@@ -9014,7 +9014,15 @@ let
     python = python2;
     kerberos = heimdal;
     gnutls = gnutls33;
-    # enableLDAP
+    cups = if stdenv.isDarwin then null else cups;
+    pam = if stdenv.isDarwin then null else pam;
+    libaio = if stdenv.isDarwin then null else libaio;
+    libceph = if stdenv.isDarwin then null else libceph;
+    glusterfs = if stdenv.isDarwin then null else glusterfs;
+    dbus = if stdenv.isLinux then dbus else null;
+    libibverbs = if stdenv.isLinux then libibverbs else null;
+    librdmacm = if stdenv.isLinux then librdmacm else null;
+    systemd = if stdenv.isLinux then systemd else null;
   };
 
   samba = samba4;
@@ -9032,19 +9040,39 @@ let
     libunwind = null;
   });
 
-  samba4Full = lowPrio (samba4.override {
-    enableKerberos  = true;
-    enableInfiniband = true;
-    enableLDAP = true;
-    enablePrinting = true;
-    enableMDNS = true;
-    enableDomainController = true;
-    enableRegedit = true;
-    enableCephFS = true;
-    enableGlusterFS = true;
+  samba4_light = lowPrio (samba4.override {
+    # source3/wscript optionals
+    kerberos = null;
+    zlib = null;
+    openldap = null;
+    cups = null;
+    pam = null;
+    avahi = null;
+    acl = null;
+    libaio = null;
+    fam = null;
+    libceph = null;
+    glusterfs = null;
+
+    # buildtools/wafsamba/wscript optionals
+    libiconv = null;
+    gettext = null;
+
+    # source4/lib/tls/wscript optionals
+    gnutls = null;
+    libgcrypt = null;
+    libgpgerror = null;
+
+    # other optionals
+    ncurses = null;
+    libunwind = null;
+    dbus = null;
+    libibverbs = null;
+    librdmacm = null;
+    systemd = null;
   });
 
-  sambaFull = samba4Full;
+  samba_light = samba4_light;
 
   shairport-sync = callPackage ../servers/shairport-sync { };
 

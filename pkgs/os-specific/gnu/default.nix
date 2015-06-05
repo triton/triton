@@ -1,7 +1,7 @@
 # Packages that make up the GNU/Hurd operating system (aka. GNU).
 
 args@{ fetchgit, stdenv, autoconf, automake, automake111x, libtool
-, texinfo, glibcCross, hurdPartedCross, libuuid, samba
+, texinfo, glibcCross, hurdPartedCross, libuuid, samba_light
 , gccCrossStageStatic, gccCrossStageFinal
 , forceNativeDrv, forceSystem, newScope, platform, config, crossSystem
 , overrides ? {} }:
@@ -91,6 +91,7 @@ let
     mig_raw = callPackage ./mig {};
 
     smbfs = callPackage ./smbfs {
+      samba = samba_light;
       hurd = gnu.hurdCross;
     };
 

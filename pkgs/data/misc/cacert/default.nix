@@ -1,4 +1,4 @@
-{ stdenv, nss, curl, perl, perlPackages }:
+{ stdenv, nss, curl-full, perl, perlPackages }:
 
 stdenv.mkDerivation rec {
   name = "nss-cacert-${nss.version}";
@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   src = nss.src;
 
   postPatch = ''
-    unpackFile ${curl.src};
+    unpackFile ${curl-full.src};
   '';
 
   nativeBuildInputs = [ perl ] ++ (with perlPackages; [ LWP ]);

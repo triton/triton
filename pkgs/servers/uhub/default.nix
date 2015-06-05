@@ -1,43 +1,53 @@
-{ stdenv, fetchurl, cmake, openssl, sqlite, pkgconfig, systemd
-, tlsSupport ? false }:
+{ stdenv, fetchurl, cmake, pkgconfig
+, sqlite, systemd, openssl
+, stresstestSupport ? false
+}:
 
-assert tlsSupport -> openssl != null;
+let
+  mkFlag = optset: flag: if optset then "-D${flag}=ON" else "-D${flag}=OFF";
+in
 
-let version = "0.4.1"; in
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "uhub-${version}";
+  version = "0.5.0";
 
   src = fetchurl {
-    url = "http://www.extatic.org/downloads/uhub/uhub-${version}-src.tar.bz2";
-    sha256 = "1q0n74fb0h5w0k9fhfkznxb4r46qyfb8g2ss3wflivx4l0m1f9x2";
+    url = "https://github.com/janvidar/uhub/archive/${version}.tar.gz";
+    sha256 = "0ai6fvv075nk64al79piqj5i26ll2cq7wlzbrh6caigw9v59l5lf";
   };
 
-  buildInputs = [ cmake sqlite pkgconfig systemd ] ++ stdenv.lib.optional tlsSupport openssl;
+  patchPhase = ''
+    # Install plugins to $out/lib/plugins/ instead of /usr/lib/uhub/
+    sed -e 's,/usr/lib/uhub/,lib/plugins/,' -i CMakeLists.txt
+    # Install example configs to $out/share/doc/ instead of /etc/uhub
+    sed -e 's,/etc/uhub,doc/,' -i CMakeLists.txt
+  '';
 
-  outputs = [ "out"
-    "mod_example"
-    "mod_welcome"
-    "mod_logging"
-    "mod_auth_simple"
-    "mod_auth_sqlite"
-    "mod_chat_history"
-    "mod_chat_only"
-    "mod_topic"
-    "mod_no_guest_downloads"
+  cmakeFlags = [
+    "-DSSL_SUPPORT=ON"
+    "-DUSE_OPENSSL=ON"
+    "-DSYSTEMD_SUPPORT=ON"
+    (mkFlag stresstestSupport "ADC_STRESS")
   ];
 
-  patches = [ ./plugin-dir.patch ./systemd.patch ];
+  nativeBuildInputs = [ cmake pkgconfig ];
 
-  cmakeFlags = ''
-    -DSYSTEMD_SUPPORT=ON
-    ${if tlsSupport then "-DSSL_SUPPORT=ON" else "-DSSL_SUPPORT=OFF"}
+  buildInputs = [ openssl sqlite systemd ];
+
+  postInstall = ''
+    # Remove unsupported plugins
+    # This build uses sqlite as a backend and does not support plain-text storage
+    rm -f $out/lib/plugins/mod_auth_simple.so
+    rm -f $out/lib/plugins/mod_chat_history.so
+    # Example plugin does nothing
+    rm -f $out/lib/plugins/mod_example.so
   '';
 
   meta = with stdenv.lib; {
-    description = "High performance peer-to-peer hub for the ADC network";
+    description = "High performance ADC (DC++) hub for peer-to-peer networks";
     homepage = https://www.uhub.org/;
     license = licenses.gpl3;
-    maintainers = [ maintainers.emery ];
+    maintainers = with maintainers; [ codyopel emery ];
     platforms = platforms.unix;
   };
 }

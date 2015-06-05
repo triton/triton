@@ -8816,21 +8816,37 @@ let
 
   pshs = callPackage ../servers/http/pshs { };
 
-  libpulseaudio = callPackage ../servers/pulseaudio { libOnly = true; };
+  libpulseaudio = pulseaudioFull.override {
+    prefix = "lib";
+  };
 
-  # Name is changed to prevent use in packages;
-  # please use libpulseaudio instead.
-  pulseaudioLight = callPackage ../servers/pulseaudio { };
+  # Name is changed to prevent use in packages
+  # please use libpulseaudio instead
+  pulseaudioLight = pulseaudioFull.override {
+    # The following are disabled in the default build, because if this
+    # functionality is desired, they are only needed in the PulseAudio
+    # server.
+    xlibs = null;
+    coreaudio = null;
+    esound = null;
+    libjack2 = null;
+    avahi = null;
+    lirc = null;
+    bluez5 = null;
+    tdb = null;
+    gdbm = null;
+    gtk3 = null;
+    webrtc-audio-processing = null;
+    gconf = null;
+    libasyncns = null;
+  };
 
   pulseaudioFull = callPackage ../servers/pulseaudio {
     gconf = gnome3.gconf;
-    x11Support = true;
-    jackaudioSupport = true;
-    airtunesSupport = true;
-    gconfSupport = true;
-    bluetoothSupport = true;
-    remoteControlSupport = true;
-    zeroconfSupport = true;
+    fftw = fftwFloat;
+
+    # Disabled unless debugging
+    valgrind = null;
   };
 
   tomcat_connectors = callPackage ../servers/http/apache-modules/tomcat-connectors { };

@@ -89,12 +89,12 @@ in {
 
       package = mkOption {
         type = types.package;
-        default = pulseaudioLight;
+        default = pulseaudioFull;
         example = literalExample "pkgs.pulseaudioFull";
         description = ''
-          The PulseAudio derivation to use.  This can be used to enable
-          features (such as JACK support, Bluetooth) via the
-          <literal>pulseaudioFull</literal> package.
+          The PulseAudio derivation to use.  This can be used to disable
+          features (such as JACK support, Bluetooth) that are enabled in the
+          pulseaudioFull package in Nixpkgs.
         '';
       };
 

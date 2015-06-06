@@ -89,10 +89,6 @@ stdenv.mkDerivation rec {
     ln -svf libncurses.so $out/lib/libcurses.so
   '';
 
-  preFixup = ''
-    rm $out/lib/*.a
-  '';
-
   meta = {
     description = "Free software emulation of curses in SVR4 and more";
 

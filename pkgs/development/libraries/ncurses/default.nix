@@ -1,14 +1,19 @@
-{ lib, stdenv, fetchurl
+{ stdenv, fetchurl
 
-, mouseSupport ? false
-, unicode ? true
-
-, gpm
+# Optional Dependencies
+, gpm ? null
 
 # Extra Options
 , abiVersion ? "5"
+, unicode ? true
 }:
 
+with stdenv.lib;
+let
+  buildShared = !stdenv.isDarwin;
+
+  optGpm = stdenv.shouldUsePkg gpm;
+in
 stdenv.mkDerivation rec {
   name = "ncurses-5.9";
 
@@ -19,11 +24,41 @@ stdenv.mkDerivation rec {
 
   patches = [ ./clang.patch ];
 
-  configureFlags =
-    [ "--with-shared" "--without-debug" "--enable-pc-files" "--enable-symlinks" ]
-    ++ lib.optional unicode "--enable-widec";
+  buildInputs = [ optGpm ];
 
-  buildInputs = lib.optional (mouseSupport && stdenv.isLinux) gpm;
+  configureFlags = [
+    (mkWith   true        "abi-version" abiVersion)
+    (mkWith   true        "cxx"         null)
+    (mkWith   true        "cxx-binding" null)
+    (mkWith   false       "ada"         null)
+    (mkWith   true        "manpages"    null)
+    (mkWith   true        "progs"       null)
+    (mkWith   doCheck     "tests"       null)
+    (mkWith   true        "curses-h"    null)
+    (mkEnable true        "pc-files"    null)
+    (mkWith   buildShared "shared"      null)
+    (mkWith   true        "normal"      null)
+    (mkWith   false       "debug"       null)
+    (mkWith   false       "termlib"     null)
+    (mkWith   false       "ticlib"      null)
+    (mkWith   optGpm      "gpm"         null)
+    (mkEnable true        "overwrite"   null)
+    (mkEnable true        "database"    null)
+    (mkWith   true        "xterm-new"   null)
+    (mkEnable true        "symlinks"    null)
+    (mkEnable unicode     "widec"       null)
+    (mkEnable true        "ext-colors"  null)
+    (mkEnable true        "ext-mouse"   null)
+  ] ++ stdenv.lib.optionals stdenv.isCygwin [
+    "--enable-sp-funcs"
+    "--enable-term-driver"
+    "--enable-const"
+    "--enable-ext-colors"
+    "--enable-ext-mouse"
+    "--enable-reentrant"
+    "--enable-colorfgbg"
+    "--enable-tcap-names"
+  ];
 
   # PKG_CONFIG_LIBDIR is where the *.pc files will be installed. If this
   # directory doesn't exist, the configure script will disable installation of
@@ -34,7 +69,7 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     export PKG_CONFIG_LIBDIR="$out/lib/pkgconfig"
     mkdir -p "$PKG_CONFIG_LIBDIR"
-  '' + lib.optionalString stdenv.isCygwin ''
+  '' + stdenv.lib.optionalString stdenv.isCygwin ''
     sed -i -e 's,LIB_SUFFIX="t,LIB_SUFFIX=",' configure
   '';
 
@@ -71,7 +106,7 @@ stdenv.mkDerivation rec {
     # Create curses compatability
     ln -svf libncursesw.so $out/lib/libcursesw.so
     ln -svf libncursesw.so $out/lib/libcurses.so
-  '' + lib.optionalString stdenv.isCygwin ''
+  '' + stdenv.lib.optionalString stdenv.isCygwin ''
     for lib in $libs; do
       if test -e $out/lib/lib''${lib}w.dll.a; then
           ln -svf lib''${lib}w.dll.a $out/lib/lib$lib.dll.a
@@ -108,9 +143,9 @@ stdenv.mkDerivation rec {
 
     homepage = http://www.gnu.org/software/ncurses/;
 
-    license = lib.licenses.mit;
-    platforms = lib.platforms.all;
-    maintainers = [ lib.maintainers.wkennington ];
+    license = licenses.mit;
+    platforms = platforms.all;
+    maintainers = with maintainers; [ wkennington ];
   };
 
   passthru.ldflags = if unicode then "-lncursesw" else "-lncurses";

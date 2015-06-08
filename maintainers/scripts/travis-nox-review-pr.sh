@@ -16,7 +16,8 @@ case "$1" in
 binary-caches = http://cache.nixos.org http://hydra.nixos.org
 trusted-binary-caches = http://hydra.nixos.org
 build-max-jobs = 4
-NIXCONFIG) > "/etc/nix/nix.conf"
+NIXCONFIG
+) > "/etc/nix/nix.conf"
 
         # Verify evaluation
         echo "=== Verifying that nixpkgs evaluates..."

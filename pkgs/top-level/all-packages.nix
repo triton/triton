@@ -1646,6 +1646,13 @@ let
     ghostscript = null;
   };
 
+  calamares = callPackage ../tools/misc/calamares rec {
+    python = python3;
+    boost = callPackage ../development/libraries/boost/1.57.nix { python=python3; };
+    libyamlcpp = callPackage ../development/libraries/libyaml-cpp { makePIC=true; boost=boost; };
+    inherit (kf5_stable) extra-cmake-modules kconfig ki18n kcoreaddons solid;
+  };
+
   grub = callPackage_i686 ../tools/misc/grub {
     buggyBiosCDSupport = config.grub.buggyBiosCDSupport or true;
     automake = automake112x; # fails with 13 and 14
@@ -9002,10 +9009,10 @@ let
   };
 
   rippled = callPackage ../servers/rippled {
-    boost = boost155;
+    boost = boost157;
   };
 
-  ripple-data-api = callPackage ../servers/rippled/data-api.nix { };
+  ripple-rest = callPackage ../servers/rippled/ripple-rest.nix { };
 
   s6 = callPackage ../servers/s6 { };
 
@@ -10486,9 +10493,13 @@ let
     tcl = tcl-8_5;
   };
 
+  AMB-plugins = callPackage ../applications/audio/AMB-plugins { };
+
   ams-lv2 = callPackage ../applications/audio/ams-lv2 { };
 
   amsn = callPackage ../applications/networking/instant-messengers/amsn { };
+
+  antimony = callPackage ../applications/graphics/antimony {};
 
   antiword = callPackage ../applications/office/antiword {};
 
@@ -10654,6 +10665,8 @@ let
     amdappsdk = amdappsdk28;
   };
 
+  CharacterCompressor = callPackage ../applications/audio/CharacterCompressor { };
+
   chatzilla = callPackage ../applications/networking/irc/chatzilla { };
 
   chromium = callPackage ../applications/networking/browsers/chromium {
@@ -10689,9 +10702,13 @@ let
 
   cmus = callPackage ../applications/audio/cmus { };
 
+  CompBus = callPackage ../applications/audio/CompBus { };
+
   compiz = callPackage ../applications/window-managers/compiz {
     inherit (gnome) GConf ORBit2 metacity;
   };
+
+  constant-detune-chorus = callPackage ../applications/audio/constant-detune-chorus { };
 
   coriander = callPackage ../applications/video/coriander {
     inherit (gnome) libgnomeui GConf;
@@ -12273,6 +12290,8 @@ let
   retroshare06 = lowPrio (callPackage ../applications/networking/p2p/retroshare/0.6.nix {
     qt = qt4;
   });
+
+  RhythmDelay = callPackage ../applications/audio/RhythmDelay { };
 
   rofi = callPackage ../applications/misc/rofi {
     automake = automake114x;
@@ -14606,6 +14625,8 @@ let
   sqsh = callPackage ../development/tools/sqsh { };
 
   tetex = callPackage ../tools/typesetting/tex/tetex { libpng = libpng12; };
+
+  tewi-font = callPackage ../data/fonts/tewi  {};
 
   tex4ht = callPackage ../tools/typesetting/tex/tex4ht { };
 

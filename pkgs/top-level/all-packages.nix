@@ -3897,23 +3897,17 @@ let
 
   gwt240 = callPackage ../development/compilers/gwt/2.4.0.nix { };
 
-  icedtea7_jdk = callPackage ../development/compilers/icedtea rec {
-    jdk = openjdk;
-    giflib = giflib_5_0;
-  } // { outputs = [ "out" ]; };
-
-  icedtea7_jre = (lib.setName "icedtea7-${lib.getVersion pkgs.icedtea7_jdk.jre}" (lib.addMetaAttrs
-    { description = "Free Java runtime environment based on OpenJDK 7.0 and the IcedTea project"; }
-    pkgs.icedtea7_jdk.jre)) // { outputs = [ "jre" ]; };
-
   icedtea7_web = callPackage ../development/compilers/icedtea-web {
-    jdk = icedtea7_jdk;
+    jdk = jdk7;
     xulrunner = firefox;
   };
 
-  icedtea_jdk = icedtea7_jdk;
-  icedtea_jre = icedtea7_jre;
-  icedtea_web = icedtea7_web;
+  icedtea8_web = callPackage ../development/compilers/icedtea-web {
+    jdk = jdk8;
+    xulrunner = firefox;
+  };
+
+  icedtea_web = icedtea8_web;
 
   ikarus = callPackage ../development/compilers/ikarus { };
 
@@ -3921,34 +3915,38 @@ let
 
   path64 = callPackage ../development/compilers/path64 { };
 
-  openjdk =
-    if stdenv.isDarwin then
-      callPackage ../development/compilers/openjdk-darwin { }
-    else
-      let
-        openjdkBootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { };
-      in (callPackage ../development/compilers/openjdk {
-        jdk = openjdkBootstrap;
-      }) // { outputs = [ "out" ]; };
+  openjdk7-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "7"; };
+  openjdk8-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "8"; };
 
-  openjdk8 = callPackage ../development/compilers/openjdk/openjdk8.nix { } // { outputs = [ "out" ]; };
+  openjdk7-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
+    openjdk = openjdk7.override { minimal = true; };
+  };
+  openjdk8-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
+    openjdk = openjdk8.override { minimal = true; };
+  };
 
-  # FIXME: Need a way to set per-output meta attributes.
-  openjre = (lib.setName "openjre-${lib.getVersion pkgs.openjdk.jre}" (lib.addMetaAttrs
-    { description = "The open-source Java Runtime Environment"; }
-    pkgs.openjdk.jre)) // { outputs = [ "jre" ]; };
+  openjdk-darwin = callPackage ../development/compilers/openjdk-darwin { };
 
-  jdk = if stdenv.system == "i686-linux" || stdenv.system == "x86_64-linux"
-    then pkgs.icedtea_jdk
-    else if stdenv.isDarwin
-      then pkgs.openjdk # TODO: Use icedtea for darwin
-      else pkgs.oraclejdk;
+  openjdk7 = callPackage ../development/compilers/openjdk {
+    bootjdk = openjdk7-bootstrap;
+  };
+  openjdk7_jre = openjdk7.jre;
 
-  jre = if stdenv.system == "i686-linux" || stdenv.system == "x86_64-linux"
-    then pkgs.icedtea_jre
-    else if stdenv.isDarwin
-      then pkgs.openjre # TODO: Use icedtea for darwin
-      else pkgs.oraclejre;
+  openjdk8 = callPackage ../development/compilers/openjdk/openjdk8.nix {
+    bootjdk = openjdk8-bootstrap;
+  };
+  openjdk8_jre = openjdk8.jre;
+
+  openjdk = if stdenv.isDarwin then openjdk-darwin else openjdk8;
+
+  jdk7 = openjdk7;
+  jre7 = jdk7.jre;
+
+  jdk8 = openjdk8;
+  jre8 = jdk8.jre;
+
+  jdk = if stdenv.isDarwin then openjdk-darwin else jdk8;
+  jre = jdk.jre;
 
   oraclejdk = pkgs.jdkdistro true false;
 
@@ -10848,6 +10846,8 @@ let
     gconf = null;
     alsaLib = null;
     imagemagick = null;
+    acl = null;
+    gpm = null;
   };
 
   emacs24-nox = lowPrio (appendToName "nox" (emacs24.override {
@@ -13066,6 +13066,8 @@ let
     inherit (gnome) libgnomeprint libgnomeprintui libgnomecanvas;
   };
 
+  apvlv = callPackage ../applications/misc/apvlv { };
+
   xpdf = callPackage ../applications/misc/xpdf {
     motif = lesstif;
     base14Fonts = "${ghostscript}/share/ghostscript/fonts";
@@ -14767,6 +14769,8 @@ let
   yandex-disk = callPackage ../tools/filesystems/yandex-disk { };
 
   zdfmediathk = callPackage ../applications/video/zdfmediathk { };
+
+  zopfli = callPackage ../tools/compression/zopfli { };
 
   myEnvFun = import ../misc/my-env {
     inherit substituteAll pkgs;

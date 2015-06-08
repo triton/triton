@@ -70,16 +70,26 @@ stdenv.mkDerivation rec {
 
   patches = [ ./caps-fix.patch ];
 
-  nativeBuildInputs = [ pkgconfig intltool automake autoconf libtool ];
-  buildInputs = [
-    json_c libsndfile gettext check database
+  nativeBuildInputs = [ pkgconfig intltool autoreconfHook ];
 
-    optLibcap valgrind optOss optCoreaudio optAlsaLib optEsound optGlib
-    optGtk3 optGconf optAvahi optLibjack2 optLibasyncns optLirc optDbus optUdev
-    optOpenssl optFftw optSpeexdsp optSystemd optWebrtc-audio-processing
-  ] ++ optionals hasXlibs (with xlibs; [
-      libX11 libxcb libICE libSM libXtst xextproto libXi
-    ]) ++ optionals (optBluez5 != null) [ optBluez5 optSbc ];
+  propagatedBuildInputs =
+    lib.optionals stdenv.isLinux [ libcap ];
+
+  buildInputs =
+    [ json_c libsndfile speexdsp fftwFloat ]
+    ++ lib.optionals stdenv.isLinux [ glib dbus.libs ]
+    ++ lib.optionals (!libOnly) (
+      [ libasyncns webrtc-audio-processing ]
+      ++ lib.optional jackaudioSupport libjack2
+      ++ lib.optionals x11Support [ xlibs.xlibs xlibs.libXtst xlibs.libXi ]
+      ++ lib.optional useSystemd systemd
+      ++ lib.optionals stdenv.isLinux [ alsaLib udev ]
+      ++ lib.optional airtunesSupport openssl
+      ++ lib.optional gconfSupport gconf
+      ++ lib.optionals bluetoothSupport [ bluez5 sbc ]
+      ++ lib.optional remoteControlSupport lirc
+      ++ lib.optional zeroconfSupport  avahi
+    );
 
   preConfigure = ''
     # Performs and autoreconf

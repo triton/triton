@@ -92,6 +92,12 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
+  postInstall = ''
+    # Remove the installation of pgxs library code
+    # This adds dependencies on the dev toolchain
+    rm -r $out/lib/pgxs
+  '';
+
   meta = with stdenv.lib; {
     homepage = http://www.postgresql.org/;
     description = "A powerful, open source object-relational database system";

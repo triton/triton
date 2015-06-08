@@ -70,26 +70,16 @@ stdenv.mkDerivation rec {
 
   patches = [ ./caps-fix.patch ];
 
-  nativeBuildInputs = [ pkgconfig intltool autoreconfHook ];
+  nativeBuildInputs = [ pkgconfig intltool automake autoconf libtool ];
+  buildInputs = [
+    json_c libsndfile gettext check database
 
-  propagatedBuildInputs =
-    lib.optionals stdenv.isLinux [ libcap ];
-
-  buildInputs =
-    [ json_c libsndfile speexdsp fftwFloat ]
-    ++ lib.optionals stdenv.isLinux [ glib dbus.libs ]
-    ++ lib.optionals (!libOnly) (
-      [ libasyncns webrtc-audio-processing ]
-      ++ lib.optional jackaudioSupport libjack2
-      ++ lib.optionals x11Support [ xlibs.xlibs xlibs.libXtst xlibs.libXi ]
-      ++ lib.optional useSystemd systemd
-      ++ lib.optionals stdenv.isLinux [ alsaLib udev ]
-      ++ lib.optional airtunesSupport openssl
-      ++ lib.optional gconfSupport gconf
-      ++ lib.optionals bluetoothSupport [ bluez5 sbc ]
-      ++ lib.optional remoteControlSupport lirc
-      ++ lib.optional zeroconfSupport  avahi
-    );
+    optLibcap valgrind optOss optCoreaudio optAlsaLib optEsound optGlib
+    optGtk3 optGconf optAvahi optLibjack2 optLibasyncns optLirc optDbus optUdev
+    optOpenssl optFftw optSpeexdsp optSystemd optWebrtc-audio-processing
+  ] ++ optionals hasXlibs (with xlibs; [
+      libX11 libxcb libICE libSM libXtst xextproto libXi
+    ]) ++ optionals (optBluez5 != null) [ optBluez5 optSbc ];
 
   preConfigure = ''
     # Performs and autoreconf
@@ -165,8 +155,7 @@ stdenv.mkDerivation rec {
   # the alternative is to copy the files from /usr/include to src, but there are
   # probably a large number of files that would need to be copied (I stopped
   # after the seventh)
-  NIX_CFLAGS_COMPILE = optionalString stdenv.isDarwin
-    "-I/usr/include";
+  NIX_CFLAGS_COMPILE = optionalString stdenv.isDarwin "-I/usr/include";
 
   installFlags = [
     "sysconfdir=$(out)/etc"

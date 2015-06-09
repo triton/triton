@@ -704,7 +704,7 @@ in
       ];
 
     environment.systemPackages =
-      [ pkgs.host
+      [ pkgs.dnsutils
         pkgs.iproute
         pkgs.iputils
         pkgs.nettools

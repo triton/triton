@@ -125,10 +125,10 @@ stdenv.mkDerivation rec {
 
   postInstall = optionalString toolsOnly ''
     mkdir -p $out/{bin,etc,lib,share/man/man1}
-    install -m 0755 $TMPDIR/$out/bin/{dig,nslookup,nsupdate} $out/bin
+    install -m 0755 $TMPDIR/$out/bin/{dig,host,nslookup,nsupdate} $out/bin
     install -m 0644 $TMPDIR/$out/etc/bind.keys $out/etc
     install -m 0644 $TMPDIR/$out/lib/*.so.* $out/lib
-    install -m 0644 $TMPDIR/$out/share/man/man1/{dig,nslookup,nsupdate}.1 $out/share/man/man1
+    install -m 0644 $TMPDIR/$out/share/man/man1/{dig,host,nslookup,nsupdate}.1 $out/share/man/man1
   '';
 
   enableParallelBuilding = true;

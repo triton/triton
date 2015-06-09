@@ -1,7 +1,16 @@
-{ stdenv, fetchurl, perl, file, nettools, iputils, iproute, makeWrapper
-, coreutils, gnused, bind, openldap ? null
+{ stdenv, fetchurl, perl, makeWrapper, autoreconfHook
+, nettools, iputils, iproute, coreutils, gnused
+
+# Optional Dependencies
+, bind ? null, openldap ? null
 }:
 
+with stdenv;
+let
+  optBind = shouldUsePkg bind;
+  optOpenldap = shouldUsePkg openldap;
+in
+with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "dhcp-${version}";
   version = "4.3.2";
@@ -11,67 +20,61 @@ stdenv.mkDerivation rec {
     sha256 = "0rc156qqv7293yi69gxvvc8s4cp7fspwl12iqkf6r7vmb2rwjik2";
   };
 
-  patches =
-    [ # Don't bring down interfaces, because wpa_supplicant doesn't
-      # recover when the wlan interface goes down.  Instead just flush
-      # all addresses, routes and neighbours of the interface.
-      ./flush-if.patch
+  nativeBuildInputs = [ perl makeWrapper autoreconfHook ];
+  buildInputs = [ optBind optOpenldap ];
 
-      # Make sure that the hostname gets set on reboot.  Without this
-      # patch, the hostname doesn't get set properly if the old
-      # hostname (i.e. before reboot) is equal to the new hostname.
-      ./set-hostname.patch
-    ];
+  postPatch = ''
+    # Use our prebuilt version of bind
+    rm -rf bind
+    ln -sv ${bind} bind
 
-  # Fixes "socket.c:591: error: invalid application of 'sizeof' to
-  # incomplete type 'struct in6_pktinfo'".  See
-  # http://www.mail-archive.com/blfs-book@linuxfromscratch.org/msg13013.html
-  #
-  # Also adds the ability to run dhcpd as a non-root user / group
-  NIX_CFLAGS_COMPILE = "-D_GNU_SOURCE -DPARANOIA";
+    # Don't build an internal version of bind
+    sed -i 's,^\(.*SUBDIRS.*\)bind\(.*\)$,\1\2,' Makefile.am
 
-  # It would automatically add -Werror, which disables build in gcc 4.4
-  # due to an uninitialized variable.
-  CFLAGS = "-g -O2 -Wall";
+    # Use shared bind libraries instead of static
+    grep -r 'bind/lib' . | awk -F: '{print $1}' | sort | uniq | xargs sed \
+      -e "s,[^ ]*bind/lib/lib\([^.]*\)\.a,-l\1,g" \
+      -i
+  '';
 
-  buildInputs = [ perl makeWrapper openldap bind ];
+  preConfigure = ''
+    sed -i "includes/dhcpd.h" \
+      -e "s|^ *#define \+_PATH_DHCLIENT_SCRIPT.*$|#define _PATH_DHCLIENT_SCRIPT \"$out/sbin/dhclient-script\"|g"
+  '';
 
   configureFlags = [
-    "--with-libbind=${bind}"
-    "--enable-failover"
-    "--enable-execute"
-    "--enable-tracing"
-    "--enable-delayed-ack"
-    "--enable-dhcpv6"
-    "--enable-paranoia"
-    "--enable-early-chroot"
-    "--sysconfdir=/etc"
-    "--localstatedir=/var"
-  ] ++ stdenv.lib.optionals (openldap != null) [ "--with-ldap" "--with-ldapcrypto" ];
+    (mkOther                        "sysconfdir"     "/etc")
+    (mkOther                        "localstatedir"  "/var")
+    (mkEnable false                 "debug"          null)
+    (mkEnable true                  "failover"       null)
+    (mkEnable true                  "execute"        null)
+    (mkEnable true                  "tracing"        null)
+    (mkEnable true                  "delayed-ack"    null)  # Experimental in 4.3.2
+    (mkEnable true                  "dhcpv6"         null)
+    (mkEnable true                  "paranoia"       null)
+    (mkEnable true                  "early-chroot"   null)
+    (mkEnable true                  "ipv4-pktinfo"   null)
+    (mkEnable false                 "use-sockets"    null)
+    (mkEnable false                 "secs-byteorder" null)
+    (mkEnable false                 "log-pid"        null)
+    (mkWith   (optBind != null)     "libbind"        optBind)
+    (mkWith   (optOpenldap != null) "ldap"           null)
+    (mkWith   (optOpenldap != null) "ldapcrypto"     null)
+  ];
 
-  installFlags = [ "DESTDIR=\${out}" ];
+  installFlags = [
+    "sysconfdir=\${out}/etc"
+  ];
 
-  postInstall =
-    ''
-      mv $out/$out/* $out
-      DIR=$out/$out
-      while rmdir $DIR 2>/dev/null; do
-        DIR="$(dirname "$DIR")"
-      done
+  postInstall = ''
+    cp client/scripts/linux $out/sbin/dhclient-script
+    substituteInPlace $out/sbin/dhclient-script \
+      --replace /sbin/ip ${iproute}/sbin/ip
+    wrapProgram "$out/sbin/dhclient-script" --prefix PATH : \
+      "${nettools}/bin:${nettools}/sbin:${iputils}/bin:${coreutils}/bin:${gnused}/bin"
+  '';
 
-      cp client/scripts/linux $out/sbin/dhclient-script
-      substituteInPlace $out/sbin/dhclient-script \
-        --replace /sbin/ip ${iproute}/sbin/ip
-      wrapProgram "$out/sbin/dhclient-script" --prefix PATH : \
-        "${nettools}/bin:${nettools}/sbin:${iputils}/bin:${coreutils}/bin:${gnused}/bin"
-    '';
-
-  preConfigure =
-    ''
-      substituteInPlace configure --replace "/usr/bin/file" "${file}/bin/file"
-      sed -i "includes/dhcpd.h" \
-	-"es|^ *#define \+_PATH_DHCLIENT_SCRIPT.*$|#define _PATH_DHCLIENT_SCRIPT \"$out/sbin/dhclient-script\"|g"
-    '';
+  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Dynamic Host Configuration Protocol (DHCP) tools";

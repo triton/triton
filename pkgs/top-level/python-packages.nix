@@ -522,16 +522,53 @@ let
     };
   };
 
+  funcsigs = buildPythonPackage rec {
+    name = "funcsigs-0.4";
+    disabled = ! (isPy26 || isPy27 || isPy33 || isPyPy);
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/f/funcsigs/${name}.tar.gz";
+      md5 = "fb1d031f284233e09701f6db1281c2a5";
+    };
+
+    buildInputs = with self; [
+      unittest2
+    ];
+
+    meta = with pkgs.stdenv.lib; {
+      description = "Python function signatures from PEP362 for Python 2.6, 2.7 and 3.2+";
+      homepage = "https://github.com/aliles/funcsigs";
+      maintainers = with maintainers; [ garbas ];
+      license = licenses.asl20;
+    };
+  };
 
   apscheduler = buildPythonPackage rec {
     name = "APScheduler-3.0.1";
-
-    propagatedBuildInputs = with self; [ futures tzlocal six pytest mock sqlalchemy9 ];
+    disabled = !isPy27;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/A/APScheduler/${name}.tar.gz";
-      sha256 = "1dcyk58svhhd7flpq0fbyzcp0z3a1as4ddmdv1rxqvqng0sxhwaf";
+      md5 = "7c3687b3dcd645fe9df48e34eb7a7592";
     };
+
+    buildInputs = with self; [
+      pytest
+      sqlalchemy9
+      tornado
+      twisted
+      mock
+      trollius
+      funcsigs
+      gevent
+    ];
+
+    propagatedBuildInputs = with self; [
+      six
+      pytz
+      tzlocal
+      futures
+    ];
 
     meta = with pkgs.stdenv.lib; {
       description = "A Python library that lets you schedule your Python code to be executed";
@@ -539,7 +576,6 @@ let
       license = licenses.mit;
     };
   };
-
 
   area53 = buildPythonPackage (rec {
     name = "Area53-0.94";
@@ -5509,18 +5545,18 @@ let
   };
 
   futures = buildPythonPackage rec {
-    name = "futures-2.1.6";
-
+    name = "futures-3.0.2";
 
     src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/f/futures/futures-2.1.6.tar.gz";
-      md5 = "cfab9ac3cd55d6c7ddd0546a9f22f453";
+      url = "https://pypi.python.org/packages/source/f/futures/${name}.tar.gz";
+      md5 = "42aaf1e4de48d6e871d77dc1f9d96d5a";
     };
 
     meta = with pkgs.stdenv.lib; {
       description = "Backport of the concurrent.futures package from Python 3.2";
-      homepage = http://code.google.com/p/pythonfutures;
+      homepage = "https://github.com/agronholm/pythonfutures";
       license = licenses.bsd2;
+      maintainers = with maintainers; [ garbas ];
     };
   };
 
@@ -7907,8 +7943,13 @@ let
       sha256 = "1fp3d3z2grb1ls97smjkraazpxnvajda2d1g1378s6gzmda2jvjd";
     };
 
-    buildInputs = with self; [ pkgs.makeWrapper ];
-    propagatedBuildInputs = with self; [ requests2 pkgs.rtmpdump pycrypto singledispatch futures ];
+    buildInputs = [ pkgs.makeWrapper ];
+
+    propagatedBuildInputs = with self; [ pkgs.rtmpdump pycrypto requests2 ]
+      ++ optionals isPy26 [ singledispatch futures argparse ]
+      ++ optionals isPy27 [ singledispatch futures ]
+      ++ optionals isPy33 [ singledispatch ];
+
     postInstall = ''
       wrapProgram $out/bin/livestreamer --prefix PATH : ${pkgs.rtmpdump}/bin
     '';
@@ -15715,6 +15756,52 @@ let
       license = licenses.gpl1;
       maintainers = with maintainers; [ hbunke ];
 
+    };
+  };
+
+  trollius = buildPythonPackage rec {
+    version = "1.0.4";
+    name = "trollius-${version}";
+    disabled = ! isPy27;
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/t/trollius/${name}.tar.gz";
+      md5 = "3631a464d49d0cbfd30ab2918ef2b783";
+    };
+
+    buildInputs = [ self.mock ];
+
+    propagatedBuildInputs = [ self.futures ];
+
+    meta = {
+      description = "Port of the Tulip project (asyncio module, PEP 3156) on Python 2";
+      homepage = "https://bitbucket.org/enovance/trollius";
+      license = licenses.asl20;
+      maintainers = with maintainers; [ garbas ];
+    };
+  };
+
+  neovim = buildPythonPackage rec {
+    version = "0.0.36";
+    name = "neovim-${version}";
+    disabled = ! isPy27;
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/n/neovim/${name}.tar.gz";
+      md5 = "8cdad23402e29c7c5a1e85770e976edf";
+    };
+
+    propagatedBuildInputs = with self; [
+      msgpack
+      trollius
+      greenlet
+    ];
+
+    meta = {
+      description = "Python client for Neovim";
+      homepage = "https://github.com/neovim/python-client";
+      license = licenses.asl20;
+      maintainers = with maintainers; [ garbas ];
     };
   };
 

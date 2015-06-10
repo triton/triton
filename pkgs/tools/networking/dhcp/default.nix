@@ -23,10 +23,9 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ perl makeWrapper autoreconfHook ];
   buildInputs = [ optBind optOpenldap ];
 
-  postPatch = ''
-    # Use our prebuilt version of bind
+  postPatch = optionalString (optBind != null) ''
+    # Don't use the built in bind
     rm -rf bind
-    ln -sv ${bind} bind
 
     # Don't build an internal version of bind
     sed -i 's,^\(.*SUBDIRS.*\)bind\(.*\)$,\1\2,' Makefile.am
@@ -35,6 +34,9 @@ stdenv.mkDerivation rec {
     grep -r 'bind/lib' . | awk -F: '{print $1}' | sort | uniq | xargs sed \
       -e "s,[^ ]*bind/lib/lib\([^.]*\)\.a,-l\1,g" \
       -i
+
+    # Use our prebuilt version of bind
+    ln -sv ${optBind} bind
   '';
 
   preConfigure = ''

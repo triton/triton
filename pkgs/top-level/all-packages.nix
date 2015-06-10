@@ -7531,7 +7531,9 @@ let
 
   openbr = callPackage ../development/libraries/openbr { };
 
-  opencascade = callPackage ../development/libraries/opencascade { };
+  opencascade = callPackage ../development/libraries/opencascade {
+    tcl = tcl-8_5;
+  };
 
   opencascade_6_5 = callPackage ../development/libraries/opencascade/6.5.nix {
     automake = automake111x;
@@ -10636,6 +10638,8 @@ let
 
   canto-daemon = callPackage ../applications/networking/feedreaders/canto-daemon { };
 
+  carddav-util = callPackage ../tools/networking/carddav-util { };
+
   carrier = builderDefsPackage (import ../applications/networking/instant-messengers/carrier/2.5.0.nix) {
     inherit fetchurl stdenv pkgconfig perl perlXMLParser libxml2 openssl nss
       gtkspell aspell gettext ncurses avahi dbus dbus_glib python
@@ -12467,7 +12471,6 @@ let
   sonic-visualiser = callPackage ../applications/audio/sonic-visualiser {
     inherit (pkgs.vamp) vampSDK;
     inherit (pkgs.xlibs) libX11;
-    fftw = pkgs.fftwSinglePrec;
   };
 
   sox = callPackage ../applications/misc/audio/sox { };

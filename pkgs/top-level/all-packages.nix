@@ -239,7 +239,7 @@ let
   # just the plain stdenv.
   stdenv_32bit = lowPrio (
     if system == "x86_64-linux" then
-      overrideCC stdenv gcc48_multi
+      overrideCC stdenv gcc_multi
     else
       stdenv);
 
@@ -3550,8 +3550,20 @@ let
 
   gambit = callPackage ../development/compilers/gambit { };
 
-  gcc       = gcc48;
-  gcc_multi = gcc48_multi;
+  gcc = gcc49;
+
+  gcc_multi =
+    if system == "x86_64-linux" then lowPrio (
+      wrapCCWith (import ../build-support/cc-wrapper) glibc_multi (gcc.cc.override {
+        stdenv = overrideCC stdenv (wrapCCWith (import ../build-support/cc-wrapper) glibc_multi gcc.cc);
+        profiledCompiler = false;
+        enableMultilib = true;
+      }))
+    else throw "Multilib gcc not supported on ‘${system}’";
+
+  gcc_debug = lowPrio (wrapCC (gcc.cc.override {
+    stripped = false;
+  }));
 
   gccApple = throw "gccApple is no longer supported";
 
@@ -3680,24 +3692,6 @@ let
       if crossSystem != null && crossSystem.config == "i586-pc-gnu"
       then gnu.libpthreadCross
       else null;
-  }));
-
-  gcc48_multi =
-    if system == "x86_64-linux" then lowPrio (
-      wrapCCWith (import ../build-support/cc-wrapper) glibc_multi (gcc48.cc.override {
-        stdenv = overrideCC stdenv (wrapCCWith (import ../build-support/cc-wrapper) glibc_multi gcc.cc);
-        profiledCompiler = false;
-        enableMultilib = true;
-      }))
-    else throw "Multilib gcc not supported on ‘${system}’";
-
-  gcc48_debug = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.8 {
-    stripped = false;
-
-    inherit noSysDirs;
-    cross = null;
-    libcCross = null;
-    binutilsCross = null;
   }));
 
   gcc49 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.9 {
@@ -4669,28 +4663,6 @@ let
       noLibc = (libc == null);
       inherit stdenv gcc binutils libc shell name cross;
     });
-
-  /* Alternative GCC wrapper that uses the standard -I include flag instead of
-   * -isystem. The -isystem flag can change the search order specified by prior
-   * -I flags. For KDE 5 packages, we don't want to interfere with the include
-   * search path order specified by the build system. Some packages depend on
-   * Qt 4 and Qt 5 simultaneously; because the two Qt versions provide headers
-   * with the same filenames, we must respect the search order specified by the
-   * build system so that the Qt 4 components find the Qt 4 headers and the Qt 5
-   * components find the Qt 5 headers.
-   */
-  wrapGCCStdInc = glibc: baseGCC: (import ../build-support/cc-wrapper) {
-    nativeTools = stdenv.cc.nativeTools or false;
-    nativeLibc = stdenv.cc.nativeLibc or false;
-    nativePrefix = stdenv.cc.nativePrefix or "";
-    cc = baseGCC;
-    libc = glibc;
-    isGNU = true;
-    inherit stdenv binutils coreutils zlib;
-    setupHook = ../build-support/cc-wrapper/setup-hook-stdinc.sh;
-  };
-
-  gccStdInc = wrapGCCStdInc glibc gcc.cc;
 
   # prolog
   yap = callPackage ../development/compilers/yap { };
@@ -7861,9 +7833,9 @@ let
 
   SDL = callPackage ../development/libraries/SDL {
     openglSupport = mesaSupported;
-    alsaSupport = (!stdenv.isDarwin);
-    x11Support = true;
-    pulseaudioSupport = (!stdenv.isDarwin);
+    alsaSupport = stdenv.isLinux;
+    x11Support = !stdenv.isCygwin;
+    pulseaudioSupport = stdenv.isLinux;
   };
 
   SDL_gfx = callPackage ../development/libraries/SDL_gfx { };
@@ -7882,8 +7854,8 @@ let
 
   SDL2 = callPackage ../development/libraries/SDL2 {
     openglSupport = mesaSupported;
-    alsaSupport = (!stdenv.isDarwin);
-    x11Support = (!stdenv.isDarwin);
+    alsaSupport = stdenv.isLinux;
+    x11Support = !stdenv.isCygwin;
     pulseaudioSupport = false; # better go through ALSA
   };
 
@@ -11817,6 +11789,8 @@ let
   minimodem = callPackage ../applications/audio/minimodem { };
 
   minidjvu = callPackage ../applications/graphics/minidjvu { };
+
+  minitube = callPackage ../applications/video/minitube { };
 
   mimms = callPackage ../applications/audio/mimms {};
 

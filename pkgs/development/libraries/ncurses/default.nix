@@ -89,6 +89,8 @@ stdenv.mkDerivation rec {
     ln -svf $cfg $out/bin/ncurses-config
 
     # Allow for end users who #include <ncurses?w/*.h>
+    mv "$out"/include/ncursesw/* "$out"/include/
+    rmdir "$out"/include/ncursesw
     ln -svf . $out/include/ncursesw
     ln -svf . $out/include/ncurses
 
@@ -118,6 +120,8 @@ stdenv.mkDerivation rec {
     ln -svf $cfg $out/bin/ncurses-config
 
     # Allow for end users who #include <ncurses/*.h>
+    mv "$out"/include/ncurses/* "$out"/include/
+    rmdir "$out"/include/ncurses
     ln -svf . $out/include/ncurses
 
     # Create curses compatability

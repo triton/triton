@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, python, pkgconfig, perl, libxslt, docbook_xsl
+{ stdenv, fetchurl, pythonPackages, pkgconfig, perl, libxslt, docbook_xsl
 , docbook_xml_dtd_42, docbook_xml_dtd_45, readline, talloc, ntdb, tdb, tevent
 , ldb, popt, iniparser, subunit, libbsd, nss_wrapper, socket_wrapper
 , uid_wrapper, libarchive
@@ -56,9 +56,12 @@ stdenv.mkDerivation rec {
     ./4.x-fix-ctdb-deps.patch
   ] ++ optional (kerberos != null) ./4.x-heimdal-compat.patch;
 
+  nativeBuildInputs = [
+    pythonPackages.python pkgconfig perl libxslt docbook_xsl docbook_xml_dtd_42
+    pythonPackages.wrapPython
+  ];
   buildInputs = [
-    python pkgconfig perl libxslt docbook_xsl docbook_xml_dtd_42
-    docbook_xml_dtd_45 readline talloc ntdb tdb tevent ldb popt iniparser
+    readline talloc ntdb tdb tevent ldb popt iniparser
     subunit libbsd nss_wrapper socket_wrapper uid_wrapper
     libarchive
 
@@ -70,6 +73,8 @@ stdenv.mkDerivation rec {
 
     ncurses libunwind dbus libibverbs librdmacm systemd
   ];
+
+  pythonPath = [ talloc ldb tdb ntdb ];
 
   postPatch = ''
     # Removes absolute paths in scripts
@@ -141,19 +146,19 @@ stdenv.mkDerivation rec {
     # Remove unecessary components
     rm -r $out/{lib,share}/ctdb-tests
     rm $out/bin/ctdb_run{_cluster,}_tests
+
+    # Correct python program paths
+    wrapPythonPrograms
   '';
 
   postFixup = ''
-    export SAMBA_LIBS="$(find $out -type f -name \*.so -exec dirname {} \; | sort | uniq)"
-    read -r -d "" SCRIPT << EOF || true
-    [ -z "\$SAMBA_LIBS" ] && exit 1;
-    BIN='{}';
-    OLD_LIBS="\$(patchelf --print-rpath "\$BIN" 2>/dev/null | tr ':' '\n')";
-    ALL_LIBS="\$(echo -e "\$SAMBA_LIBS\n\$OLD_LIBS" | sort | uniq | tr '\n' ':')";
-    patchelf --set-rpath "\$ALL_LIBS" "\$BIN" 2>/dev/null || exit $?;
-    patchelf --shrink-rpath "\$BIN";
-    EOF
-    find $out -type f -exec $SHELL -c "$SCRIPT" \;
+    SAMBA_LIBS="$(find $out -type f -name \*.so -exec dirname {} \; | sort | uniq)"
+    find $out -type f | while read BIN; do
+      OLD_LIBS="$(patchelf --print-rpath "$BIN" 2>/dev/null | tr ':' '\n')" || continue
+      ALL_LIBS="$(echo -e "$SAMBA_LIBS\n$OLD_LIBS" | sort | uniq | tr '\n' ':')"
+      patchelf --set-rpath "$ALL_LIBS" "$BIN" 2>/dev/null
+      patchelf --shrink-rpath "$BIN"
+    done
   '';
 
   meta = {

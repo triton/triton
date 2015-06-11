@@ -9001,7 +9001,7 @@ let
   samba3 = callPackage ../servers/samba/3.x.nix { };
 
   samba4 = callPackage ../servers/samba/4.x.nix {
-    python = python2;
+    pythonPackages = python2Packages;
     # Samba is tightly coupled to kerberos so let it provide its own
     kerberos = null;
     gnutls = gnutls33;

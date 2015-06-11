@@ -32,12 +32,7 @@ let
     crypt = null;
   };
 
-  pythonPackages = modules // import ./python-packages-generated.nix {
-    inherit pkgs python;
-    inherit (pkgs) stdenv fetchurl;
-    self = pythonPackages;
-  }
-// {
+  pythonPackages = modules // {
 
   inherit python isPy26 isPy27 isPy33 isPy34 isPyPy isPy3k pythonName buildPythonPackage;
 
@@ -8100,14 +8095,21 @@ let
   #   };
   # });
 
-  ordereddict = if isPy26 then (buildPythonPackage {
+  ordereddict = buildPythonPackage rec {
     name = "ordereddict-1.1";
+    disabled = !isPy26;
+
     src = pkgs.fetchurl {
-      url = "http://pypi.python.org/packages/source/o/ordereddict/ordereddict-1.1.tar.gz";
+      url = "http://pypi.python.org/packages/source/o/ordereddict/${name}.tar.gz";
       md5 = "a0ed854ee442051b249bfad0f638bbec";
     };
-    doCheck = false;
-  }) else null;
+
+    meta = {
+      description = "A drop-in substitute for Py2.7's new collections.OrderedDict that works in Python 2.4-2.6.";
+      license = licenses.bsd3;
+      maintainers = with maintainers; [ garbas ];
+    };
+  };
 
   ply = buildPythonPackage (rec {
     name = "ply-3.4";
@@ -15618,7 +15620,7 @@ let
       sha256 = "6380eb38d0b5770d7e50813c8a48ff7c373b2187b4220339c1adce803df01c59";
     };
 
-    buildInputs = with self; [ nose decorator ];
+    propagatedBuildInputs = with self; [ nose decorator ];
 
     meta = {
       homepage = "https://networkx.github.io/";
@@ -15775,16 +15777,51 @@ let
   trollius = buildPythonPackage rec {
     version = "1.0.4";
     name = "trollius-${version}";
-    disabled = ! isPy27;
+    disabled = isPy34;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/t/trollius/${name}.tar.gz";
       md5 = "3631a464d49d0cbfd30ab2918ef2b783";
     };
 
-    buildInputs = [ self.mock ];
+    buildInputs = with self; [ mock ]
+      ++ optional isPy26 unittest2;
 
-    propagatedBuildInputs = [ self.futures ];
+    propagatedBuildInputs = with self; []
+      ++ optional isPy26 ordereddict
+      ++ optional (isPy26 || isPy27 || isPyPy) futures;
+
+    # Some of the tests fail on darwin with `error: AF_UNIX path too long'
+    # because of the *long* path names for sockets
+    patchPhase = optionalString stdenv.isDarwin ''
+      sed -i -e "s|test_create_ssl_unix_connection|skip_test_create_ssl_unix_connection|" tests/test_events.py
+      sed -i -e "s|test_create_unix_connection|skip_test_create_unix_connection|" tests/test_events.py
+      sed -i -e "s|test_create_unix_connection|skip_test_create_unix_connection|" tests/test_events.py
+      sed -i -e "s|test_create_unix_connection|skip_test_create_unix_connection|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server_existing_path_nonsock|skip_test_create_unix_server_existing_path_nonsock|" tests/test_unix_events.py
+      sed -i -e "s|test_create_unix_server_existing_path_sock|skip_test_create_unix_server_existing_path_sock|" tests/test_unix_events.py
+      sed -i -e "s|test_create_unix_server_ssl_verified|skip_test_create_unix_server_ssl_verified|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server_ssl_verified|skip_test_create_unix_server_ssl_verified|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server_ssl_verified|skip_test_create_unix_server_ssl_verified|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server_ssl_verify_failed|skip_test_create_unix_server_ssl_verify_failed|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server_ssl_verify_failed|skip_test_create_unix_server_ssl_verify_failed|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server_ssl_verify_failed|skip_test_create_unix_server_ssl_verify_failed|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server_ssl|skip_test_create_unix_server_ssl|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server_ssl|skip_test_create_unix_server_ssl|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server_ssl|skip_test_create_unix_server_ssl|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server|skip_test_create_unix_server|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server|skip_test_create_unix_server|" tests/test_events.py
+      sed -i -e "s|test_create_unix_server|skip_test_create_unix_server|" tests/test_events.py
+      sed -i -e "s|test_open_unix_connection_error|skip_test_open_unix_connection_error|" tests/test_streams.py
+      sed -i -e "s|test_open_unix_connection_no_loop_ssl|skip_test_open_unix_connection_no_loop_ssl|" tests/test_streams.py
+      sed -i -e "s|test_open_unix_connection|skip_test_open_unix_connection|" tests/test_streams.py
+      sed -i -e "s|test_start_unix_server|skip_test_start_unix_server|" tests/test_streams.py
+      sed -i -e "s|test_unix_sock_client_ops|skip_test_unix_sock_client_ops|" tests/test_events.py
+      sed -i -e "s|test_unix_sock_client_ops|skip_test_unix_sock_client_ops|" tests/test_events.py
+      sed -i -e "s|test_unix_sock_client_ops|skip_test_unix_sock_client_ops|" tests/test_events.py
+    '' + optionalString isPy26 ''
+      sed -i -e "s|test_env_var_debug|skip_test_env_var_debug|" tests/test_tasks.py
+    '';
 
     meta = {
       description = "Port of the Tulip project (asyncio module, PEP 3156) on Python 2";
@@ -15797,18 +15834,15 @@ let
   neovim = buildPythonPackage rec {
     version = "0.0.36";
     name = "neovim-${version}";
-    disabled = ! isPy27;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/n/neovim/${name}.tar.gz";
       md5 = "8cdad23402e29c7c5a1e85770e976edf";
     };
 
-    propagatedBuildInputs = with self; [
-      msgpack
-      trollius
-      greenlet
-    ];
+    propagatedBuildInputs = with self; [ msgpack ]
+      ++ optional (!isPyPy) greenlet
+      ++ optional (!isPy34) trollius;
 
     meta = {
       description = "Python client for Neovim";

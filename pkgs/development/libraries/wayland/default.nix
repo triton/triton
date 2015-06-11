@@ -1,6 +1,11 @@
 { stdenv, fetchurl, pkgconfig
-, libffi, docbook_xsl, doxygen, graphviz, libxslt, xmlto
+
+# Optional Dependencies
+, libffi ? null, docbook_xsl ? null, doxygen ? null, graphviz ? null, libxslt ? null, xmlto ? null
 , expat ? null # Build wayland-scanner (currently cannot be disabled as of 1.7.0)
+
+# Extra Arguments
+, enableDocumentation ? false
 }:
 
 # Require the optional to be enabled until upstream fixes or removes the configure flag
@@ -17,12 +22,14 @@ stdenv.mkDerivation rec {
   };
 
   configureFlags = [
-    (mkEnable (expat != null) "scanner" null)
+    (mkEnable (expat != null)     "scanner"       null)
+    (mkEnable enableDocumentation "documentation" null)
   ];
 
-  nativeBuildInputs = [ pkgconfig ];
+  nativeBuildInputs = [ pkgconfig ]
+    ++ optionals enableDocumentation [ docbook_xsl doxygen graphviz libxslt xmlto ];
 
-  buildInputs = [ libffi docbook_xsl doxygen graphviz libxslt xmlto expat ];
+  buildInputs = [ libffi expat ];
 
   meta = {
     description = "Reference implementation of the wayland protocol";

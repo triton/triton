@@ -8128,6 +8128,10 @@ let
   wayland = callPackage ../development/libraries/wayland {
     graphviz = graphviz-nox;
   };
+  wayland-docs = callPackage ../development/libraries/wayland {
+    graphviz = graphviz-nox;
+    enableDocumentation = true;
+  };
 
   webkit = webkitgtk;
 

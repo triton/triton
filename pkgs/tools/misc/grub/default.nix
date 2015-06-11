@@ -13,7 +13,7 @@ stdenv.mkDerivation {
   # failures on systems with more than 2 GiB RAM, and for booting from
   # ext3 filesystems with 256-byte inodes as well as ext4 filesystems.
   gentooPatches = fetchurl {
-    url = mirror://gentoo/distfiles/grub-0.97-patches-1.12.tar.bz2;
+    url = mirror://gentoo/grub-0.97-patches-1.12.tar.bz2;
     sha256 = "15xc5349hkzl03lbn2cadrmvjrf3s8sn147vv2142cwys9sdzkl0";
   };
 

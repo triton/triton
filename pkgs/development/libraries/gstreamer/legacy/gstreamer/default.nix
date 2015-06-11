@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls =
       [ "${meta.homepage}/src/gstreamer/${name}.tar.xz"
-        "mirror://gentoo/distfiles/${name}.tar.xz"
+        "mirror://gentoo/${name}.tar.xz"
       ];
     sha256 = "1nkid1n2l3rrlmq5qrf5yy06grrkwjh3yxl5g0w58w0pih8allci";
   };

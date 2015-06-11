@@ -4,7 +4,7 @@ stdenv.mkDerivation rec {
   name = "net-tools-1.60_p20120127084908";
 
   src = fetchurl {
-    url = "mirror://gentoo/distfiles/${name}.tar.xz";
+    url = "mirror://gentoo/${name}.tar.xz";
     sha256 = "408a51964aa142a4f45c4cffede2478abbd5630a7c7346ba0d3611059a2a3c94";
   };
 

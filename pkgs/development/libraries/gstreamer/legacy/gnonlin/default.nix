@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = [
       "http://gstreamer.freedesktop.org/src/gnonlin/${name}.tar.bz2"
-      "mirror://gentoo/distfiles/${name}.tar.bz2"
+      "mirror://gentoo/${name}.tar.bz2"
       ];
     sha256 = "0dc9kvr6i7sh91cyhzlbx2bchwg84rfa4679ccppzjf0y65dv8p4";
   };

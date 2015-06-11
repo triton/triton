@@ -23,7 +23,7 @@ stdenv.mkDerivation {
 
   patches =
     [ (fetchurl {
-        url = mirror://gentoo/distfiles/beast-0.7.1-guile-1.8.diff.bz2;
+        url = mirror://gentoo/beast-0.7.1-guile-1.8.diff.bz2;
         sha256 = "dc5194deff4b0a0eec368a69090db682d0c3113044ce2c2ed017ddfec9d3814e";
       })
       ./patch.patch # patches taken from gentoo

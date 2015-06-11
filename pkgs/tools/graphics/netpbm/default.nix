@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   name = "netpbm-10.66.00";
 
   src = fetchurl {
-    url = "mirror://gentoo/distfiles/${name}.tar.xz";
+    url = "mirror://gentoo/${name}.tar.xz";
     sha256 = "1z33pxdir92m7jlvp5c2q44gxwj7jyf8skiqkr71kgirw4w4zsbz";
   };
 

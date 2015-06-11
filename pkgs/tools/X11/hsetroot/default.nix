@@ -1,12 +1,11 @@
 { stdenv, fetchurl, autoconf, automake, imlib2, libtool, libX11, pkgconfig, xproto }:
 
 stdenv.mkDerivation rec {
-  name = "hsetroot-${version}";
-  version = "1.0.2";
+  name = "hsetroot-1.0.2";
 
   # The primary download site seems to no longer exist; use Gentoo's mirror for now.
   src = fetchurl {
-    url = "http://mirror.datapipe.net/gentoo/distfiles/hsetroot-${version}.tar.gz";
+    url = "mirror://gentoo/${name}.tar.gz";
     sha256 = "d6712d330b31122c077bfc712ec4e213abe1fe71ab24b9150ae2774ca3154fd7";
   };
 

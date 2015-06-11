@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = [
       "${meta.homepage}/src/gst-plugins-base/${name}.tar.xz"
-      "mirror://gentoo/distfiles/${name}.tar.xz"
+      "mirror://gentoo/${name}.tar.xz"
       ];
     sha256 = "0jp6hjlra98cnkal4n6bdmr577q8mcyp3c08s3a02c4hjhw5rr0z";
   };

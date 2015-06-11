@@ -12,10 +12,7 @@ stdenv.mkDerivation {
     # Upstream forgot to include the generated manpages.  Thankfully
     # the Gentoo people fixed this for us :-)
     (fetchurl {
-      urls = [
-        mirror://gentoo/distfiles/module-init-tools-3.16-man.tar.bz2
-        http://mirror.meleeweb.net/pub/linux/gentoo/distfiles/module-init-tools-3.16-man.tar.bz2
-      ];
+      url = "mirror://gentoo/module-init-tools-3.16-man.tar.bz2";
       sha256 = "1j1nzi87kgsh4scl645fhwhjvljxj83cmdasa4n4p5krhasgw358";
     })
   ];

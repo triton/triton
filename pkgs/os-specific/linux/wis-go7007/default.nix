@@ -15,7 +15,7 @@ stdenv.mkDerivation {
   name = "wis-go7007-0.9.8-${kernel.version}";
 
   src = fetchurl {
-    url = http://gentoo.osuosl.org/distfiles/wis-go7007-linux-0.9.8.tar.bz2;
+    url = mirror://gentoo/wis-go7007-linux-0.9.8.tar.bz2;
     sha256 = "06lvlz42c5msvwc081p8vjcbv8qq1j1g1myxhh27xi8zi06n1mzg";
   };
 

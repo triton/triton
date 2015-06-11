@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   name = "gpsd-3.10";
 
   src = fetchurl {
-    url = "http://download-mirror.savannah.gnu.org/releases/gpsd/${name}.tar.gz";
+    url = "mirror://savannah/gpsd/${name}.tar.gz";
     sha256 = "0823hl5zgwnbgm0fq3i4z34lv76cpj0k6m0zjiygiyrxrz0w4vvh";
   };
 

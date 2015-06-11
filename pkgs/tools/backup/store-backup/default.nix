@@ -13,17 +13,15 @@ let dummyMount = writeScriptBin "mount" "#!/bin/sh";
 in
 
 stdenv.mkDerivation rec {
-
-  version = "3.5";
-
   name = "store-backup-${version}";
+  version = "3.5";
 
   enableParallelBuilding = true;
 
   buildInputs = [ perl makeWrapper ];
 
   src = fetchurl {
-    url = "http://download.savannah.gnu.org/releases/storebackup/storeBackup-${version}.tar.bz2";
+    url = "mirror://savannah/storebackup/storeBackup-${version}.tar.bz2";
     sha256 = "0y4gzssc93x6y93mjsxm5b5cdh68d7ffa43jf6np7s7c99xxxz78";
   };
 

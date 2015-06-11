@@ -4,7 +4,7 @@ stdenv.mkDerivation {
   name = "uisp-20050207";
 
   src = fetchurl {
-    url = http://mirror.switch.ch/mirror/gentoo/distfiles/uisp-20050207.tar.gz;
+    url = "mirror://gentoo/distfiles/${name}.tar.gz";
     sha256 = "1bncxp5yxh9r1yrp04vvhfiva8livi1pwic7v8xj99q09zrwahvw";
   };
 

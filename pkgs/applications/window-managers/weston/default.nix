@@ -1,22 +1,27 @@
-{ stdenv, fetchurl, pkgconfig, wayland, mesa, libxkbcommon, cairo, libxcb
-, libXcursor, x11, udev, libdrm, mtdev, libjpeg, pam, dbus, libinput
-, pango ? null, libunwind ? null, freerdp ? null, vaapi ? null, libva ? null
-, libwebp ? null, xwayland ? null
-# beware of null defaults, as the parameters *are* supplied by callPackage by default
+{ stdenv, fetchurl, pkgconfig
+, cairo, dbus, libdrm, libinput, libjpeg, libunwind, libva, libwebp, libxcb
+, libxkbcommon, libXcursor, mesa, mtdev, pam, pango, udev, wayland, x11
+, freerdp ? null, vaapi ? null, xwayland ? null
 }:
+
+let
+  inherit (stdenv.lib) mkEnable optional optionals;
+in
 
 stdenv.mkDerivation rec {
   name = "weston-${wayland.version}";
 
   src = fetchurl {
     url = "http://wayland.freedesktop.org/releases/${name}.tar.xz";
-    sha256 = "1kb6a494j56sh7iy43xwkjlr3bh0nnkq4bkimwj6qirzbya12i8w";
+    sha256 = "04nkbbdglh0pqznxkdqvak3pc53jmz24d0658bn5r0cf6agycqw9";
   };
 
+  nativeBuildInputs = [ pkgconfig ];
+
   buildInputs = [
-    pkgconfig wayland mesa libxkbcommon cairo libxcb libXcursor x11 udev libdrm
-    mtdev libjpeg pam dbus.libs libinput pango libunwind freerdp vaapi libva
-    libwebp
+    cairo dbus.libs libdrm libinput libjpeg libunwind libva libwebp libxcb
+    libxkbcommon libXcursor mesa mtdev pam pango udev wayland x11
+    freerdp vaapi xwayland
   ];
 
   configureFlags = [
@@ -28,19 +33,18 @@ stdenv.mkDerivation rec {
     "--enable-screen-sharing"
     "--enable-clients"
     "--enable-weston-launch"
-    "--disable-setuid-install" # prevent install target to chown root weston-launch, which fails
-  ] ++ stdenv.lib.optional (freerdp != null) "--enable-rdp-compositor"
-    ++ stdenv.lib.optional (vaapi != null) "--enabe-vaapi-recorder"
-    ++ stdenv.lib.optionals (xwayland != null) [
-        "--enable-xwayland"
-        "--with-xserver-path=${xwayland}/bin/Xwayland"
-      ];
+    "--disable-setuid-install" # prevent install target chowning `weston-launch' as root, which fails
+    (mkEnable (freerdp != null)  "rdp-compositor" null)
+    (mkEnable (vaapi != null)    "vaapi-recorder" null)
+    (mkEnable (xwayland != null) "xwayland"       null)
+    (mkWith   (xwayland != null) "xserver-path"   "${xwayland}/bin/Xwayland")
+  ];
 
   meta = with stdenv.lib; {
     description = "Reference implementation of a Wayland compositor";
     homepage = http://wayland.freedesktop.org/;
     license = licenses.mit;
+    maintainers = with maintainers; [ codyopel wkennington ];
     platforms = platforms.linux;
-    maintainers = with maintainers; [ wkennington ];
   };
 }

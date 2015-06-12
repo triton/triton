@@ -5,7 +5,7 @@
 }:
 
 let
-  inherit (stdenv.lib) mkEnable optional optionals;
+  inherit (stdenv.lib) mkEnable mkWith optional optionals;
 in
 
 stdenv.mkDerivation rec {

@@ -1845,7 +1845,7 @@ let
 
   ised = callPackage ../tools/misc/ised {};
 
-  isl = callPackage ../development/libraries/isl { };
+  isl = isl_0_14;
   isl_0_11 = callPackage ../development/libraries/isl/0.11.1.nix { };
   isl_0_12 = callPackage ../development/libraries/isl/0.12.2.nix { };
   isl_0_14 = callPackage ../development/libraries/isl/0.14.1.nix { };
@@ -6192,7 +6192,8 @@ let
 
   gmp4 = callPackage ../development/libraries/gmp/4.3.2.nix { }; # required by older GHC versions
   gmp5 = callPackage ../development/libraries/gmp/5.1.x.nix { };
-  gmp = gmp5;
+  gmp6 = callPackage ../development/libraries/gmp/6.x.nix { };
+  gmp = gmp6;
   gmpxx = appendToName "with-cxx" (gmp.override { cxx = true; });
 
   #GMP ex-satellite, so better keep it near gmp

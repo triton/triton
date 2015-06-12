@@ -1068,7 +1068,12 @@ let
       sha256 = "f856ea2e9e2947abc1a6557625cc6b0e45228984f397a90c420b2f468dc4cb97";
     };
     doCheck = false;
-    buildInputs = with pkgs; [ liblapack blas ];
+    buildInputs = with pkgs; [ openblasCompat ];
+    preConfigure = ''
+      export CVXOPT_BLAS_LIB_DIR=${pkgs.openblasCompat}/lib
+      export CVXOPT_BLAS_LIB=openblas
+      export CVXOPT_LAPACK_LIB=openblas
+    '';
     meta = {
       homepage = "http://cvxopt.org/";
       description = "Python Software for Convex Optimization";
@@ -5920,12 +5925,12 @@ let
 
   gyp = buildPythonPackage rec {
     name = "gyp-${version}";
-    version = "2015-05-15";
+    version = "2015-06-11";
 
     src = pkgs.fetchgit {
       url = "https://chromium.googlesource.com/external/gyp.git";
-      rev = "9f594095c5b14f8bc518081a660e77890c294861";
-      sha256 = "1xqi44alnw9c31jg2hz7flz5nabq003b4jyin12h3s9zl82y6vd5";
+      rev = "fdc7b812f99e48c00e9a487bd56751bbeae07043";
+      sha256 = "176sdxkva2irr1v645nn4q6rwc6grbb1wxj82n7x9hh09q4bxqcz";
     };
 
     patches = optionals pkgs.stdenv.isDarwin [
@@ -5940,28 +5945,6 @@ let
       platforms = platforms.all;
     };
   };
-
-  # Needed to build Chromium until #7402 is fixed.
-  gyp_svn1977 = pkgs.lowPrio (buildPythonPackage rec {
-    rev = "1977";
-    name = "gyp-r${rev}";
-
-    src = pkgs.fetchsvn {
-      url = "http://gyp.googlecode.com/svn/trunk";
-      inherit rev;
-      sha256 = "0vnr75yd3bidysiwl9lljvf1dv6v9m9xqdnx0hdgyl92w689n9j8";
-    };
-
-    patches = optionals pkgs.stdenv.isDarwin [
-      ../development/python-modules/gyp/no-darwin-cflags.patch
-    ];
-
-    meta = {
-      homepage = http://code.google.com/p/gyp;
-      license = licenses.bsd3;
-      description = "Generate Your Projects";
-    };
-  });
 
   guessit = buildPythonPackage rec {
     version = "0.9.4";
@@ -7872,7 +7855,7 @@ let
   numpy = let
     support = import ../development/python-modules/numpy-scipy-support.nix {
       inherit python;
-      atlas = pkgs.atlasWithLapack;
+      openblas = pkgs.openblasCompat;
       pkgName = "numpy";
     };
   in buildPythonPackage ( rec {
@@ -7895,7 +7878,7 @@ let
     setupPyBuildFlags = ["--fcompiler='gnu95'"];
 
     buildInputs = [ pkgs.gfortran self.nose ];
-    propagatedBuildInputs = [ support.atlas ];
+    propagatedBuildInputs = [ support.openblas ];
 
     meta = {
       description = "Scientific tools for Python";
@@ -11344,7 +11327,7 @@ let
   scipy = let
     support = import ../development/python-modules/numpy-scipy-support.nix {
       inherit python;
-      atlas = pkgs.atlasWithLapack;
+      openblas = pkgs.openblasCompat;
       pkgName = "numpy";
     };
   in buildPythonPackage rec {
@@ -11382,15 +11365,14 @@ let
     };
 
     buildInputs = with self; [ nose pillow pkgs.gfortran pkgs.glibcLocales ];
-    propagatedBuildInputs = with self; [ numpy scipy pkgs.atlas ];
+    propagatedBuildInputs = with self; [ numpy scipy pkgs.openblas ];
 
     buildPhase = ''
-      export ATLAS=${pkgs.atlas}
       ${self.python.executable} setup.py build_ext -i --fcompiler='gnu95'
     '';
 
     checkPhase = ''
-      LC_ALL="en_US.UTF-8" HOME=$TMPDIR ATLAS="" nosetests
+      LC_ALL="en_US.UTF-8" HOME=$TMPDIR OMP_NUM_THREADS=1 nosetests
     '';
 
     meta = {

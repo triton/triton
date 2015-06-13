@@ -10759,7 +10759,10 @@ let
   darcs = haskell.lib.overrideCabal haskellPackages.darcs (drv: {
     configureFlags = (stdenv.lib.remove "-flibrary" drv.configureFlags or []) ++ ["-f-library"];
     enableSharedExecutables = false;
+    enableSharedLibraries = false;
     isLibrary = false;
+    doHaddock = false;
+    postFixup = "rm -rf $out/lib $out/nix-support $out/share";
   });
 
   darktable = callPackage ../applications/graphics/darktable {
@@ -13890,6 +13893,7 @@ let
 
   plasma53 = recurseIntoAttrs (callPackage ../desktops/plasma-5.3 {
     kf5 = kf510;
+    kdeApps = kdeApps_15_04;
   });
   plasma5_latest = plasma53;
   plasma5_stable = plasma53;

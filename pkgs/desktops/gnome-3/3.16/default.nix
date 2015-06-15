@@ -1,6 +1,18 @@
-{ callPackage, pkgs, self }:
+{ pkgs }:
 
-rec {
+let
+
+  pkgsFun = overrides:
+    let 
+      self = self_ // overrides;
+      self_ = with self; {
+
+  overridePackages = f:
+    let newself = pkgsFun (f newself self);
+    in newself;
+
+  callPackage = pkgs.newScope self;
+
   corePackages = with gnome3; [
     pkgs.desktop_file_utils pkgs.ibus
     pkgs.shared_mime_info # for update-mime-database
@@ -293,4 +305,7 @@ rec {
 
   gtkhtml = callPackage ./misc/gtkhtml { };
 
-}
+    };
+  in self; # pkgsFun
+
+in pkgsFun {}

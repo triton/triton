@@ -1787,6 +1787,8 @@ let
 
   hwinfo = callPackage ../tools/system/hwinfo { };
 
+  i2c-tools = callPackage ../os-specific/linux/i2c-tools { };
+
   i2p = callPackage ../tools/networking/i2p {};
 
   i2pd = callPackage ../tools/networking/i2pd {};
@@ -2055,6 +2057,8 @@ let
   mailcheck = callPackage ../applications/networking/mailreaders/mailcheck { };
 
   maildrop = callPackage ../tools/networking/maildrop { };
+
+  mailnag = callPackage ../applications/networking/mailreaders/mailnag { };
 
   mailsend = callPackage ../tools/networking/mailsend { };
 
@@ -2677,6 +2681,8 @@ let
 
   privateer = callPackage ../games/privateer { };
 
+  read-edid = callPackage ../os-specific/linux/read-edid { };
+
   redmine = callPackage ../applications/version-management/redmine { };
 
   rtmpdump = callPackage ../tools/video/rtmpdump { };
@@ -2848,6 +2854,8 @@ let
   silver-searcher = callPackage ../tools/text/silver-searcher { };
 
   simplescreenrecorder = callPackage ../applications/video/simplescreenrecorder { };
+
+  skippy-xd = callPackage ../tools/X11/skippy-xd {};
 
   skydns = callPackage ../servers/dns/skydns { };
 
@@ -3404,6 +3412,8 @@ let
   xvkbd = callPackage ../tools/X11/xvkbd {
     inherit (xlibs) libXt libXaw libXtst xextproto libXi libXpm gccmakedep;
   };
+
+  xwinmosaic = callPackage ../tools/X11/xwinmosaic {};
 
   # To expose more packages for Yi, override the extraPackages arg.
   yi = callPackage ../applications/editors/yi/wrapper.nix { };
@@ -5272,6 +5282,8 @@ let
 
   csslint = callPackage ../development/web/csslint { };
 
+  infer = callPackage ../development/tools/analysis/infer { };
+
   libcxx = llvmPackages.libcxx;
   libcxxabi = llvmPackages.libcxxabi;
 
@@ -6693,6 +6705,8 @@ let
   libeatmydata = callPackage ../development/libraries/libeatmydata { };
 
   libebml = callPackage ../development/libraries/libebml { };
+
+  libebur128 = callPackage ../development/libraries/libebur128 { };
 
   libedit = callPackage ../development/libraries/libedit { };
 
@@ -12282,6 +12296,8 @@ let
 
   rapidsvn = callPackage ../applications/version-management/rapidsvn { };
 
+  ratmen = callPackage ../tools/X11/ratmen {};
+
   ratox = callPackage ../applications/networking/instant-messengers/ratox { };
 
   ratpoison = callPackage ../applications/window-managers/ratpoison { };
@@ -13514,6 +13530,8 @@ let
 
   tintin = callPackage ../games/tintin { };
 
+  tome4 = callPackage ../games/tome4 { };
+
   tpm = callPackage ../games/thePenguinMachine { };
 
   tremulous = callPackage ../games/tremulous { };
@@ -13647,10 +13665,7 @@ let
     inherit (pkgs) libsoup libwnck gtk_doc gnome_doc_utils;
   };
 
-  gnome3_16 = recurseIntoAttrs (callPackage ../desktops/gnome-3/3.16 {
-    callPackage = pkgs.newScope pkgs.gnome3_16;
-    self = pkgs.gnome3_16;
-  });
+  gnome3_16 = recurseIntoAttrs (callPackage ../desktops/gnome-3/3.16 { });
 
   gnome3 = gnome3_16;
 

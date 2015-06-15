@@ -91,6 +91,7 @@ rec {
   # ImageMagick mirrors, see http://www.imagemagick.org/script/download.php
   imagemagick = [
     ftp://ftp.imagemagick.org/pub/ImageMagick/
+    ftp://ftp.sunet.se/pub/multimedia/graphics/ImageMagick/ # also contains older versions removed from most mirrors
     ftp://ftp.imagemagick.net/pub/ImageMagick/
   ];
 

@@ -6740,6 +6740,10 @@ let
 
   libgnurl = callPackage ../development/libraries/libgnurl { };
 
+  libgringotts = callPackage ../development/libraries/libgringotts { };
+
+  libgroove = callPackage ../development/libraries/libgroove { };
+
   libseccomp = callPackage ../development/libraries/libseccomp { };
 
   libsecret = callPackage ../development/libraries/libsecret { };
@@ -10793,6 +10797,8 @@ let
     pulseSupport = config.pulseaudio or true;
   };
 
+  dfasma = callPackage ../applications/audio/dfasma { };
+
   dia = callPackage ../applications/graphics/dia {
     inherit (pkgs.gnome) libart_lgpl libgnomeui;
   };
@@ -11649,9 +11655,7 @@ let
 
   keymon = callPackage ../applications/video/key-mon { };
 
-  khal = callPackage ../applications/misc/khal {
-    pythonPackages = python3Packages;
-  };
+  khal = callPackage ../applications/misc/khal { };
 
   kid3 = callPackage ../applications/audio/kid3 {
     qt = qt4;
@@ -12095,6 +12099,8 @@ let
   opusfile = callPackage ../applications/audio/opusfile { };
 
   opusTools = callPackage ../applications/audio/opus-tools { };
+
+  osmo = callPackage ../applications/office/osmo { };
 
   pamixer = callPackage ../applications/audio/pamixer { };
 
@@ -12732,9 +12738,7 @@ let
 
   vcprompt = callPackage ../applications/version-management/vcprompt { };
 
- vdirsyncer = callPackage ../tools/misc/vdirsyncer {
-   pythonPackages = python3Packages;
- };
+  vdirsyncer = callPackage ../tools/misc/vdirsyncer { };
 
   vdpauinfo = callPackage ../tools/X11/vdpauinfo { };
 

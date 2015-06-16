@@ -2,7 +2,7 @@
 , withCryptodev ? false, cryptodevHeaders }:
 
 let
-  name = "openssl-1.0.1n";
+  name = "openssl-1.0.1o";
 
   opensslCrossSystem = stdenv.lib.attrByPath [ "openssl" "system" ]
     (throw "openssl needs its platform name cross building" null)
@@ -23,7 +23,7 @@ stdenv.mkDerivation {
       "http://www.openssl.org/source/${name}.tar.gz"
       "http://openssl.linux-mirror.org/source/${name}.tar.gz"
     ];
-    sha1 = "2f6ea1e0f2724aca1805392e4387df8361442ace";
+    sha1 = "b003e3382607ef2c6d85b51e4ed7a4c0a76b8d5a";
   };
 
   patches = (patchesCross false) ++ extraPatches;
@@ -42,10 +42,6 @@ stdenv.mkDerivation {
   configureFlags = "shared --libdir=lib --openssldir=etc/ssl" +
     stdenv.lib.optionalString withCryptodev " -DHAVE_CRYPTODEV -DUSE_CRYPTODEV_DIGESTS";
 
-  # CYGXXX: used to be set for cygwin with optionalString. Not needed
-  # anymore but kept to prevent rebuild.
-  preBuild = "";
-
   makeFlags = "MANDIR=$(out)/share/man";
 
   # Parallel building is broken in OpenSSL.
@@ -56,12 +52,12 @@ stdenv.mkDerivation {
       # If we're building dynamic libraries, then don't install static
       # libraries.
       if [ -n "$(echo $out/lib/*.so $out/lib/*.dylib)" ]; then
-          rm $out/lib/*.a
+          rm "$out/lib/"*.a
       fi
 
       # remove dependency on Perl at runtime
       rm -rf $out/etc/ssl/misc
-    ''; # */
+    '';
 
   crossAttrs = {
     patches = patchesCross true;

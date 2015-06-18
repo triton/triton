@@ -62,9 +62,10 @@ let
   hasOsd = hasServer;
   hasRadosgw = optFcgi != null && optExpat != null && optCurl != null && optLibedit != null;
 
-  hasXio = (stdenv.isLinux || stdenv.isFreeBSD) &&
+  /*hasXio = (stdenv.isLinux || stdenv.isFreeBSD) &&
     versionAtLeast version "9.0.0" &&
-    optAccelio != null && optLibibverbs != null && optLibrdmacm != null;
+    optAccelio != null && optLibibverbs != null && optLibrdmacm != null;*/
+  hasXio = false;  # Broken with xio 1.4
 
   hasRocksdb = versionAtLeast version "9.0.0" && optRocksdb != null;
 
@@ -184,10 +185,11 @@ stdenv.mkDerivation {
     (mkWith   (optLibaio != null)          "libaio"              null)
     (mkWith   (optLibxfs != null)          "libxfs"              null)
     (mkWith   (optZfs != null)             "libzfs"              null)
-  ] ++ optional (versionAtLeast version "10.0.0") [
-    (mkWith   true                         "man-pages"           null)
+  ] ++ optional (versionAtLeast version "9.0.1") [
     (mkWith   false                        "tcmalloc-minimal"    null)
     (mkWith   false                        "valgrind"            null)
+  ] ++ optional (versionAtLeast version "10.0.0") [
+    (mkWith   true                         "man-pages"           null)
     (mkWith   true                         "systemd-libexec-dir" "\${TMPDIR}")
   ];
 

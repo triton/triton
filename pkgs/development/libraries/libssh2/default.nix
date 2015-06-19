@@ -38,12 +38,12 @@ stdenv.mkDerivation rec {
   configureFlags = [
     (mkWith   (cryptoStr == "openssl")   "openssl"        null)
     (mkWith   (cryptoStr == "libgcrypt") "libgcrypt"      null)
-    (mkWith   false                      "wicng"          null)
+    (mkWith   false                      "wincng"         null)
     (mkWith   optZlib                    "libz"           null)
     (mkEnable false                      "crypt-none"     null)
     (mkEnable false                      "mac-none"       null)
     (mkEnable true                       "gex-new"        null)
-    (mkEnable true                       "clear-memory"   null)
+    #(mkEnable true                       "clear-memory"   null) Use autodetection
     (mkEnable false                      "debug"          null)
     (mkEnable false                      "examples-build" null)
   ];

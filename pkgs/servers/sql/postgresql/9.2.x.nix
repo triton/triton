@@ -2,10 +2,10 @@
 
 callPackage ./generic.nix (args // rec {
   psqlSchema = "9.2";
-  version = "${psqlSchema}.11";
+  version = "${psqlSchema}.13";
 
   src = fetchurl {
     url = "mirror://postgresql/source/v${version}/postgresql-${version}.tar.bz2";
-    sha256 = "1k5i73ninqyz76zzpi06ajj5qawf30zwr16x8wrgq6swzvsgbck5";
+    sha256 = "0i3avdr8mnvn6ldkx0hc4jmclhisb2338hzs0j2m03wck8hddjsx";
   };
 })

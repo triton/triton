@@ -8,11 +8,11 @@
 
 with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "rsyslog-8.9.0";
+  name = "rsyslog-8.10.0";
 
   src = fetchurl {
     url = "http://www.rsyslog.com/files/download/rsyslog/${name}.tar.gz";
-    sha256 = "1p3saxfs723479rbsdyvqwfrblcp0bw6mkz2ncrxvnccfn70xc7a";
+    sha256 = "04k90v7fm1czg3lm5anfnf5cnxcxyhxldkgwzzi1k0hhczrz6bdr";
   };
 
   buildInputs = [

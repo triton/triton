@@ -635,6 +635,9 @@ let
 
   oracle-instantclient = callPackage ../development/libraries/oracle-instantclient { };
 
+  derez = callPackage ../os-specific/darwin/derez { };
+  rez = callPackage ../os-specific/darwin/rez { };
+
   setfile = callPackage ../os-specific/darwin/setfile { };
 
   install_name_tool = callPackage ../os-specific/darwin/install_name_tool { };
@@ -1026,10 +1029,6 @@ let
 
   checkinstall = callPackage ../tools/package-management/checkinstall { };
 
-  cheetahTemplate = builderDefsPackage (import ../tools/text/cheetah-template/2.0.1.nix) {
-    inherit makeWrapper python;
-  };
-
   chkrootkit = callPackage ../tools/security/chkrootkit { };
 
   chocolateDoom = callPackage ../games/chocolate-doom { };
@@ -1276,6 +1275,8 @@ let
   dolphinEmuMaster = callPackage ../misc/emulators/dolphin-emu/master.nix { };
 
   doomseeker = callPackage ../applications/misc/doomseeker { };
+
+  drive = callPackage ../applications/networking/drive { };
 
   dropbear = callPackage ../tools/networking/dropbear { };
 
@@ -1964,7 +1965,7 @@ let
   else
     nodePackages_0_12;
 
-  iojs = callPackage ../development/web/iojs { libuv = libuvVersions.v1_5_0; };
+  iojs = callPackage ../development/web/iojs { libuv = libuvVersions.v1_6_1; };
 
   iojsPackages = callPackage ./node-packages.nix { self = iojsPackages; nodejs = iojs; };
 
@@ -5282,8 +5283,6 @@ let
 
   csslint = callPackage ../development/web/csslint { };
 
-  infer = callPackage ../development/tools/analysis/infer { };
-
   libcxx = llvmPackages.libcxx;
   libcxxabi = llvmPackages.libcxxabi;
 
@@ -6032,6 +6031,8 @@ let
   fltk20 = callPackage ../development/libraries/fltk { };
 
   fmod = callPackage ../development/libraries/fmod { };
+
+  fmod42416 = callPackage ../development/libraries/fmod/4.24.16.nix { };
 
   freeimage = callPackage ../development/libraries/freeimage { };
 
@@ -7220,7 +7221,7 @@ let
     automake = automake113x; # fails with 14
   });
 
-  libuv = libuvVersions.v1_5_0;
+  libuv = libuvVersions.v1_6_1;
 
   libv4l = lowPrio (v4l_utils.override {
     alsaLib = null;
@@ -7989,6 +7990,8 @@ let
 
   sqlite3_analyzer = lowPrio (callPackage ../development/libraries/sqlite/sqlite3_analyzer.nix { });
 
+  sqlite-amalgamation = callPackage ../development/libraries/sqlite-amalgamation { };
+
   sqlite-interactive = appendToName "interactive" (sqlite.override { interactive = true; });
 
   sqlcipher = lowPrio (callPackage ../development/libraries/sqlcipher {
@@ -8209,6 +8212,8 @@ let
     inherit (gnome) GConf;
     withMesa = lib.elem system lib.platforms.mesaPlatforms;
   };
+
+  wxmac = callPackage ../development/libraries/wxmac { };
 
   wtk = callPackage ../development/libraries/wtk { };
 
@@ -8751,6 +8756,8 @@ let
   freeswitch = callPackage ../servers/sip/freeswitch { };
 
   ghostOne = callPackage ../servers/games/ghost-one { };
+
+  groovebasin = callPackage ../applications/audio/groovebasin { };
 
   ircdHybrid = callPackage ../servers/irc/ircd-hybrid { };
 
@@ -10843,6 +10850,8 @@ let
 
   dvdauthor = callPackage ../applications/video/dvdauthor { };
 
+  dvd-slideshow = callPackage ../applications/video/dvd-slideshow { };
+
   dwb = callPackage ../applications/networking/browsers/dwb { dconf = gnome3.dconf; };
 
   dwbWrapper = wrapFirefox
@@ -12644,8 +12653,8 @@ let
   thunderbird-bin = callPackage ../applications/networking/mailreaders/thunderbird-bin {
     gconf = pkgs.gnome.GConf;
     inherit (pkgs.gnome) libgnome libgnomeui;
-    inherit (pkgs.xlibs) libX11 libXScrnSaver libXext
-      libXinerama libXrender libXt;
+    inherit (pkgs.xlibs) libX11 libXScrnSaver libXcomposite libXdamage libXext
+      libXfixes libXinerama libXrender libXt;
   };
 
   tig = gitAndTools.tig;
@@ -13621,6 +13630,10 @@ let
     inherit (xlibs) libX11 xproto libXpm libXt;
   };
 
+  zandronum = callPackage ../games/zandronum { };
+  zandronum-server = callPackage ../games/zandronum/server.nix { };
+  zandronum-bin = callPackage ../games/zandronum/bin.nix { };
+
   zdoom = callPackage ../games/zdoom { };
 
   zod = callPackage ../games/zod { };
@@ -14201,6 +14214,8 @@ let
 
   satallax = callPackage ../applications/science/logic/satallax {};
 
+  saw-tools = callPackage ../applications/science/logic/saw-tools {};
+
   spass = callPackage ../applications/science/logic/spass {};
 
   tptp = callPackage ../applications/science/logic/tptp {};
@@ -14742,6 +14757,10 @@ let
 
   utf8proc = callPackage ../development/libraries/utf8proc { };
 
+  vbam = callPackage ../misc/emulators/vbam {
+    inherit (xlibs) libpthreadstubs;
+  };
+
   vice = callPackage ../misc/emulators/vice {
     libX11 = xlibs.libX11;
     giflib = giflib_4_1;
@@ -14904,6 +14923,7 @@ let
   haskell-ng = haskell;                 # 2015-04-19
   haskellngPackages = haskellPackages;  # 2015-04-19
   inherit (haskell.compiler) jhc uhc;   # 2015-05-15
+  cheetahTemplate = pythonPackages.cheetah; # 2015-06-15
 
   opentsdb = callPackage ../tools/misc/opentsdb {};
 

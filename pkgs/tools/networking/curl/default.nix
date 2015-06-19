@@ -30,11 +30,11 @@ let
 in
 stdenv.mkDerivation rec {
   name = "curl${nameSuffix}-${version}";
-  version = "7.42.1";
+  version = "7.43.0";
 
   src = fetchurl {
     url = "http://curl.haxx.se/download/curl-${version}.tar.bz2";
-    sha256 = "11y8racpj6m4j9w7wa9sifmqvdgf22nk901sfkbxzhhy75rmk472";
+    sha256 = "1ycdhp47v8z6y64s7ihi5jl28dzc5w8wqn0wrhy4hc152ahm99ms";
   };
 
   # Use pkgconfig only when necessary

@@ -135,55 +135,40 @@ stdenv.mkDerivation rec {
   # When building a wide-character (Unicode) build, create backward
   # compatibility links from the the "normal" libraries to the
   # wide-character libraries (e.g. libncurses.so to libncursesw.so).
-  postInstall = if unicode then (''
-    # Create a non-abi versioned config
-    cfg=$(basename $out/bin/ncurses*-config)
-    ln -svf $cfg $out/bin/ncursesw-config
-    ln -svf $cfg $out/bin/ncurses-config
-
-    # Allow for end users who #include <ncurses?w/*.h>
-    ln -svf . $out/include/ncursesw
-    ln -svf . $out/include/ncurses
-
+  postInstall = ''
+    # Determine what suffixes our libraries have
     suffix="$(awk -F': ' 'f{print $3; f=0} /default library suffix/{f=1}' config.log)"
     libs="$(ls $out/lib/pkgconfig | tr ' ' '\n' | sed "s,\(.*\)$suffix\.pc,\1,g")"
     suffixes="$(echo "$suffix" | awk '{for (i=1; i < length($0); i++) {x=substr($0, i+1, length($0)-i); print x}}')"
-  '' + optionalString stdenv.isLinux ''
-    for lib in $libs; do
-      for newsuffix in $suffixes ""; do
-        if [ -e "$out/lib/lib''${lib}$suffix.so" ]; then
-          ln -svf lib''${lib}$suffix.so $out/lib/lib$lib$newsuffix.so
-          ln -svf lib''${lib}$suffix.so.${abiVersion} $out/lib/lib$lib$newsuffix.so.${abiVersion}
-        fi
-        if [ -e "$out/lib/lib''${lib}$suffix.a" ]; then
-          ln -svf lib''${lib}$suffix.a $out/lib/lib$lib$newsuffix.a
-        fi
-        ln -svf lib''${lib}$suffix.la $out/lib/lib$lib$newsuffix.la
+
+    # Get the path to the config util
+    cfg=$(basename $out/bin/ncurses*-config)
+
+    for newsuffix in $suffixes ""; do
+      # Create a non-abi versioned config util links
+      ln -svf $cfg $out/bin/ncurses$newsuffix-config
+
+      # Allow for end users who #include <ncurses?w/*.h>
+      ln -svf . $out/include/ncurses$newsuffix
+
+      for lib in $libs; do
+        for dylibtype in so dll dylib; do
+          if [ -e "$out/lib/lib''${lib}$suffix.$dylibtype" ]; then
+            ln -svf lib''${lib}$suffix.$dylibtype $out/lib/lib$lib$newsuffix.$dylibtype
+            ln -svf lib''${lib}$suffix.$dylibtype.${abiVersion} $out/lib/lib$lib$newsuffix.$dylibtype.${abiVersion}
+          fi
+        done
+        for statictype in a dll.a la; do
+          if [ -e "$out/lib/lib''${lib}$suffix.$statictype" ]; then
+            ln -svf lib''${lib}$suffix.$statictype $out/lib/lib$lib$newsuffix.$statictype
+          fi
+        done
         ln -svf ''${lib}$suffix.pc $out/lib/pkgconfig/$lib$newsuffix.pc
       done
     done
-
-    # Create curses compatability
-    ln -svf libncurses.so $out/lib/libcurses.so
-
+  '' + optionalString threaded ''
     # Fix .la files to include pthreads
-    find $out/lib -name \*.la -type f | xargs sed -i "s,\(dependency_libs='\),\1${optionalString threaded "-lpthread"},"
-  '' + stdenv.lib.optionalString stdenv.isCygwin ''
-    for lib in $libs; do
-      if test -e $out/lib/lib''${lib}$suffix.dll.a; then
-        ln -svf lib''${lib}$suffix.dll.a $out/lib/lib$lib.dll.a
-      fi
-    done
-  '') else ''
-    # Create a non-abi versioned config
-    cfg=$(basename $out/bin/ncurses*-config)
-    ln -svf $cfg $out/bin/ncurses-config
-
-    # Allow for end users who #include <ncurses/*.h>
-    ln -svf . $out/include/ncurses
-
-    # Create curses compatability
-    ln -svf libncurses.so $out/lib/libcurses.so
+    find $out/lib -name \*.la -type f | xargs sed -i "s,\(dependency_libs='\),\1 -lpthread,"
   '';
 
   meta = {

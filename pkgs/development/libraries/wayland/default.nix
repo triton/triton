@@ -18,11 +18,11 @@ assert expat != null;
 
 stdenv.mkDerivation rec {
   name = "wayland-${version}";
-  version = "1.8.0";
+  version = "1.8.1";
 
   src = fetchurl {
     url = "http://wayland.freedesktop.org/releases/${name}.tar.xz";
-    sha256 = "0h61bzm9mig9ajqw2sxdr16f69qs2l5bn3g9szdhvsh8f9mk9s1i";
+    sha256 = "1j3gfzn8i0xhk3j34mwb2srrscjxfyi279jhyq80mz943j6r6z7i";
   };
 
   configureFlags = [

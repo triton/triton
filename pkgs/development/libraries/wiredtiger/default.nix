@@ -18,13 +18,13 @@ in
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "wiredtiger-${version}";
-  version = "2.6.0";
+  version = "2.6.1";
 
   src = fetchFromGitHub {
     repo = "wiredtiger";
     owner = "wiredtiger";
     rev = version;
-    sha256 = "0i2r03bpq9xzp5pw7c67kjac5j7mssiawd9id8lqjdbr6c6772cv";
+    sha256 = "1nj319w3hvkq3za2dz9m0p1w683gycdb392v1jb910bhzpsq30pd";
   };
 
   nativeBuildInputs = [ automake autoconf libtool ];

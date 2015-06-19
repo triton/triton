@@ -195,5 +195,5 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ wkennington ];
   };
 
-  passthru.ldflags = if unicode then "-lncursesw" else "-lncurses";
+  passthru.ldflags = "-lncurses";
 }

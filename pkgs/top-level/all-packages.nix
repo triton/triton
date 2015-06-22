@@ -280,6 +280,8 @@ let
     runScript = args.runScript;
   };
 
+  buildMaven = callPackage ../build-support/build-maven.nix {};
+
   dotnetenv = import ../build-support/dotnetenv {
     inherit stdenv;
     dotnetfx = dotnetfx40;
@@ -586,6 +588,8 @@ let
 
   ascii = callPackage ../tools/text/ascii { };
 
+  asciinema = callPackage ../tools/misc/asciinema { };
+
   asymptote = callPackage ../tools/graphics/asymptote {
     texLive = texLiveAggregationFun {
       paths = [ texLive texLiveExtra texLiveCMSuper ];
@@ -779,6 +783,8 @@ let
 
   ccnet = callPackage ../tools/networking/ccnet { };
 
+  ckbcomp = callPackage ../tools/X11/ckbcomp { };
+
   cli53 = callPackage ../tools/admin/cli53 { };
 
   cloud-init = callPackage ../tools/virtualization/cloud-init { };
@@ -822,6 +828,8 @@ let
   diagrams-builder = callPackage ../tools/graphics/diagrams-builder {
     inherit (haskellngPackages) ghcWithPackages diagrams-builder;
   };
+
+  dialog = callPackage ../development/tools/misc/dialog { };
 
   direnv = callPackage ../tools/misc/direnv { };
 
@@ -1104,6 +1112,10 @@ let
 
   ibus-anthy = callPackage ../tools/inputmethods/ibus-anthy { };
 
+  ibus-table = callPackage ../tools/inputmethods/ibus-table { };
+
+  ibus-table-others = callPackage ../tools/inputmethods/ibus-table-others { };
+
   biosdevname = callPackage ../tools/networking/biosdevname { };
 
   checkbashism = callPackage ../development/tools/misc/checkbashisms { };
@@ -1127,11 +1139,9 @@ let
 
   cool-retro-term = callPackage ../applications/misc/cool-retro-term { };
 
-  coreutils = callPackage ../tools/misc/coreutils
-    {
-      # TODO: Add ACL support for cross-Linux.
-      aclSupport = crossSystem == null && stdenv.isLinux;
-    };
+  coreutils = callPackage ../tools/misc/coreutils {
+    aclSupport = stdenv.isLinux;
+  };
 
   cpio = callPackage ../tools/archivers/cpio { };
 
@@ -1949,7 +1959,10 @@ let
 
   ninka = callPackage ../development/tools/misc/ninka { };
 
-  nodejs-0_12 = callPackage ../development/web/nodejs { libuv = libuvVersions.v1_2_0; };
+  nodejs-0_12 = callPackage ../development/web/nodejs {
+    libuv = libuvVersions.v1_2_0;
+    libtool = darwin.cctools;
+  };
   nodejs-unstable = callPackage ../development/web/nodejs { libuv = libuvVersions.v1_2_0; unstableVersion = true; };
   nodejs-0_10 = callPackage ../development/web/nodejs/v0_10.nix { };
 
@@ -2043,7 +2056,9 @@ let
 
   lshw = callPackage ../tools/system/lshw { };
 
-  lxc = callPackage ../os-specific/linux/lxc { };
+  lxc = callPackage ../os-specific/linux/lxc {
+    wrapPython = python3Packages.wrapPython;
+  };
 
   lzip = callPackage ../tools/compression/lzip { };
 
@@ -2070,6 +2085,8 @@ let
   mailutils = callPackage ../tools/networking/mailutils {
     guile = guile_1_8;
   };
+
+  maim = callPackage ../tools/graphics/maim {};
 
   mairix = callPackage ../tools/text/mairix { };
 
@@ -3177,6 +3194,10 @@ let
 
   welkin = callPackage ../tools/graphics/welkin {};
 
+  wolfebin = callPackage ../tools/networking/wolfebin {
+    python = python2;
+  };
+
   xl2tpd = callPackage ../tools/networking/xl2tpd { };
 
   testdisk = callPackage ../tools/misc/testdisk { };
@@ -3595,36 +3616,22 @@ let
 
   gccApple = throw "gccApple is no longer supported";
 
-  gcc48_realCross = lib.addMetaAttrs { hydraPlatforms = []; }
-    (callPackage ../development/compilers/gcc/4.8 {
-      inherit noSysDirs;
-      binutilsCross = binutilsCross;
-      libcCross = libcCross;
-      profiledCompiler = false;
-      enableMultilib = false;
-      crossStageStatic = false;
-      cross = assert crossSystem != null; crossSystem;
-    });
-
-  gcc_realCross = gcc48_realCross;
-
   gccCrossStageStatic = let
-      libcCross1 =
-        if stdenv.cross.libc == "msvcrt" then windows.mingw_w64_headers
-        else if stdenv.cross.libc == "libSystem" then darwin.xcode
-        else null;
-    in
-      wrapGCCCross {
-      gcc = forceNativeDrv (lib.addMetaAttrs { hydraPlatforms = []; } (
-        gcc_realCross.override {
-          crossStageStatic = true;
-          langCC = false;
-          libcCross = libcCross1;
-          enableShared = false;
-        }));
+    libcCross1 =
+      if stdenv.cross.libc == "msvcrt" then windows.mingw_w64_headers
+      else if stdenv.cross.libc == "libSystem" then darwin.xcode
+      else null;
+    in wrapGCCCross {
+      gcc = forceNativeDrv (gcc.cc.override {
+        cross = crossSystem;
+        crossStageStatic = true;
+        langCC = false;
+        libcCross = libcCross1;
+        enableShared = false;
+      });
       libc = libcCross1;
       binutils = binutilsCross;
-      cross = assert crossSystem != null; crossSystem;
+      cross = crossSystem;
   };
 
   # Only needed for mingw builds
@@ -3636,21 +3643,17 @@ let
   };
 
   gccCrossStageFinal = wrapGCCCross {
-    gcc = forceNativeDrv (gcc_realCross.override {
-      libpthreadCross =
-        # FIXME: Don't explicitly refer to `i586-pc-gnu'.
-        if crossSystem != null && crossSystem.config == "i586-pc-gnu"
-        then gnu.libpthreadCross
-        else null;
+    gcc = forceNativeDrv (gcc.cc.override {
+      cross = crossSystem;
+      crossStageStatic = false;
 
       # XXX: We have troubles cross-compiling libstdc++ on MinGW (see
       # <http://hydra.nixos.org/build/4268232>), so don't even try.
-      langCC = (crossSystem == null
-                || crossSystem.config != "i686-pc-mingw32");
-     });
+      langCC = crossSystem.config != "i686-pc-mingw32";
+    });
     libc = libcCross;
     binutils = binutilsCross;
-    cross = assert crossSystem != null; crossSystem;
+    cross = crossSystem;
   };
 
   gcc44 = lowPrio (wrapCC (makeOverridable (import ../development/compilers/gcc/4.4) {
@@ -3677,10 +3680,6 @@ let
     # be passed.
     cross = null;
     libcCross = if crossSystem != null then libcCross else null;
-    libpthreadCross =
-      if crossSystem != null && crossSystem.config == "i586-pc-gnu"
-      then gnu.libpthreadCross
-      else null;
   }));
 
   gcc46 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.6 {
@@ -3698,10 +3697,6 @@ let
     # be passed.
     cross = null;
     libcCross = if crossSystem != null then libcCross else null;
-    libpthreadCross =
-      if crossSystem != null && crossSystem.config == "i586-pc-gnu"
-      then gnu.libpthreadCross
-      else null;
     texinfo = texinfo413;
   }));
 
@@ -3716,10 +3711,6 @@ let
     # be passed.
     cross = null;
     libcCross = if crossSystem != null then libcCross else null;
-    libpthreadCross =
-      if crossSystem != null && crossSystem.config == "i586-pc-gnu"
-      then gnu.libpthreadCross
-      else null;
   }));
 
   gcc49 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.9 {
@@ -3733,10 +3724,6 @@ let
     # be passed.
     cross = null;
     libcCross = if crossSystem != null then libcCross else null;
-    libpthreadCross =
-      if crossSystem != null && crossSystem.config == "i586-pc-gnu"
-      then gnu.libpthreadCross
-      else null;
 
     isl = isl_0_11;
 
@@ -3754,10 +3741,6 @@ let
     # be passed.
     cross = null;
     libcCross = if crossSystem != null then libcCross else null;
-    libpthreadCross =
-      if crossSystem != null && crossSystem.config == "i586-pc-gnu"
-      then gnu.libpthreadCross
-      else null;
 
     isl = isl_0_14;
   }));
@@ -4903,6 +4886,7 @@ let
   };
   python27 = callPackage ../development/interpreters/python/2.7 {
     self = python27;
+    inherit (darwin) CF configd;
   };
   python32 = callPackage ../development/interpreters/python/3.2 {
     self = python32;
@@ -5164,12 +5148,11 @@ let
     gold = false;
   });
 
-  binutilsCross =
-    if crossSystem != null && crossSystem.libc == "libSystem" then darwin.cctools_cross
-    else lowPrio (forceNativeDrv (import ../development/tools/misc/binutils {
-      inherit stdenv fetchurl zlib bison;
+  binutilsCross = lowPrio (forceNativeDrv (
+    if crossSystem.libc == "libSystem" then darwin.cctools_cross
+    else binutils.override {
       noSysDirs = true;
-      cross = assert crossSystem != null; crossSystem;
+      cross = crossSystem;
     }));
 
   bison2 = callPackage ../development/tools/parsing/bison/2.x.nix { };
@@ -6150,28 +6133,19 @@ let
     withGd = true;
   };
 
-  glibcCross = forceNativeDrv (makeOverridable (import ../development/libraries/glibc)
-    (let crossGNU = crossSystem != null && crossSystem.config == "i586-pc-gnu";
-     in {
-       inherit stdenv fetchurl;
-       gccCross = gccCrossStageStatic;
-       kernelHeaders = if crossGNU then gnu.hurdHeaders else linuxHeadersCross;
-       installLocales = config.glibc.locales or false;
-     }
-     // lib.optionalAttrs crossGNU {
-        inherit (gnu) machHeaders hurdHeaders libpthreadHeaders mig;
-        inherit fetchgit;
-      }));
-
+  glibcCross = forceNativeDrv (glibc.override {
+    gccCross = gccCrossStageStatic;
+    kernelHeaders = linuxHeadersCross;
+  });
 
   # We can choose:
-  libcCrossChooser = name : if name == "glibc" then glibcCross
+  libcCrossChooser = name: if name == "glibc" then glibcCross
     else if name == "uclibc" then uclibcCross
     else if name == "msvcrt" then windows.mingw_w64
     else if name == "libSystem" then darwin.xcode
     else throw "Unknown libc";
 
-  libcCross = assert crossSystem != null; libcCrossChooser crossSystem.libc;
+  libcCross = libcCrossChooser crossSystem.libc;
 
   # Only supported on Linux
   glibcLocales = if stdenv.isLinux then callPackage ../development/libraries/glibc/locales.nix { } else null;
@@ -6502,6 +6476,10 @@ let
     lua = lua5_1;
   };
 
+  k9copy = callPackage ../applications/video/k9copy {
+    kf5 = kf510;
+  };
+
   keybinder3 = callPackage ../development/libraries/keybinder3 {
     automake = automake111x;
   };
@@ -6756,6 +6734,8 @@ let
 
   libLAS = callPackage ../development/libraries/libLAS { };
 
+  liblaxjson = callPackage ../development/libraries/liblaxjson { };
+
   liblo = callPackage ../development/libraries/liblo { };
 
   liblrdf = librdf;
@@ -6916,8 +6896,11 @@ let
   # glibc provides libiconv so systems with glibc don't need to build libiconv
   # separately, but we also provide libiconvReal, which will always be a
   # standalone libiconv, just in case you want it
-  libiconv =
-    if stdenv.isGlibc then stdenv.cc.libc
+  libiconv = if crossSystem != null then
+    (if crossSystem.libc == "glibc" then libcCross
+      else if crossSystem.libc == "libSystem" then darwin.libiconv
+      else libiconvReal)
+    else if stdenv.isGlibc then stdenv.cc.libc
     else if stdenv.isDarwin then darwin.libiconv
     else libiconvReal;
 
@@ -7211,7 +7194,9 @@ let
 
   libusb = callPackage ../development/libraries/libusb {};
 
-  libusb1 = callPackage ../development/libraries/libusb1 { };
+  libusb1 = callPackage ../development/libraries/libusb1 {
+    inherit (darwin) libobjc IOKit;
+  };
 
   libusbmuxd = callPackage ../development/libraries/libusbmuxd { };
 
@@ -7223,6 +7208,7 @@ let
 
   libuvVersions = recurseIntoAttrs (callPackage ../development/libraries/libuv {
     automake = automake113x; # fails with 14
+    inherit (darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
   });
 
   libuv = libuvVersions.v1_6_1;
@@ -8073,7 +8059,10 @@ let
 
   tinyxml2 = callPackage ../development/libraries/tinyxml/2.6.2.nix { };
 
-  tk = callPackage ../development/libraries/tk { };
+  tk = tk-8_6;
+
+  tk-8_6 = callPackage ../development/libraries/tk/8.6.nix { };
+  tk-8_5 = callPackage ../development/libraries/tk/8.5.nix { tcl = tcl-8_5; };
 
   tnt = callPackage ../development/libraries/tnt { };
 
@@ -9340,6 +9329,8 @@ let
 
     cmdline_sdk   = cmdline.sdk;
     cmdline_tools = cmdline.tools;
+
+    apple_sdk = callPackage ../os-specific/darwin/apple-sdk {};
 
     libobjc = apple-source-releases.objc4;
   };
@@ -10636,6 +10627,8 @@ let
   bluefish = callPackage ../applications/editors/bluefish {
     gtk = gtk3;
   };
+
+  bluejeans = callPackage ../applications/networking/browsers/mozilla-plugins/bluejeans { };
 
   bristol = callPackage ../applications/audio/bristol { };
 
@@ -12430,6 +12423,8 @@ let
 
   slmenu = callPackage ../applications/misc/slmenu {};
 
+  slop = callPackage ../tools/misc/slop {};
+
   slrn = callPackage ../applications/networking/newsreaders/slrn { };
 
   sooperlooper = callPackage ../applications/audio/sooperlooper { };
@@ -12587,7 +12582,9 @@ let
   # linux only by now
   synergy = callPackage ../applications/misc/synergy { };
 
-  tabbed = callPackage ../applications/window-managers/tabbed { };
+  tabbed = callPackage ../applications/window-managers/tabbed {
+    enableXft = true;
+  };
 
   tagainijisho = callPackage ../applications/office/tagainijisho {};
 
@@ -12609,6 +12606,8 @@ let
   teamspeak_server = callPackage ../applications/networking/instant-messengers/teamspeak/server.nix { };
 
   taskjuggler = callPackage ../applications/misc/taskjuggler { };
+
+  tasknc = callPackage ../applications/misc/tasknc { };
 
   taskwarrior = callPackage ../applications/misc/taskwarrior { };
 
@@ -12969,6 +12968,7 @@ let
           ++ lib.optional (cfg.enableFriBIDPlugin or false) fribid
           ++ lib.optional (cfg.enableGnomeExtensions or false) gnome3.gnome_shell
           ++ lib.optional (cfg.enableTrezor or false) trezor-bridge
+          ++ lib.optional (cfg.enableBluejeans or false) bluejeans
          );
       libs = [ gstreamer gst_plugins_base ] ++ lib.optionals (cfg.enableQuakeLive or false)
              (with xlibs; [ stdenv.cc libX11 libXxf86dga libXxf86vm libXext libXt alsaLib zlib ])
@@ -13619,7 +13619,10 @@ let
 
   xboard =  callPackage ../games/xboard { };
 
-  xconq = callPackage ../games/xconq {};
+  xconq = callPackage ../games/xconq {
+    tcl = tcl-8_5;
+    tk = tk-8_5;
+  };
 
   # TODO: the corresponding nix file is missing
   # xracer = callPackage ../games/xracer { };
@@ -14089,6 +14092,8 @@ let
 
   mkCoqPackages_8_4 = self: let callPackage = newScope self; in {
 
+    inherit callPackage;
+
     bedrock = callPackage ../development/coq-modules/bedrock {};
 
     contribs =
@@ -14131,19 +14136,18 @@ let
 
   mkCoqPackages_8_5 = self: let callPackage = newScope self; in rec {
 
-    mathcomp = callPackage ../development/coq-modules/mathcomp/1.5.nix {
-      coq = coq_8_5;
-      ssreflect = ssreflect;
-    };
+    inherit callPackage;
 
-    ssreflect = callPackage ../development/coq-modules/ssreflect/1.5.nix {
-      coq = coq_8_5;
-    };
+    coq = coq_8_5;
+
+    mathcomp = callPackage ../development/coq-modules/mathcomp { };
+
+    ssreflect = callPackage ../development/coq-modules/ssreflect { };
 
   };
 
   coqPackages = recurseIntoAttrs (mkCoqPackages_8_4 coqPackages);
-  coqPackages_8_5 = recurseIntoAttrs (mkCoqPackages_8_5 coqPackages);
+  coqPackages_8_5 = recurseIntoAttrs (mkCoqPackages_8_5 coqPackages_8_5);
 
   cvc3 = callPackage ../applications/science/logic/cvc3 {};
   cvc4 = callPackage ../applications/science/logic/cvc4 {};
@@ -14479,7 +14483,9 @@ let
   gnuk-unstable = callPackage ../misc/gnuk/unstable.nix { };
   gnuk-git = callPackage ../misc/gnuk/git.nix { };
 
-  guix = callPackage ../tools/package-management/guix { };
+  guix = callPackage ../tools/package-management/guix {
+    libgcrypt = libgcrypt_1_5;
+  };
 
   gxemul = callPackage ../misc/emulators/gxemul { };
 
@@ -14581,6 +14587,8 @@ let
   };
 
   robomongo = callPackage ../applications/misc/robomongo { };
+
+  rucksack = callPackage ../development/tools/rucksack { };
 
   opkg = callPackage ../tools/package-management/opkg { };
 

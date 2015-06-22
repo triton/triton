@@ -28,6 +28,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ optGpm ];
 
   configureFlags = [
+    (mkOther              "includedir"     "\${out}/include")
     (mkWith   true        "abi-version"    abiVersion)
     (mkWith   true        "cxx"            null)
     (mkWith   true        "cxx-binding"    null)
@@ -111,12 +112,6 @@ stdenv.mkDerivation rec {
     (mkWith   false       "trace"          null)
   ];
 
-  # PKG_CONFIG_LIBDIR is where the *.pc files will be installed. If this
-  # directory doesn't exist, the configure script will disable installation of
-  # *.pc files. The configure script usually (on LSB distros) pick $(path of
-  # pkg-config)/../lib/pkgconfig. On NixOS that path doesn't exist and is not
-  # the place we want to put *.pc files from other packages anyway. So we must
-  # tell it explicitly where to install with PKG_CONFIG_LIBDIR.
   preConfigure = ''
     export PKG_CONFIG_LIBDIR="$out/lib/pkgconfig"
     mkdir -p "$PKG_CONFIG_LIBDIR"
@@ -195,5 +190,8 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ wkennington ];
   };
 
-  passthru.ldflags = "-lncurses";
+  passthru = {
+    ldflags = "-lncurses";
+    inherit unicode abiVersion;
+  };
 }

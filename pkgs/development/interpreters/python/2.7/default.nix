@@ -8,6 +8,8 @@
 , tcl ? null, tk ? null, x11 ? null, libX11 ? null, x11Support ? !stdenv.isCygwin
 , zlib ? null, zlibSupport ? true
 , expat, libffi
+
+, CF, configd
 }:
 
 assert zlibSupport -> zlib != null;
@@ -92,7 +94,12 @@ let
         [ db gdbm ncurses sqlite readline
         ] ++ optionals x11Support [ tcl tk x11 libX11 ]
     )
-    ++ optional zlibSupport zlib;
+    ++ optional zlibSupport zlib
+
+    # depend on CF and configd only if purity is an issue
+    # the impure bootstrap compiler can't build CoreFoundation currently. it requires
+    # <mach-o/dyld.h> which is in our pure bootstrapTools, but not in the system headers.
+    ++ optionals (stdenv.isDarwin && !stdenv.cc.nativeLibc) [ CF configd ];
 
   # Build the basic Python interpreter without modules that have
   # external dependencies.

@@ -1,6 +1,6 @@
 { fetchurl, stdenv, zlib }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "fastjar-0.98";
 
   src = fetchurl {

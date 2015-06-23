@@ -28,7 +28,6 @@ stdenv.mkDerivation rec {
   buildInputs = [ optGpm ];
 
   configureFlags = [
-    (mkOther              "includedir"     "\${out}/include")
     (mkWith   true        "abi-version"    abiVersion)
     (mkWith   true        "cxx"            null)
     (mkWith   true        "cxx-binding"    null)
@@ -113,9 +112,10 @@ stdenv.mkDerivation rec {
   ];
 
   preConfigure = ''
+    configureFlagsArray+=("--includedir=$out/include")
     export PKG_CONFIG_LIBDIR="$out/lib/pkgconfig"
     mkdir -p "$PKG_CONFIG_LIBDIR"
-  '' + stdenv.lib.optionalString stdenv.isCygwin ''
+  '' + optionalString stdenv.isCygwin ''
     sed -i -e 's,LIB_SUFFIX="t,LIB_SUFFIX=",' configure
   '';
 

@@ -6,7 +6,7 @@
 # Extra Options
 , abiVersion ? "5"
 , unicode ? true
-, threaded ? true
+, threaded ? false # This breaks a lot of libraries because it enables the opaque includes
 }:
 
 with stdenv.lib;

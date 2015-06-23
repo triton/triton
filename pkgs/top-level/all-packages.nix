@@ -789,6 +789,8 @@ let
 
   cloud-init = callPackage ../tools/virtualization/cloud-init { };
 
+  clib = callPackage ../tools/package-management/clib { };
+
   consul = goPackages.consul;
 
   consul-ui = callPackage ../servers/consul/ui.nix { };
@@ -1854,6 +1856,8 @@ let
 
   ipmiutil = callPackage ../tools/system/ipmiutil {};
 
+  ipcalc = callPackage ../tools/networking/ipcalc {};
+
   ipv6calc = callPackage ../tools/networking/ipv6calc {};
 
   ipxe = callPackage ../tools/misc/ipxe { };
@@ -2878,6 +2882,8 @@ let
   skippy-xd = callPackage ../tools/X11/skippy-xd {};
 
   skydns = callPackage ../servers/dns/skydns { };
+
+  sipcalc = callPackage ../tools/networking/sipcalc { };
 
   sleuthkit = callPackage ../tools/system/sleuthkit {};
 
@@ -5041,7 +5047,7 @@ let
 
   jdtsdk = callPackage ../development/eclipse/jdt-sdk { };
 
-  jruby165 = callPackage ../development/interpreters/jruby { };
+  jruby = callPackage ../development/interpreters/jruby { };
 
   jython = callPackage ../development/interpreters/jython {};
 
@@ -5096,7 +5102,7 @@ let
 
   astyle = callPackage ../development/tools/misc/astyle { };
 
-  atom-shell = callPackage ../development/tools/atom-shell {
+  electron = callPackage ../development/tools/electron {
     gconf = pkgs.gnome.GConf;
   };
 
@@ -12308,6 +12314,10 @@ let
     inherit (pythonPackages) mutagen;
     withGstPlugins = true;
     gst_plugins_bad = null;
+  };
+
+  qutebrowser = callPackage ../applications/networking/browsers/qutebrowser {
+    inherit (python34Packages) buildPythonPackage python pyqt5 jinja2 pygments pyyaml pypeg2;
   };
 
   rakarrack = callPackage ../applications/audio/rakarrack {

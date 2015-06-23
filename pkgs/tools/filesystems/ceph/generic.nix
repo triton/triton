@@ -147,12 +147,11 @@ stdenv.mkDerivation {
   '';
 
   configureFlags = [
-    "--exec_prefix=\${out}"
-    "--sysconfdir=/etc"
-    "--localstatedir=/var"
-    "--libdir=\${lib}/lib"
-    "--includedir=\${lib}/include"
-
+    (mkOther                               "exec_prefix"        "\${out}")
+    (mkOther                               "sysconfdir"         "/etc")
+    (mkOther                               "localstatedir"      "/var")
+    (mkOther                               "libdir"             "\${lib}/lib")
+    (mkOther                               "includedir"         "\${lib}/include")
     (mkWith   true                         "rbd"                 null)
     (mkWith   true                         "cephfs"              null)
     (mkWith   hasRadosgw                   "radosgw"             null)

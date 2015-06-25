@@ -27,7 +27,6 @@ self: super: {
 
   # Doesn't compile with lua 5.2.
   hslua = super.hslua.override { lua = pkgs.lua5_1; };
-  hslua_0_4_0 = super.hslua_0_4_0.override { lua = pkgs.lua5_1; };
 
   # Use the default version of mysql to build this package (which is actually mariadb).
   mysql = super.mysql.override { mysql = pkgs.mysql.lib; };
@@ -810,7 +809,8 @@ self: super: {
   HGamer3D-Data = markBroken super.HGamer3D-Data;
 
   # https://github.com/ndmitchell/shake/issues/206
-  shake = overrideCabal super.shake (drv: { doCheck = !pkgs.stdenv.isDarwin; });
+  # https://github.com/ndmitchell/shake/issues/267
+  shake = overrideCabal super.shake (drv: { doCheck = !pkgs.stdenv.isDarwin && false; });
 
   # https://github.com/nushio3/doctest-prop/issues/1
   doctest-prop = dontCheck super.doctest-prop;
@@ -824,6 +824,7 @@ self: super: {
   hipe = dontDistribute super.hipe;
   singleton-nats = dontDistribute super.singleton-nats;
   singletons = markBroken super.singletons;
+  units-attoparsec = dontDistribute super.units-attoparsec;
 
   # https://github.com/anton-k/temporal-music-notation/issues/1
   temporal-music-notation = markBroken super.temporal-music-notation;

@@ -4895,11 +4895,11 @@ let
 
   dulwich = buildPythonPackage rec {
     name = "dulwich-${version}";
-    version = "0.9.8";
+    version = "0.10.1a";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/d/dulwich/${name}.tar.gz";
-      sha256 = "0iwxp9n2c09wahq8bqnc5z431kq5bs75vbwl93nzwm2grj00l6lb";
+      sha256 = "02rknqarwy7p50693cqswbibqwgxzrfzdq4yhwqxbdmhbsmh0rk6";
     };
 
     # Only test dependencies
@@ -4916,14 +4916,14 @@ let
 
   hg-git = buildPythonPackage rec {
     name = "hg-git-${version}";
-    version = "0.7.0";
+    version = "0.8.1";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/h/hg-git/${name}.tar.gz";
-      sha256 = "1ab1phaqa8jrba6dqsf3b0lgx912j41b8dlkna9c2wxip63wvfcx";
+      sha256 = "07a5p5wfs60hmzv3h64fysvm91ablhiaf5ccpv3f8q61insdzvff";
     };
 
-    propagatedBuildInputs = with self; [ pkgs.mercurial dulwich ];
+    propagatedBuildInputs = with self; [ dulwich ];
 
     meta = {
       description = "Push and pull from a Git server using Mercurial";
@@ -8862,12 +8862,12 @@ let
 
 
   powerline = buildPythonPackage rec {
-    rev  = "8164f42fb924f38dc5b9dd6d32063e8c3d41e504";
-    name = "powerline-2.1";
+    rev  = "2.1.4";
+    name = "powerline-${rev}";
     src = pkgs.fetchurl {
-      url    = "https://github.com/powerline/powerline/tarball/${rev}";
-      name   = "${name}.tar.bz";
-      sha256 = "0xrasj1lh9ypz1q6q4k997rfym9r16bclfbpzjqj8qfkp4i62lz6";
+      url    = "https://github.com/powerline/powerline/archive/${rev}.tar.gz";
+      name   = "${name}.tar.gz";
+      sha256 = "0gnh5yyackmqcphiympan48dm5lc834yzspss1lp4g1wq3vpyraf";
     };
 
     propagatedBuildInputs = with self; [ pkgs.git pkgs.mercurial pkgs.bazaar self.psutil self.pygit2 ];
@@ -16056,6 +16056,41 @@ let
       description = "PEG parser interpreter in Python";
       homepage = http://fdik.org/pyPEG;
       license = licenses.gpl2;
+    };
+  };
+
+  jenkins-job-builder = buildPythonPackage rec {
+    name = "jenkins-job-builder-1.2.0";
+    disabled = ! (isPy26 || isPy27);
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/j/jenkins-job-builder/${name}.tar.gz";
+      md5 = "79e44ef0d3fffc19f415d8c0caac6b7b";
+    };
+
+    # pbr required for jenkins-job-builder is <1.0.0 while many of the test
+    # dependencies require pbr>=1.1
+    doCheck = false;
+
+    buildInputs = with self; [
+      pip
+    ];
+
+    propagatedBuildInputs = with self; [
+      pbr
+      python-jenkins
+      pyyaml
+      six
+    ] ++ optionals isPy26 [
+      argparse
+      ordereddict
+    ];
+
+    meta = {
+      description = "Jenkins Job Builder is a system for configuring Jenkins jobs using simple YAML files stored in Git.";
+      homepage = "http://docs.openstack.org/infra/system-config/jjb.html";
+      license = licenses.asl20;
+      maintainers = with maintainers; [ garbas ];
     };
   };
 

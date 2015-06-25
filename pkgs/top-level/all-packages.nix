@@ -3041,7 +3041,7 @@ let
 
   thc-hydra = callPackage ../tools/security/thc-hydra { };
 
-  tiled = callPackage ../applications/editors/tiled { qt = qt4; };
+  tiled = callPackage ../applications/editors/tiled { };
 
   tinc = callPackage ../tools/networking/tinc { };
 
@@ -10254,6 +10254,8 @@ let
 
   comic-relief = callPackage ../data/fonts/comic-relief {};
 
+  coreclr = callPackage ../development/compilers/coreclr { };
+
   corefonts = callPackage ../data/fonts/corefonts { };
 
   wrapFonts = paths : ((import ../data/fonts/fontWrap) {
@@ -11837,7 +11839,7 @@ let
   mendeley = callPackage ../applications/office/mendeley { };
 
   mercurial = callPackage ../applications/version-management/mercurial {
-    inherit (pythonPackages) curses docutils;
+    inherit (pythonPackages) curses docutils hg-git dulwich;
     guiSupport = false; # use mercurialFull to get hgk GUI
   };
 
@@ -14787,6 +14789,8 @@ let
   thinkfan = callPackage ../tools/system/thinkfan { };
 
   tup = callPackage ../development/tools/build-managers/tup { };
+
+  tvheadend = callPackage ../servers/tvheadend { };
 
   utf8proc = callPackage ../development/libraries/utf8proc { };
 

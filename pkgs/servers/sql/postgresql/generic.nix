@@ -92,6 +92,10 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
+  # We need to build world to include contrib (like pg_upgrade) and docs
+  buildFlags = [ "world" ];
+  installFlags = [ "install-world" ];
+
   postInstall = ''
     # Remove the installation of pgxs library code
     # This adds dependencies on the dev toolchain

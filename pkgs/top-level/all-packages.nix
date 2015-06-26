@@ -1167,12 +1167,12 @@ let
 
   cudatoolkit = cudatoolkit5;
 
-  curl-light = curl.override { suffix = "light"; };
-  curl = curl-full.override {
+  curl = curlFull.override {
     fetchurl = fetchurlBoot;
     suffix = "";
   };
-  curl-full = callPackage ../tools/networking/curl { suffix = "full"; };
+
+  curlFull = callPackage ../tools/networking/curl { suffix = "full"; };
 
   curl3 = callPackage ../tools/networking/curl/7.15.nix rec {
     zlibSupport = true;

@@ -11,18 +11,17 @@
 with stdenv;
 with stdenv.lib;
 let
-  isLight = suffix == "light";
   isFull = suffix == "full";
   nameSuffix = optionalString (suffix != "") "-${suffix}";
 
   # Normal Depedencies
-  optZlib = if isLight then null else shouldUsePkg zlib;
-  optOpenssl = if isLight then null else shouldUsePkg openssl;
-  optLibssh2 = if isLight then null else shouldUsePkg libssh2;
-  optLibnghttp2 = if isLight then null else shouldUsePkg libnghttp2;
-  optC-ares = if isLight then null else shouldUsePkg c-ares;
+  optOpenssl = shouldUsePkg openssl;
+  optLibnghttp2 = shouldUsePkg libnghttp2;
+  optZlib = shouldUsePkg zlib;
+  optC-ares = shouldUsePkg c-ares;
 
   # Full dependencies
+  optLibssh2 = if !isFull then null else shouldUsePkg libssh2;
   optGss = if !isFull then null else shouldUsePkg gss;
   optRtmpdump = if !isFull then null else shouldUsePkg rtmpdump;
   optOpenldap = if !isFull then null else shouldUsePkg openldap;
@@ -38,7 +37,7 @@ stdenv.mkDerivation rec {
   };
 
   # Use pkgconfig only when necessary
-  nativeBuildInputs = optional (!isLight) pkgconfig;
+  nativeBuildInputs = [ pkgconfig ];
   propagatedBuildInputs = [
     optZlib optOpenssl optLibssh2 optLibnghttp2 optC-ares
     optGss optRtmpdump optOpenldap optLibidn
@@ -65,7 +64,7 @@ stdenv.mkDerivation rec {
     (mkEnable true                    "smb"               null)
     (mkEnable true                    "smtp"              null)
     (mkEnable true                    "gopher"            null)
-    (mkEnable (!isLight)              "manual"            null)
+    (mkEnable true                    "manual"            null)
     (mkEnable true                    "libcurl_option"    null)
     (mkEnable false                   "libgcc"            null) # TODO: Enable on gcc
     (mkWith   (optZlib != null)       "zlib"              null)

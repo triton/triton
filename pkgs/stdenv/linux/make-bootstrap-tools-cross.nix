@@ -92,7 +92,7 @@ rec {
     aclSupport = false;
   })).crossDrv;
   
-  curl-light = pkgs.curl-light.crossDrv;
+  curl = pkgs.curl.crossDrv;
   
   busyboxMinimal = (pkgs.busybox.override {
     # TBD: uClibc is broken.
@@ -166,8 +166,8 @@ rec {
         cp -d ${gnumake}/bin/* $out/bin
         cp -d ${patch}/bin/* $out/bin
         cp ${patchelf}/bin/* $out/bin
-        cp ${curl-light}/bin/curl $out/bin
-        cp -d ${curl-light}/lib/libcurl* $out/lib
+        cp ${curl}/bin/curl $out/bin
+        cp -d ${curl}/lib/libcurl* $out/lib
 
         cp -d ${gnugrep.pcre.crossDrv}/lib/libpcre*.so* $out/lib # needed by grep
         

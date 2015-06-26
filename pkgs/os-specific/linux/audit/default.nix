@@ -2,7 +2,7 @@
 , libcap_ng
 
 # Optional Dependencies
-, openldap ? null, python ? null, go ? null, krb5 ? null, tcp_wrappers ? null
+, openldap ? null, python ? null, go ? null, libkrb5 ? null, tcp_wrappers ? null
 
 # Extra arguments
 , prefix ? ""
@@ -15,7 +15,7 @@ let
   optOpenldap = if libOnly then null else shouldUsePkg openldap;
   optPython = shouldUsePkg python;
   optGo = shouldUsePkg go;
-  optKrb5 = if libOnly then null else shouldUsePkg krb5;
+  optLibkrb5 = if libOnly then null else shouldUsePkg libkrb5;
   optTcp_wrappers = if libOnly then null else shouldUsePkg tcp_wrappers;
 in
 with stdenv.lib;
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     sha256 = "08j134s4509rxfi3hwsp8yyxzlqqxl8kqgv2rfv6p3qng5pjd80j";
   };
 
-  buildInputs = [ libcap_ng optOpenldap optPython optGo optKrb5 optTcp_wrappers ];
+  buildInputs = [ libcap_ng optOpenldap optPython optGo optLibkrb5 optTcp_wrappers ];
 
   # For libs only build and install the lib portion
   preBuild = optionalString libOnly ''
@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
     (mkWith   (optPython != null)       "python"      null)
     (mkWith   (optGo != null)           "golang"      null)
     (mkEnable (!libOnly)                "listener"    null)
-    (mkEnable (optKrb5 != null)         "gssapi-krb5" null)
+    (mkEnable (optLibkrb5 != null)      "gssapi-krb5" null)
     (mkEnable false                     "systemd"     null)
     (mkWith   false                     "debug"       null)
     (mkWith   false                     "warn"        null)

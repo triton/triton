@@ -6362,7 +6362,7 @@ let
   # Modularize heimdal into a library first
   kerberos = libkrb5;
 
-  heimdal = callPackage ../development/libraries/kerberos/heimdal.nix { };
+  heimdalFull = callPackage ../development/libraries/kerberos/heimdal.nix { };
   libheimdal = heimdal.override {
     prefix = "lib";
   };
@@ -6496,7 +6496,7 @@ let
 
   kinetic-cpp-client = callPackage ../development/libraries/kinetic-cpp-client { };
 
-  krb5 = callPackage ../development/libraries/kerberos/krb5.nix {
+  krb5Full = callPackage ../development/libraries/kerberos/krb5.nix {
     inherit (darwin) bootstrap_cmds;
   };
   libkrb5 = krb5.override {

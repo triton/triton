@@ -1922,6 +1922,8 @@ let
 
   kdbplus = callPackage_i686 ../applications/misc/kdbplus { };
 
+  keepalived = callPackage ../tools/networking/keepalived { };
+
   kexectools = callPackage ../os-specific/linux/kexectools { };
 
   keybase = callPackage ../applications/misc/keybase { };

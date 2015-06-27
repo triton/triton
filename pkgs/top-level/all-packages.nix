@@ -9247,7 +9247,7 @@ let
 
   atop = callPackage ../os-specific/linux/atop { };
 
-  audit = callPackage ../os-specific/linux/audit {
+  auditFull = callPackage ../os-specific/linux/audit {
     python = null;
     go = null;
   };

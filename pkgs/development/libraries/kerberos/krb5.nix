@@ -65,11 +65,11 @@ stdenv.mkDerivation rec {
     sha256 = "1qbdzyrws7d0q4filsibh28z54pd5l987jr0ygv43iq9085w6a75";
   };
 
-  nativeBuildInputs = [ pkgconfig perl ];
-  buildInputs = [ yacc optOpenssl optLibverto optOpenldap ]
-    ++ cryptoInputs ++ tlsInputs ++ lineParserInputs
+  nativeBuildInputs = [ pkgconfig perl yacc ]
     # Provides the mig command used by the build scripts
     ++ stdenv.lib.optional stdenv.isDarwin bootstrap_cmds;
+  buildInputs = [ optOpenssl optLibverto optOpenldap ]
+    ++ cryptoInputs ++ tlsInputs ++ lineParserInputs;
 
   unpackPhase = ''
     tar -xf $src

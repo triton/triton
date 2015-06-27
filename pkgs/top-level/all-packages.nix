@@ -9269,7 +9269,7 @@ let
     python = null;
     go = null;
   };
-  libaudit = audit.override {
+  libaudit = auditFull.override {
     prefix = "lib";
   };
 

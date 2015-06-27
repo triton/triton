@@ -1,5 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, perl
-, yacc, bootstrap_cmds
+{ stdenv, fetchurl, pkgconfig, perl, yacc, bootstrap_cmds
 
 # Optional Dependencies
 , libedit ? null, readline ? null, ncurses ? null, libverto ? null
@@ -9,12 +8,12 @@
 , openssl ? null, nss ? null, nspr ? null
 
 # Extra Arguments
-, prefix ? ""
+, type ? ""
 }:
 
 with stdenv;
 let
-  libOnly = prefix == "lib";
+  libOnly = type == "lib";
 
   optOpenssl = shouldUsePkg openssl;
   optNss = shouldUsePkg nss;
@@ -57,7 +56,7 @@ let
 in
 with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "${prefix}krb5-${version}";
+  name = "${type}krb5-${version}";
   version = "1.13.2";
 
   src = fetchurl {
@@ -105,22 +104,20 @@ stdenv.mkDerivation rec {
 
   installPhase = optionalString libOnly ''
     mkdir -p $out/{bin,include/{gssapi,gssrpc,kadm5,krb5},lib/pkgconfig,sbin,share/{et,man/man1}}
-
     (cd util; make -j $NIX_BUILD_CORES install)
     (cd include; make -j $NIX_BUILD_CORES install)
     (cd lib; make -j $NIX_BUILD_CORES install)
     (cd build-tools; make -j $NIX_BUILD_CORES install)
-
     rm -rf $out/{sbin,share}
     find $out/bin -type f | grep -v 'krb5-config' | xargs rm
   '';
 
   enableParallelBuilding = true;
 
-  meta = with stdenv.lib; {
-    homepage = http://web.mit.edu/kerberos/;
+  meta = {
     description = "MIT Kerberos 5";
-    license = "MPL";
+    homepage = http://web.mit.edu/kerberos/;
+    license = licenses.mit;
     platforms = platforms.unix;
     maintainers = with maintainers; [ wkennington ];
   };

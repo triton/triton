@@ -6,12 +6,12 @@
 , readline ? null, libedit ? null, pam ? null
 
 # Extra Args
-, prefix ? ""
+, type ? ""
 }:
 
 with stdenv;
 let
-  libOnly = prefix == "lib";
+  libOnly = type == "lib";
 
   optTexinfo = if libOnly then null else shouldUsePkg texinfo;
   optOpenldap = if libOnly then null else shouldUsePkg openldap;
@@ -35,14 +35,13 @@ let
 in
 with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "${prefix}heimdal-${version}";
-  version = "2015-05-26";
+  name = "${type}heimdal-2015-06-17";
 
   src = fetchFromGitHub {
     owner = "heimdal";
     repo = "heimdal";
-    rev = "50e2a5ce95f42d4963d359c27a832e61991a12b1";
-    sha256 = "10104vm192r1i7ccs1fan16h9n31saaswsmywmrb0cxc7jv3rj8x";
+    rev = "be63a2914adcbea7d42d56e674ee6edb4883ebaf";
+    sha256 = "147gv49gmy94y6f0x1vx523qni0frgcp3r7fill0r06rkfgfzc0j";
   };
 
   nativeBuildInputs = [ autoreconfHook pkgconfig python perl yacc flex optTexinfo ]

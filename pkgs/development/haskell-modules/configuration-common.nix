@@ -837,9 +837,6 @@ self: super: {
   # https://github.com/bos/aeson/issues/253
   aeson = dontCheck super.aeson;
 
-  # GNUTLS 3.4 causes linker errors: http://hydra.cryp.to/build/839563/nixlog/2/raw
-  gnutls = super.gnutls.override { gnutls = pkgs.gnutls33; };
-
   # Won't compile with recent versions of QuickCheck.
   testpack = markBroken super.testpack;
   MissingH = dontCheck super.MissingH;
@@ -899,5 +896,9 @@ self: super: {
   # https://github.com/singpolyma/wai-session/issues/8
   wai-session = markBroken super.wai-session;
   serversession-frontend-wai = dontDistribute super.serversession-frontend-wai;
+
+  # https://github.com/commercialhaskell/stack/issues/408
+  # https://github.com/commercialhaskell/stack/issues/409
+  stack = overrideCabal super.stack (drv: { preCheck = "export HOME=$TMPDIR"; doCheck = false; });
 
 }

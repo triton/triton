@@ -572,6 +572,20 @@ let
     };
   };
 
+  args = buildPythonPackage rec {
+    name = "args-0.1.0";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/a/args/${name}.tar.gz";
+      md5 = "66faf79ba2511def7b8b81d542482046";
+    };
+
+    meta = {
+      description = "Command Arguments for Humans";
+      homepage = "https://github.com/kennethreitz/args";
+    };
+  };
+
   area53 = buildPythonPackage (rec {
     name = "Area53-0.94";
 
@@ -3430,42 +3444,6 @@ let
     };
   };
 
-  jsonpatch = buildPythonPackage rec {
-    name = "jsonpatch-1.8";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/j/jsonpatch/jsonpatch-1.8.tar.gz";
-      sha256 = "0xhp6prvk219vnzixbj231wymd458nqbnmsf5fn4252092prvig5";
-    };
-
-    propagatedBuildInputs = with self; [ six jsonpointer ];
-
-    meta = {
-      description = "Apply JSON-Patches (RFC 6902)";
-      homepage = "https://github.com/stefankoegl/python-json-patch";
-      license = licenses.bsd3;
-      platforms = platforms.all;
-    };
-  };
-
-  jsonpointer = buildPythonPackage rec {
-    name = "jsonpointer-1.4";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/j/jsonpointer/jsonpointer-1.4.tar.gz";
-      sha256 = "1d0555smqwdbi0nm48hyqzywb9m2jlz5izgv56ll3zk7viz3b7fb";
-    };
-
-    #propagatedBuildInputs = with self; [ six jsonpointer ];
-
-    meta = {
-      description = "Identify specific nodes in a JSON document (RFC 6901)";
-      homepage = "https://github.com/stefankoegl/python-json-pointer";
-      license = licenses.bsd3;
-      platforms = platforms.all;
-    };
-  };
-
   jdcal = buildPythonPackage rec {
     version = "1.0";
     name = "jdcal-${version}";
@@ -3483,6 +3461,60 @@ let
       license = licenses.bsd2;
       maintainers = with maintainers; [ lihop ];
       platforms = platforms.all;
+    };
+  };
+
+  internetarchive = let ver = "0.8.3"; in buildPythonPackage rec {
+    name = "internetarchive-${ver}";
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/jjjake/internetarchive/archive/v${ver}.tar.gz";
+      sha256 = "0j3l13zvbx50j66l6pnf8y8y8m6gk1sc3yssvfd2scvmv4gnmm8n";
+    };
+
+    # It is hardcoded to specific versions, I don't know why.
+    preConfigure = ''
+        sed 's/==/>=/' -i setup.py
+    '';
+
+    propagatedBuildInputs = with self; [ six clint pyyaml docopt pytest
+      requests2 jsonpatch args ];
+
+    meta = with stdenv.lib; {
+      description = "A python wrapper for the various Internet Archive APIs";
+      homepage = "https://github.com/jjjake/internetarchive";
+    };
+  };
+
+  jsonpatch = buildPythonPackage rec {
+    name = "jsonpatch-1.11";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/j/jsonpatch/${name}.tar.gz";
+      md5 = "9f2d0aa31f99cc97089a203c5bed3924";
+    };
+
+    propagatedBuildInputs = with self; [ jsonpointer ];
+
+    meta = {
+      description = "Library to apply JSON Patches according to RFC 6902";
+      homepage = "https://github.com/stefankoegl/python-json-patch";
+      license = stdenv.lib.licenses.bsd2; # "Modified BSD licence, says pypi"
+    };
+  };
+
+  jsonpointer = buildPythonPackage rec {
+    name = "jsonpointer-1.9";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/j/jsonpointer/${name}.tar.gz";
+      md5 = "c4d3f28e72ba77062538d1c0864c40a9";
+    };
+
+    meta = {
+      description = "Resolve JSON Pointers in Python";
+      homepage = "https://github.com/stefankoegl/python-json-pointer";
+      license = stdenv.lib.licenses.bsd2; # "Modified BSD licence, says pypi"
     };
   };
 
@@ -5711,6 +5743,12 @@ let
       sha256 = "0cds7yvwdlqmd590i59vzxaviwxk4js6dkhnmdxb3p1xac7wmq9s";
     };
 
+    patchPhase = ''
+      pushd libev
+      patch -p1 < ${../development/libraries/libev/noreturn.patch}
+      popd
+    '';
+
     buildInputs = with self; [ pkgs.libev ];
     propagatedBuildInputs = optionals (!isPyPy) [ self.greenlet ];
 
@@ -6461,6 +6499,34 @@ let
       homepage = http://github.com/sunlightlabs/jellyfish;
       description = "Approximate and phonetic matching of strings";
       maintainers = with maintainers; [ koral ];
+    };
+  };
+
+  j2cli = buildPythonPackage rec {
+    name = "j2cli-${version}";
+    version = "0.3.1-0";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/j/j2cli/${name}.tar.gz";
+      sha256 = "0y3w1x9935qzx8w6m2r6g4ghyjmxn33wryiif6xb56q7cj9w1433";
+    };
+
+    disabled = ! (isPy26 || isPy27);
+
+    buildInputs = [ self.nose ];
+
+    propagatedBuildInputs = with self; [ jinja2 pyyaml ];
+
+    meta = {
+      homepage = https://github.com/kolypto/j2cli;
+      description = "Jinja2 Command-Line Tool";
+      license = licenses.bsd3;
+      longDescription = ''
+        J2Cli is a command-line tool for templating in shell-scripts,
+        leveraging the Jinja2 library.
+      '';
+      platforms = platforms.all;
+      maintainers = with maintainers; [ rushmorem ];
     };
   };
 
@@ -11862,11 +11928,11 @@ let
   };
 
   clint = buildPythonPackage rec {
-    name = "clint-0.3.1";
+    name = "clint-0.4.1";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/c/clint/${name}.tar.gz";
-      md5 = "7dcd43fb08bfb84c7d63e9356ada7b73";
+      md5 = "d0a0952bfcc5f4c5e03c36854665b298";
     };
 
     checkPhase = ''

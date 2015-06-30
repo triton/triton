@@ -25,6 +25,10 @@ let
   optLibxml2 = shouldUsePkg libxml2;
   optLibxslt = shouldUsePkg libxslt;
   optZlib = shouldUsePkg zlib;
+
+  uuid = if optLibossp_uuid != null then "ossp"
+    else if stdenv.isDarwin then "e2fs"
+    else null;
 in
 with stdenv.lib;
 stdenv.mkDerivation rec {
@@ -84,7 +88,7 @@ stdenv.mkDerivation rec {
     (mkEnable true                      "shared"            null)
   ] ++ optionals (versionAtLeast version "9.4.0") [
     (mkEnable false                     "tap-tests"         null)
-    (mkWith   (optLibossp_uuid != null) "uuid"              "ossp")
+    (mkWith   (uuid != null)            "uuid"              uuid)
   ] ++ optionals (versionOlder version "9.4.0") [
     (mkWith   false                     "krb5"              null)
     (mkWith   (optLibossp_uuid != null) "ossp-uuid"         null)

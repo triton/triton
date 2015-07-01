@@ -202,7 +202,7 @@ stdenv.mkDerivation rec {
   ] ++ optionals isKvmOnly [
     (mkOther                          "target-list"         targetList)
   ] ++ optionals isNix [
-    "--static"
+    (mkOther                          "--static"            null)
   ];
 
   installFlags = [

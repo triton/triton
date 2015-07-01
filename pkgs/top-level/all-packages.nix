@@ -2772,6 +2772,7 @@ let
   rhash = callPackage ../tools/security/rhash { };
 
   riemann_c_client = callPackage ../tools/misc/riemann-c-client { };
+  riemann-tools = callPackage ../tools/misc/riemann-tools { };
 
   ripmime = callPackage ../tools/networking/ripmime {};
 
@@ -3549,7 +3550,6 @@ let
 
   ats = callPackage ../development/compilers/ats { };
   ats2 = callPackage ../development/compilers/ats2 { };
-  ats-extsolve = callPackage ../development/compilers/ats-extsolve { };
 
   avra = callPackage ../development/compilers/avra { };
 
@@ -6052,6 +6052,8 @@ let
   fftwSinglePrec = fftw.override { precision = "single"; };
   fftwFloat = fftwSinglePrec; # the configure option is just an alias
 
+  filter-audio = callPackage ../development/libraries/filter-audio {};
+
   fish-fillets-ng = callPackage ../games/fish-fillets-ng {};
 
   flann = callPackage ../development/libraries/flann { };
@@ -7202,7 +7204,9 @@ let
       else stdenv;
   };
 
-  libtoxcore = callPackage ../development/libraries/libtoxcore { };
+  libtoxcore = callPackage ../development/libraries/libtoxcore/old-api { };
+
+  libtoxcore-dev = callPackage ../development/libraries/libtoxcore/new-api { };
 
   libtsm = callPackage ../development/libraries/libtsm {
     automake = automake114x;
@@ -11742,6 +11746,8 @@ let
   keymon = callPackage ../applications/video/key-mon { };
 
   khal = callPackage ../applications/misc/khal { };
+
+  khard = callPackage ../applications/misc/khard { };
 
   kid3 = callPackage ../applications/audio/kid3 {
     qt = qt4;

@@ -2976,6 +2976,8 @@ let
 
   suidChroot = callPackage ../tools/system/suid-chroot { };
 
+  sundtek = callPackage ../misc/drivers/sundtek { };
+
   super = callPackage ../tools/security/super { };
 
   ssdeep = callPackage ../tools/security/ssdeep { };

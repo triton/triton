@@ -4901,7 +4901,8 @@ let
     fetchurl = fetchurlBoot;
   };
 
-  perl = perl522;
+  # Make perl522 the default once gnulib is updated to support it.
+  perl = perl520;
 
   php = php56;
 

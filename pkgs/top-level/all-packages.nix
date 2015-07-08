@@ -1894,10 +1894,11 @@ let
 
   ised = callPackage ../tools/misc/ised {};
 
-  isl = isl_0_14;
+  isl = isl_0_15;
   isl_0_11 = callPackage ../development/libraries/isl/0.11.1.nix { };
   isl_0_12 = callPackage ../development/libraries/isl/0.12.2.nix { };
   isl_0_14 = callPackage ../development/libraries/isl/0.14.1.nix { };
+  isl_0_15 = callPackage ../development/libraries/isl/0.15.0.nix { };
 
   isync = callPackage ../tools/networking/isync { };
 
@@ -8191,6 +8192,7 @@ let
 
   v8_3_16_14 = callPackage ../development/libraries/v8/3.16.14.nix {
     inherit (pythonPackages) gyp;
+    stdenv = overrideCC stdenv gcc48;
   };
 
   v8_3_24_10 = callPackage ../development/libraries/v8/3.24.10.nix {

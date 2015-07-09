@@ -7976,6 +7976,10 @@ let
 
   sfsexp = callPackage ../development/libraries/sfsexp {};
 
+  shhmsg = callPackage ../development/libraries/shhmsg { };
+
+  shhopt = callPackage ../development/libraries/shhopt { };
+
   silgraphite = callPackage ../development/libraries/silgraphite {};
   graphite2 = callPackage ../development/libraries/silgraphite/graphite2.nix {};
 
@@ -9018,6 +9022,8 @@ let
   openfire = callPackage ../servers/xmpp/openfire { };
 
   oracleXE = callPackage ../servers/sql/oracle-xe { };
+
+  qboot = callPackage ../applications/virtualization/qboot { stdenv = stdenv_32bit; };
 
   OVMF = callPackage ../applications/virtualization/OVMF { seabios=false; openssl=null; };
   OVMF-CSM = callPackage ../applications/virtualization/OVMF { openssl=null; };
@@ -13658,6 +13664,8 @@ let
   simutrans = callPackage ../games/simutrans { };
   # get binaries without data built by Hydra
   simutrans_binaries = lowPrio simutrans.binaries;
+
+  snake4 = callPackage ../games/snake4 { };
 
   soi = callPackage ../games/soi {};
 

@@ -76,7 +76,7 @@ with frameworks; with libs; {
   OpenAL                  = [];
   OpenCL                  = [ IOSurface OpenGL ];
   OpenGL                  = [];
-  PCSC                    = [];
+  PCSC                    = [ CoreData ];
   PreferencePanes         = [];
   PubSub                  = [];
   Python                  = [ ApplicationServices ];
@@ -89,7 +89,7 @@ with frameworks; with libs; {
   ScreenSaver             = [];
   Scripting               = [];
   ScriptingBridge         = [];
-  Security                = [ CoreFoundation ];
+  Security                = [ CoreFoundation IOKit ];
   SecurityFoundation      = [];
   SecurityInterface       = [ Security ];
   ServiceManagement       = [ CoreFoundation Security ];
@@ -108,7 +108,8 @@ with frameworks; with libs; {
   # Umbrellas
   Accelerate          = [ CoreWLAN IOBluetooth ];
   ApplicationServices = [ CoreFoundation CoreServices CoreText ImageIO ];
-  Carbon              = [ ApplicationServices CoreFoundation CoreServices IOKit Security ];
+  Carbon              = [ ApplicationServices CoreFoundation CoreServices IOKit Security QuartzCore ];
+  CoreBluetooth       = [];
   CoreServices        = [ CFNetwork CoreAudio CoreData CoreFoundation DiskArbitration Security NetFS OpenDirectory ServiceManagement ];
   IOBluetooth         = [ IOKit ];
   JavaVM              = [];

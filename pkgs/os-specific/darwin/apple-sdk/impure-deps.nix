@@ -12,9 +12,18 @@ rec {
   ];
   Security = [
     "/System/Library/Frameworks/Security.framework"
+    "/usr/lib/libbsm.0.dylib"
     "/usr/lib/libbz2.1.0.dylib"
     "/usr/lib/libpam.2.dylib"
     "/usr/lib/libxar.1.dylib"
+    "/usr/lib/libxml2.2.dylib"
+    "/usr/lib/libsqlite3.dylib"
+  ];
+  GSS = [
+    "/System/Library/Frameworks/GSS.framework"
+  ];
+  Kerberos = [
+    "/System/Library/Frameworks/Kerberos.framework"
   ];
   CoreServices = [
     "/System/Library/Frameworks/CoreServices.framework"
@@ -54,6 +63,7 @@ rec {
   ];
   QuartzCore = [
     "/System/Library/Frameworks/QuartzCore.framework"
+    "/System/Library/PrivateFrameworks/CrashReporterSupport.framework/Versions/A/CrashReporterSupport"
   ];
   PCSC = [
     "/System/Library/Frameworks/PCSC.framework"
@@ -75,6 +85,8 @@ rec {
     "/System/Library/PrivateFrameworks/DesktopServicesPriv.framework/Versions/A/DesktopServicesPriv"
     "/System/Library/PrivateFrameworks/FaceCore.framework/Versions/A/FaceCore"
     "/System/Library/PrivateFrameworks/GenerationalStorage.framework/Versions/A/GenerationalStorage"
+    "/System/Library/PrivateFrameworks/Heimdal.framework/Heimdal"
+    "/System/Library/PrivateFrameworks/Heimdal.framework/Versions/Current"
     "/System/Library/PrivateFrameworks/Heimdal.framework/Versions/A/Heimdal"
     "/System/Library/PrivateFrameworks/IconServices.framework/Versions/A/IconServices"
     "/System/Library/PrivateFrameworks/LanguageModeling.framework/Versions/A/LanguageModeling"
@@ -131,6 +143,14 @@ rec {
   ];
   Carbon = [
     "/System/Library/Frameworks/Carbon.framework"
+    "/System/Library/PrivateFrameworks/CoreUI.framework/Versions/A/CoreUI"
+    "/System/Library/PrivateFrameworks/DesktopServicesPriv.framework/Versions/A/DesktopServicesPriv"
+    "/System/Library/PrivateFrameworks/IconServices.framework/Versions/A/IconServices"
+    "/System/Library/PrivateFrameworks/ChunkingLibrary.framework/Versions/A/ChunkingLibrary"
+    "/System/Library/PrivateFrameworks/Ubiquity.framework/Versions/A/Ubiquity"
+    "/System/Library/PrivateFrameworks/Sharing.framework/Versions/A/Sharing"
+    "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Apple80211"
+    "/System/Library/PrivateFrameworks/GenerationalStorage.framework/Versions/A/GenerationalStorage"
   ];
   CoreAudio = [
     "/System/Library/Frameworks/CoreAudio.framework"
@@ -169,7 +189,9 @@ rec {
   ];
   IOBluetooth = [
     "/System/Library/Frameworks/IOBluetooth.framework"
-    "/System/Library/Frameworks/CoreBluetooth.framework/Versions/A/CoreBluetooth"
+  ] ++ AudioUnit ++ CoreBluetooth;
+  CoreBluetooth = [
+    "/System/Library/Frameworks/CoreBluetooth.framework"
   ];
   SecurityFoundation = [
     "/System/Library/Frameworks/SecurityFoundation.framework"

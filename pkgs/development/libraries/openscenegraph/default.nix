@@ -1,5 +1,5 @@
 { stdenv, fetchurl, cmake, doxygen, pkgconfig, unzip
-, a52dec, coin3d, curl, faad2, ffmpeg, freeglut, freetype, gdal, gdk_pixbuf
+, a52dec, coin3d, curl, faad2, ffmpeg, freeglut, freetype, gdal_1_11_2, gdk_pixbuf
 , giflib, gtk, jasper, kbproto, lib3ds, libjpeg, libpng, librsvg, libtiff
 , libX11, libxml2, libXmu, mesa, openal, poppler, qt4, SDL, xineLib, xproto
 , zlib
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ cmake doxygen pkgconfig unzip ];
 
   buildInputs = [
-    a52dec coin3d curl faad2 ffmpeg freeglut freetype gdal gdk_pixbuf giflib gtk
+    a52dec coin3d curl faad2 ffmpeg freeglut freetype gdal_1_11_2 gdk_pixbuf giflib gtk
     jasper kbproto lib3ds libjpeg libpng librsvg libtiff libX11 libxml2 libXmu
     mesa openal poppler qt4 SDL xineLib xproto zlib
   ];

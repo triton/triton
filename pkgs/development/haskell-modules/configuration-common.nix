@@ -208,13 +208,14 @@ self: super: {
 
   # Prevents needing to add security_tool as a build tool to all of x509-system's
   # dependencies.
-  # TODO: use pkgs.darwin.security_tool once we can build it
-  x509-system = let security_tool = "/usr";
-  in overrideCabal super.x509-system (drv: {
-    patchPhase = (drv.patchPhase or "") + pkgs.stdenv.lib.optionalString pkgs.stdenv.isDarwin ''
-      substituteInPlace System/X509/MacOS.hs --replace security ${security_tool}/bin/security
-    '';
-  });
+  x509-system = if pkgs.stdenv.isDarwin && !pkgs.stdenv.cc.nativeLibc
+    then let inherit (pkgs.darwin) security_tool;
+      in pkgs.lib.overrideDerivation (addBuildDepend super.x509-system security_tool) (drv: {
+        patchPhase = (drv.patchPhase or "") + ''
+          substituteInPlace System/X509/MacOS.hs --replace security ${security_tool}/bin/security
+        '';
+      })
+    else super.x509-system;
 
   double-conversion = if !pkgs.stdenv.isDarwin
     then super.double-conversion
@@ -895,6 +896,10 @@ self: super: {
   # https://github.com/singpolyma/wai-session/issues/8
   wai-session = markBroken super.wai-session;
   serversession-frontend-wai = dontDistribute super.serversession-frontend-wai;
+
+  yesod-bin = if pkgs.stdenv.isDarwin
+    then addBuildDepend super.yesod-bin pkgs.darwin.apple_sdk.frameworks.Cocoa
+    else super.yesod-bin;
 
   # https://github.com/commercialhaskell/stack/issues/408
   # https://github.com/commercialhaskell/stack/issues/409

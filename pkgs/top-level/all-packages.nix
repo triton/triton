@@ -1147,12 +1147,17 @@ let
     inherit (perlPackages) perl AlgorithmDiff RegexpCommon;
   };
 
-  cloog = callPackage ../development/libraries/cloog { };
+  cloog = callPackage ../development/libraries/cloog {
+    isl = isl_0_14;
+  };
+
   cloog_0_18_0 = callPackage ../development/libraries/cloog/0.18.0.nix {
     isl = isl_0_11;
   };
 
   cloogppl = callPackage ../development/libraries/cloog-ppl { };
+
+  compass = callPackage ../development/tools/compass { };
 
   convmv = callPackage ../tools/misc/convmv { };
 
@@ -1897,10 +1902,11 @@ let
 
   ised = callPackage ../tools/misc/ised {};
 
-  isl = isl_0_14;
+  isl = isl_0_15;
   isl_0_11 = callPackage ../development/libraries/isl/0.11.1.nix { };
   isl_0_12 = callPackage ../development/libraries/isl/0.12.2.nix { };
   isl_0_14 = callPackage ../development/libraries/isl/0.14.1.nix { };
+  isl_0_15 = callPackage ../development/libraries/isl/0.15.0.nix { };
 
   isync = callPackage ../tools/networking/isync { };
 
@@ -1997,11 +2003,16 @@ let
   ninka = callPackage ../development/tools/misc/ninka { };
 
   nodejs-0_12 = callPackage ../development/web/nodejs {
-    libuv = libuvVersions.v1_2_0;
+    libuv = if stdenv.isDarwin
+      then libuvVersions.v1_6_1
+      else libuvVersions.v1_2_0;
     libtool = darwin.cctools;
   };
   nodejs-unstable = callPackage ../development/web/nodejs { libuv = libuvVersions.v1_2_0; unstableVersion = true; };
-  nodejs-0_10 = callPackage ../development/web/nodejs/v0_10.nix { };
+  nodejs-0_10 = callPackage ../development/web/nodejs/v0_10.nix {
+    libtool = darwin.cctools;
+    inherit (darwin.apple_sdk.frameworks) CoreServices ApplicationServices Carbon Foundation;
+  };
 
   nodejs = if stdenv.system == "armv5tel-linux" then
     nodejs-0_10
@@ -2981,6 +2992,8 @@ let
 
   suidChroot = callPackage ../tools/system/suid-chroot { };
 
+  sundtek = callPackage ../misc/drivers/sundtek { };
+
   super = callPackage ../tools/security/super { };
 
   ssdeep = callPackage ../tools/security/ssdeep { };
@@ -3762,6 +3775,8 @@ let
     # be passed.
     cross = null;
     libcCross = if crossSystem != null then libcCross else null;
+
+    isl = isl_0_14;
   }));
 
   gcc49 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.9 {
@@ -3943,7 +3958,9 @@ let
 
   go_1_3 = callPackage ../development/compilers/go/1.3.nix { };
 
-  go_1_4 = callPackage ../development/compilers/go/1.4.nix { inherit (darwin) Security; };
+  go_1_4 = callPackage ../development/compilers/go/1.4.nix {
+    inherit (darwin.apple_sdk.frameworks) Security;
+  };
 
   go = go_1_4;
 
@@ -4195,7 +4212,7 @@ let
 
     bitstring_2_0_4 = callPackage ../development/ocaml-modules/bitstring/2.0.4.nix { };
     bitstring_git   = callPackage ../development/ocaml-modules/bitstring { };
-    
+
     bitstring =
       if lib.versionOlder "4.02" ocaml_version
       then bitstring_git
@@ -5026,21 +5043,26 @@ let
   ruby_1_9_3 = callPackage ../development/interpreters/ruby/ruby-1.9.3.nix {
     inherit (darwin) libobjc;
   };
-  ruby_2_0_0 = lowPrio (callPackage ../development/interpreters/ruby/ruby-2.0.0.nix { });
-  ruby_2_1_0 = lowPrio (callPackage ../development/interpreters/ruby/ruby-2.1.0.nix { });
-  ruby_2_1_1 = lowPrio (callPackage ../development/interpreters/ruby/ruby-2.1.1.nix { });
-  ruby_2_1_2 = lowPrio (callPackage ../development/interpreters/ruby/ruby-2.1.2.nix { });
-  ruby_2_1_3 = lowPrio (callPackage ../development/interpreters/ruby/ruby-2.1.3.nix { });
-  ruby_2_1_6 = lowPrio (callPackage ../development/interpreters/ruby/ruby-2.1.6.nix { });
-  ruby_2_2_0 = lowPrio (callPackage ../development/interpreters/ruby/ruby-2.2.0.nix { });
+  ruby_2_0_0 = callPackage ../development/interpreters/ruby/ruby-2.0.0.nix { };
+  ruby_2_1_0 = callPackage ../development/interpreters/ruby/ruby-2.1.0.nix { };
+  ruby_2_1_1 = callPackage ../development/interpreters/ruby/ruby-2.1.1.nix { };
+  ruby_2_1_2 = callPackage ../development/interpreters/ruby/ruby-2.1.2.nix { };
+  ruby_2_1_3 = callPackage ../development/interpreters/ruby/ruby-2.1.3.nix { };
+  ruby_2_1_6 = callPackage ../development/interpreters/ruby/ruby-2.1.6.nix { };
+  ruby_2_2_0 = callPackage ../development/interpreters/ruby/ruby-2.2.0.nix {
+    inherit (darwin) libobjc libunwind;
+  };
+  ruby_2_2_2 = callPackage ../development/interpreters/ruby/ruby-2.2.2.nix {
+    inherit (darwin) libobjc libunwind;
+  };
 
   # Ruby aliases
-  ruby = ruby_2_1;
+  ruby = ruby_2_2;
   ruby_1_8 = ruby_1_8_7;
   ruby_1_9 = ruby_1_9_3;
   ruby_2_0 = ruby_2_0_0;
   ruby_2_1 = ruby_2_1_6;
-  ruby_2_2 = ruby_2_2_0;
+  ruby_2_2 = ruby_2_2_2;
 
   rubygemsFun = ruby: builderDefsPackage (import ../development/interpreters/ruby/rubygems.nix) {
     inherit ruby makeWrapper;
@@ -8179,6 +8201,7 @@ let
 
   v8_3_16_14 = callPackage ../development/libraries/v8/3.16.14.nix {
     inherit (pythonPackages) gyp;
+    stdenv = overrideCC stdenv gcc48;
   };
 
   v8_3_24_10 = callPackage ../development/libraries/v8/3.24.10.nix {
@@ -9331,18 +9354,26 @@ let
     xcode = callPackage ../os-specific/darwin/xcode {};
 
     osx_sdk = callPackage ../os-specific/darwin/osx-sdk {};
-    osx_private_sdk = callPackage ../os-specific/darwin/osx-private-sdk { inherit osx_sdk; };
+    osx_private_sdk = callPackage ../os-specific/darwin/osx-private-sdk {};
 
-    security_tool = callPackage ../os-specific/darwin/security-tool { inherit osx_private_sdk; };
+    security_tool = (newScope (darwin.apple_sdk.frameworks // darwin)) ../os-specific/darwin/security-tool { };
 
     binutils = callPackage ../os-specific/darwin/binutils { inherit cctools; };
 
     cmdline_sdk   = cmdline.sdk;
     cmdline_tools = cmdline.tools;
 
-    apple_sdk = callPackage ../os-specific/darwin/apple-sdk {};
+    apple_sdk = callPackage ../os-specific/darwin/apple-sdk {
+      inherit (darwin) CF;
+    };
 
     libobjc = apple-source-releases.objc4;
+  };
+
+  gnustep-make = callPackage ../development/tools/build-managers/gnustep/make {};
+  gnustep-xcode = callPackage ../development/tools/build-managers/gnustep/xcode {
+    inherit (darwin.apple_sdk.frameworks) Foundation;
+    inherit (darwin) libobjc;
   };
 
   devicemapper = lvm2;
@@ -12028,6 +12059,8 @@ let
 
   mutt-kz = callPackage ../applications/networking/mailreaders/mutt-kz { };
 
+  openshift = callPackage ../applications/networking/cluster/openshift { };
+
   panamax_api = callPackage ../applications/networking/cluster/panamax/api {
     ruby = ruby_2_1;
   };
@@ -12069,9 +12102,13 @@ let
 
   maxlib = callPackage ../applications/audio/pd-plugins/maxlib { };
 
+  pdfdiff = callPackage ../applications/misc/pdfdiff { };
+
   mupdf = callPackage ../applications/misc/mupdf {
     openjpeg = openjpeg_2_0;
   };
+
+  diffpdf = callPackage ../applications/misc/diffpdf { };
 
   mypaint = callPackage ../applications/graphics/mypaint { };
 
@@ -14333,6 +14370,10 @@ let
 
 
   ### SCIENCE / MATH
+
+  caffe = callPackage ../applications/science/math/caffe {
+    cudaSupport = config.caffe.cudaSupport or config.cudaSupport or true;
+  };
 
   ecm = callPackage ../applications/science/math/ecm { };
 

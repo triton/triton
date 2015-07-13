@@ -26,8 +26,7 @@ with frameworks; with libs; {
   CoreAudio               = [ CoreFoundation IOKit ];
   CoreAudioKit            = [ AudioUnit ];
   CoreData                = [];
-  CoreFoundation          = [];
-  CoreGraphics            = [ Accelerate CoreFoundation IOKit IOSurface ];
+  CoreGraphics            = [ Accelerate CoreFoundation IOKit IOSurface SystemConfiguration ];
   CoreLocation            = [];
   CoreMIDI                = [ CoreFoundation ];
   CoreMIDIServer          = [];
@@ -77,7 +76,7 @@ with frameworks; with libs; {
   OpenAL                  = [];
   OpenCL                  = [ IOSurface OpenGL ];
   OpenGL                  = [];
-  PCSC                    = [];
+  PCSC                    = [ CoreData ];
   PreferencePanes         = [];
   PubSub                  = [];
   Python                  = [ ApplicationServices ];
@@ -90,7 +89,7 @@ with frameworks; with libs; {
   ScreenSaver             = [];
   Scripting               = [];
   ScriptingBridge         = [];
-  Security                = [ CoreFoundation ];
+  Security                = [ CoreFoundation IOKit ];
   SecurityFoundation      = [];
   SecurityInterface       = [ Security ];
   ServiceManagement       = [ CoreFoundation Security ];
@@ -109,8 +108,9 @@ with frameworks; with libs; {
   # Umbrellas
   Accelerate          = [ CoreWLAN IOBluetooth ];
   ApplicationServices = [ CoreFoundation CoreServices CoreText ImageIO ];
-  Carbon              = [ ApplicationServices CoreFoundation CoreServices IOKit Security ];
-  CoreServices        = [ CFNetwork CoreFoundation DiskArbitration Security NetFS OpenDirectory ServiceManagement ];
+  Carbon              = [ ApplicationServices CoreFoundation CoreServices IOKit Security QuartzCore ];
+  CoreBluetooth       = [];
+  CoreServices        = [ CFNetwork CoreAudio CoreData CoreFoundation DiskArbitration Security NetFS OpenDirectory ServiceManagement ];
   IOBluetooth         = [ IOKit ];
   JavaVM              = [];
   OpenDirectory       = [];

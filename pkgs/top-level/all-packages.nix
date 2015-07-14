@@ -12139,6 +12139,8 @@ let
 
   mutt-kz = callPackage ../applications/networking/mailreaders/mutt-kz { };
 
+  notion = callPackage ../applications/window-managers/notion { };
+
   openshift = callPackage ../applications/networking/cluster/openshift { };
 
   panamax_api = callPackage ../applications/networking/cluster/panamax/api {

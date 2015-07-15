@@ -9152,7 +9152,6 @@ let
   samba4 = callPackage ../servers/samba/4.x.nix {
     pythonPackages = python2Packages;
     kerberos = null;  # Bundle kerberos because samba uses internal, non-stable functions
-    gnutls = gnutls33;
     cups = if stdenv.isDarwin then null else cups;
     pam = if stdenv.isDarwin then null else pam;
     libaio = if stdenv.isDarwin then null else libaio;

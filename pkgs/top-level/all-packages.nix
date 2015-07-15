@@ -2220,6 +2220,8 @@ let
     inherit (perlPackages) IOTty;
   };
 
+  motuclient = python27Packages.motuclient;
+
   mpage = callPackage ../tools/text/mpage { };
 
   mr = callPackage ../applications/version-management/mr { };
@@ -3121,6 +3123,8 @@ let
 
   torsocks = callPackage ../tools/security/tor/torsocks.nix { };
 
+  tpmmanager = callPackage ../applications/misc/tpmmanager { };
+
   tpm-quote-tools = callPackage ../tools/security/tpm-quote-tools { };
 
   tpm-tools = callPackage ../tools/security/tpm-tools { };
@@ -3488,6 +3492,8 @@ let
   xsel = callPackage ../tools/misc/xsel { };
 
   xtreemfs = callPackage ../tools/filesystems/xtreemfs {};
+
+  xurls = callPackage ../tools/text/xurls {};
 
   xvfb_run = callPackage ../tools/misc/xvfb-run { inherit (texFunctions) fontsConf; };
 
@@ -7040,6 +7046,7 @@ let
 
   libkate = callPackage ../development/libraries/libkate { };
 
+  libkeyfinder_0_11 = callPackage ../development/libraries/libkeyfinder/0.11.nix { };
   libkeyfinder = callPackage ../development/libraries/libkeyfinder { };
 
   libksba = callPackage ../development/libraries/libksba { };
@@ -9052,6 +9059,8 @@ let
   #WIP: OVMF-secureBoot = callPackage ../applications/virtualization/OVMF { seabios=false; secureBoot=true; };
 
   seabios = callPackage ../applications/virtualization/seabios { };
+
+  cbfstool = callPackage ../applications/virtualization/cbfstool { };
 
   pgpool92 = pgpool.override { postgresql = postgresql92; };
   pgpool93 = pgpool.override { postgresql = postgresql93; };
@@ -12364,6 +12373,8 @@ let
   };
 
   plugin-torture = callPackage ../applications/audio/plugin-torture { };
+
+  poezio = python3Packages.poezio;
 
   pommed = callPackage ../os-specific/linux/pommed {
     inherit (xorg) libXpm;

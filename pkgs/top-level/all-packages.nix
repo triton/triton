@@ -1450,6 +1450,10 @@ let
 
   fdm = callPackage ../tools/networking/fdm {};
 
+  fgallery = callPackage ../tools/graphics/fgallery {
+    inherit (perlPackages) ImageExifTool JSON;
+  };
+
   flannel = callPackage ../tools/networking/flannel { };
 
   flashbench = callPackage ../os-specific/linux/flashbench { };
@@ -6352,7 +6356,6 @@ let
 
   gnutls33 = callPackage ../development/libraries/gnutls/3.3.nix {
     guileBindings = config.gnutls.guile or false;
-    nettle = nettle27;
   };
 
   gnutls34 = callPackage ../development/libraries/gnutls/3.4.nix {
@@ -8762,6 +8765,7 @@ let
 
   cadvisor = callPackage ../servers/monitoring/cadvisor { };
 
+  cassandra_1_2 = callPackage ../servers/nosql/cassandra/1.2.nix { };
   cassandra_2_0 = callPackage ../servers/nosql/cassandra/2.0.nix { };
   cassandra_2_1 = callPackage ../servers/nosql/cassandra/2.1.nix { };
   cassandra = cassandra_2_1;
@@ -11330,6 +11334,12 @@ let
     fftw = fftwFloat;
   };
 
+  gnuradio-wrapper = callPackage ../applications/misc/gnuradio/wrapper.nix { };
+
+  gnuradio-full = gnuradio-wrapper.override {
+    extraPackages = [ gnuradio-osmosdr ];
+  };
+
   gnuradio-osmosdr = callPackage ../applications/misc/gnuradio-osmosdr { };
 
   goldendict = callPackage ../applications/misc/goldendict { };
@@ -11876,6 +11886,8 @@ let
   ldcpp = callPackage ../applications/networking/p2p/ldcpp {
     inherit (gnome) libglade;
   };
+
+  leo-editor = callPackage ../applications/editors/leo-editor { };
 
   libowfat = callPackage ../development/libraries/libowfat { };
 

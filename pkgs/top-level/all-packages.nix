@@ -882,6 +882,8 @@ let
 
   gist = callPackage ../tools/text/gist { };
 
+  gmic = callPackage ../tools/graphics/gmic { };
+
   mcrl = callPackage ../tools/misc/mcrl { };
 
   mcrl2 = callPackage ../tools/misc/mcrl2 { };
@@ -1396,6 +1398,8 @@ let
   encfs = callPackage ../tools/filesystems/encfs { };
 
   enscript = callPackage ../tools/text/enscript { };
+
+  eplot = callPackage ../tools/graphics/eplot { };
 
   ethtool = callPackage ../tools/misc/ethtool { };
 
@@ -6084,10 +6088,11 @@ let
   ffmpeg_1_2 = import ../development/libraries/ffmpeg/1.2.nix { inherit callPackage; };
   ffmpeg_2_2 = import ../development/libraries/ffmpeg/2.2.nix { inherit callPackage; };
   ffmpeg_2_6 = import ../development/libraries/ffmpeg/2.6.nix { inherit callPackage; };
+  ffmpeg_2_7 = import ../development/libraries/ffmpeg/2.7.nix { inherit callPackage; };
   # Aliases
   ffmpeg_0 = ffmpeg_0_10;
   ffmpeg_1 = ffmpeg_1_2;
-  ffmpeg_2 = ffmpeg_2_6;
+  ffmpeg_2 = ffmpeg_2_7;
   ffmpeg = ffmpeg_2;
 
   ffmpeg-full = callPackage ../development/libraries/ffmpeg-full {

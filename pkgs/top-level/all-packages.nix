@@ -1392,6 +1392,8 @@ let
 
   enscript = callPackage ../tools/text/enscript { };
 
+  eplot = callPackage ../tools/graphics/eplot { };
+
   ethtool = callPackage ../tools/misc/ethtool { };
 
   eternity = callPackage ../games/eternity-engine { };

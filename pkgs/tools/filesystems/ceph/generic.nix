@@ -100,7 +100,9 @@ stdenv.mkDerivation {
   ];
 
   nativeBuildInputs = [ autoconf automake makeWrapper pkgconfig libtool which ]
-    ++ optionals (versionAtLeast version "10.0.0") [ pythonPackages.setuptools ];
+    ++ optionals (versionAtLeast version "9.0.2") [
+      pythonPackages.setuptools pythonPackages.argparse
+    ];
   buildInputs = buildInputs ++ cryptoLibsMap.${cryptoStr} ++ [
     boost python libxml2 optYasm optLibatomic_ops optLibs3 malloc pythonPackages.flask zlib
   ] ++ optional (versionAtLeast version "9.0.0") [
@@ -134,7 +136,7 @@ stdenv.mkDerivation {
   preConfigure = ''
     # Ceph expects the arch command to be usable during configure
     # for detecting the assembly type
-    mkdir mybin
+    mkdir -p mybin
     echo "#${stdenv.shell} -e" >> mybin/arch
     echo "uname -m" >> mybin/arch
     chmod +x mybin/arch
@@ -144,6 +146,10 @@ stdenv.mkDerivation {
 
     # Fix the python site-packages install directory
     sed -i "s,\(PYTHON\(\|_EXEC\)_PREFIX=\).*,\1'$lib',g" configure
+
+    # Fix the PYTHONPATH for installing ceph-detect-init to $out
+    mkdir -p "$(toPythonPath $out)"
+    export PYTHONPATH="$(toPythonPath $out):$PYTHONPATH"
   '';
 
   configureFlags = [
@@ -187,7 +193,7 @@ stdenv.mkDerivation {
   ] ++ optional (versionAtLeast version "9.0.1") [
     (mkWith   false                        "tcmalloc-minimal"    null)
     (mkWith   false                        "valgrind"            null)
-  ] ++ optional (versionAtLeast version "10.0.0") [
+  ] ++ optional (versionAtLeast version "9.0.2") [
     (mkWith   true                         "man-pages"           null)
     (mkWith   true                         "systemd-libexec-dir" "\${TMPDIR}")
   ];

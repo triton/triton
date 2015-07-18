@@ -10156,7 +10156,10 @@ let
 
   sysklogd = callPackage ../os-specific/linux/sysklogd { };
 
-  syslinux = callPackage ../os-specific/linux/syslinux { };
+  syslinux = callPackage ../os-specific/linux/syslinux {
+    # Using GCC5 with 6.03 creates a broken isolinux.bin
+    stdenv = overrideCC stdenv gcc48;
+  };
 
   sysstat = callPackage ../os-specific/linux/sysstat { };
 

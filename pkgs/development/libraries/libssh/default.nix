@@ -27,14 +27,12 @@ in
 assert crypto != null;
 
 stdenv.mkDerivation rec {
-  name = "libssh-0.7.0";
+  name = "libssh-0.7.1";
 
   src = fetchurl {
-    url = "https://git.libssh.org/projects/libssh.git/snapshot/libssh-0.7.0.tar.gz";
-    sha256 = "1wfrdqhv97f4ycd9bcpgb6gw47kr7b2iq8cz5knk8a6n9c6870k0";
+    url = "https://red.libssh.org/attachments/download/154/libssh-0.7.1.tar.xz";
+    sha256 = "0v84zm957z31yyrj47n62hby38nrjk5ih0ajmgccnqrjdpwwrirg";
   };
-
-  patches = [ ./0001-Reintroduce-ssh_forward_listen-Fixes-194.patch ];
 
   postPatch = ''
     # Fix headers to use libsodium instead of NaCl

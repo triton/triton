@@ -7505,11 +7505,23 @@ let
 
     doCheck = false;
 
+    patches = [
+      ../development/python-modules/rainbowstream/image.patch
+    ];
+
+    postPatch = ''
+      clib=$out/${python.sitePackages}/rainbowstream/image.so
+      substituteInPlace rainbowstream/c_image.py \
+        --replace @CLIB@ $clib
+    '';
+
     preBuild = ''
       export LC_ALL="en_US.UTF-8"
     '';
 
     postInstall = ''
+      mkdir -p $out/lib
+      cc -fPIC -shared -o $clib rainbowstream/image.c
       for prog in "$out/bin/"*; do
         wrapProgram "$prog" \
           --prefix PYTHONPATH : "$PYTHONPATH"
@@ -12805,13 +12817,13 @@ let
   };
 
   sqlalchemy9 = buildPythonPackage rec {
-    name = "SQLAlchemy-0.9.8";
+    name = "SQLAlchemy-0.9.9";
 
     disabled = isPyPy;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/S/SQLAlchemy/${name}.tar.gz";
-      md5 = "470ca4da4a0081efc830f0d90dd91682";
+      sha256 = "14az6hhrz4bgnicz4q373z119zmaf7j5zxl1jfbfl5lix5m1z9bj";
     };
 
     buildInputs = with self; [ nose mock ]
@@ -12832,6 +12844,14 @@ let
     };
   };
 
+  sqlalchemy_1_0 = self.sqlalchemy9.override rec {
+    name = "SQLAlchemy-1.0.6";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/S/SQLAlchemy/${name}.tar.gz";
+      sha256 = "1wv5kjf142m8g1dnbvgpbqxb8v8rm9lzgsafql2gg229xi5sba4r";
+    };
+  };
 
   sqlalchemy_imageattach = buildPythonPackage rec {
     name = "SQLAlchemy-ImageAttach-${version}";

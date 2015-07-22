@@ -3120,11 +3120,11 @@ let
 
 
   elasticsearch = buildPythonPackage (rec {
-    name = "elasticsearch-1.4.0";
+    name = "elasticsearch-1.6.0";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/e/elasticsearch/${name}.tar.gz";
-      md5 = "14a758debd2296d923cb6c958db98eba";
+      sha256 = "1b0b5d1qp77r83r130kb2ikhd6am0d1389rdcllr1xsajrp5kj4h";
     };
 
     # Check is disabled because running them destroy the content of the local cluster!
@@ -3133,32 +3133,29 @@ let
 
     meta = {
       description = "Official low-level client for Elasticsearch";
-
       homepage = https://github.com/elasticsearch/elasticsearch-py;
-
       license = licenses.asl20;
     };
   });
 
 
   elasticsearchdsl = buildPythonPackage (rec {
-    name = "elasticsearch-dsl-0.0.3";
+    name = "elasticsearch-dsl-0.0.4";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/e/elasticsearch-dsl/${name}.tar.gz";
-      md5 = "6cbc9ed7aefb3ef804be4e3b318b2570";
+      sha256 = "0bz8p10qk7rz10glq9dm2nq9m1x6czzlqk518107x39gx18lm1a2";
     };
 
-    buildInputs = with self; [ covCore dateutil elasticsearch mock pytest pytestcov unittest2 urllib3 ];
+    buildInputs = with self; [ covCore dateutil elasticsearch mock pytest pytestcov unittest2 urllib3 pytz ];
 
     # ImportError: No module named test_elasticsearch_dsl
+    # Tests require a local instance of elasticsearch
     doCheck = false;
 
     meta = {
       description = "Python client for Elasticsearch";
-
       homepage = https://github.com/elasticsearch/elasticsearch-dsl-py;
-
       license = licenses.asl20;
     };
   });

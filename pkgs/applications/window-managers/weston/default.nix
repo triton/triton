@@ -9,7 +9,8 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "weston-${wayland.version}";
+  name = "weston-${version}";
+  version = "1.8.0";
 
   src = fetchurl {
     url = "http://wayland.freedesktop.org/releases/${name}.tar.xz";

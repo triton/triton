@@ -1961,6 +1961,8 @@ let
 
   kismet = callPackage ../applications/networking/sniffers/kismet { };
 
+  knockknock = callPackage ../tools/security/knockknock { };
+
   kpcli = callPackage ../tools/security/kpcli { };
 
   kst = callPackage ../tools/graphics/kst { };
@@ -1990,6 +1992,8 @@ let
   kzipmix = callPackage_i686 ../tools/compression/kzipmix { };
 
   makebootfat = callPackage ../tools/misc/makebootfat { };
+
+  memtester = callPackage ../tools/system/memtester { };
 
   minidlna = callPackage ../tools/networking/minidlna { };
 
@@ -3963,7 +3967,7 @@ let
 
   dotnetPackages = recurseIntoAttrs (callPackage ./dotnet-packages.nix { inherit stdenv fetchNuGet; });
 
-  go_1_0 = callPackage ../development/compilers/go { };
+  go_1_0 = callPackage ../development/compilers/go/1.0.nix { };
 
   go_1_1 =
     if stdenv.isDarwin then
@@ -7656,6 +7660,7 @@ let
 
   opencascade = callPackage ../development/libraries/opencascade {
     tcl = tcl-8_5;
+    tk = tk-8_5;
   };
 
   opencascade_6_5 = callPackage ../development/libraries/opencascade/6.5.nix {
@@ -7903,7 +7908,8 @@ let
   };
 
   qtcreator = callPackage ../development/qtcreator {
-    qtLib = qt48.override { developerBuild = true; };
+    qtLib = qt5Full; # 3.4 only supports qt5; TODO: use modularized qt>=5.4
+    withDocumentation = false; # FIXME: fails to setup some paths
   };
 
   qtkeychain = callPackage ../development/libraries/qtkeychain { };
@@ -9037,6 +9043,7 @@ let
   };
 
   riak = callPackage ../servers/nosql/riak/1.3.1.nix { };
+  riak2 = callPackage ../servers/nosql/riak/2.1.1.nix { };
 
   influxdb = callPackage ../servers/nosql/influxdb { };
 
@@ -9827,8 +9834,6 @@ let
     frandom = callPackage ../os-specific/linux/frandom { };
 
     fusionio-vsl = callPackage ../os-specific/linux/fusionio/vsl.nix { };
-
-    ktap = callPackage ../os-specific/linux/ktap { };
 
     lttng-modules = callPackage ../os-specific/linux/lttng-modules { };
 
@@ -11875,6 +11880,8 @@ let
 
   koji = callPackage ../tools/package-management/koji { };
 
+  ksuperkey = callPackage ../tools/X11/ksuperkey { };
+
   kubernetes = callPackage ../applications/networking/cluster/kubernetes { };
 
   lame = callPackage ../development/libraries/lame { };
@@ -12100,8 +12107,7 @@ let
 
   mopidy-mopify = callPackage ../applications/audio/mopidy-mopify { };
 
-  mozplugger = builderDefsPackage (import ../applications/networking/browsers/mozilla-plugins/mozplugger) {
-    inherit firefox;
+  mozplugger = callPackage ../applications/networking/browsers/mozilla-plugins/mozplugger {
     inherit (xlibs) libX11 xproto;
   };
 
@@ -12427,7 +12433,10 @@ let
 
   qiv = callPackage ../applications/graphics/qiv { };
 
-  processing = callPackage ../applications/graphics/processing { inherit (xorg) libXxf86vm; };
+  processing = callPackage ../applications/graphics/processing {
+    inherit (xorg) libXxf86vm;
+    jdk = jdk7;
+  };
 
   # perhaps there are better apps for this task? It's how I had configured my preivous system.
   # And I don't want to rewrite all rules

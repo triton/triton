@@ -1497,6 +1497,8 @@ let
 
   libbladeRF = callPackage ../development/libraries/libbladeRF { };
 
+  lp_solve = callPackage ../applications/science/math/lp_solve { };
+
   lprof = callPackage ../tools/graphics/lprof { };
 
   fdk_aac = callPackage ../development/libraries/fdk-aac { };
@@ -1835,6 +1837,8 @@ let
   };
 
   honcho = callPackage ../tools/system/honcho { };
+
+  horst = callPackage ../tools/networking/horst { };
 
   host = callPackage ../tools/networking/host { };
 
@@ -2731,6 +2735,8 @@ let
 
   openmpi = callPackage ../development/libraries/openmpi { };
 
+  openmodelica = callPackage ../applications/science/misc/openmodelica { };
+
   qarte = callPackage ../applications/video/qarte {
     sip = pythonPackages.sip_4_16;
   };
@@ -2924,6 +2930,8 @@ let
   shotwell = callPackage ../applications/graphics/shotwell { };
 
   shellinabox = callPackage ../servers/shellinabox { };
+
+  sic = callPackage ../applications/networking/irc/sic { };
 
   siege = callPackage ../tools/networking/siege {};
 
@@ -3436,7 +3444,9 @@ let
 
   wv2 = callPackage ../tools/misc/wv2 { };
 
-  wyrd = callPackage ../tools/misc/wyrd { };
+  wyrd = callPackage ../tools/misc/wyrd {
+    inherit (ocamlPackages) camlp4;
+  };
 
   x86info = callPackage ../os-specific/linux/x86info { };
 
@@ -3837,10 +3847,18 @@ let
     isl = isl_0_14;
   }));
 
-  gfortran = if !stdenv.isDarwin then gfortran48
+  gfortran = if !stdenv.isDarwin then gfortran49
              else callPackage ../development/compilers/gcc/gfortran-darwin.nix {};
 
   gfortran48 = wrapCC (gcc48.cc.override {
+    name = "gfortran";
+    langFortran = true;
+    langCC = false;
+    langC = false;
+    profiledCompiler = false;
+  });
+
+  gfortran49 = wrapCC (gcc49.cc.override {
     name = "gfortran";
     langFortran = true;
     langCC = false;
@@ -3958,7 +3976,9 @@ let
     overrides = config.haskellPackageOverrides or (self: super: {});
   };
 
-  haxe = callPackage ../development/compilers/haxe { };
+  haxe = callPackage ../development/compilers/haxe {
+    inherit (ocamlPackages) camlp4;
+  };
   hxcpp = callPackage ../development/compilers/haxe/hxcpp.nix { };
 
   hhvm = callPackage ../development/compilers/hhvm { };
@@ -5410,6 +5430,8 @@ let
 
   dfu-programmer = callPackage ../development/tools/misc/dfu-programmer { };
 
+  dfu-util = callPackage ../development/tools/misc/dfu-util { };
+
   ddd = callPackage ../development/tools/misc/ddd { };
 
   distcc = callPackage ../development/tools/misc/distcc { };
@@ -5610,6 +5632,8 @@ let
 
   omake = callPackage ../development/tools/ocaml/omake { };
   omake_rc1 = callPackage ../development/tools/ocaml/omake/0.9.8.6-rc1.nix { };
+
+  omniorb = callPackage ../development/tools/omniorb { };
 
   opengrok = callPackage ../development/tools/misc/opengrok { };
 
@@ -9259,7 +9283,7 @@ let
   xorg = recurseIntoAttrs (import ../servers/x11/xorg/default.nix {
     inherit clangStdenv fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
       libxslt expat libpng zlib perl mesa_drivers spice_protocol
-      dbus libuuid openssl gperf m4 libevdev tradcpp libinput makeWrapper
+      dbus libuuid openssl gperf m4 libevdev tradcpp libinput makeWrapper autoreconfHook
       autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman;
     bootstrap_cmds = if stdenv.isDarwin then darwin.bootstrap_cmds else null;
     mesa = mesa_noglu;

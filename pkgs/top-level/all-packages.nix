@@ -1492,6 +1492,8 @@ let
 
   libbladeRF = callPackage ../development/libraries/libbladeRF { };
 
+  lp_solve = callPackage ../applications/science/math/lp_solve { };
+
   lprof = callPackage ../tools/graphics/lprof { };
 
   fdk_aac = callPackage ../development/libraries/fdk-aac { };
@@ -1830,6 +1832,8 @@ let
   };
 
   honcho = callPackage ../tools/system/honcho { };
+
+  horst = callPackage ../tools/networking/horst { };
 
   host = callPackage ../tools/networking/host { };
 
@@ -2726,6 +2730,8 @@ let
 
   openmpi = callPackage ../development/libraries/openmpi { };
 
+  openmodelica = callPackage ../applications/science/misc/openmodelica { };
+
   qarte = callPackage ../applications/video/qarte {
     sip = pythonPackages.sip_4_16;
   };
@@ -2919,6 +2925,8 @@ let
   shotwell = callPackage ../applications/graphics/shotwell { };
 
   shellinabox = callPackage ../servers/shellinabox { };
+
+  sic = callPackage ../applications/networking/irc/sic { };
 
   siege = callPackage ../tools/networking/siege {};
 
@@ -3127,9 +3135,7 @@ let
 
   torbutton = callPackage ../tools/security/torbutton { };
 
-  torbrowser = callPackage ../tools/security/tor/torbrowser.nix {
-    stdenv = overrideCC stdenv gcc49;
-  };
+  torbrowser = callPackage ../tools/security/tor/torbrowser.nix { };
 
   touchegg = callPackage ../tools/inputmethods/touchegg { };
 
@@ -3433,7 +3439,9 @@ let
 
   wv2 = callPackage ../tools/misc/wv2 { };
 
-  wyrd = callPackage ../tools/misc/wyrd { };
+  wyrd = callPackage ../tools/misc/wyrd {
+    inherit (ocamlPackages) camlp4;
+  };
 
   x86info = callPackage ../os-specific/linux/x86info { };
 
@@ -3961,7 +3969,9 @@ let
     overrides = config.haskellPackageOverrides or (self: super: {});
   };
 
-  haxe = callPackage ../development/compilers/haxe { };
+  haxe = callPackage ../development/compilers/haxe {
+    inherit (ocamlPackages) camlp4;
+  };
   hxcpp = callPackage ../development/compilers/haxe/hxcpp.nix { };
 
   hhvm = callPackage ../development/compilers/hhvm { };
@@ -5413,6 +5423,8 @@ let
 
   dfu-programmer = callPackage ../development/tools/misc/dfu-programmer { };
 
+  dfu-util = callPackage ../development/tools/misc/dfu-util { };
+
   ddd = callPackage ../development/tools/misc/ddd { };
 
   distcc = callPackage ../development/tools/misc/distcc { };
@@ -5613,6 +5625,8 @@ let
 
   omake = callPackage ../development/tools/ocaml/omake { };
   omake_rc1 = callPackage ../development/tools/ocaml/omake/0.9.8.6-rc1.nix { };
+
+  omniorb = callPackage ../development/tools/omniorb { };
 
   opengrok = callPackage ../development/tools/misc/opengrok { };
 
@@ -10901,7 +10915,6 @@ let
   clipit = callPackage ../applications/misc/clipit { };
 
   bomi = callPackage ../applications/video/bomi {
-    stdenv = overrideCC stdenv gcc49;
     pulseSupport = config.pulseaudio or true;
   };
 
@@ -13469,8 +13482,7 @@ let
   zathuraCollection = recurseIntoAttrs
     (let callPackage = newScope pkgs.zathuraCollection; in
       import ../applications/misc/zathura {
-        inherit callPackage pkgs fetchurl lib;
-        stdenv = overrideCC stdenv gcc49;
+        inherit stdenv callPackage pkgs fetchurl lib;
         useMupdf = config.zathura.useMupdf or false;
       });
 
@@ -13484,7 +13496,6 @@ let
 
   girara = callPackage ../applications/misc/girara {
     gtk = gtk3;
-    stdenv = overrideCC stdenv gcc49;
   };
 
   girara-light = callPackage ../applications/misc/girara {

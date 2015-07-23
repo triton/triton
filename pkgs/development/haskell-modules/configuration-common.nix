@@ -825,6 +825,7 @@ self: super: {
 
   # Won't compile with recent versions of QuickCheck.
   testpack = markBroken super.testpack;
+  inilist = dontCheck super.inilist;
   MissingH = dontCheck super.MissingH;
 
   # Obsolete for GHC versions after GHC 6.10.x.
@@ -893,4 +894,8 @@ self: super: {
 
   # https://ghc.haskell.org/trac/ghc/ticket/9825
   vimus = overrideCabal super.vimus (drv: { broken = pkgs.stdenv.isLinux && pkgs.stdenv.isi686; });
+
+  # https://github.com/yesodweb/Shelly.hs/issues/105
+  shelly = dontCheck super.shelly;
+
 }

@@ -882,6 +882,8 @@ let
 
   filter_audio = callPackage ../development/libraries/filter_audio { };
 
+  fzf = callPackage ../tools/misc/fzf { };
+
   gist = callPackage ../tools/text/gist { };
 
   gmic = callPackage ../tools/graphics/gmic { };
@@ -2198,7 +2200,7 @@ let
   mfoc = callPackage ../tools/security/mfoc { };
 
   minecraft = callPackage ../games/minecraft {
-    pulseaudioSupport = config.pulseaudio or true;
+    useAlsa = config.minecraft.alsa or false;
   };
 
   minecraft-server = callPackage ../games/minecraft-server { };
@@ -4134,24 +4136,21 @@ let
   llvm_36 = llvmPackages_36.llvm;
   llvm_35 = llvmPackages_35.llvm;
   llvm_34 = llvmPackages_34.llvm;
-  llvm_33 = llvm_v ../development/compilers/llvm/3.3/llvm.nix;
+  llvm_33 = callPackage ../development/compilers/llvm/3.3/llvm.nix { };
 
-  llvm_v = path: callPackage path { };
+  llvmPackages = recurseIntoAttrs llvmPackages_36;
 
-  llvmPackages = llvmPackages_36;
-
-  llvmPackages_34 = recurseIntoAttrs (import ../development/compilers/llvm/3.4 {
-    inherit stdenv newScope fetchurl;
-    isl = isl_0_12;
-  });
-  llvmPackagesSelf = import ../development/compilers/llvm/3.4 { inherit newScope fetchurl; isl = isl_0_12; stdenv = libcxxStdenv; };
-
-  llvmPackages_35 = import ../development/compilers/llvm/3.5 {
-    inherit pkgs stdenv newScope fetchurl isl;
+  llvmPackagesSelf = llvmPackages_34.override {
+    stdenv = libcxxStdenv;
   };
 
-  llvmPackages_36 = import ../development/compilers/llvm/3.6 {
-    inherit pkgs stdenv newScope fetchurl isl wrapCC;
+  llvmPackages_34 = callPackage ../development/compilers/llvm/3.4 {
+    isl = isl_0_12;
+  };
+
+  llvmPackages_35 = callPackage ../development/compilers/llvm/3.5 { };
+
+  llvmPackages_36 = callPackage ../development/compilers/llvm/3.6 {
     inherit (stdenvAdapters) overrideCC;
   };
 
@@ -6524,6 +6523,8 @@ let
   hawknl = callPackage ../development/libraries/hawknl { };
 
   herqq = callPackage ../development/libraries/herqq { };
+
+  heyefi = haskellPackages.heyefi;
 
   hidapi = callPackage ../development/libraries/hidapi {
     libusb = libusb1;
@@ -11679,6 +11680,8 @@ let
 
   guvcview = callPackage ../os-specific/linux/guvcview { };
 
+  gxmessage = callPackage ../applications/misc/gxmessage { };
+
   hackrf = callPackage ../applications/misc/hackrf { };
 
   hello = callPackage ../applications/misc/hello/ex-2 { };
@@ -11730,7 +11733,10 @@ let
 
   i810switch = callPackage ../os-specific/linux/i810switch { };
 
-  icewm = callPackage ../applications/window-managers/icewm { };
+  icewm = callPackage ../applications/window-managers/icewm {
+    inherit (xlibs) libX11 libXft libXext libXinerama
+      libXrandr libICE libSM;
+  };
 
   id3v2 = callPackage ../applications/audio/id3v2 { };
 
@@ -12200,6 +12206,10 @@ let
 
   openshift = callPackage ../applications/networking/cluster/openshift { };
 
+  oroborus = callPackage ../applications/window-managers/oroborus {
+    inherit (xlibs) libSM libICE libXt libXaw libXmu libXext libXft libXpm libXrandr libXrender xextproto libXinerama;
+  };
+
   panamax_api = callPackage ../applications/networking/cluster/panamax/api {
     ruby = ruby_2_1;
   };
@@ -12398,6 +12408,8 @@ let
 
   pidginmsnpecan = callPackage ../applications/networking/instant-messengers/pidgin-plugins/msn-pecan { };
 
+  pidgin-mra = callPackage ../applications/networking/instant-messengers/pidgin-plugins/pidgin-mra { };
+
   pidginotr = callPackage ../applications/networking/instant-messengers/pidgin-plugins/otr { };
 
   pidginsipe = callPackage ../applications/networking/instant-messengers/pidgin-plugins/sipe { };
@@ -12405,6 +12417,8 @@ let
   pidginwindowmerge = callPackage ../applications/networking/instant-messengers/pidgin-plugins/window-merge { };
 
   purple-plugin-pack = callPackage ../applications/networking/instant-messengers/pidgin-plugins/purple-plugin-pack { };
+
+  purple-vk-plugin = callPackage ../applications/networking/instant-messengers/pidgin-plugins/purple-vk-plugin { };
 
   toxprpl = callPackage ../applications/networking/instant-messengers/pidgin-plugins/tox-prpl { };
 
@@ -12724,6 +12738,8 @@ let
   curaengine = callPackage ../applications/misc/curaengine { };
 
   cura = callPackage ../applications/misc/cura { };
+
+  peru = callPackage ../applications/version-management/peru {};
 
   printrun = callPackage ../applications/misc/printrun { };
 

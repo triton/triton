@@ -30,6 +30,8 @@ stdenv.mkDerivation rec {
   buildInputs = [ optIcu optPython optReadline optZlib optXz ];
   propagatedBuildInputs = [ findXMLCatalogs ];
 
+  outputs = [ "out" "doc" ];
+
   configureFlags = [
     (mkWith (optIcu != null)      "icu"                optIcu)
     (mkWith (optPython != null)   "python"             optPython)

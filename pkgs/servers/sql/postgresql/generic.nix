@@ -96,6 +96,8 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
+  outputs = [ "out" "doc" ];
+
   # We need to build world to include contrib (like pg_upgrade) and docs
   buildFlags = [ "world" ];
   installFlags = [ "install-world" ];

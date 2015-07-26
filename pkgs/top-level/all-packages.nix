@@ -6395,17 +6395,15 @@ let
 
   gnutls = gnutls34;
 
-  gnutls33 = callPackage ../development/libraries/gnutls/3.3.nix {
+  gnutls33 = import ../development/libraries/gnutls/3.3.nix {
+    inherit callPackage fetchurl;
     guileBindings = config.gnutls.guile or false;
   };
 
-  gnutls34 = callPackage ../development/libraries/gnutls/3.4.nix {
+  gnutls34 = import ../development/libraries/gnutls/3.4.nix {
+    inherit callPackage fetchurl;
     guileBindings = config.gnutls.guile or false;
   };
-
-  gnutls33_with_guile = lowPrio (gnutls33.override { guileBindings = true; });
-
-  gnutls34_with_guile = lowPrio (gnutls34.override { guileBindings = true; });
 
   gpac = callPackage ../applications/video/gpac { };
 
@@ -9126,7 +9124,7 @@ let
     libmemcached = null; # Detection is broken upstream
   };
 
-  postgresql = postgresql92;
+  postgresql = postgresql94;
 
   postgresql90 = callPackage ../servers/sql/postgresql/9.0.x.nix { };
 
@@ -11780,8 +11778,7 @@ let
   };
 
   imagemagick = callPackage ../applications/graphics/ImageMagick {
-    ghostscript = if stdenv.isDarwin then null else ghostscript;
-    perl = null; # Currently Broken
+    ghostscript = null;
   };
 
   imagemagickBig = imagemagick;
@@ -14202,6 +14199,8 @@ let
   plasma5_stable = plasma53;
 
   kde5 = kf5_stable // plasma5_stable // kdeApps_stable;
+
+  theme-vertex = callPackage ../misc/themes/vertex { };
 
   xfce = xfce4-12;
   xfce4-12 = recurseIntoAttrs (import ../desktops/xfce { inherit config pkgs newScope; });

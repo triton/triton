@@ -11671,7 +11671,10 @@ let
 
   i810switch = callPackage ../os-specific/linux/i810switch { };
 
-  icewm = callPackage ../applications/window-managers/icewm { };
+  icewm = callPackage ../applications/window-managers/icewm {
+    inherit (xlibs) libX11 libXft libXext libXinerama
+      libXrandr libICE libSM;
+  };
 
   id3v2 = callPackage ../applications/audio/id3v2 { };
 
@@ -12140,6 +12143,10 @@ let
   notion = callPackage ../applications/window-managers/notion { };
 
   openshift = callPackage ../applications/networking/cluster/openshift { };
+
+  oroborus = callPackage ../applications/window-managers/oroborus {
+    inherit (xlibs) libSM libICE libXt libXaw libXmu libXext libXft libXpm libXrandr libXrender xextproto libXinerama;
+  };
 
   panamax_api = callPackage ../applications/networking/cluster/panamax/api {
     ruby = ruby_2_1;
@@ -12662,6 +12669,8 @@ let
   curaengine = callPackage ../applications/misc/curaengine { };
 
   cura = callPackage ../applications/misc/cura { };
+
+  peru = callPackage ../applications/version-management/peru {};
 
   printrun = callPackage ../applications/misc/printrun { };
 

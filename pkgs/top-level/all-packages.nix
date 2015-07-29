@@ -141,6 +141,8 @@ let
   # below).
   callPackage = newScope {};
 
+  callPackages = lib.callPackagesWith defaultScope;
+
   newScope = extra: lib.callPackageWith (defaultScope // extra);
 
   # Easily override this package set.
@@ -511,6 +513,10 @@ let
   enableDebugging = pkg: pkg.override { stdenv = stdenvAdapters.keepDebugInfo pkg.stdenv; };
 
   findXMLCatalogs = makeSetupHook { } ../build-support/setup-hooks/find-xml-catalogs.sh;
+
+  wrapGAppsHook = makeSetupHook {
+    deps = [ makeWrapper ];
+  } ../build-support/setup-hooks/wrap-gapps-hook.sh;
 
 
   ### TOOLS
@@ -960,6 +966,12 @@ let
   asciidoc-full = appendToName "full" (asciidoc.override {
     inherit (pythonPackages) pygments;
     enableStandardFeatures = true;
+  });
+
+  asciidoc-full-with-plugins = appendToName "full-with-plugins" (asciidoc.override {
+    inherit (pythonPackages) pygments;
+    enableStandardFeatures = true;
+    enableExtraPlugins = true;
   });
 
   autossh = callPackage ../tools/networking/autossh { };
@@ -1886,6 +1898,8 @@ let
   imapsync = callPackage ../tools/networking/imapsync {
     inherit (perlPackages) MailIMAPClient;
   };
+
+  imgurbash = callPackage ../tools/graphics/imgurbash { };
 
   inadyn = callPackage ../tools/networking/inadyn { };
 
@@ -3102,7 +3116,6 @@ let
   texmacs = callPackage ../applications/editors/texmacs {
     tex = texLive; /* tetex is also an option */
     extraFonts = true;
-    guile = guile_1_8;
   };
 
   texmaker = callPackage ../applications/editors/texmaker { };
@@ -4707,7 +4720,9 @@ let
   sdcc = callPackage ../development/compilers/sdcc { };
 
   smlnjBootstrap = callPackage ../development/compilers/smlnj/bootstrap.nix { };
-  smlnj = callPackage_i686 ../development/compilers/smlnj { };
+  smlnj = if stdenv.isDarwin
+            then callPackage ../development/compilers/smlnj { }
+            else callPackage_i686 ../development/compilers/smlnj { };
 
   sqldeveloper = callPackage ../development/tools/database/sqldeveloper { };
 
@@ -7625,9 +7640,7 @@ let
     sslSupport = true;
   };
 
-  nethack = builderDefsPackage (import ../games/nethack) {
-    inherit ncurses flex bison;
-  };
+  nethack = callPackage ../games/nethack { };
 
   nettle27 = callPackage ../development/libraries/nettle/27.nix { };
   nettle = callPackage ../development/libraries/nettle { };
@@ -8270,6 +8283,8 @@ let
     zlib = null;
     gnutls = gnutls;
   });
+
+  unnethack = callPackage ../games/unnethack { };
 
   v8_3_16_14 = callPackage ../development/libraries/v8/3.16.14.nix {
     inherit (pythonPackages) gyp;
@@ -9127,15 +9142,12 @@ let
 
   postgresql = postgresql94;
 
-  postgresql90 = callPackage ../servers/sql/postgresql/9.0.x.nix { };
-
-  postgresql91 = callPackage ../servers/sql/postgresql/9.1.x.nix { };
-
-  postgresql92 = callPackage ../servers/sql/postgresql/9.2.x.nix { };
-
-  postgresql93 = callPackage ../servers/sql/postgresql/9.3.x.nix { };
-
-  postgresql94 = callPackage ../servers/sql/postgresql/9.4.x.nix { };
+  inherit (callPackages ../servers/sql/postgresql { })
+    postgresql90
+    postgresql91
+    postgresql92
+    postgresql93
+    postgresql94;
 
   postgresql_jdbc = callPackage ../servers/sql/postgresql/jdbc { };
 
@@ -10459,6 +10471,8 @@ let
 
   docbook_xml_dtd_43 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.3.nix { };
 
+  docbook_xml_dtd_44 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.4.nix { };
+
   docbook_xml_dtd_45 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.5.nix { };
 
   docbook_xml_ebnf_dtd = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook-ebnf { };
@@ -11681,6 +11695,11 @@ let
 
   hackrf = callPackage ../applications/misc/hackrf { };
 
+  hamster-time-tracker = callPackage ../applications/misc/hamster-time-tracker {
+    inherit (pythonPackages) pyxdg pygtk dbus sqlite3;
+    inherit (gnome) gnome_python;
+  };
+
   hello = callPackage ../applications/misc/hello/ex-2 { };
 
   helmholtz = callPackage ../applications/audio/pd-plugins/helmholtz { };
@@ -12229,6 +12248,10 @@ let
     ruby = ruby_1_9_3.override { cursesSupport = true; };
   };
 
+  synapse = callPackage ../applications/misc/synapse {
+    inherit (gnome3) libgee;
+  };
+
   synfigstudio = callPackage ../applications/graphics/synfigstudio {
     fontsConf = makeFontsConf { fontDirectories = [ freefont_ttf ]; };
   };
@@ -12441,6 +12464,8 @@ let
   };
 
   pond = callPackage ../applications/networking/pond { goPackages = go14Packages; };
+
+  ponymix = callPackage ../applications/audio/ponymix { };
 
   potrace = callPackage ../applications/graphics/potrace {};
 
@@ -13048,6 +13073,8 @@ let
   vimNox = lowPrio (vim_configurable.override { source = "vim-nox"; });
 
   qpdfview = callPackage ../applications/misc/qpdfview {};
+
+  qtile = callPackage ../applications/window-managers/qtile { };
 
   qvim = lowPrio (callPackage ../applications/editors/vim/qvim.nix {
     inherit (pkgs) fetchgit stdenv ncurses pkgconfig gettext
@@ -15219,5 +15246,7 @@ let
   hbase = callPackage ../servers/hbase {};
 
   udevil = callPackage ../applications/misc/udevil {};
+
+  facter = callPackage ../tools/system/facter {};
 
 }; in self; in pkgs

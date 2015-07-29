@@ -56,10 +56,10 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    description = "Service to share the `public' home directory via WebDAV";
     homepage = https://help.gnome.org/users/gnome-user-share/3.8;
+    description = "Service that exports the contents of the Public folder in your home directory on the local network";
+    maintainers = gnome3.maintainers;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ lethalman ];
     platforms = platforms.linux;
   };
 }

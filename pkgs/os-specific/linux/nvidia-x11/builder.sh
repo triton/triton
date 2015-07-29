@@ -47,8 +47,10 @@ installPhase() {
 
         # Install the kernel module.
         mkdir -p $out/lib/modules/$kernelVersion/misc
-        cp kernel/nvidia.ko $out/lib/modules/$kernelVersion/misc
-        cp kernel/uvm/nvidia-uvm.ko $out/lib/modules/$kernelVersion/misc
+        for i in kernel/nvidia.ko kernel/uvm/nvidia-uvm.ko; do
+            nuke-refs $i
+            cp $i $out/lib/modules/$kernelVersion/misc/
+        done
     fi
 
     # All libs except GUI-only are in $out now, so fixup them.
@@ -59,6 +61,12 @@ installPhase() {
       patchelf --set-rpath "$out/lib:$allLibPath" "$libname"
 
       libname_short=`echo -n "$libname" | sed 's/so\..*/so/'`
+
+      # nvidia's EGL stack seems to expect libGLESv2.so.2 to be available
+      if [ $(basename "$libname_short") == "libGLESv2.so" ]; then
+          ln -srnf "$libname" "$libname_short.2"
+      fi
+
       ln -srnf "$libname" "$libname_short"
       ln -srnf "$libname" "$libname_short.1"
     done

@@ -117,9 +117,6 @@ self: super: {
     sha256 = "1vn3xm38v2f4lzyzkadvq322f3s2yf8c88v56wpdpzfxmvlzaqr8";
   });
 
-  # Already applied in darcs repository.
-  gnuplot = appendPatch super.gnuplot ./gnuplot-fix-new-time.patch;
-
   ghcjs-prim = self.callPackage ({ mkDerivation, fetchgit, primitive }: mkDerivation {
     pname = "ghcjs-prim";
     version = "0.1.0.0";
@@ -145,11 +142,6 @@ self: super: {
   # diagrams/diagrams-core#83
   diagrams-core = overrideCabal super.diagrams-core (drv: {
     prePatch = "sed -i 's|4\.8|4.9|' diagrams-core.cabal";
-  });
-
-  misfortune = appendPatch super.misfortune (pkgs.fetchpatch {
-    url = "https://github.com/mokus0/misfortune/commit/9e0a38cf8d59a0de9ae1156034653f32099610e4.patch";
-    sha256 = "01m1l199ihq85j9pyc3n0wqv1z4my453hhhcvg3yz3gpz3lf224r";
   });
 
   timezone-series = doJailbreak super.timezone-series;

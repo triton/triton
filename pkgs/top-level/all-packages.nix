@@ -141,6 +141,8 @@ let
   # below).
   callPackage = newScope {};
 
+  callPackages = lib.callPackagesWith defaultScope;
+
   newScope = extra: lib.callPackageWith (defaultScope // extra);
 
   # Easily override this package set.
@@ -511,6 +513,10 @@ let
   enableDebugging = pkg: pkg.override { stdenv = stdenvAdapters.keepDebugInfo pkg.stdenv; };
 
   findXMLCatalogs = makeSetupHook { } ../build-support/setup-hooks/find-xml-catalogs.sh;
+
+  wrapGAppsHook = makeSetupHook {
+    deps = [ makeWrapper ];
+  } ../build-support/setup-hooks/wrap-gapps-hook.sh;
 
 
   ### TOOLS
@@ -960,6 +966,12 @@ let
   asciidoc-full = appendToName "full" (asciidoc.override {
     inherit (pythonPackages) pygments;
     enableStandardFeatures = true;
+  });
+
+  asciidoc-full-with-plugins = appendToName "full-with-plugins" (asciidoc.override {
+    inherit (pythonPackages) pygments;
+    enableStandardFeatures = true;
+    enableExtraPlugins = true;
   });
 
   autossh = callPackage ../tools/networking/autossh { };
@@ -1415,7 +1427,7 @@ let
 
   evtest = callPackage ../applications/misc/evtest { };
 
-  exempi = callPackage ../development/libraries/exempi { boost = boost155; };
+  exempi = callPackage ../development/libraries/exempi { };
 
   execline = callPackage ../tools/misc/execline { };
 
@@ -1891,6 +1903,8 @@ let
   imapsync = callPackage ../tools/networking/imapsync {
     inherit (perlPackages) MailIMAPClient;
   };
+
+  imgurbash = callPackage ../tools/graphics/imgurbash { };
 
   inadyn = callPackage ../tools/networking/inadyn { };
 
@@ -3107,7 +3121,6 @@ let
   texmacs = callPackage ../applications/editors/texmacs {
     tex = texLive; /* tetex is also an option */
     extraFonts = true;
-    guile = guile_1_8;
   };
 
   texmaker = callPackage ../applications/editors/texmaker { };
@@ -3667,7 +3680,7 @@ let
     libc = glibc;
     binutils = binutils;
     inherit coreutils zlib;
-    extraPackages = [ libcxx ];
+    extraPackages = [ libcxx libcxxabi ];
     nativeTools = false;
     nativeLibc = false;
   };
@@ -4714,7 +4727,9 @@ let
   sdcc = callPackage ../development/compilers/sdcc { };
 
   smlnjBootstrap = callPackage ../development/compilers/smlnj/bootstrap.nix { };
-  smlnj = callPackage_i686 ../development/compilers/smlnj { };
+  smlnj = if stdenv.isDarwin
+            then callPackage ../development/compilers/smlnj { }
+            else callPackage_i686 ../development/compilers/smlnj { };
 
   sqldeveloper = callPackage ../development/tools/database/sqldeveloper { };
 
@@ -6252,15 +6267,9 @@ let
 
   getdata = callPackage ../development/libraries/getdata { };
 
-  gettext = gettext_0_19;
+  gettext = callPackage ../development/libraries/gettext { };
 
-  gettext_0_17 = callPackage ../development/libraries/gettext/0.17.nix { };
-  gettext_0_18 = callPackage ../development/libraries/gettext/0.18.nix { };
-  gettext_0_19 = callPackage ../development/libraries/gettext { };
-
-  gettextWithExpat = gettext: callPackage ../development/libraries/gettext/expat.nix {
-    inherit gettext;
-  };
+  gettextWithExpat = callPackage ../development/libraries/gettext/expat.nix { };
 
   gd = callPackage ../development/libraries/gd { };
 
@@ -6408,17 +6417,15 @@ let
 
   gnutls = gnutls34;
 
-  gnutls33 = callPackage ../development/libraries/gnutls/3.3.nix {
+  gnutls33 = import ../development/libraries/gnutls/3.3.nix {
+    inherit callPackage fetchurl;
     guileBindings = config.gnutls.guile or false;
   };
 
-  gnutls34 = callPackage ../development/libraries/gnutls/3.4.nix {
+  gnutls34 = import ../development/libraries/gnutls/3.4.nix {
+    inherit callPackage fetchurl;
     guileBindings = config.gnutls.guile or false;
   };
-
-  gnutls33_with_guile = lowPrio (gnutls33.override { guileBindings = true; });
-
-  gnutls34_with_guile = lowPrio (gnutls34.override { guileBindings = true; });
 
   gpac = callPackage ../applications/video/gpac { };
 
@@ -6482,7 +6489,7 @@ let
   };
 
   gtk3 = callPackage ../development/libraries/gtk+/3.x.nix {
-    gettext = gettextWithExpat gettext_0_19;
+    gettext = gettextWithExpat;
   };
 
   gtk = pkgs.gtk2;
@@ -7626,9 +7633,7 @@ let
     sslSupport = true;
   };
 
-  nethack = builderDefsPackage (import ../games/nethack) {
-    inherit ncurses flex bison;
-  };
+  nethack = callPackage ../games/nethack { };
 
   nettle27 = callPackage ../development/libraries/nettle/27.nix { };
   nettle = callPackage ../development/libraries/nettle { };
@@ -7847,6 +7852,7 @@ let
   postgis = callPackage ../development/libraries/postgis { };
 
   protobuf = protobuf2_6;
+  protobuf3_0 = lowPrio (callPackage ../development/libraries/protobuf/3.0.nix { });
   protobuf2_6 = callPackage ../development/libraries/protobuf/2.6.nix { };
   protobuf2_5 = callPackage ../development/libraries/protobuf/2.5.nix { };
 
@@ -8270,6 +8276,8 @@ let
     zlib = null;
     gnutls = gnutls;
   });
+
+  unnethack = callPackage ../games/unnethack { };
 
   v8_3_16_14 = callPackage ../development/libraries/v8/3.16.14.nix {
     inherit (pythonPackages) gyp;
@@ -9104,17 +9112,14 @@ let
     libmemcached = null; # Detection is broken upstream
   };
 
-  postgresql = postgresql92;
+  postgresql = postgresql94;
 
-  postgresql90 = callPackage ../servers/sql/postgresql/9.0.x.nix { };
-
-  postgresql91 = callPackage ../servers/sql/postgresql/9.1.x.nix { };
-
-  postgresql92 = callPackage ../servers/sql/postgresql/9.2.x.nix { };
-
-  postgresql93 = callPackage ../servers/sql/postgresql/9.3.x.nix { };
-
-  postgresql94 = callPackage ../servers/sql/postgresql/9.4.x.nix { };
+  inherit (callPackages ../servers/sql/postgresql { })
+    postgresql90
+    postgresql91
+    postgresql92
+    postgresql93
+    postgresql94;
 
   postgresql_jdbc = callPackage ../servers/sql/postgresql/jdbc { };
 
@@ -9163,9 +9168,7 @@ let
 
   restund = callPackage ../servers/restund {};
 
-  rethinkdb = callPackage ../servers/nosql/rethinkdb {
-    boost = boost155;
-  };
+  rethinkdb = callPackage ../servers/nosql/rethinkdb { };
 
   rippled = callPackage ../servers/rippled {
     boost = boost157;
@@ -10406,6 +10409,8 @@ let
 
   docbook_xml_dtd_43 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.3.nix { };
 
+  docbook_xml_dtd_44 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.4.nix { };
+
   docbook_xml_dtd_45 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.5.nix { };
 
   docbook_xml_ebnf_dtd = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook-ebnf { };
@@ -10835,6 +10840,10 @@ let
 
   chatzilla = callPackage ../applications/networking/irc/chatzilla { };
 
+  chirp = callPackage ../applications/misc/chirp {
+    inherit (pythonPackages) pyserial pygtk;
+  };
+
   chromium = callPackage ../applications/networking/browsers/chromium {
     channel = "stable";
     pulseSupport = config.pulseaudio or true;
@@ -10949,6 +10958,8 @@ let
   };
 
   diffuse = callPackage ../applications/version-management/diffuse { };
+
+  direwolf = callPackage ../applications/misc/direwolf { };
 
   dirt = callPackage ../applications/audio/dirt {};
 
@@ -11622,6 +11633,11 @@ let
 
   hackrf = callPackage ../applications/misc/hackrf { };
 
+  hamster-time-tracker = callPackage ../applications/misc/hamster-time-tracker {
+    inherit (pythonPackages) pyxdg pygtk dbus sqlite3;
+    inherit (gnome) gnome_python;
+  };
+
   hello = callPackage ../applications/misc/hello/ex-2 { };
 
   helmholtz = callPackage ../applications/audio/pd-plugins/helmholtz { };
@@ -11692,40 +11708,25 @@ let
   };
 
   imagemagick_light = imagemagick.override {
-    libcl = null;
-    perl = null;
-    jemalloc = null;
     bzip2 = null;
     zlib = null;
     libX11 = null;
     libXext = null;
     libXt = null;
-    dejavu_fonts = null;
-    fftw = null;
-    libfpx = null;
-    djvulibre = null;
     fontconfig = null;
     freetype = null;
     ghostscript = null;
-    graphviz = null;
-    jbigkit = null;
     libjpeg = null;
     lcms2 = null;
-    openjpeg = null;
-    liblqr1 = null;
-    xz = null;
     openexr = null;
-    pango = null;
     libpng = null;
     librsvg = null;
     libtiff = null;
-    libwebp = null;
     libxml2 = null;
   };
 
   imagemagick = callPackage ../applications/graphics/ImageMagick {
-    ghostscript = if stdenv.isDarwin then null else ghostscript;
-    perl = null; # Currently Broken
+    ghostscript = null;
   };
 
   imagemagickBig = imagemagick;
@@ -11879,7 +11880,6 @@ let
     inherit (perlPackages) ArchiveZip CompressZlib;
     inherit (gnome) GConf ORBit2 gnome_vfs;
     zip = zip.override { enableNLS = false; };
-    #boost = boost155;
     #glm = glm_0954;
     bluez5 = bluez5_28;
     fontsConf = makeFontsConf {
@@ -12111,6 +12111,8 @@ let
     inherit (lua51Packages) luafilesystem lrexlib luazip luasqlite3;
   };
 
+  multimon-ng = callPackage ../applications/misc/multimon-ng { };
+
   multisync = callPackage ../applications/misc/multisync {
     inherit (gnome) ORBit2 libbonobo libgnomeui GConf;
   };
@@ -12167,6 +12169,10 @@ let
 
   sup = callPackage ../applications/networking/mailreaders/sup {
     ruby = ruby_1_9_3.override { cursesSupport = true; };
+  };
+
+  synapse = callPackage ../applications/misc/synapse {
+    inherit (gnome3) libgee;
   };
 
   synfigstudio = callPackage ../applications/graphics/synfigstudio {
@@ -12381,6 +12387,8 @@ let
   };
 
   pond = callPackage ../applications/networking/pond { goPackages = go14Packages; };
+
+  ponymix = callPackage ../applications/audio/ponymix { };
 
   potrace = callPackage ../applications/graphics/potrace {};
 
@@ -12981,6 +12989,8 @@ let
   vimNox = lowPrio (vim_configurable.override { source = "vim-nox"; });
 
   qpdfview = callPackage ../applications/misc/qpdfview {};
+
+  qtile = callPackage ../applications/window-managers/qtile { };
 
   qvim = lowPrio (callPackage ../applications/editors/vim/qvim.nix {
     inherit (pkgs) fetchgit stdenv ncurses pkgconfig gettext
@@ -14140,6 +14150,8 @@ let
 
   kde5 = kf5_stable // plasma5_stable // kdeApps_stable;
 
+  theme-vertex = callPackage ../misc/themes/vertex { };
+
   xfce = xfce4-12;
   xfce4-12 = recurseIntoAttrs (import ../desktops/xfce { inherit config pkgs newScope; });
 
@@ -15150,5 +15162,7 @@ let
   hbase = callPackage ../servers/hbase {};
 
   udevil = callPackage ../applications/misc/udevil {};
+
+  facter = callPackage ../tools/system/facter {};
 
 }; in self; in pkgs

@@ -62,10 +62,9 @@ let
   hasOsd = hasServer;
   hasRadosgw = optFcgi != null && optExpat != null && optCurl != null && optLibedit != null;
 
-  /*hasXio = (stdenv.isLinux || stdenv.isFreeBSD) &&
-    versionAtLeast version "9.0.0" &&
-    optAccelio != null && optLibibverbs != null && optLibrdmacm != null;*/
-  hasXio = false;  # Broken with xio 1.4
+  hasXio = (stdenv.isLinux || stdenv.isFreeBSD) &&
+    versionAtLeast version "10.0.0" &&
+    optAccelio != null && optLibibverbs != null && optLibrdmacm != null;
 
   hasRocksdb = versionAtLeast version "9.0.0" && optRocksdb != null;
 

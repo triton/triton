@@ -1415,6 +1415,8 @@ let
 
   enscript = callPackage ../tools/text/enscript { };
 
+  entr = callPackage ../tools/misc/entr { };
+
   eplot = callPackage ../tools/graphics/eplot { };
 
   ethtool = callPackage ../tools/misc/ethtool { };
@@ -10870,6 +10872,8 @@ let
 
   clipit = callPackage ../applications/misc/clipit { };
 
+  cmatrix = callPackage ../applications/misc/cmatrix { };
+
   bomi = callPackage ../applications/video/bomi {
     pulseSupport = config.pulseaudio or true;
   };
@@ -12473,6 +12477,24 @@ let
     monolithic = false;
     daemon = true;
     tag = "-daemon-qt5";
+  };
+
+  quassel_kf5 = callPackage ../applications/networking/irc/quassel {
+    monolithic = true;
+    daemon = false;
+    client = false;
+    withKDE = true;
+    useQt5 = true;
+    qt = qt5;
+    kf5 = kf510;
+    dconf = gnome3.dconf;
+    tag = "-kf5";
+  };
+
+  quasselClient_kf5 = quassel_kf5.override {
+    monolithic = false;
+    client = true;
+    tag = "-client-kf5";
   };
 
   quirc = callPackage ../tools/graphics/quirc {};
@@ -14821,7 +14843,7 @@ let
 
   polytable = callPackage ../tools/typesetting/tex/polytable { };
 
-  PPSSPP = callPackage ../misc/emulators/ppsspp { };
+  PPSSPP = callPackage ../misc/emulators/ppsspp { SDL = SDL2; };
 
   uae = callPackage ../misc/emulators/uae { };
 

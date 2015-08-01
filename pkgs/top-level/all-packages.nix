@@ -2140,9 +2140,7 @@ let
 
   lshw = callPackage ../tools/system/lshw { };
 
-  lxc = callPackage ../os-specific/linux/lxc {
-    wrapPython = python3Packages.wrapPython;
-  };
+  lxc = callPackage ../os-specific/linux/lxc { };
 
   lzip = callPackage ../tools/compression/lzip { };
 
@@ -3834,6 +3832,8 @@ let
     libcCross = if crossSystem != null then libcCross else null;
 
     isl = isl_0_14;
+
+    inherit (darwin) CF;
   }));
 
   gcc49 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.9 {
@@ -3851,6 +3851,8 @@ let
     isl = isl_0_11;
 
     cloog = cloog_0_18_0;
+
+    inherit (darwin) CF;
   }));
 
   gcc5 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/5 {
@@ -5608,7 +5610,9 @@ let
 
   libtool_2 = callPackage ../development/tools/misc/libtool/libtool2.nix { };
 
-  lsof = callPackage ../development/tools/misc/lsof { };
+  lsof = if stdenv.isDarwin
+    then darwin.lsof
+    else callPackage ../development/tools/misc/lsof { };
 
   ltrace = callPackage ../development/tools/misc/ltrace { };
 
@@ -9368,6 +9372,7 @@ let
   atop = callPackage ../os-specific/linux/atop { };
 
   audit = callPackage ../os-specific/linux/audit { };
+  libaudit = audit;
 
   b43Firmware_5_1_138 = callPackage ../os-specific/linux/firmware/b43-firmware/5.1.138.nix { };
 

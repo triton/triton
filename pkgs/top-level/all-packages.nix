@@ -1410,6 +1410,8 @@ let
 
   enscript = callPackage ../tools/text/enscript { };
 
+  entr = callPackage ../tools/misc/entr { };
+
   eplot = callPackage ../tools/graphics/eplot { };
 
   ethtool = callPackage ../tools/misc/ethtool { };
@@ -2133,9 +2135,7 @@ let
 
   lshw = callPackage ../tools/system/lshw { };
 
-  lxc = callPackage ../os-specific/linux/lxc {
-    wrapPython = python3Packages.wrapPython;
-  };
+  lxc = callPackage ../os-specific/linux/lxc { };
 
   lzip = callPackage ../tools/compression/lzip { };
 
@@ -3825,6 +3825,8 @@ let
     libcCross = if crossSystem != null then libcCross else null;
 
     isl = isl_0_14;
+
+    inherit (darwin) CF;
   }));
 
   gcc49 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.9 {
@@ -3842,6 +3844,8 @@ let
     isl = isl_0_11;
 
     cloog = cloog_0_18_0;
+
+    inherit (darwin) CF;
   }));
 
   gcc5 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/5 {
@@ -5599,7 +5603,9 @@ let
 
   libtool_2 = callPackage ../development/tools/misc/libtool/libtool2.nix { };
 
-  lsof = callPackage ../development/tools/misc/lsof { };
+  lsof = if stdenv.isDarwin
+    then darwin.lsof
+    else callPackage ../development/tools/misc/lsof { };
 
   ltrace = callPackage ../development/tools/misc/ltrace { };
 
@@ -10932,6 +10938,8 @@ let
 
   clipit = callPackage ../applications/misc/clipit { };
 
+  cmatrix = callPackage ../applications/misc/cmatrix { };
+
   bomi = callPackage ../applications/video/bomi {
     pulseSupport = config.pulseaudio or true;
   };
@@ -12557,6 +12565,24 @@ let
     monolithic = false;
     daemon = true;
     tag = "-daemon-qt5";
+  };
+
+  quassel_kf5 = callPackage ../applications/networking/irc/quassel {
+    monolithic = true;
+    daemon = false;
+    client = false;
+    withKDE = true;
+    useQt5 = true;
+    qt = qt5;
+    kf5 = kf510;
+    dconf = gnome3.dconf;
+    tag = "-kf5";
+  };
+
+  quasselClient_kf5 = quassel_kf5.override {
+    monolithic = false;
+    client = true;
+    tag = "-client-kf5";
   };
 
   quirc = callPackage ../tools/graphics/quirc {};
@@ -14905,7 +14931,7 @@ let
 
   polytable = callPackage ../tools/typesetting/tex/polytable { };
 
-  PPSSPP = callPackage ../misc/emulators/ppsspp { };
+  PPSSPP = callPackage ../misc/emulators/ppsspp { SDL = SDL2; };
 
   uae = callPackage ../misc/emulators/uae { };
 

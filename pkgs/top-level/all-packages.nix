@@ -12121,6 +12121,8 @@ let
 
   monkeysAudio = callPackage ../applications/audio/monkeys-audio { };
 
+  monkeysphere = callPackage ../tools/security/monkeysphere { };
+
   monodevelop = callPackage ../applications/editors/monodevelop {};
 
   monotone = callPackage ../applications/version-management/monotone {
@@ -12206,6 +12208,7 @@ let
     avahi = avahi.override {
       withLibdnssdCompat = true;
     };
+    celt = celt_0_7;
     jackSupport = config.mumble.jackSupport or false;
     speechdSupport = config.mumble.speechdSupport or false;
     pulseSupport = config.pulseaudio or false;

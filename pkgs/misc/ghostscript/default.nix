@@ -41,8 +41,6 @@ stdenv.mkDerivation rec {
     inherit sha256;
   };
 
-  patches = [ ./urw-font-files.patch ];
-
   outputs = [ "out" "doc" ];
 
   enableParallelBuilding = true;
@@ -56,6 +54,12 @@ stdenv.mkDerivation rec {
     ++ stdenv.lib.optional cupsSupport cups
     # [] # maybe sometimes jpeg2000 support
     ;
+
+  patches = [
+    ./urw-font-files.patch
+    # fetched from debian's ghostscript 9.15_dfsg-1 (called 020150707~0c0b085.patch there)
+    ./CVE-2015-3228.patch
+  ];
 
   makeFlags = [ "cups_serverroot=$(out)" "cups_serverbin=$(out)/lib/cups" ];
 

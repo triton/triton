@@ -7814,14 +7814,6 @@ let
     };
   };
 
-  openssl_1_0_2 = callPackage ../development/libraries/openssl/1.0.2.x.nix {
-    fetchurl = fetchurlBoot;
-    cryptodevHeaders = linuxPackages.cryptodev.override {
-      fetchurl = fetchurlBoot;
-      onlyHeaders = true;
-    };
-  };
-
   opensubdiv = callPackage ../development/libraries/opensubdiv { };
 
   openwsman = callPackage ../development/libraries/openwsman {};

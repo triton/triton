@@ -1918,6 +1918,8 @@ let
 
   iodine = callPackage ../tools/networking/iodine { };
 
+  ipad_charge = callPackage ../tools/misc/ipad_charge { };
+
   iperf2 = callPackage ../tools/networking/iperf/2.nix { };
   iperf3 = callPackage ../tools/networking/iperf/3.nix { };
   iperf = iperf3;
@@ -2025,6 +2027,8 @@ let
   memtester = callPackage ../tools/system/memtester { };
 
   minidlna = callPackage ../tools/networking/minidlna { };
+
+  minisign = callPackage ../tools/security/minisign { };
 
   mmv = callPackage ../tools/misc/mmv { };
 
@@ -2947,6 +2951,8 @@ let
 
   shotwell = callPackage ../applications/graphics/shotwell { };
 
+  shout = callPackage ../applications/networking/irc/shout { };
+
   shellinabox = callPackage ../servers/shellinabox { };
 
   sic = callPackage ../applications/networking/irc/sic { };
@@ -3061,6 +3067,8 @@ let
   stunnel = callPackage ../tools/networking/stunnel { };
 
   strongswan = callPackage ../tools/networking/strongswan { };
+
+  strongswanTNC = callPackage ../tools/networking/strongswan { enableTNC=true; };
 
   su = shadow.su;
 
@@ -3186,6 +3194,8 @@ let
   trickle = callPackage ../tools/networking/trickle {};
 
   trousers = callPackage ../tools/security/trousers { };
+
+  omapd = callPackage ../tools/security/omapd { };
 
   ttf2pt1 = callPackage ../tools/misc/ttf2pt1 { };
 
@@ -3868,6 +3878,8 @@ let
     libcCross = if crossSystem != null then libcCross else null;
 
     isl = isl_0_14;
+
+    inherit (darwin) CF;
   }));
 
   gfortran = if !stdenv.isDarwin then gfortran49
@@ -9577,6 +9589,8 @@ let
 
   ifplugd = callPackage ../os-specific/linux/ifplugd { };
 
+  ima-evm-utils = callPackage ../os-specific/linux/ima-evm-utils { };
+
   iomelt = callPackage ../os-specific/linux/iomelt { };
 
   iotop = callPackage ../os-specific/linux/iotop { };
@@ -10993,7 +11007,7 @@ let
   };
 
   docker = callPackage ../applications/virtualization/docker {
-    go = go_1_3;
+    go = go_1_4;
   };
 
   doodle = callPackage ../applications/search/doodle { };
@@ -12045,6 +12059,8 @@ let
 
   monkeysAudio = callPackage ../applications/audio/monkeys-audio { };
 
+  monkeysphere = callPackage ../tools/security/monkeysphere { };
+
   monodevelop = callPackage ../applications/editors/monodevelop {};
 
   monotone = callPackage ../applications/version-management/monotone {
@@ -12130,6 +12146,7 @@ let
     avahi = avahi.override {
       withLibdnssdCompat = true;
     };
+    celt = celt_0_7;
     jackSupport = config.mumble.jackSupport or false;
     speechdSupport = config.mumble.speechdSupport or false;
     pulseSupport = config.pulseaudio or false;

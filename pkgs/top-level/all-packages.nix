@@ -2141,6 +2141,7 @@ let
   lshw = callPackage ../tools/system/lshw { };
 
   lxc = callPackage ../os-specific/linux/lxc { };
+  lxd = goPackages.lxd;
 
   lzip = callPackage ../tools/compression/lzip { };
 
@@ -4000,7 +4001,7 @@ let
 
   haskell = callPackage ./haskell-packages.nix { };
 
-  haskellPackages = haskell.packages.ghc7101.override {
+  haskellPackages = haskell.packages.ghc7102.override {
     overrides = config.haskellPackageOverrides or (self: super: {});
   };
 
@@ -5676,6 +5677,8 @@ let
   peg = callPackage ../development/tools/parsing/peg { };
 
   phantomjs = callPackage ../development/tools/phantomjs { };
+
+  phantomjs2 = callPackage ../development/tools/phantomjs2 { };
 
   pmccabe = callPackage ../development/tools/misc/pmccabe { };
 
@@ -11548,14 +11551,13 @@ let
   gitAndTools = recurseIntoAttrs (import ../applications/version-management/git-and-tools {
     inherit pkgs;
   });
-  git = gitAndTools.git;
-  gitFull = gitAndTools.gitFull;
+
+  inherit (gitAndTools) git gitFull gitSVN git-cola svn2git;
+
   gitMinimal = git.override {
     withManual = false;
     pythonSupport = false;
   };
-  gitSVN = gitAndTools.gitSVN;
-  git-cola = gitAndTools.git-cola;
 
   gitRepo = callPackage ../applications/version-management/git-repo {
     python = python27;

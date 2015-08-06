@@ -3717,6 +3717,23 @@ let
     };
   };
 
+  iniparse = buildPythonPackage rec {
+
+    name = "iniparse-${version}";
+    version = "0.4";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/i/iniparse/iniparse-${version}.tar.gz";
+      sha256 = "0m60k46vr03x68jckachzsipav0bwhhnqb8715hm1cngs89fxhdb";
+    };
+
+    meta = with stdenv.lib; {
+      description = "Accessing and Modifying INI files";
+      license = licenses.mit;
+      maintainers = [ "abcz2.uprola@gmail.com" ];
+    };
+  };
+
   i3-py = buildPythonPackage rec {
     version = "0.6.4";
     name = "i3-py-${version}";
@@ -4555,6 +4572,19 @@ let
     meta = {
       maintainers = with maintainers; [ iElectric ];
     };
+  };
+
+
+  ssdeep = buildPythonPackage rec {
+    name = "ssdeep-3.1.1";
+
+    src = pkgs.fetchurl {
+      url = "http://pypi.python.org/packages/source/s/ssdeep/${name}.tar.gz";
+      sha256 = "1p9dpykmnfb73cszdiic5wbz5bmbbmkiih08pb4dah5mwq4n7im6";
+    };
+
+    buildInputs = with pkgs; [ ssdeep ];
+    propagatedBuildInputs = with self; [ cffi six ];
   };
 
 
@@ -8449,14 +8479,16 @@ let
   };
 
   numexpr = buildPythonPackage rec {
-    version = "2.4";
+    version = "2.4.3";
     name = "numexpr-${version}";
 
-    src = pkgs.fetchgit {
-      url = https://github.com/pydata/numexpr.git;
-      rev = "606cc9a110711e947d35ac2770749c00dab184c8";
-      sha256 = "1gxgkg7ncgjhnifn444iha5nrjhyr8sr6w5yp204186a1ysz858g";
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/n/numexpr/${name}.tar.gz";
+      sha256 = "3ae7191c89df40db6b0a8637a4dace7c5956bc910793a53225f985f3b443c722";
     };
+    
+    # Tests fail with python 3. https://github.com/pydata/numexpr/issues/177
+    doCheck = !isPy3k;
 
     propagatedBuildInputs = with self; [ numpy ];
 
@@ -11521,6 +11553,37 @@ let
       license = licenses.mit;
     };
   };
+
+  qscintilla = pkgs.stdenv.mkDerivation rec {
+    # TODO: Qt5 support
+    name = "qscintilla-${version}";
+    version = pkgs.qscintilla.version;
+    disabled = isPy3k || isPyPy;
+
+    src = pkgs.qscintilla.src;
+
+    buildInputs = with pkgs; [ xorg.lndir qt4 pyqt4 python ];
+
+    preConfigure = ''
+      mkdir -p $out
+      lndir ${pkgs.pyqt4} $out
+      cd Python
+      ${python.executable} ./configure-old.py \
+          --destdir $out/lib/${python.libPrefix}/site-packages/PyQt4 \
+          --apidir $out/api/${python.libPrefix} \
+          -n ${pkgs.qscintilla}/include \
+          -o ${pkgs.qscintilla}/lib \
+          --sipdir $out/share/sip
+    '';
+
+    meta = with stdenv.lib; {
+      description = "A Python binding to QScintilla, Qt based text editing control";
+      license = licenses.lgpl21Plus;
+      maintainers = [ "abcz2.uprola@gmail.com" ];
+      platforms = platforms.linux;
+    };
+  };
+
 
   qserve = buildPythonPackage rec {
     name = "qserve-0.2.8";
@@ -15138,16 +15201,15 @@ let
     doCheck = false;
   };
   tornado = buildPythonPackage rec {
-    name = "tornado-4.1";
+    name = "tornado-${version}";
+    version = "4.2.1";
 
     propagatedBuildInputs = with self; [ backports_ssl_match_hostname_3_4_0_2 certifi ];
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/t/tornado/${name}.tar.gz";
-      sha256 = "0a12f00h277zbifibnj46wf14801f573irvf6hwkgja5vspd7awr";
+      sha256 = "a16fcdc4f76b184cb82f4f9eaeeacef6113b524b26a2cb331222e4a7fa6f2969";
     };
-
-    doCheck = false;
   };
 
   tokenlib = buildPythonPackage rec {
@@ -15241,6 +15303,22 @@ let
     };
 
     propagatedBuildInputs = with self; [ pkgs.libarchive ];
+  };
+
+  libarchive-c = buildPythonPackage rec {
+    name = "libarchive-c-2.1";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/l/libarchive-c/${name}.tar.gz";
+      sha256 = "089lrz6xyrfnk55v35vis6jyqyyl77w093057djyspnd2744wi2n";
+    };
+
+    patchPhase = ''
+      substituteInPlace libarchive/ffi.py --replace \
+        "find_library('archive')" "'${pkgs.libarchive}/lib/libarchive.so'"
+    '';
+
+    buildInputs = [ pkgs.libarchive ];
   };
 
   pybrowserid = buildPythonPackage rec {
@@ -16021,12 +16099,12 @@ let
     };
   };
 
-  pythonefl_1_14 = buildPythonPackage rec {
+  pythonefl_1_15 = buildPythonPackage rec {
     name = "python-efl-${version}";
-    version = "1.14.0";
+    version = "1.15.0";
     src = pkgs.fetchurl {
       url = "http://download.enlightenment.org/rel/bindings/python/${name}.tar.gz";
-      sha256 = "1pns5mdyc069z6j1pywjasdd6v9xka5kjdl2yxpd6ds948dia0q0";
+      sha256 = "1k3vb7pb70l2v1s2mzg91wvmncq93vb04vn60pzdlrnbcns0grhi";
     };
     preConfigure = ''
       export NIX_CFLAGS_COMPILE="$(pkg-config --cflags efl) -I${self.dbus}/include/dbus-1.0 $NIX_CFLAGS_COMPILE"
@@ -16901,6 +16979,7 @@ let
   
   suds = buildPythonPackage rec {
     name = "suds-0.4";
+    disabled = isPy3k;
     
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/s/suds/suds-0.4.tar.gz";

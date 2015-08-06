@@ -1254,8 +1254,6 @@ let
 
   dcfldd = callPackage ../tools/system/dcfldd { };
 
-  debbindiff = callPackage ../tools/misc/debbindiff { };
-
   debian_devscripts = callPackage ../tools/misc/debian-devscripts {
     inherit (perlPackages) CryptSSLeay LWP TimeDate DBFile FileDesktopEntry;
   };
@@ -1298,6 +1296,8 @@ let
   dhcpcd = callPackage ../tools/networking/dhcpcd { };
 
   di = callPackage ../tools/system/di { };
+
+  diffoscope = callPackage ../tools/misc/diffoscope { };
 
   diffstat = callPackage ../tools/text/diffstat { };
 
@@ -1865,6 +1865,8 @@ let
   httpfs2 = callPackage ../tools/filesystems/httpfs { };
 
   httptunnel = callPackage ../tools/networking/httptunnel { };
+
+  hubicfuse = callPackage ../tools/filesystems/hubicfuse { };
 
   hwinfo = callPackage ../tools/system/hwinfo { };
 
@@ -5308,7 +5310,7 @@ let
 
   bam = callPackage ../development/tools/build-managers/bam {};
 
-  bazel = callPackage ../development/tools/build-managers/bazel { jdk = oraclejdk8; };
+  bazel = callPackage ../development/tools/build-managers/bazel { jdk = openjdk8; };
 
   bin_replace_string = callPackage ../development/tools/misc/bin_replace_string { };
 
@@ -6763,6 +6765,7 @@ let
     else libcanberra;
 
   libcec = callPackage ../development/libraries/libcec { };
+  libcec_platform = callPackage ../development/libraries/libcec/platform.nix { };
 
   libcello = callPackage ../development/libraries/libcello {};
 
@@ -7350,6 +7353,8 @@ let
   libtoxcore = callPackage ../development/libraries/libtoxcore/old-api { };
 
   libtoxcore-dev = callPackage ../development/libraries/libtoxcore/new-api { };
+
+  libtap = callPackage ../development/libraries/libtap { };
 
   libtsm = callPackage ../development/libraries/libtsm {
     automake = automake114x;
@@ -9298,7 +9303,9 @@ let
 
   seyren = callPackage ../servers/monitoring/seyren { };
 
-  sensu = callPackage ../servers/monitoring/sensu { };
+  sensu = callPackage ../servers/monitoring/sensu {
+    ruby = ruby_2_1;
+  };
 
   shishi = callPackage ../servers/shishi { };
 
@@ -13017,6 +13024,8 @@ let
     wrapPython = pythonPackages.wrapPython;
   };
 
+  tortoisehg = callPackage ../applications/version-management/tortoisehg { };
+
   toxic = callPackage ../applications/networking/instant-messengers/toxic { };
 
   transcode = callPackage ../applications/audio/transcode { };
@@ -13690,6 +13699,8 @@ let
   fairymax = callPackage ../games/fairymax {};
 
   flightgear = callPackage ../games/flightgear { };
+
+  freecell-solver = callPackage ../games/freecell-solver { };
 
   freeciv = callPackage ../games/freeciv { };
 

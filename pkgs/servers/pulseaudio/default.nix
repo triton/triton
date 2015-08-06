@@ -164,6 +164,7 @@ stdenv.mkDerivation rec {
 
   postInstall = optionalString libOnly ''
     rm -rf $out/{bin,share,etc,lib/{pulse-*,systemd}}
+    sed 's|-lltdl|-L${libtool}/lib -lltdl|' -i $out/lib/libpulsecore-6.0.la
   '';
 
   meta = {

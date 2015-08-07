@@ -2300,7 +2300,7 @@ let
 
     buildInputs = [ pkgs.openssl self.pretend self.cryptography_vectors
                     self.iso8601 self.pyasn1 self.pytest ];
-    propagatedBuildInputs = [ self.six ] ++ optional (!isPyPy) self.cffi;
+    propagatedBuildInputs = [ self.six ] ++ optional (!isPyPy) self.cffi_0_8;
   };
 
   cryptography_vectors = buildPythonPackage rec {
@@ -2396,6 +2396,21 @@ let
     };
 
     buildInputs = with self; [ pycparser mock pytest py ] ++ optionals (!isPyPy) [ cffi ];
+
+    meta = {
+      maintainers = with maintainers; [ iElectric ];
+    };
+  };
+
+  cffi_0_8 = buildPythonPackage rec {
+    name = "cffi-0.8.6";
+ 
+    src = pkgs.fetchurl {
+      url = "http://pypi.python.org/packages/source/c/cffi/${name}.tar.gz";
+      sha256 = "0406j3sgndmx88idv5zxkkrwfqxmjl18pj8gf47nsg4ymzixjci5";
+    };
+
+    propagatedBuildInputs = with self; [ pkgs.libffi pycparser ];
 
     meta = {
       maintainers = with maintainers; [ iElectric ];
@@ -9336,6 +9351,29 @@ let
     propagatedBuildInputs = with self; [ unittest2 ];
   };
 
+  pysftp = buildPythonPackage rec {
+    name = "pysftp-${version}";
+    version = "0.2.8";
+    disabled = isPyPy;
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/p/pysftp/${name}.tar.gz";
+      sha256 = "1d69z8yngciksch1i8rivy1xl8f6g6sb7c3kk5cm3pf8304q6hhm";
+    };
+
+    propagatedBuildInputs = with self; [ paramiko ];
+
+    meta = {
+      homepage = https://bitbucket.org/dundeemt/pysftp;
+      description = "A friendly face on SFTP";
+      license = licenses.mit;
+      longDescription = ''
+        A simple interface to SFTP. The module offers high level abstractions
+        and task based routines to handle your SFTP needs. Checkout the Cook
+        Book, in the docs, to see what pysftp can do for you.
+      '';
+    };
+  };
 
   python3pika = buildPythonPackage {
     name = "python3-pika-0.9.14";
@@ -9556,15 +9594,21 @@ let
 
 
 
-  praw = pythonPackages.buildPythonPackage rec {
-    name = "praw-2.1.21";
+  praw = buildPythonPackage rec {
+    name = "praw-3.1.0";
 
     src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/praw/praw-2.1.21.tar.gz";
-      md5 = "3b0388c9105662f8be8f1a4d3a38216d";
+      url = "https://pypi.python.org/packages/source/p/praw/${name}.zip";
+      sha256 = "1dilb3vr5llqy344i6nh7gl07wcssb5dmqrhjwhfqi1mais7b953";
     };
 
-    propagatedBuildInputs = with pythonPackages; [ update_checker six mock flake8 ];
+    propagatedBuildInputs = with self; [
+      decorator
+      flake8
+      mock
+      six
+      update_checker
+    ];
 
     # can't find the tests module?
     doCheck = false;
@@ -9573,6 +9617,8 @@ let
       description = "Python Reddit API wrapper";
       homepage = http://praw.readthedocs.org/;
       license = licenses.gpl3;
+      platforms = platforms.all;
+      maintainers = with maintainers; [ jgeerds ];
     };
   };
 
@@ -10518,6 +10564,7 @@ let
       homepage = https://github.com/seb-m/pyinotify/wiki;
       description = "Monitor filesystems events on Linux platforms with inotify";
       license = licenses.mit;
+      platforms = platforms.linux;
     };
   };
 

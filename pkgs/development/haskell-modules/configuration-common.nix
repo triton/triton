@@ -191,7 +191,7 @@ self: super: {
   vector = if pkgs.stdenv.isi686 then appendConfigureFlag super.vector "--ghc-options=-msse2" else super.vector;
 
   # cabal2nix likes to generate dependencies on hinotify when hfsevents is really required
-  # on darwin: https://github.com/NixOS/cabal2nix/issues/146
+  # on darwin: https://github.com/NixOS/cabal2nix/issues/146.
   hinotify = if pkgs.stdenv.isDarwin then self.hfsevents else super.hinotify;
 
   # hfsevents needs CoreServices in scope
@@ -324,6 +324,7 @@ self: super: {
   wai-middleware-throttle = dontCheck super.wai-middleware-throttle; # https://github.com/creichert/wai-middleware-throttle/issues/1
   xkbcommon = dontCheck super.xkbcommon;
   xmlgen = dontCheck super.xmlgen;
+  ide-backend = dontCheck super.ide-backend;
 
   # These packages try to access the network.
   amqp = dontCheck super.amqp;

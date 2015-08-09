@@ -13570,6 +13570,8 @@ let
 
   castle_combat = callPackage ../games/castle-combat { };
 
+  cataclysm-dda = callPackage ../games/cataclysm-dda { };
+
   chessdb = callPackage ../games/chessdb { };
 
   construoBase = lowPrio (callPackage ../games/construo {

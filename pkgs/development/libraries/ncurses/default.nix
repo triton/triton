@@ -4,7 +4,6 @@
 , gpm ? null
 
 # Extra Options
-, abiVersion ? "5"
 , unicode ? true
 , threaded ? false # This breaks a lot of libraries because it enables the opaque includes
 }:
@@ -14,46 +13,50 @@ let
   optGpm = stdenv.shouldUsePkg gpm;
 in
 stdenv.mkDerivation rec {
-  name = "ncurses-5.9";
+  name = "ncurses-6.0";
 
   src = fetchurl {
     url = "mirror://gnu/ncurses/${name}.tar.gz";
-    sha256 = "0fsn7xis81za62afan0vvm38bvgzg5wfmv1m86flqcj0nj7jjilh";
+    sha256 = "0q3jck7lna77z5r42f13c4xglc7azd19pxfrjrpgp2yf615w4lgm";
   };
 
-  # gcc-5.patch should be removed after 5.9
-  patches = [ ./clang.patch ./gcc-5.patch ];
+  patches = [ ./clang.patch ];
 
   nativeBuildInputs = [ pkgconfig libtool ];
   buildInputs = [ optGpm ];
 
   configureFlags = [
-    (mkWith   true        "abi-version"    abiVersion)
+    (mkWith   false       "ada"            null)
     (mkWith   true        "cxx"            null)
     (mkWith   true        "cxx-binding"    null)
-    (mkWith   false       "ada"            null)
+    (mkEnable true        "db-install"     null)
     (mkWith   true        "manpages"       null)
     (mkWith   true        "progs"          null)
     (mkWith   doCheck     "tests"          null)
     (mkWith   true        "curses-h"       null)
     (mkEnable true        "pc-files"       null)
+    # With pc-suffix
     (mkEnable true        "mixed-case"     "auto")
+    # With install-prefix
     (mkWith   true        "libtool"        null)
     (mkWith   true        "shared"         null)
     (mkWith   true        "normal"         null)
     (mkWith   false       "debug"          null)
     (mkWith   false       "profile"        null)
+    (mkWith   true        "cxx-shared"     null)
     (mkWith   false       "termlib"        null)
     (mkWith   false       "ticlib"         null)
     (mkWith   optGpm      "gpm"            null)
     (mkWith   true        "dlsym"          null)
     (mkWith   true        "sysmouse"       "maybe")
     (mkEnable true        "relink"         null)
+    # With extra-suffix
     (mkEnable true        "overwrite"      null)
     (mkEnable true        "database"       null)
     (mkWith   false       "hashed-db"      null)
     (mkWith   true        "fallbacks"      "")
     (mkWith   true        "xterm-new"      null)
+    # With xterm-kbs
     # With terminfo-dirs
     # With default-terminfo-dir
     # Enable big-core: Autodetected
@@ -84,6 +87,7 @@ stdenv.mkDerivation rec {
     (mkEnable true        "const"          null)
     (mkEnable true        "ext-colors"     null)
     (mkEnable true        "ext-mouse"      null)
+    (mkEnable true        "ext-putwin"     null)
     (mkEnable true        "no-padding"     null)
     (mkEnable false       "signed-char"    null)
     (mkEnable true        "sigwinch"       null)
@@ -95,8 +99,8 @@ stdenv.mkDerivation rec {
     (mkEnable true        "hashmap"        null)
     (mkEnable true        "colorfgbg"      null)
     (mkEnable true        "interop"        null)
-    (mkWith   false       "pthread"        null)
-    (mkEnable false       "pthreads-eintr" null)
+    (mkWith   threaded    "pthread"        null)
+    (mkEnable threaded    "pthreads-eintr" null)
     (mkEnable false       "weak-symbols"   null)
     (mkEnable threaded    "reentrant"      null)
     # With wrap-prefix
@@ -115,6 +119,7 @@ stdenv.mkDerivation rec {
     configureFlagsArray+=("--includedir=$out/include")
     export PKG_CONFIG_LIBDIR="$out/lib/pkgconfig"
     mkdir -p "$PKG_CONFIG_LIBDIR"
+    configureFlagsArray+=("--with-pkg-config-libdir=$PKG_CONFIG_LIBDIR")
   '' + optionalString stdenv.isCygwin ''
     sed -i -e 's,LIB_SUFFIX="t,LIB_SUFFIX=",' configure
   '';
@@ -153,7 +158,6 @@ stdenv.mkDerivation rec {
         for dylibtype in so dll dylib; do
           if [ -e "$out/lib/lib''${lib}$suffix.$dylibtype" ]; then
             ln -svf lib''${lib}$suffix.$dylibtype $out/lib/lib$lib$newsuffix.$dylibtype
-            ln -svf lib''${lib}$suffix.$dylibtype.${abiVersion} $out/lib/lib$lib$newsuffix.$dylibtype.${abiVersion}
           fi
         done
         for statictype in a dll.a la; do
@@ -195,6 +199,6 @@ stdenv.mkDerivation rec {
 
   passthru = {
     ldflags = "-lncurses";
-    inherit unicode abiVersion;
+    inherit unicode;
   };
 }

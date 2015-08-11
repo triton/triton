@@ -5016,13 +5016,11 @@ let
     php = php55;
   });
 
-  php54 = callPackage ../development/interpreters/php/5.4.nix { };
-
-  php55 = callPackage ../development/interpreters/php/5.5.nix { };
-
-  php56 = callPackage ../development/interpreters/php/5.6.nix { };
-
-  php70 = callPackage ../development/interpreters/php/7.0.nix { };
+  inherit (callPackages ../development/interpreters/php { })
+    php54
+    php55
+    php56
+    php70;
 
   picoc = callPackage ../development/interpreters/picoc {};
 
@@ -9033,6 +9031,8 @@ let
   nsd = callPackage ../servers/dns/nsd (config.nsd or {});
 
   nsq = callPackage ../servers/nsq { };
+
+  openpts = callPackage ../servers/openpts { };
 
   openresty = callPackage ../servers/http/openresty { };
 

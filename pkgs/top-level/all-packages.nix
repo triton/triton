@@ -2413,6 +2413,8 @@ let
     pythonPackages = python3Packages;
   };
 
+  nsjail = callPackage ../tools/security/nsjail {};
+
   nss_pam_ldapd = callPackage ../tools/networking/nss-pam-ldapd {};
 
   ntfs3g = callPackage ../tools/filesystems/ntfs-3g { };
@@ -9035,6 +9037,8 @@ let
 
   opensmtpd = callPackage ../servers/mail/opensmtpd { };
 
+  openxpki = callPackage ../servers/openxpki { };
+
   osrm-backend = callPackage ../servers/osrm-backend { };
 
   osrm-backend_luajit = callPackage ../servers/osrm-backend { luabind = luabind_luajit; };
@@ -10119,6 +10123,8 @@ let
   };
 
   perf-tools = callPackage ../os-specific/linux/perf-tools { };
+
+  pipework = callPackage ../os-specific/linux/pipework { };
 
   plymouth = callPackage ../os-specific/linux/plymouth { };
 
@@ -12469,6 +12475,8 @@ let
   purple-vk-plugin = callPackage ../applications/networking/instant-messengers/pidgin-plugins/purple-vk-plugin { };
 
   toxprpl = callPackage ../applications/networking/instant-messengers/pidgin-plugins/tox-prpl { };
+
+  pidgin-opensteamworks = callPackage ../applications/networking/instant-messengers/pidgin-plugins/pidgin-opensteamworks { };
 
   pithos = callPackage ../applications/audio/pithos {
     pythonPackages = python34Packages;

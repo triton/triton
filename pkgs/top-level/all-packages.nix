@@ -6135,6 +6135,7 @@ let
 
   epoxy = callPackage ../development/libraries/epoxy {
     inherit (xorg) utilmacros libX11;
+    mesa = mesa_noglu;
   };
 
   esdl = callPackage ../development/libraries/esdl { };

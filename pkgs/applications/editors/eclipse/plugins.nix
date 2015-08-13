@@ -127,6 +127,25 @@ rec {
     };
   };
 
+  cdt = buildEclipseUpdateSite rec {
+    name = "cdt-${version}";
+    version = "8.7.0";
+
+    src = fetchzip {
+      stripRoot = false;
+      url = "http://www.eclipse.org/downloads/download.php?r=1&nf=1&file=/tools/cdt/releases/8.7/${name}.zip";
+      sha256 = "0qpcjcl6n98x7ys4qz8p1x5hhk2ydrgh8w3r1kqk0zc7liqrx7vg";
+    };
+
+    meta = with stdenv.lib; {
+      homepage = https://eclipse.org/cdt/;
+      description = "C/C++ development tooling";
+      license = licenses.epl10;
+      platforms = platforms.all;
+      maintainers = [ maintainers.bjornfor ];
+    };
+  };
+
   checkstyle = buildEclipseUpdateSite rec {
     name = "checkstyle-${version}";
     version = "6.5.0.201504121610";
@@ -232,6 +251,25 @@ rec {
       license = licenses.epl10;
       platforms = platforms.all;
       maintainers = [ maintainers.rycee ];
+    };
+  };
+
+  gnuarmeclipse = buildEclipseUpdateSite rec {
+    name = "gnuarmeclipse-${version}";
+    version = "2.8.1-201504061754";
+
+    src = fetchzip {
+      stripRoot = false;
+      url = "mirror://sourceforge/project/gnuarmeclipse/Current%20Releases/2.x/ilg.gnuarmeclipse.repository-${version}.zip";
+      sha256 = "08jsnyis1ry62cidr9sl11ylyxbkwh834nlhx6qp31gh1l439px9";
+    };
+
+    meta = with stdenv.lib; {
+      homepage = http://gnuarmeclipse.livius.net/;
+      description = "GNU ARM Eclipse Plug-ins";
+      license = licenses.epl10;
+      platforms = platforms.all;
+      maintainers = [ maintainers.bjornfor ];
     };
   };
 

@@ -3059,6 +3059,10 @@ let
 
   stress-ng = callPackage ../tools/system/stress-ng { };
 
+  stoken = callPackage ../tools/security/stoken {
+    withGTK3 = config.stoken.withGTK3 or true;
+  };
+
   storeBackup = callPackage ../tools/backup/store-backup { };
 
   stow = callPackage ../tools/misc/stow { };
@@ -6743,6 +6747,8 @@ let
 
   libatomic_ops = callPackage ../development/libraries/libatomic_ops {};
 
+  libaudclient = callPackage ../development/libraries/libaudclient { };
+
   libav = libav_11; # branch 11 is API-compatible with branch 10
   libav_all = callPackage ../development/libraries/libav { };
   inherit (libav_all) libav_0_8 libav_9 libav_11;
@@ -9607,6 +9613,10 @@ let
 
   eject = utillinux;
 
+  fanctl = callPackage ../os-specific/linux/fanctl {
+    iproute = iproute.override { enableFan = true; };
+  };
+
   fatrace = callPackage ../os-specific/linux/fatrace { };
 
   ffadoFull = callPackage ../os-specific/linux/ffado { };
@@ -10835,6 +10845,8 @@ let
 
   bar = callPackage ../applications/window-managers/bar { };
 
+  bar-xft = callPackage ../applications/window-managers/bar/xft.nix { };
+
   baresip = callPackage ../applications/networking/instant-messengers/baresip {
     ffmpeg = ffmpeg_1;
   };
@@ -10909,6 +10921,8 @@ let
   funpidgin = carrier;
 
   cava = callPackage ../applications/audio/cava { };
+
+  cbc = callPackage ../applications/science/math/cbc { };
 
   cc1394 = callPackage ../applications/video/cc1394 { };
 
@@ -11455,6 +11469,8 @@ let
   guitarix = callPackage ../applications/audio/guitarix {
     fftw = fftwSinglePrec;
   };
+
+  gjay = callPackage ../applications/audio/gjay { };
 
   photivo = callPackage ../applications/graphics/photivo { };
 
@@ -12537,8 +12553,8 @@ let
   pythonmagick = callPackage ../applications/graphics/PythonMagick { };
 
   qbittorrent = callPackage ../applications/networking/p2p/qbittorrent {
-    boost = boost156;
-    libtorrentRasterbar = libtorrentRasterbar_0_16;
+    boost = boost;
+    libtorrentRasterbar = libtorrentRasterbar;
   };
 
   eiskaltdcpp = callPackage ../applications/networking/p2p/eiskaltdcpp { lua5 = lua5_1; };
@@ -13814,6 +13830,8 @@ let
   pong3d = callPackage ../games/pong3d { };
 
   prboom = callPackage ../games/prboom { };
+
+  qqwing = callPackage ../games/qqwing { };
 
   quake3demo = callPackage ../games/quake3/wrapper {
     name = "quake3-demo-${quake3game.name}";

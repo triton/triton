@@ -7,12 +7,12 @@
 assert alsaSupport -> alsaLib != null;
 assert jackSupport -> libjack2 != null;
 
-let version = "1.0.5"; in
+let version = "1.0.8"; in
 stdenv.mkDerivation {
   name = "fmit-${version}";
 
   src = fetchFromGitHub {
-    sha256 = "1p49ykg7mf62xrn08fqss8yr1nf53mm8w9zp2sgcy48bfsa9xbpy";
+    sha256 = "04s7xcgmi5g58lirr48vf203n1jwdxf981x1p6ysbax24qwhs2kd";
     rev = "v${version}";
     repo = "fmit";
     owner = "gillesdegottex";
@@ -22,29 +22,17 @@ stdenv.mkDerivation {
     ++ stdenv.lib.optional alsaSupport [ alsaLib ]
     ++ stdenv.lib.optional jackSupport [ libjack2 ];
 
-  postPatch = ''
-    substituteInPlace fmit.pro --replace '$$FMITVERSIONGITPRO' '${version}'
-    substituteInPlace distrib/fmit.desktop \
-      --replace "Icon=fmit" "Icon=$out/share/pixmaps/fmit.svg"
-    substituteInPlace src/main.cpp --replace "PREFIX" "\"$out\""
-  '';
-
   configurePhase = ''
+    mkdir build
+    cd build
     qmake \
       CONFIG+=${stdenv.lib.optionalString alsaSupport "acs_alsa"} \
       CONFIG+=${stdenv.lib.optionalString jackSupport "acs_jack"} \
-      fmit.pro
+      PREFIX="$out" PREFIXSHORTCUT="$out" \
+      ../fmit.pro
   '';
 
   enableParallelBuilding = true;
-
-  installPhase = ''
-    install -D fmit $out/bin/fmit
-    install -Dm644 distrib/fmit.desktop $out/share/applications/fmit.desktop
-    install -Dm644 ui/images/fmit.svg $out/share/pixmaps/fmit.svg
-    mkdir -p $out/share/fmit
-    cp -R tr $out/share/fmit
-  '';
 
   meta = with stdenv.lib; {
     inherit version;

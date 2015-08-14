@@ -2418,6 +2418,8 @@ let
     pythonPackages = python3Packages;
   };
 
+  nsjail = callPackage ../tools/security/nsjail {};
+
   nss_pam_ldapd = callPackage ../tools/networking/nss-pam-ldapd {};
 
   ntfs3g = callPackage ../tools/filesystems/ntfs-3g { };
@@ -2741,6 +2743,8 @@ let
 
   pwnat = callPackage ../tools/networking/pwnat { };
 
+  pyatspi = callPackage ../development/python-modules/pyatspi { };
+
   pycangjie = callPackage ../development/python-modules/pycangjie { };
 
   pydb = callPackage ../development/tools/pydb { };
@@ -3061,6 +3065,10 @@ let
   stress = callPackage ../tools/system/stress { };
 
   stress-ng = callPackage ../tools/system/stress-ng { };
+
+  stoken = callPackage ../tools/security/stoken {
+    withGTK3 = config.stoken.withGTK3 or true;
+  };
 
   storeBackup = callPackage ../tools/backup/store-backup { };
 
@@ -5021,13 +5029,11 @@ let
     php = php55;
   });
 
-  php54 = callPackage ../development/interpreters/php/5.4.nix { };
-
-  php55 = callPackage ../development/interpreters/php/5.5.nix { };
-
-  php56 = callPackage ../development/interpreters/php/5.6.nix { };
-
-  php70 = callPackage ../development/interpreters/php/7.0.nix { };
+  inherit (callPackages ../development/interpreters/php { })
+    php54
+    php55
+    php56
+    php70;
 
   picoc = callPackage ../development/interpreters/picoc {};
 
@@ -5738,6 +5744,8 @@ let
 
   remake = callPackage ../development/tools/build-managers/remake { };
 
+  rhc = callPackage ../development/tools/rhc { };
+
   rman = callPackage ../development/tools/misc/rman { };
 
   rr = callPackage ../development/tools/analysis/rr { };
@@ -5810,9 +5818,10 @@ let
   teensy-loader = callPackage ../development/tools/misc/teensy { };
 
   texinfo413 = callPackage ../development/tools/misc/texinfo/4.13a.nix { };
-  texinfo5 = callPackage ../development/tools/misc/texinfo/5.2.nix { };
   texinfo4 = texinfo413;
-  texinfo = texinfo5;
+  texinfo5 = callPackage ../development/tools/misc/texinfo/5.2.nix { };
+  texinfo6 = callPackage ../development/tools/misc/texinfo/6.0.nix { };
+  texinfo = texinfo6;
   texinfoInteractive = appendToName "interactive" (
     texinfo.override { interactive = true; }
   );
@@ -6748,6 +6757,8 @@ let
   libasyncns = callPackage ../development/libraries/libasyncns { };
 
   libatomic_ops = callPackage ../development/libraries/libatomic_ops {};
+
+  libaudclient = callPackage ../development/libraries/libaudclient { };
 
   libav = libav_11; # branch 11 is API-compatible with branch 10
   libav_all = callPackage ../development/libraries/libav { };
@@ -8028,6 +8039,8 @@ let
 
   rocksdb = callPackage ../development/libraries/rocksdb { };
 
+  rote = callPackage ../development/libraries/rote { };
+
   rubberband = callPackage ../development/libraries/rubberband {
     inherit (vamp) vampSDK;
   };
@@ -9019,9 +9032,13 @@ let
 
   nsq = callPackage ../servers/nsq { };
 
+  openpts = callPackage ../servers/openpts { };
+
   openresty = callPackage ../servers/http/openresty { };
 
   opensmtpd = callPackage ../servers/mail/opensmtpd { };
+
+  openxpki = callPackage ../servers/openxpki { };
 
   osrm-backend = callPackage ../servers/osrm-backend { };
 
@@ -9541,6 +9558,10 @@ let
 
   eject = utillinux;
 
+  fanctl = callPackage ../os-specific/linux/fanctl {
+    iproute = iproute.override { enableFan = true; };
+  };
+
   fatrace = callPackage ../os-specific/linux/fatrace { };
 
   ffadoFull = callPackage ../os-specific/linux/ffado { };
@@ -10059,6 +10080,8 @@ let
 
   perf-tools = callPackage ../os-specific/linux/perf-tools { };
 
+  pipework = callPackage ../os-specific/linux/pipework { };
+
   plymouth = callPackage ../os-specific/linux/plymouth { };
 
   pmount = callPackage ../os-specific/linux/pmount { };
@@ -10469,6 +10492,8 @@ let
 
   geolite-legacy = callPackage ../data/misc/geolite-legacy { };
 
+  gohufont = callPackage ../data/fonts/gohufont { };
+
   gnome_user_docs = callPackage ../data/documentation/gnome-user-docs { };
 
   inherit (gnome3) gsettings_desktop_schemas;
@@ -10767,6 +10792,8 @@ let
 
   bar = callPackage ../applications/window-managers/bar { };
 
+  bar-xft = callPackage ../applications/window-managers/bar/xft.nix { };
+
   baresip = callPackage ../applications/networking/instant-messengers/baresip {
     ffmpeg = ffmpeg_1;
   };
@@ -10841,6 +10868,8 @@ let
   funpidgin = carrier;
 
   cava = callPackage ../applications/audio/cava { };
+
+  cbc = callPackage ../applications/science/math/cbc { };
 
   cc1394 = callPackage ../applications/video/cc1394 { };
 
@@ -11387,6 +11416,8 @@ let
   guitarix = callPackage ../applications/audio/guitarix {
     fftw = fftwSinglePrec;
   };
+
+  gjay = callPackage ../applications/audio/gjay { };
 
   photivo = callPackage ../applications/graphics/photivo { };
 
@@ -12394,6 +12425,8 @@ let
 
   toxprpl = callPackage ../applications/networking/instant-messengers/pidgin-plugins/tox-prpl { };
 
+  pidgin-opensteamworks = callPackage ../applications/networking/instant-messengers/pidgin-plugins/pidgin-opensteamworks { };
+
   pithos = callPackage ../applications/audio/pithos {
     pythonPackages = python34Packages;
   };
@@ -12452,8 +12485,8 @@ let
   pythonmagick = callPackage ../applications/graphics/PythonMagick { };
 
   qbittorrent = callPackage ../applications/networking/p2p/qbittorrent {
-    boost = boost156;
-    libtorrentRasterbar = libtorrentRasterbar_0_16;
+    boost = boost;
+    libtorrentRasterbar = libtorrentRasterbar;
   };
 
   eiskaltdcpp = callPackage ../applications/networking/p2p/eiskaltdcpp { lua5 = lua5_1; };
@@ -13722,6 +13755,8 @@ let
   pong3d = callPackage ../games/pong3d { };
 
   prboom = callPackage ../games/prboom { };
+
+  qqwing = callPackage ../games/qqwing { };
 
   quake3demo = callPackage ../games/quake3/wrapper {
     name = "quake3-demo-${quake3game.name}";

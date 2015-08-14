@@ -2738,6 +2738,8 @@ let
 
   pwnat = callPackage ../tools/networking/pwnat { };
 
+  pyatspi = callPackage ../development/python-modules/pyatspi { };
+
   pycangjie = callPackage ../development/python-modules/pycangjie { };
 
   pydb = callPackage ../development/tools/pydb { };
@@ -5735,6 +5737,8 @@ let
 
   remake = callPackage ../development/tools/build-managers/remake { };
 
+  rhc = callPackage ../development/tools/rhc { };
+
   rman = callPackage ../development/tools/misc/rman { };
 
   rr = callPackage ../development/tools/analysis/rr { };
@@ -8042,6 +8046,8 @@ let
   rlog = callPackage ../development/libraries/rlog { };
 
   rocksdb = callPackage ../development/libraries/rocksdb { };
+
+  rote = callPackage ../development/libraries/rote { };
 
   rubberband = callPackage ../development/libraries/rubberband {
     inherit (vamp) vampSDK;
@@ -10547,6 +10553,8 @@ let
   gentium = callPackage ../data/fonts/gentium {};
 
   geolite-legacy = callPackage ../data/misc/geolite-legacy { };
+
+  gohufont = callPackage ../data/fonts/gohufont { };
 
   gnome_user_docs = callPackage ../data/documentation/gnome-user-docs { };
 

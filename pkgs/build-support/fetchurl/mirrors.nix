@@ -70,12 +70,8 @@ rec {
   ];
 
   savannah = [
-    http://mirrors.kernel.org/gnu/
-    http://gnu.mirrors.pair.com/gnu/
     http://gnu.mirrors.pair.com/savannah/savannah/
-    http://ftpmirror.gnu.org/
-    # master repository
-    http://ftp.gnu.org/pub/gnu/
+    http://download.savannah.gnu.org/releases/
   ];
 
   samba = [

@@ -401,7 +401,6 @@ self: super: {
   ghc-events-parallel = dontCheck super.ghc-events-parallel;    # http://hydra.cryp.to/build/496828/log/raw
   ghcid = dontCheck super.ghcid;
   ghc-imported-from = dontCheck super.ghc-imported-from;
-  ghc-mod = dontCheck super.ghc-mod;                    # http://hydra.cryp.to/build/499674/log/raw
   ghc-parmake = dontCheck super.ghc-parmake;
   gitlib-cmdline = dontCheck super.gitlib-cmdline;
   git-vogue = dontCheck super.git-vogue;
@@ -826,9 +825,6 @@ self: super: {
   # FPCO's fork of Cabal won't succeed its test suite.
   Cabal-ide-backend = dontCheck super.Cabal-ide-backend;
 
-  # https://github.com/DanielG/cabal-helper/issues/2
-  cabal-helper = overrideCabal super.cabal-helper (drv: { preCheck = "export HOME=$TMPDIR"; });
-
   # https://github.com/ekmett/comonad/issues/25
   comonad = dontCheck super.comonad;
 
@@ -910,12 +906,9 @@ self: super: {
 
   # Elm is no longer actively maintained on Hackage: https://github.com/NixOS/nixpkgs/pull/9233.
   Elm = markBroken super.Elm;
-  elm-bridge = markBroken super.elm-bridge;
   elm-build-lib = markBroken super.elm-build-lib;
   elm-compiler = markBroken super.elm-compiler;
-  elm-core-sources = markBroken super.elm-core-sources;
   elm-get = markBroken super.elm-get;
-  elm-init = markBroken super.elm-init;
   elm-make = markBroken super.elm-make;
   elm-package = markBroken super.elm-package;
   elm-reactor = markBroken super.elm-reactor;
@@ -944,5 +937,53 @@ self: super: {
 
   # https://github.com/lens/lens-aeson/issues/18
   lens-aeson = dontCheck super.lens-aeson;
+
+  # Byte-compile elisp code for Emacs.
+  ghc-mod = overrideCabal super.ghc-mod (drv: {
+    preCheck = "export HOME=$TMPDIR";
+    testToolDepends = drv.testToolDepends or [] ++ [self.cabal-install];
+    doCheck = false;            # https://github.com/kazu-yamamoto/ghc-mod/issues/335
+    executableToolDepends = drv.executableToolDepends or [] ++ [pkgs.emacs];
+    postInstall = ''
+      local lispdir=( "$out/share/"*"-${self.ghc.name}/${drv.pname}-${drv.version}/elisp" )
+      make -C $lispdir
+      mkdir -p $out/share/emacs/site-lisp
+      ln -s "$lispdir/"*.el{,c} $out/share/emacs/site-lisp/
+    '';
+  });
+
+  # Byte-compile elisp code for Emacs.
+  structured-haskell-mode = overrideCabal super.structured-haskell-mode (drv: {
+    executableToolDepends = drv.executableToolDepends or [] ++ [pkgs.emacs];
+    postInstall = ''
+      local lispdir=( "$out/share/"*"-${self.ghc.name}/${drv.pname}-${drv.version}/elisp" )
+      pushd >/dev/null $lispdir
+      for i in *.el; do
+        emacs -Q -L . -L ${pkgs.emacs24Packages.haskellMode}/share/emacs/site-lisp \
+          --batch --eval "(byte-compile-disable-warning 'cl-functions)" \
+          -f batch-byte-compile $i
+      done
+      popd >/dev/null
+      mkdir -p $out/share/emacs
+      ln -s $lispdir $out/share/emacs/site-lisp
+    '';
+  });
+
+  # Byte-compile elisp code for Emacs.
+  hindent = overrideCabal super.hindent (drv: {
+    executableToolDepends = drv.executableToolDepends or [] ++ [pkgs.emacs];
+    postInstall = ''
+      local lispdir=( "$out/share/"*"-${self.ghc.name}/${drv.pname}-${drv.version}/elisp" )
+      pushd >/dev/null $lispdir
+      for i in *.el; do
+        emacs -Q -L . -L ${pkgs.emacs24Packages.haskellMode}/share/emacs/site-lisp \
+          --batch --eval "(byte-compile-disable-warning 'cl-functions)" \
+          -f batch-byte-compile $i
+      done
+      popd >/dev/null
+      mkdir -p $out/share/emacs
+      ln -s $lispdir $out/share/emacs/site-lisp
+    '';
+  });
 
 }

@@ -2221,6 +2221,8 @@ let
 
   mfoc = callPackage ../tools/security/mfoc { };
 
+  mgba = callPackage ../misc/emulators/mgba { };
+
   minecraft = callPackage ../games/minecraft {
     useAlsa = config.minecraft.alsa or false;
   };
@@ -3045,6 +3047,8 @@ let
 
   super = callPackage ../tools/security/super { };
 
+  supertux-editor = callPackage ../applications/editors/supertux-editor { };
+
   super-user-spark = haskellPackages.callPackage ../applications/misc/super_user_spark { };
 
   ssdeep = callPackage ../tools/security/ssdeep { };
@@ -3723,6 +3727,8 @@ let
 
   eql = callPackage ../development/compilers/eql {};
 
+  elmPackages = callPackage ../development/compilers/elm { };
+
   adobe_flex_sdk = callPackage ../development/compilers/adobe-flex-sdk { };
 
   fpc = callPackage ../development/compilers/fpc { };
@@ -4190,7 +4196,9 @@ let
     isl = isl_0_12;
   };
 
-  llvmPackages_35 = callPackage ../development/compilers/llvm/3.5 { };
+  llvmPackages_35 = callPackage ../development/compilers/llvm/3.5 {
+    isl = isl_0_14;
+  };
 
   llvmPackages_36 = callPackage ../development/compilers/llvm/3.6 {
     inherit (stdenvAdapters) overrideCC;
@@ -10660,6 +10668,8 @@ let
 
   hasklig = callPackage ../data/fonts/hasklig {};
 
+  sound-theme-freedesktop = callPackage ../data/misc/sound-theme-freedesktop { };
+
   source-code-pro = callPackage ../data/fonts/source-code-pro {};
 
   source-sans-pro = callPackage ../data/fonts/source-sans-pro { };
@@ -14424,6 +14434,8 @@ let
   mathematica9 = callPackage ../applications/science/math/mathematica/9.nix { };
 
   sage = callPackage ../applications/science/math/sage { };
+
+  metis = callPackage ../development/libraries/science/math/metis {};
 
   suitesparse_4_2 = callPackage ../development/libraries/science/math/suitesparse/4.2.nix { };
   suitesparse_4_4 = callPackage ../development/libraries/science/math/suitesparse {};

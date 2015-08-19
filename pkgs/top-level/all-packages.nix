@@ -398,7 +398,7 @@ let
     inherit name sha256;
     url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
     meta.homepage = "https://github.com/${owner}/${repo}/";
-  };
+  } // { inherit rev; };
 
   fetchFromBitbucket = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: fetchzip {
     inherit name sha256;
@@ -1214,7 +1214,7 @@ let
     inherit callPackage;
   };
 
-  cudatoolkit = cudatoolkit5;
+  cudatoolkit = cudatoolkit7;
 
   curl = curlFull.override {
     fetchurl = fetchurlBoot;
@@ -2848,6 +2848,8 @@ let
 
   rkflashtool = callPackage ../tools/misc/rkflashtool { };
 
+  rkrlv2 = callPackage ../applications/audio/rkrlv2 {};
+
   rmlint = callPackage ../tools/misc/rmlint {
     inherit (pythonPackages) sphinx;
   };
@@ -4037,18 +4039,6 @@ let
 
   dotnetPackages = recurseIntoAttrs (callPackage ./dotnet-packages.nix { inherit stdenv fetchNuGet; });
 
-  go_1_0 = callPackage ../development/compilers/go/1.0.nix { };
-
-  go_1_1 =
-    if stdenv.isDarwin then
-      callPackage ../development/compilers/go/1.1-darwin.nix { }
-    else
-      callPackage ../development/compilers/go/1.1.nix { };
-
-  go_1_2 = callPackage ../development/compilers/go/1.2.nix { };
-
-  go_1_3 = callPackage ../development/compilers/go/1.3.nix { };
-
   go_1_4 = callPackage ../development/compilers/go/1.4.nix {
     inherit (darwin.apple_sdk.frameworks) Security;
   };
@@ -4057,7 +4047,7 @@ let
 
   go-repo-root = callPackage ../development/tools/misc/go-repo-root { };
 
-  gox = callPackage ../development/compilers/go/gox.nix { };
+  gox = goPackages.gox;
 
   gprolog = callPackage ../development/compilers/gprolog { };
 
@@ -8637,16 +8627,6 @@ let
 
   ### DEVELOPMENT / GO MODULES
 
-  go13Packages = recurseIntoAttrs (callPackage ./go-packages.nix {
-    go = go_1_3;
-    buildGoPackage = import ../development/go-modules/generic {
-      go = go_1_3;
-      govers = go13Packages.govers;
-      inherit lib;
-   };
-    overrides = (config.goPackageOverrides or (p: {})) pkgs;
-  });
-
   go14Packages = recurseIntoAttrs (callPackage ./go-packages.nix {
     go = go_1_4;
     buildGoPackage = import ../development/go-modules/generic {
@@ -10111,7 +10091,7 @@ let
 
   gotags = callPackage ../development/tools/gotags { };
 
-  golint = callPackage ../development/tools/golint { goPackages = go13Packages; };
+  golint = goPackages.lint;
 
   godep = callPackage ../development/tools/godep { };
 
@@ -10327,7 +10307,7 @@ let
   uclibc = callPackage ../os-specific/linux/uclibc { };
 
   uclibcCross = lowPrio (callPackage ../os-specific/linux/uclibc {
-    inherit fetchurl stdenv libiconvReal;
+    inherit fetchzip stdenv libiconvReal;
     linuxHeaders = linuxHeadersCross;
     gccCross = gccCrossStageStatic;
     cross = assert crossSystem != null; crossSystem;
@@ -12708,6 +12688,8 @@ let
 
   RhythmDelay = callPackage ../applications/audio/RhythmDelay { };
 
+  rkt = callPackage ../applications/virtualization/rkt { };
+
   rofi = callPackage ../applications/misc/rofi {
     automake = automake114x;
   };
@@ -13361,7 +13343,8 @@ let
          );
       libs = [ gstreamer gst_plugins_base ] ++ lib.optionals (cfg.enableQuakeLive or false)
              (with xlibs; [ stdenv.cc libX11 libXxf86dga libXxf86vm libXext libXt alsaLib zlib ])
-             ++ lib.optional (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) hal-flash;
+             ++ lib.optional (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) hal-flash
+             ++ lib.optional (config.pulseaudio or false) libpulseaudio;
       gst_plugins = [ gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly gst_ffmpeg ];
       gtk_modules = [ libcanberra ];
     };
@@ -14793,6 +14776,8 @@ let
   g4py = callPackage ../development/libraries/physics/geant4/g4py { };
 
   ### MISC
+
+  antimicro = callPackage ../tools/misc/antimicro { };
 
   atari800 = callPackage ../misc/emulators/atari800 { };
 

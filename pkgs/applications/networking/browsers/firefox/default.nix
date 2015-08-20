@@ -3,7 +3,7 @@
 , freetype, fontconfig, file, alsaLib, nspr, nss, libnotify
 , yasm, mesa, sqlite, unzip, makeWrapper, pysqlite
 , hunspell, libevent, libstartup_notification, libvpx
-, cairo, gst_all_1, icu, libpng, jemalloc
+, cairo, gstreamer, gst_plugins_base, icu, libpng, jemalloc, libpulseaudio
 , enableGTK3 ? false
 , debugBuild ? false
 , # If you want the resulting program to call itself "Firefox" instead
@@ -16,14 +16,14 @@
 
 assert stdenv.cc ? libc && stdenv.cc.libc != null;
 
-let version = "40.0"; in
+let version = "40.0.2"; in
 
 stdenv.mkDerivation rec {
   name = "firefox-${version}";
 
   src = fetchurl {
     url = "http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${version}/source/firefox-${version}.source.tar.bz2";
-    sha1 = "48483e5738182f8567e2b6d2e29bd6bc1812d3eb";
+    sha1 = "b5d79fa3684284bfeb7277e99c756b8688e8121d";
   };
 
   buildInputs =
@@ -34,8 +34,8 @@ stdenv.mkDerivation rec {
       xlibs.libXScrnSaver xlibs.scrnsaverproto pysqlite
       xlibs.libXext xlibs.xextproto sqlite unzip makeWrapper
       hunspell libevent libstartup_notification libvpx cairo
-      gst_all_1.gstreamer gst_all_1.gst-plugins-base icu libpng
-      jemalloc
+      gstreamer gst_plugins_base icu libpng jemalloc
+      libpulseaudio # only headers are needed
     ]
     ++ lib.optional enableGTK3 gtk3;
 
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
       "--enable-system-pixman"
       "--enable-system-sqlite"
       "--enable-system-cairo"
-      "--enable-gstreamer=1.0"
+      "--enable-gstreamer"
       "--enable-startup-notification"
       "--enable-content-sandbox"            # available since 26.0, but not much info available
       "--disable-content-sandbox-reporter"  # keeping disabled for now
@@ -65,7 +65,6 @@ stdenv.mkDerivation rec {
       "--disable-necko-wifi" # maybe we want to enable this at some point
       "--disable-installer"
       "--disable-updater"
-      "--disable-pulseaudio"
       "--enable-jemalloc"
     ]
     ++ lib.optional enableGTK3 "--enable-default-toolkit=cairo-gtk3"

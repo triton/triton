@@ -90,10 +90,10 @@ self: super: {
 
   # Setup: At least the following dependencies are missing: base <4.8
   hspec-expectations = overrideCabal super.hspec-expectations (drv: {
-    patchPhase = "sed -i -e 's|base < 4.8|base|' hspec-expectations.cabal";
+    postPatch = "sed -i -e 's|base < 4.8|base|' hspec-expectations.cabal";
   });
   utf8-string = overrideCabal super.utf8-string (drv: {
-    patchPhase = "sed -i -e 's|base >= 3 && < 4.8|base|' utf8-string.cabal";
+    postPatch = "sed -i -e 's|base >= 3 && < 4.8|base|' utf8-string.cabal";
   });
   pointfree = doJailbreak super.pointfree;
 
@@ -178,15 +178,6 @@ self: super: {
             in addBuildDepends jsaddle' [ self.glib self.gtk3 self.webkitgtk3
                                           self.webkitgtk3-javascriptcore ];
 
-  # contacted maintainer by e-mail
-  cmdlib = markBrokenVersion "0.3.5" super.cmdlib;
-  darcs-fastconvert = dontDistribute super.darcs-fastconvert;
-  ivory-backend-c = dontDistribute super.ivory-backend-c;
-  ivory-bitdata = dontDistribute super.ivory-bitdata;
-  ivory-examples = dontDistribute super.ivory-examples;
-  ivory-hw = dontDistribute super.ivory-hw;
-  laborantin-hs = dontDistribute super.laborantin-hs;
-
   # https://github.com/cartazio/arithmoi/issues/1
   arithmoi = markBroken super.arithmoi;
   NTRU = dontDistribute super.NTRU;
@@ -202,15 +193,6 @@ self: super: {
   nimber = dontDistribute super.nimber;
   pell = dontDistribute super.pell;
   quadratic-irrational = dontDistribute super.quadratic-irrational;
-
-  # https://github.com/kazu-yamamoto/ghc-mod/issues/437
-  ghc-mod = markBroken super.ghc-mod;
-  HaRe = dontDistribute super.HaRe;
-  ghc-imported-from = dontDistribute super.ghc-imported-from;
-  git-vogue = dontDistribute super.git-vogue;
-  haskell-token-utils = dontDistribute super.haskell-token-utils;
-  hbb = dontDistribute super.hbb;
-  hsdev = dontDistribute super.hsdev;
 
   # https://github.com/lymar/hastache/issues/47
   hastache = dontCheck super.hastache;
@@ -234,10 +216,10 @@ self: super: {
   containers_0_4_2_1 = markBroken super.containers_0_4_2_1;
   control-monad-free_0_5_3 = markBroken super.control-monad-free_0_5_3;
   haddock-api_2_15_0_2 = markBroken super.haddock-api_2_15_0_2;
-  optparse-applicative_0_10_0 = markBroken super.optparse-applicative_0_10_0;
   QuickCheck_1_2_0_1 = markBroken super.QuickCheck_1_2_0_1;
   seqid-streams_0_1_0 = markBroken super.seqid-streams_0_1_0;
-  vector_0_10_9_3 = markBroken super.vector_0_10_9_3;
+  vector_0_10_9_2 = markBroken super.vector_0_10_9_2;
+  hoopl_3_10_2_0 = markBroken super.hoopl_3_10_2_0;
 
   # http://hub.darcs.net/shelarcy/regex-tdfa-text/issue/1 -- upstream seems to be asleep
   regex-tdfa-text = appendPatch super.regex-tdfa-text ./patches/regex-tdfa-text.patch;
@@ -289,5 +271,8 @@ self: super: {
 
   # https://github.com/haskell/haddock/issues/427
   haddock = dontCheck super.haddock;
+
+  # The tests in vty-ui do not build, but vty-ui itself builds.
+  vty-ui = enableCabalFlag super.vty-ui "no-tests";
 
 }

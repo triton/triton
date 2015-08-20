@@ -1516,6 +1516,8 @@ let
   lp_solve = callPackage ../applications/science/math/lp_solve { };
 
   lprof = callPackage ../tools/graphics/lprof { };
+  
+  fatresize = callPackage ../tools/filesystems/fatresize {};
 
   fdk_aac = callPackage ../development/libraries/fdk-aac { };
 
@@ -3859,8 +3861,6 @@ let
     libcCross = if crossSystem != null then libcCross else null;
 
     isl = isl_0_14;
-
-    inherit (darwin) CF;
   }));
 
   gcc49 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.9 {
@@ -3878,8 +3878,6 @@ let
     isl = isl_0_11;
 
     cloog = cloog_0_18_0;
-
-    inherit (darwin) CF;
   }));
 
   gcc5 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/5 {
@@ -3895,8 +3893,6 @@ let
     libcCross = if crossSystem != null then libcCross else null;
 
     isl = isl_0_14;
-
-    inherit (darwin) CF;
   }));
 
   gfortran = if !stdenv.isDarwin then gfortran49
@@ -7814,6 +7810,7 @@ let
 
   pcl = callPackage ../development/libraries/pcl {
     vtk = vtkWithQt4;
+    inherit (xorg) libXt;
   };
 
   pcre = callPackage ../development/libraries/pcre {

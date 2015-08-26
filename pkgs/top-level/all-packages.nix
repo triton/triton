@@ -3331,6 +3331,8 @@ let
 
   welkin = callPackage ../tools/graphics/welkin {};
 
+  wsmancli = callPackage ../tools/system/wsmancli {};
+
   wolfebin = callPackage ../tools/networking/wolfebin {
     python = python2;
   };
@@ -6762,6 +6764,8 @@ let
 
   libavc1394 = callPackage ../development/libraries/libavc1394 { };
 
+  libb2 = callPackage ../development/libraries/libb2 { };
+
   libbluedevil = callPackage ../development/libraries/libbluedevil { };
 
   libbdplus = callPackage ../development/libraries/libbdplus { };
@@ -6769,6 +6773,8 @@ let
   libbluray = callPackage ../development/libraries/libbluray { };
 
   libbs2b = callPackage ../development/libraries/audio/libbs2b { };
+
+  libbson = callPackage ../development/libraries/libbson { };
 
   libcaca = callPackage ../development/libraries/libcaca { };
 
@@ -7798,6 +7804,8 @@ let
     };
   };
 
+  openwsman = callPackage ../development/libraries/openwsman {};
+
   ortp = callPackage ../development/libraries/ortp { };
 
   p11_kit = callPackage ../development/libraries/p11-kit { };
@@ -7973,12 +7981,12 @@ let
   qt5SDK = qtcreator.override {
     sdkBuild = true;
     qtLib = qt5Full;
-    withDocumentation = false; # fails to setup some paths
+    withDocumentation = true;
   };
 
   qtcreator = callPackage ../development/qtcreator {
     qtLib = qt5Full; # 3.4 only supports qt5; TODO: use modularized qt>=5.4
-    withDocumentation = false; # FIXME: fails to setup some paths
+    withDocumentation = true;
   };
 
   qtkeychain = callPackage ../development/libraries/qtkeychain { };
@@ -8097,6 +8105,8 @@ let
   SDL2_gfx = callPackage ../development/libraries/SDL2_gfx { };
 
   SDL2_ttf = callPackage ../development/libraries/SDL2_ttf { };
+
+  sblim-sfcc = callPackage ../development/libraries/sblim-sfcc {};
 
   serd = callPackage ../development/libraries/serd {};
 
@@ -10193,6 +10203,8 @@ let
 
   sassc = callPackage ../development/tools/sassc { };
 
+  scanmem = callPackage ../tools/misc/scanmem { };
+
   schedtool = callPackage ../os-specific/linux/schedtool { };
 
   sdparm = callPackage ../os-specific/linux/sdparm { };
@@ -11349,7 +11361,7 @@ let
   emacsPackagesNgGen = emacs: import ./emacs-packages.nix {
     overrides = (config.emacsPackageOverrides or (p: {})) pkgs;
 
-    inherit lib stdenv fetchurl fetchgit fetchFromGitHub emacs;
+    inherit lib stdenv fetchurl fetchgit fetchFromGitHub fetchhg emacs;
 
     trivialBuild = import ../build-support/emacs/trivial.nix {
       inherit lib stdenv emacs texinfo;
@@ -14919,6 +14931,8 @@ let
     inherit (pkgs.gnome) GConf;
   };
 
+  mongoc = callPackage ../development/libraries/mongoc { };
+
   mupen64plus = callPackage ../misc/emulators/mupen64plus { };
 
   mupen64plus1_5 = callPackage ../misc/emulators/mupen64plus/1.5.nix { };
@@ -15214,14 +15228,13 @@ let
 
   wavegain = callPackage ../applications/audio/wavegain { };
 
-  # Wine defaults to a mixed 64 / 32 build on x86_64 and to pure 32 on x86
   wine = callPackage ../misc/emulators/wine {
     wineRelease = config.wine.release or "stable";
-    wineBuild = config.wine.build or (if system == "x86_64-linux" then "wineWow" else "wine32");
+    wineBuild = config.wine.build or "wine32";
   };
   wineStable = wine.override { wineRelease = "stable"; };
-  wineUnstable = wine.override { wineRelease = "unstable"; };
-  wineStaging = wine.override { wineRelease = "staging"; };
+  wineUnstable = lowPrio (wine.override { wineRelease = "unstable"; });
+  wineStaging = lowPrio (wine.override { wineRelease = "staging"; });
 
   winetricks = callPackage ../misc/emulators/wine/winetricks.nix {
     inherit (gnome2) zenity;

@@ -1556,7 +1556,7 @@ let
 
     patches = [ ../development/python-modules/box2d/disable-test.patch ];
 
-    propagatedBuildInputs = [ pkgs.swig pkgs.box2d ];
+    propagatedBuildInputs = [ pkgs.swig2 pkgs.box2d ];
 
     meta = {
       homepage = https://code.google.com/p/pybox2d/;
@@ -5130,12 +5130,12 @@ let
 
   django_1_8 = buildPythonPackage rec {
     name = "Django-${version}";
-    version = "1.8.3";
+    version = "1.8.4";
     disabled = pythonOlder "2.7";
 
     src = pkgs.fetchurl {
       url = "http://www.djangoproject.com/m/releases/1.8/${name}.tar.gz";
-      sha256 = "1fjv63rdm45j5057zb7qj4ya4pjwig1jpbwcr0bk1mazq3y59dib";
+      sha256 = "1n3hb80v7wl5j2mry5pfald6i9z42a9c3m9405877iqw3v49csc2";
     };
 
     # error: invalid command 'test'
@@ -5155,12 +5155,12 @@ let
 
   django_1_7 = buildPythonPackage rec {
     name = "Django-${version}";
-    version = "1.7.9";
+    version = "1.7.10";
     disabled = pythonOlder "2.7";
 
     src = pkgs.fetchurl {
       url = "http://www.djangoproject.com/m/releases/1.7/${name}.tar.gz";
-      sha256 = "0q3q46yjjsqwp0ywrkbqwiac13rdvzrd5dchdbnzh3yjwpj9ygsg";
+      sha256 = "0xbwg6nyvwcbp2hvk0x3s5y823k5kizn0za1bl2rf6g6xcn7sddr";
     };
 
     # error: invalid command 'test'
@@ -5225,11 +5225,11 @@ let
 
   django_1_4 = buildPythonPackage rec {
     name = "Django-${version}";
-    version = "1.4.21";
+    version = "1.4.22";
 
     src = pkgs.fetchurl {
       url = "http://www.djangoproject.com/m/releases/1.4/${name}.tar.gz";
-      sha256 = "1x5wk3yh6ydbp4sgsxl4qjmdvcazphwkmmm99lfdb04645sijkwk";
+      sha256 = "110p1mgdcf87kyr64mr2jgmyapyg27kha74yq3wjrazwfbbwkqnh";
     };
 
     # error: invalid command 'test'
@@ -9356,16 +9356,14 @@ let
   };
 
 
-  pexpect = buildPythonPackage {
-    name = "pexpect-2.3";
+  pexpect = buildPythonPackage rec {
+    version = "3.3";
+    name = "pexpect-${version}";
 
     src = pkgs.fetchurl {
-      url = "mirror://sourceforge/pexpect/pexpect-2.3.tar.gz";
-      sha256 = "0x8bfjjqygriry1iyygm5048ykl5qpbpzqfp6i8dhkslm3ryf5fk";
+      url = "https://pypi.python.org/packages/source/p/pexpect/${name}.tar.gz";
+      sha256 = "dfea618d43e83cfff21504f18f98019ba520f330e4142e5185ef7c73527de5ba";
     };
-
-    # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://www.noah.org/wiki/Pexpect;
@@ -9415,7 +9413,7 @@ let
       sha256 = "1r34bbqbd4h72cl0cxi9w6q2nwx806wpxq220mzyiy8g45xv0ghj";
       rev = "v${version}";
       repo = "pgcli";
-      owner = "amjith";
+      owner = "dbcli";
     };
 
     propagatedBuildInputs = with self; [
@@ -9936,6 +9934,12 @@ let
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/py/${name}.tar.gz";
       md5 = "a904aabfe4765cb754f2db84ec7bb03a";
+    };
+
+    meta = {
+      description = "Library with cross-python path, ini-parsing, io, code, log facilities";
+      homepage = http://pylib.readthedocs.org/;
+      license = licenses.mit;
     };
   };
 
@@ -12514,11 +12518,11 @@ let
 
   setuptools_scm = buildPythonPackage rec {
     name = "setuptools_scm-${version}";
-    version = "1.5.4";
+    version = "1.7.0";
 
     src = pkgs.fetchurl {
-      url = "https://bitbucket.org/pypa/setuptools_scm/get/v${version}.tar.bz2";
-      sha256 = "0vd6xsl7r0vn5gpw87d31s195j33sqw5c26zdagimy9qzydgq6y6";
+      url = "https://pypi.python.org/packages/source/s/setuptools_scm/${name}.tar.gz";
+      sha256 = "f2f69c782b4f549003edf5b75b356b37f40a4e880b615996c5d9c117913d6f9c";
     };
 
     buildInputs = with self; [ pip ];

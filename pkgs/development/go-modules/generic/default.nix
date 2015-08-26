@@ -125,7 +125,7 @@ go.stdenv.mkDerivation (
     else
         pushd go/src
         while read d; do
-            go test -p $NIX_BUILD_CORES -v $d
+            go test -p $NIX_BUILD_CORES -v $d &
         done < <(find $goPackagePath -type f -name \*_test.go -exec dirname {} \; | sort | uniq)
         popd
         PIDS+=("$!")

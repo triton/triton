@@ -153,7 +153,6 @@ self: super: {
   hspec-discover = dontHaddock super.hspec-discover;
   http-client-conduit = dontHaddock super.http-client-conduit;
   http-client-multipart = dontHaddock super.http-client-multipart;
-  hxt = dontHaddock super.hxt;                                  # https://github.com/UweSchmidt/hxt/issues/38
   markdown-unlit = dontHaddock super.markdown-unlit;
   network-conduit = dontHaddock super.network-conduit;
   shakespeare-js = dontHaddock super.shakespeare-js;
@@ -195,8 +194,9 @@ self: super: {
     else super.hfsevents;
 
   # FSEvents API is very buggy and tests are unreliable. See
-  # http://openradar.appspot.com/10207999 and similar issues
-  fsnotify = if pkgs.stdenv.isDarwin then dontCheck super.fsnotify else super.fsnotify;
+  # http://openradar.appspot.com/10207999 and similar issues.
+  # https://github.com/haskell-fswatch/hfsnotify/issues/62
+  fsnotify = dontCheck super.fsnotify; # if pkgs.stdenv.isDarwin then dontCheck super.fsnotify else super.fsnotify;
 
   # the system-fileio tests use canonicalizePath, which fails in the sandbox
   system-fileio = if pkgs.stdenv.isDarwin then dontCheck super.system-fileio else super.system-fileio;
@@ -680,6 +680,10 @@ self: super: {
     '';
   });
 
+  # Tests attempt to use NPM to install from the network into
+  # /homeless-shelter. Disabled.
+  purescript = dontCheck super.purescript;
+
   # Broken by GLUT update.
   Monadius = markBroken super.Monadius;
 
@@ -825,9 +829,6 @@ self: super: {
 
   # https://github.com/ekmett/comonad/issues/25
   comonad = dontCheck super.comonad;
-
-  # https://github.com/ekmett/semigroupoids/issues/35
-  semigroupoids = disableCabalFlag super.semigroupoids "doctests";
 
   # https://github.com/jaspervdj/websockets/issues/104
   websockets = dontCheck super.websockets;
@@ -976,5 +977,11 @@ self: super: {
 
   # https://github.com/bos/configurator/issues/22
   configurator = dontCheck super.configurator;
+
+  # https://github.com/thoughtpolice/hs-ed25519/issues/9
+  ed25519 = markBroken super.ed25519;
+  hackage-repo-tool = dontDistribute super.hackage-repo-tool;
+  hackage-security = dontDistribute super.hackage-security;
+  hackage-security-HTTP = dontDistribute super.hackage-security-HTTP;
 
 }

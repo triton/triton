@@ -1236,6 +1236,8 @@ let
 
   cutter = callPackage ../tools/networking/cutter { };
 
+  cvs_fast_export = callPackage ../applications/version-management/cvs-fast-export { };
+
   dadadodo = callPackage ../tools/text/dadadodo { };
 
   daemonize = callPackage ../tools/system/daemonize { };
@@ -1339,7 +1341,7 @@ let
 
   doomseeker = callPackage ../applications/misc/doomseeker { };
 
-  drive = callPackage ../applications/networking/drive { };
+  drive = callPackage ../applications/networking/drive { goPackages = go14Packages; };
 
   driftnet = callPackage ../tools/networking/driftnet {};
 
@@ -2834,6 +2836,8 @@ let
   renameutils = callPackage ../tools/misc/renameutils { };
 
   replace = callPackage ../tools/text/replace { };
+
+  reposurgeon = callPackage ../applications/version-management/reposurgeon { };
 
   reptyr = callPackage ../os-specific/linux/reptyr {};
 
@@ -8920,8 +8924,8 @@ let
 
   bird = callPackage ../servers/bird { };
 
-  bosun = callPackage ../servers/monitoring/bosun {};
-  scollector = callPackage ../servers/monitoring/bosun/scollector.nix {};
+  bosun = callPackage ../servers/monitoring/bosun { goPackages = go14Packages; };
+  scollector = callPackage ../servers/monitoring/bosun/scollector.nix { goPackages = go14Packages; };
 
   charybdis = callPackage ../servers/irc/charybdis {};
 
@@ -10321,7 +10325,7 @@ let
   ubootJetsonTK1 = callPackage ../misc/uboot {
     defconfig = "jetson-tk1_defconfig";
     targetPlatforms = ["armv7l-linux"];
-    filesToInstall = ["u-boot-dtb-tegra.bin"];
+    filesToInstall = ["u-boot" "u-boot.dtb" "u-boot-dtb-tegra.bin" "u-boot-nodtb-tegra.bin"];
   };
 
   ubootPcduino3Nano = callPackage ../misc/uboot {
@@ -10560,13 +10564,13 @@ let
 
   docbook_xml_ebnf_dtd = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook-ebnf { };
 
+  inherit (callPackages ../data/sgml+xml/stylesheets/xslt/docbook-xsl { })
+    docbook_xsl
+    docbook_xsl_ns;
+
   docbook_xml_xslt = docbook_xsl;
 
-  docbook_xsl = callPackage ../data/sgml+xml/stylesheets/xslt/docbook-xsl { };
-
   docbook5_xsl = docbook_xsl_ns;
-
-  docbook_xsl_ns = callPackage ../data/sgml+xml/stylesheets/xslt/docbook-xsl-ns { };
 
   dosemu_fonts = callPackage ../data/fonts/dosemu-fonts { };
 
@@ -12406,6 +12410,8 @@ let
 
   ncdc = callPackage ../applications/networking/p2p/ncdc { };
 
+  ne = callPackage ../applications/editors/ne { };
+
   nedit = callPackage ../applications/editors/nedit {
     motif = lesstif;
   };
@@ -12625,6 +12631,8 @@ let
   qjackctl = callPackage ../applications/audio/qjackctl { };
 
   QmidiNet = callPackage ../applications/audio/QmidiNet { };
+
+  qmidiroute = callPackage ../applications/audio/qmidiroute { };
 
   qmmp = callPackage ../applications/audio/qmmp { };
 

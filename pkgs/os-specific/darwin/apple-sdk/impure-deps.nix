@@ -6,6 +6,7 @@ rec {
   ];
   IOKit = [
     "/System/Library/Frameworks/IOKit.framework"
+    "/usr/lib/libenergytrace.dylib"
   ];
   DiskArbitration = [
     "/System/Library/Frameworks/DiskArbitration.framework"
@@ -30,6 +31,8 @@ rec {
     "/System/Library/PrivateFrameworks/DataDetectorsCore.framework/Versions/A/DataDetectorsCore"
     "/System/Library/PrivateFrameworks/TCC.framework/Versions/A/TCC"
     "/System/Library/PrivateFrameworks/LanguageModeling.framework/Versions/A/LanguageModeling"
+    "/usr/lib/libChineseTokenizer.dylib"
+    "/usr/lib/libmarisa.dylib"
     "/usr/lib/libmecabra.dylib"
     "/usr/lib/libcmph.dylib"
     "/usr/lib/libiconv.2.dylib"
@@ -40,6 +43,8 @@ rec {
   ];
   CoreGraphics = [
     "/System/Library/Frameworks/CoreGraphics.framework"
+    "/System/Library/Frameworks/Metal.framework/Versions/A/Metal"
+    "/System/Library/PrivateFrameworks/IOAccelerator.framework/Versions/A/IOAccelerator"
     "/System/Library/PrivateFrameworks/MultitouchSupport.framework/Versions/A/MultitouchSupport"
     "/usr/lib/libbsm.0.dylib"
     "/usr/lib/libz.1.dylib"
@@ -63,7 +68,9 @@ rec {
   ];
   QuartzCore = [
     "/System/Library/Frameworks/QuartzCore.framework"
+    "/System/Library/Frameworks/CoreImage.framework"
     "/System/Library/PrivateFrameworks/CrashReporterSupport.framework/Versions/A/CrashReporterSupport"
+    "/usr/lib/libFosl_dynamic.dylib"
   ];
   PCSC = [
     "/System/Library/Frameworks/PCSC.framework"
@@ -101,8 +108,10 @@ rec {
     "/System/Library/PrivateFrameworks/UIFoundation.framework/Versions/A/UIFoundation"
     "/System/Library/PrivateFrameworks/Ubiquity.framework/Versions/A/Ubiquity"
     "/System/Library/PrivateFrameworks/login.framework/Versions/A/Frameworks/loginsupport.framework/Versions/A/loginsupport"
+    "/usr/lib/libChineseTokenizer.dylib"
     "/usr/lib/libCRFSuite.dylib"
     "/usr/lib/libOpenScriptingUtil.dylib"
+    "/usr/lib/libScreenReader.dylib"
     "/usr/lib/libarchive.2.dylib"
     "/usr/lib/libbsm.0.dylib"
     "/usr/lib/libbz2.1.0.dylib"
@@ -116,6 +125,7 @@ rec {
     "/usr/lib/libicucore.A.dylib"
     "/usr/lib/liblangid.dylib"
     "/usr/lib/liblzma.5.dylib"
+    "/usr/lib/libmarisa.dylib"
     "/usr/lib/libmecabra.dylib"
     "/usr/lib/libpam.2.dylib"
     "/usr/lib/libresolv.9.dylib"
@@ -135,6 +145,7 @@ rec {
   ];
   CoreData = [
     "/System/Library/Frameworks/CoreData.framework"
+    "/usr/lib/libcompression.dylib"
   ];
   Cocoa = [
     "/System/Library/Frameworks/Cocoa.framework"

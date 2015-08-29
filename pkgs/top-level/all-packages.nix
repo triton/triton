@@ -665,6 +665,8 @@ let
   derez = callPackage ../os-specific/darwin/derez { };
   rez = callPackage ../os-specific/darwin/rez { };
 
+  reattach-to-user-namespace = callPackage ../os-specific/darwin/reattach-to-user-namespace {};
+
   setfile = callPackage ../os-specific/darwin/setfile { };
 
   install_name_tool = callPackage ../os-specific/darwin/install_name_tool { };
@@ -5150,7 +5152,9 @@ let
   ruby_2_1_1 = callPackage ../development/interpreters/ruby/ruby-2.1.1.nix { };
   ruby_2_1_2 = callPackage ../development/interpreters/ruby/ruby-2.1.2.nix { };
   ruby_2_1_3 = callPackage ../development/interpreters/ruby/ruby-2.1.3.nix { };
-  ruby_2_1_6 = callPackage ../development/interpreters/ruby/ruby-2.1.6.nix { };
+  ruby_2_1_6 = callPackage ../development/interpreters/ruby/ruby-2.1.6.nix {
+    inherit (darwin) libobjc libunwind;
+  };
   ruby_2_2_0 = callPackage ../development/interpreters/ruby/ruby-2.2.0.nix {
     inherit (darwin) libobjc libunwind;
   };

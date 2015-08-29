@@ -35,6 +35,13 @@ stdenv.mkDerivation rec {
     sed -i 's,\(-lcap\),-L${optLibcap}/lib \1,' $out/lib/libgcrypt.la
   '';
 
+  # TODO: figure out why this is even necessary and why the missing dylib only crashes
+  # random instead of every test
+  preCheck = stdenv.lib.optionalString stdenv.isDarwin ''
+    mkdir -p $out/lib
+    cp src/.libs/libgcrypt.20.dylib $out/lib
+  '';
+
   doCheck = true;
 
   meta = {

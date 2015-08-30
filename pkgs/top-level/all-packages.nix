@@ -820,13 +820,13 @@ let
 
   clib = callPackage ../tools/package-management/clib { };
 
-  consul = goPackages.consul;
+  consul = goPackages.consul.bin // { outputs = [ "bin" ]; };
 
   consul-ui = callPackage ../servers/consul/ui.nix { };
 
-  consul-alerts = goPackages.consul-alerts;
+  consul-alerts = goPackages.consul-alerts.bin // { outputs = [ "bin" ]; };
 
-  consul-template = goPackages.consul-template;
+  consul-template = goPackages.consul-template.bin // { outputs = [ "bin" ]; };
 
   corosync = callPackage ../servers/corosync { };
 
@@ -950,7 +950,7 @@ let
 
   mcrypt = callPackage ../tools/misc/mcrypt { };
 
-  mongodb-tools = goPackages.mongo-tools;
+  mongodb-tools = goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 
   mstflint = callPackage ../tools/misc/mstflint { };
 
@@ -1698,7 +1698,8 @@ let
 
   gptfdisk = callPackage ../tools/system/gptfdisk { };
 
-  grafana = callPackage ../development/tools/misc/grafana { };
+  grafana-frontend = callPackage ../development/tools/misc/grafana { };
+  grafana-backend = pkgs.goPackages.grafana.bin // { outputs = [ "bin" ]; };
 
   grafx2 = callPackage ../applications/graphics/grafx2 {};
 
@@ -2150,7 +2151,7 @@ let
   lshw = callPackage ../tools/system/lshw { };
 
   lxc = callPackage ../os-specific/linux/lxc { };
-  lxd = goPackages.lxd;
+  lxd = goPackages.lxd.bin // { outputs = [ "bin" ]; };
 
   lzip = callPackage ../tools/compression/lzip { };
 
@@ -4069,7 +4070,7 @@ let
 
   go-repo-root = callPackage ../development/tools/misc/go-repo-root { };
 
-  gox = goPackages.gox;
+  gox = goPackages.gox.bin // { outputs = [ "bin" ]; };
 
   gprolog = callPackage ../development/compilers/gprolog { };
 
@@ -7980,11 +7981,6 @@ let
     developerBuild = true;
   });
 
-  qt4SDK = qtcreator.override {
-    sdkBuild = true;
-    qtLib = qt48Full;
-  };
-
   qt53 = callPackage ../development/libraries/qt-5/5.3 {
     mesa = mesa_noglu;
     cups = if stdenv.isLinux then cups else null;
@@ -7997,21 +7993,15 @@ let
 
   qt5 = qt54;
 
-  qt5Full = appendToName "full" (qt53.override {
-    buildDocs = true;
-    buildExamples = true;
-    buildTests = true;
-    developerBuild = true;
+  qtEnv = callPackage ../development/libraries/qt-5/qt-env.nix {};
+
+  qt5Full = appendToName "full" (qtEnv {
+    qtbase = qt5.base;
+    paths = lib.filter (x: !(builtins.isFunction x)) (lib.attrValues qt5);
   });
 
-  qt5SDK = qtcreator.override {
-    sdkBuild = true;
-    qtLib = qt5Full;
-    withDocumentation = true;
-  };
-
   qtcreator = callPackage ../development/qtcreator {
-    qtLib = qt5Full; # 3.4 only supports qt5; TODO: use modularized qt>=5.4
+    qtLib = qt54;
     withDocumentation = true;
   };
 
@@ -8672,8 +8662,8 @@ let
     go = go_1_4;
     buildGoPackage = import ../development/go-modules/generic {
       go = go_1_4;
-      govers = go14Packages.govers;
-      inherit lib;
+      govers = go14Packages.govers.bin;
+      inherit parallel lib;
     };
     overrides = (config.goPackageOverrides or (p: {})) pkgs;
   });
@@ -8682,8 +8672,8 @@ let
     go = go_1_5;
     buildGoPackage = import ../development/go-modules/generic {
       go = go_1_5;
-      govers = go15Packages.govers;
-      inherit lib;
+      govers = go15Packages.govers.bin;
+      inherit parallel lib;
     };
     overrides = (config.goPackageOverrides or (p: {})) pkgs;
   });
@@ -8967,7 +8957,7 @@ let
 
   dovecot_pigeonhole = callPackage ../servers/mail/dovecot-pigeonhole { };
 
-  etcd = goPackages.etcd;
+  etcd = goPackages.etcd.bin // { outputs = [ "bin" ]; };
 
   ejabberd = callPackage ../servers/xmpp/ejabberd {
     erlang = erlangR16;
@@ -8984,7 +8974,7 @@ let
     v8 = v8_3_24_10;
   };
 
-  etcdctl = goPackages.etcd;
+  etcdctl = etcd;
 
   exim = callPackage ../servers/mail/exim { };
 
@@ -9427,7 +9417,7 @@ let
   xorg = recurseIntoAttrs (import ../servers/x11/xorg/default.nix {
     inherit clangStdenv fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
       libxslt expat libpng zlib perl mesa_drivers spice_protocol
-      dbus libuuid openssl gperf m4 libevdev tradcpp libinput makeWrapper autoreconfHook
+      dbus libuuid openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
       autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman;
     bootstrap_cmds = if stdenv.isDarwin then darwin.bootstrap_cmds else null;
     mesa = mesa_noglu;
@@ -10142,7 +10132,7 @@ let
 
   gotags = callPackage ../development/tools/gotags { };
 
-  golint = goPackages.lint;
+  golint = goPackages.lint.bin // { outputs = [ "bin" ]; };
 
   godep = callPackage ../development/tools/godep { };
 
@@ -10860,6 +10850,7 @@ let
     callPackage = newScope { boost = boost157; };
   } );
   bitcoin = altcoins.bitcoin;
+  bitcoin-xt = altcoins.bitcoin-xt;
 
   aumix = callPackage ../applications/audio/aumix {
     gtkGUI = false;
@@ -13750,6 +13741,8 @@ let
 
   chessdb = callPackage ../games/chessdb { };
 
+  confd = pkgs.goPackages.confd.bin // { outputs = [ "bin" ]; };
+
   construoBase = lowPrio (callPackage ../games/construo {
     mesa = null;
     freeglut = null;
@@ -14502,8 +14495,6 @@ let
 
   ### SCIENCE/PROGRAMMING
 
-  kframework = callPackage ../applications/science/programming/kframework { };
-
   plm = callPackage ../applications/science/programming/plm { };
 
   ### SCIENCE/LOGIC
@@ -14612,6 +14603,8 @@ let
     inherit (ocamlPackages) findlib;
     camlp5 = ocamlPackages.camlp5_strict;
   };
+
+  hologram = pkgs.goPackages.hologram.bin // { outputs = [ "bin" ]; };
 
   isabelle = import ../applications/science/logic/isabelle {
     inherit (pkgs) stdenv fetchurl nettools perl polyml;
@@ -15214,7 +15207,7 @@ let
 
   utf8proc = callPackage ../development/libraries/utf8proc { };
 
-  vault = goPackages.vault;
+  vault = goPackages.vault.bin // { outputs = [ "bin" ]; };
 
   vbam = callPackage ../misc/emulators/vbam {
     inherit (xlibs) libpthreadstubs;

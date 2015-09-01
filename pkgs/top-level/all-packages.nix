@@ -723,6 +723,8 @@ let
 
   bc = callPackage ../tools/misc/bc { };
 
+  bdf2psf = callPackage ../tools/misc/bdf2psf { };  
+
   bcache-tools = callPackage ../tools/filesystems/bcache-tools { };
 
   bchunk = callPackage ../tools/cd-dvd/bchunk { };
@@ -2781,6 +2783,8 @@ let
   };
 
   ocz-ssd-guru = callPackage ../tools/misc/ocz-ssd-guru { };
+
+  qalculate-gtk = callPackage ../applications/science/math/qalculate-gtk { };
 
   qastools = callPackage ../tools/audio/qastools {
     qt = qt4;
@@ -14695,6 +14699,8 @@ let
   eagle = callPackage_i686 ../applications/science/electronics/eagle { };
 
   caneda = callPackage ../applications/science/electronics/caneda { };
+
+  geda = callPackage ../applications/science/electronics/geda { };
 
   gtkwave = callPackage ../applications/science/electronics/gtkwave { };
 

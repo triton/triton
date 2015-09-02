@@ -11756,6 +11756,10 @@ let
     # package, apparently some kind of plugin.
     doCheck = false;
 
+    prePatch = optionalString isPyPy ''
+      grep -rl 'utf-8-with-signature-unix' ./ | xargs sed -i -e "s|utf-8-with-signature-unix|utf-8|g"
+    '';
+
     meta = {
       description = "Pyutil, a collection of mature utilities for Python programmers";
 
@@ -12650,21 +12654,26 @@ let
 
 
   scikitlearn = buildPythonPackage rec {
-    name = "scikit-learn-0.16.1";
+    name = "scikit-learn-${version}";
+    version = "0.16.1";
 
     src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/s/scikit-learn/${name}.tar.gz";
-      sha256 = "1r761qmsq2mnl8sapplbx0ipj6i7ppr2cmz009q5rjana0liwwn0";
+      url = "https://github.com/scikit-learn/scikit-learn/archive/${version}.tar.gz";
+      sha256 = "140skabifgc7lvvj873pnzlwx0ni6q8qkrsyad2ccjb3h8rxzkih";
     };
 
     buildInputs = with self; [ nose pillow pkgs.gfortran pkgs.glibcLocales ];
     propagatedBuildInputs = with self; [ numpy scipy pkgs.openblas ];
 
-    # doctests fail on i686
-    # https://github.com/NixOS/nixpkgs/issues/9472
-    # https://github.com/scikit-learn/scikit-learn/issues/5177
-    patchPhase = ''
-      substituteInPlace setup.cfg --replace 'with-doctest = 1' 'with-doctest = 0'
+    patches = [
+      (pkgs.fetchurl {
+        url = "https://patch-diff.githubusercontent.com/raw/scikit-learn/scikit-learn/pull/5197.patch";
+        sha256 = "1b261wcvim6s0sqmd20jylwz09g5bh3xzhagjlslmv4q50qxpvkg";
+      })
+    ];
+
+    postPatch = optionalString (stdenv.isi686 && isPy3k) ''
+      sed -i -e "s|test_standard_scaler_numerical_stability|_skip_test_standard_scaler_numerical_stability|g" sklearn/preprocessing/tests/test_data.py
     '';
 
     buildPhase = ''
@@ -15062,6 +15071,25 @@ let
       license = licenses.mit;
     };
   });
+  
+  xray = buildPythonPackage rec {
+    name = "xray-${version}";
+    version = "0.6.0";
+    
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/x/xray/${name}.tar.gz";
+      sha256 = "c8c4aadb0d39662a81c259bd609f42708ff31c90012a9dd0a1f9ee56a798196f";
+    };
+    
+    buildInputs = with self; [nose];
+    propagatedBuildInputs = with self; [numpy pandas];
+    
+    meta = {
+      description = "N-D labeled arrays and datasets in Python";
+      homepage = https://github.com/xray/xray;
+      license = licenses.asl20;
+    };  
+  };
 
   youtube-dl = callPackage ../tools/misc/youtube-dl {
     # Release versions don't need pandoc because the formatted man page

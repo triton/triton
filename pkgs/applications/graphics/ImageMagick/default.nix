@@ -9,9 +9,6 @@
 }:
 
 let
-
-  version = "6.9.1-0";
-
   arch =
     if stdenv.system == "i686-linux" then "i686"
     else if stdenv.system == "x86_64-linux" || stdenv.system == "x86_64-darwin" then "x86-64"
@@ -28,10 +25,11 @@ in
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
+  version = "6.9.2-0";
 
   src = fetchurl {
     url = "mirror://imagemagick/releases/ImageMagick-${version}.tar.xz";
-    sha256 = "03lvj6rxv16xk0dpsbzvm2gq5bggkwff9wqbpkq0znihzijpax1j";
+    sha256 = "17ir8bw1j7g7srqmsz3rx780sgnc21zfn0kwyj78iazrywldx8h7";
   };
 
   outputs = [ "out" "doc" ];

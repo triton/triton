@@ -886,6 +886,8 @@ let
 
   ent = callPackage ../tools/misc/ent { };
 
+  facter = callPackage ../tools/system/facter {};
+
   fasd = callPackage ../tools/misc/fasd { };
 
   fop = callPackage ../tools/typesetting/fop { };
@@ -2537,6 +2539,8 @@ let
 
   opentracker = callPackage ../applications/networking/p2p/opentracker { };
 
+  opentsdb = callPackage ../tools/misc/opentsdb {};
+
   openvpn = callPackage ../tools/networking/openvpn { };
 
   openvpn_learnaddress = callPackage ../tools/networking/openvpn/openvpn_learnaddress.nix { };
@@ -3246,6 +3250,8 @@ let
   twitterBootstrap = callPackage ../development/web/twitter-bootstrap {};
 
   txt2man = callPackage ../tools/misc/txt2man { };
+
+  txt2tags = callPackage ../tools/text/txt2tags { };
 
   u9fs = callPackage ../servers/u9fs { };
 
@@ -5631,7 +5637,7 @@ let
 
   ino = callPackage ../development/arduino/ino { };
 
-  inotifyTools = callPackage ../development/tools/misc/inotify-tools { };
+  inotify-tools = callPackage ../development/tools/misc/inotify-tools { };
 
   intel-gpu-tools = callPackage ../development/tools/misc/intel-gpu-tools {
     inherit (xorg) libpciaccess dri2proto libX11 libXext libXv libXrandr;
@@ -6993,7 +6999,6 @@ let
 
   libev = callPackage ../development/libraries/libev { };
 
-  libevent14 = callPackage ../development/libraries/libevent/1.4.nix { };
   libevent = callPackage ../development/libraries/libevent { };
 
   libewf = callPackage ../development/libraries/libewf { };
@@ -7454,7 +7459,7 @@ let
   libusbmuxd = callPackage ../development/libraries/libusbmuxd { };
 
   libunwind = if stdenv.isDarwin
-    then callPackage ../development/libraries/libunwind/native.nix {}
+    then libunwindNative
     else callPackage ../development/libraries/libunwind { };
 
   libunwindNative = callPackage ../development/libraries/libunwind/native.nix {};
@@ -7798,6 +7803,8 @@ let
   opencv_2_1 = callPackage ../development/libraries/opencv/2.1.nix {
     libpng = libpng12;
   };
+
+  opencv3 = callPackage ../development/libraries/opencv/3.x.nix { };
 
   # this ctl version is needed by openexr_viewers
   openexr_ctl = ctl;
@@ -9009,6 +9016,8 @@ let
   ghostOne = callPackage ../servers/games/ghost-one { };
 
   groovebasin = callPackage ../applications/audio/groovebasin { };
+
+  hbase = callPackage ../servers/hbase {};
 
   ircdHybrid = callPackage ../servers/irc/ircd-hybrid { };
 
@@ -12299,6 +12308,8 @@ let
     inherit (lua51Packages) luafilesystem lrexlib luazip luasqlite3;
   };
 
+  multimarkdown = callPackage ../tools/typesetting/multimarkdown { };
+
   multimon-ng = callPackage ../applications/misc/multimon-ng { };
 
   multisync = callPackage ../applications/misc/multisync {
@@ -12778,6 +12789,8 @@ let
     unicode3Support = true;
   };
 
+  udevil = callPackage ../applications/misc/udevil {};
+
   # urxvt plugins
   urxvt_perl = callPackage ../applications/misc/rxvt_unicode-plugins/urxvt-perl { };
   urxvt_perls = callPackage ../applications/misc/rxvt_unicode-plugins/urxvt-perls { };
@@ -12900,6 +12913,8 @@ let
 
   cura = callPackage ../applications/misc/cura { };
 
+  curaLulzbot = callPackage ../applications/misc/cura/lulzbot.nix { };
+
   peru = callPackage ../applications/version-management/peru {};
 
   printrun = callPackage ../applications/misc/printrun { };
@@ -12995,7 +13010,7 @@ let
 
   symlinks = callPackage ../tools/system/symlinks { };
 
-  syncthing = callPackage ../applications/networking/syncthing { };
+  syncthing = (callPackage ../applications/networking/syncthing { }).bin // { outputs = [ "bin" ]; };
 
   # linux only by now
   synergy = callPackage ../applications/misc/synergy { };
@@ -15366,50 +15381,31 @@ let
 
   mg = callPackage ../applications/editors/mg { };
 
-}
-  ### Aliases to attributes converted to the dashed-style.
-  // lib.mapAttrs (name: builtins.trace
-    ( "Warning: using a deprecated attribute '${name}'."
-    + " CamelCase and under_scores are replaced by dashed-names"
-    + " to match the nix-env names better."))
-{ # warnings since 2015-09
+
+  # Attributes for backward compatibility.
   adobeReader = adobe-reader;
   arduino_core = arduino-core;  # added 2015-02-04
   asciidocFull = asciidoc-full;  # added 2014-06-22
   bridge_utils = bridge-utils;  # added 2015-02-20
-  clangAnalyzer = clang-analyzer;  # added 2015-02-20
-  lttngTools = lttng-tools;  # added 2014-07-31
-  lttngUst = lttng-ust;  # added 2014-07-31
-  jquery_ui = jquery-ui;  # added 2014-09-07
-  rdiff_backup = rdiff-backup;  # added 2014-11-23
-  htmlTidy = html-tidy;  # added 2014-12-06
-  libtidy = html-tidy;  # added 2014-12-21
-  speedtest_cli = speedtest-cli;  # added 2015-02-17
-  sqliteInteractive = sqlite-interactive;  # added 2014-12-06
-  nfsUtils = nfs-utils;  # added 2014-12-06
   buildbotSlave = buildbot-slave;  # added 2014-12-09
-  rssglx = rss-glx; #added 2015-03-25
-
-}
-  ### Other attribute aliases for backward compatibility.
-  // lib.mapAttrs
-      (name: builtins.trace "Warning: using a deprecated attribute '${name}'.")
-{ # warnings since 2015-09
-  youtubeDL = youtube-dl;  # added 2014-10-26
-  youtube-dl = pythonPackages.youtube-dl; # added 2015-06-07
+  cheetahTemplate = pythonPackages.cheetah; # 2015-06-15
+  clangAnalyzer = clang-analyzer;  # added 2015-02-20
   cool-old-term = cool-retro-term; # added 2015-01-31
-
   haskell-ng = haskell;                 # 2015-04-19
   haskellngPackages = haskellPackages;  # 2015-04-19
+  htmlTidy = html-tidy;  # added 2014-12-06
   inherit (haskell.compiler) jhc uhc;   # 2015-05-15
-  cheetahTemplate = pythonPackages.cheetah; # 2015-06-15
-
-  opentsdb = callPackage ../tools/misc/opentsdb {};
-
-  hbase = callPackage ../servers/hbase {};
-
-  udevil = callPackage ../applications/misc/udevil {};
-
-  facter = callPackage ../tools/system/facter {};
+  inotifyTools = inotify-tools;
+  jquery_ui = jquery-ui;  # added 2014-09-07
+  libtidy = html-tidy;  # added 2014-12-21
+  lttngTools = lttng-tools;  # added 2014-07-31
+  lttngUst = lttng-ust;  # added 2014-07-31
+  nfsUtils = nfs-utils;  # added 2014-12-06
+  rdiff_backup = rdiff-backup;  # added 2014-11-23
+  rssglx = rss-glx; #added 2015-03-25
+  speedtest_cli = speedtest-cli;  # added 2015-02-17
+  sqliteInteractive = sqlite-interactive;  # added 2014-12-06
+  youtube-dl = pythonPackages.youtube-dl; # added 2015-06-07
+  youtubeDL = youtube-dl;  # added 2014-10-26
 
 }; in self; in pkgs

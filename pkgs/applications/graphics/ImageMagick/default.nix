@@ -93,7 +93,7 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     (cd "$out/include" && ln -s ImageMagick* ImageMagick)
-  '' + lib.optionalString (ghostscript != null) ''
+  '' + stdenv.lib.optionalString (ghostscript != null) ''
     for la in $out/lib/*.la; do
       sed 's|-lgs|-L${ghostscript}/lib -lgs|' -i $la
     done

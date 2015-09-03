@@ -91,7 +91,13 @@ stdenv.mkDerivation rec {
     ++ (stdenv.lib.optional (bzip2 != null) bzip2)
     ;
 
-  postInstall = ''(cd "$out/include" && ln -s ImageMagick* ImageMagick)'';
+  postInstall = ''
+    (cd "$out/include" && ln -s ImageMagick* ImageMagick)
+  '' + lib.optionalString (ghostscript != null) ''
+    for la in $out/lib/*.la; do
+      sed 's|-lgs|-L${ghostscript}/lib -lgs|' -i $la
+    done
+  '';
 
   meta = with stdenv.lib; {
     homepage = http://www.imagemagick.org/;

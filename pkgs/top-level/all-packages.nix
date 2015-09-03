@@ -611,7 +611,7 @@ let
 
   ascii = callPackage ../tools/text/ascii { };
 
-  asciinema = callPackage ../tools/misc/asciinema { };
+  asciinema = goPackages.asciinema.bin // { outputs = [ "bin" ]; };
 
   asymptote = callPackage ../tools/graphics/asymptote {
     texLive = texLiveAggregationFun {
@@ -894,7 +894,7 @@ let
 
   filter_audio = callPackage ../development/libraries/filter_audio { };
 
-  fzf = callPackage ../tools/misc/fzf { };
+  fzf = goPackages.fzf.bin // { outputs = [ "bin" ]; };
 
   gist = callPackage ../tools/text/gist { };
 
@@ -1257,6 +1257,8 @@ let
 
   dbench = callPackage ../development/tools/misc/dbench { };
 
+  dclxvi = callPackage ../development/libraries/dclxvi { };
+
   dcraw = callPackage ../tools/graphics/dcraw { };
 
   dcfldd = callPackage ../tools/system/dcfldd { };
@@ -1486,7 +1488,7 @@ let
     inherit (perlPackages) ImageExifTool JSON;
   };
 
-  flannel = callPackage ../tools/networking/flannel { };
+  flannel = goPackages.flannel.bin // { outputs = [ "bin" ]; };
 
   flashbench = callPackage ../os-specific/linux/flashbench { };
 
@@ -1690,7 +1692,7 @@ let
 
   goaccess = callPackage ../tools/misc/goaccess { };
 
-  go-mtpfs = callPackage ../tools/filesystems/go-mtpfs { };
+  go-mtpfs = goPackages.mtpfs.bin // { outputs = [ "bin" ]; };
 
   googleAuthenticator = callPackage ../os-specific/linux/google-authenticator { };
 
@@ -1705,7 +1707,7 @@ let
   gptfdisk = callPackage ../tools/system/gptfdisk { };
 
   grafana-frontend = callPackage ../development/tools/misc/grafana { };
-  grafana-backend = pkgs.goPackages.grafana.bin // { outputs = [ "bin" ]; };
+  grafana-backend = goPackages.grafana.bin // { outputs = [ "bin" ]; };
 
   grafx2 = callPackage ../applications/graphics/grafx2 {};
 
@@ -2382,7 +2384,7 @@ let
     inherit gnumake3;
   };
 
-  ngrok = callPackage ../tools/misc/ngrok { };
+  ngrok = goPackages.ngrok.bin // { outputs = [ "bin" ]; };
 
   noip = callPackage ../tools/networking/noip { };
 
@@ -6188,8 +6190,6 @@ let
 
   dssi = callPackage ../development/libraries/dssi {};
 
-  dragonegg = llvmPackages_35.dragonegg;
-
   dxflib = callPackage ../development/libraries/dxflib {};
 
   eigen = callPackage ../development/libraries/eigen {};
@@ -6655,6 +6655,8 @@ let
   hsqldb = callPackage ../development/libraries/java/hsqldb { };
 
   hstr = callPackage ../applications/misc/hstr { };
+
+  htmlcxx = callPackage ../development/libraries/htmlcxx { };
 
   http-parser = callPackage ../development/libraries/http-parser { inherit (pythonPackages) gyp; };
 
@@ -7569,9 +7571,7 @@ let
 
   libxslt = callPackage ../development/libraries/libxslt { };
 
-  libixp_for_wmii = lowPrio (import ../development/libraries/libixp_for_wmii {
-    inherit fetchurl stdenv;
-  });
+  libixp_hg = callPackage ../development/libraries/libixp-hg { };
 
   libyaml = callPackage ../development/libraries/libyaml { };
 
@@ -9118,7 +9118,7 @@ let
 
   nsd = callPackage ../servers/dns/nsd (config.nsd or {});
 
-  nsq = callPackage ../servers/nsq { };
+  nsq = goPackages.nsq.bin // { outputs = [ "bin" ]; };
 
   openpts = callPackage ../servers/openpts { };
 
@@ -9382,7 +9382,7 @@ let
 
   shairport-sync = callPackage ../servers/shairport-sync { };
 
-  serfdom = callPackage ../servers/serfdom { };
+  serfdom = goPackages.serf.bin // { outputs = [ "bin" ]; };
 
   seyren = callPackage ../servers/monitoring/seyren { };
 
@@ -9858,16 +9858,6 @@ let
       ];
   };
 
-  linux_4_0 = makeOverridable (import ../os-specific/linux/kernel/linux-4.0.nix) {
-    inherit fetchurl stdenv perl buildLinux;
-    kernelPatches = [ kernelPatches.bridge_stp_helper ]
-      ++ lib.optionals ((platform.kernelArch or null) == "mips")
-      [ kernelPatches.mips_fpureg_emu
-        kernelPatches.mips_fpu_sigill
-        kernelPatches.mips_ext3_n32
-      ];
-  };
-
   linux_4_1 = makeOverridable (import ../os-specific/linux/kernel/linux-4.1.nix) {
     inherit fetchurl stdenv perl buildLinux;
     kernelPatches = [ kernelPatches.bridge_stp_helper ]
@@ -10063,7 +10053,6 @@ let
   linuxPackages_3_12 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_12 linuxPackages_3_12);
   linuxPackages_3_14 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_14 linuxPackages_3_14);
   linuxPackages_3_18 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_18 linuxPackages_3_18);
-  linuxPackages_4_0 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_0 linuxPackages_4_0);
   linuxPackages_4_1 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_1 linuxPackages_4_1);
   linuxPackages_4_2 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_2 linuxPackages_4_2);
   linuxPackages_testing = recurseIntoAttrs (linuxPackagesFor pkgs.linux_testing linuxPackages_testing);
@@ -11588,14 +11577,15 @@ let
 
   filezilla = callPackage ../applications/networking/ftp/filezilla { };
 
-  firefox = callPackage ../applications/networking/browsers/firefox {
+  inherit (callPackages ../applications/networking/browsers/firefox {
     inherit (gnome) libIDL;
     inherit (pythonPackages) pysqlite;
     libpng = libpng_apng;
     enableGTK3 = false;
-  };
+  }) firefox firefox-esr;
 
-  firefoxWrapper = wrapFirefox { browser = pkgs.firefox; };
+  firefox-wrapper = wrapFirefox { browser = pkgs.firefox; };
+  firefox-esr-wrapper = wrapFirefox { browser = pkgs.firefox-esr; };
 
   firefox-bin = callPackage ../applications/networking/browsers/firefox-bin {
     gconf = pkgs.gnome.GConf;
@@ -12616,7 +12606,7 @@ let
     inherit (xorg) libXpm;
   };
 
-  pond = callPackage ../applications/networking/pond { };
+  pond = goPackages.pond.bin // { outputs = [ "bin" ]; };
 
   ponymix = callPackage ../applications/audio/ponymix { };
 
@@ -13388,19 +13378,7 @@ let
 
   wmctrl = callPackage ../tools/X11/wmctrl { };
 
-  # I'm keen on wmiimenu only  >wmii-3.5 no longer has it...
-  wmiimenu = import ../applications/window-managers/wmii31 {
-    libixp = libixp_for_wmii;
-    inherit fetchurl /* fetchhg */ stdenv gawk;
-    inherit (xlibs) libX11;
-  };
-
-  wmiiSnap = import ../applications/window-managers/wmii {
-    libixp = libixp_for_wmii;
-    inherit fetchurl /* fetchhg */ stdenv gawk;
-    inherit (xlibs) libX11 xextproto libXt libXext;
-    includeUnpack = config.stdenv.includeUnpack or false;
-  };
+  wmii_hg = callPackage ../applications/window-managers/wmii-hg { };
 
   wordnet = callPackage ../applications/misc/wordnet { };
 
@@ -13788,7 +13766,7 @@ let
 
   chessdb = callPackage ../games/chessdb { };
 
-  confd = pkgs.goPackages.confd.bin // { outputs = [ "bin" ]; };
+  confd = goPackages.confd.bin // { outputs = [ "bin" ]; };
 
   construoBase = lowPrio (callPackage ../games/construo {
     mesa = null;
@@ -13888,6 +13866,8 @@ let
   };
 
   kobodeluxe = callPackage ../games/kobodeluxe { };
+
+  lgogdownloader = callPackage ../games/lgogdownloader { };
 
   lincity = builderDefsPackage (import ../games/lincity) {
     inherit (xlibs) libX11 libXext xextproto
@@ -14651,7 +14631,7 @@ let
     camlp5 = ocamlPackages.camlp5_strict;
   };
 
-  hologram = pkgs.goPackages.hologram.bin // { outputs = [ "bin" ]; };
+  hologram = goPackages.hologram.bin // { outputs = [ "bin" ]; };
 
   isabelle = import ../applications/science/logic/isabelle {
     inherit (pkgs) stdenv fetchurl nettools perl polyml;
@@ -15413,6 +15393,7 @@ let
   cheetahTemplate = pythonPackages.cheetah; # 2015-06-15
   clangAnalyzer = clang-analyzer;  # added 2015-02-20
   cool-old-term = cool-retro-term; # added 2015-01-31
+  firefoxWrapper = firefox-wrapper;
   haskell-ng = haskell;                 # 2015-04-19
   haskellngPackages = haskellPackages;  # 2015-04-19
   htmlTidy = html-tidy;  # added 2014-12-06

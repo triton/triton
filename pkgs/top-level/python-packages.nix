@@ -1521,12 +1521,12 @@ let
   };
 
   botocore = buildPythonPackage rec {
-    version = "1.1.4";
+    version = "1.1.10";
     name = "botocore-${version}";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/b/botocore/${name}.tar.gz";
-      sha256 = "1wbbaj0y6bfzsh61hgnnssn5j8m93r6r2m5r1jmlf6iz3l9gqkkp";
+      sha256 = "0syj0m0l7k4wa0n9h7h8ywayjv9fgpn5wyzpdriws0j417y1zlyc";
     };
 
     propagatedBuildInputs =
@@ -7274,6 +7274,33 @@ let
   };
 
 
+  jsonpath_rw = buildPythonPackage rec {
+    name = "jsonpath-rw-${version}";
+    version = "1.4.0";
+    disabled = isPyPy;
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/j/jsonpath-rw/${name}.tar.gz";
+      md5 = "3a807e05c2c12158fc6bb0a402fd5778";
+    };
+
+    propagatedBuildInputs = with self; [
+      ply
+      six
+      decorator
+    ];
+
+    # ImportError: No module named tests
+    doCheck = false;
+
+    meta = {
+      homepage = https://github.com/kennknowles/python-jsonpath-rw;
+      description = "A robust and significantly extended implementation of JSONPath for Python, with a clear AST for metaprogramming";
+      license = licenses.asl20;
+    };
+  };
+
+
   keyring = buildPythonPackage rec {
     name = "keyring-3.3";
 
@@ -13010,8 +13037,8 @@ let
 
     doCheck = false;
 
-    buildInputs = with self; [ pbr oslosphinx ];
-    propagatedBuildInputs = with self; [ six argparse ];
+    buildInputs = with self; [ oslosphinx ];
+    propagatedBuildInputs = with self; [ pbr six argparse ];
 
     meta = {
       description = "Manage dynamic plugins for Python applications";
@@ -14828,6 +14855,7 @@ let
   web = buildPythonPackage rec {
     version = "0.37";
     name = "web.py-${version}";
+    disabled = isPy3k;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/w/web.py/web.py-${version}.tar.gz";

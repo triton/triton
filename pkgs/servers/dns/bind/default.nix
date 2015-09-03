@@ -14,7 +14,7 @@
 
 with stdenv;
 let
-  version = "9.10.2-P3";
+  version = "9.10.2-P4";
 
   toolsOnly = suffix == "tools";
 
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
-    sha256 = "0jhxbsdb8q5q0vn5aga53ixz2iy9zz8p5vwkzvngymd4vmk9l1vq";
+    sha256 = "1f4w89qmsgql88nbykz82p2nwbf5m889vzlfy9bjj8gg3pn222y0";
   };
 
   patchPhase = ''

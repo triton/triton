@@ -6300,7 +6300,9 @@ let
 
   fontconfig-ultimate = callPackage ../development/libraries/fontconfig-ultimate {};
 
-  folly = callPackage ../development/libraries/folly { };
+  folly = callPackage ../development/libraries/folly {
+    boost = boost157;
+  };
 
   makeFontsConf = let fontconfig_ = fontconfig; in {fontconfig ? fontconfig_, fontDirectories}:
     import ../development/libraries/fontconfig/make-fonts-conf.nix {

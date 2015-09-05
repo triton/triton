@@ -1604,6 +1604,8 @@ let
   gawkInteractive = appendToName "interactive"
     (gawk.override { readlineSupport = true; });
 
+  gawp = goPackages.gawp;
+
   gbdfed = callPackage ../tools/misc/gbdfed {
     gtk = gtk2;
   };
@@ -6817,10 +6819,6 @@ let
 
   libassuan = callPackage ../development/libraries/libassuan { };
 
-  libassuan2_1 = callPackage ../development/libraries/libassuan/git.nix {
-    automake = automake112x; # fails with 13 and 14
-  };
-
   libasyncns = callPackage ../development/libraries/libasyncns { };
 
   libatomic_ops = callPackage ../development/libraries/libatomic_ops {};
@@ -10516,6 +10514,8 @@ let
   xmoto = callPackage ../games/xmoto { };
 
   xorg_sys_opengl = callPackage ../os-specific/linux/opengl/xorg-sys { };
+
+  xpilot-ng = callPackage ../games/xpilot { };
 
   zd1211fw = callPackage ../os-specific/linux/firmware/zd1211 { };
 

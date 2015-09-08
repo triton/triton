@@ -848,8 +848,6 @@ let
     tileMode = false;
   };
 
-  cv = callPackage ../tools/misc/cv { };
-
   contacts = callPackage ../tools/misc/contacts { };
 
   datamash = callPackage ../tools/misc/datamash { };
@@ -899,6 +897,8 @@ let
   gist = callPackage ../tools/text/gist { };
 
   gmic = callPackage ../tools/graphics/gmic { };
+
+  mathics = pythonPackages.mathics;
 
   mcrl = callPackage ../tools/misc/mcrl { };
 
@@ -1348,7 +1348,7 @@ let
 
   doomseeker = callPackage ../applications/misc/doomseeker { };
 
-  drive = callPackage ../applications/networking/drive { goPackages = go14Packages; };
+  drive = go14Packages.drive.bin // { outputs = [ "bin" ]; };
 
   driftnet = callPackage ../tools/networking/driftnet {};
 
@@ -1604,7 +1604,7 @@ let
   gawkInteractive = appendToName "interactive"
     (gawk.override { readlineSupport = true; });
 
-  gawp = goPackages.gawp;
+  gawp = goPackages.gawp.bin // { outputs = [ "bin" ]; };
 
   gbdfed = callPackage ../tools/misc/gbdfed {
     gtk = gtk2;
@@ -1708,8 +1708,8 @@ let
 
   gptfdisk = callPackage ../tools/system/gptfdisk { };
 
-  grafana-frontend = callPackage ../development/tools/misc/grafana { };
-  grafana-backend = goPackages.grafana.bin // { outputs = [ "bin" ]; };
+  grafana-old = callPackage ../development/tools/misc/grafana { };
+  grafana = pkgs.goPackages.grafana.bin // { outputs = [ "bin" ]; };
 
   grafx2 = callPackage ../applications/graphics/grafx2 {};
 
@@ -1801,6 +1801,8 @@ let
   gtmess = callPackage ../applications/networking/instant-messengers/gtmess { };
 
   gummiboot = callPackage ../tools/misc/gummiboot { };
+
+  gup = callPackage ../development/tools/build-managers/gup {};
 
   gupnp = callPackage ../development/libraries/gupnp {
     inherit (gnome) libsoup;
@@ -1918,9 +1920,7 @@ let
 
   imapproxy = callPackage ../tools/networking/imapproxy { };
 
-  imapsync = callPackage ../tools/networking/imapsync {
-    inherit (perlPackages) MailIMAPClient;
-  };
+  imapsync = callPackage ../tools/networking/imapsync { };
 
   imgurbash = callPackage ../tools/graphics/imgurbash { };
 
@@ -1933,6 +1933,8 @@ let
   ioping = callPackage ../tools/system/ioping {};
 
   iodine = callPackage ../tools/networking/iodine { };
+
+  ip2location = callPackage ../tools/networking/ip2location { };
 
   ipad_charge = callPackage ../tools/misc/ipad_charge { };
 
@@ -2718,7 +2720,7 @@ let
 
   polkit_gnome = callPackage ../tools/security/polkit-gnome { };
 
-  popcorntime = callPackage ../applications/video/popcorntime { };
+  popcorntime = callPackage ../applications/video/popcorntime { nwjs = nwjs_0_12; };
 
   ponysay = callPackage ../tools/misc/ponysay { };
 
@@ -2751,6 +2753,8 @@ let
   pastebinit = callPackage ../tools/misc/pastebinit { };
 
   polygraph = callPackage ../tools/networking/polygraph { };
+
+  progress = callPackage ../tools/misc/progress { };
 
   psmisc = callPackage ../os-specific/linux/psmisc { };
 
@@ -3009,7 +3013,7 @@ let
 
   skippy-xd = callPackage ../tools/X11/skippy-xd {};
 
-  skydns = callPackage ../servers/dns/skydns { };
+  skydns = goPackages.skydns.bin // { outputs = [ "bin" ]; };
 
   sipcalc = callPackage ../tools/networking/sipcalc { };
 
@@ -3062,7 +3066,7 @@ let
 
   sourceHighlight = callPackage ../tools/text/source-highlight { };
 
-  spaceFM = callPackage ../applications/misc/spacefm { };
+  spaceFM = callPackage ../applications/misc/spacefm { adwaita-icon-theme = gnome3.adwaita-icon-theme; };
 
   squashfsTools = callPackage ../tools/filesystems/squashfs { };
 
@@ -3193,6 +3197,8 @@ let
 
   tlsdate = callPackage ../tools/networking/tlsdate { };
 
+  tmate = callPackage ../tools/misc/tmate { };
+
   tmpwatch = callPackage ../tools/misc/tmpwatch  { };
 
   tmux = callPackage ../tools/misc/tmux { };
@@ -3317,6 +3323,7 @@ let
 
   viking = callPackage ../applications/misc/viking {
     inherit (gnome) scrollkeeper;
+    inherit (gnome3) gexiv2;
   };
 
   vnc2flv = callPackage ../tools/video/vnc2flv {};
@@ -4087,7 +4094,7 @@ let
     then go_1_4 # missing DWARF files during go-1.5 build
     else go_1_5;
 
-  go-repo-root = callPackage ../development/tools/misc/go-repo-root { };
+  go-repo-root = goPackages.go-repo-root.bin // { outputs = [ "bin" ]; };
 
   gox = goPackages.gox.bin // { outputs = [ "bin" ]; };
 
@@ -4307,17 +4314,17 @@ let
 
     asn1-combinators = callPackage ../development/ocaml-modules/asn1-combinators { };
 
-    async-extra = callPackage ../development/ocaml-modules/async-extra { };
+    async_extra = callPackage ../development/ocaml-modules/async_extra { };
 
-    async-find = callPackage ../development/ocaml-modules/async-find { };
+    async_find = callPackage ../development/ocaml-modules/async_find { };
 
-    async-kernel = callPackage ../development/ocaml-modules/async-kernel { };
+    async_kernel = callPackage ../development/ocaml-modules/async_kernel { };
 
-    async-shell = callPackage ../development/ocaml-modules/async-shell { };
+    async_shell = callPackage ../development/ocaml-modules/async_shell { };
 
-    async-ssl = callPackage ../development/ocaml-modules/async-ssl { };
+    async_ssl = callPackage ../development/ocaml-modules/async_ssl { };
 
-    async-unix = callPackage ../development/ocaml-modules/async-unix { };
+    async_unix = callPackage ../development/ocaml-modules/async_unix { };
 
     async =
       if lib.versionOlder "4.02" ocaml_version
@@ -4393,11 +4400,11 @@ let
 
     biniou = callPackage ../development/ocaml-modules/biniou { };
 
-    bin-prot = callPackage ../development/ocaml-modules/bin-prot { };
+    bin_prot = callPackage ../development/ocaml-modules/bin_prot { };
 
-    ocaml-cairo = callPackage ../development/ocaml-modules/ocaml-cairo { };
+    ocaml_cairo = callPackage ../development/ocaml-modules/ocaml-cairo { };
 
-    ocaml-cairo2 = callPackage ../development/ocaml-modules/ocaml-cairo2 { };
+    ocaml_cairo2 = callPackage ../development/ocaml-modules/ocaml-cairo2 { };
 
     cil = callPackage ../development/ocaml-modules/cil { };
 
@@ -4421,7 +4428,7 @@ let
 
     csv = callPackage ../development/ocaml-modules/csv { };
 
-    custom-printf = callPackage ../development/ocaml-modules/custom-printf { };
+    custom_printf = callPackage ../development/ocaml-modules/custom_printf { };
 
     ctypes = callPackage ../development/ocaml-modules/ctypes { };
 
@@ -4437,9 +4444,9 @@ let
 
     enumerate = callPackage ../development/ocaml-modules/enumerate { };
 
-    erm-xml = callPackage ../development/ocaml-modules/erm-xml { };
+    erm_xml = callPackage ../development/ocaml-modules/erm_xml { };
 
-    erm-xmpp = callPackage ../development/ocaml-modules/erm-xmpp { };
+    erm_xmpp = callPackage ../development/ocaml-modules/erm_xmpp { };
 
     ezjsonm = callPackage ../development/ocaml-modules/ezjsonm {
       lwt = ocaml_lwt;
@@ -4532,15 +4539,15 @@ let
 
     comparelib = callPackage ../development/ocaml-modules/comparelib { };
 
-    core-extended = callPackage ../development/ocaml-modules/core-extended { };
+    core_extended = callPackage ../development/ocaml-modules/core_extended { };
 
-    core-kernel = callPackage ../development/ocaml-modules/core-kernel { };
+    core_kernel = callPackage ../development/ocaml-modules/core_kernel { };
 
     core = callPackage ../development/ocaml-modules/core { };
 
-    ocaml-cryptgps = callPackage ../development/ocaml-modules/cryptgps { };
+    ocaml_cryptgps = callPackage ../development/ocaml-modules/cryptgps { };
 
-    ocaml-data-notation = callPackage ../development/ocaml-modules/odn { };
+    ocaml_data_notation = callPackage ../development/ocaml-modules/odn { };
 
     ocaml_expat = callPackage ../development/ocaml-modules/expat { };
 
@@ -4614,16 +4621,16 @@ let
 
     textutils = callPackage ../development/ocaml-modules/textutils { };
 
-    type-conv-108_08_00 = callPackage ../development/ocaml-modules/type-conv/108.08.00.nix { };
-    type-conv-109_60_01 = callPackage ../development/ocaml-modules/type-conv/109.60.01.nix { };
-    type-conv-112_01_01 = callPackage ../development/ocaml-modules/type-conv/112.01.01.nix { };
-    type-conv =
+    type_conv_108_08_00 = callPackage ../development/ocaml-modules/type_conv/108.08.00.nix { };
+    type_conv_109_60_01 = callPackage ../development/ocaml-modules/type_conv/109.60.01.nix { };
+    type_conv_112_01_01 = callPackage ../development/ocaml-modules/type_conv/112.01.01.nix { };
+    type_conv =
       if lib.versionOlder "4.02" ocaml_version
-      then type-conv-112_01_01
+      then type_conv_112_01_01
       else if lib.versionOlder "4.00" ocaml_version
-      then type-conv-109_60_01
+      then type_conv_109_60_01
       else if lib.versionOlder "3.12" ocaml_version
-      then type-conv-108_08_00
+      then type_conv_108_08_00
       else null;
 
     sexplib_108_08_00 = callPackage ../development/ocaml-modules/sexplib/108.08.00.nix { };
@@ -4646,11 +4653,11 @@ let
 
     ocurl = callPackage ../development/ocaml-modules/ocurl { };
 
-    pa-ounit = callPackage ../development/ocaml-modules/pa-ounit { };
+    pa_ounit = callPackage ../development/ocaml-modules/pa_ounit { };
 
-    pa-bench = callPackage ../development/ocaml-modules/pa-bench { };
+    pa_bench = callPackage ../development/ocaml-modules/pa_bench { };
 
-    pa-test = callPackage ../development/ocaml-modules/pa-test { };
+    pa_test = callPackage ../development/ocaml-modules/pa_test { };
 
     pipebang = callPackage ../development/ocaml-modules/pipebang { };
 
@@ -4711,32 +4718,6 @@ let
       oasis = ocaml_oasis;
     };
 
-
-    # Attributes for backward compatibility.
-    async_extra = async-extra; # added 2015-07-21
-    async_find = async-find; # added 2015-07-21
-    async_kernel = async-kernel; # added 2015-07-21
-    async_shell = async-shell; # added 2015-07-21
-    async_ssl = async-ssl; # added 2015-07-21
-    async_unix = async-unix; # added 2015-07-21
-    bin_prot = bin-prot; # added 2015-07-21
-    core_extended = core-extended; # added 2015-07-21
-    core_kernel = core-kernel; # added 2015-07-21
-    custom_printf = custom-printf; # added 2015-07-21
-    erm_xml = erm-xml; # added 2015-07-21
-    erm_xmpp = erm-xmpp; # added 2015-07-21
-    ocaml_cairo = ocaml-cairo; # added 2015-07-21
-    ocaml_cairo2 = ocaml-cairo2; # added 2015-07-21
-    ocaml_cryptgps = ocaml-cryptgps; # added 2015-07-21
-    ocaml_data_notation = ocaml-data-notation; # added 2015-07-21
-    pa_bench = pa-bench; # added 2015-07-21
-    pa_ounit = pa-ounit; # added 2015-07-21
-    pa_test = pa-test; # added 2015-07-21
-    type_conv_108_08_00 = type-conv-108_08_00; # added 2015-07-21
-    type_conv_109_60_01 = type-conv-109_60_01; # added 2015-07-21
-    type_conv_112_01_01 = type-conv-112_01_01; # added 2015-07-21
-    type_conv = type-conv; # added 2015-07-21
-
   };
 
   ocamlPackages = recurseIntoAttrs ocamlPackages_4_01_0;
@@ -4793,6 +4774,8 @@ let
 
       buildRustPackage = callPackage ../build-support/rust { };
     };
+
+  rustfmt = callPackage ../development/tools/rust/rustfmt { };
 
   sbclBootstrap = callPackage ../development/compilers/sbcl/bootstrap.nix {};
   sbcl = callPackage ../development/compilers/sbcl {
@@ -4920,6 +4903,8 @@ let
 
   chibi = callPackage ../development/interpreters/chibi { };
 
+  ceptre = callPackage ../development/interpreters/ceptre { };
+
   clisp = callPackage ../development/interpreters/clisp { };
 
   # compatibility issues in 2.47 - at list 2.44.1 is known good
@@ -5034,7 +5019,7 @@ let
     perf = linuxPackages.perf;
   };
 
-  mesos-dns = callPackage ../servers/dns/mesos-dns { };
+  mesos-dns = goPackages.mesos-dns.bin // { outputs = [ "bin" ]; };
 
   mujs = callPackage ../development/interpreters/mujs { };
 
@@ -5724,6 +5709,10 @@ let
   };
 
   node_webkit = node_webkit_0_9;
+
+  nwjs_0_12 = callPackage ../development/tools/node-webkit/nw12.nix {
+    gconf = pkgs.gnome.GConf;
+  };
 
   node_webkit_0_11 = callPackage ../development/tools/node-webkit/nw11.nix {
     gconf = pkgs.gnome.GConf;
@@ -6703,6 +6692,8 @@ let
   iniparser = callPackage ../development/libraries/iniparser { };
 
   intltool = callPackage ../development/tools/misc/intltool { };
+
+  ip2location-c = callPackage ../development/libraries/ip2location-c { };
 
   irrlicht = callPackage ../development/libraries/irrlicht { };
   irrlicht3843 = callPackage ../development/libraries/irrlicht/irrlicht3843.nix { };
@@ -7984,6 +7975,8 @@ let
 
   ptlib = callPackage ../development/libraries/ptlib {};
 
+  pugixml = callPackage ../development/libraries/pugixml { };
+
   re2 = callPackage ../development/libraries/re2 { };
 
   qca2 = callPackage ../development/libraries/qca2 { qt = qt4; };
@@ -8078,7 +8071,9 @@ let
 
   readosm = callPackage ../development/libraries/readosm { };
 
-  lambdabot = callPackage ../development/tools/haskell/lambdabot { };
+  lambdabot = callPackage ../development/tools/haskell/lambdabot {
+    haskell-lib = haskell.lib;
+  };
 
   leksah = callPackage ../development/tools/haskell/leksah {
     inherit (haskellPackages) ghcWithPackages;
@@ -8959,8 +8954,8 @@ let
 
   bird = callPackage ../servers/bird { };
 
-  bosun = callPackage ../servers/monitoring/bosun { goPackages = go14Packages; };
-  scollector = callPackage ../servers/monitoring/bosun/scollector.nix { goPackages = go14Packages; };
+  bosun = go14Packages.bosun.bin // { outputs = [ "bin" ]; };
+  scollector = bosun;
 
   charybdis = callPackage ../servers/irc/charybdis {};
 
@@ -8990,6 +8985,8 @@ let
   dictdWordnet = callPackage ../servers/dict/dictd-wordnet.nix {};
 
   diod = callPackage ../servers/diod { lua = lua5_1; };
+
+  dnschain = callPackage ../servers/dnschain { };
 
   dovecot = dovecot21;
 
@@ -9198,7 +9195,7 @@ let
 
   influxdb = callPackage ../servers/nosql/influxdb { };
 
-  influxdb-backup = callPackage ../servers/nosql/influxdb/backup.nix { };
+  influxdb-backup = goPackages.influxdb-backup.bin // { outputs = [ "bin" ]; };
 
   hyperdex = callPackage ../servers/nosql/hyperdex { };
 
@@ -9265,18 +9262,18 @@ let
 
   postgresql_jdbc = callPackage ../servers/sql/postgresql/jdbc { };
 
-  prom2json = goPackages.prometheus.prom2json.bin;
-  prometheus = goPackages.prometheus.prometheus.bin;
-  prometheus-alertmanager = goPackages.prometheus.alertmanager.bin;
-  prometheus-cli = goPackages.prometheus.cli.bin;
-  prometheus-collectd-exporter = goPackages.prometheus.collectd-exporter.bin;
-  prometheus-haproxy-exporter = goPackages.prometheus.haproxy-exporter.bin;
-  prometheus-mesos-exporter = goPackages.prometheus.mesos-exporter.bin;
-  prometheus-mysqld-exporter = goPackages.prometheus.mysqld-exporter.bin;
-  prometheus-nginx-exporter = goPackages.prometheus.nginx-exporter.bin;
-  prometheus-node-exporter = goPackages.prometheus.node-exporter.bin;
-  prometheus-pushgateway = goPackages.prometheus.pushgateway.bin;
-  prometheus-statsd-bridge = goPackages.prometheus.statsd-bridge.bin;
+  prom2json = goPackages.prometheus.prom2json.bin // { outputs = [ "bin" ]; };
+  prometheus = goPackages.prometheus.prometheus.bin // { outputs = [ "bin" ]; };
+  prometheus-alertmanager = goPackages.prometheus.alertmanager.bin // { outputs = [ "bin" ]; };
+  prometheus-cli = goPackages.prometheus.cli.bin // { outputs = [ "bin" ]; };
+  prometheus-collectd-exporter = goPackages.prometheus.collectd-exporter.bin // { outputs = [ "bin" ]; };
+  prometheus-haproxy-exporter = goPackages.prometheus.haproxy-exporter.bin // { outputs = [ "bin" ]; };
+  prometheus-mesos-exporter = goPackages.prometheus.mesos-exporter.bin // { outputs = [ "bin" ]; };
+  prometheus-mysqld-exporter = goPackages.prometheus.mysqld-exporter.bin // { outputs = [ "bin" ]; };
+  prometheus-nginx-exporter = goPackages.prometheus.nginx-exporter.bin // { outputs = [ "bin" ]; };
+  prometheus-node-exporter = goPackages.prometheus.node-exporter.bin // { outputs = [ "bin" ]; };
+  prometheus-pushgateway = goPackages.prometheus.pushgateway.bin // { outputs = [ "bin" ]; };
+  prometheus-statsd-bridge = goPackages.prometheus.statsd-bridge.bin // { outputs = [ "bin" ]; };
 
   psqlodbc = callPackage ../servers/sql/postgresql/psqlodbc { };
 
@@ -10164,15 +10161,15 @@ let
     inherit (gnome) gtk gtkmm;
   };
 
-  gocode = callPackage ../development/tools/gocode { };
+  gocode = goPackages.gocode.bin // { outputs = [ "bin" ]; };
 
-  gotags = callPackage ../development/tools/gotags { };
+  gotags = goPackages.gotags.bin // { outputs = [ "bin" ]; };
 
   golint = goPackages.lint.bin // { outputs = [ "bin" ]; };
 
   godep = callPackage ../development/tools/godep { };
 
-  goimports = callPackage ../development/tools/goimports { };
+  goimports = goPackages.tools.bin // { outputs = [ "bin" ]; };
 
   gogoclient = callPackage ../os-specific/linux/gogoclient { };
 
@@ -11302,6 +11299,8 @@ let
 
     ensime = callPackage ../applications/editors/emacs-modes/ensime { };
 
+    erlangMode = callPackage ../applications/editors/emacs-modes/erlang { };
+
     ess = callPackage ../applications/editors/emacs-modes/ess { };
 
     flycheck = callPackage ../applications/editors/emacs-modes/flycheck { };
@@ -11672,7 +11671,7 @@ let
     inherit pkgs;
   });
 
-  inherit (gitAndTools) git gitFull gitSVN git-cola svn2git;
+  inherit (gitAndTools) git gitFull gitSVN git-cola svn2git git-radar;
 
   gitMinimal = git.override {
     withManual = false;
@@ -13029,7 +13028,7 @@ let
 
   symlinks = callPackage ../tools/system/symlinks { };
 
-  syncthing = (callPackage ../applications/networking/syncthing { }).bin // { outputs = [ "bin" ]; };
+  syncthing = goPackages.syncthing.bin // { outputs = [ "bin" ]; };
 
   # linux only by now
   synergy = callPackage ../applications/misc/synergy { };
@@ -13168,6 +13167,8 @@ let
   trezor-bridge = callPackage ../applications/networking/browsers/mozilla-plugins/trezor { };
 
   tribler = callPackage ../applications/networking/p2p/tribler { };
+
+  github-release = callPackage ../development/tools/github/github-release { };
 
   tuxguitar = callPackage ../applications/editors/music/tuxguitar { };
 
@@ -13730,6 +13731,8 @@ let
   zynaddsubfx = callPackage ../applications/audio/zynaddsubfx { };
 
   ### GAMES
+
+  airstrike = callPackage ../games/airstrike { };
 
   alienarena = callPackage ../games/alienarena { };
 
@@ -15348,7 +15351,7 @@ let
       buildInputs = [ stdenv ncurses mesa freeglut libzip gcc
                                    pack.ocaml pack.findlib pack.camomile
                                    pack.dypgen pack.ocaml_sqlite3 pack.camlzip
-                                   pack.lablgtk pack.camlimages pack.ocaml-cairo
+                                   pack.lablgtk pack.camlimages pack.ocaml_cairo
                                    pack.lablgl pack.ocamlnet pack.cryptokit
                                    pack.ocaml_pcre pack.patoline
                                    ];
@@ -15399,6 +15402,7 @@ let
   cheetahTemplate = pythonPackages.cheetah; # 2015-06-15
   clangAnalyzer = clang-analyzer;  # added 2015-02-20
   cool-old-term = cool-retro-term; # added 2015-01-31
+  cv = progress; # added 2015-09-06
   firefoxWrapper = firefox-wrapper;
   haskell-ng = haskell;                 # 2015-04-19
   haskellngPackages = haskellPackages;  # 2015-04-19

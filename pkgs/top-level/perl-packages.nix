@@ -5469,6 +5469,14 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
+  IOTee = buildPerlPackage rec {
+    name = "IO-Tee-0.64";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/K/KE/KENSHAN/${name}.tar.gz";
+      sha256 = "1mjy6hmwrzipzxcm33qs7ja89ljk6zkk499wclw16lfkqaqpdliy";
+    };
+  };
+
   IOTieCombine = buildPerlPackage {
     name = "IO-TieCombine-1.004";
     src = fetchurl {
@@ -11768,6 +11776,7 @@ let self = _self // overrides; _self = with self; {
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
       maintainers = with maintainers; [ ocharles ];
       platforms   = stdenv.lib.platforms.unix;
+      broken = true; # tests fail http://hydra.nixos.org/build/25141764/nixlog/1/raw
     };
     buildInputs = [ pkgs.icu ];
   };
@@ -11794,6 +11803,14 @@ let self = _self // overrides; _self = with self; {
     meta = {
       description = "Unicode Normalization Forms";
       license = "perl";
+    };
+  };
+
+  UnicodeString = buildPerlPackage rec {
+    name = "Unicode-String-2.09";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/G/GA/GAAS/${name}.tar.gz";
+      sha256 = "1bgsaf3dgmlgyvi84r42ysc037mr5280amnypa4d98jfjpdvw5y8";
     };
   };
 

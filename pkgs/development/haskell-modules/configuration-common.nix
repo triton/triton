@@ -772,23 +772,6 @@ self: super: {
   # https://github.com/nushio3/doctest-prop/issues/1
   doctest-prop = dontCheck super.doctest-prop;
 
-  # https://github.com/goldfirere/singletons/issues/117
-  clash-lib = dontDistribute super.clash-lib;
-  clash-verilog = dontDistribute super.clash-verilog;
-  Frames = dontDistribute super.Frames;
-  hgeometry = dontDistribute super.hgeometry;
-  hipe = dontDistribute super.hipe;
-  hsqml-datamodel-vinyl = dontDistribute super.hsqml-datamodel-vinyl;
-  singleton-nats = dontDistribute super.singleton-nats;
-  singletons = markBroken super.singletons;
-  units-attoparsec = dontDistribute super.units-attoparsec;
-  ihaskell-widgets = dontDistribute super.ihaskell-widgets;
-  exinst-bytes = dontDistribute super.exinst-bytes;
-  exinst-deepseq = dontDistribute super.exinst-deepseq;
-  exinst-aeson = dontDistribute super.exinst-aeson;
-  exinst = dontDistribute super.exinst;
-  exinst-hashable = dontDistribute super.exinst-hashable;
-
   # https://github.com/anton-k/temporal-music-notation/issues/1
   temporal-music-notation = markBroken super.temporal-music-notation;
   temporal-music-notation-demo = dontDistribute super.temporal-music-notation-demo;
@@ -1025,5 +1008,11 @@ self: super: {
 
   # https://github.com/pxqr/base32-bytestring/issues/4
   base32-bytestring = dontCheck super.base32-bytestring;
+
+  # https://github.com/JohnLato/listlike/pull/6#issuecomment-137986095
+  ListLike = dontCheck super.ListLike;
+
+  # https://github.com/goldfirere/singletons/issues/122
+  singletons = dontCheck super.singletons;
 
 }

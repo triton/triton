@@ -110,7 +110,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://wiki.qemu.org/download/${n}.tar.bz2";
-    sha256 = "181m2ddsg3adw8y5dmimsi8x678imn9f6i5p20zbhi7pdr61a5s6";
+    sha256 = "0836gqv5zcl0xswwjcns3mlkn18lyz2fiq8rl1ihcm6cpf8vkc3j";
   };
 
   nativeBuildInputs = [ pkgconfig libtool perl texinfo flex bison gettext makeWrapper ];

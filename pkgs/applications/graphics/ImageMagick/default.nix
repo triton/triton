@@ -42,6 +42,7 @@ stdenv.mkDerivation rec {
     (mkWith   true                   "gcc-arch=${arch}")
     #(mkEnable true                   "hdri") This breaks some dependencies
     (mkWith   (perl != null)         "perl")
+    (mkWith   (perl != null)         "perl-options=PREFIX=\${out}")
     (mkWith   (jemalloc != null)     "jemalloc")
     (mkWith   true                   "frozenpaths")
     (mkWith   (bzip2 != null)        "bzlib")

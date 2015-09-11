@@ -1448,8 +1448,6 @@ let
 
   exercism = callPackage ../development/tools/exercism { };
 
-  exfat-utils = callPackage ../tools/filesystems/exfat-utils { };
-
   exif = callPackage ../tools/graphics/exif { };
 
   exiftags = callPackage ../tools/graphics/exiftags { };
@@ -1587,7 +1585,7 @@ let
 
   fuse_zip = callPackage ../tools/filesystems/fuse-zip { };
 
-  fuse_exfat = callPackage ../tools/filesystems/fuse-exfat { };
+  exfat = callPackage ../tools/filesystems/exfat { };
 
   dos2unix = callPackage ../tools/text/dos2unix { };
 
@@ -15415,6 +15413,7 @@ let
   cool-old-term = cool-retro-term; # added 2015-01-31
   cv = progress; # added 2015-09-06
   firefoxWrapper = firefox-wrapper;
+  fuse_exfat = exfat;                   # 2015-09-11
   haskell-ng = haskell;                 # 2015-04-19
   haskellngPackages = haskellPackages;  # 2015-04-19
   htmlTidy = html-tidy;  # added 2014-12-06

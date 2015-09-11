@@ -1271,6 +1271,10 @@ let
 
   detox = callPackage ../tools/misc/detox { };
 
+  devilspie2 = callPackage ../applications/misc/devilspie2 {
+    gtk = gtk3;
+  };
+
   ddccontrol = callPackage ../tools/misc/ddccontrol { };
 
   ddccontrol-db = callPackage ../data/misc/ddccontrol-db { };
@@ -1292,6 +1296,8 @@ let
   dev86 = callPackage ../development/compilers/dev86 { };
 
   dnscrypt-proxy = callPackage ../tools/networking/dnscrypt-proxy { };
+
+  dnscrypt-wrapper = callPackage ../tools/networking/dnscrypt-wrapper { };
 
   dnsmasq = callPackage ../tools/networking/dnsmasq { };
 
@@ -4120,26 +4126,16 @@ let
 
   path64 = callPackage ../development/compilers/path64 { };
 
-  openjdk7-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "7"; };
-  openjdk8-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "8"; };
-
-  openjdk7-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
-    openjdk = openjdk7.override { minimal = true; };
-  };
-  openjdk8-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
-    openjdk = openjdk8.override { minimal = true; };
-  };
-
   openjdk-darwin = callPackage ../development/compilers/openjdk-darwin { };
 
   openjdk7 = callPackage ../development/compilers/openjdk {
-    bootjdk = openjdk7-bootstrap;
+    bootjdk = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "7"; };
   };
   openjdk7_jdk = openjdk7 // { outputs = [ "out" ]; };
   openjdk7_jre = openjdk7.jre // { outputs = [ "jre" ]; };
 
   openjdk8 = callPackage ../development/compilers/openjdk/openjdk8.nix {
-    bootjdk = openjdk8-bootstrap;
+    bootjdk = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "8"; };
   };
   openjdk8_jdk = openjdk8 // { outputs = [ "out" ]; };
   openjdk8_jre = openjdk8.jre // { outputs = [ "jre" ]; };
@@ -6509,13 +6505,11 @@ let
 
   gnutls = gnutls34;
 
-  gnutls33 = import ../development/libraries/gnutls/3.3.nix {
-    inherit callPackage fetchurl;
+  gnutls33 = callPackage ../development/libraries/gnutls/3.3.nix {
     guileBindings = config.gnutls.guile or false;
   };
 
-  gnutls34 = import ../development/libraries/gnutls/3.4.nix {
-    inherit callPackage fetchurl;
+  gnutls34 = callPackage ../development/libraries/gnutls/3.4.nix {
     guileBindings = config.gnutls.guile or false;
   };
 
@@ -10401,9 +10395,7 @@ let
 
   untie = callPackage ../os-specific/linux/untie { };
 
-  upower-old = callPackage ../os-specific/linux/upower { };
-
-  upower = callPackage ../os-specific/linux/upower/0.99.nix { };
+  upower = callPackage ../os-specific/linux/upower { };
 
   upstart = callPackage ../os-specific/linux/upstart { };
 
@@ -10514,6 +10506,8 @@ let
   xorg_sys_opengl = callPackage ../os-specific/linux/opengl/xorg-sys { };
 
   xpilot-ng = callPackage ../games/xpilot { };
+  bloodspilot-server = callPackage ../games/xpilot/bloodspilot-server.nix {};
+  bloodspilot-client = callPackage ../games/xpilot/bloodspilot-client.nix {};
 
   zd1211fw = callPackage ../os-specific/linux/firmware/zd1211 { };
 
@@ -11106,6 +11100,8 @@ let
     browserName = "conkeror";
     desktopName = "Conkeror";
   };
+
+  csdp = callPackage ../applications/science/math/csdp { };
 
   cuneiform = builderDefsPackage (import ../tools/graphics/cuneiform) {
     inherit cmake patchelf;
@@ -12386,6 +12382,8 @@ let
 
   pig = callPackage ../applications/networking/cluster/pig { };
 
+  playonlinux = callPackage ../applications/misc/playonlinux { };
+
   shotcut = callPackage ../applications/video/shotcut { mlt = mlt-qt5; };
 
   smplayer = callPackage ../applications/video/smplayer { };
@@ -13024,15 +13022,14 @@ let
     webkit = webkitgtk2;
   };
 
-  svk = perlPackages.SVK;
-
   swh_lv2 = callPackage ../applications/audio/swh-lv2 { };
 
   sylpheed = callPackage ../applications/networking/mailreaders/sylpheed { };
 
   symlinks = callPackage ../tools/system/symlinks { };
 
-  syncthing = goPackages.syncthing.bin // { outputs = [ "bin" ]; };
+  # syncthing is pinned to go1.4 until https://github.com/golang/go/issues/12301 is resolved
+  syncthing = go14Packages.syncthing.bin // { outputs = [ "bin" ]; };
 
   # linux only by now
   synergy = callPackage ../applications/misc/synergy { };
@@ -13735,6 +13732,8 @@ let
   zynaddsubfx = callPackage ../applications/audio/zynaddsubfx { };
 
   ### GAMES
+
+  "2048-in-terminal" = callPackage ../games/2048-in-terminal { };
 
   airstrike = callPackage ../games/airstrike { };
 
@@ -14654,6 +14653,12 @@ let
 
   iprover = callPackage ../applications/science/logic/iprover {};
 
+  jonprl = callPackage ../applications/science/logic/jonprl {
+    smlnj = if stdenv.isDarwin
+      then smlnjBootstrap
+      else smlnj;
+  };
+
   lean = callPackage ../applications/science/logic/lean {};
 
   leo2 = callPackage ../applications/science/logic/leo2 {};
@@ -15115,6 +15120,8 @@ let
   refind = callPackage ../tools/bootloaders/refind { };
 
   xlockmore = callPackage ../misc/screensavers/xlockmore { };
+
+  xtrlock-pam = callPackage ../misc/screensavers/xtrlock-pam { };
 
   sails = callPackage ../misc/sails { };
 

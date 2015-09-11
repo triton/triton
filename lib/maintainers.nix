@@ -7,6 +7,7 @@
      so it's easy to ping a package @maintainer.
   */
 
+  a1russell = "Adam Russell <adamlr6+pub@gmail.com>";
   abaldeau = "Andreas Baldeau <andreas@baldeau.net>";
   abbradar = "Nikolay Amiantov <ab@fmap.me>";
   adev	   = "Adrien Devresse <adev@adev.name>";
@@ -79,6 +80,7 @@
   dfoxfranke = "Daniel Fox Franke <dfoxfranke@gmail.com>";
   dmalikov = "Dmitry Malikov <malikov.d.y@gmail.com>";
   doublec = "Chris Double <chris.double@double.co.nz>";
+  ebzzry = "Rommel Martinez <ebzzry@gmail.com>";
   ederoyd46 = "Matthew Brown <matt@ederoyd.co.uk>";
   eduarrrd = "Eduard Bachmakov <e.bachmakov@gmail.com>";
   edwtjo = "Edward Tjörnhammar <ed@cflags.cc>";
@@ -95,6 +97,7 @@
   fluffynukeit = "Daniel Austin <dan@fluffynukeit.com>";
   forkk = "Andrew Okin <forkk@forkk.net>";
   fpletz = "Franz Pletz <fpletz@fnordicwalking.de>";
+  fridh = "Frederik Rietdijk <fridh@fridh.nl>";
   fro_ozen = "fro_ozen <fro_ozen@gmx.de>";
   ftrvxmtrx = "Siarhei Zirukin <ftrvxmtrx@gmail.com>";
   funfunctor = "Edward O'Callaghan <eocallaghan@alterapraxis.com>";

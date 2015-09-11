@@ -53,7 +53,7 @@ self: super: {
     configureFlags = (drv.configureFlags or []) ++
       pkgs.lib.optional pkgs.stdenv.is64bit "--extra-lib-dirs=${pkgs.cudatoolkit}/lib64" ++ [
       "--extra-lib-dirs=${pkgs.cudatoolkit}/lib"
-      "--extra-include-dirs=${pkgs.cudatoolkit}/usr_include"
+      "--extra-include-dirs=${pkgs.cudatoolkit}/include"
     ];
     preConfigure = ''
       unset CC          # unconfuse the haskell-cuda configure script
@@ -757,7 +757,6 @@ self: super: {
   # Override the obsolete version from Hackage with our more up-to-date copy.
   cabal2nix = self.callPackage ../tools/haskell/cabal2nix/cabal2nix.nix {};
   hackage2nix = self.callPackage ../tools/haskell/cabal2nix/hackage2nix.nix {};
-  language-nix = self.callPackage ../tools/haskell/cabal2nix/language-nix.nix {};
   distribution-nixpkgs = self.callPackage ../tools/haskell/cabal2nix/distribution-nixpkgs.nix {};
 
   # https://github.com/urs-of-the-backwoods/HGamer3D/issues/7

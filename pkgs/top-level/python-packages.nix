@@ -1373,6 +1373,7 @@ let
       homepage = https://github.com/ContinuumIO/blaze;
       description = "Allows Python users a familiar interface to query data living in other data storage systems";
       license = licenses.bsdOriginal;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -2284,6 +2285,7 @@ let
       platforms = platforms.all;
       homepage = http://cython.org;
       license = licenses.asl20;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -2300,6 +2302,7 @@ let
       homepage = "http://github.com/pytoolz/cytoolz/";
       description = "Cython implementation of Toolz: High performance functional utilities";
       license = "licenses.bsd3";
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -2761,6 +2764,7 @@ let
       description = "Minimal task scheduling abstraction";
       homepage = "http://github.com/ContinuumIO/dask/";
       licenses = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -2779,6 +2783,7 @@ let
       homepage = https://github.com/ContinuumIO/datashape;
       description = "A data description language";
       license = licenses.bsd2;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -5421,6 +5426,43 @@ let
     };
   };
 
+  django_appconf = buildPythonPackage rec {
+    name = "django-appconf-${version}";
+    version = "1.0.1";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/d/django-appconf/django-appconf-${version}.tar.gz";
+      sha256 = "0q3fg17qi4vwpipbj075zn4wk58p6a946kah8wayks1423xpa4xs";
+    };
+
+    propagatedBuildInputs = with self; [ six ];
+
+    meta = {
+      description = "A helper class for handling configuration defaults of packaged apps gracefully";
+      homepage = http://django-appconf.readthedocs.org/;
+      license = licenses.bsd2;
+      maintainers = with maintainers; [ desiderius ];
+    };
+  };
+
+  django_compressor = buildPythonPackage rec {
+    name = "django-compressor-${version}";
+    version = "1.5";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/d/django_compressor/django_compressor-${version}.tar.gz";
+      sha256 = "0bp2acagc6b1mmcajlmjf5vvp6zj429bq7p2wks05n47pwfzv281";
+    };
+
+    propagatedBuildInputs = with self; [ django_appconf ];
+
+    meta = {
+      description = "Compresses linked and inline JavaScript or CSS into single cached files";
+      homepage = http://django-compressor.readthedocs.org/en/latest/;
+      license = licenses.mit;
+      maintainers = with maintainers; [ desiderius ];
+    };
+  };
 
   django_evolution = buildPythonPackage rec {
     name = "django_evolution-0.6.9";
@@ -5482,6 +5524,25 @@ let
     };
   };
 
+  django_modelcluster = buildPythonPackage rec {
+    name = "django-modelcluster-${version}";
+    version = "0.6.2";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/d/django-modelcluster/django-modelcluster-${version}.tar.gz";
+      sha256 = "1plsdi44dvsj2sfx79lsrccjfg0ymajcsf5n0mln4cwd4qi5mwpx";
+    };
+
+    propagatedBuildInputs = with self; [ pytz six ];
+
+    meta = {
+      description = "Django extension to allow working with 'clusters' of models as a single unit, independently of the database";
+      homepage = https://github.com/torchbox/django-modelcluster/;
+      license = licenses.bsd2;
+      maintainers = with maintainers; [ desiderius ];
+    };
+  };
+
   djangorestframework = buildPythonPackage rec {
     name = "djangorestframework-${version}";
     version = "3.2.3";
@@ -5518,6 +5579,24 @@ let
       description = "An extension to the Django web framework that provides comprehensive version control facilities";
       homepage = https://github.com/etianen/django-reversion;
       license = licenses.bsd3;
+    };
+  };
+
+  django_taggit = buildPythonPackage rec {
+    name = "django-taggit-${version}";
+    version = "0.17.0";
+    disabled = pythonOlder "2.7";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/d/django-taggit/django-taggit-${version}.tar.gz";
+      sha256 = "1xy4mm1y6z6bpakw907859wz7fiw7jfm586dj89w0ggdqlb0767b";
+    };
+
+    meta = {
+      description = "django-taggit is a reusable Django application for simple tagging";
+      homepage = http://github.com/alex/django-taggit/tree/master/;
+      license = licenses.bsd2;
+      maintainers = with maintainers; [ desiderius ];
     };
   };
 
@@ -7134,6 +7213,7 @@ let
       description = "IPython Kernel for Jupyter";
       homepage = http://ipython.org/;
       license = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     };
   };
   
@@ -7152,6 +7232,7 @@ let
       description = "Interactive Parallel Computing with IPython";
       homepage = http://ipython.org/;
       license = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     };
   
   };
@@ -7173,7 +7254,7 @@ let
       description = "IPython: Productive Interactive Computing";
       homepage = http://ipython.org/;
       license = licenses.bsd3;
-      maintainers = with maintainers; [ bjornfor jgeerds ];
+      maintainers = with maintainers; [ bjornfor jgeerds fridh ];
     };
   };
   
@@ -7419,6 +7500,7 @@ let
       description = "Jupyter protocol implementation and client libraries";
       homepage = http://jupyter.org/;
       license = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     };  
   };
   
@@ -7437,6 +7519,7 @@ let
       description = "Jupyter core package. A base package on which Jupyter projects rely";
       homepage = http://jupyter.org/;
       license = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -7911,6 +7994,8 @@ let
       rev = "v${version}";
       sha256 = "1hyrxnhxw35vn00k55hp9bkg8vg4dsphrpfg1yg4cn53y78rk1im";
     };
+
+    patches = [ ../development/python-modules/mathics/disable_console_tests.patch ];
 
     buildInputs = with self; [ pexpect ];
 
@@ -8408,6 +8493,7 @@ let
       homepage = http://github.com/mrocklin/multipledispatch/;
       description = "A relatively sane approach to multiple dispatch in Python";
       license = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -8680,6 +8766,7 @@ let
       description = "Converting Jupyter Notebooks";
       homepage = http://jupyter.org/;
       license = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     }; 
   };
   
@@ -8698,6 +8785,7 @@ let
       description = "The Jupyter Notebook format";
       homepage = "http://jupyter.org/";
       license = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -9047,6 +9135,7 @@ let
       description = "The Jupyter HTML notebook is a web-based notebook environment for interactive computing";
       homepage = http://jupyter.org/;
       license = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -9377,6 +9466,7 @@ let
       homepage = https://github.com/ContinuumIO/odo;
       description = "Data migration utilities";
       license = licenses.bsdOriginal;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -9588,7 +9678,7 @@ let
       homepage = "http://pandas.pydata.org/";
       description = "Python Data Analysis Library";
       license = licenses.bsd3;
-      maintainers = with maintainers; [ raskin ];
+      maintainers = with maintainers; [ raskin fridh ];
       platforms = platforms.unix;
     };
   };
@@ -12429,6 +12519,7 @@ let
       description = "Jupyter Qt console";
       homepage = http://jupyter.org/;
       license = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -13054,9 +13145,9 @@ let
       description = "A set of python modules for machine learning and data mining";
       homepage = http://scikit-learn.org;
       license = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     };
   };
-
 
   scripttest = buildPythonPackage rec {
     version = "1.3";
@@ -13088,6 +13179,7 @@ let
       description = "statisitical data visualization";
       homepage = "http://stanford.edu/~mwaskom/software/seaborn/";
       license     = "BSD";
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -14460,6 +14552,7 @@ let
       description = "Traitlets Python config system";
       homepage = http://ipython.org/;
       license = licenses.bsd3;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -14580,6 +14673,7 @@ let
       homepage = "http://github.com/pytoolz/toolz/";
       description = "List processing tools and functional utilities";
       license = "licenses.bsd3";
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -14905,12 +14999,12 @@ let
   };
 
   upass = buildPythonPackage rec {
-    version = "0.1.2";
+    version = "0.1.3";
     name = "upass-${version}";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/u/upass/upass-${version}.tar.gz";
-      sha256 = "1navsygidw77kr8ap8wlfwvjn3gf0chrq896yv8s4nfmaqpm39zc";
+      sha256 = "1gwp1b2xydc06pnj4a7kwadzs81fizqiyrq07l82dqjx4zkwn292";
     };
 
     propagatedBuildInputs = with pythonPackages; [
@@ -15509,6 +15603,7 @@ let
       description = "N-D labeled arrays and datasets in Python";
       homepage = https://github.com/xray/xray;
       license = licenses.asl20;
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -16627,12 +16722,18 @@ let
 
 
   unidecode = buildPythonPackage rec {
-    name = "Unidecode-0.04.12";
+    name = "Unidecode-0.04.18";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/U/Unidecode/${name}.tar.gz";
-      md5 = "351dc98f4512bdd2e93f7a6c498730eb";
+      sha256 = "12hhblqy1ajvidm38im4171x4arg83pfmziyn53nizp29p3m14gi";
     };
+
+    preBuild = ''
+      export LC_ALL="en_US.UTF-8"
+    '';
+
+    buildInputs = [ pkgs.glibcLocales ];
 
     meta = {
       homepage = http://pypi.python.org/pypi/Unidecode/;
@@ -17004,11 +17105,11 @@ let
 
   libvirt = pkgs.stdenv.mkDerivation rec {
     name = "libvirt-python-${version}";
-    version = "1.2.18";
+    version = "1.2.19";
 
     src = pkgs.fetchurl {
       url = "http://libvirt.org/sources/python/${name}.tar.gz";
-      sha256 = "0f1ni9nv6zmrfhvv71bs2d5yg0pk01zl3hsz1dh1178c2vpkai90";
+      sha256 = "0jgcggrwaz9512wzlkgxirq56cr7zq2ihmg8qv95nhryqnq67aw8";
     };
 
     buildInputs = with self; [ python pkgs.pkgconfig pkgs.libvirt lxml ];

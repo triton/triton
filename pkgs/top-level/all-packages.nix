@@ -2344,6 +2344,8 @@ let
 
   netcdf = callPackage ../development/libraries/netcdf { };
 
+  netcdfcxx4 = callPackage ../development/libraries/netcdf-cxx4 { };
+
   nc6 = callPackage ../tools/networking/nc6 { };
 
   ncat = callPackage ../tools/networking/ncat { };
@@ -3652,6 +3654,8 @@ let
   zpaq = callPackage ../tools/archivers/zpaq { };
   zpaqd = callPackage ../tools/archivers/zpaq/zpaqd.nix { };
 
+  zsh-navigation-tools = callPackage ../tools/misc/zsh-navigation-tools { };
+
   zsync = callPackage ../tools/compression/zsync { };
 
   zxing = callPackage ../tools/graphics/zxing {};
@@ -4119,6 +4123,8 @@ let
   icedtea_web = icedtea8_web;
 
   ikarus = callPackage ../development/compilers/ikarus { };
+
+  intercal = callPackage ../development/compilers/intercal { };
 
   hugs = callPackage ../development/interpreters/hugs { };
 
@@ -6991,6 +6997,8 @@ let
 
   libserialport = callPackage ../development/libraries/libserialport { };
 
+  libsoundio = callPackage ../development/libraries/libsoundio { };
+
   libgtop = callPackage ../development/libraries/libgtop {};
 
   libLAS = callPackage ../development/libraries/libLAS { };
@@ -8322,6 +8330,8 @@ let
   };
 
   thrift = callPackage ../development/libraries/thrift { };
+
+  tidyp = callPackage ../development/libraries/tidyp { };
 
   tinyxml = tinyxml2;
 
@@ -10100,6 +10110,8 @@ let
   kmod = callPackage ../os-specific/linux/kmod { };
 
   kmod-blacklist-ubuntu = callPackage ../os-specific/linux/kmod-blacklist-ubuntu { };
+
+  kmod-debian-aliases = callPackage ../os-specific/linux/kmod-debian-aliases { };
 
   kvm = qemu_kvm;
 
@@ -14636,7 +14648,6 @@ let
   hol = callPackage ../applications/science/logic/hol { };
 
   hol_light = callPackage ../applications/science/logic/hol_light {
-    inherit (ocamlPackages) findlib;
     camlp5 = ocamlPackages.camlp5_strict;
   };
 
@@ -14985,6 +14996,7 @@ let
     libopus = libopus.override { withCustomModes = true; };
   };
   libjack2 = jack2Full.override { prefix = "lib"; };
+  libjack2-git = callPackage ../misc/jackaudio/git.nix { };
 
   keynav = callPackage ../tools/X11/keynav { };
 

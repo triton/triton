@@ -2078,14 +2078,14 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  CPANMetaYAML = buildPerlPackage {
-    name = "CPAN-Meta-YAML-0.012";
+  CPANMetaYAML = buildPerlPackage rec {
+    name = "CPAN-Meta-YAML-0.016";
     src = fetchurl {
-      url = mirror://cpan/authors/id/D/DA/DAGOLDEN/CPAN-Meta-YAML-0.012.tar.gz;
-      sha256 = "7c728c573ba74294d3df2f0cbae2cd1b3830ed47040649b49a33a086b8300d28";
+      url = "mirror://cpan/authors/id/D/DA/DAGOLDEN/${name}.tar.gz";
+      sha256 = "195v3lrfjzqxfiqi1zp02xmhp6mg9y3p7abmlfk2nj1rb28p0yrl";
     };
     buildInputs = [ JSONPP ];
-    doCheck = false; # Test::More too old
+    doCheck = true;
     meta = {
       homepage = https://github.com/dagolden/CPAN-Meta-YAML;
       description = "Read and write a subset of YAML for CPAN Meta files";
@@ -2093,11 +2093,11 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  CPANPerlReleases = buildPerlPackage {
-    name = "CPAN-Perl-Releases-1.94";
+  CPANPerlReleases = buildPerlPackage rec {
+    name = "CPAN-Perl-Releases-2.36";
     src = fetchurl {
-      url = mirror://cpan/authors/id/B/BI/BINGOS/CPAN-Perl-Releases-1.94.tar.gz;
-      sha256 = "ebc70640541f5b6d1191ba7bf958d369d9e21be0908ac812663047290b95fdf2";
+      url = "mirror://cpan/authors/id/B/BI/BINGOS/${name}.tar.gz";
+      sha256 = "092nr3x2bs0lb3k8vk0mkghqzcw05s0gyyvfnmvx4fwwza8kya85";
     };
     meta = {
       homepage = https://github.com/bingos/cpan-perl-releases;
@@ -2106,11 +2106,11 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  CPANPLUS = buildPerlPackage {
-    name = "CPANPLUS-0.9152";
+  CPANPLUS = buildPerlPackage rec {
+    name = "CPANPLUS-0.9154";
     src = fetchurl {
-      url = mirror://cpan/authors/id/B/BI/BINGOS/CPANPLUS-0.9152.tar.gz;
-      sha256 = "732d9978ca6e8cde9b16431e1d1bafa543a66d8bce3fbfca4e5ac297a348ad17";
+      url = "mirror://cpan/authors/id/B/BI/BINGOS/${name}.tar.gz";
+      sha256 = "1mz20qlk0wjl4mwi4b9nji4hyh9a0l7m1v5bmypwwmhzpac5rq5c";
     };
     propagatedBuildInputs = [ ArchiveExtract LogMessage ModulePluggable ObjectAccessor PackageConstants ];
     doCheck = false;
@@ -2121,11 +2121,11 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  CPANUploader = buildPerlPackage {
-    name = "CPAN-Uploader-0.103006";
+  CPANUploader = buildPerlPackage rec {
+    name = "CPAN-Uploader-0.103010";
     src = fetchurl {
-      url = mirror://cpan/authors/id/R/RJ/RJBS/CPAN-Uploader-0.103006.tar.gz;
-      sha256 = "1hkbi2j0a9v4577jxfzw586rvpzw0af61qbiggh3dd7j9b183w39";
+      url = "mirror://cpan/authors/id/R/RJ/RJBS/${name}.tar.gz";
+      sha256 = "1n57d61q9g37s0pp7sriq8vvqj2cvp3s9v0grpv277s9idvm37x8";
     };
     propagatedBuildInputs = [ FileHomeDir GetoptLongDescriptive HTTPMessage LWP LWPProtocolhttps TermReadKey ];
     meta = {
@@ -10036,10 +10036,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   SysVirt = buildPerlPackage rec {
-    name = "Sys-Virt-1.2.9";
+    name = "Sys-Virt-1.2.19";
     src = fetchurl {
       url = "mirror://cpan/authors/id/D/DA/DANBERR/${name}.tar.gz";
-      sha256 = "1ag55mlkbf63iq3q5mxdawf29c2nyphd52kbshnlim3lax247ml7";
+      sha256 = "18v8x0514in0zpvq1rv78hmvhpij1xjh5xn0wa6wmg2swky54sp4";
     };
     propagatedBuildInputs = [XMLXPath];
     buildInputs = [TestPodCoverage TimeHiRes TestPod pkgs.pkgconfig pkgs.libvirt];
@@ -10087,13 +10087,13 @@ let self = _self // overrides; _self = with self; {
     meta.platforms = stdenv.lib.platforms.linux;
   };
 
-  TaskPlack = buildPerlPackage rec {
-    name = "Task-Plack-0.25";
+  TaskPlack = buildPerlModule rec {
+    name = "Task-Plack-0.28";
     src = fetchurl {
       url = "mirror://cpan/authors/id/M/MI/MIYAGAWA/${name}.tar.gz";
-      sha256 = "1mk3z7xis1akf8245qgw5mnnsl7570kdidx83nj81kv410pw2v43";
+      sha256 = "0ajwkyr9nwn11afi6fz6kx4bi7a3p8awjsldmsakz3sl0s42pmbr";
     };
-    propagatedBuildInputs = [ Plack PSGI ];
+    propagatedBuildInputs = [ Plack PSGI ModuleBuildTiny ];
   };
 
   TaskWeaken = buildPerlPackage {

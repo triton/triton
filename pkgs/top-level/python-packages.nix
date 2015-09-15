@@ -9,6 +9,7 @@ let
   isPy27 = python.majorVersion == "2.7";
   isPy33 = python.majorVersion == "3.3";
   isPy34 = python.majorVersion == "3.4";
+  isPy35 = python.majorVersion == "3.5";
   isPyPy = python.executable == "pypy";
   isPy3k = strings.substring 0 1 python.majorVersion == "3";
 
@@ -22,6 +23,7 @@ let
     if isPy27 then "python27" else
     if isPy33 then "python33" else
     if isPy34 then "python34" else
+    if isPy35 then "python35" else
     if isPyPy then "pypy" else "";
 
   modules = python.modules or {
@@ -34,7 +36,7 @@ let
 
   pythonPackages = modules // {
 
-  inherit python isPy26 isPy27 isPy33 isPy34 isPyPy isPy3k pythonName buildPythonPackage;
+  inherit python isPy26 isPy27 isPy33 isPy34 isPy35 isPyPy isPy3k pythonName buildPythonPackage;
 
   # helpers
 
@@ -2525,11 +2527,11 @@ let
   };
 
   pytest = buildPythonPackage rec {
-    name = "pytest-2.7.2";
+    name = "pytest-2.7.3";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/p/pytest/${name}.tar.gz";
-      sha256 = "b30457f735420d0000d10a44bbd478cf03f8bf20e25bd77248f9bab40f4fd6a4";
+      sha256 = "1z4yi986f9n0p8qmzmn21m21m8j1x78hk3505f89baqm6pdw7afm";
     };
 
     preCheck = ''
@@ -2763,7 +2765,7 @@ let
     meta = {
       description = "Minimal task scheduling abstraction";
       homepage = "http://github.com/ContinuumIO/dask/";
-      licenses = licenses.bsd3;
+      license = licenses.bsd3;
       maintainers = with maintainers; [ fridh ];
     };
   };
@@ -3297,7 +3299,7 @@ let
     meta = {
       description = "Easy to use python subprocess interface";
       homepage = "https://github.com/ponty/EasyProcess";
-      licenses = licenses.bsdOriginal;
+      license = licenses.bsdOriginal;
       maintainers = with maintainers; [ layus ];
     };
   };
@@ -5222,11 +5224,11 @@ let
   };
 
   deluge = buildPythonPackage rec {
-    name = "deluge-1.3.11";
+    name = "deluge-1.3.12";
 
     src = pkgs.fetchurl {
       url = "http://download.deluge-torrent.org/source/${name}.tar.bz2";
-      sha256 = "16681sg7yi03jqyifhalnw4vavb8sj94cisldal7nviai8dz9qc3";
+      sha256 = "14rwc5k7q0d36b4jxnmxgnyvx9lnmaifxpyv0z07ymphlfr4amsn";
     };
 
     propagatedBuildInputs = with self; [
@@ -5244,7 +5246,7 @@ let
       homepage = http://deluge-torrent.org;
       description = "Torrent client";
       license = licenses.gpl3Plus;
-      maintainers = with maintainers; [ iElectric ];
+      maintainers = with maintainers; [ iElectric ebzzry ];
       platforms = platforms.all;
     };
   };
@@ -7126,7 +7128,7 @@ let
 
     propagatedBuildInputs = with self; [
       requests2 # Needs to be first;
-      cgroup-utils docker-custom docutils lti multiprocessing pygments pymongo
+      cgroup-utils docker-custom docutils lti pygments pymongo
       pyyaml rpyc selenium sh simpleldap tidylib virtual-display web
       websocket_client
     ];
@@ -7135,6 +7137,12 @@ let
       url = "https://pypi.python.org/packages/source/I/INGInious/INGInious-${version}.tar.gz";
       md5 = "40474dd6b6d4fc26e47a1d9c77bcf943";
     };
+
+    # Remove multiprocessing
+    # https://github.com/UCL-INGI/INGInious/issues/73
+    patchPhase = ''
+      sed -i '34d' setup.py
+    '';
 
     meta = {
       description = "An intelligent grader that allows secured and automated testing of code made by students.";
@@ -7795,7 +7803,43 @@ let
       description = "A load testing tool";
     };
   };
+  
+  llvmlite = buildPythonPackage rec {
+    name = "llvmlite-${version}";
+    version = "0.7.0";
+    
+    disabled = isPyPy;
+    
+    src = pkgs.fetchurl { 
+      url = "https://pypi.python.org/packages/source/l/llvmlite/${name}.tar.gz";
+      sha256 = "6d780980da05d2d82465991bce42c1b4625018d67feae17c672c6a9d5ad0bb1a";
+    };
 
+    llvm = pkgs.llvm;
+    
+    propagatedBuildInputs = with self; [ llvm ] ++ optional (!isPy34) enum34;
+
+    # Disable static linking
+    # https://github.com/numba/llvmlite/issues/93
+    patchPhase = ''
+      substituteInPlace ffi/Makefile.linux --replace "-static-libstdc++" ""
+    '';
+    # Set directory containing llvm-config binary
+    preConfigure = ''
+      export LLVM_CONFIG=${llvm}/bin/llvm-config
+    '';
+    checkPhase = ''
+      ${self.python.executable} runtests.py
+    '';
+    
+    meta = {
+      description = "A lightweight LLVM python binding for writing JIT compilers";
+      homepage = "http://llvmlite.pydata.org/";
+      license = licenses.bsd2;
+      maintainers = with maintainers; [ fridh ];
+    };
+  };
+  
   lockfile = buildPythonPackage rec {
     name = "lockfile-0.9.1";
 
@@ -7912,11 +7956,11 @@ let
 
 
   Mako = buildPythonPackage rec {
-    name = "Mako-1.0.1";
+    name = "Mako-1.0.2";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/M/Mako/${name}.tar.gz";
-      md5 = "9f0aafd177b039ef67b90ea350497a54";
+      sha256 = "17k7jy3byi4hj6ksszib6gxbf6n7snnnirnbrdldn848abjc4l15";
     };
 
     buildInputs = with self; [ markupsafe nose mock ];
@@ -8494,15 +8538,6 @@ let
       description = "A relatively sane approach to multiple dispatch in Python";
       license = licenses.bsd3;
       maintainers = with maintainers; [ fridh ];
-    };
-  };
-
-  multiprocessing = buildPythonPackage rec {
-    name = "multiprocessing-2.6.2.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/m/multiprocessing/${name}.tar.gz";
-      md5 = "5cc484396c040102116ccc2355379c72";
     };
   };
 
@@ -9178,6 +9213,11 @@ let
 
     buildInputs = with self; [ python pkgs.notmuch ];
 
+    postPatch = ''
+      sed -i -e '/CDLL/s@"libnotmuch\.@"${pkgs.notmuch}/lib/libnotmuch.@' \
+        notmuch/globals.py
+    '';
+
     meta = {
       description = "A Python wrapper around notmuch";
       homepage = http://notmuchmail.org/;
@@ -9197,6 +9237,32 @@ let
     };
   };
 
+  numba = buildPythonPackage rec {
+    version = "0.21.0";
+    name = "numba-${version}";
+    
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/n/numba/${name}.tar.gz";
+      sha256 = "1806d2f6ad49ad891e9ac6fed0cc0b0489cbfcd9ba2dc81081c1c30091e77604";
+    };
+    
+    propagatedBuildInputs = with self; [numpy llvmlite argparse] ++ optional (!isPy3k) funcsigs ++ optional (isPy27 || isPy33) singledispatch;
+    # Future work: add Cuda support.
+    #propagatedBuildInputs = with self; [numpy llvmlite argparse pkgs.cudatoolkit6];
+    #buildPhase = ''
+    #  export NUMBAPRO_CUDA_DRIVER=
+    #  export NUMBAPRO_NVVM=${pkgs.cudatoolkit6}
+    #  export NUMBAPRO_LIBDEVICE=
+    #'';
+
+    meta = {
+      homepage = http://numba.pydata.org/;
+      license = licenses.bsd2;
+      description = "Compiling Python code using LLVM";
+      maintainers = with maintainers; [ fridh ];
+    };
+  };
+  
   numexpr = buildPythonPackage rec {
     version = "2.4.3";
     name = "numexpr-${version}";
@@ -9251,7 +9317,7 @@ let
       sha256 = "0apgmsk9jlaphb2dp1zaxqzdxkf69h1y3iw2d1pcnkj31cmmypij";
     };
 
-    disabled = isPyPy;  # WIP
+    disabled = isPyPy || isPy35;  # WIP
 
     preConfigure = ''
       sed -i 's/-faltivec//' numpy/distutils/system_info.py
@@ -9948,11 +10014,11 @@ let
 
   pep8 = buildPythonPackage rec {
     name = "pep8-${version}";
-    version = "1.5.7";
+    version = "1.6.2";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/p/pep8/${name}.tar.gz";
-      md5 = "f6adbdd69365ecca20513c709f9b7c93";
+      sha256 = "1zybkcdw1sx84dvkfss96nhykqg9bc0cdpwpl4k9wlxm61bf7dxq";
     };
 
     meta = {
@@ -11144,11 +11210,11 @@ let
   };
 
   pyflakes = buildPythonPackage rec {
-    name = "pyflakes-0.8.1";
+    name = "pyflakes-0.9.2";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/p/pyflakes/${name}.tar.gz";
-      md5 = "905fe91ad14b912807e8fdc2ac2e2c23";
+      sha256 = "0pvawddspdq0y22dbraq5gld9qr6rwa7zhmpfhl2b7v9rqiiqs82";
     };
 
     buildInputs = with self; [ unittest2 ];
@@ -12158,6 +12224,27 @@ let
     meta = {
       description = "Python bindings for Subversion";
       homepage = "http://pysvn.tigris.org/";
+    };
+  };
+
+  python-wifi = buildPythonPackage rec {
+    name = "python-wifi-${version}";
+    version = "0.6.0";
+    disabled = ! (isPy26 || isPy27 );
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/p/python-wifi/${name}.tar.bz2";
+      md5 = "f9d520a8c17b0dfffce95a8a7efba7dd";
+    };
+
+    meta = {
+      inherit version;
+      description = "Read & write wireless card capabilities using the Linux Wireless Extensions";
+      homepage = http://pythonwifi.tuxfamily.org/;
+      # From the README: "pythonwifi is licensed under LGPLv2+, however, the
+      # examples (e.g. iwconfig.py and iwlist.py) are licensed under GPLv2+."
+      license = with licenses; [ lgpl2Plus gpl2Plus ];
+      maintainers = with maintainers; [ nckx ];
     };
   };
 
@@ -15800,15 +15887,13 @@ let
 
 
   BTrees = self.buildPythonPackage rec {
-    name = "BTrees-4.0.8";
-
-    patches = [ ./../development/python-modules/btrees_interger_overflow.patch ];
+    name = "BTrees-4.1.4";
 
     propagatedBuildInputs = with self; [ persistent zope_interface transaction ];
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/B/BTrees/${name}.tar.gz";
-      md5 = "7f5df4cf8dd50fb0c584c0929a406c92";
+      sha256 = "1avvhkd7rvp3rzhw20v6ank8a8m9a1lmh99c4gjjsa1ry0zsri3y";
     };
 
     meta = {
@@ -16219,11 +16304,11 @@ let
 
   zope_testing = buildPythonPackage rec {
     name = "zope.testing-${version}";
-    version = "4.1.3";
+    version = "4.5.0";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/z/zope.testing/${name}.tar.gz";
-      md5 = "6c73c5b668a67fdc116a25b884058ed9";
+      sha256 = "1yvglxhzvhl45mndvn9gskx2ph30zz1bz7rrlyfs62fv2pvih90s";
     };
 
     doCheck = !isPyPy;

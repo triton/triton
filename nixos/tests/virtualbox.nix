@@ -8,6 +8,19 @@ import ./make-test.nix ({ pkgs, ... }: with pkgs.lib; let
         #!${pkgs.stdenv.shell} -xe
         export PATH="${pkgs.coreutils}/bin:${pkgs.utillinux}/bin"
 
+        mkdir -p /etc/dbus-1 /var/run/dbus
+        cat > /etc/passwd <<EOF
+        root:x:0:0::/root:/bin/false
+        messagebus:x:1:1::/var/run/dbus:/bin/false
+        EOF
+        cat > /etc/group <<EOF
+        root:x:0:
+        messagebus:x:1:
+        EOF
+        cp -v "${pkgs.dbus.daemon}/etc/dbus-1/system.conf" \
+          /etc/dbus-1/system.conf
+        "${pkgs.dbus.daemon}/bin/dbus-daemon" --fork --system
+
         ${pkgs.linuxPackages.virtualboxGuestAdditions}/bin/VBoxService
         ${(attrs.vmScript or (const "")) pkgs}
 
@@ -307,7 +320,7 @@ in {
       mkVMConf = name: val: val.machine // { key = "${name}-config"; };
       vmConfigs = mapAttrsToList mkVMConf vboxVMs;
     in [ ./common/user-account.nix ./common/x11.nix ] ++ vmConfigs;
-    virtualisation.memorySize = 768;
+    virtualisation.memorySize = 1024;
     virtualisation.virtualbox.host.enable = true;
     users.extraUsers.alice.extraGroups = let
       inherit (config.virtualisation.virtualbox.host) enableHardening;

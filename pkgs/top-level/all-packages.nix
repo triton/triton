@@ -424,13 +424,17 @@ let
 
   makeAutostartItem = callPackage ../build-support/make-startupitem { };
 
-  makeInitrd = { contents, compressor ? "gzip -9n", prepend ? [ ] }@args:
-    callPackage ../build-support/kernel/make-initrd.nix args;
+  makeInitrd = { contents, compressor ? "gzip -9n", prepend ? [ ] }:
+    callPackage ../build-support/kernel/make-initrd.nix {
+      inherit contents compressor prepend;
+    };
 
   makeWrapper = makeSetupHook { } ../build-support/setup-hooks/make-wrapper.sh;
 
-  makeModulesClosure = { kernel, rootModules, allowMissing ? false }@args:
-    callPackage ../build-support/kernel/modules-closure.nix args;
+  makeModulesClosure = { kernel, rootModules, allowMissing ? false }:
+    callPackage ../build-support/kernel/modules-closure.nix {
+      inherit kernel rootModules allowMissing;
+    };
 
   pathsFromGraph = ../build-support/kernel/paths-from-graph.pl;
 
@@ -3060,7 +3064,7 @@ let
   svnfs = callPackage ../tools/filesystems/svnfs { };
 
   svtplay-dl = callPackage ../tools/misc/svtplay-dl {
-    inherit (pythonPackages) nose mock;
+    inherit (pythonPackages) nose mock requests2;
   };
 
   sysbench = callPackage ../development/tools/misc/sysbench {};
@@ -5738,7 +5742,7 @@ let
 
   tcptrack = callPackage ../development/tools/misc/tcptrack { };
 
-  teensy-loader = callPackage ../development/tools/misc/teensy { };
+  teensy-loader-cli = callPackage ../development/tools/misc/teensy-loader-cli { };
 
   texinfo413 = callPackage ../development/tools/misc/texinfo/4.13a.nix { };
   texinfo4 = texinfo413;
@@ -9716,9 +9720,14 @@ let
   grPackage = opts: recurseIntoAttrs (mkGrsecurity opts).grsecPackage;
 
   # Stable kernels
-  linux_grsec_stable_desktop    = grKernel grFlavors.linux_grsec_stable_desktop;
-  linux_grsec_stable_server     = grKernel grFlavors.linux_grsec_stable_server;
-  linux_grsec_stable_server_xen = grKernel grFlavors.linux_grsec_stable_server_xen;
+  # This is no longer supported. Please see the official announcement on the
+  # grsecurity page. https://grsecurity.net/announce.php
+  linux_grsec_stable_desktop    = throw "No longer supported due to https://grsecurity.net/announce.php. "
+    + "Please use linux_grsec_testing_desktop.";
+  linux_grsec_stable_server     = throw "No longer supported due to https://grsecurity.net/announce.php. "
+    + "Please use linux_grsec_testing_server.";
+  linux_grsec_stable_server_xen = throw "No longer supporteddue to https://grsecurity.net/announce.php. "
+    + "Please use linux_grsec_testing_server_xen.";
 
   # Testing kernels
   linux_grsec_testing_desktop = grKernel grFlavors.linux_grsec_testing_desktop;
@@ -12505,6 +12514,10 @@ let
 
   rakarrack = callPackage ../applications/audio/rakarrack {
     fltk = fltk13;
+  };
+
+  renoise = callPackage ../applications/audio/renoise {
+    demo = false;
   };
 
   rapcad = callPackage ../applications/graphics/rapcad {};

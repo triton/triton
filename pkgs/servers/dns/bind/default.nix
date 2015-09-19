@@ -104,6 +104,7 @@ stdenv.mkDerivation rec {
     (mkWith   (optLibiconv != null)   "libiconv"            optLibiconv)
     (mkWith   false                   "atf"                 null)
     (mkWith   true                    "tuning"              "large")
+    (mkEnable true                    "querytrace"          null)
     (mkWith   true                    "dlopen"              null)
     (mkWith   false                   "make-clean"          null)
     (mkEnable true                    "full-report"         null)

@@ -17,11 +17,11 @@ let
 in
 with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "libmicrohttpd-0.9.42";
+  name = "libmicrohttpd-0.9.43";
 
   src = fetchurl {
     url = "mirror://gnu/libmicrohttpd/${name}.tar.gz";
-    sha256 = "0nvxmm6z6wcq1vl6l92rids0i0va184y86bkc10dl0vh6rrj0d80";
+    sha256 = "17q6v5q0jpg57vylby6rx1qkil72bdx8gij1g9m694gxf5sb6js1";
   };
 
   nativeBuildInputs = [ pkgconfig ];
@@ -35,6 +35,7 @@ stdenv.mkDerivation rec {
     (mkEnable false                "examples"      null)
     (mkEnable true                 "poll"          "auto")
     (mkEnable true                 "epoll"         "auto")
+    (mkEnable true                 "socketpair"    null)
     (mkEnable doCheck              "curl"          null)
     (mkEnable hasSpdy              "spdy"          null)
     (mkEnable true                 "messages"      null)
@@ -43,6 +44,7 @@ stdenv.mkDerivation rec {
     (mkEnable hasHttps             "https"         null)
     (mkEnable true                 "bauth"         null)
     (mkEnable true                 "dauth"         null)
+    (mkEnable false                "coverage"      null)
   ];
 
   # Disabled because the tests can time-out.

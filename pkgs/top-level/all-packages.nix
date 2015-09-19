@@ -7094,9 +7094,7 @@ let
 
   libmicrohttpd-full = callPackage ../development/libraries/libmicrohttpd { };
 
-  libmicrohttpd = libmicrohttpd-full.override {
-    gnutls = null;
-  };
+  libmicrohttpd = libmicrohttpd-full;
 
   libmikmod = callPackage ../development/libraries/libmikmod { };
 

@@ -13,11 +13,11 @@ in
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "dhcp-${version}";
-  version = "4.3.2";
+  version = "4.3.3";
   
   src = fetchurl {
     url = "http://ftp.isc.org/isc/dhcp/${version}/${name}.tar.gz";
-    sha256 = "0rc156qqv7293yi69gxvvc8s4cp7fspwl12iqkf6r7vmb2rwjik2";
+    sha256 = "1pjy4lylx7dww1fp2mk5ikya5vxaf97z70279j81n74vn12ljg2m";
   };
 
   nativeBuildInputs = [ perl makeWrapper autoreconfHook ];

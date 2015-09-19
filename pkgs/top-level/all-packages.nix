@@ -477,6 +477,8 @@ let
     deps = [ makeWrapper ];
   } ../build-support/setup-hooks/wrap-gapps-hook.sh;
 
+  separateDebugInfo = makeSetupHook { } ../build-support/setup-hooks/separate-debug-info.sh;
+
 
   ### TOOLS
 
@@ -880,7 +882,6 @@ let
   syslogng_incubator = callPackage ../tools/system/syslog-ng-incubator { };
 
   rsyslog = callPackage ../tools/system/rsyslog {
-    czmq = null; # Currently Broken
     hadoop = null; # Currently Broken
   };
 
@@ -900,6 +901,7 @@ let
     openssl = null;
     librelp = null;
     libgt = null;
+    libksi = null;
     liblogging = null;
     libnet = null;
     hadoop = null;
@@ -2084,6 +2086,8 @@ let
 
   librdmacm = callPackage ../development/libraries/librdmacm { };
 
+  libwebsockets = callPackage ../development/libraries/libwebsockets { };
+
   limesurvey = callPackage ../servers/limesurvey { };
 
   logcheck = callPackage ../tools/system/logcheck {
@@ -2197,6 +2201,8 @@ let
     libpng = libpng12;
   };
 
+  minissdpd = callPackage ../tools/networking/minissdpd { };
+
   miniupnpc = callPackage ../tools/networking/miniupnpc { };
 
   miniupnpd = callPackage ../tools/networking/miniupnpd { };
@@ -2269,6 +2275,8 @@ let
   muscletool = callPackage ../tools/security/muscletool { };
 
   mysql2pgsql = callPackage ../tools/misc/mysql2pgsql { };
+
+  nabi = callPackage ../tools/inputmethods/nabi { };
 
   namazu = callPackage ../tools/text/namazu { };
 
@@ -3108,7 +3116,7 @@ let
   telnet = callPackage ../tools/networking/telnet { };
 
   texmacs = callPackage ../applications/editors/texmacs {
-    tex = texLive; /* tetex is also an option */
+    tex = texlive.combined.scheme-small;
     extraFonts = true;
   };
 
@@ -3161,6 +3169,8 @@ let
   tpm-tools = callPackage ../tools/security/tpm-tools { };
 
   tpm-luks = callPackage ../tools/security/tpm-luks { };
+
+  tthsum = callPackage ../applications/misc/tthsum { };
 
   chaps = callPackage ../tools/security/chaps { };
 
@@ -3936,11 +3946,6 @@ let
 
   gcl = builderDefsPackage (callPackage ../development/compilers/gcl) {
     gmp = gmp4;
-    texLive = texLiveAggregationFun {
-      paths = [
-        texLive texLiveExtra
-      ];
-    };
   };
 
   gcc-arm-embedded-4_7 = callPackage_i686 ../development/compilers/gcc-arm-embedded {
@@ -5551,6 +5556,8 @@ let
 
   leiningen = callPackage ../development/tools/build-managers/leiningen { };
 
+  lemon = callPackage ../development/tools/parsing/lemon { };
+
   libtool = libtool_2;
 
   libtool_1_5 = callPackage ../development/tools/misc/libtool { };
@@ -6094,8 +6101,9 @@ let
 
   farstream = callPackage ../development/libraries/farstream {
     inherit (gst_all_1)
-      gstreamer gst-plugins-base gst-python gst-plugins-good gst-plugins-bad
+      gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
       gst-libav;
+    inherit (pythonPackages) gst-python;
   };
 
   fcgi = callPackage ../development/libraries/fcgi { };
@@ -6933,6 +6941,8 @@ let
     inherit (perlPackages) libintlperl GetoptLong SysVirt;
   };
 
+  libhangul = callPackage ../development/libraries/libhangul { };
+
   libharu = callPackage ../development/libraries/libharu { };
 
   libHX = callPackage ../development/libraries/libHX { };
@@ -7072,6 +7082,8 @@ let
   libkeyfinder = callPackage ../development/libraries/libkeyfinder { };
 
   libksba = callPackage ../development/libraries/libksba { };
+
+  libksi = callPackage ../development/libraries/libksi { };
 
   libmad = callPackage ../development/libraries/libmad { };
 
@@ -7783,6 +7795,11 @@ let
 
   poppler = callPackage ../development/libraries/poppler { lcms = lcms2; };
 
+  poppler_min = poppler.override { # TODO: maybe reduce even more
+    minimal = true;
+    suffix = "min";
+  };
+
   poppler_qt4 = poppler.override {
     qt4Support = true;
     suffix = "qt4";
@@ -7948,6 +7965,8 @@ let
   qrupdate = callPackage ../development/libraries/qrupdate { };
 
   redland = pkgs.librdf_redland;
+
+  resolv_wrapper = callPackage ../development/libraries/resolv_wrapper { };
 
   rhino = callPackage ../development/libraries/java/rhino {
     javac = gcj;
@@ -8417,6 +8436,8 @@ let
 
   czmq = callPackage ../development/libraries/czmq { };
 
+  zimlib = callPackage ../development/libraries/zimlib { };
+
   zita-convolver = callPackage ../development/libraries/audio/zita-convolver { };
 
   zita-alsa-pcmi = callPackage ../development/libraries/audio/zita-alsa-pcmi { };
@@ -8715,7 +8736,10 @@ let
   ### DEVELOPMENT / R MODULES
 
   R = callPackage ../applications/science/math/R {
-    texLive = texLiveAggregationFun { paths = [ texLive texLiveExtra ]; };
+    # TODO: split docs into a separate output
+    texLive = texlive.combine {
+      inherit (texlive) scheme-small inconsolata helvetic texinfo fancyvrb cm-super;
+    };
     openblas = openblasCompat;
     withRecommendedPackages = false;
   };
@@ -9298,7 +9322,7 @@ let
 
   afuse = callPackage ../os-specific/linux/afuse { };
 
-  autofs5 = callPackage ../os-specific/linux/autofs/autofs-v5.nix { };
+  autofs5 = callPackage ../os-specific/linux/autofs { };
 
   _915resolution = callPackage ../os-specific/linux/915resolution { };
 
@@ -9329,25 +9353,16 @@ let
 
   microcodeIntel = callPackage ../os-specific/linux/microcode/intel.nix { };
 
-  apparmor = callPackage ../os-specific/linux/apparmor {
-    inherit (perlPackages) LocaleGettext TermReadKey RpcXML;
-    bison = bison2;
-    perl = perl516; # ${perl}/.../CORE/handy.h:124:34: error: 'bool' undeclared
-  };
-
-  apparmor_2_9 = callPackage ../os-specific/linux/apparmor/2.9 { };
-  libapparmor = apparmor_2_9.libapparmor;
-  apparmor-pam = apparmor_2_9.apparmor-pam;
-  apparmor-parser = apparmor_2_9.apparmor-parser;
-  apparmor-profiles = apparmor_2_9.apparmor-profiles;
-  apparmor-utils = apparmor_2_9.apparmor-utils;
+  apparmor = callPackage ../os-specific/linux/apparmor { swig = swig2; };
+  libapparmor = apparmor.libapparmor;
+  apparmor-pam = apparmor.apparmor-pam;
+  apparmor-parser = apparmor.apparmor-parser;
+  apparmor-profiles = apparmor.apparmor-profiles;
+  apparmor-utils = apparmor.apparmor-utils;
 
   atop = callPackage ../os-specific/linux/atop { };
 
-  auditFull = callPackage ../os-specific/linux/audit {
-    python = null;
-    go = null;
-  };
+  auditFull = callPackage ../os-specific/linux/audit { };
   libaudit = auditFull.override {
     prefix = "lib";
   };
@@ -11169,15 +11184,11 @@ let
 
     proofgeneral_4_2 = callPackage ../applications/editors/emacs-modes/proofgeneral/4.2.nix {
       texinfo = texinfo4 ;
-      texLive = pkgs.texLiveAggregationFun {
-        paths = [ pkgs.texLive pkgs.texLiveCMSuper ];
-      };
+      texLive = texlive.combine { inherit (texlive) scheme-basic cm-super ec; };
     };
     proofgeneral_4_3_pre = callPackage ../applications/editors/emacs-modes/proofgeneral/4.3pre.nix {
       texinfo = texinfo4 ;
-      texLive = pkgs.texLiveAggregationFun {
-        paths = [ pkgs.texLive pkgs.texLiveCMSuper ];
-      };
+      texLive = texlive.combine { inherit (texlive) scheme-basic cm-super ec; };
     };
     proofgeneral = self.proofgeneral_4_2;
 
@@ -12509,6 +12520,8 @@ let
   qutebrowser = callPackage ../applications/networking/browsers/qutebrowser {
     inherit (python34Packages) buildPythonPackage python pyqt5 jinja2 pygments pyyaml pypeg2;
   };
+
+  rabbitvcs = callPackage ../applications/version-management/rabbitvcs {};
 
   rakarrack = callPackage ../applications/audio/rakarrack {
     fltk = fltk13;
@@ -14707,8 +14720,6 @@ let
 
   keynav = callPackage ../tools/X11/keynav { };
 
-  lazylist = callPackage ../tools/typesetting/tex/lazylist { };
-
   lilypond = callPackage ../misc/lilypond { guile = guile_1_8; };
 
   mailcore2 = callPackage ../development/libraries/mailcore2 { };
@@ -14811,8 +14822,6 @@ let
 
   pjsip = callPackage ../applications/networking/pjsip { };
 
-  polytable = callPackage ../tools/typesetting/tex/polytable { };
-
   PPSSPP = callPackage ../misc/emulators/ppsspp { SDL = SDL2; };
 
   uae = callPackage ../misc/emulators/uae { };
@@ -14891,6 +14900,10 @@ let
   tex4ht = callPackage ../tools/typesetting/tex/tex4ht { };
 
   texFunctions = callPackage ../tools/typesetting/tex/nix pkgs;
+
+  # All the new TeX Live is inside. See description in default.nix.
+  texlive = recurseIntoAttrs
+    (callPackage ../tools/typesetting/tex/texlive-new { });
 
   texLive = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive) {
     ghostscript = ghostscriptX;

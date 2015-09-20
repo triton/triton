@@ -269,7 +269,7 @@ let
   autonix = import ../build-support/autonix { inherit pkgs; };
 
   autoreconfHook = makeSetupHook
-    { substitutions = { inherit autoconf automake libtool gettext; }; }
+    { substitutions = { inherit autoconf automake gettext; libtool = realLibtool; }; }
     ../build-support/setup-hooks/autoreconf.sh;
 
   buildEnv = callPackage ../build-support/buildenv {};
@@ -1697,7 +1697,7 @@ let
 
   calamares = callPackage ../tools/misc/calamares rec {
     python = python3;
-    boost = callPackage ../development/libraries/boost/1.57.nix { python=python3; };
+    boost = pkgs.boost.override { python=python3; };
     libyamlcpp = callPackage ../development/libraries/libyaml-cpp { makePIC=true; boost=boost; };
     inherit (kf5_stable) extra-cmake-modules kconfig ki18n kcoreaddons solid;
   };
@@ -2008,10 +2008,9 @@ let
 
   nodejs-0_12 = callPackage ../development/web/nodejs {
     libuv = libuvVersions.v1_6_1;
-    libtool = darwin.cctools;
   };
+
   nodejs-0_10 = callPackage ../development/web/nodejs/v0_10.nix {
-    libtool = darwin.cctools;
     inherit (darwin.apple_sdk.frameworks) CoreServices ApplicationServices Carbon Foundation;
   };
 
@@ -3266,6 +3265,8 @@ let
     inherit (gnome3) gexiv2;
   };
 
+  vit = callPackage ../applications/misc/vit { };
+
   vnc2flv = callPackage ../tools/video/vnc2flv {};
 
   vncrec = builderDefsPackage (callPackage ../tools/video/vncrec) {};
@@ -3564,6 +3565,8 @@ let
 
   zinnia = callPackage ../tools/inputmethods/zinnia { };
   tegaki-zinnia-japanese = callPackage ../tools/inputmethods/tegaki-zinnia-japanese { };
+
+  zimreader = callPackage ../tools/text/zimreader { };
 
   zimwriterfs = callPackage ../tools/text/zimwriterfs { };
 
@@ -5563,7 +5566,11 @@ let
 
   lemon = callPackage ../development/tools/parsing/lemon { };
 
-  libtool = libtool_2;
+  libtool = if stdenv.isDarwin
+    then darwin.cctools
+    else realLibtool;
+
+  realLibtool = libtool_2;
 
   libtool_1_5 = callPackage ../development/tools/misc/libtool { };
 
@@ -10489,6 +10496,9 @@ let
   mplus-outline-fonts = callPackage ../data/fonts/mplus-outline-fonts { };
 
   nafees = callPackage ../data/fonts/nafees { };
+
+  inherit (callPackages ../data/fonts/noto-fonts {})
+    noto-fonts noto-fonts-cjk noto-fonts-emoji;
 
   numix-icon-theme = callPackage ../data/icons/numix-icon-theme { };
 

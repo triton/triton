@@ -1,7 +1,7 @@
 { stdenv, fetchurl, pythonPackages, pkgconfig, perl, libxslt, docbook_xsl
-, docbook_xml_dtd_42, docbook_xml_dtd_45, readline, talloc, ntdb, tdb, tevent
-, ldb, popt, iniparser, subunit, libbsd, nss_wrapper, socket_wrapper
-, uid_wrapper, libarchive
+, docbook_xml_dtd_42, docbook_xml_dtd_45, readline, talloc, tdb, tevent
+, ldb, popt, iniparser, subunit, libbsd, nss_wrapper, resolv_wrapper
+, socket_wrapper, uid_wrapper, libarchive
 
 # source3/wscript optionals
 , kerberos ? null
@@ -40,7 +40,8 @@ let
   bundledLibs = if kerberos != null && kerberos.implementation == "heimdal" then "NONE" else "com_err";
   hasGnutls = gnutls != null && libgcrypt != null && libgpgerror != null;
   isKrb5OrNull = if kerberos != null && kerberos.implementation == "krb5" then true else null;
-  hasInfinibandOrNull = if libibverbs != null && librdmacm != null then true else null;
+  #hasInfinibandOrNull = if libibverbs != null && librdmacm != null then true else null;
+  hasInfinibandOrNull = null;  # TODO(wkennington): Reenable after fixed
 in
 with stdenv.lib;
 stdenv.mkDerivation rec {
@@ -61,8 +62,8 @@ stdenv.mkDerivation rec {
     pythonPackages.wrapPython
   ];
   buildInputs = [
-    readline talloc ntdb tdb tevent ldb popt iniparser
-    subunit libbsd nss_wrapper socket_wrapper uid_wrapper
+    readline talloc tdb tevent ldb popt iniparser
+    subunit libbsd nss_wrapper resolv_wrapper socket_wrapper uid_wrapper
     libarchive
 
     kerberos zlib openldap cups pam avahi acl libaio fam libceph glusterfs
@@ -74,7 +75,7 @@ stdenv.mkDerivation rec {
     ncurses libunwind dbus libibverbs librdmacm systemd
   ];
 
-  pythonPath = [ talloc ldb tdb ntdb ];
+  pythonPath = [ talloc ldb tdb ];
 
   postPatch = ''
     # Removes absolute paths in scripts
@@ -127,6 +128,9 @@ stdenv.mkDerivation rec {
     (mkOther                       "builtin-libraries" "replace")
     (mkWith   libiconv             "libiconv"          libiconv)
     (mkWith   (gettext != null)    "gettext"           gettext)
+
+    # lib/util/wscript
+    (mkWith   (systemd != null)    "systemd"           null)
 
     # source4/lib/tls/wscript options
     (mkEnable hasGnutls            "gnutls" null)

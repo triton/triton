@@ -9380,6 +9380,9 @@ let
   auditFull = callPackage ../os-specific/linux/audit { };
   libaudit = auditFull.override {
     prefix = "lib";
+    go = null; # We don't need go bindings
+    python2 = null; # We don't need python2 bindings
+    python3 = null; # We don't need python3 bindings
   };
 
   b43Firmware_5_1_138 = callPackage ../os-specific/linux/firmware/b43-firmware/5.1.138.nix { };

@@ -2,7 +2,7 @@
 , libcap_ng, swig
 
 # Optional Dependencies
-, openldap ? null, python ? null, python3 ? null, go ? null, libkrb5 ? null, tcp_wrappers ? null
+, openldap ? null, python2 ? null, python3 ? null, go ? null, libkrb5 ? null, tcp_wrappers ? null
 
 # Extra arguments
 , prefix ? ""
@@ -13,7 +13,7 @@ let
   libOnly = prefix == "lib";
 
   optOpenldap = if libOnly then null else shouldUsePkg openldap;
-  optPython = if !libOnly then null else shouldUsePkg python;
+  optPython2 = if !libOnly then null else shouldUsePkg python2;
   optPython3 = if !libOnly then null else shouldUsePkg python3;
   optGo = if !libOnly then null else shouldUsePkg go;
   optLibkrb5 = if libOnly then null else shouldUsePkg libkrb5;
@@ -29,9 +29,9 @@ stdenv.mkDerivation rec {
     sha256 = "08sfcx8ykcn5jsryil15q8yqm0a8czymyqbb2sqxfc1jbx37zx95";
   };
 
-  nativeBuildInputs = [ optPython ] ++ optional (optPython3 != null) swig;
+  nativeBuildInputs = [ optPython2 ] ++ optional (optPython3 != null) swig;
   buildInputs = [
-    libcap_ng optOpenldap optPython optPython3 optGo optLibkrb5 optTcp_wrappers
+    libcap_ng optOpenldap optPython2 optPython3 optGo optLibkrb5 optTcp_wrappers
   ];
 
   postPatch = ''
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    (mkWith   (optPython != null)       "python"      null)
+    (mkWith   (optPython2 != null)       "python"      null)
     (mkWith   (optPython3 != null)      "python3"     null)
     (mkWith   (optGo != null)           "golang"      null)
     (mkEnable (!libOnly)                "listener"    null)

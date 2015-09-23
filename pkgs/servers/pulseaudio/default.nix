@@ -2,7 +2,7 @@
 , json_c, libsndfile, gettext, check
 
 # Optional Dependencies
-, xlibs ? null, libcap ? null, valgrind ? null, oss ? null, coreaudio ? null
+, xorg ? null, libcap ? null, valgrind ? null, oss ? null, coreaudio ? null
 , alsaLib ? null, esound ? null, glib ? null, gtk3 ? null, gconf ? null
 , avahi ? null, libjack2 ? null, libasyncns ? null, lirc ? null, dbus ? null
 , sbc ? null, bluez5 ? null, udev ? null, openssl ? null, fftw ? null
@@ -19,7 +19,7 @@ with stdenv;
 let
   libOnly = prefix == "lib";
 
-  hasXlibs = xlibs != null;
+  hasXlibs = xorg != null;
 
   optLibcap = shouldUsePkg libcap;
   hasCaps = optLibcap != null || stdenv.isFreeBSD; # Built-in on FreeBSD
@@ -71,13 +71,14 @@ stdenv.mkDerivation rec {
   patches = [ ./caps-fix.patch ];
 
   nativeBuildInputs = [ pkgconfig intltool automake autoconf libtool ];
+  propagatedBuildInputs = [ optLibcap ];
   buildInputs = [
     json_c libsndfile gettext check database
 
-    optLibcap valgrind optOss optCoreaudio optAlsaLib optEsound optGlib
+    valgrind optOss optCoreaudio optAlsaLib optEsound optGlib
     optGtk3 optGconf optAvahi optLibjack2 optLibasyncns optLirc optDbus optUdev
     optOpenssl optFftw optSpeexdsp optSystemd optWebrtc-audio-processing
-  ] ++ optionals hasXlibs (with xlibs; [
+  ] ++ optionals hasXlibs (with xorg; [
       libX11 libxcb libICE libSM libXtst xextproto libXi
     ]) ++ optionals (optBluez5 != null) [ optBluez5 optSbc ];
 

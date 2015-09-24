@@ -6,7 +6,7 @@
 , alsaLib ? null, esound ? null, glib ? null, gtk3 ? null, gconf ? null
 , avahi ? null, libjack2 ? null, libasyncns ? null, lirc ? null, dbus ? null
 , sbc ? null, bluez5 ? null, udev ? null, openssl ? null, fftw ? null
-, speexdsp ? null, systemd ? null, webrtc-audio-processing ? null
+, speexdsp ? null, soxr ? null, systemd ? null, webrtc-audio-processing ? null
 
 # Database selection
 , tdb ? null, gdbm ? null
@@ -45,6 +45,7 @@ let
   optOpenssl = if libOnly then null else shouldUsePkg openssl;
   optFftw = shouldUsePkg fftw;
   optSpeexdsp = shouldUsePkg speexdsp;
+  optSoxr = if libOnly then null else shouldUsePkg soxr;
   optSystemd = shouldUsePkg systemd;
   optWebrtc-audio-processing = if libOnly then null else shouldUsePkg webrtc-audio-processing;
   hasWebrtc = if libOnly then null else optWebrtc-audio-processing != null;
@@ -61,11 +62,11 @@ in
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "${prefix}pulseaudio-${version}";
-  version = "6.0";
+  version = "7.0";
 
   src = fetchurl {
     url = "http://freedesktop.org/software/pulseaudio/releases/pulseaudio-${version}.tar.xz";
-    sha256 = "1xpnfxa0d8pgf6b4qdgnkcvrvdxbbbjd5ync19h0f5hbp3h401mm";
+    sha256 = "1yp8x8z4wigrzik131kjdyhn7hznazvbkbp2zz1vy9l9gqvy26na";
   };
 
   patches = [ ./caps-fix.patch ];
@@ -77,7 +78,7 @@ stdenv.mkDerivation rec {
 
     valgrind optOss optCoreaudio optAlsaLib optEsound optGlib
     optGtk3 optGconf optAvahi optLibjack2 optLibasyncns optLirc optDbus optUdev
-    optOpenssl optFftw optSpeexdsp optSystemd optWebrtc-audio-processing
+    optOpenssl optFftw optSpeexdsp optSoxr optSystemd optWebrtc-audio-processing
   ] ++ optionals hasXlibs (with xorg; [
       libX11 libxcb libICE libSM libXtst xextproto libXi
     ]) ++ optionals (optBluez5 != null) [ optBluez5 optSbc ];
@@ -134,6 +135,7 @@ stdenv.mkDerivation rec {
     (mkEnable (optOpenssl != null)    "openssl"                    null)
     (mkWith   (optFftw != null)       "fftw"                       null)
     (mkWith   (optSpeexdsp != null)   "speex"                      null)
+    (mkWith   (optSoxr != null)       "soxr"                       null)
     (mkEnable false                   "xen"                        null)
     (mkEnable false                   "gcov"                       null)
     (mkEnable (optSystemd != null)    "systemd-daemon"             null)
@@ -147,6 +149,7 @@ stdenv.mkDerivation rec {
     (mkWith   true                    "access-group"               "audio")
     (mkWith   true                    "systemduserunitdir"         "\${out}/lib/systemd/user")
     (mkWith   stdenv.isDarwin         "mac-sysroot"                "/")
+    (mkWith   true                    "bash-completion-dir"        "\${out}/share/bash-completions/completions")
   ];
 
   enableParallelBuilding = true;
@@ -165,7 +168,7 @@ stdenv.mkDerivation rec {
 
   postInstall = optionalString libOnly ''
     rm -rf $out/{bin,share,etc,lib/{pulse-*,systemd}}
-    sed 's|-lltdl|-L${libtool}/lib -lltdl|' -i $out/lib/libpulsecore-6.0.la
+    sed 's|-lltdl|-L${libtool}/lib -lltdl|' -i $out/lib/libpulsecore-${version}.la
   '';
 
   meta = {

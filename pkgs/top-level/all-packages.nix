@@ -628,7 +628,9 @@ let
 
   inherit (androidenv) androidsdk_4_4 androidndk;
 
-  aria2 = callPackage ../tools/networking/aria2 { };
+  aria2 = callPackage ../tools/networking/aria2 {
+    inherit (darwin.apple_sdk.frameworks) Security;
+  };
   aria = aria2;
 
   at = callPackage ../tools/system/at { };
@@ -2029,7 +2031,7 @@ let
 
   nodePackages_4_1 = recurseIntoAttrs (callPackage ./node-packages.nix { self = nodePackages_4_1; nodejs = nodejs-4_1; });
 
-  nodePackages_0_10 = recurcallPackage ./node-packages.nix { self = nodePackages_0_10; nodejs = nodejs-0_10; };
+  nodePackages_0_10 = callPackage ./node-packages.nix { self = nodePackages_0_10; nodejs = nodejs-0_10; };
 
   nodePackages = if stdenv.system == "armv5tel-linux" then
     nodePackages_0_10
@@ -2241,6 +2243,8 @@ let
   motuclient = python27Packages.motuclient;
 
   mpage = callPackage ../tools/text/mpage { };
+
+  mpw = callPackage ../tools/security/mpw { };
 
   mr = callPackage ../applications/version-management/mr { };
 
@@ -6680,6 +6684,7 @@ let
   };
 
   kf513Packages = lib.makeScope kf513.newScope kf5PackagesFun;
+  kf5Packages = kf513Packages;
 
   kinetic-cpp-client = callPackage ../development/libraries/kinetic-cpp-client { };
 
@@ -7663,6 +7668,8 @@ let
 
   ncurses = callPackage ../development/libraries/ncurses { };
 
+  neardal = callPackage ../development/libraries/neardal { };
+
   neon = callPackage ../development/libraries/neon {
     compressionSupport = true;
     sslSupport = true;
@@ -7814,7 +7821,7 @@ let
 
   phonon_qt5 = callPackage ../development/libraries/phonon/qt5/old.nix {};
 
-  phonon_backend_gstreamer_qt5 = callPackage ../development/libraries/phonon-backend-gstreamer/qt5/old.nix {};
+  phonon_qt5_backend_gstreamer = callPackage ../development/libraries/phonon-backend-gstreamer/qt5/old.nix {};
 
   physfs = callPackage ../development/libraries/physfs { };
 
@@ -15207,6 +15214,11 @@ aliases = with self; rec {
   lttngTools = lttng-tools;  # added 2014-07-31
   lttngUst = lttng-ust;  # added 2014-07-31
   nfsUtils = nfs-utils;  # added 2014-12-06
+  quassel_qt5 = kf5Packages.quassel_qt5; # added 2015-09-30
+  quasselClient_qt5 = kf5Packages.quasselClient_qt5; # added 2015-09-30
+  quasselDaemon_qt5 = kf5Packages.quasselDaemon; # added 2015-09-30
+  quassel_kf5 = kf5Packages.quassel; # added 2015-09-30
+  quasselClient_kf5 = kf5Packages.quasselClient; # added 2015-09-30
   rdiff_backup = rdiff-backup;  # added 2014-11-23
   rssglx = rss-glx; #added 2015-03-25
   rxvt_unicode_with-plugins = rxvt_unicode-with-plugins; # added 2015-04-02

@@ -9109,7 +9109,7 @@ let
     # The following are disabled in the default build, because if this
     # functionality is desired, they are only needed in the PulseAudio
     # server.
-    xlibs = null;
+    xorg = null;
     coreaudio = null;
     esound = null;
     libjack2 = null;

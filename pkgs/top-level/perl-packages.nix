@@ -8715,18 +8715,18 @@ let self = _self // overrides; _self = with self; {
   };
 
   PerlOSType = buildPerlPackage rec {
-    name = "Perl-OSType-1.007";
+    name = "Perl-OSType-1.009";
     src = fetchurl {
       url = "mirror://cpan/authors/id/D/DA/DAGOLDEN/${name}.tar.gz";
-      sha256 = "0aryn8dracfjfnks07b5rvsza4csinlsj6cn92jv3sv8sg3rmdxk";
+      sha256 = "01mfvh6x9mgfnwb31bmaw0jkqkxbl8gn50mwqgjwajk1yz4z8p14";
     };
   };
 
   PerlTidy = buildPerlPackage rec {
-    name = "Perl-Tidy-20130922";
+    name = "Perl-Tidy-20150815";
     src = fetchurl {
       url = "mirror://cpan/authors/id/S/SH/SHANCOCK/${name}.tar.gz";
-      sha256 = "0qmp6308917lsvms5dbihdj85cnkhy821azc5i6q3p3703qdd375";
+      sha256 = "1mzb2df3bhxcgm7i9vx29bz5581cr8bbfrmajjrzla04djg9v5ha";
     };
   };
 
@@ -9050,11 +9050,11 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  PodEscapes = buildPerlPackage {
-    name = "Pod-Escapes-1.06";
+  PodEscapes = let version = "1.07"; in buildPerlPackage {
+    name = "Pod-Escapes-${version}";
     src = fetchurl {
-      url = mirror://cpan/authors/id/N/NE/NEILB/Pod-Escapes-1.06.tar.gz;
-      sha256 = "15dpzlgc2ywyxk2svc810nmyx6pm1nj8cji7a0rqr9x6m0v11xdm";
+      url = "mirror://cpan/authors/id/N/NE/NEILB/Pod-Escapes-${version}.tar.gz";
+      sha256 = "0213lmbbw3vy50ahlp2lqmmnkwhrizyl1y87i4jgnla9k0kwixyv";
     };
   };
 
@@ -9689,16 +9689,17 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  Starman = buildPerlModule {
-    name = "Starman-0.4010";
+  Starman = let version = "0.4014"; in buildPerlModule {
+    name = "Starman-${version}";
     src = fetchurl {
-      url = mirror://cpan/authors/id/M/MI/MIYAGAWA/Starman-0.4010.tar.gz;
-      sha256 = "abe8e2e0519b7326d64db1e93d9c32d853a7be083792d0d7e5f5a1ddf1472d42";
+      url = "mirror://cpan/authors/id/M/MI/MIYAGAWA/Starman-${version}.tar.gz";
+      sha256 = "1sbb5rb3vs82rlh1fjkgkcmj5pj62b4y9si4ihh45sl9m8c2qxx5";
     };
     buildInputs = [ LWP ModuleBuildTiny TestRequires ];
     propagatedBuildInputs = [ DataDump HTTPDate HTTPMessage HTTPParserXS NetServer Plack TestTCP ];
     doCheck = false; # binds to various TCP ports
     meta = {
+      inherit version;
       homepage = https://github.com/miyagawa/Starman;
       description = "High-performance preforking PSGI/Plack web server";
       license = "perl";
@@ -9940,13 +9941,14 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  StringUtil = buildPerlPackage {
-    name = "String-Util-1.21";
+  StringUtil = let version = "1.24"; in buildPerlPackage {
+    name = "String-Util-${version}";
     src = fetchurl {
-      url = mirror://cpan/authors/id/M/MI/MIKO/String-Util-1.21.tar.gz;
-      sha256 = "1ndvm9pbngf1j0fm02ghl4nfcqi5404sxdlm42g3ismf1ms1fnxa";
+      url = "mirror://cpan/authors/id/M/MI/MIKO/String-Util-${version}.tar.gz";
+      sha256 = "16c7dbpz87ywq49lnsaml0k28jbkraf1p2njh72jc5xcxys7vykv";
     };
     meta = {
+      inherit version;
       description = "String::Util -- String processing utilities";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
     };
@@ -10006,14 +10008,15 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  SubExporterUtil = buildPerlPackage {
-    name = "Sub-Exporter-Util-0.984";
+  SubExporterUtil = let version = "0.987"; in buildPerlPackage {
+    name = "Sub-Exporter-Util-${version}";
     src = fetchurl {
-      url = mirror://cpan/authors/id/R/RJ/RJBS/Sub-Exporter-0.984.tar.gz;
-      sha256 = "190qly7nv7zf17c1v0gnqhyf25p6whhh2m132mh4xzs5mqadwq0f";
+      url = "mirror://cpan/authors/id/R/RJ/RJBS/Sub-Exporter-${version}.tar.gz";
+      sha256 = "1ml3n1ck4ln9qjm2mcgkczj1jb5n1fkscz9c4x23v4db0glb4g2l";
     };
     propagatedBuildInputs = [ DataOptList ParamsUtil SubInstall ];
     meta = {
+      inherit version;
       homepage = https://github.com/rjbs/sub-exporter;
       description = "A sophisticated exporter for custom-built routines";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
@@ -10357,13 +10360,14 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  TermCap = buildPerlPackage {
-    name = "Term-Cap-1.16";
+  TermCap = let version = "1.17"; in buildPerlPackage {
+    name = "Term-Cap-${version}";
     src = fetchurl {
-      url = mirror://cpan/authors/id/J/JS/JSTOWE/Term-Cap-1.16.tar.gz;
-      sha256 = "b99728ac19b740b43e6a8d3c749c336f4a5d59ffd684c42c222681ee924e4a20";
+      url = "mirror://cpan/authors/id/J/JS/JSTOWE/Term-Cap-${version}.tar.gz";
+      sha256 = "0qyicyk4aikw6w3fm8c4y6hd7ff70crkl6bf64qmiakbgxy9p6p7";
     };
     meta = {
+      inherit version;
       description = "Perl termcap interface";
       license = "perl";
     };

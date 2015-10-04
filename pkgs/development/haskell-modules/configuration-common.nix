@@ -62,7 +62,7 @@ self: super: {
   # all required dependencies are part of Stackage. To comply with Stackage, we
   # make 'git-annex-without-assistant' our default version, but offer another
   # build which has the assistant to be used in the top-level.
-  git-annex_5_20150916 = (disableCabalFlag super.git-annex_5_20150916 "assistant").override {
+  git-annex_5_20150930 = (disableCabalFlag super.git-annex_5_20150930 "assistant").override {
     dbus = if pkgs.stdenv.isLinux then self.dbus else null;
     fdo-notify = if pkgs.stdenv.isLinux then self.fdo-notify else null;
     hinotify = if pkgs.stdenv.isLinux then self.hinotify else self.fsnotify;
@@ -633,8 +633,10 @@ self: super: {
   # Uses OpenGL in testing
   caramia = dontCheck super.caramia;
 
+  # Supports only 3.4 for now, https://github.com/bscarlet/llvm-general/issues/144
+  llvm-general = super.llvm-general.override { llvm-config = pkgs.llvm_34; };
+
   # Needs help finding LLVM.
-  llvm-general = super.llvm-general.override { llvm-config = self.llvmPackages.llvm; };
   spaceprobe = addBuildTool super.spaceprobe self.llvmPackages.llvm;
 
   # Tries to run GUI in tests

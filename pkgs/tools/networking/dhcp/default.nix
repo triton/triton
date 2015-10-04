@@ -20,23 +20,23 @@ stdenv.mkDerivation rec {
     sha256 = "1pjy4lylx7dww1fp2mk5ikya5vxaf97z70279j81n74vn12ljg2m";
   };
 
-  nativeBuildInputs = [ perl makeWrapper autoreconfHook ];
+  nativeBuildInputs = [ perl makeWrapper ] ++ optional (optBind != null) autoreconfHook;
   buildInputs = [ optBind optOpenldap ];
 
   postPatch = optionalString (optBind != null) ''
     # Don't use the built in bind
-    rm -rf bind
+    #rm -rf bind
 
+    # Use our prebuilt version of bind
+    #ln -sv ${optBind} bind
+    #
     # Don't build an internal version of bind
-    sed -i 's,^\(.*SUBDIRS.*\)bind\(.*\)$,\1\2,' Makefile.am
+    #sed -i 's,^\(.*SUBDIRS.*\)bind\(.*\)$,\1\2,' Makefile.am
 
     # Use shared bind libraries instead of static
     grep -r 'bind/lib' . | awk -F: '{print $1}' | sort | uniq | xargs sed \
       -e "s,[^ ]*bind/lib/lib\([^.]*\)\.a,-l\1,g" \
       -i
-
-    # Use our prebuilt version of bind
-    ln -sv ${optBind} bind
   '';
 
   preConfigure = ''

@@ -1252,8 +1252,7 @@ let
 
   dnstop = callPackage ../tools/networking/dnstop { };
 
-  # Temporarily disable bind as dhcp 4.3.2 doesn't build against bind 9.10+
-  dhcp = callPackage ../tools/networking/dhcp { bind = null; };
+  dhcp = callPackage ../tools/networking/dhcp { };
 
   dhcpdump = callPackage ../tools/networking/dhcpdump { };
 

@@ -7036,14 +7036,15 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  ModuleScanDeps = buildPerlPackage {
-    name = "Module-ScanDeps-1.17";
+  ModuleScanDeps = let version = "1.19"; in buildPerlPackage {
+    name = "Module-ScanDeps-${version}";
     src = fetchurl {
-      url = mirror://cpan/authors/id/R/RS/RSCHUPP/Module-ScanDeps-1.17.tar.gz;
-      sha256 = "1b2999344919826476c59e08e65e4877121b4da1e847c9f354841df688927dd2";
+      url = "mirror://cpan/authors/id/R/RS/RSCHUPP/Module-ScanDeps-${version}.tar.gz";
+      sha256 = "1jv6i9sawgdfr8yqvpispm4ch8ijklhfc4admsxq50yq4w9w6xxy";
     };
     buildInputs = [ TestRequires ];
     meta = {
+      inherit version;
       description = "Recursively scan Perl code for dependencies";
       license = "perl";
     };
@@ -8269,10 +8270,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   NetSSLeay = buildPerlPackage rec {
-    name = "Net-SSLeay-1.58";
+    name = "Net-SSLeay-1.72";
     src = fetchurl {
       url = "mirror://cpan/authors/id/M/MI/MIKEM/${name}.tar.gz";
-      sha256 = "0mizg2g07fa4c13zpnhmjc87psal5gp5hi23kqpynigmkp0m1p0b";
+      sha256 = "1x6jjmhvsdq488k6wdg58ajnr4dmbcbk7imyv0aybkhj1ygw7ahv";
     };
     buildInputs = [ pkgs.openssl ];
     OPENSSL_PREFIX = pkgs.openssl;

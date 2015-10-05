@@ -12209,6 +12209,8 @@ let
 
   ncmpcpp = callPackage ../applications/audio/ncmpcpp { };
 
+  nload = callPackage ../applications/networking/nload { };
+
   normalize = callPackage ../applications/audio/normalize { };
 
   mplayer = callPackage ../applications/video/mplayer ({
@@ -12485,6 +12487,8 @@ let
   pidginmsnpecan = callPackage ../applications/networking/instant-messengers/pidgin-plugins/msn-pecan { };
 
   pidgin-mra = callPackage ../applications/networking/instant-messengers/pidgin-plugins/pidgin-mra { };
+
+  pidgin-skypeweb = callPackage ../applications/networking/instant-messengers/pidgin-plugins/pidgin-skypeweb { };
 
   pidginotr = callPackage ../applications/networking/instant-messengers/pidgin-plugins/otr { };
 
@@ -14445,6 +14449,8 @@ let
     inherit callPackage;
 
     coq = coq_8_5;
+
+    coq-ext-lib = callPackage ../development/coq-modules/coq-ext-lib {};
 
     mathcomp = callPackage ../development/coq-modules/mathcomp { };
 

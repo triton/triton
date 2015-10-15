@@ -81,6 +81,7 @@
   dezgeg = "Tuomas Tynkkynen <tuomas.tynkkynen@iki.fi>";
   dfoxfranke = "Daniel Fox Franke <dfoxfranke@gmail.com>";
   dmalikov = "Dmitry Malikov <malikov.d.y@gmail.com>";
+  dochang = "Desmond O. Chang <dochang@gmail.com>";
   doublec = "Chris Double <chris.double@double.co.nz>";
   ebzzry = "Rommel Martinez <ebzzry@gmail.com>";
   ederoyd46 = "Matthew Brown <matt@ederoyd.co.uk>";
@@ -101,6 +102,7 @@
   fluffynukeit = "Daniel Austin <dan@fluffynukeit.com>";
   forkk = "Andrew Okin <forkk@forkk.net>";
   fpletz = "Franz Pletz <fpletz@fnordicwalking.de>";
+  fps = "Florian Paul Schmidt <mista.tapas@gmx.net>";
   fridh = "Frederik Rietdijk <fridh@fridh.nl>";
   fro_ozen = "fro_ozen <fro_ozen@gmx.de>";
   ftrvxmtrx = "Siarhei Zirukin <ftrvxmtrx@gmail.com>";
@@ -130,6 +132,7 @@
   iyzsong = "Song Wenwu <iyzsong@gmail.com>";
   j-keck = "Jürgen Keck <jhyphenkeck@gmail.com>";
   jagajaga = "Arseniy Seroka <ars.seroka@gmail.com>";
+  javaguirre = "Javier Aguirre <contacto@javaguirre.net>";
   jb55 = "William Casarin <bill@casarin.me>";
   jcumming = "Jack Cummings <jack@mudshark.org>";
   jefdaj = "Jeffrey David Johnson <jefdaj@gmail.com>";
@@ -145,7 +148,6 @@
   jwilberding = "Jordan Wilberding <jwilberding@afiniate.com>";
   jzellner = "Jeff Zellner <jeffz@eml.cc>";
   kamilchm = "Kamil Chmielewski <kamil.chm@gmail.com>";
-  kampfschlaefer = "Arnold Krille <arnold@arnoldarts.de>";
   khumba = "Bryan Gardiner <bog@khumba.net>";
   kkallio = "Karn Kallio <tierpluspluslists@gmail.com>";
   koral = "Koral <koral@mailoo.org>";
@@ -166,6 +168,7 @@
   lowfatcomputing = "Andreas Wagner <andreas.wagner@lowfatcomputing.org>";
   lsix = "Lancelot SIX <lsix@lancelotsix.com>";
   ludo = "Ludovic Courtès <ludo@gnu.org>";
+  lukego = "Luke Gorrie <luke@snabb.co>";
   madjar = "Georges Dubus <georges.dubus@compiletoi.net>";
   magnetophon = "Bart Brouns <bart@magnetophon.nl>";
   mahe = "Matthias Herrmann <matthias.mh.herrmann@gmail.com>";
@@ -181,7 +184,6 @@
   meditans = "Carlo Nucera <meditans@gmail.com>";
   meisternu = "Matt Miemiec <meister@krutt.org>";
   michelk = "Michel Kuhlmann <michel@kuhlmanns.info>";
-  michaelpj = "Michael Peyton Jones <michaelpj@gmail.com>";
   mirdhyn = "Merlin Gaillard <mirdhyn@gmail.com>";
   mschristiansen = "Mikkel Christiansen <mikkel@rheosystems.com>";
   modulistic = "Pablo Costa <modulistic@gmail.com>";
@@ -193,6 +195,7 @@
   muflax = "Stefan Dorn <mail@muflax.com>";
   nathan-gs = "Nathan Bijnens <nathan@nathan.gs>";
   nckx = "Tobias Geerinckx-Rice <tobias.geerinckx.rice@gmail.com>";
+  nico202 = "Nicolò Balzarotti <anothersms@gmail.com>";
   notthemessiah = "Brian Cohen <brian.cohen.88@gmail.com>";
   np = "Nicolas Pouillard <np.nix@nicolaspouillard.fr>";
   nslqqq = "Nikita Mikhailov <nslqqq@gmail.com>";

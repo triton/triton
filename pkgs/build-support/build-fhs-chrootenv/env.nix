@@ -183,12 +183,6 @@ let
   setupLibDirs = if isTargetBuild then setupLibDirs_target
                                   else setupLibDirs_multi;
 
-  setupIncludeDir = ''
-    if [ -x "${staticUsrProfileTarget}/include" ]
-    then
-        ln -s "${staticUsrProfileTarget}/include"
-    fi
-  '';
 
   # the target profile is the actual profile that will be used for the chroot
   setupTargetProfile = ''
@@ -199,7 +193,6 @@ let
     cd usr
     ${linkProfile staticUsrProfileTarget}
     ${setupLibDirs}
-    ${setupIncludeDir}
     cd ..
     rm -rf usr/etc usr/var
   '';

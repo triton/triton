@@ -43,6 +43,8 @@ in rec {
     export MACOSX_DEPLOYMENT_TARGET=10.7
     export SDKROOT=
     export CMAKE_OSX_ARCHITECTURES=x86_64
+    # Workaround for https://openradar.appspot.com/22671534 on 10.11.
+    export gl_cv_func_getcwd_abort_bug=no
   '';
 
   # The one dependency of /bin/sh :(
@@ -220,11 +222,13 @@ in rec {
   persistent3 = orig: with stage3.pkgs; {
     inherit
       gnumake gzip gnused bzip2 gawk ed xz patch bash
-      libcxxabi libcxx ncurses libffi zlib llvm gmp pcre gnugrep
+      libcxxabi libcxx ncurses libffi zlib gmp pcre gnugrep
       coreutils findutils diffutils patchutils;
 
-    llvmPackages = orig.llvmPackages // {
-      inherit (llvmPackages) llvm clang-unwrapped;
+    llvmPackages = let llvmOverride = llvmPackages.llvm.override { inherit libcxxabi; };
+    in orig.llvmPackages // {
+      llvm = llvmOverride;
+      clang-unwrapped = llvmPackages.clang-unwrapped.override { llvm = llvmOverride; };
     };
 
     darwin = orig.darwin // {

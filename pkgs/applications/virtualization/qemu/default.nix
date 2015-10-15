@@ -21,7 +21,7 @@
 with stdenv;
 with stdenv.lib;
 let
-  n = "qemu-2.4.0";
+  n = "qemu-2.4.0.1";
 
   isKvmOnly = type == "kvm-only";
   isNix = type == "nix";
@@ -109,7 +109,7 @@ stdenv.mkDerivation rec {
   name = "${n}${optionalString (type != null && type != "") "-${type}"}";
 
   src = fetchurl {
-    url = "http://wiki.qemu.org/download/${n}.tar.bz2";
+    url = "http://wiki.qemu.org/download/qemu-${version}.tar.bz2";
     sha256 = "0836gqv5zcl0xswwjcns3mlkn18lyz2fiq8rl1ihcm6cpf8vkc3j";
   };
 

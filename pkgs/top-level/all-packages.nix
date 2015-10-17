@@ -2419,6 +2419,8 @@ let
 
   numdiff = callPackage ../tools/text/numdiff { };
 
+  numlockx = callPackage ../tools/X11/numlockx { };
+
   nssmdns = callPackage ../tools/networking/nss-mdns { };
 
   nwdiag = pythonPackages.nwdiag;

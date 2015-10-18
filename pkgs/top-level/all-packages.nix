@@ -4647,6 +4647,8 @@ let
 
     vg = callPackage ../development/ocaml-modules/vg { };
 
+    x509 = callPackage ../development/ocaml-modules/x509 { };
+
     xmlm = callPackage ../development/ocaml-modules/xmlm { };
 
     xml-light = callPackage ../development/ocaml-modules/xml-light { };

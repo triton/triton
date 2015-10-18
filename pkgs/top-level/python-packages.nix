@@ -2709,10 +2709,11 @@ let
   };
 
   cssselect = buildPythonPackage rec {
-    name = "cssselect-0.7.1";
+    name = "cssselect-${version}";
+    version = "0.9.1";
     src = pkgs.fetchurl {
-      url = "http://pypi.python.org/packages/source/c/cssselect/cssselect-0.7.1.tar.gz";
-      md5 = "c6c5e9a2e7ca226ce03f6f67a771379c";
+      url = "http://pypi.python.org/packages/source/c/cssselect/${name}.tar.gz";
+      sha256 = "10h623qnp6dp1191jri7lvgmnd4yfkl36k9smqklp1qlf3iafd85";
     };
     # AttributeError: 'module' object has no attribute 'tests'
     doCheck = false;
@@ -10410,6 +10411,25 @@ let
       homepage = https://github.com/heinzK1X/pylibconfig2;
       description = "Pure python library for libconfig syntax";
       license = licenses.gpl3;
+    };
+  };
+
+  pymetar = buildPythonPackage rec {
+    name = "${pname}-${version}";
+    pname = "pymetar";
+    version = "0.20";
+
+    disabled = isPy3k;
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/p/${pname}/${name}.tar.gz";
+      sha256 = "1rxyg9465cp6nc47pqxqf092wmbvv2zhffzvaf2w74laal43pgxw";
+    };
+
+    meta = {
+      description = "A command-line tool to show the weather report by a given station ID";
+      homepage = http://www.schwarzvogel.de/software/pymetar.html;
+      license = licenses.gpl2;
     };
   };
 
@@ -18473,12 +18493,11 @@ let
 
     namePrefix = "";
     disabled = (!isPy34);
-    propagatedBuildInputs = with self ; [ aiodns slixmpp ];
+    propagatedBuildInputs = with self ; [ aiodns slixmpp pyinotify potr ];
 
-   patches =
-   let patch_base = ../development/python-modules/poezio ;
-   in [ "${patch_base}/make_default_config_writable.patch"
-      ];
+    patches =
+      let patch_base = ../development/python-modules/poezio;
+      in [ "${patch_base}/make_default_config_writable.patch" ];
 
     src = pkgs.fetchurl {
       url = "http://dev.louiz.org/attachments/download/91/${name}.tar.xz";
@@ -18490,6 +18509,25 @@ let
       homepage = http://poez.io;
       license = licenses.mit;
       maintainers = [ maintainers.lsix ];
+    };
+  };
+
+  potr = buildPythonPackage rec {
+    version = "1.0.1";
+    name = "potr-${version}";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/p/python-potr/python-${name}.zip";
+      sha256 = "1b3vjbv8hvynwj6amw3rg5zj8bagynbj0ipy09xwksf1mb0kz8m8";
+    };
+
+    propagatedBuildInputs = with self ; [ pycrypto ];
+
+    meta = {
+      description = "A pure Python OTR implementation";
+      homepage = "http://python-otr.pentabarf.de/";
+      license = licenses.lgpl3Plus;
+      maintainers = with maintainers; [ globin ];
     };
   };
 

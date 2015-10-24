@@ -1,52 +1,34 @@
 { fetchurl, stdenv, libuuid, popt, icu, ncurses }:
 
-let
-  inherit (stdenv) isDarwin isFreeBSD isLinux system;
-  inherit (stdenv.lib) optionalString;
-in
-
-# Make sure platform is supported
-assert (!isDarwin && !isFreeBSD && !isLinux) -> throw "gptfdisk does not support the `${system}' platform";
-
-# TODO: add Cygwin support
-
+let version = "1.0.1"; in
 stdenv.mkDerivation rec {
-  name = "gptfdisk-1.0.0";
+  name = "gptfdisk-${version}";
 
   src = fetchurl {
+    # http://www.rodsbooks.com/gdisk/${name}.tar.gz also works, but the home
+    # page clearly implies a preference for using SourceForge's bandwidth:
     url = "mirror://sourceforge/gptfdisk/${name}.tar.gz";
-    sha256 = "0v0xl0mzwabdf9yisgsvkhpyi48kbik35c6df42gr6d78dkrarjv";
+    sha256 = "1izazbyv5n2d81qdym77i8mg9m870hiydmq4d0s51npx5vp8lk46";
   };
 
-  # Use the correct makefile on FreeBSD & Darwin
-  patchPhase = optionalString (isDarwin || isFreeBSD) ''
-    rm -f Makefile
-  '' + optionalString isDarwin ''
-    mv Makefile.mac Makefile
-  '' + optionalString isFreeBSD ''
-    mv Makefile.freebsd Makefile
-  '';
-
-  buildInputs = [ icu libuuid ncurses popt ];
+  buildInputs = [ libuuid popt icu ncurses ];
 
   installPhase = ''
-    mkdir -p $out/bin
-    install -v -m755 cgdisk $out/bin
-    install -v -m755 fixparts $out/bin
-    install -v -m755 gdisk $out/bin
-    install -v -m755 sgdisk $out/bin
-
+    mkdir -p $out/sbin
     mkdir -p $out/share/man/man8
-    install -v -m644 cgdisk.8 $out/share/man/man8
-    install -v -m644 fixparts.8 $out/share/man/man8
-    install -v -m644 gdisk.8 $out/share/man/man8
-    install -v -m644 sgdisk.8 $out/share/man/man8
+    for prog in gdisk sgdisk fixparts cgdisk
+    do
+        install -v -m755 $prog $out/sbin
+        install -v -m644 $prog.8 $out/share/man/man8
+    done
   '';
 
   meta = with stdenv.lib; {
-    description = "A set of text-mode partitioning tools for Globally Unique Identifier (GUID) Partition Table (GPT) disks";
-    homepage = http://www.rodsbooks.com/gdisk/;
+    inherit version;
+    description = "Set of text-mode partitioning tools for Globally Unique Identifier (GUID) Partition Table (GPT) disks";
     license = licenses.gpl2;
-    platforms = platforms.unix;
+    homepage = http://www.rodsbooks.com/gdisk/;
+    maintainers = with maintainers; [ nckx ];
+    platforms = platforms.linux;
   };
 }

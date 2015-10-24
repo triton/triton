@@ -45,11 +45,11 @@ let
 in
 with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "samba-4.3.0";
+  name = "samba-4.3.1";
 
   src = fetchurl {
     url = "mirror://samba/pub/samba/stable/${name}.tar.gz";
-    sha256 = "0qyvmjl8p8fnyhibwivhxxkm67nxxaj4lp35jni9l7gcknrbdnyq";
+    sha256 = "10ic9pxsk3ml5ycmi0bql8wraxhbr2l4fhzd0qwmiqmrjl6sh24r";
   };
 
   patches = [

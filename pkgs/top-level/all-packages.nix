@@ -1728,6 +1728,10 @@ let
     zfsSupport = false;
   };
 
+  grub4dos = callPackage ../tools/misc/grub4dos {
+    stdenv = stdenv_32bit;
+  };
+
   sbsigntool = callPackage ../tools/security/sbsigntool { };
 
   gsmartcontrol = callPackage ../tools/misc/gsmartcontrol {
@@ -1992,6 +1996,10 @@ let
   lolcat = callPackage ../tools/misc/lolcat { };
 
   lsdvd = callPackage ../tools/cd-dvd/lsdvd {};
+
+  lsyncd = callPackage ../applications/networking/sync/lsyncd {
+    lua = lua5_2_compat;
+  };
 
   kippo = callPackage ../servers/kippo { };
 
@@ -2335,6 +2343,9 @@ let
   netrw = callPackage ../tools/networking/netrw { };
 
   netselect = callPackage ../tools/networking/netselect { };
+
+  # stripped down, needed by steam
+  networkmanager098 = callPackage ../tools/networking/network-manager/0.9.8.nix { };
 
   networkmanager = callPackage ../tools/networking/network-manager { };
 
@@ -3579,6 +3590,8 @@ let
 
   xwinmosaic = callPackage ../tools/X11/xwinmosaic {};
 
+  yank = callPackage ../tools/misc/yank { };
+
   # To expose more packages for Yi, override the extraPackages arg.
   yi = callPackage ../applications/editors/yi/wrapper.nix { };
 
@@ -4040,12 +4053,10 @@ let
   };
 
   go_1_5 = callPackage ../development/compilers/go/1.5.nix {
-    inherit (darwin.apple_sdk.frameworks) Security;
+    inherit (darwin.apple_sdk.frameworks) Security Foundation;
   };
 
-  go = if stdenv.isDarwin
-    then go_1_4 # missing DWARF files during go-1.5 build
-    else go_1_5;
+  go = go_1_5;
 
   go-repo-root = goPackages.go-repo-root.bin // { outputs = [ "bin" ]; };
 
@@ -4700,6 +4711,8 @@ let
     ocaml = ocaml_3_08_0;
   };
 
+  rtags = callPackage ../development/tools/rtags/default.nix {};
+
   rustcMaster = callPackage ../development/compilers/rustc/head.nix {};
   rustc = callPackage ../development/compilers/rustc {};
 
@@ -5058,9 +5071,11 @@ let
     self = python33;
   };
   python34 = hiPrio (callPackage ../development/interpreters/python/3.4 {
+    inherit (darwin) CF configd;
     self = python34;
   });
   python35 = hiPrio (callPackage ../development/interpreters/python/3.5 {
+    inherit (darwin) CF configd;
     self = python35;
   });
   pypy = callPackage ../development/interpreters/pypy {
@@ -5490,6 +5505,8 @@ let
   doxygen_gui = lowPrio (doxygen.override { inherit qt4; });
 
   drush = callPackage ../development/tools/misc/drush { };
+
+  editorconfig-core-c = callPackage ../development/tools/misc/editorconfig-core-c { };
 
   eggdbus = callPackage ../development/tools/misc/eggdbus { };
 
@@ -6305,6 +6322,7 @@ let
   libgit2_0_21 = callPackage ../development/libraries/git2/0.21.nix { };
 
   glew = callPackage ../development/libraries/glew { };
+  glew110 = callPackage ../development/libraries/glew/1.10.nix { };
 
   glfw = glfw3;
   glfw2 = callPackage ../development/libraries/glfw/2.x.nix { };
@@ -9293,7 +9311,9 @@ let
 
   restund = callPackage ../servers/restund {};
 
-  rethinkdb = callPackage ../servers/nosql/rethinkdb { };
+  rethinkdb = callPackage ../servers/nosql/rethinkdb {
+    libtool = darwin.cctools;
+  };
 
   rippled = callPackage ../servers/rippled {
     boost = boost159;
@@ -9441,7 +9461,7 @@ let
 
   xorg = recurseIntoAttrs (lib.callPackagesWith pkgs ../servers/x11/xorg/default.nix {
     inherit clangStdenv fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
-      libxslt expat libpng zlib perl mesa_drivers spice_protocol
+      libxslt expat libpng zlib perl mesa_drivers spice_protocol libunwind
       dbus libuuid openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
       autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman;
     inherit (darwin) apple_sdk libobjc CF;
@@ -10174,6 +10194,8 @@ let
 
   pam_mount = callPackage ../os-specific/linux/pam_mount { };
 
+  pam_pgsql = callPackage ../os-specific/linux/pam_pgsql { };
+
   pam_ssh_agent_auth = callPackage ../os-specific/linux/pam_ssh_agent_auth { };
 
   pam_u2f = callPackage ../os-specific/linux/pam_u2f { };
@@ -10375,6 +10397,9 @@ let
 
   udev = pkgs.systemd;
   eudev = callPackage ../os-specific/linux/eudev {};
+
+  # libudev.so.0
+  udev182 = callPackage ../os-specific/linux/udev/182.nix { };
 
   udisks1 = callPackage ../os-specific/linux/udisks/1-default.nix { };
   udisks2 = callPackage ../os-specific/linux/udisks/2-default.nix { };
@@ -10608,6 +10633,8 @@ let
 
   hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 
+  hanazono = callPackage ../data/fonts/hanazono { };
+
   inconsolata = callPackage ../data/fonts/inconsolata {};
   inconsolata-lgc = callPackage ../data/fonts/inconsolata/lgc.nix {};
 
@@ -10635,7 +10662,13 @@ let
 
   lobster-two = callPackage ../data/fonts/lobster-two {};
 
-  lohit-fonts = callPackage ../data/fonts/lohit-fonts { };
+  # lohit-fonts.assamese lohit-fonts.bengali lohit-fonts.devanagari lohit-fonts.gujarati lohit-fonts.gurmukhi
+  # lohit-fonts.kannada lohit-fonts.malayalam lohit-fonts.marathi lohit-fonts.nepali lohit-fonts.odia
+  # lohit-fonts.tamil-classical lohit-fonts.tamil lohit-fonts.telugu
+  # lohit-fonts.kashmiri lohit-fonts.konkani lohit-fonts.maithili lohit-fonts.sindhi
+  lohit-fonts = recurseIntoAttrs ( callPackages ../data/fonts/lohit-fonts { } );
+
+  marathi-cursive = callPackage ../data/fonts/marathi-cursive { };
 
   manpages = callPackage ../data/documentation/man-pages { };
 
@@ -10651,6 +10684,8 @@ let
 
   mplus-outline-fonts = callPackage ../data/fonts/mplus-outline-fonts { };
 
+  mro-unicode = callPackage ../data/fonts/mro-unicode { };
+
   nafees = callPackage ../data/fonts/nafees { };
 
   inherit (callPackages ../data/fonts/noto-fonts {})
@@ -10661,6 +10696,8 @@ let
   numix-icon-theme-circle = callPackage ../data/icons/numix-icon-theme-circle { };
 
   oldstandard = callPackage ../data/fonts/oldstandard { };
+
+  oldsindhi = callPackage ../data/fonts/oldsindhi { };
 
   open-dyslexic = callPackage ../data/fonts/open-dyslexic { };
 
@@ -10684,15 +10721,20 @@ let
     perl = perl516; # syntax error at troffprepro line 49, near "do subst("
   };
 
+  sampradaya = callPackage ../data/fonts/sampradaya { };
+
   shared_mime_info = callPackage ../data/misc/shared-mime-info { };
 
   shared_desktop_ontologies = callPackage ../data/misc/shared-desktop-ontologies { };
+
+  signwriting = callPackage ../data/fonts/signwriting { };
 
   stdmanpages = callPackage ../data/documentation/std-man-pages { };
 
   stix-otf = callPackage ../data/fonts/stix-otf { };
 
-  symbola = callPackage ../data/fonts/symbola { };
+  inherit (callPackages ../data/fonts/gdouros { })
+    aegean textfonts symbola aegyptus akkadian anatolian maya unidings musica analecta;
 
   iana_etc = callPackage ../data/misc/iana-etc { };
 
@@ -10724,6 +10766,8 @@ let
   source-han-sans-simplified-chinese = sourceHanSansPackages.simplified-chinese;
   source-han-sans-traditional-chinese = sourceHanSansPackages.traditional-chinese;
 
+  inherit (callPackages ../data/fonts/tai-languages { }) tai-ahom;
+
   tango-icon-theme = callPackage ../data/icons/tango-icon-theme { };
 
   themes = name: callPackage (../data/misc/themes + ("/" + name + ".nix")) {};
@@ -10747,6 +10791,8 @@ let
   uni-vga = callPackage ../data/fonts/uni-vga { };
 
   unifont = callPackage ../data/fonts/unifont { };
+
+  unifont_upper = callPackage ../data/fonts/unifont_upper { };
 
   vistafonts = callPackage ../data/fonts/vista-fonts { };
 
@@ -11414,6 +11460,7 @@ let
     external = {
       inherit (haskellPackages) ghc-mod structured-haskell-mode Agda;
       inherit (pythonPackages) elpy;
+      inherit rtags;
     };
   };
 
@@ -12334,6 +12381,10 @@ let
 
   pig = callPackage ../applications/networking/cluster/pig { };
 
+  pijul = callPackage ../applications/version-management/pijul {
+    inherit (ocamlPackages) findlib cryptokit yojson;
+  };
+
   playonlinux = callPackage ../applications/misc/playonlinux { };
 
   shotcut = callPackage ../applications/video/shotcut { mlt = mlt-qt5; };
@@ -12434,7 +12485,7 @@ let
   };
 
   obs-studio = callPackage ../applications/video/obs-studio {
-    pulseaudioSupport = config.pulseaudio or false;
+    pulseaudioSupport = config.pulseaudio or true;
   };
 
   ocrad = callPackage ../applications/graphics/ocrad { };
@@ -13146,6 +13197,9 @@ let
   vimHugeX = vim_configurable;
 
   vim_configurable = vimUtils.makeCustomizable (callPackage ../applications/editors/vim/configurable.nix {
+    inherit (darwin.apple_sdk.frameworks) CoreServices Cocoa Foundation CoreData;
+    inherit (darwin) libobjc cf-private;
+
     features = "huge"; # one of  tiny, small, normal, big or huge
     lua = pkgs.lua5_1;
     gui = config.vim.gui or "auto";
@@ -13890,9 +13944,12 @@ let
 
   stardust = callPackage ../games/stardust {};
 
-  steam-original = lowPrio (callPackage ../games/steam { });
-
-  steam = callPackage ../games/steam/chrootenv.nix { };
+  steamPackages = callPackage ../games/steam { };
+  steam = steamPackages.steam-chrootenv.override {
+    # DEPRECATED
+    withJava = config.steam.java or false;
+    withPrimus = config.steam.primus or false;
+  };
 
   stuntrally = callPackage ../games/stuntrally { };
 

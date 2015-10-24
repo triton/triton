@@ -862,6 +862,8 @@ let
 
   mcrl2 = callPackage ../tools/misc/mcrl2 { };
 
+  meson = callPackage ../development/tools/build-managers/meson { };
+
   mp3fs = callPackage ../tools/filesystems/mp3fs { };
 
   mpdcron = callPackage ../tools/audio/mpdcron { };
@@ -1947,6 +1949,8 @@ let
 
   john = callPackage ../tools/security/john { };
 
+  jp2a = callPackage ../applications/misc/jp2a { };
+
   jq = callPackage ../development/tools/jq {};
 
   jscoverage = callPackage ../development/tools/misc/jscoverage { };
@@ -1958,6 +1962,8 @@ let
   kazam = callPackage ../applications/video/kazam { };
 
   kalibrate-rtl = callPackage ../tools/misc/kalibrate-rtl { };
+
+  kbdd = callPackage ../applications/window-managers/kbdd { };
 
   kdbplus = callPackage_i686 ../applications/misc/kdbplus { };
 
@@ -8413,6 +8419,10 @@ let
     inherit (pythonPackages) gyp;
   };
 
+  v8_4_5 = callPackage ../development/libraries/v8/4.5.nix {
+    inherit (pythonPackages) gyp;
+  };
+
   v8 = callPackage ../development/libraries/v8 {
     inherit (pythonPackages) gyp;
   };
@@ -10964,6 +10974,10 @@ let
 
   batti = callPackage ../applications/misc/batti { };
 
+  baudline = callPackage ../applications/audio/baudline {
+    jack = jack1;
+  };
+
   cbatticon = callPackage ../applications/misc/cbatticon { };
 
   bazaar = callPackage ../applications/version-management/bazaar { };
@@ -12096,8 +12110,7 @@ let
   libowfat = callPackage ../development/libraries/libowfat { };
 
   librecad = callPackage ../applications/misc/librecad { };
-
-  librecad2 = callPackage ../applications/misc/librecad/2.0.nix { };
+  librecad2 = librecad;  # backwards compatibility alias, added 2015-10
 
   libreoffice = callPackage ../applications/office/libreoffice {
     inherit (perlPackages) ArchiveZip CompressZlib;

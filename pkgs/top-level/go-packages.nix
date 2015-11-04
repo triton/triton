@@ -1050,14 +1050,16 @@ let
   };
 
   go-bindata = buildGoPackage rec {
-    version = "3.0.7";
+    rev = "a0ff2567cfb70903282db057e799fd826784d41d";
+    date = "2015-10-23";
+    version = "${date}-${stdenv.lib.strings.substring 0 7 rev}";
     name = "go-bindata-${version}";
     goPackagePath = "github.com/jteeuwen/go-bindata";
     src = fetchFromGitHub {
+      inherit rev;
       repo = "go-bindata";
       owner = "jteeuwen";
-      rev = "v${version}";
-      sha256 = "1v8xwwlv6my5ixvis31m3vgz4sdc0cq82855j8gxmjp1scinv432";
+      sha256 = "0d6zxv0hgh938rf59p1k5lj0ymrb8kcps2vfrb9kaarxsvg7y69v";
     };
 
     subPackages = [ "./" "go-bindata" ]; # don't build testdata
@@ -1659,11 +1661,11 @@ let
   };
 
   ipfs = buildFromGitHub{
-    rev    = "9ca0be36e19f86a2511f6ac5d8f0a9403227c0f0";
-    date   = "2015-10-18";
+    rev = "43622bd5eed1f62d53d364dc771bbb500939d9e6";
+    date   = "2015-10-30";
     owner  = "ipfs";
     repo   = "go-ipfs";
-    sha256 = "0lx1vb8lzrk76rd304paydhxn3a6pxchldlkdjrwpjv98wv14phy";
+    sha256 = "0g80b65ysj995dj3mkh3lp4v616fzjl7bx2wf14mkxfri4gr5icb";
   };
 
   ldap = buildGoPackage rec {

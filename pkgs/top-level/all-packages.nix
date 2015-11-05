@@ -819,7 +819,7 @@ let
   dtrx = callPackage ../tools/compression/dtrx { };
 
   duperemove = callPackage ../tools/filesystems/duperemove {
-    linuxHeaders = linuxHeaders_3_14;
+    linuxHeaders = linuxHeaders_3_18;
   };
 
   edac-utils = callPackage ../os-specific/linux/edac-utils { };
@@ -981,6 +981,10 @@ let
     inherit (pythonPackages) pyxattr pylibacl setuptools fuse;
     par2Support = (config.bup.par2Support or false);
   };
+
+  burp_1_3 = callPackage ../tools/backup/burp/1.3.48.nix { };
+
+  burp = callPackage ../tools/backup/burp { };
 
   byzanz = callPackage ../applications/video/byzanz {};
 
@@ -4604,6 +4608,11 @@ let
 
     pprint = callPackage ../development/ocaml-modules/pprint { };
 
+    ppx_tools =
+      if lib.versionAtLeast ocaml_version "4.02"
+      then callPackage ../development/ocaml-modules/ppx_tools {}
+      else null;
+
     pycaml = callPackage ../development/ocaml-modules/pycaml { };
 
     qcheck = callPackage ../development/ocaml-modules/qcheck {
@@ -5751,7 +5760,9 @@ let
 
   rman = callPackage ../development/tools/misc/rman { };
 
-  rr = callPackage ../development/tools/analysis/rr { };
+  rr = callPackage ../development/tools/analysis/rr {
+    stdenv = stdenv_32bit;
+  };
 
   saleae-logic = callPackage ../development/tools/misc/saleae-logic { };
 
@@ -6692,11 +6703,9 @@ let
     automake = automake111x;
   };
 
-  kf510 = recurseIntoAttrs (callPackage ../development/libraries/kde-frameworks-5.10 { });
-  kf512 = recurseIntoAttrs (callPackage ../development/libraries/kde-frameworks-5.12 { });
-  kf514 = recurseIntoAttrs (import ../development/libraries/kde-frameworks-5.14 { inherit pkgs; });
-  kf5_latest = kf512;
-  kf5_stable = kf510;
+  kf515 = recurseIntoAttrs (import ../development/libraries/kde-frameworks-5.15 { inherit pkgs; });
+  kf5_stable = kf515;
+  kf5_latest = kf515;
 
   kf5PackagesFun = self: with self; {
 
@@ -6736,8 +6745,8 @@ let
 
   };
 
-  kf514Packages = lib.makeScope kf514.newScope kf5PackagesFun;
-  kf5Packages = kf514Packages;
+  kf515Packages = lib.makeScope kf515.newScope kf5PackagesFun;
+  kf5Packages = kf515Packages;
 
   kinetic-cpp-client = callPackage ../development/libraries/kinetic-cpp-client { };
 
@@ -7059,6 +7068,8 @@ let
   };
 
   libgsystem = callPackage ../development/libraries/libgsystem { };
+
+  libgudev = callPackage ../development/libraries/libgudev { };
 
   libguestfs = callPackage ../development/libraries/libguestfs {
     inherit (perlPackages) libintlperl GetoptLong SysVirt;
@@ -7578,6 +7589,8 @@ let
   lirc = callPackage ../development/libraries/lirc { };
 
   liquidfun = callPackage ../development/libraries/liquidfun { };
+
+  live555 = callPackage ../development/libraries/live555 { };
 
   log4cpp = callPackage ../development/libraries/log4cpp { };
 
@@ -8431,6 +8444,10 @@ let
   vaapiVdpau = callPackage ../development/libraries/vaapi-vdpau { };
 
   vamp = callPackage ../development/libraries/audio/vamp { };
+
+  vc = callPackage ../development/libraries/vc { };
+
+  vc_0_7 = callPackage ../development/libraries/vc/0.7.nix { };
 
   vcdimager = callPackage ../development/libraries/vcdimager { };
 
@@ -9814,19 +9831,17 @@ let
 
   # -- Linux kernel expressions ------------------------------------------------
 
-  linuxHeaders = linuxHeaders_3_12;
+  linuxHeaders = linuxHeaders_3_18;
 
   linuxHeaders24Cross = forceNativeDrv (callPackage ../os-specific/linux/kernel-headers/2.4.nix {
     cross = assert crossSystem != null; crossSystem;
   });
 
-  linuxHeaders26Cross = forceNativeDrv (callPackage ../os-specific/linux/kernel-headers/3.12.nix {
+  linuxHeaders26Cross = forceNativeDrv (callPackage ../os-specific/linux/kernel-headers/3.18.nix {
     cross = assert crossSystem != null; crossSystem;
   });
 
-  linuxHeaders_3_12 = callPackage ../os-specific/linux/kernel-headers/3.12.nix { };
-
-  linuxHeaders_3_14 = callPackage ../os-specific/linux/kernel-headers/3.14.nix { };
+  linuxHeaders_3_18 = callPackage ../os-specific/linux/kernel-headers/3.18.nix { };
 
   # We can choose:
   linuxHeadersCrossChooser = ver : if ver == "2.4" then linuxHeaders24Cross
@@ -10333,7 +10348,7 @@ let
   sysstat = callPackage ../os-specific/linux/sysstat { };
 
   systemd = callPackage ../os-specific/linux/systemd {
-    linuxHeaders = linuxHeaders_3_14;
+    linuxHeaders = linuxHeaders_3_18;
   };
 
   systemtap = callPackage ../development/tools/profiling/systemtap {
@@ -11455,6 +11470,8 @@ let
     xmlRpc = callPackage ../applications/editors/emacs-modes/xml-rpc { };
 
     cask = callPackage ../applications/editors/emacs-modes/cask { };
+
+    slime = callPackage ../applications/editors/emacs-modes/slime { };
   };
 
   emacs24Packages = recurseIntoAttrs (emacsPackagesGen emacs24 pkgs.emacs24Packages);
@@ -12031,10 +12048,9 @@ let
     boost = boost155;
   };
 
-  kdeApps_15_04 = recurseIntoAttrs (callPackage ../applications/kde-apps-15.04 {});
-  kdeApps_stable = kdeApps_15_04;
-  kdeApps_latest = kdeApps_15_04;
   kdeApps_15_08 = recurseIntoAttrs (import ../applications/kde-apps-15.08 { inherit pkgs; });
+  kdeApps_stable = kdeApps_15_08;
+  kdeApps_latest = kdeApps_15_08;
 
   keepnote = callPackage ../applications/office/keepnote {
     pygtk = pyGtkGlade;
@@ -14271,7 +14287,9 @@ let
 
           bluedevil = callPackage ../tools/bluetooth/bluedevil { };
 
-          calligra = callPackage ../applications/office/calligra { eigen = eigen2; };
+          calligra = callPackage ../applications/office/calligra {
+            vc = vc_0_7;
+          };
 
           choqok = callPackage ../applications/networking/instant-messengers/choqok { };
 
@@ -14469,10 +14487,9 @@ let
 
   numix-gtk-theme = callPackage ../misc/themes/gtk3/numix-gtk-theme { };
 
-  plasma53 = recurseIntoAttrs (callPackage ../desktops/plasma-5.3 { });
-  plasma5_latest = plasma53;
-  plasma5_stable = plasma53;
   plasma54 = recurseIntoAttrs (callPackage ../desktops/plasma-5.4 { inherit pkgs; });
+  plasma5_stable = plasma54;
+  plasma5_latest = plasma54;
 
   kde5 = kf5_stable // plasma5_stable // kdeApps_stable;
 

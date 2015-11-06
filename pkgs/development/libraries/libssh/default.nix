@@ -27,11 +27,11 @@ in
 assert crypto != null;
 
 stdenv.mkDerivation rec {
-  name = "libssh-0.7.1";
+  name = "libssh-0.7.2";
 
   src = fetchurl {
-    url = "https://red.libssh.org/attachments/download/154/libssh-0.7.1.tar.xz";
-    sha256 = "0v84zm957z31yyrj47n62hby38nrjk5ih0ajmgccnqrjdpwwrirg";
+    url = "https://red.libssh.org/attachments/download/154/libssh-0.7.2.tar.xz";
+    sha256 = "0v84zm957z31yyrj47n62hby38nrjk5ih0ajmgccnqrjdpwwrira";
   };
 
   postPatch = ''

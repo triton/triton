@@ -1390,8 +1390,6 @@ let
 
   execline = callPackage ../tools/misc/execline { };
 
-  exercism = callPackage ../development/tools/exercism { };
-
   exif = callPackage ../tools/graphics/exif { };
 
   exiftags = callPackage ../tools/graphics/exiftags { };
@@ -3167,6 +3165,8 @@ let
   tmpwatch = callPackage ../tools/misc/tmpwatch  { };
 
   tmux = callPackage ../tools/misc/tmux { };
+
+  tmux-cssh = callPackage ../tools/misc/tmux-cssh { };
 
   tmuxinator = callPackage ../tools/misc/tmuxinator { };
 
@@ -5714,6 +5714,8 @@ let
   openocd = callPackage ../development/tools/misc/openocd { };
 
   oprofile = callPackage ../development/tools/profiling/oprofile { };
+
+  parse-cli-bin = callPackage ../development/tools/parse-cli-bin { };
 
   patchelf = callPackage ../development/tools/misc/patchelf { };
 
@@ -9106,6 +9108,8 @@ let
 
   freeswitch = callPackage ../servers/sip/freeswitch { };
 
+  gatling = callPackage ../servers/http/gatling { };
+
   groovebasin = callPackage ../applications/audio/groovebasin { };
 
   hbase = callPackage ../servers/hbase {};
@@ -9208,10 +9212,9 @@ let
   popa3d = callPackage ../servers/mail/popa3d { };
 
   postfix28 = callPackage ../servers/mail/postfix { };
-
   postfix211 = callPackage ../servers/mail/postfix/2.11.nix { };
-
-  postfix = postfix211;
+  postfix30 = callPackage ../servers/mail/postfix/3.0.nix { };
+  postfix = postfix30;
 
   pshs = callPackage ../servers/http/pshs { };
 
@@ -10078,6 +10081,8 @@ let
 
     virtualboxGuestAdditions = callPackage ../applications/virtualization/virtualbox/guest-additions { };
 
+    x86_energy_perf_policy = callPackage ../os-specific/linux/x86_energy_perf_policy { };
+
     zfs = callPackage ../os-specific/linux/zfs {
       configFile = "kernel";
       inherit kernel spl;
@@ -10184,6 +10189,12 @@ let
   mdadm = callPackage ../os-specific/linux/mdadm { };
 
   mingetty = callPackage ../os-specific/linux/mingetty { };
+
+  miraclecast = callPackage ../os-specific/linux/miraclecast {
+    systemd = systemd.override { enableKDbus = true; };
+  };
+
+  mkinitcpio-nfs-utils = callPackage ../os-specific/linux/mkinitcpio-nfs-utils { };
 
   module_init_tools = callPackage ../os-specific/linux/module-init-tools { };
 
@@ -11119,6 +11130,8 @@ let
     enableNetworkManager = config.networking.networkmanager.enable or false;
   };
 
+  clfswm = callPackage ../applications/window-managers/clfswm { };
+
   clipgrab = callPackage ../applications/video/clipgrab { };
 
   clipit = callPackage ../applications/misc/clipit { };
@@ -11235,9 +11248,7 @@ let
   djview = callPackage ../applications/graphics/djview { };
   djview4 = pkgs.djview;
 
-  dmenu = callPackage ../applications/misc/dmenu {
-    enableXft = true;
-  };
+  dmenu = callPackage ../applications/misc/dmenu { };
 
   dmenu2 = callPackage ../applications/misc/dmenu2 { };
 
@@ -11602,13 +11613,7 @@ let
 
   gqrx = callPackage ../applications/misc/gqrx { };
 
-  grass = callPackage ../applications/misc/grass {
-    fftw = fftwSinglePrec;
-    ffmpeg = ffmpeg_0;
-    motif = lesstif;
-    opendwg = libdwg;
-    wxPython = wxPython28;
-  };
+  grass = callPackage ../applications/gis/grass { };
 
   grip = callPackage ../applications/misc/grip {
     inherit (gnome) libgnome libgnomeui vte;
@@ -13139,7 +13144,7 @@ let
   tla = callPackage ../applications/version-management/arch { };
 
   tlp = callPackage ../tools/misc/tlp {
-    enableRDW = config.networking.networkmanager.enable or false;
+    inherit (linuxPackages) x86_energy_perf_policy;
   };
 
   todo-txt-cli = callPackage ../applications/office/todo.txt-cli { };
@@ -13820,6 +13825,8 @@ let
     SDL_image = pkgsi686Linux.SDL_image.override {
       libpng = pkgsi686Linux.libpng12;
     };
+    inherit (pkgsi686Linux.perlPackages) XMLLibXML XMLLibXSLT;
+    enableDFHack = config.dwarfFortress.enableDFHack or false;
   };
 
   dwarf-therapist = callPackage ../games/dwarf-therapist { };
@@ -14736,6 +14743,8 @@ let
   };
 
   hologram = goPackages.hologram.bin // { outputs = [ "bin" ]; };
+
+  tini = callPackage ../applications/virtualization/tini {};
 
   isabelle = callPackage ../applications/science/logic/isabelle {
     inherit (pkgs.emacs24Packages) proofgeneral;

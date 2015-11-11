@@ -53,6 +53,7 @@ rec {
   kernel = [
     http://www.all.kernel.org/pub/
     http://kernel.mirrors.pair.com/
+    http://mirrors.xmission.com/kernel.org/
   ];
 
   # Mirrors of ftp://ftp.kde.org/pub/kde/.

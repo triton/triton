@@ -1056,6 +1056,8 @@ let
 
   ciopfs = callPackage ../tools/filesystems/ciopfs { };
 
+  citrix_receiver = callPackage ../applications/networking/remote/citrix-receiver { };
+
   cmst = callPackage ../tools/networking/cmst { };
 
   colord = callPackage ../tools/misc/colord { };
@@ -1799,14 +1801,23 @@ let
   hddtemp = callPackage ../tools/misc/hddtemp { };
 
   hdf5 = callPackage ../tools/misc/hdf5 {
+    gfortran = null;
     szip = null;
     mpi = null;
   };
 
-  hdf5-mpi = hdf5.override {
+  hdf5-mpi = appendToName "mpi" (hdf5.override {
     szip = null;
     mpi = pkgs.openmpi;
-  };
+  });
+
+  hdf5-cpp = appendToName "cpp" (hdf5.override {
+    cpp = true;
+  });
+
+  hdf5-fortran = appendToName "fortran" (hdf5.override {
+    inherit gfortran;
+  });
 
   heimdall = callPackage ../tools/misc/heimdall { };
 
@@ -3329,6 +3340,8 @@ let
   wbox = callPackage ../tools/networking/wbox {};
 
   welkin = callPackage ../tools/graphics/welkin {};
+
+  whois = callPackage ../tools/networking/whois { };
 
   wsmancli = callPackage ../tools/system/wsmancli {};
 
@@ -6036,7 +6049,9 @@ let
 
   cgui = callPackage ../development/libraries/cgui {};
 
-  check = callPackage ../development/libraries/check { };
+  check = callPackage ../development/libraries/check {
+    inherit (darwin.apple_sdk.frameworks) CoreServices;
+  };
 
   chipmunk = callPackage ../development/libraries/chipmunk {};
 
@@ -10941,6 +10956,8 @@ let
   audacity = callPackage ../applications/audio/audacity {
     ffmpeg = ffmpeg_0;
   };
+
+  audio-recorder = callPackage ../applications/audio/audio-recorder { };
 
   milkytracker = callPackage ../applications/audio/milkytracker { };
 

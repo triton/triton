@@ -4153,25 +4153,26 @@ let
   };
 
   gitdb = buildPythonPackage rec {
-    name = "gitdb-0.5.4";
+    name = "gitdb-0.6.4";
     meta.maintainers = with maintainers; [ mornfall ];
     doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/g/gitdb/${name}.tar.gz";
-      sha256 = "10rpmmlln59aq44cd5vkb77hslak5pa1rbmigg6ski5f1nn2spfy";
+      sha256 = "0n4n2c7rxph9vs2l6xlafyda5x1mdr8xy16r9s3jwnh3pqkvrsx3";
     };
 
     propagatedBuildInputs = with self; [ smmap async ];
   };
 
   GitPython = buildPythonPackage rec {
-    name = "GitPython-0.3.2";
+    version = "1.0.1";
+    name = "GitPython-${version}";
     meta.maintainers = with maintainers; [ mornfall ];
 
     src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/G/GitPython/GitPython-0.3.2.RC1.tar.gz";
-      sha256 = "1q4lc2ps12l517mmrxc8iq6gxyhj6d77bnk1p7mxf38d99l8crzx";
+      url = "https://pypi.python.org/packages/source/G/GitPython/GitPython-${version}.tar.gz";
+      sha256 = "0q7plxnbbkp5dd0k73736l7gf932a89yy920yrgl8amfpixw324w";
     };
 
     buildInputs = with self; [ nose ];
@@ -4197,6 +4198,37 @@ let
     };
 
     propagatedBuildInputs = with self; [ gdata ];
+  };
+
+  googleplaydownloader = buildPythonPackage rec {
+    version = "1.8";
+    name = "googleplaydownloader-${version}";
+
+    src = pkgs.fetchurl {
+       url = "https://codingteam.net/project/googleplaydownloader/download/file/googleplaydownloader_${version}.orig.tar.gz";
+       sha256 = "1hxl4wdbiyq8ay6vnf3m7789jg0kc63kycjj01x1wm4gcm4qvbkx";
+     };
+
+    disabled = ! isPy27;
+
+    propagatedBuildInputs = with self; [ configparser pyasn1 ndg-httpsclient requests protobuf wxPython];
+
+    preBuild = ''
+      substituteInPlace googleplaydownloader/__init__.py --replace \
+        'open(os.path.join(HERE, "googleplaydownloader"' \
+        'open(os.path.join(HERE'
+    '';
+
+    postInstall = ''
+      cp -R googleplaydownloader/ext_libs $out/${python.sitePackages}/
+    '';
+
+    meta = {
+      homepage = https://codingteam.net/project/googleplaydownloader;
+      description = "Graphical software to download APKs from the Google Play store";
+      license = licenses.agpl3;
+      maintainers = with maintainers; [ DamienCassou ];
+    };
   };
 
   gplaycli = buildPythonPackage rec {
@@ -5394,6 +5426,53 @@ let
   };
 
 
+
+  librosa = buildPythonPackage rec {
+    name = "librosa-${version}";
+    version = "0.4.0";
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/l/librosa/librosa-0.4.0.tar.gz";
+      md5 = "8149a70a5a5783c3cceeb69de3e07458";
+    };
+
+    propagatedBuildInputs = with self;
+      [ joblib matplotlib six scikitlearn decorator audioread samplerate ];
+  };
+
+  joblib = buildPythonPackage rec {
+    name = "joblib-${version}";
+    version = "0.9.0b4";
+    src = pkgs.fetchurl {
+      url = https://pypi.python.org/packages/source/j/joblib/joblib-0.9.0b4.tar.gz;
+      md5 = "e0d79a085d4773c7a61cd38b4fb6dad5";
+    };
+  };
+
+  samplerate = buildPythonPackage rec {
+    name = "scikits.samplerate-${version}";
+    version = "0.3.3";
+    src = pkgs.fetchgit {
+      url = https://github.com/ThomasLecocq/samplerate;
+      rev = "7edb22b23f5aa8e7342aea0b538bdd0434988510";
+      sha256 = "ec2a09819c38028283505090ee9839963d3557e73f6e8eb3348ff8884d0d67ed";
+      };
+    buildInputs = with self;  [ pkgs.libsamplerate ];
+
+    propagatedBuildInputs = with self; [ numpy ];
+
+
+    preConfigure = ''
+       cat > site.cfg << END
+       [samplerate]
+       library_dirs=${pkgs.libsamplerate}/lib
+       include_dirs=${pkgs.libsamplerate}/include
+       END
+    '';
+
+    doCheck = false;
+  };
+
+
   hypatia = buildPythonPackage rec {
     name = "hypatia-0.3";
 
@@ -6396,11 +6475,11 @@ let
 
   hg-git = buildPythonPackage rec {
     name = "hg-git-${version}";
-    version = "0.8.1";
+    version = "0.8.2";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/h/hg-git/${name}.tar.gz";
-      sha256 = "07a5p5wfs60hmzv3h64fysvm91ablhiaf5ccpv3f8q61insdzvff";
+      sha256 = "0hz0i6qgcn3ic292sny86mdl1psj1bnczcai1b1kzvwcla6z99py";
     };
 
     propagatedBuildInputs = with self; [ dulwich ];
@@ -8244,21 +8323,20 @@ let
   };
 
   isort = buildPythonPackage rec {
-    name = "isort-3.9.6";
+    name = "isort-4.2.2";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/i/isort/${name}.tar.gz";
-      md5 = "c0f4a7b16fde265f2ff4842c3e1cdd05";
+      sha256 = "0xqxnkli3j69mj1m0i1r9n68bfkdxfcgxi602lqgy491m21q1rpj";
     };
 
     buildInputs = with self; [ mock pytest ];
-
-    propagatedBuildInputs = with self; [ natsort pies ];
 
     meta = {
       description = "A Python utility / library to sort Python imports";
       homepage = https://github.com/timothycrosley/isort;
       license = licenses.mit;
+      maintainers = with maintainers; [ couchemar ];
     };
   };
 
@@ -17561,13 +17639,15 @@ let
   };
 
   smmap = buildPythonPackage rec {
-    name = "smmap-0.8.2";
-    disabled = isPy3k || isPyPy;  # next release will have py3k/pypy support
+    name = "smmap-0.9.0";
+    disabled = isPyPy;  # This fails the tests if built with pypy
     meta.maintainers = with maintainers; [ mornfall ];
+
+    buildInputs = with self; [ nosexcover ];
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/s/smmap/${name}.tar.gz";
-      sha256 = "0vrdgr6npmajrv658fv8bij7zgm5jmz2yxkbv8kmbv25q1f9b8ny";
+      sha256 = "0qlx25f6n2n9ff37w9gg62f217fzj16xlbh0pkz0lpxxjys64aqf";
     };
   };
 
@@ -19248,6 +19328,27 @@ let
       homepage = http://liw.fi/cliapp/;
       description = "Python framework for Unix command line programs";
       maintainers = with maintainers; [ rickynils ];
+    };
+  };
+
+  cmdtest = buildPythonPackage rec {
+    name = "cmdtest-${version}";
+    version = "0.18";
+    disabled = isPy3k || isPyPy;
+
+    propagatedBuildInputs = with self; [ cliapp ttystatus markdown ];
+
+    # TODO: cmdtest tests must be run before the buildPhase
+    doCheck = false;
+
+    src = pkgs.fetchurl {
+      url = "http://code.liw.fi/debian/pool/main/c/cmdtest/cmdtest_0.18.orig.tar.xz";
+      sha256 = "068f24k8ad520hcf8g3gj7wvq1wspyd46ay0k9xa360jlb4dv2mn";
+    };
+
+    meta = {
+      homepage = http://liw.fi/cmdtest/;
+      description = "black box tests Unix command line tools";
     };
   };
 

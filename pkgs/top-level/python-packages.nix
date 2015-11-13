@@ -1261,7 +1261,7 @@ let
   cycler = buildPythonPackage rec {
     name = "cycler-${version}";
     version = "0.9.0";
-    
+
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/C/Cycler/${name}.tar.gz";
       sha256 = "96dc4ddf27ef62c09990c6196ac1167685e89168042ec0ae4db586de023355bc";
@@ -1467,22 +1467,26 @@ let
 
   blaze = buildPythonPackage rec {
     name = "blaze-${version}";
-    version = "0.8.2";
+    version = "0.8.3";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/b/blaze/${name}.tar.gz";
-      sha256 = "1abedabf2a1e62dd059e0942d60f27337763de26f5e3f61ed55baaf97723b624";
+      sha256 = "4f8ceb1248ba44f833f5a46a18b6ea44130a5999d5234324d0456b5f9ffe716b";
     };
 
+    buildInputs = with self; [ pytest ];
     propagatedBuildInputs = with self; [
       numpy
       pandas
       datashape
       odo
       toolz
+      cytoolz
       multipledispatch
       sqlalchemy9 # sqlalchemy8 should also work
       psutil
+      numba
+      h5py
     ];
 
     meta = {
@@ -8778,13 +8782,13 @@ let
 
   llvmlite = buildPythonPackage rec {
     name = "llvmlite-${version}";
-    version = "0.7.0";
+    version = "0.8.0";
 
     disabled = isPyPy;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/l/llvmlite/${name}.tar.gz";
-      sha256 = "6d780980da05d2d82465991bce42c1b4625018d67feae17c672c6a9d5ad0bb1a";
+      sha256 = "a10d8d5e597c6a54ec418baddd31a51a0b7937a895d75b240d890aead946081c";
     };
 
     llvm = pkgs.llvm;
@@ -9216,6 +9220,22 @@ let
     meta = {
       description = "A minimalistic mocking library for python";
       homepage = https://pypi.python.org/pypi/MiniMock;
+    };
+  };
+
+  munch = buildPythonPackage rec {
+    name = "munch-${version}";
+    version = "2.0.4";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/m/munch/${name}.tar.gz";
+      sha256 = "1420683a94f3a2ffc77935ddd28aa9ccb540dd02b75e02ed7ea863db437ab8b2";
+    };
+
+    meta = {
+      description = "A dot-accessible dictionary (a la JavaScript objects)";
+      license = licenses.mit;
+      homepage = http://github.com/Infinidat/munch;
     };
   };
 
@@ -10297,13 +10317,15 @@ let
   };
 
   numba = buildPythonPackage rec {
-    version = "0.21.0";
+    version = "0.22.1";
     name = "numba-${version}";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/n/numba/${name}.tar.gz";
-      sha256 = "1806d2f6ad49ad891e9ac6fed0cc0b0489cbfcd9ba2dc81081c1c30091e77604";
+      sha256 = "8194c41cdf96c16e3b3d246c0381daf4e587d1ada761f410efecb8315c2cdda3";
     };
+
+    NIX_CFLAGS_COMPILE = stdenv.lib.optionalString stdenv.isDarwin "-I${pkgs.libcxx}/include/c++/v1";
 
     propagatedBuildInputs = with self; [numpy llvmlite argparse] ++ optional (!isPy3k) funcsigs ++ optional (isPy27 || isPy33) singledispatch;
     # Future work: add Cuda support.
@@ -12040,7 +12062,8 @@ let
       bottleneck
       sqlalchemy9
       lxml
-      html5lib
+      # Disabling this because an upstream dependency, pep8, is broken on v3.5.
+      (if isPy35 then null else html5lib)
       modules.sqlite3
       beautifulsoup4
     ] ++ optional isDarwin pkgs.darwin.adv_cmds; # provides the locale command
@@ -12064,12 +12087,19 @@ let
     # The `-e` flag disables a few problematic tests.
     # https://github.com/pydata/pandas/issues/11169
     # https://github.com/pydata/pandas/issues/11287
-    checkPhase = ''
+    # The test_sql checks fail specifically on python 3.5; see here:
+    # https://github.com/pydata/pandas/issues/11112
+    checkPhase = let
+      testsToSkip = ["test_data" "test_excel" "test_html" "test_json"
+                     "test_frequencies" "test_frame"
+                     "test_read_clipboard_infer_excel"] ++
+                    optional isPy35 "test_sql";
+    in ''
       runHook preCheck
       # The flag `-A 'not network'` will disable tests that use internet.
       # The `-e` flag disables a few problematic tests.
       ${python.executable} setup.py nosetests -A 'not network' --stop \
-        -e 'test_data|test_excel|test_html|test_json|test_frequencies|test_frame|test_read_clipboard_infer_excel' --verbosity=3
+        -e '${concatStringsSep "|" testsToSkip}' --verbosity=3
 
       runHook postCheck
     '';
@@ -21251,11 +21281,11 @@ let
 
   pafy = buildPythonPackage rec {
     name = "pafy-${version}";
-    version = "0.4.1";
+    version = "0.4.2";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/pafy/${name}.tar.gz";
-      sha256 = "1zdlwwrwh04vszwgmhkmaah1ix24d2zicpv3zi7s8whh06g7pkkl";
+      sha256 = "140nacvyv1a2frvgygbpbsdpxjh82ysfmgp7jf2apn4x2gnkip59";
     };
 
     propagatedBuildInputs = with self; [ youtube-dl ];

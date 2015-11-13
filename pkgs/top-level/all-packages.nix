@@ -13750,6 +13750,8 @@ let
 
   zotero = callPackage ../applications/office/zotero {};
 
+  zscroll = callPackage ../applications/misc/zscroll {};
+
   zynaddsubfx = callPackage ../applications/audio/zynaddsubfx { };
 
   ### GAMES

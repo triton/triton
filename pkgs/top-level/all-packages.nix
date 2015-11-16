@@ -731,7 +731,10 @@ let
 
   bwm_ng = callPackage ../tools/networking/bwm-ng { };
 
-  byobu = callPackage ../tools/misc/byobu { };
+  byobu = callPackage ../tools/misc/byobu {
+    # Choices: [ tmux screen ];
+    textual-window-manager = tmux;
+  };
 
   bsh = fetchurl {
     url = http://www.beanshell.org/bsh-2.0b5.jar;
@@ -3240,6 +3243,8 @@ let
 
   tty-clock = callPackage ../tools/misc/tty-clock { };
 
+  ttyrec = callPackage ../tools/misc/ttyrec { };
+
   ttysnoop = callPackage ../os-specific/linux/ttysnoop {};
 
   ttylog = callPackage ../tools/misc/ttylog { };
@@ -5663,6 +5668,8 @@ let
   jenkins = callPackage ../development/tools/continuous-integration/jenkins { };
 
   jenkins-job-builder = callPackage ../development/tools/continuous-integration/jenkins-job-builder { };
+
+  kcov = callPackage ../development/tools/analysis/kcov { };
 
   lcov = callPackage ../development/tools/analysis/lcov { };
 
@@ -10968,7 +10975,7 @@ let
   audacious = callPackage ../applications/audio/audacious { };
 
   audacity = callPackage ../applications/audio/audacity {
-    ffmpeg = ffmpeg_0;
+    ffmpeg = ffmpeg_2_2;
   };
 
   audio-recorder = callPackage ../applications/audio/audio-recorder { };
@@ -11787,6 +11794,17 @@ let
     slibGuile = slibGuile.override { scheme = guile_1_8; };
     goffice = goffice_0_8;
   };
+
+  gnucash26 = lowPrio (callPackage ../applications/office/gnucash/2.6.nix {
+    inherit (gnome2) libgnomecanvas;
+    inherit (gnome3) dconf;
+    gconf = gnome2.GConf;
+    goffice = goffice_0_8;
+    webkit = webkitgtk2;
+    guile = guile_1_8;
+    slibGuile = slibGuile.override { scheme = guile_1_8; };
+    glib = glib;
+  });
 
   goffice = callPackage ../development/libraries/goffice { };
 

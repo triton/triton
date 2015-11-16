@@ -1,4 +1,4 @@
-{ stdenv, fetchurl
+{ stdenv, fetchurl, windows
 
 # Optional Dependencies
 , zlib ? null
@@ -59,6 +59,21 @@ stdenv.mkDerivation rec {
   '' + ''
       $out/lib/libssh2.la
   '');
+
+  crossAttrs = {
+    # link against cross-built libraries
+    configureFlags = [
+      "--with-openssl"
+      "--with-libssl-prefix=${openssl.crossDrv}"
+      "--with-libz"
+      "--with-libz-prefix=${zlib.crossDrv}"
+    ];
+  } // stdenv.lib.optionalAttrs (stdenv.cross.libc == "msvcrt") {
+    # mingw needs import library of ws2_32 to build the shared library
+    preConfigure = ''
+      export LDFLAGS="-L${windows.mingw_w64}/lib $LDFLAGS"
+    '';
+  };
 
   meta = {
     description = "A client-side C library implementing the SSH2 protocol";

@@ -159,6 +159,7 @@ rec {
   # X.Org
   xorg = [
     http://xorg.mirrors.pair.com/
+    http://mirror.us.leaseweb.net/xorg/
     http://xorg.freedesktop.org/releases/
     http://ftp.x.org/pub/ # often incomplete (e.g. files missing from X.org 7.4)
   ];

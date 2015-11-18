@@ -17,11 +17,11 @@ let
 in
 with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "libmicrohttpd-0.9.44";
+  name = "libmicrohttpd-0.9.46";
 
   src = fetchurl {
     url = "mirror://gnu/libmicrohttpd/${name}.tar.gz";
-    sha256 = "07j1p21rvbrrfpxngk8xswzkmjkh94bp1971xfjh1p0ja709qwzj";
+    sha256 = "0yc97flxi6pjkfj9k0d3cpnw59j92ky67q3g37la23rr9xjx5nq6";
   };
 
   nativeBuildInputs = [ pkgconfig ];

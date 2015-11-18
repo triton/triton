@@ -525,6 +525,8 @@ let
     buildTools = androidenv.buildTools;
   };
 
+  apt-cacher-ng = callPackage ../servers/http/apt-cacher-ng { };
+
   apt-offline = callPackage ../tools/misc/apt-offline { };
 
   apulse = callPackage ../misc/apulse { };
@@ -1655,6 +1657,8 @@ let
 
   gource = callPackage ../applications/version-management/gource { };
 
+  gpart = callPackage ../tools/filesystems/gpart { };
+
   gparted = callPackage ../tools/misc/gparted { };
 
   gpodder = callPackage ../applications/audio/gpodder { };
@@ -1662,7 +1666,6 @@ let
   gptfdisk = callPackage ../tools/system/gptfdisk { };
 
   grafana-old = callPackage ../development/tools/misc/grafana { };
-  grafana = pkgs.goPackages.grafana.bin // { outputs = [ "bin" ]; };
 
   grafx2 = callPackage ../applications/graphics/grafx2 {};
 
@@ -2041,6 +2044,11 @@ let
   netsniff-ng = callPackage ../tools/networking/netsniff-ng { };
 
   ninka = callPackage ../development/tools/misc/ninka { };
+
+  nodejs-5_0 = callPackage ../development/web/nodejs/v5_0.nix {
+    libtool = darwin.cctools;
+    openssl = openssl_1_0_2;
+  };
 
   nodejs-4_2 = callPackage ../development/web/nodejs {
     libtool = darwin.cctools;
@@ -2767,6 +2775,8 @@ let
   pythonSexy = builderDefsPackage (callPackage ../development/python-modules/libsexy) { };
 
   pytrainer = callPackage ../applications/misc/pytrainer { };
+
+  remarshal = (callPackage ../development/tools/remarshal { }).bin // { outputs = [ "bin" ]; };
 
   openmpi = callPackage ../development/libraries/openmpi { };
 
@@ -7730,6 +7740,8 @@ let
     pgen          = callPackage ../development/libraries/pgen { aterm = aterm28; };
   });
 
+  mhddfs = callPackage ../tools/filesystems/mhddfs { };
+
   ming = callPackage ../development/libraries/ming { };
 
   minizip = callPackage ../development/libraries/minizip { };
@@ -9067,7 +9079,7 @@ let
 
   bird = callPackage ../servers/bird { };
 
-  bosun = go14Packages.bosun.bin // { outputs = [ "bin" ]; };
+  bosun = (callPackage ../servers/monitoring/bosun { }).bin // { outputs = [ "bin" ]; };
   scollector = bosun;
 
   charybdis = callPackage ../servers/irc/charybdis {};
@@ -9145,7 +9157,11 @@ let
 
   gatling = callPackage ../servers/http/gatling { };
 
+  grafana = (callPackage ../servers/monitoring/grafana { }).bin // { outputs = ["bin"]; };
+
   groovebasin = callPackage ../applications/audio/groovebasin { };
+
+  heapster = (callPackage ../servers/monitoring/heapster { }).bin // { outputs = ["bin"]; };
 
   hbase = callPackage ../servers/hbase {};
 
@@ -9299,6 +9315,7 @@ let
 
   mariadb = callPackage ../servers/sql/mariadb {
     inherit (darwin) cctools;
+    inherit (pkgs.darwin.apple_sdk.frameworks) CoreServices;
   };
 
   mongodb = callPackage ../servers/nosql/mongodb {
@@ -9308,9 +9325,7 @@ let
   riak = callPackage ../servers/nosql/riak/1.3.1.nix { };
   riak2 = callPackage ../servers/nosql/riak/2.1.1.nix { };
 
-  influxdb = callPackage ../servers/nosql/influxdb { };
-
-  influxdb-backup = goPackages.influxdb-backup.bin // { outputs = [ "bin" ]; };
+  influxdb = (callPackage ../servers/nosql/influxdb { }).bin // { outputs = [ "bin" ]; };
 
   hyperdex = callPackage ../servers/nosql/hyperdex { };
 
@@ -9395,7 +9410,7 @@ let
 
   pyMAILt = builderDefsPackage (callPackage ../servers/xmpp/pyMAILt) {};
 
-  qpid-cpp = callPackage ../servers/amqp/qpid-cpp { 
+  qpid-cpp = callPackage ../servers/amqp/qpid-cpp {
     boost = boost155;
   };
 
@@ -11079,6 +11094,8 @@ let
 
   bluejeans = callPackage ../applications/networking/browsers/mozilla-plugins/bluejeans { };
 
+  brackets = callPackage ../applications/editors/brackets { gconf = gnome3.gconf; };
+
   bristol = callPackage ../applications/audio/bristol { };
 
   bs1770gain = callPackage ../applications/audio/bs1770gain { };
@@ -11161,6 +11178,7 @@ let
   cinelerra = callPackage ../applications/video/cinelerra { };
 
   clawsMail = callPackage ../applications/networking/mailreaders/claws-mail {
+    inherit (gnome3) gsettings_desktop_schemas;
     enableNetworkManager = config.networking.networkmanager.enable or false;
   };
 
@@ -11900,6 +11918,8 @@ let
   gmtk = callPackage ../applications/networking/browsers/mozilla-plugins/gmtk {
     inherit (gnome) GConf;
   };
+
+  google-chrome = callPackage ../applications/networking/browsers/google-chrome { gconf = gnome.GConf; };
 
   googleearth = callPackage_i686 ../applications/misc/googleearth { };
 
@@ -15130,6 +15150,8 @@ let
 
   hatari = callPackage ../misc/emulators/hatari { };
 
+  helm = callPackage ../applications/audio/helm { };
+
   hplip = callPackage ../misc/drivers/hplip { };
 
   hplipWithPlugin = hplip.override { withPlugin = true; };
@@ -15173,7 +15195,7 @@ let
 
   nixopsUnstable = nixops;
 
-  nixui = callPackage ../tools/package-management/nixui { node_webkit = node_webkit_0_11; };
+  nixui = callPackage ../tools/package-management/nixui { node_webkit = nwjs_0_12; };
 
   nix-prefetch-scripts = callPackage ../tools/package-management/nix-prefetch-scripts { };
 
@@ -15303,6 +15325,8 @@ let
   mkSaneConfig = callPackage ../applications/graphics/sane/config.nix { };
 
   saneFrontends = callPackage ../applications/graphics/sane/frontends.nix { };
+
+  sct = callPackage ../tools/X11/sct {};
 
   seafile-shared = callPackage ../misc/seafile-shared { };
 

@@ -1277,6 +1277,25 @@ let
     };
   };
 
+  datadog = buildPythonPackage rec {
+    name = "${pname}-${version}";
+    pname = "datadog";
+    version = "0.10.0";
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/d/${pname}/${name}.tar.gz";
+      sha256 = "0y2if4jj43n5jis20imragvhhyhr840w4m1g7j7fxh9bn7h273zp";
+    };
+
+    buildInputs = with self; [ pillow tox mock six nose ];
+    propagatedBuildInputs = with self; [ requests2 decorator simplejson ];
+
+    meta = {
+      description = "The Datadog Python library ";
+      license = licenses.bsd3;
+      homepage = https://github.com/DataDog/datadogpy;
+    };
+  };
+
   debian = buildPythonPackage rec {
     name = "${pname}-${version}";
     pname = "python-debian";
@@ -2777,6 +2796,28 @@ let
     };
   };
 
+  mixpanel = buildPythonPackage rec {
+    version = "4.0.2";
+    name = "mixpanel-${version}";
+
+    src = pkgs.fetchzip {
+      url = "https://github.com/mixpanel/mixpanel-python/archive/${version}.zip";
+      sha256 = "0yq1bcsjzsz7yz4rp69izsdn47rvkld4wki2xmapp8gg2s9i8709";
+    };
+
+    buildInputs = with self; [ pytest mock ];
+    propagatedBuildInputs = with self; [ six ];
+    checkPhase = "py.test tests.py";
+
+    meta = {
+      homepage = https://github.com/mixpanel/mixpanel-python;
+      description = "This is the official Mixpanel Python library. This library
+                     allows for server-side integration of Mixpanel.";
+      license = stdenv.lib.licenses.asl20;
+    };
+  };
+
+
   pkginfo = buildPythonPackage rec {
     version = "1.2.1";
     name = "pkginfo-${version}";
@@ -3495,7 +3536,7 @@ let
       md5 = "2cc57e1d134aa93404e779b9311676fa";
     };
 
-    propagatedBuildInputs = with self; [ oauth2 requests ];
+    propagatedBuildInputs = with self; [ oauth2 requests2 ];
 
     meta = {
       description = "Official Python API client for Discogs";
@@ -8251,7 +8292,7 @@ let
     buildInputs = with self; [nose] ++ optionals isPy27 [mock];
 
     propagatedBuildInputs = with self;
-      [decorator pickleshare simplegeneric traitlets readline requests pexpect sqlite3]
+      [decorator pickleshare simplegeneric traitlets readline requests2 pexpect sqlite3]
       ++ optionals stdenv.isDarwin [appnope gnureadline];
 
     meta = {
@@ -8833,7 +8874,7 @@ let
       sha256 = "a10d8d5e597c6a54ec418baddd31a51a0b7937a895d75b240d890aead946081c";
     };
 
-    llvm = pkgs.llvm;
+    llvm = pkgs.llvm_36;
 
     propagatedBuildInputs = with self; [ llvm ] ++ optional (pythonOlder "3.4") enum34;
 
@@ -13214,7 +13255,7 @@ let
       md5 = "b27c714d530300b917eb869726334226";
     };
 
-    propagatedBuildInputs = with self; [ requests audioread ];
+    propagatedBuildInputs = with self; [ requests2 audioread ];
 
     patches = [ ../development/python-modules/pyacoustid-py3.patch ];
 
@@ -13481,7 +13522,7 @@ let
       homepage = https://pypi.python.org/pypi/pygit2;
       description = "A set of Python bindings to the libgit2 shared library";
       license = licenses.gpl2;
-      platforms = with platforms; all;
+      platforms = platforms.all;
     };
   };
 
@@ -17108,7 +17149,7 @@ let
       license = licenses.bsd3;
       maintainer = with maintainers; [ fridh ];
     };
-    
+
     # Many tests fail when using latest numpy and pandas.
     # See also https://github.com/statsmodels/statsmodels/issues/2602
     doCheck = false;

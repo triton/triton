@@ -562,9 +562,7 @@ let
   asciinema = goPackages.asciinema.bin // { outputs = [ "bin" ]; };
 
   asymptote = callPackage ../tools/graphics/asymptote {
-    texLive = texLiveAggregationFun {
-      paths = [ texLive texLiveExtra texLiveCMSuper ];
-    };
+    texLive = texlive.combine { inherit (texlive) scheme-small epsf cm-super; };
   };
 
   atomicparsley = callPackage ../tools/video/atomicparsley { };
@@ -1027,16 +1025,10 @@ let
 
   cdrkit = callPackage ../tools/cd-dvd/cdrkit { };
 
-  # Only ever add ceph LTS releases
-  # The default should always be symlinked to the latest LTS
-  # Dev should always point to the latest versioned release
   libceph = ceph.lib;
-  ceph-0_80 = callPackage ../tools/filesystems/ceph/0.80.nix { };
-  ceph-0_94 = callPackage ../tools/filesystems/ceph/0.94.nix { };
-  ceph-9 = callPackage ../tools/filesystems/ceph/9.nix { };
   ceph = callPackage ../tools/filesystems/ceph { };
-  ceph-dev = lowPrio (callPackage ../tools/filesystems/ceph/dev.nix { });
-  ceph-git = lowPrio (callPackage ../tools/filesystems/ceph/git.nix { });
+  ceph-dev = ceph;
+  #ceph-dev = lowPrio (callPackage ../tools/filesystems/ceph/dev.nix { });
 
   cfdg = builderDefsPackage (callPackage ../tools/graphics/cfdg) {};
 
@@ -1654,6 +1646,8 @@ let
   googleAuthenticator = callPackage ../os-specific/linux/google-authenticator { };
 
   google-cloud-sdk = callPackage ../tools/admin/google-cloud-sdk { };
+
+  google-fonts = callPackage ../data/fonts/google-fonts { };
 
   gource = callPackage ../applications/version-management/gource { };
 
@@ -9952,6 +9946,33 @@ let
     kernelPatches = [ kernelPatches.bridge_stp_helper ];
   };
 
+  linux_3_10 = callPackage ../os-specific/linux/kernel/linux-3.10.nix {
+    kernelPatches = [ kernelPatches.bridge_stp_helper ]
+      ++ lib.optionals ((platform.kernelArch or null) == "mips")
+      [ kernelPatches.mips_fpureg_emu
+        kernelPatches.mips_fpu_sigill
+        kernelPatches.mips_ext3_n32
+      ];
+  };
+
+  linux_3_12 = callPackage ../os-specific/linux/kernel/linux-3.12.nix {
+    kernelPatches = [ kernelPatches.bridge_stp_helper kernelPatches.crc_regression ]
+      ++ lib.optionals ((platform.kernelArch or null) == "mips")
+      [ kernelPatches.mips_fpureg_emu
+        kernelPatches.mips_fpu_sigill
+        kernelPatches.mips_ext3_n32
+      ];
+  };
+
+  linux_3_14 = callPackage ../os-specific/linux/kernel/linux-3.14.nix {
+    kernelPatches = [ kernelPatches.bridge_stp_helper ]
+      ++ lib.optionals ((platform.kernelArch or null) == "mips")
+      [ kernelPatches.mips_fpureg_emu
+        kernelPatches.mips_fpu_sigill
+        kernelPatches.mips_ext3_n32
+      ];
+  };
+
   linux_3_18 = callPackage ../os-specific/linux/kernel/linux-3.18.nix {
     kernelPatches = [ kernelPatches.bridge_stp_helper ]
       ++ lib.optionals ((platform.kernelArch or null) == "mips")
@@ -10155,6 +10176,10 @@ let
 
   # Build the kernel modules for the some of the kernels.
   linuxPackages_rpi = linuxPackagesFor pkgs.linux_rpi linuxPackages_rpi;
+  linuxPackages_3_10 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_10 linuxPackages_3_10);
+  linuxPackages_3_10_tuxonice = linuxPackagesFor pkgs.linux_3_10_tuxonice linuxPackages_3_10_tuxonice;
+  linuxPackages_3_12 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_12 linuxPackages_3_12);
+  linuxPackages_3_14 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_14 linuxPackages_3_14);
   linuxPackages_3_18 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_18 linuxPackages_3_18);
   linuxPackages_4_1 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_1 linuxPackages_4_1);
   linuxPackages_4_2 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_2 linuxPackages_4_2);
@@ -11316,6 +11341,8 @@ let
 
   docker = callPackage ../applications/virtualization/docker { go = go_1_4; };
 
+  docker-gc = callPackage ../applications/virtualization/docker/gc.nix { };
+
   doodle = callPackage ../applications/search/doodle { };
 
   drumgizmo = callPackage ../applications/audio/drumgizmo { };
@@ -11743,7 +11770,7 @@ let
 
   freecad = callPackage ../applications/graphics/freecad {
     boost = boost155;
-    opencascade = opencascade_6_5;
+    opencascade = opencascade_oce;
     inherit (pythonPackages) matplotlib pycollada;
   };
 
@@ -14943,6 +14970,7 @@ let
   ecm = callPackage ../applications/science/math/ecm { };
 
   eukleides = callPackage ../applications/science/math/eukleides {
+    texLive = texlive.combine { inherit (texlive) scheme-small; };
     texinfo = texinfo4;
   };
 
@@ -15466,6 +15494,8 @@ let
   wavegain = callPackage ../applications/audio/wavegain { };
 
   wcalc = callPackage ../applications/misc/wcalc { };
+
+  webfs = callPackage ../servers/http/webfs { };
 
   wine = callPackage ../misc/emulators/wine {
     wineRelease = config.wine.release or "stable";

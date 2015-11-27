@@ -5,11 +5,11 @@
 with stdenv.lib;
 
 stdenv.mkDerivation rec {
-  name = "pcre-8.38-RC1";
+  name = "pcre-8.38";
 
   src = fetchurl {
-    url = "http://pub.wak.io/nixos/tarballs/${name}.tar.bz2";
-    sha256 = "60106bd136df843b9542127ffe6767e66a8d8452de345b1ed5c9e1b7f2376379";
+    url = "http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${name}.tar.bz2";
+    sha256 = "1pvra19ljkr5ky35y2iywjnsckrs9ch2anrf5b0dc91hw8v2vq5r";
   };
 
   outputs = [ "out" "doc" "man" ];

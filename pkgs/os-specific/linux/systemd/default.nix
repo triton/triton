@@ -12,14 +12,14 @@ assert stdenv.isLinux;
 assert pythonSupport -> pythonPackages != null;
 
 stdenv.mkDerivation rec {
-  version = "227";
+  version = "228";
   name = "systemd-${version}";
 
   src = fetchFromGitHub {
-    owner = "NixOS";
+    owner = "wkennington";
     repo = "systemd";
-    rev = "7d94d27801d20278103d8c146633fe81e06697d6";
-    sha256 = "0cvzsrazqgbia3zajb0z4ik8myfil4bdy2c29qs6w93d6yvrjfkj";
+    rev = "9e5e6198b5d3259b66e71d9cd56903657f2fcb29";
+    sha256 = "1c20rxrkh58bnj974hk9y57yiqq6jr8ynpfiy3v6sf4dk9n65h45";
   };
 
   outputs = [ "out" "man" "doc" ];

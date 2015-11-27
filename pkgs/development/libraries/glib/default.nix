@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
   # Static is necessary for qemu-nix to support static userspace translators
   configureFlags = [ "--enable-static" ]
     ++ optional stdenv.isDarwin "--disable-compile-warnings"
-    ++ optional stdenv.isSunOS "--disable-modular-tests";
+    ++ optional stdenv.isSunOS ["--disable-modular-tests" "--with-libiconv"];
 
   NIX_CFLAGS_COMPILE = optionalString stdenv.isDarwin " -lintl"
     + optionalString stdenv.isSunOS " -DBSD_COMP";

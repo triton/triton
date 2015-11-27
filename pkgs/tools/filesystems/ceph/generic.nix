@@ -151,6 +151,7 @@ stdenv.mkDerivation {
   '';
 
   configureFlags = [
+    (mkEnable false "silent-rules" null)
     (mkOther                               "exec_prefix"         "\${out}")
     (mkOther                               "sysconfdir"          "/etc")
     (mkOther                               "localstatedir"       "/var")
@@ -260,7 +261,7 @@ stdenv.mkDerivation {
 
   '';
 
-  enableParallelBuilding = true;
+  enableParallelBuilding = false;
 
   meta = {
     homepage = http://ceph.com/;

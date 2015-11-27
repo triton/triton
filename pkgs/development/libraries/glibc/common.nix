@@ -5,8 +5,6 @@ cross:
 
 { name, fetchurl, fetchgit ? null, stdenv, installLocales ? false
 , gccCross ? null, kernelHeaders ? null
-, machHeaders ? null, hurdHeaders ? null, libpthreadHeaders ? null
-, mig ? null
 , profilingLibraries ? false, meta
 , withGd ? false, gd ? null, libpng ? null
 , preConfigure ? "", ... }@args:
@@ -18,9 +16,6 @@ let
 in
 
 assert cross != null -> gccCross != null;
-assert mig != null -> machHeaders != null;
-assert machHeaders != null -> hurdHeaders != null;
-assert hurdHeaders != null -> libpthreadHeaders != null;
 
 stdenv.mkDerivation ({
   inherit kernelHeaders installLocales;
@@ -34,7 +29,7 @@ stdenv.mkDerivation ({
 
   /* Don't try to apply these patches to the Hurd's snapshot, which is
      older.  */
-  patches = stdenv.lib.optionals (hurdHeaders == null)
+  patches =
     [ /* Have rpcgen(1) look for cpp(1) in $PATH.  */
       ./rpcgen-path.patch
 
@@ -47,11 +42,6 @@ stdenv.mkDerivation ({
       /* Don't use /etc/ld.so.preload, but /etc/ld-nix.so.preload.  */
       ./dont-use-system-ld-so-preload.patch
 
-      /* Add blowfish password hashing support.  This is needed for
-         compatibility with old NixOS installations (since NixOS used
-         to default to blowfish). */
-      ./glibc-crypt-blowfish.patch
-
       /* The command "getconf CS_PATH" returns the default search path
          "/bin:/usr/bin", which is inappropriate on NixOS machines. This
          patch extends the search path by "/run/current-system/sw/bin". */
@@ -59,14 +49,9 @@ stdenv.mkDerivation ({
     ];
 
   postPatch =
-    # Needed for glibc to build with the gnumake 3.82
-    # http://comments.gmane.org/gmane.linux.lfs.support/31227
-    ''
-      sed -i 's/ot \$/ot:\n\ttouch $@\n$/' manual/Makefile
-    ''
     # nscd needs libgcc, and we don't want it dynamically linked
     # because we don't want it to depend on bootstrap-tools libs.
-    + ''
+    ''
       echo "LDFLAGS-nscd += -static-libgcc" >> nscd/Makefile
     ''
     # Replace the date and time in nscd by a prefix of $out.
@@ -77,12 +62,6 @@ stdenv.mkDerivation ({
     + ''
       cat ${./glibc-remove-datetime-from-nscd.patch} \
         | sed "s,@out@,$out," | patch -p1
-    ''
-    # CVE-2014-8121, see https://bugzilla.redhat.com/show_bug.cgi?id=1165192
-    + ''
-      substituteInPlace ./nss/nss_files/files-XXX.c \
-        --replace 'status = internal_setent (stayopen);' \
-                  'status = internal_setent (1);'
     '';
 
   configureFlags =
@@ -120,7 +99,6 @@ stdenv.mkDerivation ({
   installFlags = [ "sysconfdir=$(out)/etc" ];
 
   buildInputs = stdenv.lib.optionals (cross != null) [ gccCross ]
-    ++ stdenv.lib.optional (mig != null) mig
     ++ stdenv.lib.optionals withGd [ gd libpng ];
 
   # Needed to install share/zoneinfo/zone.tab.  Set to impure /bin/sh to
@@ -145,20 +123,10 @@ stdenv.mkDerivation ({
   name = name + "-${version}" +
     stdenv.lib.optionalString (cross != null) "-${cross.config}";
 
-  src =
-    if hurdHeaders != null
-    then fetchgit {
-      # Shamefully the "official" glibc won't build on GNU, so use the one
-      # maintained by the Hurd folks, `tschwinge/Roger_Whittaker' branch.
-      # See <http://www.gnu.org/software/hurd/source_repositories/glibc.html>.
-      url = "git://git.sv.gnu.org/hurd/glibc.git";
-      sha256 = "cecec9dd5a2bafc875c56b058b6d7628a22b250b53747513dec304f31ffdb82d";
-      rev = "d3cdecf18e6550b0984a42b43ed48c5fb26501e1";
-    }
-    else fetchurl {
-      url = "mirror://gnu/glibc/glibc-${version}.tar.gz";
-      sha256 = "1rcby0cqgswgqaxyqz0yqc4zizb1kvpi5vlfqp7dh3sa132109m6";
-    };
+  src = fetchurl {
+    url = "mirror://gnu/glibc/glibc-${version}.tar.gz";
+    sha256 = "1rcby0cqgswgqaxyqz0yqc4zizb1kvpi5vlfqp7dh3sa132109m6";
+  };
 
   # Remove absolute paths from `configure' & co.; build out-of-tree.
   preConfigure = ''
@@ -183,8 +151,7 @@ stdenv.mkDerivation ({
 
   meta = {
     homepage = http://www.gnu.org/software/libc/;
-    description = "The GNU C Library"
-      + stdenv.lib.optionalString (hurdHeaders != null) ", for GNU/Hurd";
+    description = "The GNU C Library";
 
     longDescription =
       '' Any Unix-like operating system needs a C library: the library which
@@ -204,15 +171,4 @@ stdenv.mkDerivation ({
 
 // stdenv.lib.optionalAttrs withGd {
   preBuild = "unset NIX_DONT_SET_RPATH";
-}
-
-// stdenv.lib.optionalAttrs (hurdHeaders != null) {
-  # Work around the fact that the configure snippet that looks for
-  # <hurd/version.h> does not honor `--with-headers=$sysheaders' and that
-  # glibc expects Mach, Hurd, and pthread headers to be in the same place.
-  CPATH = "${hurdHeaders}/include:${machHeaders}/include:${libpthreadHeaders}/include";
-
-  # Install NSS stuff in the right place.
-  # XXX: This will be needed for all new glibcs and isn't Hurd-specific.
-  makeFlags = ''vardbdir="$out/var/db"'';
 })

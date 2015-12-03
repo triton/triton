@@ -1,5 +1,4 @@
-{ stdenv, fetchurl, perl
-, withCryptodev ? false, cryptodevHeaders }:
+{ stdenv, fetchurl, perl, withCryptodev ? true, cryptodevHeaders }:
 
 with stdenv.lib;
 let
@@ -8,23 +7,24 @@ let
     stdenv.cross;
 in
 stdenv.mkDerivation rec {
-  name = "openssl-1.0.2d";
+  name = "openssl-1.0.2e";
 
   src = fetchurl {
     urls = [
       "http://www.openssl.org/source/${name}.tar.gz"
       "http://openssl.linux-mirror.org/source/${name}.tar.gz"
     ];
-    sha256 = "671c36487785628a703374c652ad2cebea45fa920ae5681515df25d9f2c9a8c8";
+    sha256 = "eee11def03647aa2267434a779608af6fca645023c9a194ddb82f14426835537";
   };
 
   outputs = [ "out" "man" ];
 
-  patches = optional stdenv.isCygwin ./1.0.1-cygwin64.patch
-    ++ optional (stdenv.isDarwin || (stdenv ? cross && stdenv.cross.libc == "libSystem")) ./darwin-arch.patch;
-
   nativeBuildInputs = [ perl ];
   buildInputs = stdenv.lib.optional withCryptodev cryptodevHeaders;
+
+  postPatch = ''
+    sed -i 's,`cd ./util; ./pod2mantest $(PERL)`,pod2man,g' Makefile.org
+  '';
 
   # On x86_64-darwin, "./config" misdetects the system as
   # "darwin-i386-cc".  So specify the system type explicitly.

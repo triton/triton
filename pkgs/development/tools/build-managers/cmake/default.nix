@@ -11,7 +11,7 @@ assert wantPS -> (ps != null);
 let
   os = stdenv.lib.optionalString;
   majorVersion = "3.4";
-  minorVersion = "0";
+  minorVersion = "1";
   version = "${majorVersion}.${minorVersion}";
 in
 
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "${meta.homepage}files/v${majorVersion}/cmake-${version}.tar.gz";
-    sha256 = "1shwim3gfdybjx9f11ykxz5l09rh58vmvz8ip76q3i76mkv2pf55";
+    sha256 = "1qhkq72m8wch9kh0nr7fiq38rbxk9cspn5h8aq6pzhqdv2yn456l";
   };
 
   enableParallelBuilding = true;

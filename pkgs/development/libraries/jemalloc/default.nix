@@ -5,7 +5,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://www.canonware.com/download/jemalloc/${name}.tar.bz2";
-    sha256 = "1mpafaniaybv8kh7yjqq2g595l2i08m7adg238k5igzf61n6ixzi";
+    sha256 = "1l221xnv6qa9yimwadmx6z7p725j8rfd9v5vpsh1l16dgy6qvniz";
   };
 
   meta = with stdenv.lib; {

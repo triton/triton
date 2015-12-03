@@ -11,62 +11,42 @@ let
 
 in stdenv.mkDerivation rec {
   name = "nss-${version}";
-  version = "3.20.1";
+  version = "3.21";
 
   src = fetchurl {
-    url = "http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_3_20_1_RTM/src/${name}.tar.gz";
-    sha256 = "ad3c8f11dfd9570c2d04a6140d5ef7c2bdd0fe30d6c9e5548721a4251a5e8c97";
+    url = "http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src/${name}.tar.gz";
+    sha256 = "3f7a5b027d7cdd5c0e4ff7544da33fdc6f56c2f8c27fff02938fd4a6fbe87239";
   };
 
   buildInputs = [ nspr perl zlib sqlite ];
 
   prePatch = ''
     xz -d < ${nssPEM} | patch -p1
+    cd nss
   '';
 
-  patches =
-    [ ./nss-3.17-gentoo-fixups.patch
-      # Based on http://patch-tracker.debian.org/patch/series/dl/nss/2:3.15.4-1/85_security_load.patch
-      ./85_security_load.patch
-    ];
-
-  postPatch = ''
-    # Fix up the patch from Gentoo.
-    sed -i \
-      -e "/^PREFIX =/s|= /usr|= $out|" \
-      -e '/@libdir@/s|gentoo/nss|lib|' \
-      -e '/ln -sf/d' \
-      nss/config/Makefile
-
-    # Note for spacing/tab nazis: The TAB characters are intentional!
-    cat >> nss/config/Makefile <<INSTALL_TARGET
-    install:
-    	mkdir -p \$(DIST)/lib/pkgconfig
-    	cp nss.pc \$(DIST)/lib/pkgconfig
-    INSTALL_TARGET
-  '';
-
-  preConfigure = "cd nss";
+  patches = [
+    ./add-pkgconfig.patch
+    ./fix-sharedlib-loading.patch
+  ];
 
   makeFlags = [
     "NSPR_INCLUDE_DIR=${nspr}/include/nspr"
     "NSPR_LIB_DIR=${nspr}/lib"
     "NSDISTMODE=copy"
     "BUILD_OPT=1"
+    "NSS_ENABLE_WERROR=0"
     "SOURCE_PREFIX=\$(out)"
-    "NSS_ENABLE_ECC=1"
     "NSS_USE_SYSTEM_SQLITE=1"
   ] ++ stdenv.lib.optional stdenv.is64bit "USE_64=1";
 
   postInstall = ''
     rm -rf $out/private
     mv $out/public $out/include
-    mv $out/*.OBJ/* $out/
-    rmdir $out/*.OBJ
-
-    cp -av config/nss-config $out/bin/nss-config
-
-    ln -s lib $out/lib64
+    mkdir -p $out/{bin,lib}
+    mv $out/*.OBJ/bin/* $out/bin
+    mv $out/*.OBJ/lib/* $out/lib
+    rm -r $out/*.OBJ
   '';
 
   postFixup = ''

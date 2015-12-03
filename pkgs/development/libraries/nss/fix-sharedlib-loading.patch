@@ -1,7 +1,15 @@
-diff -ru nss-3.16-orig/nss/cmd/shlibsign/shlibsign.c nss-3.16/nss/cmd/shlibsign/shlibsign.c
---- nss-3.16-orig/nss/cmd/shlibsign/shlibsign.c	2014-03-14 21:31:59.000000000 +0100
-+++ nss-3.16/nss/cmd/shlibsign/shlibsign.c	2014-04-22 14:50:31.340743655 +0200
-@@ -852,6 +852,8 @@
+# HG changeset patch
+# User William A. Kennington III <william@wkennington.com>
+# Date 1449178027 28800
+#      Thu Dec 03 13:27:07 2015 -0800
+# Node ID 190fb1c96de8dd32e7239e62b8a94ab06a7b17b3
+# Parent  1a2e8b6e713c728220ad340c871e49e8290a0e0b
+Allow nix to properly load shared libraries.
+
+diff -r 1a2e8b6e713c -r 190fb1c96de8 cmd/shlibsign/shlibsign.c
+--- a/cmd/shlibsign/shlibsign.c	Thu Dec 03 17:38:49 2015 +1100
++++ b/cmd/shlibsign/shlibsign.c	Thu Dec 03 13:27:07 2015 -0800
+@@ -862,6 +862,8 @@
      libname = PR_GetLibraryName(NULL, "softokn3");
      assert(libname != NULL);
      lib = PR_LoadLibrary(libname);
@@ -10,10 +18,9 @@ diff -ru nss-3.16-orig/nss/cmd/shlibsign/shlibsign.c nss-3.16/nss/cmd/shlibsign/
      assert(lib != NULL);
      PR_FreeLibraryName(libname);
  
-Only in nss-3.16/nss/cmd/shlibsign: shlibsign.c.orig
-diff -ru nss-3.16-orig/nss/coreconf/config.mk nss-3.16/nss/coreconf/config.mk
---- nss-3.16-orig/nss/coreconf/config.mk	2014-03-14 21:31:59.000000000 +0100
-+++ nss-3.16/nss/coreconf/config.mk	2014-04-22 14:50:51.302731097 +0200
+diff -r 1a2e8b6e713c -r 190fb1c96de8 coreconf/config.mk
+--- a/coreconf/config.mk	Thu Dec 03 17:38:49 2015 +1100
++++ b/coreconf/config.mk	Thu Dec 03 13:27:07 2015 -0800
 @@ -188,3 +188,6 @@
  
  # Hide old, deprecated, TLS cipher suite names when building NSS
@@ -21,10 +28,10 @@ diff -ru nss-3.16-orig/nss/coreconf/config.mk nss-3.16/nss/coreconf/config.mk
 +
 +# Nix specific stuff.
 +DEFINES += -DNIX_NSS_LIBDIR=\"$(out)/lib/\"
-diff -ru nss-3.16-orig/nss/lib/pk11wrap/pk11load.c nss-3.16/nss/lib/pk11wrap/pk11load.c
---- nss-3.16-orig/nss/lib/pk11wrap/pk11load.c	2014-03-14 21:31:59.000000000 +0100
-+++ nss-3.16/nss/lib/pk11wrap/pk11load.c	2014-04-22 14:50:22.164749330 +0200
-@@ -406,6 +406,13 @@
+diff -r 1a2e8b6e713c -r 190fb1c96de8 lib/pk11wrap/pk11load.c
+--- a/lib/pk11wrap/pk11load.c	Thu Dec 03 17:38:49 2015 +1100
++++ b/lib/pk11wrap/pk11load.c	Thu Dec 03 13:27:07 2015 -0800
+@@ -429,6 +429,13 @@
  	 * unload the library if anything goes wrong from here on out...
  	 */
  	library = PR_LoadLibrary(mod->dllName);
@@ -38,9 +45,9 @@ diff -ru nss-3.16-orig/nss/lib/pk11wrap/pk11load.c nss-3.16/nss/lib/pk11wrap/pk1
  	mod->library = (void *)library;
  
  	if (library == NULL) {
-diff -ru nss-3.16-orig/nss/lib/util/secload.c nss-3.16/nss/lib/util/secload.c
---- nss-3.16-orig/nss/lib/util/secload.c	2014-03-14 21:31:59.000000000 +0100
-+++ nss-3.16/nss/lib/util/secload.c	2014-04-22 14:50:31.342743654 +0200
+diff -r 1a2e8b6e713c -r 190fb1c96de8 lib/util/secload.c
+--- a/lib/util/secload.c	Thu Dec 03 17:38:49 2015 +1100
++++ b/lib/util/secload.c	Thu Dec 03 13:27:07 2015 -0800
 @@ -69,9 +69,14 @@
  
      /* Remove the trailing filename from referencePath and add the new one */

@@ -1,6 +1,40 @@
---- nss-3.17.1/nss/config/Makefile
-+++ nss-3.17.1/nss/config/Makefile
-@@ -0,0 +1,40 @@
+# HG changeset patch
+# User William A. Kennington III <william@wkennington.com>
+# Date 1449178649 28800
+#      Thu Dec 03 13:37:29 2015 -0800
+# Node ID ae04a35be3acf92c9a4f73a1095d08d74235711b
+# Parent  190fb1c96de8dd32e7239e62b8a94ab06a7b17b3
+Add pkgconfig support
+
+diff -r 190fb1c96de8 -r ae04a35be3ac Makefile
+--- a/Makefile	Thu Dec 03 13:27:07 2015 -0800
++++ b/Makefile	Thu Dec 03 13:37:29 2015 -0800
+@@ -46,7 +46,7 @@
+ # (7) Execute "local" rules. (OPTIONAL).                              #
+ #######################################################################
+ 
+-nss_build_all: build_nspr all
++nss_build_all: all
+ 
+ nss_clean_all: clobber_nspr clobber
+ 
+@@ -115,12 +115,6 @@
+ 	--with-dist-prefix='$(NSPR_PREFIX)' \
+ 	--with-dist-includedir='$(NSPR_PREFIX)/include'
+ 
+-build_nspr: $(NSPR_CONFIG_STATUS)
+-	$(MAKE) -C $(CORE_DEPTH)/../nspr/$(OBJDIR_NAME)
+-
+-clobber_nspr: $(NSPR_CONFIG_STATUS)
+-	$(MAKE) -C $(CORE_DEPTH)/../nspr/$(OBJDIR_NAME) clobber
+-
+ build_docs:
+ 	$(MAKE) -C $(CORE_DEPTH)/doc
+ 
+diff -r 190fb1c96de8 -r ae04a35be3ac config/Makefile
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/config/Makefile	Thu Dec 03 13:37:29 2015 -0800
+@@ -0,0 +1,39 @@
 +CORE_DEPTH = ..
 +DEPTH      = ..
 +
@@ -9,40 +43,42 @@
 +NSS_MAJOR_VERSION = `grep "NSS_VMAJOR" ../lib/nss/nss.h | awk '{print $$3}'`
 +NSS_MINOR_VERSION = `grep "NSS_VMINOR" ../lib/nss/nss.h | awk '{print $$3}'`
 +NSS_PATCH_VERSION = `grep "NSS_VPATCH" ../lib/nss/nss.h | awk '{print $$3}'`
-+PREFIX = /usr
 +
-+all: export libs
++all: install export libs
 +
-+export:
++install:
 +	# Create the nss.pc file
-+	mkdir -p $(DIST)/lib/pkgconfig
-+	sed -e "s,@prefix@,$(PREFIX)," \
++	mkdir -p $(SOURCE_PREFIX)/lib/pkgconfig
++	sed -e "s,@prefix@,$(SOURCE_PREFIX)," \
 +	    -e "s,@exec_prefix@,\$${prefix}," \
-+	    -e "s,@libdir@,\$${prefix}/lib64," \
++	    -e "s,@libdir@,\$${prefix}/lib," \
 +	    -e "s,@includedir@,\$${prefix}/include/nss," \
 +	    -e "s,@NSS_MAJOR_VERSION@,$(NSS_MAJOR_VERSION),g" \
 +	    -e "s,@NSS_MINOR_VERSION@,$(NSS_MINOR_VERSION)," \
 +	    -e "s,@NSS_PATCH_VERSION@,$(NSS_PATCH_VERSION)," \
 +	    nss.pc.in > nss.pc
 +	chmod 0644 nss.pc
-+	ln -sf ../../../../config/nss.pc $(DIST)/lib/pkgconfig
++	cp nss.pc $(SOURCE_PREFIX)/lib/pkgconfig
 +
 +	# Create the nss-config script
-+	mkdir -p $(DIST)/bin
-+	sed -e "s,@prefix@,$(PREFIX)," \
++	mkdir -p $(SOURCE_PREFIX)/bin
++	sed -e "s,@prefix@,$(SOURCE_PREFIX)," \
 +	    -e "s,@NSS_MAJOR_VERSION@,$(NSS_MAJOR_VERSION)," \
 +	    -e "s,@NSS_MINOR_VERSION@,$(NSS_MINOR_VERSION)," \
 +	    -e "s,@NSS_PATCH_VERSION@,$(NSS_PATCH_VERSION)," \
 +	    nss-config.in > nss-config
 +	chmod 0755 nss-config
-+	ln -sf ../../../config/nss-config $(DIST)/bin
++	cp nss-config $(SOURCE_PREFIX)/bin
++
++export:
 +
 +libs:
 +
-+dummy: all export libs
++dummy: all install libs
 +
---- nss-3.17.1/nss/config/nss-config.in
-+++ nss-3.17.1/nss/config/nss-config.in
+diff -r 190fb1c96de8 -r ae04a35be3ac config/nss-config.in
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/config/nss-config.in	Thu Dec 03 13:37:29 2015 -0800
 @@ -0,0 +1,145 @@
 +#!/bin/sh
 +
@@ -189,8 +225,9 @@
 +      echo $libdirs
 +fi      
 +
---- nss-3.17.1/nss/config/nss.pc.in
-+++ nss-3.17.1/nss/config/nss.pc.in
+diff -r 190fb1c96de8 -r ae04a35be3ac config/nss.pc.in
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/config/nss.pc.in	Thu Dec 03 13:37:29 2015 -0800
 @@ -0,0 +1,12 @@
 +prefix=@prefix@
 +exec_prefix=@exec_prefix@
@@ -204,38 +241,12 @@
 +Libs: -L${libdir} -lssl3 -lsmime3 -lnss3 -lnssutil3
 +Cflags: -I${includedir}
 +
---- nss-3.17.1/nss/Makefile
-+++ nss-3.17.1/nss/Makefile
-@@ -44,7 +44,7 @@
- # (7) Execute "local" rules. (OPTIONAL).                              #
- #######################################################################
- 
--nss_build_all: build_nspr all
-+nss_build_all: all
- 
- nss_clean_all: clobber_nspr clobber
- 
-@@ -109,12 +109,6 @@
- 	--with-dist-prefix='$(NSPR_PREFIX)' \
- 	--with-dist-includedir='$(NSPR_PREFIX)/include'
- 
--build_nspr: $(NSPR_CONFIG_STATUS)
--	$(MAKE) -C $(CORE_DEPTH)/../nspr/$(OBJDIR_NAME)
--
--clobber_nspr: $(NSPR_CONFIG_STATUS)
--	$(MAKE) -C $(CORE_DEPTH)/../nspr/$(OBJDIR_NAME) clobber
--
- build_docs:
- 	$(MAKE) -C $(CORE_DEPTH)/doc
- 
---- nss-3.17.1/nss/manifest.mn
-+++ nss-3.17.1/nss/manifest.mn
-@@ -10,7 +10,7 @@
+diff -r 190fb1c96de8 -r ae04a35be3ac manifest.mn
+--- a/manifest.mn	Thu Dec 03 13:27:07 2015 -0800
++++ b/manifest.mn	Thu Dec 03 13:37:29 2015 -0800
+@@ -10,4 +10,4 @@
  
  RELEASE = nss
  
--DIRS = coreconf lib cmd
-+DIRS = coreconf lib cmd config
- 
- ifdef NSS_BUILD_GTESTS
- DIRS += external_tests
+-DIRS = coreconf lib cmd external_tests
++DIRS = coreconf lib cmd config external_tests

@@ -20,11 +20,11 @@ in
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "libxml2-${version}";
-  version = "2.9.2";
+  version = "2.9.3";
 
   src = fetchurl {
     url = "http://xmlsoft.org/sources/${name}.tar.gz";
-    sha256 = "1g6mf03xcabmk5ing1lwqmasr803616gb2xhn7pll10x2l5w6y2i";
+    sha256 = "0bd17g6znn2r98gzpjppsqjg33iraky4px923j3k8kdl8qgy7sad";
   };
 
   buildInputs = [ optIcu optPython optReadline optZlib optXz ];

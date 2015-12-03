@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig
+{ stdenv, fetchurl, pkgconfig, perl
 
 # Optional Dependencies
 , zlib ? null, openssl ? null, libssh2 ? null, libnghttp2 ? null, c-ares ? null
@@ -29,15 +29,15 @@ let
 in
 stdenv.mkDerivation rec {
   name = "curl${nameSuffix}-${version}";
-  version = "7.45.0";
+  version = "7.46.0";
 
   src = fetchurl {
     url = "http://curl.haxx.se/download/curl-${version}.tar.bz2";
-    sha256 = "1slq5c0v9wa8hajgimhkxhvsrd07jmih8sa3gjsl597qp5k4w5b5";
+    sha256 = "1bcm646jgq70mpkwa6n6skff9fzbb4y4liqvzaq6sjzdv36jdmxp";
   };
 
   # Use pkgconfig only when necessary
-  nativeBuildInputs = [ pkgconfig ];
+  nativeBuildInputs = [ pkgconfig perl ];
   propagatedBuildInputs = [
     optZlib optOpenssl optLibssh2 optLibnghttp2 optC-ares
     optGss optRtmpdump optOpenldap optLibidn
@@ -75,10 +75,13 @@ stdenv.mkDerivation rec {
     (mkWith   (optOpenssl != null)    "ssl"               null)
     (mkWith   false                   "gnutls"            null)
     (mkWith   false                   "polarssl"          null)
+    (mkWith   false                   "mbedtls"           null)
     (mkWith   false                   "cyassl"            null)
     (mkWith   false                   "nss"               null)
     (mkWith   false                   "axtls"             null)
+    (mkWith   false                   "libpsl"            null)
     (mkWith   false                   "libmetalink"       null)
+    #(mkWith   false                   "zsh-functions-dir" null)
     (mkWith   (optLibssh2 != null)    "libssh2"           null)
     (mkWith   (optRtmpdump!= null)    "librtmp"           null)
     (mkEnable false                   "versioned-symbols" null)

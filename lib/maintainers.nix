@@ -182,12 +182,14 @@
   malyn = "Michael Alyn Miller <malyn@strangeGizmo.com>";
   manveru = "Michael Fellinger <m.fellinger@gmail.com>";
   marcweber = "Marc Weber <marco-oweber@gmx.de>";
+  markWot = "Markus Wotringer <markus@wotringer.de";
   maurer = "Matthew Maurer <matthew.r.maurer+nix@gmail.com>";
   matejc = "Matej Cotman <cotman.matej@gmail.com>";
   mathnerd314 = "Mathnerd314 <mathnerd314.gph+hs@gmail.com>";
   matthiasbeyer = "Matthias Beyer <mail@beyermatthias.de>";
   mbakke = "Marius Bakke <ymse@tuta.io>";
   mbe = "Brandon Edens <brandonedens@gmail.com>";
+  mcmtroffaes = "Matthias C. M. Troffaes <matthias.troffaes@gmail.com>";
   meditans = "Carlo Nucera <meditans@gmail.com>";
   meisternu = "Matt Miemiec <meister@krutt.org>";
   michelk = "Michel Kuhlmann <michel@kuhlmanns.info>";
@@ -219,6 +221,7 @@
   page = "Carles Pagès <page@cubata.homelinux.net>";
   paholg = "Paho Lurie-Gregg <paho@paholg.com>";
   pakhfn = "Fedor Pakhomov <pakhfn@gmail.com>";
+  palo = "Ingolf Wanger <palipalo9@googlemail.com>";
   pashev = "Igor Pashev <pashev.igor@gmail.com>";
   pesterhazy = "Paulus Esterhazy <pesterhazy@gmail.com>";
   phausmann = "Philipp Hausmann <nix@314.ch>";

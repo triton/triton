@@ -520,6 +520,8 @@ let
 
   airfield = callPackage ../tools/networking/airfield { };
 
+  aj-snapshot  = callPackage ../applications/audio/aj-snapshot { };
+
   analog = callPackage ../tools/admin/analog {};
 
   apktool = callPackage ../development/tools/apktool {
@@ -2575,7 +2577,14 @@ let
 
   otpw = callPackage ../os-specific/linux/otpw { };
 
-  owncloud = callPackage ../servers/owncloud { };
+  owncloud = owncloud70;
+
+  inherit (callPackages ../servers/owncloud { })
+    owncloud705
+    owncloud70
+    owncloud80
+    owncloud81
+    owncloud82;
 
   owncloudclient = callPackage ../applications/networking/owncloud-client { };
 
@@ -2826,6 +2835,8 @@ let
 
   quilt = callPackage ../development/tools/quilt { };
 
+  radamsa = callPackage ../tools/security/radamsa { };
+
   radvd = callPackage ../tools/networking/radvd { };
 
   ranger = callPackage ../applications/misc/ranger { };
@@ -3029,7 +3040,7 @@ let
 
   smbnetfs = callPackage ../tools/filesystems/smbnetfs {};
 
-  snabb = callPackage ../tools/networking/snabb { } ;
+  snabbswitch = callPackage ../tools/networking/snabbswitch { } ;
 
   sng = callPackage ../tools/graphics/sng {
     libpng = libpng12;
@@ -3369,6 +3380,8 @@ let
 
   vtun = callPackage ../tools/networking/vtun { };
 
+  weather = callPackage ../applications/misc/weather { };
+
   wal_e = callPackage ../tools/backup/wal-e { };
 
   watchman = callPackage ../development/tools/watchman { };
@@ -3398,8 +3411,6 @@ let
   rcm = callPackage ../tools/misc/rcm {};
 
   tftp-hpa = callPackage ../tools/networking/tftp-hpa {};
-
-  tidy-html5 = callPackage ../tools/text/tidy-html5 { };
 
   tigervnc = callPackage ../tools/admin/tigervnc {
     fontDirectories = [ xorg.fontadobe75dpi xorg.fontmiscmisc xorg.fontcursormisc
@@ -4126,6 +4137,10 @@ let
   };
 
   icedtea_web = icedtea8_web;
+
+  idrisPackages = callPackage ../development/idris-modules {
+    inherit (haskellPackages) idris;
+  };
 
   ikarus = callPackage ../development/compilers/ikarus { };
 
@@ -4874,7 +4889,7 @@ let
   tinycc = callPackage ../development/compilers/tinycc { };
 
   trv = callPackage ../development/tools/misc/trv {
-   inherit (ocamlPackages_4_02) findlib camlp4 core async async_unix 
+   inherit (ocamlPackages_4_02) findlib camlp4 core async async_unix
      async_extra sexplib async_shell core_extended async_find cohttp uri;
     ocaml = ocaml_4_02;
   };
@@ -5738,6 +5753,8 @@ let
   maven3 = callPackage ../development/tools/build-managers/apache-maven { };
 
   mk = callPackage ../development/tools/build-managers/mk { };
+
+  multi-ghc-travis = callPackage ../development/tools/haskell/multi-ghc-travis { };
 
   neoload = callPackage ../development/tools/neoload {
     licenseAccepted = (config.neoload.accept_license or false);
@@ -6753,6 +6770,10 @@ let
 
   isocodes = callPackage ../development/libraries/iso-codes { };
 
+  ispc = callPackage ../development/compilers/ispc {
+    llvmPackages = llvmPackages_37;
+  };
+
   itk = callPackage ../development/libraries/itk { };
 
   jasper = callPackage ../development/libraries/jasper { };
@@ -6779,6 +6800,8 @@ let
   json_c = callPackage ../development/libraries/json-c { };
 
   jsoncpp = callPackage ../development/libraries/jsoncpp { };
+
+  jsonnet = callPackage ../development/compilers/jsonnet { };
 
   libjson = callPackage ../development/libraries/libjson { };
 
@@ -7969,6 +7992,8 @@ let
 
   boringssl = callPackage ../development/libraries/boringssl { };
 
+  wolfssl = callPackage ../development/libraries/wolfssl { };
+
   openssl = callPackage ../development/libraries/openssl {
     fetchurl = fetchurlBoot;
     cryptodevHeaders = linuxPackages.cryptodev.override {
@@ -8267,6 +8292,8 @@ let
   rubberband = callPackage ../development/libraries/rubberband {
     inherit (vamp) vampSDK;
   };
+  
+  sad = callPackage ../applications/science/logic/sad { };
 
   sbc = callPackage ../development/libraries/sbc { };
 
@@ -8997,7 +9024,7 @@ let
 
   pyGtkGlade = pythonPackages.pyGtkGlade;
 
-  pylint = callPackage ../development/python-modules/pylint { };
+  pylint = pythonPackages.pylint;
 
   pyopenssl = pythonPackages.pyopenssl;
 
@@ -10724,6 +10751,8 @@ let
 
   dina-font = callPackage ../data/fonts/dina { };
 
+  dina-font-pcf = callPackage ../data/fonts/dina-pcf { };
+
   docbook5 = callPackage ../data/sgml+xml/schemas/docbook-5.0 { };
 
   docbook_sgml_dtd_31 = callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/3.1.nix { };
@@ -10881,6 +10910,8 @@ let
   shared_desktop_ontologies = callPackage ../data/misc/shared-desktop-ontologies { };
 
   signwriting = callPackage ../data/fonts/signwriting { };
+
+  soundfont-fluid = callPackage ../data/soundfonts/fluid { };
 
   stdmanpages = callPackage ../data/documentation/std-man-pages { };
 
@@ -13063,6 +13094,10 @@ let
 
   stella = callPackage ../misc/emulators/stella { };
 
+  statsd = callPackage ../tools/networking/statsd {
+    nodejs = nodejs-0_10;
+  };
+
   linuxstopmotion = callPackage ../applications/video/linuxstopmotion { };
 
   sweethome3d = recurseIntoAttrs (  (callPackage ../applications/misc/sweethome3d { })
@@ -13194,8 +13229,8 @@ let
 
   symlinks = callPackage ../tools/system/symlinks { };
 
-  # syncthing is pinned to go1.4 until https://github.com/golang/go/issues/12301 is resolved
-  syncthing = go14Packages.syncthing.bin // { outputs = [ "bin" ]; };
+  syncthing = go15Packages.syncthing.bin // { outputs = [ "bin" ]; };
+  syncthing011 = go15Packages.syncthing011.bin // { outputs = [ "bin" ]; };
 
   # linux only by now
   synergy = callPackage ../applications/misc/synergy { };
@@ -13332,6 +13367,8 @@ let
   tribler = callPackage ../applications/networking/p2p/tribler { };
 
   github-release = callPackage ../development/tools/github/github-release { };
+
+  tudu = callPackage ../applications/office/tudu { };
 
   tuxguitar = callPackage ../applications/editors/music/tuxguitar { };
 
@@ -15106,10 +15143,7 @@ let
 
   simgrid = callPackage ../applications/science/misc/simgrid { };
 
-  spyder = callPackage ../applications/science/spyder {
-    inherit (pythonPackages) pyflakes rope sphinx numpy scipy matplotlib; # recommended
-    inherit (pythonPackages) ipython pep8; # optional
-  };
+  spyder = pythonPackages.spyder;
 
   stellarium = callPackage ../applications/science/astronomy/stellarium { };
 
@@ -15201,7 +15235,11 @@ let
 
   fakenes = callPackage ../misc/emulators/fakenes { };
 
-  faust = callPackage ../applications/audio/faust { };
+  faust = faust2;
+
+  faust1 = callPackage ../applications/audio/faust/faust1.nix { };
+
+  faust2 = callPackage ../applications/audio/faust { };
 
   faust2alqt = callPackage ../applications/audio/faust/faust2alqt.nix { };
 
@@ -15607,6 +15645,10 @@ let
     bluez = pkgs.bluez5.override {
       enableWiimote = true;
     };
+  };
+
+  yabause = callPackage ../misc/emulators/yabause {
+    qt = qt4;
   };
 
   yafc = callPackage ../applications/networking/yafc { };

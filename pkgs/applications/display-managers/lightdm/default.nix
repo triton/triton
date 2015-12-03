@@ -6,14 +6,14 @@
 
 let
   ver_branch = "1.16";
-  version = "1.16.5";
+  version = "1.16.6";
 in
 stdenv.mkDerivation rec {
   name = "lightdm-${version}";
 
   src = fetchurl {
     url = "${meta.homepage}/${ver_branch}/${version}/+download/${name}.tar.xz";
-    sha256 = "1qb3gvwdm2rymwn8rb1qc4gyam226xmvy2fq5rvmrcmgxblmi34c";
+    sha256 = "0v1ay8xvk9v9fx0g8kcy593dxxma60y6cl9ax591yg7shs4d7xgq";
   };
 
   patches = [ ./fix-paths.patch ];

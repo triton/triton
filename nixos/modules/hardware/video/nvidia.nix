@@ -12,10 +12,12 @@ let
   # ‘hardware.video.nvidia.package’ for overriding the default NVIDIA
   # driver.
   nvidiaForKernel = kernelPackages:
-    if elem "nvidia" drivers then
-        kernelPackages.nvidia_x11
-    else if elem "nvidiaLegacy173" drivers then
-      kernelPackages.nvidia_x11_legacy173
+    if elem "nvidiaLong" drivers then
+      kernelPackages.nvidia_x11_long
+    else if elem "nvidiaShort" drivers then
+      kernelPackages.nvidia_x11_short
+    else if elem "nvidiaTesting" drivers then
+      kernelPackages.nvidia_x11_testing
     else if elem "nvidiaLegacy304" drivers then
       kernelPackages.nvidia_x11_legacy304
     else if elem "nvidiaLegacy340" drivers then

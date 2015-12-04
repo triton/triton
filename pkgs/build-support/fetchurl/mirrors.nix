@@ -46,6 +46,7 @@ rec {
 
   # GnuPG
   gnupg = [
+    https://gnupg.org/ftp/gcrypt/
     ftp://ftp.gnupg.org/gcrypt/
   ];
 

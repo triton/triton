@@ -14,17 +14,13 @@ stdenv.mkDerivation rec {
       "http://www.openssl.org/source/${name}.tar.gz"
       "http://openssl.linux-mirror.org/source/${name}.tar.gz"
     ];
-    sha256 = "eee11def03647aa2267434a779608af6fca645023c9a194ddb82f14426835537";
+    sha256 = "e23ccafdb75cfcde782da0151731aa2185195ac745eea3846133f2e05c0e0bff";
   };
 
   outputs = [ "out" "man" ];
 
   nativeBuildInputs = [ perl ];
   buildInputs = stdenv.lib.optional withCryptodev cryptodevHeaders;
-
-  postPatch = ''
-    sed -i 's,`cd ./util; ./pod2mantest $(PERL)`,pod2man,g' Makefile.org
-  '';
 
   # On x86_64-darwin, "./config" misdetects the system as
   # "darwin-i386-cc".  So specify the system type explicitly.

@@ -1382,11 +1382,11 @@ let
   };
 
   rcrowley.go-metrics = buildFromGitHub {
-    rev = "1ce93efbc8f9c568886b2ef85ce305b2217b3de3";
-    date = "2015-08-22";
+    rev = "7839c01b09d2b1d7068034e5fe6e423f6ac5be22";
+    date = "2015-11-29";
     owner = "rcrowley";
     repo = "go-metrics";
-    sha256 = "06gg72krlmd0z3zdq6s716blrga95pyj8dc2f2psfbknbkyrkfqa";
+    sha256 = "1lx8zr9yl29h9agph3vwrx99398x3qi35fy1g0ys02ifxbxikx2i";
     propagatedBuildInputs = [ stathat ];
   };
 
@@ -2700,6 +2700,7 @@ let
   };
 
   qart = buildFromGitHub {
+    date   = "2014-04-19";
     rev    = "ccb109cf25f0cd24474da73b9fee4e7a3e8a8ce0";
     owner  = "vitrun";
     repo   = "qart";
@@ -2879,16 +2880,12 @@ let
     buildInputs = [ flagfile ];
   };
 
-  stathat = buildGoPackage rec {
+  stathat = buildFromGitHub {
+    date = "2013-03-14";
     rev = "01d012b9ee2ecc107cb28b6dd32d9019ed5c1d77";
-    name = "stathat-${stdenv.lib.strings.substring 0 7 rev}";
-    goPackagePath = "github.com/stathat/go";
-    src = fetchFromGitHub {
-      inherit rev;
-      owner = "stathat";
-      repo = "go";
-      sha256 = "0mrn70wjfcs4rfkmga3hbfqmbjk33skcsc8pyqxp02bzpwdpc4bi";
-    };
+    owner = "stathat";
+    repo = "go";
+    sha256 = "0mrn70wjfcs4rfkmga3hbfqmbjk33skcsc8pyqxp02bzpwdpc4bi";
   };
 
   statos = buildFromGitHub {

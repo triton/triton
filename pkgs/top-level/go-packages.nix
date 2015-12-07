@@ -19,11 +19,11 @@ let
   ## OFFICIAL GO PACKAGES
 
   crypto = buildFromGitHub {
-    rev      = "575fdbe86e5dd89229707ebec0575ce7d088a4a6";
-    date     = "2015-08-29";
+    rev      = "7b85b097bf7527677d54d3220065e966a0e3b613";
+    date     = "2015-11-30";
     owner    = "golang";
     repo     = "crypto";
-    sha256   = "1kgv1mkw9y404pk3lcwbs0vgl133mwyp294i18jg9hp10s5d56xa";
+    sha256   = "0k21nnf0nszgbvml74sn68wc6p77pxbnfpi04dgarg6byd5rvxii";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -48,21 +48,21 @@ let
   };
 
   image = buildFromGitHub {
-    rev = "8ab1ac6834edd43d91cbe24272897a87ce7e835e";
-    date = "2015-08-23";
+    rev = "baddd3465a05d84a6d8d3507547a91cb188c81ea";
+    date = "2015-09-16";
     owner = "golang";
     repo = "image";
-    sha256 = "1ckr7yh5dx2kbvp9mis7i090ss9qcz46sazrj9f2hw4jj5g3y7dr";
+    sha256 = "0rdknh8x74ds42rdqwhix3hzm954r93xnm26qiykr7mhj9wvn098";
     goPackagePath = "golang.org/x/image";
     goPackageAliases = [ "github.com/golang/image" ];
   };
 
   net = buildFromGitHub {
-    rev    = "62ac18b461605b4be188bbc7300e9aa2bc836cd4";
-    date   = "2015-08-29";
+    rev    = "d5cd7348bfebdf7dbb6dbb18fa488525f9024293";
+    date   = "2015-12-03";
     owner  = "golang";
     repo   = "net";
-    sha256 = "0lwwvbbwbf3yshxkfhn6z20gd45dkvnmw2ms36diiy34krgy402p";
+    sha256 = "03d3xnjr5l3xggrsxm8w170phgyqiqajp8k3xv6j4x4ajlar3i54";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -73,11 +73,11 @@ let
   };
 
   oauth2 = buildFromGitHub {
-    rev = "397fe7649477ff2e8ced8fc0b2696f781e53745a";
-    date = "2015-06-23";
+    rev = "2baa8a1b9338cf13d9eeb27696d761155fa480be";
+    date = "2015-12-04";
     owner = "golang";
     repo = "oauth2";
-    sha256 = "0fza0l7iwh6llkq2yzqn7dxi138vab0da64lnghfj1p71fprjzn8";
+    sha256 = "1b34m7k4q667vswjgr53sgg4nhn4cbnbp0yya55c2v2pr5r3qym5";
     goPackagePath = "golang.org/x/oauth2";
     goPackageAliases = [ "github.com/golang/oauth2" ];
     propagatedBuildInputs = [ net gcloud-golang-compute-metadata ];
@@ -85,11 +85,11 @@ let
 
 
   protobuf = buildFromGitHub {
-    rev = "59b73b37c1e45995477aae817e4a653c89a858db";
-    date = "2015-08-23";
+    rev = "68415e7123da32b07eab49c96d2c4d6158360e9b";
+    date = "2015-12-06";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "1dx22jvhvj34ivpr7gw01fncg9yyx35mbpal4mpgnqka7ajmgjsa";
+    sha256 = "0gi2r9n7fbr7vz0rkvngnrc1y0bbk1zyqlph023s76w8d98ykxx2";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [ "code.google.com/p/goprotobuf" ];
   };
@@ -104,11 +104,11 @@ let
   };
 
   sys = buildFromGitHub {
-    rev    = "d9157a9621b69ad1d8d77a1933590c416593f24f";
-    date   = "2015-02-01";
+    rev    = "2bacc619e34d59719d9ed86f0e04e8261aed3409";
+    date   = "2015-11-24";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "1asdbp7rj1j1m1aar1a022wpcwbml6zih6cpbxaw7b2m8v8is931";
+    sha256 = "1wz735axs221jcdr7qbmm72vkkhngsl2zcaz0d4n2f721cbhb1bq";
     goPackagePath = "golang.org/x/sys";
     goPackageAliases = [
       "github.com/golang/sys"
@@ -116,21 +116,21 @@ let
   };
 
   text = buildFromGitHub {
-    rev = "5eb8d4684c4796dd36c74f6452f2c0fa6c79597e";
-    date = "2015-08-27";
+    rev = "95315fc624fc42f9dd1ac02d056aaeb87e090cd7";
+    date = "2015-12-07";
     owner = "golang";
     repo = "text";
-    sha256 = "1cjwm2pv42dbfqc6ylr7jmma902zg4gng5aarqrbjf1k2nf2vs14";
+    sha256 = "1ya7d2m2fgcl4xx7fpr701slw0031bxs3xcnjblfv3c7ljkdl70a";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
   };
 
   tools = buildFromGitHub {
-    rev = "b48dc8da98ae78c3d11f220e7d327304c84e623a";
-    date = "2015-08-24";
+    rev = "c0008c5889c0d5091cdfefd2bfb08bff96527879";
+    date = "2015-12-04";
     owner = "golang";
     repo = "tools";
-    sha256 = "187p3jjxrw2qjnzqwwrq7f9w10zh6vcnwnfl3q7ms8rbiffpjy5c";
+    sha256 = "0k07293bbmsbras5ffm5dlch0qqz7xk6rxk7r3652g51v9qyg5gs";
     goPackagePath = "golang.org/x/tools";
     goPackageAliases = [ "code.google.com/p/go.tools" ];
 

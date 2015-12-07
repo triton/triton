@@ -16,10 +16,10 @@ stdenv.mkDerivation rec {
   name = "systemd-${version}";
 
   src = fetchFromGitHub {
-    owner = "wkennington";
+    owner = "NixOS";
     repo = "systemd";
-    rev = "9e5e6198b5d3259b66e71d9cd56903657f2fcb29";
-    sha256 = "1c20rxrkh58bnj974hk9y57yiqq6jr8ynpfiy3v6sf4dk9n65h45";
+    rev = "17c30663f79499ad0163c7ffe2c79e5c28525a6f";
+    sha256 = "0jyqwqyh7l2qp7k4h83gzzp9bgijz0bx02jhd0063jcl1s2amlnh";
   };
 
   outputs = [ "out" "man" "doc" ];
@@ -48,13 +48,13 @@ stdenv.mkDerivation rec {
       "--enable-compat-libs" # get rid of this eventually
       "--disable-tests"
 
-      "--disable-hostnamed"
+      "--enable-hostnamed"
       "--enable-networkd"
       "--disable-sysusers"
-      "--disable-timedated"
+      "--enable-timedated"
       "--enable-timesyncd"
       "--disable-firstboot"
-      "--disable-localed"
+      "--enable-localed"
       "--enable-resolved"
       "--disable-split-usr"
       "--disable-libcurl"

@@ -18,6 +18,16 @@ let
 
   ## OFFICIAL GO PACKAGES
 
+  appengine = buildFromGitHub {
+    rev = "7f9f17f358c21d90f402980f83776898c53cb377";
+    date = "2015-12-07";
+    owner = "golang";
+    repo = "appengine";
+    sha256 = "0narqlivzvwlwxi96aqyxpvw6zbzy19cjqiglp12rf130x46bydg";
+    goPackagePath = "google.golang.org/appengine";
+    propagatedBuildInputs = [ protobuf net ];
+  };
+
   crypto = buildFromGitHub {
     rev      = "7b85b097bf7527677d54d3220065e966a0e3b613";
     date     = "2015-11-30";
@@ -148,7 +158,7 @@ let
       + stdenv.lib.concatStringsSep "\\|" ([ "testdata" ] ++ stdenv.lib.optionals (stdenv.lib.versionAtLeast go.meta.branch "1.5") [ "vet" "cover" ])
       + "\\)";
 
-    buildInputs = [ net ];
+    buildInputs = [ appengine net ];
 
     # Do not copy this without a good reason for enabling
     # In this case tools is heavily coupled with go itself and embeds paths.
@@ -1335,15 +1345,6 @@ let
     repo = "go-metrics";
     sha256 = "06gg72krlmd0z3zdq6s716blrga95pyj8dc2f2psfbknbkyrkfqa";
     propagatedBuildInputs = [ stathat ];
-  };
-
-  appengine = buildFromGitHub {
-    rev = "72f4367c4f14a20a98dcc8b762953b40788407be";
-    owner = "golang";
-    repo = "appengine";
-    sha256 = "1phjkb0f0xp08db3irbf5wzdsxzsddsig5wv70wvmnr44ijllh4f";
-    goPackagePath = "google.golang.org/appengine";
-    buildInputs = [ protobuf net ];
   };
 
   armon.go-metrics = buildGoPackage rec {

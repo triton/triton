@@ -2747,7 +2747,8 @@ let
     owner  = "syncthing";
     repo   = "relaysrv";
     sha256 = "03p5aggvbhqkhhzd3lzhakky7v4v0rn7qna73ikh10hnwvmp4fg6";
-    buildInputs = [ xdr syncthing-protocol ratelimit syncthing-lib ];
+    buildInputs = [ syncthing-lib du ratelimit net ];
+    excludedPackages = "testutil";
   };
 
   reflectwalk = buildFromGitHub {
@@ -2971,8 +2972,16 @@ let
 
   syncthing-lib = buildFromGitHub {
     inherit (syncthing) rev owner repo sha256;
-    subPackages = [ "lib/sync" "lib/protocol" ];
-    propagatedBuildInputs = [ go-lz4 luhn xdr text suture ];
+    subPackages = [
+      "lib/sync"
+      "lib/protocol"
+      "lib/osutil"
+      "lib/tlsutil"
+      "lib/dialer"
+      "lib/relay/client"
+      "lib/relay/protocol"
+    ];
+    propagatedBuildInputs = [ go-lz4 luhn xdr text suture du net ];
   };
 
   syncthing-protocol011 = buildFromGitHub {

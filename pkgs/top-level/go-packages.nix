@@ -376,10 +376,10 @@ let
   };
 
   consul = buildFromGitHub {
-    rev = "v0.6.0-rc2";
+    rev = "v0.6.0";
     owner = "hashicorp";
     repo = "consul";
-    sha256 = "129va85sg6k56nvf4ff5a3f34wrfvqwjzim4lfilcmj65b4shx2a";
+    sha256 = "0m0ajq6sbfax2nqfwjjqdv12whiblhw75jkpzg8i4fl85i2hridm";
 
     buildInputs = [
       datadog-go circbuf armon.go-metrics go-radix bolt go-dockerclient errwrap

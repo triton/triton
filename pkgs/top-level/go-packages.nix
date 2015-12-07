@@ -243,6 +243,22 @@ let
     '';
   };
 
+  b = buildFromGitHub {
+    date   = "2015-10-27";
+    rev    = "01b13d79526a9ce9aa2c6e11d6bd4540205e4c03";
+    owner  = "cznic";
+    repo   = "b";
+    sha256 = "1xgjjpmy7n7hnx92f85i3xympf7cywm5d53zr5s1n4c28h2j719y";
+  };
+
+  bigfft = buildFromGitHub {
+    date = "2013-09-13";
+    rev = "a8e77ddfb93284b9d58881f597c820a2875af336";
+    owner = "remyoudompheng";
+    repo = "bigfft";
+    sha256 = "1h1jwfz5hbsdrf94h0x1h0dajcbklhgf58f5m0kphg4mzdaviq26";
+  };
+
   binarydist = buildFromGitHub {
     rev    = "9955b0ab8708602d411341e55fffd7e0700f86bd";
     owner  = "kr";
@@ -263,6 +279,14 @@ let
     owner  = "vmihailenco";
     repo   = "bufio";
     sha256 = "0x46qnf2f15v7m0j2dcb16raxjamk5rdc7hqwgyxfr1sqmmw3983";
+  };
+
+  bufs = buildFromGitHub {
+    date   = "2014-08-18";
+    rev    = "3dcccbd7064a1689f9c093a988ea11ac00e21f51";
+    owner  = "cznic";
+    repo   = "bufs";
+    sha256 = "0w75wc15k0gayvj6fhnqgap1y2rhq51zvslhp3v4y1vcb11mbdw9";
   };
 
   cascadia = buildGoPackage rec {
@@ -496,6 +520,15 @@ let
     '';
   };
 
+  discosrv = buildFromGitHub {
+    date = "2015-12-01";
+    rev = "d770b46fe26d15155baad54a8023fe7eb58257cc";
+    owner = "syncthing";
+    repo = "discosrv";
+    sha256 = "1916sg4bz9m5s80x21772dln74j2dwvzifrfcfb1s25fnycqz0ai";
+    buildInputs = [ ql groupcache pq ratelimit syncthing-lib ];
+  };
+
   dns = buildFromGitHub {
     rev    = "75e6e86cc601825c5dbcd4e0c209eab180997cd7";
     date   = "2015-12-05";
@@ -632,6 +665,24 @@ let
     repo   = "etcd";
     sha256 = "0prkzmdipx9qxln4nw80w5z4ra90wryzl3jmhs6bkcy93ipy1ws7";
     subPackages = [ "client" "pkg/pathutil" "pkg/transport" "pkg/types" ];
+  };
+
+  exp = buildFromGitHub {
+    date   = "2015-12-07";
+    rev    = "c21cce1fce3e6e5bc84854aa3d02a808de44229b";
+    owner  = "cznic";
+    repo   = "exp";
+    sha256 = "1v9j1klhs8y2459y38mghbhnyhx4b8akf9khgi14xw5ydrrxljpk";
+    propagatedBuildInputs = [ bufs fileutil mathutil sortutil zappy ];
+  };
+
+  fileutil = buildFromGitHub {
+    date   = "2015-07-08";
+    rev    = "1c9c88fbf552b3737c7b97e1f243860359687976";
+    owner  = "cznic";
+    repo   = "fileutil";
+    sha256 = "1imk4wjgfhyb4m8dm8qbm5lz263lyb27602v3mx8j3dzqjpagg8g";
+    buildInputs = [ mathutil ];
   };
 
   fsnotify.v0 = buildGoPackage rec {
@@ -1314,6 +1365,7 @@ let
   };
 
   go-lz4 = buildFromGitHub {
+    date   = "2015-08-20";
     rev    = "74ddf82598bc4745b965729e9c6a463bedd33049";
     owner  = "bkaradzic";
     repo   = "go-lz4";
@@ -1557,6 +1609,7 @@ let
   };
 
   groupcache = buildFromGitHub {
+    date   = "2015-01-25";
     rev    = "604ed5785183e59ae2789449d89e73f3a2a77987";
     owner  = "golang";
     repo   = "groupcache";
@@ -1741,6 +1794,14 @@ let
     sha256 = "05ihxpmp6x3hw71xzvjdgxnyvyx2s4lf23xqnfjj16s4j4qidc48";
   };
 
+  lock = buildFromGitHub {
+    date = "2014-07-28";
+    rev = "ae27720f340952636b826119b58130b9c1a847a0";
+    owner = "camlistore";
+    repo = "lock";
+    sha256 = "0gw6bw3q1b5f0p85w5dl28yp1c8y9jf5f0c87gqhaj8v78m96jvd";
+  };
+
   odeke-em.log = buildFromGitHub {
     rev    = "cad53c4565a0b0304577bd13f3862350bdc5f907";
     owner  = "odeke-em";
@@ -1822,6 +1883,15 @@ let
     postInstall = ''
       cp go/src/$goPackagePath/scripts/lxd-images $bin/bin
     '';
+  };
+
+  mathutil = buildFromGitHub {
+    date = "2015-06-05";
+    rev = "a804f0f2d8521e22d6adabf02cbec61dc1f9dbd2";
+    owner = "cznic";
+    repo = "mathutil";
+    sha256 = "1d8ms51gmp76qavbbrs384l0a5fmq8cn4wxwbx2pbs5hckzmpjkv";
+    buildInputs = [ bigfft ];
   };
 
   manners = buildFromGitHub {
@@ -2636,6 +2706,15 @@ let
     sha256 = "0bhp768b8ha6f25dmhwn9q8m2lkbn4qnjf8n7pizk25jn5zjdvc8";
   };
 
+  ql = buildFromGitHub {
+    date   = "2015-12-07";
+    rev    = "bff93da76a7b31a59eb1df42c0f278169029a9b2";
+    owner  = "cznic";
+    repo   = "ql";
+    sha256 = "07641a46sfcipqsy1yy1h1b44f6l27lsq3b1rgjdnw5r07y6xika";
+    propagatedBuildInputs = [ lock b exp strutil ];
+  };
+
   raft = buildFromGitHub {
     date = "2015-11-17";
     rev = "d136cd15dfb7876fd7c89cad1995bc4f19ceb294";
@@ -2655,11 +2734,11 @@ let
   };
 
   ratelimit = buildFromGitHub {
-    rev    = "772f5c38e468398c4511514f4f6aa9a4185bc0a0";
-    date   = "2015-06-19";
+    rev    = "77ed1c8a01217656d2080ad51981f6e99adaa177";
+    date   = "2015-11-25";
     owner  = "juju";
     repo   = "ratelimit";
-    sha256 = "02rs61ay6sq499lxxszjsrxp33m6zklds1xrmnr5fk73vpqfa28p";
+    sha256 = "1r7xdl3bpdzny4d05fpm229864ipghqwv5lplv5im5b4vhv9ryp7";
   };
 
   relaysrv = buildFromGitHub rec {
@@ -2783,6 +2862,14 @@ let
     propagatedBuildInputs = [ raw ];
   };
 
+  sortutil = buildFromGitHub {
+    date = "2015-06-17";
+    rev = "4c7342852e65c2088c981288f2c5610d10b9f7f4";
+    owner = "cznic";
+    repo = "sortutil";
+    sha256 = "1i46kdwnh8p54sp0jkybd3ayc599hdy37kvwqrxlg746flz5inyl";
+  };
+
   spacelog = buildFromGitHub {
     rev = "ae95ccc1eb0c8ce2496c43177430efd61930f7e4";
     owner = "spacemonkeygo";
@@ -2833,6 +2920,14 @@ let
     sha256 = "0s0161cyk57kv620rzdv10s70hz401db5wm7ggd1fs3xj8yahbw0";
   };
 
+  strutil = buildFromGitHub {
+    date = "2015-04-30";
+    rev = "1eb03e3cc9d345307a45ec82bd3016cde4bd4464";
+    owner = "cznic";
+    repo = "strutil";
+    sha256 = "0n4ib4ixpxh4fah145s2ikbzyqxbax8gj44081agg8jkzs74cnvm";
+  };
+
   suture = buildFromGitHub rec {
     version = "1.0.1";
     rev    = "v${version}";
@@ -2876,19 +2971,8 @@ let
 
   syncthing-lib = buildFromGitHub {
     inherit (syncthing) rev owner repo sha256;
-    subPackages = [ "lib/sync" ];
-    propagatedBuildInputs = syncthing.buildInputs;
-  };
-
-  syncthing-protocol = buildFromGitHub {
-    inherit (syncthing) rev owner repo sha256;
-    subPackages = [ "lib/protocol" ];
-    propagatedBuildInputs = [
-      go-lz4
-      logger
-      luhn
-      xdr
-      text ];
+    subPackages = [ "lib/sync" "lib/protocol" ];
+    propagatedBuildInputs = [ go-lz4 luhn xdr text suture ];
   };
 
   syncthing-protocol011 = buildFromGitHub {
@@ -3071,7 +3155,7 @@ let
 
   xdr = buildFromGitHub {
     rev    = "e467b5aeb65ca8516fb3925c84991bf1d7cc935e";
-    date   = "2015-04-08";
+    date   = "2015-11-24";
     owner  = "calmh";
     repo   = "xdr";
     sha256 = "1bi4b2xkjzcr0vq1wxz14i9943k71sj092dam0gdmr9yvdrg0nra";
@@ -3082,6 +3166,14 @@ let
     owner  = "odeke-em";
     repo   = "xon";
     sha256 = "07a7zj01d4a23xqp01m48jp2v5mw49islf4nbq2rj13sd5w4s6sc";
+  };
+
+  zappy = buildFromGitHub {
+    date = "2014-08-20";
+    rev = "47331054e4f96186e3ff772877c0443909368a45";
+    owner = "cznic";
+    repo = "zappy";
+    sha256 = "1p4v7gjpvz800ykz7i92i333xbahplbir21i2vrksb8zfw14db14";
   };
 
   ninefans = buildFromGitHub {

@@ -13256,6 +13256,8 @@ let
 
   syncthing = go15Packages.syncthing.bin // { outputs = [ "bin" ]; };
   syncthing011 = go15Packages.syncthing011.bin // { outputs = [ "bin" ]; };
+  discosrv = go15Packages.discosrv.bin // { outputs = [ "bin" ]; };
+  relaysrv = go15Packages.relaysrv.bin // { outputs = [ "bin" ]; };
 
   # linux only by now
   synergy = callPackage ../applications/misc/synergy { };

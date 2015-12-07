@@ -1,39 +1,38 @@
-{ stdenv, goPackages, ruby, bundlerEnv }:
+{ stdenv, fetchurl, goPackages, unzip }:
 
 let
-  # `sass` et al
-  gems = bundlerEnv {
-    name = "consul-ui-deps";
-    gemfile = ./Gemfile;
-    lockfile = ./Gemfile.lock;
-    gemset = ./gemset.nix;
-  };
+  version = stdenv.lib.replaceStrings ["v"] [""] goPackages.consul.rev;
 in
-
 stdenv.mkDerivation {
-  name = "consul-ui-${goPackages.consul.rev}";
+  name = "consul-ui-${version}";
 
-  src = goPackages.consul.src;
+  src = fetchurl {
+    url = "https://releases.hashicorp.com/consul/${version}/consul_${version}_web_ui.zip";
+    sha256 = "1c1fqg032h6c9hs2ih4ralrldgvxdl73679kavz2wjmva3pfgibk";
+  };
 
-  buildInputs = [ ruby gems ];
-
-  buildPhase = ''
-    # Build ui static files
-    cd ui
-    make dist
+  preUnpack = ''
+    mkdir -p tmp
+    cd tmp
   '';
 
+  sourceRoot = ".";
+
+  nativeBuildInputs = [ unzip ];
+
+  doConfigure = false;
+  doBuild = false;
+
   installPhase = ''
-    # Install ui static files
     mkdir -p $out
-    mv dist/* $out
+    cp -a * $out
   '';
 
   meta = with stdenv.lib; {
     homepage    = http://www.consul.io/;
     description = "A tool for service discovery, monitoring and configuration";
     maintainers = with maintainers; [ cstrahan wkennington ];
-    license     = licenses.mpl20 ;
+    license     = licenses.mpl20;
     platforms   = platforms.unix;
   };
 }

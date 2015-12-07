@@ -1594,6 +1594,15 @@ let
     sha256 = "08wkhvwcxglbq9h8bavrrg71f4jyrxxd37yfs9vic4nhwhh27j4p";
   };
 
+  hcl-old = buildFromGitHub {
+    date   = "2015-09-16";
+    rev    = "4de51957ef8d4aba6e285ddfc587633bbfc7c0e8";
+    owner  = "hashicorp";
+    repo   = "hcl";
+    sha256 = "14k4s4ygd4yjb6xvim3855wyhqdnnd5f29m8v7rc2rr137pi2nfw";
+    buildInputs = [ go-multierror ];
+  };
+
   hipchat-go = buildGoPackage rec {
     rev = "1dd13e154219c15e2611fe46adbb6bf65db419b7";
     name = "hipchat-go-${stdenv.lib.strings.substring 0 7 rev}";
@@ -2987,19 +2996,19 @@ let
     sha256 = "054bjcrq8q1jz9v3jm1pjjchjlxyh6j89cqzxa8jawdghf8cr8xp";
   };
 
-  vault = buildFromGitHub {
+  vault = buildFromGitHub rec {
     rev = "v0.4.0-rc2";
     owner = "hashicorp";
     repo = "vault";
     sha256 = "0gh12zx3i2kg6zyyy7785w2fqy7f4c93kcs9y0f76d146lwf85lg";
 
     buildInputs = [
-      armon.go-metrics go-radix govalidator aws-sdk-go etcd-client duo_api_golang
-      structs ini ldap mysql gocql snappy go-github go-querystring
-      hailocab.go-hostpool consul-api errwrap go-cleanhttp go-multierror
-      go-syslog golang-lru hcl logutils serf hashicorp.uuid go-jmespath osext pq cli
-      copystructure go-homedir mapstructure reflectwalk columnize go-zookeeper
-      ugorji.go crypto net oauth2 asn1-ber inf
+      armon.go-metrics go-radix govalidator aws-sdk-go etcd-client
+      duo_api_golang structs ini ldap mysql gocql snappy go-github
+      go-querystring hailocab.go-hostpool consul-api errwrap go-cleanhttp
+      go-multierror go-syslog golang-lru hcl-old logutils serf hashicorp.uuid
+      go-jmespath osext pq cli copystructure go-homedir mapstructure reflectwalk
+      columnize go-zookeeper ugorji.go crypto net oauth2 asn1-ber inf
     ];
   };
 

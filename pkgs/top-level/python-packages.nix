@@ -230,6 +230,21 @@ in modules // {
     };
   };
 
+  acme = buildPythonPackage rec {
+    inherit (pkgs.letsencrypt) src version;
+
+    name = "acme-${version}";
+
+    propagatedBuildInputs = with self; [
+      cryptography pyasn1 pyopenssl pyRFC3339 pytz requests2 six werkzeug mock
+      ndg-httpsclient
+    ];
+
+    buildInputs = with self; [ nose ];
+
+    sourceRoot = "letsencrypt-${version}/acme";
+  };
+
   actdiag = buildPythonPackage rec {
     name = "actdiag-0.5.3";
 
@@ -5074,6 +5089,27 @@ in modules // {
     };
   };
 
+  python-mapnik = buildPythonPackage {
+    name = "python-mapnik-fae6388";
+
+    src = pkgs.fetchgit {
+      url = https://github.com/mapnik/python-mapnik.git;
+      rev = "fae63881ed0945829e73f711d52740240b740936";
+      sha256 = "13i9zsy0dk9pa947vfq26a3nrn1ddknqliyb0ljcmi5w5x0z758k";
+    };
+
+    disabled = isPyPy;
+    doCheck = false; # doesn't find needed test data files
+    buildInputs = with pkgs; [ boost harfbuzz icu mapnik ];
+    propagatedBuildInputs = with self; [ pillow pycairo ];
+
+    meta = with stdenv.lib; {
+      description = "Python bindings for Mapnik";
+      homepage = http://mapnik.org;
+      license  = licenses.lgpl21;
+    };
+  };
+
   mwlib = buildPythonPackage rec {
     version = "0.15.15";
     name = "mwlib-${version}";
@@ -9834,6 +9870,24 @@ in modules // {
     };
   });
 
+  modestmaps = buildPythonPackage rec {
+    name = "ModestMaps-1.4.6";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/M/ModestMaps/${name}.tar.gz";
+      sha256 = "0vyi1m9q4pc34i6rq5agb4x3qicx5sjlbxwmxfk70k2l5mnbjca3";
+    };
+
+    disabled = !isPy27;
+    propagatedBuildInputs = with self; [ pillow ];
+
+    meta = {
+      description = "A library for building interactive maps";
+      homepage = http://modestmaps.com;
+      license = stdenv.lib.licenses.bsd3;
+    };
+  };
+
   moinmoin = buildPythonPackage (rec {
     name = "moinmoin-${ver}";
     disabled = isPy3k;
@@ -12552,7 +12606,7 @@ in modules // {
       (if isPy35 then null else html5lib)
       modules.sqlite3
       beautifulsoup4
-    ] ++ optional isDarwin pkgs.darwin.adv_cmds; # provides the locale command
+    ] ++ optional isDarwin pkgs.darwin.locale; # provides the locale command
 
     # For OSX, we need to add a dependency on libcxx, which provides
     # `complex.h` and other libraries that pandas depends on to build.
@@ -21758,6 +21812,8 @@ in modules // {
       sed -i -e "s|test_open_unix_connection_error|skip_test_open_unix_connection_error|" tests/test_streams.py
       sed -i -e "s|test_open_unix_connection_no_loop_ssl|skip_test_open_unix_connection_no_loop_ssl|" tests/test_streams.py
       sed -i -e "s|test_open_unix_connection|skip_test_open_unix_connection|" tests/test_streams.py
+      sed -i -e "s|test_read_pty_output|skip_test_read_pty_output|" tests/test_events.py
+      sed -i -e "s|test_write_pty|skip_test_write_pty|" tests/test_events.py
       sed -i -e "s|test_start_unix_server|skip_test_start_unix_server|" tests/test_streams.py
       sed -i -e "s|test_unix_sock_client_ops|skip_test_unix_sock_client_ops|" tests/test_events.py
       sed -i -e "s|test_unix_sock_client_ops|skip_test_unix_sock_client_ops|" tests/test_events.py

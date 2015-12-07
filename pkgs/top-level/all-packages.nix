@@ -657,6 +657,8 @@ let
 
   azureus = callPackage ../tools/networking/p2p/azureus { };
 
+  backup = callPackage ../tools/backup/backup { };
+
   basex = callPackage ../tools/text/xml/basex { };
 
   babeld = callPackage ../tools/networking/babeld { };
@@ -2065,11 +2067,11 @@ let
 
   ninka = callPackage ../development/tools/misc/ninka { };
 
-  nodejs-5_0 = callPackage ../development/web/nodejs/v5_0.nix {
+  nodejs-5_x = callPackage ../development/web/nodejs/v5.nix {
     libtool = darwin.cctools;
   };
 
-  nodejs-4_2 = callPackage ../development/web/nodejs {
+  nodejs-4_x = callPackage ../development/web/nodejs/v4.nix {
     libtool = darwin.cctools;
   };
 
@@ -2081,16 +2083,18 @@ let
   nodejs = if stdenv.system == "armv5tel-linux" then
     nodejs-0_10
   else
-    nodejs-4_2;
+    nodejs-4_x;
 
-  nodePackages_4_2 = recurseIntoAttrs (callPackage ./node-packages.nix { self = nodePackages_4_2; nodejs = nodejs-4_2; });
+  nodePackages_5_x = recurseIntoAttrs (callPackage ./node-packages.nix { self = nodePackages_5_x; nodejs = nodejs-5_x; });
+
+  nodePackages_4_x = recurseIntoAttrs (callPackage ./node-packages.nix { self = nodePackages_4_x; nodejs = nodejs-4_x; });
 
   nodePackages_0_10 = callPackage ./node-packages.nix { self = nodePackages_0_10; nodejs = nodejs-0_10; };
 
   nodePackages = if stdenv.system == "armv5tel-linux" then
     nodePackages_0_10
   else
-    nodePackages_4_2;
+    nodePackages_4_x;
 
   npm2nix = nodePackages.npm2nix;
 
@@ -4226,6 +4230,8 @@ let
     openblas = openblasCompat;
   };
 
+  kotlin = callPackage ../development/compilers/kotlin { };
+
   lazarus = callPackage ../development/compilers/fpc/lazarus.nix {
     fpc = fpc;
   };
@@ -5232,15 +5238,15 @@ let
   inherit (callPackage ../development/interpreters/ruby {})
     ruby_1_9_3
     ruby_2_0_0
-    ruby_2_1_0 ruby_2_1_1 ruby_2_1_2 ruby_2_1_3 ruby_2_1_6
-    ruby_2_2_0 ruby_2_2_2;
+    ruby_2_1_0 ruby_2_1_1 ruby_2_1_2 ruby_2_1_3 ruby_2_1_6 ruby_2_1_7
+    ruby_2_2_0 ruby_2_2_2 ruby_2_2_3;
 
   # Ruby aliases
   ruby = ruby_2_2;
   ruby_1_9 = ruby_1_9_3;
   ruby_2_0 = ruby_2_0_0;
-  ruby_2_1 = ruby_2_1_6;
-  ruby_2_2 = ruby_2_2_2;
+  ruby_2_1 = ruby_2_1_7;
+  ruby_2_2 = ruby_2_2_3;
 
   rubygemsFun = ruby: builderDefsPackage (callPackage ../development/interpreters/ruby/rubygems.nix) {
     inherit ruby;
@@ -7733,6 +7739,8 @@ let
 
   lzo = callPackage ../development/libraries/lzo { };
 
+  mapnik = callPackage ../development/libraries/mapnik { };
+
   matio = callPackage ../development/libraries/matio { };
 
   mbedtls = callPackage ../development/libraries/mbedtls { };
@@ -8351,6 +8359,8 @@ let
   graphite2 = callPackage ../development/libraries/silgraphite/graphite2.nix {};
 
   simgear = callPackage ../development/libraries/simgear { };
+
+  simp_le = callPackage ../tools/admin/simp_le { };
 
   sfml = callPackage ../development/libraries/sfml { };
 
@@ -9468,6 +9478,8 @@ let
 
   psqlodbc = callPackage ../servers/sql/postgresql/psqlodbc { };
 
+  pumpio = callPackage ../servers/web-apps/pump.io { };
+
   pyIRCt = builderDefsPackage (callPackage ../servers/xmpp/pyIRCt) {};
 
   pyMAILt = builderDefsPackage (callPackage ../servers/xmpp/pyMAILt) {};
@@ -10363,6 +10375,10 @@ let
 
   gocode = goPackages.gocode.bin // { outputs = [ "bin" ]; };
 
+  kgocode = callPackage ../applications/misc/kgocode { 
+    inherit (pkgs.kde4) kdelibs;
+  };
+
   gotags = goPackages.gotags.bin // { outputs = [ "bin" ]; };
 
   golint = goPackages.lint.bin // { outputs = [ "bin" ]; };
@@ -10848,7 +10864,7 @@ let
 
   marathi-cursive = callPackage ../data/fonts/marathi-cursive { };
 
-  manpages = callPackage ../data/documentation/man-pages { };
+  man-pages = callPackage ../data/documentation/man-pages { };
 
   meslo-lg = callPackage ../data/fonts/meslo-lg {};
 
@@ -11290,7 +11306,12 @@ let
     pulseSupport = config.pulseaudio or true;
   };
 
-  cmus = callPackage ../applications/audio/cmus { };
+  cmus = callPackage ../applications/audio/cmus {
+    libjack = libjack2;
+    libcdio = libcdio082;
+
+    pulseaudioSupport = config.pulseaudio or false;
+  };
 
   CompBus = callPackage ../applications/audio/CompBus { };
 
@@ -11340,6 +11361,8 @@ let
   cvsps = callPackage ../applications/version-management/cvsps { };
 
   cvs2svn = callPackage ../applications/version-management/cvs2svn { };
+
+  cwm = callPackage ../applications/window-managers/cwm { };
 
   cyclone = callPackage ../applications/audio/pd-plugins/cyclone  { };
 
@@ -11646,7 +11669,7 @@ let
   emacsPackagesNgGen = emacs: callPackage ./emacs-packages.nix {
     overrides = (config.emacsPackageOverrides or (p: {})) pkgs;
 
-    inherit emacs;
+    inherit emacs elpaPackages;
 
     trivialBuild = callPackage ../build-support/emacs/trivial.nix {
       inherit emacs;
@@ -11664,6 +11687,10 @@ let
   };
 
   emacs24PackagesNg = recurseIntoAttrs (emacsPackagesNgGen emacs24);
+
+  elpaPackages =
+    let imported = import ../applications/editors/emacs-modes/elpa-packages.nix pkgs;
+    in recurseIntoAttrs (imported.override (super: self: { inherit emacs; }));
 
   emacsWithPackages = callPackage ../build-support/emacs/wrapper.nix { };
   emacs24WithPackages = emacsWithPackages.override { emacs = emacs24; };
@@ -11889,6 +11916,10 @@ let
   };
 
   gitRepo = callPackage ../applications/version-management/git-repo {
+    python = python27;
+  };
+
+  git-review = callPackage ../applications/version-management/git-review {
     python = python27;
   };
 
@@ -12174,7 +12205,7 @@ let
     lua = lua5;
   };
 
-  ipe = callPackage ../applications/graphics/ipe { };
+  ipe = qt5Libs.callPackage ../applications/graphics/ipe { };
 
   iptraf = callPackage ../applications/networking/iptraf { };
 
@@ -13098,6 +13129,8 @@ let
                                     })
                                  );
 
+  swingsane = callPackage ../applications/graphics/swingsane { };
+
   sxiv = callPackage ../applications/graphics/sxiv { };
 
   bittorrentSync = bittorrentSync14;
@@ -13667,6 +13700,7 @@ let
       ++ optional (config.kodi.enableGenesis or false) genesis
       ++ optional (config.kodi.enableSVTPlay or false) svtplay
       ++ optional (config.kodi.enableSteamLauncher or false) steam-launcher
+      ++ optional (config.kodi.enablePVRHTS or false) pvr-hts
       );
   };
 
@@ -15559,6 +15593,8 @@ let
 
   tvheadend = callPackage ../servers/tvheadend { };
 
+  ums = callPackage ../servers/ums { };
+
   urbit = callPackage ../misc/urbit { };
 
   utf8proc = callPackage ../development/libraries/utf8proc { };
@@ -15759,6 +15795,7 @@ aliases = with self; rec {
   youtubeDL = youtube-dl;  # added 2014-10-26
   pidginlatexSF = pidginlatex; # added 2014-11-02
   tftp_hpa = tftp-hpa; # added 2015-04-03
+  manpages = man-pages; # added 2015-12-06
 };
 
 tweakAlias = _n: alias: with lib;

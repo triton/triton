@@ -222,7 +222,7 @@ in
   };
 
   xf86inputsynaptics = attrs: attrs // {
-    buildInputs = attrs.buildInputs ++ [args.mtdev args.libevdev];
+    buildInputs = attrs.buildInputs ++ [args.mtdev args.libevdev args.pixman];
     installFlags = "sdkdir=\${out}/include/xorg configdir=\${out}/share/X11/xorg.conf.d";
   };
 

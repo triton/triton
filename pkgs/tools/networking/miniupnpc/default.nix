@@ -1,18 +1,24 @@
 { stdenv, fetchurl }:
 
-let version = "1.9.20150430"; in
+let version = "1.9.20151026"; in
 stdenv.mkDerivation rec {
   name = "miniupnpc-${version}";
 
   src = fetchurl {
-    url = "http://miniupnp.free.fr/files/download.php?file=${name}.tar.gz";
-    sha256 = "0ivnvzla0l2pzmy8s0j8ss0fnpsii7z9scvyl4a13g9k911hgmvn";
     name = "${name}.tar.gz";
+    url = "http://miniupnp.free.fr/files/download.php?file=${name}.tar.gz";
+    sha256 = "0isxlakdz24v1papxqj8mb2h0kgqa2yfadwj9myr32jq65d9mkzk";
   };
 
   doCheck = true;
 
-  installFlags = "PREFIX=$(out) INSTALLPREFIX=$(out)";
+  preBuild = ''
+    makeFlagsArray+=("PREFIX=$out")
+  '';
+
+  preInstall = ''
+    installFlagsArray+=("INSTALLPREFIX=$out")
+  '';
 
   meta = {
     inherit version;

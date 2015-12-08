@@ -2677,7 +2677,9 @@ let
 
   jbig2enc = callPackage ../tools/graphics/jbig2enc { };
 
-  pdfread = callPackage ../tools/graphics/pdfread { };
+  pdfread = callPackage ../tools/graphics/pdfread {
+    inherit (pythonPackages) pillow;
+  };
 
   briss = callPackage ../tools/graphics/briss { };
 
@@ -9002,8 +9004,6 @@ let
 
   numeric = callPackage ../development/python-modules/numeric { };
 
-  pil = pythonPackages.pil;
-
   psyco = callPackage ../development/python-modules/psyco { };
 
   pycairo = pythonPackages.pycairo;
@@ -12159,6 +12159,7 @@ let
   impressive = callPackage ../applications/office/impressive {
     # XXX These are the PyOpenGL dependencies, which we need here.
     inherit (pythonPackages) pyopengl;
+    inherit (pythonPackages) pillow;
   };
 
   inferno = callPackage_i686 ../applications/inferno { };
@@ -12448,7 +12449,10 @@ let
 
   mimms = callPackage ../applications/audio/mimms {};
 
-  mirage = callPackage ../applications/graphics/mirage {};
+  mirage = callPackage ../applications/graphics/mirage {
+    inherit (pythonPackages) pygtk;
+    inherit (pythonPackages) pillow;
+  };
 
   mixxx = callPackage ../applications/audio/mixxx {
     inherit (vamp) vampSDK;
@@ -14319,8 +14323,6 @@ let
 
   tome4 = callPackage ../games/tome4 { };
 
-  tpm = callPackage ../games/thePenguinMachine { };
-
   trackballs = callPackage ../games/trackballs {
     debug = false;
     guile = guile_1_8;
@@ -15046,7 +15048,7 @@ let
 
   ### SCIENCE / ELECTRONICS
 
-  eagle = callPackage_i686 ../applications/science/electronics/eagle { };
+  eagle = callPackage ../applications/science/electronics/eagle { };
 
   caneda = callPackage ../applications/science/electronics/caneda { };
 

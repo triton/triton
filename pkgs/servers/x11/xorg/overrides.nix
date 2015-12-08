@@ -1,7 +1,7 @@
 { args, xorg }:
 
 let
-  inherit (args) stdenv makeWrapper;
+  inherit (args) stdenv makeWrapper fetchurl;
   inherit (stdenv) lib isDarwin;
   inherit (lib) overrideDerivation;
 
@@ -419,6 +419,11 @@ in
   };
 
   xf86videointel = attrs: attrs // {
+    name = "xf86-video-intel-2015-11-27";
+    src = fetchurl {
+      url = "http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/da9ad388a0657b85fcf9a5f78ae1e75d0052dc52.tar.gz";
+      sha256 = "1x4fsd0m0mjm8818gwbfa4fhq7f7biva82qbm6x9zq4lxpadqa32";
+    };
     buildInputs = attrs.buildInputs ++ [xorg.libXfixes];
     nativeBuildInputs = [args.autoreconfHook xorg.utilmacros];
   };

@@ -5152,7 +5152,7 @@ let
 
   python = python2;
   python2 = python27;
-  python3 = python34;
+  python3 = python35;
 
   # pythonPackages further below, but assigned here because they need to be in sync
   pythonPackages = python2Packages;

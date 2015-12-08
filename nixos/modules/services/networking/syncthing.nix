@@ -67,6 +67,10 @@ in
         wantedBy = [ "multi-user.target" ];
         environment.STNORESTART = "yes";  # do not self-restart
         environment.STNOUPGRADE = "yes";
+        preStart = ''
+          mkdir -p ${cfg.dataDir}
+          chown ${cfg.user} ${cfg.dataDir}
+        '';
         serviceConfig = {
           User = "${cfg.user}";
           PermissionsStartOnly = true;

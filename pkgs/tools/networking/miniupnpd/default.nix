@@ -1,30 +1,68 @@
-{ stdenv, fetchurl, iptables, pkgconfig }:
+{ stdenv, fetchurl, openssl, iptables, pkgconfig }:
 
 assert stdenv.isLinux;
 
 stdenv.mkDerivation rec {
-  name = "miniupnpd-1.9.20150721";
+  name = "miniupnpd-1.9.20151118";
 
   src = fetchurl {
-    url = "http://miniupnp.free.fr/files/download.php?file=${name}.tar.gz";
-    sha256 = "0w2422wfcir333qd300swkdvmksdfdllspplnz8vbv13a1724h4k";
     name = "${name}.tar.gz";
+    url = "http://miniupnp.free.fr/files/download.php?file=${name}.tar.gz";
+    sha256 = "1bqz6l9yy828kcrag2yikrkpv4irpxfzaagspszpd91by1n1ak0x";
   };
 
-  buildInputs = [ iptables ];
-  nativeBuildInputs= [ pkgconfig ];
+  buildInputs = [ openssl ]
+    ++ (if stdenv.isLinux then [ iptables ] else [ ]);
+  nativeBuildInputs = [ pkgconfig ];
 
-  NIX_CFLAGS_LINK = "-liptc";
+  # The upstream build is missing some of its test scripts
+  # Therefore we add dummy ones allowing it to pass
+  postPatch = ''
+    fake_script() {
+      echo "#!/bin/sh" > $1
+      chmod +x $1
+    }
+    fake_script testupnppermissions.sh
+    fake_script testgetifaddr.sh
+  '';
 
-  makefile = "Makefile.linux";
+  configureScript = "./genconfig.sh";
 
-  buildFlags = "miniupnpd genuuid";
+  dontAddPrefix = true;
 
-  installFlags = "PREFIX=$(out) INSTALLPREFIX=$(out)";
+  preConfigure = ''
+    configureFlagsArray=("--ipv6")
+    configureFlagsArray+=("--igd2")
+    configureFlagsArray+=("--leasefile")
+    configureFlagsArray+=("--pcp-peer")
+  '';
 
-  meta = {
+  postConfigure = ''
+    sed -i 's,.*\(#define USE_MINIUPNPDCTL\).*,\1,g' config.h
+  '';
+
+  doCheck = true;
+
+  makefile = if stdenv.isLinux then "Makefile.linux" else "Makefile";
+
+  makeFlags = [ "all" ];
+
+  preBuild = ''
+    makeFlagsArray+=("PREFIX=$out")
+  '';
+
+  preInstall = ''
+    installFlagsArray+=("INSTALLPREFIX=$out")
+  '';
+
+  postInstall = ''
+    mkdir -p $out/bin
+    install miniupnpdctl $out/bin
+  '';
+
+  meta = with stdenv.lib; {
     homepage = http://miniupnp.free.fr/;
     description = "A daemon that implements the UPnP Internet Gateway Device (IGD) specification";
-    platforms = stdenv.lib.platforms.linux;
+    platforms = platforms.linux;
   };
 }

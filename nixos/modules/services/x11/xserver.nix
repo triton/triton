@@ -101,6 +101,10 @@ let
         echo 'EndSection' >> $out
 
         echo "$config" >> $out
+
+        for i in ${toString cfg.modules}; do
+          find $i/share/X11/xorg.conf.d -type f || true
+        done | awk -F/ '{print $NF" "$0}' | sort -V | awk '{print $2}' | xargs cat >> $out
       ''; # */
   };
 
@@ -526,7 +530,6 @@ in
     services.xserver.modules =
       concatLists (catAttrs "modules" cfg.drivers) ++
       [ xorg.xorgserver
-        xorg.xf86inputevdev
         xorg.xf86inputlibinput
       ];
 
@@ -562,7 +565,6 @@ in
           ${inputClassSection}
         EndSection
         '')}
-
 
         Section "ServerLayout"
           Identifier "Layout[all]"

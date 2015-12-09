@@ -1,11 +1,10 @@
 { fetchurl, stdenv, kernel, onlyHeaders ? false }:
 
 stdenv.mkDerivation rec {
-  pname = "cryptodev-linux-1.8";
-  name = "${pname}-${kernel.version}";
+  name = "cryptodev-linux-1.8";
 
   src = fetchurl {
-    url = "http://download.gna.org/cryptodev-linux/${pname}.tar.gz";
+    url = "http://download.gna.org/cryptodev-linux/${name}.tar.gz";
     sha256 = "0xhkhcdlds9aiz0hams93dv0zkgcn2abaiagdjlqdck7zglvvyk7";
   };
 

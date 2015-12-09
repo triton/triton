@@ -8003,6 +8003,7 @@ let
     cryptodevHeaders = linuxPackages.cryptodev.override {
       fetchurl = fetchurlBoot;
       onlyHeaders = true;
+      kernel = null;
     };
   };
 

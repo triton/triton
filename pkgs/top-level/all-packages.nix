@@ -7529,6 +7529,8 @@ let
 
   libstartup_notification = callPackage ../development/libraries/startup-notification { };
 
+  libstroke = callPackage ../development/libraries/libstroke { };
+
   libstrophe = callPackage ../development/libraries/libstrophe { };
 
   libspatialindex = callPackage ../development/libraries/libspatialindex { };
@@ -10773,6 +10775,8 @@ let
   font-awesome-ttf = callPackage ../data/fonts/font-awesome-ttf { };
 
   freefont_ttf = callPackage ../data/fonts/freefont-ttf { };
+
+  font-droid = callPackage ../data/fonts/droid { };
 
   freepats = callPackage ../data/misc/freepats { };
 
@@ -14571,7 +14575,9 @@ let
 
           kvirc = callPackage ../applications/networking/irc/kvirc { };
 
-          krename = callPackage ../applications/misc/krename { };
+          krename = callPackage ../applications/misc/krename {
+            taglib = taglib_1_9;
+          };
 
           krusader = callPackage ../applications/misc/krusader { };
 

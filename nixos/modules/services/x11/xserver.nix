@@ -16,6 +16,14 @@ let
     unichrome    = { modules = [ pkgs.xorgVideoUnichrome ]; };
     virtualbox   = { modules = [ kernelPackages.virtualboxGuestAdditions ]; driverName = "vboxvideo"; };
     ati = { modules = [ pkgs.xorg.xf86videoati pkgs.xorg.glamoregl ]; };
+    intel = {
+      modules = with pkgs.xorg; [ xf86videointel ];
+      driverName = "intel";
+      extraConfig = ''
+        Option "DRI" "3"
+        Option "TearFree" "true"
+      '';
+    };
     intel-testing = { modules = with pkgs.xorg; [ xf86videointel-testing glamoregl ]; driverName = "intel"; };
   };
 
@@ -591,6 +599,7 @@ in
             Identifier "Device-${driver.name}[0]"
             Driver "${driver.driverName or driver.name}"
             ${if cfg.useGlamor then ''Option "AccelMethod" "glamor"'' else ""}
+            ${driver.extraConfig or ""}
             ${cfg.deviceSection}
             ${xrandrDeviceSection}
           EndSection

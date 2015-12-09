@@ -538,7 +538,7 @@ in
     services.xserver.modules =
       concatLists (catAttrs "modules" cfg.drivers) ++
       [ xorg.xorgserver
-        xorg.xf86inputlibinput
+        xorg.xf86inputevdev
       ];
 
     services.xserver.config =

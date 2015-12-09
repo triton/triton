@@ -217,12 +217,12 @@ in
   };
 
   xf86inputlibinput = attrs: attrs // {
-    buildInputs = attrs.buildInputs ++ [ args.libinput ];
+    buildInputs = attrs.buildInputs ++ [ args.libinput args.pixman ];
     installFlags = "sdkdir=\${out}/include/xorg";
   };
 
   xf86inputsynaptics = attrs: attrs // {
-    buildInputs = attrs.buildInputs ++ [args.mtdev args.libevdev args.pixman];
+    buildInputs = attrs.buildInputs ++ [ args.mtdev args.libevdev args.pixman ];
     installFlags = "sdkdir=\${out}/include/xorg configdir=\${out}/share/X11/xorg.conf.d";
   };
 
@@ -313,7 +313,7 @@ in
       if (!isDarwin)
       then {
         buildInputs = [ makeWrapper ] ++ commonBuildInputs;
-        propagatedBuildInputs = [ libpciaccess ] ++ commonPropagatedBuildInputs ++ lib.optionals stdenv.isLinux [
+        propagatedBuildInputs = [ libpciaccess pixman ] ++ commonPropagatedBuildInputs ++ lib.optionals stdenv.isLinux [
           args.udev
         ];
         patches = commonPatches;

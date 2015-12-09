@@ -527,6 +527,7 @@ in
       concatLists (catAttrs "modules" cfg.drivers) ++
       [ xorg.xorgserver
         xorg.xf86inputevdev
+        xorg.xf86inputlibinput
       ];
 
     services.xserver.config =

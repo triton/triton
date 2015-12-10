@@ -11,6 +11,8 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [ boost ];
   buildInputs = [ openssl ];
 
+  enableParallelBuilding = true;
+
   meta = {
     homepage = http://asio.sourceforge.net/;
     description = "Cross-platform C++ library for network and low-level I/O programming";

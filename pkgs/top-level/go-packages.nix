@@ -1993,10 +1993,10 @@ let
   };
 
   mongo-tools = buildFromGitHub {
-    rev    = "4fcfd3e57415de95c0c016def07b95bca63cccb4";
+    rev    = "r3.2.0";
     owner  = "mongodb";
     repo   = "mongo-tools";
-    sha256 = "0rm7bnb81hr0byxhvagwv8an1bky882nz68cmm2kbznzyprvhyaa";
+    sha256 = "0rm7bnb81hr0byxhvagwv8an1bky882nz68cmm2kbznzyprvhyab";
     buildInputs = [ gopass go-flags mgo openssl tomb ];
     excludedPackages = "vendor";
 

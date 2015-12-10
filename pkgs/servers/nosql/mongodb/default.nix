@@ -1,39 +1,33 @@
 { stdenv, fetchurl, scons, boost, gperftools, pcre, snappy
-, zlib, libyamlcpp, sasl, openssl, libpcap, wiredtiger
+, zlib, libyamlcpp, sasl, openssl, libpcap, wiredtiger, valgrind
 }:
 
 with stdenv.lib;
 
-let version = "3.0.7";
+let version = "3.2.0";
     system-libraries = [
       "pcre"
-      #"wiredtiger"
+      "wiredtiger"
       "boost"
       "snappy"
+      "valgrind"
       "zlib"
-      # "v8"
       # "stemmer" -- not nice to package yet (no versioning, no makefile, no shared libs)
       "yaml"
+      #"asio"
+      #"intel_decimal128"
     ] ++ optionals stdenv.isLinux [ "tcmalloc" ];
     buildInputs = [
-      sasl boost gperftools pcre snappy
+      boost gperftools pcre snappy valgrind
       zlib libyamlcpp sasl openssl libpcap
-    ]; # ++ optional stdenv.is64bit wiredtiger;
+    ] ++ optional stdenv.is64bit wiredtiger;
 
     other-args = concatStringsSep " " ([
-      # these are opt-in, lol
-      "--cc-use-shell-environment"
-      "--cxx-use-shell-environment"
-
-      "--c++11=on"
       "--ssl"
-      #"--rocksdb" # Don't have this packaged yet
       "--wiredtiger=${if stdenv.is64bit then "on" else "off"}"
-      "--js-engine=v8-3.25"
+      "--js-engine=mozjs"
       "--use-sasl-client"
       "--disable-warnings-as-errors"
-      "--variant-dir=nixos" # Needed so we don't produce argument lists that are too long for gcc / ld
-      "--extrapath=${concatStringsSep "," buildInputs}"
     ] ++ map (lib: "--use-system-${lib}") system-libraries);
 
 in stdenv.mkDerivation rec {
@@ -41,7 +35,7 @@ in stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://downloads.mongodb.org/src/mongodb-src-r${version}.tar.gz";
-    sha256 = "1rx7faqsq733vdriavdfmvx75nhjq9nm5bgwd3hw1cxzqgkvl99d";
+    sha256 = "1vmjb8gbsx7icqvy7k1sfgc3iwd8rnkzgp9ill1byv5qf0b1vpf6";
   };
 
   nativeBuildInputs = [ scons ];
@@ -51,13 +45,6 @@ in stdenv.mkDerivation rec {
     # fix environment variable reading
     substituteInPlace SConstruct \
         --replace "env = Environment(" "env = Environment(ENV = os.environ,"
-  '' + stdenv.lib.optionalString stdenv.isDarwin ''
-
-    substituteInPlace src/third_party/s2/s1angle.cc --replace drem remainder
-    substituteInPlace src/third_party/s2/s1interval.cc --replace drem remainder
-    substituteInPlace src/third_party/s2/s2cap.cc --replace drem remainder
-    substituteInPlace src/third_party/s2/s2latlng.cc --replace drem remainder
-    substituteInPlace src/third_party/s2/s2latlngrect.cc --replace drem remainder
   '';
 
   buildPhase = ''

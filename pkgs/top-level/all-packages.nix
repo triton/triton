@@ -4158,13 +4158,13 @@ let
     openjdk = openjdk8.override { minimal = true; };
   };
 
-  openjdk7 = callPackage ../development/compilers/openjdk {
+  openjdk7 = callPackage ../development/compilers/openjdk/7.nix {
     bootjdk = openjdk7-bootstrap;
   };
   openjdk7_jdk = openjdk7 // { outputs = [ "out" ]; };
   openjdk7_jre = openjdk7.jre // { outputs = [ "jre" ]; };
 
-  openjdk8 = callPackage ../development/compilers/openjdk/openjdk8.nix {
+  openjdk8 = callPackage ../development/compilers/openjdk/8.nix {
     bootjdk = openjdk8-bootstrap;
   };
   openjdk8_jdk = openjdk8 // { outputs = [ "out" ]; };

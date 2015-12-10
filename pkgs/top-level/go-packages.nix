@@ -1030,10 +1030,11 @@ let
   };
 
   gopass = buildFromGitHub {
-    rev = "10b54de414cc9693221d5ff2ae14fd2fbf1b0ac1";
+    date = "2015-11-20";
+    rev = "ae71a9cc54fddb61d946abe9191d05a24ac0e21b";
     owner = "howeyc";
     repo = "gopass";
-    sha256 = "0lsi89zx1i2f5vhm66zqn2drs7xi7ff8r1xlp6m58r99dddws57s";
+    sha256 = "120j9sxxznka0akhfhvg7x8y2ig46bjbwjl91kkizl5bry15s0yi";
     propagatedBuildInputs = [ crypto ];
   };
 
@@ -1239,10 +1240,11 @@ let
   };
 
   go-flags = buildFromGitHub {
-    rev    = "1b89bf73cd2c3a911d7b2a279ab085c4a18cf539";
+    date   = "2015-12-10";
+    rev    = "aa34304f81c710f34c76e964a3d996ec1330711d";
     owner  = "jessevdk";
     repo   = "go-flags";
-    sha256 = "027nglc5xx1cm03z9sisg0iqrhwcj6gh5z254rrpl8p4fwrxx680";
+    sha256 = "0zr0qkxsplzj3llj4mmyrn7wlgs5rsmfv3pb3ahmnz9zvla3bnv4";
   };
 
   go-fuse = buildFromGitHub rec {
@@ -1737,6 +1739,7 @@ let
   };
 
   flagfile = buildFromGitHub {
+    date   = "2015-02-13";
     rev    = "871ce569c29360f95d7596f90aa54d5ecef75738";
     owner  = "spacemonkeygo";
     repo   = "flagfile";
@@ -1983,10 +1986,10 @@ let
   };
 
   mgo = buildFromGitHub {
-    rev = "r2015.06.03";
+    rev = "r2015.10.05";
     owner = "go-mgo";
     repo = "mgo";
-    sha256 = "1bwqbngdy0ghwpvarsz8rlrirdmjrda44aghihpfmin06hxy3zcd";
+    sha256 = "0wn6js8g8j5wxsdn5pb2bx7hsnrmqp430wlcgw7k8114wnhnd9rc";
     goPackagePath = "gopkg.in/mgo.v2";
     goPackageAliases = [ "github.com/go-mgo/mgo" ];
     buildInputs = [ pkgs.cyrus_sasl tomb ];
@@ -1996,8 +1999,8 @@ let
     rev    = "r3.2.0";
     owner  = "mongodb";
     repo   = "mongo-tools";
-    sha256 = "0rm7bnb81hr0byxhvagwv8an1bky882nz68cmm2kbznzyprvhyab";
-    buildInputs = [ gopass go-flags mgo openssl tomb ];
+    sha256 = "07z43vx3fwzxn03f4n0r89a8xadnqyvv7p48dpf69wksqbq8gzzl";
+    buildInputs = [ crypto mgo go-flags gopass openssl tomb ];
     excludedPackages = "vendor";
 
     # Mongodb incorrectly names all of their binaries main
@@ -2179,6 +2182,7 @@ let
   };
 
   openssl = buildFromGitHub {
+    date = "2015-03-30";
     rev = "4c6dbafa5ec35b3ffc6a1b1e1fe29c3eba2053ec";
     owner = "10gen";
     repo = "openssl";
@@ -2873,6 +2877,7 @@ let
   };
 
   spacelog = buildFromGitHub {
+    date = "2015-03-20";
     rev = "ae95ccc1eb0c8ce2496c43177430efd61930f7e4";
     owner = "spacemonkeygo";
     repo = "spacelog";
@@ -3018,6 +3023,7 @@ let
   };
 
   tomb = buildFromGitHub {
+    date = "2014-06-26";
     rev = "14b3d72120e8d10ea6e6b7f87f7175734b1faab8";
     owner = "go-tomb";
     repo = "tomb";

@@ -1,13 +1,14 @@
-{ stdenv, fetchurl, popt, libiconv }:
+{ stdenv, fetchurl, autoreconfHook, popt }:
 
-stdenv.mkDerivation (rec {
-  name = "libnatspec-0.2.6";
+stdenv.mkDerivation rec {
+  name = "libnatspec-0.3.0";
 
   src = fetchurl {
     url = "mirror://sourceforge/natspec/${name}.tar.bz2";
-    sha256 = "0zvm9afh1skxgdv62ylrpwyykpjhhskxj0zv7yrdf7jhfdriz0y3";
+    sha256 = "0wffxjlc8svilwmrcg3crddpfrpv35mzzjgchf8ygqsvwbrbb3b7";
   };
 
+  nativeBuildInputs = [ autoreconfHook ];
   buildInputs = [ popt ];
 
   meta = {
@@ -16,7 +17,4 @@ stdenv.mkDerivation (rec {
     platforms = stdenv.lib.platforms.unix;
     maintainers = [ stdenv.lib.maintainers.urkud ];
   };
-} // stdenv.lib.optionalAttrs (!stdenv.isLinux) {
-  NIX_LDFLAGS = "-liconv";
-  propagatedBuildInputs = [ libiconv ];
-})
+}

@@ -1,21 +1,25 @@
 { stdenv, fetchurl, spidermonkey_24, unzip, curl, pcre, readline, openssl }:
+
+let
+  spidermonkey = spidermonkey_24;
+in
 stdenv.mkDerivation rec {
   name = "edbrowse-${version}";
-  version = "3.5.4.1";
+  version = "3.5.4.2";
 
   nativeBuildInputs = [ unzip ];
-  buildInputs = [ curl pcre readline openssl spidermonkey_24 ];
+  buildInputs = [ curl pcre readline openssl spidermonkey ];
 
   patchPhase = ''
     substituteInPlace src/ebjs.c --replace \"edbrowse-js\" \"$out/bin/edbrowse-js\"
   '';
 
-  NIX_CFLAGS_COMPILE = "-I${spidermonkey_24}/include/mozjs-24";
+  NIX_CFLAGS_COMPILE = "-I${spidermonkey}/include/mozjs-";
   makeFlags = "-C src prefix=$(out)";
 
   src = fetchurl {
     url = "http://edbrowse.org/${name}.zip";
-    sha256 = "0fpzaalwvgwbns7yxq4a4i6hpdljmcjfyvx19r1dlb3vdfw0vx5l";
+    sha256 = "07am4936lz4fyf2n6qxfqaldjn1a77ayhlbvvh6xnshvra3xl50c";
   };
   meta = {
     description = "Command Line Editor Browser";

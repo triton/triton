@@ -1,5 +1,5 @@
 { stdenv, callPackage, fetchurl, python27
-, pkgconfig, spidermonkey_31, boost, icu, libxml2, libpng
+, pkgconfig, spidermonkey, boost, icu, libxml2, libpng
 , libjpeg, zlib, curl, libogg, libvorbis, enet, miniupnpc
 , openal, mesa, xproto, libX11, libXcursor, nspr, SDL
 , gloox, nvidia-texture-tools
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    zeroadData python27 pkgconfig spidermonkey_31 boost icu
+    zeroadData python27 pkgconfig spidermonkey boost icu
     libxml2 libpng libjpeg zlib curl libogg libvorbis enet
     miniupnpc openal mesa xproto libX11 libXcursor nspr
     SDL gloox nvidia-texture-tools

@@ -5280,12 +5280,10 @@ let
 
   spark = callPackage ../applications/networking/cluster/spark { };
 
-  spidermonkey = callPackage ../development/interpreters/spidermonkey { };
-  spidermonkey_1_8_0rc1 = callPackage ../development/interpreters/spidermonkey/1.8.0-rc1.nix { };
-  spidermonkey_185 = callPackage ../development/interpreters/spidermonkey/185-1.0.0.nix { };
   spidermonkey_17 = callPackage ../development/interpreters/spidermonkey/17.0.nix { };
   spidermonkey_24 = callPackage ../development/interpreters/spidermonkey/24.2.nix { };
-  spidermonkey_31 = callPackage ../development/interpreters/spidermonkey/31.5.nix { };
+  spidermonkey_38 = callPackage ../development/interpreters/spidermonkey/38.nix { };
+  spidermonkey = spidermonkey_38;
 
   supercollider = callPackage ../development/interpreters/supercollider {
     gcc = gcc48; # doesn't build with gcc49
@@ -9175,7 +9173,6 @@ let
   charybdis = callPackage ../servers/irc/charybdis {};
 
   couchdb = callPackage ../servers/http/couchdb {
-    spidermonkey = spidermonkey_185;
     python = python27;
     sphinx = python27Packages.sphinx;
     erlang = erlangR16;
@@ -9277,9 +9274,7 @@ let
 
   mailman = callPackage ../servers/mail/mailman { };
 
-  mediatomb = callPackage ../servers/mediatomb {
-    spidermonkey = spidermonkey_185;
-  };
+  mediatomb = callPackage ../servers/mediatomb { };
 
   memcached = callPackage ../servers/memcached {};
 
@@ -13447,8 +13442,6 @@ let
   vdirsyncer = callPackage ../tools/misc/vdirsyncer { };
 
   vdpauinfo = callPackage ../tools/X11/vdpauinfo { };
-
-  veracity = callPackage ../applications/version-management/veracity {};
 
   viewMtn = builderDefsPackage (callPackage ../applications/version-management/viewmtn/0.10.nix)
   {

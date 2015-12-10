@@ -4148,14 +4148,24 @@ let
 
   path64 = callPackage ../development/compilers/path64 { };
 
-  openjdk7 = callPackage ../development/compilers/openjdk/7.nix {
-    bootjdk = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "7"; };
+  openjdk7-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "7"; };
+  openjdk8-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "8"; };
+
+  openjdk7-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
+    openjdk = openjdk7.override { minimal = true; };
+  };
+  openjdk8-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
+    openjdk = openjdk8.override { minimal = true; };
+  };
+
+  openjdk7 = callPackage ../development/compilers/openjdk {
+    bootjdk = openjdk7-bootstrap;
   };
   openjdk7_jdk = openjdk7 // { outputs = [ "out" ]; };
   openjdk7_jre = openjdk7.jre // { outputs = [ "jre" ]; };
 
-  openjdk8 = callPackage ../development/compilers/openjdk/8.nix {
-    bootjdk = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "8"; };
+  openjdk8 = callPackage ../development/compilers/openjdk/openjdk8.nix {
+    bootjdk = openjdk8-bootstrap;
   };
   openjdk8_jdk = openjdk8 // { outputs = [ "out" ]; };
   openjdk8_jre = openjdk8.jre // { outputs = [ "jre" ]; };

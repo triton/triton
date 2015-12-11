@@ -28,33 +28,29 @@ fetchurl {
     echo -n " drill-query "
     echo -n "##########################"
     echo ""
-    echo ""
 
-    echo -n "Digest (root-anchors.xml): "
     awk '
     BEGIN { FS = "[<>]"; }
     { if (/<Digest>/) {print $3;} }
-    ' $downloadedFile | tee hash
+    ' $downloadedFile > hash
     [ -n "$(cat hash)" ]
 
     awk '
     BEGIN { FS = "[<>]"; }
     { if (/<DigestType>/) {print $3;} }
-    ' $downloadedFile | tee hash-type
+    ' $downloadedFile > hash-type
     [ -n "$(cat hash-type)" ]
 
-    echo -n "Root Key Id (root-anchors.xml): "
     awk '
     BEGIN { FS = "[<>]"; }
     { if (/<KeyTag>/) {print $3;} }
-    ' $downloadedFile | tee xml-id
+    ' $downloadedFile > xml-id
     [ -n "$(cat xml-id)" ]
 
-    echo -n "Root Key Id (Drill): "
     awk '
     BEGIN { getline hash<"hash"; }
     { if (match($0, tolower(hash))) {print $7;} }
-    ' drill-out | tee drill-id
+    ' drill-out > drill-id
     [ -n "$(cat drill-id)" ]
     
     if [ "$(cat xml-id)" != "$(cat drill-id)" ]; then
@@ -66,19 +62,6 @@ fetchurl {
     BEGIN { getline id<"drill-id"; }
     { if (match($0, "id = " id)) {print $0;} }
     ' drill-out > key-line
-
-    echo ""
-    echo -n "##########################"
-    echo -n " Matching Key "
-    echo -n "##########################"
-    echo ""
-    cat key-line
-    echo -n "##########################"
-    echo -n " Matching Key "
-    echo -n "##########################"
-    echo ""
-    echo ""
-    echo "This means the key is probably okay since the root-anchors and dns match."
 
     awk '
     {
@@ -95,6 +78,21 @@ fetchurl {
       print "Key: " $8;
     }
     ' key-line > icann-root.txt
+
+    echo ""
+    echo -n "##########################"
+    echo -n " Icann Root Parsed "
+    echo -n "##########################"
+    echo ""
+    cat icann-root.txt
+    echo -n "##########################"
+    echo -n " Icann Root Parsed "
+    echo -n "##########################"
+    echo ""
+
+    echo ""
+    echo "The key is probably okay since the root-anchors and dns match."
+
     install -Dm644 icann-root.txt "$out/share/dnssec/icann-root.txt"
   '';
 }

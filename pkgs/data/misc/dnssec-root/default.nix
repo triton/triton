@@ -4,7 +4,7 @@
 fetchurl {
   name = "dnssec-root-2010-07-15";
   url = "https://data.iana.org/root-anchors/root-anchors.xml";
-  sha256 = "0higqh4wkpwbv0jnx8r4wgl7zmxzbv58m6pn0zi9yg2mq9i3q6hm";
+  sha256 = "1ifni2nzb0yxzh23zmah0hnma1cj597jp59dsamvna8sja0jwykv";
   downloadToTemp = true;
   recursiveHash = true;
   postFetch = ''
@@ -36,6 +36,12 @@ fetchurl {
     { if (/<Digest>/) {print $3;} }
     ' $downloadedFile | tee hash
     [ -n "$(cat hash)" ]
+
+    awk '
+    BEGIN { FS = "[<>]"; }
+    { if (/<DigestType>/) {print $3;} }
+    ' $downloadedFile | tee hash-type
+    [ -n "$(cat hash-type)" ]
 
     echo -n "Root Key Id (root-anchors.xml): "
     awk '
@@ -78,9 +84,11 @@ fetchurl {
     {
       getline id<"xml-id";
       getline hash<"hash";
+      getline hashtype<"hash-type";
       print "Domain: " $1;
       print "Id: " id;
       print "Hash: " hash;
+      print "HashType: " hashtype;
       print "Flags: " $5;
       print "Protocol: " $6;
       print "Algorithm: " $7;

@@ -3068,10 +3068,10 @@ let
   };
 
   vault = buildFromGitHub rec {
-    rev = "v0.4.0-rc2";
+    rev = "v0.4.0";
     owner = "hashicorp";
     repo = "vault";
-    sha256 = "0gh12zx3i2kg6zyyy7785w2fqy7f4c93kcs9y0f76d146lwf85lg";
+    sha256 = "1bvn50k0k9cdhj09rx8hpbqgdl5nhq8wf0bis8bf2ds27wcx88jy";
 
     buildInputs = [
       armon.go-metrics go-radix govalidator aws-sdk-go etcd-client

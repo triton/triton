@@ -13,8 +13,6 @@ stdenv.mkDerivation rec {
     sha256 = "1i3ybyv8vs3g2bhq6ajrnfn2q8lld7yj7zjr4i9p9sb8c6w34xqz";
   };
 
-  doConfigure = false;
-
   buildPhase = ''
     awk '
     BEGIN {

@@ -1275,6 +1275,8 @@ let
 
   dnsmasq = callPackage ../tools/networking/dnsmasq { };
 
+  dnssec-root = callPackage ../data/misc/dnssec-root { };
+
   dnstop = callPackage ../tools/networking/dnstop { };
 
   dhcp = callPackage ../tools/networking/dhcp { };

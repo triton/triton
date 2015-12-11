@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://cairographics.org/releases/${name}.tar.xz";
-    sha256 = "05pa5r914d809711yg9rapgmmi4hymzbarhd3w0yrfadhiy9rv7n";
+    sha256 = "0lmjlzmghmr27y615px9hkm552x7ap6pmq9mfbzr6smp8y2b6g31";
   };
 
   nativeBuildInputs = [ pkgconfig libiconv ] ++ libintlOrEmpty;

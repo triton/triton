@@ -4,7 +4,7 @@
 fetchurl {
   name = "dnssec-root-2010-07-15";
   url = "https://data.iana.org/root-anchors/root-anchors.xml";
-  sha256 = "1ifni2nzb0yxzh23zmah0hnma1cj597jp59dsamvna8sja0jwykv";
+  sha256 = "14mlj3pv1nw60nhs289inrm3lqxi780kf0x146h7id2xhin56k3r";
   downloadToTemp = true;
   recursiveHash = true;
   postFetch = ''
@@ -77,22 +77,22 @@ fetchurl {
       print "Algorithm: " $7;
       print "Key: " $8;
     }
-    ' key-line > icann-root.txt
+    ' key-line > iana-root.txt
 
     echo ""
     echo -n "##########################"
-    echo -n " Icann Root Parsed "
+    echo -n " IANA Root Parsed "
     echo -n "##########################"
     echo ""
-    cat icann-root.txt
+    cat iana-root.txt
     echo -n "##########################"
-    echo -n " Icann Root Parsed "
+    echo -n " IANA Root Parsed "
     echo -n "##########################"
     echo ""
 
     echo ""
     echo "The key is probably okay since the root-anchors and dns match."
 
-    install -Dm644 icann-root.txt "$out/share/dnssec/icann-root.txt"
+    install -Dm644 iana-root.txt "$out/share/dnssec/iana-root.txt"
   '';
 }

@@ -108,7 +108,7 @@ stdenv.mkDerivation rec {
       # When the record is done, print out all of the collected information
       # We dont print unassigned services or services which have no name, port, or protocol as they are unhelpful
       if (/<\/record/ && !unassigned && name != "" && number != "" && protocol != "") {
-        printf "%-15s %5s/%-3s # %s\n", name, number, protocol, description;
+        printf "%-15s %5s/%-4s # %s\n", name, number, protocol, description;
       }
     }' service-names-port-numbers.xml > services
   '';

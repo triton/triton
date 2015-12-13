@@ -2946,11 +2946,11 @@ let
   };
 
   syncthing = buildFromGitHub rec {
-    version = "0.12.7";
+    version = "0.12.8";
     rev = "v${version}";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "0v7jdcczlvywkks4s9xq9vabhykdy1i7fcqvid3bxwh72nmbzr4i";
+    sha256 = "0b2fmmb4a7z961j33vg2d1vr7jjc6apx810apgcqq9d789w23k1l";
     # buildFlags = [ "-tags noupgrade,release" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext

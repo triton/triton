@@ -8048,8 +8048,7 @@ let
 
   wolfssl = callPackage ../development/libraries/wolfssl { };
 
-  openssl = openssl_1_0_1;
-  openssl_1_0_1 = callPackage ../development/libraries/openssl {
+  openssl_1_0_2 = callPackage ../development/libraries/openssl {
     fetchurl = fetchurlBoot;
     cryptodevHeaders = linuxPackages.cryptodev.override {
       fetchurl = fetchurlBoot;
@@ -8057,6 +8056,8 @@ let
       kernel = null;
     };
   };
+
+  openssl = openssl_1_0_2;
 
   opensubdiv = callPackage ../development/libraries/opensubdiv { };
 

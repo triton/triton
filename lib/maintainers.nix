@@ -93,7 +93,6 @@
   elasticdog = "Aaron Bull Schaefer <aaron@elasticdog.com>";
   ellis = "Ellis Whitehead <nixos@ellisw.net>";
   ehmry = "Emery Hemingway <emery@vfemail.net>";
-  enolan = "Echo Nolan <echo@echonolan.net>";
   epitrochoid = "Mabry Cervin <mpcervin@uncg.edu>";
   ericbmerritt = "Eric Merritt <eric@afiniate.com>";
   ericsagnes = "Eric Sagnes <eric.sagnes@gmail.com>";
@@ -174,6 +173,7 @@
   lsix = "Lancelot SIX <lsix@lancelotsix.com>";
   ludo = "Ludovic Courtès <ludo@gnu.org>";
   lukego = "Luke Gorrie <luke@snabb.co>";
+  luispedro = "Luis Pedro Coelho <luis@luispedro.org>";
   lw = "Sergey Sofeychuk <lw@fmap.me>";
   madjar = "Georges Dubus <georges.dubus@compiletoi.net>";
   magnetophon = "Bart Brouns <bart@magnetophon.nl>";

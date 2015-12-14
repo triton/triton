@@ -1287,6 +1287,43 @@ in modules // {
     };
   };
 
+  betamax = buildPythonPackage rec {
+    name = "betamax-0.5.1";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/b/betamax/${name}.tar.gz";
+      sha256 = "1glzigrbip9w2jr2gcmwa96rffhi9x9l1455dhbcx2gh3pmcykl6";
+    };
+
+    propagatedBuildInputs = [ self.requests2 ];
+
+    meta = with stdenv.lib; {
+      homepage = https://betamax.readthedocs.org/en/latest/;
+      description = "A VCR imitation for requests";
+      license = licenses.asl20;
+      maintainers = with maintainers; [ pSub ];
+    };
+  };
+
+  betamax-matchers = buildPythonPackage rec {
+    name = "betamax-matchers-${version}";
+    version = "0.2.0";
+
+    src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/b/betamax-matchers/${name}.tar.gz";
+      sha256 = "13n2dy8s2jx8x8bbx684bff3444584bnmg0zhkfxhxndpy18p4is";
+    };
+
+    buildInputs = with self; [ betamax requests_toolbelt ];
+
+    meta = with stdenv.lib; {
+      homepage = https://github.com/sigmavirus24/betamax_matchers;
+      description = "A group of experimental matchers for Betamax";
+      license = licenses.asl20;
+      maintainers = with maintainers; [ pSub ];
+    };
+  };
+
   caldavclientlibrary-asynk = buildPythonPackage rec {
     version = "asynkdev";
     name = "caldavclientlibrary-asynk-${version}";
@@ -3094,6 +3131,34 @@ in modules // {
       homepage = "http://github.com/kjd/idna/";
       description = "Internationalized Domain Names in Applications (IDNA)";
       license = "licenses.bsd3";
+    };
+  };
+
+  mahotas = buildPythonPackage rec {
+    name = "python-mahotas-${version}";
+    version = "1.4.0";
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/luispedro/mahotas/archive/release-${version}.tar.gz";
+      sha256 = "30c4b979e0d5f4c013860321766a79ffcabe56c1ad9088e5d0c6b36aec5f0415";
+    };
+
+    buildInputs = with self; [
+      nose
+      pillow
+      scipy
+    ];
+    propagatedBuildInputs = with self; [
+      numpy
+      imread
+    ];
+
+    meta = with stdenv.lib; {
+      description = "Computer vision package based on numpy";
+      homepage = https://readthedocs.org/projects/mahotas/;
+      maintainers = with maintainers; [ luispedro ];
+      license = licenses.mit;
+      platforms = platforms.linux;
     };
   };
 
@@ -4937,6 +5002,33 @@ in modules // {
       homepage = https://github.com/jonashaag/httpauth;
       license = licenses.bsd2;
       maintainers = with maintainers; [ matthiasbeyer ];
+    };
+  };
+
+  imread = buildPythonPackage rec {
+    name = "python-imread-${version}";
+    version = "0.5.1";
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/luispedro/imread/archive/release-${version}.tar.gz";
+      sha256 = "12d7ba3523ba50d67d526e9797e041021dd9cd4acf9567a9bf73c8ae0b689d4a";
+    };
+
+    buildInputs = with self; [
+      nose
+      pkgs.libjpeg
+      pkgs.libpng
+      pkgs.libtiff
+      pkgs.libwebp
+    ];
+    propagatedBuildInputs = with self; [ numpy ];
+
+    meta = with stdenv.lib; {
+      description = "Python package to load images as numpy arrays";
+      homepage = https://readthedocs.org/projects/imread/;
+      maintainers = with maintainers; [ luispedro ];
+      license = licenses.mit;
+      platforms = platforms.linux;
     };
   };
 
@@ -7497,12 +7589,12 @@ in modules // {
       md5 = "378670fe456957eb3c27ddaef60b2b24";
     };
 
-    propagatedBuildInputs = with self; [ werkzeug jinja2 ];
+    propagatedBuildInputs = with self; [ itsdangerous click werkzeug jinja2 ];
 
     meta = {
       homepage = http://flask.pocoo.org/;
       description = "A microframework based on Werkzeug, Jinja 2, and good intentions";
-      license = "BSD";
+      license = licenses.bsd3;
     };
   };
 
@@ -8185,6 +8277,36 @@ in modules // {
     meta = {
       homepage = "http://nicolargo.github.io/glances/";
       description = "Cross-platform curses-based monitoring tool";
+    };
+  };
+
+  github3_py = buildPythonPackage rec {
+    name = "github3.py-${version}";
+    version = "1.0.0a2";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/g/github3.py/${name}.tar.gz";
+      sha256 = "11xvwbzfy04vwbjnpc8wcrjjzghbrbdzffrdfk70v0zdnxqg8hc5";
+    };
+
+    buildInputs = with self; [ unittest2 pytest mock betamax betamax-matchers ];
+
+    propagatedBuildInputs = with self; [ requests2 pyopenssl uritemplate_py
+      ndg-httpsclient requests_toolbelt pyasn1 ];
+
+    postPatch = ''
+      sed -i -e 's/mock ==1.0.1/mock>=1.0.1/' setup.py
+      sed -i -e 's/unittest2 ==0.5.1/unittest2>=0.5.1/' setup.py
+    '';
+
+    # TODO: only disable the tests that require network
+    doCheck = false;
+
+    meta = with stdenv.lib; {
+      homepage = http://github3py.readthedocs.org/en/master/;
+      description = "A wrapper for the GitHub API written in python";
+      license = licenses.bsd3;
+      maintainers = with maintainers; [ pSub ];
     };
   };
 
@@ -10209,6 +10331,25 @@ in modules // {
     };
   };
 
+  mpv = buildPythonPackage rec {
+    name = "mpv-0.1";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/m/mpv/${name}.tar.gz";
+      sha256 = "0b9kd70mshdr713f3l1lbnz1q0vlg2y76h5d8liy1bzqm7hjcgfw";
+    };
+    buildInputs = [ pkgs.mpv ];
+    patchPhase = "substituteInPlace mpv.py --replace libmpv.so ${pkgs.mpv}/lib/libmpv.so";
+
+    meta = with pkgs.stdenv.lib; {
+      description = "A python interface to the mpv media player";
+      homepage = "https://github.com/jaseg/python-mpv";
+      license = licenses.agpl3;
+    };
+
+  };
+
+
   mrbob = buildPythonPackage rec {
     name = "mrbob-${version}";
     version = "0.1.1";
@@ -10484,6 +10625,11 @@ in modules // {
       url = "http://pypi.python.org/packages/source/m/monotonic/${name}.tar.gz";
       sha256 = "1diab6hfh3jpa1f0scpqaqrawk4g97ss4v7gkn2yw8znvdm6abw5";
     };
+
+    patchPhase = optionalString stdenv.isLinux ''
+      substituteInPlace monotonic.py --replace \
+        "ctypes.util.find_library('c')" "'${stdenv.glibc}/lib/libc.so.6'"
+    '';
   };
 
   MySQL_python = buildPythonPackage rec {
@@ -13694,7 +13840,7 @@ in modules // {
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/praw/${name}.zip";
-      sha256 = "1dilb3vr5llqy344i6nh7gl07wcssb5dmqrhjwhfqi1mais7b953";
+      sha256 = "17s8s4a1yk9rq21f3kmj9k4dbgvfa3650l8b39nhwybvxl3j5nfv";
     };
 
     propagatedBuildInputs = with self; [
@@ -18722,6 +18868,31 @@ in modules // {
     };
   };
 
+  tqdm = buildPythonPackage rec {
+    name = "tqdm-${version}";
+    version = "3.1.4";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/t/tqdm/${name}.tar.gz";
+      sha256 = "e2dbef0df0fd24c9ae3b2e07bef2a3607ad8431142e76d3294a5a11926d214bf";
+    };
+
+    buildInputs = with self; [ nose coverage pkgs.glibcLocales flake8 ];
+    propagatedBuildInputs = with self; [ matplotlib pandas ];
+
+    preBuild = ''
+      export LC_ALL="en_US.UTF-8"
+    '';
+
+    doCheck = !(isPy27); # Performance test fails
+
+    meta = {
+      description = "A Fast, Extensible Progress Meter";
+      homepage = https://github.com/tqdm/tqdm;
+      license = with licenses; [ mit ];
+    };
+  };
+
   smmap = buildPythonPackage rec {
     name = "smmap-0.9.0";
     disabled = isPyPy;  # This fails the tests if built with pypy
@@ -19026,6 +19197,23 @@ in modules // {
     meta = {
       description = "A backport of the new features added to the unittest testing framework";
       homepage = http://pypi.python.org/pypi/unittest2;
+    };
+  };
+
+  uritemplate_py = buildPythonPackage rec {
+    name = "uritemplate.py-${version}";
+    version = "0.3.0";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/u/uritemplate.py/${name}.tar.gz";
+      sha256 = "0xvvdiwnag2pdi96hjf7v8asdia98flk2rxcjqnwcs3rk99alygx";
+    };
+
+    meta = with stdenv.lib; {
+      homepage = https://github.com/uri-templates/uritemplate-py;
+      description = "Python implementation of URI Template";
+      license = licenses.asl20;
+      maintainers = with maintainers; [ pSub ];
     };
   };
 

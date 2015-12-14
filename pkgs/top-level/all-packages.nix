@@ -1816,6 +1816,8 @@ let
   pgf_graphics = callPackage ../tools/graphics/pgf { };
 
   pigz = callPackage ../tools/compression/pigz { };
+  
+  pixz = callPackage ../tools/compression/pixz { };
 
   pxz = callPackage ../tools/compression/pxz { };
 
@@ -2872,6 +2874,8 @@ let
 
   read-edid = callPackage ../os-specific/linux/read-edid { };
 
+  redir = callPackage ../tools/networking/redir { };
+
   redmine = callPackage ../applications/version-management/redmine { };
 
   rtmpdump = callPackage ../tools/video/rtmpdump { };
@@ -3495,6 +3499,8 @@ let
 
   xbrightness = callPackage ../tools/X11/xbrightness { };
 
+  xprintidle-ng = callPackage ../tools/X11/xprintidle-ng {};
+
   xsettingsd = callPackage ../tools/X11/xsettingsd { };
 
   xsensors = callPackage ../os-specific/linux/xsensors { };
@@ -3813,6 +3819,8 @@ let
   clean = callPackage ../development/compilers/clean { };
 
   closurecompiler = callPackage ../development/compilers/closure { };
+
+  cmdstan = callPackage ../development/compilers/cmdstan { };
 
   cmucl_binary = callPackage_i686 ../development/compilers/cmucl/binary.nix { };
 
@@ -6840,6 +6848,8 @@ let
 
   libjson = callPackage ../development/libraries/libjson { };
 
+  libb64 = callPackage ../development/libraries/libb64 { };
+
   judy = callPackage ../development/libraries/judy { };
 
   keybinder = callPackage ../development/libraries/keybinder {
@@ -6852,9 +6862,9 @@ let
   };
 
   kf515 = recurseIntoAttrs (import ../development/libraries/kde-frameworks-5.15 { inherit pkgs; });
-  kf516 = recurseIntoAttrs (import ../development/libraries/kde-frameworks-5.16 { inherit pkgs; });
+  kf517 = recurseIntoAttrs (import ../development/libraries/kde-frameworks-5.17 { inherit pkgs; });
   kf5_stable = kf515;
-  kf5_latest = kf516;
+  kf5_latest = kf517;
 
   kf5PackagesFun = self: with self; {
 
@@ -6897,6 +6907,7 @@ let
   };
 
   kf515Packages = lib.makeScope kf515.newScope kf5PackagesFun;
+  kf517Packages = lib.makeScope kf517.newScope kf5PackagesFun;
   kf5Packages = kf515Packages;
 
   kinetic-cpp-client = callPackage ../development/libraries/kinetic-cpp-client { };
@@ -8024,16 +8035,21 @@ let
     ffmpeg = ffmpeg_0;
   };
 
-  libressl_2_2 = callPackage ../development/libraries/libressl/2.2.nix { };
-  libressl_2_3 = callPackage ../development/libraries/libressl/2.3.nix { };
   # 2.3 breaks some backward-compability
   libressl = libressl_2_2;
+  libressl_2_2 = callPackage ../development/libraries/libressl/2.2.nix {
+    fetchurl = fetchurlBoot;
+  };
+  libressl_2_3 = callPackage ../development/libraries/libressl/2.3.nix {
+    fetchurl = fetchurlBoot;
+  };
 
   boringssl = callPackage ../development/libraries/boringssl { };
 
   wolfssl = callPackage ../development/libraries/wolfssl { };
 
-  openssl = callPackage ../development/libraries/openssl {
+  openssl = openssl_1_0_1;
+  openssl_1_0_1 = callPackage ../development/libraries/openssl {
     fetchurl = fetchurlBoot;
     cryptodevHeaders = linuxPackages.cryptodev.override {
       fetchurl = fetchurlBoot;
@@ -8332,7 +8348,7 @@ let
   rubberband = callPackage ../development/libraries/rubberband {
     inherit (vamp) vampSDK;
   };
-  
+
   sad = callPackage ../applications/science/logic/sad { };
 
   sbc = callPackage ../development/libraries/sbc { };
@@ -12220,7 +12236,10 @@ let
     lua = lua5;
   };
 
-  ipe = qt5Libs.callPackage ../applications/graphics/ipe { };
+  ipe = qt5Libs.callPackage ../applications/graphics/ipe {
+    ghostscript = ghostscriptX;
+    texlive = texlive.combine { inherit (texlive) scheme-small; };
+  };
 
   iptraf = callPackage ../applications/networking/iptraf { };
 
@@ -14473,8 +14492,15 @@ let
 
   xsokoban = callPackage ../games/xsokoban { };
 
-  zandronum = callPackage ../games/zandronum { };
-  zandronum-server = callPackage ../games/zandronum/server.nix { };
+  zandronum = callPackage ../games/zandronum {
+    fmod = fmod42416;
+    cmake = cmake-2_8;
+  };
+
+  zandronum-server = zandronum.override {
+    serverOnly = true;
+  };
+
   zandronum-bin = callPackage ../games/zandronum/bin.nix { };
 
   zangband = builderDefsPackage (callPackage ../games/zangband) {};

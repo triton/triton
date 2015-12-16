@@ -7661,7 +7661,7 @@ let
     inherit (darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
   });
 
-  libuv = libuvVersions.v1_7_5;
+  libuv = libuvVersions.v1_8_0;
 
   libv4l = lowPrio (v4l_utils.override {
     alsaLib = null;

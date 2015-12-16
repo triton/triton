@@ -1,18 +1,18 @@
-{stdenv, fetchurl, alsaLib, gettext, ncurses, libsamplerate}:
+{ stdenv, fetchurl, alsaLib, gettext, ncurses, libsamplerate, fftw }:
 
 stdenv.mkDerivation rec {
   name = "alsa-utils-${version}";
-  version = "1.0.29";
+  version = "1.1.0";
 
   src = fetchurl {
     urls = [
       "ftp://ftp.alsa-project.org/pub/utils/${name}.tar.bz2"
       "http://alsa.cybermirror.org/utils/${name}.tar.bz2"
     ];
-    sha256 = "16ryhgbapp4pxyvsjc258mcj14wk7x3xs6g9bpnkqj0l7s7haq2i";
+    sha256 = "1wa88wvqcfhak9x3y65wzzwxmmyxb5bv2gyj7lnm653fnwsk271v";
   };
 
-  buildInputs = [ gettext alsaLib ncurses libsamplerate ];
+  buildInputs = [ gettext alsaLib ncurses libsamplerate fftw ];
 
   configureFlags = "--disable-xmlto --with-udev-rules-dir=$(out)/lib/udev/rules.d";
 

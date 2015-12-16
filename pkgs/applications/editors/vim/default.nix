@@ -5,13 +5,13 @@
 
 stdenv.mkDerivation rec {
   name = "vim-${version}";
-  version = "7.4.942";
+  version = "7.4.972";
 
   src = fetchFromGitHub {
     owner = "vim";
     repo = "vim";
     rev = "v${version}";
-    sha256 = "0sssriw63s69fykf60g444340xqpz0vy99i3bbb58hsxga9nz0mh";
+    sha256 = "0gn003zdd4ym41fym0sx8vws2b85va3rl6ig071f59rps4sz12fv";
   };
 
   enableParallelBuilding = true;

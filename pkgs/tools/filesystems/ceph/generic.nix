@@ -263,7 +263,7 @@ stdenv.mkDerivation {
 
   '';
 
-  enableParallelBuilding = false;
+  enableParallelBuilding = true;
 
   meta = {
     homepage = http://ceph.com/;

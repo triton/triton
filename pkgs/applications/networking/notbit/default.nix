@@ -1,17 +1,17 @@
-{ stdenv, fetchgit, autoconf, automake, pkgconfig, openssl }:
+{ stdenv, fetchFromGitHub, autoreconfHook, pkgconfig, openssl }:
 
 stdenv.mkDerivation rec {
-  name = "notbit-git-6f1ca59";
+  name = "notbit-2014-09-10";
 
-  src = fetchgit {
-    url = "git://github.com/bpeel/notbit";
+  src = fetchFromGitHub {
+    owner = "bpeel";
+    repo = "notbit";
     rev = "6f1ca5987c7f217c9c3dd27adf6ac995004c29a1";
-    sha256 = "0h9nzm248pw9wrdsfkr580ghiqvh6mk6vx7r2r752awrc13wvgis";
+    sha256 = "1q3a6ph3bx9ayw3lvjxsrw9vn9h9v02ql5kvjqfb926ypqa9xrm1";
   };
 
-  buildInputs = [ autoconf automake pkgconfig openssl ];
-
-  preConfigure = "autoreconf -vfi";
+  nativeBuildInputs = [ autoreconfHook pkgconfig ];
+  buildInputs = [ openssl ];
 
   meta = with stdenv.lib; { 
     homepage = http://busydoingnothing.co.uk/notbit/;

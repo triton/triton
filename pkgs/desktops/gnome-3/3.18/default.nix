@@ -45,7 +45,7 @@ let
     hitori gnome-taquin
   ];
 
-  inherit (pkgs) glib gtk2 webkitgtk24x gtk3 gtkmm3 libcanberra;
+  inherit (pkgs) glib gtk2 webkitgtk24x gtk3 gtkmm3 libcanberra vala;
   inherit (pkgs.gnome2) ORBit2;
   libsoup = pkgs.libsoup.override { gnomeSupport = true; };
   libchamplain = pkgs.libchamplain.override { libsoup = libsoup; };
@@ -59,7 +59,6 @@ let
   gtk = gtk3;
   gtkmm = gtkmm3;
   gtkvnc = pkgs.gtkvnc.override { enableGTK3 = true; };
-  vala = pkgs.vala_0_26;
   gegl_0_3 = pkgs.gegl_0_3.override { inherit gtk; };
 
 # Simplify the nixos module and gnome packages

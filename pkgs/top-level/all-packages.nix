@@ -5088,7 +5088,7 @@ let
   lua5_3_compat = callPackage ../development/interpreters/lua-5/5.3.nix {
     compat = true;
   };
-  lua5 = lua5_2_compat;
+  lua5 = lua5_3_compat;
   lua = lua5;
 
   lua51Packages = recurseIntoAttrs (callPackage ./lua-packages.nix { lua = lua5_1; });

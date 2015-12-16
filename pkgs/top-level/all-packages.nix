@@ -1622,7 +1622,9 @@ let
 
   gitlab-git-http-server = callPackage ../applications/version-management/gitlab-git-http-server { };
 
-  glusterfs = callPackage ../tools/filesystems/glusterfs { };
+  glusterfs = callPackage ../tools/filesystems/glusterfs {
+    flex = flex_2_5_35;
+  };
 
   glmark2 = callPackage ../tools/graphics/glmark2 { };
 

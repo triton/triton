@@ -1,4 +1,4 @@
-{stdenv, fetchurl, fuse, bison, flex_2_5_35, openssl, python, ncurses, readline,
+{stdenv, fetchurl, fuse, bison, flex, openssl, python, ncurses, readline,
  autoconf, automake, libtool, pkgconfig, zlib, libaio, libxml2, acl, sqlite
  , liburcu, attr
 }:
@@ -6,14 +6,15 @@ let
   s = # Generated upstream information 
   rec {
     baseName="glusterfs";
-    version="3.7.3";
+    major="3.7";
+    minor="6";
+    version="${major}.${minor}";
     name="${baseName}-${version}";
-    hash="0xdzxprsi0gybv6jdp0ycfpsxzijwfrm3217fk3fnixcs92frshv";
-    url="http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.3/glusterfs-3.7.3.tar.gz";
-    sha256="0xdzxprsi0gybv6jdp0ycfpsxzijwfrm3217fk3fnixcs92frshv";
+    url="http://download.gluster.org/pub/gluster/glusterfs/${major}/${version}/${name}.tar.gz";
+    sha256="01fg132k4gvvx5p0bi88956yzd77pcnw3iyi88vrsncmpnvg10xv";
   };
   buildInputs = [
-    fuse bison flex_2_5_35 openssl python ncurses readline
+    fuse bison flex openssl python ncurses readline
     autoconf automake libtool pkgconfig zlib libaio libxml2
     acl sqlite liburcu attr
   ];

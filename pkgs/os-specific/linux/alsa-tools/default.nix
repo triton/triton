@@ -2,14 +2,14 @@
 
 stdenv.mkDerivation rec {
   name = "alsa-tools-${version}";
-  version = "1.0.29";
+  version = "1.1.0";
 
   src = fetchurl {
     urls = [
       "ftp://ftp.alsa-project.org/pub/tools/${name}.tar.bz2"
       "http://alsa.cybermirror.org/tools/${name}.tar.bz2"
     ];
-    sha256 = "1lgvyb81md25s9ciswpdsbibmx9s030kvyylf0673w3kbamz1awl";
+    sha256 = "1lgayb81md25s9ciswpdsbibmx9s030kvyylf0673w3kbamz1awl";
   };
 
   buildInputs = [ alsaLib pkgconfig gtk gtk3 fltk13 ];

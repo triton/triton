@@ -87,7 +87,8 @@ in
 
     systemd.services.miniupnpd = {
       description = "MiniUPnP daemon";
-      after = [ "network.target" ];
+      after = [ "network.target" "firewall.service" ];
+      requires = [ "firewall.service" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         ExecStart = "${pkgs.miniupnpd}/bin/miniupnpd -f ${configFile}";

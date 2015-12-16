@@ -14,11 +14,11 @@ assert harfbuzzSupport -> harfbuzz != null;
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "libass-${version}";
-  version = "0.12.2";
+  version = "0.13.1";
 
   src = fetchurl {
     url = "https://github.com/libass/libass/releases/download/${version}/${name}.tar.xz";
-    sha256 = "1qzibgqmnnqk2r116lpk1br764g0v74f2zp12y5id0p1plaing37";
+    sha256 = "1rrz6is2blx8jqyydcz71y2f5f948blgx14jzi3an756fqc6p8sa";
   };
 
   configureFlags = [

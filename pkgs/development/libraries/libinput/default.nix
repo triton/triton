@@ -11,11 +11,11 @@ assert testsSupport -> check != null && valgrind != null;
 
 with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "libinput-1.1.2";
+  name = "libinput-1.1.3";
 
   src = fetchurl {
     url = "http://www.freedesktop.org/software/libinput/${name}.tar.xz";
-    sha256 = "113sv5hhki5yhxw5r88mn99fnify1lgsilqybvlgbw5830ks68x3";
+    sha256 = "0plrd60wxxivh9427kb9zy5b4w2039lwxp8amxbikfg2j69z6nmr";
   };
 
   configureFlags = [

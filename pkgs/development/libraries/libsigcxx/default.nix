@@ -12,6 +12,9 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
 
+  # This is to fix c++11 comaptability with other applications
+  setupHook = ./setup-hook.sh;
+
   meta = with stdenv.lib; {
     homepage = http://libsigc.sourceforge.net/;
     description = "A typesafe callback system for standard C++";

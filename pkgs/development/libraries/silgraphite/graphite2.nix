@@ -1,15 +1,15 @@
-{ stdenv, fetchurl, pkgconfig, freetype, cmake }:
+{ stdenv, fetchurl, pkgconfig, cmake }:
 
 stdenv.mkDerivation rec {
-  version = "1.2.4";
+  version = "1.3.3";
   name = "graphite2-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/silgraphite/graphite2/${name}.tgz";
-    sha256 = "00xhv1mp640fr3wmdzwn4yz0g56jd4r9fb7b02mc1g19h0bdbhsb";
+    sha256 = "1n22vvi4jl83m4sqhvd7v31bhyhyd8j6c3yjgh4zjfyrvid16jrg";
   };
 
-  buildInputs = [ pkgconfig freetype cmake ];
+  nativeBuildInputs = [ pkgconfig cmake ];
 
   patches = stdenv.lib.optionals stdenv.isDarwin [ ./macosx.patch ];
 

@@ -1,12 +1,19 @@
-{ stdenv, fetchurl }:
+{ stdenv, fetchurl, autoreconfHook }:
 
 stdenv.mkDerivation rec {
-  name = "jbig2dec-0.11";
+  name = "jbig2dec-0.12";
 
   src = fetchurl {
-    url = "mirror://sourceforge/jbig2dec/${name}.tar.xz";
-    sha256 = "1xddc30garsg5j8p348cz5l8vn8j7723c0sykv0kc1w5ihaghsq1";
+    url = "http://downloads.ghostscript.com/public/jbig2dec/${name}.tar.gz";
+    sha256 = "1w7bwpibw96srv8aay950rrcg002fhdlm3f6qfifjipffp6g5idw";
   };
+
+  nativeBuildInputs = [ autoreconfHook ];
+
+  # Fix the lack of memento.h
+  postInstall = ''
+    cp memento.h $out/include
+  '';
 
   meta = {
     homepage = http://jbig2dec.sourceforge.net/;

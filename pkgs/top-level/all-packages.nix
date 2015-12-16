@@ -2319,7 +2319,7 @@ let
 
   msf = callPackage ../tools/security/metasploit { };
 
-  mssys = callPackage ../tools/misc/mssys { };
+  ms-sys = callPackage ../tools/misc/ms-sys { };
 
   mtdutils = callPackage ../tools/filesystems/mtdutils { };
 
@@ -4536,6 +4536,8 @@ let
 
     ipaddr = callPackage ../development/ocaml-modules/ipaddr { };
 
+    iso8601 = callPackage ../development/ocaml-modules/iso8601 { };
+
     javalib = callPackage ../development/ocaml-modules/javalib {
       extlib = ocaml_extlib_maximal;
     };
@@ -4680,6 +4682,8 @@ let
     piqi-ocaml = callPackage ../development/ocaml-modules/piqi-ocaml { };
 
     re2 = callPackage ../development/ocaml-modules/re2 { };
+
+    tuntap = callPackage ../development/ocaml-modules/tuntap { };
 
     tyxml = callPackage ../development/ocaml-modules/tyxml { };
 
@@ -5042,6 +5046,10 @@ let
   erlang_odbc_javac = erlangR18_odbc_javac;
 
   rebar = callPackage ../development/tools/build-managers/rebar { };
+  rebar3 = callPackage ../development/tools/build-managers/rebar3 { };
+  fetchHex = callPackage ../development/tools/build-managers/rebar3/fetch-hex.nix { };
+
+  erlangPackages = callPackage ../development/erlang-modules { };
 
   elixir = callPackage ../development/interpreters/elixir { };
 
@@ -6859,53 +6867,9 @@ let
   };
 
   kf515 = recurseIntoAttrs (import ../development/libraries/kde-frameworks-5.15 { inherit pkgs; });
-  kf517 = recurseIntoAttrs (import ../development/libraries/kde-frameworks-5.17 { inherit pkgs; });
+  kf517 = import ../development/libraries/kde-frameworks-5.17 { inherit pkgs; };
   kf5_stable = kf515;
   kf5_latest = kf517;
-
-  kf5PackagesFun = self: with self; {
-
-    fcitx-qt5 = callPackage ../tools/inputmethods/fcitx/fcitx-qt5.nix { };
-
-    k9copy = callPackage ../applications/video/k9copy {};
-
-    quassel = callPackage ../applications/networking/irc/quassel/qt-5.nix {
-      monolithic = true;
-      daemon = false;
-      client = false;
-      withKDE = true;
-      dconf = gnome3.dconf;
-      tag = "-kf5";
-    };
-
-    quasselClient = quassel.override {
-      monolithic = false;
-      client = true;
-      tag = "-client-kf5";
-    };
-
-    quassel_qt5 = quassel.override {
-      withKDE = false;
-      tag = "-qt5";
-    };
-
-    quasselClient_qt5 = quasselClient.override {
-      withKDE = false;
-      tag = "-client-qt5";
-    };
-
-    quasselDaemon = quassel.override {
-      monolithic = false;
-      daemon = true;
-      tag = "-daemon-qt5";
-      withKDE = false;
-    };
-
-  };
-
-  kf515Packages = lib.makeScope kf515.newScope kf5PackagesFun;
-  kf517Packages = lib.makeScope kf517.newScope kf5PackagesFun;
-  kf5Packages = kf515Packages;
 
   kinetic-cpp-client = callPackage ../development/libraries/kinetic-cpp-client { };
 
@@ -7762,6 +7726,8 @@ let
   libwacom = callPackage ../development/libraries/libwacom { };
 
   lightning = callPackage ../development/libraries/lightning { };
+
+  lightlocker = callPackage ../misc/screensavers/light-locker { };
 
   lirc = callPackage ../development/libraries/lirc { };
 
@@ -10386,6 +10352,8 @@ let
 
   numactl = callPackage ../os-specific/linux/numactl { };
 
+  numad = callPackage ../os-specific/linux/numad { };
+
   open-vm-tools = callPackage ../applications/virtualization/open-vm-tools {
     inherit (gnome) gtk gtkmm;
   };
@@ -11381,6 +11349,15 @@ let
 
   cutecom = callPackage ../tools/misc/cutecom { };
 
+  cutegram =
+    let cp = qt5Libs.callPackage;
+    in cp ../applications/networking/instant-messengers/telegram/cutegram rec {
+      libqtelegram-aseman-edition = cp ../applications/networking/instant-messengers/telegram/libqtelegram-aseman-edition { };
+      telegram-qml = cp ../applications/networking/instant-messengers/telegram/telegram-qml {
+        inherit libqtelegram-aseman-edition;
+      };
+    };
+
   cvs = callPackage ../applications/version-management/cvs { };
 
   cvsps = callPackage ../applications/version-management/cvsps { };
@@ -12290,7 +12267,7 @@ let
   };
 
   kdeApps_15_08 = recurseIntoAttrs (import ../applications/kde-apps-15.08 { inherit pkgs; });
-  kdeApps_15_12 = recurseIntoAttrs (import ../applications/kde-apps-15.12 { inherit pkgs; });
+  kdeApps_15_12 = import ../applications/kde-apps-15.12 { inherit pkgs; };
   kdeApps_stable = kdeApps_15_08;
   kdeApps_latest = kdeApps_15_12;
 
@@ -12549,6 +12526,8 @@ let
   };
 
   mopidy = callPackage ../applications/audio/mopidy { };
+
+  mopidy-gmusic = callPackage ../applications/audio/mopidy-gmusic { };
 
   mopidy-spotify = callPackage ../applications/audio/mopidy-spotify { };
 
@@ -13262,18 +13241,21 @@ let
 
   sublime3 = lowPrio (callPackage ../applications/editors/sublime3 { });
 
-  subversion = callPackage ../applications/version-management/subversion/default.nix {
-    bdbSupport = true;
-    httpServer = false;
-    httpSupport = true;
-    pythonBindings = false;
-    perlBindings = false;
-    javahlBindings = false;
-    saslSupport = false;
-    sasl = cyrus_sasl;
-  };
+  inherit (callPackages ../applications/version-management/subversion/default.nix {
+      bdbSupport = true;
+      httpServer = false;
+      httpSupport = true;
+      pythonBindings = false;
+      perlBindings = false;
+      javahlBindings = false;
+      saslSupport = false;
+      sasl = cyrus_sasl;
+    })
+    subversion18 subversion19;
 
-  subversionClient = appendToName "client" (subversion.override {
+  subversion = pkgs.subversion19;
+
+  subversionClient = appendToName "client" (pkgs.subversion.override {
     bdbSupport = false;
     perlBindings = true;
     pythonBindings = true;
@@ -13331,7 +13313,7 @@ let
 
   taskserver = callPackage ../servers/misc/taskserver { };
 
-  telegram-cli = callPackage ../applications/networking/instant-messengers/telegram-cli/default.nix { };
+  telegram-cli = callPackage ../applications/networking/instant-messengers/telegram/telegram-cli/default.nix { };
 
   telepathy_gabble = callPackage ../applications/networking/instant-messengers/telepathy/gabble { };
 
@@ -14377,6 +14359,8 @@ let
 
   tennix = callPackage ../games/tennix { };
 
+  terraria-server = callPackage ../games/terraria-server/default.nix { };
+
   tibia = callPackage_i686 ../games/tibia { };
 
   tintin = callPackage ../games/tintin { };
@@ -14565,7 +14549,11 @@ let
         libcanberra = libcanberra_kde;
         boost = boost155;
         kdelibs = kdeApps_15_08.kdelibs;
-        subversionClient = subversionClient.override { branch = "1.8"; };
+        subversionClient = pkgs.subversion18.override {
+          bdbSupport = false;
+          perlBindings = true;
+          pythonBindings = true;
+        };
       }
       ../desktops/kde-4.14;
 
@@ -14786,11 +14774,56 @@ let
   numix-gtk-theme = callPackage ../misc/themes/gtk3/numix-gtk-theme { };
 
   plasma54 = recurseIntoAttrs (import ../desktops/plasma-5.4 { inherit pkgs; });
-  plasma55 = recurseIntoAttrs (import ../desktops/plasma-5.5 { inherit pkgs; });
+  plasma55 = import ../desktops/plasma-5.5 { inherit pkgs; };
   plasma5_stable = plasma54;
   plasma5_latest = plasma55;
 
-  kde5 = kf5_stable // plasma5_stable // kdeApps_stable;
+  kde5PackagesFun = self: with self; {
+
+    fcitx-qt5 = callPackage ../tools/inputmethods/fcitx/fcitx-qt5.nix { };
+
+    k9copy = callPackage ../applications/video/k9copy {};
+
+    quassel = callPackage ../applications/networking/irc/quassel/qt-5.nix {
+      monolithic = true;
+      daemon = false;
+      client = false;
+      withKDE = true;
+      dconf = gnome3.dconf;
+      tag = "-kf5";
+    };
+
+    quasselClient = quassel.override {
+      monolithic = false;
+      client = true;
+      tag = "-client-kf5";
+    };
+
+    quassel_qt5 = quassel.override {
+      withKDE = false;
+      tag = "-qt5";
+    };
+
+    quasselClient_qt5 = quasselClient.override {
+      withKDE = false;
+      tag = "-client-qt5";
+    };
+
+    quasselDaemon = quassel.override {
+      monolithic = false;
+      daemon = true;
+      tag = "-daemon-qt5";
+      withKDE = false;
+    };
+
+  };
+
+  kde5 = kf5_stable // plasma5_stable // kdeApps_stable // kde5PackagesFun kde5;
+
+  kde5_latest =
+    recurseIntoAttrs
+    (lib.makeScope qt55Libs.newScope (self:
+      kf5_latest self // plasma5_latest self // kdeApps_latest self // kde5PackagesFun self));
 
   theme-vertex = callPackage ../misc/themes/vertex { };
 
@@ -15814,11 +15847,11 @@ aliases = with self; rec {
   lttngTools = lttng-tools;  # added 2014-07-31
   lttngUst = lttng-ust;  # added 2014-07-31
   nfsUtils = nfs-utils;  # added 2014-12-06
-  quassel_qt5 = kf5Packages.quassel_qt5; # added 2015-09-30
-  quasselClient_qt5 = kf5Packages.quasselClient_qt5; # added 2015-09-30
-  quasselDaemon_qt5 = kf5Packages.quasselDaemon; # added 2015-09-30
-  quassel_kf5 = kf5Packages.quassel; # added 2015-09-30
-  quasselClient_kf5 = kf5Packages.quasselClient; # added 2015-09-30
+  quassel_qt5 = kde5.quassel_qt5; # added 2015-09-30
+  quasselClient_qt5 = kde5.quasselClient_qt5; # added 2015-09-30
+  quasselDaemon_qt5 = kde5.quasselDaemon; # added 2015-09-30
+  quassel_kf5 = kde5.quassel; # added 2015-09-30
+  quasselClient_kf5 = kde5.quasselClient; # added 2015-09-30
   rdiff_backup = rdiff-backup;  # added 2014-11-23
   rssglx = rss-glx; #added 2015-03-25
   rxvt_unicode_with-plugins = rxvt_unicode-with-plugins; # added 2015-04-02
@@ -15832,6 +15865,7 @@ aliases = with self; rec {
   pidginlatexSF = pidginlatex; # added 2014-11-02
   tftp_hpa = tftp-hpa; # added 2015-04-03
   manpages = man-pages; # added 2015-12-06
+  mssys = ms-sys; # added 2015-12-13
 };
 
 tweakAlias = _n: alias: with lib;

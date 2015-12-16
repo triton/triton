@@ -607,7 +607,7 @@ in modules // {
       description = "A simple automation tool";
       license = with licenses; [ gpl3] ;
       maintainers = with maintainers; [ joamaki ];
-      platforms = with platforms; [ linux darwin ];
+      platforms = with platforms; linux ++ darwin;
     };
   };
 
@@ -639,7 +639,7 @@ in modules // {
       description = "A simple automation tool";
       license     = with licenses; [ gpl3 ];
       maintainers = with maintainers; [ copumpkin ];
-      platforms   = with platforms; [ linux darwin ];
+      platforms   = with platforms; linux ++ darwin;
     };
   };
 
@@ -1084,8 +1084,80 @@ in modules // {
       md5 = "5499efd85c54c757c0e757b5407ee47f";
     };
 
-    propagatedBuildInputs = with self; [ dateutil futures pyopenssl requests ];
+    propagatedBuildInputs = with self; [ dateutil futures pyopenssl requests2 ];
 
+    meta = {
+      description = "Microsoft Azure SDK for Python";
+      homepage = "http://azure.microsoft.com/en-us/develop/python/";
+      license = licenses.asl20;
+      maintainers = with maintainers; [ olcai ];
+    };
+  };
+
+  azure-nspkg = buildPythonPackage rec {
+    version = "1.0.0";
+    name = "azure-nspkg-${version}";
+    src = pkgs.fetchurl {
+      url = https://pypi.python.org/packages/source/a/azure-nspkg/azure-nspkg-1.0.0.zip;
+      sha256 = "1xqvc8by1lbd7j9dxyly03jz3rgbmnsiqnqgydhkf4pa2mn2hgr9";
+    };
+    meta = {
+      description = "Microsoft Azure SDK for Python";
+      homepage = "http://azure.microsoft.com/en-us/develop/python/";
+      license = licenses.asl20;
+      maintainers = with maintainers; [ olcai ];
+    };
+  };
+
+  azure-common = buildPythonPackage rec {
+    version = "1.0.0";
+    name = "azure-common-${version}";
+    src = pkgs.fetchurl {
+      url = https://pypi.python.org/packages/source/a/azure-common/azure-common-1.0.0.zip;
+      sha256 = "074rwwy8zzs7zw3nww5q2wg5lxgdc4rmypp2gfc9mwsz0gb70491";
+    };
+    propagatedBuildInputs = with self; [ azure-nspkg ];
+    postInstall = ''
+      echo "__import__('pkg_resources').declare_namespace(__name__)" >> "$out/lib/${python.libPrefix}"/site-packages/azure/__init__.py
+    '';
+    meta = {
+      description = "Microsoft Azure SDK for Python";
+      homepage = "http://azure.microsoft.com/en-us/develop/python/";
+      license = licenses.asl20;
+      maintainers = with maintainers; [ olcai ];
+    };
+  };
+
+  azure-storage = buildPythonPackage rec {
+    version = "0.20.3";
+    name = "azure-storage-${version}";
+    src = pkgs.fetchurl {
+      url = https://pypi.python.org/packages/source/a/azure-storage/azure-storage-0.20.3.zip;
+      sha256 = "06bmw6k2000kln5jwk5r9bgcalqbyvqirmdh9gq4s6nb4fv3c0jb";
+    };
+    propagatedBuildInputs = with self; [ azure-common futures dateutil requests2 ];
+    postInstall = ''
+      echo "__import__('pkg_resources').declare_namespace(__name__)" >> "$out/lib/${python.libPrefix}"/site-packages/azure/__init__.py
+    '';
+    meta = {
+      description = "Microsoft Azure SDK for Python";
+      homepage = "http://azure.microsoft.com/en-us/develop/python/";
+      license = licenses.asl20;
+      maintainers = with maintainers; [ olcai ];
+    };
+  };
+
+  azure-servicemanagement-legacy = buildPythonPackage rec {
+    version = "0.20.1";
+    name = "azure-servicemanagement-legacy-${version}";
+    src = pkgs.fetchurl {
+      url = https://pypi.python.org/packages/source/a/azure-servicemanagement-legacy/azure-servicemanagement-legacy-0.20.1.zip;
+      sha256 = "17dwrp99sx5x9cm4vldkaxhki9gbd6dlafa0lpr2n92xhh2838zs";
+    };
+    propagatedBuildInputs = with self; [ azure-common requests2 ];
+    postInstall = ''
+      echo "__import__('pkg_resources').declare_namespace(__name__)" >> "$out/lib/${python.libPrefix}"/site-packages/azure/__init__.py
+    '';
     meta = {
       description = "Microsoft Azure SDK for Python";
       homepage = "http://azure.microsoft.com/en-us/develop/python/";
@@ -4695,11 +4767,11 @@ in modules // {
   };
 
   gmusicapi = with pkgs; buildPythonPackage rec {
-    name = "gmusicapi-4.0.0";
+    name = "gmusicapi-7.0.0";
 
     src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/g/gmusicapi/gmusicapi-4.0.0.tar.gz";
-      md5 = "12ba66607531978b349c7035c9bab311";
+      url = "https://pypi.python.org/packages/source/g/gmusicapi/gmusicapi-7.0.0.tar.gz";
+      sha256 = "1zji4cgylyzz97cz69lywkbsn5nvvzrhk7iaqnpqpfvj9gwdchwn";
     };
 
     propagatedBuildInputs = with self; [
@@ -4708,14 +4780,16 @@ in modules // {
       mutagen
       protobuf
       setuptools
-      requests
+      requests2
       dateutil
       proboscis
       mock
       appdirs
       oauth2client
+      pyopenssl
+      gpsoauth
+      MechanicalSoup
     ];
-    doCheck = false;
 
     meta = {
       description = "An unofficial API for Google Play Music";
@@ -4873,6 +4947,38 @@ in modules // {
       description = "Google Play Downloader via Command line";
       license = licenses.agpl3Plus;
       maintainers = with maintainers; [ DamienCassou ];
+    };
+  };
+
+  gpsoauth = buildPythonPackage rec {
+    version = "0.0.4";
+    name = "gpsoauth-${version}";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/g/gpsoauth/${name}.tar.gz";
+      sha256 = "1mhd2lkl1f4fmia1cwxwik8gvqr5q16scjip7kfwzadh9a11n9kw";
+    };
+
+    propagatedBuildInputs = with self; [
+      cffi
+      cryptography
+      enum34
+      idna
+      ipaddress
+      ndg-httpsclient
+      pyopenssl
+      pyasn1
+      pycparser
+      pycrypto
+      requests2
+      six
+    ];
+
+    meta = {
+      description = "A python client library for Google Play Services OAuth.";
+      homepage = "https://github.com/simon-weber/gpsoauth";
+      license = licenses.mit;
+      maintainers = with maintainers; [ jgillich ];
     };
   };
 
@@ -9921,6 +10027,25 @@ in modules // {
     };
   });
 
+  MechanicalSoup = buildPythonPackage rec {
+    name = "MechanicalSoup-${version}";
+    version = "0.4.0";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/M/MechanicalSoup/${name}.zip";
+      sha256 = "02jkwly4gw1jqm55l4wwn0j0ggnysx55inw9j96bif5l49z5cacd";
+    };
+
+    propagatedBuildInputs = with self; [ requests2 beautifulsoup4 six ];
+
+    meta = {
+      description = "A Python library for automating interaction with websites";
+      homepage = https://github.com/hickford/MechanicalSoup;
+      license = licenses.mit;
+      maintainers = with maintainers; [ jgillich ];
+    };
+  };
+
 
   meld3 = buildPythonPackage rec {
     name = "meld3-1.0.0";
@@ -10539,7 +10664,7 @@ in modules // {
       '';
       homepage = https://thp.io/2010/mygpoclient/;
       license = with licenses; [ gpl3 ];
-      platforms = with platforms; [ linux darwin ];
+      platforms = with platforms; linux ++ darwin;
       maintainers = with maintainers; [ skeidel ];
     };
   };
@@ -14840,6 +14965,25 @@ in modules // {
       description = "A Python wrapper for the GPGME library";
       license = licenses.lgpl21;
       maintainers = with maintainers; [ garbas ];
+    };
+  };
+
+  pyrr = buildPythonPackage rec {
+    name = "pyrr-${version}";
+    version = "0.7.2";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/p/pyrr/pyrr-${version}.tar.gz";
+      sha256 = "04a65a9fb5c746b41209f55b21abf47a0ef80a4271159d670ca9579d9be3b4fa";
+    };
+
+    buildInputs = with self; [ setuptools ];
+    propagatedBuildInputs = with self; [ multipledispatch numpy ];
+
+    meta = {
+      description = "3D mathematical functions using NumPy";
+      homepage = https://github.com/adamlwgriffiths/Pyrr/;
+      license = licenses.bsd2;
     };
   };
 

@@ -55,7 +55,7 @@ diff -r 1a2e8b6e713c -r 190fb1c96de8 lib/util/secload.c
 +    if (!c) { /* referencePath doesn't contain a / means that dladdr gave us argv[0]
 +               * and program was called from $PATH. Hack to get libs from NIX_NSS_LIBDIR */
 +        referencePath = NIX_NSS_LIBDIR;
-+        c = &referencePath[sizeof(NIX_NSS_LIBDIR) - 1]; /* last / */
++        c = (char*) &referencePath[sizeof(NIX_NSS_LIBDIR) - 1]; /* last / */
 +    }
      if (c) {
          size_t referencePathSize = 1 + c - referencePath;

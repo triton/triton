@@ -40,6 +40,8 @@ in stdenv.mkDerivation rec {
     "NSS_USE_SYSTEM_SQLITE=1"
   ] ++ stdenv.lib.optional stdenv.is64bit "USE_64=1";
 
+  NIX_CFLAGS_COMPILE = "-Wno-error";
+
   postInstall = ''
     rm -rf $out/private
     mv $out/public $out/include

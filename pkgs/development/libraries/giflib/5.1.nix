@@ -1,13 +1,13 @@
-{stdenv, fetchurl, xmlto, docbook_xml_dtd_412, docbook_xsl, libxml2 }:
+{ stdenv, fetchurl }:
 
-stdenv.mkDerivation {
-  name = "giflib-5.1.0";
+stdenv.mkDerivation rec {
+  name = "giflib-5.1.1";
+
   src = fetchurl {
-    url = mirror://sourceforge/giflib/giflib-5.1.0.tar.bz2;
-    sha256 = "06wd32akyawppar9mqdvyhcw47ssdfcj39lryim2w4v83i7nkv2s";
+    url = "mirror://sourceforge/giflib/${name}.tar.bz2";
+    sha256 = "1z1gzq16sdya8xnl5qjc07634kkwj5m0n3bvvj4v9j11xfn1841r";
   };
 
-  buildInputs = [ xmlto docbook_xml_dtd_412 docbook_xsl libxml2 ];
   meta = {
     description = "A library for reading and writing gif images";
     platforms = stdenv.lib.platforms.unix;

@@ -3,7 +3,7 @@
 let
 
   common = { pname, sha256 }: stdenv.mkDerivation rec {
-    name = "${pname}-1.78.1";
+    name = "${pname}-1.79.0";
 
     src = fetchurl {
       url = "mirror://sourceforge/docbook/${name}.tar.bz2";
@@ -36,12 +36,12 @@ in {
 
   docbook_xsl = common {
     pname = "docbook-xsl";
-    sha256 = "0rxl013ncmz1n6ymk2idvx3hix9pdabk8xn01cpcv32wmfb753y9";
+    sha256 = "01nn8gmzdnfvig7cnhb8pbr7xn9h786hhzz5ygs7vjvmvk7sjyyy";
   };
 
   docbook_xsl_ns = common {
     pname = "docbook-xsl-ns";
-    sha256 = "1x3sc0axk9z3i6n0jhlsmzlmb723a4sjgslm9g12by6phirdx3ng";
+    sha256 = "1zjfmilm8rmrshxrwnwc2rrqz48hz2jg7vzgpb79z6vz2mlgi4fm";
   };
 
 }

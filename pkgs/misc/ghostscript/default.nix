@@ -1,6 +1,5 @@
-{ stdenv, fetchurl, pkgconfig, zlib, expat, openssl
-, libjpeg, libpng, libtiff, freetype, fontconfig, lcms2, libpaper, jbig2dec
-, libiconv
+{ stdenv, fetchurl, pkgconfig, zlib, expat, openssl, libidn, libpaper, dbus, libjpeg
+, freetype, fontconfig, libpng, lcms2, jbig2dec
 , x11Support ? false, xlibsWrapper ? null
 , cupsSupport ? false, cups ? null
 }:
@@ -8,8 +7,8 @@
 assert x11Support -> xlibsWrapper != null;
 assert cupsSupport -> cups != null;
 let
-  version = "9.15";
-  sha256 = "0p1isp6ssfay141klirn7n9s8b546vcz6paksfmksbwy0ljsypg6";
+  version = "9.18";
+  sha256 = "18ad90za28dxybajqwf3y3dld87cgkx1ljllmcnc7ysspfxzbnl3";
 
   fonts = stdenv.mkDerivation {
     name = "ghostscript-fonts";
@@ -45,51 +44,47 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
-  buildInputs =
-    [ pkgconfig zlib expat openssl
-      libjpeg libpng libtiff freetype fontconfig lcms2 libpaper jbig2dec
-      libiconv
-    ]
+  nativeBuildInputs = [ pkgconfig ];
+  buildInputs = [ libidn libpaper dbus freetype fontconfig libjpeg zlib libpng lcms2 jbig2dec ]
     ++ stdenv.lib.optional x11Support xlibsWrapper
     ++ stdenv.lib.optional cupsSupport cups
-    # [] # maybe sometimes jpeg2000 support
     ;
 
+  NIX_ZLIB_INCLUDE = "${zlib}/include";
+
   patches = [
+    ./fix-system-zlib.patch
+    ./fix-ijs-device.patch
+    ./add-gserrors.patch
     ./urw-font-files.patch
-    # fetched from debian's ghostscript 9.15_dfsg-1 (called 020150707~0c0b085.patch there)
-    ./CVE-2015-3228.patch
   ];
 
   makeFlags = [ "cups_serverroot=$(out)" "cups_serverbin=$(out)/lib/cups" ];
 
   preConfigure = ''
-    rm -rf jpeg libpng zlib jasper expat tiff lcms{,2} jbig2dec openjpeg freetype cups/libs
+    rm -r freetype jbig2dec jpeg lcms2 libpng tiff zlib ijs
 
     sed "s@if ( test -f \$(INCLUDE)[^ ]* )@if ( true )@; s@INCLUDE=/usr/include@INCLUDE=/no-such-path@" -i base/unix-aux.mak
   '';
 
   configureFlags =
     [ "--with-system-libtiff"
+      "--enable-fontconfig"
+      "--enable-freetype"
       "--enable-dynamic"
       (if x11Support then "--with-x" else "--without-x")
       (if cupsSupport then "--enable-cups" else "--disable-cups")
     ];
 
   doCheck = true;
-  preCheck = "mkdir ./obj";
-  # parallel check sometimes gave: Fatal error: can't create ./obj/whitelst.o
 
   # don't build/install statically linked bin/gs
-  buildFlags = "so";
-  installTargets="soinstall";
+  installTargets="install-so";
 
   postInstall = ''
     ln -s gsc "$out"/bin/gs
-
-    mkdir -p "$doc/share/ghostscript/${version}"
-    mv "$out/share/ghostscript/${version}"/{doc,examples} "$doc/share/ghostscript/${version}/"
-
+    mkdir -p "$doc/share/ghostscript"
+    mv "$out/share/ghostscript/${version}" "$doc/share/ghostscript/${version}"
     ln -s "${fonts}" "$out/share/ghostscript/fonts"
   '';
 

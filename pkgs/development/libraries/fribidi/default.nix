@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
   name = "fribidi-${version}";
-  version = "0.19.6";
+  version = "0.19.7";
   
   src = fetchurl {
     url = "http://fribidi.org/download/${name}.tar.bz2";
-    sha256 = "0zg1hpaml34ny74fif97j7ngrshlkl3wk3nja3gmlzl17i1bga6b";
+    sha256 = "13jsb5qadlhsaxkbrb49nqslmbh904vvzhsm5mm2ghmv29i2l8h8";
   };
 
   meta = with stdenv.lib; {

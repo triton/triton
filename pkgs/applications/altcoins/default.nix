@@ -1,4 +1,4 @@
-{ callPackage, pkgs }:
+{ callPackage }:
 
 rec {
 
@@ -21,6 +21,9 @@ rec {
 
   namecoin  = callPackage ./namecoin.nix  { inherit namecoind; };
   namecoind = callPackage ./namecoind.nix { };
+
+  namecoin-core = callPackage ./namecoin-core.nix { withGui = true; };
+  namecoin-cored = callPackage ./namecoin-core.nix { withGui = false; };
 
   primecoin  = callPackage ./primecoin.nix { withGui = true; };
   primecoind = callPackage ./primecoin.nix { withGui = false; };

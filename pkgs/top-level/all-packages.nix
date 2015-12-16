@@ -11103,11 +11103,7 @@ let
 
   schismtracker = callPackage ../applications/audio/schismtracker { };
 
-  altcoins = recurseIntoAttrs ( callPackage ../applications/altcoins {
-    callPackage = newScope { boost = boost155; };
-  } );
-  bitcoin = altcoins.bitcoin;
-  bitcoin-xt = altcoins.bitcoin-xt;
+  altcoins = recurseIntoAttrs (callPackage ../applications/altcoins { });
 
   aumix = callPackage ../applications/audio/aumix {
     gtkGUI = false;

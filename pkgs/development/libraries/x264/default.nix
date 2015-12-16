@@ -1,12 +1,11 @@
-{stdenv, fetchurl, yasm, enable10bit ? false}:
+{ stdenv, fetchurl, yasm, enable10bit ? false }:
 
 stdenv.mkDerivation rec {
-  version = "snapshot-20141218-2245-stable";
-  name = "x264-20141218-2245";
+  name = "x264-snapshot-20151213-2245";
 
   src = fetchurl {
-    url = "ftp://ftp.videolan.org/pub/videolan/x264/snapshots/x264-${version}.tar.bz2";
-    sha256 = "1gp1f0382vh2hmgc23ldqyywcfljg8lsgl2849ymr14r6gxfh69m";
+    url = "ftp://ftp.videolan.org/pub/videolan/x264/snapshots/${name}.tar.bz2";
+    sha256 = "042d9hn6w0yy9k0r596lpvi73p7fk63jj6iyp3mdvlr87247j4zr";
   };
 
   patchPhase = ''

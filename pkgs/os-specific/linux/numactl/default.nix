@@ -1,11 +1,11 @@
 { stdenv, fetchurl, autoreconfHook }:
 
 stdenv.mkDerivation rec {
-  name = "numactl-2.0.10";
+  name = "numactl-2.0.11";
 
   src = fetchurl {
     url = "ftp://oss.sgi.com/www/projects/libnuma/download/${name}.tar.gz";
-    sha256 = "0qfv2ks6d3gm0mw5sj4cbhsd7cbsb7qm58xvchl2wfzifkzcinnv";
+    sha256 = "0qbqa9gac2vlahrngi553hws2mqgqdwv2lc69a3yx4gq6l90j325";
   };
 
   nativeBuildInputs = [ autoreconfHook ];

@@ -67,7 +67,15 @@ stdenv.mkDerivation rec {
     inherit sha256;
   };
 
-  patchPhase = ''patchShebangs .'';
+  postPatch = ''
+    patchShebangs .
+    sed -i libavcodec/libvpxenc.c \
+      -e '/VP8E_UPD_ENTROPY/d' \
+      -e '/VP8E_USE_REFERENCE/d' \
+      -e '/VP8E_UPD_REFERENCE/d' \
+      -e '/VP8D_USE_REFERENCE/d' \
+
+  '';
 
   configureFlags = [
     # License

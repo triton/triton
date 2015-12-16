@@ -18,11 +18,11 @@ assert javahlBindings -> jdk != null && perl != null;
 
 let
   config = {
-    "1.9".ver_min = "2";
-    "1.9".sha1 = "fb9db3b7ddf48ae37aa8785872301b59bfcc7017";
+    "1.9".ver_min = "3";
+    "1.9".sha1 = "27e8df191c92095f48314a415194ec37c682cbcf";
 
-    "1.8".ver_min = "14";
-    "1.8".sha1 = "0698efc58373e7657f6dd3ce13cab7b002ffb497";
+    "1.8".ver_min = "15";
+    "1.8".sha1 = "680acf88f0db978fbbeac89ed63776d805b918ef";
   };
 in
 assert builtins.hasAttr branch config;

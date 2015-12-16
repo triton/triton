@@ -1,20 +1,15 @@
-{ stdenv, fetchurl, xlibsWrapper, libjpeg, libtiff, giflib, libpng, bzip2, pkgconfig }:
+{ stdenv, fetchurl, xlibsWrapper, libjpeg, libtiff, giflib, libpng, bzip2, pkgconfig, libid3tag }:
 
 stdenv.mkDerivation rec {
-  name = "imlib2-1.4.6";
+  name = "imlib2-1.4.7";
 
   src = fetchurl {
     url = "mirror://sourceforge/enlightenment/${name}.tar.bz2";
-    sha256 = "0x1j0ylpclkp8cfpwfpkjywqz124bqskyxbw8pvwzkv2gmrbwldg";
+    sha256 = "00a7jbwj10x3jcvxa5rplnkvhv35gv9rb400zy636zdd4g737mrm";
   };
 
-  buildInputs = [ xlibsWrapper libjpeg libtiff giflib libpng bzip2 ];
-
   nativeBuildInputs = [ pkgconfig ];
-
-  # From
-  # https://github.com/PhantomX/slackbuilds/blob/master/imlib2/patches/imlib2-giflib51.patch
-  patches = [ ./giflib51.patch ];
+  buildInputs = [ xlibsWrapper libjpeg libtiff giflib libpng bzip2 libid3tag ];
 
   preConfigure = ''
     substituteInPlace imlib2-config.in \

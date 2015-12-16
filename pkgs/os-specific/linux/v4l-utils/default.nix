@@ -16,11 +16,11 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "v4l-utils-1.6.3";
+  name = "v4l-utils-1.8.1";
 
   src = fetchurl {
     url = "http://linuxtv.org/downloads/v4l-utils/${name}.tar.bz2";
-    sha256 = "0k46z5gqjzg702m2vs4sv6sxynq1sj14m0pgwvl2gkgg3dfbyjhn";
+    sha256 = "0cqv8drw0z0kfmz4f50a8kzbrz6vbj6j6q78030hgshr7yq1jqig";
   };
 
   configureFlags = [
@@ -39,6 +39,8 @@ stdenv.mkDerivation rec {
   postInstall = ''
     # Create symlink for V4l1 compatibility
     ln -s $out/include/libv4l1-videodev.h $out/include/videodev.h
+    mkdir -p $out/include/linux
+    ln -s $out/include/libv4l1-videodev.h $out/include/linux/videodev.h
   '';
 
   nativeBuildInputs = [ pkgconfig ];

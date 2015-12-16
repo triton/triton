@@ -202,7 +202,7 @@ stdenv.mkDerivation {
     (mkWith   true                         "rgw-group"            "rgw")
     (mkWith   true                         "systemd-unit-dir"     "\${out}/etc/systemd/system")
     (mkWith   false                        "selinux"              null)  # TODO: Implement
-  ] ++ optional (versionAtLeast version "10.0.1") [
+  ] ++ optional (versionAtLeast version "11.0.0") [
     (mkWith   true                         "eventfd"              null)
   ];
 

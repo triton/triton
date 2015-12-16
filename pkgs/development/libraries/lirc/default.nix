@@ -1,11 +1,11 @@
 { stdenv, fetchurl, alsaLib, bash, help2man, pkgconfig, xlibsWrapper, python3, libxslt }:
 
 stdenv.mkDerivation rec {
-  name = "lirc-0.9.3";
+  name = "lirc-0.9.3a";
 
   src = fetchurl {
     url = "mirror://sourceforge/lirc/${name}.tar.bz2";
-    sha256 = "19c6ldjsdnk1md66q3nb035ja1xj217k8iabhxpsb8rs10a6kwi6";
+    sha256 = "08pgfsi40d0iq0xwnfkz53whphcnsx8ycxvp65anzd6vrgv0rzws";
   };
 
   preBuild = "patchShebangs .";

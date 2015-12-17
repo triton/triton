@@ -1,9 +1,12 @@
-# Use busybox for i686-linux since it works on x86_64-linux as well.
-(import ./i686.nix) //
-
 {
+  busybox = import <nix/fetchurl.nix> {
+    url = http://pub.wak.io/nixos/bootstrap/x86_64-linux/92ziz73lv75772pflvyp6rbnddcw1h10/busybox;
+    sha256 = "1q8ycgypj40g8ciwcjgf22v1ca2pssvyd65qyxvmff300hfwpyqn";
+    executable = true;
+  };
+
   bootstrapTools = import <nix/fetchurl.nix> {
-    url = http://tarballs.nixos.org/stdenv-linux/x86_64/8d66a51a872af1ab58edc68a2ebddcc79958b563/bootstrap-tools.tar.xz;
-    sha256 = "325230b74d3d98f62ddcb595543887d09cd8421745a4eda229d2a87a1f1ed336";
+    url = http://pub.wak.io/nixos/bootstrap/x86_64-linux/92ziz73lv75772pflvyp6rbnddcw1h10/bootstrap-tools.tar.xz;
+    sha256 = "360de75a3922a6606fb324e74c1090a51f63b581278ba93b85d180076cbed330";
   };
 }

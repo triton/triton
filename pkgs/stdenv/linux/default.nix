@@ -44,10 +44,24 @@ rec {
 
     builder = bootstrapFiles.busybox;
 
-    args = if system == "armv5tel-linux" then
-        [ "ash" "-e" ./scripts/unpack-bootstrap-tools-arm.sh ]
-      else
-        [ "ash" "-e" ./scripts/unpack-bootstrap-tools.sh ];
+    args = [ "ash" "-e" ./scripts/unpack-bootstrap-tools.sh ];
+
+    tarball = bootstrapFiles.bootstrapTools;
+
+    inherit system;
+
+    # Needed by the GCC wrapper.
+    langC = true;
+    langCC = true;
+    isGNU = true;
+  };
+
+  bootstrapToolsTest = derivation {
+    name = "bootstrap-tools";
+
+    builder = bootstrapFiles.busybox;
+
+    args = [ "ash" "-e" ./scripts/unpack-bootstrap-tools-test.sh ];
 
     tarball = bootstrapFiles.bootstrapTools;
 
@@ -303,6 +317,7 @@ rec {
 
   testBootstrapTools = let
     defaultPkgs = allPackages { inherit system platform; };
+    bootstrapTools = bootstrapToolsTest;
   in derivation {
     name = "test-bootstrap-tools";
     inherit system;

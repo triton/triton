@@ -5854,7 +5854,6 @@ let
      */
   pkgconf = forceNativeDrv (callPackage ../development/tools/misc/pkgconf { });
   pkg-config = forceNativeDrv (callPackage ../development/tools/misc/pkgconfig { });
-  pkgconfigUpstream = lowPrio (pkgconfig.override { vanilla = true; });
   pkgconfig = pkgconf;
 
   prelink = callPackage ../development/tools/misc/prelink { };

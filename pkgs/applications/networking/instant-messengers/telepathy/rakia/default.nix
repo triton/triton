@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfigUpstream, libxslt, telepathy_glib, libxml2, dbus_glib
+{ stdenv, fetchurl, pkgconfig, libxslt, telepathy_glib, libxml2, dbus_glib
 , python, sofia_sip }:
 
 stdenv.mkDerivation rec {
@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     sha256 = "18dxffa8hhjyvqkhhac05rrkx81vnncjrakg5ygikfp0j79vrbhv";
   };
 
-  nativeBuildInputs = [pkgconfigUpstream libxslt python];
+  nativeBuildInputs = [pkgconfig libxslt python];
   buildInputs = [ libxml2 dbus_glib telepathy_glib sofia_sip];
 
   meta = {

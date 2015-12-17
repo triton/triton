@@ -467,6 +467,8 @@ let
 
   ### TOOLS
 
+  _9pfs = callPackage ../tools/filesystems/9pfs { };
+
   "3dfsb" = callPackage ../applications/misc/3dfsb {
     glibc = glibc.override { debugSymbols = true; };
   };
@@ -6650,7 +6652,10 @@ let
   };
 
   glib = callPackage ../development/libraries/glib { };
-  glib-tested = glib.override { doCheck = true; }; # checked version separate to break cycles
+  glib-tested = glib.override { # checked version separate to break cycles
+    doCheck = true;
+    libffi = libffi.override { doCheck = true; };
+  };
   glibmm = callPackage ../development/libraries/glibmm { };
 
   glib_networking = callPackage ../development/libraries/glib-networking {};
@@ -6851,9 +6856,8 @@ let
     automake = automake111x;
   };
 
-  kf515 = recurseIntoAttrs (import ../development/libraries/kde-frameworks-5.15 { inherit pkgs; });
   kf517 = import ../development/libraries/kde-frameworks-5.17 { inherit pkgs; };
-  kf5_stable = kf515;
+  kf5_stable = kf517;
   kf5_latest = kf517;
 
   kinetic-cpp-client = callPackage ../development/libraries/kinetic-cpp-client { };
@@ -11119,6 +11123,8 @@ let
   };
   awesome = awesome-3-5;
 
+  awesomebump = callPackage ../applications/graphics/awesomebump { };
+
   inherit (gnome3) baobab;
 
   backintime-common = callPackage ../applications/networking/sync/backintime/common.nix { };
@@ -11490,6 +11496,19 @@ let
     stdenv = pkgs.clangStdenv;
   });
   emacs24Macport = self.emacs24Macport_24_5;
+
+  emacs25pre = callPackage ../applications/editors/emacs-25 {
+    # use override to enable additional features
+    libXaw = xorg.libXaw;
+    Xaw3d = null;
+    gconf = null;
+    alsaLib = null;
+    imagemagick = null;
+    acl = null;
+    gpm = null;
+    inherit (darwin.apple_sdk.frameworks) AppKit Foundation;
+    inherit (darwin) libobjc;
+  };
 
   emacsPackagesGen = emacs: self: let callPackage = newScope self; in rec {
     inherit emacs;
@@ -12248,9 +12267,8 @@ let
     boost = boost155;
   };
 
-  kdeApps_15_08 = recurseIntoAttrs (import ../applications/kde-apps-15.08 { inherit pkgs; });
   kdeApps_15_12 = import ../applications/kde-apps-15.12 { inherit pkgs; };
-  kdeApps_stable = kdeApps_15_08;
+  kdeApps_stable = kdeApps_15_12;
   kdeApps_latest = kdeApps_15_12;
 
   keepnote = callPackage ../applications/office/keepnote {
@@ -14530,7 +14548,7 @@ let
         libusb = libusb1;
         libcanberra = libcanberra_kde;
         boost = boost155;
-        kdelibs = kdeApps_15_08.kdelibs;
+        kdelibs = kde5.kdelibs;
         subversionClient = pkgs.subversion18.override {
           bdbSupport = false;
           perlBindings = true;
@@ -14755,9 +14773,8 @@ let
 
   numix-gtk-theme = callPackage ../misc/themes/gtk3/numix-gtk-theme { };
 
-  plasma54 = recurseIntoAttrs (import ../desktops/plasma-5.4 { inherit pkgs; });
   plasma55 = import ../desktops/plasma-5.5 { inherit pkgs; };
-  plasma5_stable = plasma54;
+  plasma5_stable = plasma55;
   plasma5_latest = plasma55;
 
   kde5PackagesFun = self: with self; {
@@ -14800,7 +14817,10 @@ let
 
   };
 
-  kde5 = kf5_stable // plasma5_stable // kdeApps_stable // kde5PackagesFun kde5;
+  kde5 =
+    recurseIntoAttrs
+    (lib.makeScope qt55Libs.newScope (self:
+      kf5_stable self // plasma5_stable self // kdeApps_stable self // kde5PackagesFun self));
 
   kde5_latest =
     recurseIntoAttrs
@@ -15135,6 +15155,8 @@ let
 
   geda = callPackage ../applications/science/electronics/geda { };
 
+  gerbv = callPackage ../applications/science/electronics/gerbv { };
+
   gtkwave = callPackage ../applications/science/electronics/gtkwave { };
 
   kicad = callPackage ../applications/science/electronics/kicad {
@@ -15142,6 +15164,8 @@ let
   };
 
   ngspice = callPackage ../applications/science/electronics/ngspice { };
+
+  pcb = callPackage ../applications/science/electronics/pcb { };
 
   qucs = callPackage ../applications/science/electronics/qucs { };
 

@@ -1513,6 +1513,22 @@ in modules // {
     propagatedBuildInputs = with self; [ iowait psutil pyzmq tornado mock ];
   };
 
+  colorlog = buildPythonPackage rec {
+    name = "colorlog-${version}";
+    version = "2.6.0";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/c/colorlog/${name}.tar.gz";
+      sha256 = "1s8z9zr4r18igr4rri71nba01arnpppifrkaxhi2xb51500sw0qg";
+    };
+
+    meta = {
+      description = "Log formatting with colors";
+      homepage = https://github.com/borntyping/python-colorlog;
+      license = licenses.free; # BSD-like
+    };
+  };
+
   colour = buildPythonPackage rec {
     name = "${pname}-${version}";
     pname = "colour";
@@ -1804,18 +1820,27 @@ in modules // {
 
     buildInputs = with self; [ pytest ];
     propagatedBuildInputs = with self; [
-      numpy
-      pandas
-      datashape
-      odo
-      toolz
       cytoolz
-      multipledispatch
-      sqlalchemy9 # sqlalchemy8 should also work
-      psutil
-      numba
+      datashape
+      flask
       h5py
+      multipledispatch
+      numba
+      numpy
+      odo
+      pandas
+      psutil
+      pymongo
+      pyyaml
+      requests2
+      sqlalchemy_1_0
+      tables
+      toolz
     ];
+
+    checkPhase = ''
+      py.test blaze/tests
+    '';
 
     meta = {
       homepage = https://github.com/ContinuumIO/blaze;
@@ -2198,6 +2223,44 @@ in modules // {
 
   buildout = self.zc_buildout;
   buildout152 = self.zc_buildout152;
+
+  check-manifest = buildPythonPackage rec {
+    name = "check-manifest";
+    version = "0.30";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/c/check-manifest/check-manifest-${version}.tar.gz";
+      md5 = "b18f7f0bcd02f52d40148c388ace9290";
+    };
+
+    doCheck = false;
+
+    meta = {
+      homepage = https://github.com/mgedmin/check-manifest;
+      description = "Check MANIFEST.in in a Python source package for completeness";
+      license = licenses.mit;
+      maintainers = with maintainers; [ lewo ];
+    };
+  };
+
+  devpi-common = buildPythonPackage rec {
+    name = "devpi-common";
+    version = "2.0.8";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/d/devpi-common/devpi-common-${version}.tar.gz";
+      md5 = "3739af0f59151d1aaa67035fec8f97c6";
+    };
+
+    propagatedBuildInputs = [ self.requests2 self.py ];
+
+    meta = {
+      homepage = https://bitbucket.org/hpk42/devpi;
+      description = "Utilities jointly used by devpi-server and devpi-client";
+      license = licenses.mit;
+      maintainers = with maintainers; [ lewo ];
+    };
+  };
 
   # A patched version of buildout, useful for buildout based development on Nix
   zc_buildout_nix = callPackage ../development/python-modules/buildout-nix { };
@@ -11435,11 +11498,11 @@ in modules // {
     };
   in buildPythonPackage ( rec {
     name = "numpy-${version}";
-    version = "1.10.1";
+    version = "1.10.2";
 
     src = pkgs.fetchurl {
       url = "mirror://sourceforge/numpy/${name}.tar.gz";
-      sha256 = "8b9f453f29ce96a14e625100d3dcf8926301d36c5f622623bf8820e748510858";
+      sha256 = "23a3befdf955db4d616f8bb77b324680a80a323e0c42a7e8d7388ef578d8ffa9";
     };
 
     disabled = isPyPy;  # WIP
@@ -11689,14 +11752,19 @@ in modules // {
 
   odo = buildPythonPackage rec {
     name = "odo-${version}";
-    version= "0.3.3";
+    version= "0.3.4";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/o/odo/${name}.tar.gz";
-      sha256 = "2499ee86c26c74daa28f21ed235ca331911065950deea5169ebdb7d5dae6ebef";
+      sha256 = "77bdb372999ac0d9ef272927d7867a668108a4193e11eb8646bf770370a30725";
     };
 
+    buildInputs = with self; [ pytest ];
     propagatedBuildInputs = with self; [ datashape numpy pandas toolz multipledispatch networkx ];
+
+    checkPhase = ''
+      py.test odo/tests
+    '';
 
     meta = {
       homepage = https://github.com/ContinuumIO/odo;
@@ -13105,7 +13173,7 @@ in modules // {
       pytz
       xlrd
       bottleneck
-      sqlalchemy9
+      sqlalchemy_1_0
       lxml
       # Disabling this because an upstream dependency, pep8, is broken on v3.5.
       (if isPy35 then null else html5lib)
@@ -17146,7 +17214,7 @@ in modules // {
     support = import ../development/python-modules/numpy-scipy-support.nix {
       inherit python;
       openblas = pkgs.openblasCompat;
-      pkgName = "numpy";
+      pkgName = "scipy";
     };
   in buildPythonPackage rec {
     name = "scipy-${version}";
@@ -17164,8 +17232,18 @@ in modules // {
       sed -i '0,/from numpy.distutils.core/s//import setuptools;from numpy.distutils.core/' setup.py
     '';
 
+    # First test: RuntimeWarning: Mean of empty slice.
+    # Second: SyntaxError: invalid syntax. Due to wrapper?
+    # Third: test checks permissions
+    prePatch = ''
+      substituteInPlace scipy/stats/tests/test_stats.py --replace "test_chisquare_masked_arrays" "remove_this_one"
+      rm scipy/linalg/tests/test_lapack.py
+      substituteInPlace scipy/weave/tests/test_catalog.py --replace "test_user" "remove_this_one"
+    '';
+
     inherit (support) preBuild checkPhase;
 
+    patches = [../development/python-modules/scipy-0.16.1-decorator-fix.patch];
     setupPyBuildFlags = [ "--fcompiler='gnu95'" ];
 
     meta = {
@@ -18219,12 +18297,12 @@ in modules // {
   };
 
   sqlalchemy_1_0 = self.sqlalchemy9.override rec {
-    name = "SQLAlchemy-1.0.9";
+    name = "SQLAlchemy-1.0.10";
     doCheck = !isPyPy;  # lots of tests fail
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/S/SQLAlchemy/${name}.tar.gz";
-      sha256 = "03mi79s8dcsqpwql98mlvaf6mf4xf5j3fjkv5m6dgibfwc0pbly3";
+      sha256 = "963415bf4ea4fa13698893464bc6917d291331e0e8202dddd0ebfed2864ef7e3";
     };
   };
 
@@ -20822,6 +20900,25 @@ in modules // {
     };
   };
 
+  tunigo = buildPythonPackage rec {
+    name = "tunigo-${version}";
+    version = "0.1.3";
+    propagatedBuildInputs = with self; [ requests2 ];
+
+    src = pkgs.fetchFromGitHub {
+      owner = "trygveaa";
+      repo = "python-tunigo";
+      rev = "v${version}";
+      sha256 = "02ili37dbs5mk5f6v3fmi1sji39ymc4zyq44x0abxzr88nc8nh97";
+    };
+
+    meta = {
+      description = "Python API for the browse feature of Spotify";
+      homepage = https://github.com/trygveaa/python-tunigo;
+      license = licenses.asl20;
+    };
+  };
+
   screenkey = buildPythonPackage rec {
     version = "0.2-b3634a2c6eb6d6936c3b2c1ef5078bf3a84c40c6";
     name = "screenkey-${version}";
@@ -21624,6 +21721,21 @@ in modules // {
       description = "A privacy-respecting, hackable metasearch engine";
       license = licenses.agpl3Plus;
       maintainers = with maintainers; [ matejc ];
+    };
+  };
+
+  rpdb = buildPythonPackage rec {
+    name = "rpdb-0.1.5";
+
+    src = pkgs.fetchurl {
+      url = "http://pypi.python.org/packages/source/r/rpdb/${name}.tar.gz";
+      sha256 = "0rql1hq3lziwcql0h3dy05w074cn866p397ng9bv6qbz85ifw1bk";
+    };
+
+    meta = {
+      description = "pdb wrapper with remote access via tcp socket";
+      homepage = https://github.com/tamentis/rpdb;
+      license = licenses.bsd2;
     };
   };
 

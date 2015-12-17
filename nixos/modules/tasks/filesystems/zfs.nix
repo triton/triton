@@ -224,7 +224,7 @@ in
             done
             ''] ++ (map (pool: ''
             echo "importing root ZFS pool \"${pool}\"..."
-            zpool import -N $ZFS_FORCE "${pool}"
+            zpool import -d /dev/disk/by-id -N $ZFS_FORCE "${pool}"
         '') rootPools));
       };
 
@@ -265,7 +265,7 @@ in
             };
             script = ''
               zpool_cmd="${zfsUserPkg}/sbin/zpool"
-              ("$zpool_cmd" list "${pool}" >/dev/null) || "$zpool_cmd" import -N ${optionalString cfgZfs.forceImportAll "-f"} "${pool}"
+              ("$zpool_cmd" list "${pool}" >/dev/null) || "$zpool_cmd" import -d /dev/disk/by-id -N ${optionalString cfgZfs.forceImportAll "-f"} "${pool}"
             '';
           };
       in listToAttrs (map createImportService dataPools) // {

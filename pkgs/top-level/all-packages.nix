@@ -5430,7 +5430,9 @@ let
 
   autobuild = callPackage ../development/tools/misc/autobuild { };
 
-  autoconf = callPackage ../development/tools/misc/autoconf { };
+  autoconf = callPackage ../development/tools/misc/autoconf {
+    fetchurl = fetchurlBoot;
+  };
 
   autoconf-archive = callPackage ../development/tools/misc/autoconf-archive { };
 
@@ -5438,7 +5440,7 @@ let
 
   autocutsel = callPackage ../tools/X11/autocutsel{ };
 
-  automake = automake115x;
+  automake = automake115x.override { fetchurl = fetchurlBoot; };
 
   automake110x = callPackage ../development/tools/misc/automake/automake-1.10.x.nix { };
 
@@ -5705,7 +5707,9 @@ let
 
   gnome_doc_utils = callPackage ../development/tools/documentation/gnome-doc-utils {};
 
-  gnum4 = callPackage ../development/tools/misc/gnum4 { };
+  gnum4 = callPackage ../development/tools/misc/gnum4 {
+    fetchurl = fetchurlBoot;
+  };
 
   gnumake380 = callPackage ../development/tools/build-managers/gnumake/3.80 { };
   gnumake381 = callPackage ../development/tools/build-managers/gnumake/3.81 { };
@@ -5736,7 +5740,8 @@ let
   gwrap = callPackage ../development/tools/guile/g-wrap { };
 
   help2man = callPackage ../development/tools/misc/help2man {
-    inherit (perlPackages) LocaleGettext;
+    inherit (perlPackages.override { pkgs = pkgs // { fetchurl = fetchurlBoot; }; }) LocaleGettext;
+    fetchurl = fetchurlBoot;
   };
 
   heroku = callPackage ../development/tools/heroku { };
@@ -5780,7 +5785,7 @@ let
   lemon = callPackage ../development/tools/parsing/lemon { };
 
 
-  libtool = libtool_2;
+  libtool = libtool_2.override { fetchurl = fetchurlBoot; };
 
   libtool_1_5 = callPackage ../development/tools/misc/libtool { };
 
@@ -5864,10 +5869,14 @@ let
      cross_renaming: we should make all programs use pkgconfig as
      nativeBuildInput after the renaming.
      */
-  pkgconfig = forceNativeDrv (callPackage ../development/tools/misc/pkgconfig {
+  pkgconf = forceNativeDrv (callPackage ../development/tools/misc/pkgconf {
+    fetchurl = fetchurlBoot;
+  });
+  pkg-config = forceNativeDrv (callPackage ../development/tools/misc/pkgconfig {
     fetchurl = fetchurlBoot;
   });
   pkgconfigUpstream = lowPrio (pkgconfig.override { vanilla = true; });
+  pkgconfig = pkgconf;
 
   prelink = callPackage ../development/tools/misc/prelink { };
 
@@ -6467,7 +6476,9 @@ let
 
   getdata = callPackage ../development/libraries/getdata { };
 
-  gettext = callPackage ../development/libraries/gettext { };
+  gettext = callPackage ../development/libraries/gettext {
+    fetchurl = fetchurlBoot;
+  };
 
   gettextWithExpat = if stdenv.isDarwin
     then gettext.overrideDerivation (drv: {

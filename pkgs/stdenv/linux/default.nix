@@ -310,7 +310,8 @@ rec {
       inherit (stage4.pkgs)
         gzip bzip2 xz bash binutils coreutils diffutils findutils gawk
         glibc gnumake gnused gnutar gnugrep gnupatch patchelf
-        attr acl paxctl zlib pcre;
+        attr acl paxctl zlib pcre openssl libnghttp2 c-ares curl automake
+        perl gnum4 autoreconfHook autoconf libtool help2man pkgconfig;
     };
   };
 

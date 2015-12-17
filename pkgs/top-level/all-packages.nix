@@ -353,13 +353,6 @@ let
     inherit curl stdenv;
   };
 
-  # fetchurlBoot is used for curl and its dependencies in order to
-  # prevent a cyclic dependency (curl depends on curl.tar.bz2,
-  # curl.tar.bz2 depends on fetchurl, fetchurl depends on curl).  It
-  # uses the curl from the previous bootstrap phase (e.g. a statically
-  # linked curl in the case of stdenv-linux).
-  fetchurlBoot = stdenv.fetchurlBoot;
-
   fetchzip = callPackage ../build-support/fetchzip { };
 
   fetchFromGitHub = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: fetchzip {
@@ -1191,7 +1184,6 @@ let
   cudatoolkit = cudatoolkit7;
 
   curl = curlFull.override {
-    fetchurl = fetchurlBoot;
     suffix = "";
   };
 
@@ -5164,13 +5156,9 @@ let
 
   ocropus = callPackage ../applications/misc/ocropus { };
 
-  perl520 = callPackage ../development/interpreters/perl/5.20 {
-    fetchurl = fetchurlBoot;
-  };
+  perl520 = callPackage ../development/interpreters/perl/5.20 { };
 
-  perl522 = callPackage ../development/interpreters/perl/5.22 {
-    fetchurl = fetchurlBoot;
-  };
+  perl522 = callPackage ../development/interpreters/perl/5.22 { };
 
   perl = perl520;
 
@@ -5430,9 +5418,7 @@ let
 
   autobuild = callPackage ../development/tools/misc/autobuild { };
 
-  autoconf = callPackage ../development/tools/misc/autoconf {
-    fetchurl = fetchurlBoot;
-  };
+  autoconf = callPackage ../development/tools/misc/autoconf { };
 
   autoconf-archive = callPackage ../development/tools/misc/autoconf-archive { };
 
@@ -5440,7 +5426,7 @@ let
 
   autocutsel = callPackage ../tools/X11/autocutsel{ };
 
-  automake = automake115x.override { fetchurl = fetchurlBoot; };
+  automake = automake115x;
 
   automake110x = callPackage ../development/tools/misc/automake/automake-1.10.x.nix { };
 
@@ -5707,9 +5693,7 @@ let
 
   gnome_doc_utils = callPackage ../development/tools/documentation/gnome-doc-utils {};
 
-  gnum4 = callPackage ../development/tools/misc/gnum4 {
-    fetchurl = fetchurlBoot;
-  };
+  gnum4 = callPackage ../development/tools/misc/gnum4 { };
 
   gnumake380 = callPackage ../development/tools/build-managers/gnumake/3.80 { };
   gnumake381 = callPackage ../development/tools/build-managers/gnumake/3.81 { };
@@ -5740,8 +5724,7 @@ let
   gwrap = callPackage ../development/tools/guile/g-wrap { };
 
   help2man = callPackage ../development/tools/misc/help2man {
-    inherit (perlPackages.override { pkgs = pkgs // { fetchurl = fetchurlBoot; }; }) LocaleGettext;
-    fetchurl = fetchurlBoot;
+    inherit (perlPackages) LocaleGettext;
   };
 
   heroku = callPackage ../development/tools/heroku { };
@@ -5785,7 +5768,7 @@ let
   lemon = callPackage ../development/tools/parsing/lemon { };
 
 
-  libtool = libtool_2.override { fetchurl = fetchurlBoot; };
+  libtool = libtool_2;
 
   libtool_1_5 = callPackage ../development/tools/misc/libtool { };
 
@@ -5869,12 +5852,8 @@ let
      cross_renaming: we should make all programs use pkgconfig as
      nativeBuildInput after the renaming.
      */
-  pkgconf = forceNativeDrv (callPackage ../development/tools/misc/pkgconf {
-    fetchurl = fetchurlBoot;
-  });
-  pkg-config = forceNativeDrv (callPackage ../development/tools/misc/pkgconfig {
-    fetchurl = fetchurlBoot;
-  });
+  pkgconf = forceNativeDrv (callPackage ../development/tools/misc/pkgconf { });
+  pkg-config = forceNativeDrv (callPackage ../development/tools/misc/pkgconfig { });
   pkgconfigUpstream = lowPrio (pkgconfig.override { vanilla = true; });
   pkgconfig = pkgconf;
 
@@ -6146,9 +6125,7 @@ let
 
   bwidget = callPackage ../development/libraries/bwidget { };
 
-  c-ares = callPackage ../development/libraries/c-ares {
-    fetchurl = fetchurlBoot;
-  };
+  c-ares = callPackage ../development/libraries/c-ares { };
 
   caelum = callPackage ../development/libraries/caelum { };
 
@@ -6476,9 +6453,7 @@ let
 
   getdata = callPackage ../development/libraries/getdata { };
 
-  gettext = callPackage ../development/libraries/gettext {
-    fetchurl = fetchurlBoot;
-  };
+  gettext = callPackage ../development/libraries/gettext { };
 
   gettextWithExpat = if stdenv.isDarwin
     then gettext.overrideDerivation (drv: {
@@ -7325,9 +7300,7 @@ let
     else if stdenv.isDarwin then darwin.libiconv
     else libiconvReal;
 
-  libiconvReal = callPackage ../development/libraries/libiconv {
-    fetchurl = fetchurlBoot;
-  };
+  libiconvReal = callPackage ../development/libraries/libiconv { };
 
   # On non-GNU systems we need GNU Gettext for libintl.
   libintlOrEmpty = stdenv.lib.optional (!stdenv.isLinux) gettext;
@@ -7541,9 +7514,7 @@ let
 
   libssh = callPackage ../development/libraries/libssh { };
 
-  libssh2 = callPackage ../development/libraries/libssh2 {
-    fetchurl = fetchurlBoot;
-  };
+  libssh2 = callPackage ../development/libraries/libssh2 { };
 
   libstartup_notification = callPackage ../development/libraries/startup-notification { };
 
@@ -7915,7 +7886,6 @@ let
   nghttp2 = callPackage ../development/libraries/nghttp2 { };
   libnghttp2 = nghttp2.override {
     prefix = "lib";
-    fetchurl = fetchurlBoot;
   };
 
   nix-plugins = callPackage ../development/libraries/nix-plugins {
@@ -8010,21 +7980,15 @@ let
 
   # 2.3 breaks some backward-compability
   libressl = libressl_2_2;
-  libressl_2_2 = callPackage ../development/libraries/libressl/2.2.nix {
-    fetchurl = fetchurlBoot;
-  };
-  libressl_2_3 = callPackage ../development/libraries/libressl/2.3.nix {
-    fetchurl = fetchurlBoot;
-  };
+  libressl_2_2 = callPackage ../development/libraries/libressl/2.2.nix { };
+  libressl_2_3 = callPackage ../development/libraries/libressl/2.3.nix { };
 
   boringssl = callPackage ../development/libraries/boringssl { };
 
   wolfssl = callPackage ../development/libraries/wolfssl { };
 
   openssl_1_0_2 = callPackage ../development/libraries/openssl {
-    fetchurl = fetchurlBoot;
     cryptodevHeaders = linuxPackages.cryptodev.override {
-      fetchurl = fetchurlBoot;
       onlyHeaders = true;
       kernel = null;
     };
@@ -8779,9 +8743,7 @@ let
 
   zeitgeist = callPackage ../development/libraries/zeitgeist { };
 
-  zlib = callPackage ../development/libraries/zlib {
-    fetchurl = fetchurlBoot;
-  };
+  zlib = callPackage ../development/libraries/zlib { };
 
   zlog = callPackage ../development/libraries/zlog { };
 

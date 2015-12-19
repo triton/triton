@@ -80,6 +80,7 @@ let
   defaultNativeBuildInputs = extraBuildInputs ++
     [ ../../build-support/setup-hooks/move-docs.sh
       ../../build-support/setup-hooks/compress-man-pages.sh
+      ../../build-support/setup-hooks/absolute-pkgconfig.sh
       ../../build-support/setup-hooks/strip.sh
       ../../build-support/setup-hooks/patch-shebangs.sh
       ../../build-support/setup-hooks/move-sbin.sh

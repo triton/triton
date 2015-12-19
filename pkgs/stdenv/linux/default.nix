@@ -301,7 +301,7 @@ rec {
     allowedRequisites = with stage4.pkgs;
       [ gzip bzip2 xz bash binutils coreutils diffutils findutils gawk
         glibc gnumake gnused gnutar gnugrep gnupatch patchelf attr acl
-        paxctl zlib pcre linuxHeaders ed gcc gcc.cc libsigsegv
+        paxctl zlib pcre linuxHeaders ed gcc gcc.cc libsigsegv pkgconfig
       ];
 
     overrides = pkgs: {

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl
+{ stdenv, fetchurl, zlib
 
 # Version specific stuff
 , release, version, src
@@ -9,6 +9,8 @@ stdenv.mkDerivation rec {
   name = "tcl-${version}";
 
   inherit src;
+
+  buildInputs = [ zlib ];
 
   preConfigure = ''
     cd unix

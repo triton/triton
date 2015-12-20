@@ -284,7 +284,7 @@ rec {
     initialPath =
       ((import ../common-path.nix) {pkgs = stage4.pkgs;});
 
-    extraBuildInputs = [ stage4.pkgs.patchelf stage4.pkgs.paxctl ];
+    extraBuildInputs = [ stage4.pkgs.patchelf stage4.pkgs.paxctl stage4.pkgs.pkgconfig ];
 
     cc = stage4.pkgs.gcc;
 

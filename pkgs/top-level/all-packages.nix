@@ -7799,9 +7799,6 @@ let
 
   miro = callPackage ../applications/video/miro {
     inherit (pythonPackages) pywebkitgtk pycurl mutagen;
-    avahi = avahi.override {
-      withLibdnssdCompat = true;
-    };
   };
 
   mkvtoolnix = callPackage ../applications/video/mkvtoolnix { };
@@ -12594,9 +12591,6 @@ let
   };
 
   inherit (callPackages ../applications/networking/mumble {
-      avahi = avahi.override {
-        withLibdnssdCompat = true;
-      };
       qt5 = qt55; # Mumble is not compatible with qt55 yet
       jackSupport = config.mumble.jackSupport or false;
       speechdSupport = config.mumble.speechdSupport or false;

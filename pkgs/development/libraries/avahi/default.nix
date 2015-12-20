@@ -1,8 +1,7 @@
 { fetchurl, stdenv, pkgconfig, libdaemon, dbus, perl, perlXMLParser
 , expat, gettext, intltool, glib, libiconv
 , qt4 ? null
-, qt4Support ? false
-, withLibdnssdCompat ? false }:
+, qt4Support ? false }:
 
 assert qt4Support -> qt4 != null;
 
@@ -26,7 +25,6 @@ stdenv.mkDerivation rec {
       "--disable-gtk" "--disable-gtk3"
       "--${if qt4Support then "enable" else "disable"}-qt4"
       "--disable-python" "--localstatedir=/var" "--with-distro=none" ]
-    ++ stdenv.lib.optional withLibdnssdCompat "--enable-compat-libdns_sd"
     # autoipd won't build on darwin
     ++ stdenv.lib.optional stdenv.isDarwin "--disable-autoipd";
 
@@ -34,13 +32,6 @@ stdenv.mkDerivation rec {
     sed -i '20 i\
     #define __APPLE_USE_RFC_2292' \
     avahi-core/socket.c
-  '';
-
-  postInstall = ''
-    # Maintain compat for mdnsresponder and howl
-    ${if withLibdnssdCompat then "ln -s avahi-compat-libdns_sd/dns_sd.h $out/include/dns_sd.h" else ""}
-    ln -s avahi-compat-howl $out/include/howl
-    ln -s avahi-compat-howl.pc $out/lib/pkgconfig/howl.pc
   '';
 
   meta = with stdenv.lib; {

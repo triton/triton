@@ -42,7 +42,7 @@ pkgconfigFiles() {
 pkgconfigPath() {
   local name; local path;
   name="$1"
-  if [ -e "$name" ]; then
+  if [ "${name:0:1}" = "/" ] && [ -e "$name" ]; then
     echo "$name"
     return 0
   fi

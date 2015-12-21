@@ -166,7 +166,7 @@ in modules // {
   pyqt5 = callPackage ../development/python-modules/pyqt/5.x.nix {
     sip = self.sip_4_16;
     pythonDBus = self.dbus;
-    qt5 = pkgs.qt5;
+    inherit (pkgs.qt5) qtbase qtsvg qtwebkit;
   };
 
   pyside = callPackage ../development/python-modules/pyside { };
@@ -3271,11 +3271,11 @@ in modules // {
 
   mahotas = buildPythonPackage rec {
     name = "python-mahotas-${version}";
-    version = "1.4.0";
+    version = "1.4.1";
 
     src = pkgs.fetchurl {
       url = "https://github.com/luispedro/mahotas/archive/release-${version}.tar.gz";
-      sha256 = "30c4b979e0d5f4c013860321766a79ffcabe56c1ad9088e5d0c6b36aec5f0415";
+      sha256 = "a684d339a3a4135f6f7161851161174755e9ea643b856b0bb48abd5515041ab6";
     };
 
     buildInputs = with self; [
@@ -6828,8 +6828,10 @@ in modules // {
     nativeBuildInputs = [ pkgs.intltool ];
 
     postInstall = ''
+       mkdir -p $out/share/applications
        cp -R deluge/data/pixmaps $out/share/
        cp -R deluge/data/icons $out/share/
+       cp deluge/data/share/applications/deluge.desktop $out/share/applications
     '';
 
     meta = {
@@ -6886,6 +6888,27 @@ in modules // {
         gdal = pkgs.gdal;
       })
     ];
+  };
+
+  django_1_9 = buildPythonPackage rec {
+    name = "Django-${version}";
+    version = "1.9";
+    disabled = pythonOlder "2.7";
+
+    src = pkgs.fetchurl {
+      url = "http://www.djangoproject.com/m/releases/1.9/${name}.tar.gz";
+      sha256 = "0rkwdxh63y7pwx9larl2g7m1z206675dzx7ipd44p3bpm0clpzh5";
+    };
+
+    # patch only $out/bin to avoid problems with starter templates (see #3134)
+    postFixup = ''
+      wrapPythonProgramsIn $out/bin "$out $pythonPath"
+    '';
+
+    meta = {
+      description = "A high-level Python Web framework";
+      homepage = https://www.djangoproject.com/;
+    };
   };
 
   django_1_8 = buildPythonPackage rec {
@@ -7674,14 +7697,14 @@ in modules // {
   };
 
   docker_compose = buildPythonPackage rec {
-    version = "1.5.1";
+    version = "1.5.2";
     name = "docker-compose-${version}";
     namePrefix = "";
     disabled = isPy3k || isPyPy;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/d/docker-compose/${name}.tar.gz";
-      sha256 = "0mdgpwkpss48zz36sw65crqjry87ba5p3mkl6ncbb8jqsxgqhpnz";
+      sha256 = "79aa7e2e6ef9ab1936f8777476ffd4bb329875ec3d3664d239896d2f2a3c4f4f";
     };
 
     # lots of networking and other fails

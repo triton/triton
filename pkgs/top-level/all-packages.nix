@@ -1672,6 +1672,8 @@ let
 
   go-mtpfs = goPackages.mtpfs.bin // { outputs = [ "bin" ]; };
 
+  go-pup = goPackages.pup.bin // { outputs = [ "bin" ]; };
+
   googleAuthenticator = callPackage ../os-specific/linux/google-authenticator { };
 
   google-cloud-sdk = callPackage ../tools/admin/google-cloud-sdk { };
@@ -1805,7 +1807,7 @@ let
   pgf_graphics = callPackage ../tools/graphics/pgf { };
 
   pigz = callPackage ../tools/compression/pigz { };
-  
+
   pixz = callPackage ../tools/compression/pixz { };
 
   pxz = callPackage ../tools/compression/pxz { };
@@ -2673,6 +2675,8 @@ let
 
   pdfjam = callPackage ../tools/typesetting/pdfjam { };
 
+  pdfmod = callPackage ../applications/misc/pdfmod { };
+
   jbig2enc = callPackage ../tools/graphics/jbig2enc { };
 
   pdfread = callPackage ../tools/graphics/pdfread {
@@ -2979,7 +2983,7 @@ let
 
   samplicator = callPackage ../tools/networking/samplicator { };
 
-  screen = callPackage ../tools/misc/screen { 
+  screen = callPackage ../tools/misc/screen {
     inherit (darwin.apple_sdk.libs) utmp;
   };
 
@@ -5713,7 +5717,7 @@ let
   gotty = goPackages.gotty.bin // { outputs = [ "bin" ]; };
 
   gradleGen = callPackage ../development/tools/build-managers/gradle { };
-  gradle = self.gradleGen.gradle28;
+  gradle = self.gradleGen.gradleLatest;
   gradle25 = self.gradleGen.gradle25;
 
   gperf = callPackage ../development/tools/misc/gperf { };
@@ -6770,6 +6774,8 @@ let
   hwloc = callPackage ../development/libraries/hwloc {};
 
   hydraAntLogger = callPackage ../development/libraries/java/hydra-ant-logger { };
+
+  hyena = callPackage ../development/libraries/hyena { };
 
   icu = callPackage ../development/libraries/icu { };
 
@@ -10327,7 +10333,7 @@ let
 
   gocode = goPackages.gocode.bin // { outputs = [ "bin" ]; };
 
-  kgocode = callPackage ../applications/misc/kgocode { 
+  kgocode = callPackage ../applications/misc/kgocode {
     inherit (pkgs.kde4) kdelibs;
   };
 

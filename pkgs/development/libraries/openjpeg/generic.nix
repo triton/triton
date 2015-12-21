@@ -60,6 +60,11 @@ stdenv.mkDerivation rec {
     incDir = "openjpeg-${branch}";
   };
 
+  preFixup = ''
+    # Fix the requires field in openjpeg
+    sed -i 's,Requires: openjp2,Requires: libopenjp2,g' $out/lib/pkgconfig/libopenjpwl.pc
+  '';
+
   meta = with stdenv.lib; {
     description = "Open-source JPEG 2000 codec written in C language";
     homepage = http://www.openjpeg.org/;

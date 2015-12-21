@@ -23,6 +23,8 @@ stdenv.mkDerivation rec {
   configureFlags =
     [ "--disable-qt3" "--disable-gdbm" "--disable-mono"
       "--disable-gtk" "--disable-gtk3"
+      "--enable-compat-libdns_sd"
+      "--enable-compat-howl"
       "--${if qt4Support then "enable" else "disable"}-qt4"
       "--disable-python" "--localstatedir=/var" "--with-distro=none" ]
     # autoipd won't build on darwin

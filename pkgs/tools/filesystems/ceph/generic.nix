@@ -43,7 +43,7 @@ let
   optLibatomic_ops = shouldUsePkg libatomic_ops;
   optKinetic-cpp-client = shouldUsePkg kinetic-cpp-client;
   optRocksdb = shouldUsePkg rocksdb;
-  optLibs3 = if versionAtLeast version "10.0.0" then null else shouldUsePkg libs3;
+  optLibs3 = shouldUsePkg libs3;
 
   optJemalloc = shouldUsePkg jemalloc;
   optGperftools = shouldUsePkg gperftools;
@@ -66,14 +66,16 @@ let
     versionAtLeast version "9.0.3" &&
     optAccelio != null && optLibibverbs != null && optLibrdmacm != null;
 
-  hasRocksdb = versionAtLeast version "9.0.0" && optRocksdb != null;
+  hasRocksdb = versionAtLeast version "9.0.0" && optRocksdb != null && !hasStaticRocksdb;
+
+  hasStaticRocksdb = versionAtLeast version "10.0.1";
 
   # TODO: Reenable when kinetic support is fixed
   #hasKinetic = versionAtLeast version "9.0.0" && optKinetic-cpp-client != null;
   hasKinetic = false;
 
   # Malloc implementation (can be jemalloc, tcmalloc or null)
-  malloc = if optJemalloc != null then optJemalloc else optGperftools;
+  malloc = if !hasStaticRocksdb && optJemalloc != null then optJemalloc else optGperftools;
 
   # We prefer nss over cryptopp
   cryptoStr = if optNss != null && optNspr != null then "nss" else
@@ -182,7 +184,7 @@ stdenv.mkDerivation {
     (mkWith   true                         "ocf"                  null)
     (mkWith   hasKinetic                   "kinetic"              null)
     (mkWith   hasRocksdb                   "librocksdb"           null)
-    (mkWith   false                        "librocksdb-static"    null)
+    (mkWith   hasStaticRocksdb             "librocksdb-static"    null)
   ] ++ optional stdenv.isLinux [
     (mkWith   (optLibaio != null)          "libaio"               null)
     (mkWith   (optLibxfs != null)          "libxfs"               null)

@@ -3,7 +3,7 @@
 fixupOutputHooks+=(_doAbsolutePkgconfig)
 
 _doAbsolutePkgconfig() {
-  local pkgfile; local pkgfiles; local dep; local deps; local path; local args;
+  local pkgfile; local pkgfiles; local dep; local deps; local path; local args; local deps2;
   if [ -z "$dontAbsolutePkgconfig" ]; then
     header "Fixing up pkgconfig paths"
     for output in $outputs; do
@@ -22,7 +22,17 @@ _doAbsolutePkgconfig() {
       if [ "${#args[@]}" -gt 0 ]; then
         sed -i "$pkgfile" "${args[@]}"
       fi
+
+      deps2="$(pkgconfigRequires "$pkgfile")"
+      for dep in $deps2; do
+        if [ "${dep:0:1}" != "/" ]; then
+          echo "Found a non-absolute dependency $dep in $pkgfile" >&2
+          stopNest
+          return 1
+        fi
+      done
     done
+
     stopNest
   fi
 }
@@ -30,8 +40,14 @@ _doAbsolutePkgconfig() {
 pkgconfigRequires() {
   local name;
   name="$1"
-  pkg-config --print-requires "$name" | awk '{print $1}'
-  pkg-config --print-requires-private "$name" | awk '{print $1}'
+  if ! pkg-config --print-requires "$name" | awk '{print $1}'; then
+    echo "Failed to enumerate all of the 'Requires:' dependencies $name" >&2
+    return 1
+  fi
+  if ! pkg-config --print-requires-private "$name" | awk '{print $1}'; then
+    echo "Failed to enumerate all of the 'Requires.private:' dependencies $name" >&2
+    return 1
+  fi
 }
 
 pkgconfigFiles() {

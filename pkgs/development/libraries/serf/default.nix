@@ -1,16 +1,15 @@
-{ stdenv, fetchurl, apr, scons, openssl, aprutil, zlib, kerberos, pkgconfig, gnused }:
+{ stdenv, fetchurl, apr, scons, openssl, aprutil, zlib, kerberos, gnused }:
 
 stdenv.mkDerivation rec {
-  name = "serf-1.3.7";
+  name = "serf-1.3.8";
 
   src = fetchurl {
-    url = "http://serf.googlecode.com/svn/src_releases/${name}.tar.bz2";
-    sha256 = "1bphz616dv1svc50kkm8xbgyszhg3ni2dqbij99sfvjycr7bgk7c";
+    url = "http://archive.apache.org/dist/serf/${name}.tar.bz2";
+    sha256 = "14155g48gamcv5s0828bzij6vr14nqmbndwq8j8f9g6vcph0nl70";
   };
 
   buildInputs = [ apr scons openssl aprutil zlib ]
-    ++ stdenv.lib.optional (!stdenv.isCygwin) kerberos
-    ++ [ pkgconfig ];
+    ++ stdenv.lib.optional (!stdenv.isCygwin) kerberos;
 
   configurePhase = ''
     ${gnused}/bin/sed -e '/^env[.]Append(BUILDERS/ienv.Append(ENV={"PATH":os.environ["PATH"]})' -i SConstruct

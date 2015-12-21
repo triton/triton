@@ -106,12 +106,12 @@ let
   };
 
   stableSource = rec {
-    version = "1.2.11";
+    version = "1.2.12";
     qtVersion = 4;
 
     src = fetchurl {
       url = "https://github.com/mumble-voip/mumble/releases/download/${version}/mumble-${version}.tar.gz";
-      sha256 = "1rh3sral3f0c1mz06mqcwxbf9r4zma23yp8ra91hclbi6vn9dv78";
+      sha256 = "09sp7mrfxq29n5fxyk71i7drwp4839r414ps3dzv9832iqpfr0ar";
     };
   };
 

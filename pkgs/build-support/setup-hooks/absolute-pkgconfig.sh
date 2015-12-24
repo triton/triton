@@ -17,7 +17,7 @@ _doAbsolutePkgconfig() {
       for dep in $deps; do
         args+=("-e")
         path="$(pkgconfigPath $dep)"
-        args+=("/^\\(Requires:\\|Requires\\.private:\\)/ s@\\(,\\| \\|:\\)$dep\\(,\\| \\|$\\)@\\1$path\\2@g")
+        args+=("/^\\(Requires:\\|Requires\\.private:\\)/ s@\\(,\\| \\|\t\\|:\\|\\)$dep\\(,\\| \\|\t\\|$\\)@\\1$path\\2@g")
       done
       if [ "${#args[@]}" -gt 0 ]; then
         sed -i "$pkgfile" "${args[@]}"

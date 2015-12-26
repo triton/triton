@@ -81,6 +81,7 @@
   devhell = "devhell <\"^\"@regexmail.net>";
   dezgeg = "Tuomas Tynkkynen <tuomas.tynkkynen@iki.fi>";
   dfoxfranke = "Daniel Fox Franke <dfoxfranke@gmail.com>";
+  dgonyeo = "Derek Gonyeo <derek@gonyeo.com>";
   dmalikov = "Dmitry Malikov <malikov.d.y@gmail.com>";
   dochang = "Desmond O. Chang <dochang@gmail.com>";
   doublec = "Chris Double <chris.double@double.co.nz>";
@@ -320,6 +321,7 @@
   vmandela = "Venkateswara Rao Mandela <venkat.mandela@gmail.com>";
   vozz = "Oliver Hunt <oliver.huntuk@gmail.com>";
   wedens = "wedens <kirill.wedens@gmail.com>";
+  willtim = "Tim Philip Williams <tim.williams.public@gmail.com>";
   winden = "Antonio Vargas Gonzalez <windenntw@gmail.com>";
   wizeman = "Ricardo M. Correia <rcorreia@wizy.org>";
   wjlroe = "William Roe <willroe@gmail.com>";

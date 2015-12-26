@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, alsaLib, gettext, ncurses, libsamplerate, fftw }:
+{ stdenv, fetchurl, alsaLib, gettext, ncurses, libsamplerate, fftw, pciutils }:
 
 stdenv.mkDerivation rec {
   name = "alsa-utils-${version}";
@@ -14,9 +14,20 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ gettext alsaLib ncurses libsamplerate fftw ];
 
-  configureFlags = "--disable-xmlto --with-udev-rules-dir=$(out)/lib/udev/rules.d";
+  patchPhase = ''
+    substituteInPlace alsa-info/alsa-info.sh \
+      --replace "which" "type -p" \
+      --replace "lspci" "${pciutils}/bin/lspci"
+  '';
 
-  installFlags = "ASOUND_STATE_DIR=$(TMPDIR)/dummy";
+  configureFlags = [
+    "--disable-xmlto"
+    "--with-udev-rules-dir=$(out)/lib/udev/rules.d"
+  ];
+
+  installFlags = [
+    "ASOUND_STATE_DIR=$(TMPDIR)/dummy"
+  ];
 
   meta = {
     homepage = http://www.alsa-project.org/;

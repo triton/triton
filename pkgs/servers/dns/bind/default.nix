@@ -45,9 +45,7 @@ stdenv.mkDerivation rec {
     sha256 = "1kbfzml37sx4r2xi4gq48ji8w5kckd1f6gdn6pk6njqdmh8ijv2a";
   };
 
-  patchPhase = ''
-    sed -i 's/^\t.*run/\t/' Makefile.in
-  '';
+  patches = [ ./libressl.patch ./remove-mkdir-var.patch ];
 
   nativeBuildInputs = [ optPython libtool docbook5_xsl ];
   buildInputs = [

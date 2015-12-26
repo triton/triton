@@ -475,6 +475,8 @@ let
 
   abduco = callPackage ../tools/misc/abduco { };
 
+  acbuild = callPackage ../applications/misc/acbuild { };
+
   acct = callPackage ../tools/system/acct { };
 
   acoustidFingerprinter = callPackage ../tools/audio/acoustid-fingerprinter {
@@ -831,6 +833,8 @@ let
   duperemove = callPackage ../tools/filesystems/duperemove {
     linuxHeaders = linuxHeaders_3_18;
   };
+
+  dynamic-colors = callPackage ../tools/misc/dynamic-colors { };
 
   edac-utils = callPackage ../os-specific/linux/edac-utils { };
 
@@ -1426,11 +1430,7 @@ let
 
   fabric = pythonPackages.fabric;
 
-  fail2ban = callPackage ../tools/security/fail2ban {
-    systemd = systemd.override {
-      pythonSupport = true;
-    };
-  };
+  fail2ban = callPackage ../tools/security/fail2ban { };
 
   fakeroot = callPackage ../tools/system/fakeroot { };
 
@@ -1598,6 +1598,8 @@ let
 
   ggobi = callPackage ../tools/graphics/ggobi { };
 
+  gibo = callPackage ../tools/misc/gibo { };
+
   gifsicle = callPackage ../tools/graphics/gifsicle { };
 
   git-hub = callPackage ../applications/version-management/git-and-tools/git-hub { };
@@ -1736,6 +1738,8 @@ let
   };
 
   trustedGrub = callPackage_i686 ../tools/misc/grub/trusted.nix { };
+
+  trustedGrub-for-HP = callPackage_i686 ../tools/misc/grub/trusted.nix { for_HP_laptop = true; };
 
   grub2 = grub2_full;
 
@@ -5998,7 +6002,7 @@ let
   uncrustify = callPackage ../development/tools/misc/uncrustify { };
 
   vagrant = callPackage ../development/tools/vagrant {
-    ruby = ruby_2_0_0;
+    ruby = ruby_2_2_2;
   };
 
   gdb = callPackage ../development/tools/misc/gdb {
@@ -10801,6 +10805,7 @@ let
   iosevka = callPackage ../data/fonts/iosevka { };
 
   ipafont = callPackage ../data/fonts/ipafont {};
+  ipaexfont = callPackage ../data/fonts/ipaexfont {};
 
   junicode = callPackage ../data/fonts/junicode { };
 
@@ -10953,6 +10958,8 @@ let
   unifont = callPackage ../data/fonts/unifont { };
 
   unifont_upper = callPackage ../data/fonts/unifont_upper { };
+
+  vanilla-dmz = callPackage ../data/icons/vanilla-dmz { };
 
   vistafonts = callPackage ../data/fonts/vista-fonts { };
 
@@ -11286,6 +11293,8 @@ let
   };
 
   constant-detune-chorus = callPackage ../applications/audio/constant-detune-chorus { };
+
+  copyq = callPackage ../applications/misc/copyq { };
 
   coriander = callPackage ../applications/video/coriander {
     inherit (gnome) libgnomeui GConf;
@@ -11714,6 +11723,8 @@ let
   evolution_data_server = gnome3.evolution_data_server;
 
   keepass = callPackage ../applications/misc/keepass { };
+
+  keepass-keefox = callPackage ../applications/misc/keepass-plugins/keefox { };
 
   exrdisplay = callPackage ../applications/graphics/exrdisplay {
     fltk = fltk20;

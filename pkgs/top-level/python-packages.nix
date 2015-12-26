@@ -426,7 +426,7 @@ in modules // {
     # Let's make the library default to our gpg binary
     patchPhase = ''
       substituteInPlace gnupg.py \
-        --replace "gpgbinary='gpg'" "gpgbinary='${pkgs.gnupg}/bin/gpg'"
+        --replace "gpgbinary='gpg'" "gpgbinary='${pkgs.gnupg1}/bin/gpg'"
     '';
 
     meta = {
@@ -17983,12 +17983,12 @@ in modules // {
 
   sipsimple = buildPythonPackage rec {
     name = "sipsimple-${version}";
-    version = "2.5.1";
+    version = "2.6.0";
     disabled = isPy3k;
 
     src = pkgs.fetchurl {
       url = "http://download.ag-projects.com/SipClient/python-${name}.tar.gz";
-      sha256 = "0vpy2vss8667c0kp1k8vybl38nxp7kr2v2wa8sngrgzd65m6ww5p";
+      sha256 = "0xcyasas28q1ad1hgw4vd62b72mf1sng7xwfcls6dc05k9p3q8v3";
     };
 
     propagatedBuildInputs = with self; [ cython pkgs.openssl dns dateutil xcaplib msrplib lxml ];
@@ -21724,9 +21724,10 @@ in modules // {
     };
   };
 
-  libvirt = pkgs.stdenv.mkDerivation rec {
-    name = "libvirt-python-${version}";
+  libvirt = let
     version = "1.2.19";
+  in assert version == pkgs.libvirt.version; pkgs.stdenv.mkDerivation rec {
+    name = "libvirt-python-${version}";
 
     src = pkgs.fetchurl {
       url = "http://libvirt.org/sources/python/${name}.tar.gz";
@@ -22952,6 +22953,26 @@ in modules // {
     meta = with stdenv.lib; {
       description = "Lightweight SOAP client (Jurko's fork)";
       homepage = "http://bitbucket.org/jurko/suds";
+    };
+  };
+
+  maildir-deduplicate = buildPythonPackage rec {
+    name = "maildir-deduplicate-${version}";
+    version = "1.0.2";
+
+    disabled = !isPy27;
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/m/maildir-deduplicate/${name}.tar.gz";
+      sha256 = "1xy5z756alrjgpl9qx2gdx898rw1mryrqkwmipbh39mgrvkl3fz9";
+    };
+
+    propagatedBuildInputs = with self; [ click ];
+
+    meta = with stdenv.lib; {
+      description = "Command-line tool to deduplicate mails from a set of maildir folders";
+      homepage = "https://github.com/kdeldycke/maildir-deduplicate";
+      license = licenses.gpl2;
     };
   };
 

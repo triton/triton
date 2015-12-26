@@ -292,6 +292,14 @@ in
         '';
       };
 
+      xkbDir = mkOption {
+        type = types.str;
+        default = "${pkgs.xkeyboard_config}/etc/X11/xkb";
+        description = ''
+        Path used for -xkbdir xserver parameter.
+        '';
+      };
+
       config = mkOption {
         type = types.lines;
         description = ''
@@ -474,7 +482,7 @@ in
             target = "X11/xorg.conf";
           }
           # -xkbdir command line option does not seems to be passed to xkbcomp.
-          { source = "${pkgs.xkeyboard_config}/etc/X11/xkb";
+          { source = "${cfg.xkbDir}";
             target = "X11/xkb";
           }
         ]);
@@ -540,7 +548,7 @@ in
       [ "-ac"
         "-terminate"
         "-config ${configFile}"
-        "-xkbdir" "${pkgs.xkeyboard_config}/etc/X11/xkb"
+        "-xkbdir" "${cfg.xkbDir}"
       ] ++ optional (cfg.display != null) ":${toString cfg.display}"
         ++ optional (cfg.tty     != null) "vt${toString cfg.tty}"
         ++ optionals (cfg.display != null) [ "-logfile" "/var/log/X.${toString cfg.display}.log" ]

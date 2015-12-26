@@ -9097,6 +9097,8 @@ let
   apacheHttpdPackages_2_2 = apacheHttpdPackagesFor pkgs.apacheHttpd_2_2 pkgs.apacheHttpdPackages_2_2;
   apacheHttpdPackages_2_4 = apacheHttpdPackagesFor pkgs.apacheHttpd_2_4 pkgs.apacheHttpdPackages_2_4;
 
+  archiveopteryx = callPackage ../servers/mail/archiveopteryx/default.nix { };
+
   cadvisor = callPackage ../servers/monitoring/cadvisor { };
 
   cassandra_1_2 = callPackage ../servers/nosql/cassandra/1.2.nix { };
@@ -12060,6 +12062,8 @@ let
 
   gpsd = callPackage ../servers/gpsd { };
 
+  gpsprune = callPackage ../applications/misc/gpsprune { };
+
   gtk2fontsel = callPackage ../applications/misc/gtk2fontsel {
     inherit (gnome2) gtk;
   };
@@ -12246,6 +12250,8 @@ let
   jitsi = callPackage ../applications/networking/instant-messengers/jitsi { };
 
   joe = callPackage ../applications/editors/joe { };
+
+  josm = callPackage ../applications/misc/josm { };
 
   jbrout = callPackage ../applications/graphics/jbrout { };
 
@@ -13173,9 +13179,7 @@ let
 
   printrun = callPackage ../applications/misc/printrun { };
 
-  sddm = qt5.callPackage ../applications/display-managers/sddm {
-    themes = [];  # extra themes, etc.
-  };
+  sddm = kde5.sddm;
 
   slim = callPackage ../applications/display-managers/slim {
     libpng = libpng12;
@@ -14810,6 +14814,10 @@ let
       withKDE = false;
     };
 
+    sddm = callPackage ../applications/display-managers/sddm {
+      themes = [];  # extra themes, etc.
+    };
+
   };
 
   kde5 =
@@ -14817,18 +14825,22 @@ let
       frameworks = import ../development/libraries/kde-frameworks-5.17 { inherit pkgs; };
       plasma = import ../desktops/plasma-5.5 { inherit pkgs; };
       apps = import ../applications/kde-apps-15.12 { inherit pkgs; };
-      merged = self: frameworks self // plasma self // apps self // kde5PackagesFun self;
+      named = self: { plasma = plasma self; frameworks = frameworks self; apps = apps self; };
+      merged = self:
+        named self // frameworks self // plasma self // apps self // kde5PackagesFun self;
     in
-      recurseIntoAttrs (lib.makeScope qt5.newScope merged);
+      recurseIntoAttrs (lib.makeScope qt55.newScope merged);
 
   kde5_latest =
     let
       frameworks = import ../development/libraries/kde-frameworks-5.17 { inherit pkgs; };
       plasma = import ../desktops/plasma-5.5 { inherit pkgs; };
       apps = import ../applications/kde-apps-15.12 { inherit pkgs; };
-      merged = self: frameworks self // plasma self // apps self // kde5PackagesFun self;
+      named = self: { plasma = plasma self; frameworks = frameworks self; apps = apps self; };
+      merged = self:
+        named self // frameworks self // plasma self // apps self // kde5PackagesFun self;
     in
-      recurseIntoAttrs (lib.makeScope qt5.newScope merged);
+      recurseIntoAttrs (lib.makeScope qt55.newScope merged);
 
   theme-vertex = callPackage ../misc/themes/vertex { };
 
@@ -15568,14 +15580,13 @@ let
     };
   };
 
-  saneBackends = callPackage ../applications/graphics/sane/backends.nix {
+  saneBackends = callPackage ../applications/graphics/sane/backends {
     gt68xxFirmware = config.sane.gt68xxFirmware or null;
     snapscanFirmware = config.sane.snapscanFirmware or null;
     hotplugSupport = config.sane.hotplugSupport or true;
-    libusb = libusb1;
   };
 
-  saneBackendsGit = callPackage ../applications/graphics/sane/backends-git.nix {
+  saneBackendsGit = callPackage ../applications/graphics/sane/backends/git.nix {
     gt68xxFirmware = config.sane.gt68xxFirmware or null;
     snapscanFirmware = config.sane.snapscanFirmware or null;
     hotplugSupport = config.sane.hotplugSupport or true;

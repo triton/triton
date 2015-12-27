@@ -1653,7 +1653,7 @@ let
 
   gnupg20 = callPackage ../tools/security/gnupg/20.nix { };
 
-  gnupg21 = callPackage ../tools/security/gnupg/21.nix { };
+  gnupg21 = lowPrio (callPackage ../tools/security/gnupg/21.nix { });
 
   gnupg = gnupg20;
 
@@ -2958,6 +2958,8 @@ let
   rtorrent = callPackage ../tools/networking/p2p/rtorrent { };
 
   rubber = callPackage ../tools/typesetting/rubber { };
+  
+  runzip = callPackage ../tools/archivers/runzip { };
 
   rxp = callPackage ../tools/text/xml/rxp { };
 
@@ -9765,6 +9767,8 @@ let
 
   cramfsswap = callPackage ../os-specific/linux/cramfsswap { };
 
+  crda = callPackage ../os-specific/linux/crda { };
+
   darwin = let
     cmdline = callPackage ../os-specific/darwin/command-line-tools {};
     apple-source-releases = callPackage ../os-specific/darwin/apple-source-releases { };
@@ -10964,6 +10968,8 @@ let
   vanilla-dmz = callPackage ../data/icons/vanilla-dmz { };
 
   vistafonts = callPackage ../data/fonts/vista-fonts { };
+
+  wireless-regdb = callPackage ../data/misc/wireless-regdb { };
 
   wqy_microhei = callPackage ../data/fonts/wqy-microhei { };
 
@@ -15583,13 +15589,11 @@ let
   saneBackends = callPackage ../applications/graphics/sane/backends {
     gt68xxFirmware = config.sane.gt68xxFirmware or null;
     snapscanFirmware = config.sane.snapscanFirmware or null;
-    hotplugSupport = config.sane.hotplugSupport or true;
   };
 
   saneBackendsGit = callPackage ../applications/graphics/sane/backends/git.nix {
     gt68xxFirmware = config.sane.gt68xxFirmware or null;
     snapscanFirmware = config.sane.snapscanFirmware or null;
-    hotplugSupport = config.sane.hotplugSupport or true;
   };
 
   mkSaneConfig = callPackage ../applications/graphics/sane/config.nix { };

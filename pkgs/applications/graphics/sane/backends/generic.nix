@@ -1,13 +1,16 @@
 { stdenv, fetchurl
 , avahi, libusb1, libv4l, net_snmp
 , gettext, pkgconfig
+
+# List of { src name backend } attibute sets - see installFirmware below:
+, extraFirmware ? []
+
+# For backwards compatibility with older setups; use extraFirmware instead:
 , gt68xxFirmware ? null, snapscanFirmware ? null
-, hotplugSupport ? true
+
+# Passed from versioned package (e.g. default.nix, git.nix):
 , version, src, ...
 }:
-
-assert hotplugSupport ->
-  builtins.elem stdenv.system [ "i686-linux" "x86_64-linux" ];
 
 stdenv.mkDerivation {
   inherit src;
@@ -24,24 +27,30 @@ stdenv.mkDerivation {
   buildInputs = [ avahi libusb1 libv4l net_snmp ];
   nativeBuildInputs = [ gettext pkgconfig ];
 
-  postInstall = ''
-    if test "$hotplugSupport" = "1"; then
-      mkdir -p $out/etc/udev/rules.d/
-      ./tools/sane-desc -m udev > $out/etc/udev/rules.d/49-libsane.rules || \
-      cp tools/udev/libsane.rules $out/etc/udev/rules.d/49-libsane.rules
-    fi
-  '';
+  postInstall = let
 
-  preInstall =
-    if gt68xxFirmware != null then
-      "mkdir -p \${out}/share/sane/gt68xx ; ln -s " + gt68xxFirmware.fw +
-      " \${out}/share/sane/gt68xx/" + gt68xxFirmware.name
-    else if snapscanFirmware != null then
-      "mkdir -p \${out}/share/sane/snapscan ; ln -s " + snapscanFirmware +
-      " \${out}/share/sane/snapscan/your-firmwarefile.bin"
-      "mkdir -p \${out}/etc/sane.d ; " +
-      "echo epson2 >> \${out}/etc/sane.d/dll.conf"
-    else "";
+    compatFirmware = extraFirmware
+      ++ stdenv.lib.optional (gt68xxFirmware != null) {
+        src = gt68xxFirmware.fw;
+        inherit (gt68xxFirmware) name;
+        backend = "gt68xx";
+      }
+      ++ stdenv.lib.optional (snapscanFirmware != null) {
+        src = snapscanFirmware;
+        name = "your-firmwarefile.bin";
+        backend = "snapscan";
+      };
+
+    installFirmware = f: ''
+      mkdir -p $out/share/sane/${f.backend}
+      ln -sv ${f.src} $out/share/sane/${f.backend}/${f.name}
+    '';
+
+  in ''
+    mkdir -p $out/etc/udev/rules.d/
+    ./tools/sane-desc -m udev > $out/etc/udev/rules.d/49-libsane.rules || \
+    cp tools/udev/libsane.rules $out/etc/udev/rules.d/49-libsane.rules
+  '' + stdenv.lib.concatStrings (builtins.map installFirmware compatFirmware);
 
   meta = with stdenv.lib; {
     inherit version;

@@ -293,10 +293,9 @@ in
       };
 
       xkbDir = mkOption {
-        type = types.str;
-        default = "${pkgs.xkeyboard_config}/etc/X11/xkb";
+        type = types.path;
         description = ''
-        Path used for -xkbdir xserver parameter.
+          Path used for -xkbdir xserver parameter.
         '';
       };
 
@@ -559,6 +558,8 @@ in
       [ xorg.xorgserver
         xorg.xf86inputevdev
       ];
+
+    services.xserver.xkbDir = mkDefault "${pkgs.xkeyboard_config}/etc/X11/xkb";
 
     services.xserver.config =
       ''

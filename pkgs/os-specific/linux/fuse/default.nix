@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   builder = ./builder.sh;
   
   src = fetchurl {
-    url = "mirror://sourceforge/fuse/${name}.tar.gz";
+    url = "https://github.com/libfuse/libfuse/releases/download/${stdenv.lib.replaceStrings ["-" "."] ["_" "_"] name}/${name}.tar.gz";
     sha256 = "1qbwp63a2bp0bchabkwiyzszi9x5krlk2pwk2is6g35gyszw1sbb";
   };
   

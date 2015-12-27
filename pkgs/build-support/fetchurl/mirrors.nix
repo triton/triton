@@ -77,7 +77,7 @@ rec {
   ];
 
   samba = [
-    http://samba.org/ftp/
+    https://samba.org/ftp/
   ];
 
   # BitlBee mirrors, see http://www.bitlbee.org/main.php/mirrors.html

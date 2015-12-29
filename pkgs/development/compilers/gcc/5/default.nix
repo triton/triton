@@ -34,6 +34,7 @@
 , stripped ? true
 , gnused ? null
 , binutils ? null
+, shouldBootstrap ? true
 }:
 
 assert langJava     -> zip != null && unzip != null
@@ -196,7 +197,7 @@ let version = "5.3.0";
     stageNameAddon = if crossStageStatic then "-stage-static" else "-stage-final";
     crossNameAddon = if cross != null then "-${cross.config}" + stageNameAddon else "";
 
-  bootstrap = cross == null && !stdenv.isArm && !stdenv.isMips;
+  bootstrap = shouldBootstrap && cross == null;
 
 in
 

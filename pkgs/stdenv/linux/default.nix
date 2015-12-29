@@ -227,6 +227,7 @@ rec {
       isl = pkgs.isl.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
       gccPlain = pkgs.gcc.cc.override {
         isl = isl;
+        shouldBootstrap = false;
       };
     };
     extraBuildInputs = [ stage2.pkgs.patchelf stage2.pkgs.paxctl ];

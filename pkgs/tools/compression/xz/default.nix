@@ -10,10 +10,18 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
 
-  # In stdenv-linux, prevent a dependency on bootstrap-tools.
-  preConfigure = "unset CONFIG_SHELL";
+  NIX_CFLAGS_COMPILE = "-fPIC";
 
-  postInstall = "rm -rf $out/share/doc";
+  enableParallelBuilding = true;
+
+  # In stdenv-linux, prevent a dependency on bootstrap-tools.
+  preConfigure = ''
+    unset CONFIG_SHELL
+  '';
+
+  postInstall = ''
+    rm -rf $out/share/doc
+  '';
 
   meta = with stdenv.lib; {
     homepage = http://tukaani.org/xz/;

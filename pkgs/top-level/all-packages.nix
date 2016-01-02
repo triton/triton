@@ -1309,7 +1309,7 @@ let
   };
 
   docbook2x = callPackage ../tools/typesetting/docbook2x {
-    inherit (perlPackages) XMLSAX XMLParser XMLNamespaceSupport;
+    inherit (perlPackages) XMLSAX XMLSAXBase XMLParser XMLNamespaceSupport;
   };
 
   dog = callPackage ../tools/system/dog { };

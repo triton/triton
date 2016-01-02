@@ -1,32 +1,31 @@
 { stdenv, fetchurl, libiconv, xz }:
 
 stdenv.mkDerivation (rec {
-  name = "gettext-0.19.6";
+  name = "gettext-0.19.7";
 
   src = fetchurl {
     url = "mirror://gnu/gettext/${name}.tar.gz";
-    sha256 = "0pb9vp4ifymvdmc31ks3xxcnfqgzj8shll39czmk8c1splclqjzd";
+    sha256 = "0gy2b2aydj8r0sapadnjw8cmb8j2rynj28d5qs1mfa800njd51jk";
   };
 
   outputs = [ "out" "doc" ];
 
   LDFLAGS = if stdenv.isSunOS then "-lm -lmd -lmp -luutil -lnvpair -lnsl -lidmap -lavl -lsec" else "";
 
-  configureFlags = [ "--disable-csharp" "--with-xz" ]
-     ++ (stdenv.lib.optionals stdenv.isCygwin
-          [ "--disable-java"
-            "--disable-native-java"
-            # Share the cache among the various `configure' runs.
-            "--config-cache"
-            "--with-included-gettext"
-            "--with-included-glib"
-            "--with-included-libcroco"
-          ])
+  configureFlags = stdenv.lib.optionals stdenv.isCygwin
+      [ "--disable-java"
+        "--disable-native-java"
+        # Share the cache among the various `configure' runs.
+        "--config-cache"
+        "--with-included-gettext"
+        "--with-included-glib"
+        "--with-included-libcroco"
+      ]
      # avoid retaining reference to CF during stdenv bootstrap
-     ++ (stdenv.lib.optionals stdenv.isDarwin [
-        "gt_cv_func_CFPreferencesCopyAppValue=no"
-        "gt_cv_func_CFLocaleCopyCurrent=no"
-      ]);
+    ++ (stdenv.lib.optionals stdenv.isDarwin [
+      "gt_cv_func_CFPreferencesCopyAppValue=no"
+      "gt_cv_func_CFLocaleCopyCurrent=no"
+    ]);
 
   patchPhase = ''
    substituteInPlace gettext-tools/projects/KDE/trigger --replace "/bin/pwd" pwd

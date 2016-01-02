@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, perl, cross ? null }:
+{ stdenv, fetchurl, cross ? null }:
 
 assert cross == null -> stdenv.isLinux;
 
@@ -32,8 +32,6 @@ stdenv.mkDerivation {
     if stdenv.platform ? kernelArch then stdenv.platform.kernelArch else
     abort "don't know what the kernel include directory is called for this platform";
 
-  buildInputs = [perl];
-
   extraIncludeDirs =
     if cross != null then
         (if cross.arch == "powerpc" then ["ppc"] else [])
@@ -44,11 +42,13 @@ stdenv.mkDerivation {
        export ARCH=$platform
     fi
     make ${kernelHeadersBaseConfig} SHELL=bash
-    make mrproper headers_check SHELL=bash
   '';
 
   installPhase = ''
     make INSTALL_HDR_PATH=$out headers_install
+
+    # Cleanup some unneeded files
+    find $out/include \( -name .install -o -name ..install.cmd \) -delete
 
     # Some builds (e.g. KVM) want a kernel.release.
     mkdir -p $out/include/config

@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, python, gstreamer, gobjectIntrospection
-, orc, alsaLib, libXv, pango, libtheora
+, orc, alsaLib, xorg, pango, libtheora
 , cdparanoia, libvisual, libintlOrEmpty
 }:
 
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    orc libXv pango libtheora cdparanoia
+    orc xorg.libXv pango libtheora cdparanoia
   ]
   ++ libintlOrEmpty
   ++ stdenv.lib.optional stdenv.isLinux alsaLib

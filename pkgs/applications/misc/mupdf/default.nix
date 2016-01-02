@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, fetchpatch, pkgconfig, zlib, freetype, libjpeg, jbig2dec, openjpeg
-, libX11, libXext, openssl }:
+{ stdenv, fetchurl, fetchpatch, zlib, freetype, libjpeg, jbig2dec, openjpeg
+, xorg, openssl }:
 
 stdenv.mkDerivation rec {
   version = "1.8";
@@ -10,9 +10,8 @@ stdenv.mkDerivation rec {
     sha256 = "01n26cy41lc2fjri63s4js23ixxb4nd37aafry3hz4i4id6wd8x2";
   };
 
-  nativeBuildInputs = [ pkgconfig ];
   propagatedBuildInputs = [ openjpeg libjpeg jbig2dec openssl ];
-  buildInputs = [ zlib freetype libX11 libXext ];
+  buildInputs = [ zlib freetype xorg.libX11 xorg.libXext ];
 
   enableParallelBuilding = true;
 

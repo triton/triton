@@ -1,4 +1,4 @@
-{stdenv, fetchurl, libX11, libXinerama, libXft, zlib}:
+{ stdenv, fetchurl, xorg, zlib }:
 
 stdenv.mkDerivation rec {
   name = "dmenu-4.6";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "1cwnvamqqlgczvd5dv5rsgqbhv8kp0ddjnhmavb3q732i8028yja";
   };
 
-  buildInputs = [ libX11 libXinerama zlib libXft ];
+  buildInputs = [ xorg.libX11 xorg.libXinerama zlib xorg.libXft ];
 
   postPatch = ''
     sed -ri -e 's!\<(dmenu|stest)\>!'"$out/bin"'/&!g' dmenu_run

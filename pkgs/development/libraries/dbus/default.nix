@@ -1,10 +1,8 @@
 { stdenv, fetchurl, pkgconfig, autoconf, automake, libtool
 , expat, systemd, glib, dbus_glib, python
-, libX11 ? null, libICE ? null, libSM ? null, x11Support ? (stdenv.isLinux || stdenv.isDarwin) }:
+, xorg ? null, x11Support ? (stdenv.isLinux || stdenv.isDarwin) }:
 
-assert x11Support -> libX11 != null
-                  && libICE != null
-                  && libSM != null;
+assert x11Support -> xorg != null;
 
 let
   version = "1.8.20";
@@ -12,7 +10,7 @@ let
 
   inherit (stdenv) lib;
 
-  buildInputsX = lib.optionals x11Support [ libX11 libICE libSM ];
+  buildInputsX = lib.optionals x11Support [ xorg.libX11 xorg.libICE xorg.libSM ];
 
   # also other parts than "libs" need this statically linked lib
   makeInternalLib = "(cd dbus && make libdbus-internal.la)";

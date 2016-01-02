@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pam, pkgconfig, libxcb, glib, libXdmcp, itstool, libxml2
+{ stdenv, fetchurl, pam, glib, xorg, itstool, libxml2
 , intltool, xlibsWrapper, libxklavier, libgcrypt, libaudit
 , qt4 ? null
 , withQt5 ? false, qtbase
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   patches = [ ./fix-paths.patch ];
 
   buildInputs = [
-    pkgconfig pam libxcb glib libXdmcp itstool libxml2 intltool libxklavier libgcrypt
+    pam xorg.libxcb glib xorg.libXdmcp itstool libxml2 intltool libxklavier libgcrypt
     qt4 libaudit
   ] ++ stdenv.lib.optional withQt5 qtbase;
 

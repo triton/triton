@@ -1,6 +1,4 @@
-{ stdenv, fetchFromGitHub, autoreconfHook, pkgconfig, utilmacros, python
-, mesa, libX11
-}:
+{ stdenv, fetchFromGitHub, autoreconfHook, xorg, python, mesa }:
 
 stdenv.mkDerivation rec {
   name = "epoxy-${version}";
@@ -13,8 +11,8 @@ stdenv.mkDerivation rec {
     sha256 = "0dfkd4xbp7v5gwsf6qwaraz54yzizf3lj5ymyc0msjn0adq3j5yl";
   };
 
-  nativeBuildInputs = [ autoreconfHook pkgconfig utilmacros python ];
-  buildInputs = [ mesa libX11 ];
+  nativeBuildInputs = [ autoreconfHook xorg.utilmacros python ];
+  buildInputs = [ mesa xorg.libX11 ];
 
   preConfigure = stdenv.lib.optional stdenv.isDarwin ''
     substituteInPlace configure --replace build_glx=no build_glx=yes

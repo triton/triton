@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, fetchpatch, pkgconfig, freetype, expat, libxslt, fontbhttf
+{ stdenv, fetchurl, fetchpatch, pkgconfig, freetype, expat, libxslt, xorg
 , substituteAll }:
 
 /** Font configuration scheme
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
     "--with-cache-dir=/var/cache/fontconfig" # otherwise the fallback is in $out/
     "--disable-docs"
     # just ~1MB; this is what you get when loading config fails for some reason
-    "--with-default-fonts=${fontbhttf}"
+    "--with-default-fonts=${xorg.fontbhttf}"
   ];
 
   # We should find a better way to access the arch reliably.
@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
   postInstall = ''
     cd "$out/etc/fonts"
     rm conf.d/{50-user,51-local}.conf
-    "${libxslt}/bin/xsltproc" --stringparam fontDirectories "${fontbhttf}" \
+    "${libxslt}/bin/xsltproc" --stringparam fontDirectories "${xorg.fontbhttf}" \
       --stringparam fontconfig "$out" \
       --stringparam fontconfigConfigVersion "${configVersion}" \
       --path $out/share/xml/fontconfig \

@@ -1,17 +1,16 @@
 { stdenv, lib, fetchurl, copyPathsToStore, makeWrapper
 , srcs
 
-, xlibs, libX11, libxcb, libXcursor, libXext, libXrender, libXi
-, xcbutil, xcbutilimage, xcbutilkeysyms, xcbutilwm, libxkbcommon
+, xorg, libxkbcommon
 , fontconfig, freetype, openssl, dbus, glib, udev, libxml2, libxslt, pcre
 , zlib, libjpeg, libpng, libtiff, sqlite, icu
 
-, coreutils, bison, flex, gdb, gperf, lndir, ruby
+, coreutils, bison, flex, gdb, gperf, ruby
 , python, perl, pkgconfig
 
 # optional dependencies
 , cups ? null
-, mysql ? null, postgresql ? null
+, libmysql ? null, postgresql ? null
 
 # options
 , mesaSupported, mesa, mesa_glu
@@ -65,7 +64,7 @@ stdenv.mkDerivation {
         --replace "@glibc@" "${stdenv.cc.libc}"
 
       substituteInPlace qtbase/src/plugins/platforms/xcb/qxcbcursor.cpp \
-        --replace "@libXcursor@" "${libXcursor}"
+        --replace "@libXcursor@" "${xorg.libXcursor}"
 
       substituteInPlace qtbase/src/network/ssl/qsslsocket_openssl_symbols.cpp \
         --replace "@openssl@" "${openssl}"
@@ -75,7 +74,7 @@ stdenv.mkDerivation {
 
       substituteInPlace \
         qtbase/src/plugins/platforminputcontexts/compose/generator/qtablegenerator.cpp \
-        --replace "@libX11@" "${libX11}"
+        --replace "@libX11@" "${xorg.libX11}"
     ''
     + lib.optionalString gtkStyle ''
       substituteInPlace qtbase/src/widgets/styles/qgtk2painter.cpp --replace "@gtk@" "${gtk}"
@@ -160,7 +159,7 @@ stdenv.mkDerivation {
     -dbus-linked
 
     -system-sqlite
-    -${if mysql != null then "plugin" else "no"}-sql-mysql
+    -${if libmysql != null then "plugin" else "no"}-sql-mysql
     -${if postgresql != null then "plugin" else "no"}-sql-psql
 
     -make libs
@@ -175,16 +174,16 @@ stdenv.mkDerivation {
   PSQL_LIBS = lib.optionalString (postgresql != null) "-L${postgresql}/lib -lpq";
 
   propagatedBuildInputs = [
-    xlibs.libXcomposite libX11 libxcb libXext libXrender libXi
+    xorg.libXcomposite xorg.libX11 xorg.libxcb xorg.libXext xorg.libXrender xorg.libXi
     fontconfig freetype openssl dbus.libs glib udev libxml2 libxslt pcre
     zlib libjpeg libpng libtiff sqlite icu
-    xcbutil xcbutilimage xcbutilkeysyms xcbutilwm libxkbcommon
+    xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilwm libxkbcommon
   ]
   # Qt doesn't directly need GLU (just GL), but many apps use, it's small and
   # doesn't remain a runtime-dep if not used
   ++ lib.optionals mesaSupported [ mesa mesa_glu ]
   ++ lib.optional (cups != null) cups
-  ++ lib.optional (mysql != null) mysql.lib
+  ++ lib.optional (libmysql != null) libmysql
   ++ lib.optional (postgresql != null) postgresql
   ++ lib.optionals gtkStyle [gnome_vfs libgnomeui gtk GConf];
 
@@ -208,7 +207,7 @@ stdenv.mkDerivation {
       make docs && make install_docs
     '';
 
-  inherit lndir;
+  inherit (xorg) lndir;
   setupHook = ./setup-hook.sh;
 
   enableParallelBuilding = true;

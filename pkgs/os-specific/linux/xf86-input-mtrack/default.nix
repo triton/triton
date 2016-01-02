@@ -3,13 +3,9 @@
 , fetchurl
 , autoconf
 , automake
-, utilmacros
-, pkgconfig
 , libtool
 , mtdev
-, xorgserver
-, xproto
-, inputproto
+, xorg
 , pixman
 }:
 
@@ -21,13 +17,12 @@ stdenv.mkDerivation {
   buildInputs = [
     autoconf
     automake
-    utilmacros
-    pkgconfig
+    xorg.utilmacros
     libtool
     mtdev
-    xorgserver
-    xproto
-    inputproto
+    xorg.xorgserver
+    xorg.xproto
+    xorg.inputproto
     pixman
   ];
 

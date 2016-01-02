@@ -12,8 +12,8 @@
 , utillinux, alsaLib
 , bison, gperf
 , glib, gtk, dbus_glib
-, libXScrnSaver, libXcursor, libXtst, mesa
-, protobuf, speechd, libXdamage, cups
+, xorg, mesa
+, protobuf, speechd, cups
 
 # optional dependencies
 , libgcrypt ? null # gnomeSupport || cupsSupport
@@ -109,8 +109,8 @@ let
       utillinux alsaLib
       bison gperf kerberos
       glib gtk dbus_glib
-      libXScrnSaver libXcursor libXtst mesa
-      pciutils protobuf speechd libXdamage
+      xorg.libXScrnSaver xorg.libXcursor xorg.libXtst mesa
+      pciutils protobuf speechd xorg.libXdamage
       pythonPackages.gyp pythonPackages.ply pythonPackages.jinja2
     ] ++ optional gnomeKeyringSupport libgnome_keyring3
       ++ optionals gnomeSupport [ gnome.GConf libgcrypt ]

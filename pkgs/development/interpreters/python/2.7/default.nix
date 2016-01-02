@@ -5,7 +5,7 @@
 
 , db, gdbm, ncurses, sqlite, readline
 
-, tcl ? null, tk ? null, xlibsWrapper ? null, libX11 ? null, x11Support ? !stdenv.isCygwin
+, tcl ? null, tk ? null, xlibsWrapper ? null, xorg ? null, x11Support ? !stdenv.isCygwin
 , zlib ? null, zlibSupport ? true
 , expat, libffi
 
@@ -16,7 +16,7 @@ assert zlibSupport -> zlib != null;
 assert x11Support -> tcl != null
                   && tk != null
                   && xlibsWrapper != null
-                  && libX11 != null;
+                  && xorg != null;
 
 with stdenv.lib;
 
@@ -94,7 +94,7 @@ let
     ++ optionals stdenv.isCygwin [ expat libffi ]
     ++ optionals includeModules (
         [ db gdbm ncurses sqlite readline
-        ] ++ optionals x11Support [ tcl tk xlibsWrapper libX11 ]
+        ] ++ optionals x11Support [ tcl tk xlibsWrapper xorg.libX11 ]
     )
     ++ optional zlibSupport zlib
     ++ optional stdenv.isDarwin CF;
@@ -249,7 +249,7 @@ let
 
     tkinter = if stdenv.isCygwin then null else (buildInternalPythonModule {
       moduleName = "tkinter";
-      deps = [ tcl tk xlibsWrapper libX11 ];
+      deps = [ tcl tk xlibsWrapper xorg.libX11 ];
     });
 
   } // {

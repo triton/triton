@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, libpthreadstubs, libpciaccess, udev, valgrind }:
+{ stdenv, fetchurl, pkgconfig, xorg, udev, valgrind }:
 
 stdenv.mkDerivation rec {
   name = "libdrm-2.4.65";
@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ pkgconfig ];
-  buildInputs = [ libpthreadstubs libpciaccess ]
+  buildInputs = [ xorg.libpthreadstubs xorg.libpciaccess ]
     ++ stdenv.lib.optional stdenv.isLinux udev;
 
   patches = stdenv.lib.optional stdenv.isDarwin ./libdrm-apple.patch;

@@ -1,6 +1,4 @@
-{ stdenv, fetchurl, libX11, pkgconfig, libXext, libdrm, libXfixes, wayland, libffi
-, mesa ? null
-}:
+{ stdenv, fetchurl, libdrm, wayland, libffi, xorg, mesa ? null }:
 
 stdenv.mkDerivation rec {
   name = "libva-1.6.1";
@@ -10,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "0bjfb5s8dk3lql843l91ffxzlq47isqks5sj19cxh7j3nhzw58kz";
   };
 
-  buildInputs = [ libX11 libXext pkgconfig libdrm libXfixes wayland libffi mesa ];
+  buildInputs = [ xorg.libX11 xorg.libXext libdrm xorg.libXfixes wayland libffi mesa ];
 
   configureFlags = stdenv.lib.optional (mesa != null) "--enable-glx";
 

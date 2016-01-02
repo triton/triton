@@ -1,5 +1,5 @@
 { stdenv, fetchFromGitHub, autoreconfHook, pkgconfig, zlib, readline, openssl
-, libiconv, pcsclite, libassuan, libXt
+, libiconv, pcsclite, libassuan, xorg
 , docbook_xsl, libxslt, docbook_xml_dtd_412
 }:
 
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     autoreconfHook pkgconfig zlib readline openssl pcsclite libassuan
-    libXt libxslt libiconv docbook_xml_dtd_412
+    xorg.libXt libxslt libiconv docbook_xml_dtd_412
   ];
 
   configureFlags = [

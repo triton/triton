@@ -2,14 +2,14 @@
 , ncurses, boehmgc, gettext, zlib
 , sslSupport ? true, openssl ? null
 , graphicsSupport ? true, imlib2 ? null
-, x11Support ? graphicsSupport, libX11 ? null
+, x11Support ? graphicsSupport, xorg ? null
 , mouseSupport ? !stdenv.isDarwin, gpm-ncurses ? null
 , perl, man
 }:
 
 assert sslSupport -> openssl != null;
 assert graphicsSupport -> imlib2 != null;
-assert x11Support -> graphicsSupport && libX11 != null;
+assert x11Support -> graphicsSupport && xorg != null;
 assert mouseSupport -> gpm-ncurses != null;
 
 with stdenv.lib;
@@ -70,7 +70,7 @@ stdenv.mkDerivation rec {
     ++ optional sslSupport openssl
     ++ optional mouseSupport gpm-ncurses
     ++ optional graphicsSupport imlib2
-    ++ optional x11Support libX11;
+    ++ optional x11Support xorg.libX11;
 
   postInstall = optionalString graphicsSupport ''
     ln -s $out/libexec/w3m/w3mimgdisplay $out/bin

@@ -1,8 +1,7 @@
 { stdenv, fetchurl, fetchpatch, substituteAll
-, libXrender, libXinerama, libXcursor, libXmu, libXv, libXext
-, libXfixes, libXrandr, libSM, freetype, fontconfig, zlib, libjpeg, libpng
-, libmng, which, mesaSupported, mesa, mesa_glu, openssl, dbus, cups, pkgconfig
-, libtiff, glib, icu, mysql, postgresql, sqlite, perl, coreutils, libXi
+, xorg, freetype, fontconfig, zlib, libjpeg, libpng
+, libmng, which, mesaSupported, mesa, mesa_glu, openssl, dbus, cups
+, libtiff, glib, icu, mysql, postgresql, sqlite, perl, coreutils
 , buildMultimedia ? stdenv.isLinux, alsaLib, gstreamer, gst_plugins_base
 , buildWebkit ? stdenv.isLinux
 , flashplayerFix ? false, gdk_pixbuf
@@ -53,7 +52,8 @@ stdenv.mkDerivation rec {
       ./libressl.patch
       (substituteAll {
         src = ./dlopen-absolute-paths.diff;
-        inherit cups icu libXfixes;
+        inherit cups icu;
+        inherit (xorg) libXfixes;
         glibc = stdenv.cc.libc;
         openglDriver = if mesaSupported then mesa.driverLink else "/no-such-path";
       })
@@ -112,7 +112,7 @@ stdenv.mkDerivation rec {
     '';
 
   propagatedBuildInputs =
-    [ libXrender libXrandr libXinerama libXcursor libXext libXfixes libXv libXi
+    [ xorg.libXrender xorg.libXrandr xorg.libXinerama xorg.libXcursor xorg.libXext xorg.libXfixes xorg.libXv xorg.libXi
       libSM zlib libpng openssl dbus.libs freetype fontconfig glib ]
         # Qt doesn't directly need GLU (just GL), but many apps use, it's small and doesn't remain a runtime-dep if not used
     ++ optional mesaSupported mesa_glu
@@ -125,7 +125,7 @@ stdenv.mkDerivation rec {
       mysql.lib postgresql sqlite libjpeg libmng libtiff icu ]
     ++ optionals gtkStyle [ gtk gdk_pixbuf ];
 
-  nativeBuildInputs = [ perl pkgconfig which ];
+  nativeBuildInputs = [ perl which ];
 
   enableParallelBuilding = false;
 

@@ -126,7 +126,7 @@ let
   # The package compositions.  Yes, this isn't properly indented.
   pkgsFun = pkgs: overrides:
     with helperFunctions;
-    let defaultScope = pkgs // pkgs.xorg; self = self_ // overrides;
+    let defaultScope = pkgs; self = self_ // overrides;
     self_ = with self; helperFunctions // {
 
   # Make some arguments passed to all-packages.nix available
@@ -11472,7 +11472,6 @@ let
 
   emacs24 = callPackage ../applications/editors/emacs-24 {
     # use override to enable additional features
-    libXaw = xorg.libXaw;
     Xaw3d = null;
     gconf = null;
     alsaLib = null;

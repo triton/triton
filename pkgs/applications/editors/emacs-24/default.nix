@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, ncurses, xlibsWrapper, libXaw, libXpm, Xaw3d
-, pkgconfig, gettext, libXft, dbus, libpng, libjpeg, libungif
+{ stdenv, fetchurl, ncurses, xlibsWrapper, xorg, Xaw3d
+, pkgconfig, gettext, dbus, libpng, libjpeg, libungif
 , libtiff, librsvg, texinfo, gconf, libxml2, imagemagick, gnutls
 , alsaLib, cairo, acl, gpm, AppKit, CoreWLAN, Kerberos, GSS, ImageIO
 , withX ? !stdenv.isDarwin
@@ -7,8 +7,8 @@
 , withGTK2 ? true, gtk2
 }:
 
-assert (libXft != null) -> libpng != null;      # probably a bug
-assert stdenv.isDarwin -> libXaw != null;       # fails to link otherwise
+assert (xorg != null) -> libpng != null;      # probably a bug
+assert stdenv.isDarwin -> xorg != null;       # fails to link otherwise
 assert withGTK2 -> withX || stdenv.isDarwin;
 assert withGTK3 -> withX || stdenv.isDarwin;
 assert withGTK2 -> !withGTK3 && gtk2 != null;
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
     [ ncurses gconf libxml2 gnutls alsaLib pkgconfig texinfo acl gpm gettext ]
     ++ stdenv.lib.optional stdenv.isLinux dbus
     ++ stdenv.lib.optionals withX
-      [ xlibsWrapper libXaw Xaw3d libXpm libpng libjpeg libungif libtiff librsvg libXft
+      [ xlibsWrapper xorg.libXaw Xaw3d xorg.libXpm libpng libjpeg libungif libtiff librsvg xorg.libXft
         imagemagick gconf ]
     ++ stdenv.lib.optional (withX && withGTK2) gtk2
     ++ stdenv.lib.optional (withX && withGTK3) gtk3

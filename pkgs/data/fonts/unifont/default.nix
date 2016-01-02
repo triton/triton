@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, mkfontscale, mkfontdir }:
+{ stdenv, fetchurl, xorg }:
 
 stdenv.mkDerivation rec {
   name = "unifont-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     sha256 = "0mpdy2k7z9s60x8i6sbv64p9wrihfwgrw81x5yj13rl6x7zzghr8";
   };
 
-  buildInputs = [ mkfontscale mkfontdir ];
+  buildInputs = [ xorg.mkfontscale xorg.mkfontdir ];
 
   phases = "installPhase";
 

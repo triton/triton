@@ -1,10 +1,10 @@
-{ runCommand, libxslt, fontconfig, fontbhttf, fontDirectories }:
+{ runCommand, libxslt, fontconfig, xorg, fontDirectories }:
 
 runCommand "fonts.conf"
   {
     buildInputs = [ libxslt fontconfig ];
     # Add a default font for non-nixos systems. fontbhttf is only about 1mb.
-    fontDirectories = fontDirectories ++ [ fontbhttf ];
+    fontDirectories = fontDirectories ++ [ xorg.fontbhttf ];
   }
   ''
     xsltproc --stringparam fontDirectories "$fontDirectories" \

@@ -1,6 +1,6 @@
 { stdenv, fetchurl, xz, bzip2, perl, xorg, libdvdnav, libbluray
 , zlib, a52dec, libmad, faad2, ffmpeg, alsaLib
-, pkgconfig, dbus, fribidi, freefont_ttf, libebml, libmatroska
+, dbus, fribidi, freefont_ttf, libebml, libmatroska
 , libvorbis, libtheora, speex, lua, libgcrypt, libupnp
 , libcaca, libpulseaudio, flac, schroedinger, libxml2, librsvg
 , mpeg2dec, udev, gnutls, avahi, libcddb, libjack2, SDL, SDL_image
@@ -39,8 +39,6 @@ stdenv.mkDerivation rec {
     ]
     ++ [(if withQt5 then qtbase else qt4)]
     ++ optional jackSupport libjack2;
-
-  nativeBuildInputs = [ pkgconfig ];
 
   patches = [
     ./lua_53_compat.patch

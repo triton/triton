@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, pkgconfig, libpng, libjpeg, expat, libXaw
-, yacc, libtool, fontconfig, pango, gd, xorg, gts, libdevil, gettext, cairo
+{ stdenv, fetchurl, libpng, libjpeg, expat, xorg
+, yacc, libtool, fontconfig, pango, gd, gts, libdevil, gettext, cairo
 , flex
 }:
 
@@ -21,8 +21,8 @@ stdenv.mkDerivation rec {
     ];
 
   buildInputs =
-    [ pkgconfig libpng libjpeg expat yacc libtool fontconfig gd gts libdevil flex
-    ] ++ stdenv.lib.optionals (xorg != null) [ xorg.xlibsWrapper xorg.libXrender pango libXaw ]
+    [ libpng libjpeg expat yacc libtool fontconfig gd gts libdevil flex
+    ] ++ stdenv.lib.optionals (xorg != null) [ xorg.xlibsWrapper xorg.libXrender pango xorg.libXaw ]
     ++ stdenv.lib.optional (stdenv.system == "x86_64-darwin") gettext;
 
   CPPFLAGS = stdenv.lib.optionalString (xorg != null && stdenv.system == "x86_64-darwin")

@@ -1,4 +1,4 @@
-{stdenv, fetchurl, xlibsWrapper, imake}:
+{ stdenv, fetchurl, xlibsWrapper, xorg }:
 
 stdenv.mkDerivation {
   name = "x11-ssh-askpass-1.2.4.1";
@@ -14,7 +14,7 @@ stdenv.mkDerivation {
 
   buildPhase = "xmkmf; make includes; make";
 
-  buildInputs = [xlibsWrapper imake];
+  buildInputs = [ xlibsWrapper xorg.imake ];
 
   meta = {
     homepage = "http://www.jmknoble.net/software/x11-ssh-askpass/";

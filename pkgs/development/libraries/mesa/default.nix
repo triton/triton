@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, fetchpatch, pkgconfig, intltool, flex, bison, autoreconfHook, substituteAll
-, python, libxml2Python, file, expat, makedepend, pythonPackages
+{ stdenv, fetchurl, fetchpatch, intltool, flex, bison, autoreconfHook, substituteAll
+, python, libxml2Python, file, expat, pythonPackages
 , libdrm, xorg, wayland, udev, llvmPackages, libffi, libomxil-bellagio
 , libvdpau, libelf, libva
 , grsecEnabled
@@ -97,7 +97,7 @@ stdenv.mkDerivation {
   ] ++ optional enableTextureFloats "--enable-texture-float"
     ++ optional grsecEnabled "--enable-glx-rts"; # slight performance degradation, enable only for grsec
 
-  nativeBuildInputs = [ pkgconfig python makedepend file flex bison pythonPackages.Mako ];
+  nativeBuildInputs = [ python xorg.makedepend file flex bison pythonPackages.Mako ];
 
   propagatedBuildInputs = with xorg; [ libXdamage libXxf86vm ]
     ++ optionals stdenv.isLinux [ libdrm ];

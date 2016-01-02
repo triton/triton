@@ -1,5 +1,5 @@
 { stdenv, makeWrapper, fetchurl, xlibsWrapper, imlib2, libjpeg, libpng
-, libXinerama, curl, libexif }:
+, xorg, curl, libexif }:
 
 stdenv.mkDerivation rec {
   name = "feh-2.14";
@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ makeWrapper ];
-  buildInputs = [ xlibsWrapper imlib2 libjpeg libpng libXinerama curl libexif ];
+  buildInputs = [ xlibsWrapper imlib2 libjpeg libpng xorg.libXinerama curl libexif ];
 
   preBuild = ''
     makeFlags="PREFIX=$out exif=1"

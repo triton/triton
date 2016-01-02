@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, glib, libtiff, libjpeg, libpng, libX11
+{ stdenv, fetchurl, pkgconfig, glib, libtiff, libjpeg, libpng, xorg
 , jasper, libintlOrEmpty, gobjectIntrospection, doCheck ? false }:
 
 let
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   setupHook = ./setup-hook.sh;
 
   # !!! We might want to factor out the gdk-pixbuf-xlib subpackage.
-  buildInputs = [ libX11 libintlOrEmpty ];
+  buildInputs = [ xorg.libX11 libintlOrEmpty ];
 
   nativeBuildInputs = [ pkgconfig gobjectIntrospection ];
 

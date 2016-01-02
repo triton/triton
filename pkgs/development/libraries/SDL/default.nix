@@ -1,7 +1,7 @@
 { stdenv, fetchurl, pkgconfig, audiofile, libcap
 , openglSupport ? false, mesa ? null
 , alsaSupport ? true, alsaLib ? null
-, x11Support ? true, xlibsWrapper ? null, libXrandr ? null
+, x11Support ? true, xlibsWrapper ? null, xorg ? null
 , pulseaudioSupport ? true, libpulseaudio ? null
 , OpenGL, CoreAudio, CoreServices, AudioUnit, Kernel, Cocoa
 }:
@@ -11,7 +11,7 @@
 assert (stdenv.isLinux && !(stdenv ? cross)) -> alsaSupport || pulseaudioSupport;
 
 assert openglSupport -> (mesa != null && x11Support);
-assert x11Support -> (xlibsWrapper != null && libXrandr != null);
+assert x11Support -> (xlibsWrapper != null && xorg != null);
 assert alsaSupport -> alsaLib != null;
 assert pulseaudioSupport -> libpulseaudio != null;
 
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
 
   # Since `libpulse*.la' contain `-lgdbm', PulseAudio must be propagated.
   propagatedBuildInputs =
-    optionals x11Support [ xlibsWrapper libXrandr ] ++
+    optionals x11Support [ xlibsWrapper xorg.libXrandr ] ++
     optional alsaSupport alsaLib ++
     optional stdenv.isLinux libcap ++
     optional openglSupport mesa ++

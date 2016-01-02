@@ -1,5 +1,4 @@
-{ stdenv, fetchurl, python, pkgconfig, popt, intltool, dbus_glib
-, libX11, xextproto, libSM, libICE, libXtst, libXi, gobjectIntrospection }:
+{ stdenv, fetchurl, python, popt, intltool, dbus_glib, xorg, gobjectIntrospection }:
 
 stdenv.mkDerivation rec {
   versionMajor = "2.18";
@@ -15,8 +14,8 @@ stdenv.mkDerivation rec {
   outputs = [ "out" "doc" ];
 
   buildInputs = [
-    python pkgconfig popt  intltool dbus_glib
-    libX11 xextproto libSM libICE libXtst libXi
+    python popt intltool dbus_glib
+    xorg.libX11 xorg.xextproto xorg.libSM xorg.libICE xorg.libXtst xorg.libXi
     gobjectIntrospection
   ];
 

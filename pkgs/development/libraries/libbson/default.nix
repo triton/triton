@@ -1,18 +1,15 @@
-{ autoconf, automake114x, fetchzip, libtool, perl, stdenv, which }:
-
-let
-  version = "1.1.10";
-in
+{ stdenv, fetchurl, perl }:
 
 stdenv.mkDerivation rec {
   name = "libbson-${version}";
+  version = "1.3.0";
 
-  src = fetchzip {
-    url = "https://github.com/mongodb/libbson/releases/download/${version}/libbson-${version}.tar.gz";
-    sha256 = "0zzca7zqvxf89fq7ji9626q8nnqyyh0dnmbk4xijzr9sq485xz0s";
+  src = fetchurl {
+    url = "https://github.com/mongodb/libbson/releases/download/${version}/${name}.tar.gz";
+    sha256 = "1b9hbxfljbqpjslmsvmvlgmll57l9d2ylgcrc7mi5yyf9r92i1k3";
   };
 
-  buildInputs = [ autoconf automake114x libtool perl which ];
+  nativeBuildInputs = [ perl ];
 
   meta = with stdenv.lib; {
     description = "A C Library for parsing, editing, and creating BSON documents";

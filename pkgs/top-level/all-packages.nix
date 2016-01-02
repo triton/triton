@@ -295,8 +295,6 @@ let
     inherit helperFunctions;
   };
 
-  scatterOutputHook = makeSetupHook {} ../build-support/setup-hooks/scatter_output.sh;
-
   vsenv = callPackage ../build-support/vsenv {
     vs = vs90wrapper;
   };

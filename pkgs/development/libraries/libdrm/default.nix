@@ -1,11 +1,11 @@
 { stdenv, fetchurl, pkgconfig, xorg, udev, valgrind }:
 
 stdenv.mkDerivation rec {
-  name = "libdrm-2.4.65";
+  name = "libdrm-2.4.66";
 
   src = fetchurl {
     url = "http://dri.freedesktop.org/libdrm/${name}.tar.bz2";
-    sha256 = "71960ac8bde7d710992b1bc8879935e8300a870c36bd06f22412d0447e3d96c4";
+    sha256 = "0xidpk9637jq2gc1xdxv7cszybi9sncb4xypnbglwya9hyc8xjvr";
   };
 
   nativeBuildInputs = [ pkgconfig ];

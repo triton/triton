@@ -7900,12 +7900,12 @@ let
 
   wolfssl = callPackage ../development/libraries/wolfssl { };
 
-  openssl_1_0_2 = callPackage ../development/libraries/openssl {
-    cryptodevHeaders = linuxPackages.cryptodev.override {
-      onlyHeaders = true;
-      kernel = null;
-    };
+  cryptodevHeaders = linuxPackages.cryptodev.override {
+    onlyHeaders = true;
+    kernel = null;
   };
+
+  openssl_1_0_2 = callPackage ../development/libraries/openssl { };
 
   openssl = openssl_1_0_2;
 

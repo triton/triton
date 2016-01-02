@@ -5646,9 +5646,7 @@ let
 
   gwrap = callPackage ../development/tools/guile/g-wrap { };
 
-  help2man = callPackage ../development/tools/misc/help2man {
-    inherit (perlPackages) LocaleGettext;
-  };
+  help2man = callPackage ../development/tools/misc/help2man { };
 
   heroku = callPackage ../development/tools/heroku { };
 

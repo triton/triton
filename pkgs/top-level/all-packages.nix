@@ -6995,7 +6995,7 @@ let
 
   libedit = callPackage ../development/libraries/libedit { };
 
-  libelf = callPackage ../development/libraries/libelf { };
+  libelf = elfutils;
 
   libetpan = callPackage ../development/libraries/libetpan { };
 

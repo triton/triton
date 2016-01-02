@@ -5081,7 +5081,7 @@ let
 
   perl522 = callPackage ../development/interpreters/perl/5.22 { };
 
-  perl = perl520;
+  perl = perl522;
 
   php = php56;
 

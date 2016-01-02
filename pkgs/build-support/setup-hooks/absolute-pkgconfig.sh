@@ -15,9 +15,9 @@ rewritePkgconfigFiles() {
   local pkgfile
   while read pkgfile; do
     local absoluteDeps
-    absoluteDeps="$(pkgconfigRequires "$pkgfile" | toAbsoluteDependencies)"
+    absoluteDeps="$(pkgconfigRequires "$pkgfile" | fixPkgconfigNameBug | toAbsoluteDependencies)"
     local absoluteDepsPrivate
-    absoluteDepsPrivate="$(pkgconfigRequiresPrivate "$pkgfile" | toAbsoluteDependencies)"
+    absoluteDepsPrivate="$(pkgconfigRequiresPrivate "$pkgfile" | fixPkgconfigNameBug | toAbsoluteDependencies)"
 
     sed -i "$pkgfile" \
       -e "s@^Requires:.*\$@Requires: $(echo $absoluteDeps)@g" \
@@ -35,7 +35,7 @@ toAbsoluteDependencies() {
       return 1
     fi
     if [ "$absoluteDep" != "$dep" ] && [ "$(basename "$absoluteDep" | sed 's@^\(.*\)\.pc$@\1@g')" != "$dep" ]; then
-      echo "Found a dependency that doesn't match: $absoluteDep != $dep" >&2
+      echo "Found a dependency that doesn't match: $absoluteDep != $dep in $pkgfile" >&2
       return 1
     fi
     echo "$absoluteDep"
@@ -65,6 +65,12 @@ pkgconfigRequiresPrivate() {
     echo "Failed to enumerate all of the 'Requires.private:' dependencies $name" >&2
     return 1
   fi
+}
+
+# When using pkgconfig 0.29, if absolute paths are specified in a requires
+# field we get a prefixed slash sometimes. This removes it
+fixPkgconfigNameBug() {
+  sed 's,^/\([^./]*\)$,\1,g'
 }
 
 pkgconfigFiles() {

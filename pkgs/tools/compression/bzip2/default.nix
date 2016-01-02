@@ -68,6 +68,8 @@ in stdenv.mkDerivation {
 
   makeFlags = stdenv.lib.optional linkStatic "LDFLAGS=-static";
 
+  enableParallelBuilding = true;
+
   inherit linkStatic;
 
   meta = {

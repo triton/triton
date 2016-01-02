@@ -278,9 +278,7 @@ stdenv.mkDerivation ({
     ++ (optional (perl != null) perl)
     ++ (optional javaAwtGtk pkgconfig);
 
-  buildInputs = [ gmp mpfr libmpc libelf ]
-    ++ (optional (cloog != null) cloog)
-    ++ (optional (isl != null) isl)
+  buildInputs = [ ]
     ++ (optional (zlib != null) zlib)
     ++ (optionals langJava [ boehmgc zip unzip ])
     ++ (optionals javaAwtGtk ([ gtk libart_lgpl ] ++ xlibs))

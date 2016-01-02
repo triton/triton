@@ -9,7 +9,7 @@ diff -ru -x '*~' busybox-1.22.1-orig/libbb/appletlib.c busybox-1.22.1/libbb/appl
  	int applet = find_applet_by_name(name);
  	if (applet >= 0)
  		run_applet_no_and_exit(applet, argv);
--	if (strncmp(name, "busybox", 7) == 0)
+-	if (is_prefixed_with(name, "busybox"))
 +	if (strstr(name, "busybox") != 0)
  		exit(busybox_main(argv));
  }

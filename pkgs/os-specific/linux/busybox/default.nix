@@ -26,11 +26,11 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "busybox-1.23.2";
+  name = "busybox-1.24.1";
 
   src = fetchurl {
     url = "http://busybox.net/downloads/${name}.tar.bz2";
-    sha256 = "16ii9sqracvh2r1gfzhmlypl269nnbkpvrwa7270k35d3bigk9h5";
+    sha256 = "0ggy18gqnai9h85prxg9xqib7rfhl6vp089r1cv3g287rhr33l1p";
   };
 
   patches = [ ./busybox-in-store.patch ];

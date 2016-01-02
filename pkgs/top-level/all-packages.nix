@@ -363,13 +363,7 @@ let
     inherit name sha256;
     url = "https://bitbucket.org/${owner}/${repo}/get/${rev}.tar.gz";
     meta.homepage = "https://bitbucket.org/${owner}/${repo}/";
-  };
-
-  # gitorious example
-  fetchFromGitorious = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: fetchzip {
-    inherit name sha256;
-    url = "https://gitorious.org/${owner}/${repo}/archive/${rev}.tar.gz";
-    meta.homepage = "https://gitorious.org/${owner}/${repo}/";
+    extraPostFetch = ''rm -f "$out"/.hg_archival.txt''; # impure file; see #12002
   };
 
   # cgit example, snapshot support is optional in cgit
@@ -470,6 +464,8 @@ let
   "3dfsb" = callPackage ../applications/misc/3dfsb {
     glibc = glibc.override { debugSymbols = true; };
   };
+
+  a2ps = callPackage ../tools/text/a2ps { };
 
   abduco = callPackage ../tools/misc/abduco { };
 
@@ -809,6 +805,11 @@ let
   };
 
   dialog = callPackage ../development/tools/misc/dialog { };
+
+  ding = callPackage ../applications/misc/ding {
+    aspellDicts_de = aspellDicts.de;
+    aspellDicts_en = aspellDicts.en;
+  };
 
   direnv = callPackage ../tools/misc/direnv { };
 
@@ -1284,7 +1285,11 @@ let
 
   di = callPackage ../tools/system/di { };
 
-  diffoscope = callPackage ../tools/misc/diffoscope { };
+  diffoscope = callPackage ../tools/misc/diffoscope {
+    jdk = jdk7;
+    pythonPackages = python3Packages;
+    rpm = rpm.override { python = python3; };
+  };
 
   diffstat = callPackage ../tools/text/diffstat { };
 
@@ -1983,6 +1988,8 @@ let
 
   jp2a = callPackage ../applications/misc/jp2a { };
 
+  jpegoptim = callPackage ../applications/graphics/jpegoptim { };
+
   jq = callPackage ../development/tools/jq {};
 
   jscoverage = callPackage ../development/tools/misc/jscoverage { };
@@ -2087,7 +2094,7 @@ let
   else
     nodejs-4_x;
 
-  nodePackages_5_x = recurseIntoAttrs (callPackage ./node-packages.nix { self = nodePackages_5_x; nodejs = nodejs-5_x; });
+  nodePackages_5_x = callPackage ./node-packages.nix { self = nodePackages_5_x; nodejs = nodejs-5_x; };
 
   nodePackages_4_x = recurseIntoAttrs (callPackage ./node-packages.nix { self = nodePackages_4_x; nodejs = nodejs-4_x; });
 
@@ -2956,7 +2963,7 @@ let
   rtorrent = callPackage ../tools/networking/p2p/rtorrent { };
 
   rubber = callPackage ../tools/typesetting/rubber { };
-  
+
   runzip = callPackage ../tools/archivers/runzip { };
 
   rxp = callPackage ../tools/text/xml/rxp { };
@@ -3354,7 +3361,7 @@ let
 
   vidalia = callPackage ../tools/security/vidalia { };
 
-  vbetool = builderDefsPackage (callPackage ../tools/system/vbetool) { };
+  vbetool = callPackage ../tools/system/vbetool { };
 
   vde2 = callPackage ../tools/networking/vde2 { };
 
@@ -3670,6 +3677,8 @@ let
   # To expose more packages for Yi, override the extraPackages arg.
   yi = callPackage ../applications/editors/yi/wrapper.nix { };
 
+  yle-dl = callPackage ../tools/misc/yle-dl {};
+
   zbackup = callPackage ../tools/backup/zbackup {};
 
   zbar = callPackage ../tools/graphics/zbar {
@@ -3757,6 +3766,8 @@ let
   aldor = callPackage ../development/compilers/aldor { };
 
   aliceml = callPackage ../development/compilers/aliceml { };
+
+  arachne-pnr = callPackage ../development/compilers/arachne-pnr { };
 
   aspectj = callPackage ../development/compilers/aspectj { };
 
@@ -4900,6 +4911,8 @@ let
 
   yasm = callPackage ../development/compilers/yasm { };
 
+  yosys = callPackage ../development/compilers/yosys { };
+
 
   ### DEVELOPMENT / INTERPRETERS
 
@@ -5647,6 +5660,8 @@ let
   heroku = callPackage ../development/tools/heroku { };
 
   hyenae = callPackage ../tools/networking/hyenae { };
+
+  icestorm = callPackage ../development/tools/icestorm { };
 
   icmake = callPackage ../development/tools/build-managers/icmake { };
 
@@ -7961,8 +7976,6 @@ let
   };
 
   polkit_qt4 = callPackage ../development/libraries/polkit-qt-1 { };
-
-  policykit = callPackage ../development/libraries/policykit { };
 
   poppler = callPackage ../development/libraries/poppler { lcms = lcms2; };
 
@@ -13409,7 +13422,7 @@ let
 
   neovim-pygui = pythonPackages.neovim_gui;
 
-  virtviewer = callPackage ../applications/virtualization/virt-viewer {
+  virt-viewer = callPackage ../applications/virtualization/virt-viewer {
     gtkvnc = gtkvnc.override { enableGTK3 = true; };
     spice_gtk = spice_gtk.override { enableGTK3 = true; };
   };
@@ -13510,6 +13523,8 @@ let
   weston = callPackage ../applications/window-managers/weston {
     freerdp = freerdpUnstable;
   };
+
+  windowlab = callPackage ../applications/window-managers/windowlab { };
 
   windowmaker = callPackage ../applications/window-managers/windowmaker { };
 
@@ -13934,6 +13949,8 @@ let
 
   chessdb = callPackage ../games/chessdb { };
 
+  chessx = qt5.callPackage ../games/chessx { };
+
   chocolateDoom = callPackage ../games/chocolate-doom { };
 
   cockatrice = qt5.callPackage ../games/cockatrice {  };
@@ -14004,7 +14021,9 @@ let
 
   fish-fillets-ng = callPackage ../games/fish-fillets-ng {};
 
-  flightgear = qt5.callPackage ../games/flightgear { };
+  flightgear = qt5.callPackage ../games/flightgear {
+    fltk13 = fltk13.override { cfg.xftSupport = true; };
+  };
 
   freecell-solver = callPackage ../games/freecell-solver { };
 
@@ -14079,7 +14098,7 @@ let
 
   lincity_ng = callPackage ../games/lincity/ng.nix {};
 
-  liquidwar = builderDefsPackage (callPackage ../games/liquidwar) {
+  liquidwar = callPackage ../games/liquidwar {
     guile = guile_1_8;
   };
 
@@ -14229,6 +14248,8 @@ let
   springLobby = callPackage ../games/spring/springlobby.nix { };
 
   stardust = callPackage ../games/stardust {};
+
+  stockfish = callPackage ../games/stockfish { };
 
   steamPackages = callPackage ../games/steam { };
   steam = steamPackages.steam-chrootenv.override {
@@ -15226,13 +15247,15 @@ let
 
   cups_filters = callPackage ../misc/cups/filters.nix { };
 
+  cups-pk-helper = callPackage ../misc/cups/cups-pk-helper.nix { };
+
   crashplan = callPackage ../applications/backup/crashplan { };
 
   gutenprint = callPackage ../misc/drivers/gutenprint { };
 
   gutenprintBin = callPackage ../misc/drivers/gutenprint/bin.nix { };
 
-  cupsBjnp = callPackage ../misc/cups/drivers/cups-bjnp { };
+  cups-bjnp = callPackage ../misc/cups/drivers/cups-bjnp { };
 
   darcnes = callPackage ../misc/emulators/darcnes { };
 
@@ -15760,6 +15783,7 @@ aliases = with self; rec {
   cheetahTemplate = pythonPackages.cheetah; # 2015-06-15
   clangAnalyzer = clang-analyzer;  # added 2015-02-20
   cool-old-term = cool-retro-term; # added 2015-01-31
+  cupsBjnp = cups-bjnp; # added 2016-01-02
   cv = progress; # added 2015-09-06
   enblendenfuse = enblend-enfuse;	# 2015-09-30
   exfat-utils = exfat;                  # 2015-09-11
@@ -15803,6 +15827,7 @@ aliases = with self; rec {
   tftp_hpa = tftp-hpa; # added 2015-04-03
   manpages = man-pages; # added 2015-12-06
   mssys = ms-sys; # added 2015-12-13
+  virtviewer = virt-viewer; # added 2015-12-24
 };
 
 tweakAlias = _n: alias: with lib;

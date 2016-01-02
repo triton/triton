@@ -93,6 +93,8 @@ rec {
 
   svn2git_kde = callPackage ./svn2git-kde { };
 
+  subgit = callPackage ./subgit { };
+
   darcsToGit = callPackage ./darcs-to-git { };
 
   gitflow = callPackage ./gitflow { };

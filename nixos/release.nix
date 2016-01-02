@@ -47,6 +47,7 @@ let
           };
           inherit iso;
           passthru = { inherit config; };
+          preferLocalBuild = true;
         }
         ''
           mkdir -p $out/nix-support
@@ -149,6 +150,7 @@ in rec {
             maintainers = maintainers.eelco;
           };
           ova = config.system.build.virtualBoxOVA;
+          preferLocalBuild = true;
         }
         ''
           mkdir -p $out/nix-support
@@ -168,6 +170,7 @@ in rec {
             boot.loader.grub.device = mkDefault "/dev/sda";
           });
       }).config.system.build.toplevel;
+      preferLocalBuild = true;
     }
     "mkdir $out; ln -s $toplevel $out/dummy");
 
@@ -220,7 +223,7 @@ in rec {
   tests.dockerRegistry = hydraJob (import tests/docker-registry.nix { system = "x86_64-linux"; });
   tests.etcd = hydraJob (import tests/etcd.nix { system = "x86_64-linux"; });
   tests.ec2-nixops = hydraJob (import tests/ec2.nix { system = "x86_64-linux"; }).boot-ec2-nixops;
-  #tests.ec2-config = hydraJob (import tests/ec2.nix { system = "x86_64-linux"; }).boot-ec2-config;
+  tests.ec2-config = hydraJob (import tests/ec2.nix { system = "x86_64-linux"; }).boot-ec2-config;
   tests.firefox = callTest tests/firefox.nix {};
   tests.firewall = callTest tests/firewall.nix {};
   tests.fleet = hydraJob (import tests/fleet.nix { system = "x86_64-linux"; });
@@ -249,6 +252,7 @@ in rec {
   #tests.lightdm = callTest tests/lightdm.nix {};
   tests.login = callTest tests/login.nix {};
   #tests.logstash = callTest tests/logstash.nix {};
+  tests.mathics = callTest tests/mathics.nix {};
   tests.misc = callTest tests/misc.nix {};
   tests.mumble = callTest tests/mumble.nix {};
   tests.munin = callTest tests/munin.nix {};

@@ -14000,25 +14000,6 @@ in modules // {
   };
 
 
-  polylint = buildPythonPackage rec {
-    name = "polylint-${version}";
-    version = "158125c6ab";
-
-    src = pkgs.fetchgit {
-      url = "https://github.com/bendavis78/polylint";
-      rev = version;
-      sha256 = "ea10c67e9ce6df0936d6e2015382acba4f9cc559e2d6a9471f474f6bda78a266";
-    };
-
-    propagatedBuildInputs = with self; [ html5lib lxml cssselect ];
-
-    meta = {
-      description = "Fast HTML linter for polymer";
-      homepage = https://github.com/bendavis78/polylint;
-    };
-  };
-
-
   powerline = buildPythonPackage rec {
     rev  = "2.1.4";
     name = "powerline-${rev}";
@@ -21907,6 +21888,29 @@ in modules // {
       maintainers = with maintainers; [ matejc tstrobel ftrvxmtrx ];
       platforms = platforms.linux;
       license = licenses.gpl3;
+    };
+  };
+
+  tlsh = buildPythonPackage rec {
+    name = "tlsh-3.4.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "trendmicro";
+      repo = "tlsh";
+      rev = "b319aed6a270cc765347296b442820c495018833";
+      sha256 = "08ysniihvidcyvh9zip64wwvj7mvxvsqs60ci8cxj28f1ip0n8wg";
+    };
+    buildInputs = with pkgs; [ cmake ];
+    preConfigure = ''
+      mkdir build
+      cd build
+      cmake ..
+      cd ../py_ext
+    '';
+    meta = with stdenv.lib; {
+      description = "Trend Micro Locality Sensitive Hash";
+      homepage = https://github.com/trendmicro/tlsh;
+      license = licenses.asl20;
+      platforms = platforms.linux;
     };
   };
 

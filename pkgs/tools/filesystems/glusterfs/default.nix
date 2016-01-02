@@ -6,11 +6,10 @@ let
   s = # Generated upstream information 
   rec {
     baseName="glusterfs";
-    major="3.7";
-    minor="6";
-    version="${major}.${minor}";
+    version="3.7.6";
     name="${baseName}-${version}";
-    url="http://download.gluster.org/pub/gluster/glusterfs/${major}/${version}/${name}.tar.gz";
+    hash="01fg132k4gvvx5p0bi88956yzd77pcnw3iyi88vrsncmpnvg10xv";
+    url="http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.6/glusterfs-3.7.6.tar.gz";
     sha256="01fg132k4gvvx5p0bi88956yzd77pcnw3iyi88vrsncmpnvg10xv";
   };
   buildInputs = [

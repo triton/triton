@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     configureFlags = [ "ac_cv_func_strnlen_working=yes" ];
   };
 
-  doCheck = true;
+  doCheck = false;
 
   meta = {
     description = "GNU Patch, a program to apply differences to files";

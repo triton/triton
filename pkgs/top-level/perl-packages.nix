@@ -12808,12 +12808,12 @@ let self = _self // overrides; _self = with self; {
   };
 
   XMLSAX = buildPerlPackage {
-    name = "XML-SAX-0.96";
+    name = "XML-SAX-0.99";
     src = fetchurl {
-      url = mirror://cpan/authors/id/G/GR/GRANTM/XML-SAX-0.96.tar.gz;
-      sha256 = "024fbjgg6s87j0y3yik55plzf7d6qpn7slwd03glcb54mw9zdglv";
+      url = mirror://cpan/authors/id/G/GR/GRANTM/XML-SAX-0.99.tar.gz;
+      sha256 = "115dypb50w1l94y3iwihv5nkixbsv1cxiqkd93y4rk5n6s74pc1j";
     };
-    propagatedBuildInputs = [XMLNamespaceSupport];
+    propagatedBuildInputs = [XMLNamespaceSupport XMLSAXBase];
     postInstall = ''
       perl -MXML::SAX -e "XML::SAX->add_parser(q(XML::SAX::PurePerl))->save_parsers()"
       '';

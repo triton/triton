@@ -3,11 +3,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libvisio-0.1.4";
+  name = "libvisio-0.1.5";
 
   src = fetchurl {
     url = "http://dev-www.libreoffice.org/src/${name}.tar.bz2";
-    sha256 = "05ih84a26kg4h151a2ndyinsdd3w3mkbkkknprf7fvrh5azb3mli";
+    sha256 = "13j5pq4rl4gx3gi1iz85wzn4vj7svm3bpiyas03pykhblj8pjfxq";
   };
 
   nativeBuildInputs = [ pkgconfig ];

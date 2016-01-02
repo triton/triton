@@ -12724,10 +12724,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   XMLLibXML = buildPerlPackage rec {
-    name = "XML-LibXML-2.0122";
+    name = "XML-LibXML-2.0123";
     src = fetchurl {
       url = "mirror://cpan/authors/id/S/SH/SHLOMIF/${name}.tar.gz";
-      sha256 = "0llgkgifcw7zz7r7f2jiqryi5axymmd3fwzp4aa5gk6j37w66xkn";
+      sha256 = "1i7p2hkgkw6mdhg4rz7xa4w3kyw0ldwhqmb3ikpasb0m3x4s4985";
     };
     SKIP_SAX_INSTALL = 1;
     buildInputs = [ pkgs.libxml2 ];

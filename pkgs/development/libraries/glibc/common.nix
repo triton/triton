@@ -92,6 +92,8 @@ stdenv.mkDerivation ({
                   'status = internal_setent (1);'
     '';
 
+  dontDisableStatic = true; # Disabling static is not recognized by glibc
+
   configureFlags =
     [ "-C"
       "--enable-add-ons"

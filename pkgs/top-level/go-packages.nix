@@ -19,21 +19,21 @@ let
   ## OFFICIAL GO PACKAGES
 
   appengine = buildFromGitHub {
-    rev = "7f9f17f358c21d90f402980f83776898c53cb377";
-    date = "2015-12-07";
+    rev = "58c0e2a2044a8d1abd8dd1d97939cd74497d0806";
+    date = "2015-12-16";
     owner = "golang";
     repo = "appengine";
-    sha256 = "0narqlivzvwlwxi96aqyxpvw6zbzy19cjqiglp12rf130x46bydg";
+    sha256 = "17068ydfg9w71ciafizdipapkqc6d7aghw9l32msbgmrl8saqash";
     goPackagePath = "google.golang.org/appengine";
     propagatedBuildInputs = [ protobuf net ];
   };
 
   crypto = buildFromGitHub {
-    rev      = "7b85b097bf7527677d54d3220065e966a0e3b613";
-    date     = "2015-11-30";
+    rev      = "f18420efc3b4f8e9f3d51f6bd2476e92c46260e9";
+    date     = "2015-12-15";
     owner    = "golang";
     repo     = "crypto";
-    sha256   = "0k21nnf0nszgbvml74sn68wc6p77pxbnfpi04dgarg6byd5rvxii";
+    sha256   = "0pi38sjd543nirjx89fzix5pi2slmjdqw07zis18bwhkikxyh8ah";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -68,11 +68,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev    = "d5cd7348bfebdf7dbb6dbb18fa488525f9024293";
-    date   = "2015-12-03";
+    rev    = "0cb26f788dd4625d1956c6fd97ffc4c90669d129";
+    date   = "2015-12-28";
     owner  = "golang";
     repo   = "net";
-    sha256 = "03d3xnjr5l3xggrsxm8w170phgyqiqajp8k3xv6j4x4ajlar3i54";
+    sha256 = "1ipjy9yq8m0sqh90zcvhf4jw6s6bpv9465yblh9w1iid06zvhylq";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -114,11 +114,11 @@ let
   };
 
   sys = buildFromGitHub {
-    rev    = "2bacc619e34d59719d9ed86f0e04e8261aed3409";
-    date   = "2015-11-24";
+    rev    = "833a04a10549a95dc34458c195cbad61bbb6cb4d";
+    date   = "2015-12-10";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "1wz735axs221jcdr7qbmm72vkkhngsl2zcaz0d4n2f721cbhb1bq";
+    sha256 = "0lfam5kj2jl54cmkgr155mgidxgsxph3cyvw1zi0rbdkaj58crp1";
     goPackagePath = "golang.org/x/sys";
     goPackageAliases = [
       "github.com/golang/sys"
@@ -126,21 +126,21 @@ let
   };
 
   text = buildFromGitHub {
-    rev = "95315fc624fc42f9dd1ac02d056aaeb87e090cd7";
-    date = "2015-12-07";
+    rev = "cf4986612c83df6c55578ba198316d1684a9a287";
+    date = "2015-12-17";
     owner = "golang";
     repo = "text";
-    sha256 = "1ya7d2m2fgcl4xx7fpr701slw0031bxs3xcnjblfv3c7ljkdl70a";
+    sha256 = "1dqpcvfv9d9wl7nndl1mbk1fff8hjbs84y53qs4pqlspmj1z0zix";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
   };
 
   tools = buildFromGitHub {
-    rev = "c0008c5889c0d5091cdfefd2bfb08bff96527879";
-    date = "2015-12-04";
+    rev = "2dff1e88eb92a374a989dd38e3402481f498ffa2";
+    date = "2015-12-30";
     owner = "golang";
     repo = "tools";
-    sha256 = "0k07293bbmsbras5ffm5dlch0qqz7xk6rxk7r3652g51v9qyg5gs";
+    sha256 = "0cjwmrrxy6kdms0xp9xsfgygrfj77386l9giyc0x5y8xy8iyy3ji";
     goPackagePath = "golang.org/x/tools";
     goPackageAliases = [ "code.google.com/p/go.tools" ];
 
@@ -3093,11 +3093,11 @@ let
   };
 
   syncthing = buildFromGitHub rec {
-    version = "0.12.9";
+    version = "0.12.10";
     rev = "v${version}";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "0d420bmx1ifhjgbc65bflnawqddi4h86p7fvxzzqwfsaj94fsfbi";
+    sha256 = "1xvar4mm6f33mg8d8z8h49cni6sj1vfns379zspqvszs404fra0z";
     buildFlags = [ "-tags noupgrade,release" ];
     disabled = isGo14;
     buildInputs = [

@@ -16,10 +16,7 @@
 , isl ? null # optional, for the Graphite optimization framework.
 , zlib ? null, boehmgc ? null
 , zip ? null, unzip ? null, pkgconfig ? null
-, gtk ? null, libart_lgpl ? null
-, libX11 ? null, libXt ? null, libSM ? null, libICE ? null, libXtst ? null
-, libXrender ? null, xproto ? null, renderproto ? null, xextproto ? null
-, libXrandr ? null, libXi ? null, inputproto ? null, randrproto ? null
+, gtk ? null, libart_lgpl ? null, xorg ? null
 , x11Support ? langJava
 , gnatboot ? null
 , enableMultilib ? false
@@ -89,7 +86,7 @@ let version = "5.3.0";
       sha256 = "02lda2imivsvsis8rnzmbrbp8rh1kb8vmq4i67pqhkwz7lf8y6dz";
     };
 
-    xlibs = [
+    xlibs = with xorg; [
       libX11 libXt libSM libICE libXtst libXrender libXrandr libXi
       xproto renderproto xextproto inputproto randrproto
     ];

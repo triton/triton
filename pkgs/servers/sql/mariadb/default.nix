@@ -57,8 +57,8 @@ stdenv.mkDerivation rec {
     "-DWITHOUT_FEDERATED_STORAGE_ENGINE=1"
     "-DSECURITY_HARDENED=ON"
     "-DWITH_WSREP=ON"
-  ] ++ stdenv.lib.optionals stdenv.isDarwin [
     "-DWITHOUT_OQGRAPH_STORAGE_ENGINE=1"
+  ] ++ stdenv.lib.optionals stdenv.isDarwin [
     "-DWITHOUT_TOKUDB=1"
     "-DCURSES_LIBRARY=${ncurses}/lib/libncurses.dylib"
   ];
@@ -66,22 +66,9 @@ stdenv.mkDerivation rec {
   # fails to find lex_token.h sometimes
   enableParallelBuilding = true;
 
-  outputs = [ "out" "lib" ];
-
   prePatch = ''
     substituteInPlace cmake/libutils.cmake \
       --replace /usr/bin/libtool libtool
-    sed -i "s,SET(DEFAULT_MYSQL_HOME.*$,SET(DEFAULT_MYSQL_HOME /not/a/real/dir),g" CMakeLists.txt
-    sed -i "s,SET(PLUGINDIR.*$,SET(PLUGINDIR $lib/lib/mysql/plugin),g" CMakeLists.txt
-
-    sed -i "s,SET(pkgincludedir.*$,SET(pkgincludedir $lib/include),g" scripts/CMakeLists.txt
-    sed -i "s,SET(pkglibdir.*$,SET(pkglibdir $lib/lib),g" scripts/CMakeLists.txt
-    sed -i "s,SET(pkgplugindir.*$,SET(pkgplugindir $lib/lib/mysql/plugin),g" scripts/CMakeLists.txt
-
-    sed -i "s,set(libdir.*$,SET(libdir $lib/lib),g" storage/mroonga/vendor/groonga/CMakeLists.txt
-    sed -i "s,set(includedir.*$,SET(includedir $lib/include),g" storage/mroonga/vendor/groonga/CMakeLists.txt
-    sed -i "/\"\$[{]CMAKE_INSTALL_PREFIX}\/\$[{]GRN_RELATIVE_PLUGINS_DIR}\"/d" storage/mroonga/vendor/groonga/CMakeLists.txt
-    sed -i "s,set(GRN_PLUGINS_DIR.*$,SET(GRN_PLUGINS_DIR $lib/\$\{GRN_RELATIVE_PLUGINS_DIR}),g" storage/mroonga/vendor/groonga/CMakeLists.txt
     sed -i 's,[^"]*/var/log,/var/log,g' storage/mroonga/vendor/groonga/CMakeLists.txt
   '';
 
@@ -95,12 +82,6 @@ stdenv.mkDerivation rec {
     rm $out/bin/rcmysql # Not needed with nixos units
     rm $out/bin/mysqlbug # Encodes a path to gcc and not really useful
     find $out/bin -name \*test\* -exec rm {} \;
-
-    # Separate libs and includes into their own derivation
-    mkdir -p $lib
-    mv $out/lib $lib
-    mv $out/include $lib
-
   ''
   + stdenv.lib.optionalString stdenv.isDarwin ''
     # Fix library rpaths
@@ -115,17 +96,8 @@ stdenv.mkDerivation rec {
       -e 's,-lz,-L${zlib}/lib -lz,g' \
       -e 's,-lssl,-L${openssl}/lib -lssl,g'
 
-    # Add mysql_config to libs since configure scripts use it
-    mkdir -p $lib/bin
-    cp $out/bin/mysql_config $lib/bin
-    sed -i "/\(execdir\|bindir\)/ s,'[^\"']*',$lib/bin,g" $lib/bin/mysql_config
-
-    # Make sure to propagate lib for compatability
-    mkdir -p $out/nix-support
-    echo "$lib" > $out/nix-support/propagated-native-build-inputs
-
     # Don't install static libraries.
-    rm $lib/lib/libmysqlclient.a $lib/lib/libmysqld.a
+    rm $out/lib/*.a
   '';
 
   passthru.mysqlVersion = "5.6";

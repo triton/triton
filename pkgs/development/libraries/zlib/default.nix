@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, static ? false }:
+{ stdenv, fetchurl, shared ? true, static ? false }:
 
 let version = "1.2.8"; in
 
@@ -20,18 +20,22 @@ stdenv.mkDerivation (rec {
       --replace 'ARFLAGS="-o"' 'ARFLAGS="-r"'
   '';
 
-  configureFlags = if static then "" else "--shared";
+  configureFlags = [
+    (if static then "--static" else "")
+    (if shared then "--shared" else "")
+  ];
 
   preConfigure = ''
     if test -n "$crossConfig"; then
       export CC=$crossConfig-gcc
-      configureFlags=${if static then "" else "--shared"}
+      configureFlags=${if static then "--static" else ""} ${if shared then "--shared" else ""}
     fi
   '';
 
   # As zlib takes part in the stdenv building, we don't want references
   # to the bootstrap-tools libgcc (as uses to happen on arm/mips)
-  NIX_CFLAGS_COMPILE = stdenv.lib.optionalString (!stdenv.isDarwin) "-static-libgcc";
+  NIX_CFLAGS_COMPILE = [ "-fPIC" ]
+    ++ stdenv.lib.optional (!stdenv.isDarwin) "-static-libgcc";
 
   crossAttrs = {
     dontStrip = static;
@@ -49,6 +53,8 @@ stdenv.mkDerivation (rec {
 
   # CYGXXX: This is not needed anymore and non-functional, but left not to trigger rebuilds
   cygwinConfigureEnableShared = if (!stdenv.isCygwin) then true else null;
+
+  enableParallelBuilding = true;
 
   passthru.version = version;
 

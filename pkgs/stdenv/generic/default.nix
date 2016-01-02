@@ -1,11 +1,7 @@
 let lib = import ../../../lib; in lib.makeOverridable (
 
 { system, name ? "stdenv", preHook ? "", initialPath, cc, shell
-, allowedRequisites ? null, extraAttrs ? {}, overrides ? (pkgs: {}), config
-
-, # The `fetchurl' to use for downloading curl and its dependencies
-  # (see all-packages.nix).
-  fetchurlBoot
+, allowedRequisites ? null, extraArgs ? {}, extraAttrs ? {}, overrides ? (pkgs: {}), config
 
 , setupScript ? ./setup.sh
 
@@ -80,6 +76,7 @@ let
   defaultNativeBuildInputs = extraBuildInputs ++
     [ ../../build-support/setup-hooks/move-docs.sh
       ../../build-support/setup-hooks/compress-man-pages.sh
+      ../../build-support/setup-hooks/pkgconfig.sh
       ../../build-support/setup-hooks/absolute-pkgconfig.sh
       ../../build-support/setup-hooks/strip.sh
       ../../build-support/setup-hooks/patch-shebangs.sh
@@ -247,6 +244,7 @@ let
 
       inherit preHook initialPath shell defaultNativeBuildInputs;
     }
+    // extraArgs
     // ifDarwin {
       __sandboxProfile = stdenvSandboxProfile;
       __impureHostDeps = __stdenvImpureHostDeps;
@@ -306,15 +304,13 @@ let
       shouldUsePkg = lib.shouldUsePkgSystem system;
 
       # Whether we should run paxctl to pax-mark binaries.
-      needsPax = isLinux;
+      needsPax = false;
 
       inherit mkDerivation;
 
       # For convenience, bring in the library functions in lib/ so
       # packages don't have to do that themselves.
       inherit lib;
-
-      inherit fetchurlBoot;
 
       inherit overrides;
 

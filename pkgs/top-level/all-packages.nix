@@ -3711,14 +3711,10 @@ let
 
   ### SHELLS
 
-  bash = lowPrio (callPackage ../shells/bash {
-    texinfo = null;
-    interactive = stdenv.isCygwin; # patch for cygwin requires readline support
-  });
-
-  bashInteractive = appendToName "interactive" (callPackage ../shells/bash {
+  bash = callPackage ../shells/bash {
     interactive = true;
-  });
+  };
+  bashInteractive = bash;
 
   bashCompletion = callPackage ../shells/bash-completion { };
 

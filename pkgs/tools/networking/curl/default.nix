@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, perl
+{ stdenv, fetchurl, perl
 
 # Optional Dependencies
 , zlib ? null, openssl ? null, libssh2 ? null, libnghttp2 ? null, c-ares ? null
@@ -36,8 +36,7 @@ stdenv.mkDerivation rec {
     sha256 = "1bcm646jgq70mpkwa6n6skff9fzbb4y4liqvzaq6sjzdv36jdmxp";
   };
 
-  # Use pkgconfig only when necessary
-  nativeBuildInputs = [ pkgconfig perl ];
+  nativeBuildInputs = [ perl ];
   propagatedBuildInputs = [
     optZlib optOpenssl optLibssh2 optLibnghttp2 optC-ares
     optGss optRtmpdump optOpenldap optLibidn

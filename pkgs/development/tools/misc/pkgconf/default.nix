@@ -14,8 +14,6 @@ stdenv.mkDerivation rec {
     ln -s pkgconf $out/bin/pkg-config
   '';
 
-  setupHook = ../pkgconfig/setup-hook.sh;
-
   meta = with stdenv.lib; {
     homepage = "https://github.com/pkgconf/pkgconf";
     description = "a tool and framework (libpkgconf) which provides compiler and linker configuration for development frameworks";

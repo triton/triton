@@ -9,4 +9,8 @@
     url = http://pub.wak.io/nixos/bootstrap/x86_64-linux/jprqmvg63zz7bpki4qavw9a88vnz15g9/bootstrap-tools.tar.xz;
     sha256 = "f96220408e8e87bcadf1f947b9c476b4149ddd2a32b16d8c2578321102ca4ce8";
   };
+
+  langC = true;
+  langCC = true;
+  isGNU = true;
 }

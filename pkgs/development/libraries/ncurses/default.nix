@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, libtool
+{ stdenv, fetchurl, libtool
 
 # Optional Dependencies
 , gpm ? null
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     sha256 = "0q3jck7lna77z5r42f13c4xglc7azd19pxfrjrpgp2yf615w4lgm";
   };
 
-  nativeBuildInputs = [ pkgconfig libtool ];
+  nativeBuildInputs = [ libtool ];
   buildInputs = [ optGpm ];
 
   configureFlags = [
@@ -122,6 +122,12 @@ stdenv.mkDerivation rec {
     sed -i -e 's,LIB_SUFFIX="t,LIB_SUFFIX=",' configure
   '';
 
+  # Fix the path to gpm, this has to happen after configure is run
+  postConfigure = optionalString (optGpm != null) ''
+    sed -i "s,^\(#define LIBGPM_SONAME\).*,\1 \"${optGpm}/lib/libgpm.so\",g" include/ncurses_cfg.h
+  '';
+
+
   NIX_LDFLAGS = if threaded then "-lpthread" else null;
 
   selfNativeBuildInput = true;
@@ -169,6 +175,11 @@ stdenv.mkDerivation rec {
   '' + optionalString threaded ''
     # Fix .la files to include pthreads
     find $out/lib -name \*.la -type f | xargs sed -i "s,\(dependency_libs='\),\1 -lpthread,"
+  '';
+
+  # In the standard environment we don't want to have bootstrap references
+  preFixup = ''
+    sed -i 's,/.*/bin/sh,/bin/sh,g' $out/bin/*
   '';
 
   meta = {

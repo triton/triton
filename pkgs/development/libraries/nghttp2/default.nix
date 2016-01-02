@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig
+{ stdenv, fetchurl
 
 # Optinal Dependencies
 , openssl ? null, libev ? null, zlib ? null, jansson ? null, boost ? null
@@ -40,7 +40,6 @@ stdenv.mkDerivation rec {
     substituteInPlace configure --replace "malloc_stats_print" "je_malloc_stats_print"
   '' else null;
 
-  nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ optJansson optBoost optLibxml2 optJemalloc ]
     ++ optionals hasApp [ optOpenssl optLibev optZlib ];
 

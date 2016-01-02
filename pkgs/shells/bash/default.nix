@@ -60,8 +60,9 @@ stdenv.mkDerivation rec {
   # Note: Bison is needed because the patches above modify parse.y.
   nativeBuildInputs = [bison]
     ++ stdenv.lib.optional (texinfo != null) texinfo
-    ++ stdenv.lib.optional interactive readline
     ++ stdenv.lib.optional stdenv.isDarwin binutils;
+
+  buildInputs = stdenv.lib.optional interactive readline;
 
   # Bash randomly fails to build because of a recursive invocation to
   # build `version.h'.

@@ -57,3 +57,8 @@ echo "#! $out/bin/sh" > $out/bin/fgrep
 echo "exec $out/bin/grep -F \"\$@\"" >> $out/bin/fgrep
 
 chmod +x $out/bin/egrep $out/bin/fgrep
+
+# Create a separate glibc
+mkdir -p $glibc
+ln -s $out/lib $glibc/lib
+ln -s $out/include-glibc $glibc/include

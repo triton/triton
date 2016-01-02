@@ -86,7 +86,6 @@ rec {
       for i in as ld ar ranlib nm strip readelf objdump; do
         cp ${binutils}/bin/$i $out/bin
       done
-      cp -d ${binutils}/lib/lib*.so* $out/lib
 
       # Copy all of the needed libraries for the binaries
       set +x

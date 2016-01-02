@@ -1,16 +1,5 @@
-{pkgs}: [
-  pkgs.coreutils
-  pkgs.findutils
-  pkgs.diffutils
-  pkgs.gnused
-  pkgs.gnugrep
-  pkgs.gawk
-  pkgs.gnutar
-  pkgs.gzip
-  pkgs.bzip2
-  pkgs.gnumake
-  pkgs.bash
-  pkgs.patch
-  pkgs.pkgconfig
-  pkgs.xz
-]
+{ pkgs }:
+{
+  inherit (pkgs) coreutils findutils diffutils gnused gnugrep gawk gnutar
+    gzip bzip2 gnumake bash patch pkgconfig xz curl;
+}

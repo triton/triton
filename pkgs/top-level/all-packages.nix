@@ -3912,31 +3912,6 @@ let
     cross = crossSystem;
   };
 
-  gcc44 = lowPrio (wrapCC (makeOverridable (import ../development/compilers/gcc/4.4) {
-    inherit fetchurl stdenv gmp mpfr /* ppl cloogppl */
-      gettext which noSysDirs;
-    texinfo = texinfo4;
-    profiledCompiler = true;
-  }));
-
-  gcc45 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.5 {
-    inherit noSysDirs;
-    texinfo = texinfo4;
-
-    ppl = null;
-    cloogppl = null;
-
-    # bootstrapping a profiled compiler does not work in the sheevaplug:
-    # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=43944
-    profiledCompiler = !stdenv.isArm;
-
-    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
-    # and host != build), `cross' must be null but the cross-libc must still
-    # be passed.
-    cross = null;
-    libcCross = if crossSystem != null then libcCross else null;
-  }));
-
   gcc46 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.6 {
     inherit noSysDirs;
 
@@ -3970,23 +3945,6 @@ let
     isl = isl_0_14;
   }));
 
-  gcc49 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.9 {
-    inherit noSysDirs;
-
-    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
-    profiledCompiler = with stdenv; (!isDarwin && (isi686 || isx86_64));
-
-    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
-    # and host != build), `cross' must be null but the cross-libc must still
-    # be passed.
-    cross = null;
-    libcCross = if crossSystem != null then libcCross else null;
-
-    isl = isl_0_11;
-
-    cloog = cloog_0_18_0;
-  }));
-
   gcc5 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/5 {
     inherit noSysDirs;
 
@@ -3998,16 +3956,10 @@ let
     # be passed.
     cross = null;
     libcCross = if crossSystem != null then libcCross else null;
-
-    isl = isl_0_14;
   }));
 
-  gfortran = if !stdenv.isDarwin then gfortran49
-             else callPackage ../development/compilers/gcc/gfortran-darwin.nix {
-    inherit (darwin) Libsystem;
-  };
-
-  gfortran48 = wrapCC (gcc48.cc.override {
+  gfortran = gfortran5;
+  gfortran5 = wrapCC (gcc5.cc.override {
     name = "gfortran";
     langFortran = true;
     langCC = false;
@@ -4015,16 +3967,8 @@ let
     profiledCompiler = false;
   });
 
-  gfortran49 = wrapCC (gcc49.cc.override {
-    name = "gfortran";
-    langFortran = true;
-    langCC = false;
-    langC = false;
-    profiledCompiler = false;
-  });
-
-  gcj = gcj49;
-  gcj49 = wrapCC (gcc49.cc.override {
+  gcj = gcj5;
+  gcj5 = wrapCC (gcc5.cc.override {
     name = "gcj";
     langJava = true;
     langFortran = false;
@@ -4036,43 +3980,9 @@ let
     inherit (gnome) libart_lgpl;
   });
 
-  gnat = gnat45; # failed to make 4.6 or 4.8 build
-
-  gnat45 = wrapCC (gcc45.cc.override {
-    name = "gnat";
-    langCC = false;
-    langC = true;
-    langAda = true;
-    profiledCompiler = false;
-    inherit gnatboot;
-    # We can't use the ppl stuff, because we would have
-    # libstdc++ problems.
-    cloogppl = null;
-    ppl = null;
-  });
-
-  gnatboot = wrapGCC-old (callPackage ../development/compilers/gnatboot {});
-
   gnu-smalltalk = callPackage ../development/compilers/gnu-smalltalk {
     emacsSupport = config.emacsSupport or false;
   };
-
-  gccgo = gccgo49;
-
-  gccgo48 = wrapCC (gcc48.cc.override {
-    name = "gccgo";
-    langCC = true; #required for go.
-    langC = true;
-    langGo = true;
-  });
-
-  gccgo49 = wrapCC (gcc49.cc.override {
-    name = "gccgo49";
-    langCC = true; #required for go.
-    langC = true;
-    langGo = true;
-    profiledCompiler = false;
-  });
 
   ghdl = wrapCC (import ../development/compilers/gcc/4.3 {
     inherit stdenv fetchurl gmp mpfr noSysDirs gnat;

@@ -5092,13 +5092,9 @@ let
 
   perl = perl522;
 
-  php = php56;
+  php = php70;
 
   phpPackages = recurseIntoAttrs (callPackage ./php-packages.nix {});
-
-  php55Packages = recurseIntoAttrs (callPackage ./php-packages.nix {
-    php = php55;
-  });
 
   inherit (callPackages ../development/interpreters/php { })
     php54

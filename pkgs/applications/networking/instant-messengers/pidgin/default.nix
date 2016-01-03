@@ -1,8 +1,8 @@
-{ stdenv, fetchurl, pkgconfig, gtk, gtkspell, aspell
+{ stdenv, fetchurl, gtk, gtkspell, aspell
 , gstreamer, gst_plugins_base, startupnotification, gettext
 , perl, perlXMLParser, libxml2, nss, nspr, farsight2
-, libXScrnSaver, ncurses, avahi, dbus, dbus_glib, intltool, libidn
-, lib, python, libICE, libXext, libSM
+, xorg, ncurses, avahi, dbus, dbus_glib, intltool, libidn
+, lib, python
 , openssl ? null
 , gnutls ? null
 , libgcrypt ? null
@@ -13,11 +13,11 @@
 stdenv.mkDerivation rec {
   name = "pidgin-${version}";
   majorVersion = "2";
-  version = "${majorVersion}.10.11";
+  version = "${majorVersion}.10.12";
 
   src = fetchurl {
     url = "mirror://sourceforge/pidgin/${name}.tar.bz2";
-    sha256 = "01s0q30qrjlzj7kkz6f8lvrwsdd55a9yjh2xjjwyyxzw849j3bpj";
+    sha256 = "1pgzfwgf7vl72hppdr2v8gd8dlbvkymkidxj0ff792gyzvq26x9c";
   };
 
   inherit nss ncurses;
@@ -26,16 +26,16 @@ stdenv.mkDerivation rec {
     gtkspell aspell
     gstreamer gst_plugins_base startupnotification
     libxml2 nss nspr farsight2
-    libXScrnSaver ncurses python
+    xorg.libXScrnSaver ncurses python
     avahi dbus dbus_glib intltool libidn
-    libICE libXext libSM
+    xorg.libICE xorg.libXext xorg.libSM
   ]
   ++ (lib.optional (openssl != null) openssl)
   ++ (lib.optional (gnutls != null) gnutls)
   ++ (lib.optional (libgcrypt != null) libgcrypt);
 
   propagatedBuildInputs = [
-    pkgconfig gtk perl perlXMLParser gettext
+    gtk perl perlXMLParser gettext
   ];
 
   patches = [./pidgin-makefile.patch ./add-search-path.patch ];

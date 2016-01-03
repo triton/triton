@@ -1,4 +1,9 @@
-{ fetchurl, stdenv, pkgconfig, cairo, xlibsWrapper, fontconfig, freetype, libsigcxx }:
+{ stdenv
+, fetchurl
+
+, cairo
+, libsigcxx
+}:
 
 stdenv.mkDerivation rec {
   name = "cairomm-1.12.0";
@@ -8,27 +13,33 @@ stdenv.mkDerivation rec {
     sha256 = "1k3lb3jwnk5nm4s5cfm5kk8kl4b066chis4inws6k5yxdzn5lhsh";
   };
 
-  buildInputs = [ pkgconfig ];
+  configureFlags = [
+    "--disable-documentation"
+    "--disable-tests"
+    "--enable-api-exceptions"
+    "--without-libstdc-doc"
+    "--without-libsigc-doc"
+    "--without-boost"
+    "--without-boost-unit-test-framework"
+  ];
 
-  propagatedBuildInputs = [ cairo xlibsWrapper fontconfig freetype libsigcxx ];
+  buildInputs = [
+    cairo
+    libsigcxx
+  ];
+
+  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    description = "A 2D graphics library with support for multiple output devices";
-
-    longDescription = ''
-      Cairo is a 2D graphics library with support for multiple output
-      devices.  Currently supported output targets include the X
-      Window System, Quartz, Win32, image buffers, PostScript, PDF,
-      and SVG file output.  Experimental backends include OpenGL
-      (through glitz), XCB, BeOS, OS/2, and DirectFB.
-
-      Cairo is designed to produce consistent output on all output
-      media while taking advantage of display hardware acceleration
-      when available (e.g., through the X Render Extension).
-    '';
-
-    homepage = http://cairographics.org/;
-
-    license = with licenses; [ lgpl2Plus mpl10 ];
+    description = "C++ bindings for the Cairo vector graphics library";
+    homepage = http://cairographics.org/cairomm;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

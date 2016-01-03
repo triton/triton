@@ -98,6 +98,10 @@ stdenv.mkDerivation rec {
     libiconv
   ];
 
+  propagatedBuildInputs = [
+    zlib
+  ];
+
   buildInputs = [
     expat
     fontconfig

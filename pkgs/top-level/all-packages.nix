@@ -574,6 +574,8 @@ json-glib = callPackage ../all-pkgs/json-glib { };
 
 libgudev = callPackage ../all-pkgs/libgudev { };
 
+libspectre = callPackage ../all-pkgs/libspectre { };
+
 libvpx = callPackage ../all-pkgs/libvpx { };
 libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
@@ -7241,8 +7243,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   libsamplerate = callPackage ../development/libraries/libsamplerate { };
 
   libsieve = callPackage ../development/libraries/libsieve { };
-
-  libspectre = callPackage ../development/libraries/libspectre { };
 
   libgsf = callPackage ../development/libraries/libgsf { };
 

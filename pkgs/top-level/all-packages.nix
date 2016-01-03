@@ -456,6 +456,179 @@ let
 
   separateDebugInfo = makeSetupHook { } ../build-support/setup-hooks/separate-debug-info.sh;
 
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+################################BEGIN ALL PKGS##################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+
+atk = callPackage ../all-pkgs/atk { };
+
+atkmm = callPackage ../all-pkgs/atkmm { };
+
+at-spi2-atk = callPackage ../all-pkgs/at-spi-atk { };
+at_spi2_atk = at-spi2-atk;
+
+at-spi2-core = callPackage ../all-pkgs/at-spi-core { };
+at_spi2_core = at-spi2-core;
+
+avahi = callPackage ../all-pkgs/avahi {
+  qt4Support = config.avahi.qt4Support or false;
+};
+
+cairo = callPackage ../all-pkgs/cairo {
+  glSupport = config.cairo.gl or (stdenv.isLinux &&
+    !stdenv.isArm && !stdenv.isMips);
+};
+
+cairomm = callPackage ../all-pkgs/cairomm { };
+
+ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
+ffmpeg_1 = callPackage ../all-pkgs/ffmpeg/1.x.nix { };
+ffmpeg_2_2 = callPackage ../all-pkgs/ffmpeg/2.2.nix { };
+ffmpeg_2 = callPackage ../all-pkgs/ffmpeg/2.x.nix { };
+ffmpeg = ffmpeg_2;
+ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
+
+gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
+
+glib = callPackage ../all-pkgs/glib { };
+glib-tested = glib.override { # checked version separate to break cycles
+  doCheck = true;
+  libffi = libffi.override {
+    doCheck = true;
+  };
+};
+
+glibmm = callPackage ../all-pkgs/glibmm { };
+
+glib-networking = callPackage ../all-pkgs/glib-networking { };
+
+gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
+
+granite = callPackage ../all-pkgs/granite { };
+
+gsm = callPackage ../all-pkgs/gsm { };
+
+gst_all_1 = recurseIntoAttrs(callPackage ../all-pkgs/gstreamer {
+  callPackage = pkgs.newScope (pkgs // { libav = pkgs.ffmpeg; });
+});
+
+gst_all = {
+  inherit (pkgs) gstreamer gnonlin gst_python qt_gstreamer;
+  gstPluginsBase = pkgs.gst_plugins_base;
+  gstPluginsBad = pkgs.gst_plugins_bad;
+  gstPluginsGood = pkgs.gst_plugins_good;
+  gstPluginsUgly = pkgs.gst_plugins_ugly;
+  gstFfmpeg = pkgs.gst_ffmpeg;
+};
+
+gstreamer = callPackage ../all-pkgs/gstreamer/legacy/gstreamer {
+  bison = bison2;
+};
+
+gst_plugins_base = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-base { };
+
+gst_plugins_good = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-good { };
+
+gst_plugins_bad = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-bad { };
+
+gst_plugins_ugly = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-ugly { };
+
+gst_ffmpeg = callPackage ../all-pkgs/gstreamer/legacy/gst-ffmpeg {
+  ffmpeg = ffmpeg_0;
+};
+
+gst_python = callPackage ../all-pkgs/gstreamer/legacy/gst-python { };
+
+gstreamermm = callPackage ../all-pkgs/gstreamer/legacy/gstreamermm { };
+
+gnonlin = callPackage ../all-pkgs/gstreamer/legacy/gnonlin { };
+
+
+gtk_2 = callPackage ../all-pkgs/gtk/2.x.nix {
+  cupsSupport = config.gtk2.cups or stdenv.isLinux;
+};
+gtk2 = gtk_2;
+gtk_3 = callPackage ../all-pkgs/gtk/3.x.nix {
+  gettext = gettextWithExpat;
+};
+gtk3 = gtk_3;
+
+gtkmm_2 = callPackage ../all-pkgs/gtkmm/2.x.nix { };
+gtkmm_3 = callPackage ../all-pkgs/gtkmm/3.x.nix { };
+
+gvfs = callPackage ../all-pkgs/gvfs { gconf = gnome.GConf; };
+
+harfbuzz = callPackage ../all-pkgs/harfbuzz { };
+harfbuzz-icu = callPackage ../development/libraries/harfbuzz {
+  withIcu = true;
+  withGraphite2 = true;
+};
+
+json-glib = callPackage ../all-pkgs/json-glib { };
+
+libgudev = callPackage ../all-pkgs/libgudev { };
+
+libvpx = callPackage ../all-pkgs/libvpx { };
+libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
+
+pango = callPackage ../all-pkgs/pango { };
+
+pangomm = callPackage ../all-pkgs/pangomm { };
+
+pangox-compat = callPackage ../all-pkgs/pangox-compat { };
+
+pcre = callPackage ../all-pkgs/pcre/1.x.nix {
+  unicodeSupport = config.pcre.unicode or true;
+};
+pcre2 = callPackage ../all-pkgs/pcre/2.x.nix { };
+
+pixman = callPackage ../all-pkgs/pixman { };
+
+wayland = callPackage ../all-pkgs/wayland {
+  graphviz = graphviz-nox;
+};
+wayland-docs = callPackage ../all-pkgs/wayland {
+  graphviz = graphviz-nox;
+  enableDocumentation = true;
+};
+
+webkitgtk_2_4_gtk3 = callPackage ../all-pkgs/webkitgtk/2.4.x.nix {
+  harfbuzz = harfbuzz-icu;
+  gst-plugins-base = gst_all_1.gst-plugins-base;
+};
+webkitgtk_2_4_gtk2 = webkitgtk_2_4_gtk3.override {
+  withGtk2 = true;
+  enableIntrospection = false;
+};
+webkitgtk_2_4 = webkitgtk_2_4_gtk3;
+webkitgtk = callPackage ../all-pkgs/webkitgtk {
+  harfbuzz = harfbuzz-icu;
+  gst-plugins-base = gst_all_1.gst-plugins-base;
+};
+
+x264 = callPackage ../all-pkgs/x264 { };
+
+x265 = callPackage ../all-pkgs/x265 { };
+
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+################################END ALL PKGS####################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
 
   ### TOOLS
 
@@ -636,10 +809,6 @@ let
   autojump = callPackage ../tools/misc/autojump { };
 
   autorandr = callPackage ../tools/misc/autorandr {};
-
-  avahi = callPackage ../development/libraries/avahi {
-    qt4Support = config.avahi.qt4Support or false;
-  };
 
   aws = callPackage ../tools/virtualization/aws { };
 
@@ -6009,10 +6178,6 @@ let
 
   attr = callPackage ../development/libraries/attr { };
 
-  at_spi2_core = callPackage ../development/libraries/at-spi2-core { };
-
-  at_spi2_atk = callPackage ../development/libraries/at-spi2-atk { };
-
   aqbanking = callPackage ../development/libraries/aqbanking { };
 
   aubio = callPackage ../development/libraries/aubio { };
@@ -6248,40 +6413,6 @@ let
 
   fcgi = callPackage ../development/libraries/fcgi { };
 
-  ffmpeg_0_10 = callPackage ../development/libraries/ffmpeg/0.10.nix {
-    inherit (darwin.apple_sdk.frameworks) Cocoa;
-  };
-  ffmpeg_1_2 = callPackage ../development/libraries/ffmpeg/1.2.nix {
-    inherit (darwin.apple_sdk.frameworks) Cocoa;
-  };
-  ffmpeg_2_2 = callPackage ../development/libraries/ffmpeg/2.2.nix {
-    inherit (darwin.apple_sdk.frameworks) Cocoa;
-  };
-  ffmpeg_2_8 = callPackage ../development/libraries/ffmpeg/2.8.nix {
-    inherit (darwin.apple_sdk.frameworks) Cocoa;
-  };
-  # Aliases
-  ffmpeg_0 = ffmpeg_0_10;
-  ffmpeg_1 = ffmpeg_1_2;
-  ffmpeg_2 = ffmpeg_2_8;
-  ffmpeg = ffmpeg_2;
-
-  ffmpeg-full = callPackage ../development/libraries/ffmpeg-full {
-    # The following need to be fixed on Darwin
-    frei0r = if stdenv.isDarwin then null else frei0r;
-    game-music-emu = if stdenv.isDarwin then null else game-music-emu;
-    libjack2 = if stdenv.isDarwin then null else libjack2;
-    libmodplug = if stdenv.isDarwin then null else libmodplug;
-    libvpx = if stdenv.isDarwin then null else libvpx;
-    openal = if stdenv.isDarwin then null else openal;
-    libpulseaudio = if stdenv.isDarwin then null else libpulseaudio;
-    samba = if stdenv.isDarwin then null else samba;
-    vid-stab = if stdenv.isDarwin then null else vid-stab;
-    x265 = if stdenv.isDarwin then null else x265;
-    xavs = if stdenv.isDarwin then null else xavs;
-    inherit (darwin.apple_sdk.frameworks) Cocoa CoreServices;
-  };
-
   ffmpegthumbnailer = callPackage ../development/libraries/ffmpegthumbnailer { };
 
   ffms = callPackage ../development/libraries/ffms { };
@@ -6474,8 +6605,6 @@ let
   #GMP ex-satellite, so better keep it near gmp
   mpfr = callPackage ../development/libraries/mpfr/default.nix { };
 
-  gobjectIntrospection = callPackage ../development/libraries/gobject-introspection { };
-
   goocanvas = callPackage ../development/libraries/goocanvas { };
 
   google-gflags = callPackage ../development/libraries/google-gflags { };
@@ -6483,42 +6612,6 @@ let
   gperftools = callPackage ../development/libraries/gperftools { };
 
   grib-api = callPackage ../development/libraries/grib-api { };
-
-  gst_all_1 = recurseIntoAttrs(callPackage ../development/libraries/gstreamer {
-    callPackage = pkgs.newScope (pkgs // { libav = pkgs.ffmpeg; });
-  });
-
-  gst_all = {
-    inherit (pkgs) gstreamer gnonlin gst_python qt_gstreamer;
-    gstPluginsBase = pkgs.gst_plugins_base;
-    gstPluginsBad = pkgs.gst_plugins_bad;
-    gstPluginsGood = pkgs.gst_plugins_good;
-    gstPluginsUgly = pkgs.gst_plugins_ugly;
-    gstFfmpeg = pkgs.gst_ffmpeg;
-  };
-
-  gstreamer = callPackage ../development/libraries/gstreamer/legacy/gstreamer {
-    bison = bison2;
-  };
-
-  gst_plugins_base = callPackage ../development/libraries/gstreamer/legacy/gst-plugins-base {};
-
-  gst_plugins_good = callPackage ../development/libraries/gstreamer/legacy/gst-plugins-good {};
-
-  gst_plugins_bad = callPackage ../development/libraries/gstreamer/legacy/gst-plugins-bad {};
-
-  gst_plugins_ugly = callPackage ../development/libraries/gstreamer/legacy/gst-plugins-ugly {};
-
-  gst_ffmpeg = callPackage ../development/libraries/gstreamer/legacy/gst-ffmpeg {
-    ffmpeg = ffmpeg_0;
-  };
-
-  gst_python = callPackage ../development/libraries/gstreamer/legacy/gst-python {};
-
-  gstreamermm = callPackage ../development/libraries/gstreamer/legacy/gstreamermm { };
-
-  gnonlin = callPackage ../development/libraries/gstreamer/legacy/gnonlin {};
-
   gusb = callPackage ../development/libraries/gusb {
     inherit (gnome) gtkdoc;
   };
@@ -6559,8 +6652,6 @@ let
 
   gsl_1 = callPackage ../development/libraries/gsl/gsl-1_16.nix { };
 
-  gsm = callPackage ../development/libraries/gsm {};
-
   gsoap = callPackage ../development/libraries/gsoap { };
 
   gss = callPackage ../development/libraries/gss { };
@@ -6570,53 +6661,11 @@ let
   gtkmathview = callPackage ../development/libraries/gtkmathview { };
 
   gtkLibs = {
-    inherit (pkgs) glib glibmm atk atkmm cairo pango pangomm gdk_pixbuf gtk
+    inherit (pkgs) glib glibmm atk atkmm cairo pango pangomm gdk-pixbuf gtk
       gtkmm;
   };
 
-  glib = callPackage ../development/libraries/glib { };
-  glib-tested = glib.override { # checked version separate to break cycles
-    doCheck = true;
-    libffi = libffi.override { doCheck = true; };
-  };
-  glibmm = callPackage ../development/libraries/glibmm { };
-
-  glib_networking = callPackage ../development/libraries/glib-networking {};
-
-  atk = callPackage ../development/libraries/atk { };
-  atkmm = callPackage ../development/libraries/atkmm { };
-
-  pixman = callPackage ../development/libraries/pixman { };
-
-  cairo = callPackage ../development/libraries/cairo {
-    glSupport = config.cairo.gl or (stdenv.isLinux &&
-      !stdenv.isArm && !stdenv.isMips);
-  };
-  cairomm = callPackage ../development/libraries/cairomm { };
-
-  pango = callPackage ../development/libraries/pango { };
-  pangomm = callPackage ../development/libraries/pangomm { };
-
-  pangox_compat = callPackage ../development/libraries/pangox-compat { };
-
-  gdk_pixbuf = callPackage ../development/libraries/gdk-pixbuf { };
-
   gnome-sharp = callPackage ../development/libraries/gnome-sharp {};
-
-  granite = callPackage ../development/libraries/granite { };
-
-  gtk2 = callPackage ../development/libraries/gtk+/2.x.nix {
-    cupsSupport = config.gtk2.cups or stdenv.isLinux;
-  };
-
-  gtk3 = callPackage ../development/libraries/gtk+/3.x.nix {
-    gettext = gettextWithExpat;
-  };
-
-  gtk = pkgs.gtk2;
-
-  gtkmm = callPackage ../development/libraries/gtkmm/2.x.nix { };
-  gtkmm3 = callPackage ../development/libraries/gtkmm/3.x.nix { };
 
   gtkmozembedsharp = callPackage ../development/libraries/gtkmozembed-sharp {
     gtksharp = gtk-sharp;
@@ -6636,8 +6685,6 @@ let
 
   gts = callPackage ../development/libraries/gts { };
 
-  gvfs = callPackage ../development/libraries/gvfs { gconf = gnome.GConf; };
-
   gwenhywfar = callPackage ../development/libraries/gwenhywfar { gnutls = gnutls33; };
 
   hamlib = callPackage ../development/libraries/hamlib { };
@@ -6648,12 +6695,6 @@ let
 
   heimdalFull = callPackage ../development/libraries/kerberos/heimdal.nix { };
   libheimdal = heimdalFull.override { type = "lib"; };
-
-  harfbuzz = callPackage ../development/libraries/harfbuzz { };
-  harfbuzz-icu = callPackage ../development/libraries/harfbuzz {
-    withIcu = true;
-    withGraphite2 = true;
-  };
 
   hawknl = callPackage ../development/libraries/hawknl { };
 
@@ -6756,8 +6797,6 @@ let
   jetty_util = callPackage ../development/libraries/java/jetty-util { };
 
   jshon = callPackage ../development/tools/parsing/jshon { };
-
-  json_glib = callPackage ../development/libraries/json-glib { };
 
   json-c-0-11 = callPackage ../development/libraries/json-c/0.11.nix { }; # vulnerable
   json_c = callPackage ../development/libraries/json-c { };
@@ -7110,8 +7149,6 @@ let
   };
 
   libgsystem = callPackage ../development/libraries/libgsystem { };
-
-  libgudev = callPackage ../development/libraries/libgudev { };
 
   libguestfs = callPackage ../development/libraries/libguestfs {
     inherit (perlPackages) libintlperl GetoptLong SysVirt;
@@ -7560,9 +7597,6 @@ let
 
   libviper = callPackage ../development/libraries/libviper { };
 
-  libvpx = callPackage ../development/libraries/libvpx { };
-  libvpx-git = callPackage ../development/libraries/libvpx/git.nix { };
-
   libvterm = callPackage ../development/libraries/libvterm { };
 
   libvorbis = callPackage ../development/libraries/libvorbis { };
@@ -7930,12 +7964,6 @@ let
   pcl = callPackage ../development/libraries/pcl {
     vtk = vtkWithQt4;
   };
-
-  pcre = callPackage ../development/libraries/pcre {
-    unicodeSupport = config.pcre.unicode or true;
-  };
-
-  pcre2 = callPackage ../development/libraries/pcre2 { };
 
   pdf2xml = callPackage ../development/libraries/pdf2xml {} ;
 
@@ -8514,31 +8542,6 @@ let
     inherit (darwin) libiconv;
   };
 
-  wayland = callPackage ../development/libraries/wayland {
-    graphviz = graphviz-nox;
-  };
-  wayland-docs = callPackage ../development/libraries/wayland {
-    graphviz = graphviz-nox;
-    enableDocumentation = true;
-  };
-
-  webkit = webkitgtk;
-
-  webkitgtk = callPackage ../development/libraries/webkitgtk {
-    harfbuzz = harfbuzz-icu;
-    gst-plugins-base = gst_all_1.gst-plugins-base;
-  };
-
-  webkitgtk24x = callPackage ../development/libraries/webkitgtk/2.4.nix {
-    harfbuzz = harfbuzz-icu;
-    gst-plugins-base = gst_all_1.gst-plugins-base;
-  };
-
-  webkitgtk2 = webkitgtk24x.override {
-    withGtk2 = true;
-    enableIntrospection = false;
-  };
-
   websocketpp = callPackage ../development/libraries/websocket++ { };
 
   webrtc-audio-processing = callPackage ../development/libraries/webrtc-audio-processing { };
@@ -8574,10 +8577,6 @@ let
   };
 
   wtk = callPackage ../development/libraries/wtk { };
-
-  x264 = callPackage ../development/libraries/x264 { };
-
-  x265 = callPackage ../development/libraries/x265 { };
 
   xapian = callPackage ../development/libraries/xapian { };
 

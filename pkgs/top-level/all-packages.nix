@@ -508,6 +508,7 @@ glibmm = callPackage ../all-pkgs/glibmm { };
 glib-networking = callPackage ../all-pkgs/glib-networking { };
 
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
+gobjectIntrospection = gobject-introspection; # Deprecated alias
 
 granite = callPackage ../all-pkgs/granite { };
 

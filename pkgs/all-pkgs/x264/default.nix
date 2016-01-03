@@ -1,28 +1,81 @@
-{ stdenv, fetchurl, yasm, enable10bit ? false }:
+{ stdenv, fetchurl
+, yasm
+
+, enable10bit ? false
+, chroma ? "all"
+}:
+
+with {
+  inherit (stdenv)
+    isi686
+    is64bit;
+  inherit (stdenv.lib)
+    enFlag
+    otFlag;
+};
+
+assert enable10bit -> is64bit;
+assert (chroma == "420" ||
+        chroma == "422" ||
+        chroma == "444" ||
+        chroma == "all");
 
 stdenv.mkDerivation rec {
-  name = "x264-snapshot-20151213-2245";
+  name = "x264-${version}";
+  version = "20151213";
 
   src = fetchurl {
-    url = "ftp://ftp.videolan.org/pub/videolan/x264/snapshots/${name}.tar.bz2";
-    sha256 = "042d9hn6w0yy9k0r596lpvi73p7fk63jj6iyp3mdvlr87247j4zr";
+    url = "http://ftp.videolan.org/pub/videolan/x264/snapshots/" +
+          "x264-snapshot-${version}-2245-stable.tar.bz2";
+    sha256 = "1kx8y77715d97z3xs02wdy95p5nbgw27ks2pd1cwc96q2nl1jgjb";
   };
 
-  patchPhase = ''
-    sed -i s,/bin/bash,${stdenv.shell}, configure version.sh
+  postPatch = ''
+    patchShebangs ./configure
+    patchShebangs ./version.sh
   '';
 
-  configureFlags = [ "--enable-shared" ]
-    ++ stdenv.lib.optional (!stdenv.isi686) "--enable-pic"
-    ++ stdenv.lib.optional (enable10bit) "--bit-depth=10";
+  configureFlags = [
+    "--enable-cli"
+    "--enable-shared"
+    "--enable-opencl"
+    "--enable-gpl"
+    "--enable-thread"
+    "--disable-win32thread"
+    "--disable-interlaced"
+    "--bit-depth=${
+      if (enable10bit && is64bit) then
+        "10"
+      else
+        "8"
+    }"
+    "--chroma-format=${chroma}"
+    "--enable-asm"
+    "--disable-debug"
+    "--disable-gprof"
+    (enFlag "pic" (!isi686) null)
+    "--disable-avs"
+    "--disable-swscale"
+    "--disable-lavf"
+    "--disable-ffms"
+    "--disable-gpac"
+    "--disable-lsmash"
+  ];
 
-  buildInputs = [ yasm ];
+  nativeBuildInputs = [
+    yasm
+  ];
 
   meta = with stdenv.lib; {
-    description = "library for encoding H264/AVC video streams";
-    homepage    = http://www.videolan.org/developers/x264.html;
-    license     = licenses.gpl2;
-    platforms   = platforms.unix;
-    maintainers = [ maintainers.spwhitt ];
+    description = "Library for encoding h.264/AVC video streams";
+    homepage = http://www.videolan.org/developers/x264.html;
+    license = licenses.gpl2;
+    maintainers = [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

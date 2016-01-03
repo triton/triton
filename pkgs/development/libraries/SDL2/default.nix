@@ -1,7 +1,7 @@
 { stdenv, fetchurl, pkgconfig, audiofile
 , openglSupport ? false, mesa ? null
 , alsaSupport ? true, alsaLib ? null
-, x11Support ? true, xlibsWrapper ? null, libXrandr ? null
+, x11Support ? true, xlibsWrapper ? null, xorg ? null
 , pulseaudioSupport ? true, libpulseaudio ? null
 , AudioUnit, Cocoa, CoreAudio, CoreServices, ForceFeedback, OpenGL
 }:
@@ -11,7 +11,7 @@
 assert !stdenv.isDarwin -> alsaSupport || pulseaudioSupport;
 
 assert openglSupport -> (stdenv.isDarwin || mesa != null && x11Support);
-assert x11Support -> (xlibsWrapper != null && libXrandr != null);
+assert x11Support -> (xlibsWrapper != null && xorg != null);
 assert alsaSupport -> alsaLib != null;
 assert pulseaudioSupport -> libpulseaudio != null;
 
@@ -24,15 +24,15 @@ let
       '';
 in
 stdenv.mkDerivation rec {
-  name = "SDL2-2.0.3";
+  name = "SDL2-2.0.4";
 
   src = fetchurl {
     url = "http://www.libsdl.org/release/${name}.tar.gz";
-    sha256 = "0369ngvb46x6c26h8zva4x22ywgy6mvn0wx87xqwxg40pxm9m9m5";
+    sha256 = "0jqp46mxxbh9lhpx1ih6sp93k752j2smhpc0ad0q4cb3px0famfs";
   };
 
   # Since `libpulse*.la' contain `-lgdbm', PulseAudio must be propagated.
-  propagatedBuildInputs = stdenv.lib.optionals x11Support [ xlibsWrapper libXrandr ] ++
+  propagatedBuildInputs = stdenv.lib.optionals x11Support [ xlibsWrapper xorg.libXrandr ] ++
     stdenv.lib.optional pulseaudioSupport libpulseaudio;
 
   buildInputs = [ pkgconfig audiofile ] ++

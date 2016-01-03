@@ -1,14 +1,26 @@
-{ stdenv, fetchurl, fetchpatch, pkgconfig, libiconv, libintlOrEmpty
-, expat, zlib, libpng, pixman, fontconfig, freetype, xorg
-, gobjectSupport ? true, glib
-, xcbSupport ? true # no longer experimental since 1.12
-, glSupport ? true, mesa_noglu ? null # mesa is no longer a big dependency
-, pdfSupport ? true
+{ stdenv
+, fetchurl
+, libiconv
+
+, cogl
+, expat
+, fontconfig
+, freetype
+, glib
+, libpng
+, libspectre
+, lzo
+, pixman
+, mesa_noglu
+#, qt4
+, xorg
+, zlib
 }:
 
-assert glSupport -> mesa_noglu != null;
-
-with { inherit (stdenv.lib) optional optionals; };
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
 
 stdenv.mkDerivation rec {
   name = "cairo-1.14.6";
@@ -18,67 +30,110 @@ stdenv.mkDerivation rec {
     sha256 = "0lmjlzmghmr27y615px9hkm552x7ap6pmq9mfbzr6smp8y2b6g31";
   };
 
-  nativeBuildInputs = [ pkgconfig libiconv ] ++ libintlOrEmpty;
+  configureFlags = [
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--disable-gcov"
+    "--disable-valgrind"
+    "--enable-xlib"
+    "--enable-xlib-xrender"
+    "--enable-xcb"
+    "--enable-xlib-xcb"
+    "--enable-xcb-shm"
+    # TODO: qt
+    "--disable-qt"
+    "--disable-quartz"
+    "--disable-quartz-font"
+    "--disable-quartz-image"
+    "--disable-win32"
+    "--disable-win32-font"
+    # TODO: package skia
+    "--disable-skia"
+    "--disable-os2"
+    "--disable-beos"
+    "--disable-drm"
+    "--disable-gallium"
+    "--enable-libpng"
+    "--enable-gl"
+    "--disable-glesv2"
+    # FIXME: cogl recursion
+    "--disable-cogl"
+    # FIXME: fix directfb mirroring
+    "--disable-directfb"
+    "--disable-vg"
+    "--enable-egl"
+    "--enable-glx"
+    "--disable-wgl"
+    "--enable-script"
+    "--enable-ft"
+    "--enable-fc"
+    "--enable-ps"
+    "--enable-pdf"
+    "--enable-svg"
+    "--disable-test-surfaces"
+    "--enable-tee"
+    "--enable-xml"
+    "--enable-pthread"
+    "--enable-gobject"
+    "--disable-full-testing"
+    "--disable-trace"
+    "--enable-interpreter"
+    "--disable-symbol-lookup"
+    #"--enable-some-floating-point"
+    "--with-x"
+    #(wtFlag "skia" true "yes")
+    #(wtFlag "skia-build-type" true "Release")
+    "--without-gallium"
+  ];
 
-  propagatedBuildInputs =
-    with xorg; [ xorg.xlibsWrapper fontconfig expat freetype pixman zlib libpng ]
-    ++ optional (!stdenv.isDarwin) libXrender
-    ++ optionals xcbSupport [ libxcb xcbutil ]
-    ++ optional gobjectSupport glib
-    ++ optionals glSupport [ mesa_noglu ]
-    ;
-
-  configureFlags = [ "--enable-tee" ]
-    ++ optional xcbSupport "--enable-xcb"
-    ++ optional glSupport "--enable-gl"
-    ++ optional pdfSupport "--enable-pdf"
-    ;
-
-  preConfigure =
-  # On FreeBSD, `-ldl' doesn't exist.
-    (stdenv.lib.optionalString stdenv.isFreeBSD
-       '' for i in "util/"*"/Makefile.in" boilerplate/Makefile.in
-          do
-            cat "$i" | sed -es/-ldl//g > t
-            mv t "$i"
-          done
-       '') 
-       +
-    ''
+  preConfigure = ''
     # Work around broken `Requires.private' that prevents Freetype
     # `-I' flags to be propagated.
     sed -i "src/cairo.pc.in" \
         -es'|^Cflags:\(.*\)$|Cflags: \1 -I${freetype}/include/freetype2 -I${freetype}/include|g'
-    '';
+  '';
+
+  nativeBuildInputs = [
+    libiconv
+  ];
+
+  buildInputs = [
+    expat
+    fontconfig
+    freetype
+    glib
+    libpng
+    libspectre
+    lzo
+    mesa_noglu
+    pixman
+    xorg.libX11
+    xorg.libxcb
+    xorg.libXext
+    xorg.libXrender
+    xorg.xcbutil
+  ];
+
+  postInstall = ''
+    rm -rvf $out/share/gtk-doc
+  '' + glib.flattenInclude;
 
   enableParallelBuilding = true;
 
-  # The default `--disable-gtk-doc' is ignored.
-  postInstall = "rm -rf $out/share/gtk-doc"
-    + stdenv.lib.optionalString stdenv.isDarwin (''
-      #newline
-    '' + glib.flattenInclude
-    );
-
   meta = with stdenv.lib; {
-    description = "A 2D graphics library with support for multiple output devices";
-
-    longDescription = ''
-      Cairo is a 2D graphics library with support for multiple output
-      devices.  Currently supported output targets include the X
-      Window System, Quartz, Win32, image buffers, PostScript, PDF,
-      and SVG file output.  Experimental backends include OpenGL
-      (through glitz), XCB, BeOS, OS/2, and DirectFB.
-
-      Cairo is designed to produce consistent output on all output
-      media while taking advantage of display hardware acceleration
-      when available (e.g., through the X Render Extension).
-    '';
-
+    description = "A vector graphics library with cross-device output support";
     homepage = http://cairographics.org/;
-
-    license = with licenses; [ lgpl2Plus mpl10 ];
-
-    platforms = platforms.all;
+    license = with licenses; [
+      lgpl2Plus
+      mpl10
+    ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

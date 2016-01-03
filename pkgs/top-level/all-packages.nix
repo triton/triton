@@ -480,10 +480,7 @@ at_spi2_core = at-spi2-core; # Deprecated alias
 
 avahi = callPackage ../all-pkgs/avahi { };
 
-cairo = callPackage ../all-pkgs/cairo {
-  glSupport = config.cairo.gl or (stdenv.isLinux &&
-    !stdenv.isArm && !stdenv.isMips);
-};
+cairo = callPackage ../all-pkgs/cairo { };
 
 cairomm = callPackage ../all-pkgs/cairomm { };
 

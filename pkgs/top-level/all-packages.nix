@@ -478,9 +478,7 @@ at_spi2_atk = at-spi2-atk; # Deprecated alias
 at-spi2-core = callPackage ../all-pkgs/at-spi2-core { };
 at_spi2_core = at-spi2-core; # Deprecated alias
 
-avahi = callPackage ../all-pkgs/avahi {
-  qt4Support = config.avahi.qt4Support or false;
-};
+avahi = callPackage ../all-pkgs/avahi { };
 
 cairo = callPackage ../all-pkgs/cairo {
   glSupport = config.cairo.gl or (stdenv.isLinux &&

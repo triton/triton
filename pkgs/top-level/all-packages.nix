@@ -571,6 +571,8 @@ json-glib = callPackage ../all-pkgs/json-glib { };
 
 libgudev = callPackage ../all-pkgs/libgudev { };
 
+librsvg = callPackage ../all-pkgs/librsvg { };
+
 libspectre = callPackage ../all-pkgs/libspectre { };
 
 libvpx = callPackage ../all-pkgs/libvpx { };
@@ -7438,8 +7440,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   libpwquality = callPackage ../development/libraries/libpwquality { };
 
   libqalculate = callPackage ../development/libraries/libqalculate { };
-
-  librsvg = callPackage ../development/libraries/librsvg { };
 
   librsync = callPackage ../development/libraries/librsync { };
 

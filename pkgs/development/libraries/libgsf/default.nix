@@ -1,5 +1,5 @@
 { fetchurl, stdenv, pkgconfig, intltool, gettext, glib, libxml2, zlib, bzip2
-, python, perl, gdk_pixbuf, libiconv, libintlOrEmpty }:
+, python, perl, gdk-pixbuf-core, libiconv }:
 
 with { inherit (stdenv.lib) optionals; };
 
@@ -16,13 +16,10 @@ stdenv.mkDerivation rec {
   buildInputs = [ gettext bzip2 zlib python ]
     ++ stdenv.lib.optional doCheck perl;
 
-  propagatedBuildInputs = [ libxml2 glib gdk_pixbuf libiconv ]
-    ++ libintlOrEmpty;
+  propagatedBuildInputs = [ libxml2 glib gdk-pixbuf-core libiconv ];
 
   doCheck = true;
   preCheck = "patchShebangs ./tests/";
-
-  NIX_LDFLAGS = stdenv.lib.optionalString stdenv.isDarwin "-lintl";
 
   meta = with stdenv.lib; {
     description = "GNOME's Structured File Library";

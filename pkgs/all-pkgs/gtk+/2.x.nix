@@ -1,65 +1,118 @@
-{ stdenv, fetchurl, pkgconfig, gettext, glib, atk, pango, cairo, perl, xorg
-, gdk_pixbuf, libintlOrEmpty, xlibsWrapper
-, xineramaSupport ? stdenv.isLinux
-, cupsSupport ? true, cups ? null
+{ stdenv
+, fetchurl
+, gettext
+, intltool
+, perl
+
+, atk
+, cairo
+, cups
+, fontconfig
+, gdk-pixbuf-core
+, gdk-pixbuf
+, glib
+, gobjectIntrospection
+, libxkbcommon
+, pango
+, xlibsWrapper
+, xorg
 }:
 
-assert xineramaSupport -> xorg.libXinerama != null;
-assert cupsSupport -> cups != null;
+with {
+  inherit (stdenv.lib)
+    enFlag
+    wtFlag
+    optionalString;
+};
 
 stdenv.mkDerivation rec {
-  name = "gtk+-2.24.29";
+  name = "gtk+-${version}";
+  versionMajor = "2.24";
+  versionMinor = "29";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtk+/2.24/${name}.tar.xz";
+    url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
     sha256 = "1f1ifv1ijrda4jx831l24d3ww65v5gf56r464fi11n6k02bcah87";
   };
 
-  enableParallelBuilding = true;
+  configureFlags = [
+    (enFlag "shm" (xorg.libXext != null) null)
+    (enFlag "xkb" (libxkbcommon != null) null)
+    (enFlag "xinerama" (xorg.libXinerama != null) null)
+    "--enable-rebuilds"
+    "--enable-visibility"
+    "--enable-explicit-deps"
+    "--enable-glibtest"
+    "--enable-modules"
+    "--disable-quartz-relocation"
+    (enFlag "cups" (cups != null) null)
+    (enFlag "papi" false null)
+    (enFlag "test-print-backend" (cups != null) null)
+    (enFlag "introspection" (gobjectIntrospection != null) null)
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--enable-man"
+    (wtFlag "xinput" (xorg.libXi != null) null)
+    (wtFlag "gdktarget" (true) "x11") # add xorg deps
+    #"--with-gdktarget=directfb"
+    (wtFlag "x" (xorg != null) null)
+  ];
 
-  NIX_CFLAGS_COMPILE = stdenv.lib.optionalString (libintlOrEmpty != []) "-lintl";
+  nativeBuildInputs = [
+    gettext
+    intltool
+    perl
+  ];
 
-  nativeBuildInputs = [ perl pkgconfig gettext ];
-
-  propagatedBuildInputs = with xorg; with stdenv.lib;
-    [ glib cairo pango gdk_pixbuf atk ]
-    ++ optionals (stdenv.isLinux || stdenv.isDarwin) [
-         libXrandr libXrender libXcomposite libXi libXcursor
-       ]
-    ++ optionals stdenv.isDarwin [ xlibsWrapper libXdamage ]
-    ++ libintlOrEmpty
-    ++ optional xineramaSupport libXinerama
-    ++ optionals cupsSupport [ cups ];
-
-  configureFlags = if stdenv.isDarwin
-    then "--disable-glibtest --disable-introspection --disable-visibility"
-    else "--with-xinput=yes";
+  buildInputs = [
+    atk
+    cairo
+    cups
+    fontconfig
+    gdk-pixbuf-core
+    gdk-pixbuf
+    glib
+    gobjectIntrospection
+    libxkbcommon
+    pango
+    xorg.inputproto
+    xorg.libX11
+    xorg.libXcomposite
+    xorg.libXcursor
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXdamage
+    xorg.libXi
+    xorg.libXinerama
+    xorg.libXrandr
+    xorg.libXrender
+  ];
 
   postInstall = "rm -rf $out/share/gtk-doc";
 
+  enableParallelBuilding = true;
+
   passthru = {
     gtkExeEnvPostBuild = ''
-      rm $out/lib/gtk-2.0/2.10.0/immodules.cache
-      $out/bin/gtk-query-immodules-2.0 $out/lib/gtk-2.0/2.10.0/immodules/*.so > $out/lib/gtk-2.0/2.10.0/immodules.cache
+      rm -v $out/lib/gtk-2.0/2.10.0/immodules.cache
+      $out/bin/gtk-query-immodules-2.0 \
+        $out/lib/gtk-2.0/2.10.0/immodules/*.so > \
+        $out/lib/gtk-2.0/2.10.0/immodules.cache
     ''; # workaround for bug of nix-mode for Emacs */ '';
   };
 
   meta = with stdenv.lib; {
-    description = "A multi-platform toolkit for creating graphical user interfaces";
-    homepage    = http://www.gtk.org/;
-    license     = licenses.lgpl2Plus;
-    maintainers = with maintainers; [ lovek323 raskin ];
-    platforms   = platforms.all;
-
-    longDescription = ''
-      GTK+ is a highly usable, feature rich toolkit for creating
-      graphical user interfaces which boasts cross platform
-      compatibility and an easy to use API.  GTK+ it is written in C,
-      but has bindings to many other popular programming languages
-      such as C++, Python and C# among others.  GTK+ is licensed
-      under the GNU LGPL 2.1 allowing development of both free and
-      proprietary software with GTK+ without any license fees or
-      royalties.
-    '';
+    description = "A toolkit for creating graphical user interfaces";
+    homepage = http://www.gtk.org/;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

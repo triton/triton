@@ -550,11 +550,9 @@ gstreamermm = callPackage ../all-pkgs/gstreamer/legacy/gstreamermm { };
 gnonlin = callPackage ../all-pkgs/gstreamer/legacy/gnonlin { };
 
 
-gtk_2 = callPackage ../all-pkgs/gtk/2.x.nix {
-  cupsSupport = config.gtk2.cups or stdenv.isLinux;
-};
+gtk_2 = callPackage ../all-pkgs/gtk+/2.x.nix { };
 gtk2 = gtk_2;
-gtk_3 = callPackage ../all-pkgs/gtk/3.x.nix {
+gtk_3 = callPackage ../all-pkgs/gtk+/3.x.nix {
   gettext = gettextWithExpat;
 };
 gtk3 = gtk_3;

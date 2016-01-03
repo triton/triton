@@ -492,6 +492,8 @@ ffmpeg = ffmpeg_2;
 ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
 
 gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
+gdk_pixbuf = gdk-pixbuf; # Deprecated alias
+gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
 
 glib = callPackage ../all-pkgs/glib { };
 glib-tested = glib.override { # checked version separate to break cycles

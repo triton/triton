@@ -1,70 +1,149 @@
-{ stdenv, fetchurl, pkgconfig, gettext, perl
-, expat, glib, cairo, pango, gdk_pixbuf, atk, at_spi2_atk, gobjectIntrospection
-, xlibs, x11, wayland, libxkbcommon, epoxy
-, xineramaSupport ? stdenv.isLinux
-, cupsSupport ? stdenv.isLinux, cups ? null
+{ stdenv
+, fetchurl
+, gettext
+, perl
+
+, at-spi2-atk
+, atk
+, cairo
+, colord
+, cups
+, epoxy
+, expat
+, fontconfig
+, gdk-pixbuf
+, glib
+, gnome3
+, gobject-introspection
+, gnome-wrapper
+, json-glib
+, librsvg
+, libxkbcommon
+, mesa_noglu
+, pango
+, shared_mime_info
+, wayland
+, xlibsWrapper
+, xorg
 }:
 
-assert xineramaSupport -> xlibs.libXinerama != null;
-assert cupsSupport -> cups != null;
+with {
+  inherit (stdenv.lib)
+    enFlag
+    wtFlag;
+};
 
-let
-  ver_maj = "3.18";
-  ver_min = "6";
-  version = "${ver_maj}.${ver_min}";
-in
 stdenv.mkDerivation rec {
-  name = "gtk+3-${version}";
+  name = "gtk+-${version}";
+  versionMajor = "3.18";
+  versionMinor = "6";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtk+/${ver_maj}/gtk+-${version}.tar.xz";
-    sha256 = "78cabf0fd5a662f8723f62d5ac633072c76c557c1d700454c9c3deaa37e441ef";
+    url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
+    sha256 = "1vs1whvsmpn3r5a08w0xgianrivj61isrmb27xrghqm6sl7vzjkq";
   };
 
-  nativeBuildInputs = [ pkgconfig gettext gobjectIntrospection perl ];
+  # demos fail to install, no idea where the problem is
+  postPatch = "sed '/^SRC_SUBDIRS /s/demos//' -i Makefile.in";
 
-  buildInputs = [ libxkbcommon epoxy ];
-  propagatedBuildInputs = with xlibs; with stdenv.lib;
-    [ expat glib cairo pango gdk_pixbuf atk at_spi2_atk libXrandr libXrender libXcomposite libXi libXcursor ]
-    ++ optionals stdenv.isLinux [ wayland ]
-    ++ optional xineramaSupport libXinerama
-    ++ optional cupsSupport cups;
+  configureFlags = [
+    (enFlag "xkb" (libxkbcommon != null) null)
+    (enFlag "xinerama" (xorg.libXinerama != null) null)
+    (enFlag "xrandr" (xorg.libXrandr != null) null)
+    (enFlag "xfixes" (xorg.libXfixes != null) null)
+    (enFlag "xcomposite" (xorg.libXcomposite != null) null)
+    (enFlag "xdamage" (xorg.libXdamage != null) null)
+    (enFlag "x11-backend" (true) null) # xorg deps
+    "--disable-win32-backend"
+    "--disable-quartz-backend"
+    (enFlag "broadway-backend" true null)
+    (enFlag "wayland-backend" (wayland != null) null)
+    "--disable-mir-backend"
+    "--disable-quartz-relocation"
+    #"--enable-explicit-deps"
+    "--enable-glibtest"
+    #"--enable-modules"
+    (enFlag "cups" (cups != null) null)
+    "--disable-papi"
+    (enFlag "cloudprint" (gnome3.rest != null && json-glib != null) null)
+    (enFlag "test-print-backend" (cups != null) null)
+    "--enable-schemas-compile"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    (enFlag "colord" (colord != null) null)
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--disable-man"
+    "--disable-doc-cross-references"
+    "--enable-Bsymbolic"
+    (wtFlag "x" (xorg != null) null)
+  ];
 
-  NIX_LDFLAGS = if stdenv.isDarwin then "-lintl" else null;
+  nativeBuildInputs = [
+    gettext
+    perl
+  ];
 
-  # demos fail to install, no idea where's the problem
-  preConfigure = "sed '/^SRC_SUBDIRS /s/demos//' -i Makefile.in";
+  propagatedBuildInputs = [
+    gnome-wrapper
+  ];
 
+  buildInputs = [
+    atk
+    at-spi2-atk
+    cairo
+    colord
+    cups
+    epoxy
+    expat
+    fontconfig
+    gdk-pixbuf
+    glib
+    gnome3.adwaita-icon-theme
+    gnome3.rest
+    gobject-introspection
+    json-glib
+    librsvg
+    libxkbcommon
+    mesa_noglu
+    pango
+    shared_mime_info
+    wayland
+    xorg.inputproto
+    xorg.libICE
+    xorg.libSM
+    xorg.libX11
+    xorg.libXcomposite
+    xorg.libXcursor
+    xorg.libXdamage
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXi
+    xorg.libXinerama
+    xorg.libXrandr
+    xorg.libXrender
+  ];
+
+  postInstall = "rm -rvf $out/share/gtk-doc";
+
+  # TODO: disable unnecessary tests
+  doCheck = false;
   enableParallelBuilding = true;
-
-  postInstall = "rm -rf $out/share/gtk-doc";
 
   passthru = {
     gtkExeEnvPostBuild = ''
       rm $out/lib/gtk-3.0/3.0.0/immodules.cache
-      $out/bin/gtk-query-immodules-3.0 $out/lib/gtk-3.0/3.0.0/immodules/*.so > $out/lib/gtk-3.0/3.0.0/immodules.cache
+      $out/bin/gtk-query-immodules-3.0 $out/lib/gtk-3.0/3.0.0/immodules/*.so > \
+        $out/lib/gtk-3.0/3.0.0/immodules.cache
     ''; # workaround for bug of nix-mode for Emacs */ '';
   };
 
-  meta = {
-    description = "A multi-platform toolkit for creating graphical user interfaces";
-
-    longDescription = ''
-      GTK+ is a highly usable, feature rich toolkit for creating
-      graphical user interfaces which boasts cross platform
-      compatibility and an easy to use API.  GTK+ it is written in C,
-      but has bindings to many other popular programming languages
-      such as C++, Python and C# among others.  GTK+ is licensed
-      under the GNU LGPL 2.1 allowing development of both free and
-      proprietary software with GTK+ without any license fees or
-      royalties.
-    '';
-
+  meta = with stdenv.lib; {
+    description = "A toolkit for creating graphical user interfaces";
     homepage = http://www.gtk.org/;
-
-    license = stdenv.lib.licenses.lgpl2Plus;
-
-    maintainers = with stdenv.lib.maintainers; [ urkud raskin vcunat lethalman ];
-    platforms = stdenv.lib.platforms.all;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [ ];
+    platforms = platforms.linux;
   };
 }

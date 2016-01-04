@@ -1,43 +1,130 @@
-{ stdenv, fetchurl, pkgconfig, intltool, libtool
-, glib, dbus, udev, libgudev, udisks2, libgcrypt
-, libgphoto2, avahi, libarchive, fuse, libcdio
-, libxml2, libxslt, docbook_xsl, samba, libmtp
-, gnomeSupport ? false, gnome,libgnome_keyring, gconf, makeWrapper }:
+{ stdenv
+, docbook_xsl
+, fetchurl
+, intltool
+, libtool
+, libxslt
 
-let
-  ver_maj = "1.22";
-  version = "${ver_maj}.4";
-in
+, avahi
+, dbus
+, fuse
+, gconf
+, glib
+, gnome3
+, gtk3
+, libarchive
+, libbluray
+, libcdio
+, libgcrypt
+, libgnome_keyring
+, libgphoto2
+, libgudev
+, libmtp
+, libsecret
+, libsoup
+, libxml2
+, openssh
+, samba
+, systemd
+, udev
+, udisks2
+}:
+
 stdenv.mkDerivation rec {
   name = "gvfs-${version}";
+  versionMajor = "1.26";
+  versionMinor = "2";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gvfs/${ver_maj}/${name}.tar.xz";
-    sha256 = "57e33faad35aba72be3822099856aca847f391626cf3ec734b42e64ba31f6484";
+    url = "mirror://gnome/sources/gvfs/${versionMajor}/${name}.tar.xz";
+    sha256 = "064dsjrdjcbi38zl38jhh4r9jcpiygg7x4c8s6s2rb757l7nwnv9";
   };
 
-  nativeBuildInputs = [ pkgconfig intltool libtool ];
+  configureFlags = [
+    "--disable-documentation"
+    "--enable-schemas-compile"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--enable-gcr"
+    "--enable-nls"
+    "--enable-http"
+    "--enable-avahi"
+    "--enable-udev"
+    "--enable-fuse"
+    "--enable-gdu"
+    "--enable-udisks2"
+    "--enable-libsystemd-login"
+    "--enable-hal"
+    "--enable-gudev"
+    "--enable-cdda"
+    "--enable-afc"
+    "--enable-goa"
+    "--enable-google"
+    "--enable-gphoto2"
+    "--enable-keyring"
+    "--enable-bluray"
+    "--enable-libmtp"
+    "--enable-samba"
+    "--enable-gtk"
+    "--enable-archive"
+    "--enable-afp"
+    "--disable-nfs"
+    "--enable-bash-completion"
+    "--enable-more-warnings"
+    "--enable-installed-tests"
+    "--enable-always-build-tests"
+    #"--with-bash-completion-dir="
+  ];
 
-  buildInputs =
-    [ makeWrapper glib dbus.libs udev libgudev udisks2 libgcrypt
-      libgphoto2 avahi libarchive fuse libcdio
-      libxml2 libxslt docbook_xsl samba libmtp
-      # ToDo: a ligther version of libsoup to have FTP/HTTP support?
-    ] ++ stdenv.lib.optionals gnomeSupport (with gnome; [
-      gtk libsoup libgnome_keyring gconf
-      # ToDo: not working and probably useless until gnome3 from x-updates
-    ]);
+  nativeBuildInputs = [
+    docbook_xsl
+    intltool
+    libtool
+    libxslt
+  ];
+
+  buildInputs = [
+    avahi
+    dbus
+    fuse
+    glib
+    gnome3.gcr
+    gnome3.gnome_online_accounts
+    gnome3.libgdata
+    libarchive
+    libbluray
+    libcdio
+    libgudev
+    libgcrypt
+    libgphoto2
+    libmtp
+    libsecret
+    libsoup
+    libxml2
+    openssh
+    samba
+    systemd
+    udev
+    udisks2
+    #gconf
+    gtk3
+    libgnome_keyring
+  ];
 
   enableParallelBuilding = true;
 
-  # ToDo: one probably should specify schemas for samba and others here
-  preFixup = ''
-    wrapProgram $out/libexec/gvfsd --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH"
-  '';
-
   meta = with stdenv.lib; {
-    description = "Virtual Filesystem support library" + optionalString gnomeSupport " (full GNOME support)";
-    platforms = platforms.linux;
-    maintainers = [ maintainers.lethalman ];
+    description = "Virtual filesystem implementation for gio";
+    homepage = https://git.gnome.org/browse/gvfs;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, glib, pkgconfig }:
+{ stdenv, fetchurl, glib }:
 
 stdenv.mkDerivation rec {
   name = "libmms-0.6.4";
@@ -9,8 +9,6 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ glib ];
-
-  nativeBuildInputs = [ pkgconfig ];
 
   meta = {
     homepage = http://libmms.sourceforge.net;

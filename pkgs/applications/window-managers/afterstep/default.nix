@@ -1,7 +1,7 @@
 { stdenv, fetchurl, pkgconfig
 , libjpeg, libtiff, libpng, freetype
 , fltk, gtk
-, libX11, libXext, libICE
+, xorg
 , dbus, dbus_libs
 }:
 
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     sha256 = "1j7vkx1ig4kzwffdxnkqv3kld9qi3sam4w2nhq18waqjsi8xl5gz";
   };
 
-  buildInputs = [ pkgconfig libjpeg libtiff libpng freetype fltk gtk libX11 libXext libICE dbus dbus_libs ];
+  buildInputs = [ libjpeg libtiff libpng freetype fltk gtk xorg.libX11 xorg.libXext xorg.libICE dbus dbus_libs ];
 
   # A strange type of bug: dbus is not immediately found by pkgconfig
   preConfigure = ''

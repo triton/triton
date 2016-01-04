@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, python, xrandr, pythonPackages }:
+{ stdenv, fetchurl, python, pythonPackages, xorg }:
 
 pythonPackages.buildPythonPackage rec {
   name = "arandr-0.1.8";
@@ -16,7 +16,7 @@ pythonPackages.buildPythonPackage rec {
   doCheck = false;
 
   buildInputs = [ pythonPackages.docutils ];
-  propagatedBuildInputs = [ xrandr pythonPackages.pygtk ];
+  propagatedBuildInputs = [ xorg.xrandr pythonPackages.pygtk ];
 
   meta = {
     homepage = http://christian.amsuess.com/tools/arandr/;

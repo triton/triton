@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libX11 }:
+{ stdenv, fetchurl, xorg }:
 
 stdenv.mkDerivation rec {
   name = "xchainkeys-0.11";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "1rpqs7h5krral08vqxwb0imy33z17v5llvrg5hy8hkl2ap7ya0mn";
   };
 
-  buildInputs = [ libX11 ];
+  buildInputs = [ xorg.libX11 ];
 
   meta = {
     homepage = "https://code.google.com/p/xchainkeys/";

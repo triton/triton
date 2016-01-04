@@ -1,14 +1,14 @@
-{stdenv, fetchurl, pkgconfig, expat, zlib, libpng, libjpeg, xorg}:
+{stdenv, fetchurl, expat, zlib, libpng, libjpeg, xorg}:
 
 stdenv.mkDerivation rec {
   name = "electricsheep-2.6.8";
-  
+
   src = fetchurl {
     url = "http://electricsheep.org/${name}.tar.gz";
     sha256 = "1flqcqfs75wg74hr5w85n6w8b26l4qrpwzi7fzylnry67yzf94y5";
   };
 
-  buildInputs = [pkgconfig expat zlib libpng libjpeg xorg.xlibsWrapper xorg.libXv];
+  buildInputs = [expat zlib libpng libjpeg xorg.xlibsWrapper xorg.libXv];
 
   preInstall = ''
     installFlags=GNOME_DATADIR=$out

@@ -1,5 +1,5 @@
 { stdenv, fetchurl
-, unzip, zlib, SDL, readline, mesa, libX11 }:
+, unzip, zlib, SDL, readline, mesa, xorg }:
 
 with stdenv.lib;
 stdenv.mkDerivation rec{
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec{
     sha256 = "030yz5l1wyq9l0dmiimiiwpzrjr43whycd409xhhpnrdx76046wh";
   };
 
-  buildInputs = [ unzip zlib SDL readline mesa libX11 ];
+  buildInputs = [ unzip zlib SDL readline mesa xorg.libX11 ];
 
   configureFlags = "--target=default --with-video=sdl --with-sound=sdl --with-readline --with-opengl --with-x --enable-riodevice";
 
@@ -27,6 +27,6 @@ stdenv.mkDerivation rec{
       other systems supported by the SDL library.
     '';
     maintainers = [ maintainers.AndersonTorres ];
-    license = licenses.gpl2Plus;    
-  };    
+    license = licenses.gpl2Plus;
+  };
 }

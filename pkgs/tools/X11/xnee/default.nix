@@ -1,5 +1,5 @@
-{ fetchurl, stdenv, libX11, xproto, libXext, xextproto, libXtst
-, gtk, libXi, inputproto, pkgconfig, recordproto, texinfo }:
+{ fetchurl, stdenv
+, gtk, texinfo, xorg }:
 
 stdenv.mkDerivation rec {
   version = "3.19";
@@ -18,8 +18,8 @@ stdenv.mkDerivation rec {
     '';
 
   buildInputs =
-    [ libX11 xproto libXext xextproto libXtst gtk
-      libXi inputproto pkgconfig recordproto
+    [ xorg.libX11 xorg.xproto xorg.libXext xorg.xextproto xorg.libXtst gtk
+      xorg.libXi xorg.inputproto xorg.recordproto
       texinfo
     ];
 

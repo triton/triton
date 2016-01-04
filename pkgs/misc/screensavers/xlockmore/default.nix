@@ -1,5 +1,5 @@
 { stdenv, lib, fetchurl, pam ? null, autoreconfHook
-, libX11, libXext, libXinerama, libXdmcp, libXt }:
+, xorg }:
 
 stdenv.mkDerivation rec {
 
@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   };
 
   # Optionally, it can use GTK+.
-  buildInputs = [ pam libX11 libXext libXinerama libXdmcp libXt ];
+  buildInputs = [ pam xorg.libX11 xorg.libXext xorg.libXinerama xorg.libXdmcp xorg.libXt ];
 
   nativeBuildInputs = [ autoreconfHook ];
 

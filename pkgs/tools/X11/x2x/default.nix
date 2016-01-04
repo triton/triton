@@ -1,4 +1,4 @@
-{stdenv, fetchurl, imake, libX11, libXtst, libXext}:
+{stdenv, fetchurl, imake, xorg}:
 
 stdenv.mkDerivation {
   name = "x2x-1.27";
@@ -8,7 +8,7 @@ stdenv.mkDerivation {
     sha256 = "0dha0kn1lbc4as0wixsvk6bn4innv49z9a0sm5wlx4q1v0vzqzyj";
   };
 
-  buildInputs = [ imake libX11 libXtst libXext ];
+  buildInputs = [ xorg.imake xorg.libX11 xorg.libXtst xorg.libXext ];
 
   configurePhase = ''
     xmkmf

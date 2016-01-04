@@ -1,4 +1,4 @@
-{ stdenv, fetchgit, perl, libxcb, libXft }:
+{ stdenv, fetchgit, perl, xorg }:
 
 let
   version = "2015-07-23";
@@ -12,7 +12,7 @@ in
       sha256 = "1xzs37syhlwyjfxnk36qnij5bqa0mi53lf1k851viw4qai2bfkgr";
     };
 
-    buildInputs = [ libxcb libXft perl ];
+    buildInputs = [ xorg.libxcb xorg.libXft perl ];
 
     prePatch = ''sed -i "s@/usr@$out@" Makefile'';
 

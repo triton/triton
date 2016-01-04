@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, intltool, gtk2 }:
+{ stdenv, fetchurl, intltool, gtk2 }:
 
 stdenv.mkDerivation {
   name = "gtk-engines-2.20.2";
@@ -8,7 +8,7 @@ stdenv.mkDerivation {
     sha256 = "1db65pb0j0mijmswrvpgkdabilqd23x22d95hp5kwxvcramq1dhm";
   };
 
-  buildInputs = [ pkgconfig intltool gtk2 ];
+  buildInputs = [ intltool gtk2 ];
 
   meta = {
     description = "Theme engines for GTK+ 2";

@@ -16,9 +16,9 @@
 #
 # To use at startup, see hardware.bumblebee options.
 
-{ stdenv, lib, fetchurl, pkgconfig, help2man, makeWrapper
+{ stdenv, lib, fetchurl, help2man, makeWrapper
 , glib, libbsd
-, libX11, libXext, xorgserver, xkbcomp, module_init_tools, xkeyboard_config, xf86videonouveau
+, xorg, xkbcomp, module_init_tools, xkeyboard_config
 , nvidia_x11, virtualgl, primusLib
 # The below should only be non-null in a x86_64 system. On a i686
 # system the above nvidia_x11 and virtualgl will be the i686 packages.
@@ -43,10 +43,10 @@ let
 
   nvidiaLibs = lib.makeLibraryPath nvidia_x11s;
 
-  bbdPath = lib.makeSearchPath "bin" [ module_init_tools xorgserver ];
-  bbdLibs = lib.makeLibraryPath [ libX11 libXext ];
+  bbdPath = lib.makeSearchPath "bin" [ module_init_tools xorg.xorgserver ];
+  bbdLibs = lib.makeLibraryPath [ xorg.libX11 xorg.libXext ];
 
-  xmodules = lib.concatStringsSep "," (map (x: "${x}/lib/xorg/modules") ([ xorgserver ] ++ lib.optional (!useNvidia) xf86videonouveau));
+  xmodules = lib.concatStringsSep "," (map (x: "${x}/lib/xorg/modules") ([ xorg.xorgserver ] ++ lib.optional (!useNvidia) xf86videonouveau));
 
 in stdenv.mkDerivation rec {
   name = "bumblebee-${version}";
@@ -96,8 +96,8 @@ in stdenv.mkDerivation rec {
 
   # Build-time dependencies of bumblebeed and optirun.
   # Note that it has several runtime dependencies.
-  buildInputs = [ libX11 glib libbsd ];
-  nativeBuildInputs = [ makeWrapper pkgconfig help2man ];
+  buildInputs = [ xorg.libX11 glib libbsd ];
+  nativeBuildInputs = [ makeWrapper help2man ];
 
   # The order of LDPATH is very specific: First X11 then the host
   # environment then the optional sub architecture paths.

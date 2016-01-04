@@ -1,4 +1,4 @@
-{ stdenv, autoreconfHook, fetchgit, libX11, xauth, makeWrapper }:
+{ stdenv, autoreconfHook, fetchgit, xorg, xauth, makeWrapper }:
 
 let version = "1.3.1"; in
 stdenv.mkDerivation {
@@ -9,7 +9,7 @@ stdenv.mkDerivation {
     sha256 = "0csjw88ynzzcmx1jlb65c74r2sp9dzxn00airsxxfsipb74049d0";
   };
 
-  buildInputs = [ libX11 makeWrapper autoreconfHook ];
+  buildInputs = [ xorg.libX11 makeWrapper autoreconfHook ];
 
   preConfigure = ''
     ./autogen.sh

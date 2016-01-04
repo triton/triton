@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libvorbis, libogg, libtheora, SDL, libXft, SDL_image, zlib, libX11, libpng, openal, requireFile, commercialVersion ? false }:
+{ stdenv, fetchurl, libvorbis, libogg, libtheora, SDL, xorg, SDL_image, zlib, libpng, openal, requireFile, commercialVersion ? false }:
 
 let plainName = "andyetitmoves";
     version   = "1.2.2";
@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
     chmod +x $out/bin/$binName
   '';
 
-  buildInputs = [libvorbis libogg libtheora SDL libXft SDL_image zlib libX11 libpng openal];
+  buildInputs = [libvorbis libogg libtheora SDL xorg.libXft SDL_image zlib xorg.libX11 libpng openal];
 
   meta = {
     description = "Physics/Gravity Platform game";

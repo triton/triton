@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libX11, guile }:
+{ stdenv, fetchurl, xorg, guile }:
 
 let version = "1.8.6"; in
 stdenv.mkDerivation {
@@ -8,7 +8,7 @@ stdenv.mkDerivation {
     sha256 = "060df6d8y727jp1inp7blp44cs8a7jig7vcm8ndsn6gw36z1h3bc";
   };
 
-  buildInputs = [ libX11 guile ];
+  buildInputs = [ xorg.libX11 guile ];
 
   meta = {
     homepage = http://www.nongnu.org/xbindkeys/xbindkeys.html;

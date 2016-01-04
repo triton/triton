@@ -1,4 +1,4 @@
-{stdenv, fetchurl, zlib, libjpeg, libpng, imake}:
+{stdenv, fetchurl, zlib, libjpeg, libpng, xorg}:
 
 stdenv.mkDerivation rec {
   name = "transfig-3.2.4";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "0429snhp5acbz61pvblwlrwv8nxr6gf12p37f9xxwrkqv4ir7dd4";
   };
 
-  buildInputs = [zlib libjpeg libpng imake];
+  buildInputs = [zlib libjpeg libpng xorg.imake];
   inherit libpng;
 
   patches = [prefixPatch1 prefixPatch2 prefixPatch3 varargsPatch gensvgPatch];

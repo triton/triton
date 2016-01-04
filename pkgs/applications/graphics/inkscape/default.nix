@@ -1,12 +1,12 @@
-{ stdenv, fetchurl, pkgconfig, perl, perlXMLParser, gtk, libXft
-, libpng, zlib, popt, boehmgc, libxml2, libxslt, glib, gtkmm
+{ stdenv, fetchurl, perl, perlXMLParser, gtk2, xorg
+, libpng, zlib, popt, boehmgc, libxml2, libxslt, glib, gtkmm2
 , glibmm, libsigcxx, lcms, boost, gettext, makeWrapper, intltool
 , gsl, python, pyxml, lxml, poppler, imagemagick, libwpg, librevenge
 , libvisio, libcdr, libexif, unzip
 , boxMakerPlugin ? false # boxmaker plugin
 }:
 
-let 
+let
 
 boxmaker = fetchurl {
   # http://www.inkscapeforum.com/viewtopic.php?f=11&t=10403
@@ -41,8 +41,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    pkgconfig perl perlXMLParser gtk libXft libpng zlib popt boehmgc
-    libxml2 libxslt glib gtkmm glibmm libsigcxx lcms boost gettext
+    perl perlXMLParser gtk2 xorg.libXft libpng zlib popt boehmgc
+    libxml2 libxslt glib gtkmm2 glibmm libsigcxx lcms boost gettext
     makeWrapper intltool gsl poppler imagemagick libwpg librevenge
     libvisio libcdr libexif
   ] ++ stdenv.lib.optional boxMakerPlugin unzip;
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
       cp boxmake-upd-0.85/* $out/share/inkscape/extensions/
       rm -Rf boxmake-upd-0.85
       "
-    else 
+    else
       ""
     }
 

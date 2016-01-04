@@ -1,7 +1,7 @@
-{stdenv, fetchgit, gtk2, cmake, pkgconfig}:
+{stdenv, fetchgit, gtk2, cmake}:
 let
   buildInputs = [
-    gtk2 cmake pkgconfig
+    gtk2 cmake
   ];
 in
 stdenv.mkDerivation rec {

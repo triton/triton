@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, autoconf, automake, imlib2, libtool, libX11, pkgconfig, xproto }:
+{ stdenv, fetchurl, autoconf, automake, imlib2, libtool, xorg }:
 
 stdenv.mkDerivation rec {
   name = "hsetroot-1.0.2";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     sha256 = "1px1p3wz7ji725z9nlwb0x0h6lnnvnpz15sblzzq7zrijl3wz65x";
   };
 
-  buildInputs = [ autoconf automake imlib2 libtool libX11 pkgconfig xproto ];
+  buildInputs = [ autoconf automake imlib2 libtool xorg.libX11 xorg.xproto ];
 
   patches = [ underlinkingPatch ];
 

@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, pkgconfig, bc, perl, pam, libXext, libXScrnSaver, libX11
-, libXrandr, libXmu, libXxf86vm, libXrender, libXxf86misc, libjpeg, mesa, gtk
+{ stdenv, fetchurl, bc, perl, pam, xorg
+, libjpeg, mesa, gtk
 , libxml2, libglade, intltool
 }:
 
@@ -13,9 +13,9 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs =
-    [ pkgconfig bc perl libjpeg mesa gtk libxml2 libglade pam
-      libXext libXScrnSaver libX11 libXrandr libXmu libXxf86vm libXrender
-      libXxf86misc intltool
+    [ bc perl libjpeg mesa gtk libxml2 libglade pam
+      xorg.libXext xorg.libXScrnSaver xorg.libX11 xorg.libXrandr xorg.libXmu xorg.libXxf86vm xorg.libXrender
+      xorg.libXxf86misc intltool
     ];
 
   preConfigure =

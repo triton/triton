@@ -4,8 +4,8 @@
 , libtiff, glib, icu, mysql, postgresql, sqlite, perl, coreutils
 , buildMultimedia ? stdenv.isLinux, alsaLib, gstreamer, gst_plugins_base
 , buildWebkit ? stdenv.isLinux
-, flashplayerFix ? false, gdk_pixbuf
-, gtkStyle ? false, libgnomeui, gtk, GConf, gnome_vfs
+, flashplayerFix ? false, gdk-pixbuf
+, gtkStyle ? false, libgnomeui, gtk2, GConf, gnome_vfs
 , developerBuild ? false
 , docs ? false
 , examples ? false
@@ -123,7 +123,7 @@ stdenv.mkDerivation rec {
   buildInputs =
     [ cups # Qt dlopen's libcups instead of linking to it
       mysql.lib postgresql sqlite libjpeg libmng libtiff icu ]
-    ++ optionals gtkStyle [ gtk gdk_pixbuf ];
+    ++ optionals gtkStyle [ gtk2 gdk-pixbuf ];
 
   nativeBuildInputs = [ perl which ];
 

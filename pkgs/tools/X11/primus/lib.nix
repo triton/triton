@@ -1,7 +1,7 @@
 { stdenv, fetchgit
 , xlibsWrapper, mesa
 , nvidia_x11 ? null
-, libX11
+, xorg
 }:
 
 stdenv.mkDerivation {
@@ -13,7 +13,7 @@ stdenv.mkDerivation {
     sha256 = "8f095b5e2030cdb155a42a49873832843c1e4dc3087a6fb94d198de982609923";
   };
 
-  buildInputs = [ libX11 mesa ];
+  buildInputs = [ xorg.libX11 mesa ];
 
   makeFlags = [ "LIBDIR=$(out)/lib"
                 "PRIMUS_libGLa=${if nvidia_x11 == null then mesa else nvidia_x11}/lib/libGL.so"

@@ -1,4 +1,4 @@
-{ stdenv, fetchgit, cairomm, cmake, libjack2, libpthreadstubs, libXdmcp, libxshmfence, libsndfile, lv2, ntk, pkgconfig }:
+{ stdenv, fetchgit, cairomm, cmake, libjack2, xorg, libsndfile, lv2, ntk }:
 
 stdenv.mkDerivation rec {
   name = "artyFX-git-${version}";
@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     sha256 = "2e3f6ab6f829c0ec177e85f4e419286616cf35fb7303445caa09d3438cac27d5";
   };
 
-  buildInputs = [ cairomm cmake libjack2 libpthreadstubs libXdmcp libxshmfence libsndfile lv2 ntk pkgconfig   ];
+  buildInputs = [ cairomm cmake libjack2 xorg.libpthreadstubs xorg.libXdmcp xorg.libxshmfence libsndfile lv2 ntk   ];
 
   meta = with stdenv.lib; {
     homepage = http://openavproductions.com/artyfx/;

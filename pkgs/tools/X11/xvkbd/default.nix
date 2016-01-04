@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, imake, libXt, libXaw, libXtst, libXi, libXpm, xextproto, gccmakedep, Xaw3d }:
+{ stdenv, fetchurl, Xaw3d, xorg }:
 
 stdenv.mkDerivation rec {
   name = "xvkbd-${version}";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "02y9ks9sa4sn3vkbgswjs5qcd85xhwvarnmhg41pq3l2d617cpw9";
   };
 
-  buildInputs = [ imake libXt libXaw libXtst xextproto libXi Xaw3d libXpm gccmakedep ];
+  buildInputs = [ xorg.imake xorg.libXt xorg.libXaw xorg.libXtst xorg.xextproto xorg.libXi Xaw3d xorg.libXpm xorg.gccmakedep ];
   installTargets = [ "install" "install.man" ];
   preBuild = ''
     makeFlagsArray=( BINDIR=$out/bin XAPPLOADDIR=$out/etc/X11/app-defaults MANPATH=$out/man )

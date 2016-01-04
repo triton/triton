@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, libX11, libXext, autoconf }:
+{ stdenv, fetchFromGitHub, autoconf, xorg }:
 
 stdenv.mkDerivation rec {
   name = "${pname}-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     sha256 = "1w49fayhwzn5rx0z1q2lrvm7z8jrd34lgb89p853a024bixc3cf2";
   };
 
-  buildInputs = [ libX11 libXext autoconf ];
+  buildInputs = [ xorg.libX11 xorg.libXext autoconf ];
 
   meta = with stdenv.lib; {
     description = "Allows to start X with NumLock turned on";

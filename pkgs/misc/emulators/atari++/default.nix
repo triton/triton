@@ -1,5 +1,5 @@
 { stdenv, fetchurl
-, libX11, SDL }:
+, xorg, SDL }:
 
 with stdenv.lib;
 stdenv.mkDerivation rec{
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec{
     sha256 = "1y5kwh08717jsa5agxrvxnggnwxq36irrid9rzfhca1nnvp9a45l";
   };
 
-  buildInputs = [ libX11 SDL ];
+  buildInputs = [ xorg.libX11 SDL ];
   meta = {
     homepage = http://www.xl-project.com/;
     description = "An enhanced, cycle-accurated Atari emulator";
@@ -23,6 +23,6 @@ stdenv.mkDerivation rec{
       (Linux, Solaris, Irix).
     '';
     maintainers = [ maintainers.AndersonTorres ];
-    license = licenses.gpl2Plus;    
-  };    
+    license = licenses.gpl2Plus;
+  };
 }

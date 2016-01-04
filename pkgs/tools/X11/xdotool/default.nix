@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, libX11, perl, libXtst, xextproto, libXi, libXinerama, libxkbcommon }:
+{ stdenv, fetchurl, xorg, perl, libxkbcommon }:
 
 stdenv.mkDerivation rec {
   name = "xdotool-${version}";
@@ -8,8 +8,8 @@ stdenv.mkDerivation rec {
     sha256 = "1lcngsw33fy9my21rdiz1gs474bfdqcfxjrnfggbx4aypn1nhcp8";
   };
 
-  nativeBuildInputs = [ pkgconfig perl ];
-  buildInputs = [ libX11 libXtst xextproto libXi libXinerama libxkbcommon ];
+  nativeBuildInputs = [ perl ];
+  buildInputs = [ xorg.libX11 xorg.libXtst xorg.xextproto xorg.libXi xorg.libXinerama libxkbcommon ];
 
   makeFlags = "PREFIX=$(out)";
 

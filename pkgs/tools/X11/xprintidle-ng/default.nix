@@ -1,5 +1,5 @@
-{ stdenv, fetchFromGitHub, libX11, libXScrnSaver, libXext, gnulib
-  , autoconf, automake, libtool, gettext, pkgconfig
+{ stdenv, fetchFromGitHub, gnulib
+  , autoconf, automake, libtool, gettext
   , git, perl, texinfo, help2man
 }:
 stdenv.mkDerivation rec {
@@ -8,8 +8,8 @@ stdenv.mkDerivation rec {
   baseName = "xprintidle-ng";
 
   buildInputs = [
-    libX11 libXScrnSaver libXext gnulib
-    autoconf automake libtool gettext pkgconfig  git perl 
+    xorg.libX11 xorg.libXScrnSaver xorg.libXext gnulib
+    autoconf automake libtool gettext  git perl
     texinfo help2man
     ];
   src = fetchFromGitHub {

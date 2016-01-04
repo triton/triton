@@ -1,8 +1,7 @@
-{ stdenv, fetchurl, texinfo, libXext, xextproto, libX11, xproto
-, libXpm, libXt, libXcursor, alsaLib, cmake, zlib, libpng, libvorbis
-, libXxf86dga, libXxf86misc, xf86dgaproto, xf86miscproto
-, xf86vidmodeproto, libXxf86vm, openal, mesa, kbproto, libjpeg, flac
-, inputproto, libXi, fixesproto, libXfixes }:
+{ stdenv, fetchurl, texinfo
+, alsaLib, cmake, zlib, libpng, libvorbis
+, openal, mesa, libjpeg, flac
+, xorg }:
 
 stdenv.mkDerivation rec {
   name = "allegro-${version}";
@@ -14,10 +13,10 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    texinfo libXext xextproto libX11 xproto libXpm libXt libXcursor
-    alsaLib cmake zlib libpng libvorbis libXxf86dga libXxf86misc
-    xf86dgaproto xf86miscproto xf86vidmodeproto libXxf86vm openal mesa
-    kbproto libjpeg flac inputproto libXi fixesproto libXfixes
+    texinfo xorg.libXext xorg.xextproto xorg.libX11 xorg.xproto xorg.libXpm xorg.libXt xorg.libXcursor
+    alsaLib cmake zlib libpng libvorbis xorg.libXxf86dga xorg.libXxf86misc
+    xorg.xf86dgaproto xorg.xf86miscproto xorg.xf86vidmodeproto xorg.libXxf86vm openal mesa
+    xorg.kbproto libjpeg flac xorg.inputproto xorg.libXi xorg.fixesproto xorg.libXfixes
   ];
 
   patchPhase = ''

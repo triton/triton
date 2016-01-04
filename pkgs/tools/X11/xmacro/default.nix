@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libX11, libXtst, xextproto, libXi, inputproto }:
+{ stdenv, fetchurl, xorg }:
 
 stdenv.mkDerivation {
   name = "xmacro-0.3pre20000911";
@@ -17,5 +17,5 @@ stdenv.mkDerivation {
 
   preInstall = "echo -e 'install:\n	mkdir \${out}/bin;\n	cp xmacrorec xmacrorec2 xmacroplay \${out}/bin;' >>Makefile; ";
 
-  buildInputs = [ libX11 libXtst xextproto libXi inputproto ];
+  buildInputs = [ xorg.libX11 xorg.libXtst xorg.xextproto xorg.libXi xorg.inputproto ];
 }

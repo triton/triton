@@ -1,6 +1,5 @@
-{ stdenv, fetchurl, cmake, pkgconfig
-, giflib, libjpeg, zlib, libpng, tinyxml, allegro
-, libX11, libXext, libXcursor, libXpm, libXxf86vm, libXxf86dga
+{ stdenv, fetchurl, cmake
+, giflib, libjpeg, zlib, libpng, tinyxml, allegro, xorg
 }:
 
 stdenv.mkDerivation rec {
@@ -12,9 +11,9 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    cmake pkgconfig
+    cmake
     giflib libjpeg zlib libpng tinyxml allegro
-    libX11 libXext libXcursor libXpm libXxf86vm libXxf86dga
+    xorg.libX11 xorg.libXext xorg.libXcursor xorg.libXpm xorg.libXxf86vm xorg.libXxf86dga
   ];
 
   patchPhase = ''

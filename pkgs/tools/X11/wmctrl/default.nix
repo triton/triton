@@ -1,15 +1,15 @@
-{stdenv, fetchurl, libX11, glib, pkgconfig, libXmu }:
+{stdenv, fetchurl, xorg, glib }:
 
 stdenv.mkDerivation rec {
-  
+
   name = "wmctrl-1.07";
- 
+
   src = fetchurl {
     url = "http://tomas.styblo.name/wmctrl/dist/${name}.tar.gz";
     sha256 = "1afclc57b9017a73mfs9w7lbdvdipmf9q0xdk116f61gnvyix2np";
   };
- 
-  buildInputs = [ libX11 libXmu glib pkgconfig ];
+
+  buildInputs = [ xorg.libX11 xorg.libXmu glib ];
 
   patches = [ ./64-bit-data.patch ];
 

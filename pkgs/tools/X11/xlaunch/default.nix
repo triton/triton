@@ -1,10 +1,10 @@
-{ stdenv, xorgserver }:
+{ stdenv, xorg }:
 
 # !!! What does this package do, and does it belong in Nixpkgs?
 
 stdenv.mkDerivation {
   name = "xlaunch";
-  inherit xorgserver;
+  inherit (xorg) xorgserver;
   buildCommand = "
     cat << EOF > realizeuid.c
     #include <sys/types.h>
@@ -33,23 +33,23 @@ EOF
     echo '#! ${stdenv.shell}
       USER=\$(egrep '\\''^[-a-z0-9A-Z_]*:[^:]*:'\\''\$1'\\'':'\\'' /etc/passwd | sed -e '\\''s/:.*//'\\'' )
       shift
-      case \"\$1\" in 
-        :*) export _display=\"\$1\"; 
+      case \"\$1\" in
+        :*) export _display=\"\$1\";
         shift
       esac
       _display=\${_display:-:0}
       _display=\${_display#:}
       echo Using :\$_display
-      if [ -n \"\$DO_X_RESET\" ]; then 
+      if [ -n \"\$DO_X_RESET\" ]; then
         RESET_OPTION=\"-once\"
       else
         RESET_OPTION=\"-noreset\"
       fi;
-      XCMD=\"\$(egrep \"^Environment=\" /etc/systemd/system/display-manager.service | sed -e \"s/Environment=/ export /\" | sed -e '\\''s/#.*//'\\'' ; echo export _XARGS_=\\\$\\( grep xserver_arguments \\\$SLIM_CFGFILE \\| sed -e s/xserver_arguments// \\| sed -e s/:0/:\${_display}/ \\| sed -e s/vt7/vt\$((7+_display))/ \\) ; echo ${xorgserver}/bin/X \\\$_XARGS_ \$RESET_OPTION )\" 
+      XCMD=\"\$(egrep \"^Environment=\" /etc/systemd/system/display-manager.service | sed -e \"s/Environment=/ export /\" | sed -e '\\''s/#.*//'\\'' ; echo export _XARGS_=\\\$\\( grep xserver_arguments \\\$SLIM_CFGFILE \\| sed -e s/xserver_arguments// \\| sed -e s/:0/:\${_display}/ \\| sed -e s/vt7/vt\$((7+_display))/ \\) ; echo ${xorgserver}/bin/X \\\$_XARGS_ \$RESET_OPTION )\"
       PRE_XCMD=\"\$(egrep \"^ExecStartPre=\" /etc/systemd/system/display-manager.service | sed -e \"\s/ExecStartPre=//\")\"
-      echo \"\$PRE_XCMD\" 
+      echo \"\$PRE_XCMD\"
       echo \"\$PRE_XCMD\" | bash
-      echo \"\$XCMD\" 
+      echo \"\$XCMD\"
       echo \"\$XCMD\" | bash &
       while ! test -e /tmp/.X11-unix/X\$_display &>/dev/null ; do sleep 0.5; done
       su -l \${USER:-identityless-shelter} -c \"DISPLAY=:\$_display \$*\";

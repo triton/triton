@@ -1,10 +1,11 @@
 { fetchgit
 , stdenv
-, enableXRandr ? true, xrandr ? null
+, enableXRandr ? true
 , enableDisper ? false, disper ? null
-, xdpyinfo }:
+, xorg
+}:
 
-assert enableXRandr -> xrandr != null;
+assert enableXRandr -> xorg.xrandr != null;
 assert enableDisper -> disper != null;
 
 let
@@ -16,14 +17,14 @@ in
     src = fetchgit {
       inherit rev;
       url = "https://github.com/wertarbyte/autorandr.git";
-      sha256 = "1x8agg6mf5jr0imw7dznr8kxyw970bf252bda9q7b0z4yksya2zd"; 
+      sha256 = "1x8agg6mf5jr0imw7dznr8kxyw970bf252bda9q7b0z4yksya2zd";
     };
 
     patchPhase = ''
       substituteInPlace "autorandr" \
-        --replace "/usr/bin/xrandr" "${if enableXRandr then xrandr else "/nowhere"}/bin/xrandr" \
+        --replace "/usr/bin/xrandr" "${if enableXRandr then xorg.xrandr else "/nowhere"}/bin/xrandr" \
         --replace "/usr/bin/disper" "${if enableDisper then disper else "/nowhere"}/bin/disper" \
-        --replace "/usr/bin/xdpyinfo" "${xdpyinfo}/bin/xdpyinfo"
+        --replace "/usr/bin/xdpyinfo" "${xorg.xdpyinfo}/bin/xdpyinfo"
     '';
 
     installPhase = ''

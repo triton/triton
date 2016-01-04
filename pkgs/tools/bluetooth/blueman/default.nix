@@ -1,12 +1,12 @@
 { stdenv, fetchurl, pkgconfig, intltool, python, pyrex, pygobject, pygtk
-, notify, pythonDBus, bluez, glib, gtk, libstartup_notification
+, notify, pythonDBus, bluez, glib, gtk2, libstartup_notification
 , makeWrapper, xdg_utils, obex_data_server
 , libpulseaudio
 }:
-   
+
 stdenv.mkDerivation rec {
   name = "blueman-1.23";
-   
+
   src = fetchurl {
     url = "http://download.tuxfamily.org/blueman/${name}.tar.gz";
     sha256 = "04ghlh4h5bwp9mqr5jxcmjm01595l5fq5561qxvf369fvjy63cjh";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
 
   buildInputs =
     [ pkgconfig intltool python pyrex pygobject pygtk notify pythonDBus
-      bluez glib gtk libstartup_notification makeWrapper
+      bluez glib gtk2 libstartup_notification makeWrapper
     ];
 
   # !!! Ugly.

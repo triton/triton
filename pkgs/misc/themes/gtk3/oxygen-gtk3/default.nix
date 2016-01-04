@@ -1,5 +1,5 @@
 { stdenv, fetchurl
-, cmake, dbus_glib, glib, gtk3, gdk_pixbuf, pkgconfig, xorg }:
+, cmake, dbus_glib, glib, gtk3, gdk_pixbuf, xorg }:
 
 stdenv.mkDerivation rec {
   version = "1.4.1";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ cmake dbus_glib glib gtk3 gdk_pixbuf
-   pkgconfig xorg.libXau xorg.libXdmcp xorg.libpthreadstubs
+   xorg.libXau xorg.libXdmcp xorg.libpthreadstubs
    xorg.libxcb xorg.pixman ];
 
   meta = with stdenv.lib; {

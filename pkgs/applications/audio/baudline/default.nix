@@ -1,10 +1,10 @@
-{ stdenv, fetchurl, libXmu, libXt, libX11, libXext, libXxf86vm, jack
+{ stdenv, fetchurl, xorg, jack
 , makeWrapper
 }:
 
 let
   rpath = stdenv.lib.makeLibraryPath
-    [ libXmu libXt libX11 libXext libXxf86vm jack ];
+    [ xorg.libXmu xorg.libXt xorg.libX11 xorg.libXext xorg.libXxf86vm jack ];
 in
 stdenv.mkDerivation rec {
   name = "baudline-${version}";

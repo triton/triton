@@ -1,4 +1,4 @@
-{stdenv, fetchurl, xlibsWrapper, imake, gccmakedep, libXmu, libXpm, libXp, bison, flex}:
+{stdenv, fetchurl, xlibsWrapper, bison, flex, xorg}:
 
 stdenv.mkDerivation {
   name = "Xaw3d-1.5E";
@@ -8,8 +8,8 @@ stdenv.mkDerivation {
     md5 = "29ecfdcd6bcf47f62ecfd672d31269a1";
   };
   patches = [./config.patch ./laylex.patch];
-  buildInputs = [imake gccmakedep libXpm libXp bison flex];
-  propagatedBuildInputs = [xlibsWrapper libXmu];
+  buildInputs = [xorg.imake xorg.gccmakedep xorg.libXpm xorg.libXp bison flex];
+  propagatedBuildInputs = [xlibsWrapper xorg.libXmu];
 
   meta = {
     description = "3D widget set based on the Athena Widget set";

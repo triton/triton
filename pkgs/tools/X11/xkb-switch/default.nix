@@ -1,4 +1,4 @@
-{ stdenv, fetchgit, cmake, libX11 }:
+{ stdenv, fetchgit, cmake, xorg }:
 
 stdenv.mkDerivation rec {
   name = "xkb-switch-${version}";
@@ -10,7 +10,11 @@ stdenv.mkDerivation rec {
     sha256 = "0ilj3amwidi7imjvi8hr62y7j8zl809r5xhs7kv816773x32gpxq";
   };
 
-  buildInputs = [ cmake libX11 ];
+  nativeBuildInputs = [
+    cmake
+  ];
+
+  buildInputs = [ xorg.libX11 ];
 
   meta = with stdenv.lib; {
     description = "Switch your X keyboard layouts from the command line";
@@ -21,4 +25,3 @@ stdenv.mkDerivation rec {
     platforms = platforms.linux;
   };
 }
-

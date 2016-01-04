@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, SDL2, libpng, libjpeg, libtiff, libungif, libXpm, zlib }:
+{ stdenv, fetchurl, SDL2, libpng, libjpeg, libtiff, libungif, xorg, zlib }:
 
 stdenv.mkDerivation rec {
   name = "SDL2_image-2.0.0";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "0d3jlhkmr0j5a2dd5h6y29jfcsj7mkl16wghm6n3nqqp7g3ib65j";
   };
 
-  buildInputs = [SDL2 libpng libjpeg libtiff libungif libXpm zlib];
+  buildInputs = [SDL2 libpng libjpeg libtiff libungif xorg.libXpm zlib];
 
   postInstall = ''
     sed -i -e 's,"SDL.h",<SDL2/SDL.h>,' \

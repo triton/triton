@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, intltool, gtk2, iconnamingutils }:
+{ stdenv, fetchurl, intltool, gtk2, iconnamingutils }:
 
 stdenv.mkDerivation {
   name = "mate-icon-theme-1.6.3";
@@ -8,7 +8,7 @@ stdenv.mkDerivation {
     sha256 = "1r3qkx4k9svmxdg453r9d3hs47cgagxsngzi8rp6yry0c9bw5r5w";
   };
 
-  buildInputs = [ pkgconfig intltool gtk2 iconnamingutils ];
+  buildInputs = [ intltool gtk2 iconnamingutils ];
 
   meta = {
     description = "Icon themes from MATE";

@@ -1,8 +1,9 @@
-{ stdenv, fetchurl, bzip2, gfortran, libX11, libXmu, libXt
+{ stdenv, fetchurl, bzip2, gfortran
 , libjpeg, libpng, libtiff, ncurses, pango, pcre, perl, readline, tcl
-, texLive, tk, xz, zlib, less, texinfo, graphviz, icu, pkgconfig, bison
-, imake, which, jdk, openblas, curl
+, texLive, tk, xz, zlib, less, texinfo, graphviz, icu, bison
+, which, jdk, openblas, curl
 , withRecommendedPackages ? true
+, xorg
 }:
 
 stdenv.mkDerivation rec {
@@ -13,9 +14,9 @@ stdenv.mkDerivation rec {
     sha256 = "b93b7d878138279234160f007cb9b7f81b8a72c012a15566e9ec5395cfd9b6c1";
   };
 
-  buildInputs = [ bzip2 gfortran libX11 libXmu libXt
-    libXt libjpeg libpng libtiff ncurses pango pcre perl readline tcl
-    texLive tk xz zlib less texinfo graphviz icu pkgconfig bison imake
+  buildInputs = [ bzip2 gfortran xorg.libX11 xorg.libXmu xorg.libXt
+    libjpeg libpng libtiff ncurses pango pcre perl readline tcl
+    texLive tk xz zlib less texinfo graphviz icu bison xorg.imake
     which jdk openblas curl
   ];
 

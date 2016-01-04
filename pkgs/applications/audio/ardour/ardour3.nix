@@ -1,5 +1,5 @@
 { stdenv, fetchgit, alsaLib, aubio, boost, cairomm, curl, doxygen, dbus, fftw
-, fftwSinglePrec, flac, glibc, glibmm, graphviz, gtk, gtkmm, libjack2
+, fftwSinglePrec, flac, glibc, glibmm, graphviz, gtk2, gtkmm2, libjack2
 , libgnomecanvas, libgnomecanvasmm, liblo, libmad, libogg, librdf
 , librdf_raptor, librdf_rasqal, libsamplerate, libsigcxx, libsndfile
 , libusb, libuuid, libxml2, libxslt, lilv-svn, lv2, makeWrapper, pango
@@ -38,9 +38,9 @@ stdenv.mkDerivation rec {
     sha256 = "ede3730455c3c91b2fd612871fa7262bdacd3dff4ba77c5dfbc3c1f0de9b8a36";
   };
 
-  buildInputs = 
+  buildInputs =
     [ alsaLib aubio boost cairomm curl doxygen dbus fftw fftwSinglePrec flac glibc
-      glibmm graphviz gtk gtkmm libjack2 libgnomecanvas libgnomecanvasmm liblo
+      glibmm graphviz gtk2 gtkmm2 libjack2 libgnomecanvas libgnomecanvasmm liblo
       libmad libogg librdf librdf_raptor librdf_rasqal libsamplerate
       libsigcxx libsndfile libusb libuuid libxml2 libxslt lilv-svn lv2
       makeWrapper pango perl pkgconfig python rubberband serd sord-svn sratom suil taglib vampSDK

@@ -1,5 +1,5 @@
 { stdenv, fetchurl
-, libX11, wxGTK
+, wxGTK, xorg
 , libiconv, fontconfig, freetype
 , mesa
 , libass, fftw, ffms
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = with stdenv.lib;
-  [ pkgconfig intltool libX11 wxGTK fontconfig freetype mesa
+  [ pkgconfig intltool xorg.libX11 wxGTK fontconfig freetype mesa
     libass fftw ffms ffmpeg zlib icu boost boost.lib libiconv
   ]
     ++ optional spellcheckSupport hunspell

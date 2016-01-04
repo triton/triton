@@ -1,5 +1,4 @@
-{stdenv, fetchurl, fetchgit, libX11, xproto, libXtst, xextproto, pkgconfig
-, inputproto, libXi}:
+{stdenv, fetchurl, fetchgit, xorg}:
 let
   s = rec {
     baseName = "xcape";
@@ -7,7 +6,7 @@ let
     name = "${baseName}-${version}";
   };
   buildInputs = [
-    libX11 libXtst xproto xextproto pkgconfig inputproto libXi
+    xorg.libX11 xorg.libXtst xorg.xproto xorg.xextproto xorg.inputproto xorg.libXi
   ];
 in
 stdenv.mkDerivation {

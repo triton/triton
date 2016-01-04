@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, scons, libX11, pkgconfig }:
+{ stdenv, fetchFromGitHub, scons, xorg }:
 
 stdenv.mkDerivation rec {
   name = "xsettingsd-${version}";
@@ -15,14 +15,14 @@ stdenv.mkDerivation rec {
     ./SConstruct.patch
   ];
 
-  buildInputs = [ libX11 scons pkgconfig ];
+  buildInputs = [ xorg.libX11 scons ];
   buildPhase = ''
     mkdir -p "$out"
     scons \
       -j$NIX_BUILD_CORES -l$NIX_BUILD_CORES \
       "prefix=$out"
   '';
-  
+
   installPhase = ''
     mkdir -p "$out"/bin
     install xsettingsd "$out"/bin

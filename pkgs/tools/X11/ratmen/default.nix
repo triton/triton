@@ -1,4 +1,4 @@
-{stdenv, fetchurl, perl, xproto, libX11}:
+{stdenv, fetchurl, perl, xorg}:
 let
   s = # Generated upstream information
   rec {
@@ -10,7 +10,7 @@ let
     sha256="0gnfqhnch9x8jhr87gvdjcp1wsqhchfjilpnqcwx5j0nlqyz6wi6";
   };
   buildInputs = [
-    perl xproto libX11
+    perl xorg.xproto xorg.libX11
   ];
 in
 stdenv.mkDerivation {

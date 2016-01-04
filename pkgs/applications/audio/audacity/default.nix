@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, wxGTK, pkgconfig, gettext, gtk, glib, zlib, perl, intltool,
+{ stdenv, fetchurl, wxGTK, gettext, gtk2, glib, zlib, perl, intltool,
   libogg, libvorbis, libmad, alsaLib, libsndfile, soxr, flac, lame,
   expat, libid3tag, ffmpeg, soundtouch /*, portaudio - given up fighting their portaudio.patch */
   }:
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   configureFlags = "--with-libsamplerate";
 
   buildInputs = [
-    pkgconfig gettext wxGTK gtk expat alsaLib
+    gettext wxGTK gtk2 expat alsaLib
     libsndfile soxr libid3tag
     ffmpeg libmad lame libvorbis flac soundtouch
   ]; #ToDo: detach sbsms

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, xorg, pkgconfig, ncurses }:
+{ stdenv, fetchurl, xorg, ncurses }:
 stdenv.mkDerivation rec {
 
   name = "xrestop-${version}";

@@ -1,10 +1,10 @@
-{ stdenv, fetchgit, libX11, libXtst, pkgconfig, inputproto, libXi, xproto, xextproto }:
+{ stdenv, fetchgit, xorg }:
 
 stdenv.mkDerivation rec {
   name = "ksuperkey-git-2015-07-21";
 
   buildInputs = [
-    libX11 libXtst pkgconfig inputproto libXi xproto xextproto
+    xorg.libX11 xorg.libXtst xorg.inputproto xorg.libXi xorg.xproto xorg.xextproto
   ];
 
   src = fetchgit {

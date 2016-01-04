@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, cmake, mesa, libX11, libXv, libjpeg_turbo, fltk }:
+{ stdenv, fetchurl, cmake, mesa, xorg, libjpeg_turbo, fltk }:
 
 let
   version = "2.4.1";
@@ -17,7 +17,7 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [ cmake ];
 
-  buildInputs = [ libjpeg_turbo mesa fltk libX11 libXv ];
+  buildInputs = [ libjpeg_turbo mesa fltk xorg.libX11 xorg.libXv ];
 
   meta = with stdenv.lib; {
     homepage = http://www.virtualgl.org/;

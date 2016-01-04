@@ -1,4 +1,4 @@
-{stdenv, fetchurl, xproto, motif, libX11, libXt, libXpm, bison, flex}:
+{stdenv, fetchurl, xorg, motif, bison, flex}:
 
 stdenv.mkDerivation {
   name = "alliance-5.0-20070718";
@@ -8,7 +8,7 @@ stdenv.mkDerivation {
     sha256 = "4e17c8f9f4d344061166856d47e58527c6ae870fda0c73b5ba0200967d23af9f";
   };
 
-  buildInputs = [ xproto motif xproto libX11 libXt libXpm bison flex];
+  buildInputs = [ xorg.xproto motif xorg.xproto xorg.libX11 xorg.libXt xorg.libXpm bison flex];
 
   patchPhase = ''
     sed -i -e \

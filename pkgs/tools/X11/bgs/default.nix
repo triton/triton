@@ -1,4 +1,4 @@
-{stdenv, fetchurl, pkgconfig, libX11, libXinerama, imlib2}:
+{stdenv, fetchurl, xorg, imlib2}:
 
 stdenv.mkDerivation rec {
 
@@ -10,9 +10,7 @@ stdenv.mkDerivation rec {
     sha256 = "1rw9ingkkpvvr2dixx126ziim67a54r8k49918h1mbph0fjj08n5";
   };
 
-  nativeBuildInputs = [ pkgconfig ];
-
-  buildInputs = [ libX11 libXinerama imlib2 ];
+  buildInputs = [ xorg.libX11 xorg.libXinerama imlib2 ];
 
   preConfigure = ''sed -i "s@PREFIX = /usr/local@PREFIX = $out@g" config.mk'';
 

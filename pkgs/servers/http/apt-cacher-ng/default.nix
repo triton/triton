@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, cmake, doxygen, zlib, openssl, bzip2, pkgconfig, libpthreadstubs }:
+{ stdenv, fetchurl, cmake, doxygen, zlib, openssl, bzip2, xorg }:
 
 stdenv.mkDerivation rec {
   name = "apt-cacher-ng-${version}";
@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   };
 
   NIX_LDFLAGS = "-lpthread";
-  buildInputs = [ doxygen cmake zlib openssl bzip2 pkgconfig libpthreadstubs ];
+  buildInputs = [ doxygen cmake zlib openssl bzip2 xorg.libpthreadstubs ];
 
   meta = {
     description = "A caching proxy specialized for linux distribution files";

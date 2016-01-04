@@ -1,5 +1,5 @@
 { stdenv, fetchurl, buildPythonPackage, pythonPackages
-, python, cython, pkgconfig
+, python, cython
 , xorg, gtk, glib, pango, cairo, gdk_pixbuf, atk, pycairo
 , makeWrapper, xkbcomp, xorgserver, getopt, xauth, utillinux, which, fontsConf, xkeyboard_config
 , ffmpeg, x264, libvpx, libwebp
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    cython pkgconfig
+    cython
 
     xorg.libX11 xorg.renderproto xorg.libXrender xorg.libXi xorg.inputproto xorg.kbproto
     xorg.randrproto xorg.damageproto xorg.compositeproto xorg.xextproto xorg.recordproto

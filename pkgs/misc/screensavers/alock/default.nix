@@ -1,5 +1,5 @@
-{ stdenv, fetchgit, pkgconfig, autoconf, automake
-, libX11, pam, libgcrypt, libXrender, imlib2 }:
+{ stdenv, fetchgit, autoconf, automake
+, pam, libgcrypt, imlib2, xorg }:
 
 stdenv.mkDerivation rec {
   date = "20150418";
@@ -19,8 +19,8 @@ stdenv.mkDerivation rec {
     "--enable-imlib2"
   ];
   buildInputs = [
-    pkgconfig autoconf automake libX11
-    pam libgcrypt libXrender imlib2
+    autoconf automake xorg.libX11
+    pam xorg.libgcrypt xorg.libXrender imlib2
   ];
 
   meta = {

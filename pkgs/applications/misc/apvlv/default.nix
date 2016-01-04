@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, cmake, pkgconfig,
-  gtk2 , poppler, freetype, libpthreadstubs, libXdmcp, libxshmfence
+{ stdenv, fetchurl, cmake,
+  gtk2 , poppler, freetype, xorg
 }:
 
 stdenv.mkDerivation rec {
@@ -15,11 +15,14 @@ stdenv.mkDerivation rec {
     export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I${poppler}/include/poppler"
   '';
 
+  nativeBuildInputs = [
+    cmake
+  ];
+
   buildInputs = [
-    pkgconfig cmake
      poppler
      freetype gtk2
-     libpthreadstubs libXdmcp libxshmfence # otherwise warnings in compilation
+     xorg.libpthreadstubs xorg.libXdmcp xorg.libxshmfence # otherwise warnings in compilation
    ];
 
   installPhase = ''

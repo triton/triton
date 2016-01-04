@@ -1,4 +1,4 @@
-{ stdenv, autoconf, automake, fetchFromGitHub, gnome3, gtk, gtk-engine-murrine, pkgconfig}:
+{ stdenv, autoconf, automake, fetchFromGitHub, gnome3, gtk-engine-murrine}:
 
 stdenv.mkDerivation rec {
   version = "2015-10-21";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   preferLocalBuild = true;
 
-  buildInputs = [ autoconf automake gtk-engine-murrine pkgconfig ];
+  buildInputs = [ autoconf automake gtk-engine-murrine ];
 
   configureScript = "./autogen.sh";
   configureFlags = "--with-gnome=${gnome3.version}";

@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, luaPackages, cairo, cmake, imagemagick, pkgconfig, gdk_pixbuf
-, xorg, libstartup_notification, libxdg_basedir, libpthreadstubs
+{ stdenv, fetchurl, luaPackages, cairo, cmake, imagemagick, gdk_pixbuf
+, xorg, libstartup_notification, libxdg_basedir
 , xcb-util-cursor, makeWrapper, pango, gobjectIntrospection, unclutter
 , compton, procps, iproute, coreutils, curl, alsaUtils, findutils, xterm
 , which, dbus, nettools, git, asciidoc, doxygen
@@ -37,14 +37,13 @@ stdenv.mkDerivation rec {
     git
     imagemagick
     lgi
-    libpthreadstubs
+    xorg.libpthreadstubs
     libstartup_notification
     libxdg_basedir
     lua
     makeWrapper
     nettools
     pango
-    pkgconfig
     xcb-util-cursor
     xorg.libXau
     xorg.libXdmcp

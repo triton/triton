@@ -3,8 +3,7 @@
 , which
 , xfce
 , glib
-, pkgconfig
-, libX11
+, xorg
 , gtk3
 , dbus_glib
 , systemd
@@ -23,7 +22,7 @@ stdenv.mkDerivation rec {
     sha256 = "0ygkp5vgkx2nfhfql6j2jsfay394gda23ir3sx4f72j4agsirjvj";
   };
 
-  buildInputs = [ which xfce.xfce4_dev_tools glib pkgconfig libX11 gtk3 dbus_glib systemd wrapGAppsHook ];
+  buildInputs = [ which xfce.xfce4_dev_tools glib xorg.libX11 gtk3 dbus_glib systemd wrapGAppsHook ];
 
   preConfigure = ''
     ./autogen.sh

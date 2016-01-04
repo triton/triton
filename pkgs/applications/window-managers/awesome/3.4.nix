@@ -1,9 +1,8 @@
-{ stdenv, fetchurl, cmake, gperf, imagemagick, pkgconfig, lua
-, glib, cairo, pango, imlib2, libxcb, libxdg_basedir, xcbutil
-, xcbutilimage, xcbutilkeysyms, xcbutilwm, libpthreadstubs, libXau
-, libXdmcp, pixman, doxygen
+{ stdenv, fetchurl, cmake, gperf, imagemagick, lua
+, glib, cairo, pango, imlib2, libxdg_basedir
+, pixman, doxygen
 , libstartup_notification, libev, asciidoc, xmlto, dbus, docbook_xsl
-, docbook_xml_dtd_45, libxslt, coreutils, which }:
+, docbook_xml_dtd_45, libxslt, coreutils, which, xorg }:
 
 let
   version = "3.4.13";
@@ -11,15 +10,15 @@ in
 
 stdenv.mkDerivation rec {
   name = "awesome-${version}";
- 
+
   src = fetchurl {
     url = "http://awesome.naquadah.org/download/awesome-${version}.tar.xz";
     sha256 = "0jhsgb8wdzpfmdyl9fxp2w6app7l6zl8b513z3ff513nvdlxj5hr";
   };
- 
-  buildInputs = [ cmake gperf imagemagick pkgconfig lua glib cairo pango
-    imlib2 libxcb libxdg_basedir xcbutil xcbutilimage xcbutilkeysyms xcbutilwm
-    libstartup_notification libev libpthreadstubs libXau libXdmcp pixman doxygen
+
+  buildInputs = [ cmake gperf imagemagick lua glib cairo pango
+    imlib2 xorg.libxcb libxdg_basedir xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilwm
+    libstartup_notification libev xorg.libpthreadstubs xorg.libXau xorg.libXdmcp pixman doxygen
     asciidoc xmlto dbus docbook_xsl docbook_xml_dtd_45 libxslt which ];
 
   # We use coreutils for 'env', that will allow then finding 'bash' or 'zsh' in
@@ -39,7 +38,7 @@ stdenv.mkDerivation rec {
       --replace "set(AWE_MAN_LANGS it es fr de ru)" \
                 "set(AWE_MAN_LANGS it es fr de)"
   '';
- 
+
   meta = {
     homepage = http://awesome.naquadah.org/;
     description = "Highly configurable, dynamic window manager for X";

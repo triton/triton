@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, unzip, mono, avrgcclibc, avrdude, gtk, xdg_utils }:
+{ stdenv, fetchurl, unzip, mono, avrgcclibc, avrdude, gtk2, xdg_utils }:
 
 stdenv.mkDerivation rec {
   name = "avrdudess-2.2.20140102";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
 
     cat >> "$out/bin/avrdudess" << __EOF__
     #!${stdenv.shell}
-    export LD_LIBRARY_PATH="${gtk}/lib:${mono}/lib"
+    export LD_LIBRARY_PATH="${gtk2}/lib:${mono}/lib"
     # We need PATH from user env for xdg-open to find its tools, which
     # typically depend on the currently running desktop environment.
     export PATH="${avrgcclibc}/bin:${avrdude}/bin:${xdg_utils}/bin:\$PATH"

@@ -1,5 +1,5 @@
-{stdenv, fetchurl, cmake, pkgconfig, libxml2, qt4, gtk, gettext, SDL,
-libXv, pixman, libpthreadstubs, libXau, libXdmcp, libxslt, x264,
+{stdenv, fetchurl, cmake, libxml2, qt4, gtk2, gettext, SDL
+, pixman, xorg, libxslt, x264,
 alsaLib, lame, faad2, libvorbis, yasm, libvpx, xvidcore, libva,
 faac ? null, faacSupport ? false }:
 
@@ -14,8 +14,8 @@ stdenv.mkDerivation {
     sha256 = "01jhgricd7m9hdhr22yrdjfrnl41zccm2yxw7gfb02mwcswvswy0";
   };
 
-  buildInputs = [ cmake pkgconfig libxml2 qt4 gtk gettext SDL libXv
-    pixman libpthreadstubs libXau libXdmcp libxslt x264 alsaLib
+  buildInputs = [ cmake libxml2 qt4 gtk2 gettext SDL xorg.libXv
+    pixman xorg.libpthreadstubs xorg.libXau xorg.libXdmcp libxslt x264 alsaLib
     lame faad2 libvorbis yasm libvpx xvidcore libva
   ] ++ stdenv.lib.optional faacSupport faac;
 

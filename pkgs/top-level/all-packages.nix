@@ -563,7 +563,9 @@ gtk_3 = callPackage ../all-pkgs/gtk+/3.x.nix {
 gtk3 = gtk_3;
 
 gtkmm_2 = callPackage ../all-pkgs/gtkmm/2.x.nix { };
+gtkmm2 = gtkmm_2;
 gtkmm_3 = callPackage ../all-pkgs/gtkmm/3.x.nix { };
+gtkmm3 = gtkmm_3;
 
 gvfs = callPackage ../all-pkgs/gvfs { gconf = gnome.GConf; };
 

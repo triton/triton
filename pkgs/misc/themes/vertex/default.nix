@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, autoreconfHook, gtk3, pkgconfig }:
+{ stdenv, fetchFromGitHub, autoreconfHook, gtk3 }:
 
 stdenv.mkDerivation rec {
   name = "theme-vertex-${version}";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     sha256 = "0jsdnrw7sgrb7s4byv80y9c782gd6vbq0xsrrhwkflfnxcldvz4r";
   };
 
-  buildInputs = [ autoreconfHook gtk3 pkgconfig ];
+  buildInputs = [ autoreconfHook gtk3 ];
 
   configureFlags = "--disable-unity";
 

@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, autoconf, automake, libtool, pkgconfig
-, freetype, SDL, libX11 }:
+{ stdenv, fetchurl, autoconf, automake, libtool
+, freetype, SDL, xorg }:
 
 stdenv.mkDerivation rec {
   name = "agg-2.5";
@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
     url = "http://www.antigrain.com/${name}.tar.gz";
     sha256 = "07wii4i824vy9qsvjsgqxppgqmfdxq0xa87i5yk53fijriadq7mb";
   };
-  buildInputs = [ autoconf automake libtool pkgconfig freetype SDL libX11 ];
+  buildInputs = [ autoconf automake libtool freetype SDL xorg.libX11 ];
 
   # fix build with new automake, from Gentoo ebuild
   preConfigure = ''
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     sh autogen.sh
   '';
 
-  configureFlags = "--x-includes=${libX11}/include --x-libraries=${libX11}/lib";
+  configureFlags = "--x-includes=${xorg.libX11}/include --x-libraries=${xorg.libX11}/lib";
 
   meta = {
     description = "High quality rendering engine for C++";

@@ -1,5 +1,5 @@
-{ stdenv, fetchgit, cmake, docutils, pkgconfig, glib, libpthreadstubs
-, libXau, libXdmcp, xcbutil }:
+{ stdenv, fetchgit, cmake, docutils, glib
+, xorg, xcbutil }:
 
 stdenv.mkDerivation {
   name = "xss-lock-git-2014-03-02";
@@ -10,8 +10,8 @@ stdenv.mkDerivation {
     sha256 = "0jdpd6x1kk30qynv2n4zbjmsicvwjwcldr2224da0srzl7sgyjsg";
   };
 
-  buildInputs = [ cmake pkgconfig docutils glib libpthreadstubs libXau
-                  libXdmcp xcbutil ];
+  buildInputs = [ cmake pkgconfig docutils glib xorg.libpthreadstubs xorg.libXau
+                  xorg.libXdmcp xorg.xcbutil ];
 
   cmakeFlags = [
     "-DCMAKE_BUILD_TYPE=Release"

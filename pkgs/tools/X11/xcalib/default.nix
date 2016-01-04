@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libX11, libXxf86vm, libXext }:
+{ stdenv, fetchurl, xorg }:
 
 stdenv.mkDerivation rec {
   name = "xcalib-0.8";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "8a112ee710e5446f6c36e62345b2066f10639d500259db8c48bf1716caea06e6";
   };
 
-  buildInputs = [ libX11 libXxf86vm libXext ];
+  buildInputs = [xorg.libX11 xorg.libXxf86vm xorg.libXext ];
 
   installPhase = ''
     mkdir -p $out/bin

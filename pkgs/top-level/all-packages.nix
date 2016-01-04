@@ -6928,6 +6928,8 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   libcaca = callPackage ../development/libraries/libcaca { };
 
+  libcacard = callPackage ../development/libraries/libcacard { };
+
   libcanberra = callPackage ../development/libraries/libcanberra { };
   libcanberra_gtk3 = libcanberra.override { gtk = gtk3; };
   libcanberra_kde = if (config.kde_runtime.libcanberraWithoutGTK or true)

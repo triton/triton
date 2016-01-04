@@ -1,7 +1,31 @@
-{ stdenv, fetchurl, pkgconfig, perl, texinfo, yasm
-, alsaLib, bzip2, fontconfig, freetype, gnutls, libiconv, lame, libass, libogg
-, libtheora, libva, libvdpau, libvorbis, libvpx, lzma, libpulseaudio, SDL, soxr
-, x264, xvidcore, zlib
+{ stdenv
+, fetchurl
+, pkgconfig
+, perl
+, texinfo
+, yasm
+
+, alsaLib
+, bzip2
+, fontconfig
+, freetype
+, gnutls
+, libiconv
+, lame
+, libass
+, libogg
+, libtheora
+, libva
+, libvdpau
+, libvorbis
+, libvpx
+, lzma
+, libpulseaudio
+, SDL
+, soxr
+, x264
+, xvidcore
+, zlib
 , openglSupport ? false, mesa ? null
 # Build options
 , runtimeCpuDetectBuild ? true # Detect CPU capabilities at runtime
@@ -10,10 +34,11 @@
 , debugDeveloper ? false
 , optimizationsDeveloper ? true
 , extraWarningsDeveloper ? false
-# Darwin frameworks
-, Cocoa
 # Inherit generics
-, branch, sha256, version, ...
+, branch
+, sha256
+, version
+, ...
 }:
 
 /* Maintainer notes:
@@ -21,9 +46,6 @@
  * THIS IS A MINIMAL BUILD OF FFMPEG, do not include dependencies unless
  * a build that depends on ffmpeg requires them to be compiled into ffmpeg,
  * see `ffmpeg-full' for an ffmpeg build with all features included.
- *
- * Need fixes to support Darwin:
- *   libvpx pulseaudio
  *
  * Known issues:
  * 0.6     - fails to compile (unresolved) (so far, only disabling a number of
@@ -38,10 +60,14 @@
  *
  */
 
-let
-  inherit (stdenv) icCygwin isDarwin isFreeBSD isLinux;
-  inherit (stdenv.lib) optional optionals enableFeature;
+with {
+  inherit (stdenv.lib)
+    optional
+    optionals
+    enableFeature;
+};
 
+let
   cmpVer = builtins.compareVersions;
   reqMin = requiredVersion: (cmpVer requiredVersion branch != 1);
   reqMatch = requiredVersion: (cmpVer requiredVersion branch == 0);
@@ -50,9 +76,6 @@ let
 
   # Version specific fix
   verFix = withoutFix: fixVer: withFix: if reqMatch fixVer then withFix else withoutFix;
-
-  # Disable dependency that needs fixes before it will work on Darwin
-  disDarwinFix = origArg: minVer: fixArg: if (isDarwin && reqMin minVer) then fixArg else origArg;
 in
 
 assert openglSupport -> mesa != null;
@@ -73,8 +96,7 @@ stdenv.mkDerivation rec {
       -e '/VP8E_UPD_ENTROPY/d' \
       -e '/VP8E_USE_REFERENCE/d' \
       -e '/VP8E_UPD_REFERENCE/d' \
-      -e '/VP8D_USE_REFERENCE/d' \
-
+      -e '/VP8D_USE_REFERENCE/d'
   '';
 
   configureFlags = [
@@ -87,14 +109,9 @@ stdenv.mkDerivation rec {
       (ifMinVer "0.6" "--enable-pic")
       (enableFeature runtimeCpuDetectBuild "runtime-cpudetect")
       "--enable-hardcoded-tables"
-      (if multithreadBuild then (
-         if stdenv.isCygwin then
-           "--disable-pthreads --enable-w32threads"
-         else # Use POSIX threads by default
-           "--enable-pthreads --disable-w32threads")
-       else
-         "--disable-pthreads --disable-w32threads")
-      (ifMinVer "0.9" "--disable-os2threads") # We don't support OS/2
+      "--enable-pthreads"
+      "--disable-w32threads"
+      (ifMinVer "0.9" "--disable-os2threads")
       "--enable-network"
       (ifMinVer "2.4" "--enable-pixelutils")
     # Executables
@@ -122,13 +139,13 @@ stdenv.mkDerivation rec {
       "--enable-libmp3lame"
       (ifMinVer "1.2" "--enable-iconv")
       "--enable-libtheora"
-      (ifMinVer "0.6" (enableFeature (isLinux || isFreeBSD) "vaapi"))
+      (ifMinVer "0.6" "--enable-vaapi")
       "--enable-vdpau"
       "--enable-libvorbis"
-      (disDarwinFix (ifMinVer "0.6" "--enable-libvpx") "0.6" "--disable-libvpx")
+      (ifMinVer "0.6" "--enable-libvpx")
       (ifMinVer "2.4" "--enable-lzma")
       (ifMinVer "2.2" (enableFeature openglSupport "opengl"))
-      (disDarwinFix (ifMinVer "0.9" "--enable-libpulse") "0.9" "--disable-libpulse")
+      (ifMinVer "0.9" "--enable-libpulse")
       (ifMinVer "2.5" "--enable-sdl") # Only configurable since 2.5, auto detected before then
       (ifMinVer "1.2" "--enable-libsoxr")
       "--enable-libx264"
@@ -143,16 +160,35 @@ stdenv.mkDerivation rec {
       (verFix null "0.6.90" "--disable-mmx")
   ] ++ optional stdenv.cc.isClang "--cc=clang";
 
-  nativeBuildInputs = [ perl pkgconfig texinfo yasm ];
+  nativeBuildInputs = [
+    perl
+    texinfo
+    yasm
+  ];
 
   buildInputs = [
-    bzip2 fontconfig freetype gnutls libiconv lame libass libogg libtheora
-    libvdpau libvorbis lzma SDL soxr x264 xvidcore zlib
-  ] ++ optional openglSupport mesa
-    ++ optionals (!isDarwin) [ libvpx libpulseaudio ] # Need to be fixed on Darwin
-    ++ optional (isLinux || isFreeBSD) libva
-    ++ optional isLinux alsaLib
-    ++ optional isDarwin Cocoa;
+    bzip2
+    fontconfig
+    freetype
+    gnutls
+    libiconv
+    lame
+    libass
+    libogg
+    libtheora
+    libvdpau
+    libvorbis
+    lzma
+    SDL
+    soxr
+    x264
+    xvidcore
+    zlib
+    libvpx
+    libpulseaudio
+    libva
+    alsaLib
+  ] ++ optional openglSupport mesa;
 
   enableParallelBuilding = true;
 
@@ -186,23 +222,25 @@ stdenv.mkDerivation rec {
   };
 
   passthru = {
-    vaapiSupport = if reqMin "0.6" && (isLinux || isFreeBSD) then true else false;
+    vaapiSupport =
+      if reqMin "0.6" then
+        true
+      else
+        false;
     vdpauSupport = true;
   };
 
   meta = with stdenv.lib; {
     description = "A complete, cross-platform solution to record, convert and stream audio and video";
     homepage = http://www.ffmpeg.org/;
-    longDescription = ''
-      FFmpeg is the leading multimedia framework, able to decode, encode, transcode, 
-      mux, demux, stream, filter and play pretty much anything that humans and machines 
-      have created. It supports the most obscure ancient formats up to the cutting edge. 
-      No matter if they were designed by some standards committee, the community or 
-      a corporation. 
-    '';
     license = licenses.gpl3;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ codyopel fuuzetsu ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
     inherit branch;
   };
 }

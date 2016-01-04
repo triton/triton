@@ -1,39 +1,100 @@
-{ stdenv, fetchurl, intltool, pkgconfig, gnome3, ncurses, gobjectIntrospection, vala, libxml2
-, gnutls, selectTextPatch ? false }:
+{ stdenv, fetchurl
+, intltool
+
+, atk
+, gdk-pixbuf-core
+, glib
+, gnome3
+, gnutls
+, gobject-introspection
+, gtk3
+, libxml2
+, ncurses
+, pango
+, pcre2
+, vala
+, zlib
+, selectTextPatch ? false
+}:
+
+with {
+  inherit (stdenv.lib)
+    optional;
+};
 
 stdenv.mkDerivation rec {
-  inherit (import ./src.nix fetchurl) name src;
+  name = "vte-${version}";
+  versionMajor = "0.43";
+  versionMinor = "0";
+  version = "${versionMajor}.${versionMinor}";
 
-  patches = with stdenv.lib; optional selectTextPatch ./expose_select_text.0.40.0.patch;
+  src = fetchurl {
+    url = "mirror://gnome/sources/vte/${versionMajor}/${name}.tar.xz";
+    sha256 = "1faa9n6dn0vgzlbf9vlm7d0ksw19577p57v3b3j9wgk3910sw41g";
+  };
 
-  buildInputs = [ gobjectIntrospection intltool pkgconfig gnome3.glib 
-                  gnome3.gtk3 ncurses vala libxml2 ];
+  patches = optional selectTextPatch ./expose_select_text.0.40.0.patch;
 
-  propagatedBuildInputs = [ gnutls ];
-
-  preConfigure = "patchShebangs .";
-
-  configureFlags = [ "--enable-introspection" ];
-
-  enableParallelBuilding = true;
-
-  postInstall = ''
-    substituteInPlace $out/lib/libvte2_90.la --replace "-lncurses" "-L${ncurses}/lib -lncurses"
+  postPatch = ''
+    patchShebangs src/box_drawing_generate.sh
+    patchShebangs src/check-libstdc++.sh
+    patchShebangs src/test-vte-sh.sh
   '';
 
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--disable-debug"
+    "--enable-nls"
+    "--enable-Bsymbolic"
+    "--disable-glade"
+    "--enable-introspection"
+    "--enable-vala"
+    # test application uses deprecated functions
+    "--disable-test-application"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--with-gnutls"
+    "--with-pcre2"
+  ];
+
+  nativeBuildInputs = [
+    intltool
+  ];
+
+  buildInputs = [
+    atk
+    gdk-pixbuf-core
+    glib
+    gnutls
+    gtk3
+    libxml2
+    ncurses
+    gobject-introspection
+    pango
+    pcre2
+    vala
+    zlib
+  ];
+
+  postInstall = ''
+    substituteInPlace $out/lib/libvte2_90.la \
+      --replace "-lncurses" "-L${ncurses}/lib -lncurses"
+  '';
+
+  doCheck = true;
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
-    homepage = http://www.gnome.org/;
     description = "A library implementing a terminal emulator widget for GTK+";
-    longDescription = ''
-      VTE is a library (libvte) implementing a terminal emulator widget for
-      GTK+, and a minimal sample application (vte) using that.  Vte is
-      mainly used in gnome-terminal, but can also be used to embed a
-      console/terminal in games, editors, IDEs, etc. VTE supports Unicode and
-      character set conversion, as well as emulating any terminal known to
-      the system's terminfo database.
-    '';
+    homepage = http://www.gnome.org/;
     license = licenses.lgpl2;
-    maintainers = with maintainers; [ astsmtl antono lethalman ];
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

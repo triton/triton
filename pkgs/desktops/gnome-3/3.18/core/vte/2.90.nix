@@ -1,40 +1,76 @@
-{ stdenv, fetchurl, intltool, pkgconfig, gnome3, ncurses, gobjectIntrospection }:
+{ stdenv
+, fetchurl
+, intltool
+
+, atk
+, gdk-pixbuf
+, glib
+, gnome3
+, gobject-introspection
+, gtk3
+, libxml2
+, ncurses
+, pango
+, zlib
+}:
 
 stdenv.mkDerivation rec {
+  name = "vte-${version}";
   versionMajor = "0.36";
-  versionMinor = "3";
-  moduleName   = "vte";
-
-  name = "${moduleName}-${versionMajor}.${versionMinor}";
+  versionMinor = "5";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/${moduleName}/${versionMajor}/${name}.tar.xz";
-    sha256 = "54e5b07be3c0f7b158302f54ee79d4de1cb002f4259b6642b79b1e0e314a959c";
+    url = "mirror://gnome/sources/vte/${versionMajor}/${name}.tar.xz";
+    sha256 = "1psfnqsmxx4qzc55qwvb8jai824ix4pqcdqhgxk0g2zh82bcxhn2";
   };
 
-  buildInputs = [ gobjectIntrospection intltool pkgconfig gnome3.glib gnome3.gtk3 ncurses ];
-
-  configureFlags = [ "--enable-introspection" ];
-
-  enableParallelBuilding = true;
-
-  postInstall = ''
-    substituteInPlace $out/lib/libvte2_90.la --replace "-lncurses" "-L${ncurses}/lib -lncurses"
+  postPatch = ''
+    patchShebangs src/test-vte-sh.sh
   '';
 
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--disable-debug"
+    "--enable-nls"
+    "--enable-Bsymbolic"
+    "--enable-gnome-pty-helper"
+    "--disable-glade"
+    "--enable-introspection"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+  ];
+
+  nativeBuildInputs = [
+    intltool
+  ];
+
+  buildInputs = [
+    atk
+    gdk-pixbuf
+    glib
+    gobject-introspection
+    gtk3
+    libxml2
+    ncurses
+    pango
+    zlib
+  ];
+
+  postInstall = ''
+    substituteInPlace $out/lib/libvte2_90.la \
+      --replace "-lncurses" "-L${ncurses}/lib -lncurses"
+  '';
+
+  doCheck = true;
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
-    homepage = http://www.gnome.org/;
     description = "A library implementing a terminal emulator widget for GTK+";
-    longDescription = ''
-      VTE is a library (libvte) implementing a terminal emulator widget for
-      GTK+, and a minimal sample application (vte) using that.  Vte is
-      mainly used in gnome-terminal, but can also be used to embed a
-      console/terminal in games, editors, IDEs, etc. VTE supports Unicode and
-      character set conversion, as well as emulating any terminal known to
-      the system's terminfo database.
-    '';
+    homepage = http://www.gnome.org/;
     license = licenses.lgpl2;
-    maintainers = with maintainers; [ astsmtl antono lethalman ];
+    maintainers = with maintainers; [ ];
     platforms = platforms.linux;
   };
 }

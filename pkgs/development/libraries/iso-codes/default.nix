@@ -1,19 +1,18 @@
-{stdenv, fetchurl, gettext, python, xz}:
+{ stdenv, fetchurl, gettext, python }:
 
 stdenv.mkDerivation rec {
-  name = "iso-codes-3.56";
+  name = "iso-codes-3.64";
+
   src = fetchurl {
     url = "http://pkg-isocodes.alioth.debian.org/downloads/${name}.tar.xz";
-    sha256 = "0vnfygd03jg21i7r238n450wy2hp354f3ank0v3k34zchbjydl2m";
+    sha256 = "0a87synxkbhvi6r141d31lklrj5vsh2da6nzc1kmgs9p3qw63w2y";
   };
-  patchPhase = ''
-    for i in `find . -name \*.py`
-    do
-        sed -i -e "s|#!/usr/bin/env python|#!${python}/bin/python|" $i
-    done
+
+  nativeBuildInputs = [ gettext python ];
+
+  postPatch = ''
+    patchShebangs .
   '';
-  buildInputs = [ gettext ];
-  nativeBuildInputs = [ xz ];
 
   meta = {
     homepage = http://pkg-isocodes.alioth.debian.org/;

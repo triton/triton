@@ -2,12 +2,12 @@ findGdkPixbufLoaders() {
 
   local loadersCache
 
-  # choose the longest loaders.cache
+  # Choose the longest loaders.cache
   loadersCache="${1}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache"
 
-  if [ -f "${loadersCache}" ] ; then
-    if [ -f "${GDK_PIXBUF_MODULE_FILE}" ] ; then
-      if [ $(cat "${loadersCache}" | wc -l) -gt $(cat "${GDK_PIXBUF_MODULE_FILE}" | wc -l) ] ; then
+  if [[ -f "${loadersCache}" ]] ; then
+    if [[ -f "${GDK_PIXBUF_MODULE_FILE}" ]] ; then
+      if [[ $(cat "${loadersCache}" | wc -l) -gt $(cat "${GDK_PIXBUF_MODULE_FILE}" | wc -l) ]] ; then
         export GDK_PIXBUF_MODULE_FILE="${loadersCache}"
       fi
     else

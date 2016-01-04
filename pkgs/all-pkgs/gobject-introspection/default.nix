@@ -3,6 +3,7 @@
 , fetchurl
 , flex
 
+, bzip2
 , glib
 , libffi
 , python
@@ -67,6 +68,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    bzip2
     glib
     libffi
     python

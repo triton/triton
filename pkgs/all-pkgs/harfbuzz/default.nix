@@ -74,7 +74,11 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "An OpenType text shaping engine";
     homepage = http://www.freedesktop.org/wiki/Software/HarfBuzz;
-    license = licenses.;
+    license = with licenses; [
+      icu
+      isc
+      mit
+    ];
     maintainers = with maintainers; [
       codyopel
     ];

@@ -58,7 +58,7 @@ rec {
     outputs = [ "out" "glibc" ];
   };
 
-  bootstrapShell = "${bootstrapTools}/bin/sh";
+  bootstrapShell = "${bootstrapTools}/bin/bash";
 
   bootstrapToolsTest = derivation {
     name = "bootstrap-tools";
@@ -113,6 +113,7 @@ rec {
             ln -s $bootstrapTools/bin/patchelf $out/bin
           '';
           setupHook = ../../development/tools/misc/patchelf/setup-hook.sh;
+          dontAbsoluteLibtool = true; # Depends on cc not being null
         };
 
         gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {

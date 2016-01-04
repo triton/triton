@@ -77,6 +77,7 @@ let
     [ ../../build-support/setup-hooks/move-docs.sh
       ../../build-support/setup-hooks/compress-man-pages.sh
       ../../build-support/setup-hooks/pkgconfig.sh
+      ../../build-support/setup-hooks/absolute-libtool.sh
       ../../build-support/setup-hooks/absolute-pkgconfig.sh
       ../../build-support/setup-hooks/strip.sh
       ../../build-support/setup-hooks/patch-shebangs.sh

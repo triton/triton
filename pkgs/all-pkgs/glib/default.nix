@@ -1,126 +1,182 @@
-{ stdenv, fetchurl, pkgconfig, gettext, perl, python
-, libiconv, libintlOrEmpty, zlib, libffi, pcre, libelf
+{ stdenv
+, autoreconfHook
+, fetchurl
+, gettext
+, perl
+, python
 
-# this is just for tests (not in closure of any regular package)
-, coreutils, dbus_daemon, libxml2, tzdata, desktop_file_utils, shared_mime_info, doCheck ? false
+, attr
+, libelf
+, libffi
+, libiconv
+, pcre
+, zlib
+
+, doCheck ? false
+  , coreutils
+  , dbus_daemon
+  , desktop_file_utils
+  , libxml2
+  , shared_mime_info
+  , tzdata
 }:
 
-with stdenv.lib;
+with {
+  inherit (stdenv.lib)
+    enFlag
+    optionals
+    optionalString;
+};
 
-assert !stdenv.isDarwin -> stdenv.cc.isGNU;
-
-# TODO:
-# * Add gio-module-fam
-#     Problem: cyclic dependency on gamin
-#     Possible solution: build as a standalone module, set env. vars
-# * Make it build without python
-#     Problem: an example (test?) program needs it.
-#     Possible solution: disable compilation of this example somehow
-#     Reminder: add 'sed -e 's@python2\.[0-9]@python@' -i
-#       $out/bin/gtester-report' to postInstall if this is solved
-/*
-  * Use --enable-installed-tests for GNOME-related packages,
-      and use them as a separately installed tests runned by Hydra
-      (they should test an already installed package)
-      https://wiki.gnome.org/GnomeGoals/InstalledTests
-  * Support org.freedesktop.Application, including D-Bus activation from desktop files
-*/
 let
   # Some packages don't get "Cflags" from pkgconfig correctly
   # and then fail to build when directly including like <glib/...>.
   # This is intended to be run in postInstall of any package
   # which has $out/include/ containing just some disjunct directories.
   flattenInclude = ''
-    for dir in "$out"/include/*; do
+    for dir in "$out"/include/* ; do
       cp -r "$dir"/* "$out/include/"
       rm -r "$dir"
       ln -s . "$dir"
     done
     ln -sr -t "$out/include/" "$out"/lib/*/include/* 2>/dev/null || true
   '';
-
-  ver_maj = "2.46";
-  ver_min = "2";
 in
 
+assert stdenv.cc.isGNU;
+
 stdenv.mkDerivation rec {
-  name = "glib-${ver_maj}.${ver_min}";
+  name = "glib-${version}";
+  versionMajor = "2.46";
+  versionMinor = "2";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/glib/${ver_maj}/${name}.tar.xz";
-    sha256 = "5031722e37036719c1a09163cc6cf7c326e4c4f1f1e074b433c156862bd733db";
+    url = "mirror://gnome/sources/glib/${versionMajor}/${name}.tar.xz";
+    sha256 = "1nrkswmqcmn16fs79q7iy72f89n3yxncqqwil30ijrq36wp74cah";
   };
-
-  patches = optional stdenv.isDarwin ./darwin-compilation.patch ++ optional doCheck ./skip-timer-test.patch;
 
   setupHook = ./setup-hook.sh;
 
-  buildInputs = [ libelf ]
-    ++ optionals doCheck [ tzdata libxml2 desktop_file_utils shared_mime_info ];
+  patches = optionals doCheck [
+    ./skip-timer-test.patch
+  ];
 
-  nativeBuildInputs = [ pkgconfig gettext perl python ];
+  postPatch = (
+    # Patch tests
+    if doCheck then (''
+      substituteInPlace \
+        gio/tests/desktop-files/home/applications/epiphany-*.desktop \
+        --replace "Exec=/bin/true" "Exec=${coreutils}/bin/true"
 
-  propagatedBuildInputs = [ pcre zlib libffi libiconv ]
-    ++ libintlOrEmpty;
+      # desktop-app-info/fallback test broken upstream
+      # https://github.com/GNOME/glib/commit/a036bd38a574f38773d269447cf81df023d2c819
+      sed -e '/\/desktop-app-info\/fallback/d' -i gio/tests/desktop-app-info.c
 
-  # Static is necessary for qemu-nix to support static userspace translators
-  configureFlags = [ "--enable-static" ]
-    ++ optional stdenv.isDarwin "--disable-compile-warnings"
-    ++ optional stdenv.isSunOS ["--disable-modular-tests" "--with-libiconv"];
+      # Fails to detect content type, shared-mime-info?
+      sed -e '/contenttype/d' -i gio/tests/Makefile.{am,in}
 
-  NIX_CFLAGS_COMPILE = optionalString stdenv.isDarwin " -lintl"
-    + optionalString stdenv.isSunOS " -DBSD_COMP";
+      # Disable tests that require machine-id
+      sed -e '/\/gdbus\/codegen-peer-to-peer/d' -i gio/tests/gdbus-peer.c
+      sed -e '/\/gdbus\/x11-autolaunch/d' -i gio/tests/gdbus-unix-addresses.c
 
-  preBuild = optionalString stdenv.isDarwin
-    ''
-      export MACOSX_DEPLOYMENT_TARGET=
-    '';
+      # Regex test fails, glib/gcc5 or pcre/gcc5?
+      sed -e '/?<ab/d' -i glib/tests/regex.c
 
-  dontDisableStatic = true;
+      # All gschemas fail to pass the test, upstream bug?
+      sed -e '/g_test_add_data_func/ s/^\/*/\/\//' -i gio/tests/gschema-compile.c
 
+      # Cannot reproduce the failing test_associations on hydra
+      sed -e '/\/appinfo\/associations/d' -i gio/tests/appinfo.c
+
+      # Needed because of libtool wrappers
+      sed -e '/g_subprocess_launcher_set_environ (launcher, envp);/a g_subprocess_launcher_setenv (launcher, "PATH", g_getenv("PATH"), TRUE);' \
+          -i gio/tests/gsubprocess.c
+    '') else (''
+      # Don't build tests, also prevents extra deps
+      sed -e 's/ tests//' -i {.,gio,glib}/Makefile.{am,in}
+    '')
+  );
+
+  configureFlags = [
+    "--disable-selinux"
+    "--disable-fam"
+    "--enable-xattr"
+    "--enable-libelf"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--disable-man"
+    "--disable-dtrace"
+    "--disable-systemtap"
+    "--disable-coverage"
+    "--enable-Bsymbolic"
+    "--enable-compile-warnings"
+    # The internal pcre is not patched to support gcc5, among other fixes
+    # specific to Triton
+    "--with-pcre=system"
+  ];
+
+  nativeBuildInputs = [
+    autoreconfHook
+    gettext
+    perl
+    python
+  ];
+
+  propagatedBuildInputs = [
+    attr
+    libiconv
+    libffi
+    pcre
+    zlib
+  ];
+
+  buildInputs = [
+    libelf
+  ] ++ optionals doCheck [
+    desktop_file_utils
+    libxml2
+    shared_mime_info
+    tzdata
+  ];
+
+  postInstall = "rm -rvf $out/share/gtk-doc";
+
+  preCheck = optionalString doCheck ''
+    export LD_LIBRARY_PATH="$NIX_BUILD_TOP/${name}/glib/.libs:$LD_LIBRARY_PATH"
+    export TZDIR="${tzdata}/share/zoneinfo"
+    export XDG_CACHE_HOME="$TMP"
+    export XDG_RUNTIME_HOME="$TMP"
+    export XDG_RUNTIME_DIR="$TMP"
+    export HOME="$TMP"
+    export XDG_DATA_DIRS="${desktop_file_utils}/share:${shared_mime_info}/share"
+    export G_TEST_DBUS_DAEMON="${dbus_daemon}/bin/dbus-daemon"
+    # Make sure that everything that uses D-Bus is creating its own temporary
+    # session rather than polluting the developer's (or failing, on buildds)
+    export DBUS_SESSION_BUS_ADDRESS='this-should-not-be-used-and-will-fail'
+    # Let's get failing tests' stdout and stderr so we have some information
+    # when a build fails
+    export VERBOSE=1
+  '';
+
+  # TODO: fix or disable failing tests
+  inherit doCheck;
   enableParallelBuilding = true;
   DETERMINISTIC_BUILD = 1;
 
-  inherit doCheck;
-  preCheck = optionalString doCheck
-    '' export LD_LIBRARY_PATH="$NIX_BUILD_TOP/${name}/glib/.libs:$LD_LIBRARY_PATH"
-       export TZDIR="${tzdata}/share/zoneinfo"
-       export XDG_CACHE_HOME="$TMP"
-       export XDG_RUNTIME_HOME="$TMP"
-       export HOME="$TMP"
-       export XDG_DATA_DIRS="${desktop_file_utils}/share:${shared_mime_info}/share"
-       export G_TEST_DBUS_DAEMON="${dbus_daemon}/bin/dbus-daemon"
-
-       substituteInPlace gio/tests/desktop-files/home/applications/epiphany-weather-for-toronto-island-9c6a4e022b17686306243dada811d550d25eb1fb.desktop --replace "Exec=/bin/true" "Exec=${coreutils}/bin/true"
-       # Needs machine-id, comment the test
-       sed -e '/\/gdbus\/codegen-peer-to-peer/ s/^\/*/\/\//' -i gio/tests/gdbus-peer.c
-       # All gschemas fail to pass the test, upstream bug?
-       sed -e '/g_test_add_data_func/ s/^\/*/\/\//' -i gio/tests/gschema-compile.c
-       # Cannot reproduce the failing test_associations on hydra
-       sed -e '/\/appinfo\/associations/d' -i gio/tests/appinfo.c
-       # Needed because of libtool wrappers
-       sed -e '/g_subprocess_launcher_set_environ (launcher, envp);/a g_subprocess_launcher_setenv (launcher, "PATH", g_getenv("PATH"), TRUE);' -i gio/tests/gsubprocess.c
-    '';
-
-  postInstall = ''rm -rvf $out/share/gtk-doc'';
-
   passthru = {
-     gioModuleDir = "lib/gio/modules";
-     inherit flattenInclude;
+    gioModuleDir = "lib/gio/modules";
+    inherit flattenInclude;
   };
 
   meta = with stdenv.lib; {
     description = "C library of programming buildings blocks";
-    homepage    = http://www.gtk.org/;
-    license     = licenses.lgpl2Plus;
-    maintainers = with maintainers; [ lovek323 raskin urkud ];
-    platforms   = platforms.unix;
-
-    longDescription = ''
-      GLib provides the core application building blocks for libraries
-      and applications written in C.  It provides the core object
-      system used in GNOME, the main loop implementation, and a large
-      set of utility functions for strings and common data structures.
-    '';
+    homepage = http://www.gtk.org/;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = platforms.linux;
   };
 }

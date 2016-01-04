@@ -496,7 +496,8 @@ gdk_pixbuf = gdk-pixbuf; # Deprecated alias
 gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
 
 glib = callPackage ../all-pkgs/glib { };
-glib-tested = glib.override { # checked version separate to break cycles
+# checked version separate to break recursion
+glib-tested = glib.override {
   doCheck = true;
   libffi = libffi.override {
     doCheck = true;

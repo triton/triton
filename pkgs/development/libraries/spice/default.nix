@@ -1,6 +1,7 @@
 { stdenv, fetchurl, pkgconfig, pixman, celt, alsaLib, openssl
-, libXrandr, libXfixes, libXext, libXrender, libXinerama, libjpeg, zlib
-, spice_protocol, python, pyparsing, glib, cyrus_sasl, lz4 }:
+, xorg, libjpeg, zlib, spice_protocol, python, pyparsing, glib
+, cyrus_sasl, lz4
+}:
 
 with stdenv.lib;
 
@@ -13,7 +14,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ pixman celt alsaLib openssl libjpeg zlib
-                  libXrandr libXfixes libXrender libXext libXinerama
+                  xorg.libXrandr xorg.libXfixes xorg.libXrender xorg.libXext xorg.libXinerama
                   python pyparsing glib cyrus_sasl lz4 ];
 
   nativeBuildInputs = [ pkgconfig spice_protocol ];

@@ -1,18 +1,46 @@
-{ stdenv, fetchurl, pkgconfig, intltool, gnome3
-, iconnamingutils, gtk, gdk_pixbuf, librsvg, hicolor_icon_theme }:
+{ stdenv, fetchurl
+, gettext
+, intltool
+
+, gdk-pixbuf
+, gnome3
+, hicolor_icon_theme
+}:
 
 stdenv.mkDerivation rec {
-  inherit (import ./src.nix fetchurl) name src;
+  name = "adwaita-icon-theme-${version}";
+  versionMajor = "3.18";
+  versionMinor = "0";
+  version = "${versionMajor}.${versionMinor}";
 
-  # For convenience, we can specify adwaita-icon-theme only in packages
-  propagatedBuildInputs = [ hicolor_icon_theme ];
+  src = fetchurl {
+    url = "mirror://gnome/sources/adwaita-icon-theme/${versionMajor}/${name}.tar.xz";
+    sha256 = "5e9ce726001fdd8ee93c394fdc3cdb9e1603bbed5b7c62df453ccf521ec50e58";
+  };
 
-  buildInputs = [ gdk_pixbuf librsvg ];
+  configureFlags = [
+    # nls creates unused directories
+    "--disable-nls"
+    "--enable-w32-cursors"
+    "--disable-l-xl-variants"
+  ];
 
-  nativeBuildInputs = [ pkgconfig intltool iconnamingutils gtk ];
+  nativeBuildInputs = [
+    gettext
+    intltool
+  ];
 
-  # remove a tree of dirs with no files within
-  postInstall = '' rm -rf "$out/locale" '';
+  propagatedBuildInputs = [
+    # For convenience, we can specify adwaita-icon-theme only in packages
+    hicolor_icon_theme
+  ];
+
+  buildInputs = [
+    gdk-pixbuf
+  ];
+
+  doCheck = false;
+  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     platforms = platforms.linux;

@@ -1,21 +1,63 @@
-{ stdenv, fetchurl, perl, cmake, vala, pkgconfig, gobjectIntrospection, glib, gtk3, gnome3, gettext }:
+{ stdenv
+, fetchurl
+, cmake
+, gettext
+, perl
+
+, atk
+, gdk-pixbuf
+, glib
+, gnome3
+, gobject-introspection
+, gtk3
+, pango
+, vala
+}:
 
 stdenv.mkDerivation rec {
-  majorVersion = "0.3";
-  minorVersion = "0";
-  name = "granite-${majorVersion}.${minorVersion}";
+  name = "granite-${version}";
+  versionMajor = "0.3";
+  versionMinor = "1";
+  version = "${versionMajor}.${versionMinor}";
+
   src = fetchurl {
-    url = "https://code.launchpad.net/granite/${majorVersion}/${majorVersion}/+download/${name}.tar.gz";
-    sha256 = "1laa109dz7kbd8zxddqw2p1b67yzva7cc5h3smqkj8a9jzbhv5fz";
+    url = "https://code.launchpad.net/granite/${versionMajor}/${version}/" +
+           "+download/${name}.tar.xz";
+    sha256 = "1inyq9qhayzg1kl7nc6i275k9yqdicl23rs5lyrz2xdsk8gxdhcf";
   };
-  cmakeFlags = "-DINTROSPECTION_GIRDIR=share/gir-1.0/ -DINTROSPECTION_TYPELIBDIR=lib/girepository-1.0";
-  buildInputs = [perl cmake vala pkgconfig gobjectIntrospection glib gtk3 gnome3.libgee gettext];
-  meta = {
+
+  cmakeFlags = [
+    "-DINTROSPECTION_GIRDIR=share/gir-1.0/"
+    "-DINTROSPECTION_TYPELIBDIR=lib/girepository-1.0"
+  ];
+
+  nativeBuildInputs = [
+    cmake
+    gettext
+    perl
+  ];
+
+  buildInputs = [
+    atk
+    gdk-pixbuf
+    glib
+    gnome3.libgee
+    gobject-introspection
+    gtk3
+    pango
+    vala
+  ];
+
+  meta = with stdenv.lib; {
     description = "An extension to GTK+ used by elementary OS";
-    longDescription = "An extension to GTK+ that provides several useful widgets and classes to ease application development. Designed for elementary OS.";
     homepage = https://launchpad.net/granite;
-    license = stdenv.lib.licenses.lgpl3;
-    platforms = stdenv.lib.platforms.linux;
-    maintainers = [ stdenv.lib.maintainers.vozz ];
+    license = licenses.lgpl3;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

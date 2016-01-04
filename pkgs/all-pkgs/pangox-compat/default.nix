@@ -1,4 +1,10 @@
-{ stdenv, fetchurl, pkgconfig, glib, pango, libX11 }:
+{ stdenv
+, fetchurl
+
+, glib
+, pango
+, xorg
+}:
 
 stdenv.mkDerivation rec {
   name = "pangox-compat-0.0.2";
@@ -8,12 +14,20 @@ stdenv.mkDerivation rec {
     sha256 = "0ip0ziys6mrqqmz4n71ays0kf5cs1xflj1gfpvs4fgy2nsrr482m";
   };
 
-  buildInputs = [ pkgconfig glib pango libX11 ];
+  buildInputs = [
+    glib
+    pango
+    xorg.libX11
+  ];
 
-  meta = {
-    description = "A compatibility library for pango>1.30.*";
-
+  meta = with stdenv.lib; {
+    description = "A compatibility library for pango >1.30.*";
     homepage = http://www.pango.org/;
-    license = stdenv.lib.licenses.lgpl2Plus;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [ ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

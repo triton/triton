@@ -62,4 +62,17 @@ stdenv.mkDerivation rec {
   ];
 
   enableParallelBuilding = true;
+
+  meta = with stdenv.lib; {
+    description = "Scalable Vector Graphics (SVG) rendering library";
+    homepage = https://wiki.gnome.org/Projects/LibRsvg;
+    license = licenses.lgpl2;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
+  };
 }

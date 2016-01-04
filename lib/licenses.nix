@@ -235,6 +235,12 @@ lib.mapAttrs (n: v: v // { shortName = n; }) rec {
     url = http://www.calculate-linux.org/packages/licenses/iASL;
   };
 
+  icu = spdx {
+    spdxId = "ICU";
+    fullName = "ICU License";
+    url = http://source.icu-project.org/repos/icu/icu/trunk/license.html;
+  };
+
   ijg = spdx {
     spdxId = "IJG";
     fullName = "Independent JPEG Group License";
@@ -356,7 +362,7 @@ lib.mapAttrs (n: v: v // { shortName = n; }) rec {
     url = "https://raw.githubusercontent.com/raboof/notion/master/LICENSE";
     fullName = "Notion modified LGPL";
   };
-  
+
   ofl = spdx {
     spdxId = "OFL-1.1";
     fullName = "SIL Open Font License 1.1";

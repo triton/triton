@@ -8538,6 +8538,8 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   vid-stab = callPackage ../development/libraries/vid-stab { };
 
+  virglrenderer = callPackage ../development/libraries/virglrenderer { };
+
   vigra = callPackage ../development/libraries/vigra {
     inherit (pkgs.pythonPackages) numpy;
   };

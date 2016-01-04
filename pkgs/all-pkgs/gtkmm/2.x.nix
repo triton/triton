@@ -1,38 +1,75 @@
-{ stdenv, fetchurl, pkgconfig, gtk, glibmm, cairomm, pangomm, atkmm }:
+{ stdenv
+, fetchurl
+
+, atkmm
+, cairomm
+, glibmm
+, gtk2
+, pangomm
+}:
+
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
 
 stdenv.mkDerivation rec {
-  name = "gtkmm-${minVer}.4";
-  minVer = "2.24";
+  name = "gtkmm-${version}";
+  versionMajor = "2.24";
+  versionMinor = "4";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtkmm/${minVer}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gtkmm/${versionMajor}/${name}.tar.xz";
     sha256 = "1vpmjqv0aqb1ds0xi6nigxnhlr0c74090xzi15b92amlzkrjyfj4";
   };
 
-  nativeBuildInputs = [pkgconfig];
+  patches = [
+    ./gtkmm-2.24.4-papersize.patch
+    ./gtkmm-2.24.4-missing-includes.patch
+    ./gtkmm-2.24.4-newer-glibmm.patch
+    ./gtkmm-2.24.4-add-list.m4.patch
+    ./gtkmm-2.24.4-fix-add-list.m4.patch
+    ./gtkmm-2.24.4-cpp11.patch
+    ./gtkmm-2.24.4-gdkpixbud-deprecation-warnings.patch
+  ];
 
-  propagatedBuildInputs = [ glibmm gtk atkmm cairomm pangomm ];
+  configureFlags = [
+    (enFlag "api-atkmm" (atkmm != null) null)
+    # Nokia maemo
+    (enFlag "api-maemo-extensions" true null)
+    # Requires deprecated api
+    "--enable-deprecated-api"
+    "--disable-documentation"
+    "--without-libstdc-doc"
+    "--without-libsigc-doc"
+    "--without-glibmm-doc"
+    "--without-cairomm-doc"
+    "--without-pangomm-doc"
+    "--without-atkmm-doc"
+  ];
+
+  propagatedBuildInputs = [
+    atkmm
+    cairomm
+    glibmm
+    gtk2
+    pangomm
+  ];
 
   doCheck = true;
+  enableParallelBuilding = true;
 
-  meta = {
-    description = "C++ interface to the GTK+ graphical user interface library";
-
-    longDescription = ''
-      gtkmm is the official C++ interface for the popular GUI library
-      GTK+.  Highlights include typesafe callbacks, and a
-      comprehensive set of widgets that are easily extensible via
-      inheritance.  You can create user interfaces either in code or
-      with the Glade User Interface designer, using libglademm.
-      There's extensive documentation, including API reference and a
-      tutorial.
-    '';
-
+  meta = with stdenv.lib; {
+    description = "C++ interface for GTK+";
     homepage = http://gtkmm.org/;
-
-    license = stdenv.lib.licenses.lgpl2Plus;
-
-    maintainers = with stdenv.lib.maintainers; [ raskin vcunat ];
-    platforms = stdenv.lib.platforms.unix;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

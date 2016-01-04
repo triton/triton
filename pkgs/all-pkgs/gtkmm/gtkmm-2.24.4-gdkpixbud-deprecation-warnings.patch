@@ -1,0 +1,45 @@
+From 33f4ecd007b2e4bd3511b36add8734b362c80d40 Mon Sep 17 00:00:00 2001
+From: Murray Cumming <murrayc@murrayc.com>
+Date: Fri, 14 Aug 2015 14:25:57 +0200
+Subject: Pixbuf: Avoid deprecations warnings that break
+ --enable-warnings=fatal.
+
+Such as during distcheck.
+---
+ gdk/src/pixbuf.ccg | 5 +++++
+ gdk/src/pixbuf.hg  | 3 +++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/gdk/src/pixbuf.ccg b/gdk/src/pixbuf.ccg
+index 946d600..f1a19c4 100644
+--- a/gdk/src/pixbuf.ccg
++++ b/gdk/src/pixbuf.ccg
+@@ -21,6 +21,11 @@
+ #include <gdk/gdk.h>
+ #include <gdk-pixbuf/gdk-pixbuf.h>
+ 
++//Turn off all deprecation warnings, to avoid the warning about
++//gdk_pixbuf_new_from_inline() in the generated code.
++//We don't bother using G_GNUC_END_IGNORE_DEPRECATIONS
++//because we are happy to keep it active for the whole file.
++G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+ 
+ namespace
+ {
+diff --git a/gdk/src/pixbuf.hg b/gdk/src/pixbuf.hg
+index 5f33591..994aa83 100644
+--- a/gdk/src/pixbuf.hg
++++ b/gdk/src/pixbuf.hg
+@@ -17,6 +17,9 @@
+ 
+ #m4 _PUSH(SECTION_CC_PRE_INCLUDES)
+ #undef GDK_DISABLE_DEPRECATED
++#define GDK_DISABLE_DEPRECATION_WARNINGS 1
++#undef GDK_PIXBUF_DISABLE_DEPRECATED
++#define GDK_PIXBUF_DISABLE_DEPRECATION_WARNINGS 1
+ #m4 _POP()
+ // This is for including the config header before any code (such as
+ // the #ifndef GDKMM_DISABLE_DEPRECATED in deprecated classes) is generated:
+-- 
+cgit v0.11.2
+

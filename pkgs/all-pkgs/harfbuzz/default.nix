@@ -1,11 +1,21 @@
-{ stdenv, fetchurl, pkgconfig, glib, freetype, cairo, libintlOrEmpty
-, icu, graphite2
-, withIcu ? false # recommended by upstream as default, but most don't needed and it's big
-, withGraphite2 ? true # it is small and major distros do include it
+{ stdenv
+, fetchurl
+, python
+
+, cairo
+, fontconfig
+, freetype
+, glib
+, gobject-introspection
+, graphite2
+, icu
 }:
 
-# TODO: split non-icu and icu lib into different outputs?
-# (icu is a ~30 MB dependency, the rest is very small in comparison)
+with {
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
+};
 
 stdenv.mkDerivation rec {
   name = "harfbuzz-1.1.2";
@@ -15,24 +25,62 @@ stdenv.mkDerivation rec {
     sha256 = "07s6z3hbrb4rdfgzmln169wxz4nm5y7qbr02ik5c7drxpn85fb2a";
   };
 
-  outputs = [ "out" "doc" ];
+  postPatch = optionalString doCheck ''
+    patchShebangs test/shaping/
+
+    # failing test, https://bugs.freedesktop.org/show_bug.cgi?id=89190
+    sed -e 's|tests/arabic-fallback-shaping.tests||' \
+        -i test/shaping/Makefile.{am,in}
+
+    # test fails
+    sed -e 's|tests/vertical.tests||' -i test/shaping/Makefile.{am,in}
+  '';
 
   configureFlags = [
-    ( "--with-graphite2=" + (if withGraphite2 then "yes" else "no") ) # not auto-detected by default
-    ( "--with-icu=" +       (if withIcu       then "yes" else "no") )
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--enable-introspection"
+    "--with-glib"
+    "--with-gobject"
+    "--with-cairo"
+    "--with-fontconfig"
+    "--with-icu"
+    "--with-graphite2"
+    "--with-freetype"
+    "--without-uniscribe"
+    "--without-coretext"
   ];
 
-  buildInputs = [ pkgconfig glib freetype cairo ] # recommended by upstream
-    ++ libintlOrEmpty;
-  propagatedBuildInputs = []
-    ++ stdenv.lib.optional withGraphite2 graphite2
-    ++ stdenv.lib.optional withIcu icu
-    ;
+  nativeBuildInputs = optionals doCheck [
+    python
+  ];
 
-  meta = {
+  buildInputs = [
+    cairo
+    fontconfig
+    freetype
+    glib
+    gobject-introspection
+    graphite2
+    icu
+  ];
+
+  postInstall = "rm -rvf $out/share/gtk-doc";
+
+  doCheck = true;
+  enableParallelBuilding = true;
+
+  meta = with stdenv.lib; {
     description = "An OpenType text shaping engine";
     homepage = http://www.freedesktop.org/wiki/Software/HarfBuzz;
-    maintainers = [ stdenv.lib.maintainers.eelco ];
-    platforms = stdenv.lib.platforms.linux ++ stdenv.lib.platforms.darwin;
+    license = licenses.;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

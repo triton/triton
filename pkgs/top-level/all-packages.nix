@@ -568,10 +568,6 @@ gtkmm_3 = callPackage ../all-pkgs/gtkmm/3.x.nix { };
 gvfs = callPackage ../all-pkgs/gvfs { gconf = gnome.GConf; };
 
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
-harfbuzz-icu = callPackage ../development/libraries/harfbuzz {
-  withIcu = true;
-  withGraphite2 = true;
-};
 
 json-glib = callPackage ../all-pkgs/json-glib { };
 

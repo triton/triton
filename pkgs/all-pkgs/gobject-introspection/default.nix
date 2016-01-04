@@ -1,52 +1,97 @@
-{ stdenv, fetchurl, glib, flex, bison, pkgconfig, libffi, python
-, libintlOrEmpty, autoconf, automake, otool }:
-# now that gobjectIntrospection creates large .gir files (eg gtk3 case)
-# it may be worth thinking about using multiple derivation outputs
-# In that case its about 6MB which could be separated
+{ stdenv
+, bison
+, fetchurl
+, flex
 
-let
-  ver_maj = "1.46";
-  ver_min = "0";
-in
+, glib
+, libffi
+, python
+# Tests
+, cairo
+}:
+
+with {
+  inherit (stdenv.lib)
+    optionals
+    optionalString
+    wtFlag;
+};
+
 stdenv.mkDerivation rec {
-  name = "gobject-introspection-${ver_maj}.${ver_min}";
+  name = "gobject-introspection-${versionMajor}.${versionMinor}";
+  versionMajor = "1.46";
+  versionMinor = "0";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gobject-introspection/${ver_maj}/${name}.tar.xz";
-    sha256 = "6658bd3c2b8813eb3e2511ee153238d09ace9d309e4574af27443d87423e4233";
+    url = "mirror://gnome/sources/gobject-introspection/${versionMajor}/${name}.tar.xz";
+    sha256 = "0cs27r18fga44ypp8icy62fwx6nh70r1bvhi4lzfn4w85cybsn36";
   };
-
-  buildInputs = [ flex bison pkgconfig python ]
-    ++ libintlOrEmpty
-    ++ stdenv.lib.optional stdenv.isDarwin otool;
-  propagatedBuildInputs = [ libffi glib ];
-
-  # Tests depend on cairo, which is undesirable (it pulls in lots of
-  # other dependencies).
-  configureFlags = [ "--disable-tests" ];
-
-  preConfigure = ''
-    sed 's|/usr/bin/env ||' -i tools/g-ir-tool-template.in
-  '';
-
-  postInstall = "rm -rf $out/share/gtk-doc";
 
   setupHook = ./setup-hook.sh;
 
-  patches = [ ./absolute_shlib_path.patch ];
+  patches = [
+    ./absolute_shlib_path.patch
+  ];
+
+  postPatch = ''
+    # patchShebangs does not catch @PYTHON@
+    sed -e 's|#!/usr/bin/env @PYTHON@|#!${python.interpreter}|' \
+        -i tools/g-ir-tool-template.in
+  '' + optionalString doCheck ''
+    patchShebangs tests/gi-tester
+
+    # Fix tests broken by absolute_shlib_path.patch
+    sed -e 's|shared-library="|shared-library="/unused/|' -i \
+      tests/scanner/GtkFrob-1.0-expected.gir \
+      tests/scanner/Utility-1.0-expected.gir \
+      tests/scanner/Typedefs-1.0-expected.gir \
+      tests/scanner/GetType-1.0-expected.gir \
+      tests/scanner/SLetter-1.0-expected.gir \
+      tests/scanner/Regress-1.0-expected.gir
+  '';
+
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--disable-doctool"
+    "--enable-Bsymbolic"
+    (wtFlag "cairo" doCheck null)
+  ];
+
+  nativeBuildInputs = [
+    bison
+    flex
+  ];
+
+  buildInputs = [
+    glib
+    libffi
+    python
+  ] ++ optionals doCheck [
+    cairo
+  ];
+
+  postInstall = "rm -rvf $out/share/gtk-doc";
+
+  doCheck = true;
+  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A middleware layer between C libraries and language bindings";
-    homepage    = http://live.gnome.org/GObjectIntrospection;
-    maintainers = with maintainers; [ lovek323 urkud lethalman ];
-    platforms   = platforms.unix;
-
-    longDescription = ''
-      GObject introspection is a middleware layer between C libraries (using
-      GObject) and language bindings. The C library can be scanned at compile
-      time and generate a metadata file, in addition to the actual native C
-      library. Then at runtime, language bindings can read this metadata and
-      automatically provide bindings to call into the C library.
-    '';
+    homepage = http://live.gnome.org/GObjectIntrospection;
+    license = with licenses; [
+      lgpl2Plus
+      gpl2Plus
+    ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

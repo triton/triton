@@ -1,21 +1,43 @@
-{ lib, stdenv, fetchurl, pkgconfig, udev, glib }:
+{ stdenv
+, fetchurl
 
-let version = "230"; in
+, glib
+, gobject-introspection
+, udev
+}:
 
 stdenv.mkDerivation rec {
   name = "libgudev-${version}";
+  version = "230";
 
   src = fetchurl {
     url = "https://download.gnome.org/sources/libgudev/${version}/${name}.tar.xz";
-    sha256 = "a2e77faced0c66d7498403adefcc0707105e03db71a2b2abd620025b86347c18";
+    sha256 = "063w6j35n0i0ssmv58kivc1mw4070z6fzb83hi4xfrhcxnn7zrx2";
   };
 
-  buildInputs = [ pkgconfig udev glib ];
+  configureFlags = [
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--enable-introspection"
+  ];
 
-  meta = {
+  buildInputs = [
+    glib
+    gobject-introspection
+    udev
+  ];
+
+  meta = with stdenv.lib; {
+    description = "GObject bindings for udev";
     homepage = https://wiki.gnome.org/Projects/libgudev;
-    maintainers = [ lib.maintainers.eelco ];
-    platforms = lib.platforms.linux;
-    license = lib.licenses.lgpl2Plus;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

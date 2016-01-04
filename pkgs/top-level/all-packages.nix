@@ -592,6 +592,8 @@ pcre2 = callPackage ../all-pkgs/pcre/2.x.nix { };
 
 pixman = callPackage ../all-pkgs/pixman { };
 
+sakura = callPackage ../all-pkgs/sakura { };
+
 wayland = callPackage ../all-pkgs/wayland {
   graphviz = graphviz-nox;
 };
@@ -12960,10 +12962,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   rxvt_unicode-with-plugins = callPackage ../applications/misc/rxvt_unicode/wrapper.nix {
     plugins = [ urxvt_perl urxvt_perls urxvt_tabbedex urxvt_font_size ];
-  };
-
-  sakura = callPackage ../applications/misc/sakura {
-    vte = gnome3.vte_290;
   };
 
   sbagen = callPackage ../applications/misc/sbagen { };

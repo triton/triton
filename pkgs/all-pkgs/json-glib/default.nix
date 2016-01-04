@@ -1,23 +1,53 @@
-{ stdenv, fetchurl, glib, pkgconfig, gobjectIntrospection, dbus }:
+{ stdenv
+, fetchurl
+, gettext
+
+, glib
+, gobject-introspection
+}:
 
 stdenv.mkDerivation rec {
-  name = "json-glib-${minVer}.2";
-  minVer = "1.0";
+  name = "json-glib-${version}";
+  versionMajor = "1.0";
+  versionMinor = "4";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/json-glib/${minVer}/${name}.tar.xz";
-    sha256 = "887bd192da8f5edc53b490ec51bf3ffebd958a671f5963e4f3af32c22e35660a";
+    url = "mirror://gnome/sources/json-glib/${versionMajor}/${name}.tar.xz";
+    sha256 = "1k85vvb2prmk8aa8hmr2rp9rnbhffjgnmr18b13g24xxnqy5kww0";
   };
 
-  configureflags= "--with-introspection";
+  configureflags= [
+    "--enable-glibtest"
+    "--enable-Bsymbolic"
+    "--disable-gcov"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--disable-man"
+    "--enable-introspection"
+    "--enable-nls"
+  ];
 
-  propagatedBuildInputs = [ glib gobjectIntrospection ];
-  nativeBuildInputs = [ pkgconfig ];
+  nativeBuildInputs = [
+    gettext
+  ];
+
+  buildInputs = [
+    glib
+    gobject-introspection
+  ];
 
   meta = with stdenv.lib; {
+    description = "(de)serialization support for JSON";
     homepage = http://live.gnome.org/JsonGlib;
-    description = "A library providing (de)serialization support for the JavaScript Object Notation (JSON) format";
     license = licenses.lgpl2;
-    maintainers = with maintainers; [ lethalman ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

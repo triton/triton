@@ -287,6 +287,8 @@ let
 
   buildMaven = callPackage ../build-support/build-maven.nix {};
 
+  cmark = callPackage ../development/libraries/cmark { };
+
   dotnetenv = callPackage ../build-support/dotnetenv {
     dotnetfx = dotnetfx40;
   };
@@ -799,7 +801,9 @@ x265 = callPackage ../all-pkgs/x265 { };
     pkgs_i686 = pkgsi686Linux;
   };
 
-  inherit (androidenv) androidsdk_4_4 androidndk;
+  inherit (androidenv)  androidndk;
+
+  androidsdk = androidenv.androidsdk_6_0;
 
   arc-gtk-theme = callPackage ../misc/themes/arc { };
 
@@ -901,7 +905,7 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   bsod = callPackage ../misc/emulators/bsod { };
 
-  btrfsProgs = callPackage ../tools/filesystems/btrfsprogs { };
+  btrfs-progs = callPackage ../tools/filesystems/btrfs-progs { };
 
   bwm_ng = callPackage ../tools/networking/bwm-ng { };
 
@@ -1460,6 +1464,8 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   dhcpcd = callPackage ../tools/networking/dhcpcd { };
 
+  dhcping = callPackage ../tools/networking/dhcping { };
+
   di = callPackage ../tools/system/di { };
 
   diffoscope = callPackage ../tools/misc/diffoscope {
@@ -1974,7 +1980,7 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   gupnp_igd = callPackage ../development/libraries/gupnp-igd {};
 
-  gupnptools = callPackage ../tools/networking/gupnp-tools {};
+  gupnp-tools = callPackage ../tools/networking/gupnp-tools {};
 
   gvpe = callPackage ../tools/networking/gvpe { };
 
@@ -2909,6 +2915,8 @@ x265 = callPackage ../all-pkgs/x265 { };
     libcap = if stdenv.isDarwin then null else libcap;
   };
 
+  pingtcp = callPackage ../tools/networking/pingtcp { };
+
   pius = callPackage ../tools/security/pius { };
 
   pk2cmd = callPackage ../tools/misc/pk2cmd { };
@@ -3361,7 +3369,7 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   sysbench = callPackage ../development/tools/misc/sysbench {};
 
-  system_config_printer = callPackage ../tools/misc/system-config-printer {
+  system-config-printer = callPackage ../tools/misc/system-config-printer {
     libxml2 = libxml2Python;
    };
 
@@ -3421,6 +3429,8 @@ x265 = callPackage ../all-pkgs/x265 { };
   tiny8086 = callPackage ../applications/virtualization/8086tiny { };
 
   tlsdate = callPackage ../tools/networking/tlsdate { };
+
+  tldr = callPackage ../tools/misc/tldr { };
 
   tmate = callPackage ../tools/misc/tmate { };
 
@@ -3691,6 +3701,8 @@ x265 = callPackage ../all-pkgs/x265 { };
   xsensors = callPackage ../os-specific/linux/xsensors { };
 
   xcruiser = callPackage ../applications/misc/xcruiser { };
+
+  xxkb = callPackage ../applications/misc/xxkb { };
 
   unarj = callPackage ../tools/archivers/unarj { };
 
@@ -9538,8 +9550,6 @@ x265 = callPackage ../all-pkgs/x265 { };
     libdrm = if stdenv.isLinux then libdrm else null;
   } // { inherit xlibsWrapper; } );
 
-  xorgReplacements = callPackage ../servers/x11/xorg/replacements.nix { };
-
   xorgVideoUnichrome = callPackage ../servers/x11/xorg/unichrome/default.nix { };
 
   xwayland = callPackage ../servers/x11/xorg/xwayland.nix { };
@@ -13160,7 +13170,7 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   subunit = callPackage ../development/libraries/subunit { };
 
-  surf = callPackage ../applications/misc/surf {
+  surf = callPackage ../applications/networking/browsers/surf {
     webkit = webkitgtk2;
   };
 
@@ -13817,6 +13827,8 @@ x265 = callPackage ../all-pkgs/x265 { };
   xvidcap = callPackage ../applications/video/xvidcap {
     inherit (gnome) scrollkeeper libglade;
   };
+
+  xzgv = callPackage ../applications/graphics/xzgv { };
 
   yate = callPackage ../applications/misc/yate { };
 
@@ -15492,19 +15504,19 @@ x265 = callPackage ../all-pkgs/x265 { };
     };
   };
 
-  saneBackends = callPackage ../applications/graphics/sane/backends {
+  sane-backends = callPackage ../applications/graphics/sane/backends {
     gt68xxFirmware = config.sane.gt68xxFirmware or null;
     snapscanFirmware = config.sane.snapscanFirmware or null;
   };
 
-  saneBackendsGit = callPackage ../applications/graphics/sane/backends/git.nix {
+  sane-backends-git = callPackage ../applications/graphics/sane/backends/git.nix {
     gt68xxFirmware = config.sane.gt68xxFirmware or null;
     snapscanFirmware = config.sane.snapscanFirmware or null;
   };
 
   mkSaneConfig = callPackage ../applications/graphics/sane/config.nix { };
 
-  saneFrontends = callPackage ../applications/graphics/sane/frontends.nix { };
+  sane-frontends = callPackage ../applications/graphics/sane/frontends.nix { };
 
   sct = callPackage ../tools/X11/sct {};
 
@@ -15674,7 +15686,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   xsane = callPackage ../applications/graphics/sane/xsane.nix {
     libpng = libpng12;
-    saneBackends = saneBackends;
   };
 
   xwiimote = callPackage ../misc/drivers/xwiimote {
@@ -15772,6 +15783,7 @@ aliases = with self; rec {
   firefoxWrapper = firefox-wrapper;
   fuse_exfat = exfat;                   # 2015-09-11
   grantlee5 = qt5.grantlee;  # added 2015-12-19
+  gupnptools = gupnp-tools;  # added 2015-12-19
   htmlTidy = html-tidy;  # added 2014-12-06
   inherit (haskell.compiler) jhc uhc;   # 2015-05-15
   inotifyTools = inotify-tools;
@@ -15799,6 +15811,7 @@ aliases = with self; rec {
   signon = qt5.signon;  # added 2015-12-19
   speedtest_cli = speedtest-cli;  # added 2015-02-17
   sqliteInteractive = sqlite-interactive;  # added 2014-12-06
+  system_config_printer = system-config-printer;  # added 2016-01-03
   telepathy_qt5 = qt5.telepathy;  # added 2015-12-19
   x11 = xlibsWrapper; # added 2015-09
   xf86_video_nouveau = xorg.xf86videonouveau; # added 2015-09
@@ -15810,6 +15823,10 @@ aliases = with self; rec {
   manpages = man-pages; # added 2015-12-06
   mssys = ms-sys; # added 2015-12-13
   virtviewer = virt-viewer; # added 2015-12-24
+  saneBackends = sane-backends; # added 2016-01-02
+  saneBackendsGit = sane-backends-git; # added 2016-01-02
+  saneFrontends = sane-frontends; # added 2016-01-02
+  btrfsProgs = btrfs-progs; # added 2016-01-03
 };
 
 tweakAlias = _n: alias: with lib;

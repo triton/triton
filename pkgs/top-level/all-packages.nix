@@ -613,7 +613,6 @@ webkitgtk_2_4_gtk2 = webkitgtk_2_4_gtk3.override {
 };
 webkitgtk_2_4 = webkitgtk_2_4_gtk3;
 webkitgtk = callPackage ../all-pkgs/webkitgtk {
-  harfbuzz = harfbuzz-icu;
   gst-plugins-base = gst_all_1.gst-plugins-base;
 };
 

@@ -172,14 +172,11 @@ stdenv.mkDerivation rec {
         ln -svf ''${lib}$suffix.pc $out/lib/pkgconfig/$lib$newsuffix.pc
       done
     done
-  '' + optionalString threaded ''
-    # Fix .la files to include pthreads
-    find $out/lib -name \*.la -type f | xargs sed -i "s,\(dependency_libs='\),\1 -lpthread,"
   '';
 
   # In the standard environment we don't want to have bootstrap references
   preFixup = ''
-    sed -i 's,/.*/bin/sh,/bin/sh,g' $out/bin/*
+    sed -i 's,${stdenv.shell},/bin/sh,g' $out/bin/*-config
   '';
 
   meta = {

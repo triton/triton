@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     sha256 = "1ryd1686bd31gfdjxnqm6k1ybnjmjz8v97px7lmdkr4g0vxqhgml";
   };
 
-  buildInputs = [ python asciidoc re2c ];
+  nativeBuildInputs = [ python asciidoc re2c ];
 
   buildPhase = ''
     python bootstrap.py
@@ -25,6 +25,8 @@ stdenv.mkDerivation rec {
     cp doc/manual.asciidoc $out/share/doc/ninja/
     cp doc/manual.html $out/share/doc/ninja/
   '';
+
+  setupHook = ./setup-hook.sh;
 
   meta = with stdenv.lib; {
     description = "Small build system with a focus on speed";

@@ -594,9 +594,7 @@ pangomm = callPackage ../all-pkgs/pangomm { };
 
 pangox-compat = callPackage ../all-pkgs/pangox-compat { };
 
-pcre = callPackage ../all-pkgs/pcre/1.x.nix {
-  unicodeSupport = config.pcre.unicode or true;
-};
+pcre = callPackage ../all-pkgs/pcre/1.x.nix { };
 pcre2 = callPackage ../all-pkgs/pcre/2.x.nix { };
 
 pixman = callPackage ../all-pkgs/pixman { };
@@ -11846,9 +11844,7 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   inherit (gnome3) gitg;
 
-  giv = callPackage ../applications/graphics/giv {
-    pcre = pcre.override { unicodeSupport = true; };
-  };
+  giv = callPackage ../applications/graphics/giv { };
 
   gmrun = callPackage ../applications/misc/gmrun {};
 

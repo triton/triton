@@ -1,6 +1,4 @@
-{ stdenv, fetchurl, unicodeSupport ? true, cplusplusSupport ? true
-, windows ? null
-}:
+{ stdenv, fetchurl }:
 
 with stdenv.lib;
 
@@ -14,19 +12,17 @@ stdenv.mkDerivation rec {
 
   outputs = [ "out" "doc" "man" ];
 
-  configureFlags = ''
-    --enable-jit
-    ${if unicodeSupport then "--enable-unicode-properties" else ""}
-    ${if !cplusplusSupport then "--disable-cpp" else ""}
-  '';
+  configureFlags = [
+    "--enable-pcre8"
+    "--enable-pcre16"
+    "--enable-pcre32"
+    "--enable-jit"
+    "--enable-utf"
+    "--enable-unicode-properties"
+    "--disable-silent-rules"
+  ];
 
-  doCheck = with stdenv; !(isCygwin || isFreeBSD);
-    # XXX: test failure on Cygwin
-    # we are running out of stack on both freeBSDs on Hydra
-
-  crossAttrs = optionalAttrs (stdenv.cross.libc == "msvcrt") {
-    buildInputs = [ windows.mingw_w64_pthreads.crossDrv ];
-  };
+  doCheck = true;
 
   meta = {
     homepage = "http://www.pcre.org/";

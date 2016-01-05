@@ -6,7 +6,11 @@ let
 
   fetch = fetch_v version;
   fetch_v = ver: name: sha256: fetchurl {
-    url = "http://llvm.org/releases/${ver}/${name}-${ver}.src.tar.xz";
+    urls = [
+      "http://llvm.org/releases/${ver}/${name}-${ver}.src.tar.xz"
+      "http://ftp.cc.uoc.gr/mirrors/linux/lfs/LFS/conglomeration/llvm/${name}-${ver}.src.tar.xz"
+      "http://slackbuilds.org/mirror/slackware/slackware-current/source/d/llvm/${name}-${ver}.src.tar.xz"
+    ];
     inherit sha256;
   };
 

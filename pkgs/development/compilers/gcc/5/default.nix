@@ -32,6 +32,7 @@
 , gnused ? null
 , binutils ? null
 , shouldBootstrap ? true
+, libPathExcludes ? []
 }:
 
 assert langJava     -> zip != null && unzip != null
@@ -307,6 +308,8 @@ stdenv.mkDerivation ({
       )
     fi
   '';
+
+  ABSOLUTE_LIBTOOL_EXCLUDED = libPathExcludes;
 
   dontDisableStatic = true;
 

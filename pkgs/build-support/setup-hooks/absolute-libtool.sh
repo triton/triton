@@ -93,6 +93,13 @@ BEGIN {
       lib_paths[substr(split_ldflags[i], 3, length(split_ldflags[i])-2)] = 1;
     }
   }
+
+  # Remove the blacklisted paths
+  split(ENVIRON["ABSOLUTE_LIBTOOL_EXCLUDED"], split_excluded_paths, "[ \t\n:]+")
+  for (i in split_excluded_paths) {
+    print "Exclude Path:" split_excluded_paths[i] > "/dev/stderr";
+    delete lib_paths[split_excluded_paths[i]];
+  }
 }
 function replaceStmt(stmt,    matches, file, output, lib_path) {
   if (stmt ~ /^-L/) {

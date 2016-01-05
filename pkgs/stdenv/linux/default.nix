@@ -208,7 +208,10 @@ rec {
         gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
           nativeLibc = false;
-          cc = pkgs.gcc.cc.override { shouldBootstrap = true; };
+          cc = pkgs.gcc.cc.override {
+            shouldBootstrap = true;
+            libPathExcludes = [ "${bootstrapTools}/lib"];
+          };
           isGNU = true; # Using glibc
           libc = stage1Pkgs.glibc;
           binutils = bootstrapTools;

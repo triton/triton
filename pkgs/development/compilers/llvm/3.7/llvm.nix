@@ -3,6 +3,7 @@
 , perl
 , groff
 , cmake
+, ninja
 , python
 , libffi
 , binutils
@@ -35,7 +36,8 @@ in stdenv.mkDerivation rec {
     mv compiler-rt-* $sourceRoot/projects/compiler-rt
   '';
 
-  buildInputs = [ perl groff cmake libxml2 python libffi ]
+  nativeBuildInputs = [ perl groff cmake ninja python ];
+  buildInputs = [ libxml2 libffi ]
     ++ stdenv.lib.optional stdenv.isDarwin libcxxabi;
 
   propagatedBuildInputs = [ ncurses zlib ];
@@ -60,6 +62,8 @@ in stdenv.mkDerivation rec {
     "-DLLVM_ENABLE_LIBCXX=ON"
     "-DCAN_TARGET_i386=false"
   ];
+
+  doCheck = true;
 
   postBuild = ''
     rm -fR $out

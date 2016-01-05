@@ -11,7 +11,7 @@ ninjaInstallPhase() {
   runHook preInstall
   mkdir -p "$prefix"
   echo "ninja install flags: $installTargets $makeFlags ${makeFlagsArray[@]} $installFlags ${installFlagsArray[@]}"
-  ninja $installTargets ${enableParallelBuilding:+-j${NIX_BUILD_CORES}} \
+  ninja ${enableParallelBuilding:+-j${NIX_BUILD_CORES}} \
       $makeFlags "${makeFlagsArray[@]}" \
       $installFlags "${installFlagsArray[@]}" ${installTargets:-install}
   runHook postInstall

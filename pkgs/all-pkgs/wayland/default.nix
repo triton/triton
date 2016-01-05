@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig
+{ stdenv, fetchurl
 
 # Optional Dependencies
 , libffi ? null, docbook_xsl ? null, doxygen ? null, graphviz ? null, libxslt ? null, xmlto ? null
@@ -30,8 +30,13 @@ stdenv.mkDerivation rec {
     (mkEnable enableDocumentation "documentation" null)
   ];
 
-  nativeBuildInputs = [ pkgconfig ]
-    ++ optionals enableDocumentation [ docbook_xsl doxygen graphviz libxslt xmlto ];
+  nativeBuildInputs = optionals enableDocumentation [
+    docbook_xsl
+    doxygen
+    graphviz
+    libxslt
+    xmlto
+  ];
 
   buildInputs = [ libffi expat ];
 

@@ -1,7 +1,6 @@
 { stdenv
 , gettext
 , fetchurl
-, pkgconfig
 , perl
 
 , glib

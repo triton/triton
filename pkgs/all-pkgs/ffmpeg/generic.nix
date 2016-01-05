@@ -1,6 +1,5 @@
 { stdenv
 , fetchurl
-, pkgconfig
 , perl
 , texinfo
 , yasm

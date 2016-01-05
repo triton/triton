@@ -1,5 +1,5 @@
 { stdenv, fetchurl, perl, python, ruby, bison, gperf, cmake
-, pkgconfig, gettext, gobjectIntrospection, libnotify
+, gettext, gobjectIntrospection, libnotify
 , gtk2, gtk3, wayland, libwebp, enchant
 , libxml2, libsoup, libsecret, libxslt, harfbuzz, libpthreadstubs
 , enableGeoLocation ? true, geoclue2, sqlite
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake perl python ruby bison gperf sqlite
-    pkgconfig gettext gobjectIntrospection
+    gettext gobjectIntrospection
   ];
 
   buildInputs = [

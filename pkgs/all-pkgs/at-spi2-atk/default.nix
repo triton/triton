@@ -1,7 +1,6 @@
 { stdenv
 , fetchurl
 , intltool
-, pkgconfig
 , python
 
 , atk

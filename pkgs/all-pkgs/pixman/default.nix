@@ -1,4 +1,4 @@
-{ fetchurl, stdenv, pkgconfig, libpng, glib /*just passthru*/ }:
+{ fetchurl, stdenv, libpng, glib /*just passthru*/ }:
 
 stdenv.mkDerivation rec {
   name = "pixman-0.32.8";
@@ -10,7 +10,6 @@ stdenv.mkDerivation rec {
 
   patches = stdenv.lib.optional stdenv.isDarwin ./fix-clang36.patch;
 
-  nativeBuildInputs = [ pkgconfig ];
   buildInputs = stdenv.lib.optional doCheck libpng;
 
   configureFlags = stdenv.lib.optional stdenv.isArm "--disable-arm-iwmmxt";

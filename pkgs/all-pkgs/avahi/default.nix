@@ -2,7 +2,6 @@
 , fetchurl
 , gettext
 , intltool
-, pkgconfig
 
 , dbus
 , expat

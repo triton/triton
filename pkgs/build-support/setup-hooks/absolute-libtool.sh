@@ -98,12 +98,12 @@ function replaceStmt(stmt,    matches, file, output, lib_path) {
   if (stmt ~ /^-L/) {
     return "";
   } else if (match(stmt, /^-l(.*)$/, matches)) {
-    for (lib_path in lib_paths) {
-      file = lib_path "/lib" matches[1] ".la";
-      if (system("test -e " file) == 0) {
-        return file;
-      }
-    }
+    #for (lib_path in lib_paths) {
+    #  file = lib_path "/lib" matches[1] ".la";
+    #  if (system("test -e " file) == 0) {
+    #    return file;
+    #  }
+    #}
     for (lib_path in lib_paths) {
       file = lib_path "/lib" matches[1] ".so";
       if (system("test -e " file) != 0) {
@@ -131,7 +131,7 @@ function replaceStmt(stmt,    matches, file, output, lib_path) {
 
   if (match($0, /^dependency_libs='(.*)'$/, matches)) {
     split(matches[1], split_dependencies, "[ \t]+");
-    output = "dependency_libs=' ";
+    output = "dependency_libs='";
     for (i in split_dependencies) {
       replacement = replaceStmt(split_dependencies[i]);
       if (replacement != "") {
@@ -142,7 +142,17 @@ function replaceStmt(stmt,    matches, file, output, lib_path) {
     print output;
   } else if (match($0, /^Libs:(.*)$/, matches)) {
     split(matches[1], split_dependencies, "[ \t]+");
-    output = "Libs: ";
+    output = "Libs:";
+    for (i in split_dependencies) {
+      replacement = replaceStmt(split_dependencies[i]);
+      if (replacement != "") {
+        output = output " " replacement;
+      }
+    }
+    print output;
+  } else if (match($0, /^Libs.private:(.*)$/, matches)) {
+    split(matches[1], split_dependencies, "[ \t]+");
+    output = "Libs.private:";
     for (i in split_dependencies) {
       replacement = replaceStmt(split_dependencies[i]);
       if (replacement != "") {

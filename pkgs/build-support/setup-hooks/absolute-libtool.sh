@@ -68,9 +68,18 @@ patchPcFiles() {
   local FILE
   for FILE in $PC_FILES; do
     echo "Patching Library Paths: $FILE" >&2
-    cat "$FILE" | awkReplacer > "$FILE".tmp
+    readPcFile "$FILE" | awkReplacer > "$FILE".tmp
     mv "$FILE".tmp "$FILE"
   done
+}
+
+readPcFile() {
+  cp "$1" "$1".tmp2
+  sed -i '/Requires\(\|.private\):/d' "$1"
+  local LIBS
+  LIBS="$(pkg-config --libs "$1")"
+  mv "$1".tmp2 "$1"
+  sed "s@^Libs:.*\$@Libs: $LIBS@g" "$1"
 }
 
 # Pipe the libtool command line to be fixed

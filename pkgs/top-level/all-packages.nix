@@ -8575,8 +8575,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   wiredtiger = callPackage ../development/libraries/wiredtiger { };
 
-  wvstreams = callPackage ../development/libraries/wvstreams { };
-
   wxGTK = wxGTK28;
 
   wxGTK28 = callPackage ../development/libraries/wxGTK-2.8 {
@@ -11741,8 +11739,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   wireshark-gtk = wireshark-cli.override { withGtk = true; };
   wireshark-qt = wireshark-cli.override { withQt = true; };
   wireshark = wireshark-gtk;
-
-  wvdial = callPackage ../os-specific/linux/wvdial { };
 
   fbida = callPackage ../applications/graphics/fbida { };
 

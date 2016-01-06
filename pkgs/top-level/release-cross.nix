@@ -208,7 +208,6 @@ in {
     boehmgc.crossDrv = nativePlatforms;
     findutils.crossDrv = nativePlatforms;
     gcc.crossDrv = nativePlatforms;
-    gcc46.crossDrv = nativePlatforms;
     gdb.crossDrv = nativePlatforms;
     gmp.crossDrv = nativePlatforms;
     gnugrep.crossDrv = nativePlatforms;

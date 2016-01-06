@@ -1,5 +1,5 @@
 { stdenv, fetchurl, fetchgit, fetchzip, file, python2, tzdata, procps
-, llvmPackages_37, jemalloc, ncurses, zlib
+, llvmPackages, jemalloc, ncurses, zlib
 
 , shortVersion, isRelease
 , forceBundledLLVM ? false
@@ -37,7 +37,7 @@ let version = if isRelease then
 
     name = "rustc-${version}";
 
-    llvmShared = llvmPackages_37.llvm.override { enableSharedLibraries = true; };
+    llvmShared = llvmPackages.llvm.override { enableSharedLibraries = true; };
 
     platform = if stdenv.system == "i686-linux"
       then "linux-i386"

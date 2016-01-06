@@ -3978,8 +3978,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   ccl = callPackage ../development/compilers/ccl { };
 
-  clangSelf = clangWrapSelf llvmPackagesSelf.clang;
-
   clangWrapSelf = build: callPackage ../build-support/cc-wrapper {
     cc = build;
     isClang = true;
@@ -4349,22 +4347,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   lessc = callPackage ../development/compilers/lessc { };
 
   llvmPackages = recurseIntoAttrs llvmPackages_37;
-
-  llvmPackagesSelf = llvmPackages_34.override {
-    stdenv = libcxxStdenv;
-  };
-
-  llvmPackages_34 = callPackage ../development/compilers/llvm/3.4 {
-    isl = isl_0_12;
-  };
-
-  llvmPackages_35 = callPackage ../development/compilers/llvm/3.5 {
-    isl = isl_0_14;
-  };
-
-  llvmPackages_36 = callPackage ../development/compilers/llvm/3.6 {
-    inherit (stdenvAdapters) overrideCC;
-  };
 
   llvmPackages_37 = callPackage ../development/compilers/llvm/3.7 {
     inherit (stdenvAdapters) overrideCC;

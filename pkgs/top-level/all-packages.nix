@@ -5409,9 +5409,11 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   spark = callPackage ../applications/networking/cluster/spark { };
 
-  spidermonkey_17 = callPackage ../development/interpreters/spidermonkey/17.0.nix { };
-  spidermonkey_24 = callPackage ../development/interpreters/spidermonkey/24.2.nix { };
-  spidermonkey_38 = callPackage ../development/interpreters/spidermonkey/38.nix { };
+
+  inherit (callPackages ../development/interpreters/spidermonkey { })
+    spidermonkey_17
+    spidermonkey_24
+    spidermonkey_38;
   spidermonkey = spidermonkey_38;
 
   supercollider = callPackage ../development/interpreters/supercollider {

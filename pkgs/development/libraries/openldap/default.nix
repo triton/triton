@@ -15,18 +15,11 @@ stdenv.mkDerivation rec {
   configureFlags =
     [ "--enable-overlays"
       "--disable-dependency-tracking"   # speeds up one-time build
+      "--with-pic"
     ] ++ stdenv.lib.optional (openssl == null) "--without-tls"
-      ++ stdenv.lib.optional (cyrus_sasl == null) "--without-cyrus-sasl"
-      ++ stdenv.lib.optional stdenv.isFreeBSD "--with-pic";
+      ++ stdenv.lib.optional (cyrus_sasl == null) "--without-cyrus-sasl";
 
   dontPatchELF = 1; # !!!
-
-  # Fixup broken libtool
-  preFixup = ''
-    sed -e 's,-lsasl2,-L${cyrus_sasl}/lib -lsasl2,' \
-        -e 's,-lssl,-L${openssl}/lib -lssl,' \
-        -i $out/lib/libldap.la -i $out/lib/libldap_r.la
-  '';
 
   meta = with stdenv.lib; {
     homepage    = http://www.openldap.org/;

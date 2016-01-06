@@ -6354,9 +6354,7 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   cwiid = callPackage ../development/libraries/cwiid { };
 
-  cyrus_sasl = callPackage ../development/libraries/cyrus-sasl {
-    kerberos = if stdenv.isFreeBSD then libheimdal else kerberos;
-  };
+  cyrus_sasl = callPackage ../development/libraries/cyrus-sasl { };
 
   # Make bdb5 the default as it is the last release under the custom
   # bsd-like license
@@ -9490,8 +9488,8 @@ x265 = callPackage ../all-pkgs/x265 { };
   };
 
   shishi = callPackage ../servers/shishi {
-      pam = if stdenv.isLinux then pam else null;
-      # see also openssl, which has/had this same trick
+    pam = if stdenv.isLinux then pam else null;
+    # see also openssl, which has/had this same trick
   };
 
   sipcmd = callPackage ../applications/networking/sipcmd { };

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, xorg }:
+{ stdenv, fetchurl, xorg }:
 
 stdenv.mkDerivation rec {
   name = "libvdpau-1.1.1";
@@ -8,9 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "857a01932609225b9a3a5bf222b85e39b55c08787d0ad427dbd9ec033d58d736";
   };
 
-  buildInputs = with xorg; [ pkgconfig dri2proto libXext ];
-
-  propagatedBuildInputs = [ xorg.libX11 ];
+  buildInputs = with xorg; [ dri2proto libXext libX11 ];
 
   meta = with stdenv.lib; {
     homepage = http://people.freedesktop.org/~aplattner/vdpau/;

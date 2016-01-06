@@ -3018,8 +3018,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   openmpi = callPackage ../development/libraries/openmpi { };
 
-  openmodelica = callPackage ../applications/science/misc/openmodelica { };
-
   qarte = callPackage ../applications/video/qarte {
     sip = pythonPackages.sip_4_16;
   };

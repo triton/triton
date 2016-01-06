@@ -34,7 +34,7 @@ buildAbsoluteLdflags() {
     PC_FILES=$(find ${!output}/lib/pkgconfig -name \*.pc 2>/dev/null || true)
     local FILE
     for FILE in $PC_FILES; do
-      ABSOLUTE_LDFLAGS="$ABSOLUTE_LDFLAGS $(pkg-config --libs-only-L $FILE)"
+      ABSOLUTE_LDFLAGS="$ABSOLUTE_LDFLAGS $(pkg-config --libs-only-L --static $FILE)"
     done
   done
 
@@ -76,10 +76,14 @@ patchPcFiles() {
 readPcFile() {
   cp "$1" "$1".tmp2
   sed -i '/Requires\(\|.private\):/d' "$1"
-  local LIBS
+  local LIBS; local LIBS_COMBINED; local LIBS_PRIVATE
   LIBS="$(pkg-config --libs "$1")"
+  LIBS_COMBINED="$(pkg-config --libs --static "$1")"
+  LIBS_PRIVATE="$(echo "$LIBS" "$LIBS_COMBINED" | tr ' ' '\n' | sort | uniq -u | tr '\n' ' ')"
   mv "$1".tmp2 "$1"
-  sed "s@^Libs:.*\$@Libs: $LIBS@g" "$1"
+  sed "$1" \
+    -e "s@^Libs:.*\$@Libs: $LIBS@g" \
+    -e "s@^Libs.private:.*\$@Libs.private: $LIBS_PRIVATE@g"
 }
 
 # Pipe the libtool command line to be fixed

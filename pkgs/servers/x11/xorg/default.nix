@@ -15,8 +15,6 @@ let
 
   xorg = rec {
 
-  inherit pixman;
-
   applewmproto = (mkDerivation "applewmproto" {
     name = "applewmproto-1.4.2";
     builder = ./builder.sh;

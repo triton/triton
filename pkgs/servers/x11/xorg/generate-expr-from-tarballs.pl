@@ -245,8 +245,6 @@ let
 
   xorg = rec {
 
-  inherit pixman;
-
 EOF
 
 

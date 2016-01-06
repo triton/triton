@@ -1,7 +1,7 @@
 { stdenv, fetchurl, fetchpatch, substituteAll
 , xorg, freetype, fontconfig, zlib, libjpeg, libpng
 , libmng, which, mesaSupported, mesa, mesa_glu, openssl, dbus, cups
-, libtiff, glib, icu, mysql, postgresql, sqlite, perl, coreutils
+, libtiff, glib, icu, libmysql, postgresql, sqlite, perl, coreutils
 , buildMultimedia ? stdenv.isLinux, alsaLib, gstreamer, gst_plugins_base
 , buildWebkit ? stdenv.isLinux
 , flashplayerFix ? false, gdk-pixbuf
@@ -85,7 +85,7 @@ stdenv.mkDerivation rec {
       -datadir $out/share/${name}
       -translationdir $out/share/${name}/translations
     "
-  '' + optionalString stdenv.isDarwin ''
+  '' + optionalString stdenv.cc.isClang ''
     sed -i 's/QMAKE_CC = gcc/QMAKE_CC = clang/' mkspecs/common/g++-base.conf
     sed -i 's/QMAKE_CXX = g++/QMAKE_CXX = clang++/' mkspecs/common/g++-base.conf
   '';
@@ -95,10 +95,10 @@ stdenv.mkDerivation rec {
     ''
       -v -no-separate-debug-info -release -no-fast -confirm-license -opensource
 
-      -opengl -xrender -xrandr -xinerama -xcursor -xinput -xfixes -fontconfig
+      -${if stdenv.isFreeBSD then "no-" else ""}opengl -xrender -xrandr -xinerama -xcursor -xinput -xfixes -fontconfig
       -qdbus -${if cups == null then "no-" else ""}cups -glib -dbus-linked -openssl-linked
 
-      ${if mysql != null then "-plugin" else "-no"}-sql-mysql -system-sqlite
+      ${if libmysql != null then "-plugin" else "-no"}-sql-mysql -system-sqlite
 
       -exceptions -xmlpatterns
 
@@ -122,17 +122,18 @@ stdenv.mkDerivation rec {
   # The following libraries are only used in plugins
   buildInputs =
     [ cups # Qt dlopen's libcups instead of linking to it
-      mysql.lib postgresql sqlite libjpeg libmng libtiff icu ]
-    ++ optionals gtkStyle [ gtk2 gdk-pixbuf ];
+      postgresql sqlite libjpeg libmng libtiff icu ]
+    ++ optionals (libmysql != null) [ libmysql ]
+    ++ optionals gtkStyle [ gtk gdk_pixbuf ];
 
   nativeBuildInputs = [ perl which ];
 
   enableParallelBuilding = false;
 
-  NIX_CFLAGS_COMPILE = optionalString stdenv.isDarwin
+  NIX_CFLAGS_COMPILE = optionalString (stdenv.isFreeBSD || stdenv.isDarwin)
     "-I${glib}/include/glib-2.0 -I${glib}/lib/glib-2.0/include";
 
-  NIX_LDFLAGS = optionalString stdenv.isDarwin
+  NIX_LDFLAGS = optionalString (stdenv.isFreeBSD || stdenv.isDarwin)
     "-lglib-2.0";
 
   preBuild = optionalString stdenv.isDarwin ''

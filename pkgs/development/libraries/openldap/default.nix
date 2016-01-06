@@ -16,7 +16,8 @@ stdenv.mkDerivation rec {
     [ "--enable-overlays"
       "--disable-dependency-tracking"   # speeds up one-time build
     ] ++ stdenv.lib.optional (openssl == null) "--without-tls"
-      ++ stdenv.lib.optional (cyrus_sasl == null) "--without-cyrus-sasl";
+      ++ stdenv.lib.optional (cyrus_sasl == null) "--without-cyrus-sasl"
+      ++ stdenv.lib.optional stdenv.isFreeBSD "--with-pic";
 
   dontPatchELF = 1; # !!!
 

@@ -10,7 +10,9 @@ stdenv.mkDerivation rec {
     sha256 = "0isxlakdz24v1papxqj8mb2h0kgqa2yfadwj9myr32jq65d9mkzk";
   };
 
-  doCheck = true;
+  patches = stdenv.lib.optional stdenv.isFreeBSD ./freebsd.patch;
+
+  doCheck = !stdenv.isFreeBSD;
 
   preBuild = ''
     makeFlagsArray+=("PREFIX=$out")
@@ -24,6 +26,6 @@ stdenv.mkDerivation rec {
     inherit version;
     homepage = http://miniupnp.free.fr/;
     description = "A client that implements the UPnP Internet Gateway Device (IGD) specification";
-    platforms = stdenv.lib.platforms.linux;
+    platforms = with stdenv.lib.platforms; linux ++ freebsd;
   };
 }

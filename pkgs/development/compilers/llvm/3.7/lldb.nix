@@ -1,6 +1,7 @@
 { stdenv
 , fetch
 , cmake
+, ninja
 , zlib
 , ncurses
 , swig
@@ -23,7 +24,8 @@ stdenv.mkDerivation {
       scripts/Python/build-swig-Python.sh
   '';
 
-  buildInputs = [ cmake python which swig ncurses zlib libedit ];
+  nativeBuildInputs = [ cmake ninja python which swig ];
+  buildInputs = [ ncurses zlib libedit ];
 
   preConfigure = ''
     export CXXFLAGS="-pthread"

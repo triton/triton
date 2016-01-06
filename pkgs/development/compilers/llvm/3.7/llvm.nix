@@ -37,10 +37,8 @@ in stdenv.mkDerivation rec {
   '';
 
   nativeBuildInputs = [ perl groff cmake ninja python ];
-  buildInputs = [ libxml2 libffi ]
+  buildInputs = [ libxml2 libffi ncurses zlib ]
     ++ stdenv.lib.optional stdenv.isDarwin libcxxabi;
-
-  propagatedBuildInputs = [ ncurses zlib ];
 
   # hacky fix: created binaries need to be run before installation
   preBuild = ''

@@ -37,9 +37,15 @@ addNinjaParams() {
       break
     fi
   done
-  [ -n "$ninja" ]
-  cmakeFlagsArray+=("-DCMAKE_MAKE_PROGRAM=$ninja")
-  cmakeFlagsArray+=("-GNinja")
+  if [ -z "$ninja" ]; then
+    echo "Ninja could not be found for installing into cmake">&2
+    exit 1
+  fi
+  if [ -z "$ninjaInstalledCmake" ]; then
+    export ninjaInstalledCmake=1
+    cmakeFlagsArray+=("-DCMAKE_MAKE_PROGRAM=$ninja")
+    cmakeFlagsArray+=("-GNinja")
+  fi
 }
 
 if [ -z "$dontUseNinja" -a -z "$buildPhase" ]; then

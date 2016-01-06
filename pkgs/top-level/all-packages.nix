@@ -12120,8 +12120,6 @@ x265 = callPackage ../all-pkgs/x265 { };
     inherit (pythonPackages) pillow;
   };
 
-  inferno = callPackage_i686 ../applications/inferno { };
-
   inkscape = callPackage ../applications/graphics/inkscape {
     inherit (pythonPackages) lxml;
     lcms = lcms2;

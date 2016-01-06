@@ -9812,7 +9812,7 @@ in modules // {
       sha256 = "a10d8d5e597c6a54ec418baddd31a51a0b7937a895d75b240d890aead946081c";
     };
 
-    llvm = pkgs.llvm_36;
+    llvm = pkgs.llvmPackages.llvm;
 
     propagatedBuildInputs = with self; [ llvm ] ++ optional (pythonOlder "3.4") enum34;
 
@@ -11496,7 +11496,7 @@ in modules // {
       sha256 = "8194c41cdf96c16e3b3d246c0381daf4e587d1ada761f410efecb8315c2cdda3";
     };
 
-    NIX_CFLAGS_COMPILE = stdenv.lib.optionalString stdenv.isDarwin "-I${pkgs.libcxx}/include/c++/v1";
+    NIX_CFLAGS_COMPILE = stdenv.lib.optionalString stdenv.isDarwin "-I${pkgs.llvmPackages.libcxx}/include/c++/v1";
 
     propagatedBuildInputs = with self; [numpy llvmlite argparse] ++ optional (!isPy3k) funcsigs ++ optional (isPy27 || isPy33) singledispatch;
     # Future work: add Cuda support.
@@ -13229,7 +13229,7 @@ in modules // {
       sha256 = "cfd7214a7223703fe6999fbe34837749540efee1c985e6aee9933f30e3f72837";
     };
 
-    buildInputs = with self; [ nose ] ++ optional isDarwin pkgs.libcxx;
+    buildInputs = with self; [ nose ] ++ optional isDarwin pkgs.llvmPackages.libcxx;
     propagatedBuildInputs = with self; [
       dateutil
       numpy
@@ -13249,7 +13249,7 @@ in modules // {
     # For OSX, we need to add a dependency on libcxx, which provides
     # `complex.h` and other libraries that pandas depends on to build.
     patchPhase = optionalString isDarwin ''
-      cpp_sdk="${pkgs.libcxx}/include/c++/v1";
+      cpp_sdk="${pkgs.llvmPackages.libcxx}/include/c++/v1";
       echo "Adding $cpp_sdk to the setup.py common_include variable"
       substituteInPlace setup.py \
         --replace "['pandas/src/klib', 'pandas/src']" \

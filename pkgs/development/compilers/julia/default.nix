@@ -2,7 +2,7 @@
 # build tools
 , gfortran, m4, makeWrapper, patchelf, perl, which, python2
 # libjulia dependencies
-, libunwind, llvm, readline, utf8proc, zlib
+, libunwind, llvmPackages, readline, utf8proc, zlib
 # standard library dependencies
 , curl, fftwSinglePrec, fftw, gmp, libgit2, mpfr, openlibm, openspecfun, pcre2
 # linear algebra
@@ -68,7 +68,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildInputs = [
-    arpack fftw fftwSinglePrec gmp libgit2 libunwind llvm mpfr
+    arpack fftw fftwSinglePrec gmp libgit2 libunwind llvmPackages.llvm mpfr
     pcre2 openblas openlibm openspecfun readline suitesparse utf8proc
     zlib
   ];

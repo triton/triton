@@ -234,7 +234,7 @@ self: super: {
         postPatch = ''
           substituteInPlace double-conversion.cabal --replace stdc++ c++
         '';
-      })) pkgs.libcxx;
+      })) pkgs.llvmPackages.libcxx;
 
   # tests don't compile for some odd reason
   jwt = dontCheck super.jwt;
@@ -652,7 +652,7 @@ self: super: {
   caramia = dontCheck super.caramia;
 
   # Supports only 3.5 for now, https://github.com/bscarlet/llvm-general/issues/142
-  llvm-general = super.llvm-general.override { llvm-config = pkgs.llvm_35; };
+  llvm-general = super.llvm-general.override { llvm-config = pkgs.llvmPackages.llvm; };
 
   # Needs help finding LLVM.
   spaceprobe = addBuildTool super.spaceprobe self.llvmPackages.llvm;

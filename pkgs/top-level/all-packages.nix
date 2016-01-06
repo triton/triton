@@ -4337,8 +4337,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   jikes = callPackage ../development/compilers/jikes { };
 
   julia = callPackage ../development/compilers/julia {
-    gmp = gmp6;
-    llvm = llvm_33;
     openblas = openblasCompat;
   };
 
@@ -4349,14 +4347,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   };
 
   lessc = callPackage ../development/compilers/lessc { };
-
-  llvm = llvmPackages.llvm;
-
-  llvm_37 = llvmPackages_37.llvm;
-  llvm_36 = llvmPackages_36.llvm;
-  llvm_35 = llvmPackages_35.llvm;
-  llvm_34 = llvmPackages_34.llvm;
-  llvm_33 = callPackage ../development/compilers/llvm/3.3/llvm.nix { };
 
   llvmPackages = recurseIntoAttrs llvmPackages_37;
 
@@ -4660,9 +4650,7 @@ x265 = callPackage ../all-pkgs/x265 { };
       then callPackage ../development/ocaml-modules/lambda-term { }
       else lambdaTerm-1_6;
 
-    llvm = callPackage ../development/ocaml-modules/llvm {
-      llvm = pkgs.llvm_37;
-    };
+    llvm = callPackage ../development/ocaml-modules/llvm { };
 
     macaque = callPackage ../development/ocaml-modules/macaque { };
 
@@ -4904,9 +4892,7 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   ocamlnat = newScope pkgs.ocamlPackages_3_12_1 ../development/ocaml-modules/ocamlnat { };
 
-  ponyc = callPackage ../development/compilers/ponyc {
-    llvm = llvm_36;
-  };
+  ponyc = callPackage ../development/compilers/ponyc { };
 
   qcmm = callPackage ../development/compilers/qcmm {
     lua   = lua4;
@@ -5218,7 +5204,6 @@ x265 = callPackage ../all-pkgs/x265 { };
     fltk = fltk13.override { cfg.xftSupport = true; };
     qt = null;
     ghostscript = null;
-    llvm = null;
     hdf5 = null;
     glpk = null;
     suitesparse = null;
@@ -5259,9 +5244,7 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   polyml = callPackage ../development/compilers/polyml { };
 
-  pure = callPackage ../development/interpreters/pure {
-    llvm = llvm_35;
-  };
+  pure = callPackage ../development/interpreters/pure { };
   purePackages = recurseIntoAttrs (callPackage ./pure-packages.nix {});
 
   python = python2;
@@ -5658,9 +5641,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   cscope = callPackage ../development/tools/misc/cscope { };
 
   csslint = callPackage ../development/web/csslint { };
-
-  libcxx = llvmPackages.libcxx;
-  libcxxabi = llvmPackages.libcxxabi;
 
   libsigrok = callPackage ../development/tools/libsigrok { };
 

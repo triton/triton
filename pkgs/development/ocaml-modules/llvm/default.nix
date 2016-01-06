@@ -1,13 +1,13 @@
-{ stdenv, python, llvm, ocaml, findlib, ctypes }:
+{ stdenv, python, llvmPackages, ocaml, findlib, ctypes }:
 
-let version = stdenv.lib.getVersion llvm; in
+let version = stdenv.lib.getVersion llvmPackages.llvm; in
 
 stdenv.mkDerivation {
   name = "ocaml-llvm-${version}";
 
-  inherit (llvm) src;
+  inherit (llvmPackages.llvm) src;
 
-  buildInputs = [ python llvm ocaml findlib ctypes ];
+  buildInputs = [ python llvmPackages.llvm ocaml findlib ctypes ];
 
   configurePhase = ''
     mkdir build

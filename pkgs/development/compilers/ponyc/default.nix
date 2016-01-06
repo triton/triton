@@ -1,4 +1,4 @@
-{stdenv, glibc, fetchFromGitHub, llvm, makeWrapper, openssl, pcre2 }:
+{stdenv, glibc, fetchFromGitHub, llvmPackages, makeWrapper, openssl, pcre2 }:
 
 stdenv.mkDerivation {
   name = "ponyc-0.2.1";
@@ -10,7 +10,7 @@ stdenv.mkDerivation {
     sha256 = "1wmvqrj9v2kjqha9fcs10vfnhdxhc3rf67wpn36ldhs1hq0k25jy";
   };
 
-  buildInputs = [ llvm makeWrapper ];
+  buildInputs = [ llvmPackages.llvm makeWrapper ];
 
   makeFlags = [ "config=release" ];
   doCheck = true;
@@ -22,7 +22,7 @@ stdenv.mkDerivation {
   '';
 
   preBuild = ''
-      export LLVM_CONFIG=${llvm}/bin/llvm-config
+      export LLVM_CONFIG=${llvmPackages.llvm}/bin/llvm-config
     '';
 
   preCheck = ''

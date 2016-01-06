@@ -1,11 +1,12 @@
-{ stdenv, cmake, fetch, libcxx, libunwind, llvm, version }:
+{ stdenv, cmake, ninja, fetch, libcxx, libunwind, llvm, version }:
 
 stdenv.mkDerivation {
   name = "libc++abi-${version}";
 
   src = fetch "libcxxabi" "1swvnhrf9g67579c5picg0l869f8l2bwi4xqpbcb4n296gyp9c28";
 
-  buildInputs = [ cmake ] ++ stdenv.lib.optional (!stdenv.isDarwin) libunwind;
+  nativeBuildInputs = [ cmake ninja ];
+  buildInputs = stdenv.lib.optional (!stdenv.isDarwin) libunwind;
 
   postUnpack = ''
     unpackFile ${libcxx.src}

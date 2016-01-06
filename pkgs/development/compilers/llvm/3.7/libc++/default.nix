@@ -1,4 +1,4 @@
-{ lib, stdenv, fetch, cmake, libcxxabi, fixDarwinDylibNames, version }:
+{ lib, stdenv, fetch, cmake, ninja, libcxxabi, fixDarwinDylibNames, version }:
 
 stdenv.mkDerivation rec {
   name = "libc++-${version}";
@@ -16,7 +16,8 @@ stdenv.mkDerivation rec {
 
   patches = [ ./darwin.patch ];
 
-  buildInputs = [ cmake libcxxabi ] ++ lib.optional stdenv.isDarwin fixDarwinDylibNames;
+  nativeBuildInputs = [ cmake ninja ] ++ lib.optional stdenv.isDarwin fixDarwinDylibNames;
+  buildInputs = [ libcxxabi ];
 
   cmakeFlags =
     [ "-DCMAKE_BUILD_TYPE=Release"

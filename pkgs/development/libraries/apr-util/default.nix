@@ -36,8 +36,18 @@ stdenv.mkDerivation rec {
     ++ optional bdbSupport db
     ++ optional ldapSupport openldap;
 
-  # Give apr1 access to sed for runtime invocations
-  postInstall = ''
+  preFixup = ''
+    # Fix library references in the -config program
+    sed \
+      -e 's,LIBS=",\0-L${expat}/lib ,g' \
+  '' + optionalString (bdbSupport) ''
+      -e 's,LDAP_LIBS=",\0-L${openldap}/lib ,g' \
+  '' + optionalString (sslSupport) ''
+      -e 's,DBM_LIBS=",\0-L${db}/lib ,g' \
+  '' + ''
+      -i $out/bin/apu-1-config
+
+    # Give apr1 access to sed for runtime invocations
     wrapProgram $out/bin/apu-1-config --prefix PATH : "${gnused}/bin"
   '';
 

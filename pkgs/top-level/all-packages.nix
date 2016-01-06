@@ -799,7 +799,7 @@ x265 = callPackage ../all-pkgs/x265 { };
     pkgs_i686 = pkgsi686Linux;
   };
 
-  inherit (androidenv)  androidndk;
+  inherit (androidenv) androidsdk_4_4 androidndk;
 
   androidsdk = androidenv.androidsdk_6_0;
 
@@ -1062,6 +1062,8 @@ x265 = callPackage ../all-pkgs/x265 { };
     dbus = pythonPackages.dbus;
     pynotify = pythonPackages.notify;
   };
+
+  syscall_limiter = callPackage ../os-specific/linux/syscall_limiter {};
 
   syslogng = callPackage ../tools/system/syslog-ng { };
 
@@ -2146,6 +2148,7 @@ x265 = callPackage ../all-pkgs/x265 { };
   isl_0_15 = callPackage ../development/libraries/isl/0.15.0.nix { };
 
   isync = callPackage ../tools/networking/isync { };
+  isyncUnstable = callPackage ../tools/networking/isync/unstable.nix { };
 
   jaaa = callPackage ../applications/audio/jaaa { };
 
@@ -2522,10 +2525,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   munge = callPackage ../tools/security/munge { };
 
-  muscleframework = callPackage ../tools/security/muscleframework { };
-
-  muscletool = callPackage ../tools/security/muscletool { };
-
   mysql2pgsql = callPackage ../tools/misc/mysql2pgsql { };
 
   nabi = callPackage ../tools/inputmethods/nabi { };
@@ -2880,6 +2879,8 @@ x265 = callPackage ../all-pkgs/x265 { };
   };
 
   bully = callPackage ../tools/networking/bully { };
+
+  pcapc = callPackage ../tools/networking/pcapc { };
 
   pdnsd = callPackage ../tools/networking/pdnsd { };
 
@@ -3837,8 +3838,6 @@ x265 = callPackage ../all-pkgs/x265 { };
     w3m = w3m-batch;
   };
 
-  xmltv = callPackage ../tools/misc/xmltv { };
-
   xmpppy = pythonPackages.xmpppy;
 
   xorriso = callPackage ../tools/cd-dvd/xorriso { };
@@ -3921,6 +3920,8 @@ x265 = callPackage ../all-pkgs/x265 { };
   fish = callPackage ../shells/fish {
     python = python27Full;
   };
+
+  fish-foreign-env = callPackage ../shells/fish-foreign-env { };
 
   mksh = callPackage ../shells/mksh { };
 
@@ -7009,8 +7010,6 @@ x265 = callPackage ../all-pkgs/x265 { };
     inherit (darwin.apple_sdk.frameworks) CoreServices;
   };
 
-  libdc1394avt = callPackage ../development/libraries/libdc1394avt { };
-
   libdevil = callPackage ../development/libraries/libdevil {
     inherit (darwin.apple_sdk.frameworks) OpenGL;
   };
@@ -7359,8 +7358,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   libmsn = callPackage ../development/libraries/libmsn { };
 
   libmspack = callPackage ../development/libraries/libmspack { };
-
-  libmusclecard = callPackage ../development/libraries/libmusclecard { };
 
   libmusicbrainz2 = callPackage ../development/libraries/libmusicbrainz/2.x.nix { };
 
@@ -11138,8 +11135,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   cbc = callPackage ../applications/science/math/cbc { };
 
-  cc1394 = callPackage ../applications/video/cc1394 { };
-
   cddiscid = callPackage ../applications/audio/cd-discid { };
 
   cdparanoia = cdparanoiaIII;
@@ -11990,7 +11985,9 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   gv = callPackage ../applications/misc/gv { };
 
-  guvcview = callPackage ../os-specific/linux/guvcview { };
+  guvcview = callPackage ../os-specific/linux/guvcview {
+    pulseaudioSupport = config.pulseaudio or true;
+  };
 
   gxmessage = callPackage ../applications/misc/gxmessage { };
 
@@ -12189,7 +12186,7 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   kermit = callPackage ../tools/misc/kermit { };
 
-  keyfinder = qt5.callPackage ../applications/audio/keyfinder { };
+  keyfinder = qt55.callPackage ../applications/audio/keyfinder { };
 
   keyfinder-cli = qt5.callPackage ../applications/audio/keyfinder-cli { };
 
@@ -12604,10 +12601,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   mythtv = callPackage ../applications/video/mythtv { };
 
-  tvtime = callPackage ../applications/video/tvtime {
-    kernel = linux;
-  };
-
   nano = callPackage ../applications/editors/nano { };
 
   nanoblogger = callPackage ../applications/misc/nanoblogger { };
@@ -12627,9 +12620,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   nedit = callPackage ../applications/editors/nedit {
     motif = lesstif;
   };
-
-  netsurfBrowser = netsurf.browser;
-  netsurf = recurseIntoAttrs (callPackage ../applications/networking/browsers/netsurf {});
 
   notmuch = callPackage ../applications/networking/mailreaders/notmuch {
     # No need to build Emacs - notmuch.el works just fine without
@@ -14229,7 +14219,9 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   snake4 = callPackage ../games/snake4 { };
 
-  soi = callPackage ../games/soi {};
+  soi = callPackage ../games/soi {
+    lua = lua5_1;
+  };
 
   # You still can override by passing more arguments.
   spaceOrbit = callPackage ../games/orbit { };
@@ -15661,6 +15653,7 @@ x265 = callPackage ../all-pkgs/x265 { };
   wine = callPackage ../misc/emulators/wine {
     wineRelease = config.wine.release or "stable";
     wineBuild = config.wine.build or "wine32";
+    pulseaudioSupport = config.pulseaudio or stdenv.isLinux;
   };
   wineStable = wine.override { wineRelease = "stable"; };
   wineUnstable = lowPrio (wine.override { wineRelease = "unstable"; });

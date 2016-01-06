@@ -5918,6 +5918,8 @@ in modules // {
       description = "A command line interface for The Pirate Bay";
       homepage = https://github.com/vikstrous/pirate-get;
       license = licenses.gpl1;
+      maintainers = with maintainers; [ rnhmjoj ];
+      platforms = platforms.unix;
     };
   };
 
@@ -6309,6 +6311,24 @@ in modules // {
     doCheck = false;
   };
 
+  hyp = buildPythonPackage rec {
+    name = "hyp-server-${version}";
+    version = "1.2.0";
+    disabled = !isPy3k;
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/h/hyp-server/${name}.tar.gz";
+      sha256 = "1lafjdcn9nnq6xc3hhyizfwh6l69lc7rixn6dx65aq71c913jc15";
+    };
+
+    meta = {
+      description = "Hyperminimal https server";
+      homepage = https://github.com/rnhmjoj/hyp;
+      license = with licenses; [gpl3Plus mit];
+      maintainers = with maintainers; [ rnhmjoj ];
+      platforms = platforms.unix;
+    };
+  };
 
   hypatia = buildPythonPackage rec {
     name = "hypatia-0.3";
@@ -19638,10 +19658,11 @@ in modules // {
   };
 
   virtualenv = buildPythonPackage rec {
-    name = "virtualenv-1.11.6";
+    name = "virtualenv-13.1.2";
+
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/v/virtualenv/${name}.tar.gz";
-      md5 = "f61cdd983d2c4e6aeabb70b1060d6f49";
+      sha256 = "1p732accxwqfjbdna39k8w8lp9gyw91vr4kzkhm8mgfxikqqxg5a";
     };
 
     pythonPath = [ self.recursivePthLoader ];
@@ -19650,9 +19671,8 @@ in modules // {
 
     propagatedBuildInputs = with self; [ modules.readline modules.sqlite3 modules.curses ];
 
-    buildInputs = with self; [ mock nose ];
-
-    # XXX: Ran 0 tests in 0.003s
+    # Tarball doesn't contain tests
+    doCheck = false;
 
     meta = {
       description = "a tool to create isolated Python environments";
@@ -21722,13 +21742,13 @@ in modules // {
   };
 
   libvirt = let
-    version = "1.2.19";
+    version = "1.3.0";
   in assert version == pkgs.libvirt.version; pkgs.stdenv.mkDerivation rec {
     name = "libvirt-python-${version}";
 
     src = pkgs.fetchurl {
       url = "http://libvirt.org/sources/python/${name}.tar.gz";
-      sha256 = "0jgcggrwaz9512wzlkgxirq56cr7zq2ihmg8qv95nhryqnq67aw8";
+      sha256 = "0z7w79mkx7w322d2mf9d4bz56mmfic3nx0q4bc6fa063aay42z89";
     };
 
     buildInputs = with self; [ python pkgs.pkgconfig pkgs.libvirt lxml ];

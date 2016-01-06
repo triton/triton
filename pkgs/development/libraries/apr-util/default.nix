@@ -20,10 +20,6 @@ stdenv.mkDerivation rec {
     sha256 = "0bn81pfscy9yjvbmyx442svf43s6dhrdfcsnkpxz43fai5qk5kx6";
   };
 
-  patches = optional stdenv.isFreeBSD ./include-static-dependencies.patch;
-
-  buildInputs = optional stdenv.isFreeBSD autoreconfHook;
-
   configureFlags = [ "--with-apr=${apr}" "--with-expat=${expat}" ]
     ++ optional (!stdenv.isCygwin) "--with-crypto"
     ++ optional sslSupport "--with-openssl=${openssl}"
@@ -34,11 +30,11 @@ stdenv.mkDerivation rec {
         "--without-freetds" "--without-berkeley-db" "--without-crypto" ]
     ;
 
-  propagatedBuildInputs = [ makeWrapper apr expat libiconv ]
+  nativeBuildInputs = [ makeWrapper ];
+  buildInputs = [ apr expat libiconv ]
     ++ optional sslSupport openssl
     ++ optional bdbSupport db
-    ++ optional ldapSupport openldap
-    ++ optional stdenv.isFreeBSD cyrus_sasl;
+    ++ optional ldapSupport openldap;
 
   # Give apr1 access to sed for runtime invocations
   postInstall = ''

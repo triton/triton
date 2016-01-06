@@ -101,23 +101,30 @@ BEGIN {
     delete lib_paths[split_excluded_paths[i]];
   }
 }
+function getFullLibPath(lib_path, lib,    file) {
+  # A hack for the case where -lgcc referes to libgcc_s.so
+  if (lib == "gcc") {
+    file = lib_path "/libgcc_s.so";
+  } else {
+    file = lib_path "/lib" lib ".so";
+  }
+  if (system("test -e " file) == 0) {
+    return file;
+  }
+  file = lib_path "/lib" lib ".a";
+  if (system("test -e " file) == 0) {
+    return file;
+  }
+  return 0;
+}
 function replaceStmt(stmt,    matches, file, output, lib_path) {
   if (stmt ~ /^-L/) {
     return "";
   } else if (match(stmt, /^-l(.*)$/, matches)) {
-    #for (lib_path in lib_paths) {
-    #  file = lib_path "/lib" matches[1] ".la";
-    #  if (system("test -e " file) == 0) {
-    #    return file;
-    #  }
-    #}
     for (lib_path in lib_paths) {
-      file = lib_path "/lib" matches[1] ".so";
-      if (system("test -e " file) != 0) {
-        file = lib_path "/lib" matches[1] ".a";
-        if (system("test -e " file) != 0) {
-          continue;
-        }
+      file = getFullLibPath(lib_path, matches[1]);
+      if (!file) {
+        continue;
       }
       output = "";
       if (!printed_path[lib_path]) {
@@ -127,7 +134,7 @@ function replaceStmt(stmt,    matches, file, output, lib_path) {
       output = output "-l" matches[1];
       return output;
     }
-    print "Failed to find a path for: lib" matches[i] > "/dev/stderr"
+    print "Failed to find a path for: lib" matches[1] > "/dev/stderr"
     exit 1;
   } else {
     return stmt;

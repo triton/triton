@@ -935,8 +935,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   gcdemu = callPackage ../misc/emulators/cdemu/gui.nix { };
 
-  certificate-transparency = callPackage ../servers/certificate-transparency { };
-
   image-analyzer = callPackage ../misc/emulators/cdemu/analyzer.nix { };
 
   ccnet = callPackage ../tools/networking/ccnet { };
@@ -3983,19 +3981,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   ccl = callPackage ../development/compilers/ccl { };
 
   clang = llvmPackages.clang;
-
-  clang_37 = llvmPackages_37.clang;
-  clang_36 = llvmPackages_36.clang;
-  clang_35 = wrapCC llvmPackages_35.clang;
-  clang_34 = wrapCC llvmPackages_34.clang;
-  clang_33 = wrapCC (clangUnwrapped llvm_33 ../development/compilers/llvm/3.3/clang.nix);
-
-  clang-analyzer = callPackage ../development/tools/analysis/clang-analyzer {
-    clang = clang_34;
-    llvmPackages = llvmPackages_34;
-  };
-
-  clangUnwrapped = llvm: pkg: callPackage pkg { inherit llvm; };
 
   clangSelf = clangWrapSelf llvmPackagesSelf.clang;
 
@@ -10622,8 +10607,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   comic-relief = callPackage ../data/fonts/comic-relief {};
 
-  coreclr = callPackage ../development/compilers/coreclr { };
-
   corefonts = callPackage ../data/fonts/corefonts { };
 
   culmus = callPackage ../data/fonts/culmus { };
@@ -15025,8 +15008,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   satallax = callPackage ../applications/science/logic/satallax {};
 
-  saw-tools = callPackage ../applications/science/logic/saw-tools {};
-
   spass = callPackage ../applications/science/logic/spass {};
 
   tptp = callPackage ../applications/science/logic/tptp {};
@@ -15745,7 +15726,6 @@ aliases = with self; rec {
   bridge_utils = bridge-utils;  # added 2015-02-20
   buildbotSlave = buildbot-slave;  # added 2014-12-09
   cheetahTemplate = pythonPackages.cheetah; # 2015-06-15
-  clangAnalyzer = clang-analyzer;  # added 2015-02-20
   cool-old-term = cool-retro-term; # added 2015-01-31
   cupsBjnp = cups-bjnp; # added 2016-01-02
   cv = progress; # added 2015-09-06

@@ -1,5 +1,5 @@
 { stdenv, fetchurl, fetchgit, fetchzip, file, python2, tzdata, procps
-, llvmPackages_37, jemalloc, ncurses
+, llvmPackages_37, jemalloc, ncurses, zlib
 
 , shortVersion, isRelease
 , forceBundledLLVM ? false
@@ -161,7 +161,7 @@ with stdenv.lib; stdenv.mkDerivation {
 
   # ps is needed for one of the test cases
   nativeBuildInputs = [ file python2 procps ];
-  buildInputs = [ ncurses ]
+  buildInputs = [ ncurses zlib ]
     ++ optional (!forceBundledLLVM) llvmShared;
 
   enableParallelBuilding = true;

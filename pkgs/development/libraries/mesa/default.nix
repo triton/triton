@@ -101,15 +101,12 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [ python xorg.makedepend file flex bison pythonPackages.Mako ];
 
-  propagatedBuildInputs = with xorg; [ libXdamage libXxf86vm ]
-    ++ optionals stdenv.isLinux [ libdrm ];
-
   buildInputs = with xorg; [
     autoreconfHook intltool expat libxml2Python llvmPackages.llvm
-    glproto dri2proto dri3proto presentproto
+    glproto dri2proto dri3proto presentproto libXdamage libXxf86vm
     libX11 libXext libxcb libXt libXfixes libxshmfence
     libffi wayland libvdpau libelf libXvMC /* libomxil-bellagio libva */
-  ] ++ optional stdenv.isLinux udev;
+  ] ++ optionals stdenv.isLinux [ libdrm udev ];
 
   enableParallelBuilding = true;
   doCheck = false;

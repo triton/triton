@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, xorg, udev, valgrind }:
+{ stdenv, fetchurl, xorg, udev, valgrind }:
 
 stdenv.mkDerivation rec {
   name = "libdrm-2.4.66";
@@ -8,7 +8,6 @@ stdenv.mkDerivation rec {
     sha256 = "79cb8e988749794edfb2d777b298d5292eff353bbbb71ed813589e61d2bc2d76";
   };
 
-  nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ xorg.libpthreadstubs xorg.libpciaccess ]
     ++ stdenv.lib.optional stdenv.isLinux udev;
 

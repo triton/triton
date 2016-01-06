@@ -16,10 +16,8 @@ stdenv.mkDerivation {
     sha256 = "1bc1y8fjgh54ryh520gk63i5rbagn6jijsrskcqlibhfm0xwmc5s";
   };
 
-  buildInputs = [ pkgconfig zlib libjpeg libpng libtiff libusb gnutls avahi libpaper ]
+  buildInputs = [ pkgconfig zlib libjpeg libpng libtiff libusb gnutls avahi libpaper gmp ]
     ++ optionals stdenv.isLinux [ pam dbus.libs acl ];
-
-  propagatedBuildInputs = [ gmp ];
 
   configureFlags = [
     "--localstatedir=/var"

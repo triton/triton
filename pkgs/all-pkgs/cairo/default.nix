@@ -98,10 +98,6 @@ stdenv.mkDerivation rec {
     libiconv
   ];
 
-  propagatedBuildInputs = [
-    zlib
-  ];
-
   buildInputs = [
     expat
     fontconfig
@@ -117,6 +113,7 @@ stdenv.mkDerivation rec {
     xorg.libXext
     xorg.libXrender
     xorg.xcbutil
+    zlib
   ];
 
   postInstall = ''

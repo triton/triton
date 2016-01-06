@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, audiofile
+{ stdenv, fetchurl, audiofile
 , openglSupport ? false, mesa ? null
 , alsaSupport ? true, alsaLib ? null
 , x11Support ? true, xlibsWrapper ? null, xorg ? null
@@ -31,11 +31,9 @@ stdenv.mkDerivation rec {
     sha256 = "0jqp46mxxbh9lhpx1ih6sp93k752j2smhpc0ad0q4cb3px0famfs";
   };
 
-  # Since `libpulse*.la' contain `-lgdbm', PulseAudio must be propagated.
-  propagatedBuildInputs = stdenv.lib.optionals x11Support [ xlibsWrapper xorg.libXrandr ] ++
-    stdenv.lib.optional pulseaudioSupport libpulseaudio;
-
-  buildInputs = [ pkgconfig audiofile ] ++
+  buildInputs = [ audiofile ] ++
+    stdenv.lib.optionals x11Support [ xlibsWrapper xorg.libXrandr ] ++
+    stdenv.lib.optional pulseaudioSupport libpulseaudio ++
     stdenv.lib.optional openglSupport mesa ++
     stdenv.lib.optional alsaSupport alsaLib ++
     stdenv.lib.optionals stdenv.isDarwin [ AudioUnit Cocoa CoreAudio CoreServices ForceFeedback OpenGL ];

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, which, pkgconfig, perl, guile, libxml2 }:
+{ stdenv, fetchurl, which, pkgconfig, perl, guile, libxml2, gmp }:
 
 stdenv.mkDerivation rec {
   name = "autogen-${version}";
@@ -10,7 +10,9 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ which pkgconfig perl ];
-  buildInputs = [ guile libxml2 ];
+  buildInputs = [ guile libxml2 ]
+    # The following are needed until generic include-fixing is complete
+    ++ [ gmp ];
 
   postPatch = ''
     # Fix a broken sed expression used for detecting the minor

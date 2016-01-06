@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig
+{ stdenv, fetchurl
 , curl
 
 # Optional Dependencies
@@ -24,7 +24,6 @@ stdenv.mkDerivation rec {
     sha256 = "1952z36lf31jy0x19r4y389d9188wgzmdqh2l28wdy1biwapwrl7";
   };
 
-  nativeBuildInputs = [ pkgconfig ];
   buildInputs = optional doCheck curl
     ++ optionals hasSpdy [ optOpenssl optZlib ]
     ++ optionals hasHttps [ optLibgcrypt optGnutls ];

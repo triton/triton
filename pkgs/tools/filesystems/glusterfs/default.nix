@@ -54,6 +54,11 @@ rec {
     inherit (s) url sha256;
   };
 
+  preFixup = ''
+    # For some reason this pkgconfig file depends on an unknown library that doesn't exist
+    sed -i 's, -lgfchangedb,,g' $out/lib/pkgconfig/libgfdb.pc
+  '';
+
   meta = {
     inherit (s) version;
     description = "Distributed storage system";

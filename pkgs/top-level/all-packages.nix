@@ -14181,17 +14181,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   qqwing = callPackage ../games/qqwing { };
 
-  quake3demo = callPackage ../games/quake3/wrapper {
-    name = "quake3-demo-${quake3game.name}";
-    description = "Demo of Quake 3 Arena, a classic first-person shooter";
-    game = quake3game;
-    paks = [quake3demodata];
-  };
-
-  quake3demodata = callPackage ../games/quake3/demo { };
-
-  quake3game = callPackage ../games/quake3/game { };
-
   quantumminigolf = callPackage ../games/quantumminigolf {};
 
   racer = callPackage ../games/racer { };

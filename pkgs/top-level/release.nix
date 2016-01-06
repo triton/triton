@@ -165,7 +165,6 @@ let
       pythonFull = linux;
       sbcl = linux;
       qt3 = linux;
-      quake3demo = linux;
       reiserfsprogs = linux;
       rubber = allBut cygwin;
       rxvt_unicode = linux;

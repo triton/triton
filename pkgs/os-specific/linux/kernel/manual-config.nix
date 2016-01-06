@@ -106,7 +106,7 @@ let
       '';
 
       buildFlags = [
-        "KBUILD_BUILD_VERSION=1-NixOS"
+        "KBUILD_BUILD_VERSION=1-Triton"
         platform.kernelTarget
       ] ++ optional isModular "modules";
 

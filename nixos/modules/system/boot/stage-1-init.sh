@@ -53,7 +53,7 @@ trap 'fail' 0
 
 # Print a greeting.
 echo
-echo "[1;32m<<< NixOS Stage 1 >>>[0m"
+echo "[1;32m<<< Triton Stage 1 >>>[0m"
 echo
 
 

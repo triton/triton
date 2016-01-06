@@ -170,7 +170,7 @@ let
       # As a result, `cdrom_id' doesn't print
       # ID_CDROM_MEDIA_TRACK_COUNT_DATA, which in turn prevents the
       # /dev/disk/by-label symlinks from being created.  We need these
-      # in the NixOS installation CD, so use ID_CDROM_MEDIA in the
+      # in the Triton installation CD, so use ID_CDROM_MEDIA in the
       # corresponding udev rules for now.  This was the behaviour in
       # udev <= 154.  See also
       #   http://www.spinics.net/lists/hotplug/msg03935.html

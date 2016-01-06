@@ -42,7 +42,7 @@ let
       # Declare the ISO as a build product so that it shows up in Hydra.
       hydraJob (runCommand "nixos-iso-${config.system.nixosVersion}"
         { meta = {
-            description = "NixOS installation CD (${description}) - ISO image for ${system}";
+            description = "Triton installation CD (${description}) - ISO image for ${system}";
             maintainers = map (x: lib.maintainers.${x}) maintainers;
           };
           inherit iso;
@@ -72,7 +72,7 @@ let
     in
       tarball //
         { meta = {
-            description = "NixOS system tarball for ${system} - ${stdenv.platform.name}";
+            description = "Triton system tarball for ${system} - ${stdenv.platform.name}";
             maintainers = map (x: lib.maintainers.${x}) maintainers;
           };
           inherit config;

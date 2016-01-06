@@ -21,7 +21,7 @@ with lib;
 
       greetingLine = mkOption {
         type = types.str;
-        default = ''<<< Welcome to NixOS ${config.system.nixosVersion} (\m) - \l >>>'';
+        default = ''<<< Welcome to Triton ${config.system.nixosVersion} (\m) - \l >>>'';
         description = ''
           Welcome line printed by mingetty.
         '';

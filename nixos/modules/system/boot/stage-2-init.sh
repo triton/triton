@@ -7,7 +7,7 @@ export HOME=/root
 
 # Print a greeting.
 echo
-echo -e "\e[1;32m<<< NixOS Stage 2 >>>\e[0m"
+echo -e "\e[1;32m<<< Triton Stage 2 >>>\e[0m"
 echo
 
 

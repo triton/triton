@@ -8004,9 +8004,6 @@ x265 = callPackage ../all-pkgs/x265 { };
     mesa = mesa_noglu;
     inherit (pkgs.gnome) libgnomeui GConf gnome_vfs;
     cups = if stdenv.isLinux then cups else null;
-
-    # XXX: mariadb doesn't built on fbsd as of nov 2015
-    mysql = if (!stdenv.isFreeBSD) then mysql else null;
   };
 
   qt48Full = appendToName "full" (qt48.override {

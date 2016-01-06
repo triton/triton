@@ -18,7 +18,7 @@
 , buildExamples ? false
 , buildTests ? false
 , developerBuild ? false
-, gtkStyle ? false, libgnomeui, GConf, gnome_vfs, gtk
+, gtkStyle ? false, libgnomeui, GConf, gnome_vfs, gtk2
 , decryptSslTraffic ? false
 }:
 
@@ -77,9 +77,9 @@ stdenv.mkDerivation {
         --replace "@libX11@" "${xorg.libX11}"
     ''
     + lib.optionalString gtkStyle ''
-      substituteInPlace qtbase/src/widgets/styles/qgtk2painter.cpp --replace "@gtk@" "${gtk}"
+      substituteInPlace qtbase/src/widgets/styles/qgtk2painter.cpp --replace "@gtk@" "${gtk2}"
       substituteInPlace qtbase/src/widgets/styles/qgtkstyle_p.cpp \
-        --replace "@gtk@" "${gtk}" \
+        --replace "@gtk@" "${gtk2}" \
         --replace "@gnome_vfs@" "${gnome_vfs}" \
         --replace "@libgnomeui@" "${libgnomeui}" \
         --replace "@gconf@" "${GConf}"
@@ -185,7 +185,7 @@ stdenv.mkDerivation {
   ++ lib.optional (cups != null) cups
   ++ lib.optional (libmysql != null) libmysql
   ++ lib.optional (postgresql != null) postgresql
-  ++ lib.optionals gtkStyle [gnome_vfs libgnomeui gtk GConf];
+  ++ lib.optionals gtkStyle [gnome_vfs libgnomeui gtk2 GConf];
 
   buildInputs =
     [ bison flex gperf ruby ]

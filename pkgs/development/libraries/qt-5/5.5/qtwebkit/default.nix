@@ -1,5 +1,5 @@
 { qtSubmodule, stdenv, qtdeclarative, qtlocation, qtmultimedia, qtsensors
-, fontconfig, gdk_pixbuf, gtk, libwebp, libxml2, libxslt
+, fontconfig, gdk_pixbuf, gtk2, libwebp, libxml2, libxslt
 , sqlite, udev
 , bison2, flex, gdb, gperf, perl, pkgconfig, python, ruby
 , substituteAll
@@ -18,11 +18,11 @@ qtSubmodule {
   patches =
     let dlopen-webkit-nsplugin = substituteAll {
           src = ./0001-dlopen-webkit-nsplugin.patch;
-          inherit gtk gdk_pixbuf;
+          inherit gtk2 gdk_pixbuf;
         };
         dlopen-webkit-gtk = substituteAll {
           src = ./0002-dlopen-webkit-gtk.patch;
-          inherit gtk;
+          inherit gtk2;
         };
         dlopen-webkit-udev = substituteAll {
           src = ./0003-dlopen-webkit-udev.patch;

@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, pkgconfig, gtk, gtk3, pango, perl, python, zip, libIDL
+{ lib, stdenv, fetchurl, gtk2, gtk3, pango, perl, python, zip, libIDL
 , libjpeg, zlib, dbus, dbus_glib, bzip2, xorg
 , freetype, fontconfig, file, alsaLib, nspr, nss, libnotify
 , yasm, mesa, sqlite, unzip, makeWrapper, pysqlite
@@ -29,7 +29,7 @@ common = { pname, version, sha256 }: stdenv.mkDerivation rec {
   };
 
   buildInputs =
-    [ pkgconfig gtk perl zip libIDL libjpeg zlib bzip2
+    [ perl zip libIDL libjpeg zlib bzip2
       python dbus dbus_glib pango freetype fontconfig xorg.libXi
       xorg.libX11 xorg.libXrender xorg.libXft xorg.libXt file
       alsaLib nspr nss libnotify xorg.pixman yasm mesa
@@ -38,8 +38,7 @@ common = { pname, version, sha256 }: stdenv.mkDerivation rec {
       hunspell libevent libstartup_notification libvpx /* cairo */
       gstreamer gst_plugins_base icu libpng jemalloc
       libpulseaudio # only headers are needed
-    ]
-    ++ lib.optional enableGTK3 gtk3;
+    ] ++ (if enableGTK3 then [ gtk3 ] else [ gtk2 ]);
 
   configureFlags =
     [ "--enable-application=browser"
@@ -124,7 +123,7 @@ common = { pname, version, sha256 }: stdenv.mkDerivation rec {
   };
 
   passthru = {
-    inherit gtk nspr version;
+    inherit version;
     isFirefox3Like = true;
   };
 };

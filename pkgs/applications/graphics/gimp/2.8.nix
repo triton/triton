@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, intltool, babl, gegl, gtk, glib, gdk_pixbuf
+{ stdenv, fetchurl, pkgconfig, intltool, babl, gegl, gtk2, glib, gdk_pixbuf
 , pango, cairo, freetype, fontconfig, lcms, libpng, libjpeg, poppler, libtiff
 , webkit, libmng, librsvg, libwmf, zlib, libzip, ghostscript, aalib, jasper
 , python, pygtk, libart_lgpl, libexif, gettext, xorg, wrapPython }:
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs =
-    [ pkgconfig intltool babl gegl gtk glib gdk_pixbuf pango cairo
+    [ pkgconfig intltool babl gegl gtk2 glib gdk_pixbuf pango cairo
       freetype fontconfig lcms libpng libjpeg poppler libtiff webkit
       libmng librsvg libwmf zlib libzip ghostscript aalib jasper
       python pygtk libart_lgpl libexif gettext xorg.libXpm
@@ -22,8 +22,6 @@ stdenv.mkDerivation rec {
   pythonPath = [ pygtk ];
 
   postInstall = ''wrapPythonPrograms'';
-
-  passthru = { inherit gtk; }; # probably its a good idea to use the same gtk in plugins ?
 
   #configureFlags = [ "--disable-print" ];
 

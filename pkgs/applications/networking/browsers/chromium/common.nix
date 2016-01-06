@@ -11,7 +11,7 @@
 , nspr, udev, kerberos
 , utillinux, alsaLib
 , bison, gperf
-, glib, gtk, dbus_glib
+, glib, gtk2, dbus_glib
 , xorg, mesa
 , protobuf, speechd, cups
 
@@ -108,7 +108,7 @@ let
       nspr nss udev
       utillinux alsaLib
       bison gperf kerberos
-      glib gtk dbus_glib
+      glib gtk2 dbus_glib
       xorg.libXScrnSaver xorg.libXcursor xorg.libXtst mesa
       pciutils protobuf speechd xorg.libXdamage
       pythonPackages.gyp pythonPackages.ply pythonPackages.jinja2

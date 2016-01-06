@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, python, pkgconfig, gtk, pygobject, pycairo
+{ stdenv, fetchurl, python, pkgconfig, gtk2, pygobject, pycairo
 , buildPythonPackage, libglade ? null, isPy3k }:
 
 buildPythonPackage rec {
@@ -14,7 +14,7 @@ buildPythonPackage rec {
   buildInputs = [ pkgconfig ]
     ++ stdenv.lib.optional (libglade != null) libglade;
 
-  propagatedBuildInputs = [ gtk pygobject pycairo ];
+  propagatedBuildInputs = [ gtk2 pygobject pycairo ];
 
   configurePhase = "configurePhase";
 

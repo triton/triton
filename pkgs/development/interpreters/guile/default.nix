@@ -15,14 +15,7 @@
   };
 
   nativeBuildInputs = [ makeWrapper gawk pkgconfig ];
-  buildInputs = [ readline libtool libunistring libffi ];
-  propagatedBuildInputs = [ gmp boehmgc ]
-
-    # XXX: These ones aren't normally needed here, but since
-    # `libguile-2.0.la' reads `-lltdl -lunistring', adding them here will add
-    # the needed `-L' flags.  As for why the `.la' file lacks the `-L' flags,
-    # see below.
-    ++ [ libtool libunistring ];
+  buildInputs = [ readline libtool libunistring libffi gmp boehmgc ];
 
   # A native Guile 2.0 is needed to cross-build Guile.
   selfNativeBuildInput = true;

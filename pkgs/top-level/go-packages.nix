@@ -1302,6 +1302,15 @@ let
     sha256 = "1dv117yw1c23mqcsrx1zgpzka9avnkpa2ali0d02hwhpdciy7cn2";
   };
 
+  go-etcd = buildFromGitHub {
+    rev = "003851be7bb0694fe3cc457a49529a19388ee7cf";
+    date = "2015-10-26";
+    owner = "coreos";
+    repo = "go-etcd";
+    sha256 = "0n78m4lwsjiaqhjizcsp25paj2l2d4fdr7c4i671ldvpggq76lrl";
+    propagatedBuildInputs = [ ugorji.go ];
+  };
+
   go-flags = buildFromGitHub {
     date   = "2015-12-10";
     rev    = "aa34304f81c710f34c76e964a3d996ec1330711d";

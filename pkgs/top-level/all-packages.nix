@@ -3978,8 +3978,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   ccl = callPackage ../development/compilers/ccl { };
 
-  clang = llvmPackages.clang;
-
   clangSelf = clangWrapSelf llvmPackagesSelf.clang;
 
   clangWrapSelf = build: callPackage ../build-support/cc-wrapper {
@@ -4914,8 +4912,6 @@ x265 = callPackage ../all-pkgs/x265 { };
     lua   = lua4;
     ocaml = ocaml_3_08_0;
   };
-
-  rtags = callPackage ../development/tools/rtags/default.nix {};
 
   rustcMaster = callPackage ../development/compilers/rustc/head.nix {};
   rustc = callPackage ../development/compilers/rustc {

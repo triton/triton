@@ -1,5 +1,5 @@
 { stdenv, fetchurl, bash, callPackage, makeWrapper
-, clang, llvm, which, libcgroup }:
+, llvmPackages, which, libcgroup }:
 
 let
   afl-qemu = callPackage ./qemu.nix {};
@@ -18,7 +18,8 @@ stdenv.mkDerivation rec {
 
   # Note: libcgroup isn't needed for building, just for the afl-cgroup
   # script.
-  buildInputs  = [ makeWrapper clang llvm which ];
+  nativeBuildInputs = [ makeWrapper which ];
+  buildInputs  = [ llvmPackages.clang llvmPackages.llvm ];
 
   buildPhase   = ''
     make PREFIX=$out

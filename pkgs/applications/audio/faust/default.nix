@@ -3,8 +3,7 @@
 , fetchurl
 , makeWrapper
 , pkgconfig
-, clang
-, llvm
+, llvmPackages
 , emscripten
 , openssl
 , libsndfile
@@ -37,7 +36,7 @@ let
 
     inherit src;
 
-    buildInputs = [ makeWrapper llvm emscripten openssl libsndfile pkgconfig libmicrohttpd vim ];
+    buildInputs = [ makeWrapper llvmPackages.llvm emscripten openssl libsndfile pkgconfig libmicrohttpd vim ];
 
 
     passthru = {

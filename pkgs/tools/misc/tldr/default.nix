@@ -1,4 +1,4 @@
-{stdenv, clang, fetchurl, curl}:
+{ stdenv, llvmPackages, fetchurl, curl }:
 
 with stdenv.lib;
 
@@ -24,7 +24,7 @@ stdenv.mkDerivation {
 
   };
 
-  buildInputs = [curl clang];
+  buildInputs = [ curl llvmPackages.clang ];
 
   preBuild = ''
     cd src

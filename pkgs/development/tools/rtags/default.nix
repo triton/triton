@@ -1,11 +1,11 @@
-{ stdenv, fetchgit, cmake, llvm, openssl, clang, writeScript, bash }:
+{ stdenv, fetchgit, cmake, llvmPackages, openssl, writeScript, bash }:
 
 let llvm-config-wrapper = writeScript "llvm-config" ''
       #! ${bash}/bin/bash
       if [[ "$1" = "--cxxflags" ]]; then
-        echo $(${llvm}/bin/llvm-config "$@") -isystem ${clang.cc}/include
+        echo $(${llvmPackages.llvm}/bin/llvm-config "$@") -isystem ${llvmPackages.clang.cc}/include
       else
-        ${llvm}/bin/llvm-config "$@"
+        ${llvmPackages.llvm}/bin/llvm-config "$@"
       fi
     '';
 
@@ -14,7 +14,7 @@ in stdenv.mkDerivation rec {
   rev = "9fed420d20935faf55770765591fc2de02eeee28";
   version = "${stdenv.lib.strings.substring 0 7 rev}";
 
-  buildInputs = [ cmake llvm openssl clang ];
+  buildInputs = [ cmake llvmPackages.llvm openssl llvmPackages.clang ];
 
   preConfigure = ''
     export LIBCLANG_LLVM_CONFIG_EXECUTABLE=${llvm-config-wrapper}

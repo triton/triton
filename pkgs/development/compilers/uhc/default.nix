@@ -1,4 +1,4 @@
-{ stdenv, coreutils, fetchgit, m4, libtool, clang, ghcWithPackages }:
+{ stdenv, coreutils, fetchgit, m4, libtool, ghcWithPackages }:
 
 let wrappedGhc = ghcWithPackages (hpkgs: with hpkgs; [fgl vector syb uulib network binary hashable uhc-util mtl transformers directory containers array process filepath shuffle uuagc] );
 in stdenv.mkDerivation rec {
@@ -17,9 +17,7 @@ in stdenv.mkDerivation rec {
 
   postUnpack = "sourceRoot=\${sourceRoot}/EHC";
 
-  buildInputs = [ m4 wrappedGhc clang libtool ];
-
-  configureFlags = [ "--with-gcc=${clang}/bin/clang" ];
+  buildInputs = [ m4 wrappedGhc libtool ];
 
   # UHC builds packages during compilation; these are by default
   # installed in the user-specific package config file. We do not
@@ -35,8 +33,6 @@ in stdenv.mkDerivation rec {
     sed -i "s|--make|--make -package-db=$p|g" src/ehc/files2.mk
     sed -i "s|--make|--make -package-db=$p|g" src/gen/files.mk
   '';
-
-  inherit clang;
 
   meta = with stdenv.lib; {
     homepage = "http://www.cs.uu.nl/wiki/UHC";

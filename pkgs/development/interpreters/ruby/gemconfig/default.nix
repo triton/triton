@@ -18,7 +18,7 @@
 # (to make gems behave if necessary).
 
 { lib, fetchurl, writeScript, ruby, kerberos, libxml2, libxslt, python, stdenv, which
-, libiconv, postgresql, v8_3_16_14, clang, sqlite, zlib, imagemagick
+, libiconv, postgresql, v8_3_16_14, sqlite, zlib, imagemagick
 , pkgconfig , ncurses, xapian, gpgme, utillinux, fetchpatch, tzdata, icu, libffi
 , cmake, libssh2, openssl, mysql, darwin, git, perl, gecode_3, curl
 }:

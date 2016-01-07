@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libvdpau, mesa, libva }:
+{ stdenv, fetchurl, libvdpau, mesa, libva, xorg }:
 let
   fetchpatch = name: sha256: fetchurl {
     urls = [
@@ -21,7 +21,11 @@ stdenv.mkDerivation rec {
     (fetchpatch "libva-vdpau-driver-0.7.4-VAEncH264VUIBufferType.patch" "166svcav6axkrlb3i4rbf6dkwjnqdf69xw339az1f5yabj72pqqs")
   ];
 
-  buildInputs = [ libvdpau mesa libva ];
+  buildInputs = [ libvdpau mesa libva xorg.libX11 ];
+
+  postPatch = ''
+    sed -i -e "s,LIBVA_DRIVERS_PATH=.*,LIBVA_DRIVERS_PATH=$out/lib/dri," configure
+  '';
 
   meta = {
     homepage = http://cgit.freedesktop.org/vaapi/vdpau-driver/;

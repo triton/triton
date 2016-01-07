@@ -1,9 +1,18 @@
-{ stdenv, fetchurl, python, pkgconfig, gtk2, pygobject, pycairo
-, buildPythonPackage, libglade ? null, isPy3k }:
+{ stdenv
+, fetchurl
+, python
+, glib
+, gtk2
+, pygobject
+, pycairo
+, buildPythonPackage
+, libglade ? null
+, isPy3k
+}:
 
 buildPythonPackage rec {
   name = "pygtk-2.24.0";
-  
+
   disabled = isPy3k;
 
   src = fetchurl {
@@ -11,10 +20,10 @@ buildPythonPackage rec {
     sha256 = "04k942gn8vl95kwf0qskkv6npclfm31d78ljkrkgyqxxcni1w76d";
   };
 
-  buildInputs = [ pkgconfig ]
+  buildInputs = [ ]
     ++ stdenv.lib.optional (libglade != null) libglade;
 
-  propagatedBuildInputs = [ gtk2 pygobject pycairo ];
+  propagatedBuildInputs = [ glib gtk2 pygobject pycairo ];
 
   configurePhase = "configurePhase";
 

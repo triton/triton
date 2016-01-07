@@ -81,9 +81,9 @@ buildAbsoluteLdflags() {
 
     # Print the final output
     for (lib_path in lib_paths) {
-      #if (system("test -d " lib_path) == 0) {
+      if (system("test -d " lib_path) == 0) {
         print lib_path;
-      #}
+      }
     }
   }
   ' $TMPDIR/absolute-ldflags > $TMPDIR/absolute-lib-paths

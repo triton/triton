@@ -133,7 +133,6 @@ BEGIN {
   split("", lib_paths);
   lib_paths_file = ENVIRON["TMPDIR"] "/absolute-lib-paths";
   while (getline line < lib_paths_file) {
-    print "Reading Line: " line
     lib_paths[line] = 1;
   }
   close(lib_paths_file);

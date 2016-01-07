@@ -144,7 +144,7 @@ stdenv.mkDerivation {
   meta = {
     homepage = http://git-scm.com/;
     description = "Distributed version control system";
-    license = stdenv.lib.licenses.gpl2Plus;
+    license = stdenv.lib.licenses.gpl2;
 
     longDescription = ''
       Git, a popular distributed version control system designed to

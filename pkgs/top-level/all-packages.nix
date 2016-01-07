@@ -7837,10 +7837,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   opencv = callPackage ../development/libraries/opencv { };
 
-  opencv_2_1 = callPackage ../development/libraries/opencv/2.1.nix {
-    libpng = libpng12;
-  };
-
   opencv3 = callPackage ../development/libraries/opencv/3.x.nix { };
 
   # this ctl version is needed by openexr_viewers
@@ -8896,6 +8892,8 @@ x265 = callPackage ../all-pkgs/x265 { };
     };
     openblas = openblasCompat;
     withRecommendedPackages = false;
+    inherit (darwin.apple_sdk.frameworks) Cocoa Foundation;
+    inherit (darwin) cf-private libobjc;
   };
 
   rWrapper = callPackage ../development/r-modules/wrapper.nix {
@@ -11860,11 +11858,6 @@ x265 = callPackage ../all-pkgs/x265 { };
     java = if stdenv.isLinux then jre else jdk;
   };
 
-  qrdecode = callPackage ../tools/graphics/qrdecode {
-    libpng = libpng12;
-    opencv = opencv_2_1;
-  };
-
   qrencode = callPackage ../tools/graphics/qrencode { };
 
   gecko_mediaplayer = callPackage ../applications/networking/browsers/mozilla-plugins/gecko-mediaplayer {
@@ -13603,8 +13596,6 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   xchainkeys = callPackage ../tools/X11/xchainkeys { };
 
-  xchat = callPackage ../applications/networking/irc/xchat { };
-
   xchm = callPackage ../applications/misc/xchm { };
 
   inherit (xorg) xcompmgr;
@@ -14837,6 +14828,8 @@ x265 = callPackage ../all-pkgs/x265 { };
 
     coqeal = callPackage ../development/coq-modules/coqeal {};
 
+    coquelicot = callPackage ../development/coq-modules/coquelicot {};
+
     domains = callPackage ../development/coq-modules/domains {};
 
     fiat = callPackage ../development/coq-modules/fiat {};
@@ -14871,7 +14864,11 @@ x265 = callPackage ../all-pkgs/x265 { };
 
     coq-ext-lib = callPackage ../development/coq-modules/coq-ext-lib {};
 
+    coquelicot = callPackage ../development/coq-modules/coquelicot {};
+
     flocq = callPackage ../development/coq-modules/flocq {};
+
+    interval = callPackage ../development/coq-modules/interval {};
 
     mathcomp = callPackage ../development/coq-modules/mathcomp { };
 

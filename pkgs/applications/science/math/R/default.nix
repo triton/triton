@@ -1,7 +1,7 @@
 { stdenv, fetchurl, bzip2, gfortran
 , libjpeg, libpng, libtiff, ncurses, pango, pcre, perl, readline, tcl
 , texLive, tk, xz, zlib, less, texinfo, graphviz, icu, bison
-, which, jdk, openblas, curl
+, which, jdk, openblas, curl, Cocoa, Foundation, cf-private, libobjc, tzdata
 , withRecommendedPackages ? true
 , xorg
 }:
@@ -14,11 +14,12 @@ stdenv.mkDerivation rec {
     sha256 = "b93b7d878138279234160f007cb9b7f81b8a72c012a15566e9ec5395cfd9b6c1";
   };
 
-  buildInputs = [ bzip2 gfortran xorg.libX11 xorg.libXmu xorg.libXt
-    libjpeg libpng libtiff ncurses pango pcre perl readline tcl
-    texLive tk xz zlib less texinfo graphviz icu bison xorg.imake
-    which jdk openblas curl
-  ];
+  buildInputs = [ bzip2 gfortran xorg.libX11 xorg.ibXmu xorg.libXt
+    libXt libjpeg libpng libtiff ncurses pango pcre perl readline
+    texLive xz zlib less texinfo graphviz icu pkgconfig bison imake
+    which jdk openblas curl ]
+    ++ stdenv.lib.optionals (!stdenv.isDarwin) [ tcl tk ]
+    ++ stdenv.lib.optionals stdenv.isDarwin [ Cocoa Foundation cf-private libobjc ];
 
   patches = [ ./no-usr-local-search-paths.patch ];
 
@@ -49,8 +50,21 @@ stdenv.mkDerivation rec {
       LDFLAGS="-L${gfortran.cc}/lib"
       RANLIB=$(type -p ranlib)
       R_SHELL="${stdenv.shell}"
+  '' + stdenv.lib.optionalString stdenv.isDarwin ''
+      --without-tcltk
+      --without-aqua
+      --disable-R-framework
+      CC="clang"
+      CXX="clang++"
+      OBJC="clang"
+  '' + ''
     )
     echo "TCLLIBPATH=${tk}/lib" >>etc/Renviron.in
+  '';
+
+  postConfigure = stdenv.lib.optionalString stdenv.isDarwin ''
+    sed -i 's|/usr/share/zoneinfo|${tzdata}/share/zoneinfo|g' src/library/base/R/datetime.R
+    sed -i 's|getenv("R_SHARE_DIR")|"${tzdata}/share"|g' src/extra/tzone/localtime.c
   '';
 
   installTargets = [ "install" "install-info" "install-pdf" ];

@@ -14,19 +14,22 @@ _doAbsoluteLibtool() {
 }
 
 buildAbsoluteLdflags() {
-  ABSOLUTE_LDFLAGS="$LDFLAGS $NIX_LDFLAGS"
+  if [ -e "$TMPDIR/absolute-lib-paths" ]; then
+    return 0
+  fi
+  echo "$LDFLAGS $NIX_LDFLAGS" > $TMPDIR/absolute-ldflags
 
   # Add the outputs to the LDFLAGS
   local output
   for output in $outputs; do
-    ABSOLUTE_LDFLAGS="$ABSOLUTE_LDFLAGS -L${!output}/lib"
+    echo "-L${!output}/lib" >> $TMPDIR/absolute-ldflags
 
     # Get the paths to ldflags in .la files
     local LA_FILES
     LA_FILES=$(find ${!output}/lib -name \*.la 2>/dev/null || true)
     local FILE
     for FILE in $LA_FILES; do
-      ABSOLUTE_LDFLAGS="$ABSOLUTE_LDFLAGS $(grep '^dependency_libs=' $FILE | sed "s,^dependency_libs='\(.*\)',\1,g")"
+      grep '^dependency_libs=' $FILE | sed "s,^dependency_libs='\(.*\)',\1,g" >> $TMPDIR/absolute-ldflags
     done
 
     # Get the paths to ldflags in .pc files
@@ -34,7 +37,7 @@ buildAbsoluteLdflags() {
     PC_FILES=$(find ${!output}/lib/pkgconfig -name \*.pc 2>/dev/null || true)
     local FILE
     for FILE in $PC_FILES; do
-      ABSOLUTE_LDFLAGS="$ABSOLUTE_LDFLAGS $(pkg-config --libs-only-L --static $FILE)"
+      pkg-config --libs-only-L --static $FILE >> $TMPDIR/absolute-ldflags
     done
   done
 
@@ -45,10 +48,46 @@ buildAbsoluteLdflags() {
   # Add them to the LDFLAGS variable
   local FILE
   for FILE in $LDFLAGS_FILES; do
-    ABSOLUTE_LDFLAGS="$ABSOLUTE_LDFLAGS $(cat $FILE)"
+   cat $FILE >> $TMPDIR/absolute-ldflags
   done
 
-  export ABSOLUTE_LDFLAGS
+  # Parse the file down into only the needed paths
+  awk '
+  BEGIN {
+    split("", lib_paths);
+    is_rpath = 0;
+    FS="[ \t\r\n]+"
+  }
+  {
+    # Parse each of the library paths
+    for (i = 1; i <= NF; i++) {
+      if (is_rpath) {
+        lib_paths[$i] = 1;
+        is_rpath = 0;
+      } else if ($i ~ /^-rpath$/) {
+        is_rpath = 1;
+      } else if ($i ~ /^-L/) {
+        lib_paths[substr($i, 3, length($i)-2)] = 1;
+      }
+    }
+  }
+  END {
+    # Remove the blacklisted paths
+    split(ENVIRON["ABSOLUTE_LIBTOOL_EXCLUDED"], split_excluded_paths, "[ \t\n:]+")
+    for (i in split_excluded_paths) {
+      print "Exclude Path:" split_excluded_paths[i] > "/dev/stderr";
+      delete lib_paths[split_excluded_paths[i]];
+    }
+
+    # Print the final output
+    for (lib_path in lib_paths) {
+      #if (system("test -d " lib_path) == 0) {
+        print lib_path;
+      #}
+    }
+  }
+  ' $TMPDIR/absolute-ldflags > $TMPDIR/absolute-lib-paths
+  rm $TMPDIR/absolute-ldflags
 }
 
 patchLaFiles() {
@@ -90,29 +129,13 @@ readPcFile() {
 awkReplacer() {
   awk -f <(cat << 'EOF'
 BEGIN {
-  # Parse all of the library paths
-  split(ENVIRON["ABSOLUTE_LDFLAGS"], split_ldflags, "[ \t]+");
   split("", lib_paths);
-  is_rpath = 0;
-  for (i in split_ldflags) {
-    if (is_rpath) {
-      lib_paths[split_ldflags[i]] = 1;
-      is_rpath = 0;
-    }
-    if (split_ldflags[i] ~ /^-rpath$/) {
-      is_rpath = 1;
-    }
-    if (split_ldflags[i] ~ /^-L/) {
-      lib_paths[substr(split_ldflags[i], 3, length(split_ldflags[i])-2)] = 1;
-    }
+  lib_paths_file = ENVIRON["TMPDIR"] "/absolute-lib-paths";
+  while (getline line < lib_paths_file) {
+    print "Reading Line: " line
+    lib_paths[line] = 1;
   }
-
-  # Remove the blacklisted paths
-  split(ENVIRON["ABSOLUTE_LIBTOOL_EXCLUDED"], split_excluded_paths, "[ \t\n:]+")
-  for (i in split_excluded_paths) {
-    print "Exclude Path:" split_excluded_paths[i] > "/dev/stderr";
-    delete lib_paths[split_excluded_paths[i]];
-  }
+  close(lib_paths_file);
 }
 function getFullLibPath(lib_path, lib,    file) {
   # A hack for the case where -lgcc referes to libgcc_s.so

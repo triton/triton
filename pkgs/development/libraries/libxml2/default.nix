@@ -51,8 +51,4 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ eelco wkennington ];
   };
 
-  passthru = {
-    inherit version;
-    pythonSupport = python != null;
-  };
 }

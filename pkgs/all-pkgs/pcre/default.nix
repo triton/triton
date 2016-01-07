@@ -1,6 +1,18 @@
-{ stdenv, fetchurl }:
+{ stdenv
+, fetchurl
 
-with stdenv.lib;
+, pcregrep ? false
+  , bzip2 ? null
+  , zlib ? null
+, unicodeSupport ? true
+, cplusplusSupport ? true
+}:
+
+with {
+  inherit (stdenv.lib)
+    enFlag
+    optionals;
+};
 
 stdenv.mkDerivation rec {
   name = "pcre-8.38";
@@ -10,34 +22,45 @@ stdenv.mkDerivation rec {
     sha256 = "1pvra19ljkr5ky35y2iywjnsckrs9ch2anrf5b0dc91hw8v2vq5r";
   };
 
-  outputs = [ "out" "doc" "man" ];
-
   configureFlags = [
     "--enable-pcre8"
     "--enable-pcre16"
     "--enable-pcre32"
+    (enFlag "cpp" cplusplusSupport null)
     "--enable-jit"
+    (enFlag "pcregrep-jit" pcregrep null)
     "--enable-utf"
-    "--enable-unicode-properties"
-    "--disable-silent-rules"
+    (enFlag "unicode-properties" unicodeSupport null)
+    (enFlag "pcregrep-libz" (pcregrep && zlib != null) null)
+    (enFlag "pcregrep-libbz2" (pcregrep && bzip2 != null) null)
+    "--disable-pcretest-libedit"
+    "--disable-pcretest-libreadline"
+    "--disable-valgrind"
+    "--disable-coverage"
+  ];
+
+  buildInputs = optionals pcregrep [
+    bzip2
+    zlib
+  ];
+
+  outputs = [
+    "out"
+    "doc"
+    "man"
   ];
 
   doCheck = true;
+  enableParallelBuilding = true;
 
-  meta = {
+  meta = with stdenv.lib; {
+    description = "Perl Compatible Regular Expressions";
     homepage = "http://www.pcre.org/";
-    description = "A library for Perl Compatible Regular Expressions";
-    license = stdenv.lib.licenses.bsd3;
-
-    longDescription = ''
-      The PCRE library is a set of functions that implement regular
-      expression pattern matching using the same syntax and semantics as
-      Perl 5. PCRE has its own native API, as well as a set of wrapper
-      functions that correspond to the POSIX regular expression API. The
-      PCRE library is free, even for building proprietary software.
-    '';
-
-    platforms = platforms.all;
-    maintainers = [ maintainers.simons ];
+    license = licenses.bsd3;
+    maintainers = with maintainers; [ ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

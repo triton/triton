@@ -597,7 +597,8 @@ pangomm = callPackage ../all-pkgs/pangomm { };
 pangox-compat = callPackage ../all-pkgs/pangox-compat { };
 
 pcre = callPackage ../all-pkgs/pcre/1.x.nix { };
-pcre2 = callPackage ../all-pkgs/pcre/2.x.nix { };
+
+pcre2 = callPackage ../all-pkgs/pcre2 { };
 
 pixman = callPackage ../all-pkgs/pixman { };
 

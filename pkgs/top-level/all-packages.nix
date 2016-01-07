@@ -636,6 +636,8 @@ poppler = callPackage ../all-pkgs/poppler {
 
 sakura = callPackage ../all-pkgs/sakura { };
 
+sublime-text = callPackage ../all-pkgs/sublime-text { };
+
 wayland = callPackage ../all-pkgs/wayland {
   graphviz = graphviz-nox;
 };
@@ -13036,10 +13038,6 @@ zenity = callPackage ../all-pkgs/zenity { };
     sbcl = sbcl_1_2_5;
     lispPackages = lispPackagesFor (wrapLisp sbcl_1_2_5);
   };
-
-  sublime = callPackage ../applications/editors/sublime { };
-
-  sublime3 = lowPrio (callPackage ../applications/editors/sublime3 { });
 
   inherit (callPackages ../applications/version-management/subversion/default.nix {
       bdbSupport = true;

@@ -16,8 +16,6 @@ stdenv.mkDerivation rec {
     inherit sha256;
   };
 
-  outputs = [ "out" ] ++ lib.optional (!minimal) "doc";
-
   patches = [ ./datadir_env.patch ];
 
   # TODO: reduce propagation to necessary libs

@@ -41,6 +41,15 @@ in stdenv.mkDerivation rec {
   nativeBuildInputs = [ scons ];
   inherit buildInputs;
 
+  # Hopefully remove this in 3.2.1+
+  patches = [
+    (fetchurl {
+      name = "mongodb-boost160.patch";
+      url = "https://projects.archlinux.org/svntogit/community.git/plain/trunk/boost160.patch?h=packages/mongodb&id=cfa3ad904c66ffbe407d0180fc90c49faef58e59";
+      sha256 = "0wvd4hamwrp1067jjjgsyh92spw92z2n32g7a6pkvr838dgs778f";
+    })
+  ];
+
   postPatch = ''
     # fix environment variable reading
     substituteInPlace SConstruct \

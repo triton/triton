@@ -602,6 +602,25 @@ pcre2 = callPackage ../all-pkgs/pcre2 { };
 
 pixman = callPackage ../all-pkgs/pixman { };
 
+poppler_qt4 = poppler.override {
+  suffix = "qt4";
+  qt4 = qt4;
+  qt5 = null;
+};
+poppler_qt5 = poppler.override {
+  suffix = "qt5";
+  qt4 = null;
+  qt5 = qt54;
+};
+poppler_utils = poppler.override {
+  suffix = "utils";
+  utils = true;
+};
+poppler = callPackage ../all-pkgs/poppler {
+  qt4 = null;
+  qt5 = null;
+};
+
 sakura = callPackage ../all-pkgs/sakura { };
 
 wayland = callPackage ../all-pkgs/wayland {
@@ -7927,20 +7946,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   };
 
   polkit_qt4 = callPackage ../development/libraries/polkit-qt-1 { };
-
-  poppler = callPackage ../development/libraries/poppler { lcms = lcms2; };
-
-  poppler_min = poppler.override { # TODO: maybe reduce even more
-    minimal = true;
-    suffix = "min";
-  };
-
-  poppler_qt4 = poppler.override {
-    qt4Support = true;
-    suffix = "qt4";
-  };
-
-  poppler_utils = poppler.override { suffix = "utils"; utils = true; };
 
   popt = callPackage ../development/libraries/popt { };
 

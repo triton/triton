@@ -571,6 +571,10 @@ gtkmm2 = gtkmm_2;
 gtkmm_3 = callPackage ../all-pkgs/gtkmm/3.x.nix { };
 gtkmm3 = gtkmm_3;
 
+guitarix = callPackage ../all-pkgs/guitarix {
+  fftw = fftwSinglePrec;
+};
+
 gvfs = callPackage ../all-pkgs/gvfs { gconf = gnome.GConf; };
 
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
@@ -11638,10 +11642,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   gtimelog = pythonPackages.gtimelog;
 
   inherit (gnome3) gucharmap;
-
-  guitarix = callPackage ../applications/audio/guitarix {
-    fftw = fftwSinglePrec;
-  };
 
   gjay = callPackage ../applications/audio/gjay { };
 

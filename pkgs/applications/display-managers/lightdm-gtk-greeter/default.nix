@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, lightdm, pkgconfig, intltool
+{ stdenv, fetchurl, lightdm, intltool, glib, xorg
 , hicolor_icon_theme, makeWrapper
 , useGTK2 ? false, gtk2, gtk3 # gtk3 seems better supported
 }:
@@ -18,7 +18,8 @@ stdenv.mkDerivation rec {
     sha256 = "031iv7zrpv27zsvahvfyrm75zdrh7591db56q89k8cjiiy600r1j";
   };
 
-  buildInputs = [ pkgconfig lightdm intltool makeWrapper ]
+  nativeBuildInputs = [ intltool makeWrapper ];
+  buildInputs = [ lightdm glib xorg.libX11 ]
     ++ (if useGTK2 then [ gtk2 ] else [ gtk3 ]);
 
   configureFlags = [

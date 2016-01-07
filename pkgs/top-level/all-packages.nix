@@ -1753,8 +1753,6 @@ zenity = callPackage ../all-pkgs/zenity { };
 
   ftop = callPackage ../os-specific/linux/ftop { };
 
-  fuppes = callPackage ../tools/networking/fuppes { };
-
   fsfs = callPackage ../tools/filesystems/fsfs { };
 
   fuseiso = callPackage ../tools/filesystems/fuseiso { };
@@ -2748,8 +2746,6 @@ zenity = callPackage ../all-pkgs/zenity { };
 
   opensc = callPackage ../tools/security/opensc { };
 
-  opensc_dnie_wrapper = callPackage ../tools/security/opensc-dnie-wrapper { };
-
   openssh =
     callPackage ../tools/networking/openssh {
       hpnSupport = false;
@@ -3219,6 +3215,8 @@ zenity = callPackage ../all-pkgs/zenity { };
   sec = callPackage ../tools/admin/sec { };
 
   seccure = callPackage ../tools/security/seccure { };
+
+  setroot = callPackage  ../tools/X11/setroot { };
 
   setserial = callPackage ../tools/system/setserial { };
 
@@ -7859,8 +7857,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   openexr = callPackage ../development/libraries/openexr { };
 
   openldap = callPackage ../development/libraries/openldap { };
-
-  libopensc_dnie = callPackage ../development/libraries/libopensc-dnie { };
 
   opencolorio = callPackage ../development/libraries/opencolorio { };
 

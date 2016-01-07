@@ -3022,12 +3022,20 @@ in modules // {
 
   cytoolz = buildPythonPackage rec {
     name = "cytoolz-${version}";
-    version = "0.7.3";
+    version = "0.7.4";
 
     src = pkgs.fetchurl{
       url = "https://pypi.python.org/packages/source/c/cytoolz/cytoolz-${version}.tar.gz";
-      md5 = "e9f0441d9f340a23c60357f68f25d163";
+      sha256 = "9c2e3dda8232b6cd5b84b8c8df6c8155c2adeb8734eb7ec38e189affc0f2eba5";
     };
+
+    buildInputs = with self; [ nose ];
+
+    checkPhase = ''
+      nosetests cytoolz/tests
+    '';
+
+    doCheck = false; # Cannot import the extension module
 
     meta = {
       homepage = "http://github.com/pytoolz/cytoolz/";
@@ -19122,6 +19130,12 @@ in modules // {
       sha256 = "43c2c9e5e7a16b6c88ba3088a9bfc82f7db8e13378be7c78d6c14a5f8ed05afd";
     };
 
+    buildInputs = with self; [ nose ];
+
+    checkPhase = ''
+      nosetests toolz/tests
+    '';
+
     meta = {
       homepage = "http://github.com/pytoolz/toolz/";
       description = "List processing tools and functional utilities";
@@ -21598,14 +21612,15 @@ in modules // {
   pyspotify = buildPythonPackage rec {
     name = "pyspotify-${version}";
 
-    version = "1.12";
+    version = "2.0.5";
 
     src = pkgs.fetchurl {
       url = "https://github.com/mopidy/pyspotify/archive/v${version}.tar.gz";
-      sha256 = "0bj6p4hafj1yp0j5n1rxww39nvi3w6y3azadz8a8nxb3b4a8f1xn";
+      sha256 = "1ilbz2w1gw3f1bpapfa09p84dwh08bf7qcrkmd3aj0psz57p2rls";
     };
 
-    buildInputs = with self; [ pkgs.libspotify ]
+    propagatedBuildInputs = with self; [ cffi ];
+    buildInputs = [ pkgs.libspotify ]
       ++ stdenv.lib.optional stdenv.isDarwin pkgs.install_name_tool;
 
     # python zip complains about old timestamps

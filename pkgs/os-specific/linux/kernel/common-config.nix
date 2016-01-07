@@ -36,6 +36,9 @@ with stdenv.lib;
   SCHEDSTATS n
   DETECT_HUNG_TASK y
 
+  # Unix domain sockets.
+  UNIX y
+
   # Power management.
   ${optionalString (versionOlder version "3.19") ''
     PM_RUNTIME y
@@ -137,6 +140,7 @@ with stdenv.lib;
   FB_3DFX_ACCEL y
   FB_VESA y
   FRAMEBUFFER_CONSOLE y
+  FRAMEBUFFER_CONSOLE_ROTATION y
   ${optionalString (versionOlder version "3.9" || stdenv.system == "i686-linux") ''
     FB_GEODE y
   ''}

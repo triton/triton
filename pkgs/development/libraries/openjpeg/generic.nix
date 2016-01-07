@@ -1,68 +1,89 @@
-{ stdenv, fetchurl, cmake, pkgconfig
-, libpng, libtiff, lcms2
+{ stdenv
+, cmake
+, fetchurl
+
+, lcms2
+, libpng
+, libtiff
 , mj2Support ? true # MJ2 executables
 , jpwlLibSupport ? true # JPWL library & executables
 , jpipLibSupport ? false # JPIP library & executables
-, jpipServerSupport ? false, curl ? null, fcgi ? null # JPIP Server
-#, opjViewerSupport ? false, wxGTK ? null # OPJViewer executable
+, jpipServerSupport ? false # JPIP Server
+  , curl ? null
+  , fcgi ? null
+#, opjViewerSupport ? false # OPJViewer executable
+#  , wxGTK ? null
 , openjpegJarSupport ? false # Openjpeg jar (Java)
 , jp3dSupport ? true # # JP3D comp
 , thirdPartySupport ? false # Third party libraries - OFF: only build when found, ON: always build
 , testsSupport ? false
 , jdk ? null
 # Inherit generics
-, branch, sha256, version, ...
+, branch
+, sha256
+, version
+, ...
 }:
+
+with {
+  inherit (stdenv.lib)
+    cmFlag
+    optional
+    optionals
+    optionalString
+    versionAtLeast;
+};
 
 assert jpipServerSupport -> jpipLibSupport && curl != null && fcgi != null;
 #assert opjViewerSupport -> (wxGTK != null);
 assert (openjpegJarSupport || jpipLibSupport) -> jdk != null;
 
-let
-  inherit (stdenv.lib) optional optionals;
-  mkFlag = optSet: flag: "-D${flag}=${if optSet then "ON" else "OFF"}";
-in
-
 stdenv.mkDerivation rec {
   name = "openjpeg-${version}";
-  
+
   src = fetchurl {
     url = "mirror://sourceforge/openjpeg.mirror/${version}/openjpeg-${version}.tar.gz";
     inherit sha256;
   };
 
   cmakeFlags = [
-    "-DCMAKE_INSTALL_NAME_DIR=\${CMAKE_INSTALL_PREFIX}/lib"
+    #"-DCMAKE_INSTALL_NAME_DIR=\${CMAKE_INSTALL_PREFIX}/lib"
     "-DBUILD_SHARED_LIBS=ON"
     "-DBUILD_CODEC=ON"
-    (mkFlag mj2Support "BUILD_MJ2")
-    (mkFlag jpwlLibSupport "BUILD_JPWL")
-    (mkFlag jpipLibSupport "BUILD_JPIP")
-    (mkFlag jpipServerSupport "BUILD_JPIP_SERVER")
-    #(mkFlag opjViewerSupport "BUILD_VIEWER")
+    (cmFlag "BUILD_MJ2" mj2Support)
+    (cmFlag "BUILD_JPWL" jpwlLibSupport)
+    (cmFlag "BUILD_JPIP" jpipLibSupport)
+    (cmFlag "BUILD_JPIP_SERVER" jpipServerSupport)
+    #(cmFlag "BUILD_VIEWER" opjViewerSupport)
     "-DBUILD_VIEWER=OFF"
-    (mkFlag openjpegJarSupport "BUILD_JAVA")
-    (mkFlag jp3dSupport "BUILD_JP3D")
-    (mkFlag thirdPartySupport "BUILD_THIRDPARTY")
-    (mkFlag testsSupport "BUILD_TESTING")
+    (cmFlag "BUILD_JAVA" openjpegJarSupport)
+    (cmFlag "BUILD_JP3D" jp3dSupport)
+    (cmFlag "BUILD_THIRDPARTY" thirdPartySupport)
+    (cmFlag "BUILD_TESTING" testsSupport)
   ];
 
-  nativeBuildInputs = [ cmake pkgconfig ];
+  nativeBuildInputs = [
+    cmake
+  ];
 
-  buildInputs = [ ]
-    ++ optionals jpipServerSupport [ curl fcgi ]
-    #++ optional opjViewerSupport wxGTK
+  buildInputs = [
+    lcms2
+    libpng
+    libtiff
+  ] ++ optionals jpipServerSupport [
+    curl
+    fcgi
+  ] /*++ optional opjViewerSupport wxGTK*/
     ++ optional (openjpegJarSupport || jpipLibSupport) jdk;
-
-  propagatedBuildInputs = [ libpng libtiff lcms2 ];
 
   passthru = {
     incDir = "openjpeg-${branch}";
   };
 
-  preFixup = ''
-    # Fix the requires field in openjpeg
-    sed -i 's,Requires: openjp2,Requires: libopenjp2,g' $out/lib/pkgconfig/libopenjpwl.pc
+  postInstall = optionalString (versionAtLeast "${branch}" "2.0") ''
+    # Fix the pkg-config requires field
+    sed -i $out/lib/pkgconfig/libopenjpwl.pc \
+      -e '/Requires:/ s,openjp2,libopenjp2,'
   '';
 
   meta = with stdenv.lib; {

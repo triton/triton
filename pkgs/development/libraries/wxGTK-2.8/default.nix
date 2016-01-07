@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, gtk, libXinerama, libSM, libXxf86vm, xf86vidmodeproto
+{ stdenv, fetchurl, pkgconfig, gtk2, xorg
 , gstreamer, gst_plugins_base, GConf
 , withMesa ? true, mesa ? null, compat24 ? false, compat26 ? true, unicode ? true,
 }:
@@ -16,7 +16,9 @@ stdenv.mkDerivation rec {
     sha256 = "1l1w4i113csv3bd5r8ybyj0qpxdq83lj6jrc5p7cc10mkwyiagqz";
   };
 
-  buildInputs = [ gtk libXinerama libSM libXxf86vm xf86vidmodeproto gstreamer gst_plugins_base GConf ]
+  buildInputs = [
+    gtk2 xorg.Xxf86vm xorg.xf86vidmodeproto
+    gstreamer gst_plugins_base GConf ]
     ++ optional withMesa mesa;
 
   nativeBuildInputs = [ pkgconfig ];
@@ -33,9 +35,9 @@ stdenv.mkDerivation rec {
 
   # These variables are used by configure to find some dependencies.
   SEARCH_INCLUDE =
-    "${libXinerama}/include ${libSM}/include ${libXxf86vm}/include";
+    "${xorg.libXinerama}/include ${xorg.libSM}/include ${xorg.libXxf86vm}/include";
   SEARCH_LIB =
-    "${libXinerama}/lib ${libSM}/lib ${libXxf86vm}/lib "
+    "${xorg.libXinerama}/lib ${xorg.libSM}/lib ${xorg.libXxf86vm}/lib "
     + optionalString withMesa "${mesa}/lib ";
 
   # Work around a bug in configure.
@@ -57,7 +59,7 @@ stdenv.mkDerivation rec {
   passthru = {inherit gtk compat24 compat26 unicode;};
 
   enableParallelBuilding = true;
-  
+
   meta = {
     platforms = stdenv.lib.platforms.all;
   };

@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, pkgconfig, gtk, libXinerama, libSM, libXxf86vm, xf86vidmodeproto
-, gstreamer, gst_plugins_base, GConf, setfile
+{ stdenv, fetchurl, pkgconfig, gtk2, xorg
+, gstreamer, gst_plugins_base, GConf
 , withMesa ? true, mesa ? null, compat24 ? false, compat26 ? true, unicode ? true,
 }:
 
@@ -19,10 +19,9 @@ stdenv.mkDerivation {
   };
 
   buildInputs =
-    [ gtk libXinerama libSM libXxf86vm xf86vidmodeproto gstreamer
+    [ gtk2 xorg.libXinerama xorg.libSM xorg.libXxf86vm xorg.xf86vidmodeproto gstreamer
       gst_plugins_base GConf ]
-    ++ optional withMesa mesa
-    ++ optional stdenv.isDarwin setfile;
+    ++ optional withMesa mesa;
 
   nativeBuildInputs = [ pkgconfig ];
 
@@ -31,10 +30,7 @@ stdenv.mkDerivation {
       (if compat24 then "--enable-compat24" else "--disable-compat24")
       (if compat26 then "--enable-compat26" else "--disable-compat26") ]
     ++ optional unicode "--enable-unicode"
-    ++ optional withMesa "--with-opengl"
-    ++ optionals stdenv.isDarwin
-      # allow building on 64-bit
-      [ "--with-cocoa" "--enable-universal-binaries" ];
+    ++ optional withMesa "--with-opengl";
 
   SEARCH_LIB = optionalString withMesa "${mesa}/lib";
 
@@ -42,11 +38,7 @@ stdenv.mkDerivation {
     substituteInPlace configure --replace 'SEARCH_INCLUDE=' 'DUMMY_SEARCH_INCLUDE='
     substituteInPlace configure --replace 'SEARCH_LIB=' 'DUMMY_SEARCH_LIB='
     substituteInPlace configure --replace /usr /no-such-path
-  " + optionalString stdenv.isDarwin ''
-    substituteInPlace configure --replace \
-      'ac_cv_prog_SETFILE="/Developer/Tools/SetFile"' \
-      'ac_cv_prog_SETFILE="${setfile}/bin/SetFile"'
-  '';
+  ";
 
   postInstall = "
     (cd $out/include && ln -s wx-*/* .)
@@ -55,7 +47,7 @@ stdenv.mkDerivation {
   passthru = {inherit gtk compat24 compat26 unicode;};
 
   enableParallelBuilding = true;
-  
+
   meta = {
     platforms = stdenv.lib.platforms.all;
   };

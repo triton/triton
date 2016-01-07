@@ -1,4 +1,4 @@
-{ fetchurl, stdenv, intltool, pkgconfig, glib, json_glib, libsoup, geoip
+{ fetchurl, stdenv, intltool, pkgconfig, glib, json-glib, libsoup, geoip
 , dbus, dbus_glib, modemmanager, avahi
 }:
 
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs =
-   [ intltool pkgconfig glib json_glib libsoup geoip
+   [ intltool pkgconfig glib json-glib libsoup geoip
      dbus dbus_glib modemmanager avahi
    ];
 

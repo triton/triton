@@ -48,7 +48,7 @@ let
   inherit (pkgs)
     glib
     gtk2
-    webkitgtk24x
+    webkitgtk_2_4
     gtk3
     gtkmm3
     libcanberra
@@ -85,7 +85,7 @@ let
   dconf-editor = callPackage ./core/dconf-editor { };
 
   empathy = callPackage ./core/empathy {
-    webkitgtk = webkitgtk24x;
+    webkitgtk = webkitgtk_2_4;
     clutter-gst = pkgs.clutter-gst;
   };
 
@@ -255,13 +255,13 @@ let
   accerciser = callPackage ./apps/accerciser { };
 
   bijiben = callPackage ./apps/bijiben {
-    webkitgtk = webkitgtk24x;
+    webkitgtk = webkitgtk_2_4;
   };
 
   cheese = callPackage ./apps/cheese { };
 
   evolution = callPackage ./apps/evolution {
-    webkitgtk = webkitgtk24x;
+    webkitgtk = webkitgtk_2_4;
   };
 
   file-roller = callPackage ./apps/file-roller { };
@@ -315,7 +315,7 @@ let
   anjuta = callPackage ./devtools/anjuta { };
 
   devhelp = callPackage ./devtools/devhelp {
-    webkitgtk = webkitgtk24x;
+    webkitgtk = webkitgtk_2_4;
   };
 
   gdl = callPackage ./devtools/gdl { };
@@ -365,13 +365,13 @@ let
   california = callPackage ./misc/california { };
 
   geary = callPackage ./misc/geary {
-    webkitgtk = webkitgtk24x;
+    webkitgtk = webkitgtk_2_4;
   };
 
   gfbgraph = callPackage ./misc/gfbgraph { };
 
   gitg = callPackage ./misc/gitg {
-    webkitgtk = webkitgtk24x;
+    webkitgtk = webkitgtk_2_4;
   };
 
   libgda = callPackage ./misc/libgda { };

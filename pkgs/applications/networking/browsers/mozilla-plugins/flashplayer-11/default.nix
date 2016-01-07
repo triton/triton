@@ -7,20 +7,16 @@
 , fontconfig
 , freetype
 , expat
-, libX11
-, libXext
-, libXrender
-, libXcursor
-, libXt
 , libvdpau
-, gtk
+, gtk2
 , glib
 , pango
 , cairo
 , atk
-, gdk_pixbuf
+, gdk-pixbuf
 , nss
 , unzip
+, xorg
 , debug ? false
 
 /* you have to add ~/mm.cfg :
@@ -87,8 +83,9 @@ stdenv.mkDerivation rec {
   };
 
   rpath = stdenv.lib.makeLibraryPath
-    [ zlib alsaLib curl nspr fontconfig freetype expat libX11
-      libXext libXrender libXcursor libXt gtk glib pango atk cairo gdk_pixbuf
+    [ zlib alsaLib curl nspr fontconfig freetype expat xorg.libX11
+      xorg.libXext xorg.libXrender xorg.libXcursor xorg.libXt
+      gtk2 glib pango atk cairo gdk-pixbuf
       libvdpau nss
     ];
 

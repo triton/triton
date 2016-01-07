@@ -6629,8 +6629,8 @@ zenity = callPackage ../all-pkgs/zenity { };
   gtkmathview = callPackage ../development/libraries/gtkmathview { };
 
   gtkLibs = {
-    inherit (pkgs) glib glibmm atk atkmm cairo pango pangomm gdk-pixbuf gtk
-      gtkmm;
+    inherit (pkgs) glib glibmm atk atkmm cairo pango pangomm gdk-pixbuf gtk2
+      gtkmm2;
   };
 
   gnome-sharp = callPackage ../development/libraries/gnome-sharp {};
@@ -8505,13 +8505,11 @@ zenity = callPackage ../all-pkgs/zenity { };
 
   wxGTK29 = callPackage ../development/libraries/wxGTK-2.9/default.nix {
     inherit (gnome) GConf;
-    inherit (darwin.stubs) setfile;
     withMesa = lib.elem system lib.platforms.mesaPlatforms;
   };
 
   wxGTK30 = callPackage ../development/libraries/wxGTK-3.0/default.nix {
     inherit (gnome) GConf;
-    inherit (darwin.stubs) setfile;
     withMesa = lib.elem system lib.platforms.mesaPlatforms;
   };
 

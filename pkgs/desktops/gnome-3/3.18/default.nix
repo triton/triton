@@ -3,7 +3,7 @@
 let
 
   pkgsFun = overrides:
-    let 
+    let
       self = self_ // overrides;
       self_ = with self; {
 
@@ -45,7 +45,16 @@ let
     hitori gnome-taquin
   ];
 
-  inherit (pkgs) glib gtk2 webkitgtk24x gtk3 gtkmm3 libcanberra vala;
+  inherit (pkgs)
+    glib
+    gtk2
+    webkitgtk24x
+    gtk3
+    gtkmm3
+    libcanberra
+    vala
+    zenity;
+
   inherit (pkgs.gnome2) ORBit2;
   libsoup = pkgs.libsoup.override { gnomeSupport = true; };
   libchamplain = pkgs.libchamplain.override { libsoup = libsoup; };
@@ -75,7 +84,7 @@ let
   dconf = callPackage ./core/dconf { };
   dconf-editor = callPackage ./core/dconf-editor { };
 
-  empathy = callPackage ./core/empathy { 
+  empathy = callPackage ./core/empathy {
     webkitgtk = webkitgtk24x;
     clutter-gst = pkgs.clutter-gst;
   };
@@ -240,8 +249,6 @@ let
 
   yelp_tools = callPackage ./core/yelp-tools { };
 
-  zenity = callPackage ./core/zenity { };
-
 
 #### Apps (http://ftp.acc.umu.se/pub/GNOME/apps/)
 
@@ -357,13 +364,13 @@ let
 
   california = callPackage ./misc/california { };
 
-  geary = callPackage ./misc/geary { 
+  geary = callPackage ./misc/geary {
     webkitgtk = webkitgtk24x;
   };
 
   gfbgraph = callPackage ./misc/gfbgraph { };
 
-  gitg = callPackage ./misc/gitg { 
+  gitg = callPackage ./misc/gitg {
     webkitgtk = webkitgtk24x;
   };
 

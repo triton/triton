@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, fetchpatch, libX11, libXaw }:
+{ stdenv, fetchurl, fetchpatch, xorg }:
 
 let
   getPatch = { name, sha256 }: fetchpatch {
@@ -24,10 +24,9 @@ stdenv.mkDerivation {
   };
   inherit patches;
 
-  buildInputs = [ libX11 libXaw ];
+  buildInputs = [ xorg.libX11 xorg.libXaw ];
   buildFlags = "without_doc";
 
   postInstall = stdenv.lib.optional (!stdenv.isDarwin) "chmod +x $out/lib/*.so.*"; # ??
 
 }
-

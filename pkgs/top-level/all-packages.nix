@@ -12189,9 +12189,6 @@ zenity = callPackage ../all-pkgs/zenity { };
     };
     clucene_core = clucene_core_2;
     lcms = lcms2;
-    harfbuzz = harfbuzz.override {
-      withIcu = true; withGraphite2 = true;
-    };
   };
 
   liferea = callPackage ../applications/networking/newsreaders/liferea {
@@ -15436,9 +15433,6 @@ zenity = callPackage ../all-pkgs/zenity { };
 
   texLive = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive) {
     ghostscript = ghostscriptX;
-    harfbuzz = harfbuzz.override {
-      withIcu = true; withGraphite2 = true;
-    };
   };
 
   texLiveFull = lib.setName "texlive-full" (texLiveAggregationFun {

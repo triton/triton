@@ -2,9 +2,8 @@ args @ {
 builderDefs, zlib, bzip2, ncurses, libpng, ed, lesstif, ruby, potrace
 , gd, t1lib, freetype, icu, perl, expat, curl, xz, pkgconfig, zziplib, texinfo
 , libjpeg, bison, python, fontconfig, flex, poppler, libpaper, graphite2
-, makeWrapper, gmp, mpfr, xpdf, config
-, libXaw, libX11, xproto, libXt, libXpm
-, libXmu, libXext, xextproto, libSM, libICE
+, makeWrapper, gmp, mpfr, xpdf, config, harfbuzz
+, xorg
 , ... }: with args;
 
 rec {
@@ -29,9 +28,7 @@ rec {
 
   setupHook = ./setup-hook.sh;
 
-  doMainBuild = fullDepEntry ( stdenv.lib.optionalString stdenv.isDarwin ''
-    export DYLD_LIBRARY_PATH="${poppler}/lib"
-  '' + ''
+  doMainBuild = fullDepEntry (''
     mkdir -p $out
     mkdir -p $out/nix-support
     cp ${setupHook} $out/nix-support/setup-hook.sh
@@ -104,11 +101,7 @@ rec {
     PATH="$PATH:$out/bin" fmtutil-sys --all || true
 
     PATH=$PATH:$out/bin mktexlsr $out/share/texmf*
-  '' + stdenv.lib.optionalString stdenv.isDarwin ''
-    for prog in $out/bin/*; do
-      wrapProgram "$prog" --prefix DYLD_LIBRARY_PATH : "${poppler}/lib"
-    done
-  '' ) [ "minInit" "defEnsureDir" "doUnpack" "doMakeInstall" "promoteLibexec" "patchShebangsInterim"];
+  '') [ "minInit" "defEnsureDir" "doUnpack" "doMakeInstall" "promoteLibexec" "patchShebangsInterim"];
 
   patchShebangsInterimBin = doPatchShebangs ''$out/bin/'';
   patchShebangsInterimLibexec = doPatchShebangs ''$out/libexec/'';
@@ -119,31 +112,16 @@ rec {
     "patchShebangsInterimLibexec" "patchShebangsInterimTexmfDist"
     "patchShebangsInterimShareTexmfDist"];
 
-  buildInputs = [ zlib bzip2 ncurses libpng flex bison libX11 libICE xproto
-    freetype t1lib gd libXaw icu ghostscript ed libXt libXpm libXmu libXext
-    xextproto perl libSM ruby expat curl libjpeg python fontconfig xz pkgconfig
+  buildInputs = [ zlib bzip2 ncurses libpng flex bison xorg.libX11 xorg.libICE xorg.xproto
+    freetype t1lib gd xorg.libXaw icu ghostscript ed xorg.libXt xorg.libXpm xorg.libXmu xorg.libXext
+    xorg.xextproto perl xorg.libSM ruby expat curl libjpeg python fontconfig xz pkgconfig
     poppler libpaper graphite2 lesstif zziplib harfbuzz texinfo potrace gmp mpfr
-    xpdf ]
-    ++ stdenv.lib.optionals stdenv.isDarwin [ makeWrapper ]
-    ;
+    xpdf ];
 
   configureFlags = [ "--with-x11" "--enable-ipc" "--with-mktexfmt"
     "--enable-shared" "--disable-native-texlive-build" "--with-system-zziplib"
     "--with-system-libgs" "--with-system-t1lib" "--with-system-freetype2"
-    "--with-system-freetype=no" "--disable-ttf2pk" "--enable-ttf2pk2" ]
-    ++ stdenv.lib.optionals stdenv.isDarwin [
-      # TODO: We should be able to fix these tests
-      "--disable-devnag"
-
-      # jww (2014-06-02): The following fails with:
-      # FAIL: tests/dvisvgm
-      # ===================
-      #
-      # dyld: Library not loaded: libgs.dylib.9.06
-      #   Referenced from: .../Work/texk/dvisvgm/.libs/dvisvgm
-      #   Reason: image not found
-      "--disable-dvisvgm"
-    ];
+    "--with-system-freetype=no" "--disable-ttf2pk" "--enable-ttf2pk2" ];
 
   phaseNames = [ "addInputs" "doMainBuild" "doMakeInstall" "doPostInstall" ];
 

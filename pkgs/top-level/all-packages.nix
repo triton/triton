@@ -486,6 +486,8 @@ cairo = callPackage ../all-pkgs/cairo { };
 
 cairomm = callPackage ../all-pkgs/cairomm { };
 
+cogl = callPackage ../all-pkgs/cogl { };
+
 ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
 ffmpeg_1 = callPackage ../all-pkgs/ffmpeg/1.x.nix { };
 ffmpeg_2_2 = callPackage ../all-pkgs/ffmpeg/2.2.nix { };
@@ -6223,13 +6225,9 @@ x265 = callPackage ../all-pkgs/x265 { };
 
   clutter = callPackage ../development/libraries/clutter { };
 
-  clutter_1_22 = callPackage ../development/libraries/clutter/1.22.nix {
-    cogl = cogl_1_20;
-  };
+  clutter_1_22 = callPackage ../development/libraries/clutter/1.22.nix { };
 
-  clutter_1_24 = callPackage ../development/libraries/clutter/1.24.nix {
-    cogl = cogl_1_22;
-  };
+  clutter_1_24 = callPackage ../development/libraries/clutter/1.24.nix { };
 
   clutter-gst = callPackage ../development/libraries/clutter-gst { };
 
@@ -6244,12 +6242,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   };
 
   cminpack = callPackage ../development/libraries/cminpack { };
-
-  cogl = callPackage ../development/libraries/cogl { };
-
-  cogl_1_20 = callPackage ../development/libraries/cogl/1.20.nix { };
-
-  cogl_1_22 = callPackage ../development/libraries/cogl/1.22.nix { };
 
   coin3d = callPackage ../development/libraries/coin3d { };
 

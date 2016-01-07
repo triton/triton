@@ -87,6 +87,7 @@ buildAbsoluteLdflags() {
     }
   }
   ' $TMPDIR/absolute-ldflags > $TMPDIR/absolute-lib-paths
+  du -bhs $TMPDIR/absolute-ldflags
   rm $TMPDIR/absolute-ldflags
 }
 

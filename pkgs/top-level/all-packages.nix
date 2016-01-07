@@ -636,17 +636,13 @@ wayland-docs = callPackage ../all-pkgs/wayland {
 };
 
 webkitgtk_2_4_gtk3 = callPackage ../all-pkgs/webkitgtk/2.4.x.nix {
-  harfbuzz = harfbuzz-icu;
-  gst-plugins-base = gst_all_1.gst-plugins-base;
+  gtkVer = "3";
 };
 webkitgtk_2_4_gtk2 = webkitgtk_2_4_gtk3.override {
-  withGtk2 = true;
-  enableIntrospection = false;
+  gtkVer = "2";
 };
 webkitgtk_2_4 = webkitgtk_2_4_gtk3;
-webkitgtk = callPackage ../all-pkgs/webkitgtk {
-  gst-plugins-base = gst_all_1.gst-plugins-base;
-};
+webkitgtk = callPackage ../all-pkgs/webkitgtk { };
 
 x264 = callPackage ../all-pkgs/x264 { };
 

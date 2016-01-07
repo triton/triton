@@ -1,23 +1,57 @@
-{ stdenv, fetchurl, perl, python, ruby, bison, gperf, flex
-, which, gettext, gobjectIntrospection
-, gtk2, gtk3, wayland, libwebp, enchant, sqlite
-, libxml2, libsoup, libsecret, libxslt, harfbuzz
-, gst-plugins-base
-, withGtk2 ? false
-, enableIntrospection ? true
+{ stdenv
+, fetchurl
+  # Build
+, autoreconfHook
+, bison
+, flex
+, gettext
+, gperf
+, perl
+, python
+, ruby
+, which
+
+, atk
+, cairo
+, enchant
+, fontconfig
+, freetype
+, geoclue2
+, glib
+, gobject-introspection
+, gtk2
+, gtk3
+, gst_all_1
+, harfbuzz
+, icu
+, libjpeg
+, libpng
+, libsecret
+, libsoup
+, libwebp
+, libxml2
+, libxslt
+, pango
+, mesa_noglu
+, sqlite
+, upower
+, wayland
+, xorg
+, zlib
+
+, gtkVer ? "3"
 }:
 
-stdenv.mkDerivation rec {
-  name = "webkitgtk-${version}";
-  version = "2.4.9";
+with {
+  inherit (stdenv.lib)
+    enFlag
+    wtFlag;
+};
 
-  meta = with stdenv.lib; {
-    description = "Web content rendering engine, GTK+ port";
-    homepage = "http://webkitgtk.org/";
-    license = licenses.bsd2;
-    platforms = platforms.linux;
-    maintainers = [ maintainers.iyzsong ];
-  };
+assert (gtkVer == "2" || gtkVer == "3");
+
+stdenv.mkDerivation rec {
+  name = "webkitgtk-2.4.9";
 
   src = fetchurl {
     url = "http://webkitgtk.org/releases/${name}.tar.xz";
@@ -26,38 +60,114 @@ stdenv.mkDerivation rec {
 
   CC = "cc";
 
-  prePatch = ''
-    patchShebangs Tools/gtk
-  '';
-  patches = [ ./webcore-svg-libxml-cflags.patch ];
-
-  configureFlags = with stdenv.lib; [
-    "--disable-geolocation"
-    (optionalString enableIntrospection "--enable-introspection")
-  ] ++ stdenv.lib.optional withGtk2 [
-    "--with-gtk=2.0"
-    "--disable-webkit2"
+  patchs = [
+    ./webkit-gtk-jpeg-9a.patch
   ];
 
-  dontAddDisableDepTrack = true;
+  prePatch = ''
+    patchShebangs ./Tools/gtk
+  '';
+
+  # patch *.in between autoreconf and configure
+  postAutoreconf = "patch -p1 < ${./webcore-svg-libxml-cflags.patch}";
+
+  configureFlags = [
+    "--enable-largefile"
+    "--enable-webkit1"
+    "--disable-webkit2"
+    "--disable-debug"
+    "--disable-developer-mode"
+    "--enable-optimizations"
+    "--enable-x11-target"
+    "--disable-wayland-target" # gtk3?
+    "--disable-win32-target"
+    "--disable-quartz-target"
+    "--disable-directfb-target"
+    "--enable-spellcheck"
+    "--enable-credential-storage"
+    "--disable-glx"
+    "--enable-egl"
+    "--enable-gles2"
+    "--disable-gamepad"
+    "--enable-video"
+    "--enable-geolocation"
+    "--enable-svg"
+    "--enable-svg-fonts"
+    "--enable-web-audio"
+    "--disable-battery-status"
+    "--disable-coverage"
+    "--enable-fast-malloc"
+    "--disable-debug-symbols"
+    "--enable-webgl"
+    "--enable-accelerated-compositing"
+    "--enable-jit"
+    "--disable-ftl-jit" # llvm
+    "--disable-opcode-stats"
+    "--enable-introspection"
+    "--enable-glibtest"
+    "--enable-schemas-compile"
+    "--disable-maintainer-mode"
+    "--with-gtk=${gtkVer}.0"
+  ];
 
   nativeBuildInputs = [
-    perl python ruby bison gperf flex
-    which gettext gobjectIntrospection
-  ];
-
-  buildInputs = [
-    gtk2 wayland libwebp enchant
-    libxml2 libsecret libxslt
-    gst-plugins-base sqlite
+    autoreconfHook
+    perl
+    python
+    ruby
+    bison
+    gperf
+    flex
+    which
+    gettext
   ];
 
   propagatedBuildInputs = [
-    libsoup harfbuzz/*icu in *.la*/
-    (if withGtk2 then gtk2 else gtk3)
+    glib
+    gtk3
+    libsoup
   ];
 
-  # Still fails with transient errors in version 2.4.9.
-  enableParallelBuilding = false;
+  buildInputs = [
+    atk
+    cairo
+    enchant
+    fontconfig
+    freetype
+    geoclue2
+    gobject-introspection
+    gtk2
+    gst_all_1.gst-plugins-base
+    gst_all_1.gstreamer
+    harfbuzz
+    icu
+    libjpeg
+    libpng
+    libsecret
+    libwebp
+    libxml2
+    libxslt
+    pango
+    mesa_noglu
+    sqlite
+    upower
+    wayland
+    xorg.libXcomposite
+    xorg.libXdamage
+    xorg.libXrender
+    xorg.libXt
+    zlib
+  ];
 
+  enableParallelBuilding = true;
+
+  dontAddDisableDepTrack = true;
+
+  meta = with stdenv.lib; {
+    description = "Web content rendering engine, GTK+ port";
+    homepage = "http://webkitgtk.org/";
+    license = licenses.bsd2;
+    maintainers = with maintainers; [ ];
+    platforms = platforms.linux;
+  };
 }

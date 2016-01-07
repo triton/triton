@@ -4,8 +4,6 @@
 , pcregrep ? false
   , bzip2 ? null
   , zlib ? null
-, unicodeSupport ? true
-, cplusplusSupport ? true
 }:
 
 with {
@@ -26,11 +24,11 @@ stdenv.mkDerivation rec {
     "--enable-pcre8"
     "--enable-pcre16"
     "--enable-pcre32"
-    (enFlag "cpp" cplusplusSupport null)
+    "--enable-cpp"
     "--enable-jit"
     (enFlag "pcregrep-jit" pcregrep null)
     "--enable-utf"
-    (enFlag "unicode-properties" unicodeSupport null)
+    "--enable-unicode-properties"
     (enFlag "pcregrep-libz" (pcregrep && zlib != null) null)
     (enFlag "pcregrep-libbz2" (pcregrep && bzip2 != null) null)
     "--disable-pcretest-libedit"

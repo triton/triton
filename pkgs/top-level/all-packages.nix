@@ -579,6 +579,8 @@ json-glib = callPackage ../all-pkgs/json-glib { };
 
 libgudev = callPackage ../all-pkgs/libgudev { };
 
+libmpdclient = callPackage ../all-pkgs/libmpdclient { };
+
 librsvg = callPackage ../all-pkgs/librsvg { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };
@@ -588,7 +590,8 @@ libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
 mpd = callPackage ../all-pkgs/mpd { };
 
-libmpdclient = callPackage ../all-pkgs/libmpdclient { };
+
+ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
 
 pango = callPackage ../all-pkgs/pango { };
 
@@ -12389,8 +12392,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   mpc_cli = callPackage ../applications/audio/mpc { };
 
   ncmpc = callPackage ../applications/audio/ncmpc { };
-
-  ncmpcpp = callPackage ../applications/audio/ncmpcpp { };
 
   nload = callPackage ../applications/networking/nload { };
 

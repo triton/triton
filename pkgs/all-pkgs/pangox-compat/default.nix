@@ -20,6 +20,8 @@ stdenv.mkDerivation rec {
     xorg.libX11
   ];
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
     description = "A compatibility library for pango >1.30.*";
     homepage = http://www.pango.org/;

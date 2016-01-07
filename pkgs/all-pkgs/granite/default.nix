@@ -48,6 +48,8 @@ stdenv.mkDerivation rec {
     vala
   ];
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
     description = "An extension to GTK+ used by elementary OS";
     homepage = https://launchpad.net/granite;

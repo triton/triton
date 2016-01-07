@@ -66,6 +66,8 @@ stdenv.mkDerivation rec {
     yasm
   ];
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
     description = "Library for encoding h.264/AVC video streams";
     homepage = http://www.videolan.org/developers/x264.html;

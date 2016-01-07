@@ -85,6 +85,8 @@ let
     postInstall = ''
       mv $out/lib/libx265.a $out/lib/libx265_main10.a
     '';
+
+    enableParallelBuilding = true;
   };
   libx265-12 = stdenv.mkDerivation {
     name = "libx265-12-${version}";
@@ -115,6 +117,8 @@ let
     postInstall = ''
       mv $out/lib/libx265.a $out/lib/libx265_main12.a
     '';
+
+    enableParallelBuilding = true;
   };
 in
 
@@ -161,6 +165,8 @@ stdenv.mkDerivation rec {
   ] ++ optionals isLinux [
     numactl
   ];
+
+  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Library for encoding h.265/HEVC video streams";

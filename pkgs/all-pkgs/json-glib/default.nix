@@ -38,6 +38,8 @@ stdenv.mkDerivation rec {
     gobject-introspection
   ];
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
     description = "(de)serialization support for JSON";
     homepage = http://live.gnome.org/JsonGlib;

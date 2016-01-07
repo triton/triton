@@ -28,6 +28,8 @@ stdenv.mkDerivation rec {
     udev
   ];
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
     description = "GObject bindings for udev";
     homepage = https://wiki.gnome.org/Projects/libgudev;

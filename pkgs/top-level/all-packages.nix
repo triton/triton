@@ -9201,6 +9201,7 @@ zenity = callPackage ../all-pkgs/zenity { };
 
   mongodb = callPackage ../servers/nosql/mongodb {
     sasl = cyrus_sasl;
+    boost = boost155;
   };
 
   riak = callPackage ../servers/nosql/riak/1.3.1.nix { };

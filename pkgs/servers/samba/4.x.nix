@@ -155,6 +155,13 @@ stdenv.mkDerivation rec {
     wrapPythonPrograms
   '';
 
+  preFixup = ''
+    # Fix broken pc file generation
+    sed -i $out/lib/pkgconfig/ctdb.pc \
+      -e "s,@libdir@,$out/lib,g" \
+      -e "s,@includedir@,$out/include,g"
+  '';
+
   postFixup = ''
     SAMBA_LIBS="$(find $out -type f -name \*.so -exec dirname {} \; | sort | uniq)"
     find $out -type f | while read BIN; do

@@ -92,12 +92,10 @@
 , libvorbis ? null # Vorbis de/encoding, native encoder exists
 , libvpx ? null # VP8 & VP9 de/encoding
 , libwebp ? null # WebP encoder
-, libX11 ? null # Xlib support
-, libxcb ? null # X11 grabbing using XCB
+, xorg ? null
 , libxcbshmExtlib ? true # X11 grabbing shm communication
 , libxcbxfixesExtlib ? true # X11 grabbing mouse rendering
 , libxcbshapeExtlib ? true # X11 grabbing shape rendering
-, libXv ? null # Xlib support
 , lzma ? null # xz-utils
 #, nvenc ? null # NVIDIA NVENC support
 , openal ? null # OpenAL 1.1 capture support
@@ -123,7 +121,7 @@
 #, vo-aacenc ? null # AAC encoder
 #, vo-amrwbenc ? null # AMR-WB encoder
 , wavpack ? null # Wavpack encoder
-, x11grabExtlib ? false, libXext ? null, libXfixes ? null # X11 grabbing (legacy)
+, x11grabExtlib ? false
 , x264 ? null # H.264/AVC encoder
 , x265 ? null # H.265/HEVC encoder
 , xavs ? null # AVS encoder
@@ -138,10 +136,6 @@
 , optimizationsDeveloper ? true
 , extraWarningsDeveloper ? false
 , strippingDeveloper ? false
-/*
- *  Darwin frameworks
- */
-, Cocoa, CoreServices
 }:
 
 /* Maintainer notes:
@@ -160,10 +154,6 @@
  *   libmxf libnut libquvi nvenc opencl opencore-amr openh264 oss shine twolame
  *   utvideo vo-aacenc vo-amrwbenc xvmc zvbi blackmagic-design-desktop-video
  *
- * Need fixes to support Darwin:
- *   frei0r, game-music-emu, gsm, libjack2, libssh, libvpx(stable 1.3.0), openal, openjpeg_1,
- *   pulseaudio, rtmpdump, samba, vid-stab, wavpack, x265. xavs
- *
  * Not supported:
  *   stagefright-h264(android only)
  *
@@ -176,7 +166,6 @@
  */
 
 let
-  inherit (stdenv) isCygwin isFreeBSD isLinux;
   inherit (stdenv.lib) optional optionals enableFeature;
 in
 
@@ -226,12 +215,12 @@ assert swscaleLibrary -> avutilLibrary;
 assert faacExtlib -> faac != null && nonfreeLicensing;
 assert fdkaacExtlib -> fdk_aac != null && nonfreeLicensing;
 assert gnutls != null -> !opensslExtlib;
-assert libxcbshmExtlib -> libxcb != null;
-assert libxcbxfixesExtlib -> libxcb != null;
-assert libxcbshapeExtlib -> libxcb != null;
+assert libxcbshmExtlib -> xorg.libxcb != null;
+assert libxcbxfixesExtlib -> xorg.libxcb != null;
+assert libxcbshapeExtlib -> xorg.libxcb != null;
 assert openglExtlib -> mesa != null;
 assert opensslExtlib -> gnutls == null && openssl != null && nonfreeLicensing;
-assert x11grabExtlib -> libX11 != null && libXv != null;
+assert x11grabExtlib -> xorg.libX11 != null && xorg.libXv != null;
 
 stdenv.mkDerivation rec {
   name = "ffmpeg-full-${version}";
@@ -266,13 +255,8 @@ stdenv.mkDerivation rec {
     (enableFeature hardcodedTablesBuild "hardcoded-tables")
     (enableFeature safeBitstreamReaderBuild "safe-bitstream-reader")
     (enableFeature memalignHackBuild "memalign-hack")
-    (if multithreadBuild then (
-       if isCygwin then
-         "--disable-pthreads --enable-w32threads"
-       else # Use POSIX threads by default
-         "--enable-pthreads --disable-w32threads")
-     else
-       "--disable-pthreads --disable-w32threads")
+    "--enable-pthreads"
+    "--disable-w32threads"
     "--disable-os2threads" # We don't support OS/2
     (enableFeature networkBuild "network")
     (enableFeature pixelutilsBuild "pixelutils")
@@ -335,23 +319,23 @@ stdenv.mkDerivation rec {
     (enableFeature (libbs2b != null) "libbs2b")
     #(enableFeature (libcaca != null) "libcaca")
     #(enableFeature (cdio-paranoia != null && gplLicensing) "libcdio")
-    (enableFeature (if isLinux then libdc1394 != null && libraw1394 != null else false) "libdc1394")
+    (enableFeature (libdc1394 != null && libraw1394 != null) "libdc1394")
     (enableFeature (libiconv != null) "iconv")
-    #(enableFeature (if isLinux then libiec61883 != null && libavc1394 != null && libraw1394 != null else false) "libiec61883")
+    #(enableFeature (libiec61883 != null && libavc1394 != null && libraw1394 != null) "libiec61883")
     #(enableFeature (libmfx != null) "libmfx")
     (enableFeature (libmodplug != null) "libmodplug")
     #(enableFeature (libnut != null) "libnut")
     (enableFeature (libopus != null) "libopus")
     (enableFeature (libssh != null) "libssh")
     (enableFeature (libtheora != null) "libtheora")
-    (enableFeature (if isLinux then libv4l != null else false) "libv4l2")
-    (enableFeature ((isLinux || isFreeBSD) && libva != null) "vaapi")
+    (enableFeature (libv4l != null) "libv4l2")
+    (enableFeature (libva != null) "vaapi")
     (enableFeature (libvdpau != null) "vdpau")
     (enableFeature (libvorbis != null) "libvorbis")
     (enableFeature (libvpx != null) "libvpx")
     (enableFeature (libwebp != null) "libwebp")
-    (enableFeature (libX11 != null && libXv != null) "xlib")
-    (enableFeature (libxcb != null) "libxcb")
+    (enableFeature (xorg.libX11 != null && xorg.libXv != null) "xlib")
+    (enableFeature (xorg.libxcb != null) "libxcb")
     (enableFeature libxcbshmExtlib "libxcb-shm")
     (enableFeature libxcbxfixesExtlib "libxcb-xfixes")
     (enableFeature libxcbshapeExtlib "libxcb-shape")
@@ -402,15 +386,14 @@ stdenv.mkDerivation rec {
   buildInputs = [
     bzip2 celt fontconfig freetype frei0r fribidi game-music-emu gnutls gsm
     libjack2 ladspaH lame libass libbluray libbs2b libcaca libdc1394 libmodplug
-    libogg libopus libssh libtheora libvdpau libvorbis libvpx libwebp libX11
-    libxcb libXext libXfixes libXv lzma openal openjpeg_1 libpulseaudio rtmpdump
+    libogg libopus libssh libtheora libvdpau libvorbis libvpx libwebp xorg.libX11
+    xorg.libxcb xorg.libXext xorg.libXfixes xorg.libXv lzma openal openjpeg_1
+    libpulseaudio rtmpdump
     samba SDL soxr speex vid-stab wavpack x264 x265 xavs xvidcore zeromq4 zlib
+    libva alsaLib libraw1394 libv4l
   ] ++ optional openglExtlib mesa
-    ++ optionals x11grabExtlib [ libXext libXfixes ]
-    ++ optionals nonfreeLicensing [ faac fdk_aac openssl ]
-    ++ optional ((isLinux || isFreeBSD) && libva != null) libva
-    ++ optionals isLinux [ alsaLib libraw1394 libv4l ]
-    ++ optionals stdenv.isDarwin [ Cocoa CoreServices ];
+    ++ optionals x11grabExtlib [ xorg.libXext xorg.libXfixes ]
+    ++ optionals nonfreeLicensing [ faac fdk_aac openssl ];
 
   # Build qt-faststart executable
   buildPhase = optional qtFaststartProgram ''make tools/qt-faststart'';
@@ -420,43 +403,19 @@ stdenv.mkDerivation rec {
 
   /* Cross-compilation is untested, consider this an outline, more work
      needs to be done to portions of the build to get it to work correctly */
-  crossAttrs = let
-    os = ''
-      if [ "${stdenv.cross.config}" = "*cygwin*" ] ; then
-        # Probably should look for mingw too
-        echo "cygwin"
-      elif [ "${stdenv.cross.config}" = "*darwin*" ] ; then
-        echo "darwin"
-      elif [ "${stdenv.cross.config}" = "*freebsd*" ] ; then
-        echo "freebsd"
-      elif [ "${stdenv.cross.config}" = "*linux*" ] ; then
-        echo "linux"
-      elif [ "${stdenv.cross.config}" = "*netbsd*" ] ; then
-        echo "netbsd"
-      elif [ "${stdenv.cross.config}" = "*openbsd*" ] ; then
-        echo "openbsd"
-      fi
-    '';
-  in {
+  crossAttrs = {
     dontSetConfigureCross = true;
     configureFlags = configureFlags ++ [
       "--cross-prefix=${stdenv.cross.config}-"
       "--enable-cross-compile"
-      "--target_os=${os}"
+      "--target_os=linux"
       "--arch=${stdenv.cross.arch}"
     ];
   };
 
   meta = with stdenv.lib; {
-    description = "A complete, cross-platform solution to record, convert and stream audio and video";
+    description = "Complete solution to record, convert and stream audio and video";
     homepage = http://www.ffmpeg.org/;
-    longDescription = ''
-      FFmpeg is the leading multimedia framework, able to decode, encode, transcode,
-      mux, demux, stream, filter and play pretty much anything that humans and machines
-      have created. It supports the most obscure ancient formats up to the cutting edge.
-      No matter if they were designed by some standards committee, the community or
-      a corporation.
-    '';
     license = (
       if nonfreeLicensing then
         licenses.unfreeRedistributable
@@ -467,7 +426,12 @@ stdenv.mkDerivation rec {
       else
         licenses.lgpl21Plus
     );
-    platforms = platforms.all;
-    maintainers = with maintainers; [ codyopel fuuzetsu ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

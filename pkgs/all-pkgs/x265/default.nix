@@ -61,6 +61,14 @@ let
 
     inherit src;
 
+    phases = [
+      "unpackPhase"
+      "patchPhase"
+      "configurePhase"
+      "buildPhase"
+      "installPhase"
+    ];
+
     cmakeFlags = [
       (cmFlag "HIGH_BIT_DEPTH" true)
       (cmFlag "EXPORT_C_API" false)
@@ -92,6 +100,14 @@ let
     name = "libx265-12-${version}";
 
     inherit src;
+
+    phases = [
+      "unpackPhase"
+      "patchPhase"
+      "configurePhase"
+      "buildPhase"
+      "installPhase"
+    ];
 
     cmakeFlags = [
       (cmFlag "HIGH_BIT_DEPTH" true)

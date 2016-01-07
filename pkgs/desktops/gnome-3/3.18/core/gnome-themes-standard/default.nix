@@ -1,11 +1,10 @@
-{ stdenv, fetchurl, intltool, gtk3, gnome3, librsvg, pkgconfig, pango, atk, gtk2
-, gdk_pixbuf }:
+{ stdenv, fetchurl, intltool, gtk2, gtk3, gnome3, librsvg, pango, atk, cairo, gdk_pixbuf, glib }:
 
 stdenv.mkDerivation rec {
   inherit (import ./src.nix fetchurl) name src;
   
-  buildInputs = [ intltool gtk3 librsvg pkgconfig pango atk gtk2 gdk_pixbuf
-                  gnome3.defaultIconTheme ];
+  nativeBuildInputs = [ intltool ];
+  buildInputs = [ gtk2 gtk3 librsvg pango atk cairo gdk_pixbuf glib gnome3.defaultIconTheme ];
 
   meta = with stdenv.lib; {
     platforms = platforms.linux;

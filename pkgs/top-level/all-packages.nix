@@ -590,6 +590,7 @@ libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
 mpd = callPackage ../all-pkgs/mpd { };
 
+ncmpc = callPackage ../all-pkgs/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
 
@@ -12390,8 +12391,6 @@ x265 = callPackage ../all-pkgs/x265 { };
   mpg321 = callPackage ../applications/audio/mpg321 { };
 
   mpc_cli = callPackage ../applications/audio/mpc { };
-
-  ncmpc = callPackage ../applications/audio/ncmpc { };
 
   nload = callPackage ../applications/networking/nload { };
 

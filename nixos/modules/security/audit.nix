@@ -96,7 +96,7 @@ in {
       description = "pseudo-service representing the kernel audit state";
       wantedBy = [ "basic.target" ];
 
-      path = [ pkgs.audit ];
+      path = [ pkgs.auditFull ];
 
       serviceConfig = {
         Type = "oneshot";

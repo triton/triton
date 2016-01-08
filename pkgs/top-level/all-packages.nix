@@ -646,6 +646,10 @@ harfbuzz = callPackage ../all-pkgs/harfbuzz { };
 
 json-glib = callPackage ../all-pkgs/json-glib { };
 
+libcanberra = callPackage ../all-pkgs/libcanberra { };
+libcanberra_gtk3 = libcanberra; # Deprecated alias
+libcanberra_kde = libcanberra; # Deprecated alias
+
 libgudev = callPackage ../all-pkgs/libgudev { };
 
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
@@ -6944,12 +6948,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   libcaca = callPackage ../development/libraries/libcaca { };
 
   libcacard = callPackage ../development/libraries/libcacard { };
-
-  libcanberra = callPackage ../development/libraries/libcanberra { };
-  libcanberra_gtk3 = libcanberra.override { gtk = gtk3; };
-  libcanberra_kde = if (config.kde_runtime.libcanberraWithoutGTK or true)
-    then libcanberra.override { gtk = null; }
-    else libcanberra;
 
   libcec = callPackage ../development/libraries/libcec { };
   libcec_platform = callPackage ../development/libraries/libcec/platform.nix { };

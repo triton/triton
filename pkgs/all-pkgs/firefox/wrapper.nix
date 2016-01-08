@@ -1,5 +1,5 @@
-{ stdenv, lib, browser, makeDesktopItem, makeWrapper, plugins, gst_plugins, libs, gtk_modules
-, browserName, desktopName, nameSuffix, icon, libtrick ? true
+{ stdenv, lib, browser, makeDesktopItem, makeWrapper, plugins, gst_plugins
+, libs, gtk_modules, browserName, desktopName, nameSuffix, icon, libtrick ? true
 }:
 
 let p = builtins.parseDrvName browser.name; in
@@ -74,6 +74,7 @@ stdenv.mkDerivation {
     echo ${browser} > $out/nix-support/propagated-user-env-packages
   '';
 
+  disableGnomeWrapper = true;
   preferLocalBuild = true;
 
   # Let each plugin tell us (through its `mozillaPlugin') attribute

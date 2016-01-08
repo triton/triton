@@ -495,6 +495,33 @@ ffmpeg_2 = callPackage ../all-pkgs/ffmpeg/2.x.nix { };
 ffmpeg = ffmpeg_2;
 ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
 
+/*inherit (callPackages ../all-pkgs/firefox {
+  inherit (gnome) libIDL;
+  inherit (pythonPackages) pysqlite;
+  libpng = libpng_apng;
+  enableGTK3 = false;
+});*/
+
+firefox = callPackage ../all-pkgs/firefox {
+  inherit (gnome) libIDL;
+  inherit (pythonPackages) pysqlite;
+  libpng = libpng_apng;
+};
+firefox-esr = callPackage ../all-pkgs/firefox {
+  channel = "esr";
+  inherit (gnome) libIDL;
+  inherit (pythonPackages) pysqlite;
+  libpng = libpng_apng;
+};
+
+firefox-wrapper = wrapFirefox { browser = pkgs.firefox; };
+firefox-esr-wrapper = wrapFirefox { browser = pkgs.firefox-esr; };
+
+firefox-bin = callPackage ../applications/networking/browsers/firefox-bin {
+  gconf = pkgs.gnome.GConf;
+  inherit (pkgs.gnome) libgnome libgnomeui;
+};
+
 gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
 gdk_pixbuf = gdk-pixbuf; # Deprecated alias
 gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
@@ -11664,21 +11691,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   feh = callPackage ../applications/graphics/feh { };
 
   filezilla = callPackage ../applications/networking/ftp/filezilla { };
-
-  inherit (callPackages ../applications/networking/browsers/firefox {
-    inherit (gnome) libIDL;
-    inherit (pythonPackages) pysqlite;
-    libpng = libpng_apng;
-    enableGTK3 = false;
-  }) firefox firefox-esr;
-
-  firefox-wrapper = wrapFirefox { browser = pkgs.firefox; };
-  firefox-esr-wrapper = wrapFirefox { browser = pkgs.firefox-esr; };
-
-  firefox-bin = callPackage ../applications/networking/browsers/firefox-bin {
-    gconf = pkgs.gnome.GConf;
-    inherit (pkgs.gnome) libgnome libgnomeui;
-  };
 
   firestr = qt5.callPackage ../applications/networking/p2p/firestr
     { boost = boost155;

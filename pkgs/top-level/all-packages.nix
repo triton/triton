@@ -2734,8 +2734,6 @@ zenity = callPackage ../all-pkgs/zenity { };
     graphicalSupport = true;
   };
 
-  notbit = callPackage ../applications/networking/notbit { };
-
   notify-osd = callPackage ../applications/misc/notify-osd { };
 
   nox = callPackage ../tools/package-management/nox {
@@ -3310,7 +3308,9 @@ zenity = callPackage ../all-pkgs/zenity { };
 
   sharutils = callPackage ../tools/archivers/sharutils { };
 
-  shotwell = callPackage ../applications/graphics/shotwell { };
+  shotwell = callPackage ../applications/graphics/shotwell {
+    vala = vala_0_28;
+  };
 
   shout = callPackage ../applications/networking/irc/shout { };
 
@@ -6265,8 +6265,6 @@ zenity = callPackage ../all-pkgs/zenity { };
 
   c-ares = callPackage ../development/libraries/c-ares { };
 
-  caelum = callPackage ../development/libraries/caelum { };
-
   capnproto = callPackage ../development/libraries/capnproto { };
 
   ccnx = callPackage ../development/libraries/ccnx { };
@@ -6442,6 +6440,8 @@ zenity = callPackage ../all-pkgs/zenity { };
   faac = callPackage ../development/libraries/faac { };
 
   faad2 = callPackage ../development/libraries/faad2 { };
+
+  farbfeld = callPackage ../development/libraries/farbfeld { };
 
   farsight2 = callPackage ../development/libraries/farsight2 { };
 
@@ -7837,8 +7837,6 @@ zenity = callPackage ../all-pkgs/zenity { };
 
   mygui = callPackage ../development/libraries/mygui {};
 
-  myguiSvn = callPackage ../development/libraries/mygui/svn.nix {};
-
   mysocketw = callPackage ../development/libraries/mysocketw { };
 
   mythes = callPackage ../development/libraries/mythes { };
@@ -7951,6 +7949,8 @@ zenity = callPackage ../all-pkgs/zenity { };
     giflib = giflib_4_1;
     ffmpeg = ffmpeg_0;
   };
+
+  openslp = callPackage ../development/libraries/openslp {};
 
   # 2.3 breaks some backward-compability
   libressl = libressl_2_2;
@@ -8442,7 +8442,9 @@ zenity = callPackage ../all-pkgs/zenity { };
 
   tet = callPackage ../development/tools/misc/tet { };
 
-  thrift = callPackage ../development/libraries/thrift { };
+  thrift = callPackage ../development/libraries/thrift {
+    inherit (pythonPackages) twisted;
+  };
 
   tidyp = callPackage ../development/libraries/tidyp { };
 
@@ -12420,6 +12422,8 @@ zenity = callPackage ../all-pkgs/zenity { };
 
   mozplugger = callPackage ../applications/networking/browsers/mozilla-plugins/mozplugger {};
 
+  mozjpeg = callPackage ../applications/graphics/mozjpeg { };
+
   easytag = callPackage ../applications/audio/easytag { };
 
   mp3gain = callPackage ../applications/audio/mp3gain { };
@@ -14082,10 +14086,6 @@ zenity = callPackage ../all-pkgs/zenity { };
     openglSupport = mesaSupported;
   };
 
-  rigsofrods = callPackage ../games/rigsofrods {
-    mygui = myguiSvn;
-  };
-
   rili = callPackage ../games/rili { };
 
   rogue = callPackage ../games/rogue { };
@@ -15511,7 +15511,9 @@ zenity = callPackage ../all-pkgs/zenity { };
 
   vimUtils = callPackage ../misc/vim-plugins/vim-utils.nix { };
 
-  vimPlugins = recurseIntoAttrs (callPackage ../misc/vim-plugins { });
+  vimPlugins = recurseIntoAttrs (callPackage ../misc/vim-plugins {
+    inherit (darwin.apple_sdk.frameworks) Cocoa;
+  });
 
   vimprobable2 = callPackage ../applications/networking/browsers/vimprobable2 {
     webkit = webkitgtk2;

@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
     "--without-atkmm-doc"
   ];
 
-  propagatedBuildInputs = [
+  buildInputs = [
     atkmm
     cairomm
     glibmm

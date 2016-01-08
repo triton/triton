@@ -4,6 +4,7 @@
 , atkmm
 , cairomm
 , epoxy
+, gdk-pixbuf
 , glibmm
 , gnome3
 , gtk3
@@ -36,16 +37,14 @@ stdenv.mkDerivation rec {
     "--without-atkmm-doc"
   ];
 
-  propagatedBuildInputs = [
+  buildInputs = [
     atkmm
     cairomm
+    epoxy
+    gdk-pixbuf
     glibmm
     gtk3
     pangomm
-  ];
-
-  buildInputs = [
-    epoxy
   ];
 
   doCheck = true;

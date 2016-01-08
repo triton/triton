@@ -522,6 +522,44 @@ firefox-bin = callPackage ../applications/networking/browsers/firefox-bin {
   inherit (pkgs.gnome) libgnome libgnomeui;
 };
 
+wrapFirefox =
+  { browser, browserName ? "firefox", desktopName ? "Firefox", nameSuffix ? ""
+  , icon ? browserName }:
+  let
+    cfg = stdenv.lib.attrByPath [ browserName ] {} config;
+    enableAdobeFlash = cfg.enableAdobeFlash or false;
+    enableGnash = cfg.enableGnash or false;
+    jre = cfg.jre or false;
+    icedtea = cfg.icedtea or false;
+  in
+  callPackage ../all-pkgs/firefox/wrapper.nix {
+    inherit browser browserName desktopName nameSuffix icon;
+    libtrick = true;
+    plugins =
+       assert !(enableGnash && enableAdobeFlash);
+       assert !(jre && icedtea);
+       ([ ]
+        ++ lib.optional enableGnash gnash
+        ++ lib.optional enableAdobeFlash flashplayer
+        ++ lib.optional (cfg.enableDjvu or false) (djview4)
+        ++ lib.optional (cfg.enableMPlayer or false) (MPlayerPlugin browser)
+        ++ lib.optional (cfg.enableGeckoMediaPlayer or false) gecko_mediaplayer
+        ++ lib.optional (supportsJDK && jre && jrePlugin ? mozillaPlugin) jrePlugin
+        ++ lib.optional icedtea icedtea_web
+        ++ lib.optional (cfg.enableGoogleTalkPlugin or false) google_talk_plugin
+        ++ lib.optional (cfg.enableFriBIDPlugin or false) fribid
+        ++ lib.optional (cfg.enableGnomeExtensions or false) gnome3.gnome_shell
+        ++ lib.optional (cfg.enableTrezor or false) trezor-bridge
+        ++ lib.optional (cfg.enableBluejeans or false) bluejeans
+       );
+    libs = [ gstreamer gst_plugins_base ] ++ lib.optionals (cfg.enableQuakeLive or false)
+           (with xorg; [ stdenv.cc libX11 libXxf86dga libXxf86vm libXext libXt alsaLib zlib ])
+           ++ lib.optional (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) hal-flash
+           ++ lib.optional (config.pulseaudio or false) libpulseaudio;
+    gst_plugins = [ gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly gst_ffmpeg ];
+    gtk_modules = [ libcanberra ];
+  };
+
 gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
 gdk_pixbuf = gdk-pixbuf; # Deprecated alias
 gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
@@ -13447,44 +13485,6 @@ zenity = callPackage ../all-pkgs/zenity { };
     inherit (gnome) GConf gconfmm;
     inherit (python27Packages) cheetah;
   };
-
-  wrapFirefox =
-    { browser, browserName ? "firefox", desktopName ? "Firefox", nameSuffix ? ""
-    , icon ? browserName }:
-    let
-      cfg = stdenv.lib.attrByPath [ browserName ] {} config;
-      enableAdobeFlash = cfg.enableAdobeFlash or false;
-      enableGnash = cfg.enableGnash or false;
-      jre = cfg.jre or false;
-      icedtea = cfg.icedtea or false;
-    in
-    callPackage ../applications/networking/browsers/firefox/wrapper.nix {
-      inherit browser browserName desktopName nameSuffix icon;
-      libtrick = true;
-      plugins =
-         assert !(enableGnash && enableAdobeFlash);
-         assert !(jre && icedtea);
-         ([ ]
-          ++ lib.optional enableGnash gnash
-          ++ lib.optional enableAdobeFlash flashplayer
-          ++ lib.optional (cfg.enableDjvu or false) (djview4)
-          ++ lib.optional (cfg.enableMPlayer or false) (MPlayerPlugin browser)
-          ++ lib.optional (cfg.enableGeckoMediaPlayer or false) gecko_mediaplayer
-          ++ lib.optional (supportsJDK && jre && jrePlugin ? mozillaPlugin) jrePlugin
-          ++ lib.optional icedtea icedtea_web
-          ++ lib.optional (cfg.enableGoogleTalkPlugin or false) google_talk_plugin
-          ++ lib.optional (cfg.enableFriBIDPlugin or false) fribid
-          ++ lib.optional (cfg.enableGnomeExtensions or false) gnome3.gnome_shell
-          ++ lib.optional (cfg.enableTrezor or false) trezor-bridge
-          ++ lib.optional (cfg.enableBluejeans or false) bluejeans
-         );
-      libs = [ gstreamer gst_plugins_base ] ++ lib.optionals (cfg.enableQuakeLive or false)
-             (with xorg; [ stdenv.cc libX11 libXxf86dga libXxf86vm libXext libXt alsaLib zlib ])
-             ++ lib.optional (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) hal-flash
-             ++ lib.optional (config.pulseaudio or false) libpulseaudio;
-      gst_plugins = [ gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly gst_ffmpeg ];
-      gtk_modules = [ libcanberra ];
-    };
 
   retroArchCores =
     let

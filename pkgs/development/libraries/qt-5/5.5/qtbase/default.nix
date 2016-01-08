@@ -3,7 +3,7 @@
 
 , xorg, libxkbcommon
 , fontconfig, freetype, openssl, dbus, glib, udev, libxml2, libxslt, pcre
-, zlib, libjpeg, libpng, libtiff, sqlite, icu
+, zlib, libjpeg, libpng, libtiff, sqlite, icu, harfbuzz, libinput, mtdev
 
 , coreutils, bison, flex, gdb, gperf, ruby
 , python, perl, pkgconfig
@@ -95,78 +95,81 @@ stdenv.mkDerivation {
     export LD_LIBRARY_PATH="$PWD/qtbase/lib:$PWD/qtbase/plugins/platforms:$LD_LIBRARY_PATH"
     export MAKEFLAGS=-j$NIX_BUILD_CORES
 
-    export configureFlags+="-plugindir $out/lib/qt5/plugins -importdir $out/lib/qt5/imports -qmldir $out/lib/qt5/qml"
-    export configureFlags+=" -docdir $out/share/doc/qt5"
+    configureFlagsArray+=(
+      "-plugindir" "$out/lib/qt5/plugins"
+      "-importdir" "$out/lib/qt5/imports"
+      "-qmldir" "$out/lib/qt5/qml"
+      "-docdir" "$out/share/doc/qt5"
+      )
   '';
 
   prefixKey = "-prefix ";
 
   # -no-eglfs, -no-directfb, -no-linuxfb and -no-kms because of the current minimalist mesa
   # TODO Remove obsolete and useless flags once the build will be totally mastered
-  configureFlags = ''
-    -verbose
-    -confirm-license
-    -opensource
+  configureFlags = [
+    "-verbose"
+    "-confirm-license"
+    "-opensource"
 
-    -release
-    -shared
-    -c++11
-    ${lib.optionalString developerBuild "-developer-build"}
-    -largefile
-    -accessibility
-    -rpath
-    -optimized-qmake
-    -strip
-    -reduce-relocations
-    -system-proxies
-    -pkg-config
+    "-release"
+    "-shared"
+    "-c++11"
+    (if developerBuild then "-developer-build" else null)
+    "-largefile"
+    "-accessibility"
+    "-rpath"
+    "-optimized-qmake"
+    "-strip"
+    "-reduce-relocations"
+    "-system-proxies"
+    "-pkg-config"
 
-    -gui
-    -widgets
-    -opengl desktop
-    -qml-debug
-    -nis
-    -iconv
-    -icu
-    -pch
-    -glib
-    -xcb
-    -qpa xcb
-    -${lib.optionalString (cups == null) "no-"}cups
-    -${lib.optionalString (!gtkStyle) "no-"}gtkstyle
+    "-gui"
+    "-widgets"
+    "-opengl" "desktop"
+    "-qml-debug"
+    "-nis"
+    "-iconv"
+    "-icu"
+    "-pch"
+    "-glib"
+    "-xcb"
+    "-qpa" "xcb"
+    "-${if cups == null then "no-" else ""}cups"
+    "-${if !gtkStyle then "no-" else ""}gtkstyle"
 
-    -no-eglfs
-    -no-directfb
-    -no-linuxfb
-    -no-kms
+    #-no-eglfs
+    #-no-directfb
+    #-no-linuxfb
+    #-no-kms
 
-    ${lib.optionalString (!system-x86_64) "-no-sse2"}
-    -no-sse3
-    -no-ssse3
-    -no-sse4.1
-    -no-sse4.2
-    -no-avx
-    -no-avx2
-    -no-mips_dsp
-    -no-mips_dspr2
+    (if !system-x86_64 then "-no-sse2" else null)
+    (if !system-x86_64 then "-no-sse3" else null)
+    (if !system-x86_64 then "-no-sse4.1" else null)
+    (if !system-x86_64 then "-no-sse4.2" else null)
+    "-no-avx"
+    "-no-avx2"
+    "-no-mips_dsp"
+    "-no-mips_dspr2"
 
-    -system-zlib
-    -system-libpng
-    -system-libjpeg
-    -system-xcb
-    -system-xkbcommon
-    -openssl-linked
-    -dbus-linked
+    "-system-zlib"
+    "-system-libpng"
+    "-system-libjpeg"
+    "-system-xcb"
+    "-system-xkbcommon"
+    "-openssl-linked"
+    "-dbus-linked"
 
-    -system-sqlite
-    -${if libmysql != null then "plugin" else "no"}-sql-mysql
-    -${if postgresql != null then "plugin" else "no"}-sql-psql
+    "-system-sqlite"
+    "-${if libmysql != null then "plugin" else "no"}-sql-mysql"
+    "-${if postgresql != null then "plugin" else "no"}-sql-psql"
 
-    -make libs
-    -make tools
-    -${lib.optionalString (buildExamples == false) "no"}make examples
-    -${lib.optionalString (buildTests == false) "no"}make tests
-  '';
+    "-make" "libs"
+    "-make" "tools"
+    "-${lib.optionalString (buildExamples == false) "no"}make" "examples"
+    "-${lib.optionalString (buildTests == false) "no"}make" "tests"
+  ];
 
   # PostgreSQL autodetection fails sporadically because Qt omits the "-lpq" flag
   # if dependency paths contain the string "pq", which can occur in the hash.
@@ -176,7 +179,7 @@ stdenv.mkDerivation {
   propagatedBuildInputs = [
     xorg.libXcomposite xorg.libX11 xorg.libxcb xorg.libXext xorg.libXrender xorg.libXi
     fontconfig freetype openssl dbus.libs glib udev libxml2 libxslt pcre
-    zlib libjpeg libpng libtiff sqlite icu
+    zlib libjpeg libpng libtiff sqlite icu harfbuzz libinput mtdev
     xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilwm libxkbcommon
   ]
   # Qt doesn't directly need GLU (just GL), but many apps use, it's small and
@@ -206,6 +209,10 @@ stdenv.mkDerivation {
     + lib.optionalString buildDocs ''
       make docs && make install_docs
     '';
+
+  preFixup = ''
+    sed -i 's,-lqtharfbuzzng,,g' $out/lib/pkgconfig/Qt5Gui.pc
+  '';
 
   inherit (xorg) lndir;
   setupHook = ./setup-hook.sh;

@@ -20,6 +20,9 @@ stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p $out
     cp -ar * $out
+
+    # Fix a naming issue likely only in 4.7.6
+    ln -s 4.7.6 $out/webapps/ROOT/lib/4.7.5
   '';
 
   meta = with stdenv.lib; {

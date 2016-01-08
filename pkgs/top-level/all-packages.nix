@@ -678,6 +678,8 @@ pangomm = callPackage ../all-pkgs/pangomm { };
 
 pangox-compat = callPackage ../all-pkgs/pangox-compat { };
 
+pavucontrol = callPackage ../all-pkgs/pavucontrol { };
+
 pcre = callPackage ../all-pkgs/pcre { };
 
 pcre2 = callPackage ../all-pkgs/pcre2 { };
@@ -12644,8 +12646,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   paprefs = callPackage ../applications/audio/paprefs {
     inherit (gnome) libglademm gconfmm;
   };
-
-  pavucontrol = callPackage ../applications/audio/pavucontrol { };
 
   paraview = callPackage ../applications/graphics/paraview { };
 

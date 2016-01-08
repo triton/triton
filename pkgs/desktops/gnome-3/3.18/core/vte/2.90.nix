@@ -58,11 +58,6 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  postInstall = ''
-    substituteInPlace $out/lib/libvte2_90.la \
-      --replace "-lncurses" "-L${ncurses}/lib -lncurses"
-  '';
-
   doCheck = true;
   enableParallelBuilding = true;
 

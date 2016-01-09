@@ -664,6 +664,8 @@ librsvg = callPackage ../all-pkgs/librsvg { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };
 
+libtorrent = callPackage ../all-pkgs/libtorrent { };
+
 libvpx = callPackage ../all-pkgs/libvpx { };
 libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
@@ -2455,8 +2457,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   libmbim = callPackage ../development/libraries/libmbim { };
 
   libmongo-client = callPackage ../development/libraries/libmongo-client { };
-
-  libtorrent = callPackage ../tools/networking/p2p/libtorrent { };
 
   libiberty = callPackage ../development/libraries/libiberty { };
 

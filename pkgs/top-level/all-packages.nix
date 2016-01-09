@@ -566,12 +566,30 @@ wrapFirefox =
         ++ lib.optional (cfg.enableTrezor or false) trezor-bridge
         ++ lib.optional (cfg.enableBluejeans or false) bluejeans
        );
-    libs = [ gstreamer gst_plugins_base ] ++ lib.optionals (cfg.enableQuakeLive or false)
-           (with xorg; [ stdenv.cc libX11 libXxf86dga libXxf86vm libXext libXt alsaLib zlib ])
-           ++ lib.optional (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) hal-flash
-           ++ lib.optional (config.pulseaudio or false) libpulseaudio;
-    gst_plugins = [ gst_plugins_base gst_plugins_good gst_plugins_bad gst_plugins_ugly gst_ffmpeg ];
-    gtk_modules = [ libcanberra ];
+    libs = [
+      gstreamer_0
+      gst-plugins-base_0
+    ] ++ lib.optionals (cfg.enableQuakeLive or false) (with xorg; [
+      stdenv.cc
+      libX11
+      libXxf86dga
+      libXxf86vm
+      libXext
+      libXt
+      alsaLib
+      zlib
+    ]) ++ lib.optional (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) hal-flash
+      ++ lib.optional (config.pulseaudio or false) libpulseaudio;
+    gst_plugins = [
+      gst-plugins-base_0
+      gst-plugins-good_0
+      gst-plugins-bad_0
+      gst-plugins-ugly_0
+      gst-ffmpeg
+    ];
+    gtk_modules = [
+      libcanberra
+    ];
   };
 
 flac = callPackage ../all-pkgs/flac { };
@@ -607,28 +625,30 @@ gst_all_1 = recurseIntoAttrs(callPackage ../all-pkgs/gstreamer {
 
 gst_all = {
   inherit (pkgs) gstreamer gnonlin gst_python qt_gstreamer;
-  gstPluginsBase = pkgs.gst_plugins_base;
-  gstPluginsBad = pkgs.gst_plugins_bad;
-  gstPluginsGood = pkgs.gst_plugins_good;
-  gstPluginsUgly = pkgs.gst_plugins_ugly;
-  gstFfmpeg = pkgs.gst_ffmpeg;
-};
-
-gstreamer = callPackage ../all-pkgs/gstreamer/legacy/gstreamer {
-  bison = bison2;
+  gstPluginsBase = pkgs.gst-plugins-base_0;
+  gstPluginsBad = pkgs.gst-plugins-bad_0;
+  gstPluginsGood = pkgs.gst-plugins-good_0;
+  gstPluginsUgly = pkgs.gst-plugins-ugly_0;
+  gstFfmpeg = pkgs.gst-ffmpeg;
 };
 
 gst-ffmpeg = callPackage ../all-pkgs/gst-ffmpeg { };
 
-gst_plugins_base = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-base { };
+gst-plugins-base_0 = callPackage ../all-pkgs/gst-plugins-base/0.x.nix { };
+gst-plugins-base_1 = callPackage ../all-pkgs/gst-plugins-base/1.x.nix { };
+gst-plugins-base = gst-plugins-base_1;
 
-gst_plugins_good = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-good { };
+gst-plugins-good = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-good { };
 
-gst_plugins_bad = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-bad { };
+gst-plugins-bad = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-bad { };
 
-gst_plugins_ugly = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-ugly { };
+gst-plugins-ugly = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-ugly { };
 
 gst_python = callPackage ../all-pkgs/gstreamer/legacy/gst-python { };
+
+gstreamer_0 = callPackage ../all-pkgs/gstreamer/0.x.nix { };
+gstreamer_1 = callPackage ../all-pkgs/gstreamer/1.x.nix { };
+gstreamer = gstreamer_1;
 
 gstreamermm = callPackage ../all-pkgs/gstreamer/legacy/gstreamermm { };
 
@@ -1391,7 +1411,12 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   clementine = callPackage ../applications/audio/clementine {
     boost = boost155;
-    gst_plugins = [ gst_plugins_base gst_plugins_good gst_plugins_ugly gst_ffmpeg ];
+    gst_plugins = [
+      gst-plugins-base_0
+      gst-plugins-good_0
+      gst-plugins-ugly_0
+      gst-ffmpeg
+    ];
   };
 
   clementineFree = clementine.free;
@@ -6460,9 +6485,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   farsight2 = callPackage ../development/libraries/farsight2 { };
 
   farstream = callPackage ../development/libraries/farstream {
-    inherit (gst_all_1)
-      gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
-      gst-libav;
     inherit (pythonPackages) gst-python;
   };
 
@@ -12664,7 +12686,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   pdfpc = callPackage ../applications/misc/pdfpc {
     inherit (gnome3) libgee;
-    inherit (gst_all_1) gstreamer gst-plugins-base;
   };
 
   photoqt = qt5.callPackage ../applications/graphics/photoqt { };
@@ -12821,7 +12842,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   quodlibet-with-gst-plugins = callPackage ../applications/audio/quodlibet {
     inherit (pythonPackages) mutagen;
     withGstPlugins = true;
-    gst_plugins_bad = null;
+    gst-plugins-bad_0 = null;
   };
 
   qutebrowser = qt5.callPackage ../applications/networking/browsers/qutebrowser {

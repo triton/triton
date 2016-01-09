@@ -2,7 +2,8 @@
 , xorg, freetype, fontconfig, zlib, libjpeg, libpng
 , libmng, which, mesaSupported, mesa, mesa_glu, openssl, dbus, cups
 , libtiff, glib, icu, libmysql, postgresql, sqlite, perl, coreutils
-, buildMultimedia ? stdenv.isLinux, alsaLib, gstreamer, gst_plugins_base
+, buildMultimedia ? stdenv.isLinux, alsaLib
+, gstreamer_0, gst-plugins-base_0
 , buildWebkit ? stdenv.isLinux
 , flashplayerFix ? false, gdk-pixbuf
 , gtkStyle ? false, libgnomeui, gtk2, GConf, gnome_vfs

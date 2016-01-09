@@ -78,8 +78,16 @@ stdenv.mkDerivation rec {
     xorg.libXxf86vm
   ];
 
-  meta = {
+  meta = with stdenv.lib; {
+    description = "Xlib-based interface to Xine video player";
     homepage = http://www.xine-project.org/;
-    description = "Xlib-based interface to Xine, a video player";
+    license = licenses.gpl2;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

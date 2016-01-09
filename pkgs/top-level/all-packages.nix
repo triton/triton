@@ -470,6 +470,8 @@ let
 ################################################################################
 ################################################################################
 
+acl = callPackage ../all-pkgs/acl { };
+
 atk = callPackage ../all-pkgs/atk { };
 
 atkmm = callPackage ../all-pkgs/atkmm { };
@@ -6178,8 +6180,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   accelio = callPackage ../development/libraries/accelio { };
 
   accountsservice = callPackage ../development/libraries/accountsservice { };
-
-  acl = callPackage ../development/libraries/acl { };
 
   activemq = callPackage ../development/libraries/apache-activemq { };
 

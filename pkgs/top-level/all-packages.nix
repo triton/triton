@@ -490,6 +490,16 @@ cairo = callPackage ../all-pkgs/cairo { };
 
 cairomm = callPackage ../all-pkgs/cairomm { };
 
+chromium = callPackage ../applications/networking/browsers/chromium {
+  channel = "stable";
+};
+chromium_beta = lowPrio (chromium.override {
+  channel = "beta";
+});
+chromium_dev = lowPrio (chromium.override {
+  channel = "dev";
+});
+
 cogl = callPackage ../all-pkgs/cogl { };
 
 ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
@@ -11162,19 +11172,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     inherit (pythonPackages) pyserial pygtk;
   };
 
-  chromium = callPackage ../applications/networking/browsers/chromium {
-    channel = "stable";
-    pulseSupport = config.pulseaudio or true;
-    enablePepperFlash = config.chromium.enablePepperFlash or false;
-    enableWideVine = config.chromium.enableWideVine or false;
-    hiDPISupport = config.chromium.hiDPISupport or false;
-  };
-
   chronos = callPackage ../applications/networking/cluster/chronos { };
-
-  chromiumBeta = lowPrio (chromium.override { channel = "beta"; });
-
-  chromiumDev = lowPrio (chromium.override { channel = "dev"; });
 
   chuck = callPackage ../applications/audio/chuck { };
 

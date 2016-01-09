@@ -1,4 +1,7 @@
-{ newScope, stdenv, makeWrapper, makeDesktopItem
+{ stdenv
+, newScope
+, makeWrapper
+, makeDesktopItem
 
 # package customization
 , channel ? "stable"

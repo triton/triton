@@ -6,6 +6,7 @@
 , libpng, libxml2, libxslt, libcap
 , xdg_utils, yasm, minizip, libwebp
 , libusb1, libexif, pciutils, nss
+, xorg
 
 , python, pythonPackages, perl, pkgconfig
 , nspr, udev, kerberos
@@ -88,6 +89,9 @@ let
     libpng libxml2 libxslt libcap
     xdg_utils yasm minizip libwebp
     libusb1 libexif
+    xorg.libXcomposite
+    xorg.libXi
+    xorg.libXrandr
   ];
 
   # build paths and release info

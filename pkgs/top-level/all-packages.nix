@@ -618,6 +618,8 @@ gstreamer = callPackage ../all-pkgs/gstreamer/legacy/gstreamer {
   bison = bison2;
 };
 
+gst-ffmpeg = callPackage ../all-pkgs/gst-ffmpeg { };
+
 gst_plugins_base = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-base { };
 
 gst_plugins_good = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-good { };
@@ -625,10 +627,6 @@ gst_plugins_good = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-good { }
 gst_plugins_bad = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-bad { };
 
 gst_plugins_ugly = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-ugly { };
-
-gst_ffmpeg = callPackage ../all-pkgs/gstreamer/legacy/gst-ffmpeg {
-  ffmpeg = ffmpeg_0;
-};
 
 gst_python = callPackage ../all-pkgs/gstreamer/legacy/gst-python { };
 

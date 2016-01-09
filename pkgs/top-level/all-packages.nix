@@ -759,6 +759,8 @@ x265 = callPackage ../all-pkgs/x265 { };
 
 xine-lib = callPackage ../all-pkgs/xine-lib { };
 
+xine-ui = callPackage ../all-pkgs/xine-ui { };
+
 zenity = callPackage ../all-pkgs/zenity { };
 
 ################################################################################
@@ -13624,8 +13626,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   };
 
   xfig = callPackage ../applications/graphics/xfig { };
-
-  xineUI = callPackage ../applications/video/xine-ui { };
 
   xneur_0_13 = callPackage ../applications/misc/xneur { };
 

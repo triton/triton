@@ -564,6 +564,8 @@ wrapFirefox =
     gtk_modules = [ libcanberra ];
   };
 
+flac = callPackage ../all-pkgs/flac { };
+
 gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
 gdk_pixbuf = gdk-pixbuf; # Deprecated alias
 gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
@@ -11735,8 +11737,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   firestr = qt5.callPackage ../applications/networking/p2p/firestr
     { boost = boost155;
     };
-
-  flac = callPackage ../applications/audio/flac { };
 
   flashplayer = callPackage ../applications/networking/browsers/mozilla-plugins/flashplayer-11 {
     debug = config.flashplayer.debug or false;

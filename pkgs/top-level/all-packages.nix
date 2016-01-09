@@ -757,6 +757,8 @@ x264 = callPackage ../all-pkgs/x264 { };
 
 x265 = callPackage ../all-pkgs/x265 { };
 
+xine-lib = callPackage ../all-pkgs/xine-lib { };
+
 zenity = callPackage ../all-pkgs/zenity { };
 
 ################################################################################
@@ -8613,8 +8615,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   xcb-util-cursor-HEAD = callPackage ../development/libraries/xcb-util-cursor/HEAD.nix { };
 
   xdo = callPackage ../tools/misc/xdo { };
-
-  xineLib = callPackage ../development/libraries/xine-lib { };
 
   xautolock = callPackage ../misc/screensavers/xautolock { };
 

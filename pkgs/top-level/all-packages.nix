@@ -612,6 +612,14 @@ glibmm = callPackage ../all-pkgs/glibmm { };
 glib-networking = callPackage ../all-pkgs/glib-networking { };
 glib_networking = glib-networking; # Deprecated alias
 
+gnome-wrapper = makeSetupHook {
+  deps = [ makeWrapper ];
+} ../build-support/setup-hooks/gnome-wrapper.sh;
+
+gnonlin_0 = callPackage ../all-pkgs/gnonlin/0.x.nix { };
+gnonlin_1 = callPackage ../all-pkgs/gnonlin/1.x.nix { };
+gnonlin = gnonlin_1;
+
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = gobject-introspection; # Deprecated alias
 
@@ -657,12 +665,6 @@ gstreamer_1 = callPackage ../all-pkgs/gstreamer/1.x.nix { };
 gstreamer = gstreamer_1;
 
 gstreamermm = callPackage ../all-pkgs/gstreamer/legacy/gstreamermm { };
-
-gnome-wrapper = makeSetupHook {
-  deps = [ makeWrapper ];
-} ../build-support/setup-hooks/gnome-wrapper.sh;
-
-gnonlin = callPackage ../all-pkgs/gstreamer/legacy/gnonlin { };
 
 gtk_2 = callPackage ../all-pkgs/gtk+/2.x.nix { };
 gtk2 = gtk_2;

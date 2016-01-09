@@ -476,6 +476,8 @@ atk = callPackage ../all-pkgs/atk { };
 
 atkmm = callPackage ../all-pkgs/atkmm { };
 
+attr = callPackage ../all-pkgs/attr { };
+
 at-spi2-atk = callPackage ../all-pkgs/at-spi2-atk { };
 at_spi2_atk = at-spi2-atk; # Deprecated alias
 
@@ -6226,8 +6228,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   aterm28 = lowPrio (callPackage ../development/libraries/aterm/2.8.nix { });
 
   attica = callPackage ../development/libraries/attica { };
-
-  attr = callPackage ../development/libraries/attr { };
 
   aqbanking = callPackage ../development/libraries/aqbanking { };
 

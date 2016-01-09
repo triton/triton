@@ -728,6 +728,8 @@ poppler = callPackage ../all-pkgs/poppler {
   qt5 = null;
 };
 
+rtorrent = callPackage ../all-pkgs/rtorrent { };
+
 sakura = callPackage ../all-pkgs/sakura { };
 
 sublime-text = callPackage ../all-pkgs/sublime-text { };
@@ -3245,8 +3247,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   rrdtool = callPackage ../tools/misc/rrdtool { };
 
   rsstail = callPackage ../applications/networking/feedreaders/rsstail { };
-
-  rtorrent = callPackage ../tools/networking/p2p/rtorrent { };
 
   rubber = callPackage ../tools/typesetting/rubber { };
 

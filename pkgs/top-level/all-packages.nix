@@ -638,11 +638,17 @@ gst-plugins-base_0 = callPackage ../all-pkgs/gst-plugins-base/0.x.nix { };
 gst-plugins-base_1 = callPackage ../all-pkgs/gst-plugins-base/1.x.nix { };
 gst-plugins-base = gst-plugins-base_1;
 
-gst-plugins-good = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-good { };
+gst-plugins-good_0 = callPackage ../all-pkgs/gst-plugins-good/0.x.nix { };
+gst-plugins-good_1 = callPackage ../all-pkgs/gst-plugins-good/1.x.nix { };
+gst-plugins-good = gst-plugins-good_1;
 
-gst-plugins-bad = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-bad { };
+gst-plugins-bad_0 = callPackage ../all-pkgs/gst-plugins-bad/0.x.nix { };
+gst-plugins-bad_1 = callPackage ../all-pkgs/gst-plugins-bad/1.x.nix { };
+gst-plugins-bad = gst-plugins-bad_1;
 
-gst-plugins-ugly = callPackage ../all-pkgs/gstreamer/legacy/gst-plugins-ugly { };
+gst-plugins-ugly_0 = callPackage ../all-pkgs/gst-plugins-ugly/0.x.nix { };
+gst-plugins-ugly_1 = callPackage ../all-pkgs/gst-plugins-ugly/1.x.nix { };
+gst-plugins-ugly = gst-plugins-ugly_1;
 
 gst_python = callPackage ../all-pkgs/gstreamer/legacy/gst-python { };
 

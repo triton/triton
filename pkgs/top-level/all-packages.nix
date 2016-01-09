@@ -763,6 +763,8 @@ xine-ui = callPackage ../all-pkgs/xine-ui { };
 
 zenity = callPackage ../all-pkgs/zenity { };
 
+zsh = callPackage ../all-pkgs/zsh { };
+
 ################################################################################
 ################################################################################
 ################################################################################
@@ -4042,8 +4044,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   rush = callPackage ../shells/rush { };
 
   xonsh = callPackage ../shells/xonsh { };
-
-  zsh = callPackage ../shells/zsh { };
 
   nix-zsh-completions = callPackage ../shells/nix-zsh-completions { };
 

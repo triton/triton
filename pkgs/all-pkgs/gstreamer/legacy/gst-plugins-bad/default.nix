@@ -12,6 +12,11 @@ stdenv.mkDerivation rec {
     sha256 = "148lw51dm6pgw8vc6v0fpvm7p233wr11nspdzmvq7bjp2cd7vbhf";
   };
 
+  patches = [
+    # Patches from 0.10 branch fixing h264 baseline decoding
+    ./gst-plugins-bad-0.10.23-CVE-2015-0797.patch
+  ];
+
   buildInputs =
     [ pkgconfig glib gstreamer gst_plugins_base libdvdnav libdvdread orc ];
 

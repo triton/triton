@@ -156,6 +156,8 @@ stdenv.mkDerivation rec {
       --prefix PYTHONPATH : "$PYTHONPATH"
   '';
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
     description = "Curses-based interface for MPD (music player daemon)";
     homepage = http://www.musicpd.org/clients/ncmpc/;

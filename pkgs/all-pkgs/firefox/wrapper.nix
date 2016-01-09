@@ -75,6 +75,7 @@ stdenv.mkDerivation {
   '';
 
   disableGnomeWrapper = true;
+  enableParallelBuilding = true;
   preferLocalBuild = true;
 
   # Let each plugin tell us (through its `mozillaPlugin') attribute

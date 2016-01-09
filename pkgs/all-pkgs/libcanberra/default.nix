@@ -72,6 +72,8 @@ stdenv.mkDerivation rec {
     done
   '';
 
+  enableParallelBuilding = true;
+
   passthru = {
     gtkModule = "/lib/gtk-2.0/";
   };

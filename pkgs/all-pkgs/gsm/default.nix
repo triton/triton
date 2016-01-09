@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
   preInstall = "mkdir -pv $out/{bin,lib,man/man1,man/man3,include/gsm}";
 
-  enableParallelBuilding = false;
+  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Lossy speech compression codec";

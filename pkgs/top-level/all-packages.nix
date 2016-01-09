@@ -627,19 +627,6 @@ granite = callPackage ../all-pkgs/granite { };
 
 gsm = callPackage ../all-pkgs/gsm { };
 
-gst_all_1 = recurseIntoAttrs(callPackage ../all-pkgs/gstreamer {
-  callPackage = pkgs.newScope (pkgs // { libav = pkgs.ffmpeg; });
-});
-
-gst_all = {
-  inherit (pkgs) gstreamer gnonlin gst_python qt_gstreamer;
-  gstPluginsBase = pkgs.gst-plugins-base_0;
-  gstPluginsBad = pkgs.gst-plugins-bad_0;
-  gstPluginsGood = pkgs.gst-plugins-good_0;
-  gstPluginsUgly = pkgs.gst-plugins-ugly_0;
-  gstFfmpeg = pkgs.gst-ffmpeg;
-};
-
 gst-ffmpeg = callPackage ../all-pkgs/gst-ffmpeg { };
 
 gst-plugins-base_0 = callPackage ../all-pkgs/gst-plugins-base/0.x.nix { };

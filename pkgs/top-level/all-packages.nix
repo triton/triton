@@ -672,6 +672,23 @@ ncmpc = callPackage ../all-pkgs/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
 
+# stripped down, needed by steam
+networkmanager098 = callPackage ../all-pkgs/networkmanager/0.9.8.nix { };
+
+networkmanager = callPackage ../all-pkgs/networkmanager { };
+
+networkmanager_openvpn = callPackage ../all-pkgs/networkmanager/openvpn.nix { };
+
+networkmanager_pptp = callPackage ../all-pkgs/networkmanager/pptp.nix { };
+
+networkmanager_l2tp = callPackage ../all-pkgs/networkmanager/l2tp.nix { };
+
+networkmanager_vpnc = callPackage ../all-pkgs/networkmanager/vpnc.nix { };
+
+networkmanager_openconnect = callPackage ../all-pkgs/networkmanager/openconnect.nix { };
+
+networkmanagerapplet = newScope gnome ../all-pkgs/network-manager-applet { };
+
 pango = callPackage ../all-pkgs/pango { };
 
 pangomm = callPackage ../all-pkgs/pangomm { };
@@ -2672,23 +2689,6 @@ zenity = callPackage ../all-pkgs/zenity { };
   netrw = callPackage ../tools/networking/netrw { };
 
   netselect = callPackage ../tools/networking/netselect { };
-
-  # stripped down, needed by steam
-  networkmanager098 = callPackage ../tools/networking/network-manager/0.9.8.nix { };
-
-  networkmanager = callPackage ../tools/networking/network-manager { };
-
-  networkmanager_openvpn = callPackage ../tools/networking/network-manager/openvpn.nix { };
-
-  networkmanager_pptp = callPackage ../tools/networking/network-manager/pptp.nix { };
-
-  networkmanager_l2tp = callPackage ../tools/networking/network-manager/l2tp.nix { };
-
-  networkmanager_vpnc = callPackage ../tools/networking/network-manager/vpnc.nix { };
-
-  networkmanager_openconnect = callPackage ../tools/networking/network-manager/openconnect.nix { };
-
-  networkmanagerapplet = newScope gnome ../tools/networking/network-manager-applet { };
 
   newsbeuter = callPackage ../applications/networking/feedreaders/newsbeuter { };
 

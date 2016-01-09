@@ -11,6 +11,11 @@
 , libcap
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "gstreamer-1.6.2";
 
@@ -46,7 +51,7 @@ stdenv.mkDerivation rec {
     "--enable-tools"
     "--disable-poisoning"
     "--enable-largefile"
-    "--enable-introspection"
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-docbook"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -67,7 +72,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     glib
-    gobjectIntrospection
+    gobject-introspection
     libcap
   ];
 

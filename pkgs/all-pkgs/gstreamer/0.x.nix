@@ -10,6 +10,11 @@
 , libxml2
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "gstreamer-0.10.36";
 
@@ -47,7 +52,7 @@ stdenv.mkDerivation rec {
     "--disable-failing-tests"
     "--disable-poisoning"
     "--enable-largefile"
-    "--enable-introspection"
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-docbook"
     "--disable-gtk-doc"
     "--enable-gobject-cast-checks"

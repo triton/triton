@@ -655,6 +655,8 @@ gstreamer_0 = callPackage ../all-pkgs/gstreamer/0.x.nix { };
 gstreamer_1 = callPackage ../all-pkgs/gstreamer/1.x.nix { };
 gstreamer = gstreamer_1;
 
+gstreamer-editing-services = callPackage ../all-pkgs/gstreamer-editing-services { };
+
 gstreamer-vaapi = callPackage ../all-pkgs/gstreamer-vaapi { };
 
 gstreamermm = callPackage ../all-pkgs/gstreamermm { };

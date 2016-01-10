@@ -80,9 +80,7 @@ let
       qtimageformats = callPackage ./qtimageformats.nix {};
       qtlocation = callPackage ./qtlocation.nix {};
       /* qtmacextras = not packaged */
-      qtmultimedia = callPackage ./qtmultimedia.nix {
-        inherit (pkgs.gst_all_1) gstreamer gst-plugins-base;
-      };
+      qtmultimedia = callPackage ./qtmultimedia.nix { };
       qtquick1 = callPackage ./qtquick1 {};
       qtquickcontrols = callPackage ./qtquickcontrols.nix {};
       qtscript = callPackage ./qtscript {};

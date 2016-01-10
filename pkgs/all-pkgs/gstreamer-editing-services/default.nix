@@ -61,6 +61,8 @@ stdenv.mkDerivation rec {
     libxml2
   ];
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
     description = "SDK for making video editors and more";
     homepage = http://gstreamer.freedesktop.org;

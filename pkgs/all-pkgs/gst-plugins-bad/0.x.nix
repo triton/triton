@@ -249,7 +249,7 @@ stdenv.mkDerivation rec {
     xvidcore
   ];
 
-  enableParallelBuilding = false;
+  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "";

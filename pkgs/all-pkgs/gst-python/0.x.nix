@@ -42,6 +42,8 @@ stdenv.mkDerivation rec {
     pythonPackages.pygtk
   ];
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
     description = "A Python Interface to GStreamer";
     homepage = http://gstreamer.freedesktop.org;

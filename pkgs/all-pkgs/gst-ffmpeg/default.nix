@@ -35,6 +35,8 @@ stdenv.mkDerivation rec {
     orc
   ];
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
     description = "FFmpeg based gstreamer plugin";
     homepage = http://gstreamer.freedesktop.org;

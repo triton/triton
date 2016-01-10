@@ -1,5 +1,5 @@
 { stdenv, autoconf, automake, makeWrapper, pkgconfig, libtool, which, git
-, boost, python, pythonPackages, libxml2, zlib
+, boost, pythonPackages, libxml2, zlib
 
 # Optional Dependencies
 , snappy ? null, leveldb ? null, yasm ? null, fcgi ? null, expat ? null
@@ -87,7 +87,7 @@ let
   };
 
   wrapArgs = "--set PYTHONPATH \"$(toPythonPath $lib)\""
-    + " --prefix PYTHONPATH : \"$(toPythonPath ${python.modules.readline})\""
+    + " --prefix PYTHONPATH : \"$(toPythonPath ${pythonPackages.readline})\""
     + " --prefix PYTHONPATH : \"$(toPythonPath ${pythonPackages.flask})\""
     + " --set PATH \"$out/bin\"";
 in
@@ -100,12 +100,12 @@ stdenv.mkDerivation {
     ./0001-Makefile-env-Don-t-force-sbin.patch
   ];
 
-  nativeBuildInputs = [ autoconf automake makeWrapper pkgconfig libtool which git ]
+  nativeBuildInputs = [ autoconf automake makeWrapper pkgconfig libtool which git pythonPackages.python ]
     ++ optionals (versionAtLeast version "9.0.2") [
       pythonPackages.setuptools pythonPackages.argparse
     ];
   buildInputs = buildInputs ++ cryptoLibsMap.${cryptoStr} ++ [
-    boost python libxml2 optYasm optLibatomic_ops optLibs3 malloc pythonPackages.flask zlib
+    boost libxml2 optYasm optLibatomic_ops optLibs3 malloc pythonPackages.flask zlib
   ] ++ optional (versionAtLeast version "9.0.0") [
     pythonPackages.sphinx # Used for docs
   ] ++ optional stdenv.isLinux [

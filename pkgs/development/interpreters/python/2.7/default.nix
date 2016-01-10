@@ -179,7 +179,7 @@ let
     , internalName ? "_" + moduleName
     , deps
     }:
-    if includeModules then null else stdenv.mkDerivation rec {
+    if includeModules then python else stdenv.mkDerivation rec {
       name = "python-${moduleName}-${python.version}";
 
       inherit src patches preConfigure postConfigure configureFlags;
@@ -240,6 +240,12 @@ let
       deps = [ gdbm ] ++ stdenv.lib.optional stdenv.isCygwin gettext;
     };
 
+    readline = buildInternalPythonModule {
+      moduleName = "readline";
+      internalName = "readline";
+      deps = [ readline ];
+    };
+
     sqlite3 = buildInternalPythonModule {
       moduleName = "sqlite3";
       deps = [ sqlite ];
@@ -251,14 +257,6 @@ let
       moduleName = "tkinter";
       deps = [ tcl tk xlibsWrapper xorg.libX11 ];
     });
-
-  } // {
-
-    readline = buildInternalPythonModule {
-      moduleName = "readline";
-      internalName = "readline";
-      deps = [ readline ];
-    };
 
   };
 

@@ -629,6 +629,10 @@ gsm = callPackage ../all-pkgs/gsm { };
 
 gst-ffmpeg = callPackage ../all-pkgs/gst-ffmpeg { };
 
+gst-plugins-bad_0 = callPackage ../all-pkgs/gst-plugins-bad/0.x.nix { };
+gst-plugins-bad_1 = callPackage ../all-pkgs/gst-plugins-bad/1.x.nix { };
+gst-plugins-bad = gst-plugins-bad_1;
+
 gst-plugins-base_0 = callPackage ../all-pkgs/gst-plugins-base/0.x.nix { };
 gst-plugins-base_1 = callPackage ../all-pkgs/gst-plugins-base/1.x.nix { };
 gst-plugins-base = gst-plugins-base_1;
@@ -636,10 +640,6 @@ gst-plugins-base = gst-plugins-base_1;
 gst-plugins-good_0 = callPackage ../all-pkgs/gst-plugins-good/0.x.nix { };
 gst-plugins-good_1 = callPackage ../all-pkgs/gst-plugins-good/1.x.nix { };
 gst-plugins-good = gst-plugins-good_1;
-
-gst-plugins-bad_0 = callPackage ../all-pkgs/gst-plugins-bad/0.x.nix { };
-gst-plugins-bad_1 = callPackage ../all-pkgs/gst-plugins-bad/1.x.nix { };
-gst-plugins-bad = gst-plugins-bad_1;
 
 gst-plugins-ugly_0 = callPackage ../all-pkgs/gst-plugins-ugly/0.x.nix { };
 gst-plugins-ugly_1 = callPackage ../all-pkgs/gst-plugins-ugly/1.x.nix { };

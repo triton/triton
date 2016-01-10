@@ -490,7 +490,7 @@ cairo = callPackage ../all-pkgs/cairo { };
 
 cairomm = callPackage ../all-pkgs/cairomm { };
 
-chromium = callPackage ../applications/networking/browsers/chromium {
+chromium = callPackage ../all-pkgs/chromium {
   channel = "stable";
 };
 chromium_beta = lowPrio (chromium.override {

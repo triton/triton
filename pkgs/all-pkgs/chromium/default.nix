@@ -14,8 +14,8 @@
 , enablePepperFlash ? false
 , enableWideVine ? false
 , cupsSupport ? true
-, pulseSupport ? false
-, hiDPISupport ? false
+, pulseSupport ? true
+, hiDPISupport ? true
 }:
 
 let

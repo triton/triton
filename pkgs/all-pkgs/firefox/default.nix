@@ -34,8 +34,8 @@
 , libstartup_notification
 , libvpx
 , cairo
-, gstreamer
-, gst_plugins_base
+, gstreamer_0
+, gst-plugins-base_0
 , icu
 , libpng
 , jemalloc
@@ -172,8 +172,8 @@ stdenv.mkDerivation rec {
     libstartup_notification
     libvpx
     /* cairo */
-    gstreamer
-    gst_plugins_base
+    gstreamer_0
+    gst-plugins-base_0
     icu
     libpng
     jemalloc

@@ -6,7 +6,6 @@
 , libpng, libxml2, libxslt, libcap
 , xdg_utils, yasm, minizip, libwebp
 , libusb1, libexif, pciutils, nss
-, xorg
 
 , python, pythonPackages, perl, pkgconfig
 , nspr, udev, kerberos

@@ -5,7 +5,8 @@
 , alsaLib
 , gdk-pixbuf
 , glib
-, gst_all_1
+, gstreamer
+, gst-plugins-base
 , gtk3
 , libcap
 , libpulseaudio
@@ -53,8 +54,8 @@ stdenv.mkDerivation rec {
     alsaLib
     gdk-pixbuf
     glib
-    gst_all_1.gstreamer
-    gst_all_1.gst-plugins-base
+    gstreamer
+    gst-plugins-base
     gtk3
     libcap
     libpulseaudio

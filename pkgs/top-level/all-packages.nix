@@ -5392,7 +5392,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   # pythonPackages further below, but assigned here because they need to be in sync
   pythonPackages = python2Packages;
   python2Packages = python27Packages;
-  python3Packages = python34Packages;
+  python3Packages = python35Packages;
 
   python26 = callPackage ../development/interpreters/python/2.6 {
     db = db47;

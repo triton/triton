@@ -1,11 +1,11 @@
 { stdenv, fetchurl, self, callPackage
 , bzip2, openssl, gettext
 
-, includeModules ? false
+, includeModules ? true
 
 , db, gdbm, ncurses, sqlite, readline
 
-, tcl ? null, tk ? null, xlibsWrapper ? null, xorg ? null, x11Support ? !stdenv.isCygwin
+, tcl ? null, tk ? null, xlibsWrapper ? null, xorg ? null, x11Support ? false
 , zlib ? null, zlibSupport ? true
 , expat, libffi
 

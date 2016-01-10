@@ -4057,9 +4057,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   es = callPackage ../shells/es { };
 
-  fish = callPackage ../shells/fish {
-    python = python27Full;
-  };
+  fish = callPackage ../shells/fish { };
 
   fish-foreign-env = callPackage ../shells/fish-foreign-env { };
 
@@ -5412,10 +5410,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     includeModules = true;
     self = python26Full;
   };
-  python27Full = python27.override {
-    includeModules = true;
-    self = python27Full;
-  };
+  python27Full = python27;
 
   python2nix = callPackage ../tools/package-management/python2nix { };
 

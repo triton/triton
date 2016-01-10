@@ -472,6 +472,8 @@ let
 
 acl = callPackage ../all-pkgs/acl { };
 
+amrnb = callPackage ../all-pkgs/amrnb { };
+
 atk = callPackage ../all-pkgs/atk { };
 
 atkmm = callPackage ../all-pkgs/atkmm { };
@@ -6236,8 +6238,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   allegro5 = callPackage ../development/libraries/allegro/5.nix {};
   allegro5unstable = callPackage
     ../development/libraries/allegro/5-unstable.nix {};
-
-  amrnb = callPackage ../development/libraries/amrnb { };
 
   amrwb = callPackage ../development/libraries/amrwb { };
 

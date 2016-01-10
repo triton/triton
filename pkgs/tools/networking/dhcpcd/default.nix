@@ -1,14 +1,13 @@
-{ stdenv, fetchurl, pkgconfig, udev }:
+{ stdenv, fetchurl, udev }:
 
 stdenv.mkDerivation rec {
-  name = "dhcpcd-6.9.4";
+  name = "dhcpcd-6.10.0";
 
   src = fetchurl {
     url = "mirror://roy/dhcpcd/${name}.tar.xz";
-    sha256 = "184vpid8m5175xa2nkh6mmvk8b6z4isfm6nvf4g8l5ggfdsgzwy3";
+    sha256 = "0ddd2gs9imnmj37llmhqhgvrsx47bs1hzjv5m5akr4c65sdsymmb";
   };
 
-  nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ udev ];
 
   configureFlags = [
@@ -16,14 +15,20 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
   ];
 
-  makeFlags = "PREFIX=\${out}";
+  preBuild = ''
+    makeFlagsArray+=("PREFIX=$out")
+  '';
 
   # Hack to make installation succeed.  dhcpcd will still use /var/db
   # at runtime.
-  installFlags = "DBDIR=\${TMPDIR}/db SYSCONFDIR=$(out)/etc";
+  preInstall = ''
+    installFlagsArray+=("DBDIR=$TMPDIR/db" "SYSCONFDIR=$out/etc")
+  '';
 
   # Check that the udev plugin got built.
-  postInstall = stdenv.lib.optional (udev != null) "[ -e $out/lib/dhcpcd/dev/udev.so ]";
+  postInstall = stdenv.lib.optional (udev != null) ''
+    [ -e $out/lib/dhcpcd/dev/udev.so ]
+  '';
 
   meta = {
     description = "A client for the Dynamic Host Configuration Protocol (DHCP)";

@@ -35,7 +35,7 @@ stdenv.mkDerivation {
   pythonVersion = majorVersion;
   inherit majorVersion version;
 
-  buildInputs = stdenv.lib.optionals stdenv.isDarwin [ CF configd ];
+  buildInputs = buildInputs ++ stdenv.lib.optionals stdenv.isDarwin [ CF configd ];
 
   src = fetchurl {
     url = "http://www.python.org/ftp/python/${version}/Python-${fullVersion}.tar.xz";

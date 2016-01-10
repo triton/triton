@@ -629,6 +629,8 @@ gsm = callPackage ../all-pkgs/gsm { };
 
 gst-ffmpeg = callPackage ../all-pkgs/gst-ffmpeg { };
 
+gst-libav = callPackage ../all-pkgs/gst-libav { };
+
 gst-plugins-bad_0 = callPackage ../all-pkgs/gst-plugins-bad/0.x.nix { };
 gst-plugins-bad_1 = callPackage ../all-pkgs/gst-plugins-bad/1.x.nix { };
 gst-plugins-bad = gst-plugins-bad_1;

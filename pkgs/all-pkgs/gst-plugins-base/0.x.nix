@@ -141,6 +141,8 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
     description = "Basepack of plugins for gstreamer";
     homepage = http://gstreamer.freedesktop.org;

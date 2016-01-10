@@ -137,8 +137,7 @@ in modules // {
 
   plantuml = callPackage ../tools/misc/plantuml { };
 
-  pycairo = callPackage ../development/python-modules/pycairo {
-  };
+  pycairo = callPackage ../all-pkgs/pycairo { };
 
   pycangjie = if isPy3k then callPackage ../development/python-modules/pycangjie { } else throw "pycangjie not supported for interpreter ${python.executable}";
 

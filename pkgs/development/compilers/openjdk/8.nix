@@ -19,46 +19,31 @@ let
       throw "openjdk requires i686-linux or x86_64 linux";
 
   update = "76";
-  build = "00";
+  build = "02";
   baseurl = "http://hg.openjdk.java.net/jdk8u/jdk8u";
   repover = "jdk8u${update}-b${build}";
   paxflags = if stdenv.isi686 then "msp" else "m";
-  jdk8 = fetchurl {
-             url = "${baseurl}/archive/${repover}.tar.gz";
-             sha256 = "1bzwrm18vdd531xxin7pzsc5dx2ybkdgdxz6jp2ki19ka6pmk1l7";
-          };
-  langtools = fetchurl {
-             url = "${baseurl}/langtools/archive/${repover}.tar.gz";
-             sha256 = "044gyb7hgrahlr78vah9r3wfv6w569ihqzwqplwzr6m0l1s52994";
-          };
-  hotspot = fetchurl {
-             url = "${baseurl}/hotspot/archive/${repover}.tar.gz";
-             sha256 = "1if70s9wjsvmrdj92ky88ngpmigi9c5gfpkilpydzdibs38f05f8";
-          };
-  corba = fetchurl {
-             url = "${baseurl}/corba/archive/${repover}.tar.gz";
-             sha256 = "0fl852x25cjzz3lrhjnhj59qbb4m3ywwc2f9vbj6mqdnpzl7cg83";
-          };
-  jdk = fetchurl {
-             url = "${baseurl}/jdk/archive/${repover}.tar.gz";
-             sha256 = "11ql3p5fsizrn1fiylfkgrw0lgf6snwyich18hggsmd00bhvv3ah";
-          };
-  jaxws = fetchurl {
-             url = "${baseurl}/jaxws/archive/${repover}.tar.gz";
-             sha256 = "1d2q4bbvlz557caqciwpd5ms9f14bjk8jl5zlfflqnww9b097qy4";
-          };
-  jaxp = fetchurl {
-             url = "${baseurl}/jaxp/archive/${repover}.tar.gz";
-             sha256 = "0nrd4c77ggxkyv2271k30afbjjcp0kybc8gcypmhy8by54w4ap0j";
-          };
-  nashorn = fetchurl {
-             url = "${baseurl}/nashorn/archive/${repover}.tar.gz";
-             sha256 = "11idvkzk4nqhhw4xq5pl03g4gwnaiq021xxj2yx54rixr59zl0q6";
-          };
+
+  fetchjava = name: sha256: fetchurl {
+    name = "${repover}-${name}.tar.gz";
+    url = "${baseurl}/${name}/archive/${repover}.tar.gz";
+    inherit sha256;
+  };
+
   openjdk8 = stdenv.mkDerivation {
     name = "openjdk-8u${update}b${build}";
 
-    srcs = [ jdk8 langtools hotspot corba jdk jaxws jaxp nashorn ];
+    srcs = [
+      (fetchjava "" "0aj8czp2i8m6lxv82dh25min1wj6m867pcydwccwrqhy4n1pjih3")
+      (fetchjava "langtools" "1n2qn4qdgsdpm9by66kxh3jg9c1hfrx9j20l615sjr601g39pxa3")
+      (fetchjava "hotspot" "1k4hd8kmzv6d8y0jk54g5r3h64ahx6b7k6mgnsjz0v8yql8wz2x2")
+      (fetchjava "corba" "0dbhzh1b6c96zpy67gix0w3ba6w340g50mpa271k9792rj6mx281")
+      (fetchjava "jdk" "1bxsdjdic95z0j7xvssjj8q2jqa0ab98l3lncv2g1xsqc23y5ys8")
+      (fetchjava "jaxws" "0355sjqwqhjm6440nfxxw8gmwh4j4hsbp13a8b1708m8wak9srp3")
+      (fetchjava "jaxp" "0y2lg9rrpw8sxnh6g79svb2b6rsjbvmv5x80djyif82xk4mwczhg")
+      (fetchjava "nashorn" "16p68jpn53rzzh0v64b295xzgvgfyhgz4lmkj0akf9qp2zp9a077")
+    ];
+
     sourceRoot = ".";
 
     outputs = [ "out" "jre" ];

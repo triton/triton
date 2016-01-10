@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-rpath"
     "--disable-fatal-warnings"
-    "--disable-gst-debug"
+    "--enable-gst-debug"
     "--enable-parse"
     "--enable-option-parsing"
     "--disable-trace"

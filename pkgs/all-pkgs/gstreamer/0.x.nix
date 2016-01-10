@@ -81,6 +81,8 @@ stdenv.mkDerivation rec {
       $out/libexec/gstreamer-0.10/gst-plugin-scanner
   '';
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
     description = "Streaming media framework";
     homepage = http://gstreamer.freedesktop.org;

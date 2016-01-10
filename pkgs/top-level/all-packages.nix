@@ -651,6 +651,8 @@ gst-python_0 = callPackage ../all-pkgs/gst-python/0.x.nix { };
 gst-python_1 = callPackage ../all-pkgs/gst-python/1.x.nix { };
 gst-python = gst-python_1;
 
+gst-validate = callPackage ../all-pkgs/gst-validate { };
+
 gstreamer_0 = callPackage ../all-pkgs/gstreamer/0.x.nix { };
 gstreamer_1 = callPackage ../all-pkgs/gstreamer/1.x.nix { };
 gstreamer = gstreamer_1;

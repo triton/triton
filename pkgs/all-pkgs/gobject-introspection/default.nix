@@ -78,7 +78,7 @@ stdenv.mkDerivation rec {
 
   postInstall = "rm -rvf $out/share/gtk-doc";
 
-  doCheck = true;
+  doCheck = false;
   enableParallelBuilding = true;
 
   meta = with stdenv.lib; {

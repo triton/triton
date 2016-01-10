@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
     "XGETTEXT=xgettext"
   ];
 
-  buildInputs = [
+  nativeBuildInputs = [
     gettext
   ];
 

@@ -26,9 +26,12 @@ stdenv.mkDerivation rec {
     "ZIP=gzip"
   ];
 
+  nativeBuildInputs = [
+    gettext
+  ];
+
   buildInputs = [
     attr
-    gettext
   ];
 
   postPatch = ''

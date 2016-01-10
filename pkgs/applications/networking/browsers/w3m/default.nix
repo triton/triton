@@ -3,14 +3,14 @@
 , sslSupport ? true, openssl ? null
 , graphicsSupport ? true, imlib2 ? null
 , x11Support ? graphicsSupport, xorg ? null
-, mouseSupport ? !stdenv.isDarwin, gpm-ncurses ? null
+, mouseSupport ? !stdenv.isDarwin, gpm ? null
 , perl, man
 }:
 
 assert sslSupport -> openssl != null;
 assert graphicsSupport -> imlib2 != null;
 assert x11Support -> graphicsSupport && xorg != null;
-assert mouseSupport -> gpm-ncurses != null;
+assert mouseSupport -> gpm != null;
 
 with stdenv.lib;
 
@@ -68,7 +68,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ncurses boehmgc gettext zlib]
     ++ optional sslSupport openssl
-    ++ optional mouseSupport gpm-ncurses
+    ++ optional mouseSupport gpm
     ++ optional graphicsSupport imlib2
     ++ optional x11Support xorg.libX11;
 

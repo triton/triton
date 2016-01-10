@@ -13435,7 +13435,9 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   vym = callPackage ../applications/misc/vym { };
 
-  w3m = callPackage ../applications/networking/browsers/w3m { };
+  w3m = callPackage ../applications/networking/browsers/w3m {
+    gpm = gpm-ncurses;
+  };
 
   # Should always be the version with the most features
   w3m-full = w3m;

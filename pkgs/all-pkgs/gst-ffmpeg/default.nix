@@ -4,7 +4,9 @@
 , bzip2
 , ffmpeg_0
 , gst-plugins-base_0
+, gstreamer_0
 , orc
+, zlib
 }:
 
 stdenv.mkDerivation rec {
@@ -29,6 +31,7 @@ stdenv.mkDerivation rec {
     bzip2
     ffmpeg_0
     gst-plugins-base_0
+    gstreamer_0
     orc
   ];
 

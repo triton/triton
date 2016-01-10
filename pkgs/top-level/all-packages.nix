@@ -689,6 +689,8 @@ libspectre = callPackage ../all-pkgs/libspectre { };
 
 libtorrent = callPackage ../all-pkgs/libtorrent { };
 
+libva = callPackage ../all-pkgs/libva { };
+
 libvpx = callPackage ../all-pkgs/libvpx { };
 libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
@@ -7631,8 +7633,6 @@ zsh = callPackage ../all-pkgs/zsh { };
     qt4 = null;
     qt5 = null;
   });
-
-  libva = callPackage ../development/libraries/libva { };
 
   libvdpau = callPackage ../development/libraries/libvdpau { };
 

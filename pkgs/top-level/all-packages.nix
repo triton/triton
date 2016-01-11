@@ -687,6 +687,8 @@ gvfs = callPackage ../all-pkgs/gvfs { gconf = gnome.GConf; };
 
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
 
+hwdata = callPackage ../all-pkgs/hwdata { };
+
 json-glib = callPackage ../all-pkgs/json-glib { };
 
 libcanberra = callPackage ../all-pkgs/libcanberra { };
@@ -9869,8 +9871,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   gnu = recurseIntoAttrs (callPackage ../os-specific/gnu {
     inherit platform crossSystem;
   });
-
-  hwdata = callPackage ../os-specific/linux/hwdata { };
 
   i7z = callPackage ../os-specific/linux/i7z { };
 

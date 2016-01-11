@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
     echo 'WAF patch 2'
     patch -p1 < ${./pycairo-1.10.0-waf-py3_5.patch}
     echo 'WAF patch 3'
-    #patch -p1 < ${./pycairo-1.10.0-50_specify-encoding-in-waf.patch}
+    patch -p1 < ${./pycairo-1.10.0-50_specify-encoding-in-waf.patch}
     cd ..
     ${python.executable} waf configure --prefix=$out
   '';

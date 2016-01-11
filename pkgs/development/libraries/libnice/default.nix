@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, glib, gupnp_igd, gst_all_1 }:
+{ stdenv, fetchurl, pkgconfig, glib, gupnp_igd, gstreamer, gst-plugins-base }:
 
 stdenv.mkDerivation rec {
   name = "libnice-0.1.13";
@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ pkgconfig ];
-  buildInputs = [ gst_all_1.gstreamer gst_all_1.gst-plugins-base ];
+  buildInputs = [ gstreamer gst-plugins-base ];
   propagatedBuildInputs = [ glib gupnp_igd ];
 
   meta = {

@@ -21,7 +21,8 @@
 , gobject-introspection
 , gtk2
 , gtk3
-, gst_all_1
+, gst-plugins-base
+, gstreamer
 , harfbuzz
 , icu
 , libjpeg
@@ -137,8 +138,8 @@ stdenv.mkDerivation rec {
     geoclue2
     gobject-introspection
     gtk2
-    gst_all_1.gst-plugins-base
-    gst_all_1.gstreamer
+    gst-plugins-base
+    gstreamer
     harfbuzz
     icu
     libjpeg

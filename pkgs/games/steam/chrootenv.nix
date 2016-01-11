@@ -34,8 +34,8 @@ buildFHSUserEnv {
       xlibs.libXfixes
 
       # Not formally in runtime but needed by some games
-      gst_all_1.gstreamer
-      gst_all_1.gst-plugins-ugly
+      gstreamer
+      gst-plugins-ugly
       libdrm
 
       steamPackages.steam-runtime-wrapped

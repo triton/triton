@@ -1,5 +1,5 @@
 { lib, stdenv, fetchurl, cmake, gtk2, libjpeg, libpng, libtiff, jasper, ffmpeg
-, fetchpatch, gstreamer, xineLib, glib, python27, python27Packages, unzip
+, fetchpatch, gstreamer, xine-lib, glib, python27, python27Packages, unzip
 , enableBloat ? false }:
 
 let v = "2.4.11"; in
@@ -14,7 +14,9 @@ stdenv.mkDerivation rec {
 
   buildInputs =
     [ unzip libjpeg libpng libtiff ]
-    ++ lib.optionals enableBloat [ gtk2 glib jasper ffmpeg xineLib gstreamer python27 python27Packages.numpy ];
+    ++ lib.optionals enableBloat [
+    gtk2 glib jasper ffmpeg xine-lib gstreamer
+    python27 python27Packages.numpy ];
 
   nativeBuildInputs = [ cmake ];
 

@@ -32,7 +32,8 @@
 , geoclue2
 , gobject-introspection
 , gnutls
-, gst_all_1
+, gst-plugins-base
+, gstreamer
 , gtk2
 , libnotify
 , libsecret
@@ -154,7 +155,7 @@ stdenv.mkDerivation rec {
   # WebKit2 missing include path for gst-plugins-base.
   # https://bugs.webkit.org/show_bug.cgi?id=148894
   NIX_CFLAGS_COMPILE = [
-    "-I${gst_all_1.gst-plugins-base}/include/gstreamer-1.0"
+    "-I${gst-plugins-base}/include/gstreamer-1.0"
   ];
 
   nativeBuildInputs = [
@@ -191,8 +192,8 @@ stdenv.mkDerivation rec {
     geoclue2
     gobject-introspection
     gnutls
-    gst_all_1.gstreamer
-    gst_all_1.gst-plugins-base
+    gst-plugins-base
+    gstreamer
     gtk2
     libnotify
     libsecret

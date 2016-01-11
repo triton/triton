@@ -6486,9 +6486,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   farsight2 = callPackage ../development/libraries/farsight2 { };
 
-  farstream = callPackage ../development/libraries/farstream {
-    inherit (pythonPackages) gst-python;
-  };
+  farstream = callPackage ../development/libraries/farstream { };
 
   fcgi = callPackage ../development/libraries/fcgi { };
 

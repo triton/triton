@@ -118,7 +118,7 @@ stdenv.mkDerivation rec {
         # Qt doesn't directly need GLU (just GL), but many apps use, it's small and doesn't remain a runtime-dep if not used
     ++ optional mesaSupported mesa_glu
     ++ optional ((buildWebkit || buildMultimedia) && stdenv.isLinux ) alsaLib
-    ++ optionals (buildWebkit || buildMultimedia) [ gstreamer gst_plugins_base ];
+    ++ optionals (buildWebkit || buildMultimedia) [ gstreamer_0 gst-plugins-base_0 ];
 
   # The following libraries are only used in plugins
   buildInputs =

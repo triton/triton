@@ -1,5 +1,5 @@
 { lib, stdenv, fetchurl, fetchzip, cmake, gtk, libjpeg, libpng, libtiff, jasper, ffmpeg
-, fetchpatch, pkgconfig, gstreamer, xineLib, glib, python27, python27Packages, unzip
+, fetchpatch, pkgconfig, gstreamer, xine-lib, glib, python27, python27Packages, unzip
 , enableIpp ? false
 , enableContrib ? false
 , enableBloat ? false }:
@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
 
   buildInputs =
     [ unzip libjpeg libpng libtiff ]
-    ++ lib.optionals enableBloat [ gtk glib jasper ffmpeg xineLib gstreamer python27 python27Packages.numpy ];
+    ++ lib.optionals enableBloat [ gtk glib jasper ffmpeg xine-lib gstreamer python27 python27Packages.numpy ];
 
   nativeBuildInputs = [ cmake pkgconfig ];
 

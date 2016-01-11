@@ -58,7 +58,7 @@ in
   };
 
   intelgputools = attrs: attrs // {
-    buildInputs = attrs.buildInputs ++ [ args.cairo ];
+    buildInputs = attrs.buildInputs ++ [ args.cairo args.glib ];
     configureFlags = [ "--without-libunwind" ];
   };
 

@@ -143,6 +143,10 @@ stdenv.mkDerivation rec {
       src/gui/kernel/qt_cocoa_helpers_mac_p.h
   '';
 
+  postInstall = ''
+    cp src/3rdparty/webkit/Source/WebCore/release/libwebcore.a $out/lib
+  '';
+
   crossAttrs = let
     isMingw = stdenv.cross.libc == "msvcrt";
   in {

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, jdk, gtk2, xulrunner, zip, pkgconfig, perl, npapi_sdk, bash, bc }:
+{ stdenv, fetchurl, jdk, xorg, glib, gtk2, xulrunner, zip, pkgconfig, perl, npapi_sdk, bash, bc }:
 
 stdenv.mkDerivation rec {
   name = "icedtea-web-${version}";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ pkgconfig bc perl ];
-  buildInputs = [ gtk2 xulrunner zip npapi_sdk ];
+  buildInputs = [ xorg.libX11 glib gtk2 xulrunner zip npapi_sdk ];
 
   preConfigure = ''
     #patchShebangs javac.in

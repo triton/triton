@@ -494,6 +494,8 @@ atom = callPackage ../all-pkgs/atom {
 
 avahi = callPackage ../all-pkgs/avahi { };
 
+beets = callPackage ../all-pkgs/beets { };
+
 cairo = callPackage ../all-pkgs/cairo { };
 
 cairomm = callPackage ../all-pkgs/cairomm { };
@@ -1326,8 +1328,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   bareos = callPackage ../tools/backup/bareos { };
 
   beanstalkd = callPackage ../servers/beanstalkd { };
-
-  beets = callPackage ../tools/audio/beets { };
 
   bgs = callPackage ../tools/X11/bgs { };
 

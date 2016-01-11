@@ -1,25 +1,52 @@
-{ stdenv, fetchFromGitHub, writeScript, glibcLocales
-, buildPythonPackage, pythonPackages, python, imagemagick
+{ stdenv
+, buildPythonPackage
+, fetchFromGitHub
+, glibcLocales
+, makeWrapper
+, writeScript
+
+, python
+, pythonPackages
+, imagemagick
 
 , enableAcoustid   ? true
-, enableBadfiles   ? true, flac ? null, mp3val ? null
+, enableBadfiles   ? true
+  , flac ? null
+  , mp3val ? null
+, enableBpd        ? false
+  , gst-python_0 ? null
+  , gst-plugins-base_0 ? null
 , enableDiscogs    ? true
 , enableEchonest   ? true
 , enableFetchart   ? true
 , enableLastfm     ? true
 , enableMpd        ? true
-, enableReplaygain ? true, bs1770gain ? null
+, enableReplaygain ? true
+  , bs1770gain ? null
 , enableThumbnails ? true
 , enableWeb        ? true
 
 # External plugins
 , enableAlternatives ? false
 
-, bashInteractive, bashCompletion
+, bashInteractive
+, bashCompletion
 }:
+
+with {
+  inherit (stdenv.lib)
+    attrNames
+    concatMapStrings
+    optional
+    optionals
+    optionalString;
+};
 
 assert enableAcoustid    -> pythonPackages.pyacoustid     != null;
 assert enableBadfiles    -> flac != null && mp3val != null;
+assert enableBpd         -> pythonPackages.pygobject_2 != null &&
+                            gst_python != null &&
+                            gst_plugins_base != null;
 assert enableDiscogs     -> pythonPackages.discogs_client != null;
 assert enableEchonest    -> pythonPackages.pyechonest     != null;
 assert enableFetchart    -> pythonPackages.responses      != null;
@@ -29,11 +56,10 @@ assert enableReplaygain  -> bs1770gain                    != null;
 assert enableThumbnails  -> pythonPackages.pyxdg          != null;
 assert enableWeb         -> pythonPackages.flask          != null;
 
-with stdenv.lib;
-
 let
   optionalPlugins = {
     badfiles = enableBadfiles;
+    bpd = enableBpd;
     chroma = enableAcoustid;
     discogs = enableDiscogs;
     echonest = enableEchonest;
@@ -48,12 +74,42 @@ let
   };
 
   pluginsWithoutDeps = [
-    "bench" "bpd" "bpm" "bucket" "convert" "cue" "duplicates" "embedart"
-    "filefilter" "freedesktop" "fromfilename" "ftintitle" "fuzzy" "ihate"
-    "importadded" "importfeeds" "info" "inline" "ipfs" "keyfinder" "lyrics"
-    "mbcollection" "mbsync" "metasync" "missing" "permissions" "play"
-    "plexupdate" "random" "rewrite" "scrub" "smartplaylist" "spotify" "the"
-    "types" "zero"
+    "bench"
+    "bpd"
+    "bpm"
+    "bucket"
+    "convert"
+    "cue"
+    "duplicates"
+    "embedart"
+    "filefilter"
+    "freedesktop"
+    "fromfilename"
+    "ftintitle"
+    "fuzzy"
+    "ihate"
+    "importadded"
+    "importfeeds"
+    "info"
+    "inline"
+    "ipfs"
+    "keyfinder"
+    "lyrics"
+    "mbcollection"
+    "mbsync"
+    "metasync"
+    "missing"
+    "permissions"
+    "play"
+    "plexupdate"
+    "random"
+    "rewrite"
+    "scrub"
+    "smartplaylist"
+    "spotify"
+    "the"
+    "types"
+    "zero"
   ];
 
   enabledOptionalPlugins = attrNames (filterAttrs (_: id) optionalPlugins);
@@ -66,15 +122,46 @@ let
 
 in buildPythonPackage rec {
   name = "beets-${version}";
-  version = "1.3.15";
+  version = "1.3.16";
   namePrefix = "";
 
   src = fetchFromGitHub {
     owner = "sampsyo";
     repo = "beets";
     rev = "v${version}";
-    sha256 = "17mbkilqqkxxa8ra8b4zlsax712jb0nfkvcx9iyq9303rqwv5sx2";
+    sha256 = "1grjcgr419yq756wwxjpzyfjdf8n51bg6i0agm465lb7l3jgqy6k";
   };
+
+  patches = [
+    ./replaygain-default-bs1770gain.patch
+  ];
+
+  postPatch = ''
+    sed -i -e '/assertIn.*item.*path/d' test/test_info.py
+    echo echo completion tests passed > test/test_completion.sh
+
+    sed -i -e '/^BASH_COMPLETION_PATHS *=/,/^])$/ {
+      /^])$/i u"${completion}"
+    }' beets/ui/commands.py
+  '' + optionalString enableBadfiles ''
+    sed -i -e '/self\.run_command(\[/ {
+      s,"flac","${flac}/bin/flac",
+      s,"mp3val","${mp3val}/bin/mp3val",
+    }' beetsplug/badfiles.py
+  '' + optionalString enableBpd ''
+    # Hack to allow newer clients to try to connect
+    sed -e '/PROTOCOL_VERSION/ s/0.13.0/0.19.0/' -i beetsplug/bpd/__init__.py
+  '' + optionalString enableReplaygain ''
+    sed -i -re '
+      s!^( *cmd *= *b?['\'''"])(bs1770gain['\'''"])!\1${bs1770gain}/bin/\2!
+    ' beetsplug/replaygain.py
+    sed -i -e 's/if has_program.*bs1770gain.*:/if True:/' \
+      test/test_replaygain.py
+  '';
+
+  nativeBuildInputs = [
+    makeWrapper
+  ];
 
   propagatedBuildInputs = [
     pythonPackages.enum34
@@ -106,33 +193,18 @@ in buildPythonPackage rec {
     nose
     rarfile
     responses
+  ] ++ optionals enableBpd [
+    gst-plugins-base_0
+    gstreamer_0
   ];
 
-  patches = [
-    ./replaygain-default-bs1770gain.patch
+  makeWrapperArgs = optionals enableBpd [
+    "--prefix GST_PLUGIN_PATH : ${
+      stdenv.lib.makeSearchPath "lib/gstreamer-0.10" [ gst-plugins-base_0 ]}"
   ];
-
-  postPatch = ''
-    sed -i -e '/assertIn.*item.*path/d' test/test_info.py
-    echo echo completion tests passed > test/test_completion.sh
-
-    sed -i -e '/^BASH_COMPLETION_PATHS *=/,/^])$/ {
-      /^])$/i u"${completion}"
-    }' beets/ui/commands.py
-  '' + optionalString enableBadfiles ''
-    sed -i -e '/self\.run_command(\[/ {
-      s,"flac","${flac}/bin/flac",
-      s,"mp3val","${mp3val}/bin/mp3val",
-    }' beetsplug/badfiles.py
-  '' + optionalString enableReplaygain ''
-    sed -i -re '
-      s!^( *cmd *= *b?['\'''"])(bs1770gain['\'''"])!\1${bs1770gain}/bin/\2!
-    ' beetsplug/replaygain.py
-    sed -i -e 's/if has_program.*bs1770gain.*:/if True:/' \
-      test/test_replaygain.py
-  '';
 
   doCheck = true;
+  enableParallelBuilding = true;
 
   preCheck = ''
     (${concatMapStrings (s: "echo \"${s}\";") allPlugins}) \
@@ -182,11 +254,16 @@ in buildPythonPackage rec {
     runHook postInstallCheck
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "Music tagger and library organizer";
     homepage = http://beets.radbox.org;
     license = licenses.mit;
-    maintainers = with maintainers; [ aszlig iElectric pjones ];
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

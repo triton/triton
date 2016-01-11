@@ -133,23 +133,23 @@ while (<>) {
     }
 
     if ($file =~ /Perl is required/) {
-        push @requires, "perl";
+        push @requiresNative, "perl";
     }
 
     if ($file =~ /AC_PATH_PROG\(BDFTOPCF/) {
-        push @requires, "bdftopcf";
+        push @requiresNative, "bdftopcf";
     }
 
     if ($file =~ /AC_PATH_PROG\(MKFONTSCALE/) {
-        push @requires, "mkfontscale";
+        push @requiresNative, "mkfontscale";
     }
 
     if ($file =~ /AC_PATH_PROG\(MKFONTDIR/) {
-        push @requires, "mkfontdir";
+        push @requiresNative, "mkfontdir";
     }
 
     if ($file =~ /AM_PATH_PYTHON/) {
-        push @requires, "python";
+        push @requiresNative, "python";
     }
 
     if ($file =~ /AC_PATH_PROG\(FCCACHE/) {
@@ -161,17 +161,17 @@ while (<>) {
     my $isFont;
 
     if ($file =~ /XORG_FONT_BDF_UTILS/) {
-        push @requires, "bdftopcf", "mkfontdir";
+        push @requiresNative, "bdftopcf", "mkfontdir";
         $isFont = 1;
     }
 
     if ($file =~ /XORG_FONT_SCALED_UTILS/) {
-        push @requires, "mkfontscale", "mkfontdir";
+        push @requiresNative, "mkfontscale", "mkfontdir";
         $isFont = 1;
     }
 
     if ($file =~ /XORG_FONT_UCS2ANY/) {
-        push @requires, "fontutil", "mkfontscale";
+        push @requiresNative, "fontutil", "mkfontscale";
         $isFont = 1;
     }
 
@@ -212,11 +212,13 @@ while (<>) {
     process \@requires, $1 while $file =~ /ivo_requires=\"(.*)\"/g;
     process \@requires, $1 while $file =~ /XORG_DRIVER_CHECK_EXT\([^,]*,([^\)]*)\)/g;
 
-    push @requires, "libxslt" if $pkg =~ /libxcb/;
-    push @requires, "gperf", "m4", "xproto" if $pkg =~ /xcbutil/;
+    push @requiresNative, "libxslt" if $pkg =~ /libxcb/;
+    push @requiresNative, "gperf", "m4", "xproto" if $pkg =~ /xcbutil/;
 
     print "REQUIRES $pkg => @requires\n";
+    print "REQUIRES NATIVE $pkg => @requiresNative\n";
     $pkgRequires{$pkg} = \@requires;
+    $pkgRequiresNative{$pkg} = \@requiresNative;
 
     print "done\n";
 }
@@ -252,7 +254,9 @@ foreach my $pkg (sort (keys %pkgURLs)) {
     print "$pkg\n";
 
     my %requires = ();
+    my %requiresNative = ();
     my $inputs = "";
+    my $inputsNative = "";
     foreach my $req (sort @{$pkgRequires{$pkg}}) {
         if (defined $pcMap{$req}) {
             # Some packages have .pc that depends on itself.
@@ -260,6 +264,18 @@ foreach my $pkg (sort (keys %pkgURLs)) {
             if (!defined $requires{$pcMap{$req}}) {
                 $inputs .= "$pcMap{$req} ";
                 $requires{$pcMap{$req}} = 1;
+            }
+        } else {
+            print "  NOT FOUND: $req\n";
+        }
+    }
+    foreach my $req (sort @{$pkgRequiresNative{$pkg}}) {
+        if (defined $pcMap{$req}) {
+            # Some packages have .pc that depends on itself.
+            next if $pcMap{$req} eq $pkg;
+            if (!defined $requiresNative{$pcMap{$req}}) {
+                $inputs .= "$pcMap{$req} ";
+                $requiresNative{$pcMap{$req}} = 1;
             }
         } else {
             print "  NOT FOUND: $req\n";
@@ -277,7 +293,8 @@ foreach my $pkg (sort (keys %pkgURLs)) {
       url = $pkgURLs{$pkg};
       sha256 = "$pkgHashes{$pkg}";
     };
-    buildInputs = [pkgconfig $inputs];$extraAttrs
+	nativeBuildInputs = [ $nativeInputs ];
+    buildInputs = [ $inputs ];$extraAttrs
     meta.platforms = stdenv.lib.platforms.unix;
   }) // {inherit $inputs;};
 

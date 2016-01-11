@@ -697,6 +697,8 @@ hwdata = callPackage ../all-pkgs/hwdata { };
 
 json-glib = callPackage ../all-pkgs/json-glib { };
 
+libass = callPackage ../all-pkgs/libass { };
+
 libcanberra = callPackage ../all-pkgs/libcanberra { };
 libcanberra_gtk3 = libcanberra; # Deprecated alias
 libcanberra_kde = libcanberra; # Deprecated alias
@@ -6964,8 +6966,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   libarchive = callPackage ../development/libraries/libarchive { };
 
   libasr = callPackage ../development/libraries/libasr { };
-
-  libass = callPackage ../development/libraries/libass { };
 
   libassuan = callPackage ../development/libraries/libassuan { };
 

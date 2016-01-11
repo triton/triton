@@ -1,5 +1,5 @@
 { stdenv, fetchurl, cmake, ncurses, zlib, xz, lzo, lz4, bzip2, snappy
-, openssl, pcre, boost, judy, bison, libxml2
+, openssl, pcre, boost, judy, bison, libxml2, ninja
 , libaio, libevent, groff, jemalloc, cracklib, systemd, numactl, perl
 , fixDarwinDylibNames, cctools, CoreServices
 }:
@@ -14,8 +14,9 @@ stdenv.mkDerivation rec {
     sha256 = "0xlg4ylc0pqla27h94wqspxvg8ih9hbn2hcj4pgpnfgpdz3nzhnj";
   };
 
+  nativeBuildInputs = [ cmake ninja ];
   buildInputs = [
-    cmake ncurses openssl zlib xz lzo lz4 bzip2
+    ncurses openssl zlib xz lzo lz4 bzip2
     # temporary due to https://mariadb.atlassian.net/browse/MDEV-9000
     (if stdenv.is64bit then snappy else null)
     pcre libxml2 boost judy bison libevent cracklib

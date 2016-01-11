@@ -118,13 +118,13 @@ let
   };
 
   gitSource = rec {
-    version = "1.3.0-git-2015-12-03";
+    version = "1.3.0-git-2015-01-10";
     qtVersion = 5;
 
     src = fetchgit {
       url = "https://github.com/mumble-voip/mumble";
-      rev = "3762ad0c1423d8aa3a1cf6950e596a028acebea8";
-      sha256 = "11i73jmav2yd2z1gjxc6156pqzn7jg46w69cyy8asch8qmiabwqy";
+      rev = "58c06f267ee24b65e489f1bfe4eeb3f267eb9880";
+      sha256 = "1b1klr7jmq8h3r54kk9hnq589x24x3gw6lcf5b2z6kphnxri1xcr";
     };
 
     # TODO: Remove fetchgit as it requires git

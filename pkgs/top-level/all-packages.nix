@@ -750,6 +750,8 @@ pcre2 = callPackage ../all-pkgs/pcre2 { };
 
 pixman = callPackage ../all-pkgs/pixman { };
 
+pngcrush = callPackage ../all-pkgs/pngcrush { };
+
 poppler_qt4 = poppler.override {
   suffix = "qt4";
   qt4 = qt4;
@@ -3091,8 +3093,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   plowshare = callPackage ../tools/misc/plowshare { };
 
   pngcheck = callPackage ../tools/graphics/pngcheck { };
-
-  pngcrush = callPackage ../tools/graphics/pngcrush { };
 
   pngnq = callPackage ../tools/graphics/pngnq { };
 

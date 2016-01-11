@@ -2,22 +2,12 @@
 , pkgconfig, runCommand, which, libtool
 }:
 
-# nodejs 5.0.0 can't be built on armv5tel. Armv6 with FPU, minimum I think.
-# Related post: http://zo0ok.com/techfindings/archives/1820
-assert stdenv.system != "armv5tel-linux";
-
 let
-  version = "5.1.1";
+  version = "5.4.0";
 
   deps = {
     inherit openssl zlib libuv;
-
-    # disabled system v8 because v8 3.14 no longer receives security fixes
-    # we fall back to nodejs' internal v8 copy which receives backports for now
-    # inherit v8
-  } // (stdenv.lib.optionalAttrs (!stdenv.isDarwin) {
-    inherit http-parser;
-  });
+  };
 
   sharedConfigureFlags = name: [
     "--shared-${name}"
@@ -31,26 +21,22 @@ in stdenv.mkDerivation {
 
   src = fetchurl {
     url = "http://nodejs.org/dist/v${version}/node-v${version}.tar.gz";
-    sha256 = "1hr2zjwrah8yrih1jsm3v8b449d7xla1rykmyd8yrd80z0jf0yd7";
+    sha256 = "1avj7lvcdblg67rjzk4q99a7ysanmiqzaw9hnyz65vgh1jh3gzhx";
   };
 
-  configureFlags = concatMap sharedConfigureFlags (builtins.attrNames deps) ++ [ "--without-dtrace" ];
+  configureFlags = concatMap sharedConfigureFlags (builtins.attrNames deps);
+
   dontDisableStatic = true;
+
   prePatch = ''
     patchShebangs .
-    sed -i 's/raise.*No Xcode or CLT version detected.*/version = "7.0.0"/' tools/gyp/pylib/gyp/xcode_emulation.py
   '';
 
-  patches = stdenv.lib.optionals stdenv.isDarwin [ ./no-xcode.patch ./pkg-libpath.patch ];
-
-  buildInputs = [ python which zlib libuv openssl python ]
-    ++ optionals stdenv.isLinux [ utillinux http-parser ]
-    ++ optionals stdenv.isDarwin [ pkgconfig openssl libtool ];
+  nativeBuildInputs = [ python which ];
+  buildInputs = stdenv.lib.attrValues deps;
   setupHook = ./setup-hook.sh;
 
   enableParallelBuilding = true;
-
-  passthru.interpreterName = "nodejs";
 
   meta = {
     description = "Event-driven I/O framework for the V8 JavaScript engine";

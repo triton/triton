@@ -23,6 +23,8 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-valgrind"
+    # Fix override directory with Python3.5
+    "--with-pygi-overrides-dir=\${out}/lib/python3.5/site-packages/gi/overrides"
   ];
 
   buildInputs = [

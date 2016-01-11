@@ -722,6 +722,10 @@ libva = callPackage ../all-pkgs/libva { };
 libvpx = callPackage ../all-pkgs/libvpx { };
 libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
+mixxx = callPackage ../all-pkgs/mixxx {
+  inherit (vamp) vampSDK;
+};
+
 mpd = callPackage ../all-pkgs/mpd { };
 
 mpv = callPackage ../all-pkgs/mpv {
@@ -12391,10 +12395,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   mirage = callPackage ../applications/graphics/mirage {
     inherit (pythonPackages) pygtk;
     inherit (pythonPackages) pillow;
-  };
-
-  mixxx = callPackage ../applications/audio/mixxx {
-    inherit (vamp) vampSDK;
   };
 
   mjpg-streamer = callPackage ../applications/video/mjpg-streamer { };

@@ -10,6 +10,11 @@
 , xorg
 }:
 
+with {
+  inherit (stdenv.lib)
+    optionalString;
+};
+
 if (isPyPy) then
   throw "pycairo not supported for interpreter ${python.executable}"
 else
@@ -49,8 +54,10 @@ stdenv.mkDerivation rec {
     patch -p1 < ${./pycairo-1.10.0-waf-py3_4.patch}
     echo 'WAF patch 2'
     patch -p1 < ${./pycairo-1.10.0-waf-py3_5.patch}
+  '' + optionalString python.is_py3k or false ''
     echo 'WAF patch 3'
     patch -p1 < ${./pycairo-1.10.0-50_specify-encoding-in-waf.patch}
+  '' + ''
     cd ..
     ${python.executable} waf configure --prefix=$out
   '';

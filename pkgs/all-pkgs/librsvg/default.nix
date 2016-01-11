@@ -10,17 +10,23 @@
 , libgsf
 , libxml2
 , pango
+, vala
 }:
+
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
 
 stdenv.mkDerivation rec {
   name = "librsvg-${version}";
   versionMajor = "2.40";
-  versionMinor = "12";
+  versionMinor = "13";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url    = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.tar.xz";
-    sha256 = "0l5mzwlw6k20hvndvk5xllks20xbddr7b93rsvs9jf5zg11hrr7z";
+    sha256 = "014q7gz6mgfa7pfn0lr13qqv568ad8j1sw9d4vksnpazq0zajvjd";
   };
 
   configureFlags = [
@@ -31,8 +37,8 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--disable-tools"
-    "--enable-introspection"
-    "--disable-vala"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    (enFlag "vala" (vala != null) null)
   ];
 
   # It wants to add loaders and update the loaders.cache in gdk-pixbuf
@@ -59,6 +65,7 @@ stdenv.mkDerivation rec {
     libgsf
     libxml2
     pango
+    vala
   ];
 
   enableParallelBuilding = true;

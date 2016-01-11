@@ -243,6 +243,21 @@ rec {
         ""
     }";
 
+  scFlag =
+    flag:
+    value:
+
+    "${flag}${
+      if value == true then
+        "=1"
+      else if value == false then
+        "=0"
+      else if value != null then
+        "=${value}"
+      else
+        ""
+    }";
+
   /* Make a set of packages with a common scope. All packages called
      with the provided `callPackage' will be evaluated with the same
      arguments. Any package in the set may depend on any other. The

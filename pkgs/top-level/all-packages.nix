@@ -488,6 +488,10 @@ at_spi2_atk = at-spi2-atk; # Deprecated alias
 at-spi2-core = callPackage ../all-pkgs/at-spi2-core { };
 at_spi2_core = at-spi2-core; # Deprecated alias
 
+atom = callPackage ../all-pkgs/atom {
+  gconf = gnome.GConf;
+};
+
 avahi = callPackage ../all-pkgs/avahi { };
 
 cairo = callPackage ../all-pkgs/cairo { };
@@ -11023,10 +11027,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   arora = callPackage ../applications/networking/browsers/arora { };
 
   artha = callPackage ../applications/misc/artha { };
-
-  atom = callPackage ../applications/editors/atom {
-    gconf = gnome.GConf;
-  };
 
   aseprite = callPackage ../applications/editors/aseprite {
     giflib = giflib_4_1;

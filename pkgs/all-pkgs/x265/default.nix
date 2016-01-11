@@ -1,8 +1,11 @@
-{ stdenv, fetchurl
+{ stdenv
 , cmake
+, fetchurl
+, ninja
 , yasm
+
 # Optionals
-, numactl ? null
+, numactl
 , cliSupport ? true # Build standalone CLI application
 , unittestsSupport ? true # Unit tests
 # Debugging options
@@ -61,14 +64,6 @@ let
 
     inherit src;
 
-    phases = [
-      "unpackPhase"
-      "patchPhase"
-      "configurePhase"
-      "buildPhase"
-      "installPhase"
-    ];
-
     cmakeFlags = [
       (cmFlag "HIGH_BIT_DEPTH" true)
       (cmFlag "EXPORT_C_API" false)
@@ -83,6 +78,7 @@ let
 
     nativeBuildInputs = [
       cmake
+      ninja
       yasm
     ];
 
@@ -91,7 +87,11 @@ let
     ];
 
     postInstall = ''
-      mv $out/lib/libx265.a $out/lib/libx265_main10.a
+      # Remove unused files
+      rm -rvf $out/includes
+      rm -rvf $out/lib/pkgconfig
+
+      mv -v $out/lib/libx265.a $out/lib/libx265_main10.a
     '';
 
     enableParallelBuilding = true;
@@ -100,14 +100,6 @@ let
     name = "libx265-12-${version}";
 
     inherit src;
-
-    phases = [
-      "unpackPhase"
-      "patchPhase"
-      "configurePhase"
-      "buildPhase"
-      "installPhase"
-    ];
 
     cmakeFlags = [
       (cmFlag "HIGH_BIT_DEPTH" true)
@@ -123,6 +115,7 @@ let
 
     nativeBuildInputs = [
       cmake
+      ninja
       yasm
     ];
 
@@ -131,7 +124,11 @@ let
     ];
 
     postInstall = ''
-      mv $out/lib/libx265.a $out/lib/libx265_main12.a
+      # Remove unused files
+      rm -rvf $out/includes
+      rm -rvf $out/lib/pkgconfig
+
+      mv -v $out/lib/libx265.a $out/lib/libx265_main12.a
     '';
 
     enableParallelBuilding = true;
@@ -172,6 +169,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
+    ninja
     yasm
   ];
 

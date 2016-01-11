@@ -697,6 +697,10 @@ libgudev = callPackage ../all-pkgs/libgudev { };
 
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
+libosinfo = callPackage ../all-pkgs/libosinfo {
+  inherit (gnome3) libsoup;
+};
+
 librsvg = callPackage ../all-pkgs/librsvg { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };
@@ -7460,10 +7464,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   liboop = callPackage ../development/libraries/liboop { };
 
   libopus = callPackage ../development/libraries/libopus { };
-
-  libosinfo = callPackage ../development/libraries/libosinfo {
-    inherit (gnome3) libsoup;
-  };
 
   libosip = callPackage ../development/libraries/osip {};
 

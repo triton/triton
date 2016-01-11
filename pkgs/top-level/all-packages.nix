@@ -2466,10 +2466,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     inherit (darwin.apple_sdk.frameworks) CoreServices ApplicationServices Carbon Foundation;
   };
 
-  nodejs = if stdenv.system == "armv5tel-linux" then
-    nodejs-0_10
-  else
-    nodejs-4_x;
+  nodejs = nodejs-5_x;
 
   nodePackages_5_x = callPackage ./node-packages.nix { self = nodePackages_5_x; nodejs = nodejs-5_x; };
 
@@ -2477,10 +2474,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   nodePackages_0_10 = callPackage ./node-packages.nix { self = nodePackages_0_10; nodejs = nodejs-0_10; };
 
-  nodePackages = if stdenv.system == "armv5tel-linux" then
-    nodePackages_0_10
-  else
-    nodePackages_4_x;
+  nodePackages = nodePackages_5_x;
 
   npm2nix = nodePackages.npm2nix;
 

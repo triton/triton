@@ -754,6 +754,8 @@ networkmanager_openconnect = callPackage ../all-pkgs/networkmanager/openconnect.
 
 networkmanagerapplet = newScope gnome ../all-pkgs/network-manager-applet { };
 
+ninja = callPackage ../all-pkgs/ninja { };
+
 pango = callPackage ../all-pkgs/pango { };
 
 pangomm = callPackage ../all-pkgs/pangomm { };
@@ -6000,8 +6002,6 @@ zsh = callPackage ../all-pkgs/zsh { };
       ];
     };
   };
-
-  ninja = callPackage ../development/tools/build-managers/ninja { };
 
   nixbang = callPackage ../development/tools/misc/nixbang {
       pythonPackages = python3Packages;

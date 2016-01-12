@@ -34,9 +34,6 @@ let
   # various binaries (compiled)
   bin = callPackage ./bin.nix {
     ghostscript = ghostscriptX;
-    harfbuzz = harfbuzz.override {
-      withIcu = true; withGraphite2 = true;
-    };
   };
 
   # map: name -> fixed-output hash

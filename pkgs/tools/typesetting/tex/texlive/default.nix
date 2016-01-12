@@ -2,7 +2,7 @@ args @ {
 builderDefs, zlib, bzip2, ncurses, libpng, ed, lesstif, ruby, potrace
 , gd, t1lib, freetype, icu, perl, expat, curl, xz, pkgconfig, zziplib, texinfo
 , libjpeg, bison, python, fontconfig, flex, poppler, libpaper, graphite2
-, makeWrapper, gmp, mpfr, xpdf, config, harfbuzz
+, makeWrapper, gmp, mpfr, xpdf, config, harfbuzz, pixman
 , xorg
 , ... }: with args;
 
@@ -116,7 +116,7 @@ rec {
     freetype t1lib gd xorg.libXaw icu ghostscript ed xorg.libXt xorg.libXpm xorg.libXmu xorg.libXext
     xorg.xextproto perl xorg.libSM ruby expat curl libjpeg python fontconfig xz pkgconfig
     poppler libpaper graphite2 lesstif zziplib harfbuzz texinfo potrace gmp mpfr
-    xpdf ];
+    xpdf pixman ];
 
   configureFlags = [ "--with-x11" "--enable-ipc" "--with-mktexfmt"
     "--enable-shared" "--disable-native-texlive-build" "--with-system-zziplib"

@@ -19,6 +19,7 @@
 , glib
 , gobject-introspection
 , gnutls
+, gst-plugins-bad
 , gst-plugins-base
 , gstreamer
 , gtk2
@@ -175,6 +176,7 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     gnutls
+    gst-plugins-bad
     gst-plugins-base
     gstreamer
     gtk2

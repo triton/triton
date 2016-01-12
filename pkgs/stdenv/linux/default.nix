@@ -158,7 +158,7 @@ rec {
           nativeTools = false;
           nativeLibc = false;
           cc = bootstrapTools;
-          isGNU = false; # Using musl
+          isGNU = true; # Using glibc
           libc = stage1Pkgs.glibc;
           binutils = bootstrapTools;
           coreutils = bootstrapTools;

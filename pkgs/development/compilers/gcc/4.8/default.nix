@@ -225,11 +225,11 @@ stdenv.mkDerivation ({
             && libcCross.crossConfig == "i586-pc-gnu")
         || (crossGNU && libcCross != null))
     then
-      # On GNU/Hurd glibc refers to Hurd & Mach headers and libpthread is not
-      # in glibc, so add the right `-I' flags to the default spec string.
+      # On GNU/Hurd libc refers to Hurd & Mach headers and libpthread is not
+      # in libc, so add the right `-I' flags to the default spec string.
       assert libcCross != null -> libpthreadCross != null;
       let
-        libc = if libcCross != null then libcCross else stdenv.glibc;
+        libc = if libcCross != null then libcCross else stdenv.libc;
         gnu_h = "gcc/config/gnu.h";
         extraCPPDeps =
              libc.propagatedBuildInputs
@@ -355,8 +355,8 @@ stdenv.mkDerivation ({
         )
       )
     }
-    ${if (stdenv ? glibc && cross == null)
-      then " --with-native-system-header-dir=${stdenv.glibc}/include"
+    ${if (stdenv ? libc && cross == null)
+      then " --with-native-system-header-dir=${stdenv.libc}/include"
       else ""}
     ${if langAda then " --enable-libada" else ""}
     ${if cross == null && stdenv.isi686 then "--with-arch=i686" else ""}

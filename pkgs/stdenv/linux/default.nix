@@ -146,9 +146,9 @@ rec {
         # linuxHeaders for example.
         inherit platform;
 
-        # stdenv.glibc is used by GCC build to figure out the system-level
+        # stdenv.libc is used by GCC build to figure out the system-level
         # /usr/include directory.
-        glibc = bootstrapTools.glibc;
+        libc = bootstrapTools.glibc;
       };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "Tried to access ${n}") pkgs) // {
@@ -188,9 +188,9 @@ rec {
         # linuxHeaders for example.
         inherit platform;
 
-        # stdenv.glibc is used by GCC build to figure out the system-level
+        # stdenv.libc is used by GCC build to figure out the system-level
         # /usr/include directory.
-        glibc = stage1Pkgs.glibc;
+        libc = stage1Pkgs.glibc;
       };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "Tried to access ${n}") pkgs) // {
@@ -245,9 +245,9 @@ rec {
         # linuxHeaders for example.
         inherit platform;
 
-        # stdenv.glibc is used by GCC build to figure out the system-level
+        # stdenv.libc is used by GCC build to figure out the system-level
         # /usr/include directory.
-        glibc = stage1Pkgs.glibc;
+        libc = stage1Pkgs.glibc;
       };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "Tried to access ${n}") pkgs) // {

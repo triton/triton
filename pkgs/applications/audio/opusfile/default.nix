@@ -1,4 +1,4 @@
-{stdenv, fetchurl, openssl, libogg, libopus}:
+{ stdenv, fetchurl, openssl, libogg, libopus }:
 
 stdenv.mkDerivation rec {
   name = "opusfile-0.7";
@@ -14,6 +14,7 @@ stdenv.mkDerivation rec {
     description = "High-level API for decoding and seeking in .opus files";
     homepage = http://www.opus-codec.org/;
     license = stdenv.lib.licenses.bsd3;
+    platforms = stdenv.lib.platforms.linux;
     maintainers = with stdenv.lib.maintainers; [ fuuzetsu ];
   };
 }

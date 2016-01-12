@@ -1793,6 +1793,15 @@ let
     ];
   };
 
+  i3cat = buildFromGitHub {
+    rev    = "b9ba886a7c769994ccd8d4627978ef4b51fcf576";
+    date   = "2015-03-21";
+    owner  = "vincent-petithory";
+    repo   = "i3cat";
+    sha256 = "1xlm5c9ajdb71985nq7hcsaraq2z06przbl6r4ykvzi8w2lwgv72";
+    buildInputs = [ structfield ];
+  };
+
   inf = buildFromGitHub {
     date   = "2015-09-11";
     rev    = "3887ee99ecf07df5b447e9b00d9c0b2adaa9f3e4";
@@ -1862,6 +1871,10 @@ let
     repo   = "go-ipfs";
     sha256 = "00p7kv6000bk6lbqqnnf4xy5pmd93fv6fihji3vn7br53645blaa";
     disabled = isGo14;
+    meta = with stdenv.lib; {
+      description = "A global, versioned, peer-to-peer filesystem";
+      license = licenses.mit;
+    };
   };
 
   json2csv = buildFromGitHub{
@@ -3075,6 +3088,14 @@ let
       repo = "statik";
       sha256 = "0llk7bxmk66wdiy42h32vj1jfk8zg351xq21hwhrq7gkfljghffp";
     };
+  };
+
+  structfield = buildFromGitHub {
+    rev    = "01a738558a47fbf16712994d1737fb31c77e7d11";
+    date   = "2014-08-01";
+    owner  = "vincent-petithory";
+    repo   = "structfield";
+    sha256 = "1kyx71z13mf6hc8ly0j0b9zblgvj5lzzvgnc3fqh61wgxrsw24dw";
   };
 
   structs = buildFromGitHub {

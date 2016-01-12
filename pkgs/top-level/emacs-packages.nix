@@ -409,21 +409,6 @@ let
     };
   };
 
-  dash = melpaBuild rec {
-    pname   = "dash";
-    version = "2.12.1";
-    src = fetchFromGitHub {
-      owner  = "magnars";
-      repo   = "${pname}.el";
-      rev    = version;
-      sha256 = "1njv5adcm96kdch0jb941l8pm51yfdx7mlz83y0pq6jlzjs9mwaa";
-    };
-    meta = {
-      description = "A modern list library for Emacs (think Haskell's Prelude in elisp)";
-      license = gpl3Plus;
-    };
-  };
-
   dash-functional = melpaBuild rec {
     pname = "dash-functional";
       version = "2.11.0";
@@ -1433,21 +1418,6 @@ let
     };
   };
 
-  paredit = trivialBuild rec {
-    pname = "paredit-${version}";
-    version = "25";
-    src = fetchgit {
-      url = http://mumble.net/~campbell/git/paredit.git/;
-      rev = "9a696fdcce87c9d9eec4569a9929d0300ac6ae5c";
-      sha256 = "13wjqimp2s6pwcqix8pmsrk76bq1cxlnwmj3m57bb5y60y67vp9l";
-    };
-    meta = {
-      homepage = http://www.emacswiki.org/emacs/ParEdit;
-      description = "Minor Emacs mode for structured editing of S-expression data";
-      license = gpl3Plus;
-    };
-  };
-
   parsebib = melpaBuild rec {
     pname = "parsebib";
     version = "20151006";
@@ -1827,20 +1797,6 @@ let
     packageRequires = [ caml ];
     meta = {
       description = "Extension of OCaml mode for Emacs";
-      license = gpl3Plus;
-    };
-  };
-
-  undo-tree = melpaBuild rec {
-    pname   = "undo-tree";
-    version = "0.6.4";
-    src = fetchgit {
-      url    = "http://www.dr-qubit.org/git/${pname}.git";
-      rev    = "a3e81b682053a81e082139300ef0a913a7a610a2";
-      sha256 = "1qla7njkb7gx5aj87i8x6ni8jfk1k78ivwfiiws3gpbnyiydpx8y";
-    };
-    meta = {
-      description = "A port of Vim's undo tree functionality to Emacs";
       license = gpl3Plus;
     };
   };

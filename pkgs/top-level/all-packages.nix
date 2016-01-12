@@ -2971,6 +2971,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   panomatic = callPackage ../tools/graphics/panomatic { };
 
+  pamtester = callPackage ../tools/security/pamtester { };
+
   paper-gtk-theme = callPackage ../misc/themes/gtk3/paper-gtk-theme { };
 
   par2cmdline = callPackage ../tools/networking/par2cmdline {
@@ -3083,6 +3085,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   pinentry_qt5 = qt5.callPackage ../tools/security/pinentry/qt5.nix {
     libcap = if stdenv.isDarwin then null else libcap;
   };
+
+  pinentry_mac = callPackage ../tools/security/pinentry-mac { };
 
   pingtcp = callPackage ../tools/networking/pingtcp { };
 
@@ -3673,6 +3677,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   txt2tags = callPackage ../tools/text/txt2tags { };
 
+  txtw = callPackage ../tools/misc/txtw { };
+
   u9fs = callPackage ../servers/u9fs { };
 
   ucl = callPackage ../development/libraries/ucl { };
@@ -3988,6 +3994,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   xtitle = callPackage ../tools/misc/xtitle { };
 
   xdelta = callPackage ../tools/compression/xdelta { };
+  xdeltaUnstable = callPackage ../tools/compression/xdelta/unstable.nix { };
 
   xdummy = callPackage ../tools/misc/xdummy { };
 
@@ -6276,8 +6283,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   aterm25 = callPackage ../development/libraries/aterm/2.5.nix { };
 
-  aterm28 = lowPrio (callPackage ../development/libraries/aterm/2.8.nix { });
-
   attica = callPackage ../development/libraries/attica { };
 
   aqbanking = callPackage ../development/libraries/aqbanking { };
@@ -7033,6 +7038,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   libcm = callPackage ../development/libraries/libcm { };
 
+  libcommuni = callPackage ../development/libraries/libcommuni { };
+
   inherit (gnome3) libcroco;
 
   libcangjie = callPackage ../development/libraries/libcangjie { };
@@ -7787,6 +7794,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   mesa_drivers = mesaDarwinOr (
     let mo = mesa_noglu.override {
       grsecEnabled = config.grsecurity or false;
+      llvmPackages = llvmPackages_36; # various problems with 3.7; see #11367, #11467
     };
     in mo.drivers
   );
@@ -7796,23 +7804,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   });
 
   meterbridge = callPackage ../applications/audio/meterbridge { };
-
-  metaEnvironment = recurseIntoAttrs (let callPackage = newScope pkgs.metaEnvironment; in rec {
-    sdfLibrary    = callPackage ../development/libraries/sdf-library { aterm = aterm28; };
-    toolbuslib    = callPackage ../development/libraries/toolbuslib { aterm = aterm28; inherit (windows) w32api; };
-    cLibrary      = callPackage ../development/libraries/c-library { aterm = aterm28; };
-    errorSupport  = callPackage ../development/libraries/error-support { aterm = aterm28; };
-    ptSupport     = callPackage ../development/libraries/pt-support { aterm = aterm28; };
-    ptableSupport = callPackage ../development/libraries/ptable-support { aterm = aterm28; };
-    configSupport = callPackage ../development/libraries/config-support { aterm = aterm28; };
-    asfSupport    = callPackage ../development/libraries/asf-support { aterm = aterm28; };
-    tideSupport   = callPackage ../development/libraries/tide-support { aterm = aterm28; };
-    rstoreSupport = callPackage ../development/libraries/rstore-support { aterm = aterm28; };
-    sdfSupport    = callPackage ../development/libraries/sdf-support { aterm = aterm28; };
-    sglr          = callPackage ../development/libraries/sglr { aterm = aterm28; };
-    ascSupport    = callPackage ../development/libraries/asc-support { aterm = aterm28; };
-    pgen          = callPackage ../development/libraries/pgen { aterm = aterm28; };
-  });
 
   mhddfs = callPackage ../tools/filesystems/mhddfs { };
 
@@ -9120,9 +9111,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   etcd = goPackages.etcd.bin // { outputs = [ "bin" ]; };
 
-  ejabberd = callPackage ../servers/xmpp/ejabberd {
-    erlang = erlangR16;
-  };
+  ejabberd = callPackage ../servers/xmpp/ejabberd { };
 
   prosody = callPackage ../servers/xmpp/prosody {
     lua5 = lua5_1;
@@ -9376,7 +9365,8 @@ zsh = callPackage ../all-pkgs/zsh { };
     postgresql91
     postgresql92
     postgresql93
-    postgresql94;
+    postgresql94
+    postgresql95;
 
   postgresql_jdbc = callPackage ../servers/sql/postgresql/jdbc { };
 
@@ -9408,8 +9398,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   rabbitmq_server = callPackage ../servers/amqp/rabbitmq-server {
     inherit (darwin.apple_sdk.frameworks) AppKit Carbon Cocoa;
   };
-
-  radius = callPackage ../servers/radius { };
 
   redis = callPackage ../servers/nosql/redis { };
 
@@ -9585,8 +9573,6 @@ zsh = callPackage ../all-pkgs/zsh { };
     udev = if stdenv.isLinux then udev else null;
     libdrm = if stdenv.isLinux then libdrm else null;
   } // { inherit xlibsWrapper; } );
-
-  xorgVideoUnichrome = callPackage ../servers/x11/xorg/unichrome/default.nix { };
 
   xwayland = callPackage ../servers/x11/xorg/xwayland.nix { };
 
@@ -9895,6 +9881,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   ipset = callPackage ../os-specific/linux/ipset { };
 
+  irqbalance = callPackage ../os-specific/linux/irqbalance { };
+
   iw = callPackage ../os-specific/linux/iw { };
 
   jfbview = callPackage ../os-specific/linux/jfbview { };
@@ -10095,8 +10083,6 @@ zsh = callPackage ../all-pkgs/zsh { };
     rtl8812au = callPackage ../os-specific/linux/rtl8812au { };
 
     openafsClient = callPackage ../servers/openafs-client { };
-
-    wis_go7007 = callPackage ../os-specific/linux/wis-go7007 { };
 
     kernelHeaders = callPackage ../os-specific/linux/kernel-headers { };
 
@@ -10445,10 +10431,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   systemd = callPackage ../os-specific/linux/systemd {
     linuxHeaders = linuxHeaders_3_18;
-  };
-
-  systemtap = callPackage ../development/tools/profiling/systemtap {
-    inherit (gnome) libglademm;
   };
 
   # In nixos, you can set systemd.package = pkgs.systemd_with_lvm2 to get
@@ -11100,7 +11082,6 @@ zsh = callPackage ../all-pkgs/zsh { };
     jack = jack1;
   };
 
-  cbatticon = callPackage ../applications/misc/cbatticon { };
 
   bazaar = callPackage ../applications/version-management/bazaar { };
 
@@ -11134,6 +11115,11 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   bluejeans = callPackage ../applications/networking/browsers/mozilla-plugins/bluejeans { };
+
+  bomi = qt5.callPackage ../applications/video/bomi {
+    youtube-dl = pythonPackages.youtube-dl;
+    pulseSupport = config.pulseaudio or true;
+  };
 
   brackets = callPackage ../applications/editors/brackets { gconf = gnome3.gconf; };
 
@@ -11171,6 +11157,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   funpidgin = carrier;
 
   cava = callPackage ../applications/audio/cava { };
+
+  cbatticon = callPackage ../applications/misc/cbatticon { };
 
   cbc = callPackage ../applications/science/math/cbc { };
 
@@ -11217,17 +11205,14 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   cmatrix = callPackage ../applications/misc/cmatrix { };
 
-  bomi = qt5.callPackage ../applications/video/bomi {
-    youtube-dl = pythonPackages.youtube-dl;
-    pulseSupport = config.pulseaudio or true;
-  };
-
   cmus = callPackage ../applications/audio/cmus {
     libjack = libjack2;
     libcdio = libcdio082;
 
     pulseaudioSupport = config.pulseaudio or false;
   };
+
+  communi = callPackage ../applications/networking/irc/communi { };
 
   CompBus = callPackage ../applications/audio/CompBus { };
 
@@ -11422,14 +11407,10 @@ zsh = callPackage ../all-pkgs/zsh { };
     withGTK3 = false;
   }));
 
-  emacs24Macport_24_3 = lowPrio (callPackage ../applications/editors/emacs-24/macport-24.3.nix {
-    stdenv = pkgs.clangStdenv;
-  });
-  emacs24Macport_24_4 = lowPrio (callPackage ../applications/editors/emacs-24/macport-24.4.nix {
-    stdenv = pkgs.clangStdenv;
-  });
-  emacs24Macport_24_5 = lowPrio (newScope darwin.apple_sdk.frameworks ../applications/editors/emacs-24/macport-24.5.nix {
-    stdenv = pkgs.clangStdenv;
+  emacs24Macport_24_5 = lowPrio (callPackage ../applications/editors/emacs-24/macport-24.5.nix {
+    inherit (darwin.apple_sdk.frameworks)
+      AppKit Carbon Cocoa IOKit OSAKit Quartz QuartzCore WebKit
+      ImageCaptureCore GSS ImageIO;
   });
   emacs24Macport = self.emacs24Macport_24_5;
 
@@ -11543,6 +11524,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
     notmuch = lowPrio (pkgs.notmuch.override { inherit emacs; });
 
+    notmuch-addrlookup = callPackage ../applications/networking/mailreaders/notmuch-addrlookup { };
+
     ocamlMode = callPackage ../applications/editors/emacs-modes/ocaml { };
 
     offlineimap = callPackage ../applications/editors/emacs-modes/offlineimap {};
@@ -11599,8 +11582,6 @@ zsh = callPackage ../all-pkgs/zsh { };
     xmlRpc = callPackage ../applications/editors/emacs-modes/xml-rpc { };
 
     cask = callPackage ../applications/editors/emacs-modes/cask { };
-
-    slime = callPackage ../applications/editors/emacs-modes/slime { };
   };
 
   emacs24Packages = recurseIntoAttrs (emacsPackagesGen emacs24 pkgs.emacs24Packages);
@@ -12037,6 +12018,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   i3blocks = callPackage ../applications/window-managers/i3/blocks.nix { };
 
+  i3cat = goPackages.i3cat.bin // { outputs = [ "bin" ]; };
+
   i3lock = callPackage ../applications/window-managers/i3/lock.nix {
     cairo = cairo.override { xcbSupport = true; };
   };
@@ -12114,6 +12097,8 @@ zsh = callPackage ../all-pkgs/zsh { };
     inherit (pythonPackages) lxml;
     lcms = lcms2;
   };
+  
+  inspectrum = callPackage ../applications/misc/inspectrum { };
 
   ion3 = callPackage ../applications/window-managers/ion-3 {
     lua = lua5;
@@ -12513,6 +12498,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   openshift = callPackage ../applications/networking/cluster/openshift { };
 
   oroborus = callPackage ../applications/window-managers/oroborus {};
+
+  ostinato = callPackage ../applications/networking/ostinato { };
 
   panamax_api = callPackage ../applications/networking/cluster/panamax/api {
     ruby = ruby_2_1;
@@ -13095,6 +13082,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   libspotify = callPackage ../development/libraries/libspotify {
     apiKey = config.libspotify.apiKey or null;
   };
+
+  ltunify = callPackage ../tools/misc/ltunify { };
 
   src = callPackage ../applications/version-management/src/default.nix {
     git = gitMinimal;
@@ -14652,7 +14641,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   kde5 =
     let
-      frameworks = import ../development/libraries/kde-frameworks-5.17 { inherit pkgs; };
+      frameworks = import ../development/libraries/kde-frameworks-5.18 { inherit pkgs; };
       plasma = import ../desktops/plasma-5.5 { inherit pkgs; };
       apps = import ../applications/kde-apps-15.12 { inherit pkgs; };
       named = self: { plasma = plasma self; frameworks = frameworks self; apps = apps self; };
@@ -14661,16 +14650,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     in
       recurseIntoAttrs (lib.makeScope qt55.newScope merged);
 
-  kde5_latest =
-    let
-      frameworks = import ../development/libraries/kde-frameworks-5.17 { inherit pkgs; };
-      plasma = import ../desktops/plasma-5.5 { inherit pkgs; };
-      apps = import ../applications/kde-apps-15.12 { inherit pkgs; };
-      named = self: { plasma = plasma self; frameworks = frameworks self; apps = apps self; };
-      merged = self:
-        named self // frameworks self // plasma self // apps self // kde5PackagesFun self;
-    in
-      recurseIntoAttrs (lib.makeScope qt55.newScope merged);
+  kde5_latest = kde5;
 
   theme-vertex = callPackage ../misc/themes/vertex { };
 
@@ -15336,10 +15316,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   DisnixWebService = callPackage ../tools/package-management/disnix/DisnixWebService { };
 
-  latex2html = callPackage ../tools/typesetting/tex/latex2html/default.nix {
-    tex = tetex;
-  };
-
   lkproof = callPackage ../tools/typesetting/tex/lkproof { };
 
   mysqlWorkbench = newScope gnome ../applications/misc/mysql-workbench {
@@ -15377,6 +15353,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   pjsip = callPackage ../applications/networking/pjsip { };
 
   PPSSPP = callPackage ../misc/emulators/ppsspp { SDL = SDL2; };
+
+  pt = callPackage ../applications/misc/pt { };
 
   uae = callPackage ../misc/emulators/uae { };
 
@@ -15561,8 +15539,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   vips = callPackage ../tools/graphics/vips { };
   nip2 = callPackage ../tools/graphics/nip2 { };
 
-  VisualBoyAdvance = callPackage ../misc/emulators/VisualBoyAdvance { };
-
   wavegain = callPackage ../applications/audio/wavegain { };
 
   wcalc = callPackage ../applications/misc/wcalc { };
@@ -15615,6 +15591,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   yandex-disk = callPackage ../tools/filesystems/yandex-disk { };
 
   yara = callPackage ../tools/security/yara { };
+
+  zap = callPackage ../tools/networking/zap { };
 
   zdfmediathk = callPackage ../applications/video/zdfmediathk { };
 

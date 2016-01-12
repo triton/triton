@@ -162,6 +162,7 @@
   ./services/hardware/bluetooth.nix
   ./services/hardware/brltty.nix
   ./services/hardware/freefall.nix
+  ./services/hardware/irqbalance.nix
   ./services/hardware/nvidia-optimus.nix
   ./services/hardware/pcscd.nix
   ./services/hardware/pommed.nix
@@ -330,6 +331,7 @@
   ./services/networking/openfire.nix
   ./services/networking/openntpd.nix
   ./services/networking/openvpn.nix
+  ./services/networking/ostinato.nix
   ./services/networking/polipo.nix
   ./services/networking/prayer.nix
   ./services/networking/privoxy.nix

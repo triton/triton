@@ -16,6 +16,7 @@
 , enchant
 , fontconfig
 , freetype
+, gdk-pixbuf
 , geoclue2
 , glib
 , gobject-introspection
@@ -80,21 +81,21 @@ stdenv.mkDerivation rec {
     "--disable-developer-mode"
     "--enable-optimizations"
     "--enable-x11-target"
-    "--disable-wayland-target" # gtk3?
+    "--disable-wayland-target"
     "--disable-win32-target"
     "--disable-quartz-target"
     "--disable-directfb-target"
-    "--enable-spellcheck"
-    "--enable-credential-storage"
-    "--disable-glx"
+    (enFlag "spellcheck" (enchant != null) null)
+    (enFlag "credential-storage" (libsecret != null) null)
+    "--enable-glx"
     "--enable-egl"
-    "--enable-gles2"
+    "--disable-gles2"
     "--disable-gamepad"
     "--enable-video"
     "--enable-geolocation"
     "--enable-svg"
     "--enable-svg-fonts"
-    "--enable-web-audio"
+    (enFlag "web-audio" (gstreamer != null && gst-plugins-base != null) null)
     "--disable-battery-status"
     "--disable-coverage"
     "--enable-fast-malloc"
@@ -104,7 +105,7 @@ stdenv.mkDerivation rec {
     "--enable-jit"
     "--disable-ftl-jit" # llvm
     "--disable-opcode-stats"
-    "--enable-introspection"
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--enable-glibtest"
     "--enable-schemas-compile"
     "--disable-maintainer-mode"
@@ -113,20 +114,14 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoreconfHook
+    bison
+    flex
+    gettext
+    gperf
     perl
     python
     ruby
-    bison
-    gperf
-    flex
     which
-    gettext
-  ];
-
-  propagatedBuildInputs = [
-    glib
-    gtk3
-    libsoup
   ];
 
   buildInputs = [
@@ -135,9 +130,12 @@ stdenv.mkDerivation rec {
     enchant
     fontconfig
     freetype
+    gdk-pixbuf
     geoclue2
+    glib
     gobject-introspection
     gtk2
+    gtk3
     gst-plugins-base
     gstreamer
     harfbuzz
@@ -145,6 +143,7 @@ stdenv.mkDerivation rec {
     libjpeg
     libpng
     libsecret
+    libsoup
     libwebp
     libxml2
     libxslt
@@ -161,14 +160,18 @@ stdenv.mkDerivation rec {
   ];
 
   enableParallelBuilding = true;
-
   dontAddDisableDepTrack = true;
 
   meta = with stdenv.lib; {
     description = "Web content rendering engine, GTK+ port";
     homepage = "http://webkitgtk.org/";
     license = licenses.bsd2;
-    maintainers = with maintainers; [ ];
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

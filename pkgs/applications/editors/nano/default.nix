@@ -1,33 +1,24 @@
-{ stdenv, fetchurl
-, ncurses
-, gettext ? null
-, enableNls ? true
-, enableTiny ? false
-}:
-
-assert enableNls -> (gettext != null);
-
-with stdenv.lib;
+{ stdenv, fetchurl, ncurses, gettext }:
 
 stdenv.mkDerivation rec {
   name = "nano-${version}";
-  version = "2.5.0";
+  version = "2.5.1";
+
   src = fetchurl {
     url = "mirror://gnu/nano/${name}.tar.gz";
-    sha256 = "1vl9bim56k1b4zwc3icxp46w6pn6gb042j1h4jlz1jklxxpkwcpz";
+    sha256 = "1piv8prj6w3rvsrrx41ra8c10b8fzkgjhnm6399lsgqqpw0wlvz0";
   };
-  buildInputs = [ ncurses ] ++ optional enableNls gettext;
-  configureFlags = ''
-    --sysconfdir=/etc
-    ${optionalString (!enableNls) "--disable-nls"}
-    ${optionalString enableTiny "--enable-tiny"}
-  '';
 
-  postPatch = stdenv.lib.optionalString stdenv.isDarwin ''
-    substituteInPlace src/text.c --replace "__time_t" "time_t"
-  '';
+  nativeBuildInputs = [ gettext ];
+  buildInputs = [ ncurses ];
 
-  meta = {
+  configureFlags = [
+    "--sysconfdir=/etc"
+    "--enable-nls"
+    "--disable-tiny"
+  ];
+
+  meta = with stdenv.lib; {
     homepage = http://www.nano-editor.org/;
     description = "A small, user-friendly console text editor";
     license = licenses.gpl3Plus;

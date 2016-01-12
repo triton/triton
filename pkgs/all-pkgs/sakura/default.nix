@@ -1,5 +1,6 @@
-{ stdenv, fetchurl
+{ stdenv
 , cmake
+, fetchurl
 , perl
 
 , gdk-pixbuf
@@ -10,11 +11,11 @@
 
 stdenv.mkDerivation rec {
   name = "sakura-${version}";
-  version = "3.3.0";
+  version = "3.3.3";
 
   src = fetchurl {
     url = "http://launchpad.net/sakura/trunk/${version}/+download/${name}.tar.bz2";
-    sha256 = "0rzjnlzwlsi309plqp63r2bb6kxr0lam1v0s73c74zwms8gik3a1";
+    sha256 = "087hqbzdx9y01ksg1mqqd8kc483wfsmfzppjg0ryfkil3l633gd6";
   };
 
   nativeBuildInputs = [

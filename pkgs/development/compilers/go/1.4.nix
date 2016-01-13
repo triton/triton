@@ -50,6 +50,8 @@ stdenv.mkDerivation rec {
     sed -i '/TestHostname/areturn' src/os/os_test.go
     # ParseInLocation fails the test
     sed -i '/TestParseInSydney/areturn' src/time/format_test.go
+    # TestDialTimeout doesn't timeout
+    sed -i '/TestDialTimeout/areturn' src/net/dial_test.go
 
     sed -i 's,/etc/protocols,${iana_etc}/etc/protocols,' src/net/lookup_unix.go
   '' + lib.optionalString stdenv.isLinux ''

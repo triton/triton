@@ -1,19 +1,51 @@
-{ stdenv, fetchurl, ninja, which
+{ stdenv
+, bison
+, fetchurl
+, ninja
+, perl
+, python
+, pythonPackages
+, which
 
 # default dependencies
-, bzip2, flac, speex, libopus
-, libevent, expat, libjpeg, snappy
-, libpng, libxml2, libxslt, libcap
-, xdg_utils, yasm, minizip, libwebp
-, libusb1, libexif, pciutils, nss
-
-, python, pythonPackages, perl, pkgconfig
-, nspr, udev, kerberos
-, utillinux, alsaLib
-, bison, gperf
-, glib, gtk2, dbus_glib
-, xorg, mesa
-, protobuf, speechd, cups
+, alsaLib
+, atk
+, bzip2
+, cairo
+, cups
+, dbus_glib
+, expat
+, flac
+, fontconfig
+, glib
+, gperf
+, gtk2
+, kerberos
+, libcap
+, libevent
+, libexif
+, libjpeg
+, libopus
+, libpng
+, libusb1
+, libwebp
+, libxml2
+, libxslt
+, mesa
+, minizip
+, nspr
+, nss
+, pango
+, pciutils
+, protobuf
+, snappy
+, speechd
+, speex
+, udev
+, utillinux
+, xdg_utils
+, xorg
+, yasm
 
 # optional dependencies
 , libgcrypt ? null # gnomeSupport || cupsSupport
@@ -82,17 +114,6 @@ let
     withCustomModes = true;
   };
 
-  defaultDependencies = [
-    bzip2 flac speex opusWithCustomModes
-    libevent expat libjpeg snappy
-    libpng libxml2 libxslt libcap
-    xdg_utils yasm minizip libwebp
-    libusb1 libexif
-    xorg.libXcomposite
-    xorg.libXi
-    xorg.libXrandr
-  ];
-
   # build paths and release info
   packageName = extraAttrs.packageName or extraAttrs.name;
   buildType = "Release";
@@ -105,16 +126,60 @@ let
     inherit packageName buildType buildPath;
     src = source;
 
-    buildInputs = defaultDependencies ++ [
+    buildInputs = [
+      # Native
+      bison
+      perl
+      pythonPackages.gyp
+      pythonPackages.ply
+      pythonPackages.jinja2
       which
-      python perl pkgconfig
-      nspr nss udev
-      utillinux alsaLib
-      bison gperf kerberos
-      glib gtk2 dbus_glib
-      xorg.libXScrnSaver xorg.libXcursor xorg.libXtst mesa
-      pciutils protobuf speechd xorg.libXdamage
-      pythonPackages.gyp pythonPackages.ply pythonPackages.jinja2
+      # Inputs
+      alsaLib
+      atk
+      bzip2
+      cairo
+      dbus_glib
+      expat
+      flac
+      fontconfig
+      glib
+      gperf
+      gtk2
+      kerberos
+      libcap
+      libevent
+      libexif
+      libjpeg
+      libpng
+      libusb1
+      libwebp
+      libxml2
+      libxslt
+      mesa
+      minizip
+      opusWithCustomModes
+      pango
+      pciutils
+      protobuf
+      python
+      nspr
+      nss
+      snappy
+      speechd
+      speex
+      udev
+      utillinux
+      xdg_utils
+      yasm
+      xorg.libXcomposite
+      xorg.libXcursor
+      xorg.libXdamage
+      xorg.libXext
+      xorg.libXi
+      xorg.libXrandr
+      xorg.libXScrnSaver
+      xorg.libXtst
     ] ++ optional gnomeKeyringSupport libgnome_keyring3
       ++ optionals gnomeSupport [ gnome.GConf libgcrypt ]
       ++ optional enableSELinux libselinux

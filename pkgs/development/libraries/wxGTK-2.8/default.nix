@@ -1,6 +1,7 @@
 { stdenv, fetchurl, pkgconfig, gtk2, xorg
-, gstreamer, gst-plugins-base_0, GConf
-, withMesa ? true, mesa ? null, compat24 ? false, compat26 ? true, unicode ? true,
+, gstreamer_0, gst-plugins-base_0, GConf
+, withMesa ? true, mesa ? null
+, compat24 ? false, compat26 ? true, unicode ? true
 }:
 
 assert withMesa -> mesa != null;
@@ -17,8 +18,8 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    gtk2 xorg.Xxf86vm xorg.xf86vidmodeproto
-    gstreamer gst-plugins-base_0 GConf ]
+    gtk2 xorg.libXxf86vm xorg.xf86vidmodeproto
+    gstreamer_0 gst-plugins-base_0 GConf ]
     ++ optional withMesa mesa;
 
   nativeBuildInputs = [ pkgconfig ];

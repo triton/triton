@@ -136,6 +136,8 @@
 , optimizationsDeveloper ? true
 , extraWarningsDeveloper ? false
 , strippingDeveloper ? false
+
+, ffmpeg
 }:
 
 /* Maintainer notes:
@@ -224,14 +226,17 @@ assert x11grabExtlib -> xorg.libX11 != null && xorg.libXv != null;
 
 stdenv.mkDerivation rec {
   name = "ffmpeg-full-${version}";
-  version = "2.8.1";
 
-  src = fetchurl {
-    url = "https://www.ffmpeg.org/releases/ffmpeg-${version}.tar.bz2";
-    sha256 = "1qk6g2h993i0wgs9d2p3ahdc5bqr03mp74bk6r1zj6pfinr5mvg2";
-  };
+  inherit (ffmpeg) src version;
 
-  patchPhase = ''patchShebangs .'';
+  postPatch = ''
+    patchShebangs .
+    sed -i libavcodec/libvpxenc.c \
+      -e '/VP8E_UPD_ENTROPY/d' \
+      -e '/VP8E_USE_REFERENCE/d' \
+      -e '/VP8E_UPD_REFERENCE/d' \
+      -e '/VP8D_USE_REFERENCE/d'
+  '';
 
   configureFlags = [
     /*
@@ -309,7 +314,7 @@ stdenv.mkDerivation rec {
     (enableFeature (fribidi != null) "libfribidi")
     (enableFeature (game-music-emu != null) "libgme")
     (enableFeature (gnutls != null) "gnutls")
-    (enableFeature (gsm != null) "libgsm")
+    #(enableFeature (gsm != null) "libgsm")
     #(enableFeature (ilbc != null) "libilbc")
     (enableFeature (ladspaH !=null) "ladspa")
     (enableFeature (lame != null) "libmp3lame")

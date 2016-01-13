@@ -8,8 +8,13 @@ _doAbsoluteLibtool() {
   fi
   header "Fixing up library paths"
   buildAbsoluteLdflags
+  local PIDS
+  PIDS=()
   patchLaFiles
   patchPcFiles
+  for PID in "${PIDS[@]}"; do
+    wait "$PID"
+  done
   stopNest
 }
 
@@ -96,9 +101,12 @@ patchLaFiles() {
   LA_FILES=$(find ${!output}/lib -name \*.la 2>/dev/null || true)
   local FILE
   for FILE in $LA_FILES; do
-    echo "Patching Library Paths: $FILE" >&2
-    cat "$FILE" | awkReplacer > "$FILE".tmp
-    mv "$FILE".tmp "$FILE"
+    {
+      echo "Patching Library Paths: $FILE" >&2
+      cat "$FILE" | awkReplacer > "$FILE".tmp
+      mv "$FILE".tmp "$FILE"
+    } &
+    PIDS+=("$!")
   done
 }
 
@@ -107,9 +115,12 @@ patchPcFiles() {
   PC_FILES=$(find ${!output}/lib/pkgconfig -name \*.pc 2>/dev/null || true)
   local FILE
   for FILE in $PC_FILES; do
-    echo "Patching Library Paths: $FILE" >&2
-    readPcFile "$FILE" | awkReplacer > "$FILE".tmp
-    mv "$FILE".tmp "$FILE"
+    {
+      echo "Patching Library Paths: $FILE" >&2
+      readPcFile "$FILE" | awkReplacer > "$FILE".tmp
+      mv "$FILE".tmp "$FILE"
+    } &
+    PIDS+=("$!")
   done
 }
 

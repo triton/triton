@@ -132,6 +132,10 @@ readPcFile() {
   LIBS_COMBINED="$(pkg-config --libs --static "$1")"
   LIBS_PRIVATE="$(echo "$LIBS" "$LIBS_COMBINED" | tr ' ' '\n' | sort | uniq -u | tr '\n' ' ')"
   mv "$1".tmp2 "$1"
+  if echo "$LIBS" "$LIBS_PRIVATE" | grep -q '@'; then
+    echo "Cannot perform a replacement on $1 due to extraneous \`@\`" >&2
+    exit 1
+  fi
   sed "$1" \
     -e "s@^Libs:.*\$@Libs: $LIBS@g" \
     -e "s@^Libs.private:.*\$@Libs.private: $LIBS_PRIVATE@g"

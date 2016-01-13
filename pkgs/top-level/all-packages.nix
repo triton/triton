@@ -791,6 +791,8 @@ poppler = callPackage ../all-pkgs/poppler {
   qt5 = null;
 };
 
+qjackctl = callPackage ../all-pkgs/qjackctl { };
+
 rtorrent = callPackage ../all-pkgs/rtorrent { };
 
 sakura = callPackage ../all-pkgs/sakura { };
@@ -12794,8 +12796,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   qemu-nix = qemu.override { type = "nix"; };
-
-  qjackctl = callPackage ../applications/audio/qjackctl { };
 
   QmidiNet = callPackage ../applications/audio/QmidiNet { };
 

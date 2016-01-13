@@ -700,7 +700,9 @@ installPhase() {
 
     installTargets=${installTargets:-install}
     echo "install flags: $installTargets $makeFlags ${makeFlagsArray[@]} $installFlags ${installFlagsArray[@]}"
-    make ${makefile:+-f $makefile} $installTargets \
+    make ${makefile:+-f $makefile} \
+        ${enableParallelBuilding:+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}} \
+        $installTargets \
         $makeFlags "${makeFlagsArray[@]}" \
         $installFlags "${installFlagsArray[@]}"
 

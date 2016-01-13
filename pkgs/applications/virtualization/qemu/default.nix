@@ -146,6 +146,12 @@ let
 
   malloc = if optJemalloc != null then "jemalloc" else
     if optGperfTools != null then "tcmalloc" else null;
+
+  fetchpatch = cve: hash: sha256: fetchurl {
+    name = "${cve}.patch";
+    url = "http://git.qemu.org/?p=qemu.git;a=patch;h=${hash}";
+    inherit sha256;
+  };
 in
 
 stdenv.mkDerivation rec {
@@ -155,6 +161,15 @@ stdenv.mkDerivation rec {
     url = "http://wiki.qemu.org/download/qemu-${version}.tar.bz2";
     sha256 = "1m3j6xl7msrniidkvr5pw9d44yba5m7hm42xz8xy77v105s8hhrl";
   };
+
+  patches = [
+    # All CVE's for 2.5.0, hopefully removed in 2.5.1+
+    (fetchpatch "CVE-2015-7549" "43b11a91dd861a946b231b89b754285" "1ch9xkbd8c2r28jqkxcq0s2lmix2qhny8ynb4ymnxyk0bkml1pvi")
+    (fetchpatch "CVE-2015-8558" "156a2e4dbffa85997636a7a39ef12da6f1b40254" "1j5l3fr2623wyyry1hnydj0d4l5j51ynzblwmjbm6v7801rix0dj")
+    (fetchpatch "CVE-2015-8666" "d9a3b33d2c9f996537b7f1d0246dee2d0120cefb" "1c1gx9qy24d3yps1717id9pqpm13k4wggidzhh2cs0ncziqaq3lb")
+    (fetchpatch "CVE-2015-8744" "a7278b36fcab9af469563bd7b" "05mmbdikh4vvgqk4kr22pzddjzvfyyykmgqc5h3ip4pfd9b555h6")
+    (fetchpatch "CVE-2015-8745" "c6048f849c7e3f009786df76206e895" "0a20qh54f0k4nq9bqmkh96f2pll8djwg1n2j4jj4j0nnys41dw3j")
+  ];
 
   nativeBuildInputs = [ libtool perl texinfo flex bison gettext makeWrapper ];
 

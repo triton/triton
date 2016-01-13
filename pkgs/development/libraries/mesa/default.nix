@@ -22,7 +22,7 @@ else
 */
 
 let
-  version = "11.1.0";
+  version = "11.1.1";
   # this is the default search path for DRI drivers
   driverLink = "/run/opengl-driver" + stdenv.lib.optionalString stdenv.isi686 "-32";
 in
@@ -38,7 +38,7 @@ stdenv.mkDerivation {
         + head (splitString "." version) + ''.x/${version}/mesa-${version}.tar.xz'')
       "https://launchpad.net/mesa/trunk/${version}/+download/mesa-${version}.tar.xz"
     ];
-    sha256 = "9befe03b04223eb1ede177fa8cac001e2850292c8c12a3ec9929106afad9cf1f";
+    sha256 = "64db074fc514136b5fb3890111f0d50604db52f0b1e94ba3fcb0fe8668a7fd20";
   };
 
   prePatch = "patchShebangs .";

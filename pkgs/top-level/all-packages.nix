@@ -5945,9 +5945,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     inherit (perlPackages) XMLSimple;
   };
 
-  include-what-you-use = callPackage ../development/tools/analysis/include-what-you-use {
-    llvmPackages = llvmPackages_37;
-  };
+  include-what-you-use = callPackage ../development/tools/analysis/include-what-you-use { };
 
   indent = callPackage ../development/tools/misc/indent { };
 
@@ -6866,9 +6864,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   isocodes = callPackage ../development/libraries/iso-codes { };
 
-  ispc = callPackage ../development/compilers/ispc {
-    llvmPackages = llvmPackages_37;
-  };
+  ispc = callPackage ../development/compilers/ispc { };
 
   itk = callPackage ../development/libraries/itk { };
 
@@ -7794,7 +7790,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   mesa_drivers = mesaDarwinOr (
     let mo = mesa_noglu.override {
       grsecEnabled = config.grsecurity or false;
-      llvmPackages = llvmPackages_36; # various problems with 3.7; see #11367, #11467
     };
     in mo.drivers
   );

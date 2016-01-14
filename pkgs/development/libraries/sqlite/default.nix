@@ -1,16 +1,14 @@
-{ lib, stdenv, fetchurl, interactive ? false, readline ? null, ncurses ? null }:
-
-assert interactive -> readline != null && ncurses != null;
+{ lib, stdenv, fetchurl, readline, ncurses }:
 
 stdenv.mkDerivation {
-  name = "sqlite-3.10.0";
+  name = "sqlite-3.10.1";
 
   src = fetchurl {
-    url = "http://sqlite.org/2016/sqlite-autoconf-3100000.tar.gz";
-    sha1 = "7be6e6869d0d2d9fe3df71b5c65f065dd2325f58";
+    url = "http://sqlite.org/2016/sqlite-autoconf-3100100.tar.gz";
+    sha1 = "fedd95d402628ed0e0e3444ce50bcbd1fe2e7294";
   };
 
-  buildInputs = lib.optionals interactive [ readline ncurses ];
+  buildInputs = [ readline ncurses ];
 
   configureFlags = [ "--enable-threadsafe" ];
 

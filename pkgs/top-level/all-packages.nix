@@ -8373,13 +8373,13 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   stxxl = callPackage ../development/libraries/stxxl { parallel = true; };
 
-  sqlite = lowPrio (callPackage ../development/libraries/sqlite { });
+  sqlite = callPackage ../development/libraries/sqlite { };
 
   sqlite3_analyzer = lowPrio (callPackage ../development/libraries/sqlite/sqlite3_analyzer.nix { });
 
   sqlite-amalgamation = callPackage ../development/libraries/sqlite-amalgamation { };
 
-  sqlite-interactive = appendToName "interactive" (sqlite.override { interactive = true; });
+  sqlite-interactive = sqlite;
 
   sqlcipher = lowPrio (callPackage ../development/libraries/sqlcipher {
     readline = null;

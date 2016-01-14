@@ -61,7 +61,19 @@ stdenv.mkDerivation rec {
     inherit sha256;
   };
 
-  setupHook = ./setup-hook.sh;
+  setupHook =
+    if channel == "2.7" then
+      ./setup-hook-2.7.sh
+    else if channel == "3.2" then
+      ./setup-hook-3.2.sh
+    else if channel == "3.3" then
+      ./setup-hook-3.3.sh
+    else if channel == "3.4" then
+      ./setup-hook-3.4.sh
+    else if channel == "3.5" then
+      ./setup-hook-3.5.sh
+    else
+      throw "unsupported version";
 
   patches = optionals isPy2 [
     # patch python to put zero timestamp into pyc
@@ -125,6 +137,7 @@ stdenv.mkDerivation rec {
     #"--with-ensurepip"
   ];
 
+  # Should this be stdenv.cc.isGnu???
   NIX_LDFLAGS = optionalString isLinux "-lgcc_s";
 
   preConfigure = ''
@@ -154,6 +167,26 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  # tkinter is disabled
+  modules = "_bsddb,_curses,_curses_panel,_crypt,_gdbm,_sqlite3,_readline";
+
+  postBuild = optionalString isPy2 ''
+    # This uses the python interpreter that was just built to run the
+    # script to build the modules
+    substituteInPlace setup.py --replace 'self.extensions = extensions' \
+      'self.extensions = [ext for ext in self.extensions if ext.name in ["${modules}"]]'
+
+    export C_INCLUDE_PATH="${
+      concatStringsSep ":" (map (p: "${p}/include") buildInputs)}";
+    export LIBRARY_PATH="${
+      concatStringsSep ":" (map (p: "${p}/lib") buildInputs)}";
+
+    export LD_LIBRARY_PATH="$(pwd)";
+
+    ./python setup.py build_ext
+    [ -z "$(find build -name '*_failed.so' -print)" ]
+  '';
+
   postInstall = ''
     # needed for some packages, especially packages that backport functionality
     # to 2.x from 3.x
@@ -166,10 +199,12 @@ stdenv.mkDerivation rec {
     done
     touch $out/lib/python${versionMajor}/test/__init__.py
 
-    ln -sv \
-      "$out/include/python${versionMajor}m" \
-      "$out/include/python${versionMajor}"
     paxmark E $out/bin/python${versionMajor}
+  '' + optionalString isPy2 ''
+    # Install modules
+    dest=$out/lib/python${versionMajor}/site-packages
+    mkdir -p $dest
+    cp -p $(find . -name "*.so") $dest/
   '' + optionalString isPy2 ''
     ln -s $out/lib/python${versionMajor}/pdb.py $out/bin/pdb
     ln -s $out/lib/python${versionMajor}/pdb.py $out/bin/pdb${versionMajor}
@@ -191,7 +226,7 @@ stdenv.mkDerivation rec {
     zlibSupport = zlib != null;
 
     libPrefix = "python${versionMajor}";
-    executable = "python${versionMajor}m";
+    executable = "python${versionMajor}";
     buildEnv = callPackage ../wrapper.nix { python = self; };
     isPy2 = versionOlder versionMajor "3.0";
     isPy3 = versionAtLeast versionMajor "3.0";

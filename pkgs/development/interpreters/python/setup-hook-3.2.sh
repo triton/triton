@@ -1,6 +1,6 @@
 addPythonPath() {
 
-  addToSearchPathWithCustomDelimiter ':' 'PYTHONPATH' "${1}/lib/python${versionMajor}/site-packages"
+  addToSearchPathWithCustomDelimiter ':' 'PYTHONPATH' "${1}/lib/python3.2/site-packages"
 
 }
 
@@ -13,7 +13,7 @@ toPythonPath() {
   paths="${1}"
 
   for i in "${paths}" ; do
-    p="${i}/lib/python${versionMajor}/site-packages"
+    p="${i}/lib/python3.2/site-packages"
     result="${result}${result:+:}${p}"
   done
 

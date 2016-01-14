@@ -61,19 +61,13 @@ stdenv.mkDerivation rec {
     inherit sha256;
   };
 
-  setupHook =
-    if channel == "2.7" then
-      ./setup-hook-2.7.sh
-    else if channel == "3.2" then
-      ./setup-hook-3.2.sh
-    else if channel == "3.3" then
-      ./setup-hook-3.3.sh
-    else if channel == "3.4" then
-      ./setup-hook-3.4.sh
-    else if channel == "3.5" then
-      ./setup-hook-3.5.sh
-    else
-      throw "unsupported version";
+  setupHook = stdenv.mkDerivation {
+    name = "python-${versionMajor}-setup-hook";
+    buildCommand = ''
+      sed 's,@VERSION_MAJOR@,${versionMajor},g' ${./setup-hook.sh.in} > $out
+    '';
+    preferLocalBuild = true;
+  };
 
   patches = optionals isPy2 [
     # patch python to put zero timestamp into pyc

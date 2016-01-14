@@ -2,14 +2,14 @@
 
 stdenv.mkDerivation rec {
   name = "elfutils-${version}";
-  version = "0.164";
+  version = "0.165";
 
   src = fetchurl {
     urls = [
       "http://fedorahosted.org/releases/e/l/elfutils/${version}/${name}.tar.bz2"
       "mirror://gentoo/${name}.tar.bz2"
       ];
-    sha256 = "002r2r46lq44f1phhz8r5pi4jli3ls5944p8gxmx04laj8jw10wn";
+    sha256 = "0wp91hlh9n0ismikljf63558rzdwim8w1s271grsbaic35vr5z57";
   };
 
   configureFlags = [

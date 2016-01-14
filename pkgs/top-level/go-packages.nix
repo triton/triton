@@ -29,11 +29,11 @@ let
   };
 
   crypto = buildFromGitHub {
-    rev      = "f18420efc3b4f8e9f3d51f6bd2476e92c46260e9";
-    date     = "2015-12-15";
+    rev      = "3760e016850398b85094c4c99e955b8c3dea5711";
+    date     = "2015-01-13";
     owner    = "golang";
     repo     = "crypto";
-    sha256   = "0pi38sjd543nirjx89fzix5pi2slmjdqw07zis18bwhkikxyh8ah";
+    sha256   = "1zvm2rdfs8ljiswaddlhqbapdbk9v8wv12vpmg9dk9q3bmqx1af8";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -68,11 +68,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev    = "0cb26f788dd4625d1956c6fd97ffc4c90669d129";
-    date   = "2015-12-28";
+    rev    = "341cd0845b5a19165f12976d7915847a71037135";
+    date   = "2015-01-13";
     owner  = "golang";
     repo   = "net";
-    sha256 = "1ipjy9yq8m0sqh90zcvhf4jw6s6bpv9465yblh9w1iid06zvhylq";
+    sha256 = "131c7vgz0cym4kf7lwnhshj4a7wh3ghv8y4n77g8j9y4yjmbf8bb";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"

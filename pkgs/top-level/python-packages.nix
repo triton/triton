@@ -5,10 +5,10 @@ with pkgs.lib;
 let
   pythonAtLeast = versionAtLeast python.versionMajor;
   pythonOlder = versionOlder python.versionMajor;
-  isPy27 = python.majorVersion == "2.7";
-  isPy33 = python.majorVersion == "3.3";
-  isPy34 = python.majorVersion == "3.4";
-  isPy35 = python.majorVersion == "3.5";
+  isPy27 = python.versionMajor == "2.7";
+  isPy33 = python.versionMajor == "3.3";
+  isPy34 = python.versionMajor == "3.4";
+  isPy35 = python.versionMajor == "3.5";
   isPyPy = python.executable == "pypy";
   isPy3k = strings.substring 0 1 python.versionMajor == "3";
 
@@ -20,23 +20,31 @@ let
 
   # Unique python version identifier
   pythonName =
-    if isPy27 then "python27" else
-    if isPy33 then "python33" else
-    if isPy34 then "python34" else
-    if isPy35 then "python35" else
-    if isPyPy then "pypy" else "";
-
-  modules = python.modules or {
-    readline = null;
-    sqlite3 = null;
-    curses = null;
-    curses_panel = null;
-    crypt = null;
-  };
+    if isPy27 then
+      "python27"
+    else if isPy33 then
+      "python33"
+    else if isPy34 then
+      "python34"
+    else if isPy35 then
+      "python35"
+    else if isPyPy then
+      "pypy"
+    else
+      "";
 
 in modules // {
 
-  inherit python isPy27 isPy33 isPy34 isPy35 isPyPy isPy3k pythonName buildPythonPackage;
+  inherit
+    python
+    isPy27
+    isPy33
+    isPy34
+    isPy35
+    isPyPy
+    isPy3k
+    pythonName
+    buildPythonPackage;
 
   # helpers
 

@@ -33,7 +33,7 @@ let
     else
       "";
 
-in modules // {
+in {
 
   inherit
     python
@@ -2110,7 +2110,7 @@ in modules // {
        sha256 = "1ilf58qq7sazmcgg4f1wswbhcn2gb8qbbrpgm6gf0j2lbm60gabl";
      };
 
-     propagatedBuildInputs = with self; [ modules.curses pygments ];
+     propagatedBuildInputs = with self; [ pygments ];
      doCheck = false;
 
      meta = {
@@ -3054,7 +3054,6 @@ in modules // {
 
     propagatedBuildInputs = with self; [
       pyparsing
-      modules.readline
       urwid
     ];
 
@@ -3224,7 +3223,7 @@ in modules // {
     name = "cryptacular-1.4.1";
 
     buildInputs = with self; [ coverage nose ];
-    propagatedBuildInputs = with self; [ pbkdf2 modules.crypt ];
+    propagatedBuildInputs = with self; [ pbkdf2 ];
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/c/cryptacular/${name}.tar.gz";
@@ -3251,7 +3250,7 @@ in modules // {
     buildInputs = [ pkgs.openssl self.pretend self.cryptography_vectors
                     self.iso8601 self.pyasn1 self.pytest self.py self.hypothesis ]
                ++ optional stdenv.isDarwin pkgs.darwin.apple_sdk.frameworks.Security;
-    propagatedBuildInputs = with self; [ six idna ipaddress pyasn1 cffi pyasn1-modules modules.sqlite3 ]
+    propagatedBuildInputs = with self; [ six idna ipaddress pyasn1 cffi pyasn1-modules ]
      ++ optional (pythonOlder "3.4") self.enum34;
 
     # IOKit's dependencies are inconsistent between OSX versions, so this is the best we
@@ -4146,7 +4145,7 @@ in modules // {
       make -f Makefile.prep synctus/ddar_pb2.py
     '';
 
-    propagatedBuildInputs = with self; [ protobuf modules.sqlite3 ];
+    propagatedBuildInputs = with self; [ protobuf ];
 
     meta = {
       description = "Unix de-duplicating archiver";
@@ -5782,7 +5781,7 @@ in modules // {
         simplejson
         sqlite3dbm
         timelib
-      ] ++ optionals (!isPy3k) [ modules.sqlite3 ];
+      ];
 
     meta = {
       description = "Library for parsing MediaWiki articles and converting them to different output formats";
@@ -7081,7 +7080,7 @@ in modules // {
     };
 
     propagatedBuildInputs = with self; [
-      pyGtkGlade pkgs.libtorrentRasterbar twisted Mako chardet pyxdg self.pyopenssl modules.curses
+      pyGtkGlade pkgs.libtorrentRasterbar twisted Mako chardet pyxdg self.pyopenssl
     ];
 
     nativeBuildInputs = [ pkgs.intltool ];
@@ -8734,7 +8733,7 @@ in modules // {
     doCheck = false;
 
     buildInputs = with self; [ unittest2 ];
-    propagatedBuildInputs = with self; [ modules.curses modules.curses_panel psutil setuptools bottle batinfo pkgs.hddtemp pysnmp ];
+    propagatedBuildInputs = with self; [ psutil setuptools bottle batinfo pkgs.hddtemp pysnmp ];
 
     preConfigure = ''
       sed -i 's/data_files\.append((conf_path/data_files.append(("etc\/glances"/' setup.py;
@@ -9695,7 +9694,7 @@ in modules // {
     };
 
     propagatedBuildInputs = with self; [
-      pytz six tzlocal keyring modules.readline argparse dateutil_1_5
+      pytz six tzlocal keyring argparse dateutil_1_5
       parsedatetime
     ];
 
@@ -9951,7 +9950,6 @@ in modules // {
       sed -i 's/version=version/version="${version}"/' setup.py
     '';
     buildInputs = with self; [ pkgs.git ];
-    propagatedBuildInputs = with self; [ modules.sqlite3 ];
 
     doCheck = false;
 
@@ -10474,7 +10472,7 @@ in modules // {
     buildInputs = with self; [ pyflakes pep8 ];
     propagatedBuildInputs = with self; [
       django_1_6 filebrowser_safe grappelli_safe bleach tzlocal beautifulsoup4
-      requests2 requests_oauthlib future pillow modules.sqlite3
+      requests2 requests_oauthlib future pillow
     ];
 
     # Tests Fail Due to Syntax Warning, Fixed for v3.1.11+
@@ -10606,7 +10604,7 @@ in modules // {
 
     buildInputs = with self; [
       pkgs.libjpeg pkgs.freetype pkgs.zlib pkgs.glibcLocales
-      pillow twitter pyfiglet requests2 arrow dateutil modules.readline pysocks
+      pillow twitter pyfiglet requests2 arrow dateutil pysocks
     ];
 
     meta = {
@@ -10855,7 +10853,7 @@ in modules // {
       export LC_ALL="en_US.UTF-8"
     '';
 
-    propagatedBuildInputs = with self; [ argparse jinja2 six modules.readline ];
+    propagatedBuildInputs = with self; [ argparse jinja2 six ];
 
     meta = {
       homepage = https://github.com/iElectric/mr.bob.git;
@@ -11446,7 +11444,6 @@ in modules // {
     propagatedBuildInputs = with self; [
       numpy
       nose
-      modules.sqlite3
     ];
 
     preCheck = ''
@@ -13475,7 +13472,6 @@ in modules // {
       lxml
       # Disabling this because an upstream dependency, pep8, is broken on v3.5.
       (if isPy35 then null else html5lib)
-      modules.sqlite3
       beautifulsoup4
     ] ++ optional isDarwin pkgs.darwin.locale; # provides the locale command
 
@@ -13850,8 +13846,6 @@ in modules // {
       url = "https://pypi.python.org/packages/source/p/percol/${name}.tar.gz";
       sha256 = "169s5mhw1s60qbsd6pkf9bb2x6wfgx8hn8nw9d4qgc68qnnpp2cj";
     };
-
-    propagatedBuildInputs = with self; [ modules.curses ];
 
     meta = {
       homepage = https://github.com/mooz/percol;
@@ -16513,7 +16507,7 @@ in modules // {
     };
 
     buildInputs = with self; [ nose ];
-    propagatedBuildInputs = with self; [ modules.sqlite3 six ];
+    propagatedBuildInputs = with self; [ six ];
 
     checkPhase = "nosetests";
 
@@ -17014,7 +17008,7 @@ in modules // {
 
     propagatedBuildInputs = with self;
       [ django_1_6 recaptcha_client pytz memcached dateutil_1_5 paramiko flup
-        pygments djblets django_evolution pycrypto modules.sqlite3 pysvn pillow
+        pygments djblets django_evolution pycrypto pysvn pillow
         psycopg2 django-haystack python_mimeparse markdown django-multiselectfield
       ];
   };
@@ -17174,7 +17168,7 @@ in modules // {
       sha256 = "1lf5f4x80f7d983bmkx12sxcizzii21kghs8kf63a1mj022a5x5j";
     };
 
-    propagatedBuildInputs = with self; [ pygments wxPython modules.sqlite3 ];
+    propagatedBuildInputs = with self; [ pygments wxPython ];
 
     # ride_postinstall.py checks that needed deps are installed and creates a
     # desktop shortcut. We don't really need it and it clutters up bin/ so
@@ -17478,8 +17472,6 @@ in modules // {
       url = "http://www.secdev.org/projects/scapy/files/${name}.tar.gz";
       sha256 = "1bqmp0xglkndrqgmybpwmzkv462mir8qlkfwsxwbvvzh9li3ndn5";
     };
-
-    propagatedBuildInputs = [ modules.readline ];
 
     meta = {
       description = "Powerful interactive network packet manipulation program";
@@ -17858,8 +17850,6 @@ in modules // {
       md5 = "fc2f8fb09a4bbc0260b97e835b369184";
     };
 
-    buildInputs = with self; [ modules.sqlite3 ];
-
     meta = {
       description = "sqlite-backed dictionary";
       homepage = "http://github.com/Yelp/sqlite3dbm";
@@ -18116,7 +18106,6 @@ in modules // {
     };
 
     buildInputs = with self; [ pillow blessings nose ];
-    propagatedBuildInputs = with self; [ modules.curses ];
 
     meta = {
       maintainers = with maintainers; [ iElectric ];
@@ -18134,7 +18123,7 @@ in modules // {
     # 4 failing tests
     doCheck = false;
 
-    buildInputs = with self; [ nose modules.curses ];
+    buildInputs = with self; [ nose ];
 
     meta = {
       maintainers = with maintainers; [ iElectric ];
@@ -18559,7 +18548,6 @@ in modules // {
 
     buildInputs = with self; [ nose mock ]
       ++ stdenv.lib.optional doCheck pysqlite;
-    propagatedBuildInputs = with self; [ modules.sqlite3 ];
 
     # Test-only dependency pysqlite doesn't build on Python 3. This isn't an
     # acceptable reason to make all dependents unavailable on Python 3 as well
@@ -19435,7 +19423,7 @@ in modules // {
 
     PYTHON_EGG_CACHE = "`pwd`/.egg-cache";
 
-    propagatedBuildInputs = with self; [ genshi pkgs.setuptools modules.sqlite3 ];
+    propagatedBuildInputs = with self; [ genshi pkgs.setuptools ];
 
     meta = {
       description = "Enhanced wiki and issue tracking system for software development projects";
@@ -19905,8 +19893,6 @@ in modules // {
     pythonPath = [ self.recursivePthLoader ];
 
     patches = [ ../development/python-modules/virtualenv-change-prefix.patch ];
-
-    propagatedBuildInputs = with self; [ modules.readline modules.sqlite3 modules.curses ];
 
     # Tarball doesn't contain tests
     doCheck = false;
@@ -21253,7 +21239,7 @@ in modules // {
     };
 
     buildInputs = with self; [ unittest2 nose mock ];
-    propagatedBuildInputs = with self; [ modules.curses libarchive ];
+    propagatedBuildInputs = with self; [ libarchive ];
 
     # tests are still failing
     doCheck = false;
@@ -21696,7 +21682,7 @@ in modules // {
       md5 = "8edbb61f1ffe11c181bd2cb9ec977c72";
     };
 
-    propagatedBuildInputs = with self; [ django_1_5 django_tagging modules.sqlite3 whisper pkgs.pycairo ldap memcached ];
+    propagatedBuildInputs = with self; [ django_1_5 django_tagging whisper pkgs.pycairo ldap memcached ];
 
     postInstall = ''
       wrapProgram $out/bin/run-graphite-devel-server.py \

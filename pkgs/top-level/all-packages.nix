@@ -1558,13 +1558,9 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   cron = callPackage ../tools/system/cron { };
 
-  cudatoolkit5 = callPackage ../development/compilers/cudatoolkit/5.5.nix {
-    python = python26;
-  };
+  cudatoolkit5 = callPackage ../development/compilers/cudatoolkit/5.5.nix { };
 
-  cudatoolkit6 = callPackage ../development/compilers/cudatoolkit/6.0.nix {
-    python = python26;
-  };
+  cudatoolkit6 = callPackage ../development/compilers/cudatoolkit/6.0.nix { };
 
   cudatoolkit65 = callPackage ../development/compilers/cudatoolkit/6.5.nix { };
 
@@ -5415,39 +5411,24 @@ zsh = callPackage ../all-pkgs/zsh { };
   python2Packages = python27Packages;
   python3Packages = python35Packages;
 
-  python26 = callPackage ../development/interpreters/python/2.6 {
-    db = db47;
-    self = python26;
+  python27 = callPackage ../development/interpreters/python {
+    channel = "2.7";
   };
-  python27 = callPackage ../development/interpreters/python/2.7 {
-    self = python27;
-    inherit (darwin) CF configd;
+  python32 = callPackage ../development/interpreters/python {
+    channel = "3.2";
   };
-  python32 = callPackage ../development/interpreters/python/3.2 {
-    self = python32;
+  python33 = callPackage ../development/interpreters/python {
+    channel = "3.3";
   };
-  python33 = callPackage ../development/interpreters/python/3.3 {
-    self = python33;
-  };
-  python34 = hiPrio (callPackage ../development/interpreters/python/3.4 {
-    inherit (darwin) CF configd;
-    self = python34;
+  python34 = hiPrio (callPackage ../development/interpreters/python {
+    channel = "3.4";
   });
-  python35 = hiPrio (callPackage ../development/interpreters/python/3.5 {
-    inherit (darwin) CF configd;
-    self = python35;
+  python35 = hiPrio (callPackage ../development/interpreters/python {
+    channel = "3.5";
   });
   pypy = callPackage ../development/interpreters/pypy {
     self = pypy;
   };
-
-  pythonFull = python2Full;
-  python2Full = python27Full;
-  python26Full = python26.override {
-    includeModules = true;
-    self = python26Full;
-  };
-  python27Full = python27;
 
   python2nix = callPackage ../tools/package-management/python2nix { };
 
@@ -8878,15 +8859,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   # python function with default python interpreter
   buildPythonPackage = pythonPackages.buildPythonPackage;
-
-  # `nix-env -i python-nose` installs for 2.7, the default python.
-  # Therefore we do not recurse into attributes here, in contrast to
-  # python27Packages. `nix-env -iA python26Packages.nose` works
-  # regardless.
-  python26Packages = callPackage ./python-packages.nix {
-    python = python26;
-    self = python26Packages;
-  };
 
   python27Packages = lib.hiPrioSet (recurseIntoAttrs (callPackage ./python-packages.nix {
     python = python27;

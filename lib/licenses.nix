@@ -388,7 +388,7 @@ lib.mapAttrs (n: v: v // { shortName = n; }) rec {
     fullName = "PostgreSQL License";
   };
 
-  psfl = spdx {
+  psf-2 = spdx {
     spdxId = "Python-2.0";
     fullName = "Python Software Foundation License version 2";
     #url = http://docs.python.org/license.html;

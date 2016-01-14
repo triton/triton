@@ -181,8 +181,8 @@ stdenv.mkDerivation rec {
     tkSupport = false;
     zlibSupport = zlib != null;
 
-    libPrefix = "python${majorVersion}";
-    executable = "python${majorVersion}m";
+    libPrefix = "python${versionMajor}";
+    executable = "python${versionMajor}m";
     buildEnv = callPackage ../wrapper.nix { python = self; };
     isPy2 = versionOlder versionMajor "3.0";
     isPy3 = versionAtLeast versionMajor "3.0";

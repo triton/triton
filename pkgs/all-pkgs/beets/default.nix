@@ -175,8 +175,6 @@ in buildPythonPackage rec {
     pythonPackages.pathlib
     pythonPackages.pyyaml
     pythonPackages.unidecode
-    python.modules.sqlite3
-    python.modules.readline
   ] ++ optional enableAcoustid   pythonPackages.pyacoustid
     ++ optional enableFetchart   pythonPackages.requests2
     ++ optional enableDiscogs    pythonPackages.discogs_client

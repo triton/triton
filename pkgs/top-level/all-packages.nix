@@ -1057,13 +1057,11 @@ zsh = callPackage ../all-pkgs/zsh { };
   bindfs = callPackage ../tools/filesystems/bindfs { };
 
   binwalk = callPackage ../tools/misc/binwalk {
-    python = pythonFull;
     wrapPython = pythonPackages.wrapPython;
     curses = pythonPackages.curses;
   };
 
   binwalk-full = callPackage ../tools/misc/binwalk {
-    python = pythonFull;
     wrapPython = pythonPackages.wrapPython;
     curses = pythonPackages.curses;
     visualizationSupport = true;
@@ -1255,7 +1253,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   mpdcron = callPackage ../tools/audio/mpdcron { };
 
   mpdris2 = callPackage ../tools/audio/mpdris2 {
-    python = pythonFull;
     wrapPython = pythonPackages.wrapPython;
     mpd = pythonPackages.mpd;
     pygtk = pythonPackages.pygtk;
@@ -2287,7 +2284,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   ihaskell = callPackage ../development/tools/haskell/ihaskell/wrapper.nix {
     inherit (haskellPackages) ihaskell ghcWithPackages;
 
-    ipython = pythonFull.buildEnv.override {
+    ipython = python.buildEnv.override {
       extraLibs = with pythonPackages; [ ipython ipykernel jupyter_client notebook ];
     };
 
@@ -5413,18 +5410,23 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   python27 = callPackage ../development/interpreters/python {
     channel = "2.7";
+    self = python27;
   };
   python32 = callPackage ../development/interpreters/python {
     channel = "3.2";
+    self = python32;
   };
   python33 = callPackage ../development/interpreters/python {
     channel = "3.3";
+    self = python33;
   };
   python34 = hiPrio (callPackage ../development/interpreters/python {
     channel = "3.4";
+    self = python34;
   });
   python35 = hiPrio (callPackage ../development/interpreters/python {
     channel = "3.5";
+    self = python35;
   });
   pypy = callPackage ../development/interpreters/pypy {
     self = pypy;
@@ -9739,11 +9741,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   drbd = callPackage ../os-specific/linux/drbd { };
 
-  dstat = callPackage ../os-specific/linux/dstat {
-    # pythonFull includes the "curses" standard library module, for pretty
-    # dstat color output
-    python = pythonFull;
-  };
+  dstat = callPackage ../os-specific/linux/dstat { };
 
   libossp_uuid = callPackage ../development/libraries/libossp-uuid { };
 
@@ -12066,7 +12064,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     inherit (pythonPackages) lxml;
     lcms = lcms2;
   };
-  
+
   inspectrum = callPackage ../applications/misc/inspectrum { };
 
   ion3 = callPackage ../applications/window-managers/ion-3 {

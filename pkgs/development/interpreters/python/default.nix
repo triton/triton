@@ -12,7 +12,12 @@
 , sqlite
 , zlib
 
+# Inherit generics
 , channel ? null
+
+# Passthru
+, callPackage
+, self ? null
 }:
 
 with {
@@ -173,7 +178,11 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
-  passthru = {
+  passthru = rec {
+    inherit
+      version
+      versionMajor;
+
     dbSupport = db != null;
     opensslSupport = openssl != null;
     readlineSupport = readline != null;

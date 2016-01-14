@@ -87,7 +87,7 @@ let
   };
 
   wrapArgs = "--set PYTHONPATH \"$(toPythonPath $lib)\""
-    + " --prefix PYTHONPATH : \"$(toPythonPath ${pythonPackages.readline})\""
+    #+ " --prefix PYTHONPATH : \"$(toPythonPath ${pythonPackages.readline})\""
     + " --prefix PYTHONPATH : \"$(toPythonPath ${pythonPackages.flask})\""
     + " --set PATH \"$out/bin\"";
 in

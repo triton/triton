@@ -12,9 +12,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ pythonPackages.python pythonPackages.wrapPython ];
 
-  # Readline support is needed by bzrtools.
-  pythonPath = [ pythonPackages.readline ];
-
   # Bazaar can't find the certificates alone
   patches = [ ./add_certificates.patch ];
   postPatch = ''

@@ -516,6 +516,10 @@ chromium_dev = lowPrio (chromium.override {
 
 clutter = callPackage ../all-pkgs/clutter { };
 
+clutter-gst_2 = callPackage ../all-pkgs/clutter-gst/2.x.nix { };
+clutter-gst_3 = callPackage ../all-pkgs/clutter-gst/3.x.nix { };
+clutter-gst = clutter-gst_3;
+
 clutter-gtk = callPackage ../all-pkgs/clutter-gtk { };
 
 cogl = callPackage ../all-pkgs/cogl { };
@@ -6372,11 +6376,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   clucene_core = clucene_core_1;
 
-  clutter-gst = callPackage ../development/libraries/clutter-gst { };
-
-  clutter-gst_3_0 = callPackage ../development/libraries/clutter-gst/3.0.nix {
-    clutter = clutter_1_22;
-  };
   cminpack = callPackage ../development/libraries/cminpack { };
 
   coin3d = callPackage ../development/libraries/coin3d { };

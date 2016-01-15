@@ -8,7 +8,8 @@
 , gdk-pixbuf
 , glib
 , gobject-introspection
-, gst_all_1
+, gst-plugins-base
+, gstreamer
 , json-glib
 , libdrm
 , libxkbcommon
@@ -39,6 +40,10 @@ stdenv.mkDerivation rec {
     # Do not build examples
     sed -e "s/^\(SUBDIRS +=.*\)examples\(.*\)$/\1\2/" \
       -i Makefile.am Makefile.in
+
+    # Fix library name in pkgconfig file
+    sed -i cogl-pango/cogl-pango-2.0-experimental.pc.in \
+      -e 's|-lcoglpango|-lcogl-pango|'
   '' + optionalString (!doCheck) ''
     # For some reason the configure switch will not completely disable
     # tests being built
@@ -54,16 +59,16 @@ stdenv.mkDerivation rec {
     "--disable-standalone"
     "--disable-debug"
     (enFlag "unit-tests" doCheck null)
-    "--enable-cairo"
+    (enFlag "cairo" (cairo != null) null)
     "--disable-profile"
     "--disable-maintainer-flags"
     "--enable-deprecated"
-    "--enable-glibtest"
-    "--enable-glib"
-    "--enable-cogl-pango"
-    "--enable-cogl-gst"
+    (enFlag "glibtest" (glib != null) null)
+    (enFlag "glib" (glib != null) null)
+    (enFlag "cogl-pango" (pango != null) null)
+    (enFlag "cogl-gst" (gstreamer != null && gst-plugins-base != null) null)
     "--enable-cogl-path"
-    "--enable-gdk-pixbuf"
+    (enFlag "gdk-pixbuf" (gdk-pixbuf != null) null)
     "--disable-quartz-image"
     "--disable-examples-install"
     "--enable-gles1"
@@ -85,7 +90,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--enable-nls"
     "--enable-rpath"
-    "--enable-introspection"
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--with-x"
   ];
 
@@ -100,8 +105,8 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gobject-introspection
-    gst_all_1.gstreamer
-    gst_all_1.gst-plugins-base
+    gst-plugins-base
+    gstreamer
     json-glib
     libdrm
     libxkbcommon

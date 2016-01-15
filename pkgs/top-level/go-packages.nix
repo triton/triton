@@ -1857,12 +1857,7 @@ let
   };
 
   ipfs = buildFromGitHub{
-<<<<<<< HEAD
     rev    = "v0.3.11";
-=======
-    rev = "7070b4d878baad57dcc8da80080dd293aa46cabd";
-    date   = "2016-01-12";
->>>>>>> upstream/master
     owner  = "ipfs";
     repo   = "go-ipfs";
     sha256 = "1b7aimnbz287fy7p27v3qdxnz514r5142v3jihqxanbk9g384gcd";
@@ -2358,12 +2353,8 @@ let
   };
 
   osext = buildFromGitHub {
-<<<<<<< HEAD
-    date = "2015-11-24";
-    rev = "10da29423eb9a6269092eebdc2be32209612d9d2";
-=======
+    date = "2015-12-22";
     rev = "29ae4ffbc9a6fe9fb2bc5029050ce6996ea1d3bc";
->>>>>>> upstream/master
     owner = "kardianos";
     repo = "osext";
     sha256 = "1mawalaz84i16njkz6f9fd5jxhcbxkbsjnav3cmqq2dncv2hyv8a";

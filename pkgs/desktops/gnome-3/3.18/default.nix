@@ -47,6 +47,7 @@ let
 
   inherit (pkgs)
     glib
+    gnome-online-accounts
     gtk2
     webkitgtk_2_4
     gtk3
@@ -55,7 +56,9 @@ let
     vala
     zenity;
 
-  inherit (pkgs.gnome2) ORBit2;
+  inherit (pkgs.gnome2)
+    ORBit2;
+
   libsoup = pkgs.libsoup.override { gnomeSupport = true; };
   libchamplain = pkgs.libchamplain.override { libsoup = libsoup; };
   orbit = ORBit2;
@@ -139,7 +142,7 @@ let
 
   folks = callPackage ./core/folks { };
 
-  gnome_online_accounts = callPackage ./core/gnome-online-accounts { };
+  gnome_online_accounts = gnome-online-accounts;
 
   gnome-online-miners = callPackage ./core/gnome-online-miners { };
 

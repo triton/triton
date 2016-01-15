@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     name = "${name}.tar.gz";
     url = "http://miniupnp.free.fr/files/download.php?file=${name}.tar.gz";
-    sha256 = "1ay7dw1y5fqgjrqa9s8av8ndmw7wkjm39xnnzzw8pxbv70d6b12j";
+    sha256 = "084ii5vb54rr8sg50cqvsw5rj6linj23p3gnxwfyl100dkkgvcaa";
   };
 
   buildInputs = [ openssl ]

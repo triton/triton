@@ -733,6 +733,8 @@ libtorrent = callPackage ../all-pkgs/libtorrent { };
 
 libva = callPackage ../all-pkgs/libva { };
 
+libvdpau = callPackage ../all-pkgs/libvdpau { };
+
 libvpx = callPackage ../all-pkgs/libvpx { };
 libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
@@ -7629,8 +7631,6 @@ zsh = callPackage ../all-pkgs/zsh { };
     qt4 = null;
     qt5 = null;
   });
-
-  libvdpau = callPackage ../development/libraries/libvdpau { };
 
   libverto = callPackage ../development/libraries/libverto {
     glib = null; # Don't include fairly heavy dependency

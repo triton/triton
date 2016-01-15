@@ -10,9 +10,17 @@ assert withKerberos -> kerberos != null;
 
 let
 
-  hpnSrc = fetchurl {
-    url = mirror://sourceforge/hpnssh/openssh-6.6p1-hpnssh14v5.diff.gz;
-    sha256 = "682b4a6880d224ee0b7447241b684330b731018585f1ba519f46660c10d63950";
+  hpnSrc = stdenv.mkDerivation {
+    name = "openssh-hpn-patch-7.1p2";
+    src = fetchurl {
+      url = mirror://sourceforge/hpnssh/openssh-7_1_P1-hpn-14.9.diff;
+      sha256 = "09aib9ygr2jm9xybl52sdblcx8jcickvgh0acqkh8h5vlkvqh3b8";
+    };
+    # Fix the version for the second patch release
+    buildCommand = ''
+      sed '/SSH_PORTABLE/ s,"p1","p2",g' $src > $out
+    '';
+    preferLocalBuild = true;
   };
 
   gssapiSrc = fetchpatch {
@@ -30,14 +38,9 @@ stdenv.mkDerivation rec {
     sha256 = "dd75f024dcf21e06a0d6421d582690bf987a1f6323e32ad6619392f3bfde6bbd";
   };
 
-  prePatch = optionalString hpnSupport
-    ''
-      gunzip -c ${hpnSrc} | patch -p1
-      export NIX_LDFLAGS="$NIX_LDFLAGS -lgcc_s"
-    '';
-
   patches = [ ./locale_archive.patch ]
-    ++ optional withGssapiPatches gssapiSrc;
+    ++ optional withGssapiPatches gssapiSrc
+    ++ optional hpnSupport hpnSrc;
 
   buildInputs = [ zlib openssl libedit pkgconfig pam ]
     ++ optional withKerberos [ kerberos ];
@@ -80,6 +83,5 @@ stdenv.mkDerivation rec {
     license = stdenv.lib.licenses.bsd2;
     platforms = platforms.unix;
     maintainers = with maintainers; [ eelco ];
-    broken = hpnSupport; # probably after 6.7 update
   };
 }

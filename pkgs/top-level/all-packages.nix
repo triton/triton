@@ -514,6 +514,8 @@ chromium_dev = lowPrio (chromium.override {
   channel = "dev";
 });
 
+clutter = callPackage ../all-pkgs/clutter { };
+
 cogl = callPackage ../all-pkgs/cogl { };
 
 ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
@@ -6367,8 +6369,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   clucene_core_1 = callPackage ../development/libraries/clucene-core { };
 
   clucene_core = clucene_core_1;
-
-  clutter = callPackage ../development/libraries/clutter { };
 
   clutter_1_22 = callPackage ../development/libraries/clutter/1.22.nix { };
 

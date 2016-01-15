@@ -707,6 +707,8 @@ gvfs = callPackage ../all-pkgs/gvfs { gconf = gnome.GConf; };
 
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
 
+highlight = callPackage ../all-pkgs/highlight { };
+
 hwdata = callPackage ../all-pkgs/hwdata { };
 
 json-glib = callPackage ../all-pkgs/json-glib { };
@@ -2250,10 +2252,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   heimdall = callPackage ../tools/misc/heimdall { };
 
   hevea = callPackage ../tools/typesetting/hevea { };
-
-  highlight = callPackage ../tools/text/highlight {
-    lua = lua5;
-  };
 
   honcho = callPackage ../tools/system/honcho { };
 

@@ -516,6 +516,8 @@ chromium_dev = lowPrio (chromium.override {
 
 clutter = callPackage ../all-pkgs/clutter { };
 
+clutter-gtk = callPackage ../all-pkgs/clutter-gtk { };
+
 cogl = callPackage ../all-pkgs/cogl { };
 
 ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
@@ -6370,22 +6372,11 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   clucene_core = clucene_core_1;
 
-  clutter_1_22 = callPackage ../development/libraries/clutter/1.22.nix { };
-
-  clutter_1_24 = callPackage ../development/libraries/clutter/1.24.nix { };
-
   clutter-gst = callPackage ../development/libraries/clutter-gst { };
 
   clutter-gst_3_0 = callPackage ../development/libraries/clutter-gst/3.0.nix {
     clutter = clutter_1_22;
   };
-
-  clutter_gtk = callPackage ../development/libraries/clutter-gtk { };
-  clutter_gtk_0_10 = callPackage ../development/libraries/clutter-gtk/0.10.8.nix { };
-  clutter_gtk_1_6 = callPackage ../development/libraries/clutter-gtk/1.6.nix {
-    clutter = clutter_1_22;
-  };
-
   cminpack = callPackage ../development/libraries/cminpack { };
 
   coin3d = callPackage ../development/libraries/coin3d { };

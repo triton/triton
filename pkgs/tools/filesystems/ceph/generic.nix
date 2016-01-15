@@ -94,11 +94,7 @@ in
 stdenv.mkDerivation {
   name="ceph-${version}";
 
-  inherit src;
-
-  patches = patches ++ [
-    ./0001-Makefile-env-Don-t-force-sbin.patch
-  ];
+  inherit src patches;
 
   nativeBuildInputs = [ autoconf automake makeWrapper pkgconfig libtool which git pythonPackages.python ]
     ++ optionals (versionAtLeast version "9.0.2") [

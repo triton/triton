@@ -356,6 +356,11 @@ let
     inherit curl stdenv;
   };
 
+  fetchTritonPatch = { rev, file, sha256 }: fetchurl {
+    url = "https://raw.githubusercontent.com/triton/triton-patches/${rev}/${file}";
+    inherit sha256;
+  };
+
   fetchzip = callPackage ../build-support/fetchzip { };
 
   fetchFromGitHub = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: fetchzip {

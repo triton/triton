@@ -744,6 +744,8 @@ mixxx = callPackage ../all-pkgs/mixxx {
 
 mpd = callPackage ../all-pkgs/mpd { };
 
+mpdris2 = callPackage ../all-pkgs/mpdris2 { };
+
 mpv = callPackage ../all-pkgs/mpv {
   lua = lua5_1;
   lua5_sockets = lua5_1_sockets;
@@ -1269,14 +1271,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   mp3fs = callPackage ../tools/filesystems/mp3fs { };
 
   mpdcron = callPackage ../tools/audio/mpdcron { };
-
-  mpdris2 = callPackage ../tools/audio/mpdris2 {
-    wrapPython = pythonPackages.wrapPython;
-    mpd = pythonPackages.mpd;
-    pygtk = pythonPackages.pygtk;
-    dbus = pythonPackages.dbus;
-    pynotify = pythonPackages.notify;
-  };
 
   syscall_limiter = callPackage ../os-specific/linux/syscall_limiter {};
 

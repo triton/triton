@@ -496,6 +496,8 @@ avahi = callPackage ../all-pkgs/avahi { };
 
 bazaar = callPackage ../all-pkgs/bazaar { };
 
+bzrtools = callPackage ../all-pkgs/bzrtools { };
+
 beets = callPackage ../all-pkgs/beets { };
 
 cairo = callPackage ../all-pkgs/cairo { };
@@ -11052,8 +11054,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   baudline = callPackage ../applications/audio/baudline {
     jack = jack1;
   };
-
-  bazaarTools = callPackage ../applications/version-management/bazaar/tools.nix { };
 
   beast = callPackage ../applications/audio/beast {
     inherit (gnome) libgnomecanvas libart_lgpl;

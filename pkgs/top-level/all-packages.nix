@@ -772,6 +772,8 @@ networkmanagerapplet = newScope gnome ../all-pkgs/network-manager-applet { };
 
 ninja = callPackage ../all-pkgs/ninja { };
 
+p7zip = callPackage ../all-pkgs/p7zip { };
+
 pango = callPackage ../all-pkgs/pango { };
 
 pangomm = callPackage ../all-pkgs/pangomm { };
@@ -2963,8 +2965,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   owncloudclient = callPackage ../applications/networking/owncloud-client { };
 
   p2pvc = callPackage ../applications/video/p2pvc {};
-
-  p7zip = callPackage ../tools/archivers/p7zip { };
 
   packagekit = callPackage ../tools/package-management/packagekit { };
 

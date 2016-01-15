@@ -813,6 +813,8 @@ poppler = callPackage ../all-pkgs/poppler {
 
 qjackctl = callPackage ../all-pkgs/qjackctl { };
 
+rtmpdump = callPackage ../all-pkgs/rtmpdump { };
+
 rtorrent = callPackage ../all-pkgs/rtorrent { };
 
 sakura = callPackage ../all-pkgs/sakura { };
@@ -3238,9 +3240,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   redir = callPackage ../tools/networking/redir { };
 
   redmine = callPackage ../applications/version-management/redmine { };
-
-  rtmpdump = callPackage ../tools/video/rtmpdump { };
-  rtmpdump_gnutls = rtmpdump.override { gnutlsSupport = true; opensslSupport = false; };
 
   reaverwps = callPackage ../tools/networking/reaver-wps {};
 

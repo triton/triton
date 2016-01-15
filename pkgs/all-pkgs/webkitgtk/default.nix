@@ -19,7 +19,6 @@
 , glib
 , gobject-introspection
 , gnutls
-, gst-plugins-bad
 , gst-plugins-base
 , gstreamer
 , gtk2
@@ -108,7 +107,7 @@ stdenv.mkDerivation rec {
     # TODO: add gstreamer mpeg-ts support
     (cmFlag "USE_GSTREAMER_MPEGTS" false)
     # TODO: add gstreamer GL support
-    (cmFlag "USE_GSTREAMER_GL" (gstreamer != null && gst-plugins-base != null))
+    (cmFlag "USE_GSTREAMER_GL" false)
     (cmFlag "ENABLE_X11_TARGET" (xorg.libX11 != null))
     # TODO: add wayland support (linker errors)
     (cmFlag "ENABLE_WAYLAND_TARGET" (wayland != null))
@@ -176,7 +175,6 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     gnutls
-    gst-plugins-bad
     gst-plugins-base
     gstreamer
     gtk2

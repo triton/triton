@@ -4,8 +4,6 @@
 , fetchgit, fetchhg, fetchurl, fetchFromGitHub, fetchFromBitbucket, fetchbzr, pkgs }:
 
 let
-  isGo14 = go.meta.branch == "1.4";
-
   self = _self // overrides; _self = with self; {
 
   inherit go buildGoPackage;
@@ -598,20 +596,6 @@ let
     sha256 = "1sddkxgl1pwlipfvmv14h8vg9b9wq1km427j1gjarhb5yfqhh3l1";
   };
 
-  drive = buildFromGitHub {
-    rev = "6dc2f1e83032ea3911fa6147b846ee93f18dc544";
-    owner = "odeke-em";
-    repo = "drive";
-    sha256 = "07s4nhfcr6vznf1amvl3a4wq2hn9zq871rcppfi4i6zs7iw2ay1v";
-    subPackages = [ "cmd/drive" ];
-    buildInputs = [
-      pb go-isatty command dts odeke-em.log statos xon odeke-em.google-api-go-client
-      cli-spinner oauth2 text net pretty-words meddler open-golang extractor
-      exponential-backoff cache bolt
-    ];
-    disabled = !isGo14;
-  };
-
   duo_api_golang = buildFromGitHub {
     date = "2015-06-09";
     rev = "16da9e74793f6d9b97b227a0696fe32bcdaecb42";
@@ -856,6 +840,13 @@ let
       sha256 = "0ghrx5qmgvgb8cbvsj53v1ir4j9agilg4wyhpk5ikqdv6mmqly4h";
     };
     subPackages = [ "./" ];  # don't try to build test fixtures
+  };
+
+  git-appraise = buildFromGitHub {
+    rev = "v0.3";
+    owner = "google";
+    repo = "git-appraise";
+    sha256 = "124hci9whsvlcywsfz5y20kkj3nhy176a1d5s1lkvsga09yxq6wm";
   };
 
   git-lfs = buildFromGitHub {
@@ -1866,11 +1857,15 @@ let
   };
 
   ipfs = buildFromGitHub{
+<<<<<<< HEAD
     rev    = "v0.3.11";
+=======
+    rev = "7070b4d878baad57dcc8da80080dd293aa46cabd";
+    date   = "2016-01-12";
+>>>>>>> upstream/master
     owner  = "ipfs";
     repo   = "go-ipfs";
     sha256 = "1b7aimnbz287fy7p27v3qdxnz514r5142v3jihqxanbk9g384gcd";
-    disabled = isGo14;
     meta = with stdenv.lib; {
       description = "A global, versioned, peer-to-peer filesystem";
       license = licenses.mit;
@@ -2322,7 +2317,6 @@ let
     sha256 = "1srl3d1flqlh2k9q9pjss72rxw82msys108x22milfylmr75v03m";
     goPackageAliases = [ "github.com/michaelmacinnis/oh" ];
     buildInputs = [ adapted liner ];
-    disabled = isGo14;
   };
 
   openssl = buildFromGitHub {
@@ -2364,8 +2358,12 @@ let
   };
 
   osext = buildFromGitHub {
+<<<<<<< HEAD
     date = "2015-11-24";
     rev = "10da29423eb9a6269092eebdc2be32209612d9d2";
+=======
+    rev = "29ae4ffbc9a6fe9fb2bc5029050ce6996ea1d3bc";
+>>>>>>> upstream/master
     owner = "kardianos";
     repo = "osext";
     sha256 = "1mawalaz84i16njkz6f9fd5jxhcbxkbsjnav3cmqq2dncv2hyv8a";
@@ -3129,7 +3127,6 @@ let
     repo = "syncthing";
     sha256 = "14v1nihl2rj6h0wyzyzz5jm24ygns41yw0x32lsg2wibn6pf8xm6";
     buildFlags = [ "-tags noupgrade,release" ];
-    disabled = isGo14;
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext
       goleveldb suture qart crypto net text rcrowley.go-metrics

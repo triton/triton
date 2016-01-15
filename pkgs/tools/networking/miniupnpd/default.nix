@@ -1,9 +1,9 @@
-{ stdenv, fetchurl, openssl, iptables, pkgconfig }:
+{ stdenv, fetchurl, openssl, iptables }:
 
 assert stdenv.isLinux;
 
 stdenv.mkDerivation rec {
-  name = "miniupnpd-1.9.20151212";
+  name = "miniupnpd-1.9.20160113";
 
   src = fetchurl {
     name = "${name}.tar.gz";
@@ -13,7 +13,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ openssl ]
     ++ (if stdenv.isLinux then [ iptables ] else [ ]);
-  nativeBuildInputs = [ pkgconfig ];
 
   # The upstream build is missing some of its test scripts
   # Therefore we add dummy ones allowing it to pass
@@ -31,7 +30,7 @@ stdenv.mkDerivation rec {
   dontAddPrefix = true;
 
   preConfigure = ''
-    configureFlagsArray=("--ipv6")
+    configureFlagsArray+=("--ipv6")
     configureFlagsArray+=("--igd2")
     configureFlagsArray+=("--leasefile")
     configureFlagsArray+=("--pcp-peer")

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, zlib, libjpeg, libpng, libtiff, pam
+{ stdenv, fetchurl, zlib, libjpeg, libpng, libtiff, pam
 , dbus, acl, gmp
 , libusb ? null, gnutls ? null, avahi ? null, libpaper ? null
 }:
@@ -16,7 +16,7 @@ stdenv.mkDerivation {
     sha256 = "1bc1y8fjgh54ryh520gk63i5rbagn6jijsrskcqlibhfm0xwmc5s";
   };
 
-  buildInputs = [ pkgconfig zlib libjpeg libpng libtiff libusb gnutls avahi libpaper gmp ]
+  buildInputs = [ zlib libjpeg libpng libtiff libusb gnutls avahi libpaper gmp ]
     ++ optionals stdenv.isLinux [ pam dbus.libs acl ];
 
   configureFlags = [
@@ -31,7 +31,11 @@ stdenv.mkDerivation {
   ] ++ optional (libusb != null) "--enable-libusb"
     ++ optional (gnutls != null) "--enable-ssl"
     ++ optional (avahi != null) "--enable-avahi"
-    ++ optional (libpaper != null) "--enable-libpaper";
+    ++ optional (libpaper != null) "--enable-libpaper"
+    ++ optionals stdenv.isDarwin [
+    "--with-bundledir=$out"
+    "--disable-launchd"
+  ];
 
   installFlags =
     [ # Don't try to write in /var at build time.

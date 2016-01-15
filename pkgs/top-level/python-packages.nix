@@ -2804,6 +2804,26 @@ in {
     };
   };
 
+  click_5 = buildPythonPackage rec {
+    name = "click-5.1";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/c/click/${name}.tar.gz";
+      sha256 = "0njsm0wn31l21bi118g5825ma5sa3rwn7v2x4wjd7yiiahkri337";
+    };
+
+    meta = {
+      homepage = http://click.pocoo.org/;
+      description = "Create beautiful command line interfaces in Python";
+      longDescription = ''
+        A Python package for creating beautiful command line interfaces in a
+        composable way, with as little code as necessary.
+      '';
+      license = licenses.bsd3;
+      maintainers = with maintainers; [ mog ];
+    };
+  };
+
   click-log = buildPythonPackage rec {
     version = "0.1.1";
     name = "click-log-${version}";
@@ -4626,6 +4646,34 @@ in {
     };
   };
 
+  dyn = buildPythonPackage rec {
+    version = "1.5.0";
+    name = "dyn-${version}";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/d/dyn/${name}.tar.gz";
+      sha256 = "dc4b4b2a5d9d26f683230fd822641b39494df5fcbfa716281d126ea6425dd4c3";
+    };
+
+    buildInputs = with self; [
+      pytest
+      pytestcov
+      mock
+      pytestpep8
+      pytest_xdist
+      covCore
+      pkgs.glibcLocales
+    ];
+
+    LC_ALL="en_US.UTF-8";
+
+    meta = {
+      description = "Dynect dns lib";
+      homepage = "http://dyn.readthedocs.org/en/latest/intro.html";
+      license = licenses.bsd3;
+    };
+  };
+
   easy-process = buildPythonPackage rec {
     name = "EasyProcess-0.1.9";
 
@@ -5585,6 +5633,32 @@ in {
       platforms = platforms.all;
     };
   };
+
+  ledger-autosync = buildPythonPackage rec {
+    name = "ledger-autosync-${version}";
+    version = "0.2.3";
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/l/ledger-autosync/ledger-autosync-${version}.tar.gz";
+      sha256 = "f19fa66e656309825887171d84a462e64676b1cc36b62e4dd8679ff63926a469";
+    };
+
+    buildInputs = [
+      self.ofxclient self.mock
+      # Used at runtime to translate ofx entries to the ledger
+      # format. In fact, user could use either ledger or hledger.
+      pkgs.which pkgs.ledger ];
+
+    # Tests are disable since they require hledger and python-ledger
+    doCheck = false;
+
+    meta = {
+      homepage = https://gitlab.com/egh/ledger-autosync;
+      description = "ledger-autosync is a program to pull down transactions from your bank and create ledger transactions for them";
+      license = licenses.gpl3;
+      maintainers = with maintainers; [ lewo ];
+    };
+  };
+
 
   libthumbor = buildPythonPackage rec {
     name = "libthumbor-${version}";
@@ -11795,11 +11869,11 @@ in {
     };
   in buildPythonPackage ( rec {
     name = "numpy-${version}";
-    version = "1.10.2";
+    version = "1.10.4";
 
     src = pkgs.fetchurl {
-      url = "mirror://sourceforge/numpy/${name}.tar.gz";
-      sha256 = "23a3befdf955db4d616f8bb77b324680a80a323e0c42a7e8d7388ef578d8ffa9";
+      url = "https://pypi.python.org/packages/source/n/numpy/${name}.tar.gz";
+      sha256 = "7356e98fbcc529e8d540666f5a919912752e569150e9a4f8d869c686f14c720b";
     };
 
     disabled = isPyPy;  # WIP
@@ -11813,10 +11887,15 @@ in {
     buildInputs = [ pkgs.gfortran self.nose ];
     propagatedBuildInputs = [ support.openblas ];
 
-    # This patch removes the test of large file support, which takes forever
+    # Disable failing test_f2py test.
+    # f2py couldn't be found by test,
+    # even though it was used successfully to build numpy
+    
+    # The large file support test is disabled because it takes forever
     # and can cause the machine to run out of disk space when run.
-    patchPhase = ''
-      patch -p0 < ${../development/python-modules/numpy-no-large-files.patch}
+    prePatch = ''
+      sed -i 's/test_f2py/donttest/' numpy/tests/test_scripts.py
+      sed -i 's/test_large_file_support/donttest/' numpy/lib/tests/test_format.py
     '';
 
     meta = {
@@ -14019,6 +14098,27 @@ in {
     propagatedBuildInputs = with self; [ unittest2 ];
   };
 
+  platformio =  buildPythonPackage rec {
+    name = "platformio-${version}";
+    version="2.7.1";
+
+    disabled = isPy3k || isPyPy;
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/p/platformio/platformio-${version}.tar.gz";
+      sha256 = "1xrjzgwdw7526vfimqjyr9115qzcs17dbyf7023x13anc8b2s9pq";
+     };
+
+     propagatedBuildInputs = with self; [ click_5 requests2 bottle pyserial lockfile colorama];
+
+     meta = with stdenv.lib; {
+     description = "An open source ecosystem for IoT development";
+     homepage = http://platformio.org;
+     maintainers = with maintainers; [ mog ];
+     license = licenses.asl20;
+     };
+  };
+
   pylibconfig2 = buildPythonPackage rec {
     name = "pylibconfig2-${version}";
     version = "0.2.4";
@@ -15926,6 +16026,25 @@ in {
     };
   });
 
+  pyliblo = buildPythonPackage rec {
+    name = "pyliblo-${version}";
+    version = "0.9.2";
+
+    disabled = isPyPy;
+
+    src = pkgs.fetchurl {
+      url = "http://das.nasophon.de/download/${name}.tar.gz";
+      sha256 = "382ee7360aa00aeebf1b955eef65f8491366657a626254574c647521b36e0eb0";
+    };
+
+    propagatedBuildInputs = with self ; [ pkgs.liblo ];
+
+    meta = {
+      homepage = http://das.nasophon.de/pyliblo/;
+      description = "Python wrapper for the liblo OSC library";
+      license = licenses.lgpl21;
+    };
+  };
 
   pymacs = buildPythonPackage rec {
     version = "0.25";
@@ -17689,7 +17808,7 @@ in {
       md5 = "f16f4237c9ee483a0cd13208849d96ad";
     };
 
-    propagatedBuildInputs = with self; [ twisted ];
+    propagatedBuildInputs = with self; [ twisted15 ];
 
     meta = {
       description = "setuptools plug-in that helps run unit tests built with the \"Trial\" framework (from Twisted)";
@@ -17718,11 +17837,11 @@ in {
 
 
   simplejson = buildPythonPackage (rec {
-    name = "simplejson-3.3.0";
+    name = "simplejson-3.8.1";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/s/simplejson/${name}.tar.gz";
-      md5 = "0e29b393bceac8081fa4e93ff9f6a001";
+      sha256 = "14r4l4rcsyf87p2j4ycsbb017n4vzxfmv285rq2gny4w47rwi2j2";
     };
 
     meta = {
@@ -19598,6 +19717,35 @@ in {
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/T/Twisted/${name}.tar.bz2";
       sha256 = "05agfp17cndhv2w0p559lvknl7nv0xqkg10apc47fm53m8llbfvz";
+    };
+
+    propagatedBuildInputs = with self; [ zope_interface ];
+
+    # Generate Twisted's plug-in cache.  Twited users must do it as well.  See
+    # http://twistedmatrix.com/documents/current/core/howto/plugin.html#auto3
+    # and http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=477103 for
+    # details.
+    postInstall = "$out/bin/twistd --help > /dev/null";
+
+    meta = {
+      homepage = http://twistedmatrix.com/;
+      description = "Twisted, an event-driven networking engine written in Python";
+      longDescription = ''
+        Twisted is an event-driven networking engine written in Python
+        and licensed under the MIT license.
+      '';
+      license = licenses.mit;
+      maintainers = [ ];
+    };
+  };
+
+  twisted15 = buildPythonPackage rec {
+    disabled = isPy3k;
+
+    name = "Twisted-15.5.0";
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/T/Twisted/${name}.tar.bz2";
+      sha256 = "0zy18lcrris4aaslil5k12i13k56c32hzfdv6h10kbnzl026h158";
     };
 
     propagatedBuildInputs = with self; [ zope_interface ];
@@ -22438,6 +22586,133 @@ in {
     };
   };
 
+  blist = buildPythonPackage rec {
+    name = "blist-${version}";
+    version = "1.3.6";
+    disabled = isPyPy;
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/b/blist/blist-${version}.tar.gz";
+      sha256 = "1hqz9pqbwx0czvq9bjdqjqh5bwfksva1is0anfazig81n18c84is";
+    };
+  };
+
+  canonicaljson = buildPythonPackage rec {
+    name = "canonicaljson-${version}";
+    version = "1.0.0";
+
+    src = pkgs.fetchgit {
+      url = "https://github.com/matrix-org/python-canonicaljson.git";
+      rev = "refs/tags/v${version}";
+      sha256 = "29802d0effacd26ca1d6eccc8d4c7e4f543a194754ba89263861e87f44a83f0c";
+    };
+
+    propagatedBuildInputs = with self; [
+      frozendict simplejson
+    ];
+  };
+
+  daemonize = buildPythonPackage rec {
+    name = "daemonize-${version}";
+    version = "2.4.2";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/d/daemonize/daemonize-${version}.tar.gz";
+      sha256 = "0y139sq657bpzfv6k0aqm4071z4s40i6ybpni9qvngvdcz6r86n2";
+    };
+  };
+
+  frozendict = buildPythonPackage rec {
+    name = "frozendict-${version}";
+    version = "0.5";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/f/frozendict/frozendict-0.5.tar.gz";
+      sha256 = "0m4kg6hbadvf99if78nx01q7qnbyhdw3x4znl5dasgciyi54432n";
+    };
+  };
+
+  pydenticon = buildPythonPackage rec {
+    name = "pydenticon-${version}";
+    version = "0.2";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/p/pydenticon/pydenticon-0.2.tar.gz";
+      sha256 = "035dawcspgjw2rksbnn863s7b0i9ac8cc1nshshvd1l837ir1czp";
+    };
+    propagatedBuildInputs = with self; [
+      pillow mock
+    ];
+  };
+
+  pymacaroons-pynacl = buildPythonPackage rec {
+    name = "pymacaroons-pynacl-${version}";
+    version = "0.9.3";
+
+    src = pkgs.fetchgit {
+      url = "https://github.com/matrix-org/pymacaroons.git";
+      rev = "refs/tags/v${version}";
+      sha256 = "481a486520f5a3ad2761c3cd3954d2b08f456a94fb080aaa4ad1e68ddc705b52";
+    };
+
+    propagatedBuildInputs = with self; [ pynacl six ];
+  };
+
+  pynacl = buildPythonPackage rec {
+    name = "pynacl-${version}";
+    version = "0.3.0";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/P/PyNaCl/PyNaCl-0.3.0.tar.gz";
+      sha256 = "1hknxlp3a3f8njn19w92p8nhzl9jkfwzhv5fmxhmyq2m8hqrfj8j";
+    };
+
+    propagatedBuildInputs = with self; [pkgs.libsodium six cffi pycparser pytest];
+  };
+
+  service-identity = buildPythonPackage rec {
+    name = "service-identity-${version}";
+    version = "14.0.0";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/s/service_identity/service_identity-${version}.tar.gz";
+      sha256 = "0njg9bklkkp4rl2b9vsfh9aasxy3w2dmjkv9cq34jn65lwcs619i";
+    };
+
+    propagatedBuildInputs = with self; [
+      characteristic pyasn1 pyasn1-modules pyopenssl idna
+    ];
+
+    buildInputs = with self; [
+      pytest
+    ];
+  };
+
+  signedjson = buildPythonPackage rec {
+    name = "signedjson-${version}";
+    version = "1.0.0";
+
+    src = pkgs.fetchgit {
+      url = "https://github.com/matrix-org/python-signedjson.git";
+      rev = "refs/tags/v${version}";
+      sha256 = "4ef1c89ea85846632d711a37a2e6aae1348c62b9d62ed0e80428b4a00642e9df";
+    };
+
+    propagatedBuildInputs = with self; [
+      canonicaljson unpaddedbase64 pynacl
+    ];
+  };
+
+  unpaddedbase64 = buildPythonPackage rec {
+    name = "unpaddedbase64-${version}";
+    version = "1.0.1";
+
+    src = pkgs.fetchgit {
+      url = "https://github.com/matrix-org/python-unpaddedbase64.git";
+      rev = "refs/tags/v${version}";
+      sha256 = "f221240a6d414c4244ab906b1dc8983c4d1114acb778cb857f6fc50d710be502";
+    };
+  };
 
 
   thumbor = buildPythonPackage rec {

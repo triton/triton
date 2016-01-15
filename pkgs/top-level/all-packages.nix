@@ -279,15 +279,18 @@ let
   };
 
   buildFHSUserEnv = args: userFHSEnv {
-    env = buildFHSEnv (removeAttrs args [ "runScript" "extraBindMounts" "extraInstallCommands" ]);
+    env = buildFHSEnv (removeAttrs args [ "runScript" "extraBindMounts" "extraInstallCommands" "meta" ]);
     runScript = args.runScript or "bash";
     extraBindMounts = args.extraBindMounts or [];
     extraInstallCommands = args.extraInstallCommands or "";
+    importMeta = args.meta or {};
   };
 
   buildMaven = callPackage ../build-support/build-maven.nix {};
 
   cmark = callPackage ../development/libraries/cmark { };
+
+  dockerTools = callPackage ../build-support/docker { };
 
   dotnetenv = callPackage ../build-support/dotnetenv {
     dotnetfx = dotnetfx40;
@@ -538,20 +541,17 @@ ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
   enableGTK3 = false;
 });*/
 
-firefox = callPackage ../all-pkgs/firefox {
+firefox-unwrapped = callPackage ../all-pkgs/firefox {
   inherit (gnome) libIDL;
   inherit (pythonPackages) pysqlite;
   libpng = libpng_apng;
 };
-firefox-esr = callPackage ../all-pkgs/firefox {
+firefox-esr-unwrapped = firefox-unwrapped.override {
   channel = "esr";
-  inherit (gnome) libIDL;
-  inherit (pythonPackages) pysqlite;
-  libpng = libpng_apng;
 };
 
-firefox-wrapper = wrapFirefox { browser = pkgs.firefox; };
-firefox-esr-wrapper = wrapFirefox { browser = pkgs.firefox-esr; };
+firefox = wrapFirefox { browser = pkgs.firefox; };
+firefox-esr = wrapFirefox { browser = pkgs.firefox-esr; };
 
 firefox-bin = callPackage ../applications/networking/browsers/firefox-bin {
   gconf = pkgs.gnome.GConf;
@@ -912,7 +912,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   aide = callPackage ../tools/security/aide { };
 
-  aircrackng = callPackage ../tools/networking/aircrack-ng { };
+  aircrack-ng = callPackage ../tools/networking/aircrack-ng { };
 
   airfield = callPackage ../tools/networking/airfield { };
 
@@ -972,6 +972,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   avfs = callPackage ../tools/filesystems/avfs { };
 
   awscli = pythonPackages.awscli;
+
+  azure-cli = callPackage ../tools/virtualization/azure-cli { };
 
   ec2_api_tools = callPackage ../tools/virtualization/ec2-api-tools { };
 
@@ -1721,8 +1723,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   doomseeker = callPackage ../applications/misc/doomseeker { };
 
-  drive = go14Packages.drive.bin // { outputs = [ "bin" ]; };
-
   driftnet = callPackage ../tools/networking/driftnet {};
 
   dropbear = callPackage ../tools/networking/dropbear { };
@@ -2166,6 +2166,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gtkdatabox = callPackage ../development/libraries/gtkdatabox {};
 
+  gtklick = callPackage ../applications/audio/gtklick {};
+
   gtdialog = callPackage ../development/libraries/gtdialog {};
 
   gtkgnutella = callPackage ../tools/networking/p2p/gtk-gnutella { };
@@ -2408,6 +2410,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   kismet = callPackage ../applications/networking/sniffers/kismet { };
 
+  klick = callPackage ../applications/audio/klick { };
+
   knockknock = callPackage ../tools/security/knockknock { };
 
   kpcli = callPackage ../tools/security/kpcli { };
@@ -2443,6 +2447,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   kzipmix = callPackage_i686 ../tools/compression/kzipmix { };
 
   makebootfat = callPackage ../tools/misc/makebootfat { };
+
+  matrix-synapse = callPackage ../servers/matrix-synapse { };
 
   memtester = callPackage ../tools/system/memtester { };
 
@@ -2828,8 +2834,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   # ntfsprogs are merged into ntfs-3g
   ntfsprogs = pkgs.ntfs3g;
 
-  ntop = callPackage ../tools/networking/ntop { };
-
   ntopng = callPackage ../tools/networking/ntopng { };
 
   ntp = callPackage ../tools/networking/ntp {
@@ -3103,6 +3107,9 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   plan9port = callPackage ../tools/system/plan9port { };
 
+  platformioPackages = callPackage ../development/arduino/platformio { };
+  platformio = platformioPackages.platformio-chrootenv.override {};
+
   plex = callPackage ../servers/plex { };
 
   ploticus = callPackage ../tools/graphics/ploticus {
@@ -3238,6 +3245,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   redir = callPackage ../tools/networking/redir { };
 
   redmine = callPackage ../applications/version-management/redmine { };
+
+  rt = callPackage ../servers/rt { };
 
   rtmpdump = callPackage ../tools/video/rtmpdump { };
   rtmpdump_gnutls = rtmpdump.override { gnutlsSupport = true; opensslSupport = false; };
@@ -3825,9 +3834,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   tkgate = callPackage ../applications/science/electronics/tkgate/1.x.nix { };
 
-  # The newer package is low-priority because it segfaults at startup.
-  tkgate2 = lowPrio (callPackage ../applications/science/electronics/tkgate/2.x.nix { });
-
   tm = callPackage ../tools/system/tm { };
 
   tradcpp = callPackage ../development/tools/tradcpp { };
@@ -3871,6 +3877,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   xarchiver = callPackage ../tools/archivers/xarchiver { };
 
   xbrightness = callPackage ../tools/X11/xbrightness { };
+
+  xfstests = callPackage ../tools/misc/xfstests { };
 
   xprintidle-ng = callPackage ../tools/X11/xprintidle-ng {};
 
@@ -4403,12 +4411,12 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   icedtea7_web = callPackage ../development/compilers/icedtea-web {
     jdk = jdk7;
-    xulrunner = firefox;
+    xulrunner = firefox-unwrapped;
   };
 
   icedtea8_web = callPackage ../development/compilers/icedtea-web {
     jdk = jdk8;
-    xulrunner = firefox;
+    xulrunner = firefox-unwrapped;
   };
 
   icedtea_web = icedtea8_web;
@@ -5581,7 +5589,10 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   guile-xcb = callPackage ../development/guile-modules/guile-xcb { };
 
-  pharo-vm = callPackage_i686 ../development/pharo/vm { };
+  pharo-vms = callPackage_i686 ../development/pharo/vm { };
+  pharo-vm  = pharo-vms.pharo-no-spur;
+  pharo-vm5 = pharo-vms.pharo-spur;
+
   pharo-launcher = callPackage ../development/pharo/launcher { };
 
   srecord = callPackage ../development/tools/misc/srecord { };
@@ -5949,6 +5960,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   inotify-tools = callPackage ../development/tools/misc/inotify-tools { };
 
   intel-gpu-tools = callPackage ../development/tools/misc/intel-gpu-tools {};
+
+  iozone = callPackage ../development/tools/misc/iozone { };
 
   ired = callPackage ../development/tools/analysis/radare/ired.nix { };
 
@@ -6679,6 +6692,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   gperftools = callPackage ../development/libraries/gperftools { };
 
   grib-api = callPackage ../development/libraries/grib-api { };
+
   gusb = callPackage ../development/libraries/gusb {
     inherit (gnome) gtkdoc;
   };
@@ -8786,15 +8800,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   ### DEVELOPMENT / GO MODULES
 
-  go14Packages = recurseIntoAttrs (callPackage ./go-packages.nix {
-    go = go_1_4;
-    buildGoPackage = callPackage ../development/go-modules/generic {
-      go = go_1_4;
-      govers = go14Packages.govers.bin;
-    };
-    overrides = (config.goPackageOverrides or (p: {})) pkgs;
-  });
-
   go15Packages = recurseIntoAttrs (callPackage ./go-packages.nix {
     go = go_1_5;
     buildGoPackage = callPackage ../development/go-modules/generic {
@@ -9070,6 +9075,10 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   dovecot_pigeonhole = callPackage ../servers/mail/dovecot-pigeonhole { };
 
+  dspam = callPackage ../servers/mail/dspam {
+    inherit (perlPackages) NetSMTP;
+  };
+
   etcd = goPackages.etcd.bin // { outputs = [ "bin" ]; };
 
   ejabberd = callPackage ../servers/xmpp/ejabberd { };
@@ -9206,6 +9215,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   postfix211 = callPackage ../servers/mail/postfix/2.11.nix { };
   postfix30 = callPackage ../servers/mail/postfix/3.0.nix { };
   postfix = postfix30;
+
+  postsrsd = callPackage ../servers/mail/postsrsd { };
 
   pshs = callPackage ../servers/http/pshs { };
 
@@ -11118,7 +11129,10 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   cdparanoia = cdparanoiaIII;
 
-  cdparanoiaIII = callPackage ../applications/audio/cdparanoia { };
+  cdparanoiaIII = callPackage ../applications/audio/cdparanoia {
+    inherit (darwin) IOKit;
+    inherit (darwin.apple_sdk.frameworks) Carbon;
+  };
 
   cdrtools = callPackage ../applications/misc/cdrtools { };
 
@@ -11195,13 +11209,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   comical = callPackage ../applications/graphics/comical { };
 
-  conkeror = callPackage ../applications/networking/browsers/conkeror { };
-
-  conkerorWrapper = wrapFirefox {
-    browser = conkeror;
-    browserName = "conkeror";
-    desktopName = "Conkeror";
-  };
+  conkeror-unwrapped = callPackage ../applications/networking/browsers/conkeror { };
+  conkeror = wrapFirefox conkeror-unwrapped { };
 
   csdp = callPackage ../applications/science/math/csdp {
     liblapack = liblapackWithoutAtlas;
@@ -11309,11 +11318,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   dvd-slideshow = callPackage ../applications/video/dvd-slideshow { };
 
-  dwb = callPackage ../applications/networking/browsers/dwb { dconf = gnome3.dconf; };
-
-  dwbWrapper = wrapFirefox
-    { browser = dwb; browserName = "dwb"; desktopName = "dwb";
-    };
+  dwb-unwrapped = callPackage ../applications/networking/browsers/dwb { dconf = gnome3.dconf; };
+  dwb = wrapFirefox dwb-unwrapped { desktopName = "dwb"; };
 
   dwm = callPackage ../applications/window-managers/dwm {
     patches = config.dwm.patches or [];
@@ -11366,7 +11372,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   });
   emacs24Macport = self.emacs24Macport_24_5;
 
-  emacs25pre = callPackage ../applications/editors/emacs-25 {
+  emacs25pre = lowPrio (callPackage ../applications/editors/emacs-25 {
     # use override to enable additional features
     libXaw = xorg.libXaw;
     Xaw3d = null;
@@ -11377,7 +11383,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     gpm = null;
     inherit (darwin.apple_sdk.frameworks) AppKit Foundation;
     inherit (darwin) libobjc;
-  };
+  });
 
   emacsPackagesGen = emacs: self: let callPackage = newScope self; in rec {
     inherit emacs;
@@ -11560,7 +11566,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     };
   };
 
-  emacs24PackagesNg = recurseIntoAttrs (emacsPackagesNgGen emacs24);
+  emacs24PackagesNg = emacsPackagesNgGen emacs24;
 
   emacs24WithPackages = emacs24PackagesNg.emacsWithPackages;
   emacsWithPackages = emacsPackagesNg.emacsWithPackages;
@@ -11874,7 +11880,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gecko_mediaplayer = callPackage ../applications/networking/browsers/mozilla-plugins/gecko-mediaplayer {
     inherit (gnome) GConf;
-    browser = firefox;
+    browser = firefox-unwrapped;
   };
 
   geeqie = callPackage ../applications/graphics/geeqie { };
@@ -12310,12 +12316,10 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   mid2key = callPackage ../applications/audio/mid2key { };
 
-  midori = callPackage ../applications/networking/browsers/midori {
+  midori-unwrapped = callPackage ../applications/networking/browsers/midori {
     webkitgtk = webkitgtk24x;
   };
-
-  midoriWrapper = wrapFirefox
-    { browser = midori; browserName = "midori"; desktopName = "Midori"; };
+  midori = wrapFirefox midori-unwrapped { };
 
   mikmod = callPackage ../applications/audio/mikmod { };
 
@@ -12733,6 +12737,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   puredata-with-plugins = plugins: callPackage ../applications/audio/puredata/wrapper.nix { inherit plugins; };
 
   puremapping = callPackage ../applications/audio/pd-plugins/puremapping { };
+
+  pybitmessage = callPackage ../applications/networking/instant-messengers/pybitmessage { };
 
   pythonmagick = callPackage ../applications/graphics/PythonMagick { };
 
@@ -13485,13 +13491,14 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   wrapKodi = { kodi }: callPackage ../applications/video/kodi/wrapper.nix {
     inherit kodi;
-    plugins = let inherit (lib) optional; in with kodiPlugins;
+    plugins = let inherit (lib) optional optionals; in with kodiPlugins;
       ([]
       ++ optional (config.kodi.enableAdvancedLauncher or false) advanced-launcher
       ++ optional (config.kodi.enableGenesis or false) genesis
       ++ optional (config.kodi.enableSVTPlay or false) svtplay
       ++ optional (config.kodi.enableSteamLauncher or false) steam-launcher
       ++ optional (config.kodi.enablePVRHTS or false) pvr-hts
+      ++ optionals (config.kodi.enableSALTS or false) [salts urlresolver t0mm0-common]
       );
   };
 
@@ -13742,7 +13749,9 @@ zsh = callPackage ../all-pkgs/zsh { };
     pygtk = pyGtkGlade;
   };
 
-  zotero = callPackage ../applications/office/zotero {};
+  zotero = callPackage ../applications/office/zotero {
+    firefox = firefox-unwrapped;
+  };
 
   zscroll = callPackage ../applications/misc/zscroll {};
 
@@ -14259,25 +14268,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   ### DESKTOP ENVIRONMENTS
 
-  cinnamon = recurseIntoAttrs rec {
-    callPackage = newScope pkgs.cinnamon;
-    inherit (gnome3) gnome_common libgnomekbd gnome-menus zenity;
-
-    muffin = callPackage ../desktops/cinnamon/muffin.nix { } ;
-
-    cinnamon-control-center = callPackage ../desktops/cinnamon/cinnamon-control-center.nix{ };
-
-    cinnamon-settings-daemon = callPackage ../desktops/cinnamon/cinnamon-settings-daemon.nix{ };
-
-    cinnamon-session = callPackage ../desktops/cinnamon/cinnamon-session.nix{ } ;
-
-    cinnamon-desktop = callPackage ../desktops/cinnamon/cinnamon-desktop.nix { };
-
-    cinnamon-translations = callPackage ../desktops/cinnamon/cinnamon-translations.nix { };
-
-    cjs = callPackage ../desktops/cinnamon/cjs.nix { };
-  };
-
   clearlooks-phenix = callPackage ../misc/themes/gtk3/clearlooks-phenix { };
 
   enlightenment = callPackage ../desktops/enlightenment { };
@@ -14469,7 +14459,8 @@ zsh = callPackage ../all-pkgs/zsh { };
             tag = "-client-without-kde";
           });
 
-          rekonq = callPackage ../applications/networking/browsers/rekonq { };
+          rekonq-unwrapped = callPackage ../applications/networking/browsers/rekonq { };
+          rekonq = wrapFirefox rekonq-unwrapped { };
 
           kwebkitpart = callPackage ../applications/networking/browsers/kwebkitpart { };
 
@@ -15151,6 +15142,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gajim = callPackage ../applications/networking/instant-messengers/gajim { };
 
+  gale = callPackage ../applications/networking/instant-messengers/gale { };
+
   gammu = callPackage ../applications/misc/gammu { };
 
   gensgs = callPackage_i686 ../misc/emulators/gens-gs { };
@@ -15464,27 +15457,17 @@ zsh = callPackage ../all-pkgs/zsh { };
     inherit (darwin.apple_sdk.frameworks) Cocoa;
   });
 
-  vimprobable2 = callPackage ../applications/networking/browsers/vimprobable2 {
+  vimprobable2-unwrapped = callPackage ../applications/networking/browsers/vimprobable2 {
     webkit = webkitgtk2;
   };
+  vimprobable2 = wrapFirefox vimprobable2-unwrapped { };
 
-  vimprobable2Wrapper = wrapFirefox
-    { browser = vimprobable2; browserName = "vimprobable2"; desktopName = "Vimprobable2";
-    };
+  inherit (kde4) rekonq;
 
-  rekonqWrapper = wrapFirefox {
-    browser = kde4.rekonq; browserName = "rekonq"; desktopName = "Rekonq";
-  };
-
-  vimb = callPackage ../applications/networking/browsers/vimb {
+  vimb-unwrapped = callPackage ../applications/networking/browsers/vimb {
     webkit = webkitgtk2;
   };
-
-  vimbWrapper = wrapFirefox {
-    browser = vimb;
-    browserName = "vimb";
-    desktopName = "Vimb";
-  };
+  vimb = wrapFirefox vimb-unwrapped { };
 
   vips = callPackage ../tools/graphics/vips { };
   nip2 = callPackage ../tools/graphics/nip2 { };
@@ -15614,12 +15597,16 @@ aliases = with self; rec {
   bridge_utils = bridge-utils;  # added 2015-02-20
   buildbotSlave = buildbot-slave;  # added 2014-12-09
   cheetahTemplate = pythonPackages.cheetah; # 2015-06-15
+  conkerorWrapper = conkeror; # added 2015-01
   cool-old-term = cool-retro-term; # added 2015-01-31
   cupsBjnp = cups-bjnp; # added 2016-01-02
   cv = progress; # added 2015-09-06
-  enblendenfuse = enblend-enfuse;	# 2015-09-30
+  dwbWrapper = dwb; # added 2015-01
+  enblendenfuse = enblend-enfuse; # 2015-09-30
   exfat-utils = exfat;                  # 2015-09-11
-  firefoxWrapper = firefox-wrapper;
+  firefoxWrapper = firefox;           # 2015-09
+  firefox-wrapper = firefox;          # 2016-01
+  firefox-esr-wrapper = firefox-esr;  # 2016-01
   fuse_exfat = exfat;                   # 2015-09-11
   grantlee5 = qt5.grantlee;  # added 2015-12-19
   gupnptools = gupnp-tools;  # added 2015-12-19
@@ -15631,6 +15618,7 @@ aliases = with self; rec {
   libtidy = html-tidy;  # added 2014-12-21
   lttngTools = lttng-tools;  # added 2014-07-31
   lttngUst = lttng-ust;  # added 2014-07-31
+  midoriWrapper = midori; # added 2015-01
   mlt-qt5 = qt5.mlt;  # added 2015-12-19
   nfsUtils = nfs-utils;  # added 2014-12-06
   phonon_qt5 = qt5.phonon;  # added 2015-12-19
@@ -15645,6 +15633,7 @@ aliases = with self; rec {
   quasselClient_kf5 = kde5.quasselClient; # added 2015-09-30
   qwt6 = qt5.qwt;  # added 2015-12-19
   rdiff_backup = rdiff-backup;  # added 2014-11-23
+  rekonqWrapper = rekonq; # added 2015-01
   rssglx = rss-glx; #added 2015-03-25
   rxvt_unicode_with-plugins = rxvt_unicode-with-plugins; # added 2015-04-02
   signon = qt5.signon;  # added 2015-12-19
@@ -15657,6 +15646,8 @@ aliases = with self; rec {
   xlibs = xorg; # added 2015-09
   youtube-dl = pythonPackages.youtube-dl; # added 2015-06-07
   youtubeDL = youtube-dl;  # added 2014-10-26
+  vimbWrapper = vimb; # added 2015-01
+  vimprobable2Wrapper = vimprobable2; # added 2015-01
   pidginlatexSF = pidginlatex; # added 2014-11-02
   tftp_hpa = tftp-hpa; # added 2015-04-03
   manpages = man-pages; # added 2015-12-06
@@ -15666,6 +15657,8 @@ aliases = with self; rec {
   saneBackendsGit = sane-backends-git; # added 2016-01-02
   saneFrontends = sane-frontends; # added 2016-01-02
   btrfsProgs = btrfs-progs; # added 2016-01-03
+  aircrackng = aircrack-ng; # added 2016-01-14
+  quake3game = ioquake3; # added 2016-01-14
 };
 
 tweakAlias = _n: alias: with lib;

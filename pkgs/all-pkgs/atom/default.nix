@@ -12,7 +12,7 @@
 , fontconfig
 , freetype
 , gconf
-, gdk-pixbuf
+, gdk-pixbuf-core
 , glib
 , gtk2
 , gvfs
@@ -40,7 +40,7 @@ let
       fontconfig
       freetype
       gconf
-      gdk-pixbuf
+      gdk-pixbuf-core
       glib
       gtk2
       libcap

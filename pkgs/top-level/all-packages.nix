@@ -494,6 +494,8 @@ atom = callPackage ../all-pkgs/atom {
 
 avahi = callPackage ../all-pkgs/avahi { };
 
+bazaar = callPackage ../all-pkgs/bazaar { };
+
 beets = callPackage ../all-pkgs/beets { };
 
 cairo = callPackage ../all-pkgs/cairo { };
@@ -11050,9 +11052,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   baudline = callPackage ../applications/audio/baudline {
     jack = jack1;
   };
-
-
-  bazaar = callPackage ../applications/version-management/bazaar { };
 
   bazaarTools = callPackage ../applications/version-management/bazaar/tools.nix { };
 

@@ -534,85 +534,22 @@ ffmpeg_2 = callPackage ../all-pkgs/ffmpeg/2.x.nix { };
 ffmpeg = ffmpeg_2;
 ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
 
-/*inherit (callPackages ../all-pkgs/firefox {
-  inherit (gnome) libIDL;
-  inherit (pythonPackages) pysqlite;
-  libpng = libpng_apng;
-  enableGTK3 = false;
-});*/
-
+firefox = firefox_wrapper firefox-unwrapped { };
+firefox-esr = firefox_wrapper firefox-esr-unwrapped { };
 firefox-unwrapped = callPackage ../all-pkgs/firefox {
   inherit (gnome) libIDL;
   inherit (pythonPackages) pysqlite;
   libpng = libpng_apng;
 };
-firefox-esr-unwrapped = firefox-unwrapped.override {
+firefox-esr-unwrapped = callPackage ../all-pkgs/firefox {
   channel = "esr";
 };
-
-firefox = wrapFirefox { browser = pkgs.firefox; };
-firefox-esr = wrapFirefox { browser = pkgs.firefox-esr; };
+firefox_wrapper = callPackage ../all-pkgs/firefox/wrapper.nix { };
 
 firefox-bin = callPackage ../applications/networking/browsers/firefox-bin {
   gconf = pkgs.gnome.GConf;
   inherit (pkgs.gnome) libgnome libgnomeui;
 };
-
-wrapFirefox =
-  { browser, browserName ? "firefox", desktopName ? "Firefox", nameSuffix ? ""
-  , icon ? browserName }:
-  let
-    cfg = stdenv.lib.attrByPath [ browserName ] {} config;
-    enableAdobeFlash = cfg.enableAdobeFlash or false;
-    enableGnash = cfg.enableGnash or false;
-    jre = cfg.jre or false;
-    icedtea = cfg.icedtea or false;
-  in
-  callPackage ../all-pkgs/firefox/wrapper.nix {
-    inherit browser browserName desktopName nameSuffix icon;
-    libtrick = true;
-    plugins =
-       assert !(enableGnash && enableAdobeFlash);
-       assert !(jre && icedtea);
-       ([ ]
-        ++ lib.optional enableGnash gnash
-        ++ lib.optional enableAdobeFlash flashplayer
-        ++ lib.optional (cfg.enableDjvu or false) (djview4)
-        ++ lib.optional (cfg.enableMPlayer or false) (MPlayerPlugin browser)
-        ++ lib.optional (cfg.enableGeckoMediaPlayer or false) gecko_mediaplayer
-        ++ lib.optional (supportsJDK && jre && jrePlugin ? mozillaPlugin) jrePlugin
-        ++ lib.optional icedtea icedtea_web
-        ++ lib.optional (cfg.enableGoogleTalkPlugin or false) google_talk_plugin
-        ++ lib.optional (cfg.enableFriBIDPlugin or false) fribid
-        ++ lib.optional (cfg.enableGnomeExtensions or false) gnome3.gnome_shell
-        ++ lib.optional (cfg.enableTrezor or false) trezor-bridge
-        ++ lib.optional (cfg.enableBluejeans or false) bluejeans
-       );
-    libs = [
-      gstreamer_0
-      gst-plugins-base_0
-    ] ++ lib.optionals (cfg.enableQuakeLive or false) (with xorg; [
-      stdenv.cc
-      libX11
-      libXxf86dga
-      libXxf86vm
-      libXext
-      libXt
-      alsaLib
-      zlib
-    ]) ++ lib.optional (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) hal-flash
-      ++ lib.optional (config.pulseaudio or false) libpulseaudio;
-    gst_plugins = [
-      gst-plugins-base_0
-      gst-plugins-good_0
-      gst-plugins-bad_0
-      gst-plugins-ugly_0
-      gst-ffmpeg
-    ];
-    gtk_modules = [
-      libcanberra
-    ];
-  };
 
 flac = callPackage ../all-pkgs/flac { };
 

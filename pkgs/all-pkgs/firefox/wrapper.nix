@@ -2,7 +2,9 @@
 
 ## various stuff that can be plugged in
 , gnash, flashplayer, hal-flash
-, MPlayerPlugin, gecko_mediaplayer, gst_all, xorg, libpulseaudio, libcanberra
+, MPlayerPlugin, gecko_mediaplayer, xorg, libpulseaudio, libcanberra
+, gstreamer_0, gst-plugins-base_0, gst-plugins-good_0, gst-plugins-bad_0
+, gst-plugins-ugly_0, gst-ffmpeg
 , supportsJDK, jrePlugin, icedtea_web
 , trezor-bridge, bluejeans, djview4
 , google_talk_plugin, fribid, gnome3/*.gnome_shell*/
@@ -42,12 +44,12 @@ let
       ++ lib.optional (cfg.enableTrezor or false) trezor-bridge
       ++ lib.optional (cfg.enableBluejeans or false) bluejeans
      );
-  libs = [ gst_all.gstreamer gst_all.gst-plugins-base ]
+  libs = [ gstreamer_0 gst-plugins-base_0 ]
          ++ lib.optionals (cfg.enableQuakeLive or false)
          (with xorg; [ stdenv.cc libX11 libXxf86dga libXxf86vm libXext libXt alsaLib zlib ])
          ++ lib.optional (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) hal-flash
          ++ lib.optional (config.pulseaudio or false) libpulseaudio;
-  gst-plugins = with gst_all; [ gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-ffmpeg ];
+  gst-plugins = [ gst-plugins-base_0 gst-plugins-good_0 gst-plugins-bad_0 gst-plugins-ugly_0 gst-ffmpeg ];
   gtk_modules = [ libcanberra ];
 
 in

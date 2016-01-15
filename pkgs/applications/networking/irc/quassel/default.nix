@@ -21,11 +21,11 @@ assert !buildClient -> !withKDE; # KDE is used by the client only
 
 let
   edf = flag: feature: [("-D" + feature + (if flag then "=ON" else "=OFF"))];
-
-in with stdenv; mkDerivation rec {
-
-  version = "0.12.2";
+in
+with stdenv;
+mkDerivation rec {
   name = "quassel${tag}-${version}";
+  version = "0.12.2";
 
   src = fetchurl {
     url = "http://quassel-irc.org/pub/quassel-${version}.tar.bz2";
@@ -34,10 +34,11 @@ in with stdenv; mkDerivation rec {
 
   enableParallelBuilding = true;
 
-  buildInputs =
-       [ cmake makeWrapper qt ]
-    ++ lib.optionals buildCore [qca2]
-    ++ lib.optionals withKDE [automoc4 kdelibs phonon];
+  nativeBuildInputs = [ cmake ninja makeWrapper ];
+
+  buildInputs = [ qt ]
+    ++ lib.optionals buildCore [ qca2 ]
+    ++ lib.optionals withKDE [ automoc4 kdelibs phonon ];
 
   NIX_CFLAGS_COMPILE = "-fPIC";
 

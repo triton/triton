@@ -755,6 +755,63 @@ poppler = callPackage ../all-pkgs/poppler {
   qt5 = null;
 };
 
+python27 = callPackage ../all-pkgs/python {
+  channel = "2.7";
+  self = python27;
+};
+python32 = callPackage ../all-pkgs/python {
+  channel = "3.2";
+  self = python32;
+};
+python33 = callPackage ../all-pkgs/python {
+  channel = "3.3";
+  self = python33;
+};
+python34 = hiPrio (callPackage ../all-pkgs/python {
+  channel = "3.4";
+  self = python34;
+});
+python35 = hiPrio (callPackage ../all-pkgs/python {
+  channel = "3.5";
+  self = python35;
+});
+pypy = callPackage ../all-pkgs/pypy {
+  self = pypy;
+};
+python2 = python27;
+python3 = python35;
+python = python2;
+
+python27Packages = lib.hiPrioSet (recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+  python = python27;
+  self = python27Packages;
+}));
+python32Packages = callPackage ../top-level/python-packages.nix {
+  python = python32;
+  self = python32Packages;
+};
+python33Packages = callPackage ../top-level/python-packages.nix {
+  python = python33;
+  self = python33Packages;
+};
+python34Packages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+  python = python34;
+  self = python34Packages;
+});
+python35Packages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+  python = python35;
+  self = python35Packages;
+});
+pypyPackages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+  python = pypy;
+  self = pypyPackages;
+});
+python2Packages = python27Packages;
+python3Packages = python35Packages;
+pythonPackages = python2Packages;
+
+buildPythonPackage = pythonPackages.buildPythonPackage;
+
 qjackctl = callPackage ../all-pkgs/qjackctl { };
 
 rtmpdump = callPackage ../all-pkgs/rtmpdump { };
@@ -5352,39 +5409,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   pure = callPackage ../development/interpreters/pure { };
   purePackages = recurseIntoAttrs (callPackage ./pure-packages.nix {});
 
-  python = python2;
-  python2 = python27;
-  python3 = python35;
-
-  # pythonPackages further below, but assigned here because they need to be in sync
-  pythonPackages = python2Packages;
-  python2Packages = python27Packages;
-  python3Packages = python35Packages;
-
-  python27 = callPackage ../development/interpreters/python {
-    channel = "2.7";
-    self = python27;
-  };
-  python32 = callPackage ../development/interpreters/python {
-    channel = "3.2";
-    self = python32;
-  };
-  python33 = callPackage ../development/interpreters/python {
-    channel = "3.3";
-    self = python33;
-  };
-  python34 = hiPrio (callPackage ../development/interpreters/python {
-    channel = "3.4";
-    self = python34;
-  });
-  python35 = hiPrio (callPackage ../development/interpreters/python {
-    channel = "3.5";
-    self = python35;
-  });
-  pypy = callPackage ../development/interpreters/pypy {
-    self = pypy;
-  };
-
   python2nix = callPackage ../tools/package-management/python2nix { };
 
   pythonDocs = recurseIntoAttrs (callPackage ../development/interpreters/python/docs {});
@@ -8792,39 +8816,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   ### DEVELOPMENT / PYTHON MODULES
-
-  # python function with default python interpreter
-  buildPythonPackage = pythonPackages.buildPythonPackage;
-
-  python27Packages = lib.hiPrioSet (recurseIntoAttrs (callPackage ./python-packages.nix {
-    python = python27;
-    self = python27Packages;
-  }));
-
-  python32Packages = callPackage ./python-packages.nix {
-    python = python32;
-    self = python32Packages;
-  };
-
-  python33Packages = callPackage ./python-packages.nix {
-    python = python33;
-    self = python33Packages;
-  };
-
-  python34Packages = recurseIntoAttrs (callPackage ./python-packages.nix {
-    python = python34;
-    self = python34Packages;
-  });
-
-  python35Packages = recurseIntoAttrs (callPackage ./python-packages.nix {
-    python = python35;
-    self = python35Packages;
-  });
-
-  pypyPackages = recurseIntoAttrs (callPackage ./python-packages.nix {
-    python = pypy;
-    self = pypyPackages;
-  });
 
   foursuite = pythonPackages.foursuite;
 

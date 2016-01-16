@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , ghostscript
@@ -14,7 +15,11 @@ stdenv.mkDerivation rec {
 
   patches = [
     # Fix compatibility with newer versions of ghostscript
-    ./libspectre-0.2.7-ghostscript-9.18.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "libspectre/libspectre-0.2.7-ghostscript-9.18.patch";
+      sha256 = "2db97f45f539d7e89d3cb555825d54cdb2c78f1f8d024f5d28c33e7d394d136a";
+    })
   ];
 
   configureFlags = [

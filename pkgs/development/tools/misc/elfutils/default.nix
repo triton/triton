@@ -12,6 +12,8 @@ stdenv.mkDerivation rec {
     sha256 = "0wp91hlh9n0ismikljf63558rzdwim8w1s271grsbaic35vr5z57";
   };
 
+  patches = [ ./glibc-2.21.patch ];
+
   configureFlags = [
     "--enable-deterministic-archives"
   ];

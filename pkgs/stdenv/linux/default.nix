@@ -97,7 +97,7 @@ rec {
 
       cc = null;
 
-      overrides = pkgs: (lib.mapAttrs (n: _: throw "Tried to access ${n}") pkgs) // rec {
+      overrides = pkgs: (lib.mapAttrs (n: _: throw "stage0Pkgs is missing package definition for `${n}`") pkgs) // rec {
         inherit (pkgs) stdenv;
 
         fetchurl = import ../../build-support/fetchurl {
@@ -153,7 +153,7 @@ rec {
         libc = bootstrapTools.glibc;
       };
 
-      overrides = pkgs: (lib.mapAttrs (n: _: throw "Tried to access ${n}") pkgs) // {
+      overrides = pkgs: (lib.mapAttrs (n: _: throw "stage1Pkgs is missing package definition for `${n}`") pkgs) // rec {
         inherit (pkgs) stdenv glibc linuxHeaders linuxHeaders_3_18;
 
         gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
@@ -195,7 +195,7 @@ rec {
         libc = stage1Pkgs.glibc;
       };
 
-      overrides = pkgs: (lib.mapAttrs (n: _: throw "Tried to access ${n}") pkgs) // {
+      overrides = pkgs: (lib.mapAttrs (n: _: throw "stage2Pkgs is missing package definition for `${n}`") pkgs) // rec {
         inherit (stage1Pkgs) glibc linuxHeaders linuxHeaders_3_18;
         inherit (pkgs) stdenv m4 which gettext;
         bzip2 = pkgs.bzip2.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
@@ -252,7 +252,7 @@ rec {
         libc = stage1Pkgs.glibc;
       };
 
-      overrides = pkgs: (lib.mapAttrs (n: _: throw "Tried to access ${n}") pkgs) // {
+      overrides = pkgs: (lib.mapAttrs (n: _: throw "stage3Pkgs is missing package definition for `${n}`") pkgs) // rec {
         pkgs = stage3Pkgs;
         inherit (stage1Pkgs) glibc linuxHeaders linuxHeaders_3_18;
         inherit (pkgs) stdenv xz zlib attr acl gmp coreutils binutils gpm

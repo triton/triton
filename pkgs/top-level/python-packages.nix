@@ -83,7 +83,7 @@ in {
 
   # specials
 
-  recursivePthLoader = callPackage ../development/python-modules/recursive-pth-loader { };
+  recursivePthLoader = callPackage ../all-pkgs/recursive-pth-loader { };
 
   setuptools = callPackage ../development/python-modules/setuptools { };
 
@@ -11890,7 +11890,7 @@ in {
     # Disable failing test_f2py test.
     # f2py couldn't be found by test,
     # even though it was used successfully to build numpy
-    
+
     # The large file support test is disabled because it takes forever
     # and can cause the machine to run out of disk space when run.
     prePatch = ''

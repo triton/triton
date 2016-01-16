@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , python2
@@ -18,7 +19,11 @@ stdenv.mkDerivation rec {
 
   patches = [
     # Bazaar can't find the certificates alone
-    ./add_certificates.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "bazaar/bazaar-2.6-add_certificates.patch";
+      sha256 = "7301af4b99522ef76bc551563f5f0c958f24f34556cc2a052874c674660a71ea";
+    })
   ];
 
   postPatch = ''

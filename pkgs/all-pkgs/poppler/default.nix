@@ -1,6 +1,7 @@
 { stdenv
-, fetchurl
 , fetchpatch
+, fetchTritonPatch
+, fetchurl
 , libiconv
 
 , curl
@@ -40,15 +41,19 @@ assert (
 
 stdenv.mkDerivation rec {
   name = "poppler-${suffix}-${version}";
-  version = "0.39.0";
+  version = "0.40.0";
 
   src = fetchurl {
     url = "http://poppler.freedesktop.org/poppler-${version}.tar.xz";
-    sha256 = "1fbvw4fb9jrj63l1ihfslkqxikvhx8yy9i2mfwfix963m7pmpmxg";
+    sha256 = "1bbfxq0aclhaiyj1jcjr583prv5662jvphdqsafgr3q3srwa43dw";
   };
 
   patches = [
-    ./datadir_env.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "poppler/poppler-datadir_env.patch";
+      sha256 = "da3dd1d57a7ef0dcda7442dff2fff5375e249ba85caba9828be4fc51bfa300ff";
+    })
   ];
 
   configureFlags = [

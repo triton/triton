@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, autoreconfHook, libibverbs, librdmacm, libevent
+{ stdenv, fetchFromGitHub, fetchTritonPatch, autoreconfHook, libibverbs, librdmacm, libevent
 
 # Linux only deps
 , numactl, kernel ? null
@@ -15,7 +15,13 @@ stdenv.mkDerivation rec {
     sha256 = "172frqk2n43g0arhazgcwfvj0syf861vdzdpxl7idr142bb0ykf7";
   };
 
-  patches = [ ./fix-printfs.patch ];
+  patches = [
+    (fetchTritonPatch {
+      rev = "46327f20920c01ffb395dbd946cd7cffb67567b6";
+      file = "accelio/fix-printfs.patch";
+      sha256 = "2ab68c485eb00857a1977ba5c08d7656205ab3f2475031d1507816bb29120bc2";
+    })
+  ];
 
   postPatch = ''
     # Don't build broken examples

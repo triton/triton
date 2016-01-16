@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , gettext
 , intltool
@@ -27,7 +28,11 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    ./no-mkdir-localstatedir.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "avahi/avahi-0.6-no-mkdir-localstatedir.patch";
+      sha256 = "c47d4acb173e7b29913e7dd3e956fe5e9281a72dd9063a3bae808e5da59c421e";
+    })
   ];
 
   configureFlags = [

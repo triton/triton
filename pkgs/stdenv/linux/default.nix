@@ -256,7 +256,8 @@ rec {
         inherit (pkgs) stdenv xz zlib attr acl gmp coreutils binutils gpm
           ncurses readline bash libnghttp2 cryptodevHeaders openssl_1_0_2
           openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
-          gawk gnutar gzip bzip2 gnumake patch pkgconf pkgconfig patchelf;
+          gawk gnutar gzip bzip2 gnumake patch pkgconf pkgconfig patchelf
+          fetchTritonPatch;
 
         gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;

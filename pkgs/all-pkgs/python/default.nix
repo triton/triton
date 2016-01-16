@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , bzip2
@@ -72,15 +73,31 @@ stdenv.mkDerivation rec {
   patches = optionals isPy2 [
     # patch python to put zero timestamp into pyc
     # if DETERMINISTIC_BUILD env var is set
-    ./patches/python-2.7-deterministic-build.patch
-    ./patches/python-2.7-properly-detect-curses.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "python/python-2.7-deterministic-build.patch";
+      sha256 = "7b8ed591008f8f0dafb7f2c95d06404501c84223197fe138df75791f12a9dc24";
+    })
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "python/python-2.7-properly-detect-curses.patch";
+      sha256 = "c0d17df5f1c920699f68a1c87973d626ea8423a4881927b0ac7a20f88ceedcb4";
+    })
     # Python recompiles a Python if the mtime stored *in* the
     # pyc/pyo file differs from the mtime of the source file.  This
     # doesn't work in Nix because Nix changes the mtime of files in
     # the Nix store to 1.  So treat that as a special case.
-    ./patches/python-2.x-nix-store-mtime.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "python/python-2.x-nix-store-mtime.patch";
+      sha256 = "0869ba7b51b1c4b8f9779118a75ce34332a69f41909e5dfcd9305d2a9bcce638";
+    })
     # Look in C_INCLUDE_PATH and LIBRARY_PATH for stuff.
-    ./patches/python-2.x-search-path.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "python/python-2.x-search-path.patch";
+      sha256 = "b055ca65c28152cf8ca0f827f972b2b552c4a1df4b4aec1fb59130b153c68794";
+    })
   ];
 
   postPatch = ''

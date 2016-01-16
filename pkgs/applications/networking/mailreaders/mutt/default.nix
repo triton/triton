@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, ncurses, which, perl, autoreconfHook
+{ stdenv, fetchurl, fetchTritonPatch, ncurses, which, perl, autoreconfHook
 , sslSupport ? true
 , imapSupport ? true
 , headerCache ? true

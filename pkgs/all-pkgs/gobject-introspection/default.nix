@@ -1,5 +1,6 @@
 { stdenv
 , bison
+, fetchTritonPatch
 , fetchurl
 , flex
 
@@ -32,7 +33,11 @@ stdenv.mkDerivation rec {
   setupHook = ./setup-hook.sh;
 
   patches = [
-    ./absolute_shlib_path.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "gobject-introspection/gobject-introspection-1.x-absolute_shlib_path.patch";
+      sha256 = "72be007720645946a4db10e4d845a78ef0d74867db915f414c1ec485f8a2494e";
+    })
   ];
 
   postPatch = ''

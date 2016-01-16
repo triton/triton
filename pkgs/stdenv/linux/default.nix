@@ -97,13 +97,15 @@ rec {
 
       cc = null;
 
-      overrides = pkgs: (lib.mapAttrs (n: _: throw "Tried to access ${n}") pkgs) // {
+      overrides = pkgs: (lib.mapAttrs (n: _: throw "Tried to access ${n}") pkgs) // rec {
         inherit (pkgs) stdenv;
 
         fetchurl = import ../../build-support/fetchurl {
           stdenv = stage0Pkgs.stdenv;
           curl = bootstrapTools;
         };
+
+        fetchTritonPatch = args: pkgs.fetchTritonPatch (args // { inherit fetchurl; });
 
         patchelf = stage0Pkgs.stdenv.mkDerivation {
           name = "patchelf-boot";
@@ -167,7 +169,7 @@ rec {
         };
 
         # These are only needed to evaluate
-        inherit (stage0Pkgs) fetchurl patchelf;
+        inherit (stage0Pkgs) fetchurl fetchTritonPatch patchelf;
         bison = null;
       };
     });
@@ -221,7 +223,7 @@ rec {
         };
 
         # These are only needed to evaluate
-        inherit (stage0Pkgs) fetchurl patchelf;
+        inherit (stage0Pkgs) fetchurl fetchTritonPatch patchelf;
         coreutils = bootstrapTools;
         binutils = bootstrapTools;
         perl = null;
@@ -256,8 +258,7 @@ rec {
         inherit (pkgs) stdenv xz zlib attr acl gmp coreutils binutils gpm
           ncurses readline bash libnghttp2 cryptodevHeaders openssl_1_0_2
           openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
-          gawk gnutar gzip bzip2 gnumake patch pkgconf pkgconfig patchelf
-          fetchTritonPatch;
+          gawk gnutar gzip bzip2 gnumake patch pkgconf pkgconfig patchelf;
 
         gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -273,7 +274,7 @@ rec {
         };
 
         # Do not export these packages to the final stdenv
-        inherit (stage0Pkgs) fetchurl;
+        inherit (stage0Pkgs) fetchurl fetchTritonPatch;
         libiconv = null;
         inherit (pkgs) gettext perl522 perl m4 bison autoconf automake flex perlPackages
           libtool buildPerlPackage help2man makeWrapper autoreconfHook texinfo;

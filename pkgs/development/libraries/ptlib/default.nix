@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, bison, flex, unixODBC
+{ stdenv, fetchurl, fetchTritonPatch, bison, flex, unixODBC
 , openssl, openldap, cyrus_sasl, kerberos, expat, SDL, libdv, libv4l, alsaLib }:
 
 stdenv.mkDerivation rec {

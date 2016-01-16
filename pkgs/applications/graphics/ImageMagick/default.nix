@@ -25,14 +25,14 @@ in
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
-  version = "6.9.2-8";
+  version = "6.9.3-0";
 
   src = fetchurl {
     url = [
       "mirror://imagemagick/ImageMagick-${version}.tar.xz"
       "mirror://imagemagick/releases/ImageMagick-${version}.tar.xz"
     ];
-    sha256 = "0bfrd9mqhk7dwx8s4m563q6g9d4gn4kcmmq9368hghmpfdxxxipj";
+    sha256 = "0mlnr9ggxx64ln3m9fy031s0jd4c9r9as7kl9sjdhwixn1p6b81b";
   };
 
   outputs = [ "out" "doc" ];

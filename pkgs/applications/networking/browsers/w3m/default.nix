@@ -37,8 +37,7 @@ stdenv.mkDerivation rec {
       url = "https://aur.archlinux.org/cgit/aur.git/plain/https.patch?h=w3m-mouse&id=5b5f0fbb59f674575e87dd368fed834641c35f03";
       sha256 = "08skvaha1hjyapsh8zw5dgfy433mw2hk7qy9yy9avn8rjqj7kjxk";
     })
-  ] ++ optional (graphicsSupport && !x11Support) [ ./no-x11.patch ]
-    ++ optional stdenv.isCygwin ./cygwin.patch;
+  ] ++ optional (graphicsSupport && !x11Support) [ ./no-x11.patch ];
 
   nativeBuildInputs = [ gettext ];
   buildInputs = [ ncurses boehmgc zlib ]

@@ -1,5 +1,6 @@
 { stdenv
 , autoreconfHook
+, fetchTritonPatch
 , fetchurl
 , gettext
 , perl
@@ -59,7 +60,11 @@ stdenv.mkDerivation rec {
   setupHook = ./setup-hook.sh;
 
   patches = optionals doCheck [
-    ./skip-timer-test.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "glib/glib-2.x-skip-timer-test.patch";
+      sha256 = "97a177c1fc229d0eef3d3d2c7a023cd6bd47ddd4ee52bd22cf82e2a0c024fb2e";
+    })
   ];
 
   postPatch = (

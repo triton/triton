@@ -17,7 +17,7 @@
 
 with {
   inherit (stdenv.lib)
-    optional;
+    optionals;
 };
 
 stdenv.mkDerivation rec {
@@ -31,12 +31,15 @@ stdenv.mkDerivation rec {
     sha256 = "0l2kqkbfl5l7drmqdqdryq1p0fpz05aghxrqd29fs4j9bx0djnaw";
   };
 
-  patches = optional colorSupport (fetchurl {
+  patches = optionals colorSupport [
     # Optional patch adds support for custom configurable colors
     # https://github.com/Chlorm/chlorm_overlay/blob/master/net-p2p/rtorrent/README.md
-    url = "https://gist.githubusercontent.com/codyopel/a816c2993f8013b5f4d6/raw/b952b32da1dcf14c61820dfcf7df00bc8918fec4/rtorrent-color.patch";
-    sha256 = "00gcl7yq6261rrfzpz2k8bd7mffwya0ifji1xqcvhfw50syk8965";
-  });
+    (fetchTritonPatch {
+      rev = "bf125346b522ba5ed532152b2cbd1971b08b35b1";
+      file = "rtorrent/rtorrent-color.patch";
+      sha256 = "c52434bd06853bb819ee214a1781f2dcb97ada4253fcfb5dcec10883fda1ec01";
+    })
+  ];
 
   configureFlags = [
     "--disable-debug"

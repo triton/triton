@@ -82,7 +82,7 @@ core = stdenv.mkDerivation rec {
     ++ [ "--without-system-harfbuzz" "--without-system-icu" ] # bogus configure
     ;
 
-  enableParallelBuilding = true;
+  enableParallelBuilding = false;
 
   doCheck = false; # triptest fails, likely due to missing TEXMF tree
   preCheck = "patchShebangs ../texk/web2c";
@@ -121,7 +121,10 @@ core-big = stdenv.mkDerivation {
 
   inherit (common) src;
 
-  buildInputs = core.buildInputs ++ [ core cairo harfbuzz icu graphite2 ];
+  buildInputs = core.buildInputs ++ [
+    core cairo harfbuzz icu graphite2
+    xorg.libX11
+  ];
 
   configureFlags = common.configureFlags
     ++ withSystemLibs [ "kpathsea" "ptexenc" "cairo" "harfbuzz" "icu" "graphite2" ]

@@ -3,7 +3,7 @@
 
 cross:
 
-{ name, fetchurl, fetchgit ? null, stdenv, installLocales ? false
+{ name, fetchurl, fetchTritonPatch, fetchgit ? null, stdenv, installLocales ? false
 , gccCross ? null, kernelHeaders ? null
 , machHeaders ? null, hurdHeaders ? null, libpthreadHeaders ? null
 , mig ? null
@@ -14,6 +14,12 @@ cross:
 let
 
   version = "2.21";
+
+  nscdPatch = fetchTritonPatch {
+    rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+    file = "glibc/glibc-remove-datetime-from-nscd.patch";
+    sha256 = "72a050d394c9a4785f997b9c853680150996b65646a388e347e51d3dde8790e8";
+  };
 
 in
 
@@ -34,36 +40,80 @@ stdenv.mkDerivation ({
 
   /* Don't try to apply these patches to the Hurd's snapshot, which is
      older.  */
-  patches = stdenv.lib.optionals (hurdHeaders == null)
-    [ /* Have rpcgen(1) look for cpp(1) in $PATH.  */
-      ./rpcgen-path.patch
+  patches = stdenv.lib.optionals (hurdHeaders == null) [
+    /* Have rpcgen(1) look for cpp(1) in $PATH.  */
+    (fetchTritonPatch {
+      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+      file = "glibc/rpcgen-path.patch";
+      sha256 = "4f7f58b96098b0ae3e2945481f9007c719c5f56704724a4d36074b76e29bee81";
+    })
 
-      /* Allow NixOS and Nix to handle the locale-archive. */
-      ./nix-locale-archive.patch
+    /* Allow NixOS and Nix to handle the locale-archive. */
+    (fetchTritonPatch {
+      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+      file = "glibc/nix-locale-archive.patch";
+      sha256 = "079f4eb8f051c20291ea8bc133c582bf4e9c743948f5052069cb40fe776eeb79";
+    })
 
-      /* Don't use /etc/ld.so.cache, for non-NixOS systems.  */
-      ./dont-use-system-ld-so-cache.patch
+    /* Don't use /etc/ld.so.cache, for non-NixOS systems.  */
+    (fetchTritonPatch {
+      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+      file = "glibc/dont-use-system-ld-so-cache.patch";
+      sha256 = "c55c79b1f5e41d8331e23801556b90a678803746f92c7cf550c13f3f775dd974";
+    })
 
-      /* Don't use /etc/ld.so.preload, but /etc/ld-nix.so.preload.  */
-      ./dont-use-system-ld-so-preload.patch
+    /* Don't use /etc/ld.so.preload, but /etc/ld-nix.so.preload.  */
+    (fetchTritonPatch {
+      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+      file = "glibc/dont-use-system-ld-so-preload.patch";
+      sha256 = "de897e0f53379f87459f5d350a229768159159f5e44eb7f6bd3050fd416d4aa6";
+    })
 
-      /* Add blowfish password hashing support.  This is needed for
-         compatibility with old NixOS installations (since NixOS used
-         to default to blowfish). */
-      ./glibc-crypt-blowfish.patch
+    /* Add blowfish password hashing support.  This is needed for
+       compatibility with old NixOS installations (since NixOS used
+       to default to blowfish). */
+    (fetchTritonPatch {
+      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+      file = "glibc/glibc-crypt-blowfish.patch";
+      sha256 = "436f80937b5e6a40f198cc7552fb502c71f44e2e2e00a25520cf4efce3e660a4";
+    })
 
-      /* The command "getconf CS_PATH" returns the default search path
-         "/bin:/usr/bin", which is inappropriate on NixOS machines. This
-         patch extends the search path by "/run/current-system/sw/bin". */
-      ./fix_path_attribute_in_getconf.patch
+    /* The command "getconf CS_PATH" returns the default search path
+       "/bin:/usr/bin", which is inappropriate on NixOS machines. This
+        patch extends the search path by "/run/current-system/sw/bin". */
+    (fetchTritonPatch {
+      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+      file = "glibc/fix_path_attribute_in_getconf.patch";
+      sha256 = "d7176285b786c701bd963d97047d845aaf05fdc1e400de3a0526e0cd8ab68047";
+    })
 
-      ./security-4a28f4d5.patch
-      ./security-bdf1ff05.patch
-      ./cve-2014-8121.patch
-      ./cve-2015-1781.patch
+    (fetchTritonPatch {
+      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+      file = "glibc/cve-2014-8121.patch";
+      sha256 = "5d103ecc74c6bd30cf5314890bbb4efcfd55894a9a27230a763ba896e60dc596";
+    })
+    (fetchTritonPatch {
+      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+      file = "glibc/cve-2015-1781.patch";
+      sha256 = "cc9cf79a31c2ccec66bfa3d8c960b33d4a14f482c743aa12cfa8e3e1b93e044b";
+    })
+    (fetchTritonPatch {
+      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+      file = "glibc/security-4a28f4d5.patch";
+      sha256 = "a761ac60a7be72693044ae2584e2cfddaeb63c6b2b82192312b0391da3beff80";
+    })
+    (fetchTritonPatch {
+      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+      file = "glibc/security-bdf1ff05.patch";
+      sha256 = "22f15a0fe09add647ef16f0350c42e8a92ec8dd0b802387da78a7cacb8d57c92";
+    })
 
-      ./glibc-locale-incompatibility.patch
-    ];
+    (fetchTritonPatch {
+      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
+      file = "glibc/glibc-locale-incompatibility.patch";
+      sha256 = "0a313362bbb49cbbf4ab8d44d7108aad12da4856c790659f74a50253ef49d38e";
+    })
+  ];
 
   postPatch =
     # Needed for glibc to build with the gnumake 3.82
@@ -82,8 +132,7 @@ stdenv.mkDerivation ({
     # would break hash-rewriting. When receiving stats it does check
     # that the struct sizes match and can't cause overflow or something.
     + ''
-      cat ${./glibc-remove-datetime-from-nscd.patch} \
-        | sed "s,@out@,$out," | patch -p1
+      cat ${nscdPatch} | sed "s,@out@,$out," | patch -p1
     ''
     # CVE-2014-8121, see https://bugzilla.redhat.com/show_bug.cgi?id=1165192
     + ''
@@ -148,7 +197,7 @@ stdenv.mkDerivation ({
 
 # Remove the `gccCross' attribute so that the *native* glibc store path
 # doesn't depend on whether `gccCross' is null or not.
-// (removeAttrs args [ "gccCross" "fetchurl" "fetchgit" "withGd" "gd" "libpng" ]) //
+// (removeAttrs args [ "gccCross" "fetchurl" "fetchTritonPatch" "fetchgit" "withGd" "gd" "libpng" ]) //
 
 {
   name = name + "-${version}" +

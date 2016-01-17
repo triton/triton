@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, texinfo, perl }:
+{ stdenv, fetchurl, fetchTritonPatch, texinfo, perl }:
 
 let build = import ./common.nix; in
 
@@ -6,7 +6,7 @@ let build = import ./common.nix; in
 build null {
   name = "glibc-info";
 
-  inherit fetchurl stdenv;
+  inherit fetchurl fetchTritonPatch stdenv;
 
   configureFlags = [ "--enable-add-ons" ];
 

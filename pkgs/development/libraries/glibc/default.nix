@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, fetchgit ? null, kernelHeaders
+{ stdenv, fetchurl, fetchTritonPatch, fetchgit ? null, kernelHeaders
 , machHeaders ? null, hurdHeaders ? null, libpthreadHeaders ? null
 , mig ? null
 , installLocales ? true
@@ -20,7 +20,7 @@ in
       + stdenv.lib.optionalString debugSymbols "-debug"
       + stdenv.lib.optionalString withGd "-gd";
 
-    inherit fetchurl fetchgit stdenv kernelHeaders installLocales
+    inherit fetchurl fetchTritonPatch fetchgit stdenv kernelHeaders installLocales
       profilingLibraries gccCross withGd gd libpng;
 
     builder = ./builder.sh;

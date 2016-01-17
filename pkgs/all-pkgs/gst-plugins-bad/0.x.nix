@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , gettext
 , python
@@ -47,7 +48,11 @@ stdenv.mkDerivation rec {
 
   patches = [
     # Patch from 0.10 branch fixing h264 baseline decoding
-    ./gst-plugins-bad-0.10.23-CVE-2015-0797.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "gst-plugins-bad/gst-plugins-bad-0.10.23-CVE-2015-0797.patch";
+      sha256 = "cc5b11dcab8c984d3e24b81bfa2dad6cc3617552826faacd48fdd84b3777e31f";
+    })
   ];
 
   configureFlags = [

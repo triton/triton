@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , alsaLib
@@ -38,8 +39,16 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    ./gst-plugins-base-0.10-gcc-4.9.patch
-    ./gst-plugins-base-0.10-resync-ringbuffer.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "gst-plugins-base/gst-plugins-base-0.10-gcc-4.9.patch";
+      sha256 = "823eca6943a793a66154276018a1b682c831dda8939c7eaf29cad953c795b74f";
+    })
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "gst-plugins-base/gst-plugins-base-0.10-resync-ringbuffer.patch";
+      sha256 = "10624838ca31df3180bbaaf8bdfef6bd52ccaad62735a16f3332a70380e5c94a";
+    })
   ];
 
   postPatch = ''

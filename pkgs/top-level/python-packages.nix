@@ -14683,24 +14683,18 @@ in {
     };
   };
 
-  pyaudio = pkgs.stdenv.mkDerivation rec {
+  pyaudio = buildPythonPackage rec {
     name = "python-pyaudio-${version}";
-    version = "0.2.4";
+    version = "0.2.9";
 
     src = pkgs.fetchurl {
-      url = "http://people.csail.mit.edu/hubert/pyaudio/packages/pyaudio-${version}.tar.gz";
-      md5 = "623809778f3d70254a25492bae63b575";
+      url = "https://pypi.python.org/packages/source/P/PyAudio/PyAudio-${version}.tar.gz";
+      sha256 = "bfd694272b3d1efc51726d0c27650b3c3ba1345f7f8fdada7e86c9751ce0f2a1";
     };
 
-    buildInputs = with self; [ python pkgs.portaudio ];
+    disabled = isPyPy;
 
-    buildPhase = if stdenv.isDarwin then ''
-      PORTAUDIO_PATH="${pkgs.portaudio}" ${python}/bin/${python.executable} setup.py build --static-link
-    '' else ''
-      ${python}/bin/${python.executable} setup.py build
-    '';
-
-    installPhase = "${python}/bin/${python.executable} setup.py install --prefix=$out";
+    buildInputs = with self; [ pkgs.portaudio ];
 
     meta = {
       description = "Python bindings for PortAudio";
@@ -15427,6 +15421,24 @@ in {
       description = "3D mathematical functions using NumPy";
       homepage = https://github.com/adamlwgriffiths/Pyrr/;
       license = licenses.bsd2;
+    };
+  };
+
+  pyshp = buildPythonPackage rec {
+    name = "pyshp-${version}";
+    version = "1.2.3";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/p/pyshp/pyshp-${version}.tar.gz";
+      sha256 = "e18cc19659dadc5ddaa891eb780a6958094da0cf105a1efe0f67e75b4fa1cdf9";
+    };
+
+    buildInputs = with self; [ setuptools ];
+
+    meta = {
+      description = "Pure Python read/write support for ESRI Shapefile format";
+      homepage = https://github.com/GeospatialPython/pyshp;
+      license = licenses.mit;
     };
   };
 

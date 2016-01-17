@@ -97,7 +97,7 @@ stdenv.mkDerivation rec {
     patch -p1 < ${patchWafPython34}
     echo 'WAF patch 2'
     patch -p1 < ${patchWafPython35}
-  '' + optionalString python.is_py3k or false ''
+  '' + optionalString python.isPy3 or false ''
     echo 'WAF patch 3'
     patch -p1 < ${patchWafEncoding}
   '' + ''

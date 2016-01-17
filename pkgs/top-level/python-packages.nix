@@ -11583,7 +11583,7 @@ in {
     propagatedBuildInputs = [ self.coverage ];
 
     doCheck = false;  # lot's of transient errors, too much hassle
-    checkPhase = if python.is_py3k or false then ''
+    checkPhase = if python.isPy3 or false then ''
       ${python}/bin/${python.executable} setup.py build_tests
     '' else "" + ''
       rm functional_tests/test_multiprocessing/test_concurrent_shared.py* # see https://github.com/nose-devs/nose/commit/226bc671c73643887b36b8467b34ad485c2df062
@@ -21179,7 +21179,7 @@ in {
       sha256 = "1w09wbqiqmq6hvrammi4fzc7fr129v63gdnzlk4qi2b1xy5qpqab";
     };
 
-    propagatedBuildInputs = with self; [ zope_interface zope_exceptions zope_testing six ] ++ optional (!python.is_py3k or false) subunit;
+    propagatedBuildInputs = with self; [ zope_interface zope_exceptions zope_testing six ] ++ optional (!python.isPy3 or false) subunit;
 
     doCheck = !isPy27;
 

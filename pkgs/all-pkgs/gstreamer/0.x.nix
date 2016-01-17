@@ -1,5 +1,6 @@
 { stdenv
 , bison
+, fetchTritonPatch
 , fetchurl
 , flex
 , gettext
@@ -26,7 +27,11 @@ stdenv.mkDerivation rec {
   setupHook = ./setup-hook-0.10.sh;
 
   patches = [
-    ./gstreamer-0.10-make-grammar.y-work-with-bison-3.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "gstreamer/gstreamer-0.10-make-grammar.y-work-with-bison-3.patch";
+      sha256 = "6211ca3d1ee197cf9a0689ce47f536dc9d065ffbcd6ac6137925f2224b7f37f8";
+    })
   ];
 
   configureFlags = [

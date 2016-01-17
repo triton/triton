@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchFromGitHub
+, fetchTritonPatch
 , glibcLocales
 , makeWrapper
 , writeScript
@@ -136,7 +137,11 @@ in buildPythonPackage rec {
   };
 
   patches = [
-    ./replaygain-default-bs1770gain.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "beets/beets-1.3-replaygain-default-bs1770gain.patch";
+      sha256 = "d864aa643c16d5df9b859b5f186766a94bf2db969d97f255a88f33acf903b5b6";
+    })
   ];
 
   postPatch = ''

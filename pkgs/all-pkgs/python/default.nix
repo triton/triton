@@ -220,6 +220,13 @@ stdenv.mkDerivation rec {
     ln -s $out/lib/python${versionMajor}/pdb.py $out/bin/pdb
     ln -s $out/lib/python${versionMajor}/pdb.py $out/bin/pdb${versionMajor}
     ln -s $out/share/man/man1/{python2.7.1.gz,python.1.gz}
+  '' + optionalString isPy3 ''
+    # Some programs look for libpython<major.minor>.so
+    if [[ ! -f "$out/lib/libpython${versionMajor}.so" ]] ; then
+      ln -sv \
+        $out/lib/libpython3.so \
+        $out/lib/libpython${versionMajor}.so
+    fi
   '';
 
   enableParallelBuilding = true;

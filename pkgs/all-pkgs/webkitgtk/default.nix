@@ -1,6 +1,7 @@
 { stdenv
 , bison
 , cmake
+, fetchTritonPatch
 , fetchurl
 , gettext
 , gperf
@@ -61,7 +62,11 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    ./finding-harfbuzz-icu.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "webkitgtk/webkit-gtk-2.10.x-finding-harfbuzz-icu.patch";
+      sha256 = "8eb3f4844b06c3c060233396045248a883177e9a09c491ddfaf9897d8e8ca2c4";
+    })
   ];
 
   patchPhase = ''

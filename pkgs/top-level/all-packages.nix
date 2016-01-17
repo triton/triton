@@ -663,6 +663,18 @@ libcanberra_kde = libcanberra; # Deprecated alias
 
 libgudev = callPackage ../all-pkgs/libgudev { };
 
+libjpeg_original = callPackage ../all-pkgs/libjpeg { };
+libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix {
+  libtool = libtool_1_5;
+};
+libjpeg-turbo = callPackage ../all-pkgs/libjpeg-turbo { };
+libjpeg =
+  # some problems, both on FreeBSD and Darwin
+  if stdenv.isLinux then
+    libjpeg-turbo
+  else
+    libjpeg_original;
+
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
 libosinfo = callPackage ../all-pkgs/libosinfo {
@@ -7317,14 +7329,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   libiptcdata = callPackage ../development/libraries/libiptcdata { };
-
-  libjpeg_original = callPackage ../development/libraries/libjpeg { };
-  libjpeg_turbo = callPackage ../development/libraries/libjpeg-turbo { };
-  libjpeg = if stdenv.isLinux then libjpeg_turbo else libjpeg_original; # some problems, both on FreeBSD and Darwin
-
-  libjpeg62 = callPackage ../development/libraries/libjpeg/62.nix {
-    libtool = libtool_1_5;
-  };
 
   libjreen = callPackage ../development/libraries/libjreen { };
 

@@ -1928,6 +1928,27 @@ in {
   };
 
 
+  binaryornot = buildPythonPackage rec {
+    name = "binaryornot-${version}";
+    version = "0.4.0";
+
+    src = pkgs.fetchurl {
+      url ="https://pypi.python.org/packages/source/b/binaryornot/${name}.tar.gz";
+      sha256 = "1j4f51dxic39mdwf6alj7gd769wy6mhk916v031wjali51xkh3xb";
+    };
+
+    buildInputs = with self; [ hypothesis sqlite3 ];
+
+    propagatedBuildInputs = with self; [ chardet ];
+
+    meta = {
+      homepage = https://github.com/audreyr/binaryornot;
+      description = "Ultra-lightweight pure Python package to check if a file is binary or text";
+      license = licenses.bsd3;
+    };
+  };
+
+
   bitbucket_api = buildPythonPackage rec {
     name = "bitbucket-api-0.4.4";
 
@@ -3133,6 +3154,30 @@ in {
     };
   };
 
+  cookiecutter = buildPythonPackage rec {
+    version = "1.3.0";
+    name = "cookiecutter-${version}";
+
+    # dependency problems, next release of cookiecutter should unblock these
+    disabled = isPy3k || isPyPy;
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/audreyr/cookiecutter/archive/${version}.tar.gz";
+      sha256 = "1vchjvh7591nczz2zz55aghk9mhpm6kqgm62d05d4mjrx9xjkdcg";
+    };
+
+    buildInputs = with self; [ itsdangerous  ];
+    propagatedBuildInputs = with self; [
+          jinja2 future binaryornot click whichcraft ruamel_yaml ];
+
+    meta = {
+      homepage = https://github.com/audreyr/cookiecutter;
+      description = "A command-line utility that creates projects from project templates";
+      license = licenses.bsd3;
+      maintainers = with maintainers; [ kragniz ];
+    };
+  };
+
   cookies = buildPythonPackage rec {
     name = "cookies-2.2.1";
 
@@ -3497,6 +3542,22 @@ in {
       maintainers = with maintainers; [ luispedro ];
       license = licenses.mit;
       platforms = platforms.linux;
+    };
+  };
+
+  minidb = buildPythonPackage rec {
+    name = "minidb-2.0.1";
+
+    src = pkgs.fetchurl {
+      url = "https://thp.io/2010/minidb/${name}.tar.gz";
+      sha256 = "1x958zr9jc26vaqij451qb9m2l7apcpz34ir9fwfjg4fwv24z2dy";
+    };
+
+    meta = {
+      description = "A simple SQLite3-based store for Python objects";
+      homepage = https://thp.io/2010/minidb/;
+      license = stdenv.lib.licenses.isc;
+      maintainers = [ stdenv.lib.maintainers.tv ];
     };
   };
 
@@ -5787,6 +5848,28 @@ in {
     propagatedBuildInputs = with self; [ logilab_common ];
   };
 
+  lpod = buildPythonPackage rec {
+    version = "1.1.5";
+    name = "python-lpod-${version}";
+    # lpod library currently does not support Python 3.x
+    disabled = isPy3k;
+
+    propagatedBuildInputs = with self; [ ];
+
+    src = pkgs.fetchFromGitHub {
+      owner = "lpod";
+      repo = "lpod-python";
+      rev = "v${version}";
+      sha256 = "1g909li511jkpcl26j1dzg8gn1ipkc374sh8vv54dx30sl0xfqxf";
+    };
+
+    meta = {
+      homepage = https://github.com/lpod/lpod-python/;
+      description = "Library implementing the ISO/IEC 26300 OpenDocument Format standard (ODF) ";
+      license = licenses.gpl3;
+    };
+  };
+
   mailchimp = buildPythonPackage rec {
     version = "2.0.9";
     name = "mailchimp-${version}";
@@ -6276,6 +6359,44 @@ in {
     };
   };
 
+  python-axolotl = buildPythonPackage rec {
+    name = "python-axolotl-${version}";
+    version = "0.1.7";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/p/python-axolotl/${name}.tar.gz";
+      sha256 = "1i3id1mjl67n4sca31s5zwq96kswgsi6lga6np83ayb45rxggvhx";
+    };
+
+    propagatedBuildInputs = with self; [ python-axolotl-curve25519 protobuf pycrypto ];
+
+    meta = {
+      homepage = https://github.com/tgalal/python-axolotl;
+      description = "Python port of libaxolotl-android";
+      maintainers = with maintainers; [ abbradar ];
+      license = licenses.gpl3;
+      platform = platforms.all;
+    };
+  };
+
+  python-axolotl-curve25519 = buildPythonPackage rec {
+    name = "python-axolotl-curve25519-${version}";
+    version = "0.1";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/p/python-axolotl-curve25519/${name}.tar.gz";
+      sha256 = "1h1rsdr7m8lvgxwrwng7qv0xxmyc9k0q7g9nbcr6ks2ipyjzcnf5";
+    };
+
+    meta = {
+      homepage = https://github.com/tgalal/python-axolotl;
+      description = "Curve25519 with ed25519 signatures";
+      maintainers = with maintainers; [ abbradar ];
+      license = licenses.gpl3;
+      platform = platforms.all;
+    };
+  };
+
   pypolicyd-spf = buildPythonPackage rec {
     name = "pypolicyd-spf-${version}";
     majorVersion = "1.3";
@@ -6511,11 +6632,11 @@ in {
   radicale = buildPythonPackage rec {
     name = "radicale-${version}";
     namePrefix = "";
-    version = "1.0.1";
+    version = "1.1.1";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/R/Radicale/Radicale-${version}.tar.gz";
-      sha256 = "0q0vxqg32lp9bzbqn06x7igwq3a9hcmpspvj3icyf0rlg786i2p1";
+      sha256 = "1c5lv8qca21mndkx350wxv34qypqh6gb4rhzms4anr642clq3jg2";
     };
 
     propagatedBuildInputs = with self; [
@@ -6524,7 +6645,7 @@ in {
       sqlalchemy
     ];
 
-    doCheck = false;
+    doCheck = true;
 
     meta = {
       homepage = http://www.radicale.org/;
@@ -7195,15 +7316,15 @@ in {
   };
 
   chardet = buildPythonPackage rec {
-    name = "chardet-2.1.1";
+    name = "chardet-2.3.0";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/c/chardet/${name}.tar.gz";
-      md5 = "295367fd210d20f3febda615a88e1ef0";
+      md5 = "25274d664ccb5130adae08047416e1a8";
     };
 
     meta = {
-      homepage = https://github.com/erikrose/chardet;
+      homepage = https://github.com/chardet/chardet;
       description = "Universal encoding detector";
       license = licenses.lgpl2;
       maintainers = with maintainers; [ iElectric ];
@@ -8429,8 +8550,6 @@ in {
     };
   });
 
-  foursuite = callPackage ../development/python-modules/4suite {};
-
   fs = buildPythonPackage rec {
     name = "fs-0.5.0";
 
@@ -8498,12 +8617,12 @@ in {
   };
 
   future = buildPythonPackage rec {
-    version = "0.14.3";
+    version = "0.15.2";
     name = "future-${version}";
 
     src = pkgs.fetchurl {
       url = "http://github.com/PythonCharmers/python-future/archive/v${version}.tar.gz";
-      sha256 = "0hgp9kq7h4ipw8ax5xvvkyh3bkqw361d3rndvb9xix01h9j9mi3p";
+      sha256 = "0vm61j5br6jiry6pgcxnwvxhki8ksnirp7k9mcbmxmgib3r60xd3";
     };
 
     doCheck = false;
@@ -10543,6 +10662,8 @@ in {
       sha256 = "1cd7d3dji8q4mvcnf9asxn8j109pd5g5d5shr6xvn0iwr35qprgi";
     };
 
+    disabled = isPyPy;
+
     buildInputs = with self; [ pyflakes pep8 ];
     propagatedBuildInputs = with self; [
       django_1_6 filebrowser_safe grappelli_safe bleach tzlocal beautifulsoup4
@@ -11145,6 +11266,25 @@ in {
       homepage = http://www.pygal.org;
       license = licenses.lgpl3;
       maintainers = with maintainers; [ sjourdois ];
+    };
+  };
+
+  pygraphviz = buildPythonPackage rec {
+    version = "1.3";
+    name = "pygraphviz-${version}";
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/pygraphviz/pygraphviz/archive/${name}.tar.gz";
+      sha256 = "1fhn123hy4qj0zmmmbx0q0r4hwikay13yirsp74niiw5d52y7ib8";
+    };
+
+    propagatedBuildInputs = [ pkgs.graphviz pkgs.pkgconfig ];
+
+    meta = {
+      description = "Python interface to Graphviz graph drawing package";
+      homepage = https://github.com/pygraphviz/pygraphviz;
+      license = licenses.bsd3;
+      maintainers = with maintainers; [ matthiasbeyer ];
     };
   };
 
@@ -17481,6 +17621,57 @@ in {
     };
   };
 
+  ruamel_base = buildPythonPackage rec {
+    name = "ruamel.base-${version}";
+    version = "1.0.0";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/r/ruamel.base/${name}.tar.gz";
+      sha256 = "1wswxrn4givsm917mfl39rafgadimf1sldpbjdjws00g1wx36hf0";
+    };
+
+    meta = {
+      description = "common routines for ruamel packages";
+      homepage = https://bitbucket.org/ruamel/base;
+      license = licenses.mit;
+    };
+  };
+
+  ruamel_ordereddict = buildPythonPackage rec {
+    name = "ruamel.ordereddict-${version}";
+    version = "0.4.9";
+    disabled = isPy3k || isPyPy;
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/r/ruamel.ordereddict/${name}.tar.gz";
+      sha256 = "1xmkl8v9l9inm2pyxgc1fm5005yxm7fkd5gv74q7lj1iy5qc8n3h";
+    };
+
+    meta = {
+      description = "a version of dict that keeps keys in insertion resp. sorted order";
+      homepage = https://bitbucket.org/ruamel/ordereddict;
+      license = licenses.mit;
+    };
+  };
+
+  ruamel_yaml = buildPythonPackage rec {
+    name = "ruamel.yaml-${version}";
+    version = "0.10.13";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/r/ruamel.yaml/${name}.tar.gz";
+      sha256 = "0r9mn5lm9dcxpy0wpn18cp7i5hkvjvknv3dxg8d9ca6km39m4asn";
+    };
+
+    propagatedBuildInputs = with self; [ ruamel_base ruamel_ordereddict ];
+
+    meta = {
+      description = "YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order";
+      homepage = https://bitbucket.org/ruamel/yaml;
+      license = licenses.mit;
+    };
+  };
+
   runsnakerun = buildPythonPackage rec {
     name = "runsnakerun-2.0.4";
 
@@ -17848,6 +18039,28 @@ in {
   };
 
 
+  shortuuid = buildPythonPackage rec {
+    name = "shortuuid-${version}";
+    version = "0.4.2";
+
+    disabled = isPy26;
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/s/shortuuid/${name}.tar.gz";
+      md5 = "142e3ae4e7cd32d41a71deb359db4cfe";
+    };
+
+    buildInputs = with self; [pep8];
+
+    meta = {
+      description = "A generator library for concise, unambiguous and URL-safe UUIDs.";
+      homepage = https://github.com/stochastic-technologies/shortuuid/;
+      license = licenses.bsd3;
+      maintainers = with maintainers; [ zagy ];
+    };
+  };
+
+
   simplejson = buildPythonPackage (rec {
     name = "simplejson-3.8.1";
 
@@ -18042,6 +18255,26 @@ in {
     meta = {
       description = "Geometric objects, predicates, and operations";
       homepage = "https://pypi.python.org/pypi/Shapely/";
+    };
+  };
+
+  sopel = buildPythonPackage rec {
+    name = "sopel-6.1.1";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/s/sopel/${name}.tar.gz";
+      sha256 = "0nr2a88bkxg2593dd947qkh96g8j32q7pl7x9zvx4158h4bgx99y";
+    };
+
+    propagatedBuildInputs = with self; [ praw xmltodict pytz pyenchant pygeoip ];
+
+    disabled = isPyPy || isPy26 || isPy27;
+
+    meta = {
+      description = "Simple and extensible IRC bot";
+      homepage = "http://sopel.chat";
+      license = licenses.efl20;
+      maintainers = with maintainers; [ mog ];
     };
   };
 
@@ -21639,6 +21872,24 @@ in {
       platforms = platforms.all;
     };
   };
+
+
+  whichcraft = buildPythonPackage rec {
+    name = "whichcraft-${version}";
+    version = "0.1.1";
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/pydanny/whichcraft/archive/${version}.tar.gz";
+      sha256 = "1xqp66knzlb01k30qic40vzwl51jmlsb8r96iv60m2ca6623abbv";
+    };
+
+    meta = {
+      homepage = https://github.com/pydanny/whichcraft;
+      description = "Cross-platform cross-python shutil.which functionality";
+      license = licenses.bsd3;
+    };
+  };
+
 
   whisper = buildPythonPackage rec {
     name = "whisper-${version}";

@@ -879,10 +879,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   _9pfs = callPackage ../tools/filesystems/9pfs { };
 
-  "3dfsb" = callPackage ../applications/misc/3dfsb {
-    glibc = glibc.override { debugSymbols = true; };
-  };
-
   a2ps = callPackage ../tools/text/a2ps { };
 
   abduco = callPackage ../tools/misc/abduco { };
@@ -2619,8 +2615,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   man = callPackage ../tools/misc/man { };
 
   man_db = callPackage ../tools/misc/man-db { };
-
-  mates = callPackage ../tools/misc/mates { };
 
   mawk = callPackage ../tools/text/mawk { };
 
@@ -5156,6 +5150,12 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   tbb = callPackage ../development/libraries/tbb { };
 
+  terra = callPackage ../development/compilers/terra {
+    llvm = llvmPackages_35.llvm.override { enableSharedLibraries = false; };
+    clang = clang_35;
+    lua = lua5_1;
+  };
+
   teyjus = callPackage ../development/compilers/teyjus {
     omake = omake_rc1;
   };
@@ -5740,6 +5740,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   coan = callPackage ../development/tools/analysis/coan { };
 
   complexity = callPackage ../development/tools/misc/complexity { };
+
+  cookiecutter = pythonPackages.cookiecutter;
 
   ctags = callPackage ../development/tools/misc/ctags { };
 
@@ -9154,6 +9156,10 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   postsrsd = callPackage ../servers/mail/postsrsd { };
 
+  rmilter = callPackage ../servers/mail/rmilter { };
+
+  rspamd = callPackage ../servers/mail/rspamd { };
+
   pshs = callPackage ../servers/http/pshs { };
 
   libpulseaudio = pulseaudioFull.override {
@@ -10883,9 +10889,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   audacious = callPackage ../applications/audio/audacious { };
 
-  audacity = callPackage ../applications/audio/audacity {
-    ffmpeg = ffmpeg_2_2;
-  };
+  audacity = callPackage ../applications/audio/audacity { };
 
   audio-recorder = callPackage ../applications/audio/audio-recorder { };
 
@@ -10934,10 +10938,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   backintime = backintime-qt4;
 
   bandwidth = callPackage ../tools/misc/bandwidth { };
-
-  bar = callPackage ../applications/window-managers/bar { };
-
-  bar-xft = callPackage ../applications/window-managers/bar/xft.nix { };
 
   baresip = callPackage ../applications/networking/instant-messengers/baresip {
     ffmpeg = ffmpeg_1;
@@ -12090,6 +12090,10 @@ zsh = callPackage ../all-pkgs/zsh { };
   ldcpp = callPackage ../applications/networking/p2p/ldcpp {
     inherit (gnome) libglade;
   };
+
+  lemonbar = callPackage ../applications/window-managers/lemonbar { };
+
+  lemonbar-xft = callPackage ../applications/window-managers/lemonbar/xft.nix { };
 
   leo-editor = callPackage ../applications/editors/leo-editor { };
 
@@ -15495,6 +15499,8 @@ aliases = with self; rec {
   adobeReader = adobe-reader;
   arduino_core = arduino-core;  # added 2015-02-04
   asciidocFull = asciidoc-full;  # added 2014-06-22
+  bar = lemonbar;  # added 2015-01-16
+  bar-xft = lemonbar-xft;  # added 2015-01-16
   bridge_utils = bridge-utils;  # added 2015-02-20
   buildbotSlave = buildbot-slave;  # added 2014-12-09
   cheetahTemplate = pythonPackages.cheetah; # 2015-06-15

@@ -99,6 +99,7 @@ in {
       package = mkOption {
         type = types.package;
         default = pulseaudioFull;
+        defaultText = "pkgs.pulseaudioFull";
         example = literalExample "pkgs.pulseaudioFull";
         description = ''
           The PulseAudio derivation to use.  This can be used to disable

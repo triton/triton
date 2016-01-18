@@ -4,6 +4,7 @@
 , which, jdk, openblas, curl, Cocoa, Foundation, cf-private, libobjc, tzdata
 , withRecommendedPackages ? true
 , xorg
+, enableStrictBarrier ? false
 }:
 
 stdenv.mkDerivation rec {
@@ -40,6 +41,7 @@ stdenv.mkDerivation rec {
       --with-system-pcre
       --with-system-xz
       --with-ICU
+      ${stdenv.lib.optionalString enableStrictBarrier "--enable-strict-barrier"}
       --enable-R-shlib
       AR=$(type -p ar)
       AWK=$(type -p gawk)

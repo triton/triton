@@ -6211,6 +6211,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   yacc = bison;
 
+  ycmd = callPackage ../development/tools/misc/ycmd { };
+
   yodl = callPackage ../development/tools/misc/yodl { };
 
   winpdb = callPackage ../development/tools/winpdb { };
@@ -12741,6 +12743,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   RhythmDelay = callPackage ../applications/audio/RhythmDelay { };
 
+  ricochet = qt5.callPackage ../applications/networking/instant-messengers/ricochet { };
+
   rkt = callPackage ../applications/virtualization/rkt { };
 
   rofi = callPackage ../applications/misc/rofi {
@@ -13055,9 +13059,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   termite = callPackage ../applications/misc/termite {
-    gtk = gtk3;
     vte = gnome3.vte-select-text;
-   };
+  };
 
   tesseract = callPackage ../applications/graphics/tesseract { };
 
@@ -13557,6 +13560,8 @@ zsh = callPackage ../all-pkgs/zsh { };
     GConf2 = gnome2.GConf;
   };
 
+  xmpp-client = go15Packages.xmpp-client.bin // { outputs = [ "bin" ]; };
+
   libxpdf = callPackage ../applications/misc/xpdf/libxpdf.nix { };
 
   xpra = callPackage ../tools/X11/xpra { inherit (texFunctions) fontsConf; };
@@ -13939,6 +13944,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   performous = callPackage ../games/performous { };
 
   pingus = callPackage ../games/pingus {};
+
+  pioneer = callPackage ../games/pioneer { };
 
   pioneers = callPackage ../games/pioneers { };
 

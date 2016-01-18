@@ -4986,6 +4986,21 @@ in {
     propagatedBuildInputs = with self; [ rpkg offtrac urlgrabber fedora_cert ];
   });
 
+  frozendict = buildPythonPackage rec {
+    name = "frozendict-0.5";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/f/frozendict/${name}.tar.gz";
+      sha256 = "0m4kg6hbadvf99if78nx01q7qnbyhdw3x4znl5dasgciyi54432n";
+    };
+
+    meta = {
+      homepage = https://github.com/slezica/python-frozendict;
+      description = "An immutable dictionary";
+      license = stdenv.lib.licenses.mit;
+    };
+  };
+
   fudge = buildPythonPackage rec {
     name = "fudge-0.9.6";
     src = pkgs.fetchurl {
@@ -13756,6 +13771,25 @@ in {
       sha256 = "15dl0ll5xmfzj2fsvajzwxsb9dbw5i9fx9i4r6n4i5nzzba7m6wd";
     };
     propagatedBuildInputs = [self.numpy];
+  };
+
+  paho-mqtt = buildPythonPackage rec {
+    name = "paho-mqtt-${version}";
+    version = "1.1";
+
+    disabled = isPyPy || isPy26;
+
+    src = pkgs.fetchurl {
+        url = "https://pypi.python.org/packages/source/p/paho-mqtt/${name}.tar.gz";
+        sha256 = "07i6k9mw66kgbvjgsrcsd2sjji9ckym50dcxnmhjqfkfzsg64yhg";
+    };
+
+    meta = {
+      homepage = "https://eclipse.org/paho/";
+      description = "mqtt library for machine to machine and internet of things";
+      license = licenses.epl10;
+      maintainers = with maintainers; [ mog ];
+    };
   };
 
   parsedatetime = buildPythonPackage rec {
@@ -22882,16 +22916,6 @@ in {
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/d/daemonize/daemonize-${version}.tar.gz";
       sha256 = "0y139sq657bpzfv6k0aqm4071z4s40i6ybpni9qvngvdcz6r86n2";
-    };
-  };
-
-  frozendict = buildPythonPackage rec {
-    name = "frozendict-${version}";
-    version = "0.5";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/f/frozendict/frozendict-0.5.tar.gz";
-      sha256 = "0m4kg6hbadvf99if78nx01q7qnbyhdw3x4znl5dasgciyi54432n";
     };
   };
 

@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
       for i in src/remount-fs/remount-fs.c src/core/mount.c src/core/swap.c src/fsck/fsck.c units/emergency.service.in units/rescue.service.in src/journal/cat.c src/core/shutdown.c src/nspawn/nspawn.c src/shared/generator.c; do
         test -e $i
         substituteInPlace $i \
-          --replace /usr/bin/getent ${stdenv.glibc}/bin/getent \
+          --replace /usr/bin/getent ${stdenv.cc.libc}/bin/getent \
           --replace /bin/mount ${utillinux}/bin/mount \
           --replace /bin/umount ${utillinux}/bin/umount \
           --replace /sbin/swapon ${utillinux}/sbin/swapon \

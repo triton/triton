@@ -18,7 +18,7 @@
 
 # Passthru
 , callPackage
-, self ? null
+, self
 }:
 
 /*
@@ -130,7 +130,7 @@ stdenv.mkDerivation rec {
     configureFlagsArray+=(
       CPPFLAGS="${concatStringsSep " " (map (p: "-I${p}/include") buildInputs)}"
       LDFLAGS="${concatStringsSep " " (map (p: "-L${p}/lib") buildInputs)}"
-      LIBS="${optionalString (ncurses != null) "-lncurses"}"
+      LIBS="-lncurses"
     )
   '';
 

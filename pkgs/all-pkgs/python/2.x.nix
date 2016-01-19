@@ -18,7 +18,7 @@
 
 # Passthru
 , callPackage
-, self ? null
+, self
 }:
 
 /*
@@ -30,6 +30,7 @@
  *
  * TODO:
  * - Fix dl module support (currently fails to build)
+ * - Fix sqlite loadable extensions
  */
 
 with {
@@ -105,12 +106,6 @@ stdenv.mkDerivation rec {
       file = "python/python-2.x-nix-store-mtime.patch";
       sha256 = "0869ba7b51b1c4b8f9779118a75ce34332a69f41909e5dfcd9305d2a9bcce638";
     })
-    # Look in C_INCLUDE_PATH and LIBRARY_PATH for module dependencies.
-    (fetchTritonPatch {
-      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
-      file = "python/python-2.x-search-path.patch";
-      sha256 = "b055ca65c28152cf8ca0f827f972b2b552c4a1df4b4aec1fb59130b153c68794";
-    })
   ];
 
   postPatch =
@@ -119,11 +114,6 @@ stdenv.mkDerivation rec {
     for i in /usr /sw /opt /pkg ; do
       substituteInPlace ./setup.py \
         --replace $i /no-such-path
-    done
-  '' + optionalString (stdenv ? cc && stdenv.cc.libc != null) ''
-    for i in Lib/plat-*/regen ; do
-      substituteInPlace $i \
-        --replace /usr/include/ ${stdenv.cc.libc}/include/
     done
   '';
 
@@ -153,7 +143,7 @@ stdenv.mkDerivation rec {
   ];
 
   # Should this be stdenv.cc.isGnu???
-  NIX_LDFLAGS = optionalString isLinux "-lgcc_s";
+  NIX_LDFLAGS = "-lgcc_s";
 
   preConfigure =
     /* Something here makes portions of the build magically work,
@@ -161,7 +151,7 @@ stdenv.mkDerivation rec {
     configureFlagsArray+=(
       CPPFLAGS="${concatStringsSep " " (map (p: "-I${p}/include") buildInputs)}"
       LDFLAGS="${concatStringsSep " " (map (p: "-L${p}/lib") buildInputs)}"
-      LIBS="${optionalString (ncurses != null) "-lncurses"}"
+      LIBS="-lncurses"
     )
   '';
 
@@ -179,85 +169,6 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  # Generated from: cat ./setup.py | grep -o -P "(?<=Extension\(').*(?=',)"
-  modules = [
-    "_weakref"
-    "array"
-    "cmath"
-    "math"
-    "strop"
-    "time"
-    "datetime"
-    "future_builtins"
-    "operator"
-    "_testcapi"
-    "_hotshot"
-    "_lsprof"
-    "unicodedata"
-    "_locale"
-    "fcntl"
-    "pwd"
-    "grp"
-    "spwd"
-    "select"
-    "parser"
-    "cStringIO"
-    "cPickle"
-    "mmap"
-    "syslog"
-    "timing"
-    "audioop"
-    #"imageop"
-    "readline"
-    "crypt"
-    "_csv"
-    "_socket"
-    "_ssl"
-    "_hashlib"
-    "_sha"
-    "_md5"
-    "_sha256"
-    "_sha512"
-    "_bsddb"
-    "_sqlite3"
-    #"bsddb185"
-    "dbm"
-    "dbm"
-    "gdbm"
-    "termios"
-    "resource"
-    "nis"
-    "_curses"
-    "_curses_panel"
-    "zlib"
-    "binascii"
-    "bz2"
-    "pyexpat"
-    "_elementtree"
-    "_multibytecodec"
-    "dl"
-    "_multiprocessing"
-    "linuxaudiodev"
-    "ossaudiodev"
-    #"sunaudiodev" # Solaris
-    #"_CF" # OSX
-    "autoGIL"
-    #"_Win" # Windows
-    "_Launch"
-    "_CG"
-    "_Qt"
-    "xx"
-    #"_tkinter" # IDLE
-    "_ctypes"
-    "_ctypes_test"
-    "_struct"
-  ];
-
-
-  MODULE_LIST = "${concatStringsSep "," modules}";
-  C_INCLUDE_PATH = "${concatStringsSep ":" (map (p: "${p}/include") buildInputs)}";
-  LIBRARY_PATH = "${concatStringsSep ":" (map (p: "${p}/lib") buildInputs)}";
-
   postInstall =
     /* Needed for some packages, especially packages that
        backport functionality to 2.x from 3.x */ ''
@@ -272,12 +183,6 @@ stdenv.mkDerivation rec {
     touch $out/lib/python${versionMajor}/test/__init__.py
   '' + ''
     paxmark E $out/bin/python${versionMajor}
-  '' +
-    /* This uses the python interpreter that was just built to
-       run the script to build the modules. */ ''
-    substituteInPlace setup.py --replace 'self.extensions = extensions' \
-      'self.extensions = [ext for ext in self.extensions if ext.name in ["${MODULE_LIST}"]]'
-    $out/bin/python${versionMajor} ./setup.py build_ext
   '' + ''
     # TODO: reference reason for pdb symlink
     ln -sv $out/lib/python${versionMajor}/pdb.py $out/bin/pdb

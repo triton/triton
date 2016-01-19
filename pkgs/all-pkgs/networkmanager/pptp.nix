@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, networkmanager, pptp, ppp, intltool, pkgconfig, substituteAll
+{ stdenv, fetchTritonPatch, fetchurl, networkmanager, pptp, ppp, intltool, pkgconfig, substituteAll
 , libsecret, withGnome ? true, gnome3 }:
 
 stdenv.mkDerivation rec {
@@ -24,7 +24,12 @@ stdenv.mkDerivation rec {
 
   patches =
     [ ( substituteAll {
-        src = ./pptp-purity.patch;
+        src =
+          (fetchTritonPatch {
+            rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+            file = "networkmanager/pptp-purity.patch";
+            sha256 = "8d3359767c1acb8cf36eff094763b8f9ce0a860e2b20f585e0922ee2c4750c23";
+          });
         inherit ppp pptp;
       })
     ];

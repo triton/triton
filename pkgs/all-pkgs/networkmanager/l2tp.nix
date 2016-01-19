@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, substituteAll, automake, autoconf, libtool, intltool, pkgconfig
+{ stdenv, fetchTritonPatch, fetchFromGitHub, substituteAll, automake, autoconf, libtool, intltool, pkgconfig
 , networkmanager, ppp, xl2tpd, strongswan
 , withGnome ? true, gnome3 }:
 
@@ -28,7 +28,12 @@ stdenv.mkDerivation rec {
 
   patches =
     [ ( substituteAll {
-        src = ./l2tp-purity.patch;
+        src =
+          (fetchTritonPatch {
+            rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+            file = "networkmanager/l2tp-purity.patch";
+            sha256 = "e170efd7f3d96c61898a79569b570c435d8503a9ae021ed820feba1c82cb4089";
+          });
         inherit xl2tpd strongswan;
       })
     ];

@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , gettext
 , intltool
@@ -48,7 +49,11 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    ./nm-platform.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "networkmanager/networkmanager-platform.patch";
+      sha256 = "45d0235d3af0b8e471c2c7e14eb5bfc9e8029c6f5878c998e5273e84afab3e15";
+    })
   ];
 
   configureFlags = [

@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , libtool
 
@@ -26,7 +27,11 @@ stdenv.mkDerivation rec {
 
   patches = [
     # gtk: Don't assume all GdkDisplays are GdkX11Displays: broadway/wayland (from 'master')
-    ./libcanberra-0.30-wayland.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "libcanberra/libcanberra-0.30-wayland.patch";
+      sha256 = "ab3a989e346f871b22c99bcb8b6203eb800bc83f66269f3c26133a1edf5fbd5d";
+    })
   ];
 
   configureFlags = [

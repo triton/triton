@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, intltool, pkgconfig, dbus_glib
+{ stdenv, fetchTritonPatch, fetchurl, intltool, pkgconfig, dbus_glib
 , udev, libnl, libuuid, gnutls, dhcp
 , libgcrypt, perl, libgudev }:
 
@@ -39,10 +39,18 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ intltool pkgconfig ];
 
-  patches =
-    [ ./libnl-3.2.25.patch
-      ./nixos-purity.patch
-    ];
+  patches = [
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "networkmanager/libnl-3.2.25.patch";
+      sha256 = "239e2d55430ce75c02d3deb6bac2866bb802916687d7494d3d8b9cf68bff0d62";
+    })
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "networkmanager/networkmanager-nixos-purity.patch";
+      sha256 = "1dcb30fe8f52df17df7f46230acd27a881b4e4e01ff074c36bf9d2efc9e39fca";
+    })
+  ];
 
   preInstall =
     ''

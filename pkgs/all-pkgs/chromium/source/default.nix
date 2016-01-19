@@ -1,4 +1,8 @@
-{ stdenv, fetchurl, fetchpatch, patchutils, python
+{ stdenv
+, fetchTritonPatch
+, fetchurl
+, patchutils
+, python
 , channel ? "stable"
 }:
 
@@ -44,7 +48,12 @@ in stdenv.mkDerivation {
   patches =
     singleton ./nix_plugin_paths_46.patch ++
     singleton ./build_fixes_46.patch ++
-    singleton ./widevine.patch;
+    singleton
+      (fetchTritonPatch {
+        rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+        file = "chromium/chromium-widevine.patch";
+        sha256 = "379b746e187de28f80f5a7cd19edcfa31859656826f802a1ede054fcb6dfb221";
+      });
 
   patchPhase = let
     diffmod = sym: "/^${sym} /{s/^${sym} //;${transform ""};s/^/${sym} /}";

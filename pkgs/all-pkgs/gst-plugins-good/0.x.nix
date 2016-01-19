@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , gettext
 
@@ -41,8 +42,16 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    ./gstreamer-0.10-v4l.patch
-    ./gstreamer-0.10-linux-headers-3.9.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "gst-plugins-good/gst-plugins-good-0.10-linux-headers-3.9.patch";
+      sha256 = "7879536fb933ac39cfb9f15ec9e4f766c72cac4872e388ae40c1a4a86cb5ae11";
+    })
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "gst-plugins-good/gst-plugins-good-0.10-v4l.patch";
+      sha256 = "c962291adeb0eb2e5002e8b743d2efa7bcebe7cff199b5d8973fd12b9822899f";
+    })
   ];
 
   configureFlags = [

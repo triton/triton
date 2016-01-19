@@ -314,8 +314,8 @@ rec {
     };
 
     extraAttrs = rec {
-      inherit (stage1Pkgs) glibc;
       inherit platform;
+      libc = stage1Pkgs.glibc;
       shellPackage = stage3Pkgs.gcc.shell;
       bootstrappedPackages' = lib.attrValues (overrides {}) ++ [ cc.cc ];
       bootstrappedPackages = [ stdenvLinux ] ++ bootstrappedPackages';

@@ -2,6 +2,7 @@
 , autoconf
 , autoconf-archive
 , automake
+, fetchTritonPatch
 , fetchurl
 , gettext
 , makeWrapper
@@ -90,7 +91,11 @@ stdenv.mkDerivation rec {
   patches = [
   	# default ax_with_curses.m4 produces automagic dependency on ncursesw
   	# also, ncursesw is required for colors, so we force it here
-    ./ncmpc-0.24-ncursesw.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "ncmpc/ncmpc-0.24-ncursesw.patch";
+      sha256 = "946aa473365b57533b4ba1ca908b1bea9684a529193b5c402ad8701d5713a2d3";
+    })
   ];
 
   nativeBuildInputs = [
@@ -132,11 +137,11 @@ stdenv.mkDerivation rec {
     "--disable-documentation"
   ];
 
-  preConfigure = ''
-    # Re-run autoreconf after patching
+  preConfigure =
+    /* Re-run autoreconf after patching */ ''
     ./autogen.sh
-  '' + optionalString (lirc != null) ''
-    # upstream lirc doesn't have a pkg-config file
+  '' + optionalString (lirc != null)
+    /* upstream lirc doesn't have a pkg-config file */ ''
     export LIBLIRCCLIENT_CFLAGS="-I${lirc}/include/lirc"
     export LIBLIRCCLIENT_LIBS="-llirc_client"
   '';

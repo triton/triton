@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   # This is to avoid self-references, which causes the initrd to explode
   # in size and in turn prevents mdraid systems from booting.
-  allowedReferences = [ stdenv.glibc ];
+  allowedReferences = [ stdenv.cc.libc ];
 
   patches = [ ./no-self-references.patch ];
 

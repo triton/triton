@@ -12,7 +12,9 @@
 
 with {
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    optionals
+    wtFlag;
 };
 
 let
@@ -34,8 +36,8 @@ stdenv.mkDerivation {
   patchPhase = ''
     patchShebangs ./Misc/
     patchShebangs ./Util/
-
-    # Test fails on filesystems with noatime
+  '' +
+  /* Test requires filesystem with noatime */ ''
     rm -f ./Test/C02cond.ztst
   '';
 
@@ -60,14 +62,15 @@ stdenv.mkDerivation {
     "--enable-function-subdirs"
     "--enable-maildir-support"
     "--enable-readnullcmd=pager"
-    "--enable-pcre"
-    "--enable-cap"
-    "--enable-gdbm"
+    (enFlag "pcre" (pcre != null) null)
+    (enFlag "cap" (libcap != null) null)
+    (enFlag "gdbm" (gdbm != null) null)
     "--enable-largefile"
     "--enable-multibyte"
+    # TODO: musl libc support
     "--disable-libc-musl"
     "--enable-dynamic-nss"
-    "--with-term-lib=ncursesw"
+    (wtFlag "term-lib" (ncurses != null) "ncursesw")
     "--with-tcsetpgrp"
   ];
 
@@ -77,16 +80,19 @@ stdenv.mkDerivation {
 
   buildInputs = [
     coreutils
+    gdbm
     ncurses
     pcre
+  ] ++ optionals (!stdenv.cc.isGNU) [
+    libiconv
   ];
 
   postInstall = ''
-    mkdir -p $out/share/
+    mkdir -p $out/share
     tar xf ${documentation} -C $out/share
-
-    # TODO: convert this to install a static file
-    mkdir -p $out/etc/
+  '' +
+  /* TODO: convert this to install a static file */ ''
+    mkdir -p $out/etc
     cat > $out/etc/zprofile <<EOF
     if test -e /etc/NIXOS; then
       if test -r /etc/zprofile; then

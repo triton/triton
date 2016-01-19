@@ -653,6 +653,8 @@ highlight = callPackage ../all-pkgs/highlight { };
 
 hwdata = callPackage ../all-pkgs/hwdata { };
 
+iputils = callPackage ../all-pkgs/iputils { };
+
 json-glib = callPackage ../all-pkgs/json-glib { };
 
 libass = callPackage ../all-pkgs/libass { };
@@ -9783,11 +9785,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   iotop = callPackage ../os-specific/linux/iotop { };
 
   iproute = callPackage ../os-specific/linux/iproute { };
-
-  iputils = callPackage ../os-specific/linux/iputils {
-    sp = spCompat;
-    inherit (perlPackages) SGMLSpm;
-  };
 
   iptables = callPackage ../os-specific/linux/iptables { };
 

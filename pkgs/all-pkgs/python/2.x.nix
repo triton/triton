@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , bzip2
@@ -6,7 +7,6 @@
 , expat
 , gdbm
 , libffi
-, lzma
 , ncurses
 , openssl
 , readline
@@ -23,10 +23,13 @@
 
 /*
  * Test the following packages when making major changes, as they
- * look for or link against libpython:
+ *   look for or link against libpython:
  * - gst-python 0.10.x & 1.x
  * - libtorrent-rasterbar
  * - pycairo
+ *
+ * TODO:
+ * - Fix dl module support (currently fails to build)
  */
 
 with {
@@ -59,7 +62,7 @@ let
 in
 
 assert channel != null;
-assert isPy3;
+assert isPy2;
 
 stdenv.mkDerivation rec {
   name = "python-${version}";
@@ -80,12 +83,47 @@ stdenv.mkDerivation rec {
     preferLocalBuild = true;
   };
 
+  patches = [
+    # Patch python to put zero timestamp into pyc
+    # if DETERMINISTIC_BUILD env var is set
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "python/python-2.7-deterministic-build.patch";
+      sha256 = "7b8ed591008f8f0dafb7f2c95d06404501c84223197fe138df75791f12a9dc24";
+    })
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "python/python-2.7-properly-detect-curses.patch";
+      sha256 = "c0d17df5f1c920699f68a1c87973d626ea8423a4881927b0ac7a20f88ceedcb4";
+    })
+    # Python recompiles a Python if the mtime stored *in* the
+    # pyc/pyo file differs from the mtime of the source file.  This
+    # doesn't work in Nix because Nix changes the mtime of files in
+    # the Nix store to 1.  So treat that as a special case.
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "python/python-2.x-nix-store-mtime.patch";
+      sha256 = "0869ba7b51b1c4b8f9779118a75ce34332a69f41909e5dfcd9305d2a9bcce638";
+    })
+    # Look in C_INCLUDE_PATH and LIBRARY_PATH for module dependencies.
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "python/python-2.x-search-path.patch";
+      sha256 = "b055ca65c28152cf8ca0f827f972b2b552c4a1df4b4aec1fb59130b153c68794";
+    })
+  ];
+
   postPatch =
     /* Prevent setup.py from looking for include/lib
        directories in impure paths */ ''
     for i in /usr /sw /opt /pkg ; do
       substituteInPlace ./setup.py \
         --replace $i /no-such-path
+    done
+  '' + optionalString (stdenv ? cc && stdenv.cc.libc != null) ''
+    for i in Lib/plat-*/regen ; do
+      substituteInPlace $i \
+        --replace /usr/include/ ${stdenv.cc.libc}/include/
     done
   '';
 
@@ -95,20 +133,11 @@ stdenv.mkDerivation rec {
     "--enable-shared"
     #"--disable-profiling"
     "--disable-toolbox-glue"
-    "--enable-loadable-sqlite-extensions"
     "--enable-ipv6"
-    #"--enable-big-digits"
+    "--enable-unicode=ucs4"
     #(wtFlag "gcc" (!stdenv.cc.isClang) null)
-    #"--with-hash-algorithm"
-    # Flag is not a boolean
-    (verFlag (versionAtLeast versionMajor "3.5")
-      (if stdenv.cc.isClang then
-        "--with-address-sanitizer"
-       else
-         null))
     "--with-system-expat"
     "--with-system-ffi"
-    #"--with-system-libmpdec"
     #"--with-dbmliborder"
     #"--with-signal-module"
     "--with-threads"
@@ -126,7 +155,9 @@ stdenv.mkDerivation rec {
   # Should this be stdenv.cc.isGnu???
   NIX_LDFLAGS = optionalString isLinux "-lgcc_s";
 
-  preConfigure = ''
+  preConfigure =
+    /* Something here makes portions of the build magically work,
+       otherwise boost_python never builds */ ''
     configureFlagsArray+=(
       CPPFLAGS="${concatStringsSep " " (map (p: "-I${p}/include") buildInputs)}"
       LDFLAGS="${concatStringsSep " " (map (p: "-L${p}/lib") buildInputs)}"
@@ -140,7 +171,6 @@ stdenv.mkDerivation rec {
     expat
     gdbm
     libffi
-    lzma
     ncurses
     openssl
     readline
@@ -149,11 +179,88 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  # Generated from: cat ./setup.py | grep -o -P "(?<=Extension\(').*(?=',)"
+  modules = [
+    "_weakref"
+    "array"
+    "cmath"
+    "math"
+    "strop"
+    "time"
+    "datetime"
+    "future_builtins"
+    "operator"
+    "_testcapi"
+    "_hotshot"
+    "_lsprof"
+    "unicodedata"
+    "_locale"
+    "fcntl"
+    "pwd"
+    "grp"
+    "spwd"
+    "select"
+    "parser"
+    "cStringIO"
+    "cPickle"
+    "mmap"
+    "syslog"
+    "timing"
+    "audioop"
+    #"imageop"
+    "readline"
+    "crypt"
+    "_csv"
+    "_socket"
+    "_ssl"
+    "_hashlib"
+    "_sha"
+    "_md5"
+    "_sha256"
+    "_sha512"
+    "_bsddb"
+    "_sqlite3"
+    #"bsddb185"
+    "dbm"
+    "dbm"
+    "gdbm"
+    "termios"
+    "resource"
+    "nis"
+    "_curses"
+    "_curses_panel"
+    "zlib"
+    "binascii"
+    "bz2"
+    "pyexpat"
+    "_elementtree"
+    "_multibytecodec"
+    "dl"
+    "_multiprocessing"
+    "linuxaudiodev"
+    "ossaudiodev"
+    #"sunaudiodev" # Solaris
+    #"_CF" # OSX
+    "autoGIL"
+    #"_Win" # Windows
+    "_Launch"
+    "_CG"
+    "_Qt"
+    "xx"
+    #"_tkinter" # IDLE
+    "_ctypes"
+    "_ctypes_test"
+    "_struct"
+  ];
+
+
+  MODULE_LIST = "${concatStringsSep "," modules}";
+  C_INCLUDE_PATH = "${concatStringsSep ":" (map (p: "${p}/include") buildInputs)}";
+  LIBRARY_PATH = "${concatStringsSep ":" (map (p: "${p}/lib") buildInputs)}";
+
   postInstall =
     /* Needed for some packages, especially packages that
        backport functionality to 2.x from 3.x */ ''
-    # needed for some packages, especially packages that backport functionality
-    # to 2.x from 3.x
     for item in $out/lib/python${versionMajor}/test/* ; do
       if [[ "$item" != */test_support.py* ]]; then
         rm -rvf "$item"
@@ -166,19 +273,16 @@ stdenv.mkDerivation rec {
   '' + ''
     paxmark E $out/bin/python${versionMajor}
   '' +
-    /* Some programs look for libpython<major>.<minor>.so */ ''
-    if [[ ! -f "$out/lib/libpython${versionMajor}.so" ]] ; then
-      ln -sv \
-        $out/lib/libpython3.so \
-        $out/lib/libpython${versionMajor}.so
-    fi
-  '' +
-    /* Symlink include directory */ ''
-    if [[ ! -d "$out/include/python${versionMajor}" ]] ; then
-      ln -sv \
-        $out/include/python${versionMajor}m \
-        $out/include/python${versionMajor}
-    fi
+    /* This uses the python interpreter that was just built to
+       run the script to build the modules. */ ''
+    substituteInPlace setup.py --replace 'self.extensions = extensions' \
+      'self.extensions = [ext for ext in self.extensions if ext.name in ["${MODULE_LIST}"]]'
+    $out/bin/python${versionMajor} ./setup.py build_ext
+  '' + ''
+    # TODO: reference reason for pdb symlink
+    ln -sv $out/lib/python${versionMajor}/pdb.py $out/bin/pdb
+    ln -sv $out/lib/python${versionMajor}/pdb.py $out/bin/pdb${versionMajor}
+    ln -sv $out/share/man/man1/{python2.7.1.gz,python.1.gz}
   '';
 
   # TODO: move tests to checkPhase
@@ -189,8 +293,8 @@ stdenv.mkDerivation rec {
     $out/bin/python${versionMajor} -c "import ctypes"
     $out/bin/python${versionMajor} -c "import curses"
     $out/bin/python${versionMajor} -c "from curses import panel"
-    $out/bin/python${versionMajor} -c "from dbm import gnu"
-    $out/bin/python${versionMajor} -c "import lzma"
+    #$out/bin/python${versionMajor} -c "import dl"
+    $out/bin/python${versionMajor} -c "import gdbm"
     $out/bin/python${versionMajor} -c "import math"
     $out/bin/python${versionMajor} -c "import readline"
     $out/bin/python${versionMajor} -c "import sqlite3"
@@ -198,6 +302,8 @@ stdenv.mkDerivation rec {
     $out/bin/python${versionMajor} -c "import zlib"
   '';
 
+  # Used by python-2.7-deterministic-build.patch
+  DETERMINISTIC_BUILD = 1;
   enableParallelBuilding = true;
 
   passthru = rec {
@@ -215,8 +321,8 @@ stdenv.mkDerivation rec {
     libPrefix = "python${versionMajor}";
     executable = "python${versionMajor}";
     buildEnv = callPackage ../wrapper.nix { python = self; };
-    isPy2 = false;
-    isPy3 = true;
+    isPy2 = true;
+    isPy3 = false;
     sitePackages = "lib/${libPrefix}/site-packages";
     interpreter = "${self}/bin/${executable}";
   };

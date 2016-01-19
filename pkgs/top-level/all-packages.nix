@@ -767,7 +767,7 @@ poppler = callPackage ../all-pkgs/poppler {
   qt5 = null;
 };
 
-python27 = callPackage ../all-pkgs/python {
+python27 = callPackage ../all-pkgs/python/2.x.nix {
   channel = "2.7";
   self = python27;
 };

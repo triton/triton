@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , gstreamer
@@ -17,7 +18,11 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    ./gst-python-1.0-different-path-with-pygobject.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "gst-python/gst-python-1.0-different-path-with-pygobject.patch";
+      sha256 = "7c83295005351c1bffd9c5d1816647753c434c8bdaf575779c25afd31eaa4adb";
+    })
   ];
 
   configureFlags = [

@@ -1,11 +1,12 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , gst-plugins-base_0
 , gstreamer_0
 , libxml2
-, python
-, pythonPackages
+, python2
+, python2Packages
 }:
 
 stdenv.mkDerivation rec {
@@ -18,7 +19,11 @@ stdenv.mkDerivation rec {
 
   patches = [
     # https://bugzilla.gnome.org/show_bug.cgi?id=692479
-    ./gst-python-0.10-disable-broken-test.patch
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "gst-python/gst-python-0.10-disable-broken-test.patch";
+      sha256 = "b8d3147dd22899f7d75e0933470514a02474a3f2a47fb99c835fce7ac0aab5d4";
+    })
   ];
 
   postPatch = ''
@@ -37,9 +42,9 @@ stdenv.mkDerivation rec {
     gst-plugins-base_0
     gstreamer_0
     libxml2
-    python
-    pythonPackages.pygobject
-    pythonPackages.pygtk
+    python2
+    python2Packages.pygobject
+    python2Packages.pygtk
   ];
 
   enableParallelBuilding = true;

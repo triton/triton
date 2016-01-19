@@ -19,13 +19,11 @@ rec {
   /* doConfigure should be removed if not needed */
   phaseNames = ["doCmake" "doMakeInstall" "postInstall"];
 
-  libc = if a.stdenv ? glibc then a.stdenv.glibc else "";
-
   doCmake = a.fullDepEntry(''
     mkdir -p $PWD/builddir
     cd builddir
     export NIX_LDFLAGS="$NIX_LDFLAGS -ldl -L$out/lib"
-    cmake .. -DCMAKE_BUILD_TYPE=debug -DCMAKE_INSTALL_PREFIX=$out -DDL_LIB=${libc}/lib
+    cmake .. -DCMAKE_BUILD_TYPE=debug -DCMAKE_INSTALL_PREFIX=$out -DDL_LIB=${stdenv.libc}/lib
   '') ["minInit" "addInputs" "doUnpack" "defEnsureDir"];
 
   needLib64 = a.stdenv.system == "x86_64-linux";

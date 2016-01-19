@@ -1,4 +1,4 @@
-{stdenv, fetchurl, gettext}:
+{ stdenv, fetchurl, gettext }:
 
 assert stdenv.isLinux && stdenv ? glibc;
 

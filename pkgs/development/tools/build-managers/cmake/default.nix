@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   patches =
     # Don't search in non-Nix locations such as /usr, but do search in
     # Nixpkgs' Glibc.
-    optional (stdenv ? glibc) ./search-path-3.2.patch
+    optional (stdenv ? libc) ./search-path-3.2.patch
     ++ optional stdenv.isCygwin ./3.2.2-cygwin.patch;
 
   buildInputs =
@@ -56,12 +56,12 @@ stdenv.mkDerivation rec {
 
   dontUseCmakeConfigure = true;
 
-  preConfigure = optionalString (stdenv ? glibc)
+  preConfigure = optionalString (stdenv ? libc)
     ''
       source $setupHook
       fixCmakeFiles .
       substituteInPlace Modules/Platform/UnixPaths.cmake \
-        --subst-var-by glibc ${stdenv.glibc}
+        --subst-var-by libc ${stdenv.libc}
     '';
 
   meta = {

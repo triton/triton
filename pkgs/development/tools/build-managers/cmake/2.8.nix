@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     })] ++
     # Don't search in non-Nix locations such as /usr, but do search in
     # Nixpkgs' Glibc. 
-    optional (stdenv ? glibc) ./search-path.patch ++
+    optional (stdenv ? libc) ./search-path.patch ++
     optional (stdenv ? cross) (fetchurl {
       name = "fix-darwin-cross-compile.patch";
       url = "http://public.kitware.com/Bug/file_download.php?"
@@ -57,11 +57,11 @@ stdenv.mkDerivation rec {
 
   dontUseCmakeConfigure = true;
 
-  preConfigure = optionalString (stdenv ? glibc)
+  preConfigure = optionalString (stdenv ? libc)
     ''
       source $setupHook
       fixCmakeFiles .
-      substituteInPlace Modules/Platform/UnixPaths.cmake --subst-var-by glibc ${stdenv.glibc}
+      substituteInPlace Modules/Platform/UnixPaths.cmake --subst-var-by libc ${stdenv.libc}
     '';
 
   meta = {

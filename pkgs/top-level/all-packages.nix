@@ -700,6 +700,8 @@ mixxx = callPackage ../all-pkgs/mixxx {
   inherit (vamp) vampSDK;
 };
 
+mkvtoolnix = callPackage ../all-pkgs/mkvtoolnix { };
+
 mpd = callPackage ../all-pkgs/mpd { };
 
 mpdris2 = callPackage ../all-pkgs/mpdris2 { };
@@ -7774,15 +7776,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   miro = callPackage ../applications/video/miro {
     inherit (pythonPackages) pywebkitgtk pycurl mutagen;
-  };
-
-  mkvtoolnix = callPackage ../applications/video/mkvtoolnix { };
-
-  mkvtoolnix-cli = mkvtoolnix.override {
-    withGUI = false;
-    qt5 = null;
-    legacyGUI = false;
-    wxGTK = null;
   };
 
   mlt-qt4 = callPackage ../development/libraries/mlt {

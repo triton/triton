@@ -1,4 +1,5 @@
-{ stdenv, fetchurl
+{ stdenv
+, fetchurl
 , yasm
 
 , enable10bit ? false
@@ -15,19 +16,21 @@ with {
 };
 
 assert enable10bit -> is64bit;
-assert (chroma == "420" ||
-        chroma == "422" ||
-        chroma == "444" ||
-        chroma == "all");
+assert (
+  chroma == "420" ||
+  chroma == "422" ||
+  chroma == "444" ||
+  chroma == "all"
+);
 
 stdenv.mkDerivation rec {
   name = "x264-${version}";
-  version = "20151213";
+  version = "20160119";
 
   src = fetchurl {
     url = "http://ftp.videolan.org/pub/videolan/x264/snapshots/" +
           "x264-snapshot-${version}-2245-stable.tar.bz2";
-    sha256 = "1kx8y77715d97z3xs02wdy95p5nbgw27ks2pd1cwc96q2nl1jgjb";
+    sha256 = "1m7gncijx5wpsgrallmam8zl0sshx3di6svv0kj8rnp3wydn8q98";
   };
 
   postPatch = ''

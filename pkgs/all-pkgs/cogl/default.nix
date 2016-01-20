@@ -36,21 +36,21 @@ stdenv.mkDerivation rec {
     sha256 = "14daxqrid5039xmq9yl4pk86awng1n9zgl6ysblhc4gw2ifzp7b8";
   };
 
-  postPatch = ''
-    # Do not build examples
-    sed -e "s/^\(SUBDIRS +=.*\)examples\(.*\)$/\1\2/" \
-      -i Makefile.am Makefile.in
-
-    # Fix library name in pkgconfig file
+  postPatch =
+  /* Don't build examples */ ''
+    sed -i Makefile.{am,in} \
+      -e "s/^\(SUBDIRS +=.*\)examples\(.*\)$/\1\2/"
+  '' +
+  /* Fix library name in pkg-config file */ ''
     sed -i cogl-pango/cogl-pango-2.0-experimental.pc.in \
       -e 's|-lcoglpango|-lcogl-pango|'
-  '' + optionalString (!doCheck) ''
-    # For some reason the configure switch will not completely disable
-    # tests being built
-    sed -e "s/^\(SUBDIRS =.*\)test-fixtures\(.*\)$/\1\2/" \
+  '' + optionalString (!doCheck)
+  /* The configure switch does not completely disable
+     tests from being built */ ''
+    sed -i Makefile.{am,in} \
+      -e "s/^\(SUBDIRS =.*\)test-fixtures\(.*\)$/\1\2/" \
       -e "s/^\(SUBDIRS +=.*\)tests\(.*\)$/\1\2/" \
-      -e "s/^\(.*am__append.* \)tests\(.*\)$/\1\2/" \
-      -i Makefile.am Makefile.in
+      -e "s/^\(.*am__append.* \)tests\(.*\)$/\1\2/"
   '';
 
   configureFlags = [

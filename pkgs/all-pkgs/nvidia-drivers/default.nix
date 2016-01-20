@@ -1,4 +1,6 @@
-{ stdenv, fetchurl
+{ stdenv
+, fetchTritonPatch
+, fetchurl
 
 , buildConfig ? "all"
 , channel ? null
@@ -23,20 +25,20 @@
   , cairo
 }:
 
-# NOTICE:
-# - ONLY versions 304+ are supported on NixOS
-
-# BETA:        358.xx,   xorg <=1.17.x, kernel <=4.4
-# SHORTLIVED:  355.xx,   xorg <=1.17.x, kernel <=4.3
-# LONGLIVED:   352.xx,   xorg <=1.18.x, kernel <=4.4 (stable) <- default
-# LEGACY:      340.xx,   xorg <=1.18.x, kernel <=4.4
-# LEGACY:      304.xx,   xorg <=1.18.x, kernel <=4.4
-# UNSUPPORTED: 173.14.x, xorg <=1.15.x, kernel <=3.13
-# UNSUPPORTED: 96.43.x,  xorg <=1.12.x, kernel <=3.7
-# UNSUPPORTED: 71.86.x,  xorg <=?,      kernel <=?
-
-# If your gpu requires a version that is unsupported it is recommended to use
-# the nouveau driver.
+/* NOTICE: ONLY versions 304+ are supported on Triton
+ *
+ * BETA:        361.xx,   xorg <=1.18.x, linux <=4.4
+ * SHORTLIVED:  358.xx,   xorg <=1.18.x, linux <=4.4
+ * LONGLIVED:   352.xx,   xorg <=1.18.x, linux <=4.4 (stable) <- default
+ * LEGACY:      340.xx,   xorg <=1.18.x, linux <=4.4
+ * LEGACY:      304.xx,   xorg <=1.18.x, linux <=4.4
+ * UNSUPPORTED: 173.14.x, xorg <=1.15.x, linux <=3.13
+ * UNSUPPORTED: 96.43.x,  xorg <=1.12.x, linux <=3.7
+ * UNSUPPORTED: 71.86.x,  xorg <=?,      linux <=?
+ *
+ * If your gpu requires a version that is unsupported it is
+ * recommended to use the nouveau driver.
+ */
 
 with {
   inherit (stdenv)
@@ -122,7 +124,11 @@ stdenv.mkDerivation {
   patches =
     optionals (versionAtLeast versionMajor "346" &&
                versionOlder versionMajor "355") [
-      ./linux-4.2.patch
+      (fetchTritonPatch {
+        rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+        file = "nvidia-drivers/linux-4.2.patch";
+        sha256 = "01fe34a2eeb88057d51849098966e202f1ab94e548afe85ef25f533c8375e3c3";
+      })
     ];
 
   # Make sure anything that isn't declared within the derivation
@@ -198,7 +204,9 @@ stdenv.mkDerivation {
     description = "Drivers and Linux kernel modules for NVIDIA graphics cards";
     homepage = http://www.nvidia.com/object/unix.html;
     license = licenses.unfreeRedistributable;
-    maintainers = with maintainers; [ codyopel ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = [
       "i686-linux"
       "x86_64-linux"

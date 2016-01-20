@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, libxml2, bzip2, openssl, samba, dbus_glib
-, glib, fam, cdparanoia, intltool, GConf, gnome_mime_data, avahi, acl }:
+, glib, fam, cdparanoia, intltool, GConf, gnome_mime_data, avahi, acl, zlib }:
 
 stdenv.mkDerivation rec {
   name = "gnome-vfs-${minVer}.4";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   buildInputs =
     [ pkgconfig libxml2 bzip2 openssl samba dbus_glib fam cdparanoia
-      intltool gnome_mime_data avahi acl
+      intltool gnome_mime_data avahi acl zlib
     ];
 
   propagatedBuildInputs = [ GConf glib ];

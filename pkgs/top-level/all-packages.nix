@@ -846,6 +846,8 @@ rtorrent = callPackage ../all-pkgs/rtorrent { };
 
 sakura = callPackage ../all-pkgs/sakura { };
 
+sqlheavy = callPackage ../all-pkgs/sqlheavy { };
+
 sublime-text = callPackage ../all-pkgs/sublime-text { };
 
 wayland = callPackage ../all-pkgs/wayland {

@@ -90,8 +90,8 @@ stdenv.mkDerivation rec {
     sha256 = "c7808278027a1839e1b8bc3110f17d4c20e9ed4abdf9dfae705c050da1748fca";
   };
 
-  configurePhase = ''
-    # Patch waflib
+  configurePhase =
+  /* Apply waflib patches after unpacking waf */ ''
     cd $(${python.executable} waf unpack)
     echo 'WAF patch 1'
     patch -p1 < ${patchWafPython34}
@@ -101,7 +101,9 @@ stdenv.mkDerivation rec {
     echo 'WAF patch 3'
     patch -p1 < ${patchWafEncoding}
   '' + ''
-    cd ..
+    if [[ "$(dirname "$(pwd)")" != "$sourceRoot" ]] ; then
+      cd ..
+    fi
     ${python.executable} waf configure --prefix=$out
   '';
 

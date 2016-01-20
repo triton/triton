@@ -68,7 +68,7 @@ let
 
     inherit perlBindings pythonBindings;
 
-    enableParallelBuilding = true;
+    enableParallelBuilding = false;
 
     meta = {
       description = "A version control system intended to be a compelling replacement for CVS in the open source community";

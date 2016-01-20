@@ -1,112 +1,193 @@
-{ stdenv, fetchurl, pkgconfig, libtool
-, libcl ? null, perl ? null, jemalloc ? null, bzip2 ? null, zlib ? null
-, libX11 ? null, libXext ? null, libXt ? null, dejavu_fonts ? null, fftw ? null
-, libfpx ? null, djvulibre ? null, fontconfig ? null, freetype ? null
-, ghostscript ? null, graphviz ? null, jbigkit ? null, libjpeg ? null
-, lcms2 ? null, openjpeg ? null, liblqr1 ? null, xz ? null, openexr ? null
-, pango ? null, libpng ? null, librsvg ? null, libtiff ? null, libwebp ? null
-, libxml2 ? null
+{ stdenv
+, fetchurl
+, libtool
+
+, bzip2
+, dejavu_fonts
+, djvulibre
+, fftw
+, fontconfig
+, freetype
+, ghostscript
+, graphviz
+, jbigkit
+, jemalloc
+, lcms2
+, libfpx
+, libjpeg
+, liblqr1
+, libpng
+, librsvg
+, libtiff
+, libwebp
+, libxml2
+#, opencl
+, openexr
+, openjpeg
+, pango
+, perl
+, xorg
+, xz
+, zlib
 }:
 
-let
-  arch =
-    if stdenv.system == "i686-linux" then "i686"
-    else if stdenv.system == "x86_64-linux" || stdenv.system == "x86_64-darwin" then "x86-64"
-    else throw "ImageMagick is not supported on this platform.";
+with {
+  inherit (stdenv)
+    isi686
+    isx86_64;
+  inherit (stdenv.lib)
+    enFlag
+    wtFlag;
+};
 
-  mkFlag = trueStr: falseStr: cond: val: "--${if cond then trueStr else falseStr}-${val}";
-  mkWith = mkFlag "with" "without";
-  mkEnable = mkFlag "enable" "disable";
-
-  hasX11 = libX11 != null && libXext != null && libXt != null;
-
-in
+assert (isi686 || isx86_64);
+assert xorg != null ->
+  xorg.libX11 != null &&
+  xorg.libXext != null &&
+  xorg.libXt != null;
 
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
-  version = "6.9.3-0";
+  version = "6.9.3-1";
 
   src = fetchurl {
     url = [
       "mirror://imagemagick/ImageMagick-${version}.tar.xz"
       "mirror://imagemagick/releases/ImageMagick-${version}.tar.xz"
     ];
-    sha256 = "0mlnr9ggxx64ln3m9fy031s0jd4c9r9as7kl9sjdhwixn1p6b81b";
+    sha256 = "1ja2d6vyiw7xxl1p5bxxzhf85qvv6rvg7csxby1xwra6xzaa91a3";
   };
 
-  outputs = [ "out" "doc" ];
-
-  enableParallelBuilding = true;
-
   configureFlags = [
-    (mkEnable (libcl != null)        "opencl")
-    (mkWith   true                   "modules")
-    (mkWith   true                   "gcc-arch=${arch}")
-    #(mkEnable true                   "hdri") This breaks some dependencies
-    (mkWith   (perl != null)         "perl")
-    (mkWith   (perl != null)         "perl-options=PREFIX=\${out}")
-    (mkWith   (jemalloc != null)     "jemalloc")
-    (mkWith   true                   "frozenpaths")
-    (mkWith   (bzip2 != null)        "bzlib")
-    (mkWith   hasX11                 "x")
-    (mkWith   (zlib != null)         "zlib")
-    (mkWith   false                  "dps")
-    (mkWith   (fftw != null)         "fftw")
-    (mkWith   (libfpx != null)       "fpx")
-    (mkWith   (djvulibre != null)    "djvu")
-    (mkWith   (fontconfig != null)   "fontconfig")
-    (mkWith   (freetype != null)     "freetype")
-    (mkWith   (ghostscript != null)  "gslib")
-    (mkWith   (graphviz != null)     "gvc")
-    (mkWith   (jbigkit != null)      "jbig")
-    (mkWith   (libjpeg != null)      "jpeg")
-    (mkWith   (lcms2 != null)        "lcms2")
-    (mkWith   false                  "lcms")
-    (mkWith   (openjpeg != null)     "openjp2")
-    (mkWith   (liblqr1 != null)      "lqr")
-    (mkWith   (xz != null)           "lzma")
-    (mkWith   (openexr != null)      "openexr")
-    (mkWith   (pango != null)        "pango")
-    (mkWith   (libpng != null)       "png")
-    (mkWith   (librsvg != null)      "rsvg")
-    (mkWith   (libtiff != null)      "tiff")
-    (mkWith   (libwebp != null)      "webp")
-    (mkWith   (libxml2 != null)      "xml")
-  ] ++ optional (dejavu_fonts != null) "--with-dejavu-font-dir=${dejavu_fonts}/share/fonts/truetype/"
-    ++ optional (ghostscript != null) "--with-gs-font-dir=${ghostscript}/share/ghostscript/fonts/";
-
-  buildInputs = [
-    pkgconfig libtool libcl perl jemalloc bzip2 zlib libX11 libXext libXt fftw
-    libfpx djvulibre fontconfig freetype ghostscript graphviz jbigkit libjpeg
-    lcms2 openjpeg liblqr1 xz openexr pango libpng librsvg libtiff libwebp
-    libxml2
+    "--enable-reproducible-build"
+    #"--enable-ld-version-script"
+    #"--enable-bounds-checking"
+    "--disable-osx-universal-binary"
+    #"openmp"
+    #(enFlag "opencl" (opencl != null) null)
+    "--enable-largefile"
+    #"--enable-delegate-build"
+    "--disable-deprecated"
+    #"--enable-installed"
+    "--enable-cipher"
+    #"--enable-zero-configuration"
+    #"--enable-hdri" # This breaks some dependencies
+    "--enable-assert"
+    "--disable-maintainer-mode"
+    #--enable-hugepages
+    #--enable-ccmalloc
+    #--enable-efence
+    "--disable-prof"
+    "--disable-gprof"
+    "--disable-gcov"
+    #--disable-assert
+    "--disable-docs"
+    #--with-gnu-ld
+    #--with-dmalloc
+    #--with-gcc-arch=
+    "--with-threads"
+    "--with-modules"
+    "--with-frozenpaths"
+    "--with-magick-plus-plus"
+    (wtFlag "perl" (perl != null) null)
+    (wtFlag "perl-options" (perl != null) "PREFIX=\${out}")
+    (wtFlag "jemalloc" (jemalloc != null) null)
+    #(wtFlag "umem" ( != null) null)
+    (wtFlag "bzlib" (bzip2 != null) null)
+    (wtFlag "x" (xorg != null) null)
+    (wtFlag "zlib" (zlib != null) null)
+    #(wtFlag "autotrace" ( != null) null)
+    #(wtFlag "dps" ( != null) null)
+    (wtFlag "dejavu-font-dir" (dejavu_fonts != null)
+      "${dejavu_fonts}/share/fonts/truetype/")
+    (wtFlag "fftw" (fftw != null) null)
+    (wtFlag "fpx" (libfpx != null) null)
+    (wtFlag "djvu" (djvulibre != null) null)
+    (wtFlag "fontconfig" (fontconfig != null) null)
+    (wtFlag "freetype" (freetype != null) null)
+    (wtFlag "gslib" (ghostscript != null) null)
+    #(wtFlag "fontpath=" ( != null) null)
+    (if (ghostscript != null) then
+      "--with-gs-font-dir=${ghostscript}/share/ghostscript/fonts/"
+     else
+       "--without-gs-font-dir")
+    (wtFlag "gvc" (graphviz != null) null)
+    (wtFlag "jbig" (jbigkit != null) null)
+    (wtFlag "jpeg" (libjpeg != null) null)
+    (wtFlag "lcms" (lcms2 != null) null)
+    (wtFlag "openjp2" (openjpeg != null) null)
+    (wtFlag "lqr" (liblqr1 != null) null)
+    (wtFlag "lzma" (xz != null) null)
+    (wtFlag "openexr" (openexr != null) null)
+    (wtFlag "pango" (pango != null) null)
+    (wtFlag "png" (libpng != null) null)
+    (wtFlag "rsvg" (librsvg != null) null)
+    (wtFlag "tiff" (libtiff != null) null)
+    (wtFlag "webp" (libwebp != null) null)
+    #(wtFlag "windows-font-dir=" ( != null) null)
+    #(wtFlag "wmf" ( != null) null)
+    (wtFlag "xml" (libxml2 != null) null)
   ];
 
-  propagatedBuildInputs = []
-    ++ (stdenv.lib.optional (lcms2 != null) lcms2)
-    ++ (stdenv.lib.optional (liblqr1 != null) liblqr1)
-    ++ (stdenv.lib.optional (fftw != null) fftw)
-    ++ (stdenv.lib.optional (libtool != null) libtool)
-    ++ (stdenv.lib.optional (jemalloc != null) jemalloc)
-    ++ (stdenv.lib.optional (libXext != null) libXext)
-    ++ (stdenv.lib.optional (libX11 != null) libX11)
-    ++ (stdenv.lib.optional (libXt != null) libXt)
-    ++ (stdenv.lib.optional (bzip2 != null) bzip2)
-    ;
+  nativeBuildInputs = [
+    libtool
+  ];
+
+  buildInputs = [
+    bzip2
+    dejavu_fonts
+    djvulibre
+    fftw
+    fontconfig
+    freetype
+    ghostscript
+    graphviz
+    jbigkit
+    jemalloc
+    lcms2
+    libfpx
+    libjpeg
+    liblqr1
+    libpng
+    librsvg
+    libtiff
+    libwebp
+    libxml2
+    #opencl
+    openexr
+    openjpeg
+    pango
+    perl
+    xorg.libX11
+    xorg.libXext
+    xorg.libXt
+    xz
+    zlib
+  ];
 
   postInstall = ''
     (cd "$out/include" && ln -s ImageMagick* ImageMagick)
   '' + stdenv.lib.optionalString (ghostscript != null) ''
-    for la in $out/lib/*.la; do
-      sed 's|-lgs|-L${ghostscript}/lib -lgs|' -i $la
+    for la in $out/lib/*.la ; do
+      sed -i $la \
+        -e 's|-lgs|-L${ghostscript}/lib -lgs|'
     done
   '';
 
+  enableParallelBuilding = true;
+
   meta = with stdenv.lib; {
+    description = "A collection of tools and libraries for many image formats";
     homepage = http://www.imagemagick.org/;
-    description = "A software suite to create, edit, compose, or convert bitmap images";
-    platforms = platforms.linux ++ [ "x86_64-darwin" ];
-    maintainers = with maintainers; [ the-kenny wkennington ];
+    license = licenses.imagemagick;
+    maintainers = with maintainers; [
+      codyopel
+      wkennington
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

@@ -246,6 +246,11 @@ lib.mapAttrs (n: v: v // { shortName = n; }) rec {
     fullName = "Independent JPEG Group License";
   };
 
+  imagemagick = spdx {
+    spdxId = "ImageMagick";
+    fullName = "ImageMagick License";
+  };
+
   inria = {
     fullName  = "INRIA Non-Commercial License Agreement";
     url       = "http://compcert.inria.fr/doc/LICENSE";

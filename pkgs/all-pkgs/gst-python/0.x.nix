@@ -26,8 +26,8 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postPatch = ''
-    # Fix for newer autotools
+  postPatch =
+  /* Fix for newer autotools */ ''
     sed -i configure.ac \
       -e 's/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/g'
   '';

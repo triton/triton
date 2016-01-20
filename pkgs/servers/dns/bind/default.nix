@@ -14,7 +14,7 @@
 
 with stdenv;
 let
-  version = "9.10.3-P2";
+  version = "9.10.3-P3";
 
   toolsOnly = suffix == "tools";
 
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
-    sha256 = "1kbfzml37sx4r2xi4gq48ji8w5kckd1f6gdn6pk6njqdmh8ijv2a";
+    sha256 = "10yblk8qbb85qxakzdjy5qmqvqj4rlcqsqvlkriglampzg8i0239";
   };
 
   patches = [ ./libressl.patch ./remove-mkdir-var.patch ];

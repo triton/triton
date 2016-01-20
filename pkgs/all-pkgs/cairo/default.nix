@@ -19,7 +19,8 @@
 
 with {
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    optionals;
 };
 
 stdenv.mkDerivation rec {
@@ -87,14 +88,14 @@ stdenv.mkDerivation rec {
     "--without-gallium"
   ];
 
-  preConfigure = ''
-    # Work around broken `Requires.private' that prevents Freetype
-    # `-I' flags to be propagated.
-    sed -i "src/cairo.pc.in" \
-        -es'|^Cflags:\(.*\)$|Cflags: \1 -I${freetype}/include/freetype2 -I${freetype}/include|g'
+  preConfigure =
+  /* Work around broken pkg-config `Requires.private' that prevents
+     Freetype `-I' cflags from being propagated. */ ''
+    sed -i src/cairo.pc.in \
+      -e 's|^Cflags:\(.*\)$|Cflags: \1 -I${freetype}/include/freetype2 -I${freetype}/include|g'
   '';
 
-  nativeBuildInputs = [
+  nativeBuildInputs = optionals (!stdenv.cc.isGNU) [
     libiconv
   ];
 

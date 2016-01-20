@@ -1,6 +1,7 @@
 { stdenv
 , autoreconfHook
 , fetchFromGitHub
+, fetchTritonPatch
 , fetchurl
 
 , cppunit

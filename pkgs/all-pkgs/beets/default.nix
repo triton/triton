@@ -38,6 +38,7 @@ with {
   inherit (stdenv.lib)
     attrNames
     concatMapStrings
+    makeSearchPath
     optional
     optionals
     optionalString;
@@ -156,9 +157,10 @@ in buildPythonPackage rec {
       s,"flac","${flac}/bin/flac",
       s,"mp3val","${mp3val}/bin/mp3val",
     }' beetsplug/badfiles.py
-  '' + optionalString enableBpd ''
-    # Hack to allow newer clients to try to connect
-    sed -e '/PROTOCOL_VERSION/ s/0.13.0/0.19.0/' -i beetsplug/bpd/__init__.py
+  '' + optionalString enableBpd
+  /* Hack to allow newer mpd clients to try to connect to bpd */ ''
+    sed -i beetsplug/bpd/__init__.py \
+      -e '/PROTOCOL_VERSION/ s/0.13.0/0.19.0/'
   '' + optionalString enableReplaygain ''
     sed -i -re '
       s!^( *cmd *= *b?['\'''"])(bs1770gain['\'''"])!\1${bs1770gain}/bin/\2!
@@ -206,7 +208,7 @@ in buildPythonPackage rec {
 
   makeWrapperArgs = optionals enableBpd [
     "--prefix GST_PLUGIN_PATH : ${
-      stdenv.lib.makeSearchPath "lib/gstreamer-0.10" [ gst-plugins-base_0 ]}"
+      makeSearchPath "lib/gstreamer-0.10" [ gst-plugins-base_0 ]}"
   ];
 
   doCheck = true;
@@ -230,7 +232,7 @@ in buildPythonPackage rec {
   '';
 
   checkPhase = ''
-    runHook preCheck
+    runHook 'preCheck'
 
     LANG=en_US.UTF-8 \
     LOCALE_ARCHIVE=${assert stdenv.isLinux; glibcLocales}/lib/locale/locale-archive \
@@ -239,13 +241,13 @@ in buildPythonPackage rec {
     HOME="$(mktemp -d)" \
       nosetests -v
 
-    runHook postCheck
+    runHook 'postCheck'
   '';
 
   doInstallCheck = true;
 
   installCheckPhase = ''
-    runHook preInstallCheck
+    runHook 'preInstallCheck'
 
     tmphome="$(mktemp -d)"
 
@@ -257,7 +259,7 @@ in buildPythonPackage rec {
     ''}" HOME="$tmphome" "$out/bin/beet" config -e
     EDITOR=true HOME="$tmphome" "$out/bin/beet" config -e
 
-    runHook postInstallCheck
+    runHook 'postInstallCheck'
   '';
 
   meta = with stdenv.lib; {

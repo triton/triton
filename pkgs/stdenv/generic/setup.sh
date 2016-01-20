@@ -668,10 +668,13 @@ buildPhase() {
     else
         # See https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
         makeFlags="SHELL=$SHELL $makeFlags"
-
         echo "make flags: $makeFlags ${makeFlagsArray[@]} $buildFlags ${buildFlagsArray[@]}"
+
+        # This looks silly but we need to make sure these values are set for ${+} to work
+        disableParallelBuild=$disableParallelBuild
+
         make ${makefile:+-f $makefile} \
-            ${enableParallelBuilding:+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}} \
+            ${enableParallelBuilding:+${disableParallelBuild+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}}} \
             $makeFlags "${makeFlagsArray[@]}" \
             $buildFlags "${buildFlagsArray[@]}"
     fi
@@ -684,8 +687,12 @@ checkPhase() {
     runHook preCheck
 
     echo "check flags: $makeFlags ${makeFlagsArray[@]} $checkFlags ${checkFlagsArray[@]}"
+
+    # This looks silly but we need to make sure these values are set for ${+} to work
+    disableParallelCheck=$disableParallelCheck
+
     make ${makefile:+-f $makefile} \
-        ${enableParallelBuilding:+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}} \
+        ${enableParallelBuilding:+${disableParallelCheck+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}}} \
         $makeFlags "${makeFlagsArray[@]}" \
         ${checkFlags:-VERBOSE=y} "${checkFlagsArray[@]}" ${checkTarget:-check}
 
@@ -700,8 +707,12 @@ installPhase() {
 
     installTargets=${installTargets:-install}
     echo "install flags: $installTargets $makeFlags ${makeFlagsArray[@]} $installFlags ${installFlagsArray[@]}"
+
+    # This looks silly but we need to make sure these values are set for ${+} to work
+    disableParallelInstall=$disableParallelInstall
+
     make ${makefile:+-f $makefile} \
-        ${enableParallelBuilding:+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}} \
+        ${enableParallelBuilding:+${disableParallelInstall+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}}} \
         $installTargets \
         $makeFlags "${makeFlagsArray[@]}" \
         $installFlags "${installFlagsArray[@]}"

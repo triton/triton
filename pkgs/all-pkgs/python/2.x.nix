@@ -207,6 +207,19 @@ stdenv.mkDerivation rec {
     $out/bin/python${versionMajor} -c "import zlib"
   '';
 
+  postFixup = ''
+    # The lines we are replacing dont include libpython so we parse it out
+    LIBS="$(pkg-config --libs --static python | sed 's,[ ]*\(-L\|-l\)[^ ]*python[^ ]*[ ]*, ,g')"
+
+    sed -i "s@^LIBS=.*@LIBS= $LIBS@g" $out/lib/python*/config/Makefile
+
+    # We need to update _sysconfigdata.py{,o,c}
+    sed -i "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g" $out/lib/python*/_sysconfigdata.py
+    rm $out/lib/python*/_sysconfigdata.py{o,c}
+    $out/bin/python -c "import _sysconfigdata"
+    $out/bin/python -O -c "import _sysconfigdata"
+  '';
+
   # Used by python-2.7-deterministic-build.patch
   DETERMINISTIC_BUILD = 1;
   enableParallelBuilding = true;

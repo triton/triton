@@ -1,4 +1,4 @@
-{ stdenv, icu, expat, zlib, bzip2, python, fixDarwinDylibNames
+{ stdenv, icu, expat, zlib, bzip2, python2
 , toolset ? if stdenv.cc.isClang then "clang" else null
 , enableRelease ? true
 , enableDebug ? false
@@ -117,15 +117,6 @@ stdenv.mkDerivation {
 
   inherit src patches;
 
-  meta = {
-    homepage = "http://boost.org/";
-    description = "Collection of C++ libraries";
-    license = stdenv.lib.licenses.boost;
-
-    platforms = platforms.unix;
-    maintainers = with maintainers; [ simons wkennington ];
-  };
-
   preConfigure = ''
     NIX_LDFLAGS="$(echo $NIX_LDFLAGS | sed "s,$out,$lib,g")"
     if test -f tools/build/src/tools/clang-darwin.jam ; then
@@ -138,18 +129,14 @@ stdenv.mkDerivation {
     EOF
   '';
 
-  NIX_CFLAGS_LINK = stdenv.lib.optionalString stdenv.isDarwin
-                      "-headerpad_max_install_names";
-
   enableParallelBuilding = true;
 
-  buildInputs = [ icu expat zlib bzip2 python ]
-    ++ stdenv.lib.optional stdenv.isDarwin fixDarwinDylibNames;
+  buildInputs = [ icu expat zlib bzip2 python2 ];
 
   configureScript = "./bootstrap.sh";
   configureFlags = commonConfigureFlags ++ [
     "--with-icu=${icu}"
-    "--with-python=${python.interpreter}"
+    "--with-python=${python2.interpreter}"
   ] ++ optional (toolset != null) "--with-toolset=${toolset}";
 
   buildPhase = builder nativeB2Args;
@@ -177,5 +164,13 @@ stdenv.mkDerivation {
     buildPhase = builder crossB2Args;
     installPhase = installer crossB2Args;
     postFixup = fixup;
+  };
+
+  meta = {
+    homepage = "http://boost.org/";
+    description = "Collection of C++ libraries";
+    license = stdenv.lib.licenses.boost;
+    platforms = platforms.unix;
+    maintainers = with maintainers; [ simons wkennington ];
   };
 }

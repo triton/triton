@@ -213,7 +213,7 @@ stdenv.mkDerivation rec {
     $out/bin/python3 -OO -c "import _sysconfigdata"
     $out/bin/python3 -OOO -c "import _sysconfigdata"
 
-    sed -i "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@g" $out/bin/python*-config
+    sed --follow-symlinks -i "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@g" $out/bin/python*-config
   '';
 
   enableParallelBuilding = true;

@@ -219,7 +219,7 @@ stdenv.mkDerivation rec {
     $out/bin/python -c "import _sysconfigdata"
     $out/bin/python -O -c "import _sysconfigdata"
 
-    sed -i "s@'-lpython'@'$out/lib', \0@g" $out/bin/python-config
+    sed --follow-symlinks -i "s@'-lpython'@'$out/lib', \0@g" $out/bin/python-config
   '';
 
   # Used by python-2.7-deterministic-build.patch

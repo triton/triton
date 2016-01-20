@@ -738,6 +738,8 @@ libvdpau = callPackage ../all-pkgs/libvdpau { };
 libvpx = callPackage ../all-pkgs/libvpx { };
 libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
+libwacom = callPackage ../all-pkgs/libwacom { };
+
 mixxx = callPackage ../all-pkgs/mixxx {
   inherit (vamp) vampSDK;
 };
@@ -7731,8 +7733,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   libzdb = callPackage ../development/libraries/libzdb { };
 
   libzrtpcpp = callPackage ../development/libraries/libzrtpcpp { };
-
-  libwacom = callPackage ../development/libraries/libwacom { };
 
   lightning = callPackage ../development/libraries/lightning { };
 

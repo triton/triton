@@ -198,6 +198,24 @@ stdenv.mkDerivation rec {
     $out/bin/python${versionMajor} -c "import zlib"
   '';
 
+  postFixup = ''
+    # The lines we are replacing dont include libpython so we parse it out
+    LIBS_WITH_PYTHON="$(pkg-config --libs --static $out/lib/pkgconfig/python-*.*.pc)"
+    LIBS="$(echo "$LIBS_WITH_PYTHON" | sed 's,[ ]*\(-L\|-l\)[^ ]*python[^ ]*[ ]*, ,g')"
+
+    sed -i "s@^LIBS=.*@LIBS= $LIBS@g" $out/lib/python*/config*/Makefile
+
+    # We need to update _sysconfigdata.py{,o,c}
+    sed -i "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g" $out/lib/python*/_sysconfigdata.py
+    rm $out/lib/python*/__pycache__/_sysconfigdata*.pyc
+    $out/bin/python3 -c "import _sysconfigdata"
+    $out/bin/python3 -O -c "import _sysconfigdata"
+    $out/bin/python3 -OO -c "import _sysconfigdata"
+    $out/bin/python3 -OOO -c "import _sysconfigdata"
+
+    sed -i "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@g" $out/bin/python*-config
+  '';
+
   enableParallelBuilding = true;
 
   passthru = rec {

@@ -657,6 +657,40 @@ hwdata = callPackage ../all-pkgs/hwdata { };
 
 id3lib = callPackage ../all-pkgs/id3lib { };
 
+imagemagick_light = imagemagick.override {
+  libcl = null;
+  perl = null;
+  jemalloc = null;
+  bzip2 = null;
+  zlib = null;
+  libX11 = null;
+  libXext = null;
+  libXt = null;
+  dejavu_fonts = null;
+  fftw = null;
+  libfpx = null;
+  djvulibre = null;
+  fontconfig = null;
+  freetype = null;
+  ghostscript = null;
+  graphviz = null;
+  jbigkit = null;
+  libjpeg = null;
+  lcms2 = null;
+  openjpeg = null;
+  liblqr1 = null;
+  xz = null;
+  openexr = null;
+  pango = null;
+  libpng = null;
+  librsvg = null;
+  libtiff = null;
+  libwebp = null;
+  libxml2 = null;
+};
+
+imagemagick = callPackage ../all-pkgs/imagemagick { };
+
 iputils = callPackage ../all-pkgs/iputils { };
 
 json-glib = callPackage ../all-pkgs/json-glib { };
@@ -11899,44 +11933,6 @@ zsh = callPackage ../all-pkgs/zsh { };
       AuthenPassphrase NetOpenIDConsumer LWPxParanoidAgent CryptSSLeay;
     inherit (perlPackages.override { pkgs = pkgs // { imagemagick = imagemagickBig;}; }) PerlMagick;
   };
-
-  imagemagick_light = imagemagick.override {
-    libcl = null;
-    perl = null;
-    jemalloc = null;
-    bzip2 = null;
-    zlib = null;
-    libX11 = null;
-    libXext = null;
-    libXt = null;
-    dejavu_fonts = null;
-    fftw = null;
-    libfpx = null;
-    djvulibre = null;
-    fontconfig = null;
-    freetype = null;
-    ghostscript = null;
-    graphviz = null;
-    jbigkit = null;
-    libjpeg = null;
-    lcms2 = null;
-    openjpeg = null;
-    liblqr1 = null;
-    xz = null;
-    openexr = null;
-    pango = null;
-    libpng = null;
-    librsvg = null;
-    libtiff = null;
-    libwebp = null;
-    libxml2 = null;
-  };
-
-  imagemagick = imagemagickBig.override {
-    ghostscript = null;
-  };
-
-  imagemagickBig = callPackage ../applications/graphics/ImageMagick { };
 
   # Impressive, formerly known as "KeyJNote".
   impressive = callPackage ../applications/office/impressive {

@@ -5979,6 +5979,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   libtool_2 = callPackage ../development/tools/misc/libtool/libtool2.nix { };
 
+  mlibtool = callPackage ../development/tools/misc/mlibtool { };
+
   lsof = callPackage ../development/tools/misc/lsof { };
 
   ltrace = callPackage ../development/tools/misc/ltrace { };

@@ -691,6 +691,10 @@ libspectre = callPackage ../all-pkgs/libspectre { };
 
 libtorrent = callPackage ../all-pkgs/libtorrent { };
 
+libtorrent-rasterbar_0 = callPackage ../all-pkgs/libtorrent-rasterbar/0.x.nix { };
+libtorrent-rasterbar_1 = callPackage ../all-pkgs/libtorrent-rasterbar/1.x.nix { };
+libtorrent-rasterbar = libtorrent-rasterbar_1;
+
 libva = callPackage ../all-pkgs/libva { };
 
 libvdpau = callPackage ../all-pkgs/libvdpau { };
@@ -7542,15 +7546,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   libtommath = callPackage ../development/libraries/libtommath { };
 
   libtomcrypt = callPackage ../development/libraries/libtomcrypt { };
-
-  libtorrentRasterbar = callPackage ../development/libraries/libtorrent-rasterbar { };
-
-  libtorrentRasterbar_0_16 = callPackage ../development/libraries/libtorrent-rasterbar/0.16.nix {
-    # fix "unrecognized option -arch" error
-    stdenv = if stdenv.isDarwin
-      then clangStdenv
-      else stdenv;
-  };
 
   libtoxcore = callPackage ../development/libraries/libtoxcore/old-api { };
 

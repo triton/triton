@@ -181,25 +181,26 @@ stdenv.mkDerivation rec {
     libffi
   ];
 
-  preInstall = ''
-    # The following is needed for startup cache creation on grsecurity kernels.
+  preInstall =
+  /* The following is needed for startup cache creation
+     on grsecurity kernels. */ ''
     paxmark m ../objdir/dist/bin/xpcshell
   '';
 
-  postInstall = ''
-    # For grsecurity kernels
+  postInstall =
+  /* For grsecurity kernels */ ''
     paxmark m $out/lib/${name}/{firefox,firefox-bin,plugin-container}
-
-    # Remove SDK cruft. FIXME: move to a separate output?
+  '' +
+  /* Remove SDK cruft. FIXME: move to a separate output? */ ''
     rm -rf $out/share/idl $out/include $out/lib/firefox-devel-*
-
-    # GTK3: argv[0] must point to firefox itself
+  '' +
+  /* GTK3: argv[0] must point to firefox itself */ ''
     wrapProgram "$out/bin/firefox" \
       --argv0 "$out/bin/.firefox-wrapped" \
       --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH:" \
       --suffix XDG_DATA_DIRS : "$XDG_ICON_DIRS"
-
-    # some basic testing
+  '' +
+  /* Basic test */ ''
     "$out/bin/firefox" --version
   '';
 

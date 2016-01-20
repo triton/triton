@@ -711,6 +711,8 @@ mpv = callPackage ../all-pkgs/mpv {
   lua5_sockets = lua5_1_sockets;
 };
 
+nasm = callPackage ../all-pkgs/nasm { };
+
 ncmpc = callPackage ../all-pkgs/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
@@ -4569,8 +4571,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   nim = callPackage ../development/compilers/nim { };
 
   neko = callPackage ../development/compilers/neko { };
-
-  nasm = callPackage ../development/compilers/nasm { };
 
   nvidia_cg_toolkit = callPackage ../development/compilers/nvidia-cg-toolkit { };
 

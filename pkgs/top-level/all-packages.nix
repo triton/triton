@@ -504,6 +504,8 @@ avahi = callPackage ../all-pkgs/avahi { };
 
 bazaar = callPackage ../all-pkgs/bazaar { };
 
+bc = callPackage ../all-pkgs/bc { };
+
 bzrtools = callPackage ../all-pkgs/bzrtools { };
 
 beets = callPackage ../all-pkgs/beets { };
@@ -1082,8 +1084,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   barcode = callPackage ../tools/graphics/barcode {};
 
   bashmount = callPackage ../tools/filesystems/bashmount {};
-
-  bc = callPackage ../tools/misc/bc { };
 
   bdf2psf = callPackage ../tools/misc/bdf2psf { };
 

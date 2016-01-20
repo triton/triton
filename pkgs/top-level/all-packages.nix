@@ -564,7 +564,7 @@ gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
 
 glib = callPackage ../all-pkgs/glib { };
 # checked version separate to break recursion
-glib-tested = glib.override {
+glib_tested = glib.override {
   doCheck = true;
   libffi = libffi.override {
     doCheck = true;

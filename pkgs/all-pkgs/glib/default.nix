@@ -69,37 +69,47 @@ stdenv.mkDerivation rec {
 
   postPatch = (
     # Patch tests
-    if doCheck then (''
-      substituteInPlace \
-        gio/tests/desktop-files/home/applications/epiphany-*.desktop \
-        --replace "Exec=/bin/true" "Exec=${coreutils}/bin/true"
-
-      # desktop-app-info/fallback test broken upstream
-      # https://github.com/GNOME/glib/commit/a036bd38a574f38773d269447cf81df023d2c819
-      sed -e '/\/desktop-app-info\/fallback/d' -i gio/tests/desktop-app-info.c
-
-      # Fails to detect content type, shared-mime-info?
-      sed -e '/contenttype/d' -i gio/tests/Makefile.{am,in}
-
-      # Disable tests that require machine-id
-      sed -e '/\/gdbus\/codegen-peer-to-peer/d' -i gio/tests/gdbus-peer.c
-      sed -e '/\/gdbus\/x11-autolaunch/d' -i gio/tests/gdbus-unix-addresses.c
-
-      # Regex test fails, glib/gcc5 or pcre/gcc5?
-      sed -e '/?<ab/d' -i glib/tests/regex.c
-
-      # All gschemas fail to pass the test, upstream bug?
-      sed -e '/g_test_add_data_func/ s/^\/*/\/\//' -i gio/tests/gschema-compile.c
-
-      # Cannot reproduce the failing test_associations on hydra
-      sed -e '/\/appinfo\/associations/d' -i gio/tests/appinfo.c
-
-      # Needed because of libtool wrappers
-      sed -e '/g_subprocess_launcher_set_environ (launcher, envp);/a g_subprocess_launcher_setenv (launcher, "PATH", g_getenv("PATH"), TRUE);' \
-          -i gio/tests/gsubprocess.c
-    '') else (''
-      # Don't build tests, also prevents extra deps
-      sed -e 's/ tests//' -i {.,gio,glib}/Makefile.{am,in}
+    if doCheck then (
+      /* Fix coreutils true path */ ''
+        sed -i gio/tests/desktop-files/home/applications/epiphany-*.desktop \
+          -e 's|Exec=/bin/true|Exec=${coreutils}/bin/true|'
+      '' +
+      /* desktop-app-info/fallback test broken upstream
+       * https://github.com/GNOME/glib/commit/a036bd38a574f38773d269447cf81df023d2c819
+       */ ''
+        sed -i gio/tests/desktop-app-info.c \
+          -e '/\/desktop-app-info\/fallback/d'
+      '' +
+      /* Fails to detect content type (gio sniffing) */ ''
+        sed -i gio/tests/Makefile.{am,in} \
+          -e '/contenttype/d'
+      '' +
+      /* Disable tests that require machine-id */ ''
+        sed -i gio/tests/gdbus-peer.c \
+          -e '/\/gdbus\/codegen-peer-to-peer/d'
+        sed -i gio/tests/gdbus-unix-addresses.c \
+          -e '/\/gdbus\/x11-autolaunch/d'
+      '' +
+      /* Regex test fails, glib/gcc5 or pcre/gcc5? */ ''
+        sed -i glib/tests/regex.c \
+          -e '/?<ab/d'
+      '' +
+      /* All gschemas fail to pass the test, upstream bug? */ ''
+        sed -i gio/tests/gschema-compile.c \
+          -e '/g_test_add_data_func/ s/^\/*/\/\//'
+      '' +
+      /* Cannot reproduce the failing test_associations on hydra */ ''
+        sed -i gio/tests/appinfo.c \
+          -e '/\/appinfo\/associations/d'
+      '' +
+      /* Needed because of libtool wrappers */ ''
+        sed -i gio/tests/gsubprocess.c \
+          -e '/g_subprocess_launcher_set_environ (launcher, envp);/a g_subprocess_launcher_setenv (launcher, "PATH", g_getenv("PATH"), TRUE);'
+      ''
+    ) else (
+      /* Don't build tests, also prevents extra deps */ ''
+      sed -i {.,gio,glib}/Makefile.{am,in} \
+        -e 's/ tests//'
     '')
   );
 
@@ -117,8 +127,8 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
     "--enable-Bsymbolic"
     "--enable-compile-warnings"
-    # The internal pcre is not patched to support gcc5, among other fixes
-    # specific to Triton
+    # The internal pcre is not patched to support gcc5, among other
+    # fixes specific to Triton
     "--with-pcre=system"
   ];
 
@@ -129,16 +139,14 @@ stdenv.mkDerivation rec {
     python
   ];
 
-  propagatedBuildInputs = [
+  buildInputs = [
     attr
-    libiconv
+    libelf
     libffi
     pcre
     zlib
-  ];
-
-  buildInputs = [
-    libelf
+  ] ++ optionals (!stdenv.cc.isGNU) [
+    libiconv
   ] ++ optionals doCheck [
     desktop_file_utils
     libxml2
@@ -165,7 +173,6 @@ stdenv.mkDerivation rec {
     export VERBOSE=1
   '';
 
-  # TODO: fix or disable failing tests
   inherit doCheck;
   enableParallelBuilding = true;
   DETERMINISTIC_BUILD = 1;
@@ -182,6 +189,9 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [
       codyopel
     ];
-    platforms = platforms.linux;
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

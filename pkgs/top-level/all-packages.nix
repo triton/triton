@@ -744,6 +744,8 @@ networkmanagerapplet = newScope gnome ../all-pkgs/network-manager-applet { };
 
 ninja = callPackage ../all-pkgs/ninja { };
 
+noise = callPackage ../all-pkgs/noise { };
+
 p7zip = callPackage ../all-pkgs/p7zip { };
 
 pango = callPackage ../all-pkgs/pango { };

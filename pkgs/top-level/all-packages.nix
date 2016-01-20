@@ -655,6 +655,8 @@ highlight = callPackage ../all-pkgs/highlight { };
 
 hwdata = callPackage ../all-pkgs/hwdata { };
 
+id3lib = callPackage ../all-pkgs/id3lib { };
+
 iputils = callPackage ../all-pkgs/iputils { };
 
 json-glib = callPackage ../all-pkgs/json-glib { };
@@ -6805,8 +6807,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   hyena = callPackage ../development/libraries/hyena { };
 
   icu = callPackage ../development/libraries/icu { };
-
-  id3lib = callPackage ../development/libraries/id3lib { };
 
   iksemel = callPackage ../development/libraries/iksemel { };
 

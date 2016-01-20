@@ -865,6 +865,8 @@ xine-lib = callPackage ../all-pkgs/xine-lib { };
 
 xine-ui = callPackage ../all-pkgs/xine-ui { };
 
+yasm = callPackage ../all-pkgs/yasm { };
+
 zenity = callPackage ../all-pkgs/zenity { };
 
 zsh = callPackage ../all-pkgs/zsh { };
@@ -5221,8 +5223,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   # prolog
   yap = callPackage ../development/compilers/yap { };
-
-  yasm = callPackage ../development/compilers/yasm { };
 
   yosys = callPackage ../development/compilers/yosys { };
 

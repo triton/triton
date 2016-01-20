@@ -13,11 +13,11 @@ with { inherit (stdenv.lib) optional optionals optionalString optionalAttrs; };
 
 let
   self = stdenv.mkDerivation rec {
-    name = "coreutils-8.24";
+    name = "coreutils-8.25";
 
     src = fetchurl {
       url = "mirror://gnu/coreutils/${name}.tar.xz";
-      sha256 = "0w11jw3fb5sslf0f72kxy7llxgk1ia3a6bcw0c9kmvxrlj355mx2";
+      sha256 = "11yfrnb94xzmvi4lhclkcmkqsbhww64wf234ya1aacjvg82prrii";
     };
 
     # The test tends to fail on btrfs and maybe other unusual filesystems.
@@ -67,7 +67,7 @@ let
 
     # Saw random failures like ‘help2man: can't get '--help' info from
     # man/sha512sum.td/sha512sum’.
-    enableParallelBuilding = false;
+    enableParallelBuilding = true;
 
     NIX_LDFLAGS = optionalString selinuxSupport "-lsepol";
     FORCE_UNSAFE_CONFIGURE = stdenv.lib.optionalString (stdenv.system == "armv7l-linux" || stdenv.isSunOS) "1";

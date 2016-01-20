@@ -36,12 +36,6 @@ stdenv.mkDerivation rec {
   };
 
   postPatch =
-  /* The autoconf AX_PYTHON_DEVEL macro incorrectly tests for the
-     distutils module by checking that the stderr output is empty,
-     which is not the case with a debug build of python */ ''
-    sed -i configure.ac \
-      -e '/AX_PYTHON_DEVEL/d'
-  '' +
   /* Disable boost python check */ ''
     sed -i configure.ac \
       -e '/test -z "$BOOST_PYTHON_LIB"/d' \

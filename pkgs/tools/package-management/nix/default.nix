@@ -89,10 +89,10 @@ in rec {
    nix = nixStable;
 
    nixStable = common rec {
-     name = "nix-1.10";
+     name = "nix-1.11";
      src = fetchurl {
        url = "http://nixos.org/releases/nix/${name}/${name}.tar.xz";
-       sha256 = "5612ca7a549dd1ee20b208123e041aaa95a414a0e8f650ea88c672dc023d10f6";
+       sha256 = "1dbnmfxvsm85hb7sz2dkpinnfgps4khsx5ljmlvdbhv26pp028b1";
      };
    };
 

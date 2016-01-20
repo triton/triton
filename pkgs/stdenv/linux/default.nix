@@ -105,6 +105,14 @@ rec {
           curl = bootstrapTools;
         };
 
+        fetchzip = import ../../build-support/fetchzip {
+          lib = stage0Pkgs.stdenv.lib;
+          unzip = bootstrapTools;
+          inherit fetchurl;
+        };
+
+        fetchFromGitHub = a: pkgs.fetchFromGitHub (a // { fetchzip' = fetchzip; });
+
         fetchTritonPatch = args: pkgs.fetchTritonPatch (args // { fetchurl' = fetchurl; });
 
         patchelf = stage0Pkgs.stdenv.mkDerivation {
@@ -169,7 +177,7 @@ rec {
         };
 
         # These are only needed to evaluate
-        inherit (stage0Pkgs) fetchurl fetchTritonPatch patchelf;
+        inherit (stage0Pkgs) fetchurl fetchzip fetchFromGitHub fetchTritonPatch patchelf;
         bison = null;
       };
     });
@@ -223,7 +231,7 @@ rec {
         };
 
         # These are only needed to evaluate
-        inherit (stage0Pkgs) fetchurl fetchTritonPatch patchelf;
+        inherit (stage0Pkgs) fetchurl fetchzip fetchFromGitHub fetchTritonPatch patchelf;
         coreutils = bootstrapTools;
         binutils = bootstrapTools;
         perl = null;
@@ -274,7 +282,7 @@ rec {
         };
 
         # Do not export these packages to the final stdenv
-        inherit (stage0Pkgs) fetchurl fetchTritonPatch;
+        inherit (stage0Pkgs) fetchurl fetchzip fetchFromGitHub fetchTritonPatch;
         libiconv = null;
         inherit (pkgs) gettext perl522 perl m4 bison autoconf automake flex perlPackages
           libtool buildPerlPackage help2man makeWrapper autoreconfHook texinfo;

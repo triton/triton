@@ -363,7 +363,7 @@ let
 
   fetchzip = callPackage ../build-support/fetchzip { };
 
-  fetchFromGitHub = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: fetchzip {
+  fetchFromGitHub = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src", fetchzip' ? fetchzip }: fetchzip' {
     inherit name sha256;
     url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
     meta.homepage = "https://github.com/${owner}/${repo}/";

@@ -3,8 +3,8 @@
 , librsvg
 }:
 
-# This is a meta package for all gdk-pixbuf loaders, see gdk-pixbuf-core for
-# the main gdk-pixbuf package.
+# This is a meta package for all gdk-pixbuf loaders, see
+# gdk-pixbuf-core for the main gdk-pixbuf package.
 
 stdenv.mkDerivation rec {
   name = "gdk-pixbuf-${gdk-pixbuf-core.version}";
@@ -35,7 +35,8 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
-    install -vD -m 644 loaders.cache $out/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+    install -vD -m 644 loaders.cache \
+      $out/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
   '';
 
   dontStrip = true;

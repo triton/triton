@@ -112,7 +112,7 @@ with stdenv.lib; stdenv.mkDerivation {
       mkdir -p "$out"
       cp -r bin "$out/bin"
     '' + optionalString stdenv.isLinux ''
-      patchelf --interpreter "${stdenv.glibc}/lib/${stdenv.cc.dynamicLinker}" \
+      patchelf --interpreter "${stdenv.libc}/lib/${stdenv.cc.dynamicLinker}" \
                --set-rpath "${stdenv.cc.cc}/lib/:${stdenv.cc.cc}/lib64/" \
                "$out/bin/rustc"
     '';

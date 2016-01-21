@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "5.4.0";
+  version = "5.4.1";
 
   deps = {
     inherit openssl zlib libuv;
@@ -21,7 +21,7 @@ in stdenv.mkDerivation {
 
   src = fetchurl {
     url = "http://nodejs.org/dist/v${version}/node-v${version}.tar.gz";
-    sha256 = "1avj7lvcdblg67rjzk4q99a7ysanmiqzaw9hnyz65vgh1jh3gzhx";
+    sha256 = "032ylpjrnjpc4cjqkrax3slli40025kw74yk2dynp86ywgr5wibq";
   };
 
   configureFlags = concatMap sharedConfigureFlags (builtins.attrNames deps);

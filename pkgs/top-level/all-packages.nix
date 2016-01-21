@@ -985,6 +985,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   aj-snapshot  = callPackage ../applications/audio/aj-snapshot { };
 
+  albert = qt5.callPackage ../applications/misc/albert {};
+
   analog = callPackage ../tools/admin/analog {};
 
   apktool = callPackage ../development/tools/apktool {
@@ -1588,6 +1590,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   ibus-table = callPackage ../tools/inputmethods/ibus-table { };
 
   ibus-table-others = callPackage ../tools/inputmethods/ibus-table-others { };
+
+  brotli = callPackage ../tools/compression/brotli { };
 
   biosdevname = callPackage ../tools/networking/biosdevname { };
 
@@ -3528,9 +3532,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   socat2pre = lowPrio (callPackage ../tools/networking/socat/2.x.nix { });
 
-  softether_4_18 = callPackage ../servers/softether/4.18.nix { };
-  softether = softether_4_18;
-
   sourceHighlight = callPackage ../tools/text/source-highlight { };
 
   spaceFM = callPackage ../applications/misc/spacefm { adwaita-icon-theme = gnome3.adwaita-icon-theme; };
@@ -4442,6 +4443,10 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   fsharp = callPackage ../development/compilers/fsharp {};
 
+  fstar = callPackage ../development/compilers/fstar {
+    ocamlPackages = ocamlPackages_4_02;
+  };
+
   dotnetPackages = recurseIntoAttrs (callPackage ./dotnet-packages.nix {});
 
   go_1_4 = callPackage ../development/compilers/go/1.4.nix {
@@ -5327,7 +5332,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   erlang_odbc_javac = erlangR18_odbc_javac;
 
   rebar = callPackage ../development/tools/build-managers/rebar { };
-  rebar3 = callPackage ../development/tools/build-managers/rebar3 { };
+  rebar3-open = callPackage ../development/tools/build-managers/rebar3 { hermeticRebar3 = false; };
+  rebar3 = callPackage ../development/tools/build-managers/rebar3 { hermeticRebar3 = true; };
   rebar3-nix-bootstrap = callPackage ../development/tools/erlang/rebar3-nix-bootstrap { };
   fetchHex = callPackage ../development/tools/build-managers/rebar3/fetch-hex.nix { };
 
@@ -7636,6 +7642,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   libusbmuxd = callPackage ../development/libraries/libusbmuxd { };
 
+  libutempter = callPackage ../development/libraries/libutempter { };
+
   libunwind = if stdenv.isDarwin
     then darwin.libunwind
     else callPackage ../development/libraries/libunwind { };
@@ -9285,6 +9293,9 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   oracleXE = callPackage ../servers/sql/oracle-xe { };
 
+  softether_4_18 = callPackage ../servers/softether/4.18.nix { };
+  softether = softether_4_18;
+
   qboot = callPackage ../applications/virtualization/qboot { stdenv = stdenv_32bit; };
 
   OVMF = callPackage ../applications/virtualization/OVMF { seabios=false; openssl=null; };
@@ -9877,6 +9888,15 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   kernelPatches = callPackage ../os-specific/linux/kernel/patches.nix { };
 
+  linux_mptcp = callPackage ../os-specific/linux/kernel/linux-mptcp.nix {
+    kernelPatches = [ kernelPatches.bridge_stp_helper ]
+      ++ lib.optionals ((platform.kernelArch or null) == "mips")
+      [ kernelPatches.mips_fpureg_emu
+        kernelPatches.mips_fpu_sigill
+        kernelPatches.mips_ext3_n32
+      ];
+  };
+
   linux_rpi = callPackage ../os-specific/linux/kernel/linux-rpi.nix {
     kernelPatches = [ kernelPatches.bridge_stp_helper ];
   };
@@ -9934,10 +9954,10 @@ zsh = callPackage ../all-pkgs/zsh { };
   linux_grsec_stable_server_xen = throw "No longer supporteddue to https://grsecurity.net/announce.php. "
     + "Please use linux_grsec_testing_server_xen.";
 
-  # Testing kernels
-  linux_grsec_testing_desktop = grKernel grFlavors.linux_grsec_testing_desktop;
-  linux_grsec_testing_server  = grKernel grFlavors.linux_grsec_testing_server;
-  linux_grsec_testing_server_xen = grKernel grFlavors.linux_grsec_testing_server_xen;
+  # Testing kernels: outdated ATM
+  #linux_grsec_testing_desktop = grKernel grFlavors.linux_grsec_testing_desktop;
+  #linux_grsec_testing_server  = grKernel grFlavors.linux_grsec_testing_server;
+  #linux_grsec_testing_server_xen = grKernel grFlavors.linux_grsec_testing_server_xen;
 
   /* Linux kernel modules are inherently tied to a specific kernel.  So
      rather than provide specific instances of those packages for a
@@ -10064,6 +10084,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   linux_latest = linuxPackages_latest.kernel;
 
   # Build the kernel modules for the some of the kernels.
+  linuxPackages_mptcp = linuxPackagesFor pkgs.linux_mptcp linuxPackages_mptcp;
   linuxPackages_rpi = linuxPackagesFor pkgs.linux_rpi linuxPackages_rpi;
   linuxPackages_3_18 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_18 linuxPackages_3_18);
   linuxPackages_4_1 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_1 linuxPackages_4_1);
@@ -10085,10 +10106,10 @@ zsh = callPackage ../all-pkgs/zsh { };
   linuxPackages_grsec_stable_server     = grPackage grFlavors.linux_grsec_stable_server;
   linuxPackages_grsec_stable_server_xen = grPackage grFlavors.linux_grsec_stable_server_xen;
 
-  # Testing kernels
-  linuxPackages_grsec_testing_desktop = grPackage grFlavors.linux_grsec_testing_desktop;
-  linuxPackages_grsec_testing_server  = grPackage grFlavors.linux_grsec_testing_server;
-  linuxPackages_grsec_testing_server_xen = grPackage grFlavors.linux_grsec_testing_server_xen;
+  # Testing kernels: outdated ATM
+  #linuxPackages_grsec_testing_desktop = grPackage grFlavors.linux_grsec_testing_desktop;
+  #linuxPackages_grsec_testing_server  = grPackage grFlavors.linux_grsec_testing_server;
+  #linuxPackages_grsec_testing_server_xen = grPackage grFlavors.linux_grsec_testing_server_xen;
 
   # A function to build a manually-configured kernel
   linuxManualConfig = pkgs.buildLinux;
@@ -10162,6 +10183,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   mkinitcpio-nfs-utils = callPackage ../os-specific/linux/mkinitcpio-nfs-utils { };
 
+  mmc-utils = callPackage ../os-specific/linux/mmc-utils { };
+
   module_init_tools = callPackage ../os-specific/linux/module-init-tools { };
 
   aggregateModules = modules:
@@ -10169,7 +10192,7 @@ zsh = callPackage ../all-pkgs/zsh { };
       inherit modules;
     };
 
-  multipath_tools = callPackage ../os-specific/linux/multipath-tools { };
+  multipath-tools = callPackage ../os-specific/linux/multipath-tools { };
 
   musl = callPackage ../os-specific/linux/musl { };
 
@@ -11671,8 +11694,6 @@ zsh = callPackage ../all-pkgs/zsh { };
     boost = boost155;
   };
 
-  fuze = callPackage ../applications/networking/instant-messengers/fuze {};
-
   game-music-emu = callPackage ../applications/audio/game-music-emu { };
 
   gcolor2 = callPackage ../applications/graphics/gcolor2 { };
@@ -11844,6 +11865,11 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gtk2fontsel = callPackage ../applications/misc/gtk2fontsel {
     inherit (gnome2) gtk;
+  };
+
+  guake = callPackage ../applications/misc/guake {
+    gconf = gnome.GConf;
+    vte = gnome.vte.override { pythonSupport = true; };
   };
 
   guitone = callPackage ../applications/version-management/guitone {
@@ -15326,6 +15352,10 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   texLiveModerntimeline = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/moderntimeline.nix) {};
 
+  ib-tws = callPackage ../applications/office/ib/tws { jdk=oraclejdk8; };
+
+  ib-controller = callPackage ../applications/office/ib/controller { jdk=oraclejdk8; };
+
   thermald = callPackage ../tools/system/thermald { };
 
   thinkfan = callPackage ../tools/system/thinkfan { };
@@ -15522,6 +15552,7 @@ aliases = with self; rec {
   lttngUst = lttng-ust;  # added 2014-07-31
   midoriWrapper = midori; # added 2015-01
   mlt-qt5 = qt5.mlt;  # added 2015-12-19
+  multipath_tools = multipath-tools;  # added 2016-01-21
   nfsUtils = nfs-utils;  # added 2014-12-06
   phonon_qt5 = qt5.phonon;  # added 2015-12-19
   phonon_qt5_backend_gstreamer = qt5.phonon-backend-gstreamer;  # added 2015-12-19

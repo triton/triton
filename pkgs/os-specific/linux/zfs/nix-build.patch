@@ -104,7 +104,7 @@ index 0859b9f..b0c6eec 100644
  kernel_HEADERS = $(COMMON_H) $(KERNEL_H)
  endif
 diff --git a/module/Makefile.in b/module/Makefile.in
-index d4ddee2..bd77636 100644
+index d4ddee2..876c811 100644
 --- a/module/Makefile.in
 +++ b/module/Makefile.in
 @@ -18,9 +18,9 @@ modules:
@@ -123,7 +123,7 @@ index d4ddee2..bd77636 100644
  		"*** - @SPL_OBJ@/module/@SPL_SYMBOLS@\n"; \
  		exit 1; \
  	fi
-+	@# when copying a file out of the nix store, we need to make it writable again. 
++	@# when copying a file out of the nix store, we need to make it writable again.
 +	chmod +w @SPL_SYMBOLS@
  	$(MAKE) -C @LINUX_OBJ@ SUBDIRS=`pwd` @KERNELMAKE_PARAMS@ CONFIG_ZFS=m $@
  
@@ -140,7 +140,7 @@ index d4ddee2..bd77636 100644
 -	kmoddir=$(DESTDIR)$(INSTALL_MOD_PATH)/lib/modules/@LINUX_VERSION@; \
 -	if [ -n "$(DESTDIR)" ]; then \
 +	kmoddir=@prefix@/$(INSTALL_MOD_PATH)/lib/modules/@LINUX_VERSION@; \
-+	if [ -n $$kmoddir ]; then \
++	if [ -n "@prefix@" ]; then \
  		find $$kmoddir -name 'modules.*' | xargs $(RM); \
  	fi
 -	sysmap=$(DESTDIR)$(INSTALL_MOD_PATH)/boot/System.map-@LINUX_VERSION@; \

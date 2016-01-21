@@ -1,54 +1,67 @@
 { stdenv, fetchFromGitHub
-, autoreconfHook, diffutils, pkgconfig, docbook_xsl, libxml2, libxslt, docbook_xml_dtd_45
-, acl, attr, boost, btrfs-progs, dbus_libs, pam, utillinux }:
+, autoreconfHook, pkgconfig, docbook_xsl, libxslt, docbook_xml_dtd_45
+, acl, attr, boost, btrfs-progs, dbus_libs, diffutils, e2fsprogs, libxml2
+, lvm2, pam, python, utillinux }:
 
 stdenv.mkDerivation rec {
-  name = "snapper-${ver}";
-  ver = "0.2.8";
+  name = "snapper-${version}";
+  version = "0.2.8";
 
   src = fetchFromGitHub {
     owner = "openSUSE";
     repo = "snapper";
-    rev = "v${ver}";
+    rev = "v${version}";
     sha256 = "1rj8vy6hq140pbnc7mjjb34mfqdgdah1dmlv2073izdgakh7p38j";
   };
 
-  buildInputs = [
-    acl attr boost btrfs-progs dbus_libs pam utillinux
-  ];
   nativeBuildInputs = [
-    autoreconfHook diffutils pkgconfig
-    docbook_xsl libxml2 libxslt docbook_xml_dtd_45
+    autoreconfHook pkgconfig
+    docbook_xsl libxslt docbook_xml_dtd_45
+  ];
+  buildInputs = [
+    acl attr boost btrfs-progs dbus_libs diffutils e2fsprogs libxml2
+    lvm2 pam python utillinux
   ];
 
-  patchPhase = ''
-    # work around missing btrfs/version.h; otherwise, use "-DHAVE_BTRFS_VERSION_H"
-    substituteInPlace snapper/Btrfs.cc --replace "define BTRFS_LIB_VERSION (100)" "define BTRFS_LIB_VERSION (200)";
-    # fix strange SuSE boost naming
-    substituteInPlace snapper/Makefile.am --replace \
-      "libsnapper_la_LIBADD = -lboost_thread-mt -lboost_system-mt -lxml2 -lacl -lz -lm" \
-      "libsnapper_la_LIBADD = -lboost_thread -lboost_system -lxml2 -lacl -lz -lm";
-    '';
+  postPatch = ''
+    # Hard-coded root paths, hard-coded root paths everywhere...
+    for file in {client,data,pam,scripts}/Makefile.am; do
+      substituteInPlace $file \
+        --replace '$(DESTDIR)/usr' "$out" \
+        --replace "DESTDIR" "out" \
+        --replace "/usr" "$out"
+    done
+    substituteInPlace pam/Makefile.am \
+      --replace '/`basename $(libdir)`' "$out/lib"
+  '';
 
-  configurePhase = ''
-    ./configure --disable-silent-rules --disable-ext4 --disable-btrfs-quota --prefix=$out
-    '';
+  configureFlags = [
+    "--disable-ext4"	# requires patched kernel & e2fsprogs
+  ];
 
-  makeFlags = "DESTDIR=$(out)";
+  enableParallelBuilding = true;
 
-  NIX_CFLAGS_COMPILE = [ "-I${libxml2}/include/libxml2" ];
+  NIX_CFLAGS_COMPILE = [
+    "-I${libxml2}/include/libxml2"
+  ];
 
-  # Probably a hack, but using DESTDIR and PREFIX makes everything work!
   postInstall = ''
-    cp -r $out/$out/* $out
-    rm -r $out/nix
-    '';
+    rm -r $out/etc/cron.*
+    patchShebangs $out/lib/zypp/plugins/commit/*
+    for file in \
+      $out/lib/pam_snapper/* \
+      $out/lib/systemd/system/* \
+      $out/share/dbus-1/system-services/* \
+    ; do
+      substituteInPlace $file --replace "/usr" "$out"
+    done
+  '';
 
   meta = with stdenv.lib; {
     description = "Tool for Linux filesystem snapshot management";
     homepage = http://snapper.io;
     license = licenses.gpl2;
     platforms = platforms.linux;
-    maintainers = [ maintainers.tstrobel ];
+    maintainers = with maintainers; [ nckx tstrobel ];
   };
 }

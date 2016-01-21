@@ -659,6 +659,42 @@ configurePhase() {
     runHook postConfigure
 }
 
+commonMakeFlags() {
+    local phaseName
+    phaseName=$1
+
+    local parallelVar
+    parallelVar="parallel${phaseName^}"
+
+    actualMakeFlags=()
+    if [ -n "$makefile" ]; then
+        actualMakeFlags+=("-f" "$makefile")
+    fi
+    if [ -n "${!parallelVar-true}" ]; then
+        actualMakeFlags+=("-j${NIX_BUILD_CORES}" "-l${NIX_BUILD_CORES}")
+    fi
+    actualMakeFlags+=("SHELL=$SHELL") # Needed for https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
+    actualMakeFlags+=($makeFlags)
+    actualMakeFlags+=("${makeFlagsArray[@]}")
+    local flagsVar
+    flagsVar="${phaseName}Flags"
+    actualMakeFlags+=(${!flagsVar})
+    local arrayVar
+    arrayVar="${phaseName}FlagsArray[@]"
+    actualMakeFlags+=("${!arrayVar}")
+}
+
+printMakeFlags() {
+    local phaseName
+    phaseName=$1
+
+    echo "$phaseName flags:"
+
+    local flag
+    for flag in "${actualMakeFlags[@]}"; do
+      echo "  $flag"
+    done
+}
 
 buildPhase() {
     runHook preBuild
@@ -666,17 +702,10 @@ buildPhase() {
     if [ -z "$makeFlags" ] && ! [ -n "$makefile" -o -e "Makefile" -o -e "makefile" -o -e "GNUmakefile" ]; then
         echo "no Makefile, doing nothing"
     else
-        # See https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
-        makeFlags="SHELL=$SHELL $makeFlags"
-        echo "make flags: $makeFlags ${makeFlagsArray[@]} $buildFlags ${buildFlagsArray[@]}"
-
-        # This looks silly but we need to make sure these values are set for ${+} to work
-        disableParallelBuild=$disableParallelBuild
-
-        make ${makefile:+-f $makefile} \
-            ${enableParallelBuilding:+${disableParallelBuild+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}}} \
-            $makeFlags "${makeFlagsArray[@]}" \
-            $buildFlags "${buildFlagsArray[@]}"
+        local actualMakeFlags
+        commonMakeFlags "build"
+        printMakeFlags "build"
+        make "${actualMakeFlags[@]}"
     fi
 
     runHook postBuild
@@ -686,15 +715,12 @@ buildPhase() {
 checkPhase() {
     runHook preCheck
 
-    echo "check flags: $makeFlags ${makeFlagsArray[@]} $checkFlags ${checkFlagsArray[@]}"
-
-    # This looks silly but we need to make sure these values are set for ${+} to work
-    disableParallelCheck=$disableParallelCheck
-
-    make ${makefile:+-f $makefile} \
-        ${enableParallelBuilding:+${disableParallelCheck+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}}} \
-        $makeFlags "${makeFlagsArray[@]}" \
-        ${checkFlags:-VERBOSE=y} "${checkFlagsArray[@]}" ${checkTarget:-check}
+    local actualMakeFlags
+    commonMakeFlags "check"
+    actualMakeFlags+=(${checkFlags:-VERBOSE=y})
+    actualMakeFlags+=(${checkTarget:-check})
+    printMakeFlags "check"
+    make "${actualMakeFlags[@]}"
 
     runHook postCheck
 }
@@ -705,17 +731,11 @@ installPhase() {
 
     mkdir -p "$prefix"
 
-    installTargets=${installTargets:-install}
-    echo "install flags: $installTargets $makeFlags ${makeFlagsArray[@]} $installFlags ${installFlagsArray[@]}"
-
-    # This looks silly but we need to make sure these values are set for ${+} to work
-    disableParallelInstall=$disableParallelInstall
-
-    make ${makefile:+-f $makefile} \
-        ${enableParallelBuilding:+${disableParallelInstall+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}}} \
-        $installTargets \
-        $makeFlags "${makeFlagsArray[@]}" \
-        $installFlags "${installFlagsArray[@]}"
+    local actualMakeFlags
+    commonMakeFlags "install"
+    actualMakeFlags+=(${installTargets:-install})
+    printMakeFlags "install"
+    make "${actualMakeFlags[@]}"
 
     runHook postInstall
 }

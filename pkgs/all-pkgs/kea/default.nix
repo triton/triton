@@ -54,6 +54,10 @@ stdenv.mkDerivation rec {
     "--disable-logger-checks"
   ];
 
+  preFixup = ''
+    sed -i 's,openssl-1.0.0,openssl,g' $out/lib/pkgconfig/dns++.pc
+  '';
+
   meta = with stdenv.lib; {
     license = licenses.mpl2;
     platforms = [

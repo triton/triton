@@ -1,11 +1,11 @@
 { lib, stdenv, fetchurl, readline, ncurses }:
 
 stdenv.mkDerivation {
-  name = "sqlite-3.10.1";
+  name = "sqlite-3.10.2";
 
   src = fetchurl {
-    url = "http://sqlite.org/2016/sqlite-autoconf-3100100.tar.gz";
-    sha1 = "fedd95d402628ed0e0e3444ce50bcbd1fe2e7294";
+    url = "http://sqlite.org/2016/sqlite-autoconf-3100200.tar.gz";
+    sha1 = "ea4156fc3f6a4a4a2752a5a3ac5c5b3fe7e1a24b";
   };
 
   buildInputs = [ readline ncurses ];

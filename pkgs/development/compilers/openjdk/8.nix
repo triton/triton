@@ -98,6 +98,11 @@ let
 
     buildFlags = "all";
 
+    # Explicitly does not support parallel building at all
+    parallelBuild = false;
+    parallelCheck = false;
+    parallelInstall = false;
+
     installPhase = ''
       mkdir -p $out/lib/openjdk $out/share $jre/lib/openjdk
 

@@ -7649,7 +7649,6 @@ zsh = callPackage ../all-pkgs/zsh { };
     else callPackage ../development/libraries/libunwind { };
 
   libuvVersions = recurseIntoAttrs (callPackage ../development/libraries/libuv {
-    automake = automake113x; # fails with 14
     inherit (darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
   });
 

@@ -9298,13 +9298,14 @@ zsh = callPackage ../all-pkgs/zsh { };
   pgpool92 = pgpool.override { postgresql = postgresql92; };
   pgpool93 = pgpool.override { postgresql = postgresql93; };
   pgpool94 = pgpool.override { postgresql = postgresql94; };
+  pgpool95 = pgpool.override { postgresql = postgresql95; };
 
   pgpool = callPackage ../servers/sql/pgpool/default.nix {
     pam = if stdenv.isLinux then pam else null;
     libmemcached = null; # Detection is broken upstream
   };
 
-  postgresql = postgresql94;
+  postgresql = postgresql95;
 
   inherit (callPackages ../servers/sql/postgresql { })
     postgresql90

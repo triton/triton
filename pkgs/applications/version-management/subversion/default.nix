@@ -69,8 +69,7 @@ let
     inherit perlBindings pythonBindings;
 
     # Parallel Building works fine but Parallel Install fails
-    enableParallelBuilding = true;
-    disableParallelInstall = true;
+    parallelInstall = false;
 
     meta = {
       description = "A version control system intended to be a compelling replacement for CVS in the open source community";

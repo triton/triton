@@ -92,6 +92,8 @@ let
     ] ++ optionals (versionOlder version "9.4.0") [
       (mkWith   false                     "krb5"              null)
       (mkWith   (optLibossp_uuid != null) "ossp-uuid"         null)
+    ] ++ optionals (versionOlder version "9.5.0") [
+      (mkEnable true                      "atomics"           null)
     ];
 
     enableParallelBuilding = true;

@@ -16,6 +16,9 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ pkgconfig ];
   propagatedBuildInputs = [ glib libIDL ] ++ libintlOrEmpty;
 
+  # Doesn't build on 2.14.19
+  parallelBuild = false;
+
   meta = with stdenv.lib; {
     homepage    = https://projects.gnome.org/ORBit2/;
     description = "A a CORBA 2.4-compliant Object Request Broker";

@@ -695,6 +695,8 @@ iputils = callPackage ../all-pkgs/iputils { };
 
 json-glib = callPackage ../all-pkgs/json-glib { };
 
+kea = callPackage ../all-pkgs/kea { };
+
 libass = callPackage ../all-pkgs/libass { };
 
 libcanberra = callPackage ../all-pkgs/libcanberra { };

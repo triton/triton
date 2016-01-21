@@ -14,6 +14,9 @@ stdenv.mkDerivation {
     configureFlagsArray+=("CFLAGS=-fno-strict-aliasing -fno-aggressive-loop-optimizations")
   '';
 
+  # Fails for 1.0.5
+  parallelBuild = false;
+
   meta = {
     homepage = http://judy.sourceforge.net/;
     license = stdenv.lib.licenses.lgpl21Plus;

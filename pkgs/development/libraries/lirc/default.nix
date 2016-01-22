@@ -26,6 +26,9 @@ stdenv.mkDerivation rec {
     "localstatedir=\${TMPDIR}"
   ];
 
+  # Broken on 0.9.3a
+  parallelBuild = false;
+
   meta = with stdenv.lib; {
     description = "Allows to receive and send infrared signals";
     homepage = http://www.lirc.org/;

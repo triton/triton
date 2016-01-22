@@ -15,6 +15,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ perl python zip xmlto zlib ];
 
   doCheck = true;
+  parallelCheck = false;
 
   meta = with stdenv.lib; {
     description = "Library to extract data from files archived in a zip file";

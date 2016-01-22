@@ -22,11 +22,11 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "ncmpcpp-0.7.1";
+  name = "ncmpcpp-0.7.3";
 
   src = fetchurl {
     url = "http://ncmpcpp.rybczak.net/stable/${name}.tar.bz2";
-    sha256 = "1prg5s5j2bsanxb6kkq3pmcqfxi9m6wra495946252xhlylnrdvk";
+    sha256 = "04mj6r0whikliblxfbz92pibwcd7a3ywkryf01a89zd4bi1jk2rc";
   };
 
   configureFlags = [

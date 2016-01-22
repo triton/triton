@@ -10,8 +10,6 @@ stdenv.mkDerivation rec {
 
   outputs = [ "out" "doc" ];
 
-  enableParallelBuilding = false;
-
   buildInputs = [ ghostscript ];
   nativeBuildInputs = [ perl ];
 
@@ -33,12 +31,14 @@ stdenv.mkDerivation rec {
   };
 
   postInstall = ''
-      # Remove example output with (random?) colors to 
+      # Remove example output with (random?) colors to
       # avoid non-determinism in the output
       rm $out/share/doc/${name}/examples/hdtbl/*color*ps
       # Remove creation date
       find $out/share/doc/${name} -type f -print0 | xargs -0 sed -i -e 's/%%CreationDate: .*//'
     '';
+
+  parallelBuild = false;
 
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/groff/;

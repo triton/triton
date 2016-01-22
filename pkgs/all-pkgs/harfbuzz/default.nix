@@ -18,23 +18,24 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "harfbuzz-1.1.2";
+  name = "harfbuzz-1.1.3";
 
   src = fetchurl {
     url = "http://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2";
-    sha256 = "07s6z3hbrb4rdfgzmln169wxz4nm5y7qbr02ik5c7drxpn85fb2a";
+    sha256 = "1xxqshbca83x2ik6rc555xzz0qwyb62aiprgj0p6fclwjyvpqgfr";
   };
 
-  postPatch = optionalString doCheck ''
+  postPatch = optionalString doCheck (''
     patchShebangs test/shaping/
-
-    # failing test, https://bugs.freedesktop.org/show_bug.cgi?id=89190
-    sed -e 's|tests/arabic-fallback-shaping.tests||' \
-        -i test/shaping/Makefile.{am,in}
-
-    # test fails
-    sed -e 's|tests/vertical.tests||' -i test/shaping/Makefile.{am,in}
-  '';
+  '' +
+  /* failing test, https://bugs.freedesktop.org/show_bug.cgi?id=89190 */ ''
+    sed -i test/shaping/Makefile.{am,in} \
+      -e 's|tests/arabic-fallback-shaping.tests||'
+  '' +
+  /* test fails */ ''
+    sed -i test/shaping/Makefile.{am,in} \
+      -e 's|tests/vertical.tests||'
+  '');
 
   configureFlags = [
     "--disable-gtk-doc"
@@ -69,7 +70,6 @@ stdenv.mkDerivation rec {
   postInstall = "rm -rvf $out/share/gtk-doc";
 
   doCheck = true;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "An OpenType text shaping engine";

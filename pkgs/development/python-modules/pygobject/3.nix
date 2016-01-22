@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, python, pkgconfig, glib, gobjectIntrospection, pycairo, cairo }:
+{ stdenv, fetchurl, python, pkgconfig, glib, gobjectIntrospection, pycairo, cairo, libffi }:
 
 stdenv.mkDerivation rec {
   name = "pygobject-3.18.2";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "0prc3ky7g50ixmfxbc7zf43fw6in4hw2q07667hp8swi2wassg1a";
   };
 
-  buildInputs = [ python pkgconfig glib gobjectIntrospection ];
+  buildInputs = [ python pkgconfig glib gobjectIntrospection libffi ];
   propagatedBuildInputs = [ pycairo cairo ];
 
   meta = {

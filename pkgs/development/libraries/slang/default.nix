@@ -16,6 +16,8 @@ stdenv.mkDerivation rec {
   configureFlags = "--with-png=${libpng} --with-z=${zlib} --with-pcre=${pcre} --with-readline=${readline}";
   buildInputs = [ncurses pcre libpng zlib readline];
 
+  parallelInstall = false;
+
   meta = {
     description = "A multi-platform programmer's library designed to allow a developer to create robust software";
     homepage = http://www.jedsoft.org/slang/;

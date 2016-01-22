@@ -32,6 +32,8 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  parallelInstall = false;
+
   meta = with stdenv.lib; {
     description = "Toolkit for RTMP streams";
     homepage = http://rtmpdump.mplayerhq.hu/;

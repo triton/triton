@@ -9890,12 +9890,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   kernelPatches = callPackage ../os-specific/linux/kernel/patches.nix { };
 
   linux_mptcp = callPackage ../os-specific/linux/kernel/linux-mptcp.nix {
-    kernelPatches = [ kernelPatches.bridge_stp_helper ]
-      ++ lib.optionals ((platform.kernelArch or null) == "mips")
-      [ kernelPatches.mips_fpureg_emu
-        kernelPatches.mips_fpu_sigill
-        kernelPatches.mips_ext3_n32
-      ];
+    kernelPatches = [ kernelPatches.bridge_stp_helper ];
   };
 
   linux_rpi = callPackage ../os-specific/linux/kernel/linux-rpi.nix {

@@ -821,6 +821,39 @@ poppler = callPackage ../all-pkgs/poppler {
   qt5 = null;
 };
 
+libpulseaudio = pulseaudioFull.override {
+  prefix = "lib";
+};
+
+# Name is changed to prevent use in packages
+# please use libpulseaudio instead
+pulseaudioLight = pulseaudioFull.override {
+  # The following are disabled in the default build, because if this
+  # functionality is desired, they are only needed in the PulseAudio
+  # server.
+  xorg = null;
+  coreaudio = null;
+  esound = null;
+  libjack2 = null;
+  avahi = null;
+  lirc = null;
+  bluez5 = null;
+  tdb = null;
+  gdbm = null;
+  gtk3 = null;
+  webrtc-audio-processing = null;
+  gconf = null;
+  libasyncns = null;
+};
+
+pulseaudioFull = callPackage ../all-pkgs/pulseaudio {
+  gconf = gnome3.gconf;
+  fftw = fftwFloat;
+
+  # Disabled unless debugging
+  valgrind = null;
+};
+
 python27 = callPackage ../all-pkgs/python/2.x.nix {
   channel = "2.7";
   self = python27;
@@ -9202,39 +9235,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   rspamd = callPackage ../servers/mail/rspamd { };
 
   pshs = callPackage ../servers/http/pshs { };
-
-  libpulseaudio = pulseaudioFull.override {
-    prefix = "lib";
-  };
-
-  # Name is changed to prevent use in packages
-  # please use libpulseaudio instead
-  pulseaudioLight = pulseaudioFull.override {
-    # The following are disabled in the default build, because if this
-    # functionality is desired, they are only needed in the PulseAudio
-    # server.
-    xorg = null;
-    coreaudio = null;
-    esound = null;
-    libjack2 = null;
-    avahi = null;
-    lirc = null;
-    bluez5 = null;
-    tdb = null;
-    gdbm = null;
-    gtk3 = null;
-    webrtc-audio-processing = null;
-    gconf = null;
-    libasyncns = null;
-  };
-
-  pulseaudioFull = callPackage ../servers/pulseaudio {
-    gconf = gnome3.gconf;
-    fftw = fftwFloat;
-
-    # Disabled unless debugging
-    valgrind = null;
-  };
 
   tomcat_connectors = callPackage ../servers/http/apache-modules/tomcat-connectors { };
 

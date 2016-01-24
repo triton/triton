@@ -911,6 +911,8 @@ pythonPackages = python2Packages;
 
 buildPythonPackage = pythonPackages.buildPythonPackage;
 
+qbittorrent = callPackage ../all-pkgs/qbittorrent { };
+
 qjackctl = callPackage ../all-pkgs/qjackctl { };
 
 rtmpdump = callPackage ../all-pkgs/rtmpdump { };
@@ -12658,11 +12660,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   pybitmessage = callPackage ../applications/networking/instant-messengers/pybitmessage { };
 
   pythonmagick = callPackage ../applications/graphics/PythonMagick { };
-
-  qbittorrent = callPackage ../applications/networking/p2p/qbittorrent {
-    boost = boost;
-    libtorrentRasterbar = libtorrentRasterbar;
-  };
 
   eiskaltdcpp = callPackage ../applications/networking/p2p/eiskaltdcpp { lua5 = lua5_1; };
 

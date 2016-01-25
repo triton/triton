@@ -22,11 +22,11 @@ in
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "${prefix}audit-${version}";
-  version = "2.4.4";
+  version = "2.4.5";
 
   src = fetchurl {
     url = "http://people.redhat.com/sgrubb/audit/audit-${version}.tar.gz";
-    sha256 = "08sfcx8ykcn5jsryil15q8yqm0a8czymyqbb2sqxfc1jbx37zx95";
+    sha256 = "1q1q51dvxscbi4kbakmd4bn0xrvwwaiwvaya79925cbrqwzxsg77";
   };
 
   nativeBuildInputs = [ optPython2 ] ++ optional (optPython3 != null) swig;
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    (mkWith   (optPython2 != null)       "python"      null)
+    (mkWith   (optPython2 != null)      "python"      null)
     (mkWith   (optPython3 != null)      "python3"     null)
     (mkWith   (optGo != null)           "golang"      null)
     (mkEnable (!libOnly)                "listener"    null)
@@ -61,31 +61,22 @@ stdenv.mkDerivation rec {
 
   # For libs only build and install the lib portion
   buildPhase = optionalString libOnly ''
-    pushd lib
-    make
-    popd
+    function buildDir() {
+      pushd $1
+      shift
+      make -j $NIX_BUILD_CORES $@
+      popd
+    }
 
-    pushd auparse
-    make
-    popd
-
-    pushd bindings
-    make
-    popd
+    buildDir lib
+    buildDir auparse
+    buildDir bindings
   '';
 
   installPhase = optionalString libOnly ''
-    pushd lib
-    make install
-    popd
-
-    pushd auparse
-    make install
-    popd
-
-    pushd bindings
-    make install
-    popd
+    buildDir lib install
+    buildDir auparse install
+    buildDir bindings install
   '';
 
   meta = {

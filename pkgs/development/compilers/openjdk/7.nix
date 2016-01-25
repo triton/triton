@@ -17,10 +17,6 @@ let
     else
       throw "openjdk requires i686-linux or x86_64 linux";
 
-  update = "91";
-
-  build = "01";
-
   # On x86 for heap sizes over 700MB disable SEGMEXEC and PAGEEXEC as well.
   paxflags = if stdenv.isi686 then "msp" else "m";
 
@@ -29,40 +25,30 @@ let
     md5 = "de3006e5cf1ee78a9c6145ce62c4e982";
   };
 
+  update = "91";
+  build = "02";
   baseurl = "http://hg.openjdk.java.net/jdk7u/jdk7u";
   repover = "jdk7u${update}-b${build}";
-  jdk7 = fetchurl {
-    url = "${baseurl}/archive/${repover}.tar.gz";
-    sha256 = "08f7cbayyrryim3xbrs12cr12i1mczcikyc9rdlsyih0r4xvll28";
+
+  fetchjava = name: sha256: fetchurl {
+    name = "${repover}-${name}.tar.gz";
+    url = "${baseurl}/${name}/archive/${repover}.tar.gz";
+    inherit sha256;
   };
-  langtools = fetchurl {
-    url = "${baseurl}/langtools/archive/${repover}.tar.gz";
-    sha256 = "0rmlzrgsacn60blpg1sp30k6p0sgzsml8wb41yc998km1bsnjxnh";
-  };
-  hotspot = fetchurl {
-    url = "${baseurl}/hotspot/archive/${repover}.tar.gz";
-    sha256 = "1w1n81y9jcvjzssl4049yzfc0gdfnh73ki6wg1d8pg22zlyhrrwv";
-  };
-  corba = fetchurl {
-    url = "${baseurl}/corba/archive/${repover}.tar.gz";
-    sha256 = "086yr927bxnlgljx7mw2cg6f6aip57hi4qpn1h35n6fsyvb4n67h";
-  };
-  jdk = fetchurl {
-    url = "${baseurl}/jdk/archive/${repover}.tar.gz";
-    sha256 = "14r39ylj3qa63arpqxl0h84baah1kjgnyp3v9d7d4vd0yagpn66b";
-  };
-  jaxws = fetchurl {
-    url = "${baseurl}/jaxws/archive/${repover}.tar.gz";
-    sha256 = "1p1739gb5gx9m4sm3i4javfk9lk41wnz92k6gis6sq99dd1bj1l5";
-  };
-  jaxp = fetchurl {
-    url = "${baseurl}/jaxp/archive/${repover}.tar.gz";
-    sha256 = "1nl3kmbwqhhymcp25rnmf5mr3dn87lgdxvz9wgng7if6yqxlyakq";
-  };
+
   openjdk = stdenv.mkDerivation rec {
     name = "openjdk-7u${update}b${build}";
 
-    srcs = [ jdk7 langtools hotspot corba jdk jaxws jaxp ];
+    srcs = [
+      (fetchjava "" "0xibqcj7v9mlwpn4x5pr64qwbqc6mgjlid8mkk5vhpl6d1m7riyz")
+      (fetchjava "langtools" "0c382j57624wmj020j888alrc00z9kpmk03mjg5hp4k5grbcg2xq")
+      (fetchjava "hotspot" "130vqb4r1wh4vqcdpxnfdivrw4z5xzg27pip14dp39rj48wnk205")
+      (fetchjava "corba" "1ybkqr1vkmv71h9mja2rrl7xjyxjcgs8ix2f2a3sns0pr3k9phvg")
+      (fetchjava "jdk" "0l9h85q7k2msai3da1qn2nh5avpz7fwhl6n490affxzjs3cww8yv")
+      (fetchjava "jaxws" "1kps465x5dv2lxfhjqdf9ywv7qsy6dqd42zm8j62z443zdlckfsr")
+      (fetchjava "jaxp" "0ag0vql0vpkfx0kwb8s28snpy8nvbs63fb34g1fdrs8raip7yczz")
+    ];
+
     sourceRoot = ".";
 
     outputs = [ "out" "jre" ];

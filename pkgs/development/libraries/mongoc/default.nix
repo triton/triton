@@ -1,21 +1,33 @@
-{ stdenv, fetchzip, autoconf, automake114x, perl, pkgconfig, libbson, libtool
-, openssl, which
+{ stdenv, fetchurl
+, perl
+, libbson
+, openssl
+, cyrus_sasl
 }:
 
-let
-  version = "1.1.10";
-in
-
 stdenv.mkDerivation rec {
-  name = "mongoc-${version}";
+  name = "mongo-c-driver-${version}";
+  version = "1.3.1";
 
-  src = fetchzip {
-    url = "https://github.com/mongodb/mongo-c-driver/releases/download/${version}/mongo-c-driver-${version}.tar.gz";
-    sha256 = "13yg8dpqgbpc44lsblr3szk2a5bnl2prlayv4xlkivx90m86lcx3";
+  src = fetchurl {
+    url = "https://github.com/mongodb/mongo-c-driver/releases/download/${version}/${name}.tar.gz";
+    sha256 = "0k4yyqq3a7j432nfh2c8jhl2aa33bnw1b13bs8pmkqqgxaaq2gld";
   };
 
-  propagatedBuildInputs = [ libbson ];
-  buildInputs = [ autoconf automake114x libtool openssl perl pkgconfig which ];
+  nativeBuildInputs = [
+    perl
+  ];
+
+  buildInputs = [
+    libbson
+    openssl
+    cyrus_sasl
+  ];
+
+  configureFlags = [
+    "--enable-ssl"
+    "--enable-sasl"
+  ];
 
   meta = with stdenv.lib; {
     description = "The official C client library for MongoDB";

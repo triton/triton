@@ -3,11 +3,11 @@
 
 stdenv.mkDerivation rec {
   name = "ecryptfs-${version}";
-  version = "108";
+  version = "109";
 
   src = fetchurl {
     url = "http://launchpad.net/ecryptfs/trunk/${version}/+download/ecryptfs-utils_${version}.orig.tar.gz";
-    sha256 = "1pfpzc907m4qi5h2rxmkqq072c6g22pik2rilj4bl4qishd8p0sj";
+    sha256 = "0v7mv08y7k180h6qjp29zcjfdsnkm6ls06dh1d90alf8x8xlrskq";
   };
 
   #TODO: replace wrapperDir below with from <nixos> config.security.wrapperDir;

@@ -1,7 +1,10 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
+, autoconf
+, automake
+, libtool
 , gettext
+, xmltoman
 , intltool
 
 , dbus
@@ -20,20 +23,21 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "avahi-0.6.31";
+  name = "avahi-${version}";
+  version = "0.6.32-rc";
 
   src = fetchurl {
-    url = "http://avahi.org/download/${name}.tar.gz";
-    sha256 = "0j5b5ld6bjyh3qhd2nw0jb84znq0wqai7fsrdzg7bpg24jdp2wl3";
+    url = "https://github.com/lathiat/avahi/archive/${version}.tar.gz";
+    sha256 = "0i1gza134vbrw0zk0f802wfz40y1132m5dzn0bxwgdvbd2qq3sz5";
   };
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
-      file = "avahi/avahi-0.6-no-mkdir-localstatedir.patch";
-      sha256 = "c47d4acb173e7b29913e7dd3e956fe5e9281a72dd9063a3bae808e5da59c421e";
-    })
-  ];
+  postPatch = ''
+    patchShebangs .
+  '';
+
+  preConfigure = ''
+    NOCONFIGURE=1 ./autogen.sh
+  '';
 
   configureFlags = [
     "--localstatedir=/var"
@@ -83,7 +87,11 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
+    autoconf
+    automake
+    libtool
     gettext
+    xmltoman
     intltool
   ];
 
@@ -93,6 +101,11 @@ stdenv.mkDerivation rec {
     glib
     libdaemon
   ];
+
+  preInstall = ''
+    cat Makefile
+    installFlagsArray+=("localstatedir=$TMPDIR")
+  '';
 
   postInstall = ''
     # Maintain compat for mdnsresponder and howl

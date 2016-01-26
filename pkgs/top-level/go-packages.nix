@@ -66,11 +66,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev    = "341cd0845b5a19165f12976d7915847a71037135";
-    date   = "2015-01-13";
+    rev    = "2e9cee70ee697e0a2ef894b560dda50dec7dff58";
+    date   = "2015-01-21";
     owner  = "golang";
     repo   = "net";
-    sha256 = "131c7vgz0cym4kf7lwnhshj4a7wh3ghv8y4n77g8j9y4yjmbf8bb";
+    sha256 = "0063a9mqsairl62gs48x2maclka4gndakz1fqzcqsmsd7p483rxh";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -124,11 +124,11 @@ let
   };
 
   text = buildFromGitHub {
-    rev = "cf4986612c83df6c55578ba198316d1684a9a287";
-    date = "2015-12-17";
+    rev = "6d3c22c4525a4da167968fa2479be5524d2e8bd0";
+    date = "2016-01-25";
     owner = "golang";
     repo = "text";
-    sha256 = "1dqpcvfv9d9wl7nndl1mbk1fff8hjbs84y53qs4pqlspmj1z0zix";
+    sha256 = "0bssiv428kdlw3xpr3fh7is3w68k8banmc80v1lzhvz16bmml3n2";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
   };

@@ -14903,12 +14903,13 @@ in {
   };
 
 
-  pyasn1 = buildPythonPackage ({
-    name = "pyasn1-0.1.8";
+  pyasn1 = buildPythonPackage (rec {
+    name = "pyasn1-${version}";
+    version = "0.1.9";
 
     src = pkgs.fetchurl {
-      url = "mirror://sourceforge/pyasn1/0.1.8/pyasn1-0.1.8.tar.gz";
-      sha256 = "0iw31d9l0zwx35szkzq72hiw002wnqrlrsi9dpbrfngcl1ybwcsx";
+      url = "mirror://sourceforge/pyasn1/${version}/${name}.tar.gz";
+      sha256 = "0zraxni14bqi20kr4bi6nwsh32aibz0fq0xaczfisw0zdpcsqg45";
     };
 
     meta = {

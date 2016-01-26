@@ -935,6 +935,8 @@ sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sublime-text = callPackage ../all-pkgs/sublime-text { };
 
+usbmuxd = callPackage ../all-pkgs/usbmuxd { };
+
 vte_290 = callPackage ../all-pkgs/vte/2.90.nix { };
 vte = callPackage ../all-pkgs/vte { };
 
@@ -3837,8 +3839,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   uriparser = callPackage ../development/libraries/uriparser {};
 
   urlview = callPackage ../applications/misc/urlview {};
-
-  usbmuxd = callPackage ../tools/misc/usbmuxd {};
 
   uwsgi = callPackage ../servers/uwsgi {
     plugins = [];

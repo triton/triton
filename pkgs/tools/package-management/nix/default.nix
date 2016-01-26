@@ -92,10 +92,12 @@ in rec {
      name = "nix-1.11.1";
      src = fetchurl {
        url = "http://nixos.org/releases/nix/${name}/${name}.tar.xz";
-       sha256 = "0ypa4slj3dmn7ip6cz1xis3gz08azlw6fl5g38j11gpx18yrpa91";
+       sha256 = "21a99b3d0afdbe10241aaf506738fd0a81ff868e3d7c666e3cb6b621a926ea7a";
      };
    };
 
+   nixUnstable = nixStable;
+   /*
    nixUnstable = lib.lowPrio (common rec {
      name = "nix-1.11pre4379_786046c";
      src = fetchurl {
@@ -103,5 +105,6 @@ in rec {
        sha256 = "ff42c70697fce7ca6eade622a31e5fbe45aed0edf1204fb491b40df207a807d5";
      };
    });
+   */
 
 }

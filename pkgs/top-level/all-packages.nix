@@ -705,6 +705,8 @@ libcanberra_kde = libcanberra; # Deprecated alias
 
 libgudev = callPackage ../all-pkgs/libgudev { };
 
+libgusb = callPackage ../all-pkgs/libgusb { };
+
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };
 libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix {
   libtool = libtool_1_5;
@@ -6789,10 +6791,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   gperftools = callPackage ../development/libraries/gperftools { };
 
   grib-api = callPackage ../development/libraries/grib-api { };
-
-  gusb = callPackage ../development/libraries/gusb {
-    inherit (gnome) gtkdoc;
-  };
 
   qt-mobility = callPackage ../development/libraries/qt-mobility {};
 

@@ -54,6 +54,8 @@ let
     gtkmm3
     libcanberra
     vala
+    vte
+    vte_290
     zenity;
 
   inherit (pkgs.gnome2)
@@ -238,10 +240,6 @@ let
   totem-pl-parser = callPackage ./core/totem-pl-parser { };
 
   tracker = callPackage ./core/tracker { };
-
-  vte = callPackage ./core/vte { };
-
-  vte_290 = callPackage ./core/vte/2.90.nix { };
 
   vte-select-text = vte.override { selectTextPatch = true; };
 

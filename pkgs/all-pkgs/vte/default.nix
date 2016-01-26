@@ -1,4 +1,5 @@
-{ stdenv, fetchurl
+{ stdenv
+, fetchurl
 , intltool
 
 , atk
@@ -19,7 +20,9 @@
 
 with {
   inherit (stdenv.lib)
-    optional;
+    enFlag
+    optional
+    wtFlag;
 };
 
 stdenv.mkDerivation rec {
@@ -47,15 +50,15 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-Bsymbolic"
     "--disable-glade"
-    "--enable-introspection"
-    "--enable-vala"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    (enFlag "vala" (vala != null) null)
     # test application uses deprecated functions
     "--disable-test-application"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--with-gnutls"
-    "--with-pcre2"
+    (wtFlag "gnutls" (gnutls != null) null)
+    (wtFlag "pcre2" (pcre2 != null) null)
   ];
 
   nativeBuildInputs = [
@@ -78,7 +81,6 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = true;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A library implementing a terminal emulator widget for GTK+";

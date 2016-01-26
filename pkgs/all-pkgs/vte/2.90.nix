@@ -3,6 +3,7 @@
 , intltool
 
 , atk
+, cairo
 , gdk-pixbuf
 , glib
 , gnome3
@@ -11,8 +12,14 @@
 , libxml2
 , ncurses
 , pango
+, xorg
 , zlib
 }:
+
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
 
 stdenv.mkDerivation rec {
   name = "vte-${version}";
@@ -36,7 +43,7 @@ stdenv.mkDerivation rec {
     "--enable-Bsymbolic"
     "--enable-gnome-pty-helper"
     "--disable-glade"
-    "--enable-introspection"
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -48,6 +55,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     atk
+    cairo
     gdk-pixbuf
     glib
     gobject-introspection
@@ -55,11 +63,11 @@ stdenv.mkDerivation rec {
     libxml2
     ncurses
     pango
+    xorg.libX11
     zlib
   ];
 
   doCheck = true;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A library implementing a terminal emulator widget for GTK+";

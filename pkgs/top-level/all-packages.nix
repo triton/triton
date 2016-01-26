@@ -935,6 +935,9 @@ sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sublime-text = callPackage ../all-pkgs/sublime-text { };
 
+vte_290 = callPackage ../all-pkgs/vte/2.90.nix { };
+vte = callPackage ../all-pkgs/vte { };
+
 wayland = callPackage ../all-pkgs/wayland {
   graphviz = graphviz-nox;
 };
@@ -13134,7 +13137,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   tig = gitAndTools.tig;
 
   tilda = callPackage ../applications/misc/tilda {
-    vte = gnome3.vte_290;
+    vte = vte_290;
     gtk = gtk3;
   };
 
@@ -13286,7 +13289,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
   virtmanager = callPackage ../applications/virtualization/virt-manager {
     inherit (gnome) gnome_python;
-    vte = gnome3.vte;
     dconf = gnome3.dconf;
     gtkvnc = gtkvnc.override { enableGTK3 = true; };
     spice_gtk = spice_gtk.override { enableGTK3 = true; };
@@ -13638,7 +13640,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   roxterm = callPackage ../applications/misc/roxterm {
     inherit (pythonPackages) lockfile;
     inherit (gnome3) gsettings_desktop_schemas;
-    vte = gnome3.vte_290;
+    vte = vte_290;
   };
 
   xtrace = callPackage ../tools/X11/xtrace { };

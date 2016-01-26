@@ -2207,10 +2207,10 @@ let
   };
 
   mgo = buildFromGitHub {
-    rev = "r2015.10.05";
+    rev = "r2015.12.06";
     owner = "go-mgo";
     repo = "mgo";
-    sha256 = "0wn6js8g8j5wxsdn5pb2bx7hsnrmqp430wlcgw7k8114wnhnd9rc";
+    sha256 = "1k7zny7ac25m2a2rbgdc9yimp1g2krmlkayqxx6qd7j8ind9w794";
     goPackagePath = "gopkg.in/mgo.v2";
     goPackageAliases = [ "github.com/go-mgo/mgo" ];
     buildInputs = [ pkgs.cyrus_sasl tomb ];

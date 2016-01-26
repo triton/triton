@@ -20,12 +20,12 @@
   # A native Guile 2.0 is needed to cross-build Guile.
   selfNativeBuildInput = true;
 
-  # Guile 2.0.11 repeatable fails with 8-core parallel building because
-  # libguile/vm-i-system.i is not created in time
-  parallelBuild = false;
-
   patches = [ ./disable-gc-sensitive-tests.patch ./eai_system.patch ./clang.patch ] ++
     (stdenv.lib.optional (coverageAnalysis != null) ./gcov-file-name.patch);
+
+  postPatch = ''
+    sed -i 's,^.c.x:$,.c.x: $(BUILT_SOURCES),g' libguile/Makefile.in
+  '';
 
   # Explicitly link against libgcc_s, to work around the infamous
   # "libgcc_s.so.1 must be installed for pthread_cancel to work".

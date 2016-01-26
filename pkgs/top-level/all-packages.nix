@@ -534,6 +534,8 @@ clutter-gtk = callPackage ../all-pkgs/clutter-gtk { };
 
 cogl = callPackage ../all-pkgs/cogl { };
 
+colord = callPackage ../all-pkgs/colord { };
+
 ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
 ffmpeg_1 = callPackage ../all-pkgs/ffmpeg/1.x.nix { };
 ffmpeg_2_2 = callPackage ../all-pkgs/ffmpeg/2.2.nix { };
@@ -1585,8 +1587,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   citrix_receiver = callPackage ../applications/networking/remote/citrix-receiver { };
 
   cmst = qt5.callPackage ../tools/networking/cmst { };
-
-  colord = callPackage ../tools/misc/colord { };
 
   colord-gtk = callPackage ../tools/misc/colord-gtk { };
 

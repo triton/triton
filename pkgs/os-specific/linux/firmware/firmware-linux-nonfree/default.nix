@@ -2,7 +2,7 @@
 
 stdenv.mkDerivation rec {
   name = "firmware-linux-nonfree-${version}";
-  version = "2015-12-09";
+  version = "2015-01-26";
 
   # This repo is built by merging the latest versions of
   # http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/
@@ -14,8 +14,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "wkennington";
     repo = "linux-firmware";
-    rev = "4769127be0d0f5caed71c57fd6a17d09d13462e8";
-    sha256 = "19sjw6sssxnfwkiakjmplih9pig1z539i2jgbibbnrar004wp777";
+    rev = "0922e78fc8431c2cc6585eb66e5b75f566644ac8";
+    sha256 = "07hv4kgbsxndhm1va6k6scy083886aap3naq1l4jdz7dnph4ir02";
   };
 
   preInstall = ''

@@ -1,10 +1,9 @@
-{ stdenv, fetchurl, pkgconfig, libusb1 }:
+{ stdenv, fetchurl, pkgconfig, libusb_1 }:
 
 stdenv.mkDerivation rec {
   name = "libmtp-1.1.10";
 
-  propagatedBuildInputs = [ libusb1 ];
-  buildInputs = [ pkgconfig ];
+  buildInputs = [ libusb_1 ];
 
   # tried to install files to /lib/udev, hopefully OK
   configureFlags = [ "--with-udev=$$out/lib/udev" ];

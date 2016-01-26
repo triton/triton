@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pcsclite, pkgconfig, libusb1, perl }:
+{ stdenv, fetchurl, pcsclite, pkgconfig, libusb_1, perl }:
 
 stdenv.mkDerivation rec {
   version = "1.4.21";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   '';
 
   nativeBuildInputs = [ pkgconfig perl ];
-  buildInputs = [ pcsclite libusb1 ];
+  buildInputs = [ pcsclite libusb_1 ];
 
   meta = with stdenv.lib; {
     description = "ccid drivers for pcsclite";

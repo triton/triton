@@ -743,6 +743,8 @@ libusb_0 = libusb-compat;
 libusb_1 = callPackage ../all-pkgs/libusb { };
 libusb = libusb_1;
 
+libusbmuxd = callPackage ../all-pkgs/libusbmuxd { };
+
 libva = callPackage ../all-pkgs/libva { };
 
 libvdpau = callPackage ../all-pkgs/libvdpau { };
@@ -7694,8 +7696,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   libunique3 = callPackage ../development/libraries/libunique/3.x.nix { inherit (gnome) gtkdoc; };
 
   liburcu = callPackage ../development/libraries/liburcu { };
-
-  libusbmuxd = callPackage ../development/libraries/libusbmuxd { };
 
   libutempter = callPackage ../development/libraries/libutempter { };
 

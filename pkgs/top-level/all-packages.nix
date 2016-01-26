@@ -733,6 +733,12 @@ libtorrent-rasterbar_0 = callPackage ../all-pkgs/libtorrent-rasterbar/0.x.nix { 
 libtorrent-rasterbar_1 = callPackage ../all-pkgs/libtorrent-rasterbar/1.x.nix { };
 libtorrent-rasterbar = libtorrent-rasterbar_1;
 
+libusb-compat = callPackage ../all-pkgs/libusb-compat { };
+
+libusb_0 = libusb-compat;
+libusb_1 = callPackage ../all-pkgs/libusb { };
+libusb = libusb_1;
+
 libva = callPackage ../all-pkgs/libva { };
 
 libvdpau = callPackage ../all-pkgs/libvdpau { };
@@ -7689,12 +7695,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   libunique3 = callPackage ../development/libraries/libunique/3.x.nix { inherit (gnome) gtkdoc; };
 
   liburcu = callPackage ../development/libraries/liburcu { };
-
-  libusb = callPackage ../development/libraries/libusb {};
-
-  libusb1 = callPackage ../development/libraries/libusb1 {
-    inherit (darwin) libobjc IOKit;
-  };
 
   libusbmuxd = callPackage ../development/libraries/libusbmuxd { };
 

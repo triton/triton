@@ -17725,11 +17725,11 @@ in {
   };
 
   rsa = buildPythonPackage rec {
-    name = "rsa-3.1.4";
+    name = "rsa-3.3";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/r/rsa/${name}.tar.gz";
-      sha256 = "1842ghkkimzf4fi3np4vwbwnsriv4d9malp1sbnv2xn26rcv1c72";
+      sha256 = "05fnrirqwydk36mcfqr3ydgn2bxi80m7bf0n21vq2rnhpazdkwq3";
     };
 
     buildInputs = with self; [ self.pyasn1 ];

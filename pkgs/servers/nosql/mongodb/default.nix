@@ -4,7 +4,7 @@
 
 with stdenv.lib;
 
-let version = "3.2.0";
+let version = "3.2.1";
     system-libraries = [
       "pcre"
       "wiredtiger"
@@ -35,13 +35,13 @@ in stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://downloads.mongodb.org/src/mongodb-src-r${version}.tar.gz";
-    sha256 = "1vmjb8gbsx7icqvy7k1sfgc3iwd8rnkzgp9ill1byv5qf0b1vpf6";
+    sha256 = "059gskly8maj2c9iy46gccx7a9ya522pl5aaxl5vss5bllxilhsh";
   };
 
   nativeBuildInputs = [ scons ];
   inherit buildInputs;
 
-  # Hopefully remove this in 3.2.1+
+  # Hopefully remove this in 3.2.2+
   patches = [
     (fetchurl {
       name = "mongodb-boost160.patch";

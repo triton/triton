@@ -59,7 +59,8 @@ stdenv.mkDerivation rec {
       "${nettools}/bin:${nettools}/sbin:${iputils}/bin:${coreutils}/bin:${gnused}/bin"
   '';
 
-  enableParallelBuilding = false;
+  # Fails to build the bind library if run in parallel
+  parallelBuild = false;
 
   meta = with stdenv.lib; {
     description = "Dynamic Host Configuration Protocol (DHCP) tools";

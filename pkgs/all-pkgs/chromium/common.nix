@@ -27,7 +27,7 @@
 , libjpeg
 , libopus
 , libpng
-, libusb1
+, libusb
 , libwebp
 , libxml2
 , libxslt
@@ -152,7 +152,7 @@ let
       libexif
       libjpeg
       libpng
-      libusb1
+      libusb
       libwebp
       libxml2
       libxslt

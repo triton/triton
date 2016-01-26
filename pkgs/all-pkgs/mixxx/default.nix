@@ -13,7 +13,7 @@
 , libopus
 , libshout
 , libsndfile
-, libusb1
+, libusb
 , libvorbis
 , mesa_noglu
 , mp4v2
@@ -56,8 +56,8 @@ stdenv.mkDerivation rec {
 
     "opengles=0"
     "hss1394=0"
-    (scFlag "hid" (libusb1 != null))
-    (scFlag "bulk" (libusb1 != null))
+    (scFlag "hid" (libusb != null))
+    (scFlag "bulk" (libusb != null))
     (scFlag "mad" (libmad != null))
     "coreaudio=0"
     "mediafoundation=0"
@@ -101,7 +101,7 @@ stdenv.mkDerivation rec {
     libopus
     libshout
     libsndfile
-    libusb1
+    libusb
     libvorbis
     mesa_noglu
     mp4v2

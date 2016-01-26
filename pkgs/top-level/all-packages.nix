@@ -3171,9 +3171,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   briss = callPackage ../tools/graphics/briss { };
 
-  brickd = callPackage ../servers/brickd {
-    libusb = libusb1;
-  };
+  brickd = callPackage ../servers/brickd { };
 
   bully = callPackage ../tools/networking/bully { };
 
@@ -6882,9 +6880,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   heyefi = haskellPackages.heyefi;
 
-  hidapi = callPackage ../development/libraries/hidapi {
-    libusb = libusb1;
-  };
+  hidapi = callPackage ../development/libraries/hidapi { };
 
   hiredis = callPackage ../development/libraries/hiredis { };
 
@@ -8564,9 +8560,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   ustr = callPackage ../development/libraries/ustr { };
 
-  usbredir = callPackage ../development/libraries/usbredir {
-    libusb = libusb1;
-  };
+  usbredir = callPackage ../development/libraries/usbredir { };
 
   uthash = callPackage ../development/libraries/uthash { };
 
@@ -8720,9 +8714,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   yubico-piv-tool = callPackage ../tools/misc/yubico-piv-tool { };
 
-  yubikey-personalization = callPackage ../tools/misc/yubikey-personalization {
-    libusb = libusb1;
-  };
+  yubikey-personalization = callPackage ../tools/misc/yubikey-personalization { };
 
   yubikey-personalization-gui = callPackage ../tools/misc/yubikey-personalization-gui {
     qt = qt4;
@@ -12721,7 +12713,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   qemu = callPackage ../applications/virtualization/qemu {
     gtk = gtk3;
     bluez = bluez5;
-    libusb = libusb1;
     mesa = mesa_noglu;
   };
 
@@ -14266,7 +14257,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   kde414 =
     kdePackagesFor
       {
-        libusb = libusb1;
         libcanberra = libcanberra_kde;
         boost = boost155;
         kdelibs = kde5.kdelibs;
@@ -15038,9 +15028,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   beep = callPackage ../misc/beep { };
 
-  cups = callPackage ../misc/cups {
-    libusb = libusb1;
-  };
+  cups = callPackage ../misc/cups { };
 
   cups_filters = callPackage ../misc/cups/filters.nix { };
 

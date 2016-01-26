@@ -1115,6 +1115,7 @@ in {
       rsa
       pyasn1
       pkgs.groff
+      pkgs.less
     ];
 
     postInstall = ''
@@ -5127,18 +5128,21 @@ in {
     name = "gateone-1.2-0d57c3";
     disabled = ! isPy27;
     src = pkgs.fetchFromGitHub {
-      rev = "11ed97c663b3e8c1b8eba473b5cf8362b10d57c3";
+      rev = "1d0e8037fbfb7c270f3710ce24154e24b7031bea";
       owner= "liftoff";
       repo = "GateOne";
-      sha256 ="0zp9vfs6sqbx4d0g45kkjinfmsl9zqwa6bhp3xd81wx3ph9yr1hq";
+      sha256 = "1ghrawlqwv7wnck6alqpbwy9mpv0y21cw2jirrvsxaracmvgk6vv";
     };
-    propagatedBuildInputs = with self; [tornado futures html5lib readline pkgs.openssl];
+    propagatedBuildInputs = with self; [tornado futures html5lib readline pkgs.openssl pkgs.cacert pkgs.openssh];
     meta = {
       homepage = https://liftoffsoftware.com/;
       description = "GateOne is a web-based terminal emulator and SSH client";
       maintainers = with maintainers; [ tomberek ];
 
     };
+    postInstall=''
+    cp -R $out/gateone/* $out/lib/python2.7/site-packages/gateone
+    '';
   };
 
   gcutil = buildPythonPackage rec {
@@ -11263,7 +11267,7 @@ in {
     };
 
     # Needed for tests only
-    buildInputs = [ pkgs.faad2 pkgs.flac pkgs.vorbisTools pkgs.liboggz ];
+    buildInputs = [ pkgs.faad2 pkgs.flac pkgs.vorbis-tools pkgs.liboggz ];
 
     meta = {
       description = "Python multimedia tagging library";
@@ -14100,6 +14104,8 @@ in {
       rev = version;
       sha256 = "1k572anw39rws67mvxl2w6y93y8w8q5smnwc0dd2gnnr16cc2vsh";
     };
+
+    patches = [ ../development/python-modules/pelican-fix-tests-with-pygments-2.1.patch ];
 
     buildInputs = with self; [
       pkgs.glibcLocales
@@ -18395,17 +18401,21 @@ in {
   };
 
   sopel = buildPythonPackage rec {
-    name = "sopel-6.1.1";
+    name = "sopel-6.2.1";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/s/sopel/${name}.tar.gz";
-      sha256 = "0nr2a88bkxg2593dd947qkh96g8j32q7pl7x9zvx4158h4bgx99y";
+      sha256 = "06m5clmg9x0bsnhvl5d75mskwqnxvkdd00p0dqnpwip9vmq6n8cz";
     };
 
+    buildInputs = with self; [ pytest ];
     propagatedBuildInputs = with self; [ praw xmltodict pytz pyenchant pygeoip ];
 
     disabled = isPyPy || isPy26 || isPy27;
 
+    checkPhase = ''
+    ${python.interpreter} test/*.py
+    '';
     meta = {
       description = "Simple and extensible IRC bot";
       homepage = "http://sopel.chat";

@@ -49,14 +49,14 @@ assert xorg != null ->
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
-  version = "6.9.3-1";
+  version = "6.9.3-2";
 
   src = fetchurl {
     url = [
       "mirror://imagemagick/ImageMagick-${version}.tar.xz"
       "mirror://imagemagick/releases/ImageMagick-${version}.tar.xz"
     ];
-    sha256 = "1ja2d6vyiw7xxl1p5bxxzhf85qvv6rvg7csxby1xwra6xzaa91a3";
+    sha256 = "0k8wwkswnnalk3f0a2b900wqs8cznhqn9l00dhvvh7y8h72vzabq";
   };
 
   configureFlags = [

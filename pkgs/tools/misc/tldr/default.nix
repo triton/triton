@@ -1,8 +1,8 @@
 { stdenv, fetchFromGitHub, llvmPackages, curl, libzip }:
 
-let version = "1.1.0"; in
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "tldr-${version}";
+  version = "1.1.0";
 
   src = fetchFromGitHub {
     sha256 = "0hxkrzp5njhy7c19v8i3svcb148f1jni7dlv36gc1nmcrz5izsiz";
@@ -22,7 +22,6 @@ stdenv.mkDerivation {
   '';
 
   meta = with stdenv.lib; {
-    inherit version;
     description = "Simplified and community-driven man pages";
     longDescription = ''
       tldr pages gives common use cases for commands, so you don't need to hunt

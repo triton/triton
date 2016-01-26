@@ -1,4 +1,5 @@
-{ stdenv, fetchurl, python, boost, libgsf }:
+{ stdenv, fetchurl, autoreconfHook, boost, python, libgsf
+, bzip2, xmlto, gettext, imagemagick, doxygen }:
 
 stdenv.mkDerivation rec {
   name = "libpst-0.6.66";
@@ -8,8 +9,8 @@ stdenv.mkDerivation rec {
     sha256 = "0whzgrky1b015czg9f5mk8zpz1mvip3ifzp24nfis291v0wrkd4j";
   };
 
-  nativeBuildInputs = [ python ];
-  buildInputs = [ boost libgsf ];
+  nativeBuildInputs = [ autoreconfHook python xmlto gettext doxygen ];
+  buildInputs = [ boost libgsf bzip2 imagemagick ];
 
   doCheck = true;
 

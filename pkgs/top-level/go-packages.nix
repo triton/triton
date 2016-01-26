@@ -1974,8 +1974,12 @@ let
     owner = "ikawaha";
     repo = "kagome";
     sha256 = "1isnjdkn9hnrkp5g37p2k5bbsrx0ma32v3icwlmwwyc5mppa4blb";
+
+    # I disable the parallel building, because otherwise each
+    # spawned compile takes over 1.5GB of RAM.
     buildFlags = "-p 1";
     enableParallelBuilding = false;
+
     goPackagePath = "github.com/ikawaha/kagome";
   };
 
@@ -3015,6 +3019,16 @@ let
     owner  = "mitchellh";
     repo   = "reflectwalk";
     sha256 = "1nm2ig7gwlmf04w7dbqd8d7p64z2030fnnfbgnd56nmd7dz8gpxq";
+  };
+
+  restic = buildFromGitHub {
+    rev    = "4d7e802c44369b40177cd52938bc5b0930bd2be1";
+    date   = "2016-01-17";
+    owner  = "restic";
+    repo   = "restic";
+    sha256 = "0lf40539dy2xa5l1xy1kyn1vk3w0fmapa1h65ciksrdhn89ilrxv";
+    # Using its delivered dependencies. Easier.
+    preBuild = "export GOPATH=$GOPATH:$NIX_BUILD_TOP/go/src/$goPackagePath/Godeps/_workspace";
   };
 
   rgbterm = buildFromGitHub {

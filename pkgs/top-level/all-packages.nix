@@ -1170,6 +1170,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   barcode = callPackage ../tools/graphics/barcode {};
 
+  bashburn = callPackage ../tools/cd-dvd/bashburn { };
+
   bashmount = callPackage ../tools/filesystems/bashmount {};
 
   bdf2psf = callPackage ../tools/misc/bdf2psf { };
@@ -1863,6 +1865,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   easyrsa = callPackage ../tools/networking/easyrsa { };
 
+  easyrsa2 = callPackage ../tools/networking/easyrsa/2.x.nix { };
+
   ebook_tools = callPackage ../tools/text/ebook-tools { };
 
   ecryptfs = callPackage ../tools/security/ecryptfs { };
@@ -2233,7 +2237,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   grub = callPackage_i686 ../tools/misc/grub {
     buggyBiosCDSupport = config.grub.buggyBiosCDSupport or true;
-    automake = automake112x; # fails with 13 and 14
   };
 
   trustedGrub = callPackage_i686 ../tools/misc/grub/trusted.nix { };
@@ -2356,6 +2359,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   hevea = callPackage ../tools/typesetting/hevea { };
 
+  homesick = callPackage ../tools/misc/homesick { };
+
   honcho = callPackage ../tools/system/honcho { };
 
   horst = callPackage ../tools/networking/horst { };
@@ -2443,6 +2448,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   ipmiutil = callPackage ../tools/system/ipmiutil {};
+
+  ipmiview = callPackage ../applications/misc/ipmiview {};
 
   ipcalc = callPackage ../tools/networking/ipcalc {};
 
@@ -2971,6 +2978,10 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   obnam = callPackage ../tools/backup/obnam { };
 
+  odpdown = callPackage ../tools/typesetting/odpdown {
+    inherit (pythonPackages) lpod lxml mistune pillow pygments;
+  };
+
   odt2txt = callPackage ../tools/text/odt2txt { };
 
   offlineimap = callPackage ../tools/networking/offlineimap {
@@ -3085,9 +3096,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   paper-gtk-theme = callPackage ../misc/themes/gtk3/paper-gtk-theme { };
 
-  par2cmdline = callPackage ../tools/networking/par2cmdline {
-    automake = automake112x; # fails with 14
-  };
+  par2cmdline = callPackage ../tools/networking/par2cmdline { };
 
   parallel = callPackage ../tools/misc/parallel { };
 
@@ -3456,6 +3465,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   samplicator = callPackage ../tools/networking/samplicator { };
 
+  scanbd = callPackage ../tools/graphics/scanbd { };
+
   screen = callPackage ../tools/misc/screen {
     inherit (darwin.apple_sdk.libs) utmp;
   };
@@ -3570,6 +3581,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   socat = callPackage ../tools/networking/socat { };
 
   socat2pre = lowPrio (callPackage ../tools/networking/socat/2.x.nix { });
+
+  solaar = callPackage ../applications/misc/solaar {};
 
   sourceHighlight = callPackage ../tools/text/source-highlight { };
 
@@ -4281,11 +4294,13 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   cmucl_binary = callPackage_i686 ../development/compilers/cmucl/binary.nix { };
 
-  compcert = callPackage ../development/compilers/compcert (
+  compcert = callPackage ../development/compilers/compcert ((
     if system == "x86_64-linux"
     then { tools = pkgsi686Linux.stdenv.cc; }
     else {}
-  );
+  ) // {
+    ocamlPackages = ocamlPackages_4_02;
+  });
 
   cryptol = haskellPackages.cryptol;
 
@@ -4298,7 +4313,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   eql = callPackage ../development/compilers/eql {};
 
-  elmPackages = callPackage ../development/compilers/elm { };
+  elmPackages = recurseIntoAttrs (callPackage ../development/compilers/elm { });
 
   adobe_flex_sdk = callPackage ../development/compilers/adobe-flex-sdk { };
 
@@ -7103,6 +7118,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   libcommuni = callPackage ../development/libraries/libcommuni { };
 
+  libconfuse = callPackage ../development/libraries/libconfuse { };
+
   inherit (gnome3) libcroco;
 
   libcangjie = callPackage ../development/libraries/libcangjie { };
@@ -8217,6 +8234,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   quesoglc = callPackage ../development/libraries/quesoglc { };
 
+  quicksynergy = callPackage ../applications/misc/quicksynergy { };
+
   qwt = callPackage ../development/libraries/qwt {};
 
   qxt = callPackage ../development/libraries/qxt {};
@@ -9083,13 +9102,17 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   dnschain = callPackage ../servers/dnschain { };
 
-  dovecot = dovecot21;
+  dovecot = dovecot22;
 
   dovecot21 = callPackage ../servers/mail/dovecot { };
 
   dovecot22 = callPackage ../servers/mail/dovecot/2.2.x.nix { };
 
-  dovecot_pigeonhole = callPackage ../servers/mail/dovecot-pigeonhole { };
+  dovecot_pigeonhole = callPackage ../servers/mail/dovecot/plugins/pigeonhole {
+    dovecot = dovecot22;
+  };
+
+  dovecot_antispam = callPackage ../servers/mail/dovecot/plugins/antispam { };
 
   dspam = callPackage ../servers/mail/dspam {
     inherit (perlPackages) NetSMTP;
@@ -9921,6 +9944,23 @@ zsh = callPackage ../all-pkgs/zsh { };
     kernelPatches = [ kernelPatches.bridge_stp_helper ];
   };
 
+  linux_chromiumos_3_14 = callPackage ../os-specific/linux/kernel/linux-chromiumos-3.14.nix {
+    kernelPatches = [ kernelPatches.chromiumos_Kconfig_fix_entries_3_14
+                      kernelPatches.chromiumos_mfd_fix_dependency
+                      kernelPatches.chromiumos_no_link_restrictions
+                      kernelPatches.genksyms_fix_segfault
+                    ];
+  };
+
+  linux_chromiumos_3_18 = callPackage ../os-specific/linux/kernel/linux-chromiumos-3.18.nix {
+    kernelPatches = [ kernelPatches.chromiumos_Kconfig_fix_entries_3_18
+                      kernelPatches.chromiumos_no_link_restrictions
+                      kernelPatches.genksyms_fix_segfault
+                    ];
+  };
+
+  linux_chromiumos_latest = linux_chromiumos_3_18;
+
   /* grsec configuration
 
      We build several flavors of 'default' grsec kernels. These are
@@ -10107,9 +10147,14 @@ zsh = callPackage ../all-pkgs/zsh { };
   linuxPackages_grsec_stable_server_xen = grPackage grFlavors.linux_grsec_stable_server_xen;
 
   # Testing kernels: outdated ATM
-  #linuxPackages_grsec_testing_desktop = grPackage grFlavors.linux_grsec_testing_desktop;
-  #linuxPackages_grsec_testing_server  = grPackage grFlavors.linux_grsec_testing_server;
-  #linuxPackages_grsec_testing_server_xen = grPackage grFlavors.linux_grsec_testing_server_xen;
+  linuxPackages_grsec_testing_desktop = grPackage grFlavors.linux_grsec_testing_desktop;
+  linuxPackages_grsec_testing_server  = grPackage grFlavors.linux_grsec_testing_server;
+  linuxPackages_grsec_testing_server_xen = grPackage grFlavors.linux_grsec_testing_server_xen;
+
+  # ChromiumOS kernels
+  linuxPackages_chromiumos_3_14 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_chromiumos_3_14 linuxPackages_chromiumos_3_14);
+  linuxPackages_chromiumos_3_18 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_chromiumos_3_18 linuxPackages_chromiumos_3_18);
+  linuxPackages_chromiumos_latest = recurseIntoAttrs (linuxPackagesFor pkgs.linux_chromiumos_latest linuxPackages_chromiumos_latest);
 
   # A function to build a manually-configured kernel
   linuxManualConfig = pkgs.buildLinux;
@@ -10250,6 +10295,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   paxctl = callPackage ../os-specific/linux/paxctl { };
 
+  paxtest = callPackage ../os-specific/linux/paxtest { };
+
   pax-utils = callPackage ../os-specific/linux/pax-utils { };
 
   pcmciaUtils = callPackage ../os-specific/linux/pcmciautils {
@@ -10302,6 +10349,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   rfkill_udev = callPackage ../os-specific/linux/rfkill/udev.nix { };
 
   rtkit = callPackage ../os-specific/linux/rtkit { };
+
+  rt5677-firmware = callPackage ../os-specific/linux/firmware/rt5677 { };
 
   s3ql = callPackage ../tools/backup/s3ql { };
 
@@ -11659,6 +11708,10 @@ zsh = callPackage ../all-pkgs/zsh { };
     debug = config.flashplayer.debug or false;
   };
 
+  flashplayer-standalone = pkgsi686Linux.flashplayer.sa;
+
+  flashplayer-standalone-debugger = pkgsi686Linux.flashplayer.saDbg;
+
   fluxbox = callPackage ../applications/window-managers/fluxbox { };
 
   fme = callPackage ../applications/misc/fme {
@@ -12706,8 +12759,9 @@ zsh = callPackage ../all-pkgs/zsh { };
     gst-plugins-bad_0 = null;
   };
 
-  qutebrowser = qt5.callPackage ../applications/networking/browsers/qutebrowser {
+  qutebrowser = qt55.callPackage ../applications/networking/browsers/qutebrowser {
     inherit (python34Packages) buildPythonPackage python pyqt5 jinja2 pygments pyyaml pypeg2;
+    inherit (gst_all_1) gst-plugins-base gst-plugins-good gst-plugins-bad gst-libav;
   };
 
   rabbitvcs = callPackage ../applications/version-management/rabbitvcs {};
@@ -12756,9 +12810,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   rkt = callPackage ../applications/virtualization/rkt { };
 
-  rofi = callPackage ../applications/misc/rofi {
-    automake = automake114x;
-  };
+  rofi = callPackage ../applications/misc/rofi { };
 
   rofi-pass = callPackage ../tools/security/pass/rofi-pass.nix { };
 
@@ -12802,7 +12854,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     boost = boost155;
   };
 
-  scim = callPackage ../applications/misc/scim { };
+  sc-im = callPackage ../applications/misc/scim { };
 
   scite = callPackage ../applications/editors/scite { };
 
@@ -13296,7 +13348,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   VoiceOfFaust = callPackage ../applications/audio/VoiceOfFaust { };
 
-  vorbisTools = callPackage ../applications/audio/vorbis-tools { };
+  vorbis-tools = callPackage ../applications/audio/vorbis-tools { };
 
   vue = callPackage ../applications/misc/vue { };
 
@@ -13763,23 +13815,15 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   cuyo = callPackage ../games/cuyo { };
 
-  dfhack = callPackage_i686 ../games/dfhack {
-    inherit (pkgsi686Linux.perlPackages) XMLLibXML XMLLibXSLT;
-  };
-
   dhewm3 = callPackage ../games/dhewm3 {};
 
   drumkv1 = callPackage ../applications/audio/drumkv1 { };
 
-  dwarf_fortress = callPackage_i686 ../games/dwarf-fortress {
-    SDL_image = pkgsi686Linux.SDL_image.override {
-      libpng = pkgsi686Linux.libpng12;
-    };
-    inherit (pkgsi686Linux.perlPackages) XMLLibXML XMLLibXSLT;
-    enableDFHack = config.dwarfFortress.enableDFHack or false;
-  };
+  dwarf-fortress-packages = callPackage ../games/dwarf-fortress { };
 
-  dwarf-therapist = callPackage ../games/dwarf-therapist { };
+  dwarf-fortress = dwarf-fortress-packages.dwarf-fortress.override { };
+
+  dwarf-therapist = dwarf-fortress-packages.dwarf-therapist;
 
   d1x_rebirth = callPackage ../games/d1x-rebirth { };
 
@@ -13798,6 +13842,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   exult = callPackage ../games/exult { };
+
+  factorio = callPackage ../games/factorio {};
 
   fairymax = callPackage ../games/fairymax {};
 
@@ -14462,6 +14508,9 @@ zsh = callPackage ../all-pkgs/zsh { };
     fcitx-qt5 = callPackage ../tools/inputmethods/fcitx/fcitx-qt5.nix { };
 
     k9copy = callPackage ../applications/video/k9copy {};
+
+    konversation = callPackage ../applications/networking/irc/konversation/1.6.nix {
+    };
 
     quassel = callPackage ../applications/networking/irc/quassel/qt-5.nix {
       monolithic = true;
@@ -15250,13 +15299,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   mfcj470dw = callPackage_i686 ../misc/cups/drivers/mfcj470dw { };
 
-  samsungUnifiedLinuxDriver = callPackage ../misc/cups/drivers/samsung {
-    gcc = import ../development/compilers/gcc/4.4 {
-      inherit stdenv fetchurl gmp mpfr noSysDirs gettext which;
-      texinfo = texinfo4;
-      profiledCompiler = true;
-    };
-  };
+  samsung-unified-linux-driver = callPackage ../misc/cups/drivers/samsung { };
 
   sane-backends = callPackage ../applications/graphics/sane/backends {
     gt68xxFirmware = config.sane.gt68xxFirmware or null;
@@ -15424,6 +15467,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   xboxdrv = callPackage ../misc/drivers/xboxdrv { };
 
+  xcftools = callPackage ../tools/graphics/xcftools { };
+
   xhyve = callPackage ../applications/virtualization/xhyve { };
 
   xinput_calibrator = callPackage ../tools/X11/xinput_calibrator {};
@@ -15587,6 +15632,10 @@ aliases = with self; rec {
   btrfsProgs = btrfs-progs; # added 2016-01-03
   aircrackng = aircrack-ng; # added 2016-01-14
   quake3game = ioquake3; # added 2016-01-14
+  scim = sc-im; # added 2016-01-22
+  dwarf_fortress = dwarf-fortress; # added 2016-01-23
+  samsungUnifiedLinuxDriver = samsung-unified-linux-driver; # added 2016-01-25
+  vorbisTools = vorbis-tools; # added 2016-01-26
 };
 
 tweakAlias = _n: alias: with lib;

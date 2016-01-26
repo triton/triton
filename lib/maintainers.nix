@@ -7,6 +7,7 @@
      so it's easy to ping a package @maintainer.
   */
 
+  aaronschif = "Aaron Schif <aaronschif@gmail.com>";
   a1russell = "Adam Russell <adamlr6+pub@gmail.com>";
   abaldeau = "Andreas Baldeau <andreas@baldeau.net>";
   abbradar = "Nikolay Amiantov <ab@fmap.me>";
@@ -289,6 +290,7 @@
   smironov = "Sergey Mironov <ierton@gmail.com>";
   spacefrogg = "Michael Raitza <spacefrogg-nixos@meterriblecrew.net>";
   spencerjanssen = "Spencer Janssen <spencerjanssen@gmail.com>";
+  spinus = "Tomasz Czyż <tomasz.czyz@gmail.com>";
   sprock = "Roger Mason <rmason@mun.ca>";
   spwhitt = "Spencer Whitt <sw@swhitt.me>";
   stephenmw = "Stephen Weinberg <stephen@q5comm.com>";
@@ -339,6 +341,7 @@
   zagy = "Christian Zagrodnick <cz@flyingcircus.io>";
   zef = "Zef Hemel <zef@zef.me>";
   zimbatm = "zimbatm <zimbatm@zimbatm.com>";
+  zohl = "Al Zohali <zohl@fmap.me>";
   zoomulator = "Kim Simmons <zoomulator@gmail.com>";
   Gonzih = "Max Gonzih <gonzih@gmail.com>";
 }

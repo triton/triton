@@ -950,6 +950,8 @@ xine-lib = callPackage ../all-pkgs/xine-lib { };
 
 xine-ui = callPackage ../all-pkgs/xine-ui { };
 
+xmltoman = callPackage ../all-pkgs/xmltoman { };
+
 yasm = callPackage ../all-pkgs/yasm { };
 
 zenity = callPackage ../all-pkgs/zenity { };

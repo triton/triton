@@ -5,8 +5,8 @@
 
 , gdk-pixbuf
 , glib
-, gnome3
 , gtk3
+, vte
 }:
 
 stdenv.mkDerivation rec {
@@ -26,11 +26,9 @@ stdenv.mkDerivation rec {
   buildInputs = [
     gdk-pixbuf
     glib
-    gnome3.vte
     gtk3
+    vte
   ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A terminal emulator based on GTK and VTE";

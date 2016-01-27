@@ -11,9 +11,9 @@ callPackage ./generic.nix (args // rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "3e20a6c39775b724eff44af93f08b38205be1f5b";
+      rev = "a8e11633b115050e9d0ea558d6480ed1d5fe9eeb";
       file = "ceph/fix-pythonpath.patch";
-      sha256 = "1chf2n7rac07kvvbrs00vq2nkv31v3l6lqdlqpq09wgcbin2qpkk";
+      sha256 = "0iq52pa4i0nldm5mmm8bshbpzbmrjndswa1cysglcmv2ncbvmyzz";
     })
     (fetchTritonPatch {
       rev = "3e20a6c39775b724eff44af93f08b38205be1f5b";

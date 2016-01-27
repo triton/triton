@@ -37,6 +37,9 @@ stdenv.mkDerivation rec {
   NIX_LDFLAGS = [ ]
     ++ optional isLinux "-lgcc_s";
 
+  # Fails to correctly order objects
+  parallelBuild = false;
+
   meta = with stdenv.lib; {
     description = "Userspace access to USB devices";
     homepage = http://www.libusb.info;

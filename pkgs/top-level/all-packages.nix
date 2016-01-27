@@ -707,6 +707,8 @@ libcanberra = callPackage ../all-pkgs/libcanberra { };
 libcanberra_gtk3 = libcanberra; # Deprecated alias
 libcanberra_kde = libcanberra; # Deprecated alias
 
+libgee = callPackage ../all-pkgs/libgee { };
+
 libgpod = callPackage ../all-pkgs/libgpod {
   inherit (pkgs.pythonPackages) mutagen;
 };
@@ -4036,9 +4038,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   urlwatch = callPackage ../tools/networking/urlwatch { };
 
-  valum = callPackage ../development/web/valum {
-    inherit (gnome3) libgee;
-  };
+  valum = callPackage ../development/web/valum { };
 
   varnish = callPackage ../servers/varnish { };
 
@@ -12450,9 +12450,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     ruby = ruby_1_9_3.override { cursesSupport = true; };
   };
 
-  synapse = callPackage ../applications/misc/synapse {
-    inherit (gnome3) libgee;
-  };
+  synapse = callPackage ../applications/misc/synapse { };
 
   synfigstudio = callPackage ../applications/graphics/synfigstudio {
     fontsConf = makeFontsConf { fontDirectories = [ freefont_ttf ]; };
@@ -12593,9 +12591,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   pdftk = callPackage ../tools/typesetting/pdftk { };
   pdfgrep  = callPackage ../tools/typesetting/pdfgrep { };
 
-  pdfpc = callPackage ../applications/misc/pdfpc {
-    inherit (gnome3) libgee;
-  };
+  pdfpc = callPackage ../applications/misc/pdfpc { };
 
   photoqt = qt5.callPackage ../applications/graphics/photoqt { };
 

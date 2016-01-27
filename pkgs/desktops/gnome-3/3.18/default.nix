@@ -53,6 +53,7 @@ let
     gtk3
     gtkmm3
     libcanberra
+    libgee
     libpeas
     vala
     vte
@@ -188,9 +189,6 @@ let
   eog = callPackage ./core/eog { };
 
   libcroco = callPackage ./core/libcroco {};
-
-  libgee = callPackage ./core/libgee { };
-  libgee_1 = callPackage ./core/libgee/libgee-1.nix { };
 
   libgdata = callPackage ./core/libgdata { };
 

@@ -1,4 +1,4 @@
-{ callPackage, fetchgit, fetchTritonPatches, ... } @ args:
+{ callPackage, fetchgit, fetchTritonPatch, ... } @ args:
 
 callPackage ./generic.nix (args // rec {
   version = "10.0.2";

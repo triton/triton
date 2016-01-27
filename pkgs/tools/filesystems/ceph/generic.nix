@@ -1,5 +1,5 @@
 { stdenv, autoconf, automake, makeWrapper, pkgconfig, libtool, which, git
-, boost, pythonPackages, libxml2, zlib
+, boost, pythonPackages, libxml2, zlib, bzip2
 
 # Optional Dependencies
 , snappy ? null, leveldb ? null, yasm ? null, fcgi ? null, expat ? null
@@ -101,7 +101,7 @@ stdenv.mkDerivation {
       pythonPackages.setuptools pythonPackages.argparse
     ];
   buildInputs = buildInputs ++ cryptoLibsMap.${cryptoStr} ++ [
-    boost libxml2 optYasm optLibatomic_ops optLibs3 malloc pythonPackages.flask zlib
+    boost libxml2 optYasm optLibatomic_ops optLibs3 malloc pythonPackages.flask zlib bzip2
   ] ++ optional (versionAtLeast version "9.0.0") [
     pythonPackages.sphinx # Used for docs
   ] ++ optional stdenv.isLinux [

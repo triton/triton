@@ -705,6 +705,10 @@ libcanberra = callPackage ../all-pkgs/libcanberra { };
 libcanberra_gtk3 = libcanberra; # Deprecated alias
 libcanberra_kde = libcanberra; # Deprecated alias
 
+libgpod = callPackage ../all-pkgs/libgpod {
+  inherit (pkgs.pythonPackages) mutagen;
+};
+
 libgudev = callPackage ../all-pkgs/libgudev { };
 
 libgusb = callPackage ../all-pkgs/libgusb { };
@@ -7316,10 +7320,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   libgpgerror = callPackage ../development/libraries/libgpg-error { };
 
   libgphoto2 = callPackage ../development/libraries/libgphoto2 { };
-
-  libgpod = callPackage ../development/libraries/libgpod {
-    inherit (pkgs.pythonPackages) mutagen;
-  };
 
   libgsystem = callPackage ../development/libraries/libgsystem { };
 

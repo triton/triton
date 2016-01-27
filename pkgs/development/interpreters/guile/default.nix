@@ -23,8 +23,11 @@
   patches = [ ./disable-gc-sensitive-tests.patch ./eai_system.patch ./clang.patch ] ++
     (stdenv.lib.optional (coverageAnalysis != null) ./gcov-file-name.patch);
 
+  # Fixes for parallel building
   postPatch = ''
-    sed -i 's,^.c.x:$,.c.x: $(BUILT_SOURCES),g' libguile/Makefile.in
+    sed -i libguile/Makefile.in \
+      -e 's,^.c.x:$,.c.x: $(BUILT_SOURCES),g' \
+      -e 's,DOT_X_FILES.*: ,\0$(DOT_I_FILES) ,g'
   '';
 
   # Explicitly link against libgcc_s, to work around the infamous

@@ -514,6 +514,8 @@ cairo = callPackage ../all-pkgs/cairo { };
 
 cairomm = callPackage ../all-pkgs/cairomm { };
 
+cdparanoia = callPackage ../all-pkgs/cdparanoia { };
+
 chromium = callPackage ../all-pkgs/chromium {
   channel = "stable";
 };
@@ -11122,13 +11124,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   cbc = callPackage ../applications/science/math/cbc { };
 
   cddiscid = callPackage ../applications/audio/cd-discid { };
-
-  cdparanoia = cdparanoiaIII;
-
-  cdparanoiaIII = callPackage ../applications/audio/cdparanoia {
-    inherit (darwin) IOKit;
-    inherit (darwin.apple_sdk.frameworks) Carbon;
-  };
 
   cdrtools = callPackage ../applications/misc/cdrtools { };
 

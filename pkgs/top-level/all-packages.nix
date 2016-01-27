@@ -733,6 +733,8 @@ libosinfo = callPackage ../all-pkgs/libosinfo {
   inherit (gnome3) libsoup;
 };
 
+libpeas = callPackage ../all-pkgs/libpeas { };
+
 librsvg = callPackage ../all-pkgs/librsvg { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };

@@ -53,6 +53,7 @@ let
     gtk3
     gtkmm3
     libcanberra
+    libpeas
     vala
     vte
     vte_290
@@ -194,8 +195,6 @@ let
   libgdata = callPackage ./core/libgdata { };
 
   libgxps = callPackage ./core/libgxps { };
-
-  libpeas = callPackage ./core/libpeas {};
 
   libgweather = callPackage ./core/libgweather { };
 

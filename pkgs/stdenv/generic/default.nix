@@ -121,14 +121,14 @@ let
 
   defaultNativeBuildInputs = [
     ../../build-support/setup-hooks/move-docs.sh
-    ../../build-support/setup-hooks/compress-man-pages.sh
-    ../../build-support/setup-hooks/pkgconfig.sh
-    ../../build-support/setup-hooks/absolute-libtool.sh
-    ../../build-support/setup-hooks/absolute-pkgconfig.sh
-    ../../build-support/setup-hooks/strip.sh
-    ../../build-support/setup-hooks/patch-shebangs.sh
     ../../build-support/setup-hooks/move-sbin.sh
     ../../build-support/setup-hooks/move-lib64.sh
+    ../../build-support/setup-hooks/compress-man-pages.sh
+    ../../build-support/setup-hooks/pkgconfig.sh
+    ../../build-support/setup-hooks/strip.sh
+    ../../build-support/setup-hooks/patch-shebangs.sh
+    ../../build-support/setup-hooks/absolute-libtool.sh # Must come after any $prefix/lib manipulations
+    ../../build-support/setup-hooks/absolute-pkgconfig.sh # Must come after any $prefix/lib manipulations
     ../../build-support/setup-hooks/set-source-date-epoch-to-latest.sh
     cc
   ] ++ extraBuildInputs;

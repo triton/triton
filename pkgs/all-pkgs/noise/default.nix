@@ -19,7 +19,7 @@
 , libgpod
 #, libindicate
 , libnotify
-#, libpeas
+, libpeas
 , librsvg
 , libsoup
 , libxml2
@@ -47,14 +47,15 @@ stdenv.mkDerivation rec {
   };
 
   cmakeFlags = [
-    "-DBUILD_SHARED_LIBS=ON"
+    "-DBUILD_SHARED_LIBS=OFF"
+    "-DICON_UPDATE=OFF"
     "-DGSETTINGS_COMPILE=ON"
+    "-DVALA_EXECUTABLE=${vala}/bin/valac"
   ];
 
   nativeBuildInputs = [
     cmake
     gettext
-    pkgconfig
   ];
 
   buildInputs = [
@@ -73,7 +74,7 @@ stdenv.mkDerivation rec {
     libgpod
     #libindicate
     libnotify
-    gnome3.libpeas
+    libpeas
     librsvg
     libsoup
     libxml2

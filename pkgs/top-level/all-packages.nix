@@ -975,6 +975,8 @@ xmltoman = callPackage ../all-pkgs/xmltoman { };
 
 yasm = callPackage ../all-pkgs/yasm { };
 
+zeitgeist = callPackage ../all-pkgs/zeitgeist { };
+
 zenity = callPackage ../all-pkgs/zenity { };
 
 zsh = callPackage ../all-pkgs/zsh { };
@@ -8722,8 +8724,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   yubikey-personalization-gui = callPackage ../tools/misc/yubikey-personalization-gui {
     qt = qt4;
   };
-
-  zeitgeist = callPackage ../development/libraries/zeitgeist { };
 
   zlib = callPackage ../development/libraries/zlib { };
 

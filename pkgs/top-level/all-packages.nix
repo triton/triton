@@ -947,6 +947,8 @@ sublime-text = callPackage ../all-pkgs/sublime-text { };
 
 usbmuxd = callPackage ../all-pkgs/usbmuxd { };
 
+vala = callPackage ../all-pkgs/vala { };
+
 vte_290 = callPackage ../all-pkgs/vte/2.90.nix { };
 vte = callPackage ../all-pkgs/vte { };
 
@@ -3524,9 +3526,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   sharutils = callPackage ../tools/archivers/sharutils { };
 
-  shotwell = callPackage ../applications/graphics/shotwell {
-    vala = vala_0_28;
-  };
+  shotwell = callPackage ../applications/graphics/shotwell { };
 
   shout = callPackage ../applications/networking/irc/shout { };
 
@@ -5305,8 +5305,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   urweb = callPackage ../development/compilers/urweb { };
-
-  vala = callPackage ../development/compilers/vala/default.nix { };
 
   visualcpp = callPackage ../development/compilers/visual-c++ { };
 

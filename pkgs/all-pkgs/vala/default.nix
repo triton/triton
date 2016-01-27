@@ -11,11 +11,6 @@
 , libiconv
 }:
 
-with {
-  inherit (stdenv.lib)
-    optionalString;
-};
-
 stdenv.mkDerivation rec {
   name = "vala-${version}";
   versionMajor = "0.30";
@@ -27,13 +22,13 @@ stdenv.mkDerivation rec {
     sha256 = "1pyyhfw3zzbhxfscbn8xz70dg6vx0kh8gshzikpxczhg01xk7w31";
   };
 
-  postPatch = optionalString doCheck (''
+  postPatch = ''
     patchShebangs tests/testrunner.sh
   '' +
   /* dbus tests require machine-id */ ''
     sed -i tests/Makefile.am \
       -e '/dbus\//d'
-  '');
+  '';
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -61,9 +56,7 @@ stdenv.mkDerivation rec {
     description = "Compiler for GObject type system";
     homepage = "http://live.gnome.org/Vala";
     license = licenses.lgpl21Plus;
-    maintainers = with maintainers; [
-      codyopel
-    ];
+    maintainers = with maintainers; [ ];
     platforms = [
       "i686-linux"
       "x86_64-linux"

@@ -47,12 +47,12 @@ self: super: {
   hashable = dontCheck super.hashable;
 
   # Newer versions don't compile.
-  Cabal_1_18_1_6 = dontJailbreak super.Cabal_1_18_1_6;
+  Cabal_1_18_1_7 = dontJailbreak super.Cabal_1_18_1_7;
   cabal-install = self.cabal-install_1_18_1_0;
 
   # https://github.com/peti/jailbreak-cabal/issues/9
   jailbreak-cabal = super.jailbreak-cabal.override {
-    Cabal = dontJailbreak (self.Cabal_1_20_0_3.override { deepseq = dontJailbreak self.deepseq_1_3_0_1; });
+    Cabal = dontJailbreak (self.Cabal_1_20_0_4.override { deepseq = dontJailbreak self.deepseq_1_3_0_1; });
   };
 
   # Haddock chokes on the prologue from the cabal file.

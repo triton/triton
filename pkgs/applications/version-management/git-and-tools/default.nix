@@ -44,6 +44,8 @@ rec {
   git-annex = pkgs.haskellPackages.git-annex-with-assistant;
   gitAnnex = git-annex;
 
+  git-annex-remote-b2 = pkgs.goPackages.git-annex-remote-b2;
+
   qgit = import ./qgit {
     inherit fetchurl stdenv;
     inherit (xorg) libXext libX11;

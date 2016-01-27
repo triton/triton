@@ -255,8 +255,6 @@ let
     theAttrSet = arg;
   };
 
-  autonix = import ../build-support/autonix { inherit pkgs; };
-
   autoreconfHook = makeSetupHook
     { substitutions = { inherit autoconf automake gettext libtool; }; }
     ../build-support/setup-hooks/autoreconf.sh;
@@ -1264,6 +1262,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
   bro = callPackage ../applications/networking/ids/bro { };
 
+  bruteforce-luks = callPackage ../tools/security/bruteforce-luks { };
+
   bsod = callPackage ../misc/emulators/bsod { };
 
   btrfs-progs = callPackage ../tools/filesystems/btrfs-progs { };
@@ -1484,6 +1484,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   autossh = callPackage ../tools/networking/autossh { };
 
   asynk = callPackage ../tools/networking/asynk { };
+
+  b2 = callPackage ../tools/backup/b2 { };
 
   bacula = callPackage ../tools/backup/bacula { };
 
@@ -1964,7 +1966,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   f2fs-tools = callPackage ../tools/filesystems/f2fs-tools { };
 
-  fabric = pythonPackages.fabric;
+  Fabric = pythonPackages.Fabric;
 
   fail2ban = callPackage ../tools/security/fail2ban { };
 
@@ -2151,6 +2153,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   gitlab-git-http-server = callPackage ../applications/version-management/gitlab-git-http-server { };
+
+  git-latexdiff = callPackage ../tools/typesetting/git-latexdiff { };
 
   glusterfs = callPackage ../tools/filesystems/glusterfs {
     flex = flex_2_5_35;
@@ -4216,6 +4220,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   zsh-navigation-tools = callPackage ../tools/misc/zsh-navigation-tools { };
 
+  zstd = callPackage ../tools/compression/zstd { };
+
   zsync = callPackage ../tools/compression/zsync { };
 
   zxing = callPackage ../tools/graphics/zxing {};
@@ -4624,7 +4630,13 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   oraclejre8psu = lowPrio (pkgs.oraclejdk8psu_distro false false);
 
-  jrePlugin = lowPrio (pkgs.jdkdistro false true);
+  jrePlugin = jre8Plugin;
+
+  jre6Plugin = lowPrio (pkgs.jdkdistro false true);
+
+  jre7Plugin = lowPrio (pkgs.oraclejdk7distro false true);
+
+  jre8Plugin = lowPrio (pkgs.oraclejdk8distro false true);
 
   supportsJDK =
     system == "i686-linux" ||
@@ -4691,7 +4703,10 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   mlton = callPackage ../development/compilers/mlton { };
 
-  mono = callPackage ../development/compilers/mono {};
+  mono = callPackage ../development/compilers/mono {
+    inherit (darwin) libobjc;
+    inherit (darwin.apple_sdk.frameworks) Foundation;
+  };
 
   monoDLLFixer = callPackage ../build-support/mono-dll-fixer { };
 
@@ -7319,7 +7334,9 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   libgcrypt_1_5 = lowPrio (callPackage ../development/libraries/libgcrypt/1.5.nix { });
 
-  libgdiplus = callPackage ../development/libraries/libgdiplus { };
+  libgdiplus = callPackage ../development/libraries/libgdiplus {
+      inherit (darwin.apple_sdk.frameworks) Carbon;
+  };
 
   libgksu = callPackage ../development/libraries/libgksu { };
 
@@ -10267,6 +10284,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   gogoclient = callPackage ../os-specific/linux/gogoclient { };
 
   nss_ldap = callPackage ../os-specific/linux/nss_ldap { };
+
+  pagemon = callPackage ../os-specific/linux/pagemon { };
 
   pam = callPackage ../os-specific/linux/pam { };
 
@@ -15167,7 +15186,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   nixops = callPackage ../tools/package-management/nixops { };
 
-  nixopsUnstable = callPackage ../tools/package-management/nixops/unstable.nix { };
+  nixopsUnstable = nixops;# callPackage ../tools/package-management/nixops/unstable.nix { };
 
   nixui = callPackage ../tools/package-management/nixui { node_webkit = nwjs_0_12; };
 

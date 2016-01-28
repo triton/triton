@@ -42,9 +42,8 @@ stdenv.mkDerivation rec {
     "MANDIR=$(out)/share/man"
   ];
 
-  # Parallel building is broken in OpenSSL, it creates
-  # invaild shared objects.
-  parallelBuild = false;
+  # Parallel installing is broken in OpenSSL, it creates invaild shared objects.
+  parallelInstall = false;
 
   postInstall = ''
     # If we're building dynamic libraries, then don't install static

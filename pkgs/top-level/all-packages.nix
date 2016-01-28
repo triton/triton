@@ -795,6 +795,8 @@ ncmpc = callPackage ../all-pkgs/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
 
+net-tools = callPackage ../all-pkgs/net-tools { };
+
 # stripped down, needed by steam
 networkmanager098 = callPackage ../all-pkgs/networkmanager/0.9.8.nix { };
 
@@ -9666,7 +9668,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   # Needed for LibreOffice
   bluez5_28 = lowPrio (callPackage ../os-specific/linux/bluez/bluez5_28.nix { });
 
-  bluez = bluez4;
+  bluez = bluez5;
 
   inherit (pythonPackages) bedup;
 
@@ -10266,8 +10268,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   multipath-tools = callPackage ../os-specific/linux/multipath-tools { };
 
   musl = callPackage ../os-specific/linux/musl { };
-
-  nettools = callPackage ../os-specific/linux/net-tools { };
 
   nftables = callPackage ../os-specific/linux/nftables { };
 
@@ -15649,6 +15649,7 @@ aliases = with self; rec {
   dwarf_fortress = dwarf-fortress; # added 2016-01-23
   samsungUnifiedLinuxDriver = samsung-unified-linux-driver; # added 2016-01-25
   vorbisTools = vorbis-tools; # added 2016-01-26
+  nettools = net-tools; # added 2016-01-28
 };
 
 tweakAlias = _n: alias: with lib;

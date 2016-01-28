@@ -19,7 +19,7 @@
  * internationalization on your system.
  * 
  */
-#define I18N 0
+#define I18N 1
 
 /* 
  * 
@@ -38,7 +38,7 @@
 #define HAVE_AFECONET 0
 #define HAVE_AFDECnet 0
 #define HAVE_AFASH 0
-#define HAVE_AFBLUETOOTH 0
+#define HAVE_AFBLUETOOTH 1
 
 /* 
  * 
@@ -73,7 +73,7 @@
  * Other Features.
  * 
  */
-#define HAVE_FW_MASQUERADE 0
-#define HAVE_IP_TOOLS 0
-#define HAVE_MII 0
-#define HAVE_SELINUX 0
+#define HAVE_FW_MASQUERADE 1
+#define HAVE_IP_TOOLS 1
+#define HAVE_MII 1
+#define HAVE_SELINUX 0 // This is broken at the moment for 2016-01-27

@@ -1,0 +1,26 @@
+{ stdenv, fetchFromSourceforge, bluez }:
+
+stdenv.mkDerivation rec {
+  name = "net-tools-2016-01-27";
+
+  src = fetchFromSourceforge {
+    repo = "net-tools";
+    rev = "3f170bff115303e92319791cbd56371e33dcbf6d";
+    sha256 = "0sj2mqp74p25ijlbnf8x7xyfb74j09w0vd7ya7i24zadcbzh103r";
+  };
+
+  buildInputs = [ bluez ];
+
+  preBuild = ''
+    cp ${./config.h} config.h
+    makeFlagsArray+=("BASEDIR=$out")
+    makeFlagsArray+=("mandir=/share/man")
+  '';
+
+  meta = {
+    homepage = http://net-tools.sourceforge.net/;
+    description = "A set of tools for controlling the network subsystem in Linux";
+    license = stdenv.lib.licenses.gpl2Plus;
+    platforms = stdenv.lib.platforms.linux;
+  };
+}

@@ -42,6 +42,10 @@ stdenv.mkDerivation rec {
     xorg.libXfixes
   ];
 
+  preInstall = ''
+    installFlagsArray+=("LIBVA_DRIVERS_PATH=$out/lib/dri")
+  '';
+
   meta = with stdenv.lib; {
   description = "Video Acceleration (VA) API for Linux";
     homepage = http://www.freedesktop.org/wiki/Software/vaapi;

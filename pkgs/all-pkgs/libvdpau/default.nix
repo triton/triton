@@ -25,6 +25,10 @@ stdenv.mkDerivation rec {
     xorg.libXext
   ];
 
+  preInstall = ''
+    installFlagsArray+=("moduledir=$out/lib/vdpau")
+  '';
+
   meta = with stdenv.lib; {
     description = "VDPAU wrapper and trace libraries";
     homepage = http://people.freedesktop.org/~aplattner/vdpau/;

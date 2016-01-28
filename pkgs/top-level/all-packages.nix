@@ -395,6 +395,16 @@ let
     meta.homepage = "http://repo.or.cz/${repo}.git/";
   };
 
+  fetchFromSourceforge = { repo, rev, sha256, name ? "${repo}-${rev}-src" }: fetchzip {
+    inherit name sha256;
+    url = "http://sourceforge.net/code-snapshots/git/"
+      + "${lib.substring 0 1 repo}/"
+      + "${lib.substring 0 2 repo}/"
+      + "${repo}/code.git/"
+      + "${repo}-code-${rev}.zip";
+    meta.homepage = "http://sourceforge.net/p/${repo}/code";
+  };
+
   fetchNuGet = callPackage ../build-support/fetchnuget { };
   buildDotnetPackage = callPackage ../build-support/build-dotnet-package { };
 

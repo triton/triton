@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
   patches = [ ./bash-4.3.patch ];
 
   doCheck = true;
+  parallelBuild = false;
 
   meta = {
     homepage = "http://bash-completion.alioth.debian.org/";

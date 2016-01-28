@@ -5,7 +5,6 @@
 
 , glib
 , gobject-introspection
-, gnome3
 , granite
 , gst-plugins-bad
 , gst-plugins-base
@@ -15,7 +14,7 @@
 , gtk3
 , json-glib
 #, libdbusmenu
-#, libgee
+, libgee
 , libgpod
 #, libindicate
 , libnotify
@@ -27,6 +26,10 @@
 , taglib
 , vala
 , zeitgeist
+
+, atk
+, cairo
+, pango
 }:
 
 with {
@@ -47,7 +50,7 @@ stdenv.mkDerivation rec {
   };
 
   cmakeFlags = [
-    "-DBUILD_SHARED_LIBS=OFF"
+    "-DBUILD_SHARED_LIBS=ON"
     "-DICON_UPDATE=OFF"
     "-DGSETTINGS_COMPILE=ON"
     "-DVALA_EXECUTABLE=${vala}/bin/valac"
@@ -70,7 +73,7 @@ stdenv.mkDerivation rec {
     gtk3
     json-glib
     #libdbusmenu
-    gnome3.libgee
+    libgee
     libgpod
     #libindicate
     libnotify

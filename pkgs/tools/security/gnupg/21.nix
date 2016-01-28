@@ -20,8 +20,6 @@ stdenv.mkDerivation rec {
     sha256 = "06mn2viiwsyq991arh5i5fhr9jyxq2bi0jkdj7ndfisxihngpc5p";
   };
 
-  patches = [ ./gpgkey2ssh-21.patch ];
-
   postPatch = stdenv.lib.optionalString stdenv.isLinux ''
     sed -i 's,"libpcsclite\.so[^"]*","${pcsclite}/lib/libpcsclite.so",g' scd/scdaemon.c
   ''; #" fix Emacs syntax highlighting :-(

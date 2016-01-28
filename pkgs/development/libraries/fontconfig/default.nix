@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, fetchpatch, pkgconfig, freetype, expat, libxslt, xorg
+{ stdenv, fetchurl, fetchpatch, freetype, expat, libxslt, xorg
 , substituteAll }:
 
 /** Font configuration scheme
@@ -36,8 +36,7 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  propagatedBuildInputs = [ freetype ];
-  buildInputs = [ pkgconfig expat ];
+  buildInputs = [ expat freetype ];
 
   configureFlags = [
     "--with-cache-dir=/var/cache/fontconfig" # otherwise the fallback is in $out/

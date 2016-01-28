@@ -45,7 +45,7 @@ let
         '';
 
     nativeBuildInputs = [ pkgconfig autoreconfHook ];
-    propagatedBuildInputs = [ expat ];
+    buildInputs = [ expat ];
 
     preAutoreconf = ''
       substituteInPlace tools/Makefile.am --replace 'install-localstatelibDATA:' 'disabled:'

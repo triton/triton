@@ -31,11 +31,7 @@ stdenv.mkDerivation rec {
       (fetch_bohoomil "04-infinality-2.5.4-2014.12.07.patch" "1gph7z9s2221gy5dxn01v3lga0m9yib8yqsaqj5km74bqx1vlalh")
     ];
 
-  propagatedBuildInputs = [ zlib bzip2 libpng ]; # needed when linking against freetype
-  # dependence on harfbuzz is looser than the reverse dependence
-  buildInputs = [ pkgconfig which ]
-    # FreeType requires GNU Make, which is not part of stdenv on FreeBSD.
-    ++ optional (!stdenv.isLinux) gnumake;
+  buildInputs = [ zlib bzip2 libpng ];
 
   # from Gentoo, see https://bugzilla.redhat.com/show_bug.cgi?id=506840
   NIX_CFLAGS_COMPILE = "-fno-strict-aliasing";

@@ -7741,6 +7741,8 @@ zsh = callPackage ../all-pkgs/zsh { };
     glib = null; # Don't include fairly heavy dependency
   };
 
+  libvdpau-va-gl = callPackage ../development/libraries/libvdpau-va-gl { };
+
   libvirt = callPackage ../development/libraries/libvirt { };
 
   libvirt-glib = callPackage ../development/libraries/libvirt-glib { };

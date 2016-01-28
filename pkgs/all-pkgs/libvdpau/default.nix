@@ -2,6 +2,7 @@
 , fetchurl
 
 , xorg
+, mesa_noglu
 }:
 
 stdenv.mkDerivation rec {
@@ -15,6 +16,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-dri2"
     "--disable-documentation"
+    "--with-module-dir=${mesa_noglu.driverLink}/lib/vdpau"
   ];
 
   buildInputs = [

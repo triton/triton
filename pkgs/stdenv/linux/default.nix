@@ -134,6 +134,7 @@ rec {
           libc = bootstrapTools.glibc;
           binutils = bootstrapTools;
           coreutils = bootstrapTools;
+          gnugrep = bootstrapTools;
           name = "bootstrap-cc-wrapper-stage0";
           stdenv = stage0Pkgs.stdenv;
         };
@@ -172,6 +173,7 @@ rec {
           libc = stage1Pkgs.glibc;
           binutils = bootstrapTools;
           coreutils = bootstrapTools;
+          gnugrep = bootstrapTools;
           name = "bootstrap-cc-wrapper-stage1";
           stdenv = stage0Pkgs.stdenv;
         };
@@ -226,6 +228,7 @@ rec {
           libc = stage1Pkgs.glibc;
           binutils = bootstrapTools;
           coreutils = bootstrapTools;
+          gnugrep = bootstrapTools;
           name = "bootstrap-cc-wrapper-stage2";
           stdenv = stage0Pkgs.stdenv;
         };
@@ -234,6 +237,7 @@ rec {
         inherit (stage0Pkgs) fetchurl fetchzip fetchFromGitHub fetchTritonPatch patchelf;
         coreutils = bootstrapTools;
         binutils = bootstrapTools;
+        gnugrep = bootstrapTools;
         perl = null;
         texinfo = null;
       };
@@ -276,6 +280,7 @@ rec {
           libc = stage1Pkgs.glibc;
           binutils = stage3Pkgs.binutils;
           coreutils = stage3Pkgs.coreutils;
+          gnugrep = stage3Pkgs.gnugrep;
           name = "cc-wrapper";
           stdenv = stage3Pkgs.stdenv;
           shell = stage3Pkgs.bash + "/bin/bash";

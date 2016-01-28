@@ -3,6 +3,7 @@
 
 , libdrm
 , mesa
+, mesa_noglu
 , wayland
 , xorg
 }:
@@ -29,6 +30,7 @@ stdenv.mkDerivation rec {
     (enFlag "wayland" (wayland != null && mesa != null) null)
     #"--enable-dummy-driver"
     "--enable-largefile"
+    "--with-drivers-path=${mesa_noglu.driverLink}/lib/dri"
   ];
 
   buildInputs = [

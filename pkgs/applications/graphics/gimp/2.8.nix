@@ -26,6 +26,10 @@ stdenv.mkDerivation rec {
     wrapPythonPrograms
   '';
 
+  # "screenshot" needs this.
+  NIX_LDFLAGS = "-rpath ${xorg.libX11}/lib"
+    + stdenv.lib.optionalString stdenv.isDarwin " -lintl";
+
   meta = {
     description = "The GNU Image Manipulation Program";
     homepage = http://www.gimp.org/;

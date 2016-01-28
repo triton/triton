@@ -228,15 +228,6 @@ in
         '';
       };
 
-      vaapiDrivers = mkOption {
-        type = types.listOf types.path;
-        default = [ ];
-        example = literalExample "[ pkgs.vaapiIntel pkgs.vaapiVdpau ]";
-        description = ''
-          Packages providing libva acceleration drivers.
-        '';
-      };
-
       startGnuPGAgent = mkOption {
         type = types.bool;
         default = false;

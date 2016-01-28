@@ -46,7 +46,6 @@ stdenv.mkDerivation {
       # Idem for /etc.
       "PAMDIR=$(out)/etc/pam.d"
       "DBUSDIR=$(out)/etc/dbus-1"
-      "INITDIR=$(out)/etc/rc.d"
       "XINETD=$(out)/etc/xinetd.d"
       "SERVERROOT=$(out)/etc/cups"
       # Idem for /usr.
@@ -55,6 +54,8 @@ stdenv.mkDerivation {
       # Work around a Makefile bug.
       "CUPS_PRIMARY_SYSTEM_GROUP=root"
     ];
+
+  enableParallelBuilding = true;
 
   postInstall = ''
       # Delete obsolete stuff that conflicts with cups-filters.

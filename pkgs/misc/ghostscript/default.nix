@@ -1,20 +1,19 @@
 { stdenv
 , fetchurl
 , fetchpatch
+, fetchTritonPatch
 , autoreconfHook
-, zlib
-, expat
-, openssl
 , libidn
 , libpaper
-, dbus
-, libjpeg
-, freetype
 , fontconfig
+, dbus
+, freetype
+, libjpeg
+, zlib
 , libpng
 , lcms2
-, jbig2dec
 , ijs
+, jbig2dec
 , x11Support ? false, xlibsWrapper ? null
 , cupsSupport ? false, cups ? null
 }:
@@ -61,19 +60,17 @@ stdenv.mkDerivation rec {
     autoreconfHook
   ];
   buildInputs = [
-    #zlib
-    #expat
-    #openssl
-    #libidn
-    #libpaper
-    #dbus
-    #libjpeg
-    #freetype
-    #fontconfig
-    #libpng
-    #lcms2
-    #jbig2dec
-    #ijs
+    libidn
+    libpaper
+    fontconfig
+    dbus
+    freetype
+    libjpeg
+    zlib
+    libpng
+    lcms2
+    ijs
+    jbig2dec
   ] ++ stdenv.lib.optional x11Support xlibsWrapper
     ++ stdenv.lib.optional cupsSupport cups
     ;
@@ -81,10 +78,11 @@ stdenv.mkDerivation rec {
   NIX_ZLIB_INCLUDE = "${zlib}/include";
 
   patches = [
-    ./fix-system-zlib.patch
-    ./fix-ijs-device.patch
-    ./add-gserrors.patch
-    ./urw-font-files.patch
+    (fetchTritonPatch {
+      rev = "16e1e82d413e33a3a46976f64c275c58a7dc3928";
+      file = "ghostscript/urw-font-files.patch";
+      sha256 = "1f7e0e309802c4400a31eaadbdd4eb89c63db848f867891119156ce2cffd5c89";
+    })
     # http://bugs.ghostscript.com/show_bug.cgi?id=696281
     (fetchpatch {
       name = "fix-check-for-using-shared-freetype-lib.patch";

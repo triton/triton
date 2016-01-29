@@ -78,7 +78,6 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--with-x"
     (wtFlag "x" (xorg != null) null)
   ];
 
@@ -87,9 +86,13 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    description = "";
-    homepage = ;
-    license = licenses.;
+    description = "Libraries for the gnome desktop that are not part of the UI";
+    homepage = https://git.gnome.org/browse/gnome-desktop;
+    license = with licenses; [
+      gpl2Plus
+      fdl11
+      lgpl2Plus
+    ];
     maintainers = with maintainers; [
       codyopel
     ];

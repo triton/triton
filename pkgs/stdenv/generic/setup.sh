@@ -484,7 +484,7 @@ _defaultUnpack() {
         # We can't preserve hardlinks because they may have been
         # introduced by store optimization, which might break things
         # in the build.
-        cp -pr --reflink=auto --no-preserve=timestamps "$fn" $strippedName
+        cp -pr --reflink=auto "$fn" $strippedName
 
     else
 

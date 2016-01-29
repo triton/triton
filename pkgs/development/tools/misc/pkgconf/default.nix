@@ -11,6 +11,14 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ autoreconfHook ];
 
   postInstall = ''
+    # The install is broken and is missing libpkgconfig/config.h
+    cp libpkgconf/config.h $out/include/pkgconf
+
+    # The header files expect themselves to be in libpkgconf
+    # however they are installed to pkgconf
+    ln -s pkgconf $out/include/libpkgconf
+
+    # We want compatability with pkg-config
     ln -s pkgconf $out/bin/pkg-config
   '';
 

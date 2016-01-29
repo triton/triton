@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
+, intltool
 , libxslt
 , which
 
@@ -11,7 +12,6 @@
 , gtk3
 , isocodes
 , itstool
-, libxkbfile
 , libxml2Python
 , python
 , wayland
@@ -58,13 +58,13 @@ stdenv.mkDerivation rec {
     gtk3
     isocodes
     itstool
-    libxkbfile
     libxml2Python
     python
     wayland
     xkeyboard_config
     xorg.libX11
     xorg.libXext
+    xorg.libxkbfile
     xorg.libXrandr
     xorg.randrproto
     xorg.xproto

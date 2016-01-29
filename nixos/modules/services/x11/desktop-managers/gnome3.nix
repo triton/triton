@@ -68,7 +68,7 @@ in {
       description = "Which GNOME 3 package set to use.";
       apply = p: if p == null then pkgs.gnome3 else p;
     };
-    
+
     environment.gnome3.excludePackages = mkOption {
       default = [];
       example = literalExample "[ pkgs.gnome3.totem ]";
@@ -153,11 +153,17 @@ in {
       ++ (removePackagesByName gnome3.optionalPackages config.environment.gnome3.excludePackages);
 
     # Use the correct gnome3 packageSet
-    networking.networkmanager.basePackages =
-      { inherit (pkgs) networkmanager modemmanager wpa_supplicant;
-        inherit (gnome3) networkmanager_openvpn networkmanager_vpnc
-                         networkmanager_openconnect networkmanager_pptp
-                         networkmanager_l2tp; };
+    networking.networkmanager.basePackages = {
+      inherit (pkgs)
+        networkmanager
+        modemmanager
+        wpa_supplicant
+        networkmanager_openvpn
+        networkmanager_vpnc
+        networkmanager_openconnect
+        networkmanager_pptp
+        networkmanager_l2tp;
+    };
 
     # Needed for themes and backgrounds
     environment.pathsToLink = [ "/share" ];

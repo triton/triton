@@ -590,6 +590,8 @@ glibmm = callPackage ../all-pkgs/glibmm { };
 glib-networking = callPackage ../all-pkgs/glib-networking { };
 glib_networking = glib-networking; # Deprecated alias
 
+gnome-desktop = callPackage ../all-pkgs/gnome-desktop { };
+
 gnome-online-accounts = callPackage ../all-pkgs/gnome-online-accounts { };
 
 gnome-wrapper = makeSetupHook {

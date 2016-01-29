@@ -50,6 +50,7 @@ let
     gnome-online-accounts
     gtk2
     webkitgtk_2_4
+    gnome-desktop
     gtk3
     gtkmm3
     libcanberra
@@ -127,8 +128,6 @@ let
   gnome-calculator = callPackage ./core/gnome-calculator { };
 
   gnome_common = callPackage ./core/gnome-common { };
-
-  gnome_desktop = callPackage ./core/gnome-desktop { };
 
   gnome-dictionary = callPackage ./core/gnome-dictionary { };
 

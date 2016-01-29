@@ -486,6 +486,11 @@ _defaultUnpack() {
         # in the build.
         cp -pr --reflink=auto "$fn" $strippedName
 
+        # We need to make sure we normalize dates after 2000 to ensure
+        # we don't have problems like zipfiles not being able to encode dates
+        # before 1980
+        find $strippedName -not -newermt 2000-01-01 -exec touch {} -t 200001010000 \;
+
     else
 
         case "$fn" in

@@ -793,6 +793,8 @@ mpv = callPackage ../all-pkgs/mpv {
 
 nasm = callPackage ../all-pkgs/nasm { };
 
+nautilus = callPackage ../all-pkgs/nautilus { };
+
 ncmpc = callPackage ../all-pkgs/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };

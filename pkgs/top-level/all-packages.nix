@@ -649,6 +649,8 @@ granite = callPackage ../all-pkgs/granite { };
 
 gsm = callPackage ../all-pkgs/gsm { };
 
+gsound = callPackage ../all-pkgs/gsound { };
+
 gst-ffmpeg = callPackage ../all-pkgs/gst-ffmpeg { };
 
 gst-libav = callPackage ../all-pkgs/gst-libav { };

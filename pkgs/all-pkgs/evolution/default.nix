@@ -5,8 +5,11 @@
 , libtool
 
 , adwaita-icon-theme
+, atk
 , bogofilter
+, cairo
 , db
+, enchant
 , evolution-data-server
 , gcr
 , gdk-pixbuf
@@ -28,6 +31,7 @@
 , libnotify
 , librsvg
 , libsecret
+, libsoup
 , libxml2
 , nspr
 , nss
@@ -35,7 +39,7 @@
 , procps
 , shared_mime_info
 , sqlite
-, webkitgtk
+, webkitgtk_2_4
 }:
 
 stdenv.mkDerivation rec {
@@ -74,8 +78,11 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
+    atk
     bogofilter
+    cairo
     db
+    enchant
     evolution-data-server
     gcr
     gdk-pixbuf
@@ -96,6 +103,7 @@ stdenv.mkDerivation rec {
     libnotify
     librsvg
     libsecret
+    libsoup
     libxml2
     nspr
     nss
@@ -103,7 +111,7 @@ stdenv.mkDerivation rec {
     procps
     shared_mime_info
     sqlite
-    webkitgtk
+    webkitgtk_2_4
   ];
 
   doCheck = true;

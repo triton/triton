@@ -1,11 +1,19 @@
 { stdenv, fetchurl, pkgconfig, dbus, libgcrypt, libtasn1, pam, python, glib, libxslt
 , intltool, pango, gcr, gdk_pixbuf, atk, p11_kit, makeWrapper
-, docbook_xsl_ns, docbook_xsl, gnome3 }:
+, docbook_xsl_ns, docbook_xsl, gtk3, gconf, libgnome_keyring }:
 
 stdenv.mkDerivation rec {
-  inherit (import ./src.nix fetchurl) name src;
+  name = "gnome-keyring-${version}";
+  versionMajor = "3.18";
+  versionMinor = "3";
+  version = "${versionMajor}.${versionMinor}";
 
-  buildInputs = with gnome3; [
+  src = fetchurl {
+    url = "mirror://gnome/sources/gnome-keyring/${versionMajor}/${name}.tar.xz";
+    sha256 = "167dq1yvm080g5s38hqjl0xx5cgpkcl1xqy9p5sxmgc92zb0srrz";
+  };
+
+  buildInputs = [
     dbus libgcrypt pam python gtk3 gconf libgnome_keyring
     pango gcr gdk_pixbuf atk p11_kit makeWrapper
   ];
@@ -20,15 +28,8 @@ stdenv.mkDerivation rec {
     "--with-pkcs11-modules=$$out/lib/pkcs11/"
   ];
 
-  preFixup = ''
-    wrapProgram "$out/bin/gnome-keyring" \
-      --prefix XDG_DATA_DIRS : "${glib}/share:$out/share:$GSETTINGS_SCHEMAS_PATH"
-    wrapProgram "$out/bin/gnome-keyring-daemon" \
-      --prefix XDG_DATA_DIRS : "${glib}/share:$out/share:$GSETTINGS_SCHEMAS_PATH"
-  '';
-
   meta = with stdenv.lib; {
     platforms = platforms.linux;
-    maintainers = gnome3.maintainers;
+    #maintainers = gnome3.maintainers;
   };
 }

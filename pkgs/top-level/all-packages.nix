@@ -761,6 +761,8 @@ libgudev = callPackage ../all-pkgs/libgudev { };
 
 libgusb = callPackage ../all-pkgs/libgusb { };
 
+libgweather = callPackage ../all-pkgs/libgweather { };
+
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };
 libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix {
   libtool = libtool_1_5;

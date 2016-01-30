@@ -671,6 +671,8 @@ highlight = callPackage ../all-pkgs/highlight { };
 
 hwdata = callPackage ../all-pkgs/hwdata { };
 
+ibus = callPackage ../all-pkgs/ibus { };
+
 id3lib = callPackage ../all-pkgs/id3lib { };
 
 imagemagick_light = imagemagick.override {
@@ -1675,8 +1677,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   mozc = callPackage ../tools/inputmethods/mozc {
     inherit (pythonPackages) gyp;
   };
-
-  ibus = callPackage ../tools/inputmethods/ibus { };
 
   ibus-qt = callPackage ../tools/inputmethods/ibus-qt { };
 

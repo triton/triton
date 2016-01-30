@@ -803,6 +803,10 @@ libtorrent-rasterbar_0 = callPackage ../all-pkgs/libtorrent-rasterbar/0.x.nix { 
 libtorrent-rasterbar_1 = callPackage ../all-pkgs/libtorrent-rasterbar/1.x.nix { };
 libtorrent-rasterbar = libtorrent-rasterbar_1;
 
+libunique_1 = callPackage ../all-pkgs/libunique/1.x.nix { };
+libunique_3 = callPackage ../all-pkgs/libunique/3.x.nix { };
+libunique = libunique_3;
+
 libusb-compat = callPackage ../all-pkgs/libusb-compat { };
 
 libusb_0 = libusb-compat;
@@ -7757,9 +7761,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   libungif = callPackage ../development/libraries/giflib/libungif.nix { };
 
   libunibreak = callPackage ../development/libraries/libunibreak { };
-
-  libunique = callPackage ../development/libraries/libunique/default.nix { };
-  libunique3 = callPackage ../development/libraries/libunique/3.x.nix { inherit (gnome) gtkdoc; };
 
   liburcu = callPackage ../development/libraries/liburcu { };
 

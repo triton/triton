@@ -2,7 +2,9 @@
 , fetchurl
 , gettext
 
+, atk
 , cairo
+, gdk-pixbuf
 , glib
 , gnome-common
 , gobject-introspection
@@ -14,6 +16,11 @@
 , spidermonkey_24
 , xorg
 }:
+
+with {
+  inherit (stdenv.lib)
+    wtFlag;
+};
 
 stdenv.mkDerivation rec {
   name = "gjs-${version}";
@@ -31,7 +38,9 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    atk
     cairo
+    gdk-pixbuf
     glib
     gnome-common
     gobject-introspection

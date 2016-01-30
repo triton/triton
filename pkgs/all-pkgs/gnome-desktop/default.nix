@@ -5,6 +5,8 @@
 , libxslt
 , which
 
+, atk
+, gdk-pixbuf
 , glib
 , gnome_doc_utils
 , gobject-introspection
@@ -13,6 +15,7 @@
 , isocodes
 , itstool
 , libxml2Python
+, pango
 , python
 , wayland
 , xkeyboard_config
@@ -51,6 +54,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    atk
+    gdk-pixbuf
     glib
     gnome_doc_utils
     gobject-introspection
@@ -59,6 +64,7 @@ stdenv.mkDerivation rec {
     isocodes
     itstool
     libxml2Python
+    pango
     python
     wayland
     xkeyboard_config

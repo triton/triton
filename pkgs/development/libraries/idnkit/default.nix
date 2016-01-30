@@ -10,6 +10,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ libiconv ];
 
+  # Sometimes fails to generate libidnkit.so
+  parallelInstall = false;
+
   meta = with stdenv.lib; {
     homepage = https://www.nic.ad.jp/ja/idn/idnkit;
     description = "provides functionalities about i18n domain name processing";

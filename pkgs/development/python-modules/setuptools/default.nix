@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Utilities to facilitate the installation of Python packages";
     homepage = http://pypi.python.org/pypi/setuptools;
-    license = with lib.licenses; [ psfl zpt20 ];
+    license = with lib.licenses; [ zpt20 ];
     platforms = platforms.all;
   };
 }

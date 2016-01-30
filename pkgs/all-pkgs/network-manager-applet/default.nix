@@ -5,15 +5,18 @@
 
 , atk
 , dbus_glib
+, dconf
+, gconf
 , gdk-pixbuf
 , glib-networking
-, gnome3
+, gnome-keyring
 , gobject-introspection
-, gsettings_desktop_schemas
+, gsettings-desktop-schemas
 , gtk3
 , hicolor_icon_theme
 , isocodes
 , libglade
+, libgnome_keyring
 , libgudev
 , libnotify
 , libsecret
@@ -50,8 +53,8 @@ stdenv.mkDerivation rec {
   ];
 
   propagatedUserEnvPkgs = [
-    gnome3.gconf
-    gnome3.gnome_keyring
+    gconf
+    gnome-keyring
     hicolor_icon_theme
   ];
 
@@ -64,10 +67,10 @@ stdenv.mkDerivation rec {
     atk
     dbus_glib
     gdk-pixbuf
-    gnome3.gconf
-    gnome3.libgnome_keyring
+    gconf
+    libgnome_keyring
     gobject-introspection
-    gsettings_desktop_schemas
+    gsettings-desktop-schemas
     gtk3
     isocodes
     libglade
@@ -90,15 +93,13 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram "$out/bin/nm-applet" \
-      --prefix GIO_EXTRA_MODULES : "${glib-networking}/lib/gio/modules:${gnome3.dconf}/lib/gio/modules" \
+      --prefix GIO_EXTRA_MODULES : "${glib-networking}/lib/gio/modules:${dconf}/lib/gio/modules" \
       --prefix XDG_DATA_DIRS : "${gtk3}/share:$out/share:$GSETTINGS_SCHEMAS_PATH" \
       --set GCONF_CONFIG_SOURCE "xml::~/.gconf" \
-      --prefix PATH ":" "${gnome3.gconf}/bin"
+      --prefix PATH ":" "${gconf}/bin"
     wrapProgram "$out/bin/nm-connection-editor" \
       --prefix XDG_DATA_DIRS : "${gtk3}/share:$out/share:$GSETTINGS_SCHEMAS_PATH"
   '';
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "NetworkManager control applet";

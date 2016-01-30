@@ -20,8 +20,9 @@ stdenv.mkDerivation rec {
     sha256 = "1b165zi7jrrlz5wmyy3b34lcs3dl4g0dymfb0qxwdnimylcrsbzk";
   };
 
-  buildInputs = [perl apr aprutil pcre] ++
-    stdenv.lib.optional sslSupport openssl;
+  buildInputs = [perl apr aprutil pcre]
+    ++ stdenv.lib.optional sslSupport openssl
+    ++ stdenv.lib.optional ldapSupport openldap;
 
   # An apr-util header file includes an apr header file
   # through #include "" (quotes)

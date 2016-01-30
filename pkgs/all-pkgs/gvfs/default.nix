@@ -9,13 +9,15 @@
 , dbus
 , fuse
 , gconf
+, gcr
 , glib
-, gnome3
+, gnome-online-accounts
 , gtk3
 , libarchive
 , libbluray
 , libcdio
 , libgcrypt
+, libgdata
 , libgnome_keyring
 , libgphoto2
 , libgudev
@@ -89,10 +91,10 @@ stdenv.mkDerivation rec {
     avahi
     dbus
     fuse
+    gcr
     glib
-    gnome3.gcr
-    gnome3.gnome_online_accounts
-    gnome3.libgdata
+    gnome-online-accounts
+    libgdata
     libarchive
     libbluray
     libcdio
@@ -112,8 +114,6 @@ stdenv.mkDerivation rec {
     gtk3
     libgnome_keyring
   ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Virtual filesystem implementation for gio";

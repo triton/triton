@@ -3,12 +3,12 @@
 , gettext
 , intltool
 
+, adwaita-icon-theme
 , dbus_glib
 , dbus_libs
-#, gcr
+, gcr
 , glib
-, gnome3
-#, gnome_common
+, gnome-common
 , gobject-introspection
 , gtk3
 , icu
@@ -18,7 +18,7 @@
 , libsoup
 , libxml2
 , pango
-#, rest
+, rest
 , telepathy_glib
 , webkitgtk
 , xorg
@@ -79,11 +79,11 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    adwaita-icon-theme
     dbus_glib
-    gnome3.gcr
+    gcr
     glib
-    gnome3.gnome_common
-    gnome3.defaultIconTheme
+    gnome-common
     gobject-introspection
     gtk3
     icu # ???
@@ -92,14 +92,12 @@ stdenv.mkDerivation rec {
     libsecret
     libsoup
     libxml2
-    gnome3.rest
+    rest
     pango
     telepathy_glib
     webkitgtk
     xorg.libX11
   ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "GNOME framework for accessing online accounts";

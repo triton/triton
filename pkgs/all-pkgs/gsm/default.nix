@@ -18,11 +18,12 @@ stdenv.mkDerivation rec {
     sha256 = "0b1mx69jq88wva3wk0hi6fcl5a52qhnq2f9p3f3jdh5k61ma252q";
   };
 
-  postPhase = ''
-    # Fix include directory
-    sed -e 's,$(GSM_INSTALL_ROOT)/inc,$(GSM_INSTALL_ROOT)/include/gsm,' -i Makefile
-  '' + optionalString (!staticSupport) ''
-    # Build ELF shared object
+  postPhase =
+  /* Fix include directory */ ''
+    sed -i Makefile \
+      -e 's,$(GSM_INSTALL_ROOT)/inc,$(GSM_INSTALL_ROOT)/include/gsm,'
+  '' + optionalString (!staticSupport)
+  /* Build ELF shared object */ ''
     sed -i Makefile \
       -e 's,libgsm.a,libgsm.so,' \
       -e 's/$(AR) $(ARFLAGS) $(LIBGSM) $(GSM_OBJECTS)/$(LD) -shared -Wl,-soname,libgsm.so -o $(LIBGSM) $(GSM_OBJECTS) -lc/' \

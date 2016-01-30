@@ -3,6 +3,7 @@
 , gettext
 , perl
 
+, adwaita-icon-theme
 , at-spi2-atk
 , atk
 , cairo
@@ -13,7 +14,6 @@
 , fontconfig
 , gdk-pixbuf
 , glib
-, gnome3
 , gobject-introspection
 , gnome-wrapper
 , json-glib
@@ -21,6 +21,7 @@
 , libxkbcommon
 , mesa_noglu
 , pango
+, rest
 , shared_mime_info
 , wayland
 , xlibsWrapper
@@ -66,7 +67,7 @@ stdenv.mkDerivation rec {
     #"--enable-modules"
     (enFlag "cups" (cups != null) null)
     "--disable-papi"
-    (enFlag "cloudprint" (gnome3.rest != null && json-glib != null) null)
+    (enFlag "cloudprint" (rest != null && json-glib != null) null)
     (enFlag "test-print-backend" (cups != null) null)
     "--enable-schemas-compile"
     (enFlag "introspection" (gobject-introspection != null) null)
@@ -90,6 +91,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    adwaita-icon-theme
     atk
     at-spi2-atk
     cairo
@@ -100,14 +102,13 @@ stdenv.mkDerivation rec {
     fontconfig
     gdk-pixbuf
     glib
-    gnome3.adwaita-icon-theme
-    gnome3.rest
     gobject-introspection
     json-glib
     librsvg
     libxkbcommon
     mesa_noglu
     pango
+    rest
     shared_mime_info
     wayland
     xorg.inputproto

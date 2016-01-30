@@ -6,7 +6,6 @@
 , cairo
 , gdk-pixbuf
 , glib
-, gnome3
 , gobject-introspection
 , gtk3
 , libxml2

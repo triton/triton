@@ -4,7 +4,6 @@
 
 , glib
 , gobject-introspection
-, gnome3
 , vala
 }:
 

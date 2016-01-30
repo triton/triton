@@ -602,6 +602,8 @@ glib_networking = glib-networking; # Deprecated alias
 
 gnome-backgrounds = callPackage ../all-pkgs/gnome-backgrounds { };
 
+gnome-bluetooth = callPackage ../all-pkgs/gnome-bluetooth { };
+
 gnome-desktop = callPackage ../all-pkgs/gnome-desktop { };
 
 gnome-online-accounts = callPackage ../all-pkgs/gnome-online-accounts { };

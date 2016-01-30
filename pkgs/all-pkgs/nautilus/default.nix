@@ -4,12 +4,16 @@
 , gettext
 , intltool
 
+, adwaita-icon-theme
+, atk
 , dbus_glib
+, dconf
 , exempi
+, gdk-pixbuf
 , glib
 , gnome-desktop
-, gnome3
 , gobject-introspection
+, gsettings-desktop-schemas
 , gtk3
 , gvfs
 , libexif
@@ -19,6 +23,7 @@
 , libxml2
 , pango
 , shared_mime_info
+, tracker
 , xorg
 }:
 
@@ -30,7 +35,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/nautilus/${versionMajor}/${name}.tar.xz";
-    sha256 = "17d96qxwzibclj2w7xfjh67dxbqp2h7h5jcah6gss8wifwi25024";
+    sha256 = "05fclrqmk024pjskwlp4bcqd8bsyxv9awaznv3cwwk1bab02gab0";
   };
 
   patches = [
@@ -72,14 +77,16 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    gnome3.adwaita-icon-theme
+    adwaita-icon-theme
+    atk
     dbus_glib
-    gnome3.dconf
+    dconf
     exempi
+    gdk-pixbuf
     glib
     gnome-desktop
     gobject-introspection
-    gnome3.gsettings_desktop_schemas
+    gsettings-desktop-schemas
     gtk3
     gvfs
     libexif
@@ -89,7 +96,8 @@ stdenv.mkDerivation rec {
     libxml2
     pango
     shared_mime_info
-    gnome3.tracker
+    tracker
+    xorg.libX11
   ];
 
   preFixup = ''
@@ -102,7 +110,7 @@ stdenv.mkDerivation rec {
     description = "A file manager for the GNOME desktop";
     homepage = https://wiki.gnome.org/Apps/Nautilus;
     license = with licenses; [
-      fdl-1_1
+      fdl11
       gpl2Plus
       lgpl2Plus
     ];

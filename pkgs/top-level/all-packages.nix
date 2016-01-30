@@ -620,6 +620,8 @@ gnome-clocks = callPackage ../all-pkgs/gnome-clocks { };
 
 gnome-common = callPackage ../all-pkgs/gnome-common { };
 
+gnome-control-center = callPackage ../all-pkgs/gnome-control-center { };
+
 gnome-desktop = callPackage ../all-pkgs/gnome-desktop { };
 
 gnome-keyring = callPackage ../all-pkgs/gnome-keyring { };
@@ -633,6 +635,8 @@ gnome-screenshot = callPackage ../all-pkgs/gnome-screenshot { };
 gnome-session = callPackage ../all-pkgs/gnome-session { };
 
 gnome-settings-daemon = callPackage ../all-pkgs/gnome-settings-daemon { };
+
+gnome-shell = callPackage ../all-pkgs/gnome-shell { };
 
 gnome-terminal = callPackage ../all-pkgs/gnome-terminal { };
 

@@ -79,7 +79,6 @@ tryHashedMirrors() {
     done
 }
 
-
 # URL list may contain ?. No glob expansion for that, please
 set -o noglob
 
@@ -120,6 +119,7 @@ if test -n "$showURLs"; then
     exit 0
 fi
 
+runHook preFetch
 
 if test -n "$preferHashedMirrors"; then
     tryHashedMirrors

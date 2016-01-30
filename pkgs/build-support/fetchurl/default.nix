@@ -64,6 +64,10 @@ in
 
 , recursiveHash ? false
 
+, # Shell code executed before the file has been fetched.
+  # This can do things like force a site to generate the file.
+  preFetch ? ""
+
 , # Shell code executed after the file has been fetched
   # successfully. This can do things like check or transform the file.
   postFetch ? ""
@@ -121,7 +125,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
 
   outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
 
-  inherit curlOpts showURLs mirrorsFile impureEnvVars postFetch downloadToTemp executable;
+  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch downloadToTemp executable;
 
   # Doing the download on a remote machine just duplicates network
   # traffic, so don't do that.

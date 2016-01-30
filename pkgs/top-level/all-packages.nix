@@ -488,6 +488,8 @@ let
 
 acl = callPackage ../all-pkgs/acl { };
 
+adwaita-icon-theme = callPackage ../all-pkgs/adwaita-icon-theme { };
+
 amrnb = callPackage ../all-pkgs/amrnb { };
 
 amrwb = callPackage ../all-pkgs/amrwb { };

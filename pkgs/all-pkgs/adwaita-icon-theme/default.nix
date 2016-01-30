@@ -1,9 +1,9 @@
-{ stdenv, fetchurl
+{ stdenv
+, fetchurl
 , gettext
 , intltool
 
 , gdk-pixbuf
-, gnome3
 , hicolor_icon_theme
 }:
 
@@ -40,10 +40,17 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = false;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
-    platforms = platforms.linux;
-    maintainers = gnome3.maintainers;
+    description = "GNOME default icon theme";
+    homepage = https://git.gnome.org/browse/adwaita-icon-theme/;
+    license = licenses.lgpl3;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

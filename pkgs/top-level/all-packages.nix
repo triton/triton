@@ -1022,6 +1022,8 @@ sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sublime-text = callPackage ../all-pkgs/sublime-text { };
 
+totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
+
 tracker = callPackage ../all-pkgs/tracker { };
 
 usbmuxd = callPackage ../all-pkgs/usbmuxd { };

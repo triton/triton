@@ -586,6 +586,8 @@ gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
 
 geocode-glib = callPackage ../all-pkgs/geocode-glib { };
 
+gjs = callPackage ../all-pkgs/gjs { };
+
 glib = callPackage ../all-pkgs/glib { };
 # checked version separate to break recursion
 glib_tested = glib.override {

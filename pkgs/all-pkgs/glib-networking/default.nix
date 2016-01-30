@@ -4,7 +4,7 @@
 
 , glib
 , gnutls
-, gsettings_desktop_schemas
+, gsettings-desktop-schemas
 , libproxy
 , p11_kit
 }:
@@ -25,6 +25,18 @@ stdenv.mkDerivation rec {
     sha256 = "1cchmi08jpjypgmm9i7xzh5qfg2q5k61kry9ns8mhw3z44a440ym";
   };
 
+  nativeBuildInputs = [
+    intltool
+  ];
+
+  buildInputs = [
+    glib
+    gnutls
+    gsettings-desktop-schemas
+    libproxy
+    p11_kit
+  ];
+
   configureFlags = [
     "--enable-nls"
     "--disable-glibtest"
@@ -38,25 +50,12 @@ stdenv.mkDerivation rec {
     (wtFlag "pkcs11" (p11_kit != null) null)
   ];
 
-  nativeBuildInputs = [
-    intltool
-  ];
-
-  buildInputs = [
-    glib
-    gnutls
-    gsettings_desktop_schemas
-    libproxy
-    p11_kit
-  ];
-
   preBuild = ''
-    sed -e "s|${glib}/lib/gio/modules|$out/lib/gio/modules|g" \
-      -i $(find . -name Makefile)
+    sed -i $(find . -name Makefile) \
+      -e "s|${glib}/lib/gio/modules|$out/lib/gio/modules|g"
   '';
 
   doCheck = false; # tests need to access the certificates (among other things)
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Network-related giomodules for glib";

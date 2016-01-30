@@ -626,6 +626,8 @@ gnome-settings-daemon = callPackage ../all-pkgs/gnome-settings-daemon { };
 
 gnome-terminal = callPackage ../all-pkgs/gnome-terminal { };
 
+gnome-user-share = callPackage ../all-pkgs/gnome-user-share { };
+
 gnome-wrapper = makeSetupHook {
   deps = [ makeWrapper ];
 } ../build-support/setup-hooks/gnome-wrapper.sh;

@@ -651,6 +651,8 @@ gobjectIntrospection = gobject-introspection; # Deprecated alias
 
 granite = callPackage ../all-pkgs/granite { };
 
+grilo = callPackage ../all-pkgs/grilo { };
+
 gsm = callPackage ../all-pkgs/gsm { };
 
 gsound = callPackage ../all-pkgs/gsound { };

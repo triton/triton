@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, file, intltool, glib
-, libxml2, gnome3, gobjectIntrospection, libsoup }:
+, libxml2, gobjectIntrospection, libsoup, totem-pl-parser }:
 
 stdenv.mkDerivation rec {
   name = "grilo-0.2.12";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildInputs = [ pkgconfig file intltool glib libxml2 libsoup
-                  gnome3.totem-pl-parser gobjectIntrospection ];
+                  totem-pl-parser gobjectIntrospection ];
 
   meta = with stdenv.lib; {
     homepage = https://wiki.gnome.org/action/show/Projects/Grilo;

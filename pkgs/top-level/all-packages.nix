@@ -546,6 +546,8 @@ cogl = callPackage ../all-pkgs/cogl { };
 
 colord = callPackage ../all-pkgs/colord { };
 
+dconf = callPackage ../all-pkgs/dconf { };
+
 ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
 ffmpeg_1 = callPackage ../all-pkgs/ffmpeg/1.x.nix { };
 ffmpeg_2_2 = callPackage ../all-pkgs/ffmpeg/2.2.nix { };

@@ -745,9 +745,7 @@ libjpeg =
 
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
-libosinfo = callPackage ../all-pkgs/libosinfo {
-  inherit (gnome3) libsoup;
-};
+libosinfo = callPackage ../all-pkgs/libosinfo { };
 
 libpeas = callPackage ../all-pkgs/libpeas { };
 
@@ -887,7 +885,6 @@ pulseaudioLight = pulseaudioFull.override {
 };
 
 pulseaudioFull = callPackage ../all-pkgs/pulseaudio {
-  gconf = gnome3.gconf;
   fftw = fftwFloat;
 
   # Disabled unless debugging
@@ -2318,9 +2315,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     inherit (gnome) libglademm;
   };
 
-  gssdp = callPackage ../development/libraries/gssdp {
-    inherit (gnome) libsoup;
-  };
+  gssdp = callPackage ../development/libraries/gssdp { };
 
   gt5 = callPackage ../tools/system/gt5 { };
 
@@ -2343,9 +2338,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gup = callPackage ../development/tools/build-managers/gup {};
 
-  gupnp = callPackage ../development/libraries/gupnp {
-    inherit (gnome) libsoup;
-  };
+  gupnp = callPackage ../development/libraries/gupnp { };
 
   gupnp_av = callPackage ../development/libraries/gupnp-av {};
 
@@ -3635,7 +3628,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   sourceHighlight = callPackage ../tools/text/source-highlight { };
 
-  spaceFM = callPackage ../applications/misc/spacefm { adwaita-icon-theme = gnome3.adwaita-icon-theme; };
+  spaceFM = callPackage ../applications/misc/spacefm { };
 
   squashfsTools = callPackage ../tools/filesystems/squashfs { };
 
@@ -3906,7 +3899,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   viking = callPackage ../applications/misc/viking {
     inherit (gnome) scrollkeeper;
-    inherit (gnome3) gexiv2;
   };
 
   vit = callPackage ../applications/misc/vit { };
@@ -7142,9 +7134,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   libcdr = callPackage ../development/libraries/libcdr { lcms = lcms2; };
 
-  libchamplain = callPackage ../development/libraries/libchamplain {
-    inherit (gnome) libsoup;
-  };
+  libchamplain = callPackage ../development/libraries/libchamplain { };
 
   libchardet = callPackage ../development/libraries/libchardet { };
 
@@ -7169,8 +7159,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   libcommuni = callPackage ../development/libraries/libcommuni { };
 
   libconfuse = callPackage ../development/libraries/libconfuse { };
-
-  inherit (gnome3) libcroco;
 
   libcangjie = callPackage ../development/libraries/libcangjie { };
 
@@ -7273,12 +7261,9 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   libgadu = callPackage ../development/libraries/libgadu { };
 
-  libgdata = gnome3.libgdata;
-
   libgig = callPackage ../development/libraries/libgig { };
 
   libgnome_keyring = callPackage ../development/libraries/libgnome-keyring { };
-  libgnome_keyring3 = gnome3.libgnome_keyring;
 
   libgnurl = callPackage ../development/libraries/libgnurl { };
 
@@ -8887,9 +8872,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   smack = callPackage ../development/libraries/java/smack { };
 
-  swt = callPackage ../development/libraries/java/swt {
-    inherit (gnome) libsoup;
-  };
+  swt = callPackage ../development/libraries/java/swt { };
 
 
   ### DEVELOPMENT / LIBRARIES / JAVASCRIPT
@@ -10739,8 +10722,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gnome_user_docs = callPackage ../data/documentation/gnome-user-docs { };
 
-  inherit (gnome3) gsettings_desktop_schemas;
-
   gyre-fonts = callPackage ../data/fonts/gyre {};
 
   hack-font = callPackage ../data/fonts/hack { };
@@ -10964,7 +10945,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   abiword = callPackage ../applications/office/abiword {
     inherit (gnome) libglade libgnomecanvas;
-    iconTheme = gnome3.defaultIconTheme;
   };
 
   abook = callPackage ../applications/misc/abook { };
@@ -11063,8 +11043,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   awesomebump = qt5.callPackage ../applications/graphics/awesomebump { };
 
-  inherit (gnome3) baobab;
-
   backintime-common = callPackage ../applications/networking/sync/backintime/common.nix { };
 
   backintime-qt4 = callPackage ../applications/networking/sync/backintime/qt4.nix { };
@@ -11119,7 +11097,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     pulseSupport = config.pulseaudio or true;
   };
 
-  brackets = callPackage ../applications/editors/brackets { gconf = gnome3.gconf; };
+  brackets = callPackage ../applications/editors/brackets { };
 
   bristol = callPackage ../applications/audio/bristol { };
 
@@ -11187,7 +11165,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   cinelerra = callPackage ../applications/video/cinelerra { };
 
   clawsMail = callPackage ../applications/networking/mailreaders/claws-mail {
-    inherit (gnome3) gsettings_desktop_schemas;
     enableNetworkManager = config.networking.networkmanager.enable or false;
   };
 
@@ -11346,7 +11323,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   dvd-slideshow = callPackage ../applications/video/dvd-slideshow { };
 
-  dwb-unwrapped = callPackage ../applications/networking/browsers/dwb { dconf = gnome3.dconf; };
+  dwb-unwrapped = callPackage ../applications/networking/browsers/dwb { };
   dwb = wrapFirefox dwb-unwrapped { desktopName = "dwb"; };
 
   dwm = callPackage ../applications/window-managers/dwm {
@@ -11599,13 +11576,9 @@ zsh = callPackage ../all-pkgs/zsh { };
   emacs24WithPackages = emacs24PackagesNg.emacsWithPackages;
   emacsWithPackages = emacsPackagesNg.emacsWithPackages;
 
-  inherit (gnome3) empathy;
-
   enhanced-ctorrent = callPackage ../applications/networking/enhanced-ctorrent { };
 
   epdfview = callPackage ../applications/misc/epdfview { };
-
-  inherit (gnome3) epiphany;
 
   eq10q = callPackage ../applications/audio/eq10q { };
 
@@ -11627,9 +11600,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   keepassx = callPackage ../applications/misc/keepassx { };
   keepassx2 = callPackage ../applications/misc/keepassx/2.0.nix { };
-
-  inherit (gnome3) evince;
-  evolution_data_server = gnome3.evolution_data_server;
 
   keepass = callPackage ../applications/misc/keepass { };
 
@@ -11702,8 +11672,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   gtimelog = pythonPackages.gtimelog;
-
-  inherit (gnome3) gucharmap;
 
   gjay = callPackage ../applications/audio/gjay { };
 
@@ -11810,8 +11778,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gitolite = callPackage ../applications/version-management/gitolite { };
 
-  inherit (gnome3) gitg;
-
   giv = callPackage ../applications/graphics/giv { };
 
   gmrun = callPackage ../applications/misc/gmrun {};
@@ -11826,7 +11792,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gnucash26 = lowPrio (callPackage ../applications/office/gnucash/2.6.nix {
     inherit (gnome2) libgnomecanvas;
-    inherit (gnome3) dconf;
     gconf = gnome2.GConf;
     goffice = goffice_0_8;
     webkit = webkitgtk2;
@@ -11898,7 +11863,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   gtkpod = callPackage ../applications/audio/gtkpod {
-    gnome = gnome3;
     inherit (gnome) libglade;
   };
 
@@ -13141,9 +13105,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     inherit (pythonPackages) notify;
   };
 
-  termite = callPackage ../applications/misc/termite {
-    vte = gnome3.vte-select-text;
-  };
+  termite = callPackage ../applications/misc/termite { };
 
   tesseract = callPackage ../applications/graphics/tesseract { };
 
@@ -13317,7 +13279,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
   virtmanager = callPackage ../applications/virtualization/virt-manager {
     inherit (gnome) gnome_python;
-    dconf = gnome3.dconf;
     gtkvnc = gtkvnc.override { enableGTK3 = true; };
     spice_gtk = spice_gtk.override { enableGTK3 = true; };
     system-libvirt = libvirt;
@@ -13667,7 +13628,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   roxterm = callPackage ../applications/misc/roxterm {
     inherit (pythonPackages) lockfile;
-    inherit (gnome3) gsettings_desktop_schemas;
     vte = vte_290;
   };
 
@@ -13690,8 +13650,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   xzgv = callPackage ../applications/graphics/xzgv { };
 
   yate = callPackage ../applications/misc/yate { };
-
-  inherit (gnome3) yelp;
 
   qgis = callPackage ../applications/gis/qgis {};
 
@@ -14269,12 +14227,8 @@ zsh = callPackage ../all-pkgs/zsh { };
     self = pkgs.gnome2;
   }  // pkgs.gtkLibs // {
     # Backwards compatibility;
-    inherit (pkgs) libsoup libwnck gtk_doc gnome_doc_utils;
+    inherit (pkgs) libwnck gtk_doc gnome_doc_utils;
   };
-
-  gnome3_18 = recurseIntoAttrs (callPackage ../desktops/gnome-3/3.18 { });
-
-  gnome3 = gnome3_18;
 
   gnome = recurseIntoAttrs gnome2;
 
@@ -14409,7 +14363,6 @@ zsh = callPackage ../all-pkgs/zsh { };
             client = false;
             withKDE = stdenv.isLinux;
             qt = if withKDE then qt4 else qt5; # KDE supported quassel cannot build with qt5 yet (maybe in 0.12.0)
-            dconf = gnome3.dconf;
           };
 
           quasselWithoutKDE = (quassel.override {
@@ -14507,8 +14460,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gtk-engine-murrine = callPackage ../misc/themes/gtk2/gtk-engine-murrine { };
 
-  gnome_themes_standard = gnome3.gnome_themes_standard;
-
   mate-icon-theme = callPackage ../misc/themes/mate-icon-theme { };
 
   mate-themes = callPackage ../misc/themes/mate-themes { };
@@ -14537,7 +14488,6 @@ zsh = callPackage ../all-pkgs/zsh { };
       daemon = false;
       client = false;
       withKDE = true;
-      dconf = gnome3.dconf;
       tag = "-kf5";
     };
 

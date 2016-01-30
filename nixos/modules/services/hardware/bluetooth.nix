@@ -21,8 +21,6 @@ with lib;
 
   config = mkIf config.hardware.bluetooth.enable {
 
-    environment.systemPackages = [ pkgs.bluez pkgs.openobex pkgs.obexftp ];
-
     services.udev.packages = [ pkgs.bluez ];
 
     services.dbus.packages = [ pkgs.bluez ];

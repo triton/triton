@@ -604,6 +604,8 @@ gnome-backgrounds = callPackage ../all-pkgs/gnome-backgrounds { };
 
 gnome-bluetooth = callPackage ../all-pkgs/gnome-bluetooth { };
 
+gnome-calculator = callPackage ../all-pkgs/gnome-calculator { };
+
 gnome-desktop = callPackage ../all-pkgs/gnome-desktop { };
 
 gnome-online-accounts = callPackage ../all-pkgs/gnome-online-accounts { };

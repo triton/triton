@@ -673,6 +673,10 @@ gstreamer-vaapi = callPackage ../all-pkgs/gstreamer-vaapi { };
 
 gstreamermm = callPackage ../all-pkgs/gstreamermm { };
 
+gtk-doc = callPackage ../all-pkgs/gtk-doc { };
+gtk_doc = gtk-doc; # Deprecated alias
+gtkdoc = gtk-doc; # Deprecated alias
+
 gtk_2 = callPackage ../all-pkgs/gtk+/2.x.nix { };
 gtk2 = gtk_2;
 gtk_3 = callPackage ../all-pkgs/gtk+/3.x.nix {
@@ -6115,8 +6119,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   gperf = callPackage ../development/tools/misc/gperf { };
 
   grail = callPackage ../development/libraries/grail { };
-
-  gtk_doc = callPackage ../development/tools/documentation/gtk-doc { };
 
   gtkdialog = callPackage ../development/tools/misc/gtkdialog { };
 

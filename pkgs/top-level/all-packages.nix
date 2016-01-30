@@ -659,6 +659,8 @@ gtkmm2 = gtkmm_2;
 gtkmm_3 = callPackage ../all-pkgs/gtkmm/3.x.nix { };
 gtkmm3 = gtkmm_3;
 
+gtksourceview = callPackage ../all-pkgs/gtksourceview { };
+
 guitarix = callPackage ../all-pkgs/guitarix {
   fftw = fftwSinglePrec;
 };

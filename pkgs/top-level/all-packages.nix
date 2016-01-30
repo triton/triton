@@ -606,6 +606,8 @@ gnome-bluetooth = callPackage ../all-pkgs/gnome-bluetooth { };
 
 gnome-calculator = callPackage ../all-pkgs/gnome-calculator { };
 
+gnome-common = callPackage ../all-pkgs/gnome-common { };
+
 gnome-desktop = callPackage ../all-pkgs/gnome-desktop { };
 
 gnome-online-accounts = callPackage ../all-pkgs/gnome-online-accounts { };

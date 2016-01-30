@@ -954,6 +954,8 @@ qbittorrent = callPackage ../all-pkgs/qbittorrent { };
 
 qjackctl = callPackage ../all-pkgs/qjackctl { };
 
+rest = callPackage ../all-pkgs/rest { };
+
 rtmpdump = callPackage ../all-pkgs/rtmpdump { };
 
 rtorrent = callPackage ../all-pkgs/rtorrent { };

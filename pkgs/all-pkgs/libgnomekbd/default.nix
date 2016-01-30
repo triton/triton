@@ -1,4 +1,6 @@
-{ stdenv, fetchurl, pkgconfig, file, intltool, glib, gtk3, libxklavier, makeWrapper, gnome3 }:
+{ stdenv, fetchurl, pkgconfig, file, intltool, glib, gtk3, libxklavier
+, makeWrapper
+}:
 
 stdenv.mkDerivation rec {
   name = "libgnomekbd-3.6.0";
@@ -17,7 +19,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Keyboard management library";
-    maintainers = gnome3.maintainers;
+    #maintainers = gnome3.maintainers;
     license = licenses.gpl2;
     platforms = platforms.linux;
   };

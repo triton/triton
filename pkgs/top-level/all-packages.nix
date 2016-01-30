@@ -576,6 +576,8 @@ firefox-bin = callPackage ../applications/networking/browsers/firefox-bin {
 
 flac = callPackage ../all-pkgs/flac { };
 
+gconf = callPackage ../all-pkgs/gconf { };
+
 gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
 gdk_pixbuf = gdk-pixbuf; # Deprecated alias
 gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };

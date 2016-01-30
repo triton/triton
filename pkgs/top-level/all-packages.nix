@@ -578,6 +578,8 @@ flac = callPackage ../all-pkgs/flac { };
 
 gconf = callPackage ../all-pkgs/gconf { };
 
+gcr = callPackage ../all-pkgs/gcr { };
+
 gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
 gdk_pixbuf = gdk-pixbuf; # Deprecated alias
 gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };

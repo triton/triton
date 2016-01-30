@@ -7,8 +7,8 @@
 
 , glib
 , gnome_doc_utils
-, gnome3
 , gobject-introspection
+, gsettings-desktop-schemas
 , gtk3
 , isocodes
 , itstool
@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
     glib
     gnome_doc_utils
     gobject-introspection
-    gnome3.gsettings_desktop_schemas
+    gsettings-desktop-schemas
     gtk3
     isocodes
     itstool

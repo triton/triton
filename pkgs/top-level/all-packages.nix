@@ -622,6 +622,8 @@ gnome-online-accounts = callPackage ../all-pkgs/gnome-online-accounts { };
 
 gnome-screenshot = callPackage ../all-pkgs/gnome-screenshot { };
 
+gnome-settings-daemon = callPackage ../all-pkgs/gnome-settings-daemon { };
+
 gnome-terminal = callPackage ../all-pkgs/gnome-terminal { };
 
 gnome-wrapper = makeSetupHook {

@@ -747,6 +747,8 @@ libcanberra_kde = libcanberra; # Deprecated alias
 
 libcroco = callPackage ../all-pkgs/libcroco { };
 
+libgdata = callPackage ../all-pkgs/libgdata { };
+
 libgee = callPackage ../all-pkgs/libgee { };
 
 libgphoto2 = callPackage ../all-pkgs/libgphoto2 { };

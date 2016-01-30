@@ -66,6 +66,7 @@ stdenv.mkDerivation rec {
     libsoup
     telepathy_glib
     xorg.libSM
+    xorg.libX11
     zlib
   ];
 

@@ -622,6 +622,8 @@ gnome-online-accounts = callPackage ../all-pkgs/gnome-online-accounts { };
 
 gnome-screenshot = callPackage ../all-pkgs/gnome-screenshot { };
 
+gnome-terminal = callPackage ../all-pkgs/gnome-terminal { };
+
 gnome-wrapper = makeSetupHook {
   deps = [ makeWrapper ];
 } ../build-support/setup-hooks/gnome-wrapper.sh;

@@ -676,6 +676,8 @@ gtk_3 = callPackage ../all-pkgs/gtk+/3.x.nix {
 };
 gtk3 = gtk_3;
 
+gtkhtml = callPackage ../all-pkgs/gtkhtml { };
+
 gtkmm_2 = callPackage ../all-pkgs/gtkmm/2.x.nix { };
 gtkmm2 = gtkmm_2;
 gtkmm_3 = callPackage ../all-pkgs/gtkmm/3.x.nix { };

@@ -751,6 +751,8 @@ libpeas = callPackage ../all-pkgs/libpeas { };
 
 librsvg = callPackage ../all-pkgs/librsvg { };
 
+libsoup = callPackage ../all-pkgs/libsoup { };
+
 libspectre = callPackage ../all-pkgs/libspectre { };
 
 libtorrent = callPackage ../all-pkgs/libtorrent { };
@@ -7647,8 +7649,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   libsodium = callPackage ../development/libraries/libsodium { };
-
-  libsoup = callPackage ../development/libraries/libsoup { };
 
   libssh = callPackage ../development/libraries/libssh { };
 

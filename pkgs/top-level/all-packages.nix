@@ -689,6 +689,10 @@ gtkmm3 = gtkmm_3;
 
 gtksourceview = callPackage ../all-pkgs/gtksourceview { };
 
+gtkspell_2 = callPackage ../all-pkgs/gtkspell/2.x.nix { };
+gtkspell_3 = callPackage ../all-pkgs/gtkspell/3.x.nix { };
+gtkspell = gtkspell_3;
+
 guitarix = callPackage ../all-pkgs/guitarix {
   fftw = fftwSinglePrec;
 };
@@ -6936,10 +6940,6 @@ zsh = callPackage ../all-pkgs/zsh { };
               libgnomecanvas libgnomeui libgnomeprint
               libgnomeprintui GConf gnomepanel;
   };
-
-  gtkspell = callPackage ../development/libraries/gtkspell { };
-
-  gtkspell3 = callPackage ../development/libraries/gtkspell/3.nix { };
 
   gtkspellmm = callPackage ../development/libraries/gtkspellmm { };
 

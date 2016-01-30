@@ -5,7 +5,6 @@
 , atk
 , gdk-pixbuf-core
 , glib
-, gnome3
 , gnutls
 , gobject-introspection
 , gtk3

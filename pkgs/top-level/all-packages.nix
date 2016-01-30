@@ -550,6 +550,8 @@ colord = callPackage ../all-pkgs/colord { };
 
 dconf = callPackage ../all-pkgs/dconf { };
 
+dconf-editor = callPackage ../all-pkgs/dconf-editor { };
+
 evolution = callPackage ../all-pkgs/evolution { };
 
 evolution-data-server = callPackage ../all-pkgs/evolution-data-server { };

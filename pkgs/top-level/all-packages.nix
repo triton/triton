@@ -565,6 +565,8 @@ ffmpeg_2 = callPackage ../all-pkgs/ffmpeg/2.x.nix { };
 ffmpeg = ffmpeg_2;
 ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
 
+file-roller = callPackage ../all-pkgs/file-roller { };
+
 firefox = firefox_wrapper firefox-unwrapped { };
 firefox-esr = firefox_wrapper firefox-esr-unwrapped { };
 firefox-unwrapped = callPackage ../all-pkgs/firefox {
@@ -591,6 +593,8 @@ gcr = callPackage ../all-pkgs/gcr { };
 gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
 gdk_pixbuf = gdk-pixbuf; # Deprecated alias
 gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
+
+gdm = callPackage ../all-pkgs/gdm { };
 
 geocode-glib = callPackage ../all-pkgs/geocode-glib { };
 
@@ -640,6 +644,8 @@ gnome-shell = callPackage ../all-pkgs/gnome-shell { };
 
 gnome-terminal = callPackage ../all-pkgs/gnome-terminal { };
 
+gnome-themes-standard = callPackage ../all-pkgs/gnome-themes-standard { };
+
 gnome-user-share = callPackage ../all-pkgs/gnome-user-share { };
 
 gnome-wrapper = makeSetupHook {
@@ -656,6 +662,8 @@ gobjectIntrospection = gobject-introspection; # Deprecated alias
 granite = callPackage ../all-pkgs/granite { };
 
 grilo = callPackage ../all-pkgs/grilo { };
+
+gsettings-desktop-schemas = callPackage ../all-pkgs/gsettings-desktop-schemas { };
 
 gsm = callPackage ../all-pkgs/gsm { };
 

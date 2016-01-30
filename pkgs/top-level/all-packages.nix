@@ -843,6 +843,8 @@ mpv = callPackage ../all-pkgs/mpv {
   lua5_sockets = lua5_1_sockets;
 };
 
+mutter = callPackage ../all-pkgs/mutter { };
+
 nasm = callPackage ../all-pkgs/nasm { };
 
 nautilus = callPackage ../all-pkgs/nautilus { };

@@ -7,18 +7,16 @@
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "mariadb-${version}";
-  version = "10.1.10";
+  version = "10.1.11";
 
   src = fetchurl {
     url    = "https://downloads.mariadb.org/interstitial/mariadb-${version}/source/mariadb-${version}.tar.gz";
-    sha256 = "0xlg4ylc0pqla27h94wqspxvg8ih9hbn2hcj4pgpnfgpdz3nzhnj";
+    sha256 = "1ki50gdbx7kaijfcayxf8dwc48rn2v53n1y6pha4yfrlf1rr4cnd";
   };
 
   nativeBuildInputs = [ cmake ninja ];
   buildInputs = [
-    ncurses openssl zlib xz lzo lz4 bzip2
-    # temporary due to https://mariadb.atlassian.net/browse/MDEV-9000
-    (if stdenv.is64bit then snappy else null)
+    ncurses openssl zlib xz lzo lz4 bzip2 snappy
     pcre libxml2 boost judy bison libevent cracklib
   ] ++ stdenv.lib.optionals stdenv.isLinux [ jemalloc libaio systemd numactl ]
     ++ stdenv.lib.optionals stdenv.isDarwin [ perl fixDarwinDylibNames cctools CoreServices ];
@@ -63,9 +61,6 @@ stdenv.mkDerivation rec {
     "-DWITHOUT_TOKUDB=1"
     "-DCURSES_LIBRARY=${ncurses}/lib/libncurses.dylib"
   ];
-
-  # fails to find lex_token.h sometimes
-  enableParallelBuilding = true;
 
   prePatch = ''
     substituteInPlace cmake/libutils.cmake \

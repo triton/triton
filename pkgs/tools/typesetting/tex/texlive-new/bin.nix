@@ -82,7 +82,7 @@ core = stdenv.mkDerivation rec {
     ++ [ "--without-system-harfbuzz" "--without-system-icu" ] # bogus configure
     ;
 
-  enableParallelBuilding = false;
+  parallelInstall = false;
 
   doCheck = false; # triptest fails, likely due to missing TEXMF tree
   preCheck = "patchShebangs ../texk/web2c";

@@ -68,8 +68,8 @@ in
 
         package = mkOption {
           type = types.package;
-          default = pkgs.gnome3.gnome_themes_standard;
-          defaultText = "pkgs.gnome3.gnome_themes_standard";
+          default = pkgs.gnome-themes-standard;
+          defaultText = "pkgs.gnome-sthemes-standard";
           description = ''
             The package path that contains the theme given in the name option.
           '';
@@ -89,8 +89,8 @@ in
 
         package = mkOption {
           type = types.package;
-          default = pkgs.gnome3.defaultIconTheme;
-          defaultText = "pkgs.gnome3.defaultIconTheme";
+          default = pkgs.adwaita-icon-theme;
+          defaultText = "pkgs.adwaita-icon-theme";
           description = ''
             The package path that contains the icon theme given in the name option.
           '';

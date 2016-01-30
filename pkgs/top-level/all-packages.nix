@@ -1044,8 +1044,6 @@ rapidjson = callPackage ../all-pkgs/rapidjson { };
 
 rest = callPackage ../all-pkgs/rest { };
 
-rest = callPackage ../all-pkgs/rest { };
-
 rtmpdump = callPackage ../all-pkgs/rtmpdump { };
 
 rtorrent = callPackage ../all-pkgs/rtorrent { };

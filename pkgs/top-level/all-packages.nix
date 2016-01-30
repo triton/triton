@@ -968,6 +968,8 @@ usbmuxd = callPackage ../all-pkgs/usbmuxd { };
 
 vala = callPackage ../all-pkgs/vala { };
 
+vino = callPackage ../all-pkgs/vino { };
+
 vte_290 = callPackage ../all-pkgs/vte/2.90.nix { };
 vte = callPackage ../all-pkgs/vte { };
 

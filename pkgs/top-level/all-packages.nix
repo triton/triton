@@ -550,6 +550,8 @@ colord = callPackage ../all-pkgs/colord { };
 
 dconf = callPackage ../all-pkgs/dconf { };
 
+evolution-data-server = callPackage ../all-pkgs/evolution-data-server { };
+
 ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
 ffmpeg_1 = callPackage ../all-pkgs/ffmpeg/1.x.nix { };
 ffmpeg_2_2 = callPackage ../all-pkgs/ffmpeg/2.2.nix { };

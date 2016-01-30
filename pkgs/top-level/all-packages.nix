@@ -404,8 +404,22 @@ let
       + "${repo}-code-${rev}.zip";
     meta.homepage = "http://sourceforge.net/p/${repo}/code";
     preFetch = ''
+      echo "Telling sourceforge to generate code tarball..."
       $curl "http://sourceforge.net/p/net-tools/code/ci/master/tarball" >/dev/null
-      $curl "http://sourceforge.net/p/net-tools/code/status" >/dev/null
+      local found
+      found=0
+      for i in {1..30}; do
+        echo "Checking tarball generation status..." >&2
+        if $curl "http://sourceforge.net/p/net-tools/code/status" | grep -q '{"status": "ready"}'; then
+          found=1
+          break
+        fi
+        sleep 1
+      done
+      if [ "$found" -ne "1" ]; then
+        echo "Sourceforge failed to generate tarball"
+        exit 1
+      fi
     '';
   };
 

@@ -524,6 +524,8 @@ cairo = callPackage ../all-pkgs/cairo { };
 
 cairomm = callPackage ../all-pkgs/cairomm { };
 
+caribou = callPackage ../all-pkgs/caribou { };
+
 cdparanoia = callPackage ../all-pkgs/cdparanoia { };
 
 chromium = callPackage ../all-pkgs/chromium {

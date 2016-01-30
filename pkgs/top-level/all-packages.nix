@@ -584,6 +584,8 @@ gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
 gdk_pixbuf = gdk-pixbuf; # Deprecated alias
 gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
 
+geocode-glib = callPackage ../all-pkgs/geocode-glib { };
+
 glib = callPackage ../all-pkgs/glib { };
 # checked version separate to break recursion
 glib_tested = glib.override {

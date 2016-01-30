@@ -614,6 +614,8 @@ gnome-menus = callPackage ../all-pkgs/gnome-menus { };
 
 gnome-online-accounts = callPackage ../all-pkgs/gnome-online-accounts { };
 
+gnome-screenshot = callPackage ../all-pkgs/gnome-screenshot { };
+
 gnome-wrapper = makeSetupHook {
   deps = [ makeWrapper ];
 } ../build-support/setup-hooks/gnome-wrapper.sh;

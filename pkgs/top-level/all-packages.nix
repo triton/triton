@@ -403,6 +403,10 @@ let
       + "${repo}/code.git/"
       + "${repo}-code-${rev}.zip";
     meta.homepage = "http://sourceforge.net/p/${repo}/code";
+    preFetch = ''
+      $curl "http://sourceforge.net/p/net-tools/code/ci/master/tarball" >/dev/null
+      $curl "http://sourceforge.net/p/net-tools/code/status" >/dev/null
+    '';
   };
 
   fetchNuGet = callPackage ../build-support/fetchnuget { };

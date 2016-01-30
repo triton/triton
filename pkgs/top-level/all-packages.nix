@@ -1008,6 +1008,8 @@ sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sublime-text = callPackage ../all-pkgs/sublime-text { };
 
+tracker = callPackage ../all-pkgs/tracker { };
+
 usbmuxd = callPackage ../all-pkgs/usbmuxd { };
 
 vala = callPackage ../all-pkgs/vala { };

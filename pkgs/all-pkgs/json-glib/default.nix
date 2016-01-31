@@ -6,6 +6,11 @@
 , gobject-introspection
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "json-glib-${version}";
   versionMajor = "1.0";
@@ -17,18 +22,6 @@ stdenv.mkDerivation rec {
     sha256 = "1k85vvb2prmk8aa8hmr2rp9rnbhffjgnmr18b13g24xxnqy5kww0";
   };
 
-  configureflags= [
-    "--enable-glibtest"
-    "--enable-Bsymbolic"
-    "--disable-gcov"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-man"
-    "--enable-introspection"
-    "--enable-nls"
-  ];
-
   nativeBuildInputs = [
     gettext
   ];
@@ -38,7 +31,17 @@ stdenv.mkDerivation rec {
     gobject-introspection
   ];
 
-  enableParallelBuilding = true;
+  configureflags= [
+    "--enable-glibtest"
+    "--enable-Bsymbolic"
+    "--disable-gcov"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--disable-man"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    "--enable-nls"
+  ];
 
   meta = with stdenv.lib; {
     description = "(de)serialization support for JSON";

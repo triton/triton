@@ -9,7 +9,8 @@
 
 with {
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    wtFlag;
 };
 
 stdenv.mkDerivation rec {
@@ -31,12 +32,13 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    (enFlag "introspection" (gobject-introspection != null) "yes")
-    "--with-gnome"
-    "--with-ca-certificates=/etc/ssl/certs/ca-certificates.crt"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
+    (enFlag "introspection" (gobject-introspection != null) "yes")
+    "--disable-gcov"
+    (wtFlag "gnome" (libsoup != null) null)
+    "--with-ca-certificates=/etc/ssl/certs/ca-certificates.crt"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";

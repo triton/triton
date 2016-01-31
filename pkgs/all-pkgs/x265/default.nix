@@ -30,10 +30,11 @@ with {
 assert isLinux -> numactl != null;
 
 let
-  version = "1.8";
+  version = "1.9";
   src = fetchurl {
-    url = "https://github.com/videolan/x265/archive/${version}.tar.gz";
-    sha256 = "0ay4d9y9ccyhjrdhkkjp5mq57i3a8xmy2vi1r0ffm46dg8p4c534";
+    url = "https://bitbucket.org/multicoreware/x265/downloads/" +
+          "x265_${version}.tar.gz";
+    sha256 = "1j0mbcf10aj6zi1nxql45f9817jd2ndcpd7x123sjmyr7q9m8iiy";
   };
   cmakeFlagsAll = [
     (cmFlag "ENABLE_TESTS" unittestsSupport)
@@ -42,8 +43,7 @@ let
     (cmFlag "ENABLE_PPA" ppaSupport)
     (cmFlag "ENABLE_VTUNE" vtuneSupport)
     (cmFlag "ENABLE_PIC" true)
-    # uncomment for 1.9
-    #(cmFlag "ENABLE_LIBNUMA" (isLinux && numactl != null))
+    (cmFlag "ENABLE_LIBNUMA" (isLinux && numactl != null))
     (cmFlag "ENABLE_ASSEMBLY" true)
   ];
 in
@@ -99,8 +99,6 @@ let
     /* Rename the library to a unique name */ ''
       mv -v $out/lib/libx265.a $out/lib/libx265_main10.a
     '';
-
-    enableParallelBuilding = true;
   };
   libx265-12 = stdenv.mkDerivation {
     name = "libx265-12-${version}";
@@ -139,8 +137,6 @@ let
     /* Rename the library to a unique name */ ''
       mv -v $out/lib/libx265.a $out/lib/libx265_main12.a
     '';
-
-    enableParallelBuilding = true;
   };
 in
 
@@ -196,8 +192,6 @@ stdenv.mkDerivation rec {
   ] ++ optionals isLinux [
     numactl
   ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Library for encoding h.265/HEVC video streams";

@@ -7,7 +7,7 @@
 , fribidi
 , harfbuzz
 
-, rasterizerSupport ? false # Internal rasterizer
+, rasterizerSupport ? true # Internal rasterizer
 , largeTilesSupport ? false # Use larger tiles in the rasterizer
 }:
 
@@ -21,9 +21,21 @@ stdenv.mkDerivation rec {
   version = "0.13.1";
 
   src = fetchurl {
-    url = "https://github.com/libass/libass/releases/download/${version}/${name}.tar.xz";
+    url = "https://github.com/libass/libass/releases/download/${version}/" +
+          "${name}.tar.xz";
     sha256 = "1rrz6is2blx8jqyydcz71y2f5f948blgx14jzi3an756fqc6p8sa";
   };
+
+  nativeBuildInputs = [
+    yasm
+  ];
+
+  buildInputs = [
+    fontconfig
+    freetype
+    fribidi
+    harfbuzz
+  ];
 
   configureFlags = [
     (enFlag "test" doCheck null)
@@ -38,19 +50,7 @@ stdenv.mkDerivation rec {
     (enFlag "large-tiles" largeTilesSupport null)
   ];
 
-  nativeBuildInputs = [
-    yasm
-  ];
-
-  buildInputs = [
-    fontconfig
-    freetype
-    fribidi
-    harfbuzz
-  ];
-
   doCheck = false;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Library for SSA/ASS subtitles rendering";

@@ -3,9 +3,15 @@
 , fetchFromGitHub
 
 , glib
+, gobject-introspection
 , sqlite
 , vala
 }:
+
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
 
 stdenv.mkDerivation rec {
   name = "sqlheavy-${version}";
@@ -18,18 +24,30 @@ stdenv.mkDerivation rec {
     sha256 = "1nyqkbgx2i86b453k8yb0n2c1s3szs8lysgxkk9n634avms8dyp5";
   };
 
-  preAutoreconf = ''
-    touch ChangeLog
-  '';
-
   nativeBuildInputs = [
     autoreconfHook
   ];
 
   buildInputs = [
     glib
+    gobject-introspection
     sqlite
     vala
+  ];
+
+  preAutoreconf = ''
+    touch ChangeLog
+  '';
+
+  configureFlags = [
+    "--disable-maintainer-mode"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    "--disable-valadoc"
+  ];
+
+  makeFlags = [
+    "INTROSPECTION_GIRDIR=$(out)/share/gir-1.0"
+    "INTROSPECTION_TYPELIBDIR=$(out)/lib/girepository-1.0"
   ];
 
   meta = with stdenv.lib; {

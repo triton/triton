@@ -14,6 +14,7 @@
 , pcre2
 , vala
 , zlib
+
 , selectTextPatch ? false
 }:
 
@@ -26,39 +27,14 @@ with {
 
 stdenv.mkDerivation rec {
   name = "vte-${version}";
-  versionMajor = "0.43";
-  versionMinor = "0";
+  versionMajor = "0.42";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/vte/${versionMajor}/${name}.tar.xz";
-    sha256 = "1faa9n6dn0vgzlbf9vlm7d0ksw19577p57v3b3j9wgk3910sw41g";
+    sha256 = "1832mrw2hhgjipbsfsv2fmdnwnar4rkx589ciz008bg8x908mscn";
   };
-
-  patches = optional selectTextPatch ./expose_select_text.0.40.0.patch;
-
-  postPatch = ''
-    patchShebangs src/box_drawing_generate.sh
-    patchShebangs src/check-libstdc++.sh
-    patchShebangs src/test-vte-sh.sh
-  '';
-
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--disable-debug"
-    "--enable-nls"
-    "--enable-Bsymbolic"
-    "--disable-glade"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
-    # test application uses deprecated functions
-    "--disable-test-application"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    (wtFlag "gnutls" (gnutls != null) null)
-    (wtFlag "pcre2" (pcre2 != null) null)
-  ];
 
   nativeBuildInputs = [
     intltool
@@ -77,6 +53,32 @@ stdenv.mkDerivation rec {
     pcre2
     vala
     zlib
+  ];
+
+  patches = [ ]
+    ++ optional selectTextPatch ./expose_select_text.0.40.0.patch;
+
+  postPatch = ''
+    patchShebangs ./src/box_drawing_generate.sh
+    patchShebangs ./src/check-libstdc++.sh
+    patchShebangs ./src/test-vte-sh.sh
+  '';
+
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--disable-debug"
+    "--enable-nls"
+    "--enable-Bsymbolic"
+    "--disable-glade"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    (enFlag "vala" (vala != null) null)
+    # test application uses deprecated functions
+    "--disable-test-application"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    (wtFlag "gnutls" (gnutls != null) null)
+    (wtFlag "pcre2" (pcre2 != null) null)
   ];
 
   doCheck = true;

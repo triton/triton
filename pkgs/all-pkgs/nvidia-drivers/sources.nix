@@ -16,9 +16,9 @@
   };
   "long-lived" = {
     versionMajor = "352";
-    versionMinor = "63";
-    sha256i686   = "0vxrx2hmycvhyp32mapf1vv01ddlghliwsvkhsg29hv3a7fl4i28";
-    sha256x86_64 = "11dgvsygavdsgbgq87d3d2sj3dc85f2yarr71qczkgiqa030yb1k";
+    versionMinor = "79";
+    sha256i686   = "e05a825a5e0027f062b1a1344ff3484286f50df990d66d567348b80101a0c4e3";
+    sha256x86_64 = "8be6c64dddc2c2c5a0512bdacc71a77734de469ca11dfa435ca728fba57ccb9a";
   };
   "short-lived" = {
     versionMajor = "358";
@@ -28,9 +28,9 @@
   };
   "testing" = {
     versionMajor = "361";
-    versionMinor = "16";
-    sha256i686   = "580b16e8a29f8bf9abbe16894e38e644064605ae029788e019d19c94382600f0";
-    sha256x86_64 = "1w004qw9976i37h8i5q2mq2lc1j4wqw4x28npsmzk2wzlbl1c2sq";
+    versionMinor = "18";
+    sha256i686   = "94cccc3ff10ee9544f60bf1d32d04dddabc5103880b57895ea60e1167b89a155";
+    sha256x86_64 = "406ac161db6e3005bbfb4074becdc42e756f0e06440a072046039e64d63ed189";
   };
 
 }

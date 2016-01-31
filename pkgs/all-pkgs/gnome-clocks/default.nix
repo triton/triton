@@ -4,19 +4,13 @@
 , itstool
 , libtool
 
-, adwaita-icon-theme
-, gdk-pixbuf
 , geoclue2
 , geocode-glib
 , glib
 , gnome-desktop
-, gsettings-desktop-schemas
 , gsound
 , gtk3
-, libcanberra
 , libgweather
-, libnotify
-, librsvg
 , libxml2
 , vala
 }:

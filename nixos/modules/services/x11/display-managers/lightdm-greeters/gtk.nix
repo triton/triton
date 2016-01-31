@@ -69,7 +69,7 @@ in
         package = mkOption {
           type = types.package;
           default = pkgs.gnome-themes-standard;
-          defaultText = "pkgs.gnome-sthemes-standard";
+          defaultText = "pkgs.gnome-themes-standard";
           description = ''
             The package path that contains the theme given in the name option.
           '';

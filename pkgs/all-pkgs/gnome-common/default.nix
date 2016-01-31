@@ -35,6 +35,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Common files for development of Gnome packages";
     homepage = https://git.gnome.org/browse/gnome-common;
+    license = licenses.gpl3;
     maintainers = with maintainers; [
       codyopel
     ];

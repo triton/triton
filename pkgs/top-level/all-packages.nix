@@ -846,6 +846,8 @@ libpeas = callPackage ../all-pkgs/libpeas { };
 
 librsvg = callPackage ../all-pkgs/librsvg { };
 
+libsecret = callPackage ../all-pkgs/libsecret { };
+
 libsoup = callPackage ../all-pkgs/libsoup { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };
@@ -7365,8 +7367,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   libgroove = callPackage ../development/libraries/libgroove { };
 
   libseccomp = callPackage ../development/libraries/libseccomp { };
-
-  libsecret = callPackage ../development/libraries/libsecret { };
 
   libserialport = callPackage ../development/libraries/libserialport { };
 

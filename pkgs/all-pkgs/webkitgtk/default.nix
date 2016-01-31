@@ -54,11 +54,11 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "webkitgtk-2.10.4";
+  name = "webkitgtk-2.10.7";
 
   src = fetchurl {
     url = "http://webkitgtk.org/releases/${name}.tar.xz";
-    sha256 = "0mghsbfnmmf6nsf7cb3ah76s77aigkzf3k6kw96wgh6all6jdy6v";
+    sha256 = "0kl6a9v644vis69i0gpz88l82szi8zc842pzlqqxxpnn5v4643cr";
   };
 
   patches = [
@@ -211,8 +211,6 @@ stdenv.mkDerivation rec {
     xorg.libXt
     zlib
   ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Web content rendering engine, GTK+ port";

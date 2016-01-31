@@ -6,7 +6,6 @@
 , epoxy
 , gdk-pixbuf
 , glibmm
-, gnome3
 , gtk3
 , pangomm
 }:

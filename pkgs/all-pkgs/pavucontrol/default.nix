@@ -6,7 +6,7 @@
 , gtkmm3
 , libcanberra
 , libpulseaudio
-, gnome3
+, adwaita-icon-theme
 }:
 
 stdenv.mkDerivation rec {
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
     gtkmm3
     libcanberra
     libpulseaudio
-    gnome3.defaultIconTheme
+    adwaita-icon-theme
   ];
 
   enableParallelBuilding = true;

@@ -7,7 +7,7 @@
 , gst-plugins-ugly_0, gst-ffmpeg
 , supportsJDK, jrePlugin, icedtea_web
 , trezor-bridge, bluejeans, djview4
-, google_talk_plugin, fribid, gnome3/*.gnome_shell*/
+, google_talk_plugin, fribid, gnome-shell
 }:
 
 ## configurability of the wrapper itself
@@ -40,7 +40,7 @@ let
       ++ lib.optional icedtea icedtea_web
       ++ lib.optional (cfg.enableGoogleTalkPlugin or false) google_talk_plugin
       ++ lib.optional (cfg.enableFriBIDPlugin or false) fribid
-      ++ lib.optional (cfg.enableGnomeExtensions or false) gnome3.gnome_shell
+      ++ lib.optional (cfg.enableGnomeExtensions or false) gnome-shell
       ++ lib.optional (cfg.enableTrezor or false) trezor-bridge
       ++ lib.optional (cfg.enableBluejeans or false) bluejeans
      );

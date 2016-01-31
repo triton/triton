@@ -524,9 +524,7 @@ at_spi2_atk = at-spi2-atk; # Deprecated alias
 at-spi2-core = callPackage ../all-pkgs/at-spi2-core { };
 at_spi2_core = at-spi2-core; # Deprecated alias
 
-atom = callPackage ../all-pkgs/atom {
-  gconf = gnome.GConf;
-};
+atom = callPackage ../all-pkgs/atom { };
 
 avahi = callPackage ../all-pkgs/avahi { };
 
@@ -598,7 +596,6 @@ firefox-esr-unwrapped = callPackage ../all-pkgs/firefox {
 firefox_wrapper = callPackage ../all-pkgs/firefox/wrapper.nix { };
 
 firefox-bin = callPackage ../applications/networking/browsers/firefox-bin {
-  gconf = pkgs.gnome.GConf;
   inherit (pkgs.gnome) libgnome libgnomeui;
 };
 
@@ -751,7 +748,7 @@ guitarix = callPackage ../all-pkgs/guitarix {
   fftw = fftwSinglePrec;
 };
 
-gvfs = callPackage ../all-pkgs/gvfs { gconf = gnome.GConf; };
+gvfs = callPackage ../all-pkgs/gvfs { };
 
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
 
@@ -5433,9 +5430,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     omake = omake_rc1;
   };
 
-  thrust = callPackage ../development/tools/thrust {
-    gconf = pkgs.gnome.GConf;
-  };
+  thrust = callPackage ../development/tools/thrust { };
 
   tinycc = callPackage ../development/compilers/tinycc { };
 
@@ -5818,7 +5813,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   guileCairo = callPackage ../development/guile-modules/guile-cairo { };
 
   guileGnome = callPackage ../development/guile-modules/guile-gnome {
-    gconf = gnome.GConf;
     inherit (gnome) gnome_vfs libglade libgnome libgnomecanvas libgnomeui;
   };
 
@@ -5869,9 +5863,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   astyle = callPackage ../development/tools/misc/astyle { };
 
-  electron = callPackage ../development/tools/electron {
-    gconf = pkgs.gnome.GConf;
-  };
+  electron = callPackage ../development/tools/electron { };
 
 
   autobuild = callPackage ../development/tools/misc/autobuild { };
@@ -5999,7 +5991,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   checkstyle = callPackage ../development/tools/analysis/checkstyle { };
 
-  chromedriver = callPackage ../development/tools/selenium/chromedriver { gconf = gnome.GConf; };
+  chromedriver = callPackage ../development/tools/selenium/chromedriver { };
 
   chrpath = callPackage ../development/tools/misc/chrpath { };
 
@@ -6271,17 +6263,11 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   node_webkit = node_webkit_0_9;
 
-  nwjs_0_12 = callPackage ../development/tools/node-webkit/nw12.nix {
-    gconf = pkgs.gnome.GConf;
-  };
+  nwjs_0_12 = callPackage ../development/tools/node-webkit/nw12.nix { };
 
-  node_webkit_0_11 = callPackage ../development/tools/node-webkit/nw11.nix {
-    gconf = pkgs.gnome.GConf;
-  };
+  node_webkit_0_11 = callPackage ../development/tools/node-webkit/nw11.nix { };
 
-  node_webkit_0_9 = callPackage ../development/tools/node-webkit/nw9.nix {
-    gconf = pkgs.gnome.GConf;
-  };
+  node_webkit_0_9 = callPackage ../development/tools/node-webkit/nw9.nix { };
 
   noweb = callPackage ../development/tools/literate-programming/noweb { };
   nuweb = callPackage ../development/tools/literate-programming/nuweb { tex = texlive.combined.scheme-small; };
@@ -6625,7 +6611,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   classpath = callPackage ../development/libraries/java/classpath {
     javac = gcj;
     jvm = gcj;
-    gconf = gnome.GConf;
   };
 
   clearsilver = callPackage ../development/libraries/clearsilver { };
@@ -11887,7 +11872,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gnucash = callPackage ../applications/office/gnucash {
     inherit (gnome2) libgnomeui libgtkhtml gtkhtml libbonoboui libgnomeprint libglade libart_lgpl;
-    gconf = gnome2.GConf;
     guile = guile_1_8;
     slibGuile = slibGuile.override { scheme = guile_1_8; };
     goffice = goffice_0_8;
@@ -11895,7 +11879,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gnucash26 = lowPrio (callPackage ../applications/office/gnucash/2.6.nix {
     inherit (gnome2) libgnomecanvas;
-    gconf = gnome2.GConf;
     goffice = goffice_0_8;
     webkit = webkitgtk2;
     guile = guile_1_8;
@@ -11907,7 +11890,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   goffice_0_8 = callPackage ../development/libraries/goffice/0.8.nix {
     inherit (pkgs.gnome2) libglade libgnomeui;
-    gconf = pkgs.gnome2.GConf;
     libart = pkgs.gnome2.libart_lgpl;
   };
 
@@ -11992,7 +11974,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     inherit (gnome) GConf;
   };
 
-  google-chrome = callPackage ../applications/networking/browsers/google-chrome { gconf = gnome.GConf; };
+  google-chrome = callPackage ../applications/networking/browsers/google-chrome { };
 
   googleearth = callPackage_i686 ../applications/misc/googleearth { };
 
@@ -12015,7 +11997,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   guake = callPackage ../applications/misc/guake {
-    gconf = gnome.GConf;
     vte = gnome.vte.override { pythonSupport = true; };
   };
 
@@ -13170,9 +13151,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   tailor = builderDefsPackage (callPackage ../applications/version-management/tailor) {};
 
-  tangogps = callPackage ../applications/misc/tangogps {
-    gconf = gnome.GConf;
-  };
+  tangogps = callPackage ../applications/misc/tangogps { };
 
   teamspeak_client = qt55.callPackage ../applications/networking/instant-messengers/teamspeak/client.nix { };
   teamspeak_server = callPackage ../applications/networking/instant-messengers/teamspeak/server.nix { };
@@ -13223,7 +13202,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   thunderbird-bin = callPackage ../applications/networking/mailreaders/thunderbird-bin {
-    gconf = pkgs.gnome.GConf;
     inherit (pkgs.gnome) libgnome libgnomeui;
   };
 
@@ -13659,7 +13637,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   };
 
   xiphos = callPackage ../applications/misc/xiphos {
-    gconf = gnome2.GConf;
     inherit (gnome2) gtkhtml libgtkhtml libglade scrollkeeper;
     python = python27;
     webkitgtk = webkitgtk2;

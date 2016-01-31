@@ -17,6 +17,7 @@
 , expat
 , flac
 , fontconfig
+, freetype
 , glib
 , gperf
 , gtk2
@@ -143,6 +144,7 @@ let
       expat
       flac
       fontconfig
+      freetype
       glib
       gperf
       gtk2

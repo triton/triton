@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, dbus, glib, alsaLib, python,
+{ stdenv, fetchurl, dbus, glib, alsaLib, python,
   pythonPackages, pythonDBus, readline, libsndfile, udev, libical,
   systemd, enableWiimote ? false }:
 
@@ -16,30 +16,37 @@ stdenv.mkDerivation rec {
     [ pythonDBus pygobject pygobject3 recursivePthLoader ];
 
   buildInputs =
-    [ pkgconfig dbus.libs glib alsaLib python pythonPackages.wrapPython
+    [ dbus.libs glib alsaLib python pythonPackages.wrapPython
       readline libsndfile udev libical
-      # Disables GStreamer; not clear what it gains us other than a
-      # zillion extra dependencies.
-      # gstreamer gst_plugins_base 
     ];
 
   preConfigure = ''
-      substituteInPlace tools/hid2hci.rules --replace /sbin/udevadm ${systemd}/bin/udevadm
-      substituteInPlace tools/hid2hci.rules --replace "hid2hci " "$out/lib/udev/hid2hci "
-    '';
+    substituteInPlace tools/hid2hci.rules --replace /sbin/udevadm ${systemd}/bin/udevadm
+    substituteInPlace tools/hid2hci.rules --replace "hid2hci " "$out/lib/udev/hid2hci "
+  '';
 
   configureFlags = [
     "--localstatedir=/var"
+    "--enable-threads"
     "--enable-library"
+    "--disable-test"
+    "--enable-tools"
+    "--enable-monitor"
+    "--enable-udev"
     "--enable-cups"
+    "--enable-obex"
+    "--enable-client"
+    "--enable-systemd"
+    "--enable-experimental"
+    "--enable-sixaxis"
+    "--disable-android"
     "--with-dbusconfdir=$(out)/etc"
     "--with-dbussystembusdir=$(out)/share/dbus-1/system-services"
     "--with-dbussessionbusdir=$(out)/share/dbus-1/services"
     "--with-systemdsystemunitdir=$(out)/etc/systemd/system"
     "--with-systemduserunitdir=$(out)/etc/systemd/user"
     "--with-udevdir=$(out)/lib/udev"
-    ] ++
-    stdenv.lib.optional enableWiimote [ "--enable-wiimote" ];
+  ];
 
   # Work around `make install' trying to create /var/lib/bluetooth.
   installFlags = "statedir=$(TMPDIR)/var/lib/bluetooth";

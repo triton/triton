@@ -346,13 +346,13 @@ in {
   };
 
   afew = buildPythonPackage rec {
-    rev = "9744c18c4d6b0a3e7f57b01e5fe145a60fc82a47";
-    name = "afew-1.0_${rev}";
+    rev = "3f1e5e93119788984c2193292c988ac81ecb0a45";
+    name = "afew-git-2016-01-04";
 
     src = pkgs.fetchurl {
       url = "https://github.com/teythoon/afew/tarball/${rev}";
       name = "${name}.tar.bz";
-      sha256 = "1qyban022aji2hl91dh0j3xa6ikkxl5argc6w71yp2x8b02kp3mf";
+      sha256 = "1fi19g2j1qilh7ikp7pzn6sagkn76g740zdxgnsqmmvl2zk2yhrw";
     };
 
     buildInputs = with self; [ pkgs.dbacl ];
@@ -615,12 +615,12 @@ in {
 
   amqp = buildPythonPackage rec {
     name = "amqp-${version}";
-    version = "1.4.7";
+    version = "1.4.9";
     disabled = pythonOlder "2.6";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/a/amqp/${name}.tar.gz";
-      sha256 = "1nids25n6a17nrpxnklpi1h059zi87cs2g6irvp0j4p0ad5qi08p";
+      sha256 = "06n6q0kxhjnbfz3vn8x9yz09lwmn1xi9d6wxp31h5jbks0b4vsid";
     };
 
     buildInputs = with self; [ mock coverage nose-cover3 unittest2 ];
@@ -1129,11 +1129,11 @@ in {
 
   awscli = buildPythonPackage rec {
     name = "awscli-${version}";
-    version = "1.9.12";
+    version = "1.10.1";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/a/awscli/${name}.tar.gz";
-      sha256 = "0b50de084c8de70adf45c0e938b6350344d9b6acde8b7cdee02cb32964bc58fd";
+      sha256 = "159c8nfcighlkcbdzck102cp06g7rpgbbvxpb73vjymgqrzqywvb";
     };
 
     # No tests included
@@ -2310,12 +2310,12 @@ in {
   };
 
   botocore = buildPythonPackage rec {
-    version = "1.3.12"; # This version is required by awscli
+    version = "1.3.23"; # This version is required by awscli
     name = "botocore-${version}";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/b/botocore/${name}.tar.gz";
-      sha256 = "6f4f09234aca23db2e66c548b98a4fb14516241b31fb473c9c6f5b21270900c6";
+      sha256 = "00iaapmy07zdhm2y23fk9igrskzdkix53j7g45lc5dg9nfyngq6j";
     };
 
     propagatedBuildInputs =
@@ -7139,12 +7139,15 @@ in {
   };
 
   py3status = buildPythonPackage rec {
-    name = "py3status-2.7";
+    name = "py3status-2.8";
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/py3status/${name}.tar.gz";
-      sha256 = "09r70zbq5xxhzbgd54dcx8p9z0631a454j2ird1lawkms22fc7wv";
+      sha256 = "1aq4l1lj6j54a8mh9y3yscbxv41bbhz89fiwnydj2gx0md5sq5v5";
     };
     propagatedBuildInputs = with self; [ requests2 ];
+    prePatch = ''
+      sed -i -e "s|\[\"acpi\"|\[\"${pkgs.acpi}/bin/acpi\"|" py3status/modules/battery_level.py
+    '';
     meta = {
       maintainers = with maintainers; [ garbas ];
     };
@@ -8163,9 +8166,10 @@ in {
     name = "hg-crecord-${rev}";
     disabled = isPy3k;
 
-    src = pkgs.fetchurl {
-      url = "https://bitbucket.org/edgimar/crecord/get/${builtins.substring 0 12 rev}.tar.gz";
-      sha256 = "02003fa5620ec40a5ad0d7cede2e65c2cb398a7fe4e1ee26bd3396a87d63ad35";
+    src = pkgs.fetchhg {
+      inherit rev;
+      url = "https://bitbucket.org/edgimar/crecord";
+      sha256 = "14x1k5k0jv3fiynpdfyp5zh4qvs4nr6qwy09chv3js3dhs5887ic";
     };
 
     # crecord comes as just a bare directory
@@ -8240,11 +8244,11 @@ in {
 
   ecdsa = buildPythonPackage rec {
     name = "ecdsa-${version}";
-    version = "0.11";
+    version = "0.13";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/e/ecdsa/${name}.tar.gz";
-      md5 = "8ef586fe4dbb156697d756900cb41d7c";
+      sha256 = "1yj31j0asmrx4an9xvsaj2icdmzy6pw0glfpqrrkrphwdpi1xkv4";
     };
 
     # Only needed for tests
@@ -10412,13 +10416,13 @@ in {
 
   kombu = buildPythonPackage rec {
     name = "kombu-${version}";
-    version = "3.0.30";
+    version = "3.0.33";
 
     disabled = pythonOlder "2.6";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/k/kombu/${name}.tar.gz";
-      sha256 = "0npq81ajiqmp8gjm7mq05n18y98xqpv7n4bbqb3p74d4irvgw0mr";
+      sha256 = "16brjx2lgwbj2a37d0pjbfb84nvld6irghmqrs3qfncajp51hgc5";
     };
 
     buildInputs = with self; optionals (!isPy3k) [ anyjson mock unittest2 nose ];
@@ -14764,13 +14768,13 @@ in {
 
   platformio =  buildPythonPackage rec {
     name = "platformio-${version}";
-    version="2.7.1";
+    version="2.8.1";
 
     disabled = isPy3k || isPyPy;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/platformio/platformio-${version}.tar.gz";
-      sha256 = "1xrjzgwdw7526vfimqjyr9115qzcs17dbyf7023x13anc8b2s9pq";
+      sha256 = "0lx0cg2jyvikpcp9jjzrzgb89hvnn4ri84708d37xvzqsr0ml1fa";
      };
 
      propagatedBuildInputs = with self; [ click_5 requests2 bottle pyserial lockfile colorama];
@@ -16304,7 +16308,7 @@ in {
   };
 
   pyjwt = buildPythonPackage rec {
-    version = "0.3.2";
+    version = "1.4.0";
     name = "pyjwt-${version}";
 
     src = pkgs.fetchurl {
@@ -19921,6 +19925,25 @@ in {
       description = "Painless structural logging";
       homepage = http://www.structlog.org/;
       license = licenses.asl20;
+    };
+  };
+
+  svgwrite = buildPythonPackage rec {
+    name = "svgwrite-${version}";
+    version = "1.1.6";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/s/svgwrite/${name}.tar.gz";
+      sha256 = "1f018813072aa4d7e95e58f133acb3f68fa7de0a0d89ec9402cc38406a0ec5b8";
+    };
+
+    buildInputs = with self; [ setuptools ];
+    propagatedBuildInputs = with self; [ pyparsing ];
+
+    meta = {
+      description = "A Python library to create SVG drawings.";
+      homepage = http://bitbucket.org/mozman/svgwrite;
+      license = licenses.mit;
     };
   };
 
@@ -24436,6 +24459,10 @@ in {
     buildInputs = with self; [ pytest ];
     propagatedBuildInputs = with self ; [ aiodns slixmpp pyinotify potr ];
 
+    checkPhase = ''
+      PYTHONPATH="$PYTHONPATH:$out/${python.sitePackages}/poezio" make test
+    '';
+
     patches =
       let patch_base = ../development/python-modules/poezio;
       in [ "${patch_base}/make_default_config_writable.patch" ];
@@ -24893,6 +24920,171 @@ in {
       description = "pygments packaged static files for python";
       license = licenses.bsd2;
       maintainers = [ maintainers.makefu ];
+    };
+  };
+
+  hidapi = buildPythonPackage rec{
+    version = "0.7.99.post12";
+    name = "hidapi-${version}";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/h/hidapi/${name}.tar.gz";
+      sha256 = "1jaj0y5vn5yk033q01wacsz379mf3sy66d6gz072ycfr5rahcp59";
+    };
+
+    propagatedBuildInputs = with self; [ pkgs.libusb1 pkgs.udev cython ];
+
+    # Fix the USB backend library lookup
+    postPatch = ''
+      libusb=${pkgs.libusb1}/include/libusb-1.0
+      test -d $libusb || { echo "ERROR: $libusb doesn't exist, please update/fix this build expression."; exit 1; }
+      sed -i -e "s|/usr/include/libusb-1.0|$libusb|" setup.py
+    '';
+
+    meta = {
+      description = "A Cython interface to the hidapi from https://github.com/signal11/hidapi";
+      homepage = https://github.com/trezor/cython-hidapi;
+      # license can actually be either bsd3 or gpl3
+      # see https://github.com/trezor/cython-hidapi/blob/master/LICENSE-orig.txt
+      license = licenses.bsd3;
+      maintainer = with maintainers; [ np ];
+    };
+  };
+
+  mnemonic = buildPythonPackage rec{
+    version = "0.12";
+    name = "mnemonic-${version}";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/m/mnemonic/${name}.tar.gz";
+      sha256 = "0j5jm4v54135qqw455fw4ix2mhxhzjqvxji9gqkpxagk31cvbnj4";
+    };
+
+    propagatedBuildInputs = with self; [ pbkdf2 ];
+
+    meta = {
+      description = "Implementation of Bitcoin BIP-0039";
+      homepage = https://github.com/trezor/python-mnemonic;
+      license = licenses.mit;
+      maintainer = with maintainers; [ np ];
+    };
+  };
+
+  trezor = buildPythonPackage rec{
+    version = "0.6.11";
+    name = "trezor-${version}";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/t/trezor/${name}.tar.gz";
+      sha256 = "0nqbjj0mvkp314hpq36px12hxbyidmhsdflq3121l4g9y3scfbnx";
+    };
+
+    propagatedBuildInputs = with self; [ protobuf2_6 hidapi ];
+
+    buildInputs = with self; [ ecdsa mnemonic ];
+
+    # There are no actual tests: "ImportError: No module named tests"
+    doCheck = false;
+
+    meta = {
+      description = "Python library for communicating with TREZOR Bitcoin Hardware Wallet";
+      homepage = https://github.com/trezor/python-trezor;
+      license = licenses.gpl3;
+      maintainer = with maintainers; [ np ];
+    };
+  };
+
+  keepkey = buildPythonPackage rec{
+    version = "0.7.0";
+    name = "keepkey-${version}";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/k/keepkey/${name}.tar.gz";
+      sha256 = "1ikyp4jpydskznsrlwmxh9sn7b64aldwj2lf0phmb19r5kk06qmp";
+    };
+
+    propagatedBuildInputs = with self; [ protobuf2_6 hidapi ];
+
+    buildInputs = with self; [ ecdsa mnemonic ];
+
+    # There are no actual tests: "ImportError: No module named tests"
+    doCheck = false;
+
+    meta = {
+      description = "KeepKey Python client";
+      homepage = https://github.com/keepkey/python-keepkey;
+      license = licenses.gpl3;
+      maintainer = with maintainers; [ np ];
+    };
+  };
+
+  semver = buildPythonPackage rec {
+    name = "semver-${version}";
+    version = "2.2.1";
+
+    src = pkgs.fetchurl {
+      url = "http://pypi.python.org/packages/source/s/semver/${name}.tar.gz";
+      sha256 = "161gvsfpw0l8lnf1v19rvqc8b9f8n70cc8ppya4l0n6rwc1c1n4m";
+    };
+
+    meta = {
+      description = "Python package to work with Semantic Versioning (http://semver.org/)";
+      homepage = "https://github.com/k-bx/python-semver";
+      license = licenses.bsd3;
+      maintainers = with maintainers; [ np ];
+    };
+  };
+
+  ed25519 = buildPythonPackage rec {
+    name = "ed25519-${version}";
+    version = "1.4";
+
+    src = pkgs.fetchurl {
+      url = "http://pypi.python.org/packages/source/e/ed25519/${name}.tar.gz";
+      sha256 = "0ahx1nkxa0xis3cw0h5c4fpgv8mq4znkq7kajly33lc3317bk499";
+    };
+
+    meta = {
+      description = "Ed25519 public-key signatures";
+      homepage = "https://github.com/warner/python-ed25519";
+      license = licenses.mit;
+      maintainers = with maintainers; [ np ];
+    };
+  };
+
+  trezor_agent = buildPythonPackage rec{
+    version = "0.6.1";
+    name = "trezor_agent-${version}";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/t/trezor_agent/${name}.tar.gz";
+      sha256 = "0wpppxzld7kqqxdvy80qc8629n047vm3m3nk171i7hijfw285p0b";
+    };
+
+    propagatedBuildInputs = with self; [ trezor ecdsa ed25519 mnemonic keepkey semver ];
+
+    meta = {
+      description = "Using Trezor as hardware SSH agent";
+      homepage = https://github.com/romanz/trezor-agent;
+      license = licenses.gpl3;
+      maintainer = with maintainers; [ np ];
+    };
+  };
+
+  x11_hash = buildPythonPackage rec{
+    version = "1.4";
+    name = "x11_hash-${version}";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/x/x11_hash/${name}.tar.gz";
+      sha256 = "172skm9xbbrivy1p4xabxihx9lsnzi53hvzryfw64m799k2fmp22";
+    };
+
+    meta = {
+      description = "Binding for X11 proof of work hashing";
+      homepage = https://github.com/mazaclub/x11_hash;
+      license = licenses.mit;
+      maintainer = with maintainers; [ np ];
     };
   };
 

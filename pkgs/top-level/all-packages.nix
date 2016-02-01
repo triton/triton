@@ -1345,6 +1345,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   bibtool = callPackage ../tools/misc/bibtool { };
 
+  bibutils = callPackage ../tools/misc/bibutils { };
+
   bindfs = callPackage ../tools/filesystems/bindfs { };
 
   binwalk = callPackage ../tools/misc/binwalk {
@@ -1532,6 +1534,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   gmic = callPackage ../tools/graphics/gmic { };
 
   heatseeker = callPackage ../tools/misc/heatseeker { };
+
+  interlock = goPackages.interlock.bin // { outputs = [ "bin" ]; };
 
   mathics = pythonPackages.mathics;
 
@@ -1780,6 +1784,10 @@ zsh = callPackage ../all-pkgs/zsh { };
   usb_modeswitch = callPackage ../development/tools/misc/usb-modeswitch { };
 
   anthy = callPackage ../tools/inputmethods/anthy { };
+
+  m17n_db = callPackage ../tools/inputmethods/m17n-db { };
+
+  m17n_lib = callPackage ../tools/inputmethods/m17n-lib { };
 
   mozc = callPackage ../tools/inputmethods/mozc {
     inherit (pythonPackages) gyp;
@@ -3504,6 +3512,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   radvd = callPackage ../tools/networking/radvd { };
 
   ranger = callPackage ../applications/misc/ranger { };
+
+  rarcrack = callPackage ../tools/security/rarcrack { };
 
   rawdog = callPackage ../applications/networking/feedreaders/rawdog { };
 
@@ -5729,14 +5739,16 @@ zsh = callPackage ../all-pkgs/zsh { };
     ruby_1_9_3
     ruby_2_0_0
     ruby_2_1_0 ruby_2_1_1 ruby_2_1_2 ruby_2_1_3 ruby_2_1_6 ruby_2_1_7
-    ruby_2_2_0 ruby_2_2_2 ruby_2_2_3;
+    ruby_2_2_0 ruby_2_2_2 ruby_2_2_3
+    ruby_2_3_0;
 
   # Ruby aliases
-  ruby = ruby_2_2;
+  ruby = ruby_2_3;
   ruby_1_9 = ruby_1_9_3;
   ruby_2_0 = ruby_2_0_0;
   ruby_2_1 = ruby_2_1_7;
   ruby_2_2 = ruby_2_2_3;
+  ruby_2_3 = ruby_2_3_0;
 
   rubygems = hiPrio (callPackage ../development/interpreters/ruby/rubygems.nix {});
 
@@ -11432,6 +11444,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   electrum = callPackage ../applications/misc/electrum { };
 
+  electrum-dash = callPackage ../applications/misc/electrum-dash { };
+
   elinks = callPackage ../applications/networking/browsers/elinks { };
 
   elvis = callPackage ../applications/editors/elvis { };
@@ -11643,6 +11657,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     inherit lib newScope stdenv;
     inherit fetchFromGitHub fetchgit fetchhg fetchurl;
     inherit emacs texinfo makeWrapper;
+    inherit (xorg) lndir;
 
     trivialBuild = callPackage ../build-support/emacs/trivial.nix {
       inherit emacs;
@@ -12268,8 +12283,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   lingot = callPackage ../applications/audio/lingot {
     inherit (gnome) libglade;
   };
-
-  links = callPackage ../applications/networking/browsers/links { };
 
   ledger2 = callPackage ../applications/office/ledger/2.6.3.nix { };
   ledger3 = callPackage ../applications/office/ledger {
@@ -12924,7 +12937,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     boost = boost155;
   };
 
-  sc-im = callPackage ../applications/misc/scim { };
+  sc-im = callPackage ../applications/misc/sc-im { };
 
   scite = callPackage ../applications/editors/scite { };
 
@@ -15637,6 +15650,7 @@ aliases = with self; rec {
   jquery_ui = jquery-ui;  # added 2014-09-07
   libdbusmenu_qt5 = qt5.libdbusmenu;  # added 2015-12-19
   libtidy = html-tidy;  # added 2014-12-21
+  links = links2; # added 2016-01-31
   lttngTools = lttng-tools;  # added 2014-07-31
   lttngUst = lttng-ust;  # added 2014-07-31
   midoriWrapper = midori; # added 2015-01

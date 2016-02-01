@@ -3,15 +3,10 @@
 , gettext
 , intltool
 
-, adwaita-icon-theme
-, dbus_glib
-, dbus_libs
 , gcr
 , glib
-, gnome-common
 , gobject-introspection
 , gtk3
-, icu
 , json-glib
 , kerberos
 , libsecret
@@ -40,6 +35,28 @@ stdenv.mkDerivation rec {
     sha256 = "09rqdqq0f4p379v1z4fclinghf1sd2kzvgkh3gcgpcgq3a1q7fdz";
   };
 
+  nativeBuildInputs = [
+    gettext
+    intltool
+  ];
+
+  buildInputs = [
+    gcr
+    glib
+    gobject-introspection
+    gtk3
+    json-glib
+    kerberos
+    libsecret
+    libsoup
+    libxml2
+    rest
+    pango
+    telepathy_glib
+    webkitgtk
+    xorg.libX11
+  ];
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-schemas-compile"
@@ -66,37 +83,6 @@ stdenv.mkDerivation rec {
     "--enable-kerberos"
     "--enable-lastfm"
     "--enable-nls"
-  ];
-
-  NIX_CFLAGS_COMPILE = [
-    "-I${dbus_glib}/include/dbus-1.0"
-    "-I${dbus_libs}/include/dbus-1.0"
-  ];
-
-  nativeBuildInputs = [
-    gettext
-    intltool
-  ];
-
-  buildInputs = [
-    adwaita-icon-theme
-    dbus_glib
-    gcr
-    glib
-    gnome-common
-    gobject-introspection
-    gtk3
-    icu # ???
-    json-glib
-    kerberos
-    libsecret
-    libsoup
-    libxml2
-    rest
-    pango
-    telepathy_glib
-    webkitgtk
-    xorg.libX11
   ];
 
   meta = with stdenv.lib; {

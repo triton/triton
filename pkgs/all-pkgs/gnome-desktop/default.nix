@@ -14,6 +14,7 @@
 , gtk3
 , isocodes
 , itstool
+, libxml2
 , libxml2Python
 , pango
 , python
@@ -49,6 +50,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    itstool
     libxslt
     which
   ];
@@ -57,16 +59,12 @@ stdenv.mkDerivation rec {
     atk
     gdk-pixbuf
     glib
-    gnome_doc_utils
     gobject-introspection
     gsettings-desktop-schemas
     gtk3
     isocodes
-    itstool
-    libxml2Python
+    libxml2
     pango
-    python
-    wayland
     xkeyboard_config
     xorg.libX11
     xorg.libXext

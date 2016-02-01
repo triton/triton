@@ -1,12 +1,10 @@
 { stdenv
 , fetchurl
+, gettext
 , intltool
-, libxslt
-, makeWrapper
 
 , adwaita-icon-theme
-, dbus_glib
-, gconf
+, gdk-pixbuf
 , glib
 , gnome-desktop
 , gnome-settings-daemon
@@ -18,6 +16,11 @@
 , upower
 , xorg
 }:
+
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
 
 stdenv.mkDerivation rec {
   name = "gnome-session-${version}";
@@ -31,15 +34,13 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    gettext
     intltool
-    libxslt
-    makeWrapper
   ];
 
   buildInputs = [
     adwaita-icon-theme
-    dbus_glib
-    gconf
+    gdk-pixbuf
     glib
     gnome-desktop
     gnome-settings-daemon
@@ -49,24 +50,49 @@ stdenv.mkDerivation rec {
     mesa_noglu
     systemd
     upower
+    xorg.libICE
     xorg.libSM
     xorg.libX11
+    xorg.libXau
     xorg.libXcomposite
     xorg.libXext
+    xorg.libXrender
+    xorg.libXtst
     xorg.xtrans
   ];
 
-  configureFlags = "--enable-systemd";
-
-  preFixup = ''
-    wrapProgram "$out/bin/gnome-session" \
-      --prefix GI_TYPELIB_PATH : "$GI_TYPELIB_PATH" \
-      --suffix XDG_DATA_DIRS : "$out/share:$GSETTINGS_SCHEMAS_PATH"
-  '';
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--enable-compile-warnings"
+    "--disable-iso-c"
+    "--enable-deprecation-flags"
+    "--enable-session-selector"
+    "--disable-gconf"
+    (enFlag "systemd" (systemd != null) null)
+    "--disable-consolekit"
+    "--disable-docbook-docs"
+    "--disable-man"
+    "--enable-nls"
+    "--enable-schemas-compile"
+    "--enable-ipv6"
+    "--with-xtrans"
+  ];
 
   meta = with stdenv.lib; {
-    platforms = platforms.linux;
-    maintainers = gnome3.maintainers;
+    description = "Gnome session manager";
+    homepage = https://git.gnome.org/browse/gnome-session;
+    license = with licenses; [
+      fdl11
+      gpl2
+      lgpl2
+    ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 
 }

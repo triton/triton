@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch =
-    /* Fix expected filename */ ''
+  /* Fix expected filename */ ''
     sed -i doc/Makefile \
       -e 's/sgmlspl/sgmlspl.pl/'
   '';
@@ -75,7 +75,7 @@ stdenv.mkDerivation rec {
   installPhase = ''
     runHook 'preInstall'
   '' +
-    /* iputils does not provide a make install target */ ''
+  /* iputils does not provide a make install target */ ''
     install -vDm 755 ping $out/bin/ping
     install -vDm 755 ping6 $out/bin/ping6
     install -vDm 755 tracepath $out/bin/tracepath
@@ -99,7 +99,7 @@ stdenv.mkDerivation rec {
     runHook 'postInstall'
   '';
 
-  enableParallelBuilding = false;
+  parallelBuild = false;
 
   meta = with stdenv.lib; {
     description = "Network monitoring tools including ping and ping6";

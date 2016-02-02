@@ -405,13 +405,18 @@ let
     meta.homepage = "http://sourceforge.net/p/${repo}/code";
     preFetch = ''
       echo "Telling sourceforge to generate code tarball..."
-      $curl "http://sourceforge.net/p/net-tools/code/ci/master/tarball" >/dev/null
+      $curl --data "path=&" "http://sourceforge.net/p/${repo}/code/ci/${rev}/tarball" >/dev/null
       local found
       found=0
       for i in {1..30}; do
         echo "Checking tarball generation status..." >&2
-        if $curl "http://sourceforge.net/p/net-tools/code/status" | grep -q '{"status": "ready"}'; then
+        status="$($curl "http://sourceforge.net/p/${repo}/code/ci/${rev}/tarball_status?path=")"
+        echo "$status"
+        if echo "$status" | grep -q '{"status": "complete"}'; then
           found=1
+          break
+        fi
+        if ! echo "$status" | grep -q '{"status": "\(ready\|busy\)"}'; then
           break
         fi
         sleep 1

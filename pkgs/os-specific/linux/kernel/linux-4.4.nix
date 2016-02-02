@@ -1,16 +1,13 @@
 { stdenv, fetchurl, perl, buildLinux, ... } @ args:
 
 import ./generic.nix (args // rec {
-  version = "4.4";
-  modDirVersion = "4.4.0";
+  version = "4.4.1";
   extraMeta.branch = "4.4";
 
   src = fetchurl {
     url = "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar.xz";
-    sha256 = "1chqahb0ssvla7n9arzi4882x72fm72p436ic2j9jjarxy7pq7a0";
+    sha256 = "0mwaqvl7dkasidciah1al57a1djnsk46ha5mjy4psq2inj71klky";
   };
-
-  kernelPatches = args.kernelPatches ++ [ { name = "cve-2016-0728"; patch = ./cve-2016-0728.patch; } ];
 
   features.iwlwifi = true;
   features.efiBootStub = true;

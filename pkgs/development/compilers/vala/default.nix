@@ -19,12 +19,12 @@ with {
 stdenv.mkDerivation rec {
   name = "vala-${version}";
   versionMajor = "0.30";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/vala/${versionMajor}/${name}.tar.xz";
-    sha256 = "1pyyhfw3zzbhxfscbn8xz70dg6vx0kh8gshzikpxczhg01xk7w31";
+    sha256 = "1pyyafw3zzbhxfscbn8xz70dg6vx0kh8gshzikpxczhg01xk7w31";
   };
 
   postPatch = optionalString doCheck (''

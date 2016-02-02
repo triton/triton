@@ -1,16 +1,8 @@
-{ fetchurl
-, coreutils
-, libX11
-, libXrandr
-, libXcursor
-, libXft
-, libXt
-, libxcb
-, xcbutil
+{ stdenv
+, fetchurl
+
 , xcb-util-cursor
-, xcbutilkeysyms
-, xcbutilwm
-, stdenv
+, xorg
 }:
 
 stdenv.mkDerivation rec {
@@ -24,16 +16,16 @@ stdenv.mkDerivation rec {
 
 
   buildInputs = [
-    libX11
-    libxcb
-    libXrandr
-    libXcursor
-    libXft
-    libXt
-    xcbutil
+    xorg.libX11
+    xorg.libxcb
+    xorg.libXrandr
+    xorg.libXcursor
+    xorg.libXft
+    xorg.libXt
+    xorg.xcbutil
     xcb-util-cursor
-    xcbutilkeysyms
-    xcbutilwm
+    xorg.xcbutilkeysyms
+    xorg.xcbutilwm
   ];
 
   sourceRoot = "spectrwm-SPECTRWM_2_7_2/linux";
@@ -43,18 +35,9 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "A tiling window manager";
     homepage    = "https://github.com/conformal/spectrwm";
-    maintainers = with maintainers; [ jb55 ];
+    maintainers = with maintainers; [ ];
     license     = licenses.isc;
     platforms   = platforms.all;
-
-    longDescription = ''
-      spectrwm is a small dynamic tiling window manager for X11. It
-      tries to stay out of the way so that valuable screen real estate
-      can be used for much more important stuff. It has sane defaults
-      and does not require one to learn a language to do any
-      configuration. It was written by hackers for hackers and it
-      strives to be small, compact and fast.
-    '';
   };
 
 }

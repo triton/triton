@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
   name = "libbson-${version}";
-  version = "1.3.1";
+  version = "1.3.2";
 
   src = fetchurl {
     url = "https://github.com/mongodb/libbson/releases/download/${version}/${name}.tar.gz";
-    sha256 = "0gckh0w05ap3pnlf9cnh3hdrhanz2bn1i5z4inylyirr2aqywz38";
+    sha256 = "1ir5pbq825isxlhqc8nwxxly2aif4v3m4yjx0zifqvdxggzn8gbk";
   };
 
   nativeBuildInputs = [ perl ];

@@ -1,23 +1,26 @@
-{ fetchurl, stdenv
+{ stdenv
 , docbook_xsl
 , docbook_xsl_ns
+, fetchurl
+, gettext
 , intltool
 , libtool
-, makeWrapper
+, libxslt
 
 , accountsservice
 , adwaita-icon-theme
-, at_spi2_atk
-, at_spi2_core
+, at-spi2-atk
+, at-spi2-core
 , atk
 , caribou
 , clutter
 , cogl
 , dbus
+, dbus_glib
 , evolution-data-server
 , gcr
-, gdk_pixbuf
-#, gdm
+, gdk-pixbuf
+, gdm
 , gjs
 , glib
 , gnome-bluetooth
@@ -28,8 +31,9 @@
 , gnome-menus
 , gnome-session
 , gnome-settings-daemon
-, gobjectIntrospection
+, gobject-introspection
 , gsettings-desktop-schemas
+, gst-plugins-base
 , gstreamer
 , gtk3
 , ibus
@@ -55,18 +59,23 @@
 , polkit
 , spidermonkey_24
 , sqlite
+, systemd
 , telepathy_glib
 , telepathy_logger
 , unzip
 , upower
 , wayland
+, webkitgtk
 , xorg
 
 , python3
 , libffi
 }:
 
-# http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/gnome-base/gnome-shell/gnome-shell-3.10.2.1.ebuild?revision=1.3&view=markup
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
 
 stdenv.mkDerivation rec {
   name = "gnome-shell-${version}";
@@ -79,15 +88,102 @@ stdenv.mkDerivation rec {
     sha256 = "16sicxdp08yfaj4hiyzvbspb5jk3fpmi291272zhx5vgc3wbl5w5";
   };
 
+  nativeBuildInputs = [
+    docbook_xsl
+    docbook_xsl_ns
+    gettext
+    intltool
+    libtool
+    libxslt
+  ];
+
+  buildInputs = [
+    accountsservice
+    adwaita-icon-theme
+    at-spi2-atk
+    at-spi2-core
+    atk
+    caribou
+    clutter
+    cogl
+    dbus
+    dbus_glib
+    evolution-data-server
+    gcr
+    gdk-pixbuf
+    gdm
+    glib
+    gjs
+    gnome-control-center#
+    gnome-desktop
+    gnome-keyring#
+    gnome-menus
+    gnome-session
+    gnome-bluetooth
+    libgweather
+    gnome-clocks
+    gnome-settings-daemon
+    gobject-introspection
+    gsettings-desktop-schemas
+    gst-plugins-base
+    gstreamer
+    gtk3
+    ibus
+    json-glib
+    libcanberra
+    libcroco
+    #libgnome-keyring
+    #libical
+    libpulseaudio
+    libsecret
+    libsoup
+    libstartup_notification
+    #libxkbcommon
+    libxml2
+    mesa_noglu
+    mutter
+    networkmanager
+    networkmanagerapplet
+    #nss
+    #p11_kit
+    pango
+    polkit
+    python3
+    #spidermonkey_24
+    systemd
+    telepathy_glib
+    telepathy_logger
+    #tzdata
+    upower
+    #wayland
+    webkitgtk
+    xorg.libSM
+    xorg.libICE
+    xorg.libX11
+    xorg.libxcb
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXinerama
+    xorg.libXtst
+  ];
+
+  postPatch = ''
+    patchShebangs ./src/data-to-c.pl
+  '' + ''
+    sed -i data/Makefile.in \
+      -e 's/ install-keysDATA//'
+  '';
+
   configureFlags = [
     # Needed to find /etc/NetworkManager/VPN
     "--sysconfdir=/etc"
+    "--disable-maintainer-mode"
     "--enable-nls"
     "--enable-schemas-compile"
-    "--enable-systemd"
+    (enFlag "systemd" (systemd != null) null)
     "--enable-browser-plugin"
-    "--enable-introspection"
-    "--enable-networkmanager"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    (enFlag "networkmanager" (networkmanager != null) null)
     "--enable-glibtest"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -97,94 +193,16 @@ stdenv.mkDerivation rec {
     "--enable-Werror"
   ];
 
-  nativeBuildInputs = [
-    docbook_xsl
-    docbook_xsl_ns
-    intltool
-    libtool
-    makeWrapper
-  ];
-
-  buildInputs = [
-    accountsservice
-    adwaita-icon-theme
-    at_spi2_atk
-    at_spi2_core
-    atk
-    caribou
-    clutter
-    cogl
-    dbus
-    evolution-data-server
-    gcr
-    gdk_pixbuf
-    #gdm
-    glib
-    gjs
-    gnome-control-center
-    gnome-desktop
-    gnome-keyring
-    gnome-menus
-    gnome-session
-    gnome-bluetooth
-    # not declared at build time, but typelib is needed at runtime
-    # also requires libffi
-    libgweather
-    gnome-clocks # schemas needed
-    gnome-settings-daemon
-    gobjectIntrospection
-    gsettings-desktop-schemas
-    gstreamer
-    gtk3
-    ibus
-    json-glib
-    libcanberra
-    libcroco
-    libical
-    libpulseaudio
-    librsvg
-    libsecret
-    libsoup
-    libstartup_notification
-    libxkbcommon
-    libxml2
-    mesa_noglu
-    mutter
-    networkmanager
-    networkmanagerapplet
-    nss
-    p11_kit
-    pango
-    polkit
-    python3
-    spidermonkey_24
-    sqlite
-    telepathy_glib
-    telepathy_logger
-    upower
-    wayland
-    xorg.libSM
-    xorg.libICE
-    xorg.libXinerama
-    xorg.libXtst
-  ];
-
-  preBuild = ''
-    patchShebangs src/data-to-c.pl
-    substituteInPlace data/Makefile \
-      --replace " install-keysDATA" ""
-  '';
-
   installFlags = [
     "keysdir=$(out)/share/gnome-control-center/keybindings"
   ];
 
   preFixup = ''
-    gtk3AppsWrapperArgs+=(
+    gnomeWrapperArgs+=(
       "--prefix PATH : ${unzip}/bin"
       "--prefix XDG_DATA_DIRS : ${evolution-data-server}/share"
     )
-
+  '' + ''
     echo "${unzip}/bin" > $out/${passthru.mozillaPlugin}/extra-bin-path
   '';
 
@@ -193,8 +211,19 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    platforms = platforms.linux;
-    #maintainers = gnome3.maintainers;
+    description = "Provides core UI functions for the GNOME 3 desktop";
+    homepage = https://wiki.gnome.org/Projects/GnomeShell;
+    license = with licenses; [
+      gpl2Plus
+      lgpl2Plus
+    ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 
 }

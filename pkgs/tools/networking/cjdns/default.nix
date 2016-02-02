@@ -1,7 +1,7 @@
 { stdenv, fetchFromGitHub, nodejs, which, python2, utillinux }:
 
 let
-  version = "17.1"; # see ${src}/util/version/Version.h
+  version = "17.3"; # see ${src}/util/version/Version.h
 in
 stdenv.mkDerivation {
   name = "cjdns-${version}";
@@ -10,11 +10,11 @@ stdenv.mkDerivation {
     owner = "cjdelisle";
     repo = "cjdns";
     rev = "cjdns-v${version}";
-    sha256 = "0q9d7ll912lvv0z67mhw83vxkbv9kbajh9ngqdj937my08i9yq6c";
+    sha256 = "19d792xd8210siirckjrnwl37c3qx0imn506zr87nkcb6g7vil65";
   };
 
   nativeBuildInputs = [ which python2 nodejs ];
-  buildInputs = stdenv.lib.optional stdenv.isLinux [ utillinux ];
+  buildInputs = [ utillinux ];
 
   buildPhase = ''
     bash do

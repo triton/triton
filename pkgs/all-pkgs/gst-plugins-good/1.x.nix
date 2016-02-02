@@ -7,6 +7,7 @@
 , cairo
 , flac
 , gdk-pixbuf
+, glib
 , gst-plugins-base
 , gstreamer
 , libcaca
@@ -148,6 +149,7 @@ stdenv.mkDerivation rec {
     cairo
     flac
     gdk-pixbuf
+    glib
     gst-plugins-base
     gstreamer
     libcaca

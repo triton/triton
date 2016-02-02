@@ -6,7 +6,6 @@
 , atk
 , gdk-pixbuf
 , glib
-, gnome3
 , gobject-introspection
 , gtk3
 , pango
@@ -39,7 +38,6 @@ stdenv.mkDerivation rec {
     atk
     gdk-pixbuf
     glib
-    gnome3.defaultIconTheme
     gobject-introspection
     gtk3
     pango
@@ -70,7 +68,9 @@ stdenv.mkDerivation rec {
     description = "A GObject plugins library";
     homepage = "https://developer.gnome.org/libpeas/stable/";
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = [
       "i686-linux"
       "x86_64-linux"

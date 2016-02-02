@@ -657,6 +657,8 @@ gnome-settings-daemon = callPackage ../all-pkgs/gnome-settings-daemon { };
 
 gnome-shell = callPackage ../all-pkgs/gnome-shell { };
 
+gnome-shell-extensions = callPackage ../all-pkgs/gnome-shell-extensions { };
+
 gnome-terminal = callPackage ../all-pkgs/gnome-terminal { };
 
 gnome-themes-standard = callPackage ../all-pkgs/gnome-themes-standard { };

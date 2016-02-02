@@ -12,6 +12,8 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
   parallelBuild = false;
+  parallelInstall = false;
+  parallelCheck = false;
 
   meta = {
     homepage = "http://bash-completion.alioth.debian.org/";

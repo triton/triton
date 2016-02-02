@@ -2316,7 +2316,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gnaural = callPackage ../applications/audio/gnaural { };
 
-  gnokii = builderDefsPackage (callPackage ../tools/misc/gnokii) { };
+  gnokii = callPackage ../tools/misc/gnokii { };
 
   gnuapl = callPackage ../development/interpreters/gnu-apl { };
 
@@ -2810,6 +2810,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   liboauth = callPackage ../development/libraries/liboauth { };
 
+  libsrs2 = callPackage ../development/libraries/libsrs2 { };
+
   libtermkey = callPackage ../development/libraries/libtermkey { };
 
   libtirpc = callPackage ../development/libraries/ti-rpc { };
@@ -2888,6 +2890,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   mailutils = callPackage ../tools/networking/mailutils {
     guile = guile_1_8;
   };
+
+  email = callPackage ../tools/networking/email { };
 
   maim = callPackage ../tools/graphics/maim {};
 
@@ -3429,6 +3433,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   ponysay = callPackage ../tools/misc/ponysay { };
 
+  popfile = callPackage ../tools/text/popfile { };
+
   povray = callPackage ../tools/graphics/povray {
     automake = automake113x; # fails with 14
   };
@@ -3483,7 +3489,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   pythonIRClib = pythonPackages.pythonIRClib;
 
-  pythonSexy = builderDefsPackage (callPackage ../development/python-modules/libsexy) { };
+  pythonSexy = callPackage ../development/python-modules/libsexy { };
 
   pytrainer = callPackage ../applications/misc/pytrainer { };
 
@@ -4213,8 +4219,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   webalizer = callPackage ../tools/networking/webalizer { };
 
-  webdruid = builderDefsPackage (callPackage ../tools/admin/webdruid) {};
-
   weighttp = callPackage ../tools/networking/weighttp { };
 
   wget = callPackage ../tools/networking/wget {
@@ -4623,7 +4627,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   ghdl_mcode = callPackage ../development/compilers/ghdl { };
 
-  gcl = builderDefsPackage (callPackage ../development/compilers/gcl) {
+  gcl = callPackage ../development/compilers/gcl {
     gmp = gmp4;
   };
 
@@ -5513,7 +5517,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   ### DEVELOPMENT / INTERPRETERS
 
-  acl2 = builderDefsPackage (callPackage ../development/interpreters/acl2) {
+  acl2 = callPackage ../development/interpreters/acl2 {
     sbcl = sbcl_1_2_0;
   };
 
@@ -7295,6 +7299,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   libcouchbase = callPackage ../development/libraries/libcouchbase { };
 
   libcue = callPackage ../development/libraries/libcue { };
+
+  libcutl = callPackage ../development/libraries/libcutl { };
 
   libdaemon = callPackage ../development/libraries/libdaemon { };
 
@@ -9507,13 +9513,15 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   pumpio = callPackage ../servers/web-apps/pump.io { };
 
-  pyIRCt = builderDefsPackage (callPackage ../servers/xmpp/pyIRCt) {};
+  pyIRCt = callPackage ../servers/xmpp/pyIRCt {};
 
-  pyMAILt = builderDefsPackage (callPackage ../servers/xmpp/pyMAILt) {};
+  pyMAILt = callPackage ../servers/xmpp/pyMAILt {};
 
   qpid-cpp = callPackage ../servers/amqp/qpid-cpp {
     boost = boost155;
   };
+
+  quagga = callPackage ../servers/quagga { };
 
   rabbitmq_server = callPackage ../servers/amqp/rabbitmq-server {
     inherit (darwin.apple_sdk.frameworks) AppKit Carbon Cocoa;
@@ -10741,7 +10749,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   anonymousPro = callPackage ../data/fonts/anonymous-pro { };
 
-  arkpandora_ttf = builderDefsPackage (callPackage ../data/fonts/arkpandora) { };
+  arkpandora_ttf = callPackage ../data/fonts/arkpandora { };
 
   aurulent-sans = callPackage ../data/fonts/aurulent-sans { };
 
@@ -10867,7 +10875,7 @@ zsh = callPackage ../all-pkgs/zsh { };
   liberation_ttf_binary = callPackage ../data/fonts/redhat-liberation-fonts/binary.nix { };
   liberation_ttf = liberation_ttf_binary;
 
-  libertine = builderDefsPackage (callPackage ../data/fonts/libertine) { };
+  libertine = callPackage ../data/fonts/libertine { };
 
   lmmath = callPackage ../data/fonts/lmodern/lmmath.nix {};
 
@@ -11242,11 +11250,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   carddav-util = callPackage ../tools/networking/carddav-util { };
 
-  carrier = builderDefsPackage (callPackage ../applications/networking/instant-messengers/carrier/2.5.0.nix) {
-    inherit (gnome) startupnotification GConf ;
-  };
-  funpidgin = carrier;
-
   cava = callPackage ../applications/audio/cava { };
 
   cbatticon = callPackage ../applications/misc/cbatticon { };
@@ -11336,7 +11339,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     liblapack = liblapackWithoutAtlas;
   };
 
-  cuneiform = builderDefsPackage (callPackage ../tools/graphics/cuneiform) {};
+  cuneiform = callPackage ../tools/graphics/cuneiform {};
 
   cutecom = callPackage ../tools/misc/cutecom { };
 
@@ -11683,7 +11686,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     };
 
     external = {
-      inherit (haskellPackages) ghc-mod structured-haskell-mode Agda;
+      inherit (haskellPackages) ghc-mod structured-haskell-mode Agda hindent;
       inherit (pythonPackages) elpy;
       inherit rtags libffi autoconf automake libpng zlib poppler pkgconfig;
     };
@@ -12437,11 +12440,6 @@ zsh = callPackage ../all-pkgs/zsh { };
     lua = lua5;
   };
 
-  monotoneViz = builderDefsPackage (callPackage ../applications/version-management/monotone-viz/mtn-head.nix) {
-    inherit (ocamlPackages_4_01_0) lablgtk ocaml;
-    inherit (gnome) libgnomecanvas;
-  };
-
   mopidy = callPackage ../applications/audio/mopidy { };
 
   mopidy-gmusic = callPackage ../applications/audio/mopidy-gmusic { };
@@ -13177,7 +13175,7 @@ zsh = callPackage ../all-pkgs/zsh { };
       numpy pyasn1 mock zope_interface;
   };
 
-  tailor = builderDefsPackage (callPackage ../applications/version-management/tailor) {};
+  tailor = callPackage ../applications/version-management/tailor {};
 
   tangogps = callPackage ../applications/misc/tangogps { };
 
@@ -13332,11 +13330,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   vdirsyncer = callPackage ../tools/misc/vdirsyncer { };
 
   vdpauinfo = callPackage ../tools/X11/vdpauinfo { };
-
-  viewMtn = builderDefsPackage (callPackage ../applications/version-management/viewmtn/0.10.nix)
-  {
-    flup = pythonPackages.flup;
-  };
 
   vim = callPackage ../applications/editors/vim {
     inherit (darwin.apple_sdk.frameworks) Carbon Cocoa;
@@ -14001,15 +13994,13 @@ zsh = callPackage ../all-pkgs/zsh { };
     lua = lua5;
   };
 
-  jamp = builderDefsPackage (callPackage ../games/jamp) {};
-
   klavaro = callPackage ../games/klavaro {};
 
   kobodeluxe = callPackage ../games/kobodeluxe { };
 
   lgogdownloader = callPackage ../games/lgogdownloader { };
 
-  lincity = builderDefsPackage (callPackage ../games/lincity) {};
+  lincity = callPackage ../games/lincity {};
 
   lincity_ng = callPackage ../games/lincity/ng.nix {};
 
@@ -14239,6 +14230,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   ut2004demo = callPackage ../games/ut2004demo { };
 
+  vassal = callPackage ../games/vassal { };
+
   vdrift = callPackage ../games/vdrift { };
 
   vectoroids = callPackage ../games/vectoroids { };
@@ -14308,7 +14301,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   zandronum-bin = callPackage ../games/zandronum/bin.nix { };
 
-  zangband = builderDefsPackage (callPackage ../games/zangband) {};
+  zangband = callPackage ../games/zangband { };
 
   zdoom = callPackage ../games/zdoom { };
 
@@ -14672,8 +14665,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   mrbayes = callPackage ../applications/science/biology/mrbayes { };
 
-  ncbiCTools = builderDefsPackage (callPackage ../development/libraries/ncbi) {};
-
   ncbi_tools = callPackage ../applications/science/biology/ncbi-tools { };
 
   paml = callPackage ../applications/science/biology/paml { };
@@ -14700,8 +14691,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   atlasWithLapack = atlas.override { withLapack = true; };
 
   blas = callPackage ../development/libraries/science/math/blas { };
-
-  content = builderDefsPackage (callPackage ../applications/science/math/content) {};
 
   jags = callPackage ../applications/science/math/jags { };
 
@@ -15132,6 +15121,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   darcnes = callPackage ../misc/emulators/darcnes { };
 
+  darling-dmg = callPackage ../tools/filesystems/darling-dmg { };
+
   desmume = callPackage ../misc/emulators/desmume { inherit (pkgs.gnome) gtkglext libglade; };
 
   dbacl = callPackage ../tools/misc/dbacl { };
@@ -15448,8 +15439,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   */
   texLiveAggregationFun = params:
     builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/aggregate.nix) params;
-
-  texDisser = callPackage ../tools/typesetting/tex/disser {};
 
   texLiveContext = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/context.nix) {};
 

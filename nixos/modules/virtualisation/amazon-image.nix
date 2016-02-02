@@ -20,8 +20,7 @@ let cfg = config.ec2; in
       autoResize = true;
     };
 
-    boot.initrd.kernelModules = [ "xen-blkfront" ];
-    boot.kernelModules = [ "xen-netfront" ];
+    boot.initrd.kernelModules = [ "xen-blkfront" "xen-netfront" ];
     boot.kernelParams = mkIf cfg.hvm [ "console=ttyS0" ];
 
     # Prevent the nouveau kernel module from being loaded, as it
@@ -44,6 +43,8 @@ let cfg = config.ec2; in
         kill -9 -1
       '';
 
+    boot.initrd.network.enable = true;
+
     # Mount all formatted ephemeral disks and activate all swap devices.
     # We cannot do this with the ‘fileSystems’ and ‘swapDevices’ options
     # because the set of devices is dependent on the instance type
@@ -55,6 +56,16 @@ let cfg = config.ec2; in
     # Nix operations.
     boot.initrd.postMountCommands =
       ''
+        metaDir=$targetRoot/etc/ec2-metadata
+        mkdir -m 0755 -p $targetRoot/etc
+        mkdir -m 0700 -p "$metaDir"
+
+        echo "getting EC2 instance metadata..."
+
+        if ! [ -e "$metaDir/ami-manifest-path" ]; then
+          wget -q -O "$metaDir/ami-manifest-path" http://169.254.169.254/1.0/meta-data/ami-manifest-path
+        fi
+
         diskNr=0
         diskForUnionfs=
         for device in /dev/xvd[abcde]*; do
@@ -81,7 +92,7 @@ let cfg = config.ec2; in
             mkdir -m 1777 -p $targetRoot/$diskForUnionfs/root/tmp $targetRoot/tmp
             mount --bind $targetRoot/$diskForUnionfs/root/tmp $targetRoot/tmp
 
-            if [ ! -e $targetRoot/.ebs ]; then
+            if [ "$(cat "$metaDir/ami-manifest-path")" != "(unknown)" ]; then
                 mkdir -m 755 -p $targetRoot/$diskForUnionfs/root/var $targetRoot/var
                 mount --bind $targetRoot/$diskForUnionfs/root/var $targetRoot/var
 

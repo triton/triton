@@ -2289,10 +2289,15 @@ in {
     };
 
     propagatedBuildInputs = [ self.botocore
-                              self.futures_2_2
                               self.jmespath
-                            ];
-    buildInputs = [ self.docutils ];
+                            ] ++ (if isPy3k then [] else [self.futures_2_2]);
+    buildInputs = [ self.docutils self.nose self.mock ];
+
+    # Tests are failing with `botocore.exceptions.NoCredentialsError:
+    # Unable to locate credentials`. There also seems to be some mock
+    # issues (`assert_called_once` doesn't exist in mock but boto
+    # seems to think it is?).
+    doCheck = false;
 
     meta = {
       homepage = https://github.com/boto3/boto;
@@ -5237,6 +5242,25 @@ in {
       homepage = https://github.com/slezica/python-frozendict;
       description = "An immutable dictionary";
       license = stdenv.lib.licenses.mit;
+    };
+  };
+
+  ftputil = buildPythonPackage rec {
+    version = "3.3";
+    name = "ftputil-${version}";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/f/ftputil/${name}.tar.gz";
+      sha256 = "1714w0v6icw2xjx5m54yv2qgkq49qwxwllq4gdb7wkz25iiapr8b";
+    };
+
+    disabled = isPy3k;
+
+    meta = {
+      description = "High-level FTP client library (virtual file system and more)";
+      homepage    = https://pypi.python.org/pypi/ftputil;
+      platforms   = platforms.linux;
+      license     = licenses.bsd2; # "Modified BSD licence, says pypi"
     };
   };
 
@@ -14768,13 +14792,13 @@ in {
 
   platformio =  buildPythonPackage rec {
     name = "platformio-${version}";
-    version="2.8.1";
+    version="2.8.3";
 
     disabled = isPy3k || isPyPy;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/platformio/platformio-${version}.tar.gz";
-      sha256 = "0lx0cg2jyvikpcp9jjzrzgb89hvnn4ri84708d37xvzqsr0ml1fa";
+      sha256 = "1lz5f7xc53bk8ri4806xfpisvhyqdxdniwk0ywifinnhzx47jgp7";
      };
 
      propagatedBuildInputs = with self; [ click_5 requests2 bottle pyserial lockfile colorama];
@@ -18929,11 +18953,11 @@ in {
   };
 
   sopel = buildPythonPackage rec {
-    name = "sopel-6.2.1";
+    name = "sopel-6.3.0";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/s/sopel/${name}.tar.gz";
-      sha256 = "06m5clmg9x0bsnhvl5d75mskwqnxvkdd00p0dqnpwip9vmq6n8cz";
+      sha256 = "10g3p603qiz4whacknnslmkza5y1f7a8blq1q07dfrny4442c6nb";
     };
 
     buildInputs = with self; [ pytest ];

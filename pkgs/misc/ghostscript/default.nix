@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
     jbig2dec
   ] ++ stdenv.lib.optional x11Support xlibsWrapper
     ++ stdenv.lib.optional cupsSupport cups
-    ;
+      ;
 
   NIX_ZLIB_INCLUDE = "${zlib}/include";
 
@@ -113,40 +113,46 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  makeFlags = [
-    "cups_serverroot=$(out)"
-    "cups_serverbin=$(out)/lib/cups"
-  ];
-
   postPatch = ''
     rm -r freetype jbig2dec jpeg lcms2 libpng tiff zlib ijs
 
     sed "s@if ( test -f \$(INCLUDE)[^ ]* )@if ( true )@; s@INCLUDE=/usr/include@INCLUDE=/no-such-path@" -i base/unix-aux.mak
     sed "s@^ZLIBDIR=.*@ZLIBDIR=${zlib}/include@" -i configure.ac
+  '' + optionalString cupsSupport ''
+    configureFlagsArray+=(
+      "--with-cups-serverbin=$out/lib/cups"
+      "--with-cups-serverroot=$out/etc/cups"
+      "--with-cups-datadir=$out/share/cups"
+    )
   '';
 
-  configureFlags =
-    [ "--with-system-libtiff"
-      "--enable-fontconfig"
-      "--enable-freetype"
-      "--enable-dynamic"
-      (if x11Support then "--with-x" else "--without-x")
-      (if cupsSupport then "--enable-cups" else "--disable-cups")
-    ];
+  configureFlags = [
+    "--with-system-libtiff"
+    "--enable-fontconfig"
+    "--enable-freetype"
+    "--enable-dynamic"
+  ] ++ lib.optional x11Support "--with-x"
+    ++ lib.optional cupsSupport "--enable-cups"
+    ;
 
   doCheck = true;
 
   # don't build/install statically linked bin/gs
-  installTargets="install-so";
+  buildFlags = [ "so" ];
+  installTargets = [ "soinstall" ];
 
   postInstall = ''
     ln -s gsc "$out"/bin/gs
-    mkdir -p "$doc/share/ghostscript"
-    mv "$out/share/ghostscript/${version}" "$doc/share/ghostscript/${version}"
+
+    cp -r Resource "$out/share/ghostscript/${version}"
+
+    mkdir -p "$doc/share/ghostscript/${version}"
+    mv "$out/share/ghostscript/${version}"/{doc,examples} "$doc/share/ghostscript/${version}/"
+
     ln -s "${fonts}" "$out/share/ghostscript/fonts"
   '';
 
-  preFixup = stdenv.lib.strings.optionalString stdenv.isDarwin ''
+  preFixup = lib.optionalString stdenv.isDarwin ''
     install_name_tool -change libgs.dylib.${version} $out/lib/libgs.dylib.${version} $out/bin/gs
   '';
 

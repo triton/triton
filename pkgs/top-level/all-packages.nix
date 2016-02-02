@@ -830,6 +830,8 @@ libgusb = callPackage ../all-pkgs/libgusb { };
 
 libgweather = callPackage ../all-pkgs/libgweather { };
 
+libgxps = callPackage ../all-pkgs/libgxps { };
+
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };
 libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix {
   libtool = libtool_1_5;

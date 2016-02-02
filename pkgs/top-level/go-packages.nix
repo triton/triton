@@ -1968,10 +1968,10 @@ let
   };
 
   ipfs = buildFromGitHub{
-    rev    = "v0.3.11";
+    rev    = "v0.4.0-rc1";
     owner  = "ipfs";
     repo   = "go-ipfs";
-    sha256 = "1b7aimnbz287fy7p27v3qdxnz514r5142v3jihqxanbk9g384gcd";
+    sha256 = "0zw3m3g9cy1ppj9k0ma7jkcrmbzjfmkpmfil48glxvqziahnk935";
     meta = with stdenv.lib; {
       description = "A global, versioned, peer-to-peer filesystem";
       license = licenses.mit;

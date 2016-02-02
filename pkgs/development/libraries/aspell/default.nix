@@ -14,8 +14,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ perl ];
 
-  doCheck = true;
-
   preConfigure = ''
     configureFlagsArray=(
       --enable-pkglibdir=$out/lib/aspell
@@ -29,6 +27,9 @@ stdenv.mkDerivation rec {
   #
   # We can't use `$out/etc/aspell.conf' for that purpose since Aspell
   # doesn't expand environment variables such as `$HOME'.
+
+  doCheck = true;
+  parallelBuild = false;
 
   meta = {
     description = "Spell checker for many languages";

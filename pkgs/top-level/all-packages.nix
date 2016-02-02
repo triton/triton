@@ -1059,6 +1059,8 @@ qjackctl = callPackage ../all-pkgs/qjackctl { };
 
 rapidjson = callPackage ../all-pkgs/rapidjson { };
 
+redis = callPackage ../all-pkgs/redis { };
+
 rest = callPackage ../all-pkgs/rest { };
 
 rtmpdump = callPackage ../all-pkgs/rtmpdump { };
@@ -9506,8 +9508,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   rabbitmq_server = callPackage ../servers/amqp/rabbitmq-server {
     inherit (darwin.apple_sdk.frameworks) AppKit Carbon Cocoa;
   };
-
-  redis = callPackage ../servers/nosql/redis { };
 
   redstore = callPackage ../servers/http/redstore { };
 

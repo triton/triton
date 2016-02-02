@@ -1,11 +1,13 @@
 { config, lib, pkgs, ... }:
 
-with lib;
+with {
+  inherit (stdenv.lib)
+    mkIf
+    mkOption
+    types;
+};
 
 let
-  cfg = config.services.xserver.desktopManager.gnome3;
-  gnome3 = config.environment.gnome3.packageSet;
-
   # Remove packages of ys from xs, based on their names
   removePackagesByName = xs: ys:
     let
@@ -30,7 +32,7 @@ let
     buildInputs = [ pkgs.nixos-artwork ];
     buildCommand = ''
      mkdir -p $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas
-     cp -rf ${gnome3.gsettings_desktop_schemas}/share/gsettings-schemas/gsettings-desktop-schemas*/glib-2.0 $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas/
+     cp -rf ${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/gsettings-desktop-schemas*/glib-2.0 $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas/
      chmod -R a+w $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas
      cat - > $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas/glib-2.0/schemas/nixos-defaults.gschema.override <<- EOF
        [org.gnome.desktop.background]
@@ -47,110 +49,140 @@ in {
 
   options = {
 
-    services.xserver.desktopManager.gnome3.enable = mkOption {
-      default = false;
-      example = true;
-      description = "Enable Gnome 3 desktop manager.";
-    };
+    services.xserver.desktopManager.gnome3 = {
+      enable = mkOption {
+        default = false;
+        example = true;
+        description = "Enable Gnome 3 desktop manager.";
+      };
 
-    services.xserver.desktopManager.gnome3.sessionPath = mkOption {
-      default = [];
-      example = literalExample "[ pkgs.gnome3.gpaste ]";
-      description = "Additional list of packages to be added to the session search path.
-                     Useful for gnome shell extensions or gsettings-conditionated autostart.";
-      apply = list: list ++ [ gnome3.gnome_shell gnome3.gnome-shell-extensions ];
-    };
-
-    environment.gnome3.packageSet = mkOption {
-      type = types.nullOr types.package;
-      default = null;
-      example = literalExample "pkgs.gnome3_18";
-      description = "Which GNOME 3 package set to use.";
-      apply = p: if p == null then pkgs.gnome3 else p;
-    };
-
-    environment.gnome3.excludePackages = mkOption {
-      default = [];
-      example = literalExample "[ pkgs.gnome3.totem ]";
-      type = types.listOf types.package;
-      description = "Which packages gnome should exclude from the default environment";
+      sessionPath = mkOption {
+        default = [ ];
+        example = literalExample "[ pkgs.gnome3.gpaste ]";
+        description = "Additional list of packages to be added to the session search path.
+                       Useful for gnome shell extensions or gsettings-conditionated autostart.";
+        apply = list: list ++ [
+          pkgs.gnome-shell
+          pkgs.gnome-shell-extensions
+        ];
+      };
     };
 
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.services.xserver.desktopManager.gnome3.enable {
 
-    # Enable helpful DBus services.
     security.polkit.enable = true;
+
     services.udisks2.enable = true;
+
     services.accounts-daemon.enable = true;
+
     services.geoclue2.enable = mkDefault true;
-    services.gnome3.at-spi2-core.enable = true;
-    services.gnome3.evolution-data-server.enable = true;
-    services.gnome3.gnome-documents.enable = mkDefault true;
-    services.gnome3.gnome-keyring.enable = true;
-    services.gnome3.gnome-online-accounts.enable = mkDefault true;
-    services.gnome3.gnome-user-share.enable = mkDefault true;
-    services.gnome3.gvfs.enable = true;
-    services.gnome3.seahorse.enable = mkDefault true;
-    services.gnome3.sushi.enable = mkDefault true;
-    services.gnome3.tracker.enable = mkDefault true;
+
+    services.at-spi2-core.enable = true;
+
+    services.evolution-data-server.enable = true;
+
+    services.gnome-documents.enable = mkDefault true;
+
+    services.gnome-keyring.enable = true;
+
+    services.gnome-online-accounts.enable = mkDefault true;
+
+    services.gnome-user-share.enable = mkDefault true;
+
+    services.gvfs.enable = true;
+
+    services.seahorse.enable = mkDefault true;
+
+    services.sushi.enable = mkDefault true;
+
+    services.tracker.enable = mkDefault true;
+
     hardware.pulseaudio.enable = mkDefault true;
+
     services.telepathy.enable = mkDefault true;
+
     networking.networkmanager.enable = mkDefault true;
+
     services.upower.enable = config.powerManagement.enable;
+
     hardware.bluetooth.enable = mkDefault true;
 
-    fonts.fonts = [ pkgs.dejavu_fonts pkgs.cantarell_fonts ];
+    fonts.fonts = [
+      pkgs.dejavu_fonts
+      pkgs.cantarell_fonts
+    ];
 
-    services.xserver.desktopManager.session = singleton
-      { name = "gnome3";
-        bgSupport = true;
-        start = ''
-          # Set GTK_DATA_PREFIX so that GTK+ can find the themes
-          export GTK_DATA_PREFIX=${config.system.path}
+    services.xserver.desktopManager.session = singleton {
+      name = "gnome3";
+      bgSupport = true;
+      start = ''
+        # Set GTK_DATA_PREFIX so that GTK+ can find the themes
+        export GTK_DATA_PREFIX=${config.system.path}
 
-          # find theme engines
-          export GTK_PATH=${config.system.path}/lib/gtk-3.0:${config.system.path}/lib/gtk-2.0
+        # find theme engines
+        export GTK_PATH=${config.system.path}/lib/gtk-3.0:${config.system.path}/lib/gtk-2.0
 
-          export XDG_MENU_PREFIX=gnome
+        export XDG_MENU_PREFIX=gnome
 
-          ${concatMapStrings (p: ''
-            if [ -d "${p}/share/gsettings-schemas/${p.name}" ]; then
-              export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${p}/share/gsettings-schemas/${p.name}
-            fi
+        ${concatMapStrings (p: ''
+          if [ -d "${p}/share/gsettings-schemas/${p.name}" ]; then
+            export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${p}/share/gsettings-schemas/${p.name}
+          fi
 
-            if [ -d "${p}/lib/girepository-1.0" ]; then
-              export GI_TYPELIB_PATH=$GI_TYPELIB_PATH''${GI_TYPELIB_PATH:+:}${p}/lib/girepository-1.0
-              export LD_LIBRARY_PATH=$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}${p}/lib
-            fi
-          '') cfg.sessionPath}
+          if [ -d "${p}/lib/girepository-1.0" ]; then
+            export GI_TYPELIB_PATH=$GI_TYPELIB_PATH''${GI_TYPELIB_PATH:+:}${p}/lib/girepository-1.0
+            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}${p}/lib
+          fi
+        '') config.services.xserver.desktopManager.gnome3.sessionPath}
 
-          # Override default mimeapps
-          export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${mimeAppsList}/share
+        # Override default mimeapps
+        export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${mimeAppsList}/share
 
-          # Override gsettings-desktop-schema
-          export XDG_DATA_DIRS=${nixos-gsettings-desktop-schemas}/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas''${XDG_DATA_DIRS:+:}$XDG_DATA_DIRS
+        # Override gsettings-desktop-schema
+        export XDG_DATA_DIRS=${nixos-gsettings-desktop-schemas}/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas''${XDG_DATA_DIRS:+:}$XDG_DATA_DIRS
 
-          # Let nautilus find extensions
-          export NAUTILUS_EXTENSION_DIR=${config.system.path}/lib/nautilus/extensions-3.0/
+        # Let nautilus find extensions
+        export NAUTILUS_EXTENSION_DIR=${config.system.path}/lib/nautilus/extensions-3.0/
 
-          # Find the mouse
-          export XCURSOR_PATH=~/.icons:${config.system.path}/share/icons
+        # Find the mouse
+        export XCURSOR_PATH=~/.icons:${config.system.path}/share/icons
 
-          # Update user dirs as described in http://freedesktop.org/wiki/Software/xdg-user-dirs/
-          ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
+        # Update user dirs as described in http://freedesktop.org/wiki/Software/xdg-user-dirs/
+        ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
 
-          ${gnome3.gnome_session}/bin/gnome-session&
-          waitPID=$!
-        '';
-      };
+        ${pkgs.gnome-session}/bin/gnome-session&
+        waitPID=$!
+      '';
+    };
 
-    environment.variables.GIO_EXTRA_MODULES = [ "${gnome3.dconf}/lib/gio/modules"
-                                                "${gnome3.glib_networking}/lib/gio/modules"
-                                                "${gnome3.gvfs}/lib/gio/modules" ];
-    environment.systemPackages = gnome3.corePackages ++ cfg.sessionPath
-      ++ (removePackagesByName gnome3.optionalPackages config.environment.gnome3.excludePackages);
+    environment.variables.GIO_EXTRA_MODULES = [
+      "${pkgs.dconf}/lib/gio/modules"
+      "${pkgs.glib-networking}/lib/gio/modules"
+      "${pkgs.gvfs}/lib/gio/modules"
+    ];
+
+    environment.systemPackages = [
+      pkgs.adwaita-icon-theme
+      pkgs.dconf
+      pkgs.desktop_file_utils
+      pkgs.glib
+      pkgs.glib-networking
+      pkgs.gnome-backgrounds
+      pkgs.gnome-control-center
+      pkgs.gnome-menus
+      pkgs.gnome-settings-daemon
+      pkgs.gnome-shell
+      pkgs.gnome-shell-extensions
+      pkgs.gnome-themes-standard
+      pkgs.gtk3
+      pkgs.gvfs
+      pkgs.hicolor_icon_theme
+      pkgs.ibus
+      pkgs.shared_mime_info
+    ] ++ config.services.xserver.desktopManager.gnome3.sessionPath;
 
     # Use the correct gnome3 packageSet
     networking.networkmanager.basePackages = {

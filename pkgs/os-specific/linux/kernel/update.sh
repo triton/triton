@@ -41,7 +41,7 @@ ls $NIXPKGS/pkgs/os-specific/linux/kernel | while read FILE; do
   fi
 
   # Download the new file for the hash
-  if ! HASH="$(nix-prefetch-url $URL 2>/dev/null)"; then
+  if ! HASH="$(nix-prefetch-url $URL -I nixpkgs="$(git rev-parse --show-toplevel)" 2>/dev/null)"; then
     echo "Failed to get hash of $URL"
     continue
   fi

@@ -17,11 +17,11 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "pixman-0.32.8";
+  name = "pixman-0.34.0";
 
   src = fetchurl {
     url = "mirror://xorg/individual/lib/${name}.tar.bz2";
-    sha1 = "5c57045622265b877c9bf02d531973eadf942140";
+    sha256 = "184lazwdpv67zrlxxswpxrdap85wminh1gmq1i5lcz6iycw39fir";
   };
 
   patches = optionals stdenv.cc.isClang [
@@ -41,13 +41,13 @@ stdenv.mkDerivation rec {
     "--disable-loongson-mmi" # mips
     (enFlag "mmx" (isi686 || isx86_64) null)
     (enFlag "sse2" (isi686 || isx86_64) null)
-    (enFlag "sse3" (isi686 || isx86_64) null)
+    (enFlag "ssse3" (isi686 || isx86_64) null)
     "--disable-vmx"
     (enFlag "arm-simd" isArm null)
     (enFlag "arm-neon" isArm null)
     "--disable-arm-iwmmxt"
     (enFlag "arm-iwmmxt2" isArm null)
-    "--disable-mis-dspr2"
+    "--disable-mips-dspr2"
     (enFlag "gcc-inline-asm" cc.isGNU null)
     "--disable-static-testprogs"
     "--enable-timers"
@@ -58,7 +58,6 @@ stdenv.mkDerivation rec {
   postInstall = glib.flattenInclude;
 
   doCheck = true;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A low-level library for pixel manipulation";

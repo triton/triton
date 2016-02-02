@@ -1,5 +1,6 @@
 { stdenv, fetchurl, openconnect, intltool, pkgconfig, networkmanager, libsecret
-, withGnome ? true, gnome3, procps, module_init_tools }:
+, withGnome ? true, procps, module_init_tools
+, gtk3, libgnome_keyring, gconf }:
 
 stdenv.mkDerivation rec {
   name = "${pname}${if withGnome then "-gnome" else ""}-${version}";
@@ -14,7 +15,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ openconnect networkmanager libsecret ]
-    ++ stdenv.lib.optionals withGnome [ gnome3.gtk gnome3.libgnome_keyring gnome3.gconf ];
+    ++ stdenv.lib.optionals withGnome [ gtk3 libgnome_keyring gconf ];
 
   nativeBuildInputs = [ intltool pkgconfig ];
 
@@ -45,4 +46,3 @@ stdenv.mkDerivation rec {
     inherit (networkmanager.meta) maintainers platforms;
   };
 }
-

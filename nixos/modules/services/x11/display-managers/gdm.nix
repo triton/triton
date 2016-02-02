@@ -5,8 +5,6 @@ with lib;
 let
 
   cfg = config.services.xserver.displayManager;
-  gnome3 = config.environment.gnome3.packageSet;
-  gdm = gnome3.gdm;
 
 in
 
@@ -97,22 +95,27 @@ in
         environment = {
           GDM_X_SERVER = "${cfg.xserverBin} ${cfg.xserverArgs}";
           GDM_SESSIONS_DIR = "${cfg.session.desktops}";
-          XDG_CONFIG_DIRS = "${gnome3.gnome_settings_daemon}/etc/xdg";
+          XDG_CONFIG_DIRS = "${pkgs.gnome-settings-daemon}/etc/xdg";
           # Find the mouse
           XCURSOR_PATH = "~/.icons:${config.system.path}/share/icons";
         };
-        execCmd = "exec ${gdm}/bin/gdm";
+        execCmd = "exec ${pkgs.gdm}/bin/gdm";
       };
 
     # Because sd_login_monitor_new requires /run/systemd/machines
     systemd.services.display-manager.wants = [ "systemd-machined.service" ];
     systemd.services.display-manager.after = [ "systemd-machined.service" ];
 
-    systemd.services.display-manager.path = [ gnome3.gnome_shell gnome3.caribou pkgs.xorg.xhost pkgs.dbus_tools ];
+    systemd.services.display-manager.path = [
+      pkgs.gnome-shell
+      pkgs.caribou
+      pkgs.xorg.xhost
+      pkgs.dbus_tools
+    ];
 
-    services.dbus.packages = [ gdm ];
+    services.dbus.packages = [ pkgs.gdm ];
 
-    programs.dconf.profiles.gdm = "${gdm}/share/dconf/profile/gdm";
+    programs.dconf.profiles.gdm = "${pkgs.gdm}/share/dconf/profile/gdm";
 
     # Use AutomaticLogin if delay is zero, because it's immediate.
     # Otherwise with TimedLogin with zero seconds the prompt is still
@@ -165,7 +168,7 @@ in
         auth     required       pam_env.so envfile=${config.system.build.pamEnvironment}
 
         auth     required       pam_succeed_if.so uid >= 1000 quiet
-        auth     optional       ${gnome3.gnome_keyring}/lib/security/pam_gnome_keyring.so
+        auth     optional       ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so
         auth     ${if config.security.pam.enableEcryptfs then "required" else "sufficient"} pam_unix.so nullok likeauth
         ${optionalString config.security.pam.enableEcryptfs
           "auth required ${pkgs.ecryptfs}/lib/security/pam_ecryptfs.so unwrap"}
@@ -185,7 +188,7 @@ in
           "session optional ${pkgs.ecryptfs}/lib/security/pam_ecryptfs.so"}
         session  required       pam_loginuid.so
         session  optional       ${pkgs.systemd}/lib/security/pam_systemd.so
-        session  optional       ${gnome3.gnome_keyring}/lib/security/pam_gnome_keyring.so auto_start
+        session  optional       ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
       '';
 
       gdm-password.text = ''
@@ -193,7 +196,7 @@ in
         auth     required       pam_env.so envfile=${config.system.build.pamEnvironment}
 
         auth     required       pam_succeed_if.so uid >= 1000 quiet
-        auth     optional       ${gnome3.gnome_keyring}/lib/security/pam_gnome_keyring.so
+        auth     optional       ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so
         auth     ${if config.security.pam.enableEcryptfs then "required" else "sufficient"} pam_unix.so nullok likeauth
         ${optionalString config.security.pam.enableEcryptfs
           "auth required ${pkgs.ecryptfs}/lib/security/pam_ecryptfs.so unwrap"}
@@ -212,7 +215,7 @@ in
           "session optional ${pkgs.ecryptfs}/lib/security/pam_ecryptfs.so"}
         session  required       pam_loginuid.so
         session  optional       ${pkgs.systemd}/lib/security/pam_systemd.so
-        session  optional       ${gnome3.gnome_keyring}/lib/security/pam_gnome_keyring.so auto_start
+        session  optional       ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
       '';
 
       gdm-autologin.text = ''

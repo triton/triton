@@ -1,19 +1,17 @@
-# Tracker daemon.
-
 { config, pkgs, lib, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
-let
-  gnome3 = config.environment.gnome3.packageSet;
-in
 {
-
-  ###### interface
 
   options = {
 
-    services.gnome3.tracker = {
+    services.tracker = {
 
       enable = mkOption {
         type = types.bool;
@@ -28,14 +26,15 @@ in
 
   };
 
+  config = mkIf config.services.tracker.enable {
 
-  ###### implementation
+    environment.systemPackages = [
+      pkgs.tracker
+    ];
 
-  config = mkIf config.services.gnome3.tracker.enable {
-
-    environment.systemPackages = [ gnome3.tracker ];
-
-    services.dbus.packages = [ gnome3.tracker ];
+    services.dbus.packages = [
+      pkgs.tracker
+    ];
 
   };
 

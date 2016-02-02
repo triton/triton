@@ -1,5 +1,6 @@
 { stdenv, fetchurl, openvpn, intltool, pkgconfig, networkmanager, libsecret
-, withGnome ? true, gnome3, procps, module_init_tools }:
+, withGnome ? true, procps, module_init_tools
+, gtk3, libgnome_keyring, networkmanagerapplet }:
 
 stdenv.mkDerivation rec {
   name = "${pname}${if withGnome then "-gnome" else ""}-${version}";
@@ -12,8 +13,8 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ openvpn networkmanager libsecret ]
-    ++ stdenv.lib.optionals withGnome [ gnome3.gtk gnome3.libgnome_keyring
-                                        gnome3.networkmanagerapplet ];
+    ++ stdenv.lib.optionals withGnome [ gtk3 libgnome_keyring
+                                        networkmanagerapplet ];
 
   nativeBuildInputs = [ intltool pkgconfig ];
 

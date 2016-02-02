@@ -1,19 +1,17 @@
-# Seahorse daemon.
-
 { config, pkgs, lib, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
-let
-  gnome3 = config.environment.gnome3.packageSet;
-in
 {
-
-  ###### interface
 
   options = {
 
-    services.gnome3.seahorse = {
+    services.seahorse = {
 
       enable = mkOption {
         type = types.bool;
@@ -27,14 +25,15 @@ in
 
   };
 
+  config = mkIf config.services.seahorse.enable {
 
-  ###### implementation
+    environment.systemPackages = [
+      pkgs.seahorse
+    ];
 
-  config = mkIf config.services.gnome3.seahorse.enable {
-
-    environment.systemPackages = [ gnome3.seahorse ];
-
-    services.dbus.packages = [ gnome3.seahorse ];
+    services.dbus.packages = [
+      pkgs.seahorse
+    ];
 
   };
 

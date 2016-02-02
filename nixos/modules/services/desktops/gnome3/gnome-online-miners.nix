@@ -1,19 +1,17 @@
-# GNOME Online Miners daemon.
-
 { config, pkgs, lib, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
-let
-  gnome3 = config.environment.gnome3.packageSet;
-in
 {
-
-  ###### interface
 
   options = {
 
-    services.gnome3.gnome-online-miners = {
+    services.gnome-online-miners = {
 
       enable = mkOption {
         type = types.bool;
@@ -28,14 +26,15 @@ in
 
   };
 
+  config = mkIf config.services.gnome-online-miners.enable {
 
-  ###### implementation
+    environment.systemPackages = [
+      pkgs.gnome-online-miners
+    ];
 
-  config = mkIf config.services.gnome3.gnome-online-miners.enable {
-
-    environment.systemPackages = [ gnome3.gnome-online-miners ];
-
-    services.dbus.packages = [ gnome3.gnome-online-miners ];
+    services.dbus.packages = [
+      pkgs.gnome-online-miners
+    ];
 
   };
 

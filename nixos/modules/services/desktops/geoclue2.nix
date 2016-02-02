@@ -1,12 +1,13 @@
-# GeoClue 2 daemon.
-
 { config, lib, pkgs, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
 {
-
-  ###### interface
 
   options = {
 
@@ -25,16 +26,19 @@ with lib;
 
   };
 
-
-  ###### implementation
-
   config = mkIf config.services.geoclue2.enable {
 
-    environment.systemPackages = [ pkgs.geoclue2 ];
+    environment.systemPackages = [
+      pkgs.geoclue2
+    ];
 
-    services.dbus.packages = [ pkgs.geoclue2 ];
+    services.dbus.packages = [
+      pkgs.geoclue2
+    ];
 
-    systemd.packages = [ pkgs.geoclue2 ];
+    systemd.packages = [
+      pkgs.geoclue2
+    ];
 
   };
 

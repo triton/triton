@@ -1,12 +1,13 @@
-# Telepathy daemon.
-
 { config, lib, pkgs, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
 {
-
-  ###### interface
 
   options = {
 
@@ -25,14 +26,15 @@ with lib;
 
   };
 
-
-  ###### implementation
-
   config = mkIf config.services.telepathy.enable {
 
-    environment.systemPackages = [ pkgs.telepathy_mission_control ];
+    environment.systemPackages = [
+      pkgs.telepathy_mission_control
+    ];
 
-    services.dbus.packages = [ pkgs.telepathy_mission_control ];
+    services.dbus.packages = [
+      pkgs.telepathy_mission_control
+    ];
 
   };
 

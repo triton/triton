@@ -1,19 +1,17 @@
-# GNOME Keyring daemon.
-
 { config, pkgs, lib, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
-let
-  gnome3 = config.environment.gnome3.packageSet;
-in
 {
-
-  ###### interface
 
   options = {
 
-    services.gnome3.gnome-keyring = {
+    services.gnome-keyring = {
 
       enable = mkOption {
         type = types.bool;
@@ -29,14 +27,15 @@ in
 
   };
 
+  config = mkIf config.services.gnome-keyring.enable {
 
-  ###### implementation
+    environment.systemPackages = [
+      pkgs.gnome_keyring
+    ];
 
-  config = mkIf config.services.gnome3.gnome-keyring.enable {
-
-    environment.systemPackages = [ gnome3.gnome_keyring ];
-
-    services.dbus.packages = [ gnome3.gnome_keyring ];
+    services.dbus.packages = [
+      pkgs.gnome_keyring
+    ];
 
   };
 

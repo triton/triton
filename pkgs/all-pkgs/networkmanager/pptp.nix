@@ -1,5 +1,6 @@
-{ stdenv, fetchTritonPatch, fetchurl, networkmanager, pptp, ppp, intltool, pkgconfig, substituteAll
-, libsecret, withGnome ? true, gnome3 }:
+{ stdenv, fetchTritonPatch, fetchurl, networkmanager, pptp, ppp, intltool
+, pkgconfig, substituteAll, gtk3, libgnome_keyring, networkmanagerapplet
+, libsecret, withGnome ? true }:
 
 stdenv.mkDerivation rec {
   name = "${pname}${if withGnome then "-gnome" else ""}-${version}";
@@ -12,8 +13,8 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ networkmanager pptp ppp libsecret ]
-    ++ stdenv.lib.optionals withGnome [ gnome3.gtk gnome3.libgnome_keyring
-                                        gnome3.networkmanagerapplet ];
+    ++ stdenv.lib.optionals withGnome [ gtk3 libgnome_keyring
+                                        networkmanagerapplet ];
 
   nativeBuildInputs = [ intltool pkgconfig ];
 

@@ -1,19 +1,17 @@
-# GNOME Documents daemon.
-
 { config, pkgs, lib, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
-let
-  gnome3 = config.environment.gnome3.packageSet;
-in
 {
-
-  ###### interface
 
   options = {
 
-    services.gnome3.gnome-documents = {
+    services.gnome-documents = {
 
       enable = mkOption {
         type = types.bool;
@@ -28,18 +26,19 @@ in
 
   };
 
+  config = mkIf config.services.gnome-documents.enable {
 
-  ###### implementation
+    environment.systemPackages = [
+      pkgs.gnome-documents
+    ];
 
-  config = mkIf config.services.gnome3.gnome-documents.enable {
+    services.dbus.packages = [
+      pkgs.gnome-documents
+    ];
 
-    environment.systemPackages = [ gnome3.gnome-documents ];
+    services.gnome-online-accounts.enable = true;
 
-    services.dbus.packages = [ gnome3.gnome-documents ];
-
-    services.gnome3.gnome-online-accounts.enable = true;
-
-    services.gnome3.gnome-online-miners.enable = true;
+    services.gnome-online-miners.enable = true;
 
   };
 

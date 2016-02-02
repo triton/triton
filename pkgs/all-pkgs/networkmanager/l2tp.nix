@@ -1,6 +1,6 @@
 { stdenv, fetchTritonPatch, fetchFromGitHub, substituteAll, automake, autoconf, libtool, intltool, pkgconfig
-, networkmanager, ppp, xl2tpd, strongswan
-, withGnome ? true, gnome3 }:
+, networkmanager, ppp, xl2tpd, strongswan, gtk3, libgnome_keyring
+, withGnome ? true }:
 
 stdenv.mkDerivation rec {
   name = "${pname}${if withGnome then "-gnome" else ""}-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ networkmanager ppp ]
-    ++ stdenv.lib.optionals withGnome [ gnome3.gtk gnome3.libgnome_keyring ];
+    ++ stdenv.lib.optionals withGnome [ gtk3 libgnome_keyring ];
 
   nativeBuildInputs = [ automake autoconf libtool intltool pkgconfig ];
 

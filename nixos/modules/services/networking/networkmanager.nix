@@ -77,10 +77,9 @@ let
     "pre-up" = "pre-up.d/";
     "pre-down" = "pre-down.d/";
   };
+in
 
-in {
-
-  ###### interface
+{
 
   options = {
 
@@ -100,7 +99,7 @@ in {
 
       unmanaged = mkOption {
         type = types.listOf types.string;
-        default = [];
+        default = [ ];
         description = ''
           List of interfaces that will not be managed by NetworkManager.
           Interface name can be specified here, but if you need more fidelity
@@ -111,10 +110,17 @@ in {
       # Ugly hack for using the correct gnome3 packageSet
       basePackages = mkOption {
         type = types.attrsOf types.package;
-        default = { inherit networkmanager modemmanager wpa_supplicant
-                            networkmanager_openvpn networkmanager_vpnc
-                            networkmanager_openconnect
-                            networkmanager_pptp networkmanager_l2tp; };
+        default = {
+          inherit
+            networkmanager
+            modemmanager
+            wpa_supplicant
+            networkmanager_openvpn
+            networkmanager_vpnc
+            networkmanager_openconnect
+            networkmanager_pptp
+            networkmanager_l2tp;
+        };
         internal = true;
       };
 
@@ -129,7 +135,7 @@ in {
 
       appendNameservers = mkOption {
         type = types.listOf types.str;
-        default = [];
+        default = [ ];
         description = ''
           A list of name servers that should be appended
           to the ones configured in NetworkManager or received by DHCP.
@@ -138,7 +144,7 @@ in {
 
       insertNameservers = mkOption {
         type = types.listOf types.str;
-        default = [];
+        default = [ ];
         description = ''
           A list of name servers that should be inserted before
           the ones configured in NetworkManager or received by DHCP.
@@ -156,7 +162,7 @@ in {
             };
 
             type = mkOption {
-              type = types.enum (attrNames dispatcherTypesSubdirMap); 
+              type = types.enum (attrNames dispatcherTypesSubdirMap);
               default = "basic";
               description = ''
                 Dispatcher hook type. Only basic hooks are currently available.
@@ -164,7 +170,7 @@ in {
             };
           };
         });
-        default = [];
+        default = [ ];
         description = ''
           A list of scripts which will be executed in response to  network  events.
         '';

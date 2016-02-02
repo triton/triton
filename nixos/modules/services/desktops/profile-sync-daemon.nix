@@ -1,6 +1,12 @@
 { config, pkgs, lib, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    listOf
+    types;
+};
 
 let
   cfg = config.services.psd;
@@ -18,11 +24,14 @@ let
     ${optionalString (cfg.daemonFile != "") "DAEMON_FILE=${cfg.daemonFile}"}
   '';
 
-in {
+in
 
-  options.services.psd = with types; {
+{
+
+  options.services.psd = {
+
     enable = mkOption {
-      type = bool;
+      type = types.bool;
       default = false;
       description = ''
         Whether to enable the Profile Sync daemon.
@@ -30,7 +39,7 @@ in {
     };
 
     users = mkOption {
-      type = listOf str;
+      type = types.listOf types.str;
       default = [ ];
       example = [ "demo" ];
       description = ''
@@ -39,7 +48,7 @@ in {
     };
 
     browsers = mkOption {
-      type = listOf str;
+      type = types.listOf types.str;
       default = [ ];
       example = [ "chromium" "firefox" ];
       description = ''
@@ -55,7 +64,7 @@ in {
     };
 
     resyncTimer = mkOption {
-      type = str;
+      type = types.str;
       default = "1h";
       example = "1h 30min";
       description = ''
@@ -68,7 +77,7 @@ in {
     };
 
     volatile = mkOption {
-      type = str;
+      type = types.str;
       default = "/run/psd-profiles";
       description = ''
         The directory where browser profiles should reside(this should be
@@ -77,24 +86,32 @@ in {
     };
 
     daemonFile = mkOption {
-      type = str;
+      type = types.str;
       default = "/run/psd";
       description = ''
         Where the pid and backup configuration files will be stored.
       '';
     };
+
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.services.psd.enable {
+
     systemd = {
+
       services = {
+
         psd = {
           description = "Profile Sync daemon";
           wants = [ "psd-resync.service" "local-fs.target" ];
           wantedBy = [ "multi-user.target" ];
-          preStart = "mkdir -p ${cfg.volatile}";
+          preStart = "mkdir -p ${config.services.psd.volatile}";
 
-          path = with pkgs; [ glibc rsync gawk ];
+          path = [
+            pkgs.glibc
+            pkgs.rsync
+            pkgs.gawk
+          ];
 
           unitConfig = {
             RequiresMountsFor = [ "/home/" ];
@@ -114,23 +131,29 @@ in {
           wants = [ "psd-resync.timer" ];
           partOf = [ "psd.service" ];
 
-          path = with pkgs; [ glibc rsync gawk ];
+          path = [
+            pkgs.glibc
+            pkgs.rsync
+            pkgs.gawk
+          ];
 
           serviceConfig = {
             Type = "oneshot";
             ExecStart = "${pkgs.profile-sync-daemon}/bin/profile-sync-daemon resync";
           };
         };
+
       };
 
       timers.psd-resync = {
-        description = "Timer for profile sync daemon - ${cfg.resyncTimer}";
+        description = "Timer for profile sync daemon - ${config.services.psd.resyncTimer}";
         partOf = [ "psd-resync.service" "psd.service" ];
 
         timerConfig = {
-          OnUnitActiveSec = "${cfg.resyncTimer}";
+          OnUnitActiveSec = "${config.services.psd.resyncTimer}";
         };
       };
+
     };
 
     environment.etc."psd.conf".text = configFile;

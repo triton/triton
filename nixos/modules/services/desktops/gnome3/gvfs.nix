@@ -1,19 +1,17 @@
-# gvfs backends
-
 { config, lib, pkgs, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
-let
-  gnome3 = config.environment.gnome3.packageSet;
-in
 {
-
-  ###### interface
 
   options = {
 
-    services.gnome3.gvfs = {
+    services.gvfs = {
 
       enable = mkOption {
         type = types.bool;
@@ -28,16 +26,19 @@ in
 
   };
 
+  config = mkIf config.services.gvfs.enable {
 
-  ###### implementation
+    environment.systemPackages = [
+      pkgs.gvfs
+    ];
 
-  config = mkIf config.services.gnome3.gvfs.enable {
+    services.dbus.packages = [
+      pkgs.gvfs
+    ];
 
-    environment.systemPackages = [ gnome3.gvfs ];
-
-    services.dbus.packages = [ gnome3.gvfs ];
-
-    services.udev.packages = [ pkgs.libmtp ];
+    services.udev.packages = [
+      pkgs.libmtp
+    ];
 
   };
 

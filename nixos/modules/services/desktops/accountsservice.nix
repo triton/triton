@@ -1,12 +1,13 @@
-# AccountsService daemon.
-
 { config, lib, pkgs, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
 {
-
-  ###### interface
 
   options = {
 
@@ -25,16 +26,19 @@ with lib;
 
   };
 
-
-  ###### implementation
-
   config = mkIf config.services.accounts-daemon.enable {
 
-    environment.systemPackages = [ pkgs.accountsservice ];
+    environment.systemPackages = [
+      pkgs.accountsservice
+    ];
 
-    services.dbus.packages = [ pkgs.accountsservice ];
+    services.dbus.packages = [
+      pkgs.accountsservice
+    ];
 
-    systemd.packages = [ pkgs.accountsservice ];
+    systemd.packages = [
+      pkgs.accountsservice
+    ];
   };
 
 }

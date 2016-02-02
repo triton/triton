@@ -1,16 +1,17 @@
-# at-spi2-core daemon.
-
 { config, lib, pkgs, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
 {
 
-  ###### interface
-
   options = {
 
-    services.gnome3.at-spi2-core = {
+    services.at-spi2-core = {
 
       enable = mkOption {
         type = types.bool;
@@ -25,14 +26,15 @@ with lib;
 
   };
 
+  config = mkIf config.services.at-spi2-core.enable {
 
-  ###### implementation
+    environment.systemPackages = [
+      pkgs.at_spi2_core
+    ];
 
-  config = mkIf config.services.gnome3.at-spi2-core.enable {
-
-    environment.systemPackages = [ pkgs.at_spi2_core ];
-
-    services.dbus.packages = [ pkgs.at_spi2_core ];
+    services.dbus.packages = [
+      pkgs.at_spi2_core
+    ];
 
   };
 

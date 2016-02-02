@@ -1,19 +1,17 @@
-# GNOME Online Accounts daemon.
-
 { config, pkgs, lib, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
-let
-  gnome3 = config.environment.gnome3.packageSet;
-in
 {
-
-  ###### interface
 
   options = {
 
-    services.gnome3.gnome-online-accounts = {
+    services.gnome-online-accounts = {
 
       enable = mkOption {
         type = types.bool;
@@ -28,14 +26,15 @@ in
 
   };
 
+  config = mkIf config.services.gnome-online-accounts.enable {
 
-  ###### implementation
+    environment.systemPackages = [
+      pkgs.gnome-online-accounts
+    ];
 
-  config = mkIf config.services.gnome3.gnome-online-accounts.enable {
-
-    environment.systemPackages = [ gnome3.gnome_online_accounts ];
-
-    services.dbus.packages = [ gnome3.gnome_online_accounts ];
+    services.dbus.packages = [
+      pkgs.gnome-online-accounts
+    ];
 
   };
 

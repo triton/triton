@@ -1,19 +1,17 @@
-# GNOME Sushi daemon.
-
 { config, lib, pkgs, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    mkIf
+    mkOption
+    types;
+};
 
-let
-  gnome3 = config.environment.gnome3.packageSet;
-in
 {
-
-  ###### interface
 
   options = {
 
-    services.gnome3.sushi = {
+    services.sushi = {
 
       enable = mkOption {
         type = types.bool;
@@ -27,14 +25,15 @@ in
 
   };
 
+  config = mkIf config.services.sushi.enable {
 
-  ###### implementation
+    environment.systemPackages = [
+      pkgs.sushi
+    ];
 
-  config = mkIf config.services.gnome3.sushi.enable {
-
-    environment.systemPackages = [ gnome3.sushi ];
-
-    services.dbus.packages = [ gnome3.sushi ];
+    services.dbus.packages = [
+      pkgs.sushi
+    ];
 
   };
 

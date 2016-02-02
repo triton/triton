@@ -28,11 +28,11 @@ with {
 
 stdenv.mkDerivation rec {
   name = "ibus-${version}";
-  version = "1.5.11";
+  version = "1.5.12";
 
   src = fetchurl {
     url = "https://github.com/ibus/ibus/releases/download/${version}/${name}.tar.gz";
-    sha256 = "1g26llizd26h9sfz4xdq8krhz19hn08pirvfbkk3g89ri8lmm6a9";
+    sha256 = "0b24w95v77ygkcdv1s9jqza5mp47jiqbmsjrcfwsbb7ljmcsjkg2";
   };
 
   nativeBuildInputs = [

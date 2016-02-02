@@ -1,4 +1,5 @@
 { stdenv
+, lib
 , fetchurl
 , fetchpatch
 , fetchTritonPatch
@@ -118,7 +119,7 @@ stdenv.mkDerivation rec {
 
     sed "s@if ( test -f \$(INCLUDE)[^ ]* )@if ( true )@; s@INCLUDE=/usr/include@INCLUDE=/no-such-path@" -i base/unix-aux.mak
     sed "s@^ZLIBDIR=.*@ZLIBDIR=${zlib}/include@" -i configure.ac
-  '' + optionalString cupsSupport ''
+  '' + lib.optionalString cupsSupport ''
     configureFlagsArray+=(
       "--with-cups-serverbin=$out/lib/cups"
       "--with-cups-serverroot=$out/etc/cups"

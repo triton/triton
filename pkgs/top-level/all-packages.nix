@@ -572,6 +572,8 @@ dconf-editor = callPackage ../all-pkgs/dconf-editor { };
 
 eog = callPackage ../all-pkgs/eog { };
 
+evince = callPackage ../all-pkgs/evince { };
+
 evolution = callPackage ../all-pkgs/evolution { };
 
 evolution-data-server = callPackage ../all-pkgs/evolution-data-server { };

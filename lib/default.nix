@@ -1,31 +1,56 @@
-let 
+let
 
-  trivial = import ./trivial.nix;
-  lists = import ./lists.nix;
-  strings = import ./strings.nix;
-  stringsWithDeps = import ./strings-with-deps.nix;
   attrsets = import ./attrsets.nix;
-  sources = import ./sources.nix;
+  customisation = import ./customisation.nix;
+  debug = import ./debug.nix;
+  licenses = import ./licenses.nix;
+  lists = import ./lists.nix;
+  maintainers = import ./maintainers.nix;
+  meta = import ./meta.nix;
+  misc = import ./deprecated.nix;
   modules = import ./modules.nix;
   options = import ./options.nix;
-  types = import ./types.nix;
-  meta = import ./meta.nix;
-  debug = import ./debug.nix;
-  misc = import ./deprecated.nix;
-  maintainers = import ./maintainers.nix;
   platforms = import ./platforms.nix;
-  systems = import ./systems.nix;
-  customisation = import ./customisation.nix;
-  licenses = import ./licenses.nix;
   sandbox = import ./sandbox.nix;
+  sources = import ./sources.nix;
+  strings = import ./strings.nix;
+  stringsWithDeps = import ./strings-with-deps.nix;
+  systems = import ./systems.nix;
+  trivial = import ./trivial.nix;
+  types = import ./types.nix;
 
-in
-  { inherit trivial lists strings stringsWithDeps attrsets sources options
-      modules types meta debug maintainers licenses platforms systems sandbox;
-  }
-  # !!! don't include everything at top-level; perhaps only the most
-  # commonly used functions.
-  // trivial // lists // strings // stringsWithDeps // attrsets // sources
-  // options // types // meta // debug // misc // modules
-  // systems
-  // customisation
+in {
+  inherit
+    attrsets
+    debug
+    licenses
+    lists
+    maintainers
+    meta
+    modules
+    options
+    platforms
+    sandbox
+    sources
+    strings
+    stringsWithDeps
+    systems
+    trivial
+    types;
+}
+# !!! don't include everything at top-level; perhaps only the most
+# commonly used functions.
+// attrsets
+// customisation
+// debug
+// lists
+// meta
+// misc
+// modules
+// options
+// sources
+// strings
+// stringsWithDeps
+// systems
+// trivial
+// types

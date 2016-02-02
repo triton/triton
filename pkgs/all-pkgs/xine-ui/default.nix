@@ -22,35 +22,36 @@ stdenv.mkDerivation rec {
   };
 
   postPhase = ''
-    sed -e '/curl\/types\.h/d' -i src/xitk/download.c
+    sed -i src/xitk/download.c \
+      -e '/curl\/types\.h/d'
   '';
 
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"
-    "--enable-rapth"
+    "--enable-rpath"
     "--enable-shm"
     "--enable-shm-default"
-    "--enable-xinerama"
+    (enFlag "xinerama" (xorg.libXinerama != null) null)
     "--enable-aalibtest"
     "--enable-mbs"
-    "--enable-xft"
-    "--enable-lirc"
+    (enFlag "xft" (xorg.libXft != null) null)
+    (enFlag "lirc" (lirc != null) null)
     "--enable-vdr-keys"
     "--enable-nvtvsimple"
     "--disable-debug"
     "--with-iconv"
-    "--with-x"
-    "--with-readline=${readline}"
-    "--with-curl"
+    (wtFlag "x" (xorg != null) null)
+    (wtFlag "readline" (readline != null) readline)
+    (wtFlag "curl" (curl != null) null)
     "--with-aalib"
-    "--with-caca"
+    (wtFlag "caca" (libcaca != null) null)
     "--with-fb"
     "--with-tar"
   ];
 
-  LIRC_CFLAGS="-I${lirc}/include";
-  LIRC_LIBS="-L ${lirc}/lib -llirc_client";
+  LIRC_CFLAGS = "-I${lirc}/include";
+  LIRC_LIBS = "-L${lirc}/lib -llirc_client";
   #NIX_LDFLAGS = "-lXext -lgcc_s";
 
   nativeBuildInputs = [

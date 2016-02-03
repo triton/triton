@@ -86,19 +86,23 @@ build_redirect() {
 build_redirect_list() {
   local REDIRECT
   REDIRECT="$(build_redirect "$1")"
-  exec 3<>"$TMPDIR/redirects.lock"
+  exec 3<>"$TMPDIR/list.lock"
   flock -x 3
-  sed -i "s,$1,$1 $REDIRECT,g" "$TMPDIR/list"
+  sed -i "s,^[ \t]*$1 ,$1 $REDIRECT ,g" "$TMPDIR/list"
   exec 3>&-
 }
-ARGS=($(awk '{ print "- " $1 " build_redirect_list " $1;}' $TMPDIR/list))
+ARGS=($(awk '{ print "- " $1 " build_redirect_list " $1; }' $TMPDIR/list))
 concurrent "${ARGS[@]}"
 
 echo "Fetching package revisions..." >&2
+
 mkdir -p $TMPDIR/git
 cd $TMPDIR/git
 git init
-ARGS=()
+awk '{ if (system("git remote add " $1 " " $2) != 0) { exit 1 } }' $TMPDIR/list
+
+ARGS=($(awk '{ print "- " $1 " git fetch " $1; }' $TMPDIR/list))
 concurrent "${ARGS[@]}"
+
 
 echo "Fetching package hashes..." >&2

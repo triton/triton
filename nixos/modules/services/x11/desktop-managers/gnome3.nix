@@ -1,9 +1,13 @@
 { config, lib, pkgs, ... }:
 
 with {
-  inherit (stdenv.lib)
+  inherit (lib)
+    concatMapStrings
+    literalExample
+    mkDefault
     mkIf
     mkOption
+    singleton
     types;
 };
 

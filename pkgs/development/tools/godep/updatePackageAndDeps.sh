@@ -45,7 +45,7 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
       if pkg ? goPackagePath then
         pkgs.lib.foldl
           (attr: dep: attr // listPkgAndDeps dep)
-          { "${pkg.goPackagePath}" = { inherit (pkg) rev; }; }
+          { "${pkg.goPackagePath}" = { inherit (pkg) rev; date = pkg.date or "nodate"; }; }
           (allBuildInputs pkg)
       else { };
     combinedList = pkgs.lib.foldl
@@ -53,7 +53,7 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
       { }
       pkgList;
     pkgOutput = pkgs.lib.mapAttrsToList
-      (n: d: "${n} ${d.rev}\n") combinedList;
+      (n: d: "${n} ${d.rev} ${d.date}\n") combinedList;
   in
     pkgs.writeText "current-go-package-list" pkgOutput
 '
@@ -119,7 +119,10 @@ fetch_git() {
 ARGS=($(awk '{ print "- " $1 " fetch_git " $1; }' $TMPDIR/list))
 concurrent "${ARGS[@]}"
 
-for pkg in $(awk '{print $1}' $TMPDIR/list); do
+while read line; do
+  pkg="$(echo "$line" | awk '{print $1}')"
+  rev="$(echo "$line" | awk '{print $3}')"
+  date="$(echo "$line" | awk '{print $4}')"
   cd $TMPDIR/$pkg
   VERSION="$(git tag | grep -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
   HEAD_DATE="$(git log origin/master -n 1 --date=short | awk '{ if (/Date/) { print $2 } }')"
@@ -133,8 +136,10 @@ for pkg in $(awk '{print $1}' $TMPDIR/list); do
       DATE="$VERSION_DATE"
     fi
   fi
-  echo "$pkg: $DATE $REV" >&2
-done
+  if [ "$rev" != "$REV" ]; then
+    echo -e "$pkg:\n  $date $rev\n  $DATE $REV" >&2
+  fi
+done < $TMPDIR/list
 
 echo "Do these versions look reasonable? [y/N]"
 read answer

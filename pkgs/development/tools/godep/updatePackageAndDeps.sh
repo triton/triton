@@ -200,14 +200,16 @@ BEGIN {
 
   # Find the closing stmt and add any unadded fields
   if (/^  };/ && currentPkg != "") {
-    if (shouldSetDate) {
-      print "    date = \"" dates[currentPkg] "\";";
-    }
-    if (shouldSetRev) {
-      print "    rev = \"" revs[currentPkg] "\";";
-    }
-    if (shouldSetHash) {
-      print "    sha256 = \"" hashes[currentPkg] "\";";
+    if (exists[currentPkg]) {
+      if (shouldSetDate) {
+        print "    date = \"" dates[currentPkg] "\";";
+      }
+      if (shouldSetRev) {
+        print "    rev = \"" revs[currentPkg] "\";";
+      }
+      if (shouldSetHash) {
+        print "    sha256 = \"" hashes[currentPkg] "\";";
+      }
     }
     currentPkg = "";
   }

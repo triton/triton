@@ -458,7 +458,7 @@ let
 
     buildInputs = [
       datadog-go circbuf armon_go-metrics go-radix bolt go-dockerclient errwrap
-      go-checkpoint go-cleanhttp go-immutable-radix go-memdb ugorji.go
+      go-checkpoint go-cleanhttp go-immutable-radix go-memdb ugorji_go
       go-multierror go-syslog golang-lru hcl logutils memberlist
       net-rpc-msgpackrpc raft raft-boltdb scada-client serf yamux
       muxado dns cli mapstructure columnize crypto
@@ -906,7 +906,7 @@ let
     sha256 = "1gvgkx7llklz6plapb95fcql7d34i6j7anlvksqhdirpja465jnm";
   };
 
-  ugorji.go = buildFromGitHub {
+  ugorji_go = buildFromGitHub {
     date = "2015-12-01";
     rev = "357a44b2b13e2711a45e30016508134101477610";
     owner = "ugorji";
@@ -1347,7 +1347,7 @@ let
     owner = "coreos";
     repo = "go-etcd";
     sha256 = "0n78m4lwsjiaqhjizcsp25paj2l2d4fdr7c4i671ldvpggq76lrl";
-    propagatedBuildInputs = [ ugorji.go ];
+    propagatedBuildInputs = [ ugorji_go ];
   };
 
   go-flags = buildFromGitHub {
@@ -2175,7 +2175,7 @@ let
     owner = "hashicorp";
     repo = "memberlist";
     sha256 = "1fflijhhmrxmxgps7mb5pgg9a56hkzv0nqzx1gr3mv664gja0gm3";
-    propagatedBuildInputs = [ ugorji.go armon_go-metrics ];
+    propagatedBuildInputs = [ ugorji_go armon_go-metrics ];
   };
 
   memberlist_v2 = buildGoPackage rec {
@@ -2190,7 +2190,7 @@ let
       sha256 = "09lh79xqy7q0gy23x22lpfwihb5acr750vxl2fx0i4b88kq1vrzh";
     };
 
-    propagatedBuildInputs = [ ugorji.go armon_go-metrics ];
+    propagatedBuildInputs = [ ugorji_go armon_go-metrics ];
   };
 
   mesos-dns = buildFromGitHub {
@@ -2326,7 +2326,7 @@ let
     owner = "hashicorp";
     repo = "net-rpc-msgpackrpc";
     sha256 = "0sqx6zw211fjphj1j6w7bc5191csh2jn1wkihycsd4mk5kbwvjxp";
-    propagatedBuildInputs = [ ugorji.go go-multierror ];
+    propagatedBuildInputs = [ ugorji_go go-multierror ];
   };
 
   ngrok = buildFromGitHub {
@@ -3003,7 +3003,7 @@ let
     owner  = "hashicorp";
     repo   = "raft";
     sha256 = "0v824hqh1h53hh08zyncg67k8pqcd5igkzq66lfkmnjf6xlw19bd";
-    propagatedBuildInputs = [ armon_go-metrics ugorji.go ];
+    propagatedBuildInputs = [ armon_go-metrics ugorji_go ];
   };
 
   raft-boltdb = buildFromGitHub {
@@ -3012,7 +3012,7 @@ let
     owner  = "hashicorp";
     repo   = "raft-boltdb";
     sha256 = "0p609w6x0h6bapx4b0d91dxnp2kj7dv0534q4blyxp79shv2a8ia";
-    propagatedBuildInputs = [ bolt ugorji.go raft ];
+    propagatedBuildInputs = [ bolt ugorji_go raft ];
   };
 
   ratelimit = buildFromGitHub {
@@ -3138,7 +3138,7 @@ let
     sha256 = "0b8mhr1nv70pflh1z87x2ck0wj2y2k7pwvj6pvag5pfdamr1kvim";
 
     buildInputs = [
-      net circbuf armon_go-metrics ugorji.go go-syslog logutils mdns memberlist
+      net circbuf armon_go-metrics ugorji_go go-syslog logutils mdns memberlist
       dns cli mapstructure columnize
     ];
   };
@@ -3421,7 +3421,7 @@ let
       go-querystring hailocab.go-hostpool consul-api errwrap go-cleanhttp
       go-multierror go-syslog golang-lru hcl-old logutils serf hashicorp.uuid
       go-jmespath osext pq cli copystructure go-homedir mapstructure reflectwalk
-      columnize go-zookeeper ugorji.go crypto net oauth2 asn1-ber inf
+      columnize go-zookeeper ugorji_go crypto net oauth2 asn1-ber inf
     ];
   };
 

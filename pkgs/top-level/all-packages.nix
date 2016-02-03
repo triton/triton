@@ -765,6 +765,8 @@ guitarix = callPackage ../all-pkgs/guitarix {
 
 gupnp = callPackage ../all-pkgs/gupnp { };
 
+gupnp-av = callPackage ../all-pkgs/gupnp-av { };
+
 gvfs = callPackage ../all-pkgs/gvfs { };
 
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
@@ -2487,8 +2489,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   gummiboot = callPackage ../tools/misc/gummiboot { };
 
   gup = callPackage ../development/tools/build-managers/gup {};
-
-  gupnp_av = callPackage ../development/libraries/gupnp-av {};
 
   gupnp_igd = callPackage ../development/libraries/gupnp-igd {};
 

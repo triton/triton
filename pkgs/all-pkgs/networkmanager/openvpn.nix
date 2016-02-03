@@ -1,5 +1,5 @@
 { stdenv, fetchurl, openvpn, intltool, pkgconfig, networkmanager, libsecret
-, withGnome ? true, procps, module_init_tools
+, withGnome ? true, procps, module_init_tools, dbus_glib
 , gtk3, libgnome_keyring, networkmanagerapplet }:
 
 stdenv.mkDerivation rec {
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     sha256 = "132xwkgyfnpma7m6b06jhrd1g9xk5dlpx8alnsf03ls3z92bd0n9";
   };
 
-  buildInputs = [ openvpn networkmanager libsecret ]
+  buildInputs = [ openvpn networkmanager libsecret dbus_glib ]
     ++ stdenv.lib.optionals withGnome [ gtk3 libgnome_keyring
                                         networkmanagerapplet ];
 

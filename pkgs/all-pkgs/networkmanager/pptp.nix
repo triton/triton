@@ -1,6 +1,6 @@
 { stdenv, fetchTritonPatch, fetchurl, networkmanager, pptp, ppp, intltool
 , pkgconfig, substituteAll, gtk3, libgnome_keyring, networkmanagerapplet
-, libsecret, withGnome ? true }:
+, libsecret, withGnome ? true, dbus_glib }:
 
 stdenv.mkDerivation rec {
   name = "${pname}${if withGnome then "-gnome" else ""}-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     sha256 = "1gn1f8r32wznk4rsn2lg2slw1ccli00svz0fi4bx0qiylimlbyln";
   };
 
-  buildInputs = [ networkmanager pptp ppp libsecret ]
+  buildInputs = [ networkmanager pptp ppp libsecret dbus_glib ]
     ++ stdenv.lib.optionals withGnome [ gtk3 libgnome_keyring
                                         networkmanagerapplet ];
 

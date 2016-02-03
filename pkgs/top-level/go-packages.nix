@@ -848,16 +848,11 @@ let
     sha256 = "1iz4wjxc3zkj0xkfs88ig670gb08p1sd922l0ig2cxpjcfjp1y99";
   };
 
-  ginkgo = buildGoPackage rec {
-    rev = "5ed93e443a4b7dfe9f5e95ca87e6082e503021d2";
-    name = "ginkgo-${stdenv.lib.strings.substring 0 7 rev}";
-    goPackagePath = "github.com/onsi/ginkgo";
-    src = fetchFromGitHub {
-      inherit rev;
-      owner = "onsi";
-      repo = "ginkgo";
-      sha256 = "0ghrx5qmgvgb8cbvsj53v1ir4j9agilg4wyhpk5ikqdv6mmqly4h";
-    };
+  ginkgo = buildFromGitHub {
+    rev = "07d85e6b10c4289c7d612f9b13f45ba36f66d55b";
+    owner = "onsi";
+    repo = "ginkgo";
+    sha256 = "0yhl9mn22imrazi2z53ram3145rz09m0d1b1v86mz9iyxm1vahpy";
     subPackages = [ "./" ];  # don't try to build test fixtures
   };
 
@@ -1063,11 +1058,11 @@ let
   };
 
   goleveldb = buildFromGitHub {
-    rev = "1a9d62f03ea92815b46fcaab357cfd4df264b1a0";
-    date = "2015-08-19";
+    rev = "36d2ead1e477af53df038bdde5f7b5b3790c93dd";
+    date = "2016-02-01";
     owner = "syndtr";
     repo = "goleveldb";
-    sha256 = "04ywbif36fiah4fw0x2abr5q3p4fdhi6q57d5icc2mz03q889vhb";
+    sha256 = "1h7cm1lrd3y4s70flsnjwv553qrjklnkwrii866ygd1q5jdfi80s";
     propagatedBuildInputs = [ ginkgo gomega snappy ];
   };
 
@@ -1079,10 +1074,11 @@ let
   };
 
   gomega = buildFromGitHub {
-    rev    = "8adf9e1730c55cdc590de7d49766cb2acc88d8f2";
+    rev = "ad93e463829d54602c66e94813bc1eb9b10d454c";
     owner  = "onsi";
     repo   = "gomega";
-    sha256 = "1rf6cxn50d1pji3pv4q372s395r5nxwcgp405z2r2mfdkri4v3w4";
+    sha256 = "1b10anrsd243cncjih4l8xlkk8daxv0a86blnya0c8485v93vcgv";
+    buildInputs = [ protobuf ];
   };
 
   google-api-go-client = buildFromGitHub {
@@ -1523,11 +1519,11 @@ let
   };
 
   rcrowley_go-metrics = buildFromGitHub {
-    rev = "7839c01b09d2b1d7068034e5fe6e423f6ac5be22";
-    date = "2015-11-29";
+    rev = "51425a2415d21afadfd55cd93432c0bc69e9598d";
+    date = "2016-01-13";
     owner = "rcrowley";
     repo = "go-metrics";
-    sha256 = "1lx8zr9yl29h9agph3vwrx99398x3qi35fy1g0ys02ifxbxikx2i";
+    sha256 = "0lrmnac6wha1yxim9wd0lkks300rj9jrznfvl2xcyp2x427llhd8";
     propagatedBuildInputs = [ stathat ];
   };
 
@@ -3202,11 +3198,11 @@ let
   };
 
   stathat = buildFromGitHub {
-    date = "2013-03-14";
-    rev = "01d012b9ee2ecc107cb28b6dd32d9019ed5c1d77";
+    date = "2016-01-26";
+    rev = "cf69b0bcb80478755dc0ea1120b36000e35dcbbb";
     owner = "stathat";
     repo = "go";
-    sha256 = "0mrn70wjfcs4rfkmga3hbfqmbjk33skcsc8pyqxp02bzpwdpc4bi";
+    sha256 = "15pzhn5mxlbcamldkqh6z160ijrg1h9r5qlsrfi3cqdxhhr3c19s";
   };
 
   statos = buildFromGitHub {
@@ -3265,10 +3261,10 @@ let
 
   syncthing = buildFromGitHub rec {
     version = "0.12.16";
-    rev = "v${version}";
+    rev = "v0.12.17";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "0y64jz3h6k6fz1bn258kcwqvi7rlz0xriv5zi03kl61ablzi4xlh";
+    sha256 = "1sd2hdvkc21nkff65n41chrhqbsfy0hl2llzlpvh951m664kh3qv";
     buildFlags = [ "-tags noupgrade,release" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext

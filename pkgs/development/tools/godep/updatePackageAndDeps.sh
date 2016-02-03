@@ -96,13 +96,51 @@ concurrent "${ARGS[@]}"
 
 echo "Fetching package revisions..." >&2
 
-mkdir -p $TMPDIR/git
-cd $TMPDIR/git
-git init
-awk '{ if (system("git remote add " $1 " " $2) != 0) { exit 1 } }' $TMPDIR/list
+cd $TMPDIR
+awk '
+@load "filefuncs"
+BEGIN {
+  "pwd" | getline orig;
+  close("pwd");
+}
+{
+  if (chdir(orig) != 0) { exit 1 }
+  if (system("mkdir -p " $1) != 0) { exit 1 }
+  if (chdir($1) != 0) { exit 1 }
+  if (system("git init >/dev/null") != 0) { exit 1 }
+  if (system("git remote add origin " $2) != 0) { exit 1 }
+}
+' $TMPDIR/list
 
-ARGS=($(awk '{ print "- " $1 " git fetch " $1; }' $TMPDIR/list))
+fetch_git() {
+  cd $TMPDIR/$1
+  git fetch --tags
+}
+ARGS=($(awk '{ print "- " $1 " fetch_git " $1; }' $TMPDIR/list))
 concurrent "${ARGS[@]}"
+
+for pkg in $(awk '{print $1}' $TMPDIR/list); do
+  cd $TMPDIR/$pkg
+  VERSION="$(git tag | grep -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
+  HEAD_DATE="$(git log origin/master -n 1 --date=short | awk '{ if (/Date/) { print $2 } }')"
+  REV="$(git rev-parse origin/master)"
+  DATE="$HEAD_DATE"
+  if [ -n "$VERSION" ]; then
+    VERSION_DATE="$(git log "$VERSION" -n 1 --date=short | awk '{ if (/Date/) { print $2 } }')"
+    # Make sure we have had a release in the past 6 months
+    if [ "$(expr $(date -d "$HEAD_DATE" +'%s') - $(date -d "$VERSION_DATE" +'%s'))" -lt "15000000" ]; then
+      REV="$VERSION"
+      DATE="$VERSION_DATE"
+    fi
+  fi
+  echo "$pkg: $DATE $REV" >&2
+done
+
+echo "Do these versions look reasonable? [y/N]"
+read answer
+if [ "y" != "$answer" ] && [ "yes" != "$answer" ]; then
+  exit 1
+fi
 
 
 echo "Fetching package hashes..." >&2

@@ -658,6 +658,8 @@ gnome-menus = callPackage ../all-pkgs/gnome-menus { };
 
 gnome-online-accounts = callPackage ../all-pkgs/gnome-online-accounts { };
 
+gnome-online-miners = callPackage ../all-pkgs/gnome-online-miners { };
+
 gnome-screenshot = callPackage ../all-pkgs/gnome-screenshot { };
 
 gnome-session = callPackage ../all-pkgs/gnome-session { };

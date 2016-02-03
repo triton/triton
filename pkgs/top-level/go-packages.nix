@@ -27,11 +27,11 @@ let
   };
 
   crypto = buildFromGitHub {
-    rev      = "3760e016850398b85094c4c99e955b8c3dea5711";
-    date     = "2015-01-13";
+    rev = "1f22c0103821b9390939b6776727195525381532";
+    date = "2016-01-26";
     owner    = "golang";
     repo     = "crypto";
-    sha256   = "1zvm2rdfs8ljiswaddlhqbapdbk9v8wv12vpmg9dk9q3bmqx1af8";
+    sha256 = "1acy12f396sr3lrnbcnym5q72qnlign5bagving41qijzjnc219m";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -56,21 +56,21 @@ let
   };
 
   image = buildFromGitHub {
-    rev = "baddd3465a05d84a6d8d3507547a91cb188c81ea";
-    date = "2015-09-16";
+    rev = "7c492694a6443a92fd349fda0c4c7b587040f161";
+    date = "2016-01-02";
     owner = "golang";
     repo = "image";
-    sha256 = "0rdknh8x74ds42rdqwhix3hzm954r93xnm26qiykr7mhj9wvn098";
+    sha256 = "05c5qrph5r5ikzxw1mlgihx8396hawv38q2syjvwbxdiib9gfg9k";
     goPackagePath = "golang.org/x/image";
     goPackageAliases = [ "github.com/golang/image" ];
   };
 
   net = buildFromGitHub {
-    rev    = "2e9cee70ee697e0a2ef894b560dda50dec7dff58";
-    date   = "2015-01-21";
+    rev = "6ccd6698c634f5d835c40c1c31848729e0cecda1";
+    date = "2016-02-02";
     owner  = "golang";
     repo   = "net";
-    sha256 = "0063a9mqsairl62gs48x2maclka4gndakz1fqzcqsmsd7p483rxh";
+    sha256 = "10gnjjcgzn7z9l4hyqlammilxigln4m7jriv5apcsdk81ywbjrb5";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -93,30 +93,30 @@ let
 
 
   protobuf = buildFromGitHub {
-    rev = "68415e7123da32b07eab49c96d2c4d6158360e9b";
-    date = "2015-12-06";
+    rev = "b982704f8bb716bb608144408cff30e15fbde841";
+    date = "2016-02-02";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "0gi2r9n7fbr7vz0rkvngnrc1y0bbk1zyqlph023s76w8d98ykxx2";
+    sha256 = "0wm0kqsibk7g4rvn86mlm1d8h220hbz8xrdx4k0jxrzsz86jjbdp";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [ "code.google.com/p/goprotobuf" ];
   };
 
   snappy = buildFromGitHub {
-    rev    = "723cc1e459b8eea2dea4583200fd60757d40097a";
-    date   = "2015-07-21";
+    rev = "1963d058044b19e16595f80d5050fa54e2070438";
+    date = "2016-01-29";
     owner  = "golang";
     repo   = "snappy";
-    sha256 = "0bprq0qb46f5511b5scrdqqzskqqi2z8b4yh3216rv0n1crx536h";
+    sha256 = "0rgsizd4xz0jv03k3s6wmyrq3s1hd37fd797qvib9dh9056c6f06";
     goPackageAliases = [ "code.google.com/p/snappy-go/snappy" ];
   };
 
   sys = buildFromGitHub {
-    rev    = "833a04a10549a95dc34458c195cbad61bbb6cb4d";
-    date   = "2015-12-10";
+    rev = "eb2c74142fd19a79b3f237334c7384d5167b1b46";
+    date = "2016-01-26";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "0lfam5kj2jl54cmkgr155mgidxgsxph3cyvw1zi0rbdkaj58crp1";
+    sha256 = "0rzd48xzsmcg3cy222cz5hpai8xm74zhb185afhjhpib1r19gqfl";
     goPackagePath = "golang.org/x/sys";
     goPackageAliases = [
       "github.com/golang/sys"
@@ -124,11 +124,11 @@ let
   };
 
   text = buildFromGitHub {
-    rev = "6d3c22c4525a4da167968fa2479be5524d2e8bd0";
-    date = "2016-01-25";
+    rev = "de304c27a75f7b10cc2530c503d4526a2fd37070";
+    date = "2016-02-03";
     owner = "golang";
     repo = "text";
-    sha256 = "0bssiv428kdlw3xpr3fh7is3w68k8banmc80v1lzhvz16bmml3n2";
+    sha256 = "0z3q5h4k6glziz6clq7gr7dxj4f1898g90laaif6r3krh9ai2wdw";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
   };

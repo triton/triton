@@ -823,6 +823,8 @@ libgdata = callPackage ../all-pkgs/libgdata { };
 
 libgee = callPackage ../all-pkgs/libgee { };
 
+libgfbgraph = callPackage ../all-pkgs/libgfbgraph { };
+
 libgnomekbd = callPackage ../all-pkgs/libgnomekbd { };
 
 libgphoto2 = callPackage ../all-pkgs/libgphoto2 { };

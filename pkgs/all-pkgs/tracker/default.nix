@@ -29,8 +29,11 @@
 , libexif
 , libgee
 , libgsf
+, libgxps
 , libjpeg
+, libmediaart
 , libnotify
+, libosinfo
 , libpng
 , librsvg
 , libtiff
@@ -45,6 +48,7 @@
 , totem-pl-parser
 , upower
 , vala
+, zlib
 }:
 
 with {
@@ -55,12 +59,12 @@ with {
 stdenv.mkDerivation rec {
   name = "tracker-${version}";
   versionMajor = "1.6";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/tracker/${versionMajor}/${name}.tar.xz";
-    sha256 = "12p2r5k7b19ikdd2cjljzr4y115rlckx064wv663zx14f9i2j9vy";
+    sha256 = "1vf1y2jn17yz70gfm5xsprydga67848izv3bymnq6js59wzxfgk5";
   };
 
   propagatedUserEnvPkgs = [
@@ -69,11 +73,9 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
-    gobject-introspection
     intltool
     itstool
     libxslt
-    vala
   ];
 
   buildInputs = [
@@ -92,6 +94,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     giflib
     glib
+    gobject-introspection
     gsettings-desktop-schemas
     libgee
     totem-pl-parser
@@ -105,13 +108,13 @@ stdenv.mkDerivation rec {
     #libcue
     libexif
     #libgrss
-    #libgxps
     libgsf
+    libgxps
     #libiptcdata
     libjpeg
-    #libmediaart
+    libmediaart
     libnotify
-    #libosinfo
+    libosinfo
     libpng
     librsvg
     libtiff
@@ -126,6 +129,8 @@ stdenv.mkDerivation rec {
     #thunderbird
     upower
     #utillinux
+    vala
+    zlib
   ];
 
   preConfigure = ''
@@ -155,14 +160,13 @@ stdenv.mkDerivation rec {
     (enFlag "upower" (upower != null) null)
     "--disable-hal"
     (enFlag "network-manager" (networkmanager != null) null)
-    # TODO: libmediaart support
-    "--disable-libmediaart"
+    (enFlag "libmediaart" (libmediaart != null) null)
     (enFlag "libexif" (libexif != null) null)
     # TODO: libiptcdata support
     "--disable-libiptcdata"
     (enFlag "exempi" (exempi != null) null)
     "--enable-meegotouch"
-    "--enable-miner-fs"
+    "--disable-miner-fs"
     "--enable-extract"
     "--enable-tracker-writeback"
     "--enable-miner-apps"
@@ -186,11 +190,9 @@ stdenv.mkDerivation rec {
     "--enable-cfg-man-pages"
     "--enable-unzip-ps-gz-files"
     (enFlag "poppler" (poppler != null) null)
-    # TODO: libgxps support
-    "--disable-libgxps"
+    (enFlag "libgxps" (libgxps != null) null)
     (enFlag "libgsf" (libgsf != null) null)
-    # TODO: libosinfo support
-    "--disable-libosinfo"
+    (enFlag "libosinfo" (libosinfo != null) null)
     (enFlag "libgif" (giflib != null) null)
     (enFlag "libjpeg" (libjpeg != null) null)
     (enFlag "libtiff" (libtiff != null) null)

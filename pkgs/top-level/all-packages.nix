@@ -853,6 +853,10 @@ libjpeg =
   else
     libjpeg_original;
 
+libmediaart = callPackage ../all-pkgs/libmediaart {
+  qt5 = null;
+};
+
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
 libosinfo = callPackage ../all-pkgs/libosinfo { };

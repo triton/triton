@@ -763,6 +763,8 @@ guitarix = callPackage ../all-pkgs/guitarix {
   fftw = fftwSinglePrec;
 };
 
+gupnp = callPackage ../all-pkgs/gupnp { };
+
 gvfs = callPackage ../all-pkgs/gvfs { };
 
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
@@ -2485,8 +2487,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   gummiboot = callPackage ../tools/misc/gummiboot { };
 
   gup = callPackage ../development/tools/build-managers/gup {};
-
-  gupnp = callPackage ../development/libraries/gupnp { };
 
   gupnp_av = callPackage ../development/libraries/gupnp-av {};
 

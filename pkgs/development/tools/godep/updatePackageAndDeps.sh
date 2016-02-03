@@ -161,12 +161,14 @@ generate_hash() {
   pkg="$1"
   rev="$2"
 
-  cd $TMPDIR/$pkg
+  cd "$TMPDIR/$pkg"
   git checkout "$rev" >/dev/null 2>&1
   rm -r .git
   mkdir -p "$TMPDIR/tars/$pkg"
   tar cf "$TMPDIR/tars/$pkg/tmp.tar" $(find . -maxdepth 1 -mindepth 1)
   HASH="$(nix-prefetch-url --unpack "file://$TMPDIR/tars/$pkg/tmp.tar" 2>/dev/null)"
+  rm "$TMPDIR/tars/$pkg/tmp.tar"
+  rm -r "$TMPDIR/$pkg"
 
   exec 3<>"$TMPDIR/updates.lock"
   flock -x 3

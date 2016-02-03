@@ -7418,7 +7418,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   libgig = callPackage ../development/libraries/libgig { };
 
-  libgnome_keyring = callPackage ../development/libraries/libgnome-keyring { };
+  libgnome-keyring = callPackage ../development/libraries/libgnome-keyring { };
+  libgnome_keyring = libgnome-keyring; # Deprecated alias
 
   libgnurl = callPackage ../development/libraries/libgnurl { };
 

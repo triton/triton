@@ -952,7 +952,7 @@ networkmanager_openvpn = callPackage ../all-pkgs/networkmanager/openvpn.nix { };
 
 networkmanager_pptp = callPackage ../all-pkgs/networkmanager/pptp.nix { };
 
-networkmanager_l2tp = callPackage ../all-pkgs/networkmanager/l2tp.nix { };
+networkmanager-l2tp = callPackage ../all-pkgs/networkmanager-l2tp { };
 
 networkmanager_vpnc = callPackage ../all-pkgs/networkmanager/vpnc.nix { };
 

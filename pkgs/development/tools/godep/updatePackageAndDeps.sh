@@ -127,7 +127,7 @@ while read line; do
 
   cd $TMPDIR/$pkg
 
-  VERSION="$(git tag | grep -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
+  VERSION="$(git tag --sort "v:refname" | grep -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
   HEAD_DATE="$(git log origin/master -n 1 --date=short | awk '{ if (/Date/) { print $2 } }')"
   REV="$(git rev-parse origin/master)"
   DATE="$HEAD_DATE"

@@ -1001,6 +1001,8 @@ poppler = callPackage ../all-pkgs/poppler {
   qt5 = null;
 };
 
+psmisc = callPackage ../all-pkgs/psmisc { };
+
 libpulseaudio = pulseaudioFull.override {
   prefix = "lib";
 };
@@ -3489,8 +3491,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   polygraph = callPackage ../tools/networking/polygraph { };
 
   progress = callPackage ../tools/misc/progress { };
-
-  psmisc = callPackage ../os-specific/linux/psmisc { };
 
   pstoedit = callPackage ../tools/graphics/pstoedit { };
 

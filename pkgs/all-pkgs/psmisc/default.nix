@@ -1,14 +1,26 @@
-{stdenv, fetchurl, ncurses}:
+{ stdenv
+, autoreconfHook
+, fetchurl
+
+, ncurses
+}:
 
 assert stdenv.isLinux;
 
 stdenv.mkDerivation rec {
-  name = "psmisc-22.21";
+  name = "psmisc-${version}";
+  version = "22.21";
 
   src = fetchurl {
-    url = "mirror://sourceforge/psmisc/${name}.tar.gz";
-    sha256 = "0nhlm1vrrwn4a845p6y4nnnb4liq70n74zbdd5dq844jc6nkqclp";
+    url = "https://gitlab.com/psmisc/psmisc/repository/"
+        + "archive.tar.gz?ref=v${version}";
+    name = "${name}.tar.gz";
+    sha256 = "15k506r9p5d9clrcgis6vdh6pqk77af5a8lf233cqjc0465n5g9y";
   };
+
+  nativeBuildInputs = [
+    autoreconfHook
+  ];
 
   buildInputs = [ncurses];
 

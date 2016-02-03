@@ -7001,6 +7001,8 @@ zsh = callPackage ../all-pkgs/zsh { };
     guileBindings = config.gnutls.guile or false;
   };
 
+  gom = callPackage ../all-pkgs/gom { };
+
   gpac = callPackage ../applications/video/gpac { };
 
   gpgme = callPackage ../development/libraries/gpgme {

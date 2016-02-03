@@ -817,6 +817,8 @@ imagemagick_light = imagemagick.override {
 
 imagemagick = callPackage ../all-pkgs/imagemagick { };
 
+inkscape = callPackage ../all-pkgs/inkscape { };
+
 iputils = callPackage ../all-pkgs/iputils { };
 
 json-glib = callPackage ../all-pkgs/json-glib { };
@@ -12148,11 +12150,6 @@ zsh = callPackage ../all-pkgs/zsh { };
     # XXX These are the PyOpenGL dependencies, which we need here.
     inherit (pythonPackages) pyopengl;
     inherit (pythonPackages) pillow;
-  };
-
-  inkscape = callPackage ../applications/graphics/inkscape {
-    inherit (pythonPackages) lxml;
-    lcms = lcms2;
   };
 
   inspectrum = callPackage ../applications/misc/inspectrum { };

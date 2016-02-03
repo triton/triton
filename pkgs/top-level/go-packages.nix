@@ -288,7 +288,7 @@ let
     sha256 = "0ny7nvilrxmmzcdvpivwyrjkynnhc22c5gdrxzs421jly35jw8jx";
     buildFlags = [ "-tags all" ];
     propagatedBuildInputs = [ protobuf goleveldb kagome gtreap bolt text
-     rcrowley.go-metrics bitset segment go-porterstemmer ];
+     rcrowley_go-metrics bitset segment go-porterstemmer ];
   };
 
   binarydist = buildFromGitHub {
@@ -457,7 +457,7 @@ let
     sha256 = "0m0ajq6sbfax2nqfwjjqdv12whiblhw75jkpzg8i4fl85i2hridm";
 
     buildInputs = [
-      datadog-go circbuf armon.go-metrics go-radix bolt go-dockerclient errwrap
+      datadog-go circbuf armon_go-metrics go-radix bolt go-dockerclient errwrap
       go-checkpoint go-cleanhttp go-immutable-radix go-memdb ugorji.go
       go-multierror go-syslog golang-lru hcl logutils memberlist
       net-rpc-msgpackrpc raft raft-boltdb scada-client serf yamux
@@ -1522,7 +1522,7 @@ let
     buildInputs = [ go-immutable-radix ];
   };
 
-  rcrowley.go-metrics = buildFromGitHub {
+  rcrowley_go-metrics = buildFromGitHub {
     rev = "7839c01b09d2b1d7068034e5fe6e423f6ac5be22";
     date = "2015-11-29";
     owner = "rcrowley";
@@ -1531,7 +1531,7 @@ let
     propagatedBuildInputs = [ stathat ];
   };
 
-  armon.go-metrics = buildFromGitHub {
+  armon_go-metrics = buildFromGitHub {
     date = "2015-12-07";
     rev = "06b60999766278efd6d2b5d8418a58c3d5b99e87";
     owner = "armon";
@@ -2179,7 +2179,7 @@ let
     owner = "hashicorp";
     repo = "memberlist";
     sha256 = "1fflijhhmrxmxgps7mb5pgg9a56hkzv0nqzx1gr3mv664gja0gm3";
-    propagatedBuildInputs = [ ugorji.go armon.go-metrics ];
+    propagatedBuildInputs = [ ugorji.go armon_go-metrics ];
   };
 
   memberlist_v2 = buildGoPackage rec {
@@ -2194,7 +2194,7 @@ let
       sha256 = "09lh79xqy7q0gy23x22lpfwihb5acr750vxl2fx0i4b88kq1vrzh";
     };
 
-    propagatedBuildInputs = [ ugorji.go armon.go-metrics ];
+    propagatedBuildInputs = [ ugorji.go armon_go-metrics ];
   };
 
   mesos-dns = buildFromGitHub {
@@ -2350,7 +2350,7 @@ let
     '';
 
     buildInputs = [
-      git log4go websocket go-vhost mousetrap termbox-go rcrowley.go-metrics
+      git log4go websocket go-vhost mousetrap termbox-go rcrowley_go-metrics
       yaml-v1 go-bindata.bin go-update-v0 binarydist osext
     ];
 
@@ -3007,7 +3007,7 @@ let
     owner  = "hashicorp";
     repo   = "raft";
     sha256 = "0v824hqh1h53hh08zyncg67k8pqcd5igkzq66lfkmnjf6xlw19bd";
-    propagatedBuildInputs = [ armon.go-metrics ugorji.go ];
+    propagatedBuildInputs = [ armon_go-metrics ugorji.go ];
   };
 
   raft-boltdb = buildFromGitHub {
@@ -3107,7 +3107,7 @@ let
     owner  = "hashicorp";
     repo   = "scada-client";
     sha256 = "13rzscxn866kzrfjpdaxyqfg8p12rxyd62nzw7z6gzsl4lg3q8m1";
-    buildInputs = [ armon.go-metrics net-rpc-msgpackrpc yamux ];
+    buildInputs = [ armon_go-metrics net-rpc-msgpackrpc yamux ];
   };
 
   seelog = buildFromGitHub {
@@ -3142,7 +3142,7 @@ let
     sha256 = "0b8mhr1nv70pflh1z87x2ck0wj2y2k7pwvj6pvag5pfdamr1kvim";
 
     buildInputs = [
-      net circbuf armon.go-metrics ugorji.go go-syslog logutils mdns memberlist
+      net circbuf armon_go-metrics ugorji.go go-syslog logutils mdns memberlist
       dns cli mapstructure columnize
     ];
   };
@@ -3167,7 +3167,7 @@ let
     sha256 = "01vac6bd71wky5jbd5k4a0x665bjn1cpmw7p655jrdcn5757c2lv";
 
     buildInputs = [
-      go-etcd rcrowley.go-metrics dns go-systemd prometheus.client_golang
+      go-etcd rcrowley_go-metrics dns go-systemd prometheus.client_golang
     ];
   };
 
@@ -3272,7 +3272,7 @@ let
     buildFlags = [ "-tags noupgrade,release" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext
-      goleveldb suture qart crypto net text rcrowley.go-metrics
+      goleveldb suture qart crypto net text rcrowley_go-metrics
     ];
     postPatch = ''
       # Mostly a cosmetic change
@@ -3420,7 +3420,7 @@ let
     sha256 = "1bvn50k0k9cdhj09rx8hpbqgdl5nhq8wf0bis8bf2ds27wcx88jy";
 
     buildInputs = [
-      armon.go-metrics go-radix govalidator aws-sdk-go etcd-client
+      armon_go-metrics go-radix govalidator aws-sdk-go etcd-client
       duo_api_golang structs ini ldap mysql gocql snappy go-github
       go-querystring hailocab.go-hostpool consul-api errwrap go-cleanhttp
       go-multierror go-syslog golang-lru hcl-old logutils serf hashicorp.uuid

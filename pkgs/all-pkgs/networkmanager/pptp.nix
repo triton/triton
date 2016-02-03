@@ -23,17 +23,13 @@ stdenv.mkDerivation rec {
 
   postConfigure = "sed 's/-Werror//g' -i Makefile */Makefile";
 
-  patches =
-    [ ( substituteAll {
-        src =
-          (fetchTritonPatch {
-            rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
-            file = "networkmanager/pptp-purity.patch";
-            sha256 = "8d3359767c1acb8cf36eff094763b8f9ce0a860e2b20f585e0922ee2c4750c23";
-          });
-        inherit ppp pptp;
-      })
-    ];
+  patches = [
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "networkmanager/pptp-purity.patch";
+      sha256 = "8d3359767c1acb8cf36eff094763b8f9ce0a860e2b20f585e0922ee2c4750c23";
+    })
+  ];
 
   meta = {
     description = "PPtP plugin for NetworkManager";

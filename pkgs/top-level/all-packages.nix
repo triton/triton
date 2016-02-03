@@ -652,6 +652,8 @@ gnome-control-center = callPackage ../all-pkgs/gnome-control-center { };
 
 gnome-desktop = callPackage ../all-pkgs/gnome-desktop { };
 
+gnome-documents = callPackage ../all-pkgs/gnome-documents { };
+
 gnome-keyring = callPackage ../all-pkgs/gnome-keyring { };
 
 gnome-menus = callPackage ../all-pkgs/gnome-menus { };

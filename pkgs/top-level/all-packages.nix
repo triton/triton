@@ -908,6 +908,8 @@ libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
 libwacom = callPackage ../all-pkgs/libwacom { };
 
+libzapojit = callPackage ../all-pkgs/libzapojit { };
+
 mixxx = callPackage ../all-pkgs/mixxx {
   inherit (vamp) vampSDK;
 };

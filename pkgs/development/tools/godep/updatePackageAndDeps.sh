@@ -45,7 +45,12 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
       if pkg ? goPackagePath then
         pkgs.lib.foldl
           (attr: dep: attr // listPkgAndDeps dep)
-          { "${pkg.goPackagePath}" = { inherit (pkg) rev; date = pkg.date or "nodate"; }; }
+          { "${pkg.goPackagePath}" = {
+            inherit (pkg) rev;
+            date = pkg.date or "nodate";
+            name = pkgs.lib.head (pkgs.lib.attrNames (pkgs.lib.filterAttrs
+              (n: d: d ? goPackagePath && d.goPackagePath == pkg.goPackagePath) pkgs.goPackages));
+          }; }
           (allBuildInputs pkg)
       else { };
     combinedList = pkgs.lib.foldl
@@ -53,7 +58,7 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
       { }
       pkgList;
     pkgOutput = pkgs.lib.mapAttrsToList
-      (n: d: "${n} ${d.rev} ${d.date}\n") combinedList;
+      (n: d: "${n} ${d.rev} ${d.date} ${d.name}\n") combinedList;
   in
     pkgs.writeText "current-go-package-list" pkgOutput
 '
@@ -96,21 +101,16 @@ concurrent "${ARGS[@]}"
 
 echo "Fetching package revisions..." >&2
 
-cd $TMPDIR
-awk '
-@load "filefuncs"
-BEGIN {
-  "pwd" | getline orig;
-  close("pwd");
-}
-{
-  if (chdir(orig) != 0) { exit 1 }
-  if (system("mkdir -p " $1) != 0) { exit 1 }
-  if (chdir($1) != 0) { exit 1 }
-  if (system("git init >/dev/null") != 0) { exit 1 }
-  if (system("git remote add origin " $2) != 0) { exit 1 }
-}
-' $TMPDIR/list
+while read line; do
+  pkg="$(echo "$line" | awk '{print $1}')"
+  url="$(echo "$line" | awk '{print $2}')"
+
+  mkdir -p "$TMPDIR/$pkg"
+  cd "$TMPDIR/$pkg"
+  git init >/dev/null
+  git remote add origin "$url"
+
+done < $TMPDIR/list
 
 fetch_git() {
   cd $TMPDIR/$1
@@ -123,7 +123,10 @@ while read line; do
   pkg="$(echo "$line" | awk '{print $1}')"
   rev="$(echo "$line" | awk '{print $3}')"
   date="$(echo "$line" | awk '{print $4}')"
+  name="$(echo "$line" | awk '{print $5}')"
+
   cd $TMPDIR/$pkg
+
   VERSION="$(git tag | grep -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
   HEAD_DATE="$(git log origin/master -n 1 --date=short | awk '{ if (/Date/) { print $2 } }')"
   REV="$(git rev-parse origin/master)"
@@ -136,8 +139,13 @@ while read line; do
       DATE="$VERSION_DATE"
     fi
   fi
+
   if [ "$rev" != "$REV" ]; then
     echo -e "$pkg:\n  $date $rev\n  $DATE $REV" >&2
+    if [ -n "$VERSION" ]; then
+      DATE="nodate"
+    fi
+    echo "$pkg $REV $DATE $name" >> $TMPDIR/updates
   fi
 done < $TMPDIR/list
 
@@ -148,4 +156,80 @@ if [ "y" != "$answer" ] && [ "yes" != "$answer" ]; then
 fi
 
 
-echo "Fetching package hashes..." >&2
+echo "Generating package hashes..." >&2
+generate_hash() {
+  pkg="$1"
+  rev="$2"
+
+  cd $TMPDIR/$pkg
+  git checkout "$rev" >/dev/null 2>&1
+  rm -r .git
+  tar cf $TMPDIR/tmp.tar $(find . -maxdepth 1 -mindepth 1)
+  HASH="$(nix-prefetch-url --unpack file://$TMPDIR/tmp.tar 2>/dev/null)"
+
+  exec 3<>"$TMPDIR/updates.lock"
+  flock -x 3
+  sed -i "s, $rev , $rev $HASH ,g" "$TMPDIR/updates"
+  exec 3>&-
+}
+ARGS=($(awk '{ print "- " $1 " generate_hash " $1 " " $2; }' $TMPDIR/updates))
+concurrent "${ARGS[@]}"
+
+export TMPDIR
+awk '
+BEGIN {
+  updateFile=ENVIRON["TMPDIR"] "/updates";
+  while((getline line < updateFile) > 0) {
+    split(line, splitLine);
+    exists[splitLine[5]] = 1;
+    revs[splitLine[5]] = splitLine[2];
+    hashes[splitLine[5]] = splitLine[3];
+    dates[splitLine[5]] = splitLine[4];
+  }
+  close(updateFile);
+  currentPkg = "";
+}
+{
+  # Find a package opening stmt
+  if (/^  [^ ]*[ ]*=/) {
+    currentPkg = $1;
+    shouldSetDate = dates[$1] != "nodate";
+    shouldSetRev = 1;
+    shouldSetHash = 1;
+  }
+
+  # Find the closing stmt and add any unadded fields
+  if (/^  };/ && currentPkg != "") {
+    if (shouldSetDate) {
+      print "    date = \"" dates[currentPkg] "\";";
+    }
+    if (shouldSetRev) {
+      print "    rev = \"" revs[currentPkg] "\";";
+    }
+    if (shouldSetHash) {
+      print "    sha256 = \"" hashes[currentPkg] "\";";
+    }
+    currentPkg = "";
+  }
+
+  if (/^    date[ ]*=[ ]*/ && exists[currentPkg]) {
+    if (shouldSetDate) {
+      print "    date = \"" dates[currentPkg] "\";";
+    }
+    shouldSetDate = 0;
+  } else if (/^    rev[ ]*=[ ]*/ && exists[currentPkg]) {
+    if (shouldSetRev) {
+      print "    rev = \"" revs[currentPkg] "\";";
+    }
+    shouldSetRev = 0;
+  } else if (/^    sha256[ ]*=[ ]*/ && exists[currentPkg]) {
+    if (shouldSetHash) {
+      print "    sha256 = \"" hashes[currentPkg] "\";";
+    }
+    shouldSetHash = 0;
+  } else {
+    print $0;
+  }
+}
+' $TOP_LEVEL/pkgs/top-level/go-packages.nix >$TMPDIR/go-packages.nix
+mv "$TMPDIR/go-packages.nix" "$TOP_LEVEL/pkgs/top-level/go-packages.nix"

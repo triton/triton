@@ -767,6 +767,8 @@ gupnp = callPackage ../all-pkgs/gupnp { };
 
 gupnp-av = callPackage ../all-pkgs/gupnp-av { };
 
+gupnp-igd = callPackage ../all-pkgs/gupnp-igd { };
+
 gvfs = callPackage ../all-pkgs/gvfs { };
 
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
@@ -2489,8 +2491,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   gummiboot = callPackage ../tools/misc/gummiboot { };
 
   gup = callPackage ../development/tools/build-managers/gup {};
-
-  gupnp_igd = callPackage ../development/libraries/gupnp-igd {};
 
   gupnp-tools = callPackage ../tools/networking/gupnp-tools {};
 

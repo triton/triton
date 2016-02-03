@@ -958,7 +958,7 @@ networkmanager_vpnc = callPackage ../all-pkgs/networkmanager/vpnc.nix { };
 
 networkmanager_openconnect = callPackage ../all-pkgs/networkmanager/openconnect.nix { };
 
-networkmanagerapplet = newScope gnome ../all-pkgs/network-manager-applet { };
+networkmanager-applet = newScope gnome ../all-pkgs/networkmanager-applet { };
 
 ninja = callPackage ../all-pkgs/ninja { };
 

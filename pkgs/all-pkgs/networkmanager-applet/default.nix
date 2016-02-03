@@ -27,6 +27,11 @@
 , udev
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "network-manager-applet-${version}";
   versionMajor = "1.0";
@@ -38,19 +43,6 @@ stdenv.mkDerivation rec {
           "${name}.tar.xz";
     sha256 = "1szh5jyijxm6z55irkp5s44pwah0nikss40mx7pvpk38m8zaqidh";
   };
-
-  configureFlags = [
-    "--sysconfdir=/etc"
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--enable-iso-codes"
-    "--disable-migration"
-    "--enable-introspection"
-    "--enable-schemas-compile"
-    "--enable-more-warnings"
-    "--with-bluetooth"
-    "--without-modem-manager-1"
-  ];
 
   propagatedUserEnvPkgs = [
     gconf
@@ -83,22 +75,41 @@ stdenv.mkDerivation rec {
     udev
   ];
 
+  configureFlags = [
+    "--sysconfdir=/etc"
+    "--disable-maintainer-mode"
+    "--enable-nls"
+    "--enable-iso-codes"
+    "--disable-migration"
+    "--enable-introspection"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    "--enable-schemas-compile"
+    "--enable-more-warnings"
+    "--with-bluetooth"
+    "--without-modem-manager-1"
+  ];
+
   makeFlags = [
     ''CFLAGS=-DMOBILE_BROADBAND_PROVIDER_INFO=\"${mobile_broadband_provider_info}/share/mobile-broadband-provider-info/serviceproviders.xml\"''
   ];
 
   preInstall = ''
-    installFlagsArray=( "sysconfdir=$out/etc" )
+    installFlagsArray+=( "sysconfdir=$out/etc" )
   '';
 
   preFixup = ''
     wrapProgram "$out/bin/nm-applet" \
-      --prefix GIO_EXTRA_MODULES : "${glib-networking}/lib/gio/modules:${dconf}/lib/gio/modules" \
-      --prefix XDG_DATA_DIRS : "${gtk3}/share:$out/share:$GSETTINGS_SCHEMAS_PATH" \
+      --prefix GIO_EXTRA_MODULES : "${glib-networking}/lib/gio/modules" \
+      --prefix GIO_EXTRA_MODULES : "${dconf}/lib/gio/modules" \
+      --prefix XDG_DATA_DIRS : "${gtk3}/share" \
+      --prefix XDG_DATA_DIRS : "$out/share" \
+      --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH" \
       --set GCONF_CONFIG_SOURCE "xml::~/.gconf" \
       --prefix PATH ":" "${gconf}/bin"
     wrapProgram "$out/bin/nm-connection-editor" \
-      --prefix XDG_DATA_DIRS : "${gtk3}/share:$out/share:$GSETTINGS_SCHEMAS_PATH"
+      --prefix XDG_DATA_DIRS : "${gtk3}/share" \
+      --prefix XDG_DATA_DIRS : "$out/share" \
+      --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH"
   '';
 
   meta = with stdenv.lib; {

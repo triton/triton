@@ -7,6 +7,7 @@
 , libsoup
 , libxml2
 , libuuid
+, vala
 }:
 
 with {
@@ -31,6 +32,7 @@ stdenv.mkDerivation rec {
     libsoup
     libuuid
     libxml2
+    vala
   ];
 
   configureFlags = [

@@ -48,8 +48,11 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
           { "${pkg.goPackagePath}" = {
             inherit (pkg) rev;
             date = pkg.date or "nodate";
-            name = pkgs.lib.head (pkgs.lib.attrNames (pkgs.lib.filterAttrs
-              (n: d: d ? goPackagePath && d.goPackagePath == pkg.goPackagePath) pkgs.goPackages));
+            name = let
+              names = pkgs.lib.attrNames (pkgs.lib.filterAttrs
+              (n: d: d ? goPackagePath && d.goPackagePath == pkg.goPackagePath) pkgs.goPackages);
+            in if pkgs.lib.length names > 0 then pkgs.lib.head names else
+              throw "Found no name for: ${pkg.goPackagePath}";
           }; }
           (allBuildInputs pkg)
       else { };

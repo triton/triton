@@ -30,11 +30,11 @@ with {
   config = mkIf config.services.gnome-keyring.enable {
 
     environment.systemPackages = [
-      pkgs.gnome_keyring
+      pkgs.gnome-keyring
     ];
 
     services.dbus.packages = [
-      pkgs.gnome_keyring
+      pkgs.gnome-keyring
     ];
 
   };

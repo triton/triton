@@ -1084,6 +1084,8 @@ rtorrent = callPackage ../all-pkgs/rtorrent { };
 
 sakura = callPackage ../all-pkgs/sakura { };
 
+seahorse = callPackage ../all-pkgs/seahorse { };
+
 sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sublime-text = callPackage ../all-pkgs/sublime-text { };

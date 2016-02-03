@@ -689,11 +689,15 @@ granite = callPackage ../all-pkgs/granite { };
 
 grilo = callPackage ../all-pkgs/grilo { };
 
+grilo-plugins = callPackage ../all-pkgs/grilo-plugins { };
+
 gsettings-desktop-schemas = callPackage ../all-pkgs/gsettings-desktop-schemas { };
 
 gsm = callPackage ../all-pkgs/gsm { };
 
 gsound = callPackage ../all-pkgs/gsound { };
+
+gssdp = callPackage ../all-pkgs/gssdp { };
 
 gst-ffmpeg = callPackage ../all-pkgs/gst-ffmpeg { };
 
@@ -2460,8 +2464,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   gsmartcontrol = callPackage ../tools/misc/gsmartcontrol {
     inherit (gnome) libglademm;
   };
-
-  gssdp = callPackage ../development/libraries/gssdp { };
 
   gt5 = callPackage ../tools/system/gt5 { };
 

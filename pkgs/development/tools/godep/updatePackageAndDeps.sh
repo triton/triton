@@ -237,7 +237,7 @@ BEGIN {
       print "    rev = \"" revs[currentPkg] "\";";
     }
     shouldSetRev = 0;
-  } else if (/^    sha256[ ]*=[ ]*/ && exists[currentPkg]) {
+  } else if (/^    [ ]*sha256[ ]*=[ ]*/ && exists[currentPkg]) {
     if (shouldSetHash) {
       print "    sha256 = \"" hashes[currentPkg] "\";";
     }

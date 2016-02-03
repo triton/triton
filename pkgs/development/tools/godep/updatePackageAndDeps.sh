@@ -119,6 +119,7 @@ fetch_git() {
 ARGS=($(awk '{ print "- " $1 " fetch_git " $1; }' $TMPDIR/list))
 concurrent "${ARGS[@]}"
 
+hasUpdates=0
 while read line; do
   pkg="$(echo "$line" | awk '{print $1}')"
   rev="$(echo "$line" | awk '{print $3}')"
@@ -141,6 +142,7 @@ while read line; do
   fi
 
   if [ "$rev" != "$REV" ]; then
+    hasUpdates=1
     echo -e "$pkg:\n  $date $rev\n  $DATE $REV" >&2
     if [ -n "$VERSION" ]; then
       DATE="nodate"
@@ -149,7 +151,12 @@ while read line; do
   fi
 done < $TMPDIR/list
 
-echo "Do these versions look reasonable? [y/N]"
+if [ "$hasUpdates" -eq "0" ]; then
+  echo "Up to date" >&2
+  exit 0
+fi
+
+echo "Do these versions look reasonable? [y/N]" >&2
 read answer
 if [ "y" != "$answer" ] && [ "yes" != "$answer" ]; then
   exit 1

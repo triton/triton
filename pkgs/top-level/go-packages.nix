@@ -3474,7 +3474,6 @@ let
     owner    = "agl";
     repo     = "xmpp-client";
     sha256   = "0a1r08zs723ikcskmn6ylkdi3frcd0i0lkx30i9q39ilf734v253";
-    disabled = isGo14;
     buildInputs = [ crypto net ];
 
     meta = with stdenv.lib; {
@@ -3600,7 +3599,6 @@ let
     repo = "textsecure";
     sha256 = "0sdcqd89dlic0bllb6mjliz4x54rxnm1r3xqd5qdp936n7xs3mc6";
     propagatedBuildInputs = [ crypto protobuf ed25519 yaml-v2 logrus ];
-    disabled = isGo14;
   };
 
   interlock = buildFromGitHub rec {
@@ -3625,6 +3623,5 @@ let
         -e 's|/usr/bin/sudo|/var/setuid-wrappers/sudo|' \
         -e 's|/sbin/cryptsetup|${pkgs.cryptsetup}/bin/cryptsetup|'
     '';
-    disabled = isGo14;
   };
 }; in self

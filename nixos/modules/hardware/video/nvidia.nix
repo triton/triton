@@ -25,7 +25,11 @@ let
     else null;
 
   nvidia_x11 = nvidiaForKernel config.boot.kernelPackages;
-  nvidia_libs32 = (nvidiaForKernel pkgs_i686.linuxPackages).override { libsOnly = true; kernel = null; };
+  nvidia_libs32 = (nvidiaForKernel pkgs_i686.linuxPackages).override {
+    buildConfig = "userspace";
+    libsOnly = true;
+    kernel = null;
+  };
 
   enabled = nvidia_x11 != null;
 in

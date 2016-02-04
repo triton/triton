@@ -54,7 +54,9 @@ in {
   options = {
 
     services.xserver.desktopManager.gnome3 = {
+
       enable = mkOption {
+        type = types.bool;
         default = false;
         example = true;
         description = "Enable Gnome 3 desktop manager.";
@@ -70,6 +72,7 @@ in {
           pkgs.gnome-shell-extensions
         ];
       };
+
     };
 
   };

@@ -1526,11 +1526,11 @@ let
   };
 
   go-memdb = buildFromGitHub {
-    date = "2015-12-18";
-    rev = "31949d523ade8a236956c6f1761e9dcf902d1638";
+    date = "2016-02-03";
+    rev = "e16093a4c7dd00f7ce4c2452ded2c7e37d8df8be";
     owner = "hashicorp";
     repo = "go-memdb";
-    sha256 = "0v741i4mlw89y4jb8mim0hzi3i51l3rbkhx2d8nyldkkz4mnrda4";
+    sha256 = "0zyw2j386q4r1y85qa2wk29s8w8x2yvx51z90k4fkm29drs6ygsj";
     buildInputs = [ go-immutable-radix ];
   };
 

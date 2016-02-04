@@ -852,7 +852,6 @@ let
     owner = "onsi";
     repo = "ginkgo";
     sha256 = "0yhl9mn22imrazi2z53ram3145rz09m0d1b1v86mz9iyxm1vahpy";
-    subPackages = [ "./" ];  # don't try to build test fixtures
   };
 
   git-annex-remote-b2 = buildFromGitHub {

@@ -1,4 +1,4 @@
-{ stdenv, fetchsvn, pkgconfig, autoreconfHook, gnutls33, freetype
+{ stdenv, fetchsvn, pkgconfig, autoreconfHook, gnutls, freetype
 , SDL, SDL_gfx, SDL_ttf, liblo, libxml2, alsaLib, libjack2, libvorbis
 , libsndfile, libogg
 }:
@@ -13,7 +13,7 @@ stdenv.mkDerivation {
   };
 
   buildInputs = [
-    pkgconfig autoreconfHook gnutls33 freetype SDL SDL_gfx SDL_ttf
+    pkgconfig autoreconfHook gnutls freetype SDL SDL_gfx SDL_ttf
     liblo libxml2 libjack2 alsaLib libvorbis libsndfile libogg
   ];
 

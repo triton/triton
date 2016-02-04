@@ -1408,9 +1408,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   bitbucket-cli = pythonPackages.bitbucket-cli;
 
-  blink = callPackage ../applications/networking/instant-messengers/blink {
-    gnutls = gnutls33;
-  };
+  blink = callPackage ../applications/networking/instant-messengers/blink { };
 
   blitz = callPackage ../development/libraries/blitz { };
 
@@ -7001,10 +6999,6 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gnutls = gnutls34;
 
-  gnutls33 = callPackage ../development/libraries/gnutls/3.3.nix {
-    guileBindings = config.gnutls.guile or false;
-  };
-
   gnutls34 = callPackage ../development/libraries/gnutls/3.4.nix {
     guileBindings = config.gnutls.guile or false;
   };
@@ -7056,7 +7050,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   gts = callPackage ../development/libraries/gts { };
 
-  gwenhywfar = callPackage ../development/libraries/gwenhywfar { gnutls = gnutls33; };
+  gwenhywfar = callPackage ../development/libraries/gwenhywfar { };
 
   hamlib = callPackage ../development/libraries/hamlib { };
 

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, gnutls33, autoreconfHook }:
+{ stdenv, fetchurl, gnutls, autoreconfHook }:
 
 let
   version = "1.99.15";
@@ -15,7 +15,7 @@ stdenv.mkDerivation {
     export makeFlags=prefix=$out
   '';
 
-  buildInputs = [ gnutls33 autoreconfHook ];
+  buildInputs = [ gnutls autoreconfHook ];
 
   NIX_CFLAGS_COMPILE = "-Wno-error=cpp";
 

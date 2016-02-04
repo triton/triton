@@ -948,7 +948,7 @@ networkmanager098 = callPackage ../all-pkgs/networkmanager/0.9.8.nix { };
 
 networkmanager = callPackage ../all-pkgs/networkmanager { };
 
-networkmanager_openvpn = callPackage ../all-pkgs/networkmanager/openvpn.nix { };
+networkmanager-openvpn = callPackage ../all-pkgs/networkmanager-openvpn { };
 
 networkmanager_pptp = callPackage ../all-pkgs/networkmanager/pptp.nix { };
 

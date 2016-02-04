@@ -48,7 +48,7 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
           { "${pkg.goPackagePath}" = {
             inherit (pkg) rev;
             date = pkg.date or "nodate";
-            autoUpdate = pkg.autoUpdate or true;
+            autoUpdate = pkg.meta.autoUpdate or true;
             name = let
               names = pkgs.lib.attrNames (pkgs.lib.filterAttrs
               (n: d: d ? goPackagePath && d.goPackagePath == pkg.goPackagePath) pkgs.goPackages);

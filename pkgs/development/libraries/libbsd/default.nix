@@ -1,11 +1,11 @@
 { stdenv, fetchurl, openssl }:
 
 stdenv.mkDerivation rec {
-  name = "libbsd-0.8.1";
+  name = "libbsd-0.8.2";
 
   src = fetchurl {
     url = "http://libbsd.freedesktop.org/releases/${name}.tar.xz";
-    sha256 = "1c7r58y3jz0251y7l54jcyik4xr4y2lki7v8kf9ww2vjmn0qgg5d";
+    sha256 = "02i5brb2007sxq3mn862mr7yxxm0g6nj172417hjyvjax7549xmj";
   };
 
   buildInputs = [ openssl ];

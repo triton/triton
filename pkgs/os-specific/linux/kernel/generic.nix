@@ -9,9 +9,6 @@
 , # Overrides to the kernel config.
   extraConfig ? ""
 
-, # The version number used for the module directory
-  modDirVersion ? version
-
 , # An attribute set whose attributes express the availability of
   # certain features in this kernel.  E.g. `{iwlwifi = true;}'
   # indicates a kernel that provides Intel wireless support.  Used in
@@ -34,6 +31,13 @@ assert stdenv.isLinux;
 let
 
   lib = stdenv.lib;
+
+  modDirVersion = let
+    rcSplit = lib.splitString "-" version;
+    vSplit = lib.splitString "." (lib.head rcSplit);
+    vSplit' = if lib.length vSplit == 2 then vSplit ++ [ "0" ] else vSplit;
+    rcSplit' = [ (lib.concatStringsSep "." vSplit') ] ++ lib.tail rcSplit;
+  in lib.concatStringsSep "-" rcSplit';
 
   kernelConfigFun = baseConfig:
     let

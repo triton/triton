@@ -88,7 +88,7 @@ go.stdenv.mkDerivation (
       [ -n "$excludedPackages" ] && echo "$d" | grep -q "$excludedPackages" && return 0
       local OUT
       if ! OUT="$(go $cmd $buildFlags "''${buildFlagsArray[@]}" -v $d 2>&1)"; then
-        if ! echo "$OUT" | grep -q 'no buildable Go source files'; then
+        if ! echo "$OUT" | grep -q '\(no buildable Go source files\|permission denied\)'; then
           echo "$OUT" >&2
           return 1
         fi
@@ -133,8 +133,18 @@ go.stdenv.mkDerivation (
 
     mkdir -p $out
     pushd "$NIX_BUILD_TOP/go"
+    if [ -n "$subPackages" ]; then
+      subPackageExpr='/\('
+      for subPackage in $subPackages; do
+        if [ "$subPackageExpr" != '/\(' ]; then
+          subPackageExpr+='\|'
+        fi
+        subPackageExpr+="$subPackage"
+      done
+      subPackageExpr+='\)'
+    fi
     while read f; do
-      echo "$f" | grep -q '^./\(src\|pkg/[^/]*\)/${goPackagePath}' || continue
+      echo "$f" | grep -q '^./\(src\|pkg/[^/]*\)/${goPackagePath}'"$subPackageExpr" || continue
       mkdir -p "$(dirname "$out/share/go/$f")"
       cp "$NIX_BUILD_TOP/go/$f" "$out/share/go/$f"
     done < <(find . -type f)

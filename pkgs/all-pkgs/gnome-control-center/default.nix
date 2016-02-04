@@ -36,7 +36,7 @@
 , cracklib
 , python
 , libkrb5
-, networkmanagerapplet
+, networkmanager-applet
 , networkmanager
 , libwacom
 , samba
@@ -107,7 +107,7 @@ stdenv.mkDerivation rec {
     libpwquality
     accountsservice
     libkrb5
-    networkmanagerapplet
+    networkmanager-applet
     libwacom
     samba
     libnotify

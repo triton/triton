@@ -188,17 +188,16 @@ in {
       pkgs.shared_mime_info
     ] ++ config.services.xserver.desktopManager.gnome3.sessionPath;
 
-    # Use the correct gnome3 packageSet
     networking.networkmanager.basePackages = {
       inherit (pkgs)
-        networkmanager
         modemmanager
         wpa_supplicant
-        networkmanager_openvpn
-        networkmanager_vpnc
-        networkmanager_openconnect
-        networkmanager_pptp
-        networkmanager_l2tp;
+        networkmanager
+        networkmanager-l2tp
+        networkmanager-openconnect
+        networkmanager-openvpn
+        networkmanager-pptp
+        networkmanager-vpnc;
     };
 
     # Needed for themes and backgrounds

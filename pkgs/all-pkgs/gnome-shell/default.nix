@@ -52,7 +52,7 @@
 , mesa_noglu
 , mutter
 , networkmanager
-, networkmanagerapplet
+, networkmanager-applet
 , nss
 , p11_kit
 , pango
@@ -143,7 +143,7 @@ stdenv.mkDerivation rec {
     mesa_noglu
     mutter
     networkmanager
-    networkmanagerapplet
+    networkmanager-applet
     #nss
     #p11_kit
     pango

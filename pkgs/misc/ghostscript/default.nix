@@ -157,6 +157,9 @@ stdenv.mkDerivation rec {
     install_name_tool -change libgs.dylib.${version} $out/lib/libgs.dylib.${version} $out/bin/gs
   '';
 
+  # Sometimes throws weird errors for 9.18
+  parallelInstall = false;
+
   meta = {
     homepage = "http://www.ghostscript.com/";
     description = "PostScript interpreter (mainline version)";

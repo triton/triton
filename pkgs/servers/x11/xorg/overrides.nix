@@ -421,10 +421,10 @@ in
   };
 
   xf86videointel = attrs: attrs // {
-    name = "xf86-video-intel-2015-11-27";
+    name = "xf86-video-intel-2016-02-03";
     src = fetchurl {
-      url = "http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/da9ad388a0657b85fcf9a5f78ae1e75d0052dc52.tar.gz";
-      sha256 = "1x4fsd0m0mjm8818gwbfa4fhq7f7biva82qbm6x9zq4lxpadqa32";
+      url = "http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/8b8c9a36828e90e46ad0755c6861df85f5307fb5.tar.gz";
+      sha256 = "1r23b326k6ljf8ycp75nnfll88p2k1qn4qbmw23j03vgbhmjwrl5";
     };
     buildInputs = attrs.buildInputs ++ [xorg.libXfixes];
     nativeBuildInputs = [args.autoreconfHook xorg.utilmacros];

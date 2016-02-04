@@ -950,7 +950,7 @@ networkmanager = callPackage ../all-pkgs/networkmanager { };
 
 networkmanager-openvpn = callPackage ../all-pkgs/networkmanager-openvpn { };
 
-networkmanager_pptp = callPackage ../all-pkgs/networkmanager/pptp.nix { };
+networkmanager-pptp = callPackage ../all-pkgs/networkmanager-pptp { };
 
 networkmanager-l2tp = callPackage ../all-pkgs/networkmanager-l2tp { };
 

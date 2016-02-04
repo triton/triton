@@ -954,7 +954,7 @@ networkmanager-pptp = callPackage ../all-pkgs/networkmanager-pptp { };
 
 networkmanager-l2tp = callPackage ../all-pkgs/networkmanager-l2tp { };
 
-networkmanager_vpnc = callPackage ../all-pkgs/networkmanager/vpnc.nix { };
+networkmanager-vpnc = callPackage ../all-pkgs/networkmanager-vpnc { };
 
 networkmanager-openconnect = callPackage ../all-pkgs/networkmanager-openconnect { };
 

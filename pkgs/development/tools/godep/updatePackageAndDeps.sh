@@ -6,12 +6,7 @@ if [ "0" -eq "$#" ]; then
   exit 1
 fi
 
-cd "$(readlink -f "$0" | xargs dirname)"
-source concurrent.lib.sh
-
-TOP_LEVEL="$(git rev-parse --show-toplevel)"
-cd $TOP_LEVEL
-
+# Setup the temporary storage area
 TMPDIR=""
 cleanup() {
   CODE="$?"
@@ -23,8 +18,25 @@ cleanup() {
 }
 trap cleanup EXIT ERR INT QUIT PIPE TERM
 TMPDIR="$(mktemp -d)"
+
+# Include the concurrent library
+cd "$(readlink -f "$0" | xargs dirname)"
+source concurrent.lib.sh
 CONCURRENT_LOG_DIR="$TMPDIR/logs"
 
+# Find the top git level
+while ! [ -d "pkgs/top-level" ]; do
+  cd ..
+done
+TOP_LEVEL="$(pwd)"
+
+# Build all of the packages needed to run this script
+mkdir $TMPDIR/pkgs
+PKGS=("coreutils" "gawk" "gnused" "gnugrep" "gnutar" "git" "ncurses" "utillinux" "curl" "findutils")
+export PATH="$(nix-build --out-link $TMPDIR/pkgs/nix -A pkgs.nix)/bin"
+for PKG in "${PKGS[@]}"; do
+  export PATH="$(nix-build --out-link $TMPDIR/pkgs/$PKG -A pkgs.$PKG)/bin:$PATH"
+done
 
 echo "Finding packages and all dependencies..." >&2
 pkglist='[ '

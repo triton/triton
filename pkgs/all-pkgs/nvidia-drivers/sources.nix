@@ -17,7 +17,7 @@
   "long-lived" = {
     versionMajor = "352";
     versionMinor = "79";
-    sha256i686   = "e05a825a5e0027f062b1a1344ff3484286f50df990d66d567348b80101a0c4e3";
+    sha256i686   = "0sagvgacsg0x51x89z03mza3pdics7v88wqv5hqh4igd17jxca99";
     sha256x86_64 = "8be6c64dddc2c2c5a0512bdacc71a77734de469ca11dfa435ca728fba57ccb9a";
   };
   "short-lived" = {

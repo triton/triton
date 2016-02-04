@@ -124,11 +124,11 @@ let
   };
 
   text = buildFromGitHub {
-    rev = "de304c27a75f7b10cc2530c503d4526a2fd37070";
+    rev = "cd1d59e467ef512633026c0f15282e108e41d453";
     date = "2016-02-03";
     owner = "golang";
     repo = "text";
-    sha256 = "0z3q5h4k6glziz6clq7gr7dxj4f1898g90laaif6r3krh9ai2wdw";
+    sha256 = "0zz2w62l6ghih7802x1x6az2l47ci726wchbc6ghm36zx36xqsgl";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
   };
@@ -381,11 +381,11 @@ let
   };
 
   cli = buildFromGitHub {
-    date = "2016-01-08";
-    rev = "cb6853d606ea4a12a15ac83cc43503df99fd28fb";
+    date = "2016-02-03";
+    rev = "5c87c51cedf76a1737bf5ca3979e8644871598a6";
     owner = "mitchellh";
     repo = "cli";
-    sha256 = "1hq17hvfcfy3sbsnk8yfqddh8r0g37ssayawvcrmhkjjg6bgrzgl";
+    sha256 = "1ajxzh3winjnmqhd4yn6b6f155vfzi0dszhzl4a00zb5pdppp1rd";
     propagatedBuildInputs = [ crypto go-radix speakeasy go-isatty ];
   };
 
@@ -1348,11 +1348,11 @@ let
   };
 
   go-dockerclient = buildFromGitHub {
-    date = "2016-01-28";
-    rev = "02a8beb401b20e112cff3ea740545960b667eab1";
+    date = "2016-02-03";
+    rev = "330530f42340acee64726a5fe5ec7a6353e70385";
     owner = "fsouza";
     repo = "go-dockerclient";
-    sha256 = "1azpy7g2in2jhz46fdcql47brcvhqlr5h6d0zl221z3vpmghkxpy";
+    sha256 = "0zc1y2rbp6yhd8l55ppyfshyzwbg8nz3vi0z8ngp5ygmwjm65q44";
   };
 
   go-etcd = buildFromGitHub {

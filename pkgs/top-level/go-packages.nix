@@ -977,7 +977,7 @@ let
     owner  = "gocql";
     repo   = "gocql";
     sha256 = "1vr255zhzg7pzfjyihdh6vy4chv2kpqyvm69gs3fq9jfcixi2awd";
-    propagatedBuildInputs = [ inf snappy hailocab.go-hostpool ];
+    propagatedBuildInputs = [ inf snappy hailocab_go-hostpool ];
   };
 
   gocode = buildFromGitHub {
@@ -1420,7 +1420,7 @@ let
     sha256 = "0vsiby9fbkaz7q067wmc6s5pzgpq4gdfx66cj2a1lbdarf7j1kbs";
   };
 
-  bitly.go-hostpool = buildFromGitHub {
+  bitly_go-hostpool = buildFromGitHub {
     rev    = "d0e59c22a56e8dadfed24f74f452cea5a52722d2";
     date   = "2015-03-31";
     owner  = "bitly";
@@ -1428,7 +1428,7 @@ let
     sha256 = "14ph12krn5zlg00vh9g6g08lkfjxnpw46nzadrfb718yl1hgyk3g";
   };
 
-  hailocab.go-hostpool = buildFromGitHub {
+  hailocab_go-hostpool = buildFromGitHub {
     rev    = "0637eae892be221164aff5fcbccc57171aea6406";
     date   = "2015-11-16";
     owner  = "hailocab";
@@ -2234,7 +2234,7 @@ let
     owner = "mesos";
     repo = "mesos-go";
     sha256 = "01ab0jf3cfb1rdwwb21r38rcfr5vp86pkfk28mws8298mlzbpri7";
-    propagatedBuildInputs = [ gogo.protobuf glog net testify go-zookeeper objx pborman.uuid ];
+    propagatedBuildInputs = [ gogo.protobuf glog net testify go-zookeeper objx pborman_uuid ];
     excludedPackages = "test";
   };
 
@@ -2392,7 +2392,7 @@ let
 
     excludedPackages = "bench";
 
-    buildInputs = [ go-nsq go-options semver perks toml bitly.go-hostpool timer_metrics ];
+    buildInputs = [ go-nsq go-options semver perks toml bitly_go-hostpool timer_metrics ];
   };
 
   ntp = buildFromGitHub {
@@ -3424,7 +3424,7 @@ let
     buildInputs = [ pkgs.libusb1 ];
   };
 
-  pborman.uuid = buildFromGitHub {
+  pborman_uuid = buildFromGitHub {
     rev = "cccd189d45f7ac3368a0d127efb7f4d08ae0b655";
     date = "2015-08-24";
     owner = "pborman";
@@ -3432,7 +3432,7 @@ let
     sha256 = "0hswk9ihv3js5blp9pk2bpig64zkmyp5p1zhmgydfhb0dr2w8iad";
   };
 
-  hashicorp.uuid = buildFromGitHub {
+  hashicorp_uuid = buildFromGitHub {
     rev = "2951e8b9707a040acdb49145ed9f36a088f3532e";
     date = "2015-10-12";
     owner = "hashicorp";
@@ -3449,8 +3449,8 @@ let
     buildInputs = [
       armon_go-metrics go-radix govalidator aws-sdk-go etcd-client
       duo_api_golang structs ini ldap mysql gocql snappy go-github
-      go-querystring hailocab.go-hostpool consul-api errwrap go-cleanhttp
-      go-multierror go-syslog golang-lru hcl-old logutils serf hashicorp.uuid
+      go-querystring hailocab_go-hostpool consul-api errwrap go-cleanhttp
+      go-multierror go-syslog golang-lru hcl-old logutils serf hashicorp_uuid
       go-jmespath osext pq cli copystructure go-homedir mapstructure reflectwalk
       columnize go-zookeeper ugorji_go crypto net oauth2 asn1-ber inf
     ];

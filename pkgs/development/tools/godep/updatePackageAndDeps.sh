@@ -31,12 +31,25 @@ done
 TOP_LEVEL="$(pwd)"
 
 # Build all of the packages needed to run this script
-mkdir $TMPDIR/pkgs
-PKGS=("coreutils" "gawk" "gnused" "gnugrep" "gnutar" "git" "ncurses" "utillinux" "curl" "findutils")
-export PATH="$(nix-build --out-link $TMPDIR/pkgs/nix -A pkgs.nix)/bin"
-for PKG in "${PKGS[@]}"; do
-  export PATH="$(nix-build --out-link $TMPDIR/pkgs/$PKG -A pkgs.$PKG)/bin:$PATH"
-done
+echo "Building script dependencies..." >&2
+exp='let pkgs = import ./pkgs/top-level/all-packages.nix { };
+in pkgs.buildEnv {
+  name = "goUpdater";
+  paths = with pkgs; [
+    coreutils
+    gawk
+    gnused
+    gnugrep
+    gnutar
+    git
+    nix
+    ncurses
+    utillinux
+    curl
+    findutils
+  ];
+}'
+export PATH="$(nix-build --out-link $TMPDIR/nix-env -E "$exp")/bin"
 
 echo "Finding packages and all dependencies..." >&2
 pkglist='[ '

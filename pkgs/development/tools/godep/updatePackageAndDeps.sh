@@ -91,7 +91,7 @@ build_redirect() {
   fi
 
   local OUTPUT
-  OUTPUT="$(curl "$1")"
+  OUTPUT="$(curl -d "go-get=1" "$1")"
   local IMPORT
   IMPORT="$(echo "$OUTPUT" | grep 'go-import' || true)"
   if [ -n "$IMPORT" ]; then

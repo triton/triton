@@ -70,7 +70,7 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
       if pkg ? goPackagePath then
         pkgs.lib.foldl
           (attr: dep: attr // listPkgAndDeps dep)
-          { "${pkg.goPackagePath}" = {
+          { "${pkg.autoUpdatePath or pkg.goPackagePath}" = {
             inherit (pkg) rev;
             date = pkg.date or "nodate";
             autoUpdate = pkg.meta.autoUpdate or true;

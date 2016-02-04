@@ -956,7 +956,7 @@ networkmanager-l2tp = callPackage ../all-pkgs/networkmanager-l2tp { };
 
 networkmanager_vpnc = callPackage ../all-pkgs/networkmanager/vpnc.nix { };
 
-networkmanager_openconnect = callPackage ../all-pkgs/networkmanager/openconnect.nix { };
+networkmanager-openconnect = callPackage ../all-pkgs/networkmanager-openconnect { };
 
 networkmanager-applet = newScope gnome ../all-pkgs/networkmanager-applet { };
 

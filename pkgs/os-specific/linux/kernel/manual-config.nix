@@ -1,4 +1,4 @@
-{ stdenv, runCommand, nettools, bc, perl, kmod, openssl, writeTextFile, ubootChooser }:
+{ stdenv, runCommand, bc, perl, kmod, openssl, writeTextFile, ubootChooser }:
 
 let
   readConfig = configfile: import (runCommand "config.nix" {} ''
@@ -94,6 +94,13 @@ let
             sed -i "$mf" -e 's|/usr/bin/||g ; s|/bin/||g ; s|/sbin/||g'
         done
         sed -i Makefile -e 's|= depmod|= ${kmod}/sbin/depmod|'
+
+        # We want to make sure the hostname is deterministic
+        mkdir -p $TMPDIR/bin
+        echo '#! ${stdenv.shell}' > $TMPDIR/bin/hostname
+        echo 'echo "localhost"' >> $TMPDIR/bin/hostname
+        chmod +x $TMPDIR/bin/hostname
+        export PATH="$TMPDIR/bin:$PATH"
       '';
 
       configurePhase = ''
@@ -222,7 +229,7 @@ stdenv.mkDerivation ((drvAttrs config stdenv.platform (kernelPatches ++ nativeKe
 
   enableParallelBuilding = true;
 
-  nativeBuildInputs = [ perl bc nettools openssl ] ++ optional (stdenv.platform.uboot != null)
+  nativeBuildInputs = [ perl bc openssl ] ++ optional (stdenv.platform.uboot != null)
     (ubootChooser stdenv.platform.uboot);
 
   makeFlags = commonMakeFlags ++ [

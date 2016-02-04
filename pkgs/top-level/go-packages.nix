@@ -450,17 +450,17 @@ let
   };
 
   consul = buildFromGitHub {
-    rev = "v0.6.0";
+    rev = "v0.6.3";
     owner = "hashicorp";
     repo = "consul";
-    sha256 = "0m0ajq6sbfax2nqfwjjqdv12whiblhw75jkpzg8i4fl85i2hridm";
+    sha256 = "14vsm3f968qbbcx048il8rz2sgkn8yqgf4k2vnyfd92q86gqw9jq";
 
     buildInputs = [
-      datadog-go circbuf armon_go-metrics go-radix bolt go-dockerclient errwrap
-      go-checkpoint go-cleanhttp go-immutable-radix go-memdb ugorji_go
-      go-multierror go-syslog golang-lru hcl logutils memberlist
-      net-rpc-msgpackrpc raft raft-boltdb scada-client serf yamux
-      muxado dns cli mapstructure columnize crypto
+      datadog-go circbuf armon_go-metrics go-radix speakeasy bolt
+      go-bindata-assetfs go-dockerclient errwrap go-checkpoint go-cleanhttp
+      go-immutable-radix go-memdb ugorji_go go-multierror go-reap go-syslog
+      golang-lru hcl logutils memberlist net-rpc-msgpackrpc raft raft-boltdb
+      scada-client serf yamux muxado dns cli mapstructure columnize crypto sys
     ];
 
     # Keep consul.ui for backward compatability
@@ -1263,12 +1263,12 @@ let
   };
 
   go-bindata-assetfs = buildFromGitHub {
-    rev     = "d5cac425555ca5cf00694df246e04f05e6a55150";
+    rev = "57eb5e1fc594ad4b0b1dbea7b286d299e0cb43c2";
     owner   = "elazarl";
     repo    = "go-bindata-assetfs";
-    sha256  = "636ce247ff6f85c14f38a421f46662fa77bdc29762692e1f72b3cd1f9d7a1d17";
+    sha256 = "1za29pa15y2xsa1lza97jlkax9qj93ks4a2j58xzmay6rczfkb9i";
 
-    date = "2015-08-13";
+    date = "2015-12-24";
 
     meta = with stdenv.lib; {
       description = "Serves embedded files from jteeuwen/go-bindata with net/http";
@@ -1632,6 +1632,15 @@ let
       repo = "go-shellwords";
       sha256 = "c792abe5fda48d0dfbdc32a84edb86d884a0ccbd9ed49ad48a30cda5ba028a22";
     };
+  };
+
+  go-reap = buildFromGitHub {
+    rev = "2d85522212dcf5a84c6b357094f5c44710441912";
+    owner  = "hashicorp";
+    repo   = "go-reap";
+    sha256 = "01pahld0vdssw6550bwhjbs0cm1g0hwd21lg1i57lk8i4pwp0fd9";
+    date = "2016-01-13";
+    buildInputs = [ sys ];
   };
 
   go-restful = buildFromGitHub {

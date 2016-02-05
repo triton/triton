@@ -66,11 +66,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "6ccd6698c634f5d835c40c1c31848729e0cecda1";
-    date = "2016-02-02";
+    rev = "7f88271ea9913b72aca44fa7fc8af919eacc17ce";
+    date = "2016-02-05";
     owner  = "golang";
     repo   = "net";
-    sha256 = "10gnjjcgzn7z9l4hyqlammilxigln4m7jriv5apcsdk81ywbjrb5";
+    sha256 = "1fs484l6kmcbbng3xpryrx9w0nz3zrq0klyrr84lgbghs2id0r12";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -124,11 +124,11 @@ let
   };
 
   text = buildFromGitHub {
-    rev = "cd1d59e467ef512633026c0f15282e108e41d453";
-    date = "2016-02-03";
+    rev = "db2353fc1b663d79d1001e206afc02a5ec9f4291";
+    date = "2016-02-05";
     owner = "golang";
     repo = "text";
-    sha256 = "0zz2w62l6ghih7802x1x6az2l47ci726wchbc6ghm36zx36xqsgl";
+    sha256 = "0wn5ikx8fk84acwli9yqlwk2i55iy4bq78zws6n678rz0rana0ab";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
   };
@@ -680,8 +680,7 @@ let
   };
 
   du = buildFromGitHub {
-    rev    = "3c0690cca16228b97741327b1b6781397afbdb24";
-    date   = "2015-08-05";
+    rev = "v1.0.0";
     owner  = "calmh";
     repo   = "du";
     sha256 = "1mv6mkbslfc8giv47kyl97ny0igb3l7jya5hc75sm54xi6g205wa";
@@ -2134,8 +2133,7 @@ let
   };
 
   luhn = buildFromGitHub {
-    rev    = "0c8388ff95fa92d4094011e5a04fc99dea3d1632";
-    date   = "2015-01-13";
+    rev = "v1.0.0";
     owner  = "calmh";
     repo   = "luhn";
     sha256 = "1hfj1lx7wdpifn16zqrl4xml6cj5gxbn6hfz1f46g2a6bdf0gcvs";

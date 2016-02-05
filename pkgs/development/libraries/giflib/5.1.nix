@@ -1,11 +1,11 @@
 { stdenv, fetchurl }:
 
 stdenv.mkDerivation rec {
-  name = "giflib-5.1.1";
+  name = "giflib-5.1.2";
 
   src = fetchurl {
     url = "mirror://sourceforge/giflib/${name}.tar.bz2";
-    sha256 = "1z1gzq16sdya8xnl5qjc07634kkwj5m0n3bvvj4v9j11xfn1841r";
+    sha256 = "0z1adsza46q84chkxwr6x8ph11k117k8nywkzwar6bxhqf2a1h3n";
   };
 
   meta = {

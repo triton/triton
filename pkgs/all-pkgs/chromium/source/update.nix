@@ -9,9 +9,6 @@ let
             then import ./sources.nix
             else null;
 
-  bucketURL = "https://commondatastorage.googleapis.com/"
-            + "chromium-browser-official";
-
   debURL = "https://dl.google.com/linux/chrome/deb/pool/main/g";
 
   # Untrusted mirrors, don't try to update from them!
@@ -54,7 +51,7 @@ in rec {
     inherit (chanAttrs) version;
 
     main = {
-      url = "${bucketURL}/chromium-${chanAttrs.version}.tar.xz";
+      url = "mirror://chromium/chromium-${chanAttrs.version}.tar.xz";
       inherit (chanAttrs) sha256;
     };
 
@@ -72,11 +69,23 @@ in rec {
     };
   };
 
-  updateHelpers = writeText "update-helpers.sh" ''
+  updateHelpers = writeText "update-helpers.sh" (''
 
     prefetch_main_sha()
     {
-      nix-prefetch-url "${bucketURL}/chromium-$2.tar.xz";
+  '' + lib.flip lib.concatMapStrings (import ../../../build-support/fetchurl/mirrors.nix).chromium (mirror: ''
+      if OUT="$(curl -L "${mirror}/chromium-$2.tar.xz.hashes")"; then
+        if ! echo "$OUT" | grep -q 'Error'; then
+          if SHA="$(echo "$OUT" | awk '{ if (/sha256/) { print $2; } }')"; then
+            if [ "$SHA" != "" ]; then
+              echo "$SHA"
+              return 0
+            fi
+          fi
+        fi
+      fi
+  '') + ''
+      return 1
     }
 
     prefetch_deb_sha()
@@ -119,5 +128,5 @@ in rec {
       echo "$sha256";
       return 0;
     }
-  '';
+  '');
 }

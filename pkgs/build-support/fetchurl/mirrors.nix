@@ -8,6 +8,11 @@ rec {
   # Mirrors for mirror://site/filename URIs, where "site" is
   # "sourceforge", "gnu", etc.
 
+  chromium = [
+    https://commondatastorage.googleapis.com/chromium-browser-official
+    https://gsdview.appspot.com/chromium-browser-official
+  ];
+
   # SourceForge
   sourceforge = [
     http://prdownloads.sourceforge.net/

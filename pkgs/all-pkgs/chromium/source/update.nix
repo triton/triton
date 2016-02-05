@@ -100,11 +100,14 @@ in rec {
 
       deb_pre="${debURL}/$pname/$pname";
 
-      deb32=$(nix-prefetch-url "''${deb_pre}_$version-1_i386.deb");
-      deb64=$(nix-prefetch-url "''${deb_pre}_$version-1_amd64.deb");
+      if ! deb32=$(nix-prefetch-url "''${deb_pre}_$version-1_i386.deb"); then
+        return 1
+      fi
+      if ! deb64=$(nix-prefetch-url "''${deb_pre}_$version-1_amd64.deb"); then
+        return 1
+      fi
 
       echo "$deb32.$deb64";
-      return 0;
     }
 
     prefetch_sha()

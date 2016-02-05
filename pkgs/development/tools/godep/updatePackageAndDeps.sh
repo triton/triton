@@ -209,7 +209,7 @@ generate_hash() {
 
   exec 3<>"$TMPDIR/updates.lock"
   flock -x 3
-  sed -i "s, $rev , $rev $HASH ,g" "$TMPDIR/updates"
+  sed -i "s,^$pkg [^ ]*,\0 $HASH,g" "$TMPDIR/updates"
   exec 3>&-
 }
 ARGS=($(awk '{ print "- " $1 " generate_hash " $1 " " $2; }' $TMPDIR/updates))

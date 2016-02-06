@@ -42,11 +42,6 @@ stdenv.mkDerivation rec {
     optGss optRtmpdump optOpenldap optLibidn
   ];
 
-  # Make curl honor CURL_CA_BUNDLE & SSL_CERT_FILE
-  postConfigure = ''
-    echo '#define CURL_CA_BUNDLE (getenv("CURL_CA_BUNDLE") ? getenv("CURL_CA_BUNDLE") : getenv("SSL_CERT_FILE"))' >> lib/curl_config.h
-  '';
-
   configureFlags = [
     (mkEnable true                    "http"              null)
     (mkEnable true                    "ftp"               null)
@@ -94,6 +89,7 @@ stdenv.mkDerivation rec {
     (mkEnable true                    "cookies"           null)
     (mkEnable (optC-ares != null)     "ares"              null)
     (mkEnable true                    "rt"                null)
+    (mkWith   true                    "ca-bundle"         "/etc/ssl/certs/ca-certificates.crt")
   ];
 
   meta = {

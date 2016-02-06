@@ -13,6 +13,7 @@ let
 
   # Untrusted mirrors, don't try to update from them!
   debMirrors = [
+    "http://mirror.glendaleacademy.org/chrome/pool/main/g"
     "http://95.31.35.30/chrome/pool/main/g"
     "http://mirror.pcbeta.com/google/chrome/deb/pool/main/g"
     "http://repo.fdzh.org/chrome/deb/pool/main/g"

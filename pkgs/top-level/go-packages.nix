@@ -112,11 +112,11 @@ let
   };
 
   sys = buildFromGitHub {
-    rev = "eb2c74142fd19a79b3f237334c7384d5167b1b46";
-    date = "2016-01-26";
+    rev = "50c6bc5e4292a1d4e65c6e9be5f53be28bcbe28e";
+    date = "2016-02-04";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "0rzd48xzsmcg3cy222cz5hpai8xm74zhb185afhjhpib1r19gqfl";
+    sha256 = "0v6a1qh4znxwx5zdfsp8hwa1jrvqas9k4m6iaf734izqngyq5vmw";
     goPackagePath = "golang.org/x/sys";
     goPackageAliases = [
       "github.com/golang/sys"
@@ -599,11 +599,11 @@ let
   };
 
   dns = buildFromGitHub {
-    rev = "3d66e3747d22a77b24b119eb66e9d574ed99f86c";
-    date = "2016-01-29";
+    rev = "83f7d658ac219335d42f7ec4397a76e35ca7f835";
+    date = "2016-02-05";
     owner  = "miekg";
     repo   = "dns";
-    sha256 = "0igr7bxx77ilzd9fnc57vnpdcf33gs8ywpm5hcv2r9z5ck8nwphx";
+    sha256 = "0rvvm0c84mw77bd95a06cpqn289qiim88iw38qhy8fvlnd9plpd7";
   };
 
   docopt-go = buildFromGitHub {
@@ -1358,11 +1358,11 @@ let
   };
 
   go-dockerclient = buildFromGitHub {
-    date = "2016-02-03";
-    rev = "330530f42340acee64726a5fe5ec7a6353e70385";
+    date = "2016-02-05";
+    rev = "0099401a7342ad77e71ca9f9a57c5e72fb80f6b2";
     owner = "fsouza";
     repo = "go-dockerclient";
-    sha256 = "0zc1y2rbp6yhd8l55ppyfshyzwbg8nz3vi0z8ngp5ygmwjm65q44";
+    sha256 = "0s11zg4028gysgxffbwx7z7zp0ayvbvjwmxy332ay23pk2bbj55p";
   };
 
   go-etcd = buildFromGitHub {
@@ -1909,10 +1909,10 @@ let
   };
 
   httprouter = buildFromGitHub {
-    rev = "abb0dc9f755ff0a9d818db28d9d8b9810066e2b5";
+    rev = "d94d446eb345f8da40124f1ba74a71ff4172f128";
     owner  = "julienschmidt";
     repo   = "httprouter";
-    sha256 = "0dx0a6g28ii6w1j2c3k7z091r6bz7f8cc0zcmgqf2n6gvpb50amh";
+    sha256 = "1k1a363y5c2lvj6sadaxpimxshvmbxnf39dy737pfxhpil74y30k";
   };
 
   hugo = buildFromGitHub {

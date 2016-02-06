@@ -7673,12 +7673,12 @@ in {
 
   django_1_9 = buildPythonPackage rec {
     name = "Django-${version}";
-    version = "1.9";
+    version = "1.9.2";
     disabled = pythonOlder "2.7";
 
     src = pkgs.fetchurl {
       url = "http://www.djangoproject.com/m/releases/1.9/${name}.tar.gz";
-      sha256 = "0rkwdxh63y7pwx9larl2g7m1z206675dzx7ipd44p3bpm0clpzh5";
+      sha256 = "0bwapyjdl1w62cdv3kx27kj1s5zj93fyby8mhgysapdkxqi368vs";
     };
 
     # patch only $out/bin to avoid problems with starter templates (see #3134)
@@ -7697,12 +7697,12 @@ in {
 
   django_1_8 = buildPythonPackage rec {
     name = "Django-${version}";
-    version = "1.8.4";
+    version = "1.8.9";
     disabled = pythonOlder "2.7";
 
     src = pkgs.fetchurl {
       url = "http://www.djangoproject.com/m/releases/1.8/${name}.tar.gz";
-      sha256 = "1n3hb80v7wl5j2mry5pfald6i9z42a9c3m9405877iqw3v49csc2";
+      sha256 = "1qyjpdpsj1n5lx10vak9bwl554br01wbn0kjhy7646i00y2js0gw";
     };
 
     # too complicated to setup
@@ -7722,12 +7722,12 @@ in {
 
   django_1_7 = buildPythonPackage rec {
     name = "Django-${version}";
-    version = "1.7.10";
+    version = "1.7.11";
     disabled = pythonOlder "2.7";
 
     src = pkgs.fetchurl {
       url = "http://www.djangoproject.com/m/releases/1.7/${name}.tar.gz";
-      sha256 = "0xbwg6nyvwcbp2hvk0x3s5y823k5kizn0za1bl2rf6g6xcn7sddr";
+      sha256 = "18arf0zr98q2gxhimm2fgh0avwcdax1mcnps0cyn06wgrr7i8f90";
     };
 
     # too complicated to setup
@@ -8181,35 +8181,6 @@ in {
       description = "Push and pull from a Git server using Mercurial";
       homepage = http://hg-git.github.com/;
       maintainers = with maintainers; [ koral ];
-    };
-  };
-
-
-  hg-crecord = buildPythonPackage rec {
-    rev = "5cfaabfe9cb9f0a0d6837956d73127f290a213be";
-    name = "hg-crecord-${rev}";
-    disabled = isPy3k;
-
-    src = pkgs.fetchhg {
-      inherit rev;
-      url = "https://bitbucket.org/edgimar/crecord";
-      sha256 = "14x1k5k0jv3fiynpdfyp5zh4qvs4nr6qwy09chv3js3dhs5887ic";
-    };
-
-    # crecord comes as just a bare directory
-    configurePhase = " ";
-    buildPhase = "${python.executable} -m compileall crecord";
-    installPhase = ''
-      mkdir -p $out/${python.sitePackages}
-      cp -Lr crecord $out/${python.sitePackages}/
-    '';
-
-    # there ain't none
-    doCheck = false;
-
-    meta = {
-      description = "Mercurial extension for selecting graphically which files/hunk/lines to commit";
-      homepage = https://bitbucket.org/edgimar/crecord;
     };
   };
 
@@ -17546,15 +17517,17 @@ in {
   };
 
   requests_toolbelt = buildPythonPackage rec {
-    version = "0.4.0";
+    version = "0.6.0";
     name = "requests-toolbelt-${version}";
 
     src = pkgs.fetchurl {
       url = "https://github.com/sigmavirus24/requests-toolbelt/archive/${version}.tar.gz";
-      sha256 = "0zvfz4c9lqiwh2qh51rba6ckpjl3pbp9fcm0ri58qhcjd8mh8k34";
+      sha256 = "192pz6i1fp8vc1qasg6ccxpdsmpbqi3fqf5bgx3vpadp5x0rrz4f";
     };
 
     propagatedBuildInputs = with self; [ requests2 ];
+
+    buildInputs = with self; [ betamax ];
 
     meta = {
       description = "A toolbelt of useful classes and functions to be used with python-requests";

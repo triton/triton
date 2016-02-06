@@ -19,6 +19,7 @@
   , gst-plugins-base_0 ? null
 , enableDiscogs    ? true
 , enableEchonest   ? true
+, enableEmbyupdate ? true
 , enableFetchart   ? true
 , enableLastfm     ? true
 , enableMpd        ? true
@@ -65,6 +66,7 @@ let
     chroma = enableAcoustid;
     discogs = enableDiscogs;
     echonest = enableEchonest;
+    embyupdate = enableEmbyupdate;
     fetchart = enableFetchart;
     lastgenre = enableLastfm;
     lastimport = enableLastfm;
@@ -182,14 +184,16 @@ in buildPythonPackage rec {
     pythonPackages.pathlib
     pythonPackages.pyyaml
     pythonPackages.unidecode
-  ] ++ optional enableAcoustid   pythonPackages.pyacoustid
-    ++ optional enableFetchart   pythonPackages.requests2
-    ++ optional enableDiscogs    pythonPackages.discogs_client
-    ++ optional enableEchonest   pythonPackages.pyechonest
-    ++ optional enableLastfm     pythonPackages.pylast
-    ++ optional enableMpd        pythonPackages.mpd
-    ++ optional enableThumbnails pythonPackages.pyxdg
-    ++ optional enableWeb        pythonPackages.flask
+    python.modules.sqlite3
+    python.modules.readline
+  ] ++ optional enableAcoustid                       pythonPackages.pyacoustid
+    ++ optional (enableFetchart || enableEmbyUpdate) pythonPackages.requests2
+    ++ optional enableDiscogs                        pythonPackages.discogs_client
+    ++ optional enableEchonest                       pythonPackages.pyechonest
+    ++ optional enableLastfm                         pythonPackages.pylast
+    ++ optional enableMpd                            pythonPackages.mpd
+    ++ optional enableThumbnails                     pythonPackages.pyxdg
+    ++ optional enableWeb                            pythonPackages.flask
     ++ optional enableAlternatives (import ./alternatives-plugin.nix {
       inherit stdenv buildPythonPackage pythonPackages fetchFromGitHub;
     });

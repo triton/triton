@@ -3,7 +3,6 @@
 , alsaSupport ? true, alsaLib ? null
 , x11Support ? true, xlibsWrapper ? null, xorg ? null
 , pulseaudioSupport ? true, libpulseaudio ? null
-, OpenGL, CoreAudio, CoreServices, AudioUnit, Kernel, Cocoa
 }:
 
 # OSS is no longer supported, for it's much crappier than ALSA and
@@ -29,11 +28,9 @@ stdenv.mkDerivation rec {
 
   outputs = [ "out" "man" ];
 
-  buildInputs = let
-    notMingw = !(stdenv ? cross) || stdenv.cross.libc != "msvcrt";
-  in optional notMingw audiofile
-    ++ optionals stdenv.isDarwin [ OpenGL CoreAudio CoreServices AudioUnit Kernel Cocoa ]
-    ++ optionals x11Support [ xlibsWrapper xorg.libXrandr ]
+  buildInputs = [
+    audiofile
+  ] ++ optionals x11Support [ xlibsWrapper xorg.libXrandr ]
     ++ optional alsaSupport alsaLib
     ++ optional stdenv.isLinux libcap
     ++ optional openglSupport mesa

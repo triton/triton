@@ -157,7 +157,9 @@ let
             --replace /sbin/blkid ${extraUtils}/bin/blkid \
             --replace ${pkgs.lvm2}/sbin ${extraUtils}/bin \
             --replace /sbin/mdadm ${extraUtils}/bin/mdadm \
-            --replace /bin/sh ${extraUtils}/bin/sh
+            --replace /bin/sh ${extraUtils}/bin/sh \
+            --replace /usr/bin/readlink ${extraUtils}/bin/readlink \
+            --replace /usr/bin/basename ${extraUtils}/bin/basename
       done
 
       # Work around a bug in QEMU, which doesn't implement the "READ
@@ -205,7 +207,7 @@ let
                     (filter (sd: (sd ? label || hasPrefix "/dev/" sd.device) && !sd.randomEncryption) config.swapDevices);
 
     fsInfo =
-      let f = fs: [ fs.mountPoint (if fs.device != null then fs.device else "/dev/disk/by-label/${fs.label}") fs.fsType fs.options ];
+      let f = fs: [ fs.mountPoint (if fs.device != null then fs.device else "/dev/disk/by-label/${fs.label}") fs.fsType (builtins.concatStringsSep "," fs.options) ];
       in pkgs.writeText "initrd-fsinfo" (concatStringsSep "\n" (concatMap f fileSystems));
 
     setHostId = optionalString (config.networking.hostId != null) ''

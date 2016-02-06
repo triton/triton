@@ -27,6 +27,7 @@
   anderspapitto = "Anders Papitto <anderspapitto@gmail.com>";
   andres = "Andres Loeh <ksnixos@andres-loeh.de>";
   andrewrk = "Andrew Kelley <superjoe30@gmail.com>";
+  aneeshusa = "Aneesh Agrawal <aneeshusa@gmail.com>";
   antono = "Antono Vasiljev <self@antono.info>";
   ardumont = "Antoine R. Dumont <eniotna.t@gmail.com>";
   aristid = "Aristid Breitkreuz <aristidb@gmail.com>";
@@ -159,6 +160,7 @@
   jzellner = "Jeff Zellner <jeffz@eml.cc>";
   kamilchm = "Kamil Chmielewski <kamil.chm@gmail.com>";
   kampfschlaefer = "Arnold Krille <arnold@arnoldarts.de>";
+  kevincox = "Kevin Cox <kevincox@kevincox.ca>";
   khumba = "Bryan Gardiner <bog@khumba.net>";
   kkallio = "Karn Kallio <tierpluspluslists@gmail.com>";
   koral = "Koral <koral@mailoo.org>";

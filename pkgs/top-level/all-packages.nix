@@ -1278,6 +1278,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   artyFX = callPackage ../applications/audio/artyFX {};
 
+  as31 = callPackage ../development/compilers/as31 {};
+
   ascii = callPackage ../tools/text/ascii { };
 
   asciinema = goPackages.asciinema.bin // { outputs = [ "bin" ]; };
@@ -1373,6 +1375,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   axel = callPackage ../tools/networking/axel { };
 
   azureus = callPackage ../tools/networking/p2p/azureus { };
+
+  backblaze-b2 = callPackage ../development/tools/backblaze-b2 { };
 
   backup = callPackage ../tools/backup/backup { };
 
@@ -1488,6 +1492,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   ckbcomp = callPackage ../tools/X11/ckbcomp { };
 
   cli53 = callPackage ../tools/admin/cli53 { };
+
+  cli-visualizer = callPackage ../applications/misc/cli-visualizer { };
 
   cloud-init = callPackage ../tools/virtualization/cloud-init { };
 
@@ -1775,6 +1781,12 @@ zsh = callPackage ../all-pkgs/zsh { };
   chunkfs = callPackage ../tools/filesystems/chunkfs { };
 
   chunksync = callPackage ../tools/backup/chunksync { };
+
+  cipherscan = callPackage ../tools/security/cipherscan {
+    openssl = if stdenv.system == "x86_64-linux"
+      then openssl-chacha
+      else openssl;
+  };
 
   cjdns = callPackage ../tools/networking/cjdns { };
 
@@ -2983,6 +2995,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   miniupnpc = callPackage ../tools/networking/miniupnpc { };
 
   miniupnpd = callPackage ../tools/networking/miniupnpd { };
+
+  miniball = callPackage ../development/libraries/miniball { };
 
   minixml = callPackage ../development/libraries/minixml { };
 
@@ -6316,6 +6330,8 @@ zsh = callPackage ../all-pkgs/zsh { };
     };
   };
 
+  nant = callPackage ../development/tools/build-managers/nant { };
+
   nixbang = callPackage ../development/tools/misc/nixbang {
       pythonPackages = python3Packages;
   };
@@ -6683,6 +6699,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   clucene_core = clucene_core_1;
 
   cminpack = callPackage ../development/libraries/cminpack { };
+
+  cmocka = callPackage ../development/libraries/cmocka { };
 
   coin3d = callPackage ../development/libraries/coin3d { };
 
@@ -8151,9 +8169,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   oniguruma = callPackage ../development/libraries/oniguruma { };
 
-  # openalSoft is 100% ABI compatible to openalLegacy and should be a default
   openal = openalSoft;
-  openalLegacy = callPackage ../development/libraries/openal { };
   openalSoft = callPackage ../development/libraries/openal-soft { };
 
   openbabel = callPackage ../development/libraries/openbabel { };
@@ -8225,6 +8241,13 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   inherit (callPackages ../development/libraries/openssl { })
     openssl_1_0_2;
+
+  openssl-chacha = callPackage ../development/libraries/openssl/chacha.nix {
+    cryptodevHeaders = linuxPackages.cryptodev.override {
+      fetchurl = fetchurlBoot;
+      onlyHeaders = true;
+    };
+  };
 
   opensubdiv = callPackage ../development/libraries/opensubdiv { };
 
@@ -9329,6 +9352,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   groovebasin = callPackage ../applications/audio/groovebasin { };
 
+  haka = callPackage ../tools/security/haka { };
+
   heapster = (callPackage ../servers/monitoring/heapster { }).bin // { outputs = ["bin"]; };
 
   hbase = callPackage ../servers/hbase {};
@@ -9399,6 +9424,8 @@ zsh = callPackage ../all-pkgs/zsh { };
   nsd = callPackage ../servers/dns/nsd (config.nsd or {});
 
   nsq = goPackages.nsq.bin // { outputs = [ "bin" ]; };
+
+  oauth2_proxy = goPackages.oauth2_proxy.bin // { outputs = [ "bin" ]; };
 
   openpts = callPackage ../servers/openpts { };
 
@@ -11376,6 +11403,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   darktable = callPackage ../applications/graphics/darktable {
     inherit (gnome) GConf libglade;
+    pugixml = pugixml.override { shared = true; };
   };
 
   das_watchdog = callPackage ../tools/system/das_watchdog { };
@@ -12380,7 +12408,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     guiSupport = false; # use mercurialFull to get hgk GUI
   };
 
-  mercurialFull = appendToName "full" (pkgs.mercurial.override { inherit (pythonPackages) hg-crecord; guiSupport = true; });
+  mercurialFull = appendToName "full" (pkgs.mercurial.override { guiSupport = true; });
 
   merkaartor = callPackage ../applications/misc/merkaartor { };
 
@@ -12434,6 +12462,11 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   monotone = callPackage ../applications/version-management/monotone {
     lua = lua5;
+  };
+
+  monotoneViz = callPackage ../applications/version-management/monotone-viz {
+    inherit (ocamlPackages_4_01_0) lablgtk ocaml camlp4;
+    inherit (gnome) libgnomecanvas glib;
   };
 
   mopidy = callPackage ../applications/audio/mopidy { };
@@ -13820,6 +13853,8 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   armagetronad = callPackage ../games/armagetronad { };
 
+  arx-libertatis = callPackage ../games/arx-libertatis { };
+
   asc = callPackage ../games/asc {
     lua = lua5_1;
     libsigcxx = libsigcxx12;
@@ -14295,7 +14330,7 @@ zsh = callPackage ../all-pkgs/zsh { };
     serverOnly = true;
   };
 
-  zandronum-bin = callPackage ../games/zandronum/bin.nix { };
+  zandronum-bin = hiPrio (callPackage ../games/zandronum/bin.nix { });
 
   zangband = callPackage ../games/zangband { };
 
@@ -15147,7 +15182,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   faust1 = callPackage ../applications/audio/faust/faust1.nix { };
 
-  faust2 = callPackage ../applications/audio/faust { };
+  faust2 = callPackage ../applications/audio/faust/faust2.nix { };
 
   faust2alqt = callPackage ../applications/audio/faust/faust2alqt.nix { };
 

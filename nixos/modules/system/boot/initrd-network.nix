@@ -63,7 +63,7 @@ in
       copy_bin_and_libs ${pkgs.mkinitcpio-nfs-utils}/bin/ipconfig
     '';
 
-    boot.initrd.preLVMCommands =
+    boot.initrd.preLVMCommands = mkBefore (
       # Search for interface definitions in command line.
       ''
         for o in $(cat /proc/cmdline); do
@@ -87,11 +87,16 @@ in
 
           # Acquire a DHCP lease.
           echo "acquiring IP address via DHCP..."
-          udhcpc --quit --now --script ${udhcpcScript}
+          udhcpc --quit --now --script ${udhcpcScript} && hasNetwork=1
         fi
       ''
 
-      + cfg.postCommands;
+      + ''
+        if [ -n "$hasNetwork" ]; then
+          echo "networking is up!"
+          ${cfg.postCommands}
+        fi
+      '');
 
   };
 

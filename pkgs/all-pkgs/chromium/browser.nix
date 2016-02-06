@@ -1,7 +1,5 @@
 { stdenv, mkChromiumDerivation }:
 
-with stdenv.lib;
-
 mkChromiumDerivation (base: rec {
   name = "chromium-browser";
   packageName = "chromium";
@@ -31,11 +29,17 @@ mkChromiumDerivation (base: rec {
 
   preHook = "unset NIX_ENFORCE_PURITY";
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "An open source web browser from Google";
     homepage = http://www.chromium.org/;
-    maintainers = with maintainers; [ chaoflow ];
     license = licenses.bsd3;
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      codyopel
+      wkennington
+    ];
+    platforms = [
+      # Triton only supports Chromium on 64bit platforms
+      "x86_64-linux"
+    ];
   };
 })

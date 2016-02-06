@@ -9,8 +9,8 @@ rec {
   # "sourceforge", "gnu", etc.
 
   chromium = [
-    https://commondatastorage.googleapis.com/chromium-browser-official
-    https://gsdview.appspot.com/chromium-browser-official
+    https://commondatastorage.googleapis.com/chromium-browser-official/
+    https://gsdview.appspot.com/chromium-browser-official/
   ];
 
   # SourceForge

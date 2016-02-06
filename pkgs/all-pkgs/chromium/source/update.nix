@@ -75,7 +75,7 @@ in rec {
     prefetch_main_sha()
     {
   '' + lib.flip lib.concatMapStrings (import ../../../build-support/fetchurl/mirrors.nix).chromium (mirror: ''
-      if OUT="$(curl -L "${mirror}/chromium-$2.tar.xz.hashes")"; then
+      if OUT="$(curl -L "${mirror}chromium-$2.tar.xz.hashes")"; then
         if ! echo "$OUT" | grep -q 'Error'; then
           if SHA="$(echo "$OUT" | awk '{ if (/sha256/) { print $2; } }')"; then
             if [ "$SHA" != "" ]; then

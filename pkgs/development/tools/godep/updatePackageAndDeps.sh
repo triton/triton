@@ -105,10 +105,19 @@ build_redirect() {
 
   local OUTPUT
   OUTPUT="$(curl -d "go-get=1" "$1")"
+  echo "$OUTPUT" >&2
   local IMPORT
   IMPORT="$(echo "$OUTPUT" | grep 'go-import' || true)"
   if [ -n "$IMPORT" ]; then
-    echo "$IMPORT" | grep -q 'git'
+    if echo "$IMPORT" | grep -q 'git'; then
+      echo "$IMPORT" | awk '
+        {
+          match($0, /content="([^"]*)"/, array);
+          split(array[1], import, " ");
+          print import[3];
+        }'
+      return 0
+    fi
     local REDIRECT
     REDIRECT="$(echo "$OUTPUT" | awk '{ if (/go-source/) { print $4 } }')"
     echo "$REDIRECT" >&2

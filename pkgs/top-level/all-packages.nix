@@ -837,6 +837,8 @@ kea = callPackage ../all-pkgs/kea { };
 
 libass = callPackage ../all-pkgs/libass { };
 
+libbluray = callPackage ../all-pkgs/libbluray { };
+
 libcanberra = callPackage ../all-pkgs/libcanberra { };
 libcanberra_gtk3 = libcanberra; # Deprecated alias
 libcanberra_kde = libcanberra; # Deprecated alias
@@ -7282,8 +7284,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   libbluedevil = callPackage ../development/libraries/libbluedevil { };
 
   libbdplus = callPackage ../development/libraries/libbdplus { };
-
-  libbluray = callPackage ../development/libraries/libbluray { };
 
   libbs2b = callPackage ../development/libraries/audio/libbs2b { };
 

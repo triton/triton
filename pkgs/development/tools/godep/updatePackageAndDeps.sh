@@ -74,10 +74,10 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
             inherit (pkg) rev;
             date = pkg.date or "nodate";
             autoUpdate = pkg.meta.autoUpdate or true;
-            name = let
+            names = let
               names = pkgs.lib.attrNames (pkgs.lib.filterAttrs
               (n: d: d ? goPackagePath && d.goPackagePath == pkg.goPackagePath) pkgs.goPackages);
-            in if pkgs.lib.length names > 0 then pkgs.lib.head names else
+            in if pkgs.lib.length names > 0 then names else
               throw "Found no name for: ${pkg.goPackagePath}";
           }; }
           (allBuildInputs pkg)
@@ -87,7 +87,7 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
       { }
       pkgList;
     pkgOutput = pkgs.lib.mapAttrsToList
-      (n: d: "${n} ${d.rev} ${d.date} ${d.name}\n")
+      (n: d: "${n} ${d.rev} ${d.date} ${pkgs.lib.concatStringsSep "," d.names}\n")
       (pkgs.lib.filterAttrs (n: d: d.autoUpdate) combinedList);
   in
     pkgs.writeText "current-go-package-list" pkgOutput
@@ -163,7 +163,7 @@ while read line; do
   pkg="$(echo "$line" | awk '{print $1}')"
   rev="$(echo "$line" | awk '{print $3}')"
   date="$(echo "$line" | awk '{print $4}')"
-  name="$(echo "$line" | awk '{print $5}')"
+  names="$(echo "$line" | awk '{print $5}')"
 
   cd $TMPDIR/$pkg
 
@@ -186,7 +186,7 @@ while read line; do
     if [ -n "$VERSION" ]; then
       DATE="nodate"
     fi
-    echo "$pkg $REV $DATE $name" >> $TMPDIR/updates
+    echo "$pkg $REV $DATE $names" >> $TMPDIR/updates
   fi
 done < $TMPDIR/list
 
@@ -230,10 +230,13 @@ BEGIN {
   updateFile=ENVIRON["TMPDIR"] "/updates";
   while((getline line < updateFile) > 0) {
     split(line, splitLine);
-    exists[splitLine[5]] = 1;
-    revs[splitLine[5]] = splitLine[2];
-    hashes[splitLine[5]] = splitLine[3];
-    dates[splitLine[5]] = splitLine[4];
+    split(splitLine[5], names, ",");
+    for (i in names) {
+      exists[names[i]] = 1;
+      revs[names[i]] = splitLine[2];
+      hashes[names[i]] = splitLine[3];
+      dates[names[i]] = splitLine[4];
+    }
   }
   close(updateFile);
   currentPkg = "";

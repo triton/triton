@@ -49,15 +49,51 @@ assert xorg != null ->
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
-  version = "6.9.3-2";
+  version = "6.9.3-3";
 
   src = fetchurl {
     url = [
       "mirror://imagemagick/ImageMagick-${version}.tar.xz"
       "mirror://imagemagick/releases/ImageMagick-${version}.tar.xz"
     ];
-    sha256 = "0k8wwkswnnalk3f0a2b900wqs8cznhqn9l00dhvvh7y8h72vzabq";
+    sha256 = "0j1h29h813gq1q7k5hrcab53sk1ldz4wwkj4y2nm852gcxngf9yi";
   };
+
+  nativeBuildInputs = [
+    libtool
+  ];
+
+  buildInputs = [
+    bzip2
+    dejavu_fonts
+    djvulibre
+    fftw
+    fontconfig
+    freetype
+    ghostscript
+    graphviz
+    jbigkit
+    jemalloc
+    lcms2
+    libfpx
+    libjpeg
+    liblqr1
+    libpng
+    librsvg
+    libtiff
+    libwebp
+    libxml2
+    #opencl
+    openexr
+    openjpeg
+    pango
+    perl
+    xorg.libX11
+    xorg.libXext
+    xorg.libXt
+    xz
+    zlib
+  ];
 
   configureFlags = [
     "--enable-reproducible-build"
@@ -128,42 +164,6 @@ stdenv.mkDerivation rec {
     #(wtFlag "windows-font-dir=" ( != null) null)
     #(wtFlag "wmf" ( != null) null)
     (wtFlag "xml" (libxml2 != null) null)
-  ];
-
-  nativeBuildInputs = [
-    libtool
-  ];
-
-  buildInputs = [
-    bzip2
-    dejavu_fonts
-    djvulibre
-    fftw
-    fontconfig
-    freetype
-    ghostscript
-    graphviz
-    jbigkit
-    jemalloc
-    lcms2
-    libfpx
-    libjpeg
-    liblqr1
-    libpng
-    librsvg
-    libtiff
-    libwebp
-    libxml2
-    #opencl
-    openexr
-    openjpeg
-    pango
-    perl
-    xorg.libX11
-    xorg.libXext
-    xorg.libXt
-    xz
-    zlib
   ];
 
   postInstall = ''

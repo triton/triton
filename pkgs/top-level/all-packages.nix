@@ -8520,7 +8520,6 @@ zsh = callPackage ../all-pkgs/zsh { };
     pulseaudioSupport = if (config ? pulseaudio)
                         then config.pulseaudio
                         else stdenv.isLinux;
-    inherit (darwin.apple_sdk.frameworks) OpenGL CoreAudio CoreServices AudioUnit Kernel Cocoa;
   };
 
   SDL_gfx = callPackage ../development/libraries/SDL_gfx { };

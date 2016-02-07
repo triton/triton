@@ -77,6 +77,10 @@ stdenv.mkDerivation rec {
     ln -s ../libexec/bluetooth/bluetoothd $out/sbin/bluetoothd
   '';
 
+  preFixup = ''
+    rm -r $out/test
+  '';
+
   meta = with stdenv.lib; {
     homepage = http://www.bluez.org/;
     repositories.git = https://git.kernel.org/pub/scm/bluetooth/bluez.git;

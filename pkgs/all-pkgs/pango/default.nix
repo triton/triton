@@ -63,7 +63,9 @@ stdenv.mkDerivation rec {
   '';
 
   doCheck = true;
-  enableParallelBuilding = true;
+
+  # Test cases fail reliably in 1.38.1
+  parallelCheck = false;
 
   meta = with stdenv.lib; {
     description = "A library for laying out and rendering of text";

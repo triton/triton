@@ -266,12 +266,12 @@ BEGIN {
     currentPkg = "";
   }
 
-  if (/^    date[ ]*=[ ]*/ && exists[currentPkg]) {
+  if (/^    [ ]*date[ ]*=[ ]*/ && exists[currentPkg]) {
     if (shouldSetDate) {
       print "    date = \"" dates[currentPkg] "\";";
     }
     shouldSetDate = 0;
-  } else if (/^    rev[ ]*=[ ]*/ && exists[currentPkg]) {
+  } else if (/^    [ ]*rev[ ]*=[ ]*/ && exists[currentPkg]) {
     if (shouldSetRev) {
       print "    rev = \"" revs[currentPkg] "\";";
     }
@@ -282,6 +282,19 @@ BEGIN {
     }
     shouldSetHash = 0;
   } else {
+    if (/^    [ ]*inherit.*rev/) {
+      shouldSetRev = 0;
+    }
+    if (/^    [ ]*inherit.*date/) {
+      shouldSetDate = 0;
+    }
+    if (/^    [ ]*inherit.*sha256/) {
+      shouldSetHash = 0;
+    }
+    if (/^    [ ]*inherit.*src/) {
+      shouldSetRev = 0;
+      shouldSetHash = 0;
+    }
     print $0;
   }
 }

@@ -3,9 +3,9 @@
 stdenv.mkDerivation rec {
   name = "fribidi-${version}";
   version = "0.19.7";
-  
+
   src = fetchurl {
-    url = "http://fribidi.org/download/${name}.tar.bz2";
+    url = "http://fribidi.freedesktop.org/download/${name}.tar.bz2";
     sha256 = "13jsb5qadlhsaxkbrb49nqslmbh904vvzhsm5mm2ghmv29i2l8h8";
   };
 

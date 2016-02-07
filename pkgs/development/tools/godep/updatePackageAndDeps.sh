@@ -245,7 +245,7 @@ BEGIN {
   # Find a package opening stmt
   if (/^  [^ ]*[ ]*=/) {
     currentPkg = $1;
-    shouldSetDate = dates[$1] != "nodate" && /buildFromGitHub/;
+    shouldSetDate = dates[$1] != "nodate" && /(buildFromGitHub|buildFromGoogle)/;
     shouldSetRev = 1;
     shouldSetHash = 1;
   }

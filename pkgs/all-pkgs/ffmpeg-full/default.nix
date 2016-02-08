@@ -401,10 +401,8 @@ stdenv.mkDerivation rec {
     ++ optionals nonfreeLicensing [ faac fdk_aac openssl ];
 
   # Build qt-faststart executable
-  buildPhase = optional qtFaststartProgram ''make tools/qt-faststart'';
+  postBuild = optional qtFaststartProgram ''make tools/qt-faststart'';
   postInstall = optional qtFaststartProgram ''cp -a tools/qt-faststart $out/bin/'';
-
-  enableParallelBuilding = true;
 
   /* Cross-compilation is untested, consider this an outline, more work
      needs to be done to portions of the build to get it to work correctly */

@@ -13,4 +13,4 @@ manager.
 * [Manual (NixOS)](https://nixos.org/nixos/manual/)
 * [Nix Wiki](https://nixos.org/wiki/)
 
-Days William has procrastinated and not setup hydra: `36`
+Days William has procrastinated and not setup hydra: `40`

@@ -596,6 +596,9 @@ ffmpeg_1 = callPackage ../all-pkgs/ffmpeg/1.x.nix { };
 ffmpeg_2_2 = callPackage ../all-pkgs/ffmpeg/2.2.nix { };
 ffmpeg_2 = callPackage ../all-pkgs/ffmpeg/2.x.nix { };
 ffmpeg = ffmpeg_2;
+ffmpeg-full_HEAD = callPackage ../all-pkgs/ffmpeg-full {
+  useHEAD = true;
+};
 ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
 
 file-roller = callPackage ../all-pkgs/file-roller { };

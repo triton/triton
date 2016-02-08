@@ -1,4 +1,5 @@
-{ stdenv, fetchurl, perl, texinfo, yasm
+{ stdenv, fetchFromGitHub, fetchurl, perl, texinfo, yasm
+, useHEAD ? false
 /*
  *  Licensing options (yes some are listed twice, filters and such are not listed)
  */
@@ -226,8 +227,23 @@ assert x11grabExtlib -> xorg.libX11 != null && xorg.libXv != null;
 
 stdenv.mkDerivation rec {
   name = "ffmpeg-full-${version}";
+  version =
+    if useHEAD then
+      "2016-02-08"
+    else
+      ffmpeg.version;
 
-  inherit (ffmpeg) src version;
+  src =
+    if useHEAD then
+      fetchFromGitHub {
+        owner = "ffmpeg";
+        repo = "ffmpeg";
+        rev = "a25c5dbb5ee0f54c474d9caf43359cd0f61ae1bf";
+        sha256 = "00klxhwclf78kd60i5qxd8hn9v67pyf3k5msiy50kpxrjm34qi2v";
+      }
+    else
+      ffmpeg.src;
+
 
   postPatch = ''
     patchShebangs .

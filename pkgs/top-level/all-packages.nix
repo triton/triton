@@ -13448,9 +13448,7 @@ zsh = callPackage ../all-pkgs/zsh { };
 
   vkeybd = callPackage ../applications/audio/vkeybd {};
 
-  vlc = callPackage ../applications/video/vlc {
-    ffmpeg = ffmpeg_2;
-  };
+  vlc = callPackage ../applications/video/vlc { };
 
   vlc_qt5 = qt5.vlc;
 

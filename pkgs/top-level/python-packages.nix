@@ -2616,6 +2616,13 @@ in {
     };
 
     LC_ALL = "en_US.UTF-8";
+
+    # checkPhase require at least one 'normal' font and one 'monospace',
+    # otherwise glyph tests fails
+    FONTCONFIG_FILE = pkgs.makeFontsConf {
+      fontDirectories = [ pkgs.freefont_ttf ];
+    };
+
     buildInputs = with self; [ pytest pkgs.glibcLocales ];
     propagatedBuildInputs = with self; [ pkgs.cairo cffi ];
 
@@ -2623,17 +2630,29 @@ in {
       py.test $out/${python.sitePackages}
     '';
 
-    # Marked broken since according to test
+    # FIXME: make gdk_pixbuf dependency optional (as wel as xcfffi)
     # Happens with 0.7.1 and 0.7.2
     # OSError: dlopen() failed to load a library: gdk_pixbuf-2.0 / gdk_pixbuf-2.0-0
 
-    patchPhase = ''
+    patches = [
+      # This patch from PR substituted upstream
+      (pkgs.fetchpatch {
+          url = "https://github.com/avnik/cairocffi/commit/2266882e263c5efc87350cf016d117b2ec6a1d59.patch";
+          sha256 = "0gb570z3ivf1b0ixsk526n3h29m8c5rhjsiyam7rr3x80dp65cdl";
+      })
+
+      ../development/python-modules/cairocffi/dlopen-paths.patch
+    ];
+
+    postPatch = ''
       # Hardcode cairo library path
-      sed -e 's,ffi\.dlopen(,&"${pkgs.cairo}/lib/" + ,' -i cairocffi/__init__.py
+      # FIXME: for closure-size branch all pkgs.foo should be replaced with pkgs.foo.lib
+      substituteInPlace cairocffi/__init__.py --subst-var-by cairo ${pkgs.cairo}
+      substituteInPlace cairocffi/__init__.py --subst-var-by glib ${pkgs.glib}
+      substituteInPlace cairocffi/__init__.py --subst-var-by gdk_pixbuf ${pkgs.gdk_pixbuf}
     '';
 
     meta = {
-      broken = true;
       homepage = https://github.com/SimonSapin/cairocffi;
       license = "bsd";
       description = "cffi-based cairo bindings for Python";
@@ -7051,14 +7070,14 @@ in {
     name = "scikits.samplerate-${version}";
     version = "0.3.3";
     src = pkgs.fetchgit {
-      url = https://github.com/ThomasLecocq/samplerate;
-      rev = "7edb22b23f5aa8e7342aea0b538bdd0434988510";
-      sha256 = "ec2a09819c38028283505090ee9839963d3557e73f6e8eb3348ff8884d0d67ed";
-      };
+      url = https://github.com/cournape/samplerate;
+      rev = "a536c97eb2d6195b5f266ea3cc3a35364c4c2210";
+      sha256 = "0mgic7bs5zv5ji05vr527jlxxlb70f9dg93hy1lzyz2plm1kf7gg";
+    };
+
     buildInputs = with self;  [ pkgs.libsamplerate ];
 
     propagatedBuildInputs = with self; [ numpy ];
-
 
     preConfigure = ''
        cat > site.cfg << END
@@ -12475,48 +12494,20 @@ in {
     };
   };
 
-  numpy = let
-    support = import ../development/python-modules/numpy-scipy-support.nix {
-      inherit python;
-      openblas = pkgs.openblasCompat;
-      pkgName = "numpy";
-    };
-  in buildPythonPackage ( rec {
-    name = "numpy-${version}";
-    version = "1.10.4";
+  buildNumpyPackage = callPackage ../development/python-modules/numpy.nix {
+    gfortran = pkgs.gfortran;
+    blas = pkgs.openblasCompat_2_14;
+  };
 
+  numpy = self.numpy_1_10;
+
+  numpy_1_10 = self.buildNumpyPackage rec {
+    version = "1.10.4";
     src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/n/numpy/${name}.tar.gz";
+      url = "https://pypi.python.org/packages/source/n/numpy/numpy-${version}.tar.gz";
       sha256 = "7356e98fbcc529e8d540666f5a919912752e569150e9a4f8d869c686f14c720b";
     };
-
-    disabled = isPyPy;  # WIP
-
-    preConfigure = ''
-      sed -i 's/-faltivec//' numpy/distutils/system_info.py
-    '';
-
-    inherit (support) preBuild checkPhase;
-
-    buildInputs = [ pkgs.gfortran self.nose ];
-    propagatedBuildInputs = [ support.openblas ];
-
-    # Disable failing test_f2py test.
-    # f2py couldn't be found by test,
-    # even though it was used successfully to build numpy
-
-    # The large file support test is disabled because it takes forever
-    # and can cause the machine to run out of disk space when run.
-    prePatch = ''
-      sed -i 's/test_f2py/donttest/' numpy/tests/test_scripts.py
-      sed -i 's/test_large_file_support/donttest/' numpy/lib/tests/test_format.py
-    '';
-
-    meta = {
-      description = "Scientific tools for Python";
-      homepage = "http://numpy.scipy.org/";
-    };
-  });
+  };
 
   numpydoc = buildPythonPackage rec {
     name = "numpydoc-${version}";
@@ -18450,47 +18441,28 @@ in {
     };
   };
 
+  buildScipyPackage = callPackage ../development/python-modules/scipy.nix {
+    gfortran = pkgs.gfortran;
+  };
 
-  scipy = let
-    support = import ../development/python-modules/numpy-scipy-support.nix {
-      inherit python;
-      openblas = pkgs.openblasCompat;
-      pkgName = "scipy";
-    };
-  in buildPythonPackage rec {
-    name = "scipy-${version}";
+  scipy = self.scipy_0_17;
+
+  scipy_0_16 = self.buildScipyPackage rec {
     version = "0.16.1";
-
     src = pkgs.fetchurl {
-      url = "http://pypi.python.org/packages/source/s/scipy/${name}.tar.gz";
+      url = "https://pypi.python.org/packages/source/s/scipy/scipy-${version}.tar.gz";
       sha256 = "ecd1efbb1c038accb0516151d1e6679809c6010288765eb5da6051550bf52260";
     };
+    numpy = self.numpy_1_10;
+  };
 
-    buildInputs = [ pkgs.gfortran self.nose ];
-    propagatedBuildInputs = [ self.numpy ];
-
-    preConfigure = ''
-      sed -i '0,/from numpy.distutils.core/s//import setuptools;from numpy.distutils.core/' setup.py
-    '';
-
-    # First test: RuntimeWarning: Mean of empty slice.
-    # Second: SyntaxError: invalid syntax. Due to wrapper?
-    # Third: test checks permissions
-    prePatch = ''
-      substituteInPlace scipy/stats/tests/test_stats.py --replace "test_chisquare_masked_arrays" "remove_this_one"
-      rm scipy/linalg/tests/test_lapack.py
-      substituteInPlace scipy/weave/tests/test_catalog.py --replace "test_user" "remove_this_one"
-    '';
-
-    inherit (support) preBuild checkPhase;
-
-    patches = [../development/python-modules/scipy-0.16.1-decorator-fix.patch];
-    setupPyBuildFlags = [ "--fcompiler='gnu95'" ];
-
-    meta = {
-      description = "SciPy (pronounced 'Sigh Pie') is open-source software for mathematics, science, and engineering. ";
-      homepage = http://www.scipy.org/;
+  scipy_0_17 = self.buildScipyPackage rec {
+    version = "0.17.0";
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/s/scipy/scipy-${version}.tar.gz";
+      sha256 = "f600b755fb69437d0f70361f9e560ab4d304b1b66987ed5a28bdd9dd7793e089";
     };
+    numpy = self.numpy_1_10;
   };
 
   scikitimage = buildPythonPackage rec {
@@ -18525,7 +18497,7 @@ in {
     };
 
     buildInputs = with self; [ nose pillow pkgs.gfortran pkgs.glibcLocales ];
-    propagatedBuildInputs = with self; [ numpy scipy pkgs.openblas ];
+    propagatedBuildInputs = with self; [ numpy scipy numpy.blas ];
 
     LC_ALL="en_US.UTF-8";
 

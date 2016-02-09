@@ -855,6 +855,8 @@ libgee = callPackage ../all-pkgs/libgee { };
 
 libgfbgraph = callPackage ../all-pkgs/libgfbgraph { };
 
+libgksu = callPackage ../all-pkgs/libgksu { };
+
 libgnomekbd = callPackage ../all-pkgs/libgnomekbd { };
 
 libgphoto2 = callPackage ../all-pkgs/libgphoto2 { };
@@ -7522,8 +7524,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   libgdiplus = callPackage ../development/libraries/libgdiplus {
       inherit (darwin.apple_sdk.frameworks) Carbon;
   };
-
-  libgksu = callPackage ../development/libraries/libgksu { };
 
   libgpgerror = callPackage ../development/libraries/libgpg-error { };
 

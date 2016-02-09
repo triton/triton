@@ -1,5 +1,5 @@
 { stdenv, autoconf, automake, makeWrapper, pkgconfig, libtool, which, git
-, boost, pythonPackages, libxml2, zlib, bzip2
+, boost, pythonPackages, libxml2, zlib, bzip2, ensureNewerSourcesHook
 
 # Optional Dependencies
 , snappy ? null, leveldb ? null, yasm ? null, fcgi ? null, expat ? null
@@ -96,22 +96,54 @@ stdenv.mkDerivation {
 
   inherit src patches;
 
-  nativeBuildInputs = [ autoconf automake makeWrapper pkgconfig libtool which git pythonPackages.python ]
-    ++ optionals (versionAtLeast version "9.0.2") [
-      pythonPackages.setuptools pythonPackages.argparse
-    ];
+  nativeBuildInputs = [
+    autoconf
+    automake
+    makeWrapper
+    pkgconfig
+    libtool
+    which
+    git
+    pythonPackages.python
+    (ensureNewerSourcesHook { year = "1980"; })
+  ] ++ optionals (versionAtLeast version "9.0.2") [
+    pythonPackages.setuptools
+    pythonPackages.argparse
+  ];
+
   buildInputs = buildInputs ++ cryptoLibsMap.${cryptoStr} ++ [
-    boost libxml2 optYasm optLibatomic_ops optLibs3 malloc pythonPackages.flask zlib bzip2
+    boost
+    libxml2
+    optYasm
+    optLibatomic_ops
+    optLibs3
+    malloc
+    pythonPackages.flask
+    zlib
+    bzip2
   ] ++ optional (versionAtLeast version "9.0.0") [
     pythonPackages.sphinx # Used for docs
   ] ++ optional stdenv.isLinux [
-    linuxHeaders libuuid udev keyutils optLibaio optLibxfs optZfs
+    linuxHeaders
+    libuuid
+    udev
+    keyutils
+    optLibaio
+    optLibxfs
+    optZfs
   ] ++ optional hasServer [
-    optSnappy optLeveldb
+    optSnappy
+    optLeveldb
   ] ++ optional hasRadosgw [
-    optFcgi optExpat optCurl optFuse optLibedit
+    optFcgi
+    optExpat
+    optCurl
+    optFuse
+    optLibedit
   ] ++ optional hasXio [
-    optAccelio optLibibverbs optLibrdmacm
+    optAccelio
+    optLibibverbs
+    optLibrdmacm
   ] ++ optional hasRocksdb [
     optRocksdb
   ] ++ optional hasKinetic [

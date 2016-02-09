@@ -30,6 +30,7 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
   parallelBuild = false;
+  parallelInstall = false;
 
   meta = {
     description = "Spell checker for many languages";

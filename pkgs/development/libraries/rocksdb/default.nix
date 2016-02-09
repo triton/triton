@@ -2,7 +2,7 @@
 
 # Optional Arguments
 , snappy ? null, google-gflags ? null, zlib ? null, bzip2 ? null, lz4 ? null
-, numactl ? null
+, zstd ? null , numactl ? null
 
 # Malloc implementation
 , jemalloc ? null, gperftools ? null
@@ -13,16 +13,16 @@ let
 in
 stdenv.mkDerivation rec {
   name = "rocksdb-${version}";
-  version = "4.1";
+  version = "4.2";
 
   src = fetchFromGitHub {
     owner = "facebook";
     repo = "rocksdb";
     rev = "v${version}";
-    sha256 = "1q1h2n3v02zg711vk56rc9v54f5i31w684wqag4xcr2dv1glw0r0";
+    sha256 = "0k6zhx0xiyfr5r921kn43abm1l4dvy23w13242g2kjnasfhzzjpx";
   };
 
-  buildInputs = [ snappy google-gflags zlib bzip2 lz4 numactl malloc ];
+  buildInputs = [ snappy google-gflags zlib bzip2 lz4 zstd numactl malloc ];
 
   postPatch = ''
     # Hack to fix typos
@@ -35,13 +35,22 @@ stdenv.mkDerivation rec {
   CMAKE_CXX_FLAGS = "-std=gnu++11";
   JEMALLOC_LIB = stdenv.lib.optionalString (malloc == jemalloc) "-ljemalloc";
 
+  makeFlags = [
+    "DEBUG_LEVEL=0"
+  ];
+
   buildFlags = [
-    "static_lib"
     "shared_lib"
+    "static_lib"
   ];
 
   installFlags = [
     "INSTALL_PATH=\${out}"
+  ];
+
+  installTargets = [
+    "install-shared"
+    "install-static"
   ];
 
   postInstall = ''

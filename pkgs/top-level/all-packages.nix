@@ -1178,6 +1178,8 @@ zenity = callPackage ../all-pkgs/zenity { };
 
 zsh = callPackage ../all-pkgs/zsh { };
 
+zstd = callPackage ../all-pkgs/zstd { };
+
 ################################################################################
 ################################################################################
 ################################################################################
@@ -4421,8 +4423,6 @@ zsh = callPackage ../all-pkgs/zsh { };
   zpaqd = callPackage ../tools/archivers/zpaq/zpaqd.nix { };
 
   zsh-navigation-tools = callPackage ../tools/misc/zsh-navigation-tools { };
-
-  zstd = callPackage ../tools/compression/zstd { };
 
   zsync = callPackage ../tools/compression/zsync { };
 

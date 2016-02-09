@@ -3,6 +3,7 @@
 
 , atk
 , glibmm
+, libsigcxx
 }:
 
 stdenv.mkDerivation rec {
@@ -16,6 +17,12 @@ stdenv.mkDerivation rec {
     sha256 = "1gaqwhviadsmy0fsr47686yglv1p4mpkamj0in127bz2b5bki5gz";
   };
 
+  buildInputs = [
+    atk
+    glibmm
+    libsigcxx
+  ];
+
   configureFlags = [
     "--enable-deprecated-api"
     "--disable-documentation"
@@ -23,13 +30,6 @@ stdenv.mkDerivation rec {
     "--without-libsigc-doc"
     "--without-glibmm-doc"
   ];
-
-  propagatedBuildInputs = [
-    atk
-    glibmm
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "C++ interface for the ATK library";

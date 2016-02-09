@@ -1,12 +1,12 @@
 { callPackage, fetchgit, fetchTritonPatch, ... } @ args:
 
 callPackage ./generic.nix (args // rec {
-  version = "10.0.2";
+  version = "10.0.3";
 
   src = fetchgit {
     url = "https://github.com/ceph/ceph.git";
     rev = "refs/tags/v${version}";
-    sha256 = "019817ipp9k0nycwg8m0k9jgbs776sf481dqi6fx19j818jwyzdq";
+    sha256 = "0h44knrryv88lwiqnnhavrq821lq3fgf9byl41bh9hcnf583kq7z";
   };
 
   patches = [

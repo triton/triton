@@ -204,6 +204,7 @@ stdenv.mkDerivation {
     (mkWith   false                        "cython"              null)  # TODO: Implement
   ] ++ optional (versionAtLeast version "11.0.0") [
     (mkWith   true                         "eventfd"              null)
+    (mkWith   false                        "spdk"                 null) # TODO: Implement
   ];
 
   preBuild = optionalString (versionAtLeast version "9.0.0") ''

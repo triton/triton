@@ -49,7 +49,11 @@ in pkgs.buildEnv {
     findutils
   ];
 }'
-export PATH="$(nix-build --out-link $TMPDIR/nix-env -E "$exp")/bin"
+if ! nix-build --out-link $TMPDIR/nix-env -E "$exp"; then
+  echo "Failed to build dependencies of this script" >&2
+  exit 1
+fi
+export PATH="$(readlink -f "$TMPDIR/nix-env")/bin"
 
 echo "Finding packages and all dependencies..." >&2
 pkglist='[ '

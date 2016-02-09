@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
   name = "unifi-controller-${version}";
-  version = "4.7.6";
+  version = "4.8.12";
 
   src = fetchurl {
     url = "https://www.ubnt.com/downloads/unifi/${version}/UniFi.unix.zip";
-    sha256 = "0xinrxcbd5gb2jgcvrx3jcslad0f19qrbjzkiir9zjq59sn68gfn";
+    sha256 = "0p5hqdciszgzayv6vwc8z4vzbham1hfwsraskfnn4bj1v6mskzqy";
   };
 
   buildInputs = [ unzip ];
@@ -15,14 +15,20 @@ stdenv.mkDerivation rec {
 
   buildPhase = ''
     rm -rf bin conf readme.txt
+    for so in $(find . -name \*.so\*); do
+      chmod +x "$so"
+      patchelf --set-rpath "${stdenv.cc.cc}/lib:${stdenv.libc}/lib" \
+        "$so"
+      if ldd "$so" | grep -q 'not found'; then
+        echo "Didn't completely patch $so"
+        exit 1
+      fi
+    done
   '';
 
   installPhase = ''
     mkdir -p $out
     cp -ar * $out
-
-    # Fix a naming issue likely only in 4.7.6
-    ln -s 4.7.6 $out/webapps/ROOT/lib/4.7.5
   '';
 
   meta = with stdenv.lib; {

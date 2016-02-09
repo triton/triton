@@ -23,15 +23,6 @@ stdenv.mkDerivation rec {
     sha256 = "0ay9s137x49f0akx658p7kznz0rdapfrd8ym54q0hlgrggblhv6f";
   };
 
-  configureFlags = [
-    "--enable-rebuilds"
-    "--enable-glibtest"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-  ];
-
   nativeBuildInputs = [
     gettext
     perl
@@ -40,6 +31,15 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glib
     gobject-introspection
+  ];
+
+  configureFlags = [
+    "--enable-rebuilds"
+    "--enable-glibtest"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";

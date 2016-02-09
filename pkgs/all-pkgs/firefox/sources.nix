@@ -1,7 +1,7 @@
 {
   stable = {
-    version = "44.0";
-    sha256 = "07ac1h6ib36nm4a0aykh1z36vgw6wqlblil0zsj0lchdhksb10pa";
+    version = "44.0.1";
+    sha256 = "17lwca8cj9pv28p1p4mwik7ax8gn6i9lny2inksbbs7b79x5rlq7";
   };
   esr = {
     version = "38.5.2esr";

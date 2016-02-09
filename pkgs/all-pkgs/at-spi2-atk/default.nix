@@ -1,14 +1,13 @@
 { stdenv
 , fetchurl
+, gettext
 , intltool
 , python
 
-, atk
 , at-spi2-core
+, atk
 , dbus_glib
 , glib
-, popt
-, xorg
 
 , libxml2
 }:
@@ -30,34 +29,28 @@ stdenv.mkDerivation rec {
     sha256 = "0bf1g5cj84rmx7p1q547vwbc0hlpcs2wrxnmv96lckfkhs9mzcf4";
   };
 
+  nativeBuildInputs = [
+    gettext
+    intltool
+    python
+  ];
+
+  buildInputs = [
+    at-spi2-core
+    atk
+    dbus_glib
+    glib
+  ] ++ optionals doCheck [
+    libxml2
+  ];
+
   configureFlags = [
     "--enable-schemas-compile"
     "--enable-p2p"
     (wtFlag "tests" doCheck null)
   ];
 
-  nativeBuildInputs = [
-    intltool
-    python
-  ];
-
-  buildInputs = [
-    atk
-    dbus_glib
-    glib
-    popt
-    at-spi2-core
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXi
-    xorg.libXtst
-  ] ++ optionals doCheck [
-    libxml2
-  ];
-
   doCheck = false;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Gtk module for bridging AT-SPI to Atk";

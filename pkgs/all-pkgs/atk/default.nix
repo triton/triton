@@ -7,6 +7,11 @@
 , gobject-introspection
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "atk-${version}";
   versionMajor = "2.18";
@@ -21,7 +26,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-rebuilds"
     "--enable-glibtest"
-    "--enable-introspection"
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -38,8 +43,6 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "GTK+ & GNOME Accessibility Toolkit";

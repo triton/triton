@@ -636,6 +636,8 @@ geocode-glib = callPackage ../all-pkgs/geocode-glib { };
 
 gjs = callPackage ../all-pkgs/gjs { };
 
+gksu = callPackage ../all-pkgs/gksu { };
+
 glib = callPackage ../all-pkgs/glib { };
 # checked version separate to break recursion
 glib_tested = glib.override {
@@ -11794,8 +11796,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   geany = callPackage ../applications/editors/geany { };
   geany-with-vte = callPackage ../applications/editors/geany/with-vte.nix { };
-
-  gksu = callPackage ../applications/misc/gksu { };
 
   gnuradio = callPackage ../applications/misc/gnuradio {
     inherit (pythonPackages) lxml numpy scipy matplotlib pyopengl;

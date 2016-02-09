@@ -29,11 +29,11 @@ let
 in
 stdenv.mkDerivation rec {
   name = "curl${nameSuffix}-${version}";
-  version = "7.47.0";
+  version = "7.47.1";
 
   src = fetchurl {
     url = "http://curl.haxx.se/download/curl-${version}.tar.bz2";
-    sha256 = "0riz70pjg82gbcfi2ndvsksb2dv55g31ir8piph2p6zvhy9ny29b";
+    sha256 = "13z9gba3q2ybp50z0gdkzhwcx9m0i7qkvm278yz4pql2jfml7inx";
   };
 
   nativeBuildInputs = [ perl ];

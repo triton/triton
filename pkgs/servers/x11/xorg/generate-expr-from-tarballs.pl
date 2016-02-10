@@ -19,6 +19,7 @@ my %pkgURLs;
 my %pkgHashes;
 my %pkgNames;
 my %pkgRequires;
+my %pkgRequiresNative;
 
 my %pcMap;
 
@@ -92,6 +93,7 @@ while (<>) {
     my $provides = `find $pkgDir -name "*.pc.in"`;
     my @provides2 = split '\n', $provides;
     my @requires = ();
+    my @requiresNative = ();
 
     foreach my $pcFile (@provides2) {
         my $pc = $pcFile;
@@ -274,7 +276,7 @@ foreach my $pkg (sort (keys %pkgURLs)) {
             # Some packages have .pc that depends on itself.
             next if $pcMap{$req} eq $pkg;
             if (!defined $requiresNative{$pcMap{$req}}) {
-                $inputs .= "$pcMap{$req} ";
+                $inputsNative .= "$pcMap{$req} ";
                 $requiresNative{$pcMap{$req}} = 1;
             }
         } else {
@@ -293,7 +295,7 @@ foreach my $pkg (sort (keys %pkgURLs)) {
       url = $pkgURLs{$pkg};
       sha256 = "$pkgHashes{$pkg}";
     };
-	nativeBuildInputs = [ $nativeInputs ];
+    nativeBuildInputs = [ $inputsNative ];
     buildInputs = [ $inputs ];$extraAttrs
     meta.platforms = stdenv.lib.platforms.unix;
   }) // {inherit $inputs;};

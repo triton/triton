@@ -17,7 +17,6 @@
 , gobject-introspection
 , gnome-wrapper
 , json-glib
-, librsvg
 , libxkbcommon
 , mesa_noglu
 , pango
@@ -31,8 +30,24 @@
 with {
   inherit (stdenv.lib)
     enFlag
+    optionals
     wtFlag;
 };
+
+assert xorg != null ->
+  xorg.inputproto != null
+  && xorg.libICE != null
+  && xorg.libSM != null
+  && xorg.libX11 != null
+  && xorg.libXcomposite != null
+  && xorg.libXcursor != null
+  && xorg.libXdamage != null
+  && xorg.libXext != null
+  && xorg.libXfixes != null
+  && xorg.libXi != null
+  && xorg.libXinerama != null
+  && xorg.libXrandr != null
+  && xorg.libXrender != null;
 
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";
@@ -45,16 +60,54 @@ stdenv.mkDerivation rec {
     sha256 = "0848wr702kvpayrlvggn3wys5im564kqyxzn6hkmrkj5mjq1qvm7";
   };
 
-  # demos fail to install, no idea where the problem is
-  postPatch = "sed '/^SRC_SUBDIRS /s/demos//' -i Makefile.in";
+  nativeBuildInputs = [
+    gettext
+    perl
+  ];
+
+  buildInputs = [
+    adwaita-icon-theme
+    atk
+    at-spi2-atk
+    cairo
+    colord
+    cups
+    epoxy
+    expat
+    fontconfig
+    gdk-pixbuf
+    glib
+    gobject-introspection
+    json-glib
+    libxkbcommon
+    mesa_noglu
+    pango
+    rest
+    shared_mime_info
+    wayland
+  ] ++ optionals (xorg != null) [
+    xorg.inputproto
+    xorg.libICE
+    xorg.libSM
+    xorg.libX11
+    xorg.libXcomposite
+    xorg.libXcursor
+    xorg.libXdamage
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXi
+    xorg.libXinerama
+    xorg.libXrandr
+    xorg.libXrender
+  ];
 
   configureFlags = [
     (enFlag "xkb" (libxkbcommon != null) null)
-    (enFlag "xinerama" (xorg.libXinerama != null) null)
-    (enFlag "xrandr" (xorg.libXrandr != null) null)
-    (enFlag "xfixes" (xorg.libXfixes != null) null)
-    (enFlag "xcomposite" (xorg.libXcomposite != null) null)
-    (enFlag "xdamage" (xorg.libXdamage != null) null)
+    (enFlag "xinerama" (xorg != null) null)
+    (enFlag "xrandr" (xorg != null) null)
+    (enFlag "xfixes" (xorg != null) null)
+    (enFlag "xcomposite" (xorg != null) null)
+    (enFlag "xdamage" (xorg != null) null)
     (enFlag "x11-backend" (true) null) # xorg deps
     "--disable-win32-backend"
     "--disable-quartz-backend"
@@ -81,60 +134,14 @@ stdenv.mkDerivation rec {
     (wtFlag "x" (xorg != null) null)
   ];
 
-  nativeBuildInputs = [
-    gettext
-    perl
-  ];
-
-  propagatedBuildInputs = [
-    gnome-wrapper
-  ];
-
-  buildInputs = [
-    adwaita-icon-theme
-    atk
-    at-spi2-atk
-    cairo
-    colord
-    cups
-    epoxy
-    expat
-    fontconfig
-    gdk-pixbuf
-    glib
-    gobject-introspection
-    json-glib
-    librsvg
-    libxkbcommon
-    mesa_noglu
-    pango
-    rest
-    shared_mime_info
-    wayland
-    xorg.inputproto
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXcomposite
-    xorg.libXcursor
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXi
-    xorg.libXinerama
-    xorg.libXrandr
-    xorg.libXrender
-  ];
-
   postInstall = "rm -rvf $out/share/gtk-doc";
 
   # TODO: disable unnecessary tests
   doCheck = false;
-  enableParallelBuilding = true;
 
   passthru = {
     gtkExeEnvPostBuild = ''
-      rm $out/lib/gtk-3.0/3.0.0/immodules.cache
+      rm -v $out/lib/gtk-3.0/3.0.0/immodules.cache
       $out/bin/gtk-query-immodules-3.0 $out/lib/gtk-3.0/3.0.0/immodules/*.so > \
         $out/lib/gtk-3.0/3.0.0/immodules.cache
     ''; # workaround for bug of nix-mode for Emacs */ '';
@@ -144,7 +151,12 @@ stdenv.mkDerivation rec {
     description = "A toolkit for creating graphical user interfaces";
     homepage = http://www.gtk.org/;
     license = licenses.lgpl2Plus;
-    maintainers = with maintainers; [ ];
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

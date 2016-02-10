@@ -3503,11 +3503,11 @@ let
   }) // {inherit libX11 libXi ;};
 
   xorgserver = (mkDerivation "xorgserver" {
-    name = "xorg-server-1.18.0";
+    name = "xorg-server-1.18.1";
     builder = ./builder.sh;
     src = fetchurl {
-      url = mirror://xorg/individual/xserver/xorg-server-1.18.0.tar.bz2;
-      sha256 = "0biimwnp17wz80nplybpi940y3dyd7hgp5fyipfwxncmjs0p0mhr";
+      url = mirror://xorg/individual/xserver/xorg-server-1.18.1.tar.bz2;
+      sha256 = "17bq40als48v12ld81jysc0gj5g572zkjkyzbhlm3ac9xgdmdv45";
     };
     buildInputs = [pkgconfig dri2proto dri3proto renderproto libdrm openssl libX11 libXau libXaw libxcb xcbutil xcbutilwm xcbutilimage xcbutilkeysyms xcbutilrenderutil libXdmcp libXfixes libxkbfile libXmu libXpm libXrender libXres libXt ];
     meta.platforms = stdenv.lib.platforms.unix;

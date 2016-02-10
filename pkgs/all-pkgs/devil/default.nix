@@ -12,6 +12,13 @@
 , xorg
 }:
 
+with {
+  inherit (stdenv.lib)
+    optionals;
+};
+
+assert xorg != null -> xorg.libX11 != null;
+
 stdenv.mkDerivation rec {
 
   name ="devil-${version}";
@@ -30,6 +37,7 @@ stdenv.mkDerivation rec {
     libtiff
     openexr
     mesa
+  ] ++ optionals (xorg != null) [
     xorg.libX11
   ];
 

@@ -1,32 +1,64 @@
+# Eventually combine with the upstream stdenv
+ninjaCommonMakeFlags() {
+    local phaseName
+    phaseName=$1
+
+    local parallelVar
+    parallelVar="parallel${phaseName^}"
+
+    actualMakeFlags=()
+    if [ -n "$makefile" ]; then
+        actualMakeFlags+=("-f" "$makefile")
+    fi
+    if [ -n "${!parallelVar-true}" ]; then
+        actualMakeFlags+=("-j${NIX_BUILD_CORES}" "-l${NIX_BUILD_CORES}")
+    fi
+    actualMakeFlags+=($makeFlags)
+    actualMakeFlags+=("${makeFlagsArray[@]}")
+    local flagsVar
+    flagsVar="${phaseName}Flags"
+    actualMakeFlags+=(${!flagsVar})
+    local arrayVar
+    arrayVar="${phaseName}FlagsArray[@]"
+    actualMakeFlags+=("${!arrayVar}")
+}
+
 ninjaBuildPhase() {
-  runHook preBuild
-  echo "ninja flags: $makeFlags ${makeFlagsArray[@]} $buildFlags ${buildFlagsArray[@]}"
-  ninja ${enableParallelBuilding:+-j${NIX_BUILD_CORES}} \
-      $makeFlags "${makeFlagsArray[@]}" \
-      $buildFlags "${buildFlagsArray[@]}"
-  runHook postBuild
+    runHook preBuild
+
+    local actualMakeFlags
+    ninjaCommonMakeFlags "build"
+    printMakeFlags "build"
+    ninja "${actualMakeFlags[@]}"
+
+    runHook postBuild
+}
+
+ninjaCheckPhase() {
+    runHook preCheck
+
+    local actualMakeFlags
+    ninjaCommonMakeFlags "check"
+    actualMakeFlags+=(${checkTarget:-check})
+    printMakeFlags "check"
+    ninja "${actualMakeFlags[@]}"
+
+    runHook postCheck
 }
 
 ninjaInstallPhase() {
-  runHook preInstall
-  mkdir -p "$prefix"
-  echo "ninja install flags: $installTargets $makeFlags ${makeFlagsArray[@]} $installFlags ${installFlagsArray[@]}"
-  ninja ${enableParallelBuilding:+-j${NIX_BUILD_CORES}} \
-      $makeFlags "${makeFlagsArray[@]}" \
-      $installFlags "${installFlagsArray[@]}" ${installTargets:-install}
-  runHook postInstall
+    runHook preInstall
+
+    mkdir -p "$prefix"
+
+    local actualMakeFlags
+    ninjaCommonMakeFlags "install"
+    actualMakeFlags+=(${installTargets:-install})
+    printMakeFlags "install"
+    ninja "${actualMakeFlags[@]}"
+
+    runHook postInstall
 }
-
-
-ninjaCheckPhase() {
-  runHook preCheck
-  echo "ninja check flags: $makeFlags ${makeFlagsArray[@]} $checkFlags ${checkFlagsArray[@]}"
-  ninja ${enableParallelBuilding:+-j${NIX_BUILD_CORES}} \
-      $makeFlags "${makeFlagsArray[@]}" \
-      $checkFlags "${checkFlagsArray[@]}" ${checkTarget:-check}
-  runHook postCheck
-}
-
 
 addNinjaParams() {
   local input; local ninja

@@ -2,6 +2,7 @@
 , fetchurl
 , intltool
 , itstool
+, makeWrapper
 
 , adwaita-icon-theme
 , bash
@@ -35,6 +36,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     intltool
     itstool
+    makeWrapper
   ];
 
   buildInputs = [
@@ -58,9 +60,10 @@ stdenv.mkDerivation rec {
     "--disable-installed-tests"
   ];
 
-  NIX_CFLAGS_COMPILE = [
-    "-I${glib}/include/gio-unix-2.0"
-  ];
+  preFixup = ''
+    wrapProgram $out/bin/gnome-calculator \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
+  '';
 
   meta = with stdenv.lib; {
     description = "A calculator application for GNOME";

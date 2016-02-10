@@ -1,8 +1,11 @@
 { stdenv
 , cmake
 , fetchurl
+, makeWrapper
 , perl
 
+, adwaita-icon-theme
+, gdk-pixbuf
 , glib
 , gtk3
 , vte
@@ -19,14 +22,23 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
+    makeWrapper
     perl
   ];
 
   buildInputs = [
+    adwaita-icon-theme
+    gdk-pixbuf
     glib
     gtk3
     vte
   ];
+
+  preFixup = ''
+    wrapProgram $out/bin/sakura \
+      --set GDK_PIXBUF_MODULE_FILE "$GDK_PIXBUF_MODULE_FILE" \
+      --prefix XDG_DATA_DIRS : "$XDG_ICON_DIRS"
+  '';
 
   meta = with stdenv.lib; {
     description = "A terminal emulator based on GTK and VTE";

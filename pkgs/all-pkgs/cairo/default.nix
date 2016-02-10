@@ -1,9 +1,10 @@
 { stdenv
+, autoreconfHook
+, fetchTritonPatch
 , fetchurl
 , libiconv
 
 , cogl
-, expat
 , fontconfig
 , freetype
 , glib
@@ -12,16 +13,24 @@
 , lzo
 , pixman
 , mesa_noglu
-#, qt4
 , xorg
 , zlib
+
+, gles2 ? false
 }:
 
 with {
   inherit (stdenv.lib)
     enFlag
-    optionals;
+    optionals
+    optionalString;
 };
+
+assert xorg != null ->
+  xorg.libX11 != null
+  && xorg.libxcb != null
+  && xorg.libXext != null
+  && xorg.libXrender != null;
 
 stdenv.mkDerivation rec {
   name = "cairo-1.14.6";
@@ -31,18 +40,65 @@ stdenv.mkDerivation rec {
     sha256 = "0lmjlzmghmr27y615px9hkm552x7ap6pmq9mfbzr6smp8y2b6g31";
   };
 
+  nativeBuildInputs = [
+    autoreconfHook
+  ] ++ optionals (!stdenv.cc.isGNU) [
+    libiconv
+  ];
+
+  buildInputs = [
+    fontconfig
+    freetype
+    glib
+    libpng
+    libspectre
+    lzo
+    mesa_noglu
+    pixman
+    xorg.libX11
+    xorg.libxcb
+    xorg.libXext
+    xorg.libXrender
+    zlib
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "082637366675031d5c64f34f3ff866cc965f7c9f";
+      file = "cairo/cairo-respect-fontconfig.patch";
+      sha256 = "1732f21adfe5ab291d987b7537b13470266253f599901a4707d27fd2b3d66734";
+    })
+    (fetchTritonPatch {
+      rev = "082637366675031d5c64f34f3ff866cc965f7c9f";
+      file = "cairo/cairo-1.12.18-disable-test-suite.patch";
+      sha256 = "3ec119ac2380f8565cebbcea4f745e89eeb78686e76e6b15345a76f05812c254";
+    })
+  ];
+
+  postPatch =
+    /* Work around broken pkg-config `Requires.private' that prevents
+       Freetype `-I' cflags from being propagated. */ ''
+      sed -i src/cairo.pc.in \
+        -e 's|^Cflags:\(.*\)$|Cflags: \1 -I${freetype}/include/freetype2 -I${freetype}/include|g'
+    '' + optionalString (xorg == null)
+    /* tests and perf tools require Xorg */ ''
+      sed -i Makefile.am \
+        -e '/^SUBDIRS/ s#boilerplate test perf# #'
+    '';
+
   configureFlags = [
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
+    "--enable-largefile"
+    #"--disable-atomic"
     "--disable-gcov"
     "--disable-valgrind"
-    "--enable-xlib"
-    "--enable-xlib-xrender"
-    "--enable-xcb"
-    "--enable-xlib-xcb"
-    "--enable-xcb-shm"
-    # TODO: qt
+    (enFlag "xlib" (xorg != null) null)
+    (enFlag "xlib-xrender" (xorg != null) null)
+    (enFlag "xcb" (xorg != null) null)
+    (enFlag "xlib-xcb" (xorg != null) null)
+    (enFlag "xcb-shm" (xorg != null) null)
     "--disable-qt"
     "--disable-quartz"
     "--disable-quartz-font"
@@ -55,16 +111,17 @@ stdenv.mkDerivation rec {
     "--disable-beos"
     "--disable-drm"
     "--disable-gallium"
-    "--enable-libpng"
-    "--enable-gl"
-    "--disable-glesv2"
-    # FIXME: cogl recursion
-    "--disable-cogl"
+    (enFlag "libpng" (libpng != null) null)
+    # Only one OpenGL backend may be selected at compile time
+    # OpenGL X (gl), or OpenGL ES 2.0 (glesv2)
+    (enFlag "gl" (!gles2) null)
+    (enFlag "glesv2" gles2 null)
+    "--disable-cogl" # recursive dependency
     # FIXME: fix directfb mirroring
     "--disable-directfb"
     "--disable-vg"
-    "--enable-egl"
-    "--enable-glx"
+    (enFlag "egl" (mesa_noglu != null) null)
+    (enFlag "glx" (mesa_noglu != null) null)
     "--disable-wgl"
     "--enable-script"
     "--enable-ft"
@@ -88,40 +145,9 @@ stdenv.mkDerivation rec {
     "--without-gallium"
   ];
 
-  preConfigure =
-  /* Work around broken pkg-config `Requires.private' that prevents
-     Freetype `-I' cflags from being propagated. */ ''
-    sed -i src/cairo.pc.in \
-      -e 's|^Cflags:\(.*\)$|Cflags: \1 -I${freetype}/include/freetype2 -I${freetype}/include|g'
-  '';
-
-  nativeBuildInputs = optionals (!stdenv.cc.isGNU) [
-    libiconv
-  ];
-
-  buildInputs = [
-    expat
-    fontconfig
-    freetype
-    glib
-    libpng
-    libspectre
-    lzo
-    mesa_noglu
-    pixman
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXext
-    xorg.libXrender
-    xorg.xcbutil
-    zlib
-  ];
-
   postInstall = ''
     rm -rvf $out/share/gtk-doc
   '' + glib.flattenInclude;
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A vector graphics library with cross-device output support";

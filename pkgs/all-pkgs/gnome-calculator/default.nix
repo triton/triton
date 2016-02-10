@@ -62,7 +62,9 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/gnome-calculator \
-      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
   meta = with stdenv.lib; {

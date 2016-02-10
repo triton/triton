@@ -2,17 +2,13 @@
 , fetchurl
 , gettext
 
-, atk
-, bzip2
 , cairo
 , gdk-pixbuf
 , glib
 , gobject-introspection
 , gst-plugins-base
 , gstreamer
-, json-glib
 , libdrm
-, libxkbcommon
 , mesa_noglu
 , pango
 , wayland
@@ -36,22 +32,45 @@ stdenv.mkDerivation rec {
     sha256 = "14daxqrid5039xmq9yl4pk86awng1n9zgl6ysblhc4gw2ifzp7b8";
   };
 
+  nativeBuildInputs = [
+    gettext
+  ];
+
+  buildInputs = [
+    cairo
+    gdk-pixbuf
+    glib
+    gobject-introspection
+    gst-plugins-base
+    gstreamer
+    libdrm
+    mesa_noglu
+    pango
+    wayland
+    xorg.libX11
+    xorg.libXcomposite
+    xorg.libXdamage
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXrandr
+  ];
+
   postPatch =
-  /* Don't build examples */ ''
-    sed -i Makefile.{am,in} \
-      -e "s/^\(SUBDIRS +=.*\)examples\(.*\)$/\1\2/"
-  '' +
-  /* Fix library name in pkg-config file */ ''
-    sed -i cogl-pango/cogl-pango-2.0-experimental.pc.in \
-      -e 's|-lcoglpango|-lcogl-pango|'
-  '' + optionalString (!doCheck)
-  /* The configure switch does not completely disable
-     tests from being built */ ''
-    sed -i Makefile.{am,in} \
-      -e "s/^\(SUBDIRS =.*\)test-fixtures\(.*\)$/\1\2/" \
-      -e "s/^\(SUBDIRS +=.*\)tests\(.*\)$/\1\2/" \
-      -e "s/^\(.*am__append.* \)tests\(.*\)$/\1\2/"
-  '';
+    /* Don't build examples */ ''
+      sed -i Makefile.{am,in} \
+        -e "s/^\(SUBDIRS +=.*\)examples\(.*\)$/\1\2/"
+    '' +
+    /* Fix library name in pkg-config file */ ''
+      sed -i cogl-pango/cogl-pango-2.0-experimental.pc.in \
+        -e 's|-lcoglpango|-lcogl-pango|'
+    '' + optionalString (!doCheck)
+    /* The configure switch does not completely disable
+       tests from being built */ ''
+      sed -i Makefile.{am,in} \
+        -e "s/^\(SUBDIRS =.*\)test-fixtures\(.*\)$/\1\2/" \
+        -e "s/^\(SUBDIRS +=.*\)tests\(.*\)$/\1\2/" \
+        -e "s/^\(.*am__append.* \)tests\(.*\)$/\1\2/"
+    '';
 
   configureFlags = [
     "--disable-installed-tests"
@@ -94,36 +113,7 @@ stdenv.mkDerivation rec {
     "--with-x"
   ];
 
-  nativeBuildInputs = [
-    gettext
-  ];
-
-  buildInputs = [
-    atk
-    bzip2
-    cairo
-    gdk-pixbuf
-    glib
-    gobject-introspection
-    gst-plugins-base
-    gstreamer
-    json-glib
-    libdrm
-    libxkbcommon
-    mesa_noglu
-    pango
-    wayland
-    xorg.libX11
-    xorg.libXcomposite
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXi
-    xorg.libXrandr
-  ];
-
   doCheck = false;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "2D graphics library with support for multiple output devices";

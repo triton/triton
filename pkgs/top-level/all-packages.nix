@@ -585,7 +585,7 @@ dconf = callPackage ../all-pkgs/dconf { };
 dconf-editor = callPackage ../all-pkgs/dconf-editor { };
 
 devil-nox = devil.override {
-  libX11 = null;
+  xorg = null;
   mesa = null;
 };
 devil = callPackage ../all-pkgs/devil { };
@@ -710,6 +710,13 @@ gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = gobject-introspection; # Deprecated alias
 
 granite = callPackage ../all-pkgs/granite { };
+
+graphviz = callPackage ../all-pkgs/graphviz { };
+
+graphviz-nox = graphviz.override {
+  xorg = null;
+  devil = devil-nox;
+};
 
 grilo = callPackage ../all-pkgs/grilo { };
 
@@ -2479,25 +2486,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     # Using pypy provides significant performance improvements (~2x)
     pythonPackages = pypyPackages;
   };
-
-  graphviz = callPackage ../tools/graphics/graphviz { };
-
-  graphviz-nox = callPackage ../tools/graphics/graphviz {
-    xorg = null;
-    libdevil = devil-nox;
-  };
-
-  /* Readded by Michael Raskin. There are programs in the wild
-   * that do want 2.0 but not 2.22. Please give a day's notice for
-   * objections before removal. The feature is integer coordinates
-   */
-  graphviz_2_0 = callPackage ../tools/graphics/graphviz/2.0.nix { };
-
-  /* Readded by Michael Raskin. There are programs in the wild
-   * that do want 2.32 but not 2.0 or 2.36. Please give a day's notice for
-   * objections before removal. The feature is libgraph.
-   */
-  graphviz_2_32 = callPackage ../tools/graphics/graphviz/2.32.nix { };
 
   grin = callPackage ../tools/text/grin { };
 

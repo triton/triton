@@ -126,12 +126,12 @@ in {
       };
 
       powerManagement.resumeCommands = ''
-        ${config.systemd.package}/bin/systemctl try-restart wpa_supplicant
+        ${config.systemd.package}/bin/systemctl restart wpa_supplicant
       '';
 
       # Restart wpa_supplicant when a wlan device appears or disappears.
       services.udev.extraRules = ''
-        ACTION=="add|remove", SUBSYSTEM=="net", ENV{DEVTYPE}=="wlan", RUN+="${config.systemd.package}/bin/systemctl try-restart wpa_supplicant.service"
+        ACTION=="add|remove", SUBSYSTEM=="net", ENV{DEVTYPE}=="wlan", RUN+="${config.systemd.package}/bin/systemctl restart wpa_supplicant.service"
       '';
     })
     {

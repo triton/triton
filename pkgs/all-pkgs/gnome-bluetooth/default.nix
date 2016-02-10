@@ -2,6 +2,7 @@
 , fetchurl
 , intltool
 , itstool
+, makeWrapper
 
 , adwaita-icon-theme
 , atk
@@ -36,6 +37,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     intltool
     itstool
+    makeWrapper
   ];
 
   buildInputs = [
@@ -54,10 +56,10 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch =
-  /* Regenerate gdbus-codegen files to allow using any glib version
-  	 https://bugzilla.gnome.org/show_bug.cgi?id=758096 */ ''
-  	rm -v lib/bluetooth-client-glue.{c,h}
-  '';
+    /* Regenerate gdbus-codegen files to allow using any glib version
+    	 https://bugzilla.gnome.org/show_bug.cgi?id=758096 */ ''
+    	rm -v lib/bluetooth-client-glue.{c,h}
+    '';
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -74,6 +76,12 @@ stdenv.mkDerivation rec {
     "--disable-iso-c"
     "--disable-documentation"
   ];
+
+  preFixup = ''
+    wrapProgram $out/bin/bluetooth-sendto \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+  '';
 
   meta = with stdenv.lib; {
     description = "Application for managing Bluetooth";

@@ -6,17 +6,17 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "pngcrush-1.7.92";
+  name = "pngcrush-1.8.0";
 
   src = fetchurl {
     url = "mirror://sourceforge/pmt/${name}-nolib.tar.xz";
-    sha256 = "0dlwbqckv90cpvg8qhkl3nk5yb75ddi61vbpmmp9n0j6qq9lp6y4";
+    sha256 = "1gv36pkar5n87703mabclrmd81ij7c4vg7bnqjhf6hf3a61h99xs";
   };
 
-  postPatch = ''
-    # Fix hardcoded install location
-    sed -i Makefile -e "s,/usr,$out,"
-  '';
+  postPatch =
+    /* Fix hardcoded install location */ ''
+      sed -i Makefile -e "s,/usr,$out,"
+    '';
 
   makeFlags = [
     "PNGINC=${libpng}/include"

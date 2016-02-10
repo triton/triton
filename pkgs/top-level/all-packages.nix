@@ -849,6 +849,8 @@ libcanberra = callPackage ../all-pkgs/libcanberra { };
 libcanberra_gtk3 = libcanberra; # Deprecated alias
 libcanberra_kde = libcanberra; # Deprecated alias
 
+libclc = callPackage ../all-pkgs/libclc { };
+
 libcroco = callPackage ../all-pkgs/libcroco { };
 
 libgdata = callPackage ../all-pkgs/libgdata { };
@@ -7330,8 +7332,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   libuchardet = callPackage ../development/libraries/libuchardet { };
 
   libchop = callPackage ../development/libraries/libchop { };
-
-  libclc = callPackage ../development/libraries/libclc { };
 
   libcli = callPackage ../development/libraries/libcli { };
 

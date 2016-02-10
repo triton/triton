@@ -1,16 +1,13 @@
 { stdenv
 , fetchFromGitHub
-
 , python2
-, llvmPackages
+, ninja
 
-# Remove after #24
-, ncurses
-, zlib
+, llvmPackages
 }:
 
 stdenv.mkDerivation {
-  name = "libclc-2015-02-09";
+  name = "libclc-2016-02-09";
 
   src = fetchFromGitHub {
     owner = "llvm-mirror";
@@ -21,37 +18,39 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     python2
+    ninja
   ];
-
   buildInputs = [
-    llvmPackages.clang
     llvmPackages.llvm
-
-    # Remove after #24
-    ncurses
-    zlib
+    llvmPackages.clang
   ];
 
   postPatch = ''
-    patchShebangs configure.py
-  '' + ''
-    sed -i configure.py \
-      -e 's,llvm_clang =.*,llvm_clang = "${llvmPackages.clang}/bin/clang",' \
-      -e 's,cxx_compiler =.*,cxx_compiler = "${llvmPackages.clang}/bin/clang++",'
+    sed -i 's,^\(llvm_clang =\).*,\1 "${llvmPackages.clang}/bin/clang",g' configure.py
+    patchShebangs .
+  '';
+
+  preConfigure = ''
+    configureFlagsArray+=("--pkgconfigdir=$out/lib/pkgconfig")
   '';
 
   configureScript = "./configure.py";
 
+  configureFlags = [
+    "-g" "ninja"
+    "--with-cxx-compiler=${llvmPackages.clang}/bin/clang++"
+  ];
+
   meta = with stdenv.lib; {
-    description = "OpenCL C library";
     homepage = http://libclc.llvm.org/;
+    description = "Implementation of the library requirements of the OpenCL C programming language";
     license = licenses.mit;
     maintainers = with maintainers; [
       wkennington
     ];
     platforms = [
-      "i686-linux"
       "x86_64-linux"
+      "i686-linux"
     ];
   };
 }

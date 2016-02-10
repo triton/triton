@@ -938,6 +938,19 @@ libwacom = callPackage ../all-pkgs/libwacom { };
 
 libzapojit = callPackage ../all-pkgs/libzapojit { };
 
+mesa_glu =  callPackage ../all-pkgs/mesa-glu { };
+mesa_noglu = callPackage ../all-pkgs/mesa {
+  # makes it slower, but during runtime we link against just
+  # mesa_drivers through /run/opengl-driver*, which is overriden
+  # according to config.grsecurity
+  grsecEnabled = config.grsecurity or false;
+};
+mesa_drivers = mesa_noglu.drivers;
+mesa = buildEnv {
+  name = "mesa-${mesa_noglu.version}";
+  paths = [ mesa_noglu mesa_glu ];
+};
+
 mixxx = callPackage ../all-pkgs/mixxx {
   inherit (vamp) vampSDK;
 };
@@ -8039,32 +8052,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   mediastreamer-openh264 = callPackage ../development/libraries/mediastreamer/msopenh264.nix { };
 
   menu-cache = callPackage ../development/libraries/menu-cache { };
-
-  mesaSupported = lib.elem system lib.platforms.mesaPlatforms;
-
-  mesaDarwinOr = alternative: if stdenv.isDarwin
-    then callPackage ../development/libraries/mesa-darwin {
-      inherit (darwin.apple_sdk.frameworks) OpenGL;
-      inherit (darwin.apple_sdk.libs) Xplugin;
-      inherit (darwin) apple_sdk;
-    }
-    else alternative;
-  mesa_noglu = mesaDarwinOr (callPackage ../development/libraries/mesa {
-    # makes it slower, but during runtime we link against just mesa_drivers
-    # through /run/opengl-driver*, which is overriden according to config.grsecurity
-    grsecEnabled = true;
-  });
-  mesa_glu =  mesaDarwinOr (callPackage ../development/libraries/mesa-glu { });
-  mesa_drivers = mesaDarwinOr (
-    let mo = mesa_noglu.override {
-      grsecEnabled = config.grsecurity or false;
-    };
-    in mo.drivers
-  );
-  mesa = mesaDarwinOr (buildEnv {
-    name = "mesa-${mesa_noglu.version}";
-    paths = [ mesa_noglu mesa_glu ];
-  });
 
   meterbridge = callPackage ../applications/audio/meterbridge { };
 

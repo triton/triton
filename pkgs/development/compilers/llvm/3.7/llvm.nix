@@ -1,5 +1,6 @@
 { stdenv
 , fetch
+, fetchTritonPatch
 , perl
 , groff
 , cmake
@@ -30,6 +31,14 @@ in stdenv.mkDerivation rec {
     unpackFile ${compiler-rt_src}
     mv compiler-rt-* $sourceRoot/projects/compiler-rt
   '';
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "1a001778aab424ecd36774befa1f546b0004c5fc";
+      file = "llvm/fix-llvm-config.patch";
+      sha256 = "059655c0e6ea5dd248785ffc1b2e6402eeb66544ffe36ff15d76543dd7abb413";
+    })
+  ];
 
   nativeBuildInputs = [ perl groff cmake ninja python ];
   buildInputs = [ libxml2 libffi ncurses zlib ]
@@ -67,8 +76,6 @@ in stdenv.mkDerivation rec {
     paxmark m unittests/ExecutionEngine/MCJIT/MCJITTests
     paxmark m unittests/Support/SupportTests
   '';
-
-  enableParallelBuilding = true;
 
   passthru.src = src;
 

@@ -2,6 +2,7 @@
 , cmake
 , fetchurl
 , gettext
+, makeWrapper
 
 , glib
 , gobject-introspection
@@ -49,16 +50,10 @@ stdenv.mkDerivation rec {
     sha256 = "07hfdrjbqq683f3lp0yiysx7vmvszsghh97dafdyajwls1clcp14";
   };
 
-  cmakeFlags = [
-    "-DBUILD_SHARED_LIBS=ON"
-    "-DICON_UPDATE=OFF"
-    "-DGSETTINGS_COMPILE=ON"
-    "-DVALA_EXECUTABLE=${vala}/bin/valac"
-  ];
-
   nativeBuildInputs = [
     cmake
     gettext
+    makeWrapper
   ];
 
   buildInputs = [
@@ -78,7 +73,6 @@ stdenv.mkDerivation rec {
     #libindicate
     libnotify
     libpeas
-    librsvg
     libsoup
     libxml2
     sqlheavy
@@ -87,17 +81,28 @@ stdenv.mkDerivation rec {
     zeitgeist
   ];
 
+  cmakeFlags = [
+    "-DBUILD_SHARED_LIBS=ON"
+    "-DICON_UPDATE=OFF"
+    "-DGSETTINGS_COMPILE=ON"
+    "-DVALA_EXECUTABLE=${vala}/bin/valac"
+  ];
+
+  GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [
+    gst-plugins-base
+    gst-plugins-good
+    gst-plugins-bad
+    gst-plugins-ugly
+    gstreamer
+  ];
+
   preFixup = ''
-    gnomeWrapperArgs+=(
-      "--prefix GST_PLUGIN_PATH : ${
-        makeSearchPath "lib/gstreamer-1.0" [
-          gst-plugins-base
-          gst-plugins-good
-          gst-plugins-bad
-          gst-plugins-ugly
-          gstreamer
-        ]}"
-    )
+    wrapProgram $out/bin/noise \
+      --set 'GI_TYPELIB_PATH' "$GI_TYPELIB_PATH" \
+      --prefix 'GST_PLUGIN_PATH' : "$GST_PLUGIN_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
   meta = with stdenv.lib; {
@@ -108,7 +113,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = [
-      "i686-linux"
       "x86_64-linux"
     ];
   };

@@ -584,6 +584,12 @@ dconf = callPackage ../all-pkgs/dconf { };
 
 dconf-editor = callPackage ../all-pkgs/dconf-editor { };
 
+devil-nox = devil.override {
+  libX11 = null;
+  mesa = null;
+};
+devil = callPackage ../all-pkgs/devil { };
+
 eog = callPackage ../all-pkgs/eog { };
 
 evince = callPackage ../all-pkgs/evince { };
@@ -2478,7 +2484,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   graphviz-nox = callPackage ../tools/graphics/graphviz {
     xorg = null;
-    libdevil = libdevil-nox;
+    libdevil = devil-nox;
   };
 
   /* Readded by Michael Raskin. There are programs in the wild
@@ -7398,15 +7404,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libdc1394 = callPackage ../development/libraries/libdc1394 {
     inherit (darwin.apple_sdk.frameworks) CoreServices;
-  };
-
-  libdevil = callPackage ../development/libraries/libdevil {
-    inherit (darwin.apple_sdk.frameworks) OpenGL;
-  };
-
-  libdevil-nox = libdevil.override {
-    libX11 = null;
-    mesa = null;
   };
 
   libdiscid = callPackage ../development/libraries/libdiscid { };

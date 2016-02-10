@@ -28,8 +28,6 @@ stdenv.mkDerivation rec {
     libsigcxx
   ];
 
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     description = "C++ bindings for the Cairo vector graphics library";
     homepage = http://cairographics.org/cairomm;

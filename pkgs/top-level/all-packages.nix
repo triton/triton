@@ -895,6 +895,8 @@ libmediaart = callPackage ../all-pkgs/libmediaart {
 
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
+libomxil-bellagio = callPackage ../all-pkgs/libomxil-bellagio { };
+
 libosinfo = callPackage ../all-pkgs/libosinfo { };
 
 libpeas = callPackage ../all-pkgs/libpeas { };
@@ -7756,8 +7758,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   liboggz = callPackage ../development/libraries/liboggz { };
 
   liboil = callPackage ../development/libraries/liboil { };
-
-  libomxil-bellagio = callPackage ../development/libraries/libomxil-bellagio { };
 
   liboop = callPackage ../development/libraries/liboop { };
 

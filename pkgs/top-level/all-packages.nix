@@ -948,6 +948,7 @@ mesa_noglu = callPackage ../all-pkgs/mesa {
   grsecEnabled = config.grsecurity or false;
 };
 mesa_drivers = mesa_noglu.drivers;
+mesaSupported = lib.elem system mesa_noglu.meta.platforms;
 mesa = buildEnv {
   name = "mesa-${mesa_noglu.version}";
   paths = [ mesa_noglu mesa_glu ];

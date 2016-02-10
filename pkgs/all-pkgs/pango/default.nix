@@ -1,5 +1,7 @@
 { stdenv
+, autoreconfHook
 , fetchurl
+, gtk-doc
 
 , cairo
 , fontconfig
@@ -7,13 +9,12 @@
 , glib
 , gobject-introspection
 , harfbuzz
-, libpng
 , xorg
-#, LibThai
 }:
 
 with {
   inherit (stdenv.lib)
+    enFlag
     optionalString
     wtFlag;
 };
@@ -29,9 +30,36 @@ stdenv.mkDerivation rec {
     sha256 = "1dsf45m51i4rcyvh5wlxxrjfhvn5b67d5ckjc6vdcxbddjgmc80k";
   };
 
+  nativeBuildInputs = [
+    autoreconfHook
+    gtk-doc
+  ];
+
+  buildInputs = [
+    cairo
+    fontconfig
+    freetype
+    glib
+    gobject-introspection
+    harfbuzz
+    xorg.libX11
+    xorg.libXft
+    xorg.libXrender
+  ];
+
+  postPatch =
+    /* Test fails randomly */ optionalString doCheck ''
+      sed -i tests/Makefile.am \
+        -e 's,test-pangocairo-threads,,'
+    '';
+
+  preAutoreconf = ''
+    gtkdocize
+  '';
+
   configureFlags = [
     "--enable-rebuilds"
-    "--enable-introspection"
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -42,30 +70,16 @@ stdenv.mkDerivation rec {
     (wtFlag "cairo" (cairo != null) null)
   ];
 
-  buildInputs = [
-    cairo
-    fontconfig
-    freetype
-    glib
-    gobject-introspection
-    harfbuzz
-    libpng
-    xorg.libX11
-    xorg.libXft
-    xorg.libXrender
-  ];
-
+  # Does not respect --disable-gtk-doc
   postInstall = "rm -rvf $out/share/gtk-doc";
 
-  preCheck = optionalString doCheck ''
-    # Fontconfig fails to load default config in test
-    export FONTCONFIG_FILE="${fontconfig}/etc/fonts/fonts.conf"
-  '';
+  preCheck =
+    /* Fontconfig fails to load default config in test */
+    optionalString doCheck ''
+      export FONTCONFIG_FILE="${fontconfig}/etc/fonts/fonts.conf"
+    '';
 
   doCheck = true;
-
-  # Test cases fail reliably in 1.38.1
-  parallelCheck = false;
 
   meta = with stdenv.lib; {
     description = "A library for laying out and rendering of text";

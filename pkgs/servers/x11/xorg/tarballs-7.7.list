@@ -176,6 +176,7 @@ mirror://xorg/individual/doc/xorg-sgml-doctools-1.2.tar.bz2
 mirror://xorg/individual/doc/xorg-sgml-doctools-1.1.1.tar.bz2
 mirror://xorg/individual/doc/xorg-sgml-doctools-1.1.tar.bz2
 mirror://xorg/individual/doc/xorg-sgml-doctools-1.0.1.tar.bz2
+mirror://xorg/individual/xserver/xorg-server-1.18.1.tar.bz2
 mirror://xorg/individual/xserver/xorg-server-1.18.0.tar.bz2
 mirror://xorg/individual/xserver/xorg-server-1.17.99.902.tar.bz2
 mirror://xorg/individual/xserver/xorg-server-1.17.99.901.tar.bz2
@@ -487,6 +488,7 @@ mirror://xorg/individual/app/xkill-1.0.4.tar.bz2
 mirror://xorg/individual/app/xkill-1.0.3.tar.bz2
 mirror://xorg/individual/app/xkill-1.0.2.tar.bz2
 mirror://xorg/individual/app/xkill-1.0.1.tar.bz2
+mirror://xorg/individual/data/xkeyboard-config/xkeyboard-config-2.17.tar.bz2
 mirror://xorg/individual/data/xkeyboard-config/xkeyboard-config-2.16.tar.bz2
 mirror://xorg/individual/data/xkeyboard-config/xkeyboard-config-2.15.tar.bz2
 mirror://xorg/individual/data/xkeyboard-config/xkeyboard-config-2.14.tar.bz2
@@ -892,6 +894,7 @@ mirror://xorg/individual/driver/xf86-video-radeonhd-1.2.1.tar.bz2
 mirror://xorg/individual/driver/xf86-video-radeonhd-1.2.0.tar.bz2
 mirror://xorg/individual/driver/xf86-video-radeonhd-1.1.0.tar.bz2
 mirror://xorg/individual/driver/xf86-video-radeonhd-1.0.0.tar.bz2
+mirror://xorg/individual/driver/xf86-video-r128-6.10.1.tar.bz2
 mirror://xorg/individual/driver/xf86-video-r128-6.10.0.tar.bz2
 mirror://xorg/individual/driver/xf86-video-r128-6.9.2.tar.bz2
 mirror://xorg/individual/driver/xf86-video-r128-6.9.1.tar.bz2
@@ -1224,6 +1227,7 @@ mirror://xorg/individual/driver/xf86-video-glide-1.0.3.tar.bz2
 mirror://xorg/individual/driver/xf86-video-glide-1.0.2.tar.bz2
 mirror://xorg/individual/driver/xf86-video-glide-1.0.1.tar.bz2
 mirror://xorg/individual/driver/xf86-video-glide-1.0.0.tar.bz2
+mirror://xorg/individual/driver/xf86-video-geode-2.11.18.tar.bz2
 mirror://xorg/individual/driver/xf86-video-geode-2.11.17.tar.bz2
 mirror://xorg/individual/driver/xf86-video-geode-2.11.16.tar.bz2
 mirror://xorg/individual/driver/xf86-video-geode-2.11.15.tar.bz2
@@ -1608,6 +1612,7 @@ mirror://xorg/individual/driver/xf86-input-fpit-1.3.0.tar.bz2
 mirror://xorg/individual/driver/xf86-input-fpit-1.2.0.tar.bz2
 mirror://xorg/individual/driver/xf86-input-fpit-1.1.0.tar.bz2
 mirror://xorg/individual/driver/xf86-input-fpit-1.0.0.5.tar.bz2
+mirror://xorg/individual/driver/xf86-input-evdev-2.10.1.tar.bz2
 mirror://xorg/individual/driver/xf86-input-evdev-2.10.0.tar.bz2
 mirror://xorg/individual/driver/xf86-input-evdev-2.9.2.tar.bz2
 mirror://xorg/individual/driver/xf86-input-evdev-2.9.1.tar.bz2
@@ -2040,6 +2045,7 @@ mirror://xorg/individual/proto/printproto-1.0.5.tar.bz2
 mirror://xorg/individual/proto/printproto-1.0.4.tar.bz2
 mirror://xorg/individual/proto/printproto-1.0.3.tar.bz2
 mirror://xorg/individual/proto/presentproto-1.0.tar.bz2
+mirror://xorg/individual/lib/pixman-0.34.0.tar.bz2
 mirror://xorg/individual/lib/pixman-0.33.6.tar.bz2
 mirror://xorg/individual/lib/pixman-0.33.4.tar.bz2
 mirror://xorg/individual/lib/pixman-0.33.2.tar.bz2

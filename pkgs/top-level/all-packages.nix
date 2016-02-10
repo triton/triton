@@ -550,6 +550,8 @@ bzrtools = callPackage ../all-pkgs/bzrtools { };
 
 beets = callPackage ../all-pkgs/beets { };
 
+btrfs-progs = callPackage ../all-pkgs/btrfs-progs { };
+
 cairo = callPackage ../all-pkgs/cairo { };
 
 cairomm = callPackage ../all-pkgs/cairomm { };
@@ -1497,8 +1499,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   bruteforce-luks = callPackage ../tools/security/bruteforce-luks { };
 
   bsod = callPackage ../misc/emulators/bsod { };
-
-  btrfs-progs = callPackage ../tools/filesystems/btrfs-progs { };
 
   bwm_ng = callPackage ../tools/networking/bwm-ng { };
 
@@ -15707,7 +15707,6 @@ aliases = with self; rec {
   saneBackends = sane-backends; # added 2016-01-02
   saneBackendsGit = sane-backends-git; # added 2016-01-02
   saneFrontends = sane-frontends; # added 2016-01-02
-  btrfsProgs = btrfs-progs; # added 2016-01-03
   aircrackng = aircrack-ng; # added 2016-01-14
   quake3game = ioquake3; # added 2016-01-14
   scim = sc-im; # added 2016-01-22

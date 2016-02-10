@@ -3,7 +3,6 @@
 , fetchurl
 , perl
 
-, gdk-pixbuf
 , glib
 , gtk3
 , vte
@@ -24,7 +23,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    gdk-pixbuf
     glib
     gtk3
     vte

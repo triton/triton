@@ -853,6 +853,8 @@ libclc = callPackage ../all-pkgs/libclc { };
 
 libcroco = callPackage ../all-pkgs/libcroco { };
 
+libdrm = callPackage ../all-pkgs/libdrm { };
+
 libgdata = callPackage ../all-pkgs/libgdata { };
 
 libgee = callPackage ../all-pkgs/libgee { };
@@ -7413,8 +7415,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   libdmtx = callPackage ../development/libraries/libdmtx { };
 
   libdnet = callPackage ../development/libraries/libdnet { };
-
-  libdrm = callPackage ../development/libraries/libdrm { };
 
   libdv = callPackage ../development/libraries/libdv { };
 

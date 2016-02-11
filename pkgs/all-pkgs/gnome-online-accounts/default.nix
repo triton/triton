@@ -2,7 +2,9 @@
 , fetchurl
 , gettext
 , intltool
+, makeWrapper
 
+, dconf
 , gcr
 , glib
 , gobject-introspection
@@ -38,9 +40,11 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    makeWrapper
   ];
 
   buildInputs = [
+    dconf
     gcr
     glib
     gobject-introspection
@@ -85,6 +89,14 @@ stdenv.mkDerivation rec {
     "--enable-nls"
   ];
 
+  preFixup = ''
+    wrapProgram $out/libexec/goa-daemon \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share"
+  '';
+
   meta = with stdenv.lib; {
     description = "GNOME framework for accessing online accounts";
     homepage = https://wiki.gnome.org/Projects/GnomeOnlineAccounts;
@@ -93,7 +105,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = [
-      "i686-linux"
       "x86_64-linux"
     ];
   };

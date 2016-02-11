@@ -2018,18 +2018,15 @@ let
     sha256 = "1fcwdhfci41ibpng2j4c1bqfng578cwzb3c00yw1lnbwwhaq9r6b";
   };
 
-  ipfs = buildFromGitHub{
-    rev    = "v0.4.0-rc1";
+  ipfs = buildFromGitHub {
+    date   = "2016-02-10";
+    rev    = "c913105dd71bfd378ac5e0856526ecf070182e4c";
     owner  = "ipfs";
     repo   = "go-ipfs";
-    sha256 = "0zw3m3g9cy1ppj9k0ma7jkcrmbzjfmkpmfil48glxvqziahnk935";
-    meta = with stdenv.lib; {
-      description = "A global, versioned, peer-to-peer filesystem";
-      license = licenses.mit;
-    };
+    sha256 = "0mx4399sqja0pvjc8zf256rrg3gipgka7cadnq89f5gby7n357cj";
   };
 
-  json2csv = buildFromGitHub{
+  json2csv = buildFromGitHub {
     rev = "d82e60e6dc2a7d3bcf15314d1ecbebeffaacf0c6";
     owner  = "jehiah";
     repo   = "json2csv";

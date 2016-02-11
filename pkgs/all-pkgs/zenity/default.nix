@@ -1,11 +1,11 @@
 { stdenv
 , fetchurl
 , gettext
-, gnome_doc_utils
 , intltool
 , itstool
-, which
+, makeWrapper
 
+, adwaita-icon-theme
 , cairo
 , gdk-pixbuf
 , glib
@@ -29,6 +29,24 @@ stdenv.mkDerivation rec {
     sha256 = "02m88dfm1rziqk2ywakwib06wl1rxangbzih6cp8wllbyl1plcg6";
   };
 
+  nativeBuildInputs = [
+    gettext
+    intltool
+    itstool
+    makeWrapper
+  ];
+
+  buildInputs = [
+    adwaita-icon-theme
+    gdk-pixbuf
+    glib
+    gtk3
+    libnotify
+    libxml2
+    #webkitgtk
+    xorg.libX11
+  ];
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-libnotify"
@@ -40,23 +58,11 @@ stdenv.mkDerivation rec {
     "--enable-rpath"
   ];
 
-  nativeBuildInputs = [
-    gettext
-    intltool
-    itstool
-  ];
-
-  buildInputs = [
-    gdk-pixbuf
-    glib
-    gtk3
-    libnotify
-    libxml2
-    #webkitgtk
-    xorg.libX11
-  ];
-
-  enableParallelBuilding = true;
+  preFixup = ''
+    wrapProgram $out/bin/zenity \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+  '';
 
   meta = with stdenv.lib; {
     description = "Creates simple interactive graphical dialogs";

@@ -969,6 +969,8 @@ mesa = buildEnv {
   paths = [ mesa_noglu mesa_glu ];
 };
 
+mime-types = callPackage ../all-pkgs/mime-types { };
+
 mixxx = callPackage ../all-pkgs/mixxx {
   inherit (vamp) vampSDK;
 };

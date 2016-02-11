@@ -1,17 +1,20 @@
-{ fetchFromGitHub, stdenv, autoreconfHook, ncurses }:
+{ stdenv
+, fetchurl
+, ncurses
+}:
 
 stdenv.mkDerivation rec {
-  name = "htop-1.0.3-239-229d0058";
+  name = "htop-${version}";
+  version = "2.0.0";
 
-  src = fetchFromGitHub {
-    sha256 = "1bym6ligd8db4iyv2m1y7aylh7f9fmk71v67rkhird05hx1xb80r";
-    rev = "229d005851af8dca595b3df8e385375fb9c382b4";
-    repo = "htop";
-    owner = "hishamhm";
+  src = fetchurl {
+    url = "http://hisham.hm/htop/releases/${version}/${name}.tar.gz";
+    sha256 = "1d944hn0ldxvxfrz9acr26lpmzlwj91m0s7x2xnivnfnmfha4p6i";
   };
 
-  buildInputs = [ ncurses ];
-  nativeBuildInputs = [ autoreconfHook ];
+  buildInputs = [
+    ncurses
+  ];
 
   postPatch = ''
     touch *.h */*.h # unnecessary regeneration requires Python

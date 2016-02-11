@@ -2853,7 +2853,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   nodePackages_5_x = callPackage ./node-packages.nix { self = nodePackages_5_x; nodejs = nodejs-5_x; };
 
-  nodePackages_4_x = recurseIntoAttrs (callPackage ./node-packages.nix { self = nodePackages_4_x; nodejs = nodejs-4_x; });
+  nodePackages_4_x = callPackage ./node-packages.nix { self = nodePackages_4_x; nodejs = nodejs-4_x; };
 
   nodePackages_0_10 = callPackage ./node-packages.nix { self = nodePackages_0_10; nodejs = nodejs-0_10; };
 
@@ -3194,6 +3194,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   nox = callPackage ../tools/package-management/nox {
     pythonPackages = python3Packages;
   };
+
+  nq = callPackage ../tools/system/nq { };
 
   nsjail = callPackage ../tools/security/nsjail {};
 
@@ -4166,6 +4168,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   xl2tpd = callPackage ../tools/networking/xl2tpd { };
 
+  xe = callPackage ../tools/system/xe { };
+
   testdisk = callPackage ../tools/misc/testdisk { };
 
   html2text = callPackage ../tools/text/html2text { };
@@ -4285,6 +4289,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   vmtouch = callPackage ../tools/misc/vmtouch { };
 
   volumeicon = callPackage ../tools/audio/volumeicon { };
+
+  waf = callPackage ../development/tools/build-managers/waf { };
 
   wakelan = callPackage ../tools/networking/wakelan { };
 
@@ -9048,23 +9054,23 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ### DEVELOPMENT / GO MODULES
 
-  go15Packages = recurseIntoAttrs (callPackage ./go-packages.nix {
+  go15Packages = callPackage ./go-packages.nix {
     go = go_1_5;
     buildGoPackage = callPackage ../development/go-modules/generic {
       go = go_1_5;
       govers = go15Packages.govers.bin;
     };
     overrides = (config.goPackageOverrides or (p: {})) pkgs;
-  });
+  };
 
-  go16Packages = recurseIntoAttrs (callPackage ./go-packages.nix {
+  go16Packages = callPackage ./go-packages.nix {
     go = go_1_6;
     buildGoPackage = callPackage ../development/go-modules/generic {
       go = go_1_6;
       govers = go16Packages.govers.bin;
     };
     overrides = (config.goPackageOverrides or (p: {})) pkgs;
-  });
+  };
 
   goPackages = go15Packages;
 
@@ -11442,6 +11448,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   dmenu = callPackage ../applications/misc/dmenu { };
 
+  dmenu-wayland = callPackage ../applications/misc/dmenu/wayland.nix { };
+
   dmenu2 = callPackage ../applications/misc/dmenu2 { };
 
   dmtx = dmtx-utils;
@@ -11693,7 +11701,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     cask = callPackage ../applications/editors/emacs-modes/cask { };
   };
 
-  emacs24Packages = recurseIntoAttrs (emacsPackagesGen emacs24 pkgs.emacs24Packages);
+  emacs24Packages = emacsPackagesGen emacs24 pkgs.emacs24Packages;
 
   emacsPackagesNgGen = emacs: import ./emacs-packages.nix {
     overrides = (config.emacsPackageOverrides or (p: {})) pkgs;
@@ -12109,6 +12117,14 @@ zstd = callPackage ../all-pkgs/zstd { };
   hydrogen = callPackage ../applications/audio/hydrogen { };
 
   spectrwm = callPackage ../applications/window-managers/spectrwm { };
+
+  wlc = callPackage ../development/libraries/wlc { };
+  orbment = callPackage ../applications/window-managers/orbment { };
+  sway = callPackage ../applications/window-managers/sway { };
+
+  swc = callPackage ../development/libraries/swc { };
+  wld = callPackage ../development/libraries/wld { };
+  velox = callPackage ../applications/window-managers/velox { };
 
   i3 = callPackage ../applications/window-managers/i3 {
     xcb-util-cursor = if stdenv.isDarwin then xcb-util-cursor-HEAD else xcb-util-cursor;
@@ -12728,6 +12744,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   pdfpc = callPackage ../applications/misc/pdfpc { };
 
+  pflask = callPackage ../os-specific/linux/pflask {};
+
   photoqt = qt5.callPackage ../applications/graphics/photoqt { };
 
   phototonic = qt5.callPackage ../applications/graphics/phototonic { };
@@ -12866,6 +12884,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   qtpfsgui = callPackage ../applications/graphics/qtpfsgui { };
 
   qtractor = callPackage ../applications/audio/qtractor { };
+
+  qtscrobbler = callPackage ../applications/audio/qtscrobbler { };
 
   quirc = callPackage ../tools/graphics/quirc {};
 
@@ -13033,6 +13053,10 @@ zstd = callPackage ../all-pkgs/zstd { };
   sonic-pi = callPackage ../applications/audio/sonic-pi { };
 
   st = callPackage ../applications/misc/st {
+    conf = config.st.conf or null;
+  };
+
+  st-wayland = callPackage ../applications/misc/st/wayland.nix {
     conf = config.st.conf or null;
   };
 
@@ -13795,7 +13819,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   zathuraCollection = recurseIntoAttrs
     (callPackage ../applications/misc/zathura {
         callPackage = newScope pkgs.zathuraCollection;
-        useMupdf = config.zathura.useMupdf or false;
+        useMupdf = config.zathura.useMupdf or true;
       });
 
   zathura = zathuraCollection.zathuraWrapper;
@@ -14871,8 +14895,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   };
 
-  coqPackages = recurseIntoAttrs (mkCoqPackages_8_4 coqPackages);
-  coqPackages_8_5 = recurseIntoAttrs (mkCoqPackages_8_5 coqPackages_8_5);
+  coqPackages = mkCoqPackages_8_4 coqPackages;
+  coqPackages_8_5 = mkCoqPackages_8_5 coqPackages_8_5;
 
   cvc3 = callPackage ../applications/science/logic/cvc3 {
     gmp = lib.overrideDerivation gmp (a: { dontDisableStatic = true; });

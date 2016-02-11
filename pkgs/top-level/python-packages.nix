@@ -562,28 +562,35 @@ in {
 
 
   alot = buildPythonPackage rec {
-    rev = "0.3.6";
-    name = "alot-0.3.6";
+    rev = "0.3.7";
+    name = "alot-${rev}";
 
-    src = pkgs.fetchurl {
-      url = "https://github.com/pazz/alot/tarball/${rev}";
-      name = "${name}.tar.bz";
-      sha256 = "1rzy70w4isvypa94310xw403vq5him21q8rlx4laa0z530phkrmq";
+    src = pkgs.fetchFromGitHub {
+      owner = "pazz";
+      repo = "alot";
+      inherit rev;
+      sha256 = "0sscmmf42gsrjbisi6wm01alzlnq6wqhpwkm8pc557075jfg19il";
     };
 
-    # error: invalid command 'test'
-    doCheck = false;
+    postPatch = ''
+      substituteInPlace alot/defaults/alot.rc.spec \
+        --replace "themes_dir = string(default=None)" \
+                  "themes_dir = string(default='$out/share/themes')"
+    '';
 
     propagatedBuildInputs =
       [ self.notmuch
         self.urwid
+        self.urwidtrees
         self.twisted
-        self.magic
+        self.python_magic
         self.configobj
         self.pygpgme
       ];
 
     postInstall = ''
+      mkdir -p $out/share
+      cp -r extra/themes $out/share
       wrapProgram $out/bin/alot \
         --prefix LD_LIBRARY_PATH : ${pkgs.notmuch}/lib:${pkgs.file}/lib:${pkgs.gpgme}/lib
     '';
@@ -591,7 +598,7 @@ in {
     meta = {
       homepage = https://github.com/pazz/alot;
       description = "Terminal MUA using notmuch mail";
-      maintainers = with maintainers; [ garbas ];
+      maintainers = with maintainers; [ garbas profpatsch ];
     };
   };
 
@@ -1616,6 +1623,8 @@ in {
       sha256 = "1i6is7lv4v9by4panrd9w63m4xsmhwlp3rq4jjj3azwg5jm10940";
     };
 
+    disabled = isPy3k;
+
     meta = {
       description = "A Python library and tool for CalDAV";
 
@@ -1814,7 +1823,7 @@ in {
       description = "Composable style cycles";
       homepage = http://github.com/matplotlib/cycler;
       license = licenses.bsd3;
-      maintainer = with maintainers; [ fridh ];
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -2045,11 +2054,11 @@ in {
 
   blaze = buildPythonPackage rec {
     name = "blaze-${version}";
-    version = "0.9.0";
+    version = "0.9.1";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/b/blaze/${name}.tar.gz";
-      sha256 = "07h284n6fr0lvy58a6lvwwfb45sy7lggllx2y2vzzs4xrvf5k1i7";
+      sha256 = "fde4fd5733d8574345521581078a4fd89bb51ad3814eda88f1f467faa3a9784a";
     };
 
     buildInputs = with self; [ pytest ];
@@ -2057,6 +2066,7 @@ in {
       cytoolz
       datashape
       flask
+      flask-cors
       h5py
       multipledispatch
       numba
@@ -4205,11 +4215,11 @@ in {
 
   datashape = buildPythonPackage rec {
     name = "datashape-${version}";
-    version = "0.5.0";
+    version = "0.5.1";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/D/DataShape/${name}.tar.gz";
-      sha256 = "13w0rfaqpqkh30bxmx7i7kjfrfkm5maa35gj3c464wah7i2zm9wp";
+      sha256 = "21c424f11604873da9a36d4c55ef1d15cc3960cd208d7828b82315c494bff96a";
     };
 
     buildInputs = with self; [ pytest mock ];
@@ -8358,6 +8368,11 @@ in {
       sha256="0nrkhcb6jdrlb6pwkvd4rycw34y3s931hjf409ij9xkjsli9fkb1";
     };
 
+    buildInputs = with self; [ lxml pytest ];
+    checkPhase = ''
+      py.test $out
+    '';
+
     meta = {
       description = "An implementation of lxml.xmlfile for the standard library";
       longDescription = ''
@@ -8588,6 +8603,25 @@ in {
       homepage = https://github.com/thadeusb/flask-cache;
       description = "Adds cache support to your Flask application";
       license = "BSD";
+    };
+  };
+
+  flask-cors = buildPythonPackage rec {
+    name = "Flask-Cors-${version}";
+    version = "2.1.2";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/F/Flask-Cors/${name}.tar.gz";
+      sha256 = "0fd618a4f88ykqx4x55viz47cm9rl214q1b45a0b4mz5vhxffqpj";
+    };
+
+    buildInputs = with self; [ nose ];
+    propagatedBuildInputs = with self; [ flask six ];
+
+    meta = {
+      description = "A Flask extension adding a decorator for CORS support";
+      homepage = https://github.com/corydolphin/flask-cors;
+      license = with licenses; [ mit ];
     };
   };
 
@@ -9944,17 +9978,18 @@ in {
   };
 
   ipyparallel = buildPythonPackage rec {
-    version = "4.1.0";
+    version = "5.0.0";
     name = "ipyparallel-${version}";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/i/ipyparallel/${name}.tar.gz";
-      sha256 = "c943f6b3bbabb9332336d15474969e2a7a73d5b583f9786f7b357c75e4b1709a";
+      sha256 = "ffa7e2e29fdc4844b3c1721f46b42eee5a1abe5cbb851ccf79d0f4f89b9fe21a";
     };
 
     buildInputs = with self; [ nose ];
 
-    propagatedBuildInputs = with self; [ipython_genutils decorator pyzmq ipython jupyter_client ipykernel];
+    propagatedBuildInputs = with self; [ipython_genutils decorator pyzmq ipython jupyter_client ipykernel tornado
+    ] ++ optionals (!isPy3k) [ futures ];
 
     # Requires access to cluster
     doCheck = false;
@@ -10620,7 +10655,7 @@ in {
       description = "Line-by-line profiler";
       homepage = https://github.com/rkern/line_profiler;
       license = licenses.bsd3;
-      maintainer = with maintainers; [ fridh ];
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -12543,7 +12578,7 @@ in {
     meta = {
       description = "Numerical traits for Python objects";
       license = licenses.bsd2;
-      maintainer = with maintainers; [ fridh ];
+      maintainers = with maintainers; [ fridh ];
       homepage = https://github.com/astrofrog/numtraits;
     };
   };
@@ -12732,11 +12767,11 @@ in {
 
   odo = buildPythonPackage rec {
     name = "odo-${version}";
-    version= "0.4.0";
+    version= "0.4.2";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/o/odo/${name}.tar.gz";
-      sha256 = "0xqm4zb7a7a2cbik9kn6yk0kr26n90iqj102h5wb42x6z5v4mn79";
+      sha256 = "f793df8b212994ea23ce34e90e2048d0237d3b95ecd066ef2cfbb1c2384b79e9";
     };
 
     buildInputs = with self; [ pytest ];
@@ -14207,7 +14242,8 @@ in {
     checkPhase = let
       testsToSkip = ["test_data" "test_excel" "test_html" "test_json"
                      "test_frequencies" "test_frame"
-                     "test_read_clipboard_infer_excel"] ++
+                     "test_read_clipboard_infer_excel"
+                     "test_interp_alt_scipy" "test_nanops" "test_stats"] ++
                     optional isPy35 "test_sql";
     in ''
       runHook preCheck
@@ -14728,12 +14764,12 @@ in {
   };
 
   pip = buildPythonPackage rec {
-    version = "7.1.2";
+    version = "8.0.2";
     name = "pip-${version}";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/p/pip/pip-${version}.tar.gz";
-      sha256 = "0xx4aypfgchxdknxq7gyqghd8wb221zrzyqlbabzm32jy237j16a";
+      sha256 = "46f4bd0d8dfd51125a554568d646fe4200a3c2c6c36b9f2d06d2212148439521";
     };
 
     buildInputs = with self; [ mock scripttest virtualenv pytest ];
@@ -14852,7 +14888,7 @@ in {
       description = "An audio library based on libsndfile, CFFI and NumPy";
       license = licenses.bsd3;
       homepage = https://github.com/bastibe/PySoundFile;
-      maintainer = with maintainers; [ fridh ];
+      maintainers = with maintainers; [ fridh ];
     };
 
     prePatch = ''
@@ -15942,7 +15978,7 @@ in {
       description = "A pythonic wrapper around FFTW, the FFT library, presenting a unified interface for all the supported transforms";
       homepage = http://hgomersall.github.com/pyFFTW/;
       license = with licenses; [ bsd2 bsd3 ];
-      maintainer = with maintainers; [ fridh ];
+      maintainers = with maintainers; [ fridh ];
     };
   };
 
@@ -17675,7 +17711,7 @@ in {
       description = "A docutils-compatibility bridge to CommonMark";
       homepage = https://github.com/rtfd/recommonmark;
       license = licenses.mit;
-      maintainer = with maintainers; [ fridh ];
+      maintainers = with maintainers; [ fridh ];
     };
 
   };
@@ -18500,6 +18536,13 @@ in {
     propagatedBuildInputs = with self; [ numpy scipy numpy.blas ];
 
     LC_ALL="en_US.UTF-8";
+
+    # Exclude "test_image.py" because the Lena function/image was removed from SciPy since 0.17
+    # Should be fixed in next release.
+    # Using the -I switch broke nosetests...?
+    patchPhase = ''
+      rm sklearn/feature_extraction/tests/test_image.py
+    '';
 
     checkPhase = ''
       HOME=$TMPDIR OMP_NUM_THREADS=1 nosetests $out/${python.sitePackages}/sklearn/
@@ -19730,7 +19773,7 @@ in {
       description = "Statistical computations and models for use with SciPy";
       homepage = "https://www.github.com/statsmodels/statsmodels";
       license = licenses.bsd3;
-      maintainer = with maintainers; [ fridh ];
+      maintainers = with maintainers; [ fridh ];
     };
 
     # Many tests fail when using latest numpy and pandas.
@@ -20008,7 +20051,7 @@ in {
       description = "Pretty-print tabular data";
       homepage = https://bitbucket.org/astanin/python-tabulate;
       license = licenses.mit;
-      maintainer = with maintainers; [ fridh ];
+      maintainers = with maintainers; [ fridh ];
     };
 
   };
@@ -21003,6 +21046,26 @@ in {
     };
   });
 
+  urwidtrees = buildPythonPackage rec {
+    name = "urwidtrees-${rev}";
+    rev = "1.0";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "pazz";
+      repo = "urwidtrees";
+      inherit rev;
+      sha256 = "03gpcdi45z2idy1fd9zv8v9naivmpfx65hshm8r984k9wklv1dsa";
+    };
+
+    propagatedBuildInputs = with self; [ urwid ];
+
+    meta = {
+      description = "Tree widgets for urwid";
+      license = licenses.gpl3;
+      maintainers = with maintainers; [ profpatsch ];
+    };
+  };
+
   pyuv = buildPythonPackage rec {
     name = "pyuv-0.11.5";
     disabled = isPyPy;  # see https://github.com/saghul/pyuv/issues/49
@@ -21371,11 +21434,11 @@ in {
 
   wheel = buildPythonPackage rec {
     name = "wheel-${version}";
-    version = "0.26.0";
+    version = "0.29.0";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/w/wheel/${name}.tar.gz";
-      sha256 = "eaad353805c180a47545a256e6508835b65a8e830ba1093ed8162f19a50a530c";
+      sha256 = "1ebb8ad7e26b448e9caa4773d2357849bf80ff9e313964bcaf79cbf0201a1648";
     };
 
     buildInputs = with self; [ pytest pytestcov coverage ];
@@ -21944,14 +22007,17 @@ in {
 
   zope_exceptions = buildPythonPackage rec {
      name = "zope.exceptions-${version}";
-     version = "4.0.5";
+     version = "4.0.8";
 
      src = pkgs.fetchurl {
        url = "http://pypi.python.org/packages/source/z/zope.exceptions/${name}.tar.gz";
-       md5 = "c95569fcb444ae541777de7ae5297492";
+       sha256 = "0zwxaaa66sqxg5k7zcrvs0fbg9ym1njnxnr28dfmchzhwjvwnfzl";
      };
 
      propagatedBuildInputs = with self; [ zope_interface ];
+
+     # circular deps
+     doCheck = false;
 
      meta = {
        description = "Exception interfaces and implementations";
@@ -22048,14 +22114,17 @@ in {
 
 
   zope_proxy = buildPythonPackage rec {
-    name = "zope.proxy-4.1.4";
+    name = "zope.proxy-4.1.6";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/z/zope.proxy/${name}.tar.gz";
-      md5 = "3bcaf8b8512a99649ecf2f158c11d05b";
+      sha256 = "0pqwwmvm1prhwv1ziv9lp8iirz7xkwb6n2kyj36p2h0ppyyhjnm4";
     };
 
     propagatedBuildInputs = with self; [ zope_interface ];
+
+    # circular deps
+    doCheck = false;
 
     meta = {
         maintainers = with maintainers; [ goibhniu ];
@@ -22185,17 +22254,12 @@ in {
 
     propagatedBuildInputs = with self; [ zope_interface zope_exceptions zope_testing six ] ++ optional (!python.isPy3 or false) subunit;
 
-    doCheck = !isPy27;
-
     meta = {
       description = "A flexible test runner with layer support";
       homepage = http://pypi.python.org/pypi/zope.testrunner;
       license = licenses.zpt20;
       maintainers = with maintainers; [ goibhniu ];
     };
-
-    # Python 3.5 is not yet supported.
-    disabled = isPy35;
   };
 
 
@@ -22219,11 +22283,11 @@ in {
 
 
   zope_interface = buildPythonPackage rec {
-    name = "zope.interface-4.1.1";
+    name = "zope.interface-4.1.3";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/z/zope.interface/${name}.tar.gz";
-      md5 = "edcd5f719c5eb2e18894c4d06e29b6c6";
+      sha256 = "0ks8h73b2g4bkad821qbv0wzjppdrwys33i7ka45ik3wxjg1l8if";
     };
 
     propagatedBuildInputs = with self; [ zope_event ];
@@ -22470,8 +22534,11 @@ in {
     };
     buildInputs = with self; [ pkgs.zeromq3 pytest tornado ];
     propagatedBuildInputs = [ self.py ];
+
+    # Disable broken test
+    # https://github.com/zeromq/pyzmq/issues/799
     checkPhase = ''
-      py.test $out/${python.sitePackages}/zmq/
+      py.test $out/${python.sitePackages}/zmq/ -k "not test_large_send"
     '';
   };
 
@@ -24916,7 +24983,7 @@ in {
       # license can actually be either bsd3 or gpl3
       # see https://github.com/trezor/cython-hidapi/blob/master/LICENSE-orig.txt
       license = licenses.bsd3;
-      maintainer = with maintainers; [ np ];
+      maintainers = with maintainers; [ np ];
     };
   };
 
@@ -24935,7 +25002,7 @@ in {
       description = "Implementation of Bitcoin BIP-0039";
       homepage = https://github.com/trezor/python-mnemonic;
       license = licenses.mit;
-      maintainer = with maintainers; [ np ];
+      maintainers = with maintainers; [ np ];
     };
   };
 
@@ -24959,7 +25026,7 @@ in {
       description = "Python library for communicating with TREZOR Bitcoin Hardware Wallet";
       homepage = https://github.com/trezor/python-trezor;
       license = licenses.gpl3;
-      maintainer = with maintainers; [ np ];
+      maintainers = with maintainers; [ np ];
     };
   };
 
@@ -24983,7 +25050,7 @@ in {
       description = "KeepKey Python client";
       homepage = https://github.com/keepkey/python-keepkey;
       license = licenses.gpl3;
-      maintainer = with maintainers; [ np ];
+      maintainers = with maintainers; [ np ];
     };
   };
 
@@ -25036,7 +25103,7 @@ in {
       description = "Using Trezor as hardware SSH agent";
       homepage = https://github.com/romanz/trezor-agent;
       license = licenses.gpl3;
-      maintainer = with maintainers; [ np ];
+      maintainers = with maintainers; [ np ];
     };
   };
 
@@ -25053,7 +25120,7 @@ in {
       description = "Binding for X11 proof of work hashing";
       homepage = https://github.com/mazaclub/x11_hash;
       license = licenses.mit;
-      maintainer = with maintainers; [ np ];
+      maintainers = with maintainers; [ np ];
     };
   };
 

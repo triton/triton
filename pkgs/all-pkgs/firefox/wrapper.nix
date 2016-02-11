@@ -6,7 +6,7 @@
 , gstreamer_0, gst-plugins-base_0, gst-plugins-good_0, gst-plugins-bad_0
 , gst-plugins-ugly_0, gst-ffmpeg
 , supportsJDK, jrePlugin, icedtea_web
-, trezor-bridge, bluejeans, djview4
+, trezor-bridge, bluejeans, djview4, adobe-reader
 , google_talk_plugin, fribid, gnome-shell
 }:
 
@@ -43,6 +43,7 @@ let
       ++ lib.optional (cfg.enableGnomeExtensions or false) gnome-shell
       ++ lib.optional (cfg.enableTrezor or false) trezor-bridge
       ++ lib.optional (cfg.enableBluejeans or false) bluejeans
+      ++ lib.optional (cfg.enableAdobeReader or false) adobe-reader
      );
   libs = [ gstreamer_0 gst-plugins-base_0 ]
          ++ lib.optionals (cfg.enableQuakeLive or false)

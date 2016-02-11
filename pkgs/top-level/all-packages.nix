@@ -9055,6 +9055,15 @@ zstd = callPackage ../all-pkgs/zstd { };
     overrides = (config.goPackageOverrides or (p: {})) pkgs;
   });
 
+  go16Packages = recurseIntoAttrs (callPackage ./go-packages.nix {
+    go = go_1_6;
+    buildGoPackage = callPackage ../development/go-modules/generic {
+      go = go_1_6;
+      govers = go16Packages.govers.bin;
+    };
+    overrides = (config.goPackageOverrides or (p: {})) pkgs;
+  });
+
   goPackages = go15Packages;
 
   ### DEVELOPMENT / LISP MODULES

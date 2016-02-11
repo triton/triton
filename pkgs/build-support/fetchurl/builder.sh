@@ -3,20 +3,6 @@ source $stdenv/setup
 source $mirrorsFile
 
 
-# Curl flags to handle redirects, not use EPSV, handle cookies for
-# servers to need them during redirects, and work on SSL without a
-# certificate (this isn't a security problem because we check the
-# cryptographic hash of the output anyway).
-curl="curl \
- --location --max-redirs 20 \
- --retry 3 \
- --disable-epsv \
- --cookie-jar cookies \
- --insecure \
- $curlOpts \
- $NIX_CURL_FLAGS"
-
-
 downloadedFile="$out"
 if [ -n "$downloadToTemp" ]; then downloadedFile="$TMPDIR/file"; fi
 
@@ -120,6 +106,25 @@ if test -n "$showURLs"; then
 fi
 
 runHook preFetch
+
+if ! test -f /etc/ssl/certs/ca-certificates.crt; then
+  echo "Warning, downloading without validating SSL cert." >&2
+  echo "Eventually this will be disallowed completely." >&2
+  curlOpts="$curlOpts --insecure"
+fi
+
+# Curl flags to handle redirects, not use EPSV, handle cookies for
+# servers to need them during redirects, and work on SSL without a
+# certificate (this isn't a security problem because we check the
+# cryptographic hash of the output anyway).
+curl="curl \
+ --location --max-redirs 20 \
+ --retry 3 \
+ --disable-epsv \
+ --cookie-jar cookies \
+ $curlOpts \
+ $NIX_CURL_FLAGS"
+
 
 if test -n "$preferHashedMirrors"; then
     tryHashedMirrors

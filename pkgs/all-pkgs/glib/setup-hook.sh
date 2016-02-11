@@ -3,7 +3,7 @@ find_gio_modules() {
   # Add glib modules to GIO_EXTRA_MODULES
 
   if [[ -d "${1}/lib/gio/modules" ]] ; then
-    addToSearchPath 'GIO_EXTRA_MODULES' "${1}/lib/gio/modules")
+    addToSearchPath 'GIO_EXTRA_MODULES' "${1}/lib/gio/modules"
   fi
 
 }

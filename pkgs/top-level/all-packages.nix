@@ -804,6 +804,8 @@ gupnp-igd = callPackage ../all-pkgs/gupnp-igd { };
 
 gvfs = callPackage ../all-pkgs/gvfs { };
 
+gx = goPackages.gx.bin // { outputs = [ "bin" ]; };
+
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
 
 highlight = callPackage ../all-pkgs/highlight { };

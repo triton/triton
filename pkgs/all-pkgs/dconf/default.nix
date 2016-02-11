@@ -2,6 +2,7 @@
 , docbook_xsl
 , docbook_xsl_ns
 , fetchurl
+, gettext
 , intltool
 , libxslt
 , makeWrapper
@@ -25,10 +26,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    docbook_xsl
-    docbook_xsl_ns
+    gettext
     intltool
-    libxslt
     makeWrapper
   ];
 
@@ -41,7 +40,7 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--enable-man"
+    "--disable-man"
     "--enable-schemas-compile"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"

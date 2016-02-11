@@ -1,10 +1,12 @@
 { stdenv
 , fetchurl
 , intltool
+, makeWrapper
 
 , adwaita-icon-theme
 , avahi
 , dbus_glib
+, dconf
 , file
 , glib
 , gnutls
@@ -41,12 +43,14 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     intltool
+    makeWrapper
   ];
 
   buildInputs = [
     adwaita-icon-theme
     avahi
     dbus_glib
+    dconf
     file
     glib
     gnutls
@@ -78,6 +82,15 @@ stdenv.mkDerivation rec {
     (wtFlag "zlib" (zlib != null) null)
     (wtFlag "jpeg" (libjpeg != null) null)
   ];
+
+  preFixup = ''
+    wrapProgram $out/libexec/vino-server \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+  '';
 
   doCheck = true;
 

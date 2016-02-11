@@ -760,6 +760,14 @@ let
     buildInputs = [ mathutil ];
   };
 
+  fs = buildFromGitHub {
+    date = "2013-11-07";
+    rev = "2788f0dbd16903de03cb8186e5c7d97b69ad387b";
+    owner  = "kr";
+    repo   = "fs";
+    sha256 = "1c0fipl4rsh0v5liq1ska1dl83v3llab4k6lm8mvrx9c4dyp71ly";
+  };
+
   fsnotify.v0 = buildGoPackage rec {
     rev = "v0.9.3";
     name = "fsnotify.v0-${rev}";
@@ -1944,7 +1952,7 @@ let
     owner = "whyrusleeping";
     repo = "gx";
     sha256 = "1v0q7b2jip3xgwinly6lmcqwq351ynlk8lr0876m2ap97d5yk790";
-    buildInputs = [
+    propagatedBuildInputs = [
       go-multiaddr
       go-multihash
       go-multiaddr-net
@@ -1956,6 +1964,20 @@ let
     ];
     excludedPackages = [
       "tests"
+    ];
+  };
+
+  gx-go = buildFromGitHub {
+    rev = "e2c525cef68ffb91fde538ed2a591f85c0ae76af";
+    date = "2016-02-06";
+    owner = "whyrusleeping";
+    repo = "gx-go";
+    sha256 = "035rnpip5al3cva38216cxggz0ni0fr6ld4xjzxpmm13rjqk7d9a";
+    buildInputs = [
+      codegangsta-cli
+      fs
+      gx
+      stump
     ];
   };
 

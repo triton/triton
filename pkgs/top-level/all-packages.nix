@@ -708,6 +708,8 @@ gnonlin_0 = callPackage ../all-pkgs/gnonlin/0.x.nix { };
 gnonlin_1 = callPackage ../all-pkgs/gnonlin/1.x.nix { };
 gnonlin = gnonlin_1;
 
+gnugrep = callPackage ../all-pkgs/gnugrep { };
+
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = gobject-introspection; # Deprecated alias
 
@@ -2425,8 +2427,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   gnufdisk = callPackage ../tools/system/fdisk {
     guile = guile_1_8;
   };
-
-  gnugrep = callPackage ../tools/text/gnugrep { };
 
   gnulib = callPackage ../development/tools/gnulib { };
 

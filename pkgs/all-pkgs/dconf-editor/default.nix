@@ -1,16 +1,15 @@
 { stdenv
 , fetchurl
-, vala
-, libxslt
-, glib
-, gtk3
-, dbus_glib
-, libxml2
+, gettext
 , intltool
-, docbook_xsl_ns
-, docbook_xsl
+, makeWrapper
+
 , adwaita-icon-theme
 , dconf
+, gdk-pixbuf
+, glib
+, gtk3
+, libxml2
 }:
 
 stdenv.mkDerivation rec {
@@ -24,24 +23,44 @@ stdenv.mkDerivation rec {
     sha256 = "0xdwi7g1xdmgrc9m8ii62fp2zj114gsfpmgazlnhrcmmfi97z5d7";
   };
 
-  buildInputs = [
-    adwaita-icon-theme
-    vala
-    libxslt
-    glib
-    dbus_glib
-    gtk3
-    libxml2
+  nativeBuildInputs = [
+    gettext
     intltool
-    docbook_xsl
-    docbook_xsl_ns
-    dconf
+    makeWrapper
   ];
 
+  buildInputs = [
+    adwaita-icon-theme
+    dconf
+    gdk-pixbuf
+    glib
+    gtk3
+    libxml2
+  ];
+
+  configureFlags = [
+    "--enable-schemas-compile"
+    "--enable-nls"
+  ];
+
+  preFixup = ''
+    wrapProgram $out/bin/dconf-editor \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+  '';
+
   meta = with stdenv.lib; {
+    description = "Graphical tool for editing the dconf configuration database";
+    homepage = https://git.gnome.org/browse/dconf-editor;
+    license = licenses.lgpl21Plus;
     maintainers = with maintainers; [
       codyopel
     ];
-    platforms = platforms.linux;
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

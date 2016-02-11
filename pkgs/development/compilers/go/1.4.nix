@@ -86,7 +86,6 @@ stdenv.mkDerivation rec {
   '';
 
   patches = [
-    ./cacert-1.4.patch
     ./remove-tools-1.4.patch
   ];
 

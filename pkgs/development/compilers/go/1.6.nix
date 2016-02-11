@@ -56,6 +56,8 @@ stdenv.mkDerivation rec {
     sed -i 's,/bin/pwd,'"`type -P pwd`", src/os/os_test.go
     # Disable the hostname test
     sed -i '/TestHostname/areturn' src/os/os_test.go
+    # Remove the api check as it never worked
+    sed -i '/src\/cmd\/api\/run.go/ireturn nil' src/cmd/dist/test.go
 
     sed -i '\#"/etc/mime.types",#i"${mime-types}/etc/mime.types",' src/mime/type_unix.go
     sed -i 's,/etc/protocols,${iana_etc}/etc/protocols,g' src/net/lookup_unix.go
@@ -68,7 +70,6 @@ stdenv.mkDerivation rec {
   '';
 
   patches = [
-    ./cacert-1.5.patch
     ./remove-tools-1.5.patch
   ];
 

@@ -27,11 +27,11 @@ let
 in
 stdenv.mkDerivation rec {
   name = "${prefix}nghttp2-${version}";
-  version = "1.7.0";
+  version = "1.7.1";
 
   src = fetchurl {
     url = "https://github.com/tatsuhiro-t/nghttp2/releases/download/v${version}/nghttp2-${version}.tar.xz";
-    sha256 = "1dgfvaji3ldhnp1jxwklb8q372ibrqbrdrmv642yh0bva0hkrq8d";
+    sha256 = "05m687bhvrrnqaf18fl6h5y06a4v7j9aai8gmj5cwpflfgfnya7i";
   };
 
   # Configure script searches for a symbol which does not exist in jemalloc on Darwin

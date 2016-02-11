@@ -2,11 +2,13 @@
 , fetchurl
 , gettext
 , intltool
+, makeWrapper
 
+, adwaita-icon-theme
+, gdk-pixbuf
 , gtkmm3
 , libcanberra
 , libpulseaudio
-, adwaita-icon-theme
 }:
 
 stdenv.mkDerivation rec {
@@ -30,16 +32,22 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    makeWrapper
   ];
 
   buildInputs = [
+    adwaita-icon-theme
+    gdk-pixbuf
     gtkmm3
     libcanberra
     libpulseaudio
-    adwaita-icon-theme
   ];
 
-  enableParallelBuilding = true;
+  preFixup = ''
+    wrapProgram $out/bin/pavucontrol \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+  '';
 
   meta = with stdenv.lib; {
     description = "PulseAudio Volume Control";

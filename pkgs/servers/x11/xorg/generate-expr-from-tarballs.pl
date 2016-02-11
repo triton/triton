@@ -75,7 +75,7 @@ while (<>) {
     $pkgURLs{$pkg} = $tarball;
     $pkgNames{$pkg} = $pkgName;
 
-    my ($hash, $path) = `PRINT_PATH=1 QUIET=1 nix-prefetch-url '$tarball'`;
+    my ($hash, $path) = `PRINT_PATH=1 QUIET=1 nix-prefetch-url -I nixpkgs=../../../../ '$tarball'`;
     chomp $hash;
     chomp $path;
     $pkgHashes{$pkg} = $hash;
@@ -295,9 +295,13 @@ foreach my $pkg (sort (keys %pkgURLs)) {
       url = $pkgURLs{$pkg};
       sha256 = "$pkgHashes{$pkg}";
     };
-    nativeBuildInputs = [ $inputsNative ];
-    buildInputs = [ $inputs ];$extraAttrs
-    meta.platforms = stdenv.lib.platforms.unix;
+    nativeBuildInputs = [ $inputsNative];
+    buildInputs = [ $inputs];
+    $extraAttrs
+    meta.platforms = [
+      "x86_64-linux"
+      "i686-linux"
+    ];
   }) // {inherit $inputs;};
 
 EOF

@@ -19,7 +19,7 @@ glibPreFixupPhase() {
       "${out}/share/glib-2.0/schemas"
   fi
 
-  addToSearchPath 'GSETTINGS_SCHEMAS_PATH' "${out}/share/glib-2.0/schemas"
+  addToSearchPath 'GSETTINGS_SCHEMAS_PATH' "${out}/share"
 
 }
 

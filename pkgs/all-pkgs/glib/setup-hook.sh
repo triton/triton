@@ -4,7 +4,7 @@ make_glib_find_gsettings_schemas() {
 
   # Add glib schemas to GSETTINGS_SCHEMAS_PATH
   if [[ -d "${1}/share/glib-2.0/schemas" ]] ; then
-    addToSearchPath 'GSETTINGS_SCHEMAS_PATH' "${1}/share/glib-2.0/schemas"
+    addToSearchPath 'GSETTINGS_SCHEMAS_PATH' "${1}/share"
   fi
 
 }

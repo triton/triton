@@ -9,7 +9,6 @@
 , gdk-pixbuf
 , glib
 , gobject-introspection
-, gsettings-desktop-schemas
 , gtk3
 , libcanberra
 , libnotify
@@ -22,6 +21,8 @@ with {
   inherit (stdenv.lib)
     enFlag;
 };
+
+# TODO: fix dconf gsettings backend support
 
 stdenv.mkDerivation rec {
   name = "gnome-bluetooth-${version}";
@@ -46,7 +47,6 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gobject-introspection
-    gsettings-desktop-schemas
     gtk3
     libcanberra
     libnotify
@@ -79,13 +79,15 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/bluetooth-sendto \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
   meta = with stdenv.lib; {
-    description = "Application for managing Bluetooth";
-    homepage = https://help.gnome.org/users/gnome-bluetooth;
+    description = "Bluetooth graphical utilities integrated with GNOME";
+    homepage = https://wiki.gnome.org/Projects/GnomeBluetooth;
     license = with licenses; [
       fdl11
       gpl2Plus

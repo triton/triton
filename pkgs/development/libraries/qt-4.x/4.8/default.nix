@@ -12,7 +12,7 @@
 , libmng
 , which
 , mesaSupported
-, mesa
+, mesa_noglu
 , mesa_glu
 , openssl
 , dbus
@@ -100,7 +100,11 @@ stdenv.mkDerivation rec {
       inherit cups icu;
       inherit (xorg) libXfixes;
       glibc = stdenv.cc.libc;
-      openglDriver = if mesaSupported then mesa.driverLink else "/no-such-path";
+      openglDriver =
+        if mesaSupported then
+          mesa_noglu.driverSearchPath
+        else
+          "/no-such-path";
     })
   ] ++ optional gtkStyle (substituteAll {
     src = ./dlopen-gtkstyle.diff;
@@ -296,7 +300,7 @@ stdenv.mkDerivation rec {
     xorg.libXv
     zlib
   ] ++ optionals gtkStyle [ gtk2 gdk-pixbuf ]
-    ++ optional mesaSupported mesa_glu
+    ++ optionals mesaSupported [ mesa_noglu mesa_glu ]
     ++ optional ((buildWebkit || buildMultimedia) && stdenv.isLinux ) alsaLib
     ++ optionals (buildWebkit || buildMultimedia) [ gstreamer_0 gst-plugins-base_0 ];
 
@@ -304,8 +308,6 @@ stdenv.mkDerivation rec {
     cp -v src/3rdparty/webkit/Source/JavaScriptCore/release/libjscore.a $out/lib
     cp -v src/3rdparty/webkit/Source/WebCore/release/libwebcore.a $out/lib
   '';
-
-  enableParallelBuilding = true;
 
   crossAttrs = {
     # I've not tried any case other than i686-pc-mingw32.

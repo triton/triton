@@ -898,6 +898,10 @@ libgweather = callPackage ../all-pkgs/libgweather { };
 
 libgxps = callPackage ../all-pkgs/libgxps { };
 
+libinput = callPackage ../all-pkgs/libinput {
+  graphviz = graphviz-nox;
+};
+
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };
 libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix {
   libtool = libtool_1_5;
@@ -7674,10 +7678,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libinfinity = callPackage ../development/libraries/libinfinity {
     inherit (gnome) gtkdoc;
-  };
-
-  libinput = callPackage ../development/libraries/libinput {
-    graphviz = graphviz-nox;
   };
 
   libiptcdata = callPackage ../development/libraries/libiptcdata { };

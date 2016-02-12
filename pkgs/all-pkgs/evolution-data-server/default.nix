@@ -2,13 +2,12 @@
 , fetchurl
 , gettext
 , intltool
-, pkgconfig
 
 , db
 , gcr
 , glib
 , gnome-online-accounts
-, gobjectIntrospection
+, gobject-introspection
 , gperf
 , gsettings-desktop-schemas
 , gtk3
@@ -59,7 +58,7 @@ stdenv.mkDerivation rec {
     gcr
     glib
     gnome-online-accounts
-    gobjectIntrospection
+    gobject-introspection
     gperf
     gsettings-desktop-schemas
     gtk3

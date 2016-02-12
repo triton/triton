@@ -3824,6 +3824,10 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   solvespace = callPackage ../applications/graphics/solvespace { };
 
+  sonata = callPackage ../applications/audio/sonata {
+    inherit (python3Packages) buildPythonPackage python isPy3k dbus pygobject3 mpd2;
+  };
+
   sparsehash = callPackage ../development/libraries/sparsehash { };
 
   spiped = callPackage ../tools/networking/spiped { };
@@ -3865,6 +3869,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   suidChroot = callPackage ../tools/system/suid-chroot { };
 
   sundtek = callPackage ../misc/drivers/sundtek { };
+
+  sunxi-tools = callPackage ../development/tools/sunxi-tools { };
 
   super = callPackage ../tools/security/super { };
 
@@ -5785,7 +5791,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   phpPackages = recurseIntoAttrs (callPackage ./php-packages.nix {});
 
   inherit (callPackages ../development/interpreters/php { })
-    php54
     php55
     php56
     php70;
@@ -7292,6 +7297,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libao = callPackage ../development/libraries/libao {
     usePulseAudio = config.pulseaudio or true;
+    inherit (darwin.apple_sdk.frameworks) CoreAudio CoreServices AudioUnit;
   };
 
   libabw = callPackage ../development/libraries/libabw { };
@@ -8137,6 +8143,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   nix-plugins = callPackage ../development/libraries/nix-plugins {
     nix = pkgs.nixUnstable;
   };
+
+  nntp-proxy = callPackage ../applications/networking/nntp-proxy { };
 
   non = callPackage ../applications/audio/non { };
 
@@ -9460,6 +9468,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   rspamd = callPackage ../servers/mail/rspamd { };
 
+  pfixtools = callPackage ../servers/mail/postfix/pfixtools.nix { };
+
   pshs = callPackage ../servers/http/pshs { };
 
   tomcat_connectors = callPackage ../servers/http/apache-modules/tomcat-connectors { };
@@ -9546,7 +9556,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   postgresql = postgresql95;
 
   inherit (callPackages ../servers/sql/postgresql { })
-    postgresql90
     postgresql91
     postgresql92
     postgresql93
@@ -9988,6 +9997,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   eject = utillinux;
 
+  facetimehd-firmware = callPackage ../os-specific/linux/firmware/facetimehd-firmware { };
+
   fanctl = callPackage ../os-specific/linux/fanctl {
     iproute = iproute.override { enableFan = true; };
   };
@@ -10225,6 +10236,8 @@ zstd = callPackage ../all-pkgs/zstd { };
     rtl8812au = callPackage ../os-specific/linux/rtl8812au { };
 
     openafsClient = callPackage ../servers/openafs-client { };
+
+    facetimehd = callPackage ../os-specific/linux/facetimehd { };
 
     kernelHeaders = callPackage ../os-specific/linux/kernel-headers { };
 
@@ -12039,6 +12052,8 @@ zstd = callPackage ../all-pkgs/zstd { };
     inherit (gnome) GConf;
   };
 
+  gollum = callPackage ../applications/misc/gollum { };
+
   google-chrome = callPackage ../applications/networking/browsers/google-chrome { };
 
   googleearth = callPackage_i686 ../applications/misc/googleearth { };
@@ -13798,6 +13813,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   yate = callPackage ../applications/misc/yate { };
 
+  inherit (pythonPackages) youtube-dl;
+
   qgis = callPackage ../applications/gis/qgis {};
 
   qtbitcointrader = callPackage ../applications/misc/qtbitcointrader {
@@ -15291,8 +15308,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   mupen64plus = callPackage ../misc/emulators/mupen64plus { };
 
-  mupen64plus1_5 = callPackage ../misc/emulators/mupen64plus/1.5.nix { };
-
   inherit (callPackages ../tools/package-management/nix {
       storeDir = config.nix.storeDir or "/nix/store";
       stateDir = config.nix.stateDir or "/nix/var";
@@ -15710,6 +15725,8 @@ aliases = with self; rec {
   midoriWrapper = midori; # added 2015-01
   mlt-qt5 = qt5.mlt;  # added 2015-12-19
   multipath_tools = multipath-tools;  # added 2016-01-21
+  mupen64plus1_5 = mupen64plus; # added 2016-02-12
+  ncat = nmap;  # added 2016-01-26
   nfsUtils = nfs-utils;  # added 2014-12-06
   phonon_qt5 = qt5.phonon;  # added 2015-12-19
   phonon_qt5_backend_gstreamer = qt5.phonon-backend-gstreamer;  # added 2015-12-19
@@ -15734,7 +15751,6 @@ aliases = with self; rec {
   x11 = xlibsWrapper; # added 2015-09
   xf86_video_nouveau = xorg.xf86videonouveau; # added 2015-09
   xlibs = xorg; # added 2015-09
-  youtube-dl = pythonPackages.youtube-dl; # added 2015-06-07
   youtubeDL = youtube-dl;  # added 2014-10-26
   vimbWrapper = vimb; # added 2015-01
   vimprobable2Wrapper = vimprobable2; # added 2015-01

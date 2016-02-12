@@ -15,7 +15,7 @@ in stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src/${name}.tar.gz";
-    sha256 = "04bn4bki5ayx4pc2m2111ygnwbbmlrwzz3k1hc9mlwkyqwhx3srh";
+    sha256 = "30ebd121c77e725a1383618eff79a6752d6e9f0f21882ad825ddab12e7227611";
   };
 
   buildInputs = [ nspr perl zlib sqlite ];

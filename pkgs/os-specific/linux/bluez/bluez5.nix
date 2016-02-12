@@ -20,6 +20,8 @@ stdenv.mkDerivation rec {
       readline libsndfile udev libical
     ];
 
+  patches = [ ./bluez-5.37-obexd_without_systemd-1.patch ];
+    
   preConfigure = ''
     substituteInPlace tools/hid2hci.rules --replace /sbin/udevadm ${systemd}/bin/udevadm
     substituteInPlace tools/hid2hci.rules --replace "hid2hci " "$out/lib/udev/hid2hci "
@@ -75,6 +77,7 @@ stdenv.mkDerivation rec {
     # for bluez4 compatibility for NixOS
     mkdir $out/sbin
     ln -s ../libexec/bluetooth/bluetoothd $out/sbin/bluetoothd
+    ln -s ../libexec/bluetooth/obexd $out/sbin/obexd
   '';
 
   preFixup = ''

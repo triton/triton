@@ -11,6 +11,7 @@
 , gdk-pixbuf
 , glib
 , gobject-introspection
+, gtk3
 , json-glib
 , libdrm
 , libgudev
@@ -53,6 +54,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gobject-introspection
+    gtk3
     json-glib
     libdrm
     libgudev

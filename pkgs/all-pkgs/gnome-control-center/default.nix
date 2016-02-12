@@ -2,8 +2,10 @@
 , fetchTritonPatch
 , fetchurl
 , intltool
+, makeWrapper
 
 , adwaita-icon-theme
+, dconf
 , glib
 , gnome-bluetooth
 , gnome-desktop
@@ -81,6 +83,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     intltool
+    makeWrapper
   ];
 
   buildInputs = [
@@ -180,13 +183,26 @@ stdenv.mkDerivation rec {
       substituteInPlace $i \
         --replace "gnome-control-center" "$out/bin/gnome-control-center"
     done
+  '' + ''
+    wrapProgram $out/bin/gnome-control-center \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
   meta = with stdenv.lib; {
     description = "Utilities to configure the GNOME desktop";
+    homepage = https://git.gnome.org/browse/gnome-control-center/;
     license = licenses.gpl2Plus;
-    maintainers = gnome3.maintainers;
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "x86_64-linux"
+    ];
   };
 
 }

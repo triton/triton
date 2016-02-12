@@ -3,6 +3,7 @@
 , fetchurl
 , gettext
 , intltool
+, makeWrapper
 
 , adwaita-icon-theme
 , atk
@@ -74,6 +75,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    makeWrapper
   ];
 
   buildInputs = [
@@ -101,9 +103,14 @@ stdenv.mkDerivation rec {
   ];
 
   preFixup = ''
-    gnomeWrapperArgs+=(
-      "--prefix PATH ':' '$GSETTINGS_SCHEMAS_PATH:${gvfs}/bin'"
-    )
+    wrapProgram $out/bin/nautilus \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+      --prefix 'PATH' : "${gvfs}/bin" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
   meta = with stdenv.lib; {

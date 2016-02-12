@@ -4,14 +4,19 @@
 , intltool
 , itstool
 , libxslt
+, makeWrapper
 
 , adwaita-icon-theme
 , atk
+, clutter
+, clutter-gtk
+, dconf
 , desktop_file_utils
 , evince
 , gdk-pixbuf
 , gjs
 , glib
+, gmp
 , gnome-desktop
 , gnome-online-accounts
 , gnome-online-miners
@@ -48,16 +53,21 @@ stdenv.mkDerivation rec {
     intltool
     itstool
     libxslt
+    makeWrapper
   ];
 
   buildInputs = [
     adwaita-icon-theme
     atk
+    clutter
+    clutter-gtk
+    dconf
     desktop_file_utils
     evince
     gdk-pixbuf
     gjs
     glib
+    gmp
     gnome-desktop
     gnome-online-accounts
     gnome-online-miners
@@ -85,19 +95,30 @@ stdenv.mkDerivation rec {
   ];
 
   preFixup = ''
-    sed -i $out/bin/gnome-documents \
-      -e 's|gapplication|${glib}/bin/gapplication|'
-
-    #gnomeWrapperArgs+=(--run 'if [ -z "$XDG_CACHE_DIR" ]; then XDG_CACHE_DIR=$HOME/.cache; fi; if [ -w "$XDG_CACHE_DIR/.." ]; then mkdir -p "$XDG_CACHE_DIR/gnome-documents"; fi')
+    wrapProgram $out/bin/gnome-documents \
+      --run 'if [ -z "$XDG_CACHE_DIR" ] ; then XDG_CACHE_DIR=$HOME/.cache ; fi' \
+      --run 'if [ -d "$XDG_CACHE_DIR/gnome-documents" ] ; then mkdir -p "$XDG_CACHE_DIR/gnome-documents" ; fi' \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --set 'LD_PRELOAD' "${gnome-online-accounts}/lib/libgoa-1.0.so" \
+      --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
   doCheck = true;
 
   meta = with stdenv.lib; {
+    description = "A document manager application for GNOME";
     homepage = https://wiki.gnome.org/Apps/Documents;
-    description = "Document manager application designed to work with GNOME 3";
-    maintainers = gnome3.maintainers;
-    license = licenses.gpl2;
-    platforms = platforms.linux;
+    license = licenses.gpl2Plus;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "x86_64-linux"
+    ];
   };
 }

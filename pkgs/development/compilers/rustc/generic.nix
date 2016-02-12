@@ -142,7 +142,6 @@ with stdenv.lib; stdenv.mkDerivation {
 
     # Fix not filtering out -L lines from llvm-config
     sed -i '\#if len(lib) == 1#a\        continue\n    if lib[0:2] == "-L":' src/etc/mklldeps.py
-    cat src/etc/mklldeps.py
 
     # Fix the configure script to not require curl as we won't use it
     sed -i configure \

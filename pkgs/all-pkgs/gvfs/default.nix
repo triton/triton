@@ -4,6 +4,7 @@
 , intltool
 , libtool
 , libxslt
+, makeWrapper
 
 , avahi
 , dbus
@@ -43,6 +44,42 @@ stdenv.mkDerivation rec {
     sha256 = "064dsjrdjcbi38zl38jhh4r9jcpiygg7x4c8s6s2rb757l7nwnv9";
   };
 
+  nativeBuildInputs = [
+    docbook_xsl
+    intltool
+    libtool
+    libxslt
+    makeWrapper
+  ];
+
+  buildInputs = [
+    avahi
+    dbus
+    fuse
+    gcr
+    glib
+    gnome-online-accounts
+    libgdata
+    libarchive
+    libbluray
+    libcdio
+    libgudev
+    libgcrypt
+    libgphoto2
+    libmtp
+    libsecret
+    libsoup
+    libxml2
+    openssh
+    samba
+    systemd
+    udev
+    udisks2
+    #gconf
+    gtk3
+    libgnome_keyring
+  ];
+
   configureFlags = [
     "--disable-documentation"
     "--enable-schemas-compile"
@@ -80,40 +117,11 @@ stdenv.mkDerivation rec {
     #"--with-bash-completion-dir="
   ];
 
-  nativeBuildInputs = [
-    docbook_xsl
-    intltool
-    libtool
-    libxslt
-  ];
-
-  buildInputs = [
-    avahi
-    dbus
-    fuse
-    gcr
-    glib
-    gnome-online-accounts
-    libgdata
-    libarchive
-    libbluray
-    libcdio
-    libgudev
-    libgcrypt
-    libgphoto2
-    libmtp
-    libsecret
-    libsoup
-    libxml2
-    openssh
-    samba
-    systemd
-    udev
-    udisks2
-    #gconf
-    gtk3
-    libgnome_keyring
-  ];
+  preFixup = ''
+    wrapProgram $out/libexec/gvfsd \
+      --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix XDG_DATA_DIRS : "$out/share"
+  '';
 
   meta = with stdenv.lib; {
     description = "Virtual filesystem implementation for gio";

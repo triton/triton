@@ -2,7 +2,10 @@
 , fetchurl
 , intltool
 , itstool
+, makeWrapper
 
+, adwaita-icon-theme
+, dconf
 , gdk-pixbuf
 , glib
 , gsettings-desktop-schemas
@@ -26,9 +29,11 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     intltool
     itstool
+    makeWrapper
   ];
 
   buildInputs = [
+    adwaita-icon-theme
     gdk-pixbuf
     glib
     gsettings-desktop-schemas
@@ -42,6 +47,16 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-schemas-compile"
   ];
+
+  preFixup = ''
+    wrapProgram $out/bin/gnome-screenshot \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+  '';
 
   doCheck = true;
 

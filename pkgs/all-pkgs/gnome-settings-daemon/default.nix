@@ -6,11 +6,13 @@
 , intltool
 , libtool
 , libxslt
+, makeWrapper
 
 , adwaita-icon-theme
 , cairo
 , colord
 , cups
+, dconf
 , fontconfig
 , gconf
 , gdk-pixbuf
@@ -67,6 +69,7 @@ stdenv.mkDerivation rec {
     intltool
     libtool
     libxslt
+    makeWrapper
   ];
 
   buildInputs = [
@@ -74,6 +77,7 @@ stdenv.mkDerivation rec {
     cairo
     colord
     cups
+    dconf
     fontconfig
     gconf
     geoclue2
@@ -133,11 +137,22 @@ stdenv.mkDerivation rec {
     "--disable-debug"
     (wtFlag "nssdb" (nss != null) null)
   ];
+      #"--prefix PATH : ${glib}/bin"
 
   preFixup = ''
-    gnomeWrapperArgs+=(
-      "--prefix PATH : ${glib}/bin"
-    )
+    wrapProgram $out/libexec/gnome-settings-daemon \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+
+    wrapProgram $out/libexec/gsd-list-wacom \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share"
   '';
 
   meta = with stdenv.lib; {

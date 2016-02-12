@@ -4,12 +4,15 @@
 , gettext
 , intltool
 , libtool
+, makeWrapper
 
 , atk
+, dconf
 , gdk-pixbuf
 , geocode-glib
 , glib
 , gnome-desktop
+, gnome-settings-daemon
 , gobject-introspection
 , gsettings-desktop-schemas
 , json-glib
@@ -52,6 +55,7 @@ stdenv.mkDerivation rec {
     gettext
     intltool
     libtool
+    makeWrapper
   ];
 
   buildInputs = [
@@ -59,10 +63,12 @@ stdenv.mkDerivation rec {
     cairo
     clutter
     cogl
+    dconf
     gdk-pixbuf
     geocode-glib
     glib
     gnome-desktop
+    gnome-settings-daemon
     gobject-introspection
     gsettings-desktop-schemas
     gtk3
@@ -161,8 +167,11 @@ stdenv.mkDerivation rec {
 
       wrapProgram $out/bin/mutter \
         --set 'GI_TYPELIB_PATH' "$GI_TYPELIB_PATH" \
+        --set 'GSETTINGS_BACKEND' 'dconf' \
+        --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+        --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
         --prefix 'XDG_DATA_DIRS' : "$out/share" \
-        --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
+        --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
     '';
 
   meta = with stdenv.lib; {

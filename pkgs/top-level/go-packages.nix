@@ -8,6 +8,23 @@ let
 
   inherit go buildGoPackage;
 
+  fetchGxPackage = { multihash, sha256 }: stdenv.mkDerivation {
+    name = "gx-src-${multihash}";
+    buildCommand = ''
+      if ! [ -f /etc/ssl/certs/ca-certificates.crt ]; then
+        echo "Missing /etc/ssl/certs/ca-certificates.crt" >&2
+        echo "Please update to a version of nix which supports ssl." >&2
+        exit 1
+      fi
+      gx get -o $out "${multihash}"
+    '';
+    buildInputs = [ gx.bin ];
+    outputHashAlgo = "sha256";
+    outputHashMode = "recursive";
+    outputHash = sha256;
+    preferLocalBuild = true;
+  };
+
   buildFromGitHub = { rev, date ? null, owner, repo, sha256, name ? repo, goPackagePath ? "github.com/${owner}/${repo}", ... }@args: buildGoPackage (args // {
     inherit rev goPackagePath;
     name = "${name}-${if date != null then date else if builtins.stringLength rev != 40 then rev else stdenv.lib.strings.substring 0 7 rev}";
@@ -2153,6 +2170,15 @@ let
     owner  = "ipfs";
     repo   = "go-ipfs";
     sha256 = "0mx4399sqja0pvjc8zf256rrg3gipgka7cadnq89f5gby7n357cj";
+    extraSrcs = [
+      {
+        src = fetchGxPackage {
+          multihash = "QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4";
+          sha256 = "0vg8b2f69719gy31y4xzc96n19fd7zrhqszfgiys3khiwvd9zjpn";
+        };
+        goPackagePath = "gx/afsdfdsfasd/blah";
+      }
+    ];
   };
 
   json2csv = buildFromGitHub {

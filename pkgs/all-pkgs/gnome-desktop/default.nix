@@ -30,11 +30,11 @@ with {
 };
 
 assert xorg != null ->
-  xorg.libX11 != null &&
-  xorg.libXext != null &&
-  xorg.libXrandr != null &&
-  xorg.randrproto != null &&
-  xorg.xproto != null;
+  xorg.libX11 != null
+  && xorg.libXext != null
+  && xorg.libXrandr != null
+  && xorg.randrproto != null
+  && xorg.xproto != null;
 
 stdenv.mkDerivation rec {
   name = "gnome-desktop-${version}";
@@ -83,10 +83,6 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     (wtFlag "x" (xorg != null) null)
-  ];
-
-  NIX_CFLAGS_COMPILE = [
-    "-I${glib}/include/gio-unix-2.0"
   ];
 
   meta = with stdenv.lib; {

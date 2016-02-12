@@ -39,39 +39,6 @@ stdenv.mkDerivation rec {
     sha256 = "0qyd0cw17wi8gl6y9z2j2lh2gwghxskfmsdvw4ayrgxwnj6cjccn";
   };
 
-  configureFlags = [
-    "--enable-glibtest"
-    "--enable-Bsymbolic"
-    "--enable-x11-backend"
-    "--disable-win32-backend"
-    "--disable-quartz-backend"
-    "--enable-wayland-backend"
-    "--enable-egl-backend"
-    "--disable-mir-backend"
-    "--disable-cex100-backend"
-    "--enable-wayland-compositor"
-    "--enable-tslib-input"
-    "--enable-evdev-input"
-    "--enable-xinput"
-    "--enable-gdk-pixbuf"
-    "--disable-debug"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    "--disable-deprecated"
-    "--disable-maintainer-flags"
-    "--disable-gcov"
-    "--enable-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-docs"
-    "--enable-nls"
-    "--enable-rpath"
-    "--disable-installed-tests"
-    "--disable-always-build-tests"
-    "--disable-examples"
-    "--with-x"
-  ];
-
   nativeBuildInputs = [
     gettext
   ];
@@ -104,7 +71,38 @@ stdenv.mkDerivation rec {
     xorg.libXrandr
   ];
 
-  enableParallelBuilding = false;
+  configureFlags = [
+    "--enable-glibtest"
+    "--enable-Bsymbolic"
+    "--enable-x11-backend"
+    "--disable-win32-backend"
+    "--disable-quartz-backend"
+    "--enable-wayland-backend"
+    "--enable-egl-backend"
+    "--disable-mir-backend"
+    "--disable-cex100-backend"
+    "--enable-wayland-compositor"
+    "--enable-tslib-input"
+    "--enable-evdev-input"
+    "--enable-xinput"
+    "--enable-gdk-pixbuf"
+    "--disable-debug"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    "--disable-deprecated"
+    "--disable-maintainer-flags"
+    "--disable-gcov"
+    "--enable-introspection"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--disable-docs"
+    "--enable-nls"
+    "--enable-rpath"
+    "--disable-installed-tests"
+    "--disable-always-build-tests"
+    "--disable-examples"
+    "--with-x"
+  ];
 
   meta = with stdenv.lib; {
     description = "Library for creating graphical user interfaces";

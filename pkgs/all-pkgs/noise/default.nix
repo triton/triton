@@ -4,6 +4,8 @@
 , gettext
 , makeWrapper
 
+, adwaita-icon-theme
+, gdk-pixbuf
 , glib
 , gobject-introspection
 , granite
@@ -57,6 +59,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    adwaita-icon-theme
+    gdk-pixbuf
     glib
     gobject-introspection
     granite
@@ -98,6 +102,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/noise \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GI_TYPELIB_PATH' "$GI_TYPELIB_PATH" \
       --prefix 'GST_PLUGIN_PATH' : "$GST_PLUGIN_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \

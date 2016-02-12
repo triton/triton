@@ -8842,17 +8842,17 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   wxGTK28 = callPackage ../development/libraries/wxGTK-2.8 {
     inherit (gnome) GConf;
-    withMesa = lib.elem system lib.platforms.mesaPlatforms;
+    withMesa = lib.elem system mesa_noglu.meta.platforms;
   };
 
   wxGTK29 = callPackage ../development/libraries/wxGTK-2.9/default.nix {
     inherit (gnome) GConf;
-    withMesa = lib.elem system lib.platforms.mesaPlatforms;
+    withMesa = lib.elem system mesa_noglu.meta.platforms;
   };
 
   wxGTK30 = callPackage ../development/libraries/wxGTK-3.0/default.nix {
     inherit (gnome) GConf;
-    withMesa = lib.elem system lib.platforms.mesaPlatforms;
+    withMesa = lib.elem system mesa_noglu.meta.platforms;
   };
 
   wxmac = callPackage ../development/libraries/wxmac {

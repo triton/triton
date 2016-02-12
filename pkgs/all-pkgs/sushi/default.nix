@@ -2,12 +2,14 @@
 , fetchurl
 , gettext
 , intltool
+, makeWrapper
 
 , atk
 , clutter
 , clutter-gst_2
 , clutter-gtk
 , cogl
+, dconf
 , evince
 , freetype
 , gdk-pixbuf
@@ -22,6 +24,7 @@
 , libmusicbrainz5
 , pango
 , webkitgtk
+, xorg
 }:
 
 stdenv.mkDerivation rec {
@@ -38,6 +41,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    makeWrapper
   ];
 
   buildInputs = [
@@ -46,6 +50,7 @@ stdenv.mkDerivation rec {
     clutter-gst_2
     clutter-gtk
     cogl
+    dconf
     evince
     freetype
     gdk-pixbuf
@@ -60,12 +65,25 @@ stdenv.mkDerivation rec {
     libmusicbrainz5
     pango
     webkitgtk
+    xorg.libX11
   ];
 
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"
   ];
+
+  preFixup = ''
+    wrapProgram $out/bin/sushi \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+      --prefix 'GST_PLUGIN_SYSTEM_PATH_1_0' : "$GST_PLUGIN_SYSTEM_PATH_1_0" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+  '';
 
   meta = with stdenv.lib; {
     description = "A quick previewer for Nautilus";

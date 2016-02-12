@@ -8416,6 +8416,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     vlc = callPackage ../applications/video/vlc {
       qt4 = null;
       withQt5 = true;
+      live555 = null;
     };
 
   };

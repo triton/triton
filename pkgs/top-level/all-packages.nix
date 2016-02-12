@@ -959,6 +959,8 @@ libwacom = callPackage ../all-pkgs/libwacom { };
 
 libzapojit = callPackage ../all-pkgs/libzapojit { };
 
+live555 = callPackage ../all-pkgs/live555 { };
+
 mesa_glu =  callPackage ../all-pkgs/mesa-glu { };
 mesa_noglu = callPackage ../all-pkgs/mesa {
   # makes it slower, but during runtime we link against just
@@ -8020,8 +8022,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   liquidfun = callPackage ../development/libraries/liquidfun { };
 
-  live555 = callPackage ../development/libraries/live555 { };
-
   log4cpp = callPackage ../development/libraries/log4cpp { };
 
   log4cxx = callPackage ../development/libraries/log4cxx { };
@@ -8416,7 +8416,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     vlc = callPackage ../applications/video/vlc {
       qt4 = null;
       withQt5 = true;
-      live555 = null;
     };
 
   };

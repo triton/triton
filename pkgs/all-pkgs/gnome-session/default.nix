@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, makeWrapper
 
 , adwaita-icon-theme
 , gdk-pixbuf
@@ -36,6 +37,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    makeWrapper
   ];
 
   buildInputs = [
@@ -77,6 +79,14 @@ stdenv.mkDerivation rec {
     "--enable-ipv6"
     "--with-xtrans"
   ];
+
+  preFixup = ''
+    wrapProgram $out/libexec/gnome-session-binary \
+      --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+  '';
 
   meta = with stdenv.lib; {
     description = "Gnome session manager";

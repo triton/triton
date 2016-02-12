@@ -5,7 +5,7 @@
 , makeWrapper
 
 , adwaita-icon-theme
-, bash
+, dconf
 , gdk-pixbuf
 , glib
 , gmp
@@ -41,7 +41,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
-    bash
     gdk-pixbuf
     glib
     gmp
@@ -63,7 +62,10 @@ stdenv.mkDerivation rec {
   preFixup = ''
     wrapProgram $out/bin/gnome-calculator \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 

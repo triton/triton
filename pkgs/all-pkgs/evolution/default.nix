@@ -3,11 +3,14 @@
 , intltool
 , itstool
 , libtool
+, makeWrapper
 
 , adwaita-icon-theme
 , atk
 , bogofilter
 , cairo
+
+, dconf
 , db
 , enchant
 , evolution-data-server
@@ -53,19 +56,6 @@ stdenv.mkDerivation rec {
     sha256 = "8161a0ebc77e61904dfaca9745595fefbf84d834a07ee1132d1f8d030dabfefb";
   };
 
-  configureFlags = [
-    "--disable-spamassassin"
-    "--disable-pst-import"
-    "--disable-autoar"
-    "--disable-libcryptui"
-  ];
-
-  NIX_CFLAGS_COMPILE = [
-    "-I${nspr}/include/nspr"
-    "-I${nss}/include/nss"
-    "-I${glib}/include/gio-unix-2.0"
-  ];
-
   propagatedUserEnvPkgs = [
     gnome-themes-standard
   ];
@@ -74,6 +64,7 @@ stdenv.mkDerivation rec {
     intltool
     itstool
     libtool
+    makeWrapper
   ];
 
   buildInputs = [
@@ -81,6 +72,7 @@ stdenv.mkDerivation rec {
     atk
     bogofilter
     cairo
+    dconf
     db
     enchant
     evolution-data-server
@@ -113,6 +105,23 @@ stdenv.mkDerivation rec {
     sqlite
     webkitgtk_2_4
   ];
+
+  configureFlags = [
+    "--disable-spamassassin"
+    "--disable-pst-import"
+    "--disable-autoar"
+    "--disable-libcryptui"
+  ];
+
+  preFixup = ''
+    wrapProgram $out/bin/evolution \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+  '';
 
   doCheck = true;
 

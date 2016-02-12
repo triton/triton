@@ -3,11 +3,13 @@
 , gettext
 , intltool
 , itstool
+, makeWrapper
 
 , adwaita-icon-theme
 , bash
 , bzip2
 , c-ares
+, dconf
 , evolution
 , evolution-data-server
 , exempi
@@ -76,6 +78,7 @@ stdenv.mkDerivation rec {
     intltool
     itstool
     libxslt
+    makeWrapper
   ];
 
   buildInputs = [
@@ -83,6 +86,7 @@ stdenv.mkDerivation rec {
     bzip2
     c-ares
     #cairo
+    dconf
     #enca
     evolution
     evolution-data-server
@@ -166,7 +170,7 @@ stdenv.mkDerivation rec {
     "--disable-libiptcdata"
     (enFlag "exempi" (exempi != null) null)
     "--enable-meegotouch"
-    "--disable-miner-fs"
+    "--enable-miner-fs"
     "--enable-extract"
     "--enable-tracker-writeback"
     "--enable-miner-apps"
@@ -223,10 +227,13 @@ stdenv.mkDerivation rec {
     #"--with-gstreamer-backend=gupnp-dlna"
   ];
 
-  NIX_CFLAGS_COMPILE = [
-    "-I${glib}/include/gio-unix-2.0"
-    "-I${poppler}/include/poppler"
-  ];
+  preFixup = ''
+    wrapProgram $out/bin/tracker \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share"
+  '';
 
   meta = with stdenv.lib; {
     description = "User information store, search tool and indexer";

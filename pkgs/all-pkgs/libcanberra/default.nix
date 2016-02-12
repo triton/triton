@@ -17,6 +17,11 @@
 , xorg
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "libcanberra-0.30";
 
@@ -32,23 +37,6 @@ stdenv.mkDerivation rec {
       file = "libcanberra/libcanberra-0.30-wayland.patch";
       sha256 = "ab3a989e346f871b22c99bcb8b6203eb800bc83f66269f3c26133a1edf5fbd5d";
     })
-  ];
-
-  configureFlags = [
-    "--enable-alsa"
-    "--disable-oss"
-    "--enable-pulse"
-    "--enable-udev"
-    "--enable-gstreamer"
-    "--enable-null"
-    "--disable-gtk"
-    "--enable-gtk3"
-    "--enable-tdb"
-    "--disable-lynx"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--with-systemdsystemunitdir=$(out)/lib/systemd/system"
   ];
 
   nativeBuildInputs = [
@@ -72,13 +60,24 @@ stdenv.mkDerivation rec {
     xorg.libX11
   ];
 
-  postInstall = ''
-    for f in $out/lib/*.la ; do
-      sed 's|-lltdl|-L${libtool}/lib -lltdl|' -i $f
-    done
-  '';
-
-  enableParallelBuilding = true;
+  configureFlags = [
+    (enFlag "alsa" (alsaLib != null) null)
+    "--disable-oss"
+    (enFlag "pulse" (libpulseaudio != null) null)
+    (enFlag "udev" (udev != null) null)
+    (enFlag "gstreamer" (
+      gstreamer != null
+      && gst-plugins-base != null) null)
+    "--enable-null"
+    "--disable-gtk"
+    (enFlag "gtk3" (gtk3 != null) null)
+    (enFlag "tdb" (tdb != null) null)
+    "--disable-lynx"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--with-systemdsystemunitdir=$(out)/lib/systemd/system"
+  ];
 
   passthru = {
     gtkModule = "/lib/gtk-2.0/";

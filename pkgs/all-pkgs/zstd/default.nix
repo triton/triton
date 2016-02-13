@@ -23,13 +23,15 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    platforms = [
-      "x86_64-linux"
-      "i686-linux"
-    ];
+    description = "Fast real-time lossless compression algorithm";
+    homepage = http://www.zstd.net/;
     license = licenses.bsd2;
     maintainers = with maintainers; [
       wkennington
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
     ];
   };
 }

@@ -88,16 +88,6 @@ stdenv.mkDerivation rec {
     sha256 = "1sf3nirs3mcx0r5i7acm9bsvzqzlh730m0yjg6jcyj8ln6r7cvqf";
   };
 
-  patches = [
-  	# default ax_with_curses.m4 produces automagic dependency on ncursesw
-  	# also, ncursesw is required for colors, so we force it here
-    (fetchTritonPatch {
-      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
-      file = "ncmpc/ncmpc-0.24-ncursesw.patch";
-      sha256 = "946aa473365b57533b4ba1ca908b1bea9684a529193b5c402ad8701d5713a2d3";
-    })
-  ];
-
   nativeBuildInputs = [
     autoconf
     autoconf-archive
@@ -114,6 +104,25 @@ stdenv.mkDerivation rec {
   ] ++ optionals lyricsScreen [
     ncmpc-lyrics-plugins
   ];
+
+  patches = [
+  	# default ax_with_curses.m4 produces automagic dependency on ncursesw
+  	# also, ncursesw is required for colors, so we force it here
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "ncmpc/ncmpc-0.24-ncursesw.patch";
+      sha256 = "946aa473365b57533b4ba1ca908b1bea9684a529193b5c402ad8701d5713a2d3";
+    })
+  ];
+
+  preConfigure =
+    /* Re-run autoreconf after patching */ ''
+    ./autogen.sh
+  '' + optionalString (lirc != null)
+    /* upstream lirc doesn't have a pkg-config file */ ''
+    export LIBLIRCCLIENT_CFLAGS="-I${lirc}/include/lirc"
+    export LIBLIRCCLIENT_LIBS="-llirc_client"
+  '';
 
   configureFlags = [
     "--disable-mini"
@@ -137,15 +146,6 @@ stdenv.mkDerivation rec {
     "--disable-documentation"
   ];
 
-  preConfigure =
-    /* Re-run autoreconf after patching */ ''
-    ./autogen.sh
-  '' + optionalString (lirc != null)
-    /* upstream lirc doesn't have a pkg-config file */ ''
-    export LIBLIRCCLIENT_CFLAGS="-I${lirc}/include/lirc"
-    export LIBLIRCCLIENT_LIBS="-llirc_client"
-  '';
-
   postInstall = optionalString lyricsScreen ''
     rm -fv $out/lib/ncmpc/lyrics/*
     mkdir -pv $out/lib/ncmpc/lyrics
@@ -160,8 +160,6 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/ncmpc \
       --prefix PYTHONPATH : "$PYTHONPATH"
   '';
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Curses-based interface for MPD (music player daemon)";

@@ -48,6 +48,26 @@ stdenv.mkDerivation rec {
     sha256 = "1bbfxq0aclhaiyj1jcjr583prv5662jvphdqsafgr3q3srwa43dw";
   };
 
+  nativeBuildInputs = [
+    libiconv
+  ];
+
+  buildInputs = [
+    cairo
+    curl
+    fontconfig
+    freetype
+    glib
+    gobject-introspection
+    lcms2
+    libjpeg
+    libpng
+    libtiff
+    openjpeg
+    qt4
+    zlib
+  ] ++ optional (qt5 != null) qt5.base;
+
   patches = [
     (fetchTritonPatch {
       rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
@@ -83,28 +103,6 @@ stdenv.mkDerivation rec {
     #"cms"
     #"testdatadir"
   ];
-
-  nativeBuildInputs = [
-    libiconv
-  ];
-
-  buildInputs = [
-    cairo
-    curl
-    fontconfig
-    freetype
-    glib
-    gobject-introspection
-    lcms2
-    libjpeg
-    libpng
-    libtiff
-    openjpeg
-    qt4
-    zlib
-  ] ++ optional (qt5 != null) qt5.base;
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A PDF rendering library";

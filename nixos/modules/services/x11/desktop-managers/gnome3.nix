@@ -33,10 +33,16 @@ let
 
   nixos-gsettings-desktop-schemas = pkgs.stdenv.mkDerivation {
     name = "nixos-gsettings-desktop-schemas";
-    buildInputs = [ pkgs.nixos-artwork ];
+    buildInputs = [
+      pkgs.nixos-artwork
+    ];
+    # TODO: figure out what in the flying fuck this shit is.  There is an issue
+    #       with conflicting gschema filenames, but christ this is bad.
     buildCommand = ''
      mkdir -p $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas
-     cp -rf ${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/gsettings-desktop-schemas*/glib-2.0 $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas/
+     cp -rf \
+       ${pkgs.gsettings-desktop-schemas}/share/glib-2.0 \
+       $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas/
      chmod -R a+w $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas
      cat - > $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas/glib-2.0/schemas/nixos-defaults.gschema.override <<- EOF
        [org.gnome.desktop.background]
@@ -45,7 +51,8 @@ let
        [org.gnome.desktop.screensaver]
        picture-uri='${pkgs.nixos-artwork}/share/artwork/gnome/Gnome_Dark.png'
      EOF
-     ${pkgs.glib}/bin/glib-compile-schemas $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas/glib-2.0/schemas/
+     ${pkgs.glib}/bin/glib-compile-schemas \
+       $out/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas/glib-2.0/schemas/
     '';
   };
 

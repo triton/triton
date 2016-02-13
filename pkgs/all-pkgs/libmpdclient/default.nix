@@ -19,8 +19,6 @@ stdenv.mkDerivation rec {
     doxygen
   ];
 
-  enableParallelBuilding = true;
-
   passthru = {
     inherit
       versionMajor

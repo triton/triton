@@ -34,6 +34,27 @@ stdenv.mkDerivation rec {
     sha256 = "1751sf6brwwl1dq64155s4a12784q35dyqfy028qrwr1ilafhbci";
   };
 
+  nativeBuildInputs = [
+    gettext
+    ruby
+  ];
+
+  buildInputs = [
+    boost
+    expat
+    file
+    flac
+    libebml
+    libmatroska
+    libogg
+    libvorbis
+    qt5.qtbase
+    xdg_utils
+    zlib
+  ] ++ optionals (!stdenv.cc.isGNU) [
+    libiconv
+  ];
+
   postPatch = ''
     patchShebangs ./rake.d/
     patchShebangs ./Rakefile
@@ -62,27 +83,6 @@ stdenv.mkDerivation rec {
     "--disable-tools"
   ];
 
-  nativeBuildInputs = [
-    gettext
-    ruby
-  ];
-
-  buildInputs = [
-    boost
-    expat
-    file
-    flac
-    libebml
-    libmatroska
-    libogg
-    libvorbis
-    qt5.qtbase
-    xdg_utils
-    zlib
-  ] ++ optionals (!stdenv.cc.isGNU) [
-    libiconv
-  ];
-
   buildPhase = ''
     ./drake -j $NIX_BUILD_CORES
   '';
@@ -90,8 +90,6 @@ stdenv.mkDerivation rec {
   installPhase = ''
     ./drake install -j $NIX_BUILD_CORES
   '';
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Cross-platform tools for Matroska";

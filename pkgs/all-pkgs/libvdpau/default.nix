@@ -13,16 +13,16 @@ stdenv.mkDerivation rec {
     sha256 = "857a01932609225b9a3a5bf222b85e39b55c08787d0ad427dbd9ec033d58d736";
   };
 
-  configureFlags = [
-    "--enable-dri2"
-    "--disable-documentation"
-    "--with-module-dir=${mesa_noglu.driverLink}/lib/vdpau"
-  ];
-
   buildInputs = [
     xorg.dri2proto
     xorg.libX11
     xorg.libXext
+  ];
+
+  configureFlags = [
+    "--enable-dri2"
+    "--disable-documentation"
+    "--with-module-dir=${mesa_noglu.driverLink}/lib/vdpau"
   ];
 
   preInstall = ''

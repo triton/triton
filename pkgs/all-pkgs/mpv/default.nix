@@ -1,5 +1,6 @@
-{ stdenv, fetchurl
+{ stdenv
 , docutils
+, fetchurl
 , makeWrapper
 , perl
 , pkgconfig
@@ -57,25 +58,6 @@ stdenv.mkDerivation rec {
     sha256 = "0cqjwl0xyg0sv1jflipfkvqjg32y0kqfh4gc3lyhqgv0hgs3fa84";
   };
 
-  patchPhase = ''
-    patchShebangs ./TOOLS/
-  '';
-
-  configureFlags = [
-    "--enable-libmpv-shared"
-    "--disable-libmpv-static"
-    "--disable-static-build"
-    "--enable-manpage-build"
-    "--disable-build-date" # Purity
-    "--enable-zsh-comp"
-  ] ++ optional vaapiSupport "--enable-vaapi";
-
-  NIX_LDFLAGS = "-lX11 -lXext";
-
-  configurePhase = ''
-    python ${waf} configure --prefix=$out $configureFlags
-  '';
-
   nativeBuildInputs = [
     docutils
     makeWrapper
@@ -116,28 +98,50 @@ stdenv.mkDerivation rec {
     youtube-dl
   ] ++ optional vaapiSupport libva;
 
+  postPatch = ''
+    patchShebangs ./TOOLS/
+  '';
+
+  configureFlags = [
+    "--enable-libmpv-shared"
+    "--disable-libmpv-static"
+    "--disable-static-build"
+    "--enable-manpage-build"
+    "--disable-build-date" # Purity
+    "--enable-zsh-comp"
+  ] ++ optional vaapiSupport "--enable-vaapi";
+
+  NIX_LDFLAGS = "-lX11 -lXext";
+
+  configurePhase = ''
+    python ${waf} configure --prefix=$out $configureFlags
+  '';
+
   buildPhase = ''
     python ${waf} build
   '';
 
   installPhase = ''
     python ${waf} install
-
-    # Use a standard font
+  '' + /* Use a standard font */ ''
     mkdir -p $out/share/mpv
     ln -s ${freefont_ttf}/share/fonts/truetype/FreeSans.ttf $out/share/mpv/subfont.ttf
-
-    # Ensure youtube-dl is available in $PATH for MPV
-    wrapProgram $out/bin/mpv --prefix PATH : "${youtube-dl}/bin"
   '';
 
-  enableParallelBuilding = true;
+  preFixup =
+    /* Ensure youtube-dl is available in $PATH for MPV */ ''
+      wrapProgram $out/bin/mpv \
+        --prefix PATH : "${youtube-dl}/bin"
+    '';
 
   meta = with stdenv.lib; {
     description = "A media player that supports many video formats";
     homepage = http://mpv.io;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ ];
-    platforms = platforms.linux;
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

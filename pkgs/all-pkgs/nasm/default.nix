@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-  description = "An assembler for x86 and x86_64 instruction sets";
+    description = "An assembler for x86 and x86_64 instruction sets";
     homepage = http://www.nasm.us/;
     license = with licenses; [
       bsd

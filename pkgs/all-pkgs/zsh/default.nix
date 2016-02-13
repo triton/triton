@@ -33,7 +33,20 @@ stdenv.mkDerivation {
     sha256 = "0dsr450v8nydvpk8ry276fvbznlrjgddgp7zvhcw4cv69i9lr4ps";
   };
 
-  patchPhase = ''
+  nativeBuildInputs = [
+    perl
+  ];
+
+  buildInputs = [
+    coreutils
+    gdbm
+    ncurses
+    pcre
+  ] ++ optionals (!stdenv.cc.isGNU) [
+    libiconv
+  ];
+
+  postPhase = ''
     patchShebangs ./Misc/
     patchShebangs ./Util/
   '' +
@@ -74,19 +87,6 @@ stdenv.mkDerivation {
     "--with-tcsetpgrp"
   ];
 
-  nativeBuildInputs = [
-    perl
-  ];
-
-  buildInputs = [
-    coreutils
-    gdbm
-    ncurses
-    pcre
-  ] ++ optionals (!stdenv.cc.isGNU) [
-    libiconv
-  ];
-
   postInstall = ''
     mkdir -p $out/share
     tar xf ${documentation} -C $out/share
@@ -121,7 +121,6 @@ stdenv.mkDerivation {
   '';
 
   doCheck = true;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "The Z command shell";

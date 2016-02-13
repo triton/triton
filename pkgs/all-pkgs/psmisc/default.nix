@@ -1,11 +1,10 @@
 { stdenv
 , autoreconfHook
+, fetchTritonPatch
 , fetchurl
 
 , ncurses
 }:
-
-assert stdenv.isLinux;
 
 stdenv.mkDerivation rec {
   name = "psmisc-${version}";
@@ -22,14 +21,27 @@ stdenv.mkDerivation rec {
     autoreconfHook
   ];
 
-  buildInputs = [ncurses];
+  buildInputs = [
+    ncurses
+  ];
 
-  # From upstream, will be in next release.
-  patches = [ ./0001-Typo-in-fuser-makes-M-on-all-the-time.patch ];
+  patches = [
+    # From upstream, will be in next release.
+    (fetchTritonPatch {
+      rev = "0f7d71c8d72ed94cd06270096d82c1275fe42fb7";
+      file = "psmisc/0001-Typo-in-fuser-makes-M-on-all-the-time.patch";
+      sha256 = "e1e88176f1620f932e5f38027a5f9a5b03c163aa5ce12b26e6440ea471840a3f";
+    })
+  ];
 
-  meta = {
+  meta = with stdenv.lib; {
+    description = "A set of tools that use the proc filesystem";
     homepage = http://psmisc.sourceforge.net/;
-    description = "A set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)";
-    platforms = stdenv.lib.platforms.linux;
+    license = licenses.gpl2;
+    maintainers = with maintainers; [ ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

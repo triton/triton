@@ -13,6 +13,12 @@
 , xorg
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag
+    wtFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "xine-ui-0.99.9";
 
@@ -21,7 +27,32 @@ stdenv.mkDerivation rec {
     sha256 = "18liwmkbj75xs9bipw3vr67a7cwmdfcp04v5lph7nsjlkwhq1lcd";
   };
 
-  postPhase = ''
+  nativeBuildInputs = [
+    shared_mime_info
+  ];
+
+  buildInputs = [
+    curl
+    libcaca
+    libjpeg
+    libpng
+    lirc
+    ncurses
+    readline
+    xine-lib
+    xorg.inputproto
+    xorg.libX11
+    xorg.libXext
+    xorg.libXft
+    xorg.libXi
+    xorg.libXinerama
+    xorg.libXt
+    xorg.libXtst
+    xorg.libXv
+    xorg.libXxf86vm
+  ];
+
+  postPatch = ''
     sed -i src/xitk/download.c \
       -e '/curl\/types\.h/d'
   '';
@@ -53,31 +84,6 @@ stdenv.mkDerivation rec {
   LIRC_CFLAGS = "-I${lirc}/include";
   LIRC_LIBS = "-L${lirc}/lib -llirc_client";
   #NIX_LDFLAGS = "-lXext -lgcc_s";
-
-  nativeBuildInputs = [
-    shared_mime_info
-  ];
-
-  buildInputs = [
-    curl
-    libcaca
-    libjpeg
-    libpng
-    lirc
-    ncurses
-    readline
-    xine-lib
-    xorg.inputproto
-    xorg.libX11
-    xorg.libXext
-    xorg.libXft
-    xorg.libXi
-    xorg.libXinerama
-    xorg.libXt
-    xorg.libXtst
-    xorg.libXv
-    xorg.libXxf86vm
-  ];
 
   meta = with stdenv.lib; {
     description = "Xlib-based interface to Xine video player";

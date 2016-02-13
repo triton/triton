@@ -13,6 +13,7 @@
 , gtk3
 , json-glib
 , mesa_noglu
+, mutter
 , systemd
 , upower
 , xorg
@@ -50,6 +51,7 @@ stdenv.mkDerivation rec {
     gtk3
     json-glib
     mesa_noglu
+    mutter # gschemas
     systemd
     upower
     xorg.libICE

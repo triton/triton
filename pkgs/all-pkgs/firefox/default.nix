@@ -59,7 +59,7 @@ with {
     versionAtLeast;
   inherit (builtins.getAttr channel (import ./sources.nix))
     version
-    sha256;
+    sha512;
 };
 
 assert stdenv.cc ? libc && stdenv.cc.libc != null;
@@ -74,7 +74,7 @@ stdenv.mkDerivation rec {
         ext = if versionAtLeast version "41.0" then "xz" else "bz2";
       in
       "http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${version}/source/firefox-${version}.source.tar.${ext}";
-    inherit sha256;
+    inherit sha512;
   };
 
   configureFlags = [

@@ -43,12 +43,6 @@ stdenv.mkDerivation rec {
     sha256 = "091x9rqad3m5n1zb25m35rq0dc94yykgbypd53wyjgjsg6byaddd";
   };
 
-  configureFlags = [
-    (enFlag "documentation" documentationSupport null)
-    (enFlag "event-gui" eventGUISupport null)
-    (enFlag "tests" testsSupport null)
-  ];
-
   buildInputs = [
     libevdev
     mtdev
@@ -63,6 +57,12 @@ stdenv.mkDerivation rec {
   ] ++ optionals testsSupport [
     check
     valgrind
+  ];
+
+  configureFlags = [
+    (enFlag "documentation" documentationSupport null)
+    (enFlag "event-gui" eventGUISupport null)
+    (enFlag "tests" testsSupport null)
   ];
 
   meta = {

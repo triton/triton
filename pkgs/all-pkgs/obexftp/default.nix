@@ -1,15 +1,16 @@
 { stdenv
-, fetchurl
 , cmake
+, fetchurl
 , ninja
-, openobex
+
 , bluez
 , fuse
+, openobex
 }:
-   
+
 stdenv.mkDerivation rec {
   name = "obexftp-0.24";
-   
+
   src = fetchurl {
     url = "mirror://sourceforge/openobex/${name}-Source.tar.gz";
     sha256 = "0szy7p3y75bd5h4af0j5kf0fpzx2w560fpy4kg3603mz11b9c1xr";
@@ -21,18 +22,24 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    openobex
     bluez
     fuse
+    openobex
   ];
 
   preFixup = ''
-    sed -i '/Requires/ s,bluetooth,bluez,g' $out/lib*/pkgconfig/obexftp.pc
+    sed -i  $out/lib*/pkgconfig/obexftp.pc \
+      -e '/Requires/ s,bluetooth,bluez,g'
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
+    description = "File transfer over OBEX for mobile phones";
     homepage = http://dev.zuckschwerdt.org/openobex/wiki/ObexFtp;
-    description = "A library and tool to access files on OBEX-based devices (such as Bluetooth phones)";
-    platforms = stdenv.lib.platforms.linux;
+    license = licenses.gpl2;
+    maintainers = with maintainers; [ ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

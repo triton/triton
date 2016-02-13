@@ -130,6 +130,56 @@ stdenv.mkDerivation rec {
     sha256 = "128rrlvrgb4ia3pbzipf5mi6nvrpm6zmxn5r3bynqiikhvify3k9";
   };
 
+  nativeBuildInputs = [
+    autoconf
+    automake
+    gettext
+    intltool
+    libtool
+  ];
+
+  propagatedBuildInputs = [
+    optLibcap
+  ];
+
+  buildInputs = [
+    json_c
+    libsndfile
+    check
+    database
+    valgrind
+    optOss
+    optCoreaudio
+    optAlsaLib
+    optEsound
+    optGlib
+    optGtk3
+    optGconf
+    optAvahi
+    optLibjack2
+    optLibasyncns
+    optLirc
+    optDbus
+    optUdev
+    optOpenssl
+    optFftw
+    optSpeexdsp
+    optSoxr
+    optSystemd
+    optWebrtc-audio-processing
+  ] ++ optionals hasXlibs (with xorg; [
+    libX11
+    libxcb
+    libICE
+    libSM
+    libXtst
+    xextproto
+    libXi
+  ]) ++ optionals (optBluez != null) [
+    optBluez
+    optSbc
+  ];
+
   patches = [
     (fetchTritonPatch {
       rev = "eb290e5c68b1b1492561a04baf072d5b7e600cb0";
@@ -144,15 +194,32 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postPatch = optionalString (loopbackLatencyMsec != "200")
-  /* Allow patching default latency_msec */ ''
-    sed -e 's/DEFAULT_LATENCY_MSEC 200/DEFAULT_LATENCY_MSEC ${loopbackLatencyMsec}/' \
-        -i src/modules/module-loopback.c
-  '' + optionalString (resampleMethod != "speex-float-1")
-  /* Allow patching default resampler */ ''
-    sed -e 's/unique_jhsdjhsdf_string/${resampleMethodString}/' \
-        -i src/pulsecore/resampler.c
-  '';
+  postPatch =
+    optionalString (loopbackLatencyMsec != "200")
+    /* Allow patching default latency_msec */ ''
+      sed -e 's/DEFAULT_LATENCY_MSEC 200/DEFAULT_LATENCY_MSEC ${loopbackLatencyMsec}/' \
+          -i src/modules/module-loopback.c
+    '' + optionalString (resampleMethod != "speex-float-1")
+    /* Allow patching default resampler */ ''
+      sed -e 's/unique_jhsdjhsdf_string/${resampleMethodString}/' \
+          -i src/pulsecore/resampler.c
+    '';
+
+  preConfigure =
+    /* Performs and autoreconf */ ''
+      export NOCONFIGURE="yes"
+      patchShebangs bootstrap.sh
+      ./bootstrap.sh
+    '' +
+    /* Move the udev rules under $(prefix). */ ''
+      sed -i "src/Makefile.in" \
+          -e "s|udevrulesdir[[:blank:]]*=.*$|udevrulesdir = $out/lib/udev/rules.d|g"
+    '' +
+    /* don't install proximity-helper as root and setuid */ ''
+      sed -i "src/Makefile.in" \
+          -e "s|chown root|true |" \
+          -e "s|chmod r+s |true |"
+    '';
 
   configureFlags = [
     (otFlag "localstatedir" true "/var")
@@ -205,72 +272,6 @@ stdenv.mkDerivation rec {
     (wtFlag "systemduserunitdir" true "\${out}/lib/systemd/user")
     (wtFlag "bash-completion-dir" true
       "\${out}/share/bash-completions/completions")
-  ];
-
-  preConfigure =
-  /* Performs and autoreconf */ ''
-    export NOCONFIGURE="yes"
-    patchShebangs bootstrap.sh
-    ./bootstrap.sh
-  '' +
-  /* Move the udev rules under $(prefix). */ ''
-    sed -i "src/Makefile.in" \
-        -e "s|udevrulesdir[[:blank:]]*=.*$|udevrulesdir = $out/lib/udev/rules.d|g"
-  '' +
-  /* don't install proximity-helper as root and setuid */ ''
-    sed -i "src/Makefile.in" \
-        -e "s|chown root|true |" \
-        -e "s|chmod r+s |true |"
-  '';
-
-  nativeBuildInputs = [
-    autoconf
-    automake
-    gettext
-    intltool
-    libtool
-  ];
-
-  propagatedBuildInputs = [
-    optLibcap
-  ];
-
-  buildInputs = [
-    json_c
-    libsndfile
-    check
-    database
-    valgrind
-    optOss
-    optCoreaudio
-    optAlsaLib
-    optEsound
-    optGlib
-    optGtk3
-    optGconf
-    optAvahi
-    optLibjack2
-    optLibasyncns
-    optLirc
-    optDbus
-    optUdev
-    optOpenssl
-    optFftw
-    optSpeexdsp
-    optSoxr
-    optSystemd
-    optWebrtc-audio-processing
-  ] ++ optionals hasXlibs (with xorg; [
-    libX11
-    libxcb
-    libICE
-    libSM
-    libXtst
-    xextproto
-    libXi
-  ]) ++ optionals (optBluez != null) [
-    optBluez
-    optSbc
   ];
 
   installFlags = [

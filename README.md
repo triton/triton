@@ -13,4 +13,15 @@ manager.
 * [Manual (NixOS)](https://nixos.org/nixos/manual/)
 * [Nix Wiki](https://nixos.org/wiki/)
 
+##### Supported Platforms `(not all platforms implemented)`
+
+* `armv7l-linux`
+* `armv8l-linux`
+* `aarch64-linux`
+* `i686-freebsd` (libs only)
+* `i686-linux` (libs only)
+* `powerpc64-linux`
+* `x86_64-freebsd`
+* `x86_64-linux`
+
 Days William has procrastinated and not setup hydra: `41`

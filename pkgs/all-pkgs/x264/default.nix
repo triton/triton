@@ -33,6 +33,10 @@ stdenv.mkDerivation rec {
     sha256 = "1m7gncijx5wpsgrallmam8zl0sshx3di6svv0kj8rnp3wydn8q98";
   };
 
+  nativeBuildInputs = [
+    yasm
+  ];
+
   postPatch = ''
     patchShebangs ./configure
     patchShebangs ./version.sh
@@ -64,12 +68,6 @@ stdenv.mkDerivation rec {
     "--disable-gpac"
     "--disable-lsmash"
   ];
-
-  nativeBuildInputs = [
-    yasm
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Library for encoding h.264/AVC video streams";

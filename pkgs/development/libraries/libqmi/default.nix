@@ -1,18 +1,29 @@
-{ stdenv, fetchurl, pkgconfig, glib, python }:
+{ stdenv
+, fetchurl
+, python
+
+, glib
+}:
 
 stdenv.mkDerivation rec {
-  name = "libqmi-1.12.6";
+  name = "libqmi-1.12.8";
 
   src = fetchurl {
     url = "http://www.freedesktop.org/software/libqmi/${name}.tar.xz";
-    sha256 = "101ppan2q1h4pyp2zbn9b8sdwy2c7fk9rp91yykxz3afrvzbymq8";
+    sha256 = "19w2zkm5xl6i3vm1xhjjclks4awas17gfbb2k5y66gwnkiykjfnj";
   };
+
+  nativeBuildInputs = [
+    python
+  ];
+
+  buildInputs = [
+    glib
+  ];
 
   preBuild = ''
     patchShebangs .
   '';
-
-  buildInputs = [ pkgconfig glib python ];
 
   meta = with stdenv.lib; {
     homepage = http://www.freedesktop.org/wiki/Software/libqmi/;

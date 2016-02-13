@@ -74,6 +74,55 @@ stdenv.mkDerivation rec {
     sha256 = "0xg8w5vn6xd0yfw55qj6wnav7v14nmr00s3d4w5gixbjrv3ycvvv";
   };
 
+  buildInputs = [
+    # Required
+    boost
+    glib
+    # Optional
+    alsaLib
+    audiofile
+    avahi
+    bzip2
+    curl
+    dbus
+    expat
+    faad2
+    ffmpeg
+    flac
+    fluidsynth
+    game-music-emu
+    icu
+    lame
+    libao
+    libiconv
+    libid3tag
+    libjack2
+    libmad
+    libmikmod
+    libmms
+    libmodplug
+    libmpdclient
+    libopus
+    libpulseaudio
+    libsamplerate
+    libshout
+    libsndfile
+    libupnp
+    libvorbis
+    mpg123
+    openal
+    soxr
+    sqlite
+    systemd
+    #wavpack
+    yajl
+    zlib
+    zziplib
+  ] ++ optionals documentationSupport [
+    doxygen
+    xmlto
+  ];
+
   configureFlags = [
     (enFlag "aac" (faad2 != null) null)
     # TODO: adplug support
@@ -141,57 +190,6 @@ stdenv.mkDerivation rec {
   ];
 
   NIX_LDFLAGS = [ ] ++ optional (libshout != null) "-lshout";
-
-  buildInputs = [
-    # Required
-    boost
-    glib
-    # Optional
-    alsaLib
-    audiofile
-    avahi
-    bzip2
-    curl
-    dbus
-    expat
-    faad2
-    ffmpeg
-    flac
-    fluidsynth
-    game-music-emu
-    icu
-    lame
-    libao
-    libiconv
-    libid3tag
-    libjack2
-    libmad
-    libmikmod
-    libmms
-    libmodplug
-    libmpdclient
-    libopus
-    libpulseaudio
-    libsamplerate
-    libshout
-    libsndfile
-    libupnp
-    libvorbis
-    mpg123
-    openal
-    soxr
-    sqlite
-    systemd
-    #wavpack
-    yajl
-    zlib
-    zziplib
-  ] ++ optionals documentationSupport [
-    doxygen
-    xmlto
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A flexible, powerful daemon for playing music";

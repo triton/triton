@@ -1,6 +1,6 @@
 { stdenv
-, fetchFromGitHub
 , cmake
+, fetchFromGitHub
 , ninja
 }:
 
@@ -20,18 +20,24 @@ stdenv.mkDerivation rec {
     ninja
   ];
 
-  configureFlags = [
+  cmakeFlags = [
     "-DRAPIDJSON_BUILD_EXAMPLES=NO"
   ];
 
   meta = with stdenv.lib; {
-    license = licenses.free;
-    platforms = [
-      "x86_64-linux"
-      "i686-linux"
+    description = "Fast JSON parser/generator for C++";
+    homepage = https://github.com/miloyip/rapidjson;
+    license = with licenses; [
+      bsdOrginal
+      #json
+      mit
     ];
     maintainers = with maintainers; [
       wkennington
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
     ];
   };
 }

@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
   name = "nano-${version}";
-  version = "2.5.1";
+  version = "2.5.2";
 
   src = fetchurl {
     url = "mirror://gnu/nano/${name}.tar.gz";
-    sha256 = "1piv8prj6w3rvsrrx41ra8c10b8fzkgjhnm6399lsgqqpw0wlvz0";
+    sha256 = "0hgbmqzjy1pashb1g3qby75pqb7r5g9bmn1iajlx50082b2nmgc9";
   };
 
   nativeBuildInputs = [ gettext ];

@@ -1029,6 +1029,8 @@ ninja = callPackage ../all-pkgs/ninja { };
 
 noise = callPackage ../all-pkgs/noise { };
 
+openobex = callPackage ../all-pkgs/openobex { };
+
 p7zip = callPackage ../all-pkgs/p7zip { };
 
 pango = callPackage ../all-pkgs/pango { };
@@ -3278,8 +3280,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     privsepUser = "ntp";
     privsepPath = "/var/empty";
   };
-
-  openobex = callPackage ../tools/bluetooth/openobex { };
 
   openopc = callPackage ../tools/misc/openopc {
     pythonFull = python27.buildEnv.override {

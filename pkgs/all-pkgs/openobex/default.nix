@@ -1,5 +1,12 @@
-{stdenv, fetchurl, pkgconfig, bluez, libusb, cmake}:
-   
+{ stdenv
+, fetchurl
+, cmake
+, ninja
+, bluez
+, libusb
+, udev
+}:
+
 stdenv.mkDerivation rec {
   name = "openobex-1.7.1";
    
@@ -8,14 +15,21 @@ stdenv.mkDerivation rec {
     sha256 = "0mza0mrdrbcw4yix6qvl31kqy7bdkgxjycr0yx7yl089v5jlc9iv";
   };
 
-  buildInputs = [pkgconfig bluez libusb cmake];
+  nativeBuildInputs = [
+    cmake
+    ninja
+  ];
 
-  configureFlags = "--enable-apps";
+  buildInputs = [
+    bluez
+    libusb
+    udev
+  ];
 
-  patchPhase = ''
+  prePatch = ''
     sed -i "s!/lib/udev!$out/lib/udev!" udev/CMakeLists.txt
     sed -i "/if ( PKGCONFIG_UDEV_FOUND )/,/endif ( PKGCONFIG_UDEV_FOUND )/d" udev/CMakeLists.txt
-    '';
+  '';
 
   meta = {
     homepage = http://dev.zuckschwerdt.org/openobex/;

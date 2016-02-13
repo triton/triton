@@ -26,21 +26,6 @@ stdenv.mkDerivation rec {
     sha256 = "1g7g5hc4lhi4y0j3mbcj19hawlqkflni1zk4aggrx49fg5l392jk";
   };
 
-  configureFlags = [
-    "--disable-werror"
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-tests"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
-    "--disable-coverage"
-    "--with-usb-ids-path=${hwdata}/data/hwdata/usb.ids"
-    "--with-pci-ids-path=${hwdata}/data/hwdata/pci.ids"
-  ];
-
   nativeBuildInputs = [
     gettext
     intltool
@@ -57,8 +42,23 @@ stdenv.mkDerivation rec {
     vala
   ];
 
+  configureFlags = [
+    "--disable-werror"
+    "--disable-maintainer-mode"
+    "--enable-nls"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--disable-tests"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    (enFlag "vala" (vala != null) null)
+    "--disable-coverage"
+    "--with-usb-ids-path=${hwdata}/data/hwdata/usb.ids"
+    "--with-pci-ids-path=${hwdata}/data/hwdata/pci.ids"
+  ];
+
   meta = with stdenv.lib; {
-    description = "GObject library for managing information about real and virtual OSes";
+    description = "GObject library for managing information about real/virtual OSes";
     homepage = http://libosinfo.org/;
     license = with licenses; [
       lgpl21

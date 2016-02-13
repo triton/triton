@@ -12,9 +12,9 @@ find_gsettings_schemas() {
 
   # Add glib schemas to GSETTINGS_SCHEMAS_PATH
 
-  if [[ -d "${1}/share/gsettings-schemas/$(basename "${1}")/glib-2.0/schemas" ]] ; then
+  if [[ -d "${1}/share/gsettings-schemas/"*"/glib-2.0/schemas" ]] ; then
     addToSearchPath 'GSETTINGS_SCHEMAS_PATH' \
-      "${1}/share/gsettings-schemas/$(basename "${1}")"
+      "${1}/share/gsettings-schemas/"*
   fi
 
 }

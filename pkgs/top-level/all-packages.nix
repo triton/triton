@@ -1029,6 +1029,8 @@ ninja = callPackage ../all-pkgs/ninja { };
 
 noise = callPackage ../all-pkgs/noise { };
 
+obexftp = callPackage ../all-pkgs/obexftp { };
+
 openobex = callPackage ../all-pkgs/openobex { };
 
 p7zip = callPackage ../all-pkgs/p7zip { };
@@ -3243,8 +3245,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   openfortivpn = callPackage ../tools/networking/openfortivpn { };
 
   obexfs = callPackage ../tools/bluetooth/obexfs { };
-
-  obexftp = callPackage ../tools/bluetooth/obexftp { };
 
   objconv = callPackage ../development/tools/misc/objconv {};
 

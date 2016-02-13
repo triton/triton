@@ -57,7 +57,7 @@ let
       "/usr/bin/pkexec=${pkexecPath}"
     ];
 
-    postPhase =
+    postPatch =
       /* Fix paths */ ''
         sed -i sublime_text.desktop \
           -e 's,/opt/sublime_text/,,' \

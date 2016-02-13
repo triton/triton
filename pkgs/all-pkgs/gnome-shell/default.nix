@@ -6,6 +6,7 @@
 , intltool
 , libtool
 , libxslt
+, makeWrapper
 
 , accountsservice
 , adwaita-icon-theme
@@ -17,6 +18,7 @@
 , cogl
 , dbus
 , dbus_glib
+, dconf
 , evolution-data-server
 , gcr
 , gdk-pixbuf
@@ -95,6 +97,7 @@ stdenv.mkDerivation rec {
     intltool
     libtool
     libxslt
+    makeWrapper
   ];
 
   buildInputs = [
@@ -108,6 +111,7 @@ stdenv.mkDerivation rec {
     cogl
     dbus
     dbus_glib
+    dconf
     evolution-data-server
     gcr
     gdk-pixbuf
@@ -198,10 +202,16 @@ stdenv.mkDerivation rec {
   ];
 
   preFixup = ''
-    gnomeWrapperArgs+=(
-      "--prefix PATH : ${unzip}/bin"
-      "--prefix XDG_DATA_DIRS : ${evolution-data-server}/share"
-    )
+    wrapProgram $out/bin/gnome-shell \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --path 'PATH' : "${unzip}/bin" \
+      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
+      --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
+      --prefix 'XDG_DATA_DIRS' : "${evolution-data-server}/share"
   '' + ''
     echo "${unzip}/bin" > $out/${passthru.mozillaPlugin}/extra-bin-path
   '';

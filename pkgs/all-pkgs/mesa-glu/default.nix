@@ -16,9 +16,14 @@ stdenv.mkDerivation rec {
     mesa_noglu
   ];
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "OpenGL utility library";
     homepage = http://cgit.freedesktop.org/mesa/glu/;
-    license = stdenv.lib.licenses.sgi-b-20;
+    license = licenses.sgi-b-20;
+    maintainers = with maintainers; [ ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

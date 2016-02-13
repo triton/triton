@@ -26,6 +26,7 @@ stdenv.mkDerivation rec {
     url = "mirror://gnome/sources/libsecret/${versionMajor}/${name}.tar.xz";
     sha256 = "1v8r180sjppapa2kl4vbaizlb34w27ixqjhzr6cnk3hrk0bbaa8g";
   };
+
   nativeBuildInputs = [
     intltool
     libxslt

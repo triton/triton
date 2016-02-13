@@ -12,7 +12,7 @@ find_gsettings_schemas() {
 
   # Add glib schemas to GSETTINGS_SCHEMAS_PATH
 
-  if [[ -d "${1}/share/gsettings-schemas/"*"/glib-2.0/schemas" ]] ; then
+  if [[ -d "${1}"/share/gsettings-schemas/*/glib-2.0/schemas ]] ; then
     addToSearchPath 'GSETTINGS_SCHEMAS_PATH' \
       "${1}/share/gsettings-schemas/"*
   fi
@@ -32,10 +32,10 @@ glibPreFixupPhase() {
   # we must place these directories in a unique directory
 
   if [[ -d "${out}/share/glib-2.0/schemas" ]] ; then
-    mkdir -pv "${out}/share/gsettings-schemas/${name}/glib-2.0/schemas/"
+    mkdir -pv "${out}/share/gsettings-schemas/${name}/glib-2.0"
     mv -v \
       "${out}/share/glib-2.0/schemas" \
-      "${out}/share/gsettings-schemas/${name}/glib-2.0/schemas"
+      "${out}/share/gsettings-schemas/${name}/glib-2.0/"
   fi
 
   addToSearchPath 'GSETTINGS_SCHEMAS_PATH' \

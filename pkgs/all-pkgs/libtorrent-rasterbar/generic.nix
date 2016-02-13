@@ -35,6 +35,21 @@ stdenv.mkDerivation rec {
     inherit sha256;
   };
 
+  nativeBuildInputs = [
+    automake
+    autoconf
+    libtool
+  ];
+
+  buildInputs = [
+    boost
+    openssl
+    libiconv
+    zlib
+    python2
+    geoip
+  ];
+
   postPatch =
   /* Disable boost python check */ ''
     sed -i configure.ac \
@@ -67,28 +82,14 @@ stdenv.mkDerivation rec {
 
   preConfigure = "./autotool.sh";
 
-  nativeBuildInputs = [
-    automake
-    autoconf
-    libtool
-  ];
-
-  buildInputs = [
-    boost
-    openssl
-    libiconv
-    zlib
-    python2
-    geoip
-  ];
-
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
-    description = "BitTorrent implementation focusing on efficiency and scalability";
+    description = "BitTorrent implementation focusing on efficiency & scalability";
     homepage = http://www.rasterbar.com/products/libtorrent/;
     license = licenses.bsd3;
     maintainers = with maintainers; [ ];
-
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

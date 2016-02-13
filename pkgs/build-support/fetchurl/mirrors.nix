@@ -154,7 +154,7 @@ rec {
   # Gnome
   gnome = [
     # This one redirects to some mirror closeby, so it should be all you need.
-    http://download.gnome.org/
+    https://download.gnome.org/
   ];
 
   xfce = [

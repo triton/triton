@@ -193,6 +193,9 @@ stdenv.mkDerivation rec {
       ln -sv \
         $out/lib/systemd/system/NetworkManager-dispatcher.service \
         $out/etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service
+    '' + ''
+      sed -i $out/lib/udev/rules.d/84-nm-drivers.rules \
+        -e 's|/bin/sh|${stdenv.shell}|'
     '';
 
   meta = with stdenv.lib; {

@@ -22,15 +22,15 @@ stdenv.mkDerivation rec {
     sha256 = "06c137sm6g6av4kazv7qrhz5k8bbyz31x8id7gdwgpppa640m6kc";
   };
 
-  makeFlags = [
-    "prefix=$(out)"
-    "CRYPTO=OPENSSL"
-  ] ++ optional stdenv.cc.isClang "CC=clang";
-
   buildInputs = [
     openssl
     zlib
   ];
+
+  makeFlags = [
+    "prefix=$(out)"
+    "CRYPTO=OPENSSL"
+  ] ++ optional stdenv.cc.isClang "CC=clang";
 
   parallelInstall = false;
 

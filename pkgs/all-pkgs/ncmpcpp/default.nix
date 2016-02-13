@@ -29,18 +29,6 @@ stdenv.mkDerivation rec {
     sha256 = "04mj6r0whikliblxfbz92pibwcd7a3ywkryf01a89zd4bi1jk2rc";
   };
 
-  configureFlags = [
-    "BOOST_LIB_SUFFIX="
-    (enFlag "outputs" outputsSupport null)
-    (enFlag "visualizer" (fftw != null) null)
-    (enFlag "clock" clockSupport null)
-    "--enable-unicode"
-    (wtFlag "curl" (curl != null) null)
-    (wtFlag "fftw" (fftw != null) null)
-    "--without-pdcurses"
-    (wtFlag "taglib" (taglib != null) null)
-  ];
-
   buildInputs = [
     boost
     curl
@@ -53,7 +41,17 @@ stdenv.mkDerivation rec {
     taglib
   ];
 
-  enableParallelBuilding = true;
+  configureFlags = [
+    "BOOST_LIB_SUFFIX="
+    (enFlag "outputs" outputsSupport null)
+    (enFlag "visualizer" (fftw != null) null)
+    (enFlag "clock" clockSupport null)
+    "--enable-unicode"
+    (wtFlag "curl" (curl != null) null)
+    (wtFlag "fftw" (fftw != null) null)
+    "--without-pdcurses"
+    (wtFlag "taglib" (taglib != null) null)
+  ];
 
   meta = with stdenv.lib; {
     description = "A featureful ncurses based MPD client inspired by ncmpc";

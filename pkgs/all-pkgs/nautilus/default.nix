@@ -39,6 +39,36 @@ stdenv.mkDerivation rec {
     sha256 = "05fclrqmk024pjskwlp4bcqd8bsyxv9awaznv3cwwk1bab02gab0";
   };
 
+  nativeBuildInputs = [
+    gettext
+    intltool
+    makeWrapper
+  ];
+
+  buildInputs = [
+    adwaita-icon-theme
+    atk
+    dbus_glib
+    dconf
+    exempi
+    gdk-pixbuf
+    glib
+    gnome-desktop
+    gobject-introspection
+    gsettings-desktop-schemas
+    gtk3
+    gvfs
+    libexif
+    libnotify
+    librsvg
+    libunique
+    libxml2
+    pango
+    shared_mime_info
+    tracker
+    xorg.libX11
+  ];
+
   patches = [
     (fetchTritonPatch {
       rev = "734f89c9d36781e3f50f30dc9aa33d071136dbd0";
@@ -70,36 +100,6 @@ stdenv.mkDerivation rec {
     "--enable-tracker"
     "--enable-introspection"
     "--disable-update-mimedb"
-  ];
-
-  nativeBuildInputs = [
-    gettext
-    intltool
-    makeWrapper
-  ];
-
-  buildInputs = [
-    adwaita-icon-theme
-    atk
-    dbus_glib
-    dconf
-    exempi
-    gdk-pixbuf
-    glib
-    gnome-desktop
-    gobject-introspection
-    gsettings-desktop-schemas
-    gtk3
-    gvfs
-    libexif
-    libnotify
-    librsvg
-    libunique
-    libxml2
-    pango
-    shared_mime_info
-    tracker
-    xorg.libX11
   ];
 
   preFixup = ''

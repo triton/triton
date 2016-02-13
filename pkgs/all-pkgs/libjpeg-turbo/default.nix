@@ -18,7 +18,6 @@ stdenv.mkDerivation rec {
   checkTarget = "test";
 
   doCheck = true;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A faster (using SIMD) libjpeg implementation";

@@ -145,12 +145,25 @@ stdenv.mkDerivation rec {
 
   inherit src;
 
+  nativeBuildInputs = [
+    cmake
+    ninja
+    yasm
+  ];
+
+  buildInputs = optionals is64bit [
+    libx265-10
+    libx265-12
+  ] ++ optionals isLinux [
+    numactl
+  ];
+
   postUnpack =
   /* x265 source directory is `source`, not `src` */ ''
     sourceRoot="$sourceRoot/source"
   '';
 
-  patchPhase =
+  postPatch =
   /* Work around to set version in the compiled binary */ ''
     sed -i cmake/version.cmake \
       -e 's/unknown/${version}/g'
@@ -179,19 +192,6 @@ stdenv.mkDerivation rec {
   /* Remove static library */ ''
     rm -f $out/lib/libx265.a
   '';
-
-  nativeBuildInputs = [
-    cmake
-    ninja
-    yasm
-  ];
-
-  buildInputs = optionals is64bit [
-    libx265-10
-    libx265-12
-  ] ++ optionals isLinux [
-    numactl
-  ];
 
   meta = with stdenv.lib; {
     description = "Library for encoding h.265/HEVC video streams";

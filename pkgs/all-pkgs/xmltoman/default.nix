@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
-, perlPackages
 , makeWrapper
+, perlPackages
 }:
 
 stdenv.mkDerivation rec {
@@ -13,9 +13,9 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    makeWrapper
     perlPackages.perl
     perlPackages.XMLParser
-    makeWrapper
   ];
 
   postPatch = ''
@@ -29,18 +29,20 @@ stdenv.mkDerivation rec {
   preFixup = ''
     for prog in xmltoman xmlmantohtml; do
       wrapProgram "$out/bin/$prog" \
-        --set PERL5LIB "${stdenv.lib.makePerlPath [ perlPackages.XMLParser ]}"
+        --set 'PERL5LIB' "${stdenv.lib.makePerlPath [ perlPackages.XMLParser ]}"
     done
   '';
 
   meta = with stdenv.lib; {
+    description = "Simple scripts for converting xml to groff or html";
+    homepage = http://sourceforge.net/projects/xmltoman/;
     license = licenses.gpl2;
-    platforms = [
-      "x86_64-linux"
-      "i686-linux"
-    ];
     maintainers = with maintainers; [
       wkennington
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
     ];
   };
 }

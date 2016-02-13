@@ -27,20 +27,6 @@ stdenv.mkDerivation rec {
     sha256 = "1l3sra84k5dnavbdbjyf1ar84xmjszpnnldih6mf45kniwpjkcll";
   };
 
-  configureFlags = [
-    "--enable-schemas-compile"
-    "--enable-compile-warnings"
-    "--enable-glibtest"
-    "--enable-nls"
-    "--enable-rpath"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-introspection"
-    "--disable-vala"
-    "--with-zoneinfo-dir=${tzdata}/share/zoneinfo"
-  ];
-
   nativeBuildInputs = [
     gettext
     intltool
@@ -57,6 +43,20 @@ stdenv.mkDerivation rec {
     libsoup
     libxml2
     pango
+  ];
+
+  configureFlags = [
+    "--enable-schemas-compile"
+    "--enable-compile-warnings"
+    "--enable-glibtest"
+    "--enable-nls"
+    "--enable-rpath"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--enable-introspection"
+    "--disable-vala"
+    "--with-zoneinfo-dir=${tzdata}/share/zoneinfo"
   ];
 
   meta = with stdenv.lib; {

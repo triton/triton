@@ -23,6 +23,15 @@ stdenv.mkDerivation rec {
     sha256 = "1ldzw84vb0x51y7r2sizx1hj4js9sr8s1v8g55nc2npmm4g4w0lq";
   };
 
+  buildInputs = [
+    alsaLib
+    dbus
+    libjack2
+    qt5.qtbase
+    qt5.qttranslations
+    qt5.qtx11extras
+  ];
+
   configureFlags = [
     "--disable-debug"
     "--disable-qt4"
@@ -46,15 +55,6 @@ stdenv.mkDerivation rec {
 
   NIX_LDFLAGS = optionals (portaudio != null) [
     "-L${portaudio}/lib"
-  ];
-
-  buildInputs = [
-    alsaLib
-    dbus
-    libjack2
-    qt5.qtbase
-    qt5.qttranslations
-    qt5.qtx11extras
   ];
 
   meta = with stdenv.lib; {

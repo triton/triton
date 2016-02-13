@@ -19,15 +19,6 @@ stdenv.mkDerivation rec {
     sha256 = "12xwjvqfxhqblcv7641k0l6r8n3qifnrx8w9571izn1nbd81iyzg";
   };
 
-  configureFlags = [
-    "--disable-deprecated-api"
-    "--disable-documentation"
-    "--without-libstdc-doc"
-    "--without-libsigc-doc"
-    "--without-glibmm-doc"
-    "--without-cairomm-doc"
-  ];
-
   buildInputs = [
     cairo
     cairomm
@@ -36,7 +27,14 @@ stdenv.mkDerivation rec {
     pango
   ];
 
-  enableParallelBuilding = true;
+  configureFlags = [
+    "--disable-deprecated-api"
+    "--disable-documentation"
+    "--without-libstdc-doc"
+    "--without-libsigc-doc"
+    "--without-glibmm-doc"
+    "--without-cairomm-doc"
+  ];
 
   meta = with stdenv.lib; {
     description = "C++ interface to the Pango text rendering library";

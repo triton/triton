@@ -20,6 +20,11 @@ stdenv.mkDerivation rec {
     sha256 = "1q6lrj9b08l1q39vxipb0fi88x6ybvkr6439h8bjb9r8jd81fsn6";
   };
 
+  buildInputs = optionals pcregrep [
+    bzip2
+    zlib
+  ];
+
   configureFlags = [
     "--enable-pcre2-8"
     "--enable-pcre2-16"
@@ -37,11 +42,6 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
   ];
 
-  buildInputs = optionals pcregrep [
-    bzip2
-    zlib
-  ];
-
   outputs = [
     "out"
     "doc"
@@ -49,7 +49,6 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = true;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Perl Compatible Regular Expressions";

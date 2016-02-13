@@ -33,8 +33,6 @@ stdenv.mkDerivation rec {
     buildFlags=all3
   '';
 
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     description = "A port of the 7-zip archiver for Unix";
     homepage = http://p7zip.sourceforge.net/;

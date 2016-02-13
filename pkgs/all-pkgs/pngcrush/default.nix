@@ -13,6 +13,11 @@ stdenv.mkDerivation rec {
     sha256 = "1gv36pkar5n87703mabclrmd81ij7c4vg7bnqjhf6hf3a61h99xs";
   };
 
+  buildInputs = [
+    libpng
+    zlib
+  ];
+
   postPatch =
     /* Fix hardcoded install location */ ''
       sed -i Makefile -e "s,/usr,$out,"
@@ -23,11 +28,6 @@ stdenv.mkDerivation rec {
     "PNGLIB=${libpng}/lib"
     "ZINC=${zlib}/include"
     "ZLIB=${zlib}/lib"
-  ];
-
-  buildInputs = [
-    libpng
-    zlib
   ];
 
   meta = with stdenv.lib; {

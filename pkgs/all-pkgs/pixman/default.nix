@@ -1,7 +1,6 @@
 { fetchurl
 , stdenv
 
-, glib
 , libpng
 }:
 
@@ -24,16 +23,16 @@ stdenv.mkDerivation rec {
     sha256 = "184lazwdpv67zrlxxswpxrdap85wminh1gmq1i5lcz6iycw39fir";
   };
 
+  buildInputs = optionals doCheck [
+    libpng
+  ];
+
   patches = optionals stdenv.cc.isClang [
     (fetchTritonPatch {
       rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
       file = "pixman/pixman-fix-clang36.patch";
       sha256 = "4267d50a561ce07a1d8b3c5127ba3428f3470a1ba9ee3c781d0d2323d9a6e5f6";
     })
-  ];
-
-  buildInputs = optionals doCheck [
-    libpng
   ];
 
   configureFlags = [

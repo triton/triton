@@ -18,7 +18,8 @@
 
 with {
   inherit (stdenv.lib)
-    optionals;
+    optionals
+    wtFlag;
 };
 
 stdenv.mkDerivation rec {
@@ -31,6 +32,21 @@ stdenv.mkDerivation rec {
     rev = "62cb5a4605c0664bc522e0e0da9c72f09cf643a9";
     sha256 = "0l2kqkbfl5l7drmqdqdryq1p0fpz05aghxrqd29fs4j9bx0djnaw";
   };
+
+  nativeBuildInputs = [
+    autoreconfHook
+  ];
+
+  buildInputs = [
+    cppunit
+    curl
+    libsigcxx
+    libtorrent
+    ncurses
+    openssl
+    xmlrpc_c
+    zlib
+  ];
 
   patches = optionals colorSupport [
     # Optional patch adds support for custom configurable colors
@@ -51,32 +67,15 @@ stdenv.mkDerivation rec {
     "--enable-largefile"
     "--with-statvfs"
     "--with-statfs"
-    "--with-ncurses"
-    "--with-ncursesw"
-    "--with-xmlrpc-c"
-  ];
-
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
-
-  buildInputs = [
-    cppunit
-    curl
-    libsigcxx
-    libtorrent
-    ncurses
-    openssl
-    xmlrpc_c
-    zlib
+    (wtFlag "ncurses" (ncurses != null) null)
+    (wtFlag "ncursesw" (ncurses != null) null)
+    (wtFlag "xmlrpc-c" (xmlrpc_c != null) null)
   ];
 
   postInstall = ''
     mkdir -pv $out/share/rtorrent
     mv -v doc/rtorrent.rc $out/share/rtorrent/rtorrent.rc
   '';
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "An ncurses client for libtorrent";

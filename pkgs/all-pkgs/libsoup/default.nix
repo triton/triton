@@ -27,6 +27,20 @@ stdenv.mkDerivation rec {
     sha256 = "1p4k40y2gikr6m8p3hm0vswdzj2pj133dckipd2jk5bxbj5n4mfv";
   };
 
+  nativeBuildInputs = [
+    gettext
+    intltool
+    python
+  ];
+
+  buildInputs = [
+    glib
+    glib_networking
+    gobject-introspection
+    libxml2
+    sqlite
+  ];
+
   postPatch = ''
     patchShebangs ./libsoup/
   '';
@@ -48,20 +62,6 @@ stdenv.mkDerivation rec {
     "--with-gnome"
   ];
 
-  nativeBuildInputs = [
-    gettext
-    intltool
-    python
-  ];
-
-  buildInputs = [
-    glib
-    glib_networking
-    gobject-introspection
-    libxml2
-    sqlite
-  ];
-
   postInstall = "rm -rvf $out/share/gtk-doc";
 
   passthru = {
@@ -71,8 +71,15 @@ stdenv.mkDerivation rec {
   };
 
   meta = {
-    inherit (glib.meta)
-      maintainers
-      platforms;
+    description = "An HTTP library implementation in C";
+    homepage = https://wiki.gnome.org/Projects/libsoup;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

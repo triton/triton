@@ -593,6 +593,10 @@ let
     owner = "DataDog";
     repo = "datadog-go";
     sha256 = "15rn7brx6r4hdak5iikwfjlv1n9v0dnh89c3lkq9d1zn2ffcbkdk";
+    postPatch = ''
+      grep -q '(e.text,' statsd/statsd.go
+      sed -i 's,e.text,e.Text,g' statsd/statsd.go
+    '';
   };
 
   dbus = buildGoPackage rec {
@@ -2165,11 +2169,11 @@ let
   };
 
   ipfs = buildFromGitHub {
-    date   = "2016-02-10";
-    rev    = "c913105dd71bfd378ac5e0856526ecf070182e4c";
+    date   = "2016-02-12";
+    rev    = "a871f371e9ac947081261f5a8373ca298524587b";
     owner  = "ipfs";
     repo   = "go-ipfs";
-    sha256 = "0mx4399sqja0pvjc8zf256rrg3gipgka7cadnq89f5gby7n357cj";
+    sha256 = "0kydgdj3g6d7f6yy660j6plx0abzd76h9bwi1sj0g2f8z0fd78zj";
     extraSrcs = [
       {
         src = fetchGxPackage {

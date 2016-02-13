@@ -4784,7 +4784,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   go_1_6 = callPackage ../development/compilers/go/1.6.nix { };
 
-  go = go_1_5;
+  go = go_1_6;
 
   go-repo-root = goPackages.go-repo-root.bin // { outputs = [ "bin" ]; };
 
@@ -9079,7 +9079,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     overrides = (config.goPackageOverrides or (p: {})) pkgs;
   };
 
-  goPackages = go15Packages;
+  goPackages = go16Packages;
 
   ### DEVELOPMENT / LISP MODULES
 

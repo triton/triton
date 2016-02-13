@@ -14,17 +14,17 @@ stdenv.mkDerivation rec {
     sha256 = "1ryd1686bd31gfdjxnqm6k1ybnjmjz8v97px7lmdkr4g0vxqhgml";
   };
 
-  setupHook = ./setup-hook.sh;
-
-  postPatch = ''
-    patchShebangs ./configure.py
-  '';
-
   nativeBuildInputs = [
     asciidoc
     python
     re2c
   ];
+
+  setupHook = ./setup-hook.sh;
+
+  postPatch = ''
+    patchShebangs ./configure.py
+  '';
 
   buildPhase = ''
     runHook 'preBuild'

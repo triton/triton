@@ -30,6 +30,19 @@ stdenv.mkDerivation rec {
     sha256 = "0lyv230vqwb77isjqm6fwwgv8hdap88zir9yrccj0qxj7zf8p3cw";
   };
 
+  nativeBuildInputs = [
+    which
+  ];
+
+  buildInputs = [
+    boost
+    libtorrent-rasterbar
+  ] ++ optionals (qt5 != null) [
+    dbus_libs
+    qt5.qtbase
+    qt5.qttools
+  ];
+
   patches = [
     # The lrelease binary is named lrelease instead of lrelease-qt5
     (fetchTritonPatch {
@@ -51,19 +64,6 @@ stdenv.mkDerivation rec {
     "--with-boost=${boost.dev}"
     "--with-boost-libdir=${boost.lib}/lib"
     "--with-boost-system"
-  ];
-
-  nativeBuildInputs = [
-    which
-  ];
-
-  buildInputs = [
-    boost
-    libtorrent-rasterbar
-  ] ++ optionals (qt5 != null) [
-    dbus_libs
-    qt5.qtbase
-    qt5.qttools
   ];
 
   meta = {

@@ -81,8 +81,6 @@ stdenv.mkDerivation rec {
     "--with-session-bus-services-dir=$(out)/share/dbus-1/services"
   ];
 
-  NIX_CFLAGS_COMPILE = "-I${glib}/include/gio-unix-2.0";
-
   meta = with stdenv.lib; {
     description = "A service which logs the users's activities and events";
     homepage = https://launchpad.net/zeitgeist;

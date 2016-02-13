@@ -13,6 +13,10 @@ stdenv.mkDerivation rec {
     sha256 = "1v63lqc6bhhxwkpa43qmz8phqs8ci4dhzizyy16d3vkb20m846z8";
   };
 
+  buildInputs = [
+    ghostscript
+  ];
+
   patches = [
     # Fix compatibility with newer versions of ghostscript
     (fetchTritonPatch {
@@ -30,12 +34,7 @@ stdenv.mkDerivation rec {
     "--disable-iso-c"
   ];
 
-  buildInputs = [
-    ghostscript
-  ];
-
   doCheck = false;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "PostScript rendering library";

@@ -12,24 +12,34 @@ find_gsettings_schemas() {
 
   # Add glib schemas to GSETTINGS_SCHEMAS_PATH
 
-  if [[ -d "${1}/share/glib-2.0/schemas" ]] ; then
-    addToSearchPath 'GSETTINGS_SCHEMAS_PATH' "${1}/share"
+  if [[ -d "${1}/share/gsettings-schemas/$(basename "${1}")/glib-2.0/schemas" ]] ; then
+    addToSearchPath 'GSETTINGS_SCHEMAS_PATH' \
+      "${1}/share/gsettings-schemas/$(basename "${1}")"
   fi
 
 }
 
 glibPreFixupPhase() {
 
-  # Make sure schemas are installed in $out/share/glib-2.0/schemas
+  # Make sure schemas are installed in
+  #   $out/gsettings-schemas/${name}/glib-2.0/schemas/
 
-  if [[ -d "${out}/share/gsettings-schemas/${name}/glib-2.0/schemas" ]] ; then
-    mkdir -pv "${out}/share/glib-2.0/schemas"
+  # If schemas are all installed in $out/glib-2.0/schemas, it will
+  # result in filename collisions with gschemas.compiled when trying to
+  # add more than one package conatining this file to a given profile.
+
+  # At runtime, gsettings looks for glib-2.0/schemas in XDG_DATA_DIRS, so
+  # we must place these directories in a unique directory
+
+  if [[ -d "${out}/share/glib-2.0/schemas" ]] ; then
+    mkdir -pv "${out}/share/gsettings-schemas/${name}/glib-2.0/schemas/"
     mv -v \
-      "${out}/share/gsettings-schemas/${name}/glib-2.0/schemas" \
-      "${out}/share/glib-2.0/schemas"
+      "${out}/share/glib-2.0/schemas" \
+      "${out}/share/gsettings-schemas/${name}/glib-2.0/schemas"
   fi
 
-  addToSearchPath 'GSETTINGS_SCHEMAS_PATH' "${out}/share"
+  addToSearchPath 'GSETTINGS_SCHEMAS_PATH' \
+    "${out}/share/gsettings-schemas/${name}"
 
 }
 
@@ -39,7 +49,7 @@ envHooks+=(
 )
 
 installFlagsArray+=(
-  "gsettingsschemadir=${out}/share/glib-2.0/schemas/"
+  "gsettingsschemadir=${out}/share/gsettings-schemas/${name}/glib-2.0/schemas/"
 )
 
 preFixupPhases+=(

@@ -6,6 +6,11 @@
 , udev
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "libgudev-${version}";
   version = "230";
@@ -15,20 +20,18 @@ stdenv.mkDerivation rec {
     sha256 = "063w6j35n0i0ssmv58kivc1mw4070z6fzb83hi4xfrhcxnn7zrx2";
   };
 
-  configureFlags = [
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-introspection"
-  ];
-
   buildInputs = [
     glib
     gobject-introspection
     udev
   ];
 
-  enableParallelBuilding = true;
+  configureFlags = [
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    (enFlag "introspection" (gobject-introspection != null) null)
+  ];
 
   meta = with stdenv.lib; {
     description = "GObject bindings for udev";

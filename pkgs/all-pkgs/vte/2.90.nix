@@ -31,23 +31,6 @@ stdenv.mkDerivation rec {
     sha256 = "1psfnqsmxx4qzc55qwvb8jai824ix4pqcdqhgxk0g2zh82bcxhn2";
   };
 
-  postPatch = ''
-    patchShebangs src/test-vte-sh.sh
-  '';
-
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--disable-debug"
-    "--enable-nls"
-    "--enable-Bsymbolic"
-    "--enable-gnome-pty-helper"
-    "--disable-glade"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-  ];
-
   nativeBuildInputs = [
     intltool
   ];
@@ -66,13 +49,35 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  postPatch = ''
+    patchShebangs src/test-vte-sh.sh
+  '';
+
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--disable-debug"
+    "--enable-nls"
+    "--enable-Bsymbolic"
+    "--enable-gnome-pty-helper"
+    "--disable-glade"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+  ];
+
   doCheck = true;
 
   meta = with stdenv.lib; {
     description = "A library implementing a terminal emulator widget for GTK+";
     homepage = http://www.gnome.org/;
     license = licenses.lgpl2;
-    maintainers = with maintainers; [ ];
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
   };
 }

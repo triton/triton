@@ -20,6 +20,17 @@ stdenv.mkDerivation rec {
     sha256 = "1rr5ac2h9rwcrdzzw7357frg0l2d0az6m4zjshzk182q0darcblg";
   };
 
+  nativeBuildInputs = [
+    autoreconfHook
+  ];
+
+  buildInputs = [
+    cppunit
+    libsigcxx
+    openssl
+    zlib
+  ];
+
   configureFlags = [
     "--disable-debug"
     "--disable-extra-debug"
@@ -42,19 +53,6 @@ stdenv.mkDerivation rec {
     "--with-statfs"
     "--with-zlib"
   ];
-
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
-
-  buildInputs = [
-    cppunit
-    libsigcxx
-    openssl
-    zlib
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = " High performance BitTorrent library for unix";

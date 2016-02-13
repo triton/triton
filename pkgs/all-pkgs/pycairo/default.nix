@@ -34,6 +34,11 @@ stdenv.mkDerivation rec {
       }
   );
 
+  buildInputs = [
+    python
+    cairo
+  ];
+
   patches = [
     (fetchTritonPatch {
       rev = "6abc19d8cdde923ac47c84223bfa7c784b9b5b94";
@@ -106,11 +111,6 @@ stdenv.mkDerivation rec {
     fi
     ${python.executable} waf configure --prefix=$out
   '';
-
-  buildInputs = [
-    python
-    cairo
-  ];
 
   buildPhase = "${python.executable} waf";
 

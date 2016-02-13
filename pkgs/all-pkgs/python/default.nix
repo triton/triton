@@ -72,6 +72,21 @@ stdenv.mkDerivation rec {
     inherit sha256;
   };
 
+  buildInputs = [
+    bzip2
+    db
+    expat
+    gdbm
+    libffi
+    lzma
+    ncurses
+    openssl
+    readline
+    sqlite
+    stdenv.cc.libc
+    zlib
+  ];
+
   setupHook = stdenv.mkDerivation {
     name = "python-${versionMajor}-setup-hook";
     buildCommand = ''
@@ -87,6 +102,14 @@ stdenv.mkDerivation rec {
       substituteInPlace ./setup.py \
         --replace $i /no-such-path
     done
+  '';
+
+  preConfigure = ''
+    configureFlagsArray+=(
+      CPPFLAGS="${concatStringsSep " " (map (p: "-I${p}/include") buildInputs)}"
+      LDFLAGS="${concatStringsSep " " (map (p: "-L${p}/lib") buildInputs)}"
+      LIBS="-lncurses"
+    )
   '';
 
   configureFlags = [
@@ -125,29 +148,6 @@ stdenv.mkDerivation rec {
 
   # Should this be stdenv.cc.isGnu???
   NIX_LDFLAGS = optionalString isLinux "-lgcc_s";
-
-  preConfigure = ''
-    configureFlagsArray+=(
-      CPPFLAGS="${concatStringsSep " " (map (p: "-I${p}/include") buildInputs)}"
-      LDFLAGS="${concatStringsSep " " (map (p: "-L${p}/lib") buildInputs)}"
-      LIBS="-lncurses"
-    )
-  '';
-
-  buildInputs = [
-    bzip2
-    db
-    expat
-    gdbm
-    libffi
-    lzma
-    ncurses
-    openssl
-    readline
-    sqlite
-    stdenv.cc.libc
-    zlib
-  ];
 
   postInstall =
     /* Needed for some packages, especially packages that
@@ -215,8 +215,6 @@ stdenv.mkDerivation rec {
 
     sed --follow-symlinks -i "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@g" $out/bin/python*-config
   '';
-
-  enableParallelBuilding = true;
 
   passthru = rec {
     inherit

@@ -76,6 +76,20 @@ stdenv.mkDerivation rec {
     inherit sha256;
   };
 
+  buildInputs = [
+    bzip2
+    db
+    expat
+    gdbm
+    libffi
+    ncurses
+    openssl
+    readline
+    sqlite
+    stdenv.cc.libc
+    zlib
+  ];
+
   setupHook = stdenv.mkDerivation {
     name = "python-${versionMajor}-setup-hook";
     buildCommand = ''
@@ -117,6 +131,16 @@ stdenv.mkDerivation rec {
     done
   '';
 
+  preConfigure =
+    /* Something here makes portions of the build magically work,
+       otherwise boost_python never builds */ ''
+    configureFlagsArray+=(
+      CPPFLAGS="${concatStringsSep " " (map (p: "-I${p}/include") buildInputs)}"
+      LDFLAGS="${concatStringsSep " " (map (p: "-L${p}/lib") buildInputs)}"
+      LIBS="-lncurses"
+    )
+  '';
+
   configureFlags = [
     "--disable-universalsdk"
     "--disable-framework"
@@ -144,30 +168,6 @@ stdenv.mkDerivation rec {
 
   # Should this be stdenv.cc.isGnu???
   NIX_LDFLAGS = "-lgcc_s";
-
-  preConfigure =
-    /* Something here makes portions of the build magically work,
-       otherwise boost_python never builds */ ''
-    configureFlagsArray+=(
-      CPPFLAGS="${concatStringsSep " " (map (p: "-I${p}/include") buildInputs)}"
-      LDFLAGS="${concatStringsSep " " (map (p: "-L${p}/lib") buildInputs)}"
-      LIBS="-lncurses"
-    )
-  '';
-
-  buildInputs = [
-    bzip2
-    db
-    expat
-    gdbm
-    libffi
-    ncurses
-    openssl
-    readline
-    sqlite
-    stdenv.cc.libc
-    zlib
-  ];
 
   postInstall =
     /* Needed for some packages, especially packages that
@@ -224,7 +224,6 @@ stdenv.mkDerivation rec {
 
   # Used by python-2.7-deterministic-build.patch
   DETERMINISTIC_BUILD = 1;
-  enableParallelBuilding = true;
 
   passthru = rec {
     inherit

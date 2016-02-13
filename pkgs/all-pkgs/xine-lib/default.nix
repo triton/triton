@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, perl
 
 , aalib
 , alsaLib
@@ -23,7 +24,6 @@
 , libvorbis
 , libvpx
 , mesa
-, perl
 , speex
 , vcdimager
 , wavpack
@@ -38,6 +38,44 @@ stdenv.mkDerivation rec {
     url = "mirror://sourceforge/xine/${name}.tar.xz";
     sha256 = "01d0nv4zhr4k8id5n4rmw13llrjsv9dhwg1a773c1iqpi1ris15x";
   };
+
+  nativeBuildInputs = [
+    perl
+  ];
+
+  buildInputs = [
+    aalib
+    alsaLib
+    ffmpeg
+    flac
+    fontconfig
+    freetype
+    gdk-pixbuf
+    imagemagick
+    libbluray
+    libcaca
+    libcdio
+    libdvdcss
+    libmng
+    libmodplug
+    libmpcdec
+    libpulseaudio
+    libtheora
+    libv4l
+    libvdpau
+    libvorbis
+    libvpx
+    mesa
+    speex
+    vcdimager
+    wavpack
+    xorg.libX11
+    xorg.libxcb
+    xorg.libXext
+    xorg.libXinerama
+    xorg.libXv
+    zlib
+  ];
 
   configureFlags = [
     "--enable-option-checking"
@@ -127,46 +165,6 @@ stdenv.mkDerivation rec {
   ];
 
   NIX_LDFLAGS = "-rpath ${libdvdcss}/lib -L${libdvdcss}/lib -ldvdcss";
-
-  nativeBuildInputs = [
-    perl
-  ];
-
-  buildInputs = [
-    aalib
-    alsaLib
-    ffmpeg
-    flac
-    fontconfig
-    freetype
-    gdk-pixbuf
-    imagemagick
-    libbluray
-    libcaca
-    libcdio
-    libdvdcss
-    libmng
-    libmodplug
-    libmpcdec
-    libpulseaudio
-    libtheora
-    libv4l
-    libvdpau
-    libvorbis
-    libvpx
-    mesa
-    speex
-    vcdimager
-    wavpack
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXext
-    xorg.libXinerama
-    xorg.libXv
-    zlib
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A multimedia playback engine";

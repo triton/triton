@@ -17,10 +17,6 @@ stdenv.mkDerivation rec {
     sha256 = "095swrjw59lh8qiwmjjjdbxl9587axilkj4mh2sx5m0kiq929z21";
   };
 
-  preConfigure = ''
-    ./autogen.sh
-  '';
-
   nativeBuildInputs = [
     autoconf
     automake
@@ -35,6 +31,10 @@ stdenv.mkDerivation rec {
     python2Packages.notify
     python2Packages.wrapPython
   ];
+
+  preConfigure = ''
+    ./autogen.sh
+  '';
 
   postInstall = "wrapPythonPrograms";
 

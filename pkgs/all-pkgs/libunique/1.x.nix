@@ -31,6 +31,17 @@ stdenv.mkDerivation rec {
     sha256 = "1fsgvmncd9caw552lyfg8swmsd6bh4ijjsph69bwacwfxwf09j75";
   };
 
+  buildInputs = [
+    atk
+    dbus_glib
+    gdk-pixbuf
+    glib
+    gobject-introspection
+    gtk2
+    pango
+    xorg.libX11
+  ];
+
   patches = [
     (fetchTritonPatch {
       rev = "a8b7a446ebff3620af184177b8f07a9f82167b14";
@@ -54,16 +65,11 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  buildInputs = [
-    atk
-    dbus_glib
-    gdk-pixbuf
-    glib
-    gobject-introspection
-    gtk2
-    pango
-    xorg.libX11
-  ];
+  postPatch =
+  /* don't make deprecated usages hard errors */ ''
+    substituteInPlace unique/dbus/Makefile \
+      --replace '-Werror' ""
+  '';
 
   configureFlags = [
     (enFlag "dbus" (dbus_glib != null) null)
@@ -74,12 +80,6 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     (wtFlag "x" (xorg != null) null)
   ];
-
-  postPatch =
-  /* don't make deprecated usages hard errors */ ''
-    substituteInPlace unique/dbus/Makefile \
-      --replace '-Werror' ""
-  '';
 
   doCheck = true;
 

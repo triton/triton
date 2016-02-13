@@ -11,6 +11,11 @@
 , libpulseaudio
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "pavucontrol-3.0";
 
@@ -18,16 +23,6 @@ stdenv.mkDerivation rec {
     url = "http://freedesktop.org/software/pulseaudio/pavucontrol/${name}.tar.xz";
     sha256 = "14486c6lmmirkhscbfygz114f6yzf97h35n3h3pdr27w4mdfmlmk";
   };
-
-  configureFlags = [
-    "--enable-gtk3"
-    "--disable-lynx"
-    "--enable-nls"
-  ];
-
-  NIX_CFLAGS_COMPILE = [
-    "-std=c++11"
-  ];
 
   nativeBuildInputs = [
     gettext
@@ -41,6 +36,16 @@ stdenv.mkDerivation rec {
     gtkmm3
     libcanberra
     libpulseaudio
+  ];
+
+  configureFlags = [
+    (enFlag "gtk3" (gtkmm3 != null) null)
+    "--disable-lynx"
+    "--enable-nls"
+  ];
+
+  NIX_CFLAGS_COMPILE = [
+    "-std=c++11"
   ];
 
   preFixup = ''

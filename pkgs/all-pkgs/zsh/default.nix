@@ -46,7 +46,7 @@ stdenv.mkDerivation {
     libiconv
   ];
 
-  postPhase = ''
+  postPatch = ''
     patchShebangs ./Misc/
     patchShebangs ./Util/
   '' +

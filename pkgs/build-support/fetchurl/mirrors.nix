@@ -8,22 +8,14 @@ rec {
   # Mirrors for mirror://site/filename URIs, where "site" is
   # "sourceforge", "gnu", etc.
 
-  # Apache
   apache = [
+    https://www.apache.org/dist/
     http://apache.mirrors.pair.com/
-    http://www.apache.org/dist/
     http://archive.apache.org/dist/ # fallback for old releases
   ];
 
-  # Bioconductor mirrors (from http://bioconductor.org/about/mirrors)
-  # The commented-out ones don't seem to allow direct package downloads;
-  # they serve error messages that result in hash mismatches instead.
+  # Bioconductor mirrors
   bioc = [
-    # http://bioc.ism.ac.jp/3.2/bioc/
-    # http://bioc.openanalytics.eu/3.2/bioc/
-    # http://bioconductor.fmrp.usp.br/3.2/bioc/
-    # http://mirror.aarnet.edu.au/pub/bioconductor/3.2/bioc/
-    # http://watson.nci.nih.gov/bioc_mirror/3.2/bioc/
     http://bioconductor.jp/packages/3.2/bioc/
     http://bioconductor.statistik.tu-dortmund.de/packages/3.2/bioc/
     http://mirrors.ebi.ac.uk/bioconductor/packages/3.2/bioc/
@@ -41,31 +33,29 @@ rec {
     https://gsdview.appspot.com/chromium-browser-official/
   ];
 
-  # CPAN
   cpan = [
-    http://mirrors.kernel.org/CPAN/
+    https://mirrors.kernel.org/CPAN/
     http://cpan.pair.com/pub/CPAN
     http://cpan.perl.org/
     http://backpan.perl.org/  # for old releases
   ];
 
-  # CRAN mirrors (from http://cran.r-project.org/mirrors.html)
   cran = [
     http://watson.nci.nih.gov/cran_mirror/
     http://cran.revolutionanalytics.com/
     http://cran.mtu.edu/
   ];
 
-  # Debian
   debian = [
+    https://mirrors.kernel.org/debian/
     http://debian.mirrors.pair.com/debian/
     http://ftp.debian.org/debian/
     ftp://ftp.debian.org/debian/
     http://archive.debian.org/debian-archive/debian/
   ];
 
-  # Fedora
   fedora = [
+    https://mirrors.kernel.org/fedora/
     http://fedora.mirrors.pair.com/
     http://archives.fedoraproject.org/pub/fedora/
     http://fedora.osuosl.org/
@@ -76,29 +66,25 @@ rec {
     http://archives.fedoraproject.org/pub/archive/fedora/
   ];
 
-  # GCC
   gcc = [
     ftp://gcc.gnu.org/pub/gcc/
     ftp://ftp.nluug.nl/mirror/languages/gcc/
     ftp://ftp.fu-berlin.de/unix/languages/gcc/
   ];
 
-  # Gentoo
   gentoo = [
-    http://mirrors.kernel.org/gentoo/
+    https://mirrors.kernel.org/gentoo/
     http://gentoo.mirrors.pair.com/
     http://distfiles.gentoo.org/
   ];
 
-  # Gnome
   gnome = [
     # This one redirects to some mirror closeby, so it should be all you need.
     https://download.gnome.org/
   ];
 
-  # GNU (http://www.gnu.org/prep/ftp.html).
   gnu = [
-    http://mirrors.kernel.org/gnu/
+    https://mirrors.kernel.org/gnu/
     http://gnu.mirrors.pair.com/
 
     # This one redirects to a (supposedly) nearby and (supposedly) up-to-date
@@ -109,7 +95,6 @@ rec {
     http://ftp.gnu.org/pub/gnu/
   ];
 
-  # GnuPG
   gnupg = [
     https://gnupg.org/ftp/gcrypt/
     ftp://ftp.gnupg.org/gcrypt/
@@ -148,24 +133,19 @@ rec {
   ];
 
   metalab = [
-    ftp://mirrors.kernel.org/metalab/
     ftp://ftp.gwdg.de/pub/linux/metalab/
-    ftp://ftp.xemacs.org/sites/metalab.unc.edu/
   ];
 
-  # MySQL mirrors
   mysql = [
+    https://cdn.mysql.com/Downloads/
     http://mysql.mirrors.pair.com/Downloads/
-    http://cdn.mysql.com/Downloads/
   ];
 
-  # OpenBSD mirrors
   openbsd = [
     http://openbsd.mirrors.pair.com/
     http://ftp.openbsd.org/pub/OpenBSD/
   ];
 
-  # openSUSE
   opensuse = [
     http://opensuse.temple.edu/distribution/
     http://ftp.opensuse.org/pub/opensuse/distribution/
@@ -190,7 +170,6 @@ rec {
     http://cflags.cc/roy/
   ];
 
-  # Sage mirrors (http://www.sagemath.org/mirrors.html)
   sagemath = [
     http://boxen.math.washington.edu/home/sagemath/sage-mirror/src/
     http://mirrors.hustunique.com/sagemath/src/
@@ -212,7 +191,6 @@ rec {
     http://download.savannah.gnu.org/releases/
   ];
 
-  # SourceForge
   sourceforge = [
     http://prdownloads.sourceforge.net/
     http://heanet.dl.sourceforge.net/sourceforge/
@@ -228,8 +206,8 @@ rec {
     http://jaist.dl.sourceforge.jp/
   ];
 
-  # Ubuntu
   ubuntu = [
+    https://mirrors.kernel.org/ubuntu/
     http://ubuntu.mirrors.pair.com/
     http://archive.ubuntu.com/ubuntu/
     http://old-releases.ubuntu.com/ubuntu/
@@ -239,11 +217,10 @@ rec {
     http://archive.xfce.org/
   ];
 
-  # X.Org
   xorg = [
     http://xorg.mirrors.pair.com/
     http://mirror.us.leaseweb.net/xorg/
     http://xorg.freedesktop.org/releases/
-    http://ftp.x.org/pub/ # often incomplete (e.g. files missing from X.org 7.4)
+    http://ftp.x.org/pub/
   ];
 }

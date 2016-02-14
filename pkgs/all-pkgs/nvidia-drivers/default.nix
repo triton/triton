@@ -207,10 +207,9 @@ stdenv.mkDerivation {
     maintainers = with maintainers; [
       codyopel
     ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
     # Resolves collision w/ xorg-server "lib/xorg/modules/extensions/libglx.so"
     priority = 4;
   };

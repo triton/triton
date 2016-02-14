@@ -277,8 +277,7 @@ in buildPythonPackage rec {
     maintainers = with maintainers; [
       codyopel
     ];
-    platforms = [
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

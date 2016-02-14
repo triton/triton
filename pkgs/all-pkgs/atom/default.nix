@@ -119,8 +119,7 @@ stdenv.mkDerivation rec {
     homepage = https://atom.io/;
     license = licenses.mit;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

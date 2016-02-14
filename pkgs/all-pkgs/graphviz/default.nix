@@ -89,9 +89,8 @@ stdenv.mkDerivation rec {
     homepage = "http://www.graphviz.org/";
     license = licenses.free;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

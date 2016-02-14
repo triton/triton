@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     url = "http://ftp.isc.org/isc/kea/${version}/${name}.tar.gz";
     sha256 = "1zjs2dbdwa7hk6a2h9dgry64v0985l0sqphisc43s4zr33llz64n";
   };
-  
+
   nativeBuildInputs = [
     perl
     bc
@@ -60,10 +60,9 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     license = licenses.mpl2;
-    platforms = [
-      "x86_64-linux"
-      "i686-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
     maintainers = with maintainers; [
       wkennington
     ];

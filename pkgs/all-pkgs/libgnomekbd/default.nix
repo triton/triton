@@ -21,6 +21,8 @@ stdenv.mkDerivation rec {
     description = "Keyboard management library";
     #maintainers = gnome3.maintainers;
     license = licenses.gpl2;
-    platforms = platforms.linux;
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

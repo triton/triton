@@ -39,8 +39,7 @@ stdenv.mkDerivation rec {
     homepage = http://www.live555.com/liveMedia/;
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

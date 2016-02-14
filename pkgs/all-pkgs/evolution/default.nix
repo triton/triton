@@ -130,6 +130,8 @@ stdenv.mkDerivation rec {
     homepage = https://wiki.gnome.org/Apps/Evolution;
     license = licenses.lgpl2Plus;
     maintainers = gnome3.maintainers;
-    platforms = platforms.linux;
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

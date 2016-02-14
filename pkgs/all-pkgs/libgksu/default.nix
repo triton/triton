@@ -124,9 +124,8 @@ stdenv.mkDerivation rec {
     homepage = http://www.nongnu.org/gksu/;
     license = licenses.lgpl2;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

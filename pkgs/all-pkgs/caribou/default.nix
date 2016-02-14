@@ -28,7 +28,9 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    platforms = platforms.linux;
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
     #maintainers = gnome3.maintainers;
   };
 

@@ -48,6 +48,8 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [
       wkennington
     ];
-    platforms = platforms.linux;
+    platforms =  with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

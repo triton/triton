@@ -139,9 +139,8 @@ stdenv.mkDerivation rec {
     homepage = http://mpv.io;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

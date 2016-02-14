@@ -114,6 +114,8 @@ stdenv.mkDerivation rec {
     homepage = http://guitarix.sourceforge.net/;
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [ ];
-    platforms = platforms.linux;
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

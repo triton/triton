@@ -101,10 +101,9 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [
       codyopel
     ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 
 }

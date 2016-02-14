@@ -37,9 +37,9 @@ mkChromiumDerivation (base: rec {
       codyopel
       wkennington
     ];
-    platforms = [
+    platforms = with platforms;
+      x86_64-linux
       # Triton only supports Chromium on 64bit platforms
-      "x86_64-linux"
-    ];
+      ;
   };
 })

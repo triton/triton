@@ -106,9 +106,8 @@ stdenv.mkDerivation rec {
     homepage = http://www.skbuff.net/iputils/;
     license = licenses.bsdOriginal;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

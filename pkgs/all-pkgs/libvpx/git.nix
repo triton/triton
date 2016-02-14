@@ -180,6 +180,8 @@ stdenv.mkDerivation rec {
     homepage    = http://www.webmproject.org/;
     license     = licenses.bsd3;
     maintainers = with maintainers; [ codyopel ];
-    platforms   = platforms.all;
+    platforms   = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

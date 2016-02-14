@@ -40,9 +40,8 @@ stdenv.mkDerivation rec {
     homepage = http://savannah.nongnu.org/projects/attr/;
     license = licenses.lgpl21;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

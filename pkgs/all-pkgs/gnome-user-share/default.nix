@@ -82,6 +82,8 @@ stdenv.mkDerivation rec {
     description = "Service that exports the contents of the Public folder in your home directory on the local network";
     maintainers = gnome3.maintainers;
     license = licenses.gpl2;
-    platforms = platforms.linux;
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

@@ -16,9 +16,8 @@ stdenv.mkDerivation rec {
     homepage = http://redis.io;
     license = licenses.bsd3;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

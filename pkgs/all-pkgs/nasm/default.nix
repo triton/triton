@@ -18,9 +18,8 @@ stdenv.mkDerivation rec {
       bsdOrginal
     ];
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

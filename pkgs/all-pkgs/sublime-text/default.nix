@@ -126,8 +126,7 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     license = licenses.unfreeRedistributable;
-    platforms = [
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

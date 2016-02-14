@@ -25,9 +25,8 @@ stdenv.mkDerivation rec {
     homepage = http://www.tortall.net/projects/yasm/;
     license = licenses.bsd2;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

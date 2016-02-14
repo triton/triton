@@ -64,9 +64,8 @@ stdenv.mkDerivation rec {
     homepage = http://www.clutter-project.org/;
     license = licenses.lgpl2Plus;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

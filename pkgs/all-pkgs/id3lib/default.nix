@@ -71,9 +71,8 @@ stdenv.mkDerivation rec {
     homepage = http://id3lib.sourceforge.net/;
     license = licenses.lgpl21;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

@@ -50,9 +50,8 @@ stdenv.mkDerivation rec {
     homepage = https://github.com/hughsie/libgusb;
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

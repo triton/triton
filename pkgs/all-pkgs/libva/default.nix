@@ -51,9 +51,8 @@ stdenv.mkDerivation rec {
     homepage = http://www.freedesktop.org/wiki/Software/vaapi;
     license = licenses.mit;
     maintainers = with maintainers; [ ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

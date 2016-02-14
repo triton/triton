@@ -112,12 +112,12 @@ in
     # format.
     environment.etc."os-release".text =
       ''
-        NAME=NixOS
-        ID=nixos
+        NAME=Triton
+        ID=triton
         VERSION="${config.system.nixosVersion} (${config.system.nixosCodeName})"
         VERSION_ID="${config.system.nixosVersion}"
-        PRETTY_NAME="NixOS ${config.system.nixosVersion} (${config.system.nixosCodeName})"
-        HOME_URL="http://nixos.org/"
+        PRETTY_NAME="Triton ${config.system.nixosVersion} (${config.system.nixosCodeName})"
+        HOME_URL="http://github.org/triton"
       '';
 
   };

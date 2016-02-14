@@ -70,7 +70,7 @@ stdenv.mkDerivation rec {
     ];
   };
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "An HTTP library implementation in C";
     homepage = https://wiki.gnome.org/Projects/libsoup;
     license = licenses.lgpl2Plus;

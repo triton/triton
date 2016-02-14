@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
     (enFlag "tests" testsSupport null)
   ];
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "Library to handle input devices";
     homepage = http://www.freedesktop.org/wiki/Software/libinput;
     license = licenses.mit;

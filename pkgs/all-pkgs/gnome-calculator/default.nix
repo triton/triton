@@ -41,6 +41,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
+    dconf
     gdk-pixbuf
     glib
     gmp
@@ -63,7 +64,7 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/gnome-calculator \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"

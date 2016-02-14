@@ -10,23 +10,24 @@
 , pythonPackages
 , imagemagick
 
-, enableAcoustid   ? true
-, enableBadfiles   ? true
+, enableAcousticbrainz ? true
+, enableAcoustid ? true
+, enableBadfiles ? true
   , flac ? null
   , mp3val ? null
-, enableBpd        ? false
+, enableBpd ? false
   , gst-python_0 ? null
   , gst-plugins-base_0 ? null
-, enableDiscogs    ? true
-, enableEchonest   ? true
+, enableDiscogs ? true
+, enableEchonest ? true
 , enableEmbyupdate ? true
-, enableFetchart   ? true
-, enableLastfm     ? true
-, enableMpd        ? true
+, enableFetchart ? true
+, enableLastfm ? true
+, enableMpd ? true
 , enableReplaygain ? true
   , bs1770gain ? null
 , enableThumbnails ? true
-, enableWeb        ? true
+, enableWeb ? true
 
 # External plugins
 , enableAlternatives ? false
@@ -45,22 +46,26 @@ with {
     optionalString;
 };
 
-assert enableAcoustid    -> pythonPackages.pyacoustid     != null;
-assert enableBadfiles    -> flac != null && mp3val != null;
-assert enableBpd         -> pythonPackages.pygobject_2 != null &&
-                            gst_python != null &&
-                            gst_plugins_base != null;
-assert enableDiscogs     -> pythonPackages.discogs_client != null;
-assert enableEchonest    -> pythonPackages.pyechonest     != null;
-assert enableFetchart    -> pythonPackages.responses      != null;
-assert enableLastfm      -> pythonPackages.pylast         != null;
-assert enableMpd         -> pythonPackages.mpd            != null;
-assert enableReplaygain  -> bs1770gain                    != null;
-assert enableThumbnails  -> pythonPackages.pyxdg          != null;
-assert enableWeb         -> pythonPackages.flask          != null;
+assert enableAcoustid -> pythonPackages.pyacoustid != null;
+assert enableBadfiles ->
+  flac != null
+  && mp3val != null;
+assert enableBpd ->
+  pythonPackages.pygobject_2 != null
+  && gst_python != null
+  && gst_plugins_base != null;
+assert enableDiscogs -> pythonPackages.discogs_client != null;
+assert enableEchonest -> pythonPackages.pyechonest != null;
+assert enableFetchart -> pythonPackages.responses != null;
+assert enableLastfm -> pythonPackages.pylast != null;
+assert enableMpd -> pythonPackages.mpd != null;
+assert enableReplaygain -> bs1770gain != null;
+assert enableThumbnails -> pythonPackages.pyxdg != null;
+assert enableWeb -> pythonPackages.flask != null;
 
 let
   optionalPlugins = {
+    acousticbrainz = enableAcousticbrainz;
     badfiles = enableBadfiles;
     bpd = enableBpd;
     chroma = enableAcoustid;
@@ -129,15 +134,55 @@ let
 
 in buildPythonPackage rec {
   name = "beets-${version}";
-  version = "1.3.16";
+  version = "1.3.17";
   namePrefix = "";
 
   src = fetchFromGitHub {
     owner = "sampsyo";
     repo = "beets";
     rev = "v${version}";
-    sha256 = "1grjcgr419yq756wwxjpzyfjdf8n51bg6i0agm465lb7l3jgqy6k";
+    sha256 = "1fskxx5xxjqf4xmfjrinh7idjiq6qncb24hiyccv09l47fr1yipc";
   };
+
+  nativeBuildInputs = [
+    makeWrapper
+  ];
+
+  propagatedBuildInputs = [
+    pythonPackages.enum34
+    pythonPackages.jellyfish
+    pythonPackages.munkres
+    pythonPackages.musicbrainzngs
+    pythonPackages.mutagen
+    pythonPackages.pathlib
+    pythonPackages.pyyaml
+    pythonPackages.unidecode
+  ] ++ optional enableAcoustid pythonPackages.pyacoustid
+    ++ optional (
+      enableFetchart
+      || enableEmbyUpdate
+      || enableAcousticbrainz) pythonPackages.requests2
+    ++ optional enableDiscogs pythonPackages.discogs_client
+    ++ optional enableEchonest pythonPackages.pyechonest
+    ++ optional enableLastfm pythonPackages.pylast
+    ++ optional enableMpd pythonPackages.mpd
+    ++ optional enableThumbnails pythonPackages.pyxdg
+    ++ optional enableWeb pythonPackages.flask
+    ++ optional enableAlternatives (import ./alternatives-plugin.nix {
+      inherit stdenv buildPythonPackage pythonPackages fetchFromGitHub;
+    });
+
+  buildInputs = with pythonPackages; [
+    beautifulsoup4
+    imagemagick
+    mock
+    nose
+    rarfile
+    responses
+  ] ++ optionals enableBpd [
+    gst-plugins-base_0
+    gstreamer_0
+  ];
 
   patches = [
     (fetchTritonPatch {
@@ -149,7 +194,7 @@ in buildPythonPackage rec {
 
   postPatch = ''
     sed -i -e '/assertIn.*item.*path/d' test/test_info.py
-    echo echo completion tests passed > test/test_completion.sh
+    echo echo completion tests passed > test/rsrc/test_completion.sh
 
     sed -i -e '/^BASH_COMPLETION_PATHS *=/,/^])$/ {
       /^])$/i u"${completion}"
@@ -171,50 +216,10 @@ in buildPythonPackage rec {
       test/test_replaygain.py
   '';
 
-  nativeBuildInputs = [
-    makeWrapper
-  ];
-
-  propagatedBuildInputs = [
-    pythonPackages.enum34
-    pythonPackages.jellyfish
-    pythonPackages.munkres
-    pythonPackages.musicbrainzngs
-    pythonPackages.mutagen
-    pythonPackages.pathlib
-    pythonPackages.pyyaml
-    pythonPackages.unidecode
-  ] ++ optional enableAcoustid                       pythonPackages.pyacoustid
-    ++ optional (enableFetchart || enableEmbyUpdate) pythonPackages.requests2
-    ++ optional enableDiscogs                        pythonPackages.discogs_client
-    ++ optional enableEchonest                       pythonPackages.pyechonest
-    ++ optional enableLastfm                         pythonPackages.pylast
-    ++ optional enableMpd                            pythonPackages.mpd
-    ++ optional enableThumbnails                     pythonPackages.pyxdg
-    ++ optional enableWeb                            pythonPackages.flask
-    ++ optional enableAlternatives (import ./alternatives-plugin.nix {
-      inherit stdenv buildPythonPackage pythonPackages fetchFromGitHub;
-    });
-
-  buildInputs = with pythonPackages; [
-    beautifulsoup4
-    imagemagick
-    mock
-    nose
-    rarfile
-    responses
-  ] ++ optionals enableBpd [
-    gst-plugins-base_0
-    gstreamer_0
-  ];
-
   makeWrapperArgs = optionals enableBpd [
     "--prefix GST_PLUGIN_PATH : ${
       makeSearchPath "lib/gstreamer-0.10" [ gst-plugins-base_0 ]}"
   ];
-
-  doCheck = true;
-  enableParallelBuilding = true;
 
   preCheck = ''
     (${concatMapStrings (s: "echo \"${s}\";") allPlugins}) \
@@ -246,8 +251,6 @@ in buildPythonPackage rec {
     runHook 'postCheck'
   '';
 
-  doInstallCheck = true;
-
   installCheckPhase = ''
     runHook 'preInstallCheck'
 
@@ -264,6 +267,9 @@ in buildPythonPackage rec {
     runHook 'postInstallCheck'
   '';
 
+  doCheck = true;
+  doInstallCheck = true;
+
   meta = with stdenv.lib; {
     description = "Music tagger and library organizer";
     homepage = http://beets.radbox.org;
@@ -272,7 +278,6 @@ in buildPythonPackage rec {
       codyopel
     ];
     platforms = [
-      "i686-linux"
       "x86_64-linux"
     ];
   };

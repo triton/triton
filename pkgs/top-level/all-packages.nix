@@ -13214,9 +13214,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   symlinks = callPackage ../tools/system/symlinks { };
 
-  syncthing = go15Packages.syncthing.bin // { outputs = [ "bin" ]; };
-  discosrv = go15Packages.discosrv.bin // { outputs = [ "bin" ]; };
-  relaysrv = go15Packages.relaysrv.bin // { outputs = [ "bin" ]; };
+  syncthing = goPackages.syncthing.bin // { outputs = [ "bin" ]; };
+  discosrv = goPackages.discosrv.bin // { outputs = [ "bin" ]; };
+  relaysrv = goPackages.relaysrv.bin // { outputs = [ "bin" ]; };
 
   # linux only by now
   synergy = callPackage ../applications/misc/synergy { };
@@ -13764,7 +13764,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     GConf2 = gnome2.GConf;
   };
 
-  xmpp-client = go15Packages.xmpp-client.bin // { outputs = [ "bin" ]; };
+  xmpp-client = goPackages.xmpp-client.bin // { outputs = [ "bin" ]; };
 
   libxpdf = callPackage ../applications/misc/xpdf/libxpdf.nix { };
 

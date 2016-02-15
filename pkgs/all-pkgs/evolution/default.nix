@@ -42,7 +42,6 @@
 , procps
 , shared_mime_info
 , sqlite
-, webkitgtk_2_4
 }:
 
 stdenv.mkDerivation rec {
@@ -103,7 +102,6 @@ stdenv.mkDerivation rec {
     procps
     shared_mime_info
     sqlite
-    webkitgtk_2_4
   ];
 
   configureFlags = [
@@ -133,5 +131,7 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       i686-linux
       ++ x86_64-linux;
+    # evolution does not support webkit-2.10+
+    broken = true;
   };
 }

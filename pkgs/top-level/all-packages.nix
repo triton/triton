@@ -13071,12 +13071,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   clearlooks-phenix = callPackage ../misc/themes/gtk3/clearlooks-phenix { };
 
-  enlightenment = callPackage ../desktops/enlightenment { };
-
-  e19 = recurseIntoAttrs (callPackage ../desktops/e19 {
-    callPackage = newScope pkgs.e19;
-  });
-
   gnome2 = callPackage ../desktops/gnome-2 {
     callPackage = pkgs.newScope pkgs.gnome2;
     self = pkgs.gnome2;
@@ -13291,11 +13285,6 @@ zstd = callPackage ../all-pkgs/zstd { };
         in self;
 
     in makeOverridable makePackages extra;
-
-  pantheon = recurseIntoAttrs rec {
-    callPackage = newScope pkgs.pantheon;
-    pantheon-terminal = callPackage ../desktops/pantheon/apps/pantheon-terminal { };
-  };
 
   redshift = callPackage ../applications/misc/redshift {
     inherit (python3Packages) python pygobject3 pyxdg;

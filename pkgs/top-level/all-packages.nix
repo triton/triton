@@ -888,6 +888,8 @@ libcroco = callPackage ../all-pkgs/libcroco { };
 
 libdrm = callPackage ../all-pkgs/libdrm { };
 
+libev = callPackage ../all-pkgs/libev { };
+
 libgdata = callPackage ../all-pkgs/libgdata { };
 
 libgee = callPackage ../all-pkgs/libgee { };
@@ -6957,8 +6959,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   libe-book = callPackage ../development/libraries/libe-book {};
 
   libechonest = callPackage ../development/libraries/libechonest { };
-
-  libev = callPackage ../development/libraries/libev { };
 
   libevent = callPackage ../development/libraries/libevent { };
 

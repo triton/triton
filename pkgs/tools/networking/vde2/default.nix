@@ -10,6 +10,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ openssl libpcap python ];
 
+  # This breaks the build from linking la files together
+  parallelBuild = false;
+
   meta = with stdenv.lib; {
     homepage = http://vde.sourceforge.net/;
     description = "Virtual Distributed Ethernet, an Ethernet compliant virtual network";

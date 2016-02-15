@@ -3082,11 +3082,11 @@ in {
 
   colorama = buildPythonPackage rec {
     name = "colorama-${version}";
-    version = "0.3.3";
+    version = "0.3.6";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/c/colorama/${name}.tar.gz";
-      sha256 = "eb21f2ba718fbf357afdfdf6f641ab393901c7ca8d9f37edd0bee4806ffa269c";
+      sha256 = "1daknkr1iwxh32xc323614zjz39mwr7gk133hwkxg8c6n36gr7pc";
     };
 
     meta = {
@@ -9165,22 +9165,23 @@ in {
   };
 
   gevent = buildPythonPackage rec {
-    name = "gevent-1.0.2";
-    disabled = isPy3k || isPyPy;  # see https://github.com/surfly/gevent/issues/248
+    name = "gevent-1.1rc3";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/g/gevent/${name}.tar.gz";
-      sha256 = "0cds7yvwdlqmd590i59vzxaviwxk4js6dkhnmdxb3p1xac7wmq9s";
+      sha256 = "17g187dhr769s1rm99f2i5cjrhvmh0h3shkjdcdjciyi9ggzz56b";
     };
 
-    patchPhase = ''
-      substituteInPlace libev/ev.c --replace \
-        "ecb_inline void ecb_unreachable (void) ecb_noreturn" \
-        "ecb_inline ecb_noreturn void ecb_unreachable (void)"
+    prePatch = ''
+      rm -rf libev
     '';
 
-    buildInputs = with self; [ pkgs.libev ];
+    buildInputs = [
+      pkgs.libev
+    ];
     propagatedBuildInputs = optionals (!isPyPy) [ self.greenlet ];
+
+    doCheck = false;
 
     meta = {
       description = "Coroutine-based networking library";
@@ -9439,21 +9440,35 @@ in {
     };
   };
 
+  green = buildPythonPackage rec {
+    name = "green-2.3.0";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/g/green/${name}.tar.gz";
+      sha256 = "1888khfl9yxb8yfxq9b48dxwplqlxx8s0l530z5j7c6bx74v08b4";
+    };
+
+    buildInputs = with self; [
+      colorama
+      mock
+      termstyle
+    ];
+
+    meta = {
+      homepage = http://pypi.python.org/pypi/green;
+      platforms   = platforms.all;
+    };
+  };
 
   greenlet = buildPythonPackage rec {
     name = "greenlet-${version}";
-    version = "0.4.7";
+    version = "0.4.9";
     disabled = isPyPy;  # builtin for pypy
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/g/greenlet/${name}.zip";
-      sha256 = "1zlmsygjw69xlq56vz1z5ivzy9bwc7knjaykn2yy2hv4w2j4yb7k";
+      sha256 = "0li2vm6ix982mmqdnqb6pgrq0jfvd0lfi5dz2rb6ap07wyig7cjq";
     };
-
-    # see https://github.com/python-greenlet/greenlet/issues/85
-    preCheck = ''
-      rm tests/test_leaks.py
-    '';
 
     meta = {
       homepage = http://pypi.python.org/pypi/greenlet;
@@ -11353,8 +11368,14 @@ in {
       sha256 = "1xm0xkaz8d8d26kdk09f2n9vn543ssd03vmpkqlmgq3crjz7s90y";
     };
 
-    buildInputs = with self; [ unittest2 ];
-    propagatedBuildInputs = with self; [ funcsigs six pbr ];
+    buildInputs = with self; [
+      unittest2
+    ];
+    propagatedBuildInputs = with self; [
+      funcsigs
+      six
+      pbr
+    ];
 
     checkPhase = ''
       ${python.interpreter} -m unittest discover
@@ -20416,6 +20437,20 @@ in {
       description = "A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges";
       homepage = https://code.google.com/p/mimeparse/;
       license = licenses.mit;
+    };
+  };
+
+  termstyle = self.buildPythonPackage rec {
+    name = "termstyle-0.1.10";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/p/python-termstyle/python-${name}.tar.gz";
+      sha256 = "1qllzkx1alf14zcfapppf8w87si4cpa7lgjmdp3f5idzdyqnnapl";
+    };
+
+    meta = {
+      license = licenses.lgpl2;
+      platforms = platforms.all;
     };
   };
 

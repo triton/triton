@@ -11000,8 +11000,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   gqrx = callPackage ../applications/misc/gqrx { };
 
-  grass = callPackage ../applications/gis/grass { };
-
   grip = callPackage ../applications/misc/grip {
     inherit (gnome) libgnome libgnomeui vte;
   };
@@ -12889,8 +12887,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   inherit (pythonPackages) youtube-dl;
 
-  qgis = callPackage ../applications/gis/qgis {};
-
   qtbitcointrader = callPackage ../applications/misc/qtbitcointrader {
     qt = qt4;
   };
@@ -12946,8 +12942,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   zynaddsubfx = callPackage ../applications/audio/zynaddsubfx { };
 
   drumkv1 = callPackage ../applications/audio/drumkv1 { };
-
-  saga = callPackage ../applications/gis/saga { };
 
   samplv1 = callPackage ../applications/audio/samplv1 { };
 

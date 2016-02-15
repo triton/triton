@@ -604,6 +604,8 @@ devil-nox = devil.override {
 };
 devil = callPackage ../all-pkgs/devil { };
 
+dos2unix = callPackage ../all-pkgs/dos2unix { };
+
 eog = callPackage ../all-pkgs/eog { };
 
 evince = callPackage ../all-pkgs/evince { };
@@ -2370,8 +2372,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   fuse_zip = callPackage ../tools/filesystems/fuse-zip { };
 
   exfat = callPackage ../tools/filesystems/exfat { };
-
-  dos2unix = callPackage ../tools/text/dos2unix { };
 
   uni2ascii = callPackage ../tools/text/uni2ascii { };
 

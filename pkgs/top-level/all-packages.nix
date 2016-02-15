@@ -12335,10 +12335,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   sddm = kde5.sddm;
 
-  slim = callPackage ../applications/display-managers/slim {
-    libpng = libpng12;
-  };
-
   smartgithg = callPackage ../applications/version-management/smartgithg { };
 
   slimThemes = recurseIntoAttrs (callPackage ../applications/display-managers/slim/themes.nix {});
@@ -13965,8 +13961,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   cups_filters = callPackage ../misc/cups/filters.nix { };
 
   cups-pk-helper = callPackage ../misc/cups/cups-pk-helper.nix { };
-
-  crashplan = callPackage ../applications/backup/crashplan { };
 
   gutenprint = callPackage ../misc/drivers/gutenprint { };
 

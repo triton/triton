@@ -197,7 +197,6 @@ rec {
           inherit require;
           virtualisation.memorySize = 1024;
           services.xserver.enable = true;
-          services.xserver.displayManager.slim.enable = false;
           services.xserver.displayManager.auto.enable = true;
           services.xserver.windowManager.default = "icewm";
           services.xserver.windowManager.icewm.enable = true;

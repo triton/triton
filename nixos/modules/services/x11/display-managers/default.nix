@@ -279,16 +279,12 @@ in
 
         execCmd = mkOption {
           type = types.str;
-          example = literalExample ''
-            "''${pkgs.slim}/bin/slim"
-          '';
           description = "Command to start the display manager.";
         };
 
         environment = mkOption {
           type = types.attrsOf types.unspecified;
           default = {};
-          example = { SLIM_CFGFILE = "/etc/slim.conf"; };
           description = "Additional environment variables needed by the display manager.";
         };
 

@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
     "--with-boost-system"
   ];
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "BitTorrent client in C++ and Qt";
     homepage = http://www.qbittorrent.org/;
     license = licenses.gpl2;

@@ -2290,8 +2290,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libbladeRF = callPackage ../development/libraries/libbladeRF { };
 
-  lp_solve = callPackage ../applications/science/math/lp_solve { };
-
   lprof = callPackage ../tools/graphics/lprof { };
 
   fatresize = callPackage ../tools/filesystems/fatresize {};
@@ -3577,8 +3575,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   };
 
   ocz-ssd-guru = callPackage ../tools/misc/ocz-ssd-guru { };
-
-  qalculate-gtk = callPackage ../applications/science/math/qalculate-gtk { };
 
   qastools = callPackage ../tools/audio/qastools {
     qt = qt4;
@@ -6523,13 +6519,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   glpk = callPackage ../development/libraries/glpk { };
 
-  glsurf = callPackage ../applications/science/math/glsurf {
-    inherit (ocamlPackages) lablgl findlib ocaml_mysql mlgmp;
-    libpng = libpng12;
-    giflib = giflib_4_1;
-    camlimages = ocamlPackages.camlimages_4_0;
-  };
-
   gmime = callPackage ../development/libraries/gmime { };
 
   gmm = callPackage ../development/libraries/gmm { };
@@ -8661,32 +8650,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ZopeInterface = pythonPackages.zope_interface;
 
-  ### DEVELOPMENT / R MODULES
-
-  R = callPackage ../applications/science/math/R {
-    # TODO: split docs into a separate output
-    texLive = texlive.combine {
-      inherit (texlive) scheme-small inconsolata helvetic texinfo fancyvrb cm-super;
-    };
-    openblas = openblasCompat;
-    withRecommendedPackages = false;
-    inherit (darwin.apple_sdk.frameworks) Cocoa Foundation;
-    inherit (darwin) cf-private libobjc;
-  };
-
-  rWrapper = callPackage ../development/r-modules/wrapper.nix {
-    recommendedPackages = with rPackages; [
-      boot class cluster codetools foreign KernSmooth lattice MASS
-      Matrix mgcv nlme nnet rpart spatial survival
-    ];
-    # Override this attribute to register additional libraries.
-    packages = [];
-  };
-
-  rPackages = callPackage ../development/r-modules {
-    overrides = (config.rPackageOverrides or (p: {})) pkgs;
-  };
-
   ### SERVERS
 
   "389-ds-base" = callPackage ../servers/ldap/389 { };
@@ -10663,10 +10626,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   avidemux = callPackage ../applications/video/avidemux { };
 
-  avogadro = callPackage ../applications/science/chemistry/avogadro {
-    eigen = eigen2;
-  };
-
   avrdudess = callPackage ../applications/misc/avrdudess { };
 
   avxsynth = callPackage ../applications/video/avxsynth {
@@ -10773,8 +10732,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   cbatticon = callPackage ../applications/misc/cbatticon { };
 
-  cbc = callPackage ../applications/science/math/cbc { };
-
   cddiscid = callPackage ../applications/audio/cd-discid { };
 
   cdrtools = callPackage ../applications/misc/cdrtools { };
@@ -10853,10 +10810,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   conkeror-unwrapped = callPackage ../applications/networking/browsers/conkeror { };
   conkeror = wrapFirefox conkeror-unwrapped { };
-
-  csdp = callPackage ../applications/science/math/csdp {
-    liblapack = liblapackWithoutAtlas;
-  };
 
   cuneiform = callPackage ../tools/graphics/cuneiform {};
 
@@ -11076,8 +11029,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   freewheeling = callPackage ../applications/audio/freewheeling { };
 
   fribid = callPackage ../applications/networking/browsers/mozilla-plugins/fribid { };
-
-  fritzing = qt5.callPackage ../applications/science/electronics/fritzing { };
 
   fvwm = callPackage ../applications/window-managers/fvwm { };
 
@@ -12025,8 +11976,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   paraview = callPackage ../applications/graphics/paraview { };
 
   pencil = callPackage ../applications/graphics/pencil { };
-
-  perseus = callPackage ../applications/science/math/perseus {};
 
   petrifoo = callPackage ../applications/audio/petrifoo {
     inherit (gnome) libgnomecanvas;
@@ -13991,115 +13940,13 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ### SCIENCE
 
-  ### SCIENCE/GEOMETRY
-
-  drgeo = callPackage ../applications/science/geometry/drgeo {
-    inherit (gnome) libglade;
-    guile = guile_1_8;
-  };
-
-  tetgen = callPackage ../applications/science/geometry/tetgen { }; # AGPL3+
-  tetgen_1_4 = callPackage ../applications/science/geometry/tetgen/1.4.nix { }; # MIT
-
-  ### SCIENCE/BIOLOGY
+  ### SCIENCE / ELECTRONICS
 
   alliance = callPackage ../applications/science/electronics/alliance {
     motif = lesstif;
   };
 
   archimedes = callPackage ../applications/science/electronics/archimedes { };
-
-  emboss = callPackage ../applications/science/biology/emboss { };
-
-  mrbayes = callPackage ../applications/science/biology/mrbayes { };
-
-  ncbi_tools = callPackage ../applications/science/biology/ncbi-tools { };
-
-  paml = callPackage ../applications/science/biology/paml { };
-
-  pal2nal = callPackage ../applications/science/biology/pal2nal { };
-
-  plink = callPackage ../applications/science/biology/plink/default.nix { };
-
-
-  ### SCIENCE/MATH
-
-  arpack = callPackage ../development/libraries/science/math/arpack { };
-
-  atlas = callPackage ../development/libraries/science/math/atlas {
-    # The build process measures CPU capabilities and optimizes the
-    # library to perform best on that particular machine. That is a
-    # great feature, but it's of limited use with pre-built binaries
-    # coming from a central build farm.
-    tolerateCpuTimingInaccuracy = true;
-    liblapack = liblapack_3_5_0WithoutAtlas;
-    withLapack = false;
-  };
-
-  atlasWithLapack = atlas.override { withLapack = true; };
-
-  blas = callPackage ../development/libraries/science/math/blas { };
-
-  jags = callPackage ../applications/science/math/jags { };
-
-
-  # We have essentially 4 permutations of liblapack: version 3.4.1 or 3.5.0,
-  # and with or without atlas as a dependency. The default `liblapack` is 3.4.1
-  # with atlas. Atlas, when built with liblapack as a dependency, uses 3.5.0
-  # without atlas. Etc.
-  liblapackWithAtlas = callPackage ../development/libraries/science/math/liblapack {};
-  liblapackWithoutAtlas = liblapackWithAtlas.override { atlas = null; };
-  liblapack_3_5_0WithAtlas = callPackage ../development/libraries/science/math/liblapack/3.5.0.nix {};
-  liblapack_3_5_0WithoutAtlas = liblapack_3_5_0WithAtlas.override { atlas = null; };
-  liblapack = liblapackWithAtlas;
-  liblapack_3_5_0 = liblapack_3_5_0WithAtlas;
-
-  liblbfgs = callPackage ../development/libraries/science/math/liblbfgs { };
-
-  openblas = callPackage ../development/libraries/science/math/openblas { };
-  openblas_2_14 = callPackage ../development/libraries/science/math/openblas/0.2.14.nix { };
-
-  # A version of OpenBLAS using 32-bit integers on all platforms for compatibility with
-  # standard BLAS and LAPACK.
-  openblasCompat = openblas.override { blas64 = false; };
-  openblasCompat_2_14 = openblas_2_14.override { blas64 = false; };
-
-  openlibm = callPackage ../development/libraries/science/math/openlibm {};
-
-  openspecfun = callPackage ../development/libraries/science/math/openspecfun {};
-
-  mathematica = callPackage ../applications/science/math/mathematica { };
-  mathematica9 = callPackage ../applications/science/math/mathematica/9.nix { };
-
-  metis = callPackage ../development/libraries/science/math/metis {};
-
-  sage = callPackage ../applications/science/math/sage { };
-
-  suitesparse_4_2 = callPackage ../development/libraries/science/math/suitesparse/4.2.nix { };
-  suitesparse_4_4 = callPackage ../development/libraries/science/math/suitesparse {};
-  suitesparse = suitesparse_4_4;
-
-  ipopt = callPackage ../development/libraries/science/math/ipopt { openblas = openblasCompat; };
-
-  ### SCIENCE/MOLECULAR-DYNAMICS
-
-  gromacs = callPackage ../applications/science/molecular-dynamics/gromacs {
-    singlePrec = true;
-    fftw = fftwSinglePrec;
-    cmake = cmakeCurses;
-  };
-
-  gromacsDouble = lowPrio (callPackage ../applications/science/molecular-dynamics/gromacs {
-    singlePrec = false;
-    fftw = fftw;
-    cmake = cmakeCurses;
-  });
-
-  ### SCIENCE/PROGRAMMING
-
-  plm = callPackage ../applications/science/programming/plm { };
-
-  ### SCIENCE / ELECTRONICS
 
   eagle = callPackage ../applications/science/electronics/eagle { };
 
@@ -14122,121 +13969,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   qucs = callPackage ../applications/science/electronics/qucs { };
 
   xoscope = callPackage ../applications/science/electronics/xoscope { };
-
-
-  ### SCIENCE / MATH
-
-  caffe = callPackage ../applications/science/math/caffe {
-    cudaSupport = config.caffe.cudaSupport or config.cudaSupport or true;
-  };
-
-  ecm = callPackage ../applications/science/math/ecm { };
-
-  eukleides = callPackage ../applications/science/math/eukleides {
-    texLive = texlive.combine { inherit (texlive) scheme-small; };
-    texinfo = texinfo4;
-  };
-
-  fricas = callPackage ../applications/science/math/fricas { };
-
-  gap = callPackage ../applications/science/math/gap { };
-
-  maxima = callPackage ../applications/science/math/maxima { };
-
-  wxmaxima = callPackage ../applications/science/math/wxmaxima { wxGTK = wxGTK30; };
-
-  pari = callPackage ../applications/science/math/pari {};
-
-  pcalc = callPackage ../applications/science/math/pcalc { };
-
-  pspp = callPackage ../applications/science/math/pssp {
-    inherit (gnome) libglade gtksourceview;
-  };
-
-  singular = callPackage ../applications/science/math/singular {};
-
-  scilab = callPackage ../applications/science/math/scilab {
-    withXaw3d = false;
-    withTk = true;
-    withGtk = false;
-    withOCaml = true;
-    withX = true;
-  };
-
-  msieve = callPackage ../applications/science/math/msieve { };
-
-  weka = callPackage ../applications/science/math/weka { };
-
-  yad = callPackage ../tools/misc/yad { };
-
-  yacas = callPackage ../applications/science/math/yacas { };
-
-  speedcrunch = callPackage ../applications/science/math/speedcrunch {
-    qt = qt4;
-    cmake = cmakeCurses;
-  };
-
-
-  ### SCIENCE / MISC
-
-  boinc = callPackage ../applications/science/misc/boinc { };
-
-  celestia = callPackage ../applications/science/astronomy/celestia {
-    lua = lua5_1;
-    inherit (pkgs.gnome) gtkglext;
-  };
-
-  fityk = callPackage ../applications/science/misc/fityk { };
-
-  gravit = callPackage ../applications/science/astronomy/gravit { };
-
-  golly = callPackage ../applications/science/misc/golly { };
-
-  megam = callPackage ../applications/science/misc/megam { };
-
-  root = callPackage ../applications/science/misc/root { };
-
-  simgrid = callPackage ../applications/science/misc/simgrid { };
-
-  spyder = pythonPackages.spyder;
-
-  stellarium = callPackage ../applications/science/astronomy/stellarium { };
-
-  tulip = callPackage ../applications/science/misc/tulip {
-    cmake = cmake-2_8;
-  };
-
-  vite = callPackage ../applications/science/misc/vite { };
-
-  xplanet = callPackage ../applications/science/astronomy/xplanet { };
-
-  ### SCIENCE / PHYSICS
-
-  geant4 = callPackage ../development/libraries/physics/geant4 {
-    enableMultiThreading = true;
-    enableG3toG4         = false;
-    enableInventor       = false;
-    enableGDML           = false;
-    enableQT             = false;
-    enableXM             = false;
-    enableOpenGLX11      = true;
-    enableRaytracerX11   = false;
-
-    # Optional system packages, otherwise internal GEANT4 packages are used.
-    clhep = null;
-    zlib  = null;
-
-    # For enableGDML.
-    xercesc = null;
-
-    # For enableQT.
-    qt = null; # qt4SDK or qt5SDK
-
-    # For enableXM.
-    motif = null; # motif or lesstif
-  };
-
-  g4py = callPackage ../development/libraries/physics/geant4/g4py { };
 
   ### MISC
 

@@ -10558,8 +10558,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ario = callPackage ../applications/audio/ario { };
 
-  arora = callPackage ../applications/networking/browsers/arora { };
-
   artha = callPackage ../applications/misc/artha { };
 
   aseprite = callPackage ../applications/editors/aseprite {

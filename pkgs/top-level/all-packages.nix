@@ -981,6 +981,8 @@ libzapojit = callPackage ../all-pkgs/libzapojit { };
 
 live555 = callPackage ../all-pkgs/live555 { };
 
+mercurial = callPackage ../all-pkgs/mercurial { };
+
 mesa_glu =  callPackage ../all-pkgs/mesa-glu { };
 mesa_noglu = callPackage ../all-pkgs/mesa {
   # makes it slower, but during runtime we link against just
@@ -11562,15 +11564,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   mcomix = callPackage ../applications/graphics/mcomix { };
 
   mendeley = callPackage ../applications/office/mendeley { };
-
-  mercurial = callPackage ../applications/version-management/mercurial {
-    inherit (pythonPackages) curses docutils hg-git dulwich;
-    inherit (darwin.apple_sdk.frameworks) ApplicationServices;
-    inherit (darwin) cf-private;
-    guiSupport = false; # use mercurialFull to get hgk GUI
-  };
-
-  mercurialFull = appendToName "full" (pkgs.mercurial.override { guiSupport = true; });
 
   merkaartor = callPackage ../applications/misc/merkaartor { };
 

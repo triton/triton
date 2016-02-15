@@ -2780,8 +2780,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   kalibrate-rtl = callPackage ../tools/misc/kalibrate-rtl { };
 
-  kbdd = callPackage ../applications/window-managers/kbdd { };
-
   kdbplus = callPackage_i686 ../applications/misc/kdbplus { };
 
   keepalived = callPackage ../tools/networking/keepalived { };
@@ -10525,11 +10523,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   aewan = callPackage ../applications/editors/aewan { };
 
-  afterstep = callPackage ../applications/window-managers/afterstep {
-    fltk = fltk13;
-    gtk = gtk2;
-  };
-
   alchemy = callPackage ../applications/graphics/alchemy { };
 
   alock = callPackage ../misc/screensavers/alock { };
@@ -10599,10 +10592,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     libjpeg = libjpeg_original; # error: 'JCOPYRIGHT_SHORT' was not declared in this scope
   };
 
-  awesome-3-4 = callPackage ../applications/window-managers/awesome/3.4.nix {
-    cairo = cairo.override { xcbSupport = true; };
-    lua = lua5_1;
-  };
   awesome-3-5 = callPackage ../applications/window-managers/awesome {
     cairo = cairo.override { xcbSupport = true; };
     luaPackages = luaPackages.override { inherit lua; };
@@ -10671,8 +10660,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   bs1770gain = callPackage ../applications/audio/bs1770gain { };
 
-  bspwm = callPackage ../applications/window-managers/bspwm { };
-
   bvi = callPackage ../applications/editors/bvi { };
 
   bviplus = callPackage ../applications/editors/bviplus { };
@@ -10729,8 +10716,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     enableNetworkManager = config.networking.networkmanager.enable or false;
   };
 
-  clfswm = callPackage ../applications/window-managers/clfswm { };
-
   clipgrab = callPackage ../applications/video/clipgrab { };
 
   clipit = callPackage ../applications/misc/clipit { };
@@ -10747,10 +10732,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   communi = callPackage ../applications/networking/irc/communi { };
 
   CompBus = callPackage ../applications/audio/CompBus { };
-
-  compiz = callPackage ../applications/window-managers/compiz {
-    inherit (gnome) GConf ORBit2 metacity;
-  };
 
   constant-detune-chorus = callPackage ../applications/audio/constant-detune-chorus { };
 
@@ -10796,8 +10777,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   cvsps = callPackage ../applications/version-management/cvsps { };
 
   cvs2svn = callPackage ../applications/version-management/cvs2svn { };
-
-  cwm = callPackage ../applications/window-managers/cwm { };
 
   cyclone = callPackage ../applications/audio/pd-plugins/cyclone  { };
 
@@ -10890,8 +10869,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     patches = config.dwm.patches or [];
   };
 
-  dzen2 = callPackage ../applications/window-managers/dzen2 { };
-
   eaglemode = callPackage ../applications/misc/eaglemode { };
 
   eclipses = recurseIntoAttrs (callPackage ../applications/editors/eclipse { });
@@ -10975,8 +10952,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     fltk = fltk20;
   };
 
-  fbpanel = callPackage ../applications/window-managers/fbpanel { };
-
   fbreader = callPackage ../applications/misc/fbreader { };
 
   fetchmail = callPackage ../applications/misc/fetchmail { };
@@ -10996,8 +10971,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   freewheeling = callPackage ../applications/audio/freewheeling { };
 
   fribid = callPackage ../applications/networking/browsers/mozilla-plugins/fribid { };
-
-  fvwm = callPackage ../applications/window-managers/fvwm { };
 
   geany = callPackage ../applications/editors/geany { };
   geany-with-vte = callPackage ../applications/editors/geany/with-vte.nix { };
@@ -11330,12 +11303,10 @@ zstd = callPackage ../all-pkgs/zstd { };
   spectrwm = callPackage ../applications/window-managers/spectrwm { };
 
   wlc = callPackage ../development/libraries/wlc { };
-  orbment = callPackage ../applications/window-managers/orbment { };
   sway = callPackage ../applications/window-managers/sway { };
 
   swc = callPackage ../development/libraries/swc { };
   wld = callPackage ../development/libraries/wld { };
-  velox = callPackage ../applications/window-managers/velox { };
 
   i3 = callPackage ../applications/window-managers/i3 {
     xcb-util-cursor = if stdenv.isDarwin then xcb-util-cursor-HEAD else xcb-util-cursor;
@@ -11354,8 +11325,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   i3status = callPackage ../applications/window-managers/i3/status.nix { };
 
   i810switch = callPackage ../os-specific/linux/i810switch { };
-
-  icewm = callPackage ../applications/window-managers/icewm {};
 
   id3v2 = callPackage ../applications/audio/id3v2 { };
 
@@ -11381,10 +11350,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   };
 
   inspectrum = callPackage ../applications/misc/inspectrum { };
-
-  ion3 = callPackage ../applications/window-managers/ion-3 {
-    lua = lua5;
-  };
 
   ipe = qt5.callPackage ../applications/graphics/ipe {
     ghostscript = ghostscriptX;
@@ -11439,8 +11404,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     gtk = gtk3;
   };
 
-  jwm = callPackage ../applications/window-managers/jwm { };
-
   k3d = callPackage ../applications/graphics/k3d {
     inherit (pkgs.gnome2) gtkglext;
     boost = boost155;
@@ -11482,8 +11445,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   lame = callPackage ../development/libraries/lame { };
 
-  larswm = callPackage ../applications/window-managers/larswm { };
-
   lash = callPackage ../applications/audio/lash { };
 
   ladspaH = callPackage ../applications/audio/ladspa-sdk/ladspah.nix { };
@@ -11513,10 +11474,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   ldcpp = callPackage ../applications/networking/p2p/ldcpp {
     inherit (gnome) libglade;
   };
-
-  lemonbar = callPackage ../applications/window-managers/lemonbar { };
-
-  lemonbar-xft = callPackage ../applications/window-managers/lemonbar/xft.nix { };
 
   leo-editor = callPackage ../applications/editors/leo-editor { };
 
@@ -11602,8 +11559,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   makeself = callPackage ../applications/misc/makeself { };
 
   marathon = callPackage ../applications/networking/cluster/marathon { };
-
-  matchbox = callPackage ../applications/window-managers/matchbox { };
 
   MBdistortion = callPackage ../applications/audio/MBdistortion { };
 
@@ -11775,11 +11730,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   mutt-kz = callPackage ../applications/networking/mailreaders/mutt-kz { };
 
-  notion = callPackage ../applications/window-managers/notion { };
-
   openshift = callPackage ../applications/networking/cluster/openshift { };
-
-  oroborus = callPackage ../applications/window-managers/oroborus {};
 
   ostinato = callPackage ../applications/networking/ostinato { };
 
@@ -11821,10 +11772,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   librep = callPackage ../development/libraries/librep { };
 
   rep-gtk = callPackage ../development/libraries/rep-gtk { };
-
-  sawfish = callPackage ../applications/window-managers/sawfish { };
-
-  sxhkd = callPackage ../applications/window-managers/sxhkd { };
 
   msmtp = callPackage ../applications/networking/msmtp { };
 
@@ -12131,8 +12078,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ratox = callPackage ../applications/networking/instant-messengers/ratox { };
 
-  ratpoison = callPackage ../applications/window-managers/ratpoison { };
-
   rawtherapee = callPackage ../applications/graphics/rawtherapee {
     fftw = fftwSinglePrec;
   };
@@ -12364,13 +12309,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     git = gitMinimal;
   };
 
-  stalonetray = callPackage ../applications/window-managers/stalonetray {};
-
-  stumpwm = callPackage ../applications/window-managers/stumpwm {
-    sbcl = sbcl_1_2_5;
-    lispPackages = lispPackagesFor (wrapLisp sbcl_1_2_5);
-  };
-
   inherit (callPackages ../applications/version-management/subversion/default.nix {
       bdbSupport = true;
       httpServer = false;
@@ -12409,14 +12347,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   # linux only by now
   synergy = callPackage ../applications/misc/synergy { };
-
-  tabbed = callPackage ../applications/window-managers/tabbed {
-    enableXft = true;
-  };
-
-  taffybar = callPackage ../applications/window-managers/taffybar {
-    inherit (haskellPackages) ghcWithPackages;
-  };
 
   tagainijisho = callPackage ../applications/office/tagainijisho {};
 
@@ -12529,8 +12459,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   transmission_remote_gtk = callPackage ../applications/networking/p2p/transmission-remote-gtk {};
 
-  trayer = callPackage ../applications/window-managers/trayer { };
-
   tree = callPackage ../tools/system/tree {};
 
   trezor-bridge = callPackage ../applications/networking/browsers/mozilla-plugins/trezor { };
@@ -12606,7 +12534,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   qpdfview = callPackage ../applications/misc/qpdfview {};
 
-  qtile = callPackage ../applications/window-managers/qtile { };
 
   qvim = lowPrio (callPackage ../applications/editors/vim/qvim.nix {
     features = "huge"; # one of  tiny, small, normal, big or huge
@@ -12685,8 +12612,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   vue = callPackage ../applications/misc/vue { };
 
-  vwm = callPackage ../applications/window-managers/vwm { };
-
   vym = callPackage ../applications/misc/vym { };
 
   w3m = callPackage ../applications/networking/browsers/w3m {
@@ -12726,18 +12651,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     freerdp = freerdpUnstable;
   };
 
-  windowlab = callPackage ../applications/window-managers/windowlab { };
-
-  windowmaker = callPackage ../applications/window-managers/windowmaker { };
-
-  alsamixer.app = callPackage ../applications/window-managers/windowmaker/dockapps/alsamixer.app.nix { };
-
-  wmcalclock = callPackage ../applications/window-managers/windowmaker/dockapps/wmcalclock.nix { };
-
-  wmsm.app = callPackage ../applications/window-managers/windowmaker/dockapps/wmsm.app.nix { };
-
-  wmsystemtray = callPackage ../applications/window-managers/windowmaker/dockapps/wmsystemtray.nix { };
-
   winswitch = callPackage ../tools/X11/winswitch { };
 
   wings = callPackage ../applications/graphics/wings {
@@ -12748,8 +12661,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   wmname = callPackage ../applications/misc/wmname { };
 
   wmctrl = callPackage ../tools/X11/wmctrl { };
-
-  wmii_hg = callPackage ../applications/window-managers/wmii-hg { };
 
   wordnet = callPackage ../applications/misc/wordnet { };
 
@@ -12865,10 +12776,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   inherit (xorg) xcompmgr;
 
-  compton = callPackage ../applications/window-managers/compton { };
-
-  compton-git = callPackage ../applications/window-managers/compton/git.nix { };
-
   xdaliclock = callPackage ../tools/misc/xdaliclock {};
 
   xdg-user-dirs = callPackage ../tools/X11/xdg-user-dirs { };
@@ -12930,27 +12837,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   xmonad-with-packages = callPackage ../applications/window-managers/xmonad/wrapper.nix {
     inherit (haskellPackages) ghcWithPackages;
     packages = self: [];
-  };
-
-  xmonad_log_applet_gnome2 = callPackage ../applications/window-managers/xmonad-log-applet {
-    desktopSupport = "gnome2";
-    inherit (xfce) libxfce4util xfce4panel;
-    gnome2_panel = gnome2.gnome_panel;
-    GConf2 = gnome2.GConf;
-  };
-
-  xmonad_log_applet_gnome3 = callPackage ../applications/window-managers/xmonad-log-applet {
-    desktopSupport = "gnome3";
-    inherit (xfce) libxfce4util xfce4panel;
-    gnome2_panel = gnome2.gnome_panel;
-    GConf2 = gnome2.GConf;
-  };
-
-  xmonad_log_applet_xfce = callPackage ../applications/window-managers/xmonad-log-applet {
-    desktopSupport = "xfce4";
-    inherit (xfce) libxfce4util xfce4panel;
-    gnome2_panel = gnome2.gnome_panel;
-    GConf2 = gnome2.GConf;
   };
 
   xmpp-client = goPackages.xmpp-client.bin // { outputs = [ "bin" ]; };

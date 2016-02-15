@@ -10,7 +10,7 @@
 , bzip2
 , c-ares
 , dconf
-, evolution
+#, evolution
 , evolution-data-server
 , exempi
 , file
@@ -88,7 +88,7 @@ stdenv.mkDerivation rec {
     #cairo
     dconf
     #enca
-    evolution
+    #evolution
     evolution-data-server
     exempi
     file
@@ -177,7 +177,7 @@ stdenv.mkDerivation rec {
     "--enable-user-guides"
     # TODO: miner-rss support
     "--disable-miner-rss"
-    # TODO: evolution plugin support
+    # evolution currently requires webkit-2.4
     "--disable-miner-evolution"
     # TODO: thunderbird support
     "--disable-miner-thunderbird"

@@ -1528,6 +1528,8 @@ zstd = callPackage ../all-pkgs/zstd { };
     sha256 = "0p2sxrpzd0vsk11zf3kb5h12yl1nq4yypb5mpjrm8ww0cfaijck2";
   };
 
+  btfs = callPackage ../os-specific/linux/btfs { };
+
   cabal2nix = haskellPackages.cabal2nix;
 
   capstone = callPackage ../development/libraries/capstone { };
@@ -1765,7 +1767,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   bittornado = callPackage ../tools/networking/p2p/bit-tornado { };
 
   blueman = callPackage ../tools/bluetooth/blueman {
-    inherit (pythonPackages) notify;
+    inherit (gnome3) dconf;
+    withPulseAudio = config.pulseaudio or true;
   };
 
   bmrsa = callPackage ../tools/security/bmrsa/11.nix { };
@@ -2185,6 +2188,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   evemu = callPackage ../tools/system/evemu { };
 
   elasticsearch = callPackage ../servers/search/elasticsearch { };
+  elasticsearch2 = callPackage ../servers/search/elasticsearch/2.x.nix { };
 
   elasticsearchPlugins = recurseIntoAttrs (
     callPackage ../servers/search/elasticsearch/plugins.nix { }
@@ -3987,6 +3991,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   tiled = qt5.callPackage ../applications/editors/tiled { };
 
+  timemachine = callPackage ../applications/audio/timemachine { };
+
   tinc = callPackage ../tools/networking/tinc { };
 
   tinc_pre = callPackage ../tools/networking/tinc/pre.nix { };
@@ -4916,6 +4922,12 @@ zstd = callPackage ../all-pkgs/zstd { };
   julia = callPackage ../development/compilers/julia {
     openblas = openblasCompat;
   };
+
+  julia-git = lowPrio (callPackage ../development/compilers/julia/git.nix {
+    gmp = gmp6;
+    llvm = llvm_37;
+    openblas = openblasCompat;
+  });
 
   kotlin = callPackage ../development/compilers/kotlin { };
 
@@ -9838,11 +9850,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   batctl = callPackage ../os-specific/linux/batman-adv/batctl.nix { };
 
-  bluez4 = callPackage ../os-specific/linux/bluez {
+  bluez4 = lowPrio (callPackage ../os-specific/linux/bluez {
     pygobject = pygobject3;
-  };
+  });
 
-  bluez5 = lowPrio (callPackage ../os-specific/linux/bluez/bluez5.nix { });
+  bluez5 = callPackage ../os-specific/linux/bluez/bluez5.nix { };
 
   # Needed for LibreOffice
   bluez5_28 = lowPrio (callPackage ../os-specific/linux/bluez/bluez5_28.nix { });
@@ -11281,7 +11293,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   calcurse = callPackage ../applications/misc/calcurse { };
 
-  calibre = qt5.callPackage ../applications/misc/calibre {
+  calibre = qt55.callPackage ../applications/misc/calibre {
     inherit (pythonPackages) pyqt5 sip_4_16;
   };
 
@@ -12222,6 +12234,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   jackmix_jack1 = jackmix.override { jack = jack1; };
 
   jalv = callPackage ../applications/audio/jalv { };
+
+  jamin = callPackage ../applications/audio/jamin { };
 
   jedit = callPackage ../applications/editors/jedit { };
 
@@ -14696,7 +14710,16 @@ zstd = callPackage ../all-pkgs/zstd { };
     in
       recurseIntoAttrs (lib.makeScope qt55.newScope merged);
 
-  kde5_latest = kde5;
+  kde5_latest =
+    let
+      frameworks = import ../development/libraries/kde-frameworks-5.19 { inherit pkgs; };
+      plasma = import ../desktops/plasma-5.5 { inherit pkgs; };
+      apps = import ../applications/kde-apps-15.12 { inherit pkgs; };
+      named = self: { plasma = plasma self; frameworks = frameworks self; apps = apps self; };
+      merged = self:
+        named self // frameworks self // plasma self // apps self // kde5PackagesFun self;
+    in
+      recurseIntoAttrs (lib.makeScope qt55.newScope merged);
 
   theme-vertex = callPackage ../misc/themes/vertex { };
 
@@ -15419,6 +15442,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   runit = callPackage ../tools/system/runit { };
 
   refind = callPackage ../tools/bootloaders/refind { };
+
+  spectrojack = callPackage ../applications/audio/spectrojack { };
 
   xlockmore = callPackage ../misc/screensavers/xlockmore { };
 

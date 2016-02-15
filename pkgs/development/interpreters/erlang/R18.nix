@@ -1,9 +1,9 @@
 { stdenv, fetchurl, perl, gnum4, ncurses, openssl
 , gnused, gawk, makeWrapper
 , Carbon, Cocoa
-, odbcSupport ? false, unixODBC ? null
+, odbcSupport ? true, unixODBC ? null
 , wxSupport ? true, mesa ? null, wxGTK ? null, xorg ? null, wxmac ? null
-, javacSupport ? false, openjdk ? null
+, javacSupport ? true, openjdk ? null
 , enableHipe ? true
 }:
 

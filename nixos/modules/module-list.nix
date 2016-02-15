@@ -154,9 +154,6 @@
   ./services/desktops/gnome3/tracker.nix
   ./services/desktops/profile-sync-daemon.nix
   ./services/desktops/telepathy.nix
-  ./services/games/ghost-one.nix
-  ./services/games/minecraft-server.nix
-  ./services/games/minetest-server.nix
   ./services/hardware/acpid.nix
   ./services/hardware/actkbd.nix
   ./services/hardware/amd-hybrid-graphics.nix

@@ -526,6 +526,9 @@ amrnb = callPackage ../all-pkgs/amrnb { };
 
 amrwb = callPackage ../all-pkgs/amrwb { };
 
+aria2 = callPackage ../all-pkgs/aria2 { };
+aria = aria2;
+
 atk = callPackage ../all-pkgs/atk { };
 
 atkmm = callPackage ../all-pkgs/atkmm { };
@@ -1431,11 +1434,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   androidsdk = androidenv.androidsdk_6_0;
 
   arc-gtk-theme = callPackage ../misc/themes/arc { };
-
-  aria2 = callPackage ../tools/networking/aria2 {
-    inherit (darwin.apple_sdk.frameworks) Security;
-  };
-  aria = aria2;
 
   at = callPackage ../tools/system/at { };
 

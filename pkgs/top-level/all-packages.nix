@@ -544,6 +544,13 @@ avahi = callPackage ../all-pkgs/avahi { };
 
 bazaar = callPackage ../all-pkgs/bazaar { };
 
+bash = callPackage ../all-pkgs/bash {
+  interactive = true;
+};
+bashInteractive = bash;
+
+bashCompletion = callPackage ../all-pkgs/bash-completion { };
+
 bc = callPackage ../all-pkgs/bc { };
 
 bzrtools = callPackage ../all-pkgs/bzrtools { };
@@ -581,6 +588,8 @@ clutter-gtk = callPackage ../all-pkgs/clutter-gtk { };
 cogl = callPackage ../all-pkgs/cogl { };
 
 colord = callPackage ../all-pkgs/colord { };
+
+dash = callPackage ../shells/dash { };
 
 dconf = callPackage ../all-pkgs/dconf { };
 
@@ -627,6 +636,8 @@ firefox_wrapper = callPackage ../all-pkgs/firefox/wrapper.nix { };
 firefox-bin = callPackage ../applications/networking/browsers/firefox-bin {
   inherit (pkgs.gnome) libgnome libgnomeui;
 };
+
+fish = callPackage ../all-pkgs/fish { };
 
 flac = callPackage ../all-pkgs/flac { };
 
@@ -4463,35 +4474,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
 
   ### SHELLS
-
-  bash = callPackage ../shells/bash {
-    interactive = true;
-  };
-  bashInteractive = bash;
-
-  bashCompletion = callPackage ../shells/bash-completion { };
-
-  dash = callPackage ../shells/dash { };
-
-  es = callPackage ../shells/es { };
-
-  fish = callPackage ../shells/fish { };
-
-  fish-foreign-env = callPackage ../shells/fish-foreign-env { };
-
-  mksh = callPackage ../shells/mksh { };
-
-  pash = callPackage ../shells/pash { };
-
-  tcsh = callPackage ../shells/tcsh { };
-
-  rush = callPackage ../shells/rush { };
-
-  xonsh = callPackage ../shells/xonsh { };
-
-  nix-zsh-completions = callPackage ../shells/nix-zsh-completions { };
-
-  grml-zsh-config = callPackage ../shells/grml-zsh-config { };
 
 
   ### DEVELOPMENT / COMPILERS

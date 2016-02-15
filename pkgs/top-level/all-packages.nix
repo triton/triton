@@ -4746,8 +4746,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     inherit ocaml;
     buildOcaml = callPackage ../build-support/ocaml { };
 
-    acgtk = callPackage ../applications/science/logic/acgtk { };
-
     alcotest = callPackage ../development/ocaml-modules/alcotest {};
 
     ansiterminal = callPackage ../development/ocaml-modules/ansiterminal { };
@@ -7989,8 +7987,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   rubberband = callPackage ../development/libraries/rubberband {
     inherit (vamp) vampSDK;
   };
-
-  sad = callPackage ../applications/science/logic/sad { };
 
   sbc = callPackage ../development/libraries/sbc { };
 
@@ -11596,8 +11592,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   lbzip2 = callPackage ../tools/compression/lbzip2 { };
 
-  lci = callPackage ../applications/science/logic/lci {};
-
   ldcpp = callPackage ../applications/networking/p2p/ldcpp {
     inherit (gnome) libglade;
   };
@@ -12459,8 +12453,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   };
 
   stalonetray = callPackage ../applications/window-managers/stalonetray {};
-
-  stp = callPackage ../applications/science/logic/stp {};
 
   stumpwm = callPackage ../applications/window-managers/stumpwm {
     sbcl = sbcl_1_2_5;
@@ -14106,206 +14098,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   ### SCIENCE/PROGRAMMING
 
   plm = callPackage ../applications/science/programming/plm { };
-
-  ### SCIENCE/LOGIC
-
-  abc-verifier = callPackage ../applications/science/logic/abc {};
-
-  abella = callPackage ../applications/science/logic/abella {};
-
-  alt-ergo = callPackage ../applications/science/logic/alt-ergo {};
-
-  coq = callPackage ../applications/science/logic/coq {
-    inherit (ocamlPackages_4_01_0) ocaml findlib lablgtk;
-    camlp5 = ocamlPackages_4_01_0.camlp5_transitional;
-  };
-
-  coq_HEAD = callPackage ../applications/science/logic/coq/HEAD.nix {
-    inherit (ocamlPackages) findlib lablgtk;
-    camlp5 = ocamlPackages.camlp5_transitional;
-  };
-
-  coq_8_5 = callPackage ../applications/science/logic/coq/8.5.nix {
-    inherit (ocamlPackages) findlib lablgtk;
-    camlp5 = ocamlPackages.camlp5_transitional;
-  };
-
-  coq_8_3 = callPackage ../applications/science/logic/coq/8.3.nix {
-    make = gnumake3;
-    inherit (ocamlPackages_3_12_1) ocaml findlib;
-    camlp5 = ocamlPackages_3_12_1.camlp5_transitional;
-    lablgtk = ocamlPackages_3_12_1.lablgtk_2_14;
-  };
-
-  mkCoqPackages_8_4 = self: let callPackage = newScope self; in {
-
-    inherit callPackage;
-
-    bedrock = callPackage ../development/coq-modules/bedrock {};
-
-    contribs =
-      let contribs =
-        import ../development/coq-modules/contribs
-        contribs
-        callPackage { };
-      in
-        recurseIntoAttrs contribs;
-
-    coqExtLib = callPackage ../development/coq-modules/coq-ext-lib {};
-
-    coqeal = callPackage ../development/coq-modules/coqeal {};
-
-    coquelicot = callPackage ../development/coq-modules/coquelicot {};
-
-    domains = callPackage ../development/coq-modules/domains {};
-
-    fiat = callPackage ../development/coq-modules/fiat {};
-
-    flocq = callPackage ../development/coq-modules/flocq {};
-
-    heq = callPackage ../development/coq-modules/heq {};
-
-    interval = callPackage ../development/coq-modules/interval {};
-
-    mathcomp = callPackage ../development/coq-modules/mathcomp {};
-
-    paco = callPackage ../development/coq-modules/paco {};
-
-    QuickChick = callPackage ../development/coq-modules/QuickChick {};
-
-    ssreflect = callPackage ../development/coq-modules/ssreflect {};
-
-    tlc = callPackage ../development/coq-modules/tlc {};
-
-    unimath = callPackage ../development/coq-modules/unimath {};
-
-    ynot = callPackage ../development/coq-modules/ynot {};
-
-  };
-
-  mkCoqPackages_8_5 = self: let callPackage = newScope self; in rec {
-
-    inherit callPackage;
-
-    coq = coq_8_5;
-
-    coq-ext-lib = callPackage ../development/coq-modules/coq-ext-lib {};
-
-    coquelicot = callPackage ../development/coq-modules/coquelicot {};
-
-    flocq = callPackage ../development/coq-modules/flocq {};
-
-    interval = callPackage ../development/coq-modules/interval {};
-
-    mathcomp = callPackage ../development/coq-modules/mathcomp { };
-
-    ssreflect = callPackage ../development/coq-modules/ssreflect { };
-
-  };
-
-  coqPackages = mkCoqPackages_8_4 coqPackages;
-  coqPackages_8_5 = mkCoqPackages_8_5 coqPackages_8_5;
-
-  cvc3 = callPackage ../applications/science/logic/cvc3 {
-    gmp = lib.overrideDerivation gmp (a: { dontDisableStatic = true; });
-  };
-  cvc4 = callPackage ../applications/science/logic/cvc4 {};
-
-  ekrhyper = callPackage ../applications/science/logic/ekrhyper {};
-
-  eprover = callPackage ../applications/science/logic/eprover { };
-
-  gappa = callPackage ../applications/science/logic/gappa { };
-
-  ginac = callPackage ../applications/science/math/ginac { };
-
-  hol = callPackage ../applications/science/logic/hol { };
-
-  hol_light = callPackage ../applications/science/logic/hol_light {
-    camlp5 = ocamlPackages.camlp5_strict;
-  };
-
-  hologram = goPackages.hologram.bin // { outputs = [ "bin" ]; };
-
-  tini = callPackage ../applications/virtualization/tini {};
-
-  iprover = callPackage ../applications/science/logic/iprover {};
-
-  jonprl = callPackage ../applications/science/logic/jonprl {
-    smlnj = if stdenv.isDarwin
-      then smlnjBootstrap
-      else smlnj;
-  };
-
-  lean = callPackage ../applications/science/logic/lean {};
-
-  leo2 = callPackage ../applications/science/logic/leo2 {};
-
-  logisim = callPackage ../applications/science/logic/logisim {};
-
-  ltl2ba = callPackage ../applications/science/logic/ltl2ba {};
-
-  matita = callPackage ../applications/science/logic/matita {
-    ocaml = ocaml_3_11_2;
-    inherit (ocamlPackages_3_11_2) findlib lablgtk ocaml_expat gmetadom ocaml_http
-            lablgtkmathview ocaml_mysql ocaml_sqlite3 ocamlnet camlzip ocaml_pcre;
-    ulex08 = ocamlPackages_3_11_2.ulex08.override { camlp5 = ocamlPackages_3_11_2.camlp5_old_transitional; };
-  };
-
-  matita_130312 = lowPrio (callPackage ../applications/science/logic/matita/130312.nix {
-    inherit (ocamlPackages) findlib lablgtk ocaml_expat gmetadom ocaml_http
-            ocaml_mysql ocamlnet ulex08 camlzip ocaml_pcre;
-  });
-
-  metis-prover = callPackage ../applications/science/logic/metis-prover { };
-
-  minisat = callPackage ../applications/science/logic/minisat {};
-
-  opensmt = callPackage ../applications/science/logic/opensmt { };
-
-  ott = callPackage ../applications/science/logic/ott {
-    camlp5 = ocamlPackages.camlp5_transitional;
-  };
-
-  otter = callPackage ../applications/science/logic/otter {};
-
-  picosat = callPackage ../applications/science/logic/picosat {};
-
-  prooftree = callPackage ../applications/science/logic/prooftree {
-    inherit (ocamlPackages_4_01_0) ocaml findlib lablgtk;
-    camlp5 = ocamlPackages_4_01_0.camlp5_transitional;
-  };
-
-  prover9 = callPackage ../applications/science/logic/prover9 { };
-
-  satallax = callPackage ../applications/science/logic/satallax {};
-
-  spass = callPackage ../applications/science/logic/spass {};
-
-  tptp = callPackage ../applications/science/logic/tptp {};
-
-  twelf = callPackage ../applications/science/logic/twelf {
-    smlnj = if stdenv.isDarwin
-      then smlnjBootstrap
-      else smlnj;
-  };
-
-  verifast = callPackage ../applications/science/logic/verifast {};
-
-  veriT = callPackage ../applications/science/logic/verit {};
-
-  why3 = callPackage ../applications/science/logic/why3 {};
-
-  yices = callPackage ../applications/science/logic/yices {};
-
-  z3 = callPackage ../applications/science/logic/z3 {};
-  z3_opt = callPackage ../applications/science/logic/z3_opt {};
-
-  boolector   = boolector15;
-  boolector15 = callPackage ../applications/science/logic/boolector {};
-  boolector16 = lowPrio (callPackage ../applications/science/logic/boolector {
-    useV16 = true;
-  });
 
   ### SCIENCE / ELECTRONICS
 

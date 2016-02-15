@@ -41,11 +41,18 @@ in
 
   config = mkIf cfg.enable {
 
-    services.xserver.displayManager.slim = {
-      enable = true;
-      autoLogin = true;
-      defaultUser = cfg.user;
-    };
+    assertions = [
+      {
+        assertion = true;
+        message = "Display-manager auto is not implemented";
+      }
+    ];
+
+    #services.xserver.displayManager.slim = {
+    #  enable = true;
+    #  autoLogin = true;
+    #  defaultUser = cfg.user;
+    #};
 
   };
 

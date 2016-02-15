@@ -127,44 +127,39 @@ in {
     services.xserver.desktopManager.session = singleton {
       name = "gnome3";
       bgSupport = true;
-      start = ''
-        # Set GTK_DATA_PREFIX so that GTK+ can find the themes
-        export GTK_DATA_PREFIX=${config.system.path}
+      start =
+        /* Set GTK_DATA_PREFIX so that GTK+ can find the themes */ ''
+          export GTK_DATA_PREFIX=${config.system.path}
+        '' + /* find theme engines */ ''
+          export GTK_PATH=${config.system.path}/lib/gtk-3.0:${config.system.path}/lib/gtk-2.0
 
-        # find theme engines
-        export GTK_PATH=${config.system.path}/lib/gtk-3.0:${config.system.path}/lib/gtk-2.0
+          export XDG_MENU_PREFIX=gnome
 
-        export XDG_MENU_PREFIX=gnome
+          ${concatMapStrings (p: ''
+            if [ -d "${p}/share/gsettings-schemas/${p.name}" ]; then
+              export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${p}/share/gsettings-schemas/${p.name}
+            fi
 
-        ${concatMapStrings (p: ''
-          if [ -d "${p}/share/gsettings-schemas/${p.name}" ]; then
-            export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${p}/share/gsettings-schemas/${p.name}
-          fi
+            if [ -d "${p}/lib/girepository-1.0" ]; then
+              export GI_TYPELIB_PATH=$GI_TYPELIB_PATH''${GI_TYPELIB_PATH:+:}${p}/lib/girepository-1.0
+              export LD_LIBRARY_PATH=$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}${p}/lib
+            fi
+          '') config.services.xserver.desktopManager.gnome3.sessionPath}
+        '' + /* Override default mimeapps */ ''
+          export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${mimeAppsList}/share
+        '' + /* Override gsettings-desktop-schema */ ''
+          export XDG_DATA_DIRS=${nixos-gsettings-desktop-schemas}/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas''${XDG_DATA_DIRS:+:}$XDG_DATA_DIRS
+        '' + /* Let nautilus find extensions */ ''
+          export NAUTILUS_EXTENSION_DIR=${config.system.path}/lib/nautilus/extensions-3.0/
+        '' + /* Find the mouse */ ''
+          export XCURSOR_PATH=~/.icons:${config.system.path}/share/icons
+        '' + /* Update user dirs as described in
+                http://freedesktop.org/wiki/Software/xdg-user-dirs/ */ ''
+          ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
 
-          if [ -d "${p}/lib/girepository-1.0" ]; then
-            export GI_TYPELIB_PATH=$GI_TYPELIB_PATH''${GI_TYPELIB_PATH:+:}${p}/lib/girepository-1.0
-            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}${p}/lib
-          fi
-        '') config.services.xserver.desktopManager.gnome3.sessionPath}
-
-        # Override default mimeapps
-        export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${mimeAppsList}/share
-
-        # Override gsettings-desktop-schema
-        export XDG_DATA_DIRS=${nixos-gsettings-desktop-schemas}/share/nixos-gsettings-schemas/nixos-gsettings-desktop-schemas''${XDG_DATA_DIRS:+:}$XDG_DATA_DIRS
-
-        # Let nautilus find extensions
-        export NAUTILUS_EXTENSION_DIR=${config.system.path}/lib/nautilus/extensions-3.0/
-
-        # Find the mouse
-        export XCURSOR_PATH=~/.icons:${config.system.path}/share/icons
-
-        # Update user dirs as described in http://freedesktop.org/wiki/Software/xdg-user-dirs/
-        ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
-
-        ${pkgs.gnome-session}/bin/gnome-session&
-        waitPID=$!
-      '';
+          ${pkgs.gnome-session}/bin/gnome-session&
+          waitPID=$!
+        '';
     };
 
     environment.variables.GIO_EXTRA_MODULES = [

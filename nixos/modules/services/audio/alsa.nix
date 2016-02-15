@@ -29,7 +29,8 @@ in
         type = types.bool;
         default = true;
         description = ''
-          Whether to enable ALSA OSS emulation (with certain cards sound mixing may not work!).
+          Whether to enable ALSA OSS emulation (with certain cards sound
+          mixing may not work!).
         '';
       };
 
@@ -94,16 +95,24 @@ in
       enable = true;
       bindings = [
         # "Mute" media key
-        { keys = [ 113 ]; events = [ "key" ];       command = "${alsaUtils}/bin/amixer -q set Master toggle"; }
+        { keys = [ 113 ];
+          events = [ "key" ];
+          command = "${alsaUtils}/bin/amixer -q set Master toggle"; }
 
         # "Lower Volume" media key
-        { keys = [ 114 ]; events = [ "key" "rep" ]; command = "${alsaUtils}/bin/amixer -q set Master 1- unmute"; }
+        { keys = [ 114 ];
+          events = [ "key" "rep" ];
+          command = "${alsaUtils}/bin/amixer -q set Master 1- unmute"; }
 
         # "Raise Volume" media key
-        { keys = [ 115 ]; events = [ "key" "rep" ]; command = "${alsaUtils}/bin/amixer -q set Master 1+ unmute"; }
+        { keys = [ 115 ];
+          events = [ "key" "rep" ];
+          command = "${alsaUtils}/bin/amixer -q set Master 1+ unmute"; }
 
         # "Mic Mute" media key
-        { keys = [ 190 ]; events = [ "key" ];       command = "${alsaUtils}/bin/amixer -q set Capture toggle"; }
+        { keys = [ 190 ];
+          events = [ "key" ];
+          command = "${alsaUtils}/bin/amixer -q set Capture toggle"; }
       ];
     };
 

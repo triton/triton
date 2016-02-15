@@ -24,4 +24,4 @@ manager.
 * `x86_64-freebsd`
 * `x86_64-linux`
 
-Days William has procrastinated and not setup hydra: `41`
+Days William has procrastinated and not setup hydra: `46`

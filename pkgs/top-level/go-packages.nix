@@ -2169,11 +2169,11 @@ let
   };
 
   ipfs = buildFromGitHub {
-    date   = "2016-02-12";
-    rev    = "a871f371e9ac947081261f5a8373ca298524587b";
+    date   = "2016-02-13";
+    rev    = "6b76e2a41ab4a8802a6d1306e882ac3b8e384abe";
     owner  = "ipfs";
     repo   = "go-ipfs";
-    sha256 = "0kydgdj3g6d7f6yy660j6plx0abzd76h9bwi1sj0g2f8z0fd78zj";
+    sha256 = "02ackv5y2xralbmijyjv48wn9521ykyddc43ny9vmn492kicka3d";
     extraSrcs = [
       {
         src = fetchGxPackage {

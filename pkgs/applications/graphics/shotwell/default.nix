@@ -1,5 +1,5 @@
 { fetchurl, stdenv, m4, glibc, gtk3, libexif, libgphoto2, libsoup, libxml2, vala, sqlite
-, webkitgtk24x, pkgconfig, gnome3, gst_all_1, which, udev, libgudev, libraw, glib, json_glib
+, pkgconfig, gnome3, gst_all_1, which, udev, libgudev, libraw, glib, json_glib
 , gettext, desktop_file_utils, lcms2, gdk_pixbuf, librsvg, makeWrapper
 , gnome_doc_utils, hicolor_icon_theme }:
 
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   '';
 
 
-  buildInputs = [ m4 glibc gtk3 libexif libgphoto2 libsoup libxml2 vala sqlite webkitgtk24x
+  buildInputs = [ m4 glibc gtk3 libexif libgphoto2 libsoup libxml2 vala sqlite
                   pkgconfig gst_all_1.gstreamer gst_all_1.gst-plugins-base gnome3.libgee
                   which udev libgudev gnome3.gexiv2 hicolor_icon_theme
                   libraw json_glib gettext desktop_file_utils glib lcms2 gdk_pixbuf librsvg
@@ -48,5 +48,6 @@ stdenv.mkDerivation rec {
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [iElectric];
     platforms = platforms.linux;
+    broken = true;
   };
 }

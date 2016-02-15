@@ -11391,11 +11391,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   jbrout = callPackage ../applications/graphics/jbrout { };
 
-  jumanji = callPackage ../applications/networking/browsers/jumanji {
-    webkitgtk = webkitgtk24x;
-    gtk = gtk3;
-  };
-
   k3d = callPackage ../applications/graphics/k3d {
     inherit (pkgs.gnome2) gtkglext;
     boost = boost155;

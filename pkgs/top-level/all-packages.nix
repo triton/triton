@@ -6281,10 +6281,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   dclib = callPackage ../development/libraries/dclib { };
 
-  dillo = callPackage ../applications/networking/browsers/dillo {
-    fltk = fltk13;
-  };
-
   directfb = callPackage ../development/libraries/directfb { };
 
   dlib = callPackage ../development/libraries/dlib { };

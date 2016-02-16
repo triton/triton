@@ -17,9 +17,7 @@ rec {
 
   pkgs = pkgsFor "x86_64-linux";
 
-
   hydraJob' = if scrubJobs then hydraJob else id;
-
 
   /* !!! Hack: poor man's memoisation function.  Necessary to prevent
      Nixpkgs from being evaluated again and again for every
@@ -27,26 +25,20 @@ rec {
   pkgsFor = system:
     if system == "x86_64-linux" then pkgs_x86_64_linux
     else if system == "i686-linux" then pkgs_i686_linux
-    else if system == "x86_64-darwin" then pkgs_x86_64_darwin
     else if system == "x86_64-freebsd" then pkgs_x86_64_freebsd
     else if system == "i686-freebsd" then pkgs_i686_freebsd
-    else if system == "i686-cygwin" then pkgs_i686_cygwin
-    else if system == "x86_64-cygwin" then pkgs_x86_64_cygwin
     else abort "unsupported system type: ${system}";
 
   pkgs_x86_64_linux = allPackages { system = "x86_64-linux"; };
   pkgs_i686_linux = allPackages { system = "i686-linux"; };
-  pkgs_x86_64_darwin = allPackages { system = "x86_64-darwin"; };
   pkgs_x86_64_freebsd = allPackages { system = "x86_64-freebsd"; };
   pkgs_i686_freebsd = allPackages { system = "i686-freebsd"; };
-  pkgs_i686_cygwin = allPackages { system = "i686-cygwin"; };
-  pkgs_x86_64_cygwin = allPackages { system = "x86_64-cygwin"; };
 
 
   /* The working or failing mails for cross builds will be sent only to
      the following maintainers, as most package maintainers will not be
      interested in the result of cross building a package. */
-  crossMaintainers = [ maintainers.viric ];
+  crossMaintainers = [ ];
 
 
   /* Build a package on the given set of platforms.  The function `f'
@@ -97,11 +89,6 @@ rec {
 
 
   /* Common platform groups on which to test packages. */
-  inherit (platforms) unix linux darwin cygwin allBut all mesaPlatforms;
-
-  /* Platform groups for specific kinds of applications. */
-  x11Supported = linux;
-  gtkSupported = linux;
-  ghcSupported = linux;
+  inherit (platforms) unix linux allBut all;
 
 }

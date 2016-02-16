@@ -1,7 +1,7 @@
 { stdenv, lib, fetchurl, tzdata, iana_etc, libcCross
 , pkgconfig
 , pcre
-, Security }:
+}:
 
 let
   libc = if stdenv ? "cross" then libcCross else stdenv.cc.libc;
@@ -18,7 +18,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ pcre ];
-  propagatedBuildInputs = lib.optional stdenv.isDarwin Security;
 
   # I'm not sure what go wants from its 'src', but the go installation manual
   # describes an installation keeping the src.
@@ -62,46 +61,24 @@ stdenv.mkDerivation rec {
 
     # Replace references to the loader
     find src/cmd -name asm.c -exec sed -i "s,/lib/ld-linux.*\.so\.[0-9],$LOADER," {} \;
-  '' + lib.optionalString stdenv.isDarwin ''
-    sed -i 's,"/etc","'"$TMPDIR"'",' src/os/os_test.go
-    sed -i 's,/_go_os_test,'"$TMPDIR"'/_go_os_test,' src/os/path_test.go
-    sed -i '/TestCgoLookupIP/areturn' src/net/cgo_unix_test.go
-    sed -i '/TestChdirAndGetwd/areturn' src/os/os_test.go
-    sed -i '/TestDialDualStackLocalhost/areturn' src/net/dial_test.go
-    sed -i '/TestRead0/areturn' src/os/os_test.go
-    sed -i '/TestSystemRoots/areturn' src/crypto/x509/root_darwin_test.go
-
-    # fails when running inside tmux
-    sed -i '/TestNohup/areturn' src/os/signal/signal_test.go
-
-
-    # remove IP resolving tests, on darwin they can find fe80::1%lo while expecting ::1
-    sed -i '/TestResolveIPAddr/areturn' src/net/ipraw_test.go
-    sed -i '/TestResolveTCPAddr/areturn' src/net/tcp_test.go
-    sed -i '/TestResolveUDPAddr/areturn' src/net/udp_test.go
-
-    sed -i '/TestCgoExternalThreadSIGPROF/areturn' src/runtime/crash_cgo_test.go
-
-    touch $TMPDIR/group $TMPDIR/hosts $TMPDIR/passwd
   '';
 
   patches = [
     ./remove-tools-1.4.patch
   ];
 
-  GOOS = if stdenv.isDarwin then "darwin" else "linux";
-  GOARCH = if stdenv.isDarwin then "amd64"
-           else if stdenv.system == "i686-linux" then "386"
+  GOOS = "linux";
+  GOARCH = if stdenv.system == "i686-linux" then "386"
            else if stdenv.system == "x86_64-linux" then "amd64"
-           else if stdenv.isArm then "arm"
+           #else if stdenv.isArm then "arm"
            else throw "Unsupported system";
-  GOARM = stdenv.lib.optionalString (stdenv.system == "armv5tel-linux") "5";
+  #GOARM = stdenv.lib.optionalString (stdenv.system == "armv5tel-linux") "5";
   GO386 = 387; # from Arch: don't assume sse2 on i686
   CGO_ENABLED = 1;
 
   # The go build actually checks for CC=*/clang and does something different, so we don't
   # just want the generic `cc` here.
-  CC = if stdenv.isDarwin then "clang" else "cc";
+  CC = if stdenv.cc.isClang then "clang" else "cc";
 
   installPhase = ''
     mkdir -p "$out/bin"
@@ -120,6 +97,6 @@ stdenv.mkDerivation rec {
     description = "The Go Programming language";
     license = licenses.bsd3;
     maintainers = with maintainers; [ cstrahan wkennington ];
-    platforms = platforms.linux ++ platforms.darwin;
+    platforms = platforms.linux;
   };
 }

@@ -603,6 +603,8 @@ devil = callPackage ../all-pkgs/devil { };
 
 dos2unix = callPackage ../all-pkgs/dos2unix { };
 
+dropbox = qt5.callPackage ../all-pkgs/dropbox { };
+
 eog = callPackage ../all-pkgs/eog { };
 
 evince = callPackage ../all-pkgs/evince { };
@@ -11884,8 +11886,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   bittorrentSync20 = callPackage ../applications/networking/bittorrentsync/2.0.x.nix { };
 
   copy-com = callPackage ../applications/networking/copy-com { };
-
-  dropbox = qt5.callPackage ../applications/networking/dropbox { };
 
   dropbox-cli = callPackage ../applications/networking/dropbox-cli { };
 

@@ -2,7 +2,6 @@
 , autoreconfHook
 , fetchTritonPatch
 , fetchurl
-, libiconv
 
 , cogl
 , fontconfig
@@ -22,7 +21,6 @@
 with {
   inherit (stdenv.lib)
     enFlag
-    optionals
     optionalString;
 };
 
@@ -42,8 +40,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoreconfHook
-  ] ++ optionals (!stdenv.cc.isGNU) [
-    libiconv
   ];
 
   buildInputs = [

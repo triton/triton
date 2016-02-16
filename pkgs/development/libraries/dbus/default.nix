@@ -1,6 +1,6 @@
 { stdenv, fetchurl, pkgconfig, autoreconfHook
 , expat, systemd, glib, dbus_glib, python
-, xorg ? null, x11Support ? (stdenv.isLinux || stdenv.isDarwin) }:
+, xorg ? null, x11Support ? (stdenv.isLinux) }:
 
 assert x11Support -> xorg != null;
 
@@ -32,7 +32,7 @@ let
         ./ucred-dirty-hack.patch
         ./no-create-dirs.patch
       ]
-      ++ lib.optional (stdenv.isSunOS || stdenv.isLinux) ./implement-getgrouplist.patch
+      ++ lib.optional (stdenv.isLinux) ./implement-getgrouplist.patch
       ;
 
     # build only the specified subdirs
@@ -62,8 +62,6 @@ let
       "--with-systemdsystemunitdir=$(out)/etc/systemd/system"
     ] ++ lib.optional (!x11Support) "--without-x";
 
-    enableParallelBuilding = true;
-
     doCheck = true;
 
     installFlags = "sysconfdir=$(out)/etc";
@@ -91,9 +89,7 @@ let
   tools = dbus_drv "tools" "tools bus" {
     preBuild = makeInternalLib;
     buildInputs = buildInputsX ++ systemdOrEmpty ++ [ libs ];
-    NIX_CFLAGS_LINK =
-      stdenv.lib.optionalString (!stdenv.isDarwin && !stdenv.isSunOS) "-Wl,--as-needed "
-      + "-ldbus-1";
+    NIX_CFLAGS_LINK = "-Wl,--as-needed " + "-ldbus-1";
 
     # don't provide another dbus-1.pc (with incorrect include and link dirs),
     # also remove useless empty dirs
@@ -102,7 +98,7 @@ let
       rmdir --parents --ignore-fail-on-non-empty "$out"/{lib/pkgconfig,share/dbus-1/*}
     '';
 
-    meta.platforms = with stdenv.lib.platforms; allBut darwin;
+    meta.platforms = stdenv.lib.platforms.all;
   };
 
   daemon = tools;

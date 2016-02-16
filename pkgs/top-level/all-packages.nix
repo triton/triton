@@ -505,6 +505,8 @@ let
 ################################################################################
 ################################################################################
 
+accountsservice = callPackage ../all-pkgs/accountsservice { };
+
 acl = callPackage ../all-pkgs/acl { };
 
 adwaita-icon-theme = callPackage ../all-pkgs/adwaita-icon-theme { };
@@ -5990,8 +5992,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   aalib = callPackage ../development/libraries/aalib { };
 
   accelio = callPackage ../development/libraries/accelio { };
-
-  accountsservice = callPackage ../development/libraries/accountsservice { };
 
   activemq = callPackage ../development/libraries/apache-activemq { };
 

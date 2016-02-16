@@ -547,6 +547,10 @@ bashCompletion = callPackage ../all-pkgs/bash-completion { };
 
 bc = callPackage ../all-pkgs/bc { };
 
+bittorrentSync14 = callPackage ../all-pkgs/bittorrentsync/1.4.x.nix { };
+bittorrentSync20 = callPackage ../all-pkgs/bittorrentsync/2.0.x.nix { };
+bittorrentSync = bittorrentSync14;
+
 bzrtools = callPackage ../all-pkgs/bzrtools { };
 
 beets = callPackage ../all-pkgs/beets { };
@@ -11880,10 +11884,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   swingsane = callPackage ../applications/graphics/swingsane { };
 
   sxiv = callPackage ../applications/graphics/sxiv { };
-
-  bittorrentSync = bittorrentSync14;
-  bittorrentSync14 = callPackage ../applications/networking/bittorrentsync/1.4.x.nix { };
-  bittorrentSync20 = callPackage ../applications/networking/bittorrentsync/2.0.x.nix { };
 
   copy-com = callPackage ../applications/networking/copy-com { };
 

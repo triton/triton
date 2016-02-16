@@ -1242,6 +1242,8 @@ zeitgeist = callPackage ../all-pkgs/zeitgeist { };
 
 zenity = callPackage ../all-pkgs/zenity { };
 
+zip = callPackage ../all-pkgs/zip { };
+
 zsh = callPackage ../all-pkgs/zsh { };
 
 zstd = callPackage ../all-pkgs/zstd { };
@@ -4407,8 +4409,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   zimreader = callPackage ../tools/text/zimreader { };
 
   zimwriterfs = callPackage ../tools/text/zimwriterfs { };
-
-  zip = callPackage ../tools/archivers/zip { };
 
   zkfuse = callPackage ../tools/filesystems/zkfuse { };
 

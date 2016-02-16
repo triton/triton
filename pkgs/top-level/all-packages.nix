@@ -5932,8 +5932,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   teensy-loader-cli = callPackage ../development/tools/misc/teensy-loader-cli { };
 
-  texinfo413 = callPackage ../development/tools/misc/texinfo/4.13a.nix { };
-  texinfo4 = texinfo413;
   texinfo6 = callPackage ../development/tools/misc/texinfo/6.0.nix { };
   texinfo = texinfo6;
 

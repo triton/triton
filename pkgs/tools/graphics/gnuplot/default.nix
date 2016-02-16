@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, zlib, gd, texinfo4, makeWrapper, readline
+{ lib, stdenv, fetchurl, zlib, gd, texinfo, makeWrapper, readline
 , withTeXLive ? false, texlive
 , withLua ? false, lua
 , emacs ? null
@@ -21,15 +21,15 @@ let
   withX = libX11 != null && !aquaterm && !stdenv.isDarwin;
 in
 stdenv.mkDerivation rec {
-  name = "gnuplot-5.0.0";
+  name = "gnuplot-5.0.2";
 
   src = fetchurl {
     url = "mirror://sourceforge/gnuplot/${name}.tar.gz";
-    sha256 = "1bqg6zbsin9w9m53rbf6adzv0j2gs66z2p5pkd060jlipk2lnza1";
+    sha256 = "1bqg6zbsan9w9m53rbf6adzv0j2gs66z2p5pkd060jlipk2lnza1";
   };
 
   buildInputs =
-    [ zlib gd texinfo4 readline pango cairo pkgconfig makeWrapper ]
+    [ zlib gd texinfo readline pango cairo pkgconfig makeWrapper ]
     ++ lib.optional withTeXLive (texlive.combine { inherit (texlive) scheme-small; })
     ++ lib.optional withLua lua
     ++ lib.optionals withX [ libX11 libXpm libXt libXaw ]

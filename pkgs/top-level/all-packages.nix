@@ -515,6 +515,11 @@ amrnb = callPackage ../all-pkgs/amrnb { };
 
 amrwb = callPackage ../all-pkgs/amrwb { };
 
+ardour =  callPackage ../all-pkgs/ardour {
+  inherit (gnome) libgnomecanvas libgnomecanvasmm;
+  inherit (vamp) vampSDK;
+};
+
 aria2 = callPackage ../all-pkgs/aria2 { };
 aria = aria2;
 
@@ -10182,18 +10187,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   antimony = qt5.callPackage ../applications/graphics/antimony {};
 
   antiword = callPackage ../applications/office/antiword {};
-
-  ardour = ardour4;
-
-  ardour3 =  callPackage ../applications/audio/ardour/ardour3.nix {
-    inherit (gnome) libgnomecanvas libgnomecanvasmm;
-    inherit (vamp) vampSDK;
-  };
-
-  ardour4 =  callPackage ../applications/audio/ardour {
-    inherit (gnome) libgnomecanvas libgnomecanvasmm;
-    inherit (vamp) vampSDK;
-  };
 
   ario = callPackage ../applications/audio/ario { };
 

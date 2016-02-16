@@ -1,4 +1,4 @@
-{ stdenv, fetchgit, alsaLib, aubio, boost, cairomm, curl, doxygen, dbus, fftw
+{ stdenv, fetchFromGitHub, alsaLib, aubio, boost, cairomm, curl, doxygen, dbus, fftw
 , fftwSinglePrec, flac, glibc, glibmm, graphviz, gtk2, gtkmm2, libjack2
 , libgnomecanvas, libgnomecanvasmm, liblo, libmad, libogg, librdf
 , librdf_raptor, librdf_rasqal, libsamplerate, libsigcxx, libsndfile
@@ -15,27 +15,18 @@ let
   # "git describe" when _not_ on an annotated tag(!): MAJOR.MINOR-REV-HASH.
 
   # Version to build.
-  #tag = "3.5.403";
+  tag = "4.4";
 
-  # Version info that is built into the binary. Keep in sync with 'tag'. The
-  # last 8 digits is a (fake) commit id.
-  revision = "3.5-4539-g7024232";
-
-  # temporarily use a non tagged version, because 3.5.403 has a bug that
-  # causes loss of audio-files,  and it was decided that there won't be a
-  # hotfix release, and we should use 4.0 when it comes out.
-  # more info: http://comments.gmane.org/gmane.comp.audio.ardour.user/13665
-
-  version = "2015-02-20";
 in
 
 stdenv.mkDerivation rec {
-  name = "ardour3-git-${version}";
+  name = "ardour-${tag}";
 
-  src = fetchgit {
-    url = git://git.ardour.org/ardour/ardour.git;
-    rev = "7024232855d268633760674d34c096ce447b7240";
-    sha256 = "ede3730455c3c91b2fd612871fa7262bdacd3dff4ba77c5dfbc3c1f0de9b8a36";
+  src = fetchFromGitHub {
+    owner = "Ardour";
+    repo = "ardour";
+    rev = "b00d75adf63db155ef2873bd9d259dc8ca256be6";
+    sha256 = "1gnrcnq2ksnh7fsa301v1c4p5dqrbqpjylf02rg3za3ab58wxi7l";
   };
 
   buildInputs =
@@ -46,8 +37,11 @@ stdenv.mkDerivation rec {
       makeWrapper pango perl pkgconfig python rubberband serd sord-svn sratom suil taglib vampSDK
     ];
 
+  # ardour's wscript has a "tarball" target but that required the git revision
+  # be available. Since this is an unzipped tarball fetched from github we
+  # have to do that ourself.
   patchPhase = ''
-    printf '#include "libs/ardour/ardour/revision.h"\nnamespace ARDOUR { const char* revision = \"${revision}\"; }\n' > libs/ardour/revision.cc
+    printf '#include "libs/ardour/ardour/revision.h"\nnamespace ARDOUR { const char* revision = \"${tag}-${builtins.substring 0 8 src.rev}\"; }\n' > libs/ardour/revision.cc
     sed 's|/usr/include/libintl.h|${glibc}/include/libintl.h|' -i wscript
     patchShebangs ./tools/
   '';
@@ -63,11 +57,11 @@ stdenv.mkDerivation rec {
     mkdir -p "$out/share/applications"
     cat > "$out/share/applications/ardour.desktop" << EOF
     [Desktop Entry]
-    Name=Ardour 3
+    Name=Ardour 4
     GenericName=Digital Audio Workstation
     Comment=Multitrack harddisk recorder
-    Exec=$out/bin/ardour3
-    Icon=$out/share/ardour3/icons/ardour_icon_256px.png
+    Exec=$out/bin/ardour4
+    Icon=$out/share/ardour4/icons/ardour_icon_256px.png
     Terminal=false
     Type=Application
     X-MultipleArgs=false
@@ -77,18 +71,10 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Multi-track hard disk recording software";
-    longDescription = ''
-      Ardour is a digital audio workstation (DAW), You can use it to
-      record, edit and mix multi-track audio and midi. Produce your
-      own CDs. Mix video soundtracks. Experiment with new ideas about
-      music and sound.
-
-      Please consider supporting the ardour project financially:
-      https://community.ardour.org/node/8288
-    '';
     homepage = http://ardour.org/;
     license = licenses.gpl2;
-    platforms = platforms.linux;
-    maintainers = [ maintainers.goibhniu ];
+    maintainers = with maintainers; [ ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

@@ -12,7 +12,7 @@
 { nixpkgs ? { outPath = (import ./all-packages.nix {}).lib.cleanSource ../..; revCount = 1234; shortRev = "abcdef"; }
 , officialRelease ? false
 , # The platforms for which we build Nixpkgs.
-  supportedSystems ? [ "x86_64-linux" "i686-linux" "x86_64-darwin" ]
+  supportedSystems ? [ "x86_64-linux" "i686-linux" ]
 , scrubJobs ? true
 }:
 
@@ -37,22 +37,15 @@ let
               jobs.lib-tests
               jobs.stdenv.x86_64-linux
               jobs.stdenv.i686-linux
-              jobs.stdenv.x86_64-darwin
               jobs.linux.x86_64-linux
               jobs.linux.i686-linux
               jobs.python.x86_64-linux
               jobs.python.i686-linux
-              jobs.python.x86_64-darwin
               jobs.python3.x86_64-linux
               jobs.python3.i686-linux
-              jobs.python3.x86_64-darwin
               # Ensure that X11/GTK+ are in order.
               jobs.thunderbird.x86_64-linux
               jobs.thunderbird.i686-linux
-              # Ensure that basic stuff works on darwin
-              jobs.git.x86_64-darwin
-              jobs.mysql.x86_64-darwin
-              jobs.vim.x86_64-darwin
             ] ++ lib.collect lib.isDerivation jobs.stdenvBootstrapTools;
         };
 
@@ -61,16 +54,6 @@ let
 
       stdenvBootstrapTools.x86_64-linux =
         { inherit (import ../stdenv/linux/make-bootstrap-tools.nix { system = "x86_64-linux"; }) dist test; };
-
-      stdenvBootstrapTools.x86_64-darwin =
-        let
-          bootstrap = import ../stdenv/darwin/make-bootstrap-tools.nix { system = "x86_64-darwin"; };
-        in {
-          # Lightweight distribution and test
-          inherit (bootstrap) dist test;
-          # Test a full stdenv bootstrap from the bootstrap tools definition
-          inherit (bootstrap.test-pkgs) stdenv;
-        };
 
     } // (mapTestOn ((packagePlatforms pkgs) // rec {
 
@@ -84,7 +67,7 @@ let
       abcde = linux;
       aspell = all;
       atlas = linux;
-      bazaar = linux; # first let sqlite3 work on darwin
+      bazaar = linux;
       binutils = linux;
       bind = linux;
       bvi = all;
@@ -230,9 +213,6 @@ let
       xterm = linux;
       zdelta = linux;
       zsh = linux;
-      zsnes = ["i686-linux"];
-
-      #emacs24PackagesNg = packagePlatforms pkgs.emacs24PackagesNg;
 
       gnome = {
         gnome_panel = linux;
@@ -249,7 +229,7 @@ let
         sdf = linux;
         strategoxt = linux;
         javafront = linux;
-        strategoShell = linux ++ darwin;
+        strategoShell = linux;
         dryad = linux;
       };
 
@@ -264,21 +244,21 @@ let
       python35Packages = { };
 
       xorg = {
-        fontadobe100dpi = linux ++ darwin;
-        fontadobe75dpi = linux ++ darwin;
-        fontbh100dpi = linux ++ darwin;
-        fontbhlucidatypewriter100dpi = linux ++ darwin;
-        fontbhlucidatypewriter75dpi = linux ++ darwin;
-        fontbhttf = linux ++ darwin;
-        fontcursormisc = linux ++ darwin;
-        fontmiscmisc = linux ++ darwin;
-        iceauth = linux ++ darwin;
-        libX11 = linux ++ darwin;
-        lndir = all ++ darwin;
-        setxkbmap = linux ++ darwin;
-        xauth = linux ++ darwin;
-        xbitmaps = linux ++ darwin;
-        xev = linux ++ darwin;
+        fontadobe100dpi = linux;
+        fontadobe75dpi = linux;
+        fontbh100dpi = linux;
+        fontbhlucidatypewriter100dpi = linux;
+        fontbhlucidatypewriter75dpi = linux;
+        fontbhttf = linux;
+        fontcursormisc = linux;
+        fontmiscmisc = linux;
+        iceauth = linux;
+        libX11 = linux;
+        lndir = all;
+        setxkbmap = linux;
+        xauth = linux;
+        xbitmaps = linux;
+        xev = linux;
         xf86inputevdev = linux;
         xf86inputkeyboard = linux;
         xf86inputmouse = linux;
@@ -290,18 +270,18 @@ let
         xf86videovesa = linux;
         xf86videovmware = linux;
         xf86videomodesetting = linux;
-        xfs = linux ++ darwin;
-        xinput = linux ++ darwin;
-        xkbcomp = linux ++ darwin;
-        xlsclients = linux ++ darwin;
-        xmessage = linux ++ darwin;
-        xorgserver = linux ++ darwin;
-        xprop = linux ++ darwin;
-        xrandr = linux ++ darwin;
-        xrdb = linux ++ darwin;
-        xset = linux ++ darwin;
-        xsetroot = linux ++ darwin;
-        xwininfo = linux ++ darwin;
+        xfs = linux;
+        xinput = linux;
+        xkbcomp = linux;
+        xlsclients = linux;
+        xmessage = linux;
+        xorgserver = linux;
+        xprop = linux;
+        xrandr = linux;
+        xrdb = linux;
+        xset = linux;
+        xsetroot = linux;
+        xwininfo = linux;
       };
 
       xfce = {

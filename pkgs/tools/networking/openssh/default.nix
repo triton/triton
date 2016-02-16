@@ -1,5 +1,5 @@
 { stdenv, fetchurl, fetchpatch, zlib, openssl, perl, libedit, pkgconfig, pam
-, etcDir ? null
+, etcDir ? "/etc/ssh"
 , hpnSupport ? false
 , withKerberos ? false
 , withGssapiPatches ? withKerberos

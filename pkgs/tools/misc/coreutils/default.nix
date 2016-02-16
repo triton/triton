@@ -1,5 +1,5 @@
 { stdenv, fetchurl, perl, gmp ? null
-, aclSupport ? false, acl ? null
+, aclSupport ? true, acl ? null
 , selinuxSupport? false, libselinux ? null, libsepol ? null
 , autoconf, automake114x, texinfo
 , withPrefix ? false

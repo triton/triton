@@ -311,15 +311,6 @@ let
     vs = vs90wrapper;
   };
 
-  fetchadc = callPackage ../build-support/fetchadc {
-    adc_user = if config ? adc_user
-      then config.adc_user
-      else throw "You need an adc_user attribute in your config to download files from Apple Developer Connection";
-    adc_pass = if config ? adc_pass
-      then config.adc_pass
-      else throw "You need an adc_pass attribute in your config to download files from Apple Developer Connection";
-  };
-
   fetchbower = callPackage ../build-support/fetchbower {
     inherit (nodePackages) fetch-bower;
   };
@@ -339,8 +330,6 @@ let
   fetchgitrevision = import ../build-support/fetchgitrevision runCommand git;
 
   fetchgitLocal = callPackage ../build-support/fetchgitlocal { };
-
-  fetchmtn = callPackage ../build-support/fetchmtn (config.fetchmtn or {});
 
   packer = callPackage ../development/tools/packer { };
 
@@ -925,12 +914,7 @@ libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix {
   libtool = libtool_1_5;
 };
 libjpeg-turbo = callPackage ../all-pkgs/libjpeg-turbo { };
-libjpeg =
-  # some problems, both on FreeBSD and Darwin
-  if stdenv.isLinux then
-    libjpeg-turbo
-  else
-    libjpeg_original;
+libjpeg = libjpeg-turbo;
 
 libmediaart = callPackage ../all-pkgs/libmediaart {
   qt5 = null;
@@ -1971,9 +1955,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   cool-retro-term = qt5.callPackage ../applications/misc/cool-retro-term { };
 
-  coreutils = callPackage ../tools/misc/coreutils {
-    aclSupport = stdenv.isLinux;
-  };
+  coreutils = callPackage ../tools/misc/coreutils { };
 
   coreutils-prefixed = coreutils.override { withPrefix = true; };
 
@@ -3212,9 +3194,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ntopng = callPackage ../tools/networking/ntopng { };
 
-  ntp = callPackage ../tools/networking/ntp {
-    libcap = if stdenv.isLinux then libcap else null;
-  };
+  ntp = callPackage ../tools/networking/ntp { };
 
   numdiff = callPackage ../tools/text/numdiff { };
 
@@ -3279,13 +3259,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   opensc = callPackage ../tools/security/opensc { };
 
-  openssh =
-    callPackage ../tools/networking/openssh {
-      hpnSupport = false;
-      withKerberos = false;
-      etcDir = "/etc/ssh";
-      pam = if stdenv.isLinux then pam else null;
-    };
+  openssh = callPackage ../tools/networking/openssh { };
 
   openssh_hpn = pkgs.appendToName "with-hpn" (openssh.override { hpnSupport = true; });
 
@@ -3663,9 +3637,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   rng_tools = callPackage ../tools/security/rng-tools { };
 
   rsnapshot = callPackage ../tools/backup/rsnapshot {
-    # For the `logger' command, we can use either `utillinux' or
-    # GNU Inetutils.  The latter is more portable.
-    logger = if stdenv.isLinux then utillinux else inetutils;
+    logger = utillinux;
   };
 
   rlwrap = callPackage ../tools/misc/rlwrap { };
@@ -6422,7 +6394,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   libcCross = assert crossSystem != null; libcCrossChooser crossSystem.libc;
 
   # Only supported on Linux
-  glibcLocales = if stdenv.isLinux then callPackage ../development/libraries/glibc/locales.nix { } else null;
+  glibcLocales = callPackage ../development/libraries/glibc/locales.nix { };
 
   glibcInfo = callPackage ../development/libraries/glibc/info.nix { };
 
@@ -7039,9 +7011,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     else libiconvReal;
 
   libiconvReal = callPackage ../development/libraries/libiconv { };
-
-  # On non-GNU systems we need GNU Gettext for libintl.
-  libintlOrEmpty = stdenv.lib.optional (!stdenv.isLinux) gettext;
 
   libid3tag = callPackage ../development/libraries/libid3tag { };
 
@@ -7714,7 +7683,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   qt48 = callPackage ../development/libraries/qt-4.x/4.8 {
     # GNOME dependencies are not used unless gtkStyle == true
     inherit (pkgs.gnome) libgnomeui GConf gnome_vfs;
-    cups = if stdenv.isLinux then cups else null;
   };
 
   qt48Full = appendToName "full" (qt48.override {
@@ -7999,9 +7967,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   srm = callPackage ../tools/security/srm { };
 
-  srtp = callPackage ../development/libraries/srtp {
-    libpcap = if stdenv.isLinux then libpcap else null;
-  };
+  srtp = callPackage ../development/libraries/srtp { };
 
   stxxl = callPackage ../development/libraries/stxxl { parallel = true; };
 
@@ -8305,34 +8271,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   zita-resampler = callPackage ../development/libraries/audio/zita-resampler { };
 
   zziplib = callPackage ../development/libraries/zziplib { };
-
-  ### DEVELOPMENT / LIBRARIES / AGDA
-
-  agda = callPackage ../build-support/agda {
-    glibcLocales = if pkgs.stdenv.isLinux then pkgs.glibcLocales else null;
-    extension = self : super : { };
-    inherit (haskellPackages) Agda;
-  };
-
-  agdaBase = callPackage ../development/libraries/agda/agda-base { };
-
-  agdaIowaStdlib = callPackage ../development/libraries/agda/agda-iowa-stdlib { };
-
-  agdaPrelude = callPackage ../development/libraries/agda/agda-prelude { };
-
-  AgdaStdlib = callPackage ../development/libraries/agda/agda-stdlib {
-    inherit (haskellPackages) ghcWithPackages;
-  };
-
-  AgdaSheaves = callPackage ../development/libraries/agda/Agda-Sheaves { };
-
-  bitvector = callPackage ../development/libraries/agda/bitvector { };
-
-  categories = callPackage ../development/libraries/agda/categories { };
-
-  pretty = callPackage ../development/libraries/agda/pretty { };
-
-  TotalParserCombinators = callPackage ../development/libraries/agda/TotalParserCombinators { };
 
   ### DEVELOPMENT / LIBRARIES / JAVA
 

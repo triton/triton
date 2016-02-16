@@ -16,7 +16,7 @@
 , compiler-rt_src
 , libcxxabi
 , debugVersion ? false
-, enableSharedLibraries ? !stdenv.isDarwin
+, enableSharedLibraries ? true
 }:
 
 let
@@ -41,8 +41,7 @@ in stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [ perl groff cmake ninja python ];
-  buildInputs = [ libxml2 libffi ncurses zlib ]
-    ++ stdenv.lib.optional stdenv.isDarwin libcxxabi;
+  buildInputs = [ libxml2 libffi ncurses zlib ];
 
   # hacky fix: created binaries need to be run before installation
   preBuild = ''
@@ -58,12 +57,8 @@ in stdenv.mkDerivation rec {
     "-DLLVM_ENABLE_RTTI=ON"
   ] ++ stdenv.lib.optional enableSharedLibraries
     "-DBUILD_SHARED_LIBS=ON"
-    ++ stdenv.lib.optional (!isDarwin)
-    "-DLLVM_BINUTILS_INCDIR=${binutils}/include"
-    ++ stdenv.lib.optionals ( isDarwin) [
-    "-DLLVM_ENABLE_LIBCXX=ON"
-    "-DCAN_TARGET_i386=false"
-  ];
+    ++ stdenv.lib.optional true
+    "-DLLVM_BINUTILS_INCDIR=${binutils}/include";
 
   doCheck = true;
 

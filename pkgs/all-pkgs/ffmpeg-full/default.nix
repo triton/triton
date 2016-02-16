@@ -77,7 +77,6 @@
 , libcaca ? null # Textual display (ASCII art)
 #, libcdio-paranoia ? null # Audio CD grabbing
 , libdc1394 ? null, libraw1394 ? null # IIDC-1394 grabbing (ieee 1394)
-, libiconv ? null
 #, libiec61883 ? null, libavc1394 ? null # iec61883 (also uses libraw1394)
 #, libmfx ? null # Hardware acceleration vis libmfx
 , libmodplug ? null # ModPlug support
@@ -341,7 +340,7 @@ stdenv.mkDerivation rec {
     #(enableFeature (libcaca != null) "libcaca")
     #(enableFeature (cdio-paranoia != null && gplLicensing) "libcdio")
     (enableFeature (libdc1394 != null && libraw1394 != null) "libdc1394")
-    (enableFeature (libiconv != null) "iconv")
+    #(enableFeature (libiconv != null) "iconv")
     #(enableFeature (libiec61883 != null && libavc1394 != null && libraw1394 != null) "libiec61883")
     #(enableFeature (libmfx != null) "libmfx")
     (enableFeature (libmodplug != null) "libmodplug")

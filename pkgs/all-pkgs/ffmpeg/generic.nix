@@ -9,7 +9,6 @@
 , fontconfig
 , freetype
 , gnutls
-, libiconv
 , lame
 , libass
 , libogg
@@ -170,7 +169,6 @@ stdenv.mkDerivation rec {
     fontconfig
     freetype
     gnutls
-    libiconv
     lame
     libass
     libogg
@@ -188,8 +186,6 @@ stdenv.mkDerivation rec {
     libva
     alsaLib
   ] ++ optional openglSupport mesa;
-
-  enableParallelBuilding = true;
 
   /* Cross-compilation is untested, consider this an outline, more work
      needs to be done to portions of the build to get it to work correctly */

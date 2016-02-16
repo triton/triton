@@ -15,7 +15,7 @@ let
 
   bootStage2 = pkgs.substituteAll {
     src = ./stage-2-init.sh;
-    shellDebug = "${pkgs.bashInteractive}/bin/bash";
+    shellDebug = "${pkgs.bash}/bin/bash";
     isExecutable = true;
     inherit (config.boot) devShmSize runSize;
     inherit (config.nix) readOnlyStore;

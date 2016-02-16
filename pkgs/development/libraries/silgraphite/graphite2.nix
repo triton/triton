@@ -11,8 +11,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkgconfig cmake ];
 
-  patches = stdenv.lib.optionals stdenv.isDarwin [ ./macosx.patch ];
-
   meta = {
     description = "An advanced font engine";
     maintainers = [ stdenv.lib.maintainers.raskin ];

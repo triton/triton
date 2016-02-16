@@ -31,7 +31,7 @@ let
   extraUtils = pkgs.runCommand "extra-utils"
     { buildInputs = [pkgs.nukeReferences];
       allowedReferences = [ "out" ]; # prevent accidents like glibc being included in the initrd
-      doublePatchelf = pkgs.stdenv.isArm;
+      #doublePatchelf = pkgs.stdenv.isArm;
     }
     ''
       set +o pipefail

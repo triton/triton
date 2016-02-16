@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, openssl, kerberos, db, gettext, pam, fixDarwinDylibNames }:
+{ lib, stdenv, fetchurl, openssl, kerberos, db, gettext, pam }:
 
 with stdenv.lib;
 stdenv.mkDerivation rec {
@@ -9,7 +9,6 @@ stdenv.mkDerivation rec {
     sha256 = "1hvvbcsg21nlncbgs0cgn3iwlnb3vannzwsp6rwvnn9ba4v53g4g";
   };
 
-  nativeBuildInputs = lib.optional stdenv.isDarwin fixDarwinDylibNames;
   buildInputs =
     [ openssl db gettext kerberos ]
     ++ lib.optional stdenv.isLinux pam;
@@ -31,8 +30,6 @@ stdenv.mkDerivation rec {
   preBuild = ''
     cat sasldb/Makefile
   '';
-
-  installFlags = lib.optional stdenv.isDarwin [ "framedir=$(out)/Library/Frameworks/SASL2.framework" ];
 
   meta = {
     homepage = "http://cyrusimap.web.cmu.edu/";

@@ -21,9 +21,7 @@ stdenv.mkDerivation rec {
   patches =
     [ # Do not look in /usr etc. for dependencies.
       ./no-sys-dirs.patch
-    ]
-    ++ optional stdenv.isSunOS ./ld-shared.patch
-    ++ stdenv.lib.optional stdenv.isDarwin [ ./cpp-precomp.patch ];
+    ];
 
   # Build a thread-safe Perl with a dynamic libperls.o.  We need the
   # "installstyle" option to ensure that modules are put under
@@ -39,7 +37,6 @@ stdenv.mkDerivation rec {
       "-Dlocincpth=${libc}/include"
       "-Dloclibpth=${libc}/lib"
     ]
-    ++ optional stdenv.isSunOS "-Dcc=gcc"
     ++ optional enableThreading "-Dusethreads";
 
   configureScript = "${stdenv.shell} ./Configure";
@@ -58,11 +55,9 @@ stdenv.mkDerivation rec {
     ''
       configureFlags="$configureFlags -Dprefix=$out -Dman1dir=$out/share/man/man1 -Dman3dir=$out/share/man/man3"
 
-      ${optionalString stdenv.isArm ''
+      ${/*optionalString stdenv.isArm ''
         configureFlagsArray=(-Dldflags="-lm -lrt")
-      ''}
-    '' + optionalString stdenv.isDarwin ''
-      substituteInPlace hints/darwin.sh --replace "env MACOSX_DEPLOYMENT_TARGET=10.3" ""
+      ''*/}
     '' + optionalString (!enableThreading) ''
       # We need to do this because the bootstrap doesn't have a static libpthread
       sed -i 's,\(libswanted.*\)pthread,\1,g' Configure

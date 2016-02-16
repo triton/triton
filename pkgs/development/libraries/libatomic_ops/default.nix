@@ -11,7 +11,6 @@ let
   };
 in stdenv.mkDerivation {
   inherit (s) name version;
-  inherit buildInputs;
 
   src = fetchurl {
     inherit (s) url sha256;

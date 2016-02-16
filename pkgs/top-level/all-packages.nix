@@ -9209,11 +9209,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   htop = callPackage ../os-specific/linux/htop { };
 
-  # GNU/Hurd core packages.
-  gnu = recurseIntoAttrs (callPackage ../os-specific/gnu {
-    inherit platform crossSystem;
-  });
-
   i7z = callPackage ../os-specific/linux/i7z { };
 
   ifplugd = callPackage ../os-specific/linux/ifplugd { };

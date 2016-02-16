@@ -9863,64 +9863,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     qt5 = null;
   };
 
-  windows = rec {
-    cygwinSetup = callPackage ../os-specific/windows/cygwin-setup { };
-
-    jom = callPackage ../os-specific/windows/jom { };
-
-    w32api = callPackage ../os-specific/windows/w32api {
-      gccCross = gccCrossStageStatic;
-      binutilsCross = binutilsCross;
-    };
-
-    w32api_headers = w32api.override {
-      onlyHeaders = true;
-    };
-
-    mingw_runtime = callPackage ../os-specific/windows/mingwrt {
-      gccCross = gccCrossMingw2;
-      binutilsCross = binutilsCross;
-    };
-
-    mingw_runtime_headers = mingw_runtime.override {
-      onlyHeaders = true;
-    };
-
-    mingw_headers1 = buildEnv {
-      name = "mingw-headers-1";
-      paths = [ w32api_headers mingw_runtime_headers ];
-    };
-
-    mingw_headers2 = buildEnv {
-      name = "mingw-headers-2";
-      paths = [ w32api mingw_runtime_headers ];
-    };
-
-    mingw_headers3 = buildEnv {
-      name = "mingw-headers-3";
-      paths = [ w32api mingw_runtime ];
-    };
-
-    mingw_w64 = callPackage ../os-specific/windows/mingw-w64 {
-      gccCross = gccCrossStageStatic;
-      binutilsCross = binutilsCross;
-    };
-
-    mingw_w64_headers = callPackage ../os-specific/windows/mingw-w64 {
-      onlyHeaders = true;
-    };
-
-    mingw_w64_pthreads = callPackage ../os-specific/windows/mingw-w64 {
-      onlyPthreads = true;
-    };
-
-    pthreads = callPackage ../os-specific/windows/pthread-w32 {
-      mingw_headers = mingw_headers3;
-    };
-
-    wxMSW = callPackage ../os-specific/windows/wxMSW-2.8 { };
-  };
-
   wirelesstools = callPackage ../os-specific/linux/wireless-tools { };
 
   wpa_supplicant = callPackage ../os-specific/linux/wpa_supplicant { };

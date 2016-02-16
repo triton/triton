@@ -26,9 +26,7 @@ stdenv.mkDerivation rec {
 
   # Explicitly link against libgcc_s, to work around the infamous
   # "libgcc_s.so.1 must be installed for pthread_cancel to work".
-
-  # don't have "libgcc_s.so.1" on darwin
-  LDFLAGS = stdenv.lib.optionalString (!stdenv.isDarwin) "-lgcc_s";
+  LDFLAGS = "-lgcc_s";
 
   postInstall = ''
     wrapProgram $out/bin/guile-snarf --prefix PATH : "${gawk}/bin"

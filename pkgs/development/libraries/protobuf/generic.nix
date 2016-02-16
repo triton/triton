@@ -12,9 +12,6 @@ stdenv.mkDerivation rec {
     rm -rf gtest
     cp -r ${gtest.source} gtest
     chmod -R a+w gtest
-  '' + stdenv.lib.optionalString stdenv.isDarwin ''
-    substituteInPlace src/google/protobuf/testing/googletest.cc \
-      --replace 'tmpnam(b)' '"'$TMPDIR'/foo"'
   '';
 
   buildInputs = [ autoreconfHook zlib ];

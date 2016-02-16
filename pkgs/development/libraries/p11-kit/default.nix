@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libiconv, pkgconfig, libffi, libtasn1 }:
+{ stdenv, fetchurl, libffi, libtasn1 }:
 
 stdenv.mkDerivation rec {
   name = "p11-kit-0.23.2";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "1w7szm190phlkg7qx05ychlj2dbvkgkhx9gw6dx4d5rw62l6wwms";
   };
 
-  buildInputs = [ pkgconfig libffi libtasn1 libiconv ];
+  buildInputs = [ libffi libtasn1 ];
 
   configureFlags = [
     "--sysconfdir=/etc"

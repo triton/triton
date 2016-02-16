@@ -1,6 +1,27 @@
-{ stdenv, nukeReferences, cpio, readelf
-, glibc, coreutils, bash, findutils, diffutils, gnused, gnugrep, gawk, gnutar
-, gzip, bzip2, xz, gnumake, patch, patchelf, curl, gcc, pkgconfig, binutils, libmpc
+{ stdenv
+, nukeReferences
+, cpio
+, readelf
+, glibc
+, coreutils
+, bash
+, findutils
+, diffutils
+, gnused
+, gnugrep
+, gawk
+, gnutar
+, gzip
+, bzip2
+, xz
+, gnumake
+, patch
+, patchelf
+, curl
+, gcc
+, pkgconfig
+, binutils
+, libmpc
 , busybox
 }:
 
@@ -8,13 +29,16 @@ rec {
   build = stdenv.mkDerivation {
     name = "stdenv-bootstrap-tools";
 
-    nativeBuildInputs = [ nukeReferences cpio ];
+    nativeBuildInputs = [
+      nukeReferences
+      cpio
+    ];
 
     buildCommand = ''
       set -x
       mkdir -p $out/bin $out/lib $out/libexec
-
-      # Copy what we need of Glibc.
+    '' +
+    /* Copy what we need of Glibc. */ ''
       cp -d ${glibc}/lib/ld-*.so* $out/lib
       cp -d ${glibc}/lib/libc*.so* $out/lib
       cp -d ${glibc}/lib/libc_nonshared.a $out/lib
@@ -27,20 +51,20 @@ rec {
       cp -d ${glibc}/lib/libnss*.so* $out/lib
       cp -d ${glibc}/lib/libresolv*.so* $out/lib
       cp -d ${glibc}/lib/crt?.o $out/lib
-      
+
       cp -rL ${glibc}/include $out
       chmod -R u+w $out/include
-      
-      # Hopefully we won't need these.
+    '' +
+    /* Hopefully we won't need these. */ ''
       rm -rf $out/include/mtd $out/include/rdma $out/include/sound $out/include/video
       find $out/include -name .install -exec rm {} \;
       find $out/include -name ..install.cmd -exec rm {} \;
       mv $out/include $out/include-glibc
-      
-      # Copy coreutils, bash, etc.
+    '' +
+    /* Copy coreutils, bash, etc. */ ''
       cp ${coreutils}/bin/* $out/bin
       (cd $out/bin && rm vdir dir sha*sum pinky factor pathchk runcon shuf who whoami shred users)
-      
+
       cp ${bash}/bin/bash $out/bin
       cp ${findutils}/bin/find $out/bin
       cp ${findutils}/bin/xargs $out/bin
@@ -58,8 +82,8 @@ rec {
       cp ${patchelf}/bin/* $out/bin
       cp ${curl}/bin/curl $out/bin
       cp ${pkgconfig}/bin/pkg-config $out/bin
-      
-      # Copy what we need of GCC.
+    '' +
+    /* Copy what we need of GCC. */ ''
       cp -d ${gcc}/bin/gcc $out/bin
       cp -d ${gcc}/bin/cpp $out/bin
       cp -d ${gcc}/bin/g++ $out/bin
@@ -81,13 +105,13 @@ rec {
       chmod -R u+w $out/include
       rm -rf $out/include/c++/*/ext/pb_ds
       rm -rf $out/include/c++/*/ext/parallel
-
-      # Copy binutils.
+    '' +
+    /* Copy binutils. */ ''
       for i in as ld ar ranlib nm strip readelf objdump; do
         cp ${binutils}/bin/$i $out/bin
       done
-
-      # Copy all of the needed libraries for the binaries
+    '' +
+    /* Copy all of the needed libraries for the binaries */ ''
       set +x
       copy_libs_in_elf() {
         local BIN; local RELF; local RPATH; local LIBS; local LIB; local LINK;
@@ -128,8 +152,8 @@ rec {
       set -x
 
       chmod -R u+w $out
-      
-      # Strip executables even further.
+    '' +
+    /* Strip executables even further. */ ''
       for i in $out/bin/* $out/libexec/gcc/*/*/*; do
           if test -x $i -a ! -L $i; then
               chmod +w $i
@@ -155,7 +179,7 @@ rec {
     # The result should not contain any references (store paths) so
     # that we can safely copy them out of the store and to other
     # locations in the store.
-    allowedReferences = [];
+    allowedReferences = [ ];
   };
 
   dist = stdenv.mkDerivation {

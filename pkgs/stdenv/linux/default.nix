@@ -7,29 +7,43 @@
 # The function defaults are for easy testing.
 { system ? builtins.currentSystem
 , allPackages ? import ../../top-level/all-packages.nix
-, platform ? null, config ? {}, lib ? (import ../../../lib)
-, customBootstrapFiles ? null }:
+, platform ? null
+, config ? { }
+, lib ? (import ../../../lib)
+, customBootstrapFiles ? null
+}:
 
 rec {
 
   bootstrapFiles =
-    if customBootstrapFiles != null then customBootstrapFiles
-    else if system == "i686-linux" then import ./bootstrap/i686.nix
-    else if system == "x86_64-linux" then import ./bootstrap/x86_64.nix
-    else if system == "armv5tel-linux" then import ./bootstrap/armv5tel.nix
-    else if system == "armv6l-linux" then import ./bootstrap/armv6l.nix
-    else if system == "armv7l-linux" then import ./bootstrap/armv7l.nix
-    else if system == "mips64el-linux" then import ./bootstrap/loongson2f.nix
-    else abort "unsupported platform for the pure Linux stdenv";
+    if customBootstrapFiles != null then
+      customBootstrapFiles
+    else if system == "i686-linux" then
+      import ./bootstrap/i686.nix
+    else if system == "x86_64-linux" then
+      import ./bootstrap/x86_64.nix
+    else if system == "armv5tel-linux" then
+      import ./bootstrap/armv5tel.nix
+    else if system == "armv6l-linux" then
+      import ./bootstrap/armv6l.nix
+    else if system == "armv7l-linux" then
+      import ./bootstrap/armv7l.nix
+    else if system == "mips64el-linux" then
+      import ./bootstrap/loongson2f.nix
+    else
+      abort "unsupported platform for the pure Linux stdenv";
 
 
   commonStdenvOptions = {
-    inherit system config;
+    inherit
+      system
+      config;
 
     preHook = ''
       export NIX_ENFORCE_PURITY=1
-      # Make "strip" produce deterministic output, by setting
-      # timestamps etc. to a fixed value.
+    '' +
+      /* Make "strip" produce deterministic output, by setting
+         timestamps etc. to a fixed value. */ ''
       export commonStripFlags="--enable-deterministic-archives"
     '';
   };
@@ -53,7 +67,10 @@ rec {
     tarball = bootstrapFiles.bootstrapTools;
 
     inherit system;
-    inherit (bootstrapFiles) langC langCC isGNU;
+    inherit (bootstrapFiles)
+      langC
+      langCC
+      isGNU;
 
     outputs = [ "out" "glibc" ];
   };
@@ -78,11 +95,11 @@ rec {
     initialPath = [ bootstrapTools ];
     extraBuildInputs = [ ];
 
-    preHook = ''
-      # We don't want to patch shebangs as this will retain references to the
-      # bootstra tools.
-      export dontPatchShebangs=1
-    '';
+    preHook =
+      /* We don't want to patch shebangs as this will retain references
+         to the bootstrap tools. */ ''
+        export dontPatchShebangs=1
+      '';
 
   };
 
@@ -91,7 +108,9 @@ rec {
   # first cc-wrapper and fetchurlBoot.
   # This does not provide any actual packages.
   stage0Pkgs = allPackages {
-    inherit system platform;
+    inherit
+      system
+      platform;
     bootStdenv = import ../generic (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage0";
 

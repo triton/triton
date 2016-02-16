@@ -27,12 +27,12 @@ lib.makeOverridable (
 let
 
   allowUnfree =
-    config.allowUnfree or false ||
-    builtins.getEnv "NIXPKGS_ALLOW_UNFREE" == "1";
+    config.allowUnfree or false
+    || builtins.getEnv "NIXPKGS_ALLOW_UNFREE" == "1";
 
   allowBroken =
-    config.allowBroken or false ||
-    builtins.getEnv "NIXPKGS_ALLOW_BROKEN" == "1";
+    config.allowBroken or false
+    || builtins.getEnv "NIXPKGS_ALLOW_BROKEN" == "1";
 
   whitelist = config.whitelistedLicenses or [ ];
   blacklist = config.blacklistedLicenses or [ ];
@@ -53,8 +53,8 @@ let
   mutuallyExclusive =
     a: b:
     (builtins.length a) == 0 ||
-    (!(builtins.elem (builtins.head a) b) &&
-     mutuallyExclusive (builtins.tail a) b);
+    (!(builtins.elem (builtins.head a) b)
+    && mutuallyExclusive (builtins.tail a) b);
 
   areLicenseListsValid =
     if mutuallyExclusive whitelist blacklist then
@@ -66,27 +66,27 @@ let
 
   hasLicense =
     attrs:
-    builtins.hasAttr "meta" attrs &&
-    builtins.hasAttr "license" attrs.meta;
+    builtins.hasAttr "meta" attrs
+    && builtins.hasAttr "license" attrs.meta;
 
   hasWhitelistedLicense =
     assert areLicenseListsValid;
     attrs:
-    hasLicense attrs &&
-    builtins.elem attrs.meta.license whitelist;
+    hasLicense attrs
+    && builtins.elem attrs.meta.license whitelist;
 
   hasBlacklistedLicense =
     assert areLicenseListsValid;
     attrs:
-    hasLicense attrs &&
-    builtins.elem attrs.meta.license blacklist;
+    hasLicense attrs
+    && builtins.elem attrs.meta.license blacklist;
 
   isUnfree =
     licenses:
     lib.lists.any (l:
-      !l.free or true ||
-      l == "unfree" ||
-      l == "unfree-redistributable"
+      !l.free or true
+      || l == "unfree"
+      || l == "unfree-redistributable"
     ) licenses;
 
   # Alow granular checks to allow only some unfree packages
@@ -103,10 +103,10 @@ let
   # `allowUNfreePredicate` function.
   hasDeniedUnfreeLicense =
     attrs:
-    !allowUnfree &&
-    hasLicense attrs &&
-    isUnfree (lib.lists.toList attrs.meta.license) &&
-    !allowUnfreePredicate attrs;
+    !allowUnfree
+    && hasLicense attrs
+    && isUnfree (lib.lists.toList attrs.meta.license)
+    && !allowUnfreePredicate attrs;
 
   showLicense =
     license:
@@ -129,7 +129,7 @@ let
   # Add a utility function to produce derivations that use this
   # stdenv and its shell.
   mkDerivation = {
-      buildInputs ? [ ]
+    buildInputs ? [ ]
     , nativeBuildInputs ? [ ]
     , propagatedBuildInputs ? [ ]
     , propagatedNativeBuildInputs ? [ ]
@@ -217,18 +217,18 @@ let
         };
 
       outputs' =
-        outputs ++
-        (if separateDebugInfo then
-           assert result.isLinux; [ "debug" ]
-         else
-           [ ]);
+        outputs
+        ++ (if separateDebugInfo then
+              assert result.isLinux; [ "debug" ]
+            else
+              [ ]);
 
       buildInputs' =
-        buildInputs ++
-        (if separateDebugInfo then [
-           ../../build-support/setup-hooks/separate-debug-info.sh
-         ] else
-           [ ]);
+        buildInputs
+        ++ (if separateDebugInfo then [
+              ../../build-support/setup-hooks/separate-debug-info.sh
+            ] else
+              [ ]);
     in
 
     # Throw an error if trying to evaluate an non-valid derivation
@@ -362,20 +362,20 @@ let
 
       # Utility flags to test the type of platform.
       isLinux =
-        system == "i686-linux" ||
-        system == "x86_64-linux";
+        system == "i686-linux"
+        || system == "x86_64-linux";
       isFreeBSD =
-        system == "i686-freebsd" ||
-        system == "x86_64-freebsd";
+        system == "i686-freebsd"
+        || system == "x86_64-freebsd";
       isi686 =
-        system == "i686-linux" ||
-        system == "i686-freebsd";
+        system == "i686-linux"
+        || system == "i686-freebsd";
       isx86_64 =
-        system == "x86_64-linux" ||
-        system == "x86_64-freebsd";
+        system == "x86_64-linux"
+        || system == "x86_64-freebsd";
       is64bit =
-        system == "x86_64-linux" ||
-        system == "x86_64-freebsd";
+        system == "x86_64-linux"
+        || system == "x86_64-freebsd";
 
       shouldUsePkg = lib.shouldUsePkgSystem system;
 

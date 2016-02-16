@@ -1,4 +1,4 @@
-{ system, allPackages ? import ../../.., config }:
+{ allPackages ? import ../../.., config, system }:
 
 rec {
 
@@ -18,18 +18,27 @@ rec {
 
   # A function that builds a "native" stdenv (one that uses tools in
   # /usr etc.).
-  makeStdenv =
-    { cc, fetchurl, extraPath ? [], overrides ? (pkgs: { }) }:
+  makeStdenv = {
+    cc
+    , fetchurl
+    , extraPath ? [ ]
+    , overrides ? (pkgs: { })
+  }:
 
-    import ../generic {
-      preHook = prehookBase;
+  import ../generic {
+    preHook = prehookBase;
 
-      initialPath = extraPath ++ path;
+    initialPath = extraPath ++ path;
 
-      fetchurlBoot = fetchurl;
+    fetchurlBoot = fetchurl;
 
-      inherit system shell cc overrides config;
-    };
+    inherit
+      system
+      shell
+      cc
+      overrides
+      config;
+  };
 
 
   stdenvBoot0 = makeStdenv {
@@ -57,7 +66,7 @@ rec {
   # First build a stdenv based only on tools outside the store.
   stdenvBoot1 = makeStdenv {
     inherit cc fetchurl;
-  } // {inherit fetchurl;};
+  } // { inherit fetchurl; };
 
   stdenvBoot1Pkgs = allPackages {
     inherit system;

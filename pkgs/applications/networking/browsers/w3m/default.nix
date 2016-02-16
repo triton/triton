@@ -3,7 +3,7 @@
 , sslSupport ? true, openssl ? null
 , graphicsSupport ? true, imlib2 ? null
 , x11Support ? graphicsSupport, xorg ? null
-, mouseSupport ? !stdenv.isDarwin, gpm ? null
+, mouseSupport ? true, gpm ? null
 , perl, man
 }:
 
@@ -22,8 +22,6 @@ stdenv.mkDerivation rec {
     rev = "e0b6e022810271bd0efcd655006389ee3879e94d";
     sha256 = "1vahm3719hb0m20nc8k88165z35f8b15qasa0whhk78r12bls1q6";
   };
-
-  NIX_LDFLAGS = optionalString stdenv.isSunOS "-lsocket -lnsl";
 
   # we must set these so that the generated files (e.g. w3mhelp.cgi) contain
   # the correct paths.
@@ -58,8 +56,6 @@ stdenv.mkDerivation rec {
     substituteInPlace ./configure --replace /usr /no-such-path
   '';
 
-  enableParallelBuilding = false;
-
   # for w3mimgdisplay
   # see: https://bbs.archlinux.org/viewtopic.php?id=196093
   LIBS = optionalString x11Support "-lX11";
@@ -68,5 +64,6 @@ stdenv.mkDerivation rec {
     homepage = http://w3m.sourceforge.net/;
     description = "A text-mode web browser";
     maintainers = [ maintainers.mornfall maintainers.cstrahan ];
+    platforms = stdenv.lib.platforms.all;
   };
 }

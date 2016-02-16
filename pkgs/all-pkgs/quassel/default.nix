@@ -20,8 +20,8 @@
 }:
 
 let
-    buildClient = monolithic || client;
-    buildCore = monolithic || daemon;
+  buildClient = monolithic || client;
+  buildCore = monolithic || daemon;
 in
 
 assert stdenv.isLinux;
@@ -32,11 +32,13 @@ assert !buildClient -> !withKDE; # KDE is used by the client only
 
 let
   edf = flag: feature: [("-D" + feature + (if flag then "=ON" else "=OFF"))];
+in
 
-in with stdenv; mkDerivation rec {
+with stdenv;
 
-  version = "0.12.2";
+mkDerivation rec {
   name = "quassel${tag}-${version}";
+  version = "0.12.2";
 
   src = fetchurl {
     url = "http://quassel-irc.org/pub/quassel-${version}.tar.bz2";
@@ -51,16 +53,24 @@ in with stdenv; mkDerivation rec {
     })
   ];
 
-  enableParallelBuilding = true;
+  nativeBuildInputs = [
+    cmake
+    makeWrapper
+  ];
 
-  buildInputs =
-       [ cmake makeWrapper qtbase ]
-    ++ lib.optionals buildCore [qtscript qca-qt5]
-    ++ lib.optionals buildClient [libdbusmenu phonon]
-    ++ lib.optionals (buildClient && previews) [qtwebkit]
+  buildInputs = [
+    qtbase
+  ] ++ lib.optionals buildCore [ qtscript qca-qt5 ]
+    ++ lib.optionals buildClient [ libdbusmenu phonon ]
+    ++ lib.optionals (buildClient && previews) [ qtwebkit ]
     ++ lib.optionals (buildClient && withKDE) [
-      extra-cmake-modules kconfigwidgets kcoreaddons
-      knotifications knotifyconfig ktextwidgets kwidgetsaddons
+      extra-cmake-modules
+      kconfigwidgets
+      kcoreaddons
+      knotifications
+      knotifyconfig
+      ktextwidgets
+      kwidgetsaddons
       kxmlgui
     ];
 
@@ -68,8 +78,7 @@ in with stdenv; mkDerivation rec {
     "-DEMBED_DATA=OFF"
     "-DSTATIC=OFF"
     "-DUSE_QT5=ON"
-  ]
-    ++ edf monolithic "WANT_MONO"
+  ] ++ edf monolithic "WANT_MONO"
     ++ edf daemon "WANT_CORE"
     ++ edf client "WANT_QTCLIENT"
     ++ edf withKDE "WITH_KDE"
@@ -82,18 +91,11 @@ in with stdenv; mkDerivation rec {
     '';
 
   meta = with stdenv.lib; {
-    homepage = http://quassel-irc.org/;
     description = "Qt/KDE distributed IRC client suppporting a remote daemon";
-    longDescription = ''
-      Quassel IRC is a cross-platform, distributed IRC client,
-      meaning that one (or multiple) client(s) can attach to
-      and detach from a central core -- much like the popular
-      combination of screen and a text-based IRC client such
-      as WeeChat, but graphical (based on Qt4/KDE4 or Qt5/KF5).
-    '';
+    homepage = http://quassel-irc.org/;
     license = stdenv.lib.licenses.gpl3;
-    maintainers = with maintainers; [ phreedom ttuegel ];
-    repositories.git = https://github.com/quassel/quassel.git;
-    inherit (qtbase.meta) platforms;
+    maintainers = with maintainers; [ ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

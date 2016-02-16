@@ -4540,7 +4540,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     inherit noSysDirs;
 
     # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
-    profiledCompiler = with stdenv; (!isSunOS && && (isi686 || isx86_64));
+    profiledCompiler = with stdenv; (!isSunOS && (isi686 || isx86_64));
 
     # When building `gcc.crossDrv' (a "Canadian cross", with host == target
     # and host != build), `cross' must be null but the cross-libc must still

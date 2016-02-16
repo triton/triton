@@ -32,7 +32,7 @@
 # External plugins
 , enableAlternatives ? false
 
-, bashInteractive
+, bash
 , bashCompletion
 }:
 
@@ -129,7 +129,7 @@ let
   allPlugins = pluginsWithoutDeps ++ attrNames optionalPlugins;
   allEnabledPlugins = pluginsWithoutDeps ++ enabledOptionalPlugins;
 
-  testShell = "${bashInteractive}/bin/bash --norc";
+  testShell = "${bash}/bin/bash --norc";
   completion = "${bashCompletion}/share/bash-completion/bash_completion";
 
 in buildPythonPackage rec {

@@ -54,10 +54,6 @@ stdenv.mkDerivation rec {
   preConfigure =
     ''
       configureFlags="$configureFlags -Dprefix=$out -Dman1dir=$out/share/man/man1 -Dman3dir=$out/share/man/man3"
-
-      ${/*optionalString stdenv.isArm ''
-        configureFlagsArray=(-Dldflags="-lm -lrt")
-      ''*/}
     '' + optionalString (!enableThreading) ''
       # We need to do this because the bootstrap doesn't have a static libpthread
       sed -i 's,\(libswanted.*\)pthread,\1,g' Configure

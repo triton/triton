@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, pkgconfig, autoreconfHook }:
+{ stdenv, fetchFromGitHub, autoreconfHook }:
 
 stdenv.mkDerivation rec {
   name = "snappy-${version}";
@@ -11,13 +11,12 @@ stdenv.mkDerivation rec {
     sha256 = "1w9pq8vag8c6m4ib0qbdbqzsnpwjvw01jbp15lgwg1rzwhvflm10";
   };
 
-  nativeBuildInputs = [ pkgconfig autoreconfHook ];
+  nativeBuildInputs = [ autoreconfHook ];
 
   # -DNDEBUG for speed
   configureFlags = [ "CXXFLAGS=-DNDEBUG" ];
 
-  # SIGILL on darwin
-  doCheck = !stdenv.isDarwin;
+  doCheck = true;
 
   meta = with stdenv.lib; {
     homepage = http://code.google.com/p/snappy/;

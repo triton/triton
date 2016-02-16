@@ -16,8 +16,7 @@ stdenv.mkDerivation rec {
 
   patches = ./no-usr.patch;
 
-  # TODO: Build dylib on Darwin
-  buildFlags = (if stdenv.isDarwin then [ "libiniparser.a" ] else [ "libiniparser.so" ]) ++ [ "CC=cc" ];
+  buildFlags = [ "libiniparser.so" "CC=cc" ];
 
   installPhase = ''
     mkdir -p $out/lib
@@ -28,12 +27,10 @@ stdenv.mkDerivation rec {
     mkdir -p $out/share/doc/${name}
     cp -r html $out/share/doc/${name}
 
-  '' + (if stdenv.isDarwin then ''
-    cp libiniparser.a $out/lib
-  '' else ''
+  '' + ''
     cp libiniparser.so.0 $out/lib
     ln -s libiniparser.so.0 $out/lib/libiniparser.so
-  '');
+  '';
 
   meta = {
     homepage = http://ndevilla.free.fr/iniparser;

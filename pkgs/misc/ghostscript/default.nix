@@ -153,10 +153,6 @@ stdenv.mkDerivation rec {
     ln -s "${fonts}" "$out/share/ghostscript/fonts"
   '';
 
-  preFixup = lib.optionalString stdenv.isDarwin ''
-    install_name_tool -change libgs.dylib.${version} $out/lib/libgs.dylib.${version} $out/bin/gs
-  '';
-
   # Sometimes throws weird errors for 9.18
   parallelInstall = false;
 

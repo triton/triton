@@ -11,6 +11,10 @@ stdenv.mkDerivation rec {
     sha256 = "0nd8y0m6awc9ahv0ciiwf8gy54c8d3j51pw9xg7f7cn579jjyxr5";
   };
 
+  nativeBuildInputs = [
+    gettext
+  ];
+
   configureFlags = [
     "--enable-gettext"
     "--disable-lib64"
@@ -23,17 +27,11 @@ stdenv.mkDerivation rec {
     "XGETTEXT=xgettext"
   ];
 
-  nativeBuildInputs = [
-    gettext
-  ];
-
   installTargets = [
     "install"
     "install-lib"
     "install-dev"
   ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Library and tools for manipulating extended attributes";

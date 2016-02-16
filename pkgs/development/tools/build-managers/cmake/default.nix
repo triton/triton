@@ -1,7 +1,6 @@
 { stdenv, fetchurl
 , bzip2, curl, expat, libarchive, xz, zlib
-, useNcurses ? false, ncurses, useQt4 ? false, qt4
-, wantPS ? false, ps ? null
+, useNcurses ? true, ncurses
 }:
 
 with stdenv.lib;
@@ -16,7 +15,7 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "cmake-${os useNcurses "cursesUI-"}${os useQt4 "qt4UI-"}${version}";
+  name = "cmake-${version}";
 
   inherit majorVersion;
 
@@ -30,44 +29,37 @@ stdenv.mkDerivation rec {
   patches =
     # Don't search in non-Nix locations such as /usr, but do search in
     # Nixpkgs' Glibc.
-    optional (stdenv ? libc) ./search-path-3.2.patch
-    ++ optional stdenv.isCygwin ./3.2.2-cygwin.patch;
+    optional (stdenv ? libc) ./search-path-3.2.patch;
 
-  buildInputs =
-    [ bzip2 curl expat libarchive xz zlib ]
-    ++ optional useNcurses ncurses
-    ++ optional useQt4 qt4;
+  buildInputs = [ bzip2 curl expat libarchive xz zlib ]
+    ++ optional useNcurses ncurses;
 
   propagatedBuildInputs = optional wantPS ps;
 
   CMAKE_PREFIX_PATH = stdenv.lib.concatStringsSep ":" buildInputs;
 
-  configureFlags =
-    [ "--docdir=/share/doc/${name}"
-      "--mandir=/share/man"
-      "--no-system-jsoncpp"
-    ]
-    ++ optional (!stdenv.isCygwin) "--system-libs"
-    ++ optional useQt4 "--qt-gui"
-    ++ ["--"]
+  configureFlags = [
+    "--docdir=/share/doc/${name}"
+    "--mandir=/share/man"
+    "--no-system-jsoncpp"
+  ] ++ ["--"]
     ++ optional (!useNcurses) "-DBUILD_CursesDialog=OFF";
 
   setupHook = ./setup-hook.sh;
 
   dontUseCmakeConfigure = true;
 
-  preConfigure = optionalString (stdenv ? libc)
-    ''
-      source $setupHook
-      fixCmakeFiles .
-      substituteInPlace Modules/Platform/UnixPaths.cmake \
-        --subst-var-by libc ${stdenv.libc}
-    '';
+  preConfigure = optionalString (stdenv ? libc) ''
+    source $setupHook
+    fixCmakeFiles .
+    substituteInPlace Modules/Platform/UnixPaths.cmake \
+      --subst-var-by libc ${stdenv.libc}
+  '';
 
   meta = {
     homepage = http://www.cmake.org/;
     description = "Cross-Platform Makefile Generator";
-    platforms = if useQt4 then qt4.meta.platforms else stdenv.lib.platforms.all;
+    platforms = stdenv.lib.platforms.all;
     maintainers = with stdenv.lib.maintainers; [ urkud mornfall ttuegel ];
   };
 }

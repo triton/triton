@@ -44,10 +44,10 @@ stdenv.mkDerivation rec {
     (enFlag "sse2" (isi686 || isx86_64) null)
     (enFlag "ssse3" (isi686 || isx86_64) null)
     "--disable-vmx"
-    (enFlag "arm-simd" isArm null)
-    (enFlag "arm-neon" isArm null)
+    #(enFlag "arm-simd" isArm null)
+    #(enFlag "arm-neon" isArm null)
     "--disable-arm-iwmmxt"
-    (enFlag "arm-iwmmxt2" isArm null)
+    #(enFlag "arm-iwmmxt2" isArm null)
     "--disable-mips-dspr2"
     (enFlag "gcc-inline-asm" cc.isGNU null)
     "--disable-static-testprogs"

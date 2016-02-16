@@ -1,8 +1,7 @@
 { stdenv, fetchurl, makeWrapper, apr, expat, gnused
 , sslSupport ? true, openssl
 , bdbSupport ? false, db
-, ldapSupport ? !stdenv.isCygwin, openldap
-, libiconv
+, ldapSupport ? true, openldap
 , cyrus_sasl, autoreconfHook
 }:
 
@@ -21,17 +20,13 @@ stdenv.mkDerivation rec {
   };
 
   configureFlags = [ "--with-apr=${apr}" "--with-expat=${expat}" ]
-    ++ optional (!stdenv.isCygwin) "--with-crypto"
+    ++ optional true "--with-crypto"
     ++ optional sslSupport "--with-openssl=${openssl}"
     ++ optional bdbSupport "--with-berkeley-db=${db}"
-    ++ optional ldapSupport "--with-ldap=ldap"
-    ++ optionals stdenv.isCygwin
-      [ "--without-pgsql" "--without-sqlite2" "--without-sqlite3"
-        "--without-freetds" "--without-berkeley-db" "--without-crypto" ]
-    ;
+    ++ optional ldapSupport "--with-ldap=ldap";
 
   nativeBuildInputs = [ makeWrapper ];
-  buildInputs = [ apr expat libiconv ]
+  buildInputs = [ apr expat ]
     ++ optional sslSupport openssl
     ++ optional bdbSupport db
     ++ optional ldapSupport openldap;
@@ -50,8 +45,6 @@ stdenv.mkDerivation rec {
     # Give apr1 access to sed for runtime invocations
     wrapProgram $out/bin/apu-1-config --prefix PATH : "${gnused}/bin"
   '';
-
-  enableParallelBuilding = true;
 
   passthru = {
     inherit sslSupport bdbSupport ldapSupport;

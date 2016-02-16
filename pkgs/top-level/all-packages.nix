@@ -8809,7 +8809,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   pgpool95 = pgpool.override { postgresql = postgresql95; };
 
   pgpool = callPackage ../servers/sql/pgpool/default.nix {
-    pam = if stdenv.isLinux then pam else null;
     libmemcached = null; # Detection is broken upstream
   };
 
@@ -8879,10 +8878,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   samba4 = callPackage ../servers/samba/4.x.nix {
     pythonPackages = python2Packages;
     kerberos = null;  # Bundle kerberos because samba uses internal, non-stable functions
-    dbus = if stdenv.isLinux then dbus else null;
-    libibverbs = if stdenv.isLinux then libibverbs else null;
-    librdmacm = if stdenv.isLinux then librdmacm else null;
-    systemd = if stdenv.isLinux then systemd else null;
   };
 
   samba = samba4;
@@ -8944,10 +8939,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     ruby = ruby_2_1;
   };
 
-  shishi = callPackage ../servers/shishi {
-    pam = if stdenv.isLinux then pam else null;
-    # see also openssl, which has/had this same trick
-  };
+  shishi = callPackage ../servers/shishi { };
 
   sipcmd = callPackage ../applications/networking/sipcmd { };
 
@@ -9011,8 +9003,6 @@ zstd = callPackage ../all-pkgs/zstd { };
       dbus libuuid openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
       autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman;
     mesa = mesa_noglu;
-    udev = if stdenv.isLinux then udev else null;
-    libdrm = if stdenv.isLinux then libdrm else null;
   } // { inherit xlibsWrapper; } );
 
   xwayland = callPackage ../servers/x11/xorg/xwayland.nix { };
@@ -9166,24 +9156,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libossp_uuid = callPackage ../development/libraries/libossp-uuid { };
 
-  libuuid =
-    if crossSystem != null && crossSystem.config == "i586-pc-gnu"
-    then (utillinux // {
-      crossDrv = lib.overrideDerivation utillinux.crossDrv (args: {
-        # `libblkid' fails to build on GNU/Hurd.
-        configureFlags = args.configureFlags
-          + " --disable-libblkid --disable-mount --disable-libmount"
-          + " --disable-fsck --enable-static --disable-partx";
-        doCheck = false;
-        CPPFLAGS =                    # ugly hack for ugly software!
-          lib.concatStringsSep " "
-            (map (v: "-D${v}=4096")
-                 [ "PATH_MAX" "MAXPATHLEN" "MAXHOSTNAMELEN" ]);
-      });
-    })
-    else if stdenv.isLinux
-    then utillinux
-    else null;
+  libuuid = utillinux
 
   light = callPackage ../os-specific/linux/light { };
 
@@ -10955,7 +10928,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   };
 
   jbidwatcher = callPackage ../applications/misc/jbidwatcher {
-    java = if stdenv.isLinux then jre else jdk;
+    java = jre;
   };
 
   qrencode = callPackage ../tools/graphics/qrencode { };
@@ -12824,7 +12797,7 @@ zstd = callPackage ../all-pkgs/zstd { };
             monolithic = true;
             daemon = false;
             client = false;
-            withKDE = stdenv.isLinux;
+            withKDE = true;
             qt = if withKDE then qt4 else qt5; # KDE supported quassel cannot build with qt5 yet (maybe in 0.12.0)
           };
 
@@ -13456,7 +13429,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   wine = callPackage ../misc/emulators/wine {
     wineRelease = config.wine.release or "stable";
     wineBuild = config.wine.build or "wine32";
-    pulseaudioSupport = config.pulseaudio or stdenv.isLinux;
+    pulseaudioSupport = config.pulseaudio or true;
   };
   wineStable = wine.override { wineRelease = "stable"; };
   wineUnstable = lowPrio (wine.override { wineRelease = "unstable"; });

@@ -1,4 +1,8 @@
-{ stdenv, fetchurl, tcl, makeWrapper }:
+{ stdenv
+, fetchurl
+, tcl
+, makeWrapper
+}:
 
 stdenv.mkDerivation rec {
   version = "5.45";

@@ -878,6 +878,8 @@ libdrm = callPackage ../all-pkgs/libdrm { };
 
 libev = callPackage ../all-pkgs/libev { };
 
+libffi = callPackage ../all-pkgs/libffi { };
+
 libgdata = callPackage ../all-pkgs/libgdata { };
 
 libgee = callPackage ../all-pkgs/libgee { };
@@ -6873,7 +6875,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libffcall = callPackage ../development/libraries/libffcall { };
 
-  libffi = callPackage ../development/libraries/libffi { };
 
   libfreefare = callPackage ../development/libraries/libfreefare { };
 

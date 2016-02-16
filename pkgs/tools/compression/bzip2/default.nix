@@ -3,8 +3,7 @@
 let
   version = "1.0.6";
 
-  sharedLibrary = !stdenv.isDarwin && !(stdenv ? isStatic)
-               && stdenv.system != "i686-cygwin" && !linkStatic;
+  sharedLibrary = !(stdenv ? isStatic) && !linkStatic;
 
 in stdenv.mkDerivation {
   name = "bzip2-${version}";
@@ -68,8 +67,6 @@ in stdenv.mkDerivation {
   '';
 
   makeFlags = stdenv.lib.optional linkStatic "LDFLAGS=-static";
-
-  enableParallelBuilding = true;
 
   inherit linkStatic;
 

@@ -2,7 +2,7 @@
 
 let version = "1.2.8"; in
 
-stdenv.mkDerivation (rec {
+stdenv.mkDerivation rec {
   name = "zlib-${version}";
 
   src = fetchurl {
@@ -12,13 +12,6 @@ stdenv.mkDerivation (rec {
       ];
     sha256 = "039agw5rqvqny92cpkrfn243x2gd4xn13hs3xi6isk55d2vqqr9n";
   };
-
-  postPatch = stdenv.lib.optionalString stdenv.isDarwin ''
-    substituteInPlace configure \
-      --replace '/usr/bin/libtool' 'ar' \
-      --replace 'AR="libtool"' 'AR="ar"' \
-      --replace 'ARFLAGS="-o"' 'ARFLAGS="-r"'
-  '';
 
   configureFlags = [
     (if static then "--static" else "")
@@ -34,27 +27,11 @@ stdenv.mkDerivation (rec {
 
   # As zlib takes part in the stdenv building, we don't want references
   # to the bootstrap-tools libgcc (as uses to happen on arm/mips)
-  NIX_CFLAGS_COMPILE = [ "-fPIC" ]
-    ++ stdenv.lib.optional (!stdenv.isDarwin) "-static-libgcc";
+  NIX_CFLAGS_COMPILE = [ "-fPIC" "-static-libgcc" ];
 
   crossAttrs = {
     dontStrip = static;
-  } // stdenv.lib.optionalAttrs (stdenv.cross.libc == "msvcrt") {
-    configurePhase=''
-      installFlags="BINARY_PATH=$out/bin INCLUDE_PATH=$out/include LIBRARY_PATH=$out/lib"
-    '';
-    makeFlags = [
-      "-f" "win32/Makefile.gcc"
-      "PREFIX=${stdenv.cross.config}-"
-    ] ++ (if static then [] else [ "SHARED_MODE=1" ]);
-  } // stdenv.lib.optionalAttrs (stdenv.cross.libc == "libSystem") {
-    makeFlags = [ "RANLIB=${stdenv.cross.config}-ranlib" ];
   };
-
-  # CYGXXX: This is not needed anymore and non-functional, but left not to trigger rebuilds
-  cygwinConfigureEnableShared = if (!stdenv.isCygwin) then true else null;
-
-  enableParallelBuilding = true;
 
   passthru.version = version;
 
@@ -63,13 +40,4 @@ stdenv.mkDerivation (rec {
     license = licenses.zlib;
     platforms = platforms.all;
   };
-} // (if stdenv.isDarwin then {
-  postInstall = ''
-    # jww (2015-01-06): Sometimes this library install as a .so, even on
-    # Darwin; others time it installs as a .dylib.  I haven't yet figured out
-    # what causes this difference.
-    for file in $out/lib/*.so* $out/lib/*.dylib* ; do
-      install_name_tool -id "$file" $file
-    done
-  '';
-} else {}))
+}

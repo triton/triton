@@ -1011,10 +1011,7 @@ mpd = callPackage ../all-pkgs/mpd { };
 
 mpdris2 = callPackage ../all-pkgs/mpdris2 { };
 
-mpv = callPackage ../all-pkgs/mpv {
-  lua = lua5_1;
-  lua5_sockets = lua5_1_sockets;
-};
+mpv = callPackage ../all-pkgs/mpv { };
 
 mutter = callPackage ../all-pkgs/mutter { };
 
@@ -5263,6 +5260,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ### LUA MODULES
 
+  lua5_sockets = luaPackages.luasocket;
+
   lua5_2 = callPackage ../development/interpreters/lua-5/5.2.nix { };
   lua5_2_compat = callPackage ../development/interpreters/lua-5/5.2.nix {
     compat = true;
@@ -5285,9 +5284,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   luarocks = luaPackages.luarocks;
 
-  toluapp = callPackage ../development/tools/toluapp {
-    lua = lua5_1; # doesn't work with any other :(
-  };
+  toluapp = callPackage ../development/tools/toluapp { };
 
   ### END OF LUA
 
@@ -5915,7 +5912,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   radare = callPackage ../development/tools/analysis/radare {
     inherit (gnome) vte;
-    lua = lua5;
     useX11 = config.radare.useX11 or false;
     pythonBindings = config.radare.pythonBindings or false;
     rubyBindings = config.radare.rubyBindings or false;
@@ -5923,7 +5919,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   };
   radare2 = callPackage ../development/tools/analysis/radare2 {
     inherit (gnome) vte;
-    lua = lua5;
     useX11 = config.radare.useX11 or false;
     pythonBindings = config.radare.pythonBindings or false;
     rubyBindings = config.radare.rubyBindings or false;
@@ -6705,7 +6700,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   keybinder = callPackage ../development/libraries/keybinder {
     automake = automake111x;
-    lua = lua5_1;
   };
 
   keybinder3 = callPackage ../development/libraries/keybinder3 {
@@ -7487,7 +7481,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   loudmouth = callPackage ../development/libraries/loudmouth { };
 
-  luabind = callPackage ../development/libraries/luabind { lua = lua5_1; };
+  luabind = callPackage ../development/libraries/luabind { };
 
   luabind_luajit = callPackage ../development/libraries/luabind { lua = luajit; };
 
@@ -7742,7 +7736,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   pocketsphinx = callPackage ../development/libraries/pocketsphinx { };
 
-  podofo = callPackage ../development/libraries/podofo { lua5 = lua5_1; };
+  podofo = callPackage ../development/libraries/podofo { };
 
   poker-eval = callPackage ../development/libraries/poker-eval { };
 
@@ -8722,7 +8716,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   dictdWordnet = callPackage ../servers/dict/dictd-wordnet.nix {};
 
-  diod = callPackage ../servers/diod { lua = lua5_1; };
+  diod = callPackage ../servers/diod { };
 
   dnschain = callPackage ../servers/dnschain { };
 
@@ -8747,7 +8741,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   ejabberd = callPackage ../servers/xmpp/ejabberd { };
 
   prosody = callPackage ../servers/xmpp/prosody {
-    lua5 = lua5_1;
     inherit (lua51Packages) luasocket luasec luaexpat luafilesystem luabitop luaevent luazlib;
   };
 
@@ -9299,9 +9292,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   cifs_utils = callPackage ../os-specific/linux/cifs-utils { };
 
-  conky = callPackage ../os-specific/linux/conky ({
-    lua = lua5_1; # conky can use 5.2, but toluapp can not
-  } // config.conky or {});
+  conky = callPackage ../os-specific/linux/conky ({ } // config.conky or {});
 
   conntrack_tools = callPackage ../os-specific/linux/conntrack-tools { };
 
@@ -11142,10 +11133,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   praat = callPackage ../applications/audio/praat { };
 
-  quvi = callPackage ../applications/video/quvi/tool.nix {
-    lua5_sockets = lua5_1_sockets;
-    lua5 = lua5_1;
-  };
+  quvi = callPackage ../applications/video/quvi/tool.nix { };
 
   quvi_scripts = callPackage ../applications/video/quvi/scripts.nix { };
 
@@ -11521,7 +11509,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   luakit = callPackage ../applications/networking/browsers/luakit {
       inherit (lua51Packages) luafilesystem luasqlite3;
-      lua5 = lua5_1;
       gtk = gtk3;
       webkit = webkitgtk2;
   };
@@ -11989,7 +11976,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   pythonmagick = callPackage ../applications/graphics/PythonMagick { };
 
-  eiskaltdcpp = callPackage ../applications/networking/p2p/eiskaltdcpp { lua5 = lua5_1; };
+  eiskaltdcpp = callPackage ../applications/networking/p2p/eiskaltdcpp { };
 
   qemu = callPackage ../applications/virtualization/qemu {
     gtk = gtk3;
@@ -12501,7 +12488,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     inherit (darwin) libobjc cf-private;
 
     features = "huge"; # one of  tiny, small, normal, big or huge
-    lua = pkgs.lua5_1;
     gui = config.vim.gui or "auto";
 
     # optional features by flags
@@ -13487,7 +13473,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   lkproof = callPackage ../tools/typesetting/tex/lkproof { };
 
   mysqlWorkbench = newScope gnome ../applications/misc/mysql-workbench {
-    lua = lua5_1;
     libctemplate = libctemplate_2_2;
     inherit (pythonPackages) pexpect paramiko;
   };

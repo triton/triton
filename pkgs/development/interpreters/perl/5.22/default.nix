@@ -43,8 +43,6 @@ stdenv.mkDerivation rec {
 
   dontAddPrefix = true;
 
-  enableParallelBuilding = true;
-
   postPatch = ''
     pwd="$(type -P pwd)"
     substituteInPlace dist/PathTools/Cwd.pm \

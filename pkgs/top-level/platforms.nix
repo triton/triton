@@ -9,9 +9,17 @@ rec {
     kernelTarget = "bzImage";
   };
 
-  pc64 = pcBase // { kernelArch = "x86_64"; };
+  pc64 = pcBase // {
+    kernelArch = "x86_64";
+    march = "nehalem";
+    mtune = "nehalem";
+  };
 
-  pc32 = pcBase // { kernelArch = "i386"; };
+  pc32 = pcBase // {
+    kernelArch = "i386";
+    march = "i686";
+    mtune = "i686";
+  };
 
   pc32_simplekernel = pc32 // {
     kernelAutoModules = false;

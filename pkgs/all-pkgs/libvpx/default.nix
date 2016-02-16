@@ -42,11 +42,11 @@
 }:
 
 let
-  inherit (stdenv) isi686 isx86_64 isArm is64bit isMips isDarwin isCygwin;
+  inherit (stdenv) isi686 isx86_64 is64bit;
   inherit (stdenv.lib) enableFeature optional optionals;
 in
 
-assert isi686 || isx86_64 || isArm || isMips; # Requires ARM with floating point support
+assert isi686 || isx86_64; # Requires ARM with floating point support
 
 assert vp8DecoderSupport || vp8EncoderSupport || vp9DecoderSupport || vp9EncoderSupport;
 assert internalStatsSupport && (vp9DecoderSupport || vp9EncoderSupport) -> postprocSupport;
@@ -57,7 +57,6 @@ assert spatialResamplingSupport;
 assert postprocVisualizerSupport -> postprocSupport;
 assert unitTestsSupport -> curl != null && coreutils != null;
 assert vp9HighbitdepthSupport -> (vp9DecoderSupport || vp9EncoderSupport);
-assert isCygwin -> unitTestsSupport && webmIOSupport && libyuvSupport;
 
 stdenv.mkDerivation rec {
   name = "libvpx-${version}";
@@ -89,7 +88,7 @@ stdenv.mkDerivation rec {
     (enableFeature gprofSupport "gprof")
     (enableFeature gcovSupport "gcov")
     # Required to build shared libraries
-    (enableFeature (!isCygwin) "pic")
+    (enableFeature true "pic")
     (enableFeature (isi686 || isx86_64) "use-x86inc")
     (enableFeature optimizationsSupport "optimizations")
     (enableFeature runtimeCpuDetectSupport "runtime-cpu-detect")
@@ -103,8 +102,8 @@ stdenv.mkDerivation rec {
     #(enableFeature fastUnalignedSupport "fast-unaligned")
     "--disable-codec-srcs"
     (enableFeature debugLibsSupport "debug-libs")
-    (enableFeature isMips "dequant-tokens")
-    (enableFeature isMips "dc-recon")
+    #(enableFeature isMips "dequant-tokens")
+    #(enableFeature isMips "dc-recon")
     (enableFeature postprocSupport "postproc")
     (enableFeature (postprocSupport && (vp9DecoderSupport || vp9EncoderSupport)) "vp9-postproc")
     (enableFeature multithreadSupport "multithread")
@@ -115,10 +114,7 @@ stdenv.mkDerivation rec {
     (enableFeature ontheflyBitpackingSupport "onthefly-bitpacking")
     (enableFeature errorConcealmentSupport "error-concealment")
     # Shared libraries are only supported on ELF platforms
-    (if isDarwin || isCygwin then
-       "--enable-static --disable-shared"
-     else
-       "--disable-static --enable-shared")
+    "--disable-static --enable-shared"
     (enableFeature smallSupport "small")
     (enableFeature postprocVisualizerSupport "postproc-visualizer")
     (enableFeature unitTestsSupport "unit-tests")
@@ -143,36 +139,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ ]
     ++ optionals unitTestsSupport [ coreutils curl ];
-
-  enableParallelBuilding = true;
-
-  crossAttrs = let
-    isCygwin = stdenv.cross.libc == "msvcrt";
-    isDarwin = stdenv.cross.libc == "libSystem";
-  in {
-    dontSetConfigureCross = true;
-    configureFlags = configureFlags ++ [
-      #"--extra-cflags="
-      #"--prefix="
-      #"--libc="
-      #"--libdir="
-      "--enable-external-build"
-      # libvpx darwin targets include darwin version (ie. ARCH-darwinXX-gcc, XX being the darwin version)
-      # See all_platforms: https://github.com/webmproject/libvpx/blob/master/configure
-      # Darwin versions: 10.4=8, 10.5=9, 10.6=10, 10.7=11, 10.8=12, 10.9=13, 10.10=14
-      "--force-target=${stdenv.cross.config}${(
-              if isDarwin then (
-                if      stdenv.cross.osxMinVersion == "10.10" then "14"
-                else if stdenv.cross.osxMinVersion == "10.9"  then "13"
-                else if stdenv.cross.osxMinVersion == "10.8"  then "12"
-                else if stdenv.cross.osxMinVersion == "10.7"  then "11"
-                else if stdenv.cross.osxMinVersion == "10.6"  then "10"
-                else if stdenv.cross.osxMinVersion == "10.5"  then "9"
-                else "8")
-              else "")}-gcc"
-      (if isCygwin then "--enable-static-msvcrt" else "")
-    ];
-  };
 
   meta = with stdenv.lib; {
     description = "WebM VP8/VP9 codec SDK";

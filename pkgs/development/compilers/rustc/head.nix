@@ -17,8 +17,6 @@ callPackage ./generic.nix {
 
   snapshotHashLinux686 = "a09c4a4036151d0cb28e265101669731600e01f2";
   snapshotHashLinux64 = "97e2a5eb8904962df8596e95d6e5d9b574d73bf4";
-  snapshotHashDarwin686 = "ca52d2d3ba6497ed007705ee3401cf7efc136ca1";
-  snapshotHashDarwin64 = "3c44ffa18f89567c2b81f8d695e711c86d81ffc7";
   snapshotDate = "2015-12-18";
   snapshotRev = "3391630";
 

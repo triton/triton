@@ -43,20 +43,12 @@ let version = if isRelease then
       then "linux-i386"
       else if stdenv.system == "x86_64-linux"
       then "linux-x86_64"
-      else if stdenv.system == "i686-darwin"
-      then "macos-i386"
-      else if stdenv.system == "x86_64-darwin"
-      then "macos-x86_64"
       else abort "no snapshot to bootstrap for this platform (missing platform url suffix)";
 
     target = if stdenv.system == "i686-linux"
       then "i686-unknown-linux-gnu"
       else if stdenv.system == "x86_64-linux"
       then "x86_64-unknown-linux-gnu"
-      else if stdenv.system == "i686-darwin"
-      then "i686-apple-darwin"
-      else if stdenv.system == "x86_64-darwin"
-      then "x86_64-apple-darwin"
       else abort "no snapshot to bootstrap for this platform (missing target triple)";
 
     meta = with stdenv.lib; {
@@ -71,11 +63,8 @@ let version = if isRelease then
       then snapshotHashLinux686
       else if stdenv.system == "x86_64-linux"
       then snapshotHashLinux64
-      else if stdenv.system == "i686-darwin"
-      then snapshotHashDarwin686
-      else if stdenv.system == "x86_64-darwin"
-      then snapshotHashDarwin64
       else abort "no snapshot for platform ${stdenv.system}";
+
     snapshotName = "rust-stage0-${snapshotDate}-${snapshotRev}-${platform}-${snapshotHash}.tar.bz2";
 in
 
@@ -83,10 +72,6 @@ with stdenv.lib; stdenv.mkDerivation {
   inherit name;
   inherit version;
   inherit meta;
-
-  __impureHostDeps = [ "/usr/lib/libedit.3.dylib" ];
-
-  NIX_LDFLAGS = stdenv.lib.optionalString stdenv.isDarwin "-rpath ${llvmShared}/lib";
 
   src = if isRelease then
       fetchzip {

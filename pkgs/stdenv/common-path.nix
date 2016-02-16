@@ -1,5 +1,19 @@
 { pkgs }:
 {
-  inherit (pkgs) coreutils findutils diffutils gnused gnugrep gawk gnutar
-    gzip bzip2 gnumake bash patch pkgconfig xz curl;
+  inherit (pkgs)
+    bash
+    bzip2
+    coreutils
+    curl
+    diffutils
+    findutils
+    gawk
+    gnugrep
+    gnumake
+    gnused
+    gnutar
+    gzip
+    patch
+    pkgconfig
+    xz;
 }

@@ -1,5 +1,4 @@
 { fetchurl, stdenv
-, CoreServices
 }:
 
 stdenv.mkDerivation rec {
@@ -13,8 +12,6 @@ stdenv.mkDerivation rec {
 
   # Test can randomly fail: http://hydra.nixos.org/build/7243912
   doCheck = false;
-
-  buildInputs = stdenv.lib.optional stdenv.isDarwin CoreServices;
 
   meta = with stdenv.lib; {
     description = "Unit testing framework for C";

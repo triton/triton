@@ -29,7 +29,7 @@ stdenv.mkDerivation {
   enableParallelBuilding = !guileBindings;
 
   buildInputs = [ lzo lzip nettle libtasn1 libidn p11_kit zlib gmp autogen ]
-    ++ lib.optional (stdenv.isFreeBSD || stdenv.isDarwin) libiconv
+    ++ lib.optional (stdenv.isFreeBSD) libiconv
     ++ lib.optional (tpmSupport && stdenv.isLinux) trousers
     ++ [ unbound ]
     ++ lib.optional guileBindings guile;
@@ -40,10 +40,10 @@ stdenv.mkDerivation {
 
   # XXX: Gnulib's `test-select' fails on FreeBSD:
   # http://hydra.nixos.org/build/2962084/nixlog/1/raw .
-  doCheck = (!stdenv.isFreeBSD && !stdenv.isDarwin);
+  doCheck = true;
 
   # Fixup broken libtool and pkgconfig files
-  preFixup = lib.optionalString (!stdenv.isDarwin) ''
+  preFixup = lib.optionalString true ''
     sed ${lib.optionalString tpmSupport "-e 's,-ltspi,-L${trousers}/lib -ltspi,'"} \
         -e 's,-lz,-L${zlib}/lib -lz,' \
         -e 's,-lgmp,-L${gmp}/lib -lgmp,' \

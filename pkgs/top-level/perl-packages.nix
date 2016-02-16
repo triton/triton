@@ -4267,11 +4267,6 @@ let self = _self // overrides; _self = with self; {
       url = "mirror://cpan/modules/by-module/Encode/${name}.tar.gz";
       sha256 = "176fa02771f542a4efb1dbc2a4c928e8f4391bf4078473bd6040d8f11adb0ec1";
     };
-    preCheck = if stdenv.isCygwin then ''
-      sed -i"" -e "s@plan tests => 13@plan tests => 10@" t/env.t
-      sed -i"" -e "s@ok(env(\"\\\x@#ok(env(\"\\\x@" t/env.t
-      sed -i"" -e "s@ok(\$ENV{\"\\\x@#ok(\$ENV{\"\\\x@" t/env.t
-    '' else null;
     meta = {
       description = "Determine the locale encoding";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];

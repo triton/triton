@@ -8,7 +8,6 @@
 { name ? "", stdenv, nativeTools, nativeLibc, nativePrefix ? ""
 , cc ? null, libc ? null, binutils ? null, coreutils ? null, shell ? stdenv.shell
 , zlib ? null, extraPackages ? [], extraBuildCommands ? ""
-, dyld ? null # TODO: should this be a setup-hook on dyld?
 , isGNU ? false, isClang ? cc.isClang or false, gnugrep ? null
 }:
 
@@ -59,7 +58,7 @@ stdenv.mkDerivation {
       }
     ''
 
-    + optionalString (!nativeLibc) (if (!stdenv.isDarwin) then ''
+    + optionalString (!nativeLibc) (''
       dynamicLinker="$libc/lib/$dynamicLinker"
       echo $dynamicLinker > $out/nix-support/dynamic-linker
 
@@ -71,10 +70,6 @@ stdenv.mkDerivation {
       # explicit overrides of the dynamic linker by callers to gcc/ld
       # (the *last* value counts, so ours should come first).
       echo "-dynamic-linker" $dynamicLinker > $out/nix-support/libc-ldflags-before
-    '' else ''
-      echo $dynamicLinker > $out/nix-support/dynamic-linker
-
-      echo "export LD_DYLD_PATH=\"$dynamicLinker\"" >> $out/nix-support/setup-hook
     '')
 
     + optionalString (!nativeLibc) ''
@@ -97,7 +92,7 @@ stdenv.mkDerivation {
     ''
 
     + (if nativeTools then ''
-      ccPath="${if stdenv.isDarwin then cc else nativePrefix}/bin"
+      ccPath="${nativePrefix}/bin"
       ldPath="${nativePrefix}/bin"
     '' else ''
       echo $cc > $out/nix-support/orig-cc
@@ -143,13 +138,6 @@ stdenv.mkDerivation {
       echo $cc $binutils $libc > $out/nix-support/propagated-user-env-packages
 
       echo ${toString extraPackages} > $out/nix-support/propagated-native-build-inputs
-    ''
-
-    + optionalString (stdenv.isSunOS && nativePrefix != "") ''
-      # Solaris needs an additional ld wrapper.
-      ldPath="${nativePrefix}/bin"
-      exec="$ldPath/ld"
-      wrap ld-solaris ${./ld-solaris-wrapper.sh}
     '')
 
     + ''

@@ -1,5 +1,5 @@
 { lib, fetchurl, stdenv, zlib, lzo, libtasn1, nettle, pkgconfig, lzip
-, guileBindings, guile, perl, gmp, autogen, libidn, p11_kit, unbound, libiconv
+, guileBindings, guile, perl, gmp, autogen, libidn, p11_kit, unbound
 , tpmSupport ? false, trousers
 
 # Version dependent args
@@ -15,9 +15,8 @@ stdenv.mkDerivation {
 
   outputs = [ "out" "man" ];
 
-  configureFlags =
-    lib.optional stdenv.isLinux "--with-default-trust-store-file=/etc/ssl/certs/ca-certificates.crt"
-  ++ [
+  configureFlags = [
+    "--with-default-trust-store-file=/etc/ssl/certs/ca-certificates.crt"
     "--disable-dependency-tracking"
     "--enable-fast-install"
   ] ++ lib.optional guileBindings
@@ -29,8 +28,7 @@ stdenv.mkDerivation {
   enableParallelBuilding = !guileBindings;
 
   buildInputs = [ lzo lzip nettle libtasn1 libidn p11_kit zlib gmp autogen ]
-    ++ lib.optional (stdenv.isFreeBSD) libiconv
-    ++ lib.optional (tpmSupport && stdenv.isLinux) trousers
+    ++ lib.optional tpmSupport trousers
     ++ [ unbound ]
     ++ lib.optional guileBindings guile;
 
@@ -52,21 +50,6 @@ stdenv.mkDerivation {
 
   meta = with lib; {
     description = "The GNU Transport Layer Security Library";
-
-    longDescription = ''
-       GnuTLS is a project that aims to develop a library which
-       provides a secure layer, over a reliable transport
-       layer. Currently the GnuTLS library implements the proposed standards by
-       the IETF's TLS working group.
-
-       Quoting from the TLS protocol specification:
-
-       "The TLS protocol provides communications privacy over the
-       Internet. The protocol allows client/server applications to
-       communicate in a way that is designed to prevent eavesdropping,
-       tampering, or message forgery."
-    '';
-
     homepage = http://www.gnu.org/software/gnutls/;
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [ eelco wkennington ];

@@ -2,7 +2,7 @@
 
 let
   inherit (args) stdenv makeWrapper fetchurl;
-  inherit (stdenv) lib isDarwin;
+  inherit (stdenv) lib;
   inherit (lib) overrideDerivation;
 
   setMalloc0ReturnsNullCrossCompiling = ''
@@ -49,12 +49,8 @@ in
     inherit (xorg) xorgcffiles;
     x11BuildHook = ./imake.sh;
     patches = [./imake.patch];
-    setupHook = if stdenv.isDarwin then ./darwin-imake-setup-hook.sh else null;
-    CFLAGS = [ "-DIMAKE_COMPILETIME_CPP=\\\"${if stdenv.isDarwin
-      then "${args.tradcpp}/bin/cpp"
-      else "gcc"}\\\""
+    CFLAGS = [ "-DIMAKE_COMPILETIME_CPP=gcc"
     ];
-    tradcpp = if stdenv.isDarwin then args.tradcpp else null;
   };
 
   intelgputools = attrs: attrs // {
@@ -94,7 +90,7 @@ in
         # Remove useless DocBook XML files.
         rm -rf $out/share/doc
       '';
-    CPP = stdenv.lib.optionalString stdenv.isDarwin "clang -E -";
+    CPP = stdenv.lib.optionalString stdenv.cc.isClang "clang -E -";
     outputs = [ "out" "man" ];
   };
 
@@ -107,10 +103,6 @@ in
 
   libXfont = attrs: attrs // {
     propagatedBuildInputs = [ args.freetype ]; # propagate link reqs. like bzip2
-    # prevents "misaligned_stack_error_entering_dyld_stub_binder"
-    configureFlags = lib.optionals isDarwin [
-      "CFLAGS=-O0"
-    ];
   };
 
   libXxf86vm = attrs: attrs // {
@@ -130,7 +122,7 @@ in
       sed 's,^as_dummy.*,as_dummy="\$PATH",' -i configure
     '';
     propagatedBuildInputs = [ xorg.libSM ];
-    CPP = stdenv.lib.optionalString stdenv.isDarwin "clang -E -";
+    CPP = stdenv.lib.optionalString stdenv.cc.isClang "clang -E -";
     outputs = [ "out" "doc" "man" ];
   };
 
@@ -297,21 +289,8 @@ in
       ];
       # fix_segfault: https://bugs.freedesktop.org/show_bug.cgi?id=91316
       commonPatches = [ ./xorgserver-xkbcomp-path.patch ];
-      # XQuartz requires two compilations: the first to get X / XQuartz,
-      # and the second to get Xvfb, Xnest, etc.
-      darwinOtherX = overrideDerivation xorgserver (oldAttrs: {
-        configureFlags = oldAttrs.configureFlags ++ [
-          "--disable-xquartz"
-          "--enable-xorg"
-          "--enable-xvfb"
-          "--enable-xnest"
-          "--enable-kdrive"
-        ];
-        postInstall = ":"; # prevent infinite recursion
-      });
     in
-      if (!isDarwin)
-      then {
+      {
         buildInputs = [ makeWrapper ] ++ commonBuildInputs;
         propagatedBuildInputs = [ libpciaccess pixman ] ++ commonPropagatedBuildInputs ++ lib.optionals stdenv.isLinux [
           args.udev
@@ -336,51 +315,6 @@ in
             --add-flags "-xkbdir ${xorg.xkeyboardconfig}/share/X11/xkb"
         '';
         passthru.version = version; # needed by virtualbox guest additions
-      } else {
-        buildInputs = commonBuildInputs ++ [
-          args.bootstrap_cmds args.automake args.autoconf
-          args.apple_sdk.libs.Xplugin
-          args.apple_sdk.frameworks.Carbon
-          args.apple_sdk.frameworks.Cocoa
-        ];
-        propagatedBuildInputs = commonPropagatedBuildInputs ++ [
-          libAppleWM applewmproto
-        ];
-        # Patches can be pulled from the server-*-apple branches of:
-        # http://cgit.freedesktop.org/~jeremyhu/xserver/
-        patches = commonPatches ++ [
-          ./darwin/0002-sdksyms.sh-Use-CPPFLAGS-not-CFLAGS.patch
-          ./darwin/0004-Use-old-miTrapezoids-and-miTriangles-routines.patch
-          ./darwin/0006-fb-Revert-fb-changes-that-broke-XQuartz.patch
-          ./darwin/private-extern.patch
-          ./darwin/bundle_main.patch
-          ./darwin/stub.patch
-        ];
-        configureFlags = [
-          # note: --enable-xquartz is auto
-          "CPPFLAGS=-I${./darwin/dri}"
-          "--with-default-font-path="
-          "--with-apple-application-name=XQuartz"
-          "--with-apple-applications-dir=\${out}/Applications"
-          "--with-bundle-id-prefix=org.nixos.xquartz"
-          "--with-sha1=CommonCrypto"
-        ];
-        preConfigure = ''
-          ensureDir $out/Applications
-          export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -Wno-error"
-          substituteInPlace hw/xquartz/pbproxy/Makefile.in --replace -F/System -F${args.apple_sdk.frameworks.ApplicationServices}
-        '';
-        postInstall = ''
-          rm -fr $out/share/X11/xkb/compiled
-          ln -s /var/tmp $out/share/X11/xkb/compiled
-
-          cp -rT ${darwinOtherX}/bin $out/bin
-          rm -f $out/bin/X
-          ln -s Xquartz $out/bin/X
-
-          cp ${darwinOtherX}/share/man -rT $out/share/man
-        '' ;
-        passthru.version = version;
       });
 
   lndir = attrs: attrs // {
@@ -404,17 +338,12 @@ in
   };
 
   xinit = attrs: attrs // {
-    stdenv = if isDarwin then args.clangStdenv else stdenv;
-    buildInputs = attrs.buildInputs ++ lib.optional isDarwin args.bootstrap_cmds;
+    stdenv = if stdenv.cc.isClang then args.clangStdenv else stdenv;
+    buildInputs = attrs.buildInputs;
     configureFlags = [
       "--with-xserver=${xorg.xorgserver}/bin/X"
-    ] ++ lib.optionals isDarwin [
-      "--with-bundle-id-prefix=org.nixos.xquartz"
-      "--with-launchdaemons-dir=\${out}/LaunchDaemons"
-      "--with-launchagents-dir=\${out}/LaunchAgents"
     ];
-    propagatedBuildInputs = [ xorg.xauth ]
-                         ++ lib.optionals isDarwin [ xorg.libX11 xorg.xproto ];
+    propagatedBuildInputs = [ xorg.xauth ];
     prePatch = ''
       sed -i 's|^defaultserverargs="|&-logfile \"$HOME/.xorg.log\"|p' startx.cpp
     '';

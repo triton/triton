@@ -18,20 +18,18 @@ stdenv.mkDerivation rec {
     # See <http://hydra.nixos.org/build/2760931>, for instance.
     #
     # no darwin because gmp uses ASM that clang doesn't like
-    optional (!stdenv.isSunOS) "--enable-fat"
+    optional (true) "--enable-fat"
     ++ (if cxx then [ "--enable-cxx"  ]
                else [ "--disable-cxx" ])
-    ++ optional (cxx && stdenv.isDarwin) "CPPFLAGS=-fexceptions"
-    ++ optional stdenv.isDarwin "ABI=64"
     ++ optional stdenv.is64bit "--with-pic"
     ;
 
   # The config.guess in GMP tries to runtime-detect various
   # ARM optimization flags via /proc/cpuinfo (and is also
   # broken on multicore CPUs). Avoid this impurity.
-  preConfigure = optionalString stdenv.isArm ''
+  /*preConfigure = optionalString stdenv.isArm ''
       configureFlagsArray+=("--build=$(./configfsf.guess)")
-    '';
+    '';*/
 
   doCheck = true;
 

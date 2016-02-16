@@ -21,7 +21,6 @@
 , icu
 , lame
 , libao
-, libiconv
 , libid3tag
 , libjack2
 , libmad
@@ -94,7 +93,6 @@ stdenv.mkDerivation rec {
     icu
     lame
     libao
-    libiconv
     libid3tag
     libjack2
     libmad

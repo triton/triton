@@ -37,13 +37,6 @@ let
   whitelist = config.whitelistedLicenses or [ ];
   blacklist = config.blacklistedLicenses or [ ];
 
-  ifDarwin =
-    attrs:
-    if system == "x86_64-darwin" then
-      attrs
-    else
-      { };
-
   onlyLicenses =
     list:
     lib.lists.all (
@@ -314,39 +307,6 @@ let
           if crossConfig == null then
             propagatedBuildInputs
           else [ ]);
-    } // ifDarwin {
-      # TODO: remove lib.unique once nix has a list canonicalization primitive
-      __sandboxProfile =
-      let
-        profiles = [
-          extraSandboxProfile
-        ] ++ computedSandboxProfile
-          ++ computedPropagatedSandboxProfile
-          ++ [
-            propagatedSandboxProfile
-            sandboxProfile
-          ];
-        final = lib.concatStringsSep "\n" (
-          lib.filter (x: x != "") (lib.unique profiles));
-      in
-      final;
-      __propagatedSandboxProfile = lib.unique (
-        computedPropagatedSandboxProfile ++ [ propagatedSandboxProfile ]
-      );
-      __impureHostDeps =
-        computedImpureHostDeps ++
-        computedPropagatedImpureHostDeps ++
-        __propagatedImpureHostDeps ++
-        __impureHostDeps ++
-        __extraImpureHostDeps ++ [
-          "/dev/zero"
-          "/dev/random"
-          "/dev/urandom"
-          "/bin/sh"
-        ];
-      __propagatedImpureHostDeps =
-        computedPropagatedImpureHostDeps ++
-        __propagatedImpureHostDeps;
     } // (if outputs' != [ "out" ] then {
       outputs = outputs';
     } else { })))) (
@@ -393,11 +353,7 @@ let
         shell
         defaultNativeBuildInputs;
     }
-    // extraArgs
-    // ifDarwin {
-      __sandboxProfile = stdenvSandboxProfile;
-      __impureHostDeps = __stdenvImpureHostDeps;
-    })
+    // extraArgs)
 
     // rec {
 
@@ -405,65 +361,21 @@ let
         "The default build environment for Unix packages in Nixpkgs";
 
       # Utility flags to test the type of platform.
-      isDarwin =
-        system == "x86_64-darwin";
       isLinux =
         system == "i686-linux" ||
-        system == "x86_64-linux" ||
-        system == "powerpc-linux" ||
-        system == "armv5tel-linux" ||
-        system == "armv6l-linux" ||
-        system == "armv7l-linux" ||
-        system == "mips64el-linux";
-      isGNU =
-        system == "i686-gnu"; # GNU/Hurd
-      isGlibc =
-        isGNU || # useful for `stdenvNative' ||
-        isLinux ||
-        system == "x86_64-kfreebsd-gnu";
-      isSunOS =
-        system == "i686-solaris" ||
-        system == "x86_64-solaris";
-      isCygwin =
-        system == "i686-cygwin" ||
-        system == "x86_64-cygwin";
+        system == "x86_64-linux";
       isFreeBSD =
         system == "i686-freebsd" ||
         system == "x86_64-freebsd";
-      isOpenBSD =
-        system == "i686-openbsd" ||
-        system == "x86_64-openbsd";
       isi686 =
         system == "i686-linux" ||
-        system == "i686-gnu" ||
-        system == "i686-freebsd" ||
-        system == "i686-openbsd" ||
-        system == "i686-cygwin" ||
-        system == "i386-sunos";
+        system == "i686-freebsd";
       isx86_64 =
         system == "x86_64-linux" ||
-        system == "x86_64-darwin" ||
-        system == "x86_64-freebsd" ||
-        system == "x86_64-openbsd" ||
-        system == "x86_64-cygwin" ||
-        system == "x86_64-solaris";
+        system == "x86_64-freebsd";
       is64bit =
         system == "x86_64-linux" ||
-        system == "x86_64-darwin" ||
-        system == "x86_64-freebsd" ||
-        system == "x86_64-openbsd" ||
-        system == "x86_64-cygwin" ||
-        system == "x86_64-solaris" ||
-        system == "mips64el-linux";
-      isMips =
-        system == "mips-linux" ||
-        system == "mips64el-linux";
-      isArm =
-        system == "armv5tel-linux" ||
-        system == "armv6l-linux" ||
-        system == "armv7l-linux";
-      isBigEndian =
-        system == "powerpc-linux";
+        system == "x86_64-freebsd";
 
       shouldUsePkg = lib.shouldUsePkgSystem system;
 

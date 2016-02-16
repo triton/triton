@@ -243,11 +243,6 @@ stdenv.mkDerivation {
     if !nativeLibc then
       (if stdenv.system == "i686-linux" then "ld-linux.so.2" else
        if stdenv.system == "x86_64-linux" then "ld-linux-x86-64.so.2" else
-       # ARM with a wildcard, which can be "" or "-armhf".
-       if stdenv.isArm then "ld-linux*.so.3" else
-       if stdenv.system == "powerpc-linux" then "ld.so.1" else
-       if stdenv.system == "mips64el-linux" then "ld.so.1" else
-       if stdenv.system == "x86_64-darwin" then "/usr/lib/dyld" else
        abort "Don't know the name of the dynamic linker for this platform.")
     else "";
 
@@ -262,9 +257,7 @@ stdenv.mkDerivation {
     # the style in the gcc-cross-wrapper, but to keep a stable stdenv now I
     # do this sufficient if/else.
     dynamicLinker =
-      (if stdenv.cross.arch == "arm" then "ld-linux.so.3" else
-       if stdenv.cross.arch == "mips" then "ld.so.1" else
-       if stdenv.lib.hasSuffix "pc-gnu" stdenv.cross.config then "ld.so.1" else
+      (if stdenv.lib.hasSuffix "pc-gnu" stdenv.cross.config then "ld.so.1" else
        abort "don't know the name of the dynamic linker for this platform");
   };
 

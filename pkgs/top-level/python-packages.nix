@@ -17435,7 +17435,6 @@ in {
       sha256 = "19bb3ac350ef878dda84a62d37c7d5c17a137386dde9c2ce7249c7a21d7f6ac9";
     };
 
-    buildInputs = with self; [ pkgs.pyrex ];
     propagatedBuildInputs = with self; [ pkgs.libyaml ];
 
     meta = {

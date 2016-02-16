@@ -1,7 +1,5 @@
 { stdenv, fetchurl, noSysDirs
 , langC ? true, langCC ? true, langFortran ? false
-, langObjC ? stdenv.isDarwin
-, langObjCpp ? stdenv.isDarwin
 , langJava ? false
 , langAda ? false
 , langVhdl ? false
@@ -43,12 +41,6 @@ assert langVhdl     -> gnat != null;
 
 # LTO needs libelf and zlib.
 assert libelf != null -> zlib != null;
-
-# Make sure we get GNU sed.
-assert stdenv.isDarwin -> gnused != null;
-
-# Need c++filt on darwin
-assert stdenv.isDarwin -> binutils != null;
 
 # The go frontend is written in c++
 assert langGo -> langCC;
@@ -163,13 +155,7 @@ let version = "5.3.0";
           " --disable-libatomic " +  # libatomic requires libc
           " --disable-decimal-float" # libdecnumber requires libc
           else
-          (if crossDarwin then " --with-sysroot=${libcCross}/share/sysroot"
-           else                " --with-headers=${libcCross}/include") +
-          # Ensure that -print-prog-name is able to find the correct programs.
-          (stdenv.lib.optionalString (crossMingw || crossDarwin) (
-            " --with-as=${binutilsCross}/bin/${cross.config}-as" +
-            " --with-ld=${binutilsCross}/bin/${cross.config}-ld"
-          )) +
+          " --with-headers=${libcCross}/include" +
           " --enable-__cxa_atexit" +
           " --enable-long-long" +
           (if crossMingw then
@@ -284,13 +270,7 @@ stdenv.mkDerivation ({
     ++ (optionals javaAwtGtk ([ gtk libart_lgpl ] ++ xlibs))
     ++ (optionals (cross != null) [binutilsCross])
     ++ (optionals langAda [gnatboot])
-    ++ (optionals langVhdl [gnat])
-
-    # The builder relies on GNU sed (for instance, Darwin's `sed' fails with
-    # "-i may not be used with stdin"), and `stdenvNative' doesn't provide it.
-    ++ (optional stdenv.isDarwin gnused)
-    ++ (optional stdenv.isDarwin binutils)
-    ;
+    ++ (optionals langVhdl [gnat]);
 
   NIX_LDFLAGS = stdenv.lib.optionalString  stdenv.isSunOS "-lm -ldl";
 
@@ -299,15 +279,6 @@ stdenv.mkDerivation ({
     export LDFLAGS_FOR_TARGET="-Wl,-rpath,$prefix/lib/amd64 $LDFLAGS_FOR_TARGET"
     export CXXFLAGS_FOR_TARGET="-Wl,-rpath,$prefix/lib/amd64 $CXXFLAGS_FOR_TARGET"
     export CFLAGS_FOR_TARGET="-Wl,-rpath,$prefix/lib/amd64 $CFLAGS_FOR_TARGET"
-  '' + stdenv.lib.optionalString stdenv.isDarwin ''
-    if SDKROOT=$(/usr/bin/xcrun --show-sdk-path); then
-      configureFlagsArray+=(--with-native-system-header-dir=$SDKROOT/usr/include)
-      makeFlagsArray+=( \
-       CFLAGS_FOR_BUILD=-F$SDKROOT/System/Library/Frameworks \
-       CFLAGS_FOR_TARGET=-F$SDKROOT/System/Library/Frameworks \
-       FLAGS_FOR_TARGET=-F$SDKROOT/System/Library/Frameworks \
-      )
-    fi
   '';
 
   ABSOLUTE_LIBTOOL_EXCLUDED = libPathExcludes;
@@ -489,7 +460,7 @@ stdenv.mkDerivation ({
     else null;
 
   passthru =
-    { inherit langC langCC langObjC langObjCpp langAda langFortran langVhdl langGo version; isGNU = true; };
+    { inherit langC langCC langAda langFortran langVhdl langGo version; isGNU = true; };
 
   inherit enableParallelBuilding enableMultilib;
 
@@ -501,29 +472,14 @@ stdenv.mkDerivation ({
     description = "GNU Compiler Collection, version ${version}"
       + (if stripped then "" else " (with debugging info)");
 
-    longDescription = ''
-      The GNU Compiler Collection includes compiler front ends for C, C++,
-      Objective-C, Fortran, OpenMP for C/C++/Fortran, Java, and Ada, as well
-      as libraries for these languages (libstdc++, libgcj, libgomp,...).
-
-      GCC development is a part of the GNU Project, aiming to improve the
-      compiler used in the GNU system including the GNU/Linux variant.
-    '';
-
     maintainers = with stdenv.lib.maintainers; [ viric simons ];
 
     # gnatboot is not available out of linux platforms, so we disable the darwin build
     # for the gnat (ada compiler).
     platforms =
       stdenv.lib.platforms.linux ++
-      stdenv.lib.platforms.freebsd ++
-      optionals (langAda == false) stdenv.lib.platforms.darwin;
+      stdenv.lib.platforms.freebsd;
   };
-}
-
-// optionalAttrs (cross != null && cross.libc == "msvcrt" && crossStageStatic) {
-  makeFlags = [ "all-gcc" "all-target-libgcc" ];
-  installTargets = "install-gcc install-target-libgcc";
 }
 
 # Strip kills static libs of other archs (hence cross != null)

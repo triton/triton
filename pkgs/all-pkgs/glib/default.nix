@@ -9,7 +9,6 @@
 , attr
 , libelf
 , libffi
-, libiconv
 , pcre
 , zlib
 
@@ -145,8 +144,6 @@ stdenv.mkDerivation rec {
     libffi
     pcre
     zlib
-  ] ++ optionals (!stdenv.cc.isGNU) [
-    libiconv
   ] ++ optionals doCheck [
     desktop_file_utils
     libxml2

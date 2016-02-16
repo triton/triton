@@ -1,12 +1,7 @@
-{ fetchurl, stdenv, libtool, readline, gmp, pkgconfig, boehmgc, libunistring
-, libffi, gawk, makeWrapper, coverageAnalysis ? null, gnu ? null }:
+{ fetchurl, stdenv, libtool, readline, gmp, boehmgc, libunistring
+, libffi, gawk, makeWrapper }:
 
-# Do either a coverage analysis build or a standard build.
-(if coverageAnalysis != null
- then coverageAnalysis
- else stdenv.mkDerivation)
-
-(rec {
+stdenv.mkDerivation rec {
   name = "guile-2.0.11";
 
   src = fetchurl {
@@ -14,14 +9,13 @@
     sha256 = "1qh3j7308qvsjgwf7h94yqgckpbgz2k3yqdkzsyhqcafvfka9l5f";
   };
 
-  nativeBuildInputs = [ makeWrapper gawk pkgconfig ];
+  nativeBuildInputs = [ makeWrapper gawk ];
   buildInputs = [ readline libtool libunistring libffi gmp boehmgc ];
 
   # A native Guile 2.0 is needed to cross-build Guile.
   selfNativeBuildInput = true;
 
-  patches = [ ./disable-gc-sensitive-tests.patch ./eai_system.patch ./clang.patch ] ++
-    (stdenv.lib.optional (coverageAnalysis != null) ./gcov-file-name.patch);
+  patches = [ ./disable-gc-sensitive-tests.patch ./eai_system.patch ./clang.patch ];
 
   # Fixes for parallel building
   postPatch = ''
@@ -49,18 +43,9 @@
   '';
 
   # make check doesn't work on darwin
-  doCheck = !stdenv.isDarwin;
+  doCheck = true;
 
   setupHook = ./setup-hook-2.0.sh;
-
-  crossAttrs.preConfigure =
-    stdenv.lib.optionalString (stdenv.cross.config == "i586-pc-gnu")
-       # On GNU, libgc depends on libpthread, but the cross linker doesn't
-       # know where to find libpthread, which leads to erroneous test failures
-       # in `configure', where `-pthread' and `-lpthread' aren't explicitly
-       # passed.  So it needs some help (XXX).
-       "export LDFLAGS=-Wl,-rpath-link=${gnu.libpthreadCross}/lib";
-
 
   meta = {
     description = "Embeddable Scheme implementation";
@@ -68,44 +53,5 @@
     license     = stdenv.lib.licenses.lgpl3Plus;
     maintainers = with stdenv.lib.maintainers; [ ludo lovek323 ];
     platforms   = stdenv.lib.platforms.all;
-
-    longDescription = ''
-      GNU Guile is an implementation of the Scheme programming language, with
-      support for many SRFIs, packaged for use in a wide variety of
-      environments.  In addition to implementing the R5RS Scheme standard
-      and a large subset of R6RS, Guile includes a module system, full access
-      to POSIX system calls, networking support, multiple threads, dynamic
-      linking, a foreign function call interface, and powerful string
-      processing.
-    '';
   };
 }
-
-//
-
-(stdenv.lib.optionalAttrs stdenv.isSunOS {
-  # TODO: Move me above.
-  configureFlags =
-    [
-      # Make sure the right <gmp.h> is found, and not the incompatible
-      # /usr/include/mp.h from OpenSolaris.  See
-      # <https://lists.gnu.org/archive/html/hydra-users/2012-08/msg00000.html>
-      # for details.
-      "--with-libgmp-prefix=${gmp}"
-
-      # Same for these (?).
-      "--with-libreadline-prefix=${readline}"
-      "--with-libunistring-prefix=${libunistring}"
-
-      # See below.
-      "--without-threads"
-    ];
-})
-
-//
-
-(stdenv.lib.optionalAttrs (!stdenv.isLinux) {
-  # Work around <http://bugs.gnu.org/14201>.
-  SHELL = "/bin/sh";
-  CONFIG_SHELL = "/bin/sh";
-}))

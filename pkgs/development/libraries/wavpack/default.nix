@@ -1,12 +1,8 @@
-{ lib, stdenv, fetchurl, libiconv }:
+{ lib, stdenv, fetchurl }:
 
 stdenv.mkDerivation rec {
   name = "wavpack-${version}";
   version = "4.75.0";
-
-  enableParallelBuilding = true;
-
-  buildInputs = stdenv.lib.optional stdenv.isDarwin libiconv;
 
   patches = [
     # backported from

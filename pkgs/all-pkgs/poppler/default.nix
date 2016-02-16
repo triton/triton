@@ -2,7 +2,6 @@
 , fetchpatch
 , fetchTritonPatch
 , fetchurl
-, libiconv
 
 , curl
 , cairo
@@ -47,10 +46,6 @@ stdenv.mkDerivation rec {
     url = "http://poppler.freedesktop.org/poppler-${version}.tar.xz";
     sha256 = "1bbfxq0aclhaiyj1jcjr583prv5662jvphdqsafgr3q3srwa43dw";
   };
-
-  nativeBuildInputs = [
-    libiconv
-  ];
 
   buildInputs = [
     cairo

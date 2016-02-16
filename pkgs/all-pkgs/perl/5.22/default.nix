@@ -1,9 +1,12 @@
-{ stdenv, fetchurl, enableThreading ? true }:
+{ stdenv
+, fetchTritonPatch
+, fetchurl
+
+, enableThreading ? true
+}:
 
 let
-
   libc = if stdenv.cc.libc or null != null then stdenv.cc.libc else "/usr";
-
 in
 
 with stdenv.lib;
@@ -16,32 +19,33 @@ stdenv.mkDerivation rec {
     sha256 = "09wg24w5syyafyv87l6z8pxwz4bjgcdj996bx5844k6m9445sirb";
   };
 
-  outputs = [ "out" "man" ];
+  setupHook = ./setup-hook.sh;
 
-  patches =
-    [ # Do not look in /usr etc. for dependencies.
-      ./no-sys-dirs.patch
-    ];
+  patches = [
+    # Do not look in /usr etc. for dependencies.
+    (fetchTritonPatch {
+      rev = "07379e549f9dec896b878ccf3aecfea72dbb0d4e";
+      file = "perl/no-sys-dirs.patch";
+      sha256 = "786d9e1ac449dbe566067f953f0626481ac74f020e8e631e4f905d54a08dfb14";
+    })
+  ];
 
   # Build a thread-safe Perl with a dynamic libperls.o.  We need the
   # "installstyle" option to ensure that modules are put under
   # $out/lib/perl5 - this is the general default, but because $out
   # contains the string "perl", Configure would select $out/lib.
   # Miniperl needs -lm. perl needs -lrt.
-  configureFlags =
-    [ "-de"
-      "-Dcc=cc"
-      "-Uinstallusrbinperl"
-      "-Dinstallstyle=lib/perl5"
-      "-Duseshrplib"
-      "-Dlocincpth=${libc}/include"
-      "-Dloclibpth=${libc}/lib"
-    ]
-    ++ optional enableThreading "-Dusethreads";
+  configureFlags = [
+    "-de"
+    "-Dcc=cc"
+    "-Uinstallusrbinperl"
+    "-Dinstallstyle=lib/perl5"
+    "-Duseshrplib"
+    "-Dlocincpth=${libc}/include"
+    "-Dloclibpth=${libc}/lib"
+  ] ++ optional enableThreading "-Dusethreads";
 
   configureScript = "${stdenv.shell} ./Configure";
-
-  dontAddPrefix = true;
 
   postPatch = ''
     pwd="$(type -P pwd)"
@@ -49,17 +53,16 @@ stdenv.mkDerivation rec {
       --replace "pwd_cmd = 'pwd'" "pwd_cmd = '$pwd'"
   '';
 
-  preConfigure =
-    ''
-      configureFlags="$configureFlags -Dprefix=$out -Dman1dir=$out/share/man/man1 -Dman3dir=$out/share/man/man3"
-    '' + optionalString (!enableThreading) ''
-      # We need to do this because the bootstrap doesn't have a static libpthread
-      sed -i 's,\(libswanted.*\)pthread,\1,g' Configure
-    '';
+  preConfigure = ''
+    configureFlags="$configureFlags -Dprefix=$out -Dman1dir=$out/share/man/man1 -Dman3dir=$out/share/man/man3"
+  '' + optionalString (!enableThreading)
+  /* We need to do this because the bootstrap doesn't have a
+     static libpthread */ ''
+    sed -i 's,\(libswanted.*\)pthread,\1,g' Configure
+  '';
 
   preBuild = optionalString (!(stdenv ? cc && stdenv.cc.nativeTools))
-    ''
-      # Make Cwd work on NixOS (where we don't have a /bin/pwd).
+    /* Make Cwd work on NixOS (where we don't have a /bin/pwd). */ ''
       substituteInPlace dist/PathTools/Cwd.pm --replace "'/bin/pwd'" "'$(type -tP pwd)'"
     '';
 
@@ -71,13 +74,13 @@ stdenv.mkDerivation rec {
     sed -i "/$self/b; s|$NIX_STORE/[a-z0-9]\{32\}-|$NIX_STORE/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-|g" "$out"/lib/perl5/*/*/Config_heavy.pl
   '';
 
-  setupHook = ./setup-hook.sh;
-
   passthru.libPrefix = "lib/perl5/site_perl";
 
-  preCheck = ''
-    # Try and setup a local hosts file
-    if [ -f "${libc}/lib/libnss_files.so" ]; then
+  outputs = [ "out" "man" ];
+
+  preCheck =
+  /* Try and setup a local hosts file */ ''
+    if [ -f "${libc}/lib/libnss_files.so" ] ; then
       mkdir $TMPDIR/fakelib
       cp "${libc}/lib/libnss_files.so" $TMPDIR/fakelib
       sed -i 's,/etc/hosts,/dev/fd/3,g' $TMPDIR/fakelib/libnss_files.so
@@ -89,10 +92,18 @@ stdenv.mkDerivation rec {
     unset LD_LIBRARY_PATH
   '';
 
-  meta = {
+  dontAddPrefix = true;
+
+  meta = with stdenv.lib; {
+    description = "The Perl 5 programmming language";
     homepage = https://www.perl.org/;
-    description = "The standard implementation of the Perl 5 programmming language";
-    maintainers = [ maintainers.eelco ];
-    platforms = platforms.all;
+    license = with licenses; [
+      artistic1
+      gpl1Plus
+    ];
+    maintainers = with maintainers; [ ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

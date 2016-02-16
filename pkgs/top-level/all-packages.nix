@@ -1048,6 +1048,9 @@ pcre = callPackage ../all-pkgs/pcre { };
 
 pcre2 = callPackage ../all-pkgs/pcre2 { };
 
+perl522 = callPackage ../all-pkgs/perl/5.22 { };
+perl = perl522;
+
 pixman = callPackage ../all-pkgs/pixman { };
 
 pngcrush = callPackage ../all-pkgs/pngcrush { };
@@ -1076,7 +1079,6 @@ psmisc = callPackage ../all-pkgs/psmisc { };
 libpulseaudio = pulseaudioFull.override {
   prefix = "lib";
 };
-
 # Name is changed to prevent use in packages
 # please use libpulseaudio instead
 pulseaudioLight = pulseaudioFull.override {
@@ -5256,9 +5258,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   }));
 
   ocropus = callPackage ../applications/misc/ocropus { };
-
-  perl522 = callPackage ../development/interpreters/perl/5.22 { };
-  perl = perl522;
 
   php = php70;
 

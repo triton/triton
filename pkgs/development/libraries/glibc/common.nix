@@ -113,6 +113,7 @@ stdenv.mkDerivation ({
       file = "glibc/glibc-locale-incompatibility.patch";
       sha256 = "0a313362bbb49cbbf4ab8d44d7108aad12da4856c790659f74a50253ef49d38e";
     })
+    ./cve-2015-7547.patch
   ];
 
   postPatch =

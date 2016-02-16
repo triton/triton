@@ -9154,7 +9154,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libossp_uuid = callPackage ../development/libraries/libossp-uuid { };
 
-  libuuid = utillinux
+  libuuid = utillinux;
 
   light = callPackage ../os-specific/linux/light { };
 

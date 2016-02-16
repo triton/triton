@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libraw1394, libusb_1, CoreServices }:
+{ stdenv, fetchurl, libraw1394, libusb_1 }:
 
 stdenv.mkDerivation rec {
   name = "libdc1394-2.2.3";
@@ -9,8 +9,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ libusb_1 ]
-    ++ stdenv.lib.optional stdenv.isLinux libraw1394
-    ++ stdenv.lib.optional stdenv.isDarwin CoreServices;
+    ++ stdenv.lib.optional stdenv.isLinux libraw1394;
 
   meta = {
     homepage = http://sourceforge.net/projects/libdc1394/;

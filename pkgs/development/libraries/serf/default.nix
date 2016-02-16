@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ apr scons openssl aprutil zlib ]
-    ++ stdenv.lib.optional (!stdenv.isCygwin) kerberos;
+    ++ stdenv.lib.optional true kerberos;
 
   configurePhase = ''
     ${gnused}/bin/sed -e '/^env[.]Append(BUILDERS/ienv.Append(ENV={"PATH":os.environ["PATH"]})' -i SConstruct
@@ -21,12 +21,8 @@ stdenv.mkDerivation rec {
     scons PREFIX="$out" OPENSSL="${openssl}" ZLIB="${zlib}" APR="$(echo "${apr}"/bin/*-config)" \
         APU="$(echo "${aprutil}"/bin/*-config)" CC="${
           if stdenv.cc.isClang then "clang" else "${stdenv.cc}/bin/gcc"
-        }" ${
-          if (stdenv.isDarwin || stdenv.isCygwin) then "" else "GSSAPI=\"${kerberos}\""
-        }
+        }" GSSAPI="${kerberos}"
   '';
-
-  NIX_CFLAGS_COMPILE = stdenv.lib.optionalString stdenv.isDarwin "-L/usr/lib";
 
   installPhase = ''
     scons install
@@ -36,6 +32,6 @@ stdenv.mkDerivation rec {
     description = "HTTP client library based on APR";
     license = stdenv.lib.licenses.asl20;
     maintainers = [stdenv.lib.maintainers.raskin];
-    hydraPlatforms = stdenv.lib.platforms.linux ++ stdenv.lib.platforms.darwin;
+    hydraPlatforms = stdenv.lib.platforms.linux;
   };
 }

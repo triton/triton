@@ -1,7 +1,6 @@
 { stdenv, fetchurl, cmake, ncurses, zlib, xz, lzo, lz4, bzip2, snappy
 , openssl, pcre, boost, judy, bison, libxml2, ninja
 , libaio, libevent, groff, jemalloc, cracklib, systemd, numactl, perl
-, fixDarwinDylibNames, cctools, CoreServices
 }:
 
 with stdenv.lib;
@@ -18,10 +17,8 @@ stdenv.mkDerivation rec {
   buildInputs = [
     ncurses openssl zlib xz lzo lz4 bzip2 snappy
     pcre libxml2 boost judy bison libevent cracklib
-  ] ++ stdenv.lib.optionals stdenv.isLinux [ jemalloc libaio systemd numactl ]
-    ++ stdenv.lib.optionals stdenv.isDarwin [ perl fixDarwinDylibNames cctools CoreServices ];
-
-  patches = stdenv.lib.optional stdenv.isDarwin ./my_context_asm.patch;
+    jemalloc libaio systemd numactl
+  ];
 
   cmakeFlags = [
     "-DBUILD_CONFIG=mysql_release"
@@ -57,9 +54,6 @@ stdenv.mkDerivation rec {
     "-DSECURITY_HARDENED=ON"
     "-DWITH_WSREP=ON"
     "-DWITHOUT_OQGRAPH_STORAGE_ENGINE=1"
-  ] ++ stdenv.lib.optionals stdenv.isDarwin [
-    "-DWITHOUT_TOKUDB=1"
-    "-DCURSES_LIBRARY=${ncurses}/lib/libncurses.dylib"
   ];
 
   prePatch = ''
@@ -78,15 +72,7 @@ stdenv.mkDerivation rec {
     rm $out/bin/rcmysql # Not needed with nixos units
     rm $out/bin/mysqlbug # Encodes a path to gcc and not really useful
     find $out/bin -name \*test\* -exec rm {} \;
-  ''
-  + stdenv.lib.optionalString stdenv.isDarwin ''
-    # Fix library rpaths
-    # TODO: put this in the stdenv to prepare for wide usage of multi-output derivations
-    for file in $(grep -rl $out/lib $lib); do
-      install_name_tool -delete_rpath $out/lib -add_rpath $lib $file
-    done
 
-  '' + ''
     # Fix the mysql_config
     sed -i $out/bin/mysql_config \
       -e 's,-lz,-L${zlib}/lib -lz,g' \

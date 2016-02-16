@@ -1013,6 +1013,8 @@ nasm = callPackage ../all-pkgs/nasm { };
 
 nautilus = callPackage ../all-pkgs/nautilus { };
 
+ncdc = callPackage ../all-pkgs/ncdc { };
+
 ncmpc = callPackage ../all-pkgs/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
@@ -11409,8 +11411,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   netbeans = callPackage ../applications/editors/netbeans { };
 
   ncdu = callPackage ../tools/misc/ncdu { };
-
-  ncdc = callPackage ../applications/networking/p2p/ncdc { };
 
   ne = callPackage ../applications/editors/ne { };
 

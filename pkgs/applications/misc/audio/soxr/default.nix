@@ -8,9 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "0xf2w3piwz9gfr1xqyrj4k685q5dy53kq3igv663i4f4y4sg9rjl";
   };
 
-  preConfigure = if stdenv.isDarwin then ''
-    export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:"`pwd`/build/src
-  '' else ''
+  preConfigure = ''
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:"`pwd`/build/src
   '';
 

@@ -13,6 +13,21 @@ stdenv.mkDerivation rec {
     sha256 = "08qd9s3wfhv0ajswsylnfwr5h0d7j9d4rgip855nrh400nxp940p";
   };
 
+  nativeBuildInputs = [
+    gettext
+  ];
+
+  buildInputs = [
+    attr
+  ];
+
+  postPatch =
+    /* Upstream use C++-style comments in C code. Remove them. This
+       comment breaks compilation with strict gcc flags are used. */ ''
+    sed -i include/acl.h \
+      -e '/^\/\//d'
+  '';
+
   configureFlags = [
     "--enable-gettext"
     "--disable-lib64"
@@ -26,27 +41,11 @@ stdenv.mkDerivation rec {
     "ZIP=gzip"
   ];
 
-  nativeBuildInputs = [
-    gettext
-  ];
-
-  buildInputs = [
-    attr
-  ];
-
-  postPatch = ''
-    # Upstream use C++-style comments in C code. Remove them.
-    # This comment breaks compilation with strict gcc flags are used.
-    sed -e '/^\/\//d' -i include/acl.h
-  '';
-
   installTargets = [
     "install"
     "install-lib"
     "install-dev"
   ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Library and tools for manipulating access control lists";

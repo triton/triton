@@ -623,6 +623,8 @@ ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
 
 file-roller = callPackage ../all-pkgs/file-roller { };
 
+filezilla = callPackage ../all-pkgs/filezilla { };
+
 firefox = firefox_wrapper firefox-unwrapped { };
 firefox-esr = firefox_wrapper firefox-esr-unwrapped { };
 firefox-unwrapped = callPackage ../all-pkgs/firefox {
@@ -10692,8 +10694,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   fdupes = callPackage ../tools/misc/fdupes { };
 
   feh = callPackage ../applications/graphics/feh { };
-
-  filezilla = callPackage ../applications/networking/ftp/filezilla { };
 
   firestr = qt5.callPackage ../applications/networking/p2p/firestr
     { boost = boost155;

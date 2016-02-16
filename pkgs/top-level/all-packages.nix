@@ -6988,17 +6988,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libgsf = callPackage ../development/libraries/libgsf { };
 
-  # glibc provides libiconv so systems with glibc don't need to build libiconv
-  # separately, but we also provide libiconvReal, which will always be a
-  # standalone libiconv, just in case you want it
-  libiconv = if crossSystem != null then
-    (if crossSystem.libc == "glibc" then libcCross
-      else libiconvReal)
-    else if stdenv.isGlibc then stdenv.cc.libc
-    else libiconvReal;
-
-  libiconvReal = callPackage ../development/libraries/libiconv { };
-
   libid3tag = callPackage ../development/libraries/libid3tag { };
 
   libidn = callPackage ../development/libraries/libidn { };

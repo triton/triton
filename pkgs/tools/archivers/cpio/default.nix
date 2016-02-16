@@ -21,12 +21,6 @@ in stdenv.mkDerivation {
     })
   ];
 
-  preConfigure = if stdenv.isCygwin then ''
-    sed -i gnu/fpending.h -e 's,include <stdio_ext.h>,,'
-  '' else null;
-
-  enableParallelBuilding = true;
-
   meta = {
     homepage = http://www.gnu.org/software/cpio/;
     description = "A program to create or extract from cpio archives";

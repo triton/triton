@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libiconv, xz }:
+{ stdenv, fetchurl, xz }:
 
 stdenv.mkDerivation rec {
   name = "gettext-0.19.7";
@@ -16,34 +16,11 @@ stdenv.mkDerivation rec {
    substituteInPlace gettext-tools/src/project-id --replace "/bin/pwd" pwd
   '';
 
-  # On cross building, gettext supposes that the wchar.h from libc
-  # does not fulfill gettext needs, so it tries to work with its
-  # own wchar.h file, which does not cope well with the system's
-  # wchar.h and stddef.h (gcc-4.3 - glibc-2.9)
-  preConfigure = ''
-    if test -n "$crossConfig"; then
-      echo gl_cv_func_wcwidth_works=yes > cachefile
-      configureFlags="$configureFlags --cache-file=`pwd`/cachefile"
-    fi
-  '';
-
-  buildInputs = [ xz ] ++ stdenv.lib.optional (!stdenv.isLinux) libiconv;
-
-  enableParallelBuilding = true;
-
-  crossAttrs = {
-    buildInputs = stdenv.lib.optional (stdenv ? ccCross && stdenv.ccCross.libc ? libiconv)
-      stdenv.ccCross.libc.libiconv.crossDrv;
-    # Gettext fails to guess the cross compiler
-    configureFlags = "CXX=${stdenv.cross.config}-g++";
-  };
+  buildInputs = [ xz ];
 
   meta = {
     description = "Well integrated set of translation tools and documentation";
-
     homepage = http://www.gnu.org/software/gettext/;
-
-    maintainers = [ ];
     platforms = stdenv.lib.platforms.all;
   };
 }

@@ -1,6 +1,6 @@
 { fetchurl, stdenv, curl, openssl, zlib, expat, perl, python, gettext, cpio, gnugrep, gzip
 , asciidoc, texinfo, xmlto, docbook2x, docbook_xsl, docbook_xml_dtd_45
-, libxslt, tcl, tk, makeWrapper, libiconv
+, libxslt, tcl, tk, makeWrapper
 , svnSupport, subversionClient, perlLibs, smtpPerlLibs
 , guiSupport
 , withManual ? true
@@ -26,22 +26,19 @@ stdenv.mkDerivation {
     ./symlinks-in-bin.patch
   ];
 
-  buildInputs = [curl openssl zlib expat gettext cpio makeWrapper libiconv]
+  buildInputs = [curl openssl zlib expat gettext cpio makeWrapper]
     ++ stdenv.lib.optionals withManual [ asciidoc texinfo xmlto docbook2x
          docbook_xsl docbook_xml_dtd_45 libxslt ]
     ++ stdenv.lib.optionals guiSupport [tcl tk];
 
   # required to support pthread_cancel()
-  NIX_LDFLAGS = stdenv.lib.optionalString (!stdenv.cc.isClang) "-lgcc_s"
-              + stdenv.lib.optionalString (stdenv.isFreeBSD) "-lthr";
+  NIX_LDFLAGS = stdenv.lib.optionalString (!stdenv.cc.isClang) "-lgcc_s";
 
   # without this, git fails when trying to check for /etc/gitconfig existence
   propagatedSandboxProfile = stdenv.lib.sandbox.allowDirectoryList "/etc";
 
   makeFlags = "prefix=\${out} sysconfdir=/etc/ PERL_PATH=${perl}/bin/perl SHELL_PATH=${stdenv.shell} "
-      + (if pythonSupport then "PYTHON_PATH=${python}/bin/python" else "NO_PYTHON=1")
-      + (if stdenv.isSunOS then " INSTALL=install NO_INET_NTOP= NO_INET_PTON=" else "")
-      + (if stdenv.isDarwin then " NO_APPLE_COMMON_CRYPTO=1" else "");
+      + (if pythonSupport then "PYTHON_PATH=${python}/bin/python" else "NO_PYTHON=1");
 
 
   # FIXME: "make check" requires Sparse; the Makefile must be tweaked

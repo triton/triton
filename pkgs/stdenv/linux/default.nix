@@ -310,7 +310,7 @@ rec {
         libiconv = null;
         texinfo = pkgs.texinfo.override {
           interactive = false;
-          check = false;
+          doCheck = false;
         };
         inherit (pkgs) gettext perl522 perl m4 bison autoconf automake flex perlPackages
           libtool buildPerlPackage help2man makeWrapper autoreconfHook;

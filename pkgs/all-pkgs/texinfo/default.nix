@@ -3,7 +3,7 @@
 , perl
 
 , interactive ? true, ncurses
-, check ? true, procps
+, doCheck ? true, procps
 }:
 
 with stdenv.lib;
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
     "install-tex"
   ];
 
-  doCheck = check;
+  inherit doCheck;
 
   meta = with stdenv.lib; {
     homepage = "http://www.gnu.org/software/texinfo/";

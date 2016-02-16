@@ -485,8 +485,6 @@ let
 
   setJavaClassPath = makeSetupHook { } ../build-support/setup-hooks/set-java-classpath.sh;
 
-  fixDarwinDylibNames = makeSetupHook { } ../build-support/setup-hooks/fix-darwin-dylib-names.sh;
-
   keepBuildTree = makeSetupHook { } ../build-support/setup-hooks/keep-build-tree.sh;
 
   enableGCOVInstrumentation = makeSetupHook { } ../build-support/setup-hooks/enable-coverage-instrumentation.sh;
@@ -1416,15 +1414,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   lastpass-cli = callPackage ../tools/security/lastpass-cli { };
 
-  otool = callPackage ../os-specific/darwin/otool { };
-
   pass = callPackage ../tools/security/pass { };
 
   oracle-instantclient = callPackage ../development/libraries/oracle-instantclient { };
-
-  reattach-to-user-namespace = callPackage ../os-specific/darwin/reattach-to-user-namespace {};
-
-  install_name_tool = callPackage ../os-specific/darwin/install_name_tool { };
 
   xcodeenv = callPackage ../development/mobile/xcodeenv { };
 
@@ -1525,7 +1517,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   brasero = callPackage ../tools/cd-dvd/brasero { };
 
   brltty = callPackage ../tools/misc/brltty {
-    alsaSupport = (!stdenv.isDarwin);
+    alsaSupport = true;
   };
   bro = callPackage ../applications/networking/ids/bro { };
 
@@ -2382,9 +2374,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   garmintools = callPackage ../development/libraries/garmintools {};
 
-  gawk = callPackage ../tools/text/gawk {
-    inherit (darwin) locale;
-  };
+  gawk = callPackage ../tools/text/gawk { };
 
   gawkInteractive = appendToName "interactive"
     (gawk.override { readlineSupport = true; });
@@ -2855,18 +2845,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ninka = callPackage ../development/tools/misc/ninka { };
 
-  nodejs-5_x = callPackage ../development/web/nodejs/v5.nix {
-    libtool = darwin.cctools;
-  };
+  nodejs-5_x = callPackage ../development/web/nodejs/v5.nix { };
 
-  nodejs-4_x = callPackage ../development/web/nodejs/v4.nix {
-    libtool = darwin.cctools;
-  };
+  nodejs-4_x = callPackage ../development/web/nodejs/v4.nix { };
 
-  nodejs-0_10 = callPackage ../development/web/nodejs/v0_10.nix {
-    libtool = darwin.cctools;
-    inherit (darwin.apple_sdk.frameworks) CoreServices ApplicationServices Carbon Foundation;
-  };
+  nodejs-0_10 = callPackage ../development/web/nodejs/v0_10.nix { };
 
   nodejs = nodejs-5_x;
 
@@ -3460,7 +3443,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   philter = callPackage ../tools/networking/philter { };
 
   pinentry = callPackage ../tools/security/pinentry {
-    libcap = if stdenv.isDarwin then null else libcap;
     qt4 = null;
   };
 
@@ -3472,9 +3454,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     inherit qt4;
   };
 
-  pinentry_qt5 = qt5.callPackage ../tools/security/pinentry/qt5.nix {
-    libcap = if stdenv.isDarwin then null else libcap;
-  };
+  pinentry_qt5 = qt5.callPackage ../tools/security/pinentry/qt5.nix { };
 
   pinentry_mac = callPackage ../tools/security/pinentry-mac { };
 
@@ -3736,9 +3716,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   scanbd = callPackage ../tools/graphics/scanbd { };
 
-  screen = callPackage ../tools/misc/screen {
-    inherit (darwin.apple_sdk.libs) utmp;
-  };
+  screen = callPackage ../tools/misc/screen { };
 
   screen-message = callPackage ../tools/X11/screen-message { };
 
@@ -4494,7 +4472,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   };
 
   #Use this instead of stdenv to build with clang
-  clangStdenv = if stdenv.isDarwin then stdenv else lowPrio llvmPackages.stdenv;
+  clangStdenv = lowPrio llvmPackages.stdenv;
   libcxxStdenv = stdenvAdapters.overrideCC stdenv (clangWrapSelf llvmPackages.clang-unwrapped);
 
   cython = pythonPackages.cython;
@@ -4520,10 +4498,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   }));
 
   gccCrossStageStatic = let
-    libcCross1 =
-      if stdenv.cross.libc == "msvcrt" then windows.mingw_w64_headers
-      else if stdenv.cross.libc == "libSystem" then darwin.xcode
-      else null;
+    libcCross1 = null;
     in wrapGCCCross {
       gcc = forceNativeDrv (gcc.cc.override {
         cross = crossSystem;
@@ -4563,7 +4538,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     inherit noSysDirs;
 
     # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
-    profiledCompiler = with stdenv; (!isSunOS && !isDarwin && (isi686 || isx86_64));
+    profiledCompiler = with stdenv; (!isSunOS && && (isi686 || isx86_64));
 
     # When building `gcc.crossDrv' (a "Canadian cross", with host == target
     # and host != build), `cross' must be null but the cross-libc must still
@@ -4578,7 +4553,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     inherit noSysDirs;
 
     # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
-    profiledCompiler = with stdenv; (!isDarwin && (isi686 || isx86_64));
+    profiledCompiler = with stdenv; (isi686 || isx86_64);
 
     # When building `gcc.crossDrv' (a "Canadian cross", with host == target
     # and host != build), `cross' must be null but the cross-libc must still
@@ -4634,13 +4609,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   dotnetPackages = callPackage ./dotnet-packages.nix {};
 
-  go_1_4 = callPackage ../development/compilers/go/1.4.nix {
-    inherit (darwin.apple_sdk.frameworks) Security;
-  };
+  go_1_4 = callPackage ../development/compilers/go/1.4.nix {};
 
-  go_1_5 = callPackage ../development/compilers/go/1.5.nix {
-    inherit (darwin.apple_sdk.frameworks) Security Foundation;
-  };
+  go_1_5 = callPackage ../development/compilers/go/1.5.nix { };
 
   go_1_6 = callPackage ../development/compilers/go/1.6.nix { };
 
@@ -4706,10 +4677,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     inherit (stdenvAdapters) overrideCC;
   };
 
-  mono = callPackage ../development/compilers/mono {
-    inherit (darwin) libobjc;
-    inherit (darwin.apple_sdk.frameworks) Foundation;
-  };
+  mono = callPackage ../development/compilers/mono { };
 
   monoDLLFixer = callPackage ../build-support/mono-dll-fixer { };
 
@@ -5155,9 +5123,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   rustcMaster = callPackage ../development/compilers/rustc/head.nix {};
   rustc = callPackage ../development/compilers/rustc {
-    callPackage = newScope ({
-      procps = if stdenv.isDarwin then darwin.ps else procps;
-    });
+    callPackage = newScope ({ });
   };
 
   rustPlatform = rustStable;
@@ -5210,7 +5176,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     nativeLibc = stdenv.cc.nativeLibc or false;
     nativePrefix = stdenv.cc.nativePrefix or "";
     cc = baseCC;
-    dyld = if stdenv.isDarwin then darwin.dyld else null;
     isGNU = baseCC.isGNU or false;
     isClang = baseCC.isClang or false;
     inherit libc extraBuildCommands;
@@ -5238,9 +5203,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ### DEVELOPMENT / INTERPRETERS
 
-  erlangR18 = callPackage ../development/interpreters/erlang/R18.nix {
-    inherit (darwin.apple_sdk.frameworks) Carbon Cocoa;
-  };
+  erlangR18 = callPackage ../development/interpreters/erlang/R18.nix { };
   erlang = erlangR18;
 
   fetchHex = callPackage ../development/tools/build-managers/rebar3/fetch-hex.nix { };
@@ -5499,7 +5462,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   bin_replace_string = callPackage ../development/tools/misc/bin_replace_string { };
 
-  binutils = if stdenv.isDarwin then darwin.binutils else binutils-raw;
+  binutils = binutils-raw;
 
   binutils-raw = callPackage ../development/tools/misc/binutils { inherit noSysDirs; };
 
@@ -5509,8 +5472,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   });
 
   binutilsCross = assert crossSystem != null; lowPrio (forceNativeDrv (
-    if crossSystem.libc == "libSystem" then darwin.cctools_cross
-    else binutils.override {
+    binutils.override {
       noSysDirs = true;
       cross = crossSystem;
     }));
@@ -5604,15 +5566,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ctodo = callPackage ../applications/misc/ctodo { };
 
-  cmake-2_8 = callPackage ../development/tools/build-managers/cmake/2.8.nix {
-    wantPS = stdenv.isDarwin;
-    inherit (darwin) ps;
-  };
+  cmake-2_8 = callPackage ../development/tools/build-managers/cmake/2.8.nix { };
 
-  cmake = callPackage ../development/tools/build-managers/cmake {
-    wantPS = stdenv.isDarwin;
-    inherit (darwin) ps;
-  };
+  cmake = callPackage ../development/tools/build-managers/cmake { };
 
   cmakeCurses = cmake.override { useNcurses = true; };
 
@@ -5671,12 +5627,10 @@ zstd = callPackage ../all-pkgs/zstd { };
      wrapCC (distcc.links extraConfig)) {};
   distccStdenv = lowPrio (overrideCC stdenv distccWrapper);
 
-  distccMasquerade = if stdenv.isDarwin
-    then null
-    else callPackage ../development/tools/misc/distcc/masq.nix {
-      gccRaw = gcc.cc;
-      binutils = binutils;
-    };
+  distccMasquerade = callPackage ../development/tools/misc/distcc/masq.nix {
+    gccRaw = gcc.cc;
+    binutils = binutils;
+  };
 
   doclifter = callPackage ../development/tools/misc/doclifter { };
 
@@ -5686,7 +5640,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   doxygen = callPackage ../development/tools/documentation/doxygen {
     qt4 = null;
-    inherit (darwin.apple_sdk.frameworks) CoreServices;
   };
 
   doxygen_gui = lowPrio (doxygen.override { inherit qt4; });
@@ -5711,10 +5664,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   findbugs = callPackage ../development/tools/analysis/findbugs { };
 
-  flow = callPackage ../development/tools/analysis/flow {
-    inherit (darwin.apple_sdk.frameworks) CoreServices;
-    inherit (darwin) cf-private;
-  };
+  flow = callPackage ../development/tools/analysis/flow { };
 
   framac = callPackage ../development/tools/analysis/frama-c { };
 
@@ -6125,9 +6075,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   aubio = callPackage ../development/libraries/aubio { };
 
-  audiofile = callPackage ../development/libraries/audiofile {
-    inherit (darwin.apple_sdk.frameworks) AudioUnit CoreServices;
-  };
+  audiofile = callPackage ../development/libraries/audiofile { };
 
   babl = callPackage ../development/libraries/babl { };
 
@@ -6183,9 +6131,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   cgui = callPackage ../development/libraries/cgui {};
 
-  check = callPackage ../development/libraries/check {
-    inherit (darwin.apple_sdk.frameworks) CoreServices;
-  };
+  check = callPackage ../development/libraries/check { };
 
   chipmunk = callPackage ../development/libraries/chipmunk {};
 
@@ -6424,11 +6370,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   gettext = callPackage ../development/libraries/gettext { };
 
-  gettextWithExpat = if stdenv.isDarwin
-    then gettext.overrideDerivation (drv: {
-      configureFlags = drv.configureFlags ++ [ "--with-libexpat-prefix=${expat}" ];
-    })
-    else callPackage ../development/libraries/gettext/expat.nix { };
+  gettextWithExpat = callPackage ../development/libraries/gettext/expat.nix { };
 
   gd = callPackage ../development/libraries/gd { };
 
@@ -6475,8 +6417,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   # We can choose:
   libcCrossChooser = name: if name == "glibc" then glibcCross
     else if name == "uclibc" then uclibcCross
-    else if name == "msvcrt" then windows.mingw_w64
-    else if name == "libSystem" then darwin.xcode
     else throw "Unknown libc";
 
   libcCross = assert crossSystem != null; libcCrossChooser crossSystem.libc;
@@ -6708,9 +6648,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   kinetic-cpp-client = callPackage ../development/libraries/kinetic-cpp-client { };
 
-  krb5Full = callPackage ../development/libraries/kerberos/krb5.nix {
-    inherit (darwin) bootstrap_cmds;
-  };
+  krb5Full = callPackage ../development/libraries/kerberos/krb5.nix { };
   libkrb5 = krb5Full.override { type = "lib"; };
 
   LASzip = callPackage ../development/libraries/LASzip { };
@@ -6751,7 +6689,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libao = callPackage ../development/libraries/libao {
     usePulseAudio = config.pulseaudio or true;
-    inherit (darwin.apple_sdk.frameworks) CoreAudio CoreServices AudioUnit;
   };
 
   libabw = callPackage ../development/libraries/libabw { };
@@ -6864,9 +6801,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libdbusmenu_qt = callPackage ../development/libraries/libdbusmenu-qt { };
 
-  libdc1394 = callPackage ../development/libraries/libdc1394 {
-    inherit (darwin.apple_sdk.frameworks) CoreServices;
-  };
+  libdc1394 = callPackage ../development/libraries/libdc1394 { };
 
   libdiscid = callPackage ../development/libraries/libdiscid { };
 
@@ -6996,9 +6931,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libgcrypt_1_5 = lowPrio (callPackage ../development/libraries/libgcrypt/1.5.nix { });
 
-  libgdiplus = callPackage ../development/libraries/libgdiplus {
-      inherit (darwin.apple_sdk.frameworks) Carbon;
-  };
+  libgdiplus = callPackage ../development/libraries/libgdiplus { };
 
   libgpgerror = callPackage ../development/libraries/libgpg-error { };
 
@@ -7063,11 +6996,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   libmsgpack = callPackage ../development/libraries/libmsgpack { };
   libmsgpack_0_5 = callPackage ../development/libraries/libmsgpack/0.5.nix { };
 
-  libnatspec = callPackage ../development/libraries/libnatspec (
-    stdenv.lib.optionalAttrs stdenv.isDarwin {
-      inherit (darwin) libiconv;
-    }
-  );
+  libnatspec = callPackage ../development/libraries/libnatspec { };
 
   libndp = callPackage ../development/libraries/libndp { };
 
@@ -7105,10 +7034,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   # standalone libiconv, just in case you want it
   libiconv = if crossSystem != null then
     (if crossSystem.libc == "glibc" then libcCross
-      else if crossSystem.libc == "libSystem" then darwin.libiconv
       else libiconvReal)
     else if stdenv.isGlibc then stdenv.cc.libc
-    else if stdenv.isDarwin then darwin.libiconv
     else libiconvReal;
 
   libiconvReal = callPackage ../development/libraries/libiconv { };
@@ -7260,11 +7187,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libpqxx = callPackage ../development/libraries/libpqxx { };
 
-  libproxy = callPackage ../development/libraries/libproxy {
-    stdenv = if stdenv.isDarwin
-      then overrideCC stdenv gcc
-      else stdenv;
-  };
+  libproxy = callPackage ../development/libraries/libproxy { };
 
   libpseudo = callPackage ../development/libraries/libpseudo { };
 
@@ -7290,9 +7213,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libsigsegv = callPackage ../development/libraries/libsigsegv { };
 
-  libsndfile = callPackage ../development/libraries/libsndfile {
-    inherit (darwin.apple_sdk.frameworks) Carbon;
-  };
+  libsndfile = callPackage ../development/libraries/libsndfile { };
 
   libsodium = callPackage ../development/libraries/libsodium { };
 
@@ -7366,13 +7287,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   libutempter = callPackage ../development/libraries/libutempter { };
 
-  libunwind = if stdenv.isDarwin
-    then darwin.libunwind
-    else callPackage ../development/libraries/libunwind { };
+  libunwind = callPackage ../development/libraries/libunwind { };
 
-  libuvVersions = recurseIntoAttrs (callPackage ../development/libraries/libuv {
-    inherit (darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
-  });
+  libuvVersions = recurseIntoAttrs (callPackage ../development/libraries/libuv { });
 
   libuv = libuvVersions.v1_8_0;
 
@@ -7986,7 +7903,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     alsaSupport = stdenv.isLinux;
     x11Support = !stdenv.isCygwin;
     pulseaudioSupport = config.pulseaudio or false; # better go through ALSA
-    inherit (darwin.apple_sdk.frameworks) AudioUnit Cocoa CoreAudio CoreServices ForceFeedback OpenGL;
   };
 
   SDL2_image = callPackage ../development/libraries/SDL2_image { };
@@ -8276,9 +8192,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     libpng = libpng12;
   };
 
-  wavpack = callPackage ../development/libraries/wavpack {
-    inherit (darwin) libiconv;
-  };
+  wavpack = callPackage ../development/libraries/wavpack { };
 
   websocketpp = callPackage ../development/libraries/websocket++ { };
 
@@ -8305,10 +8219,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     withMesa = lib.elem system mesa_noglu.meta.platforms;
   };
 
-  wxmac = callPackage ../development/libraries/wxmac {
-    inherit (darwin.apple_sdk.frameworks) AGL Cocoa Kernel QuickTime;
-    inherit (darwin.stubs) setfile rez derez;
-  };
+  wxmac = callPackage ../development/libraries/wxmac { };
 
   wtk = callPackage ../development/libraries/wtk { };
 
@@ -8896,10 +8807,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   #monetdb = callPackage ../servers/sql/monetdb { };
 
-  mariadb = callPackage ../servers/sql/mariadb {
-    inherit (darwin) cctools;
-    inherit (pkgs.darwin.apple_sdk.frameworks) CoreServices;
-  };
+  mariadb = callPackage ../servers/sql/mariadb { };
 
   mongodb = callPackage ../servers/nosql/mongodb {
     sasl = cyrus_sasl;
@@ -9005,17 +8913,13 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   quagga = callPackage ../servers/quagga { };
 
-  rabbitmq_server = callPackage ../servers/amqp/rabbitmq-server {
-    inherit (darwin.apple_sdk.frameworks) AppKit Carbon Cocoa;
-  };
+  rabbitmq_server = callPackage ../servers/amqp/rabbitmq-server { };
 
   redstore = callPackage ../servers/http/redstore { };
 
   restund = callPackage ../servers/restund {};
 
-  rethinkdb = callPackage ../servers/nosql/rethinkdb {
-    libtool = darwin.cctools;
-  };
+  rethinkdb = callPackage ../servers/nosql/rethinkdb { };
 
   rippled = callPackage ../servers/rippled {
     boost = boost159;
@@ -9037,11 +8941,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   samba4 = callPackage ../servers/samba/4.x.nix {
     pythonPackages = python2Packages;
     kerberos = null;  # Bundle kerberos because samba uses internal, non-stable functions
-    cups = if stdenv.isDarwin then null else cups;
-    pam = if stdenv.isDarwin then null else pam;
-    libaio = if stdenv.isDarwin then null else libaio;
-    libceph = if stdenv.isDarwin then null else libceph;
-    glusterfs = if stdenv.isDarwin then null else glusterfs;
     dbus = if stdenv.isLinux then dbus else null;
     libibverbs = if stdenv.isLinux then libibverbs else null;
     librdmacm = if stdenv.isLinux then librdmacm else null;
@@ -9166,8 +9065,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   xquartz = callPackage ../servers/x11/xquartz { };
   quartz-wm = callPackage ../servers/x11/quartz-wm {
     stdenv = clangStdenv;
-    inherit (darwin.apple_sdk.frameworks) AppKit;
-    inherit (darwin.apple_sdk.libs) Xplugin;
   };
 
   xorg = recurseIntoAttrs (lib.callPackagesWith pkgs ../servers/x11/xorg/default.nix {
@@ -9175,8 +9072,6 @@ zstd = callPackage ../all-pkgs/zstd { };
       libxslt expat libpng zlib perl mesa_drivers spice_protocol libunwind
       dbus libuuid openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
       autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman;
-    inherit (darwin) apple_sdk cf-private libobjc;
-    bootstrap_cmds = if stdenv.isDarwin then darwin.bootstrap_cmds else null;
     mesa = mesa_noglu;
     udev = if stdenv.isLinux then udev else null;
     libdrm = if stdenv.isLinux then libdrm else null;
@@ -9308,55 +9203,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   crda = callPackage ../os-specific/linux/crda { };
 
-  darwin = let
-    cmdline = callPackage ../os-specific/darwin/command-line-tools {};
-    apple-source-releases = callPackage ../os-specific/darwin/apple-source-releases { };
-  in apple-source-releases // rec {
-    cctools_cross = callPackage (forceNativeDrv (callPackage ../os-specific/darwin/cctools/port.nix {}).cross) {
-      cross = assert crossSystem != null; crossSystem;
-      inherit maloader;
-      xctoolchain = xcode.toolchain;
-    };
-
-    cctools = (callPackage ../os-specific/darwin/cctools/port.nix { inherit libobjc; }).native;
-
-    cf-private = callPackage ../os-specific/darwin/cf-private {
-      inherit (apple-source-releases) CF;
-      inherit osx_private_sdk;
-    };
-
-    maloader = callPackage ../os-specific/darwin/maloader {
-      inherit opencflite;
-    };
-
-    opencflite = callPackage ../os-specific/darwin/opencflite {};
-
-    xcode = callPackage ../os-specific/darwin/xcode {};
-
-    osx_sdk = callPackage ../os-specific/darwin/osx-sdk {};
-    osx_private_sdk = callPackage ../os-specific/darwin/osx-private-sdk {};
-
-    security_tool = (newScope (darwin.apple_sdk.frameworks // darwin)) ../os-specific/darwin/security-tool {
-      Security-framework = darwin.apple_sdk.frameworks.Security;
-    };
-
-    binutils = callPackage ../os-specific/darwin/binutils { inherit cctools; };
-
-    cmdline_sdk   = cmdline.sdk;
-    cmdline_tools = cmdline.tools;
-
-    apple_sdk = callPackage ../os-specific/darwin/apple-sdk {};
-
-    libobjc = apple-source-releases.objc4;
-
-    stubs = callPackages ../os-specific/darwin/stubs {};
-  };
-
-  gnustep-make = callPackage ../development/tools/build-managers/gnustep/make {};
-  gnustep-xcode = callPackage ../development/tools/build-managers/gnustep/xcode {
-    inherit (darwin.apple_sdk.frameworks) Foundation;
-    inherit (darwin) libobjc;
-  };
+  gnustep-make = callPackage ../development/tools/build-managers/gnustep/make { };
+  gnustep-xcode = callPackage ../development/tools/build-managers/gnustep/xcode { };
 
   devicemapper = lvm2;
 
@@ -9450,14 +9298,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   hostapd = callPackage ../os-specific/linux/hostapd { };
 
-  htop =
-    if stdenv.isLinux then
-      callPackage ../os-specific/linux/htop { }
-    else if stdenv.isDarwin then
-      callPackage ../os-specific/darwin/htop {
-        inherit (darwin.apple_sdk.frameworks) IOKit;
-      }
-    else null;
+  htop = callPackage ../os-specific/linux/htop { };
 
   # GNU/Hurd core packages.
   gnu = recurseIntoAttrs (callPackage ../os-specific/gnu {
@@ -10882,7 +10723,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     imagemagick = null;
     acl = null;
     gpm = null;
-    inherit (darwin.apple_sdk.frameworks) AppKit CoreWLAN GSS Kerberos ImageIO;
   };
 
   emacs24-nox = lowPrio (appendToName "nox" (emacs24.override {
@@ -10900,8 +10740,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     imagemagick = null;
     acl = null;
     gpm = null;
-    inherit (darwin.apple_sdk.frameworks) AppKit Foundation;
-    inherit (darwin) libobjc;
   });
 
   enhanced-ctorrent = callPackage ../applications/networking/enhanced-ctorrent { };
@@ -11288,9 +11126,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   swc = callPackage ../development/libraries/swc { };
   wld = callPackage ../development/libraries/wld { };
 
-  i3 = callPackage ../applications/window-managers/i3 {
-    xcb-util-cursor = if stdenv.isDarwin then xcb-util-cursor-HEAD else xcb-util-cursor;
-  };
+  i3 = callPackage ../applications/window-managers/i3 { };
 
   i3blocks = callPackage ../applications/window-managers/i3/blocks.nix { };
 
@@ -12076,7 +11912,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   rstudio = callPackage ../applications/editors/rstudio { };
 
   rsync = callPackage ../applications/networking/sync/rsync {
-    enableACLs = !(stdenv.isDarwin || stdenv.isSunOS || stdenv.isFreeBSD);
+    enableACLs = !(stdenv.isSunOS || stdenv.isFreeBSD);
     enableCopyDevicesPatch = (config.rsync.enableCopyDevicesPatch or false);
   };
 
@@ -12475,17 +12311,13 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   vdpauinfo = callPackage ../tools/X11/vdpauinfo { };
 
-  vim = callPackage ../applications/editors/vim {
-    inherit (darwin.apple_sdk.frameworks) Carbon Cocoa;
-  };
+  vim = callPackage ../applications/editors/vim { };
 
   macvim = callPackage ../applications/editors/vim/macvim.nix { stdenv = clangStdenv; };
 
   vimHugeX = vim_configurable;
 
   vim_configurable = vimUtils.makeCustomizable (callPackage ../applications/editors/vim/configurable.nix {
-    inherit (darwin.apple_sdk.frameworks) CoreServices Cocoa Foundation CoreData;
-    inherit (darwin) libobjc cf-private;
 
     features = "huge"; # one of  tiny, small, normal, big or huge
     gui = config.vim.gui or "auto";
@@ -12597,9 +12429,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     mouseSupport = false;
   };
 
-  weechat = callPackage ../applications/networking/irc/weechat {
-    inherit (darwin) libobjc;
-  };
+  weechat = callPackage ../applications/networking/irc/weechat { };
 
   westonLite = callPackage ../applications/window-managers/weston {
     pango = null;
@@ -13363,7 +13193,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ghostscript = callPackage ../misc/ghostscript {
     x11Support = false;
-    cupsSupport = config.ghostscript.cups or (!stdenv.isDarwin);
+    cupsSupport = config.ghostscript.cups or true;
   };
 
   ghostscriptX = appendToName "with-X" (ghostscript.override {
@@ -13662,9 +13492,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   vimUtils = callPackage ../misc/vim-plugins/vim-utils.nix { };
 
-  vimPlugins = recurseIntoAttrs (callPackage ../misc/vim-plugins {
-    inherit (darwin.apple_sdk.frameworks) Cocoa;
-  });
+  vimPlugins = recurseIntoAttrs (callPackage ../misc/vim-plugins { });
 
   vimprobable2-unwrapped = callPackage ../applications/networking/browsers/vimprobable2 {
     webkit = webkitgtk2;

@@ -118,8 +118,6 @@ stdenv.mkDerivation rec {
     export PKG_CONFIG_LIBDIR="$out/lib/pkgconfig"
     mkdir -p "$PKG_CONFIG_LIBDIR"
     configureFlagsArray+=("--with-pkg-config-libdir=$PKG_CONFIG_LIBDIR")
-  '' + optionalString stdenv.isCygwin ''
-    sed -i -e 's,LIB_SUFFIX="t,LIB_SUFFIX=",' configure
   '';
 
   # Fix the path to gpm, this has to happen after configure is run

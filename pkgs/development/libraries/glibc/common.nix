@@ -166,14 +166,14 @@ stdenv.mkDerivation ({
           && cross.platform.kernelMajor == "2.6") [
       "--enable-kernel=2.6.0"
       "--with-__thread"
-    ] ++ stdenv.lib.optionals (cross == null && stdenv.isArm) [
+    ] /*++ stdenv.lib.optionals (cross == null && stdenv.isArm) [
       "--host=arm-linux-gnueabi"
       "--build=arm-linux-gnueabi"
 
       # To avoid linking with -lgcc_s (dynamic link)
       # so the glibc does not depend on its compiler store path
       "libc_cv_as_needed=no"
-    ] ++ stdenv.lib.optional withGd "--with-gd";
+    ]*/ ++ stdenv.lib.optional withGd "--with-gd";
 
   installFlags = [ "sysconfdir=$(out)/etc" ];
 

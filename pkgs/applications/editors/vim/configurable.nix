@@ -5,9 +5,6 @@ args@{pkgs, source ? "default", fetchurl, fetchhg, stdenv, ncurses, pkgconfig, g
 , libX11, libXext, libSM, libXpm, libXt, libXaw, libXau, libXmu
 , libICE
 
-# apple frameworks
-, CoreServices, CoreData, Cocoa, Foundation, libobjc, cf-private
-
 , ... }: with args;
 
 
@@ -44,8 +41,6 @@ composableDerivation {
     name = "vim_configurable-${version}";
     version = "7.4.826";
 
-    enableParallelBuilding = true; # test this
-
     src =
       builtins.getAttr source {
       "default" =
@@ -68,12 +63,6 @@ composableDerivation {
 
     prePatch = "cd src";
 
-    # if darwin support is enabled, we want to make sure we're not building with
-    # OS-installed python framework
-    patches = stdenv.lib.optionals
-      (stdenv.isDarwin && (config.vim.darwin or true))
-      [ ./python_framework.patch ];
-
     configureFlags
       = [ "--enable-gui=${args.gui}" "--with-features=${args.features}" ];
 
@@ -93,14 +82,6 @@ composableDerivation {
           '';
         };
       }
-      // edf {
-        name = "darwin";
-        enable = {
-          nativeBuildInputs = [ CoreServices CoreData Cocoa Foundation libobjc cf-private ];
-          NIX_LDFLAGS = stdenv.lib.optional stdenv.isDarwin
-            "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation";
-        };
-      } #Disable Darwin (Mac OS X) support.
       // edf { name = "xsmp"; } #Disable XSMP session management
       // edf { name = "xsmp_interact"; } #Disable XSMP interaction
       // edf { name = "mzscheme"; feat = "mzschemeinterp";} #Include MzScheme interpreter.
@@ -111,11 +92,6 @@ composableDerivation {
         feat = "python${if python ? isPy3 then "3" else ""}interp";
         enable = {
           nativeBuildInputs = [ python ];
-        } // lib.optionalAttrs stdenv.isDarwin {
-          configureFlags
-            = [ "--enable-python${if python ? isPy3 then "3" else ""}interp=yes"
-                "--with-python${if python ? isPy3 then "3" else ""}-config-dir=${python}/lib"
-                "--disable-python${if python ? isPy3 then "" else "3"}interp" ];
         };
       }
 
@@ -155,10 +131,6 @@ composableDerivation {
     cscopeSupport    = config.vim.cscope or true;
     netbeansSupport  = config.netbeans or true; # eg envim is using it
     ximSupport       = config.vim.xim or false;
-
-    # by default, compile with darwin support if we're compiling on darwin, but
-    # allow this to be disabled by setting config.vim.darwin to false
-    darwinSupport    = stdenv.isDarwin && (config.vim.darwin or true);
 
     # add .nix filetype detection and minimal syntax highlighting support
     ftNixSupport     = config.vim.ftNix or true;

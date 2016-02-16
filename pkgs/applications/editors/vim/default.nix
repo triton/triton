@@ -1,8 +1,5 @@
 { stdenv, fetchFromGitHub, ncurses, gettext, pkgconfig
 
-# apple frameworks
-, Carbon, Cocoa }:
-
 stdenv.mkDerivation rec {
   name = "vim-${version}";
   version = "7.4.1261";
@@ -14,10 +11,7 @@ stdenv.mkDerivation rec {
     sha256 = "17w2rnbk3day841m43k7sm11farwwfpii52w8xyi3va9ff98kc04";
   };
 
-  enableParallelBuilding = true;
-
-  buildInputs = [ ncurses pkgconfig ]
-    ++ stdenv.lib.optionals stdenv.isDarwin [ Carbon Cocoa ];
+  buildInputs = [ ncurses pkgconfig ];
   nativeBuildInputs = [ gettext ];
 
   configureFlags = [

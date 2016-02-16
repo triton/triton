@@ -534,10 +534,7 @@ avahi = callPackage ../all-pkgs/avahi { };
 
 bazaar = callPackage ../all-pkgs/bazaar { };
 
-bash = callPackage ../all-pkgs/bash {
-  interactive = true;
-};
-bashInteractive = bash;
+bash = callPackage ../all-pkgs/bash { };
 
 bashCompletion = callPackage ../all-pkgs/bash-completion { };
 
@@ -1194,6 +1191,8 @@ steam = steamPackages.steam-chrootenv.override {
 sublime-text = callPackage ../all-pkgs/sublime-text { };
 
 sushi = callPackage ../all-pkgs/sushi { };
+
+texinfo = callPackage ../all-pkgs/texinfo { };
 
 totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
 
@@ -2361,9 +2360,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   garmintools = callPackage ../development/libraries/garmintools {};
 
   gawk = callPackage ../tools/text/gawk { };
-
-  gawkInteractive = appendToName "interactive"
-    (gawk.override { readlineSupport = true; });
 
   gawp = goPackages.gawp.bin // { outputs = [ "bin" ]; };
 
@@ -5931,9 +5927,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   tcptrack = callPackage ../development/tools/misc/tcptrack { };
 
   teensy-loader-cli = callPackage ../development/tools/misc/teensy-loader-cli { };
-
-  texinfo6 = callPackage ../development/tools/misc/texinfo/6.0.nix { };
-  texinfo = texinfo6;
 
   texi2html = callPackage ../development/tools/misc/texi2html { };
 
@@ -9649,11 +9642,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   prayer = callPackage ../servers/prayer { };
 
-  procps = procps-ng;
-
   procps-old = lowPrio (callPackage ../os-specific/linux/procps { });
 
-  procps-ng = callPackage ../os-specific/linux/procps-ng { };
+  procps = callPackage ../os-specific/linux/procps-ng { };
 
   watch = callPackage ../os-specific/linux/procps/watch.nix { };
 

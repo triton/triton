@@ -34,12 +34,6 @@ stdenv.mkDerivation rec {
     sha256 = "05m687bhvrrnqaf18fl6h5y06a4v7j9aai8gmj5cwpflfgfnya7i";
   };
 
-  # Configure script searches for a symbol which does not exist in jemalloc on Darwin
-  # Reported upstream in https://github.com/tatsuhiro-t/nghttp2/issues/233
-  postPatch = if (stdenv.isDarwin && optJemalloc != null) then ''
-    substituteInPlace configure --replace "malloc_stats_print" "je_malloc_stats_print"
-  '' else null;
-
   buildInputs = [ optJansson optBoost optLibxml2 optJemalloc ]
     ++ optionals hasApp [ optOpenssl optLibev optZlib ];
 

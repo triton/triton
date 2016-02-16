@@ -308,8 +308,12 @@ rec {
         # Do not export these packages to the final stdenv
         inherit (stage0Pkgs) fetchurl fetchzip fetchFromGitHub fetchTritonPatch;
         libiconv = null;
+        texinfo = pkgs.texinfo.override {
+          interactive = false;
+          check = false;
+        };
         inherit (pkgs) gettext perl522 perl m4 bison autoconf automake flex perlPackages
-          libtool buildPerlPackage help2man makeWrapper autoreconfHook texinfo;
+          libtool buildPerlPackage help2man makeWrapper autoreconfHook;
       };
     });
   };
@@ -332,16 +336,22 @@ rec {
 
     shell = stage3Pkgs.gcc.shell;
 
-    extraArgs = {
-      stdenvDepTest = stage3Pkgs.stdenv.mkDerivation {
-        name = "stdenv-dep-test";
-        src = cc;
-        installPhase = ''
+    extraArgs = rec {
+      stdenvDeps = stage3Pkgs.stdenv.mkDerivation {
+        name = "stdenv-deps";
+        buildCommand = ''
           mkdir -p $out
         '' + lib.flip lib.concatMapStrings extraAttrs.bootstrappedPackages' (n: ''
           [ -h "$out/$(basename "${n}")" ] || ln -s "${n}" "$out"
         '');
-        allowedRequisites = extraAttrs.bootstrappedPackages';
+      };
+      stdenvDepTest = stage3Pkgs.stdenv.mkDerivation {
+        name = "stdenv-dep-test";
+        buildCommand = ''
+          mkdir -p $out
+          ln -s "${stdenvDeps}" $out
+        '';
+        allowedRequisites = extraAttrs.bootstrappedPackages' ++ [ stdenvDeps ];
       };
     };
 
@@ -349,7 +359,7 @@ rec {
       inherit platform;
       libc = stage1Pkgs.glibc;
       shellPackage = stage3Pkgs.gcc.shell;
-      bootstrappedPackages' = lib.attrValues (overrides {}) ++ [ cc.cc ];
+      bootstrappedPackages' = lib.attrValues (overrides {}) ++ [ cc.cc cc ] ++ extraBuildInputs;
       bootstrappedPackages = [ stdenvLinux ] ++ bootstrappedPackages';
     };
 

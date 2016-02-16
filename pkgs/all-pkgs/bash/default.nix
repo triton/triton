@@ -1,12 +1,10 @@
-{ stdenv, fetchurl, readline ? null, interactive ? false, texinfo ? null, bison }:
-
-assert interactive -> readline != null;
+{ stdenv, fetchurl, readline, texinfo, bison }:
 
 let
   version = "4.3";
   realName = "bash-${version}";
   shortName = "bash43";
-  baseConfigureFlags = if interactive then "--with-installed-readline" else "--disable-readline";
+  baseConfigureFlags = "--with-installed-readline";
   sha256 = "1m14s1f61mf6bijfibcjm9y6pkyvz6gibyl8p4hxq90fisi8gimg";
 in
 
@@ -49,14 +47,9 @@ stdenv.mkDerivation rec {
   configureFlags = baseConfigureFlags;
 
   # Note: Bison is needed because the patches above modify parse.y.
-  nativeBuildInputs = [bison]
-    ++ stdenv.lib.optional (texinfo != null) texinfo;
+  nativeBuildInputs = [ bison texinfo ];
 
-  buildInputs = stdenv.lib.optional interactive readline;
-
-  # Bash randomly fails to build because of a recursive invocation to
-  # build `version.h'.
-  enableParallelBuilding = false;
+  buildInputs = [ readline ];
 
   postInstall = ''
     # Add an `sh' -> `bash' symlink.
@@ -65,25 +58,8 @@ stdenv.mkDerivation rec {
 
   meta = {
     homepage = http://www.gnu.org/software/bash/;
-    description =
-      "GNU Bourne-Again Shell, the de facto standard shell on Linux" +
-        (if interactive then " (for interactive use)" else "");
-
-    longDescription = ''
-      Bash is the shell, or command language interpreter, that will
-      appear in the GNU operating system.  Bash is an sh-compatible
-      shell that incorporates useful features from the Korn shell
-      (ksh) and C shell (csh).  It is intended to conform to the IEEE
-      POSIX P1003.2/ISO 9945.2 Shell and Tools standard.  It offers
-      functional improvements over sh for both programming and
-      interactive use.  In addition, most sh scripts can be run by
-      Bash without modification.
-    '';
-
     license = stdenv.lib.licenses.gpl3Plus;
-
     platforms = stdenv.lib.platforms.all;
-
     maintainers = [ stdenv.lib.maintainers.simons ];
   };
 

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, automake, autoconf, libtool, flex, bison
+{ stdenv, fetchurl, automake, autoconf, libtool, flex, bison, texinfo
 
 # Optional Dependencies
 , ncurses ? null
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     sha256 = "13d426a8h403ckpc8zyf7s2p5rql0lqbg2bv0454x0pvgbfbf4gh";
   };
 
-  nativeBuildInputs = [ automake autoconf libtool flex bison ];
+  nativeBuildInputs = [ automake autoconf libtool flex bison texinfo ];
   buildInputs = [ ncurses ];
 
   preConfigure = ''

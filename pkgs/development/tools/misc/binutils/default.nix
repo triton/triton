@@ -68,12 +68,6 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  # As binutils takes part in the stdenv building, we don't want references
-  # to the bootstrap-tools libgcc (as uses to happen on arm/mips)
-  NIX_CFLAGS_COMPILE = if stdenv.isDarwin
-    then "-Wno-string-plus-int -Wno-deprecated-declarations"
-    else "-static-libgcc";
-
   configureFlags =
     [ "--enable-shared" "--enable-deterministic-archives" "--disable-werror" ]
     ++ optional (stdenv.system == "mips64el-linux") "--enable-fix-loongson2f-nop"

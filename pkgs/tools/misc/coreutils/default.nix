@@ -1,7 +1,6 @@
 { stdenv, fetchurl, perl, gmp ? null
 , aclSupport ? true, acl ? null
 , selinuxSupport? false, libselinux ? null, libsepol ? null
-, autoconf, automake114x, texinfo
 , withPrefix ? false
 }:
 
@@ -20,22 +19,9 @@ let
       sha256 = "11yfrnb94xzmvi4lhclkcmkqsbhww64wf234ya1aacjvg82prrii";
     };
 
-    # The test tends to fail on btrfs and maybe other unusual filesystems.
-    postPatch = stdenv.lib.optionalString (!stdenv.isDarwin) ''
-      sed '2i echo Skipping dd sparse test && exit 0' -i ./tests/dd/sparse.sh
-      sed '2i echo Skipping cp sparse test && exit 0' -i ./tests/cp/sparse.sh
-    '' +
-       # This is required by coreutils-tail-inotify-race.patch to avoid more deps
-       stdenv.lib.optionalString stdenv.isArm ''
-         touch -r src/stat.c src/tail.c
-       '';
-
-    configureFlags = optionalString stdenv.isSunOS "ac_cv_func_inotify_init=no";
-
     nativeBuildInputs = [ perl ];
     buildInputs = [ gmp ]
       ++ optional aclSupport acl
-      ++ optionals stdenv.isCygwin [ autoconf automake114x texinfo ]   # due to patch
       ++ optionals selinuxSupport [ libselinux libsepol ];
 
     crossAttrs = {
@@ -59,20 +45,9 @@ let
       doCheck = false;
     };
 
-    # The tests are known broken on Cygwin
-    # (http://thread.gmane.org/gmane.comp.gnu.core-utils.bugs/19025),
-    # Darwin (http://thread.gmane.org/gmane.comp.gnu.core-utils.bugs/19351),
-    # and {Open,Free}BSD.
-    doCheck = stdenv.isLinux;
-
-    # Saw random failures like ‘help2man: can't get '--help' info from
-    # man/sha512sum.td/sha512sum’.
-    enableParallelBuilding = true;
+    doCheck = true;
 
     NIX_LDFLAGS = optionalString selinuxSupport "-lsepol";
-    FORCE_UNSAFE_CONFIGURE = stdenv.lib.optionalString (stdenv.system == "armv7l-linux" || stdenv.isSunOS) "1";
-
-    makeFlags = optionalString stdenv.isDarwin "CFLAGS=-D_FORTIFY_SOURCE=0";
 
     # e.g. ls -> gls; grep -> ggrep
     postFixup = # feel free to simplify on a mass rebuild

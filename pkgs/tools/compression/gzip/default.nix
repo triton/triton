@@ -8,33 +8,21 @@ stdenv.mkDerivation rec {
     sha256 = "0ivqnbhiwd12q8hp3qw6rpsrpw2jg5y2mymk8cn22lsx90dfvprp";
   };
 
-  enableParallelBuilding = true;
-
-  preConfigure = if stdenv.isCygwin then ''
-    sed -i lib/fpending.h -e 's,include <stdio_ext.h>,,'
-  '' else null;
-
   # In stdenv-linux, prevent a dependency on bootstrap-tools.
-  makeFlags = "SHELL=/bin/sh GREP=grep";
+  makeFlags = [
+    "SHELL=/bin/sh"
+    "GREP=grep"
+  ];
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/gzip/;
     description = "GNU zip compression program";
-
-    longDescription =
-      ''gzip (GNU zip) is a popular data compression program written by
-        Jean-loup Gailly for the GNU project.  Mark Adler wrote the
-        decompression part.
-
-        We developed this program as a replacement for compress because of
-        the Unisys and IBM patents covering the LZW algorithm used by
-        compress.  These patents made it impossible for us to use compress,
-        and we needed a replacement.  The superior compression ratio of gzip
-        is just a bonus.
-      '';
-
-    platforms = stdenv.lib.platforms.all;
-
-    license = stdenv.lib.licenses.gpl3Plus;
+    license = licenses.gpl3Plus;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux
+      ++ i686-linux;
   };
 }

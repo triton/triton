@@ -1,4 +1,10 @@
-{ stdenv, fetchurl, ncurses, perl, xz, libiconv, gawk, procps }:
+{ stdenv
+, fetchurl
+, perl
+
+, interactive ? true, ncurses
+, check ? true, procps
+}:
 
 with stdenv.lib;
 
@@ -10,7 +16,9 @@ stdenv.mkDerivation rec {
     sha256 = "1r3i6jyynn6ab45fxw5bms8mflk9ry4qpj6gqyry72vfd5c47fhi";
   };
 
-  buildInputs = [ perl xz ncurses ]
+  nativeBuildInputs = [ perl ];
+  buildInputs = [ ]
+    ++ optional interactive ncurses
     ++ optional doCheck procps; # for tests
 
   preInstall = ''
@@ -22,12 +30,18 @@ stdenv.mkDerivation rec {
     "install-tex"
   ];
 
-  doCheck = true;
+  doCheck = check;
 
   meta = with stdenv.lib; {
     homepage = "http://www.gnu.org/software/texinfo/";
     description = "The GNU documentation system";
     license = licenses.gpl3Plus;
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux
+      ++ i686-linux
+    ;
   };
 }

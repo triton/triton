@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
   ];
 
   preFixup = ''
-    wrapProgram $out/bin/gnome-terminal \
+    wrapProgram $out/libexec/gnome-terminal-server \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
@@ -81,7 +81,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

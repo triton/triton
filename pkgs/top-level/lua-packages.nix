@@ -34,12 +34,6 @@ let
       sha256 = "16fffbrgfcw40kskh2bn9q7m3gajffwd2f35rafynlnd7llwj1qj";
     };
 
-    buildFlags = stdenv.lib.optionalString stdenv.isDarwin "macosx";
-
-    postPatch = stdenv.lib.optionalString stdenv.isDarwin ''
-      substituteInPlace Makefile --replace 10.4 10.5
-    '';
-
     preBuild = ''
       makeFlagsArray=(
         ${stdenv.lib.optionalString stdenv.cc.isClang "CC=$CC"}
@@ -326,8 +320,6 @@ let
     preBuild = ''
       makeFlagsArray=(CC=$CC);
     '';
-
-    buildFlags = if stdenv.isDarwin then "macosx" else "";
 
     installPhase = ''
       mkdir -p $out/lib/lua/${lua.luaversion}

@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, ncurses, gettext, pkgconfig
+{ stdenv, fetchFromGitHub, ncurses, gettext, pkgconfig }:
 
 stdenv.mkDerivation rec {
   name = "vim-${version}";

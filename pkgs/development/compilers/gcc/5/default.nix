@@ -204,8 +204,7 @@ stdenv.mkDerivation ({
   inherit patches;
 
   postPatch =
-    if (stdenv.isGNU
-        || (libcCross != null                  # e.g., building `gcc.crossDrv'
+    if ((libcCross != null                  # e.g., building `gcc.crossDrv'
             && libcCross ? crossConfig
             && libcCross.crossConfig == "i586-pc-gnu")
         || (crossGNU && libcCross != null))

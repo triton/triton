@@ -7425,10 +7425,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   mtpfs = callPackage ../tools/filesystems/mtpfs { };
 
-  mu = callPackage ../tools/networking/mu {
-    texinfo = texinfo4;
-  };
-
   mueval = callPackage ../development/tools/haskell/mueval { };
 
   muparser = callPackage ../development/libraries/muparser { };
@@ -7900,11 +7896,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   skalibs = callPackage ../development/libraries/skalibs { };
 
   slang = callPackage ../development/libraries/slang { };
-
-  slibGuile = callPackage ../development/libraries/slib {
-    scheme = guile_1_8;
-    texinfo = texinfo4; # otherwise erros: must be after `@defun' to use `@defunx'
-  };
 
   smpeg = callPackage ../development/libraries/smpeg { };
 

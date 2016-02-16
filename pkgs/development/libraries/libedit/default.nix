@@ -11,8 +11,6 @@ stdenv.mkDerivation rec {
   # Have `configure' avoid `/usr/bin/nroff' in non-chroot builds.
   NROFF = "${groff}/bin/nroff";
 
-  patches = [ ./01-cygwin.patch ./freebsd-wchar.patch ];
-
   propagatedBuildInputs = [ ncurses ];
 
   configureFlags = [ "--enable-widec" ];

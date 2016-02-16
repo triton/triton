@@ -829,6 +829,8 @@ gvfs = callPackage ../all-pkgs/gvfs { };
 
 gx = goPackages.gx.bin // { outputs = [ "bin" ]; };
 
+hadoop = callPackage ../all-pkgs/hadoop { };
+
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
 
 highlight = callPackage ../all-pkgs/highlight { };
@@ -5253,8 +5255,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   hex2nix = erlangPackages.callPackage ../development/tools/erlang/hex2nix { };
 
   guile = callPackage ../development/interpreters/guile { };
-
-  hadoop = callPackage ../applications/networking/cluster/hadoop { };
 
   jmeter = callPackage ../applications/networking/jmeter {};
 

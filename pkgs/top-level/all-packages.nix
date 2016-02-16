@@ -7846,10 +7846,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   SDL = callPackage ../development/libraries/SDL {
     openglSupport = mesaSupported;
     alsaSupport = stdenv.isLinux;
-    x11Support = !stdenv.isCygwin;
-    pulseaudioSupport = if (config ? pulseaudio)
-                        then config.pulseaudio
-                        else stdenv.isLinux;
+    x11Support = true;
+    pulseaudioSupport = config.pulseaudio or true;
   };
 
   SDL_gfx = callPackage ../development/libraries/SDL_gfx { };
@@ -7869,8 +7867,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   SDL2 = callPackage ../development/libraries/SDL2 {
     openglSupport = mesaSupported;
     alsaSupport = stdenv.isLinux;
-    x11Support = !stdenv.isCygwin;
-    pulseaudioSupport = config.pulseaudio or false; # better go through ALSA
+    x11Support = true;
+    pulseaudioSupport = config.pulseaudio or true;
   };
 
   SDL2_image = callPackage ../development/libraries/SDL2_image { };

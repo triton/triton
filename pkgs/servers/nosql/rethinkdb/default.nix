@@ -4,11 +4,11 @@
 
 stdenv.mkDerivation rec {
   name = "rethinkdb-${version}";
-  version = "2.2.2";
+  version = "2.2.4";
 
   src = fetchurl {
     url = "http://download.rethinkdb.com/dist/${name}.tgz";
-    sha256 = "0zswpf0nw1rkqmhx2gbbmzdqb72qihswph5y48l4ag00l43jz627";
+    sha256 = "0zs07g7arrrvm85mqbkffyzgd255qawn64r6iqdws25lj1kq2qim";
   };
 
   postPatch = stdenv.lib.optionalString stdenv.isDarwin ''

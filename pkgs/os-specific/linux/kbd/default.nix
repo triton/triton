@@ -41,12 +41,6 @@ stdenv.mkDerivation rec {
       substituteInPlace src/libkeymap/findfile.c \
         --replace gzip ${gzip}/bin/gzip \
         --replace bzip2 ${bzip2}/bin/bzip2 \
-
-      # We get a warning in armv5tel-linux and the fuloong2f, so we
-      # disable -Werror in it.
-      ${stdenv.lib.optionalString (stdenv.isArm || stdenv.system == "mips64el-linux") ''
-        sed -i s/-Werror// src/Makefile.am
-      ''}
     '';
 
   buildInputs = [ autoreconfHook pkgconfig check pam ];

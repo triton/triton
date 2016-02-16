@@ -11,18 +11,6 @@ stdenv.mkDerivation rec {
     sha256 = "1izazbyv5n2d81qdym77i8mg9m870hiydmq4d0s51npx5vp8lk46";
   };
 
-  patchPhase = stdenv.lib.optionalString stdenv.isDarwin ''
-    substituteInPlace Makefile.mac --replace \
-      "-mmacosx-version-min=10.4" "-mmacosx-version-min=10.6"
-    substituteInPlace Makefile.mac --replace \
-      " -arch i386" ""
-    substituteInPlace Makefile.mac --replace \
-      " -I/opt/local/include -I /usr/local/include -I/opt/local/include" ""
-    substituteInPlace Makefile.mac --replace \
-      "/opt/local/lib/libncurses.a" "${ncurses}/lib/libncurses.dylib"
-  '';
-
-  buildPhase = stdenv.lib.optionalString stdenv.isDarwin "make -f Makefile.mac";
   buildInputs = [ libuuid popt icu ncurses ];
 
   installPhase = ''

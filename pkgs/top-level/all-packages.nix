@@ -5934,7 +5934,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   texinfo413 = callPackage ../development/tools/misc/texinfo/4.13a.nix { };
   texinfo4 = texinfo413;
-  texinfo5 = callPackage ../development/tools/misc/texinfo/5.2.nix { };
   texinfo6 = callPackage ../development/tools/misc/texinfo/6.0.nix { };
   texinfo = texinfo6;
 

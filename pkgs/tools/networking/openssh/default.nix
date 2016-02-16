@@ -55,15 +55,12 @@ stdenv.mkDerivation rec {
     "--disable-strip"
     (if pam != null then "--with-pam" else "--without-pam")
   ] ++ optional (etcDir != null) "--sysconfdir=${etcDir}"
-    ++ optional withKerberos "--with-kerberos5=${kerberos}"
-    ++ optional stdenv.isDarwin "--disable-libutil";
+    ++ optional withKerberos "--with-kerberos5=${kerberos}";
 
   preConfigure = ''
     configureFlagsArray+=("--with-privsep-path=$out/empty")
     mkdir -p $out/empty
   '';
-
-  enableParallelBuilding = true;
 
   postInstall = ''
     # Install ssh-copy-id, it's very useful.

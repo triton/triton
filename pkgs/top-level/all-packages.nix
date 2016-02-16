@@ -883,6 +883,8 @@ json-glib = callPackage ../all-pkgs/json-glib { };
 
 kea = callPackage ../all-pkgs/kea { };
 
+kubernetes = callPackage ../all-pkgs/kubernetes { };
+
 libass = callPackage ../all-pkgs/libass { };
 
 libbluray = callPackage ../all-pkgs/libbluray { };
@@ -11107,10 +11109,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   koji = callPackage ../tools/package-management/koji { };
 
   ksuperkey = callPackage ../tools/X11/ksuperkey { };
-
-  kubernetes = callPackage ../applications/networking/cluster/kubernetes {
-    go = go_1_4;
-  };
 
   lame = callPackage ../development/libraries/lame { };
 

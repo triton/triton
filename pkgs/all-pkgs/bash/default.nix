@@ -1,7 +1,6 @@
-{ stdenv, fetchurl, readline ? null, interactive ? false, texinfo ? null, binutils ? null, bison }:
+{ stdenv, fetchurl, readline ? null, interactive ? false, texinfo ? null, bison }:
 
 assert interactive -> readline != null;
-assert stdenv.isDarwin -> binutils != null;
 
 let
   version = "4.3";
@@ -44,22 +43,14 @@ stdenv.mkDerivation rec {
 
   crossAttrs = {
     configureFlags = baseConfigureFlags +
-      " bash_cv_job_control_missing=nomissing bash_cv_sys_named_pipes=nomissing" +
-      stdenv.lib.optionalString stdenv.isCygwin ''
-        --without-libintl-prefix --without-libiconv-prefix
-        --with-installed-readline
-        bash_cv_dev_stdin=present
-        bash_cv_dev_fd=standard
-        bash_cv_termcap_lib=libncurses 
-      '';
+      " bash_cv_job_control_missing=nomissing bash_cv_sys_named_pipes=nomissing";
   };
 
   configureFlags = baseConfigureFlags;
 
   # Note: Bison is needed because the patches above modify parse.y.
   nativeBuildInputs = [bison]
-    ++ stdenv.lib.optional (texinfo != null) texinfo
-    ++ stdenv.lib.optional stdenv.isDarwin binutils;
+    ++ stdenv.lib.optional (texinfo != null) texinfo;
 
   buildInputs = stdenv.lib.optional interactive readline;
 

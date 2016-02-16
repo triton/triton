@@ -129,8 +129,6 @@ stdenv.mkDerivation {
     EOF
   '';
 
-  enableParallelBuilding = true;
-
   buildInputs = [ icu expat zlib bzip2 python2 ];
 
   configureScript = "./bootstrap.sh";

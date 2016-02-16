@@ -546,6 +546,10 @@ bzrtools = callPackage ../all-pkgs/bzrtools { };
 
 beets = callPackage ../all-pkgs/beets { };
 
+boost155 = callPackage ../all-pkgs/boost/1.55.nix { };
+boost160 = callPackage ../all-pkgs/boost/1.60.nix { };
+boost = boost160;
+
 btrfs-progs = callPackage ../all-pkgs/btrfs-progs { };
 
 cairo = callPackage ../all-pkgs/cairo { };
@@ -6050,10 +6054,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   boehmgc = callPackage ../development/libraries/boehm-gc { };
 
   boolstuff = callPackage ../development/libraries/boolstuff { };
-
-  boost155 = callPackage ../development/libraries/boost/1.55.nix { };
-  boost160 = callPackage ../development/libraries/boost/1.60.nix { };
-  boost = boost160;
 
   boost_process = callPackage ../development/libraries/boost-process { };
 

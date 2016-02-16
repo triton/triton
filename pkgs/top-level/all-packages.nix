@@ -590,6 +590,8 @@ cogl = callPackage ../all-pkgs/cogl { };
 
 colord = callPackage ../all-pkgs/colord { };
 
+cryptopp = callPackage ../all-pkgs/crypto++ { };
+
 dash = callPackage ../shells/dash { };
 
 dconf = callPackage ../all-pkgs/dconf { };
@@ -6187,8 +6189,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   cppunit = callPackage ../development/libraries/cppunit { };
 
   cracklib = callPackage ../development/libraries/cracklib { };
-
-  cryptopp = callPackage ../development/libraries/crypto++ { };
 
   cwiid = callPackage ../development/libraries/cwiid { };
 

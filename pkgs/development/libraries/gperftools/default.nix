@@ -8,19 +8,11 @@ stdenv.mkDerivation rec {
     sha256 = "0b8aqgch8dyapzw2zd9g89x6gsnm2ml0gf169rql0bxldqi3falq";
   };
 
-  buildInputs = [ unzip ] ++ stdenv.lib.optional stdenv.isLinux libunwind;
-
-  prePatch = stdenv.lib.optionalString stdenv.isDarwin ''
-    substituteInPlace Makefile.am --replace stdc++ c++
-    substituteInPlace Makefile.in --replace stdc++ c++
-    substituteInPlace libtool --replace stdc++ c++
-  '';
+  buildInputs = [ libunwind ];
 
   # some packages want to link to the static tcmalloc_minimal
   # to drop the runtime dependency on gperftools
   dontDisableStatic = true;
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     homepage = https://code.google.com/p/gperftools/;

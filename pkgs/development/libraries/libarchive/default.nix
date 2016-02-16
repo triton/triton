@@ -18,26 +18,10 @@ stdenv.mkDerivation rec {
       # ^ it's CVE-2015-2304 specific to libarchive
   ];
 
-  buildInputs = [ sharutils libxml2 zlib bzip2 openssl xz lzo ] ++
-    stdenv.lib.optionals stdenv.isLinux [ e2fsprogs attr acl ];
-
-  preBuild = if stdenv.isCygwin then ''
-    echo "#include <windows.h>" >> config.h
-  '' else null;
-
-  preFixup = ''
-    sed -i $out/lib/libarchive.la \
-      -e 's|-lcrypto|-L${openssl}/lib -lcrypto|' \
-      -e 's|-llzo2|-L${lzo}/lib -llzo2|'
-  '';
+  buildInputs = [ sharutils libxml2 zlib bzip2 openssl xz lzo e2fsprogs attr acl ];
 
   meta = {
     description = "Multi-format archive and compression library";
-    longDescription = ''
-      This library has code for detecting and reading many archive formats and
-      compressions formats including (but not limited to) tar, shar, cpio, zip, and
-      compressed with gzip, bzip2, lzma, xz, .. 
-    '';
     homepage = http://libarchive.org;
     license = stdenv.lib.licenses.bsd3;
     platforms = with stdenv.lib.platforms; all;

@@ -5,7 +5,6 @@
 , coreutils
 , gdbm
 , libcap
-, libiconv
 , ncurses
 , pcre
 }:
@@ -42,8 +41,6 @@ stdenv.mkDerivation {
     gdbm
     ncurses
     pcre
-  ] ++ optionals (!stdenv.cc.isGNU) [
-    libiconv
   ];
 
   postPatch = ''
@@ -130,7 +127,6 @@ stdenv.mkDerivation {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

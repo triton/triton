@@ -16,7 +16,7 @@ assert pythonBindings -> swig != null && python != null;
 assert javahlBindings -> jdk != null && perl != null;
 
 let
-  common = { version, sha1 }: stdenv.mkDerivation (rec {
+  common = { version, sha1 }: stdenv.mkDerivation rec {
     inherit version;
     name = "subversion-${version}";
 
@@ -75,15 +75,10 @@ let
       description = "A version control system intended to be a compelling replacement for CVS in the open source community";
       homepage = http://subversion.apache.org/;
       maintainers = with stdenv.lib.maintainers; [ eelco lovek323 ];
-      hydraPlatforms = stdenv.lib.platforms.linux ++ stdenv.lib.platforms.darwin;
+      hydraPlatforms = stdenv.lib.platforms.linux;
     };
 
-  } // stdenv.lib.optionalAttrs stdenv.isDarwin {
-    CXX = "clang++";
-    CC = "clang";
-    CPP = "clang -E";
-    CXXCPP = "clang++ -E";
-  });
+  };
 
 in {
 

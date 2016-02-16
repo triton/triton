@@ -5,7 +5,8 @@
 , MPlayerPlugin, gecko_mediaplayer, xorg, libpulseaudio, libcanberra
 , gstreamer_0, gst-plugins-base_0, gst-plugins-good_0, gst-plugins-bad_0
 , gst-plugins-ugly_0, gst-ffmpeg
-, supportsJDK, jrePlugin, icedtea_web
+#, jrePlugin
+, icedtea_web
 , trezor-bridge, bluejeans, djview4, adobe-reader
 , google_talk_plugin, fribid, gnome-shell
 }:
@@ -36,7 +37,7 @@ let
       ++ lib.optional (cfg.enableDjvu or false) (djview4)
       ++ lib.optional (cfg.enableMPlayer or false) (MPlayerPlugin browser)
       ++ lib.optional (cfg.enableGeckoMediaPlayer or false) gecko_mediaplayer
-      ++ lib.optional (supportsJDK && jre && jrePlugin ? mozillaPlugin) jrePlugin
+      #++ lib.optional (jre && jrePlugin ? mozillaPlugin) jrePlugin
       ++ lib.optional icedtea icedtea_web
       ++ lib.optional (cfg.enableGoogleTalkPlugin or false) google_talk_plugin
       ++ lib.optional (cfg.enableFriBIDPlugin or false) fribid

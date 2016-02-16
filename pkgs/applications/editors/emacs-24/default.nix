@@ -36,13 +36,9 @@ stdenv.mkDerivation rec {
         imagemagick gconf ]
     ++ [ gtk3 ];
 
-  configureFlags =
-    if stdenv.isDarwin
-      then [ "--with-ns" "--disable-ns-self-contained" ]
-    else if withX
-      then [ "--with-x-toolkit=${toolkit}" "--with-xft" ]
-      else [ "--with-x=no" "--with-xpm=no" "--with-jpeg=no" "--with-png=no"
-             "--with-gif=no" "--with-tiff=no" ];
+  configureFlags = [ "--with-x=no" "--with-xpm=no" "--with-jpeg=no" "--with-png=no"
+         "--with-gif=no" "--with-tiff=no" ]
+    ++ stdenv.lib.optionals withX [ "--with-x-toolkit=${toolkit}" "--with-xft" ];
 
   postInstall = ''
     mkdir -p $out/share/emacs/site-lisp/

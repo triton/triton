@@ -12,8 +12,6 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ libatomic_ops ];
 
-  patches = if stdenv.isCygwin then [ ./cygwin.patch ] else null;
-
   configureFlags =
     [ "--enable-cplusplus" ]
     ++ lib.optional enableLargeConfig "--enable-large-config";

@@ -272,25 +272,11 @@ stdenv.mkDerivation ({
     ++ (optionals langAda [gnatboot])
     ++ (optionals langVhdl [gnat]);
 
-  NIX_LDFLAGS = stdenv.lib.optionalString  stdenv.isSunOS "-lm -ldl";
-
-  preConfigure = stdenv.lib.optionalString (stdenv.isSunOS && stdenv.is64bit) ''
-    export NIX_LDFLAGS=`echo $NIX_LDFLAGS | sed -e s~$prefix/lib~$prefix/lib/amd64~g`
-    export LDFLAGS_FOR_TARGET="-Wl,-rpath,$prefix/lib/amd64 $LDFLAGS_FOR_TARGET"
-    export CXXFLAGS_FOR_TARGET="-Wl,-rpath,$prefix/lib/amd64 $CXXFLAGS_FOR_TARGET"
-    export CFLAGS_FOR_TARGET="-Wl,-rpath,$prefix/lib/amd64 $CFLAGS_FOR_TARGET"
-  '';
-
   ABSOLUTE_LIBTOOL_EXCLUDED = libPathExcludes;
 
   dontDisableStatic = true;
 
   configureFlags = "
-    ${if stdenv.isSunOS then
-      " --enable-long-long --enable-libssp --enable-threads=posix --disable-nls --enable-__cxa_atexit " +
-      # On Illumos/Solaris GNU as is preferred
-      " --with-gnu-as --without-gnu-ld "
-      else ""}
     --enable-lto
     ${if enableMultilib then "--enable-multilib --disable-libquadmath" else "--disable-multilib"}
     ${if enableShared then "" else "--disable-shared"}

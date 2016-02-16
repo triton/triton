@@ -8,7 +8,6 @@
 
 , glib
 , gobject-introspection
-, libiconv
 }:
 
 stdenv.mkDerivation rec {
@@ -33,7 +32,6 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glib
     gobject-introspection
-    libiconv
   ];
 
   postPatch = ''

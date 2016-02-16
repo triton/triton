@@ -31,11 +31,7 @@ stdenv.mkDerivation {
   ] ++ optional (libusb != null) "--enable-libusb"
     ++ optional (gnutls != null) "--enable-ssl"
     ++ optional (avahi != null) "--enable-avahi"
-    ++ optional (libpaper != null) "--enable-libpaper"
-    ++ optionals stdenv.isDarwin [
-    "--with-bundledir=$out"
-    "--disable-launchd"
-  ];
+    ++ optional (libpaper != null) "--enable-libpaper";
 
   installFlags =
     [ # Don't try to write in /var at build time.
@@ -54,8 +50,6 @@ stdenv.mkDerivation {
       # Work around a Makefile bug.
       "CUPS_PRIMARY_SYSTEM_GROUP=root"
     ];
-
-  enableParallelBuilding = true;
 
   postInstall = ''
       # Delete obsolete stuff that conflicts with cups-filters.

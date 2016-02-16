@@ -308,8 +308,6 @@ stdenv.mkDerivation ({
         ++ optional langAda      "ada"
         ++ optional langVhdl     "vhdl"
         ++ optional langGo       "go"
-        ++ optional langObjC     "objc"
-        ++ optional langObjCpp   "obj-c++"
         ++ optionals crossDarwin [ "objc" "obj-c++" ]
         )
       )

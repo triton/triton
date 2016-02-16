@@ -14,10 +14,6 @@ stdenv.mkDerivation rec {
   # work in pure build enviroments.
   configureFlags = stdenv.lib.optionals stdenv.isLinux [ "--with-pcap=linux" ] ;
 
-  prePatch = stdenv.lib.optionalString stdenv.isDarwin ''
-    substituteInPlace configure --replace " -arch i386" ""
-  '';
-
   preInstall = ''mkdir -p $out/bin'';
 
   crossAttrs = {

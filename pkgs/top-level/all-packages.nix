@@ -1005,6 +1005,13 @@ mesa = buildEnv {
   paths = [ mesa_noglu mesa_glu ];
 };
 
+mesos = callPackage ../all-pkgs/mesos {
+  sasl = cyrus_sasl;
+  inherit (pythonPackages) python boto setuptools wrapPython;
+  pythonProtobuf = pythonPackages.protobuf2_5;
+  perf = linuxPackages.perf;
+};
+
 mime-types = callPackage ../all-pkgs/mime-types { };
 
 mixxx = callPackage ../all-pkgs/mixxx {
@@ -5293,13 +5300,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   toluapp = callPackage ../development/tools/toluapp { };
 
   ### END OF LUA
-
-  mesos = callPackage ../applications/networking/cluster/mesos {
-    sasl = cyrus_sasl;
-    inherit (pythonPackages) python boto setuptools wrapPython;
-    pythonProtobuf = pythonPackages.protobuf2_5;
-    perf = linuxPackages.perf;
-  };
 
   mesos-dns = goPackages.mesos-dns.bin // { outputs = [ "bin" ]; };
 

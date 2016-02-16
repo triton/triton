@@ -13,7 +13,6 @@ set -o pipefail
 # code). The hooks for <hookName> are the shell function or variable
 # <hookName>, and the values of the shell array ‘<hookName>Hooks’.
 runHook() {
-
   local hookName="$1"
   shift
   local var="$hookName"
@@ -31,14 +30,12 @@ runHook() {
   done
 
   return 0
-
 }
 
 
 # Run all hooks with the specified name, until one succeeds (returns a
 # zero exit code). If none succeed, return a non-zero exit code.
 runOneHook() {
-
   local hookName="$1"
   shift
   local var="$hookName"
@@ -58,7 +55,6 @@ runOneHook() {
   done
 
   return 1
-
 }
 
 
@@ -68,7 +64,6 @@ runOneHook() {
 # environment variables) and from shell scripts (as functions). If you
 # want to allow multiple hooks, use runHook instead.
 _callImplicitHook() {
-
   local def="$1"
   local hookName="$2"
 
@@ -90,14 +85,12 @@ _callImplicitHook() {
       fi
       ;;
   esac
-
 }
 
 
 # A function wrapper around ‘eval’ that ensures that ‘return’ inside
 # hooks exits the hook, not the caller.
 _eval() {
-
   local code="$1"
   shift
 
@@ -106,7 +99,6 @@ _eval() {
   else
     eval "$code"
   fi
-
 }
 
 
@@ -116,34 +108,26 @@ _eval() {
 nestingLevel=0
 
 startNest() {
-
   nestingLevel=$(( $nestingLevel + 1 ))
   echo -en "\033[$1p"
-
 }
 
 stopNest() {
-
   nestingLevel=$(( $nestingLevel - 1 ))
   echo -en "\033[q"
-
 }
 
 header() {
-
   startNest "$2"
   echo "$1"
-
 }
 
 # Make sure that even when we exit abnormally, the original nesting
 # level is properly restored.
 closeNest() {
-
   while [ $nestingLevel -gt 0 ] ; do
     stopNest
   done
-
 }
 
 
@@ -151,7 +135,6 @@ closeNest() {
 # Error handling.
 
 exitHandler() {
-
   exitCode=$?
   set +e
 
@@ -186,7 +169,6 @@ exitHandler() {
   fi
 
   exit $exitCode
-
 }
 
 trap "exitHandler" EXIT
@@ -197,7 +179,6 @@ trap "exitHandler" EXIT
 
 
 addToSearchPathWithCustomDelimiter() {
-
   local delimiter=$1
   local varName=$2
   local dir=$3
@@ -205,20 +186,16 @@ addToSearchPathWithCustomDelimiter() {
   if [ -d "$dir" ] ; then
     eval export ${varName}=${!varName}${!varName:+$delimiter}${dir}
   fi
-
 }
 
 PATH_DELIMITER=':'
 
 addToSearchPath() {
-
   addToSearchPathWithCustomDelimiter "${PATH_DELIMITER}" "$@"
-
 }
 
 
 ensureDir() {
-
   echo "warning: ‘ensureDir’ is deprecated; use ‘mkdir’ instead" >&2
 
   local dir
@@ -228,15 +205,12 @@ ensureDir() {
       mkdir -p "$dir"
     fi
   done
-
 }
 
 
 installBin() {
-
   mkdir -p $out/bin
   cp "$@" $out/bin
-
 }
 
 
@@ -297,7 +271,6 @@ runHook addInputsHook
 
 # Recursively find all build inputs.
 findInputs() {
-
   local pkg="$1"
   local var=$2
   local propagatedBuildInputsFile=$3
@@ -328,7 +301,6 @@ findInputs() {
       findInputs "$i" $var $propagatedBuildInputsFile
     done
   fi
-
 }
 
 crossPkgs=""
@@ -345,7 +317,6 @@ done
 # Set the relevant environment variables to point to the build inputs
 # found above.
 _addToNativeEnv() {
-
   local pkg=$1
 
   if [ -d $1/bin ] ; then
@@ -354,7 +325,6 @@ _addToNativeEnv() {
 
   # Run the package-specific hooks set by the setup-hook scripts.
   runHook envHook "$pkg"
-
 }
 
 for i in $nativePkgs ; do
@@ -362,7 +332,6 @@ for i in $nativePkgs ; do
 done
 
 _addToCrossEnv() {
-
   local pkg=$1
 
   # Some programs put important build scripts (freetype-config and similar)
@@ -374,7 +343,6 @@ _addToCrossEnv() {
 
   # Run the package-specific hooks set by the setup-hook scripts.
   runHook crossEnvHook "$pkg"
-
 }
 
 for i in $crossPkgs ; do
@@ -442,9 +410,7 @@ export NIX_BUILD_CORES
 # Dummy implementation of the paxmark function. On Linux, this is
 # overwritten by paxctl's setup hook.
 paxmark() {
-
   true
-
 }
 
 
@@ -458,7 +424,6 @@ export SSL_CERT_FILE=/no-cert-file.crt
 
 
 substitute() {
-
   local input="$1"
   local output="$2"
 
@@ -499,22 +464,18 @@ substitute() {
     chmod +w "$output"
   fi
   printf "%s" "$content" > "$output"
-
 }
 
 
 substituteInPlace() {
-
   local fileName="$1"
   shift
 
   substitute "$fileName" "$fileName" "$@"
-
 }
 
 
 substituteAll() {
-
   local input="$1"
   local output="$2"
 
@@ -527,17 +488,14 @@ substituteAll() {
   done
 
   substitute "$input" "$output" $args
-
 }
 
 
 substituteAllInPlace() {
-
   local fileName="$1"
   shift
 
   substituteAll "$fileName" "$fileName" "$@"
-
 }
 
 
@@ -551,29 +509,24 @@ substituteAllInPlace() {
 # then go to the build directory and source in `env-vars' to reproduce
 # the environment used for building.
 dumpVars() {
-
   if [ "$noDumpEnvVars" != 1 ] ; then
     export > "$NIX_BUILD_TOP/env-vars" || true
   fi
-
 }
 
 
 # Utility function: return the base name of the given path, with the
 # prefix `HASH-' removed, if present.
 stripHash() {
-
   strippedName=$(basename $1);
   if echo "$strippedName" | grep -q '^[a-z0-9]\{32\}-' ; then
       strippedName=$(echo "$strippedName" | cut -c34-)
   fi
-
 }
 
 
 unpackCmdHooks+=(_defaultUnpack)
 _defaultUnpack() {
-
   local fn="$1"
 
   if [ -d "$fn" ] ; then
@@ -599,12 +552,10 @@ _defaultUnpack() {
         ;;
     esac
   fi
-
 }
 
 
 unpackFile() {
-
   curSrc="$1"
   header "unpacking source archive $curSrc" 3
   if ! runOneHook unpackCmd "$curSrc" ; then
@@ -612,12 +563,10 @@ unpackFile() {
       exit 1
   fi
   stopNest
-
 }
 
 
 unpackPhase() {
-
   runHook preUnpack
 
   if [ -z "$srcs" ] ; then
@@ -681,12 +630,10 @@ unpackPhase() {
   fi
 
   runHook postUnpack
-
 }
 
 
 patchPhase() {
-
   runHook prePatch
 
   for i in $patches; do
@@ -712,19 +659,15 @@ patchPhase() {
   done
 
   runHook postPatch
-
 }
 
 
 fixLibtool() {
-
   sed -i -e 's^eval sys_lib_.*search_path=.*^^' "$1"
-
 }
 
 
 configurePhase() {
-
   runHook preConfigure
 
   if [ -z "$configureScript" -a -x ./configure ] ; then
@@ -764,38 +707,34 @@ configurePhase() {
   fi
 
   runHook postConfigure
-
 }
 
 commonMakeFlags() {
+  local phaseName
+  phaseName=$1
 
-    local phaseName
-    phaseName=$1
+  local parallelVar
+  parallelVar="parallel${phaseName^}"
 
-    local parallelVar
-    parallelVar="parallel${phaseName^}"
-
-    actualMakeFlags=()
-    if [ -n "$makefile" ] ; then
-        actualMakeFlags+=("-f" "$makefile")
-    fi
-    if [ -n "${!parallelVar-true}" ] ; then
-        actualMakeFlags+=("-j${NIX_BUILD_CORES}" "-l${NIX_BUILD_CORES}")
-    fi
-    actualMakeFlags+=("SHELL=$SHELL") # Needed for https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
-    actualMakeFlags+=($makeFlags)
-    actualMakeFlags+=("${makeFlagsArray[@]}")
-    local flagsVar
-    flagsVar="${phaseName}Flags"
-    actualMakeFlags+=(${!flagsVar})
-    local arrayVar
-    arrayVar="${phaseName}FlagsArray[@]"
-    actualMakeFlags+=("${!arrayVar}")
-
+  actualMakeFlags=()
+  if [ -n "$makefile" ] ; then
+    actualMakeFlags+=("-f" "$makefile")
+  fi
+  if [ -n "${!parallelVar-true}" ] ; then
+    actualMakeFlags+=("-j${NIX_BUILD_CORES}" "-l${NIX_BUILD_CORES}")
+  fi
+  actualMakeFlags+=("SHELL=$SHELL") # Needed for https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
+  actualMakeFlags+=($makeFlags)
+  actualMakeFlags+=("${makeFlagsArray[@]}")
+  local flagsVar
+  flagsVar="${phaseName}Flags"
+  actualMakeFlags+=(${!flagsVar})
+  local arrayVar
+  arrayVar="${phaseName}FlagsArray[@]"
+  actualMakeFlags+=("${!arrayVar}")
 }
 
 printMakeFlags() {
-
   local phaseName
   phaseName=$1
 
@@ -805,11 +744,9 @@ printMakeFlags() {
   for flag in "${actualMakeFlags[@]}" ; do
     echo "  $flag"
   done
-
 }
 
 buildPhase() {
-
   runHook preBuild
 
   if [ -z "$makeFlags" ] && ! [ -n "$makefile" -o -e "Makefile" -o -e "makefile" -o -e "GNUmakefile" ] ; then
@@ -822,12 +759,10 @@ buildPhase() {
   fi
 
   runHook postBuild
-
 }
 
 
 checkPhase() {
-
   runHook preCheck
 
   local actualMakeFlags
@@ -838,12 +773,10 @@ checkPhase() {
   make "${actualMakeFlags[@]}"
 
   runHook postCheck
-
 }
 
 
 installPhase() {
-
   runHook preInstall
 
   mkdir -p "$prefix"
@@ -855,7 +788,6 @@ installPhase() {
   make "${actualMakeFlags[@]}"
 
   runHook postInstall
-
 }
 
 
@@ -863,7 +795,6 @@ installPhase() {
 # stripping binaries, running patchelf and setting
 # propagated-build-inputs.
 fixupPhase() {
-
   # Make sure everything is writable so "strip" et al. work.
   for output in $outputs ; do
       if [ -e "${!output}" ] ; then
@@ -900,12 +831,10 @@ fixupPhase() {
   fi
 
   runHook postFixup
-
 }
 
 
 installCheckPhase() {
-
   runHook preInstallCheck
 
   echo "installcheck flags: $makeFlags ${makeFlagsArray[@]} $installCheckFlags ${installCheckFlagsArray[@]}"
@@ -915,12 +844,10 @@ installCheckPhase() {
     $installCheckFlags "${installCheckFlagsArray[@]}" ${installCheckTarget:-installcheck}
 
   runHook postInstallCheck
-
 }
 
 
 distPhase() {
-
   runHook preDist
 
   echo "dist flags: $distFlags ${distFlagsArray[@]}"
@@ -935,12 +862,10 @@ distPhase() {
   fi
 
   runHook postDist
-
 }
 
 
 showPhaseHeader() {
-
   local phase="$1"
   case $phase in
     unpackPhase)
@@ -971,12 +896,10 @@ showPhaseHeader() {
       header "$phase"
       ;;
   esac
-
 }
 
 
 genericBuild() {
-
   if [ -n "$buildCommand" ] ; then
     eval "$buildCommand"
     return
@@ -1020,7 +943,6 @@ genericBuild() {
 
     stopNest
   done
-
 }
 
 

@@ -5,8 +5,6 @@
 
 with stdenv.lib;
 
-assert wantPS -> (ps != null);
-
 let
   os = stdenv.lib.optionalString;
   majorVersion = "3.4";
@@ -33,8 +31,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ bzip2 curl expat libarchive xz zlib ]
     ++ optional useNcurses ncurses;
-
-  propagatedBuildInputs = optional wantPS ps;
 
   CMAKE_PREFIX_PATH = stdenv.lib.concatStringsSep ":" buildInputs;
 

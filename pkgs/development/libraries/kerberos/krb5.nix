@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, perl, yacc, bootstrap_cmds
+{ stdenv, fetchurl, pkgconfig, perl, yacc
 
 # Optional Dependencies
 , libedit ? null, readline ? null, ncurses ? null, libverto ? null
@@ -68,9 +68,7 @@ stdenv.mkDerivation rec {
     cd src
   '';
 
-  nativeBuildInputs = [ pkgconfig perl yacc ]
-    # Provides the mig command used by the build scripts
-    ++ stdenv.lib.optional stdenv.isDarwin bootstrap_cmds;
+  nativeBuildInputs = [ pkgconfig perl yacc ];
   buildInputs = [ optOpenssl optLibverto optOpenldap ]
     ++ cryptoInputs ++ tlsInputs ++ lineParserInputs;
 
@@ -109,8 +107,6 @@ stdenv.mkDerivation rec {
     rm -rf $out/{sbin,share}
     find $out/bin -type f | grep -v 'krb5-config' | xargs rm
   '';
-
-  enableParallelBuilding = true;
 
   meta = {
     description = "MIT Kerberos 5";

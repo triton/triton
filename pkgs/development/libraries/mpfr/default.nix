@@ -29,12 +29,9 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [ gmp ];
 
   configureFlags =
-    optional stdenv.isSunOS "--disable-thread-safe" ++
     optional stdenv.is64bit "--with-pic";
 
   doCheck = true;
-
-  enableParallelBuilding = true;
 
   meta = {
     homepage = http://www.mpfr.org/;

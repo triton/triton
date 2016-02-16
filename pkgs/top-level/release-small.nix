@@ -2,7 +2,7 @@
    the load on Hydra when testing the `stdenv-updates' branch. */
 
 { nixpkgs ? { outPath = (import ./all-packages.nix {}).lib.cleanSource ../..; revCount = 1234; shortRev = "abcdef"; }
-, supportedSystems ? [ "x86_64-linux" "i686-linux" "x86_64-darwin" ]
+, supportedSystems ? [ "x86_64-linux" "i686-linux" ]
 }:
 
 with import ./release-lib.nix { inherit supportedSystems; };
@@ -22,7 +22,7 @@ with import ./release-lib.nix { inherit supportedSystems; };
   aterm25 = all;
   autoconf = all;
   automake = all;
-  avahi = allBut cygwin;  # Cygwin builds fail
+  avahi = all;
   bash = all;
   bashInteractive = all;
   bc = all;
@@ -39,7 +39,7 @@ with import ./release-lib.nix { inherit supportedSystems; };
   dhcp = linux;
   diffutils = all;
   e2fsprogs = linux;
-  emacs24 = gtkSupported;
+  emacs24 = all;
   enscript = all;
   file = all;
   findutils = all;
@@ -54,7 +54,7 @@ with import ./release-lib.nix { inherit supportedSystems; };
   gnumake = all;
   gnupatch = all;
   gnupg = linux;
-  gnuplot = allBut cygwin;
+  gnuplot = all;
   gnused = all;
   gnutar = all;
   gnutls = linux;
@@ -62,7 +62,7 @@ with import ./release-lib.nix { inherit supportedSystems; };
   grub = linux;
   grub2 = linux;
   gsl = linux;
-  guile = linux;  # tests fail on Cygwin
+  guile = linux;
   gzip = all;
   hddtemp = linux;
   hdparm = linux;
@@ -101,7 +101,7 @@ with import ./release-lib.nix { inherit supportedSystems; };
   mcabber = linux;
   mcron = linux;
   mdadm = linux;
-  mesa = mesaPlatforms;
+  mesa = all;
   midori = linux;
   mingetty = linux;
   mk = linux;
@@ -123,7 +123,7 @@ with import ./release-lib.nix { inherit supportedSystems; };
   ntp = linux;
   openssh = linux;
   openssl = all;
-  pan = gtkSupported;
+  pan = all;
   par2cmdline = all;
   pciutils = linux;
   pdf2xml = all;
@@ -132,19 +132,19 @@ with import ./release-lib.nix { inherit supportedSystems; };
   pmccabe = linux;
   portmap = linux;
   procps = linux;
-  python = allBut cygwin;
+  python = all;
   pythonFull = linux;
   readline = all;
   rlwrap = all;
   rpm = linux;
   rsync = linux;
-  screen = linux ++ darwin;
+  screen = linux;
   scrot = linux;
   sdparm = linux;
   sharutils = all;
-  sloccount = allBut cygwin;
+  sloccount = all;
   smartmontools = all;
-  sqlite = allBut cygwin;
+  sqlite = all;
   squid = linux;
   ssmtp = linux;
   stdenv = all;

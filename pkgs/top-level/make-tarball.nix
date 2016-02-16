@@ -63,7 +63,7 @@ releaseTools.sourceTarball rec {
     fi
 
     # Check that all-packages.nix evaluates on a number of platforms without any warnings.
-    for platform in i686-linux x86_64-linux x86_64-darwin; do
+    for platform in i686-linux x86_64-linux; do
         header "checking Nixpkgs on $platform"
 
         NIXPKGS_ALLOW_BROKEN=1 nix-env -f . \

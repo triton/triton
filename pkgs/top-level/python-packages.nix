@@ -685,7 +685,7 @@ in {
       description = "A simple automation tool";
       license = with licenses; [ gpl3] ;
       maintainers = with maintainers; [ joamaki ];
-      platforms = with platforms; linux ++ darwin;
+      platforms = with platforms; linux;
     };
   };
 
@@ -717,7 +717,7 @@ in {
       description = "A simple automation tool";
       license     = with licenses; [ gpl3 ];
       maintainers = with maintainers; [ copumpkin ];
-      platforms   = with platforms; linux ++ darwin;
+      platforms   = with platforms; linux;
     };
   };
 
@@ -760,23 +760,6 @@ in {
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/python-application/${name}.tar.gz";
       sha256 = "9bc00c2c639bf633e2c5e08d4bf1bb5d7edaad6ccdd473692f0362df08f8aafc";
-    };
-  };
-
-  appnope = buildPythonPackage rec {
-    version = "0.1.0";
-    name = "appnope-${version}";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/a/appnope/${name}.tar.gz";
-      sha256 = "8b995ffe925347a2138d7ac0fe77155e4311a0ea6d6da4f5128fe4b3cbe5ed71";
-    };
-
-    meta = {
-      description = "Disable App Nap on OS X";
-      homepage    = https://pypi.python.org/pypi/appnope;
-      platforms   = platforms.darwin;
-      license     = licenses.bsd3;
     };
   };
 
@@ -3477,8 +3460,7 @@ in {
     };
 
     buildInputs = [ pkgs.openssl self.pretend self.cryptography_vectors
-                    self.iso8601 self.pyasn1 self.pytest self.py self.hypothesis ]
-               ++ optional stdenv.isDarwin pkgs.darwin.apple_sdk.frameworks.Security;
+                    self.iso8601 self.pyasn1 self.pytest self.py self.hypothesis ];
     propagatedBuildInputs = with self; [ six idna ipaddress pyasn1 cffi pyasn1-modules ]
      ++ optional (pythonOlder "3.4") self.enum34;
 
@@ -3874,7 +3856,7 @@ in {
       description = "Python library for reading and writing collada documents";
       homepage = http://pycollada.github.io/;
       license = "BSD"; # they don't specify which BSD variant
-      platforms = with platforms; linux ++ darwin;
+      platforms = with platforms; linux;
       maintainers = with maintainers; [ bjornfor ];
     };
   };
@@ -7481,9 +7463,6 @@ in {
 
     propagatedBuildInputs = with self; [ argh pathtools pyyaml ];
 
-    buildInputs = stdenv.lib.optionals stdenv.isDarwin
-      [ pkgs.darwin.apple_sdk.frameworks.CoreServices pkgs.darwin.cf-private ];
-
     doCheck = false;
 
     src = pkgs.fetchurl {
@@ -9504,10 +9483,6 @@ in {
       sha256 = "176sdxkva2irr1v645nn4q6rwc6grbb1wxj82n7x9hh09q4bxqcz";
     };
 
-    patches = optionals pkgs.stdenv.isDarwin [
-      ../development/python-modules/gyp/no-darwin-cflags.patch
-    ];
-
     meta = {
       description = "A tool to generate native build files";
       homepage = https://chromium.googlesource.com/external/gyp/+/master/README.md;
@@ -10027,15 +10002,10 @@ in {
       sha256 = "3a928f59e8ac8dd97858c28390867c87c09510f1f8bbe97e4e9c6b036eb84fc0";
     };
 
-    prePatch = stdenv.lib.optionalString stdenv.isDarwin ''
-      substituteInPlace setup.py --replace "'gnureadline'" " "
-    '';
-
     buildInputs = with self; [ nose pkgs.glibcLocales pygments ] ++ optionals isPy27 [mock];
 
     propagatedBuildInputs = with self;
-      [decorator pickleshare simplegeneric traitlets readline requests2 pexpect sqlite3]
-      ++ optionals stdenv.isDarwin [appnope gnureadline];
+      [decorator pickleshare simplegeneric traitlets readline requests2 pexpect sqlite3];
 
     LC_ALL="en_US.UTF-8";
 
@@ -10757,8 +10727,6 @@ in {
       ${self.python.executable} runtests.py
     '';
 
-    __impureHostDeps = optionals stdenv.isDarwin [ "/usr/lib/libm.dylib" ];
-
     meta = {
       description = "A lightweight LLVM python binding for writing JIT compilers";
       homepage = "http://llvmlite.pydata.org/";
@@ -11028,10 +10996,7 @@ in {
 
 
   matplotlib = callPackage ../development/python-modules/matplotlib/default.nix {
-    stdenv = if stdenv.isDarwin then pkgs.clangStdenv else pkgs.stdenv;
     enableGhostscript = true;
-    inherit (pkgs.darwin.apple_sdk.frameworks) Cocoa Foundation CoreData;
-    inherit (pkgs.darwin) cf-private libobjc;
   };
 
 
@@ -11752,7 +11717,7 @@ in {
       '';
       homepage = https://thp.io/2010/mygpoclient/;
       license = with licenses; [ gpl3 ];
-      platforms = with platforms; linux ++ darwin;
+      platforms = with platforms; linux;
       maintainers = with maintainers; [ skeidel ];
     };
   };
@@ -11859,8 +11824,6 @@ in {
 
   monotonic = buildPythonPackage rec {
     name = "monotonic-0.4";
-
-    __propagatedImpureHostDeps = stdenv.lib.optional stdenv.isDarwin "/usr/lib/libc.dylib";
 
     src = pkgs.fetchurl {
       url = "http://pypi.python.org/packages/source/m/monotonic/${name}.tar.gz";
@@ -12507,8 +12470,6 @@ in {
       url = "https://pypi.python.org/packages/source/n/numba/${name}.tar.gz";
       sha256 = "80ce9968591db7c93e36258cc5e6734eb1e42826332799746dc6c073a6d5d317";
     };
-
-    NIX_CFLAGS_COMPILE = stdenv.lib.optionalString stdenv.isDarwin "-I${pkgs.llvmPackages.libcxx}/include/c++/v1";
 
     propagatedBuildInputs = with self; [numpy llvmlite argparse] ++ optional (!isPy3k) funcsigs ++ optional (isPy27 || isPy33) singledispatch;
     # Future work: add Cuda support.
@@ -14238,7 +14199,6 @@ in {
 
   pandas = let
     inherit (pkgs.stdenv.lib) optional optionalString;
-    inherit (pkgs.stdenv) isDarwin;
   in buildPythonPackage rec {
     name = "pandas-${version}";
     version = "0.17.1";
@@ -14248,7 +14208,7 @@ in {
       sha256 = "cfd7214a7223703fe6999fbe34837749540efee1c985e6aee9933f30e3f72837";
     };
 
-    buildInputs = with self; [ nose ] ++ optional isDarwin pkgs.llvmPackages.libcxx;
+    buildInputs = with self; [ nose ];
     propagatedBuildInputs = with self; [
       dateutil
       numpy
@@ -14262,22 +14222,7 @@ in {
       # Disabling this because an upstream dependency, pep8, is broken on v3.5.
       (if isPy35 then null else html5lib)
       beautifulsoup4
-    ] ++ optional isDarwin pkgs.darwin.locale; # provides the locale command
-
-    # For OSX, we need to add a dependency on libcxx, which provides
-    # `complex.h` and other libraries that pandas depends on to build.
-    patchPhase = optionalString isDarwin ''
-      cpp_sdk="${pkgs.llvmPackages.libcxx}/include/c++/v1";
-      echo "Adding $cpp_sdk to the setup.py common_include variable"
-      substituteInPlace setup.py \
-        --replace "['pandas/src/klib', 'pandas/src']" \
-                  "['pandas/src/klib', 'pandas/src', '$cpp_sdk']"
-
-      # disable clipboard tests since pbcopy/pbpaste are not open source
-      substituteInPlace pandas/io/tests/test_clipboard.py \
-        --replace pandas.util.clipboard no_such_module \
-        --replace OSError ImportError
-    '';
+    ];
 
     # The flag `-A 'not network'` will disable tests that use internet.
     # The `-e` flag disables a few problematic tests.
@@ -15006,12 +14951,6 @@ in {
               s|^LCMS_ROOT =.*$|LCMS_ROOT = _lib_include("${pkgs.libwebp}")|g ;
               s|^TIFF_ROOT =.*$|TIFF_ROOT = _lib_include("${pkgs.libtiff}")|g ;
               s|^TCL_ROOT=.*$|TCL_ROOT = _lib_include("${pkgs.tcl}")|g ;'
-    ''
-    # Remove impurities
-    + stdenv.lib.optionalString stdenv.isDarwin ''
-      substituteInPlace setup.py \
-        --replace '"/Library/Frameworks",' "" \
-        --replace '"/System/Library/Frameworks"' ""
     '';
 
     meta = {
@@ -15270,7 +15209,7 @@ in {
     '';
 
     # Test suite needs `free`, therefore we have pkgs.busybox
-    buildInputs = with self; [ mock pkgs.busybox] ++ optionals stdenv.isDarwin [ pkgs.darwin.IOKit ];
+    buildInputs = with self; [ mock pkgs.busybox ];
 
     meta = {
       description = "Process and system utilization information interface for python";
@@ -15298,7 +15237,6 @@ in {
       sha256 = "07ivzl7bq8bjcq5n90w4bsl29gjfm5l8yamw0paxh25si8r3zfi4";
     };
 
-    buildInputs = optional stdenv.isDarwin pkgs.openssl;
     propagatedBuildInputs = with self; [ pkgs.postgresql ];
 
     meta = {
@@ -15596,10 +15534,6 @@ in {
       url = "https://pypi.python.org/packages/source/p/pygit2/${name}.tar.gz";
       sha256 = "04201vcal7jq8lbpk9ylscrhjxdcf2aihiw25k4imjjqgfmvldf7";
     };
-
-    preConfigure = ( if stdenv.isDarwin then ''
-      export DYLD_LIBRARY_PATH="${pkgs.libgit2}/lib"
-    '' else "" );
 
     propagatedBuildInputs = with self; [ pkgs.libgit2 ] ++ optionals (!isPyPy) [ cffi ];
 
@@ -16016,9 +15950,6 @@ in {
       export LDFLAGS="-L${pkgs.fftw}/lib -L${pkgs.fftwFloat}/lib -L${pkgs.fftwLongDouble}/lib"
       export CFLAGS="-I${pkgs.fftw}/include -I${pkgs.fftwFloat}/include -I${pkgs.fftwLongDouble}/include"
     '';
-    #+ optionalString isDarwin ''
-    #  export DYLD_LIBRARY_PATH="${pkgs.fftw}/lib"
-    #'';
 
     meta = {
       description = "A pythonic wrapper around FFTW, the FFT library, presenting a unified interface for all the supported transforms";
@@ -17213,9 +17144,7 @@ in {
         --apu-inc-dir=${pkgs.aprutil}/include/apr-1 \
         --apr-lib-dir=${pkgs.apr}/lib \
         --svn-root-dir=${pkgs.subversion}
-    '' + (if !stdenv.isDarwin then "" else ''
-      sed -i -e 's|libpython2.7.dylib|lib/libpython2.7.dylib|' Makefile
-    '');
+    '';
 
     checkPhase = "make -C ../Tests";
 
@@ -18670,7 +18599,7 @@ in {
       substituteInPlace x_ignore_nofocus.c --replace "/usr/lib/libX11.so.6" "${pkgs.xorg.libX11}/lib/libX11.so.6"
       gcc -c -fPIC x_ignore_nofocus.c -o x_ignore_nofocus.o
       gcc -shared \
-        -Wl,${if stdenv.isDarwin then "-install_name" else "-soname"},x_ignore_nofocus.so \
+        -Wl,-soname,x_ignore_nofocus.so \
         -o x_ignore_nofocus.so \
         x_ignore_nofocus.o
       cp -v x_ignore_nofocus.so py/selenium/webdriver/firefox/${if pkgs.stdenv.is64bit then "amd64" else "x86"}/
@@ -23137,20 +23066,11 @@ in {
     };
 
     propagatedBuildInputs = with self; [ cffi ];
-    buildInputs = [ pkgs.libspotify ]
-      ++ stdenv.lib.optional stdenv.isDarwin pkgs.install_name_tool;
+    buildInputs = [ pkgs.libspotify ];
 
     # python zip complains about old timestamps
     preConfigure = ''
       find -print0 | xargs -0 touch
-    '';
-
-    postInstall = stdenv.lib.optionalString stdenv.isDarwin ''
-      find "$out" -name _spotify.so -exec \
-          install_name_tool -change \
-          @loader_path/../Frameworks/libspotify.framework/libspotify \
-          ${pkgs.libspotify}/lib/libspotify.dylib \
-          {} \;
     '';
 
     # There are no tests
@@ -23939,34 +23859,6 @@ in {
     };
   };
 
-  pync = buildPythonPackage rec {
-    version  = "1.4";
-    baseName = "pync";
-    name     = "${baseName}-${version}";
-    disabled = ! isPy27;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/${baseName}/${name}.tar.gz";
-      md5 = "5cc79077f386a17b539f1e51c05a3650";
-    };
-
-    buildInputs = with self; [ pkgs.coreutils ];
-
-    propagatedBuildInputs = with self; [ dateutil ];
-
-    preInstall = stdenv.lib.optionalString stdenv.isDarwin ''
-      sed -i 's|^\([ ]*\)self.bin_path.*$|\1self.bin_path = "${pkgs.terminal-notifier}/bin/terminal-notifier"|' build/lib/pync/TerminalNotifier.py
-    '';
-
-    meta = {
-      description = "Python Wrapper for Mac OS 10.8 Notification Center";
-      homepage    = https://pypi.python.org/pypi/pync/1.4;
-      license     = licenses.mit;
-      platforms   = platforms.darwin;
-      maintainers = with maintainers; [ lovek323 ];
-    };
-  };
-
   weboob = buildPythonPackage rec {
     name = "weboob-1.0";
     disabled = ! isPy27;
@@ -24329,38 +24221,6 @@ in {
 
     propagatedBuildInputs = with self; []
       ++ optional (isPy27 || isPyPy) futures;
-
-    # Some of the tests fail on darwin with `error: AF_UNIX path too long'
-    # because of the *long* path names for sockets
-    patchPhase = optionalString stdenv.isDarwin ''
-      sed -i -e "s|test_create_ssl_unix_connection|skip_test_create_ssl_unix_connection|" tests/test_events.py
-      sed -i -e "s|test_create_unix_connection|skip_test_create_unix_connection|" tests/test_events.py
-      sed -i -e "s|test_create_unix_connection|skip_test_create_unix_connection|" tests/test_events.py
-      sed -i -e "s|test_create_unix_connection|skip_test_create_unix_connection|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server_existing_path_nonsock|skip_test_create_unix_server_existing_path_nonsock|" tests/test_unix_events.py
-      sed -i -e "s|test_create_unix_server_existing_path_sock|skip_test_create_unix_server_existing_path_sock|" tests/test_unix_events.py
-      sed -i -e "s|test_create_unix_server_ssl_verified|skip_test_create_unix_server_ssl_verified|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server_ssl_verified|skip_test_create_unix_server_ssl_verified|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server_ssl_verified|skip_test_create_unix_server_ssl_verified|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server_ssl_verify_failed|skip_test_create_unix_server_ssl_verify_failed|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server_ssl_verify_failed|skip_test_create_unix_server_ssl_verify_failed|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server_ssl_verify_failed|skip_test_create_unix_server_ssl_verify_failed|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server_ssl|skip_test_create_unix_server_ssl|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server_ssl|skip_test_create_unix_server_ssl|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server_ssl|skip_test_create_unix_server_ssl|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server|skip_test_create_unix_server|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server|skip_test_create_unix_server|" tests/test_events.py
-      sed -i -e "s|test_create_unix_server|skip_test_create_unix_server|" tests/test_events.py
-      sed -i -e "s|test_open_unix_connection_error|skip_test_open_unix_connection_error|" tests/test_streams.py
-      sed -i -e "s|test_open_unix_connection_no_loop_ssl|skip_test_open_unix_connection_no_loop_ssl|" tests/test_streams.py
-      sed -i -e "s|test_open_unix_connection|skip_test_open_unix_connection|" tests/test_streams.py
-      sed -i -e "s|test_read_pty_output|skip_test_read_pty_output|" tests/test_events.py
-      sed -i -e "s|test_write_pty|skip_test_write_pty|" tests/test_events.py
-      sed -i -e "s|test_start_unix_server|skip_test_start_unix_server|" tests/test_streams.py
-      sed -i -e "s|test_unix_sock_client_ops|skip_test_unix_sock_client_ops|" tests/test_events.py
-      sed -i -e "s|test_unix_sock_client_ops|skip_test_unix_sock_client_ops|" tests/test_events.py
-      sed -i -e "s|test_unix_sock_client_ops|skip_test_unix_sock_client_ops|" tests/test_events.py
-    '';
 
     meta = {
       description = "Port of the Tulip project (asyncio module, PEP 3156) on Python 2";

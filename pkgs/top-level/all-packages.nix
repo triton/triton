@@ -1501,7 +1501,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  atftp = callPackage ../tools/networking/atftp {};
 #
-#  autogen = callPackage ../development/tools/misc/autogen { };
+  autogen = callPackage ../development/tools/misc/autogen { };
 #
 #  autojump = callPackage ../tools/misc/autojump { };
 #
@@ -4080,7 +4080,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  trickle = callPackage ../tools/networking/trickle {};
 #
-#  trousers = callPackage ../tools/security/trousers { };
+  trousers = callPackage ../tools/security/trousers { };
 #
 #  omapd = callPackage ../tools/security/omapd { };
 #
@@ -4274,7 +4274,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  unclutter = callPackage ../tools/misc/unclutter { };
 #
-#  unbound = callPackage ../tools/networking/unbound { };
+  unbound = callPackage ../tools/networking/unbound { };
 #
 #  units = callPackage ../tools/misc/units { };
 #
@@ -6006,7 +6006,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    target = crossSystem;
 #  });
 #
-#  valgrind = callPackage ../development/tools/analysis/valgrind { };
+  valgrind = callPackage ../development/tools/analysis/valgrind { };
 #
 #  valkyrie = callPackage ../development/tools/analysis/valkyrie { };
 #
@@ -6095,7 +6095,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  bobcat = callPackage ../development/libraries/bobcat { };
 #
-#  boehmgc = callPackage ../development/libraries/boehm-gc { };
+  boehmgc = callPackage ../development/libraries/boehm-gc { };
 #
 #  boolstuff = callPackage ../development/libraries/boolstuff { };
 #
@@ -6137,7 +6137,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  cgui = callPackage ../development/libraries/cgui {};
 #
-#  check = callPackage ../development/libraries/check { };
+  check = callPackage ../development/libraries/check { };
 #
 #  chipmunk = callPackage ../development/libraries/chipmunk {};
 #
@@ -6710,7 +6710,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libasyncns = callPackage ../development/libraries/libasyncns { };
 #
-#  libatomic_ops = callPackage ../development/libraries/libatomic_ops {};
+  libatomic_ops = callPackage ../development/libraries/libatomic_ops {};
 #
 #  libaudclient = callPackage ../development/libraries/libaudclient { };
 #
@@ -6895,7 +6895,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libechonest = callPackage ../development/libraries/libechonest { };
 #
-#  libevent = callPackage ../development/libraries/libevent { };
+  libevent = callPackage ../development/libraries/libevent { };
 #
 #  libewf = callPackage ../development/libraries/libewf { };
 #
@@ -7258,7 +7258,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libu2f-server = callPackage ../development/libraries/libu2f-server { };
 #
-#  libunistring = callPackage ../development/libraries/libunistring { };
+  libunistring = callPackage ../development/libraries/libunistring { };
 #
 #  libupnp = callPackage ../development/libraries/pupnp { };
 #
@@ -7603,7 +7603,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  ortp = callPackage ../development/libraries/ortp { };
 #
-#  p11_kit = callPackage ../development/libraries/p11-kit { };
+  p11_kit = callPackage ../development/libraries/p11-kit { };
 #
 #  paperkey = callPackage ../tools/security/paperkey { };
 #

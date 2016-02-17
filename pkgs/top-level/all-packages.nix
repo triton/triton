@@ -1640,15 +1640,15 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  clib = callPackage ../tools/package-management/clib { };
 #
-#  consul = goPackages.consul.bin // { outputs = [ "bin" ]; };
-#
-#  consul-ui = callPackage ../servers/consul/ui.nix { };
-#
-#  consul-alerts = goPackages.consul-alerts.bin // { outputs = [ "bin" ]; };
-#
-#  consul-template = goPackages.consul-template.bin // { outputs = [ "bin" ]; };
-#
-#  corosync = callPackage ../servers/corosync { };
+  consul = goPackages.consul.bin // { outputs = [ "bin" ]; };
+
+  consul-ui = callPackage ../servers/consul/ui.nix { };
+
+  consul-alerts = goPackages.consul-alerts.bin // { outputs = [ "bin" ]; };
+
+  consul-template = goPackages.consul-template.bin // { outputs = [ "bin" ]; };
+
+  corosync = callPackage ../servers/corosync { };
 #
 #  cherrytree = callPackage ../applications/misc/cherrytree { };
 #
@@ -1878,7 +1878,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  atool = callPackage ../tools/archivers/atool { };
 #
-#  bzip2 = callPackage ../tools/compression/bzip2 { };
+  bzip2 = callPackage ../tools/compression/bzip2 { };
 #
 #  cabextract = callPackage ../tools/archivers/cabextract { };
 #
@@ -2038,9 +2038,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  cool-retro-term = qt5.callPackage ../applications/misc/cool-retro-term { };
 #
-#  coreutils = callPackage ../tools/misc/coreutils { };
-#
-#  coreutils-prefixed = coreutils.override { withPrefix = true; };
+  coreutils = callPackage ../tools/misc/coreutils { };
+
+  coreutils-prefixed = coreutils.override { withPrefix = true; };
 #
 #  corkscrew = callPackage ../tools/networking/corkscrew { };
 #
@@ -2052,29 +2052,29 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  cron = callPackage ../tools/system/cron { };
 #
-#  cudatoolkit5 = callPackage ../development/compilers/cudatoolkit/5.5.nix { };
-#
-#  cudatoolkit6 = callPackage ../development/compilers/cudatoolkit/6.0.nix { };
-#
-#  cudatoolkit65 = callPackage ../development/compilers/cudatoolkit/6.5.nix { };
-#
-#  cudatoolkit7 = callPackage ../development/compilers/cudatoolkit/7.0.nix { };
-#
-#  cudatoolkit = cudatoolkit7;
-#
-#  curl = curlFull.override {
-#    suffix = "";
-#  };
-#
-#  curlFull = callPackage ../tools/networking/curl { suffix = "full"; };
-#
-#  curl3 = callPackage ../tools/networking/curl/7.15.nix rec {
-#    zlibSupport = true;
-#    sslSupport = zlibSupport;
-#  };
-#
-#  curl_unix_socket = callPackage ../tools/networking/curl-unix-socket rec { };
-#
+  cudatoolkit5 = callPackage ../development/compilers/cudatoolkit/5.5.nix { };
+
+  cudatoolkit6 = callPackage ../development/compilers/cudatoolkit/6.0.nix { };
+
+  cudatoolkit65 = callPackage ../development/compilers/cudatoolkit/6.5.nix { };
+
+  cudatoolkit7 = callPackage ../development/compilers/cudatoolkit/7.0.nix { };
+
+  cudatoolkit = cudatoolkit7;
+
+  curl = curlFull.override {
+    suffix = "";
+  };
+
+  curlFull = callPackage ../tools/networking/curl { suffix = "full"; };
+
+  curl3 = callPackage ../tools/networking/curl/7.15.nix rec {
+    zlibSupport = true;
+    sslSupport = zlibSupport;
+  };
+
+  curl_unix_socket = callPackage ../tools/networking/curl-unix-socket rec { };
+
 #  cunit = callPackage ../tools/misc/cunit { };
 #
 #  curlftpfs = callPackage ../tools/filesystems/curlftpfs { };
@@ -2143,7 +2143,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dnscrypt-wrapper = callPackage ../tools/networking/dnscrypt-wrapper { };
 #
-#  dnsmasq = callPackage ../tools/networking/dnsmasq { };
+  dnsmasq = callPackage ../tools/networking/dnsmasq { };
 #
 #  dnssec-root = callPackage ../data/misc/dnssec-root { };
 #
@@ -2153,7 +2153,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dhcpdump = callPackage ../tools/networking/dhcpdump { };
 #
-#  dhcpcd = callPackage ../tools/networking/dhcpcd { };
+  dhcpcd = callPackage ../tools/networking/dhcpcd { };
 #
 #  dhcping = callPackage ../tools/networking/dhcping { };
 #
@@ -2167,7 +2167,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  diffstat = callPackage ../tools/text/diffstat { };
 #
-#  diffutils = callPackage ../tools/text/diffutils { };
+  diffutils = callPackage ../tools/text/diffutils { };
 #
 #  dir2opus = callPackage ../tools/audio/dir2opus {
 #    inherit (pythonPackages) mutagen python wrapPython;
@@ -2346,7 +2346,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  fileschanged = callPackage ../tools/misc/fileschanged { };
 #
-#  findutils = callPackage ../tools/misc/findutils { };
+  findutils = callPackage ../tools/misc/findutils { };
 #
 #  finger_bsd = callPackage ../tools/networking/bsd-finger { };
 #
@@ -2364,7 +2364,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  flvstreamer = callPackage ../tools/networking/flvstreamer { };
 #
-#  libbsd = callPackage ../development/libraries/libbsd { };
+  libbsd = callPackage ../development/libraries/libbsd { };
 #
 #  libbladeRF = callPackage ../development/libraries/libbladeRF { };
 #
@@ -2441,7 +2441,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  garmintools = callPackage ../development/libraries/garmintools {};
 #
-#  gawk = callPackage ../tools/text/gawk { };
+  gawk = callPackage ../tools/text/gawk { };
 #
 #  gawp = goPackages.gawp.bin // { outputs = [ "bin" ]; };
 #
@@ -2457,7 +2457,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  getmail = callPackage ../tools/networking/getmail { };
 #
-#  getopt = callPackage ../tools/misc/getopt { };
+  getopt = callPackage ../tools/misc/getopt { };
 #
 #  gftp = callPackage ../tools/networking/gftp { };
 #
@@ -2485,9 +2485,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  git-latexdiff = callPackage ../tools/typesetting/git-latexdiff { };
 #
-#  glusterfs = callPackage ../tools/filesystems/glusterfs {
-#    flex = flex_2_5_35;
-#  };
+  glusterfs = callPackage ../tools/filesystems/glusterfs {
+    flex = flex_2_5_35;
+  };
 #
 #  glmark2 = callPackage ../tools/graphics/glmark2 { };
 #
@@ -2503,22 +2503,22 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    guile = guile_1_8;
 #  };
 #
-#  gnulib = callPackage ../development/tools/gnulib { };
-#
-#  gnupatch = callPackage ../tools/text/gnupatch { };
-#
-#  gnupg1orig = callPackage ../tools/security/gnupg/1.nix { };
-#
-#  gnupg1compat = callPackage ../tools/security/gnupg/1compat.nix { };
-#
-#  # use config.packageOverrides if you prefer original gnupg1
-#  gnupg1 = gnupg1compat;
-#
-#  gnupg20 = callPackage ../tools/security/gnupg/20.nix { };
-#
-#  gnupg21 = callPackage ../tools/security/gnupg/21.nix { };
-#
-#  gnupg = gnupg21;
+  gnulib = callPackage ../development/tools/gnulib { };
+
+  gnupatch = callPackage ../tools/text/gnupatch { };
+
+  gnupg1orig = callPackage ../tools/security/gnupg/1.nix { };
+
+  gnupg1compat = callPackage ../tools/security/gnupg/1compat.nix { };
+
+  # use config.packageOverrides if you prefer original gnupg1
+  gnupg1 = gnupg1compat;
+
+  gnupg20 = callPackage ../tools/security/gnupg/20.nix { };
+
+  gnupg21 = callPackage ../tools/security/gnupg/21.nix { };
+
+  gnupg = gnupg21;
 #
 #  gnuplot = callPackage ../tools/graphics/gnuplot { qt = qt4; };
 #
@@ -2527,9 +2527,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  # must have AquaTerm installed separately
 #  gnuplot_aquaterm = gnuplot.override { aquaterm = true; };
 #
-#  gnused = callPackage ../tools/text/gnused { };
-#
-#  gnutar = callPackage ../tools/archivers/gnutar { };
+  gnused = callPackage ../tools/text/gnused { };
+
+  gnutar = callPackage ../tools/archivers/gnutar { };
 #
 #  gnuvd = callPackage ../tools/misc/gnuvd { };
 #
@@ -2576,29 +2576,29 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    ghostscript = null;
 #  };
 #
-#  grub = callPackage_i686 ../tools/misc/grub {
-#    buggyBiosCDSupport = config.grub.buggyBiosCDSupport or true;
-#  };
-#
-#  trustedGrub = callPackage_i686 ../tools/misc/grub/trusted.nix { };
-#
-#  trustedGrub-for-HP = callPackage_i686 ../tools/misc/grub/trusted.nix { for_HP_laptop = true; };
-#
-#  grub2 = grub2_full;
-#
-#  grub2_full = callPackage ../tools/misc/grub/2.0x.nix { };
-#
-#  grub2_efi = grub2_full.override {
-#    efiSupport = true;
-#  };
-#
-#  grub2_light = grub2_full.override {
-#    zfsSupport = false;
-#  };
-#
-#  grub4dos = callPackage ../tools/misc/grub4dos {
-#    stdenv = stdenv_32bit;
-#  };
+  grub = callPackage_i686 ../tools/misc/grub {
+    buggyBiosCDSupport = config.grub.buggyBiosCDSupport or true;
+  };
+
+  trustedGrub = callPackage_i686 ../tools/misc/grub/trusted.nix { };
+
+  trustedGrub-for-HP = callPackage_i686 ../tools/misc/grub/trusted.nix { for_HP_laptop = true; };
+
+  grub2 = grub2_full;
+
+  grub2_full = callPackage ../tools/misc/grub/2.0x.nix { };
+
+  grub2_efi = grub2_full.override {
+    efiSupport = true;
+  };
+
+  grub2_light = grub2_full.override {
+    zfsSupport = false;
+  };
+
+  grub4dos = callPackage ../tools/misc/grub4dos {
+    stdenv = stdenv_32bit;
+  };
 #
 #  sbsigntool = callPackage ../tools/security/sbsigntool { };
 #
@@ -2633,7 +2633,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gvolicon = callPackage ../tools/audio/gvolicon {};
 #
-#  gzip = callPackage ../tools/compression/gzip { };
+  gzip = callPackage ../tools/compression/gzip { };
 #
 #  gzrt = callPackage ../tools/compression/gzrt { };
 #
@@ -2766,19 +2766,19 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ipad_charge = callPackage ../tools/misc/ipad_charge { };
 #
-#  iperf2 = callPackage ../tools/networking/iperf/2.nix { };
-#  iperf3 = callPackage ../tools/networking/iperf/3.nix { };
-#  iperf = iperf3;
-#
-#  ipfs = goPackages.ipfs.bin // { outputs = [ "bin" ]; };
-#
-#  ipmitool = callPackage ../tools/system/ipmitool {
-#    static = false;
-#  };
-#
-#  ipmiutil = callPackage ../tools/system/ipmiutil {};
-#
-#  ipmiview = callPackage ../applications/misc/ipmiview {};
+  iperf2 = callPackage ../tools/networking/iperf/2.nix { };
+  iperf3 = callPackage ../tools/networking/iperf/3.nix { };
+  iperf = iperf3;
+
+  ipfs = goPackages.ipfs.bin // { outputs = [ "bin" ]; };
+
+  ipmitool = callPackage ../tools/system/ipmitool {
+    static = false;
+  };
+
+  ipmiutil = callPackage ../tools/system/ipmiutil {};
+
+  ipmiview = callPackage ../applications/misc/ipmiview {};
 #
 #  ipcalc = callPackage ../tools/networking/ipcalc {};
 #
@@ -2788,11 +2788,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ised = callPackage ../tools/misc/ised {};
 #
-#  isl = isl_0_15;
-#  isl_0_11 = callPackage ../development/libraries/isl/0.11.1.nix { };
-#  isl_0_12 = callPackage ../development/libraries/isl/0.12.2.nix { };
-#  isl_0_14 = callPackage ../development/libraries/isl/0.14.1.nix { };
-#  isl_0_15 = callPackage ../development/libraries/isl/0.15.0.nix { };
+  isl = isl_0_15;
+  isl_0_11 = callPackage ../development/libraries/isl/0.11.1.nix { };
+  isl_0_12 = callPackage ../development/libraries/isl/0.12.2.nix { };
+  isl_0_14 = callPackage ../development/libraries/isl/0.14.1.nix { };
+  isl_0_15 = callPackage ../development/libraries/isl/0.15.0.nix { };
 #
 #  isync = callPackage ../tools/networking/isync { };
 #  isyncUnstable = callPackage ../tools/networking/isync/unstable.nix { };
@@ -3010,11 +3010,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  lzip = callPackage ../tools/compression/lzip { };
 #
-#  lzma = xz;
-#
-#  xz = callPackage ../tools/compression/xz { };
-#
-#  lz4 = callPackage ../tools/compression/lz4 { };
+  lzma = xz;
+
+  xz = callPackage ../tools/compression/xz { };
+
+  lz4 = callPackage ../tools/compression/lz4 { };
 #
 #  lzop = callPackage ../tools/compression/lzop { };
 #
@@ -3414,9 +3414,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  parcellite = callPackage ../tools/misc/parcellite { };
 #
-#  patchutils = callPackage ../tools/text/patchutils { };
+  patchutils = callPackage ../tools/text/patchutils { };
 #
-#  parted = callPackage ../tools/misc/parted { hurd = null; };
+  parted = callPackage ../tools/misc/parted { hurd = null; };
 #
 #  pitivi = callPackage ../applications/video/pitivi {
 #    gst = gst_all_1 //
@@ -3449,11 +3449,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ipsecTools = callPackage ../os-specific/linux/ipsec-tools { flex = flex_2_5_35; };
 #
-#  patch = gnupatch;
+  patch = gnupatch;
 #
 #  pbzip2 = callPackage ../tools/compression/pbzip2 { };
 #
-#  pciutils = callPackage ../tools/system/pciutils { };
+  pciutils = callPackage ../tools/system/pciutils { };
 #
 #  pcsclite = callPackage ../tools/security/pcsclite { };
 #
@@ -4335,7 +4335,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  volumeicon = callPackage ../tools/audio/volumeicon { };
 #
-#  waf = callPackage ../development/tools/build-managers/waf { };
+  waf = callPackage ../development/tools/build-managers/waf { };
 #
 #  wakelan = callPackage ../tools/networking/wakelan { };
 #
@@ -4349,12 +4349,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  weighttp = callPackage ../tools/networking/weighttp { };
 #
-#  wget = callPackage ../tools/networking/wget {
-#    inherit (perlPackages) LWP;
-#    libpsl = null;
-#  };
+  wget = callPackage ../tools/networking/wget {
+    inherit (perlPackages) LWP;
+    libpsl = null;
+  };
 #
-#  which = callPackage ../tools/system/which { };
+  which = callPackage ../tools/system/which { };
 #
 #  wicd = callPackage ../tools/networking/wicd { };
 #
@@ -4530,39 +4530,39 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  cython = pythonPackages.cython;
 #  cython3 = python3Packages.cython;
 #
-#  gcc = gcc5;
-#
-#  gcc_multi =
-#    if system == "x86_64-linux" then lowPrio (
-#      let
-#        extraBuildCommands = ''
-#          echo "dontMoveLib64=1" >> $out/nix-support/setup-hook
-#        '';
-#      in wrapCCWith (callPackage ../build-support/cc-wrapper) glibc_multi extraBuildCommands (gcc.cc.override {
-#        stdenv = overrideCC stdenv (wrapCCWith (callPackage ../build-support/cc-wrapper) glibc_multi "" gcc.cc);
-#        profiledCompiler = false;
-#        enableMultilib = true;
-#      }))
-#    else throw "Multilib gcc not supported on ‘${system}’";
-#
-#  gcc_debug = lowPrio (wrapCC (gcc.cc.override {
-#    stripped = false;
-#  }));
-#
-#  gccCrossStageStatic = let
-#    libcCross1 = null;
-#    in wrapGCCCross {
-#      gcc = forceNativeDrv (gcc.cc.override {
-#        cross = crossSystem;
-#        crossStageStatic = true;
-#        langCC = false;
-#        libcCross = libcCross1;
-#        enableShared = false;
-#      });
-#      libc = libcCross1;
-#      binutils = binutilsCross;
-#      cross = crossSystem;
-#  };
+  gcc = gcc5;
+
+  gcc_multi =
+    if system == "x86_64-linux" then lowPrio (
+      let
+        extraBuildCommands = ''
+          echo "dontMoveLib64=1" >> $out/nix-support/setup-hook
+        '';
+      in wrapCCWith (callPackage ../build-support/cc-wrapper) glibc_multi extraBuildCommands (gcc.cc.override {
+        stdenv = overrideCC stdenv (wrapCCWith (callPackage ../build-support/cc-wrapper) glibc_multi "" gcc.cc);
+        profiledCompiler = false;
+        enableMultilib = true;
+      }))
+    else throw "Multilib gcc not supported on ‘${system}’";
+
+  gcc_debug = lowPrio (wrapCC (gcc.cc.override {
+    stripped = false;
+  }));
+
+  gccCrossStageStatic = let
+    libcCross1 = null;
+    in wrapGCCCross {
+      gcc = forceNativeDrv (gcc.cc.override {
+        cross = crossSystem;
+        crossStageStatic = true;
+        langCC = false;
+        libcCross = libcCross1;
+        enableShared = false;
+      });
+      libc = libcCross1;
+      binutils = binutilsCross;
+      cross = crossSystem;
+  };
 #
 #  # Only needed for mingw builds
 #  gccCrossMingw2 = wrapGCCCross {
@@ -4572,47 +4572,47 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    cross = assert crossSystem != null; crossSystem;
 #  };
 #
-#  gccCrossStageFinal = wrapGCCCross {
-#    gcc = forceNativeDrv (gcc.cc.override {
-#      cross = crossSystem;
-#      crossStageStatic = false;
+  gccCrossStageFinal = wrapGCCCross {
+    gcc = forceNativeDrv (gcc.cc.override {
+      cross = crossSystem;
+      crossStageStatic = false;
 #
 #      # XXX: We have troubles cross-compiling libstdc++ on MinGW (see
 #      # <http://hydra.nixos.org/build/4268232>), so don't even try.
-#      langCC = crossSystem.config != "i686-pc-mingw32";
-#    });
-#    libc = libcCross;
-#    binutils = binutilsCross;
-#    cross = crossSystem;
-#  };
+      langCC = crossSystem.config != "i686-pc-mingw32";
+    });
+    libc = libcCross;
+    binutils = binutilsCross;
+    cross = crossSystem;
+  };
 #
-#  gcc48 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.8 {
-#    inherit noSysDirs;
+  gcc48 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.8 {
+    inherit noSysDirs;
 #
 #    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
-#    profiledCompiler = true;
+    profiledCompiler = true;
 #
 #    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
 #    # and host != build), `cross' must be null but the cross-libc must still
 #    # be passed.
-#    cross = null;
-#    libcCross = if crossSystem != null then libcCross else null;
+    cross = null;
+    libcCross = if crossSystem != null then libcCross else null;
 #
-#    isl = isl_0_14;
-#  }));
+    isl = isl_0_14;
+  }));
 #
-#  gcc5 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/5 {
-#    inherit noSysDirs;
+  gcc5 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/5 {
+    inherit noSysDirs;
 #
 #    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
-#    profiledCompiler = true;
+    profiledCompiler = true;
 #
 #    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
 #    # and host != build), `cross' must be null but the cross-libc must still
 #    # be passed.
-#    cross = null;
-#    libcCross = if crossSystem != null then libcCross else null;
-#  }));
+    cross = null;
+    libcCross = if crossSystem != null then libcCross else null;
+  }));
 #
 #  gfortran = gfortran5;
 #  gfortran5 = wrapCC (gcc5.cc.override {
@@ -5223,25 +5223,25 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    ocaml = ocaml_4_02;
 #  };
 #
-#  wrapCCWith = ccWrapper: libc: extraBuildCommands: baseCC: ccWrapper {
-#    nativeTools = stdenv.cc.nativeTools or false;
-#    nativeLibc = stdenv.cc.nativeLibc or false;
-#    nativePrefix = stdenv.cc.nativePrefix or "";
-#    cc = baseCC;
-#    isGNU = baseCC.isGNU or false;
-#    isClang = baseCC.isClang or false;
-#    inherit libc extraBuildCommands;
-#  };
-#
-#  wrapCC = wrapCCWith (callPackage ../build-support/cc-wrapper) stdenv.cc.libc "";
-#  # legacy version, used for gnat bootstrapping
-#  wrapGCC-old = baseGCC: callPackage ../build-support/gcc-wrapper-old {
-#    nativeTools = stdenv.cc.nativeTools or false;
-#    nativeLibc = stdenv.cc.nativeLibc or false;
-#    nativePrefix = stdenv.cc.nativePrefix or "";
-#    gcc = baseGCC;
-#    libc = glibc;
-#  };
+  wrapCCWith = ccWrapper: libc: extraBuildCommands: baseCC: ccWrapper {
+    nativeTools = stdenv.cc.nativeTools or false;
+    nativeLibc = stdenv.cc.nativeLibc or false;
+    nativePrefix = stdenv.cc.nativePrefix or "";
+    cc = baseCC;
+    isGNU = baseCC.isGNU or false;
+    isClang = baseCC.isClang or false;
+    inherit libc extraBuildCommands;
+  };
+
+  wrapCC = wrapCCWith (callPackage ../build-support/cc-wrapper) stdenv.cc.libc "";
+  # legacy version, used for gnat bootstrapping
+  wrapGCC-old = baseGCC: callPackage ../build-support/gcc-wrapper-old {
+    nativeTools = stdenv.cc.nativeTools or false;
+    nativeLibc = stdenv.cc.nativeLibc or false;
+    nativePrefix = stdenv.cc.nativePrefix or "";
+    gcc = baseGCC;
+    libc = glibc;
+  };
 #
 #  wrapGCCCross =
 #    {gcc, libc, binutils, cross, shell ? "", name ? "gcc-cross-wrapper"}:
@@ -5461,33 +5461,33 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  astyle = callPackage ../development/tools/misc/astyle { };
 #
-#  electron = callPackage ../development/tools/electron { };
+  electron = callPackage ../development/tools/electron { };
 #
 #
 #  autobuild = callPackage ../development/tools/misc/autobuild { };
 #
-#  autoconf = callPackage ../development/tools/misc/autoconf { };
-#
-#  autoconf-archive = callPackage ../development/tools/misc/autoconf-archive { };
-#
-#  autoconf213 = callPackage ../development/tools/misc/autoconf/2.13.nix { };
-#
+  autoconf = callPackage ../development/tools/misc/autoconf { };
+
+  autoconf-archive = callPackage ../development/tools/misc/autoconf-archive { };
+
+  autoconf213 = callPackage ../development/tools/misc/autoconf/2.13.nix { };
+
 #  autocutsel = callPackage ../tools/X11/autocutsel{ };
 #
-#  automake = automake115x;
-#
-#  automake110x = callPackage ../development/tools/misc/automake/automake-1.10.x.nix { };
-#
-#  automake111x = callPackage ../development/tools/misc/automake/automake-1.11.x.nix { };
-#
-#  automake112x = callPackage ../development/tools/misc/automake/automake-1.12.x.nix { };
-#
-#  automake113x = callPackage ../development/tools/misc/automake/automake-1.13.x.nix { };
-#
-#  automake114x = callPackage ../development/tools/misc/automake/automake-1.14.x.nix { };
-#
-#  automake115x = callPackage ../development/tools/misc/automake/automake-1.15.x.nix { };
-#
+  automake = automake115x;
+
+  automake110x = callPackage ../development/tools/misc/automake/automake-1.10.x.nix { };
+
+  automake111x = callPackage ../development/tools/misc/automake/automake-1.11.x.nix { };
+
+  automake112x = callPackage ../development/tools/misc/automake/automake-1.12.x.nix { };
+
+  automake113x = callPackage ../development/tools/misc/automake/automake-1.13.x.nix { };
+
+  automake114x = callPackage ../development/tools/misc/automake/automake-1.14.x.nix { };
+
+  automake115x = callPackage ../development/tools/misc/automake/automake-1.15.x.nix { };
+
 #  automoc4 = callPackage ../development/tools/misc/automoc4 { };
 #
 #  avrdude = callPackage ../development/tools/misc/avrdude { };
@@ -5502,24 +5502,24 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  bin_replace_string = callPackage ../development/tools/misc/bin_replace_string { };
 #
-#  binutils = binutils-raw;
+  binutils = binutils-raw;
 #
-#  binutils-raw = callPackage ../development/tools/misc/binutils { inherit noSysDirs; };
+  binutils-raw = callPackage ../development/tools/misc/binutils { inherit noSysDirs; };
 #
-#  binutils_nogold = lowPrio (callPackage ../development/tools/misc/binutils {
-#    inherit noSysDirs;
-#    gold = false;
-#  });
+  binutils_nogold = lowPrio (callPackage ../development/tools/misc/binutils {
+    inherit noSysDirs;
+    gold = false;
+  });
+
+  binutilsCross = assert crossSystem != null; lowPrio (forceNativeDrv (
+    binutils.override {
+      noSysDirs = true;
+      cross = crossSystem;
+    }));
 #
-#  binutilsCross = assert crossSystem != null; lowPrio (forceNativeDrv (
-#    binutils.override {
-#      noSysDirs = true;
-#      cross = crossSystem;
-#    }));
-#
-#  bison2 = callPackage ../development/tools/parsing/bison/2.x.nix { };
-#  bison3 = callPackage ../development/tools/parsing/bison/3.x.nix { };
-#  bison = bison3;
+  bison2 = callPackage ../development/tools/parsing/bison/2.x.nix { };
+  bison3 = callPackage ../development/tools/parsing/bison/3.x.nix { };
+  bison = bison3;
 #
 #  bossa = callPackage ../development/tools/misc/bossa {
 #    wxGTK = wxGTK30;
@@ -5606,13 +5606,13 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ctodo = callPackage ../applications/misc/ctodo { };
 #
-#  cmake-2_8 = callPackage ../development/tools/build-managers/cmake/2.8.nix { };
-#
-#  cmake = callPackage ../development/tools/build-managers/cmake { };
-#
-#  cmakeCurses = cmake.override { useNcurses = true; };
-#
-#  cmakeWithGui = cmakeCurses.override { useQt4 = true; };
+  cmake-2_8 = callPackage ../development/tools/build-managers/cmake/2.8.nix { };
+
+  cmake = callPackage ../development/tools/build-managers/cmake { };
+
+  cmakeCurses = cmake.override { useNcurses = true; };
+
+  cmakeWithGui = cmakeCurses.override { useQt4 = true; };
 #
 #  coccinelle = callPackage ../development/tools/misc/coccinelle { };
 #
@@ -5692,7 +5692,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  egypt = callPackage ../development/tools/analysis/egypt { };
 #
-#  elfutils = callPackage ../development/tools/misc/elfutils { };
+  elfutils = callPackage ../development/tools/misc/elfutils { };
 #
 #  emma = callPackage ../development/tools/analysis/emma { };
 #
@@ -5718,12 +5718,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  jdepend = callPackage ../development/tools/analysis/jdepend { };
 #
-#  flex_2_5_35 = callPackage ../development/tools/parsing/flex/2.5.35.nix { };
-#  flex = callPackage ../development/tools/parsing/flex/default.nix { };
-#
-#  flexcpp = callPackage ../development/tools/parsing/flexc++ { };
-#
-#  m4 = gnum4;
+  flex_2_5_35 = callPackage ../development/tools/parsing/flex/2.5.35.nix { };
+  flex = callPackage ../development/tools/parsing/flex/default.nix { };
+
+  flexcpp = callPackage ../development/tools/parsing/flexc++ { };
+
+  m4 = gnum4;
 #
 #  geis = callPackage ../development/libraries/geis { };
 #
@@ -5731,15 +5731,15 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gnome_doc_utils = callPackage ../development/tools/documentation/gnome-doc-utils {};
 #
-#  gnum4 = callPackage ../development/tools/misc/gnum4 { };
+  gnum4 = callPackage ../development/tools/misc/gnum4 { };
 #
-#  gnumake380 = callPackage ../development/tools/build-managers/gnumake/3.80 { };
-#  gnumake381 = callPackage ../development/tools/build-managers/gnumake/3.81 { };
-#  gnumake382 = callPackage ../development/tools/build-managers/gnumake/3.82 { };
-#  gnumake3 = gnumake382;
-#  gnumake40 = callPackage ../development/tools/build-managers/gnumake/4.0 { };
-#  gnumake41 = callPackage ../development/tools/build-managers/gnumake/4.1 { };
-#  gnumake = gnumake41;
+  gnumake380 = callPackage ../development/tools/build-managers/gnumake/3.80 { };
+  gnumake381 = callPackage ../development/tools/build-managers/gnumake/3.81 { };
+  gnumake382 = callPackage ../development/tools/build-managers/gnumake/3.82 { };
+  gnumake3 = gnumake382;
+  gnumake40 = callPackage ../development/tools/build-managers/gnumake/4.0 { };
+  gnumake41 = callPackage ../development/tools/build-managers/gnumake/4.1 { };
+  gnumake = gnumake41;
 #
 #  gob2 = callPackage ../development/tools/misc/gob2 { };
 #
@@ -5759,7 +5759,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gwrap = callPackage ../development/tools/guile/g-wrap { };
 #
-#  help2man = callPackage ../development/tools/misc/help2man { };
+  help2man = callPackage ../development/tools/misc/help2man { };
 #
 #  heroku = callPackage ../development/tools/heroku { };
 #
@@ -5787,7 +5787,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ired = callPackage ../development/tools/analysis/radare/ired.nix { };
 #
-#  itstool = callPackage ../development/tools/misc/itstool { };
+  itstool = callPackage ../development/tools/misc/itstool { };
 #
 #  jam = callPackage ../development/tools/build-managers/jam { };
 #
@@ -5806,12 +5806,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  lemon = callPackage ../development/tools/parsing/lemon { };
 #
 #
-#  libtool = libtool_2;
-#
-#  libtool_1_5 = callPackage ../development/tools/misc/libtool { };
-#
-#  libtool_2 = callPackage ../development/tools/misc/libtool/libtool2.nix { };
-#
+  libtool = libtool_2;
+
+  libtool_1_5 = callPackage ../development/tools/misc/libtool { };
+
+  libtool_2 = callPackage ../development/tools/misc/libtool/libtool2.nix { };
+
 #  mlibtool = callPackage ../development/tools/misc/mlibtool { };
 #
 #  lsof = callPackage ../development/tools/misc/lsof { };
@@ -5870,7 +5870,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  parse-cli-bin = callPackage ../development/tools/parse-cli-bin { };
 #
-#  patchelf = callPackage ../development/tools/misc/patchelf { };
+  patchelf = callPackage ../development/tools/misc/patchelf { };
 #
 #  peg = callPackage ../development/tools/parsing/peg { };
 #
@@ -5886,9 +5886,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #     cross_renaming: we should make all programs use pkgconfig as
 #     nativeBuildInput after the renaming.
 #     */
-#  pkgconf = forceNativeDrv (callPackage ../development/tools/misc/pkgconf { });
-#  pkg-config = forceNativeDrv (callPackage ../development/tools/misc/pkgconfig { });
-#  pkgconfig = pkgconf;
+  pkgconf = forceNativeDrv (callPackage ../development/tools/misc/pkgconf { });
+  pkg-config = forceNativeDrv (callPackage ../development/tools/misc/pkgconfig { });
+  pkgconfig = pkgconf;
 #
 #  prelink = callPackage ../development/tools/misc/prelink { };
 #
@@ -6130,7 +6130,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  bwidget = callPackage ../development/libraries/bwidget { };
 #
-#  c-ares = callPackage ../development/libraries/c-ares { };
+  c-ares = callPackage ../development/libraries/c-ares { };
 #
 #  capnproto = callPackage ../development/libraries/capnproto { };
 #
@@ -6391,9 +6391,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  getdata = callPackage ../development/libraries/getdata { };
 #
-#  gettext = callPackage ../development/libraries/gettext { };
-#
-#  gettextWithExpat = callPackage ../development/libraries/gettext/expat.nix { };
+  gettext = callPackage ../development/libraries/gettext { };
+
+  gettextWithExpat = callPackage ../development/libraries/gettext/expat.nix { };
 #
 #  gd = callPackage ../development/libraries/gd { };
 #
@@ -6418,40 +6418,40 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  glfw2 = callPackage ../development/libraries/glfw/2.x.nix { };
 #  glfw3 = callPackage ../development/libraries/glfw/3.x.nix { };
 #
-#  glibc = callPackage ../development/libraries/glibc {
-#    kernelHeaders = linuxHeaders;
-#    installLocales = config.glibc.locales or false;
-#    machHeaders = null;
-#    hurdHeaders = null;
-#    gccCross = null;
-#  };
+  glibc = callPackage ../development/libraries/glibc {
+    kernelHeaders = linuxHeaders;
+    installLocales = config.glibc.locales or false;
+    machHeaders = null;
+    hurdHeaders = null;
+    gccCross = null;
+  };
+
+  glibc_memusage = callPackage ../development/libraries/glibc {
+    kernelHeaders = linuxHeaders;
+    installLocales = false;
+    withGd = true;
+  };
+
+  glibcCross = forceNativeDrv (glibc.override {
+    gccCross = gccCrossStageStatic;
+    kernelHeaders = linuxHeadersCross;
+  });
+
+  # We can choose:
+  libcCrossChooser = name: if name == "glibc" then glibcCross
+    else if name == "uclibc" then uclibcCross
+    else throw "Unknown libc";
+
+  libcCross = assert crossSystem != null; libcCrossChooser crossSystem.libc;
 #
-#  glibc_memusage = callPackage ../development/libraries/glibc {
-#    kernelHeaders = linuxHeaders;
-#    installLocales = false;
-#    withGd = true;
-#  };
-#
-#  glibcCross = forceNativeDrv (glibc.override {
-#    gccCross = gccCrossStageStatic;
-#    kernelHeaders = linuxHeadersCross;
-#  });
-#
-#  # We can choose:
-#  libcCrossChooser = name: if name == "glibc" then glibcCross
-#    else if name == "uclibc" then uclibcCross
-#    else throw "Unknown libc";
-#
-#  libcCross = assert crossSystem != null; libcCrossChooser crossSystem.libc;
-#
-#  # Only supported on Linux
-#  glibcLocales = callPackage ../development/libraries/glibc/locales.nix { };
-#
-#  glibcInfo = callPackage ../development/libraries/glibc/info.nix { };
-#
-#  glibc_multi = callPackage ../development/libraries/glibc/multi.nix {
-#    glibc32 = pkgsi686Linux.glibc;
-#  };
+  # Only supported on Linux
+  glibcLocales = callPackage ../development/libraries/glibc/locales.nix { };
+
+  glibcInfo = callPackage ../development/libraries/glibc/info.nix { };
+
+  glibc_multi = callPackage ../development/libraries/glibc/multi.nix {
+    glibc32 = pkgsi686Linux.glibc;
+  };
 #
 #  glm = callPackage ../development/libraries/glm { };
 #  glm_0954 = callPackage ../development/libraries/glm/0954.nix { };
@@ -6466,13 +6466,13 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gmm = callPackage ../development/libraries/gmm { };
 #
-#  gmp4 = callPackage ../development/libraries/gmp/4.3.2.nix { }; # required by older GHC versions
-#  gmp6 = callPackage ../development/libraries/gmp/6.x.nix { };
-#  gmp = gmp6;
-#  gmpxx = appendToName "with-cxx" (gmp.override { cxx = true; });
-#
+  gmp4 = callPackage ../development/libraries/gmp/4.3.2.nix { }; # required by older GHC versions
+  gmp6 = callPackage ../development/libraries/gmp/6.x.nix { };
+  gmp = gmp6;
+  gmpxx = appendToName "with-cxx" (gmp.override { cxx = true; });
+
 #  #GMP ex-satellite, so better keep it near gmp
-#  mpfr = callPackage ../development/libraries/mpfr/default.nix { };
+  mpfr = callPackage ../development/libraries/mpfr/default.nix { };
 #
 #  goocanvas = callPackage ../development/libraries/goocanvas { };
 #
@@ -6492,11 +6492,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gnu-efi = callPackage ../development/libraries/gnu-efi { };
 #
-#  gnutls = gnutls34;
-#
-#  gnutls34 = callPackage ../development/libraries/gnutls/3.4.nix {
-#    guileBindings = config.gnutls.guile or false;
-#  };
+  gnutls = gnutls34;
+
+  gnutls34 = callPackage ../development/libraries/gnutls/3.4.nix {
+    guileBindings = config.gnutls.guile or false;
+  };
 #
 #  gom = callPackage ../all-pkgs/gom { };
 #
@@ -6862,7 +6862,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libedit = callPackage ../development/libraries/libedit { };
 #
-#  libelf = elfutils;
+  libelf = elfutils;
 #
 #  libetpan = callPackage ../development/libraries/libetpan { };
 #
@@ -7215,21 +7215,21 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libsearpc = callPackage ../development/libraries/libsearpc { };
 #
-#  libsigcxx = callPackage ../development/libraries/libsigcxx { };
+libsigcxx = callPackage ../development/libraries/libsigcxx { };
 #
-#  libsigcxx12 = callPackage ../development/libraries/libsigcxx/1.2.nix { };
+libsigcxx12 = callPackage ../development/libraries/libsigcxx/1.2.nix { };
 #
-#  libsigsegv = callPackage ../development/libraries/libsigsegv { };
+libsigsegv = callPackage ../development/libraries/libsigsegv { };
 #
-#  libsndfile = callPackage ../development/libraries/libsndfile { };
+libsndfile = callPackage ../development/libraries/libsndfile { };
 #
-#  libsodium = callPackage ../development/libraries/libsodium { };
+libsodium = callPackage ../development/libraries/libsodium { };
 #
-#  libssh = callPackage ../development/libraries/libssh { };
+libssh = callPackage ../development/libraries/libssh { };
 #
-#  libssh2 = callPackage ../development/libraries/libssh2 { };
+libssh2 = callPackage ../development/libraries/libssh2 { };
 #
-#  libstartup_notification = callPackage ../development/libraries/startup-notification { };
+libstartup_notification = callPackage ../development/libraries/startup-notification { };
 #
 #  libstroke = callPackage ../development/libraries/libstroke { };
 #
@@ -7247,9 +7247,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libtasn1 = callPackage ../development/libraries/libtasn1 { };
 #
-#  libtheora = callPackage ../development/libraries/libtheora { };
+libtheora = callPackage ../development/libraries/libtheora { };
 #
-#  libtiff = callPackage ../development/libraries/libtiff { };
+libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libtiger = callPackage ../development/libraries/libtiger { };
 #
@@ -7283,9 +7283,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libupnp = callPackage ../development/libraries/pupnp { };
 #
-#  giflib = giflib_5_1;
-#  giflib_4_1 = callPackage ../development/libraries/giflib/4.1.nix { };
-#  giflib_5_1 = callPackage ../development/libraries/giflib/5.1.nix { };
+  giflib = giflib_5_1;
+  giflib_4_1 = callPackage ../development/libraries/giflib/4.1.nix { };
+  giflib_5_1 = callPackage ../development/libraries/giflib/5.1.nix { };
 #
 #  libungif = callPackage ../development/libraries/giflib/libungif.nix { };
 #
@@ -7295,18 +7295,18 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libutempter = callPackage ../development/libraries/libutempter { };
 #
-#  libunwind = callPackage ../development/libraries/libunwind { };
+  libunwind = callPackage ../development/libraries/libunwind { };
 #
-#  libuvVersions = recurseIntoAttrs (callPackage ../development/libraries/libuv { });
-#
-#  libuv = libuvVersions.v1_8_0;
-#
-#  libv4l = lowPrio (v4l_utils.override {
-#    alsaLib = null;
-#    libX11 = null;
-#    qt4 = null;
-#    qt5 = null;
-#  });
+  libuvVersions = recurseIntoAttrs (callPackage ../development/libraries/libuv { });
+
+  libuv = libuvVersions.v1_8_0;
+
+  libv4l = lowPrio (v4l_utils.override {
+    alsaLib = null;
+    libX11 = null;
+    qt4 = null;
+    qt5 = null;
+  });
 #
 #  libverto = callPackage ../development/libraries/libverto {
 #    glib = null; # Don't include fairly heavy dependency
@@ -7328,9 +7328,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libvterm = callPackage ../development/libraries/libvterm { };
 #
-#  libvorbis = callPackage ../development/libraries/libvorbis { };
-#
-#  libwebp = callPackage ../development/libraries/libwebp { };
+  libvorbis = callPackage ../development/libraries/libvorbis { };
+
+  libwebp = callPackage ../development/libraries/libwebp { };
 #
 #  libwmf = callPackage ../development/libraries/libwmf { };
 #
@@ -7350,21 +7350,21 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libxdg_basedir = callPackage ../development/libraries/libxdg-basedir { };
 #
-#  libxkbcommon = callPackage ../development/libraries/libxkbcommon { };
+  libxkbcommon = callPackage ../development/libraries/libxkbcommon { };
 #
-#  libxklavier = callPackage ../development/libraries/libxklavier { };
+  libxklavier = callPackage ../development/libraries/libxklavier { };
 #
 #  libxls = callPackage ../development/libraries/libxls { };
 #
 #  libxmi = callPackage ../development/libraries/libxmi { };
 #
-#  libxml2 = callPackage ../development/libraries/libxml2 {
-#    python = null;
-#  };
+  libxml2 = callPackage ../development/libraries/libxml2 {
+    python = null;
+  };
 #
-#  libxml2Python = lowPrio (libxml2.override {
-#    inherit python;
-#  });
+  libxml2Python = lowPrio (libxml2.override {
+    inherit python;
+  });
 #
 #  libxmlxx = callPackage ../development/libraries/libxmlxx { };
 #
@@ -7394,7 +7394,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  lightlocker = callPackage ../misc/screensavers/light-locker { };
 #
-#  lirc = callPackage ../development/libraries/lirc { };
+  lirc = callPackage ../development/libraries/lirc { };
 #
 #  liquidfun = callPackage ../development/libraries/liquidfun { };
 #
@@ -7410,7 +7410,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  luabind_luajit = callPackage ../development/libraries/luabind { lua = luajit; };
 #
-#  lzo = callPackage ../development/libraries/lzo { };
+  lzo = callPackage ../development/libraries/lzo { };
 #
 #  mapnik = callPackage ../development/libraries/mapnik { };
 #
@@ -7459,7 +7459,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  mp4v2 = callPackage ../development/libraries/mp4v2 { };
 #
-#  libmpc = callPackage ../development/libraries/libmpc { };
+  libmpc = callPackage ../development/libraries/libmpc { };
 #
 #  mpich2 = callPackage ../development/libraries/mpich2 { };
 #
@@ -7483,7 +7483,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  nanomsg = callPackage ../development/libraries/nanomsg { };
 #
-#  ncurses = callPackage ../development/libraries/ncurses { };
+  ncurses = callPackage ../development/libraries/ncurses { };
 #
 #  neardal = callPackage ../development/libraries/neardal { };
 #
@@ -7501,10 +7501,10 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  newt = callPackage ../development/libraries/newt { };
 #
-#  nghttp2 = callPackage ../development/libraries/nghttp2 { };
-#  libnghttp2 = nghttp2.override {
-#    prefix = "lib";
-#  };
+  nghttp2 = callPackage ../development/libraries/nghttp2 { };
+  libnghttp2 = nghttp2.override {
+    prefix = "lib";
+  };
 #
 #  nix-plugins = callPackage ../development/libraries/nix-plugins {
 #    nix = pkgs.nixUnstable;
@@ -7601,16 +7601,16 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  wolfssl = callPackage ../development/libraries/wolfssl { };
 #
-#  cryptodevHeaders = linuxPackages.cryptodev.override {
-#    onlyHeaders = true;
-#    kernel = null;
-#  };
-#
-#  openssl = openssl_1_0_2;
-#
-#  inherit (callPackages ../development/libraries/openssl { })
-#    openssl_1_0_2;
-#
+  cryptodevHeaders = linuxPackages.cryptodev.override {
+    onlyHeaders = true;
+    kernel = null;
+  };
+
+  openssl = openssl_1_0_2;
+
+  inherit (callPackages ../development/libraries/openssl { })
+    openssl_1_0_2;
+
 #  openssl-chacha = callPackage ../development/libraries/openssl/chacha.nix {
 #    cryptodevHeaders = linuxPackages.cryptodev.override {
 #      fetchurl = fetchurlBoot;
@@ -7815,15 +7815,15 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  raul = callPackage ../development/libraries/audio/raul { };
 #
-#  readline = readline6;
-#  readline6 = readline63;
-#
-#  readline5 = callPackage ../development/libraries/readline/5.x.nix { };
-#
-#  readline62 = callPackage ../development/libraries/readline/6.2.nix { };
-#
-#  readline63 = callPackage ../development/libraries/readline/6.3.nix { };
-#
+  readline = readline6;
+  readline6 = readline63;
+
+  readline5 = callPackage ../development/libraries/readline/5.x.nix { };
+
+  readline62 = callPackage ../development/libraries/readline/6.2.nix { };
+
+  readline63 = callPackage ../development/libraries/readline/6.3.nix { };
+
 #  readosm = callPackage ../development/libraries/readosm { };
 #
 #  lambdabot = callPackage ../development/tools/haskell/lambdabot {
@@ -7999,14 +7999,14 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  stxxl = callPackage ../development/libraries/stxxl { parallel = true; };
 #
-#  sqlite = callPackage ../development/libraries/sqlite { };
-#
+  sqlite = callPackage ../development/libraries/sqlite { };
+
 #  sqlite3_analyzer = lowPrio (callPackage ../development/libraries/sqlite/sqlite3_analyzer.nix { });
 #
 #  sqlite-amalgamation = callPackage ../development/libraries/sqlite-amalgamation { };
 #
-#  sqlite-interactive = sqlite;
-#
+  sqlite-interactive = sqlite;
+
 #  sqlcipher = lowPrio (callPackage ../development/libraries/sqlcipher {
 #    readline = null;
 #    ncurses = null;
@@ -8273,7 +8273,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    qt = qt4;
 #  };
 #
-#  zlib = callPackage ../development/libraries/zlib { };
+  zlib = callPackage ../development/libraries/zlib { };
 #
 #  zlog = callPackage ../development/libraries/zlog { };
 #
@@ -8381,25 +8381,25 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ### DEVELOPMENT / GO MODULES
 #
-#  go15Packages = callPackage ./go-packages.nix {
-#    go = go_1_5;
-#    buildGoPackage = callPackage ../development/go-modules/generic {
-#      go = go_1_5;
-#      govers = go15Packages.govers.bin;
-#    };
-#    overrides = (config.goPackageOverrides or (p: {})) pkgs;
-#  };
-#
-#  go16Packages = callPackage ./go-packages.nix {
-#    go = go_1_6;
-#    buildGoPackage = callPackage ../development/go-modules/generic {
-#      go = go_1_6;
-#      govers = go16Packages.govers.bin;
-#    };
-#    overrides = (config.goPackageOverrides or (p: {})) pkgs;
-#  };
-#
-#  goPackages = go16Packages;
+  go15Packages = callPackage ./go-packages.nix {
+    go = go_1_5;
+    buildGoPackage = callPackage ../development/go-modules/generic {
+      go = go_1_5;
+      govers = go15Packages.govers.bin;
+    };
+    overrides = (config.goPackageOverrides or (p: {})) pkgs;
+  };
+
+  go16Packages = callPackage ./go-packages.nix {
+    go = go_1_6;
+    buildGoPackage = callPackage ../development/go-modules/generic {
+      go = go_1_6;
+      govers = go16Packages.govers.bin;
+    };
+    overrides = (config.goPackageOverrides or (p: {})) pkgs;
+  };
+
+  goPackages = go16Packages;
 #
 #  ### DEVELOPMENT / LISP MODULES
 #
@@ -8421,14 +8421,14 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ### DEVELOPMENT / PERL MODULES
 #
-#  buildPerlPackage = callPackage ../development/perl-modules/generic perl;
-#
-#  perlPackages = recurseIntoAttrs (callPackage ./perl-packages.nix {
-#    overrides = (config.perlPackageOverrides or (p: {})) pkgs;
-#  });
-#
-#  perlXMLParser = perlPackages.XMLParser;
-#
+  buildPerlPackage = callPackage ../development/perl-modules/generic perl;
+
+  perlPackages = recurseIntoAttrs (callPackage ./perl-packages.nix {
+    overrides = (config.perlPackageOverrides or (p: {})) pkgs;
+  });
+
+  perlXMLParser = perlPackages.XMLParser;
+
 #  ack = perlPackages.ack;
 #
 #  perlArchiveCpio = perlPackages.ArchiveCpio;
@@ -8461,11 +8461,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  pygame = pythonPackages.pygame;
 #
-#  pygobject = pythonPackages.pygobject;
+  pygobject = pythonPackages.pygobject;
 #
-#  pygobject3 = pythonPackages.pygobject3;
+  pygobject3 = pythonPackages.pygobject3;
 #
-#  pygtk = pythonPackages.pygtk;
+  pygtk = pythonPackages.pygtk;
 #
 #  pygtksourceview = pythonPackages.pygtksourceview;
 #
@@ -8773,11 +8773,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  #monetdb = callPackage ../servers/sql/monetdb { };
 #
-#  mariadb = callPackage ../servers/sql/mariadb { };
-#
-#  mongodb = callPackage ../servers/nosql/mongodb {
-#    sasl = cyrus_sasl;
-#  };
+  mariadb = callPackage ../servers/sql/mariadb { };
+
+  mongodb = callPackage ../servers/nosql/mongodb {
+    sasl = cyrus_sasl;
+  };
 #
 #  riak = callPackage ../servers/nosql/riak/1.3.1.nix { };
 #  riak2 = callPackage ../servers/nosql/riak/2.1.1.nix { };
@@ -8786,16 +8786,16 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  hyperdex = callPackage ../servers/nosql/hyperdex { };
 #
-#  mysql51 = callPackage ../servers/sql/mysql/5.1.x.nix {
-#    ps = procps; /* !!! Linux only */
-#  };
-#
-#  mysql55 = callPackage ../servers/sql/mysql/5.5.x.nix { };
-#
-#  mysql = mariadb;
-#  libmysql = mysql;
-#
-#  mysql_jdbc = callPackage ../servers/sql/mysql/jdbc { };
+  mysql51 = callPackage ../servers/sql/mysql/5.1.x.nix {
+    ps = procps; /* !!! Linux only */
+  };
+
+  mysql55 = callPackage ../servers/sql/mysql/5.5.x.nix { };
+
+  mysql = mariadb;
+  libmysql = mysql;
+
+  mysql_jdbc = callPackage ../servers/sql/mysql/jdbc { };
 #
 #  nagios = callPackage ../servers/monitoring/nagios { };
 #
@@ -8903,16 +8903,16 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  samba3 = callPackage ../servers/samba/3.x.nix { };
 #
-#  samba4 = callPackage ../servers/samba/4.x.nix {
-#    pythonPackages = python2Packages;
-#    kerberos = null;  # Bundle kerberos because samba uses internal, non-stable functions
-#  };
-#
-#  samba = samba4;
-#
-#  smbclient = samba;
-#
-#  # A lightweight Samba 3, useful for non-Linux-based OSes.
+  samba4 = callPackage ../servers/samba/4.x.nix {
+    pythonPackages = python2Packages;
+    kerberos = null;  # Bundle kerberos because samba uses internal, non-stable functions
+  };
+
+  samba = samba4;
+
+  smbclient = samba;
+
+  # A lightweight Samba 3, useful for non-Linux-based OSes.
 #  samba3_light = lowPrio (samba3.override {
 #    pam = null;
 #    fam = null;
@@ -8923,39 +8923,39 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    libunwind = null;
 #  });
 #
-#  samba4_light = lowPrio (samba4.override {
-#    # source3/wscript optionals
-#    kerberos = null;
-#    zlib = null;
-#    openldap = null;
-#    cups = null;
-#    pam = null;
-#    avahi = null;
-#    acl = null;
-#    libaio = null;
-#    fam = null;
-#    libceph = null;
-#    glusterfs = null;
-#
-#    # buildtools/wafsamba/wscript optionals
-#    libiconv = null;
-#    gettext = null;
-#
-#    # source4/lib/tls/wscript optionals
-#    gnutls = null;
-#    libgcrypt = null;
-#    libgpgerror = null;
-#
-#    # other optionals
-#    ncurses = null;
-#    libunwind = null;
-#    dbus = null;
-#    libibverbs = null;
-#    librdmacm = null;
-#    systemd = null;
-#  });
-#
-#  samba_light = samba4_light;
+  samba4_light = lowPrio (samba4.override {
+    # source3/wscript optionals
+    kerberos = null;
+    zlib = null;
+    openldap = null;
+    cups = null;
+    pam = null;
+    avahi = null;
+    acl = null;
+    libaio = null;
+    fam = null;
+    libceph = null;
+    glusterfs = null;
+
+    # buildtools/wafsamba/wscript optionals
+    libiconv = null;
+    gettext = null;
+
+    # source4/lib/tls/wscript optionals
+    gnutls = null;
+    libgcrypt = null;
+    libgpgerror = null;
+
+    # other optionals
+    ncurses = null;
+    libunwind = null;
+    dbus = null;
+    libibverbs = null;
+    librdmacm = null;
+    systemd = null;
+  });
+
+  samba_light = samba4_light;
 #
 #  shairport-sync = callPackage ../servers/shairport-sync { };
 #
@@ -9016,24 +9016,24 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  xinetd = callPackage ../servers/xinetd { };
 #
-#  zookeeper = callPackage ../servers/zookeeper { };
-#
-#  zookeeper_mt = callPackage ../development/libraries/zookeeper_mt { };
+  zookeeper = callPackage ../servers/zookeeper { };
+
+  zookeeper_mt = callPackage ../development/libraries/zookeeper_mt { };
 #
 #  xquartz = callPackage ../servers/x11/xquartz { };
 #  quartz-wm = callPackage ../servers/x11/quartz-wm {
 #    stdenv = clangStdenv;
 #  };
 #
-#  xorg = recurseIntoAttrs (lib.callPackagesWith pkgs ../servers/x11/xorg/default.nix {
-#    inherit clangStdenv fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
-#      libxslt expat libpng zlib perl mesa_drivers spice_protocol libunwind
-#      dbus libuuid openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
-#      autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman;
-#    mesa = mesa_noglu;
-#  } // { inherit xlibsWrapper; } );
-#
-#  xwayland = callPackage ../servers/x11/xorg/xwayland.nix { };
+  xorg = recurseIntoAttrs (lib.callPackagesWith pkgs ../servers/x11/xorg/default.nix {
+    inherit clangStdenv fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
+      libxslt expat libpng zlib perl mesa_drivers spice_protocol libunwind
+      dbus libuuid openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
+      autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman;
+    mesa = mesa_noglu;
+  } // { inherit xlibsWrapper; } );
+
+  xwayland = callPackage ../servers/x11/xorg/xwayland.nix { };
 #
 #  yaws = callPackage ../servers/http/yaws { erlang = erlangR17; };
 #
@@ -9221,12 +9221,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gfxtablet = callPackage ../os-specific/linux/gfxtablet {};
 #
-#  gpm = callPackage ../servers/gpm {
-#    ncurses = null;  # Keep curses disabled for lack of value
-#  };
-#
-#  gpm-ncurses = gpm.override { inherit ncurses; };
-#
+  gpm = callPackage ../servers/gpm {
+    ncurses = null;  # Keep curses disabled for lack of value
+  };
+
+  gpm-ncurses = gpm.override { inherit ncurses; };
+
 #  gradm = callPackage ../os-specific/linux/gradm {
 #    flex = flex_2_5_35;
 #  };
@@ -9237,7 +9237,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  hostapd = callPackage ../os-specific/linux/hostapd { };
 #
-#  htop = callPackage ../os-specific/linux/htop { };
+  htop = callPackage ../os-specific/linux/htop { };
 #
 #  i7z = callPackage ../os-specific/linux/i7z { };
 #
@@ -9291,51 +9291,51 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  # -- Linux kernel expressions ------------------------------------------------
 #
-#  linuxHeaders = linuxHeaders_3_18;
-#
-#  linuxHeaders24Cross = forceNativeDrv (callPackage ../os-specific/linux/kernel-headers/2.4.nix {
-#    cross = assert crossSystem != null; crossSystem;
-#  });
-#
-#  linuxHeaders26Cross = forceNativeDrv (callPackage ../os-specific/linux/kernel-headers/3.18.nix {
-#    cross = assert crossSystem != null; crossSystem;
-#  });
-#
-#  linuxHeaders_3_18 = callPackage ../os-specific/linux/kernel-headers/3.18.nix { };
-#
-#  # We can choose:
-#  linuxHeadersCrossChooser = ver : if ver == "2.4" then linuxHeaders24Cross
-#    else if ver == "2.6" then linuxHeaders26Cross
-#    else throw "Unknown linux kernel version";
-#
-#  linuxHeadersCross = assert crossSystem != null;
-#    linuxHeadersCrossChooser crossSystem.platform.kernelMajor;
-#
-#  kernelPatches = callPackage ../os-specific/linux/kernel/patches.nix { };
-#
+  linuxHeaders = linuxHeaders_3_18;
+
+  linuxHeaders24Cross = forceNativeDrv (callPackage ../os-specific/linux/kernel-headers/2.4.nix {
+    cross = assert crossSystem != null; crossSystem;
+  });
+
+  linuxHeaders26Cross = forceNativeDrv (callPackage ../os-specific/linux/kernel-headers/3.18.nix {
+    cross = assert crossSystem != null; crossSystem;
+  });
+
+  linuxHeaders_3_18 = callPackage ../os-specific/linux/kernel-headers/3.18.nix { };
+
+  # We can choose:
+  linuxHeadersCrossChooser = ver : if ver == "2.4" then linuxHeaders24Cross
+    else if ver == "2.6" then linuxHeaders26Cross
+    else throw "Unknown linux kernel version";
+
+  linuxHeadersCross = assert crossSystem != null;
+    linuxHeadersCrossChooser crossSystem.platform.kernelMajor;
+
+  kernelPatches = callPackage ../os-specific/linux/kernel/patches.nix { };
+
 #  linux_rpi = callPackage ../os-specific/linux/kernel/linux-rpi.nix {
 #    kernelPatches = [ kernelPatches.bridge_stp_helper ];
 #  };
 #
-#  linux_3_18 = callPackage ../os-specific/linux/kernel/linux-3.18.nix {
-#    kernelPatches = [ kernelPatches.bridge_stp_helper ];
-#  };
+  linux_3_18 = callPackage ../os-specific/linux/kernel/linux-3.18.nix {
+    kernelPatches = [ kernelPatches.bridge_stp_helper ];
+  };
 #
-#  linux_4_1 = callPackage ../os-specific/linux/kernel/linux-4.1.nix {
-#    kernelPatches = [ kernelPatches.bridge_stp_helper ];
-#  };
+  linux_4_1 = callPackage ../os-specific/linux/kernel/linux-4.1.nix {
+    kernelPatches = [ kernelPatches.bridge_stp_helper ];
+  };
 #
-#  linux_4_3 = callPackage ../os-specific/linux/kernel/linux-4.3.nix {
-#    kernelPatches = [ kernelPatches.bridge_stp_helper ];
-#  };
+  linux_4_3 = callPackage ../os-specific/linux/kernel/linux-4.3.nix {
+    kernelPatches = [ kernelPatches.bridge_stp_helper ];
+  };
 #
-#  linux_4_4 = callPackage ../os-specific/linux/kernel/linux-4.4.nix {
-#    kernelPatches = [ kernelPatches.bridge_stp_helper ];
-#  };
+  linux_4_4 = callPackage ../os-specific/linux/kernel/linux-4.4.nix {
+    kernelPatches = [ kernelPatches.bridge_stp_helper ];
+  };
 #
-#  linux_testing = callPackage ../os-specific/linux/kernel/linux-testing.nix {
-#    kernelPatches = [ kernelPatches.bridge_stp_helper ];
-#  };
+  linux_testing = callPackage ../os-specific/linux/kernel/linux-testing.nix {
+    kernelPatches = [ kernelPatches.bridge_stp_helper ];
+  };
 #
 #  /* grsec configuration
 #
@@ -9350,25 +9350,25 @@ zstd = callPackage ../all-pkgs/zstd { };
 #     to EC2, where Xen is the Hypervisor.
 #  */
 #
-#  grFlavors = import ../build-support/grsecurity/flavors.nix;
+  grFlavors = import ../build-support/grsecurity/flavors.nix;
 #
-#  mkGrsecurity = opts:
-#    (callPackage ../build-support/grsecurity {
-#      grsecOptions = opts;
-#    });
+  mkGrsecurity = opts:
+    (callPackage ../build-support/grsecurity {
+      grsecOptions = opts;
+    });
 #
-#  grKernel  = opts: (mkGrsecurity opts).grsecKernel;
-#  grPackage = opts: recurseIntoAttrs (mkGrsecurity opts).grsecPackage;
+  grKernel  = opts: (mkGrsecurity opts).grsecKernel;
+  grPackage = opts: recurseIntoAttrs (mkGrsecurity opts).grsecPackage;
 #
 #  # Stable kernels
 #  # This is no longer supported. Please see the official announcement on the
 #  # grsecurity page. https://grsecurity.net/announce.php
-#  linux_grsec_stable_desktop    = throw "No longer supported due to https://grsecurity.net/announce.php. "
-#    + "Please use linux_grsec_testing_desktop.";
-#  linux_grsec_stable_server     = throw "No longer supported due to https://grsecurity.net/announce.php. "
-#    + "Please use linux_grsec_testing_server.";
-#  linux_grsec_stable_server_xen = throw "No longer supporteddue to https://grsecurity.net/announce.php. "
-#    + "Please use linux_grsec_testing_server_xen.";
+  linux_grsec_stable_desktop    = throw "No longer supported due to https://grsecurity.net/announce.php. "
+    + "Please use linux_grsec_testing_desktop.";
+  linux_grsec_stable_server     = throw "No longer supported due to https://grsecurity.net/announce.php. "
+    + "Please use linux_grsec_testing_server.";
+  linux_grsec_stable_server_xen = throw "No longer supporteddue to https://grsecurity.net/announce.php. "
+    + "Please use linux_grsec_testing_server_xen.";
 #
 #  # Testing kernels: outdated ATM
 #  #linux_grsec_testing_desktop = grKernel grFlavors.linux_grsec_testing_desktop;
@@ -9381,8 +9381,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #     for a specific kernel.  This function can then be called for
 #     whatever kernel you're using. */
 #
-#  linuxPackagesFor = kernel: self: let callPackage = newScope self; in rec {
-#    inherit kernel;
+  linuxPackagesFor = kernel: self: let callPackage = newScope self; in rec {
+    inherit kernel;
 #
 #    accelio = callPackage ../development/libraries/accelio { };
 #
@@ -9392,15 +9392,15 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #    bbswitch = callPackage ../os-specific/linux/bbswitch {};
 #
-#    ati_drivers_x11 = callPackage ../os-specific/linux/ati-drivers { };
+    ati_drivers_x11 = callPackage ../os-specific/linux/ati-drivers { };
 #
 #    blcr = callPackage ../os-specific/linux/blcr { };
 #
-#    cryptodev = callPackage ../os-specific/linux/cryptodev { };
+    cryptodev = callPackage ../os-specific/linux/cryptodev { };
 #
 #    cpupower = callPackage ../os-specific/linux/cpupower { };
 #
-#    e1000e = callPackage ../os-specific/linux/e1000e {};
+    e1000e = callPackage ../os-specific/linux/e1000e {};
 #
 #    v4l2loopback = callPackage ../os-specific/linux/v4l2loopback { };
 #
@@ -9415,10 +9415,10 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    nvidiabl = callPackage ../os-specific/linux/nvidiabl { };
 #
 #    nvidia_x11_legacy304 = callPackage ../all-pkgs/nvidia-drivers { channel = "legacy304"; };
-#    nvidia_x11_legacy340 = callPackage ../all-pkgs/nvidia-drivers { channel = "legacy340"; };
-#    nvidia_x11_long      = callPackage ../all-pkgs/nvidia-drivers { channel = "long-lived"; };
-#    nvidia_x11_short     = callPackage ../all-pkgs/nvidia-drivers { channel = "short-lived"; };
-#    nvidia_x11_testing   = callPackage ../all-pkgs/nvidia-drivers { channel = "testing"; };
+    nvidia_x11_legacy340 = callPackage ../all-pkgs/nvidia-drivers { channel = "legacy340"; };
+    nvidia_x11_long      = callPackage ../all-pkgs/nvidia-drivers { channel = "long-lived"; };
+    nvidia_x11_short     = callPackage ../all-pkgs/nvidia-drivers { channel = "short-lived"; };
+    nvidia_x11_testing   = callPackage ../all-pkgs/nvidia-drivers { channel = "testing"; };
 #
 #    rtl8812au = callPackage ../os-specific/linux/rtl8812au { };
 #
@@ -9483,53 +9483,53 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #    x86_energy_perf_policy = callPackage ../os-specific/linux/x86_energy_perf_policy { };
 #
-#    zfs = callPackage ../os-specific/linux/zfs {
-#      configFile = "kernel";
-#      inherit kernel spl;
-#    };
-#    zfs_git = callPackage ../os-specific/linux/zfs/git.nix {
-#      configFile = "kernel";
-#      inherit kernel spl_git;
-#    };
-#  };
+    zfs = callPackage ../os-specific/linux/zfs {
+      configFile = "kernel";
+      inherit kernel spl;
+    };
+    zfs_git = callPackage ../os-specific/linux/zfs/git.nix {
+      configFile = "kernel";
+      inherit kernel spl_git;
+    };
+  };
 #
 #  # The current default kernel / kernel modules.
-#  linuxPackages = linuxPackages_4_1;
-#  linux = linuxPackages.kernel;
+  linuxPackages = linuxPackages_4_1;
+  linux = linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
-#  linuxPackages_latest = pkgs.linuxPackages_4_4;
-#  linux_latest = linuxPackages_latest.kernel;
+  linuxPackages_latest = pkgs.linuxPackages_4_4;
+  linux_latest = linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
-#  linuxPackages_3_18 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_18 linuxPackages_3_18);
-#  linuxPackages_4_1 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_1 linuxPackages_4_1);
-#  linuxPackages_4_3 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_3 linuxPackages_4_3);
-#  linuxPackages_4_4 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_4 linuxPackages_4_4);
-#  linuxPackages_testing = recurseIntoAttrs (linuxPackagesFor pkgs.linux_testing linuxPackages_testing);
-#  linuxPackages_custom = {version, src, configfile}:
-#                           let linuxPackages_self = (linuxPackagesFor (pkgs.linuxManualConfig {inherit version src configfile;
-#                                                                                               allowImportFromDerivation=true;})
-#                                                     linuxPackages_self);
-#                           in recurseIntoAttrs linuxPackages_self;
+  linuxPackages_3_18 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_18 linuxPackages_3_18);
+  linuxPackages_4_1 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_1 linuxPackages_4_1);
+  linuxPackages_4_3 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_3 linuxPackages_4_3);
+  linuxPackages_4_4 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_4 linuxPackages_4_4);
+  linuxPackages_testing = recurseIntoAttrs (linuxPackagesFor pkgs.linux_testing linuxPackages_testing);
+  linuxPackages_custom = {version, src, configfile}:
+                           let linuxPackages_self = (linuxPackagesFor (pkgs.linuxManualConfig {inherit version src configfile;
+                                                                                               allowImportFromDerivation=true;})
+                                                     linuxPackages_self);
+                           in recurseIntoAttrs linuxPackages_self;
 #
 #  # Build a kernel for Xen dom0
-#  linuxPackages_latest_xen_dom0 = recurseIntoAttrs (linuxPackagesFor (pkgs.linux_latest.override { features.xen_dom0=true; }) linuxPackages_latest);
+  linuxPackages_latest_xen_dom0 = recurseIntoAttrs (linuxPackagesFor (pkgs.linux_latest.override { features.xen_dom0=true; }) linuxPackages_latest);
 #
 #  # grsecurity flavors
 #  # Stable kernels
-#  linuxPackages_grsec_stable_desktop    = grPackage grFlavors.linux_grsec_stable_desktop;
-#  linuxPackages_grsec_stable_server     = grPackage grFlavors.linux_grsec_stable_server;
-#  linuxPackages_grsec_stable_server_xen = grPackage grFlavors.linux_grsec_stable_server_xen;
+  linuxPackages_grsec_stable_desktop    = grPackage grFlavors.linux_grsec_stable_desktop;
+  linuxPackages_grsec_stable_server     = grPackage grFlavors.linux_grsec_stable_server;
+  linuxPackages_grsec_stable_server_xen = grPackage grFlavors.linux_grsec_stable_server_xen;
 #
 #  # Testing kernels: outdated ATM
-#  linuxPackages_grsec_testing_desktop = grPackage grFlavors.linux_grsec_testing_desktop;
-#  linuxPackages_grsec_testing_server  = grPackage grFlavors.linux_grsec_testing_server;
-#  linuxPackages_grsec_testing_server_xen = grPackage grFlavors.linux_grsec_testing_server_xen;
+  linuxPackages_grsec_testing_desktop = grPackage grFlavors.linux_grsec_testing_desktop;
+  linuxPackages_grsec_testing_server  = grPackage grFlavors.linux_grsec_testing_server;
+  linuxPackages_grsec_testing_server_xen = grPackage grFlavors.linux_grsec_testing_server_xen;
 #
 #  # A function to build a manually-configured kernel
-#  linuxManualConfig = pkgs.buildLinux;
-#  buildLinux = callPackage ../os-specific/linux/kernel/manual-config.nix {};
+  linuxManualConfig = pkgs.buildLinux;
+  buildLinux = callPackage ../os-specific/linux/kernel/manual-config.nix {};
 #
 #  keyutils = callPackage ../os-specific/linux/keyutils { };
 #
@@ -9549,7 +9549,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libsmbios = callPackage ../os-specific/linux/libsmbios { };
 #
-#  lm_sensors = callPackage ../os-specific/linux/lm-sensors { };
+  lm_sensors = callPackage ../os-specific/linux/lm-sensors { };
 #
 #  lockdep = callPackage ../os-specific/linux/lockdep { };
 #
@@ -9695,9 +9695,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  prayer = callPackage ../servers/prayer { };
 #
-#  procps-old = lowPrio (callPackage ../os-specific/linux/procps { });
-#
-#  procps = callPackage ../os-specific/linux/procps-ng { };
+  procps-old = lowPrio (callPackage ../os-specific/linux/procps { });
+
+  procps = callPackage ../os-specific/linux/procps-ng { };
 #
 #  watch = callPackage ../os-specific/linux/procps/watch.nix { };
 #
@@ -9849,12 +9849,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    cross = assert crossSystem != null; crossSystem;
 #  });
 #
-#  udev = pkgs.systemd;
-#  eudev = callPackage ../os-specific/linux/eudev {};
-#
-#  # libudev.so.0
-#  udev182 = callPackage ../os-specific/linux/udev/182.nix { };
-#
+  udev = pkgs.systemd;
+  eudev = callPackage ../os-specific/linux/eudev {};
+
+  # libudev.so.0
+  udev182 = callPackage ../os-specific/linux/udev/182.nix { };
+
 #  udisks1 = callPackage ../os-specific/linux/udisks/1-default.nix { };
 #  udisks2 = callPackage ../os-specific/linux/udisks/2-default.nix { };
 #  udisks = udisks1;
@@ -9865,26 +9865,26 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  untie = callPackage ../os-specific/linux/untie { };
 #
-#  upower = callPackage ../os-specific/linux/upower { };
-#
+  upower = callPackage ../os-specific/linux/upower { };
+
 #  upstart = callPackage ../os-specific/linux/upstart { };
 #
 #  usbutils = callPackage ../os-specific/linux/usbutils { };
 #
 #  usermount = callPackage ../os-specific/linux/usermount { };
 #
-#  utillinux = callPackage ../os-specific/linux/util-linux {
-#    ncurses = null;
-#    perl = null;
-#  };
-#
-#  utillinuxCurses = appendToName "curses" (utillinux.override {
-#    inherit ncurses perl;
-#  });
-#
-#  v4l_utils = callPackage ../os-specific/linux/v4l-utils {
-#    qt5 = null;
-#  };
+  utillinux = callPackage ../os-specific/linux/util-linux {
+    ncurses = null;
+    perl = null;
+  };
+
+  utillinuxCurses = appendToName "curses" (utillinux.override {
+    inherit ncurses perl;
+  });
+
+  v4l_utils = callPackage ../os-specific/linux/v4l-utils {
+    qt5 = null;
+  };
 #
 #  wirelesstools = callPackage ../os-specific/linux/wireless-tools { };
 #
@@ -9905,12 +9905,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  zd1211fw = callPackage ../os-specific/linux/firmware/zd1211 { };
 #
-#  zfs = callPackage ../os-specific/linux/zfs {
-#    configFile = "user";
-#  };
-#  zfs_git = callPackage ../os-specific/linux/zfs/git.nix {
-#    configFile = "user";
-#  };
+  zfs = callPackage ../os-specific/linux/zfs {
+    configFile = "user";
+  };
+  zfs_git = callPackage ../os-specific/linux/zfs/git.nix {
+    configFile = "user";
+  };
 #
 #  ### DATA
 #
@@ -10561,7 +10561,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  eclipses = recurseIntoAttrs (callPackage ../applications/editors/eclipse { });
 #
-#  ed = callPackage ../applications/editors/ed { };
+  ed = callPackage ../applications/editors/ed { };
 #
 #  edbrowse = callPackage ../applications/editors/edbrowse { };
 #
@@ -11982,7 +11982,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  symlinks = callPackage ../tools/system/symlinks { };
 #
-#  syncthing = goPackages.syncthing.bin // { outputs = [ "bin" ]; };
+  syncthing = goPackages.syncthing.bin // { outputs = [ "bin" ]; };
 #  discosrv = goPackages.discosrv.bin // { outputs = [ "bin" ]; };
 #  relaysrv = goPackages.relaysrv.bin // { outputs = [ "bin" ]; };
 #

@@ -28,6 +28,20 @@ stdenv.mkDerivation rec {
     sha256 = "0ayb3y3l25dmwxlh9g071h02mphjfbkvi2k5f635bayb01k7akzh";
   };
 
+  nativeBuildInputs = [
+    gettext
+    intltool
+    libtool
+    makeWrapper
+  ];
+
+  buildInputs = [
+    glib
+    gobject-introspection
+    polkit
+    systemd
+  ];
+
   patches = [
     (fetchTritonPatch {
       rev = "6f159bbe96eb07e94789b0124fbf7317763633bc";
@@ -48,20 +62,6 @@ stdenv.mkDerivation rec {
     (enFlag "systemd" (systemd != null) null)
     (wtFlag "systemdsystemunitdir" (systemd != null) "$(out)/etc/systemd/system")
     "--localstatedir=/var"
-  ];
-
-  nativeBuildInputs = [
-    gettext
-    intltool
-    libtool
-    makeWrapper
-  ];
-
-  buildInputs = [
-    glib
-    gobject-introspection
-    polkit
-    systemd
   ];
 
   preFixup = ''

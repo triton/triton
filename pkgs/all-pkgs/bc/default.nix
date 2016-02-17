@@ -16,6 +16,16 @@ stdenv.mkDerivation rec {
     sha256 = "1k2yf9bhjxjwfhz0d1c5hmmrs8rxi9al0d4a39p8lgf0zayapr3y";
   };
 
+  nativeBuildInputs = [
+    bison
+    flex
+  ];
+
+  buildInputs = [
+    ncurses
+    readline
+  ];
+
   patches = [
     (fetchTritonPatch {
       rev = "4eaff4fc1ef159416bd98cf46c56dafa9d755a7a";
@@ -35,29 +45,18 @@ stdenv.mkDerivation rec {
   ];
 
   postConfigure =
-  /* Don't regen docs -- configure produces a small fragment
-     that includes the version info which causes all pages to
-     regen (newer file). */ ''
-  	touch -r doc doc/*
-  '';
-
-  nativeBuildInputs = [
-    bison
-    flex
-  ];
-
-  buildInputs = [
-    ncurses
-    readline
-  ];
+    /* Don't regen docs -- configure produces a small fragment
+       that includes the version info which causes all pages to
+       regen (newer file). */ ''
+    	touch -r doc doc/*
+    '';
 
   postBuild =
-  /* Simple test */ ''
-    echo "quit" | ./bc/bc -l Test/checklib.b
-  '';
+    /* Simple test */ ''
+      echo "quit" | ./bc/bc -l Test/checklib.b
+    '';
 
   doCheck = true;
-  enableParallelBuilding = false;
 
   meta = with stdenv.lib; {
     description = "GNU software calculator";

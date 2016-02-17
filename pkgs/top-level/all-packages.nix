@@ -2835,7 +2835,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  keepalived = callPackage ../tools/networking/keepalived { };
 #
-#  kexectools = callPackage ../os-specific/linux/kexectools { };
+  kexectools = callPackage ../os-specific/linux/kexectools { };
 #
 #  keybase = callPackage ../applications/misc/keybase { };
 #
@@ -3006,7 +3006,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  lxc = callPackage ../os-specific/linux/lxc { };
 #  lxd = goPackages.lxd.bin // { outputs = [ "bin" ]; };
 #
-#  lzip = callPackage ../tools/compression/lzip { };
+  lzip = callPackage ../tools/compression/lzip { };
 #
   lzma = xz;
 
@@ -5261,7 +5261,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  erlangPackages = callPackage ../development/erlang-modules { };
 #  hex2nix = erlangPackages.callPackage ../development/tools/erlang/hex2nix { };
 #
-#  guile = callPackage ../development/interpreters/guile { };
+  guile = callPackage ../development/interpreters/guile { };
 #
 #  jmeter = callPackage ../applications/networking/jmeter {};
 #
@@ -5405,22 +5405,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ecj = callPackage ../development/eclipse/ecj { };
 #
 #  jdtsdk = callPackage ../development/eclipse/jdt-sdk { };
-#
-#  guileCairo = callPackage ../development/guile-modules/guile-cairo { };
-#
-#  guileGnome = callPackage ../development/guile-modules/guile-gnome {
-#    inherit (gnome) gnome_vfs libglade libgnome libgnomecanvas libgnomeui;
-#  };
-#
-#  guile_lib = callPackage ../development/guile-modules/guile-lib { };
-#
-#  guile_ncurses = callPackage ../development/guile-modules/guile-ncurses { };
-#
-#  guile-opengl = callPackage ../development/guile-modules/guile-opengl { };
-#
-#  guile-sdl = callPackage ../development/guile-modules/guile-sdl { };
-#
-#  guile-xcb = callPackage ../development/guile-modules/guile-xcb { };
 #
 #  pharo-vms = callPackage_i686 ../development/pharo/vm { };
 #  pharo-vm  = pharo-vms.pharo-no-spur;
@@ -5985,9 +5969,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  swig1 = callPackage ../development/tools/misc/swig { };
 #  swig2 = callPackage ../development/tools/misc/swig/2.x.nix { };
-#  swig3 = callPackage ../development/tools/misc/swig/3.x.nix { };
-#  swig = swig3;
-#  swigWithJava = swig;
+  swig3 = callPackage ../development/tools/misc/swig/3.x.nix { };
+  swig = swig3;
 #
 #  swfmill = callPackage ../tools/video/swfmill { };
 #
@@ -6890,7 +6873,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libgroove = callPackage ../development/libraries/libgroove { };
 #
-#  libseccomp = callPackage ../development/libraries/libseccomp { };
+  libseccomp = callPackage ../development/libraries/libseccomp { };
 #
 #  libserialport = callPackage ../development/libraries/libserialport { };
 #
@@ -7085,9 +7068,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libmemcached = callPackage ../development/libraries/libmemcached { };
 #
-#  libmicrohttpd-full = callPackage ../development/libraries/libmicrohttpd { };
-#
-#  libmicrohttpd = libmicrohttpd-full;
+  libmicrohttpd = callPackage ../development/libraries/libmicrohttpd { };
 #
 #  libmikmod = callPackage ../development/libraries/libmikmod { };
 #
@@ -7243,7 +7224,7 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
 #  libtar = callPackage ../development/libraries/libtar { };
 #
-#  libtasn1 = callPackage ../development/libraries/libtasn1 { };
+libtasn1 = callPackage ../development/libraries/libtasn1 { };
 #
 libtheora = callPackage ../development/libraries/libtheora { };
 #
@@ -7495,7 +7476,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    sslSupport = true;
 #  };
 #
-#  nettle = callPackage ../development/libraries/nettle { };
+  nettle = callPackage ../development/libraries/nettle { };
 #
 #  newt = callPackage ../development/libraries/newt { };
 #
@@ -9086,13 +9067,13 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  atop = callPackage ../os-specific/linux/atop { };
 #
-#  auditFull = callPackage ../os-specific/linux/audit { };
-#  libaudit = auditFull.override {
-#    prefix = "lib";
-#    go = null; # We don't need go bindings
-#    python2 = null; # We don't need python2 bindings
-#    python3 = null; # We don't need python3 bindings
-#  };
+  auditFull = callPackage ../os-specific/linux/audit { };
+  libaudit = auditFull.override {
+    prefix = "lib";
+    go = null; # We don't need go bindings
+    python2 = null; # We don't need python2 bindings
+    python3 = null; # We don't need python3 bindings
+  };
 #
 #  b43Firmware_5_1_138 = callPackage ../os-specific/linux/firmware/b43-firmware/5.1.138.nix { };
 #
@@ -9263,7 +9244,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  jujuutils = callPackage ../os-specific/linux/jujuutils { };
 #
-#  kbd = callPackage ../os-specific/linux/kbd { };
+  kbd = callPackage ../os-specific/linux/kbd { };
 #
 #  kbdlight = callPackage ../os-specific/linux/kbdlight { };
 #
@@ -9968,19 +9949,19 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  docbook_xml_dtd_412 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.1.2.nix { };
 #
-#  docbook_xml_dtd_42 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.2.nix { };
+  docbook_xml_dtd_42 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.2.nix { };
 #
 #  docbook_xml_dtd_43 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.3.nix { };
 #
 #  docbook_xml_dtd_44 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.4.nix { };
 #
-#  docbook_xml_dtd_45 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.5.nix { };
+  docbook_xml_dtd_45 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.5.nix { };
 #
 #  docbook_xml_ebnf_dtd = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook-ebnf { };
 #
-#  inherit (callPackages ../data/sgml+xml/stylesheets/xslt/docbook-xsl { })
-#    docbook_xsl
-#    docbook_xsl_ns;
+  inherit (callPackages ../data/sgml+xml/stylesheets/xslt/docbook-xsl { })
+    docbook_xsl
+    docbook_xsl_ns;
 #
 #  docbook_xml_xslt = docbook_xsl;
 #

@@ -2133,7 +2133,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  deluge = pythonPackages.deluge;
 #
-#  desktop_file_utils = callPackage ../tools/misc/desktop-file-utils { };
+  desktop_file_utils = callPackage ../tools/misc/desktop-file-utils { };
 #
 #  despotify = callPackage ../development/libraries/despotify { };
 #
@@ -4306,9 +4306,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  unshield = callPackage ../tools/archivers/unshield { };
 #
-#  unzip = callPackage ../tools/archivers/unzip { };
-#
-#  unzipNLS = lowPrio (unzip.override { enableNLS = true; });
+  unzip = callPackage ../tools/archivers/unzip { };
+
+  unzipNLS = lowPrio (unzip.override { enableNLS = true; });
 #
 #  uptimed = callPackage ../tools/system/uptimed { };
 #
@@ -4661,13 +4661,13 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dotnetPackages = callPackage ./dotnet-packages.nix {};
 #
-#  go_1_4 = callPackage ../development/compilers/go/1.4.nix {};
-#
-#  go_1_5 = callPackage ../development/compilers/go/1.5.nix { };
-#
-#  go_1_6 = callPackage ../development/compilers/go/1.6.nix { };
-#
-#  go = go_1_6;
+  go_1_4 = callPackage ../development/compilers/go/1.4.nix {};
+
+  go_1_5 = callPackage ../development/compilers/go/1.5.nix { };
+
+  go_1_6 = callPackage ../development/compilers/go/1.6.nix { };
+
+  go = go_1_6;
 #
 #  go-repo-root = goPackages.go-repo-root.bin // { outputs = [ "bin" ]; };
 #
@@ -5636,7 +5636,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libsigrokdecode = callPackage ../development/tools/libsigrokdecode { };
 #
-#  dejagnu = callPackage ../development/tools/misc/dejagnu { };
+  dejagnu = callPackage ../development/tools/misc/dejagnu { };
 #
 #  dfeet = callPackage ../development/tools/misc/d-feet {
 #    inherit (pythonPackages) pep8;
@@ -5749,7 +5749,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gradle = self.gradleGen.gradleLatest;
 #  gradle25 = self.gradleGen.gradle25;
 #
-#  gperf = callPackage ../development/tools/misc/gperf { };
+  gperf = callPackage ../development/tools/misc/gperf { };
 #
 #  grail = callPackage ../development/libraries/grail { };
 #
@@ -6219,27 +6219,27 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  # Make bdb5 the default as it is the last release under the custom
 #  # bsd-like license
-#  db = db5;
-#  db4 = db48;
-#  db44 = callPackage ../development/libraries/db/db-4.4.nix { };
-#  db45 = callPackage ../development/libraries/db/db-4.5.nix { };
-#  db47 = callPackage ../development/libraries/db/db-4.7.nix { };
-#  db48 = callPackage ../development/libraries/db/db-4.8.nix { };
-#  db5 = db53;
-#  db53 = callPackage ../development/libraries/db/db-5.3.nix { };
-#  db6 = db60;
-#  db60 = callPackage ../development/libraries/db/db-6.0.nix { };
-#
-#  dbus = callPackage ../development/libraries/dbus { };
-#  dbus_cplusplus  = callPackage ../development/libraries/dbus-cplusplus { };
-#  dbus_glib       = callPackage ../development/libraries/dbus-glib { };
-#  dbus_java       = callPackage ../development/libraries/java/dbus-java { };
-#  dbus_python     = pythonPackages.dbus;
-#
-#  # Should we deprecate these? Currently there are many references.
-#  dbus_tools = pkgs.dbus.tools;
-#  dbus_libs = pkgs.dbus.libs;
-#  dbus_daemon = pkgs.dbus.daemon;
+  db = db5;
+  db4 = db48;
+  db44 = callPackage ../development/libraries/db/db-4.4.nix { };
+  db45 = callPackage ../development/libraries/db/db-4.5.nix { };
+  db47 = callPackage ../development/libraries/db/db-4.7.nix { };
+  db48 = callPackage ../development/libraries/db/db-4.8.nix { };
+  db5 = db53;
+  db53 = callPackage ../development/libraries/db/db-5.3.nix { };
+  db6 = db60;
+  db60 = callPackage ../development/libraries/db/db-6.0.nix { };
+
+  dbus = callPackage ../development/libraries/dbus { };
+  dbus_cplusplus  = callPackage ../development/libraries/dbus-cplusplus { };
+  dbus_glib       = callPackage ../development/libraries/dbus-glib { };
+  dbus_java       = callPackage ../development/libraries/java/dbus-java { };
+  dbus_python     = pythonPackages.dbus;
+
+  # Should we deprecate these? Currently there are many references.
+  dbus_tools = pkgs.dbus.tools;
+  dbus_libs = pkgs.dbus.libs;
+  dbus_daemon = pkgs.dbus.daemon;
 #
 #  dhex = callPackage ../applications/editors/dhex { };
 #
@@ -6267,13 +6267,13 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  enginepkcs11 = callPackage ../development/libraries/enginepkcs11 { };
 #
-#  epoxy = callPackage ../development/libraries/epoxy {};
+  epoxy = callPackage ../development/libraries/epoxy {};
 #
 #  esdl = callPackage ../development/libraries/esdl { };
 #
 #  exiv2 = callPackage ../development/libraries/exiv2 { };
 #
-#  expat = callPackage ../development/libraries/expat { };
+  expat = callPackage ../development/libraries/expat { };
 #
 #  eventlog = callPackage ../development/libraries/eventlog { };
 #
@@ -6293,12 +6293,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ffmpegthumbnailer = callPackage ../development/libraries/ffmpegthumbnailer { };
 #
-#  ffms = callPackage ../development/libraries/ffms { };
+  ffms = callPackage ../development/libraries/ffms { };
 #
-#  fftw = callPackage ../development/libraries/fftw { };
-#  fftwSinglePrec = fftw.override { precision = "single"; };
-#  fftwFloat = fftwSinglePrec; # the configure option is just an alias
-#  fftwLongDouble = fftw.override { precision = "long-double"; };
+  fftw = callPackage ../development/libraries/fftw { };
+  fftwSinglePrec = fftw.override { precision = "single"; };
+  fftwFloat = fftwSinglePrec; # the configure option is just an alias
+  fftwLongDouble = fftw.override { precision = "long-double"; };
 #
 #  filter-audio = callPackage ../development/libraries/filter-audio {};
 #
@@ -6320,35 +6320,35 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  cfitsio = callPackage ../development/libraries/cfitsio { };
 #
-#  fontconfig_210 = callPackage ../development/libraries/fontconfig/2.10.nix { };
-#
-#  fontconfig = callPackage ../development/libraries/fontconfig { };
-#
-#  fontconfig-ultimate = callPackage ../development/libraries/fontconfig-ultimate {};
+  fontconfig_210 = callPackage ../development/libraries/fontconfig/2.10.nix { };
+
+  fontconfig = callPackage ../development/libraries/fontconfig { };
+
+  fontconfig-ultimate = callPackage ../development/libraries/fontconfig-ultimate {};
 #
 #  folly = callPackage ../development/libraries/folly { };
 #
-#  makeFontsConf = let fontconfig_ = fontconfig; in {fontconfig ? fontconfig_, fontDirectories}:
-#    callPackage ../development/libraries/fontconfig/make-fonts-conf.nix {
-#      inherit fontconfig fontDirectories;
-#    };
+  makeFontsConf = let fontconfig_ = fontconfig; in {fontconfig ? fontconfig_, fontDirectories}:
+    callPackage ../development/libraries/fontconfig/make-fonts-conf.nix {
+      inherit fontconfig fontDirectories;
+    };
 #
-#  makeFontsCache = let fontconfig_ = fontconfig; in {fontconfig ? fontconfig_, fontDirectories}:
-#    callPackage ../development/libraries/fontconfig/make-fonts-cache.nix {
-#      inherit fontconfig fontDirectories;
-#    };
+  makeFontsCache = let fontconfig_ = fontconfig; in {fontconfig ? fontconfig_, fontDirectories}:
+    callPackage ../development/libraries/fontconfig/make-fonts-cache.nix {
+      inherit fontconfig fontDirectories;
+    };
 #
 #  freealut = callPackage ../development/libraries/freealut { };
 #
 #  freeglut = callPackage ../development/libraries/freeglut { };
 #
 #  freenect = callPackage ../development/libraries/freenect { };
-#
-#  freetype = callPackage ../development/libraries/freetype { };
-#
-#  frei0r = callPackage ../development/libraries/frei0r { };
-#
-#  fribidi = callPackage ../development/libraries/fribidi { };
+
+  freetype = callPackage ../development/libraries/freetype { };
+
+  frei0r = callPackage ../development/libraries/frei0r { };
+
+  fribidi = callPackage ../development/libraries/fribidi { };
 #
 #  funambol = callPackage ../development/libraries/funambol { };
 #
@@ -6364,7 +6364,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    inherit (gnome) gtkdoc;
 #  };
 #
-#  gdbm = callPackage ../development/libraries/gdbm { };
+  gdbm = callPackage ../development/libraries/gdbm { };
 #
 #  gecode_3 = callPackage ../development/libraries/gecode/3.nix { };
 #  gecode_4 = callPackage ../development/libraries/gecode { };
@@ -6610,7 +6610,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  imlib2 = callPackage ../development/libraries/imlib2 { };
 #
-#  ijs = callPackage ../development/libraries/ijs { };
+  ijs = callPackage ../development/libraries/ijs { };
 #
 #  incrtcl = callPackage ../development/libraries/incrtcl { };
 #
@@ -6619,30 +6619,30 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  indilib = callPackage ../development/libraries/indilib { };
 #
-#  iniparser = callPackage ../development/libraries/iniparser { };
+iniparser = callPackage ../development/libraries/iniparser { };
 #
-#  intltool = callPackage ../development/tools/misc/intltool { };
+intltool = callPackage ../development/tools/misc/intltool { };
 #
 #  ip2location-c = callPackage ../development/libraries/ip2location-c { };
 #
 #  irrlicht = callPackage ../development/libraries/irrlicht { };
 #  irrlicht3843 = callPackage ../development/libraries/irrlicht/irrlicht3843.nix { };
 #
-#  isocodes = callPackage ../development/libraries/iso-codes { };
+isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  itk = callPackage ../development/libraries/itk { };
 #
-#  jasper = callPackage ../development/libraries/jasper { };
+  jasper = callPackage ../development/libraries/jasper { };
 #
 #  jama = callPackage ../development/libraries/jama { };
 #
 #  jansson = callPackage ../development/libraries/jansson { };
 #
-#  jbig2dec = callPackage ../development/libraries/jbig2dec { };
+  jbig2dec = callPackage ../development/libraries/jbig2dec { };
 #
 #  jbigkit = callPackage ../development/libraries/jbigkit { };
 #
-#  jemalloc = callPackage ../development/libraries/jemalloc { };
+  jemalloc = callPackage ../development/libraries/jemalloc { };
 #
 #  jetty_gwt = callPackage ../development/libraries/java/jetty-gwt { };
 #
@@ -6676,11 +6676,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  LASzip = callPackage ../development/libraries/LASzip { };
 #
-#  lcms = lcms1;
-#
-#  lcms1 = callPackage ../development/libraries/lcms { };
-#
-#  lcms2 = callPackage ../development/libraries/lcms2 { };
+  lcms = lcms1;
+
+  lcms1 = callPackage ../development/libraries/lcms { };
+
+  lcms2 = callPackage ../development/libraries/lcms2 { };
 #
 #  ldb = callPackage ../development/libraries/ldb {
 #    python = python2;
@@ -6690,9 +6690,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  lesstif = callPackage ../development/libraries/lesstif { };
 #
-#  leveldb = callPackage ../development/libraries/leveldb { };
+  leveldb = callPackage ../development/libraries/leveldb { };
 #
-#  lmdb = callPackage ../development/libraries/lmdb { };
+  lmdb = callPackage ../development/libraries/lmdb { };
 #
 #  levmar = callPackage ../development/libraries/levmar { };
 #
@@ -6700,7 +6700,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    libpng = libpng12;
 #  };
 #
-#  letsencrypt = callPackage ../tools/admin/letsencrypt { };
+  letsencrypt = callPackage ../tools/admin/letsencrypt { };
 #
 #  lib3ds = callPackage ../development/libraries/lib3ds { };
 #
@@ -6945,17 +6945,17 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libftdi1 = callPackage ../development/libraries/libftdi/1.x.nix { };
 #
-#  libgcrypt = callPackage ../development/libraries/libgcrypt {
-#    # Breaks packages that expect to have elevated privileges
-#    # Ex. Lightdm, cryptsetup
-#    libcap = null;
-#  };
+  libgcrypt = callPackage ../development/libraries/libgcrypt {
+    # Breaks packages that expect to have elevated privileges
+    # Ex. Lightdm, cryptsetup
+    libcap = null;
+  };
 #
-#  libgcrypt_1_5 = lowPrio (callPackage ../development/libraries/libgcrypt/1.5.nix { });
+  libgcrypt_1_5 = lowPrio (callPackage ../development/libraries/libgcrypt/1.5.nix { });
 #
 #  libgdiplus = callPackage ../development/libraries/libgdiplus { };
 #
-#  libgpgerror = callPackage ../development/libraries/libgpg-error { };
+  libgpgerror = callPackage ../development/libraries/libgpg-error { };
 #
 #  libgsystem = callPackage ../development/libraries/libgsystem { };
 #
@@ -7018,7 +7018,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  libmsgpack = callPackage ../development/libraries/libmsgpack { };
 #  libmsgpack_0_5 = callPackage ../development/libraries/libmsgpack/0.5.nix { };
 #
-#  libnatspec = callPackage ../development/libraries/libnatspec { };
+  libnatspec = callPackage ../development/libraries/libnatspec { };
 #
 #  libndp = callPackage ../development/libraries/libndp { };
 #
@@ -7045,15 +7045,15 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  librevisa = callPackage ../development/libraries/librevisa { };
 #
-#  libsamplerate = callPackage ../development/libraries/libsamplerate { };
+  libsamplerate = callPackage ../development/libraries/libsamplerate { };
 #
 #  libsieve = callPackage ../development/libraries/libsieve { };
 #
-#  libgsf = callPackage ../development/libraries/libgsf { };
+  libgsf = callPackage ../development/libraries/libgsf { };
 #
-#  libid3tag = callPackage ../development/libraries/libid3tag { };
+  libid3tag = callPackage ../development/libraries/libid3tag { };
 #
-#  libidn = callPackage ../development/libraries/libidn { };
+  libidn = callPackage ../development/libraries/libidn { };
 #
 #  idnkit = callPackage ../development/libraries/idnkit { };
 #
@@ -7185,11 +7185,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libpgf = callPackage ../development/libraries/libpgf { };
 #
-#  libpng = callPackage ../development/libraries/libpng { };
-#  libpng_apng = libpng.override { apngSupport = true; };
-#  libpng12 = callPackage ../development/libraries/libpng/12.nix { };
+  libpng = callPackage ../development/libraries/libpng { };
+  libpng_apng = libpng.override { apngSupport = true; };
+  libpng12 = callPackage ../development/libraries/libpng/12.nix { };
 #
-#  libpaper = callPackage ../development/libraries/libpaper { };
+  libpaper = callPackage ../development/libraries/libpaper { };
 #
 #  libpfm = callPackage ../development/libraries/libpfm { };
 #
@@ -7370,7 +7370,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libxmp = callPackage ../development/libraries/libxmp { };
 #
-#  libxslt = callPackage ../development/libraries/libxslt { };
+  libxslt = callPackage ../development/libraries/libxslt { };
 #
 #  libixp_hg = callPackage ../development/libraries/libixp-hg { };
 #
@@ -8245,15 +8245,15 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  xercesc = callPackage ../development/libraries/xercesc {};
 #
 #  # Avoid using this. It isn't really a wrapper anymore, but we keep the name.
-#  xlibsWrapper = callPackage ../development/libraries/xlibs-wrapper {
-#    packages = [
-#      freetype fontconfig xorg.xproto xorg.libX11 xorg.libXt
-#      xorg.libXft xorg.libXext xorg.libSM xorg.libICE
-#      xorg.xextproto
-#    ];
-#  };
+  xlibsWrapper = callPackage ../development/libraries/xlibs-wrapper {
+    packages = [
+      freetype fontconfig xorg.xproto xorg.libX11 xorg.libXt
+      xorg.libXft xorg.libXext xorg.libSM xorg.libICE
+      xorg.xextproto
+    ];
+  };
 #
-#  xmlrpc_c = callPackage ../development/libraries/xmlrpc-c { };
+  xmlrpc_c = callPackage ../development/libraries/xmlrpc-c { };
 #
 #  xmlsec = callPackage ../development/libraries/xmlsec { };
 #
@@ -9153,7 +9153,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  criu = callPackage ../os-specific/linux/criu { };
 #
-#  cryptsetup = callPackage ../os-specific/linux/cryptsetup { };
+  cryptsetup = callPackage ../os-specific/linux/cryptsetup { };
 #
 #  cramfsswap = callPackage ../os-specific/linux/cramfsswap { };
 #
@@ -9184,7 +9184,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libossp_uuid = callPackage ../development/libraries/libossp-uuid { };
 #
-#  libuuid = utillinux;
+  libuuid = utillinux;
 #
 #  light = callPackage ../os-specific/linux/light { };
 #
@@ -9555,27 +9555,27 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  lsiutil = callPackage ../os-specific/linux/lsiutil { };
 #
-#  kmod = callPackage ../os-specific/linux/kmod { };
+  kmod = callPackage ../os-specific/linux/kmod { };
 #
 #  kmod-blacklist-ubuntu = callPackage ../os-specific/linux/kmod-blacklist-ubuntu { };
 #
 #  kmod-debian-aliases = callPackage ../os-specific/linux/kmod-debian-aliases { };
 #
-#  kvm = qemu_kvm;
+  kvm = qemu_kvm;
 #
-#  libcap = callPackage ../os-specific/linux/libcap { };
-#
-#  libcap_progs = callPackage ../os-specific/linux/libcap/progs.nix { };
-#
-#  libcap_pam = callPackage ../os-specific/linux/libcap/pam.nix { };
-#
-#  libcap_manpages = callPackage ../os-specific/linux/libcap/man.nix { };
-#
-#  libcap_ng = callPackage ../os-specific/linux/libcap-ng {
-#    swig = null; # Currently not using the python2/3 bindings
-#    python2 = null; # Currently not using the python2 bindings
-#    python3 = null; # Currently not using the python3 bindings
-#  };
+  libcap = callPackage ../os-specific/linux/libcap { };
+
+  libcap_progs = callPackage ../os-specific/linux/libcap/progs.nix { };
+
+  libcap_pam = callPackage ../os-specific/linux/libcap/pam.nix { };
+
+  libcap_manpages = callPackage ../os-specific/linux/libcap/man.nix { };
+
+  libcap_ng = callPackage ../os-specific/linux/libcap-ng {
+    swig = null; # Currently not using the python2/3 bindings
+    python2 = null; # Currently not using the python2 bindings
+    python3 = null; # Currently not using the python3 bindings
+  };
 #
 #  libnscd = callPackage ../os-specific/linux/libnscd { };
 #
@@ -9642,7 +9642,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  pagemon = callPackage ../os-specific/linux/pagemon { };
 #
-#  pam = callPackage ../os-specific/linux/pam { };
+  pam = callPackage ../os-specific/linux/pam { };
 #
 #  # pam_bioapi ( see http://www.thinkwiki.org/wiki/How_to_enable_the_fingerprint_reader )
 #
@@ -9773,18 +9773,18 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  sysstat = callPackage ../os-specific/linux/sysstat { };
 #
-#  systemd = callPackage ../os-specific/linux/systemd {
-#    linuxHeaders = linuxHeaders_3_18;
-#  };
+  systemd = callPackage ../os-specific/linux/systemd {
+    linuxHeaders = linuxHeaders_3_18;
+  };
 #
 #  # In nixos, you can set systemd.package = pkgs.systemd_with_lvm2 to get
 #  # LVM2 working in systemd.
-#  systemd_with_lvm2 = pkgs.lib.overrideDerivation pkgs.systemd (p: {
-#      name = p.name + "-with-lvm2";
-#      postInstall = p.postInstall + ''
-#        cp "${pkgs.lvm2}/lib/systemd/system-generators/"* $out/lib/systemd/system-generators
-#      '';
-#  });
+  systemd_with_lvm2 = pkgs.lib.overrideDerivation pkgs.systemd (p: {
+      name = p.name + "-with-lvm2";
+      postInstall = p.postInstall + ''
+        cp "${pkgs.lvm2}/lib/systemd/system-generators/"* $out/lib/systemd/system-generators
+      '';
+  });
 #
 #  sysvinit = callPackage ../os-specific/linux/sysvinit { };
 #
@@ -10020,7 +10020,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  hack-font = callPackage ../data/fonts/hack { };
 #
-#  hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
+hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  hanazono = callPackage ../data/fonts/hanazono { };
 #
@@ -10111,7 +10111,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  sampradaya = callPackage ../data/fonts/sampradaya { };
 #
-#  shared_mime_info = callPackage ../data/misc/shared-mime-info { };
+  shared_mime_info = callPackage ../data/misc/shared-mime-info { };
 #
 #  shared_desktop_ontologies = callPackage ../data/misc/shared-desktop-ontologies { };
 #
@@ -10126,7 +10126,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  inherit (callPackages ../data/fonts/gdouros { })
 #    aegean textfonts symbola aegyptus akkadian anatolian maya unidings musica analecta;
 #
-#  iana_etc = callPackage ../data/misc/iana-etc { };
+  iana_etc = callPackage ../data/misc/iana-etc { };
 #
 #  poppler_data = callPackage ../data/misc/poppler-data { };
 #
@@ -10172,7 +10172,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  ttf_bitstream_vera = callPackage ../data/fonts/ttf-bitstream-vera { };
 #
-#  tzdata = callPackage ../data/misc/tzdata { };
+  tzdata = callPackage ../data/misc/tzdata { };
 #
 #  ubuntu_font_family = callPackage ../data/fonts/ubuntu-font-family { };
 #
@@ -10901,13 +10901,13 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  gollum = callPackage ../applications/misc/gollum { };
 #
-#  google-chrome = callPackage ../applications/networking/browsers/google-chrome { };
+  google-chrome = callPackage ../applications/networking/browsers/google-chrome { };
 #
 #  googleearth = callPackage_i686 ../applications/misc/googleearth { };
 #
-#  google_talk_plugin = callPackage ../applications/networking/browsers/mozilla-plugins/google-talk-plugin {
-#    libpng = libpng12;
-#  };
+  google_talk_plugin = callPackage ../applications/networking/browsers/mozilla-plugins/google-talk-plugin {
+    libpng = libpng12;
+  };
 #
 #  gosmore = callPackage ../applications/misc/gosmore { };
 #
@@ -11930,15 +11930,15 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  sox = callPackage ../applications/misc/audio/sox { };
 #
-#  soxr = callPackage ../applications/misc/audio/soxr { };
+  soxr = callPackage ../applications/misc/audio/soxr { };
 #
 #  spek = callPackage ../applications/audio/spek { };
 #
-#  spotify = callPackage ../applications/audio/spotify {
-#    inherit (gnome) GConf;
-#    libgcrypt = libgcrypt_1_5;
-#    libpng = libpng12;
-#  };
+  spotify = callPackage ../applications/audio/spotify {
+    inherit (gnome) GConf;
+    libgcrypt = libgcrypt_1_5;
+    libpng = libpng12;
+  };
 #
 #  libspotify = callPackage ../development/libraries/libspotify {
 #    apiKey = config.libspotify.apiKey or null;
@@ -12911,9 +12911,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  beep = callPackage ../misc/beep { };
 #
-#  cups = callPackage ../misc/cups { };
-#
-#  cups_filters = callPackage ../misc/cups/filters.nix { };
+  cups = callPackage ../misc/cups { };
+
+  cups_filters = callPackage ../misc/cups/filters.nix { };
 #
 #  cups-pk-helper = callPackage ../misc/cups/cups-pk-helper.nix { };
 #
@@ -12989,14 +12989,14 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  gensgs = callPackage_i686 ../misc/emulators/gens-gs { };
 #
-#  ghostscript = callPackage ../misc/ghostscript {
-#    x11Support = false;
-#    cupsSupport = config.ghostscript.cups or true;
-#  };
+  ghostscript = callPackage ../misc/ghostscript {
+    x11Support = false;
+    cupsSupport = config.ghostscript.cups or true;
+  };
 #
-#  ghostscriptX = appendToName "with-X" (ghostscript.override {
-#    x11Support = true;
-#  });
+  ghostscriptX = appendToName "with-X" (ghostscript.override {
+    x11Support = true;
+  });
 #
 #  gnuk = callPackage ../misc/gnuk { };
 #  gnuk-unstable = callPackage ../misc/gnuk/unstable.nix { };
@@ -13215,49 +13215,49 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  texFunctions = callPackage ../tools/typesetting/tex/nix pkgs;
 #
 #  # All the new TeX Live is inside. See description in default.nix.
-#  texlive = recurseIntoAttrs
-#    (callPackage ../tools/typesetting/tex/texlive-new { });
-#
-#  texLive = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive) {
-#    ghostscript = ghostscriptX;
-#  };
-#
-#  texLiveFull = lib.setName "texlive-full" (texLiveAggregationFun {
-#    paths = [ texLive texLiveExtra lmodern texLiveCMSuper texLiveLatexXColor
-#              texLivePGF texLiveBeamer texLiveModerncv tipa tex4ht texinfo
-#              texLiveModerntimeline texLiveContext ];
-#  });
-#
-#  /* Look in configurations/misc/raskin.nix for usage example (around revisions
-#  where TeXLive was added)
-#
-#  (texLiveAggregationFun {
-#    paths = [texLive texLiveExtra texLiveCMSuper
-#      texLiveBeamer
-#    ];
-#  })
-#
+  texlive = recurseIntoAttrs
+    (callPackage ../tools/typesetting/tex/texlive-new { });
+
+  texLive = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive) {
+    ghostscript = ghostscriptX;
+  };
+
+  texLiveFull = lib.setName "texlive-full" (texLiveAggregationFun {
+    paths = [ texLive texLiveExtra lmodern texLiveCMSuper texLiveLatexXColor
+              texLivePGF texLiveBeamer texLiveModerncv tipa tex4ht texinfo
+              texLiveModerntimeline texLiveContext ];
+  });
+
+  /* Look in configurations/misc/raskin.nix for usage example (around revisions
+  where TeXLive was added)
+
+  (texLiveAggregationFun {
+    paths = [texLive texLiveExtra texLiveCMSuper
+      texLiveBeamer
+    ];
+  })
+
 #  You need to use texLiveAggregationFun to regenerate, say, ls-R (TeX-related file list)
 #  Just installing a few packages doesn't work.
 #  */
-#  texLiveAggregationFun = params:
-#    builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/aggregate.nix) params;
-#
-#  texLiveContext = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/context.nix) {};
-#
-#  texLiveExtra = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/extra.nix) {};
-#
-#  texLiveCMSuper = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/cm-super.nix) {};
-#
-#  texLiveLatexXColor = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/xcolor.nix) {};
-#
-#  texLivePGF = pgf3;
-#
-#  texLiveBeamer = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/beamer.nix) {};
-#
-#  texLiveModerncv = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/moderncv.nix) {};
-#
-#  texLiveModerntimeline = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/moderntimeline.nix) {};
+  texLiveAggregationFun = params:
+    builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/aggregate.nix) params;
+
+  texLiveContext = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/context.nix) {};
+
+  texLiveExtra = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/extra.nix) {};
+
+  texLiveCMSuper = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/cm-super.nix) {};
+
+  texLiveLatexXColor = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/xcolor.nix) {};
+
+  texLivePGF = pgf3;
+
+  texLiveBeamer = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/beamer.nix) {};
+
+  texLiveModerncv = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/moderncv.nix) {};
+
+  texLiveModerntimeline = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/moderntimeline.nix) {};
 #
 #  ib-tws = callPackage ../applications/office/ib/tws { jdk=oraclejdk8; };
 #
@@ -13313,18 +13313,18 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  webfs = callPackage ../servers/http/webfs { };
 #
-#  wine = callPackage ../misc/emulators/wine {
-#    wineRelease = config.wine.release or "stable";
-#    wineBuild = config.wine.build or "wine32";
-#    pulseaudioSupport = config.pulseaudio or true;
-#  };
-#  wineStable = wine.override { wineRelease = "stable"; };
-#  wineUnstable = lowPrio (wine.override { wineRelease = "unstable"; });
-#  wineStaging = lowPrio (wine.override { wineRelease = "staging"; });
-#
-#  winetricks = callPackage ../misc/emulators/wine/winetricks.nix {
-#    inherit (gnome2) zenity;
-#  };
+  wine = callPackage ../misc/emulators/wine {
+    wineRelease = config.wine.release or "stable";
+    wineBuild = config.wine.build or "wine32";
+    pulseaudioSupport = config.pulseaudio or true;
+  };
+  wineStable = wine.override { wineRelease = "stable"; };
+  wineUnstable = lowPrio (wine.override { wineRelease = "unstable"; });
+  wineStaging = lowPrio (wine.override { wineRelease = "staging"; });
+
+  winetricks = callPackage ../misc/emulators/wine/winetricks.nix {
+    inherit (gnome2) zenity;
+  };
 #
 #  wmutils-core = callPackage ../tools/X11/wmutils-core { };
 #

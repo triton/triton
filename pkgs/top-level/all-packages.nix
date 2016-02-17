@@ -547,9 +547,7 @@ bashCompletion = callPackage ../all-pkgs/bash-completion { };
 
 bc = callPackage ../all-pkgs/bc { };
 
-bittorrentSync14 = callPackage ../all-pkgs/bittorrentsync/1.4.x.nix { };
-bittorrentSync20 = callPackage ../all-pkgs/bittorrentsync/2.0.x.nix { };
-bittorrentSync = bittorrentSync14;
+btsync = callPackage ../all-pkgs/btsync { };
 
 bzrtools = callPackage ../all-pkgs/bzrtools { };
 

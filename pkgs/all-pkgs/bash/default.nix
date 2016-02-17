@@ -1,4 +1,10 @@
-{ stdenv, fetchurl, readline, texinfo, bison }:
+{ stdenv
+, bison
+, fetchurl
+, texinfo
+
+, readline
+}:
 
 let
   version = "4.3";
@@ -16,7 +22,27 @@ stdenv.mkDerivation rec {
     inherit sha256;
   };
 
-  outputs = [ "out" "doc" ];
+  # Note: Bison is needed because the patches above modify parse.y.
+  nativeBuildInputs = [
+    bison
+    texinfo
+  ];
+
+  buildInputs = [
+    readline
+  ];
+
+  patchFlags = "-p0";
+
+  patches =
+    let
+      patch = nr: sha256:
+        fetchurl {
+          url = "mirror://gnu/bash/${realName}-patches/${shortName}-${nr}";
+          inherit sha256;
+        };
+    in
+    import ./bash-4.3-patches.nix patch;
 
   NIX_CFLAGS_COMPILE = ''
     -DSYS_BASHRC="/etc/bashrc"
@@ -27,43 +53,29 @@ stdenv.mkDerivation rec {
     -DSSH_SOURCE_BASHRC
   '';
 
-  patchFlags = "-p0";
+  configureFlags = baseConfigureFlags;
 
-  patches =
-    (let
-      patch = nr: sha256:
-        fetchurl {
-          url = "mirror://gnu/bash/${realName}-patches/${shortName}-${nr}";
-          inherit sha256;
-        };
-    in
-      import ./bash-4.3-patches.nix patch);
+  postInstall =
+    /* Add an `sh' -> `bash' symlink. */ ''
+      ln -s bash "$out/bin/sh"
+    '';
+
+  outputs = [ "out" "doc" ];
 
   crossAttrs = {
     configureFlags = baseConfigureFlags +
       " bash_cv_job_control_missing=nomissing bash_cv_sys_named_pipes=nomissing";
   };
 
-  configureFlags = baseConfigureFlags;
-
-  # Note: Bison is needed because the patches above modify parse.y.
-  nativeBuildInputs = [ bison texinfo ];
-
-  buildInputs = [ readline ];
-
-  postInstall = ''
-    # Add an `sh' -> `bash' symlink.
-    ln -s bash "$out/bin/sh"
-  '';
-
-  meta = {
-    homepage = http://www.gnu.org/software/bash/;
-    license = stdenv.lib.licenses.gpl3Plus;
-    platforms = stdenv.lib.platforms.all;
-    maintainers = [ stdenv.lib.maintainers.simons ];
-  };
-
   passthru = {
     shellPath = "/bin/bash";
+  };
+
+  meta = with stdenv.lib; {
+    description = "The standard GNU Bourne again shell";
+    homepage = http://www.gnu.org/software/bash/;
+    license = licenses.gpl3Plus;
+    maintainers = with maintainers; [ ];
+    platforms = platforms.all;
   };
 }

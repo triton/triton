@@ -2,13 +2,12 @@
 
 # Update patch set for GNU Bash or Readline.
 
-if [ $# -ne 2 ]
-then
-    echo "Usage: $(basename $0) PROJECT VERSION"
-    echo ""
-    echo "Update the patch set for PROJECT (one of \`bash' or \`readline') for"
-    echo "the given version (e.g., \`4.0').  Produce \`PROJECT-patches.nix'."
-    exit 1
+if [ $# -ne 2 ] ; then
+  echo "Usage: $(basename $0) PROJECT VERSION"
+  echo ""
+  echo "Update the patch set for PROJECT (one of \`bash' or \`readline') for"
+  echo "the given version (e.g., \`4.0').  Produce \`PROJECT-patches.nix'."
+  exit 1
 fi
 
 PROJECT="$1"
@@ -30,15 +29,14 @@ rm -vf "$PATCH_LIST"
   echo "patch: [" )							\
 >> "$PATCH_LIST"
 
-for i in `seq -w $start $end`
-do
-    wget ftp.gnu.org/gnu/$PROJECT/$PROJECT-$VERSION-patches/$PROJECT$VERSION_CONDENSED-$i || break
-    wget ftp.gnu.org/gnu/$PROJECT/$PROJECT-$VERSION-patches/$PROJECT$VERSION_CONDENSED-$i.sig
-    "$GPG" --verify $PROJECT$VERSION_CONDENSED-$i.sig
-    echo "(patch \"$i\" \"$(nix-hash --flat --type sha256 --base32 $PROJECT$VERSION_CONDENSED-$i)\")"	\
-    >> "$PATCH_LIST"
+for i in `seq -w $start $end` ; do
+  wget ftp.gnu.org/gnu/$PROJECT/$PROJECT-$VERSION-patches/$PROJECT$VERSION_CONDENSED-$i || break
+  wget ftp.gnu.org/gnu/$PROJECT/$PROJECT-$VERSION-patches/$PROJECT$VERSION_CONDENSED-$i.sig
+  "$GPG" --verify $PROJECT$VERSION_CONDENSED-$i.sig
+  echo "(patch \"$i\" \"$(nix-hash --flat --type sha256 --base32 $PROJECT$VERSION_CONDENSED-$i)\")"	\
+  >> "$PATCH_LIST"
 
-    rm -f $PROJECT$VERSION_CONDENSED-$i{,.sig}
+  rm -f $PROJECT$VERSION_CONDENSED-$i{,.sig}
 done
 
 echo "]" >> "$PATCH_LIST"

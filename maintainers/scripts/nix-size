@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+MAIN=$1
+shift
+
+get_all_deps () {
+  nix-store --query --tree $1 | sed 's,^[ +|-]*,,' | awk '{print $1}'
+}
+get_size () {
+  SIZE=0
+  for CLOSURE in $1; do
+    SIZE=$(expr $(nix-store --query --size "$CLOSURE") + $SIZE)
+  done
+  echo $SIZE
+}
+
+MAIN_CLOSURES="$(get_all_deps "$MAIN" | sort | uniq)"
+
+OTHER_CLOSURES=""
+for i in $(seq 1 $#); do
+  eval ARG="\$$i"
+  OTHER_CLOSURES="$OTHER_CLOSURES\n$(get_all_deps "$ARG")"
+done
+OTHER_CLOSURES="$(echo -e "$OTHER_CLOSURES" | sort | uniq)"
+
+DELTA_CLOSURES="$(diff <(echo "$MAIN_CLOSURES") <(echo "$OTHER_CLOSURES") | grep '^<' | awk '{print $2}')"
+
+echo "First Closure Size:  $(get_size "$MAIN_CLOSURES" | numfmt --to=iec-i --suffix=B --padding=7)"
+echo "Second Closure Size: $(get_size "$OTHER_CLOSURES" | numfmt --to=iec-i --suffix=B --padding=7)"
+echo "Delta Size:          $(get_size "$DELTA_CLOSURES" | numfmt --to=iec-i --suffix=B --padding=7)"

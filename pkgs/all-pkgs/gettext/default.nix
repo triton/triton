@@ -1,4 +1,6 @@
-{ stdenv, fetchurl, xz }:
+{ stdenv
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
   name = "gettext-0.19.7";
@@ -16,7 +18,10 @@ stdenv.mkDerivation rec {
    substituteInPlace gettext-tools/src/project-id --replace "/bin/pwd" pwd
   '';
 
-  buildInputs = [ xz ];
+  preFixup = ''
+    sed -i "$out/bin/gettext.sh" \
+      -e "s,^  \([n]\?gettext \),  $out/bin/\1,"
+  '';
 
   meta = {
     description = "Well integrated set of translation tools and documentation";

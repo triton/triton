@@ -666,6 +666,8 @@ gdm = callPackage ../all-pkgs/gdm { };
 
 geocode-glib = callPackage ../all-pkgs/geocode-glib { };
 
+gettext = callPackage ../all-pkgs/gettext { };
+
 gjs = callPackage ../all-pkgs/gjs { };
 
 gksu = callPackage ../all-pkgs/gksu { };
@@ -800,9 +802,7 @@ gtkdoc = gtk-doc; # Deprecated alias
 
 gtk_2 = callPackage ../all-pkgs/gtk+/2.x.nix { };
 gtk2 = gtk_2;
-gtk_3 = callPackage ../all-pkgs/gtk+/3.x.nix {
-  gettext = gettextWithExpat;
-};
+gtk_3 = callPackage ../all-pkgs/gtk+/3.x.nix { };
 gtk3 = gtk_3;
 
 gtkhtml = callPackage ../all-pkgs/gtkhtml { };
@@ -6384,10 +6384,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  getdata = callPackage ../development/libraries/getdata { };
 #
-  gettext = callPackage ../development/libraries/gettext { };
-
-  gettextWithExpat = callPackage ../development/libraries/gettext/expat.nix { };
-
   gd = callPackage ../development/libraries/gd { };
 #
 #  gdal = callPackage ../development/libraries/gdal { };

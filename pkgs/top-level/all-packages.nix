@@ -146,6 +146,8 @@ let
 
   newScope = extra: lib.callPackageWith (defaultScope // extra);
 
+  callPackageAlias = package: newAttrs: pkgs."${package}".override newAttrs;
+
   # Easily override this package set.
   # Warning: this function is very expensive and must not be used
   # from within the nixpkgs repository.
@@ -736,6 +738,8 @@ gnonlin = gnonlin_1;
 
 gnugrep = callPackage ../all-pkgs/gnugrep { };
 
+gnum4 = callPackage ../all-pkgs/gnum4 { };
+
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = gobject-introspection; # Deprecated alias
 
@@ -993,6 +997,8 @@ libwacom = callPackage ../all-pkgs/libwacom { };
 libzapojit = callPackage ../all-pkgs/libzapojit { };
 
 live555 = callPackage ../all-pkgs/live555 { };
+
+m4 = callPackageAlias "gnum4" { };
 
 mercurial = callPackage ../all-pkgs/mercurial { };
 
@@ -5719,15 +5725,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   flexcpp = callPackage ../development/tools/parsing/flexc++ { };
 
-  m4 = gnum4;
 #
 #  geis = callPackage ../development/libraries/geis { };
 #
 #  global = callPackage ../development/tools/misc/global { };
 #
   gnome_doc_utils = callPackage ../development/tools/documentation/gnome-doc-utils {};
-
-  gnum4 = callPackage ../development/tools/misc/gnum4 { };
 
   gnumake380 = callPackage ../development/tools/build-managers/gnumake/3.80 { };
   gnumake381 = callPackage ../development/tools/build-managers/gnumake/3.81 { };

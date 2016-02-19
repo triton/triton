@@ -1,7 +1,14 @@
-{ stdenv, fetchurl, automake, autoconf, libtool, flex, bison, texinfo
+{ stdenv
+, autoconf
+, automake
+, bison
+, fetchurl
+, flex
+, libtool
+, texinfo
 
 # Optional Dependencies
-, ncurses ? null
+, ncurses
 }:
 
 stdenv.mkDerivation rec {
@@ -12,8 +19,18 @@ stdenv.mkDerivation rec {
     sha256 = "13d426a8h403ckpc8zyf7s2p5rql0lqbg2bv0454x0pvgbfbf4gh";
   };
 
-  nativeBuildInputs = [ automake autoconf libtool flex bison texinfo ];
-  buildInputs = [ ncurses ];
+  nativeBuildInputs = [
+    autoconf
+    automake
+    bison
+    flex
+    libtool
+    texinfo
+  ];
+
+  buildInputs = [
+    ncurses
+  ];
 
   preConfigure = ''
     ./autogen.sh
@@ -27,14 +44,18 @@ stdenv.mkDerivation rec {
 
   # Provide libgpm.so for compatability
   postInstall = ''
-    ln -sv $out/lib/libgpm.so.2 $out/lib/libgpm.so
+    ln -sv libgpm.so.2 $out/lib/libgpm.so
   '';
 
   meta = with stdenv.lib; {
     homepage = http://www.nico.schottelius.org/software/gpm/;
     description = "A daemon that provides mouse support on the Linux console";
     license = licenses.gpl2;
-    platforms = platforms.linux;
-    maintainers = with maintainers; [ eelco wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

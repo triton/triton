@@ -616,6 +616,8 @@ fish = callPackage ../all-pkgs/fish { };
 
 flac = callPackage ../all-pkgs/flac { };
 
+flex = callPackage ../all-pkgs/flex { };
+
 gconf = callPackage ../all-pkgs/gconf { };
 
 gcr = callPackage ../all-pkgs/gcr { };
@@ -702,6 +704,10 @@ gnum4 = callPackage ../all-pkgs/gnum4 { };
 
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = gobject-introspection; # Deprecated alias
+
+gpm = callPackage ../all-pkgs/gpm {
+  ncurses = null;  # Keep curses disabled for lack of value
+};
 
 granite = callPackage ../all-pkgs/granite { };
 
@@ -9108,10 +9114,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  gfxtablet = callPackage ../os-specific/linux/gfxtablet {};
 #
-  gpm = callPackage ../servers/gpm {
-    ncurses = null;  # Keep curses disabled for lack of value
-  };
-
   gpm-ncurses = gpm.override { inherit ncurses; };
 
 #  gradm = callPackage ../os-specific/linux/gradm {
@@ -12104,9 +12106,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  vym = callPackage ../applications/misc/vym { };
 #
-  w3m = callPackage ../applications/networking/browsers/w3m {
-    gpm = gpm-ncurses;
-  };
+  w3m = callPackage ../applications/networking/browsers/w3m { };
 #
 #  # Should always be the version with the most features
 #  w3m-full = w3m;

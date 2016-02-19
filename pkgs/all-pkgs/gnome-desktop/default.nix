@@ -19,7 +19,6 @@
 , pango
 , python
 , wayland
-, xkeyboard_config
 , xorg
 }:
 
@@ -34,6 +33,7 @@ assert xorg != null ->
   && xorg.libXext != null
   && xorg.libXrandr != null
   && xorg.randrproto != null
+  && xorg.xkeyboardconfig != null
   && xorg.xproto != null;
 
 stdenv.mkDerivation rec {
@@ -65,12 +65,12 @@ stdenv.mkDerivation rec {
     isocodes
     libxml2
     pango
-    xkeyboard_config
     xorg.libX11
     xorg.libXext
     xorg.libxkbfile
     xorg.libXrandr
     xorg.randrproto
+    xorg.xkeyboardconfig
     xorg.xproto
   ];
 

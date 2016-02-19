@@ -4,8 +4,19 @@
 , intltool
 , makeWrapper
 
+, accountsservice
 , adwaita-icon-theme
+, clutter
+, clutter-gtk
+, colord
+, colord-gtk
+, cracklib
+, cups
 , dconf
+, docbook_xsl
+, docbook_xsl_ns
+, fontconfig
+, gdk-pixbuf
 , glib
 , gnome-bluetooth
 , gnome-desktop
@@ -17,46 +28,34 @@
 , gsettings-desktop-schemas
 , gtk3
 , ibus
-, libgnomekbd
-, upower
-, vino
-
+, icu
 , libcanberra
-, accountsservice
-, libpwquality
-, libpulseaudio
-, gdk-pixbuf
-, librsvg
-, libnotify
-, libxml2
-, polkit
-, libxslt
+, libgnomekbd
 , libgtop
-, libsoup
-, colord
-, colord-gtk
-, cracklib
-, python
+, libgudev
 , libkrb5
-, networkmanager-applet
-, networkmanager
+, libnotify
+, libpulseaudio
+, libpwquality
+, librsvg
+, libsoup
+, libtool
 , libwacom
+, libxml2
+, libxslt
+, mesa_noglu
+, modemmanager
+, networkmanager
+, networkmanager-applet
+, polkit
+, python
 , samba
 , shared_mime_info
-, tzdata
-, icu
-, libtool
-, udev
-, libgudev
-, docbook_xsl
-, docbook_xsl_ns
-, modemmanager
-, clutter
-, fontconfig
 , sound-theme-freedesktop
-, cups
-, clutter-gtk
-, mesa_noglu
+, tzdata
+, udev
+, upower
+, vino
 , xorg
 }:
 
@@ -87,51 +86,52 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    adwaita-icon-theme
-    ibus
-    gtk3
-    glib
-    upower
-    libcanberra
-    gsettings-desktop-schemas
-    libxml2
-    gnome-desktop
-    gnome-settings-daemon
-    polkit
-    libxslt
-    libgtop
-    gnome-menus
-    gnome-online-accounts
-    libsoup
-    colord
-    libpulseaudio
-    fontconfig
-    colord-gtk
-    libpwquality
     accountsservice
-    libkrb5
-    networkmanager-applet
-    libwacom
-    samba
-    libnotify
-    shared_mime_info
-    icu
-    libtool
+    adwaita-icon-theme
+    clutter
+    clutter-gtk
+    colord
+    colord-gtk
+    cups
+    dconf
     docbook_xsl
     docbook_xsl_ns
-    grilo
+    fontconfig
     gdk-pixbuf
-    librsvg
-    clutter
-    vino
-    udev
-    libgudev
-    networkmanager
-    modemmanager
+    glib
     gnome-bluetooth
-    cups
-    clutter-gtk
+    gnome-desktop
+    gnome-menus
+    gnome-online-accounts
+    gnome-settings-daemon
+    grilo
+    gsettings-desktop-schemas
+    gtk3
+    ibus
+    icu
+    libcanberra
+    libgtop
+    libgudev
+    libkrb5
+    libnotify
+    libpulseaudio
+    libpwquality
+    librsvg
+    libsoup
+    libtool
+    libwacom
+    libxml2
+    libxslt
     mesa_noglu
+    modemmanager
+    networkmanager
+    networkmanager-applet
+    polkit
+    samba
+    shared_mime_info
+    udev
+    upower
+    vino
     xorg.libSM
     xorg.libX11
     xorg.libXi
@@ -187,7 +187,7 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/gnome-control-center \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"

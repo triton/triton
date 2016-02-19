@@ -591,7 +591,7 @@ colord = callPackage ../all-pkgs/colord { };
 
 cryptopp = callPackage ../all-pkgs/crypto++ { };
 
-dash = callPackage ../shells/dash { };
+dash = callPackage ../all-pkgs/dash { };
 
 dconf = callPackage ../all-pkgs/dconf { };
 

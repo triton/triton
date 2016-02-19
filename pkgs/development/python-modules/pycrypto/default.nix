@@ -1,4 +1,11 @@
-{ stdenv, fetchurl, python, buildPythonPackage, gmp }:
+{ stdenv
+, buildPythonPackage
+, fetchurl
+
+, python
+, pythonPackages
+, gmp
+}:
 
 buildPythonPackage rec {
   name = "pycrypto-2.6.1";
@@ -14,9 +21,9 @@ buildPythonPackage rec {
     sed -i "s!,'/usr/include/'!!" setup.py
   '';
 
-  buildInputs = stdenv.lib.optional (!python.isPypy or false) gmp; # optional for pypy
+  buildInputs = stdenv.lib.optional (!pythonPackages.isPyPy or false) gmp; # optional for pypy
 
-  doCheck = !(python.isPypy or stdenv.isDarwin); # error: AF_UNIX path too long
+  doCheck = !(pythonPackages.isPyPy); # error: AF_UNIX path too long
 
   meta = {
     homepage = "http://www.pycrypto.org/";

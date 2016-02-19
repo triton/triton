@@ -331,7 +331,7 @@ let
       meta.description =
         "The default build environment for Unix packages in Nixpkgs";
 
-      inherit mkDerivation;
+      inherit mkDerivation targetSystem hostSystem;
 
       # For convenience, bring in the library functions in lib/ so
       # packages don't have to do that themselves.

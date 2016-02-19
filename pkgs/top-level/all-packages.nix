@@ -6368,22 +6368,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     gccCross = null;
   };
 
-  glibc_memusage = callPackage ../development/libraries/glibc {
-    installLocales = false;
-    withGd = true;
-  };
-
-  glibcCross = forceNativeDrv (glibc.override {
-    gccCross = gccCrossStageStatic;
-  });
-
-  # We can choose:
-  libcCrossChooser = name: if name == "glibc" then glibcCross
-    else if name == "uclibc" then uclibcCross
-    else throw "Unknown libc";
-
-  libcCross = assert crossSystem != null; libcCrossChooser crossSystem.libc;
-#
   # Only supported on Linux
   glibcLocales = callPackage ../development/libraries/glibc/locales.nix { };
 

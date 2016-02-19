@@ -1,13 +1,17 @@
 /* Build configuration used to build glibc, Info files, and locale
    information.  */
 
-cross:
-
-{ name, fetchurl, fetchTritonPatch, stdenv, linux-headers, meta
-, installLocales ? false
-, gccCross ? null
-, profilingLibraries ? false
-, preConfigure ? "", ... }@args:
+{ name
+, fetchurl
+, fetchTritonPatch
+, stdenv
+, linux-headers
+, meta
+, gccCross
+, profilingLibraries
+, preConfigure ? ""
+, ...
+} @ args:
 
 let
 
@@ -21,16 +25,7 @@ let
 
 in
 
-assert cross != null -> gccCross != null;
-
 stdenv.mkDerivation ({
-  inherit installLocales;
-
-  # The host/target system.
-  crossConfig = if cross != null then cross.config else null;
-
-  enableParallelBuilding = true;
-
   patches = [
     /* Have rpcgen(1) look for cpp(1) in $PATH.  */
     (fetchTritonPatch {
@@ -153,7 +148,7 @@ stdenv.mkDerivation ({
     "sysconfdir=$(out)/etc"
   ];
 
-  buildInputs = stdenv.lib.optionals (cross != null) [ gccCross ];
+  buildInputs = [ gccCross ];
 
   # Needed to install share/zoneinfo/zone.tab.  Set to impure /bin/sh to
   # prevent a retained dependency on the bootstrap tools in the stdenv-linux
@@ -174,8 +169,7 @@ stdenv.mkDerivation ({
 // (removeAttrs args [ "gccCross" "fetchurl" "fetchTritonPatch" ]) //
 
 {
-  name = name + "-${version}" +
-    stdenv.lib.optionalString (cross != null) "-${cross.config}";
+  name = name + "-${version}";
 
   src = fetchurl {
     url = "mirror://gnu/glibc/glibc-${version}.tar.gz";

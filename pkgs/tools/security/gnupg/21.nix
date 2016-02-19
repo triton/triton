@@ -1,4 +1,4 @@
-{ fetchurl, stdenv, pkgconfig, libgcrypt, libassuan, libksba, libiconv, npth
+{ fetchurl, stdenv, pkgconfig, libgcrypt, libassuan, libksba, npth
 , autoreconfHook, gettext, texinfo, pcsclite
 
 # Each of the dependencies below are optional.
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   postConfigure = "substituteAllInPlace tools/gpgkey2ssh.c";
 
   buildInputs = [
-    pkgconfig libgcrypt libassuan libksba libiconv npth
+    pkgconfig libgcrypt libassuan libksba npth
     autoreconfHook gettext texinfo
     readline libusb gnutls adns openldap zlib bzip2
   ];

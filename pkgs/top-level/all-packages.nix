@@ -3040,7 +3040,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  makemkv = callPackage ../applications/video/makemkv { };
 #
-#  man = callPackage ../tools/misc/man { };
+  man = callPackage ../tools/misc/man { };
 #
 #  man_db = callPackage ../tools/misc/man-db { };
 #
@@ -3272,7 +3272,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ntopng = callPackage ../tools/networking/ntopng { };
 #
-#  ntp = callPackage ../tools/networking/ntp { };
+  ntp = callPackage ../tools/networking/ntp { };
 #
 #  numdiff = callPackage ../tools/text/numdiff { };
 #
@@ -3333,16 +3333,16 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    };
 #  };
 #
-#  openresolv = callPackage ../tools/networking/openresolv { };
-#
+  openresolv = callPackage ../tools/networking/openresolv { };
+
 #  opensc = callPackage ../tools/security/opensc { };
-#
-#  openssh = callPackage ../tools/networking/openssh { };
-#
-#  openssh_hpn = pkgs.appendToName "with-hpn" (openssh.override { hpnSupport = true; });
-#
-#  openssh_with_kerberos = pkgs.appendToName "with-kerberos" (openssh.override { withKerberos = true; });
-#
+
+  openssh = callPackage ../tools/networking/openssh { };
+
+  openssh_hpn = pkgs.appendToName "with-hpn" (openssh.override { hpnSupport = true; });
+
+  openssh_with_kerberos = pkgs.appendToName "with-kerberos" (openssh.override { withKerberos = true; });
+
 #  opensp = callPackage ../tools/text/sgml/opensp { };
 #
 #  spCompat = callPackage ../tools/text/sgml/opensp/compat.nix { };
@@ -3712,7 +3712,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    inherit (pythonPackages) sphinx;
 #  };
 #
-#  rng_tools = callPackage ../tools/security/rng-tools { };
+  rng_tools = callPackage ../tools/security/rng-tools { };
 #
 #  rsnapshot = callPackage ../tools/backup/rsnapshot {
 #    logger = utillinux;
@@ -5346,12 +5346,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  buildRubyGem = callPackage ../development/interpreters/ruby/build-ruby-gem { };
 #  bundlerEnv = callPackage ../development/interpreters/ruby/bundler-env { };
 #
-#  inherit (callPackage ../development/interpreters/ruby {})
-#    ruby_2_3_0;
-#
-#  # Ruby aliases
-#  ruby = ruby_2_3;
-#  ruby_2_3 = ruby_2_3_0;
+  inherit (callPackage ../development/interpreters/ruby {})
+    ruby_2_3_0;
+
+  # Ruby aliases
+  ruby = ruby_2_3;
+  ruby_2_3 = ruby_2_3_0;
 #
 #  rubygems = hiPrio (callPackage ../development/interpreters/ruby/rubygems.nix {});
 #
@@ -5359,11 +5359,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  scsh = callPackage ../development/interpreters/scsh { };
 #
-#  inherit (callPackages ../development/interpreters/spidermonkey { })
-#    spidermonkey_17
-#    spidermonkey_24
-#    spidermonkey_38;
-#  spidermonkey = spidermonkey_38;
+  inherit (callPackages ../development/interpreters/spidermonkey { })
+    spidermonkey_17
+    spidermonkey_24
+    spidermonkey_38;
+  spidermonkey = spidermonkey_38;
 #
 #  tcl = tcl-8_6;
 #  tcl-8_6 = callPackage ../development/interpreters/tcl/8.6.nix { };
@@ -5711,10 +5711,10 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  global = callPackage ../development/tools/misc/global { };
 #
-#  gnome_doc_utils = callPackage ../development/tools/documentation/gnome-doc-utils {};
-#
+  gnome_doc_utils = callPackage ../development/tools/documentation/gnome-doc-utils {};
+
   gnum4 = callPackage ../development/tools/misc/gnum4 { };
-#
+
   gnumake380 = callPackage ../development/tools/build-managers/gnumake/3.80 { };
   gnumake381 = callPackage ../development/tools/build-managers/gnumake/3.81 { };
   gnumake382 = callPackage ../development/tools/build-managers/gnumake/3.82 { };
@@ -6375,8 +6375,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   gettext = callPackage ../development/libraries/gettext { };
 
   gettextWithExpat = callPackage ../development/libraries/gettext/expat.nix { };
-#
-#  gd = callPackage ../development/libraries/gd { };
+
+  gd = callPackage ../development/libraries/gd { };
 #
 #  gdal = callPackage ../development/libraries/gdal { };
 #
@@ -6532,10 +6532,10 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  # TODO : Let admin choose.
 #  # We are using mit-krb5 because it is better maintained
-#  kerberos = libkrb5;
-#
-#  heimdalFull = callPackage ../development/libraries/kerberos/heimdal.nix { };
-#  libheimdal = heimdalFull.override { type = "lib"; };
+  kerberos = libkrb5;
+
+  heimdalFull = callPackage ../development/libraries/kerberos/heimdal.nix { };
+  libheimdal = heimdalFull.override { type = "lib"; };
 #
 #  hawknl = callPackage ../development/libraries/hawknl { };
 #
@@ -6573,7 +6573,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  hyena = callPackage ../development/libraries/hyena { };
 #
-#  icu = callPackage ../development/libraries/icu { };
+  icu = callPackage ../development/libraries/icu { };
 #
 #  iksemel = callPackage ../development/libraries/iksemel { };
 #
@@ -6589,8 +6589,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  imv = callPackage ../applications/graphics/imv/default.nix { };
 #
-#  imlib2 = callPackage ../development/libraries/imlib2 { };
-#
+  imlib2 = callPackage ../development/libraries/imlib2 { };
+
   ijs = callPackage ../development/libraries/ijs { };
 #
 #  incrtcl = callPackage ../development/libraries/incrtcl { };
@@ -6652,8 +6652,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  kinetic-cpp-client = callPackage ../development/libraries/kinetic-cpp-client { };
 #
-#  krb5Full = callPackage ../development/libraries/kerberos/krb5.nix { };
-#  libkrb5 = krb5Full.override { type = "lib"; };
+  krb5Full = callPackage ../development/libraries/kerberos/krb5.nix { };
+  libkrb5 = krb5Full.override { type = "lib"; };
 #
 #  LASzip = callPackage ../development/libraries/LASzip { };
 #
@@ -6669,10 +6669,10 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  lensfun = callPackage ../development/libraries/lensfun {};
 #
-#  lesstif = callPackage ../development/libraries/lesstif { };
-#
+  lesstif = callPackage ../development/libraries/lesstif { };
+
   leveldb = callPackage ../development/libraries/leveldb { };
-#
+
   lmdb = callPackage ../development/libraries/lmdb { };
 #
 #  levmar = callPackage ../development/libraries/levmar { };
@@ -7493,10 +7493,10 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  non = callPackage ../applications/audio/non { };
 #
-#  nspr = callPackage ../development/libraries/nspr { };
+  nspr = callPackage ../development/libraries/nspr { };
 #
-#  nss = lowPrio (callPackage ../development/libraries/nss { });
-#
+  nss = lowPrio (callPackage ../development/libraries/nss { });
+
 #  nss_wrapper = callPackage ../development/libraries/nss_wrapper { };
 #
 #  nssTools = callPackage ../development/libraries/nss {
@@ -7642,9 +7642,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  polarssl = mbedtls;
 #
-#  polkit = callPackage ../development/libraries/polkit {
-#    spidermonkey = spidermonkey_17;
-#  };
+  polkit = callPackage ../development/libraries/polkit {
+    spidermonkey = spidermonkey_17;
+  };
 #
 #  polkit_qt4 = callPackage ../development/libraries/polkit-qt-1 { };
 #
@@ -7908,7 +7908,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  shhopt = callPackage ../development/libraries/shhopt { };
 #
 #  silgraphite = callPackage ../development/libraries/silgraphite {};
-#  graphite2 = callPackage ../development/libraries/silgraphite/graphite2.nix {};
+  graphite2 = callPackage ../development/libraries/silgraphite/graphite2.nix {};
 #
 #  simgear = callPackage ../development/libraries/simgear { };
 #
@@ -8015,9 +8015,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  szip = callPackage ../development/libraries/szip { };
 #
-#  t1lib = callPackage ../development/libraries/t1lib { };
-#
-#  taglib = callPackage ../development/libraries/taglib { };
+  t1lib = callPackage ../development/libraries/t1lib { };
+
+  taglib = callPackage ../development/libraries/taglib { };
 #  taglib_1_9 = callPackage ../development/libraries/taglib/1.9.nix { };
 #
 #  taglib_extras = callPackage ../development/libraries/taglib-extras { };
@@ -8276,7 +8276,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  zita-resampler = callPackage ../development/libraries/audio/zita-resampler { };
 #
-#  zziplib = callPackage ../development/libraries/zziplib { };
+  zziplib = callPackage ../development/libraries/zziplib { };
 #
 #  ### DEVELOPMENT / LIBRARIES / JAVA
 #
@@ -9255,7 +9255,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libaio = callPackage ../os-specific/linux/libaio { };
 #
-#  libatasmart = callPackage ../os-specific/linux/libatasmart { };
+  libatasmart = callPackage ../os-specific/linux/libatasmart { };
 #
 #  libcgroup = callPackage ../os-specific/linux/libcgroup { };
 #
@@ -9567,7 +9567,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  mbpfan = callPackage ../os-specific/linux/mbpfan { };
 #
-#  mdadm = callPackage ../os-specific/linux/mdadm { };
+  mdadm = callPackage ../os-specific/linux/mdadm { };
 #
 #  mingetty = callPackage ../os-specific/linux/mingetty { };
 #
@@ -9581,10 +9581,10 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  module_init_tools = callPackage ../os-specific/linux/module-init-tools { };
 #
-#  aggregateModules = modules:
-#    callPackage ../os-specific/linux/kmod/aggregator.nix {
-#      inherit modules;
-#    };
+  aggregateModules = modules:
+    callPackage ../os-specific/linux/kmod/aggregator.nix {
+      inherit modules;
+    };
 #
 #  multipath-tools = callPackage ../os-specific/linux/multipath-tools { };
 #
@@ -9834,7 +9834,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
   udev182 = callPackage ../os-specific/linux/udev/182.nix { };
 
 #  udisks1 = callPackage ../os-specific/linux/udisks/1-default.nix { };
-#  udisks2 = callPackage ../os-specific/linux/udisks/2-default.nix { };
+  udisks2 = callPackage ../os-specific/linux/udisks/2-default.nix { };
 #  udisks = udisks1;
 #
 #  udisks_glue = callPackage ../os-specific/linux/udisks-glue { };
@@ -9906,7 +9906,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  bakoma_ttf = callPackage ../data/fonts/bakoma-ttf { };
 #
-#  cacert = callPackage ../data/misc/cacert { };
+  cacert = callPackage ../data/misc/cacert { };
 #
 #  caladea = callPackage ../data/fonts/caladea {};
 #
@@ -9946,11 +9946,11 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  docbook_sgml_dtd_41 = callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/4.1.nix { };
 #
-#  docbook_xml_dtd_412 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.1.2.nix { };
-#
+  docbook_xml_dtd_412 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.1.2.nix { };
+
   docbook_xml_dtd_42 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.2.nix { };
-#
-#  docbook_xml_dtd_43 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.3.nix { };
+
+  docbook_xml_dtd_43 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.3.nix { };
 #
 #  docbook_xml_dtd_44 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.4.nix { };
 #
@@ -10750,14 +10750,14 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  gimpPlugins = recurseIntoAttrs (callPackage ../applications/graphics/gimp/plugins {});
 #
-#  gitAndTools = recurseIntoAttrs (callPackage ../applications/version-management/git-and-tools {});
-#
-#  inherit (gitAndTools) git gitFull gitSVN git-cola svn2git git-radar transcrypt;
-#
-#  gitMinimal = git.override {
-#    withManual = false;
-#    pythonSupport = false;
-#  };
+  gitAndTools = recurseIntoAttrs (callPackage ../applications/version-management/git-and-tools {});
+
+  inherit (gitAndTools) git gitFull gitSVN git-cola svn2git git-radar transcrypt;
+
+  gitMinimal = git.override {
+    withManual = false;
+    pythonSupport = false;
+  };
 #
 #  gitRepo = callPackage ../applications/version-management/git-repo {
 #    python = python27;
@@ -11599,7 +11599,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  ponymix = callPackage ../applications/audio/ponymix { };
 #
-#  potrace = callPackage ../applications/graphics/potrace {};
+  potrace = callPackage ../applications/graphics/potrace {};
 #
 #  posterazor = callPackage ../applications/misc/posterazor { };
 #
@@ -12225,9 +12225,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  vym = callPackage ../applications/misc/vym { };
 #
-#  w3m = callPackage ../applications/networking/browsers/w3m {
-#    gpm = gpm-ncurses;
-#  };
+  w3m = callPackage ../applications/networking/browsers/w3m {
+    gpm = gpm-ncurses;
+  };
 #
 #  # Should always be the version with the most features
 #  w3m-full = w3m;
@@ -12238,11 +12238,11 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  };
 #
 #  # Version for batch text processing, not a good browser
-#  w3m-batch = w3m.override {
-#    graphicsSupport = false;
-#    x11Support = false;
-#    mouseSupport = false;
-#  };
+  w3m-batch = w3m.override {
+    graphicsSupport = false;
+    x11Support = false;
+    mouseSupport = false;
+  };
 #
 #  weechat = callPackage ../applications/networking/irc/weechat { };
 #
@@ -12432,10 +12432,10 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  apvlv = callPackage ../applications/misc/apvlv { };
 #
-#  xpdf = callPackage ../applications/misc/xpdf {
-#    motif = lesstif;
-#    base14Fonts = "${ghostscript}/share/ghostscript/fonts";
-#  };
+  xpdf = callPackage ../applications/misc/xpdf {
+    motif = lesstif;
+    base14Fonts = "${ghostscript}/share/ghostscript/fonts";
+  };
 #
 #  xkb_switch = callPackage ../tools/X11/xkb-switch { };
 #
@@ -12904,9 +12904,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  dbacl = callPackage ../tools/misc/dbacl { };
 #
-#  dblatex = callPackage ../tools/typesetting/tex/dblatex {
-#    enableAllFeatures = false;
-#  };
+  dblatex = callPackage ../tools/typesetting/tex/dblatex {
+    enableAllFeatures = false;
+  };
 #
 #  dblatexFull = appendToName "full" (dblatex.override {
 #    enableAllFeatures = true;

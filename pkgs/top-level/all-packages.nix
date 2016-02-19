@@ -2149,8 +2149,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dnssec-root = callPackage ../data/misc/dnssec-root { };
 #
-#  dnstop = callPackage ../tools/networking/dnstop { };
-#
+  dnstop = callPackage ../tools/networking/dnstop { };
+
   dhcp = callPackage ../tools/networking/dhcp { };
 #
 #  dhcpdump = callPackage ../tools/networking/dhcpdump { };
@@ -2555,7 +2555,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gpodder = callPackage ../applications/audio/gpodder { };
 #
-#  gptfdisk = callPackage ../tools/system/gptfdisk { };
+  gptfdisk = callPackage ../tools/system/gptfdisk { };
 #
 #  grafana-old = callPackage ../development/tools/misc/grafana { };
 #
@@ -2730,7 +2730,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  idle3tools = callPackage ../tools/system/idle3tools { };
 #
-#  iftop = callPackage ../tools/networking/iftop { };
+  iftop = callPackage ../tools/networking/iftop { };
 #
 #  ifuse = callPackage ../tools/filesystems/ifuse/default.nix { };
 #
@@ -3045,8 +3045,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  makemkv = callPackage ../applications/video/makemkv { };
 #
   man = callPackage ../tools/misc/man { };
-#
-#  man_db = callPackage ../tools/misc/man-db { };
+
+  man_db = callPackage ../tools/misc/man-db { };
 #
 #  mawk = callPackage ../tools/text/mawk { };
 #
@@ -3125,9 +3125,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    docbook-xsl = docbook_xsl;
 #  };
 #
-#  mosh = callPackage ../tools/networking/mosh {
-#    inherit (perlPackages) IOTty;
-#  };
+  mosh = callPackage ../tools/networking/mosh {
+    inherit (perlPackages) IOTty;
+  };
 #
 #  motuclient = python27Packages.motuclient;
 #
@@ -3149,7 +3149,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  mtools = callPackage ../tools/filesystems/mtools { };
 #
-#  mtr = callPackage ../tools/networking/mtr {};
+  mtr = callPackage ../tools/networking/mtr {};
 #
 #  multitran = recurseIntoAttrs (let callPackage = newScope pkgs.multitran; in rec {
 #    multitrandata = callPackage ../tools/text/multitran/data { };
@@ -3199,7 +3199,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  netboot = callPackage ../tools/networking/netboot {};
 #
-#  netcat = callPackage ../tools/networking/netcat { };
+  netcat = callPackage ../tools/networking/netcat { };
 #
 #  netcat-openbsd = callPackage ../tools/networking/netcat-openbsd { };
 #
@@ -3249,8 +3249,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  npapi_sdk = callPackage ../development/libraries/npapi-sdk {};
 #
   npth = callPackage ../development/libraries/npth {};
-#
-#  nmap = callPackage ../tools/security/nmap { };
+
+  nmap = callPackage ../tools/security/nmap { };
 #
 #  nmap_graphical = callPackage ../tools/security/nmap {
 #    inherit (pythonPackages) pysqlite;
@@ -3841,7 +3841,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  slsnif = callPackage ../tools/misc/slsnif { };
 #
-#  smartmontools = callPackage ../tools/system/smartmontools { };
+  smartmontools = callPackage ../tools/system/smartmontools { };
 #
 #  smbldaptools = callPackage ../tools/networking/smbldaptools {
 #    inherit (perlPackages) NetLDAP CryptSmbHash DigestSHA1;
@@ -3949,7 +3949,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  strongswanTNC = callPackage ../tools/networking/strongswan { enableTNC=true; };
 #
-#  su = shadow.su;
+  su = shadow.su;
 #
 #  subsonic = callPackage ../servers/misc/subsonic { };
 #
@@ -3995,7 +3995,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  tboot = callPackage ../tools/security/tboot { };
 #
-#  tcpdump = callPackage ../tools/networking/tcpdump { };
+  tcpdump = callPackage ../tools/networking/tcpdump { };
 #
 #  tcpflow = callPackage ../tools/networking/tcpflow { };
 #
@@ -4036,7 +4036,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  tmpwatch = callPackage ../tools/misc/tmpwatch  { };
 #
-#  tmux = callPackage ../tools/misc/tmux { };
+  tmux = callPackage ../tools/misc/tmux { };
 #
 #  tmux-cssh = callPackage ../tools/misc/tmux-cssh { };
 #
@@ -4240,7 +4240,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #      xorg.fontbhlucidatypewriter75dpi ];
 #  };
 #
-#  time = callPackage ../tools/misc/time { };
+  time = callPackage ../tools/misc/time { };
 #
 #  tkabber = callPackage ../applications/networking/instant-messengers/tkabber { };
 #
@@ -5969,7 +5969,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  stm32flash = callPackage ../development/tools/misc/stm32flash { };
 #
-#  strace = callPackage ../development/tools/misc/strace { };
+  strace = callPackage ../development/tools/misc/strace { };
 #
 #  swig1 = callPackage ../development/tools/misc/swig { };
 #  swig2 = callPackage ../development/tools/misc/swig/2.x.nix { };
@@ -7666,9 +7666,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  postgis = callPackage ../development/libraries/postgis { };
 #
-#  protobuf = protobuf2_6;
-#  protobuf3_0 = lowPrio (callPackage ../development/libraries/protobuf/3.0.nix { });
-#  protobuf2_6 = callPackage ../development/libraries/protobuf/2.6.nix { };
+  protobuf = protobuf2_6;
+  protobuf3_0 = lowPrio (callPackage ../development/libraries/protobuf/3.0.nix { });
+  protobuf2_6 = callPackage ../development/libraries/protobuf/2.6.nix { };
 #  protobuf2_5 = callPackage ../development/libraries/protobuf/2.5.nix { };
 #
 #  protobufc = protobufc1_1;
@@ -9036,7 +9036,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  nfs-utils = callPackage ../os-specific/linux/nfs-utils { };
 #
-#  acpi = callPackage ../os-specific/linux/acpi { };
+  acpi = callPackage ../os-specific/linux/acpi { };
 #
 #  acpid = callPackage ../os-specific/linux/acpid { };
 #
@@ -9069,8 +9069,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  apparmor-profiles = apparmor.apparmor-profiles;
 #  apparmor-utils = apparmor.apparmor-utils;
 #
-#  atop = callPackage ../os-specific/linux/atop { };
-#
+  atop = callPackage ../os-specific/linux/atop { };
+
   auditFull = callPackage ../os-specific/linux/audit { };
   libaudit = auditFull.override {
     prefix = "lib";
@@ -9752,10 +9752,10 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  sysklogd = callPackage ../os-specific/linux/sysklogd { };
 #
-#  syslinux = callPackage ../os-specific/linux/syslinux { };
-#
-#  sysstat = callPackage ../os-specific/linux/sysstat { };
-#
+  syslinux = callPackage ../os-specific/linux/syslinux { };
+
+  sysstat = callPackage ../os-specific/linux/sysstat { };
+
   systemd = callPackage ../os-specific/linux/systemd {
     linuxHeaders = linuxHeaders_3_18;
   };
@@ -10053,7 +10053,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  media-player-info = callPackage ../data/misc/media-player-info {};
 #
-#  mobile_broadband_provider_info = callPackage ../data/misc/mobile-broadband-provider-info { };
+  mobile_broadband_provider_info = callPackage ../data/misc/mobile-broadband-provider-info { };
 #
 #  mph_2b_damase = callPackage ../data/fonts/mph-2b-damase { };
 #
@@ -11422,7 +11422,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  mythtv = callPackage ../applications/video/mythtv { };
 #
-#  nano = callPackage ../applications/editors/nano { };
+  nano = callPackage ../applications/editors/nano { };
 #
 #  nanoblogger = callPackage ../applications/misc/nanoblogger { };
 #
@@ -11737,10 +11737,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  rstudio = callPackage ../applications/editors/rstudio { };
 #
-#  rsync = callPackage ../applications/networking/sync/rsync {
-#    enableACLs = !(stdenv.isSunOS || stdenv.isFreeBSD);
-#    enableCopyDevicesPatch = (config.rsync.enableCopyDevicesPatch or false);
-#  };
+  rsync = callPackage ../applications/networking/sync/rsync { };
 #
 #  rtl-sdr = callPackage ../applications/misc/rtl-sdr { };
 #
@@ -12131,7 +12128,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  vdpauinfo = callPackage ../tools/X11/vdpauinfo { };
 #
-#  vim = callPackage ../applications/editors/vim { };
+  vim = callPackage ../applications/editors/vim { };
 #
 #  macvim = callPackage ../applications/editors/vim/macvim.nix { stdenv = clangStdenv; };
 #
@@ -12572,8 +12569,8 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
     # Backwards compatibility;
     inherit (pkgs) libwnck gtk_doc gnome_doc_utils;
   };
-#
-#  gnome = recurseIntoAttrs gnome2;
+
+  gnome = recurseIntoAttrs gnome2;
 #
 #  hsetroot = callPackage ../tools/X11/hsetroot { };
 #
@@ -13395,7 +13392,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  httrack = callPackage ../tools/backup/httrack { };
 #
-#  mg = callPackage ../applications/editors/mg { };
+  mg = callPackage ../applications/editors/mg { };
 #
 }; # self_ =
 

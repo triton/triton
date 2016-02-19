@@ -1,8 +1,9 @@
 { stdenv
 , fetchurl
-, m4
-, perl
 , help2man
+, m4
+, makeWrapper
+, perl
 }:
 
 stdenv.mkDerivation rec {
@@ -14,10 +15,16 @@ stdenv.mkDerivation rec {
   };
   
   nativeBuildInputs = [
-    m4
-    perl
     help2man
+    m4
+    makeWrapper
+    perl
   ];
+
+  preFixup = ''
+    wrapProgram $out/bin/libtoolize \
+      --prefix PATH : "${m4}/bin"
+  '';
 
   meta = with stdenv.lib; {
     description = "Generic library support script";

@@ -2625,7 +2625,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gtmess = callPackage ../applications/networking/instant-messengers/gtmess { };
 #
-#  gummiboot = callPackage ../tools/misc/gummiboot { };
+  gummiboot = callPackage ../tools/misc/gummiboot { };
 #
 #  gup = callPackage ../development/tools/build-managers/gup {};
 #
@@ -4380,7 +4380,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  x86info = callPackage ../os-specific/linux/x86info { };
 #
-#  x11_ssh_askpass = callPackage ../tools/networking/x11-ssh-askpass { };
+  x11_ssh_askpass = callPackage ../tools/networking/x11-ssh-askpass { };
 #
 #  xbursttools = assert stdenv ? glibc; callPackage ../tools/misc/xburst-tools {
 #    # It needs a cross compiler for mipsel to build the firmware it will
@@ -6475,8 +6475,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gnet = callPackage ../development/libraries/gnet { };
 #
-#  gnu-efi = callPackage ../development/libraries/gnu-efi { };
-#
+  gnu-efi = callPackage ../development/libraries/gnu-efi { };
+
   gnutls = gnutls34;
 
   gnutls34 = callPackage ../development/libraries/gnutls/3.4.nix {
@@ -9037,8 +9037,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  nfs-utils = callPackage ../os-specific/linux/nfs-utils { };
 #
   acpi = callPackage ../os-specific/linux/acpi { };
-#
-#  acpid = callPackage ../os-specific/linux/acpid { };
+
+  acpid = callPackage ../os-specific/linux/acpid { };
 #
 #  acpitool = callPackage ../os-specific/linux/acpitool { };
 #

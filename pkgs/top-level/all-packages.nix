@@ -979,6 +979,8 @@ libwacom = callPackage ../all-pkgs/libwacom { };
 
 libzapojit = callPackage ../all-pkgs/libzapojit { };
 
+linux-headers = callPackage ../all-pkgs/linux-headers { };
+
 live555 = callPackage ../all-pkgs/live555 { };
 
 m4 = callPackageAlias "gnum4" { };
@@ -6394,22 +6396,17 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  glfw3 = callPackage ../development/libraries/glfw/3.x.nix { };
 #
   glibc = callPackage ../development/libraries/glibc {
-    kernelHeaders = linuxHeaders;
     installLocales = config.glibc.locales or false;
-    machHeaders = null;
-    hurdHeaders = null;
     gccCross = null;
   };
 
   glibc_memusage = callPackage ../development/libraries/glibc {
-    kernelHeaders = linuxHeaders;
     installLocales = false;
     withGd = true;
   };
 
   glibcCross = forceNativeDrv (glibc.override {
     gccCross = gccCrossStageStatic;
-    kernelHeaders = linuxHeadersCross;
   });
 
   # We can choose:
@@ -9259,25 +9256,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  # -- Linux kernel expressions ------------------------------------------------
 #
-  linuxHeaders = linuxHeaders_3_18;
-
-  linuxHeaders24Cross = forceNativeDrv (callPackage ../os-specific/linux/kernel-headers/2.4.nix {
-    cross = assert crossSystem != null; crossSystem;
-  });
-
-  linuxHeaders26Cross = forceNativeDrv (callPackage ../os-specific/linux/kernel-headers/3.18.nix {
-    cross = assert crossSystem != null; crossSystem;
-  });
-
-  linuxHeaders_3_18 = callPackage ../os-specific/linux/kernel-headers/3.18.nix { };
-
-  # We can choose:
-  linuxHeadersCrossChooser = ver : if ver == "2.4" then linuxHeaders24Cross
-    else if ver == "2.6" then linuxHeaders26Cross
-    else throw "Unknown linux kernel version";
-
-  linuxHeadersCross = assert crossSystem != null;
-    linuxHeadersCrossChooser crossSystem.platform.kernelMajor;
 
   kernelPatches = callPackage ../os-specific/linux/kernel/patches.nix { };
 
@@ -9393,8 +9371,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    openafsClient = callPackage ../servers/openafs-client { };
 #
 #    facetimehd = callPackage ../os-specific/linux/facetimehd { };
-#
-#    kernelHeaders = callPackage ../os-specific/linux/kernel-headers { };
 #
 #    klibc = callPackage ../os-specific/linux/klibc { };
 #

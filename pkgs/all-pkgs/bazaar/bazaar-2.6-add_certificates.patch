@@ -1,0 +1,16 @@
+diff -ru orig/bzrlib/transport/http/_urllib2_wrappers.py bzr-2.7.0/bzrlib/transport/http/_urllib2_wrappers.py
+--- orig/bzrlib/transport/http/_urllib2_wrappers.py  2016-02-19 02:41:22.225141077 -0500
++++ bzr-2.7.0/bzrlib/transport/http/_urllib2_wrappers.py  2016-02-19 02:43:38.263449143 -0500
+@@ -88,13 +88,7 @@
+ # Note for packagers: if there is no package providing certs for your platform,
+ # the curl project produces http://curl.haxx.se/ca/cacert.pem weekly.
+ _ssl_ca_certs_known_locations = [
+-    u'/etc/ssl/certs/ca-certificates.crt',  # Ubuntu/debian/gentoo
+-    u'/etc/pki/tls/certs/ca-bundle.crt',  # Fedora/CentOS/RH
+-    u'/etc/ssl/ca-bundle.pem',  # OpenSuse
+-    u'/etc/ssl/cert.pem',  # OpenSuse
+-    u"/usr/local/share/certs/ca-root-nss.crt",  # FreeBSD
+-    # XXX: Needs checking, can't trust the interweb ;) -- vila 2012-01-25
+-    u'/etc/openssl/certs/ca-certificates.crt',  # Solaris
++    u'@TritonCACertPath@',
+ ]

@@ -8,29 +8,14 @@
 
 stdenv.mkDerivation rec {
   name = "bazaar-${version}";
-    versionMajor = "2.6";
+    versionMajor = "2.7";
     versionMinor = "0";
     version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "http://launchpad.net/bzr/${versionMajor}/${version}/+download/bzr-${version}.tar.gz";
-    sha256 = "1c6sj77h5f97qimjc14kr532kgc0jk3wq778xrkqi0pbh9qpk509";
+    sha256 = "1cysix5k3wa6y7jjck3ckq3abls4gvz570s0v0hxv805nwki4i8d";
   };
-
-  patches = [
-    # Bazaar can't find the certificates alone
-    (fetchTritonPatch {
-      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
-      file = "bazaar/bazaar-2.6-add_certificates.patch";
-      sha256 = "7301af4b99522ef76bc551563f5f0c958f24f34556cc2a052874c674660a71ea";
-    })
-  ];
-
-  postPatch = ''
-    # Bazaar can't find the certificates alone
-    substituteInPlace bzrlib/transport/http/_urllib2_wrappers.py \
-      --subst-var-by certPath /etc/ssl/certs/ca-certificates.crt
-  '';
 
   buildInputs = [
     python2
@@ -38,6 +23,20 @@ stdenv.mkDerivation rec {
     python2Packages.pycurl
     python2Packages.wrapPython
   ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "f84914eb8e0780068f4d7fb4d7581f4ea1eede1a";
+      file = "bazaar/bazaar-2.7-fix-cacert-path.patch";
+      sha256 = "2246cacdcd83dbcb0d518eb2beb7a959830c6b13fa170437131170b1987ecf8d";
+    })
+  ];
+
+  postPatch =
+    /* Bazaar patch doesn't set the cacert path */ ''
+      substituteInPlace bzrlib/transport/http/_urllib2_wrappers.py \
+        --subst-var-by certPath /etc/ssl/certs/ca-certificates.crt
+    '';
 
   installPhase = ''
     runHook 'preInstall'

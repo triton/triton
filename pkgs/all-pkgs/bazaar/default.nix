@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   postPatch =
     /* Bazaar patch doesn't set the cacert path */ ''
       substituteInPlace bzrlib/transport/http/_urllib2_wrappers.py \
-        --subst-var-by certPath /etc/ssl/certs/ca-certificates.crt
+        --subst-var-by TritonCACertPath /etc/ssl/certs/ca-certificates.crt
     '';
 
   installPhase = ''

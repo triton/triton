@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, xkeyboard_config, libxml2, xorg
+{ stdenv, fetchurl, pkgconfig, libxml2, xorg
 , glib, isocodes, gobjectIntrospection }:
 
 let
@@ -13,14 +13,16 @@ stdenv.mkDerivation rec {
   };
 
   # TODO: enable xmodmap support, needs xmodmap DB
-  propagatedBuildInputs = with xorg; [ libX11 libXi xkeyboard_config libxml2 libICE glib libxkbfile isocodes ];
+  propagatedBuildInputs = with xorg; [
+    libX11 libXi xkeyboardconfig libxml2 libICE glib libxkbfile isocodes
+  ];
 
   nativeBuildInputs = [ pkgconfig ];
 
   buildInputs = [ gobjectIntrospection ];
 
   configureFlags = [
-    "--with-xkb-base=${xkeyboard_config}/etc/X11/xkb"
+    "--with-xkb-base=${xorg.xkeyboardconfig}/etc/X11/xkb"
     "--with-xkb-bin-base=${xorg.xkbcomp}/bin"
     "--disable-xmodmap-support"
   ];

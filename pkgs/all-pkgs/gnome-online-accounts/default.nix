@@ -92,7 +92,7 @@ stdenv.mkDerivation rec {
   preFixup = ''
     wrapProgram $out/libexec/goa-daemon \
       --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share"
   '';

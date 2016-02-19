@@ -10175,8 +10175,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  xhtml1 = callPackage ../data/sgml+xml/schemas/xml-dtd/xhtml1 { };
 #
-#  xkeyboard_config = xorg.xkeyboardconfig;
-#
 #  xlsx2csv = pythonPackages.xlsx2csv;
 #
 #  zeal = qt5.callPackage ../data/documentation/zeal { };

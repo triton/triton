@@ -36,12 +36,12 @@
 stdenv.mkDerivation rec {
   name = "gvfs-${version}";
   versionMajor = "1.26";
-  versionMinor = "2";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gvfs/${versionMajor}/${name}.tar.xz";
-    sha256 = "064dsjrdjcbi38zl38jhh4r9jcpiygg7x4c8s6s2rb757l7nwnv9";
+    sha256 = "0jhv80bchlcy0aldz93mrjl5ad74s11yr2hcii3kyvync3x7a3x7";
   };
 
   nativeBuildInputs = [

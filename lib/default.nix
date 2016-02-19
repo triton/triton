@@ -11,7 +11,6 @@ let
   modules = import ./modules.nix;
   options = import ./options.nix;
   platforms = import ./platforms.nix;
-  sandbox = import ./sandbox.nix;
   sources = import ./sources.nix;
   strings = import ./strings.nix;
   stringsWithDeps = import ./strings-with-deps.nix;
@@ -30,7 +29,6 @@ in {
     modules
     options
     platforms
-    sandbox
     sources
     strings
     stringsWithDeps

@@ -1,7 +1,7 @@
 { stdenv, fetchgit, fetchpatch
 , ncurses, boehmgc, gettext, zlib
 , sslSupport ? true, openssl ? null
-, graphicsSupport ? true, imlib2 ? null
+, graphicsSupport ? true, imlib2
 , x11Support ? graphicsSupport, xorg ? null
 , mouseSupport ? true, gpm ? null
 , perl, man

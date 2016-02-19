@@ -8,188 +8,225 @@ rec {
   ## Platform tuples
   #
 
-  armv7b-linux = [ "armv7b-linux" ];
-  armv7l-linux = [ "armv7l-linux" ];
-  armv8b-linux = [ "armv8b-linux" ];
-  armv8l-linux = [ "armv8l-linux" ];
-
+  aarch64-freebsd = [ "aarch64-freebsd" ];
   aarch64-linux = [ "aarch64-linux" ];
+  aarch64_be-freebsd = [ "aarch64_be-freebsd" ];
   aarch64_be-linux = [ "aarch64_be-linux" ];
 
-  i686-freebsd = [ "i686-freebsd" ];
-  i686-gnu = [ "i686-gnu" ];
-  i686-linux = [ "i686-linux" ];
-  i686-netbsd = [ "i686-netbsd" ];
-  i686-openbsd = [ "i686-openbsd" ];
+  armv7b-freebsd = [ "armv7b-freebsd" ];
+  armv7b-linux = [ "armv7b-linux" ];
+  armv7l-freebsd = [ "armv7l-freebsd" ];
+  armv7l-linux = [ "armv7l-linux" ];
+  armv8b-freebsd = [ "armv8b-freebsd" ];
+  armv8b-linux = [ "armv8b-linux" ];
+  armv8l-freebsd = [ "armv8l-freebsd" ];
+  armv8l-linux = [ "armv8l-linux" ];
 
+  i686-freebsd = [ "i686-freebsd" ];
+  i686-linux = [ "i686-linux" ];
+
+  mips-freebsd = [ "mips-freebsd" ];
   mips-linux = [ "mips-linux" ];
+  mipsel-freebsd = [ "mipsel-freebsd" ];
   mipsel-linux = [ "mipsel-linux" ];
+  mips64-freebsd = [ "mips64-freebsd" ];
   mips64-linux = [ "mips64-linux" ];
+  mips64el-freebsd = [ "mips64el-freebsd" ];
   mips64el-linux = [ "mips64el-linux" ];
 
+  powerpc-freebsd = [ "powerpc-freebsd" ];
   powerpc-linux = [ "powerpc-linux" ];
+  powerpcle-freebsd = [ "powerpcle-freebsd" ];
   powerpcle-linux = [ "powerpcle-linux" ];
+  powerpc64-freebsd = [ "powerpc64-freebsd" ];
   powerpc64-linux = [ "powerpc64-linux" ];
+  powerpc64le-freebsd = [ "powerpc64le-freebsd" ];
   powerpc64le-linux = [ "powerpc64le-linux" ];
 
-  #sparc
-
-  x86_64-dragonflybsd = [ "x86_64-dragonflybsd" ];
   x86_64-freebsd = [ "x86_64-freebsd" ];
   x86_64-illumos = [ "x86_64-illumos" ];
   x86_64-linux = [ "x86_64-linux" ];
-  x86_64-netbsd = [ "x86_64-netbsd" ];
-  x86_64-openbsd = [ "x86_64-openbsd" ];
 
   #
   ## Kernels
   #
 
-  dragonflybsd =
-    x86_64-dragonflybsd;
+  freebsd = [ ]
+    ++ aarch64-freebsd
+    ++ aarch64_be-freebsd
+    ++ armv7b-freebsd
+    ++ armv7l-freebsd
+    ++ armv8b-freebsd
+    ++ armv8l-freebsd
+    ++ i686-freebsd
+    ++ mips-freebsd
+    ++ mipsel-freebsd
+    ++ mips64-freebsd
+    ++ mips64el-freebsd
+    ++ powerpc-freebsd
+    ++ powerpcle-freebsd
+    ++ powerpc64-freebsd
+    ++ powerpc64le-freebsd
+    ++ x86_64-freebsd
+    ;
 
-  freebsd =
-    #arm
-    i686-freebsd
-    #mips
-    #powerpc
-    #sparc
-    ++ x86_64-freebsd;
+  illumos = [ ]
+    ++ x86_64-illumos
+    ;
 
-  hurd =
-    i686-gnu;
-
-  illumos =
-    #sparc
-    x86_64-illumos;
-
-  linux =
-    armv7l-linux
-    ++ armv8l-linux
+  linux = [ ]
     ++ aarch64-linux
+    ++ aarch64_be-linux
+    ++ armv7b-linux
+    ++ armv7l-linux
+    ++ armv8b-linux
+    ++ armv8l-linux
     ++ i686-linux
+    ++ mips-linux
+    ++ mipsel-linux
+    ++ mips64-linux
     ++ mips64el-linux
     ++ powerpc-linux
     ++ powerpcle-linux
     ++ powerpc64-linux
     ++ powerpc64le-linux
-    #++ sparc
-    ++ x86_64-linux;
-
-  netbsd =
-    #arm
-    i686-netbsd
-    #mips
-    #powerpc
-    #sparc
-    ++ x86_64-netbsd;
-
-  openbsd =
-    #arm
-    i686-openbsd
-    #mips
-    #powerpc
-    #sparc
-    ++ x86_64-openbsd;
+    ++ x86_64-linux
+    ;
 
   #
   ## Architectures
   #
 
-  armv7l =
-    armv7l-linux;
+  aarch64 = [ ]
+    ++ aarch64-freebsd
+    ++ aarch64-linux
+    ;
 
-  armv8l =
-    armv8l-linux;
+  aarch64_be = [ ]
+    ++ aarch64_be-freebsd
+    ++ aarch64_be-linux
+    ;
 
-  aarch64 =
-    aarch64-linux;
+  armv7b = [ ]
+    ++ armv7b-freebsd
+    ++ armv7b-linux
+    ;
 
-  aarch64_be =
-    aarch64_be-linux;
+  armv7l = [ ]
+    ++ armv7l-freebsd
+    ++ armv7l-linux
+    ;
 
-  i686 =
-    i686-freebsd
-    ++ i686-gnu
+  armv8b = [ ]
+    ++ armv8b-freebsd
+    ++ armv8b-linux
+    ;
+
+  armv8l = [ ]
+    ++ armv8l-freebsd
+    ++ armv8l-linux
+    ;
+
+  i686 = [ ]
+    ++ i686-freebsd
     ++ i686-linux
-    ++ i686-netbsd
-    ++ i686-openbsd;
+    ;
 
-  mips =
-    mips-linux;
+  mips = [ ]
+    ++ mips-freebsd
+    ++ mips-linux
+    ;
 
-  mipsel =
-    mipsel-linux;
+  mipsel = [ ]
+    ++ mipsel-freebsd
+    ++ mipsel-linux
+    ;
 
-  mips64 =
-    mips64-linux;
+  mips64 = [ ]
+    ++ mips64-freebsd
+    ++ mips64-linux
+    ;
 
-  mips64el =
-    mips64el-linux;
+  mips64el = [ ]
+    ++ mips64el-freebsd
+    ++ mips64el-linux
+    ;
 
-  powerpc =
-    powerpc-linux;
+  powerpc = [ ]
+    ++ powerpc-freebsd
+    ++ powerpc-linux
+    ;
 
-  powerpcle =
-    powerpcle-linux;
+  powerpcle = [ ]
+    ++ powerpcle-freebsd
+    ++ powerpcle-linux
+    ;
 
-  powerpc64 =
-    powerpc64-linux;
+  powerpc64 = [ ]
+    ++ powerpc64-freebsd
+    ++ powerpc64-linux
+    ;
 
-  powerpc64le =
-    powerpc64le-linux;
+  powerpc64le = [ ]
+    ++ powerpc64le-linux
+    ++ powerpc64le-linux
+    ;
 
-  x86_64 =
-    x86_64-dragonflybsd
+  x86_64 = [ ]
     ++ x86_64-freebsd
     ++ x86_64-illumos
     ++ x86_64-linux
-    ++ x86_64-netbsd
-    ++ x86_64-openbsd;
+    ;
 
   #
   ## Architecture meta attributes
   #
 
-  arm-all =
-    armv7l
-    ++ armv8l
+  arm-all = [ ]
     ++ aarch64
-    ++ aarch64_be;
+    ++ aarch64_be
+    ++ armv7b
+    ++ armv7l
+    ++ armv8b
+    ++ armv8l
+    ;
 
-  mips-all =
-    mips
+  mips-all = [ ]
+    ++ mips
     ++ mipsel
     ++ mips64
-    ++ mips64el;
+    ++ mips64el
+    ;
 
-  powerpc-all =
-    powerpc
+  powerpc-all = [ ]
+    ++ powerpc
     ++ powerpcle
     ++ powerpc64
-    ++ powerpc64le;
+    ++ powerpc64le
+    ;
 
-  sparc-all = [ ];
-
-  x86-all =
-    i686
+  x86-all = [ ]
+    ++ i686
     ++ x86_64;
 
   #
   ## Endianness
   #
 
-  big-endian =
-    aarch64_be
+  big-endian = [ ]
+    ++ aarch64_be
+    ++ armv7b
+    ++ armv8b
     ++ mips
     ++ mips64
     ++ powerpc
-    ++ powerpc64;
+    ++ powerpc64
+    ;
 
   little-endian =
-    armv7l
-    ++ armv8l
     ++ aarch64
+    ++ armv7l
+    ++ armv8l
     ++ i686
     ++ mipsel
     ++ mips64el
@@ -201,30 +238,15 @@ rec {
   ## All platforms
   #
 
-  all =
-    dragonflybsd
+  all = [ ]
     ++ freebsd
-    ++ hurd
     ++ illumos
-    ++ linux
-    ++ netbsd
-    ++ openbsd;
+    ++ linux;
 
-  supported =
-    i686-linux
-    ++ x86_64-linux;
-
-  allBut =
-    platforms:
-    lists.filter (x: !(builtins.elem x platforms)) supported;
+  supported = [ ]
+    ++ i686-linux
+    ++ x86_64-linux
+    ;
 
   none = [ ];
-
-
-
-  # Deprecated aliases
-  darwin = [ "not-supported" ];
-  cygwin = [ "not-supported" ];
-  gnu = linux; /* ++ hurd ++ kfreebsd ++ ... */
-  unix = supported;
 }

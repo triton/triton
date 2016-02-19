@@ -12,6 +12,6 @@
 } @ args:
 
 if lib.any (x: hostSystem == x) lib.platforms.linux then
-  import ./linux args
+  (import ./linux args).stdenv
 else
-  import ./native args
+  (import ./native args).stdenv

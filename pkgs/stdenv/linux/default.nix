@@ -64,7 +64,7 @@ let
   # This does not provide any actual packages.
   stage0Pkgs = allPackages {
     inherit targetSystem hostSystem config;
-    stdenv = import ../generic (commonStdenvOptions // commonBootstrapOptions // {
+    stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage0";
 
       cc = null;
@@ -118,7 +118,8 @@ let
   # for building.
   # This stage is used for building the final glibc and linux-headers.
   stage1Pkgs = allPackages {
-    stdenv = import ../generic (commonStdenvOptions // commonBootstrapOptions // {
+    inherit targetSystem hostSystem config;
+    stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage1";
       cc = stage0Pkgs.gcc;
       extraBuildInputs = [ stage0Pkgs.patchelf ];
@@ -156,7 +157,8 @@ let
   # This stage is used for building the final gcc.
   # Propagates stage1 glibc and linux-headers.
   stage2Pkgs = allPackages rec {
-    stdenv = import ../generic (commonStdenvOptions // commonBootstrapOptions // {
+    inherit targetSystem hostSystem config;
+    stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage2";
       cc = stage1Pkgs.gcc;
       extraBuildInputs = [ stage0Pkgs.patchelf ];
@@ -210,7 +212,8 @@ let
   # This is the third package set using the final gcc, glibc and bootstrap tools.
   # This stage is used for building the final versions of all stdenv utilities.
   stage3Pkgs = allPackages rec {
-    stdenv = import ../generic (commonStdenvOptions // commonBootstrapOptions // {
+    inherit targetSystem hostSystem config;
+    stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage3";
       cc = stage2Pkgs.gcc;
       extraBuildInputs = [ stage0Pkgs.patchelf ];
@@ -260,7 +263,7 @@ let
   # Construct the final stdenv.  It uses the Glibc and GCC, and adds
   # in a new binutils that doesn't depend on bootstrap-tools, as well
   # as dynamically linked versions of all other tools.
-  stdenv = import ../generic (commonStdenvOptions // rec {
+  stdenv = import ../generic { inherit lib; } (commonStdenvOptions // rec {
     name = "stdenv-final";
 
     # We want common applications in the path like gcc, mv, cp, tar, xz ...
@@ -310,5 +313,6 @@ let
         gawk gnutar gzip bzip2 gnumake patch pkgconf pkgconfig patchelf;
     };
   });
-in
-  stdenv
+in {
+  inherit bootstrapTools stage0Pkgs stage1Pkgs stage2Pkgs stage3Pkgs stdenv;
+}

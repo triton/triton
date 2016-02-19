@@ -176,6 +176,16 @@ stdenv.mkDerivation ({
     sha256 = "0f4prv4c0fcpi85wv4028wqxn075197gwxhgf0vp571fiw2pi3wd";
   };
 
+  # Glibc cannot have itself in its RPATH.
+  NIX_DONT_SET_RPATH = true;
+  NIX_NO_SELF_RPATH = true;
+  NIX_CFLAGS_LINK = false;
+  NIX_LDFLAGS_BEFORE = false;
+
+  preBuild = ''
+    unset CFLAGS
+  '';
+
   # Remove absolute paths from `configure' & co.; build out-of-tree.
   preConfigure = ''
     export PWD_P=$(type -tP pwd)

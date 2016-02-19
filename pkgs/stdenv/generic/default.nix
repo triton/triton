@@ -1,7 +1,4 @@
-let
-  lib = import ../../../lib;
-in
-lib.makeOverridable (
+{ lib }: lib.makeOverridable (
 
 { targetSystem
 , hostSystem

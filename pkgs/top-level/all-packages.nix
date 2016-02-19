@@ -4561,31 +4561,31 @@ zstd = callPackage ../all-pkgs/zstd { };
   };
 #
   gcc48 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.8 {
-    inherit noSysDirs;
-#
-#    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
+    noSysDirs = true;
+
+    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
     profiledCompiler = true;
-#
-#    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
-#    # and host != build), `cross' must be null but the cross-libc must still
-#    # be passed.
+
+    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
+    # and host != build), `cross' must be null but the cross-libc must still
+    # be passed.
     cross = null;
-    libcCross = if crossSystem != null then libcCross else null;
-#
+    libcCross = null;
+
     isl = isl_0_14;
   }));
 #
   gcc5 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/5 {
-    inherit noSysDirs;
-#
-#    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
+    noSysDirs = true;
+
+    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
     profiledCompiler = true;
-#
-#    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
-#    # and host != build), `cross' must be null but the cross-libc must still
-#    # be passed.
+
+    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
+    # and host != build), `cross' must be null but the cross-libc must still
+    # be passed.
     cross = null;
-    libcCross = if crossSystem != null then libcCross else null;
+    libcCross = null;
   }));
 #
 #  gfortran = gfortran5;

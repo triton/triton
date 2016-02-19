@@ -507,6 +507,8 @@ bashCompletion = callPackage ../all-pkgs/bash-completion { };
 
 bc = callPackage ../all-pkgs/bc { };
 
+bison = callPackage ../all-pkgs/bison { };
+
 btsync = callPackage ../all-pkgs/btsync { };
 
 bzrtools = callPackage ../all-pkgs/bzrtools { };
@@ -5460,9 +5462,6 @@ zstd = callPackage ../all-pkgs/zstd { };
       cross = crossSystem;
     }));
 #
-  bison2 = callPackage ../development/tools/parsing/bison/2.x.nix { };
-  bison3 = callPackage ../development/tools/parsing/bison/3.x.nix { };
-  bison = bison3;
 #
 #  bossa = callPackage ../development/tools/misc/bossa {
 #    wxGTK = wxGTK30;

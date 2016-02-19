@@ -212,8 +212,8 @@ in
         "/var/run/current-system/sw/bin/bash"
         "/run/current-system/sw/bin/sh"
         "/var/run/current-system/sw/bin/sh"
-        "${pkgs.bashInteractive}/bin/bash"
-        "${pkgs.bashInteractive}/bin/sh"
+        "${pkgs.bash}/bin/bash"
+        "${pkgs.bash}/bin/sh"
       ];
 
   };

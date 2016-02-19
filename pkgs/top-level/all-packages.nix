@@ -2183,9 +2183,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    inherit (perlPackages) PerlMagick;
 #  };
 #
-#  docbook2x = callPackage ../tools/typesetting/docbook2x {
-#    inherit (perlPackages) XMLSAX XMLSAXBase XMLParser XMLNamespaceSupport;
-#  };
+  docbook2x = callPackage ../tools/typesetting/docbook2x {
+    inherit (perlPackages) XMLSAX XMLSAXBase XMLParser XMLNamespaceSupport;
+  };
 #
 #  dog = callPackage ../tools/system/dog { };
 #
@@ -2374,7 +2374,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  flvtool2 = callPackage ../tools/video/flvtool2 { };
 #
-#  fontforge = lowPrio (callPackage ../tools/misc/fontforge { });
+  fontforge = lowPrio (callPackage ../tools/misc/fontforge { });
 #  fontforge-gtk = callPackage ../tools/misc/fontforge {
 #    withGTK = true;
 #  };
@@ -2943,7 +2943,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libestr = callPackage ../development/libraries/libestr { };
 #
-#  libevdev = callPackage ../development/libraries/libevdev { };
+  libevdev = callPackage ../development/libraries/libevdev { };
 #
 #  libevhtp = callPackage ../development/libraries/libevhtp { };
 #
@@ -3343,7 +3343,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   openssh_with_kerberos = pkgs.appendToName "with-kerberos" (openssh.override { withKerberos = true; });
 
-#  opensp = callPackage ../tools/text/sgml/opensp { };
+  opensp = callPackage ../tools/text/sgml/opensp { };
 #
 #  spCompat = callPackage ../tools/text/sgml/opensp/compat.nix { };
 #
@@ -6196,25 +6196,25 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  cwiid = callPackage ../development/libraries/cwiid { };
 #
-#  cyrus_sasl = callPackage ../development/libraries/cyrus-sasl { };
-#
-#  # Make bdb5 the default as it is the last release under the custom
-#  # bsd-like license
+  cyrus_sasl = callPackage ../development/libraries/cyrus-sasl { };
+
+  # Make bdb5 the default as it is the last release under the custom
+  # bsd-like license
   db = db5;
-  db4 = db48;
-  db44 = callPackage ../development/libraries/db/db-4.4.nix { };
-  db45 = callPackage ../development/libraries/db/db-4.5.nix { };
-  db47 = callPackage ../development/libraries/db/db-4.7.nix { };
-  db48 = callPackage ../development/libraries/db/db-4.8.nix { };
+#  db4 = db48;
+#  db44 = callPackage ../development/libraries/db/db-4.4.nix { };
+#  db45 = callPackage ../development/libraries/db/db-4.5.nix { };
+#  db47 = callPackage ../development/libraries/db/db-4.7.nix { };
+#  db48 = callPackage ../development/libraries/db/db-4.8.nix { };
   db5 = db53;
   db53 = callPackage ../development/libraries/db/db-5.3.nix { };
-  db6 = db60;
-  db60 = callPackage ../development/libraries/db/db-6.0.nix { };
+#  db6 = db60;
+#  db60 = callPackage ../development/libraries/db/db-6.0.nix { };
 
   dbus = callPackage ../development/libraries/dbus { };
-  dbus_cplusplus  = callPackage ../development/libraries/dbus-cplusplus { };
+#  dbus_cplusplus  = callPackage ../development/libraries/dbus-cplusplus { };
   dbus_glib       = callPackage ../development/libraries/dbus-glib { };
-  dbus_java       = callPackage ../development/libraries/java/dbus-java { };
+#  dbus_java       = callPackage ../development/libraries/java/dbus-java { };
   dbus_python     = pythonPackages.dbus;
 
   # Should we deprecate these? Currently there are many references.
@@ -6505,10 +6505,10 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gtkmathview = callPackage ../development/libraries/gtkmathview { };
 #
-#  gtkLibs = {
-#    inherit (pkgs) glib glibmm atk atkmm cairo pango pangomm gdk-pixbuf gtk2
-#      gtkmm2;
-#  };
+  gtkLibs = {
+    inherit (pkgs) glib glibmm atk atkmm cairo pango pangomm gdk-pixbuf gtk2
+      gtkmm2;
+  };
 #
 #  gnome-sharp = callPackage ../development/libraries/gnome-sharp {};
 #
@@ -6632,7 +6632,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  jshon = callPackage ../development/tools/parsing/jshon { };
 #
 #  json-c-0-11 = callPackage ../development/libraries/json-c/0.11.nix { }; # vulnerable
-#  json_c = callPackage ../development/libraries/json-c { };
+  json_c = callPackage ../development/libraries/json-c { };
 #
 #  jsoncpp = callPackage ../development/libraries/jsoncpp { };
 #
@@ -7265,8 +7265,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
   giflib = giflib_5_1;
   giflib_4_1 = callPackage ../development/libraries/giflib/4.1.nix { };
   giflib_5_1 = callPackage ../development/libraries/giflib/5.1.nix { };
-#
-#  libungif = callPackage ../development/libraries/giflib/libungif.nix { };
+
+  libungif = callPackage ../development/libraries/giflib/libungif.nix { };
 #
 #  libunibreak = callPackage ../development/libraries/libunibreak { };
 #
@@ -7444,7 +7444,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  mstpd = callPackage ../os-specific/linux/mstpd { };
 #
-#  mtdev = callPackage ../development/libraries/mtdev { };
+  mtdev = callPackage ../development/libraries/mtdev { };
 #
 #  mtpfs = callPackage ../tools/filesystems/mtpfs { };
 #
@@ -7549,7 +7549,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  openexr = callPackage ../development/libraries/openexr { };
 #
-#  openldap = callPackage ../development/libraries/openldap { };
+  openldap = callPackage ../development/libraries/openldap { };
 #
 #  opencolorio = callPackage ../development/libraries/opencolorio { };
 #
@@ -8099,7 +8099,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  usbredir = callPackage ../development/libraries/usbredir { };
 #
-#  uthash = callPackage ../development/libraries/uthash { };
+  uthash = callPackage ../development/libraries/uthash { };
 #
 #  ucommon = ucommon_openssl;
 #
@@ -9007,7 +9007,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
     inherit clangStdenv fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
       libxslt expat libpng zlib perl mesa_drivers spice_protocol libunwind
       dbus libuuid openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
-      autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman udev;
+      autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman udev
+      libdrm;
     mesa = mesa_noglu;
   } // { inherit xlibsWrapper; } );
 
@@ -9910,7 +9911,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  caladea = callPackage ../data/fonts/caladea {};
 #
-#  cantarell_fonts = callPackage ../data/fonts/cantarell-fonts { };
+  cantarell_fonts = callPackage ../data/fonts/cantarell-fonts { };
 #
 #  carlito = callPackage ../data/fonts/carlito {};
 #
@@ -9932,9 +9933,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  crimson = callPackage ../data/fonts/crimson {};
 #
-#  dejavu_fonts = callPackage ../data/fonts/dejavu-fonts {
-#    inherit (perlPackages) FontTTF;
-#  };
+  dejavu_fonts = callPackage ../data/fonts/dejavu-fonts {
+    inherit (perlPackages) FontTTF;
+  };
 #
 #  dina-font = callPackage ../data/fonts/dina { };
 #
@@ -9980,7 +9981,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  font-awesome-ttf = callPackage ../data/fonts/font-awesome-ttf { };
 #
-#  freefont_ttf = callPackage ../data/fonts/freefont-ttf { };
+  freefont_ttf = callPackage ../data/fonts/freefont-ttf { };
 #
 #  font-droid = callPackage ../data/fonts/droid { };
 #
@@ -10020,9 +10021,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  league-of-moveable-type = callPackage ../data/fonts/league-of-moveable-type {};
 #
-#  liberation_ttf_from_source = callPackage ../data/fonts/redhat-liberation-fonts { };
-#  liberation_ttf_binary = callPackage ../data/fonts/redhat-liberation-fonts/binary.nix { };
-#  liberation_ttf = liberation_ttf_binary;
+  liberation_ttf_from_source = callPackage ../data/fonts/redhat-liberation-fonts { };
+  liberation_ttf_binary = callPackage ../data/fonts/redhat-liberation-fonts/binary.nix { };
+  liberation_ttf = liberation_ttf_binary;
 #
 #  libertine = callPackage ../data/fonts/libertine { };
 #
@@ -10158,7 +10159,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  uni-vga = callPackage ../data/fonts/uni-vga { };
 #
-#  unifont = callPackage ../data/fonts/unifont { };
+  unifont = callPackage ../data/fonts/unifont { };
 #
 #  unifont_upper = callPackage ../data/fonts/unifont_upper { };
 #
@@ -12560,13 +12561,13 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  clearlooks-phenix = callPackage ../misc/themes/gtk3/clearlooks-phenix { };
 #
-#  gnome2 = callPackage ../desktops/gnome-2 {
-#    callPackage = pkgs.newScope pkgs.gnome2;
-#    self = pkgs.gnome2;
-#  }  // pkgs.gtkLibs // {
-#    # Backwards compatibility;
-#    inherit (pkgs) libwnck gtk_doc gnome_doc_utils;
-#  };
+  gnome2 = callPackage ../desktops/gnome-2 {
+    callPackage = pkgs.newScope pkgs.gnome2;
+    self = pkgs.gnome2;
+  }  // pkgs.gtkLibs // {
+    # Backwards compatibility;
+    inherit (pkgs) libwnck gtk_doc gnome_doc_utils;
+  };
 #
 #  gnome = recurseIntoAttrs gnome2;
 #
@@ -13047,7 +13048,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  nix-serve = callPackage ../tools/package-management/nix-serve { };
 #
-#  nixos-artwork = callPackage ../data/misc/nixos-artwork { };
+  nixos-artwork = callPackage ../data/misc/nixos-artwork { };
 #
 #  nut = callPackage ../applications/misc/nut { };
 #

@@ -26,7 +26,6 @@
 , libgudev
 , mesa_noglu
 , zenity
-, xkeyboard_config
 , libxkbcommon
 , libinput
 , systemd
@@ -83,7 +82,6 @@ stdenv.mkDerivation rec {
     systemd
     upower
     wayland
-    xkeyboard_config
     xorg.libICE
     xorg.libSM
     xorg.libX11
@@ -98,6 +96,7 @@ stdenv.mkDerivation rec {
     xorg.libxkbfile
     xorg.libXrandr
     xorg.libXrender
+    xorg.xkeyboardconfig
     zenity
   ];
 

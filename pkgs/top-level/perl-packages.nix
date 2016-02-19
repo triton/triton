@@ -6662,10 +6662,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   LocaleGettext = buildPerlPackage {
-    name = "LocaleGettext-1.05";
+    name = "LocaleGettext-1.07";
     src = fetchurl {
-      url = mirror://cpan/authors/id/P/PV/PVANDRY/gettext-1.05.tar.gz;
-      sha256 = "15262a00vx714szpx8p2z52wxkz46xp7acl72znwjydyq4ypydi7";
+      url = mirror://cpan/authors/id/P/PV/PVANDRY/gettext-1.07.tar.gz;
+      sha256 = "05cwqjxxary11di03gg3fm6j9lbvg1dr2wpr311c1rwp8salg7ch";
     };
   };
 

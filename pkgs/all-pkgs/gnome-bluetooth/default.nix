@@ -43,6 +43,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     adwaita-icon-theme
     atk
+    dconf
     gdk-pixbuf
     glib
     gobject-introspection
@@ -80,7 +81,7 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/bluetooth-sendto \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
@@ -98,7 +99,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

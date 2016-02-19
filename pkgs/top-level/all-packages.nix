@@ -1424,7 +1424,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  apitrace = qt5.callPackage ../applications/graphics/apitrace {};
 #
-#  argyllcms = callPackage ../tools/graphics/argyllcms {};
+  argyllcms = callPackage ../tools/graphics/argyllcms {};
 #
 #  arp-scan = callPackage ../tools/misc/arp-scan { };
 #
@@ -1533,7 +1533,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  bdf2psf = callPackage ../tools/misc/bdf2psf { };
 #
-#  bcache-tools = callPackage ../tools/filesystems/bcache-tools { };
+  bcache-tools = callPackage ../tools/filesystems/bcache-tools { };
 #
 #  bchunk = callPackage ../tools/cd-dvd/bchunk { };
 #
@@ -2042,7 +2042,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  corkscrew = callPackage ../tools/networking/corkscrew { };
 #
-#  cpio = callPackage ../tools/archivers/cpio { };
+  cpio = callPackage ../tools/archivers/cpio { };
 #
 #  crackxls = callPackage ../tools/security/crackxls { };
 #
@@ -2147,7 +2147,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dnstop = callPackage ../tools/networking/dnstop { };
 #
-#  dhcp = callPackage ../tools/networking/dhcp { };
+  dhcp = callPackage ../tools/networking/dhcp { };
 #
 #  dhcpdump = callPackage ../tools/networking/dhcpdump { };
 #
@@ -2278,7 +2278,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  eplot = callPackage ../tools/graphics/eplot { };
 #
-#  ethtool = callPackage ../tools/misc/ethtool { };
+  ethtool = callPackage ../tools/misc/ethtool { };
 #
 #  ettercap = callPackage ../applications/networking/sniffers/ettercap { };
 #
@@ -2855,7 +2855,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  leocad = callPackage ../applications/graphics/leocad { };
 #
-#  less = callPackage ../tools/misc/less { };
+  less = callPackage ../tools/misc/less { };
 #
 #  liquidsoap = callPackage ../tools/audio/liquidsoap/full.nix { };
 #
@@ -2959,9 +2959,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libqb = callPackage ../development/libraries/libqb { };
 #
-#  libqmi = callPackage ../development/libraries/libqmi { };
-#
-#  libmbim = callPackage ../development/libraries/libmbim { };
+  libqmi = callPackage ../development/libraries/libqmi { };
+
+  libmbim = callPackage ../development/libraries/libmbim { };
 #
 #  libmongo-client = callPackage ../development/libraries/libmongo-client { };
 #
@@ -3110,7 +3110,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  mktorrent = callPackage ../tools/misc/mktorrent { };
 #
-#  modemmanager = callPackage ../tools/networking/modemmanager {};
+  modemmanager = callPackage ../tools/networking/modemmanager {};
 #
 #  modsecurity_standalone = callPackage ../tools/security/modsecurity { };
 #
@@ -3565,7 +3565,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ppl = callPackage ../development/libraries/ppl { };
 #
-#  ppp = callPackage ../tools/networking/ppp { };
+  ppp = callPackage ../tools/networking/ppp { };
 #
 #  pptp = callPackage ../tools/networking/pptp {};
 #
@@ -5771,7 +5771,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   itstool = callPackage ../development/tools/misc/itstool { };
 #
-#  jam = callPackage ../development/tools/build-managers/jam { };
+  jam = callPackage ../development/tools/build-managers/jam { };
 #
 #  jikespg = callPackage ../development/tools/parsing/jikespg { };
 #
@@ -6020,7 +6020,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    bison = bison2;
 #  };
 #
-#  yacc = bison;
+  yacc = bison;
 #
 #  ycmd = callPackage ../development/tools/misc/ycmd { };
 #
@@ -7174,7 +7174,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libpqxx = callPackage ../development/libraries/libpqxx { };
 #
-#  libproxy = callPackage ../development/libraries/libproxy { };
+  libproxy = callPackage ../development/libraries/libproxy { };
 #
 #  libpseudo = callPackage ../development/libraries/libpseudo { };
 #
@@ -7330,7 +7330,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  libxdg_basedir = callPackage ../development/libraries/libxdg-basedir { };
 #
   libxkbcommon = callPackage ../development/libraries/libxkbcommon { };
-#
+
   libxklavier = callPackage ../development/libraries/libxklavier { };
 #
 #  libxls = callPackage ../development/libraries/libxls { };
@@ -7340,7 +7340,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
   libxml2 = callPackage ../development/libraries/libxml2 {
     python = null;
   };
-#
+
   libxml2Python = lowPrio (libxml2.override {
     inherit python;
   });
@@ -7561,8 +7561,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  openjpeg_1 = callPackage ../development/libraries/openjpeg/1.x.nix { };
 #  openjpeg_2_0 = callPackage ../development/libraries/openjpeg/2.0.nix { };
-#  openjpeg_2_1 = callPackage ../development/libraries/openjpeg/2.1.nix { };
-#  openjpeg = openjpeg_2_1;
+  openjpeg_2_1 = callPackage ../development/libraries/openjpeg/2.1.nix { };
+  openjpeg = openjpeg_2_1;
 #
 #  openscenegraph = callPackage ../development/libraries/openscenegraph {
 #    giflib = giflib_4_1;
@@ -8409,7 +8409,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
 #  ack = perlPackages.ack;
 #
-#  perlArchiveCpio = perlPackages.ArchiveCpio;
+  perlArchiveCpio = perlPackages.ArchiveCpio;
 #
 #  perlcritic = perlPackages.PerlCritic;
 #
@@ -8539,7 +8539,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  sabnzbd = callPackage ../servers/sabnzbd { };
 #
-#  bind = callPackage ../servers/dns/bind { };
+  bind = callPackage ../servers/dns/bind { };
 #  dnsutils = bind.override {
 #    suffix = "tools";
 #  };
@@ -9052,11 +9052,11 @@ libtiff = callPackage ../development/libraries/libtiff { };
   alsaUtils = callPackage ../os-specific/linux/alsa-utils { };
   alsaOss = callPackage ../os-specific/linux/alsa-oss { };
   alsaTools = callPackage ../os-specific/linux/alsa-tools { };
-#
-#  microcodeAmd = callPackage ../os-specific/linux/microcode/amd.nix { };
-#
-#  microcodeIntel = callPackage ../os-specific/linux/microcode/intel.nix { };
-#
+
+  microcodeAmd = callPackage ../os-specific/linux/microcode/amd.nix { };
+
+  microcodeIntel = callPackage ../os-specific/linux/microcode/intel.nix { };
+
 #  apparmor = callPackage ../os-specific/linux/apparmor { swig = swig2; };
 #  libapparmor = apparmor.libapparmor;
 #  apparmor-pam = apparmor.apparmor-pam;
@@ -9097,7 +9097,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  bridge-utils = callPackage ../os-specific/linux/bridge-utils { };
 #
-#  busybox = callPackage ../os-specific/linux/busybox { };
+  busybox = callPackage ../os-specific/linux/busybox { };
 #
 #  busyboxBootstrap = busybox.override {
 #    enableStatic = true;
@@ -9140,7 +9140,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  gnustep-make = callPackage ../development/tools/build-managers/gnustep/make { };
 #  gnustep-xcode = callPackage ../development/tools/build-managers/gnustep/xcode { };
 #
-#  devicemapper = lvm2;
+  devicemapper = lvm2;
 #
 #  disk_indicator = callPackage ../os-specific/linux/disk-indicator { };
 #
@@ -9534,11 +9534,11 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  lsiutil = callPackage ../os-specific/linux/lsiutil { };
 #
   kmod = callPackage ../os-specific/linux/kmod { };
-#
-#  kmod-blacklist-ubuntu = callPackage ../os-specific/linux/kmod-blacklist-ubuntu { };
-#
-#  kmod-debian-aliases = callPackage ../os-specific/linux/kmod-debian-aliases { };
-#
+
+  kmod-blacklist-ubuntu = callPackage ../os-specific/linux/kmod-blacklist-ubuntu { };
+
+  kmod-debian-aliases = callPackage ../os-specific/linux/kmod-debian-aliases { };
+
   kvm = qemu_kvm;
 #
   libcap = callPackage ../os-specific/linux/libcap { };
@@ -9563,7 +9563,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  lsscsi = callPackage ../os-specific/linux/lsscsi { };
 #
-#  lvm2 = callPackage ../os-specific/linux/lvm2 { };
+  lvm2 = callPackage ../os-specific/linux/lvm2 { };
 #
 #  mbpfan = callPackage ../os-specific/linux/mbpfan { };
 #
@@ -9588,12 +9588,12 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  multipath-tools = callPackage ../os-specific/linux/multipath-tools { };
 #
-#  musl = callPackage ../os-specific/linux/musl { };
-#
-#  nftables = callPackage ../os-specific/linux/nftables { };
-#
-#  numactl = callPackage ../os-specific/linux/numactl { };
-#
+  musl = callPackage ../os-specific/linux/musl { };
+
+  nftables = callPackage ../os-specific/linux/nftables { };
+
+  numactl = callPackage ../os-specific/linux/numactl { };
+
 #  numad = callPackage ../os-specific/linux/numad { };
 #
 #  open-vm-tools = callPackage ../applications/virtualization/open-vm-tools {

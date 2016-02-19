@@ -495,6 +495,8 @@ atom = callPackage ../all-pkgs/atom { };
 
 autoconf = callPackage ../all-pkgs/autoconf { };
 
+automake = callPackage ../all-pkgs/automake { };
+
 avahi = callPackage ../all-pkgs/avahi { };
 
 bazaar = callPackage ../all-pkgs/bazaar { };
@@ -5429,20 +5431,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
 #  autocutsel = callPackage ../tools/X11/autocutsel{ };
 #
-  automake = automake115x;
-
-  automake110x = callPackage ../development/tools/misc/automake/automake-1.10.x.nix { };
-
-  automake111x = callPackage ../development/tools/misc/automake/automake-1.11.x.nix { };
-
-  automake112x = callPackage ../development/tools/misc/automake/automake-1.12.x.nix { };
-
-  automake113x = callPackage ../development/tools/misc/automake/automake-1.13.x.nix { };
-
-  automake114x = callPackage ../development/tools/misc/automake/automake-1.14.x.nix { };
-
-  automake115x = callPackage ../development/tools/misc/automake/automake-1.15.x.nix { };
-
   automoc4 = callPackage ../development/tools/misc/automoc4 { };
 #
 #  avrdude = callPackage ../development/tools/misc/avrdude { };

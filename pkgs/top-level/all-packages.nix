@@ -925,6 +925,8 @@ libgweather = callPackage ../all-pkgs/libgweather { };
 
 libgxps = callPackage ../all-pkgs/libgxps { };
 
+libidl = callPackage ../all-pkgs/libidl { };
+
 libinput = callPackage ../all-pkgs/libinput {
   graphviz = graphviz-nox;
 };

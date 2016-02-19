@@ -12,10 +12,6 @@ let overridden = set // overrides; set = with overridden; {
 
 #### PLATFORM
 
-  libIDL = callPackage ./platform/libIDL {
-    gettext = if stdenv.isDarwin then gettext else null;
-  };
-
   ORBit2 = callPackage ./platform/ORBit2 { };
 
   libart_lgpl = callPackage ./platform/libart_lgpl { };

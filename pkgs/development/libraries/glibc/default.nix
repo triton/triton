@@ -1,14 +1,9 @@
-{ stdenv, fetchurl, fetchTritonPatch, fetchgit ? null, kernelHeaders
-, machHeaders ? null, hurdHeaders ? null, libpthreadHeaders ? null
-, mig ? null
+{ stdenv, fetchurl, fetchTritonPatch, linux-headers
 , installLocales ? true
 , profilingLibraries ? false
 , gccCross ? null
 , debugSymbols ? false
-, withGd ? false, gd ? null, libpng ? null
 }:
-
-assert stdenv.cc.isGNU;
 
 let
   build = import ./common.nix;
@@ -16,12 +11,10 @@ let
 in
   build cross ({
     name = "glibc"
-      + stdenv.lib.optionalString (hurdHeaders != null) "-hurd"
-      + stdenv.lib.optionalString debugSymbols "-debug"
-      + stdenv.lib.optionalString withGd "-gd";
+      + stdenv.lib.optionalString debugSymbols "-debug";
 
-    inherit fetchurl fetchTritonPatch fetchgit stdenv kernelHeaders installLocales
-      profilingLibraries gccCross withGd gd libpng;
+    inherit fetchurl fetchTritonPatch stdenv linux-headers installLocales
+      profilingLibraries gccCross;
 
     builder = ./builder.sh;
 
@@ -56,23 +49,6 @@ in
      NIX_STRIP_DEBUG = 0;
    }
    else {})
-
-  //
-
-  (if hurdHeaders != null
-   then rec {
-     inherit machHeaders hurdHeaders libpthreadHeaders mig fetchgit;
-
-     propagatedBuildInputs = [ machHeaders hurdHeaders libpthreadHeaders ];
-
-     passthru = {
-       # When building GCC itself `propagatedBuildInputs' above is not
-       # honored, so we pass it here so that the GCC builder can do the right
-       # thing.
-       inherit propagatedBuildInputs;
-     };
-   }
-   else { })
 
   //
 

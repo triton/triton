@@ -6386,8 +6386,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   # Only supported on Linux
   glibcLocales = callPackage ../development/libraries/glibc/locales.nix { };
 
-  glibcInfo = callPackage ../development/libraries/glibc/info.nix { };
-
   glibc_multi = callPackage ../development/libraries/glibc/multi.nix {
     glibc32 = pkgsi686Linux.glibc;
   };

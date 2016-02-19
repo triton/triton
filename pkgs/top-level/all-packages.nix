@@ -1636,9 +1636,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  chntpw = callPackage ../tools/security/chntpw { };
 #
-#  coprthr = callPackage ../development/libraries/coprthr {
-#    flex = flex_2_5_35;
-#  };
+#  coprthr = callPackage ../development/libraries/coprthr { };
 #
 #  cpulimit = callPackage ../tools/misc/cpulimit { };
 #
@@ -2467,9 +2465,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  git-latexdiff = callPackage ../tools/typesetting/git-latexdiff { };
 #
-  glusterfs = callPackage ../tools/filesystems/glusterfs {
-    flex = flex_2_5_35;
-  };
+  glusterfs = callPackage ../tools/filesystems/glusterfs { };
 #
 #  glmark2 = callPackage ../tools/graphics/glmark2 { };
 #
@@ -3429,7 +3425,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #           { hurd = gnu.hurdCrossIntermediate; })
 #    else null;
 #
-#  ipsecTools = callPackage ../os-specific/linux/ipsec-tools { flex = flex_2_5_35; };
+#  ipsecTools = callPackage ../os-specific/linux/ipsec-tools { };
 #
   patch = gnupatch;
 #
@@ -5660,9 +5656,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  jdepend = callPackage ../development/tools/analysis/jdepend { };
 #
-  flex_2_5_35 = callPackage ../development/tools/parsing/flex/2.5.35.nix { };
-  flex = callPackage ../development/tools/parsing/flex/default.nix { };
-
   flexcpp = callPackage ../development/tools/parsing/flexc++ { };
 
 #

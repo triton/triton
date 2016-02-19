@@ -1,4 +1,8 @@
-{ stdenv, fetchurl, bison, m4 }:
+{ stdenv
+, bison
+, fetchurl
+, m4
+}:
 
 stdenv.mkDerivation rec {
   name = "flex-2.6.0";
@@ -8,14 +12,19 @@ stdenv.mkDerivation rec {
     sha256 = "1sdqx63yadindzafrq1w31ajblf9gl1c301g068s20s7bbpi3ri4";
   };
 
-  nativeBuildInputs = [ m4 bison ];
+  nativeBuildInputs = [
+    bison
+    m4
+  ];
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://flex.sourceforge.net/;
     description = "A fast lexical analyser generator";
-    platforms = [
-      "x86_64-linux"
-      "i686-linux"
+    maintainers = with maintainers; [
+      wkennington
     ];
+    platforms = with platforms;
+      x86_64-linux
+      ++ i686-linux;
   };
 }

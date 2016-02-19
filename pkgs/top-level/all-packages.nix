@@ -1972,9 +1972,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  convertlit = callPackage ../tools/text/convertlit { };
 #
-#  collectd = callPackage ../tools/system/collectd {
-#    rabbitmq-c = rabbitmq-c_0_4;
-#  };
+  collectd = callPackage ../tools/system/collectd {
+    rabbitmq-c = rabbitmq-c_0_4;
+  };
 #
 #  colormake = callPackage ../development/tools/build-managers/colormake { };
 #
@@ -2959,7 +2959,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libtirpc = callPackage ../development/libraries/ti-rpc { };
 #
-#  libshout = callPackage ../development/libraries/libshout { };
+  libshout = callPackage ../development/libraries/libshout { };
 #
 #  libqb = callPackage ../development/libraries/libqb { };
 #
@@ -6041,7 +6041,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  aacskeys = callPackage ../development/libraries/aacskeys { };
 #
-#  aalib = callPackage ../development/libraries/aalib { };
+  aalib = callPackage ../development/libraries/aalib { };
 #
 #  accelio = callPackage ../development/libraries/accelio { };
 #
@@ -6734,7 +6734,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libbson = callPackage ../development/libraries/libbson { };
 #
-#  libcaca = callPackage ../development/libraries/libcaca { };
+  libcaca = callPackage ../development/libraries/libcaca { };
 #
 #  libcacard = callPackage ../development/libraries/libcacard { };
 #
@@ -7146,7 +7146,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  liboop = callPackage ../development/libraries/liboop { };
 #
-#  libopus = callPackage ../development/libraries/libopus { };
+  libopus = callPackage ../development/libraries/libopus { };
 #
 #  libosip = callPackage ../development/libraries/osip {};
 #
@@ -7953,13 +7953,13 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  speech_tools = callPackage ../development/libraries/speech-tools {};
 #
-#  speex = callPackage ../development/libraries/speex {
-#    fftw = fftwFloat;
-#  };
-#
-#  speexdsp = callPackage ../development/libraries/speexdsp {
-#    fftw = fftwFloat;
-#  };
+  speex = callPackage ../development/libraries/speex {
+    fftw = fftwFloat;
+  };
+
+  speexdsp = callPackage ../development/libraries/speexdsp {
+    fftw = fftwFloat;
+  };
 #
 #  sphinxbase = callPackage ../development/libraries/sphinxbase { };
 #
@@ -8169,7 +8169,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    libpng = libpng12;
 #  };
 #
-#  wavpack = callPackage ../development/libraries/wavpack { };
+  wavpack = callPackage ../development/libraries/wavpack { };
 #
 #  websocketpp = callPackage ../development/libraries/websocket++ { };
 #
@@ -8800,8 +8800,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  oracleXE = callPackage ../servers/sql/oracle-xe { };
 #
-#  softether_4_18 = callPackage ../servers/softether/4.18.nix { };
-#  softether = softether_4_18;
+  softether_4_18 = callPackage ../servers/softether/4.18.nix { };
+  softether = softether_4_18;
 #
 #  qboot = callPackage ../applications/virtualization/qboot { stdenv = stdenv_32bit; };
 #
@@ -9945,12 +9945,12 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  dina-font-pcf = callPackage ../data/fonts/dina-pcf { };
 #
-#  docbook5 = callPackage ../data/sgml+xml/schemas/docbook-5.0 { };
-#
+  docbook5 = callPackage ../data/sgml+xml/schemas/docbook-5.0 { };
+
   docbook_sgml_dtd_31 = callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/3.1.nix { };
-#
-#  docbook_sgml_dtd_41 = callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/4.1.nix { };
-#
+
+  docbook_sgml_dtd_41 = callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/4.1.nix { };
+
   docbook_xml_dtd_412 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.1.2.nix { };
 
   docbook_xml_dtd_42 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.2.nix { };
@@ -10495,7 +10495,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  distrho = callPackage ../applications/audio/distrho {};
 #
-#  djvulibre = callPackage ../applications/misc/djvulibre { };
+  djvulibre = callPackage ../applications/misc/djvulibre { };
 #
 #  djvu2pdf = callPackage ../tools/typesetting/djvu2pdf { };
 #
@@ -12998,10 +12998,10 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  # using the new configuration style proposal which is unstable
 #  jack1 = callPackage ../misc/jackaudio/jack1.nix { };
 #
-#  jack2Full = callPackage ../misc/jackaudio {
-#    libopus = libopus.override { withCustomModes = true; };
-#  };
-#  libjack2 = jack2Full.override { prefix = "lib"; };
+  jack2Full = callPackage ../misc/jackaudio {
+    libopus = libopus.override { withCustomModes = true; };
+  };
+  libjack2 = jack2Full.override { prefix = "lib"; };
 #  libjack2-git = callPackage ../misc/jackaudio/git.nix { };
 #
 #  keynav = callPackage ../tools/X11/keynav { };

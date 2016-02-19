@@ -1073,6 +1073,8 @@ obexftp = callPackage ../all-pkgs/obexftp { };
 
 openobex = callPackage ../all-pkgs/openobex { };
 
+orbit2 = callPackage ../all-pkgs/orbit2 { };
+
 p7zip = callPackage ../all-pkgs/p7zip { };
 
 pango = callPackage ../all-pkgs/pango { };

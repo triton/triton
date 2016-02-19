@@ -12,8 +12,6 @@ let overridden = set // overrides; set = with overridden; {
 
 #### PLATFORM
 
-  ORBit2 = callPackage ./platform/ORBit2 { };
-
   libart_lgpl = callPackage ./platform/libart_lgpl { };
 
   libglade = callPackage ./platform/libglade { };

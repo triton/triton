@@ -3,7 +3,7 @@
 
 # Each of the dependencies below are optional.
 # Gnupg can be built without them at the cost of reduced functionality.
-, pinentry ? null, x11Support ? true
+, pinentry, x11Support ? true
 , adns ? null, gnutls ? null, libusb ? null, openldap ? null
 , readline ? null, zlib ? null, bzip2 ? null
 }:

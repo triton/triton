@@ -11,7 +11,7 @@
 , libxml2
 , polkit
 , openldap
-#, orbit
+, orbit2
 }:
 
 with {
@@ -42,8 +42,7 @@ stdenv.mkDerivation rec {
     gtk3
     libxml2
     openldap
-    gnome2.ORBit2
-    #orbit
+    orbit2
     polkit
   ];
 
@@ -88,7 +87,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--disable-documentation"
     "--enable-gtk"
-    (enFlag "orbit" (gnome2.ORBit2 != null) null)
+    (enFlag "orbit" (orbit2 != null) null)
     (enFlag "defaults-service" (dbus_glib != null) null)
     "--enable-gsettings-backend"
     "--enable-nls"

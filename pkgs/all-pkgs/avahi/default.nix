@@ -24,12 +24,29 @@ with {
 
 stdenv.mkDerivation rec {
   name = "avahi-${version}";
-  version = "0.6.32-rc";
+  version = "0.6.32";
 
   src = fetchurl {
-    url = "https://github.com/lathiat/avahi/archive/${version}.tar.gz";
-    sha256 = "0i1gza134vbrw0zk0f802wfz40y1132m5dzn0bxwgdvbd2qq3sz5";
+    url = "https://github.com/lathiat/avahi/archive/v${version}.tar.gz";
+    name = "${name}.tar.gz";
+    sha256 = "0vi2f48d3jhkads02zrvvn27li2kxnrky5rla380qvr4g3c97dky";
   };
+
+  nativeBuildInputs = [
+    autoconf
+    automake
+    libtool
+    gettext
+    xmltoman
+    intltool
+  ];
+
+  buildInputs = [
+    dbus
+    expat
+    glib
+    libdaemon
+  ];
 
   postPatch = ''
     patchShebangs .
@@ -86,35 +103,17 @@ stdenv.mkDerivation rec {
     "--with-systemdsystemunitdir=$(out)/etc/systemd/system"
   ];
 
-  nativeBuildInputs = [
-    autoconf
-    automake
-    libtool
-    gettext
-    xmltoman
-    intltool
-  ];
-
-  buildInputs = [
-    dbus
-    expat
-    glib
-    libdaemon
-  ];
-
   preInstall = ''
     cat Makefile
     installFlagsArray+=("localstatedir=$TMPDIR")
   '';
 
-  postInstall = ''
-    # Maintain compat for mdnsresponder and howl
-    ln -s avahi-compat-libdns_sd/dns_sd.h $out/include/dns_sd.h
-    ln -s avahi-compat-howl $out/include/howl
-    ln -s avahi-compat-howl.pc $out/lib/pkgconfig/howl.pc
-  '';
-
-  enableParallelBuilding = true;
+  postInstall =
+    /* Maintain compat for mdnsresponder and howl */ ''
+      ln -sv avahi-compat-libdns_sd/dns_sd.h $out/include/dns_sd.h
+      ln -sv avahi-compat-howl $out/include/howl
+      ln -sv avahi-compat-howl.pc $out/lib/pkgconfig/howl.pc
+    '';
 
   meta = with stdenv.lib; {
     description = "Facilitates service discovery on a local network";

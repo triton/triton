@@ -2292,7 +2292,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  evtest = callPackage ../applications/misc/evtest { };
 #
-#  exempi = callPackage ../development/libraries/exempi { };
+  exempi = callPackage ../development/libraries/exempi { };
 #
 #  execline = callPackage ../tools/misc/execline { };
 #
@@ -3248,7 +3248,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  npapi_sdk = callPackage ../development/libraries/npapi-sdk {};
 #
-#  npth = callPackage ../development/libraries/npth {};
+  npth = callPackage ../development/libraries/npth {};
 #
 #  nmap = callPackage ../tools/security/nmap { };
 #
@@ -3457,7 +3457,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   pciutils = callPackage ../tools/system/pciutils { };
 #
-#  pcsclite = callPackage ../tools/security/pcsclite { };
+  pcsclite = callPackage ../tools/security/pcsclite { };
 #
 #  pcsctools = callPackage ../tools/security/pcsctools {
 #    inherit (perlPackages) pcscperl Glib Gtk2 Pango;
@@ -3500,9 +3500,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  philter = callPackage ../tools/networking/philter { };
 #
-#  pinentry = callPackage ../tools/security/pinentry {
-#    qt4 = null;
-#  };
+  pinentry = callPackage ../tools/security/pinentry {
+    qt4 = null;
+  };
 #
 #  pinentry_ncurses = pinentry.override {
 #    gtk2 = null;
@@ -6710,7 +6710,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libasr = callPackage ../development/libraries/libasr { };
 #
-#  libassuan = callPackage ../development/libraries/libassuan { };
+  libassuan = callPackage ../development/libraries/libassuan { };
 #
 #  libasyncns = callPackage ../development/libraries/libasyncns { };
 #
@@ -6747,7 +6747,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libcddb = callPackage ../development/libraries/libcddb { };
 #
-#  libcdio = callPackage ../development/libraries/libcdio { };
+  libcdio = callPackage ../development/libraries/libcdio { };
 #  libcdio082 = callPackage ../development/libraries/libcdio/0.82.nix { };
 #
 #  libcdr = callPackage ../development/libraries/libcdr { lcms = lcms2; };
@@ -6903,7 +6903,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libewf = callPackage ../development/libraries/libewf { };
 #
-#  libexif = callPackage ../development/libraries/libexif { };
+  libexif = callPackage ../development/libraries/libexif { };
 #
 #  libexosip = callPackage ../development/libraries/exosip {};
 #
@@ -6998,7 +6998,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libmodbus = callPackage ../development/libraries/libmodbus {};
 #
-#  libmtp = callPackage ../development/libraries/libmtp { };
+  libmtp = callPackage ../development/libraries/libmtp { };
 #
 #  libmsgpack = callPackage ../development/libraries/libmsgpack { };
 #  libmsgpack_0_5 = callPackage ../development/libraries/libmsgpack/0.5.nix { };
@@ -7056,7 +7056,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libkate = callPackage ../development/libraries/libkate { };
 #
-#  libksba = callPackage ../development/libraries/libksba { };
+  libksba = callPackage ../development/libraries/libksba { };
 #
 #  libksi = callPackage ../development/libraries/libksi { };
 #
@@ -7675,7 +7675,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  protobufc1_1 = callPackage ../development/libraries/protobufc/1.1.nix { };
 #  protobufc1_0 = callPackage ../development/libraries/protobufc/1.0.nix { };
 #
-#  pth = callPackage ../development/libraries/pth { };
+  pth = callPackage ../development/libraries/pth { };
 #
 #  ptlib = callPackage ../development/libraries/ptlib {};
 #
@@ -8492,20 +8492,20 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  rdf4store = callPackage ../servers/http/4store { };
 #
-#  apacheHttpd = pkgs.apacheHttpd_2_4;
-#
-#  apacheHttpd_2_2 = callPackage ../servers/http/apache-httpd/2.2.nix {
-#    sslSupport = true;
-#  };
+  apacheHttpd = pkgs.apacheHttpd_2_4;
+
+  apacheHttpd_2_2 = callPackage ../servers/http/apache-httpd/2.2.nix {
+    sslSupport = true;
+  };
 #
 #  apacheHttpd_2_4 = lowPrio (callPackage ../servers/http/apache-httpd/2.4.nix {
 #    sslSupport = true;
 #  });
 #
-#  apacheHttpdPackagesFor = apacheHttpd: self: let callPackage = newScope self; in {
-#    inherit apacheHttpd;
-#
-#    mod_dnssd = callPackage ../servers/http/apache-modules/mod_dnssd { };
+  apacheHttpdPackagesFor = apacheHttpd: self: let callPackage = newScope self; in {
+    inherit apacheHttpd;
+
+    mod_dnssd = callPackage ../servers/http/apache-modules/mod_dnssd { };
 #
 #    mod_evasive = callPackage ../servers/http/apache-modules/mod_evasive { };
 #
@@ -8518,7 +8518,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    php = pkgs.php.override { inherit apacheHttpd; };
 #
 #    subversion = pkgs.subversion.override { httpServer = true; inherit apacheHttpd; };
-#  };
+  };
 #
 #  apacheHttpdPackages = apacheHttpdPackagesFor pkgs.apacheHttpd pkgs.apacheHttpdPackages;
 #  apacheHttpdPackages_2_2 = apacheHttpdPackagesFor pkgs.apacheHttpd_2_2 pkgs.apacheHttpdPackages_2_2;
@@ -8671,7 +8671,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  meteor = callPackage ../servers/meteor/default.nix { };
 #
 #  # Backwards compatibility.
-#  mod_dnssd = pkgs.apacheHttpdPackages.mod_dnssd;
+  mod_dnssd = pkgs.apacheHttpdPackages.mod_dnssd;
 #  mod_evasive = pkgs.apacheHttpdPackages.mod_evasive;
 #  mod_fastcgi = pkgs.apacheHttpdPackages.mod_fastcgi;
 #  mod_python = pkgs.apacheHttpdPackages.mod_python;
@@ -9196,7 +9196,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  freefall = callPackage ../os-specific/linux/freefall { };
 #
-#  fuse = callPackage ../os-specific/linux/fuse { };
+  fuse = callPackage ../os-specific/linux/fuse { };
 #
 #  fusionio-util = callPackage ../os-specific/linux/fusionio/util.nix { };
 #
@@ -9562,7 +9562,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libnscd = callPackage ../os-specific/linux/libnscd { };
 #
-#  libnotify = callPackage ../development/libraries/libnotify { };
+  libnotify = callPackage ../development/libraries/libnotify { };
 #
 #  libvolume_id = callPackage ../os-specific/linux/libvolume_id { };
 #
@@ -11208,7 +11208,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  MBdistortion = callPackage ../applications/audio/MBdistortion { };
 #
-#  mcpp = callPackage ../development/compilers/mcpp { };
+  mcpp = callPackage ../development/compilers/mcpp { };
 #
 #  mda_lv2 = callPackage ../applications/audio/mda-lv2 { };
 #

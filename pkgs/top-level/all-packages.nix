@@ -5,83 +5,33 @@
    platform. */
 
 
-{ # The system (e.g., `i686-linux') for which to build the packages.
-  system ? builtins.currentSystem
+{ targetSystem ? null
+, hostSystem ? null
 
-, # The standard environment to use.  Only used for bootstrapping.  If
-  # null, the default standard environment is used.
-  bootStdenv ? null
-
-, # Non-GNU/Linux OSes are currently "impure" platforms, with their libc
-  # outside of the store.  Thus, GCC, GFortran, & co. must always look for
-  # files in standard system directories (/usr/include, etc.)
-  noSysDirs ? (system != "x86_64-freebsd" && system != "i686-freebsd"
-               && system != "x86_64-solaris"
-               && system != "x86_64-kfreebsd-gnu")
-
-  # More flags for the bootstrapping of stdenv.
-, gccWithCC ? true
-, gccWithProfiling ? true
-
-, # Allow a configuration attribute set to be passed in as an
-  # argument.  Otherwise, it's read from $NIXPKGS_CONFIG or
-  # ~/.nixpkgs/config.nix.
-  config ? null
-
-, crossSystem ? null
-, platform ? null
-}:
-
-
-let config_ = config; platform_ = platform; in # rename the function arguments
+# Allow a configuration attribute set to be passed in as an
+# argument.  Otherwise, it's read from $NIXPKGS_CONFIG or
+# ~/.nixpkgs/config.nix.
+, configFunction ? null
+} @ args:
 
 let
-
-  lib = import ../../lib;
 
   # The contents of the configuration file found at $NIXPKGS_CONFIG or
   # $HOME/.nixpkgs/config.nix.
   # for NIXOS (nixos-rebuild): use nixpkgs.config option
   config =
-    let
-      toPath = builtins.toPath;
-      getEnv = x: if builtins ? getEnv then builtins.getEnv x else "";
-      pathExists = name:
-        builtins ? pathExists && builtins.pathExists (toPath name);
-
-      configFile = getEnv "NIXPKGS_CONFIG";
-      homeDir = getEnv "HOME";
-      configFile2 = homeDir + "/.nixpkgs/config.nix";
-
-      configExpr =
-        if config_ != null then config_
-        else if configFile != "" && pathExists configFile then import (toPath configFile)
-        else if homeDir != "" && pathExists configFile2 then import (toPath configFile2)
-        else {};
-
-    in
-      # allow both:
-      # { /* the config */ } and
-      # { pkgs, ... } : { /* the config */ }
-      if builtins.isFunction configExpr
-        then configExpr { inherit pkgs; }
-        else configExpr;
-
-  # Allow setting the platform in the config file. Otherwise, let's use a reasonable default (pc)
-
-  platformAuto = let
-      platforms = (import ./platforms.nix);
-    in
-      if system == "armv6l-linux" then platforms.raspberrypi
-      else if system == "armv7l-linux" then platforms.armv7l-hf-multiplatform
-      else if system == "armv5tel-linux" then platforms.sheevaplug
-      else if system == "mips64el-linux" then platforms.fuloong2f_n32
-      else if system == "x86_64-linux" then platforms.pc64
-      else if system == "i686-linux" then platforms.pc32
-      else platforms.pcBase;
-
-  platform = if platform_ != null then platform_
-    else config.platform or platformAuto;
+    if args.configFunction != null then
+      args.configFunction { inherit pkgs; }
+    else
+      let
+        configFiles = [
+          (builtins.getEnv "NIXPKGS_CONFIG")
+          ((builtins.getEnv "HOME") + "/.nixpkgs/config.nix")
+        ];
+        configFilePaths = map builtins.toPath configFiles;
+        existingConfigFiles = filter builtins.pathExists configFilePaths;
+      in
+        import (head existingConfigFiles) { inherit pkgs; };
 
   # Helper functions that are exported through `pkgs'.
   helperFunctions =
@@ -130,7 +80,16 @@ let
     self_ = with self; helperFunctions // {
 
   # Make some arguments passed to all-packages.nix available
-  inherit system platform;
+  targetSystem =
+    if args.targetSystem != null then
+      throw "We don't support setting target systems yet."
+    else
+      builtins.currentSystem;
+  hostSystem =
+    if args.hostSystem != null then
+      throw "We don't support setting the host system yet."
+    else
+      builtins.currentSystem;
 
   # Allow callPackage to fill in the pkgs argument
   inherit pkgs;
@@ -500,7 +459,31 @@ let
 ################################################################################
 ################################################################################
 ################################################################################
-################################BEGIN ALL PKGS##################################
+############################# BEGIN ALL BUILDERS ###############################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+############################## END ALL BUILDERS ################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+############################### BEGIN ALL PKGS #################################
 ################################################################################
 ################################################################################
 ################################################################################
@@ -1349,7 +1332,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 ################################################################################
 ################################################################################
 ################################################################################
-################################END ALL PKGS####################################
+############################### END ALL PKGS ###################################
 ################################################################################
 ################################################################################
 ################################################################################

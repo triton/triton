@@ -1,6 +1,29 @@
-{ stdenv, fetchurl, glib, pkgconfig, intltool, itstool, libxml2, libarchive
-, attr, bzip2, acl, makeWrapper, librsvg, gdk_pixbuf
-, adwaita-icon-theme, gtk3 }:
+{ stdenv
+, fetchurl
+, gettext
+, intltool
+, itstool
+, makeWrapper
+
+, adwaita-icon-theme
+, cairo
+, dconf
+, file
+, gdk-pixbuf
+, glib
+, gtk3
+, json-glib
+, libarchive
+, libnotify
+, libxml2
+, nautilus
+, pango
+}:
+
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
 
 stdenv.mkDerivation rec {
   name = "file-roller-3.16.4";
@@ -10,24 +33,63 @@ stdenv.mkDerivation rec {
     sha256 = "5455980b2c9c7eb063d2d65560ae7ab2e7f01b208ea3947e151680231c7a4185";
   };
 
-  # TODO: support nautilus
-  # it tries to create {nautilus}/lib/nautilus/extensions-3.0/libnautilus-fileroller.so
+  nativeBuildInputs = [
+    gettext
+    intltool
+    itstool
+    makeWrapper
+  ];
 
-  buildInputs = [ glib pkgconfig gtk3 intltool itstool libxml2 libarchive
-                  adwaita-icon-theme attr bzip2 acl gdk_pixbuf librsvg
-                  makeWrapper ];
+  buildInputs = [
+    adwaita-icon-theme
+    dconf
+    file
+    gdk-pixbuf
+    glib
+    gtk3
+    json-glib
+    libarchive
+    libnotify
+    libxml2
+    nautilus
+  ];
+
+  configureFlags = [
+    "--enable-schemas-compile"
+    "--disable-debug"
+    "--disable-run-in-place"
+    (enFlag "nautilus-actions" (nautilus != null) null)
+    #"--enable-packagekit"
+    (enFlag "notification" (libnotify != null) null)
+    #"--enable-magic"
+    (enFlag "libarchive" (libarchive != null) null)
+    "--enable-nls"
+    "--disable-deprecated"
+  ];
+
+  preInstall = ''
+    installFlagsArray+=(
+      "nautilus_extensiondir=$out/lib/nautilus/extensions-3.0"
+    )
+  '';
 
   preFixup = ''
     wrapProgram "$out/bin/file-roller" \
-      --prefix XDG_DATA_DIRS : "$XDG_ICON_DIRS:$GSETTINGS_SCHEMAS_PATH:$out/share"
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+      --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix XDG_DATA_DIRS : "$out/share" \
+      --prefix XDG_DATA_DIRS : "$XDG_ICON_DIRS"
   '';
 
   meta = with stdenv.lib; {
     homepage = https://wiki.gnome.org/Apps/FileRoller;
     description = "Archive manager for the GNOME desktop environment";
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
-    #maintainers = gnome3.maintainers;
+      x86_64-linux;
   };
 }

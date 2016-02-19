@@ -3351,7 +3351,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  opentsdb = callPackage ../tools/misc/opentsdb {};
 #
-#  openvpn = callPackage ../tools/networking/openvpn { };
+  openvpn = callPackage ../tools/networking/openvpn { };
 #
 #  openvpn_learnaddress = callPackage ../tools/networking/openvpn/openvpn_learnaddress.nix { };
 #
@@ -3566,8 +3566,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ppl = callPackage ../development/libraries/ppl { };
 #
   ppp = callPackage ../tools/networking/ppp { };
-#
-#  pptp = callPackage ../tools/networking/pptp {};
+
+  pptp = callPackage ../tools/networking/pptp {};
 #
 #  prey-bash-client = callPackage ../tools/security/prey { };
 #
@@ -3941,7 +3941,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  stunnel = callPackage ../tools/networking/stunnel { };
 #
-#  strongswan = callPackage ../tools/networking/strongswan { };
+  strongswan = callPackage ../tools/networking/strongswan { };
 #
 #  strongswanTNC = callPackage ../tools/networking/strongswan { enableTNC=true; };
 #
@@ -4176,13 +4176,13 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  vorbisgain = callPackage ../tools/misc/vorbisgain { };
 #
-#  vpnc = callPackage ../tools/networking/vpnc { };
-#
-#  openconnect = openconnect_openssl;
-#
-#  openconnect_openssl = callPackage ../tools/networking/openconnect.nix {
-#    gnutls = null;
-#  };
+  vpnc = callPackage ../tools/networking/vpnc { };
+
+  openconnect = openconnect_openssl;
+
+  openconnect_openssl = callPackage ../tools/networking/openconnect.nix {
+    gnutls = null;
+  };
 #
 #  openconnect_gnutls = lowPrio (openconnect.override {
 #    openssl = null;
@@ -4209,7 +4209,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    python = python2;
 #  };
 #
-#  xl2tpd = callPackage ../tools/networking/xl2tpd { };
+  xl2tpd = callPackage ../tools/networking/xl2tpd { };
 #
 #  xe = callPackage ../tools/system/xe { };
 #
@@ -6864,8 +6864,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libgig = callPackage ../development/libraries/libgig { };
 #
-#  libgnome-keyring = callPackage ../development/libraries/libgnome-keyring { };
-#  libgnome_keyring = libgnome-keyring; # Deprecated alias
+  libgnome-keyring = callPackage ../development/libraries/libgnome-keyring { };
+  libgnome_keyring = libgnome-keyring; # Deprecated alias
 #
 #  libgnurl = callPackage ../development/libraries/libgnurl { };
 #
@@ -7001,7 +7001,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
   libnatspec = callPackage ../development/libraries/libnatspec { };
 #
-#  libndp = callPackage ../development/libraries/libndp { };
+  libndp = callPackage ../development/libraries/libndp { };
 #
 #  libnfc = callPackage ../development/libraries/libnfc { };
 #
@@ -7477,9 +7477,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  };
 #
   nettle = callPackage ../development/libraries/nettle { };
-#
-#  newt = callPackage ../development/libraries/newt { };
-#
+
+  newt = callPackage ../development/libraries/newt { };
+
   nghttp2 = callPackage ../development/libraries/nghttp2 { };
   libnghttp2 = nghttp2.override {
     prefix = "lib";
@@ -9229,7 +9229,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  iproute = callPackage ../os-specific/linux/iproute { };
 #
-#  iptables = callPackage ../os-specific/linux/iptables { };
+  iptables = callPackage ../os-specific/linux/iptables { };
 #
 #  ipset = callPackage ../os-specific/linux/ipset { };
 #
@@ -9259,7 +9259,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libcgroup = callPackage ../os-specific/linux/libcgroup { };
 #
-#  libnl = callPackage ../os-specific/linux/libnl { };
+  libnl = callPackage ../os-specific/linux/libnl { };
 #
 #  linuxConsoleTools = callPackage ../os-specific/linux/consoletools { };
 #
@@ -9579,8 +9579,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  mmc-utils = callPackage ../os-specific/linux/mmc-utils { };
 #
-#  module_init_tools = callPackage ../os-specific/linux/module-init-tools { };
-#
+  module_init_tools = callPackage ../os-specific/linux/module-init-tools { };
+
   aggregateModules = modules:
     callPackage ../os-specific/linux/kmod/aggregator.nix {
       inherit modules;
@@ -9863,10 +9863,10 @@ libtiff = callPackage ../development/libraries/libtiff { };
   v4l_utils = callPackage ../os-specific/linux/v4l-utils {
     qt5 = null;
   };
-#
-#  wirelesstools = callPackage ../os-specific/linux/wireless-tools { };
-#
-#  wpa_supplicant = callPackage ../os-specific/linux/wpa_supplicant { };
+
+  wirelesstools = callPackage ../os-specific/linux/wireless-tools { };
+
+  wpa_supplicant = callPackage ../os-specific/linux/wpa_supplicant { };
 #
 #  wpa_supplicant_gui = callPackage ../os-specific/linux/wpa_supplicant/gui.nix { };
 #

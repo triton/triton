@@ -794,6 +794,8 @@ hadoop = callPackage ../all-pkgs/hadoop { };
 
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
 
+help2man = callPackage ../all-pkgs/help2man { };
+
 highlight = callPackage ../all-pkgs/highlight { };
 
 hwdata = callPackage ../all-pkgs/hwdata { };
@@ -5710,8 +5712,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  guileLint = callPackage ../development/tools/guile/guile-lint { };
 #
 #  gwrap = callPackage ../development/tools/guile/g-wrap { };
-#
-  help2man = callPackage ../development/tools/misc/help2man { };
 #
 #  heroku = callPackage ../development/tools/heroku { };
 #

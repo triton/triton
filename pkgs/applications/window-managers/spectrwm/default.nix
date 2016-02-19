@@ -1,7 +1,6 @@
 { stdenv
 , fetchurl
 
-, xcb-util-cursor
 , xorg
 }:
 
@@ -23,7 +22,7 @@ stdenv.mkDerivation rec {
     xorg.libXft
     xorg.libXt
     xorg.xcbutil
-    xcb-util-cursor
+    xorg.xcbutilcursor
     xorg.xcbutilkeysyms
     xorg.xcbutilwm
   ];

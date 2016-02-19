@@ -1956,7 +1956,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  cmst = qt5.callPackage ../tools/networking/cmst { };
 #
-#  colord-gtk = callPackage ../tools/misc/colord-gtk { };
+  colord-gtk = callPackage ../tools/misc/colord-gtk { };
 #
 #  colordiff = callPackage ../tools/text/colordiff { };
 #
@@ -2193,7 +2193,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dog = callPackage ../tools/system/dog { };
 #
-#  dosfstools = callPackage ../tools/filesystems/dosfstools { };
+  dosfstools = callPackage ../tools/filesystems/dosfstools { };
 #
 #  dotnetfx35 = callPackage ../development/libraries/dotnetfx35 { };
 #
@@ -3269,10 +3269,10 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  nss_pam_ldapd = callPackage ../tools/networking/nss-pam-ldapd {};
 #
-#  ntfs3g = callPackage ../tools/filesystems/ntfs-3g { };
-#
-#  # ntfsprogs are merged into ntfs-3g
-#  ntfsprogs = pkgs.ntfs3g;
+  ntfs3g = callPackage ../tools/filesystems/ntfs-3g { };
+
+  # ntfsprogs are merged into ntfs-3g
+  ntfsprogs = pkgs.ntfs3g;
 #
 #  ntopng = callPackage ../tools/networking/ntopng { };
 #
@@ -3901,7 +3901,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  sstp = callPackage ../tools/networking/sstp {};
 #
-#  sudo = callPackage ../tools/security/sudo { };
+  sudo = callPackage ../tools/security/sudo { };
 #
 #  suidChroot = callPackage ../tools/system/suid-chroot { };
 #
@@ -6195,8 +6195,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  cpp-netlib = callPackage ../development/libraries/cpp-netlib { };
 #
   cppunit = callPackage ../development/libraries/cppunit { };
-#
-#  cracklib = callPackage ../development/libraries/cracklib { };
+
+  cracklib = callPackage ../development/libraries/cracklib { };
 #
 #  cwiid = callPackage ../development/libraries/cwiid { };
 #
@@ -6487,9 +6487,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gpac = callPackage ../applications/video/gpac { };
 #
-#  gpgme = callPackage ../development/libraries/gpgme {
-#    gnupg1 = gnupg1orig;
-#  };
+  gpgme = callPackage ../development/libraries/gpgme {
+    gnupg1 = gnupg1orig;
+  };
 #
 #  gpgstats = callPackage ../tools/security/gpgstats { };
 #
@@ -6883,7 +6883,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libsoundio = callPackage ../development/libraries/libsoundio { };
 #
-#  libgtop = callPackage ../development/libraries/libgtop {};
+  libgtop = callPackage ../development/libraries/libgtop {};
 #
 #  libLAS = callPackage ../development/libraries/libLAS { };
 #
@@ -7104,7 +7104,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libmusicbrainz3 = callPackage ../development/libraries/libmusicbrainz { };
 #
-#  libmusicbrainz5 = callPackage ../development/libraries/libmusicbrainz/5.x.nix { };
+  libmusicbrainz5 = callPackage ../development/libraries/libmusicbrainz/5.x.nix { };
 #
 #  libmusicbrainz = libmusicbrainz3;
 #
@@ -7186,7 +7186,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libpst = callPackage ../development/libraries/libpst { };
 #
-#  libpwquality = callPackage ../development/libraries/libpwquality { };
+  libpwquality = callPackage ../development/libraries/libpwquality { };
 #
 #  libqalculate = callPackage ../development/libraries/libqalculate { };
 #
@@ -8497,11 +8497,11 @@ libtiff = callPackage ../development/libraries/libtiff { };
   apacheHttpd_2_2 = callPackage ../servers/http/apache-httpd/2.2.nix {
     sslSupport = true;
   };
-#
-#  apacheHttpd_2_4 = lowPrio (callPackage ../servers/http/apache-httpd/2.4.nix {
-#    sslSupport = true;
-#  });
-#
+
+  apacheHttpd_2_4 = lowPrio (callPackage ../servers/http/apache-httpd/2.4.nix {
+    sslSupport = true;
+  });
+
   apacheHttpdPackagesFor = apacheHttpd: self: let callPackage = newScope self; in {
     inherit apacheHttpd;
 
@@ -8520,9 +8520,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    subversion = pkgs.subversion.override { httpServer = true; inherit apacheHttpd; };
   };
 #
-#  apacheHttpdPackages = apacheHttpdPackagesFor pkgs.apacheHttpd pkgs.apacheHttpdPackages;
-#  apacheHttpdPackages_2_2 = apacheHttpdPackagesFor pkgs.apacheHttpd_2_2 pkgs.apacheHttpdPackages_2_2;
-#  apacheHttpdPackages_2_4 = apacheHttpdPackagesFor pkgs.apacheHttpd_2_4 pkgs.apacheHttpdPackages_2_4;
+  apacheHttpdPackages = apacheHttpdPackagesFor pkgs.apacheHttpd pkgs.apacheHttpdPackages;
+  apacheHttpdPackages_2_2 = apacheHttpdPackagesFor pkgs.apacheHttpd_2_2 pkgs.apacheHttpdPackages_2_2;
+  apacheHttpdPackages_2_4 = apacheHttpdPackagesFor pkgs.apacheHttpd_2_4 pkgs.apacheHttpdPackages_2_4;
 #
 #  archiveopteryx = callPackage ../servers/mail/archiveopteryx/default.nix { };
 #
@@ -8544,9 +8544,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  sabnzbd = callPackage ../servers/sabnzbd { };
 #
   bind = callPackage ../servers/dns/bind { };
-#  dnsutils = bind.override {
-#    suffix = "tools";
-#  };
+  dnsutils = bind.override {
+    suffix = "tools";
+  };
 #
 #  bird = callPackage ../servers/bird { };
 #
@@ -9700,7 +9700,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  rfkill_udev = callPackage ../os-specific/linux/rfkill/udev.nix { };
 #
-#  rtkit = callPackage ../os-specific/linux/rtkit { };
+  rtkit = callPackage ../os-specific/linux/rtkit { };
 #
 #  rt5677-firmware = callPackage ../os-specific/linux/firmware/rt5677 { };
 #
@@ -9880,7 +9880,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  xf86_input_multitouch =
 #    callPackage ../os-specific/linux/xf86-input-multitouch { };
 #
-#  xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
+xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  xf86_video_nested = callPackage ../os-specific/linux/xf86-video-nested { };
 #
@@ -9969,7 +9969,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  docbook_xml_xslt = docbook_xsl;
 #
-#  docbook5_xsl = docbook_xsl_ns;
+  docbook5_xsl = docbook_xsl_ns;
 #
 #  dosemu_fonts = callPackage ../data/fonts/dosemu-fonts { };
 #
@@ -10125,7 +10125,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  hasklig = callPackage ../data/fonts/hasklig {};
 #
-#  sound-theme-freedesktop = callPackage ../data/misc/sound-theme-freedesktop { };
+  sound-theme-freedesktop = callPackage ../data/misc/sound-theme-freedesktop { };
 #
 #  source-code-pro = callPackage ../data/fonts/source-code-pro {};
 #
@@ -10690,7 +10690,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  fdupes = callPackage ../tools/misc/fdupes { };
 #
-#  feh = callPackage ../applications/graphics/feh { };
+  feh = callPackage ../applications/graphics/feh { };
 #
 #  firestr = qt5.callPackage ../applications/networking/p2p/firestr
 #    { boost = boost155;
@@ -10958,7 +10958,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  hydrogen = callPackage ../applications/audio/hydrogen { };
 #
-#  spectrwm = callPackage ../applications/window-managers/spectrwm { };
+  spectrwm = callPackage ../applications/window-managers/spectrwm { };
 #
 #  wlc = callPackage ../development/libraries/wlc { };
 #  sway = callPackage ../applications/window-managers/sway { };
@@ -11998,9 +11998,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  telepathy_haze = callPackage ../applications/networking/instant-messengers/telepathy/haze {};
 #
-#  telepathy_logger = callPackage ../applications/networking/instant-messengers/telepathy/logger {};
-#
-#  telepathy_mission_control = callPackage ../applications/networking/instant-messengers/telepathy/mission-control { };
+  telepathy_logger = callPackage ../applications/networking/instant-messengers/telepathy/logger {};
+
+  telepathy_mission_control = callPackage ../applications/networking/instant-messengers/telepathy/mission-control { };
 #
 #  telepathy_rakia = callPackage ../applications/networking/instant-messengers/telepathy/rakia { };
 #
@@ -12392,9 +12392,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  xdg-user-dirs = callPackage ../tools/X11/xdg-user-dirs { };
 #
-#  xdg_utils = callPackage ../tools/X11/xdg-utils {
-#    w3m = w3m-batch;
-#  };
+  xdg_utils = callPackage ../tools/X11/xdg-utils {
+    w3m = w3m-batch;
+  };
 #
 #  xdotool = callPackage ../tools/X11/xdotool { };
 #
@@ -12470,7 +12470,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  xsynth_dssi = callPackage ../applications/audio/xsynth-dssi { };
 #
-#  xterm = callPackage ../applications/misc/xterm { };
+  xterm = callPackage ../applications/misc/xterm { };
 #
 #  finalterm = callPackage ../applications/misc/finalterm { };
 #

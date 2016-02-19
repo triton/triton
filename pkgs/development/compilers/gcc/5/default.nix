@@ -53,8 +53,6 @@ let version = "5.3.0";
     # Whether building a cross-compiler for GNU/Hurd.
     crossGNU = cross != null && cross.config == "i586-pc-gnu";
 
-    enableParallelBuilding = true;
-
     patches =
       [ ../use-source-date-epoch.patch ]
       ++ optional (cross != null) ../libstdc++-target.patch
@@ -315,7 +313,7 @@ stdenv.mkDerivation ({
       then " --with-native-system-header-dir=${stdenv.libc}/include"
       else ""}
     ${if langAda then " --enable-libada" else ""}
-    ${if cross == null && stdenv.isi686 then "--with-arch=i686" else ""}
+    ${if stdenv.lib.elem stdenv.targetSystem stdenv.lib.platforms.i686 then "--with-arch=i686" else ""}
     ${if cross != null then crossConfigureFlags else ""}
     ${if !bootstrap then "--disable-bootstrap" else ""}
     ${if cross == null then platformFlags else ""}
@@ -445,9 +443,7 @@ stdenv.mkDerivation ({
   passthru =
     { inherit langC langCC langAda langFortran langVhdl langGo version; isGNU = true; };
 
-  inherit enableParallelBuilding enableMultilib;
-
-  inherit (stdenv) is64bit;
+  inherit enableMultilib;
 
   meta = {
     homepage = http://gcc.gnu.org/;

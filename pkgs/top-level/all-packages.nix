@@ -1794,22 +1794,22 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  appdata-tools = callPackage ../tools/misc/appdata-tools { };
 #
-#  asciidoc = callPackage ../tools/typesetting/asciidoc {
-#    inherit (pythonPackages) matplotlib numpy aafigure recursivePthLoader;
-#    w3m = w3m-batch;
-#    enableStandardFeatures = false;
-#  };
-#
-#  asciidoc-full = appendToName "full" (asciidoc.override {
-#    inherit (pythonPackages) pygments;
-#    enableStandardFeatures = true;
-#  });
-#
-#  asciidoc-full-with-plugins = appendToName "full-with-plugins" (asciidoc.override {
-#    inherit (pythonPackages) pygments;
-#    enableStandardFeatures = true;
-#    enableExtraPlugins = true;
-#  });
+  asciidoc = callPackage ../tools/typesetting/asciidoc {
+    inherit (pythonPackages) matplotlib numpy aafigure recursivePthLoader;
+    w3m = w3m-batch;
+    enableStandardFeatures = false;
+  };
+
+  asciidoc-full = appendToName "full" (asciidoc.override {
+    inherit (pythonPackages) pygments;
+    enableStandardFeatures = true;
+  });
+
+  asciidoc-full-with-plugins = appendToName "full-with-plugins" (asciidoc.override {
+    inherit (pythonPackages) pygments;
+    enableStandardFeatures = true;
+    enableExtraPlugins = true;
+  });
 #
 #  autossh = callPackage ../tools/networking/autossh { };
 #
@@ -2229,7 +2229,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dvtm = callPackage ../tools/misc/dvtm { };
 #
-#  e2fsprogs = callPackage ../tools/filesystems/e2fsprogs { };
+  e2fsprogs = callPackage ../tools/filesystems/e2fsprogs { };
 #
 #  easyrsa = callPackage ../tools/networking/easyrsa { };
 #
@@ -2338,7 +2338,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  figlet = callPackage ../tools/misc/figlet { };
 #
-#  file = callPackage ../tools/misc/file { };
+  file = callPackage ../tools/misc/file { };
 #
 #  filegive = callPackage ../tools/networking/filegive { };
 #
@@ -2570,10 +2570,10 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    json_c = json-c-0-11; # won't configure with 0.12; others are vulnerable
 #  };
 #
-#  groff = callPackage ../tools/text/groff {
-#    ghostscript = null;
-#  };
-#
+  groff = callPackage ../tools/text/groff {
+    ghostscript = null;
+  };
+
   grub = callPackage_i686 ../tools/misc/grub {
     buggyBiosCDSupport = config.grub.buggyBiosCDSupport or true;
   };
@@ -3606,9 +3606,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  pydb = callPackage ../development/tools/pydb { };
 #
 #  pystringtemplate = callPackage ../development/python-modules/stringtemplate { };
-#
-#  pythonDBus = dbus_python;
-#
+
+  pythonDBus = dbus_python;
+
 #  pythonIRClib = pythonPackages.pythonIRClib;
 #
 #  pythonSexy = callPackage ../development/python-modules/libsexy { };
@@ -3798,7 +3798,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  sg3_utils = callPackage ../tools/system/sg3_utils { };
 #
-#  sharutils = callPackage ../tools/archivers/sharutils { };
+  sharutils = callPackage ../tools/archivers/sharutils { };
 #
 #  shotwell = callPackage ../applications/graphics/shotwell { };
 #
@@ -4430,9 +4430,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  xmlstarlet = callPackage ../tools/text/xml/xmlstarlet { };
 #
-#  xmlto = callPackage ../tools/typesetting/xmlto {
-#    w3m = w3m-batch;
-#  };
+  xmlto = callPackage ../tools/typesetting/xmlto {
+    w3m = w3m-batch;
+  };
 #
 #  xmpppy = pythonPackages.xmpppy;
 #
@@ -4522,8 +4522,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  };
 #
 #  #Use this instead of stdenv to build with clang
-#  clangStdenv = lowPrio llvmPackages.stdenv;
-#  libcxxStdenv = stdenvAdapters.overrideCC stdenv (clangWrapSelf llvmPackages.clang-unwrapped);
+  clangStdenv = lowPrio llvmPackages.stdenv;
+  libcxxStdenv = stdenvAdapters.overrideCC stdenv (clangWrapSelf llvmPackages.clang-unwrapped);
 #
 #  cython = pythonPackages.cython;
 #  cython3 = python3Packages.cython;
@@ -4721,11 +4721,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  lessc = callPackage ../development/compilers/lessc { };
 #
-#  llvmPackages = recurseIntoAttrs llvmPackages_37;
+  llvmPackages = recurseIntoAttrs llvmPackages_37;
 #
-#  llvmPackages_37 = callPackage ../development/compilers/llvm/3.7 {
-#    inherit (stdenvAdapters) overrideCC;
-#  };
+  llvmPackages_37 = callPackage ../development/compilers/llvm/3.7 {
+    inherit (stdenvAdapters) overrideCC;
+  };
 #
 #  mono = callPackage ../development/compilers/mono { };
 #
@@ -5660,9 +5660,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dot2tex = pythonPackages.dot2tex;
 #
-#  doxygen = callPackage ../development/tools/documentation/doxygen {
-#    qt4 = null;
-#  };
+  doxygen = callPackage ../development/tools/documentation/doxygen {
+    qt4 = null;
+  };
 #
 #  doxygen_gui = lowPrio (doxygen.override { inherit qt4; });
 #
@@ -5902,7 +5902,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  hammer = callPackage ../development/tools/parsing/hammer { };
 #
-#  re2c = callPackage ../development/tools/parsing/re2c { };
+  re2c = callPackage ../development/tools/parsing/re2c { };
 #
 #  remake = callPackage ../development/tools/build-managers/remake { };
 #
@@ -6702,7 +6702,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libappindicator-gtk2 = callPackage ../development/libraries/libappindicator { gtkVersion = "2"; };
 #  libappindicator-gtk3 = callPackage ../development/libraries/libappindicator { gtkVersion = "3"; };
 #
-#  libarchive = callPackage ../development/libraries/libarchive { };
+  libarchive = callPackage ../development/libraries/libarchive { };
 #
 #  libasr = callPackage ../development/libraries/libasr { };
 #
@@ -6786,7 +6786,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libcutl = callPackage ../development/libraries/libcutl { };
 #
-#  libdaemon = callPackage ../development/libraries/libdaemon { };
+  libdaemon = callPackage ../development/libraries/libdaemon { };
 #
 #  libdbi = callPackage ../development/libraries/libdbi { };
 #
@@ -6841,8 +6841,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libebur128 = callPackage ../development/libraries/libebur128 { };
 #
-#  libedit = callPackage ../development/libraries/libedit { };
-#
+  libedit = callPackage ../development/libraries/libedit { };
+
   libelf = elfutils;
 #
 #  libetpan = callPackage ../development/libraries/libetpan { };
@@ -6954,7 +6954,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libibumad = callPackage ../development/libraries/libibumad { };
 #
-#  libical = callPackage ../development/libraries/libical { };
+  libical = callPackage ../development/libraries/libical { };
 #
 #  libicns = callPackage ../development/libraries/libicns { };
 #
@@ -7134,7 +7134,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libofx = callPackage ../development/libraries/libofx { };
 #
-#  libogg = callPackage ../development/libraries/libogg { };
+  libogg = callPackage ../development/libraries/libogg { };
 #
 #  liboggz = callPackage ../development/libraries/liboggz { };
 #
@@ -7706,18 +7706,18 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    developerBuild = true;
 #  });
 #
-#  qt54 =
-#    let imported = import ../development/libraries/qt-5/5.4 { inherit pkgs; };
-#    in recurseIntoAttrs (imported.override (super: qt5LibsFun));
-#
-#  qt55 =
-#    let imported = import ../development/libraries/qt-5/5.5 { inherit pkgs; };
-#    in recurseIntoAttrs (imported.override (super: qt5LibsFun));
-#
-#  qt5 = qt55;
-#
-#  qt5LibsFun = self: with self; {
-#
+  qt54 =
+    let imported = import ../development/libraries/qt-5/5.4 { inherit pkgs; };
+    in recurseIntoAttrs (imported.override (super: qt5LibsFun));
+
+  qt55 =
+    let imported = import ../development/libraries/qt-5/5.5 { inherit pkgs; };
+    in recurseIntoAttrs (imported.override (super: qt5LibsFun));
+
+  qt5 = qt55;
+
+  qt5LibsFun = self: with self; {
+
 #    accounts-qt = callPackage ../development/libraries/accounts-qt { };
 #
 #    grantlee = callPackage ../development/libraries/grantlee/5.x.nix { };
@@ -7764,15 +7764,15 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #    telepathy = callPackage ../development/libraries/telepathy/qt { };
 #
-#    vlc = callPackage ../applications/video/vlc {
-#      qt4 = null;
-#      withQt5 = true;
-#    };
+    vlc = callPackage ../applications/video/vlc {
+      qt4 = null;
+      withQt5 = true;
+    };
+
+  };
 #
-#  };
-#
-#  qtEnv = qt5.env;
-#  qt5Full = qt5.full;
+  qtEnv = qt5.env;
+  qt5Full = qt5.full;
 #
 #  qtkeychain = callPackage ../development/libraries/qtkeychain { };
 #
@@ -9042,17 +9042,17 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  alienfx = callPackage ../os-specific/linux/alienfx { };
 #
-#  alsa-firmware = callPackage ../os-specific/linux/alsa-firmware { };
-#
-#  alsaLib = callPackage ../os-specific/linux/alsa-lib { };
-#
-#  alsaPlugins = callPackage ../os-specific/linux/alsa-plugins { };
-#
-#  alsaPluginWrapper = callPackage ../os-specific/linux/alsa-plugins/wrapper.nix { };
-#
-#  alsaUtils = callPackage ../os-specific/linux/alsa-utils { };
-#  alsaOss = callPackage ../os-specific/linux/alsa-oss { };
-#  alsaTools = callPackage ../os-specific/linux/alsa-tools { };
+  alsa-firmware = callPackage ../os-specific/linux/alsa-firmware { };
+
+  alsaLib = callPackage ../os-specific/linux/alsa-lib { };
+
+  alsaPlugins = callPackage ../os-specific/linux/alsa-plugins { };
+
+  alsaPluginWrapper = callPackage ../os-specific/linux/alsa-plugins/wrapper.nix { };
+
+  alsaUtils = callPackage ../os-specific/linux/alsa-utils { };
+  alsaOss = callPackage ../os-specific/linux/alsa-oss { };
+  alsaTools = callPackage ../os-specific/linux/alsa-tools { };
 #
 #  microcodeAmd = callPackage ../os-specific/linux/microcode/amd.nix { };
 #
@@ -9086,13 +9086,13 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  bluez4 = lowPrio (callPackage ../os-specific/linux/bluez {
 #    pygobject = pygobject3;
 #  });
-#
-#  bluez5 = callPackage ../os-specific/linux/bluez/bluez5.nix { };
-#
+
+  bluez5 = callPackage ../os-specific/linux/bluez/bluez5.nix { };
+
 #  # Needed for LibreOffice
 #  bluez5_28 = lowPrio (callPackage ../os-specific/linux/bluez/bluez5_28.nix { });
-#
-#  bluez = bluez5;
+
+  bluez = bluez5;
 #
 #  inherit (pythonPackages) bedup;
 #
@@ -9376,9 +9376,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    blcr = callPackage ../os-specific/linux/blcr { };
 #
     cryptodev = callPackage ../os-specific/linux/cryptodev { };
-#
-#    cpupower = callPackage ../os-specific/linux/cpupower { };
-#
+
+    cpupower = callPackage ../os-specific/linux/cpupower { };
+
     e1000e = callPackage ../os-specific/linux/e1000e {};
 #
 #    v4l2loopback = callPackage ../os-specific/linux/v4l2loopback { };
@@ -9714,7 +9714,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  setools = callPackage ../os-specific/linux/setools { };
 #
-#  shadow = callPackage ../os-specific/linux/shadow { };
+  shadow = callPackage ../os-specific/linux/shadow { };
 #
 #  sinit = callPackage ../os-specific/linux/sinit {
 #    rcinit = "/etc/rc.d/rc.init";
@@ -9779,14 +9779,14 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  tunctl = callPackage ../os-specific/linux/tunctl { };
 #
 #  # TODO(dezgeg): either refactor & use ubootTools directly, or remove completely
-#  ubootChooser = name: ubootTools;
-#
-#  # Upstream U-Boots:
-#  ubootTools = callPackage ../misc/uboot {
-#    toolsOnly = true;
-#    targetPlatforms = lib.platforms.linux;
-#    filesToInstall = ["tools/dumpimage" "tools/mkenvimage" "tools/mkimage"];
-#  };
+  ubootChooser = name: ubootTools;
+
+  # Upstream U-Boots:
+  ubootTools = callPackage ../misc/uboot {
+    toolsOnly = true;
+    targetPlatforms = lib.platforms.linux;
+    filesToInstall = ["tools/dumpimage" "tools/mkenvimage" "tools/mkimage"];
+  };
 #
 #  ubootJetsonTK1 = callPackage ../misc/uboot {
 #    defconfig = "jetson-tk1_defconfig";
@@ -11866,14 +11866,14 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  dropbox-cli = callPackage ../applications/networking/dropbox-cli { };
 #
-#  lightdm = qt5.callPackage ../applications/display-managers/lightdm {
-#    qt4 = null;
-#    withQt5 = false;
-#  };
+  lightdm = qt5.callPackage ../applications/display-managers/lightdm {
+    qt4 = null;
+    withQt5 = false;
+  };
 #
 #  lightdm_qt = lightdm.override { withQt5 = true; };
 #
-#  lightdm_gtk_greeter = callPackage ../applications/display-managers/lightdm-gtk-greeter { };
+  lightdm_gtk_greeter = callPackage ../applications/display-managers/lightdm-gtk-greeter { };
 #
 #  slic3r = callPackage ../applications/misc/slic3r { };
 #

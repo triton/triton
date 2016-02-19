@@ -2951,7 +2951,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libevhtp = callPackage ../development/libraries/libevhtp { };
 #
-#  liboauth = callPackage ../development/libraries/liboauth { };
+  liboauth = callPackage ../development/libraries/liboauth { };
 #
 #  libsrs2 = callPackage ../development/libraries/libsrs2 { };
 #
@@ -4688,14 +4688,14 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  icedtea_web = icedtea8_web;
 #
 #  openjdk7-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "7"; };
-#  openjdk8-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "8"; };
+  openjdk8-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "8"; };
 #
 #  openjdk7-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
 #    openjdk = openjdk7.override { minimal = true; };
 #  };
-#  openjdk8-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
-#    openjdk = openjdk8.override { minimal = true; };
-#  };
+  openjdk8-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
+    openjdk = openjdk8.override { minimal = true; };
+  };
 #
 #  openjdk7 = callPackage ../development/compilers/openjdk/7.nix {
 #    bootjdk = openjdk7-bootstrap;
@@ -4703,25 +4703,25 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  openjdk7_jdk = openjdk7 // { outputs = [ "out" ]; };
 #  openjdk7_jre = openjdk7.jre // { outputs = [ "jre" ]; };
 #
-#  openjdk8 = callPackage ../development/compilers/openjdk/8.nix {
-#    bootjdk = openjdk8-bootstrap;
-#  };
-#  openjdk8_jdk = openjdk8 // { outputs = [ "out" ]; };
-#  openjdk8_jre = openjdk8.jre // { outputs = [ "jre" ]; };
-#
-#  openjdk = openjdk8;
+  openjdk8 = callPackage ../development/compilers/openjdk/8.nix {
+    bootjdk = openjdk8-bootstrap;
+  };
+  openjdk8_jdk = openjdk8 // { outputs = [ "out" ]; };
+  openjdk8_jre = openjdk8.jre // { outputs = [ "jre" ]; };
+
+  openjdk = openjdk8;
 #
 #  java7 = openjdk7;
 #  jdk7 = java7 // { outputs = [ "out" ]; };
 #  jre7 = java7.jre // { outputs = [ "jre" ]; };
 #
-#  java8 = openjdk8;
-#  jdk8 = java8 // { outputs = [ "out" ]; };
-#  jre8 = java8.jre // { outputs = [ "jre" ]; };
+  java8 = openjdk8;
+  jdk8 = java8 // { outputs = [ "out" ]; };
+  jre8 = java8.jre // { outputs = [ "jre" ]; };
 #
-#  java = java8;
-#  jdk = java // { outputs = [ "out" ]; };
-#  jre = java.jre // { outputs = [ "jre" ]; };
+  java = java8;
+  jdk = java // { outputs = [ "out" ]; };
+  jre = java.jre // { outputs = [ "jre" ]; };
 #
 #  lessc = callPackage ../development/compilers/lessc { };
 #
@@ -4740,7 +4740,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ocaml = ocamlPackages.ocaml;
 #  ocaml_4_02 = callPackage ../development/compilers/ocaml/4.02.nix { };
 #
-#  orc = callPackage ../development/compilers/orc { };
+  orc = callPackage ../development/compilers/orc { };
 #
 #  mkOcamlPackages = ocaml: self:
 #    let
@@ -5439,9 +5439,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  antlr3 = callPackage ../development/tools/parsing/antlr { };
 #
-#  ant = apacheAnt;
-#
-#  apacheAnt = callPackage ../development/tools/build-managers/apache-ant { };
+  ant = apacheAnt;
+
+  apacheAnt = callPackage ../development/tools/build-managers/apache-ant { };
 #
 #  apacheKafka = callPackage ../servers/apache-kafka { };
 #
@@ -5931,7 +5931,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  selendroid = callPackage ../development/tools/selenium/selendroid { };
 #
-#  scons = callPackage ../development/tools/build-managers/scons { };
+  scons = callPackage ../development/tools/build-managers/scons { };
 #
 #  sbt = callPackage ../development/tools/build-managers/sbt { };
 #  simpleBuildTool = sbt;
@@ -6062,20 +6062,20 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  appstream-glib = callPackage ../development/libraries/appstream-glib { };
 #
-#  apr = callPackage ../development/libraries/apr { };
-#
-#  aprutil = callPackage ../development/libraries/apr-util {
-#    bdbSupport = true;
-#    db = if stdenv.isFreeBSD then db47 else db;
-#    # XXX: only the db_185 interface was available through
-#    #      apr with db58 on freebsd (nov 2015), for unknown reasons
-#  };
-#
+  apr = callPackage ../development/libraries/apr { };
+
+  aprutil = callPackage ../development/libraries/apr-util {
+    bdbSupport = true;
+    db = if stdenv.isFreeBSD then db47 else db;
+    # XXX: only the db_185 interface was available through
+    #      apr with db58 on freebsd (nov 2015), for unknown reasons
+  };
+
 #  assimp = callPackage ../development/libraries/assimp { };
 #
 #  asio = callPackage ../development/libraries/asio { };
 #
-#  aspell = callPackage ../development/libraries/aspell { };
+  aspell = callPackage ../development/libraries/aspell { };
 #
 #  aspellDicts = recurseIntoAttrs (callPackages ../development/libraries/aspell/dictionaries.nix {});
 #
@@ -6194,7 +6194,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  cpp-netlib = callPackage ../development/libraries/cpp-netlib { };
 #
-#  cppunit = callPackage ../development/libraries/cppunit { };
+  cppunit = callPackage ../development/libraries/cppunit { };
 #
 #  cracklib = callPackage ../development/libraries/cracklib { };
 #
@@ -6246,7 +6246,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  eigen2 = callPackage ../development/libraries/eigen/2.0.nix {};
 #
-#  enchant = callPackage ../development/libraries/enchant { };
+  enchant = callPackage ../development/libraries/enchant { };
 #
 #  enet = callPackage ../development/libraries/enet { };
 #
@@ -6361,14 +6361,14 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  geoclue = callPackage ../development/libraries/geoclue {};
 #
-#  geoclue2 = callPackage ../development/libraries/geoclue/2.0.nix {};
+  geoclue2 = callPackage ../development/libraries/geoclue/2.0.nix {};
 #
 #  geoipWithDatabase = makeOverridable (callPackage ../development/libraries/geoip) {
 #    drvName = "geoip-tools";
 #    geoipDatabase = geolite-legacy;
 #  };
 #
-#  geoip = callPackage ../development/libraries/geoip { };
+  geoip = callPackage ../development/libraries/geoip { };
 #
 #  geoipjava = callPackage ../development/libraries/java/geoipjava { };
 #
@@ -6555,7 +6555,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    inherit (perlPackages) IOStringy;
 #  };
 #
-#  hspell = callPackage ../development/libraries/hspell { };
+  hspell = callPackage ../development/libraries/hspell { };
 #
 #  hspellDicts = callPackage ../development/libraries/hspell/dicts.nix { };
 #
@@ -6567,7 +6567,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  http-parser = callPackage ../development/libraries/http-parser { inherit (pythonPackages) gyp; };
 #
-#  hunspell = callPackage ../development/libraries/hunspell { };
+  hunspell = callPackage ../development/libraries/hunspell { };
 #
 #  hunspellDicts = recurseIntoAttrs (callPackages ../development/libraries/hunspell/dictionaries.nix {});
 #
@@ -6666,10 +6666,10 @@ isocodes = callPackage ../development/libraries/iso-codes { };
   lcms1 = callPackage ../development/libraries/lcms { };
 
   lcms2 = callPackage ../development/libraries/lcms2 { };
-#
-#  ldb = callPackage ../development/libraries/ldb {
-#    python = python2;
-#  };
+
+  ldb = callPackage ../development/libraries/ldb {
+    python = python2;
+  };
 #
 #  lensfun = callPackage ../development/libraries/lensfun {};
 #
@@ -6689,11 +6689,11 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  lib3ds = callPackage ../development/libraries/lib3ds { };
 #
-#  libaacs = callPackage ../development/libraries/libaacs { };
+  libaacs = callPackage ../development/libraries/libaacs { };
 #
 #  libaal = callPackage ../development/libraries/libaal { };
 #
-#  libaccounts-glib = callPackage ../development/libraries/libaccounts-glib { };
+  libaccounts-glib = callPackage ../development/libraries/libaccounts-glib { };
 #
 #  libao = callPackage ../development/libraries/libao {
 #    usePulseAudio = config.pulseaudio or true;
@@ -6728,7 +6728,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libbluedevil = callPackage ../development/libraries/libbluedevil { };
 #
-#  libbdplus = callPackage ../development/libraries/libbdplus { };
+  libbdplus = callPackage ../development/libraries/libbdplus { };
 #
 #  libbs2b = callPackage ../development/libraries/audio/libbs2b { };
 #
@@ -6745,8 +6745,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libcdaudio = callPackage ../development/libraries/libcdaudio { };
 #
-#  libcddb = callPackage ../development/libraries/libcddb { };
-#
+  libcddb = callPackage ../development/libraries/libcddb { };
+
   libcdio = callPackage ../development/libraries/libcdio { };
 #  libcdio082 = callPackage ../development/libraries/libcdio/0.82.nix { };
 #
@@ -6786,7 +6786,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libcouchbase = callPackage ../development/libraries/libcouchbase { };
 #
-#  libcue = callPackage ../development/libraries/libcue { };
+  libcue = callPackage ../development/libraries/libcue { };
 #
 #  libcutl = callPackage ../development/libraries/libcutl { };
 #
@@ -7162,7 +7162,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libpar2 = callPackage ../development/libraries/libpar2 { };
 #
-#  libpcap = callPackage ../development/libraries/libpcap { };
+  libpcap = callPackage ../development/libraries/libpcap { };
 #
 #  libpipeline = callPackage ../development/libraries/libpipeline { };
 #
@@ -7274,7 +7274,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libunibreak = callPackage ../development/libraries/libunibreak { };
 #
-#  liburcu = callPackage ../development/libraries/liburcu { };
+  liburcu = callPackage ../development/libraries/liburcu { };
 #
 #  libutempter = callPackage ../development/libraries/libutempter { };
 #
@@ -7303,7 +7303,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libvisio = callPackage ../development/libraries/libvisio { };
 #
-#  libvisual = callPackage ../development/libraries/libvisual { };
+  libvisual = callPackage ../development/libraries/libvisual { };
 #
 #  libvncserver = callPackage ../development/libraries/libvncserver {};
 #
@@ -7357,7 +7357,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libixp_hg = callPackage ../development/libraries/libixp-hg { };
 #
-#  libyaml = callPackage ../development/libraries/libyaml { };
+  libyaml = callPackage ../development/libraries/libyaml { };
 #
 #  libyamlcpp = callPackage ../development/libraries/libyaml-cpp { };
 #
@@ -7498,10 +7498,10 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  non = callPackage ../applications/audio/non { };
 #
   nspr = callPackage ../development/libraries/nspr { };
-#
+
   nss = lowPrio (callPackage ../development/libraries/nss { });
 
-#  nss_wrapper = callPackage ../development/libraries/nss_wrapper { };
+  nss_wrapper = callPackage ../development/libraries/nss_wrapper { };
 #
 #  nssTools = callPackage ../development/libraries/nss {
 #    includeTools = true;
@@ -7652,7 +7652,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  polkit_qt4 = callPackage ../development/libraries/polkit-qt-1 { };
 #
-#  popt = callPackage ../development/libraries/popt { };
+  popt = callPackage ../development/libraries/popt { };
 #
 #  portaudio = callPackage ../development/libraries/portaudio { };
 #
@@ -7840,7 +7840,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  redland = pkgs.librdf_redland;
 #
-#  resolv_wrapper = callPackage ../development/libraries/resolv_wrapper { };
+  resolv_wrapper = callPackage ../development/libraries/resolv_wrapper { };
 #
 #  rhino = callPackage ../development/libraries/java/rhino {
 #    javac = gcj;
@@ -7861,12 +7861,12 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  schroedinger = callPackage ../development/libraries/schroedinger { };
 #
-#  SDL = callPackage ../development/libraries/SDL {
-#    openglSupport = mesaSupported;
-#    alsaSupport = stdenv.isLinux;
-#    x11Support = true;
-#    pulseaudioSupport = config.pulseaudio or true;
-#  };
+  SDL = callPackage ../development/libraries/SDL {
+    openglSupport = mesaSupported;
+    alsaSupport = stdenv.isLinux;
+    x11Support = true;
+    pulseaudioSupport = config.pulseaudio or true;
+  };
 #
 #  SDL_gfx = callPackage ../development/libraries/SDL_gfx { };
 #
@@ -7903,7 +7903,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  serd = callPackage ../development/libraries/serd {};
 #
-#  serf = callPackage ../development/libraries/serf {};
+  serf = callPackage ../development/libraries/serf {};
 #
 #  sfsexp = callPackage ../development/libraries/sfsexp {};
 #
@@ -7932,7 +7932,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  snappy = callPackage ../development/libraries/snappy { };
 #
-#  socket_wrapper = callPackage ../development/libraries/socket_wrapper { };
+  socket_wrapper = callPackage ../development/libraries/socket_wrapper { };
 #
 #  sofia_sip = callPackage ../development/libraries/sofia-sip { };
 #
@@ -8026,9 +8026,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  taglib_extras = callPackage ../development/libraries/taglib-extras { };
 #
-#  talloc = callPackage ../development/libraries/talloc {
-#    python = python2;
-#  };
+  talloc = callPackage ../development/libraries/talloc {
+    python = python2;
+  };
 #
 #  tclap = callPackage ../development/libraries/tclap {};
 #
@@ -8042,21 +8042,21 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    python = python2;
 #  };
 #
-#  tdb = callPackage ../development/libraries/tdb {
-#    python = python2;
-#  };
+  tdb = callPackage ../development/libraries/tdb {
+    python = python2;
+  };
 #
 #  tecla = callPackage ../development/libraries/tecla { };
 #
-#  telepathy_glib = callPackage ../development/libraries/telepathy/glib { };
+  telepathy_glib = callPackage ../development/libraries/telepathy/glib { };
 #
 #  telepathy_farstream = callPackage ../development/libraries/telepathy/farstream {};
 #
 #  telepathy_qt = callPackage ../development/libraries/telepathy/qt { qtbase = qt4; };
 #
-#  tevent = callPackage ../development/libraries/tevent {
-#    python = python2;
-#  };
+  tevent = callPackage ../development/libraries/tevent {
+    python = python2;
+  };
 #
 #  tet = callPackage ../development/tools/misc/tet { };
 #
@@ -8083,9 +8083,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  tokyotyrant = callPackage ../development/libraries/tokyo-tyrant { };
 #
-#  tremor = callPackage ../development/libraries/tremor { };
-#
-#  uid_wrapper = callPackage ../development/libraries/uid_wrapper { };
+  tremor = callPackage ../development/libraries/tremor { };
+
+  uid_wrapper = callPackage ../development/libraries/uid_wrapper { };
 #
 #  unibilium = callPackage ../development/libraries/unibilium { };
 #
@@ -8241,7 +8241,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  xlslib = callPackage ../development/libraries/xlslib { };
 #
-#  xvidcore = callPackage ../development/libraries/xvidcore { };
+  xvidcore = callPackage ../development/libraries/xvidcore { };
 #
 #  xylib = callPackage ../development/libraries/xylib { };
 #
@@ -9258,8 +9258,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  ldm = callPackage ../os-specific/linux/ldm { };
 #
-#  libaio = callPackage ../os-specific/linux/libaio { };
-#
+  libaio = callPackage ../os-specific/linux/libaio { };
+
   libatasmart = callPackage ../os-specific/linux/libatasmart { };
 #
 #  libcgroup = callPackage ../os-specific/linux/libcgroup { };
@@ -11090,7 +11090,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  ksuperkey = callPackage ../tools/X11/ksuperkey { };
 #
-#  lame = callPackage ../development/libraries/lame { };
+  lame = callPackage ../development/libraries/lame { };
 #
 #  lash = callPackage ../applications/audio/lash { };
 #
@@ -11930,19 +11930,19 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #    git = gitMinimal;
 #  };
 #
-#  inherit (callPackages ../applications/version-management/subversion/default.nix {
-#      bdbSupport = true;
-#      httpServer = false;
-#      httpSupport = true;
-#      pythonBindings = false;
-#      perlBindings = false;
-#      javahlBindings = false;
-#      saslSupport = false;
-#      sasl = cyrus_sasl;
-#    })
-#    subversion18 subversion19;
-#
-#  subversion = pkgs.subversion19;
+  inherit (callPackages ../applications/version-management/subversion/default.nix {
+      bdbSupport = true;
+      httpServer = false;
+      httpSupport = true;
+      pythonBindings = false;
+      perlBindings = false;
+      javahlBindings = false;
+      saslSupport = false;
+      sasl = cyrus_sasl;
+    })
+    subversion18 subversion19;
+
+  subversion = pkgs.subversion19;
 #
 #  subversionClient = appendToName "client" (pkgs.subversion.override {
 #    bdbSupport = false;
@@ -11950,7 +11950,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #    pythonBindings = true;
 #  });
 #
-#  subunit = callPackage ../development/libraries/subunit { };
+  subunit = callPackage ../development/libraries/subunit { };
 #
 #  surf = callPackage ../applications/networking/browsers/surf {
 #    webkit = webkitgtk2;

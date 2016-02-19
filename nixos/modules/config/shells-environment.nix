@@ -148,7 +148,7 @@ in
 
   config = {
 
-    system.build.binsh = pkgs.bashInteractive;
+    system.build.binsh = pkgs.bash;
 
     # Set session variables in the shell as well. This is usually
     # unnecessary, but it allows changes to session variables to take

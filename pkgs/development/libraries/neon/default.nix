@@ -22,8 +22,6 @@ stdenv.mkDerivation rec {
     sha256 = "1pawhk02x728xn396a1kcivy9gqm94srmgad6ymr9l0qvk02dih0";
   };
 
-  patches = optionals stdenv.isDarwin [ ./0.29.6-darwin-fix-configure.patch ];
-
   buildInputs = [libxml2 pkgconfig openssl]
     ++ stdenv.lib.optional compressionSupport zlib;
 

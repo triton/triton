@@ -20,9 +20,6 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "http://www.webdav.org/neon/${name}.tar.gz";
     sha256 = "0hzbjqdx1z8zw0vmbknf159wjsxbcq8ii0wgwkqhxj3dimr0nr4w";
-  };
-
-  patches = optionals stdenv.isDarwin [ ./0.29.6-darwin-fix-configure.patch ];
 
   buildInputs = [libxml2 pkgconfig openssl]
     ++ stdenv.lib.optional compressionSupport zlib;

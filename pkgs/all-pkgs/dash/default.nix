@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , libedit
@@ -31,6 +32,16 @@ stdenv.mkDerivation rec {
       url = "mirror://debian/pool/main/d/dash/"
           + "dash_${release-version}-${patch-version}.diff.gz";
       sha256 = "1nm3bajpyv737j0b15hzhckg28hzwjiryhvgvhfp84bbin07nn4y";
+    })
+    (fetchTritonPatch {
+      rev = "2e96cc8e06eaf6ad9643acd1fdddb23aba7759ea";
+      file = "dash/dash-0.5.5.1-octal.patch";
+      sha256 = "06741af243014a22ba1b530a5d4e4abd70b944dcb16f9e1ed86290745ff3dbd0";
+    })
+    (fetchTritonPatch {
+      rev = "2e96cc8e06eaf6ad9643acd1fdddb23aba7759ea";
+      file = "dash/dash-0.5.8.1-eval-warnx.patch";
+      sha256 = "13840812b0e03039c4061fac9bfd01106e53ce51e9bfb794c8c4015e6f3033e9";
     })
   ];
 

@@ -3348,8 +3348,8 @@ zstd = callPackage ../all-pkgs/zstd { };
   openssh_with_kerberos = pkgs.appendToName "with-kerberos" (openssh.override { withKerberos = true; });
 
   opensp = callPackage ../tools/text/sgml/opensp { };
-#
-#  spCompat = callPackage ../tools/text/sgml/opensp/compat.nix { };
+
+  spCompat = callPackage ../tools/text/sgml/opensp/compat.nix { };
 #
 #  opentracker = callPackage ../applications/networking/p2p/opentracker { };
 #
@@ -6089,7 +6089,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  aubio = callPackage ../development/libraries/aubio { };
 #
-#  audiofile = callPackage ../development/libraries/audiofile { };
+  audiofile = callPackage ../development/libraries/audiofile { };
 #
 #  babl = callPackage ../development/libraries/babl { };
 #
@@ -6447,7 +6447,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  glpk = callPackage ../development/libraries/glpk { };
 #
-#  gmime = callPackage ../development/libraries/gmime { };
+  gmime = callPackage ../development/libraries/gmime { };
 #
 #  gmm = callPackage ../development/libraries/gmm { };
 #
@@ -7086,7 +7086,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libmng = callPackage ../development/libraries/libmng { };
 #
-#  libmnl = callPackage ../development/libraries/libmnl { };
+  libmnl = callPackage ../development/libraries/libmnl { };
 #
 #  libmodplug = callPackage ../development/libraries/libmodplug {};
 #
@@ -7114,7 +7114,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libnet = callPackage ../development/libraries/libnet { };
 #
-#  libnetfilter_conntrack = callPackage ../development/libraries/libnetfilter_conntrack { };
+  libnetfilter_conntrack = callPackage ../development/libraries/libnetfilter_conntrack { };
 #
 #  libnetfilter_cthelper = callPackage ../development/libraries/libnetfilter_cthelper { };
 #
@@ -7122,7 +7122,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libnetfilter_queue = callPackage ../development/libraries/libnetfilter_queue { };
 #
-#  libnfnetlink = callPackage ../development/libraries/libnfnetlink { };
+  libnfnetlink = callPackage ../development/libraries/libnfnetlink { };
 #
 #  libnftnl = callPackage ../development/libraries/libnftnl { };
 #
@@ -7922,7 +7922,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  skalibs = callPackage ../development/libraries/skalibs { };
 #
-#  slang = callPackage ../development/libraries/slang { };
+  slang = callPackage ../development/libraries/slang { };
 #
 #  smpeg = callPackage ../development/libraries/smpeg { };
 #
@@ -9230,10 +9230,10 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  iomelt = callPackage ../os-specific/linux/iomelt { };
 #
-#  iotop = callPackage ../os-specific/linux/iotop { };
-#
-#  iproute = callPackage ../os-specific/linux/iproute { };
-#
+  iotop = callPackage ../os-specific/linux/iotop { };
+
+  iproute = callPackage ../os-specific/linux/iproute { };
+
   iptables = callPackage ../os-specific/linux/iptables { };
 #
 #  ipset = callPackage ../os-specific/linux/ipset { };
@@ -9947,7 +9947,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  docbook5 = callPackage ../data/sgml+xml/schemas/docbook-5.0 { };
 #
-#  docbook_sgml_dtd_31 = callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/3.1.nix { };
+  docbook_sgml_dtd_31 = callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/3.1.nix { };
 #
 #  docbook_sgml_dtd_41 = callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/4.1.nix { };
 #

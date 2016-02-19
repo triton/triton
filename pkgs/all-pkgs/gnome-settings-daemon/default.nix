@@ -39,9 +39,8 @@
 , polkit
 , udev
 , upower
-, xf86_input_wacom
-, xkeyboard_config
 , wayland
+, xf86_input_wacom
 , xorg
 }:
 
@@ -106,7 +105,6 @@ stdenv.mkDerivation rec {
     upower
     wayland
     xf86_input_wacom
-    xkeyboard_config
     xorg.inputproto
     xorg.libX11
     xorg.libXext
@@ -116,6 +114,7 @@ stdenv.mkDerivation rec {
     xorg.libXtst
     xorg.libXxf86misc
     xorg.xf86miscproto
+    xorg.xkeyboardconfig
     xorg.xproto
   ];
 

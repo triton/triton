@@ -8214,7 +8214,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  xbase = callPackage ../development/libraries/xbase { };
 #
-#  xcb-util-cursor = xorg.xcbutilcursor;
 #  xcb-util-cursor-HEAD = callPackage ../development/libraries/xcb-util-cursor/HEAD.nix { };
 #
 #  xdo = callPackage ../tools/misc/xdo { };
@@ -10721,7 +10720,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  freepv = callPackage ../applications/graphics/freepv { };
 #
 #  xfontsel = callPackage ../applications/misc/xfontsel { };
-#  inherit (xorg) xlsfonts;
 #
 #  freerdp = callPackage ../applications/networking/remote/freerdp {
 #    ffmpeg = ffmpeg_1;
@@ -12384,8 +12382,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  xchainkeys = callPackage ../tools/X11/xchainkeys { };
 #
 #  xchm = callPackage ../applications/misc/xchm { };
-#
-#  inherit (xorg) xcompmgr;
 #
 #  xdaliclock = callPackage ../tools/misc/xdaliclock {};
 #

@@ -1029,6 +1029,8 @@ ncmpc = callPackage ../all-pkgs/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
 
+ncurses = callPackage ../all-pkgs/ncurses { };
+
 net-tools = callPackage ../all-pkgs/net-tools { };
 
 # stripped down, needed by steam
@@ -7380,8 +7382,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  mythes = callPackage ../development/libraries/mythes { };
 #
 #  nanomsg = callPackage ../development/libraries/nanomsg { };
-#
-  ncurses = callPackage ../development/libraries/ncurses { };
 #
 #  neardal = callPackage ../development/libraries/neardal { };
 #

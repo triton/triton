@@ -1,17 +1,14 @@
-{ stdenv, fetchurl, libtool
+{ stdenv
+, fetchurl
+, libtool
 
-# Optional Dependencies
-, gpm ? null
+, gpm
 
 # Extra Options
-, unicode ? true
 , threaded ? false # This breaks a lot of libraries because it enables the opaque includes
 }:
 
 with stdenv.lib;
-let
-  optGpm = stdenv.shouldUsePkg gpm;
-in
 stdenv.mkDerivation rec {
   name = "ncurses-6.0";
 
@@ -20,8 +17,13 @@ stdenv.mkDerivation rec {
     sha256 = "0q3jck7lna77z5r42f13c4xglc7azd19pxfrjrpgp2yf615w4lgm";
   };
 
-  nativeBuildInputs = [ libtool ];
-  buildInputs = [ optGpm ];
+  nativeBuildInputs = [
+    libtool
+  ];
+
+  buildInputs = [
+    gpm
+  ];
 
   configureFlags = [
     (mkWith   false       "ada"            null)
@@ -30,7 +32,7 @@ stdenv.mkDerivation rec {
     (mkEnable true        "db-install"     null)
     (mkWith   true        "manpages"       null)
     (mkWith   true        "progs"          null)
-    (mkWith   doCheck     "tests"          null)
+    (mkWith   false       "tests"          null)
     (mkWith   true        "curses-h"       null)
     (mkEnable true        "pc-files"       null)
     # With pc-suffix
@@ -44,7 +46,7 @@ stdenv.mkDerivation rec {
     (mkWith   true        "cxx-shared"     null)
     (mkWith   false       "termlib"        null)
     (mkWith   false       "ticlib"         null)
-    (mkWith   optGpm      "gpm"            null)
+    (mkWith   true        "gpm"            null)
     (mkWith   true        "dlsym"          null)
     (mkWith   true        "sysmouse"       "maybe")
     (mkEnable true        "relink"         null)
@@ -68,7 +70,7 @@ stdenv.mkDerivation rec {
     (mkEnable true        "symlinks"       null)
     (mkEnable false       "broken-linker"  null)
     (mkEnable false       "bsdpad"         null)
-    (mkEnable unicode     "widec"          null)
+    (mkEnable true        "widec"          null)
     (mkEnable true        "lp64"           null)
     (mkEnable true        "tparm-varargs"  null)
     (mkWith   true        "tic-depends"    null)
@@ -121,18 +123,11 @@ stdenv.mkDerivation rec {
   '';
 
   # Fix the path to gpm, this has to happen after configure is run
-  postConfigure = optionalString (optGpm != null) ''
-    sed -i "s,^\(#define LIBGPM_SONAME\).*,\1 \"${optGpm}/lib/libgpm.so\",g" include/ncurses_cfg.h
+  postConfigure = ''
+    sed -i "s,^\(#define LIBGPM_SONAME\).*,\1 \"${gpm}/lib/libgpm.so\",g" include/ncurses_cfg.h
   '';
 
-
   NIX_LDFLAGS = if threaded then "-lpthread" else null;
-
-  selfNativeBuildInput = true;
-
-  enableParallelBuilding = true;
-
-  doCheck = false;
 
   # When building a wide-character (Unicode) build, create backward
   # compatibility links from the the "normal" libraries to the
@@ -177,32 +172,15 @@ stdenv.mkDerivation rec {
     sed -i 's,${stdenv.shell},/bin/sh,g' $out/bin/*-config
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "Free software emulation of curses in SVR4 and more";
-
-    longDescription = ''
-      The Ncurses (new curses) library is a free software emulation of
-      curses in System V Release 4.0, and more.  It uses Terminfo
-      format, supports pads and color and multiple highlights and
-      forms characters and function-key mapping, and has all the other
-      SYSV-curses enhancements over BSD Curses.
-
-      The ncurses code was developed under GNU/Linux.  It has been in
-      use for some time with OpenBSD as the system curses library, and
-      on FreeBSD and NetBSD as an external package.  It should port
-      easily to any ANSI/POSIX-conforming UNIX.  It has even been
-      ported to OS/2 Warp!
-    '';
-
     homepage = http://www.gnu.org/software/ncurses/;
-
     license = licenses.mit;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
-  };
-
-  passthru = {
-    ldflags = "-lncurses";
-    inherit unicode;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

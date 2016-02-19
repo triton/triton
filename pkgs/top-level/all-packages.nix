@@ -13024,13 +13024,13 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  mupen64plus = callPackage ../misc/emulators/mupen64plus { };
 #
-#  inherit (callPackages ../tools/package-management/nix {
-#      storeDir = config.nix.storeDir or "/nix/store";
-#      stateDir = config.nix.stateDir or "/nix/var";
-#      })
-#    nix
-#    nixStable
-#    nixUnstable;
+  inherit (callPackages ../tools/package-management/nix {
+      storeDir = config.nix.storeDir or "/nix/store";
+      stateDir = config.nix.stateDir or "/nix/var";
+      })
+    nix
+    nixStable
+    nixUnstable;
 #
 #  nixops = callPackage ../tools/package-management/nixops { };
 #

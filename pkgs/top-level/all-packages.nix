@@ -895,9 +895,7 @@ libinput = callPackage ../all-pkgs/libinput {
 };
 
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };
-libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix {
-  libtool = libtool_1_5;
-};
+libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix { };
 libjpeg-turbo = callPackage ../all-pkgs/libjpeg-turbo { };
 libjpeg = libjpeg-turbo;
 
@@ -920,6 +918,8 @@ libsecret = callPackage ../all-pkgs/libsecret { };
 libsoup = callPackage ../all-pkgs/libsoup { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };
+
+libtool = callPackage ../all-pkgs/libtool { };
 
 libtorrent = callPackage ../all-pkgs/libtorrent { };
 
@@ -5758,12 +5758,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  lemon = callPackage ../development/tools/parsing/lemon { };
 #
 #
-  libtool = libtool_2;
-
-  libtool_1_5 = callPackage ../development/tools/misc/libtool { };
-
-  libtool_2 = callPackage ../development/tools/misc/libtool/libtool2.nix { };
-
 #  mlibtool = callPackage ../development/tools/misc/mlibtool { };
 #
 #  lsof = callPackage ../development/tools/misc/lsof { };

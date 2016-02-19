@@ -14,6 +14,7 @@
 , config
 
 # Allows the standard environment to be swapped out
+# This is typically most useful for bootstrapping
 , stdenv
 } @ args:
 

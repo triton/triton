@@ -11,7 +11,7 @@ let
     [ config.nix.package
       pkgs.acl
       pkgs.attr
-      pkgs.bashInteractive # bash with ncurses support
+      pkgs.bash
       pkgs.bzip2
       pkgs.coreutils
       pkgs.cpio
@@ -38,7 +38,7 @@ let
       pkgs.strace
       pkgs.su
       pkgs.time
-      pkgs.texinfoInteractive
+      pkgs.texinfo
       pkgs.utillinux
     ];
 

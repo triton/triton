@@ -1233,6 +1233,8 @@ quasselClientWithoutKDE = (quasselClient.override {
 
 rapidjson = callPackage ../all-pkgs/rapidjson { };
 
+readline = callPackage ../all-pkgs/readline { };
+
 redis = callPackage ../all-pkgs/redis { };
 
 rest = callPackage ../all-pkgs/rest { };
@@ -7708,15 +7710,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  raul = callPackage ../development/libraries/audio/raul { };
 #
-  readline = readline6;
-  readline6 = readline63;
-
-  readline5 = callPackage ../development/libraries/readline/5.x.nix { };
-
-  readline62 = callPackage ../development/libraries/readline/6.2.nix { };
-
-  readline63 = callPackage ../development/libraries/readline/6.3.nix { };
-
 #  readosm = callPackage ../development/libraries/readosm { };
 #
 #  lambdabot = callPackage ../development/tools/haskell/lambdabot {

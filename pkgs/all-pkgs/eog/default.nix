@@ -36,12 +36,12 @@ assert xorg != null -> xorg.libX11 != null;
 stdenv.mkDerivation rec {
   name = "eog-${version}";
   versionMajor = "3.18";
-  versionMinor = "1";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/eog/${versionMajor}/${name}.tar.xz";
-    sha256 = "19wkawrcwjjcvlmizkj57qycnbgizhr8ck3j5qg70605d1xb8yvv";
+    sha256 = "0dp6kxs4yl8sd0l6qbr874pdzi4rfmp5izk169q15bacfpiicbfw";
   };
 
   nativeBuildInputs = [
@@ -54,6 +54,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     adwaita-icon-theme
     atk
+    dconf
     exempi
     gdk-pixbuf
     glib
@@ -95,7 +96,7 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/eog \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
@@ -110,7 +111,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

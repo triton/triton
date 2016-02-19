@@ -2610,7 +2610,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gt5 = callPackage ../tools/system/gt5 { };
 #
-#  gtest = callPackage ../development/libraries/gtest {};
+  gtest = callPackage ../development/libraries/gtest {};
 #  gmock = callPackage ../development/libraries/gmock {};
 #
 #  gtkdatabox = callPackage ../development/libraries/gtkdatabox {};
@@ -5275,22 +5275,22 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ### LUA MODULES
 #
-#  lua5_sockets = luaPackages.luasocket;
+  lua5_sockets = luaPackages.luasocket;
 #
 #  lua5_2 = callPackage ../development/interpreters/lua-5/5.2.nix { };
 #  lua5_2_compat = callPackage ../development/interpreters/lua-5/5.2.nix {
 #    compat = true;
 #  };
-#  lua5_3 = callPackage ../development/interpreters/lua-5/5.3.nix { };
-#  lua5_3_compat = callPackage ../development/interpreters/lua-5/5.3.nix {
-#    compat = true;
-#  };
-#  lua5 = lua5_3_compat;
-#  lua = lua5;
+  lua5_3 = callPackage ../development/interpreters/lua-5/5.3.nix { };
+  lua5_3_compat = callPackage ../development/interpreters/lua-5/5.3.nix {
+    compat = true;
+  };
+  lua5 = lua5_3_compat;
+  lua = lua5;
 #
 #  lua52Packages = callPackage ./lua-packages.nix { lua = lua5_2; };
-#  lua53Packages = callPackage ./lua-packages.nix { lua = lua5_3; };
-#  luaPackages = lua53Packages;
+  lua53Packages = callPackage ./lua-packages.nix { lua = lua5_3; };
+  luaPackages = lua53Packages;
 #
 #  lua5_expat = callPackage ../development/interpreters/lua-5/expat.nix {};
 #  lua5_sec = callPackage ../development/interpreters/lua-5/sec.nix { };
@@ -6483,7 +6483,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     guileBindings = config.gnutls.guile or false;
   };
 #
-#  gom = callPackage ../all-pkgs/gom { };
+  gom = callPackage ../all-pkgs/gom { };
 #
 #  gpac = callPackage ../applications/video/gpac { };
 #
@@ -6497,7 +6497,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gsasl = callPackage ../development/libraries/gsasl { };
 #
-#  gsl = callPackage ../development/libraries/gsl { };
+  gsl = callPackage ../development/libraries/gsl { };
 #
 #  gsl_1 = callPackage ../development/libraries/gsl/gsl-1_16.nix { };
 #
@@ -6528,7 +6528,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gtkspellmm = callPackage ../development/libraries/gtkspellmm { };
 #
-#  gts = callPackage ../development/libraries/gts { };
+  gts = callPackage ../development/libraries/gts { };
 #
 #  gwenhywfar = callPackage ../development/libraries/gwenhywfar { };
 #
@@ -6585,7 +6585,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ilixi = callPackage ../development/libraries/ilixi { };
 #
-#  ilmbase = callPackage ../development/libraries/ilmbase { };
+  ilmbase = callPackage ../development/libraries/ilmbase { };
 #
 #  imlib = callPackage ../development/libraries/imlib {
 #    libpng = libpng12;
@@ -6624,9 +6624,9 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  jansson = callPackage ../development/libraries/jansson { };
 #
   jbig2dec = callPackage ../development/libraries/jbig2dec { };
-#
-#  jbigkit = callPackage ../development/libraries/jbigkit { };
-#
+
+  jbigkit = callPackage ../development/libraries/jbigkit { };
+
   jemalloc = callPackage ../development/libraries/jemalloc { };
 #
 #  jetty_gwt = callPackage ../development/libraries/java/jetty-gwt { };
@@ -6750,7 +6750,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
   libcdio = callPackage ../development/libraries/libcdio { };
 #  libcdio082 = callPackage ../development/libraries/libcdio/0.82.nix { };
 #
-#  libcdr = callPackage ../development/libraries/libcdr { lcms = lcms2; };
+  libcdr = callPackage ../development/libraries/libcdr { lcms = lcms2; };
 #
 #  libchamplain = callPackage ../development/libraries/libchamplain { };
 #
@@ -6811,7 +6811,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libdc1394 = callPackage ../development/libraries/libdc1394 { };
 #
-#  libdiscid = callPackage ../development/libraries/libdiscid { };
+  libdiscid = callPackage ../development/libraries/libdiscid { };
 #
 #  libdivsufsort = callPackage ../development/libraries/libdivsufsort { };
 #
@@ -6862,7 +6862,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libfprint = callPackage ../development/libraries/libfprint { };
 #
-#  libfpx = callPackage ../development/libraries/libfpx { };
+  libfpx = callPackage ../development/libraries/libfpx { };
 #
 #  libgadu = callPackage ../development/libraries/libgadu { };
 #
@@ -6980,7 +6980,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  liblastfm = callPackage ../development/libraries/liblastfm { };
 #
-#  liblqr1 = callPackage ../development/libraries/liblqr-1 { };
+  liblqr1 = callPackage ../development/libraries/liblqr-1 { };
 #
 #  liblockfile = callPackage ../development/libraries/liblockfile { };
 #
@@ -7026,7 +7026,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libresample = callPackage ../development/libraries/libresample {};
 #
-#  librevenge = callPackage ../development/libraries/librevenge {};
+  librevenge = callPackage ../development/libraries/librevenge {};
 #
 #  librevisa = callPackage ../development/libraries/librevisa { };
 #
@@ -7084,8 +7084,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libmowgli = callPackage ../development/libraries/libmowgli { };
 #
-#  libmng = callPackage ../development/libraries/libmng { };
-#
+  libmng = callPackage ../development/libraries/libmng { };
+
   libmnl = callPackage ../development/libraries/libmnl { };
 #
 #  libmodplug = callPackage ../development/libraries/libmodplug {};
@@ -7163,8 +7163,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libpar2 = callPackage ../development/libraries/libpar2 { };
 #
   libpcap = callPackage ../development/libraries/libpcap { };
-#
-#  libpipeline = callPackage ../development/libraries/libpipeline { };
+
+  libpipeline = callPackage ../development/libraries/libpipeline { };
 #
 #  libpgf = callPackage ../development/libraries/libpgf { };
 #
@@ -7301,8 +7301,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libvirt-glib = callPackage ../development/libraries/libvirt-glib { };
 #
-#  libvisio = callPackage ../development/libraries/libvisio { };
-#
+  libvisio = callPackage ../development/libraries/libvisio { };
+
   libvisual = callPackage ../development/libraries/libvisual { };
 #
 #  libvncserver = callPackage ../development/libraries/libvncserver {};
@@ -7321,13 +7321,13 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  libwnck2 = callPackage ../development/libraries/libwnck { };
 #  libwnck3 = callPackage ../development/libraries/libwnck/3.x.nix { };
 #
-#  libwpd = callPackage ../development/libraries/libwpd { };
+  libwpd = callPackage ../development/libraries/libwpd { };
 #
 #  libwpd_08 = callPackage ../development/libraries/libwpd/0.8.nix { };
 #
 #  libwps = callPackage ../development/libraries/libwps { };
 #
-#  libwpg = callPackage ../development/libraries/libwpg { };
+  libwpg = callPackage ../development/libraries/libwpg { };
 #
 #  libx86 = callPackage ../development/libraries/libx86 {};
 #
@@ -7470,10 +7470,10 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  neardal = callPackage ../development/libraries/neardal { };
 #
-#  neon = callPackage ../development/libraries/neon {
-#    compressionSupport = true;
-#    sslSupport = true;
-#  };
+  neon = callPackage ../development/libraries/neon {
+    compressionSupport = true;
+    sslSupport = true;
+  };
 #
 #  neon_0_29 = callPackage ../development/libraries/neon/0.29.nix {
 #    compressionSupport = true;
@@ -7551,8 +7551,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  # this ctl version is needed by openexr_viewers
 #  openexr_ctl = ctl;
 #
-#  openexr = callPackage ../development/libraries/openexr { };
-#
+  openexr = callPackage ../development/libraries/openexr { };
+
   openldap = callPackage ../development/libraries/openldap { };
 #
 #  opencolorio = callPackage ../development/libraries/opencolorio { };
@@ -8471,7 +8471,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  pysideShiboken = pythonPackages.pysideShiboken;
 #
-#  pyxml = callPackage ../development/python-modules/pyxml { };
+  pyxml = callPackage ../development/python-modules/pyxml { };
 #
 #  rbtools = pythonPackages.rbtools;
 #
@@ -12387,8 +12387,8 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  xdaliclock = callPackage ../tools/misc/xdaliclock {};
 #
-#  xdg-user-dirs = callPackage ../tools/X11/xdg-user-dirs { };
-#
+  xdg-user-dirs = callPackage ../tools/X11/xdg-user-dirs { };
+
   xdg_utils = callPackage ../tools/X11/xdg-utils {
     w3m = w3m-batch;
   };

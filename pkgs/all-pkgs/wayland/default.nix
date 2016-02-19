@@ -6,8 +6,9 @@
 , libxslt
 , xmlto
 
-, libffi
 , expat
+, libffi
+, libxml2
 
 , enableDocumentation ? false
 }:
@@ -20,11 +21,11 @@ with {
 
 stdenv.mkDerivation rec {
   name = "wayland-${version}";
-  version = "1.9.0";
+  version = "1.10.0";
 
   src = fetchurl {
     url = "http://wayland.freedesktop.org/releases/${name}.tar.xz";
-    sha256 = "1yhy62vkbq8j8c9zaa6yzvn75cd99kfa8n2zfdwl80x019r711ww";
+    sha256 = "1p307ly1yyqjnzn9dbv78yffql2qszn84qk74lwanl3gma8fgxjb";
   };
 
   nativeBuildInputs = [ ]
@@ -39,6 +40,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     expat
     libffi
+    libxml2
   ];
 
   configureFlags = [

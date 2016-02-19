@@ -493,6 +493,8 @@ at_spi2_core = at-spi2-core; # Deprecated alias
 
 atom = callPackage ../all-pkgs/atom { };
 
+autoconf = callPackage ../all-pkgs/autoconf { };
+
 avahi = callPackage ../all-pkgs/avahi { };
 
 bazaar = callPackage ../all-pkgs/bazaar { };
@@ -5423,11 +5425,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  autobuild = callPackage ../development/tools/misc/autobuild { };
 #
-  autoconf = callPackage ../development/tools/misc/autoconf { };
-
   autoconf-archive = callPackage ../development/tools/misc/autoconf-archive { };
-
-  autoconf213 = callPackage ../development/tools/misc/autoconf/2.13.nix { };
 
 #  autocutsel = callPackage ../tools/X11/autocutsel{ };
 #

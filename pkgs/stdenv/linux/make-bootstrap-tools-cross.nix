@@ -1,4 +1,4 @@
-{ system ? builtins.currentSystem }:
+{ system }:
 
 let
   buildFor = toolsArch:

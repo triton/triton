@@ -223,7 +223,7 @@ rec {
     ++ powerpc64
     ;
 
-  little-endian =
+  little-endian = [ ]
     ++ aarch64
     ++ armv7l
     ++ armv8l

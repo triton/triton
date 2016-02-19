@@ -5,33 +5,43 @@
    platform. */
 
 
-{ targetSystem ? null
-, hostSystem ? null
+{ targetSystem
+, hostSystem
 
 # Allow a configuration attribute set to be passed in as an
 # argument.  Otherwise, it's read from $NIXPKGS_CONFIG or
 # ~/.nixpkgs/config.nix.
-, configFunction ? null
+, config
+
+# Allows the standard environment to be swapped out
+, stdenv
 } @ args:
 
 let
+
+  lib = import ../../lib;
 
   # The contents of the configuration file found at $NIXPKGS_CONFIG or
   # $HOME/.nixpkgs/config.nix.
   # for NIXOS (nixos-rebuild): use nixpkgs.config option
   config =
-    if args.configFunction != null then
-      args.configFunction { inherit pkgs; }
+    if args.config != null then
+      args.config
+    else if builtins.getEnv "NIXPKGS_CONFIG" != "" then
+      import (builtins.toPath (builtins.getEnv "NIXPKGS_CONFIG")) { inherit pkgs; }
     else
       let
-        configFiles = [
-          (builtins.getEnv "NIXPKGS_CONFIG")
-          ((builtins.getEnv "HOME") + "/.nixpkgs/config.nix")
-        ];
-        configFilePaths = map builtins.toPath configFiles;
-        existingConfigFiles = filter builtins.pathExists configFilePaths;
+        home = builtins.getEnv "HOME";
+        homePath =
+          if home != "" then
+            builtins.toPath (home + "/.nixpkgs/config.nix")
+          else
+            null;
       in
-        import (head existingConfigFiles) { inherit pkgs; };
+        if homePath != null then
+          import homePath { inherit pkgs; }
+        else
+          { };
 
   # Helper functions that are exported through `pkgs'.
   helperFunctions =
@@ -52,7 +62,7 @@ let
   pkgs = applyGlobalOverrides (config.packageOverrides or (pkgs: {}));
 
   mkOverrides = pkgsOrig: overrides: overrides //
-        (lib.optionalAttrs (pkgsOrig.stdenv ? overrides && crossSystem == null) (pkgsOrig.stdenv.overrides pkgsOrig));
+        (lib.optionalAttrs (pkgsOrig.stdenv ? overrides) (pkgsOrig.stdenv.overrides pkgsOrig));
 
   # Return the complete set of packages, after applying the overrides
   # returned by the `overrider' function (see above).  Warning: this
@@ -80,16 +90,8 @@ let
     self_ = with self; helperFunctions // {
 
   # Make some arguments passed to all-packages.nix available
-  targetSystem =
-    if args.targetSystem != null then
-      throw "We don't support setting target systems yet."
-    else
-      builtins.currentSystem;
-  hostSystem =
-    if args.hostSystem != null then
-      throw "We don't support setting the host system yet."
-    else
-      builtins.currentSystem;
+  targetSystem = args.targetSystem;
+  hostSystem = args.hostSystem;
 
   # Allow callPackage to fill in the pkgs argument
   inherit pkgs;
@@ -128,7 +130,7 @@ let
   forceSystem = system: kernel: (import ./all-packages.nix) {
     inherit system;
     platform = platform // { kernelArch = kernel; };
-    inherit bootStdenv noSysDirs gccWithCC gccWithProfiling config
+    inherit noSysDirs gccWithCC gccWithProfiling config
       crossSystem;
   };
 
@@ -169,46 +171,14 @@ let
 
   ### STANDARD ENVIRONMENT
 
-
-  allStdenvs = import ../stdenv {
-    inherit system platform config lib;
-    allPackages = args: import ./all-packages.nix ({ inherit config system; } // args);
-  };
-
-  defaultStdenv = allStdenvs.stdenv // { inherit platform; };
-
-  stdenvCross = lowPrio (makeStdenvCross defaultStdenv crossSystem binutilsCross gccCrossStageFinal);
-
   stdenv =
-    if bootStdenv != null then (bootStdenv // {inherit platform;}) else
-      if crossSystem != null then
-        stdenvCross
-      else
-        let
-            changer = config.replaceStdenv or null;
-        in if changer != null then
-          changer {
-            # We import again all-packages to avoid recursivities.
-            pkgs = import ./all-packages.nix {
-              # We remove packageOverrides to avoid recursivities
-              config = removeAttrs config [ "replaceStdenv" ];
-            };
-          }
-      else
-        defaultStdenv;
-
-  forceNativeDrv = drv : if crossSystem == null then drv else
-    (drv // { crossDrv = drv.nativeDrv; });
-
-  # A stdenv capable of building 32-bit binaries.  On x86_64-linux,
-  # it uses GCC compiled with multilib support; on i686-linux, it's
-  # just the plain stdenv.
-  stdenv_32bit = lowPrio (
-    if system == "x86_64-linux" then
-      overrideCC stdenv gcc_multi
+    if args.stdenv != null then
+      args.stdenv
     else
-      stdenv);
-
+      import ../stdenv {
+        allPackages = args': import ./all-packages.nix (args // args');
+        inherit lib targetSystem hostSystem config;
+      };
 
   ### BUILD SUPPORT
 
@@ -4664,12 +4634,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dotnetPackages = callPackage ./dotnet-packages.nix {};
 #
-  go_1_4 = callPackage ../development/compilers/go/1.4.nix {};
-
+  go_1_4 = callPackage ../development/compilers/go/1.4.nix { };
   go_1_5 = callPackage ../development/compilers/go/1.5.nix { };
-
   go_1_6 = callPackage ../development/compilers/go/1.6.nix { };
-
   go = go_1_6;
 #
 #  go-repo-root = goPackages.go-repo-root.bin // { outputs = [ "bin" ]; };

@@ -3,7 +3,8 @@ let
 in
 lib.makeOverridable (
 
-{ system
+{ targetSystem
+, hostSystem
 , name ? "stdenv"
 , preHook ? ""
 , initialPath
@@ -20,8 +21,6 @@ lib.makeOverridable (
 , extraBuildInputs ? [ ]
 , __stdenvImpureHostDeps ? [ ]
 , __extraImpureHostDeps ? [ ]
-, stdenvSandboxProfile ? ""
-, extraSandboxProfile ? ""
 }:
 
 let
@@ -133,7 +132,6 @@ let
     , nativeBuildInputs ? [ ]
     , propagatedBuildInputs ? [ ]
     , propagatedNativeBuildInputs ? [ ]
-    , crossConfig ? null
     , meta ? { }
     , passthru ? { }
     , pos ? null # position used in error messages and for meta.position
@@ -141,8 +139,6 @@ let
     , outputs ? [ "out" ]
     , __impureHostDeps ? [ ]
     , __propagatedImpureHostDeps ? [ ]
-    , sandboxProfile ? ""
-    , propagatedSandboxProfile ? ""
     , ...
   } @ attrs:
     let
@@ -215,20 +211,6 @@ let
         } else {
           valid = true;
         };
-
-      outputs' =
-        outputs
-        ++ (if separateDebugInfo then
-              assert result.isLinux; [ "debug" ]
-            else
-              [ ]);
-
-      buildInputs' =
-        buildInputs
-        ++ (if separateDebugInfo then [
-              ../../build-support/setup-hooks/separate-debug-info.sh
-            ] else
-              [ ]);
     in
 
     # Throw an error if trying to evaluate an non-valid derivation
@@ -249,20 +231,8 @@ let
         "pos"
         "__impureHostDeps"
         "__propagatedImpureHostDeps"
-        "sandboxProfile"
-        "propagatedSandboxProfile"
       ]) // (
     let
-      computedSandboxProfile =
-        lib.concatMap (
-          input:
-          input.__propagatedSandboxProfile or [ ]
-        ) (extraBuildInputs ++ buildInputs ++ nativeBuildInputs);
-      computedPropagatedSandboxProfile =
-        lib.concatMap (
-          input:
-          input.__propagatedSandboxProfile or [ ]
-        ) (propagatedBuildInputs ++ propagatedNativeBuildInputs);
       computedImpureHostDeps =
         lib.unique (
           lib.concatMap (
@@ -287,28 +257,28 @@ let
 
       # Inputs built by the cross compiler.
       buildInputs =
-        if crossConfig != null then
-          buildInputs'
+        if targetSystem != hostSystem then
+          buildInputs
         else
           [ ];
       propagatedBuildInputs =
-        if crossConfig != null then
+        if targetSystem != hostSystem then
           propagatedBuildInputs
         else
           [ ];
       # Inputs built by the usual native compiler.
       nativeBuildInputs =
         nativeBuildInputs ++ (
-          if crossConfig == null then
-            buildInputs'
+          if targetSystem == hostSystem then
+            buildInputs
           else [ ]);
       propagatedNativeBuildInputs =
         propagatedNativeBuildInputs ++ (
-          if crossConfig == null then
+          if targetSystem == hostSystem then
             propagatedBuildInputs
           else [ ]);
-    } // (if outputs' != [ "out" ] then {
-      outputs = outputs';
+    } // (if outputs != [ "out" ] then {
+      outputs = outputs;
     } else { })))) (
       {
         # The meta attribute is passed in the resulting attribute set,
@@ -338,8 +308,9 @@ let
         defaultNativeBuildInputs;
      }) // {
       inherit
-        system
         name;
+
+      system = targetSystem;
 
       builder = shell;
 
@@ -359,28 +330,6 @@ let
 
       meta.description =
         "The default build environment for Unix packages in Nixpkgs";
-
-      # Utility flags to test the type of platform.
-      isLinux =
-        system == "i686-linux"
-        || system == "x86_64-linux";
-      isFreeBSD =
-        system == "i686-freebsd"
-        || system == "x86_64-freebsd";
-      isi686 =
-        system == "i686-linux"
-        || system == "i686-freebsd";
-      isx86_64 =
-        system == "x86_64-linux"
-        || system == "x86_64-freebsd";
-      is64bit =
-        system == "x86_64-linux"
-        || system == "x86_64-freebsd";
-
-      shouldUsePkg = lib.shouldUsePkgSystem system;
-
-      # Whether we should run paxctl to pax-mark binaries.
-      needsPax = false;
 
       inherit mkDerivation;
 

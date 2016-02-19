@@ -11,11 +11,15 @@ stdenv.mkDerivation rec {
     sha256 = "1xh0vvn1l2g1kkg54f0mg0inbpsiqs24ybgsakksmcpcadjgqk1i";
   };
 
+  buildFlags = [
+    "defconfig"
+  ];
+
   preInstall = ''
     installFlagsArray+=("INSTALL_HDR_PATH=$out")
   '';
 
-  installTarget = "headers_install";
+  installTargets = "headers_install";
 
   preFixup = ''
     # Cleanup some unneeded files

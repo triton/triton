@@ -164,13 +164,6 @@ rec {
       drv' = (lib.head outputsList).value;
     in lib.deepSeq drv' drv';
 
-  /* Tests whether a derivation can be used by the current platform
-     Returns the derivation if true, otherwise null. */
-  shouldUsePkgSystem = system: pkg_: let pkg = (builtins.tryEval pkg_).value;
-    in if lib.any (x: x == system) (pkg.meta.platforms or [])
-      then pkg
-      else null;
-
   /* Returns a configure flag string in an autotools format
      trueStr: Prepended when cond is true
      falseStr: Prepended when cond is false

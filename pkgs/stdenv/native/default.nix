@@ -1,4 +1,9 @@
-{ allPackages ? import ../../.., config, system }:
+{ allPackages
+, lib
+, targetSystem
+, hostSystem
+, config
+}:
 
 rec {
 

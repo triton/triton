@@ -1,5 +1,5 @@
 { stdenv, fetchurl, ncurses, nettools, python, which, groff, gettext, man_db,
-  bc, libiconv, coreutils, gnused, kbd }:
+  bc, coreutils, gnused, kbd }:
 
 stdenv.mkDerivation rec {
   name = "fish-${version}";
@@ -12,12 +12,12 @@ stdenv.mkDerivation rec {
     sha256 = "0ympqz7llmf0hafxwglykplw6j5cz82yhlrw50lw4bnf2kykjqx7";
   };
 
-  buildInputs = [ ncurses libiconv ];
+  buildInputs = [ ncurses ];
 
   # Required binaries during execution
   # Python: Autocompletion generated from manpages and config editing
   propagatedBuildInputs = [ python which groff gettext ]
-                          ++ stdenv.lib.optional (!stdenv.isDarwin) man_db
+                          ++ stdenv.lib.optional true man_db
                           ++ [ bc coreutils ];
 
   postInstall = ''
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
            "$out/share/fish/functions/prompt_pwd.fish"
     substituteInPlace "$out/share/fish/functions/fish_default_key_bindings.fish" \
       --replace "clear;" "${ncurses}/bin/clear;"
-  '' + stdenv.lib.optionalString (!stdenv.isDarwin) ''
+  '' + stdenv.lib.optionalString true ''
     sed -i "s|(hostname\||(${nettools}/bin/hostname\||" "$out/share/fish/functions/fish_prompt.fish"
     sed -i "s|Popen(\['manpath'|Popen(\['${man_db}/bin/manpath'|" "$out/share/fish/tools/create_manpage_completions.py"
     sed -i "s|command manpath|command ${man_db}/bin/manpath|" "$out/share/fish/functions/man.fish"

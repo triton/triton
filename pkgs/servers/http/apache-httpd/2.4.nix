@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     optional stdenv.isDarwin libiconv;
 
   # Required for ‘pthread_cancel’.
-  NIX_LDFLAGS = stdenv.lib.optionalString (!stdenv.isDarwin) "-lgcc_s";
+  NIX_LDFLAGS = "-lgcc_s";
 
   configureFlags = ''
     --with-apr=${apr}
@@ -53,8 +53,6 @@ stdenv.mkDerivation rec {
     rm -rf $out/manual
   '';
 
-  enableParallelBuilding = true;
-
   passthru = {
     inherit apr aprutil sslSupport proxySupport ldapSupport;
   };
@@ -63,7 +61,7 @@ stdenv.mkDerivation rec {
     description = "Apache HTTPD, the world's most popular web server";
     homepage    = http://httpd.apache.org/;
     license     = licenses.asl20;
-    platforms   = stdenv.lib.platforms.linux ++ stdenv.lib.platforms.darwin;
-    maintainers = with maintainers; [ lovek323 simons ];
+    platforms   = stdenv.lib.platforms.linux;
+    maintainers = with maintainers; [ ];
   };
 }

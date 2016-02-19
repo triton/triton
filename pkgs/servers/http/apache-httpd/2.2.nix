@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   NIX_CFLAGS_COMPILE = "-iquote ${apr}/include/apr-1";
 
   # Required for ‘pthread_cancel’.
-  NIX_LDFLAGS = (if stdenv.isDarwin then "" else "-lgcc_s");
+  NIX_LDFLAGS = "-lgcc_s";
 
   configureFlags = ''
     --with-z=${zlib}
@@ -47,8 +47,6 @@ stdenv.mkDerivation rec {
     --enable-mem-cache
   '';
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     echo "removing manual"
     rm -rf $out/manual
@@ -63,7 +61,7 @@ stdenv.mkDerivation rec {
     branch      = "2.2";
     homepage    = http://httpd.apache.org/;
     license     = stdenv.lib.licenses.asl20;
-    platforms   = stdenv.lib.platforms.linux ++ stdenv.lib.platforms.darwin;
-    maintainers = with stdenv.lib.maintainers; [ eelco simons lovek323 ];
+    platforms   = stdenv.lib.platforms.linux;
+    maintainers = with stdenv.lib.maintainers; [ ];
   };
 }

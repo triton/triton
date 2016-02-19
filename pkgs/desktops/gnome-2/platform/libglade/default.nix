@@ -11,6 +11,4 @@ stdenv.mkDerivation {
   buildInputs = [ pkgconfig gtk2 python gettext atk glib ];
 
   propagatedBuildInputs = [ libxml2 ];
-
-  NIX_LDFLAGS = stdenv.lib.optionalString stdenv.isDarwin "-lintl";
 }

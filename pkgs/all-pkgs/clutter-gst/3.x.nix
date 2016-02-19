@@ -30,16 +30,6 @@ stdenv.mkDerivation rec {
     sha256 = "1qidm0q28q6w8gjd0gpqnk8fzqxv39dcp0vlzzawlncp8zfagj7p";
   };
 
-  configureFlags = [
-    "--enable-gl-texture-upload"
-    "--disable-maintainer-flags"
-    "--disable-debug"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
-  ];
-
   buildInputs = [
     atk
     clutter
@@ -54,9 +44,17 @@ stdenv.mkDerivation rec {
     pango
   ];
 
-  postBuild = "rm -rvf $out/share/gtk-doc";
+  configureFlags = [
+    "--enable-gl-texture-upload"
+    "--disable-maintainer-flags"
+    "--disable-debug"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    (enFlag "introspection" (gobject-introspection != null) null)
+  ];
 
-  enableParallelBuilding = true;
+  postBuild = "rm -rvf $out/share/gtk-doc";
 
   meta = with stdenv.lib; {
     description = "GStreamer bindings for clutter";

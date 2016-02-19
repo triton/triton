@@ -1,4 +1,7 @@
-{ stdenv, fetchurl, gmp }:
+{ stdenv
+, fetchurl
+, gmp
+}:
 
 let
   patchSha256s = {
@@ -7,6 +10,13 @@ let
     "patch03" = "0p1y7mwbnshbj81hg5nfprzwh4aakxszf7n8bn4kh66jka4cw79c";
     "patch04" = "0vp2ywg8p0a2g8wai4fw29mbx1nq5yjzd361h2mr4cn6vac4a3sz";
     "patch05" = "1y0izl4y17xrdjidl2p1m1vapmgci5qv6shk0aqd187nvrs72jgw";
+    "patch06" = "13xq302vqzsb1w09bs8n3q4wa4s7nzjfwi4s3cpka3diga7ah3qm";
+    "patch07" = "08vk9ldp3s9kzkqjpsyd3d1ar0dkbamdg7k9yf9s6zmfdvpzjr6y";
+    "patch08" = "1ip1x7y8p3jv5wsz57cgbgxg02qza8d1lpvsr01q9hmnp1x31sy8";
+    "patch09" = "1sh7x9nk3p5hkq9qzwwhyjvsj91g9a06sb148lkyhi1kid5956rn";
+    "patch10" = "19vhfiky30v69igg5yrnggnr8r7sqqwnfkwl33zz4yins9fwphf4";
+    "patch11" = "1dj5jjchxnl25bfizxb6xs7470yz6vc5j2iqq9qpgx136iby14k8";
+    "patch12" = "17bk5zmxlxql0ch8ybiwmkxm3arfq0r05yyz761ahqc8lxjinr06";
   };
 in
 with stdenv.lib;
@@ -28,30 +38,21 @@ stdenv.mkDerivation rec {
   # mpfr.h requires gmp.h
   propagatedBuildInputs = [ gmp ];
 
-  configureFlags =
-    optional stdenv.is64bit "--with-pic";
+  configureFlags = [
+    "--with-pic"
+  ];
 
   doCheck = true;
 
   meta = {
     homepage = http://www.mpfr.org/;
     description = "Library for multiple-precision floating-point arithmetic";
-
-    longDescription = ''
-      The GNU MPFR library is a C library for multiple-precision
-      floating-point computations with correct rounding.  MPFR is
-      based on the GMP multiple-precision library.
-
-      The main goal of MPFR is to provide a library for
-      multiple-precision floating-point computation which is both
-      efficient and has a well-defined semantics.  It copies the good
-      ideas from the ANSI/IEEE-754 standard for double-precision
-      floating-point arithmetic (53-bit mantissa).
-    '';
-
     license = licenses.lgpl2Plus;
-
-    maintainers = [ ];
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

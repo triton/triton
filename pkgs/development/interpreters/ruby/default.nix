@@ -1,6 +1,6 @@
 { stdenv, lib, fetchurl, fetchFromSavannah, fetchFromGitHub
 , zlib, openssl, gdbm, ncurses, readline, groff, libyaml, libffi, autoreconfHook, bison
-, autoconf, darwin ? null
+, autoconf
 } @ args:
 
 let
@@ -30,7 +30,6 @@ let
       , libyaml, yamlSupport ? true
       , libffi, fiddleSupport ? true
       , autoreconfHook, bison, autoconf
-      , darwin ? null
       }:
       stdenv.mkDerivation rec {
         inherit version;
@@ -57,13 +56,7 @@ let
           ++ (op zlibSupport zlib)
           ++ (op opensslSupport openssl)
           ++ (op gdbmSupport gdbm)
-          ++ (op yamlSupport libyaml)
-          # Looks like ruby fails to build on darwin without readline even if curses
-          # support is not enabled, so add readline to the build inputs if curses
-          # support is disabled (if it's enabled, we already have it) and we're
-          # running on darwin
-          ++ (op (!cursesSupport && stdenv.isDarwin) readline)
-          ++ (ops stdenv.isDarwin (with darwin; [ libiconv libobjc libunwind ]));
+          ++ (op yamlSupport libyaml);
 
         enableParallelBuilding = true;
 
@@ -87,14 +80,7 @@ let
         '';
 
         configureFlags = ["--enable-shared" "--enable-pthread"]
-          ++ op useRailsExpress "--with-baseruby=${baseruby}/bin/ruby"
-          ++ ops stdenv.isDarwin [
-            # on darwin, we have /usr/include/tk.h -- so the configure script detects
-            # that tk is installed
-            "--with-out-ext=tk"
-            # on yosemite, "generating encdb.h" will hang for a very long time without this flag
-            "--with-setjmp-type=setjmp"
-          ];
+          ++ op useRailsExpress "--with-baseruby=${baseruby}/bin/ruby";
 
         installFlags = stdenv.lib.optionalString docSupport "install-doc";
         # Bundler tries to create this directory

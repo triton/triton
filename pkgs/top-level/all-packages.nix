@@ -2903,7 +2903,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  morituri = callPackage ../applications/audio/morituri { };
 #
-#  most = callPackage ../tools/misc/most { };
+  most = callPackage ../tools/misc/most { };
 #
 #  mkcast = callPackage ../applications/video/mkcast { };
 #
@@ -3810,7 +3810,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  shotwell = callPackage ../applications/graphics/shotwell { };
 #
-#  shout = callPackage ../applications/networking/irc/shout { };
+  shout = callPackage ../applications/networking/irc/shout { };
 #
 #  shellinabox = callPackage ../servers/shellinabox { };
 #
@@ -6151,7 +6151,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  chmlib = callPackage ../development/libraries/chmlib { };
 #
-#  chromaprint = callPackage ../development/libraries/chromaprint { };
+  chromaprint = callPackage ../development/libraries/chromaprint { };
 #
 #  cilaterm = callPackage ../development/libraries/cil-aterm {
 #    stdenv = overrideInStdenv stdenv [gnumake380];
@@ -6270,7 +6270,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  faac = callPackage ../development/libraries/faac { };
 #
-#  faad2 = callPackage ../development/libraries/faad2 { };
+  faad2 = callPackage ../development/libraries/faad2 { };
 #
 #  farbfeld = callPackage ../development/libraries/farbfeld { };
 #
@@ -6698,10 +6698,10 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libaal = callPackage ../development/libraries/libaal { };
 #
   libaccounts-glib = callPackage ../development/libraries/libaccounts-glib { };
-#
-#  libao = callPackage ../development/libraries/libao {
-#    usePulseAudio = config.pulseaudio or true;
-#  };
+
+  libao = callPackage ../development/libraries/libao {
+    usePulseAudio = config.pulseaudio or true;
+  };
 #
 #  libabw = callPackage ../development/libraries/libabw { };
 #
@@ -6996,7 +6996,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libmcrypt = callPackage ../development/libraries/libmcrypt {};
 #
-#  libmediainfo = callPackage ../development/libraries/libmediainfo { };
+  libmediainfo = callPackage ../development/libraries/libmediainfo { };
 #
 #  libmhash = callPackage ../development/libraries/libmhash {};
 #
@@ -7064,7 +7064,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libksi = callPackage ../development/libraries/libksi { };
 #
-#  libmad = callPackage ../development/libraries/libmad { };
+  libmad = callPackage ../development/libraries/libmad { };
 #
 #  libmatchbox = callPackage ../development/libraries/libmatchbox { };
 #
@@ -7077,22 +7077,22 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libmemcached = callPackage ../development/libraries/libmemcached { };
 #
   libmicrohttpd = callPackage ../development/libraries/libmicrohttpd { };
-#
-#  libmikmod = callPackage ../development/libraries/libmikmod { };
+
+  libmikmod = callPackage ../development/libraries/libmikmod { };
 #
 #  libmilter = callPackage ../development/libraries/libmilter { };
 #
 #  libmkv = callPackage ../development/libraries/libmkv { };
 #
-#  libmms = callPackage ../development/libraries/libmms { };
+  libmms = callPackage ../development/libraries/libmms { };
 #
 #  libmowgli = callPackage ../development/libraries/libmowgli { };
 #
   libmng = callPackage ../development/libraries/libmng { };
 
   libmnl = callPackage ../development/libraries/libmnl { };
-#
-#  libmodplug = callPackage ../development/libraries/libmodplug {};
+
+  libmodplug = callPackage ../development/libraries/libmodplug {};
 #
 #  libmpcdec = callPackage ../development/libraries/libmpcdec { };
 #
@@ -7127,8 +7127,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libnetfilter_queue = callPackage ../development/libraries/libnetfilter_queue { };
 #
   libnfnetlink = callPackage ../development/libraries/libnfnetlink { };
-#
-#  libnftnl = callPackage ../development/libraries/libnftnl { };
+
+  libnftnl = callPackage ../development/libraries/libnftnl { };
 #
 #  libnih = callPackage ../development/libraries/libnih { };
 #
@@ -7143,8 +7143,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libofx = callPackage ../development/libraries/libofx { };
 #
   libogg = callPackage ../development/libraries/libogg { };
-#
-#  liboggz = callPackage ../development/libraries/liboggz { };
+
+  liboggz = callPackage ../development/libraries/liboggz { };
 #
 #  liboil = callPackage ../development/libraries/liboil { };
 #
@@ -7267,9 +7267,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  libu2f-server = callPackage ../development/libraries/libu2f-server { };
 #
   libunistring = callPackage ../development/libraries/libunistring { };
-#
-#  libupnp = callPackage ../development/libraries/pupnp { };
-#
+
+  libupnp = callPackage ../development/libraries/pupnp { };
+
   giflib = giflib_5_1;
   giflib_4_1 = callPackage ../development/libraries/giflib/4.1.nix { };
   giflib_5_1 = callPackage ../development/libraries/giflib/5.1.nix { };
@@ -7369,7 +7369,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libyubikey = callPackage ../development/libraries/libyubikey { };
 #
-#  libzen = callPackage ../development/libraries/libzen { };
+  libzen = callPackage ../development/libraries/libzen { };
 #
 #  libzip = callPackage ../development/libraries/libzip { };
 #
@@ -7525,8 +7525,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  oniguruma = callPackage ../development/libraries/oniguruma { };
 #
-#  openal = openalSoft;
-#  openalSoft = callPackage ../development/libraries/openal-soft { };
+  openal = openalSoft;
+  openalSoft = callPackage ../development/libraries/openal-soft { };
 #
 #  openbabel = callPackage ../development/libraries/openbabel { };
 #
@@ -7548,7 +7548,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  openct = callPackage ../development/libraries/openct { };
 #
-#  opencv = callPackage ../development/libraries/opencv { };
+  opencv = callPackage ../development/libraries/opencv { };
 #
 #  opencv3 = callPackage ../development/libraries/opencv/3.x.nix { };
 #
@@ -8249,7 +8249,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  xylib = callPackage ../development/libraries/xylib { };
 #
-#  yajl = callPackage ../development/libraries/yajl { };
+  yajl = callPackage ../development/libraries/yajl { };
 #
 #  yubico-piv-tool = callPackage ../tools/misc/yubico-piv-tool { };
 #
@@ -9239,8 +9239,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
   iproute = callPackage ../os-specific/linux/iproute { };
 
   iptables = callPackage ../os-specific/linux/iptables { };
-#
-#  ipset = callPackage ../os-specific/linux/ipset { };
+
+  ipset = callPackage ../os-specific/linux/ipset { };
 #
 #  irqbalance = callPackage ../os-specific/linux/irqbalance { };
 #
@@ -10051,7 +10051,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  man-pages = callPackage ../data/documentation/man-pages { };
 #
-#  meslo-lg = callPackage ../data/fonts/meslo-lg {};
+  meslo-lg = callPackage ../data/fonts/meslo-lg {};
 #
 #  miscfiles = callPackage ../data/misc/miscfiles { };
 #
@@ -10331,7 +10331,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  bristol = callPackage ../applications/audio/bristol { };
 #
-#  bs1770gain = callPackage ../applications/audio/bs1770gain { };
+  bs1770gain = callPackage ../applications/audio/bs1770gain { };
 #
 #  bvi = callPackage ../applications/editors/bvi { };
 #
@@ -10560,17 +10560,17 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  elvis = callPackage ../applications/editors/elvis { };
 #
-#  emacs = emacs24;
+  emacs = emacs24;
 #
-#  emacs24 = callPackage ../applications/editors/emacs-24 {
-#    # use override to enable additional features
-#    Xaw3d = null;
-#    gconf = null;
-#    alsaLib = null;
-#    imagemagick = null;
-#    acl = null;
-#    gpm = null;
-#  };
+  emacs24 = callPackage ../applications/editors/emacs-24 {
+    # use override to enable additional features
+    Xaw3d = null;
+    gconf = null;
+    alsaLib = null;
+    imagemagick = null;
+    acl = null;
+    gpm = null;
+  };
 #
 #  emacs24-nox = lowPrio (appendToName "nox" (emacs24.override {
 #    withX = false;
@@ -10628,7 +10628,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  fldigi = callPackage ../applications/audio/fldigi { };
 #
-#  fluidsynth = callPackage ../applications/audio/fluidsynth { };
+  fluidsynth = callPackage ../applications/audio/fluidsynth { };
 #
 #  fmit = qt5.callPackage ../applications/audio/fmit { };
 #
@@ -10742,7 +10742,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #    boost = boost155;
 #  };
 #
-#  game-music-emu = callPackage ../applications/audio/game-music-emu { };
+  game-music-emu = callPackage ../applications/audio/game-music-emu { };
 #
 #  gcolor2 = callPackage ../applications/graphics/gcolor2 { };
 #
@@ -11216,7 +11216,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  mda_lv2 = callPackage ../applications/audio/mda-lv2 { };
 #
-#  mediainfo = callPackage ../applications/misc/mediainfo { };
+  mediainfo = callPackage ../applications/misc/mediainfo { };
 #
 #  mediainfo-gui = callPackage ../applications/misc/mediainfo-gui { };
 #
@@ -11317,11 +11317,11 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  mp3splt = callPackage ../applications/audio/mp3splt { };
 #
-#  mp3val = callPackage ../applications/audio/mp3val { };
+  mp3val = callPackage ../applications/audio/mp3val { };
 #
 #  mpc123 = callPackage ../applications/audio/mpc123 { };
 #
-#  mpg123 = callPackage ../applications/audio/mpg123 { };
+  mpg123 = callPackage ../applications/audio/mpg123 { };
 #
 #  mpg321 = callPackage ../applications/audio/mpg321 { };
 #
@@ -11909,8 +11909,8 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #    inherit (pkgs.vamp) vampSDK;
 #  };
 #
-#  sox = callPackage ../applications/misc/audio/sox { };
-#
+  sox = callPackage ../applications/misc/audio/sox { };
+
   soxr = callPackage ../applications/misc/audio/soxr { };
 #
 #  spek = callPackage ../applications/audio/spek { };
@@ -12225,7 +12225,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  VoiceOfFaust = callPackage ../applications/audio/VoiceOfFaust { };
 #
-#  vorbis-tools = callPackage ../applications/audio/vorbis-tools { };
+  vorbis-tools = callPackage ../applications/audio/vorbis-tools { };
 #
 #  vue = callPackage ../applications/misc/vue { };
 #

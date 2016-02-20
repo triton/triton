@@ -17,12 +17,26 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gstreamer-1.6.2";
+  name = "gstreamer-1.6.3";
 
   src = fetchurl {
     url = "http://gstreamer.freedesktop.org/src/gstreamer/${name}.tar.xz";
-    sha256 = "1cpyz3x1yzqmbmircjpnizawkxmn5gzjwalkaajdp2g0v1mp35jq";
+    sha256 = "093zldafh7xh3lrlwzm7j0vvjz6k9ca83wqil40gfz5qcy6mdy92";
   };
+
+  nativeBuildInputs = [
+    bison
+    flex
+    gettext
+    perl
+    python
+  ];
+
+  buildInputs = [
+    glib
+    gobject-introspection
+    libcap
+  ];
 
   setupHook = ./setup-hook-1.0.sh;
 
@@ -62,28 +76,12 @@ stdenv.mkDerivation rec {
     "--enable-Bsymbolic"
   ];
 
-  nativeBuildInputs = [
-    bison
-    flex
-    gettext
-    perl
-    python
-  ];
-
-  buildInputs = [
-    glib
-    gobject-introspection
-    libcap
-  ];
-
-  preFixup = ''
-    # Needed for orc-using gst plugins on hardened/PaX systems
-    paxmark m \
-      $out/bin/gst-launch* \
-      $out/libexec/gstreamer-0.10/gst-plugin-scanner
-  '';
-
-  enableParallelBuilding = true;
+  preFixup =
+    /* Needed for orc-using gst plugins on hardened/PaX systems */ ''
+      paxmark m \
+        $out/bin/gst-launch* \
+        $out/libexec/gstreamer-0.10/gst-plugin-scanner
+    '';
 
   meta = with stdenv.lib; {
     description = "Multimedia framework";

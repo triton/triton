@@ -26,12 +26,37 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-base-1.6.2";
+  name = "gst-plugins-base-1.6.3";
 
   src = fetchurl {
     url = "http://gstreamer.freedesktop.org/src/gst-plugins-base/${name}.tar.xz";
-    sha256 = "08jkqyjw0h8aja2cy7p7yn0ja2j77pimaj8w3vbnwljiwh0d8pf7";
+    sha256 = "0xbskifk95rw7jd85sqjrmqh2kys1bpi0inrxyapx1x4vf7ly5dn";
   };
+
+  nativeBuildInputs = [
+    gettext
+    python
+  ];
+
+  buildInputs = [
+    alsaLib
+    cdparanoia
+    glib
+    gobject-introspection
+    gstreamer
+    isocodes
+    libogg
+    libtheora
+    libvisual
+    libvorbis
+    orc
+    pango
+    tremor
+    xorg.libX11
+    xorg.libXext
+    xorg.libXv
+    zlib
+  ];
 
   configureFlags = [
     "--enable-option-checking"
@@ -90,33 +115,6 @@ stdenv.mkDerivation rec {
     "--disable-freetypetest"
     "--with-audioresample-format=float"
   ];
-
-  nativeBuildInputs = [
-    gettext
-    python
-  ];
-
-  buildInputs = [
-    alsaLib
-    cdparanoia
-    glib
-    gobject-introspection
-    gstreamer
-    isocodes
-    libogg
-    libtheora
-    libvisual
-    libvorbis
-    orc
-    pango
-    tremor
-    xorg.libX11
-    xorg.libXext
-    xorg.libXv
-    zlib
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Basepack of plugins for gstreamer";

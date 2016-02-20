@@ -51,18 +51,65 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-bad-1.6.2";
+  name = "gst-plugins-bad-1.6.3";
 
   src = fetchurl {
     url = "http://gstreamer.freedesktop.org/src/gst-plugins-bad/${name}.tar.xz";
-    sha256 = "1zlnycgfg7c2pygf21kdacpy2v4jql4j268crfv8nspmkzima235";
+    sha256 = "0q9s5da54819gwncmdi95l5qzx97l9vxk6adx4zmx73a3l82j6wp";
   };
 
-  postPatch = ''
-    # tests are slower than upstream expects
-  	sed -e 's:/\* tcase_set_timeout.*:tcase_set_timeout (tc_chain, 5 * 60);:' \
-  		-i tests/check/elements/audiomixer.c
-  '';
+  nativeBuildInputs = [
+    python
+  ];
+
+  buildInputs = [
+    bzip2
+    curl
+    faac
+    faad2
+    flite
+    game-music-emu
+    glib
+    gobject-introspection
+    gsm
+    gst-plugins-base
+    gstreamer
+    gtk3
+    ladspaH
+    libass
+    libbs2b
+    libmms
+    libmodplug
+    libmpcdec
+    libopus
+    librsvg
+    libvdpau
+    libvisual
+    libwebp
+    mesa
+    mpg123
+    openal
+    #opencv
+    openh264
+    openjpeg
+    orc
+    schroedinger
+    SDL
+    soundtouch
+    spandsp
+    #vo-aacenc
+    #vo-armwbenc
+    wayland
+    x265
+    xorg.libX11
+    xvidcore
+  ];
+
+  postPatch =
+    /* tests are slower than upstream expects */ ''
+    	sed -e 's:/\* tcase_set_timeout.*:tcase_set_timeout (tc_chain, 5 * 60);:' \
+    		-i tests/check/elements/audiomixer.c
+    '';
 
   configureFlags = [
     "--enable-option-checking"
@@ -258,55 +305,6 @@ stdenv.mkDerivation rec {
 
     "--without-gtk"
   ];
-
-  nativeBuildInputs = [
-    python
-  ];
-
-  buildInputs = [
-    bzip2
-    curl
-    faac
-    faad2
-    flite
-    game-music-emu
-    glib
-    gobject-introspection
-    gsm
-    gst-plugins-base
-    gstreamer
-    gtk3
-    ladspaH
-    libass
-    libbs2b
-    libmms
-    libmodplug
-    libmpcdec
-    libopus
-    librsvg
-    libvdpau
-    libvisual
-    libwebp
-    mesa
-    mpg123
-    openal
-    #opencv
-    openh264
-    openjpeg
-    orc
-    schroedinger
-    SDL
-    soundtouch
-    spandsp
-    #vo-aacenc
-    #vo-armwbenc
-    wayland
-    x265
-    xorg.libX11
-    xvidcore
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Less plugins for GStreamer";

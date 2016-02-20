@@ -35,12 +35,44 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-good-1.6.2";
+  name = "gst-plugins-good-1.6.3";
 
   src = fetchurl {
     url = "http://gstreamer.freedesktop.org/src/gst-plugins-good/${name}.tar.xz";
-    sha256 = "14kaxgv31ibnwrlh00grs54lvyimiljm7wr4w2c4n9wkrvgm8vl7";
+    sha256 = "0xx16h0q63gs3pxlzdflnpyssba3vcrh1qnzplg4d0ra1fvrvc94";
   };
+
+  nativeBuildInputs = [
+    python
+  ];
+
+  buildInputs = [
+    aalib
+    bzip2
+    cairo
+    flac
+    gdk-pixbuf
+    glib
+    gst-plugins-base
+    gstreamer
+    libcaca
+    libgudev
+    libjack2
+    libjpeg
+    libpng
+    libpulseaudio
+    libshout
+    libsoup
+    libv4l
+    libvpx
+    orc
+    speex
+    taglib
+    wavpack
+    zlib
+    xorg.libX11
+    xorg.libXext
+  ];
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -138,40 +170,6 @@ stdenv.mkDerivation rec {
     (wtFlag "--with-gudev" (libgudev != null) null)
     (wtFlag "--with-libv4l2" (libv4l != null) null)
   ];
-
-  nativeBuildInputs = [
-    python
-  ];
-
-  buildInputs = [
-    aalib
-    bzip2
-    cairo
-    flac
-    gdk-pixbuf
-    glib
-    gst-plugins-base
-    gstreamer
-    libcaca
-    libgudev
-    libjack2
-    libjpeg
-    libpng
-    libpulseaudio
-    libshout
-    libsoup
-    libv4l
-    libvpx
-    orc
-    speex
-    taglib
-    wavpack
-    zlib
-    xorg.libX11
-    xorg.libXext
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Basepack of plugins for GStreamer";

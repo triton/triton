@@ -17,6 +17,14 @@ stdenv.mkDerivation rec {
     sha256 = "09ci5zvr7lms7mvgbjgsjwaxcl4nq45n1g9pdwnqmx3rf0qkwxjf";
   };
 
+  buildInputs = [
+    gst-plugins-base
+    gstreamer
+    ncurses
+    python3
+    python3Packages.pygobject3
+  ];
+
   patches = [
     (fetchTritonPatch {
       rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
@@ -31,16 +39,6 @@ stdenv.mkDerivation rec {
     # Fix override directory with Python3.5
     "--with-pygi-overrides-dir=\${out}/lib/python3.5/site-packages/gi/overrides"
   ];
-
-  buildInputs = [
-    gst-plugins-base
-    gstreamer
-    ncurses
-    python3
-    python3Packages.pygobject3
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A Python Interface to GStreamer";

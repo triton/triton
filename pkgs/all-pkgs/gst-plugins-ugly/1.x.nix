@@ -24,12 +24,33 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-ugly-1.6.2";
+  name = "gst-plugins-ugly-1.6.3";
 
   src = fetchurl {
     url = "http://gstreamer.freedesktop.org/src/gst-plugins-ugly/${name}.tar.xz";
-    sha256 = "0icqksgkbi1xsf373slxrvlhrsf6lfc3kkpd1nyglrw63hrbdwg7";
+    sha256 = "0r6h3ys5n90jv3c06crxzcac561z07s4h04hy5i8ybw8qyvzgv1g";
   };
+
+  nativeBuildInputs = [
+    gettext
+    python
+  ];
+
+  buildInputs = [
+    a52dec
+    amrnb
+    amrwb
+    glib
+    gst-plugins-base
+    gstreamer
+    lame
+    libcdio
+    libdvdread
+    libmad
+    mpeg2dec
+    orc
+    x264
+  ];
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -69,29 +90,6 @@ stdenv.mkDerivation rec {
     #(enFlag "twolame" (twolame != null) null)
     (enFlag "x264" (x264 != null) null)
   ];
-
-  nativeBuildInputs = [
-    gettext
-    python
-  ];
-
-  buildInputs = [
-    a52dec
-    amrnb
-    amrwb
-    glib
-    gst-plugins-base
-    gstreamer
-    lame
-    libcdio
-    libdvdread
-    libmad
-    mpeg2dec
-    orc
-    x264
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Basepack of plugins for gstreamer";

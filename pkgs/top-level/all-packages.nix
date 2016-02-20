@@ -1312,6 +1312,8 @@ x264 = callPackage ../all-pkgs/x264 { };
 
 x265 = callPackage ../all-pkgs/x265 { };
 
+xdg-utils = callPackage ../all-pkgs/xdg-utils { };
+
 xine-lib = callPackage ../all-pkgs/xine-lib { };
 
 xine-ui = callPackage ../all-pkgs/xine-ui { };
@@ -12390,10 +12392,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  xdaliclock = callPackage ../tools/misc/xdaliclock {};
 #
   xdg-user-dirs = callPackage ../tools/X11/xdg-user-dirs { };
-
-  xdg_utils = callPackage ../tools/X11/xdg-utils {
-    w3m = w3m-batch;
-  };
 #
 #  xdotool = callPackage ../tools/X11/xdotool { };
 #

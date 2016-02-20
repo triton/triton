@@ -3416,7 +3416,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  par2cmdline = callPackage ../tools/networking/par2cmdline { };
 #
-#  parallel = callPackage ../tools/misc/parallel { };
+  parallel = callPackage ../tools/misc/parallel { };
 #
 #  parcellite = callPackage ../tools/misc/parcellite { };
 #

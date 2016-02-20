@@ -9169,8 +9169,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  dstat = callPackage ../os-specific/linux/dstat { };
 #
-#  libossp_uuid = callPackage ../development/libraries/libossp-uuid { };
-#
+  libossp_uuid = callPackage ../development/libraries/libossp-uuid { };
+
   libuuid = utillinux;
 #
 #  light = callPackage ../os-specific/linux/light { };

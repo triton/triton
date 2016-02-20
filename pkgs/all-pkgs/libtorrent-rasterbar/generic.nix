@@ -8,7 +8,6 @@
 , openssl
 , zlib
 , python2
-, libiconv
 , geoip
 
 # Inherit generics
@@ -44,7 +43,6 @@ stdenv.mkDerivation rec {
   buildInputs = [
     boost
     openssl
-    libiconv
     zlib
     python2
     geoip

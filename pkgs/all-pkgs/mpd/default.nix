@@ -140,7 +140,7 @@ stdenv.mkDerivation rec {
     (enFlag "gme" (game-music-emu != null) null)
     (enFlag "haiku" true null)
     (enFlag "httpd-output" true null)
-    (enFlag "iconv" (libiconv != null) null)
+    "--enable-iconv"
     (enFlag "icu" (icu != null) null)
     (enFlag "id3" (libid3tag != null) null)
     (enFlag "inotify" true null)

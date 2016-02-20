@@ -13,8 +13,6 @@ stdenv.mkDerivation rec {
   # needs fonts otherwise  don't know how to pass them
   configureFlags = [ "--disable-docs" ];
 
-  NIX_LDFLAGS = if stdenv.isDarwin then "-lintl" else null;
-
   buildInputs = [
     babl glib intltool cairo pango gdk_pixbuf libjpeg openexr librsvg SDL
     jasper exiv2
@@ -22,7 +20,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkgconfig ];
 
-  meta = { 
+  meta = {
     description = "Graph-based image processing framework";
     homepage = http://www.gegl.org;
     license = stdenv.lib.licenses.gpl3;

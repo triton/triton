@@ -68,8 +68,8 @@ stdenv.mkDerivation rec {
     #"--enable-pool-allocators"
     "--disable-invariant-checks"
     "--disable-deprecated-functions"
-    "--enable-statistics"
-    "--enable-disk-stats"
+    "--disable-statistics"
+    "--disable-disk-stats"
     (enFlag "geoip" (geoip != null) null)
     "--disable-examples"
     "--disable-tests"
@@ -88,7 +88,6 @@ stdenv.mkDerivation rec {
     license = licenses.bsd3;
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -1012,6 +1012,8 @@ mesos = callPackage ../all-pkgs/mesos {
   perf = linuxPackages.perf;
 };
 
+mg = callPackage ../all-pkgs/mg { };
+
 mime-types = callPackage ../all-pkgs/mime-types { };
 
 mixxx = callPackage ../all-pkgs/mixxx {
@@ -13391,8 +13393,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  bullet = callPackage ../development/libraries/bullet {};
 #
 #  httrack = callPackage ../tools/backup/httrack { };
-#
-  mg = callPackage ../applications/editors/mg { };
 #
 }; # self_ =
 

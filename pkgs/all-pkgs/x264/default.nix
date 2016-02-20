@@ -7,15 +7,11 @@
 }:
 
 with {
-  inherit (stdenv)
-    isi686
-    is64bit;
   inherit (stdenv.lib)
     enFlag
     otFlag;
 };
 
-assert enable10bit -> is64bit;
 assert (
   chroma == "420" ||
   chroma == "422" ||
@@ -51,7 +47,7 @@ stdenv.mkDerivation rec {
     "--disable-win32thread"
     "--disable-interlaced"
     "--bit-depth=${
-      if (enable10bit && is64bit) then
+      if (enable10bit) then
         "10"
       else
         "8"
@@ -60,7 +56,7 @@ stdenv.mkDerivation rec {
     "--enable-asm"
     "--disable-debug"
     "--disable-gprof"
-    (enFlag "pic" (!isi686) null)
+    "--enable-pic"
     "--disable-avs"
     "--disable-swscale"
     "--disable-lavf"
@@ -77,7 +73,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -3,14 +3,9 @@
 , alsaSupport ? true, alsaLib ? null
 , x11Support ? true, xlibsWrapper ? null, xorg ? null
 , pulseaudioSupport ? true, libpulseaudio ? null
-, AudioUnit, Cocoa, CoreAudio, CoreServices, ForceFeedback, OpenGL
 }:
 
-# OSS is no longer supported, for it's much crappier than ALSA and
-# PulseAudio.
-assert !stdenv.isDarwin -> alsaSupport || pulseaudioSupport;
-
-assert openglSupport -> (stdenv.isDarwin || mesa != null && x11Support);
+assert openglSupport -> (mesa != null && x11Support);
 assert x11Support -> (xlibsWrapper != null && xorg != null);
 assert alsaSupport -> alsaLib != null;
 assert pulseaudioSupport -> libpulseaudio != null;
@@ -35,8 +30,7 @@ stdenv.mkDerivation rec {
     stdenv.lib.optionals x11Support [ xlibsWrapper xorg.libXrandr ] ++
     stdenv.lib.optional pulseaudioSupport libpulseaudio ++
     stdenv.lib.optional openglSupport mesa ++
-    stdenv.lib.optional alsaSupport alsaLib ++
-    stdenv.lib.optionals stdenv.isDarwin [ AudioUnit Cocoa CoreAudio CoreServices ForceFeedback OpenGL ];
+    stdenv.lib.optional alsaSupport alsaLib;
 
   # https://bugzilla.libsdl.org/show_bug.cgi?id=1431
   dontDisableStatic = true;

@@ -1,4 +1,4 @@
-args @ {stringsWithDeps, lib, stdenv, writeScript, fetchurl, fetchmtn, fetchgit, ...}: with args; with stringsWithDeps; with lib;
+args @ {stringsWithDeps, lib, stdenv, writeScript, fetchurl, fetchgit, ...}: with args; with stringsWithDeps; with lib;
 let inherit (builtins) head tail trace; in
 (rec
 {
@@ -99,12 +99,12 @@ let inherit (builtins) head tail trace; in
         # changing this ? see [1]
         minInit = fullDepEntry ("
                 ${stdenv.preHook}
-                
+
                 set -e
                 NIX_CC=${stdenv.cc}
                 export SHELL=${stdenv.shell}
                 PATH_DELIMITER=':'
-                
+
                 # Set up the initial path.
                 PATH=
                 for i in \$NIX_CC ${toString stdenv.initialPath}; do
@@ -116,7 +116,7 @@ let inherit (builtins) head tail trace; in
                 prefix=${if args ? prefix then (toString args.prefix) else "\$out"}
 
                 ") ["defNest" "defAddToSearchPath"];
-                
+
         # if you change this rewrite using '' instead of "" to get rid of indentation in builder scripts
         addInputs = fullDepEntry ("
                 # Recursively find all build inputs.
@@ -129,7 +129,7 @@ let inherit (builtins) head tail trace; in
                             return 0
                             ;;
                     esac
-                    
+
                     pkgs=\"\$pkgs \$pkg \"
 
                         echo \$pkg
@@ -183,7 +183,7 @@ let inherit (builtins) head tail trace; in
 
                 PATH=\$_PATH\${_PATH:+\"\${PATH_DELIMITER}\"}\$PATH
         ") ["minInit"];
-        
+
         # changing this ? see [1]
         defEnsureDir = fullDepEntry ("
                 # Ensure that the given directories exists.
@@ -219,7 +219,7 @@ let inherit (builtins) head tail trace; in
                 cd \"$(unrar lb '${s}' | tail -1 | sed -e 's@/.*@@' )\"
         " else if (archiveType s) == "zip" then "
                 unzip '${s}'
-                cd \"$( unzip -lqq '${s}' | tail -1 | 
+                cd \"$( unzip -lqq '${s}' | tail -1 |
                         sed -e 's@^\\(\\s\\+[-0-9:]\\+\\)\\{3,3\\}\\s\\+\\([^/]\\+\\)/.*@\\2@' )\"
         " else if (archiveType s) == "cvs-dir" then "
                 cp -r '${s}' .
@@ -254,7 +254,7 @@ let inherit (builtins) head tail trace; in
         " else if (archiveType s) == "empty" then "
 	        echo No source to unpack - doing nothing ..
         " else (abort "unknown archive type : ${s}"))+
-                # goSrcDir is typically something like "cd mysubdir" .. but can be anything else 
+                # goSrcDir is typically something like "cd mysubdir" .. but can be anything else
                 (if args ? goSrcDir then args.goSrcDir else "")
         ) ["minInit"];
 
@@ -277,7 +277,7 @@ let inherit (builtins) head tail trace; in
                 libtoolize --copy --force
                 aclocal --force
                 #Some packages do not need this
-                autoheader || true; 
+                autoheader || true;
                 automake --add-missing --copy
                 autoconf
         ")["minInit" "addInputs" "doUnpack"];
@@ -288,7 +288,7 @@ let inherit (builtins) head tail trace; in
         '')["minInit" "addInputs" "doUnpack"];
 
         # changing this ? see [1]
-        doMake = fullDepEntry ("        
+        doMake = fullDepEntry ("
                 make ${toString makeFlags}
         ") ["minInit" "addInputs" "doUnpack"];
 
@@ -296,18 +296,18 @@ let inherit (builtins) head tail trace; in
 
         # changing this ? see [1]
         installPythonPackage = fullDepEntry ("
-                python setup.py install --prefix=\"\$prefix\" 
+                python setup.py install --prefix=\"\$prefix\"
                 ") ["minInit" "addInputs" "doUnpack"];
 
-        doPythonConfigure = fullDepEntry ('' 
+        doPythonConfigure = fullDepEntry (''
           pythonVersion=$(toPythonPath "$prefix")
           pythonVersion=''${pythonVersion#*/lib/python}
           pythonVersion=''${pythonVersion%%/site-packages}
-          ${if args ? extraPythonConfigureCommand then 
-            args.extraPythonConfigureCommand 
+          ${if args ? extraPythonConfigureCommand then
+            args.extraPythonConfigureCommand
           else ""}
           python configure.py -b "$prefix/bin" -d "$(toPythonPath "$prefix")" -v "$prefix/share/sip" ${toString configureFlags}
-        '') ["minInit" "addInputs" "doUnpack"]; 
+        '') ["minInit" "addInputs" "doUnpack"];
 
         # changing this ? see [1]
         doMakeInstall = fullDepEntry ("
@@ -315,7 +315,7 @@ let inherit (builtins) head tail trace; in
                         "${toString (attrByPath ["installFlags"] "" args)} install") ["doMake"];
 
         # changing this ? see [1]
-        doForceShare = fullDepEntry (" 
+        doForceShare = fullDepEntry ("
                 mkdir -p \"\$prefix/share\"
                 for d in ${toString forceShare}; do
                         if [ -d \"\$prefix/\$d\" -a ! -d \"\$prefix/share/\$d\" ]; then
@@ -352,12 +352,12 @@ let inherit (builtins) head tail trace; in
                 (map toPatchCommand patches)
         ) ["minInit" "doUnpack"];
 
-        envAdderInner = s: x: if x==null then s else y: 
+        envAdderInner = s: x: if x==null then s else y:
                 a: envAdderInner (s+"echo export ${x}='\"'\"\$${x}:${y}\";'\"'\n") a;
 
         envAdder = envAdderInner "";
 
-        envAdderList = l:  if l==[] then "" else 
+        envAdderList = l:  if l==[] then "" else
         "echo export ${head l}='\"'\"\\\$${head l}:${head (tail l)}\"'\"';\n" +
                 envAdderList (tail (tail l));
 
@@ -377,12 +377,12 @@ let inherit (builtins) head tail trace; in
           done
         '') ["minInit" "addInputs" "defEnsureDir"];
 
-        wrapBinContentsPython = (makeManyWrappers 
-          ''$out/bin/*'' 
+        wrapBinContentsPython = (makeManyWrappers
+          ''$out/bin/*''
           pythonWrapperArguments
         );
 
-        pythonWrapperArguments = 
+        pythonWrapperArguments =
           (''--prefix PYTHONPATH : $(toPythonPath $out)'' +
           ''''${PYTHONPATH:+ --prefix PYTHONPATH : $PYTHONPATH}'');
 
@@ -414,7 +414,7 @@ let inherit (builtins) head tail trace; in
                    sed -e 's/env *= *Environment *.*/&; env['"'"'ENV'"'"']=os.environ;/' -i SConstruct
 		 ''
 		}
-		scons ${toString (attrByPath ["sconsFlags"] [] args)} PREFIX=$out 
+		scons ${toString (attrByPath ["sconsFlags"] [] args)} PREFIX=$out
 		scons ${toString (attrByPath ["sconsFlags"] [] args)} PREFIX=$out install
 	'') ["minInit" "doUnpack" "addInputs" "defEnsureDir"];
 
@@ -431,9 +431,9 @@ let inherit (builtins) head tail trace; in
         check = checkFlag args;
         reqsList = attrByPath ["reqsList"] [] args;
         buildInputsNames = filter (x: null != getVal x)
-                (uniqList {inputList = 
-                  (concatLists (map 
-                    (x: if x==[] then [] else builtins.tail x) 
+                (uniqList {inputList =
+                  (concatLists (map
+                    (x: if x==[] then [] else builtins.tail x)
                   reqsList));});
         configFlags = attrByPath ["configFlags"] [] args;
         buildFlags = attrByPath ["buildFlags"] [] args;
@@ -443,12 +443,12 @@ let inherit (builtins) head tail trace; in
         autoConfigureFlags = condConcat "" configFlags check;
         autoMakeFlags = condConcat "" buildFlags check;
         useConfig = attrByPath ["useConfig"] false args;
-        realBuildInputs = 
-                lib.closePropagation ((if useConfig then 
-                        autoBuildInputs else 
+        realBuildInputs =
+                lib.closePropagation ((if useConfig then
+                        autoBuildInputs else
                         attrByPath ["buildInputs"] [] args)++
                         (attrByPath ["propagatedBuildInputs"] [] args));
-        configureFlags = if useConfig then autoConfigureFlags else 
+        configureFlags = if useConfig then autoConfigureFlags else
             attrByPath ["configureFlags"] "" args;
         makeFlags = if useConfig then autoMakeFlags else attrByPath ["makeFlags"] "" args;
 
@@ -466,15 +466,15 @@ let inherit (builtins) head tail trace; in
           name="''${name#*-}"
           mkdir -p "$out/share/doc/$name"
 	'' + (concatStringsSep ";"
-               (map 
-	         (x: ''cp "${x}" "$out/share/doc/$name" || true;'') 
+               (map
+	         (x: ''cp "${x}" "$out/share/doc/$name" || true;'')
 		 (attrByPath ["extraDoc"] [] args)))) ["minInit" "defEnsureDir" "doUnpack"];
 
-        realPhaseNames = 
+        realPhaseNames =
 	  (optional ([] != attrByPath ["neededDirs"] [] args) "createDirs")
 	  ++
 	  (attrByPath ["phaseNames"] [] args)
-	  ++ 
+	  ++
           ["doForceShare" "doPropagate" "doForceCopy"]
 	  ++
 	  (optional ([] != attrByPath ["extraDoc"] [] args) "copyExtraDoc")
@@ -512,8 +512,8 @@ let inherit (builtins) head tail trace; in
         );
 
 	builderDefsPackage = bd: func:
-	  if builtins.isFunction func then 
-	    (foldArgs 
+	  if builtins.isFunction func then
+	    (foldArgs
 	      (x: y: ((func (bd // x // y)) // y))
               (innerBuilderDefsPackage bd)
 	      {})
@@ -536,11 +536,11 @@ let inherit (builtins) head tail trace; in
                          ${optionalString (attrByPath ["createPFB"] true args) ''Generate($1:r + ".pfb");''}
                          ${optionalString (attrByPath ["createMAP"] true args) ''Generate($1:r + ".map");''}
                          ${optionalString (attrByPath ["createENC"] true args) ''Generate($1:r + ".enc");''}
-                        ' $i; 
+                        ' $i;
         done
    '') ["minInit" "addInputs" "doUnpack"];
 
-   installFonts = 
+   installFonts =
       let retrievedName = (if args ? name then args.name else ""); in
    fullDepEntry (''
            mkdir -p $out/share/fonts/truetype/public/${retrievedName}
@@ -593,7 +593,7 @@ let inherit (builtins) head tail trace; in
    fetchUrlFromSrcInfo = srcInfo: fetchurl ({
      url = srcInfo.url;
      sha256 = srcInfo.hash;
-   } // 
+   } //
    (if srcInfo ? downloadName then {name = srcInfo.downloadName;} else {}));
 
    fetchGitFromSrcInfo = srcInfo: fetchgit {

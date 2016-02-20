@@ -7093,8 +7093,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
   libmnl = callPackage ../development/libraries/libmnl { };
 
   libmodplug = callPackage ../development/libraries/libmodplug {};
-#
-#  libmpcdec = callPackage ../development/libraries/libmpcdec { };
+
+  libmpcdec = callPackage ../development/libraries/libmpcdec { };
 #
 #  libmp3splt = callPackage ../development/libraries/libmp3splt { };
 #
@@ -7565,7 +7565,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  opal = callPackage ../development/libraries/opal {};
 #
-#  openh264 = callPackage ../development/libraries/openh264 { };
+  openh264 = callPackage ../development/libraries/openh264 { };
 #
 #  openjpeg_1 = callPackage ../development/libraries/openjpeg/1.x.nix { };
 #  openjpeg_2_0 = callPackage ../development/libraries/openjpeg/2.0.nix { };

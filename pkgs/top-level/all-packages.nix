@@ -6813,8 +6813,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libdbusmenu_qt = callPackage ../development/libraries/libdbusmenu-qt { };
 #
-#  libdc1394 = callPackage ../development/libraries/libdc1394 { };
-#
+  libdc1394 = callPackage ../development/libraries/libdc1394 { };
+
   libdiscid = callPackage ../development/libraries/libdiscid { };
 #
 #  libdivsufsort = callPackage ../development/libraries/libdivsufsort { };
@@ -6825,7 +6825,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libdv = callPackage ../development/libraries/libdv { };
 #
-#  libdvbpsi = callPackage ../development/libraries/libdvbpsi { };
+  libdvbpsi = callPackage ../development/libraries/libdvbpsi { };
 #
 #  libdwg = callPackage ../development/libraries/libdwg { };
 #
@@ -7058,8 +7058,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libjson_rpc_cpp = callPackage ../development/libraries/libjson-rpc-cpp { };
 #
-#  libkate = callPackage ../development/libraries/libkate { };
-#
+  libkate = callPackage ../development/libraries/libkate { };
+
   libksba = callPackage ../development/libraries/libksba { };
 #
 #  libksi = callPackage ../development/libraries/libksi { };
@@ -7237,8 +7237,8 @@ libtasn1 = callPackage ../development/libraries/libtasn1 { };
 libtheora = callPackage ../development/libraries/libtheora { };
 #
 libtiff = callPackage ../development/libraries/libtiff { };
-#
-#  libtiger = callPackage ../development/libraries/libtiger { };
+
+  libtiger = callPackage ../development/libraries/libtiger { };
 #
 #  libtommath = callPackage ../development/libraries/libtommath { };
 #
@@ -7874,7 +7874,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  SDL_gfx = callPackage ../development/libraries/SDL_gfx { };
 #
-#  SDL_image = callPackage ../development/libraries/SDL_image { };
+  SDL_image = callPackage ../development/libraries/SDL_image { };
 #
 #  SDL_mixer = callPackage ../development/libraries/SDL_mixer { };
 #
@@ -9526,7 +9526,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libraw = callPackage ../development/libraries/libraw { };
 #
-#  libraw1394 = callPackage ../development/libraries/libraw1394 { };
+  libraw1394 = callPackage ../development/libraries/libraw1394 { };
 #
 #  libsass = callPackage ../development/libraries/libsass { };
 #
@@ -12215,9 +12215,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  vkeybd = callPackage ../applications/audio/vkeybd {};
 #
-#  vlc = callPackage ../applications/video/vlc { };
-#
-#  vlc_qt5 = qt5.vlc;
+  vlc = callPackage ../applications/video/vlc { };
+
+  vlc_qt5 = qt5.vlc;
 #
 #  vmpk = callPackage ../applications/audio/vmpk { };
 #

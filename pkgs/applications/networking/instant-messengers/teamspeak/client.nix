@@ -1,5 +1,5 @@
 { stdenv, fetchurl, makeWrapper, makeDesktopItem, zlib, glib, libpng, freetype
-, xorg, fontconfig, qtbase, xkeyboard_config, alsaLib, libpulseaudio ? null
+, xorg, fontconfig, qtbase, alsaLib, libpulseaudio ? null
 , libredirect, quazip, less, which, unzip
 }:
 
@@ -91,7 +91,7 @@ stdenv.mkDerivation rec {
         --set LD_LIBRARY_PATH "${quazip}/lib" \
         --set LD_PRELOAD "${libredirect}/lib/libredirect.so" \
         --set QT_PLUGIN_PATH "$out/lib/teamspeak/platforms" \
-        --set NIX_REDIRECTS /usr/share/X11/xkb=${xkeyboard_config}/share/X11/xkb
+        --set NIX_REDIRECTS /usr/share/X11/xkb=${xorg.xkeyboardconfig}/share/X11/xkb
     '';
 
   dontStrip = true;

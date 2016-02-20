@@ -17,9 +17,9 @@ with {
 };
 
 assert qt5 != null ->
-  dbus_libs != null &&
-  qt5.qtbase != null &&
-  qt5.qttools != null;
+  dbus_libs != null
+  && qt5.qtbase != null
+  && qt5.qttools != null;
 
 stdenv.mkDerivation rec {
   name = "qbittorrent-${version}";
@@ -72,7 +72,6 @@ stdenv.mkDerivation rec {
     license = licenses.gpl2;
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -45,7 +45,7 @@
 , speex
 , udev
 , utillinux
-, xdg_utils
+, xdg-utils
 , xorg
 , yasm
 
@@ -174,7 +174,7 @@ let
       speex
       udev
       utillinux
-      xdg_utils
+      xdg-utils
       yasm
       xorg.libXcomposite
       xorg.libXcursor

@@ -6,7 +6,6 @@
 , cdparanoia
 , freetype
 , glib
-, gnome
 , gobject-introspection
 , gstreamer_0
 , isocodes
@@ -51,17 +50,17 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postPatch = ''
-    # Fix hardcoded path
-    sed -i configure \
-      -e 's@/bin/echo@echo@g'
-
-    # The AC_PATH_XTRA macro unnecessarily pulls in libSM and libICE even
-    # though they are not actually used. This needs to be fixed upstream by
-    # replacing AC_PATH_XTRA with PKG_CONFIG calls.
-    sed -i configure \
-      -e 's:X_PRE_LIBS -lSM -lICE:X_PRE_LIBS:'
-  '';
+  postPatch =
+    /* Fix hardcoded path */ ''
+      sed -i configure \
+        -e 's@/bin/echo@echo@g'
+    '' +
+    /* The AC_PATH_XTRA macro unnecessarily pulls in libSM and libICE even
+       though they are not actually used. This needs to be fixed upstream by
+       replacing AC_PATH_XTRA with PKG_CONFIG calls. */ ''
+      sed -i configure \
+        -e 's:X_PRE_LIBS -lSM -lICE:X_PRE_LIBS:'
+    '';
 
   configureFlags = [
     "--enable-option-checking"
@@ -108,7 +107,7 @@ stdenv.mkDerivation rec {
     (enFlag "gst_v4l" (libv4l != null) null)
     (enFlag "alsa" (alsaLib != null) null)
     (enFlag "cdparanoia" (cdparanoia != null) null)
-    (enFlag "gnome_vfs" (gnome.gnome_vfs != null) null)
+    "--disable-gnome_vfs"
     # FIXME: compilation fails with ivorbis(tremor)
     "--disable-ivorbis"
     "--enable-gio"
@@ -130,7 +129,6 @@ stdenv.mkDerivation rec {
     cdparanoia
     freetype
     glib
-    gnome.gnome_vfs
     gobject-introspection
     gstreamer_0
     isocodes
@@ -149,8 +147,6 @@ stdenv.mkDerivation rec {
     xorg.libXv
     zlib
   ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Basepack of plugins for gstreamer";

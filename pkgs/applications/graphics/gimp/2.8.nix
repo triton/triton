@@ -27,8 +27,7 @@ stdenv.mkDerivation rec {
   '';
 
   # "screenshot" needs this.
-  NIX_LDFLAGS = "-rpath ${xorg.libX11}/lib"
-    + stdenv.lib.optionalString stdenv.isDarwin " -lintl";
+  NIX_LDFLAGS = "-rpath ${xorg.libX11}/lib";
 
   meta = {
     description = "The GNU Image Manipulation Program";

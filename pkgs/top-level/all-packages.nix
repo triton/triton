@@ -632,7 +632,7 @@ filezilla = callPackage ../all-pkgs/filezilla { };
 firefox = firefox_wrapper firefox-unwrapped { };
 firefox-esr = firefox_wrapper firefox-esr-unwrapped { };
 firefox-unwrapped = callPackage ../all-pkgs/firefox {
-  inherit (gnome) libIDL;
+  libIDL = libidl;
   inherit (pythonPackages) pysqlite;
   libpng = libpng_apng;
 };
@@ -2665,7 +2665,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  hashcat = callPackage ../tools/security/hashcat { };
 #
-#  hal-flash = callPackage ../os-specific/linux/hal-flash { };
+  hal-flash = callPackage ../os-specific/linux/hal-flash { };
 #
 #  halibut = callPackage ../tools/typesetting/halibut { };
 #
@@ -3250,9 +3250,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  nlopt = callPackage ../development/libraries/nlopt {};
 #
-#  npapi_sdk = callPackage ../development/libraries/npapi-sdk {};
-#
-  npth = callPackage ../development/libraries/npth {};
+  npapi_sdk = callPackage ../development/libraries/npapi-sdk { };
+
+  npth = callPackage ../development/libraries/npth { };
 
   nmap = callPackage ../tools/security/nmap { };
 #
@@ -3734,7 +3734,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  rpPPPoE = callPackage ../tools/networking/rp-pppoe { };
 #
-#  rpm = callPackage ../tools/package-management/rpm { };
+  rpm = callPackage ../tools/package-management/rpm { };
 #
 #  rpmextract = callPackage ../tools/archivers/rpmextract { };
 #
@@ -4684,12 +4684,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    xulrunner = firefox-unwrapped;
 #  };
 #
-#  icedtea8_web = callPackage ../development/compilers/icedtea-web {
-#    jdk = jdk8;
-#    xulrunner = firefox-unwrapped;
-#  };
-#
-#  icedtea_web = icedtea8_web;
+  icedtea8_web = callPackage ../development/compilers/icedtea-web {
+    jdk = jdk8;
+    xulrunner = firefox-unwrapped;
+  };
+
+  icedtea_web = icedtea8_web;
 #
 #  openjdk7-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "7"; };
   openjdk8-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "8"; };
@@ -6041,7 +6041,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ### DEVELOPMENT / LIBRARIES
 #
-#  a52dec = callPackage ../development/libraries/a52dec { };
+  a52dec = callPackage ../development/libraries/a52dec { };
 #
 #  aacskeys = callPackage ../development/libraries/aacskeys { };
 #
@@ -6094,8 +6094,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  aubio = callPackage ../development/libraries/aubio { };
 #
   audiofile = callPackage ../development/libraries/audiofile { };
-#
-#  babl = callPackage ../development/libraries/babl { };
+
+  babl = callPackage ../development/libraries/babl { };
 #
 #  beecrypt = callPackage ../development/libraries/beecrypt { };
 #
@@ -6137,9 +6137,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ccrtp_1_8 = callPackage ../development/libraries/ccrtp/1.8.nix { };
 #
-#  celt = callPackage ../development/libraries/celt {};
-#  celt_0_7 = callPackage ../development/libraries/celt/0.7.nix {};
-#  celt_0_5_1 = callPackage ../development/libraries/celt/0.5.1.nix {};
+  celt = callPackage ../development/libraries/celt {};
+  celt_0_7 = callPackage ../development/libraries/celt/0.7.nix {};
+  celt_0_5_1 = callPackage ../development/libraries/celt/0.5.1.nix {};
 #
 #  cgal = callPackage ../development/libraries/CGAL {};
 #
@@ -6260,16 +6260,16 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  esdl = callPackage ../development/libraries/esdl { };
 #
-#  exiv2 = callPackage ../development/libraries/exiv2 { };
-#
+  exiv2 = callPackage ../development/libraries/exiv2 { };
+
   expat = callPackage ../development/libraries/expat { };
 #
 #  eventlog = callPackage ../development/libraries/eventlog { };
 #
 #  facile = callPackage ../development/libraries/facile { };
 #
-#  faac = callPackage ../development/libraries/faac { };
-#
+  faac = callPackage ../development/libraries/faac { };
+
   faad2 = callPackage ../development/libraries/faad2 { };
 #
 #  farbfeld = callPackage ../development/libraries/farbfeld { };
@@ -6293,7 +6293,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  flann = callPackage ../development/libraries/flann { };
 #
-#  flite = callPackage ../development/libraries/flite { };
+  flite = callPackage ../development/libraries/flite { };
 #
 #  fltk13 = callPackage ../development/libraries/fltk/fltk13.nix { };
 #
@@ -6359,9 +6359,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gecode_4 = callPackage ../development/libraries/gecode { };
 #  gecode = gecode_4;
 #
-#  gegl = callPackage ../development/libraries/gegl { };
-#
-#  gegl_0_3 = callPackage ../development/libraries/gegl/3.0.nix { };
+  gegl = callPackage ../development/libraries/gegl { };
+
+  gegl_0_3 = callPackage ../development/libraries/gegl/3.0.nix { };
 #
 #  geoclue = callPackage ../development/libraries/geoclue {};
 #
@@ -6829,14 +6829,14 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libdwg = callPackage ../development/libraries/libdwg { };
 #
-#  libdvdcss = callPackage ../development/libraries/libdvdcss { };
-#
-#  libdvdnav = callPackage ../development/libraries/libdvdnav { };
+  libdvdcss = callPackage ../development/libraries/libdvdcss { };
+
+  libdvdnav = callPackage ../development/libraries/libdvdnav { };
 #  libdvdnav_4_2_1 = callPackage ../development/libraries/libdvdnav/4.2.1.nix {
 #    libdvdread = libdvdread_4_9_9;
 #  };
 #
-#  libdvdread = callPackage ../development/libraries/libdvdread { };
+  libdvdread = callPackage ../development/libraries/libdvdread { };
 #  libdvdread_4_9_9 = callPackage ../development/libraries/libdvdread/4.9.9.nix { };
 #
 #  libdwarf = callPackage ../development/libraries/libdwarf { };
@@ -7106,11 +7106,11 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libmusicbrainz2 = callPackage ../development/libraries/libmusicbrainz/2.x.nix { };
 #
-#  libmusicbrainz3 = callPackage ../development/libraries/libmusicbrainz { };
-#
+  libmusicbrainz3 = callPackage ../development/libraries/libmusicbrainz { };
+
   libmusicbrainz5 = callPackage ../development/libraries/libmusicbrainz/5.x.nix { };
-#
-#  libmusicbrainz = libmusicbrainz3;
+
+  libmusicbrainz = libmusicbrainz3;
 #
 #  libmwaw = callPackage ../development/libraries/libmwaw { };
 #
@@ -7318,8 +7318,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
   libvorbis = callPackage ../development/libraries/libvorbis { };
 
   libwebp = callPackage ../development/libraries/libwebp { };
-#
-#  libwmf = callPackage ../development/libraries/libwmf { };
+
+  libwmf = callPackage ../development/libraries/libwmf { };
 #
 #  libwnck = libwnck2;
 #  libwnck2 = callPackage ../development/libraries/libwnck { };
@@ -7370,8 +7370,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  libyubikey = callPackage ../development/libraries/libyubikey { };
 #
   libzen = callPackage ../development/libraries/libzen { };
-#
-#  libzip = callPackage ../development/libraries/libzip { };
+
+  libzip = callPackage ../development/libraries/libzip { };
 #
 #  libzdb = callPackage ../development/libraries/libzdb { };
 #
@@ -7438,14 +7438,14 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  mps = callPackage ../development/libraries/mps { };
 #
-#  libmpeg2 = callPackage ../development/libraries/libmpeg2 { };
-#
-#  mpeg2dec = libmpeg2;
+  libmpeg2 = callPackage ../development/libraries/libmpeg2 { };
+
+  mpeg2dec = libmpeg2;
 #
 #  msilbc = callPackage ../development/libraries/msilbc { };
 #
-#  mp4v2 = callPackage ../development/libraries/mp4v2 { };
-#
+  mp4v2 = callPackage ../development/libraries/mp4v2 { };
+
   libmpc = callPackage ../development/libraries/libmpc { };
 #
 #  mpich2 = callPackage ../development/libraries/mpich2 { };
@@ -7863,8 +7863,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  sbc = callPackage ../development/libraries/sbc { };
 #
-#  schroedinger = callPackage ../development/libraries/schroedinger { };
-#
+  schroedinger = callPackage ../development/libraries/schroedinger { };
+
   SDL = callPackage ../development/libraries/SDL {
     openglSupport = mesaSupported;
     alsaSupport = stdenv.isLinux;
@@ -7947,9 +7947,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  sord = callPackage ../development/libraries/sord {};
 #  sord-svn = callPackage ../development/libraries/sord/sord-svn.nix {};
 #
-#  soundtouch = callPackage ../development/libraries/soundtouch {};
-#
-#  spandsp = callPackage ../development/libraries/spandsp {};
+  soundtouch = callPackage ../development/libraries/soundtouch {};
+
+  spandsp = callPackage ../development/libraries/spandsp {};
 #
 #  spatialite_tools = callPackage ../development/libraries/spatialite-tools { };
 #
@@ -8186,17 +8186,17 @@ libtiff = callPackage ../development/libraries/libtiff { };
   wxGTK = wxGTK28;
 
   wxGTK28 = callPackage ../development/libraries/wxGTK-2.8 {
-    inherit (gnome) GConf;
+    GConf = gconf;
     withMesa = lib.elem system mesa_noglu.meta.platforms;
   };
 
   wxGTK29 = callPackage ../development/libraries/wxGTK-2.9/default.nix {
-    inherit (gnome) GConf;
+    GConf = gconf;
     withMesa = lib.elem system mesa_noglu.meta.platforms;
   };
 
   wxGTK30 = callPackage ../development/libraries/wxGTK-3.0/default.nix {
-    inherit (gnome) GConf;
+    GConf = gconf;
     withMesa = lib.elem system mesa_noglu.meta.platforms;
   };
 #
@@ -10206,7 +10206,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  abook = callPackage ../applications/misc/abook { };
 #
-#  adobe-reader = callPackage_i686 ../applications/misc/adobe-reader { };
+  adobe-reader = callPackage_i686 ../applications/misc/adobe-reader { };
 #
 #  aewan = callPackage ../applications/editors/aewan { };
 #
@@ -10320,7 +10320,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #    gtk = gtk3;
 #  };
 #
-#  bluejeans = callPackage ../applications/networking/browsers/mozilla-plugins/bluejeans { };
+  bluejeans = callPackage ../applications/networking/browsers/mozilla-plugins/bluejeans { };
 #
 #  bomi = qt5.callPackage ../applications/video/bomi {
 #    youtube-dl = pythonPackages.youtube-dl;
@@ -10503,9 +10503,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  djvu2pdf = callPackage ../tools/typesetting/djvu2pdf { };
 #
-#  djview = callPackage ../applications/graphics/djview { };
-#  djview4 = pkgs.djview;
-#
+  djview = callPackage ../applications/graphics/djview { };
+  djview4 = pkgs.djview;
+
   dmenu = callPackage ../applications/misc/dmenu { };
 
   dmenu-wayland = callPackage ../applications/misc/dmenu/wayland.nix { };
@@ -10640,7 +10640,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  freewheeling = callPackage ../applications/audio/freewheeling { };
 #
-#  fribid = callPackage ../applications/networking/browsers/mozilla-plugins/fribid { };
+  fribid = callPackage ../applications/networking/browsers/mozilla-plugins/fribid { };
 #
 #  geany = callPackage ../applications/editors/geany { };
 #  geany-with-vte = callPackage ../applications/editors/geany/with-vte.nix { };
@@ -10700,9 +10700,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #    { boost = boost155;
 #    };
 #
-#  flashplayer = callPackage ../applications/networking/browsers/mozilla-plugins/flashplayer-11 {
-#    debug = config.flashplayer.debug or false;
-#  };
+  flashplayer = callPackage ../applications/networking/browsers/mozilla-plugins/flashplayer-11 {
+    debug = config.flashplayer.debug or false;
+  };
 #
 #  flashplayer-standalone = pkgsi686Linux.flashplayer.sa;
 #
@@ -10748,17 +10748,17 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  get_iplayer = callPackage ../applications/misc/get_iplayer {};
 #
-#  gimp_2_8 = callPackage ../applications/graphics/gimp/2.8.nix {
-#    inherit (gnome) libart_lgpl;
-#    webkit = null;
-#    lcms = lcms2;
-#    wrapPython = pythonPackages.wrapPython;
-#  };
-#
-#  gimp = gimp_2_8;
-#
-#  gimpPlugins = recurseIntoAttrs (callPackage ../applications/graphics/gimp/plugins {});
-#
+  gimp_2_8 = callPackage ../applications/graphics/gimp/2.8.nix {
+    inherit (gnome) libart_lgpl;
+    webkit = null;
+    lcms = lcms2;
+    wrapPython = pythonPackages.wrapPython;
+  };
+
+  gimp = gimp_2_8;
+
+  gimpPlugins = recurseIntoAttrs (callPackage ../applications/graphics/gimp/plugins {});
+
   gitAndTools = recurseIntoAttrs (callPackage ../applications/version-management/git-and-tools {});
 
   inherit (gitAndTools) git gitFull gitSVN git-cola svn2git git-radar transcrypt;
@@ -10823,9 +10823,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  gmu = callPackage ../applications/audio/gmu { };
 #
-#  gnash = callPackage ../applications/video/gnash {
-#    inherit (gnome) gtkglext;
-#  };
+  gnash = callPackage ../applications/video/gnash {
+    inherit (gnome) gtkglext;
+  };
 #
 #  gnome_mplayer = callPackage ../applications/video/gnome-mplayer {
 #    inherit (gnome) GConf;
@@ -10866,10 +10866,10 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  qrencode = callPackage ../tools/graphics/qrencode { };
 #
-#  gecko_mediaplayer = callPackage ../applications/networking/browsers/mozilla-plugins/gecko-mediaplayer {
-#    inherit (gnome) GConf;
-#    browser = firefox-unwrapped;
-#  };
+  gecko_mediaplayer = callPackage ../applications/networking/browsers/mozilla-plugins/gecko-mediaplayer {
+    inherit (gnome) GConf;
+    browser = firefox-unwrapped;
+  };
 #
 #  geeqie = callPackage ../applications/graphics/geeqie { };
 #
@@ -11336,12 +11336,12 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #    libdvdnav = libdvdnav_4_2_1;
 #  } // (config.mplayer or {}));
 #
-#  MPlayerPlugin = browser:
-#    callPackage ../applications/networking/browsers/mozilla-plugins/mplayerplug-in {
-#      inherit browser;
-#      # !!! should depend on MPlayer
-#    };
-#
+  MPlayerPlugin = browser:
+    callPackage ../applications/networking/browsers/mozilla-plugins/mplayerplug-in {
+      inherit browser;
+      # !!! should depend on MPlayer
+    };
+
 #  mrpeach = callPackage ../applications/audio/pd-plugins/mrpeach { };
 #
 #  mrxvt = callPackage ../applications/misc/mrxvt { };
@@ -12083,7 +12083,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  tree = callPackage ../tools/system/tree {};
 #
-#  trezor-bridge = callPackage ../applications/networking/browsers/mozilla-plugins/trezor { };
+  trezor-bridge = callPackage ../applications/networking/browsers/mozilla-plugins/trezor { };
 #
 #  tribler = callPackage ../applications/networking/p2p/tribler { };
 #

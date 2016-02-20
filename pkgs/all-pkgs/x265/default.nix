@@ -19,7 +19,6 @@
 
 with {
   inherit (stdenv)
-    is64bit
     isLinux;
   inherit (stdenv.lib)
     cmFlag
@@ -151,7 +150,7 @@ stdenv.mkDerivation rec {
     yasm
   ];
 
-  buildInputs = optionals is64bit [
+  buildInputs = [
     libx265-10
     libx265-12
   ] ++ optionals isLinux [
@@ -182,7 +181,7 @@ stdenv.mkDerivation rec {
     (cmFlag "DETAILED_CU_STATS" custatsSupport)
     (cmFlag "ENABLE_CLI" cliSupport)
   ] ++ cmakeFlagsAll
-    ++ optionals is64bit [
+    ++ [
     (cmFlag "EXTRA_LIB" "${x265Libs}")
     (cmFlag "LINKED_10BIT" true)
     (cmFlag "LINKED_12BIT" true)
@@ -201,7 +200,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

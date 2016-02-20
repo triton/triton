@@ -25,7 +25,6 @@ let
   optZlib = shouldUsePkg zlib;
 
   uuid = if optLibossp_uuid != null then "ossp"
-    else if stdenv.isDarwin then "e2fs"
     else null;
 
   common = { version, sha256, psqlSchema } @ args: stdenv.mkDerivation (rec {

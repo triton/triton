@@ -6,7 +6,6 @@
 , libmpdclient
 , ncurses
 , readline
-, libiconv
 # Optional
 , curl # Lyric fetching
 , fftw # Visualizer screen
@@ -34,7 +33,6 @@ stdenv.mkDerivation rec {
     curl
     fftw
     icu
-    libiconv
     libmpdclient
     ncurses
     readline

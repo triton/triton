@@ -10,18 +10,8 @@ stdenv.mkDerivation  rec {
     sha256 = "00gn93bx4cz9bfwf3a8xyj2by7w23nca4zxf09ll53kzpzglg2yj";
   };
 
-  preBuild = stdenv.lib.optionalString stdenv.isDarwin ''
-    sed -i '40 i\
-    #include <CoreAudio/AudioHardware.h>\
-    #include <CoreAudio/AudioHardwareDeprecated.h>' \
-    src/drivers/fluid_coreaudio.c
-  '';
-
-  NIX_LDFLAGS = stdenv.lib.optionalString stdenv.isDarwin
-    "-framework CoreAudio";
-
   buildInputs = [ glib libsndfile pkgconfig ]
-    ++ stdenv.lib.optionals (!stdenv.isDarwin) [ alsaLib libpulseaudio libjack2 ];
+    ++ stdenv.lib.optionals true [ alsaLib libpulseaudio libjack2 ];
 
   meta = with stdenv.lib; {
     description = "Real-time software synthesizer based on the SoundFont 2 specifications";

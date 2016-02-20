@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, perl, python, flex, bison, qt4, CoreServices, libiconv }:
+{ stdenv, fetchurl, perl, python, flex, bison, qt4 }:
 
 let
   name = "doxygen-1.8.6";
@@ -19,15 +19,12 @@ stdenv.mkDerivation {
 
   buildInputs =
     [ perl python flex bison ]
-    ++ stdenv.lib.optional (qt4 != null) qt4
-    ++ stdenv.lib.optional stdenv.isSunOS libiconv
-    ++ stdenv.lib.optionals stdenv.isDarwin [ CoreServices libiconv ];
+    ++ stdenv.lib.optional (qt4 != null) qt4;
 
   prefixKey = "--prefix ";
 
   configureFlags =
     [ "--dot dot" ]
-    ++ stdenv.lib.optional stdenv.isSunOS "--install install"
     ++ stdenv.lib.optional (qt4 != null) "--with-doxywizard";
 
   preConfigure =
@@ -41,22 +38,11 @@ stdenv.mkDerivation {
 
   makeFlags = "MAN1DIR=share/man/man1";
 
-  enableParallelBuilding = true;
-
   meta = {
     license = stdenv.lib.licenses.gpl2Plus;
     homepage = "http://doxygen.org/";
     description = "Source code documentation generator tool";
-
-    longDescription = ''
-      Doxygen is a documentation system for C++, C, Java, Objective-C,
-      Python, IDL (CORBA and Microsoft flavors), Fortran, VHDL, PHP,
-      C\#, and to some extent D.  It can generate an on-line
-      documentation browser (in HTML) and/or an off-line reference
-      manual (in LaTeX) from a set of documented source files.
-    '';
-
-    maintainers = [stdenv.lib.maintainers.simons];
-    platforms = if qt4 != null then stdenv.lib.platforms.linux else stdenv.lib.platforms.unix;
+    maintainers = [ ];
+    platforms = stdenv.lib.platforms.linux;
   };
 }

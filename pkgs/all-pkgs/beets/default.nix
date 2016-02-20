@@ -52,8 +52,8 @@ assert enableBadfiles ->
   && mp3val != null;
 assert enableBpd ->
   pythonPackages.pygobject_2 != null
-  && gst_python != null
-  && gst_plugins_base != null;
+  && gst-python_0 != null
+  && gst-plugins-base_0 != null;
 assert enableDiscogs -> pythonPackages.discogs_client != null;
 assert enableEchonest -> pythonPackages.pyechonest != null;
 assert enableFetchart -> pythonPackages.responses != null;

@@ -1800,8 +1800,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  apparix = callPackage ../tools/misc/apparix { };
 #
-#  appdata-tools = callPackage ../tools/misc/appdata-tools { };
-#
+  appdata-tools = callPackage ../tools/misc/appdata-tools { };
+
   asciidoc = callPackage ../tools/typesetting/asciidoc {
     inherit (pythonPackages) matplotlib numpy aafigure recursivePthLoader;
     w3m = w3m-batch;
@@ -4258,7 +4258,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  trang = callPackage ../tools/text/xml/trang { };
 #
-#  tre = callPackage ../development/libraries/tre { };
+  tre = callPackage ../development/libraries/tre { };
 #
 #  ts = callPackage ../tools/system/ts { };
 #
@@ -5478,7 +5478,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   automake115x = callPackage ../development/tools/misc/automake/automake-1.15.x.nix { };
 
-#  automoc4 = callPackage ../development/tools/misc/automoc4 { };
+  automoc4 = callPackage ../development/tools/misc/automoc4 { };
 #
 #  avrdude = callPackage ../development/tools/misc/avrdude { };
 #
@@ -5664,7 +5664,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  doclifter = callPackage ../development/tools/misc/doclifter { };
 #
-#  docutils = pythonPackages.docutils;
+  docutils = pythonPackages.docutils;
 #
 #  dot2tex = pythonPackages.dot2tex;
 #
@@ -6002,11 +6002,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    ruby = ruby_2_2_2;
 #  };
 #
-#  gdb = callPackage ../development/tools/misc/gdb {
-#    guile = null;
-#    hurd = gnu.hurdCross;
-#    inherit (gnu) mig;
-#  };
+  gdb = callPackage ../development/tools/misc/gdb {
+    guile = null;
+    hurd = gnu.hurdCross;
+    inherit (gnu) mig;
+  };
 #
 #  gdbGuile = lowPrio (gdb.override { inherit guile; });
 #
@@ -6648,7 +6648,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libb64 = callPackage ../development/libraries/libb64 { };
 #
-#  judy = callPackage ../development/libraries/judy { };
+  judy = callPackage ../development/libraries/judy { };
 #
 #  keybinder = callPackage ../development/libraries/keybinder {
 #    automake = automake111x;
@@ -6733,8 +6733,8 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libbluedevil = callPackage ../development/libraries/libbluedevil { };
 #
   libbdplus = callPackage ../development/libraries/libbdplus { };
-#
-#  libbs2b = callPackage ../development/libraries/audio/libbs2b { };
+
+  libbs2b = callPackage ../development/libraries/audio/libbs2b { };
 #
 #  libbson = callPackage ../development/libraries/libbson { };
 #
@@ -6845,7 +6845,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libeb = callPackage ../development/libraries/libeb { };
 #
-#  libebml = callPackage ../development/libraries/libebml { };
+  libebml = callPackage ../development/libraries/libebml { };
 #
 #  libebur128 = callPackage ../development/libraries/libebur128 { };
 #
@@ -7070,7 +7070,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libmatthew_java = callPackage ../development/libraries/java/libmatthew-java { };
 #
-#  libmatroska = callPackage ../development/libraries/libmatroska { };
+  libmatroska = callPackage ../development/libraries/libmatroska { };
 #
 #  libmcs = callPackage ../development/libraries/libmcs { };
 #
@@ -7523,8 +7523,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  ogrepaged = callPackage ../development/libraries/ogrepaged { };
 #
-#  oniguruma = callPackage ../development/libraries/oniguruma { };
-#
+  oniguruma = callPackage ../development/libraries/oniguruma { };
+
   openal = openalSoft;
   openalSoft = callPackage ../development/libraries/openal-soft { };
 #
@@ -7625,7 +7625,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  pdf2xml = callPackage ../development/libraries/pdf2xml {} ;
 #
-#  phonon = callPackage ../development/libraries/phonon/qt4 {};
+  phonon = callPackage ../development/libraries/phonon/qt4 {};
 #
 #  phonon_backend_gstreamer = callPackage ../development/libraries/phonon-backend-gstreamer/qt4 {};
 #
@@ -7657,12 +7657,12 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  polkit_qt4 = callPackage ../development/libraries/polkit-qt-1 { };
 #
   popt = callPackage ../development/libraries/popt { };
-#
-#  portaudio = callPackage ../development/libraries/portaudio { };
+
+  portaudio = callPackage ../development/libraries/portaudio { };
 #
 #  portaudioSVN = callPackage ../development/libraries/portaudio/svn-head.nix { };
 #
-#  portmidi = callPackage ../development/libraries/portmidi {};
+  portmidi = callPackage ../development/libraries/portmidi { };
 #
 #  prison = callPackage ../development/libraries/prison { };
 #
@@ -7700,20 +7700,20 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    libpng = libpng12;
 #  };
 #
-#  qt4 = pkgs.kde4.qt4;
-#
-#  qt48 = callPackage ../development/libraries/qt-4.x/4.8 {
-#    # GNOME dependencies are not used unless gtkStyle == true
-#    inherit (pkgs.gnome) libgnomeui GConf gnome_vfs;
-#  };
-#
-#  qt48Full = appendToName "full" (qt48.override {
-#    docs = true;
-#    demos = true;
-#    examples = true;
-#    developerBuild = true;
-#  });
-#
+  qt4 = pkgs.kde4.qt4;
+
+  qt48 = callPackage ../development/libraries/qt-4.x/4.8 {
+    # GNOME dependencies are not used unless gtkStyle == true
+    inherit (pkgs.gnome) libgnomeui GConf gnome_vfs;
+  };
+
+  qt48Full = appendToName "full" (qt48.override {
+    docs = true;
+    demos = true;
+    examples = true;
+    developerBuild = true;
+  });
+
   qt54 =
     let imported = import ../development/libraries/qt-5/5.4 { inherit pkgs; };
     in recurseIntoAttrs (imported.override (super: qt5LibsFun));
@@ -7730,7 +7730,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #    grantlee = callPackage ../development/libraries/grantlee/5.x.nix { };
 #
-#    libdbusmenu = callPackage ../development/libraries/libdbusmenu-qt/qt-5.5.nix { };
+    libdbusmenu = callPackage ../development/libraries/libdbusmenu-qt/qt-5.5.nix { };
 #
 #    libkeyfinder = callPackage ../development/libraries/libkeyfinder { };
 #
@@ -7744,9 +7744,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #    phonon-backend-vlc = callPackage ../development/libraries/phonon-backend-vlc/qt5 { };
 #
-#    polkit-qt = callPackage ../development/libraries/polkit-qt-1 {
-#      withQt5 = true;
-#    };
+    polkit-qt = callPackage ../development/libraries/polkit-qt-1 {
+      withQt5 = true;
+    };
 #
 #    poppler = callPackage ../development/libraries/poppler {
 #      lcms = lcms2;
@@ -7762,9 +7762,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #      withDocumentation = true;
 #    };
 #
-#    quazip = callPackage ../development/libraries/quazip {
-#      qt = qtbase;
-#    };
+    quazip = callPackage ../development/libraries/quazip {
+      qt = qtbase;
+    };
 #
 #    qwt = callPackage ../development/libraries/qwt/6.nix { };
 #
@@ -7857,9 +7857,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  rote = callPackage ../development/libraries/rote { };
 #
-#  rubberband = callPackage ../development/libraries/rubberband {
-#    inherit (vamp) vampSDK;
-#  };
+  rubberband = callPackage ../development/libraries/rubberband {
+    inherit (vamp) vampSDK;
+  };
 #
 #  sbc = callPackage ../development/libraries/sbc { };
 #
@@ -7886,12 +7886,12 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  SDL_ttf = callPackage ../development/libraries/SDL_ttf { };
 #
-#  SDL2 = callPackage ../development/libraries/SDL2 {
-#    openglSupport = mesaSupported;
-#    alsaSupport = stdenv.isLinux;
-#    x11Support = true;
-#    pulseaudioSupport = config.pulseaudio or true;
-#  };
+  SDL2 = callPackage ../development/libraries/SDL2 {
+    openglSupport = mesaSupported;
+    alsaSupport = stdenv.isLinux;
+    x11Support = true;
+    pulseaudioSupport = config.pulseaudio or true;
+  };
 #
 #  SDL2_image = callPackage ../development/libraries/SDL2_image { };
 #
@@ -8143,7 +8143,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  vaapiVdpau = callPackage ../development/libraries/vaapi-vdpau { };
 #
-#  vamp = callPackage ../development/libraries/audio/vamp { };
+  vamp = callPackage ../development/libraries/audio/vamp { };
 #
 #  vc = callPackage ../development/libraries/vc { };
 #
@@ -8826,15 +8826,15 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    libmemcached = null; # Detection is broken upstream
 #  };
 #
-#  postgresql = postgresql95;
-#
-#  inherit (callPackages ../servers/sql/postgresql { })
-#    postgresql91
-#    postgresql92
-#    postgresql93
-#    postgresql94
-#    postgresql95;
-#
+  postgresql = postgresql95;
+
+  inherit (callPackages ../servers/sql/postgresql { })
+    postgresql91
+    postgresql92
+    postgresql93
+    postgresql94
+    postgresql95;
+
 #  postgresql_jdbc = callPackage ../servers/sql/postgresql/jdbc { };
 #
 #  prom2json = goPackages.prometheus.prom2json.bin // { outputs = [ "bin" ]; };
@@ -11098,7 +11098,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  lash = callPackage ../applications/audio/lash { };
 #
-#  ladspaH = callPackage ../applications/audio/ladspa-sdk/ladspah.nix { };
+  ladspaH = callPackage ../applications/audio/ladspa-sdk/ladspah.nix { };
 #
 #  ladspaPlugins = callPackage ../applications/audio/ladspa-plugins {
 #    fftw = fftwSinglePrec;
@@ -11498,7 +11498,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #    inherit (pkgs.kde4) kdelibs;
 #  };
 #
-#  opusfile = callPackage ../applications/audio/opusfile { };
+  opusfile = callPackage ../applications/audio/opusfile { };
 #
 #  opusTools = callPackage ../applications/audio/opus-tools { };
 #
@@ -11982,7 +11982,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  tangogps = callPackage ../applications/misc/tangogps { };
 #
-#  teamspeak_client = qt55.callPackage ../applications/networking/instant-messengers/teamspeak/client.nix { };
+  teamspeak_client = qt55.callPackage ../applications/networking/instant-messengers/teamspeak/client.nix { };
 #  teamspeak_server = callPackage ../applications/networking/instant-messengers/teamspeak/server.nix { };
 #
 #  taskjuggler = callPackage ../applications/misc/taskjuggler { };
@@ -12524,7 +12524,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  zed = callPackage ../applications/editors/zed { };
 #
-#  zeroc_ice = callPackage ../development/libraries/zeroc-ice { };
+  zeroc_ice = callPackage ../development/libraries/zeroc-ice { };
 #
 #  zexy = callPackage ../applications/audio/pd-plugins/zexy  { };
 #
@@ -12576,29 +12576,29 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  kakasi = callPackage ../tools/text/kakasi { };
 #
-#  kde4 = recurseIntoAttrs pkgs.kde414;
-#
-#  kde414 =
-#    kdePackagesFor
-#      {
-#        libcanberra = libcanberra_kde;
-#        boost = boost155;
-#        kdelibs = kde5.kdelibs;
-#        subversionClient = pkgs.subversion18.override {
-#          bdbSupport = false;
-#          perlBindings = true;
-#          pythonBindings = true;
-#        };
-#      }
-#      ../desktops/kde-4.14;
-#
-#
-#  kdePackagesFor = extra: dir:
-#    let
-#      # list of extra packages not included in KDE
-#      # the real work in this function is done below this list
-#      extraPackages = callPackage:
-#        rec {
+  kde4 = recurseIntoAttrs pkgs.kde414;
+
+  kde414 =
+    kdePackagesFor
+      {
+        libcanberra = libcanberra_kde;
+        boost = boost155;
+        kdelibs = kde5.kdelibs;
+        subversionClient = pkgs.subversion18.override {
+          bdbSupport = false;
+          perlBindings = true;
+          pythonBindings = true;
+        };
+      }
+      ../desktops/kde-4.14;
+
+
+  kdePackagesFor = extra: dir:
+    let
+      # list of extra packages not included in KDE
+      # the real work in this function is done below this list
+      extraPackages = callPackage:
+        rec {
 #          amarok = callPackage ../applications/audio/amarok { };
 #
 #          bangarang = callPackage ../applications/video/bangarang { };
@@ -12715,26 +12715,26 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #          zanshin = callPackage ../applications/office/zanshin { };
 #
 #          kwooty = callPackage ../applications/networking/newsreaders/kwooty { };
-#        };
-#
-#      callPackageOrig = newScope extra;
-#
-#      makePackages = extra:
-#        let
-#          callPackage = newScope (extra // self);
-#          kde4 = callPackageOrig dir { inherit callPackage callPackageOrig; };
-#          self =
-#            kde4
-#            // extraPackages callPackage
-#            // {
-#              inherit kde4;
-#              wrapper = callPackage ../build-support/kdewrapper {};
-#              recurseForRelease = true;
-#            };
-#        in self;
-#
-#    in makeOverridable makePackages extra;
-#
+        };
+
+      callPackageOrig = newScope extra;
+
+      makePackages = extra:
+        let
+          callPackage = newScope (extra // self);
+          kde4 = callPackageOrig dir { inherit callPackage callPackageOrig; };
+          self =
+            kde4
+            // extraPackages callPackage
+            // {
+              inherit kde4;
+              wrapper = callPackage ../build-support/kdewrapper {};
+              recurseForRelease = true;
+            };
+        in self;
+
+    in makeOverridable makePackages extra;
+
 #  redshift = callPackage ../applications/misc/redshift {
 #    inherit (python3Packages) python pygobject3 pyxdg;
 #  };
@@ -12759,7 +12759,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  numix-gtk-theme = callPackage ../misc/themes/gtk3/numix-gtk-theme { };
 #
-#  kde5PackagesFun = self: with self; {
+  kde5PackagesFun = self: with self; {
 #
 #    calamares = callPackage ../tools/misc/calamares rec {
 #      python = python3;
@@ -12776,53 +12776,53 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #    konversation = callPackage ../applications/networking/irc/konversation/1.6.nix {
 #    };
 #
-#    quassel = callPackage ../applications/networking/irc/quassel/qt-5.nix {
-#      monolithic = true;
-#      daemon = false;
-#      client = false;
-#      withKDE = true;
-#      tag = "-kf5";
-#    };
-#
-#    quasselClient = quassel.override {
-#      monolithic = false;
-#      client = true;
-#      tag = "-client-kf5";
-#    };
-#
-#    quassel_qt5 = quassel.override {
-#      withKDE = false;
-#      tag = "-qt5";
-#    };
-#
-#    quasselClient_qt5 = quasselClient.override {
-#      withKDE = false;
-#      tag = "-client-qt5";
-#    };
-#
-#    quasselDaemon = quassel.override {
-#      monolithic = false;
-#      daemon = true;
-#      tag = "-daemon-qt5";
-#      withKDE = false;
-#    };
-#
-#    sddm = callPackage ../applications/display-managers/sddm {
-#      themes = [];  # extra themes, etc.
-#    };
-#
-#  };
-#
-#  kde5 =
-#    let
-#      frameworks = import ../development/libraries/kde-frameworks-5.18 { inherit pkgs; };
-#      plasma = import ../desktops/plasma-5.5 { inherit pkgs; };
-#      apps = import ../applications/kde-apps-15.12 { inherit pkgs; };
-#      named = self: { plasma = plasma self; frameworks = frameworks self; apps = apps self; };
-#      merged = self:
-#        named self // frameworks self // plasma self // apps self // kde5PackagesFun self;
-#    in
-#      recurseIntoAttrs (lib.makeScope qt55.newScope merged);
+    quassel = callPackage ../all-pkgs/quassel {
+      monolithic = true;
+      daemon = false;
+      client = false;
+      withKDE = true;
+      tag = "-kf5";
+    };
+
+    quasselClient = quassel.override {
+      monolithic = false;
+      client = true;
+      tag = "-client-kf5";
+    };
+
+    quassel_qt5 = quassel.override {
+      withKDE = false;
+      tag = "-qt5";
+    };
+
+    quasselClient_qt5 = quasselClient.override {
+      withKDE = false;
+      tag = "-client-qt5";
+    };
+
+    quasselDaemon = quassel.override {
+      monolithic = false;
+      daemon = true;
+      tag = "-daemon-qt5";
+      withKDE = false;
+    };
+
+    sddm = callPackage ../applications/display-managers/sddm {
+      themes = [];  # extra themes, etc.
+    };
+
+  };
+
+  kde5 =
+    let
+      frameworks = import ../development/libraries/kde-frameworks-5.18 { inherit pkgs; };
+      plasma = import ../desktops/plasma-5.5 { inherit pkgs; };
+      apps = import ../applications/kde-apps-15.12 { inherit pkgs; };
+      named = self: { plasma = plasma self; frameworks = frameworks self; apps = apps self; };
+      merged = self:
+        named self // frameworks self // plasma self // apps self // kde5PackagesFun self;
+    in
+      recurseIntoAttrs (lib.makeScope qt55.newScope merged);
 #
 #  kde5_latest =
 #    let

@@ -8,7 +8,6 @@
 , file
 , flac
 , libebml
-, libiconv
 , libmatroska
 , libogg
 , libvorbis
@@ -51,8 +50,6 @@ stdenv.mkDerivation rec {
     qt5.qtbase
     xdg_utils
     zlib
-  ] ++ optionals (!stdenv.cc.isGNU) [
-    libiconv
   ];
 
   postPatch = ''
@@ -99,7 +96,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

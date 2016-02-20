@@ -3784,7 +3784,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    quazip = qt5.quazip.override { qt = qt4; };
 #  };
 #
-#  scrot = callPackage ../tools/graphics/scrot { };
+  scrot = callPackage ../tools/graphics/scrot { };
 #
 #  scrypt = callPackage ../tools/security/scrypt { };
 #
@@ -4180,7 +4180,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  vobcopy = callPackage ../tools/cd-dvd/vobcopy { };
 #
-#  vobsub2srt = callPackage ../tools/cd-dvd/vobsub2srt { };
+  vobsub2srt = callPackage ../tools/cd-dvd/vobsub2srt { };
 #
 #  vorbisgain = callPackage ../tools/misc/vorbisgain { };
 #
@@ -5959,7 +5959,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  sparse = callPackage ../development/tools/analysis/sparse { };
 #
-#  speedtest-cli = callPackage ../tools/networking/speedtest-cli { };
+  speedtest-cli = callPackage ../tools/networking/speedtest-cli { };
 #
 #  spin = callPackage ../development/tools/analysis/spin { };
 #
@@ -6240,7 +6240,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dlib = callPackage ../development/libraries/dlib { };
 #
-#  dotconf = callPackage ../development/libraries/dotconf { };
+  dotconf = callPackage ../development/libraries/dotconf { };
 #
 #  dssi = callPackage ../development/libraries/dssi {};
 #
@@ -6341,9 +6341,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  funambol = callPackage ../development/libraries/funambol { };
 #
-#  fam = gamin;
-#
-#  gamin = callPackage ../development/libraries/gamin { };
+  fam = gamin;
+
+  gamin = callPackage ../development/libraries/gamin { };
 #
 #  ganv = callPackage ../development/libraries/ganv { };
 #
@@ -6394,7 +6394,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ggz_base_libs = callPackage ../development/libraries/ggz_base_libs {};
 #
-#  giblib = callPackage ../development/libraries/giblib { };
+  giblib = callPackage ../development/libraries/giblib { };
 #
 #  libgit2 = callPackage ../development/libraries/git2 { };
 #
@@ -6685,10 +6685,10 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  levmar = callPackage ../development/libraries/levmar { };
 #
-#  leptonica = callPackage ../development/libraries/leptonica {
-#    libpng = libpng12;
-#  };
-#
+  leptonica = callPackage ../development/libraries/leptonica {
+    libpng = libpng12;
+  };
+
   letsencrypt = callPackage ../tools/admin/letsencrypt { };
 #
 #  lib3ds = callPackage ../development/libraries/lib3ds { };
@@ -7420,7 +7420,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  ming = callPackage ../development/libraries/ming { };
 #
-#  minizip = callPackage ../development/libraries/minizip { };
+  minizip = callPackage ../development/libraries/minizip { };
 #
 #  minmay = callPackage ../development/libraries/minmay { };
 #
@@ -7683,7 +7683,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  ptlib = callPackage ../development/libraries/ptlib {};
 #
-#  pugixml = callPackage ../development/libraries/pugixml { };
+  pugixml = callPackage ../development/libraries/pugixml { };
 #
 #  re2 = callPackage ../development/libraries/re2 { };
 #
@@ -7934,8 +7934,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #        # optional
 #  };
 #
-#  snappy = callPackage ../development/libraries/snappy { };
-#
+  snappy = callPackage ../development/libraries/snappy { };
+
   socket_wrapper = callPackage ../development/libraries/socket_wrapper { };
 #
 #  sofia_sip = callPackage ../development/libraries/sofia-sip { };
@@ -7953,7 +7953,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  spatialite_tools = callPackage ../development/libraries/spatialite-tools { };
 #
-#  speechd = callPackage ../development/libraries/speechd { };
+  speechd = callPackage ../development/libraries/speechd { };
 #
 #  speech_tools = callPackage ../development/libraries/speech-tools {};
 #
@@ -8070,9 +8070,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  tidyp = callPackage ../development/libraries/tidyp { };
 #
-#  tinyxml = tinyxml2;
-#
-#  tinyxml2 = callPackage ../development/libraries/tinyxml/2.6.2.nix { };
+  tinyxml = tinyxml2;
+
+  tinyxml2 = callPackage ../development/libraries/tinyxml/2.6.2.nix { };
 #
 #  tk = tk-8_6;
 #
@@ -8183,22 +8183,22 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  wiredtiger = callPackage ../development/libraries/wiredtiger { };
 #
-#  wxGTK = wxGTK28;
-#
-#  wxGTK28 = callPackage ../development/libraries/wxGTK-2.8 {
-#    inherit (gnome) GConf;
-#    withMesa = lib.elem system mesa_noglu.meta.platforms;
-#  };
-#
-#  wxGTK29 = callPackage ../development/libraries/wxGTK-2.9/default.nix {
-#    inherit (gnome) GConf;
-#    withMesa = lib.elem system mesa_noglu.meta.platforms;
-#  };
-#
-#  wxGTK30 = callPackage ../development/libraries/wxGTK-3.0/default.nix {
-#    inherit (gnome) GConf;
-#    withMesa = lib.elem system mesa_noglu.meta.platforms;
-#  };
+  wxGTK = wxGTK28;
+
+  wxGTK28 = callPackage ../development/libraries/wxGTK-2.8 {
+    inherit (gnome) GConf;
+    withMesa = lib.elem system mesa_noglu.meta.platforms;
+  };
+
+  wxGTK29 = callPackage ../development/libraries/wxGTK-2.9/default.nix {
+    inherit (gnome) GConf;
+    withMesa = lib.elem system mesa_noglu.meta.platforms;
+  };
+
+  wxGTK30 = callPackage ../development/libraries/wxGTK-3.0/default.nix {
+    inherit (gnome) GConf;
+    withMesa = lib.elem system mesa_noglu.meta.platforms;
+  };
 #
 #  wxmac = callPackage ../development/libraries/wxmac { };
 #
@@ -10506,11 +10506,11 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  djview = callPackage ../applications/graphics/djview { };
 #  djview4 = pkgs.djview;
 #
-#  dmenu = callPackage ../applications/misc/dmenu { };
-#
-#  dmenu-wayland = callPackage ../applications/misc/dmenu/wayland.nix { };
-#
-#  dmenu2 = callPackage ../applications/misc/dmenu2 { };
+  dmenu = callPackage ../applications/misc/dmenu { };
+
+  dmenu-wayland = callPackage ../applications/misc/dmenu/wayland.nix { };
+
+  dmenu2 = callPackage ../applications/misc/dmenu2 { };
 #
 #  dmtx = dmtx-utils;
 #
@@ -11436,7 +11436,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  netbeans = callPackage ../applications/editors/netbeans { };
 #
-#  ncdu = callPackage ../tools/misc/ncdu { };
+  ncdu = callPackage ../tools/misc/ncdu { };
 #
 #  ne = callPackage ../applications/editors/ne { };
 #
@@ -12018,7 +12018,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  termite = callPackage ../applications/misc/termite { };
 #
-#  tesseract = callPackage ../applications/graphics/tesseract { };
+  tesseract = callPackage ../applications/graphics/tesseract { };
 #
 #  tetraproc = callPackage ../applications/audio/tetraproc { };
 #
@@ -12496,7 +12496,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  yate = callPackage ../applications/misc/yate { };
 #
-#  inherit (pythonPackages) youtube-dl;
+  inherit (pythonPackages) youtube-dl;
 #
 #  qtbitcointrader = callPackage ../applications/misc/qtbitcointrader {
 #    qt = qt4;

@@ -12,7 +12,7 @@
 , libogg
 , libvorbis
 , qt5
-, xdg_utils
+, xdg-utils
 , zlib
 # pugixml (not packaged)
 }:
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
     libogg
     libvorbis
     qt5.qtbase
-    xdg_utils
+    xdg-utils
     zlib
   ];
 

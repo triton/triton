@@ -1221,7 +1221,6 @@ quassel = callPackage ../all-pkgs/quassel rec {
   daemon = false;
   client = false;
   withKDE = true;
-  qt = qt5;
 };
 quasselWithoutKDE = (quassel.override {
   monolithic = true;
@@ -3811,8 +3810,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  screenfetch = callPackage ../tools/misc/screenfetch { };
 #
-#  sg3_utils = callPackage ../tools/system/sg3_utils { };
-#
+  sg3_utils = callPackage ../tools/system/sg3_utils { };
+
   sharutils = callPackage ../tools/archivers/sharutils { };
 #
 #  shotwell = callPackage ../applications/graphics/shotwell { };
@@ -5776,7 +5775,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ino = callPackage ../development/arduino/ino { };
 #
-#  inotify-tools = callPackage ../development/tools/misc/inotify-tools { };
+  inotify-tools = callPackage ../development/tools/misc/inotify-tools { };
 #
 #  intel-gpu-tools = callPackage ../development/tools/misc/intel-gpu-tools {};
 #
@@ -5785,7 +5784,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ired = callPackage ../development/tools/analysis/radare/ired.nix { };
 #
   itstool = callPackage ../development/tools/misc/itstool { };
-#
+
   jam = callPackage ../development/tools/build-managers/jam { };
 #
 #  jikespg = callPackage ../development/tools/parsing/jikespg { };
@@ -5983,7 +5982,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   strace = callPackage ../development/tools/misc/strace { };
 #
 #  swig1 = callPackage ../development/tools/misc/swig { };
-#  swig2 = callPackage ../development/tools/misc/swig/2.x.nix { };
+  swig2 = callPackage ../development/tools/misc/swig/2.x.nix { };
   swig3 = callPackage ../development/tools/misc/swig/3.x.nix { };
   swig = swig3;
 #
@@ -6971,7 +6970,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libicns = callPackage ../development/libraries/libicns { };
 #
-#  libimobiledevice = callPackage ../development/libraries/libimobiledevice { };
+  libimobiledevice = callPackage ../development/libraries/libimobiledevice { };
 #
 #  libindicate-gtk2 = callPackage ../development/libraries/libindicate { gtkVersion = "2"; };
 #  libindicate-gtk3 = callPackage ../development/libraries/libindicate { gtkVersion = "3"; };
@@ -7024,7 +7023,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  liboping = callPackage ../development/libraries/liboping { };
 #
-#  libplist = callPackage ../development/libraries/libplist { };
+  libplist = callPackage ../development/libraries/libplist { };
 #
 #  libqglviewer = callPackage ../development/libraries/libqglviewer { };
 #
@@ -7823,7 +7822,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  librdf_raptor = callPackage ../development/libraries/librdf/raptor.nix { };
 #
-#  librdf_raptor2 = callPackage ../development/libraries/librdf/raptor2.nix { };
+  librdf_raptor2 = callPackage ../development/libraries/librdf/raptor2.nix { };
 #
 #  librdf_rasqal = callPackage ../development/libraries/librdf/rasqal.nix { };
 #

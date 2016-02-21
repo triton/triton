@@ -32,31 +32,28 @@
 }:
 
 with {
-  inherit (stdenv)
-    isi686
-    isx86_64;
   inherit (stdenv.lib)
     enFlag
     wtFlag;
 };
 
-assert (isi686 || isx86_64);
 assert xorg != null ->
-  xorg.libX11 != null &&
-  xorg.libXext != null &&
-  xorg.libXt != null;
+  xorg.libX11 != null
+  && xorg.libXext != null
+  && xorg.libXt != null;
 
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
-  version = "6.9.3-3";
+  # Use stable patch releases, e.g. -9 or -10
+  version = "6.9.2-10";
 
   src = fetchurl {
     url = [
-      "mirror://imagemagick/ImageMagick-${version}.tar.xz"
       "mirror://imagemagick/releases/ImageMagick-${version}.tar.xz"
+      "mirror://imagemagick/ImageMagick-${version}.tar.xz"
     ];
-    sha256 = "0j1h29h813gq1q7k5hrcab53sk1ldz4wwkj4y2nm852gcxngf9yi";
+    sha256 = "0g01q8rygrf977d9rpixg1bhnavqfwzz30qpn7fj17yn8fx6ybys";
   };
 
   nativeBuildInputs = [

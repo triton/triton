@@ -18,12 +18,12 @@ with {
 
 stdenv.mkDerivation rec {
   name = "libass-${version}";
-  version = "0.13.1";
+  version = "0.13.2";
 
   src = fetchurl {
     url = "https://github.com/libass/libass/releases/download/${version}/" +
           "${name}.tar.xz";
-    sha256 = "1rrz6is2blx8jqyydcz71y2f5f948blgx14jzi3an756fqc6p8sa";
+    sha256 = "1kpsw4zw95v4cjvild9wpk73dzavn1khsm3bm32kcz6amnkd166n";
   };
 
   nativeBuildInputs = [
@@ -60,7 +60,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

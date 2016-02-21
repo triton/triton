@@ -1,61 +1,66 @@
 { stdenv
 , fetchurl
 , makeWrapper
+, yasm
+
+, alsaLib
+, bzip2
+#, cairo
+, dbus
+, dbus_glib
+#, ffmpeg
+, file
+, fontconfig
+, freetype
+, glib
+, gst-plugins-base
+, gstreamer
+, gtk2
+, gtk3
+, hunspell
+, icu
+, jemalloc
+, libevent
+, libffi
+, libIDL
+, libjpeg
+, libnotify
+, libpng
+#, libproxy
+, libpulseaudio
+, libstartup_notification
+, libvpx
+, libwebp
+, mesa
+, nspr
+, nss
+, pango
+, perl
+, pixman
+, pysqlite
+, python
+, sqlite
+, unzip
+, xorg
+, zip
+, zlib
 
 , channel ? "stable"
 
-, gtk2
-, gtk3
-, pango
-, perl
-, python
-, zip
-, libIDL
-, libjpeg
-, zlib
-, dbus
-, dbus_glib
-, bzip2
-, xorg
-, freetype
-, fontconfig
-, file
-, alsaLib
-, nspr
-, nss
-, libnotify
-, yasm
-, mesa
-, sqlite
-, unzip
-, pysqlite
-, hunspell
-, libevent
-, libstartup_notification
-, libvpx
-, cairo
-, gstreamer_0
-, gst-plugins-base_0
-, icu
-, libpng
-, jemalloc
-, libpulseaudio
-, libffi
-
 , debugBuild ? false
-, # If you want the resulting program to call itself "Firefox" instead of
-  # "nightly", enable this option.  However, those binaries may not be
-  # distributed without permission from the Mozilla Foundation, see
-  # http://www.mozilla.org/foundation/trademarks/.
-  enableOfficialBranding ? false
+
+# If you want the resulting program to be called "Firefox" instead of
+# "nightly", enable this option.  However, the resulting binaries may
+# not be re-distributed without permission from the Mozilla Foundation,
+# see http://www.mozilla.org/foundation/trademarks/.
+, enableOfficialBranding ? false
 }:
 
 with {
   inherit (stdenv)
-    isi686;
+    isLinux;
   inherit (stdenv.lib)
-    optional
-    optionalString
+    optionals
     versionAtLeast;
   inherit (builtins.getAttr channel (import ./sources.nix))
     version
@@ -71,80 +76,61 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url =
       let
-        ext = if versionAtLeast version "41.0" then "xz" else "bz2";
+        ext =
+          if versionAtLeast version "41.0" then
+            "xz"
+          else
+            "bz2";
       in
-      "http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${version}/source/firefox-${version}.source.tar.${ext}";
+      "https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${version}/"
+    + "source/firefox-${version}.source.tar.${ext}";
     inherit sha512;
   };
 
-  configureFlags = [
-    "--enable-application=browser"
-    "--disable-javaxpcom"
-    "--with-system-jpeg"
-    "--with-system-zlib"
-    "--with-system-bz2"
-    "--with-system-nspr"
-    "--with-system-nss"
-    "--with-system-libevent"
-    "--with-system-libvpx"
-    "--with-system-png" # needs APNG support
-    "--with-system-icu"
-    "--enable-system-ffi"
-    "--enable-system-hunspell"
-    "--enable-system-pixman"
-    "--enable-system-sqlite"
-    #"--enable-system-cairo"
-    "--enable-gstreamer"
-    "--enable-startup-notification"
-    "--enable-content-sandbox"            # available since 26.0, but not much info available
-    "--disable-content-sandbox-reporter"  # keeping disabled for now
-    "--disable-crashreporter"
-    "--disable-tests"
-    "--disable-necko-wifi" # maybe we want to enable this at some point
-    "--disable-installer"
-    "--disable-updater"
-    "--enable-jemalloc"
-    "--disable-gconf"
-    "--enable-default-toolkit=cairo-gtk3"
-  ] ++ (if debugBuild then [
-    "--enable-debug"
-    "--enable-profiling"
-  ] else [
-    "--disable-debug"
-    "--enable-release"
-    "--enable-optimize${optionalString isi686 "=-O1"}"
-    "--enable-strip"
-  ]) ++ optional enableOfficialBranding "--enable-official-branding";
-
-  preConfigure = ''
-    mkdir ../objdir
-    cd ../objdir
-    if [ -e ../${name} ] ; then
-      configureScript=../${name}/configure
-    else
-      configureScript=../mozilla-*/configure
-    fi
-  '';
-
   nativeBuildInputs = [
     makeWrapper
+    yasm
   ];
 
   buildInputs = [
-    gtk2
-    gtk3
-    perl
-    zip
-    libIDL
-    libjpeg
-    zlib
+    alsaLib
     bzip2
-    python
+    #cairo
     dbus
     dbus_glib
-    pango
-    freetype
+    #ffmpeg
+    file
     fontconfig
+    freetype
+    glib
+    gst-plugins-base
+    gstreamer
+    gtk2
+    gtk3
+    hunspell
+    icu
+    jemalloc
+    libevent
+    libffi
+    libIDL
+    libjpeg
+    libnotify
+    libpng
+    #libproxy
+    libpulseaudio
+    libstartup_notification
+    libvpx
+    libwebp
+    mesa
+    nspr
+    nss
+    pango
+    perl
+    pixman
+    pysqlite
+    python
+    sqlite
+    unzip
     xorg.libXi
     xorg.libX11
     xorg.libXrender
@@ -157,55 +143,143 @@ stdenv.mkDerivation rec {
     xorg.xextproto
     xorg.libXcomposite
     xorg.libXdamage
-    file
-    alsaLib
-    nspr
-    nss
-    libnotify
-    yasm
-    mesa
-    pysqlite
-    sqlite
-    unzip
-    hunspell
-    libevent
-    libstartup_notification
-    libvpx
-    /* cairo */
-    gstreamer_0
-    gst-plugins-base_0
-    icu
-    libpng
-    jemalloc
-    libpulseaudio # only headers are needed
-    libffi
+    zip
+    zlib
   ];
 
-  preInstall =
-  /* The following is needed for startup cache creation
-     on grsecurity kernels. */ ''
-    paxmark m ../objdir/dist/bin/xpcshell
+  # Firefox's bastardized autoconf script does not treat all flags
+  # as booleans, so only pass flags used.
+  configureFlags =
+    optionals (!debugBuild) [
+      "--enable-release"
+    ] ++ [
+      "--with-x"
+    ] ++ optionals debugBuild [
+      "--enable-profiling"
+      "--enable-debug"
+      "--enable-debug-symbols"
+    ] ++ [
+      "--enable-pie"
+      "--with-pthreads"
+    ] ++ optionals (nspr != null) [
+      "--with-system-nspr"
+      #"--enable-posix-nspr-emulation"
+    ] ++ optionals (libevent != null) [
+      "--with-system-libevent"
+    ] ++ optionals (nss != null) [
+      "--with-system-nss"
+    ] ++ optionals (!isLinux && libjpeg != null) [
+      # Enable libjpeg for platforms that don't support libjpeg-turbo
+      "--with-system-jpeg"
+    ] ++ optionals (zlib != null) [
+      "--with-system-zlib"
+    ] ++ optionals (bzip2 != null) [
+      "--with-system-bz2"
+    ] ++ optionals (libpng != null) [
+      "--with-system-png"
+    ] ++ optionals (hunspell != null) [
+      "--enable-system-hunspell"
+    ] ++ optionals (libffi != null) [
+      "--enable-system-ffi"
+    ] ++ [
+      # Linking fails with shared js
+      #"--enable-shared-js"
+      #"--with-java-bin-path"
+      "--enable-application=browser"
+    ] ++ optionals enableOfficialBranding [
+      "--enable-official-branding"
+    ] ++ optionals (/*cairo != null &&*/ gtk3 != null) [
+      "--enable-default-toolkit=cairo-gtk3"
+      #"--without-x"
+    ] ++ optionals (libstartup_notification != null) [
+      "--enable-startup-notification"
+    ] ++ [
+      "--disable-gconf"
+      #"--enable-libproxy"
+      #"--enable-gnomeui" # ??? gnome2 ???
+      "--enable-raw"
+      #"--enable-eme"
+    ] ++ optionals (libvpx != null) [
+      "--with-system-libvpx"
+    ] ++ optionals (alsaLib != null) [
+      "--enable-alsa"
+    ] ++ optionals (gstreamer != null && gst-plugins-base != null) [
+      "--enable-gstreamer=1.0"
+    ] ++ [
+      "--disable-crashreporter"
+    ] ++ optionals (isLinux && libjpeg != null)[
+      "--enable-libjpeg-turbo"
+    ] ++ [
+      #"--enable-tree-freetype"
+      #"--enable-maintenance-service"
+      "--disable-updater"
+      "--disable-tests"
+      "--enable-content-sandbox"
+    ] ++ optionals (sqlite != null) [
+      "--enable-system-sqlite"
+    ] ++ [
+      "--enable-safe-browsing"
+      "--enable-url-classifier"
+      "--enable-optimize"
+      "--enable-approximate-location"
+    ] ++ optionals (jemalloc != null) [
+      "--enable-jemalloc"
+    ] ++ [
+      "--enable-strip"
+      #"--enable-b2g-ril"
+      #"--enable-b2g-bt"
+      #"--enable-nfc"
+      #"--enable-synth-pico"
+      #"--enable-b2g-camera"
+      #"--enable-system-cairo"
+      #"--enable-xterm-updates"
+      "--enable-skia"
+    ] /*++ optionals (cairo != null) [
+      # From firefox-40, using system cairo causes firefox to crash
+      # frequently when it is doing background rendering in a tab.
+      "--enable-system-cairo"
+    ]*/ ++ optionals (pixman != null) [
+      "--enable-system-pixman"
+    ] ++ [
+      #"--enable-necko-protocols={http,ftp,default,all,none}"
+      "--disable-necko-wifi"
+    ] ++ optionals (icu != null) [
+      "--with-system-icu"
+    ];
+
+  preConfigure = ''
+    mkdir -v ../objdir
+    cd ../objdir
+    if [ -e ../${name} ] ; then
+      configureScript=../${name}/configure
+    else
+      configureScript=../mozilla-*/configure
+    fi
   '';
+
+  preInstall =
+    /* The following is needed for startup cache creation
+       on grsecurity kernels. */ ''
+      paxmark m ../objdir/dist/bin/xpcshell
+    '';
 
   postInstall =
-  /* For grsecurity kernels */ ''
-    paxmark m $out/lib/${name}/{firefox,firefox-bin,plugin-container}
-  '' +
-  /* Remove SDK cruft. FIXME: move to a separate output? */ ''
-    rm -rf $out/share/idl $out/include $out/lib/firefox-devel-*
-  '' +
-  /* GTK3: argv[0] must point to firefox itself */ ''
-    wrapProgram "$out/bin/firefox" \
-      --argv0 "$out/bin/.firefox-wrapped" \
-      --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH:" \
-      --suffix XDG_DATA_DIRS : "$XDG_ICON_DIRS"
-  '' +
-  /* Basic test */ ''
-    "$out/bin/firefox" --version
-  '';
-
-  disableGnomeWrapper = true;
-  enableParallelBuilding = true;
+    /* For grsecurity kernels */ ''
+      paxmark m $out/lib/${name}/{firefox,firefox-bin,plugin-container}
+    '' +
+    /* Remove SDK cruft. */ ''
+      rm -rvf $out/share/idl $out/include $out/lib/firefox-devel-*
+    '' +
+    /* GTK3: argv[0] must point to firefox itself */ ''
+      wrapProgram "$out/bin/firefox" \
+        --argv0 "$out/bin/.firefox-wrapped" \
+        --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH" \
+        --prefix XDG_DATA_DIRS : "$out/share" \
+        --suffix XDG_DATA_DIRS : "$XDG_ICON_DIRS"
+    '' +
+    /* Basic test */ ''
+      "$out/bin/firefox" --version
+    '';
 
   passthru = {
     inherit
@@ -225,7 +299,6 @@ stdenv.mkDerivation rec {
     ];
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

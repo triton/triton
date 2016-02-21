@@ -1,60 +1,107 @@
-{ stdenv, lib, makeDesktopItem, makeWrapper, config
+{ stdenv
+, makeDesktopItem
+, makeWrapper
+, config
 
 ## various stuff that can be plugged in
-, gnash, flashplayer, hal-flash
-, MPlayerPlugin, gecko_mediaplayer, xorg, libpulseaudio, libcanberra
-, gstreamer_0, gst-plugins-base_0, gst-plugins-good_0, gst-plugins-bad_0
-, gst-plugins-ugly_0, gst-ffmpeg
+, gnash
+, flashplayer
+, hal-flash
+, MPlayerPlugin
+, gecko_mediaplayer
+, xorg
+, libpulseaudio
+, libcanberra
+, ffmpeg
+, gstreamer
+, gst-plugins-base
+, gst-plugins-good
+, gst-libav
 #, jrePlugin
 , icedtea_web
-, trezor-bridge, bluejeans, djview4, adobe-reader
-, google_talk_plugin, fribid, gnome-shell
+, trezor-bridge
+, bluejeans
+, djview4
+, adobe-reader
+, google_talk_plugin
+, fribid
+, gnome-shell
 }:
+
+with {
+  inherit (stdenv.lib)
+    attrByPath
+    concatStringsSep
+    head
+    makeSearchPath
+    optional
+    optionals
+    optionalString
+    splitString
+    substring
+    toUpper;
+};
 
 ## configurability of the wrapper itself
 browser :
-{ browserName ? (lib.head (lib.splitString "-" browser.name))  # name of the executable
+{
+# name of the executable
+browserName ? (head (splitString "-" browser.name))
 , name ? (browserName + "-" + (builtins.parseDrvName browser.name).version)
-, desktopName ? # browserName with first letter capitalized
-  (lib.toUpper (lib.substring 0 1 browserName) + lib.substring 1 (-1) browserName)
+# Formatted name of the browser
+, desktopName ? (toUpper (substring 0 1 browserName) + substring 1 (-1) browserName)
 , nameSuffix ? ""
-, icon ? browserName, libtrick ? true
+, icon ? browserName
+, libtrick ? true
 }:
 
 let
-  cfg = stdenv.lib.attrByPath [ browserName ] {} config;
+  cfg = attrByPath [ browserName ] {} config;
   enableAdobeFlash = cfg.enableAdobeFlash or false;
   enableGnash = cfg.enableGnash or false;
   jre = cfg.jre or false;
   icedtea = cfg.icedtea or false;
-
   plugins =
      assert !(enableGnash && enableAdobeFlash);
      assert !(jre && icedtea);
      ([ ]
-      ++ lib.optional enableGnash gnash
-      ++ lib.optional enableAdobeFlash flashplayer
-      ++ lib.optional (cfg.enableDjvu or false) (djview4)
-      ++ lib.optional (cfg.enableMPlayer or false) (MPlayerPlugin browser)
-      ++ lib.optional (cfg.enableGeckoMediaPlayer or false) gecko_mediaplayer
-      #++ lib.optional (jre && jrePlugin ? mozillaPlugin) jrePlugin
-      ++ lib.optional icedtea icedtea_web
-      ++ lib.optional (cfg.enableGoogleTalkPlugin or false) google_talk_plugin
-      ++ lib.optional (cfg.enableFriBIDPlugin or false) fribid
-      ++ lib.optional (cfg.enableGnomeExtensions or false) gnome-shell
-      ++ lib.optional (cfg.enableTrezor or false) trezor-bridge
-      ++ lib.optional (cfg.enableBluejeans or false) bluejeans
-      ++ lib.optional (cfg.enableAdobeReader or false) adobe-reader
+      ++ optional enableGnash gnash
+      ++ optional enableAdobeFlash flashplayer
+      ++ optional (cfg.enableDjvu or false) (djview4)
+      ++ optional (cfg.enableMPlayer or false) (MPlayerPlugin browser)
+      ++ optional (cfg.enableGeckoMediaPlayer or false) gecko_mediaplayer
+      #++ optional (jre && jrePlugin ? mozillaPlugin) jrePlugin
+      ++ optional icedtea icedtea_web
+      ++ optional (cfg.enableGoogleTalkPlugin or false) google_talk_plugin
+      ++ optional (cfg.enableFriBIDPlugin or false) fribid
+      ++ optional (cfg.enableGnomeExtensions or false) gnome-shell
+      ++ optional (cfg.enableTrezor or false) trezor-bridge
+      ++ optional (cfg.enableBluejeans or false) bluejeans
+      ++ optional (cfg.enableAdobeReader or false) adobe-reader
      );
-  libs = [ gstreamer_0 gst-plugins-base_0 ]
-         ++ lib.optionals (cfg.enableQuakeLive or false)
-         (with xorg; [ stdenv.cc libX11 libXxf86dga libXxf86vm libXext libXt alsaLib zlib ])
-         ++ lib.optional (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) hal-flash
-         ++ lib.optional (config.pulseaudio or false) libpulseaudio;
-  gst-plugins = [ gst-plugins-base_0 gst-plugins-good_0 gst-plugins-bad_0 gst-plugins-ugly_0 gst-ffmpeg ];
-  gtk_modules = [ libcanberra ];
-
+  libs = [
+    ffmpeg
+    gstreamer
+    gst-plugins-base
+  ] ++ optionals (cfg.enableQuakeLive or false) (with xorg; [
+    stdenv.cc
+    libX11
+    libXxf86dga
+    libXxf86vm
+    libXext
+    libXt
+    alsaLib
+    zlib
+  ]) ++ optionals (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) [
+    hal-flash
+  ] ++ optionals (config.pulseaudio or false) [
+    libpulseaudio
+  ];
+  gtk_modules = [
+    libcanberra
+  ];
 in
+
 stdenv.mkDerivation {
   inherit name;
 
@@ -66,7 +113,7 @@ stdenv.mkDerivation {
     desktopName = desktopName;
     genericName = "Web Browser";
     categories = "Application;Network;WebBrowser;";
-    mimeType = stdenv.lib.concatStringsSep ";" [
+    mimeType = concatStringsSep ";" [
       "text/html"
       "text/xml"
       "application/xhtml+xml"
@@ -77,51 +124,60 @@ stdenv.mkDerivation {
     ];
   };
 
-  buildInputs = [makeWrapper] ++ gst-plugins;
+  buildInputs = [
+    makeWrapper
+  ];
+
+  GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [
+    gst-plugins-base
+    gst-plugins-good
+    gst-libav
+    gstreamer
+  ];
 
   buildCommand = ''
-    if [ ! -x "${browser}/bin/${browserName}" ]
-    then
-        echo "cannot find executable file \`${browser}/bin/${browserName}'"
-        exit 1
+    if [ ! -x "${browser}/bin/${browserName}" ] ; then
+      echo "cannot find executable file \`${browser}/bin/${browserName}'"
+      exit 1
     fi
 
     makeWrapper "${browser}/bin/${browserName}" \
-        "$out/bin/${browserName}${nameSuffix}" \
-        --suffix-each MOZ_PLUGIN_PATH ':' "$plugins" \
-        --suffix-each LD_LIBRARY_PATH ':' "$libs" \
-        --suffix-each GTK_PATH ':' "$gtk_modules" \
-        --suffix-each LD_PRELOAD ':' "$(cat $(filterExisting $(addSuffix /extra-ld-preload $plugins)))" \
-        --prefix GST_PLUGIN_SYSTEM_PATH : "$GST_PLUGIN_SYSTEM_PATH" \
-        --prefix-contents PATH ':' "$(filterExisting $(addSuffix /extra-bin-path $plugins))" \
-        --set MOZ_OBJDIR "$(ls -d "${browser}/lib/${browserName}"*)"
+      "$out/bin/${browserName}${nameSuffix}" \
+      --suffix-each MOZ_PLUGIN_PATH ':' "$plugins" \
+      --suffix-each LD_LIBRARY_PATH ':' "$libs" \
+      --suffix-each GTK_PATH ':' "$gtk_modules" \
+      --suffix-each LD_PRELOAD ':' "$(cat $(filterExisting $(addSuffix /extra-ld-preload $plugins)))" \
+      --prefix GST_PLUGIN_PATH : "$GST_PLUGIN_PATH" \
+      --prefix-contents PATH ':' "$(filterExisting $(addSuffix /extra-bin-path $plugins))" \
+      --set MOZ_OBJDIR "$(ls -d "${browser}/lib/${browserName}"*)"
 
-    ${ lib.optionalString libtrick
+    ${optionalString libtrick
     ''
     libdirname="$(echo "${browser}/lib/${browserName}"*)"
     libdirbasename="$(basename "$libdirname")"
-    mkdir -p "$out/lib/$libdirbasename"
-    ln -s "$libdirname"/* "$out/lib/$libdirbasename"
+    mkdir -pv "$out/lib/$libdirbasename"
+    ln -sv "$libdirname"/* "$out/lib/$libdirbasename"
     script_location="$(mktemp "$out/lib/$libdirbasename/${browserName}${nameSuffix}.XXXXXX")"
-    mv "$out/bin/${browserName}${nameSuffix}" "$script_location"
-    ln -s "$script_location" "$out/bin/${browserName}${nameSuffix}"
+    mv -v "$out/bin/${browserName}${nameSuffix}" "$script_location"
+    ln -sv "$script_location" "$out/bin/${browserName}${nameSuffix}"
     ''
     }
 
-    if [ -e "${browser}/share/icons" ]; then
-        mkdir -p "$out/share"
-        ln -s "${browser}/share/icons" "$out/share/icons"
+    if [ -e "${browser}/share/icons" ] ; then
+      mkdir -p "$out/share"
+      ln -sv "${browser}/share/icons" "$out/share/icons"
     else
-        mkdir -p "$out/share/icons/hicolor/128x128/apps"
-        ln -s "$out/lib/$libdirbasename/browser/icons/mozicon128.png" \
-            "$out/share/icons/hicolor/128x128/apps/${browserName}.png"
+      mkdir -pv "$out/share/icons/hicolor/128x128/apps"
+      ln -sv \
+        "$out/lib/$libdirbasename/browser/icons/mozicon128.png" \
+        "$out/share/icons/hicolor/128x128/apps/${browserName}.png"
     fi
 
-    mkdir -p $out/share/applications
-    cp $desktopItem/share/applications/* $out/share/applications
+    mkdir -pv $out/share/applications
+    cp -v $desktopItem/share/applications/* $out/share/applications
 
     # For manpages, in case the program supplies them
-    mkdir -p $out/nix-support
+    mkdir -pv $out/nix-support
     echo ${browser} > $out/nix-support/propagated-user-env-packages
   '';
 

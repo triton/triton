@@ -29,12 +29,12 @@ with {
 stdenv.mkDerivation rec {
   name = "gnome-online-accounts-${version}";
   versionMajor = "3.18";
-  versionMinor = "3";
+  versionMinor = "4";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-online-accounts/${versionMajor}/${name}.tar.xz";
-    sha256 = "09rqdqq0f4p379v1z4fclinghf1sd2kzvgkh3gcgpcgq3a1q7fdz";
+    sha256 = "0kf7g6fs1kpxb7d0fvqi0xg8pj0wg6x9r5ryiwxadn5ilq54c8wz";
   };
 
   nativeBuildInputs = [

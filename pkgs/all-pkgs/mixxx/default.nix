@@ -117,7 +117,7 @@ stdenv.mkDerivation rec {
     "test=0"
     (scFlag "shoutcast" (libshout != null))
     (scFlag "opus" (libopus != null))
-    (scFlag "ffmpeg" (ffmpeg_2_2 != null))
+    (scFlag "ffmpeg" (ffmpeg_2 != null))
     "optimize=portable"
     "autodjcrates=1"
     "macappstore=0"

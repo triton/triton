@@ -18,12 +18,12 @@ with {
 stdenv.mkDerivation rec {
   name = "gssdp-${version}";
   versionMajor = "0.14";
-  versionMinor = "13";
+  versionMinor = "14";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gssdp/${versionMajor}/${name}.tar.xz";
-    sha256 = "1spag64k1s39xxhk3j73xxp6xz11v8h09dygk3b2m8877h77y1a3";
+    sha256 = "1mj8bf3a9fcshx9zr498f623fi0mwm3l196xxam293avbdsihmv8";
   };
 
   nativeBuildInputs = [
@@ -58,7 +58,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+
 , staticSupport ? false
 }:
 
@@ -19,16 +20,16 @@ stdenv.mkDerivation rec {
   };
 
   postPhase =
-  /* Fix include directory */ ''
-    sed -i Makefile \
-      -e 's,$(GSM_INSTALL_ROOT)/inc,$(GSM_INSTALL_ROOT)/include/gsm,'
-  '' + optionalString (!staticSupport)
-  /* Build ELF shared object */ ''
-    sed -i Makefile \
-      -e 's,libgsm.a,libgsm.so,' \
-      -e 's/$(AR) $(ARFLAGS) $(LIBGSM) $(GSM_OBJECTS)/$(LD) -shared -Wl,-soname,libgsm.so -o $(LIBGSM) $(GSM_OBJECTS) -lc/' \
-      -e '/$(RANLIB) $(LIBGSM)/d'
-  '';
+    /* Fix include directory */ ''
+      sed -i Makefile \
+        -e 's,$(GSM_INSTALL_ROOT)/inc,$(GSM_INSTALL_ROOT)/include/gsm,'
+    '' + optionalString (!staticSupport)
+    /* Build ELF shared object */ ''
+      sed -i Makefile \
+        -e 's,libgsm.a,libgsm.so,' \
+        -e 's/$(AR) $(ARFLAGS) $(LIBGSM) $(GSM_OBJECTS)/$(LD) -shared -Wl,-soname,libgsm.so -o $(LIBGSM) $(GSM_OBJECTS) -lc/' \
+        -e '/$(RANLIB) $(LIBGSM)/d'
+    '';
 
   makeFlags = [
     "SHELL=${stdenv.shell}"
@@ -39,8 +40,6 @@ stdenv.mkDerivation rec {
 
   preInstall = "mkdir -pv $out/{bin,lib,man/man1,man/man3,include/gsm}";
 
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     description = "Lossy speech compression codec";
     homepage = http://www.quut.com/gsm/;
@@ -49,7 +48,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

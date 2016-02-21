@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, python3
 , yasm
 
 , glib
@@ -22,42 +23,16 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gstreamer-vaapi-0.7.0";
+  name = "gstreamer-vaapi-1.6.0";
 
   src = fetchurl {
-    url = "http://www.freedesktop.org/software/vaapi/releases/gstreamer-vaapi/"
-        + "${name}.tar.bz2";
-    sha256 = "14jal2g5mf8r59w8420ixl3kg50vcmy56446ncwd0xrizd6yms5b";
+    url = "https://gstreamer.freedesktop.org/src/gstreamer-vaapi/"
+        + "${name}.tar.xz";
+    sha256 = "1ljmafyn0kkil6x5iqvbkrvhinlj9l4zzdq4832cdwgm2b1p8i92";
   };
 
-  postPatch = optionalString (xorg.libX11 != null && mesa != null) ''
-    # Fix broken variable replacement in pkg-config file
-    sed -i pkgconfig/gstreamer-vaapi-glx.pc.in \
-      -e "s,@LIBVA_GLX_PKGNAME@,$out/lib/pkgconfig/gstreamer-vaapi-glx-1.0.pc,"
-  '';
-
-  configureFlags = [
-    "--enable-builtin-videoparsers"
-    "--enable-builtin-codecparsers"
-    (enFlag "builtin-libvpx" (libvpx == null) null)
-    "--enable-encoders"
-    (enFlag "drm" (libdrm != null) null)
-    (enFlag "x11" (xorg.libX11 != null) null)
-    (enFlag "glx" (xorg.libX11 != null && mesa != null) null)
-    (enFlag "wayland" (wayland != null) null)
-    (enFlag "egl" (wayland != null && mesa != null) null)
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-  ];
-
-  preConfigure = ''
-    # Wants to install gst-plugins-vaapi in the gstreamer prefix by default
-    export GST_PLUGIN_PATH_1_0="$out/lib/gstreamer-1.0"
-    mkdir -pv "$GST_PLUGIN_PATH_1_0"
-  '';
-
   nativeBuildInputs = [
+    python3
     yasm
   ];
 
@@ -77,7 +52,24 @@ stdenv.mkDerivation rec {
     xorg.libXrender
   ];
 
-  enableParallelBuilding = true;
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--disable-fatal-warnings"
+    "--disable-debug"
+    "--enable-encoders"
+    (enFlag "drm" (libdrm != null) null)
+    (enFlag "x11" (xorg.libX11 != null) null)
+    (enFlag "glx" (xorg.libX11 != null && mesa != null) null)
+    (enFlag "wayland" (wayland != null) null)
+    (enFlag "egl" (wayland != null && mesa != null) null)
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--enable-gobject-cast-checks"
+    "--enable-glib-asserts"
+  ];
+
+  postInstall = "rm -rvf $out/share/gtk-doc";
 
   meta = with stdenv.lib; {
     description = "GStreamer VA-API hardware accelerated video processing";

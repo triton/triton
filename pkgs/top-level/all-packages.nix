@@ -623,7 +623,8 @@ ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
 ffmpeg_1 = callPackage ../all-pkgs/ffmpeg/1.x.nix { };
 ffmpeg_2_2 = callPackage ../all-pkgs/ffmpeg/2.2.nix { };
 ffmpeg_2 = callPackage ../all-pkgs/ffmpeg/2.x.nix { };
-ffmpeg = ffmpeg_2;
+ffmpeg_3 = callPackage ../all-pkgs/ffmpeg/3.x.nix { };
+ffmpeg = ffmpeg_3;
 ffmpeg-full_HEAD = callPackage ../all-pkgs/ffmpeg-full {
   useHEAD = true;
 };

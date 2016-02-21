@@ -13,17 +13,33 @@
 
 with {
   inherit (stdenv.lib)
+    enFlag
     optionals
-    optionalString;
+    optionalString
+    wtFlag;
 };
 
 stdenv.mkDerivation rec {
-  name = "harfbuzz-1.1.3";
+  name = "harfbuzz-1.2.0";
 
   src = fetchurl {
     url = "http://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2";
-    sha256 = "1xxqshbca83x2ik6rc555xzz0qwyb62aiprgj0p6fclwjyvpqgfr";
+    sha256 = "11d6m8ykadxaf6pw5x24xqyjic434xhwk06splgr659x2l2m7zvr";
   };
+
+  nativeBuildInputs = optionals doCheck [
+    python
+  ];
+
+  buildInputs = [
+    cairo
+    fontconfig
+    freetype
+    glib
+    gobject-introspection
+    graphite2
+    icu
+  ];
 
   postPatch = optionalString doCheck (''
     patchShebangs test/shaping/
@@ -41,30 +57,17 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--enable-introspection"
-    "--with-glib"
-    "--with-gobject"
-    "--with-cairo"
-    "--with-fontconfig"
-    "--with-icu"
-    "--with-graphite2"
-    "--with-freetype"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    (wtFlag "glib" (glib != null) null)
+    (wtFlag "gobject" (gobject-introspection != null) null)
+    (wtFlag "cairo" (cairo != null) null)
+    (wtFlag "fontconfig" (fontconfig != null) null)
+    (wtFlag "icu" (icu != null) null)
+    (wtFlag "graphite2" (graphite2 != null) null)
+    (wtFlag "freetype" (freetype != null) null)
     "--without-uniscribe"
+    "--without-directwrite"
     "--without-coretext"
-  ];
-
-  nativeBuildInputs = optionals doCheck [
-    python
-  ];
-
-  buildInputs = [
-    cairo
-    fontconfig
-    freetype
-    glib
-    gobject-introspection
-    graphite2
-    icu
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";

@@ -4,7 +4,7 @@
 
 , chromaprint
 , faad2
-, ffmpeg_2_2
+, ffmpeg_2
 , fftw
 , flac
 , libid3tag
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     chromaprint
     faad2
-    ffmpeg_2_2
+    ffmpeg_2
     fftw
     flac
     libid3tag
@@ -147,7 +147,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

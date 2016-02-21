@@ -1293,6 +1293,8 @@ vala = callPackage ../all-pkgs/vala { };
 
 vino = callPackage ../all-pkgs/vino { };
 
+vlc = callPackage ../all-pkgs/vlc { };
+
 vte_290 = callPackage ../all-pkgs/vte/2.90.nix { };
 vte = callPackage ../all-pkgs/vte { };
 
@@ -7774,11 +7776,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    signon = callPackage ../development/libraries/signon { };
 #
 #    telepathy = callPackage ../development/libraries/telepathy/qt { };
-#
-    vlc = callPackage ../applications/video/vlc {
-      qt4 = null;
-      withQt5 = true;
-    };
 
   };
 #
@@ -12215,10 +12212,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  };
 #
 #  vkeybd = callPackage ../applications/audio/vkeybd {};
-#
-  vlc = callPackage ../applications/video/vlc { };
-
-  vlc_qt5 = qt5.vlc;
 #
 #  vmpk = callPackage ../applications/audio/vmpk { };
 #

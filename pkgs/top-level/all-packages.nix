@@ -557,6 +557,8 @@ boost155 = callPackage ../all-pkgs/boost/1.55.nix { };
 boost160 = callPackage ../all-pkgs/boost/1.60.nix { };
 boost = boost160;
 
+bs1770gain = callPackage ../all-pkgs/bs1770gain { };
+
 btrfs-progs = callPackage ../all-pkgs/btrfs-progs { };
 
 cairo = callPackage ../all-pkgs/cairo { };
@@ -10330,8 +10332,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  brackets = callPackage ../applications/editors/brackets { };
 #
 #  bristol = callPackage ../applications/audio/bristol { };
-#
-  bs1770gain = callPackage ../applications/audio/bs1770gain { };
 #
 #  bvi = callPackage ../applications/editors/bvi { };
 #

@@ -4,7 +4,7 @@
 
 , chromaprint
 , faad2
-, ffmpeg
+, ffmpeg_2_2
 , fftw
 , flac
 , libid3tag
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     chromaprint
     faad2
-    ffmpeg
+    ffmpeg_2_2
     fftw
     flac
     libid3tag
@@ -117,7 +117,7 @@ stdenv.mkDerivation rec {
     "test=0"
     (scFlag "shoutcast" (libshout != null))
     (scFlag "opus" (libopus != null))
-    (scFlag "ffmpeg" (ffmpeg != null))
+    (scFlag "ffmpeg" (ffmpeg_2_2 != null))
     "optimize=portable"
     "autodjcrates=1"
     "macappstore=0"

@@ -92,14 +92,6 @@ stdenv.mkDerivation rec {
     "-DVALA_EXECUTABLE=${vala}/bin/valac"
   ];
 
-  GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [
-    gst-plugins-base
-    gst-plugins-good
-    gst-plugins-bad
-    gst-plugins-ugly
-    gstreamer
-  ];
-
   preFixup = ''
     wrapProgram $out/bin/noise \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \

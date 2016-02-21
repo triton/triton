@@ -31,8 +31,10 @@
 with {
   inherit (stdenv.lib)
     attrByPath
+    concatStrings
     concatStringsSep
     head
+    intersperse
     makeSearchPath
     optional
     optionals
@@ -195,7 +197,7 @@ stdenv.mkDerivation {
     description =
       browser.meta.description
       + " (with plugins: "
-      + lib.concatStrings (lib.intersperse ", " (map (x: x.name) plugins))
+      + concatStrings (intersperse ", " (map (x: x.name) plugins))
       + ")";
     hydraPlatforms = [];
     priority = (browser.meta.priority or 0) - 1; # prefer wrapper over the package

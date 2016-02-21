@@ -35,7 +35,6 @@ with {
     concatStringsSep
     head
     intersperse
-    makeSearchPath
     optional
     optionals
     optionalString
@@ -126,11 +125,11 @@ stdenv.mkDerivation {
     ];
   };
 
-  buildInputs = [
+  nativeBuildInputs = [
     makeWrapper
   ];
 
-  GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [
+  buildInputs = [
     gst-plugins-base
     gst-plugins-good
     gst-libav

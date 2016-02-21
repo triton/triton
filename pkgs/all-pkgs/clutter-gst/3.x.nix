@@ -22,12 +22,12 @@ with {
 stdenv.mkDerivation rec {
   name = "clutter-gst-${version}";
   versionMajor = "3.0";
-  versionMinor = "14";
+  versionMinor = "16";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/clutter-gst/${versionMajor}/${name}.tar.xz";
-    sha256 = "1qidm0q28q6w8gjd0gpqnk8fzqxv39dcp0vlzzawlncp8zfagj7p";
+    sha256 = "1w7rm8n4b6vskrg537rfa58ykpwj8w3cdl0zwa0hagp6cmr8ngl0";
   };
 
   buildInputs = [

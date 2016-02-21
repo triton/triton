@@ -567,6 +567,8 @@ caribou = callPackage ../all-pkgs/caribou { };
 
 cdparanoia = callPackage ../all-pkgs/cdparanoia { };
 
+chromaprint = callPackage ../all-pkgs/chromaprint { };
+
 chromium = callPackage ../all-pkgs/chromium {
   channel = "stable";
 };
@@ -6150,8 +6152,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  chipmunk = callPackage ../development/libraries/chipmunk {};
 #
 #  chmlib = callPackage ../development/libraries/chmlib { };
-#
-  chromaprint = callPackage ../development/libraries/chromaprint { };
 #
 #  cilaterm = callPackage ../development/libraries/cil-aterm {
 #    stdenv = overrideInStdenv stdenv [gnumake380];

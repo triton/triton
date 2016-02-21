@@ -161,51 +161,37 @@ stdenv.mkDerivation rec {
     ] ++ [
       "--enable-pie"
       "--with-pthreads"
-    ] ++ optionals (nspr != null) [
       "--with-system-nspr"
       #"--enable-posix-nspr-emulation"
-    ] ++ optionals (libevent != null) [
       "--with-system-libevent"
-    ] ++ optionals (nss != null) [
       "--with-system-nss"
     ] ++ optionals (!isLinux && libjpeg != null) [
       # Enable libjpeg for platforms that don't support libjpeg-turbo
       "--with-system-jpeg"
-    ] ++ optionals (zlib != null) [
-      "--with-system-zlib"
-    ] ++ optionals (bzip2 != null) [
-      "--with-system-bz2"
-    ] ++ optionals (libpng != null) [
-      "--with-system-png"
-    ] ++ optionals (hunspell != null) [
-      "--enable-system-hunspell"
-    ] ++ optionals (libffi != null) [
-      "--enable-system-ffi"
     ] ++ [
+      "--with-system-zlib"
+      "--with-system-bz2"
+      "--with-system-png"
+      "--enable-system-hunspell"
+      "--enable-system-ffi"
       # Linking fails with shared js
       #"--enable-shared-js"
       #"--with-java-bin-path"
       "--enable-application=browser"
     ] ++ optionals enableOfficialBranding [
       "--enable-official-branding"
-    ] ++ optionals (/*cairo != null &&*/ gtk3 != null) [
+    ] ++ [
       "--enable-default-toolkit=cairo-gtk3"
       #"--without-x"
-    ] ++ optionals (libstartup_notification != null) [
       "--enable-startup-notification"
-    ] ++ [
       "--disable-gconf"
       #"--enable-libproxy"
       #"--enable-gnomeui" # ??? gnome2 ???
       "--enable-raw"
       #"--enable-eme"
-    ] ++ optionals (libvpx != null) [
       "--with-system-libvpx"
-    ] ++ optionals (alsaLib != null) [
       "--enable-alsa"
-    ] ++ optionals (gstreamer != null && gst-plugins-base != null) [
       "--enable-gstreamer=1.0"
-    ] ++ [
       "--disable-crashreporter"
     ] ++ optionals (isLinux && libjpeg != null)[
       "--enable-libjpeg-turbo"
@@ -215,16 +201,12 @@ stdenv.mkDerivation rec {
       "--disable-updater"
       "--disable-tests"
       "--enable-content-sandbox"
-    ] ++ optionals (sqlite != null) [
       "--enable-system-sqlite"
-    ] ++ [
       "--enable-safe-browsing"
       "--enable-url-classifier"
       "--enable-optimize"
       "--enable-approximate-location"
-    ] ++ optionals (jemalloc != null) [
       "--enable-jemalloc"
-    ] ++ [
       "--enable-strip"
       #"--enable-b2g-ril"
       #"--enable-b2g-bt"
@@ -238,12 +220,10 @@ stdenv.mkDerivation rec {
       # From firefox-40, using system cairo causes firefox to crash
       # frequently when it is doing background rendering in a tab.
       "--enable-system-cairo"
-    ]*/ ++ optionals (pixman != null) [
+    ]*/ ++ [
       "--enable-system-pixman"
-    ] ++ [
       #"--enable-necko-protocols={http,ftp,default,all,none}"
       "--disable-necko-wifi"
-    ] ++ optionals (icu != null) [
       "--with-system-icu"
     ];
 

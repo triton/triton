@@ -20,7 +20,8 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     sed -i "$out/bin/gettext.sh" \
-      -e "s,^  \([n]\?gettext \),  $out/bin/\1,"
+      -e "/^  .\?gettext/ s,envsubst,$out/bin/\0,g" \
+      -e "/^  .\?gettext/ s,^  ,\0$out/bin/,"
   '';
 
   meta = {

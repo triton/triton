@@ -1009,6 +1009,8 @@ mpd = callPackage ../all-pkgs/mpd { };
 
 mpdris2 = callPackage ../all-pkgs/mpdris2 { };
 
+mpfr = callPackage ../all-pkgs/mpfr { };
+
 mpv = callPackage ../all-pkgs/mpv { };
 
 inherit (callPackages ../all-pkgs/mumble {
@@ -6369,9 +6371,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   gmime = callPackage ../development/libraries/gmime { };
 #
 #  gmm = callPackage ../development/libraries/gmm { };
-#
-#  #GMP ex-satellite, so better keep it near gmp
-  mpfr = callPackage ../development/libraries/mpfr/default.nix { };
 #
 #  goocanvas = callPackage ../development/libraries/goocanvas { };
 #

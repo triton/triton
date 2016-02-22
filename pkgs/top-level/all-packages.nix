@@ -1091,6 +1091,8 @@ pangomm = callPackage ../all-pkgs/pangomm { };
 
 pangox-compat = callPackage ../all-pkgs/pangox-compat { };
 
+patchelf = callPackage ../development/tools/misc/patchelf { };
+
 pavucontrol = callPackage ../all-pkgs/pavucontrol { };
 
 pcre = callPackage ../all-pkgs/pcre { };
@@ -5792,8 +5794,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  oprofile = callPackage ../development/tools/profiling/oprofile { };
 #
 #  parse-cli-bin = callPackage ../development/tools/parse-cli-bin { };
-#
-  patchelf = callPackage ../development/tools/misc/patchelf { };
 #
 #  peg = callPackage ../development/tools/parsing/peg { };
 #

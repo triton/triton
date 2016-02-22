@@ -919,6 +919,8 @@ libmediaart = callPackage ../all-pkgs/libmediaart {
   qt5 = null;
 };
 
+libmpc = callPackage ../all-pkgs/libmpc { };
+
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
 libomxil-bellagio = callPackage ../all-pkgs/libomxil-bellagio { };
@@ -7354,8 +7356,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  msilbc = callPackage ../development/libraries/msilbc { };
 #
   mp4v2 = callPackage ../development/libraries/mp4v2 { };
-
-  libmpc = callPackage ../development/libraries/libmpc { };
 #
 #  mpich2 = callPackage ../development/libraries/mpich2 { };
 #

@@ -1339,6 +1339,8 @@ zenity = callPackage ../all-pkgs/zenity { };
 
 zip = callPackage ../all-pkgs/zip { };
 
+zlib = callPackage ../all-pkgs/zlib { };
+
 zsh = callPackage ../all-pkgs/zsh { };
 
 zstd = callPackage ../all-pkgs/zstd { };
@@ -8126,8 +8128,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  yubikey-personalization-gui = callPackage ../tools/misc/yubikey-personalization-gui {
 #    qt = qt4;
 #  };
-#
-  zlib = callPackage ../development/libraries/zlib { };
 #
 #  zlog = callPackage ../development/libraries/zlog { };
 #

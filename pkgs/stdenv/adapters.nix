@@ -45,8 +45,11 @@ rec {
   makeStaticLibraries = stdenv: stdenv // {
     mkDerivation = args: stdenv.mkDerivation (args // {
       dontDisableStatic = true;
-      configureFlags = toString args.configureFlags or ""
-        + " --enable-static --disable-shared";
+      configureFlags = args.configureFlags or [ ]
+        ++ [
+          "--enable-static"
+          "--disable-shared"
+        ];
     });
   };
 

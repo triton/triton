@@ -13,9 +13,9 @@
     sha256bin64 = "0wj6j0v3rngsclzbb8rc8l90wdi98j2sb60r2ypfihaxq2gd138y";
   };
   stable = {
-    version = "48.0.2564.109";
-    sha256 = "2eb1e5b6dda718a5e501ba26f47015c1629adeb9f2bf2877bd9d8bf346abeb03";
-    sha256bin32 = "11rhxi96cal6qh5by09x7xfqwzdd2lzb25vna5zw0s6lf8lnbn74";
-    sha256bin64 = "19hsyn3mn2jwlka7jmwd12wp3rkmayykmkvrr53vgidgk9mx4gxs";
+    version = "48.0.2564.116";
+    sha256 = "6a1eb9b4c853f15eeec0a55af7ac3b41835f0fc592ba6c0a500873cb12a84d0f";
+    sha256bin32 = "157m88nafb8svpkv11rzpcfvak6486wx43rmbssg52x2k0vas0bl";
+    sha256bin64 = "036pcma8qczja803h9r1nlm0ypm4zblmy6q7pkwlgmn3r4r3n7i0";
   };
 }

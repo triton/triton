@@ -1,21 +1,19 @@
 { stdenv
 , bison
 , fetchurl
+, gettext
 , texinfo
 
+, ncurses
 , readline
 }:
 
 let
-  version = "4.3";
-  realName = "bash-${version}";
-  shortName = "bash43";
-  baseConfigureFlags = "--with-installed-readline";
-  sha256 = "1m14s1f61mf6bijfibcjm9y6pkyvz6gibyl8p4hxq90fisi8gimg";
+  patchSha256s = import ./patches.nix;
 in
-
+with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "${realName}-p${toString (builtins.length patches)}";
+  name = "bash-${version}-p${toString (length (attrNames patchSha256s))}";
 
   src = fetchurl {
     url = "mirror://gnu/bash/${realName}.tar.gz";
@@ -25,47 +23,42 @@ stdenv.mkDerivation rec {
   # Note: Bison is needed because the patches above modify parse.y.
   nativeBuildInputs = [
     bison
+    gettext
     texinfo
   ];
 
   buildInputs = [
+    ncurses
     readline
   ];
 
-  patchFlags = "-p0";
+  NIX_CFLAGS_COMPILE = [
+    "-DSYS_BASHRC=/etc/bashrc"
+    "-DSYS_BASH_LOGOUT=/etc/bash_logout"
+    "-DDEFAULT_PATH_VALUE=/no-such-path"
+    "-DSTANDARD_UTILS_PATH=/no-such-path"
+    "-DNON_INTERACTIVE_LOGIN_SHELLS
+    "-DSSH_SOURCE_BASHRC
+  ];
 
-  patches =
-    let
-      patch = nr: sha256:
-        fetchurl {
-          url = "mirror://gnu/bash/${realName}-patches/${shortName}-${nr}";
-          inherit sha256;
-        };
-    in
-    import ./bash-4.3-patches.nix patch;
+  patchFlags = [
+    "-p0"
+  ];
 
-  NIX_CFLAGS_COMPILE = ''
-    -DSYS_BASHRC="/etc/bashrc"
-    -DSYS_BASH_LOGOUT="/etc/bash_logout"
-    -DDEFAULT_PATH_VALUE="/no-such-path"
-    -DSTANDARD_UTILS_PATH="/no-such-path"
-    -DNON_INTERACTIVE_LOGIN_SHELLS
-    -DSSH_SOURCE_BASHRC
+  patches = flip mapAttrsToList patchSha256s (name: sha256: fetchurl {
+    inherit name sha256;
+    url = "mirror://gnu/bash/bash-${version}-patches/${name}";
+  });
+
+  configureFlags = [
+    "--with-installed-readline=${readline}"
+  ];
+
+  postInstall = ''
+    ln -s bash "$out/bin/sh"
   '';
 
-  configureFlags = baseConfigureFlags;
-
-  postInstall =
-    /* Add an `sh' -> `bash' symlink. */ ''
-      ln -s bash "$out/bin/sh"
-    '';
-
   outputs = [ "out" "doc" ];
-
-  crossAttrs = {
-    configureFlags = baseConfigureFlags +
-      " bash_cv_job_control_missing=nomissing bash_cv_sys_named_pipes=nomissing";
-  };
 
   passthru = {
     shellPath = "/bin/bash";
@@ -75,7 +68,11 @@ stdenv.mkDerivation rec {
     description = "The standard GNU Bourne again shell";
     homepage = http://www.gnu.org/software/bash/;
     license = licenses.gpl3Plus;
-    maintainers = with maintainers; [ ];
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

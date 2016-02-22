@@ -1,4 +1,6 @@
-{ stdenv, fetchurl }:
+{ stdenv
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
   name = "c-ares-1.10.0";
@@ -12,6 +14,11 @@ stdenv.mkDerivation rec {
     description = "A C library for asynchronous DNS requests";
     homepage = http://c-ares.haxx.se;
     license = licenses.mit;
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

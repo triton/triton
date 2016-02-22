@@ -525,6 +525,8 @@ btrfs-progs = callPackage ../all-pkgs/btrfs-progs { };
 
 bzip2 = callPackage ../all-pkgs/bzip2 { };
 
+c-ares = callPackage ../all-pkgs/c-ares { };
+
 cairo = callPackage ../all-pkgs/cairo { };
 
 cairomm = callPackage ../all-pkgs/cairomm { };
@@ -6056,8 +6058,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  buddy = callPackage ../development/libraries/buddy { };
 #
 #  bwidget = callPackage ../development/libraries/bwidget { };
-#
-  c-ares = callPackage ../development/libraries/c-ares { };
 #
 #  capnproto = callPackage ../development/libraries/capnproto { };
 #

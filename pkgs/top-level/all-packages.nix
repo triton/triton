@@ -858,6 +858,9 @@ inkscape = callPackage ../all-pkgs/inkscape { };
 
 iputils = callPackage ../all-pkgs/iputils { };
 
+isl = callPackage ../all-pkgs/isl { };
+isl_0_14 = callPackage ../all-pkgs/isl { channel = "0.14"; };
+
 json-glib = callPackage ../all-pkgs/json-glib { };
 
 kea = callPackage ../all-pkgs/kea { };
@@ -2787,12 +2790,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ipxe = callPackage ../tools/misc/ipxe { };
 #
 #  ised = callPackage ../tools/misc/ised {};
-#
-  isl = isl_0_15;
-  isl_0_11 = callPackage ../development/libraries/isl/0.11.1.nix { };
-  isl_0_12 = callPackage ../development/libraries/isl/0.12.2.nix { };
-  isl_0_14 = callPackage ../development/libraries/isl/0.14.1.nix { };
-  isl_0_15 = callPackage ../development/libraries/isl/0.15.0.nix { };
 #
 #  isync = callPackage ../tools/networking/isync { };
 #  isyncUnstable = callPackage ../tools/networking/isync/unstable.nix { };

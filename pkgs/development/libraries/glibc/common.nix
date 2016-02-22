@@ -15,7 +15,7 @@
 
 let
 
-  version = "2.21";
+  version = "2.23";
 
   nscdPatch = fetchTritonPatch {
     rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
@@ -72,34 +72,6 @@ stdenv.mkDerivation ({
       file = "glibc/fix_path_attribute_in_getconf.patch";
       sha256 = "d7176285b786c701bd963d97047d845aaf05fdc1e400de3a0526e0cd8ab68047";
     })
-
-    (fetchTritonPatch {
-      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
-      file = "glibc/cve-2014-8121.patch";
-      sha256 = "5d103ecc74c6bd30cf5314890bbb4efcfd55894a9a27230a763ba896e60dc596";
-    })
-    (fetchTritonPatch {
-      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
-      file = "glibc/cve-2015-1781.patch";
-      sha256 = "cc9cf79a31c2ccec66bfa3d8c960b33d4a14f482c743aa12cfa8e3e1b93e044b";
-    })
-    (fetchTritonPatch {
-      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
-      file = "glibc/security-4a28f4d5.patch";
-      sha256 = "a761ac60a7be72693044ae2584e2cfddaeb63c6b2b82192312b0391da3beff80";
-    })
-    (fetchTritonPatch {
-      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
-      file = "glibc/security-bdf1ff05.patch";
-      sha256 = "22f15a0fe09add647ef16f0350c42e8a92ec8dd0b802387da78a7cacb8d57c92";
-    })
-
-    (fetchTritonPatch {
-      rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";
-      file = "glibc/glibc-locale-incompatibility.patch";
-      sha256 = "0a313362bbb49cbbf4ab8d44d7108aad12da4856c790659f74a50253ef49d38e";
-    })
-    ./cve-2015-7547.patch
   ];
 
   postPatch =
@@ -172,8 +144,8 @@ stdenv.mkDerivation ({
   name = name + "-${version}";
 
   src = fetchurl {
-    url = "mirror://gnu/glibc/glibc-${version}.tar.gz";
-    sha256 = "0f4prv4c0fcpi85wv4028wqxn075197gwxhgf0vp571fiw2pi3wd";
+    url = "mirror://gnu/glibc/glibc-${version}.tar.xz";
+    sha256 = "1s8krs3y2n6pzav7ic59dz41alqalphv7vww4138ag30wh0fpvwl";
   };
 
   # Glibc cannot have itself in its RPATH.

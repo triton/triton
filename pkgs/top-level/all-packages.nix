@@ -573,6 +573,8 @@ dos2unix = callPackage ../all-pkgs/dos2unix { };
 
 dropbox = qt5.callPackage ../all-pkgs/dropbox { };
 
+elfutils = callPackage ../all-pkgs/elfutils { };
+
 eog = callPackage ../all-pkgs/eog { };
 
 evince = callPackage ../all-pkgs/evince { };
@@ -875,6 +877,8 @@ libclc = callPackage ../all-pkgs/libclc { };
 libcroco = callPackage ../all-pkgs/libcroco { };
 
 libdrm = callPackage ../all-pkgs/libdrm { };
+
+libelf = callPackageAlias "elfutils" { };
 
 libev = callPackage ../all-pkgs/libev { };
 
@@ -5644,8 +5648,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  egypt = callPackage ../development/tools/analysis/egypt { };
 #
-  elfutils = callPackage ../development/tools/misc/elfutils { };
-#
 #  emma = callPackage ../development/tools/analysis/emma { };
 #
 #  epm = callPackage ../development/tools/misc/epm { };
@@ -6761,8 +6763,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libebur128 = callPackage ../development/libraries/libebur128 { };
 #
   libedit = callPackage ../development/libraries/libedit { };
-
-  libelf = elfutils;
 #
 #  libetpan = callPackage ../development/libraries/libetpan { };
 #

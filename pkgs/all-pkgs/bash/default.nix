@@ -14,10 +14,11 @@ in
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "bash-${version}-p${toString (length (attrNames patchSha256s))}";
+  version = "4.3";
 
   src = fetchurl {
-    url = "mirror://gnu/bash/${realName}.tar.gz";
-    inherit sha256;
+    url = "mirror://gnu/bash/bash-${version}.tar.gz";
+    sha256 = "1m14s1f61mf6bijfibcjm9y6pkyvz6gibyl8p4hxq90fisi8gimg";
   };
 
   # Note: Bison is needed because the patches above modify parse.y.
@@ -37,8 +38,8 @@ stdenv.mkDerivation rec {
     "-DSYS_BASH_LOGOUT=/etc/bash_logout"
     "-DDEFAULT_PATH_VALUE=/no-such-path"
     "-DSTANDARD_UTILS_PATH=/no-such-path"
-    "-DNON_INTERACTIVE_LOGIN_SHELLS
-    "-DSSH_SOURCE_BASHRC
+    "-DNON_INTERACTIVE_LOGIN_SHELLS"
+    "-DSSH_SOURCE_BASHRC"
   ];
 
   patchFlags = [

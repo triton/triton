@@ -83,6 +83,7 @@ done
 concurrent "${ARGS[@]}"
 
 sed -i "s,sha256 = \".*\";,sha256 = \"$(awk '{print $2}' tarball)\";,g" $NIX_DIR/default.nix
+sed -i "s,version = \".*\";,version = \"$VERSION\";,g" $NIX_DIR/default.nix
 sort -V patches | awk '
 BEGIN {
   print "{";

@@ -10,10 +10,10 @@
     gawk
     gnugrep
     gnumake
+    gnupatch
     gnused
     gnutar
     gzip
-    patch
     pkgconfig
     xz;
 }

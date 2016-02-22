@@ -708,6 +708,8 @@ gnugrep = callPackage ../all-pkgs/gnugrep { };
 
 gnum4 = callPackage ../all-pkgs/gnum4 { };
 
+gnupatch = callPackage ../all-pkgs/gnupatch { };
+
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = gobject-introspection; # Deprecated alias
 
@@ -2506,8 +2508,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   gnulib = callPackage ../development/tools/gnulib { };
 
-  gnupatch = callPackage ../tools/text/gnupatch { };
-
   gnupg1orig = callPackage ../tools/security/gnupg/1.nix { };
 
   gnupg1compat = callPackage ../tools/security/gnupg/1compat.nix { };
@@ -3439,8 +3439,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    else null;
 #
 #  ipsecTools = callPackage ../os-specific/linux/ipsec-tools { };
-#
-  patch = gnupatch;
 #
 #  pbzip2 = callPackage ../tools/compression/pbzip2 { };
 #

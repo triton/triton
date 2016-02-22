@@ -1,7 +1,6 @@
 { stdenv
 , fetchurl
 , m4
-, withStatic ? true
 }:
 
 stdenv.mkDerivation rec {
@@ -24,7 +23,6 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = true;
-  dontDisableStatic = withStatic;
 
   meta = with stdenv.lib; {
     homepage = "http://gmplib.org/";

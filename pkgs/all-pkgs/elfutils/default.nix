@@ -5,11 +5,11 @@
 , bzip2
 , xz
 , zlib
-
-, static ? false
-, shared ? true
 }:
 
+let
+  inherit (stdenv.lib) optionals optionalString;
+in
 stdenv.mkDerivation rec {
   name = "elfutils-${version}";
   version = "0.165";
@@ -34,13 +34,8 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-deterministic-archives"
+    "--enable-sanitize-undefined"
   ];
-
-  preFixup = stdenv.lib.optionalString (!shared) ''
-    rm $out/lib/*.so*
-  '' + stdenv.lib.optionalString (!static) ''
-    rm $out/lib/*.a*
-  '';
 
   meta = with stdenv.lib; {
     homepage = https://fedorahosted.org/elfutils/;

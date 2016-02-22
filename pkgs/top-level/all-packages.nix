@@ -893,7 +893,7 @@ libcroco = callPackage ../all-pkgs/libcroco { };
 
 libdrm = callPackage ../all-pkgs/libdrm { };
 
-libelf = callPackageAlias "elfutils" { };
+libelf = callPackage ../all-pkgs/libelf { };
 
 libev = callPackage ../all-pkgs/libev { };
 

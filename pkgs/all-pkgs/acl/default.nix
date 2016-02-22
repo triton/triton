@@ -1,8 +1,8 @@
 { stdenv
 , fetchurl
+, gettext
 
 , attr
-, gettext
 }:
 
 stdenv.mkDerivation rec {
@@ -51,7 +51,9 @@ stdenv.mkDerivation rec {
     description = "Library and tools for manipulating access control lists";
     homepage = http://savannah.nongnu.org/projects/acl;
     license = licenses.lgpl21;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       i686-linux
       ++ x86_64-linux;

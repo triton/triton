@@ -559,6 +559,11 @@ colord = callPackage ../all-pkgs/colord { };
 
 coreutils = callPackage ../all-pkgs/coreutils { };
 
+cryptodevHeaders = callPackage ../all-pkgs/cryptodev {
+  onlyHeaders = true;
+  kernel = null;
+};
+
 cryptopp = callPackage ../all-pkgs/crypto++ { };
 
 dash = callPackage ../all-pkgs/dash { };
@@ -7474,22 +7479,10 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  wolfssl = callPackage ../development/libraries/wolfssl { };
 #
-  cryptodevHeaders = linuxPackages.cryptodev.override {
-    onlyHeaders = true;
-    kernel = null;
-  };
-
   openssl = openssl_1_0_2;
 
   inherit (callPackages ../development/libraries/openssl { })
     openssl_1_0_2;
-
-#  openssl-chacha = callPackage ../development/libraries/openssl/chacha.nix {
-#    cryptodevHeaders = linuxPackages.cryptodev.override {
-#      fetchurl = fetchurlBoot;
-#      onlyHeaders = true;
-#    };
-#  };
 #
 #  opensubdiv = callPackage ../development/libraries/opensubdiv { };
 #
@@ -9230,7 +9223,10 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #    blcr = callPackage ../os-specific/linux/blcr { };
 #
-    cryptodev = callPackage ../os-specific/linux/cryptodev { };
+    cryptodev = cryptodevHeaders.override {
+      onlyHeaders = false;
+      inherit kernel;
+    };
 
     cpupower = callPackage ../os-specific/linux/cpupower { };
 

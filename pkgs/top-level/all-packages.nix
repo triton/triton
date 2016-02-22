@@ -555,6 +555,8 @@ cogl = callPackage ../all-pkgs/cogl { };
 
 colord = callPackage ../all-pkgs/colord { };
 
+coreutils = callPackage ../tools/misc/coreutils { };
+
 cryptopp = callPackage ../all-pkgs/crypto++ { };
 
 dash = callPackage ../all-pkgs/dash { };
@@ -2042,10 +2044,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  convmv = callPackage ../tools/misc/convmv { };
 #
 #  cool-retro-term = qt5.callPackage ../applications/misc/cool-retro-term { };
-#
-  coreutils = callPackage ../tools/misc/coreutils { };
-
-  coreutils-prefixed = coreutils.override { withPrefix = true; };
 #
 #  corkscrew = callPackage ../tools/networking/corkscrew { };
 #
@@ -9385,9 +9383,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  keyutils = callPackage ../os-specific/linux/keyutils { };
 #
-#  libselinux = callPackage ../os-specific/linux/libselinux { };
+  libselinux = callPackage ../os-specific/linux/libselinux { };
 #
-#  libsemanage = callPackage ../os-specific/linux/libsemanage { };
+  libsemanage = callPackage ../os-specific/linux/libsemanage { };
 #
 #  libraw = callPackage ../development/libraries/libraw { };
 #
@@ -9397,7 +9395,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libsexy = callPackage ../development/libraries/libsexy { };
 #
-#  libsepol = callPackage ../os-specific/linux/libsepol { };
+  libsepol = callPackage ../os-specific/linux/libsepol { };
 #
 #  libsmbios = callPackage ../os-specific/linux/libsmbios { };
 #

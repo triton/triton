@@ -255,7 +255,8 @@ let
           doCheck = false;
         };
         inherit (pkgs) perl522 perl bison autoconf automake flex perlPackages
-          libtool buildPerlPackage help2man makeWrapper autoreconfHook;
+          libtool buildPerlPackage help2man makeWrapper autoreconfHook nghttp2;
+        jansson = null;
       };
     });
   };

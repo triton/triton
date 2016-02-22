@@ -942,6 +942,10 @@ libmpc = callPackage ../all-pkgs/libmpc { };
 
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
+libnghttp2 = callPackageAlias "nghttp2" {
+  prefix = "lib";
+};
+
 libomxil-bellagio = callPackage ../all-pkgs/libomxil-bellagio { };
 
 libosinfo = callPackage ../all-pkgs/libosinfo { };
@@ -1074,6 +1078,8 @@ networkmanager-vpnc = callPackage ../all-pkgs/networkmanager-vpnc { };
 networkmanager-openconnect = callPackage ../all-pkgs/networkmanager-openconnect { };
 
 networkmanager-applet = newScope gnome ../all-pkgs/networkmanager-applet { };
+
+nghttp2 = callPackage ../all-pkgs/nghttp2 { };
 
 ninja = callPackage ../all-pkgs/ninja { };
 
@@ -7372,10 +7378,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   newt = callPackage ../development/libraries/newt { };
 
-  nghttp2 = callPackage ../development/libraries/nghttp2 { };
-  libnghttp2 = nghttp2.override {
-    prefix = "lib";
-  };
 #
 #  nix-plugins = callPackage ../development/libraries/nix-plugins {
 #    nix = pkgs.nixUnstable;

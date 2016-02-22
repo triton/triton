@@ -650,6 +650,8 @@ glibmm = callPackage ../all-pkgs/glibmm { };
 glib-networking = callPackage ../all-pkgs/glib-networking { };
 glib_networking = glib-networking; # Deprecated alias
 
+gmp = callPackage ../all-pkgs/gmp { };
+
 gnome-backgrounds = callPackage ../all-pkgs/gnome-backgrounds { };
 
 gnome-bluetooth = callPackage ../all-pkgs/gnome-bluetooth { };
@@ -6370,11 +6372,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gmm = callPackage ../development/libraries/gmm { };
 #
-  gmp4 = callPackage ../development/libraries/gmp/4.3.2.nix { }; # required by older GHC versions
-  gmp6 = callPackage ../development/libraries/gmp/6.x.nix { };
-  gmp = gmp6;
-  gmpxx = appendToName "with-cxx" (gmp.override { cxx = true; });
-
 #  #GMP ex-satellite, so better keep it near gmp
   mpfr = callPackage ../development/libraries/mpfr/default.nix { };
 #

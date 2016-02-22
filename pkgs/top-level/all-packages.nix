@@ -712,6 +712,8 @@ gnupatch = callPackage ../all-pkgs/gnupatch { };
 
 gnused = callPackage ../all-pkgs/gnused { };
 
+gnutar = callPackage ../all-pkgs/gnutar { };
+
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = gobject-introspection; # Deprecated alias
 
@@ -2529,8 +2531,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  # must have AquaTerm installed separately
 #  gnuplot_aquaterm = gnuplot.override { aquaterm = true; };
-#
-  gnutar = callPackage ../tools/archivers/gnutar { };
 #
 #  gnuvd = callPackage ../tools/misc/gnuvd { };
 #

@@ -4,6 +4,8 @@
 , static ? false
 }:
 
+assert static || shared;
+
 stdenv.mkDerivation rec {
   name = "zlib-${version}";
   version = "1.2.8";

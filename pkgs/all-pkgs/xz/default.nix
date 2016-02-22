@@ -10,15 +10,10 @@ stdenv.mkDerivation rec {
     sha256 = "1da071wyx921pyx3zkxlnbpp14p6km98pnp66mg1arwi9dxgbxbg";
   };
 
-  # We need this for static linking
-  NIX_CFLAGS_COMPILE = "-fPIC";
-
   # In stdenv-linux, prevent a dependency on bootstrap-tools.
   preConfigure = ''
     unset CONFIG_SHELL
   '';
-
-  doCheck = true;
 
   postInstall = ''
     rm -rf $out/share/doc

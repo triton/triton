@@ -94,7 +94,7 @@ let
             mkdir -p $out/bin
             ln -s $bootstrapTools/bin/patchelf $out/bin
           '';
-          setupHook = ../../development/tools/misc/patchelf/setup-hook.sh;
+          setupHook = pkgs.patchelf.setupHook;
           dontAbsoluteLibtool = true; # Depends on cc not being null
         };
 

@@ -5456,21 +5456,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  bin_replace_string = callPackage ../development/tools/misc/bin_replace_string { };
 #
-  binutils = binutils-raw;
-#
-  binutils-raw = callPackage ../development/tools/misc/binutils { inherit noSysDirs; };
-#
-  binutils_nogold = lowPrio (callPackage ../development/tools/misc/binutils {
-    inherit noSysDirs;
-    gold = false;
-  });
-
-  binutilsCross = assert crossSystem != null; lowPrio (forceNativeDrv (
-    binutils.override {
-      noSysDirs = true;
-      cross = crossSystem;
-    }));
-#
+  binutils = callPackage ../development/tools/misc/binutils {
+    noSysDirs = true;
+  };
 #
 #  bossa = callPackage ../development/tools/misc/bossa {
 #    wxGTK = wxGTK30;
@@ -5815,14 +5803,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  pmccabe = callPackage ../development/tools/misc/pmccabe { };
 #
-#  /* Make pkgconfig always return a nativeDrv, never a proper crossDrv,
-#     because most usage of pkgconfig as buildInput (inheritance of
-#     pre-cross nixpkgs) means using it using as nativeBuildInput
-#     cross_renaming: we should make all programs use pkgconfig as
-#     nativeBuildInput after the renaming.
-#     */
-  pkgconf = forceNativeDrv (callPackage ../development/tools/misc/pkgconf { });
-  pkg-config = forceNativeDrv (callPackage ../development/tools/misc/pkgconfig { });
+  pkgconf = callPackage ../development/tools/misc/pkgconf { };
+  pkg-config = callPackage ../development/tools/misc/pkgconfig { };
   pkgconfig = pkgconf;
 #
 #  prelink = callPackage ../development/tools/misc/prelink { };
@@ -6415,7 +6397,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gsoap = callPackage ../development/libraries/gsoap { };
 #
-#  gss = callPackage ../development/libraries/gss { };
+  gss = callPackage ../development/libraries/gss { };
 #
 #  gtkimageview = callPackage ../development/libraries/gtkimageview { };
 #

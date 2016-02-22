@@ -523,6 +523,8 @@ bs1770gain = callPackage ../all-pkgs/bs1770gain { };
 
 btrfs-progs = callPackage ../all-pkgs/btrfs-progs { };
 
+bzip2 = callPackage ../all-pkgs/bzip2 { };
+
 cairo = callPackage ../all-pkgs/cairo { };
 
 cairomm = callPackage ../all-pkgs/cairomm { };
@@ -1898,8 +1900,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ori = callPackage ../tools/backup/ori { };
 #
 #  atool = callPackage ../tools/archivers/atool { };
-#
-  bzip2 = callPackage ../tools/compression/bzip2 { };
 #
 #  cabextract = callPackage ../tools/archivers/cabextract { };
 #

@@ -1319,6 +1319,8 @@ webkitgtk_2_4_gtk2 = webkitgtk_2_4_gtk3.override {
 webkitgtk_2_4 = webkitgtk_2_4_gtk3;
 webkitgtk = callPackage ../all-pkgs/webkitgtk { };
 
+which = callPackage ../all-pkgs/which { };
+
 x264 = callPackage ../all-pkgs/x264 { };
 
 x265 = callPackage ../all-pkgs/x265 { };
@@ -4346,8 +4348,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     inherit (perlPackages) LWP;
     libpsl = null;
   };
-#
-  which = callPackage ../tools/system/which { };
 #
 #  wicd = callPackage ../tools/networking/wicd { };
 #

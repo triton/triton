@@ -1308,6 +1308,8 @@ xine-ui = callPackage ../all-pkgs/xine-ui { };
 
 xmltoman = callPackage ../all-pkgs/xmltoman { };
 
+xz = callPackage ../all-pkgs/xz { };
+
 yasm = callPackage ../all-pkgs/yasm { };
 
 zeitgeist = callPackage ../all-pkgs/zeitgeist { };
@@ -3000,10 +3002,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   lzip = callPackage ../tools/compression/lzip { };
 #
-  lzma = xz;
-
-  xz = callPackage ../tools/compression/xz { };
-
   lz4 = callPackage ../tools/compression/lz4 { };
 #
 #  lzop = callPackage ../tools/compression/lzop { };

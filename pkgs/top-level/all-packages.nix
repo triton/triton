@@ -555,7 +555,7 @@ cogl = callPackage ../all-pkgs/cogl { };
 
 colord = callPackage ../all-pkgs/colord { };
 
-coreutils = callPackage ../tools/misc/coreutils { };
+coreutils = callPackage ../all-pkgs/coreutils { };
 
 cryptopp = callPackage ../all-pkgs/crypto++ { };
 

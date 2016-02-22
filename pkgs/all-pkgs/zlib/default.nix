@@ -21,13 +21,6 @@ stdenv.mkDerivation rec {
     (if shared then "--shared" else "")
   ];
 
-  # As zlib takes part in the stdenv building, we don't want references
-  # to the bootstrap-tools libgcc (as uses to happen on arm/mips)
-  NIX_CFLAGS_COMPILE = [
-    "-fPIC"
-    "-static-libgcc"
-  ];
-
   meta = with stdenv.lib; {
     description = "Lossless data-compression library";
     license = licenses.zlib;

@@ -814,6 +814,8 @@ gvfs = callPackage ../all-pkgs/gvfs { };
 
 gx = goPackages.gx.bin // { outputs = [ "bin" ]; };
 
+gzip = callPackage ../all-pkgs/gzip { };
+
 hadoop = callPackage ../all-pkgs/hadoop { };
 
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
@@ -2633,8 +2635,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gvpe = callPackage ../tools/networking/gvpe { };
 #
 #  gvolicon = callPackage ../tools/audio/gvolicon {};
-#
-  gzip = callPackage ../tools/compression/gzip { };
 #
 #  gzrt = callPackage ../tools/compression/gzrt { };
 #

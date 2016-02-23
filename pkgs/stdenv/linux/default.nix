@@ -229,7 +229,7 @@ let
         inherit (stage1Pkgs) glibc linux-headers;
         inherit (stage2Pkgs) m4 gnum4 which gettext;
         inherit (pkgs) stdenv xz zlib attr acl gmp coreutils binutils
-          gpm ncurses readline bash libnghttp2 cryptodevHeaders openssl_1_0_2
+          gpm ncurses readline bash libnghttp2 cryptodevHeaders
           openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
           gawk gnutar gzip bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
 
@@ -309,7 +309,7 @@ let
       inherit (stage1Pkgs) glibc linux-headers;
       inherit (stage2Pkgs) m4 gnum4 which gettext;
       inherit (stage3Pkgs) gcc xz zlib attr acl gmp coreutils binutils
-        gpm ncurses readline bash libnghttp2 cryptodevHeaders openssl_1_0_2
+        gpm ncurses readline bash libnghttp2 cryptodevHeaders
         openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
         gawk gnutar gzip bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
     };

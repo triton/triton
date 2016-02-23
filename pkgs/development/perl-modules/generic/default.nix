@@ -1,4 +1,4 @@
-perl:
+{ perl }:
 
 { buildInputs ? [], ... } @ attrs:
 

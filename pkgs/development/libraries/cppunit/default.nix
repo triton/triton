@@ -11,7 +11,7 @@ stdenv.mkDerivation {
   meta = {
     homepage = "http://sourceforge.net/apps/mediawiki/cppunit/";
     description = "C++ unit testing framework";
-    platforms = stdenv.lib.platforms.linux ++ stdenv.lib.platforms.darwin;
+    platforms = stdenv.lib.platforms.linux;
     maintainers = [ stdenv.lib.maintainers.simons ];
   };
 }

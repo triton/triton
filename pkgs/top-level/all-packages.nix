@@ -643,6 +643,8 @@ flac = callPackage ../all-pkgs/flac { };
 
 flex = callPackage ../all-pkgs/flex { };
 
+gawk = callPackage ../all-pkgs/gawk { };
+
 gconf = callPackage ../all-pkgs/gconf { };
 
 gcr = callPackage ../all-pkgs/gcr { };
@@ -2475,8 +2477,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  garmin-plugin = callPackage ../applications/misc/garmin-plugin {};
 #
 #  garmintools = callPackage ../development/libraries/garmintools {};
-#
-  gawk = callPackage ../tools/text/gawk { };
 #
 #  gawp = goPackages.gawp.bin // { outputs = [ "bin" ]; };
 #

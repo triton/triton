@@ -1141,6 +1141,8 @@ noise = callPackage ../all-pkgs/noise { };
 
 obexftp = callPackage ../all-pkgs/obexftp { };
 
+openldap = callPackage ../all-pkgs/openldap { };
+
 openobex = callPackage ../all-pkgs/openobex { };
 
 openssl = callPackage ../all-pkgs/openssl { };
@@ -7419,8 +7421,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   openexr = callPackage ../development/libraries/openexr { };
 
-  openldap = callPackage ../development/libraries/openldap { };
-#
 #  opencolorio = callPackage ../development/libraries/opencolorio { };
 #
 #  ois = callPackage ../development/libraries/ois {};

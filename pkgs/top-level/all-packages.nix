@@ -1358,6 +1358,11 @@ sublime-text = callPackage ../all-pkgs/sublime-text { };
 
 sushi = callPackage ../all-pkgs/sushi { };
 
+swig = callPackage ../all-pkgs/swig { };
+swig2 = callPackageAlias "swig" {
+  channel = "2";
+};
+
 talloc = callPackage ../all-pkgs/talloc { };
 
 tevent = callPackage ../all-pkgs/tevent { };
@@ -5905,11 +5910,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  stm32flash = callPackage ../development/tools/misc/stm32flash { };
 #
   strace = callPackage ../development/tools/misc/strace { };
-#
-#  swig1 = callPackage ../development/tools/misc/swig { };
-  swig2 = callPackage ../development/tools/misc/swig/2.x.nix { };
-  swig3 = callPackage ../development/tools/misc/swig/3.x.nix { };
-  swig = swig3;
 #
 #  swfmill = callPackage ../tools/video/swfmill { };
 #

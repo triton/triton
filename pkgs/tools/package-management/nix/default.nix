@@ -13,8 +13,7 @@ let
 
     nativeBuildInputs = [ perl pkgconfig ];
 
-    buildInputs = [ curl openssl sqlite xz ]
-      ++ lib.optional (stdenv.isLinux || stdenv.isDarwin) libsodium;
+    buildInputs = [ curl openssl sqlite xz libsodium ];
 
     propagatedBuildInputs = [ boehmgc ];
 
@@ -42,8 +41,6 @@ let
     installFlags = "sysconfdir=$(out)/etc";
 
     doInstallCheck = false;
-
-    separateDebugInfo = stdenv.isLinux;
 
     crossAttrs = {
       postUnpack =

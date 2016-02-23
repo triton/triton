@@ -229,7 +229,7 @@ let
         inherit (stage1Pkgs) glibc linux-headers;
         inherit (stage2Pkgs) m4 gnum4 which;
         inherit (pkgs) stdenv xz zlib attr acl gmp coreutils binutils
-          gpm ncurses readline bash libnghttp2 cryptodevHeaders gettext
+          gpm ncurses readline bash libnghttp2 cryptodevHeaders gettext bison flex
           openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
           gawk gnutar gzip bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
 
@@ -254,7 +254,7 @@ let
           interactive = false;
           doCheck = false;
         };
-        inherit (pkgs) perl522 perl bison autoconf automake flex perlPackages
+        inherit (pkgs) perl522 perl autoconf automake perlPackages
           libtool buildPerlPackage help2man makeWrapper autoreconfHook nghttp2;
         jansson = null;
       };
@@ -309,7 +309,7 @@ let
       inherit (stage1Pkgs) glibc linux-headers;
       inherit (stage2Pkgs) m4 gnum4 which;
       inherit (stage3Pkgs) gcc xz zlib attr acl gmp coreutils binutils
-        gpm ncurses readline bash libnghttp2 cryptodevHeaders gettext
+        gpm ncurses readline bash libnghttp2 cryptodevHeaders gettext bison flex
         openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
         gawk gnutar gzip bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
     };

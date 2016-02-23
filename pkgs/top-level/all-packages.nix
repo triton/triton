@@ -874,6 +874,8 @@ hwdata = callPackage ../all-pkgs/hwdata { };
 
 ibus = callPackage ../all-pkgs/ibus { };
 
+icu = callPackage ../all-pkgs/icu { };
+
 id3lib = callPackage ../all-pkgs/id3lib { };
 
 imagemagick_light = imagemagick.override {
@@ -6476,8 +6478,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  hydraAntLogger = callPackage ../development/libraries/java/hydra-ant-logger { };
 #
 #  hyena = callPackage ../development/libraries/hyena { };
-#
-  icu = callPackage ../development/libraries/icu { };
 #
 #  iksemel = callPackage ../development/libraries/iksemel { };
 #

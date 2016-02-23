@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     description = "Image manipulation library";
 
     license = stdenv.lib.licenses.free;
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
     maintainers = with stdenv.lib.maintainers; [ spwhitt ];
   };
 }

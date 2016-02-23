@@ -19,8 +19,8 @@ in stdenv.mkDerivation {
   meta = {
     inherit (s) version;
     description = ''A library for semi-portable access to hardware-provided atomic memory update operations'';
-    license = stdenv.lib.licenses.gpl2Plus ;
+    license = stdenv.lib.licenses.gpl2Plus;
     maintainers = [stdenv.lib.maintainers.raskin];
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
   };
 }

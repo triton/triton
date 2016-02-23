@@ -36,6 +36,8 @@ stdenv.mkDerivation {
     description = ''A base library for writing document import filters'';
     license = stdenv.lib.licenses.mpl20 ;
     maintainers = [stdenv.lib.maintainers.raskin];
-    platforms = stdenv.lib.platforms.unix;
+    platforms = with stdenv.lib.platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

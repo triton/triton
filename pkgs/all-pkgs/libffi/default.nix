@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   buildInputs = stdenv.lib.optional doCheck dejagnu;
 
   configureFlags = [
-    "--with-gcc-arch=${stdenv.platform.march}"
+    "--with-gcc-arch=${stdenv.cc.cc.march}"
     "--enable-pax_emutramp"
   ];
 

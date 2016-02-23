@@ -440,8 +440,19 @@ stdenv.mkDerivation ({
            " -L${libpthreadCross}/lib -Wl,${libpthreadCross.TARGET_LDFLAGS}")
     else null;
 
-  passthru =
-    { inherit langC langCC langAda langFortran langVhdl langGo version; isGNU = true; };
+  passthru =  {
+    inherit
+      langC
+      langCC
+      langAda
+      langFortran
+      langVhdl
+      langGo
+      version;
+    isGNU = true;
+    march = "nehalem";
+    mtune = "nehalem";
+  };
 
   inherit enableMultilib;
 

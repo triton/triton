@@ -5478,9 +5478,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  bin_replace_string = callPackage ../development/tools/misc/bin_replace_string { };
 #
-  binutils = callPackage ../development/tools/misc/binutils {
-    noSysDirs = true;
-  };
+  binutils = callPackage ../development/tools/misc/binutils { };
 #
 #  bossa = callPackage ../development/tools/misc/bossa {
 #    wxGTK = wxGTK30;

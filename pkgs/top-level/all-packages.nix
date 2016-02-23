@@ -97,7 +97,11 @@ let
           recurseIntoAttrs
           wrapCCWith
           wrapCC;
-        inherit (lib) lowPrio;
+        inherit (lib)
+          hiPrio
+          hiPrioSet
+          lowPrio
+          lowPrioSet;
       in
      helperFunctions // {
 
@@ -1241,10 +1245,10 @@ python33 = callPackage ../all-pkgs/python {
   channel = "3.3";
   self = callPackageAlias "python33" { };
 };
-python34 = hiPrio (callPackage ../all-pkgs/python {
+python34 = callPackage ../all-pkgs/python {
   channel = "3.4";
   self = callPackageAlias "python34" { };
-});
+};
 python35 = hiPrio (callPackage ../all-pkgs/python {
   channel = "3.5";
   self = callPackageAlias "python35" { };
@@ -1256,7 +1260,7 @@ python2 = callPackageAlias "python27" { };
 python3 = callPackageAlias "python35" { };
 python = callPackageAlias "python2" { };
 
-python27Packages = lib.hiPrioSet (recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+python27Packages = hiPrioSet (recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
   python = callPackageAlias "python27" { };
   self = callPackageAlias "python27Packages" { };
 }));
@@ -5959,8 +5963,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    bison = bison2;
 #  };
 #
-  yacc = bison;
-#
 #  ycmd = callPackage ../development/tools/misc/ycmd { };
 #
 #  yodl = callPackage ../development/tools/misc/yodl { };
@@ -6430,10 +6432,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  # TODO : Let admin choose.
 #  # We are using mit-krb5 because it is better maintained
-  kerberos = libkrb5;
+  kerberos = callPackageAlias "libkrb5" { };
 
   heimdalFull = callPackage ../development/libraries/kerberos/heimdal.nix { };
-  libheimdal = heimdalFull.override { type = "lib"; };
+  libheimdal = callPackageAlias "heimdalFull" {
+    type = "lib";
+  };
 #
 #  hawknl = callPackage ../development/libraries/hawknl { };
 #
@@ -6549,7 +6553,10 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  kinetic-cpp-client = callPackage ../development/libraries/kinetic-cpp-client { };
 #
   krb5Full = callPackage ../development/libraries/kerberos/krb5.nix { };
-  libkrb5 = krb5Full.override { type = "lib"; };
+
+  libkrb5 = callPackageAlias "krb5Full" {
+    type = "lib";
+  };
 #
 #  LASzip = callPackage ../development/libraries/LASzip { };
 #
@@ -7179,9 +7186,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
     qt5 = null;
   });
 #
-#  libverto = callPackage ../development/libraries/libverto {
-#    glib = null; # Don't include fairly heavy dependency
-#  };
+  libverto = callPackage ../development/libraries/libverto {
+    glib = null; # Don't include fairly heavy dependency
+  };
 #
 #  libvdpau-va-gl = callPackage ../development/libraries/libvdpau-va-gl { };
 #
@@ -8887,9 +8894,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   libaudit = callPackageAlias "auditFull" {
     prefix = "lib";
-    go = null; # We don't need go bindings
-    python2 = null; # We don't need python2 bindings
-    python3 = null; # We don't need python3 bindings
   };
 #
 #  b43Firmware_5_1_138 = callPackage ../os-specific/linux/firmware/b43-firmware/5.1.138.nix { };
@@ -9567,7 +9571,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  };
 #
 #  # FIXME: `tcp-wrapper' is actually not OS-specific.
-#  tcp_wrappers = callPackage ../os-specific/linux/tcp-wrappers { };
+  tcp_wrappers = callPackage ../os-specific/linux/tcp-wrappers { };
 #
 #  trinity = callPackage ../os-specific/linux/trinity { };
 #

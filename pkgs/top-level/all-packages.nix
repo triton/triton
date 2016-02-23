@@ -1041,6 +1041,8 @@ libwacom = callPackage ../all-pkgs/libwacom { };
 
 libwps = callPackage ../all-pkgs/libwps { };
 
+libxml2 = callPackage ../all-pkgs/libxml2 { };
+
 libxslt = callPackage ../all-pkgs/libxslt { };
 
 libzapojit = callPackage ../all-pkgs/libzapojit { };
@@ -4005,9 +4007,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  sysbench = callPackage ../development/tools/misc/sysbench {};
 #
-#  system-config-printer = callPackage ../tools/misc/system-config-printer {
-#    libxml2 = libxml2Python;
-#   };
+#  system-config-printer = callPackage ../tools/misc/system-config-printer { };
 #
 #  sitecopy = callPackage ../tools/networking/sitecopy { };
 #
@@ -4474,9 +4474,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  xorriso = callPackage ../tools/cd-dvd/xorriso { };
 #
-#  xpf = callPackage ../tools/text/xml/xpf {
-#    libxml2 = libxml2Python;
-#  };
+#  xpf = callPackage ../tools/text/xml/xpf { };
 #
 #  xsel = callPackage ../tools/misc/xsel { };
 #
@@ -7228,14 +7226,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  libxls = callPackage ../development/libraries/libxls { };
 #
 #  libxmi = callPackage ../development/libraries/libxmi { };
-#
-  libxml2 = callPackage ../development/libraries/libxml2 {
-    python = null;
-  };
-
-  libxml2Python = lowPrio (libxml2.override {
-    inherit python;
-  });
 #
 #  libxmlxx = callPackage ../development/libraries/libxmlxx { };
 #

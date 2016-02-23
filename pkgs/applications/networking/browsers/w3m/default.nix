@@ -1,4 +1,4 @@
-{ stdenv, fetchgit, fetchpatch
+{ stdenv, fetchzip, fetchpatch
 , ncurses, boehmgc, gettext, zlib
 , sslSupport ? true, openssl ? null
 , graphicsSupport ? true, imlib2
@@ -17,9 +17,8 @@ with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "w3m-0.5.3-2015-12-20";
 
-  src = fetchgit {
-    url = "git://anonscm.debian.org/collab-maint/w3m.git";
-    rev = "e0b6e022810271bd0efcd655006389ee3879e94d";
+  src = fetchzip {
+    url = "http://anonscm.debian.org/cgit/collab-maint/w3m.git/snapshot/e0b6e022810271bd0efcd655006389ee3879e94d.tar.xz";
     sha256 = "1vahm3719hb0m20nc8k88165z35f8b15qasa0whhk78r12bls1q6";
   };
 

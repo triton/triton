@@ -588,6 +588,8 @@ devil-nox = devil.override {
 };
 devil = callPackage ../all-pkgs/devil { };
 
+diffutils = callPackage ../all-pkgs/diffutils { };
+
 dos2unix = callPackage ../all-pkgs/dos2unix { };
 
 dropbox = qt5.callPackage ../all-pkgs/dropbox { };
@@ -2197,8 +2199,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  };
 #
 #  diffstat = callPackage ../tools/text/diffstat { };
-#
-  diffutils = callPackage ../tools/text/diffutils { };
 #
 #  dir2opus = callPackage ../tools/audio/dir2opus {
 #    inherit (pythonPackages) mutagen python wrapPython;

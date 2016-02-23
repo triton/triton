@@ -261,9 +261,7 @@ let
 
   fetchdarcs = callPackage ../build-support/fetchdarcs { };
 
-  fetchgit = callPackage ../build-support/fetchgit {
-    git = gitMinimal;
-  };
+  fetchgit = callPackage ../build-support/fetchgit { };
 
   fetchgitPrivate = callPackage ../build-support/fetchgit/private.nix { };
 
@@ -5310,8 +5308,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  mesos-dns = goPackages.mesos-dns.bin // { outputs = [ "bin" ]; };
 #
 #  nix-exec = callPackage ../development/interpreters/nix-exec {
-#    git = gitMinimal;
-#
 #    nix = nixUnstable;
 #  };
 #
@@ -10554,11 +10550,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
   gitAndTools = recurseIntoAttrs (callPackage ../applications/version-management/git-and-tools {});
 
   inherit (pkgs.gitAndTools) git gitFull gitSVN git-cola svn2git git-radar transcrypt;
-
-  gitMinimal = git.override {
-    withManual = false;
-    pythonSupport = false;
-  };
 #
 #  gitRepo = callPackage ../applications/version-management/git-repo {
 #    python = python27;
@@ -11719,9 +11710,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  ltunify = callPackage ../tools/misc/ltunify { };
 #
-#  src = callPackage ../applications/version-management/src/default.nix {
-#    git = gitMinimal;
-#  };
+#  src = callPackage ../applications/version-management/src/default.nix { };
 #
   inherit (callPackages ../applications/version-management/subversion/default.nix {
       bdbSupport = true;

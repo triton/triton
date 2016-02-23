@@ -19,8 +19,9 @@ stdenv.mkDerivation rec {
 
   # If we are only building headers, just do that
   buildCommand = optionalString onlyHeaders ''
+    unpackPhase
     mkdir -p $out/include/crypto
-    cp crypto/cryptodev.h $out/include/crypto
+    cp */crypto/cryptodev.h $out/include/crypto
   '';
 
   preBuild = optionalString (!onlyHeaders) ''

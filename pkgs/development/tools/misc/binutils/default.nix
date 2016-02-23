@@ -1,16 +1,22 @@
-{ stdenv, fetchurl, fetchTritonPatch, noSysDirs, zlib
-, cross ? null, gold ? true, bison ? null
+{ stdenv
+, bison
+, fetchTritonPatch
+, fetchurl
+
+, zlib
 }:
 
-let basename = "binutils-2.23.1"; in
-
-with { inherit (stdenv.lib) optional optionals optionalString; };
-
+let
+  inherit (stdenv.lib)
+    optional
+    optionals
+    optionalString;
+in
 stdenv.mkDerivation rec {
-  name = basename + optionalString (cross != null) "-${cross.config}";
+  name = "binutils-2.23.1";
 
   src = fetchurl {
-    url = "mirror://gnu/binutils/${basename}.tar.bz2";
+    url = "mirror://gnu/binutils/${name}.tar.bz2";
     sha256 = "06bs5v5ndb4g5qx96d52lc818gkbskd1m0sz57314v887sqfbcia";
   };
 
@@ -50,49 +56,42 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  nativeBuildInputs = optional gold bison;
-  buildInputs = [ zlib ];
+  nativeBuildInputs = [
+    bison
+  ];
 
-  inherit noSysDirs;
+  buildInputs = [
+    zlib
+  ];
 
   preConfigure = ''
     # Clear the default library search path.
-    if test "$noSysDirs" = "1"; then
-        echo 'NATIVE_LIB_DIRS=' >> ld/configure.tgt
-    fi
+    echo 'NATIVE_LIB_DIRS=' >> ld/configure.tgt
 
     # Use symlinks instead of hard links to save space ("strip" in the
     # fixup phase strips each hard link separately).
-    for i in binutils/Makefile.in gas/Makefile.in ld/Makefile.in gold/Makefile.in; do
+    for i in $(find . -name Makefile.in); do
         sed -i "$i" -e 's|ln |ln -s |'
     done
   '';
 
-  configureFlags =
-    [ "--enable-shared" "--enable-deterministic-archives" "--disable-werror" ]
-    ++ optional (stdenv.system == "mips64el-linux") "--enable-fix-loongson2f-nop"
-    ++ optional (cross != null) "--target=${cross.config}"
-    ++ optionals gold [ "--enable-gold" "--enable-plugins" ]
-    ++ optional (stdenv.system == "i686-linux") "--enable-targets=x86_64-linux-gnu";
-
-  enableParallelBuilding = true;
+  configureFlags = [
+    "--enable-shared"
+    "--enable-deterministic-archives"
+    "--disable-werror"
+    "--enable-gold"
+    "--enable-plugins"
+  ];
 
   meta = with stdenv.lib; {
     description = "Tools for manipulating binaries (linker, assembler, etc.)";
-    longDescription = ''
-      The GNU Binutils are a collection of binary tools.  The main
-      ones are `ld' (the GNU linker) and `as' (the GNU assembler).
-      They also include the BFD (Binary File Descriptor) library,
-      `gprof', `nm', `strip', etc.
-    '';
     homepage = http://www.gnu.org/software/binutils/;
     license = licenses.gpl3Plus;
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       i686-linux
       ++ x86_64-linux;
-
-    /* Give binutils a lower priority than gcc-wrapper to prevent a
-       collision due to the ld/as wrappers/symlinks in the latter. */
-    priority = "10";
   };
 }

@@ -51,6 +51,8 @@ stdenv.mkDerivation rec {
     homepage    = http://www.vim.org;
     license = licenses.vim;
     maintainers = with maintainers; [ lovek323 ];
-    platforms   = platforms.unix;
+    platforms   = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

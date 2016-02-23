@@ -10,9 +10,7 @@ stdenv.mkDerivation rec {
     sha256 = "c99f84d124347340c36707089ec8f70530abd56e7827c54d506eb4cc097a17e7";
   };
 
-  setupHook = [
-    ./setup-hook.sh
-  ];
+  setupHook = ./setup-hook.sh;
 
   meta = with stdenv.lib; {
     homepage = http://nixos.org/patchelf.html;

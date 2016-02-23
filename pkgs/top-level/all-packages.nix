@@ -1313,6 +1313,8 @@ seahorse = callPackage ../all-pkgs/seahorse { };
 
 sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
+sqlite = callPackage ../all-pkgs/sqlite { };
+
 steamPackages = callPackage ../all-pkgs/steam { };
 steam = steamPackages.steam-chrootenv.override {
   # DEPRECATED
@@ -7836,10 +7838,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  srtp = callPackage ../development/libraries/srtp { };
 #
 #  stxxl = callPackage ../development/libraries/stxxl { parallel = true; };
-#
-  sqlite = callPackage ../development/libraries/sqlite { };
-
-#  sqlite3_analyzer = lowPrio (callPackage ../development/libraries/sqlite/sqlite3_analyzer.nix { });
 #
 #  sqlite-amalgamation = callPackage ../development/libraries/sqlite-amalgamation { };
 #

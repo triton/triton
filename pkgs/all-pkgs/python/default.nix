@@ -6,11 +6,11 @@
 , expat
 , gdbm
 , libffi
-, lzma
 , ncurses
 , openssl
 , readline
 , sqlite
+, xz
 , zlib
 
 # Inherit generics
@@ -78,12 +78,12 @@ stdenv.mkDerivation rec {
     expat
     gdbm
     libffi
-    lzma
     ncurses
     openssl
     readline
     sqlite
     stdenv.cc.libc
+    xz
     zlib
   ];
 
@@ -146,8 +146,7 @@ stdenv.mkDerivation rec {
     #"--with-ensurepip"
   ];
 
-  # Should this be stdenv.cc.isGnu???
-  NIX_LDFLAGS = optionalString isLinux "-lgcc_s";
+  NIX_LDFLAGS = "-lgcc_s";
 
   postInstall =
     /* Needed for some packages, especially packages that

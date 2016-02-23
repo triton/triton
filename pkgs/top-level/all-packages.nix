@@ -4701,7 +4701,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   go_1_4 = callPackage ../development/compilers/go/1.4.nix { };
   go_1_5 = callPackage ../development/compilers/go/1.5.nix { };
   go_1_6 = callPackage ../development/compilers/go/1.6.nix { };
-  go = go_1_6;
+  go = callPackageAlias "go_1_6" { };
 #
 #  go-repo-root = goPackages.go-repo-root.bin // { outputs = [ "bin" ]; };
 #

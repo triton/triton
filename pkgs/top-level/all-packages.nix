@@ -195,7 +195,7 @@ let
     (writeScript "ensure-newer-sources-hook.sh" ''
       postUnpackHooks+=(_ensureNewerSources)
       _ensureNewerSources() {
-        '${findutils}/bin/find' "$sourceRoot" \
+        '${pkgs.findutils}/bin/find' "$sourceRoot" \
           '!' -newermt '${year}-01-01' -exec touch -d '${year}-01-02' '{}' '+'
       }
     '');
@@ -616,6 +616,8 @@ ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
 file-roller = callPackage ../all-pkgs/file-roller { };
 
 filezilla = callPackage ../all-pkgs/filezilla { };
+
+findutils = callPackage ../all-pkgs/findutils { };
 
 firefox = firefox_wrapper firefox-unwrapped { };
 firefox-esr = firefox_wrapper firefox-esr-unwrapped { };
@@ -2372,8 +2374,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  filegive = callPackage ../tools/networking/filegive { };
 #
 #  fileschanged = callPackage ../tools/misc/fileschanged { };
-#
-  findutils = callPackage ../tools/misc/findutils { };
 #
 #  finger_bsd = callPackage ../tools/networking/bsd-finger { };
 #

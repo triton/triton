@@ -1358,6 +1358,8 @@ sushi = callPackage ../all-pkgs/sushi { };
 
 talloc = callPackage ../all-pkgs/talloc { };
 
+tevent = callPackage ../all-pkgs/tevent { };
+
 texinfo = callPackage ../all-pkgs/texinfo { };
 
 totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
@@ -7878,10 +7880,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  telepathy_farstream = callPackage ../development/libraries/telepathy/farstream {};
 #
 #  telepathy_qt = callPackage ../development/libraries/telepathy/qt { qtbase = qt4; };
-#
-  tevent = callPackage ../development/libraries/tevent {
-    python = python2;
-  };
 #
 #  tet = callPackage ../development/tools/misc/tet { };
 #

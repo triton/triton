@@ -70,7 +70,7 @@ let
       cc = null;
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage0Pkgs is missing package definition for `${n}`") pkgs) // rec {
-        inherit (pkgs) stdenv fetchFromGitHub fetchTritonPatch;
+        inherit (pkgs) stdenv fetchFromGitHub fetchTritonPatch gcc;
 
         fetchurl = pkgs.fetchurl.override {
           stdenv = stage0Pkgs.stdenv;
@@ -93,7 +93,7 @@ let
           dontAbsoluteLibtool = true; # Depends on cc not being null
         };
 
-        gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+        gcc5 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
           nativeLibc = false;
           cc = bootstrapTools;
@@ -128,7 +128,7 @@ let
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage1Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit (pkgs) stdenv glibc linux-headers;
 
-        gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+        gcc5 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
           nativeLibc = false;
           cc = bootstrapTools;
@@ -143,6 +143,7 @@ let
 
         # These are only needed to evaluate
         inherit (stage0Pkgs) fetchurl fetchzip fetchFromGitHub fetchTritonPatch patchelf;
+        inherit (pkgs) gcc;
         bison = null;
       };
     });
@@ -166,7 +167,7 @@ let
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage2Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit (stage1Pkgs) glibc linux-headers;
-        inherit (pkgs) stdenv gnum4 m4 which gettext elfutils;
+        inherit (pkgs) stdenv gnum4 m4 which gettext elfutils gcc;
         bzip2 = pkgs.bzip2.override { static = true; shared = false; };
         libelf = pkgs.libelf.override { static = true; shared = false; };
         gmp = pkgs.gmp.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
@@ -176,10 +177,10 @@ let
         xz = pkgs.xz.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
         zlib = pkgs.zlib.override { static = true; shared = false; };
 
-        gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+        gcc5 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
           nativeLibc = false;
-          cc = pkgs.gcc.cc.override {
+          cc = pkgs.gcc5.cc.override {
             shouldBootstrap = true;
             libPathExcludes = [ "${bootstrapTools}/lib"];
           };
@@ -223,15 +224,15 @@ let
         pkgs = stage3Pkgs;
         inherit (stage1Pkgs) glibc linux-headers;
         inherit (stage2Pkgs) m4 gnum4 which;
-        inherit (pkgs) stdenv xz zlib attr acl gmp coreutils binutils
+        inherit (pkgs) stdenv gcc xz zlib attr acl gmp coreutils binutils
           gpm ncurses readline bash libnghttp2 cryptodevHeaders gettext bison flex
           openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
           gawk gnutar gzip bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
 
-        gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+        gcc5 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
           nativeLibc = false;
-          cc = stage2Pkgs.gcc.cc;
+          cc = stage2Pkgs.gcc5.cc;
           isGNU = true; # Using glibc
           libc = stage1Pkgs.glibc;
           binutils = stage3Pkgs.binutils;
@@ -249,7 +250,7 @@ let
           interactive = false;
           doCheck = false;
         };
-        inherit (pkgs) perl522 perl autoconf automake perlPackages
+        inherit (pkgs) perl autoconf automake perlPackages
           libtool buildPerlPackage help2man makeWrapper autoreconfHook nghttp2;
         jansson = null;
       };
@@ -303,7 +304,7 @@ let
     overrides = pkgs: {
       inherit (stage1Pkgs) glibc linux-headers;
       inherit (stage2Pkgs) m4 gnum4 which;
-      inherit (stage3Pkgs) gcc xz zlib attr acl gmp coreutils binutils
+      inherit (stage3Pkgs) gcc5 gcc xz zlib attr acl gmp coreutils binutils
         gpm ncurses readline bash libnghttp2 cryptodevHeaders gettext bison flex
         openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
         gawk gnutar gzip bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;

@@ -88,7 +88,18 @@ let
   pkgsFun = pkgs: overrides:
     with helperFunctions;
     let defaultScope = pkgs; self = self_ // overrides;
-    self_ = with self; helperFunctions // {
+    self_ =
+      let
+        inherit (self_)
+          callPackage
+          callPackages
+          callPackageAlias
+          recurseIntoAttrs
+          wrapCCWith
+          wrapCC;
+        inherit (lib) lowPrio;
+      in
+     helperFunctions // {
 
   # Make some arguments passed to all-packages.nix available
   targetSystem = args.targetSystem;
@@ -102,7 +113,7 @@ let
   # can be obtained from `pkgs' or `pkgs.xorg' (i.e. `defaultScope').
   # Use `newScope' for sets of packages in `pkgs' (see e.g. `gnome'
   # below).
-  callPackage = newScope {};
+  callPackage = self_.newScope {};
 
   callPackages = lib.callPackagesWith defaultScope;
 
@@ -149,7 +160,6 @@ let
   ### Helper functions.
   inherit lib config stdenvAdapters;
 
-  inherit (lib) lowPrio hiPrio appendToName makeOverridable;
   inherit (misc) versionedDerivation;
 
   # Applying this to an attribute set will cause nix-env to look
@@ -188,7 +198,7 @@ let
   };
 
   autoreconfHook = makeSetupHook
-    { substitutions = { inherit autoconf automake gettext libtool; }; }
+    { substitutions = { inherit (pkgs) autoconf automake gettext libtool; }; }
     ../build-support/setup-hooks/autoreconf.sh;
 
   ensureNewerSourcesHook = { year }: makeSetupHook {}
@@ -413,7 +423,7 @@ let
     ../build-support/setup-hooks/make-coverage-analysis-report.sh;
 
   # intended to be used like nix-build -E 'with <nixpkgs> {}; enableDebugging fooPackage'
-  enableDebugging = pkg: pkg.override { stdenv = stdenvAdapters.keepDebugInfo pkg.stdenv; };
+  enableDebugging = pkg: pkg.override { stdenv = stdenvAdapters.keepDebugInfo pkgs.stdenv; };
 
   findXMLCatalogs = makeSetupHook { } ../build-support/setup-hooks/find-xml-catalogs.sh;
 
@@ -434,6 +444,19 @@ let
 ################################################################################
 ################################################################################
 ################################################################################
+
+
+wrapCCWith = ccWrapper: libc: extraBuildCommands: baseCC: ccWrapper {
+  nativeTools = pkgs.stdenv.cc.nativeTools or false;
+  nativeLibc = pkgs.stdenv.cc.nativeLibc or false;
+  nativePrefix = pkgs.stdenv.cc.nativePrefix or "";
+  cc = baseCC;
+  isGNU = baseCC.isGNU or false;
+  isClang = baseCC.isClang or false;
+  inherit libc extraBuildCommands;
+};
+
+wrapCC = wrapCCWith (callPackage ../build-support/cc-wrapper) pkgs.stdenv.cc.libc "";
 
 ################################################################################
 ################################################################################
@@ -2623,7 +2646,7 @@ zstd = callPackage ../all-pkgs/zstd { };
   };
 
   grub4dos = callPackage ../tools/misc/grub4dos {
-    stdenv = stdenv_32bit;
+    stdenv = pkgs.stdenv_32bit;
   };
 #
 #  sbsigntool = callPackage ../tools/security/sbsigntool { };
@@ -4010,7 +4033,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  tcpflow = callPackage ../tools/networking/tcpflow { };
 #
 #  teamviewer = callPackage ../applications/networking/remote/teamviewer {
-#    stdenv = stdenv_32bit;
+#    stdenv = pkgs.stdenv_32bit;
 #  };
 #
 #  telnet = callPackage ../tools/networking/telnet { };
@@ -4065,7 +4088,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  torbutton = callPackage ../tools/security/torbutton { };
 #
 #  torbrowser = callPackage ../tools/security/tor/torbrowser.nix {
-#    stdenv = overrideCC stdenv gcc5;
+#    stdenv = overrideCC pkgs.stdenv gcc5;
 #  };
 #
 #  touchegg = callPackage ../tools/inputmethods/touchegg { };
@@ -4390,7 +4413,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   x11_ssh_askpass = callPackage ../tools/networking/x11-ssh-askpass { };
 #
-#  xbursttools = assert stdenv ? glibc; callPackage ../tools/misc/xburst-tools {
+#  xbursttools = assert stdenv ? libc; callPackage ../tools/misc/xburst-tools {
 #    # It needs a cross compiler for mipsel to build the firmware it will
 #    # load into the Ben Nanonote
 #    gccCross =
@@ -4526,7 +4549,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  clangWrapSelf = build: callPackage ../build-support/cc-wrapper {
 #    cc = build;
 #    isClang = true;
-#    stdenv = clangStdenv;
+#    stdenv = pkgs.clangStdenv;
 #    libc = glibc;
 #    extraPackages = [ libcxx libcxxabi ];
 #    nativeTools = false;
@@ -4535,12 +4558,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  #Use this instead of stdenv to build with clang
   clangStdenv = lowPrio llvmPackages.stdenv;
-  libcxxStdenv = stdenvAdapters.overrideCC stdenv (clangWrapSelf llvmPackages.clang-unwrapped);
+  libcxxStdenv = stdenvAdapters.overrideCC pkgs.stdenv (clangWrapSelf llvmPackages.clang-unwrapped);
 #
 #  cython = pythonPackages.cython;
 #  cython3 = python3Packages.cython;
 #
-  gcc = gcc5;
+  gcc = callPackageAlias "gcc5" { };
 
   gcc_multi =
     if system == "x86_64-linux" then lowPrio (
@@ -4549,7 +4572,7 @@ zstd = callPackage ../all-pkgs/zstd { };
           echo "dontMoveLib64=1" >> $out/nix-support/setup-hook
         '';
       in wrapCCWith (callPackage ../build-support/cc-wrapper) glibc_multi extraBuildCommands (gcc.cc.override {
-        stdenv = overrideCC stdenv (wrapCCWith (callPackage ../build-support/cc-wrapper) glibc_multi "" gcc.cc);
+        stdenv = overrideCC pkgs.stdenv (wrapCCWith (callPackage ../build-support/cc-wrapper) glibc_multi "" gcc.cc);
         profiledCompiler = false;
         enableMultilib = true;
       }))
@@ -5229,18 +5252,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #     async_extra sexplib async_shell core_extended async_find cohttp uri;
 #    ocaml = ocaml_4_02;
 #  };
-#
-  wrapCCWith = ccWrapper: libc: extraBuildCommands: baseCC: ccWrapper {
-    nativeTools = stdenv.cc.nativeTools or false;
-    nativeLibc = stdenv.cc.nativeLibc or false;
-    nativePrefix = stdenv.cc.nativePrefix or "";
-    cc = baseCC;
-    isGNU = baseCC.isGNU or false;
-    isClang = baseCC.isClang or false;
-    inherit libc extraBuildCommands;
-  };
-
-  wrapCC = wrapCCWith (callPackage ../build-support/cc-wrapper) pkgs.stdenv.cc.libc "";
 #
 #  wrapGCCCross =
 #    {gcc, libc, binutils, cross, shell ? "", name ? "gcc-cross-wrapper"}:
@@ -8241,7 +8252,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  ### DEVELOPMENT / PERL MODULES
 #
-  buildPerlPackage = callPackage ../development/perl-modules/generic perl;
+  buildPerlPackage = callPackage ../development/perl-modules/generic { };
 
   perlPackages = recurseIntoAttrs (callPackage ./perl-packages.nix {
     overrides = (config.perlPackageOverrides or (p: {})) pkgs;
@@ -8846,12 +8857,12 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  };
 #
   xorg = recurseIntoAttrs (lib.callPackagesWith pkgs ../servers/x11/xorg/default.nix {
-    inherit clangStdenv fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
+    inherit (pkgs) fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
       libxslt expat libpng zlib perl mesa_drivers spice_protocol libunwind
       dbus libuuid openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
       autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman udev
       libdrm;
-    mesa = mesa_noglu;
+    mesa = pkgs.mesa_noglu;
   } // { inherit xlibsWrapper; } );
 
   xwayland = callPackage ../servers/x11/xorg/xwayland.nix { };

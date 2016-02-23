@@ -977,6 +977,8 @@ librsvg = callPackage ../all-pkgs/librsvg { };
 
 libsecret = callPackage ../all-pkgs/libsecret { };
 
+libsigsegv = callPackage ../all-pkgs/libsigsegv { };
+
 libsoup = callPackage ../all-pkgs/libsoup { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };
@@ -7095,8 +7097,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 libsigcxx = callPackage ../development/libraries/libsigcxx { };
 #
 libsigcxx12 = callPackage ../development/libraries/libsigcxx/1.2.nix { };
-#
-libsigsegv = callPackage ../development/libraries/libsigsegv { };
 #
 libsndfile = callPackage ../development/libraries/libsndfile { };
 #

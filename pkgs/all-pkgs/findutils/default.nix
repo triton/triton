@@ -11,12 +11,14 @@ stdenv.mkDerivation rec {
     sha256 = "178nn4dl7wbcw499czikirnkniwnx36argdnqgz4ik9i6zvwkm6y";
   };
 
-  doCheck = true;
+  # We don't want to depend on bootstrap-tools
+  # This input forces the build system to use our
+  # newly built coreutils instead.
+  buildInputs = [
+    coreutils
+  ];
 
-  # Remove any references to the bootstrap tools
-  preFixup = ''
-    sed -i "s,$NIX_STORE.*/sort,${coreutils}/bin/sort,g" $out/bin/updatedb
-  '';
+  doCheck = true;
 
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/findutils/;
@@ -25,6 +27,8 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [
       wkennington
     ];
-    platforms = platforms.all;
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

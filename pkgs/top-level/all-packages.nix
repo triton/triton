@@ -2257,9 +2257,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    inherit (perlPackages) PerlMagick;
 #  };
 #
-  docbook2x = callPackage ../tools/typesetting/docbook2x {
-    inherit (perlPackages) XMLSAX XMLSAXBase XMLParser XMLNamespaceSupport;
-  };
+  docbook2x = callPackage ../tools/typesetting/docbook2x { };
 #
 #  dog = callPackage ../tools/system/dog { };
 #

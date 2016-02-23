@@ -164,11 +164,15 @@ stdenv.mkDerivation {
     postFixup = fixup;
   };
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = "http://boost.org/";
     description = "Collection of C++ libraries";
-    license = stdenv.lib.licenses.boost;
-    platforms = platforms.unix;
-    maintainers = with maintainers; [ simons wkennington ];
+    license = licenses.boost;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

@@ -1041,6 +1041,8 @@ libwacom = callPackage ../all-pkgs/libwacom { };
 
 libwps = callPackage ../all-pkgs/libwps { };
 
+libxslt = callPackage ../all-pkgs/libxslt { };
+
 libzapojit = callPackage ../all-pkgs/libzapojit { };
 
 linux-headers = callPackage ../all-pkgs/linux-headers { };
@@ -7238,8 +7240,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  libxmlxx = callPackage ../development/libraries/libxmlxx { };
 #
 #  libxmp = callPackage ../development/libraries/libxmp { };
-#
-  libxslt = callPackage ../development/libraries/libxslt { };
 #
 #  libixp_hg = callPackage ../development/libraries/libixp-hg { };
 #

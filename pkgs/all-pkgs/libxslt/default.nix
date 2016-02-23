@@ -1,4 +1,10 @@
-{ stdenv, fetchurl, fetchpatch, libxml2, findXMLCatalogs }:
+{ stdenv
+, fetchpatch
+, fetchurl
+
+, findXMLCatalogs
+, libxml2
+}:
 
 stdenv.mkDerivation rec {
   name = "libxslt-1.1.28";
@@ -16,26 +22,32 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  outputs = [ "out" "doc" ];
+  buildInputs = [
+    libxml2
+  ];
 
-  buildInputs = [ libxml2 ];
-
-  propagatedBuildInputs = [ findXMLCatalogs ];
+  propagatedBuildInputs = [
+    findXMLCatalogs
+  ];
 
   configureFlags = [
     "--with-libxml-prefix=${libxml2}"
     "--without-python"
-    "--without-crypto"
+    "--with-crypto"
     "--without-debug"
     "--without-mem-debug"
     "--without-debugger"
   ];
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://xmlsoft.org/XSLT/;
     description = "A C library and tools to do XSL transformations";
-    license = "bsd";
-    platforms = stdenv.lib.platforms.unix;
-    maintainers = [ stdenv.lib.maintainers.eelco ];
+    license = licenses.bsd3;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

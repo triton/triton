@@ -8830,7 +8830,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
       autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman udev
       libdrm;
     mesa = pkgs.mesa_noglu;
-  } // { inherit xlibsWrapper; } );
+  } // { inherit (pkgs) xlibsWrapper; } );
 
   xwayland = callPackage ../servers/x11/xorg/xwayland.nix { };
 #
@@ -8888,7 +8888,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
   atop = callPackage ../os-specific/linux/atop { };
 
   auditFull = callPackage ../os-specific/linux/audit { };
-  libaudit = auditFull.override {
+
+  libaudit = callPackageAlias "auditFull" {
     prefix = "lib";
     go = null; # We don't need go bindings
     python2 = null; # We don't need python2 bindings

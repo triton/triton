@@ -280,24 +280,22 @@ let
   fetchhg = callPackage ../build-support/fetchhg { };
 
   # `fetchurl' downloads a file from the network.
-  fetchurl = import ../build-support/fetchurl {
-    inherit curl stdenv;
-  };
+  fetchurl = callPackage ../build-support/fetchurl { };
 
-  fetchTritonPatch = { rev, file, sha256, fetchurl' ? fetchurl }: fetchurl' {
+  fetchTritonPatch = { rev, file, sha256 }: pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/triton/triton-patches/${rev}/${file}";
     inherit sha256;
   };
 
   fetchzip = callPackage ../build-support/fetchzip { };
 
-  fetchFromGitHub = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src", fetchzip' ? fetchzip }: fetchzip' {
+  fetchFromGitHub = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
     inherit name sha256;
     url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
     meta.homepage = "https://github.com/${owner}/${repo}/";
   } // { inherit rev; };
 
-  fetchFromBitbucket = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: fetchzip {
+  fetchFromBitbucket = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
     inherit name sha256;
     url = "https://bitbucket.org/${owner}/${repo}/get/${rev}.tar.gz";
     meta.homepage = "https://bitbucket.org/${owner}/${repo}/";
@@ -305,27 +303,27 @@ let
   };
 
   # cgit example, snapshot support is optional in cgit
-  fetchFromSavannah = { repo, rev, sha256, name ? "${repo}-${rev}-src" }: fetchzip {
+  fetchFromSavannah = { repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
     inherit name sha256;
     url = "http://git.savannah.gnu.org/cgit/${repo}.git/snapshot/${repo}-${rev}.tar.gz";
     meta.homepage = "http://git.savannah.gnu.org/cgit/${repo}.git/";
   };
 
   # gitlab example
-  fetchFromGitLab = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: fetchzip {
+  fetchFromGitLab = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
     inherit name sha256;
     url = "https://gitlab.com/${owner}/${repo}/repository/archive.tar.gz?ref=${rev}";
     meta.homepage = "https://gitlab.com/${owner}/${repo}/";
   };
 
   # gitweb example, snapshot support is optional in gitweb
-  fetchFromRepoOrCz = { repo, rev, sha256, name ? "${repo}-${rev}-src" }: fetchzip {
+  fetchFromRepoOrCz = { repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
     inherit name sha256;
     url = "http://repo.or.cz/${repo}.git/snapshot/${rev}.tar.gz";
     meta.homepage = "http://repo.or.cz/${repo}.git/";
   };
 
-  fetchFromSourceforge = { repo, rev, sha256, name ? "${repo}-${rev}-src" }: fetchzip {
+  fetchFromSourceforge = { repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
     inherit name sha256;
     url = "http://sourceforge.net/code-snapshots/git/"
       + "${lib.substring 0 1 repo}/"
@@ -361,7 +359,7 @@ let
   fetchNuGet = callPackage ../build-support/fetchnuget { };
   buildDotnetPackage = callPackage ../build-support/build-dotnet-package { };
 
-  resolveMirrorURLs = {url}: fetchurl {
+  resolveMirrorURLs = {url}: pkgs.fetchurl {
     showURLs = true;
     inherit url;
   };

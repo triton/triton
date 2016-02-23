@@ -70,22 +70,17 @@ let
       cc = null;
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage0Pkgs is missing package definition for `${n}`") pkgs) // rec {
-        inherit (pkgs) stdenv;
+        inherit (pkgs) stdenv fetchFromGitHub fetchTritonPatch;
 
-        fetchurl = import ../../build-support/fetchurl {
+        fetchurl = pkgs.fetchurl.override {
           stdenv = stage0Pkgs.stdenv;
           curl = bootstrapTools;
         };
 
-        fetchzip = import ../../build-support/fetchzip {
+        fetchzip = pkgs.fetchzip {
           lib = stage0Pkgs.stdenv.lib;
           unzip = bootstrapTools;
-          inherit fetchurl;
         };
-
-        fetchFromGitHub = a: pkgs.fetchFromGitHub (a // { fetchzip' = fetchzip; });
-
-        fetchTritonPatch = args: pkgs.fetchTritonPatch (args // { fetchurl' = fetchurl; });
 
         patchelf = stage0Pkgs.stdenv.mkDerivation {
           name = "patchelf-boot";

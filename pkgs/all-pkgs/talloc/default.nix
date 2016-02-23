@@ -1,5 +1,9 @@
-{ stdenv, fetchurl, python, pkgconfig, readline, libxslt
-, docbook_xsl, docbook_xml_dtd_42
+{ stdenv
+, docbook_xsl
+, docbook_xml_dtd_42
+, fetchurl
+, python2
+, libxslt
 }:
 
 stdenv.mkDerivation rec {
@@ -10,12 +14,15 @@ stdenv.mkDerivation rec {
     sha256 = "1pfx3kmj973hpacfw46fzfnjd7ms1j03ifkc30wk930brx8ffcrq";
   };
 
-  buildInputs = [
-    python pkgconfig readline libxslt docbook_xsl docbook_xml_dtd_42
+  nativeBuildInputs = [
+    docbook_xsl
+    docbook_xml_dtd_42
+    libxslt
+    python2
   ];
 
   preConfigure = ''
-    sed -i 's,#!/usr/bin/env python,#!${python}/bin/python,g' buildtools/bin/waf
+    patchShebangs buildtools/bin/waf
   '';
 
   configureFlags = [
@@ -28,7 +35,11 @@ stdenv.mkDerivation rec {
     description = "Hierarchical pool based memory allocator with destructors";
     homepage = http://tdb.samba.org/;
     license = licenses.gpl3;
-    maintainers = with maintainers; [ wkennington ];
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

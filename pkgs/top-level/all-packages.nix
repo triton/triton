@@ -1356,6 +1356,8 @@ sublime-text = callPackage ../all-pkgs/sublime-text { };
 
 sushi = callPackage ../all-pkgs/sushi { };
 
+talloc = callPackage ../all-pkgs/talloc { };
+
 texinfo = callPackage ../all-pkgs/texinfo { };
 
 totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
@@ -7852,10 +7854,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  taglib_1_9 = callPackage ../development/libraries/taglib/1.9.nix { };
 #
 #  taglib_extras = callPackage ../development/libraries/taglib-extras { };
-#
-  talloc = callPackage ../development/libraries/talloc {
-    python = python2;
-  };
 #
 #  tclap = callPackage ../development/libraries/tclap {};
 #

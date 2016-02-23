@@ -872,6 +872,8 @@ highlight = callPackage ../all-pkgs/highlight { };
 
 hwdata = callPackage ../all-pkgs/hwdata { };
 
+iasl = callPackage ../all-pkgs/iasl { };
+
 ibus = callPackage ../all-pkgs/ibus { };
 
 icu = callPackage ../all-pkgs/icu { };
@@ -2767,8 +2769,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  i2p = callPackage ../tools/networking/i2p {};
 #
 #  i2pd = callPackage ../tools/networking/i2pd {};
-#
-#  iasl = callPackage ../development/compilers/iasl { };
 #
 #  icecast = callPackage ../servers/icecast { };
 #

@@ -1132,8 +1132,7 @@ pcre = callPackage ../all-pkgs/pcre { };
 
 pcre2 = callPackage ../all-pkgs/pcre2 { };
 
-perl522 = callPackage ../all-pkgs/perl/5.22 { };
-perl = perl522;
+perl = callPackage ../all-pkgs/perl { };
 
 pixman = callPackage ../all-pkgs/pixman { };
 

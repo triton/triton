@@ -2,11 +2,14 @@
 , fetchurl
 , perl
 
+, acl
 , gmp
-, aclSupport ? true, acl
 , selinuxSupport? false, libselinux, libsepol
 }:
 
+let
+  inherit (stdenv.lib) optionals;
+in
 stdenv.mkDerivation rec {
   name = "coreutils-8.25";
 
@@ -20,8 +23,12 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    acl
     gmp
-  ] ++ stdenv.lib.optional aclSupport acl;
+  ] ++ optionals selinuxSupport [
+    libselinux
+    libsepol
+  ];
 
   doCheck = true;
 

@@ -727,6 +727,8 @@ gnugrep = callPackage ../all-pkgs/gnugrep { };
 
 gnum4 = callPackage ../all-pkgs/gnum4 { };
 
+gnumake = callPackage ../all-pkgs/gnumake { };
+
 gnupatch = callPackage ../all-pkgs/gnupatch { };
 
 gnused = callPackage ../all-pkgs/gnused { };
@@ -5676,14 +5678,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   gnome_doc_utils = callPackage ../development/tools/documentation/gnome-doc-utils {};
 
-  gnumake380 = callPackage ../development/tools/build-managers/gnumake/3.80 { };
-  gnumake381 = callPackage ../development/tools/build-managers/gnumake/3.81 { };
-  gnumake382 = callPackage ../development/tools/build-managers/gnumake/3.82 { };
-  gnumake3 = gnumake382;
-  gnumake40 = callPackage ../development/tools/build-managers/gnumake/4.0 { };
-  gnumake41 = callPackage ../development/tools/build-managers/gnumake/4.1 { };
-  gnumake = gnumake41;
-#
 #  gob2 = callPackage ../development/tools/misc/gob2 { };
 #
 #  gotty = goPackages.gotty.bin // { outputs = [ "bin" ]; };

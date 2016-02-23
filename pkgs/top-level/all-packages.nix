@@ -1035,6 +1035,8 @@ libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
 libwacom = callPackage ../all-pkgs/libwacom { };
 
+libwps = callPackage ../all-pkgs/libwps { };
+
 libzapojit = callPackage ../all-pkgs/libzapojit { };
 
 linux-headers = callPackage ../all-pkgs/linux-headers { };
@@ -7218,8 +7220,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   libwpd = callPackage ../development/libraries/libwpd { };
 #
 #  libwpd_08 = callPackage ../development/libraries/libwpd/0.8.nix { };
-#
-#  libwps = callPackage ../development/libraries/libwps { };
 #
   libwpg = callPackage ../development/libraries/libwpg { };
 #

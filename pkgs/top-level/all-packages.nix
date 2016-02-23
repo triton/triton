@@ -1153,6 +1153,8 @@ pangomm = callPackage ../all-pkgs/pangomm { };
 
 pangox-compat = callPackage ../all-pkgs/pangox-compat { };
 
+parallel = callPackage ../all-pkgs/parallel { };
+
 patchelf = callPackage ../all-pkgs/patchelf { };
 
 pavucontrol = callPackage ../all-pkgs/pavucontrol { };
@@ -3452,8 +3454,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  paper-gtk-theme = callPackage ../misc/themes/gtk3/paper-gtk-theme { };
 #
 #  par2cmdline = callPackage ../tools/networking/par2cmdline { };
-#
-  parallel = callPackage ../tools/misc/parallel { };
 #
 #  parcellite = callPackage ../tools/misc/parcellite { };
 #

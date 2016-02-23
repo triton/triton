@@ -1096,6 +1096,8 @@ obexftp = callPackage ../all-pkgs/obexftp { };
 
 openobex = callPackage ../all-pkgs/openobex { };
 
+openssl = callPackage ../all-pkgs/openssl { };
+
 orbit2 = callPackage ../all-pkgs/orbit2 { };
 
 p7zip = callPackage ../all-pkgs/p7zip { };
@@ -7478,11 +7480,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  boringssl = callPackage ../development/libraries/boringssl { };
 #
 #  wolfssl = callPackage ../development/libraries/wolfssl { };
-#
-  openssl = openssl_1_0_2;
-
-  inherit (callPackages ../development/libraries/openssl { })
-    openssl_1_0_2;
 #
 #  opensubdiv = callPackage ../development/libraries/opensubdiv { };
 #

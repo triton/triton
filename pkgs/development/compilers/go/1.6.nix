@@ -1,12 +1,13 @@
 { stdenv
 , fetchurl
-, tzdata
+, go_1_4
+, perl
+, runCommand
+, which
+
 , iana_etc
 , mime-types
-, go_1_4
-, runCommand
-, perl
-, which
+, tzdata
 }:
 
 let
@@ -49,6 +50,13 @@ stdenv.mkDerivation rec {
     fi
 
     cd go
+  '';
+
+  patches = [
+    ./remove-tools-1.6.patch
+  ];
+
+  postPatch = ''
     patchShebangs ./ # replace /bin/bash
 
     # The os test wants to read files in an existing path. Just don't let it be /usr/bin.
@@ -69,14 +77,14 @@ stdenv.mkDerivation rec {
     sed -i 's,#!/usr/bin/env bash,#! ${stdenv.shell},g' misc/cgo/testcarchive/test.bash
   '';
 
-  patches = [
-    ./remove-tools-1.5.patch
-  ];
-
-  GOOS = if stdenv.isLinux then "linux" else throw "Unknown GOOS";
-  GOARCH = if stdenv.system == "i686-linux" then "386"
-           else if stdenv.system == "x86_64-linux" then "amd64"
-           else throw "Unsupported system";
+  GOOS = "linux";
+  GOARCH =
+    if stdenv.system == "i686-linux" then
+      "386"
+    else if stdenv.system == "x86_64-linux" then
+      "amd64"
+    else
+      throw "Unsupported system.";
   GO386 = 387; # from Arch: don't assume sse2 on i686
   CGO_ENABLED = 1;
   GOROOT_BOOTSTRAP = "${goBootstrap}/share/go";
@@ -104,10 +112,11 @@ stdenv.mkDerivation rec {
     homepage = http://golang.org/;
     description = "The Go Programming language";
     license = licenses.bsd3;
-    maintainers = with maintainers; [ cstrahan wkennington ];
-    platforms = [
-      "x86_64-linux"
-      "i686-linux"
+    maintainers = with maintainers; [
+      wkennington
     ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

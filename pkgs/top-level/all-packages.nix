@@ -4701,7 +4701,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  dotnetPackages = callPackage ./dotnet-packages.nix {};
 #
   go_1_4 = callPackage ../development/compilers/go/1.4.nix { };
-  go_1_5 = callPackage ../development/compilers/go/1.5.nix { };
   go_1_6 = callPackage ../development/compilers/go/1.6.nix { };
   go = callPackageAlias "go_1_6" { };
 #
@@ -8212,15 +8211,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  ### DEVELOPMENT / GO MODULES
 #
-  go15Packages = callPackage ./go-packages.nix {
-    go = go_1_5;
-    buildGoPackage = callPackage ../development/go-modules/generic {
-      go = go_1_5;
-      govers = go15Packages.govers.bin;
-    };
-    overrides = (config.goPackageOverrides or (p: {})) pkgs;
-  };
-
   go16Packages = callPackage ./go-packages.nix {
     go = go_1_6;
     buildGoPackage = callPackage ../development/go-modules/generic {
@@ -8230,7 +8220,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
     overrides = (config.goPackageOverrides or (p: {})) pkgs;
   };
 
-  goPackages = go16Packages;
+  goPackages = callPackageAlias "go16Packages" { };
 #
 #  ### DEVELOPMENT / LISP MODULES
 #

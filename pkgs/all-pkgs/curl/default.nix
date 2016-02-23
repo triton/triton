@@ -1,31 +1,29 @@
-{ stdenv, fetchurl, perl
+{ stdenv
+, fetchurl
+, perl
 
-# Optional Dependencies
-, zlib ? null, openssl ? null, libssh2 ? null, libnghttp2 ? null, c-ares ? null
-, gss ? null, rtmpdump ? null, openldap ? null, libidn ? null
+, c-ares
+, gss
+, libidn
+, libnghttp2
+, libssh2
+, openldap
+, openssl
+, rtmpdump
+, zlib
 
 # Extra arguments
 , suffix ? ""
 }:
 
-with stdenv;
-with stdenv.lib;
 let
+  inherit (stdenv.lib)
+    mkEnable
+    mkWith
+    optionalString
+    optionals;
   isFull = suffix == "full";
   nameSuffix = optionalString (suffix != "") "-${suffix}";
-
-  # Normal Depedencies
-  optOpenssl = shouldUsePkg openssl;
-  optLibnghttp2 = shouldUsePkg libnghttp2;
-  optZlib = shouldUsePkg zlib;
-  optC-ares = shouldUsePkg c-ares;
-
-  # Full dependencies
-  optLibssh2 = if !isFull then null else shouldUsePkg libssh2;
-  optGss = if !isFull then null else shouldUsePkg gss;
-  optRtmpdump = if !isFull then null else shouldUsePkg rtmpdump;
-  optOpenldap = if !isFull then null else shouldUsePkg openldap;
-  optLibidn = if !isFull then null else shouldUsePkg libidn;
 in
 stdenv.mkDerivation rec {
   name = "curl${nameSuffix}-${version}";
@@ -36,18 +34,29 @@ stdenv.mkDerivation rec {
     sha256 = "13z9gba3q2ybp50z0gdkzhwcx9m0i7qkvm278yz4pql2jfml7inx";
   };
 
-  nativeBuildInputs = [ perl ];
-  propagatedBuildInputs = [
-    optZlib optOpenssl optLibssh2 optLibnghttp2 optC-ares
-    optGss optRtmpdump optOpenldap optLibidn
+  nativeBuildInputs = [
+    perl
+  ];
+
+  buildInputs = [
+    c-ares
+    libnghttp2
+    openssl
+    zlib
+  ] ++ optionals isFull [
+    gss
+    libidn
+    libssh2
+    openldap
+    rtmpdump
   ];
 
   configureFlags = [
     (mkEnable true                    "http"              null)
     (mkEnable true                    "ftp"               null)
     (mkEnable true                    "file"              null)
-    (mkEnable (optOpenldap != null)   "ldap"              null)
-    (mkEnable (optOpenldap != null)   "ldaps"             null)
+    (mkEnable isFull                  "ldap"              null)
+    (mkEnable isFull                  "ldaps"             null)
     (mkEnable true                    "rtsp"              null)
     (mkEnable true                    "proxy"             null)
     (mkEnable true                    "dict"              null)
@@ -61,12 +70,12 @@ stdenv.mkDerivation rec {
     (mkEnable true                    "manual"            null)
     (mkEnable true                    "libcurl_option"    null)
     (mkEnable false                   "libgcc"            null) # TODO: Enable on gcc
-    (mkWith   (optZlib != null)       "zlib"              null)
+    (mkWith   true                    "zlib"              null)
     (mkEnable true                    "ipv4"              null)
-    (mkWith   (optGss != null)        "gssapi"            null)
+    (mkWith   true                    "gssapi"            null)
     (mkWith   false                   "winssl"            null)
     (mkWith   false                   "darwinssl"         null)
-    (mkWith   (optOpenssl != null)    "ssl"               null)
+    (mkWith   true                    "ssl"               null)
     (mkWith   false                   "gnutls"            null)
     (mkWith   false                   "polarssl"          null)
     (mkWith   false                   "mbedtls"           null)
@@ -76,27 +85,31 @@ stdenv.mkDerivation rec {
     (mkWith   false                   "libpsl"            null)
     (mkWith   false                   "libmetalink"       null)
     #(mkWith   false                   "zsh-functions-dir" null)
-    (mkWith   (optLibssh2 != null)    "libssh2"           null)
-    (mkWith   (optRtmpdump!= null)    "librtmp"           null)
+    (mkWith   isFull                  "libssh2"           null)
+    (mkWith   isFull                  "librtmp"           null)
     (mkEnable false                   "versioned-symbols" null)
     (mkWith   false                   "winidn"            null)
-    (mkWith   (optLibidn != null)     "libidn"            null)
-    (mkWith   (optLibnghttp2 != null) "nghttp2"           null)
+    (mkWith   isFull                  "libidn"            null)
+    (mkWith   true                    "nghttp2"           null)
     (mkEnable false                   "sspi"              null)
     (mkEnable true                    "crypto-auth"       null)
-    (mkEnable (optOpenssl != null)    "tls-srp"           null)
+    (mkEnable true                    "tls-srp"           null)
     (mkEnable true                    "unix-sockets"      null)
     (mkEnable true                    "cookies"           null)
-    (mkEnable (optC-ares != null)     "ares"              null)
+    (mkEnable true                    "ares"              null)
     (mkEnable true                    "rt"                null)
     (mkWith   true                    "ca-bundle"         "/etc/ssl/certs/ca-certificates.crt")
   ];
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "A command line tool for transferring files with URL syntax";
-    homepage    = http://curl.haxx.se/;
-    license     = licenses.mit;
-    platforms   = platforms.all;
-    maintainers = with maintainers; [ lovek323 wkennington ];
+    homepage = http://curl.haxx.se/;
+    license = licenses.mit;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

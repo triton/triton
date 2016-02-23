@@ -568,6 +568,14 @@ cryptodevHeaders = callPackage ../all-pkgs/cryptodev {
 
 cryptopp = callPackage ../all-pkgs/crypto++ { };
 
+curl = callPackage ../all-pkgs/curl {
+  suffix = "";
+};
+
+curlFull = callPackageAlias "curl" {
+  suffix = "full";
+};
+
 dash = callPackage ../all-pkgs/dash { };
 
 dconf = callPackage ../all-pkgs/dconf { };
@@ -2093,19 +2101,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   cudatoolkit7 = callPackage ../development/compilers/cudatoolkit/7.0.nix { };
 
   cudatoolkit = cudatoolkit7;
-
-  curl = curlFull.override {
-    suffix = "";
-  };
-
-  curlFull = callPackage ../tools/networking/curl { suffix = "full"; };
-
-  curl3 = callPackage ../tools/networking/curl/7.15.nix rec {
-    zlibSupport = true;
-    sslSupport = zlibSupport;
-  };
-
-  curl_unix_socket = callPackage ../tools/networking/curl-unix-socket rec { };
 
 #  cunit = callPackage ../tools/misc/cunit { };
 #

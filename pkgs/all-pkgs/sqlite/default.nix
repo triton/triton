@@ -1,16 +1,25 @@
-{ lib, stdenv, fetchurl, readline, ncurses }:
+{ stdenv
+, fetchurl
+, readline
+, ncurses
+}:
 
 stdenv.mkDerivation {
-  name = "sqlite-3.10.2";
+  name = "sqlite-3.11.0";
 
   src = fetchurl {
-    url = "http://sqlite.org/2016/sqlite-autoconf-3100200.tar.gz";
-    sha1 = "ea4156fc3f6a4a4a2752a5a3ac5c5b3fe7e1a24b";
+    url = "http://sqlite.org/2016/sqlite-autoconf-3110000.tar.gz";
+    sha1 = "e2d300e4b24af5ecd67a1396488893fa44864e36";
   };
 
-  buildInputs = [ readline ncurses ];
+  buildInputs = [
+    readline
+    ncurses
+  ];
 
-  configureFlags = [ "--enable-threadsafe" ];
+  configureFlags = [
+    "--enable-threadsafe"
+  ];
 
   NIX_CFLAGS_COMPILE = [
     "-DSQLITE_ENABLE_COLUMN_METADATA"
@@ -40,16 +49,16 @@ stdenv.mkDerivation {
       ''$'#include <unistd.h>\nint main()\n{\n  pread64(0, NULL, 0, 0);\n  pwrite64(0, NULL, 0, 0);\n  return 0;\n}'; then
       export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -DUSE_PREAD64 -D_LARGEFILE64_SOURCE"
     fi
-
-    echo ""
-    echo "NIX_CFLAGS_COMPILE = $NIX_CFLAGS_COMPILE"
-    echo ""
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://www.sqlite.org/;
     description = "A self-contained, serverless, zero-configuration, transactional SQL database engine";
-    platforms = stdenv.lib.platforms.unix;
-    maintainers = with stdenv.lib.maintainers; [ eelco np ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

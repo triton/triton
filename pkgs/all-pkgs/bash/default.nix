@@ -34,10 +34,10 @@ stdenv.mkDerivation rec {
   ];
 
   NIX_CFLAGS_COMPILE = [
-    "-DSYS_BASHRC=/etc/bashrc"
-    "-DSYS_BASH_LOGOUT=/etc/bash_logout"
-    "-DDEFAULT_PATH_VALUE=/no-such-path"
-    "-DSTANDARD_UTILS_PATH=/no-such-path"
+    "-DSYS_BASHRC=\"/etc/${passthru.systemBashrcName}\""
+    "-DSYS_BASH_LOGOUT=\"/etc/${passthru.systemBashlogoutName}\""
+    "-DDEFAULT_PATH_VALUE=\"/no-such-path\""
+    "-DSTANDARD_UTILS_PATH=\"/no-such-path\""
     "-DNON_INTERACTIVE_LOGIN_SHELLS"
     "-DSSH_SOURCE_BASHRC"
   ];
@@ -63,6 +63,8 @@ stdenv.mkDerivation rec {
 
   passthru = {
     shellPath = "/bin/bash";
+    systemBashrcName = "bash.bashrc";
+    systemBashlogoutName = "bash.bash_logout";
   };
 
   meta = with stdenv.lib; {

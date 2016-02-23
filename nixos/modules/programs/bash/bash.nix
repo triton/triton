@@ -167,13 +167,13 @@ in
         fi
 
         if [ -n "''${BASH_VERSION:-}" ]; then
-          . /etc/bashrc
+          . /etc/${pkgs.bash.systemBashrcName}
         fi
       '';
 
-    environment.etc."bashrc".text =
+    environment.etc."${pkgs.bash.systemBashrcName}".text =
       ''
-        # /etc/bashrc: DO NOT EDIT -- this file has been generated automatically.
+        # ${pkgs.bash.systemBashrcName}: DO NOT EDIT -- this file has been generated automatically.
 
         # Only execute this file once per shell.
         if [ -n "$__ETC_BASHRC_SOURCED" -o -n "$NOSYSBASHRC" ]; then return; fi
@@ -192,8 +192,8 @@ in
         fi
 
         # Read system-wide modifications.
-        if test -f /etc/bashrc.local; then
-          . /etc/bashrc.local
+        if test -f /etc/${pkgs.bash.systemBashrcName}.local; then
+          . /etc/${pkgs.bash.systemBashrcName}.local
         fi
       '';
 

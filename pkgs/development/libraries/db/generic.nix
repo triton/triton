@@ -39,7 +39,11 @@ stdenv.mkDerivation rec {
     homepage = "http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/index.html";
     description = "Berkeley DB";
     license = license;
-    platforms = platforms.unix;
-    branch = branch;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

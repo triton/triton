@@ -120,8 +120,13 @@ stdenv.mkDerivation rec {
     install -Dm644 services "$out/etc/services"
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "IANA protocol and port number assignments (/etc/protocols and /etc/services)";
-    platforms = stdenv.lib.platforms.unix;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

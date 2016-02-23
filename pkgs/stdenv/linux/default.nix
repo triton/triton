@@ -154,7 +154,7 @@ let
   };
 
   # This is the second package set using the final glibc and bootstrap tools.
-  # This stage is used for building the final gcc.
+  # This stage is used for building the final gcc, which, and gnum4.
   # Propagates stage1 glibc and linux-headers.
   stage2Pkgs = allPackages rec {
     inherit targetSystem hostSystem config;
@@ -227,9 +227,9 @@ let
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage3Pkgs is missing package definition for `${n}`") pkgs) // {
         pkgs = stage3Pkgs;
         inherit (stage1Pkgs) glibc linux-headers;
-        inherit (stage2Pkgs) m4 gnum4 which gettext;
+        inherit (stage2Pkgs) m4 gnum4 which;
         inherit (pkgs) stdenv xz zlib attr acl gmp coreutils binutils
-          gpm ncurses readline bash libnghttp2 cryptodevHeaders
+          gpm ncurses readline bash libnghttp2 cryptodevHeaders gettext
           openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
           gawk gnutar gzip bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
 
@@ -307,9 +307,9 @@ let
 
     overrides = pkgs: {
       inherit (stage1Pkgs) glibc linux-headers;
-      inherit (stage2Pkgs) m4 gnum4 which gettext;
+      inherit (stage2Pkgs) m4 gnum4 which;
       inherit (stage3Pkgs) gcc xz zlib attr acl gmp coreutils binutils
-        gpm ncurses readline bash libnghttp2 cryptodevHeaders
+        gpm ncurses readline bash libnghttp2 cryptodevHeaders gettext
         openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
         gawk gnutar gzip bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
     };

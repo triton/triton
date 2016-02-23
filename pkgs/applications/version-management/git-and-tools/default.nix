@@ -27,10 +27,10 @@ rec {
   # support for bugzilla
   git-bz = callPackage ./git-bz { };
 
-  git = appendToName "minimal" gitBase;
+  git = stdenv.lib.appendToName "minimal" gitBase;
 
   # Git with SVN support, but without GUI.
-  gitSVN = lowPrio (appendToName "with-svn" (gitBase.override {
+  gitSVN = lowPrio (stdenv.lib.appendToName "with-svn" (gitBase.override {
     svnSupport = true;
   }));
 

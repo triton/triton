@@ -8,7 +8,7 @@
 , tetex ? null
 , dblatexFull ? null
 , libxslt ? null
-, w3m ? null
+, w3m-batch ? null
 , lynx ? null
 , imagemagick ? null
 , lilypond ? null
@@ -47,7 +47,7 @@ assert enableStandardFeatures ->
   tetex != null &&
   dblatexFull != null &&
   libxslt != null &&
-  w3m != null &&
+  w3m-batch != null &&
   lynx != null &&
   imagemagick != null &&
   lilypond != null &&
@@ -240,7 +240,7 @@ stdenv.mkDerivation rec {
         -e "s|^XSLTPROC =.*|XSLTPROC = '${libxslt}/bin/xsltproc'|" \
         -e "s|^DBLATEX =.*|DBLATEX = '${dblatexFull}/bin/dblatex'|" \
         -e "s|^FOP =.*|FOP = '${fop}/bin/fop'|" \
-        -e "s|^W3M =.*|W3M = '${w3m}/bin/w3m'|" \
+        -e "s|^W3M =.*|W3M = '${w3m-batch}/bin/w3m'|" \
         -e "s|^LYNX =.*|LYNX = '${lynx}/bin/lynx'|" \
         -e "s|^XMLLINT =.*|XMLLINT = '${libxml2}/bin/xmllint'|" \
         -e "s|^EPUBCHECK =.*|EPUBCHECK = 'nixpkgs_is_missing_epubcheck'|" \

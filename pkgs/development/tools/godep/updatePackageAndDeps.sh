@@ -32,7 +32,7 @@ TOP_LEVEL="$(pwd)"
 
 # Build all of the packages needed to run this script
 echo "Building script dependencies..." >&2
-exp='let pkgs = import ./pkgs/top-level/all-packages.nix { };
+exp='let pkgs = import ./. { };
 in pkgs.buildEnv {
   name = "goUpdater";
   paths = with pkgs; [

@@ -160,8 +160,6 @@ let
   ### Helper functions.
   inherit lib config stdenvAdapters;
 
-  inherit (misc) versionedDerivation;
-
   # Applying this to an attribute set will cause nix-env to look
   # inside the set for derivations.
   recurseIntoAttrs = attrs: attrs // { recurseForDerivations = true; };
@@ -1888,7 +1886,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   asciidoc = callPackage ../tools/typesetting/asciidoc {
     inherit (pythonPackages) matplotlib numpy aafigure recursivePthLoader;
-    w3m = w3m-batch;
     enableStandardFeatures = false;
   };
 
@@ -4014,9 +4011,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  stricat = callPackage ../tools/security/stricat { };
 #
-#  privoxy = callPackage ../tools/networking/privoxy {
-#    w3m = w3m-batch;
-#  };
+#  privoxy = callPackage ../tools/networking/privoxy { };
 #
 #  swaks = callPackage ../tools/networking/swaks { };
 #
@@ -4471,9 +4466,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  xmlstarlet = callPackage ../tools/text/xml/xmlstarlet { };
 #
-  xmlto = callPackage ../tools/typesetting/xmlto {
-    w3m = w3m-batch;
-  };
+  xmlto = callPackage ../tools/typesetting/xmlto { };
 #
 #  xmpppy = pythonPackages.xmpppy;
 #
@@ -12049,7 +12042,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  };
 #
 #  # Version for batch text processing, not a good browser
-  w3m-batch = w3m.override {
+  w3m-batch = callPackageAlias "w3m" {
     graphicsSupport = false;
     x11Support = false;
     mouseSupport = false;

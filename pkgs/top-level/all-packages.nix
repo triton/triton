@@ -8212,10 +8212,10 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  ### DEVELOPMENT / GO MODULES
 #
   go16Packages = callPackage ./go-packages.nix {
-    go = go_1_6;
+    go = callPackageAlias "go_1_6" { };
     buildGoPackage = callPackage ../development/go-modules/generic {
-      go = go_1_6;
-      govers = go16Packages.govers.bin;
+      go = callPackageAlias "go_1_6" { };
+      govers = (callPackageAlias "go16Packages" { }).govers.bin;
     };
     overrides = (config.goPackageOverrides or (p: {})) pkgs;
   };

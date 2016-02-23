@@ -1135,6 +1135,10 @@ perl = perl522;
 
 pixman = callPackage ../all-pkgs/pixman { };
 
+pkgconf = callPackage ../all-pkgs/pkgconf { };
+pkg-config = callPackage ../all-pkgs/pkgconfig { };
+pkgconfig = callPackageAlias "pkgconf" { };
+
 pngcrush = callPackage ../all-pkgs/pngcrush { };
 
 poppler_qt4 = poppler.override {
@@ -5806,10 +5810,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  phantomjs2 = callPackage ../development/tools/phantomjs2 { };
 #
 #  pmccabe = callPackage ../development/tools/misc/pmccabe { };
-#
-  pkgconf = callPackage ../development/tools/misc/pkgconf { };
-  pkg-config = callPackage ../development/tools/misc/pkgconfig { };
-  pkgconfig = pkgconf;
 #
 #  prelink = callPackage ../development/tools/misc/prelink { };
 #

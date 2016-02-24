@@ -1065,6 +1065,8 @@ libxml2 = callPackage ../all-pkgs/libxml2 { };
 
 libxslt = callPackage ../all-pkgs/libxslt { };
 
+lz4 = callPackage ../all-pkgs/lz4 { };
+
 libzapojit = callPackage ../all-pkgs/libzapojit { };
 
 linux-headers = callPackage ../all-pkgs/linux-headers { };
@@ -3090,8 +3092,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  lxd = goPackages.lxd.bin // { outputs = [ "bin" ]; };
 #
   lzip = callPackage ../tools/compression/lzip { };
-#
-  lz4 = callPackage ../tools/compression/lz4 { };
 #
 #  lzop = callPackage ../tools/compression/lzop { };
 #

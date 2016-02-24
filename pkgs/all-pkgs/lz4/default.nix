@@ -1,4 +1,6 @@
-{ stdenv, fetchFromGitHub, valgrind }:
+{ stdenv
+, fetchFromGitHub
+}:
 
 stdenv.mkDerivation rec {
   name = "lz4-${version}";
@@ -11,18 +13,19 @@ stdenv.mkDerivation rec {
     owner = "Cyan4973";
   };
 
-  buildInputs = stdenv.lib.optional doCheck valgrind;
-
-  makeFlags = [ "PREFIX=$(out)" ];
-
-  doCheck = false; # tests take a very long time
-  checkTarget = "test";
+  preBuild = ''
+    makeFlagsArray+=("PREFIX=$out")
+  '';
 
   meta = with stdenv.lib; {
     description = "Extremely fast compression algorithm";
     homepage = https://code.google.com/p/lz4/;
     license = with licenses; [ bsd2 gpl2Plus ];
-    platforms = platforms.unix;
-    maintainers = with maintainers; [ nckx ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

@@ -1377,6 +1377,8 @@ swig2 = callPackageAlias "swig" {
 
 talloc = callPackage ../all-pkgs/talloc { };
 
+tcp-wrappers = callPackage ../all-pkgs/tcp-wrappers { };
+
 tevent = callPackage ../all-pkgs/tevent { };
 
 texinfo = callPackage ../all-pkgs/texinfo { };
@@ -9565,9 +9567,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  sysvtools = callPackage ../os-specific/linux/sysvinit {
 #    withoutInitTools = true;
 #  };
-#
-#  # FIXME: `tcp-wrapper' is actually not OS-specific.
-  tcp_wrappers = callPackage ../os-specific/linux/tcp-wrappers { };
 #
 #  trinity = callPackage ../os-specific/linux/trinity { };
 #

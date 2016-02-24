@@ -8,7 +8,7 @@
 , openldap
 , python2
 , python3
-, tcp_wrappers
+, tcp-wrappers
 
 , prefix ? ""
 }:
@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
     python3
   ] ++ optionals (!libOnly) [
     libkrb5
-    tcp_wrappers
+    tcp-wrappers
     openldap
   ];
 
@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
     "--without-aarch64"  # TODO: Support
     "--${if libOnly then "without" else "with"}-apparmor"
     "--without-prelude"
-    "--${if libOnly then "without" else "with"}-libwrap${if libOnly then "" else "=${tcp_wrappers}"}"
+    "--${if libOnly then "without" else "with"}-libwrap${if libOnly then "" else "=${tcp-wrappers}"}"
   ];
 
   # For libs only build and install the lib portion

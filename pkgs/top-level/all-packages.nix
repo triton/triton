@@ -1028,6 +1028,10 @@ libsoup = callPackage ../all-pkgs/libsoup { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };
 
+libsystemd = callPackageAlias "systemd-full" {
+  type = "lib";
+};
+
 libtool = callPackage ../all-pkgs/libtool { };
 
 libtorrent = callPackage ../all-pkgs/libtorrent { };
@@ -1392,6 +1396,9 @@ swig = callPackage ../all-pkgs/swig { };
 swig2 = callPackageAlias "swig" {
   channel = "2";
 };
+
+# TODO: Rename back to systemd once depedencies are sorted
+systemd-full = callPackage ../all-pkgs/systemd { };
 
 talloc = callPackage ../all-pkgs/talloc { };
 
@@ -9549,10 +9556,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   sysstat = callPackage ../os-specific/linux/sysstat { };
 
-  systemd = callPackage ../os-specific/linux/systemd {
-    linuxHeaders = linuxHeaders_3_18;
-  };
-#
 #  # In nixos, you can set systemd.package = pkgs.systemd_with_lvm2 to get
 #  # LVM2 working in systemd.
   systemd_with_lvm2 = pkgs.lib.overrideDerivation pkgs.systemd (p: {

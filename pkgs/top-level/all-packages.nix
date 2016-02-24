@@ -514,6 +514,8 @@ at_spi2_core = at-spi2-core; # Deprecated alias
 
 atom = callPackage ../all-pkgs/atom { };
 
+auditFull = callPackage ../all-pkgs/audit { };
+
 autoconf = callPackage ../all-pkgs/autoconf { };
 
 automake = callPackage ../all-pkgs/automake { };
@@ -930,6 +932,10 @@ kea = callPackage ../all-pkgs/kea { };
 kubernetes = callPackage ../all-pkgs/kubernetes { };
 
 libass = callPackage ../all-pkgs/libass { };
+
+libaudit = callPackageAlias "auditFull" {
+  prefix = "lib";
+};
 
 libbluray = callPackage ../all-pkgs/libbluray { };
 
@@ -8892,12 +8898,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   atop = callPackage ../os-specific/linux/atop { };
 
-  auditFull = callPackage ../os-specific/linux/audit { };
-
-  libaudit = callPackageAlias "auditFull" {
-    prefix = "lib";
-  };
-#
 #  b43Firmware_5_1_138 = callPackage ../os-specific/linux/firmware/b43-firmware/5.1.138.nix { };
 #
 #  b43Firmware_6_30_163_46 = callPackage ../os-specific/linux/firmware/b43-firmware/6.30.163.46.nix { };

@@ -1,8 +1,11 @@
-{ stdenv, fetchurl, devicemapper, openssl, libuuid, pkgconfig, popt
-, enablePython ? false, python ? null
+{ stdenv
+, fetchurl
+, lvm2
+, openssl
+, libutil-linux
+, popt
+, python
 }:
-
-assert enablePython -> python != null;
 
 stdenv.mkDerivation rec {
   name = "cryptsetup-1.7.0";
@@ -12,11 +15,19 @@ stdenv.mkDerivation rec {
     sha256 = "0j6iwf64pdrl4nm5ypc2r33b3k0aflb939wz2496vcqdrjkj8m87";
   };
 
-  configureFlags = [ "--enable-cryptsetup-reencrypt" "--with-crypto_backend=openssl" ]
-                ++ stdenv.lib.optional enablePython "--enable-python";
+  configureFlags = [
+    "--enable-cryptsetup-reencrypt"
+    "--with-crypto_backend=openssl"
+    "--enable-python"
+  ];
 
-  buildInputs = [ devicemapper openssl libuuid pkgconfig popt ]
-             ++ stdenv.lib.optional enablePython python;
+  buildInputs = [
+    lvm2
+    openssl
+    libutil-linux
+    popt
+    python
+  ];
 
   meta = {
     homepage = http://code.google.com/p/cryptsetup/;

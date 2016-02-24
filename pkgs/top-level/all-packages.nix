@@ -591,6 +591,8 @@ cryptodevHeaders = callPackage ../all-pkgs/cryptodev {
 
 cryptopp = callPackage ../all-pkgs/crypto++ { };
 
+cryptsetup = callPackage ../all-pkgs/cryptsetup { };
+
 curl = callPackage ../all-pkgs/curl {
   suffix = "";
 };
@@ -8969,8 +8971,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  cryopid = callPackage ../os-specific/linux/cryopid { };
 #
 #  criu = callPackage ../os-specific/linux/criu { };
-#
-  cryptsetup = callPackage ../os-specific/linux/cryptsetup { };
 #
 #  cramfsswap = callPackage ../os-specific/linux/cramfsswap { };
 #

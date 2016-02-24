@@ -37,12 +37,9 @@
 , lz4
 , pam
 , qrencode
-, util-linux
+, util-linux-full
 , xz
 , zlib
-
-, glib
-, kexectools
 
 , type ? ""
 }:
@@ -93,39 +90,33 @@ stdenv.mkDerivation rec {
     gperf
     libcap
 
-    kmod
-    libseccomp
-    libxkbcommon
     xz
-    zlib
-    bzip2
     lz4
-    pam
-    acl
     libgcrypt
     libgpgerror
     libaudit
-    elfutils-libs
-    qrencode
-    gnutls
-    libmicrohttpd
-    curl
     libidn
-    iptables
-    gnu-efi
   ] ++ optionals (libOnly) [
     libutil-linux
   ] ++ optionals (!libOnly) [
     dbus
+    kmod
+    libxkbcommon
+    libseccomp
+    zlib
+    bzip2
+    pam
+    acl
+    elfutils-libs
     cryptsetup
-    util-linux
+    qrencode
+    gnutls
+    libmicrohttpd
+    curl
+    iptables
+    gnu-efi
+    util-linux-full
   ];
-
-  /*buildInputs = [
-    glib
-    kexectools
-    docbook_xsl docbook_xml_dtd_42 docbook_xml_dtd_45
-  ];*/
 
   preConfigure = optionalString (!libOnly) ''
     # FIXME: patch this in systemd properly (and send upstream).
@@ -133,13 +124,13 @@ stdenv.mkDerivation rec {
       test -e $i
       substituteInPlace $i \
         --replace /usr/bin/getent ${stdenv.cc.libc}/bin/getent \
-        --replace /bin/mount ${util-linux}/bin/mount \
-        --replace /bin/umount ${util-linux}/bin/umount \
-        --replace /sbin/swapon ${util-linux}/sbin/swapon \
-        --replace /sbin/swapoff ${util-linux}/sbin/swapoff \
+        --replace /bin/mount ${util-linux-full}/bin/mount \
+        --replace /bin/umount ${util-linux-full}/bin/umount \
+        --replace /sbin/swapon ${util-linux-full}/sbin/swapon \
+        --replace /sbin/swapoff ${util-linux-full}/sbin/swapoff \
         --replace /bin/echo ${coreutils}/bin/echo \
         --replace /bin/cat ${coreutils}/bin/cat \
-        --replace /sbin/sulogin ${util-linux}/sbin/sulogin \
+        --replace /sbin/sulogin ${util-linux-full}/sbin/sulogin \
         --replace /usr/lib/systemd/systemd-fsck $out/lib/systemd/systemd-fsck
     done
 
@@ -191,9 +182,6 @@ stdenv.mkDerivation rec {
     "--enable-resolved"
     "--enable-networkd"
     "--enable-efi"
-    "--with-efi-libdir=${gnu-efi}/lib"
-    "--with-efi-ldsdir=${gnu-efi}/lib"
-    "--with-efi-includedir=${gnu-efi}/include"
     # "--enable-tpm"
     "--disable-kdbus" # We can't enable this since bus1 is a thing now
     "--enable-myhostname"
@@ -206,28 +194,28 @@ stdenv.mkDerivation rec {
   ] ++ (if libOnly then [
     "--without-python"
     "--disable-dbus"
-    "--enable-kmod"
-    "--enable-xkbcommon"
+    "--disable-kmod"
+    "--disable-xkbcommon"
     "--disable-blkid"
-    "--enable-seccomp"
-    "--enable-ima"
+    "--disable-seccomp"
+    "--disable-ima"
     "--enable-xz"
-    "--enable-zlib"
-    "--enable-bzip2"
+    "--disable-zlib"
+    "--disable-bzip2"
     "--enable-lz4"
-    "--enable-pam"
-    "--enable-acl"
+    "--disable-pam"
+    "--disable-acl"
     "--enable-gcrypt"
     "--enable-audit"
-    "--enable-elfutils"
+    "--disable-elfutils"
     "--disable-libcryptsetup"
-    "--enable-qrencode"
-    "--enable-gnutls"
-    "--enable-microhttpd"
-    "--enable-libcurl"
+    "--disable-qrencode"
+    "--disable-gnutls"
+    "--disable-microhttpd"
+    "--disable-libcurl"
     "--enable-libidn"
-    "--enable-libiptc"
-    "--enable-gnuefi"
+    "--disable-libiptc"
+    "--disable-gnuefi"
     "--disable-manpages"
   ] else [
     "--with-python"
@@ -254,10 +242,12 @@ stdenv.mkDerivation rec {
     "--enable-libiptc"
     "--enable-gnuefi"
     "--enable-manpages"
-  ]) ++ optionals (!libOnly) [
+    "--with-efi-libdir=${gnu-efi}/lib"
+    "--with-efi-ldsdir=${gnu-efi}/lib"
+    "--with-efi-includedir=${gnu-efi}/include"
     "--with-kbd-loadkeys=${kbd}/bin/loadkeys"
     "--with-kbd-setfont=${kbd}/bin/setfont"
-  ];
+  ]);
 
   PYTHON_BINARY = "${coreutils}/bin/env python"; # don't want a build time dependency on Python
 
@@ -297,13 +287,12 @@ stdenv.mkDerivation rec {
   
   installTargets = optionals libOnly [
     "install-includeHEADERS"
+    "install-pkgincludeHEADERS"
     "install-libLTLIBRARIES"
-    "install-pkgconfigdataDATA"
+    "install-pkgconfiglibDATA"
   ];
 
-  postInstall = ''
-    mv $out/share/pkgconfig $out/lib
-  '' + optionalString (!libOnly) ''
+  postInstall = optionalString (!libOnly) ''
     # sysinit.target: Don't depend on
     # systemd-tmpfiles-setup.service. This interferes with NixOps's
     # send-keys feature (since sshd.service depends indirectly on

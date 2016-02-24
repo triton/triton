@@ -845,26 +845,20 @@ gstreamer-vaapi = callPackage ../all-pkgs/gstreamer-vaapi { };
 gstreamermm = callPackage ../all-pkgs/gstreamermm { };
 
 gtk-doc = callPackage ../all-pkgs/gtk-doc { };
-gtk_doc = gtk-doc; # Deprecated alias
-gtkdoc = gtk-doc; # Deprecated alias
 
 gtk_2 = callPackage ../all-pkgs/gtk+/2.x.nix { };
-gtk2 = gtk_2;
 gtk_3 = callPackage ../all-pkgs/gtk+/3.x.nix { };
-gtk3 = gtk_3;
 
 gtkhtml = callPackage ../all-pkgs/gtkhtml { };
 
 gtkmm_2 = callPackage ../all-pkgs/gtkmm/2.x.nix { };
-gtkmm2 = gtkmm_2;
 gtkmm_3 = callPackage ../all-pkgs/gtkmm/3.x.nix { };
-gtkmm3 = gtkmm_3;
 
 gtksourceview = callPackage ../all-pkgs/gtksourceview { };
 
 gtkspell_2 = callPackage ../all-pkgs/gtkspell/2.x.nix { };
 gtkspell_3 = callPackage ../all-pkgs/gtkspell/3.x.nix { };
-gtkspell = gtkspell_3;
+gtkspell = callPackageAlias "gtkspell_3" { };
 
 guitarix = callPackage ../all-pkgs/guitarix {
   fftw = fftwSinglePrec;

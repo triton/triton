@@ -1,11 +1,13 @@
-{ stdenv, fetchurl, swig ? null, python2 ? null, python3 ? null }:
+{ stdenv
+, fetchurl
+, swig
 
-assert python2 != null || python3 != null -> swig != null;
+, python2
+, python3
+}:
 
 stdenv.mkDerivation rec {
   name = "libcap-ng-${version}";
-  # When updating make sure to test that the version with
-  # all of the python bindings still works
   version = "0.7.7";
 
   src = fetchurl {
@@ -13,8 +15,14 @@ stdenv.mkDerivation rec {
     sha256 = "0syhyrixk7fqvwis3k7iddn75g0qxysc1q5fifvzccxk7774jmb1";
   };
 
-  nativeBuildInputs = [ swig ];
-  buildInputs = [ python2 python3 ];
+  nativeBuildInputs = [
+    swig
+  ];
+
+  buildInputs = [
+    python2
+    python3
+  ];
 
   postPatch = ''
     function get_header() {
@@ -26,15 +34,19 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    (if python2 != null then "--with-python" else "--without-python")
-    (if python3 != null then "--with-python3" else "--without-python3")
+    "--with-python"
+    "--with-python3"
   ];
 
-  meta = let inherit (stdenv.lib) platforms licenses maintainers; in {
+  meta = with stdenv.lib; {
     description = "Library for working with POSIX capabilities";
     homepage = http://people.redhat.com/sgrubb/libcap-ng/;
-    platforms = platforms.linux;
     license = licenses.lgpl21;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

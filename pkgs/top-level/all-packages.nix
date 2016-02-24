@@ -922,6 +922,8 @@ imagemagick = callPackage ../all-pkgs/imagemagick { };
 
 inkscape = callPackage ../all-pkgs/inkscape { };
 
+intltool = callPackage ../all-pkgs/intltool { };
+
 iputils = callPackage ../all-pkgs/iputils { };
 
 isl = callPackage ../all-pkgs/isl { };
@@ -6517,8 +6519,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  indilib = callPackage ../development/libraries/indilib { };
 #
 iniparser = callPackage ../development/libraries/iniparser { };
-#
-intltool = callPackage ../development/tools/misc/intltool { };
 #
 #  ip2location-c = callPackage ../development/libraries/ip2location-c { };
 #

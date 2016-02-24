@@ -1058,7 +1058,7 @@ libusb = libusb_1;
 
 libusbmuxd = callPackage ../all-pkgs/libusbmuxd { };
 
-libutil-linux = callPackageAlias "util-linux" {
+libutil-linux = callPackageAlias "util-linux-full" {
   type = "lib";
 };
 
@@ -1204,6 +1204,8 @@ parallel = callPackage ../all-pkgs/parallel { };
 patchelf = callPackage ../all-pkgs/patchelf { };
 
 pavucontrol = callPackage ../all-pkgs/pavucontrol { };
+
+pciutils = callPackage ../all-pkgs/pciutils { };
 
 pcre = callPackage ../all-pkgs/pcre { };
 
@@ -3547,8 +3549,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ipsecTools = callPackage ../os-specific/linux/ipsec-tools { };
 #
 #  pbzip2 = callPackage ../tools/compression/pbzip2 { };
-#
-  pciutils = callPackage ../tools/system/pciutils { };
 #
   pcsclite = callPackage ../tools/security/pcsclite { };
 #
@@ -9283,19 +9283,19 @@ libtiff = callPackage ../development/libraries/libtiff { };
   };
 #
 #  # The current default kernel / kernel modules.
-  linuxPackages = linuxPackages_4_1;
-  linux = linuxPackages.kernel;
+  linuxPackages = callPackageAlias "linuxPackages_4_1";
+  linux = (callPackageAlias "linuxPackages" { })kernel;
 #
 #  # Update this when adding the newest kernel major version!
-  linuxPackages_latest = pkgs.linuxPackages_4_4;
-  linux_latest = linuxPackages_latest.kernel;
+  linuxPackages_latest = callPackageAlias "linuxPackages_4_4" { };
+  linux_latest = (callPackageAlias "linuxPackages_latest" { }).kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
-  linuxPackages_3_18 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_3_18 linuxPackages_3_18);
-  linuxPackages_4_1 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_1 linuxPackages_4_1);
-  linuxPackages_4_3 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_3 linuxPackages_4_3);
-  linuxPackages_4_4 = recurseIntoAttrs (linuxPackagesFor pkgs.linux_4_4 linuxPackages_4_4);
-  linuxPackages_testing = recurseIntoAttrs (linuxPackagesFor pkgs.linux_testing linuxPackages_testing);
+  linuxPackages_3_18 = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_3_18 pkgs.linuxPackages_3_18);
+  linuxPackages_4_1 = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_4_1 pkgs.linuxPackages_4_1);
+  linuxPackages_4_3 = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_4_3 pkgs.linuxPackages_4_3);
+  linuxPackages_4_4 = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_4_4 pkgs.linuxPackages_4_4);
+  linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_testing pkgs.linuxPackages_testing);
   linuxPackages_custom = {version, src, configfile}:
                            let linuxPackages_self = (linuxPackagesFor (pkgs.linuxManualConfig {inherit version src configfile;
                                                                                                allowImportFromDerivation=true;})
@@ -9303,7 +9303,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
                            in recurseIntoAttrs linuxPackages_self;
 #
 #  # Build a kernel for Xen dom0
-  linuxPackages_latest_xen_dom0 = recurseIntoAttrs (linuxPackagesFor (pkgs.linux_latest.override { features.xen_dom0=true; }) linuxPackages_latest);
+  linuxPackages_latest_xen_dom0 = recurseIntoAttrs (pkgs.linuxPackagesFor (pkgs.linux_latest.override { features.xen_dom0=true; }) pkgs.linuxPackages_latest);
 #
 #  # grsecurity flavors
 #  # Stable kernels

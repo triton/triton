@@ -14,7 +14,6 @@
 , coreutils
 , cryptsetup
 , curl
-, dbus
 , docbook_xml_dtd_42
 , docbook_xml_dtd_45
 , docbook_xsl
@@ -99,7 +98,6 @@ stdenv.mkDerivation rec {
   ] ++ optionals (libOnly) [
     libutil-linux
   ] ++ optionals (!libOnly) [
-    dbus
     kmod
     libxkbcommon
     libseccomp
@@ -151,9 +149,10 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--sysconfdir=/etc"
 
-    "--enable-address-sanitizer"
-    "--enable-undefined-sanitizer"
+    "--disable-address-sanitizer"  # TODO: Fix, breaks lvm2 invocation
+    "--disable-undefined-sanitizer"  # TODO: Fix, breaks lvm2 invocation
     "--enable-utmp"
+    "--disable-dbus"  # Only needed in tests which we dont run
     "--disable-coverage"
     "--disable-selinux"
     "--disable-apparmor"
@@ -193,7 +192,6 @@ stdenv.mkDerivation rec {
     "--disable-tests"
   ] ++ (if libOnly then [
     "--without-python"
-    "--disable-dbus"
     "--disable-kmod"
     "--disable-xkbcommon"
     "--disable-blkid"
@@ -219,7 +217,6 @@ stdenv.mkDerivation rec {
     "--disable-manpages"
   ] else [
     "--with-python"
-    "--enable-dbus"
     "--enable-kmod"
     "--enable-xkbcommon"
     "--enable-blkid"

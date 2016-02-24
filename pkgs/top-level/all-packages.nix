@@ -955,6 +955,8 @@ libelf = callPackage ../all-pkgs/libelf { };
 
 libev = callPackage ../all-pkgs/libev { };
 
+libevent = callPackage ../all-pkgs/libevent { };
+
 libffi = callPackage ../all-pkgs/libffi { };
 
 libgdata = callPackage ../all-pkgs/libgdata { };
@@ -6805,8 +6807,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libe-book = callPackage ../development/libraries/libe-book {};
 #
 #  libechonest = callPackage ../development/libraries/libechonest { };
-#
-  libevent = callPackage ../development/libraries/libevent { };
 #
 #  libewf = callPackage ../development/libraries/libewf { };
 #

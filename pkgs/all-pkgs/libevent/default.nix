@@ -1,4 +1,10 @@
-{ stdenv, fetchurl, autoreconfHook, openssl, python, findutils }:
+{ stdenv
+, autoreconfHook
+, fetchurl
+, python
+
+, openssl
+}:
 
 stdenv.mkDerivation rec {
   name = "libevent-${version}";
@@ -9,8 +15,13 @@ stdenv.mkDerivation rec {
     sha256 = "18qz9qfwrkakmazdlwxvjmw8p76g70n3faikwvdwznns1agw9hki";
   };
 
-  nativeBuildInputs = [ autoreconfHook ];
-  buildInputs = [ openssl python ];
+  nativeBuildInputs = [
+    autoreconfHook
+    python
+  ];
+  buildInputs = [
+    openssl
+  ];
 
   patchPhase = ''
     patchShebangs event_rpcgen.py
@@ -19,7 +30,11 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Event notification library";
     license = licenses.bsd3;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

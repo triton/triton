@@ -1046,6 +1046,8 @@ libva = callPackage ../all-pkgs/libva { };
 
 libvdpau = callPackage ../all-pkgs/libvdpau { };
 
+libverto = callPackage ../all-pkgs/libverto { };
+
 libvpx = callPackage ../all-pkgs/libvpx { };
 libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
@@ -7195,10 +7197,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
     qt4 = null;
     qt5 = null;
   });
-#
-  libverto = callPackage ../development/libraries/libverto {
-    glib = null; # Don't include fairly heavy dependency
-  };
 #
 #  libvdpau-va-gl = callPackage ../development/libraries/libvdpau-va-gl { };
 #

@@ -1422,7 +1422,8 @@ tracker = callPackage ../all-pkgs/tracker { };
 
 usbmuxd = callPackage ../all-pkgs/usbmuxd { };
 
-util-linux = callPackage ../all-pkgs/util-linux { };
+# TODO: Rename back to util-linux once dependencies are sorted
+util-linux-full = callPackage ../all-pkgs/util-linux { };
 
 vala = callPackage ../all-pkgs/vala { };
 
@@ -1851,9 +1852,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dtrx = callPackage ../tools/compression/dtrx { };
 #
-#  duperemove = callPackage ../tools/filesystems/duperemove {
-#    linuxHeaders = linuxHeaders_3_18;
-#  };
+#  duperemove = callPackage ../tools/filesystems/duperemove { };
 #
 #  dynamic-colors = callPackage ../tools/misc/dynamic-colors { };
 #
@@ -3810,9 +3809,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   rng_tools = callPackage ../tools/security/rng-tools { };
 #
-#  rsnapshot = callPackage ../tools/backup/rsnapshot {
-#    logger = utillinux;
-#  };
+#  rsnapshot = callPackage ../tools/backup/rsnapshot { };
 #
 #  rlwrap = callPackage ../tools/misc/rlwrap { };
 #
@@ -4803,7 +4800,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  lessc = callPackage ../development/compilers/lessc { };
 #
-  llvmPackages = recurseIntoAttrs llvmPackages_37;
+  llvmPackages = recurseIntoAttrs (callPackageAlias "llvmPackages_37" { });
 #
   llvmPackages_37 = callPackage ../development/compilers/llvm/3.7 {
     inherit (stdenvAdapters) overrideCC;
@@ -6407,7 +6404,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   gnu-efi = callPackage ../development/libraries/gnu-efi { };
 
-  gnutls = gnutls34;
+  gnutls = callPackageAlias "gnutls34" { };
 
   gnutls34 = callPackage ../development/libraries/gnutls/3.4.nix {
     guileBindings = config.gnutls.guile or false;
@@ -8980,8 +8977,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  gnustep-make = callPackage ../development/tools/build-managers/gnustep/make { };
 #  gnustep-xcode = callPackage ../development/tools/build-managers/gnustep/xcode { };
 #
-  devicemapper = lvm2;
-#
 #  disk_indicator = callPackage ../os-specific/linux/disk-indicator { };
 #
 #  dmidecode = callPackage ../os-specific/linux/dmidecode { };
@@ -10638,7 +10633,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #    java = jre;
 #  };
 #
-#  qrencode = callPackage ../tools/graphics/qrencode { };
+  qrencode = callPackage ../tools/graphics/qrencode { };
 #
   gecko_mediaplayer = callPackage ../applications/networking/browsers/mozilla-plugins/gecko-mediaplayer {
     inherit (gnome) GConf;

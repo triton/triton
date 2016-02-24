@@ -1048,6 +1048,10 @@ libusb = libusb_1;
 
 libusbmuxd = callPackage ../all-pkgs/libusbmuxd { };
 
+libutil-linux = callPackageAlias "util-linux" {
+  type = "lib";
+};
+
 libva = callPackage ../all-pkgs/libva { };
 
 libvdpau = callPackage ../all-pkgs/libvdpau { };
@@ -1402,6 +1406,8 @@ totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
 tracker = callPackage ../all-pkgs/tracker { };
 
 usbmuxd = callPackage ../all-pkgs/usbmuxd { };
+
+util-linux = callPackage ../all-pkgs/util-linux { };
 
 vala = callPackage ../all-pkgs/vala { };
 
@@ -8985,8 +8991,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  dstat = callPackage ../os-specific/linux/dstat { };
 #
   libossp_uuid = callPackage ../development/libraries/libossp-uuid { };
-
-  libuuid = utillinux;
 #
 #  light = callPackage ../os-specific/linux/light { };
 #
@@ -8995,8 +8999,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  e3cfsprogs = callPackage ../os-specific/linux/e3cfsprogs { };
 #
 #  ebtables = callPackage ../os-specific/linux/ebtables { };
-#
-#  eject = utillinux;
 #
 #  facetimehd-firmware = callPackage ../os-specific/linux/firmware/facetimehd-firmware { };
 #
@@ -9644,15 +9646,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  usermount = callPackage ../os-specific/linux/usermount { };
 #
-  utillinux = callPackage ../os-specific/linux/util-linux {
-    ncurses = null;
-    perl = null;
-  };
-
-  utillinuxCurses = appendToName "curses" (utillinux.override {
-    inherit ncurses perl;
-  });
-
   v4l_utils = callPackage ../os-specific/linux/v4l-utils {
     qt5 = null;
   };

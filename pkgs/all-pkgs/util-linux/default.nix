@@ -98,9 +98,13 @@ stdenv.mkDerivation rec {
   ]);
 
   preBuild = optionalString libOnly ''
-    buildFlagsArray+=($(sed -n 's,^am__.*\(lib.*.la\)$,\1,p' Makefile | sort | uniq))
+    echo 'myBuildLibs: $(usrlib_exec_LTLIBRARIES) $(pylibmountexec_LTLIBRARIES)' >> Makefile
     installTargets="$installTargets $(awk -F: '{ if (/^install.*(LTLIBRARIES|HEADERS)/) { printf $1 " " } }' Makefile)"
   '';
+
+  buildFlags = optionals libOnly [
+    "myBuildLibs"
+  ];
 
   installTargets = optionals libOnly [
     "install-pkgconfigDATA"

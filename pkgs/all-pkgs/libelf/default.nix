@@ -26,10 +26,13 @@ elfutils.overrideDerivation (attrs: {
     "libelf.so"
   ];
 
-  installPhase = ''
-    # Install the library components
-    mkdir -p $out/{include,lib/pkgconfig}
-    cp libelf.h elf.h $out/include
+  installTargets = [
+    "install-includeHEADERS"
+    "install-pkgincludeHEADERS"
+  ];
+
+  postInstall = ''
+    mkdir -p $out/lib/pkgconfig
   '' + optionalString static ''
     cp libelf.a libelf_pic.a $out/lib
   '' + optionalString shared ''

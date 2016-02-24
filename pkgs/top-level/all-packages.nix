@@ -642,6 +642,18 @@ ffmpeg-full_HEAD = callPackage ../all-pkgs/ffmpeg-full {
 };
 ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
 
+fftw-double = callPackage ../all-pkgs/fftw {
+  precision = "double";
+};
+
+fftw-single = callPackageAlias "fftw-double" {
+  precision = "single";
+};
+
+fftw-long-double = callPackageAlias "fftw-double" {
+  precision = "long-double";
+};
+
 file-roller = callPackage ../all-pkgs/file-roller { };
 
 filezilla = callPackage ../all-pkgs/filezilla { };
@@ -6241,11 +6253,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ffmpegthumbnailer = callPackage ../development/libraries/ffmpegthumbnailer { };
 #
   ffms = callPackage ../development/libraries/ffms { };
-#
-  fftw = callPackage ../development/libraries/fftw { };
-  fftwSinglePrec = fftw.override { precision = "single"; };
-  fftwFloat = fftwSinglePrec; # the configure option is just an alias
-  fftwLongDouble = fftw.override { precision = "long-double"; };
 #
 #  filter-audio = callPackage ../development/libraries/filter-audio {};
 #

@@ -769,6 +769,8 @@ gnutar = callPackage ../all-pkgs/gnutar { };
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = gobject-introspection; # Deprecated alias
 
+gperf = callPackage ../all-pkgs/gperf { };
+
 gpm = callPackage ../all-pkgs/gpm {
   ncurses = null;  # Keep curses disabled for lack of value
 };
@@ -5716,8 +5718,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gradleGen = callPackage ../development/tools/build-managers/gradle { };
 #  gradle = self.gradleGen.gradleLatest;
 #  gradle25 = self.gradleGen.gradle25;
-#
-  gperf = callPackage ../development/tools/misc/gperf { };
 #
 #  grail = callPackage ../development/libraries/grail { };
 #

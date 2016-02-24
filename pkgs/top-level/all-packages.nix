@@ -617,6 +617,8 @@ dos2unix = callPackage ../all-pkgs/dos2unix { };
 
 dropbox = qt5.callPackage ../all-pkgs/dropbox { };
 
+e2fsprogs = callPackage ../all-pkgs/e2fsprogs { };
+
 elfutils = callPackage ../all-pkgs/elfutils { };
 
 eog = callPackage ../all-pkgs/eog { };
@@ -2329,8 +2331,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  dvgrab = callPackage ../tools/video/dvgrab { };
 #
 #  dvtm = callPackage ../tools/misc/dvtm { };
-#
-  e2fsprogs = callPackage ../tools/filesystems/e2fsprogs { };
 #
 #  easyrsa = callPackage ../tools/networking/easyrsa { };
 #

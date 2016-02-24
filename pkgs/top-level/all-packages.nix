@@ -1357,6 +1357,8 @@ rtorrent = callPackage ../all-pkgs/rtorrent { };
 
 sakura = callPackage ../all-pkgs/sakura { };
 
+seabios = callPackage ../all-pkgs/seabios { };
+
 seahorse = callPackage ../all-pkgs/seahorse { };
 
 sqlheavy = callPackage ../all-pkgs/sqlheavy { };
@@ -8635,8 +8637,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  OVMF = callPackage ../applications/virtualization/OVMF { seabios=false; openssl=null; };
 #  OVMF-CSM = callPackage ../applications/virtualization/OVMF { openssl=null; };
 #  #WIP: OVMF-secureBoot = callPackage ../applications/virtualization/OVMF { seabios=false; secureBoot=true; };
-#
-#  seabios = callPackage ../applications/virtualization/seabios { };
 #
 #  cbfstool = callPackage ../applications/virtualization/cbfstool { };
 #

@@ -1087,6 +1087,8 @@ linux-headers = callPackage ../all-pkgs/linux-headers { };
 
 live555 = callPackage ../all-pkgs/live555 { };
 
+lvm2 = callPackage ../all-pkgs/lvm2 { };
+
 m4 = callPackageAlias "gnum4" { };
 
 mercurial = callPackage ../all-pkgs/mercurial { };
@@ -9365,8 +9367,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  libvolume_id = callPackage ../os-specific/linux/libvolume_id { };
 #
 #  lsscsi = callPackage ../os-specific/linux/lsscsi { };
-#
-  lvm2 = callPackage ../os-specific/linux/lvm2 { };
 #
 #  mbpfan = callPackage ../os-specific/linux/mbpfan { };
 #

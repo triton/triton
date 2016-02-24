@@ -1189,6 +1189,8 @@ orbit2 = callPackage ../all-pkgs/orbit2 { };
 
 p7zip = callPackage ../all-pkgs/p7zip { };
 
+pam = callPackage ../all-pkgs/pam { };
+
 pango = callPackage ../all-pkgs/pango { };
 
 pangomm = callPackage ../all-pkgs/pangomm { };
@@ -9425,8 +9427,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  nss_ldap = callPackage ../os-specific/linux/nss_ldap { };
 #
 #  pagemon = callPackage ../os-specific/linux/pagemon { };
-#
-  pam = callPackage ../os-specific/linux/pam { };
 #
 #  # pam_bioapi ( see http://www.thinkwiki.org/wiki/How_to_enable_the_fingerprint_reader )
 #

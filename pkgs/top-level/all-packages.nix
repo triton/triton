@@ -1089,6 +1089,8 @@ libwacom = callPackage ../all-pkgs/libwacom { };
 
 libwps = callPackage ../all-pkgs/libwps { };
 
+libxkbcommon = callPackage ../all-pkgs/libxkbcommon { };
+
 libxml2 = callPackage ../all-pkgs/libxml2 { };
 
 libxslt = callPackage ../all-pkgs/libxslt { };
@@ -7255,8 +7257,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libxdg_basedir = callPackage ../development/libraries/libxdg-basedir { };
 #
-  libxkbcommon = callPackage ../development/libraries/libxkbcommon { };
-
   libxklavier = callPackage ../development/libraries/libxklavier { };
 #
 #  libxls = callPackage ../development/libraries/libxls { };

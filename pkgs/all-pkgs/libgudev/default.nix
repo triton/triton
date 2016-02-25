@@ -3,7 +3,7 @@
 
 , glib
 , gobject-introspection
-, udev
+, systemd_lib
 }:
 
 with {
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glib
     gobject-introspection
-    udev
+    systemd_lib
   ];
 
   configureFlags = [

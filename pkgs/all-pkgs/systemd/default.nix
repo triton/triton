@@ -267,7 +267,7 @@ stdenv.mkDerivation rec {
   ];
 
   preBuild = optionalString libOnly ''
-    echo 'myBuildLibs: $(lib_LTLIBRARIES)' >> Makefile
+    echo 'myBuildLibs: $(lib_LTLIBRARIES) udevadm' >> Makefile
     echo 'myBuiltSources: $(BUILT_SOURCES)' >> Makefile
     make myBuiltSources
   '';
@@ -292,7 +292,11 @@ stdenv.mkDerivation rec {
     "install-pkgconfiglibDATA"
   ];
 
-  postInstall = optionalString (!libOnly) ''
+  postInstall = optionalString libOnly ''
+    # This is unfortunately needed by lvm2 which is a dependency of systemd_full
+    mkdir -p $out/bin
+    cp udevadm $out/bin
+  '' + optionalString (!libOnly) ''
     # sysinit.target: Don't depend on
     # systemd-tmpfiles-setup.service. This interferes with NixOps's
     # send-keys feature (since sshd.service depends indirectly on

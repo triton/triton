@@ -1111,7 +1111,7 @@ live555 = callPackage ../all-pkgs/live555 { };
 
 lvm2 = callPackage ../all-pkgs/lvm2 { };
 
-lzip = callPackage ../all-pkgs/lzip { };
+lzip = callPackage ../all-pkg#s/lzip { };
 
 m4 = callPackageAlias "gnum4" { };
 
@@ -1357,6 +1357,8 @@ buildPythonPackage = (callPackageAlias "pythonPackages" { }).buildPythonPackage;
 qbittorrent = callPackage ../all-pkgs/qbittorrent { };
 
 qjackctl = callPackage ../all-pkgs/qjackctl { };
+
+qrencode = callPackage ../all-pkgs/qrencode { };
 
 quassel = callPackage ../all-pkgs/quassel rec {
   monolithic = true;
@@ -10626,8 +10628,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  jbidwatcher = callPackage ../applications/misc/jbidwatcher {
 #    java = jre;
 #  };
-#
-  qrencode = callPackage ../tools/graphics/qrencode { };
 #
   gecko_mediaplayer = callPackage ../applications/networking/browsers/mozilla-plugins/gecko-mediaplayer {
     inherit (gnome) GConf;

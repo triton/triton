@@ -1,4 +1,7 @@
-{ stdenv, fetchurl, libpng, pkgconfig }:
+{ stdenv
+, fetchurl
+, libpng
+}:
 
 stdenv.mkDerivation rec {
   name = "qrencode-3.4.4";
@@ -8,13 +11,18 @@ stdenv.mkDerivation rec {
     sha256 = "198zvsfa2y5bb3ccikrhmhd4i43apr3b26dqcf3zkjyv3n5iirgg";
   };
 
-  buildInputs = [ libpng ];
-  nativeBuildInputs = [ pkgconfig ];
+  buildInputs = [
+    libpng
+  ];
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://fukuchi.org/works/qrencode/;
     description = "QR code encoder";
-    platforms = stdenv.lib.platforms.all;
-    maintainers = [ stdenv.lib.maintainers.urkud ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

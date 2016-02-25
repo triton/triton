@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
-, makeWrapper
 
+, gettext
 , perlPackages
 }:
 
@@ -14,21 +14,12 @@ stdenv.mkDerivation rec {
     sha256 = "1karx4sb7bnm2j67q0q74hspkfn6lqprpy5r99vkn5bb36a4viv7";
   };
 
-  nativeBuildInputs = [
-    makeWrapper
+  # Most packages just expect these to be propagated
+  propagatedBuildInputs = [
+    gettext
+    perlPackages.perl
+    perlPackages.XMLParser
   ];
-
-  buildInputs = with perlPackages; [
-    perl
-    XMLParser
-  ];
-
-  preFixup = ''
-    for bin in $(find $out/bin -type f); do
-      wrapProgram "$bin" \
-        --set PERL5LIB "${stdenv.lib.makePerlPath [ perlPackages.XMLParser ]}"
-    done
-  '';
 
   meta = with stdenv.lib; {
     description = "Translation helper tool";

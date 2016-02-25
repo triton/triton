@@ -49,6 +49,12 @@ stdenv.mkDerivation rec {
     # Disable the port test
     rm src/net/port_test.go
 
+    # Disable the dial test due to transient errors
+    rm src/net/dial_test.go
+
+    # Disable the timeout,udp test due to dial test being gone
+    rm src/net/{timeout,udp}_test.go
+
     # Disable the multicast test
     rm src/net/multicast_test.go
 

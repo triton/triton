@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 
-, libutil-linux
+, util-linux_lib
 }:
 
 stdenv.mkDerivation rec {
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    libutil-linux
+    util-linux_lib
   ];
 
   configureFlags = [

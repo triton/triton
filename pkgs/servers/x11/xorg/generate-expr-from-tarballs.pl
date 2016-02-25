@@ -32,7 +32,7 @@ $pcMap{"freetype2"} = "freetype";
 $pcMap{"libpng12"} = "libpng";
 $pcMap{"libpng"} = "libpng";
 $pcMap{"dbus-1"} = "dbus";
-$pcMap{"uuid"} = "libuuid";
+$pcMap{"uuid"} = "libutil-linux";
 $pcMap{"libudev"} = "udev";
 $pcMap{"gl"} = "mesa";
 $pcMap{"\$PIXMAN"} = "pixman";
@@ -235,7 +235,7 @@ print OUT <<EOF;
 # THIS IS A GENERATED FILE.  DO NOT EDIT!
 args @ { clangStdenv, fetchurl, fetchgit, fetchpatch, stdenv, pkgconfig, intltool, freetype, fontconfig
 , libxslt, expat, libpng, zlib, perl, mesa_drivers, spice_protocol
-, dbus, libuuid, openssl, gperf, m4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
+, dbus, libutil-linux, openssl, gperf, m4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
 , autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, mtdev, pixman, cairo, glib, ... }: with args;
 
 let

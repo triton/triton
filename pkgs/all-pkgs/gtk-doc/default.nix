@@ -1,10 +1,11 @@
 { stdenv
 , fetchurl
+, which
+
 , perl
 , python
-, libxml2Python
+, libxml2
 , libxslt
-, which
 , docbook_xml_dtd_43
 , docbook_xsl
 , gnome_doc_utils
@@ -42,17 +43,20 @@ stdenv.mkDerivation rec {
     )
   '';
 
+  nativeBuildInputs = [
+    which
+  ];
+
   buildInputs = [
     perl
     python
-    libxml2Python
+    libxml2
     libxslt
     docbook_xml_dtd_43
     docbook_xsl
     gnome_doc_utils
     dblatex
     gettext
-    which
     itstool
   ];
 

@@ -1044,6 +1044,8 @@ libosinfo = callPackage ../all-pkgs/libosinfo { };
 
 libpeas = callPackage ../all-pkgs/libpeas { };
 
+libpng = callPackage ../all-pkgs/libpng { };
+
 librsvg = callPackage ../all-pkgs/librsvg { };
 
 libsecret = callPackage ../all-pkgs/libsecret { };
@@ -7095,10 +7097,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
   libpipeline = callPackage ../development/libraries/libpipeline { };
 #
 #  libpgf = callPackage ../development/libraries/libpgf { };
-#
-  libpng = callPackage ../development/libraries/libpng { };
-  libpng_apng = libpng.override { apngSupport = true; };
-  libpng12 = callPackage ../development/libraries/libpng/12.nix { };
 #
   libpaper = callPackage ../development/libraries/libpaper { };
 #

@@ -1454,6 +1454,8 @@ totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
 
 tracker = callPackage ../all-pkgs/tracker { };
 
+unbound = callPackage ../all-pkgs/unbound { };
+
 usbmuxd = callPackage ../all-pkgs/usbmuxd { };
 
 # TODO: Rename back to util-linux once dependencies are sorted
@@ -4392,8 +4394,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  uhub = callPackage ../servers/uhub { };
 #
 #  unclutter = callPackage ../tools/misc/unclutter { };
-#
-  unbound = callPackage ../tools/networking/unbound { };
 #
 #  units = callPackage ../tools/misc/units { };
 #
@@ -9095,28 +9095,24 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   kernelPatches = callPackage ../os-specific/linux/kernel/patches.nix { };
 
-#  linux_rpi = callPackage ../os-specific/linux/kernel/linux-rpi.nix {
-#    kernelPatches = [ kernelPatches.bridge_stp_helper ];
-#  };
-#
   linux_3_18 = callPackage ../os-specific/linux/kernel/linux-3.18.nix {
-    kernelPatches = [ kernelPatches.bridge_stp_helper ];
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
-#
+
   linux_4_1 = callPackage ../os-specific/linux/kernel/linux-4.1.nix {
-    kernelPatches = [ kernelPatches.bridge_stp_helper ];
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
-#
+
   linux_4_3 = callPackage ../os-specific/linux/kernel/linux-4.3.nix {
-    kernelPatches = [ kernelPatches.bridge_stp_helper ];
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
-#
+
   linux_4_4 = callPackage ../os-specific/linux/kernel/linux-4.4.nix {
-    kernelPatches = [ kernelPatches.bridge_stp_helper ];
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
-#
+
   linux_testing = callPackage ../os-specific/linux/kernel/linux-testing.nix {
-    kernelPatches = [ kernelPatches.bridge_stp_helper ];
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 #
 #  /* grsec configuration
@@ -9277,12 +9273,12 @@ libtiff = callPackage ../development/libraries/libtiff { };
   };
 #
 #  # The current default kernel / kernel modules.
-  linuxPackages = callPackageAlias "linuxPackages_4_1";
-  linux = (callPackageAlias "linuxPackages" { })kernel;
+  linuxPackages = pkgs.linuxPackages_4_4;
+  linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
-  linuxPackages_latest = callPackageAlias "linuxPackages_4_4" { };
-  linux_latest = (callPackageAlias "linuxPackages_latest" { }).kernel;
+  linuxPackages_latest = pkgs.linuxPackages_4_4;
+  linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
   linuxPackages_3_18 = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_3_18 pkgs.linuxPackages_3_18);

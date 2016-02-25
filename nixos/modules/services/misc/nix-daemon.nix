@@ -100,7 +100,7 @@ in
 
       useChroot = mkOption {
         type = types.bool;
-        default = false;
+        default = true;
         description = "
           If set, Nix will perform builds in a chroot-environment that it
           will set up automatically for each build.  This prevents
@@ -234,7 +234,7 @@ in
 
       binaryCaches = mkOption {
         type = types.listOf types.str;
-        default = [ https://cache.nixos.org/ ];
+        default = [ "https://cache.triton.wak.io/" ];
         description = ''
           List of binary cache URLs used to obtain pre-built binaries
           of Nix packages.
@@ -243,8 +243,7 @@ in
 
       trustedBinaryCaches = mkOption {
         type = types.listOf types.str;
-        default = [ ];
-        example = [ http://hydra.nixos.org/ ];
+        default = [ "https://hydra.triton.wak.io" ];
         description = ''
           List of binary cache URLs that non-root users can use (in
           addition to those specified using
@@ -269,14 +268,14 @@ in
 
       binaryCachePublicKeys = mkOption {
         type = types.listOf types.str;
-        example = [ "hydra.nixos.org-1:CNHJZBh9K4tP3EKF6FkkgeVYsS3ohTl+oS0Qa8bezVs=" ];
+        example = [ "hydra.triton.wak.io-1:CNHJZBh9K4tP3EKF6FkkgeVYsS3ohTl+oS0Qa8beaVs=" ];
         description = ''
           List of public keys used to sign binary caches. If
           <option>nix.requireSignedBinaryCaches</option> is enabled,
           then Nix will use a binary from a binary cache if and only
           if it is signed by <emphasis>any</emphasis> of the keys
           listed here. By default, only the key for
-          <uri>cache.nixos.org</uri> is included.
+          <uri>cache.triton.wak.io</uri> is included.
         '';
       };
 
@@ -333,7 +332,7 @@ in
 
   config = {
 
-    nix.binaryCachePublicKeys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+    nix.binaryCachePublicKeys = [ "cache.triton.wak.io-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspaDShjY=" ];
 
     environment.etc."nix/nix.conf".source = nixConf;
 

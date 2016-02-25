@@ -130,8 +130,8 @@ let
         default = null;
         description = ''
           Whether this interface should be configured with dhcp.
-          Null implies the old behavior which depends on whether ip addresses
-          are specified or not.
+          This is option is only superseeded if false. Null implies that
+          this interface is only enabled if the main useDHCP is enabled.
         '';
       };
 
@@ -831,7 +831,7 @@ in
 
     networking.useDHCP = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = ''
         Whether to use DHCP to obtain an IP address and other
         configuration for all network interfaces that are not manually

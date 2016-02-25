@@ -34,7 +34,7 @@ in
     services.ntp = {
 
       enable = mkOption {
-        default = !config.boot.isContainer;
+        default = false;
         description = ''
           Whether to synchronise your machine's time using the NTP
           protocol.

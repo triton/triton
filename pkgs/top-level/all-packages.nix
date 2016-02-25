@@ -605,7 +605,7 @@ curl = callPackage ../all-pkgs/curl {
   suffix = "";
 };
 
-curl-full = callPackageAlias "curl" {
+curl_full = callPackageAlias "curl" {
   suffix = "full";
 };
 

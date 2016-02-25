@@ -1,7 +1,5 @@
 { stdenv
 , fetchurl
-
-, doCheck ? false, dejagnu
 }:
 
 stdenv.mkDerivation rec {
@@ -12,14 +10,10 @@ stdenv.mkDerivation rec {
     sha256 = "0dya49bnhianl0r65m65xndz6ls2jn1xngyn72gd28ls3n7bnvnh";
   };
 
-  buildInputs = stdenv.lib.optional doCheck dejagnu;
-
   configureFlags = [
     "--with-gcc-arch=${stdenv.cc.cc.march}"
     "--enable-pax_emutramp"
   ];
-
-  inherit doCheck;
 
   # Install headers in the right place.
   postInstall = ''
@@ -31,7 +25,11 @@ stdenv.mkDerivation rec {
     homepage = http://sourceware.org/libffi/;
     # See http://github.com/atgreen/libffi/blob/master/LICENSE .
     license = licenses.free;
-    maintainers = [ ];
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

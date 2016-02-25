@@ -171,7 +171,6 @@ stdenv.mkDerivation rec {
   '';
 
   inherit doCheck;
-  enableParallelBuilding = true;
   DETERMINISTIC_BUILD = 1;
 
   passthru = {

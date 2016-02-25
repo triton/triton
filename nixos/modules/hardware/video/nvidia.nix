@@ -36,7 +36,7 @@ in
 
 {
 
-  config = mkIf enabled {
+  config = mkIf (config.services.xserver.enable && enabled) {
 
     services.xserver.drivers = singleton
       { name = "nvidia"; modules = [ nvidia_x11 ]; libPath = [ nvidia_x11 ]; };

@@ -50,7 +50,7 @@ let
       done
 
       # Copy some utillinux stuff.
-      copy_bin_and_libs ${pkgs.utillinux}/sbin/blkid
+      copy_bin_and_libs ${pkgs.util-linux_full}/sbin/blkid
 
       # Copy dmsetup and lvm.
       copy_bin_and_libs ${pkgs.lvm2}/sbin/dmsetup
@@ -153,7 +153,7 @@ let
             --replace ata_id ${extraUtils}/bin/ata_id \
             --replace scsi_id ${extraUtils}/bin/scsi_id \
             --replace cdrom_id ${extraUtils}/bin/cdrom_id \
-            --replace ${pkgs.utillinux}/sbin/blkid ${extraUtils}/bin/blkid \
+            --replace ${pkgs.util-linux_full}/sbin/blkid ${extraUtils}/bin/blkid \
             --replace /sbin/blkid ${extraUtils}/bin/blkid \
             --replace ${pkgs.lvm2}/sbin ${extraUtils}/bin \
             --replace /sbin/mdadm ${extraUtils}/bin/mdadm \
@@ -212,7 +212,7 @@ let
 
     setHostId = optionalString (config.networking.hostId != null) ''
       hi="${config.networking.hostId}"
-      ${if pkgs.stdenv.isBigEndian then ''
+      ${if elem config.nixpkgs.targetSystem platforms.big-endian then ''
         echo -ne "\x''${hi:0:2}\x''${hi:2:2}\x''${hi:4:2}\x''${hi:6:2}" > /etc/hostid
       '' else ''
         echo -ne "\x''${hi:6:2}\x''${hi:4:2}\x''${hi:2:2}\x''${hi:0:2}" > /etc/hostid

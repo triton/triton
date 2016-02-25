@@ -22,7 +22,7 @@ with lib;
   ###### implementation
 
   config = mkIf config.hardware.enableAllFirmware {
-    hardware.firmware = [ pkgs.firmwareLinuxNonfree ];
+    hardware.firmware = [ pkgs.firmware-linux-nonfree ];
   };
 
 }

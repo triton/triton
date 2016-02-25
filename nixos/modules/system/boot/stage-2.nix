@@ -23,7 +23,7 @@ let
     ttyGid = config.ids.gids.tty;
     path =
       [ pkgs.coreutils
-        pkgs.utillinux
+        pkgs.util-linux_full
         pkgs.openresolv
       ] ++ optional config.nix.readOnlyStore readonlyMountpoint;
     postBootCommands = pkgs.writeText "local-cmds"

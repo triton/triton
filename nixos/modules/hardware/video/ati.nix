@@ -16,7 +16,7 @@ in
 
 {
 
-  config = mkIf enabled {
+  config = mkIf (config.services.xserver.enable && enabled) {
 
     services.xserver.drivers = singleton
       { name = "fglrx"; modules = [ ati_x11 ]; libPath = [ "${ati_x11}/lib" ]; };

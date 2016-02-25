@@ -27,7 +27,7 @@
 , libaudit
 , libcap
 , libgcrypt
-, libgpgerror
+, libgpg-error
 , libidn
 , libmicrohttpd
 , libseccomp
@@ -93,7 +93,7 @@ stdenv.mkDerivation rec {
     xz
     lz4
     libgcrypt
-    libgpgerror
+    libgpg-error
     libaudit
     libidn
   ] ++ optionals (libOnly) [

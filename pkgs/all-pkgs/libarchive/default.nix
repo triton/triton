@@ -5,6 +5,7 @@
 , acl
 , attr
 , bzip2
+, e2fsprogs
 , libxml2
 , lzo
 , pcre
@@ -41,6 +42,7 @@ stdenv.mkDerivation rec {
     acl
     attr
     bzip2
+    e2fsprogs
     libxml2
     lzo
     pcre

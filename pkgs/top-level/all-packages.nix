@@ -1111,6 +1111,8 @@ live555 = callPackage ../all-pkgs/live555 { };
 
 lvm2 = callPackage ../all-pkgs/lvm2 { };
 
+lzip = callPackage ../all-pkgs/lzip { };
+
 m4 = callPackageAlias "gnum4" { };
 
 mercurial = callPackage ../all-pkgs/mercurial { };
@@ -3136,8 +3138,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  lxc = callPackage ../os-specific/linux/lxc { };
 #  lxd = goPackages.lxd.bin // { outputs = [ "bin" ]; };
-#
-  lzip = callPackage ../tools/compression/lzip { };
 #
 #  lzop = callPackage ../tools/compression/lzop { };
 #

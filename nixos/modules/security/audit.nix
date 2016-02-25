@@ -47,7 +47,7 @@ in {
     security.audit = {
       enable = mkOption {
         type        = types.enum [ false true "lock" ];
-        default     = true; # The kernel seems to enable it by default with no rules anyway
+        default     = false; # The kernel seems to enable it by default with no rules anyway
         description = ''
           Whether to enable the Linux audit system. The special `lock' value can be used to
           enable auditing and prevent disabling it until a restart. Be careful about locking
@@ -91,20 +91,25 @@ in {
     };
   };
 
-  config = mkIf (cfg.enable == "lock" || cfg.enable) {
-    systemd.services.audit = {
-      description = "Kernel Auditing";
-      wantedBy = [ "basic.target" ];
-      unitConfig.ConditionVirtualization = "!container";
+  config = mkMerge [
+    (mkIf (cfg.enable == "lock" || cfg.enable) {
+      systemd.services.audit = {
+        description = "Kernel Auditing";
+        wantedBy = [ "basic.target" ];
+        unitConfig.ConditionVirtualization = "!container";
 
-      path = [ pkgs.auditFull ];
+        path = [ pkgs.audit_full ];
 
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStart = "@${startScript} audit-start";
-        ExecStop  = "@${stopScript}  audit-stop";
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = "@${startScript} audit-start";
+          ExecStop  = "@${stopScript}  audit-stop";
+        };
       };
-    };
-  };
+    })
+    (mkIf (cfg.enable == false) {
+      boot.kernelParams = [ "audit=0" ];
+    })
+  ];
 }

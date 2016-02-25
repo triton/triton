@@ -57,7 +57,7 @@ in
 
     services.nixosManual.enable = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = ''
         Whether to build the NixOS manual pages.
       '';

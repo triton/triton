@@ -11,7 +11,7 @@ let
     src = ./nixos-container.pl;
     perl = "${pkgs.perl}/bin/perl -I${pkgs.perlPackages.FileSlurp}/lib/perl5/site_perl";
     su = "${pkgs.shadow.su}/bin/su";
-    inherit (pkgs) utillinux;
+    inherit (pkgs) util-linux_full;
 
     postInstall = ''
       t=$out/etc/bash_completion.d

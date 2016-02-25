@@ -1,6 +1,6 @@
 { stdenv, fetchurl, pkgconfig, autoreconfHook
-, expat, systemd, glib, dbus_glib, python
-, xorg ? null, x11Support ? (stdenv.isLinux) }:
+, expat, libsystemd, glib, dbus_glib, python
+, xorg ? null, x11Support ? true }:
 
 assert x11Support -> xorg != null;
 
@@ -15,8 +15,6 @@ let
   # also other parts than "libs" need this statically linked lib
   makeInternalLib = "(cd dbus && make libdbus-internal.la)";
 
-  systemdOrEmpty = lib.optional stdenv.isLinux systemd;
-
   # A generic builder for individual parts (subdirs) of D-Bus
   dbus_drv = name: subdirs: merge: stdenv.mkDerivation (lib.mergeAttrsByFuncDefaultsClean [{
 
@@ -28,12 +26,11 @@ let
     };
 
     patches = [
-        ./ignore-missing-includedirs.patch
-        ./ucred-dirty-hack.patch
-        ./no-create-dirs.patch
-      ]
-      ++ lib.optional (stdenv.isLinux) ./implement-getgrouplist.patch
-      ;
+      ./ignore-missing-includedirs.patch
+      ./ucred-dirty-hack.patch
+      ./no-create-dirs.patch
+      ./implement-getgrouplist.patch
+    ];
 
     # build only the specified subdirs
     postPatch = "sed '/SUBDIRS/s/=.*/=" + subdirs + "/' -i Makefile.am\n"
@@ -72,7 +69,7 @@ let
     # Enable X11 autolaunch support in libdbus. This doesn't actually depend on X11
     # (it just execs dbus-launch in dbus.tools), contrary to what the configure script demands.
     NIX_CFLAGS_COMPILE = "-DDBUS_ENABLE_X11_AUTOLAUNCH=1";
-    buildInputs = [ systemdOrEmpty ];
+    buildInputs = [ libsystemd ];
     meta.platforms = stdenv.lib.platforms.all;
   };
 
@@ -88,7 +85,7 @@ let
 
   tools = dbus_drv "tools" "tools bus" {
     preBuild = makeInternalLib;
-    buildInputs = buildInputsX ++ systemdOrEmpty ++ [ libs ];
+    buildInputs = buildInputsX ++ [ libsystemd libs ];
     NIX_CFLAGS_LINK = "-Wl,--as-needed " + "-ldbus-1";
 
     # don't provide another dbus-1.pc (with incorrect include and link dirs),

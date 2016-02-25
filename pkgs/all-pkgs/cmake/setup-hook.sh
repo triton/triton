@@ -15,11 +15,11 @@ fixCmakeFiles() {
 cmakeConfigurePhase() {
     eval "$preConfigure"
 
-    if [ -z "$dontFixCmake" ]; then
+    if [ -n "${fixCmake-true}" ]; then
         fixCmakeFiles .
     fi
 
-    if [ -z "$dontUseCmakeBuildDir" ]; then
+    if [ -n "${createCmakeBuildDir-true}" ]; then
         mkdir -p build
         cd build
         cmakeDir=..
@@ -27,13 +27,6 @@ cmakeConfigurePhase() {
 
     if [ -z "$dontAddPrefix" ]; then
         cmakeFlags="-DCMAKE_INSTALL_PREFIX=$prefix $cmakeFlags"
-    fi
-
-    if [ -n "$crossConfig" ]; then
-        # By now it supports linux builds only. We should set the proper
-        # CMAKE_SYSTEM_NAME otherwise.
-        # http://www.cmake.org/Wiki/CMake_Cross_Compiling
-        cmakeFlags="-DCMAKE_CXX_COMPILER=$crossConfig-g++ -DCMAKE_C_COMPILER=$crossConfig-gcc $cmakeFlags"
     fi
 
     # This installs shared libraries with a fully-specified install
@@ -56,15 +49,11 @@ cmakeConfigurePhase() {
     eval "$postConfigure"
 }
 
-if [ -z "$dontUseCmakeConfigure" -a -z "$configurePhase" ]; then
+if [ -n "${cmakeConfigure-true}" -a -z "$configurePhase" ]; then
     configurePhase=cmakeConfigurePhase
 fi
 
-if [ -n "$crossConfig" ]; then
-    crossEnvHooks+=(addCMakeParams)
-else
-    envHooks+=(addCMakeParams)
-fi
+envHooks+=(addCMakeParams)
 
 makeCmakeFindLibs(){
   for flag in $NIX_CFLAGS_COMPILE $NIX_LDFLAGS; do

@@ -578,6 +578,8 @@ clutter-gst = clutter-gst_3;
 
 clutter-gtk = callPackage ../all-pkgs/clutter-gtk { };
 
+cmake = callPackage ../all-pkgs/cmake { };
+
 cogl = callPackage ../all-pkgs/cogl { };
 
 colord = callPackage ../all-pkgs/colord { };
@@ -5641,14 +5643,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ctagsWrapped = callPackage ../development/tools/misc/ctags/wrapped.nix {};
 #
 #  ctodo = callPackage ../applications/misc/ctodo { };
-#
-  cmake-2_8 = callPackage ../development/tools/build-managers/cmake/2.8.nix { };
-
-  cmake = callPackage ../development/tools/build-managers/cmake { };
-
-  cmakeCurses = cmake.override { useNcurses = true; };
-
-  cmakeWithGui = cmakeCurses.override { useQt4 = true; };
 #
 #  coccinelle = callPackage ../development/tools/misc/coccinelle { };
 #

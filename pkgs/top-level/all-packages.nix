@@ -947,7 +947,11 @@ kbd = callPackage ../all-pkgs/kbd { };
 
 kea = callPackage ../all-pkgs/kea { };
 
+kerberos = callPackageAlias "libkrb5" { };
+
 kubernetes = callPackage ../all-pkgs/kubernetes { };
+
+krb5-full = callPackage ../all-pkgs/krb5 { };
 
 libass = callPackage ../all-pkgs/libass { };
 
@@ -1011,6 +1015,10 @@ libjpeg_original = callPackage ../all-pkgs/libjpeg { };
 libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix { };
 libjpeg-turbo = callPackage ../all-pkgs/libjpeg-turbo { };
 libjpeg = libjpeg-turbo;
+
+libkrb5 = callPackageAlias "krb5-full" {
+  type = "lib";
+};
 
 libmediaart = callPackage ../all-pkgs/libmediaart {
   qt5 = null;
@@ -6469,8 +6477,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  # TODO : Let admin choose.
 #  # We are using mit-krb5 because it is better maintained
-  kerberos = callPackageAlias "libkrb5" { };
-
   heimdalFull = callPackage ../development/libraries/kerberos/heimdal.nix { };
   libheimdal = callPackageAlias "heimdalFull" {
     type = "lib";
@@ -6586,12 +6592,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  };
 #
 #  kinetic-cpp-client = callPackage ../development/libraries/kinetic-cpp-client { };
-#
-  krb5Full = callPackage ../development/libraries/kerberos/krb5.nix { };
-
-  libkrb5 = callPackageAlias "krb5Full" {
-    type = "lib";
-  };
 #
 #  LASzip = callPackage ../development/libraries/LASzip { };
 #

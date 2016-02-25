@@ -9136,10 +9136,53 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #     for a specific kernel.  This function can then be called for
 #     whatever kernel you're using. */
 #
-  linuxPackagesFor = kernel: self: let callPackage = newScope self; in rec {
-    inherit kernel;
+  linuxPackagesFor = { kernel }: let
+    kCallPackage = pkgs.newScope kPkgs;
+
+    kPkgs = {
+      inherit kernel;
+
+      accelio = kCallPackage ../development/libraries/accelio { };
+
+      ati_drivers_x11 = kCallPackage ../os-specific/linux/ati-drivers { };
+
+      cryptodev = cryptodevHeaders.override {
+        onlyHeaders = false;
+        inherit kernel;
+      };
+
+      cpupower = kCallPackage ../os-specific/linux/cpupower { };
+
+      e1000e = kCallPackage ../os-specific/linux/e1000e {};
+
+      nvidia_x11_legacy340 = kCallPackage ../all-pkgs/nvidia-drivers { channel = "legacy340"; };
+      nvidia_x11_long      = kCallPackage ../all-pkgs/nvidia-drivers { channel = "long-lived"; };
+      nvidia_x11_short     = kCallPackage ../all-pkgs/nvidia-drivers { channel = "short-lived"; };
+      nvidia_x11_testing   = kCallPackage ../all-pkgs/nvidia-drivers { channel = "testing"; };
+
+      spl = kCallPackage ../os-specific/linux/spl {
+        configFile = "kernel";
+        inherit kernel;
+      };
+
+      spl_git = kCallPackage ../os-specific/linux/spl/git.nix {
+        configFile = "kernel";
+        inherit kernel;
+      };
+
+      zfs = kCallPackage ../os-specific/linux/zfs {
+        configFile = "kernel";
+        inherit kernel;
+      };
+
+      zfs_git = kCallPackage ../os-specific/linux/zfs/git.nix {
+        configFile = "kernel";
+        inherit kernel;
+      };
+
+    };
+  in kPkgs;
 #
-#    accelio = callPackage ../development/libraries/accelio { };
 #
 #    acpi_call = callPackage ../os-specific/linux/acpi-call {};
 #
@@ -9147,18 +9190,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #    bbswitch = callPackage ../os-specific/linux/bbswitch {};
 #
-    ati_drivers_x11 = callPackage ../os-specific/linux/ati-drivers { };
-#
 #    blcr = callPackage ../os-specific/linux/blcr { };
-#
-    cryptodev = cryptodevHeaders.override {
-      onlyHeaders = false;
-      inherit kernel;
-    };
-
-    cpupower = callPackage ../os-specific/linux/cpupower { };
-
-    e1000e = callPackage ../os-specific/linux/e1000e {};
 #
 #    v4l2loopback = callPackage ../os-specific/linux/v4l2loopback { };
 #
@@ -9173,10 +9205,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    nvidiabl = callPackage ../os-specific/linux/nvidiabl { };
 #
 #    nvidia_x11_legacy304 = callPackage ../all-pkgs/nvidia-drivers { channel = "legacy304"; };
-    nvidia_x11_legacy340 = callPackage ../all-pkgs/nvidia-drivers { channel = "legacy340"; };
-    nvidia_x11_long      = callPackage ../all-pkgs/nvidia-drivers { channel = "long-lived"; };
-    nvidia_x11_short     = callPackage ../all-pkgs/nvidia-drivers { channel = "short-lived"; };
-    nvidia_x11_testing   = callPackage ../all-pkgs/nvidia-drivers { channel = "testing"; };
 #
 #    rtl8812au = callPackage ../os-specific/linux/rtl8812au { };
 #
@@ -9207,15 +9235,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #    seturgent = callPackage ../os-specific/linux/seturgent { };
 #
-#    spl = callPackage ../os-specific/linux/spl {
-#      configFile = "kernel";
-#      inherit kernel;
-#    };
-#    spl_git = callPackage ../os-specific/linux/spl/git.nix {
-#      configFile = "kernel";
-#      inherit kernel;
-#    };
-#
 #    sysdig = callPackage ../os-specific/linux/sysdig {};
 #
 #    tp_smapi = callPackage ../os-specific/linux/tp_smapi { };
@@ -9239,15 +9258,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #    x86_energy_perf_policy = callPackage ../os-specific/linux/x86_energy_perf_policy { };
 #
-    zfs = callPackage ../os-specific/linux/zfs {
-      configFile = "kernel";
-      inherit kernel spl;
-    };
-    zfs_git = callPackage ../os-specific/linux/zfs/git.nix {
-      configFile = "kernel";
-      inherit kernel spl_git;
-    };
-  };
 #
 #  # The current default kernel / kernel modules.
   linuxPackages = pkgs.linuxPackages_4_4;
@@ -9258,10 +9268,18 @@ libtiff = callPackage ../development/libraries/libtiff { };
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
-  linuxPackages_3_18 = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_3_18 pkgs.linuxPackages_3_18);
-  linuxPackages_4_1 = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_4_1 pkgs.linuxPackages_4_1);
-  linuxPackages_4_3 = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_4_3 pkgs.linuxPackages_4_3);
-  linuxPackages_4_4 = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_4_4 pkgs.linuxPackages_4_4);
+  linuxPackages_3_18 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_3_18;
+  });
+  linuxPackages_4_1 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_4_1;
+  });
+  linuxPackages_4_3 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_4_3;
+  });
+  linuxPackages_4_4 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_4_4;
+  });
   linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_testing pkgs.linuxPackages_testing);
   linuxPackages_custom = {version, src, configfile}:
                            let linuxPackages_self = (linuxPackagesFor (pkgs.linuxManualConfig {inherit version src configfile;

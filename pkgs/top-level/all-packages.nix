@@ -1419,6 +1419,8 @@ seabios = callPackage ../all-pkgs/seabios { };
 
 seahorse = callPackage ../all-pkgs/seahorse { };
 
+sharutils = callPackage ../all-pkgs/sharutils { };
+
 sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sqlite = callPackage ../all-pkgs/sqlite { };
@@ -3923,8 +3925,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   sg3_utils = callPackage ../tools/system/sg3_utils { };
 
-  sharutils = callPackage ../tools/archivers/sharutils { };
-#
 #  shotwell = callPackage ../applications/graphics/shotwell { };
 #
   shout = callPackage ../applications/networking/irc/shout { };

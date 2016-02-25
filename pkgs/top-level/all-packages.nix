@@ -955,6 +955,8 @@ kubernetes = callPackage ../all-pkgs/kubernetes { };
 
 krb5-full = callPackage ../all-pkgs/krb5 { };
 
+libarchive = callPackage ../all-pkgs/libarchive { };
+
 libass = callPackage ../all-pkgs/libass { };
 
 libaudit = callPackageAlias "auditFull" {
@@ -6651,8 +6653,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libappindicator-gtk2 = callPackage ../development/libraries/libappindicator { gtkVersion = "2"; };
 #  libappindicator-gtk3 = callPackage ../development/libraries/libappindicator { gtkVersion = "3"; };
-#
-  libarchive = callPackage ../development/libraries/libarchive { };
 #
 #  libasr = callPackage ../development/libraries/libasr { };
 #

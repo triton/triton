@@ -584,6 +584,8 @@ colord = callPackage ../all-pkgs/colord { };
 
 coreutils = callPackage ../all-pkgs/coreutils { };
 
+cracklib = callPackage ../all-pkgs/cracklib { };
+
 cryptodevHeaders = callPackage ../all-pkgs/cryptodev {
   onlyHeaders = true;
   kernel = null;
@@ -1113,7 +1115,7 @@ live555 = callPackage ../all-pkgs/live555 { };
 
 lvm2 = callPackage ../all-pkgs/lvm2 { };
 
-lzip = callPackage ../all-pkg#s/lzip { };
+lzip = callPackage ../all-pkgs/lzip { };
 
 m4 = callPackageAlias "gnum4" { };
 
@@ -6193,8 +6195,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   cppunit = callPackage ../development/libraries/cppunit { };
 
-  cracklib = callPackage ../development/libraries/cracklib { };
-#
 #  cwiid = callPackage ../development/libraries/cwiid { };
 #
   # Make bdb5 the default as it is the last release under the custom

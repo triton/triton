@@ -1024,6 +1024,8 @@ libmediaart = callPackage ../all-pkgs/libmediaart {
   qt5 = null;
 };
 
+libmicrohttpd = callPackage ../all-pkgs/libmicrohttpd { };
+
 libmpc = callPackage ../all-pkgs/libmpc { };
 
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
@@ -7004,8 +7006,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libmemcached = callPackage ../development/libraries/libmemcached { };
 #
-  libmicrohttpd = callPackage ../development/libraries/libmicrohttpd { };
-
   libmikmod = callPackage ../development/libraries/libmikmod { };
 #
 #  libmilter = callPackage ../development/libraries/libmilter { };

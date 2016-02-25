@@ -20,13 +20,10 @@
   # symbolic name and `patch' is the actual patch.  The patch may
   # optionally be compressed with gzip or bzip2.
   kernelPatches ? []
-, ignoreConfigErrors ? stdenv.platform.name != "pc"
+, ignoreConfigErrors ? false
 , extraMeta ? {}
 , ...
 }:
-
-assert stdenv.platform.name == "sheevaplug" -> stdenv.platform.uboot != null;
-assert stdenv.isLinux;
 
 let
 
@@ -38,6 +35,8 @@ let
     vSplit' = if lib.length vSplit == 2 then vSplit ++ [ "0" ] else vSplit;
     rcSplit' = [ (lib.concatStringsSep "." vSplit') ] ++ lib.tail rcSplit;
   in lib.concatStringsSep "-" rcSplit';
+
+  common = import ./common.nix { inherit stdenv; };
 
   kernelConfigFun = baseConfig:
     let
@@ -55,28 +54,11 @@ let
 
     nativeBuildInputs = [ perl ];
 
-    platformName = stdenv.platform.name;
-    kernelBaseConfig = stdenv.platform.kernelBaseConfig;
-    kernelTarget = stdenv.platform.kernelTarget;
-    autoModules = stdenv.platform.kernelAutoModules;
-    arch = stdenv.platform.kernelArch;
-
-    crossAttrs = let
-        cp = stdenv.cross.platform;
-      in {
-        arch = cp.kernelArch;
-        platformName = cp.name;
-        kernelBaseConfig = cp.kernelBaseConfig;
-        kernelTarget = cp.kernelTarget;
-        autoModules = cp.kernelAutoModules;
-
-        # Just ignore all options that don't apply (We are lazy).
-        ignoreConfigErrors = true;
-
-        kernelConfig = kernelConfigFun configCross;
-
-        inherit (kernel.crossDrv) src patches preUnpack;
-      };
+    platformName = "pc";
+    kernelBaseConfig = "defconfig";
+    kernelTarget = "bzImage";
+    autoModules = true;
+    arch = common.kernelArch;
 
     prePatch = kernel.prePatch + ''
       # Patch kconfig to print "###" after every question so that
@@ -125,13 +107,10 @@ let
     passthru = kernel.passthru // (removeAttrs passthru [ "passthru" "meta" ]);
   };
 
-  configWithPlatform = kernelPlatform: import ./common-config.nix
-    { inherit stdenv version kernelPlatform extraConfig;
+  config = import ./common-config.nix
+    { inherit stdenv version extraConfig;
       features = passthru.features; # Ensure we know of all extra patches, etc.
     };
-
-  config = configWithPlatform stdenv.platform;
-  configCross = configWithPlatform stdenv.cross.platform;
 
   nativeDrv = lib.addPassthru kernel.nativeDrv passthru;
 

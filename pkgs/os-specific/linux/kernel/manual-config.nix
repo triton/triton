@@ -40,6 +40,8 @@ let
   inherit (stdenv.lib)
     hasAttr getAttr optional optionalString optionalAttrs maintainers platforms;
 
+  common = import ./common.nix { inherit stdenv; };
+
   installkernel = writeTextFile { name = "installkernel"; executable=true; text = ''
     #!${stdenv.shell} -e
     mkdir -p $4
@@ -49,10 +51,9 @@ let
 
   commonMakeFlags = [
     "O=$(buildRoot)"
-  ] ++ stdenv.lib.optionals (stdenv.platform ? kernelMakeFlags)
-    stdenv.platform.kernelMakeFlags;
+  ];
 
-  drvAttrs = config_: platform: kernelPatches: configfile:
+  drvAttrs = config_: kernelPatches: configfile:
     let
       config = let attrName = attr: "CONFIG_" + attr; in {
         isSet = attr: hasAttr (attrName attr) config;
@@ -115,7 +116,7 @@ let
 
       buildFlags = [
         "KBUILD_BUILD_VERSION=1-Triton"
-        platform.kernelTarget
+        "bzImage"
       ] ++ optional isModular "modules";
 
       installFlags = [
@@ -125,17 +126,13 @@ let
       ++ optional installsFirmware "INSTALL_FW_PATH=$(out)/lib/firmware";
 
       # Some image types need special install targets (e.g. uImage is installed with make uinstall)
-      installTargets = [ (if platform.kernelTarget == "uImage" then "uinstall" else
-                          if platform.kernelTarget == "zImage" then "zinstall" else
-                          "install") ];
+      installTargets = [
+        "install"
+      ];
 
       postInstall = (optionalString installsFirmware ''
         mkdir -p $out/lib/firmware
-      '') + (if (platform ? kernelDTB && platform.kernelDTB) then ''
- 	      make $makeFlags "''${makeFlagsArray[@]}" dtbs
-        mkdir -p $out/dtbs
-        cp $buildRoot/arch/$karch/boot/dts/*.dtb $out/dtbs
-      '' else "") + (if isModular then ''
+      '') + (if isModular then ''
         if [ -z "$dontStrip" ]; then
           installFlagsArray+=("INSTALL_MOD_STRIP=1")
         fi
@@ -224,33 +221,14 @@ let
     };
 in
 
-stdenv.mkDerivation ((drvAttrs config stdenv.platform (kernelPatches ++ nativeKernelPatches) configfile) // {
+stdenv.mkDerivation ((drvAttrs config (kernelPatches ++ nativeKernelPatches) configfile) // {
   name = "linux-${version}";
 
-  enableParallelBuilding = true;
-
-  nativeBuildInputs = [ perl bc openssl ] ++ optional (stdenv.platform.uboot != null)
-    (ubootChooser stdenv.platform.uboot);
+  nativeBuildInputs = [ perl bc openssl ];
 
   makeFlags = commonMakeFlags ++ [
-    "ARCH=${stdenv.platform.kernelArch}"
+    "ARCH=${common.kernelArch}"
   ];
 
-  karch = stdenv.platform.kernelArch;
-
-  crossAttrs = let cp = stdenv.cross.platform; in
-    (drvAttrs crossConfig cp (kernelPatches ++ crossKernelPatches) crossConfigfile) // {
-      makeFlags = commonMakeFlags ++ [
-        "ARCH=${cp.kernelArch}"
-        "CROSS_COMPILE=$(crossConfig)-"
-      ];
-
-      karch = cp.kernelArch;
-
-      # !!! uboot has messed up cross-compiling, nativeDrv builds arm tools on x86,
-      # crossDrv builds x86 tools on x86 (but arm uboot). If this is fixed, uboot
-      # can just go into buildInputs (but not nativeBuildInputs since cp.uboot
-      # may be different from stdenv.platform.uboot)
-      buildInputs = optional (cp.uboot != null) (ubootChooser cp.uboot).crossDrv;
-  };
+  karch = common.kernelArch;
 })

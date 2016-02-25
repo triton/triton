@@ -16,7 +16,7 @@
 
 */
 
-{ stdenv, version, kernelPlatform, extraConfig, features }:
+{ stdenv, version, extraConfig, features }:
 
 with stdenv.lib;
 
@@ -462,10 +462,10 @@ with stdenv.lib;
     XEN_TMEM? y
   ''}
   KSM y
-  ${optionalString (!stdenv.is64bit) ''
+  ${optionalString (stdenv.targetSystem == stdenv.lib.head stdenv.lib.platforms.i686-linux) ''
     HIGHMEM64G? y # We need 64 GB (PAE) support for Xen guest support.
   ''}
-  ${optionalString (versionAtLeast version "3.9" && stdenv.is64bit) ''
+  ${optionalString (versionAtLeast version "3.9") ''
     VFIO_PCI_VGA y
   ''}
   VIRT_DRIVERS y
@@ -574,6 +574,5 @@ with stdenv.lib;
     ''}
   ''}
 
-  ${kernelPlatform.kernelExtraConfig or ""}
   ${extraConfig}
 ''

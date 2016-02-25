@@ -1455,6 +1455,8 @@ vlc = callPackage ../all-pkgs/vlc { };
 vte_290 = callPackage ../all-pkgs/vte/2.90.nix { };
 vte = callPackage ../all-pkgs/vte { };
 
+w3m = callPackage ../all-pkgs/w3m { };
+
 wayland = callPackage ../all-pkgs/wayland {
   graphviz = graphviz-nox;
 };
@@ -11952,23 +11954,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  vue = callPackage ../applications/misc/vue { };
 #
 #  vym = callPackage ../applications/misc/vym { };
-#
-  w3m = callPackage ../applications/networking/browsers/w3m { };
-#
-#  # Should always be the version with the most features
-#  w3m-full = w3m;
-#
-#  # Version without X11
-#  w3m-nox = w3m.override {
-#    x11Support = false;
-#  };
-#
-#  # Version for batch text processing, not a good browser
-  w3m-batch = callPackageAlias "w3m" {
-    graphicsSupport = false;
-    x11Support = false;
-    mouseSupport = false;
-  };
 #
 #  weechat = callPackage ../applications/networking/irc/weechat { };
 #

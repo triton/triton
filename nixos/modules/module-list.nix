@@ -6,7 +6,6 @@
   ./config/fonts/fontdir.nix
   ./config/fonts/fonts.nix
   ./config/fonts/ghostscript.nix
-  ./config/gnu.nix
   ./config/gtk-exe-env.nix
   ./config/i18n.nix
   ./config/krb5.nix
@@ -25,7 +24,6 @@
   ./config/timezone.nix
   ./config/unix-odbc-drivers.nix
   ./config/users-groups.nix
-  ./config/vpnc.nix
   ./config/zram.nix
   ./hardware/all-firmware.nix
   ./hardware/cpu/amd-microcode.nix
@@ -57,43 +55,30 @@
   ./misc/nixpkgs.nix
   ./misc/passthru.nix
   ./misc/version.nix
-  ./programs/atop.nix
   ./programs/bash/bash.nix
-  ./programs/blcr.nix
-  ./programs/cdemu.nix
   ./programs/command-not-found/command-not-found.nix
   ./programs/dconf.nix
   ./programs/environment.nix
-  ./programs/freetds.nix
   ./programs/fish.nix
   ./programs/ibus.nix
   ./programs/kbdlight.nix
   ./programs/light.nix
   ./programs/man.nix
-  ./programs/nano.nix
-  ./programs/screen.nix
   ./programs/shadow.nix
   ./programs/shell.nix
   ./programs/ssh.nix
   ./programs/ssmtp.nix
   ./programs/uim.nix
-  ./programs/venus.nix
-  ./programs/wvdial.nix
-  ./programs/xfs_quota.nix
   ./programs/zsh/zsh.nix
   ./rename.nix
   ./security/acme.nix
-  ./security/apparmor.nix
-  ./security/apparmor-suid.nix
   ./security/audit.nix
   ./security/ca.nix
-  ./security/duosec.nix
   ./security/grsecurity.nix
   ./security/pam.nix
   ./security/pam_usb.nix
   ./security/pam_mount.nix
   ./security/polkit.nix
-  ./security/prey.nix
   ./security/rngd.nix
   ./security/rtkit.nix
   ./security/setuid-wrappers.nix

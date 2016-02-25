@@ -4,7 +4,6 @@ with lib;
 
 let
   cfg = config.services.transmission;
-  apparmor = config.security.apparmor.enable;
 
   homeDir = "/var/lib/transmission";
   downloadDir = "${homeDir}/Downloads";
@@ -76,8 +75,7 @@ in
   config = mkIf cfg.enable {
     systemd.services.transmission = {
       description = "Transmission BitTorrent Service";
-      after = [ "local-fs.target" "network.target" ] ++ optional apparmor "apparmor.service";
-      requires = mkIf apparmor [ "apparmor.service" ];
+      after = [ "local-fs.target" "network.target" ];
       wantedBy = [ "multi-user.target" ];
 
       # 1) Only the "transmission" user and group have access to torrents.
@@ -104,46 +102,6 @@ in
       createHome = true;
     };
 
-    # AppArmor profile
-    security.apparmor.profiles = mkIf apparmor [
-      (pkgs.writeText "apparmor-transmission-daemon" ''
-        #include <tunables/global>
-
-        ${pkgs.transmission}/bin/transmission-daemon {
-          #include <abstractions/base>
-          #include <abstractions/nameservice>
-
-          ${pkgs.glibc}/lib/*.so                    mr,
-          ${pkgs.libevent}/lib/libevent*.so*        mr,
-          ${pkgs.curl}/lib/libcurl*.so*             mr,
-          ${pkgs.openssl}/lib/libssl*.so*           mr,
-          ${pkgs.openssl}/lib/libcrypto*.so*        mr,
-          ${pkgs.zlib}/lib/libz*.so*                mr,
-          ${pkgs.libssh2}/lib/libssh2*.so*          mr,
-          ${pkgs.systemd}/lib/libsystemd*.so*       mr,
-          ${pkgs.xz}/lib/liblzma*.so*               mr,
-          ${pkgs.libgcrypt}/lib/libgcrypt*.so*      mr,
-          ${pkgs.libgpgerror}/lib/libgpg-error*.so* mr,
-          ${pkgs.libnghttp2}/lib/libnghttp2*.so*    mr,
-          ${pkgs.c-ares}/lib/libcares*.so*          mr,
-          ${pkgs.libcap}/lib/libcap*.so*            mr,
-          ${pkgs.attr}/lib/libattr*.so*             mr,
-
-          @{PROC}/sys/kernel/random/uuid   r,
-          @{PROC}/sys/vm/overcommit_memory r,
-
-          ${pkgs.openssl}/etc/**                     r,
-          ${pkgs.transmission}/share/transmission/** r,
-
-          owner ${settingsDir}/** rw,
-
-          ${fullSettings.download-dir}/** rw,
-          ${optionalString fullSettings.incomplete-dir-enabled ''
-            ${fullSettings.incomplete-dir}/** rw,
-          ''}
-        }
-      '')
-    ];
   };
 
 }

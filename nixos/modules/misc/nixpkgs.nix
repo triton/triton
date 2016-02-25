@@ -58,7 +58,7 @@ in
       '';
     };
 
-    nixpkgs.system = mkOption {
+    nixpkgs.targetSystem = mkOption {
       type = types.str;
       example = "i686-linux";
       description = ''
@@ -69,12 +69,24 @@ in
       '';
     };
 
+    nixpkgs.hostSystem = mkOption {
+      type = types.str;
+      example = "i686-linux";
+      description = ''
+        Specifies the Nix platform type which nixos is built upon.
+        If unset, it defaults to the platform type of your host system.
+        Specifying this option is useful when doing distributed
+        multi-platform deployment, or when building virtual machines.
+      '';
+    };
+
   };
 
   config = {
     _module.args.pkgs = import ../../.. {
-      system = config.nixpkgs.system;
-
+      inherit (config.nixpkgs)
+        hostSystem
+        targetSystem;
       inherit (config.nixpkgs) config;
     };
   };

@@ -14,7 +14,8 @@ let
   versionModule =
     { system.nixosVersionSuffix = config.system.nixosVersionSuffix;
       system.nixosRevision = config.system.nixosRevision;
-      nixpkgs.system = config.nixpkgs.system;
+      nixpkgs.targetSystem = config.nixpkgs.targetSystem;
+      nixpkgs.hostSystem = config.nixpkgs.hostSystem;
     };
 
   eval = evalModules {
@@ -117,7 +118,7 @@ in
     services.mingetty.helpLine = mkIf cfg.showManual
       "\nPress <Alt-F${toString cfg.ttyNumber}> for the NixOS manual.";
 
-    services.nixosManual.browser = mkDefault "${pkgs.w3m-nox}/bin/w3m";
+    services.nixosManual.browser = mkDefault "${pkgs.w3m}/bin/w3m";
 
   };
 

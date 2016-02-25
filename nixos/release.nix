@@ -15,7 +15,10 @@ let
 
   callTest = fn: args: forAllSystems (system: hydraJob (import fn ({ inherit system; } // args)));
 
-  pkgs = import nixpkgs { system = "x86_64-linux"; };
+  pkgs = import nixpkgs {
+    targetSystem = builtins.currentSystem;
+    hostSystem = builtins.currentSystem;
+  };
 
 
   versionModule =
@@ -25,14 +28,16 @@ let
 
 
   makeIso =
-    { module, type, description ? type, maintainers ? ["eelco"], system }:
+    { module, type, description ? type, maintainers ? [ ], targetSystem, hostSystem }:
 
-    with import nixpkgs { inherit system; };
+    with import nixpkgs {
+      inherit targetSystem hostSystem;
+    };
 
     let
 
       config = (import lib/eval-config.nix {
-        inherit system;
+        inherit targetSystem hostSystem;
         modules = [ module versionModule { isoImage.isoBaseName = "nixos-${type}"; } ];
       }).config;
 
@@ -42,7 +47,7 @@ let
       # Declare the ISO as a build product so that it shows up in Hydra.
       hydraJob (runCommand "nixos-iso-${config.system.nixosVersion}"
         { meta = {
-            description = "Triton installation CD (${description}) - ISO image for ${system}";
+            description = "Triton installation CD (${description}) - ISO image for ${targetSystem}";
             maintainers = map (x: lib.maintainers.${x}) maintainers;
           };
           inherit iso;
@@ -56,14 +61,16 @@ let
 
 
   makeSystemTarball =
-    { module, maintainers ? ["viric"], system }:
+    { module, maintainers ? [ ], targetSystem, hostSystem }:
 
-    with import nixpkgs { inherit system; };
+    with import nixpkgs {
+      inherit targetSystem hostSystem;
+    };
 
     let
 
       config = (import lib/eval-config.nix {
-        inherit system;
+        inherit targetSystem hostSystem;
         modules = [ module versionModule ];
       }).config;
 
@@ -72,7 +79,7 @@ let
     in
       tarball //
         { meta = {
-            description = "Triton system tarball for ${system} - ${stdenv.platform.name}";
+            description = "Triton system tarball for ${targetSystem} - ${stdenv.platform.name}";
             maintainers = map (x: lib.maintainers.${x}) maintainers;
           };
           inherit config;
@@ -82,8 +89,8 @@ let
   makeClosure = module: buildFromConfig module (config: config.system.build.toplevel);
 
 
-  buildFromConfig = module: sel: forAllSystems (system: hydraJob (sel (import ./lib/eval-config.nix {
-    inherit system;
+  buildFromConfig = module: sel: forAllSystems ({ targetSystem, hostSystem }: hydraJob (sel (import ./lib/eval-config.nix {
+    inherit targetSystem hostSystem;
     modules = [ module versionModule ] ++ singleton
       ({ config, lib, ... }:
       { fileSystems."/".device  = mkDefault "/dev/sda1";
@@ -109,7 +116,8 @@ in rec {
   iso_minimal = forAllSystems (system: makeIso {
     module = ./modules/installer/cd-dvd/installation-cd-minimal.nix;
     type = "minimal";
-    inherit system;
+    targetSystem = system;
+    hostSystem = system;
   });
 
   iso_graphical = forAllSystems (system: makeIso {
@@ -123,7 +131,8 @@ in rec {
   iso_minimal_new_kernel = forAllSystems (system: makeIso {
     module = ./modules/installer/cd-dvd/installation-cd-minimal-new-kernel.nix;
     type = "minimal-new-kernel";
-    inherit system;
+    targetSystem = system;
+    hostSystem = system;
   });
 
 

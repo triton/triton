@@ -18,7 +18,7 @@ in
 
     security.sudo.enable = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description =
         ''
           Whether to enable the <command>sudo</command> command, which

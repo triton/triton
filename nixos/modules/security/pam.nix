@@ -314,8 +314,6 @@ let
               "session optional ${pkgs.pam}/lib/security/pam_motd.so motd=${motd}"}
           ${optionalString cfg.pamMount
               "session optional ${pkgs.pam_mount}/lib/security/pam_mount.so"}
-          ${optionalString (cfg.enableAppArmor && config.security.apparmor.enable)
-              "session optional ${pkgs.apparmor-pam}/lib/security/pam_apparmor.so order=user,group,default debug"}
         '');
     };
 

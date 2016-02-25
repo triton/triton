@@ -6,7 +6,7 @@ with lib;
   options = {
     security.rngd.enable = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = ''
         Whether to enable the rng daemon, which adds entropy from
         hardware sources of randomness to the kernel entropy pool when

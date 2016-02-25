@@ -379,8 +379,8 @@ in
   options = {
 
     systemd.package = mkOption {
-      default = pkgs.systemd;
-      defaultText = "pkgs.systemd";
+      default = pkgs.systemd_full;
+      defaultText = "pkgs.systemd_full";
       type = types.package;
       description = "The systemd package.";
     };

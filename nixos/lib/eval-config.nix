@@ -9,16 +9,17 @@
 # expressions are ever made modular at the top level) can just use
 # types.submodule instead of using eval-config.nix
 { # !!! system can be set modularly, would be nice to remove
-  system ? builtins.currentSystem
-, # !!! is this argument needed any more? The pkgs argument can
+  targetSystem ? builtins.currentSystems
+, hostSystem ? builtins.currentSystem
+  # !!! is this argument needed any more? The pkgs argument can
   # be set modularly anyway.
-  pkgs ? null
-, # !!! what do we gain by making this configurable?
-  baseModules ? import ../modules/module-list.nix
-, # !!! See comment about args in lib/modules.nix
-  extraArgs ? {}
-, # !!! See comment about args in lib/modules.nix
-  specialArgs ? {}
+, pkgs ? null
+  # !!! what do we gain by making this configurable?
+,  baseModules ? import ../modules/module-list.nix
+  # !!! See comment about args in lib/modules.nix
+, extraArgs ? {}
+  # !!! See comment about args in lib/modules.nix
+,  specialArgs ? {}
 , modules
 , # !!! See comment about check in lib/modules.nix
   check ? true
@@ -26,7 +27,7 @@
 , lib ? import ../../lib
 }:
 
-let extraArgs_ = extraArgs; pkgs_ = pkgs; system_ = system;
+let extraArgs_ = extraArgs; pkgs_ = pkgs;
     extraModules = let e = builtins.getEnv "NIXOS_EXTRA_MODULE_PATH";
                    in if e == "" then [] else [(import (builtins.toPath e))];
 in
@@ -36,7 +37,8 @@ let
     _file = ./eval-config.nix;
     key = _file;
     config = {
-      nixpkgs.system = lib.mkDefault system_;
+      nixpkgs.targetSystem = lib.mkDefault targetSystem;
+      nixpkgs.hostSystem = lib.mkDefault hostSystem;
       _module.args.pkgs = lib.mkIf (pkgs_ != null) (lib.mkForce pkgs_);
     };
   };

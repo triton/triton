@@ -287,8 +287,6 @@ in
       chmod -R 0600 /etc/grsec
     ''; };
 
-    # Enable AppArmor, gradm udev rules, and utilities
-    security.apparmor.enable   = true;
     boot.kernelPackages        = customGrsecPkg;
     services.udev.packages     = lib.optional (!cfg.config.disableRBAC) pkgs.gradm;
     environment.systemPackages = [ pkgs.paxctl pkgs.pax-utils ] ++ lib.optional (!cfg.config.disableRBAC) pkgs.gradm;

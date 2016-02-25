@@ -2,7 +2,6 @@
 with lib;
 
 let
-  apparmorEnabled = config.security.apparmor.enable;
   dnscrypt-proxy = pkgs.dnscrypt-proxy;
   cfg = config.services.dnscrypt-proxy;
   resolverListFile = "${dnscrypt-proxy}/share/dnscrypt-proxy/dnscrypt-resolvers.csv";
@@ -104,34 +103,6 @@ in
       }
     ];
 
-    security.apparmor.profiles = mkIf apparmorEnabled (singleton (pkgs.writeText "apparmor-dnscrypt-proxy" ''
-      ${dnscrypt-proxy}/bin/dnscrypt-proxy {
-        /dev/null rw,
-        /dev/urandom r,
-
-        /etc/passwd r,
-        /etc/group r,
-        ${config.environment.etc."nsswitch.conf".source} r,
-
-        ${pkgs.glibc}/lib/*.so mr,
-        ${pkgs.tzdata}/share/zoneinfo/** r,
-
-        network inet stream,
-        network inet6 stream,
-        network inet dgram,
-        network inet6 dgram,
-
-        ${pkgs.gcc.cc}/lib/libssp.so.* mr,
-        ${pkgs.libsodium}/lib/libsodium.so.* mr,
-        ${pkgs.systemd}/lib/libsystemd.so.* mr,
-        ${pkgs.xz}/lib/liblzma.so.* mr,
-        ${pkgs.libgcrypt}/lib/libgcrypt.so.* mr,
-        ${pkgs.libgpgerror}/lib/libgpg-error.so.* mr,
-
-        ${resolverListFile} r,
-      }
-    ''));
-
     users.extraUsers.dnscrypt-proxy = {
       uid = config.ids.uids.dnscrypt-proxy;
       description = "dnscrypt-proxy daemon user";
@@ -149,8 +120,8 @@ in
 
     systemd.services.dnscrypt-proxy = {
       description = "dnscrypt-proxy daemon";
-      after = [ "network.target" ] ++ optional apparmorEnabled "apparmor.service";
-      requires = [ "dnscrypt-proxy.socket "] ++ optional apparmorEnabled "apparmor.service";
+      after = [ "network.target" ];
+      requires = [ "dnscrypt-proxy.socket "];
       serviceConfig = {
         Type = "simple";
         NonBlocking = "true";

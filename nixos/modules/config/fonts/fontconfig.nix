@@ -11,13 +11,12 @@ with lib;
       fontconfig = {
         enable = mkOption {
           type = types.bool;
-          default = true;
+          default = false;
           description = ''
             If enabled, a Fontconfig configuration file will be built
-            pointing to a set of default fonts.  If you don't care about
+            pointing to a set of default fonts.  If you care about
             running X11 applications or any other program that uses
-            Fontconfig, you can turn this option off and prevent a
-            dependency on all those fonts.
+            Fontconfig, you should turn this option on.
           '';
         };
 

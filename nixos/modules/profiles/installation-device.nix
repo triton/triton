@@ -21,18 +21,6 @@ with lib;
 
   config = {
 
-    # Enable in installer, even if the minimal profile disables it.
-    services.nixosManual.enable = mkForce true;
-
-    # Show the manual.
-    services.nixosManual.showManual = true;
-
-    # Let the user play Rogue on TTY 8 during the installation.
-    services.rogue.enable = true;
-
-    # Disable some other stuff we don't need.
-    security.sudo.enable = false;
-
     # Automatically log in at the virtual consoles.
     services.mingetty.autologinUser = "root";
 
@@ -68,7 +56,11 @@ with lib;
     # To speed up installation a little bit, include the complete
     # stdenv in the Nix store on the CD.  Archive::Cpio is needed for
     # the initrd builder.
-    system.extraDependencies = [ pkgs.stdenv pkgs.busybox pkgs.perlPackages.ArchiveCpio ];
+    system.extraDependencies = with pkgs; [
+      stdenv
+      busybox
+      perlPackages.ArchiveCpio
+    ];
 
   };
 }

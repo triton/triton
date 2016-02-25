@@ -1,17 +1,10 @@
-{ stdenv, fetchurl
+{ stdenv
+, fetchurl
 , libgpgerror
-
-# Optional Dependencies
-, libcap ? null, pth ? null
+, libcap
+, pth
 }:
 
-with stdenv;
-with stdenv.lib;
-let
-  optLibcap = shouldUsePkg libcap;
-  #optPth = shouldUsePkg pth;
-  optPth = null; # Broken as of 1.6.5
-in
 stdenv.mkDerivation rec {
   name = "libgcrypt-1.6.5";
 
@@ -20,11 +13,15 @@ stdenv.mkDerivation rec {
     sha256 = "0959mwfzsxhallxdqlw359xg180ll2skxwyy35qawmfl89cbr7pl";
   };
 
-  buildInputs = [ libgpgerror optLibcap optPth ];
+  buildInputs = [
+    libgpgerror
+    #libcap  Breaks application not expecting it
+    #pth  Currently Broken
+  ];
 
   configureFlags = [
-    (mkWith   (optLibcap != null) "capabilities"  null)
-    (mkEnable (optPth != null)    "random-daemon" null)
+    "--without-capabilities"
+    "--disable-random-daemon"
   ];
 
   # Make sure includes are fixed for callers who don't use libgpgcrypt-config
@@ -34,12 +31,15 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = https://www.gnu.org/software/libgcrypt/;
     description = "General-pupose cryptographic library";
     license = licenses.lgpl2Plus;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
-    repositories.git = git://git.gnupg.org/libgcrypt.git;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

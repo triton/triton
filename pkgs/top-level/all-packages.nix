@@ -981,6 +981,8 @@ libevent = callPackage ../all-pkgs/libevent { };
 
 libffi = callPackage ../all-pkgs/libffi { };
 
+libgcrypt = callPackage ../all-pkgs/libgcrypt { };
+
 libgdata = callPackage ../all-pkgs/libgdata { };
 
 libgee = callPackage ../all-pkgs/libgee { };
@@ -6863,14 +6865,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libftdi = callPackage ../development/libraries/libftdi { };
 #
 #  libftdi1 = callPackage ../development/libraries/libftdi/1.x.nix { };
-#
-  libgcrypt = callPackage ../development/libraries/libgcrypt {
-    # Breaks packages that expect to have elevated privileges
-    # Ex. Lightdm, cryptsetup
-    libcap = null;
-  };
-#
-  libgcrypt_1_5 = lowPrio (callPackage ../development/libraries/libgcrypt/1.5.nix { });
 #
 #  libgdiplus = callPackage ../development/libraries/libgdiplus { };
 #

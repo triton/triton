@@ -16,12 +16,12 @@ elfutils.overrideDerivation (attrs: {
   # We only want to build libelf
   preBuild = ''
     cd libelf
+    sed -i '/^install:/ s,install-am,,g' Makefile
   '';
 
   # We only want a certain subset of libraries
   buildFlags = optionals static [
     "libelf.a"
-    "libelf_pic.a"
   ] ++ optionals shared [
     "libelf.so"
   ];
@@ -29,18 +29,22 @@ elfutils.overrideDerivation (attrs: {
   installTargets = [
     "install-includeHEADERS"
     "install-pkgincludeHEADERS"
+  ] ++ optionals static [
+    "install-libLIBRARIES"
+  ] ++ optionals shared [
+    "install"
   ];
 
+  # Install the pkgconfig file
   postInstall = ''
-    mkdir -p $out/lib/pkgconfig
-  '' + optionalString static ''
-    cp libelf.a libelf_pic.a $out/lib
-  '' + optionalString shared ''
-    cp libelf.so $out/lib
-  '' + ''
-    # Install the pkgconfig file
     cd ../config
     make libelf.pc
+    mkdir -p $out/lib/pkgconfig
     cp libelf.pc $out/lib/pkgconfig
+  '';
+
+  preFixup = ''
+    ${if static then "" else "!"} test -e $out/lib/libelf.a
+    ${if shared then "" else "!"} test -e $out/lib/libelf.so
   '';
 })

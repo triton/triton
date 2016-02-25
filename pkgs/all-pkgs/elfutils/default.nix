@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-deterministic-archives"
-    "--enable-sanitize-undefined"
+    "--disable-sanitize-undefined"  # This is probably desireable but breaks things
   ];
 
   meta = with stdenv.lib; {

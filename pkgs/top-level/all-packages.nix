@@ -597,9 +597,11 @@ curl = callPackage ../all-pkgs/curl {
   suffix = "";
 };
 
-curlFull = callPackageAlias "curl" {
+curl-full = callPackageAlias "curl" {
   suffix = "full";
 };
+
+cyrus-sasl = callPackage ../development/libraries/cyrus-sasl { };
 
 dash = callPackage ../all-pkgs/dash { };
 
@@ -940,6 +942,8 @@ isl = callPackage ../all-pkgs/isl { };
 isl_0_14 = callPackage ../all-pkgs/isl { channel = "0.14"; };
 
 json-glib = callPackage ../all-pkgs/json-glib { };
+
+kbd = callPackage ../all-pkgs/kbd { };
 
 kea = callPackage ../all-pkgs/kea { };
 
@@ -6173,8 +6177,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  cwiid = callPackage ../development/libraries/cwiid { };
 #
-  cyrus_sasl = callPackage ../development/libraries/cyrus-sasl { };
-
   # Make bdb5 the default as it is the last release under the custom
   # bsd-like license
   db = callPackageAlias "db5" { };
@@ -9071,8 +9073,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  jool-cli = callPackage ../os-specific/linux/jool/cli.nix { };
 #
 #  jujuutils = callPackage ../os-specific/linux/jujuutils { };
-#
-  kbd = callPackage ../os-specific/linux/kbd { };
 #
 #  kbdlight = callPackage ../os-specific/linux/kbdlight { };
 #

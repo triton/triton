@@ -1,23 +1,35 @@
-{ lib, stdenv, fetchurl, openssl, kerberos, db, gettext, pam }:
+{ stdenv
+, fetchurl
+, gettext
 
-with stdenv.lib;
+, db
+, kerberos
+, openssl
+, pam
+}:
+
 stdenv.mkDerivation rec {
-  name = "cyrus-sasl-2.1.26${optionalString (kerberos == null) "-without-kerberos"}";
+  name = "cyrus-sasl-2.1.26";
 
   src = fetchurl {
     url = "ftp://ftp.cyrusimap.org/cyrus-sasl/${name}.tar.gz";
     sha256 = "1hvvbcsg21nlncbgs0cgn3iwlnb3vannzwsp6rwvnn9ba4v53g4g";
   };
 
-  buildInputs =
-    [ openssl db gettext kerberos ]
-    ++ lib.optional stdenv.isLinux pam;
+  nativeBuildInputs = [
+    gettext
+  ];
 
-  patches = [ ./missing-size_t.patch ]; # https://bugzilla.redhat.com/show_bug.cgi?id=906519
+  buildInputs = [
+    db
+    kerberos
+    openssl
+    pam
+  ];
 
-  configureFlags = [
-    "--with-openssl=${openssl}"
-    "--enable-auth-sasldb"
+  # https://bugzilla.redhat.com/show_bug.cgi?id=906519
+  patches = [
+    ./missing-size_t.patch
   ];
 
   # Set this variable at build-time to make sure $out can be evaluated.
@@ -27,14 +39,19 @@ stdenv.mkDerivation rec {
     configureFlagsArray+=("--with-saslauthd=/run/saslauthd")
   '';
 
-  preBuild = ''
-    cat sasldb/Makefile
-  '';
+  configureFlags = [
+    "--with-openssl=${openssl}"
+    "--enable-auth-sasldb"
+  ];
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = "http://cyrusimap.web.cmu.edu/";
     description = "library for adding authentication support to connection-based protocols";
-    platforms = platforms.unix;
-    maintainers = with maintainers; [ simons ];
+    maintainers = with maintainers; [
+      simons
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

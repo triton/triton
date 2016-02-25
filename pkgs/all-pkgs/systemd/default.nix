@@ -31,13 +31,13 @@
 , libidn
 , libmicrohttpd
 , libseccomp
-, libutil-linux
 , libxkbcommon
 , lz4
 , pam
 , python3Packages
 , qrencode
-, util-linux-full
+, util-linux_lib
+, util-linux_full
 , xz
 , zlib
 
@@ -97,7 +97,7 @@ stdenv.mkDerivation rec {
     libaudit
     libidn
   ] ++ optionals (libOnly) [
-    libutil-linux
+    util-linux_lib
   ] ++ optionals (!libOnly) [
     python3Packages.python
     python3Packages.lxml
@@ -116,7 +116,7 @@ stdenv.mkDerivation rec {
     curl
     iptables
     gnu-efi
-    util-linux-full
+    util-linux_full
   ];
 
   preConfigure = optionalString (!libOnly) ''
@@ -125,13 +125,13 @@ stdenv.mkDerivation rec {
       test -e $i
       substituteInPlace $i \
         --replace /usr/bin/getent ${stdenv.cc.libc}/bin/getent \
-        --replace /bin/mount ${util-linux-full}/bin/mount \
-        --replace /bin/umount ${util-linux-full}/bin/umount \
-        --replace /sbin/swapon ${util-linux-full}/sbin/swapon \
-        --replace /sbin/swapoff ${util-linux-full}/sbin/swapoff \
+        --replace /bin/mount ${util-linux_full}/bin/mount \
+        --replace /bin/umount ${util-linux_full}/bin/umount \
+        --replace /sbin/swapon ${util-linux_full}/sbin/swapon \
+        --replace /sbin/swapoff ${util-linux_full}/sbin/swapoff \
         --replace /bin/echo ${coreutils}/bin/echo \
         --replace /bin/cat ${coreutils}/bin/cat \
-        --replace /sbin/sulogin ${util-linux-full}/sbin/sulogin \
+        --replace /sbin/sulogin ${util-linux_full}/sbin/sulogin \
         --replace /usr/lib/systemd/systemd-fsck $out/lib/systemd/systemd-fsck
     done
 

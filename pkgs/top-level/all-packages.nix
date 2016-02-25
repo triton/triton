@@ -993,6 +993,8 @@ libgksu = callPackage ../all-pkgs/libgksu { };
 
 libgnomekbd = callPackage ../all-pkgs/libgnomekbd { };
 
+libgpg-error = callPackage ../all-pkgs/libgpg-error { };
+
 libgphoto2 = callPackage ../all-pkgs/libgphoto2 { };
 
 libgpod = callPackage ../all-pkgs/libgpod {
@@ -6867,8 +6869,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libftdi1 = callPackage ../development/libraries/libftdi/1.x.nix { };
 #
 #  libgdiplus = callPackage ../development/libraries/libgdiplus { };
-#
-  libgpgerror = callPackage ../development/libraries/libgpg-error { };
 #
 #  libgsystem = callPackage ../development/libraries/libgsystem { };
 #

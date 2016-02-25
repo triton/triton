@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, libgpgerror
+, libgpg-error
 , libcap
 , pth
 }:
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    libgpgerror
+    libgpg-error
     #libcap  Breaks application not expecting it
     #pth  Currently Broken
   ];
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   # Make sure includes are fixed for callers who don't use libgpgcrypt-config
   postInstall = ''
-    sed -i 's,#include <gpg-error.h>,#include "${libgpgerror}/include/gpg-error.h",g' $out/include/gcrypt.h
+    sed -i 's,#include <gpg-error.h>,#include "${libgpg-error}/include/gpg-error.h",g' $out/include/gcrypt.h
   '';
 
   doCheck = true;

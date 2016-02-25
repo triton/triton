@@ -5,7 +5,7 @@
 , c-ares
 , gss
 , libidn
-, libnghttp2
+, nghttp2_lib
 , libssh2
 , openldap
 , openssl
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     c-ares
-    libnghttp2
+    nghttp2_lib
     openssl
     zlib
   ] ++ optionals isFull [

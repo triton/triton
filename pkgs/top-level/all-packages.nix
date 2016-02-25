@@ -1197,7 +1197,7 @@ networkmanager-applet = newScope gnome ../all-pkgs/networkmanager-applet { };
 
 nghttp2_full = callPackage ../all-pkgs/nghttp2 { };
 
-nghttp2_lib = callPackageAlias "nghttp2" {
+nghttp2_lib = callPackageAlias "nghttp2_full" {
   prefix = "lib";
 };
 

@@ -35,6 +35,7 @@
 , libxkbcommon
 , lz4
 , pam
+, python3Packages
 , qrencode
 , util-linux-full
 , xz
@@ -98,6 +99,8 @@ stdenv.mkDerivation rec {
   ] ++ optionals (libOnly) [
     libutil-linux
   ] ++ optionals (!libOnly) [
+    python3Packages.python
+    python3Packages.lxml
     kmod
     libxkbcommon
     libseccomp

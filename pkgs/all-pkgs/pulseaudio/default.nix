@@ -32,7 +32,6 @@
 , speexdsp ? null
 , systemd ? null
 , udev ? null
-, valgrind ? null
 , webrtc-audio-processing ? null
 , xorg ? null
 
@@ -147,7 +146,6 @@ stdenv.mkDerivation rec {
     libsndfile
     check
     database
-    valgrind
     optOss
     optCoreaudio
     optAlsaLib

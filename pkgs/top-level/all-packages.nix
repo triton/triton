@@ -514,7 +514,11 @@ at_spi2_core = at-spi2-core; # Deprecated alias
 
 atom = callPackage ../all-pkgs/atom { };
 
-auditFull = callPackage ../all-pkgs/audit { };
+audit_full = callPackage ../all-pkgs/audit { };
+
+audit_lib = callPackageAlias "audit_full" {
+  prefix = "lib";
+};
 
 autoconf = callPackage ../all-pkgs/autoconf { };
 
@@ -957,15 +961,15 @@ kerberos = callPackageAlias "libkrb5" { };
 
 kubernetes = callPackage ../all-pkgs/kubernetes { };
 
-krb5-full = callPackage ../all-pkgs/krb5 { };
+krb5_full = callPackage ../all-pkgs/krb5 { };
+
+krb5_lib = callPackageAlias "krb5-full" {
+  type = "lib";
+};
 
 libarchive = callPackage ../all-pkgs/libarchive { };
 
 libass = callPackage ../all-pkgs/libass { };
-
-libaudit = callPackageAlias "auditFull" {
-  prefix = "lib";
-};
 
 libbluray = callPackage ../all-pkgs/libbluray { };
 
@@ -1028,10 +1032,6 @@ libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix { };
 libjpeg-turbo = callPackage ../all-pkgs/libjpeg-turbo { };
 libjpeg = libjpeg-turbo;
 
-libkrb5 = callPackageAlias "krb5-full" {
-  type = "lib";
-};
-
 libmediaart = callPackage ../all-pkgs/libmediaart {
   qt5 = null;
 };
@@ -1041,10 +1041,6 @@ libmicrohttpd = callPackage ../all-pkgs/libmicrohttpd { };
 libmpc = callPackage ../all-pkgs/libmpc { };
 
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
-
-libnghttp2 = callPackageAlias "nghttp2" {
-  prefix = "lib";
-};
 
 libomxil-bellagio = callPackage ../all-pkgs/libomxil-bellagio { };
 
@@ -1063,10 +1059,6 @@ libsigsegv = callPackage ../all-pkgs/libsigsegv { };
 libsoup = callPackage ../all-pkgs/libsoup { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };
-
-libsystemd = callPackageAlias "systemd-full" {
-  type = "lib";
-};
 
 libtool = callPackage ../all-pkgs/libtool { };
 
@@ -1087,10 +1079,6 @@ libusb_1 = callPackage ../all-pkgs/libusb { };
 libusb = libusb_1;
 
 libusbmuxd = callPackage ../all-pkgs/libusbmuxd { };
-
-libutil-linux = callPackageAlias "util-linux-full" {
-  type = "lib";
-};
 
 libva = callPackage ../all-pkgs/libva { };
 
@@ -1207,7 +1195,11 @@ networkmanager-openconnect = callPackage ../all-pkgs/networkmanager-openconnect 
 
 networkmanager-applet = newScope gnome ../all-pkgs/networkmanager-applet { };
 
-nghttp2 = callPackage ../all-pkgs/nghttp2 { };
+nghttp2_full = callPackage ../all-pkgs/nghttp2 { };
+
+nghttp2_lib = callPackageAlias "nghttp2" {
+  prefix = "lib";
+};
 
 ninja = callPackage ../all-pkgs/ninja { };
 
@@ -1276,35 +1268,12 @@ poppler = callPackage ../all-pkgs/poppler {
 
 psmisc = callPackage ../all-pkgs/psmisc { };
 
-libpulseaudio = pulseaudioFull.override {
-  prefix = "lib";
-};
-# Name is changed to prevent use in packages
-# please use libpulseaudio instead
-pulseaudioLight = pulseaudioFull.override {
-  # The following are disabled in the default build, because if this
-  # functionality is desired, they are only needed in the PulseAudio
-  # server.
-  xorg = null;
-  coreaudio = null;
-  esound = null;
-  libjack2 = null;
-  avahi = null;
-  lirc = null;
-  bluez5 = null;
-  tdb = null;
-  gdbm = null;
-  gtk3 = null;
-  webrtc-audio-processing = null;
-  gconf = null;
-  libasyncns = null;
-};
-
-pulseaudioFull = callPackage ../all-pkgs/pulseaudio {
+pulseaudio_full = callPackage ../all-pkgs/pulseaudio {
   fftw = fftwFloat;
+};
 
-  # Disabled unless debugging
-  valgrind = null;
+pulseaudio_lib = pulseaudio_full.override {
+  prefix = "lib";
 };
 
 python27 = callPackage ../all-pkgs/python/2.x.nix {
@@ -1443,12 +1412,17 @@ sublime-text = callPackage ../all-pkgs/sublime-text { };
 sushi = callPackage ../all-pkgs/sushi { };
 
 swig = callPackage ../all-pkgs/swig { };
+
 swig2 = callPackageAlias "swig" {
   channel = "2";
 };
 
 # TODO: Rename back to systemd once depedencies are sorted
-systemd-full = callPackage ../all-pkgs/systemd { };
+systemd_full = callPackage ../all-pkgs/systemd { };
+
+systemd_lib = callPackageAlias "systemd_full" {
+  type = "lib";
+};
 
 talloc = callPackage ../all-pkgs/talloc { };
 
@@ -1466,8 +1440,11 @@ unbound = callPackage ../all-pkgs/unbound { };
 
 usbmuxd = callPackage ../all-pkgs/usbmuxd { };
 
-# TODO: Rename back to util-linux once dependencies are sorted
-util-linux-full = callPackage ../all-pkgs/util-linux { };
+util-linux_full = callPackage ../all-pkgs/util-linux { };
+
+util-linux_lib = callPackageAlias "util-linux_full" {
+  type = "lib";
+};
 
 vala = callPackage ../all-pkgs/vala { };
 
@@ -6487,8 +6464,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  # TODO : Let admin choose.
 #  # We are using mit-krb5 because it is better maintained
-  heimdalFull = callPackage ../development/libraries/kerberos/heimdal.nix { };
-  libheimdal = callPackageAlias "heimdalFull" {
+  heimdal_full = callPackage ../development/libraries/kerberos/heimdal.nix { };
+
+  heimdal_lib = callPackageAlias "heimdal_full" {
     type = "lib";
   };
 #
@@ -8846,7 +8824,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
   xorg = recurseIntoAttrs (lib.callPackagesWith pkgs ../servers/x11/xorg/default.nix {
     inherit (pkgs) fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
       libxslt expat libpng zlib perl mesa_drivers spice_protocol libunwind
-      dbus libutil-linux openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
+      dbus util-linux_lib openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
       autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman udev
       libdrm;
     mesa = pkgs.mesa_noglu;
@@ -9007,8 +8985,11 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  fatrace = callPackage ../os-specific/linux/fatrace { };
 #
-#  ffadoFull = callPackage ../os-specific/linux/ffado { };
-#  libffado = ffadoFull.override { prefix = "lib"; };
+  ffado_full = callPackage ../os-specific/linux/ffado { };
+
+  ffado_lib = ffadoFull.override {
+    prefix = "lib";
+  };
 #
 #  fbterm = callPackage ../os-specific/linux/fbterm { };
 #
@@ -12743,10 +12724,13 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  # using the new configuration style proposal which is unstable
 #  jack1 = callPackage ../misc/jackaudio/jack1.nix { };
 #
-  jack2Full = callPackage ../misc/jackaudio {
-    libopus = libopus.override { withCustomModes = true; };
+  jack2_full = callPackage ../misc/jackaudio {
+    libopus = libopus.override { withCustomModes = true; };  # WTF
   };
-  libjack2 = jack2Full.override { prefix = "lib"; };
+
+  jack2_lib = jack2_full.override {
+    prefix = "lib";
+  };
 #  libjack2-git = callPackage ../misc/jackaudio/git.nix { };
 #
 #  keynav = callPackage ../tools/X11/keynav { };

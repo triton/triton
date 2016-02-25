@@ -791,7 +791,7 @@ gnused = callPackage ../all-pkgs/gnused { };
 gnutar = callPackage ../all-pkgs/gnutar { };
 
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
-gobjectIntrospection = gobject-introspection; # Deprecated alias
+gobjectIntrospection = callPackageAlias "gobject-introspection" { }; # Deprecated alias
 
 gperf = callPackage ../all-pkgs/gperf { };
 
@@ -1029,8 +1029,8 @@ libinput = callPackage ../all-pkgs/libinput {
 
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };
 libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix { };
-libjpeg-turbo = callPackage ../all-pkgs/libjpeg-turbo { };
-libjpeg = libjpeg-turbo;
+libjpeg_turbo = callPackage ../all-pkgs/libjpeg-turbo { };
+libjpeg = callPackageAlias "libjpeg_turbo" { };
 
 libmediaart = callPackage ../all-pkgs/libmediaart {
   qt5 = null;
@@ -3263,7 +3263,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  mtdutils = callPackage ../tools/filesystems/mtdutils { };
 #
-#  mtools = callPackage ../tools/filesystems/mtools { };
+  mtools = callPackage ../tools/filesystems/mtools { };
 #
   mtr = callPackage ../tools/networking/mtr {};
 #
@@ -5435,7 +5435,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     spidermonkey_17
     spidermonkey_24
     spidermonkey_38;
-  spidermonkey = spidermonkey_38;
+  spidermonkey = callPackageAlias "spidermonkey_38" { };
 #
 #  tcl = tcl-8_6;
 #  tcl-8_6 = callPackage ../development/interpreters/tcl/8.6.nix { };
@@ -7166,7 +7166,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   libupnp = callPackage ../development/libraries/pupnp { };
 
-  giflib = giflib_5_1;
+  giflib = callPackageAlias "giflib_5_1" { };
   giflib_4_1 = callPackage ../development/libraries/giflib/4.1.nix { };
   giflib_5_1 = callPackage ../development/libraries/giflib/5.1.nix { };
 
@@ -7501,9 +7501,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  polarssl = mbedtls;
 #
-  polkit = callPackage ../development/libraries/polkit {
-    spidermonkey = spidermonkey_17;
-  };
+  polkit = callPackage ../development/libraries/polkit { };
 #
 #  polkit_qt4 = callPackage ../development/libraries/polkit-qt-1 { };
 #
@@ -8057,7 +8055,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  # Avoid using this. It isn't really a wrapper anymore, but we keep the name.
   xlibsWrapper = callPackage ../development/libraries/xlibs-wrapper {
-    packages = [
+    packages = with pkgs; [
       freetype fontconfig xorg.xproto xorg.libX11 xorg.libXt
       xorg.libXft xorg.libXext xorg.libSM xorg.libICE
       xorg.xextproto
@@ -8619,7 +8617,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  oracleXE = callPackage ../servers/sql/oracle-xe { };
 #
   softether_4_18 = callPackage ../servers/softether/4.18.nix { };
-  softether = softether_4_18;
+  softether = callPackageAlias "softether_4_18" { };
 #
 #  qboot = callPackage ../applications/virtualization/qboot { stdenv = stdenv_32bit; };
 #
@@ -9712,7 +9710,7 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  docbook_xml_xslt = docbook_xsl;
 #
-  docbook5_xsl = docbook_xsl_ns;
+  docbook5_xsl = callPackageAlias "docbook_xsl_ns" { };
 #
 #  dosemu_fonts = callPackage ../data/fonts/dosemu-fonts { };
 #

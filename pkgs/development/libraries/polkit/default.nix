@@ -1,6 +1,5 @@
-{ stdenv, fetchurl, pkgconfig, glib, expat, pam, intltool, spidermonkey
-, gobjectIntrospection, libxslt, docbook_xsl, docbook_xml_dtd_412
-, useSystemd ? stdenv.isLinux, systemd }:
+{ stdenv, fetchurl, glib, expat, pam, intltool, spidermonkey_17
+, gobjectIntrospection, libxslt, docbook_xsl, docbook_xml_dtd_412, systemd_lib }:
 
 let
 
@@ -23,9 +22,8 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs =
-    [ pkgconfig glib expat pam intltool spidermonkey gobjectIntrospection ]
-    ++ [ libxslt docbook_xsl docbook_xml_dtd_412 ] # man pages
-    ++ stdenv.lib.optional useSystemd systemd;
+    [ glib expat pam intltool spidermonkey_17 gobjectIntrospection systemd_lib ]
+    ++ [ libxslt docbook_xsl docbook_xml_dtd_412 ]; # man pages
 
   # Ugly hack to overwrite hardcoded directories
   # TODO: investigate a proper patch which will be accepted upstream
@@ -37,14 +35,14 @@ stdenv.mkDerivation rec {
 
   preConfigure = ''
     patchShebangs .
-  '' + stdenv.lib.optionalString useSystemd /* bogus chroot detection */ ''
+
+    # bogus chroot detection
     sed '/libsystemd autoconfigured/s/.*/:/' -i configure
-  ''
+
     # ‘libpolkit-agent-1.so’ should call the setuid wrapper on
     # NixOS.  Hard-coding the path is kinda ugly.  Maybe we can just
     # call through $PATH, but that might have security implications.
-  + ''
-    substituteInPlace src/polkitagent/polkitagentsession.c \
+      substituteInPlace src/polkitagent/polkitagentsession.c \
       --replace   'PACKAGE_PREFIX "/lib/polkit-1/'   '"${setuid}/'
   '';
 

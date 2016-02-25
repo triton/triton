@@ -4,13 +4,13 @@
 , libxslt
 , perl
 
-, libaudit
+, audit_lib
 , libcap_ng
-, libsystemd
 , ncurses
 , pam
 , python3
 , readline
+, systemd_lib
 , zlib
 
 , type ? ""
@@ -42,12 +42,12 @@ stdenv.mkDerivation rec {
     python3
     libcap_ng
   ] ++ optionals (!libOnly) [
-    libaudit
+    audit_lib
     ncurses
     pam
     readline
+    systemd_lib
     zlib
-    libsystemd
   ];
 
   patches = [

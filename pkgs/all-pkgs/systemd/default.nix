@@ -10,6 +10,7 @@
 , perl
 
 , acl
+, audit_lib
 , bzip2
 , coreutils
 , cryptsetup
@@ -24,7 +25,6 @@
 , iptables
 , kbd
 , kmod
-, libaudit
 , libcap
 , libgcrypt
 , libgpg-error
@@ -94,7 +94,7 @@ stdenv.mkDerivation rec {
     lz4
     libgcrypt
     libgpg-error
-    libaudit
+    audit_lib
     libidn
   ] ++ optionals (libOnly) [
     util-linux_lib

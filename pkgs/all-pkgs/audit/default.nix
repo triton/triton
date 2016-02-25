@@ -4,7 +4,7 @@
 
 , go
 , libcap_ng
-, libkrb5
+, krb5_lib
 , openldap
 , python2
 , python3
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
     python2
     python3
   ] ++ optionals (!libOnly) [
-    libkrb5
+    krb5_lib
     tcp-wrappers
     openldap
   ];

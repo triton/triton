@@ -2,9 +2,9 @@
 , fetchurl
 , lvm2
 , openssl
-, libutil-linux
 , popt
 , python
+, util-linux_lib
 }:
 
 stdenv.mkDerivation rec {
@@ -24,16 +24,20 @@ stdenv.mkDerivation rec {
   buildInputs = [
     lvm2
     openssl
-    libutil-linux
     popt
     python
+    util-linux_lib
   ];
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://code.google.com/p/cryptsetup/;
     description = "LUKS for dm-crypt";
-    license = stdenv.lib.licenses.gpl2;
-    maintainers = with stdenv.lib.maintainers; [ viric chaoflow ];
-    platforms = with stdenv.lib.platforms; linux;
+    license = licenses.gpl2;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

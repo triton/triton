@@ -1,8 +1,8 @@
 { stdenv
 , fetchurl
 
+, audit_lib
 , cracklib
-, libaudit
 , db
 }:
 
@@ -16,9 +16,9 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
+    audit_lib
     cracklib
     db
-    libaudit
   ];
 
   preConfigure = ''

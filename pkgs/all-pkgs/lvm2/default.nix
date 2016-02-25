@@ -1,8 +1,9 @@
 { stdenv
 , fetchurl
-, libsystemd
-, util-linux-full
+
 , coreutils
+, systemd_lib
+, util-linux_full
 }:
 
 stdenv.mkDerivation rec {
@@ -25,7 +26,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    libsystemd
+    systemd_lib
   ];
 
   preConfigure = ''
@@ -33,7 +34,7 @@ stdenv.mkDerivation rec {
       --replace /usr/bin/tr ${coreutils}/bin/tr
     substituteInPlace scripts/lvm2_activation_generator_systemd_red_hat.c \
       --replace /usr/sbin/lvm $out/sbin/lvm \
-      --replace /usr/bin/udevadm ${libsystemd}/bin/udevadm
+      --replace /usr/bin/udevadm ${systemd_lib}/bin/udevadm
 
     sed -i /DEFAULT_SYS_DIR/d Makefile.in
     sed -i /DEFAULT_PROFILE_DIR/d conf/Makefile.in
@@ -58,7 +59,7 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     substituteInPlace $out/lib/udev/rules.d/13-dm-disk.rules \
-      --replace $out/sbin/blkid ${util-linux-full}/bin/blkid
+      --replace $out/sbin/blkid ${util-linux_full}/bin/blkid
 
     # Systemd stuff
     mkdir -p $out/etc/systemd/system $out/lib/systemd/system-generators

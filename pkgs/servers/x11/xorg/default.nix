@@ -1,7 +1,7 @@
 # THIS IS A GENERATED FILE.  DO NOT EDIT!
 args @ { fetchurl, fetchgit, fetchpatch, stdenv, pkgconfig, intltool, freetype, fontconfig
 , libxslt, expat, libpng, zlib, perl, mesa_drivers, spice_protocol
-, dbus, libutil-linux, openssl, gperf, m4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
+, dbus, util-linux_lib, openssl, gperf, m4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
 , autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, mtdev, pixman, cairo, glib, ... }: with args;
 
 let
@@ -13,7 +13,7 @@ let
 
   overrides = import ./overrides.nix {inherit args xorg;};
 
-  libuuid = libutil-linux;
+  libuuid = util-linux_lib;
 
   xorg = rec {
 

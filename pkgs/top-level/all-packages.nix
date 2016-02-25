@@ -790,6 +790,8 @@ gnused = callPackage ../all-pkgs/gnused { };
 
 gnutar = callPackage ../all-pkgs/gnutar { };
 
+gnutls = callPackage ../all-pkgs/gnutls { };
+
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = callPackageAlias "gobject-introspection" { }; # Deprecated alias
 
@@ -6407,12 +6409,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   gnu-efi = callPackage ../development/libraries/gnu-efi { };
 
-  gnutls = callPackageAlias "gnutls34" { };
-
-  gnutls34 = callPackage ../development/libraries/gnutls/3.4.nix {
-    guileBindings = config.gnutls.guile or false;
-  };
-#
   gom = callPackage ../all-pkgs/gom { };
 #
 #  gpac = callPackage ../applications/video/gpac { };

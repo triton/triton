@@ -957,13 +957,13 @@ kbd = callPackage ../all-pkgs/kbd { };
 
 kea = callPackage ../all-pkgs/kea { };
 
-kerberos = callPackageAlias "libkrb5" { };
+kerberos = callPackageAlias "krb5_lib" { };
 
 kubernetes = callPackage ../all-pkgs/kubernetes { };
 
 krb5_full = callPackage ../all-pkgs/krb5 { };
 
-krb5_lib = callPackageAlias "krb5-full" {
+krb5_lib = callPackageAlias "krb5_full" {
   type = "lib";
 };
 
@@ -1074,9 +1074,9 @@ libunique = libunique_3;
 
 libusb-compat = callPackage ../all-pkgs/libusb-compat { };
 
-libusb_0 = libusb-compat;
+libusb_0 = callPackageAlias "libusb-compat" { };
 libusb_1 = callPackage ../all-pkgs/libusb { };
-libusb = libusb_1;
+libusb = callPackageAlias "libusb_1" { };
 
 libusbmuxd = callPackage ../all-pkgs/libusbmuxd { };
 
@@ -2157,7 +2157,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  unifdef = callPackage ../development/tools/misc/unifdef { };
 #
-#  "unionfs-fuse" = callPackage ../tools/filesystems/unionfs-fuse { };
+  unionfs-fuse = callPackage ../tools/filesystems/unionfs-fuse { };
 #
 #  usb_modeswitch = callPackage ../development/tools/misc/usb-modeswitch { };
 #
@@ -2283,7 +2283,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dd_rescue = callPackage ../tools/system/dd_rescue { };
 #
-#  ddrescue = callPackage ../tools/system/ddrescue { };
+  ddrescue = callPackage ../tools/system/ddrescue { };
 #
 #  deluge = pythonPackages.deluge;
 #
@@ -2401,9 +2401,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  emscriptenfastcomp = callPackage ../development/compilers/emscripten-fastcomp { };
 #
-#  efibootmgr = callPackage ../tools/system/efibootmgr { };
+  efibootmgr = callPackage ../tools/system/efibootmgr { };
 #
-#  efivar = callPackage ../tools/system/efivar { };
+  efivar = callPackage ../tools/system/efivar { };
 #
 #  evemu = callPackage ../tools/system/evemu { };
 #
@@ -2450,7 +2450,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  expect = callPackage ../tools/misc/expect { };
 #
-#  f2fs-tools = callPackage ../tools/filesystems/f2fs-tools { };
+  f2fs-tools = callPackage ../tools/filesystems/f2fs-tools { };
 #
 #  Fabric = pythonPackages.Fabric;
 #
@@ -3172,7 +3172,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  memtest86 = callPackage ../tools/misc/memtest86 { };
 #
-#  memtest86plus = callPackage ../tools/misc/memtest86+ { };
+  memtest86plus = callPackage ../tools/misc/memtest86+ { };
 #
 #  meo = callPackage ../tools/security/meo {
 #    boost = boost155;
@@ -3259,7 +3259,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  msf = callPackage ../tools/security/metasploit { };
 #
-#  ms-sys = callPackage ../tools/misc/ms-sys { };
+  ms-sys = callPackage ../tools/misc/ms-sys { };
 #
 #  mtdutils = callPackage ../tools/filesystems/mtdutils { };
 #
@@ -3721,8 +3721,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  pystringtemplate = callPackage ../development/python-modules/stringtemplate { };
 
-  pythonDBus = dbus_python;
-
 #  pythonIRClib = pythonPackages.pythonIRClib;
 #
 #  pythonSexy = callPackage ../development/python-modules/libsexy { };
@@ -3999,7 +3997,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  spaceFM = callPackage ../applications/misc/spacefm { };
 #
-#  squashfsTools = callPackage ../tools/filesystems/squashfs { };
+  squashfs-tools = callPackage ../tools/filesystems/squashfs { };
 #
 #  sshfsFuse = callPackage ../tools/filesystems/sshfs-fuse { };
 #
@@ -4054,8 +4052,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   strongswan = callPackage ../tools/networking/strongswan { };
 #
 #  strongswanTNC = callPackage ../tools/networking/strongswan { enableTNC=true; };
-#
-  su = shadow.su;
 #
 #  subsonic = callPackage ../servers/misc/subsonic { };
 #
@@ -4523,8 +4519,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  xflux = callPackage ../tools/misc/xflux { };
 #
-#  xfsprogs = callPackage ../tools/filesystems/xfsprogs { };
-#  libxfs = xfsprogs.lib;
+  xfsprogs = callPackage ../tools/filesystems/xfsprogs { };
+  libxfs = pkgs.xfsprogs.lib;
 #
 #  xml2 = callPackage ../tools/text/xml/xml2 { };
 #
@@ -4536,7 +4532,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  xmpppy = pythonPackages.xmpppy;
 #
-#  xorriso = callPackage ../tools/cd-dvd/xorriso { };
+  xorriso = callPackage ../tools/cd-dvd/xorriso { };
 #
 #  xpf = callPackage ../tools/text/xml/xpf { };
 #
@@ -6191,7 +6187,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  dbus_cplusplus  = callPackage ../development/libraries/dbus-cplusplus { };
   dbus_glib       = callPackage ../development/libraries/dbus-glib { };
 #  dbus_java       = callPackage ../development/libraries/java/dbus-java { };
-  dbus_python     = pkgs.pythonPackages.dbus;
 
   # Should we deprecate these? Currently there are many references.
   dbus_tools = pkgs.dbus.tools;
@@ -6557,7 +6552,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  jshon = callPackage ../development/tools/parsing/jshon { };
 #
 #  json-c-0-11 = callPackage ../development/libraries/json-c/0.11.nix { }; # vulnerable
-  json_c = callPackage ../development/libraries/json-c { };
+  json-c = callPackage ../development/libraries/json-c { };
 #
 #  jsoncpp = callPackage ../development/libraries/jsoncpp { };
 #
@@ -6765,7 +6760,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libetpan = callPackage ../development/libraries/libetpan { };
 #
-#  libfaketime = callPackage ../development/libraries/libfaketime { };
+  libfaketime = callPackage ../development/libraries/libfaketime { };
 #
 #  libfakekey = callPackage ../development/libraries/libfakekey { };
 #
@@ -6942,7 +6937,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
   libidn = callPackage ../development/libraries/libidn { };
 #
-#  idnkit = callPackage ../development/libraries/idnkit { };
+  idnkit = callPackage ../development/libraries/idnkit { };
 #
 #  libiec61883 = callPackage ../development/libraries/libiec61883 { };
 #
@@ -8354,7 +8349,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  sabnzbd = callPackage ../servers/sabnzbd { };
 #
   bind = callPackage ../servers/dns/bind { };
-  dnsutils = bind.override {
+
+  dnsutils = callPackageAlias "bind" {
     suffix = "tools";
   };
 #
@@ -8578,17 +8574,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  hyperdex = callPackage ../servers/nosql/hyperdex { };
 #
-  mysql51 = callPackage ../servers/sql/mysql/5.1.x.nix {
-    ps = procps; /* !!! Linux only */
-  };
+  mysql = callPackageAlias "mariadb" { };
+  mysql_lib = callPackageAlias "mysql" { };
 
-  mysql55 = callPackage ../servers/sql/mysql/5.5.x.nix { };
-
-  mysql = mariadb;
-  libmysql = mysql;
-
-  mysql_jdbc = callPackage ../servers/sql/mysql/jdbc { };
-#
 #  nagios = callPackage ../servers/monitoring/nagios { };
 #
 #  munin = callPackage ../servers/monitoring/munin { };
@@ -8630,7 +8618,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    libmemcached = null; # Detection is broken upstream
 #  };
 #
-  postgresql = postgresql95;
+  postgresql = callPackageAlias "postgresql95" { };
+  postgresql_lib = callPackageAlias "postgresql" { };
 
   inherit (callPackages ../servers/sql/postgresql { })
     postgresql91
@@ -8856,15 +8845,15 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   alsa-firmware = callPackage ../os-specific/linux/alsa-firmware { };
 
-  alsaLib = callPackage ../os-specific/linux/alsa-lib { };
+  alsa-lib = callPackage ../os-specific/linux/alsa-lib { };
 
-  alsaPlugins = callPackage ../os-specific/linux/alsa-plugins { };
+  alsa-plugins = callPackage ../os-specific/linux/alsa-plugins { };
 
-  alsaPluginWrapper = callPackage ../os-specific/linux/alsa-plugins/wrapper.nix { };
+  alsa-plugin-wrapper = callPackage ../os-specific/linux/alsa-plugins/wrapper.nix { };
 
-  alsaUtils = callPackage ../os-specific/linux/alsa-utils { };
-  alsaOss = callPackage ../os-specific/linux/alsa-oss { };
-  alsaTools = callPackage ../os-specific/linux/alsa-tools { };
+  alsa-utils = callPackage ../os-specific/linux/alsa-utils { };
+  alsa-oss = callPackage ../os-specific/linux/alsa-oss { };
+  alsa-tools = callPackage ../os-specific/linux/alsa-tools { };
 
   microcodeAmd = callPackage ../os-specific/linux/microcode/amd.nix { };
 
@@ -8891,12 +8880,10 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    pygobject = pygobject3;
 #  });
 
-  bluez5 = callPackage ../os-specific/linux/bluez/bluez5.nix { };
+  bluez = callPackage ../os-specific/linux/bluez/bluez5.nix { };
 
 #  # Needed for LibreOffice
 #  bluez5_28 = lowPrio (callPackage ../os-specific/linux/bluez/bluez5_28.nix { });
-
-  bluez = bluez5;
 #
 #  inherit (pythonPackages) bedup;
 #
@@ -8924,7 +8911,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  checksec = callPackage ../os-specific/linux/checksec { };
 #
-#  cifs_utils = callPackage ../os-specific/linux/cifs-utils { };
+  cifs_utils = callPackage ../os-specific/linux/cifs-utils { };
 #
 #  conky = callPackage ../os-specific/linux/conky ({ } // config.conky or {});
 #
@@ -8952,10 +8939,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  dietlibc = callPackage ../os-specific/linux/dietlibc { };
 #
 #  directvnc = callPackage ../os-specific/linux/directvnc { };
-#
-#  dmraid = callPackage ../os-specific/linux/dmraid {
-#    devicemapper = devicemapper.override {enable_dmeventd = true;};
-#  };
 #
 #  drbd = callPackage ../os-specific/linux/drbd { };
 #
@@ -9005,7 +8988,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    flex = flex_2_5_35;
 #  };
 #
-#  hdparm = callPackage ../os-specific/linux/hdparm { };
+  hdparm = callPackage ../os-specific/linux/hdparm { };
 #
 #  hibernate = callPackage ../os-specific/linux/hibernate { };
 #
@@ -9031,7 +9014,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  irqbalance = callPackage ../os-specific/linux/irqbalance { };
 #
-#  iw = callPackage ../os-specific/linux/iw { };
+  iw = callPackage ../os-specific/linux/iw { };
 #
 #  jfbview = callPackage ../os-specific/linux/jfbview { };
 #
@@ -9142,7 +9125,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
       cryptodev = cryptodevHeaders.override {
         onlyHeaders = false;
-        inherit kernel;
+        inherit kernel;  # We shouldn't need this
       };
 
       cpupower = kCallPackage ../os-specific/linux/cpupower { };
@@ -9156,22 +9139,22 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
       spl = kCallPackage ../os-specific/linux/spl {
         configFile = "kernel";
-        inherit kernel;
+        inherit (kPkgs) kernel;  # We shouldn't need this
       };
 
       spl_git = kCallPackage ../os-specific/linux/spl/git.nix {
         configFile = "kernel";
-        inherit kernel;
+        inherit (kPkgs) kernel;  # We shouldn't need this
       };
 
       zfs = kCallPackage ../os-specific/linux/zfs {
         configFile = "kernel";
-        inherit kernel;
+        inherit (kPkgs) kernel spl;  # We shouldn't need this
       };
 
       zfs_git = kCallPackage ../os-specific/linux/zfs/git.nix {
         configFile = "kernel";
-        inherit kernel;
+        inherit (kPkgs) kernel spl_git;  # We shouldn't need this
       };
 
     };
@@ -9461,7 +9444,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  qemu_kvm = lowPrio (qemu.override { type = "kvm-only"; });
 #
-#  firmwareLinuxNonfree = callPackage ../os-specific/linux/firmware/firmware-linux-nonfree { };
+  firmware-linux-nonfree = callPackage ../os-specific/linux/firmware/firmware-linux-nonfree { };
 #
 #  radeontools = callPackage ../os-specific/linux/radeontools { };
 #
@@ -9471,7 +9454,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  regionset = callPackage ../os-specific/linux/regionset { };
 #
-#  rfkill = callPackage ../os-specific/linux/rfkill { };
+  rfkill = callPackage ../os-specific/linux/rfkill { };
 #
 #  rfkill_udev = callPackage ../os-specific/linux/rfkill/udev.nix { };
 #
@@ -9487,7 +9470,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  schedtool = callPackage ../os-specific/linux/schedtool { };
 #
-#  sdparm = callPackage ../os-specific/linux/sdparm { };
+  sdparm = callPackage ../os-specific/linux/sdparm { };
 #
 #  sepolgen = callPackage ../os-specific/linux/sepolgen { };
 #
@@ -9614,7 +9597,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
 #  upstart = callPackage ../os-specific/linux/upstart { };
 #
-#  usbutils = callPackage ../os-specific/linux/usbutils { };
+  usbutils = callPackage ../os-specific/linux/usbutils { };
 #
 #  usermount = callPackage ../os-specific/linux/usermount { };
 #

@@ -544,7 +544,7 @@ beets = callPackage ../all-pkgs/beets { };
 
 boost155 = callPackage ../all-pkgs/boost/1.55.nix { };
 boost160 = callPackage ../all-pkgs/boost/1.60.nix { };
-boost = boost160;
+boost = callPackageAlias "boost160" { };
 
 bs1770gain = callPackage ../all-pkgs/bs1770gain { };
 
@@ -7136,8 +7136,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   libuv = libuvVersions.v1_8_0;
 
-  libv4l = lowPrio (v4l_utils.override {
-    alsaLib = null;
+  libv4l = lowPrio (callPackageAlias "v4l_utils" {
+    alsa-lib = null;
     libX11 = null;
     qt4 = null;
     qt5 = null;
@@ -12194,16 +12194,12 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
   kde4 = recurseIntoAttrs pkgs.kde414;
 
   kde414 =
-    kdePackagesFor
+    pkgs.kdePackagesFor
       {
-        libcanberra = libcanberra_kde;
-        boost = boost155;
-        kdelibs = kde5.kdelibs;
-        subversionClient = pkgs.subversion18.override {
-          bdbSupport = false;
-          perlBindings = true;
-          pythonBindings = true;
-        };
+        libcanberra = pkgs.libcanberra_kde;
+        boost = pkgs.boost155;
+        kdelibs = pkgs.kde5.kdelibs;
+        subversionClient = pkgs.subversion18 { };
       }
       ../desktops/kde-4.14;
 
@@ -12332,7 +12328,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #          kwooty = callPackage ../applications/networking/newsreaders/kwooty { };
         };
 
-      callPackageOrig = newScope extra;
+      callPackageOrig = pkgs.newScope extra;
 
       makePackages = extra:
         let
@@ -12348,7 +12344,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
             };
         in self;
 
-    in makeOverridable makePackages extra;
+    in lib.makeOverridable makePackages extra;
 
 #  redshift = callPackage ../applications/misc/redshift {
 #    inherit (python3Packages) python pygobject3 pyxdg;

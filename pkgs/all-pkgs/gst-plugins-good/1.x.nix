@@ -12,10 +12,10 @@
 , gstreamer
 , libcaca
 , libgudev
-, libjack2
+, jack2_lib
 , libjpeg
 , libpng
-, libpulseaudio
+, pulseaudio_lib
 , libshout
 , libsoup
 , libv4l
@@ -57,10 +57,10 @@ stdenv.mkDerivation rec {
     gstreamer
     libcaca
     libgudev
-    libjack2
+    jack2_lib
     libjpeg
     libpng
-    libpulseaudio
+    pulseaudio_lib
     libshout
     libsoup
     libv4l
@@ -152,12 +152,12 @@ stdenv.mkDerivation rec {
     (enFlag "cairo" (cairo != null) null)
     (enFlag "flac" (flac != null) null)
     (enFlag "gdk_pixbuf" (gdk-pixbuf != null) null)
-    (enFlag "jack" (libjack2 != null) null)
+    (enFlag "jack" (jack2_lib != null) null)
     (enFlag "jpeg" (libjpeg != null) null)
     (enFlag "libcaca" (libcaca != null) null)
     "--disable-libdv"
     (enFlag "libpng" (libpng != null) null)
-    (enFlag "pulse" (libpulseaudio != null) null)
+    (enFlag "pulse" (pulseaudio_lib != null) null)
     "--disable-dv1394"
     (enFlag "shout2" (libshout != null) null)
     (enFlag "soup" (libsoup != null) null)

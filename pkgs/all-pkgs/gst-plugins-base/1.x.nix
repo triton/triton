@@ -103,7 +103,7 @@ stdenv.mkDerivation rec {
     (enFlag "x" (xorg.libX11 != null) null)
     (enFlag "xvideo" (xorg.libXv != null) null)
     (enFlag "xshm" (xorg.libXext != null) null)
-    (enFlag "alsa" (alsaLib != null) null)
+    (enFlag "alsa" (alsa-lib != null) null)
     (enFlag "cdparanoia" (cdparanoia != null) null)
     (enFlag "ivorbis" (tremor != null) null)
     (enFlag "libvisual" (libvisual != null) null)

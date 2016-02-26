@@ -42,7 +42,7 @@ import ./common.nix {
 
     # Fix ldd
     RTLDLIST="$(find $out -name ld\*.so\* | tr '\n' ' ')"
-    sed -i "s,^RTLDLIST=,RTLDLIST=\"$RTLDLIST\",g" $out/bin/ldd
+    sed -i "s,^RTLDLIST=.*,RTLDLIST=\"$RTLDLIST\",g" $out/bin/ldd
 
     # Get rid of more unnecessary stuff.
     rm -rf $out/var $out/sbin/sln

@@ -1,21 +1,20 @@
-{ stdenv, fetchurl, fetchpatch, audiofile, libcap
-, openglSupport ? false, mesa ? null
-, alsaSupport ? true, alsaLib ? null
-, x11Support ? true, xlibsWrapper ? null, xorg ? null
-, pulseaudioSupport ? true, libpulseaudio ? null
+{ stdenv
+, fetchurl
+, fetchpatch
+
+, alsa-lib
+, audiofile
+, libcap
+, mesa
+, pulseaudio_lib
+, xlibsWrapper
+, xorg
 }:
 
-# OSS is no longer supported, for it's much crappier than ALSA and
-# PulseAudio.
-assert (stdenv.isLinux && !(stdenv ? cross)) -> alsaSupport || pulseaudioSupport;
-
-assert openglSupport -> (mesa != null && x11Support);
-assert x11Support -> (xlibsWrapper != null && xorg != null);
-assert alsaSupport -> alsaLib != null;
-assert pulseaudioSupport -> libpulseaudio != null;
-
 let
-  inherit (stdenv.lib) optional optionals;
+  inherit (stdenv.lib)
+    optional
+    optionals;
 in
 stdenv.mkDerivation rec {
   version = "1.2.15";
@@ -26,15 +25,15 @@ stdenv.mkDerivation rec {
     sha256 = "005d993xcac8236fpvd1iawkz4wqjybkpn8dbwaliqz5jfkidlyn";
   };
 
-  outputs = [ "out" "man" ];
-
   buildInputs = [
+    alsa-lib
     audiofile
-  ] ++ optionals x11Support [ xlibsWrapper xorg.libXrandr ]
-    ++ optional alsaSupport alsaLib
-    ++ optional stdenv.isLinux libcap
-    ++ optional openglSupport mesa
-    ++ optional pulseaudioSupport libpulseaudio;
+    libcap
+    mesa
+    pulseaudio_lib
+    xlibsWrapper
+    xorg.libXrandr
+  ];
 
   # XXX: By default, SDL wants to dlopen() PulseAudio, in which case
   # we must arrange to add it to its RPATH; however, `patchelf' seems
@@ -47,9 +46,8 @@ stdenv.mkDerivation rec {
     "--enable-rpath"
     "--disable-pulseaudio-shared"
     "--disable-osmesa-shared"
-  ] ++ stdenv.lib.optionals (stdenv ? cross) ([
-    "--without-x"
-  ] ++ stdenv.lib.optional alsaSupport "--with-alsa-prefix=${alsaLib}/lib");
+    "--with-alsa-prefix=${alsa-lib}/lib"
+  ];
 
   patches = [
     # Fix window resizing issues, e.g. for xmonad
@@ -87,13 +85,11 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  passthru = { inherit openglSupport; };
-
   meta = with stdenv.lib; {
     description = "A cross-platform multimedia library";
     homepage    = http://www.libsdl.org/;
     maintainers = with maintainers; [ lovek323 ];
-    platforms   = platforms.unix;
+    platforms   = platforms.all;
     license     = licenses.lgpl21;
   };
 }

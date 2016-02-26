@@ -44,6 +44,9 @@ import ./common.nix {
     RTLDLIST="$(find $out -name ld\*.so\* | tr '\n' ' ')"
     sed -i "s,^RTLDLIST=.*,RTLDLIST=\"$RTLDLIST\",g" $out/bin/ldd
 
+    # Test that ldd works
+    $out/bin/ldd $out/lib/libcrypt.so
+
     # Get rid of more unnecessary stuff.
     rm -rf $out/var $out/sbin/sln
   '';

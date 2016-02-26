@@ -7410,7 +7410,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  openjpeg_1 = callPackage ../development/libraries/openjpeg/1.x.nix { };
 #  openjpeg_2_0 = callPackage ../development/libraries/openjpeg/2.0.nix { };
   openjpeg_2_1 = callPackage ../development/libraries/openjpeg/2.1.nix { };
-  openjpeg = openjpeg_2_1;
+  openjpeg = callPackageAlias "openjpeg_2_1" { };
 #
 #  openscenegraph = callPackage ../development/libraries/openscenegraph {
 #    giflib = giflib_4_1;

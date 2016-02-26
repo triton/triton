@@ -19,10 +19,11 @@ in stdenv.mkDerivation {
   cmakeFlags = [
     "-DCMAKE_BUILD_TYPE=Release"
     "-DCMAKE_CXX_FLAGS=-std=c++11"
-  ] ++
-  # Maybe with compiler-rt this won't be needed?
-  (stdenv.lib.optional stdenv.isLinux "-DGCC_INSTALL_PREFIX=${gcc}") ++
-  (stdenv.lib.optional (stdenv.cc.libc != null) "-DC_INCLUDE_DIRS=${stdenv.cc.libc}/include");
+
+    # Maybe with compiler-rt this won't be needed?
+    "-DGCC_INSTALL_PREFIX=${gcc}"
+    "-DC_INCLUDE_DIRS=${stdenv.cc.libc}/include"
+  ];
 
   patches = [ ./purity.patch ];
 
@@ -39,12 +40,9 @@ in stdenv.mkDerivation {
     ln -sv $out/bin/clang $out/bin/cpp
   '';
 
-  enableParallelBuilding = true;
-
   passthru = {
     isClang = true;
-  } // stdenv.lib.optionalAttrs stdenv.isLinux {
-    inherit gcc;
+    inherit gcc;  # WAT????? Why does cc-wrapper need this here
   };
 
   meta = {

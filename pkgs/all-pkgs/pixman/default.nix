@@ -1,17 +1,12 @@
 { fetchurl
 , stdenv
 
-, libpng
-
 , glib
 }:
 
 with {
   inherit (stdenv)
-    cc
-    isArm
-    isi686
-    isx86_64;
+    cc;
   inherit (stdenv.lib)
     enFlag
     optionals;
@@ -25,24 +20,12 @@ stdenv.mkDerivation rec {
     sha256 = "184lazwdpv67zrlxxswpxrdap85wminh1gmq1i5lcz6iycw39fir";
   };
 
-  buildInputs = optionals doCheck [
-    libpng
-  ];
-
-  patches = optionals stdenv.cc.isClang [
-    (fetchTritonPatch {
-      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
-      file = "pixman/pixman-fix-clang36.patch";
-      sha256 = "4267d50a561ce07a1d8b3c5127ba3428f3470a1ba9ee3c781d0d2323d9a6e5f6";
-    })
-  ];
-
   configureFlags = [
     "--enable-openmp"
     "--disable-loongson-mmi" # mips
-    (enFlag "mmx" (isi686 || isx86_64) null)
-    (enFlag "sse2" (isi686 || isx86_64) null)
-    (enFlag "ssse3" (isi686 || isx86_64) null)
+    "--enable-mmx"  # X86 Only
+    "--enable-sse2"  # X86 Only
+    "--enable-ssse3"  # X86 Only
     "--disable-vmx"
     #(enFlag "arm-simd" isArm null)
     #(enFlag "arm-neon" isArm null)
@@ -53,12 +36,10 @@ stdenv.mkDerivation rec {
     "--disable-static-testprogs"
     "--enable-timers"
     "--disable-gtk"
-    (enFlag "libpng" (libpng != null) null)
+    "--disable-libpng"
   ];
 
   postInstall = glib.flattenInclude;
-
-  doCheck = true;
 
   meta = with stdenv.lib; {
     description = "A low-level library for pixel manipulation";

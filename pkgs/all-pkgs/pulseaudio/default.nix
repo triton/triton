@@ -5,19 +5,19 @@
 , automake
 , autoconf
 , libtool
-, json_c
+, json-c
 , libsndfile
 , gettext
 , check
 
 # Optional Dependencies
-, alsaLib ? null
-, avahi ? null
-, bluez ? null
-, coreaudio ? null
-, dbus ? null
-, esound ? null
-, fftw ? null
+, alsa-lib
+, avahi
+, bluez
+, coreaudio
+, dbus
+, esound
+, fftwDouble
 , gconf ? null
 , glib ? null
 , gtk3 ? null
@@ -102,7 +102,7 @@ let
       shouldUsePkg bluez;
   optUdev = ifFull (shouldUsePkg udev);
   optOpenssl = ifFull (shouldUsePkg openssl);
-  optFftw = shouldUsePkg fftw;
+  optFftw = shouldUsePkg fftwDouble;
   optSpeexdsp = shouldUsePkg speexdsp;
   optSoxr = ifFull (shouldUsePkg soxr);
   optSystemd = shouldUsePkg systemd;

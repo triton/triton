@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, udev }:
+{ stdenv, fetchurl, systemd_lib }:
 
 stdenv.mkDerivation rec {
   name = "dhcpcd-6.10.1";
@@ -8,7 +8,9 @@ stdenv.mkDerivation rec {
     sha256 = "0yxfx3r6ik47rsv1f8q7siw0vas6jcsrbjpaqnx0nn707f6byji8";
   };
 
-  buildInputs = [ udev ];
+  buildInputs = [
+    systemd_lib
+  ];
 
   configureFlags = [
     "--sysconfdir=/etc"
@@ -26,7 +28,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Check that the udev plugin got built.
-  postInstall = stdenv.lib.optional (udev != null) ''
+  postInstall = ''
     [ -e $out/lib/dhcpcd/dev/udev.so ]
   '';
 

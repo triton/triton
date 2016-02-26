@@ -1,4 +1,6 @@
-{ stdenv, fetchurl, libiconv }:
+{ stdenv
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
   name = "idnkit-1.0";
@@ -8,8 +10,6 @@ stdenv.mkDerivation rec {
     sha256 = "1z4i6fmyv67sflmjg763ymcxrcv84rbj1kv15im0s655h775zk8n";
   };
 
-  buildInputs = [ libiconv ];
-
   # Sometimes fails to generate libidnkit.so
   parallelInstall = false;
 
@@ -17,7 +17,11 @@ stdenv.mkDerivation rec {
     homepage = https://www.nic.ad.jp/ja/idn/idnkit;
     description = "provides functionalities about i18n domain name processing";
     license = "idnkit-2 license";
-    platforms = platforms.unix;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

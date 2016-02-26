@@ -12,10 +12,6 @@
 , spCompat
 }:
 
-# Requires glibc
-assert stdenv.cc.isGNU;
-assert stdenv.isLinux;
-
 stdenv.mkDerivation rec {
   name = "iputils-${version}";
   version = "20151218";

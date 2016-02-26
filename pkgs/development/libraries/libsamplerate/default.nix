@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig
-, fftw, libsndfile
+, fftw-double, libsndfile
 }:
 
 stdenv.mkDerivation rec {
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ pkgconfig ];
-  buildInputs = [ fftw libsndfile ];
+  buildInputs = [ fftw-double libsndfile ];
 
   # maybe interesting configure flags:
   #--disable-fftw          disable usage of FFTW

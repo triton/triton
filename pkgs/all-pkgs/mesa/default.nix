@@ -21,7 +21,7 @@
 #, libva
 , libvdpau
 , llvmPackages
-, udev
+, systemd_lib
 , wayland
 , xorg
 
@@ -30,10 +30,26 @@
 , enableTextureFloats ? false
 }:
 
-with {
-  inherit (stdenv)
-    is64bit
-    isLinux;
+/* Packaging design:
+ * - The basic mesa ($out) contains headers and libraries (GLU is in mesa_glu now).
+ *   This or the mesa attribute (which also contains GLU) are small (~ 2 MB,
+ *   mostly headers) and are designed to be the buildInput of other packages.
+ * - DRI drivers are compiled into $drivers output, which is much bigger and
+ *   depends on LLVM. These should be searched at runtime in
+ *   "/run/opengl-driver-${stdenv.targetSystem}/lib/*" and so are kind-of impure (given by NixOS).
+ *   (I suppose on non-NixOS one would create the appropriate symlinks from there.)
+ * - libOSMesa is in $osmesa (~4 MB)
+ */
+
+let
+  # this is the default search path for DRI drivers
+  driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
+  clang =
+    if llvmPackages ? clang-unwrapped then
+      llvmPackages.clang-unwrapped
+    else
+      llvmPackages.clang;
+
   inherit (stdenv.lib)
     enFlag
     head
@@ -41,27 +57,6 @@ with {
     optionals
     optionalString
     splitString;
-};
-
-/* Packaging design:
- * - The basic mesa ($out) contains headers and libraries (GLU is in mesa_glu now).
- *   This or the mesa attribute (which also contains GLU) are small (~ 2 MB,
- *   mostly headers) and are designed to be the buildInput of other packages.
- * - DRI drivers are compiled into $drivers output, which is much bigger and
- *   depends on LLVM. These should be searched at runtime in
- *   "/run/opengl-driver{,-32}/lib/*" and so are kind-of impure (given by NixOS).
- *   (I suppose on non-NixOS one would create the appropriate symlinks from there.)
- * - libOSMesa is in $osmesa (~4 MB)
- */
-
-let
-  # this is the default search path for DRI drivers
-  driverSearchPath = "/run/opengl-driver" + optionalString (!is64bit) "-32";
-  clang =
-    if llvmPackages ? clang-unwrapped then
-      llvmPackages.clang-unwrapped
-    else
-      llvmPackages.clang;
 in
 
 stdenv.mkDerivation rec {
@@ -94,6 +89,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     expat
     libclc
+    libdrm
     libelf
     libffi
     libomxil-bellagio
@@ -102,6 +98,7 @@ stdenv.mkDerivation rec {
     libvdpau
     #libxml2Python
     llvmPackages.llvm
+    systemd_lib
     wayland
     xorg.dri2proto
     xorg.dri3proto
@@ -116,9 +113,6 @@ stdenv.mkDerivation rec {
     xorg.libXvMC
     xorg.libXxf86vm
     xorg.presentproto
-  ] ++ optionals isLinux [
-    libdrm
-    udev
   ];
 
   patches = [
@@ -128,13 +122,12 @@ stdenv.mkDerivation rec {
       file = "mesa/glx_ro_text_segm.patch";
       sha256 = "3f91c181307f7275f3c53ec172450b3b51129d796bacbca92f91e45acbbc861e";
     })
-  ] ++ optional stdenv.isLinux (
     (fetchTritonPatch {
       rev = "02cecd54589d7a77a38e4c183c24ffd30efdc9a7";
       file = "mesa/dlopen-absolute-paths.patch";
       sha256 = "aee62e3fcb535af73ba152c56c389d573efd6271f9aae702c0be98584643c518";
     })
-  );
+  ];
 
   postPatch = ''
     patchShebangs .

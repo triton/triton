@@ -8,10 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "1cq4a0904lnz6nygbgarnlq49cz4qnfdyvz90s3nfk5as7gbwhr8";
   };
 
-  doCheck = true;
-
-  buildInputs = [ libcdio zlib bzip2 readline attr ]
-    ++ stdenv.lib.optional stdenv.isLinux acl;
+  buildInputs = [ libcdio zlib bzip2 readline attr acl ];
 
   meta = {
     description = "ISO 9660 Rock Ridge file system manipulator";
@@ -31,6 +28,6 @@ stdenv.mkDerivation rec {
     homepage = http://www.gnu.org/software/xorriso/;
 
     maintainers = [ ];
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
   };
 }

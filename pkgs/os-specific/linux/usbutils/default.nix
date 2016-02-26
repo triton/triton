@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, udev, libusb_1, hwdata }:
+{ stdenv, fetchurl, systemd_lib, libusb_1, hwdata }:
 
 stdenv.mkDerivation rec {
   name = "usbutils-008";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "132clk14j4nm8crln2jymdbbc2vhzar2j2hnxyh05m79pbq1lx24";
   };
 
-  buildInputs = [ udev libusb_1 ];
+  buildInputs = [ systemd_lib libusb_1 ];
 
   postInstall =
     ''

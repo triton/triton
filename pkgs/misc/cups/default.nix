@@ -1,6 +1,6 @@
 { stdenv, fetchurl, zlib, libjpeg, libpng, libtiff, pam
 , dbus, acl, gmp
-, libusb ? null, gnutls ? null, avahi ? null, libpaper ? null
+, libusb, gnutls, avahi, libpaper
 }:
 
 let version = "2.1.3"; in
@@ -16,8 +16,20 @@ stdenv.mkDerivation {
     sha256 = "1lyl3z01xhg9xb9c8m42398c6h9kw8qr6jwiv8bjdsjab11hv9rn";
   };
 
-  buildInputs = [ zlib libjpeg libpng libtiff libusb gnutls avahi libpaper gmp ]
-    ++ optionals stdenv.isLinux [ pam dbus.libs acl ];
+  buildInputs = [
+    zlib
+    libjpeg
+    libpng
+    libtiff
+    libusb
+    gnutls
+    avahi
+    libpaper
+    gmp
+    pam
+    dbus.libs
+    acl
+  ];
 
   configureFlags = [
     "--localstatedir=/var"
@@ -25,13 +37,13 @@ stdenv.mkDerivation {
     "--with-systemd=\${out}/lib/systemd/system"
     "--enable-raw-printing"
     "--enable-threads"
-  ] ++ optionals stdenv.isLinux [
     "--enable-dbus"
     "--enable-pam"
-  ] ++ optional (libusb != null) "--enable-libusb"
-    ++ optional (gnutls != null) "--enable-ssl"
-    ++ optional (avahi != null) "--enable-avahi"
-    ++ optional (libpaper != null) "--enable-libpaper";
+    "--enable-libusb"
+    "--enable-ssl"
+    "--enable-avahi"
+    "--enable-libpaper"
+  ];
 
   installFlags =
     [ # Don't try to write in /var at build time.
@@ -67,7 +79,6 @@ stdenv.mkDerivation {
           mv "$f" "''${f/org\.cups\./}"
         fi
       done
-    '' + optionalString stdenv.isLinux ''
       # Use xdg-open when on Linux
       substituteInPlace $out/share/applications/cups.desktop \
         --replace "Exec=htmlview" "Exec=xdg-open"

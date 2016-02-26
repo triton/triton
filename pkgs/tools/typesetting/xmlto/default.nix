@@ -1,5 +1,5 @@
 { fetchurl, stdenv, flex, libxml2, libxslt
-, docbook_xml_dtd_42, docbook_xsl, w3m-batch
+, docbook_xml_dtd_42, docbook_xsl, w3m
 , bash, getopt, makeWrapper }:
 
 stdenv.mkDerivation rec {
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
 
     # `w3m' is needed for HTML to text conversions.
     substituteInPlace "$out/share/xmlto/format/docbook/txt" \
-      --replace "/usr/bin/w3m" "${w3m-batch}/bin/w3m"
+      --replace "/usr/bin/w3m" "${w3m}/bin/w3m"
   '';
 
   meta = {

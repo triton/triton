@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, utillinux }:
+{ stdenv, fetchurl, util-linux_lib }:
 
 stdenv.mkDerivation rec {
   name = "fuse-2.9.4";
@@ -12,10 +12,8 @@ stdenv.mkDerivation rec {
   
   configureFlags = "--disable-kernel-module";
   
-  buildInputs = [ utillinux ];
+  buildInputs = [ util-linux_lib ];
   
-  inherit utillinux;
-
   meta = with stdenv.lib; {
     homepage = http://fuse.sourceforge.net/;
     description = "Kernel module and library that allows filesystems to be implemented in user space";

@@ -1,7 +1,5 @@
 { stdenv, fetchurl, groff }:
 
-assert stdenv.isLinux;
-
 stdenv.mkDerivation rec {
   name = "mdadm-3.3.4";
 
@@ -32,8 +30,14 @@ stdenv.mkDerivation rec {
     sed -e 's@/lib/udev@''${out}/lib/udev@' -e 's@ -Werror @ @' -i Makefile
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "Programs for managing RAID arrays under Linux";
     homepage = http://neil.brown.name/blog/mdadm;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

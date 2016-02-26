@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, udev }:
+{ stdenv, fetchurl, systemd_lib }:
 
 stdenv.mkDerivation rec {
   name = "libatasmart-0.19";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "138gvgdwk6h4ljrjsr09pxk1nrki4b155hqdzyr8mlk3bwsfmw31";
   };
 
-  buildInputs = [ pkgconfig udev ];
+  buildInputs = [ systemd_lib ];
 
   meta = {
     homepage = http://0pointer.de/public/;

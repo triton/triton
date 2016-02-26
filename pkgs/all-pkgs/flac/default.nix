@@ -5,8 +5,6 @@
 }:
 
 with {
-  inherit (stdenv)
-    isi686 isx86_64;
   inherit (stdenv.lib)
     enFlag;
 };
@@ -24,8 +22,8 @@ stdenv.mkDerivation rec {
     "--enable-largefile"
     "--enable-asm-optimizations"
     "--disable-debug"
-    (enFlag "sse" (isi686 || isx86_64) null)
-    "--disable-altivec" # Power Architecture
+    "--enable-sse"  # X86 Only, we need this fixed at some point
+    "--disable-altivec"  # Power Architecture
     "--disable-thorough-tests"
     "--disable-exhaustive-tests"
     "--disable-werror"

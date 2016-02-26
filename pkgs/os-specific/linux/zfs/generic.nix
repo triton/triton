@@ -1,8 +1,8 @@
-{ stdenv, fetchFromGitHub, autoreconfHook, utillinux, nukeReferences, coreutils
+{ stdenv, fetchFromGitHub, autoreconfHook, util-linux_full, nukeReferences, coreutils
 , configFile ? "all"
 
 # Userspace dependencies
-, zlib, libuuid, python
+, zlib, python
 
 # Kernel dependencies
 , kernel ? null, spl ? null
@@ -28,16 +28,16 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ autoreconfHook nukeReferences ]
     ++ optionals buildKernel [ spl ]
-    ++ optionals buildUser [ zlib libuuid python ];
+    ++ optionals buildUser [ zlib util-linux_full python ];
 
   # for zdb to get the rpath to libgcc_s, needed for pthread_cancel to work
   NIX_CFLAGS_LINK = "-lgcc_s";
 
   preConfigure = ''
-    substituteInPlace ./module/zfs/zfs_ctldir.c   --replace "umount -t zfs"           "${utillinux}/bin/umount -t zfs"
-    substituteInPlace ./module/zfs/zfs_ctldir.c   --replace "mount -t zfs"            "${utillinux}/bin/mount -t zfs"
-    substituteInPlace ./lib/libzfs/libzfs_mount.c --replace "/bin/umount"             "${utillinux}/bin/umount"
-    substituteInPlace ./lib/libzfs/libzfs_mount.c --replace "/bin/mount"              "${utillinux}/bin/mount"
+    substituteInPlace ./module/zfs/zfs_ctldir.c   --replace "umount -t zfs"           "${util-linux_full}/bin/umount -t zfs"
+    substituteInPlace ./module/zfs/zfs_ctldir.c   --replace "mount -t zfs"            "${util-linux_full}/bin/mount -t zfs"
+    substituteInPlace ./lib/libzfs/libzfs_mount.c --replace "/bin/umount"             "${util-linux_full}/bin/umount"
+    substituteInPlace ./lib/libzfs/libzfs_mount.c --replace "/bin/mount"              "${util-linux_full}/bin/mount"
     substituteInPlace ./udev/rules.d/*            --replace "/lib/udev/vdev_id"       "$out/lib/udev/vdev_id"
     substituteInPlace ./cmd/ztest/ztest.c         --replace "/usr/sbin/ztest"         "$out/sbin/ztest"
     substituteInPlace ./cmd/ztest/ztest.c         --replace "/usr/sbin/zdb"           "$out/sbin/zdb"

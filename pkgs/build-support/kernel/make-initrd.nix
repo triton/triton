@@ -22,9 +22,6 @@ in
 stdenv.mkDerivation {
   name = "initrd";
   builder = ./make-initrd.sh;
-  nativeBuildInputs = inputsFun stdenv.platform.uboot;
-
-  makeUInitrd = makeUInitrdFun stdenv.platform.uboot;
 
   # !!! should use XML.
   objects = map (x: x.object) contents;
@@ -37,9 +34,5 @@ stdenv.mkDerivation {
   pathsFromGraph = ./paths-from-graph.pl;
   cpioClean = ./cpio-clean.pl;
 
-  crossAttrs = {
-    nativeBuildInputs = inputsFun stdenv.cross.platform.uboot;
-    makeUInitrd = makeUInitrdFun stdenv.cross.platform.uboot;
-  };
   inherit compressor prepend;
 }

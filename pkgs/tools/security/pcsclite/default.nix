@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, udev, dbus_libs, perl, python2 }:
+{ stdenv, fetchurl, systemd_lib, dbus_libs, perl, python2 }:
 
 stdenv.mkDerivation rec {
   name = "pcsclite-1.8.14";
@@ -12,17 +12,17 @@ stdenv.mkDerivation rec {
     # The OS should care on preparing the drivers into this location
     "--enable-usbdropdir=/var/lib/pcsc/drivers"
     "--enable-confdir=/etc"
-  ] ++ stdenv.lib.optional stdenv.isLinux
-         "--with-systemdsystemunitdir=\${out}/etc/systemd/system";
+    "--with-systemdsystemunitdir=\${out}/etc/systemd/system"
+  ];
 
-  nativeBuildInputs = [ pkgconfig perl python2 ];
-  buildInputs = stdenv.lib.optionals stdenv.isLinux [ udev dbus_libs ];
+  nativeBuildInputs = [ perl python2 ];
+  buildInputs = [ systemd_lib dbus_libs ];
 
   meta = with stdenv.lib; {
     description = "Middleware to access a smart card using SCard API (PC/SC)";
     homepage = http://pcsclite.alioth.debian.org/;
     license = licenses.bsd3;
     maintainers = with maintainers; [ viric wkennington ];
-    platforms = with platforms; unix;
+    platforms = with platforms; all;
   };
 }

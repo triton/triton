@@ -1,4 +1,7 @@
-{ stdenv, fetchurl, autoreconfHook }:
+{ stdenv
+, autoconf
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
   name = "json-c-0.12";
@@ -7,26 +10,27 @@ stdenv.mkDerivation rec {
     sha256 = "0dgvjjyb9xva63l6sy70sdch2w4ryvacdmfd3fg2f2v13lqx5mkg";
   };
 
-  patches = [ ./unused-variable.patch ];
+  nativeBuildInputs = [
+    autoconf
+  ];
 
-  buildInputs = [ autoreconfHook ]; # won't configure without it, no idea why
+  patches = [
+    ./unused-variable.patch
+  ];
 
   # compatibility hack (for mypaint at least)
   postInstall = ''
-    ln -s json-c.pc "$out/lib/pkgconfig/json.pc"
+    ln -sv json-c.pc "$out/lib/pkgconfig/json.pc"
   '';
 
   meta = with stdenv.lib; {
     description = "A JSON implementation in C";
-    homepage    = https://github.com/json-c/json-c/wiki;
-    maintainers = with maintainers; [ lovek323 ];
-    platforms   = platforms.unix;
-
-    longDescription = ''
-      JSON-C implements a reference counting object model that allows you to
-      easily construct JSON objects in C, output them as JSON formatted strings
-      and parse JSON formatted strings back into the C representation of JSON
-      objects.
-    '';
+    homepage = https://github.com/json-c/json-c/wiki;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

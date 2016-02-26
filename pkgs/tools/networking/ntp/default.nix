@@ -1,6 +1,10 @@
-{ stdenv, fetchurl, autoreconfHook, libcap ? null, openssl ? null }:
+{ stdenv
+, fetchurl
+, autoreconfHook
 
-assert stdenv.isLinux -> libcap != null;
+, libcap
+, openssl
+}:
 
 stdenv.mkDerivation rec {
   name = "ntp-4.2.8p6";
@@ -14,10 +18,17 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-ignore-dns-errors"
-  ] ++ stdenv.lib.optional (libcap != null) "--enable-linuxcaps";
+    "--enable-linuxcaps"
+  ];
 
-  nativeBuildInputs = [ autoreconfHook ];
-  buildInputs = [ libcap openssl ];
+  nativeBuildInputs = [
+    autoreconfHook
+  ];
+
+  buildInputs = [
+    libcap
+    openssl
+  ];
 
   postInstall = ''
     rm -rf $out/share/doc

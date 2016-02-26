@@ -1,8 +1,6 @@
-{ stdenv, fetchurl, dbus, glib, alsaLib, python,
-  pythonPackages, pythonDBus, readline, libsndfile, udev, libical,
-  systemd, enableWiimote ? false }:
-
-assert stdenv.isLinux;
+{ stdenv, fetchurl, dbus, glib, alsa-lib, python,
+  pythonPackages, readline, libsndfile, systemd_lib, libical,
+  enableWiimote ? false }:
 
 stdenv.mkDerivation rec {
   name = "bluez-5.37";
@@ -13,17 +11,17 @@ stdenv.mkDerivation rec {
   };
 
   pythonPath = with pythonPackages;
-    [ pythonDBus pygobject pygobject3 recursivePthLoader ];
+    [ dbus pygobject pygobject3 recursivePthLoader ];
 
   buildInputs =
-    [ dbus.libs glib alsaLib python pythonPackages.wrapPython
-      readline libsndfile udev libical
+    [ dbus.libs glib alsa-lib python pythonPackages.wrapPython
+      readline libsndfile systemd_lib libical
     ];
 
   patches = [ ./bluez-5.37-obexd_without_systemd-1.patch ];
     
   preConfigure = ''
-    substituteInPlace tools/hid2hci.rules --replace /sbin/udevadm ${systemd}/bin/udevadm
+    substituteInPlace tools/hid2hci.rules --replace /sbin/udevadm ${systemd_lib}/bin/udevadm
     substituteInPlace tools/hid2hci.rules --replace "hid2hci " "$out/lib/udev/hid2hci "
   '';
 

@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     homepage = https://github.com/libical/libical;
     description = "an Open Source implementation of the iCalendar protocols";
     license = licenses.mpl10;
-    platforms = platforms.unix;
+    platforms = platforms.all;
     maintainers = with maintainers; [ wkennington ];
   };
 }

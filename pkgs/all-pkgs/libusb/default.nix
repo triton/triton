@@ -1,16 +1,13 @@
 { stdenv
 , fetchurl
 
-, udev ? null
+, systemd_lib
 }:
 
-with {
-  inherit (stdenv)
-    isLinux;
+let
   inherit (stdenv.lib)
-    enFlag
     optional;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "libusb-1.0.20";
@@ -20,12 +17,13 @@ stdenv.mkDerivation rec {
     sha256 = "1zzp6hc7r7m3gl6zjbmzn92zkih4664cckaf49l1g5hapa8721fb";
   };
 
-  buildInputs = [ ]
-    ++ optional isLinux udev;
+  buildInputs = [
+    systemd_lib
+  ];
 
   configureFlags = [
     "--disable-maintainer-mode"
-    (enFlag "udev" (udev != null) null)
+    "--enable-udev"
     #"--enable-timerfd"
     "--enable-log"
     "--disable-debug-log"
@@ -34,8 +32,9 @@ stdenv.mkDerivation rec {
     "--disable-tests-build"
   ];
 
-  NIX_LDFLAGS = [ ]
-    ++ optional isLinux "-lgcc_s";
+  NIX_LDFLAGS = [
+    "-lgcc_s"
+  ];
 
   # Fails to correctly order objects
   parallelBuild = false;

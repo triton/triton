@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A library for reading and writing gif images";
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
     license = stdenv.lib.licenses.mit;
     maintainers = with stdenv.lib.maintainers; [ fuuzetsu ];
     branch = "5.1";

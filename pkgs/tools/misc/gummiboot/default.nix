@@ -1,9 +1,9 @@
-{ stdenv, fetchurl, gnu-efi, unzip, pkgconfig, utillinux, libxslt, docbook_xsl, docbook_xml_dtd_42 }:
+{ stdenv, fetchurl, gnu-efi, unzip, pkgconfig, util-linux_lib, libxslt, docbook_xsl, docbook_xml_dtd_42 }:
 
 stdenv.mkDerivation rec {
   name = "gummiboot-48";
 
-  buildInputs = [ gnu-efi pkgconfig libxslt utillinux ];
+  buildInputs = [ gnu-efi pkgconfig libxslt util-linux_lib ];
 
   # Sigh, gummiboot should be able to find this in buildInputs
   configureFlags = [

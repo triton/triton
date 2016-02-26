@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, autoreconfHook
-, expat, libsystemd, glib, dbus_glib, python
+, expat, systemd_lib, glib, dbus_glib, python
 , xorg ? null, x11Support ? true }:
 
 assert x11Support -> xorg != null;
@@ -69,7 +69,7 @@ let
     # Enable X11 autolaunch support in libdbus. This doesn't actually depend on X11
     # (it just execs dbus-launch in dbus.tools), contrary to what the configure script demands.
     NIX_CFLAGS_COMPILE = "-DDBUS_ENABLE_X11_AUTOLAUNCH=1";
-    buildInputs = [ libsystemd ];
+    buildInputs = [ systemd_lib ];
     meta.platforms = stdenv.lib.platforms.all;
   };
 
@@ -85,7 +85,7 @@ let
 
   tools = dbus_drv "tools" "tools bus" {
     preBuild = makeInternalLib;
-    buildInputs = buildInputsX ++ [ libsystemd libs ];
+    buildInputs = buildInputsX ++ [ systemd_lib libs ];
     NIX_CFLAGS_LINK = "-Wl,--as-needed " + "-ldbus-1";
 
     # don't provide another dbus-1.pc (with incorrect include and link dirs),

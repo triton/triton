@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, nasm, perl, python, libuuid, mtools, makeWrapper }:
+{ stdenv, fetchFromGitHub, nasm, perl, python, util-linux_lib, mtools, makeWrapper }:
 
 stdenv.mkDerivation rec {
   name = "syslinux-2015-11-09";
@@ -12,8 +12,8 @@ stdenv.mkDerivation rec {
 
   patches = [ ./perl-deps.patch ];
 
-  nativeBuildInputs = [ nasm perl python ];
-  buildInputs = [ libuuid makeWrapper ];
+  nativeBuildInputs = [ nasm perl python makeWrapper ];
+  buildInputs = [ util-linux_lib ];
 
   enableParallelBuilding = false; # Fails very rarely with 'No rule to make target: ...'
 

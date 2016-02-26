@@ -1,4 +1,4 @@
-{ fetchurl, stdenv, libuuid, popt, icu, ncurses }:
+{ fetchurl, stdenv, util-linux_lib, popt, icu, ncurses }:
 
 stdenv.mkDerivation rec {
   name = "gptfdisk-${version}";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     sha256 = "1izazbyv5n2d81qdym77i8mg9m870hiydmq4d0s51npx5vp8lk46";
   };
 
-  buildInputs = [ libuuid popt icu ncurses ];
+  buildInputs = [ util-linux_lib popt icu ncurses ];
 
   installPhase = ''
     mkdir -p $out/sbin

@@ -15,8 +15,6 @@
 , zlib
 , compiler-rt_src
 , libcxxabi
-, debugVersion ? false
-, enableSharedLibraries ? true
 }:
 
 let
@@ -50,29 +48,20 @@ in stdenv.mkDerivation rec {
   '';
 
   cmakeFlags = with stdenv; [
-    "-DCMAKE_BUILD_TYPE=${if debugVersion then "Debug" else "Release"}"
+    "-DCMAKE_BUILD_TYPE=Release"
     "-DLLVM_INSTALL_UTILS=ON"  # Needed by rustc
     "-DLLVM_BUILD_TESTS=ON"
     "-DLLVM_ENABLE_FFI=ON"
     "-DLLVM_ENABLE_RTTI=ON"
-  ] ++ stdenv.lib.optional enableSharedLibraries
     "-DBUILD_SHARED_LIBS=ON"
-    ++ stdenv.lib.optional true
-    "-DLLVM_BINUTILS_INCDIR=${binutils}/include";
+    "-DLLVM_BINUTILS_INCDIR=${binutils}/include"
+  ];
 
   doCheck = true;
 
   postBuild = ''
     rm -fR $out
-
-    paxmark m bin/{lli,llvm-rtdyld}
-
-    paxmark m unittests/ExecutionEngine/JIT/JITTests
-    paxmark m unittests/ExecutionEngine/MCJIT/MCJITTests
-    paxmark m unittests/Support/SupportTests
   '';
-
-  passthru.src = src;
 
   meta = {
     description = "Collection of modular and reusable compiler and toolchain technologies";

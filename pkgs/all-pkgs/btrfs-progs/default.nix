@@ -4,7 +4,6 @@
 , attr
 , acl
 , zlib
-, libuuid
 , e2fsprogs
 , lzo
 , asciidoc
@@ -12,6 +11,7 @@
 , docbook_xml_dtd_45
 , docbook_xsl
 , libxslt
+, util-linux_lib
 }:
 
 stdenv.mkDerivation rec {
@@ -27,7 +27,6 @@ stdenv.mkDerivation rec {
     attr
     acl
     zlib
-    libuuid
     e2fsprogs
     lzo
     asciidoc
@@ -35,11 +34,8 @@ stdenv.mkDerivation rec {
     docbook_xml_dtd_45
     docbook_xsl
     libxslt
+    util-linux_lib
   ];
-
-  # gcc bug with -O1 on ARM with gcc 4.8
-  # This should be fine on all platforms so apply universally
-  postPatch = "sed -i s/-O1/-O2/ configure";
 
   meta = with stdenv.lib; {
     description = "Utilities for the btrfs filesystem";

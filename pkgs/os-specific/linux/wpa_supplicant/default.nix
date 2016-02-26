@@ -1,5 +1,5 @@
-{ stdenv, fetchpatch, fetchurl, lib, openssl, pkgconfig, libnl
-, dbus_libs ? null, readline ? null, pcsclite ? null
+{ stdenv, fetchpatch, fetchurl, lib, openssl, libnl
+, dbus_libs, readline, pcsclite
 }:
 
 with stdenv.lib;
@@ -73,9 +73,13 @@ stdenv.mkDerivation rec {
       -I${pcsclite}/include/PCSC/"
   '';
 
-  buildInputs = [ openssl libnl dbus_libs readline pcsclite ];
-
-  nativeBuildInputs = [ pkgconfig ];
+  buildInputs = [
+    openssl
+    libnl
+    dbus_libs
+    readline
+    pcsclite
+  ];
 
   patches = [
     ./build-fix.patch

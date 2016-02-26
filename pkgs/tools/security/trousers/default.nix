@@ -19,17 +19,12 @@ stdenv.mkDerivation rec {
   NIX_CFLAGS_COMPILE = "-std=gnu89 -DALLOW_NON_TSS_CONFIG_FILE";
   NIX_LDFLAGS = "-lgcc_s";
 
-  # Fix broken libtool file
-  preFixup = stdenv.lib.optionalString (!stdenv.isDarwin) ''
-    sed 's,-lcrypto,-L${openssl}/lib -lcrypto,' -i $out/lib/libtspi.la
-  '';
-
   meta = with stdenv.lib; {
     description = "Trusted computing software stack";
     homepage    = http://trousers.sourceforge.net/;
     license     = licenses.cpl10;
     maintainers = [ maintainers.ak ];
-    platforms   = platforms.unix;
+    platforms   = platforms.all;
   };
 }
 

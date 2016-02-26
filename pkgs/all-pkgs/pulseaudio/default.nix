@@ -78,6 +78,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     glib
+    dbus_lib
     libasyncns
     libcap
     json-c
@@ -86,7 +87,6 @@ stdenv.mkDerivation rec {
     tdb
     speexdsp
   ] ++ optionals (!libOnly) [
-    dbus_lib
     alsa-lib
     gtk3
     gconf

@@ -2702,29 +2702,23 @@ zstd = callPackage ../all-pkgs/zstd { };
     ghostscript = null;
   };
 
-  grub = callPackage_i686 ../tools/misc/grub {
-    buggyBiosCDSupport = config.grub.buggyBiosCDSupport or true;
-  };
+#  grub = callPackage_i686 ../tools/misc/grub {
+#    buggyBiosCDSupport = config.grub.buggyBiosCDSupport or true;
+#  };
+#
+#  trustedGrub = callPackage_i686 ../tools/misc/grub/trusted.nix { };
+#
+#  trustedGrub-for-HP = callPackage_i686 ../tools/misc/grub/trusted.nix { for_HP_laptop = true; };
 
-  trustedGrub = callPackage_i686 ../tools/misc/grub/trusted.nix { };
+  grub2 = callPackage ../tools/misc/grub/2.0x.nix { };
 
-  trustedGrub-for-HP = callPackage_i686 ../tools/misc/grub/trusted.nix { for_HP_laptop = true; };
-
-  grub2 = grub2_full;
-
-  grub2_full = callPackage ../tools/misc/grub/2.0x.nix { };
-
-  grub2_efi = grub2_full.override {
+  grub2_efi = callPackageAlias "grub2" {
     efiSupport = true;
   };
 
-  grub2_light = grub2_full.override {
-    zfsSupport = false;
-  };
-
-  grub4dos = callPackage ../tools/misc/grub4dos {
-    stdenv = pkgs.stdenv_32bit;
-  };
+#  grub4dos = callPackage ../tools/misc/grub4dos {
+#    stdenv = pkgs.stdenv_32bit;
+#  };
 #
 #  sbsigntool = callPackage ../tools/security/sbsigntool { };
 #

@@ -1,25 +1,32 @@
-{stdenv, fetchurl, utillinux, libuuid
-, crypto ? false, libgcrypt, gnutls, pkgconfig}:
+{ stdenv
+, fetchurl
+, util-linux_full
+, libgcrypt
+, gnutls
+}:
 
 stdenv.mkDerivation rec {
   pname = "ntfs-3g";
   version = "2015.3.14";
   name = "${pname}-${version}";
 
-  buildInputs = [ libuuid ] ++ stdenv.lib.optionals crypto [ gnutls libgcrypt ];
-  nativeBuildInputs = stdenv.lib.optional crypto pkgconfig;
-
   src = fetchurl {
     url = "http://tuxera.com/opensource/ntfs-3g_ntfsprogs-${version}.tgz";
     sha256 = "1wiqcmy07y02k3iqq56cscnhg5syisbjj9mxfaid85l3bl0rdycp";
   };
 
+  buildInputs = [
+    gnutls
+    libgcrypt
+    util-linux_full
+  ];
+
   patchPhase = ''
     substituteInPlace src/Makefile.in --replace /sbin '@sbindir@'
     substituteInPlace ntfsprogs/Makefile.in --replace /sbin '@sbindir@'
     substituteInPlace libfuse-lite/mount_util.c \
-      --replace /bin/mount ${utillinux}/bin/mount \
-      --replace /bin/umount ${utillinux}/bin/umount
+      --replace /bin/mount ${util-linux_full}/bin/mount \
+      --replace /bin/umount ${util-linux_full}/bin/umount
   '';
 
   configureFlags = [
@@ -28,7 +35,7 @@ stdenv.mkDerivation rec {
     "--enable-mount-helper"
     "--enable-posix-acls"
     "--enable-xattr-mappings"
-    "--${if crypto then "enable" else "disable"}-crypto"
+    "--enable-crypto"
   ];
 
   postInstall =

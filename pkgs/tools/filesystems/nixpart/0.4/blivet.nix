@@ -1,6 +1,6 @@
 { stdenv, fetchurl, buildPythonPackage, pykickstart, pyparted, pyblock
 , libselinux, cryptsetup, multipath_tools, lsof, utillinux
-, useNixUdev ? true, udev ? null
+, useNixUdev ? true, systemd_lib
 }:
 
 assert useNixUdev -> udev != null;

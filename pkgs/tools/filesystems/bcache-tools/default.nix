@@ -1,4 +1,8 @@
-{ stdenv, fetchurl, pkgconfig, utillinux, kmod }:
+{ stdenv
+, fetchurl
+, kmod
+, util-linux_lib
+}:
 
 stdenv.mkDerivation rec {
   name = "bcache-tools-${version}";
@@ -9,7 +13,9 @@ stdenv.mkDerivation rec {
     sha256 = "1gbsh2qw0a7kgck6w0apydiy37nnz5xvdgipa0yqrfmghl86vmv4";
   };
 
-  buildInputs = [ pkgconfig utillinux ];
+  buildInputs = [
+    util-linux_lib
+  ];
 
   # * Remove broken install rules (they ignore $PREFIX) for stuff we don't need
   #   anyway (it's distro specific stuff).

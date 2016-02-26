@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, gettext, libuuid, readline }:
+{ stdenv, fetchurl, gettext, util-linux_lib, readline }:
 
 stdenv.mkDerivation rec {
   name = "xfsprogs-4.2.0";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     ./4.2.0-sharedlibs.patch
   ];
 
-  buildInputs = [ gettext libuuid readline ];
+  buildInputs = [ gettext util-linux_lib readline ];
 
   outputs = [ "out" "lib" ];
 

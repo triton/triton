@@ -1,4 +1,4 @@
-{stdenv, fetchurl, python, pkgconfig, libxml2Python, libxslt, intltool
+{stdenv, fetchurl, python, libxml2, libxslt, intltool
 , makeWrapper, pythonPackages }:
 
 stdenv.mkDerivation {
@@ -10,9 +10,9 @@ stdenv.mkDerivation {
   };
 
   configureFlags = "--disable-scrollkeeper";
-  buildInputs = [ python libxml2Python libxslt ];
-  pythonPath = [ libxml2Python ];
+  buildInputs = [ python libxml2 libxslt ];
+  pythonPath = [ libxml2 ];
   postInstall = "wrapPythonPrograms";
 
-  nativeBuildInputs = [ pkgconfig intltool pythonPackages.wrapPython ];
+  nativeBuildInputs = [ intltool pythonPackages.wrapPython ];
 }

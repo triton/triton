@@ -16,7 +16,7 @@
 , avahi
 , bluez
 , dbus_lib
-, fftw_double
+, fftw_single
 , gconf
 , glib
 , gtk3
@@ -83,7 +83,7 @@ stdenv.mkDerivation rec {
     libcap
     json-c
     libsndfile
-    fftw_double
+    fftw_single
     tdb
     speexdsp
   ] ++ optionals (!libOnly) [

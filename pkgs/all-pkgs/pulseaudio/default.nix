@@ -4,6 +4,7 @@
 , fetchTritonPatch
 , fetchurl
 , gettext
+, gnum4
 , intltool
 , libtool
 
@@ -70,6 +71,7 @@ stdenv.mkDerivation rec {
     autoconf
     automake
     gettext
+    gnum4
     intltool
     libtool
   ];

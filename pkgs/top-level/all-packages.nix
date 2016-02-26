@@ -956,6 +956,8 @@ krb5_lib = callPackageAlias "krb5_full" {
   type = "lib";
 };
 
+ldb = callPackage ../all-pkgs/ldb { };
+
 libarchive = callPackage ../all-pkgs/libarchive { };
 
 libass = callPackage ../all-pkgs/libass { };
@@ -6545,8 +6547,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 
   lcms2 = callPackage ../development/libraries/lcms2 { };
 
-  ldb = callPackage ../development/libraries/ldb { };
-#
 #  lensfun = callPackage ../development/libraries/lensfun {};
 #
   lesstif = callPackage ../development/libraries/lesstif { };

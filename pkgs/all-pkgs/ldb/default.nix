@@ -1,22 +1,40 @@
-{ stdenv, fetchurl, python, pkgconfig, readline, tdb, talloc, tevent
-, popt, libxslt, docbook_xsl, docbook_xml_dtd_42
+{ stdenv
+, docbook_xml_dtd_42
+, docbook_xsl
+, fetchurl
+, libxslt
+, python
+
+, popt
+, talloc
+, tdb
+, tevent
 }:
 
 stdenv.mkDerivation rec {
-  name = "ldb-1.1.25";
+  name = "ldb-1.1.26";
 
   src = fetchurl {
     url = "mirror://samba/ldb/${name}.tar.gz";
-    sha256 = "04kw5g91l72dlqbgi67kiqqphq8p32lq9qs604jhh974rqz7hx5z";
+    sha256 = "1rmjv12pf57vga8s5z9p9d90rlfckc1lqjbcp89r83cq5fkwfhw8";
   };
 
-  buildInputs = [
-    python pkgconfig readline tdb talloc tevent popt
-    libxslt docbook_xsl docbook_xml_dtd_42
+  nativeBuildInputs = [
+    docbook_xml_dtd_42
+    docbook_xsl
+    libxslt
+    python
   ];
 
-  preConfigure = ''
-    sed -i 's,#!/usr/bin/env python,#!${python}/bin/python,g' buildtools/bin/waf
+  buildInputs = [
+    talloc
+    tdb
+    tevent
+    popt
+  ];
+
+  postPatch = ''
+    patchShebangs buildtools/bin/waf
   '';
 
   configureFlags = [

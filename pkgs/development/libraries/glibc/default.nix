@@ -40,11 +40,9 @@ import ./common.nix {
     (cd $out/include && \
      ln -sv $(ls -d ${linux-headers}/include/* | grep -v 'scsi''$') .)
 
-    # Fix for NIXOS-54 (ldd not working on x86_64).  Make a symlink
-    # "lib64" to "lib".
-    #if test -n "$is64bit"; then
-    #  ln -s lib $out/lib64
-    #fi
+    # Fix ldd
+    RTLDLIST="$(find $out -name ld\*.so\* | tr '\n' ' ')"
+    sed -i "s,^RTLDLIST=,RTLDLIST=\"$RTLDLIST\",g" $out/bin/ldd
 
     # Get rid of more unnecessary stuff.
     rm -rf $out/var $out/sbin/sln

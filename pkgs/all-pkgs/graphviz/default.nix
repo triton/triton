@@ -5,7 +5,7 @@
 , libjpeg
 , expat
 , xorg
-, yacc
+, bison
 , libtool
 , fontconfig
 , pango
@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
     libpng
     libjpeg
     expat
-    yacc
+    bison
     libtool
     fontconfig
     gd

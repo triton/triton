@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, python, libxml2Python }:
+{ stdenv, fetchurl, python, libxml2 }:
 
 stdenv.mkDerivation rec {
   name = "itstool-1.2.0";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   patchPhase =
     ''
       sed -e '/import libxml2/i import sys\
-      sys.path.append("${libxml2Python}/lib/${python.libPrefix}/site-packages")' \
+      sys.path.append("${libxml2}/lib/${python.libPrefix}/site-packages")' \
       -i itstool.in
     '';
 

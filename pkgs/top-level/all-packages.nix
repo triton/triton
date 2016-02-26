@@ -797,9 +797,7 @@ gobjectIntrospection = callPackageAlias "gobject-introspection" { }; # Deprecate
 
 gperf = callPackage ../all-pkgs/gperf { };
 
-gpm = callPackage ../all-pkgs/gpm {
-  ncurses = null;  # Keep curses disabled for lack of value
-};
+gpm = callPackage ../all-pkgs/gpm+ncurses { };
 
 granite = callPackage ../all-pkgs/granite { };
 
@@ -1176,7 +1174,7 @@ ncmpc = callPackage ../all-pkgs/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
 
-ncurses = callPackage ../all-pkgs/ncurses { };
+ncurses = callPackage ../all-pkgs/gpm+ncurses { };
 
 net-tools = callPackage ../all-pkgs/net-tools { };
 

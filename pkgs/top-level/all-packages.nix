@@ -1117,9 +1117,9 @@ mesa_noglu = callPackage ../all-pkgs/mesa {
 };
 mesa_drivers = mesa_noglu.drivers;
 mesaSupported = lib.elem system mesa_noglu.meta.platforms;
-mesa = buildEnv {
-  name = "mesa-${mesa_noglu.version}";
-  paths = [ mesa_noglu mesa_glu ];
+mesa = pkgs.buildEnv {
+  name = "mesa-${pkgs.mesa_noglu.version}";
+  paths = with pkgs; [ mesa_noglu mesa_glu ];
 };
 
 mesos = callPackage ../all-pkgs/mesos {
@@ -1258,6 +1258,8 @@ poppler = callPackage ../all-pkgs/poppler {
   qt4 = null;
   qt5 = null;
 };
+
+potrace = callPackage ../all-pkgs/potrace {};
 
 psmisc = callPackage ../all-pkgs/psmisc { };
 
@@ -11311,8 +11313,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  pond = goPackages.pond.bin // { outputs = [ "bin" ]; };
 #
 #  ponymix = callPackage ../applications/audio/ponymix { };
-#
-  potrace = callPackage ../applications/graphics/potrace {};
 #
 #  posterazor = callPackage ../applications/misc/posterazor { };
 #

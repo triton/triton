@@ -235,6 +235,32 @@ rec {
     ++ x86_64;
 
   #
+  ## Pointer Sizes
+  #
+
+  bit64 = [ ]
+    ++ aarch64
+    ++ aarch64_be
+    ++ mips64
+    ++ mips64el
+    ++ powerpc64
+    ++ powerpc64le
+    ++ x86_64
+    ;
+
+  bit32 = [ ]
+    ++ armv7b
+    ++ armv7l
+    ++ armv8b
+    ++ armv8l
+    ++ i686
+    ++ mips
+    ++ mipsel
+    ++ powerpc
+    ++ powerpcle
+    ;
+
+  #
   ## All platforms
   #
 

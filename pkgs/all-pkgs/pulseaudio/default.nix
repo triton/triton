@@ -1,43 +1,36 @@
 { stdenv
+, autoconf
+, automake
 , fetchTritonPatch
 , fetchurl
+, gettext
 , intltool
-, automake
-, autoconf
 , libtool
+
 , json-c
 , libsndfile
-, gettext
-, check
 
 # Optional Dependencies
 , alsa-lib
 , avahi
 , bluez
-, coreaudio
-, dbus
-, esound
-, fftwDouble
-, gconf ? null
-, glib ? null
-, gtk3 ? null
-, libasyncns ? null
-, libcap ? null
-, libjack2 ? null
-, lirc ? null
-, openssl ? null
-, oss ? null
-, sbc ? null
-, soxr ? null
-, speexdsp ? null
-, systemd ? null
-, udev ? null
-, webrtc-audio-processing ? null
-, xorg ? null
-
-# Database selection
-, tdb ? null
-, gdbm ? null
+, dbus_lib
+, fftw_double
+, gconf
+, glib
+, gtk3
+, libasyncns
+, libcap
+, jack2_lib
+, lirc
+, openssl
+, sbc
+, soxr
+, speexdsp
+, systemd_lib
+, tdb
+, webrtc-audio-processing
+, xorg
 
 # Extra options
 , prefix ? ""
@@ -51,73 +44,17 @@
 , resampleMethod ? "speex-float-1"
 }:
 
-with {
-  inherit (stdenv)
-    shouldUsePkg;
+let
   inherit (stdenv.lib)
-    enFlag
-    otFlag
-    wtFlag
     optionals
     optionalString;
   inherit (builtins.getAttr resampleMethod (import ./resample-methods.nix))
     resampleMethodString;
-};
+
+  libOnly = prefix == "lib";
+in
 
 assert resampleMethodString != null;
-
-let
-  libOnly = prefix == "lib";
-  ifFull =
-    a:
-    if libOnly then
-      null
-    else
-      a;
-
-  hasXlibs = xorg != null;
-
-  optLibcap = shouldUsePkg libcap;
-  hasCaps = optLibcap != null || stdenv.isFreeBSD; # Built-in on FreeBSD
-
-  optOss = ifFull (shouldUsePkg oss);
-  hasOss = optOss != null || stdenv.isFreeBSD; # Built-in on FreeBSD
-
-  optCoreaudio = ifFull (shouldUsePkg coreaudio);
-  optAlsaLib = ifFull (shouldUsePkg alsaLib);
-  optEsound = ifFull (shouldUsePkg esound);
-  optGlib = shouldUsePkg glib;
-  optGtk3 = ifFull (shouldUsePkg gtk3);
-  optGconf = ifFull (shouldUsePkg gconf);
-  optAvahi = ifFull (shouldUsePkg avahi);
-  optLibjack2 = ifFull (shouldUsePkg libjack2);
-  optLibasyncns = shouldUsePkg libasyncns;
-  optLirc = ifFull (shouldUsePkg lirc);
-  optDbus = shouldUsePkg dbus;
-  optSbc = ifFull (shouldUsePkg sbc);
-  optBluez =
-    if optDbus == null || optSbc == null then
-      null
-    else
-      shouldUsePkg bluez;
-  optUdev = ifFull (shouldUsePkg udev);
-  optOpenssl = ifFull (shouldUsePkg openssl);
-  optFftw = shouldUsePkg fftwDouble;
-  optSpeexdsp = shouldUsePkg speexdsp;
-  optSoxr = ifFull (shouldUsePkg soxr);
-  optSystemd = shouldUsePkg systemd;
-  optWebrtc-audio-processing = ifFull (shouldUsePkg webrtc-audio-processing);
-  hasWebrtc = ifFull (optWebrtc-audio-processing != null);
-
-  # Pick a database to use
-  databaseName = if tdb != null then "tdb" else
-    if gdbm != null then "gdbm" else "simple";
-  database = {
-    tdb = tdb;
-    gdbm = gdbm;
-    simple = null;
-  }.${databaseName};
-in
 
 stdenv.mkDerivation rec {
   name = "${prefix}pulseaudio-${version}";
@@ -137,45 +74,36 @@ stdenv.mkDerivation rec {
     libtool
   ];
 
-  propagatedBuildInputs = [
-    optLibcap
-  ];
-
   buildInputs = [
-    json_c
+    glib
+    libasyncns
+    libcap
+    json-c
     libsndfile
-    check
-    database
-    optOss
-    optCoreaudio
-    optAlsaLib
-    optEsound
-    optGlib
-    optGtk3
-    optGconf
-    optAvahi
-    optLibjack2
-    optLibasyncns
-    optLirc
-    optDbus
-    optUdev
-    optOpenssl
-    optFftw
-    optSpeexdsp
-    optSoxr
-    optSystemd
-    optWebrtc-audio-processing
-  ] ++ optionals hasXlibs (with xorg; [
-    libX11
-    libxcb
-    libICE
-    libSM
-    libXtst
-    xextproto
-    libXi
-  ]) ++ optionals (optBluez != null) [
-    optBluez
-    optSbc
+    fftw_double
+    tdb
+    speexdsp
+  ] ++ optionals (!libOnly) [
+    dbus_lib
+    alsa-lib
+    gtk3
+    gconf
+    avahi
+    jack2_lib
+    lirc
+    openssl
+    soxr
+    systemd_lib
+    webrtc-audio-processing
+    xorg.libX11
+    xorg.libxcb
+    xorg.libICE
+    xorg.libSM
+    xorg.libXtst
+    xorg.xextproto
+    xorg.libXi
+    bluez
+    sbc
   ];
 
   patches = [
@@ -220,56 +148,76 @@ stdenv.mkDerivation rec {
     '';
 
   configureFlags = [
-    (otFlag "localstatedir" true "/var")
-    (otFlag "sysconfdir" true "/etc")
-    (enFlag "atomic-arm-memory-barrier" false null)
-    (enFlag "neon-opt" false null)
-    (enFlag "x11" hasXlibs null)
-    (wtFlag "caps" hasCaps optLibcap)
-    (enFlag "tests" true null)
+    "--localstatedir=/var"
+    "--sysconfdir=/etc"
+    "--disable-atomic-arm-memory-barrier"
+    "--disable-neon-opt"
+    "--with-caps=${libcap}"
+    "--disable-tests"
     "--disable-samplerate" # Deprecated
-    (wtFlag "database" true databaseName)
-    (enFlag "oss-output" hasOss null)
-    (enFlag "oss-wrapper" true null) # Does not use OSS
-    (enFlag "coreaudio-output" (optCoreaudio != null) null)
-    (enFlag "alsa" (optAlsaLib != null) null)
-    (enFlag "esound" (optEsound != null) null)
-    (enFlag "solaris" false null)
-    (enFlag "waveout" false null) # Windows Only
-    (enFlag "glib2" (optGlib != null) null)
-    (enFlag "gtk3" (optGtk3 != null) null)
-    (enFlag "gconf" (optGconf != null) null)
-    (enFlag "avahi" (optAvahi != null) null)
-    (enFlag "jack" (optLibjack2 != null) null)
-    (enFlag "asyncns" (optLibasyncns != null) null)
-    (enFlag "tcpwrap" false null)
-    (enFlag "lirc" (optLirc != null) null)
-    (enFlag "dbus" (optDbus != null) null)
-    (enFlag "bluez4" false null)
-    (enFlag "bluez5" (optBluez != null) null)
-    (enFlag "bluez5-ofono-headset" (optBluez != null) null)
-    (enFlag "bluez5-native-headset" (optBluez != null) null)
-    (enFlag "udev" (optUdev != null) null)
-    (enFlag "hal-compat" false null)
-    (enFlag "ipv6" true null)
-    (enFlag "openssl" (optOpenssl != null) null)
-    (wtFlag "fftw" (optFftw != null) null)
-    (wtFlag "speex" (optSpeexdsp != null) null)
-    (wtFlag "soxr" (optSoxr != null) null)
-    (enFlag "xen" false null)
-    (enFlag "gcov" false null)
-    (enFlag "systemd-daemon" (optSystemd != null) null)
-    (enFlag "systemd-login" (optSystemd != null) null)
-    (enFlag "systemd-journal" (optSystemd != null) null)
-    (enFlag "manpages" true null)
-    (enFlag "webrtc-aec" hasWebrtc null)
-    (enFlag "adrian-aec" true null)
-    (wtFlag "system-user" true "pulse")
-    (wtFlag "system-group" true "pulse")
-    (wtFlag "access-group" true "audio")
-    (wtFlag "systemduserunitdir" true "\${out}/lib/systemd/user")
-    (wtFlag "bash-completion-dir" true
-      "\${out}/share/bash-completions/completions")
+    "--with-database=tdb"
+    "--disable-esound"
+    "--disable-oss-output"
+    "--enable-oss-wrapper" # Does not use OSS
+    "--disable-solaris"
+    "--disable-waveout" # Windows Only
+    "--enable-glib2"
+    "--enable-asyncns"
+    "--disable-tcpwrap"
+    "--enable-dbus"
+    "--disable-bluez4"
+    "--disable-hal-compat"
+    "--enable-ipv6"
+    "--with-fftw"
+    "--with-speex"
+    "--disable-xen"
+    "--disable-gcov"
+    "--enable-adrian-aec"
+    "--with-system-user=pulse"
+    "--with-system-group=pulse"
+    "--with-access-group=audio"
+    "--with-systemduserunitdir=\${out}/lib/systemd/user"
+    "--with-bash-completion-dir=\${out}/share/bash-completions/completions"
+  ] ++ optionals (libOnly) [
+    "--disable-x11"
+    "--disable-coreaudio-output"
+    "--disable-alsa"
+    "--disable-gtk3"
+    "--disable-gconf"
+    "--disable-avahi"
+    "--disable-jack"
+    "--disable-lirc"
+    "--disable-bluez5"
+    "--disable-bluez5-ofono-headset"
+    "--disable-bluez5-native-headset"
+    "--disable-udev"
+    "--disable-openssl"
+    "--without-soxr"
+    "--disable-manpages"
+    "--disable-webrtc-aec"
+    "--disable-systemd-daemon"
+    "--disable-systemd-login"
+    "--disable-systemd-journal"
+  ] ++ optionals (!libOnly) [
+    "--enable-x11"
+    "--enable-coreaudio-output"
+    "--enable-alsa"
+    "--enable-gtk3"
+    "--enable-gconf"
+    "--enable-avahi"
+    "--enable-jack"
+    "--enable-lirc"
+    "--enable-bluez5"
+    "--enable-bluez5-ofono-headset"
+    "--enable-bluez5-native-headset"
+    "--enable-udev"
+    "--enable-openssl"
+    "--with-soxr"
+    "--enable-manpages"
+    "--enable-webrtc-aec"
+    "--enable-systemd-daemon"
+    "--enable-systemd-login"
+    "--enable-systemd-journal"
   ];
 
   installFlags = [
@@ -279,8 +227,6 @@ stdenv.mkDerivation rec {
 
   postInstall = optionalString libOnly ''
     rm -rf $out/{bin,share,etc,lib/{pulse-*,systemd}}
-    sed -i $out/lib/pulseaudio/libpulsecore-${version}.la \
-      -e 's|-lltdl|-L${libtool}/lib -lltdl|'
   '';
 
   meta = with stdenv.lib; {

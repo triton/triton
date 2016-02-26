@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, autoreconfHook, pkgconfig, fftw }:
+{ stdenv, fetchurl, autoreconfHook, pkgconfig, fftw_single }:
 
 stdenv.mkDerivation rec {
   name = "speexdsp-1.2rc3";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   postPatch = "sed '3i#include <stdint.h>' -i ./include/speex/speexdsp_config_types.h.in";
 
   nativeBuildInputs = [ autoreconfHook pkgconfig ];
-  buildInputs = [ fftw ];
+  buildInputs = [ fftw_single ];
 
   configureFlags = [
     "--with-fft=gpl-fftw3"
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     hompage = http://www.speex.org/;
     description = "an Open Source/Free Software patent-free audio compression format designed for speech";
     license = licenses.bsd3;
-    platforms = platforms.unix;
+    platforms = platforms.all;
     maintainers = with maintainers; [ wkennington ];
   };
 }

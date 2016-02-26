@@ -4,7 +4,7 @@
 , fetchurl
 , libxslt
 , xmlto
-, w3m-batch
+, w3m
 
 , coreutils
 , file
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     docbook_xml_dtd_412
     docbook_xsl
     xmlto
-    w3m-batch
+    w3m
   ];
 
   postInstall = ''

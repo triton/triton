@@ -26,6 +26,6 @@ stdenv.mkDerivation rec {
     homepage    = http://www.gnome.org/projects/libgsf;
     license     = licenses.lgpl2Plus;
     maintainers = with maintainers; [ lovek323 ];
-    platforms   = stdenv.lib.platforms.unix;
+    platforms   = stdenv.lib.platforms.all;
   };
 }

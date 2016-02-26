@@ -9,7 +9,7 @@
 with stdenv.lib;
 
 with (import ./update.nix {
-  inherit (stdenv) system;
+  inherit (stdenv) targetSystem hostSystem;
 }).getChannel channel;
 
 let

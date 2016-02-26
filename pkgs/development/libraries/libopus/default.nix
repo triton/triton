@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     description = "Open, royalty-free, highly versatile audio codec";
     license = stdenv.lib.licenses.bsd3;
     homepage = http://www.opus-codec.org/;
-    platforms = platforms.unix;
+    platforms = platforms.all;
     maintainers = with maintainers; [ wkennington ];
   };
 }

@@ -8,7 +8,7 @@
 , which
 
 # default dependencies
-, alsaLib
+, alsa-lib
 , atk
 , bzip2
 , cairo
@@ -43,8 +43,8 @@
 , snappy
 , speechd
 , speex
-, udev
-, utillinux
+, systemd_lib
+, util-linux_lib
 , xdg-utils
 , xorg
 , yasm
@@ -70,8 +70,6 @@
 buildFun:
 
 with {
-  inherit (stdenv)
-    isx86_64;
   inherit (stdenv.lib)
     attrValues
     concatStringsSep
@@ -83,8 +81,7 @@ with {
 };
 
 assert
-  !isx86_64
-  && (enablePepperFlash || enableWideVine) ->
+  stdenv.lib.platforms.x86_64-linux != [ stdenv.targetSystem ] && (enablePepperFlash || enableWideVine) ->
     throw "chrome binary plugins are only available on x86_64";
 
 let
@@ -137,7 +134,7 @@ let
       pythonPackages.jinja2
       which
       # Inputs
-      alsaLib
+      alsa-lib
       atk
       bzip2
       cairo
@@ -172,8 +169,8 @@ let
       snappy
       speechd
       speex
-      udev
-      utillinux
+      systemd_lib
+      util-linux_lib
       xdg-utils
       yasm
       xorg.libXcomposite
@@ -205,7 +202,7 @@ let
       }' chrome/utility/media_galleries/image_metadata_extractor.cc
 
       sed -i device/udev_linux/udev?_loader.cc \
-        -e '/lib_loader.*Load/s!"\(libudev\.so\)!"${udev}/lib/\1!'
+        -e '/lib_loader.*Load/s!"\(libudev\.so\)!"${systemd_lib}/lib/\1!'
 
       sed -i gpu/config/gpu_info_collector_linux.cc \
         -e '/libpci_loader.*Load/s!"\(libpci\.so\)!"${pciutils}/lib/\1!'

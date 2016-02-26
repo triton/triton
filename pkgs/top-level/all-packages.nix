@@ -654,15 +654,15 @@ ffmpeg-full_HEAD = callPackage ../all-pkgs/ffmpeg-full {
 };
 ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
 
-fftw-double = callPackage ../all-pkgs/fftw {
+fftw_double = callPackage ../all-pkgs/fftw {
   precision = "double";
 };
 
-fftw-single = callPackageAlias "fftw-double" {
+fftw_single = callPackageAlias "fftw_double" {
   precision = "single";
 };
 
-fftw-long-double = callPackageAlias "fftw-double" {
+fftw_long-double = callPackageAlias "fftw_double" {
   precision = "long-double";
 };
 
@@ -854,9 +854,9 @@ gstreamermm = callPackage ../all-pkgs/gstreamermm { };
 gtk-doc = callPackage ../all-pkgs/gtk-doc { };
 
 gtk_2 = callPackage ../all-pkgs/gtk+/2.x.nix { };
-gtk2 = gtk_2;
+gtk2 = callPackageAlias "gtk_2" { };
 gtk_3 = callPackage ../all-pkgs/gtk+/3.x.nix { };
-gtk3 = gtk_3;
+gtk3 = callPackageAlias "gtk_3" { };
 
 gtkhtml = callPackage ../all-pkgs/gtkhtml { };
 
@@ -1263,9 +1263,7 @@ potrace = callPackage ../all-pkgs/potrace {};
 
 psmisc = callPackage ../all-pkgs/psmisc { };
 
-pulseaudio_full = callPackage ../all-pkgs/pulseaudio {
-  fftw = fftwFloat;
-};
+pulseaudio_full = callPackage ../all-pkgs/pulseaudio { };
 
 pulseaudio_lib = pulseaudio_full.override {
   prefix = "lib";
@@ -7491,7 +7489,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  postgis = callPackage ../development/libraries/postgis { };
 #
-  protobuf = protobuf2_6;
+  protobuf = callPackageAlias "protobuf2_6" { };
   protobuf3_0 = lowPrio (callPackage ../development/libraries/protobuf/3.0.nix { });
   protobuf2_6 = callPackage ../development/libraries/protobuf/2.6.nix { };
 #  protobuf2_5 = callPackage ../development/libraries/protobuf/2.5.nix { };
@@ -7764,13 +7762,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  speech_tools = callPackage ../development/libraries/speech-tools {};
 #
-  speex = callPackage ../development/libraries/speex {
-    fftw = fftwFloat;
-  };
+  speex = callPackage ../development/libraries/speex { };
 
-  speexdsp = callPackage ../development/libraries/speexdsp {
-    fftw = fftwFloat;
-  };
+  speexdsp = callPackage ../development/libraries/speexdsp { };
 #
 #  sphinxbase = callPackage ../development/libraries/sphinxbase { };
 #
@@ -10360,7 +10354,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  gnuradio = callPackage ../applications/misc/gnuradio {
 #    inherit (pythonPackages) lxml numpy scipy matplotlib pyopengl;
-#    fftw = fftwFloat;
 #  };
 #
 #  gnuradio-with-packages = callPackage ../applications/misc/gnuradio/wrapper.nix {

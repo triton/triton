@@ -38,7 +38,9 @@ in stdenv.mkDerivation rec {
     "NSS_ENABLE_WERROR=0"
     "SOURCE_PREFIX=\$(out)"
     "NSS_USE_SYSTEM_SQLITE=1"
-  ] ++ stdenv.lib.optional stdenv.is64bit "USE_64=1";
+  ] ++ stdenv.lib.optionals (stdenv.lib.elem stdenv.targetSystem stdenv.lib.platforms.bit64) [
+    "USE_64=1"
+  ];
 
   NIX_CFLAGS_COMPILE = "-Wno-error";
 

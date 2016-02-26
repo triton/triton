@@ -1,5 +1,10 @@
+{ targetSystem ? builtins.currentSystem
+, hostSystem ? builtins.currentSystem
+}:
+
 let
-  inherit (import ../../../../. { }) lib writeText stdenv;
+  inherit (import ../../../../. { inherit targetSystem hostSystem; })
+    lib writeText stdenv;
 
   sources = if builtins.pathExists ./sources.nix
             then import ./sources.nix

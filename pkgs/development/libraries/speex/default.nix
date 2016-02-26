@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, autoreconfHook, pkgconfig, fftw, speexdsp }:
+{ stdenv, fetchurl, autoreconfHook, pkgconfig, fftw_single, speexdsp }:
 
 stdenv.mkDerivation rec {
   name = "speex-1.2rc2";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   '';
   
   nativeBuildInputs = [ autoreconfHook pkgconfig ];
-  buildInputs = [ fftw speexdsp ];
+  buildInputs = [ fftw_single speexdsp ];
 
   # TODO: Remove this will help with immediate backward compatability
   propagatedBuildInputs = [ speexdsp ];
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     hompage = http://www.speex.org/;
     description = "an Open Source/Free Software patent-free audio compression format designed for speech";
     license = licenses.bsd3;
-    platforms = platforms.unix;
+    platforms = platforms.all;
     maintainers = with maintainers; [ wkennington ];
   };
 }

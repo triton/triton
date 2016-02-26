@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     homepage = http://code.google.com/p/snappy/;
     license = licenses.bsd3;
     description = "Compression/decompression library for very high speeds";
-    platforms = platforms.unix;
+    platforms = platforms.all;
     maintainers = with maintainers; [ wkennington ];
   };
 }

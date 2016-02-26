@@ -42,5 +42,6 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       i686-linux
       ++ x86_64-linux;
+    priority = 20;  # This should have a higher priority than everything
   };
 }

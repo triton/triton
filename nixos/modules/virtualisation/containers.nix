@@ -10,7 +10,7 @@ let
     isExecutable = true;
     src = ./nixos-container.pl;
     perl = "${pkgs.perl}/bin/perl -I${pkgs.perlPackages.FileSlurp}/lib/perl5/site_perl";
-    su = "${pkgs.shadow.su}/bin/su";
+    su = "${pkgs.shadow}/bin/su";
     inherit (pkgs) util-linux_full;
 
     postInstall = ''

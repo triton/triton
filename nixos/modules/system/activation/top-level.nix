@@ -106,7 +106,7 @@ let
       allowSubstitutes = false;
       buildCommand = systemBuilder;
 
-      inherit (pkgs) utillinux coreutils;
+      inherit (pkgs) util-linux_full coreutils;
       systemd = config.systemd.package;
 
       inherit children;

@@ -14,7 +14,6 @@ let
       pkgs.bash
       pkgs.bzip2
       pkgs.coreutils
-      pkgs.cpio
       pkgs.curl
       pkgs.diffutils
       pkgs.findutils
@@ -27,19 +26,11 @@ let
       pkgs.gzip
       pkgs.xz
       pkgs.less
-      pkgs.libcap
-      pkgs.nano
       pkgs.ncurses
-      pkgs.netcat
-      config.programs.ssh.package
-      pkgs.perl
       pkgs.procps
-      pkgs.rsync
-      pkgs.strace
-      pkgs.su
+      pkgs.shadow
       pkgs.time
-      pkgs.texinfo
-      pkgs.utillinux
+      pkgs.util-linux_full
     ];
 
 in
@@ -99,58 +90,16 @@ in
 
     environment.systemPackages = requiredPackages;
 
-    environment.pathsToLink =
-      [ "/bin"
-        "/etc/xdg"
-        "/info"
-        "/lib" # FIXME: remove and update debug-info.nix
-        "/sbin"
-        "/share/applications"
-        "/share/desktop-directories"
-        "/share/doc"
-        "/share/emacs"
-        "/share/icons"
-        "/share/info"
-        "/share/menus"
-        "/share/mime"
-        "/share/nano"
-        "/share/org"
-        "/share/terminfo"
-        "/share/themes"
-        "/share/vim-plugins"
-      ];
+    environment.pathsToLink = [
+      "/bin"
+      "/lib"
+    ];
 
     system.path = pkgs.buildEnv {
       name = "system-path";
       paths = config.environment.systemPackages;
       inherit (config.environment) pathsToLink outputsToLink;
       ignoreCollisions = true;
-      # !!! Hacky, should modularise.
-      postBuild =
-        ''
-          if [ -x $out/bin/update-mime-database -a -w $out/share/mime ]; then
-              XDG_DATA_DIRS=$out/share $out/bin/update-mime-database -V $out/share/mime > /dev/null
-          fi
-
-          if [ -x $out/bin/gtk-update-icon-cache -a -f $out/share/icons/hicolor/index.theme ]; then
-              $out/bin/gtk-update-icon-cache $out/share/icons/hicolor
-          fi
-
-          if [ -x $out/bin/glib-compile-schemas -a -w $out/share/glib-2.0/schemas ]; then
-              $out/bin/glib-compile-schemas $out/share/glib-2.0/schemas
-          fi
-
-          if [ -x $out/bin/update-desktop-database -a -w $out/share/applications ]; then
-              $out/bin/update-desktop-database $out/share/applications
-          fi
-
-          if [ -x $out/bin/install-info -a -w $out/share/info ]; then
-            shopt -s nullglob
-            for i in $out/share/info/*.info $out/share/info/*.info.gz; do
-                $out/bin/install-info $i $out/share/info/dir
-            done
-          fi
-        '';
     };
 
   };

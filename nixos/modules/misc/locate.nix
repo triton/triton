@@ -71,7 +71,7 @@ in {
 
     systemd.services.update-locatedb =
       { description = "Update Locate Database";
-        path  = [ pkgs.su ];
+        path  = [ pkgs.shadow ];
         script =
           ''
             mkdir -m 0755 -p $(dirname ${toString cfg.output})

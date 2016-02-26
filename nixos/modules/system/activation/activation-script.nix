@@ -153,9 +153,9 @@ in
 
     system.activationScripts.tmpfs =
       ''
-        ${pkgs.utillinux}/bin/mount -o "remount,size=${config.boot.devSize}" none /dev
-        ${pkgs.utillinux}/bin/mount -o "remount,size=${config.boot.devShmSize}" none /dev/shm
-        ${pkgs.utillinux}/bin/mount -o "remount,size=${config.boot.runSize}" none /run
+        ${pkgs.util-linux_full}/bin/mount -o "remount,size=${config.boot.devSize}" none /dev
+        ${pkgs.util-linux_full}/bin/mount -o "remount,size=${config.boot.devShmSize}" none /dev/shm
+        ${pkgs.util-linux_full}/bin/mount -o "remount,size=${config.boot.runSize}" none /run
       '';
 
   };

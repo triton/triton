@@ -305,7 +305,7 @@ let
           ${optionalString cfg.oathAuth
               "session optional ${pkgs.oathToolkit}/lib/security/pam_oath.so window=5 usersfile=/etc/users.oath"}
           ${optionalString cfg.startSession
-              "session optional ${pkgs.systemd}/lib/security/pam_systemd.so"}
+              "session optional ${config.systemd.package}/lib/security/pam_systemd.so"}
           ${optionalString cfg.forwardXAuth
               "session optional pam_xauth.so xauthpath=${pkgs.xorg.xauth}/bin/xauth systemuser=99"}
           ${optionalString (cfg.limits != [])

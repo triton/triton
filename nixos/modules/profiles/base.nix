@@ -12,17 +12,13 @@
     pkgs.efivar
     pkgs.gptfdisk
     pkgs.ddrescue
-    pkgs.ccrypt
+    pkgs.openssl
     pkgs.cryptsetup # needed for dm-crypt volumes
-
-    # Some networking tools.
-    pkgs.fuse
-    pkgs.sshfsFuse
 
     # Hardware-related tools.
     pkgs.sdparm
     pkgs.hdparm
-    pkgs.dmraid
+    pkgs.mdadm
     pkgs.smartmontools # for diagnosing hard disks
     pkgs.pciutils
     pkgs.usbutils
@@ -31,17 +27,11 @@
     pkgs.ntfsprogs # for resizing NTFS partitions
     pkgs.dosfstools
     pkgs.xfsprogs
-    pkgs.jfsutils
     pkgs.f2fs-tools
-
-    # Some compression/archiver tools.
-    pkgs.unzip
-    pkgs.zip
-    pkgs.dar # disk archiver
   ];
 
   # Include support for various filesystems.
-  boot.supportedFilesystems = [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "zfs" "ntfs" "cifs" ];
+  boot.supportedFilesystems = [ "btrfs" "vfat" "f2fs" "xfs" "zfs" "ntfs" ];
 
   # Configure host id for ZFS to work
   networking.hostId = lib.mkDefault "8425e349";

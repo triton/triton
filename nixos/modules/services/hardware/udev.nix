@@ -60,8 +60,8 @@ let
         substituteInPlace $i \
           --replace \"/sbin/modprobe \"${config.system.sbin.modprobe}/sbin/modprobe \
           --replace \"/sbin/mdadm \"${pkgs.mdadm}/sbin/mdadm \
-          --replace \"/sbin/blkid \"${pkgs.utillinux}/sbin/blkid \
-          --replace \"/bin/mount \"${pkgs.utillinux}/bin/mount \
+          --replace \"/sbin/blkid \"${pkgs.util-linux_full}/sbin/blkid \
+          --replace \"/bin/mount \"${pkgs.util-linux_full}/bin/mount \
           --replace /usr/bin/readlink ${pkgs.coreutils}/bin/readlink \
           --replace /usr/bin/basename ${pkgs.coreutils}/bin/basename
       done
@@ -72,7 +72,7 @@ let
       run_progs=$(grep -v '^[[:space:]]*#' $out/* | grep 'RUN+="[^/$]' |
         sed -e 's/.*RUN+="\([^ "]*\)[ "].*/\1/' | uniq)
       for i in $import_progs $run_progs; do
-        if [[ ! -x ${pkgs.udev}/lib/udev/$i && ! $i =~ socket:.* ]]; then
+        if [[ ! -x ${config.systemd.package}/lib/udev/$i && ! $i =~ socket:.* ]]; then
           echo "FAIL"
           echo "$i is called in udev rules but not installed by udev"
           exit 1
@@ -282,7 +282,7 @@ in
 
     services.udev.packages = [ extraUdevRules extraHwdbFile ];
 
-    services.udev.path = [ pkgs.coreutils pkgs.gnused pkgs.gnugrep pkgs.utillinux udev ];
+    services.udev.path = [ pkgs.coreutils pkgs.gnused pkgs.gnugrep pkgs.util-linux_full udev ];
 
     environment.etc =
       [ { source = udevRules;

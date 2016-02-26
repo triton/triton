@@ -106,12 +106,13 @@ let
       mcopy -bpsvm -i "$out" ./* ::
     ''; # */
 
-  targetArch = if pkgs.stdenv.isi686 then
-    "ia32"
-  else if pkgs.stdenv.isx86_64 then
-    "x64"
-  else
-    throw "Unsupported architecture";
+  targetArch =
+    if elem config.nixpkgs.targetSystem platforms.i686 then
+      "ia32"
+    else if elem config.nixpkgs.targetSystem platforms.x86_64 then
+      "x64"
+    else
+      throw "Unsupported architecture";
 
 in
 
@@ -297,7 +298,7 @@ in
 
     # Create the squashfs image that contains the Nix store.
     system.build.squashfsStore = import ../../../lib/make-squashfs.nix {
-      inherit (pkgs) stdenv squashfsTools perl pathsFromGraph;
+      inherit (pkgs) stdenv squashfs-tools perl pathsFromGraph;
       storeContents = config.isoImage.storeContents;
     };
 

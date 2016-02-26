@@ -1,4 +1,4 @@
-{ stdenv, squashfsTools, perl, pathsFromGraph
+{ stdenv, squashfs-tools, perl, pathsFromGraph
 
 , # The root directory of the squashfs filesystem is filled with the
   # closures of the Nix store paths listed here.
@@ -8,7 +8,7 @@
 stdenv.mkDerivation {
   name = "squashfs.img";
 
-  buildInputs = [perl squashfsTools];
+  buildInputs = [perl squashfs-tools];
 
   # For obtaining the closure of `storeContents'.
   exportReferencesGraph =

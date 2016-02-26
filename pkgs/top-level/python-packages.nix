@@ -505,7 +505,7 @@ in {
       homepage    = "https://pypi.python.org/pypi/python-gnupg";
       license     = licenses.bsd3;
       maintainers = with maintainers; [ copumpkin ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
   };
 
@@ -3067,7 +3067,7 @@ in {
       homepage    = http://nedbatchelder.com/code/cog;
       license     = licenses.mit;
       maintainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
   };
 
@@ -3910,7 +3910,7 @@ in {
 
     meta = {
       maintainers = with maintainers; [ iElectric lovek323 madjar ];
-      platforms = platforms.unix;
+      platforms = platforms.all;
     };
   };
 
@@ -5131,7 +5131,7 @@ in {
       homepage    = http://eyed3.nicfit.net/;
       license     = licenses.gpl2;
       maintainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
 
       longDescription = ''
         eyeD3 is a Python module and command line program for processing ID3
@@ -5189,7 +5189,7 @@ in {
       homepage    = http://pypi.python.org/pypi/Faker;
       license     = licenses.mit;
       maintainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
   };
 
@@ -5204,7 +5204,7 @@ in {
       homepage    = https://pypi.python.org/pypi/fake-factory;
       license     = licenses.mit;
       maintainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
   };
 
@@ -5583,7 +5583,7 @@ in {
       homepage    = https://code.google.com/p/googlecl/;
       license     = licenses.asl20;
       maintainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
 
     propagatedBuildInputs = with self; [ gdata ];
@@ -5717,7 +5717,7 @@ in {
       homepage = http://mg.pov.lt/gtimelog/;
       license = licenses.gpl2Plus;
       maintainers = with maintainers; [ ocharles ];
-      platforms = platforms.unix;
+      platforms = platforms.all;
     };
   };
 
@@ -6497,7 +6497,7 @@ in {
       description = "A Python-based build/distribution/deployment scripting tool";
       homepage    = http://github.com/paver/paver;
       matinainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
   };
 
@@ -6612,7 +6612,7 @@ in {
       homepage = https://github.com/vikstrous/pirate-get;
       license = licenses.gpl1;
       maintainers = with maintainers; [ rnhmjoj ];
-      platforms = platforms.unix;
+      platforms = platforms.all;
     };
   };
 
@@ -7106,7 +7106,7 @@ in {
       homepage = https://github.com/rnhmjoj/hyp;
       license = with licenses; [gpl3Plus mit];
       maintainers = with maintainers; [ rnhmjoj ];
-      platforms = platforms.unix;
+      platforms = platforms.all;
     };
   };
 
@@ -8951,7 +8951,7 @@ in {
       homepage    = http://pypi.python.org/pypi/fs;
       license     = licenses.bsd3;
       maintainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
   };
 
@@ -9000,7 +9000,7 @@ in {
       '';
       homepage = http://github.com/terencehonles/fusepy;
       license = licenses.isc;
-      platforms = platforms.unix;
+      platforms = platforms.all;
       maintainers = with maintainers; [ nckx ];
     };
   };
@@ -9121,7 +9121,7 @@ in {
       '';
       homepage = https://github.com/dsoprea/GDriveFS;
       license = licenses.gpl2;
-      platforms = platforms.unix;
+      platforms = platforms.all;
       maintainers = with maintainers; [ nckx ];
     };
   };
@@ -9176,7 +9176,7 @@ in {
       description = "Coroutine-based networking library";
       homepage = http://www.gevent.org/;
       license = licenses.mit;
-      platforms = platforms.unix;
+      platforms = platforms.all;
       maintainers = with maintainers; [ bjornfor ];
     };
   };
@@ -9378,7 +9378,7 @@ in {
       homepage    = https://pypi.python.org/pypi/goobook;
       license     = licenses.gpl3;
       maintainers = with maintainers; [ lovek323 hbunke ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
 
     propagatedBuildInputs = with self; [ oauth2client gdata simplejson httplib2 keyring six rsa ];
@@ -9398,7 +9398,7 @@ in {
       description = "The core Python library for accessing Google APIs";
       homepage = "https://code.google.com/p/google-api-python-client/";
       license = licenses.asl20;
-      platforms = platforms.unix;
+      platforms = platforms.all;
     };
   };
 
@@ -9571,7 +9571,7 @@ in {
       homepage    = https://pypi.python.org/pypi/hcs_utils/1.3;
       license     = licenses.isc;
       maintainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
   };
 
@@ -10433,7 +10433,7 @@ in {
       homepage    = "https://pypi.python.org/pypi/keyring";
       license     = licenses.psfl;
       maintainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
   };
 
@@ -10687,7 +10687,7 @@ in {
       description = "Python bindings for the low-level FUSE API";
       homepage = https://code.google.com/p/python-llfuse/;
       license = licenses.lgpl2Plus;
-      platforms = platforms.unix;
+      platforms = platforms.all;
       maintainers = with maintainers; [ bjornfor ];
     };
   };
@@ -11473,7 +11473,7 @@ in {
       description = "A pure-Python library for multiprecision floating arithmetic";
       license     = licenses.bsd3;
       maintainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
 
     # error: invalid command 'test'
@@ -14261,7 +14261,7 @@ in {
       description = "Python Data Analysis Library";
       license = licenses.bsd3;
       maintainers = with maintainers; [ raskin fridh ];
-      platforms = platforms.unix;
+      platforms = platforms.all;
     };
   };
 
@@ -15350,7 +15350,7 @@ in {
       description = "ASN.1 tools for Python";
       homepage = http://pyasn1.sourceforge.net/;
       license = "mBSD";
-      platforms = platforms.unix;  # arbitrary choice
+      platforms = platforms.all;  # arbitrary choice
     };
   });
 
@@ -15370,7 +15370,7 @@ in {
       description = "A collection of ASN.1-based protocols modules";
       homepage = https://pypi.python.org/pypi/pyasn1-modules;
       license = licenses.bsd3;
-      platforms = platforms.unix;  # same as pyasn1
+      platforms = platforms.all;  # same as pyasn1
     };
   };
 
@@ -16498,7 +16498,7 @@ in {
       description = "Scientific Graphics and GUI Library for Python";
       homepage = http://www.pyqtgraph.org/;
       license = licenses.mit;
-      platforms = platforms.unix;
+      platforms = platforms.all;
       maintainers = with maintainers; [ koral ];
     };
   };
@@ -16547,7 +16547,7 @@ in {
       description = "Snowball stemming algorithms, for information retrieval";
       homepage = http://snowball.tartarus.org/;
       license = licenses.mit;
-      platforms = platforms.unix;
+      platforms = platforms.all;
     };
   });
 
@@ -16564,7 +16564,7 @@ in {
       description = "Distributed object middleware for Python (IPC/RPC)";
       homepage = http://pythonhosted.org/Pyro/;
       license = licenses.mit;
-      platforms = platforms.unix;
+      platforms = platforms.all;
       maintainers = with maintainers; [ bjornfor ];
     };
   });
@@ -16667,7 +16667,7 @@ in {
       homepage    = https://pypi.python.org/pypi/python-keyczar;
       license     = licenses.asl20;
       maintainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
 
     buildInputs = with self; [ pyasn1 pycrypto ];
@@ -18842,7 +18842,7 @@ in {
       description = "16 stemmer algorithms (15 + Poerter English stemmer) generated from Snowball algorithms";
       homepage = http://sigal.saimon.org/en/latest/index.html;
       license = licenses.bsd3;
-      platforms = platforms.unix;
+      platforms = platforms.all;
     };
   };
 
@@ -19097,7 +19097,7 @@ in {
       homepage    = http://www.sympy.org/;
       license     = licenses.bsd3;
       maintainers = with maintainers; [ lovek323 ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
   };
 
@@ -19484,7 +19484,7 @@ in {
       description = "A tool that makes it easy to create intelligent and beautiful documentation for Python projects";
       homepage = http://sphinx.pocoo.org/;
       license = licenses.bsd3;
-      platforms = platforms.unix;
+      platforms = platforms.all;
     };
   });
 
@@ -19517,7 +19517,7 @@ in {
       description = "ReadTheDocs.org theme for Sphinx, 2013 version";
       homepage = https://github.com/snide/sphinx_rtd_theme/;
       license = licenses.bsd3;
-      platforms = platforms.unix;
+      platforms = platforms.all;
     };
   });
 
@@ -23091,7 +23091,7 @@ in {
       description = "A Python interface to Spotify’s online music streaming service";
       license     = licenses.unfree;
       maintainers = with maintainers; [ lovek323 rickynils ];
-      platforms   = platforms.unix;
+      platforms   = platforms.all;
     };
   };
 

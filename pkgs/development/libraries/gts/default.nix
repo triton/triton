@@ -1,4 +1,8 @@
-{ fetchurl, stdenv, glib, pkgconfig, gettext }:
+{ stdenv
+, fetchurl
+
+, glib
+}:
 
 
 stdenv.mkDerivation rec {
@@ -10,19 +14,19 @@ stdenv.mkDerivation rec {
     sha256 = "07mqx09jxh8cv9753y2d2jsv7wp8vjmrd7zcfpbrddz3wc9kx705";
   };
 
-  buildInputs = [ glib pkgconfig ] ++ stdenv.lib.optional (stdenv.system == "x86_64-darwin") gettext;
+  buildInputs = [
+    glib
+  ];
 
-  meta = {
-    homepage = http://gts.sourceforge.net/;
-    license = stdenv.lib.licenses.lgpl2Plus;
+  meta = with stdenv.lib; {
     description = "GNU Triangulated Surface Library";
-
-    longDescription = ''
-      Library intended to provide a set of useful functions to deal with
-      3D surfaces meshed with interconnected triangles.
-    '';
-
-    maintainers = [ stdenv.lib.maintainers.viric ];
-    platforms = stdenv.lib.platforms.linux ++ stdenv.lib.platforms.darwin;
+    homepage = http://gts.sourceforge.net/;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

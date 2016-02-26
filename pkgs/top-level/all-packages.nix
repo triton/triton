@@ -1413,6 +1413,8 @@ talloc = callPackage ../all-pkgs/talloc { };
 
 tcp-wrappers = callPackage ../all-pkgs/tcp-wrappers { };
 
+tdb = callPackage ../all-pkgs/tdb { };
+
 tevent = callPackage ../all-pkgs/tevent { };
 
 texinfo = callPackage ../all-pkgs/texinfo { };
@@ -7805,8 +7807,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  tcltls = callPackage ../development/libraries/tcltls { };
 #
 #  ntdb = callPackage ../development/libraries/ntdb { };
-#
-  tdb = callPackage ../development/libraries/tdb { };
 #
 #  tecla = callPackage ../development/libraries/tecla { };
 #

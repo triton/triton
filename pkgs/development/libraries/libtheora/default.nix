@@ -22,6 +22,6 @@ stdenv.mkDerivation rec {
     description = "Library for Theora, a free and open video compression format";
     license = licenses.bsd3;
     maintainers = with maintainers; [ spwhitt wkennington ];
-    platforms = platforms.unix;
+    platforms = platforms.all;
   };
 }

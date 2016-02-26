@@ -6,15 +6,9 @@
 , gobject-introspection
 , libxslt
 , glib
-, systemd
 , libusb
 , vala
 }:
-
-with {
-  inherit (stdenv.lib)
-    enFlag;
-};
 
 stdenv.mkDerivation rec {
   name = "libgusb-0.2.8";
@@ -37,8 +31,8 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
+    "--enable-introspection"
+    "--enable-vala"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"

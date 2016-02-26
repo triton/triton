@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     description = "Programmable completion for the bash shell";
     license = "GPL";
 
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
     maintainers = [ stdenv.lib.maintainers.simons ];
   };
 }

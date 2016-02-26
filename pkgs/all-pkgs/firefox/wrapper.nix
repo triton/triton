@@ -10,7 +10,7 @@
 , MPlayerPlugin
 , gecko_mediaplayer
 , xorg
-, libpulseaudio
+, pulseaudio_lib
 , libcanberra
 , ffmpeg
 , gstreamer
@@ -91,7 +91,7 @@ let
     libXxf86vm
     libXext
     libXt
-    alsaLib
+    alsa-lib
     zlib
   ]) ++ optionals (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) [
     hal-flash

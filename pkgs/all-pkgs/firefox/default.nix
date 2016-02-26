@@ -3,7 +3,7 @@
 , makeWrapper
 , yasm
 
-, alsaLib
+, alsa-lib
 , bzip2
 #, cairo
 , dbus
@@ -22,12 +22,12 @@
 , jemalloc
 , libevent
 , libffi
-, libIDL
+, libidl
 , libjpeg
 , libnotify
 , libpng
 #, libproxy
-, libpulseaudio
+, pulseaudio_lib
 , libstartup_notification
 , libvpx
 , libwebp
@@ -37,8 +37,7 @@
 , pango
 , perl
 , pixman
-, pysqlite
-, python
+, pythonPackages
 , sqlite
 , unzip
 , xorg
@@ -93,7 +92,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    alsaLib
+    alsa-lib
     bzip2
     #cairo
     dbus
@@ -112,12 +111,12 @@ stdenv.mkDerivation rec {
     jemalloc
     libevent
     libffi
-    libIDL
+    libidl
     libjpeg
     libnotify
     libpng
     #libproxy
-    libpulseaudio
+    pulseaudio_lib
     libstartup_notification
     libvpx
     libwebp
@@ -127,8 +126,8 @@ stdenv.mkDerivation rec {
     pango
     perl
     pixman
-    pysqlite
-    python
+    pythonPackages.python
+    pythonPackages.pysqlite
     sqlite
     unzip
     xorg.libXi

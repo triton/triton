@@ -40,6 +40,11 @@ stdenv.mkDerivation rec {
     "--enable-threads"
   ];
 
+  # Since this is used in a lot of shared libraries we need fPIC
+  NIX_CFLAGS_COMPILE = [
+    "-fPIC"
+  ];
+
   meta = with stdenv.lib; {
     description = "Fastest Fourier Transform in the West library";
     homepage = http://www.fftw.org/;

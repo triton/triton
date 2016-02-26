@@ -1,4 +1,4 @@
-{stdenv, fetchurl, yacc}:
+{stdenv, fetchurl, bison}:
 
 let
   bindir = if stdenv.system == "i686-linux" then "bin.linuxx86"
@@ -13,7 +13,7 @@ stdenv.mkDerivation {
     sha256 = "04c6khd7gdkqkvx4h3nbz99lyz7waid4fd221hq5chcygyx1sj3i";
   };
 
-  buildInputs = [ yacc ];
+  buildInputs = [ bison ];
 
   installPhase = ''
     mkdir -p $out/bin

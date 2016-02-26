@@ -3,7 +3,7 @@
 , gettext
 , python
 
-, alsaLib
+, alsa-lib
 , cdparanoia
 , glib
 , gobject-introspection
@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    alsaLib
+    alsa-lib
     cdparanoia
     glib
     gobject-introspection
@@ -119,7 +119,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Basepack of plugins for gstreamer";
     homepage = http://gstreamer.freedesktop.org;
-    license = licenses.lgpl2plus;
+    license = licenses.lgpl2Plus;
     maintainers = with maintainers; [
       codyopel
     ];

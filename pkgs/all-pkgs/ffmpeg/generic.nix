@@ -4,7 +4,7 @@
 , texinfo
 , yasm
 
-, alsaLib
+, alsa-lib
 , bzip2
 , fontconfig
 , freetype
@@ -17,12 +17,12 @@
 , libvdpau
 , libvorbis
 , libvpx
-, lzma
-, libpulseaudio
+, pulseaudio_lib
 , SDL
 , soxr
 , x264
 , xvidcore
+, xz
 , zlib
 , openglSupport ? false, mesa ? null
 # Build options
@@ -175,16 +175,16 @@ stdenv.mkDerivation rec {
     libtheora
     libvdpau
     libvorbis
-    lzma
+    xz
     SDL
     soxr
     x264
     xvidcore
     zlib
     libvpx
-    libpulseaudio
+    pulseaudio_lib
     libva
-    alsaLib
+    alsa-lib
   ] ++ optional openglSupport mesa;
 
   /* Cross-compilation is untested, consider this an outline, more work

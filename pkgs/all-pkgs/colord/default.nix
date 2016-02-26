@@ -15,7 +15,7 @@
 , libusb
 , polkit
 , sqlite
-, systemd
+, systemd_lib
 , vala
 }:
 
@@ -41,18 +41,17 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--disable-strict"
     "--enable-rpath"
-    (enFlag "gusb" (libgusb != null) null)
-    (enFlag "udev" (systemd != null) null)
+    "--enable-libgusb"
+    "--enable-udev"
     "--disable-bash-completion"
-    (enFlag "polkit" (polkit != null) null)
+    "--enable-polkit"
     "--enable-libcolordcompat"
-    (enFlag "systemd-login" (systemd != null) null)
+    "--enable-systemd-login"
     "--disable-examples"
     "--enable-argyllcms-sensor"
-    (enFlag "argyllcms-sensor" (argyllcms != null) null)
     "--disable-reverse"
     "--disable-sane"
-    (enFlag "vala" (vala != null) null)
+    "--enable-vala"
     "--disable-session-example"
     "--enable-print-profiles"
     "--disable-installed-tests"
@@ -79,7 +78,7 @@ stdenv.mkDerivation rec {
     libusb
     polkit
     sqlite
-    systemd
+    systemd_lib
     vala
   ];
 

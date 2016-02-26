@@ -86,7 +86,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Multimedia framework";
     homepage = http://gstreamer.freedesktop.org;
-    license = licenses.lgpl2plus;
+    license = licenses.lgpl2Plus;
     maintainers = with maintainers; [
       codyopel
     ];

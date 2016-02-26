@@ -1,4 +1,4 @@
-{stdenv, fetchurl, pkgconfig, gettext, perl, perlXMLParser, intltool
+{stdenv, fetchurl, pkgconfig, gettext, perlPackages, intltool
 , libxml2, glib}:
 
 let version = "1.5"; in
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    pkgconfig gettext intltool perl perlXMLParser libxml2 glib
+    pkgconfig gettext intltool perlPackages.perl perlPackages.XMLParser libxml2 glib
   ];
 
   meta = {

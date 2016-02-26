@@ -609,7 +609,7 @@ curl_full = callPackageAlias "curl" {
   suffix = "full";
 };
 
-cyrus-sasl = callPackage ../development/libraries/cyrus-sasl { };
+cyrus-sasl = callPackage ../all-pkgs/cyrus-sasl { };
 
 dash = callPackage ../all-pkgs/dash { };
 
@@ -648,7 +648,7 @@ ffmpeg_1 = callPackage ../all-pkgs/ffmpeg/1.x.nix { };
 ffmpeg_2_2 = callPackage ../all-pkgs/ffmpeg/2.2.nix { };
 ffmpeg_2 = callPackage ../all-pkgs/ffmpeg/2.x.nix { };
 ffmpeg_3 = callPackage ../all-pkgs/ffmpeg/3.x.nix { };
-ffmpeg = ffmpeg_3;
+ffmpeg = callPackageAlias "ffmpeg_3" { };
 ffmpeg-full_HEAD = callPackage ../all-pkgs/ffmpeg-full {
   useHEAD = true;
 };
@@ -672,21 +672,15 @@ filezilla = callPackage ../all-pkgs/filezilla { };
 
 findutils = callPackage ../all-pkgs/findutils { };
 
-firefox = firefox_wrapper firefox-unwrapped { };
-firefox-esr = firefox_wrapper firefox-esr-unwrapped { };
-firefox-unwrapped = callPackage ../all-pkgs/firefox {
-  libIDL = libidl;
-  inherit (pythonPackages) pysqlite;
-  libpng = libpng_apng;
-};
+firefox = pkgs.firefox_wrapper pkgs.firefox-unwrapped { };
+firefox-esr = pkgs.firefox_wrapper pkgs.firefox-esr-unwrapped { };
+firefox-unwrapped = callPackage ../all-pkgs/firefox { };
 firefox-esr-unwrapped = callPackage ../all-pkgs/firefox {
   channel = "esr";
 };
 firefox_wrapper = callPackage ../all-pkgs/firefox/wrapper.nix { };
 
-firefox-bin = callPackage ../applications/networking/browsers/firefox-bin {
-  inherit (pkgs.gnome) libgnome libgnomeui;
-};
+firefox-bin = callPackage ../applications/networking/browsers/firefox-bin { };
 
 fish = callPackage ../all-pkgs/fish { };
 
@@ -726,7 +720,7 @@ glib_tested = glib.override {
 glibmm = callPackage ../all-pkgs/glibmm { };
 
 glib-networking = callPackage ../all-pkgs/glib-networking { };
-glib_networking = glib-networking; # Deprecated alias
+glib_networking = callPackageAlias "glib-networking" { }; # Deprecated alias
 
 gmp = callPackage ../all-pkgs/gmp { };
 
@@ -821,29 +815,29 @@ gst-libav = callPackage ../all-pkgs/gst-libav { };
 
 gst-plugins-bad_0 = callPackage ../all-pkgs/gst-plugins-bad/0.x.nix { };
 gst-plugins-bad_1 = callPackage ../all-pkgs/gst-plugins-bad/1.x.nix { };
-gst-plugins-bad = gst-plugins-bad_1;
+gst-plugins-bad = callPackageAlias "gst-plugins-bad_1" { };
 
 gst-plugins-base_0 = callPackage ../all-pkgs/gst-plugins-base/0.x.nix { };
 gst-plugins-base_1 = callPackage ../all-pkgs/gst-plugins-base/1.x.nix { };
-gst-plugins-base = gst-plugins-base_1;
+gst-plugins-base = callPackageAlias "gst-plugins-base_1" { };
 
 gst-plugins-good_0 = callPackage ../all-pkgs/gst-plugins-good/0.x.nix { };
 gst-plugins-good_1 = callPackage ../all-pkgs/gst-plugins-good/1.x.nix { };
-gst-plugins-good = gst-plugins-good_1;
+gst-plugins-good = callPackageAlias "gst-plugins-good_1" { };
 
 gst-plugins-ugly_0 = callPackage ../all-pkgs/gst-plugins-ugly/0.x.nix { };
 gst-plugins-ugly_1 = callPackage ../all-pkgs/gst-plugins-ugly/1.x.nix { };
-gst-plugins-ugly = gst-plugins-ugly_1;
+gst-plugins-ugly = callPackageAlias "gst-plugins-ugly_1" { };
 
 gst-python_0 = callPackage ../all-pkgs/gst-python/0.x.nix { };
 gst-python_1 = callPackage ../all-pkgs/gst-python/1.x.nix { };
-gst-python = gst-python_1;
+gst-python = callPackageAlias "gst-python_1" { };
 
 gst-validate = callPackage ../all-pkgs/gst-validate { };
 
 gstreamer_0 = callPackage ../all-pkgs/gstreamer/0.x.nix { };
 gstreamer_1 = callPackage ../all-pkgs/gstreamer/1.x.nix { };
-gstreamer = gstreamer_1;
+gstreamer = callPackageAlias "gstreamer_1" { };
 
 gstreamer-editing-services = callPackage ../all-pkgs/gstreamer-editing-services { };
 
@@ -1116,14 +1110,12 @@ mesa_noglu = callPackage ../all-pkgs/mesa {
   grsecEnabled = config.grsecurity or false;
 };
 mesa_drivers = mesa_noglu.drivers;
-mesaSupported = lib.elem system mesa_noglu.meta.platforms;
 mesa = pkgs.buildEnv {
   name = "mesa-${pkgs.mesa_noglu.version}";
   paths = with pkgs; [ mesa_noglu mesa_glu ];
 };
 
 mesos = callPackage ../all-pkgs/mesos {
-  sasl = cyrus_sasl;
   inherit (pythonPackages) python boto setuptools wrapPython;
   pythonProtobuf = pythonPackages.protobuf2_5;
   perf = linuxPackages.perf;
@@ -1265,7 +1257,7 @@ psmisc = callPackage ../all-pkgs/psmisc { };
 
 pulseaudio_full = callPackage ../all-pkgs/pulseaudio { };
 
-pulseaudio_lib = pulseaudio_full.override {
+pulseaudio_lib = callPackageAlias "pulseaudio_full" {
   prefix = "lib";
 };
 
@@ -3225,9 +3217,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    docbook-xsl = docbook_xsl;
 #  };
 #
-  mosh = callPackage ../tools/networking/mosh {
-    inherit (perlPackages) IOTty;
-  };
+  mosh = callPackage ../tools/networking/mosh { };
 #
 #  motuclient = python27Packages.motuclient;
 #
@@ -4431,10 +4421,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  weighttp = callPackage ../tools/networking/weighttp { };
 #
-  wget = callPackage ../tools/networking/wget {
-    inherit (perlPackages) LWP;
-    libpsl = null;
-  };
+  wget = callPackage ../tools/networking/wget { };
 #
 #  wicd = callPackage ../tools/networking/wicd { };
 #
@@ -6024,12 +6011,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   apr = callPackage ../development/libraries/apr { };
 
-  aprutil = callPackage ../development/libraries/apr-util {
-    bdbSupport = true;
-    db = if stdenv.isFreeBSD then db47 else db;
-    # XXX: only the db_185 interface was available through
-    #      apr with db58 on freebsd (nov 2015), for unknown reasons
-  };
+  aprutil = callPackage ../development/libraries/apr-util { };
 
 #  assimp = callPackage ../development/libraries/assimp { };
 #
@@ -6174,7 +6156,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   # Should we deprecate these? Currently there are many references.
   dbus_tools = pkgs.dbus.tools;
-  dbus_libs = pkgs.dbus.libs;
+  dbus_lib = pkgs.dbus.libs;
   dbus_daemon = pkgs.dbus.daemon;
 #
 #  dhex = callPackage ../applications/editors/dhex { };
@@ -6561,9 +6543,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 
   lcms2 = callPackage ../development/libraries/lcms2 { };
 
-  ldb = callPackage ../development/libraries/ldb {
-    python = python2;
-  };
+  ldb = callPackage ../development/libraries/ldb { };
 #
 #  lensfun = callPackage ../development/libraries/lensfun {};
 #
@@ -6604,7 +6584,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
   libassuan = callPackage ../development/libraries/libassuan { };
 #
-#  libasyncns = callPackage ../development/libraries/libasyncns { };
+  libasyncns = callPackage ../development/libraries/libasyncns { };
 #
   libatomic_ops = callPackage ../development/libraries/libatomic_ops {};
 #
@@ -7515,7 +7495,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  qoauth = callPackage ../development/libraries/qoauth { };
 #
 #  qt3 = callPackage ../development/libraries/qt-3 {
-#    openglSupport = mesaSupported;
 #    libpng = libpng12;
 #  };
 #
@@ -7666,16 +7645,11 @@ libtiff = callPackage ../development/libraries/libtiff { };
     inherit (vamp) vampSDK;
   };
 #
-#  sbc = callPackage ../development/libraries/sbc { };
+  sbc = callPackage ../development/libraries/sbc { };
 #
   schroedinger = callPackage ../development/libraries/schroedinger { };
 
-  SDL = callPackage ../development/libraries/SDL {
-    openglSupport = mesaSupported;
-    alsaSupport = stdenv.isLinux;
-    x11Support = true;
-    pulseaudioSupport = config.pulseaudio or true;
-  };
+  SDL = callPackage ../development/libraries/SDL { };
 #
 #  SDL_gfx = callPackage ../development/libraries/SDL_gfx { };
 #
@@ -7691,12 +7665,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  SDL_ttf = callPackage ../development/libraries/SDL_ttf { };
 #
-  SDL2 = callPackage ../development/libraries/SDL2 {
-    openglSupport = mesaSupported;
-    alsaSupport = stdenv.isLinux;
-    x11Support = true;
-    pulseaudioSupport = config.pulseaudio or true;
-  };
+  SDL2 = callPackage ../development/libraries/SDL2 { };
 #
 #  SDL2_image = callPackage ../development/libraries/SDL2_image { };
 #
@@ -7835,13 +7804,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  tcltls = callPackage ../development/libraries/tcltls { };
 #
-#  ntdb = callPackage ../development/libraries/ntdb {
-#    python = python2;
-#  };
+#  ntdb = callPackage ../development/libraries/ntdb { };
 #
-  tdb = callPackage ../development/libraries/tdb {
-    python = python2;
-  };
+  tdb = callPackage ../development/libraries/tdb { };
 #
 #  tecla = callPackage ../development/libraries/tecla { };
 #
@@ -7966,7 +7931,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  websocketpp = callPackage ../development/libraries/websocket++ { };
 #
-#  webrtc-audio-processing = callPackage ../development/libraries/webrtc-audio-processing { };
+  webrtc-audio-processing = callPackage ../development/libraries/webrtc-audio-processing { };
 #
 #  wildmidi = callPackage ../development/libraries/wildmidi { };
 #
@@ -8191,11 +8156,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
     overrides = (config.perlPackageOverrides or (p: {})) pkgs;
   });
 
-  perlXMLParser = perlPackages.XMLParser;
-
 #  ack = perlPackages.ack;
-#
-  perlArchiveCpio = perlPackages.ArchiveCpio;
 #
 #  perlcritic = perlPackages.PerlCritic;
 #
@@ -8540,9 +8501,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   mariadb = callPackage ../servers/sql/mariadb { };
 
-  mongodb = callPackage ../servers/nosql/mongodb {
-    sasl = cyrus_sasl;
-  };
+  mongodb = callPackage ../servers/nosql/mongodb { };
 #
 #  riak = callPackage ../servers/nosql/riak/1.3.1.nix { };
 #  riak2 = callPackage ../servers/nosql/riak/2.1.1.nix { };
@@ -8660,7 +8619,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  samba3 = callPackage ../servers/samba/3.x.nix { };
 #
   samba4 = callPackage ../servers/samba/4.x.nix {
-    pythonPackages = python2Packages;
     kerberos = null;  # Bundle kerberos because samba uses internal, non-stable functions
   };
 
@@ -9650,9 +9608,7 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  crimson = callPackage ../data/fonts/crimson {};
 #
-  dejavu_fonts = callPackage ../data/fonts/dejavu-fonts {
-    inherit (perlPackages) FontTTF;
-  };
+  dejavu_fonts = callPackage ../data/fonts/dejavu-fonts { };
 #
 #  dina-font = callPackage ../data/fonts/dina { };
 #
@@ -10469,13 +10425,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 
   inherit (pkgs.gitAndTools) git gitFull gitSVN git-cola svn2git git-radar transcrypt;
 #
-#  gitRepo = callPackage ../applications/version-management/git-repo {
-#    python = python27;
-#  };
+#  gitRepo = callPackage ../applications/version-management/git-repo { };
 #
-#  git-review = callPackage ../applications/version-management/git-review {
-#    python = python27;
-#  };
+#  git-review = callPackage ../applications/version-management/git-review { };
 #
 #  gitolite = callPackage ../applications/version-management/gitolite { };
 #
@@ -11626,19 +11578,10 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  src = callPackage ../applications/version-management/src/default.nix { };
 #
-  inherit (callPackages ../applications/version-management/subversion/default.nix {
-      bdbSupport = true;
-      httpServer = false;
-      httpSupport = true;
-      pythonBindings = false;
-      perlBindings = false;
-      javahlBindings = false;
-      saslSupport = false;
-      sasl = cyrus_sasl;
-    })
+  inherit (callPackages ../applications/version-management/subversion/default.nix { })
     subversion18 subversion19;
 
-  subversion = pkgs.subversion19;
+  subversion = callPackageAlias "subversion19" { };
 #
 #  subversionClient = appendToName "client" (pkgs.subversion.override {
 #    bdbSupport = false;
@@ -12670,11 +12613,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  # using the new configuration style proposal which is unstable
 #  jack1 = callPackage ../misc/jackaudio/jack1.nix { };
 #
-  jack2_full = callPackage ../misc/jackaudio {
-    libopus = libopus.override { withCustomModes = true; };  # WTF
-  };
+  jack2_full = callPackage ../misc/jackaudio { };
 
-  jack2_lib = jack2_full.override {
+  jack2_lib = callPackageAlias "jack2_full" {
     prefix = "lib";
   };
 #  libjack2-git = callPackage ../misc/jackaudio/git.nix { };

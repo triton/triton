@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     homepage = http://0pointer.de/lennart/projects/libasyncns/;
     description = "a C library for Linux/Unix for executing name service queries asynchronously";
     license = licenses.lgpl21;
-    platforms = platforms.unix;
+    platforms = platforms.all;
     maintainers = with maintainers; [ wkennington ];
   };
 }

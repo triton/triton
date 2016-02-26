@@ -2,7 +2,7 @@
 , fetchurl
 , groff
 
-, cyrus_sasl
+, cyrus-sasl
 , db
 , openssl
 }:
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    cyrus_sasl
+    cyrus-sasl
     db
     openssl
   ];

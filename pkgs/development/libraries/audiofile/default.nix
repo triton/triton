@@ -1,9 +1,11 @@
-{ stdenv, fetchurl, alsaLib }:
+{ stdenv, fetchurl, alsa-lib }:
 
 stdenv.mkDerivation rec {
   name = "audiofile-0.3.6";
 
-  nativeBuildInputs = stdenv.lib.optional stdenv.isLinux alsaLib;
+  buildInputs = [
+    alsa-lib
+  ];
 
   src = fetchurl {
     url = "http://audiofile.68k.org/${name}.tar.gz";
@@ -17,6 +19,6 @@ stdenv.mkDerivation rec {
     homepage    = http://www.68k.org/~michael/audiofile/;
     license     = licenses.lgpl21Plus;
     maintainers = with maintainers; [ lovek323 ];
-    platforms   = platforms.unix;
+    platforms   = platforms.all;
   };
 }

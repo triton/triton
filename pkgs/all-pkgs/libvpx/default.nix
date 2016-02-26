@@ -42,11 +42,11 @@
 }:
 
 let
-  inherit (stdenv) isi686 isx86_64 is64bit;
-  inherit (stdenv.lib) enableFeature optional optionals;
+  inherit (stdenv.lib)
+    enableFeature
+    optional
+    optionals;
 in
-
-assert isi686 || isx86_64; # Requires ARM with floating point support
 
 assert vp8DecoderSupport || vp8EncoderSupport || vp9DecoderSupport || vp9EncoderSupport;
 assert internalStatsSupport && (vp9DecoderSupport || vp9EncoderSupport) -> postprocSupport;
@@ -89,7 +89,7 @@ stdenv.mkDerivation rec {
     (enableFeature gcovSupport "gcov")
     # Required to build shared libraries
     (enableFeature true "pic")
-    (enableFeature (isi686 || isx86_64) "use-x86inc")
+    (enableFeature true "use-x86inc")  # Fixme, we are always on x86 for now
     (enableFeature optimizationsSupport "optimizations")
     (enableFeature runtimeCpuDetectSupport "runtime-cpu-detect")
     (enableFeature thumbSupport "thumb")
@@ -126,7 +126,7 @@ stdenv.mkDerivation rec {
     (enableFeature temporalDenoisingSupport "temporal-denoising")
     (enableFeature (temporalDenoisingSupport && (vp9DecoderSupport || vp9EncoderSupport)) "vp9-temporal-denoising")
     (enableFeature coefficientRangeCheckingSupport "coefficient-range-checking")
-    (enableFeature (vp9HighbitdepthSupport && is64bit) "vp9-highbitdepth")
+    (enableFeature (vp9HighbitdepthSupport && stdenv.lib.elem stdenv.targetSystem stdenv.lib.platforms.bit64) "vp9-highbitdepth")
     (enableFeature (experimentalSpatialSvcSupport ||
                     experimentalFpMbStatsSupport ||
                     experimentalEmulateHardwareSupport) "experimental")

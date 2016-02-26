@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, alsaLib, bash, help2man, pkgconfig, xlibsWrapper, python3, libxslt }:
+{ stdenv, fetchurl, alsa-lib, bash, help2man, xlibsWrapper, python3, libxslt }:
 
 stdenv.mkDerivation rec {
   name = "lirc-0.9.3a";
@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   preBuild = "patchShebangs .";
 
-  buildInputs = [ alsaLib help2man pkgconfig xlibsWrapper python3 libxslt ];
+  buildInputs = [ alsa-lib help2man xlibsWrapper python3 libxslt ];
 
   configureFlags = [
     "--with-driver=devinput"

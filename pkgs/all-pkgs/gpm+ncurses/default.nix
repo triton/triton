@@ -54,7 +54,7 @@ stdenv.mkDerivation {
     make "SHELL=${stdenv.shell}" -j $NIX_BUILD_CORES
     make "SHELL=${stdenv.shell}" -j $NIX_BUILD_CORES install
     ln -sv libgpm.so.2 $out/lib/libgpm.so
-    for file in $(find $out -not -type d); do
+    for file in $(find $out -type l -or -type f); do
       GPM_FILES["$file"]=1
     done
     popd
@@ -178,7 +178,6 @@ stdenv.mkDerivation {
       cfg=$(basename $out/bin/ncurses*-config)
 
       # symlink the full suffixed include directory
-      rm -f $out/include/ncurses$suffix
       ln -svf . $out/include/ncurses$suffix
 
       for newsuffix in $suffixes ""; do
@@ -186,7 +185,6 @@ stdenv.mkDerivation {
         ln -svf $cfg $out/bin/ncurses$newsuffix-config
 
         # Allow for end users who #include <ncurses?w/*.h>
-        rm -f $out/include/ncurses$newsuffix
         ln -svf . $out/include/ncurses$newsuffix
 
         for lib in $libs; do
@@ -208,7 +206,7 @@ stdenv.mkDerivation {
       sed -i 's,${stdenv.shell},/bin/sh,g' $out/bin/*-config
     }
     ncursesBuild
-    for file in $(find $out -type f); do
+    for file in $(find $out -type l -or -type f); do
       if [ "''${GPM_FILES["$file"]}" != "1" ]; then
         NCURSES_FILES["$file"]=1
       fi

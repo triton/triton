@@ -9,6 +9,7 @@
 { stdenv
 , fetchurl
 , fetchTritonPatch
+, linux-headers
 , writeText
 , allLocales ? true
 , locales ? [ "en_US.UTF-8/UTF-8" ]
@@ -17,7 +18,7 @@
 import ./common.nix {
   name = "glibc-locales";
 
-  inherit fetchurl fetchTritonPatch stdenv;
+  inherit fetchurl fetchTritonPatch stdenv linux-headers;
   installLocales = true;
 
   # Awful hack: `localedef' doesn't allow the path to `locale-archive'

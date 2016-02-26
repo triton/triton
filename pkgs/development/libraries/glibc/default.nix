@@ -3,15 +3,12 @@
 , fetchTritonPatch
 , linux-headers
 , installLocales ? false
-, profilingLibraries ? false
-, gccCross ? null
 }:
 
 import ./common.nix {
   name = "glibc";
 
-  inherit fetchurl fetchTritonPatch stdenv linux-headers installLocales
-    profilingLibraries gccCross;
+  inherit fetchurl fetchTritonPatch stdenv linux-headers installLocales;
 
   preConfigure = stdenv.lib.optionalString (stdenv.targetSystem != stdenv.hostSystem) ''
     sed -i s/-lgcc_eh//g "../$sourceRoot/Makeconfig"

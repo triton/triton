@@ -6343,10 +6343,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  glfw2 = callPackage ../development/libraries/glfw/2.x.nix { };
 #  glfw3 = callPackage ../development/libraries/glfw/3.x.nix { };
 #
-  glibc = callPackage ../development/libraries/glibc {
-    installLocales = config.glibc.locales or false;
-    gccCross = null;
-  };
+  glibc = callPackage ../development/libraries/glibc { };
 
   # Only supported on Linux
   glibcLocales = callPackage ../development/libraries/glibc/locales.nix { };

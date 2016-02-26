@@ -7,8 +7,6 @@
 , stdenv
 , linux-headers
 , meta
-, gccCross
-, profilingLibraries
 , preConfigure ? ""
 , ...
 } @ args:
@@ -110,7 +108,7 @@ stdenv.mkDerivation ({
     "--localedir=/var/run/current-system/sw/lib/locale"
     "libc_cv_ssp=no"
     "--with-headers=${linux-headers}/include"
-    (if profilingLibraries then "--enable-profile" else "--disable-profile")
+    "--enable-profile"
     "--enable-kernel=2.6.32"
     "--with-fp"
     "--with-tls"
@@ -119,8 +117,6 @@ stdenv.mkDerivation ({
   installFlags = [
     "sysconfdir=$(out)/etc"
   ];
-
-  buildInputs = [ gccCross ];
 
   # Needed to install share/zoneinfo/zone.tab.  Set to impure /bin/sh to
   # prevent a retained dependency on the bootstrap tools in the stdenv-linux
@@ -136,9 +132,7 @@ stdenv.mkDerivation ({
     + " -Wno-error=strict-prototypes";
 }
 
-# Remove the `gccCross' attribute so that the *native* glibc store path
-# doesn't depend on whether `gccCross' is null or not.
-// (removeAttrs args [ "gccCross" "fetchurl" "fetchTritonPatch" ]) //
+// (removeAttrs args [ "fetchurl" "fetchTritonPatch" ]) //
 
 {
   name = name + "-${version}";

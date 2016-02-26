@@ -1,24 +1,19 @@
-{ stdenv, fetchFromGitHub, pkgconfig, python, makeWrapper
+{ stdenv, fetchFromGitHub, python, makeWrapper
 , bash, libsamplerate, libsndfile, readline, expat
 
 # Optional Dependencies
-, dbus ? null, pythonDBus ? null, libffado ? null, alsaLib ? null
-, libopus ? null
+, dbus, pythonPackages, ffado_lib, alsa-lib
+, libopus
 
 # Extra options
 , prefix ? ""
 }:
 
-with stdenv;
-with stdenv.lib;
 let
   libOnly = prefix == "lib";
-
-  optDbus = shouldUsePkg dbus;
-  optPythonDBus = if libOnly then null else shouldUsePkg pythonDBus;
-  optLibffado = if libOnly then null else shouldUsePkg libffado;
-  optAlsaLib = if libOnly then null else shouldUsePkg alsaLib;
-  optLibopus = shouldUsePkg libopus;
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
 in
 stdenv.mkDerivation rec {
   name = "${prefix}jack2-${version}";
@@ -31,13 +26,17 @@ stdenv.mkDerivation rec {
     sha256 = "1a2213l7x6sgqg2hq3yhnpvvvqyskhsmx8j3z0jgjsqwz9xa3wbr";
   };
 
-  nativeBuildInputs = [ pkgconfig python makeWrapper ];
+  nativeBuildInputs = [ python makeWrapper ];
   buildInputs = [
     python
 
     libsamplerate libsndfile readline expat
 
-    optDbus optPythonDBus optLibffado optAlsaLib optLibopus
+    dbus libopus
+  ] ++ optionals (!libOnly) [
+    alsa-lib
+    ffado_lib
+    pythonPackages.dbus
   ];
 
   prePatch = ''
@@ -48,11 +47,11 @@ stdenv.mkDerivation rec {
 
   configurePhase = ''
     python waf configure --prefix=$out \
-      ${optionalString (optDbus != null) "--dbus"} \
+      --dbus \
       --classic \
-      ${optionalString (optLibffado != null) "--firewire"} \
-      ${optionalString (optAlsaLib != null) "--alsa"} \
-      --autostart=${if (optDbus != null) then "dbus" else "classic"} \
+      ${optionalString (!libOnly) "--firewire"} \
+      ${optionalString (!libOnly) "--alsa"} \
+      --autostart=dbus \
   '';
 
   buildPhase = ''
@@ -68,11 +67,11 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/jack_control --set PYTHONPATH $PYTHONPATH
   '');
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "JACK audio connection kit, version 2 with jackdbus";
     homepage = "http://jackaudio.org";
     license = licenses.gpl2Plus;
-    platforms = platforms.unix;
+    platforms = platforms.all;
     maintainers = with maintainers; [ goibhniu wkennington ];
   };
 }

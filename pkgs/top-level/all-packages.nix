@@ -803,11 +803,6 @@ granite = callPackage ../all-pkgs/granite { };
 
 graphviz = callPackage ../all-pkgs/graphviz { };
 
-graphviz-nox = graphviz.override {
-  xorg = null;
-  devil = devil-nox;
-};
-
 grilo = callPackage ../all-pkgs/grilo { };
 
 grilo-plugins = callPackage ../all-pkgs/grilo-plugins { };
@@ -1023,9 +1018,7 @@ libgxps = callPackage ../all-pkgs/libgxps { };
 
 libidl = callPackage ../all-pkgs/libidl { };
 
-libinput = callPackage ../all-pkgs/libinput {
-  graphviz = graphviz-nox;
-};
+libinput = callPackage ../all-pkgs/libinput { };
 
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };
 libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix { };
@@ -1457,11 +1450,8 @@ vte = callPackage ../all-pkgs/vte { };
 
 w3m = callPackage ../all-pkgs/w3m { };
 
-wayland = callPackage ../all-pkgs/wayland {
-  graphviz = graphviz-nox;
-};
+wayland = callPackage ../all-pkgs/wayland { };
 wayland-docs = callPackage ../all-pkgs/wayland {
-  graphviz = graphviz-nox;
   enableDocumentation = true;
 };
 

@@ -57,11 +57,10 @@ stdenv.mkDerivation rec {
     gd
     gts
     devil
+    pango
     flex
-  ] ++ optionals (xorg != null) [
     xorg.xlibsWrapper
     xorg.libXrender
-    pango
     xorg.libXaw
   ];
 
@@ -72,14 +71,14 @@ stdenv.mkDerivation rec {
     "--with-jpeglibdir=${libjpeg}/lib"
     "--with-expatincludedir=${expat}/include"
     "--with-expatlibdir=${expat}/lib"
-  ] ++ optional (xorg == null) "--without-x";
+  ];
 
   preBuild = ''
     sed -e 's@am__append_5 *=.*@am_append_5 =@' -i lib/gvc/Makefile
   '';
 
   # "command -v" is POSIX, "which" is not
-  postInstall = optionalString (xorg != null) ''
+  postInstall = ''
     sed -i 's|`which lefty`|"'$out'/bin/lefty"|' $out/bin/dotty
     sed -i 's|which|command -v|' $out/bin/vimdot
   '';

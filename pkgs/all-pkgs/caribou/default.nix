@@ -1,6 +1,6 @@
 { fetchurl, stdenv, clutter, gobject-introspection, gdk-pixbuf
 , dbus, pythonPackages, libxml2, autoconf, libgee, glib, gtk3, pango
-, libxklavier, xorg, gtk2, intltool, libxslt, at_spi2_core, automake }:
+, libxklavier, xorg, gtk2, intltool, libxslt, at-spi2-core, automake }:
 
 stdenv.mkDerivation rec {
   name = "caribou-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs =
-    [ glib gtk3 clutter at_spi2_core dbus
+    [ glib gtk3 clutter at-spi2-core dbus
     pythonPackages.python automake gdk-pixbuf pango
       pythonPackages.pygobject3 libxml2 xorg.libXtst
       gtk2 intltool libxslt autoconf gobject-introspection ];

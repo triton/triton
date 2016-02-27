@@ -507,10 +507,8 @@ atkmm = callPackage ../all-pkgs/atkmm { };
 attr = callPackage ../all-pkgs/attr { };
 
 at-spi2-atk = callPackage ../all-pkgs/at-spi2-atk { };
-at_spi2_atk = at-spi2-atk; # Deprecated alias
 
 at-spi2-core = callPackage ../all-pkgs/at-spi2-core { };
-at_spi2_core = at-spi2-core; # Deprecated alias
 
 atom = callPackage ../all-pkgs/atom { };
 
@@ -2638,13 +2636,13 @@ zstd = callPackage ../all-pkgs/zstd { };
   gnupg1compat = callPackage ../tools/security/gnupg/1compat.nix { };
 
   # use config.packageOverrides if you prefer original gnupg1
-  gnupg1 = gnupg1compat;
+  gnupg1 = callPackageAlias "gnupg1compat" { };
 
   gnupg20 = callPackage ../tools/security/gnupg/20.nix { };
 
   gnupg21 = callPackage ../tools/security/gnupg/21.nix { };
 
-  gnupg = gnupg21;
+  gnupg = callPackageAlias "gnupg21" { };
 #
 #  gnuplot = callPackage ../tools/graphics/gnuplot { qt = qt4; };
 #
@@ -5393,8 +5391,8 @@ zstd = callPackage ../all-pkgs/zstd { };
     ruby_2_3_0;
 
   # Ruby aliases
-  ruby = ruby_2_3;
-  ruby_2_3 = ruby_2_3_0;
+  ruby = callPackageAlias "ruby_2_3" { };
+  ruby_2_3 = callPackageAlias "ruby_2_3_0" { };
 #
 #  rubygems = hiPrio (callPackage ../development/interpreters/ruby/rubygems.nix {});
 #

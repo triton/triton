@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
     description = "GObject library for the freedesktop.org Secret Service API";
     homepage = https://wiki.gnome.org/Projects/Libsecret;
     license = with licenses; [
-      apache20
+      #apache20
       lgpl21Plus
     ];
     maintainers = with maintainers; [

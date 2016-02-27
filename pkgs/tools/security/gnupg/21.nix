@@ -1,4 +1,4 @@
-{ fetchurl, stdenv, pkgconfig, libgcrypt, libassuan, libksba, npth
+{ fetchurl, stdenv, libgcrypt, libassuan, libksba, npth
 , autoreconfHook, gettext, texinfo, pcsclite
 
 # Each of the dependencies below are optional.
@@ -8,7 +8,14 @@
 , readline ? null, zlib ? null, bzip2 ? null
 }:
 
-with stdenv.lib;
+with {
+  inherit (stdenv)
+    targetSystem;
+  inherit (stdenv.lib)
+    elem
+    optional
+    platforms;
+};
 
 assert x11Support -> pinentry != null;
 
@@ -20,14 +27,17 @@ stdenv.mkDerivation rec {
     sha256 = "06mn2viiwsyq991arh5i5fhr9jyxq2bi0jkdj7ndfisxihngpc5p";
   };
 
-  postPatch = stdenv.lib.optionalString stdenv.isLinux ''
-    sed -i 's,"libpcsclite\.so[^"]*","${pcsclite}/lib/libpcsclite.so",g' scd/scdaemon.c
-  ''; #" fix Emacs syntax highlighting :-(
+  postPatch =
+    optional (elem targetSystem platforms.linux)
+    /* fix Emacs syntax highlighting */ ''
+      sed -i scd/scdaemon.c \
+        -e 's,"libpcsclite\.so[^"]*","${pcsclite}/lib/libpcsclite.so",g'
+    '';
 
   postConfigure = "substituteAllInPlace tools/gpgkey2ssh.c";
 
   buildInputs = [
-    pkgconfig libgcrypt libassuan libksba npth
+    libgcrypt libassuan libksba npth
     autoreconfHook gettext texinfo
     readline libusb gnutls adns openldap zlib bzip2
   ];

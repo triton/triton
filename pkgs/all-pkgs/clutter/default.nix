@@ -19,7 +19,7 @@
 , libxkbcommon
 , mesa
 , pango
-, udev
+, systemd_lib
 , xorg
 , wayland
 }:
@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
     libxkbcommon
     mesa
     pango
-    udev
+    systemd_lib
     wayland
     xorg.inputproto
     xorg.libX11

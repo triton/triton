@@ -9,7 +9,7 @@
 , glib
 , gobject-introspection
 , polkit
-, systemd
+, systemd_lib
 , coreutils
 }:
 
@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     polkit
-    systemd
+    systemd_lib
   ];
 
   patches = [
@@ -59,8 +59,8 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
     "--disable-more-warnings"
     "--disable-docbook-docs"
-    (enFlag "systemd" (systemd != null) null)
-    (wtFlag "systemdsystemunitdir" (systemd != null) "$(out)/etc/systemd/system")
+    (enFlag "systemd" (systemd_lib != null) null)
+    (wtFlag "systemdsystemunitdir" (systemd_lib != null) "$(out)/etc/systemd/system")
     "--localstatedir=/var"
   ];
 

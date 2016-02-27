@@ -44,7 +44,6 @@
 , libcroco
 , libical
 , libgweather
-, libpulseaudio
 , librsvg
 , libsecret
 , libsoup
@@ -59,9 +58,10 @@
 , p11_kit
 , pango
 , polkit
+, pulseaudio_lib
 , spidermonkey_24
 , sqlite
-, systemd
+, systemd_lib
 , telepathy_glib
 , telepathy_logger
 , unzip
@@ -138,7 +138,6 @@ stdenv.mkDerivation rec {
     libcroco
     #libgnome-keyring
     #libical
-    libpulseaudio
     libsecret
     libsoup
     libstartup_notification
@@ -152,9 +151,10 @@ stdenv.mkDerivation rec {
     #p11_kit
     pango
     polkit
+    pulseaudio_lib
     python3
     #spidermonkey_24
-    systemd
+    systemd_lib
     telepathy_glib
     telepathy_logger
     #tzdata

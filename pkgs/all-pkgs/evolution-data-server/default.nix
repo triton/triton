@@ -125,7 +125,7 @@ stdenv.mkDerivation rec {
     license = with licenses; [
       lgpl2
       lgpl3
-      bsdOrginal
+      bsd3
     ];
     maintainers = with maintainers; [
       codyopel

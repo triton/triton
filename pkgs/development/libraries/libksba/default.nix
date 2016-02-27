@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libgpgerror }:
+{ stdenv, fetchurl, libgpg-error }:
 
 stdenv.mkDerivation rec {
   name = "libksba-1.3.3";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "11kp3h9l3b8ikydkcdkwgx45r662zi30m26ra5llyhfh6kz5yzqc";
   };
 
-  propagatedBuildInputs = [ libgpgerror ];
+  propagatedBuildInputs = [ libgpg-error ];
 
   meta = with stdenv.lib; {
     homepage = http://www.gnupg.org;

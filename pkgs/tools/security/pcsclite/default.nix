@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, systemd_lib, dbus_libs, perl, python2 }:
+{ stdenv, fetchurl, systemd_lib, dbus, perl, python2 }:
 
 stdenv.mkDerivation rec {
   name = "pcsclite-1.8.14";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [ perl python2 ];
-  buildInputs = [ systemd_lib dbus_libs ];
+  buildInputs = [ systemd_lib dbus.libs ];
 
   meta = with stdenv.lib; {
     description = "Middleware to access a smart card using SCard API (PC/SC)";

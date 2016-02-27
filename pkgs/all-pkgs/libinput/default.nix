@@ -3,7 +3,7 @@
 
 , libevdev
 , mtdev
-, udev
+, systemd_lib
 
 , documentationSupport ? false
   , doxygen ? null
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libevdev
     mtdev
-    udev
+    systemd_lib
   ] ++ optionals eventGUISupport [
     cairo
     glib

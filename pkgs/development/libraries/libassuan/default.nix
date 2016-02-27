@@ -1,4 +1,4 @@
-{ fetchurl, stdenv, pth, libgpgerror }:
+{ fetchurl, stdenv, pth, libgpg-error }:
 
 stdenv.mkDerivation rec {
   name = "libassuan-2.4.2";
@@ -8,13 +8,13 @@ stdenv.mkDerivation rec {
     sha256 = "086bbcdnvs48qq5g4iac7dpk76j0q3jrp16mchdvyx0b720xq1mv";
   };
 
-  buildInputs = [ libgpgerror pth ];
+  buildInputs = [ libgpg-error pth ];
 
   doCheck = true;
 
   # Make sure includes are fixed for callers who don't use libassuan-config
   postInstall = ''
-    sed -i 's,#include <gpg-error.h>,#include "${libgpgerror}/include/gpg-error.h",g' $out/include/assuan.h
+    sed -i 's,#include <gpg-error.h>,#include "${libgpg-error}/include/gpg-error.h",g' $out/include/assuan.h
   '';
 
   meta = {

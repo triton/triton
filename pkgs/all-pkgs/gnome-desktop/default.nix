@@ -15,7 +15,6 @@
 , isocodes
 , itstool
 , libxml2
-, libxml2Python
 , pango
 , python
 , wayland
@@ -89,8 +88,8 @@ stdenv.mkDerivation rec {
     description = "Libraries for the gnome desktop that are not part of the UI";
     homepage = https://git.gnome.org/browse/gnome-desktop;
     license = with licenses; [
+      #fdl11
       gpl2Plus
-      fdl11
       lgpl2Plus
     ];
     maintainers = with maintainers; [

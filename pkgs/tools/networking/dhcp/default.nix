@@ -6,21 +6,19 @@
 }:
 
 with stdenv;
-let
-  optOpenldap = shouldUsePkg openldap;
-in
+
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "dhcp-${version}";
   version = "4.3.3-P1";
-  
+
   src = fetchurl {
     url = "http://ftp.isc.org/isc/dhcp/${version}/${name}.tar.gz";
     sha256 = "08crcsmg4dm2v533aq3883ik8mf4vvvd6r998r4vrgx1zxnqj7n1";
   };
 
   nativeBuildInputs = [ perl makeWrapper ];
-  buildInputs = [ optOpenldap ];
+  buildInputs = [ openldap ];
 
   preConfigure = ''
     sed -i "includes/dhcpd.h" \
@@ -43,8 +41,8 @@ stdenv.mkDerivation rec {
     (mkEnable false                 "secs-byteorder" null)
     (mkEnable false                 "log-pid"        null)
     (mkWith   false                 "libbind"        null)
-    (mkWith   (optOpenldap != null) "ldap"           null)
-    (mkWith   (optOpenldap != null) "ldapcrypto"     null)
+    (mkWith   (openldap != null) "ldap"           null)
+    (mkWith   (openldap != null) "ldapcrypto"     null)
   ];
 
   installFlags = [
@@ -74,7 +72,7 @@ stdenv.mkDerivation rec {
 
     homepage = http://www.isc.org/products/DHCP/;
     license = licenses.isc;
-    platforms = platforms.unix;
+    platforms = platforms.all;
     maintainers = with maintainers; [ wkennington ];
   };
 }

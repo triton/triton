@@ -3,7 +3,7 @@
 
 , file
 , ncurses
-, udev
+, systemd_lib
 , pixman
 , xorg
 }:
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
     xorg.randrproto
     xorg.xorgserver
     xorg.xproto
-    udev
+    systemd_lib
     xorg.libXinerama
     pixman
   ];

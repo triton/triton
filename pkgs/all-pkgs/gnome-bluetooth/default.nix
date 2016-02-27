@@ -15,7 +15,7 @@
 , libnotify
 , libxml2
 , pango
-, udev
+, systemd_lib
 }:
 
 with {
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
     libnotify
     libxml2
     pango
-    udev
+    systemd_lib
   ];
 
   postPatch =
@@ -91,7 +91,7 @@ stdenv.mkDerivation rec {
     description = "Bluetooth graphical utilities integrated with GNOME";
     homepage = https://wiki.gnome.org/Projects/GnomeBluetooth;
     license = with licenses; [
-      fdl11
+      #fdl11
       gpl2Plus
       lgpl21Plus
     ];

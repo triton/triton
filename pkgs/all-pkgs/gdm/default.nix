@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, glib, itstool, libxml2, xorg, dbus
-, intltool, accountsservice, systemd, gnome-session, gtk3
+, intltool, accountsservice, systemd_lib, gnome-session, gtk3
 , libcanberra, pam, libtool, gobjectIntrospection, dconf }:
 
 stdenv.mkDerivation rec {
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
                      "--with-systemdsystemunitdir=$(out)/etc/systemd/system" ];
 
   buildInputs = [ pkgconfig glib itstool libxml2 intltool
-                  accountsservice dconf systemd
+                  accountsservice dconf systemd_lib
                   gobjectIntrospection xorg.libX11 gtk3
                   xorg.libXrandr
                   libcanberra pam libtool xorg.libXi xorg.libXext ];

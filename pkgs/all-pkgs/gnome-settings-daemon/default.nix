@@ -29,7 +29,6 @@
 , libgudev
 , libgweather
 , libnotify
-, libpulseaudio
 , librsvg
 , libwacom
 , libxml2
@@ -37,7 +36,8 @@
 , nss
 , pango
 , polkit
-, udev
+, pulseaudio_lib
+, systemd_lib
 , upower
 , wayland
 , xf86_input_wacom
@@ -93,7 +93,6 @@ stdenv.mkDerivation rec {
     libgudev
     libgweather
     libnotify
-    libpulseaudio
     librsvg
     libwacom
     libxml2
@@ -101,7 +100,8 @@ stdenv.mkDerivation rec {
     nss
     pango
     polkit
-    udev
+    pulseaudio_lib
+    systemd_lib
     upower
     wayland
     xf86_input_wacom

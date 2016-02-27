@@ -6,7 +6,7 @@
 
 , avahi
 , bind
-, bluez5
+, bluez
 , dbus_glib
 , dhcp
 , dhcpcd
@@ -20,7 +20,6 @@
 , libndp
 , libnl
 , libsoup
-, libuuid
 , modemmanager
 , newt
 , nss
@@ -30,7 +29,8 @@
 , ppp
 , readline
 , substituteAll
-, udev
+, systemd_lib
+, util-linux_lib
 , vala
 , wirelesstools
 , xz
@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    bluez5
+    bluez
     dbus_glib
     dnsmasq
     gobject-introspection
@@ -68,14 +68,14 @@ stdenv.mkDerivation rec {
     libndp
     libnl
     libsoup
-    libuuid
     modemmanager
     newt
     nss
     polkit
     ppp
     readline
-    udev
+    systemd_lib
+    util-linux_lib
     vala
     wirelesstools
     xz

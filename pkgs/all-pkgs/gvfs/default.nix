@@ -19,7 +19,7 @@
 , libcdio
 , libgcrypt
 , libgdata
-, libgnome_keyring
+, libgnome-keyring
 , libgphoto2
 , libgudev
 , libmtp
@@ -28,8 +28,7 @@
 , libxml2
 , openssh
 , samba
-, systemd
-, udev
+, systemd_lib
 , udisks2
 }:
 
@@ -72,12 +71,11 @@ stdenv.mkDerivation rec {
     libxml2
     openssh
     samba
-    systemd
-    udev
+    systemd_lib
     udisks2
     #gconf
     gtk3
-    libgnome_keyring
+    libgnome-keyring
   ];
 
   configureFlags = [

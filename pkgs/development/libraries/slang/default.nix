@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     description = "A multi-platform programmer's library designed to allow a developer to create robust software";
     homepage = http://www.jedsoft.org/slang/;
     license = stdenv.lib.licenses.gpl2Plus;
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
     maintainers = with stdenv.lib.maintainers; [ fuuzetsu ];
   };
 }

@@ -14,8 +14,8 @@
 , isocodes
 , libnotify
 , libxkbcommon
-, pygobject
 , python3
+, python3Packages
 , vala
 , wayland
 , xorg
@@ -99,7 +99,7 @@ stdenv.mkDerivation rec {
     for f in "$out"/bin/* ; do
       wrapProgram "$f" \
         --prefix XDG_DATA_DIRS : "$out/share:$GSETTINGS_SCHEMAS_PATH" \
-        --prefix PYTHONPATH : "$(toPythonPath ${pygobject})" \
+        --prefix PYTHONPATH : "$(toPythonPath ${python3Packages.pygobject})" \
         --prefix LD_LIBRARY_PATH : "${gtk3}/lib:${atk}/lib:$out/lib" \
         --prefix GI_TYPELIB_PATH : "$GI_TYPELIB_PATH:$out/lib/girepository-1.0" \
         --prefix GIO_EXTRA_MODULES : "${dconf}/lib/gio/modules"

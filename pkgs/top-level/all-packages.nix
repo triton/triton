@@ -693,7 +693,6 @@ gconf = callPackage ../all-pkgs/gconf { };
 gcr = callPackage ../all-pkgs/gcr { };
 
 gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
-gdk_pixbuf = gdk-pixbuf; # Deprecated alias
 gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
 
 gdm = callPackage ../all-pkgs/gdm { };
@@ -4768,17 +4767,17 @@ zstd = callPackage ../all-pkgs/zstd { };
   openjdk8_jdk = openjdk8 // { outputs = [ "out" ]; };
   openjdk8_jre = openjdk8.jre // { outputs = [ "jre" ]; };
 
-  openjdk = openjdk8;
+  openjdk = callPackageAlias "openjdk8" { };
 #
 #  java7 = openjdk7;
 #  jdk7 = java7 // { outputs = [ "out" ]; };
 #  jre7 = java7.jre // { outputs = [ "jre" ]; };
 #
-  java8 = openjdk8;
+  java8 = callPackageAlias "openjdk8" { };
   jdk8 = java8 // { outputs = [ "out" ]; };
   jre8 = java8.jre // { outputs = [ "jre" ]; };
 #
-  java = java8;
+  java = callPackageAlias "java8" { };
   jdk = java // { outputs = [ "out" ]; };
   jre = java.jre // { outputs = [ "jre" ]; };
 #
@@ -5476,7 +5475,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  antlr3 = callPackage ../development/tools/parsing/antlr { };
 #
-  ant = apacheAnt;
+  ant = callPackageAlias "apacheAnt" { };
 
   apacheAnt = callPackage ../development/tools/build-managers/apache-ant { };
 #
@@ -6265,7 +6264,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  funambol = callPackage ../development/libraries/funambol { };
 #
-  fam = gamin;
+  fam = callPackageAlias "gamin" { };
 
   gamin = callPackage ../development/libraries/gamin { };
 #
@@ -6739,7 +6738,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libgig = callPackage ../development/libraries/libgig { };
 #
   libgnome-keyring = callPackage ../development/libraries/libgnome-keyring { };
-  libgnome_keyring = libgnome-keyring; # Deprecated alias
 #
 #  libgnurl = callPackage ../development/libraries/libgnurl { };
 #
@@ -8184,12 +8182,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  pygame = pythonPackages.pygame;
 #
-  pygobject = pythonPackages.pygobject;
-#
-  pygobject3 = pythonPackages.pygobject3;
-#
-  pygtk = pythonPackages.pygtk;
-#
 #  pygtksourceview = pythonPackages.pygtksourceview;
 #
 #  pyGtkGlade = pythonPackages.pyGtkGlade;
@@ -8620,9 +8612,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
     kerberos = null;  # Bundle kerberos because samba uses internal, non-stable functions
   };
 
-  samba = samba4;
-
-  smbclient = samba;
+  samba = callPackageAlias "samba4" { };
 
   # A lightweight Samba 3, useful for non-Linux-based OSes.
 #  samba3_light = lowPrio (samba3.override {
@@ -8667,7 +8657,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
     systemd = null;
   });
 
-  samba_light = samba4_light;
+  samba_light = callPackageAlias "samba4_light" { };
 #
 #  shairport-sync = callPackage ../servers/shairport-sync { };
 #
@@ -8741,7 +8731,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
     inherit (pkgs) fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
       libxslt expat libpng zlib perl mesa_drivers spice_protocol libunwind
       dbus util-linux_lib openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
-      autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman udev
+      autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman systemd_lib
       libdrm;
     mesa = pkgs.mesa_noglu;
   } // { inherit (pkgs) xlibsWrapper; } );

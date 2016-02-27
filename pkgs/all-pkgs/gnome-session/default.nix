@@ -14,7 +14,7 @@
 , json-glib
 , mesa_noglu
 , mutter
-, systemd
+, systemd_lib
 , upower
 , xorg
 }:
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
     json-glib
     mesa_noglu
     mutter # gschemas
-    systemd
+    systemd_lib
     upower
     xorg.libICE
     xorg.libSM
@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
     "--enable-deprecation-flags"
     "--enable-session-selector"
     "--disable-gconf"
-    (enFlag "systemd" (systemd != null) null)
+    (enFlag "systemd" (systemd_lib != null) null)
     "--disable-consolekit"
     "--disable-docbook-docs"
     "--disable-man"
@@ -94,7 +94,7 @@ stdenv.mkDerivation rec {
     description = "Gnome session manager";
     homepage = https://git.gnome.org/browse/gnome-session;
     license = with licenses; [
-      fdl11
+      #fdl11
       gpl2
       lgpl2
     ];

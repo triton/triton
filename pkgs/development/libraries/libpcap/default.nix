@@ -1,5 +1,14 @@
 { stdenv, fetchurl, flex, bison }:
 
+with {
+  inherit (stdenv)
+    targetSystem;
+  inherit (stdenv.lib)
+    elem
+    optionals
+    platforms;
+};
+
 stdenv.mkDerivation rec {
   name = "libpcap-1.7.4";
 
@@ -12,7 +21,7 @@ stdenv.mkDerivation rec {
 
   # We need to force the autodetection because detection doesn't
   # work in pure build enviroments.
-  configureFlags = stdenv.lib.optionals stdenv.isLinux [ "--with-pcap=linux" ] ;
+  configureFlags = optionals (elem targetSystem platforms.linux) [ "--with-pcap=linux" ] ;
 
   preInstall = ''mkdir -p $out/bin'';
 

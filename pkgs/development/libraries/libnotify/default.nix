@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, automake, autoconf, libtool
-, glib, gdk_pixbuf, gobjectIntrospection, autoreconfHook }:
+, glib, gdk-pixbuf, gobject-introspection, autoreconfHook }:
 
 stdenv.mkDerivation rec {
   ver_maj = "0.7";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildInputs = [ pkgconfig automake autoconf autoreconfHook
-                  libtool glib gdk_pixbuf gobjectIntrospection ];
+                  libtool glib gdk-pixbuf gobject-introspection ];
 
   meta = {
     homepage = http://galago-project.org/; # very obsolete but found no better

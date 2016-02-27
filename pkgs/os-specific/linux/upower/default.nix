@@ -1,9 +1,7 @@
 { stdenv, fetchurl, pkgconfig, glib, dbus_glib
-, intltool, libxslt, docbook_xsl, udev, libgudev, libusb
-, useSystemd ? true, systemd, gobjectIntrospection
+, intltool, libxslt, docbook_xsl, libgudev, libusb
+, useSystemd ? true, systemd_lib, gobjectIntrospection
 }:
-
-assert stdenv.isLinux;
 
 stdenv.mkDerivation rec {
   name = "upower-0.99.3";
@@ -14,8 +12,8 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs =
-    [ dbus_glib intltool libxslt docbook_xsl udev libgudev libusb gobjectIntrospection ]
-    ++ stdenv.lib.optional useSystemd systemd;
+    [ dbus_glib intltool libxslt docbook_xsl libgudev libusb gobjectIntrospection ]
+    ++ stdenv.lib.optional useSystemd systemd_lib;
 
   nativeBuildInputs = [ pkgconfig ];
 

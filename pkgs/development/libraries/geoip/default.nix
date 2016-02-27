@@ -23,7 +23,7 @@ stdenv.mkDerivation {
     description = "Geolocation API";
     maintainers = [ stdenv.lib.maintainers.raskin ];
     license = stdenv.lib.licenses.lgpl21;
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
     homepage = "http://geolite.maxmind.com/";
     downloadPage = "http://geolite.maxmind.com/download/";
   };

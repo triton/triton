@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, glib, zlib, libgpgerror }:
+{ stdenv, fetchurl, pkgconfig, glib, zlib, libgpg-error }:
 
 stdenv.mkDerivation rec {
   name = "gmime-2.6.20";
@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ pkgconfig ];
-  propagatedBuildInputs = [ glib zlib libgpgerror ];
+  propagatedBuildInputs = [ glib zlib libgpg-error ];
 
   meta = {
     homepage = http://spruce.sourceforge.net/gmime/;

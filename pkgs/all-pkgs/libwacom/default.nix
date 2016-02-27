@@ -3,7 +3,7 @@
 
 , glib
 , libgudev
-, udev
+, systemd_lib
 }:
 
 stdenv.mkDerivation rec {
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glib
     libgudev
-    udev
+    systemd_lib
   ];
 
   meta = with stdenv.lib; {

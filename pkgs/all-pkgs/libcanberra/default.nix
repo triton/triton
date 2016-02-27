@@ -3,17 +3,17 @@
 , fetchurl
 , libtool
 
-, alsaLib
+, alsa-lib
 , gdk-pixbuf
 , glib
 , gstreamer
 , gst-plugins-base
 , gtk3
 , libcap
-, libpulseaudio
 , libvorbis
+, pulseaudio_lib
+, systemd_lib
 , tdb
-, udev
 , xorg
 }:
 
@@ -44,27 +44,27 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    alsaLib
+    alsa-lib
     gdk-pixbuf
     glib
     gstreamer
     gst-plugins-base
     gtk3
     libcap
-    libpulseaudio
     libvorbis
+    pulseaudio_lib
+    systemd_lib
     tdb
-    udev
     xorg.libICE
     xorg.libSM
     xorg.libX11
   ];
 
   configureFlags = [
-    (enFlag "alsa" (alsaLib != null) null)
+    (enFlag "alsa" (alsa-lib != null) null)
     "--disable-oss"
-    (enFlag "pulse" (libpulseaudio != null) null)
-    (enFlag "udev" (udev != null) null)
+    (enFlag "pulse" (pulseaudio_lib != null) null)
+    (enFlag "udev" (systemd_lib != null) null)
     (enFlag "gstreamer" (
       gstreamer != null
       && gst-plugins-base != null) null)

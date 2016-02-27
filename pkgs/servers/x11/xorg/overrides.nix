@@ -2,8 +2,8 @@
 
 let
   inherit (args) stdenv makeWrapper fetchurl;
-  inherit (stdenv) lib;
-  inherit (lib) overrideDerivation;
+  inherit (stdenv) lib targetSystem;
+  inherit (lib) elem overrideDerivation platforms;
 
   setMalloc0ReturnsNullCrossCompiling = ''
     if test -n "$crossConfig"; then
@@ -291,8 +291,8 @@ in
     in
       {
         buildInputs = [ makeWrapper ] ++ commonBuildInputs;
-        propagatedBuildInputs = [ libpciaccess pixman ] ++ commonPropagatedBuildInputs ++ lib.optionals stdenv.isLinux [
-          args.udev
+        propagatedBuildInputs = [ libpciaccess pixman ] ++ commonPropagatedBuildInputs ++ lib.optionals (elem targetSystem platforms.linux) [
+          args.systemd_lib
         ];
         patches = commonPatches;
         configureFlags = [

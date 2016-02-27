@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
     homepage    = https://people.gnome.org/~veillard/gamin/;
     description = "A file and directory monitoring system";
     maintainers = with maintainers; [ lovek323 ];
-    platforms   = platforms.unix;
+    platforms   = platforms.all;
   };
 }
 

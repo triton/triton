@@ -1,11 +1,11 @@
-{ stdenv, fetchurl, pkgconfig, dbus_libs, nettle, libidn, libnetfilter_conntrack }:
+{ stdenv, fetchurl, pkgconfig, dbus, nettle, libidn, libnetfilter_conntrack }:
 
 with stdenv.lib;
 let
   copts = concatStringsSep " " ([
     "-DHAVE_IDN"
     "-DHAVE_DNSSEC"
-  ] ++ optionals stdenv.isLinux [
+  ] ++ optionals (elem stdenv.targetSystem platforms.linux) [
     "-DHAVE_DBUS"
     "-DHAVE_CONNTRACK"
   ]);
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     "LOCALEDIR=$(out)/share/locale"
   ];
 
-  postBuild = optionalString stdenv.isLinux ''
+  postBuild = optionalString (elem stdenv.targetSystem platforms.linux) ''
     make -C contrib/wrt
   '';
 
@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
   # module can create it in Nix-land?
   postInstall = ''
     install -Dm644 trust-anchors.conf $out/share/dnsmasq/trust-anchors.conf
-  '' + optionalString stdenv.isLinux ''
+  '' + optionalString (elem stdenv.targetSystem platforms.linux) ''
     install -Dm644 dbus/dnsmasq.conf $out/etc/dbus-1/system.d/dnsmasq.conf
     install -Dm755 contrib/wrt/dhcp_lease_time $out/bin/dhcp_lease_time
     install -Dm755 contrib/wrt/dhcp_release $out/bin/dhcp_release
@@ -54,13 +54,13 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ nettle libidn ]
-    ++ optionals stdenv.isLinux [ dbus_libs libnetfilter_conntrack ];
+    ++ optionals (elem stdenv.targetSystem platforms.linux) [ dbus.libs libnetfilter_conntrack ];
 
   meta = {
     description = "An integrated DNS, DHCP and TFTP server for small networks";
     homepage = http://www.thekelleys.org.uk/dnsmasq/doc.html;
     license = licenses.gpl2;
-    platforms = with platforms; linux ++ darwin;
+    platforms = with platforms; linux;
     maintainers = with maintainers; [ eelco ];
   };
 }

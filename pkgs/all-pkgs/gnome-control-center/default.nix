@@ -29,13 +29,12 @@
 , gtk3
 , ibus
 , icu
+, krb5_lib
 , libcanberra
 , libgnomekbd
 , libgtop
 , libgudev
-, libkrb5
 , libnotify
-, libpulseaudio
 , libpwquality
 , librsvg
 , libsoup
@@ -48,12 +47,13 @@
 , networkmanager
 , networkmanager-applet
 , polkit
+, pulseaudio_lib
 , python
 , samba
 , shared_mime_info
 , sound-theme-freedesktop
+, systemd_lib
 , tzdata
-, udev
 , upower
 , vino
 , xorg
@@ -109,12 +109,11 @@ stdenv.mkDerivation rec {
     gtk3
     ibus
     icu
+    krb5_lib
     libcanberra
     libgtop
     libgudev
-    libkrb5
     libnotify
-    libpulseaudio
     libpwquality
     librsvg
     libsoup
@@ -127,9 +126,10 @@ stdenv.mkDerivation rec {
     networkmanager
     networkmanager-applet
     polkit
+    pulseaudio_lib
     samba
     shared_mime_info
-    udev
+    systemd_lib
     upower
     vino
     xorg.libSM

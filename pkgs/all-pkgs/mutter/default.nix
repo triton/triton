@@ -28,7 +28,7 @@
 , zenity
 , libxkbcommon
 , libinput
-, systemd
+, systemd_lib
 , wayland
 , xorg
 , gtk3
@@ -79,7 +79,7 @@ stdenv.mkDerivation rec {
     libxkbcommon
     mesa_noglu
     pango
-    systemd
+    systemd_lib
     upower
     wayland
     xorg.libICE

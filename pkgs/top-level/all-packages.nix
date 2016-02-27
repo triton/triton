@@ -1177,7 +1177,7 @@ networkmanager-vpnc = callPackage ../all-pkgs/networkmanager-vpnc { };
 
 networkmanager-openconnect = callPackage ../all-pkgs/networkmanager-openconnect { };
 
-networkmanager-applet = newScope gnome ../all-pkgs/networkmanager-applet { };
+networkmanager-applet = callPackage ../all-pkgs/networkmanager-applet { };
 
 nghttp2_full = callPackage ../all-pkgs/nghttp2 { };
 

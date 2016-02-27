@@ -3,6 +3,7 @@
 , intltool
 , makeWrapper
 
+, adwaita-icon-theme
 , atk
 , dbus_glib
 , dconf
@@ -15,8 +16,8 @@
 , gtk3
 , hicolor_icon_theme
 , isocodes
-, libglade
-, libgnome_keyring
+#, libglade
+, libgnome-keyring
 , libgudev
 , libnotify
 , libsecret
@@ -24,7 +25,7 @@
 , networkmanager
 , pango
 , polkit
-, udev
+, systemd_lib
 }:
 
 with {
@@ -56,23 +57,25 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    adwaita-icon-theme
     atk
     dbus_glib
     gdk-pixbuf
     gconf
-    libgnome_keyring
+    libgnome-keyring
     gobject-introspection
     gsettings-desktop-schemas
     gtk3
+    hicolor_icon_theme
     isocodes
-    libglade
+    #libglade
     libgudev
     libnotify
     libsecret
     networkmanager
     pango
     polkit
-    udev
+    systemd_lib
   ];
 
   configureFlags = [
@@ -99,17 +102,21 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram "$out/bin/nm-applet" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix GIO_EXTRA_MODULES : "${glib-networking}/lib/gio/modules" \
       --prefix GIO_EXTRA_MODULES : "${dconf}/lib/gio/modules" \
       --prefix XDG_DATA_DIRS : "${gtk3}/share" \
       --prefix XDG_DATA_DIRS : "$out/share" \
       --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix XDG_DATA_DIRS : "$XDG_ICON_DIRS" \
       --set GCONF_CONFIG_SOURCE "xml::~/.gconf" \
       --prefix PATH ":" "${gconf}/bin"
     wrapProgram "$out/bin/nm-connection-editor" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix XDG_DATA_DIRS : "${gtk3}/share" \
       --prefix XDG_DATA_DIRS : "$out/share" \
-      --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH"
+      --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix XDG_DATA_DIRS : "$XDG_ICON_DIRS"
   '';
 
   meta = with stdenv.lib; {

@@ -54,6 +54,7 @@ stdenv.mkDerivation rec {
     "--enable-optimizations"
     "--disable-examples"
     #(enFlag "bdjava" (jdk != null) null)
+    "--disable-bdjava"
     "--enable-udf"
     "--disable-doxygen-doc"
     "--disable-doxygen-dot"
@@ -68,7 +69,7 @@ stdenv.mkDerivation rec {
     (wtFlag "libxml2" (libxml2 != null) null)
     (wtFlag "freetype" (freetype != null) null)
     (wtFlag "fontconfig" (fontconfig != null) null)
-    "--with-bdj-type=j2se"
+    #"--with-bdj-type=j2se"
     #"--with-bdj-bootclasspath="
   ];
 

@@ -13,6 +13,10 @@ stdenv.mkDerivation rec{
     sha256 = "1qgiw02n2a6r32pimnd97v2jkvnw449xrqmaxiivjy2jcr5h141q";
   };
 
+  nativeBuildInputs = [
+    unzip
+  ];
+
   configureFlags = [
     "--without-downloader"
   ];
@@ -20,12 +24,6 @@ stdenv.mkDerivation rec{
   postConfigure = ''
     cp $srcAmr 26104-b00.zip
   '';
-
-  nativeBuildInputs = [
-    unzip
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "AMR Narrow-Band Codec";

@@ -184,7 +184,7 @@ stdenv.mkDerivation rec {
     "--disable-maintainer-mode"
     "--enable-nls"
     "--enable-schemas-compile"
-    (enFlag "systemd" (systemd != null) null)
+    (enFlag "systemd" (systemd_lib != null) null)
     "--enable-browser-plugin"
     (enFlag "introspection" (gobject-introspection != null) null)
     (enFlag "networkmanager" (networkmanager != null) null)

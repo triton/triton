@@ -223,14 +223,12 @@ with lib;
         '';
     in mkIf fontconfig.enable {
 
-      # Fontconfig 2.10 backward compatibility
-
-      # Bring in the default (upstream) fontconfig configuration, only for fontconfig 2.10
-      environment.etc."fonts/fonts.conf".source =
-        pkgs.makeFontsConf { fontconfig = pkgs.fontconfig_210; fontDirectories = config.fonts.fonts; };
-
-      environment.etc."fonts/conf.d/10-nixos-rendering.conf".text = renderConf;
-      environment.etc."fonts/conf.d/60-nixos-generic-alias.conf".text = genericAliasConf;
+      assertions = [
+        {
+          assertion = !config.fonts.fontconfig.cache32Bit;
+          message = "We don't support caching 32bit yet";
+        }
+      ];
 
       # Versioned fontconfig > 2.10. Take shared fonts.conf from fontconfig.
       # Otherwise specify only font directories.
@@ -248,9 +246,6 @@ with lib;
             ${concatStringsSep "\n" (map (font: "<dir>${font}</dir>") config.fonts.fonts)}
             <!-- Pre-generated font caches -->
             <cachedir>${cache pkgs.fontconfig}</cachedir>
-            ${optionalString (pkgs.stdenv.isx86_64 && config.fonts.fontconfig.cache32Bit) ''
-              <cachedir>${cache pkgs.pkgsi686Linux.fontconfig}</cachedir>
-            ''}
           </fontconfig>
         '';
 

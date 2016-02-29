@@ -1,5 +1,6 @@
 { configuration ? import ./lib/from-env.nix "NIXOS_CONFIG" <nixos-config>
-, system ? builtins.currentSystem
+, targetSystem ? builtins.currentSystem
+, hostSystem ? builtins.currentSystem
 , extraModules ? []
   # This attribute is used to specify a different nixos version, a different
   # system or additional modules which might be set conditionally.
@@ -13,7 +14,7 @@ let
   };
 
   eval = import ./lib/eval-config.nix {
-    inherit system;
+    inherit targetSystem hostSystem;
     modules = [ configuration reEnterModule ] ++ extraModules;
   };
 
@@ -21,13 +22,13 @@ let
 
   # This is for `nixos-rebuild build-vm'.
   vmConfig = (import ./lib/eval-config.nix {
-    inherit system;
+    inherit targetSystem hostSystem;
     modules = [ configuration reEnterModule ./modules/virtualisation/qemu-vm.nix ] ++ extraModules;
   }).config;
 
   # This is for `nixos-rebuild build-vm-with-bootloader'.
   vmWithBootLoaderConfig = (import ./lib/eval-config.nix {
-    inherit system;
+    inherit targetSystem hostSystem;
     modules =
       [ configuration reEnterModule
         ./modules/virtualisation/qemu-vm.nix

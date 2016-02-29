@@ -40,7 +40,11 @@ import ./common.nix {
     (cd $out/include && \
      ln -sv $(ls -d ${linux-headers}/include/* | grep -v 'scsi''$') .)
 
-    # Fix ldd
+    # ldd has a preconfigured bad list of ld.so loaders
+    # Rewrite that variable in the ldd script so it finds the
+    # loaders correctly.
+    # We can find the loaders by simply looking for ld*.so*
+    # in the ouput folder
     RTLDLIST="$(find $out -name ld\*.so\* | tr '\n' ' ')"
     sed -i "s,^RTLDLIST=.*,RTLDLIST=\"$RTLDLIST\",g" $out/bin/ldd
 

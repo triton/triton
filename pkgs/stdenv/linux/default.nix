@@ -21,7 +21,7 @@ let
   commonStdenvOptions = {
     inherit targetSystem hostSystem config;
     preHook = ''
-      export NIX_ENFORCE_PURITY=1
+      export NIX_ENFORCE_PURITY="''${NIX_ENFORCE_PURITY-1}"
     '';
   };
 

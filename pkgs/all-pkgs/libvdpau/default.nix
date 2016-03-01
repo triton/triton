@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-dri2"
     "--disable-documentation"
-    "--with-module-dir=${mesa_noglu.driverLink}/lib/vdpau"
+    "--with-module-dir=${mesa_noglu.driverSearchPath}/lib/vdpau"
   ];
 
   preInstall = ''

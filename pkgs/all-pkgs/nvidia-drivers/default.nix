@@ -13,11 +13,14 @@
 , xlibs
 , zlib
 
+# Just needed for the passthru driver path
+, mesa_noglu
+
 , libsOnly ? false
 
 , nvidiasettingsSupport ? true
   , atk
-  , gdk_pixbuf
+  , gdk-pixbuf
   , glib
   , pango
   , gtk2 # <346
@@ -79,7 +82,7 @@ assert any (n: n == channel) [
 assert buildKernelspace -> kernel != null;
 assert nvidiasettingsSupport -> (
   atk != null &&
-  gdk_pixbuf != null &&
+  gdk-pixbuf != null &&
   glib != null &&
   pango != null
   # TODO: add gtk2/3 requirement
@@ -166,7 +169,7 @@ stdenv.mkDerivation {
         atk
         pango
         glib
-        gdk_pixbuf
+        gdk-pixbuf
       ] ++ (
         if versionAtLeast versionMajor "346" then [
           cairo
@@ -185,6 +188,8 @@ stdenv.mkDerivation {
     inherit
       version
       versionMajor;
+    inherit (mesa_noglu)
+      driverSearchPath;
     nvenc =
       if versionAtLeast versionMajor "340" then
         true

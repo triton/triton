@@ -247,12 +247,7 @@ stdenv.mkDerivation rec {
   doCheck = false;
 
   passthru = {
-    inherit
-      libdrm
-      version
-      driverSearchPath;
-    # Deprecated alias
-    driverLink = driverSearchPath;
+    inherit driverSearchPath;
   };
 
   meta = with stdenv.lib; {

@@ -17,16 +17,19 @@ let
         p.mesa_noglu # mainly for libGL
         (if cfg.s3tcSupport then p.libtxc_dxtn else p.libtxc_dxtn_s2tc)
       ];
+    passthru = p.mesa_drivers.passthru // p.mesa_noglu.passthru;
   };
 
   package = pkgs.buildEnv {
-    name = "opengl-drivers";
+    name = "opengl-drivers-${cfg.package.system}";
     paths = [ cfg.package ] ++ cfg.extraPackages;
+    inherit (cfg.package) passthru;
   };
 
   package32 = pkgs.buildEnv {
-    name = "opengl-drivers-32bit";
+    name = "opengl-drivers-${cfg.package32.system}";
     paths = [ cfg.package32 ] ++ cfg.extraPackages32;
+    inherit (cfg.package32) passthru;
   };
 
 in
@@ -122,18 +125,18 @@ in
 
     system.activationScripts.setup-opengl =
       ''
-        ln -sfn ${package} /run/opengl-driver
-        ${if pkgs.stdenv.isi686 then ''
-          ln -sfn opengl-driver /run/opengl-driver-32
-        '' else if cfg.driSupport32Bit then ''
-          ln -sfn ${package32} /run/opengl-driver-32
-        '' else ''
-          rm -f /run/opengl-driver-32
+        find /run -maxdepth 1 -name opengl-driver\* -exec rm { } \;
+        ln -sfn ${package} ${package.driverSearchPath}
+        ${optionalString cfg.driSupport32Bit ''
+          ln -sfn ${package32} ${package.driverSearchPath}
         ''}
       '';
 
-    environment.sessionVariables.LD_LIBRARY_PATH =
-      [ "/run/opengl-driver/lib" "/run/opengl-driver-32/lib" ];
+    environment.sessionVariables.LD_LIBRARY_PATH = [
+      "${package.driverSearchPath}/lib"
+    ] ++ optionals cfg.driSupport32Bit [
+      "${package32.driverSearchPath}/lib"
+    ];
 
     hardware.opengl.package = mkDefault (makePackage pkgs);
     hardware.opengl.package32 = mkDefault (makePackage pkgs_i686);

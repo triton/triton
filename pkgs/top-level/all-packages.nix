@@ -8590,6 +8590,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  samba3 = callPackage ../servers/samba/3.x.nix { };
 #
   samba4 = callPackage ../servers/samba/4.x.nix {
+    glusterfs = null;
     kerberos = null;  # Bundle kerberos because samba uses internal, non-stable functions
   };
 

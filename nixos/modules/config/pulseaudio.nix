@@ -34,18 +34,18 @@ let
   # plugin.
   alsaConf = writeText "asound.conf" (''
     pcm_type.pulse {
-      libs.native = ${pkgs.alsaPlugins}/lib/alsa-lib/libasound_module_pcm_pulse.so ;
+      libs.native = ${pkgs.alsa-plugins}/lib/alsa-lib/libasound_module_pcm_pulse.so ;
       ${lib.optionalString enable32BitAlsaPlugins
-     "libs.32Bit = ${pkgs_i686.alsaPlugins}/lib/alsa-lib/libasound_module_pcm_pulse.so ;"}
+     "libs.32Bit = ${pkgs_i686.alsa-plugins}/lib/alsa-lib/libasound_module_pcm_pulse.so ;"}
     }
     pcm.!default {
       type pulse
       hint.description "Default Audio Device (via PulseAudio)"
     }
     ctl_type.pulse {
-      libs.native = ${alsaPlugins}/lib/alsa-lib/libasound_module_ctl_pulse.so ;
+      libs.native = ${alsa-plugins}/lib/alsa-lib/libasound_module_ctl_pulse.so ;
       ${lib.optionalString enable32BitAlsaPlugins
-     "libs.32Bit = ${pkgs_i686.alsaPlugins}/lib/alsa-lib/libasound_module_ctl_pulse.so ;"}
+     "libs.32Bit = ${pkgs_i686.alsa-plugins}/lib/alsa-lib/libasound_module_ctl_pulse.so ;"}
     }
     ctl.!default {
       type pulse
@@ -98,13 +98,13 @@ in {
 
       package = mkOption {
         type = types.package;
-        default = pulseaudioFull;
-        defaultText = "pkgs.pulseaudioFull";
-        example = literalExample "pkgs.pulseaudioFull";
+        default = pulseaudio_full;
+        defaultText = "pkgs.pulseaudio_full";
+        example = literalExample "pkgs.pulseaudio_full";
         description = ''
           The PulseAudio derivation to use.  This can be used to disable
           features (such as JACK support, Bluetooth) that are enabled in the
-          pulseaudioFull package in Nixpkgs.
+          pulseaudio_full package in Nixpkgs.
         '';
       };
 

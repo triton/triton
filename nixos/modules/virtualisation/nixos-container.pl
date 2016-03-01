@@ -7,7 +7,7 @@ use File::Slurp;
 use Fcntl ':flock';
 use Getopt::Long qw(:config gnu_getopt);
 
-my $nsenter = "@utillinux@/bin/nsenter";
+my $nsenter = "@util-linux_full@/bin/nsenter";
 my $su = "@su@";
 
 # Ensure a consistent umask.

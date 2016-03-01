@@ -57,9 +57,9 @@ let
         default fsIdentifier efiSupport gfxmodeEfi gfxmodeBios;
       path = (makeSearchPath "bin" ([
         pkgs.coreutils pkgs.gnused pkgs.gnugrep pkgs.findutils pkgs.diffutils pkgs.btrfs-progs
-        pkgs.utillinux ] ++ (if cfg.efiSupport && (cfg.version == 2) then [pkgs.efibootmgr ] else [])
+        pkgs.util-linux_full ] ++ (if cfg.efiSupport && (cfg.version == 2) then [pkgs.efibootmgr ] else [])
       )) + ":" + (makeSearchPath "sbin" [
-        pkgs.mdadm pkgs.utillinux
+        pkgs.mdadm pkgs.util-linux_full
       ]);
     });
 

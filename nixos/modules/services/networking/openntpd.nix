@@ -5,7 +5,7 @@ with lib;
 let
   cfg = config.services.openntpd;
 
-  package = pkgs.openntpd_nixos;
+  package = pkgs.openntpd;
 
   cfgFile = pkgs.writeText "openntpd.conf" ''
     ${concatStringsSep "\n" (map (s: "server ${s}") cfg.servers)}

@@ -316,7 +316,7 @@ foreach my $device (keys %$prevSwaps) {
         # units that prevent a stop from actually calling
         # "swapoff".
         print STDERR "stopping swap device: $device\n";
-        system("@utillinux@/sbin/swapoff", $device);
+        system("@util-linux_full@/sbin/swapoff", $device);
     }
     # FIXME: update swap options (i.e. its priority).
 }

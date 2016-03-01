@@ -2,7 +2,7 @@
 
 with lib;
 let
-    bluez-bluetooth = if config.services.xserver.desktopManager.kde4.enable then pkgs.bluez else pkgs.bluez5;
+    bluez-bluetooth = pkgs.bluez;
 
     configBluez = {
         description = "Bluetooth Service";

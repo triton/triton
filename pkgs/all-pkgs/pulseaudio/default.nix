@@ -77,7 +77,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    alsa-lib
     glib
     dbus_lib
     libasyncns
@@ -88,6 +87,7 @@ stdenv.mkDerivation rec {
     tdb
     speexdsp
   ] ++ optionals (!libOnly) [
+    alsa-lib
     gtk3
     gconf
     avahi
@@ -152,7 +152,6 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--localstatedir=/var"
     "--sysconfdir=/etc"
-    "--enable-alsa"
     "--disable-atomic-arm-memory-barrier"
     "--disable-neon-opt"
     "--with-caps=${libcap}"
@@ -184,6 +183,7 @@ stdenv.mkDerivation rec {
     "--with-bash-completion-dir=\${out}/share/bash-completions/completions"
   ] ++ optionals (libOnly) [
     "--disable-x11"
+    "--disable-alsa"
     "--disable-gtk3"
     "--disable-gconf"
     "--disable-avahi"

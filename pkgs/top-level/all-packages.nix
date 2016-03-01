@@ -9161,7 +9161,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
   linuxPackages_4_4 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4_4;
   });
-  linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor pkgs.linux_testing pkgs.linuxPackages_testing);
+  linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_testing;
+  });
   linuxPackages_custom = {version, src, configfile}:
                            let linuxPackages_self = (linuxPackagesFor (pkgs.linuxManualConfig {inherit version src configfile;
                                                                                                allowImportFromDerivation=true;})

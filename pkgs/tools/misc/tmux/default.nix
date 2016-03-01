@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
 
     license = stdenv.lib.licenses.bsd3;
 
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
     maintainers = with stdenv.lib.maintainers; [ thammers ];
   };
 }

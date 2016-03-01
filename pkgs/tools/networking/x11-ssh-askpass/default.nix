@@ -20,7 +20,7 @@ stdenv.mkDerivation {
     homepage = "http://www.jmknoble.net/software/x11-ssh-askpass/";
     description = "Lightweight passphrase dialog for OpenSSH or other open variants of SSH";
 
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
     maintainers = [];
   };
 }

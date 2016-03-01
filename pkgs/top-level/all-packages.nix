@@ -214,10 +214,7 @@ let
 
   buildEnv = callPackage ../build-support/buildenv { }; # not actually a package
 
-  buildFHSEnv = callPackage ../build-support/build-fhs-chrootenv/env.nix {
-    nixpkgs      = pkgs;
-    nixpkgs_i686 = pkgsi686Linux;
-  };
+  buildFHSEnv = callPackage ../build-support/build-fhs-chrootenv/env.nix { };
 
   chrootFHSEnv = callPackage ../build-support/build-fhs-chrootenv { };
   userFHSEnv = callPackage ../build-support/build-fhs-userenv {
@@ -872,7 +869,7 @@ gupnp-igd = callPackage ../all-pkgs/gupnp-igd { };
 
 gvfs = callPackage ../all-pkgs/gvfs { };
 
-gx = goPackages.gx.bin // { outputs = [ "bin" ]; };
+gx = pkgs.goPackages.gx.bin // { outputs = [ "bin" ]; };
 
 gzip = callPackage ../all-pkgs/gzip { };
 
@@ -1104,7 +1101,7 @@ mercurial = callPackage ../all-pkgs/mercurial { };
 mesa_glu =  callPackage ../all-pkgs/mesa-glu { };
 mesa_noglu = callPackage ../all-pkgs/mesa {
   # makes it slower, but during runtime we link against just
-  # mesa_drivers through /run/opengl-driver*, which is overriden
+  # mesa_drivers through mesa_noglu.driverSearchPath, which is overriden
   # according to config.grsecurity
   grsecEnabled = config.grsecurity or false;
 };
@@ -1112,6 +1109,7 @@ mesa_drivers = mesa_noglu.drivers;
 mesa = pkgs.buildEnv {
   name = "mesa-${pkgs.mesa_noglu.version}";
   paths = with pkgs; [ mesa_noglu mesa_glu ];
+  passthru = pkgs.mesa_glu.passthru // pkgs.mesa_noglu.passthru;
 };
 
 mesos = callPackage ../all-pkgs/mesos {
@@ -1595,7 +1593,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ascii = callPackage ../tools/text/ascii { };
 #
-#  asciinema = goPackages.asciinema.bin // { outputs = [ "bin" ]; };
+#  asciinema = pkgs.goPackages.asciinema.bin // { outputs = [ "bin" ]; };
 #
 #  asymptote = callPackage ../tools/graphics/asymptote {
 #    texLive = texlive.combine { inherit (texlive) scheme-small epsf cm-super; };
@@ -1631,7 +1629,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  });
 #
 #  androidenv = callPackage ../development/mobile/androidenv {
-#    pkgs_i686 = pkgsi686Linux;
 #  };
 #
 #  apg = callPackage ../tools/security/apg { };
@@ -1651,7 +1648,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  xcodeenv = callPackage ../development/mobile/xcodeenv { };
 #
 #  titaniumenv = callPackage ../development/mobile/titaniumenv {
-#    pkgs_i686 = pkgsi686Linux;
 #  };
 #
 #  inherit (androidenv) androidsdk_4_4 androidndk;
@@ -1801,13 +1797,13 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  clib = callPackage ../tools/package-management/clib { };
 #
-  consul = goPackages.consul.bin // { outputs = [ "bin" ]; };
+  consul = pkgs.goPackages.consul.bin // { outputs = [ "bin" ]; };
 
   consul-ui = callPackage ../servers/consul/ui.nix { };
 
-  consul-alerts = goPackages.consul-alerts.bin // { outputs = [ "bin" ]; };
+  consul-alerts = pkgs.goPackages.consul-alerts.bin // { outputs = [ "bin" ]; };
 
-  consul-template = goPackages.consul-template.bin // { outputs = [ "bin" ]; };
+  consul-template = pkgs.goPackages.consul-template.bin // { outputs = [ "bin" ]; };
 
   corosync = callPackage ../servers/corosync { };
 #
@@ -1825,7 +1821,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ddate = callPackage ../tools/misc/ddate { };
 #
-#  deis = goPackages.deis.bin // { outputs = [ "bin" ]; };
+#  deis = pkgs.goPackages.deis.bin // { outputs = [ "bin" ]; };
 #
 #  dfilemanager = kde5.dfilemanager;
 #
@@ -1862,7 +1858,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dynamic-colors = callPackage ../tools/misc/dynamic-colors { };
 #
-#  edac-utils = callPackage ../os-specific/linux/edac-utils { };
+  edac-utils = callPackage ../os-specific/linux/edac-utils { };
 #
 #  eggdrop = callPackage ../tools/networking/eggdrop { };
 #
@@ -1880,7 +1876,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  filter_audio = callPackage ../development/libraries/filter_audio { };
 #
-#  fzf = goPackages.fzf.bin // { outputs = [ "bin" ]; };
+#  fzf = pkgs.goPackages.fzf.bin // { outputs = [ "bin" ]; };
 #
 #  gencfsm = callPackage ../tools/security/gencfsm { };
 #
@@ -1890,7 +1886,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  heatseeker = callPackage ../tools/misc/heatseeker { };
 #
-#  interlock = goPackages.interlock.bin // { outputs = [ "bin" ]; };
+#  interlock = pkgs.goPackages.interlock.bin // { outputs = [ "bin" ]; };
 #
 #  mathics = pythonPackages.mathics;
 #
@@ -1943,7 +1939,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  mcrypt = callPackage ../tools/misc/mcrypt { };
 #
-#  mongodb-tools = goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
+#  mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 #
 #  mstflint = callPackage ../tools/misc/mstflint { };
 #
@@ -2046,7 +2042,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  caudec = callPackage ../applications/audio/caudec { };
 #
-#  ccid = callPackage ../tools/security/ccid { };
+  ccid = callPackage ../tools/security/ccid { };
 #
 #  ccrypt = callPackage ../tools/security/ccrypt { };
 #
@@ -2282,7 +2278,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   dnsmasq = callPackage ../tools/networking/dnsmasq { };
 #
-#  dnssec-root = callPackage ../data/misc/dnssec-root { };
+  dnssec-root = callPackage ../data/misc/dnssec-root { };
 #
   dnstop = callPackage ../tools/networking/dnstop { };
 
@@ -2465,7 +2461,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    inherit (perlPackages) ImageExifTool JSON;
 #  };
 #
-#  flannel = goPackages.flannel.bin // { outputs = [ "bin" ]; };
+#  flannel = pkgs.goPackages.flannel.bin // { outputs = [ "bin" ]; };
 #
 #  flashbench = callPackage ../os-specific/linux/flashbench { };
 #
@@ -2570,7 +2566,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  garmintools = callPackage ../development/libraries/garmintools {};
 #
-#  gawp = goPackages.gawp.bin // { outputs = [ "bin" ]; };
+#  gawp = pkgs.goPackages.gawp.bin // { outputs = [ "bin" ]; };
 #
 #  gbdfed = callPackage ../tools/misc/gbdfed {
 #    gtk = gtk2;
@@ -2654,9 +2650,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  goaccess = callPackage ../tools/misc/goaccess { };
 #
-#  go-mtpfs = goPackages.mtpfs.bin // { outputs = [ "bin" ]; };
+#  go-mtpfs = pkgs.goPackages.mtpfs.bin // { outputs = [ "bin" ]; };
 #
-#  go-pup = goPackages.pup.bin // { outputs = [ "bin" ]; };
+#  go-pup = pkgs.goPackages.pup.bin // { outputs = [ "bin" ]; };
 #
 #  googleAuthenticator = callPackage ../os-specific/linux/google-authenticator { };
 #
@@ -2877,9 +2873,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   iperf2 = callPackage ../tools/networking/iperf/2.nix { };
   iperf3 = callPackage ../tools/networking/iperf/3.nix { };
-  iperf = iperf3;
+  iperf = callPackageAlias "iperf3" { };
 
-  ipfs = goPackages.ipfs.bin // { outputs = [ "bin" ]; };
+  ipfs = pkgs.goPackages.ipfs.bin // { outputs = [ "bin" ]; };
 
   ipmitool = callPackage ../tools/system/ipmitool {
     static = false;
@@ -3032,7 +3028,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ldapvi = callPackage ../tools/misc/ldapvi { };
 #
-#  ldns = callPackage ../development/libraries/ldns { };
+  ldns = callPackage ../development/libraries/ldns { };
 #
 #  leafpad = callPackage ../applications/editors/leafpad { };
 #
@@ -3109,7 +3105,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  lshw = callPackage ../tools/system/lshw { };
 #
 #  lxc = callPackage ../os-specific/linux/lxc { };
-#  lxd = goPackages.lxd.bin // { outputs = [ "bin" ]; };
+#  lxd = pkgs.goPackages.lxd.bin // { outputs = [ "bin" ]; };
 #
 #  lzop = callPackage ../tools/compression/lzop { };
 #
@@ -3310,7 +3306,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ngrep = callPackage ../tools/networking/ngrep { };
 #
-#  ngrok = goPackages.ngrok.bin // { outputs = [ "bin" ]; };
+#  ngrok = pkgs.goPackages.ngrok.bin // { outputs = [ "bin" ]; };
 #
 #  noip = callPackage ../tools/networking/noip { };
 #
@@ -3415,7 +3411,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  openjade = callPackage ../tools/text/sgml/openjade { };
 #
-#  openntpd = callPackage ../tools/networking/openntpd { };
+  openntpd = callPackage ../tools/networking/openntpd { };
 #
 #  openntpd_nixos = openntpd.override {
 #    privsepUser = "ntp";
@@ -3908,7 +3904,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  skippy-xd = callPackage ../tools/X11/skippy-xd {};
 #
-#  skydns = goPackages.skydns.bin // { outputs = [ "bin" ]; };
+#  skydns = pkgs.goPackages.skydns.bin // { outputs = [ "bin" ]; };
 #
 #  sipcalc = callPackage ../tools/networking/sipcalc { };
 #
@@ -4095,9 +4091,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  timemachine = callPackage ../applications/audio/timemachine { };
 #
-#  tinc = callPackage ../tools/networking/tinc { };
+  tinc = callPackage ../tools/networking/tinc { };
 #
-#  tinc_pre = callPackage ../tools/networking/tinc/pre.nix { };
+  tinc_pre = callPackage ../tools/networking/tinc/pre.nix { };
 #
 #  tiny8086 = callPackage ../applications/virtualization/8086tiny { };
 #
@@ -4446,7 +4442,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  x86info = callPackage ../os-specific/linux/x86info { };
 #
-  x11_ssh_askpass = callPackage ../tools/networking/x11-ssh-askpass { };
+#  x11_ssh_askpass = callPackage ../tools/networking/x11-ssh-askpass { };
 #
 #  xbursttools = assert stdenv ? libc; callPackage ../tools/misc/xburst-tools {
 #    # It needs a cross compiler for mipsel to build the firmware it will
@@ -4711,11 +4707,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  # Haskell and GHC
 #
-#  haskell = callPackage ./haskell-packages.nix { };
+  haskell = callPackage ./haskell-packages.nix { };
 #
-#  haskellPackages = haskell.packages.ghc7103.override {
-#    overrides = config.haskellPackageOverrides or (self: super: {});
-#  };
+  haskellPackages = pkgs.haskell.packages.ghc7103.override {
+    overrides = config.haskellPackageOverrides or (self: super: {});
+  };
 #  inherit (haskellPackages) ghc cabal-install stack;
 #
 #  hhvm = callPackage ../development/compilers/hhvm { };
@@ -4729,9 +4725,9 @@ zstd = callPackage ../all-pkgs/zstd { };
   go_1_6 = callPackage ../development/compilers/go/1.6.nix { };
   go = callPackageAlias "go_1_6" { };
 #
-#  go-repo-root = goPackages.go-repo-root.bin // { outputs = [ "bin" ]; };
+#  go-repo-root = pkgs.goPackages.go-repo-root.bin // { outputs = [ "bin" ]; };
 #
-#  gox = goPackages.gox.bin // { outputs = [ "bin" ]; };
+#  gox = pkgs.goPackages.gox.bin // { outputs = [ "bin" ]; };
 #
 #  icedtea7_web = callPackage ../development/compilers/icedtea-web {
 #    jdk = jdk7;
@@ -5233,10 +5229,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  opam = callPackage ../development/tools/ocaml/opam { };
 #
-#  rustcMaster = callPackage ../development/compilers/rustc/head.nix {};
-#  rustc = callPackage ../development/compilers/rustc {
-#    callPackage = newScope ({ });
-#  };
+  rustcMaster = callPackage ../development/compilers/rustc/head.nix { };
+  rustc = callPackage ../development/compilers/rustc { };
 #
 #  rustPlatform = rustStable;
 #
@@ -5341,7 +5335,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ### END OF LUA
 #
-#  mesos-dns = goPackages.mesos-dns.bin // { outputs = [ "bin" ]; };
+#  mesos-dns = pkgs.goPackages.mesos-dns.bin // { outputs = [ "bin" ]; };
 #
 #  nix-exec = callPackage ../development/interpreters/nix-exec {
 #    nix = nixUnstable;
@@ -5706,7 +5700,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
 #  gob2 = callPackage ../development/tools/misc/gob2 { };
 #
-#  gotty = goPackages.gotty.bin // { outputs = [ "bin" ]; };
+#  gotty = pkgs.goPackages.gotty.bin // { outputs = [ "bin" ]; };
 #
 #  gradleGen = callPackage ../development/tools/build-managers/gradle { };
 #  gradle = self.gradleGen.gradleLatest;
@@ -6232,7 +6226,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  cfitsio = callPackage ../development/libraries/cfitsio { };
 #
-  fontconfig_210 = callPackage ../development/libraries/fontconfig/2.10.nix { };
+#  fontconfig_210 = callPackage ../development/libraries/fontconfig/2.10.nix { };
 
   fontconfig = callPackage ../development/libraries/fontconfig { };
 
@@ -6240,12 +6234,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  folly = callPackage ../development/libraries/folly { };
 #
-  makeFontsConf = let fontconfig_ = fontconfig; in {fontconfig ? fontconfig_, fontDirectories}:
+  makeFontsConf = let fontconfig_ = pkgs.fontconfig; in {fontconfig ? fontconfig_, fontDirectories}:
     callPackage ../development/libraries/fontconfig/make-fonts-conf.nix {
       inherit fontconfig fontDirectories;
     };
 #
-  makeFontsCache = let fontconfig_ = fontconfig; in {fontconfig ? fontconfig_, fontDirectories}:
+  makeFontsCache = let fontconfig_ = pkgs.fontconfig; in {fontconfig ? fontconfig_, fontDirectories}:
     callPackage ../development/libraries/fontconfig/make-fonts-cache.nix {
       inherit fontconfig fontDirectories;
     };
@@ -7100,9 +7094,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libtunepimp = callPackage ../development/libraries/libtunepimp { };
 #
-#  libtxc_dxtn = callPackage ../development/libraries/libtxc_dxtn { };
+  libtxc_dxtn = callPackage ../development/libraries/libtxc_dxtn { };
 #
-#  libtxc_dxtn_s2tc = callPackage ../development/libraries/libtxc_dxtn_s2tc { };
+  libtxc_dxtn_s2tc = callPackage ../development/libraries/libtxc_dxtn_s2tc { };
 #
 #  libgeotiff = callPackage ../development/libraries/libgeotiff { };
 #
@@ -7512,13 +7506,13 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   qt54 =
     let imported = import ../development/libraries/qt-5/5.4 { inherit pkgs; };
-    in recurseIntoAttrs (imported.override (super: qt5LibsFun));
+    in recurseIntoAttrs (imported.override (super: pkgs.qt5LibsFun));
 
   qt55 =
     let imported = import ../development/libraries/qt-5/5.5 { inherit pkgs; };
-    in recurseIntoAttrs (imported.override (super: qt5LibsFun));
+    in recurseIntoAttrs (imported.override (super: pkgs.qt5LibsFun));
 
-  qt5 = qt55;
+  qt5 = pkgs.qt55;
 
   qt5LibsFun = self: with self; {
 
@@ -7889,9 +7883,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    inherit (pythonPackages) gyp;
 #  };
 #
-#  vaapiIntel = callPackage ../development/libraries/vaapi-intel { };
+  vaapiIntel = callPackage ../development/libraries/vaapi-intel { };
 #
-#  vaapiVdpau = callPackage ../development/libraries/vaapi-vdpau { };
+  vaapiVdpau = callPackage ../development/libraries/vaapi-vdpau { };
 #
   vamp = callPackage ../development/libraries/audio/vamp { };
 #
@@ -8329,7 +8323,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    inherit (perlPackages) NetSMTP;
 #  };
 #
-#  etcd = goPackages.etcd.bin // { outputs = [ "bin" ]; };
+#  etcd = pkgs.goPackages.etcd.bin // { outputs = [ "bin" ]; };
 #
 #  ejabberd = callPackage ../servers/xmpp/ejabberd { };
 #
@@ -8441,9 +8435,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  nsd = callPackage ../servers/dns/nsd (config.nsd or {});
 #
-#  nsq = goPackages.nsq.bin // { outputs = [ "bin" ]; };
+#  nsq = pkgs.goPackages.nsq.bin // { outputs = [ "bin" ]; };
 #
-#  oauth2_proxy = goPackages.oauth2_proxy.bin // { outputs = [ "bin" ]; };
+#  oauth2_proxy = pkgs.goPackages.oauth2_proxy.bin // { outputs = [ "bin" ]; };
 #
 #  openpts = callPackage ../servers/openpts { };
 #
@@ -8556,18 +8550,18 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
 #  postgresql_jdbc = callPackage ../servers/sql/postgresql/jdbc { };
 #
-#  prom2json = goPackages.prometheus.prom2json.bin // { outputs = [ "bin" ]; };
-#  prometheus = goPackages.prometheus.prometheus.bin // { outputs = [ "bin" ]; };
-#  prometheus-alertmanager = goPackages.prometheus.alertmanager.bin // { outputs = [ "bin" ]; };
-#  prometheus-cli = goPackages.prometheus.cli.bin // { outputs = [ "bin" ]; };
-#  prometheus-collectd-exporter = goPackages.prometheus.collectd-exporter.bin // { outputs = [ "bin" ]; };
-#  prometheus-haproxy-exporter = goPackages.prometheus.haproxy-exporter.bin // { outputs = [ "bin" ]; };
-#  prometheus-mesos-exporter = goPackages.prometheus.mesos-exporter.bin // { outputs = [ "bin" ]; };
-#  prometheus-mysqld-exporter = goPackages.prometheus.mysqld-exporter.bin // { outputs = [ "bin" ]; };
-#  prometheus-nginx-exporter = goPackages.prometheus.nginx-exporter.bin // { outputs = [ "bin" ]; };
-#  prometheus-node-exporter = goPackages.prometheus.node-exporter.bin // { outputs = [ "bin" ]; };
-#  prometheus-pushgateway = goPackages.prometheus.pushgateway.bin // { outputs = [ "bin" ]; };
-#  prometheus-statsd-bridge = goPackages.prometheus.statsd-bridge.bin // { outputs = [ "bin" ]; };
+#  prom2json = pkgs.goPackages.prometheus.prom2json.bin // { outputs = [ "bin" ]; };
+#  prometheus = pkgs.goPackages.prometheus.prometheus.bin // { outputs = [ "bin" ]; };
+#  prometheus-alertmanager = pkgs.goPackages.prometheus.alertmanager.bin // { outputs = [ "bin" ]; };
+#  prometheus-cli = pkgs.goPackages.prometheus.cli.bin // { outputs = [ "bin" ]; };
+#  prometheus-collectd-exporter = pkgs.goPackages.prometheus.collectd-exporter.bin // { outputs = [ "bin" ]; };
+#  prometheus-haproxy-exporter = pkgs.goPackages.prometheus.haproxy-exporter.bin // { outputs = [ "bin" ]; };
+#  prometheus-mesos-exporter = pkgs.goPackages.prometheus.mesos-exporter.bin // { outputs = [ "bin" ]; };
+#  prometheus-mysqld-exporter = pkgs.goPackages.prometheus.mysqld-exporter.bin // { outputs = [ "bin" ]; };
+#  prometheus-nginx-exporter = pkgs.goPackages.prometheus.nginx-exporter.bin // { outputs = [ "bin" ]; };
+#  prometheus-node-exporter = pkgs.goPackages.prometheus.node-exporter.bin // { outputs = [ "bin" ]; };
+#  prometheus-pushgateway = pkgs.goPackages.prometheus.pushgateway.bin // { outputs = [ "bin" ]; };
+#  prometheus-statsd-bridge = pkgs.goPackages.prometheus.statsd-bridge.bin // { outputs = [ "bin" ]; };
 #
 #  psqlodbc = callPackage ../servers/sql/postgresql/psqlodbc { };
 #
@@ -8661,7 +8655,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  shairport-sync = callPackage ../servers/shairport-sync { };
 #
-#  serfdom = goPackages.serf.bin // { outputs = [ "bin" ]; };
+#  serfdom = pkgs.goPackages.serf.bin // { outputs = [ "bin" ]; };
 #
 #  seyren = callPackage ../servers/monitoring/seyren { };
 #
@@ -8855,7 +8849,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  disk_indicator = callPackage ../os-specific/linux/disk-indicator { };
 #
-#  dmidecode = callPackage ../os-specific/linux/dmidecode { };
+  dmidecode = callPackage ../os-specific/linux/dmidecode { };
 #
 #  dmtcp = callPackage ../os-specific/linux/dmtcp { };
 #
@@ -9043,8 +9037,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
       inherit kernel;
 
       accelio = kCallPackage ../development/libraries/accelio { };
-
-      ati_drivers_x11 = kCallPackage ../os-specific/linux/ati-drivers { };
 
       cryptodev = cryptodevHeaders.override {
         onlyHeaders = false;
@@ -9288,19 +9280,19 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    inherit (gnome) gtk gtkmm;
 #  };
 #
-#  gocode = goPackages.gocode.bin // { outputs = [ "bin" ]; };
+#  gocode = pkgs.goPackages.gocode.bin // { outputs = [ "bin" ]; };
 #
 #  kgocode = callPackage ../applications/misc/kgocode {
 #    inherit (pkgs.kde4) kdelibs;
 #  };
 #
-#  gotags = goPackages.gotags.bin // { outputs = [ "bin" ]; };
+#  gotags = pkgs.goPackages.gotags.bin // { outputs = [ "bin" ]; };
 #
-#  golint = goPackages.lint.bin // { outputs = [ "bin" ]; };
+#  golint = pkgs.goPackages.lint.bin // { outputs = [ "bin" ]; };
 #
 #  godep = callPackage ../development/tools/godep { };
 #
-#  goimports = goPackages.tools.bin // { outputs = [ "bin" ]; };
+#  goimports = pkgs.goPackages.tools.bin // { outputs = [ "bin" ]; };
 #
 #  gogoclient = callPackage ../os-specific/linux/gogoclient { };
 #
@@ -9421,7 +9413,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    kernel = null;
 #  }; # pkgs.sysdig is a client, for a driver look at linuxPackagesFor
 #
-#  sysfsutils = callPackage ../os-specific/linux/sysfsutils { };
+  sysfsutils = callPackage ../os-specific/linux/sysfsutils { };
 #
 #  sysprof = callPackage ../development/tools/profiling/sysprof {
 #    inherit (gnome) libglade;
@@ -9684,7 +9676,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
   liberation_ttf_from_source = callPackage ../data/fonts/redhat-liberation-fonts { };
   liberation_ttf_binary = callPackage ../data/fonts/redhat-liberation-fonts/binary.nix { };
-  liberation_ttf = liberation_ttf_binary;
+  liberation_ttf = pkgs.liberation_ttf_binary;
 #
 #  libertine = callPackage ../data/fonts/libertine { };
 #
@@ -10613,7 +10605,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  i3blocks = callPackage ../applications/window-managers/i3/blocks.nix { };
 #
-#  i3cat = goPackages.i3cat.bin // { outputs = [ "bin" ]; };
+#  i3cat = pkgs.goPackages.i3cat.bin // { outputs = [ "bin" ]; };
 #
 #  i3lock = callPackage ../applications/window-managers/i3/lock.nix {
 #    cairo = cairo.override { xcbSupport = true; };
@@ -11243,7 +11235,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  pommed = callPackage ../os-specific/linux/pommed {};
 #
-#  pond = goPackages.pond.bin // { outputs = [ "bin" ]; };
+#  pond = pkgs.goPackages.pond.bin // { outputs = [ "bin" ]; };
 #
 #  ponymix = callPackage ../applications/audio/ponymix { };
 #
@@ -11505,7 +11497,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  dropbox-cli = callPackage ../applications/networking/dropbox-cli { };
 #
-  lightdm = qt5.callPackage ../applications/display-managers/lightdm {
+  lightdm = pkgs.qt5.callPackage ../applications/display-managers/lightdm {
     qt4 = null;
     withQt5 = false;
   };
@@ -11589,9 +11581,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  symlinks = callPackage ../tools/system/symlinks { };
 #
-  syncthing = goPackages.syncthing.bin // { outputs = [ "bin" ]; };
-#  discosrv = goPackages.discosrv.bin // { outputs = [ "bin" ]; };
-#  relaysrv = goPackages.relaysrv.bin // { outputs = [ "bin" ]; };
+  syncthing = pkgs.goPackages.syncthing.bin // { outputs = [ "bin" ]; };
+#  discosrv = pkgs.goPackages.discosrv.bin // { outputs = [ "bin" ]; };
+#  relaysrv = pkgs.goPackages.relaysrv.bin // { outputs = [ "bin" ]; };
 #
 #  # linux only by now
 #  synergy = callPackage ../applications/misc/synergy { };
@@ -12051,7 +12043,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #    packages = self: [];
 #  };
 #
-#  xmpp-client = goPackages.xmpp-client.bin // { outputs = [ "bin" ]; };
+#  xmpp-client = pkgs.goPackages.xmpp-client.bin // { outputs = [ "bin" ]; };
 #
 #  libxpdf = callPackage ../applications/misc/xpdf/libxpdf.nix { };
 #
@@ -12765,7 +12757,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  seafile-shared = callPackage ../misc/seafile-shared { };
 #
-#  slock = callPackage ../misc/screensavers/slock { };
+  slock = callPackage ../misc/screensavers/slock { };
 #
 #  snapraid = callPackage ../tools/filesystems/snapraid { };
 #
@@ -12852,7 +12844,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  utf8proc = callPackage ../development/libraries/utf8proc { };
 #
-#  vault = goPackages.vault.bin // { outputs = [ "bin" ]; };
+#  vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 #
 #  vbam = callPackage ../misc/emulators/vbam {};
 #

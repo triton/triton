@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, alsaLib, gettext, ncurses, libsamplerate, fftw-double, pciutils }:
+{ stdenv, fetchurl, alsa-lib, gettext, ncurses, libsamplerate, fftw_double, pciutils }:
 
 stdenv.mkDerivation rec {
   name = "alsa-utils-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     sha256 = "1wa88wvqcfhak9x3y65wzzwxmmyxb5bv2gyj7lnm653fnwsk271v";
   };
 
-  buildInputs = [ gettext alsaLib ncurses libsamplerate fftw-double ];
+  buildInputs = [ gettext alsa-lib ncurses libsamplerate fftw_double ];
 
   patchPhase = ''
     substituteInPlace alsa-info/alsa-info.sh \

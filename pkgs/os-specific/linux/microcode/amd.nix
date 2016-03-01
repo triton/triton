@@ -1,9 +1,9 @@
-{ stdenv, fetchurl, firmwareLinuxNonfree, libarchive }:
+{ stdenv, fetchurl, firmware-linux-nonfree, libarchive }:
 
 stdenv.mkDerivation rec {
-  name = "amd-ucode-${firmwareLinuxNonfree.version}";
+  name = "amd-ucode-${firmware-linux-nonfree.version}";
 
-  src = firmwareLinuxNonfree;
+  src = firmware-linux-nonfree;
 
   sourceRoot = ".";
 
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
   buildPhase = ''
     mkdir -p kernel/x86/microcode
-    find ${firmwareLinuxNonfree}/lib/firmware/amd-ucode -name \*.bin \
+    find ${firmware-linux-nonfree}/lib/firmware/amd-ucode -name \*.bin \
       -exec sh -c 'cat {} >> kernel/x86/microcode/AuthenticAMD.bin' \;
   '';
 

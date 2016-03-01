@@ -12,16 +12,17 @@
 # `contents = {object = ...; symlink = /init;}' is a typical
 # argument.
 
-{ stdenv, perl, perlArchiveCpio, cpio, contents, ubootChooser, compressor, prepend }:
+{ stdenv, perlPackages, cpio, contents, ubootChooser, compressor, prepend }:
 
-let
-  inputsFun = ubootName : [perl cpio perlArchiveCpio ]
-    ++ stdenv.lib.optional (ubootName != null) [ (ubootChooser ubootName) ];
-  makeUInitrdFun = ubootName : (ubootName != null);
-in
 stdenv.mkDerivation {
   name = "initrd";
   builder = ./make-initrd.sh;
+
+  nativeBuildInputs = [
+    cpio
+    perlPackages.ArchiveCpio
+    perlPackages.perl
+  ];
 
   # !!! should use XML.
   objects = map (x: x.object) contents;

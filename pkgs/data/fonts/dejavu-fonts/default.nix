@@ -1,11 +1,11 @@
-{fetchurl, stdenv, fontforge, perl, fontconfig, FontTTF}:
+{fetchurl, stdenv, fontforge, perlPackages, fontconfig}:
 
 let version = "2.35" ; in
 
 stdenv.mkDerivation rec {
   name = "dejavu-fonts-${version}";
   #fontconfig is needed only for fc-lang (?)
-  buildInputs = [fontforge perl FontTTF];
+  buildInputs = [fontforge perlPackages.perl perlPackages.FontTTF];
 
   unicodeData = fetchurl {
     url = http://www.unicode.org/Public/6.1.0/ucd/UnicodeData.txt ;

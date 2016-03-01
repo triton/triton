@@ -1113,13 +1113,13 @@ let
       sha256 = "0d5ff9l12zw9mdsjwbwn6y9k1gz6xlzsx5k87apz9vq6q625irn6";
     };
     nativeBuildInputs = [ python ];
-    buildInputs = [ dri2proto libdrm udev libpciaccess libX11 libXext libXrandr libXv ];
+    buildInputs = [ dri2proto libdrm systemd_lib libpciaccess libX11 libXext libXrandr libXv ];
     
     meta.platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
-  }) // {inherit dri2proto libdrm udev libpciaccess libX11 libXext libXrandr libXv ;};
+  }) // {inherit dri2proto libdrm systemd_lib libpciaccess libX11 libXext libXrandr libXv ;};
 
   kbproto = (mkDerivation "kbproto" {
     name = "kbproto-1.0.7";
@@ -3193,13 +3193,13 @@ let
       sha256 = "05z05n39v8s2b0hwhcjb1bca7j8gc62bv9jxnibawwmjym3jp75g";
     };
     nativeBuildInputs = [ ];
-    buildInputs = [ inputproto udev xorgserver xproto ];
+    buildInputs = [ inputproto systemd_lib xorgserver xproto ];
     
     meta.platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
-  }) // {inherit inputproto udev xorgserver xproto ;};
+  }) // {inherit inputproto systemd_lib xorgserver xproto ;};
 
   xf86inputfpit = (mkDerivation "xf86inputfpit" {
     name = "xf86-input-fpit-1.4.0";
@@ -3497,13 +3497,13 @@ let
       sha256 = "06ckn4hlkpig5vnivl0zj8a7ykcgvrsj8b3iccl1pgn1gaamix8a";
     };
     nativeBuildInputs = [ ];
-    buildInputs = [ inputproto udev randrproto xorgserver xproto ];
+    buildInputs = [ inputproto systemd_lib randrproto xorgserver xproto ];
     
     meta.platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
-  }) // {inherit inputproto udev randrproto xorgserver xproto ;};
+  }) // {inherit inputproto systemd_lib randrproto xorgserver xproto ;};
 
   xf86inputvoid = (mkDerivation "xf86inputvoid" {
     name = "xf86-input-void-1.4.1";
@@ -3577,13 +3577,13 @@ let
       sha256 = "0siaz583zdfasd1mm5p558qq49pz030nnvhf7pdvn8a9dwvxasr9";
     };
     nativeBuildInputs = [ ];
-    buildInputs = [ fontsproto mesa glamoregl libdrm udev randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ];
+    buildInputs = [ fontsproto mesa glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ];
     
     meta.platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
-  }) // {inherit fontsproto mesa glamoregl libdrm udev randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ;};
+  }) // {inherit fontsproto mesa glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ;};
 
   xf86videoapm = (mkDerivation "xf86videoapm" {
     name = "xf86-video-apm-1.2.5";
@@ -3641,13 +3641,13 @@ let
       sha256 = "0k6kw69mcarlmxlb4jlhz887jxqr94qx2pin04xcv2ysp3pdj5i5";
     };
     nativeBuildInputs = [ ];
-    buildInputs = [ fontsproto glamoregl libdrm udev libpciaccess randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ];
+    buildInputs = [ fontsproto glamoregl libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ];
     
     meta.platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
-  }) // {inherit fontsproto glamoregl libdrm udev libpciaccess randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ;};
+  }) // {inherit fontsproto glamoregl libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ;};
 
   xf86videochips = (mkDerivation "xf86videochips" {
     name = "xf86-video-chips-1.2.6";
@@ -3737,13 +3737,13 @@ let
       sha256 = "1hf67nwy223ghzc3ag9l99rjxrwv1fq6f1j42fmlpfmp145xvazm";
     };
     nativeBuildInputs = [ ];
-    buildInputs = [ libdrm udev randrproto renderproto xextproto xorgserver xproto ];
+    buildInputs = [ libdrm systemd_lib randrproto renderproto xextproto xorgserver xproto ];
     
     meta.platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
-  }) // {inherit libdrm udev randrproto renderproto xextproto xorgserver xproto ;};
+  }) // {inherit libdrm systemd_lib randrproto renderproto xextproto xorgserver xproto ;};
 
   xf86videogeode = (mkDerivation "xf86videogeode" {
     name = "xf86-video-geode-2.11.18";
@@ -3881,13 +3881,13 @@ let
       sha256 = "1jb7jspmzidfixbc0gghyjmnmpqv85i7pi13l4h2hn2ml3p83dq0";
     };
     nativeBuildInputs = [ ];
-    buildInputs = [ dri2proto dri3proto fontsproto intelgputools libdrm libpng udev libpciaccess pixman presentproto randrproto renderproto libX11 xcbutil libxcb libXcursor libXdamage libXext xextproto xf86driproto libXfixes xorgserver xproto libXrandr libXrender libxshmfence libXtst libXvMC ];
+    buildInputs = [ dri2proto dri3proto fontsproto intelgputools libdrm libpng systemd_lib libpciaccess pixman presentproto randrproto renderproto libX11 xcbutil libxcb libXcursor libXdamage libXext xextproto xf86driproto libXfixes xorgserver xproto libXrandr libXrender libxshmfence libXtst libXvMC ];
     
     meta.platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
-  }) // {inherit dri2proto dri3proto fontsproto intelgputools libdrm libpng udev libpciaccess pixman presentproto randrproto renderproto libX11 xcbutil libxcb libXcursor libXdamage libXext xextproto xf86driproto libXfixes xorgserver xproto libXrandr libXrender libxshmfence libXtst libXvMC ;};
+  }) // {inherit dri2proto dri3proto fontsproto intelgputools libdrm libpng systemd_lib libpciaccess pixman presentproto randrproto renderproto libX11 xcbutil libxcb libXcursor libXdamage libXext xextproto xf86driproto libXfixes xorgserver xproto libXrandr libXrender libxshmfence libXtst libXvMC ;};
 
   xf86videomach64 = (mkDerivation "xf86videomach64" {
     name = "xf86-video-mach64-6.9.5";
@@ -3929,13 +3929,13 @@ let
       sha256 = "0p6pjn5bnd2wr3lmas4b12zcq12d9ilvssga93fzlg90fdahikwh";
     };
     nativeBuildInputs = [ ];
-    buildInputs = [ fontsproto libdrm udev libpciaccess randrproto libX11 xextproto xorgserver xproto ];
+    buildInputs = [ fontsproto libdrm systemd_lib libpciaccess randrproto libX11 xextproto xorgserver xproto ];
     
     meta.platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
-  }) // {inherit fontsproto libdrm udev libpciaccess randrproto libX11 xextproto xorgserver xproto ;};
+  }) // {inherit fontsproto libdrm systemd_lib libpciaccess randrproto libX11 xextproto xorgserver xproto ;};
 
   xf86videoneomagic = (mkDerivation "xf86videoneomagic" {
     name = "xf86-video-neomagic-1.2.9";
@@ -3977,13 +3977,13 @@ let
       sha256 = "07irv1zkk0rkyn1d7f2gn1icgcz2ix0pwv74sjian763gynmg80f";
     };
     nativeBuildInputs = [ ];
-    buildInputs = [ dri2proto fontsproto libdrm udev libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ];
+    buildInputs = [ dri2proto fontsproto libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ];
     
     meta.platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
-  }) // {inherit dri2proto fontsproto libdrm udev libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ;};
+  }) // {inherit dri2proto fontsproto libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ;};
 
   xf86videonsc = (mkDerivation "xf86videonsc" {
     name = "xf86-video-nsc-2.8.3";
@@ -4041,13 +4041,13 @@ let
       sha256 = "1v8j4i1r268n4fc5gq54zg1x50j0rhw71f3lba7411mcblg2z7p4";
     };
     nativeBuildInputs = [ ];
-    buildInputs = [ fontsproto glproto libdrm udev libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xf86driproto xorgserver xproto libXvMC ];
+    buildInputs = [ fontsproto glproto libdrm systemd_lib libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xf86driproto xorgserver xproto libXvMC ];
     
     meta.platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
-  }) // {inherit fontsproto glproto libdrm udev libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xf86driproto xorgserver xproto libXvMC ;};
+  }) // {inherit fontsproto glproto libdrm systemd_lib libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xf86driproto xorgserver xproto libXvMC ;};
 
   xf86videoqxl = (mkDerivation "xf86videoqxl" {
     name = "xf86-video-qxl-0.1.4";
@@ -4057,13 +4057,13 @@ let
       sha256 = "018ic9ddxfnjcv2yss0mwk1gq6rmip1hrgi2wxwqkbqx1cpx4yp5";
     };
     nativeBuildInputs = [ ];
-    buildInputs = [ fontsproto libdrm udev libpciaccess randrproto renderproto videoproto xf86dgaproto xorgserver xproto ];
+    buildInputs = [ fontsproto libdrm systemd_lib libpciaccess randrproto renderproto videoproto xf86dgaproto xorgserver xproto ];
     
     meta.platforms = [
       "x86_64-linux"
       "i686-linux"
     ];
-  }) // {inherit fontsproto libdrm udev libpciaccess randrproto renderproto videoproto xf86dgaproto xorgserver xproto ;};
+  }) // {inherit fontsproto libdrm systemd_lib libpciaccess randrproto renderproto videoproto xf86dgaproto xorgserver xproto ;};
 
   xf86videor128 = (mkDerivation "xf86videor128" {
     name = "xf86-video-r128-6.10.1";

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, lib, pkgconfig, alsaLib, libogg, libpulseaudio ? null, libjack2 ? null }:
+{ stdenv, fetchurl, lib, pkgconfig, alsa-lib, libogg, libpulseaudio ? null, libjack2 ? null }:
 
 stdenv.mkDerivation rec {
   name = "alsa-plugins-1.1.0";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   # ToDo: a52, etc.?
   buildInputs =
-    [ pkgconfig alsaLib libogg ]
+    [ pkgconfig alsa-lib libogg ]
     ++ lib.optional (libpulseaudio != null) libpulseaudio
     ++ lib.optional (libjack2 != null) libjack2;
 

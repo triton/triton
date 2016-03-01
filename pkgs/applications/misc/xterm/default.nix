@@ -40,6 +40,6 @@ stdenv.mkDerivation rec {
     homepage = http://invisible-island.net/xterm;
     license = "BSD";
     maintainers = with stdenv.lib.maintainers; [viric];
-    platforms = with stdenv.lib.platforms; linux ++ darwin;
+    platforms = with stdenv.lib.platforms; linux;
   };
 }

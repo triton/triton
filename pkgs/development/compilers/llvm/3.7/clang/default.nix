@@ -1,4 +1,4 @@
-{ stdenv, fetch, cmake, ninja, libxml2, libedit, llvm, version, clang-tools-extra_src }:
+{ stdenv, fetch, cmake, ninja, libxml2, libedit, llvm, zlib, version, clang-tools-extra_src }:
 
 let
   gcc = if stdenv.cc.isGNU then stdenv.cc.cc else stdenv.cc.cc.gcc;
@@ -14,7 +14,7 @@ in stdenv.mkDerivation {
   '';
 
   nativeBuildInputs = [ cmake ninja ];
-  buildInputs = [ libedit libxml2 llvm ];
+  buildInputs = [ libedit libxml2 llvm zlib ];
 
   cmakeFlags = [
     "-DCMAKE_BUILD_TYPE=Release"

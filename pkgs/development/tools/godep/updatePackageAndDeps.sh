@@ -44,7 +44,7 @@ in pkgs.buildEnv {
     git
     nix
     ncurses
-    utillinux
+    util-linux_full
     curl
     findutils
   ];
@@ -65,7 +65,7 @@ pkglist+=']'
 nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
   { pkgList }:
   let
-    pkgs = (import pkgs/top-level/all-packages.nix { });
+    pkgs = (import ./. { });
     allBuildInputs = pkg: pkg.buildInputs
       ++ pkg.nativeBuildInputs
       ++ pkg.propagatedBuildInputs

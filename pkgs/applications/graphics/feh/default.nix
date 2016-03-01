@@ -26,6 +26,6 @@ stdenv.mkDerivation rec {
     homepage = https://derf.homelinux.org/projects/feh/;
     license = stdenv.lib.licenses.mit;
     maintainers = with stdenv.lib.maintainers; [viric];
-    platforms = with stdenv.lib.platforms; unix;
+    platforms = with stdenv.lib.platforms; all;
   };
 }

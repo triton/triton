@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     homepage = http://www.bitwizard.nl/mtr/;
     description = "A network diagnostics tool";
     maintainers = [ maintainers.koral maintainers.raskin ];
-    platforms = platforms.unix;
+    platforms = platforms.all;
     license = licenses.gpl2;
   };
 }

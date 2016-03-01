@@ -5,7 +5,7 @@
 
 , bluez
 , libusb
-, udev
+, systemd_lib
 }:
 
 stdenv.mkDerivation rec {
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     bluez
     libusb
-    udev
+    systemd_lib
   ];
 
   postPatch = ''

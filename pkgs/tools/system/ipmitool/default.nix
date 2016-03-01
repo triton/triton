@@ -12,10 +12,6 @@ stdenv.mkDerivation {
     sha256 = "0y6g8xg9p854n7xm3kds8m3d53jrsllnknp8lcr3jscf99j4x5ph";
   };
 
-  patchPhase = stdenv.lib.optionalString stdenv.isDarwin ''
-    substituteInPlace src/plugins/ipmi_intf.c --replace "s6_addr16" "s6_addr"
-  '';
-
   buildInputs = [ openssl ];
 
   preConfigure = ''
@@ -33,7 +29,7 @@ stdenv.mkDerivation {
     license = stdenv.lib.licenses.bsd3;
     homepage = http://ipmitool.sourceforge.net;
 
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
     maintainers = [ stdenv.lib.maintainers.simons ];
   };
 }

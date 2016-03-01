@@ -14,6 +14,6 @@ stdenv.mkDerivation rec {
     homepage = "http://mcpp.sourceforge.net/";
     description = "A portable c preprocessor";
     license = licenses.bsd2;
-    platforms = platforms.unix;
+    platforms = platforms.all;
   };
 }

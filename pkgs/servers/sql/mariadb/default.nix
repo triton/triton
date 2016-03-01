@@ -1,23 +1,23 @@
 { stdenv, fetchurl, cmake, ncurses, zlib, xz, lzo, lz4, bzip2, snappy
 , openssl, pcre, boost, judy, bison, libxml2, ninja
-, libaio, libevent, groff, jemalloc, cracklib, systemd, numactl, perl
+, libaio, libevent, groff, jemalloc, cracklib, systemd_lib, numactl, perl
 }:
 
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "mariadb-${version}";
-  version = "10.1.11";
+  version = "10.1.12";
 
   src = fetchurl {
     url    = "https://downloads.mariadb.org/interstitial/mariadb-${version}/source/mariadb-${version}.tar.gz";
-    sha256 = "1ki50gdbx7kaijfcayxf8dwc48rn2v53n1y6pha4yfrlf1rr4cnd";
+    sha256 = "1rzlc2ns84x540asbkgdp9562haxhlszfpdqh64i9pz4q1m4cpvr";
   };
 
   nativeBuildInputs = [ cmake ninja ];
   buildInputs = [
     ncurses openssl zlib xz lzo lz4 bzip2 snappy
     pcre libxml2 boost judy bison libevent cracklib
-    jemalloc libaio systemd numactl
+    jemalloc libaio systemd_lib numactl
   ];
 
   cmakeFlags = [

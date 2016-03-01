@@ -36,9 +36,7 @@ stdenv.mkDerivation rec {
   '';
 
   nativeBuildInputs = [ autoreconfHook ];
-  buildInputs = [ libevent ];
-  propagatedBuildInputs = [ libibverbs librdmacm ]
-    ++ stdenv.lib.optional stdenv.isLinux numactl;
+  buildInputs = [ libevent libibverbs librdmacm numactl ];
 
   configureFlags = [
     "--enable-rdma"

@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     homepage = https://code.google.com/p/gperftools/;
     description = "Fast, multi-threaded malloc() and nifty performance analysis tools";
-    platforms = with platforms; linux ++ darwin;
+    platforms = with platforms; linux;
     license = licenses.bsd3;
     maintainers = with maintainers; [ wkennington ];
   };

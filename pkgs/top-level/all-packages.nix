@@ -3013,6 +3013,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  nodePackages = nodePackages_5_x;
 #
+  nomad = pkgs.goPackages.nomad.bin // { outputs = [ "bin" ]; };
+
 #  npm2nix = nodePackages.npm2nix;
 #
 #  ldapvi = callPackage ../tools/misc/ldapvi { };

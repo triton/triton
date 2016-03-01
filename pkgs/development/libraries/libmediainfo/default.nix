@@ -1,12 +1,12 @@
 { stdenv, fetchurl, automake, autoconf, libtool, libzen, zlib, curl, libmms }:
 
 stdenv.mkDerivation rec {
-  version = "0.7.82";
+  version = "0.7.83";
   name = "libmediainfo-${version}";
 
   src = fetchurl {
     url = "http://mediaarea.net/download/source/libmediainfo/${version}/libmediainfo_${version}.tar.xz";
-    sha256 = "1mqmk1q2phwqwrak54jc9hfwjllhhr4nqyigisrh9rcvd6wx6r86";
+    sha256 = "0kl5x07j3jp5mnmhpjvdq0a2nnlgvqnhwar0xalvg3b3msdf8417";
   };
 
   nativeBuildInputs = [ automake autoconf libtool ];
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     description = "Shared library for mediainfo";
     homepage = http://mediaarea.net/;
     license = stdenv.lib.licenses.bsd2;
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
     maintainers = [ stdenv.lib.maintainers.devhell ];
   };
 }

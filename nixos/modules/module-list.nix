@@ -38,7 +38,6 @@
   ./hardware/pcmcia.nix
   ./hardware/video/bumblebee.nix
   ./hardware/video/nvidia.nix
-  ./hardware/video/ati.nix
   ./hardware/video/webcam/facetimehd.nix
   ./installer/tools/auto-upgrade.nix
   ./installer/tools/nixos-checkout.nix

@@ -50,7 +50,7 @@ runCommand name
       paths =
         [ drv ]
         ++ lib.concatMap (outputName: lib.optional (drv.${outputName}.outPath or null != null) drv.${outputName}) outputsToLink;
-      priority = drv.meta.priority or 5;
+      priority = drv.meta.priority or 0;
     }) paths);
     preferLocalBuild = true;
     # XXX: The size is somewhat arbitrary

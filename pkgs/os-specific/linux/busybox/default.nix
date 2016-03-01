@@ -82,5 +82,6 @@ stdenv.mkDerivation rec {
     license = licenses.gpl2;
     maintainers = with maintainers; [ viric ];
     platforms = platforms.linux;
+    priority = 9;  # Lower than everything but lowPrio packages
   };
 }

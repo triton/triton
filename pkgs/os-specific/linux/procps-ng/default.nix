@@ -10,21 +10,13 @@ stdenv.mkDerivation {
 
   buildInputs = [ ncurses ];
 
-  makeFlags = "usrbin_execdir=$(out)/bin";
-
-  enableParallelBuilding = true;
-
-  crossAttrs = {
-    CC = stdenv.cross.config + "-gcc";
-  };
-
-  # Too red
-  configureFlags = [ "--disable-modern-top" ];
+  makeFlags = [
+    "usrbin_execdir=$(out)/bin"
+  ];
 
   meta = {
     homepage = http://sourceforge.net/projects/procps-ng/;
     description = "Utilities that give information about processes using the /proc filesystem";
-    priority = 10; # less than coreutils, which also provides "kill" and "uptime"
     license = lib.licenses.gpl2;
     platforms = lib.platforms.linux;
   };

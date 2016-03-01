@@ -1,6 +1,6 @@
 { targetSystem ? builtins.currentSystem
 , hostSystem ? builtins.currentSystem
-, config ? { }
+, config ? null
 } @ args:
 let
   requiredVersion = import ./lib/minver.nix;

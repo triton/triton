@@ -255,7 +255,7 @@ in
 
     # Turn off NixOS' network management
     networking = {
-      useDHCP = false;
+      #useDHCP = false;
       wireless.enable = false;
     };
 

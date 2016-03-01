@@ -67,9 +67,14 @@ stdenv.mkDerivation rec {
       file = "webkitgtk/webkit-gtk-2.10.x-finding-harfbuzz-icu.patch";
       sha256 = "8eb3f4844b06c3c060233396045248a883177e9a09c491ddfaf9897d8e8ca2c4";
     })
+    (fetchTritonPatch {
+      rev = "0f1cfb237c758ea9c79fe44d6f5b5b20bcf8900f";
+      file = "webkitgtk/webkit-gtk-2.10.7-fix-compatibility-with-glibc-2.23.patch";
+      sha256 = "b66396c7aeddaf90360d4c37301099734925197fa664bfd7d8c6b4532624b432";
+    })
   ];
 
-  patchPhase = ''
+  postPatch = ''
     patchShebangs ./Tools
   '';
 

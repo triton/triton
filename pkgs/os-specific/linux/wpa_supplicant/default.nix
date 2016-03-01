@@ -1,5 +1,5 @@
 { stdenv, fetchpatch, fetchurl, lib, openssl, libnl
-, dbus, readline, pcsclite
+, dbus, readline, pcsclite, ncurses
 }:
 
 with stdenv.lib;
@@ -77,6 +77,7 @@ stdenv.mkDerivation rec {
     openssl
     libnl
     dbus.libs
+    ncurses
     readline
     pcsclite
   ];

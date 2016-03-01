@@ -152,6 +152,8 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--sysconfdir=/etc"
 
+    "--enable-compat-libs"  # Needed for accountsservice but will be removed in >229
+
     "--disable-address-sanitizer"  # TODO: Fix, breaks lvm2 invocation
     "--disable-undefined-sanitizer"  # TODO: Fix, breaks lvm2 invocation
     "--enable-utmp"

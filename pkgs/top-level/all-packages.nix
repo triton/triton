@@ -574,6 +574,8 @@ colord = callPackage ../all-pkgs/colord { };
 
 coreutils = callPackage ../all-pkgs/coreutils { };
 
+cpio = callPackage ../all-pkgs/cpio { };
+
 cracklib = callPackage ../all-pkgs/cracklib { };
 
 cryptodevHeaders = callPackage ../all-pkgs/cryptodev {
@@ -2190,8 +2192,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  cool-retro-term = qt5.callPackage ../applications/misc/cool-retro-term { };
 #
 #  corkscrew = callPackage ../tools/networking/corkscrew { };
-#
-  cpio = callPackage ../tools/archivers/cpio { };
 #
 #  crackxls = callPackage ../tools/security/crackxls { };
 #

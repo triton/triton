@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "A POSIX-compliant implementation of /bin/sh";
     homepage = http://gondor.apana.org.au/~herbert/dash/;
-    license = licenses.bsdOrginal;
+    license = licenses.bsd3;
     maintainers = with maintainers; [ ];
     platforms = with platforms;
       i686-linux

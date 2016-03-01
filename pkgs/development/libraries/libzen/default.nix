@@ -1,15 +1,15 @@
-{ stdenv, fetchurl, automake, autoconf, libtool, pkgconfig }:
+{ stdenv, fetchurl, automake, autoconf, libtool }:
 
-let version = "0.4.32"; in
+let version = "0.4.33"; in
 
 stdenv.mkDerivation {
   name = "libzen-${version}";
   src = fetchurl {
     url = "http://mediaarea.net/download/source/libzen/${version}/libzen_${version}.tar.bz2";
-    sha256 = "0rhbiaywij6jj8d7vkc4v7y21ic1kv9fbn9lk82mm12yjwzlhhyd";
+    sha256 = "0py5iagajz6m5zh26svkjyy85k1dmyhi6cdbmc3cb56a4ix1k2d2";
   };
 
-  buildInputs = [ automake autoconf libtool pkgconfig ];
+  nativeBuildInputs = [ automake autoconf libtool ];
   configureFlags = [ "--enable-shared" ];
 
   sourceRoot = "./ZenLib/Project/GNU/Library/";
@@ -20,7 +20,7 @@ stdenv.mkDerivation {
     description = "Shared library for libmediainfo and mediainfo";
     homepage = http://mediaarea.net/;
     license = stdenv.lib.licenses.bsd2;
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
     maintainers = [ stdenv.lib.maintainers.devhell ];
   };
 }

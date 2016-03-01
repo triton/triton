@@ -119,8 +119,7 @@ with stdenv.lib; stdenv.mkDerivation {
       --replace "\$\$(subst  /,//," "\$\$(subst /,/,"
 
     # Fix dynamic linking against llvm
-    # TODO: Change once we can link dynamically against llvm
-    #${optionalString (!forceBundledLLVM) ''sed -i 's/, kind = \\"static\\"//g' src/etc/mklldeps.py''}
+    ${optionalString (!forceBundledLLVM) ''sed -i 's/, kind = \\"static\\"//g' src/etc/mklldeps.py''}
 
     # Fix not filtering out -L lines from llvm-config
     sed -i '\#if len(lib) == 1#a\        continue\n    if lib[0:2] == "-L":' src/etc/mklldeps.py

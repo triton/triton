@@ -1,30 +1,47 @@
-{ stdenv, fetchurl, pkgconfig, glib, dbus_glib
-, intltool, libxslt, docbook_xsl, libgudev, libusb
-, useSystemd ? true, systemd_lib, gobjectIntrospection
+{ stdenv
+, docbook_xsl
+, fetchurl
+, intltool
+, libxslt
+
+, glib
+, dbus_glib
+, libgudev
+, libusb
+, systemd_lib
+, gobjectIntrospection
 }:
 
 stdenv.mkDerivation rec {
-  name = "upower-0.99.3";
+  name = "upower-0.99.4";
 
   src = fetchurl {
     url = "http://upower.freedesktop.org/releases/${name}.tar.xz";
-    sha256 = "0f6x9mi1jzgqdpycaikyhjljnw3aacsl3gxndyg0dfqkq6y9jwb9";
+    sha256 = "1c1ph1j1fnrf3vipxb7ncmdfc36dpvcvpsv8n8lmal7grjk2b8ww";
   };
 
-  buildInputs =
-    [ dbus_glib intltool libxslt docbook_xsl libgudev libusb gobjectIntrospection ]
-    ++ stdenv.lib.optional useSystemd systemd_lib;
+  nativeBuildInputs = [
+    docbook_xsl
+    intltool
+    libxslt
+  ];
 
-  nativeBuildInputs = [ pkgconfig ];
+  buildInputs = [
+    dbus_glib
+    libgudev
+    libusb
+    systemd_lib
+    gobjectIntrospection
+  ];
 
-  configureFlags =
-    [ "--with-backend=linux" "--localstatedir=/var"
-    ]
-    ++ stdenv.lib.optional useSystemd
-    [ "--with-systemdsystemunitdir=$(out)/etc/systemd/system"
-      "--with-systemdutildir=$(out)/lib/systemd"
-      "--with-udevrulesdir=$(out)/lib/udev/rules.d"
-    ];
+  configureFlags = [
+    "--with-backend=linux"
+    "--localstatedir=/var"
+    "--sysconfdir=/etc"
+    "--with-systemdsystemunitdir=$(out)/etc/systemd/system"
+    "--with-systemdutildir=$(out)/lib/systemd"
+    "--with-udevrulesdir=$(out)/lib/udev/rules.d"
+  ];
 
   NIX_CFLAGS_LINK = "-lgcc_s";
 

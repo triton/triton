@@ -1369,6 +1369,8 @@ redis = callPackage ../all-pkgs/redis { };
 
 rest = callPackage ../all-pkgs/rest { };
 
+rocksdb = callPackage ../all-pkgs/rocksdb { };
+
 rtmpdump = callPackage ../all-pkgs/rtmpdump { };
 
 rtorrent = callPackage ../all-pkgs/rtorrent { };
@@ -7627,8 +7629,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  };
 #
 #  rlog = callPackage ../development/libraries/rlog { };
-#
-  rocksdb = callPackage ../development/libraries/rocksdb { };
 #
 #  rote = callPackage ../development/libraries/rote { };
 #

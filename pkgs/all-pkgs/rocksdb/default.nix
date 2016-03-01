@@ -1,16 +1,16 @@
-{ stdenv, fetchFromGitHub
+{ stdenv
+, fetchFromGitHub
 
-# Optional Arguments
-, snappy ? null, google-gflags ? null, zlib ? null, bzip2 ? null, lz4 ? null
-, zstd ? null , numactl ? null
-
-# Malloc implementation
-, jemalloc ? null, gperftools ? null
+, bzip2
+, google-gflags
+, jemalloc
+, lz4
+, numactl
+, snappy
+, zlib
+, zstd
 }:
 
-let
-  malloc = if jemalloc != null then jemalloc else gperftools;
-in
 stdenv.mkDerivation rec {
   name = "rocksdb-${version}";
   version = "4.2";
@@ -22,7 +22,16 @@ stdenv.mkDerivation rec {
     sha256 = "0k6zhx0xiyfr5r921kn43abm1l4dvy23w13242g2kjnasfhzzjpx";
   };
 
-  buildInputs = [ snappy google-gflags zlib bzip2 lz4 zstd numactl malloc ];
+  buildInputs = [
+    bzip2
+    google-gflags
+    jemalloc
+    lz4
+    numactl
+    snappy
+    zlib
+    zstd
+  ];
 
   postPatch = ''
     # Hack to fix typos
@@ -33,7 +42,7 @@ stdenv.mkDerivation rec {
   PORTABLE = "1";
   USE_SSE = "1";
   CMAKE_CXX_FLAGS = "-std=gnu++11";
-  JEMALLOC_LIB = stdenv.lib.optionalString (malloc == jemalloc) "-ljemalloc";
+  JEMALLOC_LIB = "-ljemalloc";
 
   makeFlags = [
     "DEBUG_LEVEL=0"
@@ -59,13 +68,15 @@ stdenv.mkDerivation rec {
     cat make_config.mk
   '';
 
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     homepage = http://rocksdb.org;
     description = "A library that provides an embeddable, persistent key-value store for fast storage";
     license = licenses.bsd3;
-    platforms = platforms.allBut [ "i686-linux" ];
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

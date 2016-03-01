@@ -1239,6 +1239,16 @@ poppler = callPackage ../all-pkgs/poppler {
   qt5 = null;
 };
 
+postgresql = callPackageAlias "postgresql95" { };
+postgresql_lib = callPackageAlias "postgresql" { };
+
+inherit (callPackages ../all-pkgs/postgresql { })
+  postgresql91
+  postgresql92
+  postgresql93
+  postgresql94
+  postgresql95;
+
 potrace = callPackage ../all-pkgs/potrace {};
 
 psmisc = callPackage ../all-pkgs/psmisc { };
@@ -8527,16 +8537,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    libmemcached = null; # Detection is broken upstream
 #  };
 #
-  postgresql = callPackageAlias "postgresql95" { };
-  postgresql_lib = callPackageAlias "postgresql" { };
-
-  inherit (callPackages ../servers/sql/postgresql { })
-    postgresql91
-    postgresql92
-    postgresql93
-    postgresql94
-    postgresql95;
-
 #  postgresql_jdbc = callPackage ../servers/sql/postgresql/jdbc { };
 #
 #  prom2json = pkgs.goPackages.prometheus.prom2json.bin // { outputs = [ "bin" ]; };

@@ -486,7 +486,6 @@ in
         xorg.xsetroot
         xorg.xinput
         xorg.xprop
-        pkgs.xterm
         pkgs.xdg-utils
       ]
       ++ optional (elem "virtualbox" cfg.videoDrivers) xorg.xrefresh;

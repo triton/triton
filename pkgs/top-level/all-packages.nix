@@ -3071,13 +3071,13 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libiberty = callPackage ../development/libraries/libiberty { };
 #
-#  libibverbs = callPackage ../development/libraries/libibverbs { };
+  libibverbs = callPackage ../development/libraries/libibverbs { };
 #
 #  libxcomp = callPackage ../development/libraries/libxcomp { };
 #
 #  libx86emu = callPackage ../development/libraries/libx86emu { };
 #
-#  librdmacm = callPackage ../development/libraries/librdmacm { };
+  librdmacm = callPackage ../development/libraries/librdmacm { };
 #
 #  libwebsockets = callPackage ../development/libraries/libwebsockets { };
 #
@@ -4491,7 +4491,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  xflux = callPackage ../tools/misc/xflux { };
 #
   xfsprogs = callPackage ../tools/filesystems/xfsprogs { };
-  libxfs = pkgs.xfsprogs.lib;
+  xfsprogs_lib = pkgs.xfsprogs.lib;
 #
 #  xml2 = callPackage ../tools/text/xml/xml2 { };
 #
@@ -5988,7 +5988,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   aalib = callPackage ../development/libraries/aalib { };
 #
-#  accelio = callPackage ../development/libraries/accelio { };
+  accelio = callPackage ../development/libraries/accelio { };
 #
 #  activemq = callPackage ../development/libraries/apache-activemq { };
 #
@@ -6203,7 +6203,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  farstream = callPackage ../development/libraries/farstream { };
 #
-#  fcgi = callPackage ../development/libraries/fcgi { };
+  fcgi = callPackage ../development/libraries/fcgi { };
 #
 #  ffmpegthumbnailer = callPackage ../development/libraries/ffmpegthumbnailer { };
 #
@@ -6347,9 +6347,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  goocanvas = callPackage ../development/libraries/goocanvas { };
 #
-#  google-gflags = callPackage ../development/libraries/google-gflags { };
+  google-gflags = callPackage ../development/libraries/google-gflags { };
 #
-#  gperftools = callPackage ../development/libraries/gperftools { };
+  gperftools = callPackage ../development/libraries/gperftools { };
 #
 #  grib-api = callPackage ../development/libraries/grib-api { };
 #
@@ -7037,7 +7037,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  librsync_0_9 = callPackage ../development/libraries/librsync/0.9.nix { };
 #
-#  libs3 = callPackage ../development/libraries/libs3 { };
+  libs3 = callPackage ../development/libraries/libs3 { };
 #
 #  libsearpc = callPackage ../development/libraries/libsearpc { };
 #
@@ -7628,7 +7628,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  rlog = callPackage ../development/libraries/rlog { };
 #
-#  rocksdb = callPackage ../development/libraries/rocksdb { };
+  rocksdb = callPackage ../development/libraries/rocksdb { };
 #
 #  rote = callPackage ../development/libraries/rote { };
 #
@@ -7824,7 +7824,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  tnt = callPackage ../development/libraries/tnt { };
 #
-#  kyotocabinet = callPackage ../development/libraries/kyotocabinet { };
+  kyotocabinet = callPackage ../development/libraries/kyotocabinet { };
 #
 #  tokyocabinet = callPackage ../development/libraries/tokyo-cabinet { };
 #
@@ -9187,7 +9187,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
   linuxManualConfig = pkgs.buildLinux;
   buildLinux = callPackage ../os-specific/linux/kernel/manual-config.nix {};
 #
-#  keyutils = callPackage ../os-specific/linux/keyutils { };
+  keyutils = callPackage ../os-specific/linux/keyutils { };
 #
   libselinux = callPackage ../os-specific/linux/libselinux { };
 #

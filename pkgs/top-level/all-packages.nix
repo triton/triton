@@ -143,23 +143,12 @@ let
     in newpkgs;
 
   # Override system. This is useful to build i686 packages on x86_64-linux.
-  forceSystem = system: kernel: (import ./all-packages.nix) {
-    inherit system;
-    platform = platform // { kernelArch = kernel; };
-    inherit noSysDirs gccWithCC gccWithProfiling config
-      crossSystem;
+  forceSystem = { targetSystem, hostSystem }: (import ./all-packages.nix) {
+    inherit targetSystem hostSystem config stdenv;
   };
-
-
-  # Used by wine, firefox with debugging version of Flash, ...
-  pkgsi686Linux = forceSystem "i686-linux" "i386";
-
-  callPackage_i686 = lib.callPackageWith (pkgsi686Linux // pkgsi686Linux.xorg);
-
 
   # For convenience, allow callers to get the path to Nixpkgs.
   path = ../..;
-
 
   ### Helper functions.
   inherit lib config stdenvAdapters;

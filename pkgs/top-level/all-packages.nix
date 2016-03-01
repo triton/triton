@@ -1018,6 +1018,8 @@ libomxil-bellagio = callPackage ../all-pkgs/libomxil-bellagio { };
 
 libosinfo = callPackage ../all-pkgs/libosinfo { };
 
+libossp-uuid = callPackage ../all-pkgs/libossp-uuid { };
+
 libpeas = callPackage ../all-pkgs/libpeas { };
 
 libpng = callPackage ../all-pkgs/libpng { };
@@ -8848,8 +8850,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  drbd = callPackage ../os-specific/linux/drbd { };
 #
 #  dstat = callPackage ../os-specific/linux/dstat { };
-#
-  libossp_uuid = callPackage ../development/libraries/libossp-uuid { };
 #
 #  light = callPackage ../os-specific/linux/light { };
 #

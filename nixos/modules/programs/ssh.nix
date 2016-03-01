@@ -192,8 +192,8 @@ in
     environment.etc."ssh/ssh_known_hosts".text = knownHostsText;
 
     # FIXME: this should really be socket-activated for über-awesomeness.
-    systemd.user.services.ssh-agent =
-      { enable = cfg.startAgent;
+    systemd.user.services = mkIf cfg.startAgent {
+      ssh-agent = {
         description = "SSH Agent";
         wantedBy = [ "default.target" ];
         serviceConfig =
@@ -213,6 +213,7 @@ in
         environment.SSH_ASKPASS = optionalString config.services.xserver.enable askPasswordWrapper;
         environment.DISPLAY = "fake"; # required to make ssh-agent start $SSH_ASKPASS
       };
+    };
 
     environment.extraInit = optionalString cfg.startAgent
       ''
@@ -221,7 +222,9 @@ in
         fi
       '';
 
-    environment.variables.SSH_ASKPASS = optionalString config.services.xserver.enable askPassword;
+    environment.variables = mkIf cfg.startAgent {
+      SSH_ASKPASS = optionalString config.services.xserver.enable askPassword;
+    };
 
     programs.ssh.askPassword = mkDefault "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
 

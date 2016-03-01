@@ -25,6 +25,6 @@ stdenv.mkDerivation rec {
     description = "An account manager and channel dispatcher for the Telepathy framework";
     homepage = http://telepathy.freedesktop.org/wiki/;
     license = licenses.lgpl21;
-    platforms = platforms.unix;
+    platforms = platforms.all;
   };
 }

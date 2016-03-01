@@ -1,5 +1,5 @@
 { stdenv, fetchpatch, fetchurl, lib, openssl, libnl
-, dbus_libs, readline, pcsclite
+, dbus, readline, pcsclite
 }:
 
 with stdenv.lib;
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
     CONFIG_EAP_AKA=y
     CONFIG_EAP_AKA_PRIME=y
     CONFIG_PCSC=y
-  '' + optionalString (dbus_libs != null) ''
+  '' + optionalString (dbus.libs != null) ''
     CONFIG_CTRL_IFACE_DBUS=y
     CONFIG_CTRL_IFACE_DBUS_NEW=y
     CONFIG_CTRL_IFACE_DBUS_INTRO=y
@@ -76,7 +76,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     openssl
     libnl
-    dbus_libs
+    dbus.libs
     readline
     pcsclite
   ];

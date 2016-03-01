@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, iproute, lzo, openssl, pam, systemd, pkgconfig }:
+{ stdenv, fetchurl, iproute, lzo, openssl, pam, systemd_lib, pkgconfig }:
 
 with stdenv.lib;
 
@@ -10,14 +10,12 @@ stdenv.mkDerivation rec {
     sha256 = "0lbw22qv3m0axhs13razr6b4x1p7jcpvf9rzb15b850wyvpka92k";
   };
 
-  patches = optional stdenv.isLinux ./systemd-notify.patch;
+  patches = ./systemd-notify.patch;
 
-  buildInputs = [ lzo openssl pkgconfig ]
-                  ++ optionals stdenv.isLinux [ pam systemd iproute ];
+  buildInputs = [ lzo openssl pkgconfig pam systemd_lib iproute ];
 
   configureFlags = ''
     --enable-password-save
-  '' + optionalString stdenv.isLinux ''
     --enable-systemd
     --enable-iproute2
     IPROUTE=${iproute}/sbin/ip
@@ -32,7 +30,7 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
-  NIX_LDFLAGS = optionalString stdenv.isLinux "-lsystemd-daemon"; # hacky
+  NIX_LDFLAGS = "-lsystemd-daemon"; # hacky
 
   meta = {
     description = "A robust and highly flexible tunneling application";

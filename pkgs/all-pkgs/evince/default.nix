@@ -4,7 +4,7 @@
 , intltool
 , itstool
 , perl
-, perlXMLParser
+, perlPackages
 
 , adwaita-icon-theme
 , atk
@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
     intltool
     itstool
     perl
-    perlXMLParser
+    perlPackages.XMLParser
   ];
 
   buildInputs = [

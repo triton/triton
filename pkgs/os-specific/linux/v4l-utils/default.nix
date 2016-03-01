@@ -1,6 +1,6 @@
 { stdenv, fetchurl, pkgconfig
 , libjpeg
-, alsaLib ? null
+, alsa-lib ? null
 , libX11 ? null
 , qt4 ? null # The default is set to qt4 in all-packages.nix
 , qt5 ? null
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-libv4l"
-  ] ++ (if (alsaLib != null && libX11 != null && (qt4 != null || qt5 != null)) then [
+  ] ++ (if (alsa-lib != null && libX11 != null && (qt4 != null || qt5 != null)) then [
     "--with-udevdir=\${out}/lib/udev"
     "--enable-v4l-utils"
     "--enable-qv4l2"
@@ -45,8 +45,8 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkgconfig ];
 
-  buildInputs = [ alsaLib libX11 qt4 qt5 ];
-  
+  buildInputs = [ alsa-lib libX11 qt4 qt5 ];
+
   propagatedBuildInputs = [ libjpeg ];
 
   meta = with stdenv.lib; {

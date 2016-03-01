@@ -1,11 +1,11 @@
-{ stdenv, fetchurl, libgpgerror, gnupg, pkgconfig, glib, pth, libassuan
-, useGnupg1 ? false, gnupg1 ? null }:
+{ stdenv, fetchurl, libgpg-error, gnupg, pkgconfig, glib, pth, libassuan
+, useGnupg1 ? false, gnupg1orig ? null }:
 
-assert useGnupg1 -> gnupg1 != null;
+assert useGnupg1 -> gnupg1orig != null;
 assert !useGnupg1 -> gnupg != null;
 
 let
-  gpgStorePath = if useGnupg1 then gnupg1 else gnupg;
+  gpgStorePath = if useGnupg1 then gnupg1orig else gnupg;
   gpgProgram = if useGnupg1 then "gpg" else "gpg2";
 in
 stdenv.mkDerivation rec {
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     sha256 = "17892sclz3yg45wbyqqrzzpq3l0icbnfl28f101b3062g8cy97dh";
   };
 
-  propagatedBuildInputs = [ libgpgerror glib libassuan pth ];
+  propagatedBuildInputs = [ libgpg-error glib libassuan pth ];
 
   nativeBuildInputs = [ pkgconfig gnupg ];
 
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     homepage = "http://www.gnupg.org/related_software/gpgme";
     description = "Library for making GnuPG easier to use";
     license = stdenv.lib.licenses.gpl2;
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
     maintainers = with stdenv.lib.maintainers; [ fuuzetsu ];
   };
 }

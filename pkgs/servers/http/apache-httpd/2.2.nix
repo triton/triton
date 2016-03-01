@@ -8,7 +8,7 @@
 }:
 
 assert sslSupport -> openssl != null;
-assert ldapSupport -> aprutil.ldapSupport && openldap != null;
+assert ldapSupport -> aprutil != null && openldap != null;
 assert mpm == "prefork" || mpm == "worker" || mpm == "event";
 
 stdenv.mkDerivation rec {

@@ -948,8 +948,6 @@ libass = callPackage ../all-pkgs/libass { };
 libbluray = callPackage ../all-pkgs/libbluray { };
 
 libcanberra = callPackage ../all-pkgs/libcanberra { };
-libcanberra_gtk3 = libcanberra; # Deprecated alias
-libcanberra_kde = libcanberra; # Deprecated alias
 
 libcap_ng = callPackage ../all-pkgs/libcap-ng { };
 
@@ -1042,7 +1040,7 @@ libtorrent-rasterbar = libtorrent-rasterbar_1;
 
 libunique_1 = callPackage ../all-pkgs/libunique/1.x.nix { };
 libunique_3 = callPackage ../all-pkgs/libunique/3.x.nix { };
-libunique = libunique_3;
+libunique = callPackageAlias "libunique_3" { };
 
 libusb-compat = callPackage ../all-pkgs/libusb-compat { };
 
@@ -1218,17 +1216,17 @@ pkgconfig = callPackageAlias "pkgconf" { };
 
 pngcrush = callPackage ../all-pkgs/pngcrush { };
 
-poppler_qt4 = poppler.override {
+poppler_qt4 = callPackageAlias "poppler" {
   suffix = "qt4";
   qt4 = qt4;
   qt5 = null;
 };
-poppler_qt5 = poppler.override {
+poppler_qt5 = callPackageAlias "poppler" {
   suffix = "qt5";
   qt4 = null;
   qt5 = qt54;
 };
-poppler_utils = poppler.override {
+poppler_utils = callPackageAlias "poppler" {
   suffix = "utils";
   utils = true;
 };
@@ -4242,7 +4240,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   vpnc = callPackage ../tools/networking/vpnc { };
 
-  openconnect = openconnect_openssl;
+  openconnect = callPackageAlias "openconnect_openssl" { };
 
   openconnect_openssl = callPackage ../tools/networking/openconnect.nix {
     gnutls = null;
@@ -5308,12 +5306,12 @@ zstd = callPackage ../all-pkgs/zstd { };
   lua5_3_compat = callPackage ../development/interpreters/lua-5/5.3.nix {
     compat = true;
   };
-  lua5 = lua5_3_compat;
-  lua = lua5;
+  lua5 = callPackageAlias "lua5_3_compat" { };
+  lua = callPackageAlias "lua5" { };
 #
 #  lua52Packages = callPackage ./lua-packages.nix { lua = lua5_2; };
   lua53Packages = callPackage ./lua-packages.nix { lua = lua5_3; };
-  luaPackages = lua53Packages;
+  luaPackages = callPackageAlias "lua53Packages" { };
 #
 #  lua5_expat = callPackage ../development/interpreters/lua-5/expat.nix {};
 #  lua5_sec = callPackage ../development/interpreters/lua-5/sec.nix { };
@@ -6355,9 +6353,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gpac = callPackage ../applications/video/gpac { };
 #
-  gpgme = callPackage ../development/libraries/gpgme {
-    gnupg1 = gnupg1orig;
-  };
+  gpgme = callPackage ../development/libraries/gpgme { };
 #
 #  gpgstats = callPackage ../tools/security/gpgstats { };
 #
@@ -6523,7 +6519,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  LASzip = callPackage ../development/libraries/LASzip { };
 #
-  lcms = lcms1;
+  lcms = callPackageAlias "lcms1" { };
 
   lcms1 = callPackage ../development/libraries/lcms { };
 
@@ -6606,7 +6602,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
   libcdio = callPackage ../development/libraries/libcdio { };
 #  libcdio082 = callPackage ../development/libraries/libcdio/0.82.nix { };
 #
-  libcdr = callPackage ../development/libraries/libcdr { lcms = lcms2; };
+  libcdr = callPackage ../development/libraries/libcdr { lcms = callPackageAlias "lcms2" { }; };
 #
 #  libchamplain = callPackage ../development/libraries/libchamplain { };
 #
@@ -8210,7 +8206,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  rdf4store = callPackage ../servers/http/4store { };
 #
-  apacheHttpd = pkgs.apacheHttpd_2_4;
+  apacheHttpd = callPackageAlias "apacheHttpd_2_4";
 
   apacheHttpd_2_2 = callPackage ../servers/http/apache-httpd/2.2.nix {
     sslSupport = true;

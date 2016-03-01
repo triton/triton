@@ -29,11 +29,11 @@ with {
   config = mkIf config.services.at-spi2-core.enable {
 
     environment.systemPackages = [
-      pkgs.at_spi2_core
+      pkgs.at-spi2-core
     ];
 
     services.dbus.packages = [
-      pkgs.at_spi2_core
+      pkgs.at-spi2-core
     ];
 
   };

@@ -10,7 +10,7 @@
 , glib
 , gtk3
 , pango
-, libxml2Python
+, libxml2
 , perl
 , gobject-introspection
 , vala
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
     glib
     gtk3
     pango
-    libxml2Python
+    libxml2
     perl
     gobject-introspection
     vala

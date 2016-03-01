@@ -11,23 +11,23 @@
 , libpng
 , libmng
 , which
-, mesaSupported
+, mesaSupported ? true
 , mesa_noglu
 , mesa_glu
 , openssl
 , dbus
 , cups
-, libpulseaudio
+, pulseaudio_lib
 , libtiff
 , glib
 , icu
-, libmysql
+, mysql_lib
 , postgresql
 , sqlite
 , perl
 , coreutils
 , buildMultimedia ? stdenv.isLinux
-  , alsaLib
+  , alsa-lib
 , gstreamer_0
 , gst-plugins-base_0
 , buildWebkit ? stdenv.isLinux
@@ -153,7 +153,7 @@ stdenv.mkDerivation rec {
     #"-sql"
     #"-qt-sql-<driver>"
     #"-plugin-sql-<driver>"
-    (qtFlag "sql-mysql" (libmysql != null) null)
+    (qtFlag "sql-mysql" (mysql_lib != null) null)
     "-system-sqlite"
     #"-qt3Support"
     #"-xmlpatterns"
@@ -213,7 +213,7 @@ stdenv.mkDerivation rec {
     #"-gtkstyle"
     #"-system-nas-sound"
     #"-egl" # replace glx
-    (qtFlag "opengl" (!isFreeBSD) null)
+    (qtFlag "opengl" true null)
     #"-openvg"
     "-sm"
     "-xshape"
@@ -281,9 +281,9 @@ stdenv.mkDerivation rec {
     icu
     libjpeg
     libmng
-    libmysql
+    mysql_lib
     libpng
-    libpulseaudio
+    pulseaudio_lib
     libtiff
     openssl
     postgresql
@@ -301,7 +301,7 @@ stdenv.mkDerivation rec {
     zlib
   ] ++ optionals gtkStyle [ gtk2 gdk-pixbuf ]
     ++ optionals mesaSupported [ mesa_noglu mesa_glu ]
-    ++ optional ((buildWebkit || buildMultimedia) && stdenv.isLinux ) alsaLib
+    ++ optional ((buildWebkit || buildMultimedia)) alsa-lib
     ++ optionals (buildWebkit || buildMultimedia) [ gstreamer_0 gst-plugins-base_0 ];
 
   postInstall = ''

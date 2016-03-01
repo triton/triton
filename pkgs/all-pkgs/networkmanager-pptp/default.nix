@@ -6,7 +6,7 @@
 
 , dbus_glib
 , gtk3
-, libgnome_keyring
+, libgnome-keyring
 , libsecret
 , networkmanager
 , networkmanager-applet

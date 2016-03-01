@@ -39,7 +39,6 @@
 , libpng
 , librsvg
 , libtiff
-, libuuid
 , libvorbis
 , libxml2
 , libxslt
@@ -49,6 +48,7 @@
 , taglib
 , totem-pl-parser
 , upower
+, util-linux_lib
 , vala
 , zlib
 }:
@@ -122,7 +122,6 @@ stdenv.mkDerivation rec {
     libpng
     librsvg
     libtiff
-    libuuid
     libvorbis
     libxml2
     networkmanager
@@ -132,7 +131,7 @@ stdenv.mkDerivation rec {
     taglib
     #thunderbird
     upower
-    #utillinux
+    util-linux_lib
     vala
     zlib
   ];

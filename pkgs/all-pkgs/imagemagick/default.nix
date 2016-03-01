@@ -5,7 +5,7 @@
 , bzip2
 , dejavu_fonts
 , djvulibre
-, fftw
+, fftw_single
 , fontconfig
 , freetype
 , ghostscript
@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
     bzip2
     dejavu_fonts
     djvulibre
-    fftw
+    fftw_single
     fontconfig
     freetype
     ghostscript
@@ -134,7 +134,7 @@ stdenv.mkDerivation rec {
     #(wtFlag "dps" ( != null) null)
     (wtFlag "dejavu-font-dir" (dejavu_fonts != null)
       "${dejavu_fonts}/share/fonts/truetype/")
-    (wtFlag "fftw" (fftw != null) null)
+    (wtFlag "fftw" (fftw_single != null) null)
     (wtFlag "fpx" (libfpx != null) null)
     (wtFlag "djvu" (djvulibre != null) null)
     (wtFlag "fontconfig" (fontconfig != null) null)

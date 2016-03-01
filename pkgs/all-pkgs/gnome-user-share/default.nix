@@ -13,9 +13,9 @@
 , libtool
 , mod_dnssd
 , librsvg
-, gdk_pixbuf
+, gdk-pixbuf
 , file
-, libcanberra_gtk3
+, libcanberra
 , glib
 , adwaita-icon-theme
 }:
@@ -33,13 +33,13 @@ stdenv.mkDerivation rec {
 
   NIX_CFLAGS_COMPILE = "-I${glib}/include/gio-unix-2.0";
 
-  preConfigure = ''
-    sed -i data/dav_user_2.2.conf \
-      -e 's,^LoadModule dnssd_module.\+,LoadModule dnssd_module ${mod_dnssd}/modules/mod_dnssd.so,'
-  '';
+  #preConfigure = ''
+  #  sed -i data/dav_user_2.2.conf \
+  #    -e 's,^LoadModule dnssd_module.\+,LoadModule dnssd_module ${mod_dnssd}/modules/mod_dnssd.so,'
+  #'';
 
-  configureFlags = [ "--with-httpd=${apacheHttpd_2_2}/bin/httpd"
-                     "--with-modules-path=${apacheHttpd_2_2}/modules"
+  configureFlags = [ #"--with-httpd=${apacheHttpd_2_2}/bin/httpd"
+                     #"--with-modules-path=${apacheHttpd_2_2}/modules"
                      "--disable-bluetooth"
                      "--with-nautilusdir=$(out)/lib/nautilus/extensions-3.0" ];
 
@@ -53,11 +53,11 @@ stdenv.mkDerivation rec {
     libtool
     makeWrapper
     file
-    gdk_pixbuf
+    gdk-pixbuf
     librsvg
     nautilus
     libnotify
-    libcanberra_gtk3
+    libcanberra
   ];
 
   postInstall = ''

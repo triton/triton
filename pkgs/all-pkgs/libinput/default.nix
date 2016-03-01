@@ -2,6 +2,7 @@
 , fetchurl
 
 , libevdev
+, libwacom
 , mtdev
 , systemd_lib
 
@@ -36,15 +37,16 @@ assert testsSupport ->
   && valgrind != null;
 
 stdenv.mkDerivation rec {
-  name = "libinput-1.1.8";
+  name = "libinput-1.2.1";
 
   src = fetchurl {
     url = "http://www.freedesktop.org/software/libinput/${name}.tar.xz";
-    sha256 = "0iwpysfkd4gpwn05k17mdm5giy0dz6kax07ibpk1aklwflwrc37y";
+    sha256 = "1hy1h0a4zx5wj23sah4kms2z0285yl0kcn4fqlrrp1gqax9qrnz2";
   };
 
   buildInputs = [
     libevdev
+    libwacom
     mtdev
     systemd_lib
   ] ++ optionals eventGUISupport [

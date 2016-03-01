@@ -39,7 +39,7 @@ let
           else
             null;
       in
-        if homePath != null then
+        if homePath != null && builtins.pathExists homePath then
           import homePath { inherit pkgs; }
         else
           { };

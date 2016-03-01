@@ -1,13 +1,34 @@
-{ stdenv, fetchurl, gettext, util-linux_lib, readline }:
+{ stdenv
+, fetchTritonPatch
+, fetchurl
+, gettext
+
+, readline
+, util-linux_lib
+}:
 
 stdenv.mkDerivation rec {
-  name = "xfsprogs-4.2.0";
+  name = "xfsprogs-4.3.0";
 
   src = fetchurl {
     urls = map (dir: "ftp://oss.sgi.com/projects/xfs/${dir}/${name}.tar.gz")
       [ "cmd_tars" "previous" ];
-    sha256 = "0q2j1rrh37kqyihaq5lc31xdi36lgg9asidaad0fada61ynv3six";
+    sha256 = "0p6bsh350zf85q8a7sv6s5anpm6vbn02qazlj8vvxr2k27ahlmry";
   };
+
+  nativeBuildInputs = [
+    gettext
+  ];
+
+  buildInputs = [
+    readline
+    util-linux_lib
+  ];
+
+  outputs = [
+    "out"
+    "lib"
+  ];
 
   prePatch = ''
     sed -i "s,/bin/bash,$(type -P bash),g" install-sh
@@ -20,13 +41,12 @@ stdenv.mkDerivation rec {
   '';
 
   patches = [
-    # This patch fixes shared libs installation, still not fixed in 4.2.0
-    ./4.2.0-sharedlibs.patch
+    (fetchTritonPatch {
+      rev = "07aa30f6f5e0f4a08903cf93cdc1825d75a81404";
+      file = "xfsprogs/xfsprogs-4.3.0-sharedlibs.patch";
+      sha256 = "23bf3127cd1eab6e96055d2a5f3ae61f417a8d4ae52d5c421be2bbb05576bb46";
+    })
   ];
-
-  buildInputs = [ gettext util-linux_lib readline ];
-
-  outputs = [ "out" "lib" ];
 
   preConfigure = ''
     NIX_LDFLAGS="$(echo $NIX_LDFLAGS | sed "s,$out,$lib,g")"
@@ -43,9 +63,9 @@ stdenv.mkDerivation rec {
     "--libdir=$(lib)/lib"
   ];
 
-  installFlags = [ "install-dev" ];
-
-  enableParallelBuilding = true;
+  installFlags = [
+    "install-dev"
+  ];
 
   meta = with stdenv.lib; {
     homepage = http://xfs.org/;

@@ -1468,6 +1468,9 @@ x265 = callPackage ../all-pkgs/x265 { };
 
 xdg-utils = callPackage ../all-pkgs/xdg-utils { };
 
+xfsprogs = callPackage ../all-pkgs/xfsprogs { };
+xfsprogs_lib = pkgs.xfsprogs.lib;
+
 xine-lib = callPackage ../all-pkgs/xine-lib { };
 
 xine-ui = callPackage ../all-pkgs/xine-ui { };
@@ -4491,9 +4494,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  xdummy = callPackage ../tools/misc/xdummy { };
 #
 #  xflux = callPackage ../tools/misc/xflux { };
-#
-  xfsprogs = callPackage ../tools/filesystems/xfsprogs { };
-  xfsprogs_lib = pkgs.xfsprogs.lib;
 #
 #  xml2 = callPackage ../tools/text/xml/xml2 { };
 #

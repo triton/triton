@@ -181,7 +181,7 @@ stdenv.mkDerivation rec {
     "--enable-glx-tls"
     "--disable-glx-read-only-text"
     "--enable-gallium-llvm"
-    "--enable-llvm-shared-libs"
+    "--disable-llvm-shared-libs"
 
     #gl-lib-name=GL
     #osmesa-libname=OSMesa

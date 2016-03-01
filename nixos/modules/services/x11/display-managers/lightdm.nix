@@ -138,7 +138,7 @@ in
 
         session  required pam_env.so envfile=${config.system.build.pamEnvironment}
         session  required pam_unix.so
-        session  optional ${pkgs.systemd}/lib/security/pam_systemd.so
+        session  optional ${config.systemd.package}/lib/security/pam_systemd.so
       '';
     };
 

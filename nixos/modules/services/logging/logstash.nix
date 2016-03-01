@@ -88,7 +88,7 @@ in
         example = literalExample ''
           # Read from journal
           pipe {
-            command => "''${pkgs.systemd}/bin/journalctl -f -o json"
+            command => "''${config.systemd.package}/bin/journalctl -f -o json"
             type => "syslog" codec => json {}
           }
         '';

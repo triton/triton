@@ -170,7 +170,7 @@ in
             '' + optionalString config.services.nscd.enable ''
               # Invalidate the nscd cache whenever resolv.conf is
               # regenerated.
-              libc_restart='${pkgs.systemd}/bin/systemctl try-restart --no-block nscd.service 2> /dev/null'
+              libc_restart='${config.systemd.package}/bin/systemctl try-restart --no-block nscd.service 2> /dev/null'
             '' + optionalString cfg.dnsSingleRequest ''
               # only send one DNS request at a time
               resolv_conf_options+=' single-request'

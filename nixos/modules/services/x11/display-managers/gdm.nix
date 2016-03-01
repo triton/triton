@@ -156,7 +156,7 @@ in
 
         session  required       pam_succeed_if.so audit quiet_success user = gdm
         session  required       pam_env.so envfile=${config.system.build.pamEnvironment}
-        session  optional       ${pkgs.systemd}/lib/security/pam_systemd.so
+        session  optional       ${config.systemd.package}/lib/security/pam_systemd.so
         session  optional       pam_keyinit.so force revoke
         session  optional       pam_permit.so
       '';
@@ -185,7 +185,7 @@ in
         ${optionalString config.security.pam.enableEcryptfs
           "session optional ${pkgs.ecryptfs}/lib/security/pam_ecryptfs.so"}
         session  required       pam_loginuid.so
-        session  optional       ${pkgs.systemd}/lib/security/pam_systemd.so
+        session  optional       ${config.systemd.package}/lib/security/pam_systemd.so
         session  optional       ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
       '';
 
@@ -212,7 +212,7 @@ in
         ${optionalString config.security.pam.enableEcryptfs
           "session optional ${pkgs.ecryptfs}/lib/security/pam_ecryptfs.so"}
         session  required       pam_loginuid.so
-        session  optional       ${pkgs.systemd}/lib/security/pam_systemd.so
+        session  optional       ${config.systemd.package}/lib/security/pam_systemd.so
         session  optional       ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
       '';
 
@@ -230,7 +230,7 @@ in
         session  required       pam_env.so envfile=${config.system.build.pamEnvironment}
         session  required       pam_unix.so
         session  required       pam_loginuid.so
-        session  optional       ${pkgs.systemd}/lib/security/pam_systemd.so
+        session  optional       ${config.systemd.package}/lib/security/pam_systemd.so
       '';
 
     };

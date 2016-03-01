@@ -29,8 +29,8 @@ let
 
   cfgFile = pkgs.writeText "sddm.conf" ''
     [General]
-    HaltCommand=${pkgs.systemd}/bin/systemctl poweroff
-    RebootCommand=${pkgs.systemd}/bin/systemctl reboot
+    HaltCommand=${config.systemd.package}/bin/systemctl poweroff
+    RebootCommand=${config.systemd.package}/bin/systemctl reboot
     ${optionalString cfg.autoNumlock ''
     Numlock=on
     ''}
@@ -222,7 +222,7 @@ in
 
         session  required       pam_succeed_if.so audit quiet_success user = sddm
         session  required       pam_env.so envfile=${config.system.build.pamEnvironment}
-        session  optional       ${pkgs.systemd}/lib/security/pam_systemd.so
+        session  optional       ${config.systemd.package}/lib/security/pam_systemd.so
         session  optional       pam_keyinit.so force revoke
         session  optional       pam_permit.so
       '';

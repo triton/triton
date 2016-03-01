@@ -11,11 +11,11 @@ let
 
 in stdenv.mkDerivation rec {
   name = "nss-${version}";
-  version = "3.22.1";
+  version = "3.22.2";
 
   src = fetchurl {
     url = "http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src/${name}.tar.gz";
-    sha256 = "0kzsd35djpi1h6l8nc7jbblpl86qsx69ya1152b2bhz5fiqgrqc9";
+    sha256 = "07d49287c527ac31200f02dcf8494cef19e936d8ed470802749c4dfc782d3650";
   };
 
   buildInputs = [ nspr perl zlib sqlite ];

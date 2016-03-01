@@ -18,20 +18,18 @@ in
 
     environment.variables =
       { LOCATE_PATH = "/var/cache/locatedb";
-        NIXPKGS_CONFIG = "/etc/nix/nixpkgs-config.nix";
         PAGER = mkDefault "less -R";
         EDITOR = mkDefault "nano";
       };
 
     environment.profiles =
       [ "$HOME/.nix-profile"
-        "/nix/var/nix/profiles/default"
         "/run/current-system/sw"
       ];
 
     # TODO: move most of these elsewhere
     environment.profileRelativeEnvVars =
-      { PATH = [ "/bin" "/sbin" "/lib/kde4/libexec" ];
+      { PATH = [ "/bin" "/sbin" ];
         INFOPATH = [ "/info" "/share/info" ];
         PKG_CONFIG_PATH = [ "/lib/pkgconfig" ];
         TERMINFO_DIRS = [ "/share/terminfo" ];

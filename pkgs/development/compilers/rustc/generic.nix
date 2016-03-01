@@ -5,14 +5,11 @@
 , forceBundledLLVM ? false
 , srcSha, srcRev ? ""
 , snapshotHashLinux686, snapshotHashLinux64
-, snapshotHashDarwin686, snapshotHashDarwin64
 , snapshotDate, snapshotRev
 , configureFlags ? []
 
 , patches
 }:
-
-assert !stdenv.isFreeBSD;
 
 /* Rust's build process has a few quirks :
 
@@ -36,8 +33,6 @@ let version = if isRelease then
         "${shortVersion}-g${builtins.substring 0 7 srcRev}";
 
     name = "rustc-${version}";
-
-    llvmShared = llvmPackages.llvm.override { enableSharedLibraries = true; };
 
     platform = if stdenv.system == "i686-linux"
       then "linux-i386"
@@ -66,6 +61,8 @@ let version = if isRelease then
       else abort "no snapshot for platform ${stdenv.system}";
 
     snapshotName = "rust-stage0-${snapshotDate}-${snapshotRev}-${platform}-${snapshotHash}.tar.bz2";
+
+    llvm = llvmPackages.llvm;
 in
 
 with stdenv.lib; stdenv.mkDerivation {
@@ -96,8 +93,7 @@ with stdenv.lib; stdenv.mkDerivation {
     installPhase = ''
       mkdir -p "$out"
       cp -r bin "$out/bin"
-    '' + optionalString stdenv.isLinux ''
-      patchelf --interpreter "${stdenv.libc}/lib/${stdenv.cc.dynamicLinker}" \
+      patchelf --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
                --set-rpath "${stdenv.cc.cc}/lib/:${stdenv.cc.cc}/lib64/" \
                "$out/bin/rustc"
     '';
@@ -108,7 +104,7 @@ with stdenv.lib; stdenv.mkDerivation {
                 # ++ [ "--jemalloc-root=${jemalloc}/lib"
                 ++ [ "--default-linker=${stdenv.cc}/bin/cc" "--default-ar=${stdenv.cc.binutils}/bin/ar" ]
                 ++ optional (stdenv.cc.cc ? isClang) "--enable-clang"
-                ++ optional (!forceBundledLLVM) "--llvm-root=${llvmShared}";
+                ++ optional (!forceBundledLLVM) "--llvm-root=${llvm}";
 
   inherit patches;
 
@@ -123,7 +119,8 @@ with stdenv.lib; stdenv.mkDerivation {
       --replace "\$\$(subst  /,//," "\$\$(subst /,/,"
 
     # Fix dynamic linking against llvm
-    ${optionalString (!forceBundledLLVM) ''sed -i 's/, kind = \\"static\\"//g' src/etc/mklldeps.py''}
+    # TODO: Change once we can link dynamically against llvm
+    #${optionalString (!forceBundledLLVM) ''sed -i 's/, kind = \\"static\\"//g' src/etc/mklldeps.py''}
 
     # Fix not filtering out -L lines from llvm-config
     sed -i '\#if len(lib) == 1#a\        continue\n    if lib[0:2] == "-L":' src/etc/mklldeps.py
@@ -149,7 +146,7 @@ with stdenv.lib; stdenv.mkDerivation {
 
   # ps is needed for one of the test cases
   nativeBuildInputs = [ file python2 procps ];
-  buildInputs = [ ncurses zlib ] ++ optional (!forceBundledLLVM) llvmShared;
+  buildInputs = [ ncurses zlib ] ++ optional (!forceBundledLLVM) llvm;
 
   enableParallelBuilding = true;
 

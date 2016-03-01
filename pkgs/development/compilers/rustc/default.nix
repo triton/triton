@@ -20,6 +20,5 @@ callPackage ./generic.nix {
   snapshotDate = "2015-08-11";
   snapshotRev = "1af31d4";
 
-  patches = [ ./patches/remove-uneeded-git.patch ]
-    ++ stdenv.lib.optional stdenv.needsPax ./patches/grsec.patch;
+  patches = [ ./patches/remove-uneeded-git.patch ];
 }

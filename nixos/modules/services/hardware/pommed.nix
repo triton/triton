@@ -27,8 +27,6 @@ with lib;
   };
 
   config = mkIf config.services.hardware.pommed.enable {
-    environment.systemPackages = [ pkgs.polkit ];
-
     environment.etc."pommed.conf".source = config.services.hardware.pommed.configFile;
 
     services.hardware.pommed.configFile = "${pkgs.pommed}/etc/pommed.conf";

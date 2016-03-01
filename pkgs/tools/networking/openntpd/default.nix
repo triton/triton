@@ -1,6 +1,6 @@
-{ stdenv, fetchurl, openssl
-, privsepPath ? "/var/empty"
-, privsepUser ? "ntp"
+{ stdenv
+, fetchurl
+, openssl
 }:
 
 stdenv.mkDerivation rec {
@@ -13,8 +13,8 @@ stdenv.mkDerivation rec {
   };
 
   configureFlags = [
-    "--with-privsep-path=${privsepPath}"
-    "--with-privsep-user=${privsepUser}"
+    "--with-privsep-path=/var/empty"
+    "--with-privsep-user=ntp"
     "--sysconfdir=/etc"
     "--localstatedir=/var"
   ];

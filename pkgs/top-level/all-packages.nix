@@ -923,6 +923,8 @@ iputils = callPackage ../all-pkgs/iputils { };
 isl = callPackage ../all-pkgs/isl { };
 isl_0_14 = callPackage ../all-pkgs/isl { channel = "0.14"; };
 
+jemalloc = callPackage ../all-pkgs/jemalloc { };
+
 json-glib = callPackage ../all-pkgs/json-glib { };
 
 kbd = callPackage ../all-pkgs/kbd { };
@@ -6488,8 +6490,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 
   jbigkit = callPackage ../development/libraries/jbigkit { };
 
-  jemalloc = callPackage ../development/libraries/jemalloc { };
-#
 #  jetty_gwt = callPackage ../development/libraries/java/jetty-gwt { };
 #
 #  jetty_util = callPackage ../development/libraries/java/jetty-util { };

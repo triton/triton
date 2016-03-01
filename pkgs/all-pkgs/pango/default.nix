@@ -1,7 +1,5 @@
 { stdenv
-, autoreconfHook
 , fetchurl
-, gtk-doc
 
 , cairo
 , fontconfig
@@ -30,11 +28,6 @@ stdenv.mkDerivation rec {
     sha256 = "1dsf45m51i4rcyvh5wlxxrjfhvn5b67d5ckjc6vdcxbddjgmc80k";
   };
 
-  nativeBuildInputs = [
-    autoreconfHook
-    gtk-doc
-  ];
-
   buildInputs = [
     cairo
     fontconfig
@@ -49,13 +42,9 @@ stdenv.mkDerivation rec {
 
   postPatch =
     /* Test fails randomly */ optionalString doCheck ''
-      sed -i tests/Makefile.am \
-        -e 's,test-pangocairo-threads,,'
+      sed -i tests/Makefile.in \
+        -e 's,\(am__append_4 = testiter\) test-pangocairo-threads,\1,g'
     '';
-
-  preAutoreconf = ''
-    gtkdocize
-  '';
 
   configureFlags = [
     "--enable-rebuilds"
@@ -65,7 +54,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--disable-doc-cross-reference"
     "--enable-Bsymbolic"
-    "--enable-installed-tests"
+    "--disable-installed-tests"
     (wtFlag "xft" (xorg.libXft != null) null)
     (wtFlag "cairo" (cairo != null) null)
   ];

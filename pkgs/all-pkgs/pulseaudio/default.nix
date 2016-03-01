@@ -161,6 +161,7 @@ stdenv.mkDerivation rec {
     "--disable-esound"
     "--disable-oss-output"
     "--enable-oss-wrapper" # Does not use OSS
+    "--disable-coreaudio-output"
     "--disable-solaris"
     "--disable-waveout" # Windows Only
     "--enable-glib2"
@@ -182,7 +183,6 @@ stdenv.mkDerivation rec {
     "--with-bash-completion-dir=\${out}/share/bash-completions/completions"
   ] ++ optionals (libOnly) [
     "--disable-x11"
-    "--disable-coreaudio-output"
     "--disable-alsa"
     "--disable-gtk3"
     "--disable-gconf"
@@ -202,7 +202,6 @@ stdenv.mkDerivation rec {
     "--disable-systemd-journal"
   ] ++ optionals (!libOnly) [
     "--enable-x11"
-    "--enable-coreaudio-output"
     "--enable-alsa"
     "--enable-gtk3"
     "--enable-gconf"

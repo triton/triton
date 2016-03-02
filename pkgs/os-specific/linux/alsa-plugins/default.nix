@@ -1,4 +1,11 @@
-{ stdenv, fetchurl, lib, pkgconfig, alsa-lib, libogg, pulseaudio_lib, libjack2 ? null }:
+{ stdenv
+, fetchurl
+
+, alsa-lib
+, jack2_lib
+, libogg
+, pulseaudio_lib
+}:
 
 stdenv.mkDerivation rec {
   name = "alsa-plugins-1.1.0";
@@ -12,16 +19,22 @@ stdenv.mkDerivation rec {
   };
 
   # ToDo: a52, etc.?
-  buildInputs =
-    [ pkgconfig alsa-lib libogg ]
-    ++ lib.optional (pulseaudio_lib != null) pulseaudio_lib
-    ++ lib.optional (libjack2 != null) libjack2;
+  buildInputs = [
+    alsa-lib
+    jack2_lib
+    libogg
+    pulseaudio_lib
+  ];
 
-  meta = with lib; {
+  meta = with stdenv.lib; {
     description = "Various plugins for ALSA";
     homepage = http://alsa-project.org/;
     license = licenses.lgpl21;
-    maintainers = [maintainers.marcweber];
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

@@ -43,8 +43,6 @@ let
       dontFixLibtool = args.dontFixLibtool or true;
       configureScript = args.configureScript or "qmake";
 
-      enableParallelBuilding = args.enableParallelBuilding or true;
-
       meta = {
         homepage = http://qt-project.org;
         description = "A cross-platform application framework for C++";
@@ -61,10 +59,10 @@ let
 
       qtbase = callPackage ./qtbase {
         mesa = pkgs.mesa_noglu;
-        cups = if stdenv.isLinux then pkgs.cups else null;
+        cups =  pkgs.cups;
         # GNOME dependencies are not used unless gtkStyle == true
         inherit (pkgs.gnome) libgnomeui GConf gnome_vfs;
-        bison = pkgs.bison2; # error: too few arguments to function 'int yylex(...
+        bison = pkgs.bison; # error: too few arguments to function 'int yylex(...
         inherit developerBuild decryptSslTraffic;
       };
 

@@ -2,7 +2,7 @@
 , srcs
 
 , xorg, libxkbcommon
-, fontconfig, freetype, openssl, dbus, glib, udev, libxml2, libxslt, pcre
+, fontconfig, freetype, openssl, dbus, glib, systemd_lib, libxml2, libxslt, pcre
 , zlib, libjpeg, libpng, libtiff, sqlite, icu, harfbuzz, libinput, mtdev
 
 , coreutils, bison, flex, gdb, gperf, ruby
@@ -13,7 +13,7 @@
 , libmysql ? null, postgresql ? null
 
 # options
-, mesaSupported, mesa, mesa_glu
+, mesa, mesa_glu
 , buildDocs ? false
 , buildExamples ? false
 , buildTests ? false
@@ -24,7 +24,7 @@
 
 let
   inherit (srcs.qt5) version;
-  system-x86_64 = lib.elem stdenv.system lib.platforms.x86_64;
+  system-x86_64 = lib.elem stdenv.targetSystem lib.platforms.x86_64;
 in
 
 stdenv.mkDerivation {
@@ -44,7 +44,7 @@ stdenv.mkDerivation {
     copyPathsToStore (lib.readPathsFromFile ./. ./series)
     ++ lib.optional gtkStyle ./dlopen-gtkstyle.patch
     ++ lib.optional decryptSslTraffic ./decrypt-ssl-traffic.patch
-    ++ lib.optional mesaSupported [ ./dlopen-gl.patch ./mkspecs-libgl.patch ];
+    ++ lib.optional true [ ./dlopen-gl.patch ./mkspecs-libgl.patch ];
 
   postPatch =
     ''
@@ -84,7 +84,7 @@ stdenv.mkDerivation {
         --replace "@libgnomeui@" "${libgnomeui}" \
         --replace "@gconf@" "${GConf}"
     ''
-    + lib.optionalString mesaSupported ''
+    + lib.optionalString true ''
       substituteInPlace \
         qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_glx/qglxintegration.cpp \
         --replace "@mesa@" "${mesa}"
@@ -178,13 +178,13 @@ stdenv.mkDerivation {
 
   propagatedBuildInputs = [
     xorg.libXcomposite xorg.libX11 xorg.libxcb xorg.libXext xorg.libXrender xorg.libXi
-    fontconfig freetype openssl dbus.libs glib udev libxml2 libxslt pcre
+    fontconfig freetype openssl dbus.libs glib systemd_lib libxml2 libxslt pcre
     zlib libjpeg libpng libtiff sqlite icu harfbuzz libinput mtdev
     xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilwm libxkbcommon
   ]
   # Qt doesn't directly need GLU (just GL), but many apps use, it's small and
   # doesn't remain a runtime-dep if not used
-  ++ lib.optionals mesaSupported [ mesa mesa_glu ]
+  ++ lib.optionals true [ mesa mesa_glu ]
   ++ lib.optional (cups != null) cups
   ++ lib.optional (libmysql != null) libmysql
   ++ lib.optional (postgresql != null) postgresql

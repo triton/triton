@@ -28,8 +28,6 @@ stdenv.mkDerivation rec {
     unzip
   ];
 
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     description = "AMR Wide-Band Codec";
     homepage = http://www.penguin.cz/~utx/amr;
@@ -39,7 +37,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

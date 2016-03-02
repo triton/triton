@@ -10327,16 +10327,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  get_iplayer = callPackage ../applications/misc/get_iplayer {};
 #
-  gimp_2_8 = callPackage ../applications/graphics/gimp/2.8.nix {
-    inherit (gnome) libart_lgpl;
-    webkit = null;
-    lcms = lcms2;
-    wrapPython = pythonPackages.wrapPython;
-  };
-
-  gimp = gimp_2_8;
-
-  gimpPlugins = recurseIntoAttrs (callPackage ../applications/graphics/gimp/plugins {});
+  gimp = callPackage ../applications/graphics/gimp { };
 
   gitAndTools = recurseIntoAttrs (callPackage ../applications/version-management/git-and-tools {});
 

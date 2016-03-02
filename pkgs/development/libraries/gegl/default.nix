@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, glib, babl, libpng, cairo, libjpeg
-, librsvg, pango, bzip2, intltool, gdk_pixbuf, openexr, SDL
+, librsvg, pango, bzip2, intltool, gdk-pixbuf, openexr, SDL
 , jasper, exiv2 }:
 
 stdenv.mkDerivation rec {
@@ -11,10 +11,12 @@ stdenv.mkDerivation rec {
   };
 
   # needs fonts otherwise  don't know how to pass them
-  configureFlags = [ "--disable-docs" ];
+  configureFlags = [
+    "--disable-docs"
+  ];
 
   buildInputs = [
-    babl glib intltool cairo pango gdk_pixbuf libjpeg openexr librsvg SDL
+    babl glib intltool cairo pango gdk-pixbuf libjpeg openexr librsvg SDL
     jasper exiv2
   ];
 

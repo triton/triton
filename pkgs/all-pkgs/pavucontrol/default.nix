@@ -6,9 +6,9 @@
 
 , adwaita-icon-theme
 , gdk-pixbuf
-, gtkmm3
+, gtkmm_3
 , libcanberra
-, libpulseaudio
+, pulseaudio_lib
 }:
 
 with {
@@ -33,13 +33,13 @@ stdenv.mkDerivation rec {
   buildInputs = [
     adwaita-icon-theme
     gdk-pixbuf
-    gtkmm3
+    gtkmm_3
     libcanberra
-    libpulseaudio
+    pulseaudio_lib
   ];
 
   configureFlags = [
-    (enFlag "gtk3" (gtkmm3 != null) null)
+    (enFlag "gtk3" (gtkmm_3 != null) null)
     "--disable-lynx"
     "--enable-nls"
   ];

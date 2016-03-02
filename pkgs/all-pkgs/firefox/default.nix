@@ -56,8 +56,6 @@
 }:
 
 with {
-  inherit (stdenv)
-    isLinux;
   inherit (stdenv.lib)
     optionals
     versionAtLeast;
@@ -164,7 +162,7 @@ stdenv.mkDerivation rec {
       #"--enable-posix-nspr-emulation"
       "--with-system-libevent"
       "--with-system-nss"
-    ] ++ optionals (!isLinux && libjpeg != null) [
+    ] ++ optionals (libjpeg.type == "normal") [
       # Enable libjpeg for platforms that don't support libjpeg-turbo
       "--with-system-jpeg"
     ] ++ [
@@ -192,7 +190,7 @@ stdenv.mkDerivation rec {
       "--enable-alsa"
       "--enable-gstreamer=1.0"
       "--disable-crashreporter"
-    ] ++ optionals (isLinux && libjpeg != null)[
+    ] ++ optionals (libjpeg.type == "turbo") [
       "--enable-libjpeg-turbo"
     ] ++ [
       #"--enable-tree-freetype"

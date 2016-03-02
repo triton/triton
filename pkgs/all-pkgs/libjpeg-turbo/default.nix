@@ -15,10 +15,6 @@ stdenv.mkDerivation rec {
     yasm
   ];
 
-  checkTarget = "test";
-
-  doCheck = true;
-
   meta = with stdenv.lib; {
     description = "A faster (using SIMD) libjpeg implementation";
     homepage = http://libjpeg-turbo.virtualgl.org/;
@@ -29,5 +25,9 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       i686-linux
       ++ x86_64-linux;
+  };
+
+  passthru = {
+    type = "turbo";
   };
 }

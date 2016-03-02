@@ -1,5 +1,5 @@
 { stdenv, fetchurl, cpio, file, which, unzip, zip, xorg, cups, freetype
-, alsaLib, bootjdk, cacert, perl, liberation_ttf, fontconfig, zlib
+, alsa-lib, bootjdk, cacert, perl, liberation_ttf, fontconfig, zlib
 , setJavaClassPath
 , minimal ? false
 , enableInfinality ? true # font rendering patch
@@ -22,7 +22,6 @@ let
   build = "04";
   baseurl = "http://hg.openjdk.java.net/jdk8u/jdk8u";
   repover = "jdk8u${update}-b${build}";
-  paxflags = if stdenv.isi686 then "msp" else "m";
 
   fetchjava = name: sha256: fetchurl {
     name = "${repover}-${name}.tar.gz";
@@ -52,7 +51,7 @@ let
       cpio file which unzip zip
       xorg.libX11 xorg.libXt xorg.libXext xorg.libXrender xorg.libXtst
       xorg.libXi xorg.libXinerama xorg.libXcursor xorg.lndir
-      cups freetype alsaLib perl liberation_ttf fontconfig bootjdk zlib
+      cups freetype alsa-lib perl liberation_ttf fontconfig bootjdk zlib
     ];
 
     prePatch = ''
@@ -135,14 +134,6 @@ let
       # https://youtrack.jetbrains.com/issue/IDEA-147272
       rm -rf $out/lib/openjdk/jre/lib/cmm
       ln -s {$jre,$out}/lib/openjdk/jre/lib/cmm
-
-      # Set PaX markings
-      exes=$(file $out/lib/openjdk/bin/* $jre/lib/openjdk/jre/bin/* 2> /dev/null | grep -E 'ELF.*(executable|shared object)' | sed -e 's/: .*$//')
-      echo "to mark: *$exes*"
-      for file in $exes; do
-        echo "marking *$file*"
-        paxmark ${paxflags} "$file"
-      done
 
       # Remove duplicate binaries.
       for i in $(cd $out/lib/openjdk/bin && echo *); do

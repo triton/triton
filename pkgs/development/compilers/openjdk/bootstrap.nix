@@ -48,13 +48,5 @@ let
       patchelf --set-interpreter ${glibc}/lib/ld-linux*.so.2 $lib || true
       patchelf --set-rpath "${glibc}/lib:${stdenv.cc.cc}/lib:$LIBDIRS" $lib || true
     done
-
-    # Temporarily, while NixOS's OpenJDK bootstrap tarball doesn't have PaX markings:
-    exes=$(${file}/bin/file $out/bin/* 2> /dev/null | grep -E 'ELF.*(executable|shared object)' | sed -e 's/: .*$//')
-    for file in $exes; do
-      paxmark m "$file"
-      # On x86 for heap sizes over 700MB disable SEGMEXEC and PAGEEXEC as well.
-      ${stdenv.lib.optionalString stdenv.isi686 ''paxmark msp "$file"''}
-    done
   '';
 in bootstrap

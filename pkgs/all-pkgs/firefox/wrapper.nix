@@ -96,7 +96,7 @@ let
   ]) ++ optionals (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) [
     hal-flash
   ] ++ optionals (config.pulseaudio or false) [
-    libpulseaudio
+    pulseaudio_lib
   ];
   gtk_modules = [
     libcanberra

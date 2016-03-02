@@ -4755,11 +4755,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  };
 #
   icedtea8_web = callPackage ../development/compilers/icedtea-web {
-    jdk = jdk8;
-    xulrunner = firefox-unwrapped;
+    jdk = pkgs.jdk8;
+    xulrunner = pkgs.firefox-unwrapped;
   };
 
-  icedtea_web = icedtea8_web;
+  icedtea_web = pkgs.icedtea8_web;
 #
 #  openjdk7-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "7"; };
   openjdk8-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "8"; };
@@ -4778,10 +4778,10 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  openjdk7_jre = openjdk7.jre // { outputs = [ "jre" ]; };
 #
   openjdk8 = callPackage ../development/compilers/openjdk/8.nix {
-    bootjdk = openjdk8-bootstrap;
+    bootjdk = pkgs.openjdk8-bootstrap;
   };
-  openjdk8_jdk = openjdk8 // { outputs = [ "out" ]; };
-  openjdk8_jre = openjdk8.jre // { outputs = [ "jre" ]; };
+  openjdk8_jdk = pkgs.openjdk8 // { outputs = [ "out" ]; };
+  openjdk8_jre = pkgs.openjdk8.jre // { outputs = [ "jre" ]; };
 
   openjdk = callPackageAlias "openjdk8" { };
 #
@@ -4790,12 +4790,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  jre7 = java7.jre // { outputs = [ "jre" ]; };
 #
   java8 = callPackageAlias "openjdk8" { };
-  jdk8 = java8 // { outputs = [ "out" ]; };
-  jre8 = java8.jre // { outputs = [ "jre" ]; };
+  jdk8 = pkgs.java8 // { outputs = [ "out" ]; };
+  jre8 = pkgs.java8.jre // { outputs = [ "jre" ]; };
 #
   java = callPackageAlias "java8" { };
-  jdk = java // { outputs = [ "out" ]; };
-  jre = java.jre // { outputs = [ "jre" ]; };
+  jdk = pkgs.java // { outputs = [ "out" ]; };
+  jre = pkgs.java.jre // { outputs = [ "jre" ]; };
 #
 #  lessc = callPackage ../development/compilers/lessc { };
 #

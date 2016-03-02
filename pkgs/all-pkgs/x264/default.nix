@@ -21,12 +21,12 @@ assert (
 
 stdenv.mkDerivation rec {
   name = "x264-${version}";
-  version = "20160119";
+  version = "20160301";
 
   src = fetchurl {
     url = "http://ftp.videolan.org/pub/videolan/x264/snapshots/" +
           "x264-snapshot-${version}-2245-stable.tar.bz2";
-    sha256 = "1m7gncijx5wpsgrallmam8zl0sshx3di6svv0kj8rnp3wydn8q98";
+    sha256 = "1h023a2id71mk15rcgk838lwqc6alk2df0nyflg7ycb97f85ckys";
   };
 
   nativeBuildInputs = [
@@ -39,12 +39,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--enable-cli"
     "--enable-shared"
-    "--enable-opencl"
-    "--enable-gpl"
-    "--enable-thread"
-    "--disable-win32thread"
     "--disable-interlaced"
     "--bit-depth=${
       if (enable10bit) then
@@ -53,9 +48,6 @@ stdenv.mkDerivation rec {
         "8"
     }"
     "--chroma-format=${chroma}"
-    "--enable-asm"
-    "--disable-debug"
-    "--disable-gprof"
     "--enable-pic"
     "--disable-avs"
     "--disable-swscale"

@@ -42,7 +42,7 @@
 , libvorbis
 , libxml2
 , lua
-, mpeg2dec
+, libmpeg2
 , perl
 , pulseaudio_lib
 , qt4
@@ -118,7 +118,7 @@ stdenv.mkDerivation rec {
     libvorbis
     libxml2
     lua
-    mpeg2dec
+    libmpeg2
     perl
     pulseaudio_lib
     qt4

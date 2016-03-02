@@ -58,11 +58,7 @@ let
     in {
 
       qtbase = callPackage ./qtbase {
-        mesa = pkgs.mesa_noglu;
-        cups =  pkgs.cups;
-        # GNOME dependencies are not used unless gtkStyle == true
         inherit (pkgs.gnome) libgnomeui GConf gnome_vfs;
-        bison = pkgs.bison; # error: too few arguments to function 'int yylex(...
         inherit developerBuild decryptSslTraffic;
       };
 

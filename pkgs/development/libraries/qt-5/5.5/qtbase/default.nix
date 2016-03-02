@@ -13,7 +13,7 @@
 , libmysql ? null, postgresql ? null
 
 # options
-, mesa, mesa_glu
+, mesa
 , buildDocs ? false
 , buildExamples ? false
 , buildTests ? false
@@ -179,12 +179,9 @@ stdenv.mkDerivation {
   propagatedBuildInputs = [
     xorg.libXcomposite xorg.libX11 xorg.libxcb xorg.libXext xorg.libXrender xorg.libXi
     fontconfig freetype openssl dbus.libs glib systemd_lib libxml2 libxslt pcre
-    zlib libjpeg libpng libtiff sqlite icu harfbuzz libinput mtdev
+    zlib libjpeg libpng libtiff sqlite icu harfbuzz libinput mtdev mesa
     xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilwm libxkbcommon
   ]
-  # Qt doesn't directly need GLU (just GL), but many apps use, it's small and
-  # doesn't remain a runtime-dep if not used
-  ++ lib.optionals true [ mesa mesa_glu ]
   ++ lib.optional (cups != null) cups
   ++ lib.optional (libmysql != null) libmysql
   ++ lib.optional (postgresql != null) postgresql

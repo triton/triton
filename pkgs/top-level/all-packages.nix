@@ -1148,12 +1148,15 @@ mpfr = callPackage ../all-pkgs/mpfr { };
 mpv = callPackage ../all-pkgs/mpv { };
 
 inherit (callPackages ../all-pkgs/mumble {
-  qt5 = qt55; # Mumble is not compatible with qt55 yet
-  jackSupport = config.mumble.jackSupport or false;
+  jackSupport = config.jack or false;
   speechdSupport = config.mumble.speechdSupport or false;
   pulseSupport = config.pulseaudio or false;
   iceSupport = config.murmur.iceSupport or true;
-}) mumble mumble_git murmur murmur_git;
+})
+  mumble
+  mumble_git
+  murmur
+  murmur_git;
 
 mutter = callPackage ../all-pkgs/mutter { };
 
@@ -7261,8 +7264,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   libmpeg2 = callPackage ../development/libraries/libmpeg2 { };
 
-  mpeg2dec = libmpeg2;
-#
 #  msilbc = callPackage ../development/libraries/msilbc { };
 #
   mp4v2 = callPackage ../development/libraries/mp4v2 { };

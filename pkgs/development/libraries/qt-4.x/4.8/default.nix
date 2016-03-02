@@ -26,11 +26,11 @@
 , sqlite
 , perl
 , coreutils
-, buildMultimedia ? stdenv.isLinux
+, buildMultimedia ? true
   , alsa-lib
 , gstreamer_0
 , gst-plugins-base_0
-, buildWebkit ? stdenv.isLinux
+, buildWebkit ? false # TODO: Maybe fix
 , flashplayerFix ? false
   , gdk-pixbuf
 , gtkStyle ? false
@@ -45,8 +45,6 @@
 }:
 
 with {
-  inherit (stdenv)
-    isFreeBSD;
   inherit (stdenv.lib)
     optional
     optionals
@@ -173,7 +171,7 @@ stdenv.mkDerivation rec {
     # CPU features
     #"-mmx"
     #"-no-3dnow"
-    #"-sse"
+    "-sse"
     #"-sse2"
     #"-sse3"
     #"-ssse3"
@@ -238,15 +236,6 @@ stdenv.mkDerivation rec {
     "-qdbus"
     "-xmlpatterns"
     "-audio-backend"
-  ];
-
-  NIX_CFLAGS_COMPILE = optionals isFreeBSD [
-    "-I${glib}/include/glib-2.0"
-    "-I${glib}/lib/glib-2.0/include"
-  ];
-
-  NIX_LDFLAGS = optionals isFreeBSD [
-    "-lglib-2.0"
   ];
 
   preConfigure = ''

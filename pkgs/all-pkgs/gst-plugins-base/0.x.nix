@@ -2,7 +2,7 @@
 , fetchTritonPatch
 , fetchurl
 
-, alsaLib
+, alsa-lib
 , cdparanoia
 , freetype
 , glib
@@ -105,7 +105,7 @@ stdenv.mkDerivation rec {
     (enFlag "xvideo" (xorg.libXv != null) null)
     (enFlag "xshm" (xorg.libXext != null) null)
     (enFlag "gst_v4l" (libv4l != null) null)
-    (enFlag "alsa" (alsaLib != null) null)
+    (enFlag "alsa" (alsa-lib != null) null)
     (enFlag "cdparanoia" (cdparanoia != null) null)
     "--disable-gnome_vfs"
     # FIXME: compilation fails with ivorbis(tremor)
@@ -125,7 +125,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    alsaLib
+    alsa-lib
     cdparanoia
     freetype
     glib

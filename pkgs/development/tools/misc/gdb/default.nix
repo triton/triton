@@ -3,25 +3,11 @@
 , python ? null
 , guile ? null
 , target ? null
-# Additional dependencies for GNU/Hurd.
-, mig ? null, hurd ? null
-
 }:
 
 let
-
   basename = "gdb-7.10.1";
-
-  # Whether (cross-)building for GNU/Hurd.  This is an approximation since
-  # having `stdenv ? cross' doesn't tell us if we're building `crossDrv' and
-  # `nativeDrv'.
-  isGNU =
-      stdenv.system == "i686-gnu"
-      || (stdenv ? cross && stdenv.cross.config == "i586-pc-gnu");
-
 in
-
-assert isGNU -> mig != null && hurd != null;
 
 stdenv.mkDerivation rec {
   name = basename + stdenv.lib.optionalString (target != null)
@@ -32,30 +18,17 @@ stdenv.mkDerivation rec {
     sha256 = "1mfnjcwnwm5cg4rc9pncs9v356a0bz6ymjyac56mbj6784yjzir5";
   };
 
-  nativeBuildInputs = [ pkgconfig texinfo perl ]
-    ++ stdenv.lib.optional isGNU mig;
+  nativeBuildInputs = [ pkgconfig texinfo perl ];
 
   buildInputs = [ ncurses readline gmp mpfr expat zlib python guile ]
-    ++ stdenv.lib.optional isGNU hurd
     ++ stdenv.lib.optional doCheck dejagnu;
-
-  enableParallelBuilding = true;
 
   configureFlags = with stdenv.lib;
     [ "--with-gmp=${gmp}" "--with-mpfr=${mpfr}" "--with-system-readline"
       "--with-system-zlib" "--with-expat" "--with-libexpat-prefix=${expat}"
       "--with-separate-debug-dir=/run/current-system/sw/lib/debug"
     ]
-    ++ optional (target != null) "--target=${target.config}"
-    ++ optional (elem stdenv.system platforms.cygwin) "--without-python";
-
-  crossAttrs = {
-    # Do not add --with-python here to avoid cross building it.
-    configureFlags = with stdenv.lib;
-      [ "--with-gmp=${gmp.crossDrv}" "--with-mpfr=${mpfr.crossDrv}" "--with-system-readline"
-        "--with-system-zlib" "--with-expat" "--with-libexpat-prefix=${expat.crossDrv}" "--without-python"
-      ] ++ optional (target != null) "--target=${target.config}";
-  };
+    ++ optional (target != null) "--target=${target.config}";
 
   postInstall =
     '' # Remove Info files already provided by Binutils and other packages.
@@ -67,18 +40,9 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The GNU Project debugger";
-
-    longDescription = ''
-      GDB, the GNU Project debugger, allows you to see what is going
-      on `inside' another program while it executes -- or what another
-      program was doing at the moment it crashed.
-    '';
-
     homepage = http://www.gnu.org/software/gdb/;
-
     license = stdenv.lib.licenses.gpl3Plus;
-
-    platforms = with platforms; linux ++ cygwin ++ darwin;
-    maintainers = with maintainers; [ pierron ];
+    platforms = with platforms; linux;
+    maintainers = with maintainers; [ ];
   };
 }

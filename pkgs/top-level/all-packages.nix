@@ -5957,15 +5957,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   gdb = callPackage ../development/tools/misc/gdb {
     guile = null;
-    hurd = gnu.hurdCross;
-    inherit (gnu) mig;
   };
-#
-#  gdbGuile = lowPrio (gdb.override { inherit guile; });
-#
-#  gdbCross = lowPrio (callPackage ../development/tools/misc/gdb {
-#    target = crossSystem;
-#  });
 #
   valgrind = callPackage ../development/tools/analysis/valgrind { };
 #

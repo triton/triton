@@ -8,10 +8,13 @@
 , libcap
 , libopus
 , libsndfile
+, mesa_noglu
 , qt4
 , qt5
+, openssl
 , protobuf
 , speex
+, xorg
 
 , iceSupport ? true, zeroc_ice
 , jackSupport ? false, jack2_lib
@@ -38,9 +41,10 @@ let
       qt5.qtbase
     ];
 
-    buildInputs = [
+    buildInputs = (overrides.buildInputs or [ ]) ++ [
       avahi
       boost
+      openssl
       protobuf
     ] ++ optionals (source.qtVersion == 4) [
       qt4
@@ -106,7 +110,13 @@ let
       alsa-lib
       libopus
       libsndfile
+      mesa_noglu
       speex
+      xorg.inputproto
+      xorg.libX11
+      xorg.libXext
+      xorg.libXfixes
+      xorg.libXi
     ] ++ optionals (source.qtVersion == 5) [
       qt5.qtsvg
     ] ++ optionals jackSupport [

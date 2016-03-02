@@ -546,6 +546,24 @@ caribou = callPackage ../all-pkgs/caribou { };
 
 cdparanoia = callPackage ../all-pkgs/cdparanoia { };
 
+# Only ever add ceph LTS releases
+# The default channel should be the latest LTS
+# Dev should always point to the latest versioned release
+ceph_lib = pkgs.ceph.lib;
+ceph = hiPrio (callPackage ../all-pkgs/ceph { });
+ceph_0_94 = callPackage ../all-pkgs/ceph {
+  channel = "0.94";
+};
+ceph_9 = callPackage ../all-pkgs/ceph {
+  channel = "9";
+};
+ceph_dev = callPackage ../all-pkgs/ceph {
+  channel = "dev";
+};
+ceph_git = callPackage ../all-pkgs/ceph {
+  channel = "git";
+};
+
 chromaprint = callPackage ../all-pkgs/chromaprint { };
 
 chromium = callPackage ../all-pkgs/chromium {
@@ -2061,16 +2079,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  cdrdao = callPackage ../tools/cd-dvd/cdrdao { };
 #
 #  cdrkit = callPackage ../tools/cd-dvd/cdrkit { };
-#
-#  # Only ever add ceph LTS releases
-#  # The default should always be symlinked to the latest LTS
-#  # Dev should always point to the latest versioned release
-#  libceph = ceph.lib;
-#  ceph-0_94 = callPackage ../tools/filesystems/ceph/0.94.nix { };
-#  ceph-9 = callPackage ../tools/filesystems/ceph/9.nix { };
-#  ceph = callPackage ../tools/filesystems/ceph { };
-#  ceph-dev = lowPrio (callPackage ../tools/filesystems/ceph/dev.nix { });
-#  ceph-git = lowPrio (callPackage ../tools/filesystems/ceph/git.nix { });
 #
 #  cfdg = callPackage ../tools/graphics/cfdg { };
 #

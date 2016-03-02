@@ -1345,6 +1345,8 @@ qjackctl = callPackage ../all-pkgs/qjackctl { };
 
 qrencode = callPackage ../all-pkgs/qrencode { };
 
+qt4 = callPackage ../all-pkgs/qt/4 { };
+
 quassel = callPackage ../all-pkgs/quassel rec {
   monolithic = true;
   daemon = false;
@@ -7491,20 +7493,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  qt3 = callPackage ../development/libraries/qt-3 {
 #    libpng = libpng12;
 #  };
-#
-  qt4 = pkgs.kde4.qt4;
-
-  qt48 = callPackage ../development/libraries/qt-4.x/4.8 {
-    # GNOME dependencies are not used unless gtkStyle == true
-    inherit (pkgs.gnome) libgnomeui GConf gnome_vfs;
-  };
-
-  qt48Full = appendToName "full" (qt48.override {
-    docs = true;
-    demos = true;
-    examples = true;
-    developerBuild = true;
-  });
 
   qt54 =
     let imported = import ../development/libraries/qt-5/5.4 { inherit pkgs; };

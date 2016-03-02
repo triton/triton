@@ -1,20 +1,20 @@
 { stdenv, fetchurl, audiofile
 , openglSupport ? false, mesa ? null
-, alsaSupport ? true, alsaLib ? null
-, x11Support ? true, xlibsWrapper ? null, xorg ? null
-, pulseaudioSupport ? true, libpulseaudio ? null
+, alsaSupport ? true, alsa-lib
+, x11Support ? true, xlibsWrapper, xorg
+, pulseaudioSupport ? true, pulseaudio_lib
 }:
 
 assert openglSupport -> (mesa != null && x11Support);
 assert x11Support -> (xlibsWrapper != null && xorg != null);
-assert alsaSupport -> alsaLib != null;
-assert pulseaudioSupport -> libpulseaudio != null;
+assert alsaSupport -> alsa-lib != null;
+assert pulseaudioSupport -> pulseaudio_lib != null;
 
 let
   configureFlagsFun = attrs: ''
         --disable-oss --disable-x11-shared
         --disable-pulseaudio-shared --disable-alsa-shared
-        ${if alsaSupport then "--with-alsa-prefix=${attrs.alsaLib}/lib" else ""}
+        ${if alsaSupport then "--with-alsa-prefix=${attrs.alsa-lib}/lib" else ""}
         ${if (!x11Support) then "--without-x" else ""}
       '';
 in
@@ -28,9 +28,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ audiofile ] ++
     stdenv.lib.optionals x11Support [ xlibsWrapper xorg.libXrandr ] ++
-    stdenv.lib.optional pulseaudioSupport libpulseaudio ++
+    stdenv.lib.optional pulseaudioSupport pulseaudio_lib ++
     stdenv.lib.optional openglSupport mesa ++
-    stdenv.lib.optional alsaSupport alsaLib;
+    stdenv.lib.optional alsaSupport alsa-lib;
 
   # https://bugzilla.libsdl.org/show_bug.cgi?id=1431
   dontDisableStatic = true;
@@ -38,11 +38,7 @@ stdenv.mkDerivation rec {
   # XXX: By default, SDL wants to dlopen() PulseAudio, in which case
   # we must arrange to add it to its RPATH; however, `patchelf' seems
   # to fail at doing this, hence `--disable-pulseaudio-shared'.
-  configureFlags = configureFlagsFun { inherit alsaLib; };
-
-  crossAttrs = {
-      configureFlags = configureFlagsFun { alsaLib = alsaLib.crossDrv; };
-  };
+  configureFlags = configureFlagsFun { inherit alsa-lib; };
 
   postInstall = ''
     rm $out/lib/*.a
@@ -55,6 +51,6 @@ stdenv.mkDerivation rec {
     homepage = http://www.libsdl.org/;
     license = stdenv.lib.licenses.zlib;
     platforms = stdenv.lib.platforms.all;
-    maintainers = [ stdenv.lib.maintainers.page ];
+    maintainers = [ ];
   };
 }

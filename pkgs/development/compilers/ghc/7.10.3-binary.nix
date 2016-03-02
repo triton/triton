@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, perl, ncurses, gmp, libiconv, makeWrapper }:
+{ stdenv, fetchurl, perl, ncurses, gmp, makeWrapper }:
 
 stdenv.mkDerivation rec {
   version = "7.10.3";
@@ -26,12 +26,6 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ perl ];
 
   postUnpack =
-    # GHC has dtrace probes, which causes ld to try to open /usr/lib/libdtrace.dylib
-    # during linking
-    stdenv.lib.optionalString stdenv.isDarwin ''
-      export NIX_LDFLAGS+=" -no_dtrace_dof"
-    '' +
-
     # Strip is harmful, see also below. It's important that this happens
     # first. The GHC Cabal build system makes use of strip by default and
     # has hardcoded paths to /usr/bin/strip in many places. We replace
@@ -48,9 +42,6 @@ stdenv.mkDerivation rec {
      ''
       find . -name integer-gmp.buildinfo \
           -exec sed -i "s@extra-lib-dirs: @extra-lib-dirs: ${gmp}/lib@" {} \;
-     '' + stdenv.lib.optionalString stdenv.isDarwin ''
-      find . -name base.buildinfo \
-          -exec sed -i "s@extra-lib-dirs: @extra-lib-dirs: ${libiconv}/lib@" {} \;
      '' +
     # We have to patch shebangs
       ''
@@ -58,9 +49,9 @@ stdenv.mkDerivation rec {
       '' +
     # On Linux, use patchelf to modify the executables so that they can
     # find editline/gmp.
-    stdenv.lib.optionalString stdenv.isLinux ''
+    ''
       mkdir -p "$out/lib"
-      ln -sv "${ncurses}/lib/libncurses.so" "$out/lib/libncurses${stdenv.lib.optionalString stdenv.is64bit "w"}.so.5"
+      ln -sv "${ncurses}/lib/libncurses.so" "$out/lib/libncursesw.so.5"
       find . -type f -perm -0100 \
           -exec patchelf --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
           --set-rpath "$out/lib:${gmp}/lib" {} \;
@@ -69,29 +60,11 @@ stdenv.mkDerivation rec {
       for prog in ld ar gcc strip ranlib; do
         find . -name "setup-config" -exec sed -i "s@/usr/bin/$prog@$(type -p $prog)@g" {} \;
       done
-     '' + stdenv.lib.optionalString stdenv.isDarwin ''
-       # not enough room in the object files for the full path to libiconv :(
-       fix () {
-         install_name_tool -change /usr/lib/libiconv.2.dylib @executable_path/libiconv.dylib $1
-       }
-
-       ln -s ${libiconv}/lib/libiconv.dylib ghc-${version}/utils/ghc-pwd/dist-install/build/tmp
-       ln -s ${libiconv}/lib/libiconv.dylib ghc-${version}/utils/hpc/dist-install/build/tmp
-       ln -s ${libiconv}/lib/libiconv.dylib ghc-${version}/ghc/stage2/build/tmp
-
-       for file in ghc-cabal ghc-pwd ghc-stage2 ghc-pkg haddock hsc2hs hpc; do
-         fix $(find . -type f -name $file)
-       done
-
-       for file in $(find . -name setup-config); do
-         substituteInPlace $file --replace /usr/bin/ranlib "$(type -P ranlib)"
-       done
      '';
 
   configurePhase = ''
     ./configure --prefix=$out \
-      --with-gmp-libraries=${gmp}/lib --with-gmp-includes=${gmp}/include \
-      ${stdenv.lib.optionalString stdenv.isDarwin "--with-gcc=${./gcc-clang-wrapper.sh}"}
+      --with-gmp-libraries=${gmp}/lib --with-gmp-includes=${gmp}/include
   '';
 
   # Stripping combined with patchelf breaks the executables (they die
@@ -101,14 +74,6 @@ stdenv.mkDerivation rec {
   # No building is necessary, but calling make without flags ironically
   # calls install-strip ...
   buildPhase = "true";
-
-  preInstall = stdenv.lib.optionalString stdenv.isDarwin ''
-    mkdir -p $out/lib/ghc-${version}
-    mkdir -p $out/bin
-    ln -s ${libiconv}/lib/libiconv.dylib $out/bin
-    ln -s ${libiconv}/lib/libiconv.dylib $out/lib/ghc-${version}/libiconv.dylib
-    ln -s ${libiconv}/lib/libiconv.dylib utils/ghc-cabal/dist-install/build/tmp
-  '';
 
   postInstall = ''
     # Sanity check, can ghc create executables?

@@ -12111,7 +12111,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
     inherit (pkgs) libwnck gtk_doc gnome_doc_utils;
   };
 
-  gnome = recurseIntoAttrs gnome2;
+  gnome = recurseIntoAttrs pkgs.gnome2;
 #
 #  hsetroot = callPackage ../tools/X11/hsetroot { };
 #

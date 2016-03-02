@@ -1,4 +1,4 @@
-{ callPackage, self, stdenv, gettext, gvfs, libunique, bison2
+{ callPackage, self, stdenv, gettext, gvfs, libunique
 , libstartup_notification, overrides ? {} }:
 
 let overridden = set // overrides; set = with overridden; {
@@ -16,9 +16,7 @@ let overridden = set // overrides; set = with overridden; {
 
   libglade = callPackage ./platform/libglade { };
 
-  libgnomeprint = callPackage ./platform/libgnomeprint {
-    bison = bison2;
-  };
+  libgnomeprint = callPackage ./platform/libgnomeprint { };
 
   libgnomeprintui = callPackage ./platform/libgnomeprintui { };
 

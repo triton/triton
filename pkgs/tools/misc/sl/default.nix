@@ -1,4 +1,7 @@
-{ stdenv, fetchFromGitHub, ncurses }:
+{ stdenv
+, fetchFromGitHub
+, ncurses
+}:
 
 stdenv.mkDerivation rec {
   name = "sl-${version}";
@@ -11,7 +14,9 @@ stdenv.mkDerivation rec {
     sha256 = "1zrfd71zx2px2xpapg45s8xvi81xii63yl0h60q72j71zh4sif8b";
   };
 
-  buildInputs = [ ncurses ];
+  buildInputs = [
+    ncurses
+  ];
 
   installPhase = ''
     mkdir -p $out/bin $out/share/man/man1
@@ -19,14 +24,13 @@ stdenv.mkDerivation rec {
     cp sl.1 $out/share/man/man1
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://www.tkl.iis.u-tokyo.ac.jp/~toyoda/index_e.html;
-    license = rec {
-      shortName = "Toyoda Masashi's free software license";
-      fullName = shortName;
-      url = https://github.com/mtoyoda/sl/blob/master/LICENSE;
-    };
     description = "Steam Locomotive runs across your terminal when you type 'sl'";
-    platforms = with stdenv.lib.platforms; unix;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

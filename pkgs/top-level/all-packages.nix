@@ -3979,7 +3979,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  fusesmb = callPackage ../tools/filesystems/fusesmb { samba = samba3; };
 #
-#  sl = callPackage ../tools/misc/sl { };
+  sl = callPackage ../tools/misc/sl { };
 #
 #  socat = callPackage ../tools/networking/socat { };
 #
@@ -10128,7 +10128,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  elvis = callPackage ../applications/editors/elvis { };
 #
-  emacs = emacs24;
+  emacs = pkgs.emacs24;
 #
   emacs24 = callPackage ../applications/editors/emacs-24 {
     # use override to enable additional features
@@ -12758,7 +12758,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  utf8proc = callPackage ../development/libraries/utf8proc { };
 #
-#  vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
+  vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 #
 #  vbam = callPackage ../misc/emulators/vbam {};
 #
@@ -12849,9 +12849,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  zopfli = callPackage ../tools/compression/zopfli { };
 #
-#  myEnvFun = callPackage ../misc/my-env {
-#    inherit (stdenv) mkDerivation;
-#  };
+  myEnvFun = callPackage ../misc/my-env { };
 #
 #  # patoline requires a rather large ocaml compilation environment.
 #  # this is why it is build as an environment and not just a normal package.

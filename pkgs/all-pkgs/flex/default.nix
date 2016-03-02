@@ -17,6 +17,15 @@ stdenv.mkDerivation rec {
     m4
   ];
 
+  # Using static libraries fixes issues with references to
+  # yylex in flex 2.6.0
+  # This can be tested by building glusterfs
+  configureFlags = [
+    "--disable-shared"
+  ];
+
+  dontDisableStatic = true;
+
   meta = with stdenv.lib; {
     homepage = http://flex.sourceforge.net/;
     description = "A fast lexical analyser generator";

@@ -13,10 +13,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "upower-0.99.4";
+  name = "upower-${version}";
+  version = "0.99.4";
 
   src = fetchurl {
-    url = "http://upower.freedesktop.org/releases/${name}.tar.xz";
+    urls = [
+      "http://upower.freedesktop.org/releases/${name}.tar.xz"
+      "http://http.debian.net/debian/pool/main/u/upower/upower_${version}.orig.tar.xz"
+    ];
     sha256 = "1c1ph1j1fnrf3vipxb7ncmdfc36dpvcvpsv8n8lmal7grjk2b8ww";
   };
 
@@ -45,7 +49,10 @@ stdenv.mkDerivation rec {
 
   NIX_CFLAGS_LINK = "-lgcc_s";
 
-  installFlags = "historydir=$(TMPDIR)/foo";
+  installFlags = [
+    "historydir=$(TMPDIR)/foo"
+    "sysconfdir=$(out)/etc"
+  ];
 
   meta = {
     homepage = http://upower.freedesktop.org/;

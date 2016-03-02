@@ -22,12 +22,10 @@ stdenv.mkDerivation rec {
     make -j $NIX_BUILD_CORES prefix=$out install
   '';
 
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     homepage = "http://www.zeroc.com/ice.html";
     description = "The internet communications engine";
     license = licenses.gpl2;
-    platforms = platforms.unix;
+    platforms = platforms.all;
   };
 }

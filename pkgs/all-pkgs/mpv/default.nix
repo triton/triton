@@ -1,5 +1,4 @@
 { stdenv
-, docutils
 , fetchurl
 , makeWrapper
 , perl
@@ -7,30 +6,29 @@
 , python
 , which
 
-, alsaLib
+, alsa-lib
 , ffmpeg
 , freefont_ttf
 , freetype
+, jack2_lib
 , libass
 , libbluray
 , libbs2b
 , libcaca
 , libdvdnav
 , libdvdread
-, libjack2
 , libpng
-, libpulseaudio
 , libtheora
+, libva
 , libvdpau
 , lua
-, lua5_sockets
+, luaPackages
+, pythonPackages
 , mesa
+, pulseaudio_lib
 , SDL2
 , speex
 , xorg
-, youtube-dl
-
-, vaapiSupport ? false, libva ? null
 }:
 
 with {
@@ -51,26 +49,27 @@ in
 
 stdenv.mkDerivation rec {
   name = "mpv-${version}";
-  version = "0.15.0";
+  version = "0.16.0";
 
   src = fetchurl {
     url = "https://github.com/mpv-player/mpv/archive/v${version}.tar.gz";
-    sha256 = "1p0b83048g66icpz5n66v3k4ldr1z0rmg5d2rr7kcbspm1xj2cbx";
+    sha256 = "1fiqxx85s418qynq2fp0v7cpzrz8j285hwmc4fqgn5ny1vg1jdpw";
   };
 
   nativeBuildInputs = [
-    docutils
     makeWrapper
     perl
     python
+    pythonPackages.docutils
     which
   ];
 
   buildInputs = [
-    alsaLib
+    alsa-lib
     ffmpeg
     freefont_ttf
     freetype
+    jack2_lib
     libass
     libbluray
     libbs2b
@@ -78,14 +77,15 @@ stdenv.mkDerivation rec {
     libdvdnav
     libdvdnav.libdvdread
     libdvdread
-    libjack2
     libpng
-    libpulseaudio
     libtheora
+    libva
     libvdpau
     lua
-    lua5_sockets
+    luaPackages.luasocket
     mesa
+    pulseaudio_lib
+    pythonPackages.youtube-dl
     SDL2
     speex
     xorg.libpthreadstubs
@@ -95,8 +95,7 @@ stdenv.mkDerivation rec {
     xorg.libXScrnSaver
     xorg.libXv
     xorg.libXxf86vm
-    youtube-dl
-  ] ++ optional vaapiSupport libva;
+  ];
 
   postPatch = ''
     patchShebangs ./TOOLS/
@@ -109,9 +108,8 @@ stdenv.mkDerivation rec {
     "--enable-manpage-build"
     "--disable-build-date" # Purity
     "--enable-zsh-comp"
-  ] ++ optional vaapiSupport "--enable-vaapi";
-
-  NIX_LDFLAGS = "-lX11 -lXext";
+    "--enable-vaapi"
+  ];
 
   configurePhase = ''
     python ${waf} configure --prefix=$out $configureFlags
@@ -124,14 +122,14 @@ stdenv.mkDerivation rec {
   installPhase = ''
     python ${waf} install
   '' + /* Use a standard font */ ''
-    mkdir -p $out/share/mpv
-    ln -s ${freefont_ttf}/share/fonts/truetype/FreeSans.ttf $out/share/mpv/subfont.ttf
+    mkdir -pv $out/share/mpv
+    ln -sv ${freefont_ttf}/share/fonts/truetype/FreeSans.ttf $out/share/mpv/subfont.ttf
   '';
 
   preFixup =
     /* Ensure youtube-dl is available in $PATH for MPV */ ''
       wrapProgram $out/bin/mpv \
-        --prefix PATH : "${youtube-dl}/bin"
+        --prefix PATH : "${pythonPackages.youtube-dl}/bin"
     '';
 
   meta = with stdenv.lib; {
@@ -140,7 +138,6 @@ stdenv.mkDerivation rec {
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

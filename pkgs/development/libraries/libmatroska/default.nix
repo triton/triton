@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     homepage = http://matroska.org/;
     license = licenses.lgpl21;
     maintainers = [ maintainers.spwhitt ];
-    platforms = platforms.unix;
+    platforms = platforms.all;
   };
 }
 

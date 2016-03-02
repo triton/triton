@@ -3,7 +3,7 @@
 , fetchurl
 
 , a52dec
-, alsaLib
+, alsa-lib
 , avahi
 , bzip2
 , dbus
@@ -13,6 +13,7 @@
 , freefont_ttf
 , fribidi
 , gnutls
+, jack2_lib
 , libass
 , libbluray
 , libcaca
@@ -22,14 +23,12 @@
 , libdvdnav
 , libebml
 , libgcrypt
-, libjack2
 , libkate
 , libmad
 , libmatroska
 , libmtp
 , liboggz
 , libopus
-, libpulseaudio
 , libraw1394
 , librsvg
 , libsamplerate
@@ -45,6 +44,7 @@
 , lua
 , mpeg2dec
 , perl
+, pulseaudio_lib
 , qt4
 #, qt5
 , samba
@@ -52,8 +52,8 @@
 , SDL
 , SDL_image
 , speex
+, systemd_lib
 , taglib
-, udev
 , unzip
 , xorg
 , xz
@@ -78,7 +78,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     a52dec
-    alsaLib
+    alsa-lib
     avahi
     bzip2
     dbus
@@ -88,6 +88,7 @@ stdenv.mkDerivation rec {
     freefont_ttf
     fribidi
     gnutls
+    jack2_lib
     libass
     libbluray
     libcaca
@@ -98,14 +99,12 @@ stdenv.mkDerivation rec {
     libdvdnav.libdvdread
     libebml
     libgcrypt
-    libjack2
     libkate
     libmad
     libmatroska
     libmtp
     liboggz
     libopus
-    libpulseaudio
     libraw1394
     librsvg
     libsamplerate
@@ -121,6 +120,7 @@ stdenv.mkDerivation rec {
     lua
     mpeg2dec
     perl
+    pulseaudio_lib
     qt4
     #qt5.qtbase
     samba
@@ -128,8 +128,8 @@ stdenv.mkDerivation rec {
     SDL
     SDL_image
     speex
+    systemd_lib
     taglib
-    udev
     unzip
     xorg.xcbutilkeysyms
     xorg.libXpm

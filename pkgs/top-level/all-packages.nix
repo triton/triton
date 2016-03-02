@@ -5322,8 +5322,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ### LUA MODULES
 #
-  lua5_sockets = luaPackages.luasocket;
-#
 #  lua5_2 = callPackage ../development/interpreters/lua-5/5.2.nix { };
 #  lua5_2_compat = callPackage ../development/interpreters/lua-5/5.2.nix {
 #    compat = true;
@@ -5336,7 +5334,9 @@ zstd = callPackage ../all-pkgs/zstd { };
   lua = callPackageAlias "lua5" { };
 #
 #  lua52Packages = callPackage ./lua-packages.nix { lua = lua5_2; };
-  lua53Packages = callPackage ./lua-packages.nix { lua = lua5_3; };
+  lua53Packages = callPackage ./lua-packages.nix {
+    lua = callPackageAlias "lua5_3" { };
+  };
   luaPackages = callPackageAlias "lua53Packages" { };
 #
 #  lua5_expat = callPackage ../development/interpreters/lua-5/expat.nix {};
@@ -5661,8 +5661,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  };
 #
 #  doclifter = callPackage ../development/tools/misc/doclifter { };
-#
-  docutils = pythonPackages.docutils;
 #
 #  dot2tex = pythonPackages.dot2tex;
 #
@@ -12036,8 +12034,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  xzgv = callPackage ../applications/graphics/xzgv { };
 #
 #  yate = callPackage ../applications/misc/yate { };
-#
-  inherit (pythonPackages) youtube-dl;
 #
 #  qtbitcointrader = callPackage ../applications/misc/qtbitcointrader {
 #    qt = qt4;

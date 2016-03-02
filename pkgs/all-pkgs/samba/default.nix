@@ -1,78 +1,94 @@
-{ stdenv, fetchurl, pythonPackages, pkgconfig, perl, libxslt, docbook_xsl
-, docbook_xml_dtd_42, docbook_xml_dtd_45, readline, talloc, tdb, tevent
-, ldb, popt, iniparser, subunit, libbsd, nss_wrapper, resolv_wrapper
-, socket_wrapper, uid_wrapper, libarchive
+{ stdenv
+, docbook_xml_dtd_42
+, docbook_xsl
+, fetchurl
+, gettext
+, libxslt
+, perl
+, pythonPackages
+
+, iniparser
+, ldb
+, libarchive
+, libbsd
+, nss_wrapper
+, popt
+, readline
+, resolv_wrapper
+, socket_wrapper
+, subunit
+, talloc
+, tdb
+, tevent
+, uid_wrapper
 
 # source3/wscript optionals
-, kerberos ? null
-, zlib ? null
-, openldap ? null
-, cups ? null
-, pam ? null
-, avahi ? null
-, acl ? null
-, libaio ? null
-, fam ? null
-, libceph ? null
-, glusterfs ? null
-
-# buildtools/wafsamba/wscript optionals
-, libiconv ? null
-, gettext ? null
+, kerberos
+, zlib
+, openldap
+, cups
+, pam
+, avahi
+, acl
+, libaio
+, fam
+, ceph_lib
+, glusterfs
 
 # source4/lib/tls/wscript optionals
-, gnutls ? null
-, libgcrypt ? null
-, libgpgerror ? null
+, gnutls
+, libgcrypt
+, libgpg-error
 
 # other optionals
-, ncurses ? null
-, libunwind ? null
-, dbus ? null
-, libibverbs ? null
-, librdmacm ? null
-, systemd ? null
+, ncurses
+, libunwind
+, dbus
+, libibverbs
+, librdmacm
+, systemd_lib
 }:
-
-assert kerberos != null -> zlib != null;
 
 let
   bundledLibs = if kerberos != null && kerberos.implementation == "heimdal" then "NONE" else "com_err";
-  hasGnutls = gnutls != null && libgcrypt != null && libgpgerror != null;
+  hasGnutls = gnutls != null && libgcrypt != null && libgpg-error != null;
   isKrb5OrNull = if kerberos != null && kerberos.implementation == "krb5" then true else null;
   #hasInfinibandOrNull = if libibverbs != null && librdmacm != null then true else null;
   hasInfinibandOrNull = null;  # TODO(wkennington): Reenable after fixed
 in
 with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "samba-4.3.4";
+  name = "samba-4.3.5";
 
   src = fetchurl {
     url = "mirror://samba/pub/samba/stable/${name}.tar.gz";
-    sha256 = "1n8r2i7s53714xkxyfzc0qlij8zzmip72mvx5y9ayci8hhpba3jx";
+    sha256 = "075z2h7qgr0pvxicdhyg0qxj42njgckbxw2dzmbjf9rvh9x94gsq";
   };
 
   patches = [
     ./4.x-no-persistent-install.patch
     ./4.x-fix-ctdb-deps.patch
-  ] ++ optional (kerberos != null) ./4.x-heimdal-compat.patch;
+  ];
 
   nativeBuildInputs = [
-    pythonPackages.python pkgconfig perl libxslt docbook_xsl docbook_xml_dtd_42
+    pythonPackages.python
+    perl
+    libxslt
+    docbook_xsl
+    docbook_xml_dtd_42
     pythonPackages.wrapPython
+    gettext
   ];
   buildInputs = [
     readline talloc tdb tevent ldb popt iniparser
     subunit libbsd nss_wrapper resolv_wrapper socket_wrapper uid_wrapper
     libarchive
 
-    kerberos zlib openldap cups pam avahi acl libaio fam libceph glusterfs
+    kerberos zlib openldap cups pam avahi acl libaio fam ceph_lib glusterfs
 
-    libiconv gettext
+    gnutls libgcrypt libgpg-error
 
-    gnutls libgcrypt libgpgerror
-
-    ncurses libunwind dbus libibverbs librdmacm systemd
+    ncurses libunwind dbus libibverbs librdmacm systemd_lib
   ];
 
   pythonPath = [ talloc ldb tdb ];
@@ -114,7 +130,7 @@ stdenv.mkDerivation rec {
     (mkWith   (libarchive != null) "libarchive"        null)
     (mkWith   true                 "cluster-support"   null)
     (mkWith   (ncurses != null)    "regedit"           null)
-    (mkWith   libceph              "libcephfs"         libceph)
+    (mkWith   ceph_lib             "libcephfs"         ceph_lib)
     (mkEnable (glusterfs != null)  "glusterfs"         null)
 
     # dynconfig/wscript options
@@ -126,11 +142,11 @@ stdenv.mkDerivation rec {
     (mkOther                       "bundled-libraries" bundledLibs)
     (mkOther                       "private-libraries" "NONE")
     (mkOther                       "builtin-libraries" "replace")
-    (mkWith   libiconv             "libiconv"          libiconv)
+    (mkWith   true                 "libiconv"          null)
     (mkWith   (gettext != null)    "gettext"           gettext)
 
     # lib/util/wscript
-    (mkWith   (systemd != null)    "systemd"           null)
+    (mkWith   (systemd_lib != null) "systemd"          null)
 
     # source4/lib/tls/wscript options
     (mkEnable hasGnutls            "gnutls" null)

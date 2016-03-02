@@ -1395,6 +1395,8 @@ rtorrent = callPackage ../all-pkgs/rtorrent { };
 
 sakura = callPackage ../all-pkgs/sakura { };
 
+samba = callPackage ../all-pkgs/samba { };
+
 seabios = callPackage ../all-pkgs/seabios { };
 
 seahorse = callPackage ../all-pkgs/seahorse { };
@@ -8596,60 +8598,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    inherit (perlPackages) HTMLParser NetDNS NetAddrIP DBFile
 #      HTTPDate MailDKIM LWP IOSocketSSL;
 #  };
-#
-#  samba3 = callPackage ../servers/samba/3.x.nix { };
-#
-  samba4 = callPackage ../servers/samba/4.x.nix {
-    glusterfs = null;
-    kerberos = null;  # Bundle kerberos because samba uses internal, non-stable functions
-  };
-
-  samba = callPackageAlias "samba4" { };
-
-  # A lightweight Samba 3, useful for non-Linux-based OSes.
-#  samba3_light = lowPrio (samba3.override {
-#    pam = null;
-#    fam = null;
-#    cups = null;
-#    acl = null;
-#    openldap = null;
-#    # libunwind 1.0.1 is not ported to GNU/Hurd.
-#    libunwind = null;
-#  });
-#
-  samba4_light = lowPrio (samba4.override {
-    # source3/wscript optionals
-    kerberos = null;
-    zlib = null;
-    openldap = null;
-    cups = null;
-    pam = null;
-    avahi = null;
-    acl = null;
-    libaio = null;
-    fam = null;
-    libceph = null;
-    glusterfs = null;
-
-    # buildtools/wafsamba/wscript optionals
-    libiconv = null;
-    gettext = null;
-
-    # source4/lib/tls/wscript optionals
-    gnutls = null;
-    libgcrypt = null;
-    libgpgerror = null;
-
-    # other optionals
-    ncurses = null;
-    libunwind = null;
-    dbus = null;
-    libibverbs = null;
-    librdmacm = null;
-    systemd = null;
-  });
-
-  samba_light = callPackageAlias "samba4_light" { };
 #
 #  shairport-sync = callPackage ../servers/shairport-sync { };
 #

@@ -1,32 +1,55 @@
-{ stdenv, fetchurl, fetchgit, pkgconfig
-, qt4, qt5, avahi, boost, libopus, libsndfile, protobuf, speex, libcap
-, alsaLib
-, jackSupport ? false, libjack2 ? null
-, speechdSupport ? false, speechd ? null
-, pulseSupport ? false, libpulseaudio ? null
-, iceSupport ? false, zeroc_ice ? null
+{ stdenv
+, fetchurl
+, fetchgit
+
+, alsa-lib
+, avahi
+, boost
+, libcap
+, libopus
+, libsndfile
+, qt4
+, qt5
+, protobuf
+, speex
+
+, iceSupport ? true, zeroc_ice
+, jackSupport ? false, jack2_lib
+, pulseSupport ? false, pulseaudio_lib
+, speechdSupport ? false, speechd
 }:
 
-assert jackSupport -> libjack2 != null;
-assert speechdSupport -> speechd != null;
-assert pulseSupport -> libpulseaudio != null;
-assert iceSupport -> zeroc_ice != null;
-
-with stdenv.lib;
 let
+  inherit (stdenv.lib)
+    optional
+    optionals;
+
   generic = overrides: source: stdenv.mkDerivation (source // overrides // {
     name = "${overrides.type}-${source.version}";
 
-    patches = optional jackSupport ./mumble-jack-support.patch;
+    patches = optionals jackSupport [
+      ./mumble-jack-support.patch
+    ];
 
-    nativeBuildInputs = [ pkgconfig ]
-      ++ { qt4 = [ qt4 ]; qt5 = [ qt5.qtbase ]; }."qt${toString source.qtVersion}"
-      ++ (overrides.nativeBuildInputs or [ ]);
-    buildInputs = [ boost protobuf avahi ]
-      ++ { qt4 = [ qt4 ]; qt5 = [ qt5.qtbase ]; }."qt${toString source.qtVersion}"
-      ++ (overrides.buildInputs or [ ]);
+    nativeBuildInputs = (overrides.nativeBuildInputs or [ ])
+      ++ optionals (source.qtVersion == 4) [
+      qt4
+    ] ++ optionals (source.qtVersion == 5) [
+      qt5.qtbase
+    ];
 
-    configureFlags = [
+    buildInputs = [
+      avahi
+      boost
+      protobuf
+    ] ++ optionals (source.qtVersion == 4) [
+      qt4
+    ] ++ optionals (source.qtVersion == 5) [
+      qt5.qtbase
+    ];
+
+    configureFlags = (overrides.configureFlags or [ ])
+      ++ [
       "CONFIG+=shared"
       "CONFIG+=no-g15"
       "CONFIG+=packaged"
@@ -35,15 +58,21 @@ let
       "CONFIG+=bundled-celt"
       "CONFIG+=no-bundled-opus"
       "CONFIG+=no-bundled-speex"
-    ] ++ optional (!speechdSupport) "CONFIG+=no-speechd"
-      ++ optional jackSupport "CONFIG+=no-oss CONFIG+=no-alsa CONFIG+=jackaudio"
-      ++ (overrides.configureFlags or [ ]);
+    ] ++ optionals (!speechdSupport) [
+      "CONFIG+=no-speechd"
+    ] ++ optionals jackSupport [
+      "CONFIG+=no-oss"
+      "CONFIG+=no-alsa"
+      "CONFIG+=jackaudio"
+    ];
 
     configurePhase = ''
       qmake $configureFlags DEFINES+="PLUGIN_PATH=$out/lib"
     '';
 
-    makeFlags = [ "release" ];
+    makeFlags = [
+      "release"
+    ];
 
     installPhase = ''
       mkdir -p $out/{lib,bin}
@@ -54,27 +83,39 @@ let
       cp man/mum* $out/share/man/man1
     '' + (overrides.installPhase or "");
 
-    enableParallelBuilding = true;
-
-    meta = {
+    meta = with stdenv.lib; {
       description = "Low-latency, high quality voice chat software";
       homepage = "http://mumble.sourceforge.net/";
       license = licenses.bsd3;
-      maintainers = with maintainers; [ viric jgeerds wkennington ];
-      platforms = platforms.linux;
+      maintainers = with maintainers; [
+        wkennington
+      ];
+      platforms = with platforms;
+        x86_64-linux;
     };
   });
 
   client = source: generic {
     type = "mumble";
 
-    nativeBuildInputs = optional (source.qtVersion == 5) qt5.qttools;
-    buildInputs = [ libopus libsndfile speex ]
-      ++ optional (source.qtVersion == 5) qt5.qtsvg
-      ++ optional stdenv.isLinux alsaLib
-      ++ optional jackSupport libjack2
-      ++ optional speechdSupport speechd
-      ++ optional pulseSupport libpulseaudio;
+    nativeBuildInputs = optionals (source.qtVersion == 5) [
+      qt5.qttools
+    ];
+
+    buildInputs = [
+      alsa-lib
+      libopus
+      libsndfile
+      speex
+    ] ++ optionals (source.qtVersion == 5) [
+      qt5.qtsvg
+    ] ++ optionals jackSupport [
+      jack2_lib
+    ] ++ optionals speechdSupport [
+      speechd
+    ] ++ optionals pulseSupport [
+      pulseaudio_lib
+    ];
 
     configureFlags = [
       "CONFIG+=no-server"
@@ -104,27 +145,31 @@ let
       "CONFIG+=no-client"
     ];
 
-    buildInputs = [ libcap ] ++ optional iceSupport [ zeroc_ice ];
+    buildInputs = [
+      libcap
+    ] ++ optionals iceSupport [
+      zeroc_ice
+    ];
   };
 
   stableSource = rec {
-    version = "1.2.13";
+    version = "1.2.14";
     qtVersion = 4;
 
     src = fetchurl {
       url = "https://github.com/mumble-voip/mumble/releases/download/${version}/mumble-${version}.tar.gz";
-      sha256 = "0ih108bc8xccldrifh5asf10svw6q2xahhhiz2jvc33nqf7p1nxp";
+      sha256 = "0y3pi8ny0hw6q2q6ikgq1fqnlgw309r515q6flx1hjpxmr880m6z";
     };
   };
 
   gitSource = rec {
-    version = "1.3.0-git-2016-02-09";
+    version = "1.3.0-git-2016-02-25";
     qtVersion = 5;
 
     src = fetchgit {
       url = "https://github.com/mumble-voip/mumble";
-      rev = "cb267a3606c8f65bf81961f121a6d9977692262f";
-      sha256 = "08w1pa23kzkk1zx905habck9915iila6hfi1ah9jq9fcm83y6wj1";
+      rev = "93427affdeeafb0b4aebd79bafc30970d8f39584";
+      sha256 = "1ssd6pxx5355jwvmc9m02jh0jiabyli0ql7xc8yh1z13c2zf79ji";
     };
 
     # TODO: Remove fetchgit as it requires git

@@ -30,6 +30,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   preConfigure = ''
+    export LD_LIBRARY_PATH="${gmp}/lib:${stdenv.libc}/lib"
     export NIX_LDFLAGS="$NIX_LDFLAGS -rpath $out/lib/ghc-${version}"
   '';
 

@@ -6324,10 +6324,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   # Only supported on Linux
   glibcLocales = callPackage ../development/libraries/glibc/locales.nix { };
 
-  glibc_multi = callPackage ../development/libraries/glibc/multi.nix {
-    glibc32 = pkgsi686Linux.glibc;
-  };
-#
 #  glm = callPackage ../development/libraries/glm { };
 #  glm_0954 = callPackage ../development/libraries/glm/0954.nix { };
 #

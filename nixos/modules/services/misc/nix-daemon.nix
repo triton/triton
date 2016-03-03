@@ -44,6 +44,7 @@ let
         binary-caches = ${toString cfg.binaryCaches}
         trusted-binary-caches = ${toString cfg.trustedBinaryCaches}
         binary-cache-public-keys = ${toString cfg.binaryCachePublicKeys}
+        auto-optimise-store = ${toString cfg.autoOptimiseStore}
         ${optionalString cfg.requireSignedBinaryCaches ''
           signed-binary-caches = *
         ''}
@@ -74,11 +75,11 @@ in
 
       maxJobs = mkOption {
         type = types.int;
-        default = 1;
+        default = 2;
         example = 64;
         description = ''
           This option defines the maximum number of jobs that Nix will try
-          to build in parallel.  The default is 1.  You should generally
+          to build in parallel.  The default is 2.  You should generally
           set it to the total number of logical cores in your system (e.g., 16
           for two CPUs with 4 cores each and hyper-threading).
         '';
@@ -86,15 +87,14 @@ in
 
       buildCores = mkOption {
         type = types.int;
-        default = 1;
+        default = 0;
         example = 64;
         description = ''
           This option defines the maximum number of concurrent tasks during
-          one build. It affects, e.g., -j option for make. The default is 1.
+          one build. It affects, e.g., -j option for make. The default is 0.
           The special value 0 means that the builder should use all
           available CPU cores in the system. Some builds may become
-          non-deterministic with this option; use with care! Packages will
-          only be affected if enableParallelBuilding is set for them.
+          non-deterministic with this option; use with care!
         '';
       };
 
@@ -118,6 +118,14 @@ in
             Directories from the host filesystem to be included
             in the chroot.
           '';
+      };
+
+      autoOptimiseStore = mkOption {
+        type = types.bool;
+        default = true;
+        description = ''
+          Whether the store will auto-optimise after each derivation addition.
+        '';
       };
 
       extraOptions = mkOption {
@@ -311,11 +319,9 @@ in
 
       nixPath = mkOption {
         type = types.listOf types.str;
-        default =
-          [ "/nix/var/nix/profiles/per-user/root/channels/nixos"
-            "nixos-config=/etc/nixos/configuration.nix"
-            "/nix/var/nix/profiles/per-user/root/channels"
-          ];
+        default = [
+          "nixos-config=/etc/nixos/configuration.nix"
+        ];
         description = ''
           The default Nix expression search path, used by the Nix
           evaluator to look up paths enclosed in angle brackets

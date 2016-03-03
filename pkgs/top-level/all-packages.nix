@@ -1030,6 +1030,8 @@ libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix { };
 libjpeg_turbo = callPackage ../all-pkgs/libjpeg-turbo { };
 libjpeg = callPackageAlias "libjpeg_turbo" { };
 
+libmcrypt = callPackage ../all-pkgs/libmcrypt {};
+
 libmediaart = callPackage ../all-pkgs/libmediaart {
   qt5 = null;
 };
@@ -6832,8 +6834,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  liblognorm = callPackage ../development/libraries/liblognorm { };
 #
 #  libltc = callPackage ../development/libraries/libltc { };
-#
-  libmcrypt = callPackage ../development/libraries/libmcrypt {};
 #
   libmediainfo = callPackage ../development/libraries/libmediainfo { };
 #

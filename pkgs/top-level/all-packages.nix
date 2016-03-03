@@ -789,6 +789,16 @@ gnumake = callPackage ../all-pkgs/gnumake { };
 
 gnupatch = callPackage ../all-pkgs/gnupatch { };
 
+gnupg_2_0 = callPackageAlias "gnupg" {
+  channel = "2.0";
+};
+
+gnupg_2_1 = callPackageAlias "gnupg" {
+  channel = "2.1";
+};
+
+gnupg = callPackage ../all-pkgs/gnupg { };
+
 gnused = callPackage ../all-pkgs/gnused { };
 
 gnutar = callPackage ../all-pkgs/gnutar { };
@@ -2645,19 +2655,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   gnulib = callPackage ../development/tools/gnulib { };
 
-  gnupg1orig = callPackage ../tools/security/gnupg/1.nix { };
-
-  gnupg1compat = callPackage ../tools/security/gnupg/1compat.nix { };
-
-  # use config.packageOverrides if you prefer original gnupg1
-  gnupg1 = callPackageAlias "gnupg1compat" { };
-
-  gnupg20 = callPackage ../tools/security/gnupg/20.nix { };
-
-  gnupg21 = callPackage ../tools/security/gnupg/21.nix { };
-
-  gnupg = callPackageAlias "gnupg21" { };
-#
 #  gnuplot = callPackage ../tools/graphics/gnuplot { qt = qt4; };
 #
 #  gnuplot_qt = gnuplot.override { withQt = true; };
@@ -5995,7 +5992,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  activemq = callPackage ../development/libraries/apache-activemq { };
 #
-#  adns = callPackage ../development/libraries/adns { };
+  adns = callPackage ../development/libraries/adns { };
 #
 #  afflib = callPackage ../development/libraries/afflib { };
 #

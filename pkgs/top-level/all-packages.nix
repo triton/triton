@@ -1174,6 +1174,8 @@ inherit (callPackages ../all-pkgs/mumble {
   murmur
   murmur_git;
 
+musl = callPackage ../all-pkgs/musl { };
+
 mutter = callPackage ../all-pkgs/mutter { };
 
 nasm = callPackage ../all-pkgs/nasm { };
@@ -9158,8 +9160,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  multipath-tools = callPackage ../os-specific/linux/multipath-tools { };
 #
-  musl = callPackage ../os-specific/linux/musl { };
-
   nftables = callPackage ../os-specific/linux/nftables { };
 
   numactl = callPackage ../os-specific/linux/numactl { };

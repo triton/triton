@@ -2,12 +2,12 @@
 
 stdenv.mkDerivation rec {
   name = "nasm-${version}";
-  version = "2.11.08";
+  version = "2.12";
 
   src = fetchurl {
     url = "http://www.nasm.us/pub/nasm/releasebuilds/${version}/" +
           "${name}.tar.bz2";
-    sha256 = "0ialkla6i63j8fpv840jy7k5mdf2wbqr98bvbcq0dp0b38ls18wx";
+    sha256 = "07l3cx88lnr57xi2q46xzh5cwqyswimaqgnms69h0m41614hb80f";
   };
 
   meta = with stdenv.lib; {

@@ -959,6 +959,8 @@ iputils = callPackage ../all-pkgs/iputils { };
 isl = callPackage ../all-pkgs/isl { };
 isl_0_14 = callPackage ../all-pkgs/isl { channel = "0.14"; };
 
+jam = callPackage ../all-pkgs/jam { };
+
 jemalloc = callPackage ../all-pkgs/jemalloc { };
 
 json-glib = callPackage ../all-pkgs/json-glib { };
@@ -5759,8 +5761,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   itstool = callPackage ../development/tools/misc/itstool { };
 
-  jam = callPackage ../development/tools/build-managers/jam { };
-#
 #  jikespg = callPackage ../development/tools/parsing/jikespg { };
 #
 #  jenkins = callPackage ../development/tools/continuous-integration/jenkins { };

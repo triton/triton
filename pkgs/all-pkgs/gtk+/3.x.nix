@@ -52,12 +52,12 @@ assert xorg != null ->
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";
   versionMajor = "3.18";
-  versionMinor = "7";
+  versionMinor = "8";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
-    sha256 = "0848wr702kvpayrlvggn3wys5im564kqyxzn6hkmrkj5mjq1qvm7";
+    sha256 = "1y2jw3i340j067aszgvs7952zya7nn2x3v43f67njr2knldyylqw";
   };
 
   nativeBuildInputs = [

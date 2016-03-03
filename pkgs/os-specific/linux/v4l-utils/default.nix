@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig
+{ stdenv, fetchurl
 , libjpeg
 , alsa-lib ? null
 , libX11 ? null
@@ -43,11 +43,10 @@ stdenv.mkDerivation rec {
     ln -s $out/include/libv4l1-videodev.h $out/include/linux/videodev.h
   '';
 
-  nativeBuildInputs = [ pkgconfig ];
+  buildInputs = [ alsa-lib libX11 qt4 qt5 libjpeg ];
 
-  buildInputs = [ alsa-lib libX11 qt4 qt5 ];
-
-  propagatedBuildInputs = [ libjpeg ];
+  # Sometimes fails
+  parallelInstall = false;
 
   meta = with stdenv.lib; {
     description = "V4L utils and libv4l, provide common image formats regardless of the v4l device";

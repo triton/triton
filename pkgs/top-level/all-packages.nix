@@ -7132,7 +7132,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   libuv = libuvVersions.v1_8_0;
 
-  libv4l = lowPrio (callPackageAlias "v4l_utils" {
+  v4l_lib = lowPrio (callPackageAlias "v4l_utils" {
     alsa-lib = null;
     libX11 = null;
     qt4 = null;

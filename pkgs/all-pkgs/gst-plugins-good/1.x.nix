@@ -18,7 +18,7 @@
 , pulseaudio_lib
 , libshout
 , libsoup
-, libv4l
+, v4l_lib
 , libvpx
 , orc
 , speex
@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
     pulseaudio_lib
     libshout
     libsoup
-    libv4l
+    v4l_lib
     libvpx
     orc
     speex
@@ -145,7 +145,7 @@ stdenv.mkDerivation rec {
     "--disable-sunaudio"
     "--disable-osx_audio"
     "--disable-osx_video"
-    (enFlag "gst_v4l2" (libv4l != null) null)
+    (enFlag "gst_v4l2" (v4l_lib != null) null)
     (enFlag "x" (xorg.libX11 != null) null)
     (enFlag "aalib" (aalib != null) null)
     "--disable-aalibtest"
@@ -168,7 +168,7 @@ stdenv.mkDerivation rec {
     (enFlag "zlib" (zlib != null) null)
     (enFlag "bz2" (bzip2 != null) null)
     (wtFlag "--with-gudev" (libgudev != null) null)
-    (wtFlag "--with-libv4l2" (libv4l != null) null)
+    (wtFlag "--with-libv4l2" (v4l_lib != null) null)
   ];
 
   meta = with stdenv.lib; {

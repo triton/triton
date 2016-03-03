@@ -109,10 +109,6 @@ let
   # source tree.
   extraAttrs = buildFun base;
 
-  opusWithCustomModes = libopus.override {
-    withCustomModes = true;
-  };
-
   # build paths and release info
   packageName = extraAttrs.packageName or extraAttrs.name;
   buildType = "Release";
@@ -159,7 +155,7 @@ let
       libxslt
       mesa
       minizip
-      opusWithCustomModes
+      libopus
       pango
       pciutils
       protobuf

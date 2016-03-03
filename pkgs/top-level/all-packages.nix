@@ -1003,6 +1003,8 @@ libevent = callPackage ../all-pkgs/libevent { };
 
 libffi = callPackage ../all-pkgs/libffi { };
 
+libfilezilla = callPackage ../all-pkgs/libfilezilla { };
+
 libgcrypt = callPackage ../all-pkgs/libgcrypt { };
 
 libgdata = callPackage ../all-pkgs/libgdata { };

@@ -478,6 +478,8 @@ amrnb = callPackage ../all-pkgs/amrnb { };
 
 amrwb = callPackage ../all-pkgs/amrwb { };
 
+apr = callPackage ../all-pkgs/apr { };
+
 ardour =  callPackage ../all-pkgs/ardour {
   inherit (gnome) libgnomecanvas libgnomecanvasmm;
   inherit (vamp) vampSDK;
@@ -5999,8 +6001,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  appstream-glib = callPackage ../development/libraries/appstream-glib { };
 #
-  apr = callPackage ../development/libraries/apr { };
-
   aprutil = callPackage ../development/libraries/apr-util { };
 
 #  assimp = callPackage ../development/libraries/assimp { };

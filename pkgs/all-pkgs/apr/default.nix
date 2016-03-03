@@ -1,4 +1,6 @@
-{ stdenv, fetchurl }:
+{ stdenv
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
   name = "apr-1.5.2";
@@ -8,10 +10,14 @@ stdenv.mkDerivation rec {
     sha256 = "0ypn51xblix5ys9xy7da3ngdydip0qqh9rdq8nz54w9aq8lys0vx";
   };
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://apr.apache.org/;
     description = "The Apache Portable Runtime library";
-    platforms = stdenv.lib.platforms.all;
-    maintainers = [ stdenv.lib.maintainers.eelco ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

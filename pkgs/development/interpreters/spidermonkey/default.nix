@@ -1,13 +1,24 @@
-{ stdenv, fetchurl, perl, python, libffi, nspr, zlib, readline, icu }:
+{ stdenv
+, fetchurl
+, perl
+, python
 
-with stdenv.lib;
+, icu
+, libffi
+, nspr
+, readline
+, zlib
+}:
+
 let
-  mkSpidermonkey = version: sha256: stdenv.mkDerivation rec {
+  inherit (stdenv.lib)
+    versionAtLeast;
+
+  mkSpidermonkey = { version, urls, sha256 }: stdenv.mkDerivation rec {
     name = "spidermonkey-${version}";
 
     src = fetchurl {
-      url = "https://people.mozilla.org/~sstangl/mozjs-${version}.tar.bz2";
-      inherit sha256;
+      inherit urls sha256;
     };
 
     prePatch = ''
@@ -22,8 +33,18 @@ let
       sed -i 's/(defined\((@TEMPLATE_FILE)\))/\1/' config/milestone.pl
     '';
 
-    nativeBuildInputs = [ perl python ];
-    buildInputs = [ libffi nspr zlib readline icu ];
+    nativeBuildInputs = [
+      perl
+      python
+    ];
+
+    buildInputs = [
+      libffi
+      nspr
+      zlib
+      readline
+      icu
+    ];
 
     configureFlags = [
       "--enable-release"
@@ -39,8 +60,6 @@ let
       "--with-system-icu"
     ];
 
-    enableParallelBuilding = true;
-
     postFixup = ''
       # The headers are symlinks to a directory that doesn't get put
       # into $out, so they end up broken. Fix that by just resolving the
@@ -53,11 +72,27 @@ let
     meta = with stdenv.lib; {
       description = "Mozilla's JavaScript engine written in C/C++";
       homepage = https://developer.mozilla.org/en/SpiderMonkey;
-      platforms = platforms.linux;
+      maintainers = with maintainers; [
+        wkennington
+      ];
+      platforms = with platforms;
+        x86_64-linux;
     };
   };
 in {
-  spidermonkey_17 = mkSpidermonkey "17.0.0" "1fig2wf4f10v43mqx67y68z6h77sy900d1w0pz9qarrqx57rc7ij";
-  spidermonkey_24 = mkSpidermonkey "24.2.0" "1n1phk8r3l8icqrrap4czplnylawa0ddc2cc4cgdz46x3lrkybz6";
-  spidermonkey_38 = mkSpidermonkey "38.2.1.rc0" "0p4bmbpgkfsj54xschcny0a118jdrdgg0q29rwxigg3lh5slr681";
+  spidermonkey_17 = mkSpidermonkey {
+    version = "17.0.0";
+    urls = [
+      "http://ftp.mozilla.org/pub/js/mozjs17.0.0.tar.gz"
+    ];
+    sha256 = "1fig2wf4f10v43mqx67y68z6h77sy900d1w0pz9qarrqx57rc7ij";
+  };
+
+  spidermonkey_24 = mkSpidermonkey {
+    version = "24.2.0";
+    urls = [
+      "http://ftp.mozilla.org/pub/js/mozjs-24.2.0.tar.bz2"
+    ];
+    sha256 = "1n1phk8r3l8icqrrap4czplnylawa0ddc2cc4cgdz46x3lrkybz6";
+  };
 }

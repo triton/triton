@@ -5416,9 +5416,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   inherit (callPackages ../development/interpreters/spidermonkey { })
     spidermonkey_17
-    spidermonkey_24
-    spidermonkey_38;
-  spidermonkey = callPackageAlias "spidermonkey_38" { };
+    spidermonkey_24;
+  spidermonkey = callPackageAlias "spidermonkey_24" { };
 #
 #  tcl = tcl-8_6;
 #  tcl-8_6 = callPackage ../development/interpreters/tcl/8.6.nix { };

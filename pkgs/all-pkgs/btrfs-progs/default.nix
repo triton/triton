@@ -1,17 +1,17 @@
 { stdenv
+, asciidoc
+, docbook_xsl
+, docbook_xml_dtd_45
 , fetchurl
+, libxslt
+, xmlto
 
-, attr
 , acl
-, zlib
+, attr
 , e2fsprogs
 , lzo
-, asciidoc
-, xmlto
-, docbook_xml_dtd_45
-, docbook_xsl
-, libxslt
 , util-linux_lib
+, zlib
 }:
 
 stdenv.mkDerivation rec {
@@ -23,18 +23,21 @@ stdenv.mkDerivation rec {
     sha256 = "0jssv1ys4nw2jf7mkp58c19yspaa8ybf48fxsrhhp0683mzpr73p";
   };
 
+  nativeBuildInputs = [
+    asciidoc
+    docbook_xsl
+    docbook_xml_dtd_45
+    libxslt
+    xmlto
+  ];
+
   buildInputs = [
-    attr
     acl
-    zlib
+    attr
     e2fsprogs
     lzo
-    asciidoc
-    xmlto
-    docbook_xml_dtd_45
-    docbook_xsl
-    libxslt
     util-linux_lib
+    zlib
   ];
 
   meta = with stdenv.lib; {

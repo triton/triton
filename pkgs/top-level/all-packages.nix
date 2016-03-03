@@ -1060,6 +1060,8 @@ libsecret = callPackage ../all-pkgs/libsecret { };
 
 libssh = callPackage ../all-pkgs/libssh { };
 
+libssh2 = callPackage ../all-pkgs/libssh2 { };
+
 libsigsegv = callPackage ../all-pkgs/libsigsegv { };
 
 libsodium = callPackage ../all-pkgs/libsodium { };
@@ -7047,8 +7049,6 @@ libsigcxx = callPackage ../development/libraries/libsigcxx { };
 libsigcxx12 = callPackage ../development/libraries/libsigcxx/1.2.nix { };
 #
 libsndfile = callPackage ../development/libraries/libsndfile { };
-#
-libssh2 = callPackage ../development/libraries/libssh2 { };
 #
 libstartup_notification = callPackage ../development/libraries/startup-notification { };
 #

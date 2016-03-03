@@ -207,17 +207,6 @@ in
         '';
       };
 
-      videoDriver = mkOption {
-        type = types.nullOr types.str;
-        default = null;
-        example = "i810";
-        description = ''
-          The name of the video driver for your graphics card.  This
-          option is obsolete; please set the
-          <option>services.xserver.videoDrivers</option> instead.
-        '';
-      };
-
       drivers = mkOption {
         type = types.listOf types.attrs;
         internal = true;
@@ -438,8 +427,6 @@ in
   config = mkIf cfg.enable {
 
     hardware.opengl.enable = mkDefault true;
-
-    services.xserver.videoDrivers = mkIf (cfg.videoDriver != null) [ cfg.videoDriver ];
 
     # FIXME: somehow check for unknown driver names.
     services.xserver.drivers = flip concatMap cfg.videoDrivers (name:

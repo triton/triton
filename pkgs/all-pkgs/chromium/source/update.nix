@@ -31,12 +31,7 @@ let
       sha256="$(prefetch_sha "$channel" "$version")" || return 1;
     else
       echo " yes, keeping old sha256." >&2;
-      sha256="${chan.sha256}";
-      ${if (chan ? sha256bin32 && chan ? sha256bin64) then ''
-        sha256="$sha256.${chan.sha256bin32}.${chan.sha256bin64}";
-      '' else ''
-        sha256="$sha256.$(prefetch_deb_sha "$channel" "$version")";
-      ''}
+      sha256="${chan.sha256}.${chan.sha256bin}";
     fi;
   '' else ''
     sha256="$(prefetch_sha "$channel" "$version")" || return 1;
@@ -61,13 +56,11 @@ in rec {
       pname = if channel == "dev"
               then "google-chrome-unstable"
               else "google-chrome-${channel}";
-      arch = if stdenv.is64bit then "amd64" else "i386";
+      arch = "amd64";
       relpath = "${pname}/${pname}_${chanAttrs.version}-1_${arch}.deb";
-    in lib.optionalAttrs (chanAttrs ? sha256bin64) {
+    in lib.optionalAttrs (chanAttrs ? sha256bin) {
       urls = map (url: "${url}/${relpath}") ([ debURL ] ++ debMirrors);
-      sha256 = if stdenv.is64bit
-               then chanAttrs.sha256bin64
-               else chanAttrs.sha256bin32;
+      sha256 = chanAttrs.sha256bin;
     };
   };
 
@@ -102,14 +95,11 @@ in rec {
 
       deb_pre="${debURL}/$pname/$pname";
 
-      if ! deb32=$(nix-prefetch-url "''${deb_pre}_$version-1_i386.deb"); then
-        return 1
-      fi
-      if ! deb64=$(nix-prefetch-url "''${deb_pre}_$version-1_amd64.deb"); then
+      if ! deb=$(nix-prefetch-url "''${deb_pre}_$version-1_amd64.deb"); then
         return 1
       fi
 
-      echo "$deb32.$deb64";
+      echo "$deb";
     }
 
     prefetch_sha()

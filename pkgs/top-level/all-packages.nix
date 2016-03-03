@@ -1411,6 +1411,8 @@ seabios = callPackage ../all-pkgs/seabios { };
 
 seahorse = callPackage ../all-pkgs/seahorse { };
 
+serf = callPackage ../all-pkgs/serf { };
+
 sharutils = callPackage ../all-pkgs/sharutils { };
 
 sqlheavy = callPackage ../all-pkgs/sqlheavy { };
@@ -7643,8 +7645,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  sblim-sfcc = callPackage ../development/libraries/sblim-sfcc {};
 #
 #  serd = callPackage ../development/libraries/serd {};
-#
-  serf = callPackage ../development/libraries/serf {};
 #
 #  sfsexp = callPackage ../development/libraries/sfsexp {};
 #

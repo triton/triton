@@ -1,8 +1,13 @@
-{ stdenv, fetchurl, makeWrapper, apr, expat, gnused
-, openssl
+{ stdenv
+, fetchurl
+, makeWrapper
+
+, apr
+, expat
 , db
+, gnused
 , openldap
-, autoreconfHook
+, openssl
 }:
 
 stdenv.mkDerivation rec {
@@ -13,6 +18,18 @@ stdenv.mkDerivation rec {
     sha256 = "0bn81pfscy9yjvbmyx442svf43s6dhrdfcsnkpxz43fai5qk5kx6";
   };
 
+  nativeBuildInputs = [
+    makeWrapper
+  ];
+
+  buildInputs = [
+    apr
+    db
+    expat
+    openldap
+    openssl
+  ];
+
   configureFlags = [
     "--with-apr=${apr}"
     "--with-expat=${expat}"
@@ -21,9 +38,6 @@ stdenv.mkDerivation rec {
     "--with-berkeley-db=${db}"
     "--with-ldap=ldap"
   ];
-
-  nativeBuildInputs = [ makeWrapper ];
-  buildInputs = [ apr expat openssl db openldap ];
 
   preFixup = ''
     # Fix library references in the -config program
@@ -40,7 +54,9 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     homepage = http://apr.apache.org/;
     description = "A companion library to APR, the Apache Portable Runtime";
-    maintainers = [ stdenv.lib.maintainers.eelco ];
+    maintainers = [
+      wkennington
+    ];
     platforms = with platforms;
       i686-linux
       ++ x86_64-linux;

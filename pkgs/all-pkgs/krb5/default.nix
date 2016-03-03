@@ -19,11 +19,11 @@ let
 in
 stdenv.mkDerivation rec {
   name = "${type}krb5-${version}";
-  version = "1.14";
+  version = "1.14.1";
 
   src = fetchurl {
     url = "${meta.homepage}dist/krb5/1.14/krb5-${version}.tar.gz";
-    sha256 = "1sgr61cnkgc5xazijaww6wpn5fnxl9vyj9ixk3r3y7ikv3x0gnyf";
+    sha256 = "168sdwnsrw3hpx4kjcn49jklinrjik2fsgasrv85nvr4fi2s9yn8";
   };
 
   prePatch= ''

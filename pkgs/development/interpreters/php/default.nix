@@ -1,8 +1,8 @@
 { lib, stdenv, fetchurl, composableDerivation, autoconf, automake, flex, bison
-, libmysql, libxml2, readline, zlib, curl, postgresql, gettext
+, mysql_lib, libxml2, readline, zlib, curl, postgresql_lib, gettext
 , openssl, pkgconfig, sqlite, config, libjpeg, libpng, freetype
-, libxslt, libmcrypt, bzip2, icu, openldap, cyrus_sasl, libmhash, freetds
-, uwimap, pam, gmp, apacheHttpd }:
+, libxslt, libmcrypt, bzip2, icu, openldap, cyrus-sasl, libmhash
+, pam, gmp, apache-httpd }:
 
 let
 
@@ -30,22 +30,22 @@ let
         # SAPI modules:
 
         apxs2 = {
-          configureFlags = ["--with-apxs2=${apacheHttpd}/bin/apxs"];
-          buildInputs = [apacheHttpd];
+          configureFlags = ["--with-apxs2=${apache-httpd}/bin/apxs"];
+          buildInputs = [apache-httpd];
         };
 
         # Extensions
-        imap = {
+        /*imap = {
           configureFlags = [
             "--with-imap=${uwimap}"
             "--with-imap-ssl"
             ];
           buildInputs = [ uwimap openssl pam ];
-        };
+        };*/
 
         ldap = {
           configureFlags = ["--with-ldap=${openldap}"];
-          buildInputs = [openldap cyrus_sasl openssl];
+          buildInputs = [openldap cyrus-sasl openssl];
         };
 
         mhash = {
@@ -89,23 +89,23 @@ let
         };
 
         postgresql = {
-          configureFlags = ["--with-pgsql=${postgresql}"];
-          buildInputs = [ postgresql ];
+          configureFlags = ["--with-pgsql=${postgresql_lib}"];
+          buildInputs = [ postgresql_lib ];
         };
 
         pdo_pgsql = {
-          configureFlags = ["--with-pdo-pgsql=${postgresql}"];
-          buildInputs = [ postgresql ];
+          configureFlags = ["--with-pdo-pgsql=${postgresql_lib}"];
+          buildInputs = [ postgresql_lib ];
         };
 
         mysql = {
-          configureFlags = ["--with-mysql=${libmysql}"];
-          buildInputs = [ libmysql ];
+          configureFlags = ["--with-mysql=${mysql_lib}"];
+          buildInputs = [ mysql_lib ];
         };
 
         mysqli = {
-          configureFlags = ["--with-mysqli=${libmysql}/bin/mysql_config"];
-          buildInputs = [ libmysql ];
+          configureFlags = ["--with-mysqli=${mysql_lib}/bin/mysql_config"];
+          buildInputs = [ mysql_lib ];
         };
 
         mysqli_embedded = {
@@ -115,8 +115,8 @@ let
         };
 
         pdo_mysql = {
-          configureFlags = ["--with-pdo-mysql=${libmysql}"];
-          buildInputs = [ libmysql ];
+          configureFlags = ["--with-pdo-mysql=${mysql_lib}"];
+          buildInputs = [ mysql_lib ];
         };
 
         bcmath = {
@@ -195,11 +195,6 @@ let
 
         fpm = {
           configureFlags = ["--enable-fpm"];
-        };
-
-        mssql = stdenv.lib.optionalAttrs (!stdenv.isDarwin) {
-          configureFlags = ["--with-mssql=${freetds}"];
-          buildInputs = [freetds];
         };
 
         zts = {
@@ -288,8 +283,8 @@ let
 in {
 
   php70 = generic {
-    version = "7.0.2";
-    sha256 = "0di2vallv5kry85l67za25nq4f2hjr8fad5j0c06nb69v7xpa6wv";
+    version = "7.0.4";
+    sha256 = "0di2vbllv5kry85l67za25nq4f2hjr8fad5j0c06nb69v7xpa6wv";
   };
 
 }

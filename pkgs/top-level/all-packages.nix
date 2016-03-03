@@ -5367,12 +5367,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ocropus = callPackage ../applications/misc/ocropus { };
 #
-#  php = php70;
+  php = pkgs.php70;
 #
 #  phpPackages = recurseIntoAttrs (callPackage ./php-packages.nix {});
 #
-#  inherit (callPackages ../development/interpreters/php { })
-#    php70;
+  inherit (callPackages ../development/interpreters/php { })
+    php70;
 #
 #  python2nix = callPackage ../tools/package-management/python2nix { };
 #
@@ -6831,11 +6831,11 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libltc = callPackage ../development/libraries/libltc { };
 #
-#  libmcrypt = callPackage ../development/libraries/libmcrypt {};
+  libmcrypt = callPackage ../development/libraries/libmcrypt {};
 #
   libmediainfo = callPackage ../development/libraries/libmediainfo { };
 #
-#  libmhash = callPackage ../development/libraries/libmhash {};
+  libmhash = callPackage ../development/libraries/libmhash {};
 #
 #  libmodbus = callPackage ../development/libraries/libmodbus {};
 #
@@ -8177,15 +8177,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  rdf4store = callPackage ../servers/http/4store { };
 #
-  apacheHttpd = callPackageAlias "apacheHttpd_2_4";
-
-  apacheHttpd_2_2 = callPackage ../servers/http/apache-httpd/2.2.nix {
-    sslSupport = true;
-  };
-
-  apacheHttpd_2_4 = lowPrio (callPackage ../servers/http/apache-httpd/2.4.nix {
-    sslSupport = true;
-  });
+  apache-httpd = callPackage ../all-pkgs/apache-httpd  { };
 
   apacheHttpdPackagesFor = apacheHttpd: self: let callPackage = newScope self; in {
     inherit apacheHttpd;
@@ -8205,9 +8197,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    subversion = pkgs.subversion.override { httpServer = true; inherit apacheHttpd; };
   };
 #
-  apacheHttpdPackages = apacheHttpdPackagesFor pkgs.apacheHttpd pkgs.apacheHttpdPackages;
-  apacheHttpdPackages_2_2 = apacheHttpdPackagesFor pkgs.apacheHttpd_2_2 pkgs.apacheHttpdPackages_2_2;
-  apacheHttpdPackages_2_4 = apacheHttpdPackagesFor pkgs.apacheHttpd_2_4 pkgs.apacheHttpdPackages_2_4;
+  apacheHttpdPackages = pkgs.apacheHttpdPackagesFor pkgs.apacheHttpd pkgs.apacheHttpdPackages;
 #
 #  archiveopteryx = callPackage ../servers/mail/archiveopteryx/default.nix { };
 #

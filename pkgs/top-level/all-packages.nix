@@ -1049,6 +1049,8 @@ librsvg = callPackage ../all-pkgs/librsvg { };
 libsecret = callPackage ../all-pkgs/libsecret { };
 
 libsigsegv = callPackage ../all-pkgs/libsigsegv { };
+#
+libsodium = callPackage ../all-pkgs/libsodium { };
 
 libsoup = callPackage ../all-pkgs/libsoup { };
 
@@ -1093,8 +1095,6 @@ libxml2 = callPackage ../all-pkgs/libxml2 { };
 
 libxslt = callPackage ../all-pkgs/libxslt { };
 
-lz4 = callPackage ../all-pkgs/lz4 { };
-
 libzapojit = callPackage ../all-pkgs/libzapojit { };
 
 linux-headers = callPackage ../all-pkgs/linux-headers { };
@@ -1102,6 +1102,8 @@ linux-headers = callPackage ../all-pkgs/linux-headers { };
 live555 = callPackage ../all-pkgs/live555 { };
 
 lvm2 = callPackage ../all-pkgs/lvm2 { };
+
+lz4 = callPackage ../all-pkgs/lz4 { };
 
 lzip = callPackage ../all-pkgs/lzip { };
 
@@ -7053,8 +7055,6 @@ libsigcxx = callPackage ../development/libraries/libsigcxx { };
 libsigcxx12 = callPackage ../development/libraries/libsigcxx/1.2.nix { };
 #
 libsndfile = callPackage ../development/libraries/libsndfile { };
-#
-libsodium = callPackage ../development/libraries/libsodium { };
 #
 libssh = callPackage ../development/libraries/libssh { };
 #

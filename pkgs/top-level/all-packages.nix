@@ -1034,6 +1034,8 @@ libmediaart = callPackage ../all-pkgs/libmediaart {
   qt5 = null;
 };
 
+libmhash = callPackage ../all-pkgs/libmhash { };
+
 libmicrohttpd = callPackage ../all-pkgs/libmicrohttpd { };
 
 libmpc = callPackage ../all-pkgs/libmpc { };
@@ -6834,8 +6836,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
   libmcrypt = callPackage ../development/libraries/libmcrypt {};
 #
   libmediainfo = callPackage ../development/libraries/libmediainfo { };
-#
-  libmhash = callPackage ../development/libraries/libmhash {};
 #
 #  libmodbus = callPackage ../development/libraries/libmodbus {};
 #

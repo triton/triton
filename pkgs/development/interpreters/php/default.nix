@@ -175,9 +175,9 @@ let
           buildInputs = [libxslt];
         };
 
-        mcrypt = let libmcrypt' = libmcrypt.override { disablePosixThreads = true; }; in {
-          configureFlags = ["--with-mcrypt=${libmcrypt'}"];
-          buildInputs = [libmcrypt'];
+        mcrypt = {
+          configureFlags = ["--with-mcrypt=${libmcrypt}"];
+          buildInputs = [libmcrypt];
         };
 
         bz2 = {

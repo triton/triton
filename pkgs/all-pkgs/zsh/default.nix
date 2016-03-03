@@ -47,7 +47,7 @@ stdenv.mkDerivation {
     patchShebangs ./Misc/
     patchShebangs ./Util/
   '' +
-  /* Test requires filesystem with noatime */ ''
+  /* Test requires filesystem with atime enabled */ ''
     rm -f ./Test/C02cond.ztst
   '';
 
@@ -60,7 +60,7 @@ stdenv.mkDerivation {
     "--disable-zsh-secure-free"
     "--disable-zsh-valgrind"
     "--disable-zsh-hash-debug"
-    # Test fail with stack allocation enabled >=5.2
+    # Tests fail with stack allocation enabled >=5.2
     "--disable-stack-allocation"
     #"--enable-zshenv="
     "--enable-zprofile=$(out)/etc/zprofile"

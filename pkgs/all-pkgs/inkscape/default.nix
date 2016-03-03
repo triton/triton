@@ -85,8 +85,8 @@ stdenv.mkDerivation rec {
   ] ++ optional boxMakerPlugin unzip;
 
   propagatedBuildInputs = [
-    /* Python is used at run-time to execute scripts, e.g.,
-       those from the "Effects" menu. */
+    /* Python is used at run-time to execute scripts, e.g.
+       those in the "Effects" menu. */
     python
     pyxml
     pythonPackages.lxml
@@ -171,7 +171,7 @@ stdenv.mkDerivation rec {
     /* Tarballs do not contain autogen.sh and unique work-arounds
        are required. Run all commands manually instead of using
        autoreconfHook as it does not handle this situation. */
-    /* This autoreconf hack to to work around an issue with autopoint and
+    /* This autoreconf hack is to work around an issue with autopoint and
        intltool both trying to take ownership of the same file.  Autopoint
        is automatically invoked if AM_GNU_GETTEXT_VERSION or
        AM_GNU_GETTEXT_VERSION exist in configure.ac.  To fix this make
@@ -179,7 +179,7 @@ stdenv.mkDerivation rec {
       autopoint --force
       AUTOPOINT='intltoolize --automake --copy' autoreconf --force --install --verbose
     '' +
-    /* Upstream uses hack for intltool < 0.51.0 in 0.91 */ ''
+    /* Upstream uses a hack for intltool < 0.51.0 in 0.91 */ ''
       sed -i po/Makefile.in.in \
         -e 's/itlocaledir = $(prefix)\/$(DATADIRNAME)\/locale/itlocaledir = $(datarootdir)\/locale/'
     ''
@@ -243,7 +243,6 @@ stdenv.mkDerivation rec {
     ];
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

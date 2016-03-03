@@ -1428,6 +1428,11 @@ steam = steamPackages.steam-chrootenv.override {
 
 sublime-text = callPackage ../all-pkgs/sublime-text { };
 
+inherit (callPackages ../all-pkgs/subversion { })
+  subversion18 subversion19;
+
+subversion = callPackageAlias "subversion19" { };
+
 sushi = callPackage ../all-pkgs/sushi { };
 
 swig = callPackage ../all-pkgs/swig { };
@@ -11421,11 +11426,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  ltunify = callPackage ../tools/misc/ltunify { };
 #
 #  src = callPackage ../applications/version-management/src/default.nix { };
-#
-  inherit (callPackages ../applications/version-management/subversion/default.nix { })
-    subversion18 subversion19;
-
-  subversion = callPackageAlias "subversion19" { };
 #
 #  subversionClient = appendToName "client" (pkgs.subversion.override {
 #    bdbSupport = false;

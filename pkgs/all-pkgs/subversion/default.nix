@@ -1,7 +1,16 @@
 { stdenv
-, fetchurl, apr, aprutil, zlib, sqlite
-, expat, swig, python, perl
-, cyrus-sasl, serf
+, fetchurl
+, perl
+, python
+
+, apr
+, apr-util
+, cyrus-sasl
+, expat
+, serf
+, sqlite
+, swig
+, zlib
 }:
 
 let
@@ -14,7 +23,19 @@ let
       inherit sha1;
     };
 
-    buildInputs = [ zlib apr aprutil sqlite serf python perl cyrus-sasl ];
+    nativeBuildInputs = [
+      perl
+      python
+    ];
+
+    buildInputs = [
+      apr
+      apr-util
+      cyrus-sasl
+      serf
+      sqlite
+      zlib
+    ];
 
     configureFlags = [
       "--with-berkeley-db"
@@ -27,7 +48,7 @@ let
     ];
 
     preBuild = ''
-      makeFlagsArray=(APACHE_LIBEXECDIR=$out/modules)
+      makeFlagsArray+=(APACHE_LIBEXECDIR=$out/modules)
     '';
 
     postInstall = ''
@@ -48,11 +69,15 @@ let
     # Parallel Building works fine but Parallel Install fails
     parallelInstall = false;
 
-    meta = {
+    meta = with stdenv.lib; {
       description = "A version control system intended to be a compelling replacement for CVS in the open source community";
       homepage = http://subversion.apache.org/;
-      maintainers = with stdenv.lib.maintainers; [ eelco lovek323 ];
-      hydraPlatforms = stdenv.lib.platforms.linux;
+      maintainers = with maintainers; [
+        wkennington
+      ];
+      plaforms = with platforms;
+        i686-linux
+        ++ x86_64-linux;
     };
 
   };

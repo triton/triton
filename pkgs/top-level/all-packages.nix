@@ -707,6 +707,8 @@ geocode-glib = callPackage ../all-pkgs/geocode-glib { };
 
 gettext = callPackage ../all-pkgs/gettext { };
 
+git = callPackage ../all-pkgs/git { };
+
 gjs = callPackage ../all-pkgs/gjs { };
 
 gksu = callPackage ../all-pkgs/gksu { };
@@ -10299,16 +10301,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
   gimp = callPackage ../applications/graphics/gimp { };
 
-  gitAndTools = recurseIntoAttrs (callPackage ../applications/version-management/git-and-tools {});
-
-  inherit (pkgs.gitAndTools) git gitFull gitSVN git-cola svn2git git-radar transcrypt;
-#
-#  gitRepo = callPackage ../applications/version-management/git-repo { };
-#
-#  git-review = callPackage ../applications/version-management/git-review { };
-#
-#  gitolite = callPackage ../applications/version-management/gitolite { };
-#
 #  giv = callPackage ../applications/graphics/giv { };
 #
 #  gmrun = callPackage ../applications/misc/gmrun {};

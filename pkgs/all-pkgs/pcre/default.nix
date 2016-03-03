@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , pcregrep ? false
@@ -19,6 +20,19 @@ stdenv.mkDerivation rec {
     url = "http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${name}.tar.bz2";
     sha256 = "1pvra19ljkr5ky35y2iywjnsckrs9ch2anrf5b0dc91hw8v2vq5r";
   };
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "f595acad67433d7ac50f03c05b6e5d530b2cd78a";
+      file = "pcre/CVE-2016-1283.patch";
+      sha256 = "d133102d68c9f95aec3ff25afcc715294ee9a3e420e8a6529fac1b602fe2af36";
+    })
+    (fetchTritonPatch {
+      rev = "f595acad67433d7ac50f03c05b6e5d530b2cd78a";
+      file = "pcre/head-overflow-r1636.patch";
+      sha256 = "7fda9e90001e46b5d47fc12ebf48ebb4389d6e80365677348015a62574024bd6";
+    })
+  ];
 
   buildInputs = optionals pcregrep [
     bzip2

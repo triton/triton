@@ -1192,6 +1192,8 @@ ncurses = callPackage ../all-pkgs/gpm+ncurses { };
 
 net-tools = callPackage ../all-pkgs/net-tools { };
 
+nettle = callPackage ../all-pkgs/nettle { };
+
 # stripped down, needed by steam
 networkmanager098 = callPackage ../all-pkgs/networkmanager/0.9.8.nix { };
 
@@ -7296,8 +7298,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    sslSupport = true;
 #  };
 #
-  nettle = callPackage ../development/libraries/nettle { };
-
   newt = callPackage ../development/libraries/newt { };
 
 #

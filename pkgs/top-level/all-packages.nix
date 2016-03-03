@@ -10945,7 +10945,9 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  pdfdiff = callPackage ../applications/misc/pdfdiff { };
 #
-  mupdf = callPackage ../applications/misc/mupdf { };
+  mupdf = callPackage ../applications/misc/mupdf {
+    openjpeg = pkgs.openjpeg_2_0;
+  };
 #
 #  diffpdf = callPackage ../applications/misc/diffpdf { };
 #
@@ -11359,13 +11361,13 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  sonic-pi = callPackage ../applications/audio/sonic-pi { };
 #
-#  st = callPackage ../applications/misc/st {
-#    conf = config.st.conf or null;
-#  };
+  st = callPackage ../applications/misc/st {
+    conf = config.st.conf or null;
+  };
 #
-#  st-wayland = callPackage ../applications/misc/st/wayland.nix {
-#    conf = config.st.conf or null;
-#  };
+  st-wayland = callPackage ../applications/misc/st/wayland.nix {
+    conf = config.st.conf or null;
+  };
 #
 #  stag = callPackage ../applications/misc/stag {
 #    curses = ncurses;

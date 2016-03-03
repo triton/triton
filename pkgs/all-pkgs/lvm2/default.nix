@@ -8,11 +8,11 @@
 
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
-  version = "2.02.140";
+  version = "2.02.144";
 
   src = fetchurl {
     url = "ftp://sources.redhat.com/pub/lvm2/releases/LVM2.${version}.tgz";
-    sha256 = "1jd46diyv7074fw8kxwq7imn4pl76g01d8y7z4scq0lkxf8jmpai";
+    sha256 = "0qvfli1429y3755g7q103na0rsjzcprxhngqlbpyfydx8qdvahmm";
   };
 
   configureFlags = [

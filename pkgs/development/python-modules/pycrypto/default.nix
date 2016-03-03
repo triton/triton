@@ -28,6 +28,6 @@ buildPythonPackage rec {
   meta = {
     homepage = "http://www.pycrypto.org/";
     description = "Python Cryptography Toolkit";
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
   };
 }

@@ -12,13 +12,13 @@
 , libgudev
 , libogg
 , libtheora
-, libv4l
 , libvisual
 , libvorbis
 , libxml2
 , orc
 , pango
 #, tremor
+, v4l_lib
 , xorg
 , zlib
 }:
@@ -104,7 +104,7 @@ stdenv.mkDerivation rec {
     (enFlag "x" (xorg.libX11 != null) null)
     (enFlag "xvideo" (xorg.libXv != null) null)
     (enFlag "xshm" (xorg.libXext != null) null)
-    (enFlag "gst_v4l" (libv4l != null) null)
+    (enFlag "gst_v4l" (v4l_lib != null) null)
     (enFlag "alsa" (alsa-lib != null) null)
     (enFlag "cdparanoia" (cdparanoia != null) null)
     "--disable-gnome_vfs"
@@ -135,13 +135,13 @@ stdenv.mkDerivation rec {
     libgudev
     libogg
     libtheora
-    libv4l
     libvisual
     libvorbis
     libxml2
     orc
     pango
     #tremor
+    v4l_lib
     xorg.libX11
     xorg.libXext
     xorg.libXv

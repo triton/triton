@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, gtk2, xorg
-, gstreamer_0, gst-plugins-base_0, GConf
+, gstreamer_0, gst-plugins-base_0, gconf
 , withMesa ? true, mesa ? null, compat24 ? false, compat26 ? true, unicode ? true,
 }:
 
@@ -20,7 +20,7 @@ stdenv.mkDerivation {
 
   buildInputs =
     [ gtk2 xorg.libXinerama xorg.libSM xorg.libXxf86vm xorg.xf86vidmodeproto gstreamer_0
-      gst-plugins-base_0 GConf ]
+      gst-plugins-base_0 gconf ]
     ++ optional withMesa mesa;
 
   nativeBuildInputs = [ pkgconfig ];

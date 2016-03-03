@@ -29,8 +29,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildInputs =
-    [ ncurses gconf libxml2 gnutls alsaLib pkgconfig texinfo acl gpm gettext ]
-    ++ stdenv.lib.optional stdenv.isLinux dbus
+    [ ncurses gconf libxml2 gnutls alsaLib pkgconfig texinfo acl gpm gettext dbus ]
     ++ stdenv.lib.optionals withX
       [ xlibsWrapper xorg.libXaw Xaw3d xorg.libXpm libpng libjpeg libungif libtiff librsvg xorg.libXft
         imagemagick gconf ]

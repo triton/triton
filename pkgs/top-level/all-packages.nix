@@ -1353,36 +1353,29 @@ quassel = callPackage ../all-pkgs/quassel rec {
   monolithic = true;
   daemon = false;
   client = false;
-  withKDE = true;
 };
-quasselWithoutKDE = (quassel.override {
+quasselWithoutKDE = (pkgs.quassel.override {
   monolithic = true;
   daemon = false;
   client = false;
-  withKDE = false;
-  #qt = qt5;
   tag = "-without-kde";
 });
-quasselDaemon = (quassel.override {
+quasselDaemon = (pkgs.quassel.override {
   monolithic = false;
   daemon = true;
   client = false;
-  withKDE = false;
-  #qt = qt5;
   tag = "-daemon";
 });
-quasselClient = (quassel.override {
+quasselClient = (pkgs.quassel.override {
   monolithic = false;
   daemon = false;
   client = true;
   tag = "-client";
 });
-quasselClientWithoutKDE = (quasselClient.override {
+quasselClientWithoutKDE = (pkgs.quasselClient.override {
   monolithic = false;
   daemon = false;
   client = true;
-  withKDE = false;
-  #qt = qt5;
   tag = "-client-without-kde";
 });
 
@@ -5254,29 +5247,31 @@ zstd = callPackage ../all-pkgs/zstd { };
   rustcMaster = callPackage ../development/compilers/rustc/head.nix { };
   rustc = callPackage ../development/compilers/rustc { };
 #
-#  rustPlatform = rustStable;
+  rustPlatform = pkgs.rustStable;
 #
-#  rustStable = recurseIntoAttrs (makeRustPlatform cargo rustStable);
-#  rustUnstable = recurseIntoAttrs (makeRustPlatform cargoUnstable rustUnstable);
+  rustStable = recurseIntoAttrs (pkgs.makeRustPlatform pkgs.cargo);
+  rustUnstable = recurseIntoAttrs (pkgs.makeRustPlatform pkgs.cargoUnstable);
 #
 #  # rust platform to build cargo itself (with cargoSnapshot)
-#  rustCargoPlatform = makeRustPlatform (cargoSnapshot rustc) rustCargoPlatform;
-#  rustUnstableCargoPlatform = makeRustPlatform (cargoSnapshot rustcMaster) rustUnstableCargoPlatform;
+  rustCargoPlatform = pkgs.makeRustPlatform (pkgs.cargoSnapshot pkgs.rustc);
+#  rustUnstableCargoPlatform = pkgs.makeRustPlatform (pkgs.cargoSnapshot pkgs.rustcMaster);
 #
-#  makeRustPlatform = cargo: self:
-#    let
-#      callPackage = newScope self;
-#    in {
-#      inherit cargo;
-#
-#      rustc = cargo.rustc;
-#
-#      rustRegistry = callPackage ./rust-packages.nix { };
-#
-#      buildRustPackage = callPackage ../build-support/rust {
-#        inherit cargo;
-#      };
-#    };
+  makeRustPlatform = cargo:
+    let
+      callPackage = pkgs.newScope self;
+
+      self = {
+        inherit cargo;
+
+        rustc = cargo.rustc;
+
+        rustRegistry = callPackage ./rust-packages.nix { };
+
+        buildRustPackage = callPackage ../build-support/rust {
+          inherit cargo;
+        };
+      };
+    in self;
 #
 #  rustfmt = callPackage ../development/tools/rust/rustfmt { };
 #
@@ -5539,19 +5534,19 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  byacc = callPackage ../development/tools/parsing/byacc { };
 #
-#  cargo = callPackage ../development/tools/build-managers/cargo {
-#    # cargo needs to be built with rustCargoPlatform, which uses cargoSnapshot
-#    rustPlatform = rustCargoPlatform;
-#  };
+  cargo = callPackage ../development/tools/build-managers/cargo {
+    # cargo needs to be built with rustCargoPlatform, which uses cargoSnapshot
+    rustPlatform = pkgs.rustCargoPlatform;
+  };
 #
 #  cargoUnstable = callPackage ../development/tools/build-managers/cargo/head.nix {
 #    rustPlatform = rustUnstableCargoPlatform;
 #  };
 #
-#  cargoSnapshot = rustc:
-#    callPackage ../development/tools/build-managers/cargo/snapshot.nix {
-#      inherit rustc;
-#    };
+  cargoSnapshot = rustc:
+    callPackage ../development/tools/build-managers/cargo/snapshot.nix {
+      inherit rustc;
+    };
 #
 #  casperjs = callPackage ../development/tools/casperjs { };
 #
@@ -7382,7 +7377,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
   openh264 = callPackage ../development/libraries/openh264 { };
 #
 #  openjpeg_1 = callPackage ../development/libraries/openjpeg/1.x.nix { };
-#  openjpeg_2_0 = callPackage ../development/libraries/openjpeg/2.0.nix { };
+  openjpeg_2_0 = callPackage ../development/libraries/openjpeg/2.0.nix { };
   openjpeg_2_1 = callPackage ../development/libraries/openjpeg/2.1.nix { };
   openjpeg = callPackageAlias "openjpeg_2_1" { };
 #
@@ -7504,7 +7499,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   qt5 = pkgs.qt55;
 
-  qt5LibsFun = self: with self; {
+  qt5LibsFun = self: let inherit (self) callPackage; in {
 
 #    accounts-qt = callPackage ../development/libraries/accounts-qt { };
 #
@@ -7534,7 +7529,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #      suffix = "qt5";
 #    };
 #
-#    qca-qt5 = callPackage ../development/libraries/qca-qt5 { };
+    qca-qt5 = callPackage ../development/libraries/qca-qt5 { };
 #
 #    qmltermwidget = callPackage ../development/libraries/qmltermwidget { };
 #
@@ -7802,8 +7797,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  tidyp = callPackage ../development/libraries/tidyp { };
 #
-  tinyxml = tinyxml2;
-
   tinyxml2 = callPackage ../development/libraries/tinyxml/2.6.2.nix { };
 #
 #  tk = tk-8_6;
@@ -7915,22 +7908,11 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  wiredtiger = callPackage ../development/libraries/wiredtiger { };
 #
-  wxGTK = wxGTK28;
+  wxGTK28 = callPackage ../development/libraries/wxGTK-2.8 { };
 
-  wxGTK28 = callPackage ../development/libraries/wxGTK-2.8 {
-    GConf = gconf;
-    withMesa = lib.elem system mesa_noglu.meta.platforms;
-  };
+  wxGTK29 = callPackage ../development/libraries/wxGTK-2.9/default.nix { };
 
-  wxGTK29 = callPackage ../development/libraries/wxGTK-2.9/default.nix {
-    GConf = gconf;
-    withMesa = lib.elem system mesa_noglu.meta.platforms;
-  };
-
-  wxGTK30 = callPackage ../development/libraries/wxGTK-3.0/default.nix {
-    GConf = gconf;
-    withMesa = lib.elem system mesa_noglu.meta.platforms;
-  };
+  wxGTK30 = callPackage ../development/libraries/wxGTK-3.0/default.nix { };
 #
 #  wxmac = callPackage ../development/libraries/wxmac { };
 #
@@ -10963,9 +10945,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  pdfdiff = callPackage ../applications/misc/pdfdiff { };
 #
-#  mupdf = callPackage ../applications/misc/mupdf {
-#    openjpeg = openjpeg_2_0;
-#  };
+  mupdf = callPackage ../applications/misc/mupdf { };
 #
 #  diffpdf = callPackage ../applications/misc/diffpdf { };
 #
@@ -12285,7 +12265,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
       monolithic = true;
       daemon = false;
       client = false;
-      withKDE = true;
       tag = "-kf5";
     };
 
@@ -12296,12 +12275,10 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
     };
 
     quassel_qt5 = quassel.override {
-      withKDE = false;
       tag = "-qt5";
     };
 
     quasselClient_qt5 = quasselClient.override {
-      withKDE = false;
       tag = "-client-qt5";
     };
 
@@ -12309,7 +12286,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
       monolithic = false;
       daemon = true;
       tag = "-daemon-qt5";
-      withKDE = false;
     };
 
     sddm = callPackage ../applications/display-managers/sddm {

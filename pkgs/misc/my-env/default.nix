@@ -59,7 +59,7 @@
 { stdenv, mkDerivation ? stdenv.mkDerivation, substituteAll, pkgs }:
     { stdenv ? pkgs.stdenv, name, buildInputs ? []
     , propagatedBuildInputs ? [], gcc ? stdenv.cc, cTags ? [], extraCmds ? ""
-    , cleanupCmds ? "", shell ? "${pkgs.bashInteractive}/bin/bash --norc"}:
+    , cleanupCmds ? "", shell ? "${pkgs.bash}/bin/bash --norc"}:
 
 mkDerivation {
   # The setup.sh script from stdenv will expect the native build inputs in

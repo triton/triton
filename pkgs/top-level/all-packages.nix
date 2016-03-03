@@ -2608,21 +2608,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gifsicle = callPackage ../tools/graphics/gifsicle { };
 #
-#  git-hub = callPackage ../applications/version-management/git-and-tools/git-hub { };
-#
 #  gitfs = callPackage ../tools/filesystems/gitfs { };
-#
-#  gitinspector = callPackage ../applications/version-management/gitinspector { };
-#
-#  gitlab = callPackage ../applications/version-management/gitlab {
-#    ruby = ruby_2_2_2;
-#  };
-#
-#  gitlab-shell = callPackage ../applications/version-management/gitlab-shell {
-#    ruby = ruby_2_2_2;
-#  };
-#
-#  gitlab-git-http-server = callPackage ../applications/version-management/gitlab-git-http-server { };
 #
 #  git-latexdiff = callPackage ../tools/typesetting/git-latexdiff { };
 #
@@ -9916,8 +9902,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  cdrtools = callPackage ../applications/misc/cdrtools { };
 #
 #  centerim = callPackage ../applications/networking/instant-messengers/centerim { };
-#
-#  cgit = callPackage ../applications/version-management/git-and-tools/cgit { };
 #
 #  cgminer = callPackage ../applications/misc/cgminer {
 #    amdappsdk = amdappsdk28;

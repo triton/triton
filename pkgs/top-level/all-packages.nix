@@ -1492,6 +1492,8 @@ util-linux_lib = callPackageAlias "util-linux_full" {
 
 vala = callPackage ../all-pkgs/vala { };
 
+vim = callPackage ../all-pkgs/vim { };
+
 vino = callPackage ../all-pkgs/vino { };
 
 vlc = callPackage ../all-pkgs/vlc { };
@@ -11569,8 +11571,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  vdirsyncer = callPackage ../tools/misc/vdirsyncer { };
 #
 #  vdpauinfo = callPackage ../tools/X11/vdpauinfo { };
-#
-  vim = callPackage ../applications/editors/vim { };
 #
 #  macvim = callPackage ../applications/editors/vim/macvim.nix { stdenv = clangStdenv; };
 #

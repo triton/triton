@@ -368,24 +368,13 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  ArchiveZip = buildPerlPackage {
-    name = "Archive-Zip-1.16";
+  ArchiveZip = buildPerlPackage rec {
+    name = "Archive-Zip-1.56";
     src = fetchurl {
-      url = http://tarballs.nixos.org/Archive-Zip-1.16.tar.gz;
-      sha256 = "1ghgs64by3ybjlb0bj65kxysb03k72i7iwmw63g41bj175l44ima";
+      url = "http://search.cpan.org/CPAN/authors/id/P/PH/PHRED/${name}.tar.gz";
+      sha256 = "1y00ck1ihrd7jsvwkzsxhlzxi394dhh9c3kh9wa67javxv53r7qh";
     };
-  };
-
-  ArchiveZip_1_53 = buildPerlPackage {
-    name = "Archive-Zip-1.53";
-    src = fetchurl {
-      url = mirror://cpan/authors/id/P/PH/PHRED/Archive-Zip-1.53.tar.gz;
-      sha256 = "c66f3cdfd1965d47d84af1e37b997e17d3f8c5f2cceffc1e90d04d64001424b9";
-    };
-    meta = {
-      description = "Provide an interface to ZIP archive files";
-      license = "perl";
-    };
+    doCheck = false;
   };
 
   AuthenDecHpwd = buildPerlPackage rec {
@@ -10662,7 +10651,7 @@ let self = _self // overrides; _self = with self; {
       sha256 = "0yiddi9r87iysa2msr6l5fc5631zmi5ldsy8m3sd9chrlhag361g";
     };
 
-    buildInputs = [ ArchiveZip_1_53 pkgs.file ];
+    buildInputs = [ ArchiveZip pkgs.file ];
   };
 
 
@@ -10675,7 +10664,7 @@ let self = _self // overrides; _self = with self; {
       sha256 = "0yiddi9r87iysa2msr6l5fc5631zmi5ldsy8m3sd9chrlhag361g";
     };
 
-    buildInputs = [ ArchiveZip_1_53 libfile-stripnondeterminism pkgs.file ];
+    buildInputs = [ ArchiveZip libfile-stripnondeterminism pkgs.file ];
 
     meta = with stdenv.lib; {
       description = "A Perl module for stripping bits of non-deterministic information";

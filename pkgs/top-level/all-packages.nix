@@ -1572,8 +1572,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  advancecomp = callPackage ../tools/compression/advancecomp {};
 #
-#  aefs = callPackage ../tools/filesystems/aefs { };
-#
 #  aegisub = callPackage ../applications/video/aegisub {
 #    wxGTK = wxGTK30;
 #    spellcheckSupport = config.aegisub.spellcheckSupport or true;
@@ -1663,10 +1661,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  azure-cli = callPackage ../tools/virtualization/azure-cli { };
 #
-#  ec2_api_tools = callPackage ../tools/virtualization/ec2-api-tools { };
-#
-#  ec2_ami_tools = callPackage ../tools/virtualization/ec2-ami-tools { };
-#
 #  altermime = callPackage ../tools/networking/altermime {};
 #
 #  amule = callPackage ../tools/networking/p2p/amule { };
@@ -1724,8 +1718,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  aws_mturk_clt = callPackage ../tools/misc/aws-mturk-clt { };
 #
 #  axel = callPackage ../tools/networking/axel { };
-#
-#  azureus = callPackage ../tools/networking/p2p/azureus { };
 #
 #  backblaze-b2 = callPackage ../development/tools/backblaze-b2 { };
 #
@@ -4528,8 +4520,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   xorriso = callPackage ../tools/cd-dvd/xorriso { };
 #
-#  xpf = callPackage ../tools/text/xml/xpf { };
-#
 #  xsel = callPackage ../tools/misc/xsel { };
 #
 #  xtreemfs = callPackage ../tools/filesystems/xtreemfs {};
@@ -5800,8 +5790,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  maven = maven3;
 #  maven3 = callPackage ../development/tools/build-managers/apache-maven { };
 #
-#  mk = callPackage ../development/tools/build-managers/mk { };
-#
 #  multi-ghc-travis = callPackage ../development/tools/haskell/multi-ghc-travis { };
 #
 #  neoload = callPackage ../development/tools/neoload {
@@ -6405,10 +6393,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gnome-sharp = callPackage ../development/libraries/gnome-sharp {};
 #
-#  gtkmozembedsharp = callPackage ../development/libraries/gtkmozembed-sharp {
-#    gtksharp = gtk-sharp;
-#  };
-#
 #  gtk-sharp = callPackage ../development/libraries/gtk-sharp-2 {
 #    inherit (gnome) libglade libgtkhtml gtkhtml
 #              libgnomecanvas libgnomeui libgnomeprint
@@ -6474,10 +6458,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ilixi = callPackage ../development/libraries/ilixi { };
 #
   ilmbase = callPackage ../development/libraries/ilmbase { };
-#
-#  imlib = callPackage ../development/libraries/imlib {
-#    libpng = libpng12;
-#  };
 #
 #  imv = callPackage ../applications/graphics/imv/default.nix { };
 #
@@ -7411,8 +7391,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  pcl = callPackage ../development/libraries/pcl {
 #    vtk = vtkWithQt4;
 #  };
-#
-#  pdf2xml = callPackage ../development/libraries/pdf2xml {} ;
 #
   phonon = callPackage ../development/libraries/phonon/qt4 {};
 #
@@ -9450,8 +9428,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  baekmuk-ttf = callPackage ../data/fonts/baekmuk-ttf { };
 #
-#  bakoma_ttf = callPackage ../data/fonts/bakoma-ttf { };
-#
   cacert = callPackage ../data/misc/cacert { };
 #
 #  caladea = callPackage ../data/fonts/caladea {};
@@ -9819,8 +9795,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  baresip = callPackage ../applications/networking/instant-messengers/baresip {
 #    ffmpeg = ffmpeg_1;
 #  };
-#
-#  batik = callPackage ../applications/graphics/batik { };
 #
 #  batti = callPackage ../applications/misc/batti { };
 #
@@ -10830,17 +10804,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  nload = callPackage ../applications/networking/nload { };
 #
 #  normalize = callPackage ../applications/audio/normalize { };
-#
-#  mplayer = callPackage ../applications/video/mplayer ({
-#    pulseSupport = config.pulseaudio or false;
-#    libdvdnav = libdvdnav_4_2_1;
-#  } // (config.mplayer or {}));
-#
-  MPlayerPlugin = browser:
-    callPackage ../applications/networking/browsers/mozilla-plugins/mplayerplug-in {
-      inherit browser;
-      # !!! should depend on MPlayer
-    };
 
 #  mrpeach = callPackage ../applications/audio/pd-plugins/mrpeach { };
 #

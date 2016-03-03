@@ -115,7 +115,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
   urls = urls_;
 
   # If set, prefer the content-addressable mirrors
-  # (http://tarballs.nixos.org) over the original URLs.
+  # (http://tarballs.triton.wak.io) over the original URLs.
   preferHashedMirrors = true;
 
   # New-style output content requirements.

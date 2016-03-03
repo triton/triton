@@ -50,17 +50,17 @@
 , yasm
 
 # optional dependencies
-, libgcrypt ? null # gnomeSupport || cupsSupport
+, libgcrypt # gnomeSupport || cupsSupport
 
 # package customization
-, enableSELinux ? false, libselinux ? null
+, enableSELinux ? false, libselinux
 , enableNaCl ? false
 , enableHotwording ? false
-, gnomeSupport ? false, gnome ? null
-, gnomeKeyringSupport ? false, libgnome_keyring3 ? null
+, gnomeSupport ? false, gnome
+, gnomeKeyringSupport ? false, libgnome-keyring
 , proprietaryCodecs ? true
 , cupsSupport ? true
-, pulseSupport ? false, libpulseaudio ? null
+, pulseSupport ? false, pulseaudio_lib
 , hiDPISupport ? false
 
 , source
@@ -177,11 +177,11 @@ let
       xorg.libXrandr
       xorg.libXScrnSaver
       xorg.libXtst
-    ] ++ optional gnomeKeyringSupport libgnome_keyring3
+    ] ++ optional gnomeKeyringSupport libgnome-keyring
       ++ optionals gnomeSupport [ gnome.GConf libgcrypt ]
       ++ optional enableSELinux libselinux
       ++ optionals cupsSupport [ libgcrypt cups ]
-      ++ optional pulseSupport libpulseaudio;
+      ++ optional pulseSupport pulseaudio_lib;
 
     # XXX: Wait for https://crbug.com/239107 and https://crbug.com/239181 to
     #      be fixed, then try again to unbundle everything into separate

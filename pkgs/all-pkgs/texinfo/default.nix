@@ -3,23 +3,26 @@
 , perl
 
 , interactive ? true, ncurses
-, doCheck ? true, procps
 }:
 
-with stdenv.lib;
-
+let
+  inherit (stdenv.lib) optionals;
+in
 stdenv.mkDerivation rec {
-  name = "texinfo-6.0";
+  name = "texinfo-6.1";
 
   src = fetchurl {
     url = "mirror://gnu/texinfo/${name}.tar.xz";
-    sha256 = "1r3i6jyynn6ab45fxw5bms8mflk9ry4qpj6gqyry72vfd5c47fhi";
+    sha256 = "1ll3d0l8izygdxqz96wfr2631kxahifwdknpgsx2090vw963js5c";
   };
 
-  nativeBuildInputs = [ perl ];
-  buildInputs = [ ]
-    ++ optional interactive ncurses
-    ++ optional doCheck procps; # for tests
+  nativeBuildInputs = [
+    perl
+  ];
+
+  buildInputs = optionals interactive [
+    ncurses
+  ];
 
   preInstall = ''
     installFlagsArray+=("TEXMF=$out/texmf-dist")
@@ -29,8 +32,6 @@ stdenv.mkDerivation rec {
     "install"
     "install-tex"
   ];
-
-  inherit doCheck;
 
   meta = with stdenv.lib; {
     homepage = "http://www.gnu.org/software/texinfo/";

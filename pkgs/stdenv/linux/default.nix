@@ -248,7 +248,6 @@ let
         libiconv = null;
         texinfo = pkgs.texinfo.override {
           interactive = false;
-          doCheck = false;
         };
         inherit (pkgs) perl autoconf automake perlPackages
           libtool buildPerlPackage help2man makeWrapper autoreconfHook nghttp2_full;

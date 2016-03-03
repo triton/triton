@@ -36,7 +36,6 @@
 , libtiff
 , libtiger
 , libupnp
-, libv4l
 , libva
 , libvdpau
 , libvorbis
@@ -55,6 +54,7 @@
 , systemd_lib
 , taglib
 , unzip
+, v4l_lib
 , xorg
 , xz
 , zlib
@@ -112,7 +112,6 @@ stdenv.mkDerivation rec {
     libtiff
     libtiger
     libupnp
-    libv4l
     libva
     libvdpau
     libvorbis
@@ -131,6 +130,7 @@ stdenv.mkDerivation rec {
     systemd_lib
     taglib
     unzip
+    v4l_lib
     xorg.xcbutilkeysyms
     xorg.libXpm
     xorg.xlibsWrapper

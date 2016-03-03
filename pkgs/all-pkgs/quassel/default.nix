@@ -1,57 +1,45 @@
-{ monolithic ? true # build monolithic Quassel
+{ stdenv
+, cmake
+, fetchurl
+, makeWrapper
+
+, dconf
+, qt5
+
 , daemon ? false # build Quassel daemon
 , client ? false # build Quassel client
-, previews ? false # enable webpage previews on hovering over URLs
 , tag ? "" # tag added to the package name
-
-, stdenv, fetchurl, cmake, makeWrapper, dconf
-, qtbase, qtscript, qtwebkit
-, phonon, libdbusmenu, qca-qt5
-
-, withKDE ? stdenv.isLinux # enable KDE integration
-, extra-cmake-modules
-, kconfigwidgets
-, kcoreaddons
-, knotifications
-, knotifyconfig
-, ktextwidgets
-, kwidgetsaddons
-, kxmlgui
+, monolithic ? true # build monolithic Quassel
 }:
 
 let
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
+
   buildClient = monolithic || client;
   buildCore = monolithic || daemon;
 in
 
-assert stdenv.isLinux;
-
 assert monolithic -> !client && !daemon;
 assert client || daemon -> !monolithic;
-assert !buildClient -> !withKDE; # KDE is used by the client only
 
-let
-  edf = flag: feature: [("-D" + feature + (if flag then "=ON" else "=OFF"))];
-in
-
-with stdenv;
-
-mkDerivation rec {
+stdenv.mkDerivation rec {
   name = "quassel${tag}-${version}";
-  version = "0.12.2";
+  version = "0.12.3";
 
   src = fetchurl {
     url = "http://quassel-irc.org/pub/quassel-${version}.tar.bz2";
-    sha256 = "15vqjiw38mifvnc95bhvy0zl23xxldkwg2byx9xqbyw8rfgggmkb";
+    sha256 = "0d6lwf6qblj1ia5j9mjy112zrmpbbg9mmxgscbgxiqychldyjgjd";
   };
 
-  patches = [
-    # fix build with Qt 5.5
-    (fetchurl {
-      url = "https://github.com/quassel/quassel/commit/078477395aaec1edee90922037ebc8a36b072d90.patch";
-      sha256 = "1njwnay7pjjw0g7m0x5cwvck8xcznc7jbdfyhbrd121nc7jgpbc5";
-    })
-  ];
+  #patches = [
+  #  # fix build with Qt 5.5
+  #  (fetchurl {
+  #    url = "https://github.com/quassel/quassel/commit/078477395aaec1edee90922037ebc8a36b072d90.patch";
+  #    sha256 = "1njwnay7pjjw0g7m0x5cwvck8xcznc7jbdfyhbrd121nc7jgpbc5";
+  #  })
+  #];
 
   nativeBuildInputs = [
     cmake
@@ -59,42 +47,36 @@ mkDerivation rec {
   ];
 
   buildInputs = [
-    qtbase
-  ] ++ lib.optionals buildCore [ qtscript qca-qt5 ]
-    ++ lib.optionals buildClient [ libdbusmenu phonon ]
-    ++ lib.optionals (buildClient && previews) [ qtwebkit ]
-    ++ lib.optionals (buildClient && withKDE) [
-      extra-cmake-modules
-      kconfigwidgets
-      kcoreaddons
-      knotifications
-      knotifyconfig
-      ktextwidgets
-      kwidgetsaddons
-      kxmlgui
-    ];
+    qt5.qtbase
+  ] ++ optionals buildCore [
+    qt5.qtscript
+    qt5.qca-qt5
+  ] ++ optionals buildClient [
+    qt5.libdbusmenu
+  ];
 
   cmakeFlags = [
     "-DEMBED_DATA=OFF"
     "-DSTATIC=OFF"
     "-DUSE_QT5=ON"
-  ] ++ edf monolithic "WANT_MONO"
-    ++ edf daemon "WANT_CORE"
-    ++ edf client "WANT_QTCLIENT"
-    ++ edf withKDE "WITH_KDE"
-    ++ edf previews "WITH_WEBKIT";
+    "-DWANT_MONO=${if monolithic then "ON" else "OFF"}"
+    "-DWANT_CORE=${if daemon then "ON" else "OFF"}"
+    "-DWANT_QTCLIENT=${if client then "ON" else "OFF"}"
+    "-DWITH_KDE=OFF"
+  ];
 
-  preFixup =
-    lib.optionalString buildClient ''
-        wrapProgram "$out/bin/quassel${lib.optionalString client "client"}" \
-          --prefix GIO_EXTRA_MODULES : "${dconf}/lib/gio/modules"
-    '';
+  preFixup = optionalString buildClient ''
+    wrapProgram "$out/bin/quassel${optionalString client "client"}" \
+      --prefix GIO_EXTRA_MODULES : "${dconf}/lib/gio/modules"
+  '';
 
   meta = with stdenv.lib; {
     description = "Qt/KDE distributed IRC client suppporting a remote daemon";
     homepage = http://quassel-irc.org/;
-    license = stdenv.lib.licenses.gpl3;
-    maintainers = with maintainers; [ ];
+    license = licenses.gpl3;
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

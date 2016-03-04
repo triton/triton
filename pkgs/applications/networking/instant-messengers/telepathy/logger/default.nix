@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, dbus_glib, libxml2, sqlite, telepathy_glib, pkgconfig
+{ stdenv, fetchurl, dbus-glib, libxml2, sqlite, telepathy_glib, pkgconfig
 , intltool, libxslt, gobject-introspection, dbus }:
 
 stdenv.mkDerivation rec {
@@ -10,10 +10,10 @@ stdenv.mkDerivation rec {
     sha256 = "18i00l8lnp5dghqmgmpxnn0is2a20pkisxy0sb78hnd2dz0z6xnl";
   };
 
-  NIX_CFLAGS_COMPILE = "-I${dbus_glib}/include/dbus-1.0 -I${dbus.libs}/include/dbus-1.0";
+  NIX_CFLAGS_COMPILE = "-I${dbus-glib}/include/dbus-1.0 -I${dbus}/include/dbus-1.0";
 
-  buildInputs = [ dbus_glib libxml2 sqlite telepathy_glib pkgconfig intltool
-                  gobject-introspection dbus.libs ];
+  buildInputs = [ dbus-glib libxml2 sqlite telepathy_glib pkgconfig intltool
+                  gobject-introspection dbus ];
 
   nativeBuildInputs = [ libxslt ];
 

@@ -80,6 +80,8 @@ go.stdenv.mkDerivation (
 
     runHook renameImports
 
+    rm -rf go/src/$goPackagePath/vendor
+
     buildGoDir() {
       local d; local cmd;
       cmd="$1"

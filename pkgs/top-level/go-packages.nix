@@ -93,11 +93,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "6acef71eb69611914f7a30939ea9f6e194c78172";
-    date = "2016-02-25";
+    rev = "d58ca6618b994150e624f6888d871f4709db51a0";
+    date = "2016-03-04";
     owner  = "golang";
     repo   = "net";
-    sha256 = "1fcsv50sbq0lpzrhx3m9jw51wa255fsbqjwsx9iszq4d0gysnnvc";
+    sha256 = "0j3692kp5y9i462j48w1awmys1hhvf7wvpvv4xhh89xkza4cwvy8";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -120,11 +120,11 @@ let
 
 
   protobuf = buildFromGitHub {
-    rev = "552c7b9542c194800fd493123b3798ef0a832032";
-    date = "2016-02-26";
+    rev = "c75fbf01dc6cb73649c4cd4326182c3e44aa9dbb";
+    date = "2016-03-04";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "1zaw1xxnvgsvfcrv5xkn1f7p87vyh9i6mc44csl11fgc2hvqp6xm";
+    sha256 = "08g8mn4qf8hb43hha1m2nrxn5bs1x85vc0wdspz5sq88w08m2ypj";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [ "code.google.com/p/goprotobuf" ];
   };
@@ -139,11 +139,11 @@ let
   };
 
   sys = buildFromGitHub {
-    rev = "54535356f1d989a6072b0898d9ddc4dd7009dcd3";
-    date = "2016-02-29";
+    rev = "7a56174f0086b32866ebd746a794417edbc678a1";
+    date = "2016-03-02";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "14gfzj3jwbskz6303108l4hpnb85zc9fk0rdnq2mhxnfxr4r1rxn";
+    sha256 = "0bmxxjqp842fdpi6h3049b9a360ijgm63yvn0piqxs29clg1iwka";
     goPackagePath = "golang.org/x/sys";
     goPackageAliases = [
       "github.com/golang/sys"
@@ -525,25 +525,24 @@ let
     buildInputs = [ logrus docopt-go hipchat-go gopherduty consul-api opsgenie-go-sdk influxdb8-client ];
   };
 
-  consul-template = buildGoPackage rec {
-    rev = "v0.9.0";
-    name = "consul-template-${rev}";
-    goPackagePath = "github.com/hashicorp/consul-template";
+  consul-template = buildFromGitHub {
+    rev = "v0.13.0";
+    owner = "hashicorp";
+    repo = "consul-template";
+    sha256 = "0zcx315f7xfw1bkxx2835zh8ql3zvwnqnzb8algkdqx7403jl6c5";
 
-    src = fetchFromGitHub {
-      inherit rev;
-      owner = "hashicorp";
-      repo = "consul-template";
-      sha256 = "1k64rjskzn7cxn7rxab978847jq8gr4zj4cnzgznhn44nzasgymj";
-    };
-
-    # We just want the consul api not all of consul and vault
-    extraSrcs = [
-      { inherit (consul) src goPackagePath; }
-      { inherit (vault) src goPackagePath; }
+    buildInputs = [
+      consul-api
+      go-cleanhttp
+      go-multierror
+      go-reap
+      go-syslog
+      logutils
+      mapstructure
+      serf
+      yaml-v2
+      vault-api
     ];
-
-    buildInputs = [ go-multierror go-syslog hcl logutils mapstructure ];
   };
 
   context = buildGoPackage rec {
@@ -635,11 +634,11 @@ let
   };
 
   dns = buildFromGitHub {
-    rev = "cce6c130cdb92c752850880fd285bea1d64439dd";
-    date = "2016-02-28";
+    rev = "4adf880b0237527fe9e86701c412d6906e5fcf9c";
+    date = "2016-03-02";
     owner  = "miekg";
     repo   = "dns";
-    sha256 = "098gadhfjiijlgq497gbccvf26xrmjvln1fws56m0ljcgszq3jdx";
+    sha256 = "191qwxin1ahqnkvpxgp1avip528sqydac4qn7qsxqrvnd3fz0fxs";
   };
 
   docker = buildFromGitHub {
@@ -1803,7 +1802,7 @@ let
     repo   = "go-reap";
     sha256 = "01pahld0vdssw6550bwhjbs0cm1g0hwd21lg1i57lk8i4pwp0fd9";
     date = "2016-01-13";
-    buildInputs = [ sys ];
+    propagatedBuildInputs = [ sys ];
   };
 
   go-restful = buildFromGitHub {
@@ -2068,11 +2067,11 @@ let
   };
 
   hcl = buildFromGitHub {
-    date = "2016-02-10";
-    rev = "1c284ec98f4b398443cbabb0d9197f7f4cc0077c";
+    date = "2016-03-01";
+    rev = "71c7409f1abba841e528a80556ed2c67671744c3";
     owner  = "hashicorp";
     repo   = "hcl";
-    sha256 = "0adlb6r00v4b9lzdsi27h2s4jcd6v3z8gbb7xzarqi04xh8kni1d";
+    sha256 = "09jzf8k68vcaxn1frq1y63y4brisbs4n5r89zxl7a9hr5xfsjx75";
   };
 
   hipchat-go = buildGoPackage rec {
@@ -3679,6 +3678,12 @@ let
     ];
   };
 
+  vault-api = buildFromGitHub {
+    inherit (vault) rev owner repo sha256;
+    subPackages = [ "api" ];
+    propagatedBuildInputs = [ hcl structs go-cleanhttp mapstructure ];
+  };
+
   vcs = buildFromGitHub {
     rev    = "1.0.0";
     owner  = "Masterminds";
@@ -3772,11 +3777,11 @@ let
   };
 
   yaml-v2 = buildFromGitHub {
-    rev = "f7716cbe52baa25d2e9b0d0da546fcf909fc16b4";
-    date = "2015-12-01";
+    rev = "a83829b6f1293c91addabc89d0571c246397bbf4";
+    date = "2016-03-01";
     owner = "go-yaml";
     repo = "yaml";
-    sha256 = "1v569hk9n995vvddh99xc9n1nhakl39hi88bqyxamgc4gxdmnfcw";
+    sha256 = "1m4dsmk90sbi17571h6pld44zxz7jc4lrnl4f27dpd1l8g5xvjhh";
     goPackagePath = "gopkg.in/yaml.v2";
   };
 

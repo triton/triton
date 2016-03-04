@@ -524,13 +524,11 @@ bashCompletion = callPackage ../all-pkgs/bash-completion { };
 
 bc = callPackage ../all-pkgs/bc { };
 
+beets = callPackage ../all-pkgs/beets { };
+
 bison = callPackage ../all-pkgs/bison { };
 
-btsync = callPackage ../all-pkgs/btsync { };
-
-bzrtools = callPackage ../all-pkgs/bzrtools { };
-
-beets = callPackage ../all-pkgs/beets { };
+bluez = callPackage ../all-pkgs/bluez { };
 
 boost155 = callPackage ../all-pkgs/boost/1.55.nix { };
 boost160 = callPackage ../all-pkgs/boost/1.60.nix { };
@@ -540,7 +538,11 @@ bs1770gain = callPackage ../all-pkgs/bs1770gain { };
 
 btrfs-progs = callPackage ../all-pkgs/btrfs-progs { };
 
+btsync = callPackage ../all-pkgs/btsync { };
+
 bzip2 = callPackage ../all-pkgs/bzip2 { };
+
+bzrtools = callPackage ../all-pkgs/bzrtools { };
 
 c-ares = callPackage ../all-pkgs/c-ares { };
 
@@ -8646,18 +8648,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  b43FirmwareCutter = callPackage ../os-specific/linux/firmware/b43-firmware-cutter { };
 #
 #  batctl = callPackage ../os-specific/linux/batman-adv/batctl.nix { };
-#
-#  bluez4 = lowPrio (callPackage ../os-specific/linux/bluez {
-#    pygobject = pygobject3;
-#  });
 
-  bluez = callPackage ../os-specific/linux/bluez/bluez5.nix { };
-
-#  # Needed for LibreOffice
-#  bluez5_28 = lowPrio (callPackage ../os-specific/linux/bluez/bluez5_28.nix { });
-#
-#  inherit (pythonPackages) bedup;
-#
 #  bridge-utils = callPackage ../os-specific/linux/bridge-utils { };
 #
   busybox = callPackage ../os-specific/linux/busybox { };

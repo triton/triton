@@ -1316,6 +1316,8 @@ potrace = callPackage ../all-pkgs/potrace {};
 
 psmisc = callPackage ../all-pkgs/psmisc { };
 
+pugixml = callPackage ../all-pkgs/pugixml { };
+
 pulseaudio_full = callPackage ../all-pkgs/pulseaudio { };
 
 pulseaudio_lib = callPackageAlias "pulseaudio_full" {
@@ -7444,8 +7446,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   pth = callPackage ../development/libraries/pth { };
 #
 #  ptlib = callPackage ../development/libraries/ptlib {};
-#
-  pugixml = callPackage ../development/libraries/pugixml { };
 #
 #  re2 = callPackage ../development/libraries/re2 { };
 #

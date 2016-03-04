@@ -1060,6 +1060,8 @@ libmpc = callPackage ../all-pkgs/libmpc { };
 
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
+libmsgpack = callPackage ../all-pkgs/libmsgpack { };
+
 libomxil-bellagio = callPackage ../all-pkgs/libomxil-bellagio { };
 
 libosinfo = callPackage ../all-pkgs/libosinfo { };
@@ -6831,9 +6833,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libmodbus = callPackage ../development/libraries/libmodbus {};
 #
   libmtp = callPackage ../development/libraries/libmtp { };
-#
-#  libmsgpack = callPackage ../development/libraries/libmsgpack { };
-#  libmsgpack_0_5 = callPackage ../development/libraries/libmsgpack/0.5.nix { };
 #
   libnatspec = callPackage ../development/libraries/libnatspec { };
 #

@@ -1,4 +1,8 @@
-{ stdenv, fetchurl, goPackages, unzip }:
+{ stdenv
+, fetchurl
+, goPackages
+, unzip
+}:
 
 let
   version = stdenv.lib.replaceStrings ["v"] [""] goPackages.consul.rev;
@@ -8,7 +12,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://releases.hashicorp.com/consul/${version}/consul_${version}_web_ui.zip";
-    sha256 = "1c1fqg032h6c9hs2ih4ralrldgvxdl73679kavz2wjmva3pfgibk";
+    sha256 = "0wmv5dmnfsn9p4hcbvcq900wxrkssgkyvm9vzf8dxs6gr80b7fwk";
   };
 
   preUnpack = ''
@@ -31,8 +35,11 @@ stdenv.mkDerivation {
   meta = with stdenv.lib; {
     homepage    = http://www.consul.io/;
     description = "A tool for service discovery, monitoring and configuration";
-    maintainers = with maintainers; [ cstrahan wkennington ];
-    license     = licenses.mpl20;
-    platforms   = platforms.unix;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    license = licenses.mpl20;
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

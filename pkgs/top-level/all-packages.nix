@@ -598,6 +598,12 @@ cmake = callPackage ../all-pkgs/cmake { };
 
 cogl = callPackage ../all-pkgs/cogl { };
 
+consul = pkgs.goPackages.consul.bin // { outputs = [ "bin" ]; };
+
+consul-ui = callPackage ../all-pkgs/consul-ui { };
+
+consul-template = pkgs.goPackages.consul-template.bin // { outputs = [ "bin" ]; };
+
 colord = callPackage ../all-pkgs/colord { };
 
 coreutils = callPackage ../all-pkgs/coreutils { };
@@ -1878,16 +1884,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  cloud-init = callPackage ../tools/virtualization/cloud-init { };
 #
 #  clib = callPackage ../tools/package-management/clib { };
-#
-  consul = pkgs.goPackages.consul.bin // { outputs = [ "bin" ]; };
-
-  consul-ui = callPackage ../servers/consul/ui.nix { };
-
-  consul-alerts = pkgs.goPackages.consul-alerts.bin // { outputs = [ "bin" ]; };
-
-  consul-template = pkgs.goPackages.consul-template.bin // { outputs = [ "bin" ]; };
-
-  corosync = callPackage ../servers/corosync { };
 #
 #  cherrytree = callPackage ../applications/misc/cherrytree { };
 #

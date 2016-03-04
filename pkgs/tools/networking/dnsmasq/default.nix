@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, dbus, nettle, libidn, libnetfilter_conntrack }:
+{ stdenv, fetchurl, pkgconfig, dbus, gmp, nettle, libidn, libnetfilter_conntrack }:
 
 with stdenv.lib;
 let
@@ -53,7 +53,7 @@ stdenv.mkDerivation rec {
   '';
 
   nativeBuildInputs = [ pkgconfig ];
-  buildInputs = [ nettle libidn ]
+  buildInputs = [ nettle libidn gmp ]
     ++ optionals (elem stdenv.targetSystem platforms.linux) [ dbus libnetfilter_conntrack ];
 
   meta = {

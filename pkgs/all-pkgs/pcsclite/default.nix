@@ -1,4 +1,11 @@
-{ stdenv, fetchurl, systemd_lib, dbus, perl, python2 }:
+{ stdenv
+, fetchurl
+, perl
+, python2
+
+, dbus
+, systemd_lib
+}:
 
 stdenv.mkDerivation rec {
   name = "pcsclite-1.8.14";
@@ -8,21 +15,36 @@ stdenv.mkDerivation rec {
     sha256 = "0kik09dif6hih09vvprd7zvj31lnrclrbrh5y10mlca2c209f7xr";
   };
 
+  nativeBuildInputs = [
+    perl
+    python2
+  ];
+
+  buildInputs = [
+    systemd_lib
+    dbus
+  ];
+
+  preConfigure = ''
+    configureFlagsArray+=(
+      "--with-systemdsystemunitdir=$out/etc/systemd/system"
+    )
+  '';
+
   configureFlags = [
     # The OS should care on preparing the drivers into this location
     "--enable-usbdropdir=/var/lib/pcsc/drivers"
     "--enable-confdir=/etc"
-    "--with-systemdsystemunitdir=\${out}/etc/systemd/system"
   ];
-
-  nativeBuildInputs = [ perl python2 ];
-  buildInputs = [ systemd_lib dbus.libs ];
 
   meta = with stdenv.lib; {
     description = "Middleware to access a smart card using SCard API (PC/SC)";
     homepage = http://pcsclite.alioth.debian.org/;
     license = licenses.bsd3;
-    maintainers = with maintainers; [ viric wkennington ];
-    platforms = with platforms; all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

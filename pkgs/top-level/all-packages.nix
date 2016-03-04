@@ -1287,6 +1287,8 @@ pcre = callPackage ../all-pkgs/pcre { };
 
 pcre2 = callPackage ../all-pkgs/pcre2 { };
 
+pcsclite = callPackage ../all-pkgs/pcsclite { };
+
 perl = callPackage ../all-pkgs/perl { };
 
 pixman = callPackage ../all-pkgs/pixman { };
@@ -3581,8 +3583,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ipsecTools = callPackage ../os-specific/linux/ipsec-tools { };
 #
 #  pbzip2 = callPackage ../tools/compression/pbzip2 { };
-#
-  pcsclite = callPackage ../tools/security/pcsclite { };
 #
 #  pcsctools = callPackage ../tools/security/pcsctools {
 #    inherit (perlPackages) pcscperl Glib Gtk2 Pango;

@@ -512,6 +512,8 @@ audit_lib = callPackageAlias "audit_full" {
 
 autoconf = callPackage ../all-pkgs/autoconf { };
 
+autogen = callPackage ../all-pkgs/autogen { };
+
 automake = callPackage ../all-pkgs/automake { };
 
 avahi = callPackage ../all-pkgs/avahi { };
@@ -1745,8 +1747,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  at = callPackage ../tools/system/at { };
 #
 #  atftp = callPackage ../tools/networking/atftp {};
-#
-  autogen = callPackage ../development/tools/misc/autogen { };
 #
 #  autojump = callPackage ../tools/misc/autojump { };
 #

@@ -1,27 +1,40 @@
-{ stdenv, fetchFromGitHub, perl, makeWrapper
-, sysfsutils, dmidecode, kmod }:
+{ stdenv
+, fetchFromGitHub
+, makeWrapper
+, perl
+
+, dmidecode
+, kmod
+, sysfsutils
+}:
 
 stdenv.mkDerivation {
-  name = "edac-utils-2015-01-07";
+  name = "edac-utils-2015-07-11";
 
   src = fetchFromGitHub {
     owner = "grondo";
     repo = "edac-utils";
-    rev = "f9aa96205f610de39a79ff43c7478b7ef02e3138";
-    sha256 = "1dmfqb15ffldl5zirbmwiqzpxbcc2ny9rpfvxcfvpmh5b69knvdg";
+    rev = "556ebce6e1a5a8ad8c07090979a36be7a2276e2e";
+    sha256 = "1517kp67qn9aldary4a1ymk7s1qyc9b355ac9yg9cb6cz4qjvi69";
   };
 
-  nativeBuildInputs = [ perl makeWrapper ];
-  buildInputs = [ sysfsutils ];
+  nativeBuildInputs = [
+    makeWrapper
+    perl
+  ];
+
+  buildInputs = [
+    sysfsutils
+  ];
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
   ];
 
-  installFlags = [
-    "sysconfdir=\${out}/etc"
-  ];
+  preInstall = ''
+    installFlagsArray+=("sysconfdir=$out/etc")
+  '';
 
   postInstall = ''
     wrapProgram "$out/sbin/edac-ctl" \
@@ -34,7 +47,10 @@ stdenv.mkDerivation {
     homepage = http://github.com/grondo/edac-utils;
     description = "Handles the reporting of hardware-related memory errors";
     license = licenses.gpl2;
-    platforms = platforms.linux;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

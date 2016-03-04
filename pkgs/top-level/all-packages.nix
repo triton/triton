@@ -663,6 +663,8 @@ dropbox = qt5.callPackage ../all-pkgs/dropbox { };
 
 e2fsprogs = callPackage ../all-pkgs/e2fsprogs { };
 
+edac-utils = callPackage ../all-pkgs/edac-utils { };
+
 elfutils = callPackage ../all-pkgs/elfutils { };
 
 eog = callPackage ../all-pkgs/eog { };
@@ -1935,8 +1937,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  duperemove = callPackage ../tools/filesystems/duperemove { };
 #
 #  dynamic-colors = callPackage ../tools/misc/dynamic-colors { };
-#
-  edac-utils = callPackage ../os-specific/linux/edac-utils { };
 #
 #  eggdrop = callPackage ../tools/networking/eggdrop { };
 #

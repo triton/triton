@@ -3,7 +3,7 @@
 , fetchurl
 
 , atk
-, dbus_glib
+, dbus-glib
 , gdk-pixbuf
 , glib
 , gobject-introspection
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     atk
-    dbus_glib
+    dbus-glib
     gdk-pixbuf
     glib
     gobject-introspection
@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    (enFlag "dbus" (dbus_glib != null) null)
+    (enFlag "dbus" (dbus-glib != null) null)
     "--enable-bacon"
     "--disable-maintainer-flags"
     "--disable-debug"

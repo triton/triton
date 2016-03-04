@@ -1,7 +1,7 @@
 { stdenv
 , intltool
 , fetchurl
-, apacheHttpd_2_2
+, apache-httpd
 , nautilus
 , gtk3
 , libxml2
@@ -38,8 +38,8 @@ stdenv.mkDerivation rec {
   #    -e 's,^LoadModule dnssd_module.\+,LoadModule dnssd_module ${mod_dnssd}/modules/mod_dnssd.so,'
   #'';
 
-  configureFlags = [ #"--with-httpd=${apacheHttpd_2_2}/bin/httpd"
-                     #"--with-modules-path=${apacheHttpd_2_2}/modules"
+  configureFlags = [ "--with-httpd=${apache-httpd}/bin/httpd"
+                     "--with-modules-path=${apache-httpd}/modules"
                      "--disable-bluetooth"
                      "--with-nautilusdir=$(out)/lib/nautilus/extensions-3.0" ];
 

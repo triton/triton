@@ -4,7 +4,10 @@ stdenv.mkDerivation rec {
   name = "man-1.6g";
 
   src = fetchurl {
-    url = "http://primates.ximian.com/~flucifredi/man/${name}.tar.gz";
+    urls = [
+      "http://primates.ximian.com/~flucifredi/man/${name}.tar.gz"
+      "http://pkgs.fedoraproject.org/repo/pkgs/man2html/man-1.6g.tar.gz/ba154d5796928b841c9c69f0ae376660/man-1.6g.tar.gz"
+    ];
     sha256 = "17wmp2ahkhl72cvfzshmck22dnq2lbjg0678swihj270yk1vip6c";
   };
   

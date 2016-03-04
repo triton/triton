@@ -490,6 +490,8 @@ ardour =  callPackage ../all-pkgs/ardour {
 aria2 = callPackage ../all-pkgs/aria2 { };
 aria = aria2;
 
+argyllcms = callPackage ../all-pkgs/argyllcms { };
+
 atk = callPackage ../all-pkgs/atk { };
 
 atkmm = callPackage ../all-pkgs/atkmm { };
@@ -1651,8 +1653,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  };
 #
 #  apitrace = qt5.callPackage ../applications/graphics/apitrace {};
-#
-  argyllcms = callPackage ../tools/graphics/argyllcms {};
 #
 #  arp-scan = callPackage ../tools/misc/arp-scan { };
 #

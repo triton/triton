@@ -1,5 +1,5 @@
 { fetchurl, stdenv, intltool, pkgconfig, glib, json-glib, libsoup, geoip
-, dbus, dbus_glib, modemmanager, avahi
+, dbus, dbus-glib, modemmanager, avahi
 }:
 
 stdenv.mkDerivation rec {
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   buildInputs =
    [ intltool pkgconfig glib json-glib libsoup geoip
-     dbus dbus_glib modemmanager avahi
+     dbus dbus-glib modemmanager avahi
    ];
 
   preConfigure = ''
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [ "--with-systemdsystemunitdir=$(out)/etc/systemd/system" ];
 
-  propagatedBuildInputs = [ dbus dbus_glib glib ];
+  propagatedBuildInputs = [ dbus dbus-glib glib ];
 
   meta = {
     description = "Geolocation framework and some data providers";

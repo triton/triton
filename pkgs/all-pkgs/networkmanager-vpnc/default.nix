@@ -4,7 +4,7 @@
 , module_init_tools
 , procps
 
-, dbus_glib
+, dbus-glib
 , glib
 , gtk3
 , libsecret
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    dbus_glib
+    dbus-glib
     glib
     gtk3
     libsecret

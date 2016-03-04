@@ -17,7 +17,7 @@
 , clutter
 , cogl
 , dbus
-, dbus_glib
+, dbus-glib
 , dconf
 , evolution-data-server
 , gcr
@@ -110,7 +110,7 @@ stdenv.mkDerivation rec {
     clutter
     cogl
     dbus
-    dbus_glib
+    dbus-glib
     dconf
     evolution-data-server
     gcr

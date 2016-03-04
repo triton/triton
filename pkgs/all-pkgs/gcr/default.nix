@@ -4,7 +4,7 @@
 , libxslt
 
 , atk
-, dbus_glib
+, dbus-glib
 , gdk-pixbuf
 , glib
 , gobject-introspection
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     atk
-    dbus_glib
+    dbus-glib
     gdk-pixbuf
     glib
     gnupg

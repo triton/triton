@@ -5,7 +5,7 @@
 
 , adwaita-icon-theme
 , avahi
-, dbus_glib
+, dbus-glib
 , dconf
 , file
 , glib
@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     adwaita-icon-theme
     avahi
-    dbus_glib
+    dbus-glib
     dconf
     file
     glib

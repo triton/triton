@@ -5,7 +5,7 @@
 
 , adwaita-icon-theme
 , atk
-, dbus_glib
+, dbus-glib
 , dconf
 , gconf
 , gdk-pixbuf
@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     adwaita-icon-theme
     atk
-    dbus_glib
+    dbus-glib
     gdk-pixbuf
     gconf
     libgnome-keyring

@@ -3,7 +3,7 @@
 , fetchurl
 , intltool
 
-, dbus_glib
+, dbus-glib
 , gnome2
 , glib
 , gobject-introspection
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    dbus_glib
+    dbus-glib
     glib
     gobject-introspection
     gtk3
@@ -88,7 +88,7 @@ stdenv.mkDerivation rec {
     "--disable-documentation"
     "--enable-gtk"
     (enFlag "orbit" (orbit2 != null) null)
-    (enFlag "defaults-service" (dbus_glib != null) null)
+    (enFlag "defaults-service" (dbus-glib != null) null)
     "--enable-gsettings-backend"
     "--enable-nls"
     (enFlag "introspection" (gobject-introspection != null) null)

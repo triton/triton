@@ -7,7 +7,7 @@
 , intltool
 , libtool
 
-, dbus_glib
+, dbus-glib
 , glib
 , gtk3
 , libgnome-keyring
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    dbus_glib
+    dbus-glib
     glib
     gtk3
     libgnome-keyring

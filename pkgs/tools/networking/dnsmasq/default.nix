@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ nettle libidn ]
-    ++ optionals (elem stdenv.targetSystem platforms.linux) [ dbus.libs libnetfilter_conntrack ];
+    ++ optionals (elem stdenv.targetSystem platforms.linux) [ dbus libnetfilter_conntrack ];
 
   meta = {
     description = "An integrated DNS, DHCP and TFTP server for small networks";

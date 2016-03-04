@@ -7,7 +7,7 @@
 , avahi
 , bind
 , bluez
-, dbus_glib
+, dbus-glib
 , dhcp
 , dhcpcd
 , dnsmasq
@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bluez
-    dbus_glib
+    dbus-glib
     dnsmasq
     gobject-introspection
     libgcrypt

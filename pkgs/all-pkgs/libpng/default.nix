@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    description = "The official reference implementation for the PNG file format" + whenPatched " with animation patch";
+    description = "The official reference implementation for the PNG file format with animation patch";
     homepage = http://www.libpng.org/pub/png/libpng.html;
     license = licenses.libpng;
     maintainers = with maintainers; [

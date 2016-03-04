@@ -711,6 +711,8 @@ gdm = callPackage ../all-pkgs/gdm { };
 
 geocode-glib = callPackage ../all-pkgs/geocode-glib { };
 
+getopt = callPackage ../all-pkgs/getopt { };
+
 gettext = callPackage ../all-pkgs/gettext { };
 
 git = callPackage ../all-pkgs/git { };
@@ -2632,8 +2634,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gengetopt = callPackage ../development/tools/misc/gengetopt { };
 #
 #  getmail = callPackage ../tools/networking/getmail { };
-#
-  getopt = callPackage ../tools/misc/getopt { };
 #
 #  gftp = callPackage ../tools/networking/gftp { };
 #

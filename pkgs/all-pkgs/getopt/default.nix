@@ -1,4 +1,7 @@
-{ stdenv, fetchurl, gettext }:
+{ stdenv
+, fetchurl
+, gettext
+}:
 
 stdenv.mkDerivation rec {
   name = "getopt-1.1.6";
@@ -8,7 +11,9 @@ stdenv.mkDerivation rec {
     sha256 = "1zn5kp8ar853rin0ay2j3p17blxy16agpp8wi8wfg4x98b31vgyh";
   };
 
-  nativeBuildInputs = [ gettext ];
+  nativeBuildInputs = [
+    gettext
+  ];
 
   preBuild = ''
     makeFlagsArray+=("prefix=$out")
@@ -18,6 +23,11 @@ stdenv.mkDerivation rec {
     homepage = "http://frodo.looijaard.name/project/getopt";
     description = "a program to help shell scripts parse command-line parameters";
     license = licenses.gpl2;
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

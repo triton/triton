@@ -42,12 +42,12 @@ with {
 stdenv.mkDerivation rec {
   name = "mutter-${version}";
   versionMajor = "3.18";
-  versionMinor = "2";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/mutter/${versionMajor}/${name}.tar.xz";
-    sha256 = "108i4qvwhipdlyvd75fykhskp6y4rywkhffmdknpaxbc45pk4sca";
+    sha256 = "0ik8aa3k5cglz9f237mfxxdf8pcr0srr5mmfwdx3gc3bb7aqipaq";
   };
 
   nativeBuildInputs = [

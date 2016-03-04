@@ -7,7 +7,7 @@
 , libxslt
 , makeWrapper
 
-, dbus_glib
+, dbus-glib
 , glib
 , gtk3
 , libxml2
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    dbus_glib
+    dbus-glib
     glib
     gtk3
     libxml2

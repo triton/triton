@@ -15,7 +15,7 @@
 , alsa-lib
 , avahi
 , bluez
-, dbus_lib
+, dbus
 , fftw_single
 , gconf
 , glib
@@ -78,7 +78,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     glib
-    dbus_lib
+    dbus
     libasyncns
     libcap
     json-c

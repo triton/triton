@@ -3,7 +3,7 @@
 , intltool
 , python
 
-, dbus_glib
+, dbus-glib
 , glib
 , gobject-introspection
 , xorg
@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    dbus_glib
+    dbus-glib
     glib
     gobject-introspection
     xorg.libSM

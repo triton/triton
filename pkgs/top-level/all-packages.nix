@@ -1058,7 +1058,6 @@ libidl = callPackage ../all-pkgs/libidl { };
 libinput = callPackage ../all-pkgs/libinput { };
 
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };
-libjpeg62 = callPackage ../all-pkgs/libjpeg/62.nix { };
 libjpeg_turbo = callPackage ../all-pkgs/libjpeg-turbo { };
 libjpeg = callPackageAlias "libjpeg_turbo" { };
 

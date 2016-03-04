@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, dbus-glib, glib, python, pkgconfig, libxslt
+{ stdenv, fetchurl, dbus-glib, dbus, glib, python, pkgconfig, libxslt
 , gobjectIntrospection, valaSupport ? true, vala }:
 
 stdenv.mkDerivation rec {
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = stdenv.lib.optional valaSupport "--enable-vala-bindings";
 
-  propagatedBuildInputs = [dbus-glib glib python gobjectIntrospection];
+  propagatedBuildInputs = [dbus-glib glib dbus python gobjectIntrospection];
 
   buildInputs = [pkgconfig libxslt] ++ stdenv.lib.optional valaSupport vala;
 

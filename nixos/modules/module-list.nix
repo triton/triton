@@ -464,7 +464,6 @@
   ./system/boot/timesyncd.nix
   ./system/boot/tmp.nix
   ./system/etc/etc.nix
-  ./tasks/bcache.nix
   ./tasks/cpu-freq.nix
   ./tasks/encrypted-devices.nix
   ./tasks/filesystems.nix

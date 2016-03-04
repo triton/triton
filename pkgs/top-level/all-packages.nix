@@ -1776,8 +1776,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  bdf2psf = callPackage ../tools/misc/bdf2psf { };
 #
-  bcache-tools = callPackage ../tools/filesystems/bcache-tools { };
-#
 #  bchunk = callPackage ../tools/cd-dvd/bchunk { };
 #
 #  bfr = callPackage ../tools/misc/bfr { };

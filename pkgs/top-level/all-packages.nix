@@ -1527,6 +1527,8 @@ webkitgtk = callPackage ../all-pkgs/webkitgtk { };
 
 which = callPackage ../all-pkgs/which { };
 
+wxGTK = callPackage ../all-pkgs/wxGTK { };
+
 x264 = callPackage ../all-pkgs/x264 { };
 
 x265 = callPackage ../all-pkgs/x265 { };
@@ -7876,11 +7878,9 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  wiredtiger = callPackage ../development/libraries/wiredtiger { };
 #
-  wxGTK28 = callPackage ../development/libraries/wxGTK-2.8 { };
-
-  wxGTK29 = callPackage ../development/libraries/wxGTK-2.9/default.nix { };
-
-  wxGTK30 = callPackage ../development/libraries/wxGTK-3.0/default.nix { };
+#  wxGTK28 = callPackage ../development/libraries/wxGTK-2.8 { };
+#
+#  wxGTK29 = callPackage ../development/libraries/wxGTK-2.9/default.nix { };
 #
 #  wxmac = callPackage ../development/libraries/wxmac { };
 #

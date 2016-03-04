@@ -175,12 +175,15 @@ go.stdenv.mkDerivation (
   # I prefer to call this dev but propagatedBuildInputs expects $out to exist
   outputs = [ "out" "bin" ];
 
-  meta = {
+  meta = with lib; {
     # Add default meta information
-    platforms = lib.platforms.all;
+    platforms = with platforms;
+      x86_64-linux;
   } // meta // {
     # add an extra maintainer to every package
-    maintainers = (meta.maintainers or []) ++
-                  [ lib.maintainers.ehmry lib.maintainers.lethalman ];
+    maintainers = (meta.maintainers or [])
+      ++ (with maintainers; [
+        wkennington
+      ]);
   };
 })

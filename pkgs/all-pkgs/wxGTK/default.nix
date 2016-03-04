@@ -32,7 +32,6 @@ stdenv.mkDerivation rec {
     gconf
     gstreamer_0
     gst-plugins-base_0
-    gtk3
     expat
     libjpeg
     libmsgpack
@@ -47,6 +46,11 @@ stdenv.mkDerivation rec {
     xorg.xf86vidmodeproto
     xz
     zlib
+  ];
+
+  # WXWidget applications will depend directly on gtk
+  propagatedBuildInputs = [
+    gtk3
   ];
 
   SEARCH_LIB = "${mesa}/lib";

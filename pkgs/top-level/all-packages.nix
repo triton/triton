@@ -8547,7 +8547,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  axis2 = callPackage ../servers/http/tomcat/axis2 { };
 #
-#  unifi = callPackage ../servers/unifi { };
+  unifi = callPackage ../servers/unifi { };
 #
 #  virtuoso6 = callPackage ../servers/sql/virtuoso/6.x.nix { };
 #

@@ -3,6 +3,7 @@
 , intltool
 , python
 
+, dbus
 , dbus-glib
 , glib
 , gobject-introspection
@@ -37,6 +38,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    dbus
     dbus-glib
     glib
     gobject-introspection

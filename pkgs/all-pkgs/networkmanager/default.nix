@@ -7,11 +7,13 @@
 , avahi
 , bind
 , bluez
+, dbus
 , dbus-glib
 , dhcp
 , dhcpcd
 , dnsmasq
 , ethtool
+, glib
 , gnused
 , gobject-introspection
 , iptables
@@ -60,8 +62,10 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bluez
+    dbus
     dbus-glib
     dnsmasq
+    glib
     gobject-introspection
     libgcrypt
     libgudev

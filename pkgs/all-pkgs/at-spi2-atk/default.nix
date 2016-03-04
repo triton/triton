@@ -6,6 +6,7 @@
 
 , at-spi2-core
 , atk
+, dbus
 , dbus-glib
 , glib
 
@@ -38,6 +39,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     at-spi2-core
     atk
+    dbus
     dbus-glib
     glib
   ] ++ optionals doCheck [

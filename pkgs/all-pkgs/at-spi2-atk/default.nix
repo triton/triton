@@ -6,7 +6,7 @@
 
 , at-spi2-core
 , atk
-, dbus_glib
+, dbus-glib
 , glib
 
 , libxml2
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     at-spi2-core
     atk
-    dbus_glib
+    dbus-glib
     glib
   ] ++ optionals doCheck [
     libxml2

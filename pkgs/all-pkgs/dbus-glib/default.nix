@@ -20,6 +20,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    dbus
     expat
     glib
   ];

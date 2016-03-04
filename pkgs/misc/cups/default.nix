@@ -27,7 +27,7 @@ stdenv.mkDerivation {
     libpaper
     gmp
     pam
-    dbus.libs
+    dbus
     acl
   ];
 

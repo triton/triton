@@ -14,7 +14,7 @@
 
 , doCheck ? false
   , coreutils
-  , dbus_daemon
+  , dbus
   , desktop_file_utils
   , libxml2
   , shared_mime_info
@@ -161,7 +161,7 @@ stdenv.mkDerivation rec {
     export XDG_RUNTIME_DIR="$TMP"
     export HOME="$TMP"
     export XDG_DATA_DIRS="${desktop_file_utils}/share:${shared_mime_info}/share"
-    export G_TEST_DBUS_DAEMON="${dbus_daemon}/bin/dbus-daemon"
+    export G_TEST_DBUS_DAEMON="${dbus}/bin/dbus-daemon"
     # Make sure that everything that uses D-Bus is creating its own temporary
     # session rather than polluting the developer's (or failing, on buildds)
     export DBUS_SESSION_BUS_ADDRESS='this-should-not-be-used-and-will-fail'

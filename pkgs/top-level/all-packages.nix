@@ -631,6 +631,10 @@ db_6 = callPackageAlias "db" {
   channel = "6";
 };
 
+dbus = callPackage ../all-pkgs/dbus { };
+
+dbus-glib = callPackage ../all-pkgs/dbus-glib { };
+
 dconf = callPackage ../all-pkgs/dconf { };
 
 dconf-editor = callPackage ../all-pkgs/dconf-editor { };
@@ -6146,16 +6150,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   cppunit = callPackage ../development/libraries/cppunit { };
 
 #  cwiid = callPackage ../development/libraries/cwiid { };
-
-  dbus = callPackage ../development/libraries/dbus { };
-#  dbus_cplusplus  = callPackage ../development/libraries/dbus-cplusplus { };
-  dbus_glib       = callPackage ../development/libraries/dbus-glib { };
-#  dbus_java       = callPackage ../development/libraries/java/dbus-java { };
-
-  # Should we deprecate these? Currently there are many references.
-  dbus_tools = pkgs.dbus.tools;
-  dbus_lib = pkgs.dbus.libs;
-  dbus_daemon = pkgs.dbus.daemon;
 #
 #  dhex = callPackage ../applications/editors/dhex { };
 #

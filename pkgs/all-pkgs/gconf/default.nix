@@ -3,6 +3,7 @@
 , fetchurl
 , intltool
 
+, dbus
 , dbus-glib
 , gnome2
 , glib
@@ -36,6 +37,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    dbus
     dbus-glib
     glib
     gobject-introspection

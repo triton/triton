@@ -5,6 +5,7 @@
 , intltool
 
 , dbus-glib
+, glib
 , gtk3
 , libgnome-keyring
 , libsecret
@@ -33,6 +34,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     dbus-glib
+    glib
     gtk3
     libsecret
     networkmanager

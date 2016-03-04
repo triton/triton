@@ -9,6 +9,7 @@
 , dbus
 , dbus-glib
 , gdk-pixbuf
+, glib
 , gobject-introspection
 , gtk3
 , libxml2
@@ -47,6 +48,7 @@ stdenv.mkDerivation rec {
     dbus
     dbus-glib
     gdk-pixbuf
+    glib
     gtk3
     gobject-introspection
     libxml2

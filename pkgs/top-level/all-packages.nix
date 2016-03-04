@@ -623,6 +623,14 @@ cyrus-sasl = callPackage ../all-pkgs/cyrus-sasl { };
 
 dash = callPackage ../all-pkgs/dash { };
 
+db = callPackage ../all-pkgs/db { };
+db_5 = callPackageAlias "db" {
+  channel = "5";
+};
+db_6 = callPackageAlias "db" {
+  channel = "6";
+};
+
 dconf = callPackage ../all-pkgs/dconf { };
 
 dconf-editor = callPackage ../all-pkgs/dconf-editor { };
@@ -6138,19 +6146,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   cppunit = callPackage ../development/libraries/cppunit { };
 
 #  cwiid = callPackage ../development/libraries/cwiid { };
-#
-  # Make bdb5 the default as it is the last release under the custom
-  # bsd-like license
-  db = callPackageAlias "db5" { };
-#  db4 = db48;
-#  db44 = callPackage ../development/libraries/db/db-4.4.nix { };
-#  db45 = callPackage ../development/libraries/db/db-4.5.nix { };
-#  db47 = callPackage ../development/libraries/db/db-4.7.nix { };
-#  db48 = callPackage ../development/libraries/db/db-4.8.nix { };
-  db5 = callPackageAlias "db53" { };
-  db53 = callPackage ../development/libraries/db/db-5.3.nix { };
-#  db6 = callPackageAlias "db60" { };
-#  db60 = callPackage ../development/libraries/db/db-6.0.nix { };
 
   dbus = callPackage ../development/libraries/dbus { };
 #  dbus_cplusplus  = callPackage ../development/libraries/dbus-cplusplus { };

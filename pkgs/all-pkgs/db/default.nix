@@ -1,27 +1,25 @@
-{ stdenv, fetchurl
-, cxxSupport ? true
-, compat185 ? true
-
-# Options from inherited versions
-, version, sha256
-, extraPatches ? [ ]
-, license ? stdenv.lib.licenses.sleepycat
-, branch ? null
+{ stdenv
+, fetchurl
+, channel ? "5"
 }:
 
+let
+  sources = import ./sources.nix {
+    inherit (stdenv.lib) licenses;
+  };
+  source = sources.${channel};
+in
 stdenv.mkDerivation rec {
-  name = "db-${version}";
+  name = "db-${source.version}";
 
   src = fetchurl {
     url = "http://download.oracle.com/berkeley-db/${name}.tar.gz";
-    sha256 = sha256;
+    inherit (source) sha256;
   };
 
-  patches = extraPatches;
-
   configureFlags = [
-    (if cxxSupport then "--enable-cxx" else "--disable-cxx")
-    (if compat185 then "--enable-compat185" else "--disable-compat185")
+    "--enable-cxx"
+    "--enable-compat185"
     "--enable-dbm"
     "--with-pic"
   ];

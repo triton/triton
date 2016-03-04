@@ -4,8 +4,8 @@
 , intltool
 , libxslt
 
-, glib
 , dbus-glib
+, glib
 , libgudev
 , libusb
 , systemd_lib
@@ -32,6 +32,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     dbus-glib
+    glib
     libgudev
     libusb
     systemd_lib

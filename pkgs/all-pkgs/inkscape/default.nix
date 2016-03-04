@@ -14,7 +14,7 @@
 , boost
 , cairo
 , cairomm
-, dbus_glib
+, dbus-glib
 , fontconfig
 , freetype
 , glib
@@ -98,7 +98,7 @@ stdenv.mkDerivation rec {
     boost
     cairo
     cairomm
-    dbus_glib
+    dbus-glib
     fontconfig
     freetype
     glib

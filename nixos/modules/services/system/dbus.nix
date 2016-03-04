@@ -19,7 +19,7 @@ let
     buildCommand = ''
       mkdir -p $out
 
-      cp -v ${pkgs.dbus.daemon}/etc/dbus-1/system.conf $out/system.conf
+      cp -v ${pkgs.dbus}/etc/dbus-1/system.conf $out/system.conf
 
       # !!! Hm, these `sed' calls are rather error-prone...
 
@@ -34,7 +34,7 @@ let
           -e 's|<standard_system_servicedirs/>|${systemServiceDirs}|' \
           -e 's|<includedir>system.d</includedir>|${systemIncludeDirs}|'
 
-      cp ${pkgs.dbus.daemon}/etc/dbus-1/session.conf $out/session.conf
+      cp ${pkgs.dbus}/etc/dbus-1/session.conf $out/session.conf
 
       # Add the services and session.d directories to the session bus
       # search path.
@@ -101,7 +101,7 @@ in
 
   config = mkIf cfg.enable {
 
-    environment.systemPackages = [ pkgs.dbus.daemon pkgs.dbus_tools ];
+    environment.systemPackages = [ pkgs.dbus ];
 
     environment.etc = singleton
       { source = configDir;
@@ -117,11 +117,11 @@ in
 
     users.extraGroups.messagebus.gid = config.ids.gids.messagebus;
 
-    systemd.packages = [ pkgs.dbus.daemon ];
+    systemd.packages = [ pkgs.dbus ];
 
     security.setuidOwners = singleton
       { program = "dbus-daemon-launch-helper";
-        source = "${pkgs.dbus_daemon}/libexec/dbus-daemon-launch-helper";
+        source = "${pkgs.dbus}/libexec/dbus-daemon-launch-helper";
         owner = "root";
         group = "messagebus";
         setuid = true;

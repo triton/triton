@@ -6,7 +6,7 @@
 , glib
 
 # Optional
-, alsaLib
+, alsa-lib
 , audiofile
 , avahi
 , bzip2
@@ -19,17 +19,16 @@
 , fluidsynth
 , game-music-emu
 , icu
+, jack2_lib
 , lame
 , libao
 , libid3tag
-, libjack2
 , libmad
 , libmikmod
 , libmms
 , libmodplug
 , libmpdclient
 , libopus
-, libpulseaudio
 , libsamplerate
 , libshout
 , libsndfile
@@ -37,11 +36,12 @@
 , libvorbis
 , mpg123
 , openal
+, pulseaudio_lib
 , samba
 , shout
 , soxr
 , sqlite
-, systemd
+, systemd_lib
 #, twolame
 #, wavpack
 , yajl
@@ -78,7 +78,7 @@ stdenv.mkDerivation rec {
     boost
     glib
     # Optional
-    alsaLib
+    alsa-lib
     audiofile
     avahi
     bzip2
@@ -91,17 +91,16 @@ stdenv.mkDerivation rec {
     fluidsynth
     game-music-emu
     icu
+    jack2_lib
     lame
     libao
     libid3tag
-    libjack2
     libmad
     libmikmod
     libmms
     libmodplug
     libmpdclient
     libopus
-    libpulseaudio
     libsamplerate
     libshout
     libsndfile
@@ -109,9 +108,10 @@ stdenv.mkDerivation rec {
     libvorbis
     mpg123
     openal
+    pulseaudio_lib
     soxr
     sqlite
-    systemd
+    systemd_lib
     #wavpack
     yajl
     zlib
@@ -125,7 +125,7 @@ stdenv.mkDerivation rec {
     (enFlag "aac" (faad2 != null) null)
     # TODO: adplug support
     #(enFlag "adplug" true null)
-    (enFlag "alsa" (alsaLib != null) null)
+    (enFlag "alsa" (alsa-lib != null) null)
     (enFlag "audiofile" (audiofile != null) null)
     (enFlag "bzip2" (bzip2 != null) null)
     # TODO: cdio-paranoia support
@@ -145,7 +145,7 @@ stdenv.mkDerivation rec {
     (enFlag "id3" (libid3tag != null) null)
     (enFlag "inotify" true null)
     (enFlag "ipv6" true null)
-    (enFlag "jack" (libjack2 != null) null)
+    (enFlag "jack" (jack2_lib != null) null)
     (enFlag "lame-encoder" (lame != null) null)
     (enFlag "libmpdclient" (libmpdclient != null) null)
     # TODO: libwrap support
@@ -163,7 +163,7 @@ stdenv.mkDerivation rec {
     (enFlag "oss" true null)
     "--disable-osx"
     (enFlag "pipe-output" true null)
-    (enFlag "pulse" (libpulseaudio != null) null)
+    (enFlag "pulse" (pulseaudio_lib != null) null)
     (enFlag "shout" (libshout != null) null)
     "--disable-solaris-output"
     (enFlag "soundcloud" (yajl != null) null)
@@ -181,7 +181,7 @@ stdenv.mkDerivation rec {
     (enFlag "zlib" (zlib != null) null)
     (enFlag "zzip" (zziplib != null) null)
 
-    (wtFlag "systemdsystemunitdir" (systemd != null) "$(out)/etc/systemd/system")
+    (wtFlag "systemdsystemunitdir" (systemd_lib != null) "$(out)/etc/systemd/system")
     (enFlag "debug" debugSupport null)
     (enFlag "documentation" documentationSupport null)
     (enFlag "werror" false null)
@@ -197,7 +197,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

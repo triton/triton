@@ -1,5 +1,5 @@
 { lib, stdenv, fetchurl
-, enableAlsa ? true, alsaLib ? null
+, enableAlsa ? true, alsa-lib ? null
 , enableLibao ? true, libao ? null
 , enableLame ? false, lame ? null
 , enableLibmad ? true, libmad ? null
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs =
-    optional (enableAlsa && stdenv.isLinux) alsaLib ++
+    optional (enableAlsa) alsa-lib ++
     optional enableLibao libao ++
     optional enableLame lame ++
     optional enableLibmad libmad ++
@@ -37,6 +37,6 @@ stdenv.mkDerivation rec {
     homepage = http://sox.sourceforge.net/;
     maintainers = [ lib.maintainers.marcweber ];
     license = if enableAMR then lib.licenses.unfree else lib.licenses.gpl2Plus;
-    platforms = lib.platforms.linux ++ lib.platforms.darwin;
+    platforms = lib.platforms.linux;
   };
 }

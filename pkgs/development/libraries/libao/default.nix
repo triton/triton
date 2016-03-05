@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, pkgconfig, libpulseaudio, alsaLib, libcap
+{ lib, stdenv, fetchurl, pulseaudio_lib, alsa-lib, libcap
 , usePulseAudio }:
 
 stdenv.mkDerivation rec {
@@ -10,13 +10,13 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs =
-    [ pkgconfig ] ++
-    lib.optional stdenv.isLinux (if usePulseAudio then libpulseaudio else alsaLib) ++
-    lib.optional stdenv.isLinux libcap;
+    [ ] ++
+    lib.optional true (if usePulseAudio then pulseaudio_lib else alsa-lib) ++
+    lib.optional true libcap;
 
   meta = {
     homepage = http://xiph.org/ao/;
     license = stdenv.lib.licenses.gpl2;
-    maintainers = with stdenv.lib.maintainers; [ fuuzetsu ];
+    maintainers = with stdenv.lib.maintainers; [ ];
   };
 }

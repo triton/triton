@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, alsaLib, glib, libjack2, libsndfile, pkgconfig
-, libpulseaudio }:
+{ stdenv, fetchurl, alsa-lib, glib, jack2_lib, libsndfile, pkgconfig
+, pulseaudio_lib }:
 
 stdenv.mkDerivation  rec {
   name = "fluidsynth-${version}";
@@ -11,13 +11,13 @@ stdenv.mkDerivation  rec {
   };
 
   buildInputs = [ glib libsndfile pkgconfig ]
-    ++ stdenv.lib.optionals true [ alsaLib libpulseaudio libjack2 ];
+    ++ stdenv.lib.optionals true [ alsa-lib pulseaudio_lib jack2_lib ];
 
   meta = with stdenv.lib; {
     description = "Real-time software synthesizer based on the SoundFont 2 specifications";
     homepage    = http://www.fluidsynth.org;
     license     = licenses.lgpl2;
     maintainers = with maintainers; [ goibhniu lovek323 ];
-    platforms   = platforms.unix;
+    platforms   = platforms.all;
   };
 }

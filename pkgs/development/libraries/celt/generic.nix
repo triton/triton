@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     description = "Ultra-low delay audio codec";
     homepage    = http://www.celt-codec.org/;
     license     = licenses.bsd2;
-    maintainers = with maintainers; [ codyopel raskin ];
-    platforms   = platforms.unix;
+    maintainers = with maintainers; [ codyopel ];
+    platforms   = platforms.all;
   };
 }

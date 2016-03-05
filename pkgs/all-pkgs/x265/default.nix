@@ -19,14 +19,16 @@
 
 with {
   inherit (stdenv)
-    isLinux;
+    targetSystem;
   inherit (stdenv.lib)
     cmFlag
     concatStringsSep
-    optionals;
+    elem
+    optionals
+    platforms;
 };
 
-assert isLinux -> numactl != null;
+assert (elem targetSystem platforms.linux) -> numactl != null;
 
 let
   version = "1.9";
@@ -42,7 +44,9 @@ let
     (cmFlag "ENABLE_PPA" ppaSupport)
     (cmFlag "ENABLE_VTUNE" vtuneSupport)
     (cmFlag "ENABLE_PIC" true)
-    (cmFlag "ENABLE_LIBNUMA" (isLinux && numactl != null))
+    (cmFlag "ENABLE_LIBNUMA" (
+      (elem targetSystem platforms.linux)
+      && numactl != null))
     (cmFlag "ENABLE_ASSEMBLY" true)
   ];
 in
@@ -85,7 +89,7 @@ let
       yasm
     ];
 
-    buildInputs = optionals isLinux [
+    buildInputs = optionals (elem targetSystem platforms.linux) [
       numactl
     ];
 
@@ -123,7 +127,7 @@ let
       yasm
     ];
 
-    buildInputs = optionals isLinux [
+    buildInputs = optionals (elem targetSystem platforms.linux) [
       numactl
     ];
 
@@ -153,7 +157,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libx265-10
     libx265-12
-  ] ++ optionals isLinux [
+  ] ++ optionals (elem targetSystem platforms.linux) [
     numactl
   ];
 
@@ -189,7 +193,7 @@ stdenv.mkDerivation rec {
 
   postInstall =
   /* Remove static library */ ''
-    rm -f $out/lib/libx265.a
+    rm -vf $out/lib/libx265.a
   '';
 
   meta = with stdenv.lib; {

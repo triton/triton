@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, texinfo, alsaLib, libpulseaudio }:
+{ stdenv, fetchurl, texinfo, alsa-lib, pulseaudio_lib }:
 
 stdenv.mkDerivation rec {
   name = "libmikmod-3.3.7";
@@ -7,23 +7,15 @@ stdenv.mkDerivation rec {
     sha256 = "18nrkf5l50hfg0y50yxr7bvik9f002lhn8c00nbcp6dgm5011x2c";
   };
 
-  buildInputs = [ texinfo ]
-    ++ stdenv.lib.optional stdenv.isLinux [ alsaLib libpulseaudio ];
-  propagatedBuildInputs =
-    stdenv.lib.optional stdenv.isLinux libpulseaudio;
+  buildInputs = [ texinfo alsa-lib pulseaudio_lib ];
 
-  NIX_LDFLAGS = stdenv.lib.optionalString stdenv.isLinux "-lasound";
+  NIX_LDFLAGS = "-lasound";
 
   meta = with stdenv.lib; {
     description = "A library for playing tracker music module files";
     homepage    = http://mikmod.shlomifish.org/;
     license     = licenses.lgpl2Plus;
-    maintainers = with maintainers; [ astsmtl lovek323 ];
-    platforms   = platforms.unix;
-
-    longDescription = ''
-      A library for playing tracker music module files supporting many formats,
-      including MOD, S3M, IT and XM.
-    '';
+    maintainers = with maintainers; [ ];
+    platforms   = platforms.all;
   };
 }

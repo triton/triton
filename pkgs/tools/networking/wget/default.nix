@@ -1,5 +1,5 @@
 { stdenv, fetchurl, gettext, libidn, pkgconfig
-, perl, perlPackages, LWP, python3
+, perl, perlPackages, python3
 , libpsl ? null, openssl ? null }:
 
 stdenv.mkDerivation rec {
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ gettext pkgconfig ];
   buildInputs = [ libidn libpsl ]
-    ++ stdenv.lib.optionals doCheck [ perl perlPackages.IOSocketSSL LWP python3 ]
+    ++ stdenv.lib.optionals doCheck [ perl perlPackages.IOSocketSSL perlPackages.LWP python3 ]
     ++ stdenv.lib.optional (openssl != null) openssl;
 
   configureFlags =

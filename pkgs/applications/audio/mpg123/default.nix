@@ -1,4 +1,4 @@
-{stdenv, fetchurl, alsaLib }:
+{stdenv, fetchurl, alsa-lib }:
 
 stdenv.mkDerivation rec {
   name = "mpg123-1.22.2";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "0i1phi6fdjas37y00h3j8rb0b8ngr9az6hy5ff5bl53ify3j87kd";
   };
 
-  buildInputs = stdenv.lib.optional (stdenv.isLinux) alsaLib;
+  buildInputs = [ alsa-lib ];
 
   crossAttrs = {
     configureFlags = if stdenv.cross ? mpg123 then

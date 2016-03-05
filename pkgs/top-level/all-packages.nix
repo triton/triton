@@ -7298,7 +7298,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   oniguruma = callPackage ../development/libraries/oniguruma { };
 
-  openal = openalSoft;
+  openal = callPackageAlias "openalSoft" { };
   openalSoft = callPackage ../development/libraries/openal-soft { };
 #
 #  openbabel = callPackage ../development/libraries/openbabel { };

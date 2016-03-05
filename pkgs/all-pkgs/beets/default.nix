@@ -37,13 +37,17 @@
 }:
 
 with {
+  inherit (stdenv)
+    targetSystem;
   inherit (stdenv.lib)
     attrNames
     concatMapStrings
+    elem
     makeSearchPath
     optional
     optionals
-    optionalString;
+    optionalString
+    platforms;
 };
 
 assert enableAcoustid -> pythonPackages.pyacoustid != null;
@@ -242,7 +246,7 @@ in buildPythonPackage rec {
     runHook 'preCheck'
 
     LANG=en_US.UTF-8 \
-    LOCALE_ARCHIVE=${assert stdenv.isLinux; glibcLocales}/lib/locale/locale-archive \
+    LOCALE_ARCHIVE=${assert (elem targetSystem platforms.linux); glibcLocales}/lib/locale/locale-archive \
     BEETS_TEST_SHELL="${testShell}" \
     BASH_COMPLETION_SCRIPT="${completion}" \
     HOME="$(mktemp -d)" \

@@ -8793,18 +8793,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   kernelPatches = callPackage ../os-specific/linux/kernel/patches.nix { };
 
-  linux_3_18 = callPackage ../os-specific/linux/kernel/linux-3.18.nix {
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
-  };
-
-  linux_4_1 = callPackage ../os-specific/linux/kernel/linux-4.1.nix {
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
-  };
-
-  linux_4_3 = callPackage ../os-specific/linux/kernel/linux-4.3.nix {
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
-  };
-
   linux_4_4 = callPackage ../os-specific/linux/kernel/linux-4.4.nix {
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
@@ -8987,15 +8975,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
-  linuxPackages_3_18 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_3_18;
-  });
-  linuxPackages_4_1 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_4_1;
-  });
-  linuxPackages_4_3 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_4_3;
-  });
   linuxPackages_4_4 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4_4;
   });

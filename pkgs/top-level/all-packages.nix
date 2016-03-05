@@ -1158,6 +1158,8 @@ linux-headers = callPackage ../all-pkgs/linux-headers { };
 
 live555 = callPackage ../all-pkgs/live555 { };
 
+lm-sensors = callPackage ../all-pkgs/lm-sensors { };
+
 lvm2 = callPackage ../all-pkgs/lvm2 { };
 
 lz4 = callPackage ../all-pkgs/lz4 { };
@@ -9052,8 +9054,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   libsepol = callPackage ../os-specific/linux/libsepol { };
 #
 #  libsmbios = callPackage ../os-specific/linux/libsmbios { };
-#
-  lm_sensors = callPackage ../os-specific/linux/lm-sensors { };
 #
 #  lockdep = callPackage ../os-specific/linux/lockdep { };
 #

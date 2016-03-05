@@ -1100,6 +1100,8 @@ libpeas = callPackage ../all-pkgs/libpeas { };
 
 libpng = callPackage ../all-pkgs/libpng { };
 
+libraw = callPackage ../all-pkgs/libraw { };
+
 librsvg = callPackage ../all-pkgs/librsvg { };
 
 libsecret = callPackage ../all-pkgs/libsecret { };
@@ -9029,8 +9031,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   libselinux = callPackage ../os-specific/linux/libselinux { };
 #
   libsemanage = callPackage ../os-specific/linux/libsemanage { };
-#
-#  libraw = callPackage ../development/libraries/libraw { };
 #
   libraw1394 = callPackage ../development/libraries/libraw1394 { };
 #

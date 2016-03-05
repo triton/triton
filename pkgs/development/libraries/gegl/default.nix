@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/gegl/0.3/${name}.tar.bz2";
-    sha256 = "df2e6a0d9499afcbc4f9029c18d9d1e0dd5e8710a75e17c9b1d9a6480dd8d426";
+    sha256 = "1v63vgnhrk4q3fwd62r45v3i9jyp5bwdd8hpgimiwkc5j2kr0ql4";
   };
 
   # needs fonts otherwise  don't know how to pass them

@@ -1,4 +1,5 @@
-{ stdenv, fetchurl
+{ stdenv
+, fetchurl
 , threadingSupport ? true # multi-threading
 , openglSupport ? false, freeglut ? null, mesa ? null # OpenGL (required for vwebp)
 , pngSupport ? true, libpng ? null # PNG image format
@@ -23,11 +24,11 @@ assert gifSupport -> (giflib != null);
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "libwebp-${version}";
-  version = "0.4.4";
+  version = "0.5.0";
 
   src = fetchurl {
     url = "http://downloads.webmproject.org/releases/webp/${name}.tar.gz";
-    sha256 = "11iyc0zxdspi6hnd05yarx2985xkl8kj4qjdp8qy6f3knpnk8pf6";
+    sha256 = "0x5jvwvrxq025srjbcjyzn47dgxbvg41sqdxf171zzrsc9xvplsw";
   };
 
   configureFlags = [

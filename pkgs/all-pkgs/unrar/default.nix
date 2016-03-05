@@ -1,14 +1,14 @@
-{stdenv, fetchurl}:
+{ stdenv
+, fetchurl
+}:
 
-let
-  version = "5.3.9";
-in
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "unrar-${version}";
+  version = "5.3.11";
 
   src = fetchurl {
     url = "http://www.rarlab.com/rar/unrarsrc-${version}.tar.gz";
-    sha256 = "0nsxwg1zp3s34wyjznwmy2cc5929yk7m5smq11cqdb6hmql3fngz";
+    sha256 = "0qw77gvr57azjbn76cjlm4sv1hf2hh90g7n7n33gfvlpnbs7mf3p";
   };
 
   preBuild = ''
@@ -29,7 +29,10 @@ stdenv.mkDerivation {
     description = "Utility for RAR archives";
     homepage = http://www.rarlab.com/;
     license = licenses.unfreeRedistributable;
-    maintainers = [ maintainers.ehmry ];
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

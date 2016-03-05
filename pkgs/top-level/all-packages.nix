@@ -1528,6 +1528,8 @@ tracker = callPackage ../all-pkgs/tracker { };
 
 unbound = callPackage ../all-pkgs/unbound { };
 
+unrar = callPackage ../all-pkgs/unrar { };
+
 usbmuxd = callPackage ../all-pkgs/usbmuxd { };
 
 util-linux_full = callPackage ../all-pkgs/util-linux { };
@@ -4390,8 +4392,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  unclutter = callPackage ../tools/misc/unclutter { };
 #
 #  units = callPackage ../tools/misc/units { };
-#
-#  unrar = callPackage ../tools/archivers/unrar { };
 #
 #  xar = callPackage ../tools/compression/xar { };
 #

@@ -8,7 +8,7 @@ patchELF() {
   header "patching ELF executables and libraries in $prefix"
   if [ -e "$prefix" ]; then
     while read file; do
-      if readelf -h "$file" 2>/dev/null; then
+      if readelf -S "$file" 2>&1 | grep -q '.dynamic'; then
         echo "Shrink rpath: $file" >&2
         patchelf --shrink-rpath "$file"
       fi

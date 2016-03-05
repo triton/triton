@@ -1463,6 +1463,8 @@ sakura = callPackage ../all-pkgs/sakura { };
 
 samba = callPackage ../all-pkgs/samba { };
 
+scrot = callPackage ../all-pkgs/scrot { };
+
 seabios = callPackage ../all-pkgs/seabios { };
 
 seahorse = callPackage ../all-pkgs/seahorse { };
@@ -3892,8 +3894,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  screencloud = callPackage ../applications/graphics/screencloud {
 #    quazip = qt5.quazip.override { qt = qt4; };
 #  };
-#
-  scrot = callPackage ../tools/graphics/scrot { };
 #
 #  scrypt = callPackage ../tools/security/scrypt { };
 #

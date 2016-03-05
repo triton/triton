@@ -4,10 +4,8 @@
 , config
 
 ## various stuff that can be plugged in
-, gnash
 , flashplayer
 , hal-flash
-, MPlayerPlugin
 , gecko_mediaplayer
 , xorg
 , pulseaudio_lib
@@ -66,10 +64,8 @@ let
      assert !(enableGnash && enableAdobeFlash);
      assert !(jre && icedtea);
      ([ ]
-      ++ optional enableGnash gnash
       ++ optional enableAdobeFlash flashplayer
       ++ optional (cfg.enableDjvu or false) (djview4)
-      ++ optional (cfg.enableMPlayer or false) (MPlayerPlugin browser)
       ++ optional (cfg.enableGeckoMediaPlayer or false) gecko_mediaplayer
       #++ optional (jre && jrePlugin ? mozillaPlugin) jrePlugin
       ++ optional icedtea icedtea_web

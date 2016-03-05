@@ -10267,10 +10267,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  gmu = callPackage ../applications/audio/gmu { };
 #
-  gnash = callPackage ../applications/video/gnash {
-    inherit (gnome) gtkglext;
-  };
-#
 #  gnome_mplayer = callPackage ../applications/video/gnome-mplayer {
 #    inherit (gnome) GConf;
 #  };

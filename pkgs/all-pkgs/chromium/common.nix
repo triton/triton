@@ -13,7 +13,7 @@
 , bzip2
 , cairo
 , cups
-, dbus_glib
+, dbus-glib
 , expat
 , flac
 , fontconfig
@@ -134,7 +134,7 @@ let
       atk
       bzip2
       cairo
-      dbus_glib
+      dbus-glib
       expat
       flac
       fontconfig

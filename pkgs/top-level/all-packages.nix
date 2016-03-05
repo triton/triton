@@ -554,6 +554,8 @@ cairomm = callPackage ../all-pkgs/cairomm { };
 
 caribou = callPackage ../all-pkgs/caribou { };
 
+ccid = callPackage ../all-pkgs/ccid { };
+
 cdparanoia = callPackage ../all-pkgs/cdparanoia { };
 
 # Only ever add ceph LTS releases
@@ -2121,8 +2123,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  can-utils = callPackage ../os-specific/linux/can-utils { };
 #
 #  caudec = callPackage ../applications/audio/caudec { };
-#
-  ccid = callPackage ../tools/security/ccid { };
 #
 #  ccrypt = callPackage ../tools/security/ccrypt { };
 #

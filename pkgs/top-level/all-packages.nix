@@ -734,6 +734,8 @@ gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
 
 gdm = callPackage ../all-pkgs/gdm { };
 
+gegl = callPackage ../all-pkgs/gegl { };
+
 geocode-glib = callPackage ../all-pkgs/geocode-glib { };
 
 getopt = callPackage ../all-pkgs/getopt { };
@@ -6262,10 +6264,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gecode_3 = callPackage ../development/libraries/gecode/3.nix { };
 #  gecode_4 = callPackage ../development/libraries/gecode { };
 #  gecode = gecode_4;
-#
-  gegl = callPackage ../development/libraries/gegl { };
-
-  gegl_0_3 = callPackage ../development/libraries/gegl/3.0.nix { };
 #
 #  geoclue = callPackage ../development/libraries/geoclue {};
 #

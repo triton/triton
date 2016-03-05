@@ -575,6 +575,8 @@ ceph_git = callPackage ../all-pkgs/ceph {
   channel = "git";
 };
 
+check = callPackage ../all-pkgs/check { };
+
 chromaprint = callPackage ../all-pkgs/chromaprint { };
 
 chromium = callPackage ../all-pkgs/chromium {
@@ -6093,8 +6095,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  cgal = callPackage ../development/libraries/CGAL {};
 #
 #  cgui = callPackage ../development/libraries/cgui {};
-#
-  check = callPackage ../development/libraries/check { };
 #
 #  chipmunk = callPackage ../development/libraries/chipmunk {};
 #

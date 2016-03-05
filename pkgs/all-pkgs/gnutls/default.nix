@@ -18,11 +18,11 @@
 
 stdenv.mkDerivation rec {
   name = "gnutls-${version}";
-  version = "3.4.9";
+  version = "3.4.10";
 
   src = fetchurl {
     url = "ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/gnutls-${version}.tar.xz";
-    sha256 = "0gvwyl0kdp1qpzbzp46wqfdzzrmwy9n54sgcjvvm1m1kpanlyna8";
+    sha256 = "17zmpnqpdh5n409zcvhlc16cj16s15q3blfbxxzgycxxmjsc4cka";
   };
 
   # This fixes some broken parallel dependencies

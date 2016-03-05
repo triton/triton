@@ -4,9 +4,9 @@
 , gnome_doc_utils
 , intltool
 , itstool
-, libuuid
 , libxml2
 , makeWrapper
+, util-linux_lib
 , which
 
 , adwaita-icon-theme
@@ -38,9 +38,9 @@ stdenv.mkDerivation rec {
     gnome_doc_utils
     intltool
     itstool
-    libuuid
     libxml2
     makeWrapper
+    util-linux_lib
     which
   ];
 

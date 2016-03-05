@@ -484,7 +484,6 @@ apr-util = callPackage ../all-pkgs/apr-util { };
 
 ardour =  callPackage ../all-pkgs/ardour {
   inherit (gnome) libgnomecanvas libgnomecanvasmm;
-  inherit (vamp) vampSDK;
 };
 
 aria2 = callPackage ../all-pkgs/aria2 { };
@@ -1121,7 +1120,7 @@ libtorrent = callPackage ../all-pkgs/libtorrent { };
 
 libtorrent-rasterbar_0 = callPackage ../all-pkgs/libtorrent-rasterbar/0.x.nix { };
 libtorrent-rasterbar_1 = callPackage ../all-pkgs/libtorrent-rasterbar/1.x.nix { };
-libtorrent-rasterbar = libtorrent-rasterbar_1;
+libtorrent-rasterbar = callPackageAlias "libtorrent-rasterbar_1" { };
 
 libunique_1 = callPackage ../all-pkgs/libunique/1.x.nix { };
 libunique_3 = callPackage ../all-pkgs/libunique/3.x.nix { };
@@ -1196,9 +1195,7 @@ mg = callPackage ../all-pkgs/mg { };
 
 mime-types = callPackage ../all-pkgs/mime-types { };
 
-mixxx = callPackage ../all-pkgs/mixxx {
-  inherit (vamp) vampSDK;
-};
+mixxx = callPackage ../all-pkgs/mixxx { };
 
 mkvtoolnix = callPackage ../all-pkgs/mkvtoolnix { };
 
@@ -3077,7 +3074,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  lftp = callPackage ../tools/networking/lftp { };
 #
-#  libconfig = callPackage ../development/libraries/libconfig { };
+  libconfig = callPackage ../development/libraries/libconfig { };
 #
 #  libcmis = callPackage ../development/libraries/libcmis { };
 #
@@ -6526,9 +6523,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  levmar = callPackage ../development/libraries/levmar { };
 #
-  leptonica = callPackage ../development/libraries/leptonica {
-    libpng = libpng12;
-  };
+  leptonica = callPackage ../development/libraries/leptonica { };
 
   letsencrypt = callPackage ../tools/admin/letsencrypt { };
 #
@@ -6565,7 +6560,7 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libav_all = callPackage ../development/libraries/libav { };
 #  inherit (libav_all) libav_0_8 libav_9 libav_11;
 #
-#  libavc1394 = callPackage ../development/libraries/libavc1394 { };
+  libavc1394 = callPackage ../development/libraries/libavc1394 { };
 #
 #  libb2 = callPackage ../development/libraries/libb2 { };
 #
@@ -6856,14 +6851,14 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libsieve = callPackage ../development/libraries/libsieve { };
 #
   libgsf = callPackage ../development/libraries/libgsf { };
-#
+
   libid3tag = callPackage ../development/libraries/libid3tag { };
-#
+
   libidn = callPackage ../development/libraries/libidn { };
-#
+
   idnkit = callPackage ../development/libraries/idnkit { };
-#
-#  libiec61883 = callPackage ../development/libraries/libiec61883 { };
+
+  libiec61883 = callPackage ../development/libraries/libiec61883 { };
 #
 #  libinfinity = callPackage ../development/libraries/libinfinity {
 #    inherit (gnome) gtkdoc;
@@ -7574,9 +7569,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  rote = callPackage ../development/libraries/rote { };
 #
-  rubberband = callPackage ../development/libraries/rubberband {
-    inherit (vamp) vampSDK;
-  };
+  rubberband = callPackage ../development/libraries/rubberband { };
 #
   sbc = callPackage ../development/libraries/sbc { };
 #
@@ -8719,7 +8712,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   ffado_full = callPackage ../os-specific/linux/ffado { };
 
-  ffado_lib = ffadoFull.override {
+  ffado_lib = callPackage ../os-specific/linux/ffado {
     prefix = "lib";
   };
 #
@@ -10327,9 +10320,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  googleearth = callPackage_i686 ../applications/misc/googleearth { };
 #
-  google_talk_plugin = callPackage ../applications/networking/browsers/mozilla-plugins/google-talk-plugin {
-    libpng = libpng12;
-  };
+  google_talk_plugin = callPackage ../applications/networking/browsers/mozilla-plugins/google-talk-plugin { };
 #
 #  gosmore = callPackage ../applications/misc/gosmore { };
 #
@@ -11343,7 +11334,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
   spotify = callPackage ../applications/audio/spotify {
     inherit (gnome) GConf;
     libgcrypt = libgcrypt_1_5;
-    libpng = libpng12;
   };
 #
 #  libspotify = callPackage ../development/libraries/libspotify {

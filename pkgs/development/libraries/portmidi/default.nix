@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, unzip, cmake, /*jdk,*/ alsaLib }:
+{ stdenv, fetchurl, unzip, cmake, /*jdk,*/ alsa-lib }:
 
 stdenv.mkDerivation rec {
   name = "portmidi-${version}";
@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
     ln -s libportmidi.so "$out/lib/libporttime.so"
   '';
 
-  buildInputs = [ unzip cmake /*jdk*/ alsaLib ];
+  buildInputs = [ unzip cmake /*jdk*/ alsa-lib ];
 
   meta = {
     homepage = "http://portmedia.sourceforge.net/portmidi/";

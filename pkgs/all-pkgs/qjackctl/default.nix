@@ -1,9 +1,9 @@
 { stdenv
 , fetchurl
 
-, alsaLib
+, alsa-lib
 , dbus
-, libjack2
+, jack2_lib
 , portaudio
 , qt5
 }:
@@ -24,9 +24,9 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    alsaLib
+    alsa-lib
     dbus
-    libjack2
+    jack2_lib
     qt5.qtbase
     qt5.qttranslations
     qt5.qtx11extras
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     "--enable-jack-port-aliases"
     "--enable-jack-metadata"
     "--enable-jack-version"
-    (enFlag "alsa-seq" (alsaLib != null) null)
+    (enFlag "alsa-seq" (alsa-lib != null) null)
     (enFlag "portaudio" (portaudio != null) null)
     (enFlag "dbus" (dbus != null) null)
     "--enable-xunique"
@@ -65,7 +65,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

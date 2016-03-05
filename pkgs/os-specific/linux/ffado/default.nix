@@ -2,21 +2,29 @@
 , expat, libraw1394, libconfig, libavc1394, libiec61883
 
 # Optional dependencies
-, libjack2 ? null, dbus ? null, dbus_cplusplus ? null, alsaLib ? null
+, jack2_lib ? null, dbus ? null, dbus_cplusplus ? null, alsa-lib ? null
 , pyqt4 ? null, pythonDBus ? null, xdg_utils ? null
 
 # Other Flags
 , prefix ? ""
 }:
 
+with {
+  inherit (stdenv)
+    targetSystem;
+  inherit (stdenv.lib)
+    elem
+    platforms;
+};
+
 with stdenv;
 let
   libOnly = prefix == "lib";
 
-  optLibjack2 = shouldUsePkg libjack2;
+  optLibjack2 = shouldUsePkg jack2_lib;
   optDbus = shouldUsePkg dbus;
   optDbus_cplusplus = shouldUsePkg dbus_cplusplus;
-  optAlsaLib = shouldUsePkg alsaLib;
+  optAlsaLib = shouldUsePkg alsa-lib;
   optPyqt4 = shouldUsePkg pyqt4;
   optPythonDBus = shouldUsePkg pythonDBus;
   optXdg_utils = shouldUsePkg xdg_utils;
@@ -45,7 +53,7 @@ stdenv.mkDerivation rec {
     # SConstruct checks cpuinfo and an objdump of /bin/mount to determine the appropriate arch
     # Let's just skip this and tell it which to build
     sed '/def is_userspace_32bit(cpuinfo):/a\
-        return ${if stdenv.is64bit then "False" else "True"}' -i SConstruct
+        return ${if (elem targetSystem platforms.bit64) then "False" else "True"}' -i SConstruct
 
     # Lots of code is missing random headers to exist
     sed -i '1i #include <memory>' \

@@ -8,7 +8,7 @@
 , readline
 # Optional
 , curl # Lyric fetching
-, fftw # Visualizer screen
+, fftw_double # Visualizer screen
 , taglib # Tag editor screen
 , outputsSupport ? false # outputs screen
 , clockSupport ? false # clock screen
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     boost
     curl
-    fftw
+    fftw_double
     icu
     libmpdclient
     ncurses
@@ -42,11 +42,11 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "BOOST_LIB_SUFFIX="
     (enFlag "outputs" outputsSupport null)
-    (enFlag "visualizer" (fftw != null) null)
+    (enFlag "visualizer" (fftw_double != null) null)
     (enFlag "clock" clockSupport null)
     "--enable-unicode"
     (wtFlag "curl" (curl != null) null)
-    (wtFlag "fftw" (fftw != null) null)
+    (wtFlag "fftw" (fftw_double != null) null)
     "--without-pdcurses"
     (wtFlag "taglib" (taglib != null) null)
   ];

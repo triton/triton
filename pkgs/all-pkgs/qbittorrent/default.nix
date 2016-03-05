@@ -4,7 +4,7 @@
 , which
 
 , boost
-, dbus_libs
+, dbus
 , libtorrent-rasterbar
 , qt5
 , webuiSupport ? true
@@ -17,7 +17,7 @@ with {
 };
 
 assert qt5 != null ->
-  dbus_libs != null
+  dbus != null
   && qt5.qtbase != null
   && qt5.qttools != null;
 
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
     boost
     libtorrent-rasterbar
   ] ++ optionals (qt5 != null) [
-    dbus_libs
+    dbus
     qt5.qtbase
     qt5.qttools
   ];
@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
     (enFlag "gui" (qt5 != null) null)
     "--enable-systemd"
     (enFlag "webui" webuiSupport null)
-    (enFlag "qt-dbus" (qt5 != null && dbus_libs != null) null)
+    (enFlag "qt-dbus" (qt5 != null && dbus != null) null)
     "--without-qt4"
     "--with-qtsingleapplication=shipped"
     "--with-qjson=system"

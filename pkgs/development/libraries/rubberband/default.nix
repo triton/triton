@@ -1,5 +1,5 @@
-{ stdenv, fetchurl, pkgconfig, libsamplerate, libsndfile, fftw
-, vampSDK, ladspaH }:
+{ stdenv, fetchurl, pkgconfig, libsamplerate, libsndfile, fftw_double
+, vamp, ladspaH }:
 
 stdenv.mkDerivation {
   name = "rubberband-1.8.1";
@@ -9,7 +9,7 @@ stdenv.mkDerivation {
     sha256 = "0x9bm2nqd6w2f35w2sqcp7h5z34i4w7mdg53m0vzjhffnnq6637z";
   };
 
-  buildInputs = [ pkgconfig libsamplerate libsndfile fftw vampSDK ladspaH ];
+  buildInputs = [ pkgconfig libsamplerate libsndfile fftw_double vamp.vampSDK ladspaH ];
 
   meta = with stdenv.lib; {
     description = "High quality software library for audio time-stretching and pitch-shifting";

@@ -5,7 +5,7 @@
 , chromaprint
 , faad2
 , ffmpeg_2
-, fftw
+, fftw_double
 , flac
 , libid3tag
 , libmad
@@ -26,7 +26,7 @@
 , soundtouch
 , sqlite
 , taglib
-, vampSDK
+, vamp
 , wavpack
 , xorg
 }:
@@ -53,7 +53,7 @@ stdenv.mkDerivation rec {
     chromaprint
     faad2
     ffmpeg_2
-    fftw
+    fftw_double
     flac
     libid3tag
     libmad
@@ -78,7 +78,7 @@ stdenv.mkDerivation rec {
     soundtouch
     sqlite
     taglib
-    vampSDK
+    vamp.vampSDK
     wavpack
     xorg.libX11
   ];
@@ -102,7 +102,7 @@ stdenv.mkDerivation rec {
     "mediafoundation=0"
     "ipod=0"
     "vinylcontrol=1"
-    (scFlag "vamp" (vampSDK != null))
+    (scFlag "vamp" (vamp.vampSDK != null))
     (scFlag "modplug" (libmodplug != null))
     (scFlag "faad" (faad2 != null))
     (scFlag "wv" (wavpack != null))

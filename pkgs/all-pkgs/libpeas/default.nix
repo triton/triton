@@ -10,7 +10,7 @@
 , gtk3
 , pango
 , python3
-, pygobject3
+, python3Packages
 }:
 
 with {
@@ -41,8 +41,8 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gtk3
     pango
-    pygobject3
     python3
+    python3Packages.pygobject3
   ];
 
   configureFlags = [

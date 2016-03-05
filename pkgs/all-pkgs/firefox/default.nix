@@ -7,7 +7,7 @@
 , bzip2
 #, cairo
 , dbus
-, dbus_glib
+, dbus-glib
 #, ffmpeg
 , file
 , fontconfig
@@ -94,7 +94,7 @@ stdenv.mkDerivation rec {
     bzip2
     #cairo
     dbus
-    dbus_glib
+    dbus-glib
     #ffmpeg
     file
     fontconfig

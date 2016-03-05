@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, autoconf, automake, m4
-, intltool, glib, libsoup, gdk_pixbuf }:
+, intltool, glib, libsoup, gdk-pixbuf }:
 
 stdenv.mkDerivation rec {
   version = "0_1_7";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ pkgconfig autoconf automake m4 intltool glib
-                  libsoup gdk_pixbuf ];
+                  libsoup gdk-pixbuf ];
 
   configureScript = "./autogen.sh";
 

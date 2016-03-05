@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     alsa-lib
     cups # Qt dlopen's libcups instead of linking to it
-    dbus.libs
+    dbus
     fontconfig
     freetype
     glib

@@ -3,7 +3,7 @@
 , buildEnv
 , makeWrapper
 
-, alsaLib
+, alsa-lib
 , atk
 , cairo
 , cups
@@ -18,12 +18,12 @@
 , gvfs
 , libcap
 , libgnome-keyring
-, libgpgerror
+, libgpg-error
 , nspr
 , nss
 , pango
 , xorg
-, systemd
+, systemd_lib
 , zlib
 }:
 
@@ -31,7 +31,7 @@ let
   atomEnv = buildEnv {
     name = "env-atom";
     paths = [
-      alsaLib
+      alsa-lib
       atk
       cairo
       cups
@@ -45,7 +45,7 @@ let
       gtk2
       libcap
       libgnome-keyring
-      libgpgerror
+      libgpg-error
       nspr
       nss
       pango
@@ -60,7 +60,7 @@ let
       xorg.libXrender
       xorg.libXtst
       stdenv.cc.cc
-      systemd
+      systemd_lib
       zlib
     ];
   };

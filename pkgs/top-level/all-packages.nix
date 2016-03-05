@@ -6249,10 +6249,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  funambol = callPackage ../development/libraries/funambol { };
 #
-  fam = callPackageAlias "gamin" { };
-
-  gamin = callPackage ../development/libraries/gamin { };
-#
 #  ganv = callPackage ../development/libraries/ganv { };
 #
 #  gcab = callPackage ../development/libraries/gcab { };

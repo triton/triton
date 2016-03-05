@@ -31,7 +31,6 @@
 , avahi
 , acl
 , libaio
-, fam
 , ceph_lib
 , glusterfs
 
@@ -84,7 +83,7 @@ stdenv.mkDerivation rec {
     subunit libbsd nss_wrapper resolv_wrapper socket_wrapper uid_wrapper
     libarchive
 
-    kerberos zlib openldap cups pam avahi acl libaio fam ceph_lib glusterfs
+    kerberos zlib openldap cups pam avahi acl libaio ceph_lib glusterfs
 
     gnutls libgcrypt libgpg-error
 
@@ -126,7 +125,7 @@ stdenv.mkDerivation rec {
     (mkWith   true                 "syslog"            null)
     (mkWith   true                 "automount"         null)
     (mkWith   (libaio != null)     "aio-support"       null)
-    (mkWith   (fam != null)        "fam"               null)
+    (mkWith   false                "fam"               null)
     (mkWith   (libarchive != null) "libarchive"        null)
     (mkWith   true                 "cluster-support"   null)
     (mkWith   (ncurses != null)    "regedit"           null)

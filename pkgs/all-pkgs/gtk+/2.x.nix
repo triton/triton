@@ -28,12 +28,12 @@ with {
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";
   versionMajor = "2.24";
-  versionMinor = "29";
+  versionMinor = "30";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
-    sha256 = "1f1ifv1ijrda4jx831l24d3ww65v5gf56r464fi11n6k02bcah87";
+    sha256 = "0l6aqk86aw5w132ygy6hv6nlxvd1h6xg7c85qbm60p6mnv1ww58d";
   };
 
   configureFlags = [

@@ -7759,8 +7759,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  tokyotyrant = callPackage ../development/libraries/tokyo-tyrant { };
 #
-  tremor = callPackage ../development/libraries/tremor { };
-
   uid_wrapper = callPackage ../development/libraries/uid_wrapper { };
 #
 #  unibilium = callPackage ../development/libraries/unibilium { };

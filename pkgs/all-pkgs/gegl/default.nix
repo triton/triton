@@ -20,7 +20,7 @@
 , libwebp
 , openexr
 , pango
-, v4l_lib
+#, v4l_lib
 , vala
 }:
 
@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
     libwebp
     openexr
     pango
-    v4l_lib
+    #v4l_lib
     vala
   ];
 
@@ -69,6 +69,7 @@ stdenv.mkDerivation rec {
     "--without-lua"
     "--without-libspiro"
     "--without-umfpack"
+    "--without-libv4l"  # This is currently broken
   ];
 
   meta = with stdenv.lib; {

@@ -1548,7 +1548,6 @@ vino = callPackage ../all-pkgs/vino { };
 
 vlc = callPackage ../all-pkgs/vlc { };
 
-vte_290 = callPackage ../all-pkgs/vte/2.90.nix { };
 vte = callPackage ../all-pkgs/vte { };
 
 w3m = callPackage ../all-pkgs/w3m { };
@@ -11405,7 +11404,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  tig = gitAndTools.tig;
 #
 #  tilda = callPackage ../applications/misc/tilda {
-#    vte = vte_290;
 #    gtk = gtk3;
 #  };
 #
@@ -11816,7 +11814,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  roxterm = callPackage ../applications/misc/roxterm {
 #    inherit (pythonPackages) lockfile;
-#    vte = vte_290;
 #  };
 #
 #  xtrace = callPackage ../tools/X11/xtrace { };

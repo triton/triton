@@ -152,7 +152,7 @@
   ./services/hardware/tlp.nix
   ./services/hardware/thinkfan.nix
   ./services/hardware/udev.nix
-  ./services/hardware/udisks2.nix
+  ./services/hardware/udisks.nix
   ./services/hardware/upower.nix
   ./services/hardware/thermald.nix
   ./services/logging/fluentd.nix

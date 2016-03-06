@@ -72,7 +72,7 @@ in
 
     fonts.fonts = [ pkgs.dejavu_fonts pkgs.ubuntu_font_family ];
 
-    services.udisks2.enable = true;
+    services.udisks.enable = true;
     services.upower.enable = config.powerManagement.enable;
 
     #services.dbus.packages = [ pkgs.efl ]; # dbus-1 folder is not in /etc but in /share, so needs fixing first

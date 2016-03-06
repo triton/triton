@@ -307,7 +307,7 @@ in rec {
   tests.sddm-kde5 = callTest tests/sddm-kde5.nix {};
   tests.simple = callTest tests/simple.nix {};
   tests.tomcat = callTest tests/tomcat.nix {};
-  tests.udisks2 = callTest tests/udisks2.nix {};
+  tests.udisks = callTest tests/udisks.nix {};
   tests.virtualbox = hydraJob (import tests/virtualbox.nix { system = "x86_64-linux"; });
   tests.xfce = callTest tests/xfce.nix {};
   tests.bootBiosCdrom = forAllSystems (system: hydraJob (import tests/boot.nix { inherit system; }).bootBiosCdrom);

@@ -184,7 +184,7 @@ in
     programs.ssh.askPassword = "${kde5.ksshaskpass}/bin/ksshaskpass";
 
     # Enable helpful DBus services.
-    services.udisks2.enable = true;
+    services.udisks.enable = true;
     services.upower.enable = config.powerManagement.enable;
 
     # Extra UDEV rules used by Solid

@@ -88,7 +88,7 @@ in
     environment.variables.GIO_EXTRA_MODULES = [ "${pkgs.xfce.gvfs}/lib/gio/modules" ];
 
     # Enable helpful DBus services.
-    services.udisks2.enable = true;
+    services.udisks.enable = true;
     services.upower.enable = config.powerManagement.enable;
 
   };

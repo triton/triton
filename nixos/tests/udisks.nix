@@ -10,14 +10,14 @@ let
 in
 
 {
-  name = "udisks2";
+  name = "udisks";
   meta = with pkgs.stdenv.lib.maintainers; {
     maintainers = [ eelco chaoflow ];
   };
 
   machine =
     { config, pkgs, ... }:
-    { services.udisks2.enable = true;
+    { services.udisks.enable = true;
       imports = [ ./common/user-account.nix ];
 
       security.polkit.extraConfig =

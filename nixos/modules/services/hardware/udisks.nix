@@ -34,7 +34,7 @@ with lib;
 
     services.dbus.packages = [ pkgs.udisks ];
 
-    system.activationScripts.udisks2 = ''
+    system.activationScripts.udisks = ''
       mkdir -m 0755 -p /var/lib/udisks
     '';
 

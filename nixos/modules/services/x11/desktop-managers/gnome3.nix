@@ -83,7 +83,7 @@ in {
 
     security.polkit.enable = true;
 
-    services.udisks2.enable = true;
+    services.udisks.enable = true;
 
     services.accounts-daemon.enable = true;
 

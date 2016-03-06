@@ -1092,6 +1092,8 @@ libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
 libmsgpack = callPackage ../all-pkgs/libmsgpack { };
 
+libogg = callPackage ../all-pkgs/libogg { };
+
 libomxil-bellagio = callPackage ../all-pkgs/libomxil-bellagio { };
 
 libosinfo = callPackage ../all-pkgs/libosinfo { };
@@ -6953,8 +6955,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libofx = callPackage ../development/libraries/libofx { };
 #
-  libogg = callPackage ../development/libraries/libogg { };
-
   liboggz = callPackage ../development/libraries/liboggz { };
 #
 #  liboil = callPackage ../development/libraries/liboil { };

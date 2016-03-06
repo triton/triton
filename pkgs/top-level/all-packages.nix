@@ -1526,6 +1526,8 @@ totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
 
 tracker = callPackage ../all-pkgs/tracker { };
 
+udisks = callPackage ../all-pkgs/udisks { };
+
 unbound = callPackage ../all-pkgs/unbound { };
 
 unrar = callPackage ../all-pkgs/unrar { };
@@ -9299,10 +9301,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    gccCross = gccCrossStageStatic;
 #    cross = assert crossSystem != null; crossSystem;
 #  });
-#
-#  udisks1 = callPackage ../os-specific/linux/udisks/1-default.nix { };
-  udisks2 = callPackage ../os-specific/linux/udisks/2-default.nix { };
-#  udisks = udisks1;
 #
 #  udisks_glue = callPackage ../os-specific/linux/udisks-glue { };
 #

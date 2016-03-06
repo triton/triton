@@ -10,11 +10,11 @@ with lib;
 
   options = {
 
-    services.udisks2 = {
+    services.udisks = {
 
       enable = mkOption {
         type = types.bool;
-        default = true;
+        default = false;
         description = ''
           Whether to enable Udisks, a DBus service that allows
           applications to query and manipulate storage devices.
@@ -28,25 +28,24 @@ with lib;
 
   ###### implementation
 
-  config = mkIf config.services.udisks2.enable {
+  config = mkIf config.services.udisks.enable {
 
-    environment.systemPackages = [ pkgs.udisks2 ];
+    environment.systemPackages = [ pkgs.udisks ];
 
-    services.dbus.packages = [ pkgs.udisks2 ];
+    services.dbus.packages = [ pkgs.udisks ];
 
-    system.activationScripts.udisks2 =
-      ''
-        mkdir -m 0755 -p /var/lib/udisks2
-      '';
+    system.activationScripts.udisks2 = ''
+      mkdir -m 0755 -p /var/lib/udisks
+    '';
 
-    services.udev.packages = [ pkgs.udisks2 ];
+    services.udev.packages = [ pkgs.udisks ];
     
-    systemd.services.udisks2 = {
-      description = "Udisks2 service";
+    systemd.services.udisks = {
+      description = "Udisks service";
       serviceConfig = {
         Type = "dbus";
         BusName = "org.freedesktop.UDisks2";
-        ExecStart = "${pkgs.udisks2}/libexec/udisks2/udisksd --no-debug";
+        ExecStart = "${pkgs.udisks}/libexec/udisks/udisksd --no-debug";
       };
     };
   };

@@ -2208,9 +2208,9 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  convertlit = callPackage ../tools/text/convertlit { };
 #
-  collectd = callPackage ../tools/system/collectd {
-    rabbitmq-c = rabbitmq-c_0_4;
-  };
+#  collectd = callPackage ../tools/system/collectd {
+#    rabbitmq-c = rabbitmq-c_0_4;
+#  };
 #
 #  colormake = callPackage ../development/tools/build-managers/colormake { };
 #

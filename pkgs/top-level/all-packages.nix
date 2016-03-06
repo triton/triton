@@ -1148,6 +1148,8 @@ libvdpau = callPackage ../all-pkgs/libvdpau { };
 
 libverto = callPackage ../all-pkgs/libverto { };
 
+libvorbis = callPackage ../all-pkgs/libvorbis { };
+
 libvpx = callPackage ../all-pkgs/libvpx { };
 libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
@@ -7106,8 +7108,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libvterm = callPackage ../development/libraries/libvterm { };
 #
-  libvorbis = callPackage ../development/libraries/libvorbis { };
-
   libwebp = callPackage ../development/libraries/libwebp { };
 
   libwmf = callPackage ../development/libraries/libwmf { };

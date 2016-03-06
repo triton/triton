@@ -1,42 +1,71 @@
-{ stdenv, fetchurl, kernel, coreutils, pciutils, gettext }:
+{ stdenv
+, fetchurl
+, gettext
+
+, coreutils
+, kernel
+, kmod
+, pciutils
+}:
 
 stdenv.mkDerivation {
   name = "cpupower-${kernel.version}";
 
   src = kernel.src;
 
-  buildInputs = [ coreutils pciutils gettext ];
+  nativeBuildInputs = [
+    gettext
+  ];
 
-  configurePhase = ''
+  buildInputs = [
+    pciutils
+  ];
+
+  postPatch = ''
     cd tools/power/cpupower
-    sed -i 's,/bin/true,${coreutils}/bin/true,' Makefile
-    sed -i 's,/bin/pwd,${coreutils}/bin/pwd,' Makefile
-    sed -i 's,/usr/bin/install,${coreutils}/bin/install,' Makefile
+
+    # We always want to directly specify the path to modprobe
+    grep '"modprobe' utils/cpupower.c
+    sed -i 's,"modprobe,"${kmod}/bin/modprobe,g' utils/cpupower.c
+
+    # Patch the build to use the correct tooling
+    grep -q '/bin/true' Makefile
+    grep -q '/bin/pwd' Makefile
+    grep -q '/usr/bin/install' Makefile
+    sed \
+      -e 's,/bin/true,${coreutils}/bin/true,g' \
+      -e 's,/bin/pwd,${coreutils}/bin/pwd,g' \
+      -e 's,/usr/bin/install,${coreutils}/bin/install,g' \
+      -i Makefile
   '';
 
-  buildPhase = ''
-    make
+
+  preInstall = ''
+    installFlagsArray+=(
+      "bindir=$out/bin"
+      "sbindir=$out/sbin"
+      "mandir=$out/share/man"
+      "includedir=$out/include"
+      "libdir=$out/lib"
+      "localedir=$out/share/locale"
+      "docdir=$out/share/doc/cpupower"
+      "confdir=$out/etc"
+    )
   '';
 
-  installPhase = ''
-    make \
-      bindir="$out/bin" \
-      sbindir="$out/sbin" \
-      mandir="$out/share/man" \
-      includedir="$out/include" \
-      libdir="$out/lib" \
-      localedir="$out/share/locale" \
-      docdir="$out/share/doc/cpupower" \
-      confdir="$out/etc" \
-      install install-man
-  '';
-
-  enableParallelBuilding = true;
+  installTargets = [
+    "install"
+    "install-man"
+  ];
 
   meta = with stdenv.lib; {
     description = "Tool to examine and tune power saving features";
     homepage = https://www.kernel.org.org/;
     license = licenses.gpl2;
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

@@ -1024,6 +1024,8 @@ libass = callPackage ../all-pkgs/libass { };
 
 libbluray = callPackage ../all-pkgs/libbluray { };
 
+libbsd = callPackage ../all-pkgs/libbsd { };
+
 libcanberra = callPackage ../all-pkgs/libcanberra { };
 
 libcap_ng = callPackage ../all-pkgs/libcap-ng { };
@@ -2570,8 +2572,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  fluentd = callPackage ../tools/misc/fluentd { };
 #
 #  flvstreamer = callPackage ../tools/networking/flvstreamer { };
-#
-  libbsd = callPackage ../development/libraries/libbsd { };
 #
 #  libbladeRF = callPackage ../development/libraries/libbladeRF { };
 #

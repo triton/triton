@@ -652,6 +652,8 @@ dconf = callPackage ../all-pkgs/dconf { };
 
 dconf-editor = callPackage ../all-pkgs/dconf-editor { };
 
+ddrescue = callPackage ../all-pkgs/ddrescue { };
+
 devil-nox = devil.override {
   xorg = null;
   mesa = null;
@@ -2343,8 +2345,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ddclient = callPackage ../tools/networking/ddclient { };
 #
 #  dd_rescue = callPackage ../tools/system/dd_rescue { };
-#
-  ddrescue = callPackage ../tools/system/ddrescue { };
 #
 #  deluge = pythonPackages.deluge;
 #

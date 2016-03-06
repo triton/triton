@@ -1120,6 +1120,8 @@ libsoup = callPackage ../all-pkgs/libsoup { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };
 
+libtheora = callPackage ../all-pkgs/libtheora { };
+
 libtool = callPackage ../all-pkgs/libtool { };
 
 libtorrent = callPackage ../all-pkgs/libtorrent { };
@@ -7028,8 +7030,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #  libtar = callPackage ../development/libraries/libtar { };
 #
 libtasn1 = callPackage ../development/libraries/libtasn1 { };
-#
-libtheora = callPackage ../development/libraries/libtheora { };
 #
 libtiff = callPackage ../development/libraries/libtiff { };
 

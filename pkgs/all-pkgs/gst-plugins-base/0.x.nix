@@ -17,7 +17,6 @@
 , libxml2
 , orc
 , pango
-#, tremor
 , v4l_lib
 , xorg
 , zlib
@@ -108,7 +107,6 @@ stdenv.mkDerivation rec {
     (enFlag "alsa" (alsa-lib != null) null)
     (enFlag "cdparanoia" (cdparanoia != null) null)
     "--disable-gnome_vfs"
-    # FIXME: compilation fails with ivorbis(tremor)
     "--disable-ivorbis"
     "--enable-gio"
     (enFlag "libvisual" (libvisual != null) null)
@@ -140,7 +138,6 @@ stdenv.mkDerivation rec {
     libxml2
     orc
     pango
-    #tremor
     v4l_lib
     xorg.libX11
     xorg.libXext

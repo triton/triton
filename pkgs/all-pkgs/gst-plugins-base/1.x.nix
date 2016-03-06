@@ -15,7 +15,6 @@
 , libvorbis
 , orc
 , pango
-, tremor
 , xorg
 , zlib
 }:
@@ -51,7 +50,6 @@ stdenv.mkDerivation rec {
     libvorbis
     orc
     pango
-    tremor
     xorg.libX11
     xorg.libXext
     xorg.libXv
@@ -90,6 +88,7 @@ stdenv.mkDerivation rec {
     "--enable-videoconvert"
     "--enable-gio"
     "--enable-playback"
+    "--disable-ivorbis"
     "--enable-audioresample"
     "--enable-subparse"
     "--enable-tcp"
@@ -105,7 +104,6 @@ stdenv.mkDerivation rec {
     (enFlag "xshm" (xorg.libXext != null) null)
     (enFlag "alsa" (alsa-lib != null) null)
     (enFlag "cdparanoia" (cdparanoia != null) null)
-    (enFlag "ivorbis" (tremor != null) null)
     (enFlag "libvisual" (libvisual != null) null)
     (enFlag "ogg" (libogg != null) null)
     (enFlag "pango" (pango != null) null)

@@ -1,16 +1,36 @@
-{ stdenv, fetchgit, autoreconfHook, texinfo, ncurses, readline, zlib, lzo, openssl }:
+{ stdenv
+, autoreconfHook
+, fetchgit
+, texinfo
+
+, lzo
+, ncurses
+, openssl
+, readline
+, zlib
+}:
 
 stdenv.mkDerivation rec {
-  name = "tinc-1.1pre-2016-01-17";
+  name = "tinc-1.1pre-2016-02-28";
 
   src = fetchgit {
     url = "git://tinc-vpn.org/tinc";
-    rev = "7418e9077f84db10ef6bb082a375870a7130bd7d";
-    sha256 = "0zap4a2jsm08cfvmgldidva508vjbflpvhdm84sdnmghwir2b53l";
+    rev = "bf50b3502a022b406424d0d03aaf7670133452b2";
+    sha256 = "0v04xyyyrqjf0wiswqgzwyysfpxparxx70v22i1ybkmgj4gcxx5j";
   };
 
-  nativeBuildInputs = [ autoreconfHook texinfo ];
-  buildInputs = [ ncurses readline zlib lzo openssl ];
+  nativeBuildInputs = [
+    autoreconfHook
+    texinfo
+  ];
+
+  buildInputs = [
+    lzo
+    ncurses
+    openssl
+    readline
+    zlib
+  ];
 
   configureFlags = [
     "--sysconfdir=/etc"
@@ -19,15 +39,12 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "VPN daemon with full mesh routing";
-    longDescription = ''
-      tinc is a Virtual Private Network (VPN) daemon that uses tunnelling and
-      encryption to create a secure private network between hosts on the
-      Internet.  It features full mesh routing, as well as encryption,
-      authentication, compression and ethernet bridging.
-    '';
     homepage="http://www.tinc-vpn.org/";
     license = licenses.gpl2Plus;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

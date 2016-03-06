@@ -662,6 +662,8 @@ devil = callPackage ../all-pkgs/devil { };
 
 diffutils = callPackage ../all-pkgs/diffutils { };
 
+dnsmasq = callPackage ../all-pkgs/dnsmasq { };
+
 dos2unix = callPackage ../all-pkgs/dos2unix { };
 
 dropbox = qt5.callPackage ../all-pkgs/dropbox { };
@@ -2357,8 +2359,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  dnscrypt-proxy = callPackage ../tools/networking/dnscrypt-proxy { };
 #
 #  dnscrypt-wrapper = callPackage ../tools/networking/dnscrypt-wrapper { };
-#
-  dnsmasq = callPackage ../tools/networking/dnsmasq { };
 #
   dnssec-root = callPackage ../data/misc/dnssec-root { };
 #

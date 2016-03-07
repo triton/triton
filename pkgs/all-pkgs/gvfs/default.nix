@@ -29,7 +29,7 @@
 , openssh
 , samba
 , systemd_lib
-, udisks2
+, udisks
 }:
 
 stdenv.mkDerivation rec {
@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
     openssh
     samba
     systemd_lib
-    udisks2
+    udisks
     #gconf
     gtk3
     libgnome-keyring

@@ -18,7 +18,7 @@ buildRustPackage rec {
     sha256 = "0d3n2jdhaz06yhilvmw3m2avxv501da1hdhljc9mwkz3l5bkv2jv";
   };
 
-  depsSha256 = "1awc5ygs3h8jxs506xmbj1xzaqpb3kmg3pkxg9j9yqy616jw6rcn";
+  depsSha256 = "1x2m7ww2z8nl5ic2nds85p7ma8x0zp654jg7ay905ia95daiabzg";
 
   buildInputs = [ file curl pkgconfig python openssl cmake zlib makeWrapper ];
 

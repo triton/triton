@@ -13,7 +13,7 @@ let
 
     ${optionalString (cfg.httpConfig != "") ''
     http {
-      include ${cfg.package}/conf/mime.types;
+      include ${cfg.package}/etc/nginx/mime.types;
       ${cfg.httpConfig}
     }
     ''}
@@ -68,7 +68,7 @@ in
       };
 
       stateDir = mkOption {
-        default = "/var/spool/nginx";
+        default = "/tmp/nginx";
         description = "
           Directory holding all state for nginx to run.
         ";
@@ -100,7 +100,7 @@ in
       path = [ nginx ];
       preStart =
         ''
-        mkdir -p ${cfg.stateDir}/logs
+        mkdir -p /var/log/nginx ${cfg.stateDir}
         chmod 700 ${cfg.stateDir}
         chown -R ${cfg.user}:${cfg.group} ${cfg.stateDir}
         '';

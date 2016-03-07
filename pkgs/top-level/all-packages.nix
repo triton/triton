@@ -2995,7 +2995,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  kdbplus = callPackage_i686 ../applications/misc/kdbplus { };
 #
-#  keepalived = callPackage ../tools/networking/keepalived { };
+  keepalived = callPackage ../tools/networking/keepalived { };
 #
   kexectools = callPackage ../os-specific/linux/kexectools { };
 #
@@ -8399,7 +8399,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  neo4j = callPackage ../servers/nosql/neo4j { };
 #
-#  net_snmp = callPackage ../servers/monitoring/net-snmp { };
+  net_snmp = callPackage ../servers/monitoring/net-snmp { };
 #
 #  newrelic-sysmond = callPackage ../servers/monitoring/newrelic-sysmond { };
 #

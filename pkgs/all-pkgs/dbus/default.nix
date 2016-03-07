@@ -31,13 +31,13 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--localstatedir=/var"
     "--sysconfdir=/etc"
+    "--with-session-socket-dir=/tmp"
     "--enable-libaudit"
     "--enable-systemd"
     "--disable-selinux"
     "--disable-apparmor"
     "--disable-tests"
     "--disable-x11-autolaunch"
-    "--with-session-socket-dir=/tmp"
   ];
 
   meta = with stdenv.lib; {

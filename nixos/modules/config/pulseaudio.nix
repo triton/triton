@@ -29,6 +29,10 @@ let
     ${optionalString nonSystemWide "daemon-binary=${cfg.package}/bin/pulseaudio"}
   '';
 
+  daemonConf = writeText "daemon.conf" ''
+    flat-volumes=no
+  '';
+
   # Write an /etc/asound.conf that causes all ALSA applications to
   # be re-routed to the PulseAudio server through ALSA's Pulse
   # plugin.
@@ -125,10 +129,16 @@ in {
 
   config = mkMerge [
     {
-      environment.etc = singleton {
-        target = "pulse/client.conf";
-        source = clientConf;
-      };
+      environment.etc = [
+        {
+          target = "pulse/client.conf";
+          source = clientConf;
+        }
+        {
+          target = "pulse/daemon.conf";
+          source = daemonConf;
+        }
+      ];
 
       hardware.pulseaudio.configFile = mkDefault "${cfg.package}/etc/pulse/default.pa";
     }

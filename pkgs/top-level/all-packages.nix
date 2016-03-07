@@ -672,6 +672,8 @@ e2fsprogs = callPackage ../all-pkgs/e2fsprogs { };
 
 edac-utils = callPackage ../all-pkgs/edac-utils { };
 
+efibootmgr = callPackage ../all-pkgs/efibootmgr { };
+
 elfutils = callPackage ../all-pkgs/elfutils { };
 
 eog = callPackage ../all-pkgs/eog { };
@@ -2473,8 +2475,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  emscripten = callPackage ../development/compilers/emscripten { };
 #
 #  emscriptenfastcomp = callPackage ../development/compilers/emscripten-fastcomp { };
-#
-  efibootmgr = callPackage ../tools/system/efibootmgr { };
 #
   efivar = callPackage ../tools/system/efivar { };
 #

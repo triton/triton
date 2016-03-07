@@ -1,11 +1,11 @@
 { stdenv, fetchurl }:
 
 stdenv.mkDerivation rec {
-  name = "libfpx-1.3.1-4";
+  name = "libfpx-1.3.1-6";
 
   src = fetchurl {
     url = "mirror://imagemagick/delegates/${name}.tar.xz";
-    sha256 = "0pbvxbp30zqjpc0q71qbl15cb47py74c4d6a8qv1mqa6j81pb233";
+    sha256 = "150cbdrjvsnnyij0xy81qn3wwx3k7w6plss49656ragiaiadza4f";
   };
 
   # This dead code causes a duplicate symbol error in Clang so just remove it

@@ -86,7 +86,6 @@ go.stdenv.mkDerivation (
       local d; local cmd;
       cmd="$1"
       d="$2"
-      echo "$d" | grep -q "\(/_\|examples\|Godeps\)" && return 0
       [ -n "$excludedPackages" ] && echo "$d" | grep -q "$excludedPackages" && return 0
       local OUT
       if ! OUT="$(go $cmd $buildFlags "''${buildFlagsArray[@]}" -v $d 2>&1)"; then
@@ -105,18 +104,15 @@ go.stdenv.mkDerivation (
       local type;
       type="$1"
       if [ -n "$subPackages" ]; then
-        echo "$subPackages" | sed "s,\(^\| \),\1$goPackagePath/,g"
+        echo "$subPackages" | tr ' ' '\n' | sed "s,\(^\| \|\n\),\1$goPackagePath/,g"
       else
         pushd go/src >/dev/null
-        find "$goPackagePath" -type f -name \*$type.go -exec dirname {} \; | sort | uniq
+        find "$goPackagePath" -type f -name \*$type.go -exec dirname {} \; | sort | uniq | grep -v "\(/_\|examples\|Godeps\)"
         popd >/dev/null
       fi
     }
 
     export -f buildGoDir # parallel needs to see the function
-    if [ -z "$enableParallelBuilding" ]; then
-        export NIX_BUILD_CORES=1
-    fi
     getGoDirs "" | parallel -j $NIX_BUILD_CORES buildGoDir install
 
     runHook postBuild

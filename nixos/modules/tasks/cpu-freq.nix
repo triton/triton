@@ -38,7 +38,8 @@ in
       description = "CPU Frequency Governor Setup";
       after = [ "systemd-modules-load.service" ];
       wantedBy = [ "multi-user.target" ];
-      path = [ cpupower ];
+      path = [ cpupower pkgs.kmod ];
+      environment.MODULE_DIR = "/run/booted-system/kernel-modules/lib/modules";
       unitConfig.ConditionVirtualization = false;
       serviceConfig = {
         Type = "oneshot";

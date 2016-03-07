@@ -44,9 +44,7 @@ in
   config = mkIf cfg.enable {
 
     environment.systemPackages = [ cfg.package ];
-
     services.dbus.packages = [ cfg.package ];
-
     services.udev.packages = [ cfg.package ];
 
     systemd.services.upower =
@@ -59,19 +57,17 @@ in
           };
       };
 
-    system.activationScripts.upower =
-      ''
-        mkdir -m 0755 -p /var/lib/upower
-      '';
+    system.activationScripts.upower = ''
+      mkdir -m 0755 -p /var/lib/upower
+    '';
 
     # The upower daemon seems to get stuck after doing a suspend
     # (i.e. subsequent suspend requests will say "Sleep has already
     # been requested and is pending").  So as a workaround, restart
     # the daemon.
-    powerManagement.resumeCommands =
-      ''
-        ${config.systemd.package}/bin/systemctl try-restart upower
-      '';
+    powerManagement.resumeCommands = ''
+      ${config.systemd.package}/bin/systemctl try-restart upower
+   '';
 
   };
 

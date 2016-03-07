@@ -4,7 +4,6 @@
 
 , coreutils
 , kernel
-, kmod
 , pciutils
 }:
 
@@ -23,10 +22,6 @@ stdenv.mkDerivation {
 
   postPatch = ''
     cd tools/power/cpupower
-
-    # We always want to directly specify the path to modprobe
-    grep '"modprobe' utils/cpupower.c
-    sed -i 's,"modprobe,"${kmod}/bin/modprobe,g' utils/cpupower.c
 
     # Patch the build to use the correct tooling
     grep -q '/bin/true' Makefile

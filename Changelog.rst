@@ -34,3 +34,27 @@ This is probably missing a lot
 * libbluray, enable java by default
 * new consistent coding style, needs coding style guide
 * golang package updater
+* deprecated stdenv.system, use the following instead
+   + stdenv.hostSystem
+   + stdenv.targetSystem
+* disable all non-required services by default
+   + dhcp
+   + ntpd
+   + dns
+   + ???
+* dbus: remove multiple outputs
+* remove meta platform attributes that don't respect target system
+   + isLinux
+   + isFreeBSD
+   + is64bit
+   + isi686
+   + etc...
+* use the following for platform specific options
+   + lib.elem stdenv.targetSystem lib.platforms.<required platform>
+* dropped qt4 webkit and gtk2 compat
+* xorg: disable xterm
+* remove garbage ati build (needs rewrite)
+* mesa: base driver location on platform and not address size
+* enable /tmp cleanup by default
+* disable audit in the kernel by default
+* rewrite lib.platforms

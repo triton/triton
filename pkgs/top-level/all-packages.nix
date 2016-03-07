@@ -849,6 +849,8 @@ gobjectIntrospection = callPackageAlias "gobject-introspection" { }; # Deprecate
 
 gperf = callPackage ../all-pkgs/gperf { };
 
+gperftools = callPackage ../all-pkgs/gperftools { };
+
 gpm = callPackage ../all-pkgs/gpm+ncurses { };
 
 granite = callPackage ../all-pkgs/granite { };
@@ -6337,8 +6339,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  goocanvas = callPackage ../development/libraries/goocanvas { };
 #
   google-gflags = callPackage ../development/libraries/google-gflags { };
-#
-  gperftools = callPackage ../development/libraries/gperftools { };
 #
 #  grib-api = callPackage ../development/libraries/grib-api { };
 #

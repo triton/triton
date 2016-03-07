@@ -451,8 +451,12 @@ in
     security.setuidPrograms =
         optionals config.security.pam.enableEcryptfs [ "mount.ecryptfs_private" "umount.ecryptfs_private" ];
 
-    environment.etc =
-      mapAttrsToList (n: v: makePAMService v) config.security.pam.services;
+    environment.etc = [
+      {
+        name = "security/pam_env.conf";
+        source = "${pkgs.pam}/etc/security/pam_env.conf";
+      }
+    ] ++  mapAttrsToList (n: v: makePAMService v) config.security.pam.services;
 
     security.setuidOwners = [ {
       program = "unix_chkpwd";

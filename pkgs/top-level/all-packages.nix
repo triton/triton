@@ -1285,6 +1285,8 @@ nghttp2_lib = callPackageAlias "nghttp2_full" {
   prefix = "lib";
 };
 
+nginx = callPackage ../all-pkgs/nginx { };
+
 ninja = callPackage ../all-pkgs/ninja { };
 
 noise = callPackage ../all-pkgs/noise { };
@@ -8320,18 +8322,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  myserver = callPackage ../servers/http/myserver { };
 #
 #  neard = callPackage ../servers/neard { };
-#
-#  nginx = callPackage ../servers/http/nginx {
-#    # We don't use `with` statement here on purpose!
-#    # See https://github.com/NixOS/nixpkgs/pull/10474/files#r42369334
-#    modules = [ nginxModules.rtmp nginxModules.dav nginxModules.moreheaders ];
-#  };
-#
-#  nginxUnstable = callPackage ../servers/http/nginx/unstable.nix {
-#    modules = [ nginxModules.rtmp nginxModules.dav nginxModules.moreheaders ];
-#  };
-#
-#  nginxModules = callPackage ../servers/http/nginx/modules.nix { };
 #
 #  ngircd = callPackage ../servers/irc/ngircd { };
 #

@@ -2,21 +2,22 @@
 , fetchurl
 
 , coreutils
+, readline
 , systemd_lib
 , util-linux_full
+, util-linux_lib
 }:
 
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
-  version = "2.02.144";
+  version = "2.02.145";
 
   src = fetchurl {
     url = "ftp://sources.redhat.com/pub/lvm2/releases/LVM2.${version}.tgz";
-    sha256 = "0qvfli1429y3755g7q103na0rsjzcprxhngqlbpyfydx8qdvahmm";
+    sha256 = "02sn77pjkbqrlkcfm2b2lgp3q4spawkabqc6d8n4cnj8gk0c9dwq";
   };
 
   configureFlags = [
-    "--disable-readline"
     "--enable-udev_rules"
     "--enable-udev_sync"
     "--enable-pkgconfig"
@@ -26,7 +27,9 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    readline
     systemd_lib
+    util-linux_lib
   ];
 
   preConfigure = ''
@@ -74,7 +77,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

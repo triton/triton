@@ -25,7 +25,7 @@ with lib;
         text =
           ''
             #! ${pkgs.stdenv.shell}
-            export MODULE_DIR=/run/current-system/kernel-modules/lib/modules
+            export MODULE_DIR=/run/booted-system/kernel-modules/lib/modules
 
             # Fall back to the kernel modules used at boot time if the
             # modules in the current configuration don't match the
@@ -98,7 +98,7 @@ with lib;
         echo ${config.system.sbin.modprobe}/sbin/modprobe > /proc/sys/kernel/modprobe
       '';
 
-    environment.sessionVariables.MODULE_DIR = "/run/current-system/kernel-modules/lib/modules";
+    environment.sessionVariables.MODULE_DIR = "/run/booted-system/kernel-modules/lib/modules";
 
   };
 

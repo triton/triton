@@ -93,7 +93,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    license = license.bsd2;
+    license = licenses.bsd2;
     maintainers = with maintainers; [
       wkennington
     ];

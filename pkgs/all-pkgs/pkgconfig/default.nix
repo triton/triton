@@ -2,12 +2,12 @@
 , fetchurl
 }:
 
-stdenv.mkDerivation (rec {
-  name = "pkg-config-0.29";
+stdenv.mkDerivation rec {
+  name = "pkg-config-0.29.1";
   
   src = fetchurl {
     url = "http://pkgconfig.freedesktop.org/releases/${name}.tar.gz";
-    sha256 = "0sq09a39wj4cxf8l2jvkq067g08ywfma4v6nhprnf351s82pfl68";
+    sha256 = "00dh1jn8rbppmgbhhgqhmbh3c58b0gccy39rsjdlcma50sg3rd5y";
   };
 
   configureFlags = [
@@ -24,5 +24,4 @@ stdenv.mkDerivation (rec {
       i686-linux
       ++ x86_64-linux;
   };
-
 }

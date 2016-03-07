@@ -100,7 +100,7 @@ in
       path = [ nginx ];
       preStart =
         ''
-        mkdir -p /var/log/nginx ${cfg.stateDir}
+        mkdir -p /var/log/nginx /run/nginx ${cfg.stateDir}
         chmod 700 ${cfg.stateDir}
         chown -R ${cfg.user}:${cfg.group} ${cfg.stateDir}
         '';

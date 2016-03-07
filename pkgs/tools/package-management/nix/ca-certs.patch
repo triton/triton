@@ -1,0 +1,12 @@
+diff --git a/src/libstore/build.cc b/src/libstore/build.cc
+index 180a558..118e841 100644
+--- a/src/libstore/build.cc
++++ b/src/libstore/build.cc
+@@ -2285,6 +2285,7 @@ void DerivationGoal::runChild()
+                 ss.push_back("/etc/nsswitch.conf");
+                 ss.push_back("/etc/services");
+                 ss.push_back("/etc/hosts");
++                ss.push_back("/etc/ssl/certs/ca-certificates.crt");
+             }
+ 
+             for (auto & i : ss) dirsInChroot[i] = i;

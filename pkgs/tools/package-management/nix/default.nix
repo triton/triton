@@ -15,6 +15,10 @@ let
 
     buildInputs = [ curl openssl sqlite xz libsodium ];
 
+    patches = [
+      ./ca-certs.patch
+    ];
+
     propagatedBuildInputs = [ boehmgc ];
 
     # Note: bzip2 is not passed as a build input, because the unpack phase

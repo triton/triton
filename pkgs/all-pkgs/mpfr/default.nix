@@ -9,11 +9,11 @@ in
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "mpfr-${version}-p${toString (length patches)}";
-  version = "3.1.3";
+  version = "3.1.4";
 
   src = fetchurl {
     url = "mirror://gnu/mpfr/mpfr-${version}.tar.bz2";
-    sha256 = "1z8akfw9wbmq91vrx04bw86mmnxw2sw5qm5cr8ix5b3w2mcv8fzn";
+    sha256 = "0xbpgwwwqqnnx9jilxygs690qknhpv21hdhzb3nhf95drn03l46k";
   };
 
   patches = flip mapAttrsToList patchSha256s (n: sha256: fetchurl {
@@ -22,7 +22,9 @@ stdenv.mkDerivation rec {
     inherit sha256;
   });
 
-  buildInputs = [ gmp ];
+  buildInputs = [
+    gmp
+  ];
 
   configureFlags = [
     "--with-pic"

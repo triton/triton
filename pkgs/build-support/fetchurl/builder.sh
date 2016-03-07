@@ -58,7 +58,7 @@ tryHashedMirrors() {
             # Be quiet about 404 errors, which we interpret as the file
             # not being present on this particular mirror.
             if test "$(cat code)" != 404; then
-                echo "error checking the existence of $url:"
+                echo "error checking the existence of $url"
                 cat log
             fi
         fi
@@ -112,6 +112,7 @@ if ! test -f /etc/ssl/certs/ca-certificates.crt; then
   echo "Eventually this will be disallowed completely." >&2
   curlOpts="$curlOpts --insecure"
 fi
+export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 # Curl flags to handle redirects, not use EPSV, handle cookies for
 # servers to need them during redirects, and work on SSL without a

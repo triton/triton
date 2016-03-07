@@ -750,6 +750,8 @@ getopt = callPackage ../all-pkgs/getopt { };
 
 gettext = callPackage ../all-pkgs/gettext { };
 
+gexiv2 = callPackage ../all-pkgs/gexiv2 { };
+
 git = callPackage ../all-pkgs/git { };
 
 gjs = callPackage ../all-pkgs/gjs { };

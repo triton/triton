@@ -556,8 +556,7 @@ in
 
     systemd.tmpfiles.rules = mkOption {
       type = types.listOf types.str;
-      default = [];
-      example = [ "d /tmp 1777 root root 10d" ];
+      default = [ ];
       description = ''
         Rules for creating and cleaning up temporary files
         automatically. See
@@ -785,6 +784,11 @@ in
     # Don't bother with certain units in containers.
     systemd.services.systemd-remount-fs.unitConfig.ConditionVirtualization = "!container";
     systemd.services.systemd-random-seed.unitConfig.ConditionVirtualization = "!container";
+
+    systemd.tmpfiles.rules = [
+      "D! /tmp 1777 root root 0"
+      "D! /var/tmp 1777 root root 10d"
+    ];
 
   };
 

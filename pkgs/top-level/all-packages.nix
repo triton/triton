@@ -744,6 +744,8 @@ gegl = callPackage ../all-pkgs/gegl { };
 
 geocode-glib = callPackage ../all-pkgs/geocode-glib { };
 
+geoip = callPackage ../all-pkgs/geoip { };
+
 getopt = callPackage ../all-pkgs/getopt { };
 
 gettext = callPackage ../all-pkgs/gettext { };
@@ -6284,8 +6286,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    drvName = "geoip-tools";
 #    geoipDatabase = geolite-legacy;
 #  };
-#
-  geoip = callPackage ../development/libraries/geoip { };
 #
 #  geoipjava = callPackage ../development/libraries/java/geoipjava { };
 #

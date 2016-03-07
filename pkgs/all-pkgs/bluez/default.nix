@@ -36,8 +36,6 @@ stdenv.mkDerivation rec {
       "--with-systemduserunitdir=$out/etc/systemd/user"
       "--with-udevdir=$out/lib/udev"
     )
-    installFlagsArray+=(
-    )
   '';
 
   configureFlags = [
@@ -57,12 +55,6 @@ stdenv.mkDerivation rec {
     "--enable-sixaxis"
     "--disable-android"
   ];
-
-  postInstall = ''
-    # for bluez4 compatibility for NixOS
-    ln -s ../libexec/bluetooth/bluetoothd $out/bin/bluetoothd
-    ln -s ../libexec/bluetooth/obexd $out/bin/obexd
-  '';
 
   meta = with stdenv.lib; {
     description = "Bluetooth support for Linux";

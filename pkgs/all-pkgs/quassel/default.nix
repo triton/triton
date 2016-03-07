@@ -1,6 +1,7 @@
 { stdenv
 , cmake
 , fetchurl
+, ninja
 , makeWrapper
 
 , dconf
@@ -33,16 +34,9 @@ stdenv.mkDerivation rec {
     sha256 = "0d6lwf6qblj1ia5j9mjy112zrmpbbg9mmxgscbgxiqychldyjgjd";
   };
 
-  #patches = [
-  #  # fix build with Qt 5.5
-  #  (fetchurl {
-  #    url = "https://github.com/quassel/quassel/commit/078477395aaec1edee90922037ebc8a36b072d90.patch";
-  #    sha256 = "1njwnay7pjjw0g7m0x5cwvck8xcznc7jbdfyhbrd121nc7jgpbc5";
-  #  })
-  #];
-
   nativeBuildInputs = [
     cmake
+    ninja
     makeWrapper
   ];
 

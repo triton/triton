@@ -1450,12 +1450,6 @@ quassel = callPackage ../all-pkgs/quassel rec {
   daemon = false;
   client = false;
 };
-quasselWithoutKDE = (pkgs.quassel.override {
-  monolithic = true;
-  daemon = false;
-  client = false;
-  tag = "-without-kde";
-});
 quasselDaemon = (pkgs.quassel.override {
   monolithic = false;
   daemon = true;
@@ -1467,12 +1461,6 @@ quasselClient = (pkgs.quassel.override {
   daemon = false;
   client = true;
   tag = "-client";
-});
-quasselClientWithoutKDE = (pkgs.quasselClient.override {
-  monolithic = false;
-  daemon = false;
-  client = true;
-  tag = "-client-without-kde";
 });
 
 rapidjson = callPackage ../all-pkgs/rapidjson { };

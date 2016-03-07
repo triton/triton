@@ -6,7 +6,7 @@
 
 , fontconfig
 , freetype
-#, jdk
+, jdk
 , libaacs
 , libbdplus
 , libxml2
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     fontconfig
     freetype
-    #jdk
+    jdk
     libaacs
     libxml2
   ];
@@ -53,7 +53,7 @@ stdenv.mkDerivation rec {
     "--disable-werror"
     "--enable-optimizations"
     "--disable-examples"
-    #(enFlag "bdjava" (jdk != null) null)
+    (enFlag "bdjava" (jdk != null) null)
     "--disable-bdjava"
     "--enable-udf"
     "--disable-doxygen-doc"
@@ -69,7 +69,7 @@ stdenv.mkDerivation rec {
     (wtFlag "libxml2" (libxml2 != null) null)
     (wtFlag "freetype" (freetype != null) null)
     (wtFlag "fontconfig" (fontconfig != null) null)
-    #"--with-bdj-type=j2se"
+    "--with-bdj-type=j2se"
     #"--with-bdj-bootclasspath="
   ];
 
@@ -80,9 +80,9 @@ stdenv.mkDerivation rec {
     "-lbdplus"
   ];
 
-  #preConfigure = ''
-  #  export JDK_HOME="${jdk.home}"
-  #'';
+  preConfigure = ''
+    export JDK_HOME="${jdk.home}"
+  '';
 
   meta = with stdenv.lib; {
     description = "Library to access Blu-Ray disks for video playback";
@@ -92,7 +92,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -7,6 +7,7 @@
 , exiv2
 , ffmpeg
 , gdk-pixbuf
+, gexiv2
 , glib
 , gobject-introspection
 , jasper
@@ -42,6 +43,7 @@ stdenv.mkDerivation rec {
     exiv2
     ffmpeg
     gdk-pixbuf
+    gexiv2
     glib
     gobject-introspection
     jasper
@@ -62,7 +64,6 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-docs"
     "--without-mrg"
-    "--without-gexiv2"
     "--without-lensfun"
     "--without-sdl"
     "--without-graphviz"

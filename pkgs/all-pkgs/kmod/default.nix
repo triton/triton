@@ -1,4 +1,10 @@
-{ stdenv, fetchurl, xz, zlib, pkgconfig, libxslt }:
+{ stdenv
+, fetchurl
+, libxslt
+
+, xz
+, zlib
+}:
 
 stdenv.mkDerivation rec {
   name = "kmod-22";
@@ -8,12 +14,26 @@ stdenv.mkDerivation rec {
     sha256 = "10lzfkmnpq6a43a3gkx7x633njh216w0bjwz31rv8a1jlgg1sfxs";
   };
 
-  buildInputs = [ pkgconfig libxslt xz /* zlib */ ];
+  nativeBuildInputs = [
+    libxslt
+  ];
 
-  configureFlags = [ "--sysconfdir=/etc" "--with-xz" /* "--with-zlib" */ ];
+  buildInputs = [
+    xz
+    zlib
+  ];
 
-  patches = [ ./module-dir.patch ];
+  patches = [
+    ./module-dir.patch
+  ];
 
+  configureFlags = [
+    "--sysconfdir=/etc"
+    "--with-xz"
+    "--with-zlib"
+  ];
+
+  # Use symlinks instead of hard-links or copies
   postInstall = ''
     ln -s kmod $out/bin/lsmod
     mkdir -p $out/sbin
@@ -22,9 +42,13 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://www.kernel.org/pub/linux/utils/kernel/kmod/;
     description = "Tools for loading and managing Linux kernel modules";
-    platforms = stdenv.lib.platforms.linux;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

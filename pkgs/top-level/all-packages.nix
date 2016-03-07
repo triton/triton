@@ -1008,13 +1008,15 @@ kea = callPackage ../all-pkgs/kea { };
 
 kerberos = callPackageAlias "krb5_lib" { };
 
-kubernetes = callPackage ../all-pkgs/kubernetes { };
+kmod = callPackage ../all-pkgs/kmod { };
 
 krb5_full = callPackage ../all-pkgs/krb5 { };
 
 krb5_lib = callPackageAlias "krb5_full" {
   type = "lib";
 };
+
+kubernetes = callPackage ../all-pkgs/kubernetes { };
 
 ldb = callPackage ../all-pkgs/ldb { };
 
@@ -9024,8 +9026,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  lsiutil = callPackage ../os-specific/linux/lsiutil { };
 #
-  kmod = callPackage ../os-specific/linux/kmod { };
-
   kmod-blacklist-ubuntu = callPackage ../os-specific/linux/kmod-blacklist-ubuntu { };
 
   kmod-debian-aliases = callPackage ../os-specific/linux/kmod-debian-aliases { };
@@ -9065,7 +9065,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
   module_init_tools = callPackage ../os-specific/linux/module-init-tools { };
 
   aggregateModules = modules:
-    callPackage ../os-specific/linux/kmod/aggregator.nix {
+    callPackage ../all-pkgs/kmod/aggregator.nix {
       inherit modules;
     };
 #

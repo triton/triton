@@ -13,6 +13,7 @@
 , bzip2
 , cairo
 , cups
+, dbus
 , dbus-glib
 , expat
 , flac
@@ -134,6 +135,7 @@ let
       atk
       bzip2
       cairo
+      dbus
       dbus-glib
       expat
       flac

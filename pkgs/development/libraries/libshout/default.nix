@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 
+, libogg
 , libvorbis
 , libtheora
 , speex
@@ -15,6 +16,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
+    libogg
     libvorbis
     libtheora
     speex

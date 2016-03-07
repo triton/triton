@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     sed \
       -e "s,/usr,$out,g" \
       -e 's,{exec_prefix},{prefix},g' \
-      -i Makefile
+      -i Makefile.in
   '';
 
   meta = with stdenv.lib; {

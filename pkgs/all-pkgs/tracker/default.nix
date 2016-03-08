@@ -35,6 +35,7 @@
 , libjpeg
 , libmediaart
 , libnotify
+, libogg
 , libosinfo
 , libpng
 , librsvg
@@ -118,6 +119,7 @@ stdenv.mkDerivation rec {
     libjpeg
     libmediaart
     libnotify
+    libogg
     libosinfo
     libpng
     librsvg
@@ -278,7 +280,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

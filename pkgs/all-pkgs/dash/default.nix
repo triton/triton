@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://gondor.apana.org.au/~herbert/dash/files/"
-        + "${release-version}.tar.gz";
+        + "dash-${release-version}.tar.gz";
     sha256 = "03y6z8akj72swa6f42h2dhq3p09xasbi6xia70h2vc27fwikmny6";
   };
 

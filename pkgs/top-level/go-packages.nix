@@ -3658,10 +3658,22 @@ let
       armon_go-metrics go-radix govalidator aws-sdk-go speakeasy etcd-client
       duo_api_golang structs ini ldap mysql gocql snappy go-github
       go-querystring hailocab_go-hostpool consul-api errwrap go-cleanhttp
-      go-multierror go-syslog golang-lru hcl logutils serf hashicorp_uuid
+      go-multierror go-syslog golang-lru logutils serf hashicorp_uuid
       go-jmespath osext pq mitchellh-cli copystructure go-homedir mapstructure
       reflectwalk columnize go-zookeeper ugorji_go crypto net oauth2 sys
       asn1-ber inf yaml yaml-v2 hashicorp-go-uuid
+    ];
+
+    extraSrcs = [
+      {
+        src = fetchFromGitHub {
+          owner = "hashicorp";
+          repo = "hcl";
+          rev = "4de51957ef8d4aba6e285ddfc587633bbfc7c0e8";
+          sha256 = "14k4s4ygd4yjb6xvim3855wyhqdnnd5f29m8v7rc2rr137pi2nfw";
+        };
+        goPackagePath = "github.com/hashicorp/hcl";
+      }
     ];
   };
 

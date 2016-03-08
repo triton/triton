@@ -3,19 +3,21 @@
 
 , expat
 , systemd_lib
+, xorg
 }:
 
 stdenv.mkDerivation rec {
-  name = "dbus-1.10.6";
+  name = "dbus-1.10.8";
   
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus/${name}.tar.gz";
-    sha256 = "0pykylm78hf6pgj85gpqygv2rh7bksadnwnqck6pdpbylw4gmzmm";
+    sha256 = "0560y3hxpgh346w6avcrcz79c8ansmn771y5xpcvvlr6m8mx5wxs";
   };
 
   buildInputs = [
     expat
     systemd_lib
+    xorg.libX11
   ];
 
   preConfigure = ''
@@ -37,7 +39,8 @@ stdenv.mkDerivation rec {
     "--disable-selinux"
     "--disable-apparmor"
     "--disable-tests"
-    "--disable-x11-autolaunch"
+    "--enable-x11-autolaunch"
+    "--enable-user-session"
   ];
 
   meta = with stdenv.lib; {

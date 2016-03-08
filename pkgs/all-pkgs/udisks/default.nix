@@ -9,6 +9,7 @@
 , systemd_lib
 , glib
 , gobject-introspection
+, gnused
 , libatasmart
 , polkit
 , util-linux_full
@@ -32,12 +33,10 @@ stdenv.mkDerivation rec {
 
     # We need to fix the udev rules
     grep -q '/bin/sh' data/80-udisks2.rules
-    grep -q '/sbin/mdadm' data/80-udisks2.rules
     grep -q 'sed' data/80-udisks2.rules
     sed \
-      -e 's,/bin/sh,/run/current-system/sw/bin/sh,g' \
-      -e 's,/sbin/mdadm,/run/current-system/sw/bin/mdadm,g' \
-      -e 's,sed,/run/current-system/sw/bin/sed,g' \
+      -e 's,/bin/sh,${stdenv.shell},g' \
+      -e 's,sed,${gnused}/bin/sed,g' \
       -i data/80-udisks2.rules
   '';
 

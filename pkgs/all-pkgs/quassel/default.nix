@@ -1,7 +1,6 @@
 { stdenv
 , cmake
 , fetchurl
-, ninja
 , makeWrapper
 
 , dconf
@@ -36,7 +35,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
-    ninja
     makeWrapper
   ];
 

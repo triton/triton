@@ -1094,6 +1094,8 @@ libjpeg_original = callPackage ../all-pkgs/libjpeg { };
 libjpeg_turbo = callPackage ../all-pkgs/libjpeg-turbo { };
 libjpeg = callPackageAlias "libjpeg_turbo" { };
 
+libmatroska = callPackage ../all-pkgs/libmatroska { };
+
 libmcrypt = callPackage ../all-pkgs/libmcrypt {};
 
 libmediaart = callPackage ../all-pkgs/libmediaart {
@@ -6878,8 +6880,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libmatchbox = callPackage ../development/libraries/libmatchbox { };
 #
 #  libmatthew_java = callPackage ../development/libraries/java/libmatthew-java { };
-#
-  libmatroska = callPackage ../development/libraries/libmatroska { };
 #
 #  libmcs = callPackage ../development/libraries/libmcs { };
 #

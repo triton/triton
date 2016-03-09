@@ -11,7 +11,7 @@
 , fetchTritonPatch
 , linux-headers
 , writeText
-, allLocales ? true
+, allLocales ? false
 , locales ? [ "en_US.UTF-8/UTF-8" ]
 }:
 

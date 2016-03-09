@@ -1,10 +1,10 @@
 {
   stable = {
     version = "45.0";
-    sha512 = "2sw9qrg4mfclc4l0czpzra3cn9hwz6v02b3zwixjcj7scwkp7dm701s6idk9bvmfnbsfxgf2h8a9nmplr2rifbpgcivg0q1yzqpnp6p";
+    sha512 = "d75c7bf1f70183b7237b77b99845a6b7daa41014ee75a7977575af345b343a8053dbb993337d24933df23f9600db7c0e936543e57f3f039430ca5c252fe3c4b5";
   };
   esr = {
-    version = "38.7.0esr";
-    sha512 = "356agppaji4q9j75hrh6000mvv6jx9vkkzpxx14nxgh4kr8cy90jgr8h6r4jwl5qgmz7jwpmyy23yqavyj04r11r8yqr9c2dnqcvf7d";
+    version = "45.0esr";
+    sha512 = "af450f5dcf8b56931e241cf08b8d3a89066b4c5bc612ddde092a3ea099dba3e6a73f1d9d2bf9c96e67506e352e7f88f32b08dcf54ea863326f0dc31d7483c91f";
   };
 }

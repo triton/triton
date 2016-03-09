@@ -21,8 +21,8 @@
 , libtheora
 , libva
 , libvdpau
-, lua
-, luaPackages
+#, lua
+#, luaPackages
 , pythonPackages
 , mesa
 , pulseaudio_lib
@@ -81,8 +81,9 @@ stdenv.mkDerivation rec {
     libtheora
     libva
     libvdpau
-    lua
-    luaPackages.luasocket
+    # MPV does not support lua 5.3 yet
+    #lua
+    #luaPackages.luasocket
     mesa
     pulseaudio_lib
     pythonPackages.youtube-dl

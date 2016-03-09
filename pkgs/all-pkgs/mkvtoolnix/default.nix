@@ -11,10 +11,10 @@
 , libmatroska
 , libogg
 , libvorbis
+, pugixml
 , qt5
 , xdg-utils
 , zlib
-# pugixml (not packaged)
 }:
 
 with {
@@ -24,13 +24,15 @@ with {
     wtFlag;
 };
 
+assert qt5 != null -> qt5.qtbase != null;
+
 stdenv.mkDerivation rec {
   name = "mkvtoolnix-${version}";
-  version = "8.8.0";
+  version = "8.9.0";
 
   src = fetchurl {
     url = "http://www.bunkus.org/videotools/mkvtoolnix/sources/${name}.tar.xz";
-    sha256 = "1751sf6brwwl1dq64155s4a12784q35dyqfy028qrwr1ilafhbci";
+    sha256 = "1m50m8lkfpk0663zhhx9alvprf2y6b4lj9wj29xn3a1rjf2b421j";
   };
 
   nativeBuildInputs = [
@@ -47,21 +49,16 @@ stdenv.mkDerivation rec {
     libmatroska
     libogg
     libvorbis
-    qt5.qtbase
+    pugixml
     xdg-utils
     zlib
+  ] ++ optionals (qt5 != null) [
+    qt5.qtbase
   ];
 
   postPatch = ''
     patchShebangs ./rake.d/
     patchShebangs ./Rakefile
-  '' +
-  /* Force ruby encoding to UTF-8 or else when enabling qt5 the
-     Rakefile mayfail with `invalid byte sequence in US-ASCII'
-     due to UTF-8 characters. This workaround replaces an
-     arbitrary comment in the drake file. */ ''
-    sed -i ./drake \
-      -e 's,#--,Encoding.default_external = Encoding::UTF_8,'
   '';
 
   configureFlags = [
@@ -77,7 +74,7 @@ stdenv.mkDerivation rec {
     (wtFlag "boost" (boost != null) null)
     (wtFlag "boost-libdir" (boost != null) "${boost.lib}/lib")
     "--with-gettext"
-    "--disable-tools"
+    "--without-tools"
   ];
 
   buildPhase = ''

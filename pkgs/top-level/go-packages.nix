@@ -275,10 +275,10 @@ let
   };
 
   aws-sdk-go = buildFromGitHub {
-    rev = "v1.1.8";
+    rev = "v1.1.9";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "1ki0m2mjzcxl66sdhlchxnxz4nw04lqrhzkzcz94sb94qsr2wpp1";
+    sha256 = "1s7q9b8ydiq4jlfdlxz01cnpqa8vxppp5fyq8cbgb3md8fdxgil0";
     buildInputs = [ testify gucumber tools ];
     propagatedBuildInputs = [ ini go-jmespath ];
 
@@ -359,6 +359,14 @@ let
     owner  = "cznic";
     repo   = "bufs";
     sha256 = "0w75wc15k0gayvj6fhnqgap1y2rhq51zvslhp3v4y1vcb11mbdw9";
+  };
+
+  candiedyaml = buildFromGitHub {
+    date = "2016-01-27";
+    rev = "4e924c79e32959414e8c7aaed6607176d8ee79c3";
+    owner  = "cloudfoundry-incubator";
+    repo   = "candiedyaml";
+    sha256 = "1vai4yffp514f4hxqlrqkliwy28ya4dw6ggcihbjkxy0mys61iib";
   };
 
   cascadia = buildGoPackage rec {
@@ -1215,10 +1223,10 @@ let
   };
 
   gopsutil = buildFromGitHub {
-    rev = "715c421b57b08535cf69baa61c9503333c65f2b4";
+    rev = "627d2a98711da9c9a6f3e63cc76e19e0028b5fe5";
     owner  = "shirou";
     repo   = "gopsutil";
-    sha256 = "1nb3gk6pf8pb1wrc8868vbzpbxrr3w1da8kzxi7xxqfdjzckmrl6";
+    sha256 = "0bn6vpk42xdm10cygvzpnjmxymifjwi6b8gns5k75a5g3gvsg3kc";
   };
 
   goreq = buildFromGitHub {
@@ -1464,11 +1472,11 @@ let
   };
 
   go-getter = buildFromGitHub {
-    rev = "0f91b5ccb25250bebe0307353d92882376c851c6";
-    date = "2016-03-05";
+    rev = "cd92db7af9118d920be4f1b95680ba75ad91d1c6";
+    date = "2016-03-07";
     owner = "hashicorp";
     repo = "go-getter";
-    sha256 = "11k8wmsnhlp5w81pnxxxjiyyf2cjva064w04mw3hmwvj36vqllyb";
+    sha256 = "0n17668zk9p453mgdpdbs2gz4d2l7yjvs0hwckg5j8880f4wfzyd";
     buildInputs = [ aws-sdk-go ];
   };
 
@@ -1884,10 +1892,10 @@ let
   };
 
   go-units = buildFromGitHub {
-    rev = "v0.2.0";
+    rev = "v0.3.0";
     owner = "docker";
     repo = "go-units";
-    sha256 = "1bspd691pqc3xjyr2r68s2z8kl1sjl8965prppvijz107c7djzbx";
+    sha256 = "0hn8xdbaykp046inc4d2mwig5ir89ighma8hk18dfkm8rh1vvr8i";
   };
 
   go-update-v0 = buildFromGitHub {
@@ -3751,12 +3759,12 @@ let
   };
 
   yaml = buildFromGitHub {
-    rev = "73d445a93680fa1a78ae23a5839bad48f32ba1ee";
-    date = "2015-09-08";
+    rev = "1a6f069841556a7bcaff4a397ca6e8328d266c2f";
+    date = "2016-03-07";
     owner = "ghodss";
     repo = "yaml";
-    sha256 = "0pg53ky4sy3sp9j4n7vgf1p3gw4nbckwqfldcmmi9rf13kjh0mr7";
-    buildInputs = [ yaml-v2 ];
+    sha256 = "0mr9bx9rsxp0pswv9n717pv9w5w9cfjmb2wnrnsn6v2rfl71npb1";
+    propagatedBuildInputs = [ candiedyaml ];
   };
 
   yaml-v1 = buildGoPackage rec {

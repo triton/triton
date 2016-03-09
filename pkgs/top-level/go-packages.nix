@@ -93,11 +93,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "a4bbce9fcae005b22ae5443f6af064d80a6f5a55";
-    date = "2016-03-05";
+    rev = "3e5cd1ed149001198e582f9d3f5bfd564cde2896";
+    date = "2016-03-08";
     owner  = "golang";
     repo   = "net";
-    sha256 = "1wh68a5gyqcc906gh77q4z72i7b4h9inax510mijmzxavwk6h8sf";
+    sha256 = "0ppiwwl8x8sadpjk1v9ymrg5h4y2c4nhys8sj43pn0jyj0ccs46b";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -120,11 +120,11 @@ let
 
 
   protobuf = buildFromGitHub {
-    rev = "c75fbf01dc6cb73649c4cd4326182c3e44aa9dbb";
-    date = "2016-03-04";
+    rev = "b9504f23731d0b61ccfff7370a161d6c857ca00d";
+    date = "2016-03-09";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "08g8mn4qf8hb43hha1m2nrxn5bs1x85vc0wdspz5sq88w08m2ypj";
+    sha256 = "1aylzsbwf1wrvykxa0dv82fh67xfrqx2vrl0x4h1gqgk9071rn1j";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [ "code.google.com/p/goprotobuf" ];
   };
@@ -593,15 +593,11 @@ let
   };
 
   datadog-go = buildFromGitHub {
-    date = "2016-02-12";
-    rev = "694a2805f0014581c9da2bfbe2acd3192517eac7";
+    date = "2016-02-15";
+    rev = "8b6f59aa4f252b3b547523c21381330138bfe3ac";
     owner = "DataDog";
     repo = "datadog-go";
-    sha256 = "15rn7brx6r4hdak5iikwfjlv1n9v0dnh89c3lkq9d1zn2ffcbkdk";
-    postPatch = ''
-      grep -q '(e.text,' statsd/statsd.go
-      sed -i 's,e.text,e.Text,g' statsd/statsd.go
-    '';
+    sha256 = "0wxbcnp3xmifcsgq6kp1qgd4ymxhgnsakmvmsbraazmsglssi1lv";
   };
 
   dbus = buildFromGitHub {
@@ -634,11 +630,11 @@ let
   };
 
   dns = buildFromGitHub {
-    rev = "4adf880b0237527fe9e86701c412d6906e5fcf9c";
-    date = "2016-03-02";
+    rev = "b9171237b0642de1d8e8004f16869970e065f46b";
+    date = "2016-03-08";
     owner  = "miekg";
     repo   = "dns";
-    sha256 = "191qwxin1ahqnkvpxgp1avip528sqydac4qn7qsxqrvnd3fz0fxs";
+    sha256 = "1biz7j8mdyil2vks1hyvwkjh5na5fy45rn5fnxl68b9iw6r0xsc3";
   };
 
   docker = buildFromGitHub {
@@ -1435,11 +1431,11 @@ let
   };
 
   go-dockerclient = buildFromGitHub {
-    date = "2016-03-02";
-    rev = "ddbe4ddacd876fa8f9202e656c1972124c4a665d";
+    date = "2016-03-08";
+    rev = "9b6c9720043b74304a6dd07a2a901d16e7bf3d3d";
     owner = "fsouza";
     repo = "go-dockerclient";
-    sha256 = "0hm99xmr21426xcdh3drysl7vnimdach8j0m43ii42dgn3z8fhzm";
+    sha256 = "039xh7hazi022cslpzrxi704kv24x979r1irvjs3qg1pqvgcrsx7";
   };
 
   go-etcd = buildFromGitHub {
@@ -2422,11 +2418,11 @@ let
   };
 
   memberlist = buildFromGitHub {
-    date = "2016-02-25";
-    rev = "ae9a8d974c48e1dfe981177288831513bb5d3f4d";
+    date = "2016-03-07";
+    rev = "cef12ad58224d55cf26caa9e3d239c2fcb3432a2";
     owner = "hashicorp";
     repo = "memberlist";
-    sha256 = "0jpczvjgcvp3bv1y5w7jpsngg9l7m5r23ldfix6lzhyzm6xflpyb";
+    sha256 = "0sbb3s47zdsrwqwqjixwzzjl9smclfd71i6affbp77l968bxa663";
     propagatedBuildInputs = [ ugorji_go armon_go-metrics ];
   };
 

@@ -11,6 +11,7 @@ let
 
   configFile = writeText "NetworkManager.conf" ''
     [main]
+    dhcp=dhclient
     plugins=keyfile
 
     [keyfile]
@@ -109,18 +110,17 @@ in
 
       # Ugly hack for using the correct gnome3 packageSet
       basePackages = mkOption {
-        type = types.attrsOf types.package;
-        default = {
-          inherit
-            networkmanager
-            modemmanager
-            wpa_supplicant
-            networkmanager-openvpn
-            networkmanager-vpnc
-            networkmanager-openconnect
-            networkmanager-pptp
-            networkmanager-l2tp;
-        };
+        type = types.listOf types.package;
+        default = [
+          pkgs.networkmanager
+          pkgs.modemmanager
+          pkgs.networkmanager-l2tp
+          pkgs.networkmanager-openconnect
+          pkgs.networkmanager-openvpn
+          pkgs.networkmanager-pptp
+          pkgs.networkmanager-vpnc
+          pkgs.wpa_supplicant
+        ];
         internal = true;
       };
 
@@ -130,7 +130,7 @@ in
         description = ''
           Extra packages that provide NetworkManager plugins.
         '';
-        apply = list: (attrValues cfg.basePackages) ++ list;
+        apply = list: (cfg.basePackages) ++ list;
       };
 
       appendNameservers = mkOption {
@@ -188,35 +188,46 @@ in
       message = "You can not use networking.networkmanager with services.networking.wireless";
     }];
 
-    boot.kernelModules = [ "ppp_mppe" ]; # Needed for most (all?) PPTP VPN connections.
+    boot.kernelModules = [
+      # Needed for most (all?) PPTP VPN connections.
+      "ppp_mppe"
+    ];
 
-    environment.etc = with cfg.basePackages; [
-      { source = ipUpScript;
+    environment.etc = [
+      {
+        source = ipUpScript;
         target = "NetworkManager/dispatcher.d/01nixos-ip-up";
       }
-      { source = configFile;
+      {
+        source = configFile;
         target = "NetworkManager/NetworkManager.conf";
       }
-      { source = "${networkmanager-openvpn}/etc/NetworkManager/VPN/nm-openvpn-service.name";
+      {
+        source = "${pkgs.networkmanager-openvpn}/etc/NetworkManager/VPN/nm-openvpn-service.name";
         target = "NetworkManager/VPN/nm-openvpn-service.name";
       }
-      { source = "${networkmanager-vpnc}/etc/NetworkManager/VPN/nm-vpnc-service.name";
+      {
+        source = "${pkgs.networkmanager-vpnc}/etc/NetworkManager/VPN/nm-vpnc-service.name";
         target = "NetworkManager/VPN/nm-vpnc-service.name";
       }
-      { source = "${networkmanager-openconnect}/etc/NetworkManager/VPN/nm-openconnect-service.name";
+      {
+        source = "${pkgs.networkmanager-openconnect}/etc/NetworkManager/VPN/nm-openconnect-service.name";
         target = "NetworkManager/VPN/nm-openconnect-service.name";
       }
-      { source = "${networkmanager-pptp}/etc/NetworkManager/VPN/nm-pptp-service.name";
+      {
+        source = "${pkgs.networkmanager-pptp}/etc/NetworkManager/VPN/nm-pptp-service.name";
         target = "NetworkManager/VPN/nm-pptp-service.name";
       }
-      { source = "${networkmanager-l2tp}/etc/NetworkManager/VPN/nm-l2tp-service.name";
+      {
+        source = "${pkgs.networkmanager-l2tp}/etc/NetworkManager/VPN/nm-l2tp-service.name";
         target = "NetworkManager/VPN/nm-l2tp-service.name";
       }
-    ] ++ optional (cfg.appendNameservers == [] || cfg.insertNameservers == [])
-           { source = overrideNameserversScript;
-             target = "NetworkManager/dispatcher.d/02overridedns";
-           }
-      ++ lib.imap (i: s: {
+    ] ++ optionals (cfg.appendNameservers == [] || cfg.insertNameservers == []) [
+      {
+        source = overrideNameserversScript;
+        target = "NetworkManager/dispatcher.d/02overridedns";
+      }
+    ] ++ lib.imap (i: s: {
         text = s.source;
         target = "NetworkManager/dispatcher.d/${dispatcherTypesSubdirMap.${s.type}}03userscript${lib.fixedWidthNumber 4 i}";
       }) cfg.dispatcherScripts;

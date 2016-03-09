@@ -9,12 +9,11 @@
 , bluez
 , dbus
 , dbus-glib
-, dhcp
-, dhcpcd
 , dnsmasq
 , ethtool
 , glib
 , gnused
+, gnutls
 , gobject-introspection
 , iptables
 , libgcrypt
@@ -30,18 +29,27 @@
 , polkit
 , ppp
 , readline
-, substituteAll
-, systemd_lib
+, systemd_full
 , util-linux_lib
 , vala
 , wirelesstools
 , xz
+
+, dhcp-client ? "dhclient"
+  , dhcp ? null
+  , dhcpcd ? null
 }:
 
 with {
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    optionals
+    wtFlag;
 };
+
+assert dhcp-client == "dhclient" || dhcp-client == "dhcpcd";
+assert dhcp-client == "dhclient" -> dhcp != null;
+assert dhcp-client == "dhcpcd" -> dhcpcd != null;
 
 stdenv.mkDerivation rec {
   name = "network-manager-${version}";
@@ -61,12 +69,18 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    avahi
+    bind
     bluez
     dbus
     dbus-glib
     dnsmasq
+    ethtool
     glib
+    gnused
+    gnutls
     gobject-introspection
+    iptables
     libgcrypt
     libgudev
     libndp
@@ -75,14 +89,20 @@ stdenv.mkDerivation rec {
     modemmanager
     newt
     nss
+    openresolv
+    perl
     polkit
     ppp
     readline
-    systemd_lib
+    systemd_full
     util-linux_lib
     vala
     wirelesstools
     xz
+  ] ++ optionals (dhcp-client == "dhclient") [
+    dhcp
+  ] ++ optionals (dhcp-client == "dhcpcd") [
+    dhcpcd
   ];
 
   patches = [
@@ -93,20 +113,22 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  preConfigure = ''
-    substituteInPlace tools/glib-mkenums \
-      --replace '/usr/bin/perl' '${perl}/bin/perl'
-    substituteInPlace src/NetworkManagerUtils.c \
-      --replace '/sbin/modprobe' '/run/current-system/sw/sbin/modprobe'
-    substituteInPlace data/85-nm-unmanaged.rules \
-      --replace '/bin/sh' '${stdenv.shell}' \
-      --replace '/usr/sbin/ethtool' '${ethtool}/sbin/ethtool' \
-      --replace '/bin/sed' '${gnused}/bin/sed'
-    configureFlagsArray+=("--with-udev-dir=$out/lib/udev")
-  '';
+  preConfigure =
+    /* fix hardcoded `mobprobe` search path */ ''
+      sed -i src/NetworkManagerUtils.c \
+        -e 's,/sbin/modprobe,/run/current-system/sw/sbin/modprobe,'
+    '' + /* fix hardcoded paths in udev rules */ ''
+      sed -i data/84-nm-drivers.rules \
+        -e 's,/bin/sh,${stdenv.shell},'
+      sed -i data/85-nm-unmanaged.rules \
+        -e 's,/bin/sh,${stdenv.shell},' \
+        -e 's,/usr/sbin/ethtool,${ethtool}/sbin/ethtool,' \
+        -e 's,/bin/sed,${gnused}/bin/sed,'
+    '' + ''
+      configureFlagsArray+=("--with-udev-dir=$out/lib/udev")
+    '';
 
   configureFlags = [
-    #"--with-distro=exherbo"
     "--sysconfdir=/etc"
     "--localstatedir=/var"
 
@@ -142,9 +164,8 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
 
     #"--with-config-plugins-default"
-    #"--with-dist-version"
     "--with-wext"
-    #"--with-udev-dir=$(out)/lib/udev"
+    "--with-udev-dir=$(out)/lib/udev"
     "--with-systemunitdir=$(out)/etc/systemd/system"
     "--with-session-tracking=systemd"
     "--with-suspend-resume=systemd"
@@ -156,8 +177,8 @@ stdenv.mkDerivation rec {
     "--with-pppd=${ppp}/bin/pppd"
     #"--with-pppoe"
     "--with-modem-manager-1"
-    "--with-dhclient=${dhcp}/bin/dhclient"
-    "--with-dhcpcd=${dhcpcd}/sbin/dhcpcd"
+    (wtFlag "dhclient" (dhcp-client == "dhclient") "${dhcp}/bin/dhclient")
+    (wtFlag "dhcpcd" (dhcp-client == "dhcpcd") "${dhcpcd}/sbin/dhcpcd")
     "--with-resolvconf=${openresolv}/sbin/resolvconf"
     #"--with-netconfig"
     "--with-iptables=${iptables}/bin/iptables"
@@ -190,16 +211,13 @@ stdenv.mkDerivation rec {
       mkdir -pv $out/etc/systemd/system
       ln -sv \
         $out/lib/systemd/system/NetworkManager.service \
-        $out/etc/systemd/system/network-manager.service
+        $out/etc/systemd/system/networkmanager.service
       ln -sv \
         $out/lib/systemd/system/NetworkManager.service \
         $out/etc/systemd/system/dbus-org.freedesktop.NetworkManager.service
       ln -sv \
         $out/lib/systemd/system/NetworkManager-dispatcher.service \
         $out/etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service
-    '' + ''
-      sed -i $out/lib/udev/rules.d/84-nm-drivers.rules \
-        -e 's|/bin/sh|${stdenv.shell}|'
     '';
 
   meta = with stdenv.lib; {

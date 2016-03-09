@@ -28,6 +28,7 @@
 , libmms
 , libmodplug
 , libmpdclient
+, libogg
 , libopus
 , libsamplerate
 , libshout
@@ -65,12 +66,12 @@ with {
 stdenv.mkDerivation rec {
   name = "mpd-${version}";
   versionMajor = "0.19";
-  versionMinor = "12";
+  versionMinor = "13";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url    = "http://www.musicpd.org/download/mpd/${versionMajor}/${name}.tar.xz";
-    sha256 = "0xg8w5vn6xd0yfw55qj6wnav7v14nmr00s3d4w5gixbjrv3ycvvv";
+    sha256 = "0mcsj7jchip15r3d5yrwq72c5plgsl0w3x7p5vzdbcksz8w4h0gi";
   };
 
   buildInputs = [
@@ -100,6 +101,7 @@ stdenv.mkDerivation rec {
     libmms
     libmodplug
     libmpdclient
+    libogg
     libopus
     libsamplerate
     libshout

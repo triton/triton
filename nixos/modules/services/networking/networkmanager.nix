@@ -11,7 +11,7 @@ let
 
   configFile = writeText "NetworkManager.conf" ''
     [main]
-    dhcp=dhclient
+    dhcp=${pkgs.networkmanager.dhcp-client}
     plugins=keyfile
 
     [keyfile]

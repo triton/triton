@@ -220,6 +220,11 @@ stdenv.mkDerivation rec {
         $out/etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service
     '';
 
+  passthru = {
+    inherit
+      dhcp-client;
+  };
+
   meta = with stdenv.lib; {
     description = "Network configuration and management tool";
     homepage = http://projects.gnome.org/NetworkManager/;

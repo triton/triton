@@ -44,6 +44,8 @@ stdenv.mkDerivation rec {
     "--libdir=lib"
     "--openssldir=/etc/ssl"
     # TODO: Enable krb5
+    "disable-ssl2"
+    "disable-ssl3"
   ];
 
   preBuild = ''

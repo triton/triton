@@ -1046,6 +1046,8 @@ libcroco = callPackage ../all-pkgs/libcroco { };
 
 libdrm = callPackage ../all-pkgs/libdrm { };
 
+libebml = callPackage ../all-pkgs/libebml { };
+
 libelf = callPackage ../all-pkgs/libelf { };
 
 libev = callPackage ../all-pkgs/libev { };
@@ -6675,8 +6677,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libeatmydata = callPackage ../development/libraries/libeatmydata { };
 #
 #  libeb = callPackage ../development/libraries/libeb { };
-#
-  libebml = callPackage ../development/libraries/libebml { };
 #
 #  libebur128 = callPackage ../development/libraries/libebur128 { };
 #

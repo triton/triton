@@ -30,11 +30,11 @@ let
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
-  version = "9.10.3-P3";
+  version = "9.10.3-P4";
 
   src = fetchurl {
     url = "http://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
-    sha256 = "10yblk8qbb85qxakzdjy5qmqvqj4rlcqsqvlkriglampzg8i0239";
+    sha256 = "0giys46ifypysf799w9v58kbaz1v3fbdzw3s212znifzzfsl9h1a";
   };
 
   nativeBuildInputs = [

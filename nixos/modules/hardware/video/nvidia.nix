@@ -82,7 +82,7 @@ in
 
     services.acpid.enable = true;
 
-    environment.etc."OpenCL/vendors/nvidia.icd".source = "${nvidia_x11}/lib/vendors/nvidia.icd";
+    environment.etc."OpenCL/vendors/nvidia.icd".source = "${nvidia-drivers}/lib/vendors/nvidia.icd";
 
   };
 

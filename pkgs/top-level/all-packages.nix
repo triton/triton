@@ -8843,10 +8843,24 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
       e1000e = kCallPackage ../os-specific/linux/e1000e {};
 
-      nvidia_x11_legacy340 = kCallPackage ../all-pkgs/nvidia-drivers { channel = "legacy340"; };
-      nvidia_x11_long      = kCallPackage ../all-pkgs/nvidia-drivers { channel = "long-lived"; };
-      nvidia_x11_short     = kCallPackage ../all-pkgs/nvidia-drivers { channel = "short-lived"; };
-      nvidia_x11_testing   = kCallPackage ../all-pkgs/nvidia-drivers { channel = "testing"; };
+      nvidia-drivers_legacy304 = kCallPackage ../all-pkgs/nvidia-drivers {
+        channel = "legacy304";
+      };
+      nvidia-drivers_legacy340 = kCallPackage ../all-pkgs/nvidia-drivers {
+        channel = "legacy340";
+      };
+      nvidia-drivers_long = kCallPackage ../all-pkgs/nvidia-drivers {
+        channel = "long-lived";
+      };
+      nvidia-drivers_short = kCallPackage ../all-pkgs/nvidia-drivers {
+        channel = "short-lived";
+      };
+      nvidia-drivers_testing = kCallPackage ../all-pkgs/nvidia-drivers {
+        channel = "testing";
+      };
+      nvidia-drivers_vulkan = kCallPackage ../all-pkgs/nvidia-drivers {
+        channel = "vulkan";
+      };
 
       spl = kCallPackage ../os-specific/linux/spl {
         configFile = "kernel";

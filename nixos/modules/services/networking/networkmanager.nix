@@ -1,7 +1,15 @@
 { config, lib, pkgs, ... }:
 
-with pkgs;
-with lib;
+with {
+  inherit (lib)
+    concatStrings
+    concatStringsSep
+    mkIf
+    mkOption
+    optionals
+    optionalString
+    types;
+};
 
 let
   cfg = config.networking.networkmanager;
@@ -9,7 +17,7 @@ let
   # /var/lib/misc is for dnsmasq.leases.
   stateDirs = "/var/lib/NetworkManager /var/lib/dhclient /var/lib/misc";
 
-  configFile = writeText "NetworkManager.conf" ''
+  configFile = pkgs.writeText "NetworkManager.conf" ''
     [main]
     dhcp=${pkgs.networkmanager.dhcp-client}
     plugins=keyfile
@@ -18,7 +26,7 @@ let
     ${optionalString (config.networking.hostName != "")
       ''hostname=${config.networking.hostName}''}
     ${optionalString (cfg.unmanaged != [])
-      ''unmanaged-devices=${lib.concatStringsSep ";" cfg.unmanaged}''}
+      ''unmanaged-devices=${concatStringsSep ";" cfg.unmanaged}''}
 
     [logging]
     level=WARN
@@ -50,7 +58,7 @@ let
     });
   '';
 
-  ipUpScript = writeScript "01nixos-ip-up" ''
+  ipUpScript = pkgs.writeScript "01nixos-ip-up" ''
     #!/bin/sh
     if test "$2" = "up"; then
       ${config.systemd.package}/bin/systemctl start ip-up.target
@@ -58,19 +66,19 @@ let
     fi
   '';
 
-  ns = xs: writeText "nameservers" (
+  ns = xs: pkgs.writeText "nameservers" (
     concatStrings (map (s: "nameserver ${s}\n") xs)
   );
 
-  overrideNameserversScript = writeScript "02overridedns" ''
+  overrideNameserversScript = pkgs.writeScript "02overridedns" ''
     #!/bin/sh
-    tmp=`${coreutils}/bin/mktemp`
-    ${gnused}/bin/sed '/nameserver /d' /etc/resolv.conf > $tmp
-    ${gnugrep}/bin/grep 'nameserver ' /etc/resolv.conf | \
-      ${gnugrep}/bin/grep -vf ${ns (cfg.appendNameservers ++ cfg.insertNameservers)} > $tmp.ns
-    ${optionalString (cfg.appendNameservers != []) "${coreutils}/bin/cat $tmp $tmp.ns ${ns cfg.appendNameservers} > /etc/resolv.conf"}
-    ${optionalString (cfg.insertNameservers != []) "${coreutils}/bin/cat $tmp ${ns cfg.insertNameservers} $tmp.ns > /etc/resolv.conf"}
-    ${coreutils}/bin/rm -f $tmp $tmp.ns
+    tmp=`${pkgs.coreutils}/bin/mktemp`
+    ${pkgs.gnused}/bin/sed '/nameserver /d' /etc/resolv.conf > $tmp
+    ${pkgs.gnugrep}/bin/grep 'nameserver ' /etc/resolv.conf | \
+      ${pkgs.gnugrep}/bin/grep -vf ${ns (cfg.appendNameservers ++ cfg.insertNameservers)} > $tmp.ns
+    ${optionalString (cfg.appendNameservers != []) "${pkgs.coreutils}/bin/cat $tmp $tmp.ns ${ns cfg.appendNameservers} > /etc/resolv.conf"}
+    ${optionalString (cfg.insertNameservers != []) "${pkgs.coreutils}/bin/cat $tmp ${ns cfg.insertNameservers} $tmp.ns > /etc/resolv.conf"}
+    ${pkgs.coreutils}/bin/rm -f $tmp $tmp.ns
   '';
 
   dispatcherTypesSubdirMap = {
@@ -92,9 +100,9 @@ in
         description = ''
           Whether to use NetworkManager to obtain an IP address and other
           configuration for all network interfaces that are not manually
-          configured. If enabled, a group <literal>networkmanager</literal>
-          will be created. Add all users that should have permission
-          to change network settings to this group.
+          configured. If enabled, a group `networkmanager` will be created.
+          Add all users that should have permission to change network
+          settings to this group.
         '';
       };
 

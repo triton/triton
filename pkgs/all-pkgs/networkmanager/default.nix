@@ -147,13 +147,13 @@ stdenv.mkDerivation rec {
     # TODO: wimax support, requires intel wimax sdk
     "--disable-wimax"
     #"--enable-teamdctl"
-    "--enable-polkit"
-    "--enable-polkit-agent"
+    (enFlag "polkit" (polkit != null) null)
+    (enFlag "polkit-agent" (polkit != null) null)
     #"--enable-modify-system"
-    "--enable-ppp"
+    (enFlag "ppp" (ppp != null) null)
     "--enable-bluez5-dun"
     #"--enable-concheck"
-    "--enable-more-warnings"
+    "--disable-more-warnings"
     "--disable-more-asserts"
     "--disable-more-logging"
     "--disable-lto"
@@ -185,7 +185,7 @@ stdenv.mkDerivation rec {
     "--with-dnsmasq=${dnsmasq}/bin/dnsmasq"
     #"--with-system-ca-path"
     "--with-kernel-firmware-dir=/run/current-system/firmware"
-    "--with-libsoup"
+    (wtFlag "libsoup" (libsoup != null) null)
     "--with-nmtui"
     "--without-valgrind"
     "--with-tests"
@@ -202,9 +202,8 @@ stdenv.mkDerivation rec {
   postInstall =
     /* FIXME: Workaround until Triton-LINUX dbus+systemd supports
        at_console policy */ ''
-      substituteInPlace \
-        $out/etc/dbus-1/system.d/org.freedesktop.NetworkManager.conf \
-        --replace 'at_console="true"' 'group="networkmanager"'
+      sed -i $out/etc/dbus-1/system.d/org.freedesktop.NetworkManager.conf \
+        -e 's/at_console="true"/group="networkmanager"/'
     '' +
     /* systemd in Triton-LINUX doesn't use `systemctl enable`, so we
        need to establish aliases ourselves. */ ''
@@ -233,7 +232,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

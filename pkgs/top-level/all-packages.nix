@@ -666,7 +666,7 @@ dnsmasq = callPackage ../all-pkgs/dnsmasq { };
 
 dos2unix = callPackage ../all-pkgs/dos2unix { };
 
-dropbox = qt5.callPackage ../all-pkgs/dropbox { };
+dropbox = callPackage ../all-pkgs/dropbox { };
 
 e2fsprogs = callPackage ../all-pkgs/e2fsprogs { };
 

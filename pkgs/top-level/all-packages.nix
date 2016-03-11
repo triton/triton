@@ -1068,6 +1068,8 @@ libgfbgraph = callPackage ../all-pkgs/libgfbgraph { };
 
 libgksu = callPackage ../all-pkgs/libgksu { };
 
+libglvnd = callPackage ../all-pkgs/libglvnd { };
+
 libgnomekbd = callPackage ../all-pkgs/libgnomekbd { };
 
 libgpg-error = callPackage ../all-pkgs/libgpg-error { };

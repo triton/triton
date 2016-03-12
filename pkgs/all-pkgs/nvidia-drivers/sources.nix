@@ -32,5 +32,11 @@
     sha256i686   = "94cccc3ff10ee9544f60bf1d32d04dddabc5103880b57895ea60e1167b89a155";
     sha256x86_64 = "406ac161db6e3005bbfb4074becdc42e756f0e06440a072046039e64d63ed189";
   };
+  "vulkan" = {
+    versionMajor = "355";
+    versionMinor = "00.29";
+    sha256i686   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    sha256x86_64 = "1n2ad6db6zg7rp6vdf8pz9j92s8d5ac6npyi6bnmia6l5i40391i";
+  };
 
 }

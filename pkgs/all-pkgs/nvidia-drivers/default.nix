@@ -1,16 +1,18 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, makeWrapper
+, nukeReferences
 
 , buildConfig ? "all"
 , channel ? null
 
 # Kernelspace dependencies
 , kernel ? null
-, nukeReferences
 
 # Userspace dependencies
-, xlibs
+, libglvnd
+, xorg
 , zlib
 
 # Just needed for the passthru driver path
@@ -20,7 +22,7 @@
 
 , nvidiasettingsSupport ? true
   , atk
-  , gdk-pixbuf
+  , gdk-pixbuf-core
   , glib
   , pango
   , gtk2 # <346
@@ -45,8 +47,7 @@
 
 with {
   inherit (stdenv)
-    system
-    isx86_64;
+    targetSystem;
   inherit (stdenv.lib)
     any
     makeLibraryPath
@@ -78,13 +79,14 @@ assert any (n: n == channel) [
   "long-lived"
   "short-lived"
   "testing"
+  "vulkan"
 ];
 assert buildKernelspace -> kernel != null;
 assert nvidiasettingsSupport -> (
-  atk != null &&
-  gdk-pixbuf != null &&
-  glib != null &&
-  pango != null
+  atk != null
+  && gdk-pixbuf-core != null
+  && glib != null
+  && pango != null
   # TODO: add gtk2/3 requirement
 );
 assert libsOnly -> !buildKernelspace;
@@ -95,22 +97,35 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url =
-      if system == "i686-linux" then
-        "http://us.download.nvidia.com/XFree86/Linux-x86/${version}/" +
-        "NVIDIA-Linux-x86-${version}.run"
-      else if system == "x86_64-linux" then
-        "http://us.download.nvidia.com/XFree86/Linux-x86_64/${version}/" +
-        "NVIDIA-Linux-x86_64-${version}-no-compat32.run"
+      if targetSystem == "i686-linux" then
+        if channel == "vulkan" then
+          "https://developer.nvidia.com/linux32bit"
+        else
+          "http://us.download.nvidia.com/XFree86/Linux-x86/${version}/" +
+          "NVIDIA-Linux-x86-${version}.run"
+      else if targetSystem == "x86_64-linux" then
+        if channel == "vulkan" then
+          "https://developer.nvidia.com/linux64bit"
+        else
+          "http://us.download.nvidia.com/XFree86/Linux-x86_64/${version}/" +
+          "NVIDIA-Linux-x86_64-${version}-no-compat32.run"
       else
-        throw "The NVIDIA drivers do not support the `${system}' platform";
+        throw "The NVIDIA drivers do not support the `${targetSystem}' platform";
+    # Remove rename once vulkan is mainlined
+    name = "NVIDIA-${targetSystem}-${version}.run";
     sha256 =
-      if system == "i686-linux" then
+      if targetSystem == "i686-linux" then
         sha256i686
-      else if system == "x86_64-linux" then
+      else if targetSystem == "x86_64-linux" then
         sha256x86_64
       else
-        throw "The NVIDIA drivers do not support the `${system}' platform";
+        throw "The NVIDIA drivers do not support the `${targetSystem}' platform";
   };
+
+  nativeBuildInputs = [
+    makeWrapper
+    nukeReferences
+  ];
 
   kernel =
     if buildKernelspace then
@@ -141,35 +156,32 @@ stdenv.mkDerivation {
     buildUserspace
     libsOnly
     nvidiasettingsSupport
+    targetSystem
     version
     versionMajor;
 
-  nativeBuildInputs = [ nukeReferences ];
+  builder = ./builder-generic.sh;
 
-  builder = ./builder.sh;
-
-  glPath = makeLibraryPath [
-    xlibs.libXext
-    xlibs.libX11
-    xlibs.libXrandr
-  ];
-  programPath = makeLibraryPath [
-    xlibs.libXv
+  libXvPath = makeLibraryPath [
+    xorg.libXv
   ];
   allLibPath = makeLibraryPath [
     stdenv.cc.cc
-    xlibs.libX11
-    xlibs.libXext
-    xlibs.libXrandr
+    xorg.libX11
+    xorg.libXau
+    xorg.libxcb
+    #xorg.libXdcmp
+    xorg.libXext
+    xorg.libXrandr
     zlib
   ];
   gtkPath = optionalString (!libsOnly) (
     makeLibraryPath (
       [
         atk
-        pango
+        gdk-pixbuf-core
         glib
-        gdk-pixbuf
+        pango
       ] ++ (
         if versionAtLeast versionMajor "346" then [
           cairo
@@ -181,8 +193,17 @@ stdenv.mkDerivation {
     )
   );
 
+  /*preFixup = ''
+    ln -fns ${libglvnd}/include/glvnd $out/include
+    find "${libglvnd}/lib" -maxdepth 1 -iwholename '*.so*' | while read -r glvndLib ; do
+      ln -fns $glvndLib $out/lib
+    done
+    ln -fns \
+      ${libglvnd}/lib/xorg/modules/extensions/x11glvnd.so \
+      $out/lib/xorg/modules/extensions
+  '';*/
+
   dontStrip = true;
-  enableParallelBuilding = true;
 
   passthru = {
     inherit
@@ -196,10 +217,15 @@ stdenv.mkDerivation {
       else
         false;
     cudaUVM =
-      if ((versionAtLeast versionMajor "340" &&
-           versionOlder versionMajor "346") ||
-          (versionAtLeast versionMajor "346" &&
-           isx86_64)) then
+      # 340.xx supported UVM for both i686 & x86_64
+      if versionAtLeast versionMajor "340"
+         && versionOlder versionMajor "346"
+         && ((elem targetSystem platforms.i686-linux)
+              || (elem targetSystem platforms.x86_64-linux)) then
+        true
+      # 346.xx+ only supports UVM for x86_64
+      else if versionAtLeast versionMajor "346"
+              && (elem targetSystem platforms.x86_64) then
         true
       else
         false;

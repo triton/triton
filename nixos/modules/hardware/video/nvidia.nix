@@ -24,7 +24,8 @@ let
       kernelPackages.nvidia-drivers_legacy340
     else if elem "nvidia-vulkan" drivers then
       kernelPackages.nvidia-drivers_vulkan
-    else null;
+    else
+      null;
 
   nvidia-drivers = nvidiaForKernel config.boot.kernelPackages;
   nvidia-drivers_libs32 = (nvidiaForKernel pkgs_i686.linuxPackages).override {
@@ -65,8 +66,8 @@ in
       nvidia-drivers
     ];
 
-    # nvidia-uvm is required by CUDA applications.
     boot.kernelModules = [
+      # nvidia-uvm is required by CUDA applications.
       "nvidia-uvm"
     ];
 
@@ -82,7 +83,7 @@ in
 
     services.acpid.enable = true;
 
-    environment.etc."OpenCL/vendors/nvidia.icd".source = "${nvidia-drivers}/lib/vendors/nvidia.icd";
+    environment.etc."OpenCL/vendors/nvidia.icd".source = "${nvidia-drivers}/etc/OpenCL/vendors/nvidia.icd";
 
   };
 

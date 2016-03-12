@@ -384,7 +384,7 @@ installPhase() {
     nvidia_lib_install 0 0 'libcuda'
     nvidia_lib_install 304 0 'libnvidia-compiler'
     # CUDA video decoder library
-    nvidia_lib_install 0 0 'libnvcuvid'
+    nvidia_lib_install 0 0 'libnvcuvid' '1'
     # Fat (multiarchitecture) binary loader
     nvidia_lib_install 361 0 'libnvidia-fatbinaryloader'
     # PTX JIT Compiler (Parallel Thread Execution (PTX) for CUDA)
@@ -577,7 +577,11 @@ postFixup() {
   fi
 
   # Fail if libraries contain broken RPATH's
-  [ -z "$(ldd ${out}/lib/* 1&>2 | grep --only-matching 'not found')" ]
+  [ -z "$(ldd ${out}/lib/* 2> /dev/null | grep -B 10 'not found')" ] || {
+    echo "ERROR: failed to patch RPATH's for:"
+    ldd ${out}/lib/* 2> /dev/null | grep -B 10 'not found'
+    return 1
+  }
 }
 
 genericBuild

@@ -172,7 +172,7 @@ stdenv.mkDerivation {
     xorg.libX11
     xorg.libXau
     xorg.libxcb
-    #xorg.libXdcmp
+    xorg.libXdmcp
     xorg.libXext
     xorg.libXrandr
     zlib

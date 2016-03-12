@@ -96,22 +96,17 @@ nvidia_lib_install() {
     # Install the library
     cp -pdv "${3}.so${soVersion}" "${out}/lib/${6}"
 
-    # Always create a symlink from the library to *.so & *.so.1
+    # Always create a symlink from the library to *.so
     if [ ! -z "${soVersion}" ] ; then
       ln -fnrsv \
         "${out}/lib/${outDir}${libFile}.so${soVersion}" \
         "${out}/lib/${outDir}${libFile}.so"
     fi
-    if [ "${soVersion}" != '.1' ] ; then
-      ln -fnrsv \
-        "${out}/lib/${outDir}${libFile}.so${soVersion}" \
-        "${out}/lib/${outDir}${libFile}.so.1"
-    fi
 
     # If $4 wasn't 1, then create a *.so.$4 symlink
     # Make sure that we don't set it if we haven't passed a value
     if [ ! -z "${4}" ] ; then
-      if [ "${4}" != '-' ] && [ "${4}" != "${soVersion}" ] ; then
+      if [ "${4}" != '-' ] && [ ".${4}" != "${soVersion}" ] ; then
         ln -fnrsv \
           "${out}/lib/${outDir}${libFile}.so${soVersion}" \
           "${out}/lib/${outDir}${libFile}.so.${4}"
@@ -323,11 +318,12 @@ installPhase() {
     #
 
     ## Graphics libraries
-    # OpenGL API entry point (NVIDIA)
-    nvidia_lib_install 0 0 'libGL'
-    # OpenGL API entry point (GLVND) 361+, required for EGL
-    # FIXME
-    ###nvidia_lib_install 361 0 'libGL' '-' '1.0.0'
+    # OpenGL GLX API entry point (NVIDIA)
+    # Triton only support the NVIDIA vendor libGL for drivers that
+    # do not support GLVND (<361).
+    nvidia_lib_install 0 360 'libGL'
+    # OpenGL GLX API entry point (GLVND)
+    nvidia_lib_install 361 0 'libGL' '1' '1.0.0'
     # OpenGL ES API entry point
     nvidia_lib_install 340 360 'libGLESv1_CM' # Renamed to *.so.1 in 361+
     nvidia_lib_install 361 0 'libGLESv1_CM' '-' '1'
@@ -335,20 +331,25 @@ installPhase() {
     nvidia_lib_install 361 0 'libGLESv2' '-' '2'
     # EGL API entry point
     nvidia_lib_install 340 354 'libEGL' # Renamed to *.so.1 in 355+
-    # FIXME
-    ###nvidia_lib_install 355 0 'libEGL' '-' '1'
+    nvidia_lib_install 355 0 'libEGL' '-' '1'
 
     ## Vendor neutral graphics libraries
-    nvidia_lib_install 355 0 'libOpenGL' '-' '0'
-    nvidia_lib_install 361 0 'libGLX' '-' '0'
-    nvidia_lib_install 355 0 'libGLdispatch' '-' '0'
+    nvidia_lib_install 355 0 'libOpenGL' '0' '0'
+    nvidia_lib_install 361 0 'libGLX' '0' '0'
+    nvidia_lib_install 355 0 'libGLdispatch' '0' '0'
 
     ## Vendor implementation graphics libraries
-    nvidia_lib_install 361 0 'libGLX_nvidia'
-    nvidia_lib_install 361 0 'libEGL_nvidia'
-    nvidia_lib_install 361 0 'libGLESv1_CM_nvidia'
-    nvidia_lib_install 361 0 'libGLESv2_nvidia'
+    nvidia_lib_install 361 0 'libGLX_nvidia' '0'
+    nvidia_lib_install 361 0 'libEGL_nvidia' '0'
+    nvidia_lib_install 361 0 'libGLESv1_CM_nvidia' '1'
+    nvidia_lib_install 361 0 'libGLESv2_nvidia' '2'
     nvidia_lib_install 304 0 'libvdpau_nvidia'
+
+    # GLX indirect support
+    # CVE-2014-8298: http://goo.gl/QTEVwu
+    #ln -fsv \
+    #  "${out}/lib/libGLX_nvidia.${version}" \
+    #  "${out}/lib/libGLX_indirect.so.0"
 
     ## Internal driver components
     nvidia_lib_install 340 0 'libnvidia-eglcore'

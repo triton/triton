@@ -43,6 +43,8 @@
  *
  * If your gpu requires a version that is unsupported it is
  * recommended to use the nouveau driver.
+ *
+ * Information on the GLVND transition: https://goo.gl/4mraRX
  */
 
 with {

@@ -93,6 +93,9 @@ assert nvidiasettingsSupport -> (
 );
 assert libsOnly -> !buildKernelspace;
 
+assert elem targetSystem platforms.bit32 && !libsOnly ->
+  throw "Only libs are supported for 32bit platforms";
+
 stdenv.mkDerivation {
   name = "nvidia-drivers-${buildConfig}-${version}"
        + "${optionalString buildKernelspace "-${kernel.version}"}";

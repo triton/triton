@@ -31,11 +31,11 @@ let
 in
 with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "openssh-7.2p1";
+  name = "openssh-7.2p2";
 
   src = fetchurl {
     url = "mirror://openbsd/OpenSSH/portable/${name}.tar.gz";
-    sha256 = "1hsa1f3641pdj57a55gmnvcya3wwww2fc2cvb77y95rm5xxw6g4p";
+    sha256 = "132lh9aanb0wkisji1d6cmsxi520m8nh7c7i9wi6m1s3l38q29x7";
   };
 
   patches = [ ./locale_archive.patch ]

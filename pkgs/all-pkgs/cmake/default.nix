@@ -11,8 +11,8 @@
 }:
 
 let
-  majorVersion = "3.4";
-  minorVersion = "3";
+  majorVersion = "3.5";
+  minorVersion = "0";
   version = "${majorVersion}.${minorVersion}";
 in
 
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "${meta.homepage}files/v${majorVersion}/cmake-${version}.tar.gz";
-    sha256 = "1yl0z422gr7zfc638chifv343vx0ig5gasvrh7nzf7b15488qgxp";
+    sha256 = "1yly38mpk2s08b4rglp9xcw5pxalk0whp9hrcg7j8qpxlkc3mj4j";
   };
 
   patches = [

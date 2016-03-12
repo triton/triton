@@ -482,6 +482,13 @@ installPhase() {
       # OpenCL ICD config
       mkdir -pv "${out}/lib/vendors"
       cp -pv 'nvidia.icd' "${out}/lib/vendors"
+
+      # X.Org driver configuration file
+      if [ ${versionMajor} -ge 346 ] ; then
+        mkdir -pv "$out/share/X11/xorg.conf.d"
+        cp -pv 'nvidia-drm-outputclass.conf' \
+          "$out/share/X11/xorg.conf.d"
+      fi
     fi
 
     #

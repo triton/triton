@@ -325,7 +325,7 @@ installPhase() {
     # OpenGL GLX API entry point (GLVND)
     nvidia_lib_install 361 0 'libGL' '1' '1.0.0'
     # OpenGL ES API entry point
-    nvidia_lib_install 340 360 'libGLESv1_CM' # Renamed to *.so.1 in 361+
+    nvidia_lib_install 340 360 'libGLESv1_CM' '1' # Renamed to *.so.1 in 361+
     nvidia_lib_install 361 0 'libGLESv1_CM' '-' '1'
     nvidia_lib_install 340 360 'libGLESv2' '2' # Renamed to *.so.2 in 361+
     nvidia_lib_install 361 0 'libGLESv2' '-' '2'
@@ -334,9 +334,9 @@ installPhase() {
     nvidia_lib_install 355 0 'libEGL' '-' '1'
 
     ## Vendor neutral graphics libraries
-    nvidia_lib_install 355 0 'libOpenGL' '0' '0'
-    nvidia_lib_install 361 0 'libGLX' '0' '0'
-    nvidia_lib_install 355 0 'libGLdispatch' '0' '0'
+    nvidia_lib_install 355 0 'libOpenGL' '-' '0'
+    nvidia_lib_install 361 0 'libGLX' '-' '0'
+    nvidia_lib_install 355 0 'libGLdispatch' '-' '0'
 
     ## Vendor implementation graphics libraries
     nvidia_lib_install 361 0 'libGLX_nvidia' '0'
@@ -361,17 +361,17 @@ installPhase() {
 
     ## Thread local storage libraries for NVIDIA OpenGL libraries
     nvidia_lib_install 304 0 'libnvidia-tls'
-    nvidia_lib_install 0 0 'tls/libnvidia-tls' '1' "${version}" 'tls'
-    ###nvidia_lib_install 0 0 'tls_test_dso' '1' '-'
+    nvidia_lib_install 0 0 'tls/libnvidia-tls' '-' "${version}" 'tls'
+    ###nvidia_lib_install 0 0 'tls_test_dso' '-' '-'
 
     # X.Org DDX driver
     if test -z "${libsOnly}" ; then
-      nvidia_lib_install 0 0 'nvidia_drv' '1' '-' 'xorg/modules/drivers'
+      nvidia_lib_install 0 0 'nvidia_drv' '-' '-' 'xorg/modules/drivers'
     fi
 
     # X.Org GLX extension module
     if test -z "${libsOnly}" ; then
-      nvidia_lib_install 0 0 'libglx' '1' "${version}" 'xorg/modules/extensions'
+      nvidia_lib_install 0 0 'libglx' '-' "${version}" 'xorg/modules/extensions'
     fi
 
     # X-Video Motion Compensation library

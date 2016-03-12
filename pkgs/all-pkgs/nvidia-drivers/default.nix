@@ -52,9 +52,11 @@ with {
     targetSystem;
   inherit (stdenv.lib)
     any
+    elem
     makeLibraryPath
     optionals
     optionalString
+    platforms
     versionAtLeast
     versionOlder;
   inherit (builtins.getAttr channel (import ./sources.nix))

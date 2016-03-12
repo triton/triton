@@ -6,6 +6,8 @@
 , check
 , gzip
 , pam
+
+, neoSupport ? false
 }:
 
 let
@@ -15,6 +17,7 @@ let
     sha256 = "0e859211cfe16a18a3b9cbf2ca3e280a23a79b4e40b60d8d01d0fde7336b6d50";
   };
 
+  # German keyboard layout
   neoSrc = fetchurl {
     name = "neo.map";
     url = "https://svn.neo-layout.org/linux/console/neo.map?r=2455";
@@ -42,11 +45,11 @@ stdenv.mkDerivation rec {
     ./console-fix.patch
   ];
 
-  postPatch = ''
+  postPatch = stdenv.lib.optionalString neoSupport ''
     mkdir -p data/keymaps/i386/neo
     cat "${neoSrc}" > data/keymaps/i386/neo/neo.map
     sed -i -e 's,^KEYMAPSUBDIRS *= *,&i386/neo ,' data/Makefile.am
-
+  '' + ''
     # Add the dvp keyboard in the dvorak folder
     ${gzip}/bin/gzip -c -d ${dvpSrc} > data/keymaps/i386/dvorak/dvp.map
 

@@ -58,8 +58,6 @@ in
   # Different ways of specifying the hash.
 , outputHash ? ""
 , outputHashAlgo ? ""
-, md5 ? ""
-, sha1 ? ""
 , sha256 ? ""
 , sha512 ? ""
 
@@ -97,7 +95,7 @@ assert url != "" -> urls == [];
 let
 
   hasHash = showURLs || (outputHash != "" && outputHashAlgo != "")
-    || md5 != "" || sha1 != "" || sha256 != "" || sha512 != "";
+    || sha256 != "" || sha512 != "";
   urls_ = if urls != [] then urls else [url];
 
 in
@@ -119,10 +117,24 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
   preferHashedMirrors = true;
 
   # New-style output content requirements.
-  outputHashAlgo = if outputHashAlgo != "" then outputHashAlgo else
-      if sha512 != "" then "sha512" else if sha256 != "" then "sha256" else if sha1 != "" then "sha1" else "md5";
-  outputHash = if outputHash != "" then outputHash else
-      if sha512 != "" then sha512 else if sha256 != "" then sha256 else if sha1 != "" then sha1 else md5;
+  outputHashAlgo =
+    if outputHashAlgo != "" then
+      outputHashAlgo
+    else if sha512 != "" then
+      "sha512"
+    else if sha256 != "" then
+      "sha256"
+    else
+      throw "Unsupported hash";
+  outputHash =
+    if outputHash != "" then
+      outputHash
+    else if sha512 != "" then
+      sha512
+    else if sha256 != "" then
+      sha256
+    else
+      throw "Unsupported hash";
 
   outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
 

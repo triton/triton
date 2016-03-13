@@ -1146,6 +1146,8 @@ libspectre = callPackage ../all-pkgs/libspectre { };
 
 libtheora = callPackage ../all-pkgs/libtheora { };
 
+libtirpc = callPackage ../all-pkgs/libtirpc { };
+
 libtool = callPackage ../all-pkgs/libtool { };
 
 libtorrent = callPackage ../all-pkgs/libtorrent { };
@@ -3112,8 +3114,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  libsrs2 = callPackage ../development/libraries/libsrs2 { };
 #
 #  libtermkey = callPackage ../development/libraries/libtermkey { };
-#
-#  libtirpc = callPackage ../development/libraries/ti-rpc { };
 #
   libshout = callPackage ../development/libraries/libshout { };
 #

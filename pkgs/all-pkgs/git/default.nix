@@ -28,11 +28,11 @@ let
 in
 stdenv.mkDerivation rec {
   name = "git-${version}";
-  version = "2.7.2";
+  version = "2.7.3";
 
   src = fetchurl {
     url = "https://www.kernel.org/pub/software/scm/git/git-${version}.tar.xz";
-    sha256 = "086ga30ksijfxad085ply83ddf955d2b8qxph5sw6c9hab77j15j";
+    sha256 = "1di96q86fq3pdn5d5v4fw9vf58gha5i9b3r880mxlh275n8ngi49";
   };
 
   patches = [

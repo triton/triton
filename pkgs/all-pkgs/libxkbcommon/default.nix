@@ -11,7 +11,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://xkbcommon.org/download/${name}.tar.xz";
-    sha1 = "z9dvxrkcyb4b7f2zybgkrqb9zcxrj9vi";
+    sha1Confirm = "7127993bfb69e13cdff25fb8b3c8f26ce6be5bfa";
+    sha256 = "176ii5dn2wh74q48sd8ac37ljlvgvp5f506glr96z6ibfhj7igch";
   };
 
   nativeBuildInputs = [

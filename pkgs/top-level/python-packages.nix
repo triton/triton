@@ -805,7 +805,8 @@ in {
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/f/funcsigs/${name}.tar.gz";
-      md5 = "fb1d031f284233e09701f6db1281c2a5";
+      md5Confirm = "fb1d031f284233e09701f6db1281c2a5";
+      sha256 = "0cr0fzd62ypd5yjspdx1mnisi4b3a99v67gy023n39hf1ggycg6q";
     };
 
     buildInputs = with self; [

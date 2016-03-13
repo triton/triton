@@ -8727,8 +8727,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  i7z = callPackage ../os-specific/linux/i7z { };
 #
-#  ifplugd = callPackage ../os-specific/linux/ifplugd { };
-#
 #  ima-evm-utils = callPackage ../os-specific/linux/ima-evm-utils { };
 #
 #  iomelt = callPackage ../os-specific/linux/iomelt { };

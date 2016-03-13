@@ -1,4 +1,4 @@
-{ stdenv, curl }: # Note that `curl' may be `null', in case of the native stdenv.
+{ stdenv, curl, openssl }: # Note that `curl' may be `null', in case of the native stdenv.
 
 let
 
@@ -61,6 +61,9 @@ in
 , sha256 ? ""
 , sha512 ? ""
 
+, sha1Confirm ? ""
+, md5Confirm ? ""
+
 , recursiveHash ? false
 
 , # Shell code executed before the file has been fetched.
@@ -96,6 +99,7 @@ let
 
   hasHash = showURLs || (outputHash != "" && outputHashAlgo != "")
     || sha256 != "" || sha512 != "";
+
   urls_ = if urls != [] then urls else [url];
 
 in
@@ -108,7 +112,10 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
 
   builder = ./builder.sh;
 
-  buildInputs = [ curl ];
+  buildInputs = [
+    curl
+    openssl
+  ];
 
   urls = urls_;
 
@@ -138,7 +145,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
 
   outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
 
-  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch downloadToTemp executable;
+  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch downloadToTemp executable sha1Confirm md5Confirm;
 
   # Doing the download on a remote machine just duplicates network
   # traffic, so don't do that.

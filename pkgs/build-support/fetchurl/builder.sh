@@ -36,6 +36,22 @@ finish() {
       chmod +x $downloadedFile
     fi
 
+    if [ -n "$sha1Confirm" ]; then
+      sha1="$(openssl sha1 -r "$downloadedFile" | tail -n 1 | awk '{print $1}')"
+      if [ "$sha1Confirm" != "$sha1" ]; then
+        echo "SHA1 hash does not match given $sha1Confirm" >&2
+        exit 1
+      fi
+    fi
+
+    if [ -n "$md5Confirm" ]; then
+      md5="$(openssl md5 -r "$downloadedFile" | tail -n 1 | awk '{print $1}')"
+      if [ "$md5Confirm" != "$md5" ]; then
+        echo "MD5 hash does not match given $md5Confirm" >&2
+        exit 1
+      fi
+    fi
+
     runHook postFetch
     stopNest
     exit 0

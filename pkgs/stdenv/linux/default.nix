@@ -75,6 +75,7 @@ let
         fetchurl = pkgs.fetchurl.override {
           stdenv = stage0Pkgs.stdenv;
           curl = bootstrapTools;
+          openssl = bootstrapTools;
         };
 
         fetchzip = pkgs.fetchzip {

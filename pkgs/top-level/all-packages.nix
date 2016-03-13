@@ -1258,6 +1258,8 @@ musl = callPackage ../all-pkgs/musl { };
 
 mutter = callPackage ../all-pkgs/mutter { };
 
+nano = callPackage ../all-pkgs/nano { };
+
 nasm = callPackage ../all-pkgs/nasm { };
 
 nautilus = callPackage ../all-pkgs/nautilus { };
@@ -10807,8 +10809,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  mypaint = callPackage ../applications/graphics/mypaint { };
 #
 #  mythtv = callPackage ../applications/video/mythtv { };
-#
-  nano = callPackage ../applications/editors/nano { };
 #
 #  nanoblogger = callPackage ../applications/misc/nanoblogger { };
 #

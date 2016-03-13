@@ -1,16 +1,25 @@
-{ stdenv, fetchurl, ncurses, gettext }:
+{ stdenv
+, fetchurl
+, gettext
+
+, ncurses
+}:
 
 stdenv.mkDerivation rec {
-  name = "nano-${version}";
-  version = "2.5.2";
+  name = "nano-2.5.3";
 
   src = fetchurl {
     url = "mirror://gnu/nano/${name}.tar.gz";
-    sha256 = "0hgbmqzjy1pashb1g3qby75pqb7r5g9bmn1iajlx50082b2nmgc9";
+    sha256 = "1vhjrcydcfxqq1719vcsvqqnbjbq2523m00dhzag5vwzkc961c5j";
   };
 
-  nativeBuildInputs = [ gettext ];
-  buildInputs = [ ncurses ];
+  nativeBuildInputs = [
+    gettext
+  ];
+
+  buildInputs = [
+    ncurses
+  ];
 
   configureFlags = [
     "--sysconfdir=/etc"
@@ -22,7 +31,10 @@ stdenv.mkDerivation rec {
     homepage = http://www.nano-editor.org/;
     description = "A small, user-friendly console text editor";
     license = licenses.gpl3Plus;
-    maintainers = with maintainers; [ joachifm ];
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

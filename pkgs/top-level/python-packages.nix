@@ -8208,7 +8208,7 @@ in {
 
     src = pkgs.fetchurl {
       url = "mirror://sourceforge/docutils/${name}.tar.gz";
-      md5 = "4622263b62c5c771c03502afa3157768";
+      sha256 = "1ylnjnw1x4b2y7blr6x35ncdzn69k253kw4cdkv6asdb21w73ny7";
     };
 
     # error: invalid command 'test'
@@ -16537,7 +16537,7 @@ in {
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/P/PyStemmer/${name}.tar.gz";
-      md5 = "46ee623eeeba5a7cc0d95cbfa7e18abd";
+      sha256 = "14fb8y4n8d7nj19pg3j2r5bl7qpbqwx6x9zvzjbid34pckmi9b6i";
     };
 
     checkPhase = ''

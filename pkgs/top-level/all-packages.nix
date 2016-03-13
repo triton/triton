@@ -951,6 +951,8 @@ help2man = callPackage ../all-pkgs/help2man { };
 
 highlight = callPackage ../all-pkgs/highlight { };
 
+htop = callPackage ../all-pkgs/htop { };
+
 hwdata = callPackage ../all-pkgs/hwdata { };
 
 iasl = callPackage ../all-pkgs/iasl { };
@@ -8722,8 +8724,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  hibernate = callPackage ../os-specific/linux/hibernate { };
 #
 #  hostapd = callPackage ../os-specific/linux/hostapd { };
-#
-  htop = callPackage ../os-specific/linux/htop { };
 #
 #  i7z = callPackage ../os-specific/linux/i7z { };
 #

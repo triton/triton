@@ -9,7 +9,8 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "http://sqlite.org/2016/sqlite-autoconf-3110100.tar.gz";
-    sha1 = "c4b4dcd735a4daf5a2e2bb90f374484c8d4dad29";
+    sha1Confirm = "c4b4dcd735a4daf5a2e2bb90f374484c8d4dad29";
+    sha256 = "0xs3gl3kbxqfx2ahrymgcf2n8c8sy37724jr05pncbhw4z8g2gsk";
   };
 
   buildInputs = [

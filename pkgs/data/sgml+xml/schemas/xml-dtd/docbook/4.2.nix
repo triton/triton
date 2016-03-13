@@ -5,7 +5,7 @@ import ./generic.nix {
   name = "docbook-xml-4.2";
   src = fetchurl {
     url = http://www.docbook.org/xml/4.2/docbook-xml-4.2.zip;
-    md5 = "73fe50dfe74ca631c1602f558ed8961f";
+    sha256 = "18hgwvmywh6a5jh38szjmg3hg2r4v5lb6r3ydc3rd8cp9wg61i5c";
   };
   meta = {
     branch = "4.2";

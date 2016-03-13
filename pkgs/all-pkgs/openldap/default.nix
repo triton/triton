@@ -8,11 +8,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openldap-2.4.43";
+  name = "openldap-2.4.44";
 
   src = fetchurl {
     url = "http://www.openldap.org/software/download/OpenLDAP/openldap-release/${name}.tgz";
-    sha256 = "1j3qd65mkm9rg1hbn4xhjdacd671pg6hy1d94q6kdc52k1aqxmrl";
+    sha256 = "0044p20hx07fwgw2mbwj1fkx04615hhs1qyx4mawj2bhqvrnppnp";
   };
 
   nativeBuildInputs = [

@@ -7766,7 +7766,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  tsocks = callPackage ../development/libraries/tsocks { };
 #
-#  unixODBC = callPackage ../development/libraries/unixODBC { };
+unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  unixODBCDrivers = recurseIntoAttrs (callPackages ../development/libraries/unixODBCDrivers {});
 #

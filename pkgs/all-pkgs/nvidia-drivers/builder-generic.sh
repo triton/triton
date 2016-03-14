@@ -345,7 +345,7 @@ installPhase() {
     fi
 
     # X-Video Motion Compensation library
-    nvidia_lib_install 0 304 'libXvMCNVIDIA'
+    nvidia_lib_install 0 304 'libXvMCNVIDIA' '1'
 
     # Managment & Monitoring library
     nvidia_lib_install 304 0 'libnvidia-ml' '1'
@@ -487,6 +487,18 @@ installPhase() {
 preFixup() {
   # Patch RPATH's in libraries and executables
   nvidia_patchelf
+
+  # libXvMC special case
+  if [ ${versionMajor} -le 304 ] ; then
+   local storeLibxvmcRpath
+   storeLibxvmcRpath="$(patchelf --print-rpath $out/lib/libXvMCNVIDIA.so.${version})"
+   storeLibxvmcRpath="${storeLibxvmcRpath}:${libXvPath}"
+   echo "patchelf: ${out}/bin/nvidia-settings : rpath -> ${storeLibxvmcRpath}"
+   patchelf \
+     --set-rpath "${storeLibxvmcRpath}" \
+     "${out}/lib/libXvMCNVIDIA.so.${version}"
+ fi
+
 
   # nvidia-settings special case
   if test -z "${libsOnly}" && test -n "${nvidiasettingsSupport}" ; then

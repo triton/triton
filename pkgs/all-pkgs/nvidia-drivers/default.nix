@@ -169,9 +169,11 @@ stdenv.mkDerivation {
 
   builder = ./builder-generic.sh;
 
-  libXvPath = makeLibraryPath [
+  libXvPath = makeLibraryPath ([
     xorg.libXv
-  ];
+  ] ++ optionals (versionOlder versionMajor "305") [
+    xorg.libXvMC
+  ]);
   allLibPath = makeLibraryPath [
     stdenv.cc.cc
     xorg.libX11

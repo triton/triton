@@ -8782,6 +8782,10 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
+  linux_4_5 = callPackage ../os-specific/linux/kernel/linux-4.5.nix {
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
+  };
+
   linux_testing = callPackage ../os-specific/linux/kernel/linux-testing.nix {
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
@@ -8970,12 +8974,15 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
-  linuxPackages_latest = pkgs.linuxPackages_4_4;
+  linuxPackages_latest = pkgs.linuxPackages_4_5;
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
   linuxPackages_4_4 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4_4;
+  });
+  linuxPackages_4_5 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_4_5;
   });
   linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_testing;

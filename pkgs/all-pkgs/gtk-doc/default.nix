@@ -9,7 +9,8 @@
 , docbook_xml_dtd_43
 , docbook_xsl
 , gnome_doc_utils
-, dblatex
+# TODO: reenable once texlive is fixed
+#, dblatex
 , gettext
 , itstool
 }:
@@ -55,7 +56,7 @@ stdenv.mkDerivation rec {
     docbook_xml_dtd_43
     docbook_xsl
     gnome_doc_utils
-    dblatex
+    #dblatex
     gettext
     itstool
   ];

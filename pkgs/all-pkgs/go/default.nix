@@ -1,32 +1,62 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
-, go_1_4
 , perl
-, runCommand
 , which
+, patchelf
 
 , iana_etc
 , mime-types
 , tzdata
+
+, channel ? "1.6"
 }:
 
 let
-  goBootstrap = runCommand "go-bootstrap" {} ''
-    mkdir $out
-    cp -rf ${go_1_4}/* $out/
-    chmod -R u+w $out
-    find $out -name "*.c" -delete
-    cp -rf $out/bin/* $out/share/go/bin/
-  '';
+  sources = import ./sources.nix;
+
+  source = sources."${channel}";
+
+  goPlatform =
+    if stdenv.hostSystem == "x86_64-linux" then
+      "linux-amd64"
+    else
+      throw "Unsupported System";
+
+  goBootstrap = stdenv.mkDerivation {
+    name = "go-bootstrap";
+
+    src = fetchurl {
+      url = "https://storage.googleapis.com/golang/go${channel}.${goPlatform}.tar.gz";
+      sha256 = source.sha256Bootstrap."${stdenv.hostSystem}";
+    };
+
+    nativeBuildInputs = [
+      patchelf
+    ];
+
+    buildPhase = ''
+      strip bin/*
+      find bin -type f -exec patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" {} \;
+    '';
+
+    installPhase = ''
+      mkdir -p $out/share
+      ln -s .././ $out/share/go
+      cp -r bin src pkg $out
+
+      # Test that the install worked
+      $out/bin/go help
+    '';
+  };
 in
 
-stdenv.mkDerivation rec {
-  name = "go-${version}";
-  version = "1.6";
+stdenv.mkDerivation {
+  name = "go-${source.version}";
 
   src = fetchurl {
-    url = "https://github.com/golang/go/archive/go${version}.tar.gz";
-    sha256 = "04g7w34qamgy9gqpy75xm03s8xbbslv1735iv1a06z8sphpkgs7m";
+    url = "https://storage.googleapis.com/golang/go${source.version}.src.tar.gz";
+    inherit (source) sha256;
   };
 
   # perl is used for testing go vet
@@ -53,7 +83,11 @@ stdenv.mkDerivation rec {
   '';
 
   patches = [
-    ./remove-tools-1.6.patch
+    (fetchTritonPatch {
+      rev = "e55948eaf64c06f2c147cb6b18522a9d9bf72641";
+      file = "go/remove-tools.patch";
+      sha256 = "275c4428ce5c0ff45e853f93b8259ed656fd2c53cdb83aeb287a9f305c1f84a7";
+    })
   ];
 
   postPatch = ''
@@ -105,7 +139,7 @@ stdenv.mkDerivation rec {
 
   setupHook = ./setup-hook.sh;
 
-  disallowedReferences = [ go_1_4 ];
+  disallowedReferences = [ goBootstrap ];
 
   meta = with stdenv.lib; {
     branch = "1.6";
@@ -116,7 +150,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

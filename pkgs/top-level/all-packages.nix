@@ -848,6 +848,12 @@ gnutar = callPackage ../all-pkgs/gnutar { };
 
 gnutls = callPackage ../all-pkgs/gnutls { };
 
+go = callPackage ../all-pkgs/go { };
+
+go_1_6 = callPackageAlias "go" {
+  channel = "1.6";
+};
+
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = callPackageAlias "gobject-introspection" { }; # Deprecated alias
 
@@ -4772,10 +4778,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  hop = callPackage ../development/compilers/hop { };
 #
 #  dotnetPackages = callPackage ./dotnet-packages.nix {};
-#
-  go_1_4 = callPackage ../development/compilers/go/1.4.nix { };
-  go_1_6 = callPackage ../development/compilers/go/1.6.nix { };
-  go = callPackageAlias "go_1_6" { };
 #
 #  go-repo-root = pkgs.goPackages.go-repo-root.bin // { outputs = [ "bin" ]; };
 #

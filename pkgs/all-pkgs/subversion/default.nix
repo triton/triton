@@ -14,13 +14,13 @@
 }:
 
 let
-  common = { version, sha1 }: stdenv.mkDerivation rec {
+  common = { version, sha1Confirm, sha256 }: stdenv.mkDerivation rec {
     inherit version;
     name = "subversion-${version}";
 
     src = fetchurl {
       url = "mirror://apache/subversion/${name}.tar.bz2";
-      inherit sha1;
+      inherit sha1Confirm sha256;
     };
 
     nativeBuildInputs = [
@@ -86,12 +86,14 @@ in {
 
   subversion18 = common {
     version = "1.8.15";
-    sha1 = "680acf88f0db978fbbeac89ed63776d805b918ef";
+    sha1Confirm = "680acf88f0db978fbbeac89ed63776d805b918ef";
+    sha256 = "0b68rjy1sjd66nqcswrm1bhda3vk2ngkgs6drcanmzbcd3vs366g";
   };
 
   subversion19 = common {
     version = "1.9.3";
-    sha1 = "27e8df191c92095f48314a415194ec37c682cbcf";
+    sha1Confirm = "27e8df191c92095f48314a415194ec37c682cbcf";
+    sha256 = "1q3ax2v10qybwnzmz2qcgsapvaxinwv5m4r23kp8hg804nqnpgwb";
   };
 
 }

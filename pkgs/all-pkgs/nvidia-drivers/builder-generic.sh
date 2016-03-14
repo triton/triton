@@ -23,13 +23,8 @@ nvidia_bin_install() {
 
   if ([ ${1} -eq 0 ] || [ ${versionMajor} -ge ${1} ]) && \
      ([ ${2} -eq 0 ] || [ ${versionMajor} -le ${2} ]) ; then
-    # Create the executable directory if it doesn't exist
-    if [ ! -d "${out}/bin" ] ; then
-      mkdir -p "${out}/bin"
-    fi
-
     # Install the executable
-    cp -pv "${3}" "${out}/bin"
+    install -D -m 755 -v "${3}" "${out}/bin/${3}"
   fi
 }
 
@@ -42,13 +37,8 @@ nvidia_header_install() {
 
   if ([ ${1} -eq 0 ] || [ ${versionMajor} -ge ${1} ]) && \
      ([ ${2} -eq 0 ] || [ ${versionMajor} -le ${2} ]) ; then
-    # Create the include directory if it doesn't exist
-    if [ ! -d "${out}/include/${4}" ] ; then
-      mkdir -p "${out}/include/${4}"
-    fi
-
     # Install the header
-    cp -pv "${3}.h" "${out}/include/${4}"
+    install -D -m 644 -v "${3}.h" "${out}/include${4:+/${4}}/${3}.h"
   fi
 }
 
@@ -68,25 +58,13 @@ nvidia_lib_install() {
 
   if ([ ${1} -eq 0 ] || [ ${versionMajor} -ge ${1} ]) && \
      ([ ${2} -eq 0 ] || [ ${versionMajor} -le ${2} ]) ; then
-    # Create the lib directory if it doesn't exist
-    if [ ! -d "${out}/lib/${6}" ] ; then
-      mkdir -p "${out}/lib/${6}"
-    fi
-
     # If the source *.so.<version> isn't set use *.so.$version
     if [ -z "${5}" ] ; then
-      soVersion=".${version}"
+      soVersion="${version}"
     elif [ "${5}" == '-' ] ; then
       soVersion=
     else
-      soVersion=".${5}"
-    fi
-
-    # If $outDir is set then we need to add a trailing `/'
-    if [ -z "${6}" ] ; then
-      outDir=
-    else
-      outDir="${6}/"
+      soVersion="${5}"
     fi
 
     # Handle cases where the file being installed is in a subdirectory within
@@ -94,22 +72,23 @@ nvidia_lib_install() {
     libFile="$(basename "${3}")"
 
     # Install the library
-    cp -pdv "${3}.so${soVersion}" "${out}/lib/${6}"
+    install -D -m 755 -v "${3}.so${soVersion:+.${soVersion}}" \
+      "${out}/lib${6:+/${6}}/${libFile}.so${soVersion:+.${soVersion}}"
 
     # Always create a symlink from the library to *.so
     if [ ! -z "${soVersion}" ] ; then
       ln -fnrsv \
-        "${out}/lib/${outDir}${libFile}.so${soVersion}" \
-        "${out}/lib/${outDir}${libFile}.so"
+        "${out}/lib${6:+/${6}}/${libFile}.so.${soVersion}" \
+        "${out}/lib${6:+/${6}}/${libFile}.so"
     fi
 
     # If $4 wasn't 1, then create a *.so.$4 symlink
     # Make sure that we don't set it if we haven't passed a value
     if [ ! -z "${4}" ] ; then
-      if [ "${4}" != '-' ] && [ ".${4}" != "${soVersion}" ] ; then
+      if [ "${4}" != '-' ] && [ "${4}" != "${soVersion}" ] ; then
         ln -fnrsv \
-          "${out}/lib/${outDir}${libFile}.so${soVersion}" \
-          "${out}/lib/${outDir}${libFile}.so.${4}"
+          "${out}/lib${6:+/${6}}/${libFile}.so${soVersion:+.${soVersion}}" \
+          "${out}/lib${6:+/${6}}/${libFile}.so.${4}"
       fi
     fi
   fi
@@ -123,13 +102,8 @@ nvidia_man_install() {
 
   if ([ ${1} -eq 0 ] || [ ${versionMajor} -ge ${1} ]) && \
      ([ ${2} -eq 0 ] || [ ${versionMajor} -le ${2} ]) ; then
-    # Create the manpage directory if it doesn't exist
-    if [ ! -d "${out}/share/man/man1" ] ; then
-      mkdir -p "${out}/share/man/man1"
-    fi
-
     # Install the manpage
-    cp -pv "${3}.1.gz" "${out}/share/man/man1"
+    install -D -m 644 -v "${3}.1.gz" "${out}/share/man/man1/${3}.1.gz"
   fi
 }
 
@@ -252,19 +226,16 @@ installPhase() {
     ## Kernel modules
     #
 
-    # Install the kernel modules
-    mkdir -pv "${out}/lib/modules/${kernelVersion}/misc"
-
     # NVIDIA kernel module
     nuke-refs 'kernel/nvidia.ko'
-    cp -pv 'kernel/nvidia.ko' \
-      "${out}/lib/modules/${kernelVersion}/misc"
+    install -D -m 644 -v 'kernel/nvidia.ko' \
+      "${out}/lib/modules/${kernelVersion}/misc/nvidia.ko"
 
     # NVIDIA modesetting kernel module
     if [ ${versionMajor} -ge 358 ] ; then
       nuke-refs 'kernel/nvidia-modeset.ko'
-      cp -pv 'kernel/nvidia-modeset.ko' \
-        "${out}/lib/modules/${kernelVersion}/misc"
+      install -D -m 644 -v 'kernel/nvidia-modeset.ko' \
+        "${out}/lib/modules/${kernelVersion}/misc/nvidia-modeset.ko"
     fi
 
     # NVIDIA cuda unified virtual memory kernel module
@@ -272,13 +243,13 @@ installPhase() {
       # The uvm kernel module build directory changed in 355+
       if [ ${versionMajor} -ge 355 ] && [ "${system}" == 'x86_64-linux' ] ; then
         nuke-refs 'kernel/nvidia-uvm.ko'
-        cp -pv 'kernel/nvidia-uvm.ko' \
-          "${out}/lib/modules/${kernelVersion}/misc"
+        install -D -m 644 -v 'kernel/nvidia-uvm.ko' \
+          "${out}/lib/modules/${kernelVersion}/misc/nvidia-uvm.ko"
       elif ([ ${versionMajor} -ge 346 ] && [ "${system}" == 'x86_64-linux' ]) || \
            ([ ${versionMajor} -ge 340 ] && [ ${versionMajor} -lt 346 ]) ; then
         nuke-refs 'kernel/uvm/nvidia-uvm.ko'
-        cp -pv 'kernel/uvm/nvidia-uvm.ko' \
-          "${out}/lib/modules/${kernelVersion}/misc"
+        install -D -m 644 -v 'kernel/uvm/nvidia-uvm.ko' \
+          "${out}/lib/modules/${kernelVersion}/misc/nvidia-uvm.ko"
       fi
     fi
 
@@ -473,22 +444,19 @@ installPhase() {
     if test -z "${libsOnly}" ; then
       # NVIDIA application profiles
       if [ ${versionMajor} -ge 340 ] ; then
-        mkdir -pv "${out}/share/doc"
-        cp -pv "nvidia-application-profiles-${version}-key-documentation" \
-          "${out}/share/doc"
-        cp -pv "nvidia-application-profiles-${version}-rc" \
-          "${out}/share/doc"
+        install -D -m 644 -v "nvidia-application-profiles-${version}-key-documentation" \
+          "${out}/share/doc/nvidia-application-profiles-${version}-key-documentation"
+        install -D -m 644 -v "nvidia-application-profiles-${version}-rc" \
+          "${out}/share/doc/nvidia-application-profiles-${version}-rc"
       fi
 
       # OpenCL ICD config
-      mkdir -pv "${out}/lib/vendors"
-      cp -pv 'nvidia.icd' "${out}/lib/vendors"
+      install -D -m 644 -v 'nvidia.icd' "${out}/lib/vendors/nvidia.icd"
 
       # X.Org driver configuration file
       if [ ${versionMajor} -ge 346 ] ; then
-        mkdir -pv "$out/share/X11/xorg.conf.d"
-        cp -pv 'nvidia-drm-outputclass.conf' \
-          "$out/share/X11/xorg.conf.d"
+        install -D -m 644 -v 'nvidia-drm-outputclass.conf' \
+          "$out/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf"
       fi
     fi
 
@@ -499,8 +467,8 @@ installPhase() {
     if test -z "${libsOnly}" ; then
       if test -n "${nvidiasettingsSupport}" ; then
         # NVIDIA Settings .desktop entry
-        mkdir -pv "${out}/share/applications"
-        cp -pv 'nvidia-settings.desktop' "${out}/share/applications"
+        install -D -m 644 -v 'nvidia-settings.desktop' \
+          "${out}/share/applications/nvidia-settings.desktop"
         sed -i "${out}/share/applications/nvidia-settings.desktop" \
           -e "s,__UTILS_PATH__,${out}/bin," \
           -e "s,__PIXMAP_PATH__,${out}/share/pixmaps,"
@@ -514,8 +482,8 @@ installPhase() {
     if test -z "${libsOnly}" ; then
       if test -n "${nvidiasettingsSupport}" ; then
         # NVIDIA Settings icon
-        mkdir -pv "${out}/share/pixmaps"
-        cp -pv 'nvidia-settings.png' "${out}/share/pixmaps"
+        install -D -m 644 -v 'nvidia-settings.png' \
+          "${out}/share/pixmaps/nvidia-settings.png"
       fi
     fi
   }

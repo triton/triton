@@ -8627,20 +8627,20 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  bridge-utils = callPackage ../os-specific/linux/bridge-utils { };
 #
   busybox = callPackage ../os-specific/linux/busybox { };
-#
-#  busyboxBootstrap = busybox.override {
-#    enableStatic = true;
-#    enableMinimal = true;
-#    extraConfig = ''
-#      CONFIG_ASH y
-#      CONFIG_ASH_BUILTIN_ECHO y
-#      CONFIG_ASH_BUILTIN_TEST y
-#      CONFIG_ASH_OPTIMIZE_FOR_SIZE y
-#      CONFIG_MKDIR y
-#      CONFIG_TAR y
-#      CONFIG_UNXZ y
-#    '';
-#  };
+
+  busyboxBootstrap = callPackageAlias "busybox" {
+    enableStatic = true;
+    enableMinimal = true;
+    extraConfig = ''
+      CONFIG_ASH y
+      CONFIG_ASH_BUILTIN_ECHO y
+      CONFIG_ASH_BUILTIN_TEST y
+      CONFIG_ASH_OPTIMIZE_FOR_SIZE y
+      CONFIG_MKDIR y
+      CONFIG_TAR y
+      CONFIG_UNXZ y
+    '';
+  };
 #
 #  cgmanager = callPackage ../os-specific/linux/cgmanager { };
 #

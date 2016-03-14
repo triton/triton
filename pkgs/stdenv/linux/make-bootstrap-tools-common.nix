@@ -15,13 +15,12 @@
 , bzip2
 , xz
 , gnumake
-, patch
+, gnupatch
 , patchelf
 , curl
 , gcc
 , pkgconfig
 , binutils
-, libmpc
 , busybox
 }:
 
@@ -39,18 +38,7 @@ rec {
       mkdir -p $out/bin $out/lib $out/libexec
     '' +
     /* Copy what we need of Glibc. */ ''
-      cp -d ${glibc}/lib/ld-*.so* $out/lib
-      cp -d ${glibc}/lib/libc*.so* $out/lib
-      cp -d ${glibc}/lib/libc_nonshared.a $out/lib
-      cp -d ${glibc}/lib/libm*.so* $out/lib
-      cp -d ${glibc}/lib/libdl*.so* $out/lib
-      cp -d ${glibc}/lib/librt*.so*  $out/lib
-      cp -d ${glibc}/lib/libpthread*.so* $out/lib
-      cp -d ${glibc}/lib/libnsl*.so* $out/lib
-      cp -d ${glibc}/lib/libutil*.so* $out/lib
-      cp -d ${glibc}/lib/libnss*.so* $out/lib
-      cp -d ${glibc}/lib/libresolv*.so* $out/lib
-      cp -d ${glibc}/lib/crt?.o $out/lib
+      cp -d ${glibc}/lib/*.a $out/lib
 
       cp -rL ${glibc}/include $out
       chmod -R u+w $out/include
@@ -78,7 +66,7 @@ rec {
       cp ${bzip2}/bin/bzip2 $out/bin
       cp ${xz}/bin/xz $out/bin
       cp -d ${gnumake}/bin/* $out/bin
-      cp -d ${patch}/bin/* $out/bin
+      cp -d ${gnupatch}/bin/* $out/bin
       cp ${patchelf}/bin/* $out/bin
       cp ${curl}/bin/curl $out/bin
       cp ${pkgconfig}/bin/pkg-config $out/bin
@@ -87,8 +75,6 @@ rec {
       cp -d ${gcc}/bin/gcc $out/bin
       cp -d ${gcc}/bin/cpp $out/bin
       cp -d ${gcc}/bin/g++ $out/bin
-      cp -d ${gcc}/lib*/libgcc_s.so* $out/lib
-      cp -d ${gcc}/lib*/libstdc++.so* $out/lib
       cp -rd ${gcc}/lib/gcc $out/lib
       chmod -R u+w $out/lib
       rm -f $out/lib/gcc/*/*/include*/linux
@@ -112,44 +98,48 @@ rec {
       done
     '' +
     /* Copy all of the needed libraries for the binaries */ ''
-      set +x
       copy_libs_in_elf() {
         local BIN; local RELF; local RPATH; local LIBS; local LIB; local LINK;
         BIN=$1
         # Determine what libraries are needed by the elf
+        set +x
         RELF="$(${readelf} -a $BIN 2>&1)" || continue
-        RPATH="$(echo "$RELF" | grep rpath | sed 's,.*\[\([^]]*\)\].*,\1,')"
-        LIBS="$(echo "$RELF" | grep 'Shared library' | sed 's,.*\[\([^]]*\)\].*,\1,')"
-        for LIB in $LIBS; do
-          # Find the libraries on the system
-          for LIBPATH in $(echo "$RPATH:${libmpc}/lib" | tr ':' ' '); do
-            if [ -f "$LIBPATH/$LIB" ]; then
-              LIB="$LIBPATH/$LIB"
-              break
-            fi
-          done
-          # Copy the library and possibly symlinks
-          while [ ! -f "$out/lib/$(basename $LIB)" ]; do
-            LINK="$(readlink $LIB)" || true
-            if [ -z "$LINK" ]; then
-              cp -pdv $LIB $out/lib
-              copy_libs_in_elf $LIB
-              break
-            else
-              ln -sv "$(basename $LINK)" "$out/lib/$(basename $LIB)"
-              if [ "${LINK:0:1}" != "/" ]; then
-                LINK="$(dirname $LIB)/$LINK"
+        if RPATH="$(echo "$RELF" | grep rpath | sed 's,.*\[\([^]]*\)\].*,\1,')" &&
+          LIBS="$(echo "$RELF" | grep 'Shared library' | sed 's,.*\[\([^]]*\)\].*,\1,')"; then
+          set -x
+          for LIB in $LIBS; do
+            # Find the libraries on the system
+            for LIBPATH in $(echo "$RPATH" | tr ':' ' '); do
+              if [ -f "$LIBPATH/$LIB" ]; then
+                LIB="$LIBPATH/$LIB"
+                break
               fi
-              LIB="$LINK"
-            fi
+            done
+            # Copy the library and possibly symlinks
+            while [ ! -f "$out/lib/$(basename $LIB)" ]; do
+              LINK="$(readlink $LIB)" || true
+              if [ -z "$LINK" ]; then
+                cp -pdv $LIB $out/lib
+                copy_libs_in_elf $LIB
+                break
+              else
+                ln -sv "$(basename $LINK)" "$out/lib/$(basename $LIB)"
+                if [ "${LINK:0:1}" != "/" ]; then
+                  LINK="$(dirname $LIB)/$LINK"
+                fi
+                LIB="$LINK"
+              fi
+            done
           done
-        done
+        else
+          set -x
+          echo "ELF is not dynamic: $BIN" >&2
+        fi
       }
       for BIN in $out/bin/* $out/libexec/gcc/*/*/*; do
         echo "Copying libs for bin $BIN"
         copy_libs_in_elf $BIN
       done
-      set -x
 
       chmod -R u+w $out
     '' +

@@ -2306,7 +2306,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   cudatoolkit7 = callPackage ../development/compilers/cudatoolkit/7.0.nix { };
 
-  cudatoolkit = cudatoolkit7;
+  cudatoolkit = callPackageAlias "cudatoolkit7" { };
 
 #  cunit = callPackage ../tools/misc/cunit { };
 #

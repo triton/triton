@@ -1116,6 +1116,8 @@ libmhash = callPackage ../all-pkgs/libmhash { };
 
 libmicrohttpd = callPackage ../all-pkgs/libmicrohttpd { };
 
+libmnl = callPackage ../all-pkgs/libmnl { };
+
 libmpc = callPackage ../all-pkgs/libmpc { };
 
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
@@ -6904,8 +6906,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libmowgli = callPackage ../development/libraries/libmowgli { };
 #
   libmng = callPackage ../development/libraries/libmng { };
-
-  libmnl = callPackage ../development/libraries/libmnl { };
 
   libmodplug = callPackage ../development/libraries/libmodplug {};
 

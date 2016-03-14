@@ -3,11 +3,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "c-ares-1.10.0";
+  name = "c-ares-1.11.0";
 
   src = fetchurl {
     url = "http://c-ares.haxx.se/download/${name}.tar.gz";
-    sha256 = "1nyka87yf2jfd0y6sspll0yxwb8zi7kyvajrdbjmh4axc5s1cw1x";
+    sha256 = "1z9y1f835dpi1ka2a2vzjygm3djdvr01036ml4l2js6r2xk2wqdk";
   };
 
   meta = with stdenv.lib; {

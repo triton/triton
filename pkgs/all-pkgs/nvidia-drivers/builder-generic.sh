@@ -289,9 +289,9 @@ installPhase() {
 
     ## Graphics libraries
     # OpenGL GLX API entry point (NVIDIA)
-    # Triton only support the NVIDIA vendor libGL for drivers that
-    # do not support GLVND (<361).
-    nvidia_lib_install 0 360 'libGL'
+    # - Triton only supports the NVIDIA vendor libGL implementation for
+    #   versions that do not support GLVND (<361).
+    nvidia_lib_install 0 360 'libGL' '1'
     # OpenGL GLX API entry point (GLVND)
     nvidia_lib_install 361 0 'libGL' '1' '1.0.0'
     # OpenGL ES API entry point

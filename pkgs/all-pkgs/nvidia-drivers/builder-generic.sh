@@ -1,11 +1,11 @@
 # Generic builder for the NVIDIA drivers, supports versions 304+
 
 # Notice:
-# The generic builder does not use the exact version changes were made, so if
-# you choose to use a version not offically supported, it may require additional
-# research into at which version certain changes were made.
+# The generic builder does not always use the exact version changes were made,
+# so if you choose to use a version not offically supported, it may require
+# additional research into at which version certain changes were made.
 
-. "${stdenv}/setup"
+source "${stdenv}/setup"
 
 # Fail on any error
 set -e
@@ -46,11 +46,10 @@ nvidia_lib_install() {
   # Usage:
   # $1 - Min version (0 = null, for no minimum)
   # $2 - Max version (0 = null, for no maximum)
-  # $3 = Library name (w/o extension (.so*))
-  # $4 = Custom so version (symlink to original) (1 is ignored since the symlink
-  #      is always created, so it can be used in place of a null value)
-  # $5 = File's so version
-  # $6 = Lib sub-directory (rel to $out/lib/)
+  # $3 = Library name (w/ rel path & w/o extension (.so*))
+  # $4 = Custom so version (symlink to original)
+  # $5 = Source libs' so version (*.so.<version>)
+  # $6 = Lib install sub-directory (rel to $out/lib/)
 
   local libFile
   local outDir
@@ -380,9 +379,7 @@ installPhase() {
     nvidia_lib_install 340 0 'libnvidia-fbc'
 
     # NVENC video encoding library
-    if test -z "${libsOnly}" ; then
-      nvidia_lib_install 340 0 'libnvidia-encode'
-    fi
+    nvidia_lib_install 340 0 'libnvidia-encode'
 
     # NVIDIA GTK+ 3 library
     # For versions older than 346 see nvidia_bin_install
@@ -425,15 +422,10 @@ installPhase() {
     #
 
     if test -z "${libsOnly}" ; then
-      nvidia_man_install 340 0 'nvidia-cuda-mps-control'
-      nvidia_man_install 304 304 'nvidia-cuda-proxy-control'
       ###nvidia_man_install 0 0 'nvidia-installer'
-      ###nvidia_man_install 0 0 'nvidia-modprobe'
-      nvidia_man_install 340 0 'nvidia-persistenced'
       if test -n "${nvidiasettingsSupport}" ; then
         nvidia_man_install 0 0 'nvidia-settings'
       fi
-      nvidia_man_install 0 0 'nvidia-smi'
       ###nvidia_man_install 0 0 'nvidia-xconfig'
     fi
 
@@ -545,7 +537,7 @@ postFixup() {
   fi
 
   # Fail if libraries contain broken RPATH's
-  [ -z "$(ldd ${out}/lib/* 2> /dev/null | grep -B 10 'not found')" ] || {
+  [ -z "$(ldd ${out}/lib/* 2> /dev/null | grep --only-matching 'not found')" ] || {
     echo "ERROR: failed to patch RPATH's for:"
     ldd ${out}/lib/* 2> /dev/null | grep -B 10 'not found'
     return 1

@@ -349,7 +349,7 @@ installPhase() {
     nvidia_lib_install 0 304 'libXvMCNVIDIA'
 
     # Managment & Monitoring library
-    nvidia_lib_install 304 0 'libnvidia-ml'
+    nvidia_lib_install 304 0 'libnvidia-ml' '1'
 
     ## CUDA libraries
     nvidia_lib_install 0 0 'libcuda'

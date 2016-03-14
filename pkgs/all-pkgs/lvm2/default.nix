@@ -10,11 +10,11 @@
 
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
-  version = "2.02.145";
+  version = "2.02.146";
 
   src = fetchurl {
     url = "ftp://sources.redhat.com/pub/lvm2/releases/LVM2.${version}.tgz";
-    sha256 = "02sn77pjkbqrlkcfm2b2lgp3q4spawkabqc6d8n4cnj8gk0c9dwq";
+    sha256 = "0jnj0msjcg3r0mirnpiph558q6sm885a0rh2vibd95abil1jzb1r";
   };
 
   configureFlags = [

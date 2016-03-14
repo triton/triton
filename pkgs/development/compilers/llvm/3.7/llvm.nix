@@ -22,6 +22,8 @@ let
 in stdenv.mkDerivation rec {
   name = "llvm-${version}";
 
+  inherit src;
+
   unpackPhase = ''
     unpackFile ${src}
     mv llvm-${version}.src llvm

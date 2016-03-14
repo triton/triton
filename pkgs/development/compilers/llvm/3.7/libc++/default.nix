@@ -1,4 +1,4 @@
-{ lib, stdenv, fetch, cmake, ninja, libcxxabi, fixDarwinDylibNames, version }:
+{ lib, stdenv, fetch, cmake, ninja, libcxxabi, version }:
 
 stdenv.mkDerivation rec {
   name = "libc++-${version}";
@@ -14,9 +14,7 @@ stdenv.mkDerivation rec {
     cmakeFlagsArray+=("-DLIBCXX_CXX_ABI_INCLUDE_PATHS=$NIX_BUILD_TOP/libcxxabi-${version}.src/include")
   '';
 
-  patches = [ ./darwin.patch ];
-
-  nativeBuildInputs = [ cmake ninja ] ++ lib.optional stdenv.isDarwin fixDarwinDylibNames;
+  nativeBuildInputs = [ cmake ninja ];
   buildInputs = [ libcxxabi ];
 
   cmakeFlags =
@@ -28,7 +26,7 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
-  linkCxxAbi = stdenv.isLinux;
+  linkCxxAbi = true;
 
   setupHook = ./setup-hook.sh;
 
@@ -36,6 +34,6 @@ stdenv.mkDerivation rec {
     homepage = http://libcxx.llvm.org/;
     description = "A new implementation of the C++ standard library, targeting C++11";
     license = "BSD";
-    platforms = stdenv.lib.platforms.unix;
+    platforms = stdenv.lib.platforms.all;
   };
 }

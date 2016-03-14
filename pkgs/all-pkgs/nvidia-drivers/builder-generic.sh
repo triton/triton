@@ -10,9 +10,9 @@ source "${stdenv}/setup"
 # Fail on any error
 set -e
 
-# PatchELF RPATH shrink removes libXv from the RPATH of `nvidia-settings', as a
-# work around we run `patchelf' on everything except `nvidia-settings' (see
-# `nvidia_bin_install')
+# PatchELF RPATH shrink removes libXv from the RPATH of `nvidia-settings',
+# as a work around we run `patchelf' on everything except `nvidia-settings'
+# (see `nvidia_patchelf`)
 dontPatchELF=1
 
 nvidia_bin_install() {
@@ -137,7 +137,7 @@ nvidia_patchelf() {
 
 unpackFile() {
   # This function prints the first 20 lines of the file, then awk's for
-  # the line with `skip=' which contains the line number where the tarball
+  # the line with `skip=` which contains the line number where the tarball
   # begins, then tails to that line and pipes the tarball to the required
   # decompression utility (gzip/xz), which interprets the tarball, and
   # finally pipes the output to tar to extract the contents. This is
@@ -146,13 +146,13 @@ unpackFile() {
 
   local skip
 
-  # The line you are looking for `skip=' is within the first 20 lines of
+  # The line you are looking for `skip=` is within the first 20 lines of
   # the file, make sure that you aren't grepping/awking/sedding the entire
-  # 60,000+ line file for 1 line (hense the use of `head').
+  # 60,000+ line file for 1 line (hense the use of `head`).
   skip="$(
-    head -n 20 "${src}" |
-    awk -F= '/skip=/ { print $2 ; exit ; }' |
-    grep -o '[0-9]*'
+    head --lines 20 "${src}" |
+      awk -F= '/skip=/ { print $2 ; exit }' |
+      grep --only-matching '[0-9]*'
   )"
 
   # If the `skip=' value is null, more than likely the hash wasn't updated

@@ -1007,6 +1007,8 @@ inkscape = callPackage ../all-pkgs/inkscape { };
 
 intltool = callPackage ../all-pkgs/intltool { };
 
+ipset = callPackage ../all-pkgs/ipset { };
+
 iputils = callPackage ../all-pkgs/iputils { };
 
 isl = callPackage ../all-pkgs/isl { };
@@ -8739,8 +8741,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 
   iptables = callPackage ../os-specific/linux/iptables { };
 
-  ipset = callPackage ../os-specific/linux/ipset { };
-#
 #  irqbalance = callPackage ../os-specific/linux/irqbalance { };
 #
   iw = callPackage ../os-specific/linux/iw { };

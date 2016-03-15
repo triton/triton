@@ -1887,11 +1887,12 @@ in {
   };
 
   responses = self.buildPythonPackage rec {
-    name = "responses-0.4.0";
+    name = "responses-0.5.1";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/r/responses/${name}.tar.gz";
-      sha256 = "0fs7a4cf4f12mjhcjd5vfh0f3ixcy2nawzxpgsfr3ahf0rg7ppx5";
+      md5Confirm = "f1962b295b18128c522e83901556deac";
+      sha256 = "1spcfxixyk9k7pk82jm6zqkwk031s95lh8q0mz7539jrb7269bcc";
     };
 
     propagatedBuildInputs = with self; [ cookies mock requests2 six ];

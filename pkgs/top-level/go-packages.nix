@@ -1595,11 +1595,11 @@ let
   };
 
   go-ipfs-api = buildFromGitHub {
-    date = "2016-02-17";
-    rev = "400579b7ce12c0498d72a6d8329c28e58f733a7e";
+    date = "2016-03-15";
+    rev = "94bb11b4e8fdd34d5d3196c30f5294238b8af608";
     owner  = "ipfs";
     repo   = "go-ipfs-api";
-    sha256 = "1ib7fhihz57niy784vpa1dyn912hm0da4klxgmnn3hwszvhvwblv";
+    sha256 = "1gi966yrf0q6rjvwf0cr67wxgwx5qrv7zn6wmisr3inp58mimvbh";
     excludedPackages = "tests";
     propagatedBuildInputs = [ go-multipart-files tar-utils ];
   };

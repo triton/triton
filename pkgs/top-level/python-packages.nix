@@ -11017,7 +11017,8 @@ in {
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/m/mccabe/${name}.tar.gz";
-      md5 = "81640948ff226f8c12b3277059489157";
+      md5Confirm = "81640948ff226f8c12b3277059489157";
+      sha256 = "0z3v1ap70hrfki7k1mma17vrsnxvslflsm40j534y0f5cnzsk31x";
     };
 
     # See https://github.com/flintwork/mccabe/issues/31

@@ -24,13 +24,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "rtorrent-${version}";
-  version = "2015-09-07";
+  version = "2016-03-10";
 
   src = fetchFromGitHub {
     owner = "rakshasa";
     repo = "rtorrent";
-    rev = "62cb5a4605c0664bc522e0e0da9c72f09cf643a9";
-    sha256 = "0l2kqkbfl5l7drmqdqdryq1p0fpz05aghxrqd29fs4j9bx0djnaw";
+    rev = "9abcea84c7f7594ef9cc99f151467cf8b718a9c0";
+    sha256 = "07kal3fdyh04fkrx5vm1ndnkxcfwmykl5p0n4varlxnhczbzq2mm";
   };
 
   nativeBuildInputs = [
@@ -85,7 +85,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

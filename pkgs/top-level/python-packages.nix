@@ -10526,12 +10526,15 @@ in {
 
   pylast = buildPythonPackage rec {
     name = "pylast-${version}";
-    version = "0.5.11";
+    version = "1.5.1";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/pylast/${name}.tar.gz";
-      md5 = "506cf1b13020b3ed2f3c845ea0c9830e";
+      md5Confirm = "2cd634d9ca4d9b064be0424689210193";
+      sha256 = "10znd9xr1vs2ix519jkz3ccm90zciaddcdr2w2wrrh2jyy3bc59a";
     };
+
+    propagatedBuildInputs = with self; [ six ];
 
     # error: invalid command 'test'
     doCheck = false;

@@ -61,7 +61,7 @@ nvidia_lib_install() {
     if [ -z "${5}" ] ; then
       soVersion="${version}"
     elif [ "${5}" == '-' ] ; then
-      soVersion=
+      unset soVersion
     else
       soVersion="${5}"
     fi
@@ -141,7 +141,7 @@ unpackFile() {
   # begins, then tails to that line and pipes the tarball to the required
   # decompression utility (gzip/xz), which interprets the tarball, and
   # finally pipes the output to tar to extract the contents. This is
-  # exactly what the cli commands in the `.run' file do, but there is an
+  # exactly what the cli commands in the `.run` file do, but there is an
   # issue with some versions so it is best to do it manually instead.
 
   local skip
@@ -357,7 +357,7 @@ installPhase() {
     nvidia_lib_install 0 0 'libnvcuvid' '1'
     # Fat (multiarchitecture) binary loader
     nvidia_lib_install 361 0 'libnvidia-fatbinaryloader'
-    # PTX JIT Compiler (Parallel Thread Execution (PTX) for CUDA)
+    # Parallel Thread Execution JIT Compiler for CUDA
     nvidia_lib_install 361 0 'libnvidia-ptxjitcompiler'
 
     ## OpenCL libraries

@@ -80,6 +80,19 @@ go.stdenv.mkDerivation (
 
     runHook renameImports
 
+    # Deal with gx dependencies
+    if [ -d "go/src/$goPackagePath/vendor/gx" ]; then
+      mv go/src/$goPackagePath/vendor/gx go/src
+      pushd go/src
+      ARGS=()
+      while read dep; do
+        RDEP="$(awk 'BEGIN { FS="\""; } { if (/dvcsimport/) { print $4; } }' "$dep")"
+        ARGS+=("-e" "s,\([^a-zA-Z/]\)$RDEP,\1$(dirname "$dep"),g")
+      done < <(find gx -name package.json)
+      find . -type f -exec sed -i {} "''${ARGS[@]}" \;
+      popd
+    fi
+
     rm -rf go/src/$goPackagePath/vendor
 
     buildGoDir() {

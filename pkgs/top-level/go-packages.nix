@@ -8,15 +8,19 @@ let
 
   inherit go buildGoPackage;
 
-  fetchGxPackage = { multihash, sha256 }: stdenv.mkDerivation {
-    name = "gx-src-${multihash}";
+  fetchGxPackage = { src, sha256 }: stdenv.mkDerivation {
+    name = "gx-src-${src.name}";
     buildCommand = ''
       if ! [ -f /etc/ssl/certs/ca-certificates.crt ]; then
         echo "Missing /etc/ssl/certs/ca-certificates.crt" >&2
         echo "Please update to a version of nix which supports ssl." >&2
         exit 1
       fi
-      gx get -o $out "${multihash}"
+      cp -r ${src} $TMPDIR/src
+      chmod -R a+w $TMPDIR/src
+      cd $TMPDIR/src
+      gx --verbose install --global
+      cp -r $TMPDIR/src $out
     '';
     buildInputs = [ gx.bin ];
     outputHashAlgo = "sha256";
@@ -25,10 +29,15 @@ let
     preferLocalBuild = true;
   };
 
-  buildFromGitHub = { rev, date ? null, owner, repo, sha256, name ? repo, goPackagePath ? "github.com/${owner}/${repo}", ... }@args: buildGoPackage (args // {
+  buildFromGitHub = { rev, date ? null, owner, repo, sha256, gxSha256 ? null, name ? repo, goPackagePath ? "github.com/${owner}/${repo}", ... }@args: buildGoPackage (args // {
     inherit rev goPackagePath;
     name = "${name}-${if date != null then date else if builtins.stringLength rev != 40 then rev else stdenv.lib.strings.substring 0 7 rev}";
-    src  = fetchFromGitHub { inherit rev owner repo sha256; };
+    src = let
+      src' = fetchFromGitHub { inherit rev owner repo sha256; };
+    in if gxSha256 == null then
+      src'
+    else
+      fetchGxPackage { src = src'; sha256 = gxSha256; };
   });
 
   buildFromGoogle = { rev, date ? null, repo, sha256, name ? repo, goPackagePath ? "google.golang.org/${repo}", ... }@args: buildGoPackage (args // {
@@ -2253,17 +2262,17 @@ let
   };
 
   ipfs = buildFromGitHub {
-    rev = "v0.3.11";
-    owner  = "ipfs";
-    repo   = "go-ipfs";
-    sha256 = "1b7aimnbz287fy7p27v3qdxnz514r5142v3jihqxanbk9g384gcd";
-    extraSrcs = [
-      {
-        src = fetchGxPackage {
-          multihash = "QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4";
-        };
-        goPackagePath = "gx/afsdfdsfasd/blah";
-      }
+    rev = "24d88da289061ba36826b9010d3a40bc663ee52e";
+    date = "2016-03-15";
+    owner = "ipfs";
+    repo = "go-ipfs";
+    sha256 = "0wan8ykwi49i7bvqb2kc3qj23zs8s5f0vnh6v88qnmhm1izw45iw";
+    gxSha256 = "1a3wwq6308mbx2310xwpf3cq4a7ia28q9mbfg2bndhsznz6101c3";
+
+    subPackages = [
+      "cmd/ipfs"
+      "cmd/ipfswatch"
+      "cmd/seccat"
     ];
   };
 

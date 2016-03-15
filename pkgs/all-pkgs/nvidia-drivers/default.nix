@@ -91,7 +91,13 @@ assert nvidiasettingsSupport -> (
   && gdk-pixbuf-core != null
   && glib != null
   && pango != null
-  # TODO: add gtk2/3 requirement
+  && (
+    if versionAtLeast versionMajor "346" then
+      cairo != null
+      && gtk3 != null
+    else
+      gtk2 != null
+  )
 );
 assert libsOnly -> !buildKernelspace;
 
@@ -184,7 +190,7 @@ stdenv.mkDerivation {
     xorg.libXrandr
     zlib
   ];
-  gtkPath = optionalString (!libsOnly) (
+  gtkPath = optionalString (!libsOnly && nvidiasettingsSupport) (
     makeLibraryPath (
       [
         atk

@@ -114,13 +114,13 @@ stdenv.mkDerivation {
         if channel == "vulkan" then
           "https://developer.nvidia.com/linux32bit"
         else
-          "http://us.download.nvidia.com/XFree86/Linux-x86/${version}/" +
+          "http://download.nvidia.com/XFree86/Linux-x86/${version}/" +
           "NVIDIA-Linux-x86-${version}.run"
       else if targetSystem == "x86_64-linux" then
         if channel == "vulkan" then
           "https://developer.nvidia.com/linux64bit"
         else
-          "http://us.download.nvidia.com/XFree86/Linux-x86_64/${version}/" +
+          "http://download.nvidia.com/XFree86/Linux-x86_64/${version}/" +
           "NVIDIA-Linux-x86_64-${version}-no-compat32.run"
       else
         throw "The NVIDIA drivers are not supported for the `${targetSystem}` platform";

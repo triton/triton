@@ -7,9 +7,11 @@
 
 with {
   inherit (stdenv)
-    isLinux;
+    targetSystem;
   inherit (stdenv.lib)
+    elem
     optionals
+    platforms
     wtFlag;
 };
 
@@ -22,14 +24,13 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libplist
-  ] ++ optionals isLinux [
+  ] ++ optionals (elem targetSystem platforms.linux) [
     inotify-tools
   ];
 
   configureFlags = [
     # Flag is not a boolean
-    #"--with-inotify"
-    (if isLinux then
+    (if elem targetSystem platforms.linux then
        null
      else
        "--without-inotify")
@@ -42,9 +43,10 @@ stdenv.mkDerivation rec {
       gpl2Plus
       lgpl21Plus
     ];
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

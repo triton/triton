@@ -494,7 +494,7 @@ preFixup() {
     # strips it out; re-add libXv/libXvMC here.
     local storeLibxvmcRpath
     storeLibxvmcRpath="$(patchelf --print-rpath $out/lib/libXvMCNVIDIA.so.${version})"
-    storeLibxvmcRpath="${storeLibxvmcRpath}:${libXvPath}"
+    storeLibxvmcRpath="${storeLibxvmcRpath}:${libXvPath}:${libXvMCPath}"
     echo "patchelf: ${out}/bin/nvidia-settings : rpath -> ${storeLibxvmcRpath}"
     patchelf \
       --set-rpath "${storeLibxvmcRpath}" \

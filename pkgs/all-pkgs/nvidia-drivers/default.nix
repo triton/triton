@@ -175,11 +175,16 @@ stdenv.mkDerivation {
 
   builder = ./builder-generic.sh;
 
-  libXvPath = makeLibraryPath ([
-    xorg.libXv
-  ] ++ optionals (versionOlder versionMajor "305") [
-    xorg.libXvMC
-  ]);
+  libXvPath = optionalString (!libsOnly && nvidiasettingsSupport) (
+    makeLibraryPath [
+      xorg.libXv
+    ]
+  );
+  libXvMCPath = optionalString (versionOlder versionMajor "305") (
+    makeLibraryPath [
+      xorg.libXvMC
+    ]
+  );
   allLibPath = makeLibraryPath [
     stdenv.cc.cc
     xorg.libX11

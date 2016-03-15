@@ -1060,6 +1060,8 @@ libclc = callPackage ../all-pkgs/libclc { };
 
 libcroco = callPackage ../all-pkgs/libcroco { };
 
+libcue = callPackage ../all-pkgs/libcue { };
+
 libdrm = callPackage ../all-pkgs/libdrm { };
 
 libebml = callPackage ../all-pkgs/libebml { };
@@ -6640,8 +6642,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libctemplate_2_2 = callPackage ../development/libraries/libctemplate/2.2.nix { };
 #
 #  libcouchbase = callPackage ../development/libraries/libcouchbase { };
-#
-  libcue = callPackage ../development/libraries/libcue { };
 #
 #  libcutl = callPackage ../development/libraries/libcutl { };
 #

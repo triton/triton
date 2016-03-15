@@ -233,7 +233,7 @@ open OUT, ">default.nix";
 print OUT "";
 print OUT <<EOF;
 # THIS IS A GENERATED FILE.  DO NOT EDIT!
-args @ { clangStdenv, fetchurl, fetchgit, fetchpatch, stdenv, pkgconfig, intltool, freetype, fontconfig
+args @ { fetchurl, fetchgit, fetchpatch, stdenv, pkgconfig, intltool, freetype, fontconfig
 , libxslt, expat, libpng, zlib, perl, mesa_drivers, spice_protocol
 , dbus, util-linux_lib, openssl, gperf, m4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
 , autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, mtdev, pixman, cairo, glib, ... }: with args;

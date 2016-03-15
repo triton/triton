@@ -800,6 +800,8 @@ gnome-keyring = callPackage ../all-pkgs/gnome-keyring { };
 
 gnome-menus = callPackage ../all-pkgs/gnome-menus { };
 
+gnome-mpv = callPackage ../all-pkgs/gnome-mpv { };
+
 gnome-online-accounts = callPackage ../all-pkgs/gnome-online-accounts { };
 
 gnome-online-miners = callPackage ../all-pkgs/gnome-online-miners { };

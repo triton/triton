@@ -42,6 +42,7 @@
 , libxml2
 , lua
 , libmpeg2
+, mesa_noglu
 , perl
 , pulseaudio_lib
 , qt4
@@ -118,6 +119,7 @@ stdenv.mkDerivation rec {
     libxml2
     lua
     libmpeg2
+    mesa_noglu
     perl
     pulseaudio_lib
     qt4
@@ -148,6 +150,10 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  postPatch = ''
+    sed -e "s@/bin/echo@echo@g" -i configure
+  '';
+
   configureFlags = [
     "--enable-alsa"
     "--with-kde-solid=$out/share/apps/solid/actions"
@@ -157,10 +163,6 @@ stdenv.mkDerivation rec {
     "--enable-dvdnav"
     "--enable-samplerate"
   ] ++ optional onlyLibVLC  "--disable-vlc";
-
-  preConfigure = ''
-    sed -e "s@/bin/echo@echo@g" -i configure
-  '';
 
   preBuild = ''
     substituteInPlace \
@@ -174,6 +176,7 @@ stdenv.mkDerivation rec {
     homepage = http://www.videolan.org/vlc/;
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [ ];
-    platforms = platforms.linux;
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

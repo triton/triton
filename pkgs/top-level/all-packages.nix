@@ -1257,6 +1257,8 @@ mixxx = callPackage ../all-pkgs/mixxx { };
 
 mkvtoolnix = callPackage ../all-pkgs/mkvtoolnix { };
 
+mp4v2 = callPackage ../all-pkgs/mp4v2 { };
+
 mpd = callPackage ../all-pkgs/mpd { };
 
 mpdris2 = callPackage ../all-pkgs/mpdris2 { };
@@ -7226,8 +7228,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   libmpeg2 = callPackage ../development/libraries/libmpeg2 { };
 
 #  msilbc = callPackage ../development/libraries/msilbc { };
-#
-  mp4v2 = callPackage ../development/libraries/mp4v2 { };
 #
 #  mpich2 = callPackage ../development/libraries/mpich2 { };
 #

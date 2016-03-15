@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-URL="http://xorg.mirrors.pair.com/individual/"
+URL="http://www.x.org/releases/individual/"
 MIRROR="mirror://xorg/individual/"
 
 pull_tars() {

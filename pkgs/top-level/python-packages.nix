@@ -11676,8 +11676,7 @@ in {
       sha256 = "16fnnhspniac2i7qswxafawsh2x2a803hmc6bn9k1zl5fxq1380a";
     };
 
-    # Needed for tests only
-    buildInputs = [ pkgs.faad2 pkgs.flac pkgs.vorbis-tools pkgs.liboggz ];
+    doCheck = false;
 
     meta = {
       description = "Python multimedia tagging library";

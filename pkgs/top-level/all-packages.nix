@@ -670,6 +670,8 @@ dos2unix = callPackage ../all-pkgs/dos2unix { };
 
 dropbox = callPackage ../all-pkgs/dropbox { };
 
+duplicity = callPackage ../all-pkgs/duplicity { };
+
 e2fsprogs = callPackage ../all-pkgs/e2fsprogs { };
 
 edac-utils = callPackage ../all-pkgs/edac-utils { };
@@ -2470,11 +2472,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  duff = callPackage ../tools/filesystems/duff { };
 #
 #  duo-unix = callPackage ../tools/security/duo-unix { };
-#
-#  duplicity = callPackage ../tools/backup/duplicity {
-#    inherit (pythonPackages) boto lockfile paramiko ecdsa pycrypto;
-#    gnupg = gnupg1;
-#  };
 #
 #  duply = callPackage ../tools/backup/duply { };
 #

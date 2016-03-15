@@ -11496,7 +11496,8 @@ in {
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/python-mpd/python-mpd-0.3.0.tar.gz";
-      md5 = "5b3849b131e2fb12f251434597d65635";
+      md5Confirm = "5b3849b131e2fb12f251434597d65635";
+      sha256 = "1d11rl46prk5n8chmaxwwhi3c85s4gxadxapfkilc3rf3nx2x082";
     };
 
     meta = with pkgs.stdenv.lib; {

@@ -15302,7 +15302,8 @@ in {
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/pyacoustid/${name}.tar.gz";
-      md5 = "b27c714d530300b917eb869726334226";
+      md5Confirm = "b27c714d530300b917eb869726334226";
+      sha256 = "0lnl1760mz1d1jyl4w88mm9ji2ww7jzyis36d1g29bqnn6f065q1";
     };
 
     propagatedBuildInputs = with self; [ requests2 audioread ];

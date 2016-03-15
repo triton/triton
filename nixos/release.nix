@@ -1,6 +1,6 @@
 { nixpkgs ? { outPath = ./..; revCount = 56789; shortRev = "gfedcba"; }
 , stableBranch ? false
-, supportedSystems ? [ "x86_64-linux" "i686-linux" ]
+, supportedSystems ? [ "x86_64-linux" ]
 }:
 
 with import ../lib;
@@ -100,15 +100,15 @@ in rec {
     hostSystem = system;
   });
 
-  iso_graphical = forAllSystems (system: makeIso {
-    module = ./modules/installer/cd-dvd/installation-cd-graphical.nix;
+  iso_graphical = genAttrs [ "x86_64-linux" ] (system: makeIso {
+    module = ./modules/installer/cd-dvd/installation-cd-graphical-kde.nix;
     type = "graphical";
     inherit system;
   });
 
   # A variant with a more recent (but possibly less stable) kernel
   # that might support more hardware.
-  iso_minimal_new_kernel = forAllSystems (system: makeIso {
+  iso_minimal_new_kernel = genAttrs [ "x86_64-linux" ] (system: makeIso {
     module = ./modules/installer/cd-dvd/installation-cd-minimal-new-kernel.nix;
     type = "minimal-new-kernel";
     targetSystem = system;
@@ -117,7 +117,7 @@ in rec {
 
 
   # A bootable VirtualBox virtual appliance as an OVA file (i.e. packaged OVF).
-  ova = forAllSystems (system:
+  ova = genAttrs [ "x86_64-linux" ] (system:
 
     with import nixpkgs { inherit system; };
 

@@ -1901,11 +1901,12 @@ in {
   };
 
   rarfile = self.buildPythonPackage rec {
-    name = "rarfile-2.6";
+    name = "rarfile-2.7";
 
     src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/r/rarfile/rarfile-2.6.tar.gz";
-      md5 = "50ce3f3fdb9196a00059a5ea7b3739fd";
+      url = "https://pypi.python.org/packages/source/r/rarfile/${name}.tar.gz";
+      md5Confirm = "d143205f22078830451e0066c123580d";
+      sha256 = "0d8n1dlpiz7av8dmbp0vclrwl9cnxizr4f2c9xvj1h5nvn480527";
     };
 
     meta = {

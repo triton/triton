@@ -123,7 +123,7 @@ stdenv.mkDerivation {
           "http://us.download.nvidia.com/XFree86/Linux-x86_64/${version}/" +
           "NVIDIA-Linux-x86_64-${version}-no-compat32.run"
       else
-        throw "The NVIDIA drivers do not support the `${targetSystem}' platform";
+        throw "The NVIDIA drivers are not supported for the `${targetSystem}` platform";
     # Remove rename once vulkan is mainlined
     name = "NVIDIA-${targetSystem}-${version}.run";
     sha256 =
@@ -132,7 +132,7 @@ stdenv.mkDerivation {
       else if targetSystem == "x86_64-linux" then
         sha256x86_64
       else
-        throw "The NVIDIA drivers do not support the `${targetSystem}' platform";
+        throw "The NVIDIA drivers are not supported for the `${targetSystem}` platform";
   };
 
   nativeBuildInputs = [

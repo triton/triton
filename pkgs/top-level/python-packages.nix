@@ -439,11 +439,6 @@ in {
       sha256 = "f416a84e0d0ddbc288f6b8f2c276d10b40ca1238562cd9ed5a751292ec647b71";
     };
 
-    propagatedBuildInputs = with self; [ pygments ];
-
-    # No tests included
-    doCheck = false;
-
     meta = {
       homepage = https://github.com/bitprophet/alabaster;
       description = "a Sphinx theme";
@@ -8217,13 +8212,9 @@ in {
       sha256 = "1ylnjnw1x4b2y7blr6x35ncdzn69k253kw4cdkv6asdb21w73ny7";
     };
 
-    # error: invalid command 'test'
-    doCheck = false;
-
     meta = {
       description = "An open-source text processing system for processing plaintext documentation into useful formats, such as HTML or LaTeX";
       homepage = http://docutils.sourceforge.net/;
-      maintainers = with maintainers; [ garbas ];
     };
   };
 
@@ -10285,19 +10276,15 @@ in {
       sha256 = "1x0v41lp5m1pjix3l46zx02b7lqp2hflgpnxwkywxynvi3zz47xw";
     };
 
-    propagatedBuildInputs = with self; [ markupsafe ];
+    propagatedBuildInputs = with self; [
+      markupsafe
+    ];
 
     meta = {
       homepage = http://jinja.pocoo.org/;
       description = "Stand-alone template engine";
       license = licenses.bsd3;
-      longDescription = ''
-        Jinja2 is a template engine written in pure Python. It provides a
-        Django inspired non-XML syntax but supports inline expressions and
-        an optional sandboxed environment.
-      '';
       platforms = platforms.all;
-      maintainers = with maintainers; [ pierron garbas sjourdois ];
     };
   };
 
@@ -10756,17 +10743,15 @@ in {
   };
 
   lockfile = buildPythonPackage rec {
-    name = "lockfile-${version}";
-    version = "0.10.2";
+    name = "lockfile-0.12.2";
+
     src = pkgs.fetchurl {
-      sha256 = "0zi7amj3y55lp6339w217zksn1a0ssfvscmv059g2wvnyjqi6f95";
-      url = "https://github.com/openstack/pylockfile/archive/${version}.tar.gz";
+      url = "https://pypi.python.org/packages/source/l/lockfile/${name}.tar.gz";
+      sha256 = "16gpx5hm73ah5n1079ng0vy381hl802v606npkx4x8nb0gg05vba";
     };
 
-    doCheck = true;
-    OSLO_PACKAGE_VERSION = "${version}";
     buildInputs = with self; [
-      pbr nose sphinx_1_2
+      pbr #nose sphinx_1_2
     ];
 
     meta = {
@@ -10932,7 +10917,6 @@ in {
       description = "Implements a XML/HTML/XHTML Markup safe string";
       homepage = http://dev.pocoo.org;
       license = licenses.bsd3;
-      maintainers = with maintainers; [ iElectric garbas ];
     };
   };
 
@@ -15577,7 +15561,7 @@ in {
   };
 
 
-  Babel = buildPythonPackage (rec {
+  Babel = buildPythonPackage rec {
     name = "Babel-2.2.0";
 
     src = pkgs.fetchurl {
@@ -15585,16 +15569,16 @@ in {
       sha256 = "d8cb4c0e78148aee89560f9fe21587aa57739c975bb89ff66b1e842cc697428f";
     };
 
-    buildInputs = with self; [ pytest ];
-    propagatedBuildInputs = with self; [ pytz ];
+    propagatedBuildInputs = with self; [
+      pytz
+    ];
 
     meta = {
       homepage = http://babel.edgewall.org;
       description = "A collection of tools for internationalizing Python applications";
       license = licenses.bsd3;
-      maintainers = with maintainers; [ garbas ];
     };
-  });
+  };
 
   pybfd = buildPythonPackage rec {
     name = "pybfd-0.1.1";
@@ -16068,35 +16052,17 @@ in {
   };
 
   pygments = buildPythonPackage rec {
-    version = "2.1";
-    name = "Pygments-${version}";
+    name = "Pygments-2.1.3";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/P/Pygments/${name}.tar.gz";
-      sha256 = "0yx4p3w9lw1kw24zr87xnaqxm007mdxgwa5wjpwnrcfpmxgyz80k";
+      sha256 = "10axnp2wpjnq9g8wg53fx0c70dfxqrz498jyz8mrdx9a3flwir48";
     };
-
-    propagatedBuildInputs = with self; [ docutils ];
-
-    # Circular dependency with sphinx
-    doCheck = false;
 
     meta = {
       homepage = http://pygments.org/;
       description = "A generic syntax highlighter";
       license = licenses.bsd2;
-      maintainers = with maintainers; [ nckx garbas ];
-    };
-  };
-
-  # For Pelican 3.6.3
-  pygments_2_0 = self.pygments.override rec {
-    version = "2.0.2";
-    name = "Pygments-${version}";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/P/Pygments/${name}.tar.gz";
-      sha256 = "7320919084e6dac8f4540638a46447a3bd730fca172afc17d2c03eed22cf4f51";
     };
   };
 
@@ -16548,7 +16514,7 @@ in {
     };
   };
 
-  PyStemmer = buildPythonPackage (rec {
+  PyStemmer = buildPythonPackage rec {
     name = "PyStemmer-1.3.0";
 
     src = pkgs.fetchurl {
@@ -16556,17 +16522,13 @@ in {
       sha256 = "14fb8y4n8d7nj19pg3j2r5bl7qpbqwx6x9zvzjbid34pckmi9b6i";
     };
 
-    checkPhase = ''
-      ${python.interpreter} runtests.py
-    '';
-
     meta = {
       description = "Snowball stemming algorithms, for information retrieval";
       homepage = http://snowball.tartarus.org/;
       license = licenses.mit;
       platforms = platforms.all;
     };
-  });
+  };
 
   pyro3 = buildPythonPackage (rec {
     name = "Pyro-3.16";
@@ -17215,11 +17177,11 @@ in {
 
   pytz = buildPythonPackage rec {
     name = "pytz-${version}";
-    version = "2015.7";
+    version = "2016.1";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/pytz/${name}.tar.gz";
-      sha256 = "99266ef30a37e43932deec2b7ca73e83c8dbc3b9ff703ec73eca6b1dae6befea";
+      sha256 = "17nwrkxjfgc20x1kbjpz46i0mvpx7ik9df5fclm4css8nv7f5hn9";
     };
 
     meta = {
@@ -18851,10 +18813,7 @@ in {
       sha256 = "919f26a68b2c17a7634da993d91339e288964f93c274f1343e3bbbe2096e1128";
     };
 
-    # No tests included
-    doCheck = false;
-
-    propagatedBuildInputs = with self; [ PyStemmer ];
+    buildInputs = with self; [ PyStemmer ];
 
     meta = {
       description = "16 stemmer algorithms (15 + Poerter English stemmer) generated from Snowball algorithms";
@@ -19334,12 +19293,6 @@ in {
       sha256 = "0snmb8xffb3vsma0z67i0h0w2g2dy0p3gsgh9gi4i0kgc5l8spqh";
     };
 
-    buildInputs = with self; [ pytest ];
-
-    checkPhase = ''
-      py.test test_six.py
-    '';
-
     meta = {
       description = "A Python 2 and 3 compatibility library";
       homepage = https://pypi.python.org/pypi/six/;
@@ -19478,24 +19431,25 @@ in {
   };
 
 
-  sphinx = buildPythonPackage (rec {
-    name = "Sphinx-1.3.4";
+  sphinx = buildPythonPackage rec {
+    name = "Sphinx-1.3.6";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/S/Sphinx/${name}.tar.gz";
-      sha256 = "0mw06q7bzzjylgwh0wnnaxmwc95hx8w95as4vcgpan579brw7b4a";
+      sha256 = "12pzlfkjjlwgvsj56k0y809jpx5mgcs9548k1l4kdbr028ifjfqb";
     };
 
-    patches = [ ../development/python-modules/sphinx-fix-tests-with-pygments-2.1.patch ];
-    LC_ALL = "en_US.UTF-8";
-    checkPhase = ''
-      PYTHON=${python.executable} make test
-    '';
-
-    buildInputs = with self; [ mock pkgs.glibcLocales ];
     propagatedBuildInputs = with self; [
-      docutils jinja2 pygments sphinx_rtd_theme
-      alabaster Babel snowballstemmer six nose
+      Babel
+      snowballstemmer
+      sphinx_rtd_theme
+      six
+      pygments
+      docutils
+      jinja2
+      alabaster
+      #docutils jinja2 pygments sphinx_rtd_theme
+      #alabaster Babel snowballstemmer six nose
     ];
 
     meta = {
@@ -19504,7 +19458,7 @@ in {
       license = licenses.bsd3;
       platforms = platforms.all;
     };
-  });
+  };
 
   sphinx_1_2 = self.sphinx.override rec {
     name = "sphinx-1.2.3";
@@ -19519,13 +19473,14 @@ in {
   };
 
   sphinx_rtd_theme = buildPythonPackage (rec {
-    name = "sphinx_rtd_theme-0.1.8";
+    name = "sphinx_rtd_theme-0.1.9";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/s/sphinx_rtd_theme/${name}.tar.gz";
-      sha256 = "12mnb7qscr07mllmyyqfpx37778sr21m8663b4fivnk17bnk7xkl";
+      sha256 = "18d0r63w7jpdrk4q5qy26n08vdlmnj9sar93akwjphyambw4cf17";
     };
 
+    # It doesn't actually have real dependencies
     postPatch = ''
       rm requirements.txt
       touch requirements.txt

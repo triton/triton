@@ -16327,10 +16327,12 @@ in {
 
     src = pkgs.fetchurl {
       url = "http://github.com/progrium/pyjwt/archive/${version}.tar.gz";
-      sha256 = "118rzhpyvx1h4hslms4fdizyv6mnyd4g34fv089lvs116pj08k9c";
+      sha256 = "1gpr1hrbshvgznq2sr5jxmcan9ln8pzm29c32z4d2vwbrgb2w742";
     };
 
-    propagatedBuildInputs = with self; [ pycrypto ecdsa ];
+    propagatedBuildInputs = with self; [ pycrypto ecdsa pytestrunner ];
+
+    doCheck = false;
 
     meta = {
       description = "JSON Web Token implementation in Python";

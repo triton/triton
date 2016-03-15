@@ -4,7 +4,10 @@
 , shortVersion, isRelease
 , forceBundledLLVM ? false
 , srcSha, srcRev ? ""
-, snapshotHashLinux686, snapshotHashLinux64
+, sha1Linux686
+, sha256Linux686
+, sha1Linux64
+, sha256Linux64
 , snapshotDate, snapshotRev
 , configureFlags ? []
 
@@ -54,13 +57,23 @@ let version = if isRelease then
       platforms = platforms.linux;
     };
 
-    snapshotHash = if stdenv.system == "i686-linux"
-      then snapshotHashLinux686
-      else if stdenv.system == "x86_64-linux"
-      then snapshotHashLinux64
-      else abort "no snapshot for platform ${stdenv.system}";
+    sha1 =
+      if stdenv.system == "i686-linux" then
+        sha1Linux686
+      else if stdenv.system == "x86_64-linux" then
+        sha1Linux64
+      else
+        abort "no snapshot for platform ${stdenv.system}";
 
-    snapshotName = "rust-stage0-${snapshotDate}-${snapshotRev}-${platform}-${snapshotHash}.tar.bz2";
+    sha256 =
+      if stdenv.system == "i686-linux" then
+        sha256Linux686
+      else if stdenv.system == "x86_64-linux" then
+        sha256Linux64
+      else
+        abort "no snapshot for platform ${stdenv.system}";
+
+    snapshotName = "rust-stage0-${snapshotDate}-${snapshotRev}-${platform}-${sha1}.tar.bz2";
 
     llvm = llvmPackages.llvm;
 in
@@ -87,7 +100,8 @@ with stdenv.lib; stdenv.mkDerivation {
     name = "rust-stage0";
     src = fetchurl {
       url = "http://static.rust-lang.org/stage0-snapshots/${snapshotName}";
-      sha1 = snapshotHash;
+      sha1Confirm = sha1;
+      inherit sha256;
     };
     dontStrip = true;
     installPhase = ''

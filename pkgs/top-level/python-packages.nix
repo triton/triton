@@ -18553,7 +18553,8 @@ in {
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/s/scripttest/scripttest-${version}.tar.gz";
-      md5 = "1d1c5117ccfc7b5961cae6c1020c0848";
+      md5Confirm = "1d1c5117ccfc7b5961cae6c1020c0848";
+      sha256 = "0f4w84k8ck82syys7yg9maz93mqzc8p5ymis941x034v44jzq74m";
     };
 
     buildInputs = with self; [ pytest ];

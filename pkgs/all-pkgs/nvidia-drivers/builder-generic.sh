@@ -549,11 +549,29 @@ postFixup() {
   fi
 
   # Fail if libraries contain broken RPATH's
-  [ -z "$(ldd ${out}/lib/* 2> /dev/null | grep --only-matching 'not found')" ] || {
-    echo "ERROR: failed to patch RPATH's for:"
-    ldd ${out}/lib/* 2> /dev/null | grep -B 10 'not found'
-    return 1
-  }
+  local TestLib
+  find "${out}/lib" -name '*.so*' -type f |
+  while read -r TestLib ; do
+    if [ -n "$(ldd "${TestLib}" 2> /dev/null |
+               grep --only-matching 'not found')" ] ; then
+      echo "ERROR: failed to patch RPATH's for:"
+      echo "${TestLib}"
+      ldd ${TestLib}
+      return 1
+    fi
+  done
+
+  # Fail if executables contain broken RPATH's
+  local executable
+  for executable in ${out}/bin/* ; do
+    if [ -n "$(ldd "${executable}" 2> /dev/null |
+               grep --only-matching 'not found')" ] ; then
+      echo "ERROR: failed to patch RPATH's for:"
+      echo "${executable}"
+      ldd ${out}/bin/${executable}
+      return 1
+    fi
+  done
 }
 
 genericBuild

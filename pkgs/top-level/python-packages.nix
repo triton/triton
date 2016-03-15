@@ -11633,7 +11633,8 @@ in {
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/m/musicbrainzngs/${name}.tar.gz";
-      md5 = "9e17a181af72d04a291c9a960bc73d44";
+      md5Confirm = "9e17a181af72d04a291c9a960bc73d44";
+      sha256 = "12f48llmdf5rkiqxcb70k2k1dmhm8byq0ifazvlrca8dfnmqh4r8";
     };
 
     buildInputs = [ pkgs.glibcLocales ];
@@ -11667,11 +11668,12 @@ in {
   };
 
   mutagen = buildPythonPackage (rec {
-    name = "mutagen-1.27";
+    name = "mutagen-1.31";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/m/mutagen/${name}.tar.gz";
-      md5 = "6a9bb5cc33214add35348f1bb3448340";
+      md5Confirm = "6db58c5b58d85ffb15d208f46a372c01";
+      sha256 = "16fnnhspniac2i7qswxafawsh2x2a803hmc6bn9k1zl5fxq1380a";
     };
 
     # Needed for tests only

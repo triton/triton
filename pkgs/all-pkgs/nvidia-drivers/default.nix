@@ -152,16 +152,6 @@ stdenv.mkDerivation {
     else
       [ ];
 
-  patches =
-    optionals (versionAtLeast versionMajor "346" &&
-               versionOlder versionMajor "355") [
-      (fetchTritonPatch {
-        rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
-        file = "nvidia-drivers/linux-4.2.patch";
-        sha256 = "01fe34a2eeb88057d51849098966e202f1ab94e548afe85ef25f533c8375e3c3";
-      })
-    ];
-
   # Make sure anything that isn't declared within the derivation
   # is inherited so that it is passed to the builder.
   inherit

@@ -9706,15 +9706,15 @@ in {
   };
 
   hypothesis = buildPythonPackage rec {
-    name = "hypothesis-1.14.0";
+    name = "hypothesis-3.1.0";
 
-    buildInputs = with self; [fake_factory django numpy pytz flake8 pytest ];
+    buildInputs = with self; [fake_factory django pytz flake8 pytest enum34 ];
 
     doCheck = false;  # no tests in source
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/h/hypothesis/${name}.tar.gz";
-      sha256 = "12dxrvn108q2j20brrk6zcb8w00kn3af1c07c0fv572nf2ngyaxy";
+      sha256 = "0qyqq9akm4vshhn8cngjc1qykcvsn7cz6dlm6njfsgpbraqrmbbw";
     };
 
     meta = {

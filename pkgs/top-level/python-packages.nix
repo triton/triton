@@ -11608,11 +11608,12 @@ in {
   };
 
   munkres = buildPythonPackage rec {
-    name = "munkres-1.0.6";
+    name = "munkres-1.0.7";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/m/munkres/${name}.tar.gz";
-      md5 = "d7ba3b8c5001578ae229a2d5a655872f";
+      md5Confirm = "d534612326f7c7cadcfa61d109f96289";
+      sha256 = "1i6nf45i0kkzdx6k70giybsqxz4dxsjbrkrfqgjd7znfkf25sjik";
     };
 
     # error: invalid command 'test'

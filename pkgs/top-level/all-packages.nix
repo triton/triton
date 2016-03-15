@@ -478,6 +478,8 @@ amrnb = callPackage ../all-pkgs/amrnb { };
 
 amrwb = callPackage ../all-pkgs/amrwb { };
 
+appstream-glib = callPackage ../all-pkgs/appstream-glib { };
+
 apr = callPackage ../all-pkgs/apr { };
 
 apr-util = callPackage ../all-pkgs/apr-util { };
@@ -6050,8 +6052,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    ../development/libraries/allegro/5-unstable.nix {};
 #
 #  appstream = callPackage ../development/libraries/appstream { };
-#
-#  appstream-glib = callPackage ../development/libraries/appstream-glib { };
 #
 #  assimp = callPackage ../development/libraries/assimp { };
 #

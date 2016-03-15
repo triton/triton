@@ -11,10 +11,6 @@ stdenv.mkDerivation rec {
     sha256 = "0f438bimimsvxjbdp4vsr8hjw2nwggmhaxgcw07g2z361fkbj683";
   };
 
-  configurePhase = ''
-    ./configure --help
-  '';
-
   meta = with stdenv.lib; {
     description = "Functions for accessing ISO-IEC:14496-1:2001 MPEG-4 standard";
     homepage = http://code.google.com/p/mp4v2;

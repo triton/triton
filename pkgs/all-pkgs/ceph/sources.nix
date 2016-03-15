@@ -12,14 +12,14 @@
   };
 
   "dev" = rec {
-    version = "10.0.3";
+    version = "10.0.5";
     rev = "refs/tags/v${version}";
-    sha256 = "0h44knrryv88lwiqnnhavrq821lq3fgf9byl41bh9hcnf583kq7z";
+    sha256 = "1r4jvqs811d2h5gjczsn7k773vjc8v1qyra97d0ghfj2r8i43hnj";
   };
 
   "git" = rec {
-    version = "2016-02-08";
-    rev = "f22b671434f0f3640244d05d2f72fcc0eb3696f3";
-    sha256 = "0hky9yjx1ry2ss64mflsjdjl3fabwpz8x59gfqzw31b64g5p4704";
+    version = "2016-03-15";
+    rev = "8d10fdfb5e7c0f24ce39a17bb5f2e57a76b173a0";
+    sha256 = "1xakipgwmkdfmjbkk6is4sar4lvgcg2r14vbvrvbl4g50jnq74hm";
   };
 }

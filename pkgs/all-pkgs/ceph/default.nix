@@ -62,8 +62,8 @@ let
 
   hasStaticRocksdb = versionAtLeast version "10.0.1";
 
-  # Malloc implementation (can be jemalloc, tcmalloc or null)
-  malloc = if !hasStaticRocksdb then jemalloc else gperftools;
+  # Malloc implementation (can be jemalloc or tcmalloc)
+  malloc = if versionAtLeast version "10.0.4" || !hasStaticRocksdb then jemalloc else gperftools;
 
   wrapArgs = "--set PYTHONPATH \"$(toPythonPath $lib)\""
     #+ " --prefix PYTHONPATH : \"$(toPythonPath ${pythonPackages.readline})\""
@@ -143,6 +143,7 @@ stdenv.mkDerivation {
     expat
     curl
     fuse
+  ] ++ optionals (versionOlder version "10.0.4") [
     libedit
   ] ++ optionals (versionAtLeast version "10.0.0") [
     lz4
@@ -225,18 +226,20 @@ stdenv.mkDerivation {
     "--without-valgrind"
   ] ++ optionals (versionAtLeast version "9.0.2") [
     "--with-man-pages"
+  ] ++ optionals (versionAtLeast version "9.0.2" && versionOlder version "10.0.4") [
     "--with-systemd-libexec-dir=\${out}/libexec"
   ] ++ optionals (versionOlder version "9.1.0") [
     "--with-system-libs3"
     "--with-rest-bench"
   ] ++ optionals (versionAtLeast version "9.1.0") [
-    "--with-rgw-user=rgw"
-    "--with-rgw-group=rgw"
     "--with-systemd-unit-dir=\${out}/etc/systemd/system"
     "--without-selinux"  # TODO: Implement
+  ] ++ optionals (versionAtLeast version "9.1.0" && versionOlder version "10.0.4") [
+    "--with-rgw-user=rgw"
+    "--with-rgw-group=rgw"
   ] ++ optionals (versionAtLeast version "10.0.2") [
     "--without-cython"  # TODO: Implement
-  ] ++ optionals (versionAtLeast version "11.0.0") [
+  ] ++ optionals (versionAtLeast version "10.0.4") [
     "--with-eventfd"
     "--without-spdk" # TODO: Implement
   ];

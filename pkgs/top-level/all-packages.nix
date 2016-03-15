@@ -1154,6 +1154,8 @@ libraw = callPackage ../all-pkgs/libraw { };
 
 librsvg = callPackage ../all-pkgs/librsvg { };
 
+librsync = callPackage ../all-pkgs/librsync { };
+
 libsecret = callPackage ../all-pkgs/libsecret { };
 
 libssh = callPackage ../all-pkgs/libssh { };
@@ -7010,10 +7012,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
   libpwquality = callPackage ../development/libraries/libpwquality { };
 #
 #  libqalculate = callPackage ../development/libraries/libqalculate { };
-#
-#  librsync = callPackage ../development/libraries/librsync { };
-#
-#  librsync_0_9 = callPackage ../development/libraries/librsync/0.9.nix { };
 #
   libs3 = callPackage ../development/libraries/libs3 { };
 #

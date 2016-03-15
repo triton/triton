@@ -10751,8 +10751,10 @@ in {
     };
 
     buildInputs = with self; [
-      pbr #nose sphinx_1_2
+      pbr
     ];
+
+    doCheck = false;
 
     meta = {
       homepage = http://launchpad.net/pylockfile;

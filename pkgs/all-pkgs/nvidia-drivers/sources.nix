@@ -17,7 +17,7 @@
   "long-lived" = {
     versionMajor = "361";
     versionMinor = "28";
-    sha256i686   = "0sagvgacsg0x51x89z03mzaxpdics7v88wqv5hqh4igd17jxca99";
+    sha256i686   = "013l9hfjc7gyk5g2v2h71lwjmx4dqlkczsb17cz833fnadcrn4hs";
     sha256x86_64 = "1kq335mdmwlgp0lp9z8wrwyh48p2xv2nwdlgfj7b83vsh6ib17a4";
   };
   "short-lived" = {
@@ -29,13 +29,14 @@
   "testing" = {
     versionMajor = "361";
     versionMinor = "18";
-    sha256i686   = "94cccc3ff10ee9544f60bf1d32d04dddabc5103880b57895ea60e1167b89a155";
-    sha256x86_64 = "406ac161db6e3005bbfb4074becdc42e756f0e06440a072046039e64d63ed189";
+    sha256i686   = "1n6nrz59r3dgcpkcpr4yw997fygkpsdbv1x45c30w781w0j1q5s5";
+    sha256x86_64 = "12fi7vb697h38qh0f2j40q76yx9fqk6vwx20zfxhac3fvdhw2sj0";
   };
+  # https://developer.nvidia.com/vulkan-driver
   "vulkan" = {
     versionMajor = "355";
     versionMinor = "00.29";
-    sha256i686   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    sha256i686   = "11n5m332krb0fwlqf1zlgs4b2nxxjjk4g1gdc177fga8gr5cvic7";
     sha256x86_64 = "1n2ad6db6zg7rp6vdf8pz9j92s8d5ac6npyi6bnmia6l5i40391i";
   };
 

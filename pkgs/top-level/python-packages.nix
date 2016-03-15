@@ -7650,7 +7650,8 @@ in {
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/pyxdg/${name}.tar.gz";
-      md5 = "bedcdb3a0ed85986d40044c87f23477c";
+      md5Confirm = "bedcdb3a0ed85986d40044c87f23477c";
+      sha256 = "179767h8m634ydlm4v8lnz01ba42gckfp684id764zaip7h87s41";
     };
 
     # error: invalid command 'test'

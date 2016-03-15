@@ -1276,6 +1276,8 @@ inherit (callPackages ../all-pkgs/mumble {
   murmur
   murmur_git;
 
+musepack = callPackage ../all-pkgs/musepack { };
+
 musl = callPackage ../all-pkgs/musl { };
 
 mutter = callPackage ../all-pkgs/mutter { };
@@ -6914,8 +6916,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
   libmng = callPackage ../development/libraries/libmng { };
 
   libmodplug = callPackage ../development/libraries/libmodplug {};
-
-  libmpcdec = callPackage ../development/libraries/libmpcdec { };
 #
 #  libmp3splt = callPackage ../development/libraries/libmp3splt { };
 #

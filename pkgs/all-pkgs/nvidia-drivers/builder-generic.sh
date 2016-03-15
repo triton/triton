@@ -110,7 +110,7 @@ nvidia_patchelf() {
   local executable
   local patchLib
 
-  find "${out}/lib" -iwholename '*.so*' -type f | \
+  find "${out}/lib" -name '*.so*' -type f |
   while read -r patchLib ; do
     if [ -f "${patchLib}" ] ; then
       echo "patchelf: ${patchLib} : rpath -> ${out}/lib:${allLibPath}"
@@ -488,15 +488,17 @@ preFixup() {
   # Patch RPATH's in libraries and executables
   nvidia_patchelf
 
-  # libXvMC special case
+  # libXvMCNVIDIA special case
   if [ ${versionMajor} -le 304 ] ; then
-   local storeLibxvmcRpath
-   storeLibxvmcRpath="$(patchelf --print-rpath $out/lib/libXvMCNVIDIA.so.${version})"
-   storeLibxvmcRpath="${storeLibxvmcRpath}:${libXvPath}"
-   echo "patchelf: ${out}/bin/nvidia-settings : rpath -> ${storeLibxvmcRpath}"
-   patchelf \
-     --set-rpath "${storeLibxvmcRpath}" \
-     "${out}/lib/libXvMCNVIDIA.so.${version}"
+    # libXvMCNVIDIA loads libXv at runtime, so shrink rpath
+    # strips it out; re-add libXv/libXvMC here.
+    local storeLibxvmcRpath
+    storeLibxvmcRpath="$(patchelf --print-rpath $out/lib/libXvMCNVIDIA.so.${version})"
+    storeLibxvmcRpath="${storeLibxvmcRpath}:${libXvPath}"
+    echo "patchelf: ${out}/bin/nvidia-settings : rpath -> ${storeLibxvmcRpath}"
+    patchelf \
+      --set-rpath "${storeLibxvmcRpath}" \
+      "${out}/lib/libXvMCNVIDIA.so.${version}"
  fi
 
 

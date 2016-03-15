@@ -2,7 +2,14 @@
 
 { config, lib, pkgs, pkgs_i686, ... }:
 
-with lib;
+with {
+  inherit (lib)
+    elem
+    mkIf
+    optionals
+    optionalString
+    singleton;
+};
 
 let
 
@@ -41,9 +48,41 @@ in
 
   config = mkIf (config.services.xserver.enable && enabled) {
 
+    boot.blacklistedKernelModules = [
+      "nouveau"
+      "nvidiafb"
+      "rivafb"
+      "rivatv"
+    ];
+
+    boot.extraModulePackages = [
+      nvidia-drivers
+    ];
+
+    environment.etc."OpenCL/vendors/nvidia.icd".source =
+      "${nvidia-drivers}/etc/OpenCL/vendors/nvidia.icd";
+    environment.etc."nvidia/nvidia-application-profiles-rc.d".source =
+      "${nvidia-drivers}/etc/nvidia/nvidia-application-profiles-rc.d";
+
+    environment.systemPackages = [
+      nvidia-drivers
+    ];
+
+    hardware.opengl.package = nvidia-drivers;
+    hardware.opengl.package32 = nvidia-drivers_libs32;
+
+    services.acpid.enable = true;
+
+    # Create /dev/nvidia-uvm when the nvidia-uvm module is loaded.
+    services.udev.extraRules = optionalString nvidia-drivers.cudaUVM ''
+      KERNEL=="nvidia_uvm", RUN+="${pkgs.stdenv.shell} -c 'mknod -m 666 /dev/nvidia-uvm c $(grep nvidia-uvm /proc/devices | cut -d \  -f 1) 0'"
+    '';
+
     services.xserver.drivers = singleton {
       name = "nvidia";
       modules = [
+        # x11glvnd module
+        pkgs.libglvnd
         nvidia-drivers
       ];
       libPath = [
@@ -54,36 +93,6 @@ in
     services.xserver.screenSection = ''
       Option "RandRRotation" "on"
     '';
-
-    hardware.opengl.package = nvidia-drivers;
-    hardware.opengl.package32 = nvidia-drivers_libs32;
-
-    environment.systemPackages = [
-      nvidia-drivers
-    ];
-
-    boot.extraModulePackages = [
-      nvidia-drivers
-    ];
-
-    boot.kernelModules = [
-      # nvidia-uvm is required by CUDA applications.
-      "nvidia-uvm"
-    ];
-
-    # Create /dev/nvidia-uvm when the nvidia-uvm module is loaded.
-    services.udev.extraRules = ''
-      KERNEL=="nvidia_uvm", RUN+="${pkgs.stdenv.shell} -c 'mknod -m 666 /dev/nvidia-uvm c $(grep nvidia-uvm /proc/devices | cut -d \  -f 1) 0'"
-    '';
-
-    boot.blacklistedKernelModules = [
-      "nouveau"
-      "nvidiafb"
-    ];
-
-    services.acpid.enable = true;
-
-    environment.etc."OpenCL/vendors/nvidia.icd".source = "${nvidia-drivers}/etc/OpenCL/vendors/nvidia.icd";
 
   };
 

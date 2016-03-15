@@ -192,6 +192,7 @@ rec {
   ];
 
   sourceforge = [
+    http://downloads.sourceforge.net/sourceforge/
     http://prdownloads.sourceforge.net/
     http://heanet.dl.sourceforge.net/sourceforge/
     http://surfnet.dl.sourceforge.net/sourceforge/

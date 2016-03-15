@@ -200,7 +200,7 @@ buildPhase() {
        [ ${versionMajor} -ge 340 ] ; then
       # 32-bit UVM support was removed in 346
       if ([ ${versionMajor} -ge 346 ] && \
-         [ "${system}" == 'x86_64-linux' ]) || \
+         [ "${targetSystem}" == 'x86_64-linux' ]) || \
          [ ${versionMajor} -lt 346 ] ; then
         cd "${sourceRoot}/kernel/uvm"
         make \
@@ -240,11 +240,11 @@ installPhase() {
     # NVIDIA cuda unified virtual memory kernel module
     if [ ${versionMajor} -ge 340 ] ; then
       # The uvm kernel module build directory changed in 355+
-      if [ ${versionMajor} -ge 355 ] && [ "${system}" == 'x86_64-linux' ] ; then
+      if [ ${versionMajor} -ge 355 ] && [ "${targetSystem}" == 'x86_64-linux' ] ; then
         nuke-refs 'kernel/nvidia-uvm.ko'
         install -D -m 644 -v 'kernel/nvidia-uvm.ko' \
           "${out}/lib/modules/${kernelVersion}/misc/nvidia-uvm.ko"
-      elif ([ ${versionMajor} -ge 346 ] && [ "${system}" == 'x86_64-linux' ]) || \
+      elif ([ ${versionMajor} -ge 346 ] && [ "${targetSystem}" == 'x86_64-linux' ]) || \
            ([ ${versionMajor} -ge 340 ] && [ ${versionMajor} -lt 346 ]) ; then
         nuke-refs 'kernel/uvm/nvidia-uvm.ko'
         install -D -m 644 -v 'kernel/uvm/nvidia-uvm.ko' \

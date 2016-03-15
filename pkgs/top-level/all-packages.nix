@@ -733,6 +733,8 @@ flex = callPackage ../all-pkgs/flex { };
 
 gawk = callPackage ../all-pkgs/gawk { };
 
+gcab = callPackage ../all-pkgs/gcab { };
+
 gconf = callPackage ../all-pkgs/gconf { };
 
 gcr = callPackage ../all-pkgs/gcr { };
@@ -6277,8 +6279,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  funambol = callPackage ../development/libraries/funambol { };
 #
 #  ganv = callPackage ../development/libraries/ganv { };
-#
-#  gcab = callPackage ../development/libraries/gcab { };
 #
 #  gdome2 = callPackage ../development/libraries/gdome2 {
 #    inherit (gnome) gtkdoc;

@@ -440,6 +440,10 @@ installPhase() {
           "${out}/share/doc/nvidia-application-profiles-${version}-key-documentation"
         install -D -m 644 -v "nvidia-application-profiles-${version}-rc" \
           "${out}/share/doc/nvidia-application-profiles-${version}-rc"
+        mkdir -pv "${out}/etc/nvidia"
+        ln -fsv \
+          "${out}/share/doc/nvidia-application-profiles-${version}-rc" \
+          "${out}/etc/nvidia/nvidia-application-profiles-rc.d"
       fi
 
       # OpenCL ICD config

@@ -1610,7 +1610,7 @@ let
     repo   = "go-ipfs-api";
     sha256 = "1gi966yrf0q6rjvwf0cr67wxgwx5qrv7zn6wmisr3inp58mimvbh";
     excludedPackages = "tests";
-    propagatedBuildInputs = [ go-multipart-files tar-utils ];
+    propagatedBuildInputs = [ go-multiaddr-net go-multipart-files tar-utils ];
   };
 
   go-isatty = buildFromGitHub {
@@ -2266,8 +2266,8 @@ let
     date = "2016-03-15";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "0wan8ykwi49i7bvqb2kc3qj23zs8s5f0vnh6v88qnmhm1izw45iw";
-    gxSha256 = "1a3wwq6308mbx2310xwpf3cq4a7ia28q9mbfg2bndhsznz6101c3";
+    sha256 = "00idfw35hwsv5a0j7cwzvnrkm9912jd0ywbd0x6hz430d9hjm6hv";
+    gxSha256 = "0lxlxwpd3z25m8k96qhjg9sdrcj6mnp0awjv792zbbk8z6524m6f";
 
     subPackages = [
       "cmd/ipfs"

@@ -20,7 +20,7 @@
 , libomxil-bellagio
 #, libva
 , libvdpau
-, llvmPackages
+, llvm
 , systemd_lib
 , wayland
 , xorg
@@ -54,11 +54,6 @@ in
 let
   # this is the default search path for DRI drivers
   driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
-  clang =
-    if llvmPackages ? clang-unwrapped then
-      llvmPackages.clang-unwrapped
-    else
-      llvmPackages.clang;
 in
 
 stdenv.mkDerivation rec {
@@ -100,7 +95,7 @@ stdenv.mkDerivation rec {
     #libva
     libvdpau
     #libxml2Python
-    llvmPackages.llvm
+    llvm
     systemd_lib
     wayland
     xorg.dri2proto
@@ -198,7 +193,7 @@ stdenv.mkDerivation rec {
     "--with-dri-searchpath=${driverSearchPath}/lib/dri"
     "--with-dri-drivers=i915,i965,nouveau,radeon,r200,swrast"
     #osmesa-bits=8
-    #"--with-clang-libdir=${clang}/lib"
+    #"--with-clang-libdir=${llvm}/lib"
     "--with-egl-platforms=x11,wayland,drm"
     #llvm-prefix
     #xvmc-libdir

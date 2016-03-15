@@ -1,5 +1,5 @@
 { stdenv, fetchurl, fetchgit, file, python2, tzdata, procps
-, llvmPackages, jemalloc, ncurses, zlib
+, llvm, jemalloc, ncurses, zlib
 
 , shortVersion, isRelease
 , forceBundledLLVM ? false
@@ -74,8 +74,6 @@ let version = if isRelease then
         abort "no snapshot for platform ${stdenv.system}";
 
     snapshotName = "rust-stage0-${snapshotDate}-${snapshotRev}-${platform}-${sha1}.tar.bz2";
-
-    llvm = llvmPackages.llvm;
 in
 
 with stdenv.lib; stdenv.mkDerivation {

@@ -3,7 +3,8 @@
 , python2
 , ninja
 
-, llvmPackages
+, clang
+, llvm
 }:
 
 stdenv.mkDerivation {
@@ -20,13 +21,13 @@ stdenv.mkDerivation {
     python2
     ninja
   ];
+
   buildInputs = [
-    llvmPackages.llvm
-    llvmPackages.clang
+    llvm
   ];
 
   postPatch = ''
-    sed -i 's,^\(llvm_clang =\).*,\1 "${llvmPackages.clang}/bin/clang",g' configure.py
+    sed -i 's,^\(llvm_clang =\).*,\1 "${clang}/bin/clang",g' configure.py
     patchShebangs .
   '';
 
@@ -38,7 +39,7 @@ stdenv.mkDerivation {
 
   configureFlags = [
     "-g" "ninja"
-    "--with-cxx-compiler=${llvmPackages.clang}/bin/clang++"
+    "--with-cxx-compiler=${clang}/bin/clang++"
   ];
 
   meta = with stdenv.lib; {

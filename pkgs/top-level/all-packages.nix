@@ -622,6 +622,8 @@ chromium_dev = lowPrio (chromium.override {
   channel = "dev";
 });
 
+clang = wrapCC (callPackageAlias "llvm" { });
+
 clutter = callPackage ../all-pkgs/clutter { };
 
 clutter-gst_2 = callPackage ../all-pkgs/clutter-gst/2.x.nix { };
@@ -1367,6 +1369,8 @@ lightdm-gtk-greeter = callPackage ../all-pkgs/lightdm-gtk-greeter { };
 linux-headers = callPackage ../all-pkgs/linux-headers { };
 
 live555 = callPackage ../all-pkgs/live555 { };
+
+llvm = callPackage ../all-pkgs/llvm { };
 
 lmdb = callPackage ../all-pkgs/lmdb { };
 
@@ -4805,8 +4809,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  };
 #
 #  #Use this instead of stdenv to build with clang
-  clangStdenv = lowPrio llvmPackages.stdenv;
-  libcxxStdenv = stdenvAdapters.overrideCC pkgs.stdenv (clangWrapSelf llvmPackages.clang-unwrapped);
+#  clangStdenv = lowPrio llvmPackages.stdenv;
+#  libcxxStdenv = stdenvAdapters.overrideCC pkgs.stdenv (clangWrapSelf llvmPackages.clang-unwrapped);
 #
 #  cython = pythonPackages.cython;
 #  cython3 = python3Packages.cython;
@@ -4991,12 +4995,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   jre = pkgs.java.jre // { outputs = [ "jre" ]; };
 #
 #  lessc = callPackage ../development/compilers/lessc { };
-#
-  llvmPackages = recurseIntoAttrs (callPackageAlias "llvmPackages_37" { });
-#
-  llvmPackages_37 = callPackage ../development/compilers/llvm/3.7 {
-    inherit (stdenvAdapters) overrideCC;
-  };
 #
 #  mono = callPackage ../development/compilers/mono { };
 #

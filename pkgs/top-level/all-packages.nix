@@ -1126,6 +1126,8 @@ libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
 libmsgpack = callPackage ../all-pkgs/libmsgpack { };
 
+libnl = callPackage ../all-pkgs/libnl { };
+
 libogg = callPackage ../all-pkgs/libogg { };
 
 libomxil-bellagio = callPackage ../all-pkgs/libomxil-bellagio { };
@@ -8764,8 +8766,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   libatasmart = callPackage ../os-specific/linux/libatasmart { };
 #
 #  libcgroup = callPackage ../os-specific/linux/libcgroup { };
-#
-  libnl = callPackage ../os-specific/linux/libnl { };
 #
 #  linuxConsoleTools = callPackage ../os-specific/linux/consoletools { };
 #

@@ -19,7 +19,6 @@
 , libbs2b
 , libmms
 , libmodplug
-, libmpcdec
 , libopus
 , librsvg
 , libsndfile
@@ -28,6 +27,7 @@
 , libwebp
 , mesa
 , mpg123
+, musepack
 , openal
 #, opencv
 , openh264
@@ -80,7 +80,6 @@ stdenv.mkDerivation rec {
     libbs2b
     libmms
     libmodplug
-    libmpcdec
     libopus
     librsvg
     libvdpau
@@ -88,6 +87,7 @@ stdenv.mkDerivation rec {
     libwebp
     mesa
     mpg123
+    musepack
     openal
     #opencv
     openh264
@@ -260,7 +260,7 @@ stdenv.mkDerivation rec {
     #(enFlag "mpeg2enc" ( != null) null)
     (enFlag "mpg123" (mpg123 != null) null)
     #(enFlag "mplex" ( != null) null)
-    (enFlag "musepack" (libmpcdec != null) null)
+    (enFlag "musepack" (musepack != null) null)
     #(enFlag "nas" ( != null) null)
     #(enFlag "neon" ( != null) null)
     #(enFlag "ofa" ( != null) null)

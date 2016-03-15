@@ -3463,11 +3463,11 @@ in {
   };
 
   cryptography = buildPythonPackage rec {
-    name = "cryptography-1.2.2";
+    name = "cryptography-1.2.3";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/c/cryptography/${name}.tar.gz";
-      sha256 = "0rvaha7ymgbqkzbxk7xmj67k5b3hbp8w8cn3m5z776vd22wrq89z";
+      sha256 = "0kj511z4g21fhcr649pyzpl0zzkkc7hsgxxjys6z8wwfvmvirccf";
     };
 
     buildInputs = [ pkgs.openssl self.pretend self.cryptography_vectors

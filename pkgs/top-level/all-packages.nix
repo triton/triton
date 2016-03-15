@@ -688,6 +688,8 @@ evolution-data-server = callPackage ../all-pkgs/evolution-data-server { };
 
 expat = callPackage ../all-pkgs/expat { };
 
+faac = callPackage ../all-pkgs/faac { };
+
 ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
 ffmpeg_1 = callPackage ../all-pkgs/ffmpeg/1.x.nix { };
 ffmpeg_2_2 = callPackage ../all-pkgs/ffmpeg/2.2.nix { };
@@ -6217,8 +6219,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  eventlog = callPackage ../development/libraries/eventlog { };
 #
 #  facile = callPackage ../development/libraries/facile { };
-#
-  faac = callPackage ../development/libraries/faac { };
 
   faad2 = callPackage ../development/libraries/faad2 { };
 #

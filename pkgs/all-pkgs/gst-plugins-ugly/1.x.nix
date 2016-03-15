@@ -4,8 +4,8 @@
 , python
 
 , a52dec
-, amrnb
-, amrwb
+#, amrnb
+#, amrwb
 , glib
 , gst-plugins-base
 , gstreamer
@@ -13,7 +13,7 @@
 , libcdio
 , libdvdread
 , libmad
-, mpeg2dec
+, libmpeg2
 , orc
 , x264
 }:
@@ -38,8 +38,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     a52dec
-    amrnb
-    amrwb
+    #amrnb
+    #amrwb
     glib
     gst-plugins-base
     gstreamer
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     libcdio
     libdvdread
     libmad
-    mpeg2dec
+    libmpeg2
     orc
     x264
   ];
@@ -79,13 +79,13 @@ stdenv.mkDerivation rec {
     "--enable-realmedia"
     # External plugins
     (enFlag "a52dec" (a52dec != null) null)
-    (enFlag "amrnb" (amrnb != null) null)
-    (enFlag "amrwb" (amrnb != null) null)
+    #(enFlag "amrnb" (amrnb != null) null)
+    #(enFlag "amrwb" (amrnb != null) null)
     (enFlag "cdio" (libcdio != null) null)
     (enFlag "dvdread" (libdvdread != null) null)
     (enFlag "lame" (lame != null) null)
     (enFlag "mad" (libmad != null) null)
-    (enFlag "mpeg2dec" (mpeg2dec != null) null)
+    (enFlag "mpeg2dec" (libmpeg2 != null) null)
     #(enFlag "sidplay" (sidplay != null) null)
     #(enFlag "twolame" (twolame != null) null)
     (enFlag "x264" (x264 != null) null)

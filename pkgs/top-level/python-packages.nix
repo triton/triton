@@ -1933,11 +1933,12 @@ in {
   };
 
   pyechonest = self.buildPythonPackage rec {
-    name = "pyechonest-8.0.2";
+    name = "pyechonest-9.0.0";
 
     src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pyechonest/pyechonest-8.0.2.tar.gz";
-      md5 = "5586fe8ece7af4e24f71ea740185127e";
+      url = "https://pypi.python.org/packages/source/p/pyechonest/${name}.tar.gz";
+      md5Confirm = "c633dce658412e3ec553efd25d7d2686";
+      sha256 = "1584nira3rkiman9dm81kdshihmkj21s8navndz2l8spnjwb790x";
     };
 
     meta = {

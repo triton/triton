@@ -1327,6 +1327,8 @@ openobex = callPackage ../all-pkgs/openobex { };
 
 openssl = callPackage ../all-pkgs/openssl { };
 
+openvpn = callPackage ../all-pkgs/openvpn { };
+
 orbit2 = callPackage ../all-pkgs/orbit2 { };
 
 p7zip = callPackage ../all-pkgs/p7zip { };
@@ -3516,8 +3518,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  opentracker = callPackage ../applications/networking/p2p/opentracker { };
 #
 #  opentsdb = callPackage ../tools/misc/opentsdb {};
-#
-  openvpn = callPackage ../tools/networking/openvpn { };
 #
 #  openvpn_learnaddress = callPackage ../tools/networking/openvpn/openvpn_learnaddress.nix { };
 #

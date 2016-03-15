@@ -2,7 +2,8 @@
 
 /* Cargo binary snapshot */
 
-let snapshotDate = "2015-06-17";
+let
+  snapshotDate = "2016-01-31";
 in
 
 with ((import ./common.nix) {
@@ -10,16 +11,14 @@ with ((import ./common.nix) {
   version = "snapshot-${snapshotDate}";
 });
 
-let snapshotHash = if stdenv.system == "i686-linux"
-      then "g2h9l35123r72hqdwayd9h79kspfb4y9"
-      else if stdenv.system == "x86_64-linux"
-      then "fnx2rf1j8zvrplcc7xzf89czn0hf3397"
-      else if stdenv.system == "i686-darwin"
-      then "3viz3fi2jx18qjwrc90nfhm9cik59my6"
-      else if stdenv.system == "x86_64-darwin"
-      then "h2bf3db4vwz5cjjkn98lxayivdc6dflp"
-      else throw "no snapshot for platform ${stdenv.system}";
-    snapshotName = "cargo-nightly-${platform}.tar.gz";
+let snapshotHashes =
+  if stdenv.system == "x86_64-linux" then {
+    sha1 = "4c03a3fd2474133c7ad6d8bb5f6af9915ca5292a";
+    sha256 = "19jzx889bi21kq8mm33xysq0pcigsshh8rzzcfkyndmmp9hyc80r";
+  } else
+    throw "no snapshot for platform ${stdenv.system}";
+
+  snapshotName = "cargo-nightly-${platform}.tar.gz";
 in
 
 stdenv.mkDerivation {
@@ -27,7 +26,8 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://static-rust-lang-org.s3.amazonaws.com/cargo-dist/${snapshotDate}/${snapshotName}";
-    sha1 = snapshotHash;
+    sha1Confirm = snapshotHashes.sha1;
+    inherit (snapshotHashes) sha256;
   };
 
   buildInputs = [ makeWrapper ];

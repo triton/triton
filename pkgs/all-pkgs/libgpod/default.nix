@@ -3,7 +3,7 @@
 , gettext
 , intltool
 , perl
-, perlXMLParser
+, perlPackages
 
 , gdk-pixbuf
 , glib
@@ -12,11 +12,11 @@
 , libxml2
 , mutagen
 , python
-, pygobject
+, pythonPackages
 , sg3_utils
 , sqlite
+, systemd_lib
 , taglib
-, udev
 , zlib
 }:
 
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
     intltool
     libimobiledevice.swig
     perl
-    perlXMLParser
+    perlPackages.XMLParser
   ];
 
   buildInputs = [
@@ -50,45 +50,46 @@ stdenv.mkDerivation rec {
     libusb
     libxml2
     mutagen
-    pygobject
+    pythonPackages.pygobject
     python
     sg3_utils
     sqlite
+    systemd_lib
     taglib
-    udev
     zlib
   ];
 
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"
-    (enFlag "udev" (udev != null) null)
+    (enFlag "udev" (systemd_lib != null) null)
     (enFlag "libxml" (libxml2 != null) null)
     (enFlag "gdk-pixbuf" (gdk-pixbuf != null) null)
-    (enFlag "pygobject" (pygobject != null) null)
+    (enFlag "pygobject" (pythonPackages.pygobject != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--disable-more-warnings"
     #(wtFlag "hal" (hal != null) null)
     (wtFlag "libimobiledevice" (libimobiledevice != null) null)
-    (wtFlag "udev-dir" (udev != null) "\${out}/lib/udev")
+    (wtFlag "udev-dir" (systemd_lib != null) "\${out}/share/udev")
     (wtFlag "python" (python != null) null)
     "--without-mono"
   ];
 
   preFixup =
-  /* libgpod installs libgpod-sharp.pc unconditionally */ ''
-    rm -vf $out/lib/pkgconfig/libgpod-sharp.pc
-  '';
+    /* libgpod installs libgpod-sharp.pc unconditionally */ ''
+      rm -vf $out/lib/pkgconfig/libgpod-sharp.pc
+    '';
 
   meta = with stdenv.lib; {
     description = "Library to access the contents of an iPod";
     homepage = http://www.gtkpod.org/;
     license = licenses.lgpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

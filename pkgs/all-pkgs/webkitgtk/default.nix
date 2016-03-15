@@ -54,11 +54,11 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "webkitgtk-2.10.7";
+  name = "webkitgtk-2.10.8";
 
   src = fetchurl {
     url = "http://webkitgtk.org/releases/${name}.tar.xz";
-    sha256 = "0kl6a9v644vis69i0gpz88l82szi8zc842pzlqqxxpnn5v4643cr";
+    sha256 = "1a98z7fa8vxk7y2hlbnkl767908anyyxbwkyiar5gi037yr84dii";
   };
 
   patches = [

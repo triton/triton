@@ -443,7 +443,7 @@ installPhase() {
       fi
 
       # OpenCL ICD config
-      install -D -m 644 -v 'nvidia.icd' "${out}/lib/vendors/nvidia.icd"
+      install -D -m 644 -v 'nvidia.icd' "${out}/etc/OpenCL/vendors/nvidia.icd"
 
       # X.Org driver configuration file
       if [ ${versionMajor} -ge 346 ] ; then

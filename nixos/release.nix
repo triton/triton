@@ -28,36 +28,16 @@ let
 
 
   makeIso =
-    { module, type, description ? type, maintainers ? [ ], targetSystem, hostSystem }:
+    { module, type, maintainers ? [ ], targetSystem, hostSystem }:
 
     with import nixpkgs {
       inherit targetSystem hostSystem;
     };
 
-    let
-
-      config = (import lib/eval-config.nix {
+    hydraJob ((import lib/eval-config.nix {
         inherit targetSystem hostSystem;
-        modules = [ module versionModule { isoImage.isoBaseName = "nixos-${type}"; } ];
-      }).config;
-
-      iso = config.system.build.isoImage;
-
-    in
-      # Declare the ISO as a build product so that it shows up in Hydra.
-      hydraJob (runCommand "nixos-iso-${config.system.nixosVersion}"
-        { meta = {
-            description = "Triton installation CD (${description}) - ISO image for ${targetSystem}";
-            maintainers = map (x: lib.maintainers.${x}) maintainers;
-          };
-          inherit iso;
-          passthru = { inherit config; };
-          preferLocalBuild = true;
-        }
-        ''
-          mkdir -p $out/nix-support
-          echo "file iso" $iso/iso/*.iso* >> $out/nix-support/hydra-build-products
-        ''); # */
+      modules = [ module versionModule { isoImage.isoBaseName = "nixos-${type}"; } ];
+    }).config.system.build.isoImage);
 
 
   makeSystemTarball =

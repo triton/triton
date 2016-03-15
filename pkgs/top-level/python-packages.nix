@@ -3481,11 +3481,11 @@ in {
   };
 
   cryptography_vectors = buildPythonPackage rec {
-    name = "cryptography_vectors-1.2.2";
+    name = "cryptography_vectors-1.2.3";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/c/cryptography-vectors/${name}.tar.gz";
-      sha256 = "1zg47fzzn30mgkkbwrxqqcfq9crgabcmxyiy106n9404wbhfjkkl";
+      sha256 = "0shawgpax79gvjrj0a313sll9gaqys7q1hxngn6j4k24lmz7bwki";
     };
   };
 

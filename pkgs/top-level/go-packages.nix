@@ -2271,8 +2271,6 @@ let
 
     subPackages = [
       "cmd/ipfs"
-      "cmd/ipfswatch"
-      "cmd/seccat"
     ];
   };
 

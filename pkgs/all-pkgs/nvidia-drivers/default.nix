@@ -170,12 +170,7 @@ stdenv.mkDerivation {
       xorg.libXv
     ]
   );
-  libXvMCPath = optionalString (versionOlder versionMajor "305") (
-    makeLibraryPath [
-      xorg.libXvMC
-    ]
-  );
-  allLibPath = makeLibraryPath [
+  allLibPath = makeLibraryPath ([
     stdenv.cc.cc
     xorg.libX11
     xorg.libXau
@@ -183,8 +178,11 @@ stdenv.mkDerivation {
     xorg.libXdmcp
     xorg.libXext
     xorg.libXrandr
+    xorg.libXv
     zlib
-  ];
+  ] ++ optionals (versionOlder versionMajor "305") [
+    xorg.libXvMC
+  ]);
   gtkPath = optionalString (!libsOnly && nvidiasettingsSupport) (
     makeLibraryPath (
       [

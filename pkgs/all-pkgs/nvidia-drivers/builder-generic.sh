@@ -488,20 +488,6 @@ preFixup() {
   # Patch RPATH's in libraries and executables
   nvidia_patchelf
 
-  # libXvMCNVIDIA special case
-  if [ ${versionMajor} -le 304 ] ; then
-    # libXvMCNVIDIA loads libXv at runtime, so shrink rpath
-    # strips it out; re-add libXv/libXvMC here.
-    local storeLibxvmcRpath
-    storeLibxvmcRpath="$(patchelf --print-rpath $out/lib/libXvMCNVIDIA.so.${version})"
-    storeLibxvmcRpath="${storeLibxvmcRpath}:${libXvPath}:${libXvMCPath}"
-    echo "patchelf: ${out}/bin/nvidia-settings : rpath -> ${storeLibxvmcRpath}"
-    patchelf \
-      --set-rpath "${storeLibxvmcRpath}" \
-      "${out}/lib/libXvMCNVIDIA.so.${version}"
- fi
-
-
   # nvidia-settings special case
   if test -z "${libsOnly}" && test -n "${nvidiasettingsSupport}" ; then
     # Handle GTK+ path for nvidia-settings separately

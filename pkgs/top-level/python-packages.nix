@@ -3834,18 +3834,18 @@ in {
   };
 
   cffi = if isPyPy then null else buildPythonPackage rec {
-    name = "cffi-1.3.0";
+    name = "cffi-1.5.2";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/c/cffi/${name}.tar.gz";
-      sha256 = "1s9lcwmyhshrmvgcwy0vww70v23ncz7bgshhbk469kxmy2pm7alx";
+      sha256 = "1p91p1n8n46y0k3q7ddgxxjnfh08rjqsjh7zbjxzfiifhycxx6ys";
     };
 
     propagatedBuildInputs = with self; [ pkgs.libffi pycparser ];
     buildInputs = with self; [ pytest ];
 
     meta = {
-      maintainers = with maintainers; [ iElectric ];
+      maintainers = with maintainers; [ ];
     };
   };
 

@@ -26,7 +26,7 @@
     sha256i686   = "1cc0zsri92nz2mznabfd6pqckm9mlbszmysqqqh3w5mipwn898nk";
     sha256x86_64 = "1xr16faam2zsx8ajwm9g9302m6qjzyjh1zd56g8jhc8jxg8h43sg";
   };
-  "testing" = {
+  "beta" = {
     versionMajor = "361";
     versionMinor = "18";
     sha256i686   = "1n6nrz59r3dgcpkcpr4yw997fygkpsdbv1x45c30w781w0j1q5s5";

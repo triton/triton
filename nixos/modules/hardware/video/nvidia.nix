@@ -20,11 +20,11 @@ let
   # driver.
   nvidiaForKernel = kernelPackages:
     if elem "nvidia" drivers || elem "nvidia-long" drivers then
-      kernelPackages.nvidia-drivers_long
+      kernelPackages.nvidia-drivers_long-lived
     else if elem "nvidia-short" drivers then
-      kernelPackages.nvidia-drivers_short
-    else if elem "nvidia-testing" drivers then
-      kernelPackages.nvidia-drivers_testing
+      kernelPackages.nvidia-drivers_short-lived
+    else if elem "nvidia-beta" drivers then
+      kernelPackages.nvidia-drivers_beta
     else if elem "nvidia-legacy304" drivers then
       kernelPackages.nvidia-drivers_legacy304
     else if elem "nvidia-legacy340" drivers then

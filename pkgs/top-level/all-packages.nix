@@ -8854,14 +8854,14 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
       nvidia-drivers_legacy340 = kCallPackage ../all-pkgs/nvidia-drivers {
         channel = "legacy340";
       };
-      nvidia-drivers_long = kCallPackage ../all-pkgs/nvidia-drivers {
+      nvidia-drivers_long-lived = kCallPackage ../all-pkgs/nvidia-drivers {
         channel = "long-lived";
       };
-      nvidia-drivers_short = kCallPackage ../all-pkgs/nvidia-drivers {
+      nvidia-drivers_short-lived = kCallPackage ../all-pkgs/nvidia-drivers {
         channel = "short-lived";
       };
-      nvidia-drivers_testing = kCallPackage ../all-pkgs/nvidia-drivers {
-        channel = "testing";
+      nvidia-drivers_beta = kCallPackage ../all-pkgs/nvidia-drivers {
+        channel = "beta";
       };
       nvidia-drivers_vulkan = kCallPackage ../all-pkgs/nvidia-drivers {
         channel = "vulkan";

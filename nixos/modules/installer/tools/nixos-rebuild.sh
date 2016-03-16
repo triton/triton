@@ -276,7 +276,7 @@ if [ -n "$buildNix" ]; then
             if ! nixDrv="$(nix-instantiate '<nixpkgs>' --add-root $tmpDir/nix.drv --indirect -A nix "${extraBuildFlags[@]}")"; then
                 nixStorePath="$(prebuiltNix "$(uname -m)")"
                 if ! nix-store -r $nixStorePath --add-root $tmpDir/nix --indirect \
-                    --option extra-binary-caches https://cache.nixos.org/; then
+                    --option extra-binary-caches https://cache.triton.wak.io/; then
                     echo "warning: don't know how to get latest Nix" >&2
                 fi
                 # Older version of nix-store -r don't support --add-root.
@@ -285,7 +285,7 @@ if [ -n "$buildNix" ]; then
                     remoteNixStorePath="$(prebuiltNix "$(buildHostCmd uname -m)")"
                     remoteNix="$remoteNixStorePath/bin"
                     if ! buildHostCmd nix-store -r $remoteNixStorePath \
-                      --option extra-binary-caches https://cache.nixos.org/ >/dev/null; then
+                      --option extra-binary-caches https://cache.triton.wak.io/ >/dev/null; then
                         remoteNix=
                         echo "warning: don't know how to get latest Nix" >&2
                     fi

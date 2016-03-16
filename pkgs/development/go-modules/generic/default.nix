@@ -87,9 +87,9 @@ go.stdenv.mkDerivation (
       ARGS=()
       while read dep; do
         RDEP="$(awk 'BEGIN { FS="\""; } { if (/dvcsimport/) { print $4; } }' "$dep")"
-        ARGS+=("-e" "s,\([^a-zA-Z/]\)$RDEP,\1$(dirname "$dep"),g")
+        ARGS+=("-e" "s,\([^a-zA-Z/]\)$RDEP\(\"\|/\),\1$(dirname "$dep")\2,g")
       done < <(find gx -name package.json)
-      find . -type f -exec sed -i {} "''${ARGS[@]}" \;
+      find . -type f | xargs -n 1 -P $NIX_BUILD_CORES sed -i "''${ARGS[@]}"
       popd
     fi
 

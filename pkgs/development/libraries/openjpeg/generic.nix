@@ -21,6 +21,7 @@
 # Inherit generics
 , branch
 , sha256
+, multihash ? ""
 , version
 , ...
 }:
@@ -43,7 +44,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/openjpeg.mirror/${version}/openjpeg-${version}.tar.gz";
-    inherit sha256;
+    inherit multihash sha256;
   };
 
   cmakeFlags = [

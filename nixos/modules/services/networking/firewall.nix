@@ -232,7 +232,7 @@ in
 
     networking.firewall.enable = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description =
         ''
           Whether to enable the firewall.  This is a simple stateful

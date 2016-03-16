@@ -19279,6 +19279,10 @@ in {
       sha256 = "0snmb8xffb3vsma0z67i0h0w2g2dy0p3gsgh9gi4i0kgc5l8spqh";
     };
 
+    nativeBuildInputs = with self; [
+      pytest
+    ];
+
     meta = {
       description = "A Python 2 and 3 compatibility library";
       homepage = https://pypi.python.org/pypi/six/;

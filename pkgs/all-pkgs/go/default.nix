@@ -5,6 +5,7 @@
 , which
 , patchelf
 
+, bash
 , iana_etc
 , mime-types
 , tzdata
@@ -137,12 +138,12 @@ stdenv.mkDerivation {
     rm -r $out/share/go/pkg/bootstrap
     rm -r $out/share/go/{doc,misc}
     find $out -type f \( -name run -or -name \*.bash -or -name \*.sh \) -delete
-    find $out \( -name \*test\* -and -not -name testing \) -type d | xargs rm -rf
+    rm -r $out/share/go/src/cmd/go/testdata
   '';
 
   setupHook = ./setup-hook.sh;
 
-  disallowedReferences = [ goBootstrap ];
+  disallowedReferences = [ goBootstrap bash ];
 
   meta = with stdenv.lib; {
     branch = "1.6";

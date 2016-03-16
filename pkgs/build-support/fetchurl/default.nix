@@ -1,4 +1,4 @@
-{ stdenv, curl, openssl }: # Note that `curl' may be `null', in case of the native stdenv.
+{ stdenv, curl, openssl }: # Note that `curl' and `openssl' may be `null', in case of the native stdenv.
 
 let
 
@@ -30,13 +30,9 @@ let
     # This variable allows the user to pass additional options to curl
     "NIX_CURL_FLAGS"
 
-    # This variable allows the user to override hashedMirrors from the
-    # command-line.
-    "NIX_HASHED_MIRRORS"
-
-    # This variable allows overriding the timeout for connecting to
-    # the hashed mirrors.
-    "NIX_CONNECT_TIMEOUT"
+    # This allows the end user to specify the local ipfs host:port which hosts
+    # the content
+    "IPFS_ADDR"
   ] ++ (map (site: "NIX_MIRRORS_${site}") sites);
 
 in
@@ -63,6 +59,8 @@ in
 
 , sha1Confirm ? ""
 , md5Confirm ? ""
+
+, multihash ? ""
 
 , recursiveHash ? false
 
@@ -119,10 +117,6 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
 
   urls = urls_;
 
-  # If set, prefer the content-addressable mirrors
-  # (http://tarballs.triton.wak.io) over the original URLs.
-  preferHashedMirrors = true;
-
   # New-style output content requirements.
   outputHashAlgo =
     if outputHashAlgo != "" then
@@ -133,6 +127,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
       "sha256"
     else
       throw "Unsupported hash";
+
   outputHash =
     if outputHash != "" then
       outputHash
@@ -145,7 +140,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
 
   outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
 
-  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch downloadToTemp executable sha1Confirm md5Confirm;
+  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch downloadToTemp executable sha1Confirm md5Confirm multihash;
 
   # Doing the download on a remote machine just duplicates network
   # traffic, so don't do that.

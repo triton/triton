@@ -1,10 +1,4 @@
 rec {
-
-  # Content-addressable Nix mirrors
-  hashedMirrors = [
-    https://tarballs.triton.wak.io
-  ];
-
   # Mirrors for mirror://site/filename URIs, where "site" is
   # "sourceforge", "gnu", etc.
 

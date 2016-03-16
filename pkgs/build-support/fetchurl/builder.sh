@@ -58,29 +58,6 @@ finish() {
 }
 
 
-tryHashedMirrors() {
-    if test -n "$NIX_HASHED_MIRRORS"; then
-        hashedMirrors="$NIX_HASHED_MIRRORS"
-    fi
-
-    for mirror in $hashedMirrors; do
-        url="$mirror/$outputHashAlgo/$outputHash"
-        if $curl --retry 0 --connect-timeout "${NIX_CONNECT_TIMEOUT:-15}" \
-            --fail --silent --show-error --head "$url" \
-            --write-out "%{http_code}" --output /dev/null > code 2> log; then
-            tryDownload "$url"
-            if test -n "$success"; then finish; fi
-        else
-            # Be quiet about 404 errors, which we interpret as the file
-            # not being present on this particular mirror.
-            if test "$(cat code)" != 404; then
-                echo "error checking the existence of $url"
-                cat log
-            fi
-        fi
-    done
-}
-
 # URL list may contain ?. No glob expansion for that, please
 set -o noglob
 
@@ -143,25 +120,46 @@ curl="curl \
  $NIX_CURL_FLAGS"
 
 
-if test -n "$preferHashedMirrors"; then
-    tryHashedMirrors
-fi
-
 # URL list may contain ?. No glob expansion for that, please
 set -o noglob
 
 success=
+if [ -n "$multihash" ]; then
+  if [ -n "$IPFS_ADDR" ]; then
+    tryDownload "http://$IPFS_ADDR/ipfs/$multihash"
+    if test -n "$success"; then
+      finish
+    fi
+  fi
+
+  tryDownload "http://127.0.0.1/ipfs/$multihash"
+  if test -n "$success"; then
+    finish
+  fi
+
+  tryDownload "http://127.0.0.1:8080/ipfs/$multihash"
+  if test -n "$success"; then
+    finish
+  fi
+fi
+
 for url in $urls; do
-    tryDownload "$url"
-    if test -n "$success"; then finish; fi
+  tryDownload "$url"
+  if test -n "$success"; then
+    finish
+  fi
 done
+
+# We only ever want to access the official gateway as a last resort as it can be slow
+if [ -n "$multihash" ]; then
+  tryDownload "https://gateway.ipfs.io/ipfs/$multihash"
+  if test -n "$success"; then
+    finish
+  fi
+fi
 
 # Restore globbing settings
 set +o noglob
-
-if test -z "$preferHashedMirrors"; then
-    tryHashedMirrors
-fi
 
 
 echo "error: cannot download $name from any mirror"

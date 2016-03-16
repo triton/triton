@@ -19,12 +19,12 @@ nvidia_bin_install() {
   # Usage:
   # $1 - Min version (0 = null, for no minimum)
   # $2 - Max version (0 = null, for no maximum)
-  # $3 - Executable name
+  # $3 - Executable name w/ relative path
 
   if ([ ${1} -eq 0 ] || [ ${versionMajor} -ge ${1} ]) && \
      ([ ${2} -eq 0 ] || [ ${versionMajor} -le ${2} ]) ; then
     # Install the executable
-    install -D -m 755 -v "${3}" "${out}/bin/${3}"
+    install -D -m 755 -v "${3}" "${out}/bin/$(basename ${3})"
   fi
 }
 
@@ -32,13 +32,13 @@ nvidia_header_install() {
   # Usage:
   # $1 - Min version (0 = null, for no minimum)
   # $2 - Max version (0 = null, for no maximum)
-  # $3 - Header name (w/o extension (.h))
-  # $4 - Include sub-directory (rel to $out/include/)
+  # $3 - Header name w/ relative path & w/o extension (.h)
+  # $4 - Install include sub-directory (relative to $out/include/)
 
   if ([ ${1} -eq 0 ] || [ ${versionMajor} -ge ${1} ]) && \
      ([ ${2} -eq 0 ] || [ ${versionMajor} -le ${2} ]) ; then
     # Install the header
-    install -D -m 644 -v "${3}.h" "${out}/include${4:+/${4}}/${3}.h"
+    install -D -m 644 -v "${3}.h" "${out}/include${4:+/${4}}/$(basename ${3}).h"
   fi
 }
 
@@ -46,10 +46,10 @@ nvidia_lib_install() {
   # Usage:
   # $1 - Min version (0 = null, for no minimum)
   # $2 - Max version (0 = null, for no maximum)
-  # $3 = Library name (w/ rel path & w/o extension (.so*))
-  # $4 = Custom so version (symlink to original)
-  # $5 = Source libs' so version (*.so.<version>)
-  # $6 = Lib install sub-directory (rel to $out/lib/)
+  # $3 - Library name w/ relative path & w/o extension (.so*)
+  # $4 - Custom shared object version (symlink *.so.<orig> -> *.so.<custom>)
+  # $5 - Source libraries' shared object version (*.so.<version>)
+  # $6 - Install library in sub-directory (relative to $out/lib/)
 
   local libFile
   local outDir
@@ -81,14 +81,11 @@ nvidia_lib_install() {
         "${out}/lib${6:+/${6}}/${libFile}.so"
     fi
 
-    # If $4 wasn't 1, then create a *.so.$4 symlink
-    # Make sure that we don't set it if we haven't passed a value
-    if [ ! -z "${4}" ] ; then
-      if [ "${4}" != '-' ] && [ "${4}" != "${soVersion}" ] ; then
-        ln -fnrsv \
-          "${out}/lib${6:+/${6}}/${libFile}.so${soVersion:+.${soVersion}}" \
-          "${out}/lib${6:+/${6}}/${libFile}.so.${4}"
-      fi
+    # If $4 is set & does not equal $soVersion, then create a *.so.$4 symlink
+    if [ ! -z "${4}" ] && [ "${4}" != '-' ] && [ "${4}" != "${soVersion}" ] ; then
+      ln -fnrsv \
+        "${out}/lib${6:+/${6}}/${libFile}.so${soVersion:+.${soVersion}}" \
+        "${out}/lib${6:+/${6}}/${libFile}.so.${4}"
     fi
   fi
 }
@@ -97,12 +94,13 @@ nvidia_man_install() {
   # Usage:
   # $1 - Min version (0 = null, for no minimum)
   # $2 - Max version (0 = null, for no maximum)
-  # $3 = Man page (w/o extension (.1.gz))
+  # $3 - Man page (w/o extension (.1.gz))
 
   if ([ ${1} -eq 0 ] || [ ${versionMajor} -ge ${1} ]) && \
      ([ ${2} -eq 0 ] || [ ${versionMajor} -le ${2} ]) ; then
     # Install the manpage
-    install -D -m 644 -v "${3}.1.gz" "${out}/share/man/man1/${3}.1.gz"
+    install -D -m 644 -v "${3}.1.gz" \
+      "${out}/share/man/man1/$(basename ${3}).1.gz"
   fi
 }
 
@@ -373,6 +371,9 @@ installPhase() {
     if test -z "${libsOnly}" ; then
       nvidia_lib_install 0 0 'libnvidia-wfb' '-' "${version}" 'xorg/modules'
       # symlink libwfb -> libnvidia-wfb
+      ln -fsv \
+        "${out}/lib/xorg/modules/libnvidia-wfb.so.${version}" \
+        "${out}/lib/xorg/modules/libwfb.so"
     fi
 
     # Framebuffer capture library
@@ -422,6 +423,7 @@ installPhase() {
     #
 
     if test -z "${libsOnly}" ; then
+      ###nvidia_man_install 361 0 'nvidia-gridd'
       ###nvidia_man_install 0 0 'nvidia-installer'
       if test -n "${nvidiasettingsSupport}" ; then
         nvidia_man_install 0 0 'nvidia-settings'
@@ -544,6 +546,7 @@ postFixup() {
   local TestLib
   find "${out}/lib" -name '*.so*' -type f |
   while read -r TestLib ; do
+    echo "Testing rpath for: ${TestLib}"
     if [ -n "$(ldd "${TestLib}" 2> /dev/null |
                grep --only-matching 'not found')" ] ; then
       echo "ERROR: failed to patch RPATH's for:"
@@ -551,11 +554,13 @@ postFixup() {
       ldd ${TestLib}
       return 1
     fi
+    echo "PASSED"
   done
 
   # Fail if executables contain broken RPATH's
   local executable
   for executable in ${out}/bin/* ; do
+    echo "Testing rpath for: ${executable}"
     if [ -n "$(ldd "${executable}" 2> /dev/null |
                grep --only-matching 'not found')" ] ; then
       echo "ERROR: failed to patch RPATH's for:"
@@ -563,6 +568,7 @@ postFixup() {
       ldd ${out}/bin/${executable}
       return 1
     fi
+    echo "PASSED"
   done
 }
 

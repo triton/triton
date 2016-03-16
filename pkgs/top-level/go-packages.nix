@@ -2272,6 +2272,15 @@ let
     subPackages = [
       "cmd/ipfs"
     ];
+
+    # Make sure we don't auto-update
+    postPatch = ''
+      grep -q 'AutoUpdate:[ ]*AutoUpdateMinor,' repo/config/version.go
+      sed -i 's#AutoUpdate:[ ]*AutoUpdateMinor,#AutoUpdate: AutoUpdateNever,#g' repo/config/version.go
+
+      grep -q 'Check:[ ]*"error",' repo/config/version.go
+      sed -i 's#Check:[ ]*"error",#Check: CheckIgnore,#g' repo/config/version.go
+    '';
   };
 
   json2csv = buildFromGitHub {

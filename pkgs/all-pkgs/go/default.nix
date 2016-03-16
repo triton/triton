@@ -137,7 +137,7 @@ stdenv.mkDerivation {
     rm -r $out/share/go/pkg/bootstrap
     rm -r $out/share/go/{doc,misc}
     find $out -type f \( -name run -or -name \*.bash -or -name \*.sh \) -delete
-    find $out -name \*test\* -type d | xargs rm -rf
+    find $out \( -name \*test\* -and -not -name testing \) -type d | xargs rm -rf
   '';
 
   setupHook = ./setup-hook.sh;

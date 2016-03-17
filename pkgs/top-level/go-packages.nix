@@ -129,11 +129,11 @@ let
 
 
   protobuf = buildFromGitHub {
-    rev = "99511271042a09d1e01baea8781caa5210fec66e";
-    date = "2016-03-10";
+    rev = "62e4364d64b32762febb61f2c88c0a29bc49a225";
+    date = "2016-03-17";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "0w0w54nmp99n1xn58l8m1rqx1dpjzdm0d1pnmdgfm3s917vs4qr6";
+    sha256 = "1yxzgxims3hqnbnfqy74m7n823gnxqf8rqi4wff3zyxw9kq32zl2";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [ "code.google.com/p/goprotobuf" ];
   };
@@ -160,21 +160,21 @@ let
   };
 
   text = buildFromGitHub {
-    rev = "c20b6f20120f3c96689c10ffa47eee07776b9fe1";
-    date = "2015-12-24";
+    rev = "1b466db55e0ba5d56ef5315c728216b42f796491";
+    date = "2016-02-26";
     owner = "golang";
     repo = "text";
-    sha256 = "1ix44aij1i2sg684lip6cqp72vfl8gys94dymkqlc14wqnswjggw";
+    sha256 = "1ss4lw5qrd43f89q93xmdz79jfb4mxczqcaj91ddycf38jdgmsac";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
   };
 
   tools = buildFromGitHub {
-    rev = "1431634c5607631cf68bb453e5a6487800e4cf80";
-    date = "2016-03-15";
+    rev = "758728c4b28cfbac299730969ef8f655c4761283";
+    date = "2016-03-16";
     owner = "golang";
     repo = "tools";
-    sha256 = "03hm29ds0n62zk8rssgxixh73r8y82cgfay25z6fv821rzjrp802";
+    sha256 = "1fj9nm7yzrcmw9vggfifmwlj4i9dfvcv4gqb5x70abyyrwqlkk21";
     goPackagePath = "golang.org/x/tools";
     goPackageAliases = [ "code.google.com/p/go.tools" ];
 
@@ -480,7 +480,7 @@ let
     owner = "mitchellh";
     repo = "copystructure";
     sha256 = "0sqiw6gwpgmjm420348indfmg7d8ymq9ilxf6100kkzq3kppzf3s";
-    buildInputs = [ reflectwalk ];
+    propagatedBuildInputs = [ reflectwalk ];
   };
 
   confd = buildGoPackage rec {
@@ -498,17 +498,18 @@ let
   };
 
   consul = buildFromGitHub {
-    rev = "v0.6.3";
+    rev = "v0.6.4";
     owner = "hashicorp";
     repo = "consul";
-    sha256 = "14vsm3f968qbbcx048il8rz2sgkn8yqgf4k2vnyfd92q86gqw9jq";
+    sha256 = "0p6m2rl0d30w418n4fzc4vymqs3vzfa468czmy4znkjmxdl5vp5a";
 
     buildInputs = [
       datadog-go circbuf armon_go-metrics go-radix speakeasy bolt
       go-bindata-assetfs go-dockerclient errwrap go-checkpoint go-cleanhttp
       go-immutable-radix go-memdb ugorji_go go-multierror go-reap go-syslog
       golang-lru hcl logutils memberlist net-rpc-msgpackrpc raft raft-boltdb
-      scada-client serf yamux muxado dns mitchellh-cli mapstructure columnize crypto sys
+      scada-client serf yamux muxado dns mitchellh-cli mapstructure columnize
+      copystructure hil hashicorp-go-uuid crypto sys
     ];
 
     # Keep consul.ui for backward compatability
@@ -893,13 +894,13 @@ let
   };
 
   gcloud-golang = buildFromGoogle {
-    rev = "5ff67fe23b1ba3ed2135491d9bb2ca087c84bfde";
+    rev = "619c6aa4ed0d5695d97fb99be26fd50fe5743406";
     repo = "cloud";
-    sha256 = "1dxqi00wwc4k88wxq6fmq85z6fv423kxsndrhwfm7pzjjjwv947q";
+    sha256 = "1j5mxx5dn4jkbypgxgar09s5nspmsi50lb73ba89zga36lya7583";
     propagatedBuildInputs = [ net oauth2 protobuf google-api-go-client grpc ];
     excludedPackages = "oauth2";
     meta.hydraPlatforms = [ ];
-    date = "2016-03-11";
+    date = "2016-03-17";
   };
 
   gcloud-golang-compute-metadata = buildFromGoogle {
@@ -1507,11 +1508,11 @@ let
   };
 
   go-getter = buildFromGitHub {
-    rev = "cd92db7af9118d920be4f1b95680ba75ad91d1c6";
-    date = "2016-03-07";
+    rev = "575ec4e3a1eb4fd0a2c1182f4a1bc9e75c1377fa";
+    date = "2016-03-15";
     owner = "hashicorp";
     repo = "go-getter";
-    sha256 = "0n17668zk9p453mgdpdbs2gz4d2l7yjvs0hwckg5j8880f4wfzyd";
+    sha256 = "1xjjmv517hmq5c01vlj3lfcw3czjfljmcc9f2mzgf1g51ahz5rk3";
     buildInputs = [ aws-sdk-go ];
   };
 
@@ -1703,6 +1704,15 @@ let
     repo   = "go-md2man";
     sha256 = "0hmkrq4gdzb6mwllmh4p1y7vrz7hyr8xqagpk9nyr5dhygvnnq2v";
     propagatedBuildInputs = [ blackfriday ];
+  };
+
+  go-mssqldb = buildFromGitHub {
+    rev = "6e7f3d73dade2e5566f87d18c3a1d00d2ce33421";
+    owner = "denisenkom";
+    repo = "go-mssqldb";
+    sha256 = "0f3yvij3pwcvk37fsahd1zh2hkpwhkqayfrhgwnw056i73y2m7gm";
+    date = "2016-01-21";
+    buildInputs = [ crypto ];
   };
 
   go-multiaddr = buildFromGitHub {
@@ -2101,6 +2111,15 @@ let
     owner  = "hashicorp";
     repo   = "hcl";
     sha256 = "13fh037x483ji4jkr65715rn559svql0h06synbb7hx37j4vzp3v";
+  };
+
+  hil = buildFromGitHub {
+    date = "2016-03-14";
+    rev = "22dcaf2ab44cd75477bef6bd024352ec952ab2b5";
+    owner  = "hashicorp";
+    repo   = "hil";
+    sha256 = "0fk7gpzd032kkprrlm7idqw7j1l41glf0mqqn00z1qb4lxf7b0l9";
+    propagatedBuildInputs = [ reflectwalk ];
   };
 
   hipchat-go = buildGoPackage rec {
@@ -2651,10 +2670,10 @@ let
   };
 
   nomad = buildFromGitHub {
-    rev = "v0.3.0";
+    rev = "v0.3.1";
     owner = "hashicorp";
     repo = "nomad";
-    sha256 = "1p520agqg31k29k9xj60zyr1yjm1mn5gy7ygji520lcgdcdr3syf";
+    sha256 = "0l8xw4w9gbxr0628w9py1pvy7r2d2avqm5pcfz2yscx0px13m8sg";
 
     buildInputs = [
       datadog-go wmi armon_go-metrics go-radix aws-sdk-go perks speakeasy
@@ -3523,10 +3542,10 @@ let
 
   suture = buildFromGitHub rec {
     version = "1.0.1";
-    rev    = "v${version}";
+    rev = "v1.1.0";
     owner  = "thejerf";
     repo   = "suture";
-    sha256 = "094ksr2nlxhvxr58nbnzzk0prjskb21r86jmxqjr3rwg4rkwn6d4";
+    sha256 = "0ny41wxg2rkc3lxn1xmi5fkk2g9n03bha2vcqxrwsy22jfbfwwn5";
   };
 
   syncthing = buildFromGitHub rec {
@@ -3696,10 +3715,10 @@ let
   };
 
   vault = buildFromGitHub rec {
-    rev = "v0.5.1";
+    rev = "v0.5.2";
     owner = "hashicorp";
     repo = "vault";
-    sha256 = "1v9lbqg0qmbnl06d70wnjjnvhdca4hv96jaszf9snl887w3ycsma";
+    sha256 = "085rk5i480wdlkn2p14yxi8zgsc11595nkkda1i77c4vjkllbkdy";
 
     buildInputs = [
       armon_go-metrics go-radix govalidator aws-sdk-go speakeasy etcd-client
@@ -3708,19 +3727,7 @@ let
       go-multierror go-syslog golang-lru logutils serf hashicorp_uuid
       go-jmespath osext pq mitchellh-cli copystructure go-homedir mapstructure
       reflectwalk columnize go-zookeeper ugorji_go crypto net oauth2 sys
-      asn1-ber inf yaml yaml-v2 hashicorp-go-uuid
-    ];
-
-    extraSrcs = [
-      {
-        src = fetchFromGitHub {
-          owner = "hashicorp";
-          repo = "hcl";
-          rev = "4de51957ef8d4aba6e285ddfc587633bbfc7c0e8";
-          sha256 = "14k4s4ygd4yjb6xvim3855wyhqdnnd5f29m8v7rc2rr137pi2nfw";
-        };
-        goPackagePath = "github.com/hashicorp/hcl";
-      }
+      asn1-ber inf yaml yaml-v2 hashicorp-go-uuid hcl go-mssqldb
     ];
   };
 

@@ -1168,6 +1168,8 @@ libssh = callPackage ../all-pkgs/libssh { };
 
 libssh2 = callPackage ../all-pkgs/libssh2 { };
 
+libsigcxx = callPackage ../all-pkgs/libsigcxx { };
+
 libsigsegv = callPackage ../all-pkgs/libsigsegv { };
 
 libsodium = callPackage ../all-pkgs/libsodium { };
@@ -7019,10 +7021,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
   libs3 = callPackage ../development/libraries/libs3 { };
 #
 #  libsearpc = callPackage ../development/libraries/libsearpc { };
-#
-libsigcxx = callPackage ../development/libraries/libsigcxx { };
-#
-libsigcxx12 = callPackage ../development/libraries/libsigcxx/1.2.nix { };
 #
 libsndfile = callPackage ../development/libraries/libsndfile { };
 #

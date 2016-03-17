@@ -472,6 +472,8 @@ accountsservice = callPackage ../all-pkgs/accountsservice { };
 
 acl = callPackage ../all-pkgs/acl { };
 
+acpid = callPackage ../all-pkgs/acpid { };
+
 adwaita-icon-theme = callPackage ../all-pkgs/adwaita-icon-theme { };
 
 amrnb = callPackage ../all-pkgs/amrnb { };
@@ -8584,8 +8586,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   acpi = callPackage ../os-specific/linux/acpi { };
 
-  acpid = callPackage ../os-specific/linux/acpid { };
-#
 #  acpitool = callPackage ../os-specific/linux/acpitool { };
 #
 #  alfred = callPackage ../os-specific/linux/batman-adv/alfred.nix { };

@@ -35,7 +35,6 @@
 , libxml2
 , libxslt
 , mesa
-, minizip
 , nspr
 , nss
 , pango
@@ -156,7 +155,6 @@ let
       libxml2
       libxslt
       mesa
-      minizip
       libopus
       pango
       pciutils

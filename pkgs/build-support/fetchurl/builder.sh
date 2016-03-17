@@ -82,7 +82,9 @@ tryDownload() {
   while [ $curlexit -eq 18 ]; do
     # keep this inside an if statement, since on failure it doesn't abort the script
     if $curl -C - --fail "$url" --output "$downloadedFile"; then
+      set +o noglob
       runHook postFetch
+      set -o noglob
       if [ "$outputHashMode" = "flat" ]; then
         if [ -n "$sha1Confirm" ]; then
           local sha1

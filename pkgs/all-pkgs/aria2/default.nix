@@ -11,11 +11,11 @@
 
 stdenv.mkDerivation rec {
   name = "aria2-${version}";
-  version = "1.20.0";
+  version = "1.21.0";
 
   src = fetchurl {
     url = "https://github.com/tatsuhiro-t/aria2/releases/download/release-${version}/${name}.tar.xz";
-    sha256 = "1l4gzz3yr0cl6a9xdy7843c5sb7afyq0i80wi2hasfpfdx5k95mz";
+    sha256 = "225c5f2c8acc899e0a802cdf198f82bd0d3282218e80cdce251b1f9ffacf6580";
   };
 
   buildInputs = [

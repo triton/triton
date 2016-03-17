@@ -36,8 +36,8 @@ stdenv.mkDerivation rec {
     ln -s . $out/share/zoneinfo/posix
     mv $out/share/zoneinfo-leaps $out/share/zoneinfo/right
 
-    mkdir -p "$lib/include"
-    cp tzfile.h "$lib/include/tzfile.h"
+    mkdir -p "$out/include"
+    cp tzfile.h "$out/include/tzfile.h"
   '';
 
   preferLocalBuild = true;

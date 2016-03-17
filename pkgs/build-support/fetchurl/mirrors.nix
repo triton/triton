@@ -186,13 +186,13 @@ rec {
   ];
 
   sourceforge = [
-    http://downloads.sourceforge.net/sourceforge/
-    http://prdownloads.sourceforge.net/
-    http://heanet.dl.sourceforge.net/sourceforge/
-    http://surfnet.dl.sourceforge.net/sourceforge/
-    http://dfn.dl.sourceforge.net/sourceforge/
-    http://osdn.dl.sourceforge.net/sourceforge/
-    http://kent.dl.sourceforge.net/sourceforge/
+    https://downloads.sourceforge.net/sourceforge/
+    https://prdownloads.sourceforge.net/
+    https://heanet.dl.sourceforge.net/sourceforge/
+    https://surfnet.dl.sourceforge.net/sourceforge/
+    https://dfn.dl.sourceforge.net/sourceforge/
+    https://osdn.dl.sourceforge.net/sourceforge/
+    https://kent.dl.sourceforge.net/sourceforge/
   ];
 
   # SourceForge.jp

@@ -112,7 +112,7 @@ tryDownload() {
           rm -f $out
           rm -f $downloadedFile
           str="$url produced a bad hash for $out"
-          if [ "$canPrintHash" = "1" ] && grep -q 'https'; then
+          if [ "$canPrintHash" = "1" ] && echo "$url" | grep -q 'https'; then
             str+=": $lhash"
           fi
           echo "$str" >&2

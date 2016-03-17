@@ -1,8 +1,7 @@
 { stdenv
 , fetchurl
 , fetchgit
-
-, bluez
+, gettext
 }:
 
 let
@@ -18,12 +17,13 @@ stdenv.mkDerivation rec {
     sha256 = "ff6f8986a56cdab0f012084def538357fba117ad81660ed6f7130f6c48b8e963";
   };
 
-  buildInputs = [
-    bluez
+  nativeBuildInputs = [
+    gettext
   ];
 
   preBuild = ''
     cp ${./config.h} config.h
+    cp ${./config.make} config.make
     makeFlagsArray+=(
       "BASEDIR=$out"
       "mandir=/share/man"

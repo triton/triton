@@ -244,7 +244,7 @@ in
 
     networking.firewall.logRefusedConnections = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description =
         ''
           Whether to log rejected or dropped incoming connections.
@@ -276,7 +276,7 @@ in
 
     networking.firewall.rejectPackets = mkOption {
       type = types.bool;
-      default = false;
+      default = true;
       description =
         ''
           If set, forbidden packets are rejected rather than dropped
@@ -338,7 +338,7 @@ in
     };
 
     networking.firewall.allowPing = mkOption {
-      default = false;
+      default = true;
       type = types.bool;
       description =
         ''

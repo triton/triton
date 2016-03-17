@@ -497,6 +497,8 @@ aria = aria2;
 
 argyllcms = callPackage ../all-pkgs/argyllcms { };
 
+asciidoc = callPackage ../all-pkgs/asciidoc { };
+
 atk = callPackage ../all-pkgs/atk { };
 
 atkmm = callPackage ../all-pkgs/atkmm { };
@@ -2105,22 +2107,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   appdata-tools = callPackage ../tools/misc/appdata-tools { };
 
-  asciidoc = callPackage ../tools/typesetting/asciidoc {
-    inherit (pythonPackages) matplotlib numpy aafigure recursivePthLoader;
-    enableStandardFeatures = false;
-  };
-
-  asciidoc-full = appendToName "full" (asciidoc.override {
-    inherit (pythonPackages) pygments;
-    enableStandardFeatures = true;
-  });
-
-  asciidoc-full-with-plugins = appendToName "full-with-plugins" (asciidoc.override {
-    inherit (pythonPackages) pygments;
-    enableStandardFeatures = true;
-    enableExtraPlugins = true;
-  });
-#
 #  autossh = callPackage ../tools/networking/autossh { };
 #
 #  asynk = callPackage ../tools/networking/asynk { };

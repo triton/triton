@@ -198,10 +198,6 @@ curl="curl \
  $NIX_CURL_FLAGS"
 
 
-# URL list may contain ?. No glob expansion for that, please
-set -o noglob
-
-success=
 if [ -n "$multihash" ]; then
   if [ -n "$IPFS_ADDR" ]; then
     tryDownload "http://$IPFS_ADDR/ipfs/$multihash"
@@ -210,17 +206,20 @@ if [ -n "$multihash" ]; then
   tryDownload "http://127.0.0.1:8080/ipfs/$multihash"
 fi
 
+# URL list may contain ?. No glob expansion for that, please
+set -o noglob
+
 for url in $urls; do
   tryDownload "$url" "1"
 done
+
+# Restore globbing settings
+set +o noglob
 
 # We only ever want to access the official gateway as a last resort as it can be slow
 if [ -n "$multihash" ]; then
   tryDownload "https://gateway.ipfs.io/ipfs/$multihash"
 fi
-
-# Restore globbing settings
-set +o noglob
 
 
 echo "error: cannot download $name from any mirror"

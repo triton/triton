@@ -1582,6 +1582,8 @@ totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
 
 tracker = callPackage ../all-pkgs/tracker { };
 
+tzdata = callPackage ../all-pkgs/tzdata { };
+
 udisks = callPackage ../all-pkgs/udisks { };
 
 unbound = callPackage ../all-pkgs/unbound { };
@@ -9598,8 +9600,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  tipa = callPackage ../data/fonts/tipa { };
 #
 #  ttf_bitstream_vera = callPackage ../data/fonts/ttf-bitstream-vera { };
-#
-  tzdata = callPackage ../data/misc/tzdata { };
 #
 #  ubuntu_font_family = callPackage ../data/fonts/ubuntu-font-family { };
 #

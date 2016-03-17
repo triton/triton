@@ -11806,7 +11806,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  xsynth_dssi = callPackage ../applications/audio/xsynth-dssi { };
 #
-  xterm = callPackage ../applications/misc/xterm { };
+#  xterm = callPackage ../applications/misc/xterm { };
 #
 #  finalterm = callPackage ../applications/misc/finalterm { };
 #

@@ -84,8 +84,6 @@ tryDownload() {
       if [ "$downloadedFile" = "$out" ] && [ "$outputHashMode" = "flat" ]; then
         local lhash
         lhash="$(openssl "$outputHashAlgo" -r -hex "$downloadedFile" 2>/dev/null | awk '{print $1;}')"
-        echo "$HEX_HASH" >&2
-        echo "$lhash" >&2
         if [ "$lhash" = "$HEX_HASH" ]; then
           success=1
         else

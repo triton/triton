@@ -1651,6 +1651,8 @@ xine-lib = callPackage ../all-pkgs/xine-lib { };
 
 xine-ui = callPackage ../all-pkgs/xine-ui { };
 
+xmlto = callPackage ../all-pkgs/xmlto { };
+
 xmltoman = callPackage ../all-pkgs/xmltoman { };
 
 xz = callPackage ../all-pkgs/xz { };
@@ -4570,8 +4572,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  xmlroff = callPackage ../tools/typesetting/xmlroff { };
 #
 #  xmlstarlet = callPackage ../tools/text/xml/xmlstarlet { };
-#
-  xmlto = callPackage ../tools/typesetting/xmlto { };
 #
 #  xmpppy = pythonPackages.xmpppy;
 #

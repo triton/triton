@@ -1233,6 +1233,8 @@ lzip = callPackage ../all-pkgs/lzip { };
 
 m4 = callPackageAlias "gnum4" { };
 
+man-pages = callPackage ../all-pkgs/man-pages { };
+
 mercurial = callPackage ../all-pkgs/mercurial { };
 
 mesa_glu =  callPackage ../all-pkgs/mesa-glu { };
@@ -9490,8 +9492,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  lohit-fonts = recurseIntoAttrs ( callPackages ../data/fonts/lohit-fonts { } );
 #
 #  marathi-cursive = callPackage ../data/fonts/marathi-cursive { };
-#
-#  man-pages = callPackage ../data/documentation/man-pages { };
 #
   meslo-lg = callPackage ../data/fonts/meslo-lg {};
 #

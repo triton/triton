@@ -121,7 +121,7 @@ rec {
 
   # kernel.org's /pub (/pub/{linux,software}) tree.
   kernel = [
-    http://www.all.kernel.org/pub/
+    https://www.kernel.org/pub/
     http://kernel.mirrors.pair.com/
     http://mirrors.xmission.com/kernel.org/
   ];

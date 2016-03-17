@@ -474,6 +474,8 @@ acl = callPackage ../all-pkgs/acl { };
 
 acpid = callPackage ../all-pkgs/acpid { };
 
+adns = callPackage ../all-pkgs/adns { };
+
 adwaita-icon-theme = callPackage ../all-pkgs/adwaita-icon-theme { };
 
 amrnb = callPackage ../all-pkgs/amrnb { };
@@ -6054,8 +6056,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   accelio = callPackage ../development/libraries/accelio { };
 #
 #  activemq = callPackage ../development/libraries/apache-activemq { };
-#
-  adns = callPackage ../development/libraries/adns { };
 #
 #  afflib = callPackage ../development/libraries/afflib { };
 #

@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
       "http://www.chiark.greenend.org.uk/~ian/adns/ftp/${name}.tar.gz"
       "ftp://ftp.chiark.greenend.org.uk/users/ian/adns/${name}.tar.gz"
     ];
+    multihash = "QmUj1XpX2yuKFEJYoqLAqL8b5asTDuAvYgxKxjRkkQEvYS";
     sha256 = "0hg89b5n84zjhzvbzrpvhl0hbm4s6d1z2pzllfis64ai656ypibz";
   };
 

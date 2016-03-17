@@ -88,19 +88,16 @@ in
   meta ? {}
 }:
 
-assert builtins.isList urls;
-assert urls != [] -> url == "";
-assert url != "" -> urls == [];
-
-
 let
 
   hasHash = showURLs || (outputHash != "" && outputHashAlgo != "")
     || sha256 != "" || sha512 != "";
 
-  urls_ = if urls != [] then urls else [url];
+  urls_ = (if url != "" then [ url ] else [ ]) ++ urls;
 
 in
+
+assert urls_ != [ ] || multihash != "";
 
 if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${stdenv.lib.concatStringsSep ", " urls_}" else stdenv.mkDerivation {
   name =

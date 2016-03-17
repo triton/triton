@@ -75,20 +75,41 @@ tryDownload() {
   header "trying $url"
   local curlexit=18;
 
-  success=
+  local success
+  success=0
 
   # if we get error code 18, resume partial download
   while [ $curlexit -eq 18 ]; do
     # keep this inside an if statement, since on failure it doesn't abort the script
     if $curl -C - --fail "$url" --output "$downloadedFile"; then
-      if [ "$downloadedFile" = "$out" ] && [ "$outputHashMode" = "flat" ]; then
+      runHook postFetch
+      if [ "$outputHashMode" = "flat" ]; then
+        if [ -n "$sha1Confirm" ]; then
+          local sha1
+          sha1="$(openssl sha1 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
+          if [ "$sha1Confirm" != "$sha1" ]; then
+            echo "$out SHA1 hash does not match given $sha1Confirm" >&2
+            break
+          fi
+        fi
+
+        if [ -n "$md5Confirm" ]; then
+          local md5
+          md5="$(openssl md5 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
+          if [ "$md5Confirm" != "$md5" ]; then
+            echo "$out MD5 hash does not match given $md5Confirm" >&2
+            break
+          fi
+        fi
+
         local lhash
-        lhash="$(openssl "$outputHashAlgo" -r -hex "$downloadedFile" 2>/dev/null | awk '{print $1;}')"
+        lhash="$(openssl "$outputHashAlgo" -r -hex "$out" 2>/dev/null | awk '{print $1;}')"
         if [ "$lhash" = "$HEX_HASH" ]; then
           success=1
         else
-          rm $downloadedFile
-          str="$url produced a bad hash for $downloadedFile"
+          rm -f $out
+          rm -f $downloadedFile
+          str="$url produced a bad hash for $out"
           if [ "$canPrintHash" = "1" ] && grep -q 'https'; then
             str+=": $lhash"
           fi
@@ -104,36 +125,14 @@ tryDownload() {
     fi
   done
 
-  stopNest
-}
-
-
-finish() {
-    set +o noglob
-
-    if [[ $executable == "1" ]]; then
-      chmod +x $downloadedFile
+  if [ "$success" = "1" ]; then
+    if [ "$executable" = "1" ]; then
+      chmod +x $out
     fi
-
-    if [ -n "$sha1Confirm" ]; then
-      sha1="$(openssl sha1 -r "$downloadedFile" | tail -n 1 | awk '{print $1}')"
-      if [ "$sha1Confirm" != "$sha1" ]; then
-        echo "SHA1 hash does not match given $sha1Confirm" >&2
-        exit 1
-      fi
-    fi
-
-    if [ -n "$md5Confirm" ]; then
-      md5="$(openssl md5 -r "$downloadedFile" | tail -n 1 | awk '{print $1}')"
-      if [ "$md5Confirm" != "$md5" ]; then
-        echo "MD5 hash does not match given $md5Confirm" >&2
-        exit 1
-      fi
-    fi
-
-    runHook postFetch
-    stopNest
     exit 0
+  fi
+
+  stopNest
 }
 
 
@@ -206,35 +205,18 @@ success=
 if [ -n "$multihash" ]; then
   if [ -n "$IPFS_ADDR" ]; then
     tryDownload "http://$IPFS_ADDR/ipfs/$multihash"
-    if test -n "$success"; then
-      finish
-    fi
   fi
-
   tryDownload "http://127.0.0.1/ipfs/$multihash"
-  if test -n "$success"; then
-    finish
-  fi
-
   tryDownload "http://127.0.0.1:8080/ipfs/$multihash"
-  if test -n "$success"; then
-    finish
-  fi
 fi
 
 for url in $urls; do
   tryDownload "$url" "1"
-  if test -n "$success"; then
-    finish
-  fi
 done
 
 # We only ever want to access the official gateway as a last resort as it can be slow
 if [ -n "$multihash" ]; then
   tryDownload "https://gateway.ipfs.io/ipfs/$multihash"
-  if test -n "$success"; then
-    finish
-  fi
 fi
 
 # Restore globbing settings

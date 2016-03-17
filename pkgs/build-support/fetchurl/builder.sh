@@ -2,30 +2,111 @@ source $stdenv/setup
 
 source $mirrorsFile
 
-
 downloadedFile="$out"
 if [ -n "$downloadToTemp" ]; then downloadedFile="$TMPDIR/file"; fi
 
+# We need to normalize the hash for openssl
+HEX_HASH="$(echo "$outputHash" | awk -v algo="$outputHashAlgo" \
+'
+function ceil(val) {
+  if (val == int(val)) {
+    return val;
+  }
+  return int(val) + 1;
+}
+
+BEGIN {
+  split("0123456789abcdfghijklmnpqrsvwxyz", b32chars, "");
+  for (i in b32chars) {
+    b32val[b32chars[i]] = i-1;
+  }
+  split("0123456789abcdef", b16chars, "");
+  for (i in b16chars) {
+    b16val[b16chars[i]] = i-1;
+  }
+  if (algo == "sha256") {
+    b32len = ceil(256 / 5);
+    b16len = 256 / 4;
+    blen = 256 / 8;
+  } else if (algo == "sha512") {
+    b32len = ceil(512 / 5);
+    b16len = 512 / 4;
+    blen = 512 / 8;
+  } else {
+    print "Unsupported hash algo" > "/dev/stderr";
+    exit(1);
+  }
+}
+
+{
+  len = length($0);
+  split($0, chars, "");
+  if (len == b32len) {
+    split("", bin);
+    for (n = 0; n < len; n++) {
+      c = chars[len - n];
+      digit = b32val[c];
+      b = n * 5;
+      i = rshift(b, 3);
+      j = and(b, 0x7);
+      bin[i] = or(bin[i], and(lshift(digit, j), 0xff));
+      bin[i+1] = or(bin[i+1], rshift(digit, 8-j));
+    }
+    out = "";
+    for (i = 0; i < blen; i++) {
+      out = out b16chars[rshift(bin[i], 4) + 1];
+      out = out b16chars[and(bin[i], 0xf) + 1];
+    }
+    print out;
+  } else if (len == b16len) {
+    print $0;
+  } else {
+    print "Unsupported hash encoding" > "/dev/stderr";
+  }
+}')"
 
 tryDownload() {
-    local url="$1"
-    echo
-    header "trying $url"
-    local curlexit=18;
+  local url
+  url="$1"
+  local canPrintHash
+  canPrintHash="$2"
 
-    success=
+  echo
+  header "trying $url"
+  local curlexit=18;
 
-    # if we get error code 18, resume partial download
-    while [ $curlexit -eq 18 ]; do
-       # keep this inside an if statement, since on failure it doesn't abort the script
-       if $curl -C - --fail "$url" --output "$downloadedFile"; then
+  success=
+
+  # if we get error code 18, resume partial download
+  while [ $curlexit -eq 18 ]; do
+    # keep this inside an if statement, since on failure it doesn't abort the script
+    if $curl -C - --fail "$url" --output "$downloadedFile"; then
+      if [ "$downloadedFile" = "$out" ] && [ "$outputHashMode" = "flat" ]; then
+        local lhash
+        lhash="$(openssl "$outputHashAlgo" -r -hex "$downloadedFile" 2>/dev/null | awk '{print $1;}')"
+        echo "$HEX_HASH" >&2
+        echo "$lhash" >&2
+        if [ "$lhash" = "$HEX_HASH" ]; then
           success=1
-          break
-       else
-          curlexit=$?;
-       fi
-    done
-    stopNest
+        else
+          rm $downloadedFile
+          str="$url produced a bad hash for $downloadedFile"
+          if [ "$canPrintHash" = "1" ] && grep -q 'https'; then
+            str+=": $lhash"
+          fi
+          echo "$str" >&2
+        fi
+        break
+      else
+        success=1
+        break
+      fi
+    else
+      curlexit=$?;
+    fi
+  done
+
+  stopNest
 }
 
 
@@ -144,7 +225,7 @@ if [ -n "$multihash" ]; then
 fi
 
 for url in $urls; do
-  tryDownload "$url"
+  tryDownload "$url" "1"
   if test -n "$success"; then
     finish
   fi

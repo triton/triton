@@ -174,7 +174,7 @@ stdenv.mkDerivation rec {
     "--enable-miner-fs"
     "--enable-extract"
     "--enable-tracker-writeback"
-    "--enable-miner-apps"
+    "--disable-miner-apps"
     "--enable-user-guides"
     # TODO: miner-rss support
     "--disable-miner-rss"
@@ -236,12 +236,6 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$out/share"
 
     wrapProgram $out/libexec/tracker-extract \
-      --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
-      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
-      --prefix 'XDG_DATA_DIRS' : "$out/share"
-
-    wrapProgram $out/libexec/tracker-miner-apps \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \

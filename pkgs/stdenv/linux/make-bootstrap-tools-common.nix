@@ -39,6 +39,7 @@ rec {
     '' +
     /* Copy what we need of Glibc. */ ''
       cp -d ${glibc}/lib/*.a $out/lib
+      cp -d ${glibc}/lib/*crt*.o $out/lib
 
       cp -rL ${glibc}/include $out
       chmod -R u+w $out/include

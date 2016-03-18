@@ -12,7 +12,7 @@ in
   options = {
 
     services.xserver.desktopManager.xterm.enable = mkOption {
-      default = true;
+      default = false;
       example = false;
       description = "Enable a xterm terminal as a desktop manager.";
     };

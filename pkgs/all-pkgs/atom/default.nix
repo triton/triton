@@ -68,11 +68,11 @@ in
 
 stdenv.mkDerivation rec {
   name = "atom-${version}";
-  version = "1.5.3";
+  version = "1.6.0";
 
   src = fetchurl {
     url = "https://github.com/atom/atom/releases/download/v${version}/atom-amd64.deb";
-    sha256 = "101fz4c5pj7yp7fg7kg7vcpqjzpwfrbxdyb6va5liip1llg1i2z3";
+    sha256 = "2b308c676e2a1177ee0e569c16f33af12b05ac435231b89a9e3993d9b913f7c7";
     name = "${name}.deb";
   };
 
@@ -118,7 +118,9 @@ stdenv.mkDerivation rec {
     description = "A hackable text editor for the 21st Century";
     homepage = https://atom.io/;
     license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

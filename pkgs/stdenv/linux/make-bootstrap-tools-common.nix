@@ -162,9 +162,9 @@ rec {
 
       mkdir $out/on-server
       tar cvfJ $out/on-server/bootstrap-tools.tar.xz -C $out/pack .
-      cp ${busybox}/bin/busybox $out/on-server
-      chmod u+w $out/on-server/busybox
-      nuke-refs $out/on-server/busybox
+      cp ${busybox}/bin/bootstrap-busybox $out/on-server
+      chmod u+w $out/on-server/bootstrap-busybox
+      nuke-refs $out/on-server/bootstrap-busybox
     '';
 
     # The result should not contain any references (store paths) so

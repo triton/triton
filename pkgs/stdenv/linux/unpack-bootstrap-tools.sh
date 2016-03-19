@@ -6,30 +6,24 @@ $builder mkdir $out
 # Set the ELF interpreter / RPATH in the bootstrap binaries.
 echo Patching the bootstrap tools...
 
-if test -f $out/lib/ld.so.?; then
-   # MIPS case
-   LD_BINARY=$out/lib/ld.so.?
-else
-   # i686, x86_64 and armv5tel
-   LD_BINARY=$out/lib/ld-*so.?
-fi
+LD_BINARY=$out/lib/ld-*so
 
 # On x86_64, ld-linux-x86-64.so.2 barfs on patchelf'ed programs.  So
 # use a copy of patchelf.
-LD_LIBRARY_PATH=$out/lib $LD_BINARY $out/bin/cp $out/bin/patchelf .
+set -x
+LD_LIBRARY_PATH=$out/lib $LD_BINARY $out/bin/cp $out/bin/patchelf $out/lib/*.so* .
 
 for i in $out/bin/* $out/libexec/gcc/*/*/*; do
-    if [ -L "$i" ]; then continue; fi
-    if [ -z "${i##*/liblto*}" ]; then continue; fi
-    echo patching "$i"
-    LD_LIBRARY_PATH=$out/lib $LD_BINARY \
-        $out/bin/patchelf --set-interpreter $LD_BINARY --set-rpath $out/lib --force-rpath "$i"
+  if [ -L "$i" ]; then continue; fi
+  if [ -z "${i##*/liblto*}" ]; then continue; fi
+  echo patching "$i"
+  LD_LIBRARY_PATH=. ./ld-*so ./patchelf --set-interpreter $LD_BINARY --set-rpath $out/lib --force-rpath "$i"
 done
 
 for i in $out/lib/lib*.so*; do
-    if [ -L "$i" ]; then continue; fi
-    echo patching "$i"
-    $out/bin/patchelf --set-rpath $out/lib --force-rpath "$i" || true
+  if [ -L "$i" ]; then continue; fi
+  echo patching "$i"
+  LD_LIBRARY_PATH=. ./ld-*so ./patchelf --set-rpath $out/lib --force-rpath "$i" || true
 done
 
 # Fix the libc linker script.

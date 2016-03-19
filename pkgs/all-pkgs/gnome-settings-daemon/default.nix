@@ -53,12 +53,12 @@ with {
 stdenv.mkDerivation rec {
   name = "gnome-settings-daemon-${version}";
   versionMajor = "3.18";
-  versionMinor = "2";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-settings-daemon/${versionMajor}/${name}.tar.xz";
-    sha256 = "0vzwf875csyqx04fnra6zicmzcjc3s13bxxpcizlys12iwjwfw9h";
+    sha256 = "36e6170768ef17f5e089090f943ee93e632fa5abb64502a2f68a54974f08bf1f";
   };
 
   nativeBuildInputs = [

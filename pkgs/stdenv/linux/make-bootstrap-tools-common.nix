@@ -18,6 +18,7 @@
 , gnupatch
 , patchelf
 , curl
+, openssl
 , gcc
 , pkgconfig
 , binutils
@@ -38,9 +39,8 @@ rec {
       mkdir -p $out/bin $out/lib $out/libexec
     '' +
     /* Copy what we need of Glibc. */ ''
-      cp -d ${glibc}/lib/*.a $out/lib
-      cp -d ${glibc}/lib/*crt*.o $out/lib
-
+      cp -d ${glibc}/lib/{*.so*,*.a,*crt*.o} $out/lib
+      chmod -R u+w $out/lib
       cp -rL ${glibc}/include $out
       chmod -R u+w $out/include
     '' +
@@ -70,12 +70,15 @@ rec {
       cp -d ${gnupatch}/bin/* $out/bin
       cp ${patchelf}/bin/* $out/bin
       cp ${curl}/bin/curl $out/bin
+      cp ${openssl}/bin/openssl $out/bin
       cp ${pkgconfig}/bin/pkg-config $out/bin
     '' +
     /* Copy what we need of GCC. */ ''
       cp -d ${gcc}/bin/gcc $out/bin
       cp -d ${gcc}/bin/cpp $out/bin
       cp -d ${gcc}/bin/g++ $out/bin
+      cp -d ${gcc}/lib/{*.a,*.so*} $out/lib
+      chmod -R u+w $out/lib
       cp -rd ${gcc}/lib/gcc $out/lib
       chmod -R u+w $out/lib
       rm -f $out/lib/gcc/*/*/include*/linux
@@ -162,7 +165,7 @@ rec {
 
       mkdir $out/on-server
       tar cvfJ $out/on-server/bootstrap-tools.tar.xz -C $out/pack .
-      cp ${busybox}/bin/bootstrap-busybox $out/on-server
+      cp ${busybox}/bin/busybox $out/on-server/bootstrap-busybox
       chmod u+w $out/on-server/bootstrap-busybox
       nuke-refs $out/on-server/bootstrap-busybox
     '';

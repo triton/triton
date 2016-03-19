@@ -12,6 +12,7 @@ let
       cpio
       glibc
       patchelf
+      openssl
       binutils;
     busybox = pkgs.busyboxBootstrap;
     gcc = pkgs.gcc.cc;

@@ -873,6 +873,8 @@ go_1_6 = callPackageAlias "go" {
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = callPackageAlias "gobject-introspection" { }; # Deprecated alias
 
+google-gflags = callPackage ../all-pkgs/google-gflags { };
+
 gperf = callPackage ../all-pkgs/gperf { };
 
 gperftools = callPackage ../all-pkgs/gperftools { };
@@ -6345,8 +6347,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gmm = callPackage ../development/libraries/gmm { };
 #
 #  goocanvas = callPackage ../development/libraries/goocanvas { };
-#
-  google-gflags = callPackage ../development/libraries/google-gflags { };
 #
 #  grib-api = callPackage ../development/libraries/grib-api { };
 #

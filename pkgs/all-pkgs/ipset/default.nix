@@ -5,11 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ipset-6.28";
+  name = "ipset-6.29";
 
   src = fetchurl {
     url = "http://ipset.netfilter.org/${name}.tar.bz2";
-    sha256 = "0bkbk47b0c6jha149zkmpmzg2d9dpk3zvs5lz4qyr39z1dckjhpx";
+    md5Confirm = "fd8ea35997115c5c630eee22f0beecec";
+    sha256 = "6af58b21c8b475b1058e02529ea9f15b4b727dbc13dc9cbddf89941b0103880e";
   };
 
   buildInputs = [

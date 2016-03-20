@@ -37,15 +37,19 @@ if [ hostSystem ] == lib.platforms.x86_64-linux then {
   langCC = true;
   isGNU = true;
 } else if [ hostSystem ] == lib.platforms.i686-linux then {
-  busybox = import <nix/fetchurl.nix> {
-    url = "https://pub.wak.io/nixos/bootstrap/i686-linux/ygk76d6amwb610f10nqnq08h1gmmc3j0/busybox";
-    sha256 = "16f62zvr1w1ffyn84n4yspb549awnx6jf778i3wh5893i0d4dsv9";
+  busybox = makeUrls {
+    file = "bootstrap-busybox";
+    nix-hash = "sf1ydfr2icbxvv9vfg8b7nzic8a9i55n";
+    multihash = "QmWK7MwnR66b79g85SkkCMyWHddNrMHpk7ieHup1JJ9t47";
+    sha256 = "0m8z670i4s4p4daj2776frazrprmm3c9gsnzslz9dx0hqd70p3iq";
     executable = true;
   };
 
-  bootstrapTools = import <nix/fetchurl.nix> {
-    url = "https://pub.wak.io/nixos/bootstrap/i686-linux/ygk76d6amwb610f10nqnq08h1gmmc3j0/bootstrap-tools.tar.xz";
-    sha256 = "af7b3bde18fdf951588c05c1503ef504e0ae87be296161021ede4df0989b4acc";
+  bootstrapTools = makeUrls {
+    file = "bootstrap-tools";
+    nix-hash = "sf1ydfr2icbxvv9vfg8b7nzic8a9i55n";
+    multihash = "QmXJQh3utXkx93tRGA6t8puYKyBkaaXC2fdNwGTHzeyFft";
+    sha256 = "dd27b7e023bc8fe375790325771741a9342712caa205533900279d2a7051e245";
   };
 
   langC = true;

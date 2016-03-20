@@ -1239,6 +1239,8 @@ lz4 = callPackage ../all-pkgs/lz4 { };
 
 lzip = callPackage ../all-pkgs/lzip { };
 
+lzo = callPackage ../all-pkgs/lzo { };
+
 m4 = callPackageAlias "gnum4" { };
 
 man-pages = callPackage ../all-pkgs/man-pages { };
@@ -7163,8 +7165,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  luabind = callPackage ../development/libraries/luabind { };
 #
 #  luabind_luajit = callPackage ../development/libraries/luabind { lua = luajit; };
-#
-  lzo = callPackage ../development/libraries/lzo { };
 #
 #  mapnik = callPackage ../development/libraries/mapnik { };
 #

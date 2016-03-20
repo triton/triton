@@ -69,7 +69,10 @@ tryDownload() {
   local url
   url="$1"
   local canPrintHash
-  canPrintHash="$2"
+  canPrintHash=0
+  if [ "$2" = "1" ] && echo "$url" | grep -q '^https'; then
+    canPrintHash=1
+  fi
 
   echo
   header "trying $url"
@@ -92,6 +95,8 @@ tryDownload() {
           if [ "$sha1Confirm" != "$sha1" ]; then
             echo "$out SHA1 hash does not match given $sha1Confirm" >&2
             break
+          else
+            canPrintHash=1
           fi
         fi
 
@@ -101,6 +106,8 @@ tryDownload() {
           if [ "$md5Confirm" != "$md5" ]; then
             echo "$out MD5 hash does not match given $md5Confirm" >&2
             break
+          else
+            canPrintHash=1
           fi
         fi
 
@@ -112,7 +119,7 @@ tryDownload() {
           rm -f $out
           rm -f $downloadedFile
           str="$url produced a bad hash for $out"
-          if [ "$canPrintHash" = "1" ] && echo "$url" | grep -q '^https'; then
+          if [ "$canPrintHash" = "1" ]; then
             str+=": $lhash"
           fi
           echo "$str" >&2

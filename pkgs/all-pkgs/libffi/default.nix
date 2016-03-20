@@ -11,7 +11,6 @@ stdenv.mkDerivation rec {
   };
 
   configureFlags = [
-    "--with-gcc-arch=${stdenv.cc.cc.march}"
     "--enable-pax_emutramp"
   ];
 

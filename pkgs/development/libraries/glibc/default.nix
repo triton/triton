@@ -10,27 +10,22 @@ import ./common.nix {
 
   inherit fetchurl fetchTritonPatch stdenv linux-headers installLocales;
 
-  preConfigure = stdenv.lib.optionalString (stdenv.targetSystem != stdenv.hostSystem) ''
-    sed -i s/-lgcc_eh//g "../$sourceRoot/Makeconfig"
-
-    cat > config.cache << "EOF"
-    libc_cv_forced_unwind=yes
-    libc_cv_c_cleanup=yes
-    libc_cv_gnu89_inline=yes
-    EOF
-    export BUILD_CC=gcc
-    export CC="$targetSystem-gcc"
-    export AR="$targetSystem-ar"
-    export RANLIB="$targetSystem-ranlib"
-
-    dontStrip=1
-  '';
-
   installTargets = [
     "install"
   ] ++ stdenv.lib.optionals installLocales [
     "localedata/install-locales"
   ];
+
+  preBuild = ''
+    export stackProtector=0
+    echo "build-programs=no" >> configparams
+  '';
+
+  postBuild = ''
+    export stackProtector=1
+    sed -i 's,build-programs=no,build-programs=yes,g' configparams
+    make -j $NIX_BUILD_CORES $makeFlags "''${makeFlagsArray[@]}" $buildFlags "''${buildFlagsArray[@]}"
+  '';
 
   postInstall = ''
     rm $out/etc/ld.so.cache

@@ -18,12 +18,15 @@ source @out@/nix-support/utils.sh
 # Figure out if linker flags should be passed.  GCC prints annoying
 # warnings when they are not needed.
 dontLink=0
+shared=0
 getVersion=0
 nonFlagArgs=0
 
 for i in "$@"; do
     if [ "$i" = -c ]; then
         dontLink=1
+    elif [ "$i" = -shared ]; then
+        shared=1
     elif [ "$i" = -S ]; then
         dontLink=1
     elif [ "$i" = -E ]; then
@@ -56,9 +59,45 @@ if [ "$nonFlagArgs" = 0 ]; then
     dontLink=1
 fi
 
+params=("$@")
+new_params=(
+  "-D_FORTIFY_SOURCE=2"
+  "-fno-strict-overflow"
+  "-fPIC"
+  @optFlags@
+)
+
+if [ "$dontLink" != "1" ] && [ "$shared" = "1" ]; then
+  new_params+=("-pie")
+fi
+
+if [ "${stackProtector-1}" = "1" ]; then
+  new_params+=("-fstack-protector-strong")
+fi
+
+# Remove any flags which may interfere with hardening
+for (( i = 0; i < "${#params[@]}"; i++ )); do
+  param="${params[$i]}"
+  if [[ "${param}" =~ ^-D_FORTIFY_SOURCE ]]; then
+    continue
+  fi
+  if [[ "${param}" =~ ^-f.*strict-overflow ]]; then
+    continue
+  fi
+  if [ "${stackProtector-1}" = "1" ] && [[ "${param}" =~ ^-f.*stack-protector.* ]]; then
+    continue
+  fi
+  if [[ "${param}" =~ ^-m(arch|tune|fpmath) ]]; then
+    continue
+  fi
+  if [[ "${param}" =~ ^-f(pic|PIC|pie|PIE)$ ]]; then
+    continue
+  fi
+  new_params+=("${param}")
+done
+params=("${new_params[@]}")
 
 # Optionally filter out paths not refering to the store.
-params=("$@")
 if [ "$NIX_ENFORCE_PURITY" = 1 -a -n "$NIX_STORE" ]; then
     rest=()
     n=0
@@ -96,7 +135,6 @@ extraBefore=()
 
 
 if [ "$dontLink" != 1 ]; then
-
     # Add the flags that should only be passed to the compiler when
     # linking.
     extraAfter+=($NIX_CFLAGS_LINK)

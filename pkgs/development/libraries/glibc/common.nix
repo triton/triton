@@ -8,6 +8,7 @@
 , linux-headers
 , meta
 , preConfigure ? ""
+, preBuild ? ""
 , ...
 } @ args:
 
@@ -150,6 +151,8 @@ stdenv.mkDerivation ({
 
   preBuild = ''
     unset CFLAGS
+
+    ${preBuild}
   '';
 
   # Remove absolute paths from `configure' & co.; build out-of-tree.

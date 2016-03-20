@@ -73,6 +73,8 @@ stdenv.mkDerivation rec {
     for i in $(find . -name Makefile.in); do
         sed -i "$i" -e 's|ln |ln -s |'
     done
+
+    sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
   '';
 
   configureFlags = [

@@ -26,6 +26,9 @@ let
   ccVersion = (builtins.parseDrvName cc.name).version;
   ccName = (builtins.parseDrvName cc.name).name;
 
+  inherit (stdenv.lib.platforms)
+    x86_64-linux;
+
 in
 
 stdenv.mkDerivation {
@@ -36,6 +39,23 @@ stdenv.mkDerivation {
   preferLocalBuild = true;
 
   inherit cc shell;
+
+  optFlags =
+    if [ stdenv.targetSystem ] == x86_64-linux then [
+      "-mmmx"
+      "-msse"
+      "-msse2"
+      "-msse3"
+      "-mssse3"
+      "-msse4"
+      "-msse4.1"
+      "-msse4.2"
+      "-maes"
+      "-mpclmul"
+      "-mfpmath=sse"
+    ] else
+      throw "Unknown march level for ${stdenv.targetSystem}";
+
   libc = if nativeLibc then null else libc;
   binutils = if nativeTools then "" else binutils;
   # The wrapper scripts use 'cat' and 'grep', so we may need coreutils

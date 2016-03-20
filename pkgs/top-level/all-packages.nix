@@ -1551,6 +1551,8 @@ serf = callPackage ../all-pkgs/serf { };
 
 sharutils = callPackage ../all-pkgs/sharutils { };
 
+snappy = callPackage ../all-pkgs/snappy { };
+
 sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sqlite = callPackage ../all-pkgs/sqlite { };
@@ -7615,8 +7617,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #        # optional
 #  };
 #
-  snappy = callPackage ../development/libraries/snappy { };
-
   socket_wrapper = callPackage ../development/libraries/socket_wrapper { };
 #
 #  sofia_sip = callPackage ../development/libraries/sofia-sip { };

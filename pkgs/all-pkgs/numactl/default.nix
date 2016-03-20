@@ -1,4 +1,7 @@
-{ stdenv, fetchurl, autoreconfHook }:
+{ stdenv
+, autoreconfHook
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
   name = "numactl-2.0.11";
@@ -8,7 +11,11 @@ stdenv.mkDerivation rec {
     sha256 = "0qbqa9gac2vlahrngi553hws2mqgqdwv2lc69a3yx4gq6l90j325";
   };
 
-  nativeBuildInputs = [ autoreconfHook ];
+  nativeBuildInputs = [
+    autoreconfHook
+  ];
+
+  dontDisableStatic = true;
 
   meta = with stdenv.lib; {
     description = "Library and tools for non-uniform memory access (NUMA) machines";

@@ -1353,6 +1353,8 @@ nmap = callPackage ../all-pkgs/nmap { };
 
 noise = callPackage ../all-pkgs/noise { };
 
+numactl = callPackage ../all-pkgs/numactl { };
+
 obexftp = callPackage ../all-pkgs/obexftp { };
 
 openldap = callPackage ../all-pkgs/openldap { };
@@ -9055,8 +9057,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  multipath-tools = callPackage ../os-specific/linux/multipath-tools { };
 #
   nftables = callPackage ../os-specific/linux/nftables { };
-
-  numactl = callPackage ../os-specific/linux/numactl { };
 
 #  numad = callPackage ../os-specific/linux/numad { };
 #

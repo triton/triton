@@ -1345,6 +1345,8 @@ nginx = callPackage ../all-pkgs/nginx { };
 
 ninja = callPackage ../all-pkgs/ninja { };
 
+nmap = callPackage ../all-pkgs/nmap { };
+
 noise = callPackage ../all-pkgs/noise { };
 
 obexftp = callPackage ../all-pkgs/obexftp { };
@@ -3425,13 +3427,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   npth = callPackage ../development/libraries/npth { };
 
-  nmap = callPackage ../tools/security/nmap { };
-#
-#  nmap_graphical = callPackage ../tools/security/nmap {
-#    inherit (pythonPackages) pysqlite;
-#    graphicalSupport = true;
-#  };
-#
 #  notify-osd = callPackage ../applications/misc/notify-osd { };
 #
 #  nox = callPackage ../tools/package-management/nox {

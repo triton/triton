@@ -60,37 +60,55 @@ if [ "$nonFlagArgs" = 0 ]; then
 fi
 
 params=("$@")
-new_params=(
-  "-D_FORTIFY_SOURCE=2"
-  "-fno-strict-overflow"
-  "-fPIC"
-  @optFlags@
-)
+new_params=()
 
-if [ "$dontLink" != "1" ] && [ "$shared" = "1" ]; then
+if [ "$extraCCFlags" = "1" ]; then
+  new_params+=(@optFlags@)
+fi
+
+if [ "${pie-$extraCCFlags}" ] && [ "$dontLink" != "1" ] && [ "$shared" = "1" ]; then
   new_params+=("-pie")
 fi
 
-if [ "${stackProtector-1}" = "1" ]; then
+if [ "${fpic-$extraCCFlags}" ]; then
+  new_params+=("-fPIC")
+fi
+
+if [ "${noStrictOverflow-$extraCCFlags}" = "1" ]; then
+  new_params+=("-fno-strict-overflow")
+fi
+
+if [ "${fortifySource-$extraCCFlags}" = "1" ]; then
+  new_params+=("-D_FORTIFY_SOURCE=2")
+fi
+
+if [ "${stackProtector-$extraCCFlags}" = "1" ]; then
   new_params+=("-fstack-protector-strong")
+fi
+
+if [ "${optimize-$extraCCFlags}" = "1" ]; then
+  new_params+=("-O2")
 fi
 
 # Remove any flags which may interfere with hardening
 for (( i = 0; i < "${#params[@]}"; i++ )); do
   param="${params[$i]}"
-  if [[ "${param}" =~ ^-D_FORTIFY_SOURCE ]]; then
+  if [ "${fortifySource-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-D_FORTIFY_SOURCE ]]; then
     continue
   fi
-  if [[ "${param}" =~ ^-f.*strict-overflow ]]; then
+  if [ "${stackProtector-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f.*strict-overflow ]]; then
     continue
   fi
-  if [ "${stackProtector-1}" = "1" ] && [[ "${param}" =~ ^-f.*stack-protector.* ]]; then
+  if [ "${stackProtector-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f.*stack-protector.* ]]; then
     continue
   fi
   if [[ "${param}" =~ ^-m(arch|tune|fpmath) ]]; then
     continue
   fi
-  if [[ "${param}" =~ ^-f(pic|PIC|pie|PIE)$ ]]; then
+  if [ "${fpic-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f(pic|PIC|pie|PIE)$ ]]; then
+    continue
+  fi
+  if [ "${optimize-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-O ]]; then
     continue
   fi
   new_params+=("${param}")

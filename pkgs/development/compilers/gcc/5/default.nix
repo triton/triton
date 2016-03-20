@@ -273,10 +273,6 @@ stdenv.mkDerivation ({
 
   dontDisableStatic = true;
 
-  preConfigure = ''
-    sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
-  '';
-
   configureFlags = "
     --enable-lto
     ${if enableMultilib then "--enable-multilib --disable-libquadmath" else "--disable-multilib"}

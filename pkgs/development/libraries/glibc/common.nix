@@ -97,6 +97,10 @@ stdenv.mkDerivation ({
       substituteInPlace ./nss/nss_files/files-XXX.c \
         --replace 'status = internal_setent (stayopen);' \
                   'status = internal_setent (1);'
+    ''
+    # Always treat fortify source warnings as errors
+    + ''
+      sed -i 's,\(#[ ]*\)warning\( _FORTIFY_SOURCE\),\1error\2,g' include/features.h
     '';
 
   dontDisableStatic = true; # Disabling static is not recognized by glibc

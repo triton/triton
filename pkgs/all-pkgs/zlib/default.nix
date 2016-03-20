@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 , shared ? true
-, static ? false
+, static ? true
 }:
 
 assert static || shared;

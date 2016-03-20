@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 
-, static ? false
+, static ? true
 , shared ? true
 }:
 

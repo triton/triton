@@ -228,12 +228,19 @@ installPhase() {
     install -D -m 644 -v 'kernel/nvidia.ko' \
       "${out}/lib/modules/${kernelVersion}/misc/nvidia.ko"
 
-    # NVIDIA modesetting kernel module
-    if [ ${versionMajor} -ge 358 ] ; then
-      nuke-refs 'kernel/nvidia-modeset.ko'
-      install -D -m 644 -v 'kernel/nvidia-modeset.ko' \
-        "${out}/lib/modules/${kernelVersion}/misc/nvidia-modeset.ko"
+    # NVIDIA direct rendering manager kernel modesetting (DRM KMS) kernel module
+    if [ ${versionMajor} -ge 364 ] ; then
+      nuke-refs 'kernel/nvidia-drm.ko'
+      install -D -m 644 -v 'kernel/nvidia-drm.ko' \
+        "${out}/lib/modules/${kernelVersion}/misc/nvidia-drm.ko"
     fi
+
+  # NVIDIA modesetting kernel module
+  if [ ${versionMajor} -ge 358 ] ; then
+    nuke-refs 'kernel/nvidia-modeset.ko'
+    install -D -m 644 -v 'kernel/nvidia-modeset.ko' \
+      "${out}/lib/modules/${kernelVersion}/misc/nvidia-modeset.ko"
+  fi
 
     # NVIDIA cuda unified virtual memory kernel module
     if [ ${versionMajor} -ge 340 ] ; then
@@ -320,6 +327,7 @@ installPhase() {
     #  "${out}/lib/libGLX_indirect.so.0"
 
     ## Internal driver components
+    nvidia_lib_install 364 0 'libnvidia-egl-wayland'
     nvidia_lib_install 340 0 'libnvidia-eglcore'
     nvidia_lib_install 304 0 'libnvidia-glcore'
     nvidia_lib_install 340 0 'libnvidia-glsi'

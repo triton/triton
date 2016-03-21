@@ -11,7 +11,7 @@
 , kernel ? null
 
 # Userspace dependencies
-, libglvnd
+, wayland
 , xorg
 , zlib
 
@@ -172,6 +172,7 @@ stdenv.mkDerivation {
   );
   allLibPath = makeLibraryPath ([
     stdenv.cc.cc
+    wayland
     xorg.libX11
     xorg.libXau
     xorg.libxcb
@@ -212,6 +213,7 @@ stdenv.mkDerivation {
   '';*/
 
   dontStrip = true;
+  fpic = false;
 
   passthru = {
     inherit

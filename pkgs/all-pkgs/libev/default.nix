@@ -7,8 +7,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = [
+      "mirror://gentoo/distfiles/${name}.tar.gz"
       "http://dist.schmorp.de/libev/Attic/${name}.tar.gz"
-      "http://download.openpkg.org/components/cache/libev/${name}.tar.gz"
     ];
     sha256 = "1mhvy38g9947bbr0n0hzc34zwfvvfd99qgzpkbap8g2lmkl7jq3k";
   };

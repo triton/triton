@@ -82,6 +82,8 @@ let
 
       inherit src;
 
+      fpic = false;
+
       preUnpack = ''
         mkdir build
         export buildRoot="$(pwd)/build"

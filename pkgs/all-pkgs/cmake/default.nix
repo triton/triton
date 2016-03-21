@@ -44,11 +44,9 @@ stdenv.mkDerivation rec {
   CMAKE_PREFIX_PATH = stdenv.lib.concatStringsSep ":" buildInputs;
 
   preConfigure = ''
-    source $setupHook
     fixCmakeFiles .
     substituteInPlace Modules/Platform/UnixPaths.cmake \
       --subst-var-by libc ${stdenv.libc}
-
     configureFlagsArray+=("--parallel=$NIX_BUILD_CORES")
   '';
 
@@ -67,6 +65,7 @@ stdenv.mkDerivation rec {
   ];
 
   setupHook = ./setup-hook.sh;
+  selfApplySetupHook = true;
 
   meta = with stdenv.lib; {
     homepage = http://www.cmake.org/;

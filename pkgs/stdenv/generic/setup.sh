@@ -314,6 +314,12 @@ for i in $nativeBuildInputs $defaultNativeBuildInputs $propagatedNativeBuildInpu
 done
 
 
+# We want to allow builders to apply setup-hooks to themselves
+if [ "${selfApplySetupHook-0}" = "1" ]; then
+  source $setupHook
+fi
+
+
 # Set the relevant environment variables to point to the build inputs
 # found above.
 _addToNativeEnv() {

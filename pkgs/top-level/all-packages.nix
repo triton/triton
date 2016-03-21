@@ -1362,6 +1362,8 @@ openldap = callPackage ../all-pkgs/openldap { };
 
 openobex = callPackage ../all-pkgs/openobex { };
 
+openssh = callPackage ../all-pkgs/openssh { };
+
 openssl = callPackage ../all-pkgs/openssl { };
 
 openvpn = callPackage ../all-pkgs/openvpn { };
@@ -3513,12 +3515,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   openresolv = callPackage ../tools/networking/openresolv { };
 
 #  opensc = callPackage ../tools/security/opensc { };
-
-  openssh = callPackage ../tools/networking/openssh { };
-
-  openssh_hpn = pkgs.appendToName "with-hpn" (openssh.override { hpnSupport = true; });
-
-  openssh_with_kerberos = pkgs.appendToName "with-kerberos" (openssh.override { withKerberos = true; });
 
   opensp = callPackage ../tools/text/sgml/opensp { };
 

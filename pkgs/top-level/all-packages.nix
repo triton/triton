@@ -670,6 +670,8 @@ devil = callPackage ../all-pkgs/devil { };
 
 diffutils = callPackage ../all-pkgs/diffutils { };
 
+dnscrypt-proxy = callPackage ../all-pkgs/dnscrypt-proxy { };
+
 dnsmasq = callPackage ../all-pkgs/dnsmasq { };
 
 dos2unix = callPackage ../all-pkgs/dos2unix { };

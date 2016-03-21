@@ -27,7 +27,7 @@ let
   ccName = (builtins.parseDrvName cc.name).name;
 
   inherit (stdenv.lib.platforms)
-    i686-linux;
+    i686-linux
     x86_64-linux;
 
 in
@@ -55,7 +55,7 @@ stdenv.mkDerivation {
         "-maes"
         "-mpclmul"
         "-mfpmath=sse"
-      ] [ stdenv.targetSystem ] == i686-linux then [
+      ] else if [ stdenv.targetSystem ] == i686-linux then [
         "-msse"
         "-msse2"
         "-mfpmath=sse"

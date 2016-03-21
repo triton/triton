@@ -1,4 +1,4 @@
-prePhases+=" moveBuildDir"
+prePhases+=('moveBuildDir')
 
 moveBuildDir() {
     mkdir -p $out/.build

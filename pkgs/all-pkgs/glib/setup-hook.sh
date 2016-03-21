@@ -61,6 +61,5 @@ installFlagsArray+=(
   "gsettingsschemadir=${out}/share/gsettings-schemas/${name}/glib-2.0/schemas/"
 )
 
-# phases is currently a string and NOT an array in stdenv
 preFixupPhases+=('fix_gio_modules_install_path')
 preFixupPhases+=('fix_gsettings_schemas_install_path')

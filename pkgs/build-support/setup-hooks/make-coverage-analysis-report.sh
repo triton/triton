@@ -1,4 +1,4 @@
-postPhases+=" coverageReportPhase"
+postPhases+=("coverageReportPhase")
 
 coverageReportPhase() {
     lcov --directory . --capture --output-file app.info

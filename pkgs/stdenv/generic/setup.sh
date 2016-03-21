@@ -5,6 +5,18 @@ set -o pipefail
 
 
 ######################################################################
+# Array handling.
+# We need to turn some variables into arrays
+prePhases=($prePhases)
+preConfigurePhases=($preConfigurePhases)
+preBuildPhases=($preBuildPhases)
+preInstallPhases=($preInstallPhases)
+preFixupPhases=($preFixupPhases)
+preDistPhases=($preDistPhases)
+postPhases=($postPhases)
+
+
+######################################################################
 # Hook handling.
 
 
@@ -906,14 +918,30 @@ genericBuild() {
     return
   fi
 
-  if [ -z "$phases" ]; then
-    phases="$prePhases unpackPhase patchPhase $preConfigurePhases \
-        configurePhase $preBuildPhases buildPhase checkPhase \
-        $preInstallPhases installPhase "${preFixupPhases[@]}" fixupPhase installCheckPhase \
-        $preDistPhases distPhase $postPhases";
+  if [ -n "$phases" ]; then
+    phases=($phases)
+  else
+    phases=(
+      "${prePhases[@]}"
+      "unpackPhase"
+      "patchPhase"
+      "${preConfigurePhases[@]}"
+      "configurePhase"
+      "${preBuildPhases[@]}"
+      "buildPhase"
+      "checkPhase"
+      "${preInstallPhases[@]}"
+      "installPhase"
+      "${preFixupPhases[@]}"
+      "fixupPhase"
+      "installCheckPhase"
+      "${preDistPhases[@]}"
+      "distPhase"
+      "${postPhases[@]}"
+    )
   fi
 
-  for curPhase in $phases; do
+  for curPhase in "${phases[@]}"; do
     if [ "$curPhase" = buildPhase -a -n "$dontBuild" ] ; then continue ; fi
     if [ "$curPhase" = checkPhase -a -z "$doCheck" ] ; then continue ; fi
     if [ "$curPhase" = installPhase -a -n "$dontInstall" ] ; then continue ; fi

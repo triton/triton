@@ -1,4 +1,4 @@
-postPhases+=" cleanupBuildDir"
+postPhases+=('cleanupBuildDir')
 
 # Force GCC to build with coverage instrumentation.  Also disable
 # optimisation, since it may confuse things.

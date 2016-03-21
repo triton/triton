@@ -1,5 +1,5 @@
 { stdenv, fetchurl, perl, makeWrapper, autoreconfHook
-, nettools, iputils, iproute, coreutils, gnused
+, net-tools, iputils, iproute, coreutils, gnused
 
 # Optional Dependencies
 , openldap ? null
@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
     substituteInPlace $out/sbin/dhclient-script \
       --replace /sbin/ip ${iproute}/sbin/ip
     wrapProgram "$out/sbin/dhclient-script" --prefix PATH : \
-      "${nettools}/bin:${nettools}/sbin:${iputils}/bin:${coreutils}/bin:${gnused}/bin"
+      "${net-tools}/bin:${net-tools}/sbin:${iputils}/bin:${coreutils}/bin:${gnused}/bin"
   '';
 
   # Fails to build the bind library if run in parallel
@@ -62,14 +62,6 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Dynamic Host Configuration Protocol (DHCP) tools";
-
-    longDescription = ''
-      ISC's Dynamic Host Configuration Protocol (DHCP) distribution
-      provides a freely redistributable reference implementation of
-      all aspects of DHCP, through a suite of DHCP tools: server,
-      client, and relay agent.
-   '';
-
     homepage = http://www.isc.org/products/DHCP/;
     license = licenses.isc;
     platforms = platforms.all;

@@ -164,7 +164,7 @@ in
         # dhcpcd.  So do a "systemctl restart" instead.
         stopIfChanged = false;
 
-        path = [ dhcpcd pkgs.nettools pkgs.openresolv ];
+        path = [ dhcpcd pkgs.net-tools pkgs.openresolv ];
 
         unitConfig.ConditionCapability = "CAP_NET_ADMIN";
 

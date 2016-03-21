@@ -311,9 +311,9 @@ in
         generate a random 32-bit ID using the following commands:
 
         <literal>cksum /etc/machine-id | while read c rest; do printf "%x" $c; done</literal>
-        
+
         (this derives it from the machine-id that systemd generates) or
-        
+
         <literal>head -c4 /dev/urandom | od -A none -t x4</literal>
       '';
     };
@@ -922,7 +922,7 @@ in
       [ pkgs.dnsutils
         pkgs.iproute
         pkgs.iputils
-        pkgs.nettools
+        pkgs.net-tools
         pkgs.openresolv
       ]
       ++ optionals config.networking.wireless.enable [

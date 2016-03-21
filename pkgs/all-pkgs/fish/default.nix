@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, ncurses, nettools, python, which, groff, gettext, man_db,
+{ stdenv, fetchurl, ncurses, net-tools, python, which, groff, gettext, man_db,
   bc, coreutils, gnused, kbd }:
 
 stdenv.mkDerivation rec {
@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
     substituteInPlace "$out/share/fish/functions/fish_default_key_bindings.fish" \
       --replace "clear;" "${ncurses}/bin/clear;"
   '' + stdenv.lib.optionalString true ''
-    sed -i "s|(hostname\||(${nettools}/bin/hostname\||" "$out/share/fish/functions/fish_prompt.fish"
+    sed -i "s|(hostname\||(${net-tools}/bin/hostname\||" "$out/share/fish/functions/fish_prompt.fish"
     sed -i "s|Popen(\['manpath'|Popen(\['${man_db}/bin/manpath'|" "$out/share/fish/tools/create_manpage_completions.py"
     sed -i "s|command manpath|command ${man_db}/bin/manpath|" "$out/share/fish/functions/man.fish"
   '' + ''

@@ -16,7 +16,7 @@ let
     [ pkgs.coreutils pkgs.gnugrep pkgs.findutils
       pkgs.glibc # needed for getent
       pkgs.shadow
-      pkgs.nettools # needed for hostname
+      pkgs.net-tools # needed for hostname
     ];
 
 in

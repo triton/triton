@@ -1,4 +1,4 @@
-{ stdenv, fetchsvn, nettools, libgcrypt, openssl, openresolv, perl, gawk, makeWrapper }:
+{ stdenv, fetchsvn, net-tools, libgcrypt, openssl, openresolv, perl, gawk, makeWrapper }:
 
 stdenv.mkDerivation rec {
   name = "vpnc-0.5.3-post-r550";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
 
   # The `etc/vpnc/vpnc-script' script relies on `which' and on
   # `ifconfig' as found in net-tools (not GNU Inetutils).
-  propagatedBuildInputs = [ nettools ];
+  propagatedBuildInputs = [ net-tools ];
 
   buildInputs = [libgcrypt perl makeWrapper openssl ];
 
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
     for i in "$out/{bin,sbin}/"*
     do
       wrapProgram $i --prefix PATH :  \
-        "${nettools}/bin:${nettools}/sbin"
+        "${net-tools}/bin:${net-tools}/sbin"
     done
 
     mkdir -p $out/share/doc/vpnc

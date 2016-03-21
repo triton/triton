@@ -62,7 +62,7 @@ fi
 params=("$@")
 new_params=()
 
-if [ "$extraCCFlags" = "1" ]; then
+if [ "${optFlags-$extraCCFlags}" = "1" ]; then
   new_params+=(@optFlags@)
 fi
 

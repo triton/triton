@@ -174,7 +174,7 @@ stdenv.mkDerivation rec {
   DETERMINISTIC_BUILD = 1;
 
   passthru = {
-    gioModuleDir = "lib/gio/modules";
+    gioModuleDir = "lib/gio-modules/${name}/gio/modules";
     inherit flattenInclude;
   };
 

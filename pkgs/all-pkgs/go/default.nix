@@ -124,6 +124,10 @@ stdenv.mkDerivation {
   CGO_ENABLED = 1;
   GOROOT_BOOTSTRAP = "${goBootstrap}/share/go";
 
+  # These optimizations / security hardenings break the `os` library
+  optimize = false;
+  fortifySource = false;
+
   installPhase = ''
     mkdir -p "$out/bin"
     export GOROOT="$(pwd)/"

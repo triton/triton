@@ -82,7 +82,13 @@ let
 
       inherit src;
 
+      # We don't want these compiler security features / optimizations
+      pie = false;
       fpic = false;
+      noStrictOverflow = false;
+      fortifySource = false;
+      stackProtector = false;
+      optimize = false;
 
       preUnpack = ''
         mkdir build

@@ -24,13 +24,14 @@ stdenv.mkDerivation rec {
     libsodium
   ];
 
-  passthru = {
+  passthru = rec {
+    nextVersion = "0.6";
+
     srcUpdate = fetchurl {
-      url = "https://github.com/jedisct1/minisign/archive/${version}.tar.gz";
-      minisignUrl = "https://github.com/jedisct1/minisign/releases/download/${version}/minisign-${version}.tar.gz.minisig";
+      url = "https://github.com/jedisct1/minisign/archive/${nextVersion}.tar.gz";
+      minisignUrl = "https://github.com/jedisct1/minisign/releases/download/${nextVersion}/minisign-${nextVersion}.tar.gz.minisig";
       minisignPub = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      sha256 = "f2267a07bece923d4d174ccacccc56eff9c05b28c4d971e601de896355442f0a";
-      showURLs = true;
+      sha256 = "f2267a07bece923d4d174ccacccc56eff9c05b28c4d971e601de896355442f09";
     };
   };
 

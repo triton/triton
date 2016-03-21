@@ -1081,6 +1081,8 @@ libdrm = callPackage ../all-pkgs/libdrm { };
 
 libebml = callPackage ../all-pkgs/libebml { };
 
+libedit = callPackage ../all-pkgs/libedit { };
+
 libelf = callPackage ../all-pkgs/libelf { };
 
 libev = callPackage ../all-pkgs/libev { };
@@ -6688,8 +6690,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libeb = callPackage ../development/libraries/libeb { };
 #
 #  libebur128 = callPackage ../development/libraries/libebur128 { };
-#
-  libedit = callPackage ../development/libraries/libedit { };
 #
 #  libetpan = callPackage ../development/libraries/libetpan { };
 #

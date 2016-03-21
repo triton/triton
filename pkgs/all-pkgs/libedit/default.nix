@@ -1,4 +1,9 @@
-{ stdenv, fetchurl, ncurses, groff }:
+{ stdenv
+, fetchurl
+, groff
+
+, ncurses
+}:
 
 stdenv.mkDerivation rec {
   name = "libedit-20150325-3.1";
@@ -11,19 +16,22 @@ stdenv.mkDerivation rec {
   # Have `configure' avoid `/usr/bin/nroff' in non-chroot builds.
   NROFF = "${groff}/bin/nroff";
 
-  propagatedBuildInputs = [ ncurses ];
+  buildInputs = [
+    ncurses
+  ];
 
-  configureFlags = [ "--enable-widec" ];
-
-  postInstall = ''
-    find $out/lib -type f | grep '\.\(la\|pc\)''$' | xargs sed -i \
-      -e 's,-lncurses[a-z]*,-L${ncurses}/lib -lncursesw,g'
-  '';
+  configureFlags = [
+    "--enable-widec"
+  ];
 
   meta = with stdenv.lib; {
     homepage = "http://www.thrysoee.dk/editline/";
     description = "A port of the NetBSD Editline library (libedit)";
     license = licenses.bsd3;
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

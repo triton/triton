@@ -83,6 +83,7 @@ let
       inherit src;
 
       # We don't want these compiler security features / optimizations
+      optFlags = false;
       pie = false;
       fpic = false;
       noStrictOverflow = false;

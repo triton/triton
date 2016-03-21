@@ -41,20 +41,23 @@ stdenv.mkDerivation {
   inherit cc shell;
 
   optFlags =
-    if [ stdenv.targetSystem ] == x86_64-linux then [
-      "-mmmx"
-      "-msse"
-      "-msse2"
-      "-msse3"
-      "-mssse3"
-      "-msse4"
-      "-msse4.1"
-      "-msse4.2"
-      "-maes"
-      "-mpclmul"
-      "-mfpmath=sse"
-    ] else
-      throw "Unknown march level for ${stdenv.targetSystem}";
+    if cc.isGNU or false then
+      if [ stdenv.targetSystem ] == x86_64-linux then [
+        "-mmmx"
+        "-msse"
+        "-msse2"
+        "-msse3"
+        "-mssse3"
+        "-msse4"
+        "-msse4.1"
+        "-msse4.2"
+        "-maes"
+        "-mpclmul"
+        "-mfpmath=sse"
+      ] else
+        throw "Unknown march level for ${stdenv.targetSystem}"
+    else  # TODO(wkennington): Figure out optimization flags for clang
+      [ ];
 
   libc = if nativeLibc then null else libc;
   binutils = if nativeTools then "" else binutils;

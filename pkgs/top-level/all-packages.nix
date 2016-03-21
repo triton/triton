@@ -776,9 +776,9 @@ gksu = callPackage ../all-pkgs/gksu { };
 
 glib = callPackage ../all-pkgs/glib { };
 # checked version separate to break recursion
-glib_tested = glib.override {
+glib_tested = callPackageAlias "glib" {
   doCheck = true;
-  libffi = libffi.override {
+  libffi = callPackageAlias "libffi" {
     doCheck = true;
   };
 };

@@ -1,6 +1,10 @@
-source $stdenv/setup
+# Convert any non-arrays to arrays
+set -o noglob
+urls=($urls)
+minisignUrls=($minisignUrls)
+set +o noglob
 
-source $mirrorsFile
+source $stdenv/setup
 
 downloadedFile="$out"
 if [ -n "$downloadToTemp" ]; then downloadedFile="$TMPDIR/file"; fi
@@ -68,10 +72,10 @@ BEGIN {
 tryDownload() {
   local url
   url="$1"
-  local canPrintHash
-  canPrintHash=0
-  if [ "$2" = "1" ] && echo "$url" | grep -q '^https'; then
-    canPrintHash=1
+  local verifications
+  verifications=()
+  if [ "$2" = "1" ] && echo "$url" | grep -q '^https' && echo "$curlOpts" | grep -q -v '\--insecure'; then
+    verifications+=('https')
   fi
 
   echo
@@ -85,9 +89,7 @@ tryDownload() {
   while [ $curlexit -eq 18 ]; do
     # keep this inside an if statement, since on failure it doesn't abort the script
     if $curl -C - --fail "$url" --output "$downloadedFile"; then
-      set +o noglob
       runHook postFetch
-      set -o noglob
       if [ "$outputHashMode" = "flat" ]; then
         if [ -n "$sha1Confirm" ]; then
           local sha1
@@ -96,7 +98,7 @@ tryDownload() {
             echo "$out SHA1 hash does not match given $sha1Confirm" >&2
             break
           else
-            canPrintHash=1
+            verifications+=('sha1')
           fi
         fi
 
@@ -107,7 +109,16 @@ tryDownload() {
             echo "$out MD5 hash does not match given $md5Confirm" >&2
             break
           else
-            canPrintHash=1
+            verifications+=('md5')
+          fi
+        fi
+
+        if [ -n "$minisignPub" ]; then
+          if ! minisign -V -x "$TMPDIR/minisign" -m "$out" -P "$minisignPub" -q; then
+            echo "$out Minisig does not validate" >&2
+            break
+          else
+            verifications+=('minisign')
           fi
         fi
 
@@ -118,11 +129,18 @@ tryDownload() {
         else
           rm -f $out
           rm -f $downloadedFile
-          str="$url produced a bad hash for $out"
-          if [ "$canPrintHash" = "1" ]; then
-            str+=": $lhash"
+          str="Got a bad hash:\n"
+          str+="  URL: $url\n"
+          str+="  File: $out\n"
+          if [ "${#verifications[@]}" -gt 0 ]; then
+            str+='  Verification:'
+            local verification
+            for verification in "${verifications[@]}"; do
+              str+=" $verification"
+            done
+            str+="\n  sha256: $lhash"
           fi
-          echo "$str" >&2
+          echo -e "$str" >&2
         fi
         break
       else
@@ -144,45 +162,51 @@ tryDownload() {
   stopNest
 }
 
+fixUrls() {
+  local varname
+  varname="$1"
+  
+  local result
+  result=()
 
-# URL list may contain ?. No glob expansion for that, please
-set -o noglob
-
-urls2=
-for url in $urls; do
+  array="${varname}[@]"
+  for url in "${!array}"; do
     if test "${url:0:9}" != "mirror://"; then
-        urls2="$urls2 $url"
+      result+=("$url")
     else
-        url2="${url:9}"; echo "${url2/\// }" > split; read site fileName < split
-        #varName="mirror_$site"
-        varName="$site" # !!! danger of name clash, fix this
-        if test -z "${!varName}"; then
-            echo "warning: unknown mirror:// site \`$site'"
-        else
-            # Assume that SourceForge/GNU/kernel mirrors have better
-            # bandwidth than nixos.org.
-            preferHashedMirrors=
-
-            mirrors=${!varName}
-
-            # Allow command-line override by setting NIX_MIRRORS_$site.
-            varName="NIX_MIRRORS_$site"
-            if test -n "${!varName}"; then mirrors="${!varName}"; fi
-
-            for url3 in $mirrors; do
-                urls2="$urls2 $url3$fileName";
-            done
-        fi
+      local mirror
+      mirror="$(echo "$url" | awk -F/ '{print $3}')"
+      base="$(echo "$url" | awk -F/ '{ for (i=4; i<=NF; i++) { printf "%s", "/" $i; } }')"
+      while read mirror; do
+        result+=("$mirror$base")
+      done < <(awk -v mirror="$mirror" '{
+          if ($0 ~ "^" mirror " ") {
+            for (i=2; i<=NF; i++) {
+              print $i;
+            }
+          }
+        }' "$mirrorsFile")
     fi
-done
-urls="$urls2"
+  done
 
-# Restore globbing settings
-set +o noglob
+  eval $varname='("${result[@]}")'
+}
+
+fixUrls 'urls'
+fixUrls 'minisignUrls'
 
 if test -n "$showURLs"; then
-    echo "$urls" > $out
-    exit 0
+  echo "URLs:"
+  for url in "${urls[@]}"; do
+    echo "  $url" >&2
+  done
+
+  if [ "${#minisignUrls[@]}" -gt 0 ]; then
+    echo "Minisign URLs:"
+    for url in "${minisignUrls[@]}"; do
+      echo "  $url" >&2
+    done
+  fi
 fi
 
 runHook preFetch
@@ -203,10 +227,22 @@ curl="curl \
  --retry 3 \
  --disable-epsv \
  --cookie-jar cookies \
+ --speed-limit 10240 \
+ --speed-time 5 \
  $curlOpts \
  $NIX_CURL_FLAGS"
 
 
+# We want to download signatures first
+for url in "${minisignUrls[@]}"; do
+  if $curl -C - --fail "$url" --output "$TMPDIR/minisign"; then
+    break
+  else
+    rm -f "$TMPDIR/minisign"
+  fi
+done
+
+# Download the actual file
 if [ -n "$multihash" ]; then
   if [ -n "$IPFS_ADDR" ]; then
     tryDownload "http://$IPFS_ADDR/ipfs/$multihash"
@@ -215,15 +251,9 @@ if [ -n "$multihash" ]; then
   tryDownload "http://127.0.0.1:8080/ipfs/$multihash"
 fi
 
-# URL list may contain ?. No glob expansion for that, please
-set -o noglob
-
-for url in $urls; do
+for url in "${urls[@]}"; do
   tryDownload "$url" "1"
 done
-
-# Restore globbing settings
-set +o noglob
 
 # We only ever want to access the official gateway as a last resort as it can be slow
 if [ -n "$multihash" ]; then

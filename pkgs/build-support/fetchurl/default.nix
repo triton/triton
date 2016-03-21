@@ -1,4 +1,4 @@
-{ stdenv, curl, openssl }: # Note that `curl' and `openssl' may be `null', in case of the native stdenv.
+{ stdenv, curl, openssl, minisign }: # Note that `curl' and `openssl' may be `null', in case of the native stdenv.
 
 let
 
@@ -9,12 +9,15 @@ let
   # fetchurl instantiations via environment variables.  This makes the
   # resulting store derivations (.drv files) much smaller, which in
   # turn makes nix-env/nix-instantiate faster.
-  mirrorsFile =
-    stdenv.mkDerivation ({
-      name = "mirrors-list";
-      builder = ./write-mirror-list.sh;
-      preferLocalBuild = true;
-    } // mirrors);
+  mirrorsFile = stdenv.mkDerivation {
+    name = "mirrors-list";
+    buildCommand = stdenv.lib.concatStrings (
+      stdenv.lib.flip stdenv.lib.mapAttrsToList mirrors (mirror: urls: ''
+        echo '${mirror} ${stdenv.lib.concatStringsSep " " urls}' >> "$out"
+      '')
+    );
+    preferLocalBuild = true;
+  };
 
   # Names of the master sites that are mirrored (i.e., "sourceforge",
   # "gnu", etc.).
@@ -62,6 +65,10 @@ in
 
 , multihash ? ""
 
+, minisignPub ? ""
+, minisignUrl ? ""
+, minisignUrls ? []
+
 , recursiveHash ? false
 
 , # Shell code executed before the file has been fetched.
@@ -94,6 +101,7 @@ let
     || sha256 != "" || sha512 != "";
 
   urls_ = (if url != "" then [ url ] else [ ]) ++ urls;
+  minisignUrls_ = (if minisignUrl != "" then [ minisignUrl ] else [ ]) ++ minisignUrls;
 
 in
 
@@ -110,9 +118,12 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
   buildInputs = [
     curl
     openssl
+  ] ++ stdenv.lib.optionals (minisignPub != "") [
+    minisign
   ];
 
   urls = urls_;
+  minisignUrls = minisignUrls_;
 
   # New-style output content requirements.
   outputHashAlgo =
@@ -137,7 +148,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
 
   outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
 
-  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch downloadToTemp executable sha1Confirm md5Confirm multihash;
+  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch downloadToTemp executable sha1Confirm md5Confirm multihash minisignPub;
 
   # Doing the download on a remote machine just duplicates network
   # traffic, so don't do that.

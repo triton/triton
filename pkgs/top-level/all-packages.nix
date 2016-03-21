@@ -1033,6 +1033,8 @@ jam = callPackage ../all-pkgs/jam { };
 
 jemalloc = callPackage ../all-pkgs/jemalloc { };
 
+jsoncpp = callPackage ../all-pkgs/jsoncpp { };
+
 json-glib = callPackage ../all-pkgs/json-glib { };
 
 kbd = callPackage ../all-pkgs/kbd { };
@@ -6500,8 +6502,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  json-c-0-11 = callPackage ../development/libraries/json-c/0.11.nix { }; # vulnerable
   json-c = callPackage ../development/libraries/json-c { };
-#
-#  jsoncpp = callPackage ../development/libraries/jsoncpp { };
 #
 #  libjson = callPackage ../development/libraries/libjson { };
 #

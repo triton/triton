@@ -47,6 +47,10 @@ let
 
     outputs = [ "out" "jre" ];
 
+    # Enabling optimizations breaks compilation
+    fortifySource = false;
+    optimize = false;
+
     buildInputs = [
       cpio file which unzip zip
       xorg.libX11 xorg.libXt xorg.libXext xorg.libXrender xorg.libXtst

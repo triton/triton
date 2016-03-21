@@ -27,6 +27,7 @@ let
   ccName = (builtins.parseDrvName cc.name).name;
 
   inherit (stdenv.lib.platforms)
+    i686-linux;
     x86_64-linux;
 
 in
@@ -54,8 +55,12 @@ stdenv.mkDerivation {
         "-maes"
         "-mpclmul"
         "-mfpmath=sse"
+      ] [ stdenv.targetSystem ] == i686-linux then [
+        "-msse"
+        "-msse2"
+        "-mfpmath=sse"
       ] else
-        throw "Unknown march level for ${stdenv.targetSystem}"
+        throw "Unknown optimization level for ${stdenv.targetSystem}"
     else  # TODO(wkennington): Figure out optimization flags for clang
       [ ];
 

@@ -16,5 +16,5 @@ hicolorPreFixupPhase() {
     rm -f $out/share/icons/HighContrast/icon-theme.cache
 }
 
-preFixupPhases="$preFixupPhases hicolorPreFixupPhase"
+preFixupPhases+=('hicolorPreFixupPhase')
 

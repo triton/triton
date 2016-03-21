@@ -909,7 +909,7 @@ genericBuild() {
   if [ -z "$phases" ]; then
     phases="$prePhases unpackPhase patchPhase $preConfigurePhases \
         configurePhase $preBuildPhases buildPhase checkPhase \
-        $preInstallPhases installPhase $preFixupPhases fixupPhase installCheckPhase \
+        $preInstallPhases installPhase "${preFixupPhases[@]}" fixupPhase installCheckPhase \
         $preDistPhases distPhase $postPhases";
   fi
 

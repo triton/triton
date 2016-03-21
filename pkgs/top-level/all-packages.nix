@@ -778,9 +778,6 @@ glib = callPackage ../all-pkgs/glib { };
 # checked version separate to break recursion
 glib_tested = callPackageAlias "glib" {
   doCheck = true;
-  libffi = callPackageAlias "libffi" {
-    doCheck = true;
-  };
 };
 
 glibmm = callPackage ../all-pkgs/glibmm { };

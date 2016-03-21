@@ -2411,10 +2411,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  dfc  = callPackage ../tools/system/dfc { };
 #
-#  dnscrypt-proxy = callPackage ../tools/networking/dnscrypt-proxy { };
-#
-#  dnscrypt-wrapper = callPackage ../tools/networking/dnscrypt-wrapper { };
-#
   dnssec-root = callPackage ../data/misc/dnssec-root { };
 #
   dnstop = callPackage ../tools/networking/dnstop { };
@@ -3088,8 +3084,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  memtester = callPackage ../tools/system/memtester { };
 #
 #  minidlna = callPackage ../tools/networking/minidlna { };
-#
-#  minisign = callPackage ../tools/security/minisign { };
 #
 #  mmv = callPackage ../tools/misc/mmv { };
 #

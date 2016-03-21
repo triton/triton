@@ -109,8 +109,7 @@ assert urls_ != [ ] || multihash != "";
 
 if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${stdenv.lib.concatStringsSep ", " urls_}" else stdenv.mkDerivation {
   name =
-    if showURLs then "urls"
-    else if name != "" then name
+    if name != "" then name
     else baseNameOf (toString (builtins.head urls_));
 
   builder = ./builder.sh;

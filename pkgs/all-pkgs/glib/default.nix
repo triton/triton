@@ -58,6 +58,12 @@ stdenv.mkDerivation rec {
 
   setupHook = ./setup-hook.sh;
 
+  postUnpack = ''
+    # setupHooks are not run on the build the are declared in from stdenv.
+    # Manually source the hook to run it against the build.
+    source $setupHook
+  '';
+
   patches = optionals doCheck [
     (fetchTritonPatch {
       rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";

@@ -1605,6 +1605,8 @@ tevent = callPackage ../all-pkgs/tevent { };
 
 texinfo = callPackage ../all-pkgs/texinfo { };
 
+tmux = callPackage ../all-pkgs/tmux { };
+
 totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
 
 tracker = callPackage ../all-pkgs/tracker { };
@@ -4184,8 +4186,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  tmate = callPackage ../tools/misc/tmate { };
 #
 #  tmpwatch = callPackage ../tools/misc/tmpwatch  { };
-#
-  tmux = callPackage ../tools/misc/tmux { };
 #
 #  tmux-cssh = callPackage ../tools/misc/tmux-cssh { };
 #

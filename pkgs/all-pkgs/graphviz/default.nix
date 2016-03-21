@@ -83,6 +83,10 @@ stdenv.mkDerivation rec {
     sed -i 's|which|command -v|' $out/bin/vimdot
   '';
 
+  # Adding optimizations breaks the internal malloc build
+  fortifySource = false;
+  optimize = false;
+
   meta = with stdenv.lib; {
     description = "Open source graph visualization software";
     homepage = "http://www.graphviz.org/";

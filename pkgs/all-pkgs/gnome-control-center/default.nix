@@ -66,13 +66,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "gnome-control-center-${version}";
-  versionMajor = "3.18";
-  versionMinor = "2";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-control-center/${versionMajor}/${name}.tar.xz";
-    sha256 = "1bgqg1sl3cp2azrwrjgwx3jzk9n3w76xpcyvk257qavx4ibn3zin";
+    sha256 = "b7e7307612e244a8ba15a3bb5dc0d12a043b93381a3939515e585558b064d683";
   };
 
   propagatedUserEnvPkgs = [

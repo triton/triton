@@ -14,6 +14,8 @@
 , glib
 , gnome-online-accounts
 , gtk3
+# TODO: add hal support
+, hal ? null
 , libarchive
 , libbluray
 , libcdio
@@ -32,15 +34,20 @@
 , udisks
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "gvfs-${version}";
-  versionMajor = "1.26";
-  versionMinor = "3";
+  versionMajor = "1.28";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gvfs/${versionMajor}/${name}.tar.xz";
-    sha256 = "0jhv80bchlcy0aldz93mrjl5ad74s11yr2hcii3kyvync3x7a3x7";
+    sha256 = "cf72fc0adf0ca702ead5b3fab3c1fa46b09678eb7c1290de7e30bb7cbaf5f704";
   };
 
   nativeBuildInputs = [
@@ -55,15 +62,19 @@ stdenv.mkDerivation rec {
     avahi
     dbus
     fuse
+    #gconf
     gcr
     glib
     gnome-online-accounts
+    gtk3
+    hal
     libgdata
     libarchive
     libbluray
     libcdio
     libgudev
     libgcrypt
+    libgnome-keyring
     libgphoto2
     libmtp
     libsecret
@@ -73,9 +84,6 @@ stdenv.mkDerivation rec {
     samba
     systemd_lib
     udisks
-    #gconf
-    gtk3
-    libgnome-keyring
   ];
 
   configureFlags = [
@@ -84,28 +92,28 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--enable-gcr"
+    (enFlag "gcr" (gcr != null) null)
     "--enable-nls"
     "--enable-http"
-    "--enable-avahi"
-    "--enable-udev"
-    "--enable-fuse"
+    (enFlag "avahi" (avahi != null) null)
+    (enFlag "udev" (systemd_lib != null) null)
+    (enFlag "fuse" (fuse != null) null)
     "--enable-gdu"
-    "--enable-udisks2"
-    "--enable-libsystemd-login"
-    "--enable-hal"
-    "--enable-gudev"
+    (enFlag "udisks2" (udisks != null) null)
+    (enFlag "libsystemd-login" (systemd_lib != null) null)
+    (enFlag "hal" (hal != null) null)
+    (enFlag "gudev" (libgudev != null) null)
     "--enable-cdda"
     "--enable-afc"
     "--enable-goa"
     "--enable-google"
-    "--enable-gphoto2"
-    "--enable-keyring"
-    "--enable-bluray"
+    (enFlag "gphoto2" (libgphoto2 != null) null)
+    (enFlag "keyring" (libgnome-keyring != null) null)
+    (enFlag "bluray" (libbluray != null) null)
     "--enable-libmtp"
-    "--enable-samba"
-    "--enable-gtk"
-    "--enable-archive"
+    (enFlag "samba" (samba != null) null)
+    (enFlag "gtk" (gtk3 != null) null)
+    (enFlag "archive" (libarchive != null) null)
     "--enable-afp"
     "--disable-nfs"
     "--enable-bash-completion"
@@ -129,7 +137,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

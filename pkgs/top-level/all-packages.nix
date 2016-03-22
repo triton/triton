@@ -1294,6 +1294,8 @@ mpfr = callPackage ../all-pkgs/mpfr { };
 
 mpv = callPackage ../all-pkgs/mpv { };
 
+mtools = callPackage ../all-pkgs/mtools { };
+
 inherit (callPackages ../all-pkgs/mumble {
   jackSupport = config.jack or false;
   speechdSupport = config.mumble.speechdSupport or false;
@@ -3336,8 +3338,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   ms-sys = callPackage ../tools/misc/ms-sys { };
 #
 #  mtdutils = callPackage ../tools/filesystems/mtdutils { };
-#
-  mtools = callPackage ../tools/filesystems/mtools { };
 #
   mtr = callPackage ../tools/networking/mtr {};
 #

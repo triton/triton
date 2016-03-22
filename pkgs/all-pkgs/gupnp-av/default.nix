@@ -18,12 +18,12 @@ with {
 stdenv.mkDerivation rec {
   name = "gupnp-av-${version}";
   versionMajor = "0.12";
-  versionMinor = "7";
+  versionMinor = "8";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gupnp-av/${versionMajor}/${name}.tar.xz";
-    sha256 = "35e775bc4f7801d65dcb710905a6b8420ce751a239b5651e6d830615dc906ea8";
+    sha256 = "759bc7d46aff894c282d17f508d9b5be82de96aa74b10cb6b0fc6c5e07cc273c";
   };
 
   buildInputs = [
@@ -53,7 +53,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

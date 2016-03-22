@@ -15,13 +15,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "gsettings-desktop-schemas-${version}";
-  versionMajor = "3.18";
-  versionMinor = "1";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gsettings-desktop-schemas/${versionMajor}/${name}.tar.xz";
-    sha256 = "06lsz789q3g4zdgzbqk0gn1ak3npk0gwikqvjy86asywlfr171r5";
+    sha256 = "55a41b533c0ab955e0a36a84d73829451c88b027d8d719955d8f695c35c6d9c1";
   };
 
   nativeBuildInputs = [
@@ -54,7 +54,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

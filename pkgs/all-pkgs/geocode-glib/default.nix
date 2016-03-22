@@ -17,13 +17,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "geocode-glib-${version}";
-  versionMajor = "3.18";
-  versionMinor = "1";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/geocode-glib/${versionMajor}/${name}.tar.xz";
-    sha256 = "0rf302vbpc6mlf8n7ns2k4n9zfgidj5kwimpj219ni3m4pw2plbm";
+    sha256 = "5f2264238e9481a95ca260ba2c652bebd247ec1852a27ded5b126117eb1bb6ba";
   };
 
   nativeBuildInputs = [
@@ -62,8 +62,7 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 
 }

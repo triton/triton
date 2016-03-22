@@ -23,13 +23,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "gtksourceview-${version}";
-  versionMajor = "3.18";
-  versionMinor = "2";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gtksourceview/${versionMajor}/${name}.tar.xz";
-    sha256 = "60f75a9f0039e13a2281fc595b5ef7344afa06732cc53b57d13234bfb0a5b7b2";
+    sha256 = "0b753cbd49cdfb0fb8bb347e4669dcc233d9c05c1d321429efe93c4e885262fd";
   };
 
   patches = [
@@ -66,6 +66,7 @@ stdenv.mkDerivation rec {
     "--enable-completion-providers"
     "--disable-glade-catalog"
     "--enable-nls"
+    "--enable-rpath"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -91,7 +92,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

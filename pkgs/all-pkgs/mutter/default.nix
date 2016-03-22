@@ -30,24 +30,44 @@
 , libinput
 , systemd_lib
 , wayland
+, wayland-protocols
 , xorg
 , gtk3
 }:
 
 with {
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    optionals
+    wtFlag;
 };
+
+assert xorg != null ->
+  xorg.libICE != null
+  && xorg.libSM != null
+  && xorg.libX11 != null
+  && xorg.libxcb != null
+  && xorg.libXcomposite != null
+  && xorg.libXcursor != null
+  && xorg.libXdamage != null
+  && xorg.libXext != null
+  && xorg.libXfixes != null
+  && xorg.libXi != null
+  && xorg.libXinerama != null
+  && xorg.libxkbfile != null
+  && xorg.libXrandr != null
+  && xorg.libXrender != null
+  && xorg.xkeyboardconfig != null;
 
 stdenv.mkDerivation rec {
   name = "mutter-${version}";
-  versionMajor = "3.18";
-  versionMinor = "3";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/mutter/${versionMajor}/${name}.tar.xz";
-    sha256 = "0ik8aa3k5cglz9f237mfxxdf8pcr0srr5mmfwdx3gc3bb7aqipaq";
+    sha256 = "5644d297b69dd3fb465ed9d998e297667c06d9d372e49ded1d788548a38516f5";
   };
 
   nativeBuildInputs = [
@@ -82,6 +102,9 @@ stdenv.mkDerivation rec {
     systemd_lib
     upower
     wayland
+    wayland-protocols
+    zenity
+  ] ++ optionals (xorg != null) [
     xorg.libICE
     xorg.libSM
     xorg.libX11
@@ -97,7 +120,6 @@ stdenv.mkDerivation rec {
     xorg.libXrandr
     xorg.libXrender
     xorg.xkeyboardconfig
-    zenity
   ];
 
   patches = [
@@ -119,15 +141,15 @@ stdenv.mkDerivation rec {
     "--enable-schemas-compile"
     "--enable-verbose-mode"
     "--enable-sm"
-    "--enable-startup-notification"
+    (enFlag "startup-notification" (libstartup_notification != null) null)
     "--disable-installed-tests"
     (enFlag "introspection" (gobject-introspection != null) null)
     "--enable-native-backend"
-    "--enable-wayland"
+    (enFlag "wayland" (wayland != null) null)
     "--disable-debug"
     "--enable-compile-warnings"
-    "--with-libcanberra"
-    "--with-x"
+    (wtFlag "libcanberra" (libcanberra != null) null)
+    (wtFlag "x" (xorg != null) null)
   ];
 
   preFixup =
@@ -156,8 +178,7 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 
 }

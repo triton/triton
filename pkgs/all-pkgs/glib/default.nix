@@ -47,14 +47,34 @@ assert stdenv.cc.isGNU;
 
 stdenv.mkDerivation rec {
   name = "glib-${version}";
-  versionMajor = "2.46";
-  versionMinor = "2";
+  versionMajor = "2.48";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${versionMajor}/${name}.tar.xz";
-    sha256 = "1nrkswmqcmn16fs79q7iy72f89n3yxncqqwil30ijrq36wp74cah";
+    sha256 = "744be6931ca914c68af98dc38ff6b0cf8381d65e335060faddfbf04c17147c34";
   };
+
+  nativeBuildInputs = [
+    autoreconfHook
+    gettext
+    perl
+    python
+  ];
+
+  buildInputs = [
+    attr
+    libelf
+    libffi
+    pcre
+    zlib
+  ] ++ optionals doCheck [
+    desktop_file_utils
+    libxml2
+    shared_mime_info
+    tzdata
+  ];
 
   setupHook = ./setup-hook.sh;
   selfApplySetupHook = true;
@@ -114,10 +134,19 @@ stdenv.mkDerivation rec {
   );
 
   configureFlags = [
+    "--disable-maintainer-mode"
+    "--disable-debug"
+    "--disable-gc-friendly"
+    #"--enable-mem-pools"
+    "--enable-rebuilds"
+    "--disable-installed-tests"
+    "--disable-always-build-tests"
+    "--enable-largefile"
+    "--disable-included-printf"
     "--disable-selinux"
     "--disable-fam"
-    "--enable-xattr"
-    "--enable-libelf"
+    (enFlag "attr" (attr != null) null)
+    (enFlag "libelf" (libelf != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -126,30 +155,11 @@ stdenv.mkDerivation rec {
     "--disable-systemtap"
     "--disable-coverage"
     "--enable-Bsymbolic"
+    #"--disable-znodelete"
     "--enable-compile-warnings"
     # The internal pcre is not patched to support gcc5, among other
     # fixes specific to Triton
     "--with-pcre=system"
-  ];
-
-  nativeBuildInputs = [
-    autoreconfHook
-    gettext
-    perl
-    python
-  ];
-
-  buildInputs = [
-    attr
-    libelf
-    libffi
-    pcre
-    zlib
-  ] ++ optionals doCheck [
-    desktop_file_utils
-    libxml2
-    shared_mime_info
-    tzdata
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";
@@ -187,7 +197,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

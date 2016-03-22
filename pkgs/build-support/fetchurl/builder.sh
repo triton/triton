@@ -122,6 +122,8 @@ tryDownload() {
           fi
         fi
 
+        runHook postVerification
+
         local lhash
         lhash="$(openssl "$outputHashAlgo" -r -hex "$out" 2>/dev/null | awk '{print $1;}')"
         if [ "$lhash" = "$HEX_HASH" ]; then
@@ -144,6 +146,7 @@ tryDownload() {
         fi
         break
       else
+        runHook postVerification
         success=1
         break
       fi

@@ -79,6 +79,10 @@ in
   # successfully. This can do things like check or transform the file.
   postFetch ? ""
 
+, # Shell code executed after the verifications have been performed
+  # This does not include the final checksum
+  postVerification ? ""
+
 , # Whether to download to a temporary path rather than $out. Useful
   # in conjunction with postFetch. The location of the temporary file
   # is communicated to postFetch via $downloadedFile.
@@ -147,7 +151,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
 
   outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
 
-  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch downloadToTemp executable sha1Confirm md5Confirm multihash minisignPub;
+  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch postVerification downloadToTemp executable sha1Confirm md5Confirm multihash minisignPub;
 
   # Doing the download on a remote machine just duplicates network
   # traffic, so don't do that.

@@ -1546,6 +1546,8 @@ readline = callPackage ../all-pkgs/readline { };
 
 redis = callPackage ../all-pkgs/redis { };
 
+resolv_wrapper = callPackage ../all-pkgs/resolv_wrapper { };
+
 rest = callPackage ../all-pkgs/rest { };
 
 rocksdb = callPackage ../all-pkgs/rocksdb { };
@@ -7541,8 +7543,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  qrupdate = callPackage ../development/libraries/qrupdate { };
 #
 #  redland = pkgs.librdf_redland;
-#
-  resolv_wrapper = callPackage ../development/libraries/resolv_wrapper { };
 #
 #  rhino = callPackage ../development/libraries/java/rhino {
 #    javac = gcj;

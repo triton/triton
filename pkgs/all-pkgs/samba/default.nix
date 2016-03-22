@@ -1,5 +1,6 @@
 { stdenv
 , docbook_xml_dtd_42
+, docbook_xml_dtd_45
 , docbook_xsl
 , fetchurl
 , gettext
@@ -7,67 +8,49 @@
 , perl
 , pythonPackages
 
+, avahi
+, acl
+, ceph_lib
+, cups
+, dbus
+, glusterfs
+, gnutls
 , iniparser
+, kerberos
 , ldb
+, libaio
 , libarchive
 , libbsd
+, libcap
+, libgcrypt
+, libgpg-error
+, libibverbs
+, librdmacm
+, libunwind
+, ncurses
 , nss_wrapper
+, openldap
+, pam
 , popt
 , readline
 , resolv_wrapper
 , socket_wrapper
 , subunit
+, systemd_lib
 , talloc
 , tdb
 , tevent
 , uid_wrapper
-
-# source3/wscript optionals
-, kerberos
 , zlib
-, openldap
-, cups
-, pam
-, avahi
-, acl
-, libaio
-, ceph_lib
-, glusterfs
-
-# source4/lib/tls/wscript optionals
-, gnutls
-, libgcrypt
-, libgpg-error
-
-# other optionals
-, ncurses
-, libunwind
-, dbus
-, libibverbs
-, librdmacm
-, systemd_lib
 }:
 
-let
-  bundledLibs = if kerberos != null && kerberos.implementation == "heimdal" then "NONE" else "com_err";
-  hasGnutls = gnutls != null && libgcrypt != null && libgpg-error != null;
-  isKrb5OrNull = if kerberos != null && kerberos.implementation == "krb5" then true else null;
-  #hasInfinibandOrNull = if libibverbs != null && librdmacm != null then true else null;
-  hasInfinibandOrNull = null;  # TODO(wkennington): Reenable after fixed
-in
-with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "samba-4.3.6";
+  name = "samba-4.4.0";
 
   src = fetchurl {
-    url = "mirror://samba/pub/samba/stable/${name}.tar.gz";
-    sha256 = "0929fpk2pq4v389naai519xvsm9bzpar4jlgjxwlx1cnn6jyql9j";
+    url = "mirror://samba/samba/stable/${name}.tar.gz";
+    sha256 = "c5f6fefb7fd0a4e5f404a253b19b55f74f88faa1c3612cb3329e24aa03470075";
   };
-
-  patches = [
-    ./4.x-no-persistent-install.patch
-    ./4.x-fix-ctdb-deps.patch
-  ];
 
   nativeBuildInputs = [
     pythonPackages.python
@@ -75,22 +58,53 @@ stdenv.mkDerivation rec {
     libxslt
     docbook_xsl
     docbook_xml_dtd_42
+    docbook_xml_dtd_45
     pythonPackages.wrapPython
     gettext
   ];
+
   buildInputs = [
-    readline talloc tdb tevent ldb popt iniparser
-    subunit libbsd nss_wrapper resolv_wrapper socket_wrapper uid_wrapper
+    acl
+    avahi
+    ceph_lib
+    cups
+    dbus
+    glusterfs
+    gnutls
+    iniparser
+    kerberos
+    ldb
+    libaio
     libarchive
-
-    kerberos zlib openldap cups pam avahi acl libaio ceph_lib glusterfs
-
-    gnutls libgcrypt libgpg-error
-
-    ncurses libunwind dbus libibverbs librdmacm systemd_lib
+    libbsd
+    libcap
+    libgcrypt
+    libgpg-error
+    libibverbs
+    librdmacm
+    libunwind
+    ncurses
+    nss_wrapper
+    openldap
+    pam
+    popt
+    readline
+    resolv_wrapper
+    socket_wrapper
+    subunit
+    systemd_lib
+    talloc
+    tdb
+    tevent
+    uid_wrapper
+    zlib
   ];
 
-  pythonPath = [ talloc ldb tdb ];
+  pythonPath = [
+    talloc
+    ldb
+    tdb
+  ];
 
   postPatch = ''
     # Removes absolute paths in scripts
@@ -100,83 +114,81 @@ stdenv.mkDerivation rec {
     sed -i "s,\(XML_CATALOG_FILES=\"\),\1$XML_CATALOG_FILES ,g" buildtools/wafsamba/wafsamba.py
   '';
 
-  enableParallelBuilding = true;
-
   configureFlags = [
     # source3/wscript options
-    (mkWith   true                 "static-modules"    "NONE")
-    (mkWith   true                 "shared-modules"    "ALL")
-    (mkWith   true                 "winbind"           null)
-    (mkWith   (openldap != null)   "ads"               null)
-    (mkWith   (openldap != null)   "ldap"              null)
-    (mkEnable (cups != null)       "cups"              null)
-    (mkEnable (cups != null)       "iprint"            null)
-    (mkWith   (pam != null)        "pam"               null)
-    (mkWith   (pam != null)        "pam_smbpass"       null)
-    (mkWith   true                 "quotas"            null)
-    (mkWith   true                 "sendfile-support"  null)
-    (mkWith   true                 "utmp"              null)
-    (mkWith   true                 "utmp"              null)
-    (mkEnable true                 "pthreadpool"       null)
-    (mkEnable (avahi != null)      "avahi"             null)
-    (mkWith   true                 "iconv"             null)
-    (mkWith   (acl != null)        "acl-support"       null)
-    (mkWith   true                 "dnsupdate"         null)
-    (mkWith   true                 "syslog"            null)
-    (mkWith   true                 "automount"         null)
-    (mkWith   (libaio != null)     "aio-support"       null)
-    (mkWith   false                "fam"               null)
-    (mkWith   (libarchive != null) "libarchive"        null)
-    (mkWith   true                 "cluster-support"   null)
-    (mkWith   (ncurses != null)    "regedit"           null)
-    (mkWith   ceph_lib             "libcephfs"         ceph_lib)
-    (mkEnable (glusterfs != null)  "glusterfs"         null)
+    "--with-static-modules=NONE"
+    "--with-shared-modules=ALL"
+    "--with-winbind"
+    "--with-ads"
+    "--with-ldap"
+    "--enable-cups"
+    "--enable-iprint"
+    "--with-pam"
+    "--with-quotas"
+    "--with-sendfile-support"
+    "--with-utmp"
+    "--with-utmp"
+    "--enable-pthreadpool"
+    "--enable-avahi"
+    "--with-iconv"
+    "--with-acl-support"
+    "--with-dnsupdate"
+    "--with-syslog"
+    "--with-automount"
+    "--without-fam"
+    "--with-libarchive"
+    "--with-cluster-support"
+    "--with-regedit"
+    "--with-libcephfs=${ceph_lib}"
+    "--enable-glusterfs"
 
     # dynconfig/wscript options
-    (mkEnable true                 "fhs"               null)
-    (mkOther                       "sysconfdir"        "/etc")
-    (mkOther                       "localstatedir"     "/var")
+    "--enable-fhs"
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
 
     # buildtools/wafsamba/wscript options
-    (mkOther                       "bundled-libraries" bundledLibs)
-    (mkOther                       "private-libraries" "NONE")
-    (mkOther                       "builtin-libraries" "replace")
-    (mkWith   true                 "libiconv"          null)
-    (mkWith   (gettext != null)    "gettext"           gettext)
+    "--bundled-libraries=com_err"
+    "--private-libraries=NONE"
+    "--builtin-libraries=replace"
+    "--abi-check"
+    "--why-needed"
+    "--with-libiconv"
 
     # lib/util/wscript
-    (mkWith   (systemd_lib != null) "systemd"          null)
+    "--with-systemd"
 
     # source4/lib/tls/wscript options
-    (mkEnable hasGnutls            "gnutls" null)
+    "--enable-gnutls"
 
     # wscript options
-    (mkWith   isKrb5OrNull         "system-mitkrb5"    null)
-    (if hasGnutls then null else "--without-ad-dc")
+    "--with-system-mitkrb5"
+    # "--without-ad-dc"
 
     # ctdb/wscript
-    (mkEnable hasInfinibandOrNull  "infiniband"        null)
-    (mkEnable null                 "pmda"              null)
+    "--enable-infiniband"
+    "--enable-pmda"
   ];
 
-  stripAllList = [ "bin" "sbin" ];
+  preInstall = ''
+    sed \
+      -e "s,'/etc,'$out/etc,g" \
+      -e "s,'/var,'$TMPDIR/var,g" \
+      -i bin/c4che/default.cache.py
+  '';
 
   postInstall = ''
     # Remove unecessary components
     rm -r $out/{lib,share}/ctdb-tests
     rm $out/bin/ctdb_run{_cluster,}_tests
+  '';
 
+  preFixup = ''
     # Correct python program paths
     wrapPythonPrograms
   '';
 
-  preFixup = ''
-    # Fix broken pc file generation
-    sed -i $out/lib/pkgconfig/ctdb.pc \
-      -e "s,@libdir@,$out/lib,g" \
-      -e "s,@includedir@,$out/include,g"
-  '';
-
+  # We need to make sure rpaths are correct for all of our libraries
   postFixup = ''
     SAMBA_LIBS="$(find $out -type f -name \*.so -exec dirname {} \; | sort | uniq)"
     find $out -type f | while read BIN; do
@@ -187,11 +199,14 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://www.samba.org/;
     description = "The standard Windows interoperability suite of programs for Linux and Unix";
     license = licenses.gpl3;
-    maintainers = with maintainers; [ wkennington ];
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

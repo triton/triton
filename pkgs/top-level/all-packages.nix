@@ -1652,6 +1652,8 @@ wayland-docs = callPackage ../all-pkgs/wayland {
   enableDocumentation = true;
 };
 
+wayland-protocols = callPackage ../all-pkgs/wayland-protocols { };
+
 webkitgtk_2_4_gtk3 = callPackage ../all-pkgs/webkitgtk/2.4.x.nix {
   gtkVer = "3";
 };

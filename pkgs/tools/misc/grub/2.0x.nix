@@ -47,21 +47,23 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ autogen flex bison python autoconf automake ];
   buildInputs = [ ncurses libusb_1 freetype gettext lvm2 zfs ];
 
-  prePatch =
-    '' tar zxf ${po_src} grub-2.02~beta2/po
-       rm -rf po
-       mv grub-2.02~beta2/po po
-       sh autogen.sh
-       gunzip < "${unifont_bdf}" > "unifont.bdf"
-       sed -i "configure" \
-           -e "s|/usr/src/unifont.bdf|$PWD/unifont.bdf|g"
-    '';
+  prePatch = ''
+    tar zxf ${po_src} grub-2.02~beta2/po
+    rm -rf po
+    mv grub-2.02~beta2/po po
+    sh autogen.sh
+    gunzip < "${unifont_bdf}" > "unifont.bdf"
+    sed -i "configure" \
+      -e "s|/usr/src/unifont.bdf|$PWD/unifont.bdf|g"
+  '';
 
-  patches = [ ./fix-bash-completion.patch ];
+  patches = [
+    ./fix-bash-completion.patch
+  ];
 
   configureFlags = [
     "--enable-libzfs"
-  ]  ++ optionals efiSupport [
+  ] ++ optionals efiSupport [
     "--with-platform=efi"
     "--target=${efiSystems.${stdenv.targetSystem}.target}"
     "--program-prefix="
@@ -76,12 +78,20 @@ stdenv.mkDerivation rec {
     else 
       throw "Unsupported Target";
 
+  # We don't need any security / optimization features for a bootloader
+  optFlags = false;
+  pie = false;
+  fpic = false;
+  noStrictOverflow = false;
+  fortifySource = false;
+  stackProtector = false;
+  optimize = false;
+
   meta = with stdenv.lib; {
     description = "GNU GRUB, the Grand Unified Boot Loader (2.x beta)";
     homepage = http://www.gnu.org/software/grub/;
     license = licenses.gpl3Plus;
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 })

@@ -6,7 +6,7 @@
 , gssdp
 , libsoup
 , libxml2
-, libuuid
+, util-linux_lib
 , vala
 }:
 
@@ -18,11 +18,11 @@ with {
 stdenv.mkDerivation rec {
   name = "gupnp-${version}";
   majorVersion = "0.20";
-  version = "${majorVersion}.15";
+  version = "${majorVersion}.16";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gupnp/${majorVersion}/${name}.tar.xz";
-    sha256 = "1qlzaz61zv3sr6pmb87wjcvv6fhpwqn2z0vqrb6xz2jv1lnv8ih4";
+    sha256 = "ff1119eff12529c46837e03c742f69dc4fae48d59097d79582d38a383b832602";
   };
 
   buildInputs = [
@@ -30,8 +30,8 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gssdp
     libsoup
-    libuuid
     libxml2
+    util-linux_lib
     vala
   ];
 
@@ -57,7 +57,6 @@ stdenv.mkDerivation rec {
     license = licenses.gpl2;
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

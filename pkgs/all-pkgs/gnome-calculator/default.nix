@@ -14,19 +14,20 @@
 , gtk3
 , gtksourceview
 , librsvg
+, libsoup
 , libxml2
 , mpfr
 }:
 
 stdenv.mkDerivation rec {
   name = "gnome-calculator-${version}";
-  versionMajor = "3.18";
-  versionMinor = "3";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-calculator/${versionMajor}/${name}.tar.xz";
-    sha256 = "c376a4a14a3f7946b799b8458ac4cf2694735fc7c20e90cfda29e209439e32ff";
+    sha256 = "504da356f4ab9d2a6ec989e2769ccf00afdbfb5aa8bd57e60c1e8f21652e0c92";
   };
 
   propagatedUserEnvPkgs = [
@@ -49,6 +50,7 @@ stdenv.mkDerivation rec {
     gtk3
     gtksourceview
     librsvg
+    libsoup
     libxml2
     mpfr
   ];

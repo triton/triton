@@ -20,11 +20,11 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "harfbuzz-1.2.0";
+  name = "harfbuzz-1.2.4";
 
   src = fetchurl {
-    url = "http://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2";
-    sha256 = "11d6m8ykadxaf6pw5x24xqyjic434xhwk06splgr659x2l2m7zvr";
+    url = "https://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2";
+    sha256 = "449dbdf12a8f94aedbdefaac831d8b1bf45e7decaa9192eaa4f74104ef9de491";
   };
 
   nativeBuildInputs = optionals doCheck [
@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     (enFlag "introspection" (gobject-introspection != null) null)
     (wtFlag "glib" (glib != null) null)
-    (wtFlag "gobject" (gobject-introspection != null) null)
+    (wtFlag "gobject" (glib != null) null)
     (wtFlag "cairo" (cairo != null) null)
     (wtFlag "fontconfig" (fontconfig != null) null)
     (wtFlag "icu" (icu != null) null)
@@ -86,7 +86,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

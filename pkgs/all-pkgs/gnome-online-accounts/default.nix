@@ -17,6 +17,7 @@
 , pango
 , rest
 , telepathy_glib
+, vala
 , webkitgtk
 , xorg
 }:
@@ -28,13 +29,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "gnome-online-accounts-${version}";
-  versionMajor = "3.18";
-  versionMinor = "4";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-online-accounts/${versionMajor}/${name}.tar.xz";
-    sha256 = "0kf7g6fs1kpxb7d0fvqi0xg8pj0wg6x9r5ryiwxadn5ilq54c8wz";
+    sha256 = "c98233914c455dc21f8c73904dd2881bee6bfa117a5bdc573ba3a8550c36a460";
   };
 
   nativeBuildInputs = [
@@ -57,12 +58,14 @@ stdenv.mkDerivation rec {
     rest
     pango
     telepathy_glib
+    vala
     webkitgtk
     xorg.libX11
   ];
 
   configureFlags = [
     "--disable-maintainer-mode"
+    "--disable-debug"
     "--enable-schemas-compile"
     "--enable-compile-warnings"
     "--disable-iso-c"
@@ -71,6 +74,8 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     (enFlag "introspection" (gobject-introspection != null) null)
+    (enFlag "vala" (vala != null) null)
+    (enFlag "telepathy" (telepathy_glib != null) null)
     "--enable-backend"
     "--disable-inspector"
     "--enable-exchange"
@@ -82,7 +87,6 @@ stdenv.mkDerivation rec {
     "--enable-owncloud"
     "--enable-facebook"
     "--enable-windows-live"
-    "--enable-telepathy"
     "--enable-pocket"
     "--enable-kerberos"
     "--enable-lastfm"

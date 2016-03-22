@@ -3,7 +3,6 @@
 , gettext
 , perl
 
-, adwaita-icon-theme
 , at-spi2-atk
 , atk
 , cairo
@@ -24,7 +23,6 @@
 , shared_mime_info
 , wayland
 , wayland-protocols
-, xlibsWrapper
 , xorg
 }:
 
@@ -67,7 +65,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    adwaita-icon-theme
     atk
     at-spi2-atk
     cairo

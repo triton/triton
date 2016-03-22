@@ -20,13 +20,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "libpeas-${version}";
-  versionMajor = "1.16";
+  versionMajor = "1.18";
   versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libpeas/${versionMajor}/${name}.tar.xz";
-    sha256 = "b093008ecd65f7d55c80517589509698ff15ad41f664b11a3eb88ff461b1454e";
+    sha256 = "bf49842c64c36925bbc41d954de490b6ff7faa29b45f6fd9e91ddcc779165e26";
   };
 
   nativeBuildInputs = [
@@ -72,7 +72,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

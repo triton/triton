@@ -5,6 +5,7 @@
 , makeWrapper
 
 , adwaita-icon-theme
+, appstream-glib
 , dconf
 , gdk-pixbuf
 , glib
@@ -12,15 +13,20 @@
 , libxml2
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "dconf-editor-${version}";
-  versionMajor = "3.18";
-  versionMinor = "2";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/dconf-editor/${versionMajor}/${name}.tar.xz";
-    sha256 = "0xdwi7g1xdmgrc9m8ii62fp2zj114gsfpmgazlnhrcmmfi97z5d7";
+    sha256 = "23d4c854e2924e4acea01b7cb79460dc06e512ac0546ca17af3980a568e5a760";
   };
 
   nativeBuildInputs = [
@@ -31,6 +37,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
+    appstream-glib
     dconf
     gdk-pixbuf
     glib
@@ -40,6 +47,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-schemas-compile"
+    (enFlag "appstream-util" (appstream-glib != null) null)
     "--enable-nls"
   ];
 

@@ -13,13 +13,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "json-glib-${version}";
-  versionMajor = "1.0";
-  versionMinor = "4";
+  versionMajor = "1.1";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/json-glib/${versionMajor}/${name}.tar.xz";
-    sha256 = "1k85vvb2prmk8aa8hmr2rp9rnbhffjgnmr18b13g24xxnqy5kww0";
+    sha256 = "e00f84018306e1aa234285d77b6c2b5d57c1e1d4dabc4dfc62d30b9670941bda";
   };
 
   nativeBuildInputs = [
@@ -32,8 +32,11 @@ stdenv.mkDerivation rec {
   ];
 
   configureflags= [
-    "--enable-glibtest"
     "--enable-Bsymbolic"
+    "--disable-debug"
+    "--disable-maintainer-mode"
+    "--disable-installed-tests"
+    "--disable-always-build-tests"
     "--disable-gcov"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -41,6 +44,7 @@ stdenv.mkDerivation rec {
     "--disable-man"
     (enFlag "introspection" (gobject-introspection != null) null)
     "--enable-nls"
+    "--enable-rpath"
   ];
 
   meta = with stdenv.lib; {
@@ -51,7 +55,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

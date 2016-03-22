@@ -27,18 +27,18 @@ with {
 };
 
 assert xorg != null ->
-  xorg.libSM != null &&
-  xorg.libX11 != null;
+  xorg.libSM != null
+  && xorg.libX11 != null;
 
 stdenv.mkDerivation rec {
   name = "vino-${version}";
-  versionMajor = "3.18";
-  versionMinor = "1";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/vino/${versionMajor}/${name}.tar.xz";
-    sha256 = "0npyzabbk0v4qdxd22dv89v9rnpx69lv4gl7rqzyxm7cpdw6xv07";
+    sha256 = "ed61d0ba18d9b21a4151c23dd76f17d45d6e66b621a9389578daf88a9266a367";
   };
 
   nativeBuildInputs = [
@@ -69,6 +69,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-compile-warnings"
+    "--disable-iso-c"
     "--disable-debug"
     "--enable-nls"
     "--enable-ipv6"
@@ -102,7 +103,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

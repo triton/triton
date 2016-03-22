@@ -1590,6 +1590,8 @@ swig2 = callPackageAlias "swig" {
   channel = "2";
 };
 
+syslinux = callPackage ../all-pkgs/syslinux { };
+
 # TODO: Rename back to systemd once depedencies are sorted
 systemd_full = callPackage ../all-pkgs/systemd { };
 
@@ -9200,8 +9202,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  sysklogd = callPackage ../os-specific/linux/sysklogd { };
 #
-  syslinux = callPackage ../os-specific/linux/syslinux { };
-
   sysstat = callPackage ../os-specific/linux/sysstat { };
 
 #  # In nixos, you can set systemd.package = pkgs.systemd_with_lvm2 to get

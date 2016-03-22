@@ -8,23 +8,30 @@
 , gdk-pixbuf
 , geocode-glib
 , glib
-, gobjectIntrospection
+, gobject-introspection
 , gtk3
 , libsoup
 , libxml2
 , pango
 , tzdata
+, vala
 }:
+
+with {
+  inherit (stdenv.lib)
+    enFlag
+    wtFlag;
+};
 
 stdenv.mkDerivation rec {
   name = "libgweather-${version}";
-  versionMajor = "3.18";
-  versionMinor = "1";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libgweather/${versionMajor}/${name}.tar.xz";
-    sha256 = "1l3sra84k5dnavbdbjyf1ar84xmjszpnnldih6mf45kniwpjkcll";
+    sha256 = "52629b8e9fcd979377f43a2223cf0e7096d3c3e940faa94021132ee0f879b8d6";
   };
 
   nativeBuildInputs = [
@@ -38,25 +45,32 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     geocode-glib
     glib
-    gobjectIntrospection
+    gobject-introspection
     gtk3
     libsoup
     libxml2
     pango
+    vala
   ];
 
   configureFlags = [
     "--enable-schemas-compile"
     "--enable-compile-warnings"
+    #"--disable-Werror"
     "--enable-glibtest"
     "--enable-nls"
-    "--enable-rpath"
+    "--disable-glade-catalog"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--enable-introspection"
-    "--disable-vala"
-    "--with-zoneinfo-dir=${tzdata}/share/zoneinfo"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    (enFlag "vala" (vala != null) null)
+    (wtFlag "zoneinfo-dir" (tzdata != null) "${tzdata}/share/zoneinfo")
+  ];
+
+  makeFlags = [
+    # Libgweather tries to install vala bindings in vala's prefix
+    "vapidir=$(out)/share/vala/vapi"
   ];
 
   meta = with stdenv.lib; {
@@ -67,7 +81,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

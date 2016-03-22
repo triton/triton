@@ -2837,8 +2837,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gtmess = callPackage ../applications/networking/instant-messengers/gtmess { };
 #
-  gummiboot = callPackage ../tools/misc/gummiboot { };
-#
 #  gup = callPackage ../development/tools/build-managers/gup {};
 #
 #  gupnp-tools = callPackage ../tools/networking/gupnp-tools {};

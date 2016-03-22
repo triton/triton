@@ -1366,6 +1366,8 @@ noise = callPackage ../all-pkgs/noise { };
 
 nss_wrapper = callPackage ../all-pkgs/nss_wrapper { };
 
+ntfs-3g = callPackage ../all-pkgs/ntfs-3g { };
+
 numactl = callPackage ../all-pkgs/numactl { };
 
 obexftp = callPackage ../all-pkgs/obexftp { };
@@ -3463,11 +3465,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  nsjail = callPackage ../tools/security/nsjail {};
 #
 #  nss_pam_ldapd = callPackage ../tools/networking/nss-pam-ldapd {};
-#
-  ntfs3g = callPackage ../tools/filesystems/ntfs-3g { };
-
-  # ntfsprogs are merged into ntfs-3g
-  ntfsprogs = pkgs.ntfs3g;
 #
 #  ntopng = callPackage ../tools/networking/ntopng { };
 #

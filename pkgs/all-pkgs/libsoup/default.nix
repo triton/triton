@@ -5,10 +5,11 @@
 , python
 
 , glib
-, glib_networking
+, glib-networking
 , gobject-introspection
 , libxml2
 , sqlite
+, vala
 }:
 
 with {
@@ -18,13 +19,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "libsoup-${version}";
-  versionMajor = "2.52";
-  versionMinor = "2";
+  versionMajor = "2.54";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libsoup/${versionMajor}/${name}.tar.xz";
-    sha256 = "1p4k40y2gikr6m8p3hm0vswdzj2pj133dckipd2jk5bxbj5n4mfv";
+    sha256 = "fbf1038efb10d2ffbbb88bb46e7ce32b683fde8e566f36bcf26f7f69a550ec56";
   };
 
   nativeBuildInputs = [
@@ -35,10 +36,11 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     glib
-    glib_networking
+    glib-networking
     gobject-introspection
     libxml2
     sqlite
+    vala
   ];
 
   postPatch = ''
@@ -47,6 +49,7 @@ stdenv.mkDerivation rec {
 
   # glib_networking is a runtime dependency, not a compile-time dependency
   configureFlags = [
+    "--disable-debug"
     "--enable-glibtest"
     "--disable-installed-tests"
     "--disable-always-build-tests"
@@ -55,18 +58,25 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     (enFlag "introspection" (gobject-introspection != null) null)
-    "--disable-vala"
+    (enFlag "vala" (vala != null) null)
     "--disable-tls-check"
     "--disable-code-coverage"
     "--enable-more-warnings"
     "--with-gnome"
+    #"--with-apache-httpd"
+    #"--with-gssapi"
+  ];
+
+  makeFlags = [
+    # Libsoup tries to install vala bindings in vala's prefix
+    "vapidir=$(out)/share/vala/vapi"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";
 
   passthru = {
     propagatedUserEnvPackages = [
-      glib_networking
+      glib-networking
     ];
   };
 
@@ -78,7 +88,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

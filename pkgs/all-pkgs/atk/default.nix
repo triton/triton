@@ -14,13 +14,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "atk-${version}";
-  versionMajor = "2.18";
+  versionMajor = "2.20";
   versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/atk/${versionMajor}/${name}.tar.xz";
-    sha256 = "0ay9s137x49f0akx658p7kznz0rdapfrd8ym54q0hlgrggblhv6f";
+    sha256 = "493a50f6c4a025f588d380a551ec277e070b28a82e63ef8e3c06b3ee7c1238f0";
   };
 
   nativeBuildInputs = [
@@ -52,7 +52,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

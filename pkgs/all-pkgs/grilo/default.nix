@@ -20,13 +20,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "grilo-${version}";
-  versionMajor = "0.3";
-  versionMinor = "0";
+  versionMajor = "0.2";
+  versionMinor = "15";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/grilo/${versionMajor}/${name}.tar.xz";
-    sha256 = "1fd1a87d606f56adb3086954baec3ea6e25d9ba3fb010f11d1d3ddc9ec66bc60";
+    sha256 = "6f5d2583250a68e76d281edaa08adb880d5a78ed46f9ecd22ae4715f1dd66815";
   };
 
   nativeBuildInputs = [

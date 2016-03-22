@@ -61,13 +61,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "tracker-${version}";
-  versionMajor = "1.6";
-  versionMinor = "1";
+  versionMajor = "1.8";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/tracker/${versionMajor}/${name}.tar.xz";
-    sha256 = "1vf1y2jn17yz70gfm5xsprydga67848izv3bymnq6js59wzxfgk5";
+    sha256 = "a11f31a373bfec3abae38ae719d0a59f666f1f067d8789ade2ed7032a152907d";
   };
 
   propagatedUserEnvPkgs = [
@@ -157,12 +157,14 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--enable-maemo"
+    "--disable-maemo"
     "--enable-journal"
-    "--enable-libstreamer"
+    # TODO: libstemmer support
+    "--disable-libstemmer"
     "--enable-tracker-fts"
     "--disable-unit-tests"
     (enFlag "upower" (upower != null) null)
+    # TODO: hal support
     "--disable-hal"
     (enFlag "network-manager" (networkmanager != null) null)
     (enFlag "libmediaart" (libmediaart != null) null)
@@ -170,12 +172,12 @@ stdenv.mkDerivation rec {
     # TODO: libiptcdata support
     "--disable-libiptcdata"
     (enFlag "exempi" (exempi != null) null)
-    "--enable-meegotouch"
+    "--disable-meegotouch"
     "--enable-miner-fs"
     "--enable-extract"
     "--enable-tracker-writeback"
     "--disable-miner-apps"
-    "--enable-user-guides"
+    "--disable-miner-user-guides"
     # TODO: miner-rss support
     "--disable-miner-rss"
     # evolution currently requires webkit-2.4
@@ -193,6 +195,7 @@ stdenv.mkDerivation rec {
     "--enable-icu-charset-detection"
     (enFlag "libxml2" (libxml2 != null) null)
     "--enable-cfg-man-pages"
+    #"--enable-generic-media-extractor="
     "--enable-unzip-ps-gz-files"
     (enFlag "poppler" (poppler != null) null)
     (enFlag "libgxps" (libgxps != null) null)
@@ -242,12 +245,6 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$out/share"
 
     wrapProgram $out/libexec/tracker-miner-fs \
-      --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
-      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
-      --prefix 'XDG_DATA_DIRS' : "$out/share"
-
-    wrapProgram $out/libexec/tracker-miner-user-guides \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \

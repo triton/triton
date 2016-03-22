@@ -3,12 +3,14 @@
 , gettext
 , intltool
 , itstool
+, makeWrapper
 , perl
 , perlPackages
 
 , adwaita-icon-theme
 , atk
 , cairo
+, dconf
 , djvulibre
 , gdk-pixbuf
 , glib
@@ -19,6 +21,7 @@
 , gst-plugins-good
 , gstreamer
 , gtk3
+, gvfs
 , libgxps
 , libsecret
 , libspectre
@@ -47,19 +50,20 @@ with {
 
 stdenv.mkDerivation rec {
   name = "evince-${version}";
-  versionMajor = "3.18";
-  versionMinor = "2";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/evince/${versionMajor}/${name}.tar.xz";
-    sha256 = "05ybiqniqbn1nr4arksvc11bkb37z17shvhkmgnak0fqairnrba2";
+    sha256 = "cf8358a453686c2a7f85d245f83fe918c0ce02eb6532339f3e02e31249a5a280";
   };
 
   nativeBuildInputs = [
     gettext
     intltool
     itstool
+    makeWrapper
     perl
     perlPackages.XMLParser
   ];
@@ -68,6 +72,7 @@ stdenv.mkDerivation rec {
     adwaita-icon-theme
     atk
     cairo
+    dconf
     djvulibre
     gdk-pixbuf
     glib
@@ -78,6 +83,7 @@ stdenv.mkDerivation rec {
     gst-plugins-good
     gstreamer
     gtk3
+    gvfs
     libgxps
     libsecret
     libspectre
@@ -157,7 +163,28 @@ stdenv.mkDerivation rec {
     (wtFlag "keyring" (libsecret != null) null)
   ];
 
-  #NIX_CFLAGS_COMPILE = "-I${glib}/include/gio-unix-2.0";
+  preFixup = ''
+    wrapProgram $out/bin/evince \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'PATH' : "${gvfs}/bin" \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+      --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
+      --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share"
+
+    wrapProgram $out/bin/evince-previewer \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --prefix 'PATH' : "${gvfs}/bin" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
+      --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share"
+
+    wrapProgram $out/bin/evince-thumbnailer \
+      --prefix 'PATH' : "${gvfs}/bin" \
+      --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share"
+  '';
 
   doCheck = false;
 
@@ -165,9 +192,10 @@ stdenv.mkDerivation rec {
     description = "Simple document viewer for GNOME";
     homepage = http://www.gnome.org/projects/evince/;
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

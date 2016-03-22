@@ -27,13 +27,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "vte-${version}";
-  versionMajor = "0.42";
-  versionMinor = "5";
+  versionMajor = "0.44";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/vte/${versionMajor}/${name}.tar.xz";
-    sha256 = "53cc15c5315d73b69f7848e07a5c512cd40b7caf0323e3d0e0d75d7ae65deee7";
+    sha256 = "93a3b1a71a885f416a119a5a8fb27b8f36bb176b8d0bec5e48188d1db5ef12aa";
   };
 
   nativeBuildInputs = [
@@ -60,7 +60,6 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     patchShebangs ./src/box_drawing_generate.sh
-    patchShebangs ./src/check-libstdc++.sh
     patchShebangs ./src/test-vte-sh.sh
   '';
 
@@ -81,7 +80,7 @@ stdenv.mkDerivation rec {
     (wtFlag "pcre2" (pcre2 != null) null)
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta = with stdenv.lib; {
     description = "A library implementing a terminal emulator widget for GTK+";
@@ -91,7 +90,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

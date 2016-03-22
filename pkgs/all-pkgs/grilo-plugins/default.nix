@@ -34,13 +34,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "grilo-plugins-${version}";
-  versionMajor = "0.2";
-  versionMinor = "17";
+  versionMajor = "0.3";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/grilo-plugins/${versionMajor}/${name}.tar.xz";
-    sha256 = "109pf4sz320jiqs1nzszpj2flkwrgwfsm64kza24mxnxih4njxik";
+    sha256 = "8e7eafae50f7fdd7eec006ad6d5b9aee888270ff288e6d0bcb14d1c71f0d6fcc";
   };
 
   nativeBuildInputs = [
@@ -114,7 +114,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

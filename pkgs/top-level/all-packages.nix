@@ -1625,6 +1625,8 @@ tzdata = callPackage ../all-pkgs/tzdata { };
 
 udisks = callPackage ../all-pkgs/udisks { };
 
+uid_wrapper = callPackage ../all-pkgs/uid_wrapper { };
+
 unbound = callPackage ../all-pkgs/unbound { };
 
 unrar = callPackage ../all-pkgs/unrar { };
@@ -7740,8 +7742,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  tokyocabinet = callPackage ../development/libraries/tokyo-cabinet { };
 #
 #  tokyotyrant = callPackage ../development/libraries/tokyo-tyrant { };
-#
-  uid_wrapper = callPackage ../development/libraries/uid_wrapper { };
 #
 #  unibilium = callPackage ../development/libraries/unibilium { };
 #

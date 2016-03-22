@@ -33,6 +33,7 @@
 , lz4
 , nss
 , nspr
+, openldap
 , rocksdb
 , snappy
 , systemd_lib
@@ -155,6 +156,8 @@ stdenv.mkDerivation {
     rocksdb
   ] ++ optionals (versionOlder version "9.1.0") [
     libs3
+  ] ++ optionals (versionAtLeast version "11.0.0") [
+    openldap
   ];
 
   postPatch = ''
@@ -242,6 +245,8 @@ stdenv.mkDerivation {
   ] ++ optionals (versionAtLeast version "10.0.4") [
     "--with-eventfd"
     "--without-spdk" # TODO: Implement
+  ] ++ optionals (versionAtLeast version "11.0.0") [
+    "--with-openldap"
   ];
 
   preBuild = optionalString (versionAtLeast version "9.0.0") ''

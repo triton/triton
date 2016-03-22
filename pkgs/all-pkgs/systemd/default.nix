@@ -338,6 +338,16 @@ stdenv.mkDerivation rec {
   # runtime; otherwise we can't and we need to reboot.
   passthru.interfaceVersion = 2;
 
+  # We can't enable some of these security hardenings due to systemd-boot
+  # However, systemd already enables them where it can
+  optFlags = false;
+  pie = false;
+  fpic = false;
+  noStrictOverflow = false;
+  fortifySource = false;
+  stackProtector = false;
+  optimize = false;
+
   meta = with stdenv.lib; {
     homepage = "http://www.freedesktop.org/wiki/Software/systemd";
     description = "A system and service manager for Linux";

@@ -837,15 +837,17 @@ gnome-wrapper = makeSetupHook {
   deps = [ makeWrapper ];
 } ../build-support/setup-hooks/gnome-wrapper.sh;
 
-gnonlin_0 = callPackage ../all-pkgs/gnonlin/0.x.nix { };
-gnonlin_1 = callPackage ../all-pkgs/gnonlin/1.x.nix { };
-gnonlin = gnonlin_1;
+gnu-efi = callPackage ../all-pkgs/gnu-efi { };
 
 gnugrep = callPackage ../all-pkgs/gnugrep { };
 
 gnum4 = callPackage ../all-pkgs/gnum4 { };
 
 gnumake = callPackage ../all-pkgs/gnumake { };
+
+gnonlin_0 = callPackage ../all-pkgs/gnonlin/0.x.nix { };
+gnonlin_1 = callPackage ../all-pkgs/gnonlin/1.x.nix { };
+gnonlin = gnonlin_1;
 
 gnupatch = callPackage ../all-pkgs/gnupatch { };
 
@@ -6359,8 +6361,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  gnet = callPackage ../development/libraries/gnet { };
 #
-  gnu-efi = callPackage ../development/libraries/gnu-efi { };
-
   gom = callPackage ../all-pkgs/gom { };
 #
 #  gpac = callPackage ../applications/video/gpac { };

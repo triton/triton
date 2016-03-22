@@ -176,7 +176,7 @@ rec {
   ];
 
   samba = [
-    https://samba.org/ftp
+    https://download.samba.org/
   ];
 
   savannah = [

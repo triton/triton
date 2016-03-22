@@ -12,7 +12,8 @@
 
 with {
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    wtFlag;
 };
 
 assert xorg != null ->
@@ -23,13 +24,13 @@ assert xorg != null ->
 
 stdenv.mkDerivation rec {
   name = "at-spi2-core-${version}";
-  versionMajor = "2.18";
-  versionMinor = "3";
+  versionMajor = "2.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/at-spi2-core/${versionMajor}/${name}.tar.xz";
-    sha256 = "0afn4x04j5l352vj0dccb2hkpzg3l2vhr8h1yv89fpqmjkfnm8md";
+    sha256 = "dcc49fb7c08e582910b21ff1e4110b22ab66068a4c6f0db52b098d66794c609b";
   };
 
   nativeBuildInputs = [
@@ -57,7 +58,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "x" (xorg != null) null)
+    (wtFlag "x" (xorg != null) null)
     "--with-dbus-daemondir=/run/current-system/sw/bin/"
   ];
 
@@ -69,7 +70,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

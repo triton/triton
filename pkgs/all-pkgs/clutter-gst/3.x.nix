@@ -11,6 +11,7 @@
 , gstreamer
 , gtk3
 , json-glib
+, libgudev
 , pango
 }:
 
@@ -22,12 +23,12 @@ with {
 stdenv.mkDerivation rec {
   name = "clutter-gst-${version}";
   versionMajor = "3.0";
-  versionMinor = "16";
+  versionMinor = "18";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/clutter-gst/${versionMajor}/${name}.tar.xz";
-    sha256 = "1w7rm8n4b6vskrg537rfa58ykpwj8w3cdl0zwa0hagp6cmr8ngl0";
+    sha256 = "0aec0d0c6020cd19a5bb0dab1165a92748f81a9a3acdfabb0f966d5f53bc8093";
   };
 
   buildInputs = [
@@ -41,10 +42,12 @@ stdenv.mkDerivation rec {
     gstreamer
     gtk3
     json-glib
+    libgudev
     pango
   ];
 
   configureFlags = [
+    (enFlag "udev" (libgudev != null) null)
     "--enable-gl-texture-upload"
     "--disable-maintainer-flags"
     "--disable-debug"
@@ -64,7 +67,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

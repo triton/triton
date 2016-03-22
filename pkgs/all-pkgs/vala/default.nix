@@ -12,13 +12,13 @@
 
 stdenv.mkDerivation rec {
   name = "vala-${version}";
-  versionMajor = "0.30";
-  versionMinor = "1";
+  versionMajor = "0.32";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/vala/${versionMajor}/${name}.tar.xz";
-    sha256 = "0b6zwp22dn7llk49wlapp7hcj54qqz4qba6l37q6spkabj7dgb93";
+    sha256 = "07a2aa4ede040789b4b5af817a42249d703bfe8affccb7732ca2b53d00c1fb6e";
   };
 
   nativeBuildInputs = [
@@ -58,7 +58,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

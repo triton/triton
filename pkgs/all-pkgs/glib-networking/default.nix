@@ -16,13 +16,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "glib-networking-${version}";
-  versionMajor = "2.46";
-  versionMinor = "1";
+  versionMajor = "2.48";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/glib-networking/${versionMajor}/${name}.tar.xz";
-    sha256 = "1cchmi08jpjypgmm9i7xzh5qfg2q5k61kry9ns8mhw3z44a440ym";
+    sha256 = "7a1f3312e757b97af94e2db8a1f14eb9cc018c983931ecdf3b0c54acece39024";
   };
 
   nativeBuildInputs = [
@@ -38,11 +38,13 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
+    "--disable-maintainer-mode"
     "--enable-nls"
     "--disable-glibtest"
     "--disable-installed-tests"
     "--disable-always-build-tests"
     "--disable-gcov"
+    "--enable-more-warnings"
     (wtFlag "libproxy" (libproxy != null) null)
     "--with-gnome-proxy"
     (wtFlag "gnutls" (gnutls != null) null)
@@ -65,7 +67,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

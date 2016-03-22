@@ -26,11 +26,14 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "file-roller-3.16.4";
+  name = "file-roller-${version}";
+  versionMajor = "3.20";
+  versionMinor = "0";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = mirror://gnome/sources/file-roller/3.16/file-roller-3.16.4.tar.xz;
-    sha256 = "5455980b2c9c7eb063d2d65560ae7ab2e7f01b208ea3947e151680231c7a4185";
+    url = "mirror://gnome/sources/file-roller/${versionMajor}/${name}.tar.xz";
+    sha256 = "185a99b2fc6bcfa21988af36c70def4c519931443015accff40db6ef3f4aa5a8";
   };
 
   nativeBuildInputs = [
@@ -86,6 +89,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     homepage = https://wiki.gnome.org/Apps/FileRoller;
     description = "Archive manager for the GNOME desktop environment";
+    licenses = licenses.free;
     maintainers = with maintainers; [
       codyopel
     ];

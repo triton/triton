@@ -26,26 +26,26 @@
 , p11_kit
 , python
 , sqlite
-# Optional
 , vala
 , zlib
 }:
 
 with {
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    wtFlag;
 };
 
 stdenv.mkDerivation rec {
   name = "evolution-data-server-${version}";
-  versionMajor = "3.18";
-  versionMinor = "4";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/evolution-data-server/${versionMajor}/" +
           "${name}.tar.xz";
-    sha256 = "0b756f05feae538676832acc122407046a89d4dd32da725789229dc3c416433f";
+    sha256 = "05f2e84fd5b02f9a526ffd549753af564f54c56047b5126aeecb28a8a0fa4f4b";
   };
 
   nativeBuildInputs = [
@@ -90,30 +90,32 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--enable-gtk"
+    (enFlag "gtk" (gtk3 != null) null)
+    # TODO: add google auth support
+    "--disable-google-auth"
     "--disable-examples"
-    "--enable-goa"
-    # TODO: requires libsignon-glib
+    (enFlag "goa" (gnome-online-accounts != null) null)
+    # TODO: requires libsignon-glib (Ubuntu online accounts)
     "--disable-uoa"
     "--enable-backend-per-process"
     "--disable-backtraces"
-    "--enable-smime"
+    (enFlag "smime" (nss != null) null)
     "--enable-ipv6"
-    "--enable-weather"
+    (enFlag "weather" (libgweather != null) null)
     "--enable-dot-locking"
     "--enable-file-locking"
     "--disable-purify"
     "--enable-google"
     "--enable-largefile"
     "--enable-glibtest"
-    "--enable-introspection"
+    (enFlag "introspection" (gobject-introspection != null) null)
     (enFlag "vala-bindings" (vala != null) null)
     # TODO: libphonenumber support
     "--without-phonenumber"
     "--without-private-docs"
-    "--with-libdb=${db}"
-    "--with-krb5=${kerberos}"
-    "--with-openldap"
+    (wtFlag "libdb" (db != null) "${db}")
+    (wtFlag "krb5" (kerberos != null) "${kerberos}")
+    (wtFlag "openldap" (openldap != null) null)
     "--without-static-ldap"
     "--without-sunldap"
     "--without-static-sunldap"
@@ -131,8 +133,7 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 
 }

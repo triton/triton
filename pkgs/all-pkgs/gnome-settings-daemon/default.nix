@@ -9,6 +9,7 @@
 , makeWrapper
 
 , adwaita-icon-theme
+, alsa-lib
 , cairo
 , colord
 , cups
@@ -52,13 +53,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "gnome-settings-daemon-${version}";
-  versionMajor = "3.18";
-  versionMinor = "3";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-settings-daemon/${versionMajor}/${name}.tar.xz";
-    sha256 = "36e6170768ef17f5e089090f943ee93e632fa5abb64502a2f68a54974f08bf1f";
+    sha256 = "bb2e40b3566f9014315765fc4d40f749ccf284727277294cdfb7707ced162c6c";
   };
 
   nativeBuildInputs = [
@@ -73,6 +74,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
+    alsa-lib
     cairo
     colord
     cups
@@ -125,6 +127,7 @@ stdenv.mkDerivation rec {
     "--disable-iso-c"
     "--enable-schemas-compile"
     (enFlag "gudev" (libgudev != null) null)
+    (enFlag "alsa" (alsa-lib != null) null)
     (enFlag "wayland" (wayland != null) null)
     (enFlag "smartcard-support" (nss != null) null)
     (enFlag "cups" (cups != null) null)
@@ -136,7 +139,6 @@ stdenv.mkDerivation rec {
     "--disable-debug"
     (wtFlag "nssdb" (nss != null) null)
   ];
-      #"--prefix PATH : ${glib}/bin"
 
   preFixup = ''
     wrapProgram $out/libexec/gnome-settings-daemon \
@@ -162,7 +164,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

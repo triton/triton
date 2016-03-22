@@ -1364,6 +1364,8 @@ nmap = callPackage ../all-pkgs/nmap { };
 
 noise = callPackage ../all-pkgs/noise { };
 
+nss_wrapper = callPackage ../all-pkgs/nss_wrapper { };
+
 numactl = callPackage ../all-pkgs/numactl { };
 
 obexftp = callPackage ../all-pkgs/obexftp { };
@@ -7255,8 +7257,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   nss = lowPrio (callPackage ../development/libraries/nss { });
 
-  nss_wrapper = callPackage ../development/libraries/nss_wrapper { };
-#
 #  nssTools = callPackage ../development/libraries/nss {
 #    includeTools = true;
 #  };

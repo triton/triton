@@ -14,14 +14,14 @@
 
 stdenv.mkDerivation rec {
   name = "gnome-online-miners-${version}";
-  versionMajor = "3.14";
-  versionMinor = "3";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-online-miners/${versionMajor}/" +
           "${name}.tar.xz";
-    sha256 = "0zdsb56b14xjlanc4ihjkhnjk7f3ph2jv6g3x4mpdjsg5wfhqzwh";
+    sha256 = "f46dac7743283385d2aeea588eeead216274d9f365e323b90f586de982336e36";
   };
 
   buildInputs = [
@@ -58,7 +58,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

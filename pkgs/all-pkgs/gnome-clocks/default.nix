@@ -17,13 +17,13 @@
 
 stdenv.mkDerivation rec {
   name = "gnome-clocks-${version}";
-  versionMajor = "3.18";
+  versionMajor = "3.20";
   versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-clocks/${versionMajor}/${name}.tar.xz";
-    sha256 = "ca0818ec89e3539201da6b5388365e3d66df815198beccc90e2be44c7822baa0";
+    sha256 = "e7a6da2ba3778fcfd77a6734f960319035370b942a3358089b7e712055e1bb17";
   };
 
   nativeBuildInputs = [
@@ -60,7 +60,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

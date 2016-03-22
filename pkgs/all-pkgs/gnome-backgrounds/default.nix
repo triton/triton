@@ -6,14 +6,14 @@
 
 stdenv.mkDerivation rec {
   name = "gnome-backgrounds-${version}";
-  versionMajor = "3.18";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  versionMajor = "3.20";
+  #versionMinor = "0";
+  version = "${versionMajor}"; #.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-backgrounds/${versionMajor}/" +
           "${name}.tar.xz";
-    sha256 = "aa560f0e5f12a308dd36aaac2fff32916abd61d42f47b4bc42c8c7011bf2a7b9";
+    sha256 = "d66c6e165e5c16b79ee4ab83102fa73fa20ce4e14191036ee68e8e82cf537127";
   };
 
   nativeBuildInputs = [
@@ -34,7 +34,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

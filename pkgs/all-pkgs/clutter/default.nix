@@ -26,18 +26,29 @@
 
 with {
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    optionals
+    wtFlag;
 };
+
+assert xorg != null ->
+  xorg.inputproto != null
+  && xorg.libX11 != null
+  && xorg.libXcomposite != null
+  && xorg.libXdamage != null
+  && xorg.libXext != null
+  && xorg.libXi != null
+  && xorg.libXrandr != null;
 
 stdenv.mkDerivation rec {
   name = "clutter-${version}";
-  versionMajor = "1.24";
-  versionMinor = "2";
+  versionMajor = "1.26";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/clutter/${versionMajor}/${name}.tar.xz";
-    sha256 = "0qyd0cw17wi8gl6y9z2j2lh2gwghxskfmsdvw4ayrgxwnj6cjccn";
+    sha256 = "67514e7824b3feb4723164084b36d6ce1ae41cb3a9897e9f1a56c8334993ce06";
   };
 
   nativeBuildInputs = [
@@ -64,6 +75,7 @@ stdenv.mkDerivation rec {
     pango
     systemd_lib
     wayland
+  ] ++ optionals (xorg != null) [
     xorg.inputproto
     xorg.libX11
     xorg.libXcomposite
@@ -76,24 +88,26 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-glibtest"
     "--enable-Bsymbolic"
-    "--enable-x11-backend"
+    (enFlag "x11-backend" (xorg != null) null)
     "--disable-win32-backend"
     "--disable-quartz-backend"
-    "--enable-wayland-backend"
+    "--enable-gdk-backend"
+    (enFlag "wayland-backend" (wayland != null) null)
     "--enable-egl-backend"
     "--disable-mir-backend"
     "--disable-cex100-backend"
-    "--enable-wayland-compositor"
-    "--enable-tslib-input"
+    # TODO: tslib, touch screen support
+    "--disable-tslib-input"
     "--enable-evdev-input"
-    "--enable-xinput"
-    "--enable-gdk-pixbuf"
+    (enFlag "wayland-compositor" (wayland != null) null)
+    (enFlag "xinput" (xorg != null) null)
+    (enFlag "gdk-pixbuf" (gdk-pixbuf != null) null)
     "--disable-debug"
-    (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-deprecated"
     "--disable-maintainer-flags"
+    #"--disable-Werror"
     "--disable-gcov"
-    "--enable-introspection"
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -103,7 +117,7 @@ stdenv.mkDerivation rec {
     "--disable-installed-tests"
     "--disable-always-build-tests"
     "--disable-examples"
-    "--with-x"
+    (wtFlag "x" (xorg != null) null)
   ];
 
   meta = with stdenv.lib; {

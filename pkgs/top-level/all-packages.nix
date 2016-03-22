@@ -1572,6 +1572,8 @@ sharutils = callPackage ../all-pkgs/sharutils { };
 
 snappy = callPackage ../all-pkgs/snappy { };
 
+socket_wrapper = callPackage ../all-pkgs/socket_wrapper { };
+
 sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sqlite = callPackage ../all-pkgs/sqlite { };
@@ -7615,8 +7617,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  snack = callPackage ../development/libraries/snack {
 #        # optional
 #  };
-#
-  socket_wrapper = callPackage ../development/libraries/socket_wrapper { };
 #
 #  sofia_sip = callPackage ../development/libraries/sofia-sip { };
 #

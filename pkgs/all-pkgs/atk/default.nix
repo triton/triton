@@ -36,6 +36,8 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-rebuilds"
     "--enable-glibtest"
+    "--enable-nls"
+    "--enable-rpath"
     (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"

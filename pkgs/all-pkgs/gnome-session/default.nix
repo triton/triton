@@ -21,18 +21,20 @@
 
 with {
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    optionals
+    wtFlag;
 };
 
 stdenv.mkDerivation rec {
   name = "gnome-session-${version}";
-  versionMajor = "3.18";
-  versionMinor = "1.2";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-session/${versionMajor}/${name}.tar.xz";
-    sha256 = "b37d823d57ff2e3057401a426279954699cfe1e44e59a4cbdd941687ff928a45";
+    sha256 = "66ff72379a2e7ee11ab7fcec37ad911d36f12471845dc7755e1ce55d29301b34";
   };
 
   nativeBuildInputs = [
@@ -54,6 +56,7 @@ stdenv.mkDerivation rec {
     mutter # gschemas
     systemd_lib
     upower
+  ] ++ optionals (xorg != null) [
     xorg.libICE
     xorg.libSM
     xorg.libX11
@@ -79,7 +82,7 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-schemas-compile"
     "--enable-ipv6"
-    "--with-xtrans"
+    (wtFlag "xtrans" (xorg != null) null)
   ];
 
   preFixup = ''
@@ -102,8 +105,7 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 
 }

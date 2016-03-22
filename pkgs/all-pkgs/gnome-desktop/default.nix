@@ -24,6 +24,7 @@
 with {
   inherit (stdenv.lib)
     enFlag
+    optionals
     wtFlag;
 };
 
@@ -37,13 +38,13 @@ assert xorg != null ->
 
 stdenv.mkDerivation rec {
   name = "gnome-desktop-${version}";
-  versionMajor = "3.18";
-  versionMinor = "2";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-desktop/${versionMajor}/${name}.tar.xz";
-    sha256 = "0mkv5vg04n2znd031dgjsgari6rgnf97637mf4x58dz15l16vm6x";
+    sha256 = "18c7f818cfd91e25d242785c14d0d46dd8eeca3a0bde46949d387987badab08d";
   };
 
   nativeBuildInputs = [
@@ -64,6 +65,7 @@ stdenv.mkDerivation rec {
     isocodes
     libxml2
     pango
+  ] ++ optionals (xorg != null) [
     xorg.libX11
     xorg.libXext
     xorg.libxkbfile
@@ -74,9 +76,16 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
+    "--disable-maintainer-mode"
     "--enable-nls"
     "--disable-date-in-gnome-version"
     "--enable-compile-warnings"
+    "--disable-iso-c"
+    "--disable-deprecation-flags"
+    "--disable-desktop-docs"
+    "--disable-debug-tools"
+    "--disable-installed-tests"
+    "--disable-always-build-tests"
     (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -96,7 +105,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

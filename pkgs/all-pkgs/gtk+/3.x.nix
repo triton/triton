@@ -23,6 +23,7 @@
 , rest
 , shared_mime_info
 , wayland
+, wayland-protocols
 , xlibsWrapper
 , xorg
 }:
@@ -51,13 +52,13 @@ assert xorg != null ->
 
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";
-  versionMajor = "3.18";
-  versionMinor = "9";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
-    sha256 = "783d7f8b00f9b4224cc94d7da885a67598e711c2d6d79c9c873c6b203e83acbd";
+    sha256 = "1c3d3a4a6e959ec8636ccb074bcdb8fa25c81ec56fbc70de6a3f5ef83ba6d803";
   };
 
   nativeBuildInputs = [
@@ -85,6 +86,7 @@ stdenv.mkDerivation rec {
     rest
     shared_mime_info
     wayland
+    wayland-protocols
   ] ++ optionals (xorg != null) [
     xorg.inputproto
     xorg.libICE
@@ -102,13 +104,17 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
+    "--disable-maintainer-mode"
+    "--enable-largefile"
+    "--disable-debug"
+    "--disable-installed-tests"
     (enFlag "xkb" (libxkbcommon != null) null)
     (enFlag "xinerama" (xorg != null) null)
     (enFlag "xrandr" (xorg != null) null)
     (enFlag "xfixes" (xorg != null) null)
     (enFlag "xcomposite" (xorg != null) null)
     (enFlag "xdamage" (xorg != null) null)
-    (enFlag "x11-backend" (true) null) # xorg deps
+    (enFlag "x11-backend" (xorg != null) null)
     "--disable-win32-backend"
     "--disable-quartz-backend"
     (enFlag "broadway-backend" true null)
@@ -155,7 +161,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -1201,6 +1201,8 @@ libtorrent-rasterbar_0 = callPackage ../all-pkgs/libtorrent-rasterbar/0.x.nix { 
 libtorrent-rasterbar_1 = callPackage ../all-pkgs/libtorrent-rasterbar/1.x.nix { };
 libtorrent-rasterbar = callPackageAlias "libtorrent-rasterbar_1" { };
 
+libtsm = callPackage ../all-pkgs/libtsm { };
+
 libunique_1 = callPackage ../all-pkgs/libunique/1.x.nix { };
 libunique_3 = callPackage ../all-pkgs/libunique/3.x.nix { };
 libunique = callPackageAlias "libunique_3" { };
@@ -7042,10 +7044,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  libtoxcore-dev = callPackage ../development/libraries/libtoxcore/new-api { };
 #
 #  libtap = callPackage ../development/libraries/libtap { };
-#
-#  libtsm = callPackage ../development/libraries/libtsm {
-#    automake = automake114x;
-#  };
 #
 #  libtunepimp = callPackage ../development/libraries/libtunepimp { };
 #

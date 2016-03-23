@@ -21,13 +21,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "gobject-introspection-${versionMajor}.${versionMinor}";
-  versionMajor = "1.46";
+  versionMajor = "1.48";
   versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gobject-introspection/${versionMajor}/${name}.tar.xz";
-    sha256 = "0cs27r18fga44ypp8icy62fwx6nh70r1bvhi4lzfn4w85cybsn36";
+    sha256 = "fa275aaccdbfc91ec0bc9a6fd0562051acdba731e7d584b64a277fec60e75877";
   };
 
   nativeBuildInputs = [
@@ -76,6 +76,10 @@ stdenv.mkDerivation rec {
     (wtFlag "cairo" doCheck null)
   ];
 
+  configurePhase = ''
+    ./configure --help
+  '';
+
   postInstall = "rm -rvf $out/share/gtk-doc";
 
   doCheck = false;
@@ -91,7 +95,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -82,7 +82,7 @@ assert any (n: n == channel) [
   "legacy340"
   "long-lived"
   "short-lived"
-  "testing"
+  "beta"
   "vulkan"
 ];
 assert buildKernelspace -> kernel != null;
@@ -213,6 +213,7 @@ stdenv.mkDerivation {
   '';*/
 
   dontStrip = true;
+  optFlags = false;
   fpic = false;
 
   passthru = {

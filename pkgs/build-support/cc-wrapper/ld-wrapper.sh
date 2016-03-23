@@ -17,7 +17,7 @@ source @out@/nix-support/utils.sh
 params=()
 
 if [ "${relro-1}" = "1" ]; then
-  params+=(" -z" "relro")
+  params+=("-z" "relro")
 fi
 
 if [ "${bindnow-1}" = "1" ]; then

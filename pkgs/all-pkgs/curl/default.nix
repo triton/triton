@@ -18,20 +18,19 @@
 
 let
   inherit (stdenv.lib)
-    mkEnable
-    mkWith
     optionalString
     optionals;
+
   isFull = suffix == "full";
   nameSuffix = optionalString (suffix != "") "-${suffix}";
 in
 stdenv.mkDerivation rec {
   name = "curl${nameSuffix}-${version}";
-  version = "7.47.1";
+  version = "7.48.0";
 
   src = fetchurl {
-    url = "http://curl.haxx.se/download/curl-${version}.tar.bz2";
-    sha256 = "13z9gba3q2ybp50z0gdkzhwcx9m0i7qkvm278yz4pql2jfml7inx";
+    url = "https://curl.haxx.se/download/curl-${version}.tar.bz2";
+    sha256 = "864e7819210b586d42c674a1fdd577ce75a78b3dda64c63565abe5aefd72c753";
   };
 
   nativeBuildInputs = [
@@ -52,53 +51,54 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    (mkEnable true                    "http"              null)
-    (mkEnable true                    "ftp"               null)
-    (mkEnable true                    "file"              null)
-    (mkEnable isFull                  "ldap"              null)
-    (mkEnable isFull                  "ldaps"             null)
-    (mkEnable true                    "rtsp"              null)
-    (mkEnable true                    "proxy"             null)
-    (mkEnable true                    "dict"              null)
-    (mkEnable true                    "telnet"            null)
-    (mkEnable true                    "tftp"              null)
-    (mkEnable true                    "pop3"              null)
-    (mkEnable true                    "imap"              null)
-    (mkEnable true                    "smb"               null)
-    (mkEnable true                    "smtp"              null)
-    (mkEnable true                    "gopher"            null)
-    (mkEnable true                    "manual"            null)
-    (mkEnable true                    "libcurl_option"    null)
-    (mkEnable false                   "libgcc"            null) # TODO: Enable on gcc
-    (mkWith   true                    "zlib"              null)
-    (mkEnable true                    "ipv4"              null)
-    (mkWith   true                    "gssapi"            null)
-    (mkWith   false                   "winssl"            null)
-    (mkWith   false                   "darwinssl"         null)
-    (mkWith   true                    "ssl"               null)
-    (mkWith   false                   "gnutls"            null)
-    (mkWith   false                   "polarssl"          null)
-    (mkWith   false                   "mbedtls"           null)
-    (mkWith   false                   "cyassl"            null)
-    (mkWith   false                   "nss"               null)
-    (mkWith   false                   "axtls"             null)
-    (mkWith   false                   "libpsl"            null)
-    (mkWith   false                   "libmetalink"       null)
-    #(mkWith   false                   "zsh-functions-dir" null)
-    (mkWith   isFull                  "libssh2"           null)
-    (mkWith   isFull                  "librtmp"           null)
-    (mkEnable false                   "versioned-symbols" null)
-    (mkWith   false                   "winidn"            null)
-    (mkWith   isFull                  "libidn"            null)
-    (mkWith   true                    "nghttp2"           null)
-    (mkEnable false                   "sspi"              null)
-    (mkEnable true                    "crypto-auth"       null)
-    (mkEnable true                    "tls-srp"           null)
-    (mkEnable true                    "unix-sockets"      null)
-    (mkEnable true                    "cookies"           null)
-    (mkEnable true                    "ares"              null)
-    (mkEnable true                    "rt"                null)
-    (mkWith   true                    "ca-bundle"         "/etc/ssl/certs/ca-certificates.crt")
+    "--enable-http"
+    "--enable-ftp"
+    "--enable-file"
+    "--${if isFull then "enable" else "disable"}-ldap"
+    "--${if isFull then "enable" else "disable"}-ldaps"
+    "--enable-rtsp"
+    "--enable-proxy"
+    "--enable-dict"
+    "--enable-telnet"
+    "--enable-tftp"
+    "--enable-pop3"
+    "--enable-imap"
+    "--enable-smb"
+    "--enable-smtp"
+    "--enable-gopher"
+    "--enable-manual"
+    "--enable-libcurl_option"
+    "--${if stdenv.cc.cc.isGNU then "enable" else "disable"}-libgcc"
+    "--with-zlib"
+    "--enable-ipv4"
+    "--with-gssapi"
+    "--without-winssl"
+    "--without-darwinssl"
+    "--with-ssl"
+    "--without-gnutls"
+    "--without-polarssl"
+    "--without-mbedtls"
+    "--without-cyassl"
+    "--without-nss"
+    "--without-axtls"
+    "--without-libpsl"
+    "--without-libmetalink"
+    # "--without-zsh-functions-dir"
+    "--${if isFull then "with" else "without"}-libssh2"
+    "--${if isFull then "with" else "without"}-librtmp"
+    "--disable-versioned-symbols"
+    "--without-winidn"
+    "--${if isFull then "with" else "without"}-libidn"
+    "--with-nghttp2"
+    "--disable-sspi"
+    "--enable-crypto-auth"
+    "--enable-tls-srp"
+    "--enable-unix-sockets"
+    "--enable-cookies"
+    "--enable-ares"
+    "--enable-rt"
+    "--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt"
+    "--with-ca-fallback"
   ];
 
   meta = with stdenv.lib; {

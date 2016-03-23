@@ -73,12 +73,12 @@ tryDownload() {
   local url
   url="$1"
   local extraOpts
-  extraOpts=()
-  local verifications
-  verifications=(
+  extraOpts=(
     "-C" "-"
     "--fail"
   )
+  local verifications
+  verifications=()
   if [ "$2" = "1" ] && echo "$url" | grep -q '^https' && echo "$curlOpts" | grep -q -v '\--insecure'; then
     verifications+=('https')
     extraOpts+=('--ssl-reqd')

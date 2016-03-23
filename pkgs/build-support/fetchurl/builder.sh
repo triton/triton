@@ -72,10 +72,16 @@ BEGIN {
 tryDownload() {
   local url
   url="$1"
+  local extraOpts
+  extraOpts=()
   local verifications
-  verifications=()
+  verifications=(
+    "-C" "-"
+    "--fail"
+  )
   if [ "$2" = "1" ] && echo "$url" | grep -q '^https' && echo "$curlOpts" | grep -q -v '\--insecure'; then
     verifications+=('https')
+    extraOpts+=('--ssl-reqd')
   fi
 
   echo
@@ -88,7 +94,7 @@ tryDownload() {
   # if we get error code 18, resume partial download
   while [ $curlexit -eq 18 ]; do
     # keep this inside an if statement, since on failure it doesn't abort the script
-    if $curl -C - --fail "$url" --output "$downloadedFile"; then
+    if $curl "${extraOpts[@]}" "$url" --output "$downloadedFile"; then
       runHook postFetch
       if [ "$outputHashMode" = "flat" ]; then
         if [ -n "$sha1Confirm" ]; then

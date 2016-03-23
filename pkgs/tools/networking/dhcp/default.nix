@@ -1,13 +1,16 @@
-{ stdenv, fetchurl, perl, makeWrapper, autoreconfHook
-, net-tools, iputils, iproute, coreutils, gnused
+{ stdenv
+, fetchurl
+, makeWrapper
+, perl
 
-# Optional Dependencies
-, openldap ? null
+, coreutils
+, gnused
+, iproute
+, iputils
+, net-tools
+, openldap
 }:
 
-with stdenv;
-
-with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "dhcp-${version}";
   version = "4.3.3-P1";
@@ -17,44 +20,50 @@ stdenv.mkDerivation rec {
     sha256 = "08crcsmg4dm2v533aq3883ik8mf4vvvd6r998r4vrgx1zxnqj7n1";
   };
 
-  nativeBuildInputs = [ perl makeWrapper ];
-  buildInputs = [ openldap ];
+  nativeBuildInputs = [
+    perl
+    makeWrapper
+  ];
 
-  preConfigure = ''
+  buildInputs = [
+    openldap
+  ];
+
+  postPatch = ''
     sed -i "includes/dhcpd.h" \
-      -e "s|^ *#define \+_PATH_DHCLIENT_SCRIPT.*$|#define _PATH_DHCLIENT_SCRIPT \"$out/sbin/dhclient-script\"|g"
+      -e "s|^ *#define \+_PATH_DHCLIENT_SCRIPT.*$|#define _PATH_DHCLIENT_SCRIPT \"$out/bin/dhclient-script\"|g"
   '';
 
   configureFlags = [
-    (mkOther                        "sysconfdir"     "/etc")
-    (mkOther                        "localstatedir"  "/var")
-    (mkEnable false                 "debug"          null)
-    (mkEnable true                  "failover"       null)
-    (mkEnable true                  "execute"        null)
-    (mkEnable true                  "tracing"        null)
-    (mkEnable true                  "delayed-ack"    null)  # Experimental in 4.3.2
-    (mkEnable true                  "dhcpv6"         null)
-    (mkEnable true                  "paranoia"       null)
-    (mkEnable true                  "early-chroot"   null)
-    (mkEnable true                  "ipv4-pktinfo"   null)
-    (mkEnable false                 "use-sockets"    null)
-    (mkEnable false                 "secs-byteorder" null)
-    (mkEnable false                 "log-pid"        null)
-    (mkWith   false                 "libbind"        null)
-    (mkWith   (openldap != null) "ldap"           null)
-    (mkWith   (openldap != null) "ldapcrypto"     null)
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
+    "--disable-debug"
+    "--enable-failover"
+    "--enable-execute"
+    "--enable-tracing"
+    "--enable-delayed-ack"  # Experimental in 4.3.2
+    "--enable-dhcpv6"
+    "--enable-paranoia"
+    "--enable-early-chroot"
+    "--enable-ipv4-pktinfo"
+    "--disable-use-sockets"
+    "--disable-secs-byteorder"
+    "--disable-log-pid"
+    "--without-libbind"
+    "--with-ldap"
+    "--with-ldapcrypto"
   ];
 
-  installFlags = [
-    "sysconfdir=\${out}/etc"
-  ];
+  preInstall = ''
+    installFlagsArray+=("sysconfdir=$out/etc")
+  '';
 
   postInstall = ''
-    cp client/scripts/linux $out/sbin/dhclient-script
-    substituteInPlace $out/sbin/dhclient-script \
-      --replace /sbin/ip ${iproute}/sbin/ip
-    wrapProgram "$out/sbin/dhclient-script" --prefix PATH : \
-      "${net-tools}/bin:${net-tools}/sbin:${iputils}/bin:${coreutils}/bin:${gnused}/bin"
+    cp client/scripts/linux $out/bin/dhclient-script
+    substituteInPlace $out/bin/dhclient-script \
+      --replace /sbin/ip ${iproute}/bin/ip
+    wrapProgram "$out/bin/dhclient-script" --prefix PATH : \
+      "${net-tools}/bin:${iputils}/bin:${coreutils}/bin:${gnused}/bin"
   '';
 
   # Fails to build the bind library if run in parallel
@@ -64,7 +73,10 @@ stdenv.mkDerivation rec {
     description = "Dynamic Host Configuration Protocol (DHCP) tools";
     homepage = http://www.isc.org/products/DHCP/;
     license = licenses.isc;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

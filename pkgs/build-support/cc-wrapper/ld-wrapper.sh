@@ -14,11 +14,17 @@ fi
 
 source @out@/nix-support/utils.sh
 
-params=(
-  "-z" "relro"
-  "-z" "now"
-  "$@"
-)
+params=()
+
+if [ "${relro-1}" = "1" ]; then
+  params+=(" -z" "relro")
+fi
+
+if [ "${bindnow-1}" = "1" ]; then
+  params+=("-z" "now")
+fi
+
+params+=("$@")
 
 # Optionally filter out paths not refering to the store.
 if [ "$NIX_ENFORCE_PURITY" = 1 -a -n "$NIX_STORE" \

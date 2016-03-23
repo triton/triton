@@ -206,7 +206,7 @@ stdenv.mkDerivation rec {
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --path 'PATH' : "${unzip}/bin" \
-      --prefix 'GIO_EXTRA_MODULES' : "${dconf}/lib/gio/modules" \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \

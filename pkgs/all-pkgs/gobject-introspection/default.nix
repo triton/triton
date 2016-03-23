@@ -76,10 +76,6 @@ stdenv.mkDerivation rec {
     (wtFlag "cairo" doCheck null)
   ];
 
-  configurePhase = ''
-    ./configure --help
-  '';
-
   postInstall = "rm -rvf $out/share/gtk-doc";
 
   doCheck = false;

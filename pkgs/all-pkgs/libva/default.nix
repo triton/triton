@@ -8,18 +8,14 @@
 , xorg
 }:
 
-with {
-  inherit (stdenv.lib)
-    enFlag;
-};
-
 stdenv.mkDerivation rec {
-  name = "libva-1.6.2";
+  name = "libva-1.7.0";
 
   src = fetchurl {
-    url = "http://www.freedesktop.org/software/vaapi/releases/libva/" +
+    url = "https://www.freedesktop.org/software/vaapi/releases/libva/" +
           "${name}.tar.bz2";
-    sha256 = "1l4bij21shqbfllbxicmqgmay4v509v9hpxyyia9wm7gvsfg05y4";
+    sha1Confirm = "e1e440da60b11986afb54fc130c7707f11827298";
+    sha256 = "a689bccbcc81a66b458e448377f108c057d3eee44a2e21a23c92c549dc8bc95f";
   };
 
   buildInputs = [
@@ -32,11 +28,11 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    (enFlag "drm" (libdrm != null) null)
-    (enFlag "x11" (xorg.libX11 != null && mesa != null) null)
-    (enFlag "glx" (mesa != null) null)
-    (enFlag "egl" (mesa != null) null)
-    (enFlag "wayland" (wayland != null && mesa != null) null)
+    "--enable-drm"
+    "--enable-x11"
+    "--enable-glx"
+    "--enable-egl"
+    "--enable-wayland"
     #"--enable-dummy-driver"
     "--enable-largefile"
     "--with-drivers-path=${mesa_noglu.driverSearchPath}/lib/dri"
@@ -47,12 +43,13 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-  description = "Video Acceleration (VA) API for Linux";
+    description = "Video Acceleration (VA) API for Linux";
     homepage = http://www.freedesktop.org/wiki/Software/vaapi;
     license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

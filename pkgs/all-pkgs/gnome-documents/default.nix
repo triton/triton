@@ -38,14 +38,14 @@
 
 stdenv.mkDerivation rec {
   name = "gnome-documents-${version}";
-  versionMajor = "3.18";
-  versionMinor = "2";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-documents/${versionMajor}/"
         + "${name}.tar.xz";
-    sha256 = "1m2clxk54z9ch6vrr3kv725l65mgdyiw6bkcd7hbnjb56vrxl3c5";
+    sha256 = "a5fa496c5e80eccb8d2e5bba7f4d7dc4cc6c9f53d5bc028402428771be1237d2";
   };
 
   nativeBuildInputs = [

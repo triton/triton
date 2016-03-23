@@ -1159,6 +1159,8 @@ libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
 libmsgpack = callPackage ../all-pkgs/libmsgpack { };
 
+libnftnl = callPackage ../all-pkgs/libnftnl { };
+
 libnl = callPackage ../all-pkgs/libnl { };
 
 libogg = callPackage ../all-pkgs/libogg { };
@@ -6957,8 +6959,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
   libnfnetlink = callPackage ../development/libraries/libnfnetlink { };
 
-  libnftnl = callPackage ../development/libraries/libnftnl { };
-#
 #  libnih = callPackage ../development/libraries/libnih { };
 #
 #  libnova = callPackage ../development/libraries/libnova { };

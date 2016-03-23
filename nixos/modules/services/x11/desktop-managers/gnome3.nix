@@ -93,7 +93,7 @@ in {
 
     services.evolution-data-server.enable = true;
 
-    services.gnome-documents.enable = mkDefault true;
+    #services.gnome-documents.enable = mkDefault true;
 
     services.gnome-keyring.enable = true;
 

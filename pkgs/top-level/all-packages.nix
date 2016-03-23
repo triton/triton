@@ -1323,6 +1323,8 @@ musl = callPackage ../all-pkgs/musl { };
 
 mutter = callPackage ../all-pkgs/mutter { };
 
+mxml = callPackage ../all-pkgs/mxml { };
+
 nano = callPackage ../all-pkgs/nano { };
 
 nasm = callPackage ../all-pkgs/nasm { };

@@ -69,7 +69,7 @@ in {
 
   config = mkIf cfg.enable {
 
-    services.xserver.modules = [ pkgs.xf86_input_mtrack ];
+    services.xserver.modules = [ pkgs.xf86-input-mtrack ];
 
     services.xserver.config =
       ''

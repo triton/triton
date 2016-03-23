@@ -21,14 +21,14 @@
 
 stdenv.mkDerivation rec {
   name = "gnome-shell-extensions-${version}";
-  versionMajor = "3.18";
-  versionMinor = "4";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-shell-extensions/${versionMajor}/" +
           "${name}.tar.xz";
-    sha256 = "0fmpk6an2gzhys3c6gpg61ng7qlrvh3knzj4dnji9ndajkw71r4a";
+    sha256 = "cc97e8627245038821c9f61e684a56c4dfc08c5f86e38d7a6750da0fc40acc87";
   };
 
   nativeBuildInputs = [
@@ -69,7 +69,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

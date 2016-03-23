@@ -16,8 +16,6 @@
 let
   isLib = prefix == "lib";
   inherit (stdenv.lib)
-    mkEnable
-    mkWith
     optionals;
 in
 stdenv.mkDerivation rec {
@@ -40,22 +38,22 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    (mkEnable false                 "werror"          null)
-    (mkEnable false                 "debug"           null)
-    (mkEnable true                  "threads"         null)
-    (mkEnable (!isLib)              "app"             null)
-    (mkEnable (!isLib)              "hpack-tools"     null)
-    (mkEnable (!isLib)              "asio-lib"        null)
-    (mkEnable false                 "examples"        null)
-    (mkEnable false                 "python-bindings" null)
-    (mkEnable false                 "failmalloc"      null)
-    (mkWith   (!isLib)              "libxml2"         null)
-    (mkWith   (!isLib)              "jemalloc"        null)
-    (mkWith   false                 "spdylay"         null)
-    (mkWith   false                 "neverbleed"      null)
-    (mkWith   false                 "cython"          null)
-    (mkWith   false                 "mruby"           null)
-    (mkWith   isLib                 "libonly"         null)
+    "--disable-werror"
+    "--disable-debug"
+    "--enable-threads"
+    "--${if !isLib then "enable" else "disable"}-app"
+    "--${if !isLib then "enable" else "disable"}-hpack-tools"
+    "--${if !isLib then "enable" else "disable"}-asio-lib"
+    "--disable-examples"
+    "--disable-python-bindings"
+    "--disable-failmalloc"
+    "--${if !isLib then "with" else "without"}-libxml2"
+    "--${if !isLib then "with" else "without"}-jemalloc"
+    "--without-spdylay"
+    "--without-neverbleed"
+    "--without-cython"
+    "--without-mruby"
+    "--${if isLib then "with" else "without"}-libonly"
   ];
 
   meta = with stdenv.lib; {

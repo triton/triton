@@ -1177,6 +1177,8 @@ libosinfo = callPackage ../all-pkgs/libosinfo { };
 
 libossp-uuid = callPackage ../all-pkgs/libossp-uuid { };
 
+libpcap = callPackage ../all-pkgs/libpcap { };
+
 libpeas = callPackage ../all-pkgs/libpeas { };
 
 libpng = callPackage ../all-pkgs/libpng { };
@@ -6993,8 +6995,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #
 #  libpar2 = callPackage ../development/libraries/libpar2 { };
 #
-  libpcap = callPackage ../development/libraries/libpcap { };
-
   libpipeline = callPackage ../development/libraries/libpipeline { };
 #
 #  libpgf = callPackage ../development/libraries/libpgf { };

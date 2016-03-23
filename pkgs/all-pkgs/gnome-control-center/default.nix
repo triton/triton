@@ -191,6 +191,9 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+
+    wrapProgram $out/libexec/gnome-control-center-search-provider \
+      --prefix 'XDG_DATA_DIRS' : "$out/share"
   '';
 
   meta = with stdenv.lib; {

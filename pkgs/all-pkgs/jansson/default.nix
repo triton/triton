@@ -1,4 +1,6 @@
-{stdenv, fetchurl}:
+{ stdenv
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
   name = "jansson-2.7";
@@ -12,7 +14,10 @@ stdenv.mkDerivation rec {
     homepage = "http://www.digip.org/jansson/";
     description = "C library for encoding, decoding and manipulating JSON data";
     license = licenses.mit;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

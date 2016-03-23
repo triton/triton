@@ -1041,6 +1041,8 @@ isl_0_14 = callPackage ../all-pkgs/isl { channel = "0.14"; };
 
 jam = callPackage ../all-pkgs/jam { };
 
+jansson = callPackage ../all-pkgs/jansson { };
+
 jemalloc = callPackage ../all-pkgs/jemalloc { };
 
 jsoncpp = callPackage ../all-pkgs/jsoncpp { };
@@ -6510,8 +6512,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
   jasper = callPackage ../development/libraries/jasper { };
 #
 #  jama = callPackage ../development/libraries/jama { };
-#
-#  jansson = callPackage ../development/libraries/jansson { };
 #
   jbig2dec = callPackage ../development/libraries/jbig2dec { };
 

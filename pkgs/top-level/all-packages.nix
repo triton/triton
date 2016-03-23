@@ -1649,6 +1649,8 @@ util-linux_lib = callPackageAlias "util-linux_full" {
   type = "lib";
 };
 
+vaapi-intel = callPackage ../all-pkgs/vaapi-intel { };
+
 vala = callPackage ../all-pkgs/vala { };
 
 vim = callPackage ../all-pkgs/vim { };
@@ -7788,9 +7790,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #    inherit (pythonPackages) gyp;
 #  };
 #
-  vaapiIntel = callPackage ../development/libraries/vaapi-intel { };
-#
-  vaapiVdpau = callPackage ../development/libraries/vaapi-vdpau { };
+  vaapi-vdpau = callPackage ../development/libraries/vaapi-vdpau { };
 #
   vamp = callPackage ../development/libraries/audio/vamp { };
 #

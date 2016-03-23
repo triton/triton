@@ -1689,6 +1689,8 @@ x265 = callPackage ../all-pkgs/x265 { };
 
 xdg-utils = callPackage ../all-pkgs/xdg-utils { };
 
+xf86-input-mtrack = callPackage ../all-pkgs/xf86-input-mtrack { };
+
 xfsprogs = callPackage ../all-pkgs/xfsprogs { };
 xfsprogs_lib = pkgs.xfsprogs.lib;
 
@@ -9293,8 +9295,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   wpa_supplicant = callPackage ../os-specific/linux/wpa_supplicant { };
 #
 #  wpa_supplicant_gui = callPackage ../os-specific/linux/wpa_supplicant/gui.nix { };
-#
-  xf86_input_mtrack = callPackage ../os-specific/linux/xf86-input-mtrack { };
 #
 #  xf86_input_multitouch =
 #    callPackage ../os-specific/linux/xf86-input-multitouch { };

@@ -1159,6 +1159,8 @@ libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
 libmsgpack = callPackage ../all-pkgs/libmsgpack { };
 
+libnetfilter_conntrack = callPackage ../all-pkgs/libnetfilter_conntrack { };
+
 libnfnetlink = callPackage ../all-pkgs/libnfnetlink { };
 
 libnftnl = callPackage ../all-pkgs/libnftnl { };
@@ -6950,8 +6952,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libmx = callPackage ../development/libraries/libmx { };
 #
 #  libnet = callPackage ../development/libraries/libnet { };
-#
-  libnetfilter_conntrack = callPackage ../development/libraries/libnetfilter_conntrack { };
 #
 #  libnetfilter_cthelper = callPackage ../development/libraries/libnetfilter_cthelper { };
 #

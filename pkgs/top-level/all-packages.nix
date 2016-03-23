@@ -1034,6 +1034,8 @@ ipset = callPackage ../all-pkgs/ipset { };
 
 iproute = callPackage ../all-pkgs/iproute { };
 
+iptables = callPackage ../all-pkgs/iptables { };
+
 iputils = callPackage ../all-pkgs/iputils { };
 
 isl = callPackage ../all-pkgs/isl { };
@@ -8716,8 +8718,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  iomelt = callPackage ../os-specific/linux/iomelt { };
 #
   iotop = callPackage ../os-specific/linux/iotop { };
-
-  iptables = callPackage ../os-specific/linux/iptables { };
 
 #  irqbalance = callPackage ../os-specific/linux/irqbalance { };
 #

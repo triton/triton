@@ -1051,6 +1051,8 @@ kerberos = callPackageAlias "krb5_lib" { };
 
 kmod = callPackage ../all-pkgs/kmod { };
 
+kmscon = callPackage ../all-pkgs/kmscon { };
+
 krb5_full = callPackage ../all-pkgs/krb5 { };
 
 krb5_lib = callPackageAlias "krb5_full" {
@@ -8724,8 +8726,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  jujuutils = callPackage ../os-specific/linux/jujuutils { };
 #
 #  kbdlight = callPackage ../os-specific/linux/kbdlight { };
-#
-#  kmscon = callPackage ../os-specific/linux/kmscon { };
 #
 #  latencytop = callPackage ../os-specific/linux/latencytop { };
 #

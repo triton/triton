@@ -1,15 +1,15 @@
 { stdenv
+, docbook_xsl
 , fetchurl
-, libtsm
-, systemd
-, libxkbcommon
+, libxslt
+
 , libdrm
+, libtsm
+, libxkbcommon
 , mesa
 , pango
 , pixman
-, pkgconfig
-, docbook_xsl
-, libxslt
+, systemd_lib
 }:
 
 stdenv.mkDerivation rec {
@@ -20,17 +20,19 @@ stdenv.mkDerivation rec {
     sha256 = "0axfwrp3c8f4gb67ap2sqnkn75idpiw09s35wwn6kgagvhf1rc0a";
   };
 
+  nativeBuildInputs = [
+    docbook_xsl
+    libxslt
+  ];
+
   buildInputs = [
-    libtsm
-    systemd
-    libxkbcommon
     libdrm
+    libtsm
+    libxkbcommon
     mesa
     pango
     pixman
-    pkgconfig
-    docbook_xsl
-    libxslt
+    systemd_lib
   ];
 
   configureFlags = [

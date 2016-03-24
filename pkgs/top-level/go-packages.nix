@@ -63,11 +63,11 @@ let
   };
 
   crypto = buildFromGitHub {
-    rev = "6025851c7c2bf210daf74d22300c699b16541847";
-    date = "2016-03-12";
+    rev = "c197bcf24cde29d3f73c7b4ac6fd41f4384e8af6";
+    date = "2016-03-17";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "17ckkizvb0y6bfrqks9p37q9jny68zzkb73wdgvg3w4zswvyn4gz";
+    sha256 = "1y2bbghi594m8p4pcm9pwrzql06179xj6zvhaghwcc6y0l48rbgp";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -102,11 +102,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "35b06af0720201bc2f326773a80767387544f8c4";
-    date = "2016-03-15";
+    rev = "4876518f9e71663000c348837735820161a42df7";
+    date = "2016-03-22";
     owner  = "golang";
     repo   = "net";
-    sha256 = "0kqmwd6kla6rhwgyj8gic0s46bdj1qqbhb09h2hif9ai7jdiz8jj";
+    sha256 = "0vbs6ikshx0qyxwf0pk5b16g21zwcibi62k65qb43qg58ryg7x95";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -129,11 +129,11 @@ let
 
 
   protobuf = buildFromGitHub {
-    rev = "62e4364d64b32762febb61f2c88c0a29bc49a225";
-    date = "2016-03-17";
+    rev = "8d92cf5fc15a4382f8964b08e1f42a75c0591aa3";
+    date = "2016-03-19";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "1yxzgxims3hqnbnfqy74m7n823gnxqf8rqi4wff3zyxw9kq32zl2";
+    sha256 = "17vzyxc2nqz8a7wjvrdcpw9hhsys3iglwp8j4dl7nmw3s6fnz3jf";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [ "code.google.com/p/goprotobuf" ];
   };
@@ -3550,10 +3550,10 @@ let
 
   syncthing = buildFromGitHub rec {
     version = "0.12.16";
-    rev = "v0.12.20";
+    rev = "v0.12.21";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "133mb8n91izqif35xfs5k5kw74i14gvfv2s9vvx2n6wvqcbf4w9y";
+    sha256 = "18bq8677nnnwkns0diy3hmzdlhyq6c3faqddiwz4ysbl3vjyr847";
     buildFlags = [ "-tags noupgrade,release" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext

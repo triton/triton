@@ -352,6 +352,7 @@ in
     };
     buildInputs = attrs.buildInputs ++ [xorg.libXfixes];
     nativeBuildInputs = [args.autoreconfHook xorg.utilmacros];
+    bindnow = false;
   };
 
   xwd = attrs: attrs // {

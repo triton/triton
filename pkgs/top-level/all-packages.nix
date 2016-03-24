@@ -6509,7 +6509,7 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  irrlicht = callPackage ../development/libraries/irrlicht { };
 #  irrlicht3843 = callPackage ../development/libraries/irrlicht/irrlicht3843.nix { };
 #
-isocodes = callPackage ../development/libraries/iso-codes { };
+iso-codes = callPackage ../development/libraries/iso-codes { };
 #
 #  itk = callPackage ../development/libraries/itk { };
 #

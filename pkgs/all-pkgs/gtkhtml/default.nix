@@ -9,7 +9,7 @@
 , glib
 , gsettings-desktop-schemas
 , gtk3
-, isocodes
+, iso-codes
 , libsoup
 , pango
 }:
@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
     glib
     gsettings-desktop-schemas
     gtk3
-    isocodes
+    iso-codes
     libsoup
   ];
 

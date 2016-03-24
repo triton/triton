@@ -8,7 +8,7 @@
 , glib
 , gobject-introspection
 , gstreamer_0
-, isocodes
+, iso-codes
 , libgudev
 , libogg
 , libtheora
@@ -98,7 +98,7 @@ stdenv.mkDerivation rec {
     "--enable-videorate"
     "--enable-videoscale"
     "--enable-volume"
-    (enFlag "iso-codes" (isocodes != null) null)
+    (enFlag "iso-codes" (iso-codes != null) null)
     (enFlag "zlib" (zlib != null) null)
     (enFlag "x" (xorg.libX11 != null) null)
     (enFlag "xvideo" (xorg.libXv != null) null)
@@ -129,7 +129,7 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     gstreamer_0
-    isocodes
+    iso-codes
     libgudev
     libogg
     libtheora

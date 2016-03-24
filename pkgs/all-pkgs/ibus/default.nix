@@ -11,7 +11,7 @@
 , gobject-introspection
 , gtk2
 , gtk3
-, isocodes
+, iso-codes
 , libnotify
 , libxkbcommon
 , python3
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gtk2
     gtk3
-    isocodes
+    iso-codes
     libnotify
     libxkbcommon
     python3

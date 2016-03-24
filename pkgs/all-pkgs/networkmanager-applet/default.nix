@@ -15,7 +15,7 @@
 , gsettings-desktop-schemas
 , gtk3
 , hicolor_icon_theme
-, isocodes
+, iso-codes
 #, libglade
 , libgnome-keyring
 , libgudev
@@ -68,7 +68,7 @@ stdenv.mkDerivation rec {
     gsettings-desktop-schemas
     gtk3
     hicolor_icon_theme
-    isocodes
+    iso-codes
     #libglade
     libgudev
     libnotify

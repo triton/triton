@@ -12,7 +12,7 @@
 , gobject-introspection
 , gsettings-desktop-schemas
 , gtk3
-, isocodes
+, iso-codes
 , itstool
 , libxml2
 , pango
@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gsettings-desktop-schemas
     gtk3
-    isocodes
+    iso-codes
     libxml2
     pango
   ] ++ optionals (xorg != null) [

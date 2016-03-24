@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, cmake, intltool, gettext
-, libxml2, enchant, isocodes, icu, libpthreadstubs
+, libxml2, enchant, iso-codes, icu, libpthreadstubs
 , pango, cairo, libxkbfile, libXau, libXdmcp
 , dbus, gtk2, gtk3, qt4, kde5
 }:
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildInputs = with stdenv.lib; [
-    cmake enchant pango gettext libxml2 isocodes pkgconfig libxkbfile
+    cmake enchant pango gettext libxml2 iso-codes pkgconfig libxkbfile
     intltool cairo icu libpthreadstubs libXau libXdmcp
     dbus gtk2 gtk3 qt4 kde5.extra-cmake-modules
   ];

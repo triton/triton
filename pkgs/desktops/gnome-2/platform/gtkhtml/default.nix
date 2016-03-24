@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, gtk, intltool,
-GConf, enchant, isocodes, gnome_icon_theme }:
+GConf, enchant, iso-codes, gnome_icon_theme }:
 
 stdenv.mkDerivation rec {
   name = "gtkhtml-3.32.2";
@@ -13,5 +13,5 @@ stdenv.mkDerivation rec {
   #http://www.mail-archive.com/debian-bugs-rc@lists.debian.org/msg250091.html
   patches = [ ./01_remove-disable-deprecated.patch ];
 
-  buildInputs = [pkgconfig gtk intltool GConf enchant isocodes gnome_icon_theme ];
+  buildInputs = [pkgconfig gtk intltool GConf enchant iso-codes gnome_icon_theme ];
 }

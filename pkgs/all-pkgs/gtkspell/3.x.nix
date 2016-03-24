@@ -10,7 +10,7 @@
 , gobject-introspection
 , gtk2
 , gtk3
-, isocodes
+, iso-codes
 , pango
 , vala
 }:
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gtk2
     gtk3
-    isocodes
+    iso-codes
     pango
     vala
   ];
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "iso-codes" (isocodes != null) null)
+    (enFlag "iso-codes" (iso-codes != null) null)
   ];
 
   meta = with stdenv.lib; {

@@ -7,7 +7,7 @@
 , libgsf, gconf
 , gtkhtml, libgtkhtml, libglade, scrollkeeper
 , webkitgtk
-, dbus_glib, enchant, isocodes, libuuid
+, dbus_glib, enchant, iso-codes, libuuid
 }:
 
 stdenv.mkDerivation rec {
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ pkgconfig python intltool docbook2x docbook_xml_dtd_412 libxslt
                   sword clucene_core biblesync gnome_doc_utils libgsf gconf gtkhtml libgtkhtml
-                  libglade scrollkeeper webkitgtk dbus_glib enchant isocodes libuuid ];
+                  libglade scrollkeeper webkitgtk dbus_glib enchant iso-codes libuuid ];
 
   prePatch = ''
     patchShebangs .;

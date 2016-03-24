@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, makeWrapper, pkgconfig, cmake, fcitx, gtk3, isocodes, gnome3 }:
+{ stdenv, fetchurl, makeWrapper, pkgconfig, cmake, fcitx, gtk3, iso-codes, gnome3 }:
 
 stdenv.mkDerivation rec {
   name = "fcitx-configtool-0.4.8";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     sha256 = "1vaim0namw58bfafbvws1vgd4010p19zwqfbx6bd1zi5sgchdg0f";
   };
 
-  buildInputs = [ makeWrapper fcitx cmake isocodes pkgconfig gtk3
+  buildInputs = [ makeWrapper fcitx cmake iso-codes pkgconfig gtk3
     gnome3.defaultIconTheme ];
 
   preFixup = ''

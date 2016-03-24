@@ -1,7 +1,7 @@
 { fetchurl, stdenv, pkgconfig, libxml2, libxslt, perl, perlPackages, gconf, guile
 , intltool, glib, gtk, libofx, aqbanking, gwenhywfar, libgnomecanvas, goffice
 , webkit, glibcLocales, gsettings_desktop_schemas, makeWrapper, dconf, file
-, gettext, swig, slibGuile, enchant, bzip2, isocodes, libdbi, libdbiDrivers
+, gettext, swig, slibGuile, enchant, bzip2, iso-codes, libdbi, libdbiDrivers
 }:
 
 /*
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     # general
     intltool pkgconfig libxml2 libxslt glibcLocales file gettext swig enchant
-    bzip2 isocodes
+    bzip2 iso-codes
     # glib, gtk...
     glib gtk goffice webkit
     # gnome...

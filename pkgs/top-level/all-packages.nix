@@ -1270,6 +1270,8 @@ libxslt = callPackage ../all-pkgs/libxslt { };
 
 libzapojit = callPackage ../all-pkgs/libzapojit { };
 
+lightdm = callPackage ../all-pkgs/lightdm { };
+
 linux-headers = callPackage ../all-pkgs/linux-headers { };
 
 live555 = callPackage ../all-pkgs/live555 { };
@@ -11204,11 +11206,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  copy-com = callPackage ../applications/networking/copy-com { };
 #
 #  dropbox-cli = callPackage ../applications/networking/dropbox-cli { };
-#
-  lightdm = pkgs.qt5.callPackage ../applications/display-managers/lightdm {
-    qt4 = null;
-    withQt5 = false;
-  };
 #
 #  lightdm_qt = lightdm.override { withQt5 = true; };
 #

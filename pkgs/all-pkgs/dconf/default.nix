@@ -17,13 +17,13 @@
 
 stdenv.mkDerivation rec {
   name = "dconf-${version}";
-  versionMajor = "0.24";
+  versionMajor = "0.26";
   versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/dconf/${versionMajor}/${name}.tar.xz";
-    sha256 = "4373e0ced1f4d7d68d518038796c073696280e22957babb29feb0267c630fec2";
+    sha256 = "8683292eb31a3fae31e561f0a4220d8569b0f6d882e9958b68373f9043d658c9";
   };
 
   nativeBuildInputs = [
@@ -58,7 +58,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

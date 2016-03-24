@@ -135,6 +135,11 @@ stdenv.mkDerivation rec {
   /* Set runtime driver search path */ ''
     sed -i src/egl/main/egldriver.c \
       -e 's,_EGL_DRIVER_SEARCH_DIR,"${driverSearchPath}",'
+
+  '' +
+  /* Substitute the path to udev */ ''
+    grep -q '@udev@' src/loader/loader.c
+    sed -i 's,@udev@,${systemd_lib},g' src/loader/loader.c
   '';
 
   configureFlags = [

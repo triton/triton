@@ -1165,6 +1165,8 @@ libmsgpack = callPackage ../all-pkgs/libmsgpack { };
 
 libnetfilter_conntrack = callPackage ../all-pkgs/libnetfilter_conntrack { };
 
+libnetfilter_cttimeout = callPackage ../all-pkgs/libnetfilter_cttimeout { };
+
 libnfnetlink = callPackage ../all-pkgs/libnfnetlink { };
 
 libnftnl = callPackage ../all-pkgs/libnftnl { };
@@ -6960,8 +6962,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libnet = callPackage ../development/libraries/libnet { };
 #
 #  libnetfilter_cthelper = callPackage ../development/libraries/libnetfilter_cthelper { };
-#
-#  libnetfilter_cttimeout = callPackage ../development/libraries/libnetfilter_cttimeout { };
 #
 #  libnetfilter_queue = callPackage ../development/libraries/libnetfilter_queue { };
 #

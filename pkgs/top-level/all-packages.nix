@@ -1446,6 +1446,8 @@ pcsclite = callPackage ../all-pkgs/pcsclite { };
 
 perl = callPackage ../all-pkgs/perl { };
 
+pinentry = callPackage ../all-pkgs/pinentry { };
+
 pixman = callPackage ../all-pkgs/pixman { };
 
 pkgconf = callPackage ../all-pkgs/pkgconf { };
@@ -3713,22 +3715,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  pfstools = callPackage ../tools/graphics/pfstools { };
 #
 #  philter = callPackage ../tools/networking/philter { };
-#
-  pinentry = callPackage ../tools/security/pinentry {
-    qt4 = null;
-  };
-#
-#  pinentry_ncurses = pinentry.override {
-#    gtk2 = null;
-#  };
-#
-#  pinentry_qt4 = pinentry_ncurses.override {
-#    inherit qt4;
-#  };
-#
-#  pinentry_qt5 = qt5.callPackage ../tools/security/pinentry/qt5.nix { };
-#
-#  pinentry_mac = callPackage ../tools/security/pinentry-mac { };
 #
 #  pingtcp = callPackage ../tools/networking/pingtcp { };
 #

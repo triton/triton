@@ -28,6 +28,8 @@
 
 with {
   inherit (stdenv.lib)
+    enFlag
+    optionals
     wtFlag;
 };
 
@@ -35,13 +37,13 @@ assert xorg != null -> xorg.libX11 != null;
 
 stdenv.mkDerivation rec {
   name = "eog-${version}";
-  versionMajor = "3.18";
-  versionMinor = "2";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/eog/${versionMajor}/${name}.tar.xz";
-    sha256 = "0dp6kxs4yl8sd0l6qbr874pdzi4rfmp5izk169q15bacfpiicbfw";
+    sha256 = "db715c172443c670dd959d1e6170a403018ed71b77dfd8732ac665a3b53e7e2b";
   };
 
   nativeBuildInputs = [
@@ -70,6 +72,7 @@ stdenv.mkDerivation rec {
     libxml2
     pango
     shared_mime_info
+  ] ++ optionals (xorg != null) [
     xorg.libX11
   ];
 
@@ -82,6 +85,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--enable-nls"
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--enable-schemas-compile"
     "--disable-installed-tests"
     (wtFlag "libexif" (libexif != null) null)

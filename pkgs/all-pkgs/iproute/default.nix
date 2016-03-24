@@ -8,7 +8,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "iproute-4.5.0";
+  name = "iproute2-4.5.0";
 
   src = fetchurl {
     url = "mirror://kernel/linux/utils/net/iproute2/${name}.tar.xz";

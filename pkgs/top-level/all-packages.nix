@@ -751,6 +751,8 @@ flac = callPackage ../all-pkgs/flac { };
 
 flex = callPackage ../all-pkgs/flex { };
 
+freeglut = callPackage ../all-pkgs/freeglut { };
+
 gawk = callPackage ../all-pkgs/gawk { };
 
 gcab = callPackage ../all-pkgs/gcab { };
@@ -6309,8 +6311,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     };
 #
 #  freealut = callPackage ../development/libraries/freealut { };
-#
-#  freeglut = callPackage ../development/libraries/freeglut { };
 #
 #  freenect = callPackage ../development/libraries/freenect { };
 

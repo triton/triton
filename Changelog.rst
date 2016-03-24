@@ -58,3 +58,10 @@ This is probably missing a lot
 * enable /tmp cleanup by default
 * disable audit in the kernel by default
 * rewrite lib.platforms
+* optFlags = true;
+* pie = true;
+* fpic = true;
+* noStrictOverflow = true;
+* fortifySource = true;
+* stackProtector = true;
+* optimize = true;

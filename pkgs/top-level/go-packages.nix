@@ -432,10 +432,11 @@ let
   };
 
   codegangsta-cli = buildFromGitHub {
-    rev = "aca5b047ed14d17224157c3434ea93bf6cdaadee";
+    rev = "9fec0fad02befc9209347cc6d620e68e1b45f74d";
     owner = "codegangsta";
     repo = "cli";
-    sha256 = "0gximqj7cv8kiyvl5bj53pswxcy3x18dam7161ylmnp7m8fjcbzm";
+    sha256 = "1xg5iwclna9v9aji5w1j6cb8gi443s6nizr8802blc09avlv6zgb";
+    buildInputs = [ yaml-v2 ];
   };
 
   cli-spinner = buildFromGitHub {
@@ -454,10 +455,10 @@ let
   };
 
   cli-go = buildFromGitHub {
-    rev = "aca5b047ed14d17224157c3434ea93bf6cdaadee";
+    rev = "9fec0fad02befc9209347cc6d620e68e1b45f74d";
     owner  = "codegangsta";
     repo   = "cli";
-    sha256 = "0gximqj7cv8kiyvl5bj53pswxcy3x18dam7161ylmnp7m8fjcbzm";
+    sha256 = "1xg5iwclna9v9aji5w1j6cb8gi443s6nizr8802blc09avlv6zgb";
   };
 
   columnize = buildFromGitHub {
@@ -584,10 +585,10 @@ let
   };
 
   cronexpr = buildFromGitHub {
-    rev = "1.0.0";
+    rev = "f0984319b44273e83de132089ae42b1810f4933b";
     owner  = "gorhill";
     repo   = "cronexpr";
-    sha256 = "0wyw6c1d7zf5r721zrb0ld0pjf07l1zh9k06adzawq9hm17fk9ms";
+    sha256 = "0dphhhqy3i7265znv3m8n57l80dmaq6z4hsj5kgd87qd19z8x0l2";
   };
 
   crypt = buildFromGitHub {
@@ -1124,11 +1125,11 @@ let
   };
 
   gojsonschema = buildFromGitHub {
-    rev = "3988ac14d6f66842abf574a0615d2935ef5dab9d";
+    rev = "93e72a773fade158921402d6a24c819b48aba29d";
     owner  = "xeipuuv";
     repo   = "gojsonschema";
-    sha256 = "1cr3af3x97ik9rp93xpzp63a9nz9cp2v28hczyqbbdrj6r6dxrx4";
-    date = "2015-12-04";
+    sha256 = "0hqpcy4xgm9xw16dxbs1skrh6ga60bwfjv5dyz5zh86xsxpln3nr";
+    date = "2016-03-23";
     propagatedBuildInputs = [ gojsonreference ];
   };
 
@@ -1256,10 +1257,10 @@ let
   };
 
   gopsutil = buildFromGitHub {
-    rev = "1f32ce1bb380845be7f5d174ac641a2c592c0c42";
+    rev = "be06a94d4487f6562f3c8dbfa6e51689406e0c61";
     owner  = "shirou";
     repo   = "gopsutil";
-    sha256 = "03b3949g9lx3r96qsbfz66ygfm93qacnz6m9d986qd8skrfp0n4w";
+    sha256 = "1mg386cfjymalxmy6cv10rfxbv7pb7155bf8xh11dlcmhh1dmk4v";
   };
 
   goreq = buildFromGitHub {
@@ -1505,11 +1506,11 @@ let
   };
 
   go-getter = buildFromGitHub {
-    rev = "575ec4e3a1eb4fd0a2c1182f4a1bc9e75c1377fa";
-    date = "2016-03-15";
+    rev = "833da1c2bd47f5145677b8cafe18636e5d9f83fd";
+    date = "2016-03-21";
     owner = "hashicorp";
     repo = "go-getter";
-    sha256 = "1xjjmv517hmq5c01vlj3lfcw3czjfljmcc9f2mzgf1g51ahz5rk3";
+    sha256 = "0sy0q7v5j9ybk07pilnxcvb6k7wvpc8d9ppm38fsmiqm4kgjhr9m";
     buildInputs = [ aws-sdk-go ];
   };
 
@@ -1916,10 +1917,10 @@ let
   };
 
   go-systemd = buildFromGitHub {
-    rev = "v4";
+    rev = "v5";
     owner = "coreos";
     repo = "go-systemd";
-    sha256 = "1d6z06v8a16a7pipggk1r7zq89fbc1ksdcjc7q400wn844qfr7xc";
+    sha256 = "0kfbxvm9zsjgvgmiq2jl807y4s5z0rya65rm399llr5rr7vz1lxd";
     propagatedBuildInputs = [ pkgs.systemd_lib dbus ];
   };
 
@@ -2627,11 +2628,11 @@ let
   };
 
   netlink = buildFromGitHub {
-    rev = "4fdf23c882685717a2a750114bdc904afeafc16b";
+    rev = "adb0f53af689dd38f1443eba79489feaacf0b22e";
     owner  = "vishvananda";
     repo   = "netlink";
-    sha256 = "17g5ziazsnak3j6vh0gmwqjyvwjrrw61qabz1zsznwp0v0x7lm85";
-    date = "2016-03-05";
+    sha256 = "1xp6j18b0n702639jmhahghaz95bw9c0n5vmdk0hilml6as3czl7";
+    date = "2016-03-19";
   };
 
   ngrok = buildFromGitHub {

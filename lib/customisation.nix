@@ -254,4 +254,18 @@ rec {
         };
     in self;
 
+
+
+
+
+  mkFlag = trueStr: falseStr: cond: name: val:
+    if cond == null then null else
+      "--${if cond != false then trueStr else falseStr}${name}"
+      + "${if val != null && cond != false then "=${val}" else ""}";
+
+  /* Flag setting helpers for autotools like packages */
+  mkEnable = mkFlag "enable-" "disable-";
+  mkWith = mkFlag "with-" "without-";
+  mkOther = mkFlag "" "" true;
+
 }

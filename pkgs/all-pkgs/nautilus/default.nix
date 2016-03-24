@@ -28,15 +28,20 @@
 , xorg
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "nautilus-${version}";
-  versionMajor = "3.18";
-  versionMinor = "5";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/nautilus/${versionMajor}/${name}.tar.xz";
-    sha256 = "05fclrqmk024pjskwlp4bcqd8bsyxv9awaznv3cwwk1bab02gab0";
+    sha256 = "7ca7995a4d6a77871503dc092ae816584b8d1891730e1b9eed1a1e4a16194293";
   };
 
   nativeBuildInputs = [
@@ -91,14 +96,15 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--disable-profiling"
     "--enable-nst-extension"
-    "--enable-exif"
+    (enFlag "libexif" (libexif != null) null)
     "--enable-xmp"
+    "--disable-selinux"
     # Flag is not a proper boolean
     #"--disable-empty-view"
     "--enable-packagekit"
     "--enable-more-warnings"
-    "--enable-tracker"
-    "--enable-introspection"
+    (enFlag "tracker" (tracker != null) null)
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-update-mimedb"
   ];
 
@@ -125,7 +131,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

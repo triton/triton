@@ -1256,6 +1256,8 @@ libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
 libwacom = callPackage ../all-pkgs/libwacom { };
 
+libwebp = callPackage ../all-pkgs/libwebp { };
+
 libwps = callPackage ../all-pkgs/libwps { };
 
 libxkbcommon = callPackage ../all-pkgs/libxkbcommon { };
@@ -7118,8 +7120,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libvterm = callPackage ../development/libraries/libvterm { };
 #
-  libwebp = callPackage ../development/libraries/libwebp { };
-
   libwmf = callPackage ../development/libraries/libwmf { };
 #
 #  libwnck = libwnck2;

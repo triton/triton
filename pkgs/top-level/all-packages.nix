@@ -9180,12 +9180,12 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  statifier = callPackage ../os-specific/linux/statifier { };
 #
-#  spl = callPackage ../os-specific/linux/spl {
-#    configFile = "user";
-#  };
-#  spl_git = callPackage ../os-specific/linux/spl/git.nix {
-#    configFile = "user";
-#  };
+  spl = callPackage ../os-specific/linux/spl {
+    configFile = "user";
+  };
+  spl_git = callPackage ../os-specific/linux/spl/git.nix {
+    configFile = "user";
+  };
 #
 #  sysdig = callPackage ../os-specific/linux/sysdig {
 #    kernel = null;

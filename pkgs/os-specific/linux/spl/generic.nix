@@ -43,19 +43,24 @@ stdenv.mkDerivation rec {
     "--with-linux-obj=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   ];
 
-  enableParallelBuilding = true;
+  # We don't want these compiler security features / optimizations
+  # when we are building kernel modules
+  optFlags = !buildKernel;
+  pie = !buildKernel;
+  fpic = !buildKernel;
+  noStrictOverflow = !buildKernel;
+  fortifySource = !buildKernel;
+  stackProtector = !buildKernel;
+  optimize = !buildKernel;
 
   meta = {
     description = "Kernel module driver for solaris porting layer (needed by in-kernel zfs)";
-
-    longDescription = ''
-      This kernel module is a porting layer for ZFS to work inside the linux
-      kernel.
-    '';
-
     homepage = http://zfsonlinux.org/;
-    platforms = platforms.linux;
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ jcumming wizeman wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

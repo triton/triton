@@ -68,8 +68,6 @@ stdenv.mkDerivation rec {
     "--with-linux-obj=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   ];
 
-  enableParallelBuilding = true;
-
   installFlags = [
     "sysconfdir=\${out}/etc"
     "DEFAULT_INITCONF_DIR=\${out}/default"
@@ -92,16 +90,24 @@ stdenv.mkDerivation rec {
     ln -s ../share/pkgconfig $out/lib/pkgconfig
   '';
 
+  # We don't want these compiler security features / optimizations
+  # when we are building kernel modules
+  optFlags = !buildKernel;
+  pie = !buildKernel;
+  fpic = !buildKernel;
+  noStrictOverflow = !buildKernel;
+  fortifySource = !buildKernel;
+  stackProtector = !buildKernel;
+  optimize = !buildKernel;
+
   meta = {
     description = "ZFS Filesystem Linux Kernel module";
-    longDescription = ''
-      ZFS is a filesystem that combines a logical volume manager with a
-      Copy-On-Write filesystem with data integrity detection and repair,
-      snapshotting, cloning, block devices, deduplication, and more.
-      '';
     homepage = http://zfsonlinux.org/;
     license = licenses.cddl;
-    platforms = platforms.linux;
-    maintainers = with maintainers; [ jcumming wizeman wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

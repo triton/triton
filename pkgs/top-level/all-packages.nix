@@ -1169,6 +1169,8 @@ libnetfilter_cthelper = callPackage ../all-pkgs/libnetfilter_cthelper { };
 
 libnetfilter_cttimeout = callPackage ../all-pkgs/libnetfilter_cttimeout { };
 
+libnetfilter_queue = callPackage ../all-pkgs/libnetfilter_queue { };
+
 libnfnetlink = callPackage ../all-pkgs/libnfnetlink { };
 
 libnftnl = callPackage ../all-pkgs/libnftnl { };
@@ -6962,8 +6964,6 @@ isocodes = callPackage ../development/libraries/iso-codes { };
 #  libmx = callPackage ../development/libraries/libmx { };
 #
 #  libnet = callPackage ../development/libraries/libnet { };
-#
-#  libnetfilter_queue = callPackage ../development/libraries/libnetfilter_queue { };
 #
 #  libnih = callPackage ../development/libraries/libnih { };
 #

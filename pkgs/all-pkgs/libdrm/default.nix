@@ -40,6 +40,9 @@ stdenv.mkDerivation rec {
     #"--with-kernel-source"
   ];
 
+  # This breaks libraries talking to the dri interfaces
+  bindnow = false;
+
   meta = with stdenv.lib; {
     description = "Library for accessing the kernel's Direct Rendering Manager";
     homepage = http://dri.freedesktop.org/libdrm/;

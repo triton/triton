@@ -1272,6 +1272,8 @@ libzapojit = callPackage ../all-pkgs/libzapojit { };
 
 lightdm = callPackage ../all-pkgs/lightdm { };
 
+lightdm-gtk-greeter = callPackage ../all-pkgs/lightdm-gtk-greeter { };
+
 linux-headers = callPackage ../all-pkgs/linux-headers { };
 
 live555 = callPackage ../all-pkgs/live555 { };
@@ -11206,10 +11208,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  copy-com = callPackage ../applications/networking/copy-com { };
 #
 #  dropbox-cli = callPackage ../applications/networking/dropbox-cli { };
-#
-#  lightdm_qt = lightdm.override { withQt5 = true; };
-#
-  lightdm_gtk_greeter = callPackage ../applications/display-managers/lightdm-gtk-greeter { };
 #
 #  slic3r = callPackage ../applications/misc/slic3r { };
 #

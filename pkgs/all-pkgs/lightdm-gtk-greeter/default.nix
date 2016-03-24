@@ -1,10 +1,14 @@
-{ stdenv, fetchurl, lightdm, intltool, glib, xorg
-, hicolor_icon_theme, makeWrapper
-, useGTK2 ? false, gtk2, gtk3 # gtk3 seems better supported
-}:
+{ stdenv
+, fetchurl
+, intltool
+, makeWrapper
 
-#ToDo: bad icons with gtk2;
-#  avatar icon is missing in standard hicolor theme, I don't know where gtk3 takes it from
+, glib
+, gtk3
+, hicolor_icon_theme
+, lightdm
+, xorg
+}:
 
 let
   ver_branch = "2.0";
@@ -14,23 +18,33 @@ stdenv.mkDerivation rec {
   name = "lightdm-gtk-greeter-${version}";
 
   src = fetchurl {
-    url = "${meta.homepage}/${ver_branch}/${version}/+download/${name}.tar.gz";
+    url = "https://launchpad.net/lightdm-gtk-greeter/${ver_branch}/${version}/+download/${name}.tar.gz";
     sha256 = "031iv7zrpv27zsvahvfyrm75zdrh7591db56q89k8cjiiy600r1j";
   };
 
-  nativeBuildInputs = [ intltool makeWrapper ];
-  buildInputs = [ lightdm glib xorg.libX11 ]
-    ++ (if useGTK2 then [ gtk2 ] else [ gtk3 ]);
+  nativeBuildInputs = [
+    intltool
+    makeWrapper
+  ];
+
+  buildInputs = [
+    glib
+    gtk3
+    lightdm
+    xorg.libX11
+  ];
 
   configureFlags = [
     "--localstatedir=/var"
     "--sysconfdir=/etc"
-  ] ++ stdenv.lib.optional useGTK2 "--with-gtk2";
-
-  installFlags = [
-    "localstatedir=\${TMPDIR}"
-    "sysconfdir=\${out}/etc"
   ];
+
+  preInstall = ''
+    installFlagsArray+=(
+      "localstatedir=$TMPDIR"
+      "sysconfdir=$out/etc"
+    )
+  '';
 
   postInstall = ''
     substituteInPlace "$out/share/xgreeters/lightdm-gtk-greeter.desktop" \
@@ -41,8 +55,11 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     homepage = http://launchpad.net/lightdm-gtk-greeter;
-    platforms = platforms.linux;
     license = licenses.gpl3;
-    maintainers = with maintainers; [ ocharles wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

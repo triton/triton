@@ -22,7 +22,7 @@ let
 
     buildCommand = ''
       # This wrapper ensures that we actually get themes
-      makeWrapper ${pkgs.lightdm_gtk_greeter}/sbin/lightdm-gtk-greeter \
+      makeWrapper ${pkgs.lightdm-gtk-greeter}/sbin/lightdm-gtk-greeter \
         $out/greeter \
         --prefix PATH : "${pkgs.glibc}/bin" \
         --set GDK_PIXBUF_MODULE_FILE "${pkgs.gdk-pixbuf}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache" \

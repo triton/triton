@@ -246,6 +246,9 @@ stdenv.mkDerivation rec {
 
   doCheck = false;
 
+  # This breaks driver loading
+  bindnow = false;
+
   passthru = {
     inherit driverSearchPath;
   };

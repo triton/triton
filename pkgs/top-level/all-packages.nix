@@ -609,6 +609,8 @@ cmake = callPackage ../all-pkgs/cmake { };
 
 cogl = callPackage ../all-pkgs/cogl { };
 
+conntrack-tools = callPackage ../all-pkgs/conntrack-tools { };
+
 consul = pkgs.goPackages.consul.bin // { outputs = [ "bin" ]; };
 
 consul-ui = callPackage ../all-pkgs/consul-ui { };
@@ -8635,8 +8637,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   cifs_utils = callPackage ../os-specific/linux/cifs-utils { };
 #
 #  conky = callPackage ../os-specific/linux/conky ({ } // config.conky or {});
-#
-#  conntrack_tools = callPackage ../os-specific/linux/conntrack-tools { };
 #
 #  cpufrequtils = callPackage ../os-specific/linux/cpufrequtils { };
 #

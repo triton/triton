@@ -1372,6 +1372,8 @@ networkmanager-openconnect = callPackage ../all-pkgs/networkmanager-openconnect 
 
 networkmanager-applet = callPackage ../all-pkgs/networkmanager-applet { };
 
+nftables = callPackage ../all-pkgs/nftables { };
+
 nghttp2_full = callPackage ../all-pkgs/nghttp2 { };
 
 nghttp2_lib = callPackageAlias "nghttp2_full" {
@@ -9050,8 +9052,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  multipath-tools = callPackage ../os-specific/linux/multipath-tools { };
 #
-  nftables = callPackage ../os-specific/linux/nftables { };
-
 #  numad = callPackage ../os-specific/linux/numad { };
 #
 #  open-vm-tools = callPackage ../applications/virtualization/open-vm-tools {

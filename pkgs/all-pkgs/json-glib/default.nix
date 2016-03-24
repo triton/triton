@@ -13,13 +13,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "json-glib-${version}";
-  versionMajor = "1.1";
-  versionMinor = "2";
+  versionMajor = "1.2";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/json-glib/${versionMajor}/${name}.tar.xz";
-    sha256 = "e00f84018306e1aa234285d77b6c2b5d57c1e1d4dabc4dfc62d30b9670941bda";
+    sha256 = "99d6dfbe49c08fd7529f1fe8dcb1893b810a1bb222f1e7b65f41507658b8a7d3";
   };
 
   nativeBuildInputs = [

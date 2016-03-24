@@ -5,6 +5,9 @@
 , makeWrapper
 
 , adwaita-icon-theme
+, dbus-glib
+, dconf
+, gconf
 , gdk-pixbuf
 , glib
 , gnome-desktop
@@ -45,6 +48,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
+    dbus-glib
+    dconf
+    gconf
     gdk-pixbuf
     glib
     gnome-desktop
@@ -74,7 +80,8 @@ stdenv.mkDerivation rec {
     "--disable-iso-c"
     "--enable-deprecation-flags"
     "--enable-session-selector"
-    "--disable-gconf"
+    # Support legacy gconf autostart
+    (enFlag "gconf" (gconf != null) null)
     (enFlag "systemd" (systemd_lib != null) null)
     "--disable-consolekit"
     "--disable-docbook-docs"
@@ -87,6 +94,8 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/libexec/gnome-session-binary \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \

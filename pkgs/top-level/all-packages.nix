@@ -1334,6 +1334,8 @@ mpfr = callPackage ../all-pkgs/mpfr { };
 
 mpv = callPackage ../all-pkgs/mpv { };
 
+ms-sys = callPackage ../all-pkgs/ms-sys { };
+
 mtools = callPackage ../all-pkgs/mtools { };
 
 inherit (callPackages ../all-pkgs/mumble {
@@ -3394,8 +3396,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  mscgen = callPackage ../tools/graphics/mscgen { };
 #
 #  msf = callPackage ../tools/security/metasploit { };
-#
-  ms-sys = callPackage ../tools/misc/ms-sys { };
 #
 #  mtdutils = callPackage ../tools/filesystems/mtdutils { };
 #

@@ -5,7 +5,6 @@
 , makeWrapper
 
 , adwaita-icon-theme
-, dbus-glib
 , dconf
 , gconf
 , gdk-pixbuf
@@ -48,7 +47,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
-    dbus-glib
     dconf
     gconf
     gdk-pixbuf

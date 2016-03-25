@@ -67,7 +67,7 @@
 , unzip
 , upower
 , wayland
-, webkitgtk
+#, webkitgtk
 , xorg
 
 , python3
@@ -160,7 +160,7 @@ stdenv.mkDerivation rec {
     #tzdata
     upower
     #wayland
-    webkitgtk
+    #webkitgtk
     xorg.libSM
     xorg.libICE
     xorg.libX11

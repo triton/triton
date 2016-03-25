@@ -163,22 +163,6 @@ in rec {
     inherit system;
   });
 
-  /*
-  system_tarball_fuloong2f =
-    assert builtins.currentSystem == "mips64-linux";
-    makeSystemTarball {
-      module = ./modules/installer/cd-dvd/system-tarball-fuloong2f.nix;
-      system = "mips64-linux";
-    };
-
-  system_tarball_sheevaplug =
-    assert builtins.currentSystem == "armv5tel-linux";
-    makeSystemTarball {
-      module = ./modules/installer/cd-dvd/system-tarball-sheevaplug.nix;
-      system = "armv5tel-linux";
-    };
-  */
-
 
   # Run the tests for each platform.  You can run a test by doing
   # e.g. ‘nix-build -A tests.login.x86_64-linux’, or equivalently,

@@ -97,7 +97,7 @@ in
 
     systemd.services.unbound = {
       description="Unbound recursive Domain Name Server";
-      after = [ "network.target" ];
+      before = [ "network-setup.service" ];
       wantedBy = [ "multi-user.target" ];
       path = [ pkgs.util-linux_full ];
 

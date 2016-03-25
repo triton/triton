@@ -63,7 +63,8 @@
 
 with {
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    optionalString;
 };
 
 stdenv.mkDerivation rec {
@@ -164,7 +165,7 @@ stdenv.mkDerivation rec {
     /* Patch path to gnome version file */ ''
       sed -i panels/info/cc-info-panel.c \
         -e 's|DATADIR "/gnome/gnome-version.xml"|"${gnome-desktop}/share/gnome/gnome-version.xml"|'
-    '' + optionalString (gnome-online-accounts == null)
+    '' + #optionalString (gnome-online-accounts == null)
     /* Remove unconditional check for gnome-online-accounts */ ''
       sed -i configure.ac \
         -e '/goa-1.0 >=/d'

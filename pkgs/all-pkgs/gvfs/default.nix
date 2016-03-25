@@ -12,7 +12,7 @@
 , gconf
 , gcr
 , glib
-, gnome-online-accounts
+#, gnome-online-accounts
 , gtk3
 # TODO: add hal support
 , hal ? null

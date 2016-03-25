@@ -7,7 +7,7 @@
 , avahi
 , glib
 , gmime
-, gnome-online-accounts
+#, gnome-online-accounts
 , gom
 , grilo
 , gssdp
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
     avahi
     glib
     gmime
-    gnome-online-accounts
+    #gnome-online-accounts
     gom
     grilo
     json-glib
@@ -74,7 +74,9 @@ stdenv.mkDerivation rec {
     "--disable-maintainer-mode"
     "--disable-uninstalled"
     "--disable-debug"
-    (enFlag "goa" (gnome-online-accounts != null) null)
+    # Remove dependency on webkit
+    #(enFlag "goa" (gnome-online-accounts != null) null)
+    "--disable-goa"
     "--disable-gcov"
     "--enable-filesystem"
     "--enable-optical-media"

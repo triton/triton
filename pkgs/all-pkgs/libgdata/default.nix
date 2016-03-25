@@ -6,7 +6,7 @@
 , gcr
 , glib
 , json-glib
-, gnome-online-accounts
+#, gnome-online-accounts
 , gobject-introspection
 , liboauth
 , libsoup

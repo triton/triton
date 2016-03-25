@@ -6,7 +6,7 @@
 , db
 , gcr
 , glib
-, gnome-online-accounts
+#, gnome-online-accounts
 , gobject-introspection
 , gperf
 , gsettings-desktop-schemas
@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
     db
     gcr
     glib
-    gnome-online-accounts
+    #gnome-online-accounts
     gobject-introspection
     gperf
     gsettings-desktop-schemas
@@ -94,7 +94,9 @@ stdenv.mkDerivation rec {
     # TODO: add google auth support
     "--disable-google-auth"
     "--disable-examples"
-    (enFlag "goa" (gnome-online-accounts != null) null)
+    # Remove dependency on webkit
+    #(enFlag "goa" (gnome-online-accounts != null) null)
+    "--disable-goa"
     # TODO: requires libsignon-glib (Ubuntu online accounts)
     "--disable-uoa"
     "--enable-backend-per-process"

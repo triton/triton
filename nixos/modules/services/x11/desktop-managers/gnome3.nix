@@ -106,7 +106,8 @@ in {
 
     services.seahorse.enable = mkDefault true;
 
-    services.sushi.enable = mkDefault true;
+    # Remove dependency on webkit
+    #services.sushi.enable = mkDefault true;
 
     services.tracker.enable = mkDefault true;
 

@@ -18,7 +18,7 @@
 
 { stdenv, lib, fetchurl, help2man, makeWrapper
 , glib, libbsd
-, xorg, xkbcomp, module_init_tools, xkeyboard_config
+, xorg, xkbcomp, kmod, xkeyboard_config
 , nvidia_x11, virtualgl, primusLib
 # The below should only be non-null in a x86_64 system. On a i686
 # system the above nvidia_x11 and virtualgl will be the i686 packages.
@@ -43,7 +43,7 @@ let
 
   nvidiaLibs = lib.makeLibraryPath nvidia_x11s;
 
-  bbdPath = lib.makeSearchPath "bin" [ module_init_tools xorg.xorgserver ];
+  bbdPath = lib.makeSearchPath "bin" [ kmod xorg.xorgserver ];
   bbdLibs = lib.makeLibraryPath [ xorg.libX11 xorg.libXext ];
 
   xmodules = lib.concatStringsSep "," (map (x: "${x}/lib/xorg/modules") ([ xorg.xorgserver ] ++ lib.optional (!useNvidia) xf86videonouveau));
@@ -80,7 +80,7 @@ in stdenv.mkDerivation rec {
     # be in PATH, and thus no action for them is required.
 
     substituteInPlace src/module.c \
-      --replace "/sbin/modinfo" "${module_init_tools}/sbin/modinfo"
+      --replace "/sbin/modinfo" "${kmod}/sbin/modinfo"
 
     # Don't use a special group, just reuse wheel.
     substituteInPlace configure \

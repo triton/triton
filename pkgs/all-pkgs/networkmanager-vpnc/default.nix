@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 , intltool
-, module_init_tools
+, kmod
 , procps
 
 , dbus-glib
@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
        --replace "/sbin/sysctl" "${procps}/sbin/sysctl"
      substituteInPlace "src/nm-vpnc-service.c" \
        --replace "/sbin/vpnc" "${vpnc}/sbin/vpnc" \
-       --replace "/sbin/modprobe" "${module_init_tools}/sbin/modprobe"
+       --replace "/sbin/modprobe" "${kmod}/sbin/modprobe"
   '';
 
   configureFlags = [

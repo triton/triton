@@ -9033,8 +9033,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  mmc-utils = callPackage ../os-specific/linux/mmc-utils { };
 #
-  module_init_tools = callPackage ../os-specific/linux/module-init-tools { };
-
   aggregateModules = modules:
     callPackage ../all-pkgs/kmod/aggregator.nix {
       inherit modules;

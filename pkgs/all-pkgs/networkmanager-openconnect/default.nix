@@ -2,7 +2,7 @@
 , fetchurl
 , gettext
 , intltool
-, module_init_tools
+, kmod
 , procps
 
 , dbus-glib
@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
        --replace "/sbin/sysctl" "${procps}/sbin/sysctl"
      substituteInPlace "src/nm-openconnect-service.c" \
        --replace "/usr/sbin/openconnect" "${openconnect}/sbin/openconnect" \
-       --replace "/sbin/modprobe" "${module_init_tools}/sbin/modprobe"
+       --replace "/sbin/modprobe" "${kmod}/sbin/modprobe"
   '';
 
   configureFlags = [

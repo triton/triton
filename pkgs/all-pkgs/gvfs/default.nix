@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
     #gconf
     gcr
     glib
-    gnome-online-accounts
+    #gnome-online-accounts
     gtk3
     hal
     libgdata
@@ -105,7 +105,8 @@ stdenv.mkDerivation rec {
     (enFlag "gudev" (libgudev != null) null)
     "--enable-cdda"
     "--enable-afc"
-    "--enable-goa"
+    # Remove dependency on webkit
+    "--disable-goa"
     "--enable-google"
     (enFlag "gphoto2" (libgphoto2 != null) null)
     (enFlag "keyring" (libgnome-keyring != null) null)

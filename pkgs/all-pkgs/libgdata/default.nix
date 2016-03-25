@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     gcr
     glib
-    gnome-online-accounts
+    #gnome-online-accounts
     gobject-introspection
     json-glib
     liboauth
@@ -51,7 +51,9 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-gnome"
-    (enFlag "goa" (gnome-online-accounts != null) null)
+    # Remove dependency on webkit
+    #(enFlag "goa" (gnome-online-accounts != null) null)
+    "--disable-goa"
     "--disable-always-build-tests"
     "--disable-installed-tests"
     "--enable-nls"

@@ -1,4 +1,5 @@
 { stdenv
+, autoreconfHook
 , fetchTritonPatch
 , fetchurl
 , intltool
@@ -19,9 +20,10 @@
 , gdk-pixbuf
 , glib
 , gnome-bluetooth
+, gnome-common
 , gnome-desktop
 , gnome-menus
-, gnome-online-accounts
+#, gnome-online-accounts
 , gnome-settings-daemon
 , gnome-themes-standard
 , grilo
@@ -81,6 +83,7 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
+    autoreconfHook
     intltool
     makeWrapper
   ];
@@ -100,9 +103,10 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gnome-bluetooth
+    gnome-common
     gnome-desktop
     gnome-menus
-    gnome-online-accounts
+    #gnome-online-accounts
     gnome-settings-daemon
     grilo
     gsettings-desktop-schemas
@@ -138,28 +142,48 @@ stdenv.mkDerivation rec {
     xorg.libxkbfile
   ];
 
+  postUnpack = ''
+    rm -v $sourceRoot/configure
+  '';
+
   patches = [
     (fetchTritonPatch {
       rev = "453aedffa95d1c459a15a6f1fb8cb9d0ce810803";
       file = "gnome-control-center/vpn_plugins_path.patch";
       sha256 = "1e855649929c56466995ed5ace80cbd56617c8855b7d22b4f352c06752c3e126";
     })
+    # Patch from Gentoo for making various features optional
+    (fetchTritonPatch {
+      rev = "a59629461bca11af9c83259900cae13628f79d79";
+      file = "gnome-control-center/gnome-control-center-3.20.0-goa-optional.patch";
+      sha256 = "b43d9ed2ca08159b9d1629ec0c28ac3853b6d6929a85446840696ef5d37b1eb7";
+    })
   ];
 
   postPatch =
-  /* Patch path to gnome version file */ ''
-    sed -i panels/info/cc-info-panel.c \
-      -e 's|DATADIR "/gnome/gnome-version.xml"|"${gnome-desktop}/share/gnome/gnome-version.xml"|'
-  '';
+    /* Patch path to gnome version file */ ''
+      sed -i panels/info/cc-info-panel.c \
+        -e 's|DATADIR "/gnome/gnome-version.xml"|"${gnome-desktop}/share/gnome/gnome-version.xml"|'
+    '' + optionalString (gnome-online-accounts == null)
+    /* Remove unconditional check for gnome-online-accounts */ ''
+      sed -i configure.ac \
+        -e '/goa-1.0 >=/d'
+    '';
 
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-debug"
-    "--enable-compile-warnings"
     "--enable-nls"
     "--disable-documentation"
     (enFlag "ibus" (ibus != null) null)
+    # Remove dependency on webkit
+    #(enFlag "goa" (gnome-online-accounts != null) null)
+    "--disable-goa"
+    "--enable-color"
+    "--enable-bluetooth"
     (enFlag "cups" (cups != null) null)
+    "--enable-wacom"
+    "--enable-kerberos"
     "--disable-update-mimedb"
     "--disable-more-warnings"
     "--with-x"

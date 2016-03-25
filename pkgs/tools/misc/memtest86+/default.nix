@@ -30,6 +30,15 @@ stdenv.mkDerivation rec {
     cp memtest.bin $out/
   '';
 
+  # We don't need hardening / optimizations for the bios
+  optFlags = false;
+  pie = false;
+  fpic = false;
+  noStrictOverflow = false;
+  fortifySource = false;
+  stackProtector = false;
+  optimize = false;
+
   meta = {
     homepage = http://www.memtest.org/;
     description = "A tool to detect memory errors";

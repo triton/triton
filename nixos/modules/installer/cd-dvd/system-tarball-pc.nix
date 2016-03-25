@@ -105,6 +105,10 @@ in
       }
     ];
 
+  # Allow dhcpcd to be started manually through start dhcpcd
+  services.dhcpcd.enable = true;
+  systemd.services.dhcpcd.wantedBy = lib.mkOverride 50 [];
+
   # Allow sshd to be started manually through "start sshd".  It should
   # not be started by default on the installation CD because the
   # default root password is empty.

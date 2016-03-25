@@ -41,7 +41,7 @@ let
     server:
       directory: "${stateDir}"
       username: unbound
-      pidfile: ""
+      pidfile: "/run/unbound.pid"
       chroot: "${stateDir}"
       ${trustAnchor}
     ${cfg.extraConfig}

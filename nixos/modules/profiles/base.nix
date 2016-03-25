@@ -7,7 +7,7 @@
   # Include some utilities that are useful for installing or repairing
   # the system.
   environment.systemPackages = [
-    pkgs.mssys # for writing Microsoft boot sectors / MBRs
+    pkgs.ms-sys # for writing Microsoft boot sectors / MBRs
     pkgs.efibootmgr
     pkgs.efivar
     pkgs.gptfdisk

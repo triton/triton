@@ -99,12 +99,21 @@ in
       description="Unbound recursive Domain Name Server";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
+      path = [ pkgs.util-linux_full ];
 
       preStart = ''
         rm -f ${confFile} ${rootKeyFile}
         cp ${confFile'} ${confFile}
         cp ${rootKeyFile'} ${rootKeyFile}
         touch ${stateDir}/unbound-resolvconf.conf
+
+        mkdir -p ${stateDir}/dev
+        touch ${stateDir}/dev/random
+        mount -o defaults,bind /dev/urandom ${stateDir}/dev/random
+      '';
+
+      postStop = ''
+        umount ${stateDir}/dev/random
       '';
 
       serviceConfig = {

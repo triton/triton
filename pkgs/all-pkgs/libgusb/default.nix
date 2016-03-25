@@ -1,5 +1,4 @@
 { stdenv
-, autoreconfHook
 , fetchurl
 , gettext
 
@@ -11,15 +10,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libgusb-0.2.8";
+  name = "libgusb-0.2.9";
 
   src = fetchurl {
-    url = "http://people.freedesktop.org/~hughsient/releases/${name}.tar.xz";
-    sha256 = "1vcy71wjy0ifrmzd2j27dx523bn4z4z57jzxb6724nql47pnkhm9";
+    url = "https://people.freedesktop.org/~hughsient/releases/${name}.tar.xz";
+    sha256 = "7320bdcd0ab1750d314fa86f48bd2cc186b9e33332314403779af9772fedde14";
   };
 
   nativeBuildInputs = [
-    autoreconfHook
     gettext
   ];
 
@@ -43,9 +41,10 @@ stdenv.mkDerivation rec {
     description = "GObject wrapper for libusb";
     homepage = https://github.com/hughsie/libgusb;
     license = licenses.lgpl21Plus;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codeyopel
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

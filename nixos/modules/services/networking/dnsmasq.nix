@@ -9,10 +9,8 @@ let
 
   dnsmasqConf = pkgs.writeText "dnsmasq.conf" ''
     dhcp-leasefile=${stateDir}/dnsmasq.leases
-    ${optionalString cfg.resolveLocalQueries ''
-      conf-file=/etc/dnsmasq-conf.conf
-      resolv-file=/etc/dnsmasq-resolv.conf
-    ''}
+    conf-file=/etc/dnsmasq-conf.conf
+    resolv-file=/etc/dnsmasq-resolv.conf
     ${flip concatMapStrings cfg.servers (server: ''
       server=${server}
     '')}
@@ -34,15 +32,6 @@ in
         default = false;
         description = ''
           Whether to run dnsmasq.
-        '';
-      };
-
-      resolveLocalQueries = mkOption {
-        type = types.bool;
-        default = true;
-        description = ''
-          Whether dnsmasq should resolve local queries (i.e. add 127.0.0.1 to
-          /etc/resolv.conf).
         '';
       };
 
@@ -73,8 +62,10 @@ in
 
   config = mkIf config.services.dnsmasq.enable {
 
-    networking.nameservers =
-      optional cfg.resolveLocalQueries "127.0.0.1";
+    networking.extraResolvconfConf = ''
+      dnsmasq_conf=/etc/dnsmasq-conf.conf
+      dnsmasq_resolv=/etc/dnsmasq-resolv.conf
+    '';
 
     services.dbus.packages = [ dnsmasq ];
 

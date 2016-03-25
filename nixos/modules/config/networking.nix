@@ -5,17 +5,17 @@
 with lib;
 
 let
-
   cfg = config.networking;
-  dnsmasqResolve = config.services.dnsmasq.enable &&
-                   config.services.dnsmasq.resolveLocalQueries;
-  hasLocalResolver = config.services.bind.enable || dnsmasqResolve;
-
 in
 
 {
 
   options = {
+
+    networking.hasLocalResolver = lib.mkOption {
+      type = types.bool;
+      default = false;
+    };
 
     networking.extraHosts = lib.mkOption {
       type = types.lines;
@@ -177,22 +177,12 @@ in
             '' + optionalString cfg.dnsExtensionMechanism ''
               # enable extension mechanisms for DNS
               resolv_conf_options+=' edns0'
-            '' + optionalString hasLocalResolver ''
+            '' + optionalString cfg.hasLocalResolver ''
               # This hosts runs a full-blown DNS resolver.
               name_servers='127.0.0.1'
-            '' + optionalString dnsmasqResolve ''
-              dnsmasq_conf=/etc/dnsmasq-conf.conf
-              dnsmasq_resolv=/etc/dnsmasq-resolv.conf
-            '' + cfg.extraResolvconfConf + ''
-            '';
+            '' + cfg.extraResolvconfConf;
 
-      } // (optionalAttrs config.services.resolved.enable (
-        if dnsmasqResolve then {
-          "dnsmasq-resolv.conf".source = "/run/systemd/resolve/resolv.conf";
-        } else {
-          "resolv.conf".source = "/run/systemd/resolve/resolv.conf";
-        }
-      ));
+      };
 
       networking.proxy.envVars =
         optionalAttrs (cfg.proxy.default != null) {

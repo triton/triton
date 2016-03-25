@@ -8,31 +8,46 @@ let
 
   stateDir = "/var/lib/unbound";
 
-  access = concatMapStrings (x: "  access-control: ${x} allow\n") cfg.allowedAccess;
+  rootKeyFile' = pkgs.stdenv.mkDerivation {
+    name = "unbound-root-key";
 
-  interfaces = concatMapStrings (x: "  interface: ${x}\n") cfg.interfaces;
+    buildCommand = ''
+      awk '
+      {
+        if (/Domain:/) { domain=$2; }
+        if (/Flags:/) { flags=$2; }
+        if (/Protocol:/) { protocol=$2; }
+        if (/Algorithm:/) { algorithm=$2; }
+        if (/Key:/) { key=$2; }
+      }
+      END {
+        print domain "   1000    IN DNSKEY  " flags " " protocol " " algorithm " " key;
+      }
+      ' ${pkgs.dnssec-root}/share/dnssec/iana-root.txt > $out
+    '';
 
-  forward = optionalString (length cfg.forwardAddresses != 0)
-    "forward-zone:\n  name: .\n" +
-    concatMapStrings (x: "  forward-addr: ${x}\n") cfg.forwardAddresses;
+    preferLocalBuild = true;
+    allowSubstitutes = false;
+  };
 
-  rootTrustAnchorFile = "${stateDir}/root.key";
+  rootKeyFile = "${stateDir}/root.key";
 
-  trustAnchor = optionalString cfg.enableRootTrustAnchor
-    "auto-trust-anchor-file: ${rootTrustAnchorFile}";
+  trustAnchor = optionalString cfg.enableRootTrustAnchor ''
+    trust-anchor-file: "${rootKeyFile}"
+  '';
 
-  confFile = pkgs.writeText "unbound.conf" ''
+  confFile' = pkgs.writeText "unbound.conf" ''
+    include: ${stateDir}/unbound-*.conf
     server:
       directory: "${stateDir}"
       username: unbound
-      chroot: "${stateDir}"
       pidfile: ""
-      ${interfaces}
-      ${access}
+      chroot: "${stateDir}"
       ${trustAnchor}
     ${cfg.extraConfig}
-    ${forward}
   '';
+
+  confFile = "${stateDir}/unbound.conf";
 
 in
 
@@ -49,24 +64,6 @@ in
         description = "Whether to enable the Unbound domain name server.";
       };
 
-      allowedAccess = mkOption {
-        default = ["127.0.0.0/24"];
-        type = types.listOf types.str;
-        description = "What networks are allowed to use unbound as a resolver.";
-      };
-
-      interfaces = mkOption {
-        default = [ "127.0.0.1" "::1" ];
-        type = types.listOf types.str;
-        description = "What addresses the server should listen on.";
-      };
-
-      forwardAddresses = mkOption {
-        default = [ ];
-        type = types.listOf types.str;
-        description = "What servers to forward queries to.";
-      };
-
       enableRootTrustAnchor = mkOption {
         default = true;
         type = types.bool;
@@ -75,7 +72,7 @@ in
 
       extraConfig = mkOption {
         default = "";
-        type = types.str;
+        type = types.lines;
         description = "Extra lines of unbound config.";
       };
 
@@ -86,7 +83,9 @@ in
 
   config = mkIf cfg.enable {
 
-    environment.systemPackages = [ pkgs.unbound ];
+    networking.extraResolvconfConf = ''
+      unbound_conf=${stateDir}/unbound-resolvconf.conf
+    '';
 
     users.extraUsers = singleton {
       name = "unbound";
@@ -99,22 +98,17 @@ in
     systemd.services.unbound = {
       description="Unbound recursive Domain Name Server";
       after = [ "network.target" ];
-      before = [ "nss-lookup.target" ];
-      wants = [" nss-lookup.target" ];
       wantedBy = [ "multi-user.target" ];
 
       preStart = ''
-        mkdir -m 0755 -p ${stateDir}/dev/
-        cp ${confFile} ${stateDir}/unbound.conf
-        ${pkgs.unbound}/bin/unbound-anchor -a ${rootTrustAnchorFile}
-        chown unbound ${stateDir} ${rootTrustAnchorFile}
-        touch ${stateDir}/dev/random
-        ${pkgs.utillinux}/bin/mount --bind -n /dev/random ${stateDir}/dev/random
+        rm -f ${confFile} ${rootKeyFile}
+        cp ${confFile'} ${confFile}
+        cp ${rootKeyFile'} ${rootKeyFile}
+        touch ${stateDir}/unbound-resolvconf.conf
       '';
 
       serviceConfig = {
-        ExecStart = "${pkgs.unbound}/sbin/unbound -d -c ${stateDir}/unbound.conf";
-        ExecStopPost="${pkgs.utillinux}/bin/umount ${stateDir}/dev/random";
+        ExecStart = "${pkgs.unbound}/sbin/unbound -d -c ${confFile}";
       };
     };
 

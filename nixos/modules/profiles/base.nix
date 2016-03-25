@@ -24,7 +24,7 @@
     pkgs.usbutils
 
     # Tools to create / manipulate filesystems.
-    pkgs.ntfsprogs # for resizing NTFS partitions
+    pkgs.ntfs-3g # for resizing NTFS partitions
     pkgs.dosfstools
     pkgs.xfsprogs
     pkgs.f2fs-tools

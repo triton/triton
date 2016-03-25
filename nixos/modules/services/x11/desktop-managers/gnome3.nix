@@ -97,7 +97,8 @@ in {
 
     services.gnome-keyring.enable = true;
 
-    services.gnome-online-accounts.enable = mkDefault true;
+    # Remove dependency on webkit
+    #services.gnome-online-accounts.enable = mkDefault true;
 
     services.gnome-user-share.enable = mkDefault true;
 

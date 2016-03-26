@@ -13,11 +13,11 @@
 
 stdenv.mkDerivation rec {
   name = "filezilla-${version}";
-  version = "3.16.0";
+  version = "3.16.1";
 
   src = fetchurl {
     url = "mirror://sourceforge/project/filezilla/FileZilla_Client/${version}/FileZilla_${version}_src.tar.bz2";
-    sha256 = "0ilv4xhgav4srx6iqn0v0kv8rifgkysyx1hb9bnm45dc0skmbgbx";
+    sha256 = "3b046f854cea17f9c14d6a12aa5d2e027908c6535f44a068cfed5da9eddddda8";
   };
 
   nativeBuildInputs = [

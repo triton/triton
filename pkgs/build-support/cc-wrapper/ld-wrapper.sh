@@ -16,11 +16,11 @@ source @out@/nix-support/utils.sh
 
 params=()
 
-if [ "${relro-1}" = "1" ]; then
+if [ "${relro-$extraCCFlags}" = "1" ]; then
   params+=("-z" "relro")
 fi
 
-if [ "${bindnow-1}" = "1" ]; then
+if [ "${bindnow-$extraCCFlags}" = "1" ]; then
   params+=("-z" "now")
 fi
 

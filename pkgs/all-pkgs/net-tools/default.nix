@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     sourceTarball = stdenv.mkDerivation rec {
-      name = "net-tools-tarball-${date}";
+      name = "net-tools-${date}";
 
       src = fetchgit {
         url = "http://git.code.sf.net/p/net-tools/code";

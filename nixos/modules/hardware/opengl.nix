@@ -125,7 +125,7 @@ in
 
     system.activationScripts.setup-opengl =
       ''
-        find /run -maxdepth 1 -name opengl-driver\* -exec rm { } \;
+        find /run -maxdepth 1 -name opengl-driver\* -exec rm -rf {} \;
         ln -sfn ${package} ${package.driverSearchPath}
         ${optionalString cfg.driSupport32Bit ''
           ln -sfn ${package32} ${package.driverSearchPath}

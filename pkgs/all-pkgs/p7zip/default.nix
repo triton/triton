@@ -12,17 +12,18 @@ with {
 
 stdenv.mkDerivation rec {
   name = "p7zip-${version}";
-  version = "15.09";
+  version = "15.14.1";
 
   src = fetchurl {
     url = "mirror://sourceforge/p7zip/p7zip_${version}_src_all.tar.bz2";
-    sha256 = "0vsdkg24qa4l47gllyy2n3vyrn2cdk01qcgpa00y04728zvsr0w7";
+    sha256 = "699db4da3621904113e040703220abb1148dfef477b55305e2f14a4f1f8f25d4";
   };
 
   postPatch = optionalString (!rarSupport) ''
-    sed -e '/Rar/d' -i makefile* CPP/7zip/Bundles/Format7zFree/makefile
-    sed -e '/RAR/d' -i makefile* CPP/7zip/Bundles/Format7zFree/makefile
-    rm -rf CPP/7zip/Compress/Rar
+    sed -i makefile* CPP/7zip/Bundles/Format7zFree/makefile \
+       -e '/Rar/d' \
+       -e '/RAR/d'
+    rm -frv CPP/7zip/Compress/Rar
   '';
 
   makeFlags = [
@@ -43,7 +44,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

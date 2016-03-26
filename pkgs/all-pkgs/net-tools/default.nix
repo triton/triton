@@ -31,9 +31,8 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    sourceTarball = stdenv.mkDerivation rec {
+    sourceTarball = stdenv.mkDerivation {
       name = "net-tools-tarball-${date}";
-      tarballName = "net-tools-${date}";
 
       src = fetchgit {
         url = "http://git.code.sf.net/p/net-tools/code";
@@ -43,12 +42,12 @@ stdenv.mkDerivation rec {
 
       buildPhase = ''
         cp -rv ${src} ${name}
-        tar Jcfv ${tarballName}.tar.xz ${name}
+        tar Jcfv ${name}.tar.xz ${name}
       '';
 
       installPhase = ''
         mkdir -pv $out
-        cp -v ${tarballName}.tar.xz $out
+        cp -v ${name}.tar.xz $out
       '';
     };
   };

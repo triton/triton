@@ -23,6 +23,7 @@
 
 with {
   inherit (stdenv.lib)
+    optionals
     wtFlag;
 };
 
@@ -61,9 +62,10 @@ stdenv.mkDerivation rec {
     libsecret
     libsoup
     telepathy_glib
+    zlib
+  ] ++ optionals (xorg != null) [
     xorg.libSM
     xorg.libX11
-    zlib
   ];
 
   configureFlags = [

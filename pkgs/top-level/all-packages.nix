@@ -1748,6 +1748,8 @@ xz = callPackage ../all-pkgs/xz { };
 
 yasm = callPackage ../all-pkgs/yasm { };
 
+yelp-tools = callPackage ../all-pkgs/yelp-tools { };
+
 yelp-xsl = callPackage ../all-pkgs/yelp-xsl { };
 
 zeitgeist = callPackage ../all-pkgs/zeitgeist { };

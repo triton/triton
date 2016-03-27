@@ -34,10 +34,11 @@ stdenv.mkDerivation rec {
     gobject-introspection
   ];
 
+  setupHook = ./setup-hook.sh;
+
   postPatch = ''
     patchShebangs ./tests/testrunner.sh
-  '' +
-  /* dbus tests require machine-id */ ''
+  '' + /* dbus tests require machine-id */ ''
     sed -i tests/Makefile.am \
       -e '/dbus\//d'
   '';

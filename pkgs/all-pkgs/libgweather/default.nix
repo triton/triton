@@ -68,11 +68,6 @@ stdenv.mkDerivation rec {
     (wtFlag "zoneinfo-dir" (tzdata != null) "${tzdata}/share/zoneinfo")
   ];
 
-  makeFlags = [
-    # Libgweather tries to install vala bindings in vala's prefix
-    "vapidir=$(out)/share/vala/vapi"
-  ];
-
   meta = with stdenv.lib; {
     description = "Library to access weather information from online services";
     homepage = https://wiki.gnome.org/Projects/LibGWeather;

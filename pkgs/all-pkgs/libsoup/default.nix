@@ -67,11 +67,6 @@ stdenv.mkDerivation rec {
     #"--with-gssapi"
   ];
 
-  makeFlags = [
-    # Libsoup tries to install vala bindings in vala's prefix
-    "vapidir=$(out)/share/vala/vapi"
-  ];
-
   postInstall = "rm -rvf $out/share/gtk-doc";
 
   passthru = {

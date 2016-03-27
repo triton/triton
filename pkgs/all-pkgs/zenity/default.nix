@@ -1,14 +1,15 @@
 { stdenv
+#, autoreconfHook
 , fetchurl
 , gettext
+#, gnome-common
 , intltool
 , itstool
 , makeWrapper
+#, yelp-tools
 
 , adwaita-icon-theme
 , at-spi2-core
-, dbus
-, dbus-glib
 , gdk-pixbuf
 , glib
 , gtk3
@@ -36,10 +37,13 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    #autoreconfHook
     gettext
+    #gnome-common
     intltool
     itstool
     makeWrapper
+    #yelp-tools
   ];
 
   buildInputs = [

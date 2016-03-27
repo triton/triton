@@ -122,6 +122,7 @@
   ./services/databases/redis.nix
   ./services/databases/riak.nix
   ./services/databases/virtuoso.nix
+  ./services/dconf
   ./services/desktops/accountsservice.nix
   ./services/desktops/geoclue.nix
   ./services/desktops/gnome3/at-spi2-core.nix

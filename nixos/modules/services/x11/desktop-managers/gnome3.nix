@@ -166,12 +166,6 @@ in {
         '';
     };
 
-    environment.variables.GIO_EXTRA_MODULES = [
-      "${pkgs.dconf}/lib/gio/modules"
-      "${pkgs.glib-networking}/lib/gio/modules"
-      "${pkgs.gvfs}/lib/gio/modules"
-    ];
-
     environment.systemPackages = [
       pkgs.adwaita-icon-theme
       pkgs.dconf

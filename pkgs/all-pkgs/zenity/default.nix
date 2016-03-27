@@ -44,9 +44,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
-    at-spi2-core
-    dbus
-    dbus-glib
     gdk-pixbuf
     glib
     gtk3

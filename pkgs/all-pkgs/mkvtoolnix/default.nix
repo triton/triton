@@ -28,11 +28,11 @@ assert qt5 != null -> qt5.qtbase != null;
 
 stdenv.mkDerivation rec {
   name = "mkvtoolnix-${version}";
-  version = "8.9.0";
+  version = "9.0.0";
 
   src = fetchurl {
-    url = "http://www.bunkus.org/videotools/mkvtoolnix/sources/${name}.tar.xz";
-    sha256 = "1m50m8lkfpk0663zhhx9alvprf2y6b4lj9wj29xn3a1rjf2b421j";
+    url = "https://mkvtoolnix.download/sources/${name}.tar.xz";
+    sha256 = "cff3da0dfce78d73b714777905f63b3fe48c6dca1bc7441f44f257a37f7ab357";
   };
 
   nativeBuildInputs = [

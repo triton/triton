@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   ];
 
   propagatedBuildInputs = [
-    # autogen.sh which is using gnome-common tends to require which
+    # GNOME autogen.sh scripts that use gnome-common tend to require which
     which
     autoconf
     automake
@@ -40,7 +40,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

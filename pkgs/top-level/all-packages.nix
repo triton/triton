@@ -1750,7 +1750,9 @@ yasm = callPackage ../all-pkgs/yasm { };
 
 zeitgeist = callPackage ../all-pkgs/zeitgeist { };
 
-zenity = callPackage ../all-pkgs/zenity { };
+zenity = callPackage ../all-pkgs/zenity {
+  webkitgtk = null;
+};
 
 zip = callPackage ../all-pkgs/zip { };
 

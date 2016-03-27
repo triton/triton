@@ -6,27 +6,33 @@
 , makeWrapper
 
 , adwaita-icon-theme
-, cairo
+, at-spi2-core
+, dbus
+, dbus-glib
 , gdk-pixbuf
 , glib
 , gtk3
 , libnotify
 , libxml2
-, libxslt
-, pango
 , webkitgtk
 , xorg
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag
+    optionals;
+};
+
 stdenv.mkDerivation rec {
   name = "zenity-${version}";
-  versionMajor = "3.18";
-  versionMinor = "1.1";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/zenity/${versionMajor}/${name}.tar.xz";
-    sha256 = "02m88dfm1rziqk2ywakwib06wl1rxangbzih6cp8wllbyl1plcg6";
+    sha256 = "02e8759397f813c0a620b93ebeacdab9956191c9dc0d0fcba1815c5ea3f15a48";
   };
 
   nativeBuildInputs = [
@@ -38,19 +44,23 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
+    at-spi2-core
+    dbus
+    dbus-glib
     gdk-pixbuf
     glib
     gtk3
     libnotify
     libxml2
-    #webkitgtk
+    webkitgtk
+  ] ++ optionals gtk3.x11_backend [
     xorg.libX11
   ];
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--enable-libnotify"
-    #"--enable-webkitgtk"
+    (enFlag "libnotify" (libnotify != null) null)
+    (enFlag "webkitgtk" (webkitgtk != null) null)
     "--disable-debug"
     "--enable-compile-warnings"
     "--disable-iso-c"
@@ -72,7 +82,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

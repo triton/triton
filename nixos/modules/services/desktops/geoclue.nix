@@ -11,7 +11,7 @@ with {
 
   options = {
 
-    services.geoclue2 = {
+    services.geoclue = {
 
       enable = mkOption {
         type = types.bool;
@@ -26,18 +26,18 @@ with {
 
   };
 
-  config = mkIf config.services.geoclue2.enable {
+  config = mkIf config.services.geoclue.enable {
 
     environment.systemPackages = [
-      pkgs.geoclue2
+      pkgs.geoclue
     ];
 
     services.dbus.packages = [
-      pkgs.geoclue2
+      pkgs.geoclue
     ];
 
     systemd.packages = [
-      pkgs.geoclue2
+      pkgs.geoclue
     ];
 
   };

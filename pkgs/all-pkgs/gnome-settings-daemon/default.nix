@@ -17,7 +17,7 @@
 , fontconfig
 , gconf
 , gdk-pixbuf
-, geoclue2
+, geoclue
 , geocode-glib
 , glib
 , gnome-desktop
@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
     dconf
     fontconfig
     gconf
-    geoclue2
+    geoclue
     geocode-glib
     gdk-pixbuf
     glib

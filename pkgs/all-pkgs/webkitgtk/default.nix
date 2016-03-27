@@ -16,7 +16,7 @@
 , fontconfig
 , freetype
 , gdk-pixbuf
-, geoclue2
+, geoclue
 , glib
 , gobject-introspection
 , gnutls
@@ -82,7 +82,7 @@ stdenv.mkDerivation rec {
     fontconfig
     freetype
     gdk-pixbuf
-    geoclue2
+    geoclue
     glib
     gobject-introspection
     gnutls
@@ -155,7 +155,7 @@ stdenv.mkDerivation rec {
     (cmFlag "ENABLE_FTL_JIT" false) # llvm
     # TODO: add gudev support
     (cmFlag "ENABLE_GAMEPAD_DEPRECATED" false)
-    (cmFlag "ENABLE_GEOLOCATION" (geoclue2 != null))
+    (cmFlag "ENABLE_GEOLOCATION" (geoclue != null))
     # TODO: add openwebrtc support
     (cmFlag "ENABLE_MEDIA_STREAM" false)
     (cmFlag "ENABLE_OPENGL" (mesa_noglu != null))

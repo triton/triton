@@ -87,7 +87,7 @@ in {
 
     services.accounts-daemon.enable = true;
 
-    services.geoclue2.enable = mkDefault true;
+    services.geoclue.enable = mkDefault true;
 
     services.at-spi2-core.enable = true;
 

@@ -8,7 +8,7 @@
 , adwaita-icon-theme
 , dconf
 , gdk-pixbuf
-, geoclue2
+, geoclue
 , geocode-glib
 , glib
 , gnome-desktop
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     adwaita-icon-theme
     dconf
     gdk-pixbuf
-    geoclue2
+    geoclue
     geocode-glib
     glib
     gnome-desktop

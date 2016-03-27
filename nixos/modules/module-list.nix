@@ -123,7 +123,7 @@
   ./services/databases/riak.nix
   ./services/databases/virtuoso.nix
   ./services/desktops/accountsservice.nix
-  ./services/desktops/geoclue2.nix
+  ./services/desktops/geoclue.nix
   ./services/desktops/gnome3/at-spi2-core.nix
   ./services/desktops/gnome3/evolution-data-server.nix
   ./services/desktops/gnome3/gnome-documents.nix

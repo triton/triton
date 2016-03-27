@@ -766,6 +766,8 @@ gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
 
 gdm = callPackage ../all-pkgs/gdm { };
 
+geoclue = callPackage ../all-pkgs/geoclue { };
+
 gegl = callPackage ../all-pkgs/gegl { };
 
 geocode-glib = callPackage ../all-pkgs/geocode-glib { };
@@ -6333,10 +6335,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gecode_3 = callPackage ../development/libraries/gecode/3.nix { };
 #  gecode_4 = callPackage ../development/libraries/gecode { };
 #  gecode = gecode_4;
-#
-#  geoclue = callPackage ../development/libraries/geoclue {};
-#
-  geoclue2 = callPackage ../development/libraries/geoclue/2.0.nix {};
 #
 #  geoipWithDatabase = makeOverridable (callPackage ../development/libraries/geoip) {
 #    drvName = "geoip-tools";

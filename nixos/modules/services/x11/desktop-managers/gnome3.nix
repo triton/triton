@@ -81,6 +81,8 @@ in {
 
   config = mkIf config.services.xserver.desktopManager.gnome3.enable {
 
+    services.dconf.enable = true;
+
     security.polkit.enable = true;
 
     services.udisks.enable = true;

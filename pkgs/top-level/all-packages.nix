@@ -5876,7 +5876,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  lsof = callPackage ../development/tools/misc/lsof { };
 #
-#  ltrace = callPackage ../development/tools/misc/ltrace { };
+  ltrace = callPackage ../development/tools/misc/ltrace { };
 #
 #  lttng-tools = callPackage ../development/tools/misc/lttng-tools { };
 #

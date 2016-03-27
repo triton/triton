@@ -48,6 +48,20 @@ assert xorg != null ->
   && xorg.libXrandr != null
   && xorg.libXrender != null;
 
+let
+  broadway_backend = true;
+  wayland_backend =
+    if wayland != null && wayland-protocols != null then
+      true
+    else
+      false;
+  x11_backend =
+    if xorg != null then
+      true
+    else
+      false;
+in
+
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";
   versionMajor = "3.20";
@@ -115,7 +129,9 @@ stdenv.mkDerivation rec {
     "--disable-win32-backend"
     "--disable-quartz-backend"
     (enFlag "broadway-backend" true null)
-    (enFlag "wayland-backend" (wayland != null) null)
+    (enFlag "wayland-backend" (
+      wayland != null
+      && wayland-protocols != null) null)
     "--disable-mir-backend"
     "--disable-quartz-relocation"
     #"--enable-explicit-deps"
@@ -143,6 +159,10 @@ stdenv.mkDerivation rec {
   doCheck = false;
 
   passthru = {
+    inherit
+      broadway_backend
+      wayland_backend
+      x11_backend;
     gtkExeEnvPostBuild = ''
       rm -v $out/lib/gtk-3.0/3.0.0/immodules.cache
       $out/bin/gtk-query-immodules-3.0 $out/lib/gtk-3.0/3.0.0/immodules/*.so > \

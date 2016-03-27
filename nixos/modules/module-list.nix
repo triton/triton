@@ -122,7 +122,6 @@
   ./services/databases/redis.nix
   ./services/databases/riak.nix
   ./services/databases/virtuoso.nix
-  ./services/dconf
   ./services/desktops/accountsservice.nix
   ./services/desktops/geoclue.nix
   ./services/desktops/gnome3/at-spi2-core.nix
@@ -435,6 +434,7 @@
   ./services/x11/window-managers/xmonad.nix
   ./services/x11/xfs.nix
   ./services/x11/xserver.nix
+  ./services-new/dconf
   ./system/activation/activation-script.nix
   ./system/activation/top-level.nix
   ./system/boot/coredump.nix

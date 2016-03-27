@@ -122,19 +122,6 @@
   ./services/databases/redis.nix
   ./services/databases/riak.nix
   ./services/databases/virtuoso.nix
-  ./services/desktops/accountsservice.nix
-  ./services/desktops/geoclue.nix
-  ./services/desktops/gnome3/at-spi2-core.nix
-  ./services/desktops/gnome3/evolution-data-server.nix
-  ./services/desktops/gnome3/gnome-documents.nix
-  ./services/desktops/gnome3/gnome-keyring.nix
-  ./services/desktops/gnome3/gnome-online-accounts.nix
-  ./services/desktops/gnome3/gnome-online-miners.nix
-  ./services/desktops/gnome3/gnome-user-share.nix
-  ./services/desktops/gnome3/gvfs.nix
-  ./services/desktops/gnome3/seahorse.nix
-  ./services/desktops/gnome3/sushi.nix
-  ./services/desktops/gnome3/tracker.nix
   ./services/desktops/profile-sync-daemon.nix
   ./services/desktops/telepathy.nix
   ./services/hardware/acpid.nix
@@ -434,7 +421,22 @@
   ./services/x11/window-managers/xmonad.nix
   ./services/x11/xfs.nix
   ./services/x11/xserver.nix
+
+  ./services-new/accountsservice
+  ./services-new/at-spi2-core
   ./services-new/dconf
+  ./services-new/evolution-data-server
+  ./services-new/geoclue
+  ./services-new/gnome-documents
+  ./services-new/gnome-keyring
+  ./services-new/gnome-online-accounts
+  ./services-new/gnome-online-miners
+  ./services-new/gnome-user-share
+  ./services-new/gvfs
+  ./services-new/seahorse
+  ./services-new/sushi
+  ./services-new/tracker
+
   ./system/activation/activation-script.nix
   ./system/activation/top-level.nix
   ./system/boot/coredump.nix

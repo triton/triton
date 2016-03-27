@@ -8,12 +8,10 @@
 
 # Optionals
 , cliSupport ? true # Build standalone CLI application
-, unittestsSupport ? true # Unit tests
+, unittestsSupport ? false # Unit tests
 # Debugging options
 , debugSupport ? false # Run-time sanity checks (debugging)
 , werrorSupport ? false # Warnings as errors
-, ppaSupport ? false # PPA profiling instrumentation
-, vtuneSupport ? false # Vtune profiling instrumentation
 , custatsSupport ? false # Internal profiling of encoder work
 }:
 
@@ -38,11 +36,12 @@ let
     sha256 = "1j0mbcf10aj6zi1nxql45f9817jd2ndcpd7x123sjmyr7q9m8iiy";
   };
   cmakeFlagsAll = [
-    (cmFlag "ENABLE_TESTS" unittestsSupport)
+    (cmFlag "ENABLE_TESTS" false)
+    (cmFlag "ENABLE_AGGRESSIVE_CHECKS" false)
     (cmFlag "CHECKED_BUILD" debugSupport)
-    (cmFlag "WARNINGS_AS_ERRORS" werrorSupport)
-    (cmFlag "ENABLE_PPA" ppaSupport)
-    (cmFlag "ENABLE_VTUNE" vtuneSupport)
+    (cmFlag "WARNINGS_AS_ERRORS" false)
+    (cmFlag "ENABLE_PPA" false)
+    (cmFlag "ENABLE_VTUNE" false)
     (cmFlag "ENABLE_PIC" true)
     (cmFlag "ENABLE_LIBNUMA" (
       (elem targetSystem platforms.linux)
@@ -78,8 +77,7 @@ let
       (cmFlag "MAIN12" false)
     ] ++ cmakeFlagsAll;
 
-    preConfigure =
-    /* x265 source directory is `source`, not `src` */ ''
+    preConfigure = /* x265 source directory is `source`, not `src` */ ''
       cd source
     '';
 
@@ -94,14 +92,14 @@ let
     ];
 
     postInstall =
-    /* Remove unused files to prevent conflicts with
-       pkg-config/libtool hooks */ ''
-      rm -rvf $out/includes
-      rm -rvf $out/lib/pkgconfig
-    '' +
-    /* Rename the library to a unique name */ ''
-      mv -v $out/lib/libx265.a $out/lib/libx265_main10.a
-    '';
+      /* Remove unused files to prevent conflicts with
+         pkg-config/libtool hooks */ ''
+        rm -frv $out/includes
+        rm -frv $out/lib/pkgconfig
+      '' +
+      /* Rename the library to a unique name */ ''
+        mv -v $out/lib/libx265.a $out/lib/libx265_main10.a
+      '';
   };
   libx265-12 = stdenv.mkDerivation {
     name = "libx265-12-${version}";
@@ -116,8 +114,7 @@ let
       (cmFlag "MAIN12" true)
     ] ++ cmakeFlagsAll;
 
-    preConfigure =
-    /* x265 source directory is `source`, not `src` */ ''
+    preConfigure = /* x265 source directory is `source`, not `src` */ ''
       cd source
     '';
 
@@ -132,14 +129,14 @@ let
     ];
 
     postInstall =
-    /* Remove unused files to prevent conflicts with
-       pkg-config/libtool hooks */ ''
-      rm -rvf $out/includes
-      rm -rvf $out/lib/pkgconfig
-    '' +
-    /* Rename the library to a unique name */ ''
-      mv -v $out/lib/libx265.a $out/lib/libx265_main12.a
-    '';
+      /* Remove unused files to prevent conflicts with
+         pkg-config/libtool hooks */ ''
+        rm -frv $out/includes
+        rm -frv $out/lib/pkgconfig
+      '' +
+      /* Rename the library to a unique name */ ''
+        mv -v $out/lib/libx265.a $out/lib/libx265_main12.a
+      '';
   };
 in
 
@@ -161,13 +158,11 @@ stdenv.mkDerivation rec {
     numactl
   ];
 
-  postUnpack =
-  /* x265 source directory is `source`, not `src` */ ''
+  postUnpack = /* x265 source directory is `source`, not `src` */ ''
     sourceRoot="$sourceRoot/source"
   '';
 
-  postPatch =
-  /* Work around to set version in the compiled binary */ ''
+  postPatch = /* Work around to set version in the compiled binary */ ''
     sed -i cmake/version.cmake \
       -e 's/unknown/${version}/g'
   '';
@@ -191,9 +186,8 @@ stdenv.mkDerivation rec {
     (cmFlag "LINKED_12BIT" true)
   ];
 
-  postInstall =
-  /* Remove static library */ ''
-    rm -vf $out/lib/libx265.a
+  postInstall = /* Remove static library */ ''
+    rm -v $out/lib/libx265.a
   '';
 
   meta = with stdenv.lib; {

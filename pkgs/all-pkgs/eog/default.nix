@@ -89,11 +89,11 @@ stdenv.mkDerivation rec {
     "--enable-schemas-compile"
     "--disable-installed-tests"
     (wtFlag "libexif" (libexif != null) null)
-    (wtFlag "cms" (lcms2 != null) null)
+    (wtFlag "cms" (xorg != null && lcms2 != null) null)
     (wtFlag "xmp" (exempi != null) null)
     (wtFlag "libjpeg" (libjpeg != null) null)
     (wtFlag "librsvg" (librsvg != null) null)
-    (wtFlag "x" (xorg != null) null)
+    (wtFlag "x" (gtk3.x11_backend && xorg != null) null)
   ];
 
   preFixup = ''
@@ -104,7 +104,8 @@ stdenv.mkDerivation rec {
       --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
-      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
+      --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share"
   '';
 
   meta = with stdenv.lib; {

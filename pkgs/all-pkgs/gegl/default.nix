@@ -26,11 +26,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gegl-0.3.4";
+  name = "gegl-${version}";
+  versionMajor = "0.3";
+  versionMinor = "6";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "https://download.gimp.org/pub/gegl/0.3/${name}.tar.bz2";
-    sha256 = "1v63vgnhrk4q3fwd62r45v3i9jyp5bwdd8hpgimiwkc5j2kr0ql4";
+    url = "https://download.gimp.org/pub/gegl/${versionMajor}/${name}.tar.bz2";
+    sha256 = "70e7fbbc74b9a5d7a8428d49f282855c8b14b4ea7c6a3cb83cb7f2291c6da722";
   };
 
   nativeBuildInputs = [

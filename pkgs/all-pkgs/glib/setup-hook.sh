@@ -23,10 +23,10 @@ fix_gio_modules_install_path() {
   # so we must place these directories in a unique directory.
 
   if [ -d "${out}/lib/gio/modules" ] ; then
-    mkdir -pv "${out}/lib/gio-modules/${name}/gio"
+    mkdir -pv "${out}/lib/gio-modules/${name}"
     mv -v \
-      "${out}/lib/gio/modules" \
-      "${out}/lib/gio-modules/${name}/gio/"
+      "${out}/lib/gio" \
+      "${out}/lib/gio-modules/${name}/"
   fi
 
   addToSearchPath GIO_EXTRA_MODULES "${out}/lib/gio-modules/${name}"

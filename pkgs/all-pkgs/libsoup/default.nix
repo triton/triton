@@ -20,12 +20,12 @@ with {
 stdenv.mkDerivation rec {
   name = "libsoup-${version}";
   versionMajor = "2.54";
-  versionMinor = "0";
+  versionMinor = "0.1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libsoup/${versionMajor}/${name}.tar.xz";
-    sha256 = "fbf1038efb10d2ffbbb88bb46e7ce32b683fde8e566f36bcf26f7f69a550ec56";
+    sha256 = "ade4920166bd036e8890d04acdc135686d877670953949fa6245797c906e38e0";
   };
 
   nativeBuildInputs = [

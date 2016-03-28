@@ -26,12 +26,12 @@ with {
 stdenv.mkDerivation rec {
   name = "gnome-bluetooth-${version}";
   versionMajor = "3.18";
-  versionMinor = "2";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-bluetooth/${versionMajor}/${name}.tar.xz";
-    sha256 = "d8df073c331df0f97261869fb77ffcdbf4e3e4eaf460d3c3ed2b16e03d9c5398";
+    sha256 = "e481b70423e52adc3c3aa919eeb033b47f9cd1598d6c0c7f384c0bd10f4e8ce3";
   };
 
   nativeBuildInputs = [

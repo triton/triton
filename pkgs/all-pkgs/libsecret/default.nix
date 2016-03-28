@@ -19,12 +19,12 @@ with {
 stdenv.mkDerivation rec {
   name = "libsecret-${version}";
   versionMajor = "0.18";
-  versionMinor = "4";
+  versionMinor = "5";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libsecret/${versionMajor}/${name}.tar.xz";
-    sha256 = "1v8r180sjppapa2kl4vbaizlb34w27ixqjhzr6cnk3hrk0bbaa8g";
+    sha256 = "9ce7bd8dd5831f2786c935d82638ac428fa085057cc6780aba0e39375887ccb3";
   };
 
   nativeBuildInputs = [

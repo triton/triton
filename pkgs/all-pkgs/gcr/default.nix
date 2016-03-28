@@ -24,13 +24,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "gcr-${version}";
-  versionMajor = "3.18";
+  versionMajor = "3.20";
   versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gcr/${versionMajor}/${name}.tar.xz";
-    sha256 = "006f6xbd3jppkf9avg83mpqdld5d0z6mr0sm81lql52mmyjnvlfl";
+    sha256 = "90572c626d8a708225560c42b4421f7941315247fa1679d4ef569bde7f4bb379";
   };
 
   nativeBuildInputs = [
@@ -82,7 +82,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

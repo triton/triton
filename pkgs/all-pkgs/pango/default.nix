@@ -19,13 +19,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "pango-${version}";
-  versionMajor = "1.38";
-  versionMinor = "1";
+  versionMajor = "1.40";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/pango/${versionMajor}/${name}.tar.xz";
-    sha256 = "1dsf45m51i4rcyvh5wlxxrjfhvn5b67d5ckjc6vdcxbddjgmc80k";
+    sha256 = "da17985df314cb07d066ab5424f59c21ce973ece05b7de4df04d798ec8511c8b";
   };
 
   buildInputs = [

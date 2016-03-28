@@ -171,6 +171,8 @@ stdenv.mkDerivation rec {
       ${freefont_ttf}/share/fonts/truetype/FreeSerifBold.ttf
   '';
 
+  bindnow = false;
+
   meta = with stdenv.lib; {
     description = "Cross-platform media player and streaming server";
     homepage = http://www.videolan.org/vlc/;

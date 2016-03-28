@@ -601,7 +601,7 @@ clutter = callPackage ../all-pkgs/clutter { };
 
 clutter-gst_2 = callPackage ../all-pkgs/clutter-gst/2.x.nix { };
 clutter-gst_3 = callPackage ../all-pkgs/clutter-gst/3.x.nix { };
-clutter-gst = clutter-gst_3;
+clutter-gst = callPackageAlias "clutter-gst_3" { };
 
 clutter-gtk = callPackage ../all-pkgs/clutter-gtk { };
 

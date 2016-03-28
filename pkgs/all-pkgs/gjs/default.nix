@@ -1,12 +1,13 @@
 { stdenv
+#, autoreconfHook
 , fetchurl
 , gettext
+#, gnome-common
 
 , atk
 , cairo
 , gdk-pixbuf
 , glib
-, gnome-common
 , gobject-introspection
 , gtk3
 , libffi
@@ -34,7 +35,9 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    #autoreconfHook
     gettext
+    #gnome-common
   ];
 
   buildInputs = [
@@ -42,7 +45,6 @@ stdenv.mkDerivation rec {
     cairo
     gdk-pixbuf
     glib
-    gnome-common
     gobject-introspection
     gtk3
     libffi
@@ -53,8 +55,11 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
+    "--disable-maintainer-mode"
     "--enable-cxx-warnings"
+    "--disable-iso-cxx"
     "--disable-coverage"
+    "--disable-installed-tests"
     "--disable-systemtap"
     "--disable-dtrace"
     "--enable-Bsymbolic"
@@ -65,6 +70,8 @@ stdenv.mkDerivation rec {
   postInstall = ''
     sed -i $out/lib/libgjs.la \
       -e 's|-lreadline|-L${readline}/lib -lreadline|g'
+  '' + /* Remove empty directory tree (for installed tests)) */ ''
+    rm -frv $out/libexec
   '';
 
   meta = with stdenv.lib; {
@@ -80,8 +87,7 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 
 }

@@ -4,6 +4,7 @@
 , config
 
 ## various stuff that can be plugged in
+, adwaita-icon-theme
 , flashplayer
 , hal-flash
 , gecko_mediaplayer
@@ -11,6 +12,7 @@
 , pulseaudio_lib
 , libcanberra
 , ffmpeg
+, gdk-pixbuf
 , gstreamer
 , gst-plugins-base
 , gst-plugins-good
@@ -24,6 +26,9 @@
 , google_talk_plugin
 , fribid
 , gnome-shell
+, dconf
+, glib
+, shared_mime_info
 }:
 
 with {
@@ -126,6 +131,10 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
+    adwaita-icon-theme
+    dconf
+    gdk-pixbuf
+    glib
     gst-plugins-base
     gst-plugins-good
     gst-libav
@@ -144,6 +153,13 @@ stdenv.mkDerivation {
       --suffix-each LD_LIBRARY_PATH ':' "$libs" \
       --suffix-each GTK_PATH ':' "$gtk_modules" \
       --suffix-each LD_PRELOAD ':' "$(cat $(filterExisting $(addSuffix /extra-ld-preload $plugins)))" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --set 'GSETTINGS_BACKEND' 'dconf' \
+      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
+      --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share" \
       --prefix GST_PLUGIN_PATH : "$GST_PLUGIN_PATH" \
       --prefix-contents PATH ':' "$(filterExisting $(addSuffix /extra-bin-path $plugins))" \
       --set MOZ_OBJDIR "$(ls -d "${browser}/lib/${browserName}"*)"

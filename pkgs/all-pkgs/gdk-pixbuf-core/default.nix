@@ -23,13 +23,13 @@ with {
 
 stdenv.mkDerivation rec {
   name = "gdk-pixbuf-core-${version}";
-  versionMajor = "2.33";
-  versionMinor = "2";
+  versionMajor = "2.34";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gdk-pixbuf/${versionMajor}/" +
-          "gdk-pixbuf-${version}.tar.xz";
+    url = "mirror://gnome/sources/gdk-pixbuf/${versionMajor}/"
+        + "gdk-pixbuf-${version}.tar.xz";
     sha256 = "d91ec3ab7d0fcf998d2c38b6725655666e0767e2c462598aea003caee2455929";
   };
 
@@ -51,14 +51,14 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch =
-  /* The configure script only tests glib for mimetype detection
-     support if --enable-gio-sniffing=auto, this patches it to
-     run the test and explicitly fail if glib isn't configured
-     correctly. */ ''
-    sed -i configure.ac \
-      -e '/x$enable_gio_sniffing/ s/xauto/xyes/' \
-      -e 's|\[gio_can_sniff=no\]|\[gio_can_sniff=no, AC_MSG_ERROR(gio cannot determine mimetype)\]|'
-  '';
+    /* The configure script only tests glib for mimetype detection
+       support if --enable-gio-sniffing=auto, this patches it to
+       run the test and explicitly fail if glib isn't configured
+       correctly. */ ''
+      sed -i configure.ac \
+        -e '/x$enable_gio_sniffing/ s/xauto/xyes/' \
+        -e 's|\[gio_can_sniff=no\]|\[gio_can_sniff=no, AC_MSG_ERROR(gio cannot determine mimetype)\]|'
+    '';
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -97,7 +97,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "A library for image loading and manipulation";
     homepage = http://library.gnome.org/devel/gdk-pixbuf/;
-    license = licenses.free;
+    license = licenses.lgpl2Plus;
     maintainers = [
       codyopel
     ];

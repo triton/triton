@@ -40,7 +40,6 @@ stdenv.mkDerivation rec {
   '';
 
   dontStrip = true;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "A library for image loading and manipulation";
@@ -49,7 +48,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

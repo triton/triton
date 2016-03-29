@@ -1681,6 +1681,8 @@ tzdata = callPackage ../all-pkgs/tzdata { };
 
 udisks = callPackage ../all-pkgs/udisks { };
 
+uhub = callPackage ../all-pkgs/uhub { };
+
 uid_wrapper = callPackage ../all-pkgs/uid_wrapper { };
 
 unbound = callPackage ../all-pkgs/unbound { };
@@ -4473,8 +4475,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  uim = callPackage ../tools/inputmethods/uim {
 #    inherit (pkgs.kde4) kdelibs;
 #  };
-#
-#  uhub = callPackage ../servers/uhub { };
 #
 #  unclutter = callPackage ../tools/misc/unclutter { };
 #

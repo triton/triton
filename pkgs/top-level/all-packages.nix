@@ -1270,6 +1270,8 @@ libxml2 = callPackage ../all-pkgs/libxml2 { };
 
 libxslt = callPackage ../all-pkgs/libxslt { };
 
+libyaml = callPackage ../all-pkgs/libyaml { };
+
 libzapojit = callPackage ../all-pkgs/libzapojit { };
 
 lightdm = callPackage ../all-pkgs/lightdm { };
@@ -7141,8 +7143,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  libxmp = callPackage ../development/libraries/libxmp { };
 #
 #  libixp_hg = callPackage ../development/libraries/libixp-hg { };
-#
-  libyaml = callPackage ../development/libraries/libyaml { };
 #
 #  libyamlcpp = callPackage ../development/libraries/libyaml-cpp { };
 #

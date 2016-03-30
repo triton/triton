@@ -1075,6 +1075,8 @@ krb5_lib = callPackageAlias "krb5_full" {
 
 kubernetes = callPackage ../all-pkgs/kubernetes { };
 
+lame = callPackage ../all-pkgs/lame { };
+
 ldb = callPackage ../all-pkgs/ldb { };
 
 libarchive = callPackage ../all-pkgs/libarchive { };
@@ -10451,8 +10453,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  koji = callPackage ../tools/package-management/koji { };
 #
 #  ksuperkey = callPackage ../tools/X11/ksuperkey { };
-#
-  lame = callPackage ../development/libraries/lame { };
 #
 #  lash = callPackage ../applications/audio/lash { };
 #

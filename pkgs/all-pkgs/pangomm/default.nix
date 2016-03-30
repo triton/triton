@@ -1,7 +1,6 @@
 { stdenv
 , fetchurl
 
-, cairo
 , cairomm
 , glibmm
 , libpng
@@ -10,17 +9,16 @@
 
 stdenv.mkDerivation rec {
   name = "pangomm-${version}";
-  versionMajor = "2.38";
-  versionMinor = "1";
+  versionMajor = "2.40";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/pangomm/${versionMajor}/${name}.tar.xz";
-    sha256 = "12xwjvqfxhqblcv7641k0l6r8n3qifnrx8w9571izn1nbd81iyzg";
+    sha256 = "7dd0afa9dcce57cdb0aad77da9ea46823ee8515d5f3ffd895b9ede7365c3d70d";
   };
 
   buildInputs = [
-    cairo
     cairomm
     glibmm
     libpng
@@ -28,8 +26,10 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
+    "--disable-maintainer-mode"
     "--disable-deprecated-api"
     "--disable-documentation"
+    "--enable-warnings"
     "--without-libstdc-doc"
     "--without-libsigc-doc"
     "--without-glibmm-doc"
@@ -47,7 +47,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

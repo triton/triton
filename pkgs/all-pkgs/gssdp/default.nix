@@ -41,12 +41,10 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-compile-warnings"
-    "--enable-introspection"
     (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--with-gtk"
     (wtFlag "gtk" (gtk3 != null) null)
   ];
 

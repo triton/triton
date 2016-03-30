@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
     (enFlag "x11-backend" gtk3.x11_backend null)
     (enFlag "wayland-backend" gtk3.wayland_backend null)
     (enFlag "broadway-backend" gtk3.broadway_backend null)
-    "--enable-api-atkmm"
+    (enFlag "api-atkmm" (atkmm != null) null)
     # Requires deprecated api to build
     "--enable-deprecated-api"
     "--disable-documentation"

@@ -27,7 +27,8 @@ stdenv.mkDerivation rec {
     "--disable-documentation"
     "--disable-debug-refcounting"
     "--enable-warnings"
-    "--disable-deprecated-api"
+    # Deprecated apis used by gtkmm2
+    "--enable-deprecated-api"
     "--without-libstdc-doc"
     "--without-libsigc-doc"
   ];

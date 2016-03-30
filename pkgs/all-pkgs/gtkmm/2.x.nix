@@ -4,6 +4,7 @@
 
 , atkmm
 , cairomm
+, gdk-pixbuf-core
 , glibmm
 , gtk2
 , pangomm
@@ -24,6 +25,15 @@ stdenv.mkDerivation rec {
     url = "mirror://gnome/sources/gtkmm/${versionMajor}/${name}.tar.xz";
     sha256 = "1vpmjqv0aqb1ds0xi6nigxnhlr0c74090xzi15b92amlzkrjyfj4";
   };
+
+  buildInputs = [
+    atkmm
+    cairomm
+    gdk-pixbuf-core
+    glibmm
+    gtk2
+    pangomm
+  ];
 
   patches = [
     (fetchTritonPatch {
@@ -65,8 +75,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     (enFlag "api-atkmm" (atkmm != null) null)
-    # Nokia maemo
-    (enFlag "api-maemo-extensions" true null)
+    "--disable-api-maemo-extensions"
     # Requires deprecated api
     "--enable-deprecated-api"
     "--disable-documentation"
@@ -78,16 +87,11 @@ stdenv.mkDerivation rec {
     "--without-atkmm-doc"
   ];
 
-  buildInputs = [
-    atkmm
-    cairomm
-    glibmm
-    gtk2
-    pangomm
+  NIX_CFLAGS_COMPILE = [
+    "-std=c++11"
   ];
 
   doCheck = true;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "C++ interface for GTK+";
@@ -97,7 +101,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

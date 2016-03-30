@@ -8,7 +8,7 @@
 , glib
 , libffi
 , python
-# Tests
+
 , cairo
 }:
 
@@ -58,13 +58,14 @@ stdenv.mkDerivation rec {
   /* patchShebangs does not catch @PYTHON@ */ ''
     sed -i tools/g-ir-tool-template.in \
       -e 's|#!/usr/bin/env @PYTHON@|#!${python.interpreter}|'
-  '' + optionalString doCheck (''
+  '' +
+  optionalString doCheck (''
       patchShebangs ./tests/gi-tester
-    '' +
-    /* Fix tests broken by absolute_shlib_path.patch */ ''
-    sed -i tests/scanner/{GetType,GtkFrob,Regress,SLetter,Typedefs,Utility}-1.0-expected.gir \
-      -e 's|shared-library="|shared-library="/unused/|'
-  '');
+    '' + /* Fix tests broken by absolute_shlib_path.patch */ ''
+      sed -i tests/scanner/{GetType,GtkFrob,Regress,SLetter,Typedefs,Utility}-1.0-expected.gir \
+        -e 's|shared-library="|shared-library="/unused/|'
+    ''
+  );
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -76,7 +77,7 @@ stdenv.mkDerivation rec {
     (wtFlag "cairo" doCheck null)
   ];
 
-  postInstall = "rm -rvf $out/share/gtk-doc";
+  postInstall = "rm -frv $out/share/gtk-doc";
 
   doCheck = false;
 

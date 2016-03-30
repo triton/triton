@@ -1,4 +1,8 @@
-{ stdenv, fetchurl, systemd_lib }:
+{ stdenv
+, fetchurl
+
+, systemd_lib
+}:
 
 stdenv.mkDerivation rec {
   name = "dhcpcd-6.10.1";
@@ -24,18 +28,19 @@ stdenv.mkDerivation rec {
   # Hack to make installation succeed.  dhcpcd will still use /var/db
   # at runtime.
   preInstall = ''
-    installFlagsArray+=("DBDIR=$TMPDIR/db" "SYSCONFDIR=$out/etc")
+    installFlagsArray+=(
+      "DBDIR=$TMPDIR/db"
+      "SYSCONFDIR=$out/etc"
+    )
   '';
 
-  # Check that the udev plugin got built.
-  postInstall = ''
-    [ -e $out/lib/dhcpcd/dev/udev.so ]
-  '';
-
-  meta = {
+  meta = with stdenv.lib; {
     description = "A client for the Dynamic Host Configuration Protocol (DHCP)";
     homepage = http://roy.marples.name/projects/dhcpcd;
-    platforms = stdenv.lib.platforms.linux;
-    maintainers = [ stdenv.lib.maintainers.eelco ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

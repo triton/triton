@@ -672,6 +672,8 @@ devil = callPackage ../all-pkgs/devil { };
 
 dhcp = callPackage ../all-pkgs/dhcp { };
 
+dhcpcd = callPackage ../all-pkgs/dhcpcd { };
+
 diffutils = callPackage ../all-pkgs/diffutils { };
 
 dnscrypt-proxy = callPackage ../all-pkgs/dnscrypt-proxy { };
@@ -2513,8 +2515,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   dnstop = callPackage ../tools/networking/dnstop { };
 
 #  dhcpdump = callPackage ../tools/networking/dhcpdump { };
-#
-  dhcpcd = callPackage ../tools/networking/dhcpcd { };
 #
 #  dhcping = callPackage ../tools/networking/dhcping { };
 #

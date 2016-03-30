@@ -698,6 +698,8 @@ elfutils = callPackage ../all-pkgs/elfutils { };
 
 eog = callPackage ../all-pkgs/eog { };
 
+erlang = callPackage ../all-pkgs/erlang { };
+
 evince = callPackage ../all-pkgs/evince { };
 
 evolution = callPackage ../all-pkgs/evolution { };

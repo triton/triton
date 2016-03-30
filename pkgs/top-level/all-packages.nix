@@ -1415,6 +1415,10 @@ nghttp2_lib = callPackageAlias "nghttp2_full" {
 
 nginx = callPackage ../all-pkgs/nginx { };
 
+nginx_unstable = callPackageAlias "nginx" {
+  channel = "unstable";
+};
+
 ninja = callPackage ../all-pkgs/ninja { };
 
 nmap = callPackage ../all-pkgs/nmap { };

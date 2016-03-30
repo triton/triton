@@ -10,14 +10,21 @@
 , pcre
 , openssl
 , zlib
+
+, channel ? "stable"
 }:
 
+let
+  sources = import ./sources.nix;
+
+  source = sources."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "nginx-1.8.1";
+  name = "nginx-${source.version}";
 
   src = fetchurl {
     url = "http://nginx.org/download/${name}.tar.gz";
-    sha256 = "1dwpyw4pvhj68vxramqxm8f79pqz9lrm8mvifbn49h3615ikqjwg";
+    inherit (source) sha256;
   };
 
   buildInputs = [
@@ -92,6 +99,15 @@ stdenv.mkDerivation rec {
     mv $TMPDIR/install/$out/sbin $out/bin
     mv $TMPDIR/install/etc $out/etc
   '';
+
+  passthru = {
+    sourceTarball = fetchurl {
+      urls = src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFile = ./mdounin.key;
+      inherit (source) sha256;
+    };
+  };
 
   meta = with stdenv.lib; {
     license = licenses.bsd2;

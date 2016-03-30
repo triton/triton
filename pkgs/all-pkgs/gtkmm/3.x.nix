@@ -10,31 +10,21 @@
 , pangomm
 }:
 
+with {
+  inherit (stdenv.lib)
+    enFlag;
+};
+
 stdenv.mkDerivation rec {
   name = "gtkmm-${version}";
-  versionMajor = "3.18";
+  versionMajor = "3.20";
   versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gtkmm/${versionMajor}/${name}.tar.xz";
-    sha256 = "0sxq700invkjpksn790gbnl8px8751kvgwn39663jx7dv89s37w2";
+    sha256 = "f021573f870df8a0b40ba37a7864c37be517c7a88cc957a193dbab28449b028a";
   };
-
-  configureFlags = [
-    "--disable-quartz-backend"
-    "--enable-x11-backend"
-    "--enable-wayland-backend"
-    "--enable-brodway-backend"
-    "--enable-api-atkmm"
-    # Requires glibmm deprecated api
-    "--enable-deprecated-api"
-    "--without-libstdc-doc"
-    "--without-libsigc-doc"
-    "--without-cairomm-doc"
-    "--without-pangomm-doc"
-    "--without-atkmm-doc"
-  ];
 
   buildInputs = [
     atkmm
@@ -46,8 +36,25 @@ stdenv.mkDerivation rec {
     pangomm
   ];
 
-  doCheck = true;
-  enableParallelBuilding = true;
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--disable-win32-backend"
+    "--disable-quartz-backend"
+    (enFlag "x11-backend" gtk3.x11_backend null)
+    (enFlag "wayland-backend" gtk3.wayland_backend null)
+    (enFlag "broadway-backend" gtk3.broadway_backend null)
+    "--enable-api-atkmm"
+    # Requires deprecated api to build
+    "--enable-deprecated-api"
+    "--disable-documentation"
+    "--enable-warnings"
+    "--without-libstdc-doc"
+    "--without-libsigc-doc"
+    "--without-glibmm-doc"
+    "--without-cairomm-doc"
+    "--without-pangomm-doc"
+    "--without-atkmm-doc"
+  ];
 
   meta = with stdenv.lib; {
     description = "C++ interface for GTK+";
@@ -57,7 +64,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

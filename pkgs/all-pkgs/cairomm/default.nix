@@ -13,19 +13,21 @@ stdenv.mkDerivation rec {
     sha256 = "1k3lb3jwnk5nm4s5cfm5kk8kl4b066chis4inws6k5yxdzn5lhsh";
   };
 
+  buildInputs = [
+    cairo
+    libsigcxx
+  ];
+
   configureFlags = [
+    "--disable-maintainer-mode"
     "--disable-documentation"
+    "--enable-warnings"
     "--disable-tests"
     "--enable-api-exceptions"
     "--without-libstdc-doc"
     "--without-libsigc-doc"
     "--without-boost"
     "--without-boost-unit-test-framework"
-  ];
-
-  buildInputs = [
-    cairo
-    libsigcxx
   ];
 
   meta = with stdenv.lib; {
@@ -36,7 +38,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

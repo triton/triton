@@ -1169,6 +1169,11 @@ libmpc = callPackage ../all-pkgs/libmpc { };
 
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
 
+libmpeg2 = callPackage ../all-pkgs/libmpeg2 {
+  libSDL = null;
+  xorg = null;
+};
+
 libmsgpack = callPackage ../all-pkgs/libmsgpack { };
 
 libnetfilter_conntrack = callPackage ../all-pkgs/libnetfilter_conntrack { };
@@ -7216,8 +7221,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  mosquitto = callPackage ../servers/mqtt/mosquitto { };
 #
 #  mps = callPackage ../development/libraries/mps { };
-#
-  libmpeg2 = callPackage ../development/libraries/libmpeg2 { };
 
 #  msilbc = callPackage ../development/libraries/msilbc { };
 #

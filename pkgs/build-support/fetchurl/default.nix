@@ -1,4 +1,4 @@
-{ stdenv, curl, openssl, minisign }: # Note that `curl' and `openssl' may be `null', in case of the native stdenv.
+{ stdenv, curl, openssl, minisign, gnupg }: # Note that `curl' and `openssl' may be `null', in case of the native stdenv.
 
 let
 
@@ -69,6 +69,10 @@ in
 , minisignUrl ? ""
 , minisignUrls ? []
 
+, pgpKeyFile ? null
+, pgpsigUrl ? ""
+, pgpsigUrls ? []
+
 , recursiveHash ? false
 
 , # Shell code executed before the file has been fetched.
@@ -106,6 +110,7 @@ let
 
   urls_ = (if url != "" then [ url ] else [ ]) ++ urls;
   minisignUrls_ = (if minisignUrl != "" then [ minisignUrl ] else [ ]) ++ minisignUrls;
+  pgpsigUrls_ = (if pgpsigUrl != "" then [ pgpsigUrl ] else [ ]) ++ pgpsigUrls;
 
 in
 
@@ -123,10 +128,13 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
     openssl
   ] ++ stdenv.lib.optionals (minisignPub != "") [
     minisign
+  ] ++ stdenv.lib.optionals (pgpKeyFile != null) [
+    gnupg
   ];
 
   urls = urls_;
   minisignUrls = minisignUrls_;
+  pgpsigUrls = pgpsigUrls_;
 
   # New-style output content requirements.
   outputHashAlgo =
@@ -151,7 +159,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
 
   outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
 
-  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch postVerification downloadToTemp executable sha1Confirm md5Confirm multihash minisignPub;
+  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch postVerification downloadToTemp executable sha1Confirm md5Confirm multihash minisignPub pgpKeyFile;
 
   # Doing the download on a remote machine just duplicates network
   # traffic, so don't do that.

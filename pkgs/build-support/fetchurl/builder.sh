@@ -2,6 +2,7 @@
 set -o noglob
 urls=($urls)
 minisignUrls=($minisignUrls)
+pgpsigUrls=($pgpsigUrls)
 set +o noglob
 
 source $stdenv/setup
@@ -128,6 +129,15 @@ tryDownload() {
           fi
         fi
 
+        if [ -n "$pgpKeyFile" ]; then
+          if ! gpg --lock-never --no-default-keyring --keyring "$TMPDIR/key.pgp" --verify "$TMPDIR/pgpsig" "$out" 2>/dev/null; then
+            echo "$out pgpsig does not validate" >&2
+            break
+          else
+            verifications+=('pgp')
+          fi
+        fi
+
         runHook postVerification
 
         local lhash
@@ -203,6 +213,7 @@ fixUrls() {
 
 fixUrls 'urls'
 fixUrls 'minisignUrls'
+fixUrls 'pgpsigUrls'
 
 if test -n "$showURLs"; then
   echo "URLs:"
@@ -213,6 +224,13 @@ if test -n "$showURLs"; then
   if [ "${#minisignUrls[@]}" -gt 0 ]; then
     echo "Minisign URLs:"
     for url in "${minisignUrls[@]}"; do
+      echo "  $url" >&2
+    done
+  fi
+
+  if [ "${#pgpsigUrls[@]}" -gt 0 ]; then
+    echo "ASC URLs:"
+    for url in "${pgpsigUrls[@]}"; do
       echo "  $url" >&2
     done
   fi
@@ -241,6 +259,11 @@ curl="curl \
  $curlOpts \
  $NIX_CURL_FLAGS"
 
+# Make sure we un ascii-armor our keyfile
+if [ -n "$pgpKeyFile" ]; then
+  HOME="$TMPDIR"  # GNUPG needs this for some reason
+  gpg -o "$TMPDIR/key.pgp" --dearmor "$pgpKeyFile" 2>/dev/null
+fi
 
 # We want to download signatures first
 for url in "${minisignUrls[@]}"; do
@@ -248,6 +271,14 @@ for url in "${minisignUrls[@]}"; do
     break
   else
     rm -f "$TMPDIR/minisign"
+  fi
+done
+
+for url in "${pgpsigUrls[@]}"; do
+  if $curl -C - --fail "$url" --output "$TMPDIR/pgpsig"; then
+    break
+  else
+    rm -f "$TMPDIR/pgpsig"
   fi
 done
 

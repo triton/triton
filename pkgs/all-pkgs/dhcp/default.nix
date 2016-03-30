@@ -13,11 +13,11 @@
 
 stdenv.mkDerivation rec {
   name = "dhcp-${version}";
-  version = "4.3.3-P1";
+  version = "4.3.4";
 
   src = fetchurl {
     url = "http://ftp.isc.org/isc/dhcp/${version}/${name}.tar.gz";
-    sha256 = "08crcsmg4dm2v533aq3883ik8mf4vvvd6r998r4vrgx1zxnqj7n1";
+    sha256 = "f5115aee3dd3e6925de4ba47b80ab732ba48b481c8364b6ebade2d43698d607e";
   };
 
   nativeBuildInputs = [
@@ -68,6 +68,15 @@ stdenv.mkDerivation rec {
 
   # Fails to build the bind library if run in parallel
   parallelBuild = false;
+
+  passthru = {
+    sourceTarball = fetchurl {
+      urls = src.urls;
+      pgpsigUrls = map (n: "${n}.sha512.asc") src.urls;
+      pgpKeyFile = ./signing.key;
+      inherit (src) outputHashAlgo outputHash;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Dynamic Host Configuration Protocol (DHCP) tools";

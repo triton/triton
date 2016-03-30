@@ -35,7 +35,7 @@ let
 
     # This allows the end user to specify the local ipfs host:port which hosts
     # the content
-    "IPFS_ADDR"
+    "IPFS_API"
   ] ++ (map (site: "NIX_MIRRORS_${site}") sites);
 
 in

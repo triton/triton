@@ -253,8 +253,8 @@ done
 
 # Download the actual file
 if [ -n "$multihash" ]; then
-  if [ -n "$IPFS_ADDR" ]; then
-    tryDownload "http://$IPFS_ADDR/ipfs/$multihash"
+  if [ -n "$IPFS_API" ]; then
+    tryDownload "http://$IPFS_API/ipfs/$multihash"
   fi
   tryDownload "http://127.0.0.1/ipfs/$multihash"
   tryDownload "http://127.0.0.1:8080/ipfs/$multihash"

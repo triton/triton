@@ -19,7 +19,16 @@ let
       cp -r ${src} $TMPDIR/src
       chmod -R a+w $TMPDIR/src
       cd $TMPDIR/src
-      gx --verbose install --global
+
+      echo "##### Trying to fetch locally on port 80 #####" >&2
+      if ! IPFS_API=localhost:80 gx --verbose install --global; then
+        echo "##### Trying to fetch locally on port 8080 #####" >&2
+        if ! IPFS_API=localhost:8080 gx --verbose install --global; then
+          echo "##### Trying to fetch remotely #####" >&2
+          gx --verbose install --global
+        fi
+      fi
+
       cp -r $TMPDIR/src $out
     '';
     buildInputs = [ gx.bin ];

@@ -13,7 +13,7 @@ stdenv.mkDerivation {
     owner = "llvm-mirror";
     repo = "libclc";
     rev = "b518692b52a0bbdf9cf0e2167b9629dd9501abcd";
-    sha256 = "0rh2whpi1vmncv9h2rzd6mzvkb1xgfq1glx7hnv805s71v3nfvsp";
+    sha256 = "3ee33d3a2c9989ce383b722760e0bd3e5dd80db56c7d48bb0f3014ac0d24eaac";
   };
 
   nativeBuildInputs = [

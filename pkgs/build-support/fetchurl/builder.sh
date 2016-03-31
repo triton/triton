@@ -3,6 +3,30 @@ set -o noglob
 urls=($urls)
 minisignUrls=($minisignUrls)
 pgpsigUrls=($pgpsigUrls)
+pgpKeyIds=($pgpKeyIds)
+
+pgpKeyFingerprintsArr=()
+i=0
+str=""
+for group in $pgpKeyFingerprints; do
+  if [ "$i" -eq "5" ]; then
+    str+=" "
+  fi
+
+  str+="$group"
+
+  i=$(($i + 1))
+
+  if [ "$i" -eq "10" ]; then
+    pgpKeyFingerprintsArr+=("$str")
+    str=""
+    i=0
+  else
+    str+=" "
+  fi
+done
+pgpKeyFingerprints=("${pgpKeyFingerprintsArr[@]}")
+
 set +o noglob
 
 source $stdenv/setup
@@ -129,8 +153,8 @@ tryDownload() {
           fi
         fi
 
-        if [ -n "$pgpKeyFile" ]; then
-          if ! gpg --lock-never --no-default-keyring --keyring "$TMPDIR/key.pgp" --verify "$TMPDIR/pgpsig" "$out" 2>/dev/null; then
+        if [ -n "$pgpKeyFile" ] || [ "${#pgpKeyIds[@]}" -gt "0" ]; then
+          if ! gpg --lock-never --verify "$TMPDIR/pgpsig" "$out"; then
             echo "$out pgpsig does not validate" >&2
             break
           else
@@ -259,11 +283,28 @@ curl="curl \
  $curlOpts \
  $NIX_CURL_FLAGS"
 
-# Make sure we un ascii-armor our keyfile
+# Import needed gnupg keys
+HOME="$TMPDIR"  # GNUPG needs this
 if [ -n "$pgpKeyFile" ]; then
-  HOME="$TMPDIR"  # GNUPG needs this for some reason
-  gpg -o "$TMPDIR/key.pgp" --dearmor "$pgpKeyFile" 2>/dev/null
+  gpg --import "$pgpKeyFile"
 fi
+
+if [ "${#pgpKeyIds[@]}" -gt "0" ]; then
+  gpg --list-keys
+  eval `dirmngr --daemon --homedir=$HOME --disable-http --disable-ldap`
+  gpg --verbose --recv-keys --keyserver "hkp://pgp.mit.edu" "${pgpKeyIds[@]}"
+fi
+
+i=0
+while [ "$i" -lt "${#pgpKeyIds[@]}" ]; do
+  pgpKeyId="${pgpKeyIds[$i]}"
+  pgpKeyFingerprint="${pgpKeyFingerprints[$i]}"
+  if [ "$(gpg --fingerprint "$pgpKeyId" | awk -F '= ' '{ if (/Key fingerprint/) { print $2 } }')" != "$pgpKeyFingerprint" ]; then
+    echo "Fingerprints didn't match for $pgpKeyId" >&2
+    exit 1
+  fi
+  i=$(($i + 1))
+done
 
 # We want to download signatures first
 for url in "${minisignUrls[@]}"; do

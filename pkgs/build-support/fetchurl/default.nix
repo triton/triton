@@ -69,6 +69,10 @@ in
 , minisignUrl ? ""
 , minisignUrls ? []
 
+, pgpKeyId ? ""
+, pgpKeyIds ? []
+, pgpKeyFingerprint ? ""
+, pgpKeyFingerprints ? []
 , pgpKeyFile ? null
 , pgpsigUrl ? ""
 , pgpsigUrls ? []
@@ -111,10 +115,14 @@ let
   urls_ = (if url != "" then [ url ] else [ ]) ++ urls;
   minisignUrls_ = (if minisignUrl != "" then [ minisignUrl ] else [ ]) ++ minisignUrls;
   pgpsigUrls_ = (if pgpsigUrl != "" then [ pgpsigUrl ] else [ ]) ++ pgpsigUrls;
+  pgpKeyIds_ = (if pgpKeyId != "" then [ pgpKeyId ] else [ ]) ++ pgpKeyIds;
+  pgpKeyFingerprints_ = (if pgpKeyFingerprint != "" then [ pgpKeyFingerprint ] else [ ]) ++ pgpKeyFingerprints;
 
 in
 
 assert urls_ != [ ] || multihash != "";
+
+assert stdenv.lib.length pgpKeyIds == stdenv.lib.length pgpKeyFingerprints;
 
 if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${stdenv.lib.concatStringsSep ", " urls_}" else stdenv.mkDerivation {
   name =
@@ -128,13 +136,15 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
     openssl
   ] ++ stdenv.lib.optionals (minisignPub != "") [
     minisign
-  ] ++ stdenv.lib.optionals (pgpKeyFile != null) [
+  ] ++ stdenv.lib.optionals (pgpKeyFile != null || pgpKeyIds_ != []) [
     gnupg
   ];
 
   urls = urls_;
   minisignUrls = minisignUrls_;
   pgpsigUrls = pgpsigUrls_;
+  pgpKeyIds = pgpKeyIds_;
+  pgpKeyFingerprints = pgpKeyFingerprints_;
 
   # New-style output content requirements.
   outputHashAlgo =

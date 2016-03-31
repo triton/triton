@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "zeux";
     repo = "pugixml";
     rev = "v${version}";
-    sha256 = "0f28wwpc395s6jcx4hax6sn3gn7wwxf2xghadaqv5chldv5miymg";
+    sha256 = "b4dc913f28763da0ce56cf091500f9ac728b83ba50a269cff9f2c91378e27e08";
   };
 
   nativeBuildInputs = [

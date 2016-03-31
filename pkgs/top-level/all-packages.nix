@@ -1504,15 +1504,23 @@ poppler = callPackage ../all-pkgs/poppler {
   qt5 = null;
 };
 
-postgresql = callPackageAlias "postgresql95" { };
+postgresql = callPackage ../all-pkgs/postgresql { };
 postgresql_lib = callPackageAlias "postgresql" { };
-
-inherit (callPackages ../all-pkgs/postgresql { })
-  postgresql91
-  postgresql92
-  postgresql93
-  postgresql94
-  postgresql95;
+postgresql_95 = callPackageAlias "postgresql" {
+  channel = "9.5";
+};
+postgresql_94 = callPackageAlias "postgresql" {
+  channel = "9.4";
+};
+postgresql_93 = callPackageAlias "postgresql" {
+  channel = "9.3";
+};
+postgresql_92 = callPackageAlias "postgresql" {
+  channel = "9.2";
+};
+postgresql_91 = callPackageAlias "postgresql" {
+  channel = "9.1";
+};
 
 potrace = callPackage ../all-pkgs/potrace {};
 

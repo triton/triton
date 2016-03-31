@@ -122,7 +122,7 @@ in
 
 assert urls_ != [ ] || multihash != "";
 
-assert stdenv.lib.length pgpKeyIds == stdenv.lib.length pgpKeyFingerprints;
+assert stdenv.lib.length pgpKeyIds_ == stdenv.lib.length pgpKeyFingerprints_;
 
 if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${stdenv.lib.concatStringsSep ", " urls_}" else stdenv.mkDerivation {
   name =

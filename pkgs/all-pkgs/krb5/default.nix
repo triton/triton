@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "${meta.homepage}dist/krb5/1.14/krb5-${version}.tar.gz";
-    sha256 = "168sdwnsrw3hpx4kjcn49jklinrjik2fsgasrv85nvr4fi2s9yn8";
+    sha256 = "c8faa44574246f5bd0ce5a3dedc48c32db48a74cc4323949bf70f0ac2d6f1a99";
   };
 
   prePatch= ''
@@ -81,6 +81,17 @@ stdenv.mkDerivation rec {
     find $out/bin -type f | grep -v 'krb5-config' | xargs rm
   '';
 
+  passthru = rec {
+    newVersion = "1.14.1";
+    sourceTarball = fetchurl rec {
+      url = "${meta.homepage}dist/krb5/1.14/krb5-${newVersion}.tar.gz";
+      pgpsigUrl = "${url}.asc";
+      pgpKeyId = "0055C305";
+      pgpKeyFingerprint = "2C73 2B1C 0DBE F678 AB3A  F606 A32F 17FD 0055 C305";
+      sha256 = "c8faa44574246f5bd0ce5a3dedc48c32db48a74cc4323949bf70f0ac2d6f1a99";
+    };
+  };
+
   meta = with stdenv.lib; {
     description = "MIT Kerberos 5";
     homepage = http://web.mit.edu/kerberos/;
@@ -89,8 +100,7 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 
   passthru.implementation = "krb5";

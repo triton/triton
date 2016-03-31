@@ -11,7 +11,7 @@ let
 
     let php7 = lib.versionAtLeast version "7.0"; in
 
-    composableDerivation.composableDerivation {} (fixed: {
+    composableDerivation.composableDerivation {} (fixed: rec {
 
       inherit version;
 
@@ -265,8 +265,24 @@ let
       '';
 
       src = fetchurl {
-        url = "http://www.php.net/distributions/php-${version}.tar.bz2";
+        url = "http://www.php.net/distributions/php-${version}.tar.xz";
         inherit sha256;
+      };
+
+      passthru = {
+        sourceTarball = fetchurl {
+          urls = src.urls;
+          pgpsigUrls = map (n: "${n}.asc") src.urls;
+          pgpKeyIds = [
+            "9C0D5763"
+            "33CFC8B3"
+          ];
+          pgpKeyFingerprints = [
+            "1A4E 8B72 77C4 2E53 DBA9  C7B9 BCAA 30EA 9C0D 5763"
+            "6E4F 6AB3 21FD C07F 2C33  2E3A C2BF 0BC4 33CF C8B3"
+          ];
+          inherit (src) outputHashAlgo outputHash;
+        };
       };
 
       meta = with stdenv.lib; {
@@ -279,12 +295,11 @@ let
       patches = if !php7 then [ ./fix-paths.patch ] else [ ./fix-paths-php7.patch ];
 
     });
-
 in {
 
   php70 = generic {
-    version = "7.0.4";
-    sha256 = "1k4xaapin64f66rz2zwr7aj7vhmb4b5x4bp2w6l9n64wf01waim2";
+    version = "7.0.5";
+    sha256 = "c41f1a03c24119c0dd9b741cdb67880486e64349fc33527767f6dc28d3803abb";
   };
 
 }

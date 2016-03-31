@@ -1,4 +1,11 @@
-{ stdenv, fetchFromGitHub, autoreconfHook, xorg, python, mesa }:
+{ stdenv
+, autoreconfHook
+, fetchFromGitHub
+, python
+
+, xorg
+, mesa
+}:
 
 stdenv.mkDerivation rec {
   name = "epoxy-${version}";
@@ -8,17 +15,28 @@ stdenv.mkDerivation rec {
     owner = "anholt";
     repo = "libepoxy";
     rev = "v${version}";
-    sha256 = "0dfkd4xbp7v5gwsf6qwaraz54yzizf3lj5ymyc0msjn0adq3j5yl";
+    sha256 = "c4d1e31751eafe42504d44b6933967687db9f9fd10c9fa8649cfc19fb9ea3db4";
   };
 
-  nativeBuildInputs = [ autoreconfHook xorg.utilmacros python ];
-  buildInputs = [ mesa xorg.libX11 ];
+  nativeBuildInputs = [
+    autoreconfHook
+    python
+    xorg.utilmacros
+  ];
+
+  buildInputs = [
+    mesa
+    xorg.libX11
+  ];
 
   meta = with stdenv.lib; {
     description = "A library for handling OpenGL function pointer management";
     homepage = https://github.com/anholt/libepoxy;
     license = licenses.mit;
-    maintainers = [ maintainers.goibhniu ];
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

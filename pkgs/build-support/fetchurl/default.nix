@@ -57,11 +57,20 @@ in
   # Different ways of specifying the hash.
 , outputHash ? ""
 , outputHashAlgo ? ""
+
+, sha256Url ? ""
+, sha256Urls ? []
 , sha256 ? ""
+, sha512Url ? ""
+, sha512Urls ? []
 , sha512 ? ""
 
 , sha1Confirm ? ""
+, sha1Url ? ""
+, sha1Urls ? []
 , md5Confirm ? ""
+, md5Url ? ""
+, md5Urls ? []
 
 , multihash ? ""
 
@@ -113,6 +122,10 @@ let
     || sha256 != "" || sha512 != "";
 
   urls_ = (if url != "" then [ url ] else [ ]) ++ urls;
+  sha512Urls_ = (if sha512Url != "" then [ sha512Url ] else [ ]) ++ sha512Urls;
+  sha256Urls_ = (if sha256Url != "" then [ sha256Url ] else [ ]) ++ sha256Urls;
+  sha1Urls_ = (if sha1Url != "" then [ sha1Url ] else [ ]) ++ sha1Urls;
+  md5Urls_ = (if md5Url != "" then [ md5Url ] else [ ]) ++ md5Urls;
   minisignUrls_ = (if minisignUrl != "" then [ minisignUrl ] else [ ]) ++ minisignUrls;
   pgpsigUrls_ = (if pgpsigUrl != "" then [ pgpsigUrl ] else [ ]) ++ pgpsigUrls;
   pgpKeyIds_ = (if pgpKeyId != "" then [ pgpKeyId ] else [ ]) ++ pgpKeyIds;
@@ -141,6 +154,10 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
   ];
 
   urls = urls_;
+  sha512Urls = sha512Urls_;
+  sha256Urls = sha256Urls_;
+  sha1Urls = sha1Urls_;
+  md5Urls = md5Urls_;
   minisignUrls = minisignUrls_;
   pgpsigUrls = pgpsigUrls_;
   pgpKeyIds = pgpKeyIds_;

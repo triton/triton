@@ -1,6 +1,10 @@
 # Convert any non-arrays to arrays
 set -o noglob
 urls=($urls)
+sha512Urls=($sha512Urls)
+sha256Urls=($sha256Urls)
+sha1Urls=($sha1Urls)
+md5Urls=($md5Urls)
 minisignUrls=($minisignUrls)
 pgpsigUrls=($pgpsigUrls)
 pgpKeyIds=($pgpKeyIds)
@@ -122,6 +126,28 @@ tryDownload() {
     if $curl "${extraOpts[@]}" "$url" --output "$downloadedFile"; then
       runHook postFetch
       if [ "$outputHashMode" = "flat" ]; then
+        if [ -n "$sha512Confirm" ]; then
+          local sha512
+          sha512="$(openssl sha512 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
+          if [ "$sha512Confirm" != "$sha512" ]; then
+            echo "$out SHA512 hash does not match given $sha512Confirm" >&2
+            break
+          else
+            verifications+=('sha512')
+          fi
+        fi
+
+        if [ -n "$sha256Confirm" ]; then
+          local sha256
+          sha256="$(openssl sha256 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
+          if [ "$sha256Confirm" != "$sha256" ]; then
+            echo "$out SHA256 hash does not match given $sha256Confirm" >&2
+            break
+          else
+            verifications+=('sha256')
+          fi
+        fi
+
         if [ -n "$sha1Confirm" ]; then
           local sha1
           sha1="$(openssl sha1 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
@@ -236,6 +262,10 @@ fixUrls() {
 }
 
 fixUrls 'urls'
+fixUrls 'sha512Urls'
+fixUrls 'sha256Urls'
+fixUrls 'sha1Urls'
+fixUrls 'md5Urls'
 fixUrls 'minisignUrls'
 fixUrls 'pgpsigUrls'
 
@@ -244,6 +274,34 @@ if test -n "$showURLs"; then
   for url in "${urls[@]}"; do
     echo "  $url" >&2
   done
+
+  if [ "${#sha512Urls[@]}" -gt 0 ]; then
+    echo "sha512 URLs:"
+    for url in "${sha512Urls[@]}"; do
+      echo "  $url" >&2
+    done
+  fi
+
+  if [ "${#sha256Urls[@]}" -gt 0 ]; then
+    echo "sha256 URLs:"
+    for url in "${sha256Urls[@]}"; do
+      echo "  $url" >&2
+    done
+  fi
+
+  if [ "${#sha1Urls[@]}" -gt 0 ]; then
+    echo "sha1 URLs:"
+    for url in "${sha1Urls[@]}"; do
+      echo "  $url" >&2
+    done
+  fi
+
+  if [ "${#md5Urls[@]}" -gt 0 ]; then
+    echo "md5 URLs:"
+    for url in "${md5Urls[@]}"; do
+      echo "  $url" >&2
+    done
+  fi
 
   if [ "${#minisignUrls[@]}" -gt 0 ]; then
     echo "Minisign URLs:"
@@ -307,7 +365,66 @@ while [ "$i" -lt "${#pgpKeyIds[@]}" ]; do
 done
 
 # We want to download signatures first
+getHashOrEmpty() {
+  if grep -q "$(basename "$urls")" "$1"; then
+    grep "$(basename "$urls")" "$1" | awk '{ print $1 }'
+  else
+    cat "$1"
+  fi
+}
+
+getHash() {
+  local hashh
+  hashh="$(getHashOrEmpty "$@")"
+  if [ -z "$hashh" ]; then
+    echo "broken"
+  else
+    echo "$hashh"
+  fi
+}
+
+for url in "${sha512Urls[@]}"; do
+  echo "Trying $url" >&2
+  if $curl -C - --fail "$url" --output "$TMPDIR/sha512"; then
+    sha512Confirm="$(getHash "$TMPDIR/sha512")"
+    break
+  else
+    sha512Confirm="broken"
+  fi
+done
+
+for url in "${sha256Urls[@]}"; do
+  echo "Trying $url" >&2
+  if $curl -C - --fail "$url" --output "$TMPDIR/sha256"; then
+    sha256Confirm="$(getHash "$TMPDIR/sha256")"
+    break
+  else
+    sha256Confirm="broken"
+  fi
+done
+
+for url in "${sha1Urls[@]}"; do
+  echo "Trying $url" >&2
+  if $curl -C - --fail "$url" --output "$TMPDIR/sha1"; then
+    sha1Confirm="$(getHash "$TMPDIR/sha1")"
+    break
+  else
+    sha1Confirm="broken"
+  fi
+done
+
+for url in "${md5Urls[@]}"; do
+  echo "Trying $url" >&2
+  if $curl -C - --fail "$url" --output "$TMPDIR/md5"; then
+    md5Confirm="$(getHash "$TMPDIR/md5")"
+    break
+  else
+    md5Confirm="broken"
+  fi
+done
+
 for url in "${minisignUrls[@]}"; do
+  echo "Trying $url" >&2
   if $curl -C - --fail "$url" --output "$TMPDIR/minisign"; then
     break
   else
@@ -316,6 +433,7 @@ for url in "${minisignUrls[@]}"; do
 done
 
 for url in "${pgpsigUrls[@]}"; do
+  echo "Trying $url" >&2
   if $curl -C - --fail "$url" --output "$TMPDIR/pgpsig"; then
     break
   else

@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     owner = "wkennington";
     repo = "iana-etc";
     rev = "f3ab93e036523757c540247bff80ff9904a28b42";
-    sha256 = "1i3ybyv8vs3g2bhq6ajrnfn2q8lld7yj7zjr4i9p9sb8c6w34xqz";
+    sha256 = "052e2793a0f69a19ecdbe31a1a546e95e715db9a30b936ce0e065c707f908cd7";
   };
 
   buildPhase = ''

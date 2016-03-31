@@ -47,6 +47,7 @@ in pkgs.buildEnv {
     util-linux_full
     curl
     findutils
+    xz
   ];
 }'
 if ! nix-build --out-link $TMPDIR/nix-env -E "$exp"; then
@@ -171,7 +172,7 @@ while read line; do
 
   cd $TMPDIR/$pkg
 
-  VERSION="$(git tag --sort "v:refname" | grep -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
+  VERSION="$(git tag --sort "v:refname" | grep '\([0-9]\+\.\)\+[0-9]\+$' | grep -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
   HEAD_DATE="$(git log origin/master -n 1 --date=short | awk '{ if (/Date/) { print $2 } }')"
   REV="$(git rev-parse origin/master)"
   DATE="$HEAD_DATE"
@@ -187,7 +188,7 @@ while read line; do
   if [ "$rev" != "$REV" ]; then
     hasUpdates=1
     echo -e "$pkg:\n  $date $rev\n  $DATE $REV" >&2
-    if [ -n "$VERSION" ]; then
+    if [ "$REV" = "$VERSION" ]; then
       DATE="nodate"
     fi
     echo "$pkg $REV $DATE $names" >> $TMPDIR/updates
@@ -210,14 +211,26 @@ echo "Generating package hashes..." >&2
 generate_hash() {
   pkg="$1"
   rev="$2"
+  date="$3"
+
+  if [ "${#rev}" -eq "40" ]; then
+    name="$(echo "$pkg" | awk -F/ '{ print $NF }')-$date"
+  else
+    name="$(echo "$pkg" | awk -F/ '{ print $NF }')-$rev"
+  fi
+  tmp="$TMPDIR/tars/$pkg"
+  mkdir -p "$tmp"
 
   cd "$TMPDIR/$pkg"
-  git checkout "$rev" >/dev/null 2>&1
-  rm -r .git
-  mkdir -p "$TMPDIR/tars/$pkg"
-  tar cf "$TMPDIR/tars/$pkg/tmp.tar" $(find . -maxdepth 1 -mindepth 1)
-  HASH="$(nix-prefetch-url --unpack "file://$TMPDIR/tars/$pkg/tmp.tar" 2>/dev/null)"
-  rm "$TMPDIR/tars/$pkg/tmp.tar"
+  export TZ="UTC"
+  git archive --format=tar --prefix="$name/" "$rev" | tar -xC "$tmp"
+  touch -t 200001010000 "$tmp/$name"
+  
+  cd "$tmp"
+  tar --sort=name --owner=0 --group=0 --numeric-owner --mode=go=rX,u+rw,a-s -cJf "$tmp/$name.tar.xz" "$name"
+
+  HASH="$(nix-prefetch-url "file://$tmp/$name.tar.xz" 2>/dev/null)"
+  rm -r "$tmp"
   rm -r "$TMPDIR/$pkg"
 
   exec 3<>"$TMPDIR/updates.lock"
@@ -225,7 +238,7 @@ generate_hash() {
   sed -i "s,^$pkg [^ ]*,\0 $HASH,g" "$TMPDIR/updates"
   exec 3>&-
 }
-ARGS=($(awk '{ print "- " $1 " generate_hash " $1 " " $2; }' $TMPDIR/updates))
+ARGS=($(awk '{ print "- " $1 " generate_hash " $1 " " $2 " " $3; }' $TMPDIR/updates))
 concurrent "${ARGS[@]}"
 
 export TMPDIR

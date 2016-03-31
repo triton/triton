@@ -7,10 +7,10 @@ stdenv.mkDerivation rec {
   version = "131";
 
   src = fetchFromGitHub {
-    sha256 = "1bhvcq8fxxsqnpg5qa6k3nsyhq0nl0iarh08sqzclww27hlpyay2";
-    rev = "r${version}";
-    repo = "lz4";
     owner = "Cyan4973";
+    repo = "lz4";
+    rev = "r${version}";
+    sha256 = "8a5b040fbe3d0684eb30a5736060c2865869117e867279e7d3785691fe281752";
   };
 
   preBuild = ''

@@ -285,41 +285,43 @@ let
 
   fetchzip = callPackage ../build-support/fetchzip { };
 
-  fetchFromGitHub = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
+  fetchFromGitHub = { owner, repo, rev, sha256, name ? "${repo}-${rev}" }: pkgs.fetchzip {
     inherit name sha256;
     url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
     meta.homepage = "https://github.com/${owner}/${repo}/";
   } // { inherit rev; };
 
-  fetchFromBitbucket = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
+  fetchFromBitbucket = { owner, repo, rev, sha256, name ? "${repo}-${rev}" }: pkgs.fetchzip {
     inherit name sha256;
     url = "https://bitbucket.org/${owner}/${repo}/get/${rev}.tar.gz";
     meta.homepage = "https://bitbucket.org/${owner}/${repo}/";
-    extraPostFetch = ''rm -f "$out"/.hg_archival.txt''; # impure file; see #12002
+    extraPostFetch = ''
+      find . -name .hg_archival.txt -delete
+    ''; # impure file; see #12002
   };
 
   # cgit example, snapshot support is optional in cgit
-  fetchFromSavannah = { repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
+  fetchFromSavannah = { repo, rev, sha256, name ? "${repo}-${rev}" }: pkgs.fetchzip {
     inherit name sha256;
     url = "http://git.savannah.gnu.org/cgit/${repo}.git/snapshot/${repo}-${rev}.tar.gz";
     meta.homepage = "http://git.savannah.gnu.org/cgit/${repo}.git/";
   };
 
   # gitlab example
-  fetchFromGitLab = { owner, repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
+  fetchFromGitLab = { owner, repo, rev, sha256, name ? "${repo}-${rev}" }: pkgs.fetchzip {
     inherit name sha256;
     url = "https://gitlab.com/${owner}/${repo}/repository/archive.tar.gz?ref=${rev}";
     meta.homepage = "https://gitlab.com/${owner}/${repo}/";
   };
 
   # gitweb example, snapshot support is optional in gitweb
-  fetchFromRepoOrCz = { repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
+  fetchFromRepoOrCz = { repo, rev, sha256, name ? "${repo}-${rev}" }: pkgs.fetchzip {
     inherit name sha256;
     url = "http://repo.or.cz/${repo}.git/snapshot/${rev}.tar.gz";
     meta.homepage = "http://repo.or.cz/${repo}.git/";
   };
 
-  fetchFromSourceforge = { repo, rev, sha256, name ? "${repo}-${rev}-src" }: pkgs.fetchzip {
+  fetchFromSourceforge = { repo, rev, sha256, name ? "${repo}-${rev}" }: pkgs.fetchzip {
     inherit name sha256;
     url = "http://sourceforge.net/code-snapshots/git/"
       + "${lib.substring 0 1 repo}/"

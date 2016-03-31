@@ -3,7 +3,7 @@
 , gettext
 , texinfo
 
-, adns
+#, adns
 , bzip2
 , gnutls
 , libassuan
@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    adns
+    #adns
     bzip2
     gnutls
     libassuan
@@ -78,7 +78,7 @@ stdenv.mkDerivation rec {
     "--enable-sqlite"
     "--disable-ntbtls"
     "--enable-gnutls"
-    "--with-adns"
+    # "--with-adns"  # This seems to be buggy
     "--enable-ldap"
     "--with-mailprog=sendmail"
     "--with-zlib"

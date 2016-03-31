@@ -28,6 +28,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://nginx.org/download/${name}.tar.gz";
+    allowHashOutput = false;
     inherit (source) sha256;
   };
 

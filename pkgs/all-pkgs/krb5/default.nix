@@ -23,6 +23,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "${meta.homepage}dist/krb5/1.14/krb5-${version}.tar.gz";
+    allowHashOutput = false;
     sha256 = "c8faa44574246f5bd0ce5a3dedc48c32db48a74cc4323949bf70f0ac2d6f1a99";
   };
 

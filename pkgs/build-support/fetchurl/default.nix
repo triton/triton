@@ -58,6 +58,8 @@ in
 , outputHash ? ""
 , outputHashAlgo ? ""
 
+, allowHashOutput ? true
+
 , sha256Url ? ""
 , sha256Urls ? []
 , sha256 ? ""
@@ -186,7 +188,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
 
   outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
 
-  inherit curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch postVerification downloadToTemp executable sha1Confirm md5Confirm multihash minisignPub pgpKeyFile;
+  inherit allowHashOutput curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch postVerification downloadToTemp executable sha1Confirm md5Confirm multihash minisignPub pgpKeyFile;
 
   # Doing the download on a remote machine just duplicates network
   # traffic, so don't do that.

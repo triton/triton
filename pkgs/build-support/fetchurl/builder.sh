@@ -200,7 +200,7 @@ tryDownload() {
           str="Got a bad hash:\n"
           str+="  URL: $url\n"
           str+="  File: $out\n"
-          if [ "${#verifications[@]}" -gt 0 ]; then
+          if [ -n "$allowHashOutput" ] && [ "${#verifications[@]}" -gt 0 ]; then
             str+='  Verification:'
             local verification
             for verification in "${verifications[@]}"; do

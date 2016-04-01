@@ -1,10 +1,19 @@
-{ stdenv, fetchurl, fetchFromSavannah, autogen, flex, bison, python, autoconf, automake
+{ stdenv
+, autogen
+, bison
+, fetchurl
+, flex
+, python, autoconf, automake
 , gettext, ncurses, libusb_1, freetype, lvm2, zfs
 , efiSupport ? false
 }:
 
-with stdenv.lib;
 let
+  inherit (stdenv.lib)
+    any
+    mapAttrsToList
+    optionals;
+
   pcSystems = {
     "i686-linux".target = "i386";
     "x86_64-linux".target = "i386";
@@ -18,44 +27,27 @@ let
   canEfi = any (system: stdenv.system == system) (mapAttrsToList (name: _: name) efiSystems);
   inPCSystems = any (system: stdenv.system == system) (mapAttrsToList (name: _: name) pcSystems);
 
-  version = "2.x-2015-01-22";
-
-  unifont_bdf = fetchurl {
-    url = "http://unifoundry.com/unifont-5.1.20080820.bdf.gz";
-    sha256 = "0s0qfff6n6282q28nwwblp5x295zd6n71kl43xj40vgvdqxv0fxx";
-  };
-
-  po_src = fetchurl {
-    name = "grub-2.02-beta2.tar.gz";
-    url = "http://alpha.gnu.org/gnu/grub/grub-2.02~beta2.tar.gz";
-    sha256 = "1lr9h3xcx0wwrnkxdnkfjwy08j7g7mdlmmbdip2db4zfgi69h0rm";
-  };
-
-in (
+in
 
 assert efiSupport -> canEfi;
 
 stdenv.mkDerivation rec {
-  name = "grub-${version}";
+  name = "grub-2.02-beta3";
 
-  src = fetchFromSavannah {
-    repo = "grub";
-    rev = "ff84a9b868ea36da23248da780b8e85bdc4c183d";
-    sha256 = "1pbnyqha8my5h0bx3vfn4aqjdja8z32m4jp10dv9a1hx7mfnansk";
+  src = fetchurl {
+    name = "${name}.tar.xz";
+    url = "http://alpha.gnu.org/gnu/grub/grub-2.02~beta3.tar.xz";
+    sha256 = "30ec3d555e52a702c3eef449872ef874eff28b320f40b55ffc47f70db8e5ada1";
   };
 
-  nativeBuildInputs = [ autogen flex bison python autoconf automake ];
-  buildInputs = [ ncurses libusb_1 freetype gettext lvm2 zfs ];
+  nativeBuildInputs = [
+    autogen
+    bison
+    flex
+    python
+  ];
 
-  prePatch = ''
-    tar zxf ${po_src} grub-2.02~beta2/po
-    rm -rf po
-    mv grub-2.02~beta2/po po
-    sh autogen.sh
-    gunzip < "${unifont_bdf}" > "unifont.bdf"
-    sed -i "configure" \
-      -e "s|/usr/src/unifont.bdf|$PWD/unifont.bdf|g"
-  '';
+  buildInputs = [ ncurses libusb_1 freetype gettext lvm2 zfs ];
 
   patches = [
     ./fix-bash-completion.patch
@@ -87,6 +79,15 @@ stdenv.mkDerivation rec {
   stackProtector = false;
   optimize = false;
 
+  passthru = rec {
+    sourceTarball = fetchurl {
+      inherit (src) name urls outputHash outputHashAlgo;
+      pgpsigUrl = map (n: "${n}.sig") src.urls;
+      pgpKeyId = "E82E4209";
+      pgpKeyFingerprint = "E53D 497F 3FA4 2AD8 C9B4  D1E8 35A9 3B74 E82E 4209";
+    };
+  };
+
   meta = with stdenv.lib; {
     description = "GNU GRUB, the Grand Unified Boot Loader (2.x beta)";
     homepage = http://www.gnu.org/software/grub/;
@@ -94,4 +95,4 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       x86_64-linux;
   };
-})
+}

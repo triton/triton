@@ -2,14 +2,14 @@
 
 stdenv.mkDerivation rec {
   name = "alsa-utils-${version}";
-  version = "1.1.0";
+  version = "1.1.1";
 
   src = fetchurl {
     urls = [
       "ftp://ftp.alsa-project.org/pub/utils/${name}.tar.bz2"
       "http://alsa.cybermirror.org/utils/${name}.tar.bz2"
     ];
-    sha256 = "1wa88wvqcfhak9x3y65wzzwxmmyxb5bv2gyj7lnm653fnwsk271v";
+    sha256 = "89757c9abaf420831b088fce354d492acc170bd02bb50eb7392c175f594b8041";
   };
 
   buildInputs = [ gettext alsa-lib ncurses libsamplerate fftw_double ];

@@ -26,7 +26,6 @@
 , libvisual
 , libwebp
 , mesa
-, mpg123
 , musepack
 , openal
 #, opencv
@@ -87,7 +86,6 @@ stdenv.mkDerivation rec {
     libvisual
     libwebp
     mesa
-    mpg123
     musepack
     openal
     #opencv

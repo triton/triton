@@ -18,7 +18,19 @@
 
 let
   tarball = baseNameOf url;
-  name' = args.name or (lib.head (lib.splitString "." tarball));
+
+  removeTarZip = l:
+    if l == [ ] then
+      [ ]
+    else
+      let
+        item = lib.head l;
+        rest' = lib.tail l;
+        list = if lib.any (n: item == n) [ "tar" "zip" ] then [ ] else [ item ];
+        rest = if item == "tar" then lib.tail rest' else rest';
+      in list ++ removeTarZip rest;
+
+  name' = args.name or (lib.concatStringsSep "." (removeTarZip (lib.splitString "." tarball)));
 in
 lib.overrideDerivation (fetchurl (rec {
   name = "${name'}.tar.xz";

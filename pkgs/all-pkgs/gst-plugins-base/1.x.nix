@@ -25,11 +25,12 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-base-1.6.3";
+  name = "gst-plugins-base-1.8.0";
 
-  src = fetchurl {
-    url = "http://gstreamer.freedesktop.org/src/gst-plugins-base/${name}.tar.xz";
-    sha256 = "0xbskifk95rw7jd85sqjrmqh2kys1bpi0inrxyapx1x4vf7ly5dn";
+  src = fetchurl rec {
+    url = "https://gstreamer.freedesktop.org/src/gst-plugins-base/${name}.tar.xz";
+    sha256Url = "${url}.sha256sum";
+    sha256 = "abc0acc1d15b4b9c97c65cd9689bd6400081853b9980ea428d3c8572dd791522";
   };
 
   nativeBuildInputs = [
@@ -57,11 +58,11 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--enable-option-checking"
     "--disable-maintainer-mode"
     "--enable-nls"
     "--enable-rpath"
     "--disable-fatal-warnings"
+    "--disable-extra-checks"
     "--disable-debug"
     "--disable-profiling"
     "--disable-valgrind"
@@ -104,13 +105,12 @@ stdenv.mkDerivation rec {
     (enFlag "xshm" (xorg.libXext != null) null)
     (enFlag "alsa" (alsa-lib != null) null)
     (enFlag "cdparanoia" (cdparanoia != null) null)
+    "--disable-ivorbis"
     (enFlag "libvisual" (libvisual != null) null)
     (enFlag "ogg" (libogg != null) null)
     (enFlag "pango" (pango != null) null)
     (enFlag "theora" (libtheora != null) null)
     (enFlag "vorbis" (libvorbis != null) null)
-    (enFlag "gio_unix_2_0" (glib != null) null)
-    "--disable-freetypetest"
     "--with-audioresample-format=float"
   ];
 
@@ -122,7 +122,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

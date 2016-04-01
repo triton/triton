@@ -20,7 +20,6 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "${baseFileUrl}_src.tar.bz2";
-    sha512Url = "${baseFileUrl}.sha512";
     sha256 = "3b046f854cea17f9c14d6a12aa5d2e027908c6535f44a068cfed5da9eddddda8";
   };
 

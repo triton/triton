@@ -11,7 +11,7 @@
 , libva
 , libvpx
 , mesa
-, udev
+, systemd_lib
 , wayland
 , xorg
 }:
@@ -23,12 +23,13 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gstreamer-vaapi-1.6.0";
+  name = "gstreamer-vaapi-1.8.0";
 
-  src = fetchurl {
+  src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gstreamer-vaapi/"
         + "${name}.tar.xz";
-    sha256 = "1ljmafyn0kkil6x5iqvbkrvhinlj9l4zzdq4832cdwgm2b1p8i92";
+    sha256Url = "${url}.sha256sum";
+    sha256 = "3b83d405f4423ab0bdc8fbe25e72c4c37b59b7776da21f1d49b0444957595ac1";
   };
 
   nativeBuildInputs = [
@@ -45,7 +46,7 @@ stdenv.mkDerivation rec {
     libva
     libvpx
     mesa
-    udev
+    systemd_lib
     wayland
     xorg.libX11
     xorg.libXrandr
@@ -55,6 +56,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-fatal-warnings"
+    "--disable-extra-checks"
     "--disable-debug"
     "--enable-encoders"
     (enFlag "drm" (libdrm != null) null)
@@ -69,6 +71,12 @@ stdenv.mkDerivation rec {
     "--enable-glib-asserts"
   ];
 
+  NIX_CFLAGS_COMPILE = [
+    "-I${gst-plugins-bad}/include/gstreamer-1.0"
+    # FIXME: Gstreamer installs gstglconfig.h in the wrong location
+    "-I${gst-plugins-bad}/lib/gstreamer-1.0/include"
+  ];
+
   postInstall = "rm -rvf $out/share/gtk-doc";
 
   meta = with stdenv.lib; {
@@ -79,7 +87,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

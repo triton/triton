@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "accelio";
     repo = "accelio";
     rev = "v1.5";
-    sha256 = "172frqk2n43g0arhazgcwfvj0syf861vdzdpxl7idr142bb0ykf7";
+    sha256 = "cbf38db95767c2772b699ac954deff9b5be34aa1f90c25e40c1014d820494d9c";
   };
 
   patches = [

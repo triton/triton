@@ -27,12 +27,12 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "appstream-glib-0.5.10";
+  name = "appstream-glib-0.5.12";
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/appstream-glib/"
         + "releases/${name}.tar.xz";
-    sha256 = "00g8i3da0ldy3nq57xnj2cizs73myj5if69a57f52ijasc9vhc9l";
+    sha256 = "39e1ad771f1a44a3d409618dc17600217ab398d06075f3029c8e96f4100d14ef";
   };
 
   nativeBuildInputs = [

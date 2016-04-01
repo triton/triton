@@ -8,14 +8,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "alsa-plugins-1.1.0";
+  name = "alsa-plugins-1.1.1";
 
   src = fetchurl {
     urls = [
       "ftp://ftp.alsa-project.org/pub/plugins/${name}.tar.bz2"
       "http://alsa.cybermirror.org/plugins/${name}.tar.bz2"
     ];
-    sha256 = "1vn9n996d5i1addb9wrr958ycps59bn09bi5zvsrkvrvjllw70rv";
+    sha256 = "8ea4d1e082c36528a896a2581e5eb62d4dc2683238e353050d0d624e65f901f1";
   };
 
   # ToDo: a52, etc.?

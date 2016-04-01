@@ -1633,6 +1633,8 @@ rtmpdump = callPackage ../all-pkgs/rtmpdump { };
 
 rtorrent = callPackage ../all-pkgs/rtorrent { };
 
+ruby = callPackage ../all-pkgs/ruby { };
+
 sakura = callPackage ../all-pkgs/sakura { };
 
 samba = callPackage ../all-pkgs/samba { };
@@ -5514,21 +5516,12 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  pypi2nix = python27Packages.pypi2nix;
 #
-#  bundix = callPackage ../development/interpreters/ruby/bundix {
-#    ruby = ruby_2_1_3;
-#  };
+#  bundix = callPackage ../development/interpreters/ruby/bundix { };
 #  bundler = callPackage ../development/interpreters/ruby/bundler.nix { };
 #  bundler_HEAD = bundler;
 #  defaultGemConfig = callPackage ../development/interpreters/ruby/gemconfig/default.nix { };
 #  buildRubyGem = callPackage ../development/interpreters/ruby/build-ruby-gem { };
 #  bundlerEnv = callPackage ../development/interpreters/ruby/bundler-env { };
-#
-  inherit (callPackage ../development/interpreters/ruby {})
-    ruby_2_3_0;
-
-  # Ruby aliases
-  ruby = callPackageAlias "ruby_2_3" { };
-  ruby_2_3 = callPackageAlias "ruby_2_3_0" { };
 #
 #  rubygems = hiPrio (callPackage ../development/interpreters/ruby/rubygems.nix {});
 #

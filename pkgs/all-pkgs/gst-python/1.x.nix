@@ -5,23 +5,23 @@
 , gstreamer
 , gst-plugins-base
 , ncurses
-, python3
 , python3Packages
 }:
 
 stdenv.mkDerivation rec {
-  name = "gst-python-1.6.2";
+  name = "gst-python-1.8.0";
 
-  src = fetchurl {
-    url = "http://gstreamer.freedesktop.org/src/gst-python/${name}.tar.xz";
-    sha256 = "09ci5zvr7lms7mvgbjgsjwaxcl4nq45n1g9pdwnqmx3rf0qkwxjf";
+  src = fetchurl rec {
+    url = "https://gstreamer.freedesktop.org/src/gst-python/${name}.tar.xz";
+    sha256Url = "${url}.sha256sum";
+    sha256 = "ce45ff17c59f86a3a525685e37b95e6a78a019e709f66a5c4b462a7f7a22f6ea";
   };
 
   buildInputs = [
     gst-plugins-base
     gstreamer
     ncurses
-    python3
+    python3Packages.python
     python3Packages.pygobject3
   ];
 
@@ -48,7 +48,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

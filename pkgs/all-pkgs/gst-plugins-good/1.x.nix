@@ -35,11 +35,12 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-good-1.6.3";
+  name = "gst-plugins-good-1.8.0";
 
-  src = fetchurl {
+  src = fetchurl rec {
     url = "http://gstreamer.freedesktop.org/src/gst-plugins-good/${name}.tar.xz";
-    sha256 = "0xx16h0q63gs3pxlzdflnpyssba3vcrh1qnzplg4d0ra1fvrvc94";
+    sha256Url = "${url}.sha256sum";
+    sha256 = "c20c134d47dbc238d921707a3b66da709c2b4dd89f9d267cec13d1ddf16e9f4d";
   };
 
   nativeBuildInputs = [
@@ -79,6 +80,7 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-rpath"
     "--disable-fatal-warnings"
+    "--disable-extra-checks"
     "--disable-debug"
     "--disable-profiling"
     "--disable-valgrind"
@@ -92,6 +94,7 @@ stdenv.mkDerivation rec {
     "--enable-gobject-cast-checks"
     "--enable-glib-asserts"
     (enFlag "orc" (orc != null) null)
+    "--enable-Bsymbolic"
     "--disable-static-plugins"
     # Internal plugins
     "--enable-alpha"
@@ -146,7 +149,8 @@ stdenv.mkDerivation rec {
     "--disable-osx_audio"
     "--disable-osx_video"
     (enFlag "gst_v4l2" (v4l_lib != null) null)
-    (enFlag "x" (xorg.libX11 != null) null)
+    (enFlag "v4l2-probe" (v4l_lib != null) null)
+    (enFlag "x" (xorg != null) null)
     (enFlag "aalib" (aalib != null) null)
     "--disable-aalibtest"
     (enFlag "cairo" (cairo != null) null)
@@ -179,7 +183,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

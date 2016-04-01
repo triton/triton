@@ -85,7 +85,7 @@ with stdenv.lib; stdenv.mkDerivation {
 
   src = if isRelease then
       fetchurl {
-        url = "http://static.rust-lang.org/dist/rustc-${version}-src.tar.gz";
+        url = "https://static.rust-lang.org/dist/rustc-${version}-src.tar.gz";
         sha256 = srcSha;
       }
     else

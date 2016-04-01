@@ -12,6 +12,7 @@
 
 { # Optionally move the contents of the unpacked tree up one level.
   stripRoot ? true
+, purgeTimestamps ? false
 , url
 , extraPostFetch ? ""
 , ... } @ args:
@@ -65,16 +66,21 @@ lib.overrideDerivation (fetchurl (rec {
   '') + extraPostFetch + ''
     cd "$TMPDIR"
 
+  '' + lib.optionalString (!purgeTimestamps) ''
     echo "Fixing mtime and atimes" >&2
     touch -t 200001010000 "${name'}"
     readarray -t files < <(find "${name'}")
     for file in "''${files[@]}"; do
       touch -h -d "@$(stat -c '%Y' "$file")" "$file"
     done
-
+  '' + ''
     echo "Building Archive ${name}" >&2
-    tar --sort=name --owner=0 --group=0 --numeric-owner --mode=go=rX,u+rw,a-s -cJf "$out" "${name'}"
+    tar --sort=name --owner=0 --group=0 --numeric-owner \
+      --mode=go=rX,u+rw,a-s \
+      ${lib.optionalString purgeTimestamps "--mtime=@946713600"} \
+      -cJf "$out" "${name'}"
+    cp "$out" "$TMPDIR/${name}"
   '';
-} // removeAttrs args [ "name" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))
+} // removeAttrs args [ "name" "purgeTimestamps" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))
 # Hackety-hack: we actually need unzip hooks, too
 (x: {nativeBuildInputs = x.nativeBuildInputs++ [unzip];})

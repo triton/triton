@@ -51,11 +51,12 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-bad-1.6.3";
+  name = "gst-plugins-bad-1.8.0";
 
-  src = fetchurl {
+  src = fetchurl rec {
     url = "http://gstreamer.freedesktop.org/src/gst-plugins-bad/${name}.tar.xz";
-    sha256 = "0q9s5da54819gwncmdi95l5qzx97l9vxk6adx4zmx73a3l82j6wp";
+    sha256Url = "${url}.sha256sum";
+    sha256 = "116376dd1085082422e0b21b0ecd3d1cb345c469c58e32463167d4675f4ca90e";
   };
 
   nativeBuildInputs = [
@@ -112,11 +113,11 @@ stdenv.mkDerivation rec {
     '';
 
   configureFlags = [
-    "--enable-option-checking"
     "--disable-maintainer-mode"
     "--enable-nls"
     "--enable-rpath"
     "--disable-fatal-warnings"
+    "--disable-extra-checks"
     "--disable-debug"
     "--disable-profiling"
     "--disable-valgrind"
@@ -124,12 +125,13 @@ stdenv.mkDerivation rec {
     "--disable-examples"
     "--enable-external"
     "--enable-experimental"
-    "--enable-introspection"
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--enable-gobject-cast-checks"
     "--enable-glib-asserts"
+    "--enable-Bsymbolic"
     (enFlag "orc" (orc != null) null)
     "--disable-static-plugins"
     # Internal Plugins
@@ -137,6 +139,7 @@ stdenv.mkDerivation rec {
     "--enable-adpcmdec"
     "--enable-adpcmenc"
     "--enable-aiff"
+    "--enable-videoframe_audiolevel"
     "--enable-asfmux"
     "--enable-audiofxbad"
     "--enable-audiomixer"
@@ -169,7 +172,6 @@ stdenv.mkDerivation rec {
     "--enable-jp2kdecimator"
     "--enable-jpegformat"
     "--enable-librfb"
-    "--enable-liveadder"
     "--enable-midi"
     "--enable-mpegdemux"
     "--enable-mpegtsdemux"
@@ -177,6 +179,7 @@ stdenv.mkDerivation rec {
     "--enable-mpegpsmux"
     "--enable-mve"
     "--enable-mxf"
+    "--enable-netsim"
     "--enable-nuvdemux"
     "--enable-onvif"
     "--enable-patchdetect"
@@ -184,7 +187,6 @@ stdenv.mkDerivation rec {
     "--enable-pnm"
     "--enable-rawparse"
     "--enable-removesilence"
-    "--enable-rtp"
     "--enable-sdi"
     "--enable-sdp"
     "--enable-segmentclip"
@@ -220,10 +222,12 @@ stdenv.mkDerivation rec {
     "--disable-apple_media"
     "--disable-bluez"
     "--disable-avc"
-    (enFlag "shm" (xorg.libXext != null) null)
+    (enFlag "shm" (xorg != null) null)
     #--disable-vcd
     #--disable-opensles
     #--disable-uvch264
+    #"--disable-nvenc"
+    #"--disable-tinyalsa"
     (enFlag "assrender" (libass != null) null)
     #(enFlag "voamrwbenc" (vo-amrwbenc != null) null)
     #(enFlag "voaacenc" (vo-aacenc != null) null)
@@ -258,7 +262,6 @@ stdenv.mkDerivation rec {
     (enFlag "modplug" (libmodplug != null) null)
     #(enFlag "mimic" ( != null) null)
     #(enFlag "mpeg2enc" ( != null) null)
-    (enFlag "mpg123" (mpg123 != null) null)
     #(enFlag "mplex" ( != null) null)
     (enFlag "musepack" (musepack != null) null)
     #(enFlag "nas" ( != null) null)
@@ -276,6 +279,7 @@ stdenv.mkDerivation rec {
     (enFlag "gl" (mesa != null) null)
     #(enFlag "gtk3" ( != null) null)
     #(enFlag "qt" ( != null) null)
+    #"--disable-vulkan"
     (enFlag "libvisual" (libvisual != null) null)
     #(enFlag "timidity" ( != null) null)
     #(enFlag "teletextdec" ( != null) null)
@@ -314,7 +318,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

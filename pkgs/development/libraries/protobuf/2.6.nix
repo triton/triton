@@ -7,6 +7,6 @@ callPackage ./generic.nix (args // rec {
     owner = "google";
     repo = "protobuf";
     rev = "v${version}";
-    sha256 = "03df8zvx2sry3jz2x4pi3l32qyfqa7w8kj8jdbz30nzy0h7aa070";
+    sha256 = "3ea7b7edd5148c93dce1023e4a39bb2a9be3c1e11222d81708dfe70aea1d0e4f";
   };
 })

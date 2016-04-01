@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
     owner = "vim";
     repo = "vim";
     rev = "v${version}";
-    sha256 = "1kjdwpka269i4cyl0rmnmzg23dl26g65k26h32w8ayzfm3kbj123";
+    sha256 = "704712cb9d3b3bacbe10afb36d10c0564cfd1e17119b57b93aa75dec2ddb8401";
   };
 
   nativeBuildInputs = [

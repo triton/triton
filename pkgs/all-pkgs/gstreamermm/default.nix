@@ -15,8 +15,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url    = "mirror://gnome/sources/gstreamermm/${versionMajor}/" +
-             "${name}.tar.xz";
+    url = "mirror://gnome/sources/gstreamermm/${versionMajor}/"
+        + "${name}.tar.xz";
     sha256 = "1ipbhbbcym33dqhw701nank3r0dim385qbwznyfad51m6rvz7d8j";
   };
 
@@ -28,9 +28,6 @@ stdenv.mkDerivation rec {
     libxmlxx
   ];
 
-  doCheck = false;
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     description = "C++ bindings for the GStreamer streaming multimedia library";
     homepage = http://www.gtkmm.org/;
@@ -39,8 +36,7 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 
 }

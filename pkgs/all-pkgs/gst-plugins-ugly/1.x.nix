@@ -14,6 +14,7 @@
 , libdvdread
 , libmad
 , libmpeg2
+, mpg123
 , orc
 , x264
 }:
@@ -24,11 +25,13 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-ugly-1.6.3";
+  name = "gst-plugins-ugly-1.8.0";
 
-  src = fetchurl {
-    url = "http://gstreamer.freedesktop.org/src/gst-plugins-ugly/${name}.tar.xz";
-    sha256 = "0r6h3ys5n90jv3c06crxzcac561z07s4h04hy5i8ybw8qyvzgv1g";
+  src = fetchurl rec {
+    url = "https://gstreamer.freedesktop.org/src/gst-plugins-ugly/"
+        + "${name}.tar.xz";
+    sha256Url = "${url}.sha256sum";
+    sha256 = "53657ffb7d49ddc4ae40e3f52e56165db4c06eb016891debe2b6c0e9f134eb8c";
   };
 
   nativeBuildInputs = [
@@ -48,6 +51,7 @@ stdenv.mkDerivation rec {
     libdvdread
     libmad
     libmpeg2
+    mpg123
     orc
     x264
   ];
@@ -57,6 +61,7 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-rpath"
     "--disable-fatal-warnings"
+    "--disable-extra-checks"
     "--disable-debug"
     "--disable-profiling"
     "--disable-valgrind"
@@ -70,8 +75,9 @@ stdenv.mkDerivation rec {
     "--enable-gobject-cast-checks"
     "--enable-glib-asserts"
     (enFlag "orc" (orc != null) null)
+    "--enable-Bsymbolic"
     # Internal plugins
-    "--enable-static-plugins"
+    "--disable-static-plugins"
     "--enable-asfdemux"
     "--enable-dvdlpcmdec"
     "--enable-dvdsub"
@@ -86,6 +92,7 @@ stdenv.mkDerivation rec {
     (enFlag "lame" (lame != null) null)
     (enFlag "mad" (libmad != null) null)
     (enFlag "mpeg2dec" (libmpeg2 != null) null)
+    (enFlag "mpg123" (mpg123 != null) null)
     #(enFlag "sidplay" (sidplay != null) null)
     #(enFlag "twolame" (twolame != null) null)
     (enFlag "x264" (x264 != null) null)
@@ -99,7 +106,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

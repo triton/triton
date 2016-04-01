@@ -17,11 +17,12 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gstreamer-1.6.3";
+  name = "gstreamer-1.8.0";
 
-  src = fetchurl {
-    url = "http://gstreamer.freedesktop.org/src/gstreamer/${name}.tar.xz";
-    sha256 = "093zldafh7xh3lrlwzm7j0vvjz6k9ca83wqil40gfz5qcy6mdy92";
+  src = fetchurl rec {
+    url = "https://gstreamer.freedesktop.org/src/gstreamer/${name}.tar.xz";
+    sha256Url = "${url}.sha256sum";
+    sha256 = "947a314a212b5d94985d89b43440dbe66b696e12bbdf9a2f78967b98d74abedc";
   };
 
   nativeBuildInputs = [
@@ -41,12 +42,13 @@ stdenv.mkDerivation rec {
   setupHook = ./setup-hook-1.0.sh;
 
   configureFlags = [
-    "--enable-option-checking"
     "--disable-maintainer-mode"
     "--enable-nls"
     "--enable-rpath"
     "--disable-fatal-warnings"
+    "--disable-extra-checks"
     "--enable-gst-debug"
+    "--disable-gst-tracer-hooks"
     "--enable-parse"
     "--enable-option-parsing"
     "--disable-trace"
@@ -91,7 +93,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

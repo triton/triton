@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "rhinstaller";
     repo = "efivar";
     rev = version;
-    sha256 = "0iakv8prvl61mb2wnll02sxlg3kfzh3d4qb41d0bklmnljjkqr8p";
+    sha256 = "4c74ef0924fef8c0acb9d60d884d626edf4e27786275f0da4e18e55aef73f7ee";
   };
 
   buildInputs = [ popt ];

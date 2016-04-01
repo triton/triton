@@ -5,7 +5,7 @@ callPackage ./generic.nix {
   isRelease = true;
   forceBundledLLVM = true;
   configureFlags = [ "--release-channel=stable" ];
-  srcSha = "05f4v6sfmvkwsv6a7jp9sxsm84s0gdvqyf2wwdi1ilg9k8nxzgd4";
+  srcSha = "6df96059d87b718676d9cd879672e4e22418b6093396b4ccb5b5b66df37bf13a";
 
   /* Rust is bootstrapped from an earlier built version. We need
   to fetch these earlier versions, which vary per platform.

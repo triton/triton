@@ -2906,7 +2906,7 @@ in {
     buildInputs = with self; [ pytest ];
 
     checkPhase = ''
-      py.test tests
+      test tests
     '';
 
     # Python 3.5 str/bytes-like errors with reading files

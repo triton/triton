@@ -9922,10 +9922,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
   djview4 = pkgs.djview;
 
   dmenu = callPackage ../applications/misc/dmenu { };
-
-  dmenu-wayland = callPackage ../applications/misc/dmenu/wayland.nix { };
-
-  dmenu2 = callPackage ../applications/misc/dmenu2 { };
 #
 #  dmtx = dmtx-utils;
 #

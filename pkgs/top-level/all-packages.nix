@@ -759,6 +759,8 @@ flex = callPackage ../all-pkgs/flex { };
 
 freeglut = callPackage ../all-pkgs/freeglut { };
 
+game-music-emu = callPackage ../all-pkgs/game-music-emu { };
+
 gawk = callPackage ../all-pkgs/gawk { };
 
 gcab = callPackage ../all-pkgs/gcab { };
@@ -10151,8 +10153,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  freicoin = callPackage ../applications/misc/freicoin {
 #    boost = boost155;
 #  };
-#
-  game-music-emu = callPackage ../applications/audio/game-music-emu { };
 #
 #  gcolor2 = callPackage ../applications/graphics/gcolor2 { };
 #

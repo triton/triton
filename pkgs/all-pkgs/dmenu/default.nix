@@ -1,4 +1,9 @@
-{ stdenv, fetchurl, xorg, zlib, patches ? null }:
+{ stdenv
+, fetchurl
+
+, xorg
+, zlib
+}:
 
 stdenv.mkDerivation rec {
   name = "dmenu-4.6";
@@ -8,9 +13,13 @@ stdenv.mkDerivation rec {
     sha256 = "1cwnvamqqlgczvd5dv5rsgqbhv8kp0ddjnhmavb3q732i8028yja";
   };
 
-  buildInputs = [ xorg.libX11 xorg.libXinerama zlib xorg.libXft ];
-
-  inherit patches;
+  buildInputs = [
+    fontconfig
+    xorg.libX11
+    xorg.libXft
+    xorg.libXinerama
+    zlib
+  ];
 
   postPatch = ''
     sed -ri -e 's!\<(dmenu|stest)\>!'"$out/bin"'/&!g' dmenu_run
@@ -21,10 +30,11 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-      description = "A generic, highly customizable, and efficient menu for the X Window System";
-      homepage = http://tools.suckless.org/dmenu;
-      license = licenses.mit;
-      maintainers = with maintainers; [ viric pSub ];
-      platforms = platforms.all;
+    description = "Dynamic menu for X";
+    homepage = http://tools.suckless.org/dmenu;
+    license = licenses.mit;
+    maintainers = with maintainers; [ ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

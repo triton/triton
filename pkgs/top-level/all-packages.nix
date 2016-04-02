@@ -666,6 +666,8 @@ dconf-editor = callPackage ../all-pkgs/dconf-editor { };
 
 ddrescue = callPackage ../all-pkgs/ddrescue { };
 
+dmenu = callPackage ../all-pkgs/dmenu { };
+
 devil-nox = devil.override {
   xorg = null;
   mesa = null;
@@ -9920,8 +9922,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
   djview = callPackage ../applications/graphics/djview { };
   djview4 = pkgs.djview;
-
-  dmenu = callPackage ../applications/misc/dmenu { };
 #
 #  dmtx = dmtx-utils;
 #

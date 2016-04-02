@@ -1000,6 +1000,8 @@ iasl = callPackage ../all-pkgs/iasl { };
 
 ibus = callPackage ../all-pkgs/ibus { };
 
+ice = callPackage ../all-pkgs/ice { };
+
 icu = callPackage ../all-pkgs/icu { };
 
 id3lib = callPackage ../all-pkgs/id3lib { };
@@ -11823,8 +11825,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  zathura = zathuraCollection.zathuraWrapper;
 #
 #  zed = callPackage ../applications/editors/zed { };
-#
-  zeroc_ice = callPackage ../development/libraries/zeroc-ice { };
 #
 #  zexy = callPackage ../applications/audio/pd-plugins/zexy  { };
 #

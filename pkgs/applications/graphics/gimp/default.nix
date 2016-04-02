@@ -35,7 +35,7 @@
 , poppler
 , xorg
 , zlib
-, zeroc_ice
+, ice
 }:
 
 stdenv.mkDerivation rec {
@@ -89,7 +89,7 @@ stdenv.mkDerivation rec {
     xorg.libXmu
     xorg.libXpm
     zlib
-    zeroc_ice
+    ice
   ];
 
   pythonPath = [

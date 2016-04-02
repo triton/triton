@@ -16,7 +16,7 @@
 , speex
 , xorg
 
-, iceSupport ? true, zeroc_ice
+, iceSupport ? true, ice
 , jackSupport ? false, jack2_lib
 , pulseSupport ? false, pulseaudio_lib
 , speechdSupport ? false, speechd
@@ -148,7 +148,7 @@ let
     type = "murmur";
 
     postPatch = optional iceSupport ''
-      grep -Rl '/usr/share/Ice' . | xargs sed -i 's,/usr/share/Ice/,${zeroc_ice}/,g'
+      grep -Rl '/usr/share/Ice' . | xargs sed -i 's,/usr/share/Ice/,${ice}/,g'
     '';
 
     configureFlags = [
@@ -158,7 +158,7 @@ let
     buildInputs = [
       libcap
     ] ++ optionals iceSupport [
-      zeroc_ice
+      ice
     ];
   };
 

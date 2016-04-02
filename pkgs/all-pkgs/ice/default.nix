@@ -33,6 +33,12 @@ stdenv.mkDerivation rec {
     export sourceRoot="$sourceRoot/cpp"
   '';
 
+  preConfigure = ''
+    makeFlagsArray+=(
+      "prefix=$out"
+    )
+  '';
+
   meta = with stdenv.lib; {
     description = "The internet communications engine";
     homepage = "http://www.zeroc.com/ice.html";

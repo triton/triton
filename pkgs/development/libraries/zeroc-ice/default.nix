@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "zeroc-ice";
     repo = "ice";
     rev = "v${version}";
-    sha256 = "044511zbhwiach1867r3xjz8i4931wn7c1l3nz4kcpgks16kqhhz";
+    sha256 = "2996782d46aa98a0fa699c3c7b75451de8d9d56dec6f8d94450e9246c690cef4";
   };
 
   buildInputs = [ mcpp bzip2 expat openssl db ];

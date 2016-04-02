@@ -1087,6 +1087,8 @@ lame = callPackage ../all-pkgs/lame { };
 
 ldb = callPackage ../all-pkgs/ldb { };
 
+letsencrypt = callPackage ../all-pkgs/letsencrypt { };
+
 libarchive = callPackage ../all-pkgs/libarchive { };
 
 libass = callPackage ../all-pkgs/libass { };
@@ -6594,8 +6596,6 @@ iso-codes = callPackage ../development/libraries/iso-codes { };
 #
   leptonica = callPackage ../development/libraries/leptonica { };
 
-  letsencrypt = callPackage ../tools/admin/letsencrypt { };
-#
 #  lib3ds = callPackage ../development/libraries/lib3ds { };
 #
   libaacs = callPackage ../development/libraries/libaacs { };

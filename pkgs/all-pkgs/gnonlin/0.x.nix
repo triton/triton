@@ -11,12 +11,11 @@ stdenv.mkDerivation rec {
   name = "gnonlin-0.10.17";
 
   src = fetchurl {
-    url = "http://gstreamer.freedesktop.org/src/gnonlin/${name}.tar.bz2";
+    url = "https://gstreamer.freedesktop.org/src/gnonlin/${name}.tar.bz2";
     sha256 = "0dc9kvr6i7sh91cyhzlbx2bchwg84rfa4679ccppzjf0y65dv8p4";
   };
 
   configureFlags = [
-    "--enable-option-checking"
     "--disable-maintainer-mode"
     "--disable-debug"
     "--disable-valgrind"
@@ -45,7 +44,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -23,9 +23,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitLab {
     owner = "accounts-sso";
     repo = "libaccounts-glib";
-    # Upstream no longer uses proper git tags, review commit history for releases
-    rev = "00254a604a7c7bd38c41794a80ad8930e90f21aa";
-    sha256 = "9b410a0adc77eecda69aedb2f236f949bfdca404ab5bdce3570954cb4481051e";
+    rev = "VERSION_${version}";
+    sha256 = "e251dd9d44cb7936a483d7640da44848e12a30470442bfc1d6e9c57317bd5c0a";
   };
 
   nativeBuildInputs = [

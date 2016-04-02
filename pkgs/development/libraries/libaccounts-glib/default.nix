@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   name = "libaccounts-glib-${version}";
 
   src = fetchFromGitLab {
-    sha256 = "02p23vrqhw2l2w6nrwlk4bqxf7z9kplkc2d43716x9xakxr291km";
+    sha256 = "f1fbfc89fe688e09d2a6b377d0a8ea61b293893b2bba3f9570b9551f6526e00d";
     rev = version;
     repo = "libaccounts-glib";
     owner = "accounts-sso";

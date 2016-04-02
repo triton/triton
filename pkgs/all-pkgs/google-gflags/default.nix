@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "gflags";
     repo = "gflags";
     rev = "v${version}";
-    sha256 = "0qxvr9cyxq3px60jglkm94pq5bil8dkjjdb99l3ypqcds7iypx9w";
+    sha256 = "42f3d1eeb55814f1ebe49d5e96d39a18b87555534b693cf95d19545b4909cbd7";
   };
 
   nativeBuildInputs = [

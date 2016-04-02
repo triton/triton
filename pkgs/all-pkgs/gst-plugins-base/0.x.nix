@@ -36,6 +36,29 @@ stdenv.mkDerivation rec {
     sha256 = "0jp6hjlra98cnkal4n6bdmr577q8mcyp3c08s3a02c4hjhw5rr0z";
   };
 
+  buildInputs = [
+    alsa-lib
+    cdparanoia
+    freetype
+    glib
+    gobject-introspection
+    gstreamer_0
+    iso-codes
+    libgudev
+    libogg
+    libtheora
+    libvisual
+    libvorbis
+    libxml2
+    orc
+    pango
+    v4l_lib
+    xorg.libX11
+    xorg.libXext
+    xorg.libXv
+    zlib
+  ];
+
   patches = [
     (fetchTritonPatch {
       rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
@@ -122,29 +145,6 @@ stdenv.mkDerivation rec {
     (wtFlag "gudev" (libgudev != null) null)
   ];
 
-  buildInputs = [
-    alsa-lib
-    cdparanoia
-    freetype
-    glib
-    gobject-introspection
-    gstreamer_0
-    iso-codes
-    libgudev
-    libogg
-    libtheora
-    libvisual
-    libvorbis
-    libxml2
-    orc
-    pango
-    v4l_lib
-    xorg.libX11
-    xorg.libXext
-    xorg.libXv
-    zlib
-  ];
-
   meta = with stdenv.lib; {
     description = "Basepack of plugins for gstreamer";
     homepage = http://gstreamer.freedesktop.org;
@@ -153,7 +153,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

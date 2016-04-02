@@ -30,6 +30,26 @@ stdenv.mkDerivation rec {
     sha256 = "0wx8dr3sqfkar106yw6h57jdv2cifwsydkziz9z7wqwjz1gzcd29";
   };
 
+  nativeBuildInputs = [
+    gettext
+  ];
+
+  buildInputs = [
+    a52dec
+    amrnb
+    amrwb
+    glib
+    gst-plugins-base_0
+    gstreamer_0
+    lame
+    #libcdio
+    libdvdread
+    libmad
+    mpeg2dec
+    orc
+    x264
+  ];
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"
@@ -66,30 +86,7 @@ stdenv.mkDerivation rec {
     #(enFlag "sidplay" (sidplay != null) null)
     #(enFlag "twolame" (twolame != null) null)
     (enFlag "x264" (x264 != null) null)
-
   ];
-
-  nativeBuildInputs = [
-    gettext
-  ];
-
-  buildInputs = [
-    a52dec
-    amrnb
-    amrwb
-    glib
-    gst-plugins-base_0
-    gstreamer_0
-    lame
-    #libcdio
-    libdvdread
-    libmad
-    mpeg2dec
-    orc
-    x264
-  ];
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Basepack of plugins for gstreamer";
@@ -99,7 +96,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

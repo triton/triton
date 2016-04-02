@@ -17,6 +17,14 @@ stdenv.mkDerivation rec {
     sha256 = "0qmvgwcfybci78sd73mhvm4bsb7l0xsk9yljrgik80g011ds1z3n";
   };
 
+  buildInputs = [
+    bzip2
+    ffmpeg_0
+    gst-plugins-base_0
+    gstreamer_0
+    orc
+  ];
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-valgrind"
@@ -27,16 +35,6 @@ stdenv.mkDerivation rec {
     "--with-system-ffmpeg"
   ];
 
-  buildInputs = [
-    bzip2
-    ffmpeg_0
-    gst-plugins-base_0
-    gstreamer_0
-    orc
-  ];
-
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     description = "FFmpeg based gstreamer plugin";
     homepage = http://gstreamer.freedesktop.org;
@@ -45,7 +43,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

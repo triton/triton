@@ -24,6 +24,19 @@ stdenv.mkDerivation rec {
     sha256 = "1nkid1n2l3rrlmq5qrf5yy06grrkwjh3yxl5g0w58w0pih8allci";
   };
 
+  nativeBuildInputs = [
+    bison
+    flex
+    gettext
+    perl
+  ];
+
+  buildInputs = [
+    glib
+    gobject-introspection
+    libxml2
+  ];
+
   setupHook = ./setup-hook-0.10.sh;
 
   patches = [
@@ -66,27 +79,12 @@ stdenv.mkDerivation rec {
     "--enable-Bsymbolic"
   ];
 
-  nativeBuildInputs = [
-    bison
-    flex
-    gettext
-    perl
-  ];
-
-  buildInputs = [
-    glib
-    gobject-introspection
-    libxml2
-  ];
-
   preFixup = ''
     # Needed for orc-using gst plugins on hardened/PaX systems
     paxmark m \
       $out/bin/gst-launch* \
       $out/libexec/gstreamer-0.10/gst-plugin-scanner
   '';
-
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "Streaming media framework";
@@ -96,7 +94,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

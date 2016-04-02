@@ -41,6 +41,37 @@ stdenv.mkDerivation rec {
     sha256 = "0r1b54yixn8v2l1dlwmgpkr0v2a6a21id5njp9vgh58agim47a3p";
   };
 
+  nativeBuildInputs = [
+    gettext
+  ];
+
+  buildInputs = [
+    aalib
+    bzip2
+    cairo
+    flac
+    gdk-pixbuf
+    glib
+    gst-plugins-base_0
+    gstreamer_0
+    libcaca
+    libgudev
+    libjack2
+    libjpeg
+    libpng
+    libpulseaudio
+    libsoup
+    libv4l
+    orc
+    speex
+    taglib
+    wavpack
+    xorg.libX11
+    xorg.libXext
+    xorg.libXv
+    zlib
+  ];
+
   patches = [
     (fetchTritonPatch {
       rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
@@ -156,39 +187,6 @@ stdenv.mkDerivation rec {
     #"--with-jpeg-mmx"
   ];
 
-  nativeBuildInputs = [
-    gettext
-  ];
-
-  buildInputs = [
-    aalib
-    bzip2
-    cairo
-    flac
-    gdk-pixbuf
-    glib
-    gst-plugins-base_0
-    gstreamer_0
-    libcaca
-    libgudev
-    libjack2
-    libjpeg
-    libpng
-    libpulseaudio
-    libsoup
-    libv4l
-    orc
-    speex
-    taglib
-    wavpack
-    xorg.libX11
-    xorg.libXext
-    xorg.libXv
-    zlib
-  ];
-
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     description = "Basepack of plugins for GStreamer";
     homepage = http://gstreamer.freedesktop.org;
@@ -197,7 +195,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -15,6 +15,16 @@ stdenv.mkDerivation rec {
     sha256 = "0dc9kvr6i7sh91cyhzlbx2bchwg84rfa4679ccppzjf0y65dv8p4";
   };
 
+  nativeBuildInputs = [
+    python
+  ];
+
+  buildInputs = [
+    glib
+    gst-plugins-base_0
+    gstreamer_0
+  ];
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-debug"
@@ -24,16 +34,6 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--enable-gobject-cast-checks"
     "--enable-glib-asserts"
-  ];
-
-  nativeBuildInputs = [
-    python
-  ];
-
-  buildInputs = [
-    glib
-    gst-plugins-base_0
-    gstreamer_0
   ];
 
   meta = with stdenv.lib; {

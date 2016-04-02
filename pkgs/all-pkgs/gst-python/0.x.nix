@@ -26,6 +26,15 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  buildInputs = [
+    gst-plugins-base_0
+    gstreamer_0
+    libxml2
+    python2
+    python2Packages.pygobject
+    python2Packages.pygtk
+  ];
+
   postPatch =
   /* Fix for newer autotools */ ''
     sed -i configure.ac \
@@ -38,17 +47,6 @@ stdenv.mkDerivation rec {
     "--disable-valgrind"
   ];
 
-  buildInputs = [
-    gst-plugins-base_0
-    gstreamer_0
-    libxml2
-    python2
-    python2Packages.pygobject
-    python2Packages.pygtk
-  ];
-
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     description = "A Python Interface to GStreamer";
     homepage = http://gstreamer.freedesktop.org;
@@ -57,7 +55,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -46,6 +46,40 @@ stdenv.mkDerivation rec {
     sha256 = "148lw51dm6pgw8vc6v0fpvm7p233wr11nspdzmvq7bjp2cd7vbhf";
   };
 
+  nativeBuildInputs = [
+    gettext
+  ];
+
+  buildInputs = [
+    bzip2
+    celt
+    curl
+    faac
+    faad2
+    flite
+    game-music-emu
+    glib
+    gsm
+    gst-plugins-base_0
+    gstreamer_0
+    libass
+    libmms
+    #libmodplug
+    libmusicbrainz
+    #libopus
+    librsvg
+    libsndfile
+    libvdpau
+    #libvpx
+    openal
+    orc
+    schroedinger
+    SDL
+    soundtouch
+    spandsp
+    xvidcore
+  ];
+
   patches = [
     # Patch from 0.10 branch fixing h264 baseline decoding
     (fetchTritonPatch {
@@ -220,42 +254,6 @@ stdenv.mkDerivation rec {
     "--with-x"
   ];
 
-  nativeBuildInputs = [
-    gettext
-  ];
-
-  buildInputs = [
-    bzip2
-    celt
-    curl
-    faac
-    faad2
-    flite
-    game-music-emu
-    glib
-    gsm
-    gst-plugins-base_0
-    gstreamer_0
-    libass
-    libmms
-    #libmodplug
-    libmusicbrainz
-    #libopus
-    librsvg
-    libsndfile
-    libvdpau
-    #libvpx
-    openal
-    orc
-    schroedinger
-    SDL
-    soundtouch
-    spandsp
-    xvidcore
-  ];
-
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     description = "";
     homepage = http://gstreamer.freedesktop.org;
@@ -264,7 +262,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "williamh";
     repo = "dotconf";
     rev = "v${version}";
-    sha256 = "1sc95hw5k2xagpafny0v35filmcn05k1ds5ghkldfpf6xw4hakp7";
+    sha256 = "66f53482d14c1c5402020cdff503bed9d06ac81eed6ec8be3cba64e43478ea27";
   };
 
   buildInputs = [ autoreconfHook ];

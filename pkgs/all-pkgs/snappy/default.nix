@@ -9,12 +9,12 @@
 stdenv.mkDerivation rec {
   name = "snappy-${version}";
   version = "1.1.3";
-  
+
   src = fetchFromGitHub {
     owner = "google";
     repo = "snappy";
     rev = version;
-    sha256 = "1w9pq8vag8c6m4ib0qbdbqzsnpwjvw01jbp15lgwg1rzwhvflm10";
+    sha256 = "d7c1e3e88d3d470046f35a73658e63c25345fd9894735efb535cc8a5324a5c78";
   };
 
   nativeBuildInputs = [

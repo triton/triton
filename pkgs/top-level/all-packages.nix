@@ -1663,6 +1663,8 @@ snappy = callPackage ../all-pkgs/snappy { };
 
 socket_wrapper = callPackage ../all-pkgs/socket_wrapper { };
 
+spectrwm = callPackage ../all-pkgs/spectrwm { };
+
 sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sqlite = callPackage ../all-pkgs/sqlite { };
@@ -10335,8 +10337,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  };
 #
 #  hydrogen = callPackage ../applications/audio/hydrogen { };
-#
-  spectrwm = callPackage ../applications/window-managers/spectrwm { };
 #
 #  wlc = callPackage ../development/libraries/wlc { };
 #  sway = callPackage ../applications/window-managers/sway { };

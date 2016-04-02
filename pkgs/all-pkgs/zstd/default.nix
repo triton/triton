@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     owner = "Cyan4973";
     repo = "zstd";
     rev = "v${version}";
-    sha256 = "18mfrq5fqd7gkkqrgc32rlb98vw45rq1vsbrg44bprg3mv6ca3ls";
+    sha256 = "935618d578b13cb004cbe057ee1b17082d81109b8b07ac896fc15756c30e5627";
   };
 
   # Dont do anything in the build phase since the makefile builds during install
@@ -30,7 +30,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

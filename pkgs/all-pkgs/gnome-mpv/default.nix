@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
     owner = "gnome-mpv";
     repo = "gnome-mpv";
     rev = "2f1b5b4ed4fbf18fb1368e0a151235e5f762b7c2";
-    sha256 = "0nkn4g1inzhisxm4xgvy1zg0dywzrbb0yz05p1lvn6bwc45r98am";
+    sha256 = "2121c8a12570d65c9cf0c983e941e679317e56d045a121a6b587d88e32fb6218";
   };
 
   nativeBuildInputs = [

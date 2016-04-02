@@ -24,9 +24,10 @@ stdenv.mkDerivation rec {
   name = "w3m-0.5.3-2016-02-27";
 
   src = fetchzip {
+    inherit name;
     url = "http://anonscm.debian.org/cgit/collab-maint/w3m.git/snapshot/"
         + "692e2c04a0e7e216b670eab6133d68818260d5e8.tar.xz";
-    sha256 = "2dad5897b8b2895c4be4632f0cf1ec1b5fe7d10fd05d310570e3692d24fa3fbd";
+    sha256 = "8586ecdc4af44062c449b10ddb858a6933cd3ebc48cc66702da122a3ea6cb9d6";
   };
 
   nativeBuildInputs = [ gettext ];

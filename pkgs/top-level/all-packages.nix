@@ -1449,6 +1449,8 @@ openvpn = callPackage ../all-pkgs/openvpn { };
 
 orbit2 = callPackage ../all-pkgs/orbit2 { };
 
+orc = callPackage ../all-pkgs/orc { };
+
 p7zip = callPackage ../all-pkgs/p7zip { };
 
 pam = callPackage ../all-pkgs/pam { };
@@ -4936,8 +4938,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ocaml = ocamlPackages.ocaml;
 #  ocaml_4_02 = callPackage ../development/compilers/ocaml/4.02.nix { };
-#
-  orc = callPackage ../development/compilers/orc { };
 #
 #  mkOcamlPackages = ocaml: self:
 #    let

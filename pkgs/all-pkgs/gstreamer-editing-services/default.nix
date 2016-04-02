@@ -18,33 +18,14 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gstreamer-editing-services-1.6.2";
+  name = "gstreamer-editing-services-1.8.0";
 
-  src = fetchurl {
-    url = "http://gstreamer.freedesktop.org/src/gstreamer-editing-services/" +
+  src = fetchurl rec {
+    url = "https://gstreamer.freedesktop.org/src/gstreamer-editing-services/" +
           "${name}.tar.xz";
-    sha256 = "1i20bmj8qd8ybl728iv2v1w69gbspnksqw6jz4i1zxvsmi5ifani";
+    sha256Url = "${url}.sha256sum";
+    sha256 = "50f066d5b4090d5739fd6d38932bbe14c1aea83a64ed55f54a08cf90946b3abe";
   };
-
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--disable-debug"
-    "--disable-profiling"
-    "--disable-valgrind"
-    "--disable-gcov"
-    "--disable-examples"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    "--disable-docbook"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-gobject-cast-checks"
-    "--enable-glib-asserts"
-    "--enable-plugins"
-    "--disable-benchmarks"
-    "--disable-static-plugins"
-    "--without-gtk"
-  ];
 
   nativeBuildInputs = [
     flex
@@ -61,7 +42,28 @@ stdenv.mkDerivation rec {
     libxml2
   ];
 
-  enableParallelBuilding = true;
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--disable-fatal-warnings"
+    "--disable-extra-checks"
+    "--disable-debug"
+    "--disable-profiling"
+    "--disable-valgrind"
+    "--disable-gcov"
+    "--disable-examples"
+    (enFlag "introspection" (gobject-introspection != null) null)
+    "--disable-docbook"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--enable-gobject-cast-checks"
+    "--enable-glib-asserts"
+    "--enable-plugins"
+    "--enable-Bsymbolic"
+    "--disable-benchmarks"
+    "--disable-static-plugins"
+    "--without-gtk"
+  ];
 
   meta = with stdenv.lib; {
     description = "SDK for making video editors and more";
@@ -71,7 +73,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

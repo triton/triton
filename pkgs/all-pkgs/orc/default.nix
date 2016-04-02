@@ -33,8 +33,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    description = "The Oil Runtime Compiler";
-    homepage = "http://code.entropywave.com/orc/";
+    description = "The Oil Runtime Compiler, a JIT compiler for array operations";
+    homepage = http://gstreamer.freedesktop.org/;
     # The source code implementing the Marsenne Twister algorithm is licensed
     # under the 3-clause BSD license. The rest is 2-clause BSD license.
     license = with licenses; [

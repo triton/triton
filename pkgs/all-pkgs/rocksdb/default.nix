@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     owner = "facebook";
     repo = "rocksdb";
     rev = "v${version}";
-    sha256 = "1d7lqpfq379fsz39skxk6jddikr65kdzfp5g4in04pzxj8x9r0qq";
+    sha256 = "d5431f775b841f9077d8e2b5c2da7fa6448a0dd28831c6a18871560fc733d63b";
   };
 
   buildInputs = [
@@ -76,7 +76,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

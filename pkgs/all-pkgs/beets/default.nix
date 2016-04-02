@@ -145,7 +145,7 @@ in buildPythonPackage rec {
     owner = "sampsyo";
     repo = "beets";
     rev = "v${version}";
-    sha256 = "1fskxx5xxjqf4xmfjrinh7idjiq6qncb24hiyccv09l47fr1yipc";
+    sha256 = "55c6965e8e2054fc9d127ab83a7e1c08bc70ac9f2cd70750346b6362ab0d61bf";
   };
 
   nativeBuildInputs = [

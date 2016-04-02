@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 
+, fontconfig
 , xorg
 , zlib
 }:

@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "google";
     repo = "leveldb";
     rev = "v${version}";
-    sha256 = "1bnsii47vbyqnbah42qgq6pbmmcg4k3fynjnw7whqfv6lpdgmb8d";
+    sha256 = "37d54d298fb4440b37744820fd113967ed9c9278e184d1a613fd13556220e587";
   };
 
   buildInputs = [ sqlite kyotocabinet ];

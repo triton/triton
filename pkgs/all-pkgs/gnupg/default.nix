@@ -36,6 +36,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnupg/gnupg/${name}.tar.bz2";
+    allowHashOutput = false;
     inherit (sources.${channel}) sha256;
   };
 
@@ -91,6 +92,26 @@ stdenv.mkDerivation rec {
   postInstall = ''
     ln -s gpg2 $out/bin/gpg
   '';
+
+  passthru = {
+    sourceTarball = fetchurl rec {
+      url = "mirror://gnupg/gnupg/${name}.tar.bz2";
+      pgpsigUrl = "${url}.sig";
+      pgpKeyIds = [
+        "4F25E3B6"
+        "E0856959"
+        "33BD3F06"
+        "7EFD60D9"
+      ];
+      pgpKeyFingerprints = [
+        "D869 2123 C406 5DEA 5E0F  3AB5 249B 39D2 4F25 E3B6"
+        "46CC 7308 65BB 5C78 EBAB  ADCF 0437 6F3E E085 6959"
+        "031E C253 6E58 0D8E A286  A9F2 2071 B08A 33BD 3F06"
+        "D238 EA65 D64C 67ED 4C30  73F2 8A86 1B1C 7EFD 60D9"
+      ];
+      inherit (sources.${channel}) sha256;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://gnupg.org;

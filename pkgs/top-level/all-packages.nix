@@ -1089,6 +1089,8 @@ ldb = callPackage ../all-pkgs/ldb { };
 
 letsencrypt = callPackage ../all-pkgs/letsencrypt { };
 
+libaccounts-glib = callPackage ../all-pkgs/libaccounts-glib { };
+
 libarchive = callPackage ../all-pkgs/libarchive { };
 
 libass = callPackage ../all-pkgs/libass { };
@@ -6601,8 +6603,6 @@ iso-codes = callPackage ../development/libraries/iso-codes { };
   libaacs = callPackage ../development/libraries/libaacs { };
 #
 #  libaal = callPackage ../development/libraries/libaal { };
-#
-  libaccounts-glib = callPackage ../development/libraries/libaccounts-glib { };
 
   libao = callPackage ../development/libraries/libao {
     usePulseAudio = config.pulseaudio or true;

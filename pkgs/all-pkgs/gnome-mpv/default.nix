@@ -9,6 +9,7 @@
 , makeWrapper
 , pkgconfig
 
+, adwaita-icon-theme
 , appstream-glib
 , gdk-pixbuf
 , glib
@@ -49,6 +50,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    adwaita-icon-theme
     appstream-glib
     gdk-pixbuf
     glib

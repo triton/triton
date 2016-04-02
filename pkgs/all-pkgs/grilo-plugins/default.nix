@@ -35,12 +35,13 @@ with {
 stdenv.mkDerivation rec {
   name = "grilo-plugins-${version}";
   versionMajor = "0.3";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/grilo-plugins/${versionMajor}/${name}.tar.xz";
-    sha256 = "8e7eafae50f7fdd7eec006ad6d5b9aee888270ff288e6d0bcb14d1c71f0d6fcc";
+    sha256Url = "mirror://gnome/sources/grilo-plugins/${versionMajor}/${name}.sha256sum";
+    sha256 = "605d04c40a9ed4fec4c590ff3e0da0de175e3a064bba96bdb26c5a7c0d3e6daa";
   };
 
   nativeBuildInputs = [

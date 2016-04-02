@@ -15,12 +15,25 @@ with {
 };
 
 stdenv.mkDerivation rec {
-  name = "gst-validate-1.6.0";
+  name = "gst-validate-1.8.0";
 
-  src = fetchurl {
-    url = "${meta.homepage}/src/gst-validate/${name}.tar.xz";
-    sha256 = "1vmg5mh068zrvhgrjsbnb7y4k632akyhm8ql0g196cinnp3zibiv";
+  src = fetchurl rec {
+    url = "https://gstreamer.freedesktop.org/src/gst-validate/${name}.tar.xz";
+    sha256Url = "${url}.sha256sum";
+    sha256 = "7666b777bd4b05efe4520ef92669169d8879f69a68606578ec667ae7dc4d9edd";
   };
+
+  nativeBuildInputs = [
+    gettext
+  ];
+
+  buildInputs = [
+    glib
+    gobject-introspection
+    gst-plugins-base
+    gstreamer
+    python
+  ];
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -38,20 +51,6 @@ stdenv.mkDerivation rec {
     "--enable-glib-asserts"
   ];
 
-  nativeBuildInputs = [
-    gettext
-  ];
-
-  buildInputs = [
-    glib
-    gobject-introspection
-    gst-plugins-base
-    gstreamer
-    python
-  ];
-
-  enableParallelBuilding = true;
-
   meta = with stdenv.lib; {
     description = "Integration testing infrastructure for the GStreamer framework";
     homepage = "http://gstreamer.freedesktop.org";
@@ -60,7 +59,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -53,7 +53,7 @@ stdenv.mkDerivation rec {
   name = "gst-plugins-bad-1.8.0";
 
   src = fetchurl rec {
-    url = "http://gstreamer.freedesktop.org/src/gst-plugins-bad/${name}.tar.xz";
+    url = "https://gstreamer.freedesktop.org/src/gst-plugins-bad/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
     sha256 = "116376dd1085082422e0b21b0ecd3d1cb345c469c58e32463167d4675f4ca90e";
   };

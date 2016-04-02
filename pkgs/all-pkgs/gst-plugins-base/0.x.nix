@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   name = "gst-plugins-base-0.10.36";
 
   src = fetchurl {
-    url = "http://gstreamer.freedesktop.org/src/gst-plugins-base/${name}.tar.xz";
+    url = "https://gstreamer.freedesktop.org/src/gst-plugins-base/${name}.tar.xz";
     sha256 = "0jp6hjlra98cnkal4n6bdmr577q8mcyp3c08s3a02c4hjhw5rr0z";
   };
 

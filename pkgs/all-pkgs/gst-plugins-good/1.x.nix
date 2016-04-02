@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
   name = "gst-plugins-good-1.8.0";
 
   src = fetchurl rec {
-    url = "http://gstreamer.freedesktop.org/src/gst-plugins-good/${name}.tar.xz";
+    url = "https://gstreamer.freedesktop.org/src/gst-plugins-good/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
     sha256 = "c20c134d47dbc238d921707a3b66da709c2b4dd89f9d267cec13d1ddf16e9f4d";
   };

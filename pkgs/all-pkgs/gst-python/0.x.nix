@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   name = "gst-python-0.10.22";
 
   src = fetchurl {
-    url = "http://gstreamer.freedesktop.org/src/gst-python/${name}.tar.bz2";
+    url = "https://gstreamer.freedesktop.org/src/gst-python/${name}.tar.bz2";
     sha256 = "0y1i4n5m1diljqr9dsq12anwazrhbs70jziich47gkdwllcza9lg";
   };
 

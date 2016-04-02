@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   name = "gst-ffmpeg-0.10.13";
 
   src = fetchurl {
-    url = "http://gstreamer.freedesktop.org/src/gst-ffmpeg/${name}.tar.bz2";
+    url = "https://gstreamer.freedesktop.org/src/gst-ffmpeg/${name}.tar.bz2";
     sha256 = "0qmvgwcfybci78sd73mhvm4bsb7l0xsk9yljrgik80g011ds1z3n";
   };
 

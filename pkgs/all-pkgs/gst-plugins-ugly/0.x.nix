@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   name = "gst-plugins-ugly-0.10.19";
 
   src = fetchurl {
-    url = "http://gstreamer.freedesktop.org/src/gst-plugins-ugly/${name}.tar.xz";
+    url = "https://gstreamer.freedesktop.org/src/gst-plugins-ugly/${name}.tar.xz";
     sha256 = "0wx8dr3sqfkar106yw6h57jdv2cifwsydkziz9z7wqwjz1gzcd29";
   };
 

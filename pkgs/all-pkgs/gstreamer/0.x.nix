@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   name = "gstreamer-0.10.36";
 
   src = fetchurl {
-    url = "http://gstreamer.freedesktop.org/src/gstreamer/${name}.tar.xz";
+    url = "https://gstreamer.freedesktop.org/src/gstreamer/${name}.tar.xz";
     sha256 = "1nkid1n2l3rrlmq5qrf5yy06grrkwjh3yxl5g0w58w0pih8allci";
   };
 

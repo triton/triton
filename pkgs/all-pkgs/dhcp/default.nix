@@ -72,10 +72,9 @@ stdenv.mkDerivation rec {
 
   passthru = {
     sourceTarball = fetchurl {
-      urls = src.urls;
       pgpsigUrls = map (n: "${n}.sha512.asc") src.urls;
       pgpKeyFile = ./signing.key;
-      inherit (src) outputHashAlgo outputHash;
+      inherit (src) urls outputHashAlgo outputHash;
     };
   };
 

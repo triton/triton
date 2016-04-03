@@ -1659,6 +1659,8 @@ seahorse = callPackage ../all-pkgs/seahorse { };
 
 serf = callPackage ../all-pkgs/serf { };
 
+shared_mime_info = callPackage ../all-pkgs/shared-mime-info { };
+
 sharutils = callPackage ../all-pkgs/sharutils { };
 
 snappy = callPackage ../all-pkgs/snappy { };
@@ -9522,8 +9524,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  proggyfonts = callPackage ../data/fonts/proggyfonts { };
 #
 #  sampradaya = callPackage ../data/fonts/sampradaya { };
-#
-  shared_mime_info = callPackage ../data/misc/shared-mime-info { };
 #
 #  shared_desktop_ontologies = callPackage ../data/misc/shared-desktop-ontologies { };
 #

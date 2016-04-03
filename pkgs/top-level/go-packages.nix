@@ -553,7 +553,7 @@ let
     rev = "v0.6.4";
     owner = "hashicorp";
     repo = "consul";
-    sha256 = "0d0bpaq4phc3q9gaikjv6riax79gysk608icah34rqsz04y3ca51";
+    sha256 = "9fe1189a3145519f88d3e5e6cae9597a934af25df5f62d4ea0b7cc1ea13edd07";
 
     buildInputs = [
       datadog-go circbuf armon_go-metrics go-radix speakeasy bolt
@@ -1535,7 +1535,7 @@ let
     rev = "4ac6ea1aa6ee9be15e66aa694c4b3f909df239f4";
     owner = "fsouza";
     repo = "go-dockerclient";
-    sha256 = "1dwhlb25pbvj96dywrqp544ah0i7yh0p689gqmvp28wf6zg0fr1b";
+    sha256 = "22d26ab4535140cb65a2cbd2e7de6efcb5f8bfefbfbc28ef5599adf8b8bf4478";
   };
 
   go-etcd = buildFromGitHub {

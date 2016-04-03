@@ -13,9 +13,15 @@
 with {
   inherit (stdenv.lib)
     enFlag
+    optionals
     optionalString
     wtFlag;
 };
+
+assert xorg != null ->
+  xorg.libX11 != null
+  && xorg.libXft != null
+  && xorg.libXrender != null;
 
 stdenv.mkDerivation rec {
   name = "pango-${version}";
@@ -35,6 +41,7 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     harfbuzz
+  ] ++ optionals (xorg != null) [
     xorg.libX11
     xorg.libXft
     xorg.libXrender
@@ -55,7 +62,7 @@ stdenv.mkDerivation rec {
     "--disable-doc-cross-reference"
     "--enable-Bsymbolic"
     "--disable-installed-tests"
-    (wtFlag "xft" (xorg.libXft != null) null)
+    (wtFlag "xft" (xorg != null) null)
     (wtFlag "cairo" (cairo != null) null)
   ];
 
@@ -78,7 +85,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

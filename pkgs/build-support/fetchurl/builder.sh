@@ -9,27 +9,7 @@ minisignUrls=($minisignUrls)
 pgpsigUrls=($pgpsigUrls)
 pgpKeyIds=($pgpKeyIds)
 
-pgpKeyFingerprintsArr=()
-i=0
-str=""
-for group in $pgpKeyFingerprints; do
-  if [ "$i" -eq "5" ]; then
-    str+=" "
-  fi
-
-  str+="$group"
-
-  i=$(($i + 1))
-
-  if [ "$i" -eq "10" ]; then
-    pgpKeyFingerprintsArr+=("$str")
-    str=""
-    i=0
-  else
-    str+=" "
-  fi
-done
-pgpKeyFingerprints=("${pgpKeyFingerprintsArr[@]}")
+pgpKeyFingerprints=($pgpKeyFingerprints)
 
 set +o noglob
 
@@ -357,7 +337,7 @@ i=0
 while [ "$i" -lt "${#pgpKeyIds[@]}" ]; do
   pgpKeyId="${pgpKeyIds[$i]}"
   pgpKeyFingerprint="${pgpKeyFingerprints[$i]}"
-  if [ "$(gpg --fingerprint "$pgpKeyId" | awk -F '= ' '{ if (/Key fingerprint/) { print $2 } }')" != "$pgpKeyFingerprint" ]; then
+  if [ "$(gpg --fingerprint "$pgpKeyId" | awk -F '= ' '{ if (/Key fingerprint/) { gsub(/ /, "", $2); print $2; } }')" != "$pgpKeyFingerprint" ]; then
     echo "Fingerprints didn't match for $pgpKeyId" >&2
     exit 1
   fi

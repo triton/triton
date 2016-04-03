@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, intltool
 
 , glib
 , gobject-introspection
@@ -24,6 +25,10 @@ stdenv.mkDerivation rec {
     sha256 = "05mj10hhiik23ai8w4wkk5vhsp7hcv24bih5q3fl82ilam268467";
   };
 
+  nativeBuildInputs = [
+    intltool
+  ];
+
   buildInputs = [
     glib
     gobject-introspection
@@ -37,7 +42,8 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     (enFlag "introspection" (gobject-introspection != null) "yes")
     "--disable-gcov"
-    (wtFlag "gnome" (libsoup != null) null)
+    # gnome support only adds a dependency on obsolete libsoup-gnome
+    "--without-gnome"
     "--with-ca-certificates=/etc/ssl/certs/ca-certificates.crt"
   ];
 
@@ -51,7 +57,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

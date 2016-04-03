@@ -1067,6 +1067,8 @@ jansson = callPackage ../all-pkgs/jansson { };
 
 jemalloc = callPackage ../all-pkgs/jemalloc { };
 
+jshon = callPackage ../all-pkgs/jshon { };
+
 jsoncpp = callPackage ../all-pkgs/jsoncpp { };
 
 json-glib = callPackage ../all-pkgs/json-glib { };

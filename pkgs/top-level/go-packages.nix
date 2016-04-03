@@ -821,7 +821,7 @@ let
     rev = "v2.3.1";
     owner  = "coreos";
     repo   = "etcd";
-    sha256 = "1hrpa8knz3nyzm6m4ng8xd91afsp06ywnxs6mfxgc4c08fglppc0";
+    sha256 = "c43f81cbf9e5de62d0fd94336573380a7352f0a5e5c2c12968fe76aa9dcd9895";
   };
 
   etcd-client = buildFromGitHub {
@@ -947,7 +947,7 @@ let
   gcloud-golang = buildFromGoogle {
     rev = "a84169b58e233ca24c21e8d0418d0bc6e0f6e195";
     repo = "cloud";
-    sha256 = "936913866d67c0727cbf25318109e0a73eb44e7b61c50b508c76afa38e2b5450";
+    sha256 = "daa295e090b6188e0c5804fbe93df5616f0ab6715f8cf2bf2490c1abe84156fc";
     propagatedBuildInputs = [ net oauth2 protobuf google-api-go-client grpc ];
     excludedPackages = "oauth2";
     meta.hydraPlatforms = [ ];

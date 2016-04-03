@@ -336,7 +336,7 @@ let
     rev = "v1.1.15";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "1vff889lgzv4xfc9qi9qdhm0dx1i7iiz7bbx91aw6y2lmpyldhzv";
+    sha256 = "aa48199de5e758d7aa3fe963d6bce43dbd8e2d0bdcf3279c4dedc7e53303313a";
     buildInputs = [ testify gucumber tools ];
     propagatedBuildInputs = [ ini go-jmespath ];
 
@@ -947,7 +947,7 @@ let
   gcloud-golang = buildFromGoogle {
     rev = "a84169b58e233ca24c21e8d0418d0bc6e0f6e195";
     repo = "cloud";
-    sha256 = "0bvdbh408wdjqnhf3kyjlpp666lgcglj2i26k5j9cxhnxvcbk6q0";
+    sha256 = "936913866d67c0727cbf25318109e0a73eb44e7b61c50b508c76afa38e2b5450";
     propagatedBuildInputs = [ net oauth2 protobuf google-api-go-client grpc ];
     excludedPackages = "oauth2";
     meta.hydraPlatforms = [ ];
@@ -1535,7 +1535,7 @@ let
     rev = "086d16d0c1428734a75065d2aa64e248093d2790";
     owner = "fsouza";
     repo = "go-dockerclient";
-    sha256 = "1kdcc0xa6c99ki2kwwskcri6xj9xw4jpv5w98zkav8payfq57d2w";
+    sha256 = "df076f7593b55ea7f1ce9e73bc88ba19ba390174fe448797ada1953b107906a9";
   };
 
   go-etcd = buildFromGitHub {
@@ -3784,7 +3784,7 @@ let
     rev = "v0.5.2";
     owner = "hashicorp";
     repo = "vault";
-    sha256 = "0ll1nnln7mv8nl4y9g45jw97gz3c3n8h7q80290ninbs0ylpjk6i";
+    sha256 = "49030e9007fde2de3ab9ba43b9242a8e18e982ddc9123229dd4bd05d8b22f1bf";
 
     buildInputs = [
       armon_go-metrics go-radix govalidator aws-sdk-go speakeasy etcd-client

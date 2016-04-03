@@ -32,34 +32,6 @@ stdenv.mkDerivation rec {
     sha256 = "0flcsr148xshjbff030pgyk9ar25an901m9q1pjgjdvaq5j1h96m";
   };
 
-  configureFlags = [
-    (enFlag "introspection" (gobject-introspection != null) null)
-    "--enable-schemas-compile"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-nls"
-    "--disable-strict"
-    "--enable-rpath"
-    "--enable-libgusb"
-    "--enable-udev"
-    "--disable-bash-completion"
-    "--enable-polkit"
-    "--enable-libcolordcompat"
-    "--enable-systemd-login"
-    "--disable-examples"
-    "--enable-argyllcms-sensor"
-    "--disable-reverse"
-    "--disable-sane"
-    "--enable-vala"
-    "--disable-session-example"
-    "--enable-print-profiles"
-    "--disable-installed-tests"
-    "--with-systemdsystemunitdir=$(out)/etc/systemd/system"
-    "--with-udevrulesdir=$out/lib/udev/rules.d"
-    #"--with-daemon-user"
-  ];
-
   nativeBuildInputs = [
     autoconf
     automake
@@ -82,6 +54,39 @@ stdenv.mkDerivation rec {
     vala
   ];
 
+  preConfigure = ''
+    configureFlagsArray+=(
+      "--with-systemdsystemunitdir=$out/etc/systemd/system"
+      "--with-udevrulesdir=$out/lib/udev/rules.d"
+    )
+  '';
+
+  configureFlags = [
+    (enFlag "introspection" (gobject-introspection != null) null)
+    "--enable-schemas-compile"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--enable-nls"
+    "--disable-strict"
+    "--enable-rpath"
+    (enFlag "libgusb" (libgusb != null) null)
+    (enFlag "udev" (systemd_lib != null) null)
+    "--disable-bash-completion"
+    (enFlag "polkit" (polkit != null) null)
+    "--enable-libcolordcompat"
+    (enFlag "systemd-login" (systemd_lib != null) null)
+    "--disable-examples"
+    (enFlag "argyllcms-sensor" (argyllcms != null) null)
+    "--disable-reverse"
+    "--disable-sane"
+    (enFlag "vala" (vala != null) null)
+    "--disable-session-example"
+    "--enable-print-profiles"
+    "--disable-installed-tests"
+    #"--with-daemon-user"
+  ];
+
   postInstall = ''
     rm -rvf $out/var/lib/colord
     mkdir -p $out/etc/bash_completion.d
@@ -94,7 +99,6 @@ stdenv.mkDerivation rec {
     license = licenses.lgpl2Plus;
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

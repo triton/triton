@@ -1143,6 +1143,8 @@ libgksu = callPackage ../all-pkgs/libgksu { };
 
 libglvnd = callPackage ../all-pkgs/libglvnd { };
 
+libgnome-keyring = callPackage ../all-pkgs/libgnome-keyring { };
+
 libgnomekbd = callPackage ../all-pkgs/libgnomekbd { };
 
 libgpg-error = callPackage ../all-pkgs/libgpg-error { };
@@ -6774,8 +6776,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libgadu = callPackage ../development/libraries/libgadu { };
 #
 #  libgig = callPackage ../development/libraries/libgig { };
-#
-  libgnome-keyring = callPackage ../development/libraries/libgnome-keyring { };
 #
 #  libgnurl = callPackage ../development/libraries/libgnurl { };
 #

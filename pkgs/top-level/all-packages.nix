@@ -1059,6 +1059,8 @@ iputils = callPackage ../all-pkgs/iputils { };
 isl = callPackage ../all-pkgs/isl { };
 isl_0_14 = callPackage ../all-pkgs/isl { channel = "0.14"; };
 
+iso-codes = callPackage ../all-pkgs/iso-codes { };
+
 jam = callPackage ../all-pkgs/jam { };
 
 jansson = callPackage ../all-pkgs/jansson { };
@@ -6548,8 +6550,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #
 #  irrlicht = callPackage ../development/libraries/irrlicht { };
 #  irrlicht3843 = callPackage ../development/libraries/irrlicht/irrlicht3843.nix { };
-#
-iso-codes = callPackage ../development/libraries/iso-codes { };
 #
 #  itk = callPackage ../development/libraries/itk { };
 #

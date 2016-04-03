@@ -2896,31 +2896,11 @@ in {
   };
 
   click = buildPythonPackage rec {
-    name = "click-6.2";
+    name = "click-6.4";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/c/click/${name}.tar.gz";
-      sha256 = "10kavbisnk9m93jl2wi34pw7ryr2qbxshh2cysxwxd7bymqgz87v";
-    };
-
-    buildInputs = with self; [ pytest ];
-
-    checkPhase = ''
-      test tests
-    '';
-
-    # Python 3.5 str/bytes-like errors with reading files
-    doCheck = !isPy3k;
-
-    meta = {
-      homepage = http://click.pocoo.org/;
-      description = "Create beautiful command line interfaces in Python";
-      longDescription = ''
-        A Python package for creating beautiful command line interfaces in a
-        composable way, with as little code as necessary.
-      '';
-      license = licenses.bsd3;
-      maintainers = with maintainers; [ nckx ];
+      sha256 = "6eb86ac0e44e60b3085e7b87797fe2adf745dbea38b78d7db1f17ec96ca016ed";
     };
   };
 
@@ -8526,12 +8506,6 @@ in {
     };
 
     propagatedBuildInputs = with self; [ itsdangerous click werkzeug jinja2 ];
-
-    meta = {
-      homepage = http://flask.pocoo.org/;
-      description = "A microframework based on Werkzeug, Jinja 2, and good intentions";
-      license = licenses.bsd3;
-    };
   };
 
   flask_cache = buildPythonPackage rec {

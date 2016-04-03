@@ -971,7 +971,7 @@ let
     rev = "c3a655f9b37a2207fa39721b078b3173ee9218d6";
     owner = "onsi";
     repo = "ginkgo";
-    sha256 = "00hvd1jnjizwxi6s2n3mdzvy7r83jlhgrwv2myzws26myfs5vwzv";
+    sha256 = "edf2b34ad6f44cfc78c66b265d3eba6eff0ad6285e62fc83bf2f8da6fdec2928";
     date = "2016-03-14";
   };
 
@@ -1784,7 +1784,7 @@ let
     rev = "4a8bd8f8baf45afcf2bb385bbc17e5208d5d4c71";
     owner  = "jbenet";
     repo   = "go-multiaddr-net";
-    sha256 = "0rvd721pkkzqvzc3y07z46dhmw7hnxpx2j3pcnfnh5ahfz6y742f";
+    sha256 = "9caeaa3316d6c20ed1b49d3a9f8c8646e56f8b2b6dab6910c5553e79529fa924";
     date = "2015-10-11";
   };
 
@@ -3619,7 +3619,7 @@ let
     rev = "v0.12.21";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "13k44zhwlxcph2i2cz29if8y7f4dyi5v1282mj3jlljm3hf5fnp0";
+    sha256 = "ffd6863af8c24a8d16e8f596799033689a1bb10e0466f95cba9cc3c183478a8b";
     buildFlags = [ "-tags noupgrade,release" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext

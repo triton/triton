@@ -1,7 +1,4 @@
-{ stdenv
-, newScope
-, makeWrapper
-, makeDesktopItem
+{ newScope, stdenv, makeWrapper, makeDesktopItem
 
 # package customization
 , channel ? "stable"
@@ -14,18 +11,17 @@
 , enablePepperFlash ? false
 , enableWideVine ? false
 , cupsSupport ? true
-, pulseSupport ? true
-, hiDPISupport ? true
+, pulseSupport ? false
+, hiDPISupport ? false
 }:
 
 let
   callPackage = newScope chromium;
 
   chromium = {
-    source = callPackage ./source {
-      inherit channel;
-      # XXX: common config
-    };
+    upstream-info = (import ./update.nix {
+      inherit (stdenv) targetSystem hostSystem;
+    }).getChannel channel;
 
     mkChromiumDerivation = callPackage ./common.nix {
       inherit enableSELinux enableNaCl enableHotwording gnomeSupport
@@ -60,6 +56,9 @@ let
       "x-scheme-handler/unknown"
     ];
     categories = "Network;WebBrowser";
+    extraEntries = ''
+      StartupWMClass=chromium-browser
+    '';
   };
 
   suffix = if channel != "stable" then "-" + channel else "";

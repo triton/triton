@@ -713,7 +713,7 @@ let
     rev = "v1.10.3";
     owner = "docker";
     repo = "docker";
-    sha256 = "14k450g67xb1c3r12irv7h7309ms0ms3l5i33l3s1myvhid3dkwg";
+    sha256 = "63e98239fe4066895a42689847ee12755a44d2d749239c66d2a19086b5194f27";
     subPackages = [ "pkg/mount" "pkg/system" "pkg/symlink" "pkg/term" ];
     propagatedBuildInputs = [ go-units ];
   };
@@ -1568,7 +1568,7 @@ let
     date = "2016-03-30";
     owner = "hashicorp";
     repo = "go-getter";
-    sha256 = "1vnqqffljbyvf268gvdk19328jjqgnvraq0kd6819h14rafi1q7i";
+    sha256 = "a5f15be312e436e35eb8b1e27301526f12422105c406b941478df4a3d4e32f1f";
     buildInputs = [ aws-sdk-go ];
   };
 
@@ -2739,7 +2739,7 @@ let
     rev = "v0.3.1";
     owner = "hashicorp";
     repo = "nomad";
-    sha256 = "0y382q5zckc0yrm0hm8ca5l7fdrb53m0p011005lq27520l4b1sn";
+    sha256 = "de5b734182e2056321dab3511e2170b4dd6e770ae1e2a28c36964e5b9e6d601c";
 
     buildInputs = [
       datadog-go wmi armon_go-metrics go-radix aws-sdk-go perks speakeasy
@@ -3401,7 +3401,7 @@ let
     rev = "v0.0.9";
     owner  = "opencontainers";
     repo   = "runc";
-    sha256 = "19irib3hvd12cwryfp3g03rm1j7siyfh9hxmavcchckf9na092sr";
+    sha256 = "305c184f04a1240e4b76151d231aa2d85309640ad528bc562472683738b6957e";
     propagatedBuildInputs = [
       go-units logrus docker go-systemd protobuf gocapability netlink
       codegangsta-cli specs

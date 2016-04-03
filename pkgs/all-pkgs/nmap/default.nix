@@ -8,11 +8,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "nmap-7.11";
+  name = "nmap-7.12";
 
   src = fetchurl {
     url = "https://nmap.org/dist/${name}.tar.bz2";
-    sha256 = "13fa971555dec00e495a5b72c1f9efa1363b8e6c7388a2f05117cb0778c0954a";
+    sha256 = "63df082a87c95a189865d37304357405160fc6333addcf5b84204c95e0539b04";
   };
 
   nativeBuildInputs = [

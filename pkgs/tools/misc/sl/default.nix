@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     owner = "mtoyoda";
     repo = "sl";
     rev = version;
-    sha256 = "1zrfd71zx2px2xpapg45s8xvi81xii63yl0h60q72j71zh4sif8b";
+    sha256 = "8df0edee1b23cbfde9b1c7f26647f81983e10745b8a671b6b2f0eb2cc438a393";
   };
 
   buildInputs = [

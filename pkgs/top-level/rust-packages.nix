@@ -14,7 +14,7 @@ let
     inherit rev;
     owner = "rust-lang";
     repo = "crates.io-index";
-    sha256 = "0820274yannfiasjawp2zi4v1v02cianwpq6r920x3nzhhgsm61v";
+    sha256 = "f00fe4417441e73cc46e97f0cb3c272162a939343c0f401cb919777405697a64";
   };
 
 in
@@ -31,9 +31,13 @@ runCommand "rustRegistry-${version}-${builtins.substring 0 7 rev}" {} ''
   # contents downloaded with fetchgit...
 
   mkdir -p $out
+  mkdir -p "$TMPDIR/unpack"
 
-  cp -r ${src}/* $out/
+  cd "$TMPDIR/unpack"
+  unpackFile "${src}"
 
+  cd *
+  mv * $out
   cd $out
 
   git="${git}/bin/git"

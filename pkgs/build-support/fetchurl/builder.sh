@@ -254,6 +254,10 @@ fixUrls 'sha1Urls'
 fixUrls 'md5Urls'
 fixUrls 'minisignUrls'
 fixUrls 'pgpsigUrls'
+fixUrls 'pgpsigMd5Urls'
+fixUrls 'pgpsigSha1Urls'
+fixUrls 'pgpsigSha256Urls'
+fixUrls 'pgpsigSha512Urls'
 
 if test -n "$showURLs"; then
   echo "URLs:"
@@ -299,6 +303,34 @@ if test -n "$showURLs"; then
   if [ "${#pgpsigUrls[@]}" -gt 0 ]; then
     echo "ASC URLs:"
     for url in "${pgpsigUrls[@]}"; do
+      echo "  $url" >&2
+    done
+  fi
+
+  if [ "${#pgpsigMd5Urls[@]}" -gt 0 ]; then
+    echo "ASC MD5 URLs:"
+    for url in "${pgpsigMd5Urls[@]}"; do
+      echo "  $url" >&2
+    done
+  fi
+
+  if [ "${#pgpsigSha1Urls[@]}" -gt 0 ]; then
+    echo "ASC SHA1 URLs:"
+    for url in "${pgpsigSha1Urls[@]}"; do
+      echo "  $url" >&2
+    done
+  fi
+
+  if [ "${#pgpsigSha256Urls[@]}" -gt 0 ]; then
+    echo "ASC SHA256 URLs:"
+    for url in "${pgpsigSha256Urls[@]}"; do
+      echo "  $url" >&2
+    done
+  fi
+
+  if [ "${#pgpsigSha512Urls[@]}" -gt 0 ]; then
+    echo "ASC SHA512 URLs:"
+    for url in "${pgpsigSha512Urls[@]}"; do
       echo "  $url" >&2
     done
   fi

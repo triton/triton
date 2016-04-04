@@ -666,6 +666,8 @@ dconf-editor = callPackage ../all-pkgs/dconf-editor { };
 
 ddrescue = callPackage ../all-pkgs/ddrescue { };
 
+dialog = callPackage ../all-pkgs/dialog { };
+
 dmenu = callPackage ../all-pkgs/dmenu { };
 
 devil-nox = devil.override {
@@ -2140,8 +2142,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  diagrams-builder = callPackage ../tools/graphics/diagrams-builder {
 #    inherit (haskellPackages) ghcWithPackages diagrams-builder;
 #  };
-#
-#  dialog = callPackage ../development/tools/misc/dialog { };
 #
 #  ding = callPackage ../applications/misc/ding {
 #    aspellDicts_de = aspellDicts.de;

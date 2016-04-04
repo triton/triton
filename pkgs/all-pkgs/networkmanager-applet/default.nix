@@ -9,6 +9,7 @@
 , dconf
 , gconf
 , gdk-pixbuf
+, glib
 , glib-networking
 , gnome-keyring
 , gobject-introspection
@@ -63,6 +64,7 @@ stdenv.mkDerivation rec {
     dconf
     gdk-pixbuf
     gconf
+    glib
     libgnome-keyring
     gobject-introspection
     gsettings-desktop-schemas

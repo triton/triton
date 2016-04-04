@@ -1,6 +1,8 @@
 { stdenv
 , fetchFromGitHub
 , pythonPackages
+
+, dialog
 }:
 
 pythonPackages.buildPythonPackage rec {
@@ -19,6 +21,7 @@ pythonPackages.buildPythonPackage rec {
     ConfigArgParse
     configobj
     cryptography
+    dialog
     parsedatetime
     psutil
     pyopenssl

@@ -110,65 +110,67 @@ tryDownload() {
     if $curl "${extraOpts[@]}" "$url" --output "$downloadedFile"; then
       runHook postFetch
       if [ "$outputHashMode" = "flat" ]; then
-        if [ -n "$sha512Confirm" ]; then
-          local sha512
-          sha512="$(openssl sha512 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
-          if [ "$sha512Confirm" != "$sha512" ]; then
-            echo "$out SHA512 hash does not match given $sha512Confirm" >&2
-            break
-          else
-            verifications+=('sha512')
+        if [ "$2" = "1" ]; then
+          if [ -n "$sha512Confirm" ]; then
+            local sha512
+            sha512="$(openssl sha512 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
+            if [ "$sha512Confirm" != "$sha512" ]; then
+              echo "$out SHA512 hash does not match given $sha512Confirm" >&2
+              break
+            else
+              verifications+=('sha512')
+            fi
           fi
-        fi
 
-        if [ -n "$sha256Confirm" ]; then
-          local sha256
-          sha256="$(openssl sha256 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
-          if [ "$sha256Confirm" != "$sha256" ]; then
-            echo "$out SHA256 hash does not match given $sha256Confirm" >&2
-            break
-          else
-            verifications+=('sha256')
+          if [ -n "$sha256Confirm" ]; then
+            local sha256
+            sha256="$(openssl sha256 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
+            if [ "$sha256Confirm" != "$sha256" ]; then
+              echo "$out SHA256 hash does not match given $sha256Confirm" >&2
+              break
+            else
+              verifications+=('sha256')
+            fi
           fi
-        fi
 
-        if [ -n "$sha1Confirm" ]; then
-          local sha1
-          sha1="$(openssl sha1 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
-          if [ "$sha1Confirm" != "$sha1" ]; then
-            echo "$out SHA1 hash does not match given $sha1Confirm" >&2
-            break
-          else
-            verifications+=('sha1')
+          if [ -n "$sha1Confirm" ]; then
+            local sha1
+            sha1="$(openssl sha1 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
+            if [ "$sha1Confirm" != "$sha1" ]; then
+              echo "$out SHA1 hash does not match given $sha1Confirm" >&2
+              break
+            else
+              verifications+=('sha1')
+            fi
           fi
-        fi
 
-        if [ -n "$md5Confirm" ]; then
-          local md5
-          md5="$(openssl md5 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
-          if [ "$md5Confirm" != "$md5" ]; then
-            echo "$out MD5 hash does not match given $md5Confirm" >&2
-            break
-          else
-            verifications+=('md5')
+          if [ -n "$md5Confirm" ]; then
+            local md5
+            md5="$(openssl md5 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
+            if [ "$md5Confirm" != "$md5" ]; then
+              echo "$out MD5 hash does not match given $md5Confirm" >&2
+              break
+            else
+              verifications+=('md5')
+            fi
           fi
-        fi
 
-        if [ -n "$minisignPub" ]; then
-          if ! minisign -V -x "$TMPDIR/minisign" -m "$out" -P "$minisignPub" -q; then
-            echo "$out Minisig does not validate" >&2
-            break
-          else
-            verifications+=('minisign')
+          if [ -n "$minisignPub" ]; then
+            if ! minisign -V -x "$TMPDIR/minisign" -m "$out" -P "$minisignPub" -q; then
+              echo "$out Minisig does not validate" >&2
+              break
+            else
+              verifications+=('minisign')
+            fi
           fi
-        fi
 
-        if [ "${#pggsisgUrls[@]}" -gt "0" ]; then
-          if ! gpg --lock-never --verify "$TMPDIR/pgpsig" "$out"; then
-            echo "$out pgpsig does not validate" >&2
-            break
-          else
-            verifications+=('pgp')
+          if [ "${#pggsisgUrls[@]}" -gt "0" ]; then
+            if ! gpg --lock-never --verify "$TMPDIR/pgpsig" "$out"; then
+              echo "$out pgpsig does not validate" >&2
+              break
+            else
+              verifications+=('pgp')
+            fi
           fi
         fi
 
@@ -324,6 +326,15 @@ curl="curl \
  --speed-time 5 \
  $curlOpts \
  $NIX_CURL_FLAGS"
+
+# Download the actual file from ipfs before doing anything else
+if [ -n "$multihash" ]; then
+  if [ -n "$IPFS_API" ]; then
+    tryDownload "http://$IPFS_API/ipfs/$multihash"
+  fi
+  tryDownload "http://127.0.0.1/ipfs/$multihash"
+  tryDownload "http://127.0.0.1:8080/ipfs/$multihash"
+fi
 
 # Import needed gnupg keys
 HOME="$TMPDIR"  # GNUPG needs this
@@ -485,15 +496,6 @@ for url in "${md5Urls[@]}"; do
     md5Confirm="broken"
   fi
 done
-
-# Download the actual file
-if [ -n "$multihash" ]; then
-  if [ -n "$IPFS_API" ]; then
-    tryDownload "http://$IPFS_API/ipfs/$multihash"
-  fi
-  tryDownload "http://127.0.0.1/ipfs/$multihash"
-  tryDownload "http://127.0.0.1:8080/ipfs/$multihash"
-fi
 
 for url in "${urls[@]}"; do
   tryDownload "$url" "1"

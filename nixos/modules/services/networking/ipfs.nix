@@ -93,7 +93,9 @@ in
 
           # Fix permissions
           chmod -R o-rwx "${ipfs_path}"
+          chmod -R g-w "${ipfs_path}"
           chown -R ipfs:ipfs "${ipfs_path}"
+          chmod 0750 "${ipfs_path}"
         fi
 
         touch "${ipfs_path}/new_config"
@@ -110,6 +112,7 @@ in
         ExecStart = "${pkgs.ipfs}/bin/ipfs daemon ${concatStringsSep " " extraFlags}";
         User = "ipfs";
         PermissionsStartOnly = true;
+        UMask = "0027";
       };
     };
 

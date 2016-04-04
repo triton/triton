@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
-, oniguruma
+
+#, oniguruma  # Broken for some reason
 }:
 
 stdenv.mkDerivation rec {
@@ -12,8 +13,13 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    oniguruma
+    #oniguruma
   ];
+
+  # For some reason jq doesn't have the rpath for libjq.so
+  preFixup = ''
+    patchelf --set-rpath "$out/lib:$(patchelf --print-rpath "$out/bin/jq")" "$out/bin/jq"
+  '';
 
   meta = with stdenv.lib; {
     description = "A lightweight and flexible command-line JSON processor";

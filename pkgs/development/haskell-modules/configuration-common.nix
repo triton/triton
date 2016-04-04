@@ -191,7 +191,7 @@ self: super: {
   ABList = dontCheck super.ABList;
 
   # https://github.com/haskell/vector/issues/47
-  vector = if pkgs.stdenv.isi686 then appendConfigureFlag super.vector "--ghc-options=-msse2" else super.vector;
+  vector = super.vector;
 
   halive = if pkgs.stdenv.isDarwin
     then addBuildDepend super.halive pkgs.darwin.apple_sdk.frameworks.AppKit
@@ -717,7 +717,7 @@ self: super: {
   lhs2tex = dontDistribute super.lhs2tex;
 
   # https://ghc.haskell.org/trac/ghc/ticket/9825
-  vimus = overrideCabal super.vimus (drv: { broken = pkgs.stdenv.isLinux && pkgs.stdenv.isi686; });
+  vimus = overrideCabal super.vimus (drv: { });
 
   # https://github.com/hspec/mockery/issues/6
   mockery = overrideCabal super.mockery (drv: { preCheck = "export TRAVIS=true"; });

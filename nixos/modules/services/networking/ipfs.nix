@@ -81,22 +81,26 @@ in
       path = with pkgs; [ ipfs gawk findutils jq ];
 
       preStart = ''
-        set -x
         if [ ! -d "${ipfs_path}" ]; then
           mkdir -p "${ipfs_path}"
+          chmod 0700 "${ipfs_path}"
+
+          # Initialize the repo
           ipfs init -b 4096 -e
-          chmod 0600 "${ipfs_path}/config"
+
+          # Remove any pins that are created by default
           ipfs pin ls -t recursive | awk '{print $1}' | xargs ipfs pin rm
-          chown -R ipfs:nogroup "${ipfs_path}"
+
+          # Fix permissions
+          chmod -R o-rwx "${ipfs_path}"
+          chown -R ipfs:ipfs "${ipfs_path}"
         fi
 
-        mkdir "${ipfs_path}/private"
-        chmod 0700 "${ipfs_path}/private"
-        jq -s '.[0] * .[1]' "${ipfs_path}/config" "${extraJson}" > "${ipfs_path}/private/config"
-        chown ipfs:nogroup "${ipfs_path}/private/config"
-        chmod 0600 "${ipfs_path}/private/config"
-        mv "${ipfs_path}"/{private/,}config
-        rmdir "${ipfs_path}/private"
+        touch "${ipfs_path}/new_config"
+        chmod 0660 "${ipfs_path}/new_config"
+        chown ipfs:ipfs "${ipfs_path}/new_config"
+        jq -s '.[0] * .[1]' "${ipfs_path}/config" "${extraJson}" > "${ipfs_path}/new_config"
+        mv "${ipfs_path}"/{new_,}config
       '';
 
       environment.IPFS_PATH = ipfs_path;
@@ -111,6 +115,11 @@ in
 
     users.extraUsers.ipfs = {
       uid = config.ids.uids.ipfs;
+      group = "ipfs";
+    };
+
+    users.extraGroups.ipfs = {
+      gid = config.ids.gids.ipfs;
     };
   };
 }

@@ -1455,6 +1455,8 @@ numactl = callPackage ../all-pkgs/numactl { };
 
 obexftp = callPackage ../all-pkgs/obexftp { };
 
+oniguruma = callPackage ../all-pkgs/oniguruma { };
+
 openldap = callPackage ../all-pkgs/openldap { };
 
 openobex = callPackage ../all-pkgs/openobex { };
@@ -7310,8 +7312,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  ogrepaged = callPackage ../development/libraries/ogrepaged { };
 #
-  oniguruma = callPackage ../development/libraries/oniguruma { };
-
   openal = callPackageAlias "openalSoft" { };
   openalSoft = callPackage ../development/libraries/openal-soft { };
 #

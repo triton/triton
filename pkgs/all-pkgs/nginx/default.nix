@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--conf-path=/etc/nginx/nginx.conf"
     "--error-log-path=/var/log/nginx/error.log"
-    "--http-log-path=/var/log/nginx/acces.log"
+    "--http-log-path=/var/log/nginx/access.log"
     "--pid-path=/run/nginx/nginx.pid"
     "--lock-path=/run/nginx/nginx.lock"
     "--user=nginx"

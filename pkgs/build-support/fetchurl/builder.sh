@@ -445,7 +445,7 @@ done
 # We want to download signatures first
 getHashOrEmpty() {
   if grep -q "$(basename "$urls")" "$1"; then
-    grep "$(basename "$urls")" "$1" | awk '{ print $1 }'
+    grep "$(basename "$urls")" "$1" | sed -n "s,.*\\([0-9A-Za-z]\\{$2\\}\\).*,\\1,p"
   else
     cat "$1"
   fi
@@ -464,13 +464,13 @@ getHash() {
 for url in "${sha512Urls[@]}"; do
   echo "Trying $url" >&2
   if $curl -C - --fail "$url" --output "$TMPDIR/sha512"; then
-    if [ "${#pggsisgSha512Urls[@]}" -gt "0" ]; then
-       if ! gpg -lock-never --verify "$TMPDIR/pgpsigSha512" "$TMPDIR/sha512"; then
+    if [ "${#pgpsigSha512Urls[@]}" -gt "0" ]; then
+       if ! gpg --lock-never --verify "$TMPDIR/pgpsigSha512" "$TMPDIR/sha512"; then
           echo "$TMPDIR/sha512 pgpsig does not validate" >&2
           exit 1
        fi
     fi
-    sha512Confirm="$(getHash "$TMPDIR/sha512")"
+    sha512Confirm="$(getHash "$TMPDIR/sha512" 128)"
     break
   else
     sha512Confirm="broken"
@@ -480,13 +480,13 @@ done
 for url in "${sha256Urls[@]}"; do
   echo "Trying $url" >&2
   if $curl -C - --fail "$url" --output "$TMPDIR/sha256"; then
-    if [ "${#pggsisgSha256Urls[@]}" -gt "0" ]; then
-       if ! gpg -lock-never --verify "$TMPDIR/pgpsigSha256" "$TMPDIR/sha256"; then
+    if [ "${#pgpsigSha256Urls[@]}" -gt "0" ]; then
+       if ! gpg --lock-never --verify "$TMPDIR/pgpsigSha256" "$TMPDIR/sha256"; then
           echo "$TMPDIR/sha256 pgpsig does not validate" >&2
           exit 1
        fi
     fi
-    sha256Confirm="$(getHash "$TMPDIR/sha256")"
+    sha256Confirm="$(getHash "$TMPDIR/sha256" 64)"
     break
   else
     sha256Confirm="broken"
@@ -496,13 +496,13 @@ done
 for url in "${sha1Urls[@]}"; do
   echo "Trying $url" >&2
   if $curl -C - --fail "$url" --output "$TMPDIR/sha1"; then
-    if [ "${#pggsisgSha1Urls[@]}" -gt "0" ]; then
-       if ! gpg -lock-never --verify "$TMPDIR/pgpsigSha1" "$TMPDIR/sha1"; then
+    if [ "${#pgpsigSha1Urls[@]}" -gt "0" ]; then
+       if ! gpg --lock-never --verify "$TMPDIR/pgpsigSha1" "$TMPDIR/sha1"; then
           echo "$TMPDIR/sha1 pgpsig does not validate" >&2
           exit 1
        fi
     fi
-    sha1Confirm="$(getHash "$TMPDIR/sha1")"
+    sha1Confirm="$(getHash "$TMPDIR/sha1" 40)"
     break
   else
     sha1Confirm="broken"
@@ -512,13 +512,13 @@ done
 for url in "${md5Urls[@]}"; do
   echo "Trying $url" >&2
   if $curl -C - --fail "$url" --output "$TMPDIR/md5"; then
-    if [ "${#pggsisgMd5Urls[@]}" -gt "0" ]; then
-       if ! gpg -lock-never --verify "$TMPDIR/pgpsigMd5" "$TMPDIR/md5"; then
+    if [ "${#pgpsigMd5Urls[@]}" -gt "0" ]; then
+       if ! gpg --lock-never --verify "$TMPDIR/pgpsigMd5" "$TMPDIR/md5"; then
           echo "$TMPDIR/md5 pgpsig does not validate" >&2
           exit 1
        fi
     fi
-    md5Confirm="$(getHash "$TMPDIR/md5")"
+    md5Confirm="$(getHash "$TMPDIR/md5" 32)"
     break
   else
     md5Confirm="broken"

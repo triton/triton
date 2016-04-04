@@ -1067,6 +1067,8 @@ jansson = callPackage ../all-pkgs/jansson { };
 
 jemalloc = callPackage ../all-pkgs/jemalloc { };
 
+jq = callPackage ../all-pkgs/jq { };
+
 jshon = callPackage ../all-pkgs/jshon { };
 
 jsoncpp = callPackage ../all-pkgs/jsoncpp { };
@@ -3147,8 +3149,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  jp2a = callPackage ../applications/misc/jp2a { };
 #
 #  jpegoptim = callPackage ../applications/graphics/jpegoptim { };
-#
-#  jq = callPackage ../development/tools/jq {};
 #
 #  jscoverage = callPackage ../development/tools/misc/jscoverage { };
 #

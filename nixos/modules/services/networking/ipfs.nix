@@ -70,7 +70,10 @@ in
 
   config = mkIf cfg.enable {
 
-    environment.variables.IPFS_API = "127.0.0.1:8001";
+    environment.variables = {
+      IPFS_API = "127.0.0.1:8001"
+      IPFS_PATH = "/var/lib/ipfs";
+    };
 
     systemd.services.ipfs = {
       wantedBy = [ "multi-user.target" ];
@@ -87,9 +90,11 @@ in
           chmod -R go-rwx "${ipfs_path}"
         fi
 
+        umask 0077
         jq -s '.[0] * .[1]' "${ipfs_path}/config" "${extraJson}" > "${ipfs_path}/new_config"
         mv "${ipfs_path}"/{new_,}config
         chown ipfs:nogroup "${ipfs_path}/config"
+        umask 0022
       '';
 
       environment.IPFS_PATH = ipfs_path;
@@ -99,7 +104,7 @@ in
         ExecStart = "${pkgs.ipfs}/bin/ipfs daemon ${concatStringsSep " " extraFlags}";
         User = "ipfs";
         PermissionsStartOnly = true;
-        UMask = "0077";
+        UMask = "0022";
       };
     };
 

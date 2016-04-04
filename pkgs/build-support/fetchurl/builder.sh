@@ -499,7 +499,7 @@ done
 
 # We only ever want to access the official gateway as a last resort as it can be slow
 if [ -n "$multihash" ]; then
-  tryDownload "https://gateway.ipfs.io/ipfs/$multihash"
+  tryDownload "https://ipfs.wak.io/ipfs/$multihash"
 fi
 
 

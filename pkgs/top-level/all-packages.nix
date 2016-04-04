@@ -1459,6 +1459,8 @@ oniguruma = callPackage ../all-pkgs/oniguruma { };
 
 openldap = callPackage ../all-pkgs/openldap { };
 
+openntpd = callPackage ../all-pkgs/openntpd { };
+
 openobex = callPackage ../all-pkgs/openobex { };
 
 openssh = callPackage ../all-pkgs/openssh { };
@@ -3622,8 +3624,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  opendkim = callPackage ../development/libraries/opendkim { };
 #
 #  openjade = callPackage ../tools/text/sgml/openjade { };
-#
-  openntpd = callPackage ../tools/networking/openntpd { };
 #
 #  openntpd_nixos = openntpd.override {
 #    privsepUser = "ntp";

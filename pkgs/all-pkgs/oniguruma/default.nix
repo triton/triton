@@ -3,10 +3,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "oniguruma-5.9.5";
+  name = "oniguruma-${version}";
+  version = "5.9.6";
 
   src = fetchurl {
-    url = "https://github.com/kkos/oniguruma/releases/download/v5.9.6/onig-5.9.6.tar.gz";
+    url = "https://github.com/kkos/oniguruma/releases/download/v${version}/onig-${version}.tar.gz";
     sha256 = "d5642010336a6f68b7f2e34b1f1cb14be333e4d95c2ac02b38c162caf44e47a7";
   };
 

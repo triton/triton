@@ -71,7 +71,7 @@ in
   config = mkIf cfg.enable {
 
     environment.variables = {
-      IPFS_API = "127.0.0.1:8001"
+      IPFS_API = "127.0.0.1:8001";
       IPFS_PATH = "/var/lib/ipfs";
     };
 
@@ -85,16 +85,18 @@ in
         if [ ! -d "${ipfs_path}" ]; then
           mkdir -p "${ipfs_path}"
           ipfs init -b 4096 -e
+          chmod 0600 "${ipfs_path}/config"
           ipfs pin ls -t recursive | awk '{print $1}' | xargs ipfs pin rm
           chown -R ipfs:nogroup "${ipfs_path}"
-          chmod -R go-rwx "${ipfs_path}"
         fi
 
-        umask 0077
-        jq -s '.[0] * .[1]' "${ipfs_path}/config" "${extraJson}" > "${ipfs_path}/new_config"
-        mv "${ipfs_path}"/{new_,}config
-        chown ipfs:nogroup "${ipfs_path}/config"
-        umask 0022
+        mkdir "${ipfs_path}/private"
+        chmod 0700 "${ipfs_path}/private"
+        jq -s '.[0] * .[1]' "${ipfs_path}/config" "${extraJson}" > "${ipfs_path}/private/config"
+        chown ipfs:nogroup "${ipfs_path}/private/config"
+        chmod 0600 "${ipfs_path}/private/config"
+        mv "${ipfs_path}"/{private/,}config
+        rmdir "${ipfs_path}/private"
       '';
 
       environment.IPFS_PATH = ipfs_path;
@@ -104,7 +106,6 @@ in
         ExecStart = "${pkgs.ipfs}/bin/ipfs daemon ${concatStringsSep " " extraFlags}";
         User = "ipfs";
         PermissionsStartOnly = true;
-        UMask = "0022";
       };
     };
 

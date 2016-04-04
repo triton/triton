@@ -87,6 +87,14 @@ in
 , pgpKeyFile ? null
 , pgpsigUrl ? ""
 , pgpsigUrls ? []
+, pgpsigMd5Url ? ""
+, pgpsigMd5Urls ? []
+, pgpsigSha1Url ? ""
+, pgpsigSha1Urls ? []
+, pgpsigSha256Url ? ""
+, pgpsigSha256Urls ? []
+, pgpsigSha512Url ? ""
+, pgpsigSha512Urls ? []
 
 , recursiveHash ? false
 
@@ -130,6 +138,10 @@ let
   md5Urls_ = (if md5Url != "" then [ md5Url ] else [ ]) ++ md5Urls;
   minisignUrls_ = (if minisignUrl != "" then [ minisignUrl ] else [ ]) ++ minisignUrls;
   pgpsigUrls_ = (if pgpsigUrl != "" then [ pgpsigUrl ] else [ ]) ++ pgpsigUrls;
+  pgpsigMd5Urls_ = (if pgpsigMd5Url != "" then [ pgpsigMd5Url ] else [ ]) ++ pgpsigMd5Urls;
+  pgpsigSha1Urls_ = (if pgpsigSha1Url != "" then [ pgpsigSha1Url ] else [ ]) ++ pgpsigSha1Urls;
+  pgpsigSha256Urls_ = (if pgpsigSha256Url != "" then [ pgpsigSha256Url ] else [ ]) ++ pgpsigSha256Urls;
+  pgpsigSha512Urls_ = (if pgpsigSha512Url != "" then [ pgpsigSha512Url ] else [ ]) ++ pgpsigSha512Urls;
   pgpKeyIds_ = (if pgpKeyId != "" then [ pgpKeyId ] else [ ]) ++ pgpKeyIds;
   pgpKeyFingerprints_ = map (n: stdenv.lib.replaceChars [" "] [""] n) ((if pgpKeyFingerprint != "" then [ pgpKeyFingerprint ] else [ ]) ++ pgpKeyFingerprints);
 
@@ -162,6 +174,10 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
   md5Urls = md5Urls_;
   minisignUrls = minisignUrls_;
   pgpsigUrls = pgpsigUrls_;
+  pgpsigMd5Urls = pgpsigMd5Urls_;
+  pgpsigSha1Urls = pgpsigSha1Urls_;
+  pgpsigSha256Urls = pgpsigSha256Urls_;
+  pgpsigSha512Urls = pgpsigSha512Urls_;
   pgpKeyIds = pgpKeyIds_;
   pgpKeyFingerprints = pgpKeyFingerprints_;
 

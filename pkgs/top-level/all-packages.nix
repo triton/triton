@@ -3105,6 +3105,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   ipfs = pkgs.goPackages.ipfs.bin // { outputs = [ "bin" ]; };
 
+  lego = pkgs.goPackages.lego.bin // { outputs = [ "bin" ]; };
+
   ipmitool = callPackage ../tools/system/ipmitool {
     static = false;
   };

@@ -164,7 +164,7 @@ tryDownload() {
             fi
           fi
 
-          if [ "${#pggsisgUrls[@]}" -gt "0" ]; then
+          if [ "${#pgpsigUrls[@]}" -gt "0" ]; then
             if ! gpg --lock-never --verify "$TMPDIR/pgpsig" "$out"; then
               echo "$out pgpsig does not validate" >&2
               break

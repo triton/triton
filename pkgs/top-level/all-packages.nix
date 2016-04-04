@@ -1228,6 +1228,8 @@ libpng = callPackage ../all-pkgs/libpng { };
 
 libraw = callPackage ../all-pkgs/libraw { };
 
+libressl = callPackage ../all-pkgs/libressl { };
+
 librsvg = callPackage ../all-pkgs/librsvg { };
 
 librsync = callPackage ../all-pkgs/librsync { };
@@ -7361,11 +7363,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  };
 #
 #  openslp = callPackage ../development/libraries/openslp {};
-#
-#  # 2.3 breaks some backward-compability
-#  libressl = libressl_2_2;
-#  libressl_2_2 = callPackage ../development/libraries/libressl/2.2.nix { };
-#  libressl_2_3 = callPackage ../development/libraries/libressl/2.3.nix { };
 #
 #  boringssl = callPackage ../development/libraries/boringssl { };
 #

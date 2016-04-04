@@ -14,7 +14,7 @@ let
         "/ip6/::/udp/4001/utp"
       ];
       API = "/ip4/127.0.0.1/tcp/5001";
-      Gateway = "/ip4/0.0.0.0/tcp/8001";
+      Gateway = "/ip4/127.0.0.1/tcp/8001";
     };
   };
 
@@ -64,19 +64,13 @@ in
         '';
       };
 
-      gateway = mkOption {
-        type = str;
-        default = "/ip4/127.0.0.1/tcp/8001";
-        description = ''
-          The address in go format for the gateway.
-        '';
-      };
-
     };
 
   };
 
   config = mkIf cfg.enable {
+
+    environment.variables.IPFS_API = "127.0.0.1:8001";
 
     systemd.services.ipfs = {
       wantedBy = [ "multi-user.target" ];

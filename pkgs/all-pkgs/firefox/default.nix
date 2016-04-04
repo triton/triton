@@ -55,14 +55,17 @@
 , enableOfficialBranding ? false
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optionals
     versionAtLeast;
+
   inherit (builtins.getAttr channel (import ./sources.nix))
     version
     sha512;
-};
+
+  baseUrl = "https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${version}";
+in
 
 assert stdenv.cc ? libc && stdenv.cc.libc != null;
 assert (channel == "stable" || channel == "esr");
@@ -70,17 +73,9 @@ assert (channel == "stable" || channel == "esr");
 stdenv.mkDerivation rec {
   name = "firefox${if channel != "stable" then "-${channel}" else ""}-${version}";
 
-  src = fetchurl {
-    url =
-      let
-        ext =
-          if versionAtLeast version "41.0" then
-            "xz"
-          else
-            "bz2";
-      in
-      "https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${version}/"
-    + "source/firefox-${version}.source.tar.${ext}";
+  src = fetchurl rec {
+    url = "${baseUrl}/source/firefox-${version}.source.tar.xz";
+    allowHashOutput = false;
     inherit sha512;
   };
 
@@ -264,6 +259,14 @@ stdenv.mkDerivation rec {
       nspr
       version;
     isFirefox3Like = true;
+
+    sourceTarball = fetchurl rec {
+      sha512Url = "${baseUrl}/SHA512SUMS";
+      pgpsigSha512Url = "${sha512Url}.asc";
+      pgpKeyId = "D98F0353";
+      pgpKeyFingerprint = "14F2 6682 D091 6CDD 81E3  7B6D 61B7 B526 D98F 0353";
+      inherit (src) urls outputHashAlgo outputHash;
+    };
   };
 
   meta = with stdenv.lib; {

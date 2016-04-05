@@ -22,6 +22,7 @@ stdenv.mkDerivation rec {
     newVersion = "1.0.9";
 
     sourceTarball = fetchurl rec {
+      failEarly = true;
       urls = genUrls newVersion;
       minisignUrls = map (n: "${n}.minisig") urls;
       minisignPub = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";

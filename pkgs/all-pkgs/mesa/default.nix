@@ -258,6 +258,7 @@ stdenv.mkDerivation rec {
   passthru = {
     inherit driverSearchPath;
     sourceTarball = fetchurl {
+      failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
       pgpKeyId = "2CEB490D";
       pgpKeyFingerprint = "8703 B670 0E7E E06D 7A39  B8D6 EDAE 37B0 2CEB 490D";

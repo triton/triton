@@ -272,6 +272,7 @@ let
 
       passthru = {
         sourceTarball = fetchurl {
+          failEarly = true;
           urls = src.urls;
           pgpsigUrls = map (n: "${n}.asc") src.urls;
           pgpKeyIds = [

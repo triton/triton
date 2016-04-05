@@ -81,6 +81,7 @@ stdenv.mkDerivation rec {
 
   passthru = rec {
     sourceTarball = fetchurl {
+      failEarly = true;
       inherit (src) name urls outputHash outputHashAlgo;
       pgpsigUrl = map (n: "${n}.sig") src.urls;
       pgpKeyId = "E82E4209";

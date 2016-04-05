@@ -26,6 +26,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     sourceTarball = fetchurl rec {
+      failEarly = true;
       url = "http://pkg-isocodes.alioth.debian.org/downloads/${name}.tar.xz";
       pgpsigUrl = "${url}.sig";
       pgpKeyIds = [

@@ -34,6 +34,7 @@ stdenv.mkDerivation rec {
     nextVersion = "0.6";
 
     sourceTarball = fetchurl {
+      failEarly = true;
       urls = genUrls version;
       minisignUrl = "https://github.com/jedisct1/minisign/releases/download/${nextVersion}/minisign-${nextVersion}.tar.gz.minisig";
       minisignPub = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";

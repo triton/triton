@@ -1659,6 +1659,8 @@ rapidjson = callPackage ../all-pkgs/rapidjson { };
 
 readline = callPackage ../all-pkgs/readline { };
 
+recode = callPackage ../all-pkgs/recode { };
+
 redis = callPackage ../all-pkgs/redis { };
 
 resolv_wrapper = callPackage ../all-pkgs/resolv_wrapper { };
@@ -11076,8 +11078,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  rcs = callPackage ../applications/version-management/rcs { };
 #
 #  rdesktop = callPackage ../applications/networking/remote/rdesktop { };
-#
-#  recode = callPackage ../tools/text/recode { };
 #
 #  remotebox = callPackage ../applications/virtualization/remotebox { };
 #

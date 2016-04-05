@@ -14,7 +14,7 @@
 , gdk-pixbuf
 , glib
 , gtk3
-, epoxy
+, libepoxy
 , librsvg
 , mpv
 , pythonPackages
@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gtk3
-    epoxy
+    libepoxy
     librsvg
     mpv
     pythonPackages.youtube-dl

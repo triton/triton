@@ -3,10 +3,10 @@
 
 , atkmm
 , cairomm
-, epoxy
 , gdk-pixbuf
 , glibmm
 , gtk3
+, libepoxy
 , pangomm
 }:
 
@@ -29,10 +29,10 @@ stdenv.mkDerivation rec {
   buildInputs = [
     atkmm
     cairomm
-    epoxy
     gdk-pixbuf
     glibmm
     gtk3
+    libepoxy
     pangomm
   ];
 

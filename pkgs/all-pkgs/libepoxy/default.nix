@@ -3,12 +3,12 @@
 , fetchFromGitHub
 , python
 
-, xorg
 , mesa
+, xorg
 }:
 
 stdenv.mkDerivation rec {
-  name = "epoxy-${version}";
+  name = "libepoxy-${version}";
   version = "1.3.1";
 
   src = fetchFromGitHub {

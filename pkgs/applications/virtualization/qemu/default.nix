@@ -40,7 +40,7 @@
 , libusb ? null
 , usbredir ? null
 , mesa ? null
-, epoxy ? null
+, libepoxy ? null
 , lzo ? null
 , snappy ? null
 , bzip2 ? null
@@ -95,7 +95,7 @@ let
   optLibusb = if isNix then null else shouldUsePkg libusb;
   optUsbredir = if isNix then null else shouldUsePkg usbredir;
   optMesa = if isNix then null else shouldUsePkg mesa;
-  optEpoxy = if isNix then null else shouldUsePkg epoxy;
+  optEpoxy = if isNix then null else shouldUsePkg libepoxy;
   optLzo = if isNix then null else shouldUsePkg lzo;
   optSnappy = if isNix then null else shouldUsePkg snappy;
   optBzip2 = if isNix then null else shouldUsePkg bzip2;

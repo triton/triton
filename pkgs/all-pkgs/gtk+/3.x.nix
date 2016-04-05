@@ -8,7 +8,6 @@
 , cairo
 , colord
 , cups
-, epoxy
 , expat
 , fontconfig
 , gdk-pixbuf
@@ -16,6 +15,7 @@
 , gobject-introspection
 , gnome-wrapper
 , json-glib
+, libepoxy
 , libxkbcommon
 , mesa_noglu
 , pango
@@ -85,13 +85,13 @@ stdenv.mkDerivation rec {
     cairo
     colord
     cups
-    epoxy
     expat
     fontconfig
     gdk-pixbuf
     glib
     gobject-introspection
     json-glib
+    libepoxy
     libxkbcommon
     mesa_noglu
     pango

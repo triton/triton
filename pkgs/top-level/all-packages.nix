@@ -1125,6 +1125,8 @@ libedit = callPackage ../all-pkgs/libedit { };
 
 libelf = callPackage ../all-pkgs/libelf { };
 
+libepoxy = callPackage ../all-pkgs/libepoxy { };
+
 libev = callPackage ../all-pkgs/libev { };
 
 libevent = callPackage ../all-pkgs/libevent { };
@@ -6289,8 +6291,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  enet = callPackage ../development/libraries/enet { };
 #
 #  enginepkcs11 = callPackage ../development/libraries/enginepkcs11 { };
-#
-  epoxy = callPackage ../development/libraries/epoxy {};
 #
 #  esdl = callPackage ../development/libraries/esdl { };
 #

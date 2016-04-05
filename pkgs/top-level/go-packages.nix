@@ -152,11 +152,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "024ed629fd292398cfd43c9678a5bf004f7defdc";
-    date = "2016-04-03";
+    rev = "318395d8b12f5dd0f1b7cd0fbb95195f49acb0f9";
+    date = "2016-04-01";
     owner  = "golang";
     repo   = "net";
-    sha256 = "02x9vc834f0lhvw4jj2v6l9wjv52w6aiwjrn2mmi3pws22gb79rk";
+    sha256 = "0swgnwf13qs3inqr06z9qa8d1hhyagi3svfzkn2fb5jdd1b43yqy";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -198,11 +198,11 @@ let
   };
 
   sys = buildFromGitHub {
-    rev = "a60af9cbbc6ab800af4f2be864a31f423a0ae1f2";
-    date = "2016-04-02";
+    rev = "b323466d0bc6669362b0836480b30452d2c00db9";
+    date = "2016-04-05";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "0n34cn8lsy0w7xffnph3ajsqv0x2n93kfvi5lppgdclx8sax58g9";
+    sha256 = "16f1ij0vsvrci0qvncw9pzgcqxzfb7n2py7fibzq0b7azw9c3nih";
     goPackagePath = "golang.org/x/sys";
     goPackageAliases = [
       "github.com/golang/sys"
@@ -595,10 +595,10 @@ let
   };
 
   consul-template = buildFromGitHub {
-    rev = "0.0.1";
+    rev = "v0.14.0";
     owner = "hashicorp";
     repo = "consul-template";
-    sha256 = "0zcx315f7xfw1bkxx2835zh8ql3zvwnqnzb8algkdqx7403jl6c5";
+    sha256 = "07pnhl3pcfgbwrl3vb9smqm4a6hv5knlz01ms0p001fxjazzqap9";
 
     buildInputs = [
       consul-api
@@ -3887,7 +3887,13 @@ let
   vault-api = buildFromGitHub {
     inherit (vault) rev owner repo sha256;
     subPackages = [ "api" ];
-    propagatedBuildInputs = [ hcl structs go-cleanhttp mapstructure ];
+    propagatedBuildInputs = [
+      hcl
+      structs
+      go-cleanhttp
+      go-multierror
+      mapstructure
+    ];
   };
 
   vcs = buildFromGitHub {

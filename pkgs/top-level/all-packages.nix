@@ -1689,6 +1689,8 @@ socket_wrapper = callPackage ../all-pkgs/socket_wrapper { };
 
 spectrwm = callPackage ../all-pkgs/spectrwm { };
 
+split2flac = callPackage ../all-pkgs/split2flac { };
+
 sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sqlite = callPackage ../all-pkgs/sqlite { };

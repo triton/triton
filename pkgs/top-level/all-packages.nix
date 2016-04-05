@@ -1087,6 +1087,8 @@ kmod = callPackage ../all-pkgs/kmod { };
 
 kmscon = callPackage ../all-pkgs/kmscon { };
 
+knot = callPackage ../all-pkgs/knot { };
+
 krb5_full = callPackage ../all-pkgs/krb5 { };
 
 krb5_lib = callPackageAlias "krb5_full" {

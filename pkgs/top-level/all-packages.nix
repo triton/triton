@@ -1008,6 +1008,8 @@ icu = callPackage ../all-pkgs/icu { };
 
 id3lib = callPackage ../all-pkgs/id3lib { };
 
+id3v2 = callPackage ../all-pkgs/id3v2 { };
+
 imagemagick_light = imagemagick.override {
   libcl = null;
   perl = null;
@@ -10352,8 +10354,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  i3status = callPackage ../applications/window-managers/i3/status.nix { };
 #
 #  i810switch = callPackage ../os-specific/linux/i810switch { };
-#
-#  id3v2 = callPackage ../applications/audio/id3v2 { };
 #
 #  ifenslave = callPackage ../os-specific/linux/ifenslave { };
 #

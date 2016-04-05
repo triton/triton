@@ -116,7 +116,11 @@ tryDownload() {
             sha512="$(openssl sha512 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
             if [ "$sha512Confirm" != "$sha512" ]; then
               echo "$out SHA512 hash does not match given $sha512Confirm" >&2
-              break
+              if [ "$failEarly" = "1" ]; then
+                exit 1
+              else
+                break
+              fi
             else
               verifications+=('sha512')
             fi
@@ -127,7 +131,11 @@ tryDownload() {
             sha256="$(openssl sha256 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
             if [ "$sha256Confirm" != "$sha256" ]; then
               echo "$out SHA256 hash does not match given $sha256Confirm" >&2
-              break
+              if [ "$failEarly" = "1" ]; then
+                exit 1
+              else
+                break
+              fi
             else
               verifications+=('sha256')
             fi
@@ -138,7 +146,11 @@ tryDownload() {
             sha1="$(openssl sha1 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
             if [ "$sha1Confirm" != "$sha1" ]; then
               echo "$out SHA1 hash does not match given $sha1Confirm" >&2
-              break
+              if [ "$failEarly" = "1" ]; then
+                exit 1
+              else
+                break
+              fi
             else
               verifications+=('sha1')
             fi
@@ -149,7 +161,11 @@ tryDownload() {
             md5="$(openssl md5 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
             if [ "$md5Confirm" != "$md5" ]; then
               echo "$out MD5 hash does not match given $md5Confirm" >&2
-              break
+              if [ "$failEarly" = "1" ]; then
+                exit 1
+              else
+                break
+              fi
             else
               verifications+=('md5')
             fi
@@ -158,7 +174,11 @@ tryDownload() {
           if [ -n "$minisignPub" ]; then
             if ! minisign -V -x "$TMPDIR/minisign" -m "$out" -P "$minisignPub" -q; then
               echo "$out Minisig does not validate" >&2
-              break
+              if [ "$failEarly" = "1" ]; then
+                exit 1
+              else
+                break
+              fi
             else
               verifications+=('minisign')
             fi
@@ -179,7 +199,11 @@ tryDownload() {
             fi
             if ! gpg --lock-never --verify "$TMPDIR/pgpsig" - < <(eval $method); then
               echo "$out pgpsig does not validate" >&2
-              break
+              if [ "$failEarly" = "1" ]; then
+                exit 1
+              else
+                break
+              fi
             else
               verifications+=('pgp')
             fi
@@ -207,6 +231,9 @@ tryDownload() {
             str+="\n  sha256: $lhash"
           fi
           echo -e "$str" >&2
+          if [ "$failEarly" = "1" ]; then
+            exit 1
+          fi
         fi
         break
       else

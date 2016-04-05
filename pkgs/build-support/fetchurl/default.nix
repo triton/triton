@@ -97,6 +97,8 @@ in
 , pgpsigSha512Urls ? []
 , pgpDecompress ? false
 
+, failEarly ? false
+
 , recursiveHash ? false
 
 , # Shell code executed before the file has been fetched.
@@ -205,7 +207,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
 
   outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
 
-  inherit allowHashOutput curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch postVerification downloadToTemp executable sha1Confirm md5Confirm multihash minisignPub pgpKeyFile pgpDecompress;
+  inherit failEarly allowHashOutput curlOpts showURLs mirrorsFile impureEnvVars preFetch postFetch postVerification downloadToTemp executable sha1Confirm md5Confirm multihash minisignPub pgpKeyFile pgpDecompress;
 
   # Doing the download on a remote machine just duplicates network
   # traffic, so don't do that.

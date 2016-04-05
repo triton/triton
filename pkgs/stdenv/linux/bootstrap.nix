@@ -6,7 +6,7 @@ let
   makeUrls = { multihash, nix-hash, file, sha256, executable ? false }:
     import <nix/fetchurl.nix> {
       name = file;
-      url = "https://gateway.ipfs.io/ipfs/${multihash}";
+      url = "https://ipfs.wak.io/ipfs/${multihash}";
       #urls = [
       #  "http://127.0.0.1/ipfs/${multihash}"
       #  "http://127.0.0.1:8080/ipfs/${multihash}"

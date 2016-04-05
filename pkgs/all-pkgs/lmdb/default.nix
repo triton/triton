@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     owner = "LMDB";
     repo = "lmdb";
     rev = "LMDB_${version}";
-    sha256 = "01j384kxg36kym060pybr5p6mjw0xv33bqbb8arncdkdq57xk8wg";
+    sha256 = "c0270b1a3fb0e18ab4825e0c950cbc5b7f9962f5f8c422aba45dffa94f62e9ee";
   };
 
   prePatch = ''
@@ -26,8 +26,11 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Lightning memory-mapped database";
     homepage = http://symas.com/mdb/;
-    maintainers = with maintainers; [ jb55 ];
     license = licenses.openldap;
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

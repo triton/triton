@@ -1321,6 +1321,8 @@ linux-headers = callPackage ../all-pkgs/linux-headers { };
 
 live555 = callPackage ../all-pkgs/live555 { };
 
+lmdb = callPackage ../all-pkgs/lmdb { };
+
 lm-sensors = callPackage ../all-pkgs/lm-sensors { };
 
 lvm2 = callPackage ../all-pkgs/lvm2 { };
@@ -6616,8 +6618,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 
   leveldb = callPackage ../development/libraries/leveldb { };
 
-  lmdb = callPackage ../development/libraries/lmdb { };
-#
 #  levmar = callPackage ../development/libraries/levmar { };
 #
   leptonica = callPackage ../development/libraries/leptonica { };

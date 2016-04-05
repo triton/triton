@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     /* split2flac uses $0 to determine what format to convert to, but
        makeWrapper renames the file breaking the expected behavior */ ''
       sed -i split2flac \
-        -e "s/\''${0##\*split2}/\$(echo \''${0##\*split2} | awk -F'-' '{print \$1}')/"
+        -e "s/\''${0##\*split2}/\''${SPLIT2FLAC_CALLER##\*split2}/"
     '';
 
   configurePhase = "true";
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
   installPhase = ''
     install -D -m755 -v 'split2flac' "$out/bin/split2flac"
     ln -sv $out/bin/split2flac $out/bin/split2m4a
-    ln -sv $out/bin/split2flac $out/bin/split2mp2
+    ln -sv $out/bin/split2flac $out/bin/split2mp3
     ln -sv $out/bin/split2flac $out/bin/split2ogg
     ln -sv $out/bin/split2flac $out/bin/split2wav
 
@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/split2flac \
-      --argv0 "$out/bin/$0" \
+      --set 'SPLIT2FLAC_CALLER' "\$0" \
       --prefix 'PATH' : "${cuetools}/bin" \
       --prefix 'PATH' : "${faac}/bin" \
       --prefix 'PATH' : "${flac}/bin" \

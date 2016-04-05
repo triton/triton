@@ -1683,6 +1683,8 @@ sharutils = callPackage ../all-pkgs/sharutils { };
 
 snappy = callPackage ../all-pkgs/snappy { };
 
+shntool = callPackage ../all-pkgs/shntool { };
+
 socket_wrapper = callPackage ../all-pkgs/socket_wrapper { };
 
 spectrwm = callPackage ../all-pkgs/spectrwm { };
@@ -11243,8 +11245,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  snapper = callPackage ../tools/misc/snapper { };
 #
 #  snd = callPackage ../applications/audio/snd { };
-#
-#  shntool = callPackage ../applications/audio/shntool { };
 #
 #  sipp = callPackage ../development/tools/misc/sipp { };
 #

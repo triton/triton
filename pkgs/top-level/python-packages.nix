@@ -10108,15 +10108,20 @@ in {
   });
 
   jellyfish = buildPythonPackage rec {
-    version = "0.5.0";
+    version = "0.5.1";
     name = "jellyfish-${version}";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/j/jellyfish/${name}.tar.gz";
-      sha256 = "04p80gwwlhxjp8zpjf70a62x69l9rlvnz1pwi5ar52gyajn8z6z1";
+      sha256 = "e297b7a5d00579b0da0474a89273fff759f305de88e05d6a1d0ebd4cb58c49e8";
     };
 
-    buildInputs = with self; [ pytest unicodecsv ];
+    buildInputs = with self; [
+      pytest
+      unicodecsv
+    ];
+
+    doCheck = false;
 
     meta = {
       homepage = http://github.com/sunlightlabs/jellyfish;

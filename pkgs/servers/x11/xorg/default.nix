@@ -1088,11 +1088,11 @@ let
   }) // {inherit xproto ;};
 
   inputproto = (mkDerivation "inputproto" {
-    name = "inputproto-2.3.1";
+    name = "inputproto-2.3.2";
     builder = ./builder.sh;
     src = fetchurl {
-      url = mirror://xorg/individual/proto/inputproto-2.3.1.tar.bz2;
-      sha256 = "1lf1jlxp0fc8h6fjdffhd084dqab94966l1zm3rwwsis0mifwiss";
+      url = mirror://xorg/individual/proto/inputproto-2.3.2.tar.bz2;
+      sha256 = "07gk7v006zqn3dcfh16l06gnccy7xnqywf3vl9c209ikazsnlfl9";
     };
     nativeBuildInputs = [ ];
     buildInputs = [ ];

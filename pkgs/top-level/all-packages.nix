@@ -1337,6 +1337,8 @@ lzo = callPackage ../all-pkgs/lzo { };
 
 m4 = callPackageAlias "gnum4" { };
 
+mac = callPackage ../all-pkgs/mac { };
+
 man-pages = callPackage ../all-pkgs/man-pages { };
 
 mercurial = callPackage ../all-pkgs/mercurial { };

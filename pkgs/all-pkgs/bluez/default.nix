@@ -8,12 +8,16 @@
 , systemd_lib
 }:
 
+let
+  baseUrl = "mirror://kernel/linux/bluetooth";
+in
 stdenv.mkDerivation rec {
-  name = "bluez-5.38";
+  name = "bluez-5.39";
    
   src = fetchurl {
-    url = "mirror://kernel/linux/bluetooth/${name}.tar.xz";
-    sha256 = "0618c5440be6715805060ab5eea930526f34089c437bf61819447b160254f4df";
+    url = "${baseUrl}/${name}.tar.xz";
+    allowHashOutput = false;
+    sha256 = "21d1bc9150d3576296595217efb98a746b592389d25d5637e8bee5da7272593b";
   };
 
   buildInputs = [
@@ -55,6 +59,16 @@ stdenv.mkDerivation rec {
     "--enable-sixaxis"
     "--disable-android"
   ];
+
+  passthru = {
+    sourceTarball = fetchurl {
+      pgpsigUrl = "${baseUrl}/${name}.tar.sign";
+      pgpDecompress = true;
+      pgpKeyId = "1DCF2659";
+      pgpKeyFingerprint = "E932 D120 BC2A EC44 4E55  8F01 06CA 9F5D 1DCF 2659";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Bluetooth support for Linux";

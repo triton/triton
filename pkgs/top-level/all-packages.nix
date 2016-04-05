@@ -1766,6 +1766,8 @@ vino = callPackage ../all-pkgs/vino { };
 
 vlc = callPackage ../all-pkgs/vlc { };
 
+vorbis-tools = callPackage ../all-pkgs/vorbis-tools { };
+
 vte = callPackage ../all-pkgs/vte { };
 
 w3m = callPackage ../all-pkgs/w3m { };
@@ -11541,8 +11543,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  vnstat = callPackage ../applications/networking/vnstat { };
 #
 #  VoiceOfFaust = callPackage ../applications/audio/VoiceOfFaust { };
-#
-  vorbis-tools = callPackage ../applications/audio/vorbis-tools { };
 #
 #  vue = callPackage ../applications/misc/vue { };
 #

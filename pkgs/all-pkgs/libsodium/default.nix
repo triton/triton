@@ -1,34 +1,20 @@
-{ stdenv, fetchurl }:
+{ stdenv
+, fetchurl
+}:
 
-let
-  genUrls = version: [
-    "https://download.libsodium.org/libsodium/releases/libsodium-${version}.tar.gz"
-    "mirror://gentoo/distfiles/libsodium-${version}.tar.gz"
-  ];
-in
 stdenv.mkDerivation rec {
   name = "libsodium-${version}";
-  version = "1.0.9";
+  version = "1.0.10";
 
   src = fetchurl {
-    urls = genUrls version;
-    allowHashOutput = false;
-    sha256 = "611418db78c36b2e20e50363d30e9c002a98dea9322f305b5bde56a26cdfe756";
+    urls = [
+      "https://download.libsodium.org/libsodium/releases/libsodium-${version}.tar.gz"
+      "mirror://gentoo/distfiles/libsodium-${version}.tar.gz"
+    ];
+    sha256 = "71b786a96dd03693672b0ca3eb77f4fb08430df307051c0d45df5353d22bc4be";
   };
 
   doCheck = true;
-
-  passthru = rec {
-    newVersion = "1.0.9";
-
-    sourceTarball = fetchurl rec {
-      failEarly = true;
-      urls = genUrls newVersion;
-      minisignUrls = map (n: "${n}.minisig") urls;
-      minisignPub = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      sha256 = "611418db78c36b2e20e50363d30e9c002a98dea9322f305b5bde56a26cdfe756";
-    };
-  };
 
   meta = with stdenv.lib; {
     description = "A modern and easy-to-use crypto library";

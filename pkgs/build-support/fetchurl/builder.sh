@@ -165,7 +165,19 @@ tryDownload() {
           fi
 
           if [ "${#pgpsigUrls[@]}" -gt "0" ]; then
-            if ! gpg --lock-never --verify "$TMPDIR/pgpsig" "$out"; then
+            method="cat \"$out\""
+            if [ "${pgpDecompress}" = "1" ]; then
+              case "$out" in
+                *.tar.xz | *.txz)
+                  method="xz -d -c \"$out\""
+                  ;;
+                *)
+                  echo "Could not determine how to decompress $out for pgp verification" >&2
+                  exit 1
+                  ;;
+              esac
+            fi
+            if ! gpg --lock-never --verify "$TMPDIR/pgpsig" - < <(eval $method); then
               echo "$out pgpsig does not validate" >&2
               break
             else

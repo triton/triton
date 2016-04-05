@@ -1875,7 +1875,7 @@ let
     name = "libpthread-stubs-0.3";
     builder = ./builder.sh;
     src = fetchurl {
-      url = http://xcb.freedesktop.org/dist/libpthread-stubs-0.3.tar.bz2;
+      url = mirror://xorg/individual/xcb/libpthread-stubs-0.3.tar.bz2;
       sha256 = "16bjv3in19l84hbri41iayvvg4ls9gv1ma0x0qlbmwy67i7dbdim";
     };
     nativeBuildInputs = [ ];
@@ -1891,7 +1891,7 @@ let
     name = "libxcb-1.11.1";
     builder = ./builder.sh;
     src = fetchurl {
-      url = http://xcb.freedesktop.org/dist/libxcb-1.11.1.tar.bz2;
+      url = mirror://xorg/individual/xcb/libxcb-1.11.1.tar.bz2;
       sha256 = "0c4xyvdyx5adh8dzyhnrmvwwz24gri4z1czxmxqm63i0gmngs85p";
     };
     nativeBuildInputs = [ libxslt python ];
@@ -2595,7 +2595,7 @@ let
     name = "xcb-proto-1.11";
     builder = ./builder.sh;
     src = fetchurl {
-      url = http://xcb.freedesktop.org/dist/xcb-proto-1.11.tar.bz2;
+      url = mirror://xorg/individual/xcb/xcb-proto-1.11.tar.bz2;
       sha256 = "0bp3f53l9fy5x3mn1rkj1g81aiyzl90wacwvqdgy831aa3kfxb5l";
     };
     nativeBuildInputs = [ python ];
@@ -2611,7 +2611,7 @@ let
     name = "xcb-util-0.4.0";
     builder = ./builder.sh;
     src = fetchurl {
-      url = http://xcb.freedesktop.org/dist/xcb-util-0.4.0.tar.bz2;
+      url = mirror://xorg/individual/xcb/xcb-util-0.4.0.tar.bz2;
       sha256 = "1sahmrgbpyki4bb72hxym0zvxwnycmswsxiisgqlln9vrdlr9r26";
     };
     nativeBuildInputs = [ gperf m4 xproto ];
@@ -2627,7 +2627,7 @@ let
     name = "xcb-util-cursor-0.1.2";
     builder = ./builder.sh;
     src = fetchurl {
-      url = http://xcb.freedesktop.org/dist/xcb-util-cursor-0.1.2.tar.bz2;
+      url = mirror://xorg/individual/xcb/xcb-util-cursor-0.1.2.tar.bz2;
       sha256 = "0fpv46zb7kz04qxwvpax4cpd2kd8yhsm2n0if1isniqdh5xkcrgd";
     };
     nativeBuildInputs = [ gperf m4 xproto ];
@@ -2643,7 +2643,7 @@ let
     name = "xcb-util-errors-1.0";
     builder = ./builder.sh;
     src = fetchurl {
-      url = http://xcb.freedesktop.org/dist/xcb-util-errors-1.0.tar.bz2;
+      url = mirror://xorg/individual/xcb/xcb-util-errors-1.0.tar.bz2;
       sha256 = "158rm913dg3hxrrhyvvxr8bcm0pjy5jws70dhy2s12w1krv829k8";
     };
     nativeBuildInputs = [ gperf m4 xproto ];
@@ -2659,7 +2659,7 @@ let
     name = "xcb-util-image-0.4.0";
     builder = ./builder.sh;
     src = fetchurl {
-      url = http://xcb.freedesktop.org/dist/xcb-util-image-0.4.0.tar.bz2;
+      url = mirror://xorg/individual/xcb/xcb-util-image-0.4.0.tar.bz2;
       sha256 = "1z1gxacg7q4cw6jrd26gvi5y04npsyavblcdad1xccc8swvnmf9d";
     };
     nativeBuildInputs = [ gperf m4 xproto ];
@@ -2675,7 +2675,7 @@ let
     name = "xcb-util-keysyms-0.4.0";
     builder = ./builder.sh;
     src = fetchurl {
-      url = http://xcb.freedesktop.org/dist/xcb-util-keysyms-0.4.0.tar.bz2;
+      url = mirror://xorg/individual/xcb/xcb-util-keysyms-0.4.0.tar.bz2;
       sha256 = "1nbd45pzc1wm6v5drr5338j4nicbgxa5hcakvsvm5pnyy47lky0f";
     };
     nativeBuildInputs = [ gperf m4 xproto ];
@@ -2691,7 +2691,7 @@ let
     name = "xcb-util-renderutil-0.3.9";
     builder = ./builder.sh;
     src = fetchurl {
-      url = http://xcb.freedesktop.org/dist/xcb-util-renderutil-0.3.9.tar.bz2;
+      url = mirror://xorg/individual/xcb/xcb-util-renderutil-0.3.9.tar.bz2;
       sha256 = "0nza1csdvvxbmk8vgv8vpmq7q8h05xrw3cfx9lwxd1hjzd47xsf6";
     };
     nativeBuildInputs = [ gperf m4 xproto ];
@@ -2707,7 +2707,7 @@ let
     name = "xcb-util-wm-0.4.1";
     builder = ./builder.sh;
     src = fetchurl {
-      url = http://xcb.freedesktop.org/dist/xcb-util-wm-0.4.1.tar.bz2;
+      url = mirror://xorg/individual/xcb/xcb-util-wm-0.4.1.tar.bz2;
       sha256 = "0gra7hfyxajic4mjd63cpqvd20si53j1q3rbdlkqkahfciwq3gr8";
     };
     nativeBuildInputs = [ gperf m4 xproto ];

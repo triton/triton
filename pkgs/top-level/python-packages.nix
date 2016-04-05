@@ -14621,6 +14621,8 @@ in {
     };
 
     buildInputs = with self; [ mock scripttest virtualenv pytest ];
+
+    doCheck = false;
   };
 
 

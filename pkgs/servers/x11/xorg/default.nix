@@ -2400,11 +2400,11 @@ let
   }) // {inherit libXt ;};
 
   twm = (mkDerivation "twm" {
-    name = "twm-1.0.8";
+    name = "twm-1.0.9";
     builder = ./builder.sh;
     src = fetchurl {
-      url = mirror://xorg/individual/app/twm-1.0.8.tar.bz2;
-      sha256 = "0i1ff8h2gh1ab311da5dlhl0nrma0qbrk403ymzi4cnnacikaq3n";
+      url = mirror://xorg/individual/app/twm-1.0.9.tar.bz2;
+      sha256 = "02iicvhkp3i7q5rliyymiq9bppjr0pzfs6rgb78kppryqdx1cxf5";
     };
     nativeBuildInputs = [ ];
     buildInputs = [ libICE libSM libX11 libXext libXmu xproto libXt ];

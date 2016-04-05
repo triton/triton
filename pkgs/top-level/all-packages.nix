@@ -704,6 +704,8 @@ efibootmgr = callPackage ../all-pkgs/efibootmgr { };
 
 elfutils = callPackage ../all-pkgs/elfutils { };
 
+enca = callPackage ../all-pkgs/enca { };
+
 eog = callPackage ../all-pkgs/eog { };
 
 erlang = callPackage ../all-pkgs/erlang { };
@@ -2199,8 +2201,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  eggdrop = callPackage ../tools/networking/eggdrop { };
 #
 #  elementary-icon-theme = callPackage ../data/icons/elementary-icon-theme { };
-#
-#  enca = callPackage ../tools/text/enca { };
 #
 #  ent = callPackage ../tools/misc/ent { };
 #

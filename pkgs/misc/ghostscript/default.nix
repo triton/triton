@@ -22,7 +22,7 @@ assert cupsSupport -> cups != null;
 let
   version = "9.19";
   versionNoP = lib.replaceChars ["."] [""] version;
-  sha256 = "fc07d5eb1b325f59d4bb3994975e9ab769e7c7353403c6420f42c54161c552ca";
+  sha256 = "f67acdcfcde1f86757ff3553cd719f12eac2d7681a0e96d8bdd1f40a0f47b45b";
 
   fonts = stdenv.mkDerivation {
     name = "ghostscript-fonts";
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
   name = "ghostscript-${version}";
 
   src = fetchurl {
-    url = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs${versionNoP}/${name}.tar.gz";
+    url = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs${versionNoP}/${name}.tar.bz2";
     inherit sha256;
   };
 

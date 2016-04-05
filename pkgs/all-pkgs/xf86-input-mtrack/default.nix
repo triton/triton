@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     owner = "BlueDragonX";
     repo = "xf86-input-mtrack";
     rev = "v${version}";
-    sha256 = "0522p8appcal7xc96ya6jhpj1rnmcyybm2rh6jds187ipcwv7ygh";
+    sha256 = "97c5262f2304843cc3edf219f89abe523da3ff9e335421280d756ca33ac9fbda";
   };
 
   nativeBuildInputs = [

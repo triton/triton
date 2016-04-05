@@ -636,6 +636,8 @@ cryptopp = callPackage ../all-pkgs/crypto++ { };
 
 cryptsetup = callPackage ../all-pkgs/cryptsetup { };
 
+cuetools = callPackage ../all-pkgs/cuetools { };
+
 curl = callPackage ../all-pkgs/curl {
   suffix = "";
 };
@@ -2423,8 +2425,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  cpuminer = callPackage ../tools/misc/cpuminer { };
 #
 #  cpuminer-multi = callPackage ../tools/misc/cpuminer-multi { };
-#
-#  cuetools = callPackage ../tools/cd-dvd/cuetools { };
 #
 #  unifdef = callPackage ../development/tools/misc/unifdef { };
 #

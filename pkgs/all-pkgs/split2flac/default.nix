@@ -10,7 +10,7 @@
 , gawk
 , imagemagick
 , lame
-#, mac
+, mac
 #, mp3gain
 , mp4v2
 , python2Packages
@@ -69,6 +69,7 @@ stdenv.mkDerivation rec {
       --prefix 'PATH' : "${gawk}/bin" \
       --prefix 'PATH' : "${imagemagick}/bin" \
       --prefix 'PATH' : "${lame}/bin" \
+      --prefix 'PATH' : "${mac}/bin" \
       --prefix 'PATH' : "${mp4v2}/bin" \
       --prefix 'PATH' : "${python2Packages.mutagen}/bin" \
       --prefix 'PATH' : "${shntool}/bin" \

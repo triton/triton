@@ -4,7 +4,7 @@
 
 #, aacgain
 , cuetools
-#, enca
+, enca
 , faac
 , flac
 , gawk
@@ -64,6 +64,7 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/split2flac \
       --set 'SPLIT2FLAC_CALLER' "\$0" \
       --prefix 'PATH' : "${cuetools}/bin" \
+      --prefix 'PATH' : "${enca}/bin" \
       --prefix 'PATH' : "${faac}/bin" \
       --prefix 'PATH' : "${flac}/bin" \
       --prefix 'PATH' : "${gawk}/bin" \

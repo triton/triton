@@ -21,12 +21,13 @@ with {
 stdenv.mkDerivation rec {
   name = "librsvg-${version}";
   versionMajor = "2.40";
-  versionMinor = "13";
+  versionMinor = "15";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url    = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.tar.xz";
-    sha256 = "014q7gz6mgfa7pfn0lr13qqv568ad8j1sw9d4vksnpazq0zajvjd";
+    sha256Url = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.sha256sum";
+    sha256 = "d9cac4a123eec6e553a26e120979bab7425def9ae7ce7c079eba5e4a45db05f4";
   };
 
   buildInputs = [

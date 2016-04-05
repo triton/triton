@@ -28,11 +28,11 @@ assert qt5 != null -> qt5.qtbase != null;
 
 stdenv.mkDerivation rec {
   name = "mkvtoolnix-${version}";
-  version = "9.0.0";
+  version = "9.0.1";
 
   src = fetchurl {
     url = "https://mkvtoolnix.download/sources/${name}.tar.xz";
-    sha256 = "cff3da0dfce78d73b714777905f63b3fe48c6dca1bc7441f44f257a37f7ab357";
+    sha256 = "292504633d714c42f73f08474137e462827f6d8d570292005bbaebb8fee8e52e";
   };
 
   nativeBuildInputs = [

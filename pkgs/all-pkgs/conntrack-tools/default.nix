@@ -39,6 +39,17 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
   ];
 
+  # We need this for the promotion of caches
+  postInstall = ''
+    mkdir -p "$out/libexec"
+    cp doc/sync/primary-backup.sh "$out/libexec"
+    sed \
+      -e "s,/usr/sbin,$out/bin,g" \
+      -e "s,/var/lock,/run,g" \
+      -i "$out/libexec/primary-backup.sh"
+    chmod +x "$out/libexec/primary-backup.sh"
+  '';
+
   meta = with stdenv.lib; {
     homepage = http://conntrack-tools.netfilter.org/;
     description = "Connection tracking userspace tools";

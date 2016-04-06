@@ -16,12 +16,20 @@
 , zlib
 }:
 
+let
+  tarballUrls = major: minor: [
+    "ftp://ftp.gnutls.org/gcrypt/gnutls/v${major}/gnutls-${major}.${minor}.tar.xz"
+  ];
+  major = "3.4";
+  minor = "10";
+in
 stdenv.mkDerivation rec {
   name = "gnutls-${version}";
-  version = "3.4.10";
+  version = "${major}.${minor}";
 
   src = fetchurl {
-    url = "ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/gnutls-${version}.tar.xz";
+    urls = tarballUrls major minor;
+    allowHashOutput = false;
     sha256 = "17zmpnqpdh5n409zcvhlc16cj16s15q3blfbxxzgycxxmjsc4cka";
   };
 
@@ -56,6 +64,19 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = true;
+
+  passthru = {
+    # Gnupg depends on this so we have to decouple this fetch from the rest of the build.
+    sourceTarball = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "3.4" "10";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyId = "96865171";
+      pgpKeyFingerprint = "1F42 4189 05D8 206A A754  CCDC 29EE 58B9 9686 5171 ";
+      inherit (src) outputHashAlgo;
+      outputHash = "17zmpnqpdh5n409zcvhlc16cj16s15q3blfbxxzgycxxmjsc4cka";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "The GNU Transport Layer Security Library";

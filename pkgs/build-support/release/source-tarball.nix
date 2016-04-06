@@ -36,6 +36,17 @@ stdenv.mkDerivation (
 
     # Autoconfiscate the sources.
     autoconfPhase = ''
+      # Fix bugs in the ustar format for high uid workers
+      # Also make tarballs more deterministic
+      tar="$(type -P tar)"
+      mkdir "$TMPDIR/bin"
+      export PATH="$TMPDIR/bin:$PATH"
+      sed \
+        -e 's,@shell@,${stdenv.shell},g' \
+        -e "s,@tar@,$tar,g" \
+        "${./source-tarball-tar.sh}" > "$TMPDIR/bin/tar"
+      chmod +x "$TMPDIR/bin/tar"
+
       export VERSION=${version}
       export VERSION_SUFFIX=${versionSuffix}
 
@@ -56,6 +67,8 @@ stdenv.mkDerivation (
       else
           echo "No bootstrap, bootstrap.sh, configure.in or configure.ac. Assuming this is not an GNU Autotools package."
       fi
+
+      sed -i 's,\(am_[ug]id\)=.*,\1=0,g' configure
 
       eval "$postAutoconf"
     '';
@@ -87,13 +100,13 @@ stdenv.mkDerivation (
     '';
 
     postUnpack = ''
-      # Set all source files to the current date.  This is because Nix
+      # Set all source files to a modern date.  This is because Nix
       # resets the timestamp on all files to 0 (1/1/1970), which some
       # people don't like (in particular GNU tar prints harmless but
       # frightening warnings about it).
-      touch now
+      touch -d "2000-01-01 00:00:00 UTC" modern
       touch -d "1970-01-01 00:00:00 UTC" then
-      find $sourceRoot ! -newer then -print0 | xargs -0r touch --reference now
+      find $sourceRoot ! -newer then -print0 | xargs -0r touch --reference modern
       eval "$nextPostUnpack"
     '';
 

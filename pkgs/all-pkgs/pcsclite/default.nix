@@ -4,7 +4,8 @@
 , python2
 
 , dbus
-, systemd_lib
+, libusb
+# , systemd_lib
 }:
 
 stdenv.mkDerivation rec {
@@ -21,8 +22,9 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    systemd_lib
     dbus
+    libusb
+    # systemd_lib
   ];
 
   preConfigure = ''
@@ -35,6 +37,9 @@ stdenv.mkDerivation rec {
     # The OS should care on preparing the drivers into this location
     "--enable-usbdropdir=/var/lib/pcsc/drivers"
     "--enable-confdir=/etc"
+
+    # Sometiems the udev code makes pcscd hit 100%
+    "--disable-libudev"
   ];
 
   meta = with stdenv.lib; {

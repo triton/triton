@@ -94,7 +94,7 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    sourceTarball = fetchurl rec {
+    srcVerified = fetchurl rec {
       failEarly = true;
       url = "mirror://gnupg/gnupg/${name}.tar.bz2";
       pgpsigUrl = "${url}.sig";

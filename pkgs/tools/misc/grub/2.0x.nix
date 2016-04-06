@@ -80,7 +80,7 @@ stdenv.mkDerivation rec {
   optimize = false;
 
   passthru = rec {
-    sourceTarball = fetchurl {
+    srcVerified = fetchurl {
       failEarly = true;
       inherit (src) name urls outputHash outputHashAlgo;
       pgpsigUrl = map (n: "${n}.sig") src.urls;

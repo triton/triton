@@ -260,7 +260,7 @@ stdenv.mkDerivation rec {
       version;
     isFirefox3Like = true;
 
-    sourceTarball = fetchurl rec {
+    srcVerified = fetchurl rec {
       failEarly = true;
       sha512Url = "${baseUrl}/SHA512SUMS";
       pgpsigSha512Url = "${sha512Url}.asc";

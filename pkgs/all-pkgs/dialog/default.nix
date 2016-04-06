@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   ];
 
   passthru = {
-    sourceTarball = fetchurl {
+    srcVerified = fetchurl {
       failEarly = true;
       pgpsigUrl = map (n: "${n}.asc") src.urls;
       pgpKeyId = "F7E48EDB";

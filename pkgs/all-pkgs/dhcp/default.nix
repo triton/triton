@@ -71,7 +71,7 @@ stdenv.mkDerivation rec {
   parallelBuild = false;
 
   passthru = {
-    sourceTarball = fetchurl {
+    srcVerified = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sha512.asc") src.urls;
       pgpKeyFile = ./signing.key;

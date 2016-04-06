@@ -271,7 +271,7 @@ let
       };
 
       passthru = {
-        sourceTarball = fetchurl {
+        srcVerified = fetchurl {
           failEarly = true;
           urls = src.urls;
           pgpsigUrls = map (n: "${n}.asc") src.urls;

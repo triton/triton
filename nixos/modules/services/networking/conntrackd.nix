@@ -22,17 +22,17 @@ let
         PurgeTimeout 5
       }
 
-      UDP Default {
+  '' + flip concatMapStrings cfg.remoteAddresses (n: ''
+      UDP {
         IPv4_address ${cfg.localAddress}
-  '' + flip concatMapStrings cfg.remoteAddresses (n:
-    "    IPv4_Destination_Address ${n}\n"
-  ) + ''
+        IPv4_Destination_Address ${n}
         Port 3780
         Interface ${cfg.interface}
         SndSocketBuffer 24985600
         RcvSocketBuffer 24985600
         Checksum on
       }
+  '') + ''
     }
 
     General {
@@ -118,6 +118,7 @@ in
     systemd.services.conntrackd = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
+      restartTriggers = [ config.environment.etc."conntrackd/conntrackd.conf".source ];
       serviceConfig = {
         ExecStart = "${pkgs.conntrack-tools}/bin/conntrackd";
       };

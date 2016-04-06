@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "miloyip";
     repo = "rapidjson";
     rev = "v${version}";
-    sha256 = "01gh5d1v8rbrcl4jdksllnpfbkmc9994yr4l3ki0f87353cy872i";
+    sha256 = "7ba9555701b383600d3f8a90fe06e491a085006effdf3592c0f3bb2b690f34f7";
   };
 
   nativeBuildInputs = [

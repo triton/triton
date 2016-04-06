@@ -12,13 +12,17 @@ let
     url = http://dev.gentoo.org/~polynomial-c/mozilla/nss-3.15.4-pem-support-20140109.patch.xz;
     sha256 = "10ibz6y0hknac15zr6dw4gv9nb5r5z9ym6gq18j3xqx7v7n3vpdw";
   };
+
+  version = "3.23";
+  baseUrl = "https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src";
 in
 stdenv.mkDerivation rec {
   name = "nss-${version}";
-  version = "3.23";
+  inherit version;
 
   src = fetchurl {
-    url = "http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src/${name}.tar.gz";
+    url = "${baseUrl}/${name}.tar.gz";
+    sha256Url = "${baseUrl}/SHA256SUMS";
     sha256 = "94b383e31c9671e9dfcca81084a8a813817e8f05a57f54533509b318d26e11cf";
   };
 

@@ -22,17 +22,15 @@ let
         PurgeTimeout 5
       }
 
-  '' + flip concatMapStrings cfg.remoteAddresses (n: ''
-      UDP {
-        IPv4_address ${cfg.localAddress}
-        IPv4_Destination_Address ${n}
-        Port 3780
+      Multicast {
+        IPv4_address 225.0.0.50
+        IPv4_interface ${cfg.localAddress}
+        Group 3780
         Interface ${cfg.interface}
         SndSocketBuffer 24985600
         RcvSocketBuffer 24985600
         Checksum on
       }
-  '') + ''
     }
 
     General {
@@ -97,13 +95,6 @@ in
         type = str;
         description = ''
           The address we send our sync packets from.
-        '';
-      };
-
-      remoteAddresses = mkOption {
-        type = listOf str;
-        description = ''
-          The remote addresses to sync with.
         '';
       };
 

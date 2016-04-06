@@ -1052,6 +1052,8 @@ inkscape = callPackage ../all-pkgs/inkscape { };
 
 intltool = callPackage ../all-pkgs/intltool { };
 
+ipfs-hasher = callPackage ../all-pkgs/ipfs-hasher { };
+
 ipset = callPackage ../all-pkgs/ipset { };
 
 iproute = callPackage ../all-pkgs/iproute { };

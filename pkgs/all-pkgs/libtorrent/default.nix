@@ -11,13 +11,13 @@
 
 stdenv.mkDerivation rec {
   name = "libtorrent-${version}";
-  version = "2016-03-10";
+  version = "2016-03-22";
 
   src = fetchFromGitHub {
     owner = "rakshasa";
     repo = "libtorrent";
-    rev = "5a3bea6602348caaabdb7a500717658137c9df2c";
-    sha256 = "431e62374b186380189bcc350c13c5edbd4a63871a2e52038ea72cebd4d87500";
+    rev = "ef46ca30f778057095c9ef932527d5e7a8785fad";
+    sha256 = "ed78b389cb74fdbd330e3b4081b7817362a03f12c593693f6e8ff34c1f0b002c";
   };
 
   nativeBuildInputs = [
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
     "--enable-aligned"
     "--enable-interrupt-socket"
     "--enable-openssl"
-    # Flag is not a proper boolean
+    # Flag is not a boolean
     #"--disable-cyrus-rc4"
     "--enable-mincore"
     "--enable-ipv6"
@@ -62,7 +62,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

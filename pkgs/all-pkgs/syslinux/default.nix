@@ -67,6 +67,7 @@ stdenv.mkDerivation rec {
   optimize = false;
 
   # Broken in the makefile
+  parallelBuild = false;
   parallelInstall = false;
 
   meta = with stdenv.lib; {

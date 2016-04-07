@@ -11,6 +11,7 @@
 
 , adwaita-icon-theme
 , appstream-glib
+, dconf
 , gdk-pixbuf
 , glib
 , gtk3
@@ -29,19 +30,20 @@ with {
 
 stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
-  version = "2016-03-15";
+  version = "2016-04-02";
 
   src = fetchFromGitHub {
     owner = "gnome-mpv";
     repo = "gnome-mpv";
-    rev = "2f1b5b4ed4fbf18fb1368e0a151235e5f762b7c2";
-    sha256 = "2121c8a12570d65c9cf0c983e941e679317e56d045a121a6b587d88e32fb6218";
+    rev = "c24b198d474226e3585a861d4e02d90e1d390851";
+    sha256 = "abdb73901ee13a307e83a8abd0bdb46b4151e047094c835370b4c693357ad552";
   };
 
   nativeBuildInputs = [
     autoconf
     autoconf-archive
     automake
+    dconf
     gettext
     intltool
     libtool

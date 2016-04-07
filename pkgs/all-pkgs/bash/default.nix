@@ -11,7 +11,9 @@
 let
   patchSha256s = import ./patches.nix;
 in
+
 with stdenv.lib;
+
 stdenv.mkDerivation rec {
   name = "bash-${version}-p${toString (length (attrNames patchSha256s))}";
   version = "4.3";

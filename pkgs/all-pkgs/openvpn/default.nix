@@ -8,8 +8,6 @@
 , systemd_lib
 }:
 
-with stdenv.lib;
-
 stdenv.mkDerivation rec {
   name = "openvpn-2.3.10";
 
@@ -25,7 +23,7 @@ stdenv.mkDerivation rec {
     pam
     systemd_lib
   ];
-  
+
   configureFlags = [
     "--enable-x509-alt-username"
     "--enable-iproute2"

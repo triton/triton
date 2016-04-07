@@ -31,12 +31,12 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optional
     optionals
     optionalString;
-};
+in
 
 let
   # Purity: Waf is normally downloaded by bootstrap.py, but

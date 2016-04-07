@@ -11,13 +11,13 @@
 , icu
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals
     optionalString
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "harfbuzz-1.2.4";

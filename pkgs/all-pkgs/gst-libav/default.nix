@@ -12,10 +12,10 @@
 , zlib # internal libav
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gst-libav-1.8.0";

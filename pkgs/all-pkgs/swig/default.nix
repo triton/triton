@@ -26,6 +26,7 @@ let
     version
     sha256;
 in
+
 stdenv.mkDerivation rec {
   name = "swig-${version}";
   inherit version;

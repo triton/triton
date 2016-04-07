@@ -19,11 +19,11 @@
   , valgrind ? null
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals;
-};
+in
 
 assert documentationSupport ->
   doxygen != null

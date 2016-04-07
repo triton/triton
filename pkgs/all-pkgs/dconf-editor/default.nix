@@ -13,10 +13,10 @@
 , libxml2
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "dconf-editor-${version}";

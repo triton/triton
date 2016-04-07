@@ -6,7 +6,9 @@
 let
   patchSha256s = import ./patches.nix;
 in
+
 with stdenv.lib;
+
 stdenv.mkDerivation rec {
   name = "readline-${version}-p${toString (length (attrNames patchSha256s))}";
   version = "6.3";

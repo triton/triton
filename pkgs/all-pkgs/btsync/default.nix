@@ -1,6 +1,9 @@
-{ stdenv, fetchurl, patchelf }:
+{ stdenv
+, fetchurl
+, patchelf
+}:
 
-with {
+let
   inherit (stdenv)
     isFreeBSD
     isLinux
@@ -8,7 +11,7 @@ with {
   inherit (stdenv.lib.platforms)
     x86_64-freebsd
     x86_64-linux;
-};
+in
 
 let
   arch =
@@ -28,6 +31,7 @@ let
     stdenv.cc.libc
   ];
 in
+
 stdenv.mkDerivation rec {
   name = "btsync-${version}";
   version = "2.3.1";

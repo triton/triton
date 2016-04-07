@@ -36,7 +36,7 @@
 , bashCompletion
 }:
 
-with {
+let
   inherit (stdenv)
     targetSystem;
   inherit (stdenv.lib)
@@ -48,7 +48,7 @@ with {
     optionals
     optionalString
     platforms;
-};
+in
 
 assert enableAcoustid -> pythonPackages.pyacoustid != null;
 assert enableBadfiles ->

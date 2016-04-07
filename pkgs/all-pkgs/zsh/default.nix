@@ -9,12 +9,12 @@
 , pcre
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals
     wtFlag;
-};
+in
 
 let
   version = "5.2";

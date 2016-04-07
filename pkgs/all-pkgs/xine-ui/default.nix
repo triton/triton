@@ -13,11 +13,11 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "xine-ui-0.99.9";

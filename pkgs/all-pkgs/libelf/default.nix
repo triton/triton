@@ -5,13 +5,13 @@
 , shared ? true
 }:
 
-assert static || shared;
-
 let
   inherit (stdenv.lib)
     optionals
     optionalString;
 in
+
+assert static || shared;
 
 elfutils.overrideDerivation (attrs: {
   name = "libelf-${attrs.version}";

@@ -36,10 +36,10 @@
 , optimizationSupport ? false
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optional;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "guitarix-${version}";

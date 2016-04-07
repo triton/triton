@@ -6,11 +6,11 @@
 , chroma ? "all"
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     otFlag;
-};
+in
 
 assert (
   chroma == "420" ||

@@ -45,6 +45,12 @@
 }:
 
 let
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
+in
+
+let
   libOnly = type == "lib";
 
   elfutils-libs = stdenv.mkDerivation {
@@ -55,11 +61,8 @@ let
       ln -sv ${elfutils}/{lib,include} $out
     '';
   };
-
-  inherit (stdenv.lib)
-    optionals
-    optionalString;
 in
+
 stdenv.mkDerivation rec {
   version = "229";
   name = "${type}systemd-${version}";
@@ -286,7 +289,7 @@ stdenv.mkDerivation rec {
       "pamconfdir=$out/etc/pam.d"
     )
   '';
-  
+
   installTargets = optionals libOnly [
     "install-includeHEADERS"
     "install-pkgincludeHEADERS"

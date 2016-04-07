@@ -15,14 +15,17 @@
 }:
 
 let
-  sources = import ./sources.nix;
-
-  source = sources."${channel}";
-
   inherit (stdenv.lib)
     versionAtLeast
     versionOlder;
 in
+
+let
+  sources = import ./sources.nix;
+
+  source = sources."${channel}";
+in
+
 stdenv.mkDerivation rec {
   name = "nginx-${source.version}";
 
@@ -95,13 +98,13 @@ stdenv.mkDerivation rec {
     "--with-pcre-jit"
     "--with-libatomic"
   ];
-  
+
   # The install paths are a disaster
   preInstall = ''
     mkdir -p $TMPDIR/install
     installFlagsArray+=("DESTDIR=$TMPDIR/install")
   '';
-  
+
   postInstall = ''
     mkdir -p $out/share/nginx
     mv $TMPDIR/install/$out/html $out/share/nginx

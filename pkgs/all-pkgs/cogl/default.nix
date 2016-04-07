@@ -15,11 +15,11 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionalString;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "cogl-${version}";

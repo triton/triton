@@ -10,11 +10,11 @@
 , webuiSupport ? true
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals;
-};
+in
 
 assert qt5 != null ->
   dbus != null

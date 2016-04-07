@@ -11,6 +11,7 @@ let
     "https://github.com/jedisct1/minisign/archive/${version}.tar.gz"
   ];
 in
+
 stdenv.mkDerivation rec {
   name = "minisign-${version}";
   version = "0.6";

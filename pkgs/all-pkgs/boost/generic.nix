@@ -21,6 +21,7 @@
 assert !enableShared -> enableStatic;
 
 with stdenv.lib;
+
 let
 
   variant = concatStringsSep ","

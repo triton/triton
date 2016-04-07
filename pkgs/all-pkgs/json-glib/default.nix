@@ -6,10 +6,10 @@
 , gobject-introspection
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "json-glib-${version}";

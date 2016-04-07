@@ -4,10 +4,10 @@
 , libebml
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optionals;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "libmatroska-1.4.4";

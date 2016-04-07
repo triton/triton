@@ -3,6 +3,11 @@
 , precision
 }:
 
+let
+  inherit (stdenv.lib)
+    optionals;
+in
+
 assert stdenv.lib.elem precision [
   "single"
   "double"
@@ -10,10 +15,6 @@ assert stdenv.lib.elem precision [
   "quad-precision"
 ];
 
-let
-  inherit (stdenv.lib)
-    optionals;
-in
 stdenv.mkDerivation rec {
   name = "fftw-${precision}-${version}";
   version = "3.3.4";

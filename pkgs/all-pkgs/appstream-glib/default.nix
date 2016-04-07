@@ -21,10 +21,10 @@
 , util-linux_lib
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "appstream-glib-0.5.12";

@@ -5,7 +5,7 @@
 , libplist
 }:
 
-with {
+let
   inherit (stdenv)
     targetSystem;
   inherit (stdenv.lib)
@@ -13,7 +13,7 @@ with {
     optionals
     platforms
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "libusbmuxd-1.0.10";

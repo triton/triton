@@ -55,13 +55,13 @@
   , doxygen
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     wtFlag
     optional
     optionals;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "mpd-${version}";

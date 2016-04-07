@@ -8,6 +8,7 @@
 let
   baseUrl = "mirror://openbsd/OpenNTPD";
 in
+
 stdenv.mkDerivation rec {
   name = "openntpd-${version}";
   version = "5.9p1";
@@ -40,7 +41,7 @@ stdenv.mkDerivation rec {
       "localstatedir=$TMPDIR"
     )
   '';
-  
+
   passthru = {
     srcVerified = fetchurl rec {
       failEarly = true;

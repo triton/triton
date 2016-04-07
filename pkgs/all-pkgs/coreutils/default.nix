@@ -8,8 +8,10 @@
 }:
 
 let
-  inherit (stdenv.lib) optionals;
+  inherit (stdenv.lib)
+    optionals;
 in
+
 stdenv.mkDerivation rec {
   name = "coreutils-8.25";
 

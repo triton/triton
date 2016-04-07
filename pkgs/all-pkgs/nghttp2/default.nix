@@ -14,9 +14,12 @@
 }:
 
 let
-  isLib = prefix == "lib";
   inherit (stdenv.lib)
     optionals;
+in
+
+let
+  isLib = prefix == "lib";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}nghttp2-${version}";

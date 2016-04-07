@@ -16,11 +16,11 @@
 , colorSupport ? false
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optionals
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "rtorrent-${version}";

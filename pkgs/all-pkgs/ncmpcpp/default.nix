@@ -14,11 +14,11 @@
 , clockSupport ? false # clock screen
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "ncmpcpp-0.7.3";

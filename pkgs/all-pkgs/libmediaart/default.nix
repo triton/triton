@@ -8,11 +8,11 @@
 , vala
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals;
-};
+in
 
 assert gdk-pixbuf != null -> qt5 == null;
 assert qt5 != null ->

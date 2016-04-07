@@ -31,10 +31,10 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     scFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "mixxx-${version}";

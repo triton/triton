@@ -6,7 +6,6 @@
 , perl, pkgconfig, python, rubberband, serd, sord-svn, sratom, suil, taglib, vampSDK }:
 
 let
-
   # Ardour git repo uses a mix of annotated and lightweight tags. Annotated
   # tags are used for MAJOR.MINOR versioning, and lightweight tags are used
   # in-between; MAJOR.MINOR.REV where REV is the number of commits since the
@@ -16,7 +15,6 @@ let
 
   # Version to build.
   tag = "4.4";
-
 in
 
 stdenv.mkDerivation rec {

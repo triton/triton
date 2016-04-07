@@ -4,11 +4,11 @@
 , rarSupport ? false
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optional
     optionalString;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "p7zip-${version}";

@@ -31,11 +31,11 @@
 , zlib
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     wtFlag;
-};
+in
 
 assert xorg != null ->
   xorg.libX11 != null

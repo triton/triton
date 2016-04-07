@@ -16,11 +16,11 @@
 , ...
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     replaceChars;
-};
+in
 
 let
   formattedVersion = replaceChars ["."] ["_"] version;

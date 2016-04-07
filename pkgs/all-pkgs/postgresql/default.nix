@@ -22,6 +22,13 @@
 }:
 
 let
+  inherit (stdenv.lib)
+    optionals
+    versionAtLeast
+    versionOlder;
+in
+
+let
   sources = {
     "9.1" = {
       version = "9.1.21";
@@ -50,12 +57,8 @@ let
   };
 
   source = sources."${channel}";
-
-  inherit (stdenv.lib)
-    optionals
-    versionAtLeast
-    versionOlder;
 in
+
 stdenv.mkDerivation rec {
   name = "postgresql-${source.version}";
 

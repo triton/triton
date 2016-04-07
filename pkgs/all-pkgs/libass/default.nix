@@ -11,10 +11,10 @@
 , largeTilesSupport ? false # Use larger tiles in the rasterizer
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "libass-${version}";

@@ -21,11 +21,11 @@
 , zlib
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optionals
     wtFlag;
-};
+in
 
 assert xorg != null ->
   xorg.libSM != null

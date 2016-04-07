@@ -30,11 +30,11 @@
 , zlib
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "evolution-data-server-${version}";

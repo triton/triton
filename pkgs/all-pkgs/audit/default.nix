@@ -14,11 +14,15 @@
 }:
 
 let
-  libOnly = prefix == "lib";
   inherit (stdenv.lib)
     optionals
     optionalString;
 in
+
+let
+  libOnly = prefix == "lib";
+in
+
 stdenv.mkDerivation rec {
   name = "${prefix}audit-${version}";
   version = "2.4.5";

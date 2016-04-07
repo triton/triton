@@ -8,14 +8,14 @@
   , libsndfile
 }:
 
-with {
+let
   inherit (stdenv)
     targetSystem;
   inherit (stdenv.lib)
     elem
     enFlag
     wtFlag;
-};
+in
 
 let
   sndfileFileIO =

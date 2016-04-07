@@ -9,11 +9,11 @@
 , vala
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gssdp-${version}";

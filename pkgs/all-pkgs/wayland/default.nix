@@ -13,11 +13,11 @@
 , enableDocumentation ? false
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "wayland-${version}";

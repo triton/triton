@@ -8,11 +8,11 @@
 , qt5
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals;
-};
+in
 
 stdenv.mkDerivation rec {
   version = "0.4.1";

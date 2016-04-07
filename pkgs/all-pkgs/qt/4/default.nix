@@ -30,13 +30,13 @@
 , zlib
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optional
     optionals
     optionalString
     qtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "qt-${version}";

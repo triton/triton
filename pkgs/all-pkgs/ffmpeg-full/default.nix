@@ -168,7 +168,10 @@
  */
 
 let
-  inherit (stdenv.lib) optional optionals enableFeature;
+  inherit (stdenv.lib)
+    optional
+    optionals
+    enableFeature;
 in
 
 /*

@@ -33,10 +33,10 @@
 , xvidcore
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gst-plugins-bad-0.10.23";

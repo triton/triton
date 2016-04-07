@@ -16,7 +16,9 @@ let
   inherit (stdenv.lib)
     optionals
     optionalString;
+in
 
+let
   buildClient = monolithic || client;
   buildCore = monolithic || daemon;
 in

@@ -46,17 +46,18 @@
 }:
 
 let
-  inherit ((import ./sources.nix).${channel})
-    version
-    rev
-    sha256;
-
   inherit (stdenv.lib)
     optionals
     optionalString
     versionAtLeast
     versionOlder;
+  inherit ((import ./sources.nix).${channel})
+    version
+    rev
+    sha256;
+in
 
+let
   hasXio = versionAtLeast version "9.0.3";
 
   hasRocksdb = versionAtLeast version "9.0.0" && !hasStaticRocksdb;
@@ -71,6 +72,7 @@ let
     + " --prefix PYTHONPATH : \"$(toPythonPath ${pythonPackages.flask})\""
     + " --set PATH \"$out/bin\"";
 in
+
 stdenv.mkDerivation {
   name="ceph-${version}";
 

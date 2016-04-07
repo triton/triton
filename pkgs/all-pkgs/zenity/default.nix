@@ -19,11 +19,11 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "zenity-${version}";

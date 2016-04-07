@@ -40,12 +40,12 @@
   , dhcpcd ? null
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals
     wtFlag;
-};
+in
 
 assert dhcp-client == "dhclient" || dhcp-client == "dhcpcd";
 assert dhcp-client == "dhclient" -> dhcp != null;

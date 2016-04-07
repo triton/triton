@@ -47,7 +47,7 @@
  * Information on the GLVND transition: https://goo.gl/4mraRX
  */
 
-with {
+let
   inherit (stdenv)
     targetSystem;
   inherit (stdenv.lib)
@@ -64,7 +64,7 @@ with {
     versionMinor
     sha256i686
     sha256x86_64;
-};
+in
 
 let
   version = "${versionMajor}.${versionMinor}";

@@ -17,11 +17,15 @@
 }:
 
 let
-  libOnly = type == "lib";
   inherit (stdenv.lib)
     optionals
     optionalString;
 in
+
+let
+  libOnly = type == "lib";
+in
+
 stdenv.mkDerivation rec {
   name = "${type}util-linux-${version}";
   version = "2.27.1";

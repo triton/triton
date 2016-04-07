@@ -47,11 +47,11 @@
 # TODO: When adding doc support, re-add autoreconf for gtk-docsize patch
 #       and update webcore-svg-libxml-cflags.patch to patch *.am.
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     wtFlag;
-};
+in
 
 assert (gtkVer == "2" || gtkVer == "3");
 

@@ -18,12 +18,12 @@
 , selectTextPatch ? false
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optional
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "vte-${version}";

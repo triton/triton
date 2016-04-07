@@ -24,6 +24,7 @@ let
     sha256 = "1wlgp09wq84hml60hi4ls6d4zna7vhycyg40iipyh1279i91hsx7";
   };
 in
+
 stdenv.mkDerivation rec {
   name = "kbd-2.0.3";
 

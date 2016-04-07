@@ -51,8 +51,9 @@ let
     categories = "Network;FileTransfer;";
     startupNotify = "false";
   };
+in
 
-in stdenv.mkDerivation {
+stdenv.mkDerivation {
   name = "dropbox-${version}";
   src = fetchurl {
     name = "dropbox-${version}.tar.gz";

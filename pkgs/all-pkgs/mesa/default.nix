@@ -42,14 +42,6 @@
  */
 
 let
-  # this is the default search path for DRI drivers
-  driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
-  clang =
-    if llvmPackages ? clang-unwrapped then
-      llvmPackages.clang-unwrapped
-    else
-      llvmPackages.clang;
-
   inherit (stdenv.lib)
     enFlag
     head
@@ -57,6 +49,16 @@ let
     optionals
     optionalString
     splitString;
+in
+
+let
+  # this is the default search path for DRI drivers
+  driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
+  clang =
+    if llvmPackages ? clang-unwrapped then
+      llvmPackages.clang-unwrapped
+    else
+      llvmPackages.clang;
 in
 
 stdenv.mkDerivation rec {

@@ -7,8 +7,9 @@
 let
   mavenRepo = import ./mesos-deps.nix { inherit stdenv curl; };
   soext = if stdenv.system == "x86_64-darwin" then "dylib" else "so";
+in
 
-in stdenv.mkDerivation rec {
+stdenv.mkDerivation rec {
   version = "0.26.0";
   name = "mesos-${version}";
 
@@ -114,7 +115,7 @@ in stdenv.mkDerivation rec {
     rm -f "$out/lib/${python.libPrefix}"/site-packages/site.py*
     popd
 
-    # optional python dependency for mesos cli 
+    # optional python dependency for mesos cli
     pushd src/python/cli
     ${python}/bin/${python.executable} setup.py install \
       --install-lib=$out/lib/${python.libPrefix}/site-packages \

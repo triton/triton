@@ -9,10 +9,10 @@
 , python
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gst-validate-1.8.0";

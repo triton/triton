@@ -17,10 +17,10 @@
 , x264
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gst-plugins-ugly-0.10.19";

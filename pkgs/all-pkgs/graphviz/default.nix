@@ -16,12 +16,12 @@
 , flex
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optional
     optionals
     optionalString;
-};
+in
 
 stdenv.mkDerivation rec {
   version = "2.38.0";

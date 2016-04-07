@@ -9,10 +9,10 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optionalString;
-};
+in
 
 if (isPyPy) then
   throw "pycairo not supported for interpreter ${python.executable}"

@@ -38,7 +38,7 @@
 , recentListSize ? null # 5 is not enough, allow passing a different number
 }:
 
-with {
+let
   inherit (builtins)
     toString;
   inherit (stdenv.lib)
@@ -46,7 +46,7 @@ with {
     optionals
     optionalString
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "evince-${version}";

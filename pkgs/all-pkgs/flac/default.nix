@@ -4,10 +4,10 @@
 , libogg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "flac-1.3.1";

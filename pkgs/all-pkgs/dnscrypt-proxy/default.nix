@@ -8,6 +8,7 @@
 let
   baseUrl = "https://download.dnscrypt.org/dnscrypt-proxy";
 in
+
 stdenv.mkDerivation rec {
   name = "dnscrypt-proxy-1.6.1";
 
@@ -37,7 +38,7 @@ stdenv.mkDerivation rec {
       sha256 = "895ac36f5d4898dabf0ed65e0a579d0aa4d9a9be9cca4dca7b573a0ff170919a";
     };
   };
-  
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

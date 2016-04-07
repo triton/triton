@@ -13,11 +13,11 @@
 , libxml2
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optionals
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "at-spi2-atk-${version}";

@@ -51,7 +51,9 @@ let
     optionalString;
   inherit (builtins.getAttr resampleMethod (import ./resample-methods.nix))
     resampleMethodString;
+in
 
+let
   libOnly = prefix == "lib";
 in
 

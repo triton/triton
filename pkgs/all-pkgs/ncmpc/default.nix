@@ -28,12 +28,12 @@
 , chatScreen ? false
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals
     optionalString;
-};
+in
 
 let
   ncmpc-lyrics-plugins = stdenv.mkDerivation rec {

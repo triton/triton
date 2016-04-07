@@ -13,10 +13,10 @@
 , pango
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "clutter-gtk-${version}";

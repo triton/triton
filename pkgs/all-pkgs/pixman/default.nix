@@ -4,13 +4,13 @@
 , glib
 }:
 
-with {
+let
   inherit (stdenv)
     cc;
   inherit (stdenv.lib)
     enFlag
     optionals;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "pixman-0.34.0";

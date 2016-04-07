@@ -59,11 +59,12 @@ let
   inherit (stdenv.lib)
     optionals
     versionAtLeast;
-
   inherit (builtins.getAttr channel (import ./sources.nix))
     version
     sha512;
+in
 
+let
   baseUrl = "https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${version}";
 in
 

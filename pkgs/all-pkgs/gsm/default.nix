@@ -4,11 +4,11 @@
 , staticSupport ? false
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optional
     optionalString;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gsm-${version}";

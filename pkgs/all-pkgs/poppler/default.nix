@@ -23,13 +23,13 @@
 , suffix ? "glib"
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optional
     optionals
     wtFlag;
-};
+in
 
 assert (
   suffix == "glib" ||

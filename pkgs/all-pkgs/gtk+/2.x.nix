@@ -18,12 +18,12 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     wtFlag
     optionalString;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";

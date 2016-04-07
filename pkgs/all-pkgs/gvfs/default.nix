@@ -34,10 +34,10 @@
 , udisks
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gvfs-${version}";

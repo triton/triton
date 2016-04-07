@@ -14,10 +14,10 @@
 , openconnect
 }:
 
-with {
+let
   inherit (stdenv.lib)
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "NetworkManager-openconnect-${version}";

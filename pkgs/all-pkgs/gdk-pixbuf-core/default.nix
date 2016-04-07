@@ -14,12 +14,12 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gdk-pixbuf-core-${version}";

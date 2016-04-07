@@ -22,11 +22,11 @@
 , zlib
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gst-plugins-base-0.10.36";

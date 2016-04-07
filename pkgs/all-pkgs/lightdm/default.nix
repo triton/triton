@@ -16,6 +16,7 @@ let
   ver_branch = "1.18";
   version = "1.18.0";
 in
+
 stdenv.mkDerivation rec {
   name = "lightdm-${version}";
 

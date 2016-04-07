@@ -23,6 +23,7 @@ let
   major = "3.4";
   minor = "10";
 in
+
 stdenv.mkDerivation rec {
   name = "gnutls-${version}";
   version = "${major}.${minor}";
@@ -50,12 +51,12 @@ stdenv.mkDerivation rec {
     perl
   ];
 
-  buildInputs = [ 
+  buildInputs = [
     lzo
     lzip
     nettle
     libtasn1
-    libidn 
+    libidn
     p11_kit
     zlib
     gmp

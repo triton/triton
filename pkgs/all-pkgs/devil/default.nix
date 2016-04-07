@@ -12,10 +12,10 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optionals;
-};
+in
 
 assert xorg != null -> xorg.libX11 != null;
 

@@ -17,10 +17,10 @@
 , xl2tpd
 }:
 
-with {
+let
   inherit (stdenv.lib)
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "NetworkManager-l2tp-${version}";

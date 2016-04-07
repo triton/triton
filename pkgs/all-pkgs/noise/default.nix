@@ -35,10 +35,10 @@
 , pango
 }:
 
-with {
+let
   inherit (stdenv.lib)
     makeSearchPath;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "noise-${version}";

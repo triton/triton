@@ -63,10 +63,10 @@
 , onlyLibVLC ? false
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optional;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "vlc-${version}";

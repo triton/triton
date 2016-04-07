@@ -15,6 +15,7 @@ let
 
   optLibcap = shouldUsePkg libcap;
 in
+
 stdenv.mkDerivation rec {
   name = "libgcrypt-1.5.4";
 

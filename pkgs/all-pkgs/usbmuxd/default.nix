@@ -6,10 +6,10 @@
 , libusb
 }:
 
-with {
+let
   inherit (stdenv.lib)
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "usbmuxd-${version}";

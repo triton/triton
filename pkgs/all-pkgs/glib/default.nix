@@ -21,12 +21,12 @@
   , tzdata
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals
     optionalString;
-};
+in
 
 let
   # Some packages don't get "Cflags" from pkgconfig correctly

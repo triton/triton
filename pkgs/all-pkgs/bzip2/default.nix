@@ -5,11 +5,14 @@
 , shared ? true
 }:
 
+let
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
+in
+
 assert shared || static;
 
-let
-  inherit (stdenv.lib) optionals optionalString;
-in
 stdenv.mkDerivation rec {
   name = "bzip2-${version}";
   version = "1.0.6";

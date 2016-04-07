@@ -22,8 +22,6 @@
 }:
 
 let
-  sources = import ./sources.nix;
-
   inherit (stdenv)
     targetSystem;
   inherit (stdenv.lib)
@@ -31,6 +29,11 @@ let
     optional
     platforms;
 in
+
+let
+  sources = import ./sources.nix;
+in
+
 stdenv.mkDerivation rec {
   name = "gnupg-${sources.${channel}.version}";
 

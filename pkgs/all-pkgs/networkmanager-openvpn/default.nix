@@ -14,10 +14,10 @@
 , openvpn
 }:
 
-with {
+let
   inherit (stdenv.lib)
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "NetworkManager-openvpn-${version}";

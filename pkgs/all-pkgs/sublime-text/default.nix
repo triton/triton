@@ -15,13 +15,13 @@
 , pkexecPath ? "/var/setuid-wrappers/pkexec"
 }:
 
-with {
+let
   inherit (stdenv)
     system;
   inherit (stdenv.lib)
     makeLibraryPath
     optionalString;
-};
+in
 
 let
   version = "3103";

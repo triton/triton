@@ -13,10 +13,10 @@
 #, lockdev
 }:
 
-with {
+let
   inherit (stdenv.lib)
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "libgphoto2-2.5.9";

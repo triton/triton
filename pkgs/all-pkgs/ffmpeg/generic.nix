@@ -58,12 +58,12 @@
  *
  */
 
-with {
+let
   inherit (stdenv.lib)
     optional
     optionals
     enableFeature;
-};
+in
 
 let
   cmpVer = builtins.compareVersions;

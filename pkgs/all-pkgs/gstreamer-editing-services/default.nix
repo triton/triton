@@ -12,10 +12,10 @@
 , libxml2
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gstreamer-editing-services-1.8.0";

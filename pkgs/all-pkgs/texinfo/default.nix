@@ -6,8 +6,10 @@
 }:
 
 let
-  inherit (stdenv.lib) optionals;
+  inherit (stdenv.lib)
+    optionals;
 in
+
 stdenv.mkDerivation rec {
   name = "texinfo-6.1";
 

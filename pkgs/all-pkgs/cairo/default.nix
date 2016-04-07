@@ -18,11 +18,11 @@
 , gles2 ? false
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionalString;
-};
+in
 
 assert xorg != null ->
   xorg.libX11 != null

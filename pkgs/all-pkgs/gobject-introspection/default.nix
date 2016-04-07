@@ -12,12 +12,12 @@
 , cairo
 }:
 
-with {
+let
   inherit (stdenv.lib)
     optionals
     optionalString
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gobject-introspection-${versionMajor}.${versionMinor}";

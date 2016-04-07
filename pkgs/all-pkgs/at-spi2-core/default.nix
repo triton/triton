@@ -10,11 +10,11 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     wtFlag;
-};
+in
 
 assert xorg != null ->
   xorg.libSM != null

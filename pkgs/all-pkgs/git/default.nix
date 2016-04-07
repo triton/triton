@@ -26,6 +26,7 @@ let
     gnused
   ];
 in
+
 stdenv.mkDerivation rec {
   name = "git-${version}";
   version = "2.8.1";

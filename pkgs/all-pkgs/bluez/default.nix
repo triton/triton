@@ -11,9 +11,10 @@
 let
   baseUrl = "mirror://kernel/linux/bluetooth";
 in
+
 stdenv.mkDerivation rec {
   name = "bluez-5.39";
-   
+
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     allowHashOutput = false;
@@ -31,7 +32,7 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     substituteInPlace tools/hid2hci.rules --replace /sbin/udevadm ${systemd_lib}/bin/udevadm
     substituteInPlace tools/hid2hci.rules --replace "hid2hci " "$out/lib/udev/hid2hci "
-  
+
     configureFlagsArray+=(
       "--with-dbusconfdir=$out/etc"
       "--with-dbussystembusdir=$out/share/dbus-1/system-services"

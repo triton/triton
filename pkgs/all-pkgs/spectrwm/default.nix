@@ -8,10 +8,10 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     replaceStrings;
-};
+in
 
 let
   replace = v: replaceStrings ["."] ["_"] v;

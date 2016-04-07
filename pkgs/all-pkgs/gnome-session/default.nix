@@ -21,12 +21,12 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "gnome-session-${version}";

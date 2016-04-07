@@ -47,7 +47,7 @@
 , boxMakerPlugin ? false
 }:
 
-with {
+let
   inherit (stdenv)
     cc;
   inherit (stdenv.lib)
@@ -55,7 +55,7 @@ with {
     optional
     optionalString
     wtFlag;
-};
+in
 
 let
   boxmaker = fetchurl {

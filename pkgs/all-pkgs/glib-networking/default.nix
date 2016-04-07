@@ -9,10 +9,10 @@
 , p11_kit
 }:
 
-with {
+let
   inherit (stdenv.lib)
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "glib-networking-${version}";

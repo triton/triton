@@ -27,10 +27,10 @@
 , tracker
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "grilo-plugins-${version}";

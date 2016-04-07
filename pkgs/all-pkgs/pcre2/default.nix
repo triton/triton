@@ -6,11 +6,11 @@
   , zlib ? null
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "pcre2-10.21";

@@ -20,10 +20,13 @@ let
   inherit (stdenv.lib)
     optionalString
     optionals;
+in
 
+let
   isFull = suffix == "full";
   nameSuffix = optionalString (suffix != "") "-${suffix}";
 in
+
 stdenv.mkDerivation rec {
   name = "curl${nameSuffix}-${version}";
   version = "7.48.0";

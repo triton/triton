@@ -1,5 +1,5 @@
 { stdenv
-, bison 
+, bison
 , fetchurl
 , perl
 
@@ -12,11 +12,15 @@
 }:
 
 let
-  libOnly = type == "lib";
   inherit (stdenv.lib)
     optionals
     optionalString;
 in
+
+let
+  libOnly = type == "lib";
+in
+
 stdenv.mkDerivation rec {
   name = "${type}krb5-${version}";
   version = "1.14.1";

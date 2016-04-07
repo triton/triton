@@ -20,12 +20,12 @@
 , zlib
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionalString
     wtFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "libgpod-0.8.3";

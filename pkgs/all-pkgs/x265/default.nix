@@ -15,7 +15,7 @@
 , custatsSupport ? false # Internal profiling of encoder work
 }:
 
-with {
+let
   inherit (stdenv)
     targetSystem;
   inherit (stdenv.lib)
@@ -24,7 +24,7 @@ with {
     elem
     optionals
     platforms;
-};
+in
 
 assert (elem targetSystem platforms.linux) -> numactl != null;
 

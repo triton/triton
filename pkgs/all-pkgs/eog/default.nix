@@ -26,12 +26,12 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals
     wtFlag;
-};
+in
 
 assert xorg != null -> xorg.libX11 != null;
 

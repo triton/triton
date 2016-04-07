@@ -11,10 +11,10 @@
 , stresstestSupport ? false
 }:
 
-with {
+let
   inherit (stdenv.lib)
     cmFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "uhub-${version}";

@@ -17,12 +17,12 @@
 , zlib
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals
     wtFlag;
-};
+in
 
 assert qt5 != null -> qt5.qtbase != null;
 

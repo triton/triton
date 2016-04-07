@@ -33,7 +33,7 @@
  * - Fix sqlite loadable extensions
  */
 
-with {
+let
   inherit (stdenv)
     isLinux;
   inherit (stdenv.lib)
@@ -47,7 +47,7 @@ with {
   inherit (builtins.getAttr channel (import ./sources.nix))
     versionMinor
     sha256;
-};
+in
 
 let
   versionMajor = channel;

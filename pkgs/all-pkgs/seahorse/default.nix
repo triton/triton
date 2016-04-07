@@ -19,10 +19,10 @@
 , vala
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag;
-};
+in
 
 stdenv.mkDerivation rec {
   name = "seahorse-${version}";

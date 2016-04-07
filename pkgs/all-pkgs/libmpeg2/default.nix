@@ -5,12 +5,12 @@
 , xorg
 }:
 
-with {
+let
   inherit (stdenv.lib)
     enFlag
     optionals
     wtFlag;
-};
+in
 
 assert xorg != null ->
   xorg.libICE != null

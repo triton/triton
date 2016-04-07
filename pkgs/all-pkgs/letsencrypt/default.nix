@@ -7,15 +7,15 @@
 
 pythonPackages.buildPythonPackage rec {
   name = "letsencrypt-${version}";
-  version = "0.4.2";
-  
+  version = "0.5.0";
+
   src = fetchFromGitHub {
     owner = "letsencrypt";
     repo = "letsencrypt";
     rev = "v${version}";
-    sha256 = "7f5509bf42e6ee9a3e1619ebbe7a7528bdb025e96eccddaaa9d94fe7d4f31b41";
+    sha256 = "8559646fd7691a5a5078094428a2d17a3b333755e0fe94031f42a1c5a7b33800";
   };
-  
+
   pythonPath = with pythonPackages; [
     acme
     ConfigArgParse

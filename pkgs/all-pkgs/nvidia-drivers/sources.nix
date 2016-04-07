@@ -28,9 +28,9 @@
   };
   "beta" = {
     versionMajor = "364";
-    versionMinor = "12";
-    sha256i686   = "14532b7621808b5e04e31d4004e77e0facc95aeba0aa632b184b10da28997ec7";
-    sha256x86_64 = "6d4827edf5d69d0bcf5beb40bda9494888c5ab6de4989fcc66aadaac0fe0a323";
+    versionMinor = "15";
+    sha256i686   = "8fae0f29ab4bebf2b2e2d38e94adc3150217b52fac1adbd42df50aa65ccb2c59";
+    sha256x86_64 = "8edfee9a1461721b3311a3fe056ccb246a2e268585c61a54aaab9b0756e6df0b";
   };
   # https://developer.nvidia.com/vulkan-driver
   "vulkan" = {

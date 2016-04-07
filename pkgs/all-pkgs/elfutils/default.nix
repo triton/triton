@@ -19,10 +19,10 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = [
-      "http://fedorahosted.org/releases/e/l/elfutils/${version}/${name}.tar.bz2"
+      "https://fedorahosted.org/releases/e/l/elfutils/${version}/${name}.tar.bz2"
       "mirror://gentoo/${name}.tar.bz2"
     ];
-    sha256 = "0wp91hlh9n0ismikljf63558rzdwim8w1s271grsbaic35vr5z57";
+    sha256 = "3c056914c8a438b210be0d790463b960fc79d234c3f05ce707cbff80e94cba30";
   };
 
   nativeBuildInputs = [

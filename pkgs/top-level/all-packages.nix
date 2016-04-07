@@ -1290,6 +1290,8 @@ libusb = callPackageAlias "libusb_1" { };
 
 libusbmuxd = callPackage ../all-pkgs/libusbmuxd { };
 
+libuv = callPackage ../all-pkgs/libuv { };
+
 libva = callPackage ../all-pkgs/libva { };
 
 libvdpau = callPackage ../all-pkgs/libvdpau { };
@@ -7137,10 +7139,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   libunwind = callPackage ../development/libraries/libunwind { };
 #
-  libuvVersions = recurseIntoAttrs (callPackage ../development/libraries/libuv { });
-
-  libuv = libuvVersions.v1_8_0;
-
   v4l_lib = lowPrio (callPackageAlias "v4l_utils" {
     alsa-lib = null;
     libX11 = null;

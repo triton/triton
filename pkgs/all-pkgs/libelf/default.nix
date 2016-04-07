@@ -8,8 +8,11 @@
 assert static || shared;
 
 let
-  inherit (stdenv.lib) optionals optionalString;
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
 in
+
 elfutils.overrideDerivation (attrs: {
   name = "libelf-${attrs.version}";
 

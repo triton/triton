@@ -545,6 +545,8 @@ boost155 = callPackage ../all-pkgs/boost/1.55.nix { };
 boost160 = callPackage ../all-pkgs/boost/1.60.nix { };
 boost = callPackageAlias "boost160" { };
 
+brotli = callPackage ../all-pkgs/brotli { };
+
 bs1770gain = callPackage ../all-pkgs/bs1770gain { };
 
 btrfs-progs = callPackage ../all-pkgs/btrfs-progs { };
@@ -2471,8 +2473,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ibus-table = callPackage ../tools/inputmethods/ibus-table { };
 #
 #  ibus-table-others = callPackage ../tools/inputmethods/ibus-table-others { };
-#
-#  brotli = callPackage ../tools/compression/brotli { };
 #
 #  biosdevname = callPackage ../tools/networking/biosdevname { };
 #

@@ -1105,6 +1105,8 @@ lame = callPackage ../all-pkgs/lame { };
 
 ldb = callPackage ../all-pkgs/ldb { };
 
+leptonica = callPackage ../all-pkgs/leptonica { };
+
 letsencrypt = callPackage ../all-pkgs/letsencrypt { };
 
 libaccounts-glib = callPackage ../all-pkgs/libaccounts-glib { };
@@ -6629,8 +6631,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
   leveldb = callPackage ../development/libraries/leveldb { };
 
 #  levmar = callPackage ../development/libraries/levmar { };
-#
-  leptonica = callPackage ../development/libraries/leptonica { };
 
 #  lib3ds = callPackage ../development/libraries/lib3ds { };
 #

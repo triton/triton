@@ -7,7 +7,7 @@
 , writeScript
 
 , python
-, pythonPackages
+, python2Packages
 , imagemagick
 
 , enableAcousticbrainz ? true
@@ -16,11 +16,11 @@
   , flac ? null
   , mp3val ? null
 , enableBpd ? false
-  , gst-python_0 ? null
   , gst-plugins-base_0 ? null
+  , gstreamer_0
 , enableDiscogs ? true
 , enableEchonest ? true
-, enableEmbyupdate ? true
+, enableEmbyUpdate ? true
 , enableFetchart ? true
 , enableLastfm ? true
 , enableMpd ? true
@@ -42,7 +42,10 @@ let
   inherit (stdenv.lib)
     attrNames
     concatMapStrings
+    concatStringsSep
     elem
+    filterAttrs
+    id
     makeSearchPath
     optional
     optionals
@@ -50,22 +53,22 @@ let
     platforms;
 in
 
-assert enableAcoustid -> pythonPackages.pyacoustid != null;
+assert enableAcoustid -> python2Packages.pyacoustid != null;
 assert enableBadfiles ->
   flac != null
   && mp3val != null;
 assert enableBpd ->
-  pythonPackages.pygobject_2 != null
-  && gst-python_0 != null
-  && gst-plugins-base_0 != null;
-assert enableDiscogs -> pythonPackages.discogs_client != null;
-assert enableEchonest -> pythonPackages.pyechonest != null;
-assert enableFetchart -> pythonPackages.responses != null;
-assert enableLastfm -> pythonPackages.pylast != null;
-assert enableMpd -> pythonPackages.mpd != null;
+  python2Packages.pygobject_2 != null
+  && gst-plugins-base_0 != null
+  && gstreamer_0 != null;
+assert enableDiscogs -> python2Packages.discogs_client != null;
+assert enableEchonest -> python2Packages.pyechonest != null;
+assert enableFetchart -> python2Packages.responses != null;
+assert enableLastfm -> python2Packages.pylast != null;
+assert enableMpd -> python2Packages.mpd != null;
 assert enableReplaygain -> bs1770gain != null;
-assert enableThumbnails -> pythonPackages.pyxdg != null;
-assert enableWeb -> pythonPackages.flask != null;
+assert enableThumbnails -> python2Packages.pyxdg != null;
+assert enableWeb -> python2Packages.flask != null;
 
 let
   optionalPlugins = {
@@ -75,7 +78,7 @@ let
     chroma = enableAcoustid;
     discogs = enableDiscogs;
     echonest = enableEchonest;
-    embyupdate = enableEmbyupdate;
+    embyupdate = enableEmbyUpdate;
     fetchart = enableFetchart;
     lastgenre = enableLastfm;
     lastimport = enableLastfm;
@@ -136,7 +139,9 @@ let
   testShell = "${bash}/bin/bash --norc";
   completion = "${bashCompletion}/share/bash-completion/bash_completion";
 
-in buildPythonPackage rec {
+in
+
+buildPythonPackage rec {
   name = "beets-${version}";
   version = "1.3.17";
   namePrefix = "";
@@ -153,36 +158,36 @@ in buildPythonPackage rec {
   ];
 
   propagatedBuildInputs = [
-    pythonPackages.enum34
-    pythonPackages.jellyfish
-    pythonPackages.munkres
-    pythonPackages.musicbrainzngs
-    pythonPackages.mutagen
-    pythonPackages.pathlib
-    pythonPackages.pyyaml
-    pythonPackages.unidecode
-  ] ++ optional enableAcoustid pythonPackages.pyacoustid
+    python2Packages.enum34
+    python2Packages.jellyfish
+    python2Packages.munkres
+    python2Packages.musicbrainzngs
+    python2Packages.mutagen
+    python2Packages.pathlib
+    python2Packages.pyyaml
+    python2Packages.unidecode
+  ] ++ optional enableAcoustid python2Packages.pyacoustid
     ++ optional (
       enableFetchart
       || enableEmbyUpdate
-      || enableAcousticbrainz) pythonPackages.requests2
-    ++ optional enableDiscogs pythonPackages.discogs_client
-    ++ optional enableEchonest pythonPackages.pyechonest
-    ++ optional enableLastfm pythonPackages.pylast
-    ++ optional enableMpd pythonPackages.mpd
-    ++ optional enableThumbnails pythonPackages.pyxdg
-    ++ optional enableWeb pythonPackages.flask
+      || enableAcousticbrainz) python2Packages.requests2
+    ++ optional enableDiscogs python2Packages.discogs_client
+    ++ optional enableEchonest python2Packages.pyechonest
+    ++ optional enableLastfm python2Packages.pylast
+    ++ optional enableMpd python2Packages.mpd
+    ++ optional enableThumbnails python2Packages.pyxdg
+    ++ optional enableWeb python2Packages.flask
     ++ optional enableAlternatives (import ./alternatives-plugin.nix {
-      inherit stdenv buildPythonPackage pythonPackages fetchFromGitHub;
+      inherit stdenv buildPythonPackage python2Packages fetchFromGitHub;
     });
 
-  buildInputs = with pythonPackages; [
-    beautifulsoup4
+  buildInputs = [
+    python2Packages.beautifulsoup4
     imagemagick
-    mock
-    nose
-    rarfile
-    responses
+    python2Packages.mock
+    python2Packages.nose
+    python2Packages.rarfile
+    python2Packages.responses
   ] ++ optionals enableBpd [
     gst-plugins-base_0
     gstreamer_0

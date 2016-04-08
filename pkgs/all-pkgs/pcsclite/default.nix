@@ -9,11 +9,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "pcsclite-1.8.14";
+  name = "pcsclite-1.8.16";
 
   src = fetchurl {
-    url = "https://alioth.debian.org/frs/download.php/file/4138/pcsc-lite-1.8.14.tar.bz2";
-    sha256 = "0kik09dif6hih09vvprd7zvj31lnrclrbrh5y10mlca2c209f7xr";
+    url = "https://alioth.debian.org/frs/download.php/file/4164/pcsc-lite-1.8.16.tar.bz2";
+    sha256 = "e7d08aa38897e86fdf632d56ac70663a3a9add3c0bf4031dc32e783f19c0688a";
   };
 
   nativeBuildInputs = [

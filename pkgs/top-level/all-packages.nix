@@ -1750,6 +1750,8 @@ tcp-wrappers = callPackage ../all-pkgs/tcp-wrappers { };
 
 tdb = callPackage ../all-pkgs/tdb { };
 
+tesseract = callPackage ../all-pkgs/tesseract { };
+
 tevent = callPackage ../all-pkgs/tevent { };
 
 texinfo = callPackage ../all-pkgs/texinfo { };
@@ -11349,8 +11351,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  };
 #
 #  termite = callPackage ../applications/misc/termite { };
-#
-  tesseract = callPackage ../applications/graphics/tesseract { };
 #
 #  tetraproc = callPackage ../applications/audio/tetraproc { };
 #

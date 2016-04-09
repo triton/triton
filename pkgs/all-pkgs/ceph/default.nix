@@ -300,8 +300,8 @@ stdenv.mkDerivation {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://ceph.com/;
     description = "Distributed storage system";
+    homepage = https://ceph.com/;
     license = licenses.lgpl21;
     maintainers = with maintainers; [
       wkennington

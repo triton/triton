@@ -20,9 +20,8 @@ stdenv.mkDerivation rec {
   setupHook = ./setup-hook.sh;
 
   meta = with stdenv.lib; {
-    branch = "1.15";
-    homepage = "http://www.gnu.org/software/automake/";
     description = "GNU standard-compliant makefile generator";
+    homepage = "http://www.gnu.org/software/automake/";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
       wkennington
@@ -30,5 +29,6 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       x86_64-linux
       ++ i686-linux;
+    branch = "1.15";
   };
 }

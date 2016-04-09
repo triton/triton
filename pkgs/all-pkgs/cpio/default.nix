@@ -29,8 +29,9 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = http://www.gnu.org/software/cpio/;
     description = "A program to create or extract from cpio archives";
+    homepage = http://www.gnu.org/software/cpio/;
+    license = licenses.gpl3;
     maintainers = with maintainers; [
       wkennington
     ];

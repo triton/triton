@@ -18,9 +18,10 @@ let
     version = "1.4.0-8";
     src = fetchzip {
       url = "mirror://debian/pool/main/v/vorbis-tools/vorbis-tools_${version}.debian.tar.xz";
-      sha256 = "8691688115d8ca3a3907aa5a194c746c7010dc283e68aca1d145e7be1f1a3e54";
+      sha256 = "87194f03a0fe06fede2b5d217edfef1acbe46bdb4de85a031000bd07fc0502ed";
     };
-    buildPhase = "true";
+    doConfigure = false;
+    doBuild = false;
     installPhase = ''
       mkdir -pv $out
       find . -type f -regextype posix-extended -regex ".*\.(diff|patch)" -exec cp -v {} $out \;

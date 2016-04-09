@@ -36,8 +36,11 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Automated text and program generation tool";
-    license = with licenses; [ gpl3Plus lgpl3Plus ];
     homepage = http://www.gnu.org/software/autogen/;
+    license = with licenses; [
+      gpl3Plus
+      lgpl3Plus
+    ];
     maintainers = with maintainers; [
       wkennington
     ];

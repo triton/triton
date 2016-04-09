@@ -14,6 +14,8 @@ let
   inherit (stdenv.lib)
     elem
     enFlag
+    optional
+    platforms
     wtFlag;
 in
 
@@ -25,7 +27,6 @@ let
       "lame";
 in
 
-with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "lame-${version}";
   version = "3.99.5";

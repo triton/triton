@@ -11,6 +11,7 @@
 , gnugrep
 , gawk
 , gnutar
+, brotli
 , gzip
 , bzip2
 , xz
@@ -63,6 +64,8 @@ rec {
       cp ${gawk}/bin/gawk $out/bin
       cp -d ${gawk}/bin/awk $out/bin
       cp ${gnutar}/bin/tar $out/bin
+      cp ${brotli}/bin/bro $out/bin
+      ln -s bro $out/bin/brotli
       cp ${gzip}/bin/gzip $out/bin
       cp ${bzip2}/bin/bzip2 $out/bin
       cp ${xz}/bin/xz $out/bin

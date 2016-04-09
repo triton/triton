@@ -20,17 +20,17 @@ in
 if [ hostSystem ] == lib.platforms.x86_64-linux then {
   busybox = makeUrls {
     file = "bootstrap-busybox";
-    nix-hash = "dayf8f2nvd7yrvagfipkss3cvwzym7j1";
-    multihash = "QmQ1dche6tk7oEAcV5Q4KMSVPC54ikhbAsfcaWqd7buUUg";
-    sha256 = "1bn3v1jfxkj0pb4q1yvlrlphy9izxx7rsbns43j8fkgqfqc3a2w1";
+    nix-hash = "gn9dm0jsqjwk08k4s4xakcanikffmrw2";
+    multihash = "QmQJUUmN6bBcVyEGCfgyurwee4vChZR7jKRoXS3zj8CVnM";
+    sha256 = "0j42mh47gb3501yfz8pr6hpxqrf7fzfl170fmypmi7f9x0p6i3x2";
     executable = true;
   };
 
   bootstrapTools = makeUrls {
     file = "bootstrap-tools";
-    nix-hash = "dayf8f2nvd7yrvagfipkss3cvwzym7j1";
-    multihash = "QmUdKGWBGTeh1MRrwufeJoNeL2gNnHvMxzbEKT4pT8ayKD";
-    sha256 = "956fe1a2a083d2066b2f33a17d711ea4904397911c70a3b4b030e50c5b004947";
+    nix-hash = "gn9dm0jsqjwk08k4s4xakcanikffmrw2";
+    multihash = "QmRscqmDa1C6c1rRWPWnd9YLYmDgo8gzwm1fkLFiKmMxPJ";
+    sha256 = "e034a412ec2d95ec06faa08a86d46cae4f573c513744529a31fef654ca72ef11";
   };
 
   langC = true;
@@ -39,17 +39,17 @@ if [ hostSystem ] == lib.platforms.x86_64-linux then {
 } else if [ hostSystem ] == lib.platforms.i686-linux then {
   busybox = makeUrls {
     file = "bootstrap-busybox";
-    nix-hash = "sf1ydfr2icbxvv9vfg8b7nzic8a9i55n";
-    multihash = "QmWK7MwnR66b79g85SkkCMyWHddNrMHpk7ieHup1JJ9t47";
-    sha256 = "0m8z670i4s4p4daj2776frazrprmm3c9gsnzslz9dx0hqd70p3iq";
+    nix-hash = "is0wjld2l6far986w69bmzhl5f58j1fh";
+    multihash = "QmemDcocPBMvmzmmf7cCTBHNt9uuc5Lfzo1G3uBqn84B7K";
+    sha256 = "14l4rzv35d2kqsj8d69gpnhf4wxk63d53k2zchgsjk6sgzm4gfgx";
     executable = true;
   };
 
   bootstrapTools = makeUrls {
     file = "bootstrap-tools";
-    nix-hash = "sf1ydfr2icbxvv9vfg8b7nzic8a9i55n";
-    multihash = "QmXJQh3utXkx93tRGA6t8puYKyBkaaXC2fdNwGTHzeyFft";
-    sha256 = "dd27b7e023bc8fe375790325771741a9342712caa205533900279d2a7051e245";
+    nix-hash = "is0wjld2l6far986w69bmzhl5f58j1fh";
+    multihash = "QmVEu5kSfvk3FHymC7WwTaxXv3qLhaQb9aGhUvaZZSVKSA";
+    sha256 = "80c7a35e4d80425393ba711064080b68a2f393df694b604674804848a90f5d97";
   };
 
   langC = true;

@@ -104,7 +104,6 @@ stdenv.mkDerivation rec {
   ];
 
   preInstall = ''
-    cat Makefile
     installFlagsArray+=("localstatedir=$TMPDIR")
   '';
 
@@ -123,7 +122,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

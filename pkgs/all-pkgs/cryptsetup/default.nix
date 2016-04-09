@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+
 , lvm2
 , openssl
 , popt
@@ -15,12 +16,6 @@ stdenv.mkDerivation rec {
     sha256 = "1v0zj4181ahckn5hn95kg3zbqw944raz769wdam5cjwqriiqmp3k";
   };
 
-  configureFlags = [
-    "--enable-cryptsetup-reencrypt"
-    "--with-crypto_backend=openssl"
-    "--enable-python"
-  ];
-
   buildInputs = [
     lvm2
     openssl
@@ -29,9 +24,15 @@ stdenv.mkDerivation rec {
     util-linux_lib
   ];
 
+  configureFlags = [
+    "--enable-cryptsetup-reencrypt"
+    "--with-crypto_backend=openssl"
+    "--enable-python"
+  ];
+
   meta = with stdenv.lib; {
-    homepage = http://code.google.com/p/cryptsetup/;
     description = "LUKS for dm-crypt";
+    homepage = http://code.google.com/p/cryptsetup/;
     license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington

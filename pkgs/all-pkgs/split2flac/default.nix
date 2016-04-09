@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
     owner = "ftrvxmtrx";
     repo = "split2flac";
     rev = version;
-    sha256 = "fc19a432f50c19777dbe0397c75bd13e826d0ba8945c0ce6f6b9f0ce226c16e7";
+    sha256 = "163b757cb6efa69c1d731484bb9fe701c65859b62f24072ef14aedbc2343bce4";
   };
 
   nativeBuildInputs = [
@@ -45,9 +45,9 @@ stdenv.mkDerivation rec {
         -e "s/\''${0##\*split2}/\''${SPLIT2FLAC_CALLER##\*split2}/"
     '';
 
-  configurePhase = "true";
+  doConfigure = false;
 
-  buildPhase = "true";
+  doBuild = false;
 
   installPhase = ''
     install -D -m755 -v 'split2flac' "$out/bin/split2flac"

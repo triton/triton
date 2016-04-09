@@ -68,7 +68,7 @@ stdenv.mkDerivation rec {
     (fetchTritonPatch {
       rev = "b664680703ddf56e54f54264001e13e39e6127f7";
       file = "argyllcms/argyllcms-1.8.3-gcc5.patch";
-      sha256 = "1cef3c3a3f88f352d83f4b126810f2aed394a6a9cc54be773631a11c2ebc5215";
+      sha256 = "de9b8a90e249070d457291c29ae3c732f89c51bc6f6296cb6aa7e800ba31a0e5";
     })
   ];
 

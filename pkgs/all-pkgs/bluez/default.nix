@@ -75,6 +75,10 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Bluetooth support for Linux";
     homepage = http://www.bluez.org/;
+    license = with licenses; [
+      gpl2Plus
+      lgpl2Plus
+    ];
     maintainers = with maintainers; [
       wkennington
     ];

@@ -577,5 +577,5 @@ if [ -n "$multihash" ]; then
 fi
 
 
-echo "error: cannot download $name from any mirror"
+echo "error: Failed to produce $name from any mirror"
 exit 1

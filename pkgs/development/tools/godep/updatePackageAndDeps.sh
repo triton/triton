@@ -37,6 +37,7 @@ in pkgs.buildEnv {
   name = "goUpdater";
   paths = with pkgs; [
     coreutils
+    brotli
     gawk
     gnused
     gnugrep
@@ -47,7 +48,6 @@ in pkgs.buildEnv {
     util-linux_full
     curl
     findutils
-    xz
   ];
 }'
 if ! nix-build --out-link $TMPDIR/nix-env -E "$exp"; then
@@ -227,7 +227,7 @@ generate_hash() {
   touch -t 200001010000 "$tmp/$name"
   
   cd "$tmp"
-  tar --sort=name --owner=0 --group=0 --numeric-owner --mode=go=rX,u+rw,a-s -cJf "$tmp/$name.tar.xz" "$name"
+  tar --sort=name --owner=0 --group=0 --numeric-owner --mode=go=rX,u+rw,a-s -c "$name" | brotli --quality 6 --output "$tmp/$name.tar.xz" 
 
   HASH="$(nix-prefetch-url "file://$tmp/$name.tar.xz" 2>/dev/null)"
   rm -r "$tmp"

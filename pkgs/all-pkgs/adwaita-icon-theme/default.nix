@@ -18,25 +18,25 @@ stdenv.mkDerivation rec {
     sha256 = "7a0a887349f340dd644032f89d81264b694c4b006bd51af1c2c368d431e7ae35";
   };
 
-  configureFlags = [
-    # nls creates unused directories
-    "--disable-nls"
-    "--enable-w32-cursors"
-    "--disable-l-xl-variants"
-  ];
-
   nativeBuildInputs = [
     gettext
     intltool
   ];
 
   propagatedBuildInputs = [
-    # For convenience, we can specify adwaita-icon-theme only in packages
+    # For convenience, we specify adwaita-icon-theme only in packages
     hicolor_icon_theme
   ];
 
   buildInputs = [
     gdk-pixbuf
+  ];
+
+  configureFlags = [
+    # nls creates unused directories
+    "--disable-nls"
+    "--enable-w32-cursors"
+    "--disable-l-xl-variants"
   ];
 
   doCheck = false;

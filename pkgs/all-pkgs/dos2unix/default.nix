@@ -20,15 +20,14 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
+    description = "Tools to transform text files from dos to unix formats";
     homepage = http://waterlan.home.xs4all.nl/dos2unix.html;
-    description = "Tools to transform text files from dos to unix formats and vicervesa";
     license = licenses.bsd2;
     maintainers = with maintainers; [
       wkennington
     ];
-    platforms = [
-      "x86_64-linux"
-      "i686-linux"
-    ];
+    platforms = with platforms;
+      i686-linux
+      + x86_64-linux;
   };
 }

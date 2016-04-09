@@ -19,6 +19,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     install -D -m 755 -v 'bro' "$out/bin/bro"
+    ln -sv "$out/bin/bro" "$out/bin/brotli"
   '';
 
   meta = with stdenv.lib; {

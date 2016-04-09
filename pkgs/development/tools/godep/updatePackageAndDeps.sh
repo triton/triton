@@ -227,9 +227,9 @@ generate_hash() {
   touch -t 200001010000 "$tmp/$name"
   
   cd "$tmp"
-  tar --sort=name --owner=0 --group=0 --numeric-owner --mode=go=rX,u+rw,a-s -c "$name" | brotli --quality 6 --output "$tmp/$name.tar.xz" 
+  tar --sort=name --owner=0 --group=0 --numeric-owner --mode=go=rX,u+rw,a-s -c "$name" | brotli --quality 6 --output "$tmp/$name.tar.br"
 
-  HASH="$(nix-prefetch-url "file://$tmp/$name.tar.xz" 2>/dev/null)"
+  HASH="$(nix-prefetch-url "file://$tmp/$name.tar.br" 2>/dev/null)"
   rm -r "$tmp"
   rm -r "$TMPDIR/$pkg"
 

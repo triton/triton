@@ -51,8 +51,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://conntrack-tools.netfilter.org/;
     description = "Connection tracking userspace tools";
+    homepage = http://conntrack-tools.netfilter.org/;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
       wkennington

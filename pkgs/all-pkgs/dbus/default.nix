@@ -44,6 +44,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
+    description = "A message bus system interprocess communication (IPC)";
+    homepage = http://dbus.freedesktop.org/;
     license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington

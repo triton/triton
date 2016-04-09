@@ -46,8 +46,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = http://invisible-island.net/dialog/dialog.html;
     description = "Display dialog boxes from shell";
+    homepage = http://invisible-island.net/dialog/dialog.html;
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [
       wkennington

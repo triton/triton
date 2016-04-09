@@ -13,11 +13,11 @@ stdenv.mkDerivation rec {
     sha256 = "eea47f1875b3e8d30dd96cdf2c41e076a9d40032bb1eeeb6edf5e14b4f0b962d";
   };
 
-  # Dont do anything in the build phase since the makefile builds during install
-  buildPhase = ''
-    echo "Build happens during install"
-  '';
+  doConfigure = false;
 
+  doBuild = false;
+
+  # Makefile builds during the install phase
   preInstall = ''
     installFlagsArray+=("PREFIX=$out")
   '';

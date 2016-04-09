@@ -25,6 +25,8 @@ stdenv.mkDerivation rec {
   makefile = "GNUmakefile";
 
   meta = with stdenv.lib; {
+    description = "Libraries and drivers for fast packet processing";
+    homepage = http://dpdk.org/;
     license = licenses.bsd3;
     platforms = with platforms;
       i686-linux

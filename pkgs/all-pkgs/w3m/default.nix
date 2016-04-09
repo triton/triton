@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     inherit name;
     url = "http://anonscm.debian.org/cgit/collab-maint/w3m.git/snapshot/"
         + "692e2c04a0e7e216b670eab6133d68818260d5e8.tar.xz";
-    sha256 = "8586ecdc4af44062c449b10ddb858a6933cd3ebc48cc66702da122a3ea6cb9d6";
+    sha256 = "9b7522eeaab3f9696125fc010c8cbc167122698ad3b223816a425fffcf62ab2c";
   };
 
   nativeBuildInputs = [ gettext ];
@@ -79,6 +79,14 @@ stdenv.mkDerivation rec {
   postInstall = ''
     ln -s $out/libexec/w3m/w3mimgdisplay $out/bin
   '';
+
+  passthru = {
+    srcVerified = fetchzip {
+      inherit name;
+      inherit (src) urls outputHash outputHashAlgo;
+      allowInsecure = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://w3m.sourceforge.net/;

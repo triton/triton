@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     owner = "facebook";
     repo = "rocksdb";
     rev = "v${version}";
-    sha256 = "d5431f775b841f9077d8e2b5c2da7fa6448a0dd28831c6a18871560fc733d63b";
+    sha256 = "9a8e0b16dce07f87c5e0dceac93943505fd8a7890f030fc4aff51f13acccddac";
   };
 
   buildInputs = [

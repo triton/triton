@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     url = "http://www.argyllcms.com/Argyll_V${version}_src.zip";
     purgeTimestamps = true;
-    sha256 = "60494176785f6c2e4e4daefb9452d83859880449040b2a843ed81de3bd0c558e";
+    sha256 = "02f9ef76bf0050233d388acb073e50e26c8e5fd28104caf94ef280e2da273fb3";
     # The argyllcms web server doesn't like curl ...
     curlOpts = "--user-agent 'Mozilla/5.0'";
   };
@@ -97,8 +97,8 @@ stdenv.mkDerivation rec {
 
   passthru = {
     srcVerified = fetchzip {
-      inherit name;
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src) urls outputHash outputHashAlgo curlOpts;
+      purgeTimestamps = true;
       allowInsecure = true;
     };
   };

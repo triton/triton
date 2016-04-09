@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     owner = "accounts-sso";
     repo = "libaccounts-glib";
     rev = "VERSION_${version}";
-    sha256 = "e251dd9d44cb7936a483d7640da44848e12a30470442bfc1d6e9c57317bd5c0a";
+    sha256 = "da830281059247fe30c6112b86e1226a3eea8020ce59d3015822570b16927356";
   };
 
   nativeBuildInputs = [

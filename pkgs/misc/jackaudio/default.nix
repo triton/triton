@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
     owner = "jackaudio";
     repo = "jack2";
     rev = "v${version}";
-    sha256 = "a862c2ca4cfdb356c345186133489b194f9e623879b326d901a30c538cc2377a";
+    sha256 = "cda28de4d80a79173520b95dfd94201b0294bf833cf39c12bba0a3ace94652db";
   };
 
   nativeBuildInputs = [ python makeWrapper ];

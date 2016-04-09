@@ -14,7 +14,7 @@ let
   channels = {
     "3" = {
       version = "3.0.8";
-      sha256 = "c3099b5a0bcdea166d085c19620f2da81e088eb193c25163a116969eec94d848";
+      sha256 = "84e4ffdc989465fad522dd870f7655fd3d6c8ae573ee03ef6144854af5cfdeb6";
     };
     "2" = {
       version = "2.0.12";

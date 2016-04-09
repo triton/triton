@@ -147,6 +147,28 @@ let
     inherit targetSystem hostSystem config stdenv;
   };
 
+  pkgs_32 =
+    let
+      hostSystem' =
+        if [ hostSystem ] == lib.platforms.x86_64-linux && [ targetSystem' ] == lib.platforms.i686-linux then
+          lib.head lib.platforms.i686-linux
+        else if [ hostSystem ] == lib.platforms.i686-linux && [ targetSystem' ] == lib.platforms.i686-linux then
+          lib.head lib.platforms.i686-linux
+        else
+          throw "Couldn't determine the 32 bit host system.";
+
+      targetSystem' =
+        if [ targetSystem ] == lib.platforms.x86_64-linux then
+          lib.head lib.platforms.i686-linux
+        else if [ targetSystem ] == lib.platforms.i686-linux then
+          lib.head lib.platforms.i686-linux
+        else
+          throw "Couldn't determine the 32 bit target system.";
+    in pkgs.forceSystem {
+      hostSystem = hostSystem';
+      targetSystem = targetSystem';
+    };
+
   # For convenience, allow callers to get the path to Nixpkgs.
   path = ../..;
 

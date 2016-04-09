@@ -15,7 +15,7 @@ stdenv.mkDerivation {
     owner = "grondo";
     repo = "edac-utils";
     rev = "556ebce6e1a5a8ad8c07090979a36be7a2276e2e";
-    sha256 = "edb15c5139c47e8be5d6493140424e54daf2818e044ec12402c778faf2b1a9ab";
+    sha256 = "827ff49b8ca27afb191334ebcafda3de1643d67cea32fac22a9e4e47e067bafe";
   };
 
   nativeBuildInputs = [

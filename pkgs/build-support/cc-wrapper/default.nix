@@ -43,7 +43,7 @@ stdenv.mkDerivation {
 
   optFlags =
     if cc.isGNU or false then
-      if [ stdenv.targetSystem ] == x86_64-linux then [
+      if [ stdenv.targetSystem ] == x86_64-linux || [ stdenv.targetSystem ] == i686-linux then [
         "-mmmx"
         "-msse"
         "-msse2"
@@ -54,11 +54,6 @@ stdenv.mkDerivation {
         "-msse4.2"
         "-maes"
         "-mpclmul"
-        "-mfpmath=sse"
-      ] else if [ stdenv.targetSystem ] == i686-linux then [
-        "-msse"
-        "-msse2"
-        "-mfpmath=sse"
       ] else
         throw "Unknown optimization level for ${stdenv.targetSystem}"
     else  # TODO(wkennington): Figure out optimization flags for clang

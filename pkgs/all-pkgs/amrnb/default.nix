@@ -1,4 +1,7 @@
-{ stdenv, fetchurl, unzip }:
+{ stdenv
+, fetchurl
+, unzip
+}:
 
 stdenv.mkDerivation rec{
   name = "amrnb-11.0.0.0";
@@ -22,7 +25,7 @@ stdenv.mkDerivation rec{
   ];
 
   postConfigure = ''
-    cp $srcAmr 26104-b00.zip
+    cp -v $srcAmr 26104-b00.zip
   '';
 
   meta = with stdenv.lib; {

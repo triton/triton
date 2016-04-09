@@ -34,7 +34,7 @@ let
   name' = args.name or (lib.concatStringsSep "." (removeTarZip (lib.splitString "." tarball)));
 in
 lib.overrideDerivation (fetchurl (rec {
-  name = "${name'}.tar.xz";
+  name = "${name'}.tar.br";
 
   downloadToTemp = true;
 
@@ -78,7 +78,8 @@ lib.overrideDerivation (fetchurl (rec {
     tar --sort=name --owner=0 --group=0 --numeric-owner \
       --mode=go=rX,u+rw,a-s \
       ${lib.optionalString purgeTimestamps "--mtime=@946713600"} \
-      -cJf "$out" "${name'}"
+      -c "${name'}" | brotli --quality 6 --output "$out"
+    du -bhs "$out"
     cp "$out" "$TMPDIR/${name}"
   '';
 } // removeAttrs args [ "name" "purgeTimestamps" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))

@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
     owner = "seriyps";
     repo = "NetworkManager-l2tp";
     rev = version;
-    sha256 = "bd2bd18e6fa29549226188b9fb92321399c7cc9001b160c91da761a0c994e07b";
+    sha256 = "be0fd7f43f7278b6f6482b75429f1da9f4be95ad7429837a492432da83b16dde";
   };
 
   nativeBuildInputs = [

@@ -16,17 +16,17 @@ stdenv.mkDerivation rec {
     sha256 = "1p6m9nd08mv525w14py9qzs9zwsa5i3vxf5bgcmcvc408jqmkbsw";
   };
 
+  nativeBuildInputs = [
+    unzip
+  ];
+
   configureFlags = [
     "--without-downloader"
   ];
 
   postConfigure = ''
-    cp $srcAmr 26204-b00.zip
+    cp -v $srcAmr 26204-b00.zip
   '';
-
-  nativeBuildInputs = [
-    unzip
-  ];
 
   meta = with stdenv.lib; {
     description = "AMR Wide-Band Codec";

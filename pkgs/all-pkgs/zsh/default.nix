@@ -46,9 +46,8 @@ stdenv.mkDerivation {
   postPatch = ''
     patchShebangs ./Misc/
     patchShebangs ./Util/
-  '' +
-  /* Test requires filesystem with atime enabled */ ''
-    rm -f ./Test/C02cond.ztst
+  '' + /* Test requires filesystem with atime enabled */ ''
+    rm -fv ./Test/C02cond.ztst
   '';
 
   configureFlags = [

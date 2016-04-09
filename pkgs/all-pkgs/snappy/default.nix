@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "google";
     repo = "snappy";
     rev = version;
-    sha256 = "d7c1e3e88d3d470046f35a73658e63c25345fd9894735efb535cc8a5324a5c78";
+    sha256 = "7deee0390ce4b7b8c35b75e4573831fedcf9b069f08fe190d220b8e0912c1ce6";
   };
 
   nativeBuildInputs = [

@@ -13,13 +13,12 @@
 { # Optionally move the contents of the unpacked tree up one level.
   stripRoot ? true
 , purgeTimestamps ? false
-, url
+, url ? null
+, urls ? []
 , extraPostFetch ? ""
 , ... } @ args:
 
 let
-  tarball = baseNameOf url;
-
   removeTarZip = l:
     if l == [ ] then
       [ ]
@@ -32,7 +31,14 @@ let
       in list ++ removeTarZip rest;
 
   name' = args.name or (lib.concatStringsSep "." (removeTarZip (lib.splitString "." tarball)));
+
+  urls' = (if url != null then [ url ] else [ ]) ++ urls;
+
+  tarball = baseNameOf (lib.head urls');
 in
+
+assert urls' != [ ];
+
 lib.overrideDerivation (fetchurl (rec {
   name = "${name'}.tar.br";
 

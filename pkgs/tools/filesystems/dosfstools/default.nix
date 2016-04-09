@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "dosfstools";
     repo = "dosfstools";
     rev = "v${version}";
-    sha256 = "17bbe2ae19c96c1adbc44e832de5539128ca2f8e11b0c2fbb9cdf92242623681";
+    sha256 = "755b87230dc38100aab458aede515abfe6f094d5a8379ec50b6d29782a9f06ff";
   };
 
   makeFlags = "PREFIX=$(out)";

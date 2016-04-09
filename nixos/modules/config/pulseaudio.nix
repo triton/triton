@@ -12,7 +12,7 @@ let
 
   # Forces 32bit pulseaudio and alsaPlugins to be built/supported for apps
   # using 32bit alsa on 64bit linux.
-  enable32BitAlsaPlugins = pkgs.pkgs_32.alsa-lib != null && pkgs.pkgs_32.pulseaudio_lib != null;
+  enable32BitAlsaPlugins = cfg.support32Bit && pkgs.pkgs_32.alsa-lib != null && pkgs.pkgs_32.pulseaudio_lib != null;
 
   ids = config.ids;
 

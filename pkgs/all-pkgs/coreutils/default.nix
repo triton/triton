@@ -4,7 +4,9 @@
 
 , acl
 , gmp
-, selinuxSupport? false, libselinux, libsepol
+, selinuxSupport? false
+  , libselinux
+  , libsepol
 }:
 
 let
@@ -35,8 +37,8 @@ stdenv.mkDerivation rec {
   doCheck = true;
 
   meta = with stdenv.lib; {
+    description = "Basic file, shell & text manipulation utilities of the GNU operating system";
     homepage = http://www.gnu.org/software/coreutils/;
-    description = "The basic file, shell and text manipulation utilities of the GNU operating system";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [
       wkennington

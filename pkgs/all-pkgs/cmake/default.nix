@@ -68,8 +68,9 @@ stdenv.mkDerivation rec {
   selfApplySetupHook = true;
 
   meta = with stdenv.lib; {
-    homepage = http://www.cmake.org/;
     description = "Cross-Platform Makefile Generator";
+    homepage = http://www.cmake.org/;
+    license = licenses.free; # cmake
     maintainers = with maintainers; [
       wkennington
     ];

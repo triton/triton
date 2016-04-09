@@ -92,6 +92,9 @@ tryDownload() {
   )
   local verifications
   verifications=()
+  if [ -n "$allowInsecure" ]; then
+    verifications+=('insecure')
+  fi
   if [ "$2" = "1" ] && echo "$url" | grep -q '^https' && echo "$curlOpts" | grep -q -v '\--insecure'; then
     verifications+=('https')
     extraOpts+=('--ssl-reqd')

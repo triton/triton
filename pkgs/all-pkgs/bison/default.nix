@@ -19,11 +19,13 @@ stdenv.mkDerivation rec {
 
   # We need this for bison to work correctly when being
   # used during the build process
-  propagatedBuildInputs = [ m4 ];
+  propagatedBuildInputs = [
+    m4
+  ];
 
   meta = with stdenv.lib; {
-    homepage = "http://www.gnu.org/software/bison/";
     description = "Yacc-compatible parser generator";
+    homepage = "http://www.gnu.org/software/bison/";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [
       wkennington

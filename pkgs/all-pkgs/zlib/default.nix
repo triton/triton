@@ -25,6 +25,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Lossless data-compression library";
+    homepage = http://www.zlib.net/;
     license = licenses.zlib;
     maintainers = with maintainers; [
       wkennington

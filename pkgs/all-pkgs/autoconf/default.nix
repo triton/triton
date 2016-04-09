@@ -18,8 +18,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = http://www.gnu.org/software/autoconf/;
     description = "Part of the GNU Build System";
+    homepage = http://www.gnu.org/software/autoconf/;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
       wkennington

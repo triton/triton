@@ -24,6 +24,9 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
+    desciption = "Wrapper helps to add dnscrypt support to any name resolver";
+    homepage = https://github.com/Cofyc/dnscrypt-wrapper;
+    license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington
     ];

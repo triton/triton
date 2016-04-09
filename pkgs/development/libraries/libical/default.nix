@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "libical";
     repo = "libical";
     rev = "v${version}";
-    sha256 = "0681a55473114a7176317d23169235111dd44a21d5adc68d50a13f99476268fe";
+    sha256 = "ad43ba94a80501f97f132debca9a232a745a920810b6f51ad060347b6c74f87f";
   };
 
   nativeBuildInputs = [ perl cmake ];

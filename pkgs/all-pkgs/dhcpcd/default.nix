@@ -37,6 +37,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "A client for the Dynamic Host Configuration Protocol (DHCP)";
     homepage = http://roy.marples.name/projects/dhcpcd;
+    license = licenses.bsd2;
     maintainers = with maintainers; [
       wkennington
     ];

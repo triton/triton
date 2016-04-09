@@ -23,9 +23,12 @@ stdenv.mkDerivation {
 
   sourceRoot = ".";
 
-  nativeBuildInputs = [ unzip ];
+  nativeBuildInputs = [
+    unzip
+  ];
 
   doConfigure = false;
+
   doBuild = false;
 
   installPhase = ''
@@ -34,12 +37,12 @@ stdenv.mkDerivation {
   '';
 
   meta = with stdenv.lib; {
-    homepage    = http://www.consul.io/;
     description = "A tool for service discovery, monitoring and configuration";
+    homepage    = http://www.consul.io/;
+    license = licenses.mpl20;
     maintainers = with maintainers; [
       wkennington
     ];
-    license = licenses.mpl20;
     platforms = with platforms;
       x86_64-linux;
   };

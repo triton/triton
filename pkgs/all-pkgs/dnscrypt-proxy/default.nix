@@ -40,6 +40,9 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
+    description = "A tool for securing communications between a client & a DNS resolver";
+    homepage = http://dnscrypt.org/;
+    license = licenses.isc;
     maintainers = with maintainers; [
       wkennington
     ];

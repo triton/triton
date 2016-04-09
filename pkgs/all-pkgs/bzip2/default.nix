@@ -91,8 +91,9 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = "http://www.bzip.org";
     description = "high-quality data compression program";
+    homepage = "http://www.bzip.org";
+    license = licenses.free; # bzip2
     maintainers = with maintainers; [
       wkennington
     ];

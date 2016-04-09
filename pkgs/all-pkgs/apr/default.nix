@@ -11,8 +11,9 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = http://apr.apache.org/;
     description = "The Apache Portable Runtime library";
+    homepage = https://apr.apache.org/;
+    license = licenses.asl20;
     maintainers = with maintainers; [
       wkennington
     ];

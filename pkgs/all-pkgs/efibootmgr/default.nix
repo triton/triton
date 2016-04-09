@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     owner = "rhinstaller";
     repo = "efibootmgr";
     rev = name;
-    sha256 = "94e58b70a4474d20947cc801b435cf539805d82484de2c65b14c530571ceb3bf";
+    sha256 = "bf941f9c29315d7606c5e64c07d0f53ef9e5d5e63083e85c04035e38ffe92249";
   };
 
   nativeBuildInputs = [

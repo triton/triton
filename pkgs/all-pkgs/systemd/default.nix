@@ -71,7 +71,7 @@ stdenv.mkDerivation rec {
     owner = "NixOS";
     repo = "systemd";
     rev = "4936f6e6c05162516a685ebd227b55816cf2b670";
-    sha256 = "35135ce0b551719627a9b298cdf9440fee3b56bebc8bb25ca1643d286b1cd76c";
+    sha256 = "81abb3b1e831e94b10a5688c822d40d3967ac6544d7f7e4283b0db819a7d49be";
   };
 
   nativeBuildInputs = [

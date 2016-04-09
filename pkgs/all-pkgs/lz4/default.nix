@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     owner = "Cyan4973";
     repo = "lz4";
     rev = "r${version}";
-    sha256 = "8a5b040fbe3d0684eb30a5736060c2865869117e867279e7d3785691fe281752";
+    sha256 = "0c7d1ed694fcc3fc5caf2f21d83c61936e4720df1d11ff16dfe8bf6f390a07fb";
   };
 
   preBuild = ''

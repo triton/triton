@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+
 , pythonPackages
 }:
 
@@ -16,6 +17,9 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
+    description = "A plain text human readable/writable document format";
+    homepage = http://asciidoc.org/;
+    license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington
     ];

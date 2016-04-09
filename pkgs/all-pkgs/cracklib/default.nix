@@ -22,8 +22,9 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/cracklib/cracklib;
     description = "A library for checking the strength of passwords";
+    homepage = https://github.com/cracklib/cracklib;
+    license = licenses.lgpl21;
     maintainers = with maintainers; [
       wkennington
     ];

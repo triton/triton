@@ -18,8 +18,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
+    description = "Commands for showing the differences (diff) between files";
     homepage = http://www.gnu.org/software/diffutils/diffutils.html;
-    description = "Commands for showing the differences between files (diff, cmp, etc.)";
     license = licenses.gpl3;
     maintainers = with maintainers; [
       wkennington

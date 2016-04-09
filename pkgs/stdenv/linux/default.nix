@@ -78,7 +78,7 @@ let
           openssl = bootstrapTools;
         };
 
-        fetchzip = pkgs.fetchzip {
+        fetchzip = pkgs.fetchzip.override {
           lib = stage0Pkgs.stdenv.lib;
           unzip = bootstrapTools;
         };
@@ -228,7 +228,7 @@ let
         inherit (pkgs) stdenv gcc xz zlib attr acl gmp coreutils binutils
           gpm ncurses readline bash nghttp2_lib cryptodevHeaders gettext bison flex
           openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
-          gawk gnutar gzip bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
+          gawk gnutar gzip brotli bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
 
         gcc5 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -307,7 +307,7 @@ let
       inherit (stage3Pkgs) gcc5 gcc xz zlib attr acl gmp coreutils binutils
         gpm ncurses readline bash nghttp2_lib cryptodevHeaders gettext bison flex
         openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
-        gawk gnutar gzip bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
+        gawk gnutar gzip brotli bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
     };
   });
 in {

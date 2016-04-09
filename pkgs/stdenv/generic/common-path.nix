@@ -2,6 +2,7 @@
 {
   inherit (pkgs)
     bash
+    brotli
     bzip2
     coreutils
     curl

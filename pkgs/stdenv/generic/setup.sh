@@ -551,6 +551,9 @@ _defaultUnpack() {
     cp -pr --reflink=auto "$fn" $strippedName
   else
     case "$fn" in
+      *.tar.brotli | *.tar.bro | *.tar.br)
+        brotli --decompress --input "$fn" | tar xf -
+        ;;
       *.tar.xz | *.tar.lzma)
         # Don't rely on tar knowing about .xz.
         xz -d < "$fn" | tar xf -

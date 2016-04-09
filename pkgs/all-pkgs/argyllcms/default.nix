@@ -1,12 +1,13 @@
 { stdenv
 , buildEnv
+, fetchTritonPatch
 , fetchzip
 , jam
 , unzip
 
-, libtiff
 , libjpeg
 , libpng
+, libtiff
 , openssl
 , writeText
 , xorg
@@ -17,24 +18,24 @@ let
   inputEnv = buildEnv {
     name = "argyllcms-inputs";
     paths = [
-      libtiff
       libjpeg
       libpng
+      libtiff
       openssl
       xorg.libX11
-      xorg.libXxf86vm
-      xorg.libXrandr
-      xorg.libXinerama
-      xorg.libXext
-      xorg.xf86vidmodeproto
-      xorg.xextproto
-      xorg.randrproto
-      xorg.libXrender
-      xorg.scrnsaverproto
-      xorg.renderproto
-      xorg.libXScrnSaver
-      xorg.libXdmcp
       xorg.libXau
+      xorg.libXdmcp
+      xorg.libXext
+      xorg.libXinerama
+      xorg.libXrandr
+      xorg.libXrender
+      xorg.libXScrnSaver
+      xorg.libXxf86vm
+      xorg.randrproto
+      xorg.renderproto
+      xorg.scrnsaverproto
+      xorg.xextproto
+      xorg.xf86vidmodeproto
       xorg.xproto
       zlib
     ];
@@ -64,13 +65,17 @@ stdenv.mkDerivation rec {
   NIX_LDFLAGS = "-L${inputEnv}";
 
   patches = [
-    ./gcc5.patch
+    (fetchTritonPatch {
+      rev = "b664680703ddf56e54f54264001e13e39e6127f7";
+      file = "argyllcms/argyllcms-1.8.3-gcc5.patch";
+      sha256 = "de9b8a90e249070d457291c29ae3c732f89c51bc6f6296cb6aa7e800ba31a0e5";
+    })
   ];
 
   preConfigure = ''
     # Remove bundled packages
     find . -name configure | grep -v xml | xargs -n 1 dirname | xargs rm -rf
-    
+
     # Fix all of the usr references
     sed -i 's,/usr,${inputEnv},g' Jamtop
   '';
@@ -81,18 +86,18 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     jam DESTDIR="/" PREFIX="$out" -j $NIX_BUILD_CORES -q -fJambase install
-    
-    rm $out/bin/License.txt
-    mkdir -p $out/etc/udev/rules.d
+
+    rm -v $out/bin/License.txt
+    mkdir -pv $out/etc/udev/rules.d
     sed -i '/udev-acl/d' usb/55-Argyll.rules
     cp -v usb/55-Argyll.rules $out/etc/udev/rules.d/
-    mkdir -p $out/share/
-    mv $out/ref $out/share/argyllcms
+    mkdir -pv $out/share/
+    mv -v $out/ref $out/share/argyllcms
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://www.argyllcms.com;
     description = "Color management system (compatible with ICC)";
+    homepage = http://www.argyllcms.com;
     license = licenses.gpl3;
     maintainers = with maintainers; [
       wkennington

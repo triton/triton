@@ -1,14 +1,52 @@
-{stdenv, fetchurl, pkgconfig, gtk2, libxml2, python, gettext, atk, glib}:
+{ stdenv
+, fetchurl
+, gettext
 
-stdenv.mkDerivation {
-  name = "libglade-2.6.4";
+, atk
+, glib
+, gtk2
+, libxml2
+, python2
+}:
+
+stdenv.mkDerivation rec {
+  name = "libglade-${version}";
+  versionMajor = "2.6";
+  versionMinor = "4";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = mirror://gnome/sources/libglade/2.6/libglade-2.6.4.tar.bz2;
-    sha256 = "1v2x2s04jry4gpabws92i0wq2ghd47yr5n9nhgnkd7c38xv1wdk4";
+    url = "mirror://gnome/sources/libglade/${versionMajor}/${name}.tar.bz2";
+    sha256 = "64361e7647839d36ed8336d992fd210d3e8139882269bed47dc4674980165dec";
   };
 
-  buildInputs = [ pkgconfig gtk2 python gettext atk glib ];
+  nativeBuildInputs = [
+    gettext
+  ];
 
-  propagatedBuildInputs = [ libxml2 ];
+  buildInputs = [
+    atk
+    glib
+    gtk2
+    libxml2
+    python2
+  ];
+
+  configureFlags = [
+    "--disable-gtktest"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+  ];
+
+  meta = with stdenv.lib; {
+    description = "Library to construct graphical interfaces at runtime";
+    homepage = https://library.gnome.org/devel/libglade/stable/;
+    license = licenses.lgpl2;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = with platforms;
+      x86_64-linux;
+  };
 }

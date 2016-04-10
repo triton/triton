@@ -12,13 +12,13 @@
 
 stdenv.mkDerivation rec {
   name = "ice-${version}";
-  version = "3.6.1";
+  version = "3.6.2";
 
   src = fetchFromGitHub {
     owner = "zeroc-ice";
     repo = "ice";
     rev = "v${version}";
-    sha256 = "2996782d46aa98a0fa699c3c7b75451de8d9d56dec6f8d94450e9246c690cef4";
+    sha256 = "778929f0c0a01c1be88d061ea428b43ce2fe8dd50b58815454c98ddbe0df39b2";
   };
 
   buildInputs = [

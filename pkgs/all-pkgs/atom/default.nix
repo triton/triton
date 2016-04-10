@@ -76,11 +76,6 @@ stdenv.mkDerivation rec {
     name = "${name}.deb";
   };
 
-  phases = [
-    "installPhase"
-    "fixupPhase"
-  ];
-
   nativeBuildInputs = [
     makeWrapper
   ];
@@ -89,6 +84,10 @@ stdenv.mkDerivation rec {
     atomEnv
     gvfs
   ];
+
+  doConfigure = false;
+
+  doBuild = false;
 
   installPhase = ''
     mkdir -pv $out

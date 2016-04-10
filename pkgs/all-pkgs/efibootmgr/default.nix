@@ -36,14 +36,11 @@ stdenv.mkDerivation rec {
     "-I${efivar}/include/efivar"
   ];
 
-  NIX_LDFLAGS = [
-    "-lefiboot"
-    "-lefivar"
-  ];
-
-  installFlags = [
-    "BINDIR=$(out)/sbin"
-  ];
+  preInstall = ''
+    installFlagsArray+=(
+      "BINDIR=$out/sbin"
+    )
+  '';
 
   meta = with stdenv.lib; {
     description = "Application to modify the EFI Boot Manager";

@@ -5,7 +5,7 @@ rec {
   apache = [
     https://www.apache.org/dist
     http://apache.mirrors.pair.com
-    http://archive.apache.org/dist/ # fallback for old releases
+    https://archive.apache.org/dist/ # fallback for old releases
   ];
 
   # Bioconductor mirrors

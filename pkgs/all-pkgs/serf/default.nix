@@ -13,7 +13,9 @@ stdenv.mkDerivation rec {
   name = "serf-1.3.8";
 
   src = fetchurl {
-    url = "http://archive.apache.org/dist/serf/${name}.tar.bz2";
+    url = "mirror://apache/serf/${name}.tar.bz2";
+    multihash = "QmW49Y4ZNoRj8meZo89mZMrdtvMpQKkgZf9Lv2vxzSK4vW";
+    sha1Confirm = "1d45425ca324336ce2f4ae7d7b4cfbc5567c5446";
     sha256 = "14155g48gamcv5s0828bzij6vr14nqmbndwq8j8f9g6vcph0nl70";
   };
 

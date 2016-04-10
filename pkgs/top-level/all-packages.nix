@@ -1729,6 +1729,8 @@ snappy = callPackage ../all-pkgs/snappy { };
 
 shntool = callPackage ../all-pkgs/shntool { };
 
+sl = callPackage ../all-pkgs/sl { };
+
 socket_wrapper = callPackage ../all-pkgs/socket_wrapper { };
 
 spectrwm = callPackage ../all-pkgs/spectrwm { };
@@ -4169,8 +4171,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  storebrowse = callPackage ../tools/system/storebrowse { };
 #
 #  fusesmb = callPackage ../tools/filesystems/fusesmb { samba = samba3; };
-#
-  sl = callPackage ../tools/misc/sl { };
 #
 #  socat = callPackage ../tools/networking/socat { };
 #

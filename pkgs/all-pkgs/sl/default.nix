@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+
 , ncurses
 }:
 
@@ -11,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "mtoyoda";
     repo = "sl";
     rev = version;
-    sha256 = "8df0edee1b23cbfde9b1c7f26647f81983e10745b8a671b6b2f0eb2cc438a393";
+    sha256 = "d52d3b025e9aa5d728dc459f8d945cb979f6f9b82a43254693f6b413ec94fc3e";
   };
 
   buildInputs = [

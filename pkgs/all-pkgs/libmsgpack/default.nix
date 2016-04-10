@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "msgpack";
     repo = "msgpack-c";
     rev = "cpp-${version}";
-    sha256 = "16b50d9e48a9ba32877255f229ae5a0fc5bd0f73100c1d15c030157653ff8bc0";
+    sha256 = "b6f0b2af84e99a950409cfce29deff39385308d3da0b4f3cb9f4d9700da92a4b";
   };
 
   nativeBuildInputs = [

@@ -331,7 +331,7 @@ let
     rev = "v1.1.17";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "1kahy7mcbcnrgbwf3xclvilvwm718g16abw8h3ls455rv2ciq7x9";
+    sha256 = "6cd3bab60dff06067d86c5e86b61bef21f61cbba4bca947c17f38e5b6c7af831";
     buildInputs = [ testify gucumber tools ];
     propagatedBuildInputs = [ ini go-jmespath ];
 

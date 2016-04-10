@@ -179,7 +179,7 @@ let
     src = fetchgit {
       url = "https://github.com/mumble-voip/mumble";
       rev = "a59e166c9b4bfe1d4edded7ec8ce3a6870cd2843";
-      sha256 = "15m997qggsxmlyn6l72lq67ybx5lb9al28rdgnwpfp88vpxs3bs3";
+      sha256 = "1md4sx2yfy8hfww7wqxwxx5xi4w41as8wjmb9az9dd3s2fsnyg6a";
     };
 
     # TODO: Remove fetchgit as it requires git

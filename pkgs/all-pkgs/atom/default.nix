@@ -85,6 +85,8 @@ stdenv.mkDerivation rec {
     gvfs
   ];
 
+  unpackPhase = "true";
+
   doConfigure = false;
 
   doBuild = false;

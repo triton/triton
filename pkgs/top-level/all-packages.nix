@@ -1022,6 +1022,10 @@ harfbuzz = callPackage ../all-pkgs/harfbuzz { };
 
 help2man = callPackage ../all-pkgs/help2man { };
 
+hicolor-icon-theme = callPackage ../all-pkgs/hicolor-icon-theme { };
+# Deprecated
+hicolor_icon_theme = callPackageAlias "hicolor-icon-theme" { };
+
 highlight = callPackage ../all-pkgs/highlight { };
 
 htop = callPackage ../all-pkgs/htop { };
@@ -9413,8 +9417,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  gyre-fonts = callPackage ../data/fonts/gyre {};
 #
 #  hack-font = callPackage ../data/fonts/hack { };
-#
-hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #
 #  hanazono = callPackage ../data/fonts/hanazono { };
 #

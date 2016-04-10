@@ -1326,10 +1326,11 @@ let
   };
 
   gopsutil = buildFromGitHub {
-    rev = "v2.0.0";
+    rev = "37d89088411de59a4ef9fc340afa0e89dfcb4ea9";
     owner  = "shirou";
     repo   = "gopsutil";
-    sha256 = "0yys9agzbvlr8qck5x9v7am21kqqxs7jjz5lz2r0psf5v0g17f79";
+    sha256 = "3e541ffaf2f7b988bb6366b0b5ca7aa001a4204459ecfb1ff63e81cf19c902fd";
+    date = "2016-03-31";
   };
 
   goreq = buildFromGitHub {

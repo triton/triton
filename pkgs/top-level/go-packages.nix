@@ -546,7 +546,7 @@ let
     rev = "v0.6.4";
     owner = "hashicorp";
     repo = "consul";
-    sha256 = "0wqf8cbbwkyfw2hb2ikm552dpfd7s7dikkn9zdnigl6p72l8ybfs";
+    sha256 = "eb9ec84635f900856f65c05482fda382ed199aa30fa03a18777493513c187f66";
 
     buildInputs = [
       datadog-go circbuf armon_go-metrics go-radix speakeasy bolt
@@ -592,7 +592,7 @@ let
     rev = "v0.14.0";
     owner = "hashicorp";
     repo = "consul-template";
-    sha256 = "1gd7b5xnnmnncp6pgbhwa0a29pc1n8jj8p9phipiswj088casqiw";
+    sha256 = "96be40e0ff990df7850e3ec746c393d831783065deb5a8182607ae90ecf426ab";
 
     buildInputs = [
       consul-api
@@ -690,7 +690,7 @@ let
     rev = "v0.12.2";
     owner = "syncthing";
     repo = "discosrv";
-    sha256 = "0072wd6xw0a7mzm42iz1y8azz6h3xkrv704n675cpmqx4pd6cz8g";
+    sha256 = "755fe9bda5f004a0798c81126c7148ea9d185d9a0e8cba8472b142bda326e640";
     buildInputs = [ ql groupcache pq ratelimit syncthing-lib ];
   };
 
@@ -725,7 +725,7 @@ let
     rev = "v1.10.3";
     owner = "docker";
     repo = "docker";
-    sha256 = "04419gkvaxl7w016dc2qhp03zrjaqcrd5i48xm8dzpp5406q9mfx";
+    sha256 = "84d02cdf630d8d6627a398699f8fbc9d9751bf26a5e37cbb307c246f403e11f3";
     subPackages = [ "pkg/mount" "pkg/system" "pkg/symlink" "pkg/term" ];
     propagatedBuildInputs = [ go-units ];
   };
@@ -833,7 +833,7 @@ let
     rev = "v2.3.1";
     owner  = "coreos";
     repo   = "etcd";
-    sha256 = "1zfwx2mb2kmavzv286jaiwfmksh0hha4dnjmh2g3y86iipapbhry";
+    sha256 = "b32caa830f77eb7346c537ecc285524d0f3ee33ee174bd879ae7135930b1cc6a";
   };
 
   etcd-client = buildFromGitHub {
@@ -983,7 +983,7 @@ let
     rev = "105b4823ee2cbebc2b5c562d9ac50694ecc2c689";
     owner = "onsi";
     repo = "ginkgo";
-    sha256 = "1gxih7rpp4j6pbrqrmwyibfga2bmhblklfajragvf96pqd2swgsp";
+    sha256 = "f3a2d2dea7501738b51c2164575a62b7672f9f6cb4fecc8ac110d0f22890db4e";
     date = "2016-04-04";
   };
 
@@ -1548,7 +1548,7 @@ let
     rev = "bf97c77db7c945cbcdbf09d56c6f87a66f54537b";
     owner = "fsouza";
     repo = "go-dockerclient";
-    sha256 = "1zdjpzxm3qzbjjk7skmk7q88k2wnwj58d5mg72ps3h2857k946a8";
+    sha256 = "0cc5498b1d721e86c8f8021a7d1b834a3473302e5e43c60d874809793d6c962a";
   };
 
   go-etcd = buildFromGitHub {
@@ -1581,7 +1581,7 @@ let
     date = "2016-03-30";
     owner = "hashicorp";
     repo = "go-getter";
-    sha256 = "0a4kwjg5vd3fzx7fb7yip2m5mj50qihxs68nlq21gcns561jp1l4";
+    sha256 = "7411e4d1cd91ed8acf8a4131d05791655b13276cbf98af8bbe3d78e984aa1906";
     buildInputs = [ aws-sdk-go ];
   };
 
@@ -1819,7 +1819,7 @@ let
     rev = "4a8bd8f8baf45afcf2bb385bbc17e5208d5d4c71";
     owner  = "jbenet";
     repo   = "go-multiaddr-net";
-    sha256 = "1yqcgpv7lmiqcc7xxy9lb6cambvq697rdpylh2bzsr4jh9ccyzmd";
+    sha256 = "0161f35145a7adc5b4d103e99b74c8f78259735dae7b798e96142eccf12e550f";
     date = "2015-10-11";
   };
 
@@ -2675,7 +2675,7 @@ let
     rev = "r3.3.4";
     owner  = "mongodb";
     repo   = "mongo-tools";
-    sha256 = "0wxhxkvzy4fz7pzr83zw02q4ivmv5i3fqzc9a5s4pcvkqmrz8jpg";
+    sha256 = "1fc76efb1bee6de51a5c7cb42ff95c09244e3f77f191e1540c9cfe6275608a9c";
     buildInputs = [ crypto mgo go-flags gopass openssl tomb ];
     excludedPackages = "vendor";
 
@@ -2807,7 +2807,7 @@ let
     rev = "v0.3.1";
     owner = "hashicorp";
     repo = "nomad";
-    sha256 = "0pnihvh855pc45rw4f30dsjm6j21g5wi837gjbga9wj0yzhrr0cx";
+    sha256 = "3180fc7aa9381d585197c30b787057389aa5d7e6144cab6ad8ba3352283f5bd4";
 
     buildInputs = [
       datadog-go wmi armon_go-metrics go-radix aws-sdk-go perks speakeasy
@@ -3428,7 +3428,7 @@ let
     rev = "v0.12.18";
     owner  = "syncthing";
     repo   = "relaysrv";
-    sha256 = "046vkb2nhxvcf94nqs080fsag8753ax9ibwcxnfmqn485layzhks";
+    sha256 = "60cfbceef393ef1db126ab9d3653cad315779a745d3fc91072f4d1d356e9ef78";
     buildInputs = [ syncthing-lib du ratelimit net ];
     excludedPackages = "testutil";
   };
@@ -3477,7 +3477,7 @@ let
     rev = "v0.0.9";
     owner  = "opencontainers";
     repo   = "runc";
-    sha256 = "1292xv5wdvrlnz9vx6pccfrhr3glyy3lilyyssv5v6iq9jnkfkp2";
+    sha256 = "7d27ab9821c653bf50bdbaddc25b22540b8697a4d5843381b6bd700312a5424c";
     propagatedBuildInputs = [
       go-units logrus docker go-systemd protobuf gocapability netlink
       codegangsta-cli specs
@@ -3691,7 +3691,7 @@ let
     rev = "v0.12.21";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "13kknvw2p3c537ifp8d7fpga9g5p8yymszxiv7nkjbjcfqpap6vx";
+    sha256 = "67943bd21102208820b371f62eb16e7a93bcb1429635c95e7ec3b8aad9002d7f";
     buildFlags = [ "-tags noupgrade,release" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext
@@ -3864,7 +3864,7 @@ let
     rev = "v0.5.2";
     owner = "hashicorp";
     repo = "vault";
-    sha256 = "0nldbnam03jx28wadp1yl15vcmz3sp3lsfwkjqhjpr8c9bw1awfy";
+    sha256 = "9279123ca97ec164c0169be1b1c48ebb23ad76ec04607f5f85fe5c1c50455ef8";
 
     buildInputs = [
       armon_go-metrics go-radix govalidator aws-sdk-go speakeasy etcd-client

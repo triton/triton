@@ -23,7 +23,7 @@
 , enableSELinux ? false, libselinux
 , enableNaCl ? false
 , enableHotwording ? false
-, gnomeSupport ? false, gnome
+, gnomeSupport ? false, gconf
 , gnomeKeyringSupport ? false, libgnome-keyring
 , proprietaryCodecs ? true
 , cupsSupport ? true
@@ -119,7 +119,7 @@ let
       pciutils protobuf speechd xorg.libXdamage
       pythonPackages.gyp pythonPackages.ply pythonPackages.jinja2
     ] ++ optional gnomeKeyringSupport libgnome-keyring
-      ++ optionals gnomeSupport [ gnome.GConf libgcrypt ]
+      ++ optionals gnomeSupport [ gconf libgcrypt ]
       ++ optional enableSELinux libselinux
       ++ optionals cupsSupport [ libgcrypt cups ]
       ++ optional pulseSupport pulseaudio_lib

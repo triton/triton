@@ -5,7 +5,6 @@
 
 , dbus
 , dbus-glib
-, gnome2
 , glib
 , gobject-introspection
 , gtk3

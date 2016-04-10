@@ -716,6 +716,8 @@ dnsmasq = callPackage ../all-pkgs/dnsmasq { };
 
 dos2unix = callPackage ../all-pkgs/dos2unix { };
 
+dotconf = callPackage ../all-pkgs/dotconf { };
+
 dropbox = callPackage ../all-pkgs/dropbox { };
 
 duplicity = callPackage ../all-pkgs/duplicity { };
@@ -6295,8 +6297,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  directfb = callPackage ../development/libraries/directfb { };
 #
 #  dlib = callPackage ../development/libraries/dlib { };
-#
-  dotconf = callPackage ../development/libraries/dotconf { };
 #
 #  dssi = callPackage ../development/libraries/dssi {};
 #

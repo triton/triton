@@ -1,22 +1,31 @@
-{ fetchFromGitHub, stdenv, autoreconfHook }:
+{ stdenv
+, autoreconfHook
+, fetchFromGitHub
+}:
 
 stdenv.mkDerivation rec {
-  name = "dotconf-" + version;
+  name = "dotconf-${version}";
   version = "1.3";
 
   src = fetchFromGitHub {
     owner = "williamh";
     repo = "dotconf";
     rev = "v${version}";
-    sha256 = "66f53482d14c1c5402020cdff503bed9d06ac81eed6ec8be3cba64e43478ea27";
+    sha256 = "dc3cba9439c9841393fe708dc1d7d927bf52aca5ea02fd87ef53d2b5be589001";
   };
 
-  buildInputs = [ autoreconfHook ];
+  buildInputs = [
+    autoreconfHook
+  ];
 
   meta = with stdenv.lib; {
     description = "A configuration parser library";
-    maintainers = with maintainers; [ pSub ];
     homepage = http://www.azzit.de/dotconf/;
     license = licenses.lgpl21Plus;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

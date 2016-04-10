@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   setupHook = ./setup-hook.sh;
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "Default fallback theme used by the icon theme specification";
     homepage = http://icon-theme.freedesktop.org/releases/;
     license = licenses.gpl2;

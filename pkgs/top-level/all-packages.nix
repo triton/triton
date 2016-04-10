@@ -726,6 +726,8 @@ edac-utils = callPackage ../all-pkgs/edac-utils { };
 
 efibootmgr = callPackage ../all-pkgs/efibootmgr { };
 
+efivar = callPackage ../all-pkgs/efivar { };
+
 elfutils = callPackage ../all-pkgs/elfutils { };
 
 enca = callPackage ../all-pkgs/enca { };
@@ -2688,8 +2690,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  emscripten = callPackage ../development/compilers/emscripten { };
 #
 #  emscriptenfastcomp = callPackage ../development/compilers/emscripten-fastcomp { };
-#
-  efivar = callPackage ../tools/system/efivar { };
 #
 #  evemu = callPackage ../tools/system/evemu { };
 #

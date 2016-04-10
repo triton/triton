@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     owner = "rakshasa";
     repo = "libtorrent";
     rev = "ef46ca30f778057095c9ef932527d5e7a8785fad";
-    sha256 = "ed78b389cb74fdbd330e3b4081b7817362a03f12c593693f6e8ff34c1f0b002c";
+    sha256 = "eed36f9aa15be12d3b3593648e3e7c126d5656a8201432ec9d71eeda9ea56118";
   };
 
   nativeBuildInputs = [

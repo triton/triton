@@ -16,7 +16,6 @@
 , gexiv2
 , ghostscript
 , glib
-, gnome2
 , gtk2
 , harfbuzz
 , jasper
@@ -65,7 +64,6 @@ stdenv.mkDerivation rec {
     gexiv2
     ghostscript
     glib
-    gnome2.libart_lgpl
     gtk2
     harfbuzz
     jasper

@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   meta = {
     description = "Default fallback theme used by the icon theme specification";
     homepage = http://icon-theme.freedesktop.org/releases/;
-    license = licenses.;
+    license = licenses.gpl2;
     maintainers = with maintainers; [
       codyopel
     ];

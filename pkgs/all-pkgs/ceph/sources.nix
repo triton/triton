@@ -2,24 +2,24 @@
   "0.94" = rec {
     version = "0.94.6";
     rev = "refs/tags/v${version}";
-    sha256 = "17ic5jq4himcj3kg2cw6v50lv32iqsknkwkn3xl0ji98y73q1pf9";
+    sha256 = "096fnyq1cygpdk4pfs9l2ziqk2wnv2l6j0axz551mp0z0b8nmy8f";
   };
 
   "9" = rec {
     version = "9.2.1";
     rev = "refs/tags/v${version}";
-    sha256 = "1jdjgqi6lhfddgv44m7nnh37r2jg0slv5nxqjkk3my2p74dd2ddx";
+    sha256 = "1gpz82b13lvhxk30gi10g190kf1wj0fqjg91dcy92q7ag9807hd3";
   };
 
   "dev" = rec {
-    version = "10.0.5";
+    version = "10.1.1";
     rev = "refs/tags/v${version}";
-    sha256 = "1r4jvqs811d2h5gjczsn7k773vjc8v1qyra97d0ghfj2r8i43hnj";
+    sha256 = "031nwprv2s0h46cwccnx30z9d8p4qi0hm5997xkzmq5iz87bfnf7";
   };
 
   "git" = rec {
-    version = "2016-03-22";
-    rev = "3156ebf9ed7c94116fd36fa4d807abe50cc87297";
-    sha256 = "05kz2k46gakjalxkf7vcvzsrvnyvr82mldw6j7x1l2m3dmf37ca3";
+    version = "2016-04-10";
+    rev = "b4746520706495314c24992b663ea4955607fdbe";
+    sha256 = "01hvky0pzdc4n93742044pqbzlfm2r2a11k2g0l35h0bkk5a834j";
   };
 }

@@ -121,6 +121,8 @@ stdenv.mkDerivation {
     pythonPackages.setuptools
     pythonPackages.argparse
     pythonPackages.sphinx # Used for docs
+  ] ++ optionals (versionAtLeast version "10.0.2") [
+    pythonPackages.cython
   ];
 
   buildInputs = [
@@ -158,7 +160,7 @@ stdenv.mkDerivation {
     rocksdb
   ] ++ optionals (versionOlder version "9.1.0") [
     libs3
-  ] ++ optionals (versionAtLeast version "11.0.0") [
+  ] ++ optionals (versionAtLeast version "10.1.0") [
     openldap
   ];
 
@@ -243,11 +245,12 @@ stdenv.mkDerivation {
     "--with-rgw-user=rgw"
     "--with-rgw-group=rgw"
   ] ++ optionals (versionAtLeast version "10.0.2") [
-    "--without-cython"  # TODO: Implement
+    "--with-cython"
   ] ++ optionals (versionAtLeast version "10.0.4") [
     "--with-eventfd"
     "--without-spdk" # TODO: Implement
-  ] ++ optionals (versionAtLeast version "11.0.0") [
+  ] ++ optionals (versionAtLeast version "10.1.0") [
+    "--enable-subman"
     "--with-openldap"
   ];
 

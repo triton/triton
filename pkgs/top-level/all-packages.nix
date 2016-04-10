@@ -818,6 +818,8 @@ gettext = callPackage ../all-pkgs/gettext { };
 
 gexiv2 = callPackage ../all-pkgs/gexiv2 { };
 
+gimp = callPackage ../all-pkgs/gimp { };
+
 git = callPackage ../all-pkgs/git { };
 
 gjs = callPackage ../all-pkgs/gjs { };
@@ -10135,8 +10137,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  gcolor2 = callPackage ../applications/graphics/gcolor2 { };
 #
 #  get_iplayer = callPackage ../applications/misc/get_iplayer {};
-#
-  gimp = callPackage ../applications/graphics/gimp { };
 
 #  giv = callPackage ../applications/graphics/giv { };
 #

@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libxkbcommon-0.6.0";
+  name = "libxkbcommon-0.6.1";
 
   src = fetchurl {
     url = "http://xkbcommon.org/download/${name}.tar.xz";
-    sha1Confirm = "b9d9e0a02c9bc439a387dba27ff8115c1f1afb56";
-    sha256 = "69235ec3a13194dea9555d7994bc4548b3ee20070e05a135af5372a958149ef0";
+    sha1Confirm = "85175bd3baa2cb6207beb5ac980568b70e1a6a3d";
+    sha256 = "5b0887b080b42169096a61106661f8d35bae783f8b6c58f97ebcd3af83ea8760";
   };
 
   nativeBuildInputs = [

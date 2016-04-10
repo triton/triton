@@ -512,9 +512,7 @@ apr = callPackage ../all-pkgs/apr { };
 
 apr-util = callPackage ../all-pkgs/apr-util { };
 
-ardour =  callPackage ../all-pkgs/ardour {
-  inherit (gnome) libgnomecanvas libgnomecanvasmm;
-};
+ardour =  callPackage ../all-pkgs/ardour { };
 
 aria2 = callPackage ../all-pkgs/aria2 { };
 aria = aria2;
@@ -1184,6 +1182,8 @@ libgee = callPackage ../all-pkgs/libgee { };
 libgfbgraph = callPackage ../all-pkgs/libgfbgraph { };
 
 libgksu = callPackage ../all-pkgs/libgksu { };
+
+libglade = callPackage ../all-pkgs/libglade { };
 
 libglvnd = callPackage ../all-pkgs/libglvnd { };
 
@@ -10219,7 +10219,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  };
 #
   gecko_mediaplayer = callPackage ../applications/networking/browsers/mozilla-plugins/gecko-mediaplayer {
-    inherit (gnome) GConf;
     browser = firefox-unwrapped;
   };
 #
@@ -11228,7 +11227,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  spek = callPackage ../applications/audio/spek { };
 #
   spotify = callPackage ../applications/audio/spotify {
-    inherit (gnome) GConf;
     libgcrypt = libgcrypt_1_5;
   };
 #
@@ -11819,16 +11817,6 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
 #  ### DESKTOP ENVIRONMENTS
 #
 #  clearlooks-phenix = callPackage ../misc/themes/gtk3/clearlooks-phenix { };
-#
-  gnome2 = callPackage ../desktops/gnome-2 {
-    callPackage = pkgs.newScope pkgs.gnome2;
-    self = pkgs.gnome2;
-  }  // pkgs.gtkLibs // {
-    # Backwards compatibility;
-    inherit (pkgs) libwnck gtk_doc gnome_doc_utils;
-  };
-
-  gnome = recurseIntoAttrs pkgs.gnome2;
 #
 #  hsetroot = callPackage ../tools/X11/hsetroot { };
 #
@@ -12548,9 +12536,7 @@ hicolor_icon_theme = callPackage ../data/icons/hicolor-icon-theme { };
   wineUnstable = lowPrio (wine.override { wineRelease = "unstable"; });
   wineStaging = lowPrio (wine.override { wineRelease = "staging"; });
 
-  winetricks = callPackage ../misc/emulators/wine/winetricks.nix {
-    inherit (gnome2) zenity;
-  };
+  winetricks = callPackage ../misc/emulators/wine/winetricks.nix { };
 #
 #  wmutils-core = callPackage ../tools/X11/wmutils-core { };
 #

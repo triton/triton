@@ -7,8 +7,8 @@
 , makeWrapper
 
 , gconf
-, gnome
 , gtk2
+, libglade
 , libgnome-keyring
 , libgtop
 , libstartup_notification
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     gconf
     gtk2
-    gnome.libglade
+    libglade
     libgnome-keyring
     libgtop
     libstartup_notification

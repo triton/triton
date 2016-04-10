@@ -43,18 +43,17 @@ assert md5 != "" || sha256 != "";
 assert deepClone -> leaveDotGit;
 
 stdenv.mkDerivation {
-  inherit name;
+  innerName = name;
+  name = "${name}.tar.br";
   builder = ./builder.sh;
   fetcher = ./nix-prefetch-git;
   buildInputs = [git];
 
   outputHashAlgo = if sha256 == "" then "md5" else "sha256";
-  outputHashMode = "recursive";
+  outputHashMode = "flat";
   outputHash = if sha256 == "" then md5 else sha256;
 
   inherit url rev leaveDotGit fetchSubmodules deepClone branchName;
-
-  GIT_SSL_CAINFO = "${cacert}/etc/ssl/certs/ca-bundle.crt";
 
   impureEnvVars = [
     # We borrow these environment variables from the caller to allow

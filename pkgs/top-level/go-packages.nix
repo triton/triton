@@ -192,11 +192,11 @@ let
   };
 
   sys = buildFromGitHub {
-    rev = "a80ff226bd294315526e7ae48959d55635143ea7";
-    date = "2016-04-07";
+    rev = "9eef40adf05b951699605195b829612bd7b69952";
+    date = "2016-04-09";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "1h8hspxhydd50yv3h84l14bds0j3zv46abifl87627s7licads7d";
+    sha256 = "0v21hmvqibx9mc9ziybswwlh0xr50b9y5sdiz722hv81m6gnb2ga";
     goPackagePath = "golang.org/x/sys";
     goPackageAliases = [
       "github.com/golang/sys"
@@ -695,11 +695,11 @@ let
   };
 
   dns = buildFromGitHub {
-    rev = "7e024ce8ce18b21b475ac6baf8fa3c42536bf2fa";
-    date = "2016-03-28";
+    rev = "b5f8285e2ab8f825c92ba68ddbbfe55c534b1064";
+    date = "2016-04-09";
     owner  = "miekg";
     repo   = "dns";
-    sha256 = "06v3ghd2ccg2b3l0x78brvc8ghbj3qjl32v2csb3flk263s4by2b";
+    sha256 = "11a70wy72v04zq9ixq5ss8jxskzb0zgm8finsj9hsb124y8502zs";
   };
 
   aetrion-dnsimple-go = buildFromGitHub {
@@ -3390,11 +3390,11 @@ let
   };
 
   raft = buildFromGitHub {
-    date = "2016-03-31";
-    rev = "57cdb81412489befaac6c127ae3b63746904b58f";
+    date = "2016-04-09";
+    rev = "1c84b7ca86424d341b95457cf6da85fdb367c4f0";
     owner  = "hashicorp";
     repo   = "raft";
-    sha256 = "0gv1q5zn8a2y6nym9l9cw9dp0y1ddad9kcf09qhigzlnipg0sw7p";
+    sha256 = "1fllbriwzxg509ipda8svznid4yjb3x0lnj9mmsmjkgv371v6b54";
     propagatedBuildInputs = [ armon_go-metrics ugorji_go ];
   };
 

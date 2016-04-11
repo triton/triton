@@ -21,7 +21,7 @@ let
     "ftp://ftp.gnutls.org/gcrypt/gnutls/v${major}/gnutls-${major}.${minor}.tar.xz"
   ];
   major = "3.4";
-  minor = "10";
+  minor = "11";
 in
 
 stdenv.mkDerivation rec {
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls major minor;
     allowHashOutput = false;
-    sha256 = "17zmpnqpdh5n409zcvhlc16cj16s15q3blfbxxzgycxxmjsc4cka";
+    sha256 = "70ef9c9f95822d363036c6e6b5479750e5b7fc34f50e750c3464a98ec65a9ab8";
   };
 
   # This fixes some broken parallel dependencies
@@ -70,12 +70,12 @@ stdenv.mkDerivation rec {
     # Gnupg depends on this so we have to decouple this fetch from the rest of the build.
     srcVerified = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.4" "10";
+      urls = tarballUrls "3.4" "11";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyId = "96865171";
-      pgpKeyFingerprint = "1F42 4189 05D8 206A A754  CCDC 29EE 58B9 9686 5171 ";
+      pgpKeyFingerprint = "1F42 4189 05D8 206A A754  CCDC 29EE 58B9 9686 5171";
       inherit (src) outputHashAlgo;
-      outputHash = "17zmpnqpdh5n409zcvhlc16cj16s15q3blfbxxzgycxxmjsc4cka";
+      outputHash = "70ef9c9f95822d363036c6e6b5479750e5b7fc34f50e750c3464a98ec65a9ab8";
     };
   };
 
@@ -87,7 +87,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

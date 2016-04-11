@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation {
-  name = "sqlite-3.12.0";
+  name = "sqlite-3.12.1";
 
   src = fetchurl {
-    url = "http://sqlite.org/2016/sqlite-autoconf-3120000.tar.gz";
-    sha1Confirm = "e3269662b13ce5cd93b08bd33899bd1cbde3b072";
-    sha256 = "53ecdbb5287af673eca3710c5f6c2305e73bb2d034f2a28770bea2be92ed269e";
+    url = "http://sqlite.org/2016/sqlite-autoconf-3120100.tar.gz";
+    sha1Confirm = "fa1f3dbf6e2e8c6d14125b2eceda5b2e16a19f1f";
+    sha256 = "1c038519862b3983b0475f3ed3143ce4bbfcd21bfbd0741192f415838c831a7c";
   };
 
   buildInputs = [

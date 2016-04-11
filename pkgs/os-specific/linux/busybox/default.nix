@@ -29,7 +29,11 @@ stdenv.mkDerivation rec {
   name = "busybox-1.24.2";
 
   src = fetchurl {
-    url = "https://busybox.net/downloads/${name}.tar.bz2";
+    urls = [
+      "http://sources.openelec.tv/mirror/busybox/${name}.tar.bz2"
+      "https://busybox.net/downloads/${name}.tar.bz2"
+    ];
+    md5Urls = map (n: "${n}.md5") src.urls;
     sha256 = "e71ef53ec656f31c42633918d301405d40dea1d97eca12f272217ae4a971c855";
   };
 

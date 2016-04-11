@@ -5,11 +5,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dhcpcd-6.10.1";
+  name = "dhcpcd-6.10.2";
 
   src = fetchurl {
     url = "mirror://roy/dhcpcd/${name}.tar.xz";
-    sha256 = "0yxfx3r6ik47rsv1f8q7siw0vas6jcsrbjpaqnx0nn707f6byji8";
+    sha256 = "02afm61xmw93wlfv4x120yxrcgmpnf08kq6g5h5q47kzpa2gz834";
   };
 
   buildInputs = [

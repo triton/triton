@@ -62,7 +62,24 @@ go.stdenv.mkDerivation (
     rmdir extraSrc
 
   '') + ''
-    export GOPATH=$NIX_BUILD_TOP/go:$GOPATH
+    # Unpack all of the tarballs of other go sources
+    OLDIFS="$IFS"
+    IFS=":"
+    NEWPATH=$NIX_BUILD_TOP/go
+    mkdir -p "$NIX_BUILD_TOP/unpack"
+    pushd "$NIX_BUILD_TOP/unpack"
+    for path in $GOPATH; do
+      if [ -f "$path/files.tar.br" ]; then
+        brotli --decompress --input "$path/files.tar.br" | tar x
+        echo "Decompressing Archive"
+      elif [ -d "$path/src" ]; then
+        NEWPATH="$NEWPATH:$path"
+      fi
+    done
+    EXTRAPATH="$(find $NIX_BUILD_TOP/unpack -maxdepth 1 -mindepth 1 | tr '\n' ':')"
+    popd
+    export GOPATH="$EXTRAPATH$NEWPATH"
+    IFS="$OLDIFS"
 
     runHook postConfigure
   '';
@@ -143,6 +160,7 @@ go.stdenv.mkDerivation (
     runHook preInstall
 
     mkdir -p $out
+    mkdir "$NIX_BUILD_TOP/${name}"
     pushd "$NIX_BUILD_TOP/go"
     if [ -n "$subPackages" ]; then
       subPackageExpr='/\('
@@ -156,9 +174,17 @@ go.stdenv.mkDerivation (
     fi
     while read f; do
       echo "$f" | grep -q '^./\(src\|pkg/[^/]*\)/${goPackagePath}'"$subPackageExpr" || continue
-      mkdir -p "$(dirname "$out/share/go/$f")"
-      cp "$NIX_BUILD_TOP/go/$f" "$out/share/go/$f"
+      mkdir -p "$(dirname "$NIX_BUILD_TOP/${name}/$f")"
+      cp "$NIX_BUILD_TOP/go/$f" "$NIX_BUILD_TOP/${name}/$f"
     done < <(find . -type f)
+    popd
+
+    pushd "$NIX_BUILD_TOP"
+    mkdir -p "$out/share/go"
+    tar --sort=name --owner=0 --group=0 --numeric-owner \
+      --mode=go=rX,u+rw,a-s \
+      --mtime=@946713600 \
+      -c "${name}" | brotli --quality 6 --output "$out/share/go/files.tar.br"
     popd
 
     mkdir -p $bin

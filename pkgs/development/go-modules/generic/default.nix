@@ -68,14 +68,19 @@ go.stdenv.mkDerivation (
     NEWPATH=$NIX_BUILD_TOP/go
     mkdir -p "$NIX_BUILD_TOP/unpack"
     pushd "$NIX_BUILD_TOP/unpack"
+    args=()
+    decompress() {
+      echo "Decompressing $1" >&2
+      brotli --decompress --input "$1/files.tar.br" | tar x
+    }
+    export -f decompress
     for path in $GOPATH; do
       if [ -f "$path/files.tar.br" ]; then
-        brotli --decompress --input "$path/files.tar.br" | tar x
-        echo "Decompressing Archive"
+        echo "$path"
       elif [ -d "$path/src" ]; then
         NEWPATH="$NEWPATH:$path"
       fi
-    done
+    done | parallel -j "$NIX_BUILD_CORES" decompress
     EXTRAPATH="$(find $NIX_BUILD_TOP/unpack -maxdepth 1 -mindepth 1 | tr '\n' ':')"
     popd
     export GOPATH="$EXTRAPATH$NEWPATH"
@@ -142,7 +147,7 @@ go.stdenv.mkDerivation (
       fi
     }
 
-    export -f buildGoDir # parallel needs to see the function
+    export -f buildGoDir
     getGoDirs "" | parallel -j $NIX_BUILD_CORES buildGoDir install
 
     runHook postBuild

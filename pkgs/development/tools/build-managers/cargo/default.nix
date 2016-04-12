@@ -15,7 +15,7 @@ buildRustPackage rec {
   src = fetchgit {
     url = "git://github.com/rust-lang/cargo";
     rev = "refs/tags/${version}";
-    sha256 = "0d3n2jdhaz06yhilvmw3m2avxv501da1hdhljc9mwkz3l5bkv2jv";
+    sha256 = "13ixfd2f2kcn9xpxlv539wz1ij87s5jgh971d477rydw0yj3ix9x";
   };
 
   depsSha256 = "1x2m7ww2z8nl5ic2nds85p7ma8x0zp654jg7ay905ia95daiabzg";

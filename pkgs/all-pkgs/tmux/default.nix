@@ -7,11 +7,11 @@
 
 stdenv.mkDerivation rec {
   name = "tmux-${version}";
-  version = "2.1";
+  version = "2.2";
 
   src = fetchurl {
     url = "https://github.com/tmux/tmux/releases/download/${version}/${name}.tar.gz";
-    sha256 = "0xk1mylsb08sf0w597mdgj9s6hxxjvjvjd6bngpjvvxwyixlwmii";
+    sha256 = "bc28541b64f99929fe8e3ae7a02291263f3c97730781201824c0f05d7c8e19e4";
   };
 
   buildInputs = [
@@ -23,11 +23,6 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
   ];
-
-  postInstall = ''
-    mkdir -p $out/etc/bash_completion.d
-    cp -v examples/bash_completion_tmux.sh $out/etc/bash_completion.d/tmux
-  '';
 
   meta = with stdenv.lib; {
     homepage = http://tmux.github.io/;

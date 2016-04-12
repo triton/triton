@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "geneC";
     repo = "syslinux";
     rev = "4abebfbcafe90e65ecebabec530d52eddfd7ce3e";
-    sha256 = "99fb138e90a8c7bca5329436387b91455104df005d488ed8667473ba01d242ca";
+    sha256 = "f6293e09521d015bf5a294b05c73955542f274ef0e0cde8612f87745e280a1e1";
   };
 
   nativeBuildInputs = [

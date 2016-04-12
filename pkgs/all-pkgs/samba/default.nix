@@ -44,12 +44,20 @@
 , zlib
 }:
 
+let
+  name = "samba-4.4.2";
+
+  tarballUrls = [
+    "mirror://samba/samba/stable/${name}.tar"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "samba-4.4.0";
+  inherit name;
 
   src = fetchurl {
-    url = "mirror://samba/samba/stable/${name}.tar.gz";
-    sha256 = "c5f6fefb7fd0a4e5f404a253b19b55f74f88faa1c3612cb3329e24aa03470075";
+    urls = map (n: "${n}.gz") tarballUrls;
+    allowHashOutput = false;
+    sha256 = "eaecd41a85ebb9507b8db9856ada2a949376e9d53cf75664b5493658f6e5926a";
   };
 
   nativeBuildInputs = [
@@ -198,6 +206,17 @@ stdenv.mkDerivation rec {
       patchelf --shrink-rpath "$BIN"
     done
   '';
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") tarballUrls;
+      pgpKeyId = "6568B7EA";
+      pgpKeyFingerprint = "52FB C0B8 6D95 4B08 4332  4CDC 6F33 915B 6568 B7EA";
+      pgpDecompress = true;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://www.samba.org/;

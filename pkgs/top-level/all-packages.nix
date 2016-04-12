@@ -9956,34 +9956,7 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  elvis = callPackage ../applications/editors/elvis { };
 #
-  emacs = pkgs.emacs24;
-#
-  emacs24 = callPackage ../applications/editors/emacs-24 {
-    # use override to enable additional features
-    Xaw3d = null;
-    gconf = null;
-    alsaLib = null;
-    imagemagick = null;
-    acl = null;
-    gpm = null;
-  };
-#
-#  emacs24-nox = lowPrio (appendToName "nox" (emacs24.override {
-#    withX = false;
-#    withGTK2 = false;
-#    withGTK3 = false;
-#  }));
-#
-#  emacs25pre = lowPrio (callPackage ../applications/editors/emacs-25 {
-#    # use override to enable additional features
-#    libXaw = xorg.libXaw;
-#    Xaw3d = null;
-#    gconf = null;
-#    alsaLib = null;
-#    imagemagick = null;
-#    acl = null;
-#    gpm = null;
-#  });
+  emacs = callPackage ../all-pkgs/emacs { };
 #
 #  enhanced-ctorrent = callPackage ../applications/networking/enhanced-ctorrent { };
 #

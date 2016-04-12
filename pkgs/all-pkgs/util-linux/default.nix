@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , gettext
 , libxslt
@@ -24,15 +25,26 @@ in
 
 let
   libOnly = type == "lib";
+
+  version = base: patch: "${base}${if patch == null then "" else ".${patch}"}";
+
+  baseUrls = base: [
+    "mirror://kernel/linux/utils/util-linux/v${base}"
+  ];
+
+  tarballUrls = base: patch: map (n: "${n}/util-linux-${version base patch}.tar") (baseUrls base);
+
+  base = "2.28";
+  patch = null;
 in
 
 stdenv.mkDerivation rec {
-  name = "${type}util-linux-${version}";
-  version = "2.27.1";
+  name = "${type}util-linux-${version base patch}";
 
   src = fetchurl {
-    url = "mirror://kernel/linux/utils/util-linux/v2.27/util-linux-${version}.tar.xz";
-    sha256 = "1452hz5zx56a3mad8yrg5wb0vy5zi19mpjp6zx1yr6p9xp6qz08a";
+    urls = map (n: "${n}.xz") (tarballUrls base patch);
+    allowHashOutput = false;
+    sha256 = "395847e2a18a2c317170f238892751e73a57104565344f8644090c8b091014bb";
   };
 
   nativeBuildInputs = [
@@ -55,7 +67,11 @@ stdenv.mkDerivation rec {
   ];
 
   patches = [
-    ./rtcwake-search-PATH-for-shutdown.patch
+    (fetchTritonPatch {
+      rev = "b84e67b8138aa3305c7047b5affa393b7d875af2";
+      file = "util-linux/fix-paths.patch";
+      sha256 = "0925c16024be1927250fa32378bf6a69f37e9be2d91d9a5a7541aa54340af384";
+    })
   ];
 
   #FIXME: make it also work on non-nixos?
@@ -115,6 +131,20 @@ stdenv.mkDerivation rec {
   ];
 
   parallelInstall = false;
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      urls = map (n: "${n}.xz") (tarballUrls "2.28" null);
+      pgpsigUrls = map (n: "${n}.sign") (tarballUrls "2.28" null);
+      pgpsigSha256Urls = map (n: "${n}/sha256sums.asc") (baseUrls "2.28");
+      pgpKeyId = "EC39C284";
+      pgpKeyFingerprint = "B0C6 4D14 301C C6EF AEDF  60E4 E4B7 1D5E EC39 C284";
+      pgpDecompress = true;
+      outputHash = "395847e2a18a2c317170f238892751e73a57104565344f8644090c8b091014bb";
+      inherit (src) outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://www.kernel.org/pub/linux/utils/util-linux/;

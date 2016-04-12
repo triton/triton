@@ -17,17 +17,21 @@ let
   inherit (stdenv.lib)
     optionals
     wtFlag;
+
+  versionMajor = "2.20";
+  versionMinor = "1";
+  version = "${versionMajor}.${versionMinor}";
+  name = "at-spi2-atk-${version}";
+  baseUrl = "mirror://gnome/sources/at-spi2-atk/${versionMajor}/${name}";
 in
 
 stdenv.mkDerivation rec {
-  name = "at-spi2-atk-${version}";
-  versionMajor = "2.20";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  inherit name;
 
   src = fetchurl {
-    url = "mirror://gnome/sources/at-spi2-atk/${versionMajor}/${name}.tar.xz";
-    sha256 = "a24b142b6e8f1dd2d57a657447dde3e0ae29df481968c88673a58d4ce44f3ad2";
+    url = "${baseUrl}.tar.xz";
+    sha256Url = "${baseUrl}.sha256sum";
+    sha256 = "2358a794e918e8f47ce0c7370eee8fc8a6207ff1afe976ec9ff547a03277bf8e";
   };
 
   nativeBuildInputs = [

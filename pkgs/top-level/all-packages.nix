@@ -731,6 +731,8 @@ efivar = callPackage ../all-pkgs/efivar { };
 
 elfutils = callPackage ../all-pkgs/elfutils { };
 
+emacs = callPackage ../all-pkgs/emacs { };
+
 enca = callPackage ../all-pkgs/enca { };
 
 eog = callPackage ../all-pkgs/eog { };
@@ -9955,8 +9957,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  elinks = callPackage ../applications/networking/browsers/elinks { };
 #
 #  elvis = callPackage ../applications/editors/elvis { };
-#
-  emacs = callPackage ../all-pkgs/emacs { };
 #
 #  enhanced-ctorrent = callPackage ../applications/networking/enhanced-ctorrent { };
 #

@@ -519,8 +519,7 @@ in
       };
 
     services.xserver.displayManager.xserverArgs =
-      [ "-ac"
-        "-terminate"
+      [ "-terminate"
         "-config ${configFile}"
         "-xkbdir" "${cfg.xkbDir}"
       ] ++ optional (cfg.display != null) ":${toString cfg.display}"

@@ -1,25 +1,51 @@
-{ stdenv, fetchgit, zlib, xz }:
+{ stdenv
+, fetchFromGitHub
+
+, lz4
+, lzo
+, xz
+, zlib
+}:
 
 stdenv.mkDerivation rec {
   name = "squashfs-4.4dev";
 
-  src = fetchgit {
-    url = https://github.com/plougher/squashfs-tools.git;
-    sha256 = "059pa2shdysr3zfmwrhq28s12zbi5nyzbpzyaf5lmspgfh1493ks";
+  src = fetchFromGitHub {
+    owner = "plougher";
+    repo = "squashfs-tools";
     rev = "9c1db6d13a51a2e009f0027ef336ce03624eac0d";
+    sha256 = "83979bacb8272301d6b157314a9d04a3bcf4119872e3e0a6d0dd1a681a5b2f7c";
   };
 
-  buildInputs = [ zlib xz ];
+  buildInputs = [
+    lz4
+    lzo
+    xz
+    zlib
+  ];
 
-  preBuild = "cd squashfs-tools";
+  prePatch = ''
+    cd squashfs-tools
+  '';
 
-  installFlags = "INSTALL_DIR=\${out}/bin";
+  preInstall = ''
+    installFlagsArray+=("INSTALL_DIR=$out/bin")
+  '';
 
-  makeFlags = "XZ_SUPPORT=1";
+  makeFlags = [
+    "GZIP_SUPPORT=1"
+    "XZ_SUPPORT=1"
+    "LZO_SUPPORT=1"
+    "LZ4_SUPPORT=1"
+  ];
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://squashfs.sourceforge.net/;
     description = "Tool for creating and unpacking squashfs filesystems";
-    platforms = stdenv.lib.platforms.linux;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

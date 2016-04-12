@@ -60,18 +60,22 @@ let
       true
     else
       false;
+
+  versionMajor = "3.20";
+  versionMinor = "3";
+  version = "${versionMajor}.${versionMinor}";
+  name = "gtk+-${version}";
+
+  baseUrl = "mirror://gnome/sources/gtk+/${versionMajor}/${name}";
 in
 
 stdenv.mkDerivation rec {
-  name = "gtk+-${version}";
-  versionMajor = "3.20";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  inherit name;
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.sha256sum";
-    sha256 = "1ab1d1068ea55e0046f437d69983f164df5e68cb2e9fdfb38787b867f33f69f7";
+    url = "${baseUrl}.tar.xz";
+    sha256Url = "${baseUrl}.sha256sum";
+    sha256 = "3834f3bf23b260b3e5ebfea41102e2026a8af29e36c3620edf4a5cf05e82f694";
   };
 
   nativeBuildInputs = [

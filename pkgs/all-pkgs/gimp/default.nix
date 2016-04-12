@@ -40,8 +40,9 @@
 stdenv.mkDerivation rec {
   name = "gimp-2.9.2";
 
-  src = fetchurl {
-    url = "http://download.gimp.org/pub/gimp/v2.9/${name}.tar.bz2";
+  src = fetchurl rec {
+    url = "https://download.gimp.org/pub/gimp/v2.9/${name}.tar.bz2";
+    md5Url = "${url}.md5";
     sha256 = "17p2030fynil5qra7k78f0kr61ihfksip3dlz9gy9ck8p0vd9gl5";
   };
 

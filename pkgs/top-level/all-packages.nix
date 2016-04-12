@@ -1525,6 +1525,8 @@ openssl = callPackage ../all-pkgs/openssl { };
 
 openvpn = callPackage ../all-pkgs/openvpn { };
 
+opus-tools = callPackage ../all-pkgs/opus-tools { };
+
 orbit2 = callPackage ../all-pkgs/orbit2 { };
 
 orc = callPackage ../all-pkgs/orc { };
@@ -10829,8 +10831,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  };
 #
   opusfile = callPackage ../applications/audio/opusfile { };
-#
-#  opusTools = callPackage ../applications/audio/opus-tools { };
 #
 #  orpie = callPackage ../applications/misc/orpie { gsl = gsl_1; };
 #

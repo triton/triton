@@ -1,26 +1,51 @@
-{ stdenv, fetchurl, xlibsWrapper, libjpeg, libtiff, giflib, libpng, bzip2, pkgconfig, libid3tag }:
+{ stdenv
+, fetchurl
+
+, bzip2
+, freetype
+, giflib
+, libid3tag
+, libjpeg
+, libpng
+, libtiff
+, xorg
+, zlib
+}:
 
 stdenv.mkDerivation rec {
-  name = "imlib2-1.4.7";
+  name = "imlib2-1.4.8";
 
   src = fetchurl {
     url = "mirror://sourceforge/enlightenment/${name}.tar.bz2";
-    sha256 = "00a7jbwj10x3jcvxa5rplnkvhv35gv9rb400zy636zdd4g737mrm";
+    sha256 = "89ab531ff882c23c8c68e3e941d1bb59dde7a3b2a7853b87ab8c7615da7cb077";
   };
 
-  nativeBuildInputs = [ pkgconfig ];
-  buildInputs = [ xlibsWrapper libjpeg libtiff giflib libpng bzip2 libid3tag ];
+  buildInputs = [
+    bzip2
+    freetype
+    giflib
+    libid3tag
+    libjpeg
+    libpng
+    libtiff
+    xorg.libICE
+    xorg.libX11
+    xorg.libXext
+    zlib
+  ];
 
   preConfigure = ''
     substituteInPlace imlib2-config.in \
       --replace "@my_libs@" ""
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "Image manipulation library";
-
-    license = stdenv.lib.licenses.free;
-    platforms = stdenv.lib.platforms.all;
-    maintainers = with stdenv.lib.maintainers; [ spwhitt ];
+    license = licenses.free;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

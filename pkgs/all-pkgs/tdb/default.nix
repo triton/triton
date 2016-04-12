@@ -4,17 +4,26 @@
 , fetchurl
 , libxslt
 , python
+, samba
 
 , ncurses
 , readline
 }:
 
+let
+  name = "tdb-1.3.9";
+
+  tarballUrls = [
+    "mirror://samba/tdb/${name}.tar"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "tdb-1.3.8";
+  inherit name;
 
   src = fetchurl {
-    url = "mirror://samba/tdb/${name}.tar.gz";
-    sha256 = "1cg6gmpgn36dd4bsp3j9k3hyrm87d8hdigqyyqxw5jga4w2aq186";
+    urls = map (n: "${n}.gz") tarballUrls;
+    allowHashOutput = false;
+    sha256 = "7101f726e6d5c70f14e577b01c133e2e6059c4455239115e56a12ba64fc084d2";
   };
 
   nativeBuildInputs = [
@@ -37,6 +46,16 @@ stdenv.mkDerivation rec {
     "--bundled-libraries=NONE"
     "--builtin-libraries=replace"
   ];
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") tarballUrls;
+      pgpDecompress = true;
+      inherit (samba.pgp.library) pgpKeyId pgpKeyFingerprint;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "The trivial database";

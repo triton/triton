@@ -194,6 +194,9 @@ tryDownload() {
                 *.tar.xz | *.txz)
                   method="xz -d -c \"$out\""
                   ;;
+                *.tar.gz | *.tgz)
+                  method="gzip -d -c \"$out\""
+                  ;;
                 *)
                   echo "Could not determine how to decompress $out for pgp verification" >&2
                   exit 1

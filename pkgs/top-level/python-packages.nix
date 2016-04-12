@@ -9429,7 +9429,7 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     src = pkgs.fetchgit {
       url = "https://chromium.googlesource.com/external/gyp.git";
       rev = "fdc7b812f99e48c00e9a487bd56751bbeae07043";
-      sha256 = "176sdxkva2irr1v645nn4q6rwc6grbb1wxj82n7x9hh09q4bxqcz";
+      sha256 = "1s2dddmjzp39yw3pqmd087k6znh8gzj6qq1yg2fcz8ahnhayakdf";
     };
 
     meta = {

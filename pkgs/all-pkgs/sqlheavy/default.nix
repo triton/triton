@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     owner = "chlorm-forks";
     repo = "sqlheavy";
     rev = "e83b497a9528e455baf77c9221041d9e600ea972";
-    sha256 = "d5c068eeb4072515a784ca088772028ee2682017a137704e397398aac0e07ba2";
+    sha256 = "87f6945ed7ab5b45964369db42411c3d814ee693f58309b5de0300e3f04496df";
   };
 
   nativeBuildInputs = [

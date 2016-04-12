@@ -18,7 +18,7 @@ let
     };
     "2" = {
       version = "2.0.12";
-      sha256 = "3df731d6233ef7484a1b8597c07b79c9ee5c93f2198dd2a293770828ad07276c";
+      sha256 = "401b0a06aa55e1e7b95a784e8b1959fb798fef2e1e82e441bfaccd613c6118fb";
     };
   };
 

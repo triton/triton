@@ -1754,6 +1754,11 @@ sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sqlite = callPackage ../all-pkgs/sqlite { };
 
+st = callPackage ../all-pkgs/st {
+  config = config.st.config or null;
+  configFile = config.st.configFile or null;
+};
+
 steamPackages = callPackage ../all-pkgs/steam { };
 steam = steamPackages.steam-chrootenv.override {
   # DEPRECATED
@@ -11133,14 +11138,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  viber = callPackage ../applications/networking/instant-messengers/viber { };
 #
 #  sonic-pi = callPackage ../applications/audio/sonic-pi { };
-#
-  st = callPackage ../applications/misc/st {
-    conf = config.st.conf or null;
-  };
-#
-  st-wayland = callPackage ../applications/misc/st/wayland.nix {
-    conf = config.st.conf or null;
-  };
 #
 #  stag = callPackage ../applications/misc/stag {
 #    curses = ncurses;

@@ -76,8 +76,15 @@ lib.overrideDerivation (fetchurl (rec {
     echo "Fixing mtime and atimes" >&2
     touch -t 200001010000 "${name'}"
     readarray -t files < <(find "${name'}")
+    i=0
+    max=$(( $NIX_BUILD_CORES * 4 ))
     for file in "''${files[@]}"; do
-      touch -h -d "@$(stat -c '%Y' "$file")" "$file"
+      touch -h -d "@$(stat -c '%Y' "$file")" "$file" &
+      i=$(( $i + 1 ))
+      if [ "$i" -ge "$max" ]; then
+        wait
+        i=0
+      fi
     done
   '' + ''
     echo "Building Archive ${name}" >&2

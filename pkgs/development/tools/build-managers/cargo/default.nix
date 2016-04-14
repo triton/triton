@@ -1,11 +1,21 @@
-{ stdenv, fetchgit, rustPlatform, file, curl, python, pkgconfig, openssl
-, cmake, zlib, makeWrapper }:
+{ stdenv
+, fetchgit
+, rustPlatform
+, file
+, curl
+, python
+, pkgconfig
+, openssl
+, cmake
+, zlib
+, makeWrapper
+}:
 
 with rustPlatform;
 
 with ((import ./common.nix) {
   inherit stdenv rustc;
-  version = "0.9.0";
+  version = "0.10.0";
 });
 
 buildRustPackage rec {
@@ -15,10 +25,10 @@ buildRustPackage rec {
   src = fetchgit {
     url = "git://github.com/rust-lang/cargo";
     rev = "refs/tags/${version}";
-    sha256 = "13ixfd2f2kcn9xpxlv539wz1ij87s5jgh971d477rydw0yj3ix9x";
+    sha256 = "14ra0sbh9srxnbdgccnmra56n8ccrmgdvb4s964gny493c0gva2r";
   };
 
-  depsSha256 = "1x2m7ww2z8nl5ic2nds85p7ma8x0zp654jg7ay905ia95daiabzg";
+  depsSha256 = "0js4697n7v93wnqnpvamhp446w58llj66za5hkd6wannmc0gsy3b";
 
   buildInputs = [ file curl pkgconfig python openssl cmake zlib makeWrapper ];
 

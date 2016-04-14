@@ -3,7 +3,7 @@
 /* Cargo binary snapshot */
 
 let
-  snapshotDate = "2016-01-31";
+  snapshotDate = "2016-03-21";
 in
 
 with ((import ./common.nix) {
@@ -13,8 +13,8 @@ with ((import ./common.nix) {
 
 let snapshotHashes =
   if stdenv.system == "x86_64-linux" then {
-    sha1 = "4c03a3fd2474133c7ad6d8bb5f6af9915ca5292a";
-    sha256 = "19jzx889bi21kq8mm33xysq0pcigsshh8rzzcfkyndmmp9hyc80r";
+    sha1 = "84266cf626ca4fcdc290bca8f1a74e6ad9e8b3d9";
+    sha256 = "55ad9a8929303b4e06c18d0dd30b0d6296da784606d9c55cce98d5d7fc39a0b2";
   } else
     throw "no snapshot for platform ${stdenv.system}";
 

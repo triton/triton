@@ -39,12 +39,13 @@ assert xorg != null ->
 stdenv.mkDerivation rec {
   name = "gnome-desktop-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-desktop/${versionMajor}/${name}.tar.xz";
-    sha256 = "18c7f818cfd91e25d242785c14d0d46dd8eeca3a0bde46949d387987badab08d";
+    sha256Url = "mirror://gnome/sources/gnome-desktop/${versionMajor}/${name}.sha256sum";
+    sha256 = "6eac7b2b1a9672685028b81d2b06cb45449f967e66dd41724bc4a9596941c140";
   };
 
   nativeBuildInputs = [

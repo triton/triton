@@ -82,11 +82,12 @@ in
 stdenv.mkDerivation rec {
   name = "gnome-shell-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-shell/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/gnome-shell/${versionMajor}/${name}.sha256sum";
     sha256 = "ee69f461dd3d03caf788dfc64241275868ec0bcd1ef814f3cd2803c25796b888";
   };
 

@@ -60,21 +60,17 @@ let
       true
     else
       false;
-
-  versionMajor = "3.20";
-  versionMinor = "3";
-  version = "${versionMajor}.${versionMinor}";
-  name = "gtk+-${version}";
-
-  baseUrl = "mirror://gnome/sources/gtk+/${versionMajor}/${name}";
 in
 
 stdenv.mkDerivation rec {
-  inherit name;
+  name = "gtk+-${version}";
+  versionMajor = "3.20";
+  versionMinor = "3";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "${baseUrl}.tar.xz";
-    sha256Url = "${baseUrl}.sha256sum";
+    url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.sha256sum";
     sha256 = "3834f3bf23b260b3e5ebfea41102e2026a8af29e36c3620edf4a5cf05e82f694";
   };
 

@@ -14,12 +14,6 @@ let
   inherit (stdenv.lib)
     enFlag
     wtFlag;
-
-  versionMajor = "2.20";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
-  name = "at-spi2-core-${version}";
-  baseUrl = "mirror://gnome/sources/at-spi2-core/${versionMajor}/${name}";
 in
 
 assert xorg != null ->
@@ -29,11 +23,14 @@ assert xorg != null ->
   && xorg.libXtst != null;
 
 stdenv.mkDerivation rec {
-  inherit name;
+  name = "at-spi2-core-${version}";
+  versionMajor = "2.20";
+  versionMinor = "1";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "${baseUrl}.tar.xz";
-    sha256Url = "${baseUrl}.sha256sum";
+    url = "mirror://gnome/sources/at-spi2-core/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/at-spi2-core/${versionMajor}/${name}.sha256sum";
     sha256 = "6ed858e781f5aa9a9662b3beb5ef82f733dac040afc8255d85dffd2097f16900";
   };
 

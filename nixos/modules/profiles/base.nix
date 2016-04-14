@@ -28,6 +28,12 @@
     pkgs.dosfstools
     pkgs.xfsprogs
     pkgs.f2fs-tools
+
+    # Tools for building
+    pkgs.stdenv
+    pkgs.vim
+    pkgs.nano
+    pkgs.git
   ];
 
   # Include support for various filesystems.

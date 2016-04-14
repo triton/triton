@@ -33,6 +33,10 @@ with lib;
             "Type `start display-manager' to\nstart the graphical user interface."}
       '';
 
+    # Allow dhcpcd to be started manually through start dhcpcd
+    networking.useDHCP = lib.mkDefault true;
+    systemd.services.dhcpcd.wantedBy = lib.mkOverride 50 [];
+
     # Allow sshd to be started manually through "start sshd".
     services.openssh.enable = true;
     systemd.services.sshd.wantedBy = mkOverride 50 [];

@@ -25,12 +25,13 @@
 stdenv.mkDerivation rec {
   name = "gnome-terminal-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-terminal/${versionMajor}/${name}.tar.xz";
-    sha256 = "2fe7f6bd3ca4e93ce156f83e673b9e8c3f0155b6bc603e109edc942718eb4150";
+    sha256Url = "mirror://gnome/sources/gnome-terminal/${versionMajor}/${name}.sha256sum";
+    sha256 = "98b7f48b13b37f05c92aa6b09006f608985efaf5440a1d76c28eda5f46b50894";
   };
 
   nativeBuildInputs = [

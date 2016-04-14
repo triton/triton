@@ -70,12 +70,13 @@ in
 stdenv.mkDerivation rec {
   name = "gnome-control-center-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-control-center/${versionMajor}/${name}.tar.xz";
-    sha256 = "b7e7307612e244a8ba15a3bb5dc0d12a043b93381a3939515e585558b064d683";
+    sha256Url = "mirror://gnome/sources/gnome-control-center/${versionMajor}/${name}.sha256sum";
+    sha256 = "ce6474fc60f78ed3cfaf555e55a52ec3ebb6437fa184e08ad6077bbec380a1ed";
   };
 
   propagatedUserEnvPkgs = [

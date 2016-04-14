@@ -18,12 +18,13 @@ in
 stdenv.mkDerivation rec {
   name = "geocode-glib-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/geocode-glib/${versionMajor}/${name}.tar.xz";
-    sha256 = "5f2264238e9481a95ca260ba2c652bebd247ec1852a27ded5b126117eb1bb6ba";
+    sha256Url = "mirror://gnome/sources/geocode-glib/${versionMajor}/${name}.sha256sum";
+    sha256 = "669fc832cabf8cc2f0fc4194a8fa464cdb9c03ebf9aca5353d7cf935ba8637a2";
   };
 
   nativeBuildInputs = [

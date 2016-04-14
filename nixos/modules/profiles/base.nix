@@ -12,7 +12,6 @@
     pkgs.efivar
     pkgs.gptfdisk
     pkgs.ddrescue
-    pkgs.openssl
     pkgs.cryptsetup # needed for dm-crypt volumes
 
     # Hardware-related tools.
@@ -35,6 +34,19 @@
     pkgs.mg
     pkgs.nano
     pkgs.vim
+
+    # Misc tools
+    config.programs.ssh.package
+    pkgs.dnsutils
+    pkgs.htop
+    pkgs.iftop
+    pkgs.iotop
+    pkgs.mtr
+    pkgs.nmap
+    pkgs.openssl
+    pkgs.gnupg
+    pkgs.tmux
+    pkgs.screen
   ];
 
   # Include support for various filesystems.

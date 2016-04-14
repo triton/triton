@@ -26,12 +26,13 @@ assert xorg != null ->
 stdenv.mkDerivation rec {
   name = "pango-${version}";
   versionMajor = "1.40";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/pango/${versionMajor}/${name}.tar.xz";
-    sha256 = "da17985df314cb07d066ab5424f59c21ce973ece05b7de4df04d798ec8511c8b";
+    sha256Url = "mirror://gnome/sources/pango/${versionMajor}/${name}.sha256sum";
+    sha256 = "e27af54172c72b3ac6be53c9a4c67053e16c905e02addcf3a603ceb2005c1a40";
   };
 
   buildInputs = [

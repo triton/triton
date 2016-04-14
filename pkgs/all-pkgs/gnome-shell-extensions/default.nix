@@ -22,13 +22,15 @@
 stdenv.mkDerivation rec {
   name = "gnome-shell-extensions-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-shell-extensions/${versionMajor}/" +
-          "${name}.tar.xz";
-    sha256 = "cc97e8627245038821c9f61e684a56c4dfc08c5f86e38d7a6750da0fc40acc87";
+    url = "mirror://gnome/sources/gnome-shell-extensions/${versionMajor}/"
+      + "${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/gnome-shell-extensions/${versionMajor}/"
+      + "${name}.sha256sum";
+    sha256 = "e84a075d895ca3baeefb8508e0a901027b66f7d5a7ee8c966e31d301b38e78e7";
   };
 
   nativeBuildInputs = [

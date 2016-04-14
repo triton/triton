@@ -37,21 +37,17 @@
 let
   inherit (stdenv.lib)
     enFlag;
-
-  versionMajor = "1.28";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
-  name = "gvfs-${version}";
-
-  baseUrl = "mirror://gnome/sources/gvfs/${versionMajor}/${name}";
 in
 
 stdenv.mkDerivation rec {
-  inherit name;
+  name = "gvfs-${version}";
+  versionMajor = "1.28";
+  versionMinor = "1";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "${baseUrl}.tar.xz";
-    sha256Url = "${baseUrl}.sha256sum";
+    url = "mirror://gnome/sources/gvfs/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/gvfs/${versionMajor}/${name}.sha256sum";
     sha256 = "4ecfe5ac35c1b3e61d6abddc98902b6c7faf243308c60b165f01990783f17999";
   };
 

@@ -28,12 +28,13 @@ in
 stdenv.mkDerivation rec {
   name = "vte-${version}";
   versionMajor = "0.44";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/vte/${versionMajor}/${name}.tar.xz";
-    sha256 = "93a3b1a71a885f416a119a5a8fb27b8f36bb176b8d0bec5e48188d1db5ef12aa";
+    sha256Url = "mirror://gnome/sources/vte/${versionMajor}/${name}.sha256sum";
+    sha256 = "712dd548339f600fd7e221d12b2670a13a4361b2cd23ba0e057e76cc19fe5d4e";
   };
 
   nativeBuildInputs = [

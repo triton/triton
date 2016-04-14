@@ -46,13 +46,14 @@
 
 stdenv.mkDerivation rec {
   name = "evolution-${version}";
-  versionMajor = "3.18";
-  versionMinor = "4";
+  versionMajor = "3.20";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/evolution/${versionMajor}/${name}.tar.xz";
-    sha256 = "8161a0ebc77e61904dfaca9745595fefbf84d834a07ee1132d1f8d030dabfefb";
+    sha256Url = "mirror://gnome/sources/evolution/${versionMajor}/${name}.sha256sum";
+    sha256 = "029567e20fa62263c5fcd2e7f3a0dff96364b647cf9d36a5b99a3abe3b0027d3";
   };
 
   propagatedUserEnvPkgs = [

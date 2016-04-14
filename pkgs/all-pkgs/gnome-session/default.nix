@@ -31,12 +31,13 @@ in
 stdenv.mkDerivation rec {
   name = "gnome-session-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-session/${versionMajor}/${name}.tar.xz";
-    sha256 = "66ff72379a2e7ee11ab7fcec37ad911d36f12471845dc7755e1ce55d29301b34";
+    sha256Url = "mirror://gnome/sources/gnome-session/${versionMajor}/${name}.sha256sum";
+    sha256 = "2ae9f53dc74f851222fbefbe0dc08db0a78cc76ceeb156f92ebd4d40fd038913";
   };
 
   nativeBuildInputs = [

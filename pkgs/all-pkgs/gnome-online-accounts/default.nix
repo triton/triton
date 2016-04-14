@@ -30,12 +30,13 @@ in
 stdenv.mkDerivation rec {
   name = "gnome-online-accounts-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-online-accounts/${versionMajor}/${name}.tar.xz";
-    sha256 = "c98233914c455dc21f8c73904dd2881bee6bfa117a5bdc573ba3a8550c36a460";
+    sha256Url = "mirror://gnome/sources/gnome-online-accounts/${versionMajor}/${name}.sha256sum";
+    sha256 = "c37aebc1e12f31f5516d33a354181e4d202a07da4f7d3a95b0da8cf0028c0c93";
   };
 
   nativeBuildInputs = [

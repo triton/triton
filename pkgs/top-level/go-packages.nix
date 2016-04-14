@@ -993,7 +993,7 @@ let
     rev = "2c2e9bb47b4e44067024f29339588cac8b34dd12";
     owner = "onsi";
     repo = "ginkgo";
-    sha256 = "0sf02hkyy8knsw1yc4zb6yac1bzylydlb7hw22fb5szhb3i6pncj";
+    sha256 = "6f55a601d8e77e6565cb5b137f142bf16e90ccc6092eef68170052beb5aa38c7";
     date = "2016-04-09";
   };
 
@@ -3701,7 +3701,7 @@ let
     rev = "v0.12.22";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "0frh4xa08n3008kkpwj8yw5yxs14wzjsir9s7wv8pzjbnygnqyan";
+    sha256 = "1c417f7c7ea3866ecd68b619d8e85e3debbe0524aa6960b5a9e7f158eb9a5dad";
     buildFlags = [ "-tags noupgrade,release" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext

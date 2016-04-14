@@ -31,9 +31,10 @@
 
     # Tools for building
     pkgs.stdenv
-    pkgs.vim
-    pkgs.nano
     pkgs.git
+    pkgs.mg
+    pkgs.nano
+    pkgs.vim
   ];
 
   # Include support for various filesystems.

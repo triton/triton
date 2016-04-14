@@ -4091,7 +4091,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  scanbd = callPackage ../tools/graphics/scanbd { };
 #
-#  screen = callPackage ../tools/misc/screen { };
+  screen = callPackage ../tools/misc/screen { };
 #
 #  screen-message = callPackage ../tools/X11/screen-message { };
 #

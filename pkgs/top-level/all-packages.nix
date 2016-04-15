@@ -1532,6 +1532,10 @@ openssl = callPackage ../all-pkgs/openssl { };
 
 openvpn = callPackage ../all-pkgs/openvpn { };
 
+opus = callPackage ../all-pkgs/opus { };
+# Deprecated
+libopus = callPackageAlias "opus" { };
+
 opus-tools = callPackage ../all-pkgs/opus-tools { };
 
 orbit2 = callPackage ../all-pkgs/orbit2 { };
@@ -7046,8 +7050,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  liboil = callPackage ../development/libraries/liboil { };
 #
 #  liboop = callPackage ../development/libraries/liboop { };
-#
-  libopus = callPackage ../development/libraries/libopus { };
 #
 #  libosip = callPackage ../development/libraries/osip {};
 #

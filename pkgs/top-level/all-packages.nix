@@ -844,6 +844,8 @@ glibmm = callPackage ../all-pkgs/glibmm { };
 glib-networking = callPackage ../all-pkgs/glib-networking { };
 glib_networking = callPackageAlias "glib-networking" { }; # Deprecated alias
 
+glusterfs = callPackage ../all-pkgs/glusterfs { };
+
 gmp = callPackage ../all-pkgs/gmp { };
 
 gnome-backgrounds = callPackage ../all-pkgs/gnome-backgrounds { };
@@ -2928,8 +2930,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gitfs = callPackage ../tools/filesystems/gitfs { };
 #
 #  git-latexdiff = callPackage ../tools/typesetting/git-latexdiff { };
-#
-  glusterfs = callPackage ../tools/filesystems/glusterfs { };
 #
 #  glmark2 = callPackage ../tools/graphics/glmark2 { };
 #

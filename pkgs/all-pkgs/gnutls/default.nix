@@ -7,7 +7,6 @@
 , gmp
 , libidn
 , libtasn1
-, lzip
 , lzo
 , nettle
 , p11_kit
@@ -53,7 +52,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     lzo
-    lzip
     nettle
     libtasn1
     libidn

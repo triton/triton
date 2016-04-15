@@ -751,6 +751,8 @@ expat = callPackage ../all-pkgs/expat { };
 
 faac = callPackage ../all-pkgs/faac { };
 
+feh = callPackage ../all-pkgs/feh { };
+
 ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
 ffmpeg_1 = callPackage ../all-pkgs/ffmpeg/1.x.nix { };
 ffmpeg_2 = callPackage ../all-pkgs/ffmpeg/2.x.nix { };
@@ -10068,8 +10070,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  fbida = callPackage ../applications/graphics/fbida { };
 #
 #  fdupes = callPackage ../tools/misc/fdupes { };
-#
-  feh = callPackage ../applications/graphics/feh { };
 #
 #  firestr = qt5.callPackage ../applications/networking/p2p/firestr
 #    { boost = boost155;

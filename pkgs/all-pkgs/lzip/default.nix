@@ -4,11 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "lzip-1.16";
+  name = "lzip-1.17";
 
   src = fetchurl {
     url = "mirror://savannah/lzip/${name}.tar.gz";
-    sha256 = "0l9724rw1l3hg2ldr3n7ihqich4m9nc6y7l302bvdj4jmxdw530j";
+    allowHashOutput = false;
+    sha256 = "9443855e0a33131233b22cdb6c62c9313a483f16cc7415efe88d4a494cea0352";
   };
 
   nativeBuildInputs = [
@@ -21,6 +22,16 @@ stdenv.mkDerivation rec {
     "CXXFLAGS=-O3"
   ];
 
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyId = "132D7742";
+      pgpKeyFingerprint = "1D41 C14B 272A 2219 A739  FA4F 8FE9 9503 132D 7742";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
+
   meta = with stdenv.lib; {
     homepage = "http://www.nongnu.org/lzip/lzip.html";
     description = "a lossless data compressor based on the LZMA algorithm";
@@ -29,7 +40,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

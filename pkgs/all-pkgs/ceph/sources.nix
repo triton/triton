@@ -12,9 +12,9 @@
   };
 
   "dev" = rec {
-    version = "10.1.1";
+    version = "10.1.2";
     rev = "refs/tags/v${version}";
-    sha256 = "031nwprv2s0h46cwccnx30z9d8p4qi0hm5997xkzmq5iz87bfnf7";
+    sha256 = "0f1rws5jdzx6gi447px2ydwsympqnlbkdqv9k16vmyaj1dj8sd5v";
   };
 
   "git" = rec {

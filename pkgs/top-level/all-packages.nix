@@ -1305,6 +1305,8 @@ libsoup = callPackage ../all-pkgs/libsoup { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };
 
+libtasn1 = callPackage ../all-pkgs/libtasn1 { };
+
 libtheora = callPackage ../all-pkgs/libtheora { };
 
 libtirpc = callPackage ../all-pkgs/libtirpc { };
@@ -7110,8 +7112,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #  libsvm = callPackage ../development/libraries/libsvm { };
 #
 #  libtar = callPackage ../development/libraries/libtar { };
-#
-libtasn1 = callPackage ../development/libraries/libtasn1 { };
 #
 libtiff = callPackage ../development/libraries/libtiff { };
 

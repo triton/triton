@@ -21,12 +21,13 @@ in
 stdenv.mkDerivation rec {
   name = "dconf-editor-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/dconf-editor/${versionMajor}/${name}.tar.xz";
-    sha256 = "23d4c854e2924e4acea01b7cb79460dc06e512ac0546ca17af3980a568e5a760";
+    sha256Url = "mirror://gnome/sources/dconf-editor/${versionMajor}/${name}.sha256sum";
+    sha256 = "7794f40b33dc376096896e10164b8571ab31ae1d50b9d0b40d409db2efaed75d";
   };
 
   nativeBuildInputs = [

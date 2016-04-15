@@ -1220,6 +1220,8 @@ libgweather = callPackage ../all-pkgs/libgweather { };
 
 libgxps = callPackage ../all-pkgs/libgxps { };
 
+libibverbs = callPackage ../all-pkgs/libibverbs { };
+
 libidl = callPackage ../all-pkgs/libidl { };
 
 libinput = callPackage ../all-pkgs/libinput { };
@@ -3363,8 +3365,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  libmongo-client = callPackage ../development/libraries/libmongo-client { };
 #
 #  libiberty = callPackage ../development/libraries/libiberty { };
-#
-  libibverbs = callPackage ../development/libraries/libibverbs { };
 #
 #  libxcomp = callPackage ../development/libraries/libxcomp { };
 #

@@ -1287,6 +1287,8 @@ libraw = callPackage ../all-pkgs/libraw { };
 
 libressl = callPackage ../all-pkgs/libressl { };
 
+librdmacm = callPackage ../all-pkgs/librdmacm { };
+
 librsvg = callPackage ../all-pkgs/librsvg { };
 
 librsync = callPackage ../all-pkgs/librsync { };
@@ -3369,8 +3371,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  libxcomp = callPackage ../development/libraries/libxcomp { };
 #
 #  libx86emu = callPackage ../development/libraries/libx86emu { };
-#
-  librdmacm = callPackage ../development/libraries/librdmacm { };
 #
 #  libwebsockets = callPackage ../development/libraries/libwebsockets { };
 #

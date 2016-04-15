@@ -1,20 +1,30 @@
 { stdenv
 , fetchurl
-
 , lzip
 }:
 
 stdenv.mkDerivation rec {
-  name = "ddrescue-1.20";
+  name = "ddrescue-1.21";
 
   src = fetchurl {
     url = "mirror://gnu/ddrescue/${name}.tar.lz";
-    sha256 = "1gb0ak2c47nass7qdf9pnfrshcb38c318z1fx5v5v1k7l6qr7yc3";
+    allowHashOutput = false;
+    sha256 = "f09e4eb6a209cbd0fe8ee6db2d558238cdc969afa1d94150f263402ac882e1ac";
   };
 
   nativeBuildInputs = [
     lzip
   ];
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyId = "132D7742";
+      pgpKeyFingerprint = "1D41 C14B 272A 2219 A739  FA4F 8FE9 9503 132D 7742";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "GNU ddrescue, a data recovery tool";

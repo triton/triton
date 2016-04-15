@@ -18,12 +18,13 @@ in
 stdenv.mkDerivation rec {
   name = "gtkmm-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gtkmm/${versionMajor}/${name}.tar.xz";
-    sha256 = "f021573f870df8a0b40ba37a7864c37be517c7a88cc957a193dbab28449b028a";
+    sha256Url = "mirror://gnome/sources/gtkmm/${versionMajor}/${name}.sha256sum";
+    sha256 = "051de1b8756ca6ec61f26264338cfc3060af936fd70bf4558bfe1e115418c612";
   };
 
   buildInputs = [

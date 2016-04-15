@@ -6697,7 +6697,7 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #
   libcaca = callPackage ../development/libraries/libcaca { };
 #
-#  libcacard = callPackage ../development/libraries/libcacard { };
+  libcacard = callPackage ../development/libraries/libcacard { };
 #
 #  libcec = callPackage ../development/libraries/libcec { };
 #  libcec_platform = callPackage ../development/libraries/libcec/platform.nix { };

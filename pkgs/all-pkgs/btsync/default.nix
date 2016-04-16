@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
       "$out/bin/btsync"
   '';
 
-  dontStrip   = true;
+  dontStrip = true;
 
   meta = with stdenv.lib; {
     description = "Automatically sync files via secure, distributed technology";

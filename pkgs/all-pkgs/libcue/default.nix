@@ -8,11 +8,11 @@
 
 stdenv.mkDerivation rec {
   name = "libcue-${version}";
-  version = "2.0.1";
+  version = "2.1.0";
 
   src = fetchurl {
     url = "https://github.com/lipnitsk/libcue/archive/v${version}.tar.gz";
-    sha256 = "0lg18cp06lgsni8dg971gzmnjavra0lqccihl09dl6nylsvyizb3";
+    sha256 = "288ddd01e5f9e8f901d0c205d31507e4bdffd2540fa86073f2fe82de066d2abb";
   };
 
   nativeBuildInputs = [

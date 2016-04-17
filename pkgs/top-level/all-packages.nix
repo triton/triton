@@ -1128,6 +1128,8 @@ kea = callPackage ../all-pkgs/kea { };
 
 kerberos = callPackageAlias "krb5_lib" { };
 
+kid3 = callPackage ../all-pkgs/kid3 { };
+
 kmod = callPackage ../all-pkgs/kmod { };
 
 kmscon = callPackage ../all-pkgs/kmscon { };
@@ -10407,10 +10409,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  khal = callPackage ../applications/misc/khal { };
 #
 #  khard = callPackage ../applications/misc/khard { };
-#
-#  kid3 = callPackage ../applications/audio/kid3 {
-#    qt = qt4;
-#  };
 #
 #  kino = callPackage ../applications/video/kino {
 #    inherit (gnome) libglade;

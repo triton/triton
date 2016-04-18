@@ -8,13 +8,19 @@
 , util-linux_lib
 }:
 
+let
+  baseUrls = [
+    "ftp://sources.redhat.com/pub/lvm2/releases"
+  ];
+in
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
-  version = "2.02.148";
+  version = "2.02.150";
 
   src = fetchurl {
-    url = "ftp://sources.redhat.com/pub/lvm2/releases/LVM2.${version}.tgz";
-    sha512 = "549d9d772eae7054c6d9b0d0a7f65e3930f6109b81e8e58ce265f9f3732ea322a0c81acc9e9714ca16c2670ee519ea28a74470b3daf8b0ca05d82decee2443b4";
+    urls = map (n: "${n}/LVM2.${version}.tgz") baseUrls;
+    allowHashOutput = false;
+    sha512 = "66d1a247170f685c72d91d5fc52a2394ba5d5a477686101b9a472a8ac163813f9c80c0d75e4f29939b16000456263e9191cd294520ab5b320915f23f0797f22e";
   };
 
   configureFlags = [
@@ -69,6 +75,17 @@ stdenv.mkDerivation rec {
     cp scripts/blk_availability_systemd_red_hat.service $out/etc/systemd/system
     cp scripts/lvm2_activation_generator_systemd_red_hat $out/lib/systemd/system-generators
   '';
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      sha512Urls = map (n: "${n}/sha512.sum") baseUrls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyId = "567E2C17";
+      pgpKeyFingerprint = "8843 7EF5 C077 BD11 3D3B  7224 2281 91C1 567E 2C17";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://sourceware.org/lvm2/;

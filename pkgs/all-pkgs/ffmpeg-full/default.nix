@@ -97,7 +97,8 @@
 , libxcbxfixesExtlib ? true # X11 grabbing mouse rendering
 , libxcbshapeExtlib ? true # X11 grabbing shape rendering
 , lzma ? null # xz-utils
-#, nvenc ? null # NVIDIA NVENC support
+, nvenc ? false # NVIDIA NVENC support
+  , nvidia-video-codec-sdk ? null
 , openal ? null # OpenAL 1.1 capture support
 #, opencl ? null # OpenCL code
 #, opencore-amr ? null # AMR-NB de/encoder & AMR-WB decoder
@@ -153,7 +154,7 @@
  *
  * Not packaged:
  *   aacplus avisynth cdio-paranoia crystalhd libavc1394 libiec61883
- *   libmxf libnut libquvi nvenc opencl opencore-amr openh264 oss shine twolame
+ *   libmxf libnut libquvi opencl opencore-amr openh264 oss shine twolame
  *   utvideo vo-aacenc vo-amrwbenc xvmc zvbi blackmagic-design-desktop-video
  *
  * Not supported:
@@ -223,6 +224,9 @@ assert gnutls != null -> !opensslExtlib;
 assert libxcbshmExtlib -> xorg.libxcb != null;
 assert libxcbxfixesExtlib -> xorg.libxcb != null;
 assert libxcbshapeExtlib -> xorg.libxcb != null;
+assert nvenc ->
+  nvidia-video-codec-sdk != null
+  && nonfreeLicensing;
 assert openglExtlib -> mesa != null;
 assert opensslExtlib -> gnutls == null && openssl != null && nonfreeLicensing;
 assert x11grabExtlib -> xorg.libX11 != null && xorg.libXv != null;
@@ -354,7 +358,7 @@ stdenv.mkDerivation rec {
     (enableFeature libxcbxfixesExtlib "libxcb-xfixes")
     (enableFeature libxcbshapeExtlib "libxcb-shape")
     (enableFeature (lzma != null) "lzma")
-    #(enableFeature nvenc "nvenc")
+    (enableFeature nvenc "nvenc")
     (enableFeature (openal != null) "openal")
     #(enableFeature opencl "opencl")
     #(enableFeature (opencore-amr != null && version3Licensing) "libopencore-amrnb")
@@ -409,6 +413,10 @@ stdenv.mkDerivation rec {
     ++ optionals x11grabExtlib [ xorg.libXext xorg.libXfixes ]
     ++ optionals nonfreeLicensing [ faac fdk_aac openssl ];
 
+  NIX_CFLAGS_COMPILE = optionals nvenc [
+    "-I${nvidia-video-codec-sdk}/include"
+  ];
+
   # Build qt-faststart executable
   postBuild = optional qtFaststartProgram ''make tools/qt-faststart'';
   postInstall = optional qtFaststartProgram ''cp -a tools/qt-faststart $out/bin/'';
@@ -442,7 +450,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

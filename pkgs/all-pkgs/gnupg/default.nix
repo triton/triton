@@ -10,7 +10,7 @@
 , libgcrypt
 , libgpg-error
 , libksba
-, libusb
+, libusb-compat
 , npth
 , openldap
 , pcsclite
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
     libgcrypt
     libgpg-error
     libksba
-    libusb
+    libusb-compat
     npth
     openldap
     readline

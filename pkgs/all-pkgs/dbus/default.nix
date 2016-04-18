@@ -1,7 +1,9 @@
 { stdenv
 , fetchurl
 
+, audit_lib
 , expat
+, libcap-ng
 , systemd_lib
 , xorg
 }:
@@ -15,7 +17,9 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
+    audit_lib
     expat
+    libcap-ng
     systemd_lib
     xorg.libX11
   ];

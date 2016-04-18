@@ -357,7 +357,7 @@ installPhase() {
     nvidia_lib_install 304 0 'libnvidia-ml' '1'
 
     ## CUDA libraries
-    nvidia_lib_install 0 0 'libcuda'
+    nvidia_lib_install 0 0 'libcuda' '1'
     nvidia_lib_install 304 0 'libnvidia-compiler'
     # CUDA video decoder library
     nvidia_lib_install 0 0 'libnvcuvid' '1'

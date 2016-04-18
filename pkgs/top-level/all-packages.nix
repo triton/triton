@@ -1528,6 +1528,8 @@ ntfs-3g = callPackage ../all-pkgs/ntfs-3g { };
 
 numactl = callPackage ../all-pkgs/numactl { };
 
+nvidia-video-codec-sdk = callPackage ../all-pkgs/nvidia-video-codec-sdk { };
+
 obexftp = callPackage ../all-pkgs/obexftp { };
 
 oniguruma = callPackage ../all-pkgs/oniguruma { };

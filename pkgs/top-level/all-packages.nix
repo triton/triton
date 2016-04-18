@@ -1160,6 +1160,8 @@ libbluray = callPackage ../all-pkgs/libbluray { };
 
 libbsd = callPackage ../all-pkgs/libbsd { };
 
+libcacard = callPackage ../all-pkgs/libcacard { };
+
 libcanberra = callPackage ../all-pkgs/libcanberra { };
 
 libcap-ng = callPackage ../all-pkgs/libcap-ng { };
@@ -6696,8 +6698,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libbson = callPackage ../development/libraries/libbson { };
 #
   libcaca = callPackage ../development/libraries/libcaca { };
-#
-  libcacard = callPackage ../development/libraries/libcacard { };
 #
 #  libcec = callPackage ../development/libraries/libcec { };
 #  libcec_platform = callPackage ../development/libraries/libcec/platform.nix { };

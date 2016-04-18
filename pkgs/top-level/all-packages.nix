@@ -1162,7 +1162,7 @@ libbsd = callPackage ../all-pkgs/libbsd { };
 
 libcanberra = callPackage ../all-pkgs/libcanberra { };
 
-libcap_ng = callPackage ../all-pkgs/libcap-ng { };
+libcap-ng = callPackage ../all-pkgs/libcap-ng { };
 
 libclc = callPackage ../all-pkgs/libclc { };
 

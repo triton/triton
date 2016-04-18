@@ -6,7 +6,7 @@
 , perl
 
 , audit_lib
-, libcap_ng
+, libcap-ng
 , ncurses
 , pam
 , python3
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     python3
-    libcap_ng
+    libcap-ng
   ] ++ optionals (!libOnly) [
     audit_lib
     ncurses

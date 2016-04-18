@@ -3,7 +3,7 @@
 , swig
 
 , go
-, libcap_ng
+, libcap-ng
 , krb5_lib
 , openldap
 , python2
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     go
-    libcap_ng
+    libcap-ng
     python2
     python3
   ] ++ optionals (!libOnly) [

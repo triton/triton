@@ -753,8 +753,6 @@ faac = callPackage ../all-pkgs/faac { };
 
 feh = callPackage ../all-pkgs/feh { };
 
-ffmpeg_0 = callPackage ../all-pkgs/ffmpeg/0.x.nix { };
-ffmpeg_1 = callPackage ../all-pkgs/ffmpeg/1.x.nix { };
 ffmpeg_2 = callPackage ../all-pkgs/ffmpeg/2.x.nix { };
 ffmpeg_3 = callPackage ../all-pkgs/ffmpeg/3.x.nix { };
 ffmpeg = callPackageAlias "ffmpeg_3" { };
@@ -1951,9 +1949,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  acct = callPackage ../tools/system/acct { };
 #
-#  acoustidFingerprinter = callPackage ../tools/audio/acoustid-fingerprinter {
-#    ffmpeg = ffmpeg_1;
-#  };
+#  acoustidFingerprinter = callPackage ../tools/audio/acoustid-fingerprinter { };
 #
 #  actdiag = pythonPackages.actdiag;
 #
@@ -7393,7 +7389,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  openscenegraph = callPackage ../development/libraries/openscenegraph {
 #    giflib = giflib_4_1;
-#    ffmpeg = ffmpeg_0;
 #  };
 #
 #  openslp = callPackage ../development/libraries/openslp {};
@@ -9704,9 +9699,7 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  bandwidth = callPackage ../tools/misc/bandwidth { };
 #
-#  baresip = callPackage ../applications/networking/instant-messengers/baresip {
-#    ffmpeg = ffmpeg_1;
-#  };
+#  baresip = callPackage ../applications/networking/instant-messengers/baresip { };
 #
 #  batti = callPackage ../applications/misc/batti { };
 #
@@ -10109,9 +10102,7 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  xfontsel = callPackage ../applications/misc/xfontsel { };
 #
-#  freerdp = callPackage ../applications/networking/remote/freerdp {
-#    ffmpeg = ffmpeg_1;
-#  };
+#  freerdp = callPackage ../applications/networking/remote/freerdp { };
 #
 #  freerdpUnstable = callPackage ../applications/networking/remote/freerdp/unstable.nix {
 #    cmake = cmake-2_8;

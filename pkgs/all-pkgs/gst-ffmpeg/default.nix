@@ -2,7 +2,6 @@
 , fetchurl
 
 , bzip2
-, ffmpeg_0
 , gst-plugins-base_0
 , gstreamer_0
 , orc
@@ -19,7 +18,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bzip2
-    ffmpeg_0
     gst-plugins-base_0
     gstreamer_0
     orc
@@ -32,7 +30,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--enable-orc"
     "--enable-lgpl"
-    "--with-system-ffmpeg"
+    "--without-system-ffmpeg"
   ];
 
   meta = with stdenv.lib; {

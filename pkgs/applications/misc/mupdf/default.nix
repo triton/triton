@@ -2,12 +2,12 @@
 , xorg, openssl }:
 
 stdenv.mkDerivation rec {
-  version = "1.8";
+  version = "1.9";
   name = "mupdf-${version}";
 
   src = fetchurl {
     url = "http://mupdf.com/downloads/archive/${name}-source.tar.gz";
-    sha256 = "01n26cy41lc2fjri63s4js23ixxb4nd37aafry3hz4i4id6wd8x2";
+    sha256 = "1776eb4368467c553ce78ec89c731ed84917c6c7ee0396b15d8739356c98e296";
   };
 
   propagatedBuildInputs = [ openjpeg libjpeg jbig2dec openssl ];

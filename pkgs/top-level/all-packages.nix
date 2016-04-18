@@ -1770,6 +1770,10 @@ socket_wrapper = callPackage ../all-pkgs/socket_wrapper { };
 
 spectrwm = callPackage ../all-pkgs/spectrwm { };
 
+spice = callPackage ../all-pkgs/spice { };
+
+spice-protocol = callPackage ../all-pkgs/spice-protocol { };
+
 split2flac = callPackage ../all-pkgs/split2flac { };
 
 sqlheavy = callPackage ../all-pkgs/sqlheavy { };
@@ -7700,14 +7704,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  sphinxsearch = callPackage ../servers/search/sphinxsearch { };
 #
-#  spice = callPackage ../development/libraries/spice {
-#    celt = celt_0_5_1;
-#    inherit (pythonPackages) pyparsing;
-#  };
-#
 #  spice_gtk = callPackage ../development/libraries/spice-gtk { };
-#
-  spice-protocol = callPackage ../development/libraries/spice-protocol { };
 #
 #  sratom = callPackage ../development/libraries/audio/sratom { };
 #

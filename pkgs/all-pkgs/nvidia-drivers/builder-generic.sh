@@ -168,10 +168,10 @@ unpackFile() {
 }
 
 buildPhase() {
-  local kernelBuild
-  local kernelSource
-
   if test -n "${buildKernelspace}" ; then
+    local kernelBuild
+    local kernelSource
+
     # Create the kernel module
     echo "Building the NVIDIA Linux kernel modules against: ${kernel}"
 

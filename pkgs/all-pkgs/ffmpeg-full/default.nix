@@ -409,13 +409,10 @@ stdenv.mkDerivation rec {
     libpulseaudio rtmpdump
     samba SDL soxr speex vid-stab wavpack x264 x265 xavs xvidcore zeromq4 zlib
     libva alsaLib libraw1394 libv4l
+    nvidia-video-codec-sdk
   ] ++ optional openglExtlib mesa
     ++ optionals x11grabExtlib [ xorg.libXext xorg.libXfixes ]
     ++ optionals nonfreeLicensing [ faac fdk_aac openssl ];
-
-  NIX_CFLAGS_COMPILE = optionals nvenc [
-    "-I${nvidia-video-codec-sdk}/include"
-  ];
 
   # Build qt-faststart executable
   postBuild = optional qtFaststartProgram ''make tools/qt-faststart'';

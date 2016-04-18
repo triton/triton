@@ -770,6 +770,8 @@ fftw_long-double = callPackageAlias "fftw_double" {
   precision = "long-double";
 };
 
+file = callPackage ../all-pkgs/file { };
+
 file-roller = callPackage ../all-pkgs/file-roller { };
 
 filezilla = callPackage ../all-pkgs/filezilla { };
@@ -2815,8 +2817,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  flashbench = callPackage ../os-specific/linux/flashbench { };
 #
 #  figlet = callPackage ../tools/misc/figlet { };
-#
-  file = callPackage ../tools/misc/file { };
 #
 #  filegive = callPackage ../tools/networking/filegive { };
 #

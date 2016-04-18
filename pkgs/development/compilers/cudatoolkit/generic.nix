@@ -1,37 +1,69 @@
-{ lib, stdenv, fetchurl, patchelf, perl, ncurses, expat, python, zlib
-, xorg, gtk2, glib, fontconfig, freetype, unixODBC, alsaLib, glibc
+{ stdenv
+, fetchurl
+, patchelf
+, perl
+
+, ncurses
+, expat
+, python
+, zlib
+, xorg
+, gtk2
+, glib
+, fontconfig
+, freetype
+, unixODBC
+, alsa-lib
+, glibc
 # generic inputs
-, version, sha256, url ? null, ...
-} :
+, version, sha256, ...
+}:
 
 let
   # eg, 5.5.22 => 5_5
-  mkShort = let str  = stdenv.lib.strings;
-                take = stdenv.lib.lists.take;
-            in v: str.concatStringsSep "_" (take 2 (str.splitString "." v));
+  mkShort =
+    let
+      str  = stdenv.lib.strings;
+      take = stdenv.lib.lists.take;
+    in
+    v: str.concatStringsSep "_" (take 2 (str.splitString "." v));
   shortVer = mkShort version;
-in stdenv.mkDerivation rec {
+in
+
+stdenv.mkDerivation rec {
   name = "cudatoolkit-${version}";
 
   dontPatchELF = true;
   dontStrip = true;
 
-  src =
-    if stdenv.system == "x86_64-linux" then
-      fetchurl {
-        url = if url != null then url else "http://developer.download.nvidia.com/compute/cuda/${shortVer}/rel/installers/cuda_${version}_linux_64.run";
-        sha256 = sha256;
-      }
-    else throw "cudatoolkit does not support platform ${stdenv.system}";
+  src = fetchurl {
+    url = "http://developer.download.nvidia.com/compute/cuda/${shortVer}/Prod/local_installers/cuda_${version}_linux.run";
+    inherit sha256;
+  };
 
   outputs = [ "out" "sdk" ];
 
   buildInputs = [ perl ];
 
   runtimeDependencies = [
-    ncurses expat python zlib glibc
-    xorg.libX11 xorg.libXext xorg.libXrender xorg.libXt xorg.libXtst xorg.libXi xorg.libXext
-    gtk2 glib fontconfig freetype unixODBC alsaLib
+    ncurses
+    expat
+    python
+    zlib
+    glibc
+    xorg.libX11
+    xorg.libXext
+    xorg.libXrender
+    xorg.libXt
+    xorg.libXtst
+    xorg.libXi
+    xorg.libXext
+    gtk2
+    glib
+    fontconfig
+    freetype
+    unixODBC
+    alsa-lib
   ];
 
   rpath = "${stdenv.lib.makeLibraryPath runtimeDependencies}:${stdenv.cc.cc}/lib64";
@@ -70,6 +102,6 @@ in stdenv.mkDerivation rec {
   '';
 
   meta = {
-    license = lib.licenses.unfree;
+    license = stdenv.lib.licenses.unfreeRedistributable;
   };
 }

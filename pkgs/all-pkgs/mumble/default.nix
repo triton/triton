@@ -112,11 +112,13 @@ let
       libsndfile
       mesa_noglu
       speex
+      xorg.fixesproto
       xorg.inputproto
       xorg.libX11
       xorg.libXext
       xorg.libXfixes
       xorg.libXi
+      xorg.xproto
     ] ++ optionals (source.qtVersion == 5) [
       qt5.qtsvg
     ] ++ optionals jackSupport [

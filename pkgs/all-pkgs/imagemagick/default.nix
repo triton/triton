@@ -1,6 +1,5 @@
 { stdenv
 , fetchurl
-, libtool
 
 , bzip2
 , dejavu_fonts
@@ -8,6 +7,7 @@
 , fftw_single
 , fontconfig
 , freetype
+, fftw_double
 , ghostscript
 , graphviz
 , jbigkit
@@ -19,6 +19,7 @@
 , libpng
 , librsvg
 , libtiff
+, libtool
 , libwebp
 , libxml2
 #, opencl
@@ -56,10 +57,6 @@ stdenv.mkDerivation rec {
     sha256 = "0g01q8rygrf977d9rpixg1bhnavqfwzz30qpn7fj17yn8fx6ybys";
   };
 
-  nativeBuildInputs = [
-    libtool
-  ];
-
   buildInputs = [
     bzip2
     dejavu_fonts
@@ -67,6 +64,7 @@ stdenv.mkDerivation rec {
     fftw_single
     fontconfig
     freetype
+    fftw_double
     ghostscript
     graphviz
     jbigkit
@@ -77,6 +75,7 @@ stdenv.mkDerivation rec {
     liblqr1
     libpng
     librsvg
+    libtool
     libtiff
     libwebp
     libxml2
@@ -85,9 +84,13 @@ stdenv.mkDerivation rec {
     openjpeg
     pango
     perl
+    xorg.libICE
+    xorg.libSM
     xorg.libX11
     xorg.libXext
     xorg.libXt
+    xorg.xextproto
+    xorg.xproto
     xz
     zlib
   ];

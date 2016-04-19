@@ -124,6 +124,10 @@ stdenv.mkDerivation rec {
     pythonPackages.pysqlite
     sqlite
     unzip
+    xorg.compositeproto
+    xorg.fixesproto
+    xorg.kbproto
+    xorg.libICE
     xorg.libSM
     xorg.libXi
     xorg.libX11

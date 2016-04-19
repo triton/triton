@@ -1304,6 +1304,8 @@ libpeas = callPackage ../all-pkgs/libpeas { };
 
 libpng = callPackage ../all-pkgs/libpng { };
 
+libproxy = callPackage ../all-pkgs/libproxy { };
+
 libraw = callPackage ../all-pkgs/libraw { };
 
 libraw1394 = callPackage ../all-pkgs/libraw1394 { };
@@ -7093,8 +7095,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libpfm = callPackage ../development/libraries/libpfm { };
 #
 #  libpqxx = callPackage ../development/libraries/libpqxx { };
-#
-  libproxy = callPackage ../development/libraries/libproxy { };
 #
 #  libpseudo = callPackage ../development/libraries/libpseudo { };
 #

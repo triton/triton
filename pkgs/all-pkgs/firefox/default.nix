@@ -135,6 +135,7 @@ stdenv.mkDerivation rec {
     xorg.libXfixes
     xorg.libXft
     xorg.libXt
+    xorg.damageproto
     xorg.libXScrnSaver
     xorg.renderproto
     xorg.scrnsaverproto

@@ -2,6 +2,7 @@
 , fetchgit
 , writeText
 
+, freetype
 , fontconfig
 , ncurses
 , xorg
@@ -38,11 +39,16 @@ stdenv.mkDerivation rec {
   '';
   
   buildInputs = [
+    freetype
     fontconfig
     ncurses
+    xorg.kbproto
     xorg.libX11
     xorg.libXext
     xorg.libXft
+    xorg.libXrender
+    xorg.renderproto
+    xorg.xproto
   ];
 
   preInstall = ''

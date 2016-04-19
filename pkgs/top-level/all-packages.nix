@@ -10719,6 +10719,8 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  pdfdiff = callPackage ../applications/misc/pdfdiff { };
 #
+  mujs = callPackage ../all-pkgs/mujs { };
+
   mupdf = callPackage ../applications/misc/mupdf {
     openjpeg = pkgs.openjpeg_2_0;
   };

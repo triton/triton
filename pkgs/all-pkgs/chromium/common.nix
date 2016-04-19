@@ -106,7 +106,7 @@ let
     '';
 
     buildInputs = defaultDependencies ++ [
-      atk xorg.libXfixes xorg.libX11 xorg.libXi xorg.libXrandr xorg.xextproto
+      atk xorg.libXfixes xorg.inputproto xorg.libX11 xorg.libXi xorg.libXrandr xorg.xextproto
       xorg.libXcomposite xorg.compositeproto xorg.libXext xorg.libXrender dbus fontconfig
       xorg.xproto xorg.fixesproto xorg.damageproto freetype pango libffi cairo
       xorg.renderproto which

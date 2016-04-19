@@ -137,7 +137,7 @@ let
       owner = "tesseract-ocr";
       repo = "tessdata";
       rev = "3cf1e2df1fe1d1da29295c9ef0983796c7958b7d";
-      sha256 = "e9bcc8ef4c1ba6e330f85f7c0417ffbec7a7c47c89c82b4c868a33283d2e4aed";
+      sha256 = "53eee3ad9e64db9bc88830f5cb3905b273bf84d78579497c55c5dd441a15fdda";
     };
 
     phases = [ "unpackPhase" "installPhase" ];
@@ -457,7 +457,7 @@ stdenv.mkDerivation rec {
 
   src = fetchzip {
     url = "https://github.com/tesseract-ocr/tesseract/archive/${version}.tar.gz";
-    sha256 = "3a170e6fb0b851079480c69783f8910fff8a8a5ea30cc8d01d330fcbcc6f6e27";
+    sha256 = "7ea689d944dd683f4c03bf66b643631699380241eb3f5ee74b451f34e5fe8ac1";
   };
 
   nativeBuildInputs = [

@@ -753,10 +753,19 @@ faac = callPackage ../all-pkgs/faac { };
 
 feh = callPackage ../all-pkgs/feh { };
 
-ffmpeg_2 = callPackage ../all-pkgs/ffmpeg/2.x.nix { };
-ffmpeg_3 = callPackage ../all-pkgs/ffmpeg/3.x.nix { };
+ffmpeg_2 = callPackage ../all-pkgs/ffmpeg {
+  channel = "2";
+};
+ffmpeg_3 = callPackage ../all-pkgs/ffmpeg {
+  channel = "3";
+};
+ffmpeg_head = callPackage ../all-pkgs/ffmpeg {
+  channel = "9";
+};
 ffmpeg = callPackageAlias "ffmpeg_3" { };
-ffmpeg-full = callPackage ../all-pkgs/ffmpeg-full { };
+ffmpeg_full = callPackageAlias "ffmpeg" {
+  full = true;
+};
 
 fftw_double = callPackage ../all-pkgs/fftw {
   precision = "double";
@@ -7386,7 +7395,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   openh264 = callPackage ../development/libraries/openh264 { };
 #
-#  openjpeg_1 = callPackage ../development/libraries/openjpeg/1.x.nix { };
+  openjpeg_1 = callPackage ../development/libraries/openjpeg/1.x.nix { };
   openjpeg_2_0 = callPackage ../development/libraries/openjpeg/2.0.nix { };
   openjpeg_2_1 = callPackage ../development/libraries/openjpeg/2.1.nix { };
   openjpeg = callPackageAlias "openjpeg_2_1" { };
@@ -7853,7 +7862,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  vcdimager = callPackage ../development/libraries/vcdimager { };
 #
-#  vid-stab = callPackage ../development/libraries/vid-stab { };
+  vid-stab = callPackage ../development/libraries/vid-stab { };
 #
 #  virglrenderer = callPackage ../development/libraries/virglrenderer { };
 #
@@ -7905,7 +7914,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  xapian-omega = callPackage ../tools/misc/xapian-omega {};
 #
-#  xavs = callPackage ../development/libraries/xavs { };
+  xavs = callPackage ../development/libraries/xavs { };
 #
 #  Xaw3d = callPackage ../development/libraries/Xaw3d { };
 #
@@ -7947,8 +7956,8 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  zeromq2 = callPackage ../development/libraries/zeromq/2.x.nix {};
 #  zeromq3 = callPackage ../development/libraries/zeromq/3.x.nix {};
-#  zeromq4 = callPackage ../development/libraries/zeromq/4.x.nix {};
-#  zeromq = zeromq4;
+  zeromq4 = callPackage ../development/libraries/zeromq/4.x.nix {};
+  zeromq = callPackageAlias "zeromq4" { };
 #
 #  cppzmq = callPackage ../development/libraries/cppzmq {};
 #

@@ -26,20 +26,41 @@ my %pcMap;
 my %extraAttrs;
 
 
-my @missingPCs = ("fontconfig", "libdrm", "libXaw", "zlib", "perl", "python", "mesa", "mkfontscale", "mkfontdir", "bdftopcf", "libxslt", "openssl", "gperf", "m4");
+my @missingPCs = ("fontconfig", "libdrm", "libXaw", "zlib", "perl", "python", "python3", "mkfontscale", "mkfontdir", "bdftopcf", "libxslt", "openssl", "gperf", "gnum4", "libunwind", "libcacard", "spice-protocol", "libbsd", "intltool", "bison", "flex");
 $pcMap{$_} = $_ foreach @missingPCs;
+$pcMap{"libpci"} = "pciutils";
+$pcMap{"spice-server"} = "spice";
 $pcMap{"freetype2"} = "freetype";
+$pcMap{"epoxy"} = "libepoxy";
+$pcMap{"libsystemd-daemon"} = "systemd_lib";
 $pcMap{"libpng12"} = "libpng";
 $pcMap{"libpng"} = "libpng";
+$pcMap{"libpcsclite"} = "pcsclite";
+$pcMap{"dbus-glib-1"} = "dbus-glib";
+$pcMap{"fuse"} = "fuse";
+$pcMap{"gconf-2.0"} = "gconf";
+$pcMap{"glib-2.0"} = "glib";
+$pcMap{"libdrm_intel"} = "libdrm";
+$pcMap{"libdrm_nouveau"} = "libdrm";
+$pcMap{"libdrm_amdgpu"} = "libdrm";
+$pcMap{"libdrm_radeon"} = "libdrm";
+$pcMap{"librsvg-2.0"} = "librsvg";
 $pcMap{"dbus-1"} = "dbus";
+$pcMap{"cairo"} = "cairo";
+$pcMap{"utilmacros"} = "utilmacros";
 $pcMap{"uuid"} = "util-linux_lib";
 $pcMap{"libudev"} = "systemd_lib";
-$pcMap{"gl"} = "mesa";
-$pcMap{"\$PIXMAN"} = "pixman";
-$pcMap{"\$RENDERPROTO"} = "renderproto";
-$pcMap{"\$DRI3PROTO"} = "dri3proto";
-$pcMap{"\$DRI2PROTO"} = "dri2proto";
-
+$pcMap{"mesa"} = "mesa_noglu";
+$pcMap{"gl"} = "mesa_noglu";
+$pcMap{"wayland-client"} = "wayland";
+$pcMap{"libevdev"} = "libevdev";
+$pcMap{"mtdev"} = "mtdev";
+$pcMap{"libinput"} = "libinput";
+$pcMap{"gbm"} = "mesa_noglu";
+$pcMap{"glesv2"} = "mesa_noglu";
+$pcMap{"egl"} = "mesa_noglu";
+$pcMap{"dri"} = "mesa_noglu";
+$pcMap{"libsystem"} = "systemd_lib";
 
 my $downloadCache = "./download-cache";
 $ENV{'NIX_DOWNLOAD_CACHE'} = $downloadCache;
@@ -49,17 +70,18 @@ mkdir $downloadCache, 0755;
 while (<>) {
     chomp;
     my $tarball = "$_";
+	next if $tarball =~ /[aA]pple/;
     print "\nDOING TARBALL $tarball\n";
 
     my $pkg;
     if ($tarball =~ s/:([a-zA-Z0-9_]+)$//) {
-      $pkg = $1;
+        $pkg = $1;
     } else {
-      $tarball =~ /\/((?:(?:[A-Za-z0-9]|(?:-[^0-9])|(?:-[0-9]*[a-z]))+))[^\/]*$/;
-      die unless defined $1;
-      $pkg = $1;
-      $pkg =~ s/-//g;
-      #next unless $pkg eq "xcbutil";
+        $tarball =~ /\/((?:(?:[A-Za-z0-9]|(?:-[^0-9])|(?:-[0-9]*[a-z]))+))[^\/]*$/;
+        die unless defined $1;
+        $pkg = $1;
+        $pkg =~ s/-//g;
+        #next unless $pkg eq "xcbutil";
     }
 
     $tarball =~ /\/([^\/]*)\.tar\.(bz2|gz|xz)$/;
@@ -134,6 +156,10 @@ while (<>) {
         push @requires, "zlib";
     }
 
+    if ($file =~ /AC_CHECK_LIB\(\[bsd\]/) {
+        push @requires, "libbsd";
+    }
+
     if ($file =~ /Perl is required/) {
         push @requiresNative, "perl";
     }
@@ -157,7 +183,15 @@ while (<>) {
     if ($file =~ /AC_PATH_PROG\(FCCACHE/) {
         # Don't run fc-cache.
         die if defined $extraAttrs{$pkg};
-        $extraAttrs{$pkg} = " preInstall = \"installFlags=(FCCACHE=true)\"; ";
+        $extraAttrs{$pkg} = "    preInstall = \"installFlags=(FCCACHE=true)\";\n";
+    }
+
+    if ($file =~ /XORG_MACROS/) {
+        push @requiresNative, "utilmacros";
+    }
+
+	if ($file =~ /python version 3/) {
+        push @requiresNative, "python3";
     }
 
     my $isFont;
@@ -178,11 +212,49 @@ while (<>) {
     }
 
     if ($isFont) {
-        $extraAttrs{$pkg} = " configureFlags = \"--with-fontrootdir=\$(out)/lib/X11/fonts\"; ";
+        $extraAttrs{$pkg} = "    configureFlags = [ \"--with-fontrootdir=\$(out)/lib/X11/fonts\" ];\n";
+    }
+
+    my $finalfile;
+    {
+        local $/;
+        open FOO, "cd '$tmpDir'/* && grep -v '^ *#' configure |";
+        $finalfile = <FOO>;
+        close FOO;
+    }
+
+	if ($finalfile =~ /xorg-macros/) {
+		push @requiresNative, "utilmacros";
+	}
+
+    if ($finalfile =~ /intltool/) {
+        push @requiresNative, "intltool";
+    }
+
+    if ($finalfile =~ /checking for m4/) {
+        push @requiresNative, "gnum4";
+    }
+
+    if ($finalfile =~ /--with-perl/) {
+        push @requiresNative, "perl";
+    }
+
+    if ($finalfile =~ /'bison /) {
+        push @requiresNative, "bison";
+    }
+
+    if ($finalfile =~ / flex /) {
+        push @requiresNative, "flex";
+    }
+
+    my %fileVars;
+    while ($file =~ /\n([0-9A-Z_]+)=\"([^"]*)\"/g) {
+        $fileVars{$1} = $2;
     }
 
     sub process {
         my $requires = shift;
+        my $fileVars = shift;
         my $s = shift;
         $s =~ s/\[/\ /g;
         $s =~ s/\]/\ /g;
@@ -192,30 +264,41 @@ while (<>) {
             #next if $req =~ /^\$/;
             next if $req =~ /^[0-9]/;
             next if $req =~ /^\s*$/;
+            next if $req =~ /apple/;
             next if $req eq '$REQUIRED_MODULES';
             next if $req eq '$REQUIRED_LIBS';
             next if $req eq '$XDMCP_MODULES';
             next if $req eq '$XORG_MODULES';
-            print "REQUIRE: $req\n";
-            push @{$requires}, $req;
+            next if $req =~ /_VERSION/;
+            if ($req =~ /\$([A-Z0-9_]*)/) {
+                if (!exists ${$fileVars}{$1}) {
+                    "Couldn't find: " . $1 . "\n";
+                    next
+                }
+                my $var = ${$fileVars}{$1};
+                process($requires, $fileVars, $var);
+            } else {
+                print "REQUIRE: $req\n";
+                push @{$requires}, $req;
+            }
         }
     }
 
     #process \@requires, $1 while $file =~ /PKG_CHECK_MODULES\([^,]*,\s*[\[]?([^\)\[]*)/g;
-    process \@requires, $1 while $file =~ /PKG_CHECK_MODULES\([^,]*,([^\)\,]*)/g;
-    process \@requires, $1 while $file =~ /MODULES=\"(.*)\"/g;
-    process \@requires, $1 while $file =~ /REQUIRED_LIBS=\"(.*)\"/g;
-    process \@requires, $1 while $file =~ /REQUIRED_MODULES=\"(.*)\"/g;
-    process \@requires, $1 while $file =~ /REQUIRES=\"(.*)\"/g;
-    process \@requires, $1 while $file =~ /X11_REQUIRES=\'(.*)\'/g;
-    process \@requires, $1 while $file =~ /XDMCP_MODULES=\"(.*)\"/g;
-    process \@requires, $1 while $file =~ /XORG_MODULES=\"(.*)\"/g;
-    process \@requires, $1 while $file =~ /NEEDED=\"(.*)\"/g;
-    process \@requires, $1 while $file =~ /ivo_requires=\"(.*)\"/g;
-    process \@requires, $1 while $file =~ /XORG_DRIVER_CHECK_EXT\([^,]*,([^\)]*)\)/g;
+    process \@requires, \%fileVars, $1 while $file =~ /PKG_CHECK_MODULES\([^,]*,([^\)\,]*)/g;
+    process \@requires, \%fileVars, $1 while $file =~ /MODULES=\"(.*)\"/g;
+    process \@requires, \%fileVars, $1 while $file =~ /REQUIRED_LIBS=\"(.*)\"/g;
+    process \@requires, \%fileVars, $1 while $file =~ /REQUIRED_MODULES=\"(.*)\"/g;
+    process \@requires, \%fileVars, $1 while $file =~ /REQUIRES=\"(.*)\"/g;
+    process \@requires, \%fileVars, $1 while $file =~ /X11_REQUIRES=\'(.*)\'/g;
+    process \@requires, \%fileVars, $1 while $file =~ /XDMCP_MODULES=\"(.*)\"/g;
+    process \@requires, \%fileVars, $1 while $file =~ /XORG_MODULES=\"(.*)\"/g;
+    process \@requires, \%fileVars, $1 while $file =~ /NEEDED=\"(.*)\"/g;
+    process \@requires, \%fileVars, $1 while $file =~ /ivo_requires=\"(.*)\"/g;
+    process \@requires, \%fileVars, $1 while $file =~ /XORG_DRIVER_CHECK_EXT\([^,]*,([^\)]*)\)/g;
 
-    push @requiresNative, "libxslt" if $pkg =~ /libxcb/;
-    push @requiresNative, "gperf", "m4", "xproto" if $pkg =~ /xcbutil/;
+    #push @requiresNative, "libxslt" if $pkg =~ /libxcb/;
+    #push @requiresNative, "gperf", "m4", "xproto" if $pkg =~ /xcbutil/;
 
     print "REQUIRES $pkg => @requires\n";
     print "REQUIRES NATIVE $pkg => @requiresNative\n";
@@ -234,16 +317,26 @@ print OUT "";
 print OUT <<EOF;
 # THIS IS A GENERATED FILE.  DO NOT EDIT!
 args @ { fetchurl, fetchgit, fetchpatch, stdenv, pkgconfig, intltool, freetype, fontconfig
-, libxslt, expat, libpng, zlib, perl, mesa_drivers, spice_protocol
-, dbus, util-linux_lib, openssl, gperf, m4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
-, autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, mtdev, pixman, cairo, glib, ... }: with args;
+, libxslt, expat, libpng, zlib, perl, mesa_noglu, mesa_drivers, spice-protocol, spice
+, dbus, util-linux_lib, openssl, gperf, gnum4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
+, autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, mtdev, pixman, cairo, glib
+, libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3, ... }: with args;
 
 let
 
   mkDerivation = name: attrs:
     let newAttrs = (overrides."\${name}" or (x: x)) attrs;
         stdenv = newAttrs.stdenv or args.stdenv;
-    in stdenv.mkDerivation (removeAttrs newAttrs [ "stdenv" ]);
+    in stdenv.mkDerivation (removeAttrs newAttrs [ "stdenv" ] // {
+      builder = ./builder.sh;
+      postPatch = (attrs.postPatch or "") + ''
+        patchShebangs .
+      '';
+      meta.platforms = [
+        "x86_64-linux"
+        "i686-linux"
+      ];
+	});
 
   overrides = import ./overrides.nix {inherit args xorg;};
 
@@ -290,18 +383,13 @@ foreach my $pkg (sort (keys %pkgURLs)) {
     print OUT <<EOF
   $pkg = (mkDerivation "$pkg" {
     name = "$pkgNames{$pkg}";
-    builder = ./builder.sh;
     src = fetchurl {
       url = $pkgURLs{$pkg};
       sha256 = "$pkgHashes{$pkg}";
     };
     nativeBuildInputs = [ $inputsNative];
     buildInputs = [ $inputs];
-    $extraAttrs
-    meta.platforms = [
-      "x86_64-linux"
-      "i686-linux"
-    ];
+$extraAttrs
   }) // {inherit $inputs;};
 
 EOF

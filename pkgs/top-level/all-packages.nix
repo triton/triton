@@ -7919,15 +7919,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  xercesc = callPackage ../development/libraries/xercesc {};
 #
-#  # Avoid using this. It isn't really a wrapper anymore, but we keep the name.
-  xlibsWrapper = callPackage ../development/libraries/xlibs-wrapper {
-    packages = with pkgs; [
-      freetype fontconfig xorg.xproto xorg.libX11 xorg.libXt
-      xorg.libXft xorg.libXext xorg.libSM xorg.libICE
-      xorg.xextproto
-    ];
-  };
-#
   xmlrpc_c = callPackage ../development/libraries/xmlrpc-c { };
 #
 #  xmlsec = callPackage ../development/libraries/xmlsec { };
@@ -8562,7 +8553,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   xorg = recurseIntoAttrs (lib.callPackagesWith pkgs ../servers/x11/xorg/default.nix {
     inherit (pkgs) fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
-      libxslt expat libpng zlib perl mesa_drivers spice_protocol libunwind
+      libxslt expat libpng zlib perl mesa_drivers spice-protocol libunwind
       dbus util-linux_lib openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
       autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman systemd_lib
       libdrm;

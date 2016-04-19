@@ -1,54 +1,17 @@
 # This is the builder for all X.org components.
 source $stdenv/setup
 
+installFlagsArray+=("appdefaultdir=$out/share/X11/app-defaults")
 
-# After installation, automatically add all "Requires" fields in the
-# pkgconfig files (*.pc) to the propagated build inputs.
-origPostInstall=$postInstall
-postInstall() {
-    if test -n "$origPostInstall"; then eval "$origPostInstall"; fi
+configureFlagsArray+=(
+  "--disable-docs"
+  "--disable-unit-tests"
+)
 
-    local r p requires
-    set +o pipefail
-    requires=$(grep "Requires:" $out/lib/pkgconfig/*.pc | \
-        sed "s/Requires://" | sed "s/,/ /g")
-    set -o pipefail
-
-    echo "propagating requisites $requires"
-
-    for r in $requires; do
-        if test -n "$crossConfig"; then
-            for p in $crossPkgs; do
-                if test -e $p/lib/pkgconfig/$r.pc; then
-                    echo "  found requisite $r in $p"
-                    propagatedBuildInputs="$propagatedBuildInputs $p"
-                fi
-            done
-        else
-            for p in $nativePkgs; do
-                if test -e $p/lib/pkgconfig/$r.pc; then
-                    echo "  found requisite $r in $p"
-                    propagatedNativeBuildInputs="$propagatedNativeBuildInputs $p"
-                fi
-            done
-        fi
-    done
-
-    mkdir -p "$out/nix-support"
-    echo "$propagatedBuildInputs" > "$out/nix-support/propagated-build-inputs"
-    echo "$propagatedNativeBuildInputs" > "$out/nix-support/propagated-native-build-inputs"
-}
-
-
-installFlags="appdefaultdir=$out/share/X11/app-defaults $installFlags"
-
+postInstall="rm -rf $out/share/doc; $postInstall"
 
 if test -n "$x11BuildHook"; then
-    source $x11BuildHook
+  source $x11BuildHook
 fi
-
-
-enableParallelBuilding=1
-
 
 genericBuild

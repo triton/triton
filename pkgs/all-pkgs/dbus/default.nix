@@ -21,6 +21,7 @@ stdenv.mkDerivation rec {
     expat
     libcap-ng
     systemd_lib
+    xorg.xproto
     xorg.libX11
   ];
 

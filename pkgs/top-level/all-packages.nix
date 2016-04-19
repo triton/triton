@@ -1316,6 +1316,8 @@ librsvg = callPackage ../all-pkgs/librsvg { };
 
 librsync = callPackage ../all-pkgs/librsync { };
 
+libseccomp = callPackage ../all-pkgs/libseccomp { };
+
 libsecret = callPackage ../all-pkgs/libsecret { };
 
 libssh = callPackage ../all-pkgs/libssh { };
@@ -6841,8 +6843,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libgringotts = callPackage ../development/libraries/libgringotts { };
 #
 #  libgroove = callPackage ../development/libraries/libgroove { };
-#
-  libseccomp = callPackage ../development/libraries/libseccomp { };
 #
 #  libserialport = callPackage ../development/libraries/libserialport { };
 #

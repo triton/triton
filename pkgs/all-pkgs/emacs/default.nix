@@ -7,6 +7,7 @@
 , alsa-lib
 , dbus
 , fontconfig
+, freetype
 , gconf
 , giflib
 , glib
@@ -39,6 +40,7 @@ stdenv.mkDerivation rec {
     alsa-lib
     dbus
     fontconfig
+    freetype
     gconf
     giflib
     glib
@@ -50,7 +52,8 @@ stdenv.mkDerivation rec {
     libtiff
     libxml2
     ncurses
-    xorg.xproto
+    xorg.kbproto
+    xorg.libICE
     xorg.libSM
     xorg.libX11
     xorg.libXft
@@ -58,6 +61,7 @@ stdenv.mkDerivation rec {
     xorg.libXpm
     xorg.libXrandr
     xorg.libXrender
+    xorg.xproto
   ];
 
   configureFlags = [

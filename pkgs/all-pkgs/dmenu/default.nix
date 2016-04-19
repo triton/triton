@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 
+, freetype
 , fontconfig
 , xorg
 , zlib
@@ -15,10 +16,14 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
+    freetype
     fontconfig
     xorg.libX11
     xorg.libXft
     xorg.libXinerama
+    xorg.libXrender
+    xorg.renderproto
+    xorg.xproto
     zlib
   ];
 

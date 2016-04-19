@@ -951,7 +951,7 @@ go_1_6 = callPackageAlias "go" {
 
 go16Packages = callPackage ./go-packages.nix {
   go = callPackageAlias "go_1_6" { };
-  buildGoPackage = callPackage ../development/go-modules/generic {
+  buildGoPackage = callPackage ../all-pkgs/build-go-package {
     go = callPackageAlias "go_1_6" { };
     govers = (callPackageAlias "go16Packages" { }).govers.bin;
   };

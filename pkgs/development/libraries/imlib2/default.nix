@@ -31,6 +31,8 @@ stdenv.mkDerivation rec {
     xorg.libICE
     xorg.libX11
     xorg.libXext
+    xorg.xextproto
+    xorg.xproto
     zlib
   ];
 

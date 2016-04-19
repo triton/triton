@@ -44,6 +44,9 @@ stdenv.mkDerivation rec {
     dbus-glib
     glib
     gobject-introspection
+    xorg.inputproto
+    xorg.kbproto
+    xorg.xproto
     xorg.libSM
     xorg.libX11
     xorg.libXi

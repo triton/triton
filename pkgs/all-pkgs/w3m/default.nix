@@ -39,6 +39,7 @@ stdenv.mkDerivation rec {
     ncurses
     openssl
     imlib2
+    xorg.xproto
     xorg.libX11
     zlib
   ];

@@ -4,7 +4,6 @@
 , ninja
 
 , mesa
-, xlibsWrapper
 , xorg
 }:
 
@@ -23,10 +22,16 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     mesa
+    xorg.inputproto
     xorg.libX11
     xorg.libXi
     xorg.libXrandr
+    xorg.libXrender
     xorg.libXxf86vm
+    xorg.randrproto
+    xorg.renderproto
+    xorg.xf86vidmodeproto
+    xorg.xproto
   ];
 
   meta = with stdenv.lib; {

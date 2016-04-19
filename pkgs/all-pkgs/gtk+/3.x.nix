@@ -100,6 +100,7 @@ stdenv.mkDerivation rec {
     wayland
     wayland-protocols
   ] ++ optionals (xorg != null) [
+    xorg.fixesproto
     xorg.inputproto
     xorg.libICE
     xorg.libSM
@@ -113,6 +114,7 @@ stdenv.mkDerivation rec {
     xorg.libXinerama
     xorg.libXrandr
     xorg.libXrender
+    xorg.xproto
   ];
 
   configureFlags = [

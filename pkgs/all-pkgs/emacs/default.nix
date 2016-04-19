@@ -50,6 +50,7 @@ stdenv.mkDerivation rec {
     libtiff
     libxml2
     ncurses
+    xorg.xproto
     xorg.libSM
     xorg.libX11
     xorg.libXft

@@ -14,7 +14,6 @@
 , gobjectIntrospection
 , libxkbcommon
 , pango
-, xlibsWrapper
 , xorg
 }:
 

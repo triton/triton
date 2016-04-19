@@ -39,6 +39,7 @@ stdenv.mkDerivation rec {
     libpng
     libtiff
     mesa
+    xorg.libICE
     xorg.libSM
     xorg.libX11
     xorg.libXinerama

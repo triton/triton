@@ -7,7 +7,6 @@
 , libcap
 , mesa
 , pulseaudio_lib
-, xlibsWrapper
 , xorg
 }:
 
@@ -31,8 +30,15 @@ stdenv.mkDerivation rec {
     libcap
     mesa
     pulseaudio_lib
-    xlibsWrapper
+    xorg.randrproto
+    xorg.renderproto
+    xorg.libICE
+    xorg.libX11
+    xorg.libXext
+    xorg.libXrender
     xorg.libXrandr
+    xorg.xextproto
+    xorg.xproto
   ];
 
   # XXX: By default, SDL wants to dlopen() PulseAudio, in which case

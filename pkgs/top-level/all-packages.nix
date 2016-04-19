@@ -749,6 +749,8 @@ evolution-data-server = callPackage ../all-pkgs/evolution-data-server { };
 
 expat = callPackage ../all-pkgs/expat { };
 
+f2fs-tools = callPackage ../all-pkgs/f2fs-tools { };
+
 faac = callPackage ../all-pkgs/faac { };
 
 feh = callPackage ../all-pkgs/feh { };
@@ -2794,8 +2796,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  extundelete = callPackage ../tools/filesystems/extundelete { };
 #
 #  expect = callPackage ../tools/misc/expect { };
-#
-  f2fs-tools = callPackage ../tools/filesystems/f2fs-tools { };
 #
 #  Fabric = pythonPackages.Fabric;
 #

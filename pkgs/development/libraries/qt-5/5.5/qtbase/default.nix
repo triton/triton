@@ -4,13 +4,14 @@
 , xorg, libxkbcommon
 , fontconfig, freetype, openssl, dbus, glib, systemd_lib, libxml2, libxslt, pcre
 , zlib, libjpeg, libpng, libtiff, sqlite, icu, harfbuzz, libinput, mtdev
+, pulseaudio_lib, alsa-lib
 
 , coreutils, bison, flex, gdb, gperf, ruby
 , python, perl, pkgconfig
 
 # optional dependencies
-, cups ? null
-, libmysql ? null, postgresql ? null
+, cups
+, mysql_lib, postgresql
 
 # options
 , mesa
@@ -162,7 +163,7 @@ stdenv.mkDerivation {
     "-dbus-linked"
 
     "-system-sqlite"
-    "-${if libmysql != null then "plugin" else "no"}-sql-mysql"
+    "-${if mysql_lib != null then "plugin" else "no"}-sql-mysql"
     "-${if postgresql != null then "plugin" else "no"}-sql-psql"
 
     "-make" "libs"
@@ -181,9 +182,11 @@ stdenv.mkDerivation {
     fontconfig freetype openssl dbus glib systemd_lib libxml2 libxslt pcre
     zlib libjpeg libpng libtiff sqlite icu harfbuzz libinput mtdev mesa
     xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilwm libxkbcommon
+    xorg.inputproto xorg.xproto xorg.renderproto xorg.libXfixes xorg.fixesproto
+    xorg.xcbutilrenderutil pulseaudio_lib alsa-lib
   ]
   ++ lib.optional (cups != null) cups
-  ++ lib.optional (libmysql != null) libmysql
+  ++ lib.optional (mysql_lib != null) mysql_lib
   ++ lib.optional (postgresql != null) postgresql
   ++ lib.optionals gtkStyle [gnome_vfs libgnomeui gtk2 GConf];
 

@@ -4,11 +4,11 @@ stdenv.mkDerivation rec {
   shortName = "setuptools-${version}";
   name = "${python.executable}-${shortName}";
 
-  version = "20.6.7";  # 18.4 and up breaks python34Packages.characteristic and many others
+  version = "20.7.0";  # 18.4 and up breaks python34Packages.characteristic and many others
 
   src = fetchurl {
     url = "https://pypi.python.org/packages/source/s/setuptools/${shortName}.tar.gz";
-    sha256 = "d20152ee6337323d3b6d95cd733fb719d6b4f3fbc40f61f7a48e5a1bb96478b2";
+    sha256 = "505cdf282c5f6e3a056e79f0244b8945f3632257bba8469386c6b9b396400233";
   };
 
   buildInputs = [ python wrapPython ];

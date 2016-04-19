@@ -468,12 +468,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       url = "https://pypi.python.org/packages/source/a/alabaster/${name}.tar.gz";
       sha256 = "f416a84e0d0ddbc288f6b8f2c276d10b40ca1238562cd9ed5a751292ec647b71";
     };
-
-    meta = {
-      homepage = https://github.com/bitprophet/alabaster;
-      description = "a Sphinx theme";
-      license = licenses.bsd3;
-    };
   };
 
 
@@ -826,15 +820,27 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   } else null;
 
   funcsigs = buildPythonPackage rec {
-    name = "funcsigs-0.4";
+    name = "funcsigs-1.0.0";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/f/funcsigs/${name}.tar.gz";
-      md5Confirm = "fb1d031f284233e09701f6db1281c2a5";
-      sha256 = "0cr0fzd62ypd5yjspdx1mnisi4b3a99v67gy023n39hf1ggycg6q";
+      sha256 = "2310f9d4a77c284e920ec572dc2525366a107b08d216ff8dbb891d95b6a77563";
     };
 
+    propagatedBuildInputs = with self; [
+      ordereddict
+    ];
+
     doCheck = false;
+  };
+
+  ordereddict = buildPythonPackage rec {
+    name = "ordereddict-1.1";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/o/ordereddict/${name}.tar.gz";
+      sha256 = "1c35b4ac206cef2d24816c89f89cf289dd3d38cf7c449bb3fab7bf6d43f01b1f";
+    };
   };
 
   apscheduler = buildPythonPackage rec {
@@ -970,36 +976,14 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
   };
 
-  argparse = buildPythonPackage (rec {
+  argparse = buildPythonPackage rec {
     name = "argparse-1.4.0";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/a/argparse/${name}.tar.gz";
       sha256 = "1r6nznp64j68ih1k537wms7h57nvppq0szmwsaf99n71bfjqkc32";
     };
-
-    checkPhase = ''
-      export PYTHONPATH=`pwd`/build/lib:$PYTHONPATH
-      ${python.interpreter} test/test_argparse.py
-    '';
-
-    # ordering issues in tests
-    doCheck = !isPy3k;
-
-    meta = {
-      homepage = http://code.google.com/p/argparse/;
-      license = licenses.asl20;
-      description = "argparse: Python command line parser";
-      longDescription = ''
-        The argparse module makes writing command line tools in Python
-        easy.  Just briefly describe your command line interface and
-        argparse will take care of the rest, including: parsing the
-        arguments and flags from sys.argv, converting arg strings into
-        objects for your program, formatting and printing any help
-        messages, and much more.
-      '';
-    };
-  });
+  };
 
   astroid = buildPythonPackage rec {
     name = "astroid-1.4.4";
@@ -3338,21 +3322,11 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   };
 
   coverage = buildPythonPackage rec {
-    name = "coverage-4.0.1";
+    name = "coverage-4.0.3";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/c/coverage/${name}.tar.gz";
-      sha256 = "0nrd817pzjw1haaz6gambgwf4jdjnh9kyxkgj6l8qgl6hdxga45w";
-    };
-
-    # TypeError: __call__() takes 1 positional argument but 2 were given
-    doCheck = !isPy3k;
-    buildInputs = with self; [ mock ];
-
-    meta = {
-      description = "Code coverage measurement for python";
-      homepage = http://nedbatchelder.com/code/coverage/;
-      license = licenses.bsd3;
+      sha256 = "85b1275b6d7a61ccc8024a4e9a4c9e896394776edce1a5d075ec116f91925462";
     };
   };
 
@@ -5810,11 +5784,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       url = "https://pypi.python.org/packages/source/i/itsdangerous/${name}.tar.gz";
       sha256 = "06856q6x675ly542ig0plbqcyab6ksfzijlyf1hzhgg3sgwgrcyb";
     };
-
-    meta = {
-      description = "helpers to pass trusted data to untrusted environments and back";
-      homepage = "https://pypi.python.org/pypi/itsdangerous/";
-    };
   };
 
   iniparse = buildPythonPackage rec {
@@ -8184,11 +8153,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       url = "mirror://sourceforge/docutils/${name}.tar.gz";
       sha256 = "1ylnjnw1x4b2y7blr6x35ncdzn69k253kw4cdkv6asdb21w73ny7";
     };
-
-    meta = {
-      description = "An open-source text processing system for processing plaintext documentation into useful formats, such as HTML or LaTeX";
-      homepage = http://docutils.sourceforge.net/;
-    };
   };
 
   doxypy = buildPythonPackage rec {
@@ -8533,7 +8497,13 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0wrkavjdjndknhp8ya8j850jq7a1cli4g5a93mg8nh1xz2gq50sc";
     };
 
-    propagatedBuildInputs = with self; [ itsdangerous click werkzeug jinja2 ];
+    buildInputs = with self; [
+      itsdangerous
+      jinja2
+      werkzeug
+    ];
+
+    doCheck = false;
   };
 
   flask_cache = buildPythonPackage rec {
@@ -10197,13 +10167,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [
       markupsafe
     ];
-
-    meta = {
-      homepage = http://jinja.pocoo.org/;
-      description = "Stand-alone template engine";
-      license = licenses.bsd3;
-      platforms = platforms.all;
-    };
   };
 
 
@@ -10803,40 +10766,27 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
 
   Mako = buildPythonPackage rec {
-    name = "Mako-1.0.2";
+    name = "Mako-1.0.4";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/M/Mako/${name}.tar.gz";
-      sha256 = "17k7jy3byi4hj6ksszib6gxbf6n7snnnirnbrdldn848abjc4l15";
+      sha256 = "fed99dbe4d0ddb27a33ee4910d8708aca9ef1fe854e668387a9ab9a90cbf9059";
     };
+    
+    buildInputs = with self; [
+      markupsafe
+    ];
 
-    buildInputs = with self; [ markupsafe nose mock ];
-    propagatedBuildInputs = with self; [ markupsafe ];
-
-    doCheck = !isPyPy;  # https://bitbucket.org/zzzeek/mako/issue/238/2-tests-failed-on-pypy-24-25
-
-    meta = {
-      description = "Super-fast templating language";
-      homepage = http://www.makotemplates.org;
-      license = licenses.mit;
-      maintainers = with maintainers; [ iElectric ];
-    };
+    doCheck = false;
   };
 
 
   markupsafe = buildPythonPackage rec {
-    name = "markupsafe-${version}";
-    version = "0.23";
+    name = "MarkupSafe-0.23";
 
     src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/M/MarkupSafe/MarkupSafe-${version}.tar.gz";
+      url = "https://pypi.python.org/packages/source/M/MarkupSafe/${name}.tar.gz";
       sha256 = "a4ec1aff59b95a14b45eb2e23761a0179e98319da5a7eb76b56ea8cdc7b871c3";
-    };
-
-    meta = {
-      description = "Implements a XML/HTML/XHTML Markup safe string";
-      homepage = http://dev.pocoo.org;
-      license = licenses.bsd3;
     };
   };
 
@@ -11251,11 +11201,11 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   };
 
   mock = buildPythonPackage rec {
-    name = "mock-1.3.0";
+    name = "mock-2.0.0";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/m/mock/${name}.tar.gz";
-      sha256 = "1xm0xkaz8d8d26kdk09f2n9vn543ssd03vmpkqlmgq3crjz7s90y";
+      sha256 = "b158b6df76edd239b8208d481dc46b6afd45a846b7812ff0ce58971cf5bc8bba";
     };
 
     propagatedBuildInputs = with self; [
@@ -12141,26 +12091,11 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   };
 
   nose = buildPythonPackage rec {
-    version = "1.3.7";
-    name = "nose-${version}";
+    name = "nose-1.3.7";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/n/nose/${name}.tar.gz";
       sha256 = "f1bffef9cbc82628f6e7d7b40d7e255aefaa1adb6a1b1d26c69a8b79e6208a98";
-    };
-
-    propagatedBuildInputs = [ self.coverage ];
-
-    doCheck = false;  # lot's of transient errors, too much hassle
-    checkPhase = if python.isPy3 or false then ''
-      ${python}/bin/${python.executable} setup.py build_tests
-    '' else "" + ''
-      rm functional_tests/test_multiprocessing/test_concurrent_shared.py* # see https://github.com/nose-devs/nose/commit/226bc671c73643887b36b8467b34ad485c2df062
-      ${python}/bin/${python.executable} selftest.py
-    '';
-
-    meta = {
-      description = "A unittest-based testing framework for python that makes writing and running tests easier";
     };
   };
 
@@ -12767,21 +12702,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   #     homepage = "http://simonwillison.net/2009/May/28/optfunc/";
   #   };
   # });
-
-  ordereddict = buildPythonPackage rec {
-    name = "ordereddict-1.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/o/ordereddict/${name}.tar.gz";
-      md5 = "a0ed854ee442051b249bfad0f638bbec";
-    };
-
-    meta = {
-      description = "A drop-in substitute for Py2.7's new collections.OrderedDict that works in Python 2.4-2.6.";
-      license = licenses.bsd3;
-      maintainers = with maintainers; [ garbas ];
-    };
-  };
 
   ply = buildPythonPackage (rec {
     name = "ply-3.8";
@@ -14372,11 +14292,11 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
   pbr = buildPythonPackage rec {
     name = "pbr-${version}";
-    version = "1.8.1";
+    version = "1.9.1";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/pbr/${name}.tar.gz";
-      sha256 = "0jcny36cf3s8ar5r4a575npz080hndnrfs4np1fqhv0ym4k7c4p2";
+      sha256 = "3997406c90894ebf3d1371811c1e099721440a901f946ca6dc4383350403ed51";
     };
 
     # circular dependencies with fixtures
@@ -15405,22 +15325,18 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
 
   Babel = buildPythonPackage rec {
-    name = "Babel-2.2.0";
+    name = "Babel-2.3.3";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/B/Babel/${name}.tar.gz";
-      sha256 = "d8cb4c0e78148aee89560f9fe21587aa57739c975bb89ff66b1e842cc697428f";
+      sha256 = "12dff9afa9c6cd6e2a39960d3cd4b46b2b98768cdc6646833c66b20799c1c58e";
     };
 
     propagatedBuildInputs = with self; [
       pytz
     ];
 
-    meta = {
-      homepage = http://babel.edgewall.org;
-      description = "A collection of tools for internationalizing Python applications";
-      license = licenses.bsd3;
-    };
+    doCheck = false;
   };
 
   pybfd = buildPythonPackage rec {
@@ -15900,12 +15816,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/P/Pygments/${name}.tar.gz";
       sha256 = "10axnp2wpjnq9g8wg53fx0c70dfxqrz498jyz8mrdx9a3flwir48";
-    };
-
-    meta = {
-      homepage = http://pygments.org/;
-      description = "A generic syntax highlighter";
-      license = licenses.bsd2;
     };
   };
 
@@ -19121,10 +19031,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       url = "https://pypi.python.org/packages/source/s/six/${name}.tar.gz";
       sha256 = "0snmb8xffb3vsma0z67i0h0w2g2dy0p3gsgh9gi4i0kgc5l8spqh";
     };
-
-    nativeBuildInputs = with self; [
-      pytest
-    ];
   };
 
 
@@ -19260,44 +19166,34 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
 
   sphinx = buildPythonPackage rec {
-    name = "Sphinx-1.3.6";
+    name = "Sphinx-1.4.1";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/S/Sphinx/${name}.tar.gz";
-      sha256 = "12pzlfkjjlwgvsj56k0y809jpx5mgcs9548k1l4kdbr028ifjfqb";
+      sha256 = "c6871a784d24aba9270b6b28541537a57e2fcf4d7c799410eba18236bc76d6bc";
     };
+
+    doCheck = false;
 
     propagatedBuildInputs = with self; [
-      Babel
-      snowballstemmer
-      sphinx_rtd_theme
-      six
-      pygments
-      docutils
-      jinja2
       alabaster
-      #docutils jinja2 pygments sphinx_rtd_theme
-      #alabaster Babel snowballstemmer six nose
+      Babel
+      docutils
+      imagesize
+      jinja2
+      pygments
+      snowballstemmer
+      six
     ];
-
-    meta = {
-      description = "A tool that makes it easy to create intelligent and beautiful documentation for Python projects";
-      homepage = http://sphinx.pocoo.org/;
-      license = licenses.bsd3;
-      platforms = platforms.all;
-    };
   };
 
-  sphinx_1_2 = self.sphinx.override rec {
-    name = "sphinx-1.2.3";
+  imagesize = buildPythonPackage rec {
+    name = "imagesize-0.7.0";
+
     src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/s/sphinx/sphinx-1.2.3.tar.gz";
-      sha256 = "94933b64e2fe0807da0612c574a021c0dac28c7bd3c4a23723ae5a39ea8f3d04";
+      url = "https://pypi.python.org/packages/source/i/imagesize/${name}.tar.gz";
+      sha256 = "bb3d10fca0f66f771298d19035d8e6d01aaafb9ec8d9ae972dcb8acb2cf94f57";
     };
-    patches = [];
-    disabled = isPy35;
-    # Tests requires Pygments >=2.0.2 which isn't worth keeping around for this:
-    doCheck = false;
   };
 
   sphinx_rtd_theme = buildPythonPackage (rec {
@@ -21213,22 +21109,14 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
 
   werkzeug = buildPythonPackage rec {
-    name = "Werkzeug-0.10.4";
+    name = "Werkzeug-0.11.8";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/W/Werkzeug/${name}.tar.gz";
-      sha256 = "9d2771e4c89be127bc4bac056ab7ceaf0e0064c723d6b6e195739c3af4fd5c1d";
+      sha256 = "729730a25f43a29ac6a79f08384ea18a3a125d07079492e15c3b3c2a3f090c37";
     };
-
-    propagatedBuildInputs = with self; [ itsdangerous ];
 
     doCheck = false;            # tests fail, not sure why
-
-    meta = {
-      homepage = http://werkzeug.pocoo.org/;
-      description = "A WSGI utility library for Python";
-      license = "BSD";
-    };
   };
 
   wheel = buildPythonPackage rec {

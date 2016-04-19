@@ -1,8 +1,8 @@
 { stdenv
 , fetchurl
 
-, xlibsWrapper
 , imlib2
+, xorg
 }:
 
 stdenv.mkDerivation rec {
@@ -15,8 +15,9 @@ stdenv.mkDerivation rec {
   };
   
   buildInputs = [
-    xlibsWrapper
     imlib2
+    xorg.libX11
+    xorg.xproto
   ];
 
   meta = with stdenv.lib; {

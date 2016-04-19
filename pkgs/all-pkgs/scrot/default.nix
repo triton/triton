@@ -2,7 +2,7 @@
 , fetchurl
 
 , giblib
-, xlibsWrapper
+, xorg
 }:
 
 stdenv.mkDerivation rec {
@@ -15,7 +15,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     giblib
-    xlibsWrapper
+    xorg.libX11
+    xorg.xproto
   ];
 
   meta = with stdenv.lib; {

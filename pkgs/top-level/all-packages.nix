@@ -753,6 +753,8 @@ f2fs-tools = callPackage ../all-pkgs/f2fs-tools { };
 
 faac = callPackage ../all-pkgs/faac { };
 
+fcgi = callPackage ../all-pkgs/fcgi { };
+
 feh = callPackage ../all-pkgs/feh { };
 
 ffmpeg_2 = callPackage ../all-pkgs/ffmpeg {
@@ -6376,8 +6378,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  farsight2 = callPackage ../development/libraries/farsight2 { };
 #
 #  farstream = callPackage ../development/libraries/farstream { };
-#
-  fcgi = callPackage ../development/libraries/fcgi { };
 #
 #  ffmpegthumbnailer = callPackage ../development/libraries/ffmpegthumbnailer { };
 #

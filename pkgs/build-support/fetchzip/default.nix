@@ -86,6 +86,7 @@ lib.overrideDerivation (fetchurl (rec {
         i=0
       fi
     done
+    wait
   '' + ''
     echo "Building Archive ${name}" >&2
     tar --sort=name --owner=0 --group=0 --numeric-owner \

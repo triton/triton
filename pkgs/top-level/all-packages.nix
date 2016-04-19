@@ -1306,6 +1306,8 @@ libpng = callPackage ../all-pkgs/libpng { };
 
 libraw = callPackage ../all-pkgs/libraw { };
 
+libraw1394 = callPackage ../all-pkgs/libraw1394 { };
+
 libressl = callPackage ../all-pkgs/libressl { };
 
 librdmacm = callPackage ../all-pkgs/librdmacm { };
@@ -9012,8 +9014,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   libselinux = callPackage ../os-specific/linux/libselinux { };
 #
   libsemanage = callPackage ../os-specific/linux/libsemanage { };
-#
-  libraw1394 = callPackage ../development/libraries/libraw1394 { };
 #
 #  libsass = callPackage ../development/libraries/libsass { };
 #

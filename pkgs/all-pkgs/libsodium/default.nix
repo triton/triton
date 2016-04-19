@@ -2,6 +2,7 @@
 
 let
   genUrls = version: [
+    "https://github.com/jedisct1/libsodium/releases/download/${version}/libsodium-${version}.tar.gz"
     "https://download.libsodium.org/libsodium/releases/libsodium-${version}.tar.gz"
     "mirror://gentoo/distfiles/libsodium-${version}.tar.gz"
   ];

@@ -132,9 +132,11 @@ stdenv.mkDerivation rec {
     xorg.libXi
     xorg.libX11
     xorg.libXrender
+    xorg.libXfixes
     xorg.libXft
     xorg.libXt
     xorg.libXScrnSaver
+    xorg.renderproto
     xorg.scrnsaverproto
     xorg.pixman
     xorg.libXext

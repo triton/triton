@@ -76,6 +76,10 @@ stdenv.mkDerivation rec {
     postgresql
     pulseaudio_lib
     sqlite
+    xorg.fixesproto
+    xorg.inputproto
+    xorg.kbproto
+    xorg.libICE
     xorg.libSM
     xorg.libX11
     xorg.libXcursor
@@ -86,6 +90,10 @@ stdenv.mkDerivation rec {
     xorg.libXrandr
     xorg.libXrender
     xorg.libXv
+    xorg.randrproto
+    xorg.renderproto
+    xorg.xextproto
+    xorg.xproto
     zlib
   ];
 

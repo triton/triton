@@ -842,6 +842,10 @@ gjs = callPackage ../all-pkgs/gjs { };
 
 gksu = callPackage ../all-pkgs/gksu { };
 
+glfw = callPackageAlias "glfw3" { };
+glfw2 = callPackage ../all-pkgs/glfw/2.x.nix { };
+glfw3 = callPackage ../all-pkgs/glfw/3.x.nix { };
+
 glib = callPackage ../all-pkgs/glib { };
 # checked version separate to break recursion
 glib_tested = callPackageAlias "glib" {
@@ -6464,10 +6468,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  glew = callPackage ../development/libraries/glew { };
 #  glew110 = callPackage ../development/libraries/glew/1.10.nix { };
-#
-#  glfw = glfw3;
-#  glfw2 = callPackage ../development/libraries/glfw/2.x.nix { };
-#  glfw3 = callPackage ../development/libraries/glfw/3.x.nix { };
 #
   glibc = callPackage ../development/libraries/glibc { };
 

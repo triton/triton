@@ -1,4 +1,9 @@
-{ stdenv, fetchurl, mesa, libX11 }:
+{ stdenv
+, fetchurl
+
+, mesa
+, xorg
+}:
 
 stdenv.mkDerivation rec {
   name = "glfw-2.7.9";
@@ -8,7 +13,11 @@ stdenv.mkDerivation rec {
     sha256 = "17c2msdcb7pn3p8f83805h1c216bmdqnbn9hgzr1j8wnwjcpxx6i";
   };
 
-  buildInputs = [ mesa libX11 ];
+  buildInputs = [
+    mesa
+    xorg.libX11
+    xorg.xproto
+  ];
 
   buildPhase = ''
     make x11
@@ -22,10 +31,12 @@ stdenv.mkDerivation rec {
   ''; 
   
   meta = with stdenv.lib; { 
-    description = "Multi-platform library for creating OpenGL contexts and managing input, including keyboard, mouse, joystick and time";
     homepage = "http://glfw.sourceforge.net/";
     license = licenses.zlib;
-    maintainers = [ stdenv.lib.maintainers.marcweber ];
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

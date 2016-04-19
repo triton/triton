@@ -707,6 +707,8 @@ dhcp = callPackage ../all-pkgs/dhcp { };
 
 dhcpcd = callPackage ../all-pkgs/dhcpcd { };
 
+discosrv = pkgs.goPackages.discosrv.bin // { outputs = [ "bin" ]; };
+
 diffutils = callPackage ../all-pkgs/diffutils { };
 
 dnscrypt-proxy = callPackage ../all-pkgs/dnscrypt-proxy { };
@@ -947,6 +949,16 @@ go_1_6 = callPackageAlias "go" {
   channel = "1.6";
 };
 
+go16Packages = callPackage ./go-packages.nix {
+  go = callPackageAlias "go_1_6" { };
+  buildGoPackage = callPackage ../development/go-modules/generic {
+    go = callPackageAlias "go_1_6" { };
+    govers = (callPackageAlias "go16Packages" { }).govers.bin;
+  };
+  overrides = (config.goPackageOverrides or (p: {})) pkgs;
+};
+goPackages = callPackageAlias "go16Packages" { };
+
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
 gobjectIntrospection = callPackageAlias "gobject-introspection" { }; # Deprecated alias
 
@@ -1110,6 +1122,8 @@ inkscape = callPackage ../all-pkgs/inkscape { };
 
 intltool = callPackage ../all-pkgs/intltool { };
 
+ipfs = pkgs.goPackages.ipfs.bin // { outputs = [ "bin" ]; };
+
 ipfs-hasher = callPackage ../all-pkgs/ipfs-hasher { };
 
 ipset = callPackage ../all-pkgs/ipset { };
@@ -1164,6 +1178,8 @@ kubernetes = callPackage ../all-pkgs/kubernetes { };
 lame = callPackage ../all-pkgs/lame { };
 
 ldb = callPackage ../all-pkgs/ldb { };
+
+lego = pkgs.goPackages.lego.bin // { outputs = [ "bin" ]; };
 
 leptonica = callPackage ../all-pkgs/leptonica { };
 
@@ -1415,6 +1431,8 @@ lm-sensors = callPackage ../all-pkgs/lm-sensors { };
 
 lvm2 = callPackage ../all-pkgs/lvm2 { };
 
+lxd = pkgs.goPackages.lxd.bin // { outputs = [ "bin" ]; };
+
 lz4 = callPackage ../all-pkgs/lz4 { };
 
 lzip = callPackage ../all-pkgs/lzip { };
@@ -1458,6 +1476,8 @@ minisign = callPackage ../all-pkgs/minisign { };
 mixxx = callPackage ../all-pkgs/mixxx { };
 
 mkvtoolnix = callPackage ../all-pkgs/mkvtoolnix { };
+
+mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 
 mp4v2 = callPackage ../all-pkgs/mp4v2 { };
 
@@ -1546,6 +1566,8 @@ ninja = callPackage ../all-pkgs/ninja { };
 nmap = callPackage ../all-pkgs/nmap { };
 
 noise = callPackage ../all-pkgs/noise { };
+
+nomad = pkgs.goPackages.nomad.bin // { outputs = [ "bin" ]; };
 
 nss_wrapper = callPackage ../all-pkgs/nss_wrapper { };
 
@@ -1757,6 +1779,8 @@ recode = callPackage ../all-pkgs/recode { };
 
 redis = callPackage ../all-pkgs/redis { };
 
+relaysrv = pkgs.goPackages.relaysrv.bin // { outputs = [ "bin" ]; };
+
 resolv_wrapper = callPackage ../all-pkgs/resolv_wrapper { };
 
 rest = callPackage ../all-pkgs/rest { };
@@ -1832,6 +1856,8 @@ swig2 = callPackageAlias "swig" {
   channel = "2";
 };
 
+syncthing = pkgs.goPackages.syncthing.bin // { outputs = [ "bin" ]; };
+
 syslinux = callPackage ../all-pkgs/syslinux { };
 
 # TODO: Rename back to systemd once depedencies are sorted
@@ -1882,6 +1908,8 @@ util-linux_lib = callPackageAlias "util-linux_full" {
 vaapi-intel = callPackage ../all-pkgs/vaapi-intel { };
 
 vala = callPackage ../all-pkgs/vala { };
+
+vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
 vim = callPackage ../all-pkgs/vim { };
 
@@ -2369,8 +2397,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  };
 #
 #  mcrypt = callPackage ../tools/misc/mcrypt { };
-#
-  mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 #
 #  mstflint = callPackage ../tools/misc/mstflint { };
 #
@@ -3204,10 +3230,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   iperf3 = callPackage ../tools/networking/iperf/3.nix { };
   iperf = callPackageAlias "iperf3" { };
 
-  ipfs = pkgs.goPackages.ipfs.bin // { outputs = [ "bin" ]; };
-
-  lego = pkgs.goPackages.lego.bin // { outputs = [ "bin" ]; };
-
   ipmitool = callPackage ../tools/system/ipmitool {
     static = false;
   };
@@ -3351,8 +3373,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  nodePackages = nodePackages_5_x;
 #
-  nomad = pkgs.goPackages.nomad.bin // { outputs = [ "bin" ]; };
-
 #  npm2nix = nodePackages.npm2nix;
 #
 #  ldapvi = callPackage ../tools/misc/ldapvi { };
@@ -3428,7 +3448,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  lshw = callPackage ../tools/system/lshw { };
 #
   lxc = callPackage ../os-specific/linux/lxc { };
-  lxd = pkgs.goPackages.lxd.bin // { outputs = [ "bin" ]; };
 #
 #  lzop = callPackage ../tools/compression/lzop { };
 #
@@ -8056,16 +8075,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  ### DEVELOPMENT / GO MODULES
 #
-  go16Packages = callPackage ./go-packages.nix {
-    go = callPackageAlias "go_1_6" { };
-    buildGoPackage = callPackage ../development/go-modules/generic {
-      go = callPackageAlias "go_1_6" { };
-      govers = (callPackageAlias "go16Packages" { }).govers.bin;
-    };
-    overrides = (config.goPackageOverrides or (p: {})) pkgs;
-  };
-
-  goPackages = callPackageAlias "go16Packages" { };
 #
 #  ### DEVELOPMENT / LISP MODULES
 #
@@ -11221,10 +11230,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  symlinks = callPackage ../tools/system/symlinks { };
 #
-  syncthing = pkgs.goPackages.syncthing.bin // { outputs = [ "bin" ]; };
-  discosrv = pkgs.goPackages.discosrv.bin // { outputs = [ "bin" ]; };
-  relaysrv = pkgs.goPackages.relaysrv.bin // { outputs = [ "bin" ]; };
-#
 #  # linux only by now
 #  synergy = callPackage ../applications/misc/synergy { };
 #
@@ -12455,8 +12460,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  urbit = callPackage ../misc/urbit { };
 #
 #  utf8proc = callPackage ../development/libraries/utf8proc { };
-#
-  vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 #
 #  vbam = callPackage ../misc/emulators/vbam {};
 #

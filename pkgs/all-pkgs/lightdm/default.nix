@@ -14,7 +14,7 @@
 
 let
   ver_branch = "1.18";
-  version = "1.18.0";
+  version = "1.18.1";
 in
 
 stdenv.mkDerivation rec {
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://launchpad.net/lightdm/${ver_branch}/${version}/+download/${name}.tar.xz";
-    sha256 = "2fb92fc71bed5506bfe2635656dec5565d8adf89c15b046ce3df2d4fcc66fb1f";
+    sha256 = "85488565e42089ec025a2f330cff97fa615b02777dbab86a916b209a2cfc89fa";
   };
 
   patches = [

@@ -369,6 +369,7 @@ stdenv.mkDerivation rec {
     x264
     x265
     xorg.libX11
+    xorg.xproto
     xvidcore
     xz
     zlib

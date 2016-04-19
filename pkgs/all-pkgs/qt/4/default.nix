@@ -92,6 +92,7 @@ stdenv.mkDerivation rec {
     xorg.libXv
     xorg.randrproto
     xorg.renderproto
+    xorg.videoproto
     xorg.xextproto
     xorg.xproto
     zlib

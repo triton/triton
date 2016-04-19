@@ -255,9 +255,7 @@ let
     # Set GOTOOLDIR for derivations adding this to buildInputs
     postInstall = ''
       mkdir -p $bin/nix-support
-      substituteAll ${../development/go-modules/tools/setup-hook.sh} $bin/nix-support/setup-hook.tmp
-      cat $bin/nix-support/setup-hook.tmp >> $bin/nix-support/setup-hook
-      rm $bin/nix-support/setup-hook.tmp
+      echo "export GOTOOLDIR=$bin/bin" >> $bin/nix-support/setup-hook
     '';
   };
 

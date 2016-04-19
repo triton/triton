@@ -38,6 +38,7 @@ stdenv.mkDerivation rec {
     openexr
     mesa
   ] ++ optionals (xorg != null) [
+    xorg.xproto
     xorg.libX11
   ];
 

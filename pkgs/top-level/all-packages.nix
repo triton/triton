@@ -8567,7 +8567,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
       autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman systemd_lib
       libdrm;
     mesa = pkgs.mesa_noglu;
-  } // { inherit (pkgs) xlibsWrapper; } );
+  });
 
   xwayland = callPackage ../servers/x11/xorg/xwayland.nix { };
 #

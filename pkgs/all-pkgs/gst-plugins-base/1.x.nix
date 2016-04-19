@@ -54,6 +54,9 @@ stdenv.mkDerivation rec {
     xorg.libX11
     xorg.libXext
     xorg.libXv
+    xorg.videoproto
+    xorg.xextproto
+    xorg.xproto
     zlib
   ];
 

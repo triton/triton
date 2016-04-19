@@ -4,7 +4,6 @@
 
 , python
 , cairo
-, xlibsWrapper
 , isPyPy
 , xorg
 }:

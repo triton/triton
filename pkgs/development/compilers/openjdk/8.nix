@@ -54,7 +54,7 @@ let
     buildInputs = [
       cpio file which unzip zip
       xorg.xproto xorg.inputproto xorg.libICE xorg.xextproto xorg.renderproto
-      xorg.libX11 xorg.libXt xorg.libXext xorg.libXrender xorg.libXtst
+      xorg.libX11 xorg.libSM xorg.libXt xorg.libXext xorg.libXrender xorg.libXtst
       xorg.kbproto xorg.libXi xorg.libXinerama xorg.libXcursor xorg.lndir
       cups freetype alsa-lib perl liberation_ttf fontconfig bootjdk zlib
     ];

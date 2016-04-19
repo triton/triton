@@ -106,9 +106,9 @@ let
     '';
 
     buildInputs = defaultDependencies ++ [
-      atk xorg.libX11 xorg.libXi xorg.libXrandr
-      xorg.libXcomposite xorg.libXext dbus fontconfig
-      freetype pango libffi cairo
+      atk xorg.libXfixes xorg.libX11 xorg.libXi xorg.libXrandr
+      xorg.libXcomposite xorg.libXext xorg.libXrender dbus fontconfig
+      xorg.xproto freetype pango libffi cairo
       which
       python perl pkgconfig
       nspr nss systemd_lib

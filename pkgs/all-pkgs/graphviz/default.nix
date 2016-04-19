@@ -1,19 +1,22 @@
 { stdenv
+, bison
 , fetchTritonPatch
 , fetchurl
-, libpng
-, libjpeg
-, expat
-, xorg
-, bison
+, flex
 , libtool
-, fontconfig
-, pango
+, swig
+
+, cairo
+, devil
+, expat
 , gd
 , gts
-, devil
-, cairo
-, flex
+, fontconfig
+, libpng
+, libjpeg
+, pango
+, xorg
+, zlib
 }:
 
 let
@@ -47,21 +50,31 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  buildInputs = [
-    libpng
-    libjpeg
-    expat
+  nativeBuildInputs = [
     bison
+    flex
     libtool
-    fontconfig
+    swig
+  ];
+
+  buildInputs = [
+    devil
+    expat
     gd
     gts
-    devil
+    fontconfig
+    libjpeg
+    libpng
     pango
-    flex
-    xorg.xlibsWrapper
-    xorg.libXrender
+    xorg.libICE
+    xorg.libX11
     xorg.libXaw
+    xorg.libXmu
+    xorg.libXpm
+    xorg.libXrender
+    xorg.libXt
+    xorg.xproto
+    zlib
   ];
 
   configureFlags = [

@@ -19,12 +19,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "wxwidgets-${version}";
-  version = "3.0.2";
+  name = "wxWidgets-${version}";
+  version = "3.1.0";
 
   src = fetchurl {
-    url = "mirror://sourceforge/wxwindows/wxWidgets-${version}.tar.bz2";
-    sha256 = "0paq27brw4lv8kspxh9iklpa415mxi8zc117vbbbhfjgapf7js1l";
+    url = "https://github.com/wxWidgets/wxWidgets/releases/download/v${version}/${name}.tar.bz2";
+    sha1Confirm = "2170839cfa9d9322e8ee8368b21a15a2497b4f11";
+    sha256 = "e082460fb6bf14b7dd6e8ac142598d1d3d0b08a7b5ba402fdbf8711da7e66da8";
   };
 
   buildInputs = [

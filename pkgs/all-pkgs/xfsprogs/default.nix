@@ -8,12 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xfsprogs-4.3.0";
+  name = "xfsprogs-4.5.0";
 
   src = fetchurl {
     urls = map (dir: "ftp://oss.sgi.com/projects/xfs/${dir}/${name}.tar.gz")
       [ "cmd_tars" "previous" ];
-    sha256 = "0p6bsh350zf85q8a7sv6s5anpm6vbn02qazlj8vvxr2k27ahlmry";
+    sha256 = "1y49rwvbbvqdq2a1x7p5i05bcfyv6xhmrfwafl6vvvw494qyp6z4";
   };
 
   nativeBuildInputs = [

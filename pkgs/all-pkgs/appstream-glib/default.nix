@@ -1,6 +1,4 @@
 { stdenv
-#, docbook_xml_dtd_43
-#, docbook_xsl
 , fetchurl
 , gettext
 , intltool
@@ -21,23 +19,16 @@
 , util-linux_lib
 }:
 
-let
-  inherit (stdenv.lib)
-    enFlag;
-in
-
 stdenv.mkDerivation rec {
-  name = "appstream-glib-0.5.12";
+  name = "appstream-glib-0.5.13";
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/appstream-glib/"
         + "releases/${name}.tar.xz";
-    sha256 = "39e1ad771f1a44a3d409618dc17600217ab398d06075f3029c8e96f4100d14ef";
+    sha256 = "ee32f3e4d20b7e8fe58da85f277d2e1821ab845de23cdb61bda4e50c84b9c308";
   };
 
   nativeBuildInputs = [
-    #docbook_xml_dtd_43
-    #docbook_xsl
     gettext
     intltool
   ];
@@ -61,7 +52,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-largefile"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--enable-introspection"
     "--enable-nls"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"

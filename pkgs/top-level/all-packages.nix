@@ -972,6 +972,8 @@ gperftools = callPackage ../all-pkgs/gperftools { };
 
 gpm = callPackage ../all-pkgs/gpm+ncurses { };
 
+gptfdisk = callPackage ../all-pkgs/gptfdisk { };
+
 granite = callPackage ../all-pkgs/granite { };
 
 graphviz = callPackage ../all-pkgs/graphviz { };
@@ -3024,8 +3026,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gparted = callPackage ../tools/misc/gparted { };
 #
 #  gpodder = callPackage ../applications/audio/gpodder { };
-#
-  gptfdisk = callPackage ../tools/system/gptfdisk { };
 #
 #  grafana-old = callPackage ../development/tools/misc/grafana { };
 #

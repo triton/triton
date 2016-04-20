@@ -18,8 +18,8 @@ let
     else
       throw "openjdk requires i686-linux or x86_64 linux";
 
-  update = "77";
-  build = "03";
+  update = "92";
+  build = "14";
   baseurl = "http://hg.openjdk.java.net/jdk8u/jdk8u";
   repover = "jdk8u${update}-b${build}";
 
@@ -33,14 +33,14 @@ let
     name = "openjdk-8u${update}b${build}";
 
     srcs = [
-      (fetchjava "" "4de7ac9e083b577c61b861660e1883c8e3d36024860ac95390fe5113cd51aa85")
-      (fetchjava "langtools" "40d450dc4a1799a0d913af40b97ad22bd713974f29f2b4bcc4fbfae2c1dc3412")
-      (fetchjava "hotspot" "166058d86a5f078094f6de2ba534b28837124bcc7688b72c67dc3b6beb41a013")
-      (fetchjava "corba" "8e556b9cb8321a1007894358405365f43a5138e04647436aea2dabd4457a5c11")
-      (fetchjava "jdk" "3c0bcc0afda1f4bb27ae8f15ed5ebaafc7ce90e9d304e3cb53e202ac911a8de5")
-      (fetchjava "jaxws" "240313419da136cac61293ff867568fd4342faff1d66688af66d4fd0d45047c4")
-      (fetchjava "jaxp" "f671cdb170bd50681d1c97051740b69952764d3eda17a5d1523a0a830ab401ab")
-      (fetchjava "nashorn" "eab31307c8325823667ed376cee0ebea5cafe90d1bff8eec66457532fddd72a7")
+      (fetchjava "" "19bc6028c18dd1993f734dc49991c181138e2e85ead42354d7236fb3c6169e16")
+      (fetchjava "langtools" "374d12d1434172c775f0ecd944d0a903cd56264a4c9d5ef0be038715e47e67fd")
+      (fetchjava "hotspot" "653821c6d3e542b4922aeedea6e25efb6d3c6ea2aaa0f5b038e6af972accf814")
+      (fetchjava "corba" "287edac284f4b97f48a14fea331455c3807bcffd51612278decb0ac265303069")
+      (fetchjava "jdk" "9a344a13bb327c5533c22c95b2cf3935d1d4c1612366e1d142b265dd6b93fe69")
+      (fetchjava "jaxws" "77aea5c781d6614b4be391befc59e3017d2d9c9303b6bc2ca9d316cb35954a89")
+      (fetchjava "jaxp" "63eff7fe1f6a0dd7ec0c450724a403dcff986e026b5b9ae9ac46edc7222f798c")
+      (fetchjava "nashorn" "76a18e240a8498c8d2a3a261b7845c8062dbf85941425adcd96f9e879141b3e6")
     ];
 
     sourceRoot = ".";

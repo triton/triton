@@ -1,7 +1,6 @@
 { stdenv
 , cmake
 , fetchFromGitHub
-, ninja
 
 , glib
 , zlib
@@ -22,7 +21,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
-    ninja
   ];
 
   buildInputs = [

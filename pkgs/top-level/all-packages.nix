@@ -811,6 +811,8 @@ flex = callPackage ../all-pkgs/flex { };
 
 freeglut = callPackage ../all-pkgs/freeglut { };
 
+fuse = callPackage ../all-pkgs/fuse { };
+
 game-music-emu = callPackage ../all-pkgs/game-music-emu { };
 
 gawk = callPackage ../all-pkgs/gawk { };
@@ -8721,8 +8723,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  firejail = callPackage ../os-specific/linux/firejail {};
 #
 #  freefall = callPackage ../os-specific/linux/freefall { };
-#
-  fuse = callPackage ../os-specific/linux/fuse { };
 #
 #  fusionio-util = callPackage ../os-specific/linux/fusionio/util.nix { };
 #

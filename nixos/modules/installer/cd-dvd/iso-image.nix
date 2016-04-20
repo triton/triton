@@ -248,45 +248,75 @@ in
         "boot.shell_on_fail"
       ];
 
-    fileSystems."/" =
-      { fsType = "tmpfs";
-        options = [ "mode=0755" ];
-      };
+    fileSystems = mkMerge [
+      (mkOrder 0 {
+        mountPoint = "/";
+        fsType = "tmpfs";
+        options = [
+          "defaults"
+          "mode=0755"
+        ];
+      })
 
-    # Note that /dev/root is a symlink to the actual root device
-    # specified on the kernel command line, created in the stage 1
-    # init script.
-    fileSystems."/iso" =
-      { device = "/dev/root";
+      # Note that /dev/root is a symlink to the actual root device
+      # specified on the kernel command line, created in the stage 1
+      # init script.
+      (mkOrder 1 {
+        mountPoint = "/iso";
+        device = "/dev/root";
         neededForBoot = true;
         noCheck = true;
-      };
+      })
 
-    # In stage 1, mount a tmpfs on top of /nix/store (the squashfs
-    # image) to make this a live CD.
-    fileSystems."/nix/.ro-store" =
-      { fsType = "squashfs";
+      # In stage 1, mount a tmpfs on top of /nix/store (the squashfs
+      # image) to make this a live CD.
+      (mkOrder 2 {
+        mountPoint = "/nix/.ro-store";
+        fsType = "squashfs";
         device = "/iso/nix-store.squashfs";
-        options = [ "loop" ];
+        options = [
+          "defaults"
+          "loop"
+        ];
         neededForBoot = true;
-      };
+      })
 
-    fileSystems."/nix/.rw-store" =
-      { fsType = "tmpfs";
-        options = [ "mode=0755" ];
+      # This is the temp space for new items in the store
+      (mkOrder 1 {
+        mountPoint = "/nix/.rw-store";
+        fsType = "tmpfs";
+        options = [
+          "defaults"
+          "mode=0755"
+        ];
         neededForBoot = true;
-      };
+      })
+      (mkOrder 1 {
+        mountPoint = "/workdir";
+        fsType = "tmpfs";
+        options = [
+          "defaults"
+          "mode=0755"
+        ];
+        neededForBoot = true;
+      })
 
-    fileSystems."/nix/store" =
-      { fsType = "unionfs-fuse";
-        device = "unionfs";
-        options = [ "allow_other" "cow" "nonempty" "chroot=/mnt-root" "max_files=32768" "hide_meta_files" "dirs=/nix/.rw-store=rw:/nix/.ro-store=ro" ];
-      };
+      # Finally we merge the squashfs with the temp space
+      (mkOrder 3 {
+        mountPoint = "/nix/store";
+        fsType = "overlay";
+        device = "overlay";
+        options = [
+          "defaults"
+          "lowerdir=/nix/.ro-store"
+          "upperdir=/nix/.rw-store"
+          "workdir=/workdir"
+        ];
+        neededForBoot = true;
+      })
 
     boot.initrd.availableKernelModules = [ "squashfs" "iso9660" "usb-storage" ];
-
     boot.blacklistedKernelModules = [ "nouveau" ];
-
     boot.initrd.kernelModules = [ "loop" ];
 
     # Closures to be copied to the Nix store on the CD, namely the init

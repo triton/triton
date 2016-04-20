@@ -140,7 +140,5 @@ let cfg = config.ec2; in
 
     # Always include cryptsetup so that Charon can use it.
     environment.systemPackages = [ pkgs.cryptsetup ];
-
-    boot.initrd.supportedFilesystems = [ "unionfs-fuse" ];
   };
 }

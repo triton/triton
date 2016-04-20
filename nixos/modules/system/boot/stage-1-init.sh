@@ -325,13 +325,6 @@ mountFS() {
             ;;
     esac
 
-    # Create backing directories for unionfs-fuse.
-    if [ "$fsType" = unionfs-fuse ]; then
-        for i in $(IFS=:; echo ${options##*,dirs=}); do
-            mkdir -m 0700 -p /mnt-root"${i%=*}"
-        done
-    fi
-
     echo "mounting $device on $mountPoint..."
 
     mkdir -p "/mnt-root$mountPoint"
@@ -438,7 +431,7 @@ exec 1>&$logOutFd 2>&$logErrFd
 eval "exec $logOutFd>&- $logErrFd>&-"
 
 # Kill any remaining processes, just to be sure we're not taking any
-# with us into stage 2. But keep storage daemons like unionfs-fuse.
+# with us into stage 2. But keep storage daemons.
 pkill -9 -v -f '@'
 
 

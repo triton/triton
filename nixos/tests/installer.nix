@@ -191,7 +191,6 @@ let
               [ pkgs.sudo
                 pkgs.docbook5
                 pkgs.docbook5_xsl
-                pkgs.unionfs-fuse
                 pkgs.ntp
                 pkgs.nixos-artwork
                 pkgs.gummiboot

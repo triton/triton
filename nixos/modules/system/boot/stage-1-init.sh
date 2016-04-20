@@ -308,22 +308,38 @@ mountFS() {
         if [ -z "$fsType" ]; then fsType=auto; fi
     fi
 
-    # Filter out x- options, which busybox doesn't do yet.
-    local optionsFiltered="$(IFS=,; for i in $options; do if [ "${i:0:2}" != "x-" ]; then echo -n $i,; fi; done)"
-
-    echo "$device /mnt-root$mountPoint $fsType $optionsFiltered" >> /etc/fstab
-
     checkFS "$device" "$fsType"
 
-    # Optionally resize the filesystem.
-    case $options in
-        *x-nixos.autoresize*)
-            if [ "$fsType" = ext2 -o "$fsType" = ext3 -o "$fsType" = ext4 ]; then
-                echo "resizing $device..."
-                resize2fs "$device"
-            fi
-            ;;
-    esac
+    optionsFiltered=""
+    for option in $(IFS=,; echo $options); do
+      case $option in
+        x-nixos.autoresize)
+          if [ "$fsType" = ext2 -o "$fsType" = ext3 -o "$fsType" = ext4 ]; then
+            echo "resizing $device..."
+            resize2fs "$device"
+          else
+            echo "we dont know how to resize $device..."
+            exit 1
+          fi
+          ;;
+        upperdir=* | lowerdir=* | workdir=*)
+          DIRS=($(echo "$option" | sed -e 's,^[a-z]*dir=,,' -e 's,:,\n,g' | sed 's,^/,/mnt-root/,g'))
+          echo "${DIRS[@]}" | xargs mkdir -p
+          str=""
+          for DIR in "${DIRS[@]}"; do
+            str+=":$DIR"
+          done
+          optionsFiltered+=",$(echo "$option" | sed -n 's,^\([a-z]*dir\)=.*$,\1,p')=${str:1}"
+          ;;
+        x-*)
+          ;;
+        *)
+          optionsFiltered+=",$option"
+          ;;
+      esac
+    done
+
+    echo "$device /mnt-root$mountPoint $fsType ${optionsFiltered:1}" >> /etc/fstab
 
     echo "mounting $device on $mountPoint..."
 

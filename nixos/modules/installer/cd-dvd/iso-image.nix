@@ -256,6 +256,7 @@ in
           "defaults"
           "mode=0755"
         ];
+        neededForBoot = true;
       })
 
       # Note that /dev/root is a symlink to the actual root device
@@ -281,26 +282,6 @@ in
         neededForBoot = true;
       })
 
-      # This is the temp space for new items in the store
-      (mkOrder 1 {
-        mountPoint = "/nix/.rw-store";
-        fsType = "tmpfs";
-        options = [
-          "defaults"
-          "mode=0755"
-        ];
-        neededForBoot = true;
-      })
-      (mkOrder 1 {
-        mountPoint = "/workdir";
-        fsType = "tmpfs";
-        options = [
-          "defaults"
-          "mode=0755"
-        ];
-        neededForBoot = true;
-      })
-
       # Finally we merge the squashfs with the temp space
       (mkOrder 3 {
         mountPoint = "/nix/store";
@@ -314,6 +295,7 @@ in
         ];
         neededForBoot = true;
       })
+    ];
 
     boot.initrd.availableKernelModules = [ "squashfs" "iso9660" "usb-storage" ];
     boot.blacklistedKernelModules = [ "nouveau" ];

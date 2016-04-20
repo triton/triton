@@ -50,15 +50,15 @@ let
       done
 
       # Copy some utillinux stuff.
-      copy_bin_and_libs ${pkgs.util-linux_full}/sbin/blkid
+      copy_bin_and_libs ${pkgs.util-linux_full}/bin/blkid
 
       # Copy dmsetup and lvm.
-      copy_bin_and_libs ${pkgs.lvm2}/sbin/dmsetup
-      copy_bin_and_libs ${pkgs.lvm2}/sbin/lvm
+      copy_bin_and_libs ${pkgs.lvm2}/bin/dmsetup
+      copy_bin_and_libs ${pkgs.lvm2}/bin/lvm
 
       # Add RAID mdadm tool.
-      copy_bin_and_libs ${pkgs.mdadm}/sbin/mdadm
-      copy_bin_and_libs ${pkgs.mdadm}/sbin/mdmon
+      copy_bin_and_libs ${pkgs.mdadm}/bin/mdadm
+      copy_bin_and_libs ${pkgs.mdadm}/bin/mdmon
 
       # Copy udev.
       copy_bin_and_libs ${udev}/lib/systemd/systemd-udevd
@@ -74,7 +74,7 @@ let
       # Copy resize2fs if needed.
       ${optionalString (any (fs: fs.autoResize) (attrValues config.fileSystems)) ''
         # We need mke2fs in the initrd.
-        copy_bin_and_libs ${pkgs.e2fsprogs}/sbin/resize2fs
+        copy_bin_and_libs ${pkgs.e2fsprogs}/bin/resize2fs
       ''}
 
       ${config.boot.initrd.extraUtilsCommands}

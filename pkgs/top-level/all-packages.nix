@@ -507,6 +507,8 @@ amrnb = callPackage ../all-pkgs/amrnb { };
 
 amrwb = callPackage ../all-pkgs/amrwb { };
 
+appdata-tools = callPackage ../all-pkgs/appdata-tools { };
+
 appstream-glib = callPackage ../all-pkgs/appstream-glib { };
 
 apr = callPackage ../all-pkgs/apr { };
@@ -2408,8 +2410,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  apparix = callPackage ../tools/misc/apparix { };
 #
-  appdata-tools = callPackage ../tools/misc/appdata-tools { };
-
 #  autossh = callPackage ../tools/networking/autossh { };
 #
 #  asynk = callPackage ../tools/networking/asynk { };

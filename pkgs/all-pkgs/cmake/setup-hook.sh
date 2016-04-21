@@ -19,14 +19,12 @@ cmakeConfigurePhase() {
         fixCmakeFiles .
     fi
 
-    if [ -n "${createCmakeBuildDir-true}" ]; then
-        mkdir -p build
-        cd build
-        cmakeDir=..
-    fi
+    cmakeDir="$(pwd)"
+    mkdir -p $TMPDIR/build
+    cd $TMPDIR/build
 
     if [ -z "$dontAddPrefix" ]; then
-        cmakeFlags="-DCMAKE_INSTALL_PREFIX=$prefix $cmakeFlags"
+      cmakeFlagsArray+=("-DCMAKE_INSTALL_PREFIX=$prefix")
     fi
 
     # This installs shared libraries with a fully-specified install
@@ -36,11 +34,14 @@ cmakeConfigurePhase() {
     # libraries are in a system path or in the same directory as the
     # executable. This flag makes the shared library accessible from its
     # nix/store directory.
-    cmakeFlags="-DCMAKE_INSTALL_NAME_DIR=$prefix/lib $cmakeFlags"
+    cmakeFlagsArray+=("-DCMAKE_INSTALL_NAME_DIR=$prefix/lib")
 
     # Avoid cmake resetting the rpath of binaries, on make install
     # And build always Release, to ensure optimisation flags
-    cmakeFlags="-DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_BUILD_RPATH=ON $cmakeFlags"
+    cmakeFlagsArray+=(
+      "-DCMAKE_BUILD_TYPE=Release"
+      "-DCMAKE_SKIP_BUILD_RPATH=ON"
+    )
 
     echo "cmake flags: $cmakeFlags ${cmakeFlagsArray[@]}"
 

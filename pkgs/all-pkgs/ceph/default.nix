@@ -6,7 +6,6 @@
 , fetchTritonPatch
 , git
 , libtool
-, makeWrapper
 , pythonPackages
 , which
 , yasm
@@ -34,6 +33,7 @@
 , nss
 , nspr
 , openldap
+, openssl
 , rocksdb
 , snappy
 , systemd_lib
@@ -42,7 +42,7 @@
 , zfs
 , zlib
 
-, channel ? "9"
+, channel ? "10"
 }:
 
 let
@@ -66,14 +66,9 @@ let
 
   # Malloc implementation (can be jemalloc or tcmalloc)
   malloc = if versionAtLeast version "10.0.4" || !hasStaticRocksdb then jemalloc else gperftools;
-
-  wrapArgs = "--set PYTHONPATH \"$(toPythonPath $lib)\""
-    #+ " --prefix PYTHONPATH : \"$(toPythonPath ${pythonPackages.readline})\""
-    + " --prefix PYTHONPATH : \"$(toPythonPath ${pythonPackages.flask})\""
-    + " --set PATH \"$out/bin\"";
 in
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name="ceph-${version}";
 
   src = fetchgit {
@@ -94,6 +89,7 @@ stdenv.mkDerivation {
       sha256 = "11xn226mlzh6c13j9h1xavr9pnnfvkykkxzmf7c0w7hqm3w8r0gs";
     })
   ] ++ optionals (versionAtLeast version "9.0.0" && versionOlder version "10.0.0") [
+    #./fix-sphinx.patch
     (fetchTritonPatch {
       rev = "3e20a6c39775b724eff44af93f08b38205be1f5b";
       file = "ceph/fix-pythonpath.patch";
@@ -113,24 +109,32 @@ stdenv.mkDerivation {
     (ensureNewerSourcesHook { year = "1980"; })
     git
     libtool
-    makeWrapper
     pythonPackages.python
+    pythonPackages.wrapPython
     which
     yasm
   ] ++ optionals (versionAtLeast version "9.0.2") [
-    pythonPackages.setuptools
     pythonPackages.argparse
+    pythonPackages.setuptools
     #pythonPackages.sphinx # Used for docs
   ] ++ optionals (versionAtLeast version "10.0.2") [
     pythonPackages.cython
+    pythonPackages.pip
+    pythonPackages.virtualenv
   ];
 
-  buildInputs = [
+  pythonPath = [
+    pythonPackages.flask
+    pythonPackages.itsdangerous
+    pythonPackages.jinja2
+    pythonPackages.werkzeug
+  ];
+
+  buildInputs = pythonPath ++ [
     boost
     libxml2
     libatomic_ops
     malloc
-    pythonPackages.flask
     zlib
     bzip2
     linux-headers
@@ -162,17 +166,17 @@ stdenv.mkDerivation {
     libs3
   ] ++ optionals (versionAtLeast version "10.1.0") [
     openldap
+    openssl
   ];
 
   postPatch = ''
+    patchShebangs .
+
     # Fix zfs pkgconfig detection
     sed -i 's,\[zfs\],\[libzfs\],g' configure.ac
 
     # Fix GNU_SOURCE
     sed -i '/AC_INIT/aAC_GNU_SOURCE' configure.ac
-  '' + optionalString (versionAtLeast version "9.0.0") ''
-    # Fix gmock
-    patchShebangs src/gmock
   '';
 
   preConfigure = ''
@@ -268,12 +272,7 @@ stdenv.mkDerivation {
   outputs = [ "out" "lib" ];
 
   postInstall = ''
-    # Wrap all of the python scripts
-    wrapProgram $out/bin/ceph ${wrapArgs}
-    wrapProgram $out/bin/ceph-brag ${wrapArgs}
-    wrapProgram $out/bin/ceph-rest-api ${wrapArgs}
-    wrapProgram $out/sbin/ceph-create-keys ${wrapArgs}
-    wrapProgram $out/sbin/ceph-disk ${wrapArgs}
+    wrapPythonPrograms $out/bin
 
     # Bring in lib as a native build input
     mkdir -p $out/nix-support

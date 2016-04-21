@@ -11,15 +11,21 @@
     sha256 = "1gpz82b13lvhxk30gi10g190kf1wj0fqjg91dcy92q7ag9807hd3";
   };
 
-  "dev" = rec {
-    version = "10.1.2";
+  "10" = rec {
+    version = "10.2.0";
     rev = "refs/tags/v${version}";
-    sha256 = "0f1rws5jdzx6gi447px2ydwsympqnlbkdqv9k16vmyaj1dj8sd5v";
+    sha256 = "1wwddk9vyi4fzlrsgflq1dlym8z6n93j0pwm8p8gr0wp4q7ljyk6";
+  };
+
+  "dev" = rec {
+    version = "10.2.0";
+    rev = "refs/tags/v${version}";
+    sha256 = "1wwddk9vyi4fzlrsgflq1dlym8z6n93j0pwm8p8gr0wp4q7ljyk6";
   };
 
   "git" = rec {
-    version = "2016-04-10";
-    rev = "b4746520706495314c24992b663ea4955607fdbe";
-    sha256 = "01hvky0pzdc4n93742044pqbzlfm2r2a11k2g0l35h0bkk5a834j";
+    version = "2016-04-21";
+    rev = "8e58fe6a55459a81dc554cc908bb391b934ccea3";
+    sha256 = "1hs95rww1m5sqn1m2000q5619v6wcfsiv34zflm9pir9ihxknxi7";
   };
 }

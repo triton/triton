@@ -605,6 +605,9 @@ ceph_0_94 = callPackage ../all-pkgs/ceph {
 ceph_9 = callPackage ../all-pkgs/ceph {
   channel = "9";
 };
+ceph_10 = callPackage ../all-pkgs/ceph {
+  channel = "10";
+};
 ceph_dev = callPackage ../all-pkgs/ceph {
   channel = "dev";
 };

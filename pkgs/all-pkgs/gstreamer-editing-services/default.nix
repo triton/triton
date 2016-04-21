@@ -18,13 +18,13 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "gstreamer-editing-services-1.8.0";
+  name = "gstreamer-editing-services-1.8.1";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gstreamer-editing-services/" +
           "${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "50f066d5b4090d5739fd6d38932bbe14c1aea83a64ed55f54a08cf90946b3abe";
+    sha256 = "897babc2da242438992a2361a74cde16d3feb5eab56c653a3aeb553f45365020";
   };
 
   nativeBuildInputs = [

@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
     #"--with-pam-dir="
     "--with-pkcs11-config=\${out}/etc/pkcs11/"
     "--with-pkcs11-modules=\${out}/lib/pkcs11/"
-    (wtFlag "libcap-ng" (libcap_ng != null) null)
+    (wtFlag "libcap-ng" (libcap-ng != null) null)
   ];
 
   meta = with stdenv.lib; {

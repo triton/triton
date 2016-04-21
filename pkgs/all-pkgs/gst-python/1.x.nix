@@ -9,12 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gst-python-1.8.0";
+  name = "gst-python-1.8.1";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-python/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "ce45ff17c59f86a3a525685e37b95e6a78a019e709f66a5c4b462a7f7a22f6ea";
+    sha256 = "76a3bfb72f9cb81d2b2cf8d07e420478e5b3592ea4b8056bb8c8127f73810a98";
   };
 
   buildInputs = [
@@ -33,11 +33,16 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  preConfigure = ''
+    configureFlagsArray+=(
+      # Fix override directory with Python3.5
+      "--with-pygi-overrides-dir=$out/lib/python3.5/site-packages/gi/overrides"
+    )
+  '';
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-valgrind"
-    # Fix override directory with Python3.5
-    "--with-pygi-overrides-dir=\${out}/lib/python3.5/site-packages/gi/overrides"
   ];
 
   meta = with stdenv.lib; {

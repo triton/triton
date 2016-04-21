@@ -50,12 +50,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-bad-1.8.0";
+  name = "gst-plugins-bad-1.8.1";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-plugins-bad/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "116376dd1085082422e0b21b0ecd3d1cb345c469c58e32463167d4675f4ca90e";
+    sha256 = "0bbd58f363734fc0c4a620b2d6fb01d427fdafdbda7b90b4e15d03b751ca40f5";
   };
 
   nativeBuildInputs = [

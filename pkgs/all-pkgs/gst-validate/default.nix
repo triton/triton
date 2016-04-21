@@ -15,12 +15,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "gst-validate-1.8.0";
+  name = "gst-validate-1.8.1";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-validate/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "7666b777bd4b05efe4520ef92669169d8879f69a68606578ec667ae7dc4d9edd";
+    sha256 = "a9b208c014cca2dc515599f01fd3a7a294133fd936366e74f439b9bc96a1ccbf";
   };
 
   nativeBuildInputs = [

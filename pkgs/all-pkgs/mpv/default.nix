@@ -26,7 +26,7 @@
 , pythonPackages
 , mesa
 , pulseaudio_lib
-, SDL2
+#, SDL2
 , speex
 , xorg
 }:
@@ -87,7 +87,7 @@ stdenv.mkDerivation rec {
     mesa
     pulseaudio_lib
     pythonPackages.youtube-dl
-    SDL2
+    #SDL2
     speex
     xorg.libpthreadstubs
     xorg.libX11

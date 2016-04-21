@@ -626,6 +626,8 @@ chromium_dev = lowPrio (chromium.override {
   channel = "dev";
 });
 
+civetweb = callPackage ../all-pkgs/civetweb { };
+
 clang = wrapCC (callPackageAlias "llvm" { });
 
 clutter = callPackage ../all-pkgs/clutter { };

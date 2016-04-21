@@ -120,7 +120,7 @@ stdenv.mkDerivation {
   ] ++ optionals (versionAtLeast version "9.0.2") [
     pythonPackages.setuptools
     pythonPackages.argparse
-    pythonPackages.sphinx # Used for docs
+    #pythonPackages.sphinx # Used for docs
   ] ++ optionals (versionAtLeast version "10.0.2") [
     pythonPackages.cython
   ];
@@ -235,7 +235,7 @@ stdenv.mkDerivation {
   ] ++ optionals (versionAtLeast version "9.0.1") [
     "--without-valgrind"
   ] ++ optionals (versionAtLeast version "9.0.2") [
-    "--with-man-pages"
+    "--without-man-pages"  # TODO(wkennington): Fix
   ] ++ optionals (versionAtLeast version "9.0.2" && versionOlder version "10.0.4") [
     "--with-systemd-libexec-dir=\${out}/libexec"
   ] ++ optionals (versionOlder version "9.1.0") [

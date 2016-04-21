@@ -15,7 +15,9 @@ let
   callPackage = pkgs.newScope self;
 
   buildPythonPackage = makeOverridable (callPackage ../development/python-modules/generic {
-    bootstrapped-pip = callPackage ../development/python-modules/bootstrapped-pip { };
+    bootstrapped-pip = callPackage ../development/python-modules/bootstrapped-pip {
+      inherit (self) wrapPython;
+    };
   });
 
   # Unique python version identifier
@@ -14560,15 +14562,12 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   };
 
   pip = buildPythonPackage rec {
-    version = "8.0.2";
-    name = "pip-${version}";
+    name = "pip-8.1.1";
 
     src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pip/pip-${version}.tar.gz";
-      sha256 = "46f4bd0d8dfd51125a554568d646fe4200a3c2c6c36b9f2d06d2212148439521";
+      url = "https://pypi.python.org/packages/source/p/pip/${name}.tar.gz";
+      sha256 = "3e78d3066aaeb633d185a57afdccf700aa2e660436b4af618bcb6ff0fa511798";
     };
-
-    buildInputs = with self; [ mock scripttest virtualenv pytest ];
 
     doCheck = false;
   };
@@ -20801,26 +20800,18 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   };
 
   virtualenv = buildPythonPackage rec {
-    name = "virtualenv-13.1.2";
+    name = "virtualenv-15.0.1";
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/v/virtualenv/${name}.tar.gz";
-      sha256 = "1p732accxwqfjbdna39k8w8lp9gyw91vr4kzkhm8mgfxikqqxg5a";
+      sha256 = "1a74278b8adb383ce4c7619e33c753b1eb7b58dc1e449601c096ca4b76125f84";
     };
 
-    pythonPath = [ self.recursivePthLoader ];
-
-    patches = [ ../development/python-modules/virtualenv-change-prefix.patch ];
-
-    # Tarball doesn't contain tests
     doCheck = false;
 
-    meta = {
-      description = "a tool to create isolated Python environments";
-      homepage = http://www.virtualenv.org;
-      license = licenses.mit;
-      maintainers = with maintainers; [ goibhniu ];
-    };
+    #pythonPath = [ self.recursivePthLoader ];
+
+    #patches = [ ../development/python-modules/virtualenv-change-prefix.patch ];
   };
 
   virtualenv-clone = buildPythonPackage rec {

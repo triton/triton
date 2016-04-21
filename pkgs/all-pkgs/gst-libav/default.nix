@@ -18,12 +18,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "gst-libav-1.8.0";
+  name = "gst-libav-1.8.1";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-libav/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "5a1ce28876aee93cb4f3d090f0e807915a5d9bc1325e3480dd302b85aeb4291c";
+    sha256 = "44a49108c3531b5ac4f346a2247cd7fbafb0e8ab394394cb6d75a70300b38933";
   };
 
   nativeBuildInputs = [

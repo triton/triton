@@ -6,7 +6,7 @@
 
 , gcr
 , glib
-, libcap_ng
+, libcap-ng
 , libgcrypt
 , p11_kit
 , pam
@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     gcr
     glib
-    libcap_ng
+    libcap-ng
     libgcrypt
     p11_kit
     pam
@@ -73,7 +73,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

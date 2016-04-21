@@ -23,13 +23,13 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "gstreamer-vaapi-1.8.0";
+  name = "gstreamer-vaapi-1.8.1";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gstreamer-vaapi/"
         + "${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "3b83d405f4423ab0bdc8fbe25e72c4c37b59b7776da21f1d49b0444957595ac1";
+    sha256 = "2580a00fc626ecc60a6fef9a6366f18b6d451db1ca3fe0daf81c6a416a4a33c1";
   };
 
   nativeBuildInputs = [
@@ -51,6 +51,7 @@ stdenv.mkDerivation rec {
     xorg.libX11
     xorg.libXrandr
     xorg.libXrender
+    xorg.renderproto
   ];
 
   configureFlags = [

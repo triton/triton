@@ -167,6 +167,9 @@ stdenv.mkDerivation {
   postPatch = ''
     # Fix zfs pkgconfig detection
     sed -i 's,\[zfs\],\[libzfs\],g' configure.ac
+
+    # Fix GNU_SOURCE
+    sed -i '/AC_INIT/aAC_GNU_SOURCE' configure.ac
   '' + optionalString (versionAtLeast version "9.0.0") ''
     # Fix gmock
     patchShebangs src/gmock

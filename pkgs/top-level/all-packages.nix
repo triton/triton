@@ -1427,6 +1427,8 @@ lightdm-gtk-greeter = callPackage ../all-pkgs/lightdm-gtk-greeter { };
 
 linux-headers = callPackage ../all-pkgs/linux-headers { };
 
+lirc = callPackage ../all-pkgs/lirc { };
+
 live555 = callPackage ../all-pkgs/live555 { };
 
 llvm = callPackage ../all-pkgs/llvm { };
@@ -7255,8 +7257,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  lightning = callPackage ../development/libraries/lightning { };
 #
 #  lightlocker = callPackage ../misc/screensavers/light-locker { };
-#
-  lirc = callPackage ../development/libraries/lirc { };
 #
 #  liquidfun = callPackage ../development/libraries/liquidfun { };
 #

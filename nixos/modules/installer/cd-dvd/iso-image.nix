@@ -249,7 +249,7 @@ in
       ];
 
     fileSystems = mkMerge [
-      (mkOrder 0 {
+      (mkOrder 0 [ {
         mountPoint = "/";
         fsType = "tmpfs";
         options = [
@@ -257,21 +257,21 @@ in
           "mode=0755"
         ];
         neededForBoot = true;
-      })
+      } ])
 
       # Note that /dev/root is a symlink to the actual root device
       # specified on the kernel command line, created in the stage 1
       # init script.
-      (mkOrder 1 {
+      (mkOrder 1 [ {
         mountPoint = "/iso";
         device = "/dev/root";
         neededForBoot = true;
         noCheck = true;
-      })
+      } ])
 
       # In stage 1, mount a tmpfs on top of /nix/store (the squashfs
       # image) to make this a live CD.
-      (mkOrder 2 {
+      (mkOrder 2 [ {
         mountPoint = "/nix/.ro-store";
         fsType = "squashfs";
         device = "/iso/nix-store.squashfs";
@@ -280,10 +280,10 @@ in
           "loop"
         ];
         neededForBoot = true;
-      })
+      } ])
 
       # Finally we merge the squashfs with the temp space
-      (mkOrder 3 {
+      (mkOrder 3 [ {
         mountPoint = "/nix/store";
         fsType = "overlay";
         device = "overlay";
@@ -294,7 +294,7 @@ in
           "workdir=/workdir"
         ];
         neededForBoot = true;
-      })
+      } ])
     ];
 
     boot.initrd.availableKernelModules = [ "squashfs" "iso9660" "usb-storage" ];

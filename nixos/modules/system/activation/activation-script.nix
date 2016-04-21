@@ -138,6 +138,7 @@ in
 
         # Empty, read-only home directory of many system accounts.
         mkdir -m 0555 -p /var/empty
+        chattr +i /var/empty
       '';
 
     system.activationScripts.usrbinenv = if config.environment.usrbinenv != null

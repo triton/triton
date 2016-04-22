@@ -316,18 +316,18 @@ mountFS() {
           fi
           ;;
         upperdir=*|lowerdir=*|workdir=*)
-          DIRS=($(echo "$option" | sed -e 's,^[a-z]*dir=,,' -e 's,:,\n,g' | sed 's,^/,/mnt-root/,g'))
-          echo "${DIRS[@]}" | xargs mkdir -p
+          DIRS=$(echo "$option" | sed -e 's,^[a-z]*dir=,,' -e 's,:,\n,g' | sed 's,^/,/mnt-root/,g')
+          mkdir -p $DIRS
           str=""
-          for DIR in "${DIRS[@]}"; do
-            str+=":$DIR"
+          for DIR in $DIRS; do
+            str="$str:$DIR"
           done
-          optionsFiltered+=",$(echo "$option" | sed -n 's,^\([a-z]*dir\)=.*$,\1,p')=${str:1}"
+          optionsFiltered="$optionsFiltered,$(echo "$option" | sed -n 's,^\([a-z]*dir\)=.*$,\1,p')=${str:1}"
           ;;
         x-*)
           ;;
         *)
-          optionsFiltered+=",$option"
+          optionsFiltered="$optionsFiltered,$option"
           ;;
       esac
     done

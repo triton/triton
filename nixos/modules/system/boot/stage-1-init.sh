@@ -322,7 +322,7 @@ mountFS() {
             exit 1
           fi
           ;;
-        upperdir=* | lowerdir=* | workdir=*)
+        upperdir=*|lowerdir=*|workdir=*)
           DIRS=($(echo "$option" | sed -e 's,^[a-z]*dir=,,' -e 's,:,\n,g' | sed 's,^/,/mnt-root/,g'))
           echo "${DIRS[@]}" | xargs mkdir -p
           str=""

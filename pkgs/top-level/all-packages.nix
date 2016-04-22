@@ -1072,6 +1072,8 @@ harfbuzz = callPackage ../all-pkgs/harfbuzz { };
 
 help2man = callPackage ../all-pkgs/help2man { };
 
+hexchat = callPackage ../all-pkgs/hexchat { };
+
 hicolor-icon-theme = callPackage ../all-pkgs/hicolor-icon-theme { };
 # Deprecated
 hicolor_icon_theme = callPackageAlias "hicolor-icon-theme" { };
@@ -10270,8 +10272,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  heme = callPackage ../applications/editors/heme { };
 #
 #  herbstluftwm = callPackage ../applications/window-managers/herbstluftwm { };
-#
-#  hexchat = callPackage ../applications/networking/irc/hexchat { };
 #
 #  hexcurse = callPackage ../applications/editors/hexcurse { };
 #

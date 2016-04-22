@@ -1,4 +1,7 @@
-{stdenv, fetchurl, perl}:
+{ stdenv
+, fetchurl
+, perl
+}:
 
 stdenv.mkDerivation rec {
   name = "aspell-0.60.6.1";
@@ -8,14 +11,12 @@ stdenv.mkDerivation rec {
     sha256 = "1qgn5psfyhbrnap275xjfrzppf5a83fb67gpql0kfqv37al869gm";
   };
 
-  patchPhase = ''
-    patch interfaces/cc/aspell.h < ${./clang.patch}
-  '';
-
-  buildInputs = [ perl ];
+  nativeBuildInputs = [
+    perl
+  ];
 
   preConfigure = ''
-    configureFlagsArray=(
+    configureFlagsArray+=(
       --enable-pkglibdir=$out/lib/aspell
       --enable-pkgdatadir=$out/lib/aspell
     );
@@ -28,15 +29,18 @@ stdenv.mkDerivation rec {
   # We can't use `$out/etc/aspell.conf' for that purpose since Aspell
   # doesn't expand environment variables such as `$HOME'.
 
-  doCheck = true;
+  # Parallel building is horribly broken
   parallelBuild = false;
   parallelInstall = false;
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "Spell checker for many languages";
     homepage = http://aspell.net/;
-    license = stdenv.lib.licenses.lgpl2Plus;
-    maintainers = [ ];
-    platforms = with stdenv.lib.platforms; all;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

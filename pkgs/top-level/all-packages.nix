@@ -524,6 +524,8 @@ argyllcms = callPackage ../all-pkgs/argyllcms { };
 
 asciidoc = callPackage ../all-pkgs/asciidoc { };
 
+aspell = callPackage ../all-pkgs/aspell { };
+
 atk = callPackage ../all-pkgs/atk { };
 
 atkmm = callPackage ../all-pkgs/atkmm { };
@@ -6242,8 +6244,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  assimp = callPackage ../development/libraries/assimp { };
 #
 #  asio = callPackage ../development/libraries/asio { };
-#
-  aspell = callPackage ../development/libraries/aspell { };
 #
 #  aspellDicts = recurseIntoAttrs (callPackages ../development/libraries/aspell/dictionaries.nix {});
 #

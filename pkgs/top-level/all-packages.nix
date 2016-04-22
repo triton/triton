@@ -743,6 +743,8 @@ emacs = callPackage ../all-pkgs/emacs { };
 
 enca = callPackage ../all-pkgs/enca { };
 
+enchant = callPackage ../all-pkgs/enchant { };
+
 eog = callPackage ../all-pkgs/eog { };
 
 erlang = callPackage ../all-pkgs/erlang { };
@@ -6379,8 +6381,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  eigen = callPackage ../development/libraries/eigen {};
 #
 #  eigen2 = callPackage ../development/libraries/eigen/2.0.nix {};
-#
-  enchant = callPackage ../development/libraries/enchant { };
 #
 #  enet = callPackage ../development/libraries/enet { };
 #

@@ -291,13 +291,13 @@ in
           "defaults"
           "lowerdir=/nix/.ro-store"
           "upperdir=/nix/.rw-store"
-          "workdir=/workdir"
+          "workdir=/nix/.workdir"
         ];
         neededForBoot = true;
       } ])
     ];
 
-    boot.initrd.availableKernelModules = [ "squashfs" "iso9660" "usb-storage" ];
+    boot.initrd.availableKernelModules = [ "overlay" "squashfs" "iso9660" "usb-storage" ];
     boot.blacklistedKernelModules = [ "nouveau" ];
     boot.initrd.kernelModules = [ "loop" ];
 

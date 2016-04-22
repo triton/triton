@@ -1078,6 +1078,8 @@ highlight = callPackage ../all-pkgs/highlight { };
 
 htop = callPackage ../all-pkgs/htop { };
 
+hunspell = callPackage ../all-pkgs/hunspell { };
+
 hwdata = callPackage ../all-pkgs/hwdata { };
 
 iasl = callPackage ../all-pkgs/iasl { };
@@ -6604,8 +6606,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  htmlcxx = callPackage ../development/libraries/htmlcxx { };
 #
 #  http-parser = callPackage ../development/libraries/http-parser { inherit (pythonPackages) gyp; };
-#
-  hunspell = callPackage ../development/libraries/hunspell { };
 #
 #  hunspellDicts = recurseIntoAttrs (callPackages ../development/libraries/hunspell/dictionaries.nix {});
 #

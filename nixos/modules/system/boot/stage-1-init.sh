@@ -185,13 +185,6 @@ if test -n "$debug1devices"; then fail; fi
 
 
 # Try to resume - all modules are loaded now, and devices exist
-if test -e /sys/power/tuxonice/resume; then
-    if test -n "$(cat /sys/power/tuxonice/resume)"; then
-        echo 0 > /sys/power/tuxonice/user_interface/enabled
-        echo 1 > /sys/power/tuxonice/do_resume || echo "failed to resume..."
-    fi
-fi
-
 if test -e /sys/power/resume -a -e /sys/power/disk; then
     if test -n "@resumeDevice@"; then
         resumeDev="@resumeDevice@"

@@ -27,6 +27,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://0pointer.de/lennart/projects/libcanberra/${name}.tar.xz";
+    multihash = "QmdHpboSUCqS17x13gf7fwnc6Ns3usHYyPZLwsXo2JQPUF";
     sha256 = "0wps39h8rx2b00vyvkia5j40fkak3dpipp1kzilqla0cgvk73dn2";
   };
 

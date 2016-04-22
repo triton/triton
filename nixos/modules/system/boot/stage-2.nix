@@ -24,6 +24,7 @@ let
     path =
       [ pkgs.coreutils
         pkgs.util-linux_full
+        pkgs.e2fsprogs
         pkgs.openresolv
       ] ++ optional config.nix.readOnlyStore readonlyMountpoint;
     postBootCommands = pkgs.writeText "local-cmds"

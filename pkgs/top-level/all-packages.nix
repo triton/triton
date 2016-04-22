@@ -6593,7 +6593,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    inherit (perlPackages) IOStringy;
 #  };
 #
-  hspell = callPackage ../development/libraries/hspell { };
+#  hspell = callPackage ../development/libraries/hspell { };
 #
 #  hspellDicts = callPackage ../development/libraries/hspell/dicts.nix { };
 #

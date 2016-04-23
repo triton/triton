@@ -51,13 +51,12 @@ let
     optionalString
     versionAtLeast
     versionOlder;
+
   inherit ((import ./sources.nix).${channel})
     version
     rev
     sha256;
-in
 
-let
   hasXio = versionAtLeast version "9.0.3";
 
   hasRocksdb = versionAtLeast version "9.0.0" && !hasStaticRocksdb;
@@ -177,6 +176,10 @@ stdenv.mkDerivation rec {
 
     # Fix GNU_SOURCE
     sed -i '/AC_INIT/aAC_GNU_SOURCE' configure.ac
+  '' + optionalString (versionAtLeast version "10.1.0") ''
+    # Fix LDAP linking
+    ! grep '\(-lldap\|LDAP_LIB\)' src/rgw/Makefile.am
+    sed -i 's,LIBRGW_DEPS +=,\0 -lldap,g' src/rgw/Makefile.am
   '';
 
   preConfigure = ''
@@ -312,8 +315,7 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 
   passthru.version = version;

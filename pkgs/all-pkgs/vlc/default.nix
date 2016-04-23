@@ -135,7 +135,6 @@ stdenv.mkDerivation rec {
     v4l_lib
     xorg.xcbutilkeysyms
     xorg.libXpm
-    xorg.xlibsWrapper
     xorg.libXv
     xorg.libXvMC
     xz

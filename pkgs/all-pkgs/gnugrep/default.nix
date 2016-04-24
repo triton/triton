@@ -6,11 +6,11 @@
 
 stdenv.mkDerivation rec {
   name = "gnugrep-${version}";
-  version = "2.24";
+  version = "2.25";
 
   src = fetchurl {
     url = "mirror://gnu/grep/grep-${version}.tar.xz";
-    sha256 = "057cir4p19h7yv4xir1wiaxfa1fp45d3pl7xsaaannlc16wvwj7j";
+    sha256 = "e21e83bac50450e0d0d61a42c154ee0dceaacdbf4f604ef6e79071cb8e596830";
   };
 
   nativeBuildInputs = [

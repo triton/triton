@@ -1838,6 +1838,8 @@ sl = callPackage ../all-pkgs/sl { };
 
 socket_wrapper = callPackage ../all-pkgs/socket_wrapper { };
 
+soxr = callPackage ../all-pkgs/soxr { };
+
 spectrwm = callPackage ../all-pkgs/spectrwm { };
 
 spice = callPackage ../all-pkgs/spice { };
@@ -11198,8 +11200,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  };
 #
   sox = callPackage ../applications/misc/audio/sox { };
-
-  soxr = callPackage ../applications/misc/audio/soxr { };
 #
 #  spek = callPackage ../applications/audio/spek { };
 #

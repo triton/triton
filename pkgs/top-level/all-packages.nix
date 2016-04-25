@@ -1812,6 +1812,8 @@ rest = callPackage ../all-pkgs/rest { };
 
 rocksdb = callPackage ../all-pkgs/rocksdb { };
 
+rtkit = callPackage ../all-pkgs/rtkit { };
+
 rtmpdump = callPackage ../all-pkgs/rtmpdump { };
 
 rtorrent = callPackage ../all-pkgs/rtorrent { };
@@ -9176,8 +9178,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   rfkill = callPackage ../os-specific/linux/rfkill { };
 #
 #  rfkill_udev = callPackage ../os-specific/linux/rfkill/udev.nix { };
-#
-  rtkit = callPackage ../os-specific/linux/rtkit { };
 #
 #  rt5677-firmware = callPackage ../os-specific/linux/firmware/rt5677 { };
 #

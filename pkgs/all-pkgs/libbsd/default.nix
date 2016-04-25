@@ -4,12 +4,20 @@
 , openssl
 }:
 
+let
+  tarballUrls = version: [
+    "https://libbsd.freedesktop.org/releases/libbsd-${version}.tar.xz"
+  ];
+
+  version = "0.8.3";
+in
 stdenv.mkDerivation rec {
-  name = "libbsd-0.8.2";
+  name = "libbsd-${version}";
 
   src = fetchurl {
-    url = "http://libbsd.freedesktop.org/releases/${name}.tar.xz";
-    sha256 = "02i5brb2007sxq3mn862mr7yxxm0g6nj172417hjyvjax7549xmj";
+    url = tarballUrls version;
+    allowHashOutput = false;
+    sha256 = "934b634f4dfd865b6482650b8f522c70ae65c463529de8be907b53c89c3a34a8";
   };
 
   buildInputs = [
@@ -22,6 +30,18 @@ stdenv.mkDerivation rec {
       -e 's,{exec_prefix},{prefix},g' \
       -i Makefile.in
   '';
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "0.8.3";
+      pgpsigUrls = map (n: "${n}.asc") urls;
+      pgpKeyId = "A4AE57A3";
+      pgpKeyFingerprint = "4F3E 74F4 3605 0C10 F569  6574 B972 BF3E A4AE 57A3";
+      inherit (src) outputHashAlgo;
+      outputHash = "934b634f4dfd865b6482650b8f522c70ae65c463529de8be907b53c89c3a34a8";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Common functions found on BSD systems";

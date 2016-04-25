@@ -23,11 +23,11 @@ let
 in
 stdenv.mkDerivation rec {
   name = "${prefix}nghttp2-${version}";
-  version = "1.9.2";
+  version = "1.10.0";
 
   src = fetchurl {
     url = "https://github.com/tatsuhiro-t/nghttp2/releases/download/v${version}/nghttp2-${version}.tar.xz";
-    sha256 = "3d600ef8bfd151769559bc23806877b8b4eaf3d66776e6c1427b9c04cce8e853";
+    sha256 = "c7e4624d91f32cddfd81233361804c004ef5295851b93e31f95f54a224e5091f";
   };
 
   buildInputs = optionals (!isLib) [

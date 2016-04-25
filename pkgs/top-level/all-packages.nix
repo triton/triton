@@ -754,6 +754,8 @@ eog = callPackage ../all-pkgs/eog { };
 
 erlang = callPackage ../all-pkgs/erlang { };
 
+ethtool = callPackage ../all-pkgs/ethtool { };
+
 evince = callPackage ../all-pkgs/evince { };
 
 evolution = callPackage ../all-pkgs/evolution { };
@@ -2833,8 +2835,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  entr = callPackage ../tools/misc/entr { };
 #
 #  eplot = callPackage ../tools/graphics/eplot { };
-#
-  ethtool = callPackage ../tools/misc/ethtool { };
 #
 #  ettercap = callPackage ../applications/networking/sniffers/ettercap { };
 #

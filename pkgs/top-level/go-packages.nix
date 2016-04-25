@@ -29,19 +29,9 @@ let
 
       gx --verbose install --global
 
-      echo "Fixing mtime and atimes" >&2
-      readarray -t files < <(find *)
-      for file in "''${files[@]}"; do
-        time=$(stat -c '%Y' "$file")
-        if [ "$time" -gt "$newtime" ]; then
-          time=$newtime
-        fi
-        touch -h -d "@$time" "$file"
-      done
-
       echo "Building GX Archive" >&2
       cd "$unpackDir"
-      tar --sort=name --owner=0 --group=0 --numeric-owner --mode=go=rX,u+rw,a-s -c * | brotli --quality 6 --output "$out"
+      tar --sort=name --owner=0 --group=0 --numeric-owner --mtime=@946713600 --mode=go=rX,u+rw,a-s -c * | brotli --quality 6 --output "$out"
     '';
 
     buildInputs = [ gx.bin ];
@@ -2384,24 +2374,15 @@ let
   };
 
   ipfs = buildFromGitHub {
-    rev = "v0.4.0";
+    rev = "v0.4.1";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "f1f3f9145a8aacfe7c09669020f76c66b5812da0e101368a800d2dc98fb6f697";
-    gxSha256 = "0s0zrdsm330mz4qhkhgi1a23pfmh71506x6c4b3gqxj4fccah1g6";
+    sha256 = "0jg9y50kdnd5ihswi1s76bksljh415m5dc6s4p05h5z088jiizg5";
+    gxSha256 = "00hy40lh1y90v58i3isr3fwqj83363y3whnsyhfr89c33cdpyvrj";
 
     subPackages = [
       "cmd/ipfs"
     ];
-
-    # Make sure we don't auto-update
-    postPatch = ''
-      grep -q 'AutoUpdate:[ ]*AutoUpdateMinor,' repo/config/version.go
-      sed -i 's#AutoUpdate:[ ]*AutoUpdateMinor,#AutoUpdate: AutoUpdateNever,#g' repo/config/version.go
-
-      grep -q 'Check:[ ]*"error",' repo/config/version.go
-      sed -i 's#Check:[ ]*"error",#Check: CheckIgnore,#g' repo/config/version.go
-    '';
   };
 
   json2csv = buildFromGitHub {

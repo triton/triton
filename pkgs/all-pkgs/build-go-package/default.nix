@@ -57,6 +57,7 @@ go.stdenv.mkDerivation (
     if [ -d "go/src/$goPackagePath/vendor/gx" ]; then
       mv go/src/$goPackagePath/vendor/gx go/src
       pushd go/src
+      find gx -name vendor | xargs rm -rf
       ARGS=()
       while read dep; do
         RDEP="$(awk 'BEGIN { FS="\""; } { if (/dvcsimport/) { print $4; } }' "$dep")"

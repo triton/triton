@@ -53,6 +53,21 @@ go.stdenv.mkDerivation (
     mkdir -p "go/src/$(dirname "$goPackagePath")"
     mv "$sourceRoot" "go/src/$goPackagePath"
 
+    # Deal with gx dependencies
+    if [ -d "go/src/$goPackagePath/vendor/gx" ]; then
+      mv go/src/$goPackagePath/vendor/gx go/src
+      pushd go/src
+      ARGS=()
+      while read dep; do
+        RDEP="$(awk 'BEGIN { FS="\""; } { if (/dvcsimport/) { print $4; } }' "$dep")"
+        ARGS+=("-e" "s,\([^a-zA-Z/]\)$RDEP\(\"\|/\),\1$(dirname "$dep")\2,g")
+      done < <(find gx -name package.json)
+      find . -type f | xargs -n 1 -P $NIX_BUILD_CORES sed -i "''${ARGS[@]}"
+      popd
+    fi
+
+    rm -rf go/src/$goPackagePath/vendor
+
   '' + lib.flip lib.concatMapStrings extraSrcs ({ src, goPackagePath }: ''
     mkdir extraSrc
     (cd extraSrc; unpackFile "${src}")
@@ -101,21 +116,6 @@ go.stdenv.mkDerivation (
     runHook preBuild
 
     runHook renameImports
-
-    # Deal with gx dependencies
-    if [ -d "go/src/$goPackagePath/vendor/gx" ]; then
-      mv go/src/$goPackagePath/vendor/gx go/src
-      pushd go/src
-      ARGS=()
-      while read dep; do
-        RDEP="$(awk 'BEGIN { FS="\""; } { if (/dvcsimport/) { print $4; } }' "$dep")"
-        ARGS+=("-e" "s,\([^a-zA-Z/]\)$RDEP\(\"\|/\),\1$(dirname "$dep")\2,g")
-      done < <(find gx -name package.json)
-      find . -type f | xargs -n 1 -P $NIX_BUILD_CORES sed -i "''${ARGS[@]}"
-      popd
-    fi
-
-    rm -rf go/src/$goPackagePath/vendor
 
     buildGoDir() {
       local d; local cmd;

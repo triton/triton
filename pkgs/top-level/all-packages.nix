@@ -1206,6 +1206,8 @@ letsencrypt = callPackage ../all-pkgs/letsencrypt { };
 
 libaccounts-glib = callPackage ../all-pkgs/libaccounts-glib { };
 
+libaio = callPackage ../all-pkgs/libaio { };
+
 libarchive = callPackage ../all-pkgs/libarchive { };
 
 libass = callPackage ../all-pkgs/libass { };
@@ -8777,8 +8779,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  ldm = callPackage ../os-specific/linux/ldm { };
 #
-  libaio = callPackage ../os-specific/linux/libaio { };
-
 #  libcgroup = callPackage ../os-specific/linux/libcgroup { };
 #
 #  linuxConsoleTools = callPackage ../os-specific/linux/consoletools { };

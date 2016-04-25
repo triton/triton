@@ -1210,6 +1210,8 @@ libarchive = callPackage ../all-pkgs/libarchive { };
 
 libass = callPackage ../all-pkgs/libass { };
 
+libatasmart = callPackage ../all-pkgs/libatasmart { };
+
 libbluray = callPackage ../all-pkgs/libbluray { };
 
 libbsd = callPackage ../all-pkgs/libbsd { };
@@ -8777,8 +8779,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   libaio = callPackage ../os-specific/linux/libaio { };
 
-  libatasmart = callPackage ../os-specific/linux/libatasmart { };
-#
 #  libcgroup = callPackage ../os-specific/linux/libcgroup { };
 #
 #  linuxConsoleTools = callPackage ../os-specific/linux/consoletools { };

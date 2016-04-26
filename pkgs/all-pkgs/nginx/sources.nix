@@ -1,11 +1,11 @@
 {
   "stable" = {
-    version = "1.8.1";
-    sha256 = "8f4b3c630966c044ec72715754334d1fdf741caa1d5795fb4646c27d09f797b7";
+    version = "1.10.0";
+    sha256 = "8ed647c3dd65bc4ced03b0e0f6bf9e633eff6b01bac772bcf97077d58bc2be4d";
   };
 
   "unstable" = {
-    version = "1.9.14";
-    sha256 = "2b4893076d28e6b4384bba8c4fdebfca6de6f8f68ec48a1ca94b9b855ff457d2";
+    version = "1.10.0";
+    sha256 = "8ed647c3dd65bc4ced03b0e0f6bf9e633eff6b01bac772bcf97077d58bc2be4d";
   };
 }

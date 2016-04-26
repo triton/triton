@@ -15,12 +15,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  version = "1.9";
+  version = "1.9a";
   name = "mupdf-${version}";
 
   src = fetchurl {
     url = "http://mupdf.com/downloads/archive/${name}-source.tar.gz";
-    sha256 = "1776eb4368467c553ce78ec89c731ed84917c6c7ee0396b15d8739356c98e296";
+    sha256 = "8015c55f4e6dd892d3c50db4f395c1e46660a10b460e2ecd180a497f55bbc4cc";
   };
 
   buildInputs = [

@@ -488,8 +488,9 @@ done
 
 # We want to download signatures first
 getHashOrEmpty() {
-  if grep -q "\( \|\t\)$(basename "$urls")\( \|\t\|$\)" "$1"; then
-    grep "\( \|\t\)$(basename "$urls")\( \|\t\|$\)" "$1" | sed -n "s,.*\\([0-9A-Za-z]\\{$2\\}\\).*,\\1,p"
+  match_expr="\( \|\t\|/\)$(basename "$urls")\( \|\t\|$\)"
+  if grep -q "$match_expr" "$1"; then
+    grep "$match_expr" "$1" | sed -n "s,.*\\([0-9A-Za-z]\\{$2\\}\\).*,\\1,p"
   else
     cat "$1"
   fi

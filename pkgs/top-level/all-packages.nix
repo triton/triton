@@ -1294,6 +1294,8 @@ libjpeg_original = callPackage ../all-pkgs/libjpeg { };
 libjpeg_turbo = callPackage ../all-pkgs/libjpeg-turbo { };
 libjpeg = callPackageAlias "libjpeg_turbo" { };
 
+libksba = callPackage ../all-pkgs/libksba { };
+
 libmatroska = callPackage ../all-pkgs/libmatroska { };
 
 libmcrypt = callPackage ../all-pkgs/libmcrypt {};
@@ -7040,8 +7042,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #
   libkate = callPackage ../development/libraries/libkate { };
 
-  libksba = callPackage ../development/libraries/libksba { };
-#
 #  libksi = callPackage ../development/libraries/libksi { };
 #
   libmad = callPackage ../development/libraries/libmad { };

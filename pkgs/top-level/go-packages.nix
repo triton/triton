@@ -1543,7 +1543,7 @@ let
     rev = "03cbd2b15b2a68937f9c752aae8ee7dc95172f17";
     owner = "fsouza";
     repo = "go-dockerclient";
-    sha256 = "0n3nixvxc366qkxxpm37gd2zbd3yk1gf9w14in5a3404svnp1l3y";
+    sha256 = "b82f3884bd81994f003ba112060921f6401c441e8a24661f7bb02254a01e6bfe";
   };
 
   go-etcd = buildFromGitHub {

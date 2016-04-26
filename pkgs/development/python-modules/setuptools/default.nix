@@ -1,14 +1,15 @@
-{ stdenv, lib, fetchurl, python, wrapPython }:
+{ stdenv, lib, fetchPyPi, python, wrapPython }:
 
 stdenv.mkDerivation rec {
   shortName = "setuptools-${version}";
   name = "${python.executable}-${shortName}";
 
-  version = "20.7.0";  # 18.4 and up breaks python34Packages.characteristic and many others
+  version = "20.10.1";  # 18.4 and up breaks python34Packages.characteristic and many others
 
-  src = fetchurl {
-    url = "https://pypi.python.org/packages/source/s/setuptools/${shortName}.tar.gz";
-    sha256 = "505cdf282c5f6e3a056e79f0244b8945f3632257bba8469386c6b9b396400233";
+  src = fetchPyPi {
+    package = "setuptools";
+    inherit version;
+    sha256 = "3e59c885f09ed0d631816468e431b347b5103339e77a21cbf56df6283319b5dd";
   };
 
   buildInputs = [ python wrapPython ];

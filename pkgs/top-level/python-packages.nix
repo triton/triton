@@ -14582,10 +14582,12 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   };
 
   pip = buildPythonPackage rec {
-    name = "pip-8.1.1";
+    name = "pip-${version}";
+    version = "8.1.1";
 
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pip/${name}.tar.gz";
+    src = fetchPyPi {
+      package = "pip";
+      inherit version;
       sha256 = "3e78d3066aaeb633d185a57afdccf700aa2e660436b4af618bcb6ff0fa511798";
     };
 

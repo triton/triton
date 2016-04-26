@@ -1214,6 +1214,8 @@ libarchive = callPackage ../all-pkgs/libarchive { };
 
 libass = callPackage ../all-pkgs/libass { };
 
+libassuan = callPackage ../all-pkgs/libassuan { };
+
 libatasmart = callPackage ../all-pkgs/libatasmart { };
 
 libbluray = callPackage ../all-pkgs/libbluray { };
@@ -6729,8 +6731,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libappindicator-gtk3 = callPackage ../development/libraries/libappindicator { gtkVersion = "3"; };
 #
 #  libasr = callPackage ../development/libraries/libasr { };
-#
-  libassuan = callPackage ../development/libraries/libassuan { };
 #
   libasyncns = callPackage ../development/libraries/libasyncns { };
 #

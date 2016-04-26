@@ -381,8 +381,6 @@ if test -n "$showURLs"; then
   fi
 fi
 
-runHook preFetch
-
 if ! test -f /etc/ssl/certs/ca-certificates.crt; then
   echo "Warning, downloading without validating SSL cert." >&2
   echo "Eventually this will be disallowed completely." >&2
@@ -403,6 +401,8 @@ curl="curl \
  --speed-time 5 \
  $curlOpts \
  $NIX_CURL_FLAGS"
+
+runHook preFetch
 
 # Download the actual file from ipfs before doing anything else
 if [ -n "$multihash" ] && [ -n "$IPFS_API" ]; then

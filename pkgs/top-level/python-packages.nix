@@ -12,7 +12,26 @@ let
   isPyPy = python.executable == "pypy";
   isPy3k = strings.substring 0 1 python.versionMajor == "3";
 
-  callPackage = pkgs.newScope self;
+  fetchPyPi = { package, version, sha256, type ? ".tar.gz" }: pkgs.fetchurl rec {
+    name = "${package}-${version}${type}";
+    url = "http://localhost/not-a-url";
+    preFetch = ''
+      $curl 'https://pypi.python.org/pypi/${package}/json' | \
+        ${pkgs.jq}/bin/jq -r '
+          .releases["${version}"] |
+            reduce .[] as $item ("";
+              if $item.filename == "${name}" then
+                $item.url
+              else
+                .
+              end)
+        ' > "$TMPDIR/url"
+      urls=($(cat "$TMPDIR/url"))
+    '';
+    inherit sha256;
+  };
+
+  callPackage = pkgs.newScope (self // { inherit fetchPyPi; });
 
   buildPythonPackage = makeOverridable (callPackage ../development/python-modules/generic {
     bootstrapped-pip = callPackage ../development/python-modules/bootstrapped-pip {
@@ -46,6 +65,7 @@ in {
     isPyPy
     isPy3k
     pythonName
+    fetchPyPi
     buildPythonPackage;
 
   # helpers

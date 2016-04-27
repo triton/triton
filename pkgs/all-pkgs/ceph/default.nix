@@ -118,8 +118,6 @@ stdenv.mkDerivation rec {
     #pythonPackages.sphinx # Used for docs
   ] ++ optionals (versionAtLeast version "10.0.2") [
     pythonPackages.cython
-    pythonPackages.pip
-    pythonPackages.virtualenv
   ];
 
   pythonPath = [
@@ -180,6 +178,9 @@ stdenv.mkDerivation rec {
     # Fix LDAP linking
     ! grep '\(-lldap\|LDAP_LIB\)' src/rgw/Makefile.am
     sed -i 's,LIBRGW_DEPS +=,\0 -lldap,g' src/rgw/Makefile.am
+
+    # Remove anything that depends on virtualenv
+    sed -i '/include ceph-\(disk\|detect-init\)/d' src/Makefile.am
   '';
 
   preConfigure = ''

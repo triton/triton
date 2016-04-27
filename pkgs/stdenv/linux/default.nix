@@ -76,6 +76,7 @@ let
           stdenv = stage0Pkgs.stdenv;
           curl = bootstrapTools;
           openssl = bootstrapTools;
+          inherit (finalPkgs) gnupg;
         };
 
         fetchzip = pkgs.fetchzip.override {
@@ -310,6 +311,10 @@ let
         gawk gnutar gzip brotli bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
     };
   });
+
+  finalPkgs = allPackages {
+    inherit targetSystem hostSystem config stdenv;
+  };
 in {
   inherit bootstrapTools stage0Pkgs stage1Pkgs stage2Pkgs stage3Pkgs stdenv;
 }

@@ -2,12 +2,20 @@
 , fetchurl
 }:
 
+let
+  tarballUrls = version: [
+    "mirror://gnu/gzip/gzip-${version}.tar.xz"
+  ];
+
+  version = "1.8";
+in
 stdenv.mkDerivation rec {
-  name = "gzip-1.7";
+  name = "gzip-${version}";
 
   src = fetchurl {
-    url = "mirror://gnu/gzip/${name}.tar.xz";
-    sha256 = "fb31c57e7ce7703596ef57329be7cc5c5fd741b4a0f659fea7ee6a54706b41ab";
+    urls = tarballUrls version;
+    allowHashOutput = false;
+    sha256 = "ff1767ec444f71e5daf8972f6f8bf68cfcca1d2f76c248eb18e8741fc91dbbd3";
   };
 
   # In stdenv-linux, prevent a dependency on bootstrap-tools.
@@ -15,6 +23,17 @@ stdenv.mkDerivation rec {
     "SHELL=/bin/sh"
     "GREP=grep"
   ];
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "1.8";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "155D 3FC5 00C8 3448 6D1E  EA67 7FD9 FCCB 000B EEEE";
+      outputHash = "ff1767ec444f71e5daf8972f6f8bf68cfcca1d2f76c248eb18e8741fc91dbbd3";
+      inherit (src) outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/gzip/;

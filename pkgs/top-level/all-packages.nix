@@ -1365,6 +1365,8 @@ librsvg = callPackage ../all-pkgs/librsvg { };
 
 librsync = callPackage ../all-pkgs/librsync { };
 
+libs3 = callPackage ../all-pkgs/libs3 { };
+
 libseccomp = callPackage ../all-pkgs/libseccomp { };
 
 libsecret = callPackage ../all-pkgs/libsecret { };
@@ -7141,8 +7143,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
   libpwquality = callPackage ../development/libraries/libpwquality { };
 #
 #  libqalculate = callPackage ../development/libraries/libqalculate { };
-#
-  libs3 = callPackage ../development/libraries/libs3 { };
 #
 #  libsearpc = callPackage ../development/libraries/libsearpc { };
 #

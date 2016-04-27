@@ -11,7 +11,6 @@ pgpsigMd5Urls=($pgpsigMd5Urls)
 pgpsigSha1Urls=($pgpsigSha1Urls)
 pgpsigSha256Urls=($pgpsigSha256Urls)
 pgpsigSha512Urls=($pgpsigSha512Urls)
-pgpKeyIds=($pgpKeyIds)
 
 pgpKeyFingerprints=($pgpKeyFingerprints)
 
@@ -415,17 +414,16 @@ if [ -n "$pgpKeyFile" ]; then
   gpg --import "$pgpKeyFile"
 fi
 
-if [ "${#pgpKeyIds[@]}" -gt "0" ]; then
+if [ "${#pgpKeyFingerprints[@]}" -gt "0" ]; then
   eval `dirmngr --daemon --homedir=$HOME --disable-http --disable-ldap`
-  gpg --verbose --recv-keys --keyserver "hkp://pgp.mit.edu" "${pgpKeyIds[@]}"
+  gpg --verbose --recv-keys --keyserver "hkp://pgp.mit.edu" "${pgpKeyFingerprints[@]}"
 fi
 
 i=0
-while [ "$i" -lt "${#pgpKeyIds[@]}" ]; do
-  pgpKeyId="${pgpKeyIds[$i]}"
+while [ "$i" -lt "${#pgpKeyFingerprints[@]}" ]; do
   pgpKeyFingerprint="${pgpKeyFingerprints[$i]}"
-  if [ "$(gpg --fingerprint "$pgpKeyId" | awk -F '= ' '{ if (/Key fingerprint/) { gsub(/ /, "", $2); print $2; } }')" != "$pgpKeyFingerprint" ]; then
-    echo "Fingerprints didn't match for $pgpKeyId" >&2
+  if [ "$(gpg --fingerprint "$pgpKeyFingerprint" | awk -F '= ' '{ if (/Key fingerprint/) { gsub(/ /, "", $2); print $2; } }')" != "$pgpKeyFingerprint" ]; then
+    echo "Fingerprints didn't match for $pgpKeyFingerprint" >&2
     exit 1
   fi
   i=$(($i + 1))

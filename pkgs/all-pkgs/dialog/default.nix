@@ -39,7 +39,6 @@ stdenv.mkDerivation rec {
     srcVerified = fetchurl {
       failEarly = true;
       pgpsigUrl = map (n: "${n}.asc") src.urls;
-      pgpKeyId = "F7E48EDB";
       pgpKeyFingerprint = "C520 48C0 C074 8FEE 227D  47A2 7023 53E0 F7E4 8EDB";
       inherit (src) urls outputHash outputHashAlgo;
     };

@@ -92,7 +92,6 @@ stdenv.mkDerivation rec {
       failEarly = true;
       url = "${meta.homepage}dist/krb5/1.14/krb5-${newVersion}.tar.gz";
       pgpsigUrl = "${url}.asc";
-      pgpKeyId = "0055C305";
       pgpKeyFingerprint = "2C73 2B1C 0DBE F678 AB3A  F606 A32F 17FD 0055 C305";
       sha256 = "c8faa44574246f5bd0ce5a3dedc48c32db48a74cc4323949bf70f0ac2d6f1a99";
     };

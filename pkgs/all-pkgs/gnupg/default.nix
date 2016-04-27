@@ -101,12 +101,6 @@ stdenv.mkDerivation rec {
       failEarly = true;
       url = "mirror://gnupg/gnupg/${name}.tar.bz2";
       pgpsigUrl = "${url}.sig";
-      pgpKeyIds = [
-        "4F25E3B6"
-        "E0856959"
-        "33BD3F06"
-        "7EFD60D9"
-      ];
       pgpKeyFingerprints = [
         "D869 2123 C406 5DEA 5E0F  3AB5 249B 39D2 4F25 E3B6"
         "46CC 7308 65BB 5C78 EBAB  ADCF 0437 6F3E E085 6959"

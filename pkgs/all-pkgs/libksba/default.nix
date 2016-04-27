@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
       failEarly = true;
       urls = tarballUrls "1.3.3";
       pgpsigUrls = map (n: "${n}.sig") urls;
-      inherit (gnupg.srcVerified) pgpKeyIds pgpKeyFingerprints;
+      inherit (gnupg.srcVerified) pgpKeyFingerprints;
       outputHash = "0c7f5ffe34d0414f6951d9880a46fcc2985c487f7c36369b9f11ad41131c7786";
       inherit (src) outputHashAlgo;
     };

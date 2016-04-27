@@ -36,7 +36,6 @@ stdenv.mkDerivation rec {
       failEarly = true;
       urls = tarballUrls "0.8.3";
       pgpsigUrls = map (n: "${n}.asc") urls;
-      pgpKeyId = "A4AE57A3";
       pgpKeyFingerprint = "4F3E 74F4 3605 0C10 F569  6574 B972 BF3E A4AE 57A3";
       inherit (src) outputHashAlgo;
       outputHash = "934b634f4dfd865b6482650b8f522c70ae65c463529de8be907b53c89c3a34a8";

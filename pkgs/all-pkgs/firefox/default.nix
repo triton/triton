@@ -274,7 +274,6 @@ stdenv.mkDerivation rec {
       failEarly = true;
       sha512Url = "${baseUrl}/SHA512SUMS";
       pgpsigSha512Url = "${sha512Url}.asc";
-      pgpKeyId = "D98F0353";
       pgpKeyFingerprint = "14F2 6682 D091 6CDD 81E3  7B6D 61B7 B526 D98F 0353";
       inherit (src) urls outputHashAlgo outputHash;
     };

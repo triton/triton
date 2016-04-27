@@ -138,7 +138,6 @@ stdenv.mkDerivation rec {
       urls = map (n: "${n}.xz") (tarballUrls "2.28" null);
       pgpsigUrls = map (n: "${n}.sign") (tarballUrls "2.28" null);
       pgpsigSha256Urls = map (n: "${n}/sha256sums.asc") (baseUrls "2.28");
-      pgpKeyId = "EC39C284";
       pgpKeyFingerprint = "B0C6 4D14 301C C6EF AEDF  60E4 E4B7 1D5E EC39 C284";
       pgpDecompress = true;
       outputHash = "395847e2a18a2c317170f238892751e73a57104565344f8644090c8b091014bb";

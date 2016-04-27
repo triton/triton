@@ -29,10 +29,6 @@ stdenv.mkDerivation rec {
       failEarly = true;
       url = "http://pkg-isocodes.alioth.debian.org/downloads/${name}.tar.xz";
       pgpsigUrl = "${url}.sig";
-      pgpKeyIds = [
-        "36EBEB19"
-        "C0143D2D"
-      ];
       pgpKeyFingerprints = [
         "D1CB 8F39 BC5D ED24 C5D2  C78C 1302 F1F0 36EB EB19"
         "F972 A168 A270 3B34 CC23  E09F D4E5 EDAC C014 3D2D"

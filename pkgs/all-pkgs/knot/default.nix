@@ -53,7 +53,6 @@ stdenv.mkDerivation rec {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       sha256Urls = map (n: "${n}.sha256") src.urls;
-      pgpKeyId = "EE37A832";
       pgpKeyFingerprint = "DEF3 5D16 E5AE 59D8 20BD  F780 ACE2 4DA9 EE37 A832";
       inherit (src) urls outputHash outputHashAlgo;
     };

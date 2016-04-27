@@ -66,7 +66,6 @@ stdenv.mkDerivation rec {
       failEarly = true;
       pgpsigUrl = "${baseUrl}/${name}.tar.sign";
       pgpDecompress = true;
-      pgpKeyId = "1DCF2659";
       pgpKeyFingerprint = "E932 D120 BC2A EC44 4E55  8F01 06CA 9F5D 1DCF 2659";
       inherit (src) urls outputHash outputHashAlgo;
     };

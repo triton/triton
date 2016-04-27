@@ -212,17 +212,15 @@ stdenv.mkDerivation rec {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") tarballUrls;
       pgpDecompress = true;
-      inherit (pgp.samba) pgpKeyId pgpKeyFingerprint;
+      inherit (pgp.samba) pgpKeyFingerprint;
       inherit (src) urls outputHash outputHashAlgo;
     };
 
     pgp = {
       samba = {
-        pgpKeyId = "6568B7EA";
         pgpKeyFingerprint = "52FB C0B8 6D95 4B08 4332  4CDC 6F33 915B 6568 B7EA";
       };
       library = {
-        pgpKeyId = "13084025";
         pgpKeyFingerprint = "9147 A339 7195 18EE 9011  BCB5 4793 9161 1308 4025";
       };
     };

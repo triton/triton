@@ -275,10 +275,6 @@ let
           failEarly = true;
           urls = src.urls;
           pgpsigUrls = map (n: "${n}.asc") src.urls;
-          pgpKeyIds = [
-            "9C0D5763"
-            "33CFC8B3"
-          ];
           pgpKeyFingerprints = [
             "1A4E 8B72 77C4 2E53 DBA9  C7B9 BCAA 30EA 9C0D 5763"
             "6E4F 6AB3 21FD C07F 2C33  2E3A C2BF 0BC4 33CF C8B3"

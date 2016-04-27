@@ -95,7 +95,7 @@ let
           dontAbsoluteLibtool = true; # Depends on cc not being null
         };
 
-        gcc5 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+        gcc6 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
           nativeLibc = false;
           cc = bootstrapTools;
@@ -130,7 +130,7 @@ let
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage1Pkgs is missing package definition for `${n}`") pkgs) // {
         inherit (pkgs) stdenv glibc linux-headers;
 
-        gcc5 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+        gcc6 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
           nativeLibc = false;
           cc = bootstrapTools;
@@ -179,10 +179,10 @@ let
         xz = pkgs.xz.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
         zlib = pkgs.zlib.override { static = true; shared = false; };
 
-        gcc5 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+        gcc6 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
           nativeLibc = false;
-          cc = pkgs.gcc5.cc.override {
+          cc = pkgs.gcc6.cc.override {
             shouldBootstrap = true;
             libPathExcludes = [ "${bootstrapTools}/lib"];
           };
@@ -231,10 +231,10 @@ let
           openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
           gawk gnutar gzip brotli bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
 
-        gcc5 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+        gcc6 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
           nativeLibc = false;
-          cc = stage2Pkgs.gcc5.cc;
+          cc = stage2Pkgs.gcc6.cc;
           isGNU = true; # Using glibc
           libc = stage1Pkgs.glibc;
           binutils = stage3Pkgs.binutils;
@@ -305,7 +305,7 @@ let
     overrides = pkgs: {
       inherit (stage1Pkgs) glibc linux-headers;
       inherit (stage2Pkgs) m4 gnum4 which;
-      inherit (stage3Pkgs) gcc5 gcc xz zlib attr acl gmp coreutils binutils
+      inherit (stage3Pkgs) gcc6 gcc xz zlib attr acl gmp coreutils binutils
         gpm ncurses readline bash nghttp2_lib cryptodevHeaders gettext bison flex
         openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
         gawk gnutar gzip brotli bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;

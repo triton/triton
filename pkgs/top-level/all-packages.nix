@@ -5021,7 +5021,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  cython = pythonPackages.cython;
 #  cython3 = python3Packages.cython;
 #
-  gcc = callPackageAlias "gcc5" { };
+  gcc = callPackageAlias "gcc6" { };
 
   gcc_multi =
     if system == "x86_64-linux" then lowPrio (
@@ -5093,6 +5093,19 @@ zstd = callPackage ../all-pkgs/zstd { };
   }));
 #
   gcc5 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/5 {
+    noSysDirs = true;
+
+    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
+    profiledCompiler = true;
+
+    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
+    # and host != build), `cross' must be null but the cross-libc must still
+    # be passed.
+    cross = null;
+    libcCross = null;
+  }));
+
+  gcc6 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/6 {
     noSysDirs = true;
 
     # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion

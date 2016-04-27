@@ -75,30 +75,11 @@ stdenv.mkDerivation rec {
     inherit rev sha256;
   };
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "3e20a6c39775b724eff44af93f08b38205be1f5b";
-      file = "ceph/0001-Makefile-env-Don-t-force-sbin.patch";
-      sha256 = "025agxpjkp5dj1fpx2ln0j9s43wklzgld6v6zk3vmgs0l4q138g0";
-    })
-  ] ++ optionals (versionOlder version "9.0.0") [
+  patches = optionals (versionOlder version "9.0.0") [
     (fetchTritonPatch {
       rev = "3e20a6c39775b724eff44af93f08b38205be1f5b";
       file = "ceph/fix-pgrefdebugging.patch";
       sha256 = "11xn226mlzh6c13j9h1xavr9pnnfvkykkxzmf7c0w7hqm3w8r0gs";
-    })
-  ] ++ optionals (versionAtLeast version "9.0.0" && versionOlder version "10.0.0") [
-    #./fix-sphinx.patch
-    (fetchTritonPatch {
-      rev = "3e20a6c39775b724eff44af93f08b38205be1f5b";
-      file = "ceph/fix-pythonpath.patch";
-      sha256 = "1chf2n7rac07kvvbrs00vq2nkv31v3l6lqdlqpq09wgcbin2qpkk";
-    })
-  ] ++ optionals (versionAtLeast version "10.0.0") [
-    (fetchTritonPatch {
-      rev = "a8e11633b115050e9d0ea558d6480ed1d5fe9eeb";
-      file = "ceph/fix-pythonpath.patch";
-      sha256 = "0iq52pa4i0nldm5mmm8bshbpzbmrjndswa1cysglcmv2ncbvmyzz";
     })
   ];
 
@@ -166,21 +147,37 @@ stdenv.mkDerivation rec {
     openssl
   ];
 
+  # We don't want any of the debug info built as it is huge
+  # and slow to generate.
+  CFLAGS="-O2";
+  CXXFLAGS="-O2";
+
   postPatch = ''
-    patchShebangs .
+    export PYTHONPATH="$(toPythonPath $lib):$(toPythonPath $out):$PYTHONPATH"
+
+    patchShebangs src/gmock/gtest/scripts/fuse_gtest_files.py
 
     # Fix zfs pkgconfig detection
     sed -i 's,\[zfs\],\[libzfs\],g' configure.ac
 
     # Fix GNU_SOURCE
     sed -i '/AC_INIT/aAC_GNU_SOURCE' configure.ac
+
+    # Remove anything that depends on virtualenv
+    sed -i '/include ceph-\(disk\|detect-init\)/d' src/Makefile.am
+
+    # Fix sbindir moving
+    sed -i 's,su_sbindir = /sbin,su_sbindir = $(bindir),g' src/Makefile-env.am
+  '' + optionalString (versionAtLeast version "9.1.0") ''
+    # Don't embed debug info as it is huge
+    sed -i 's, -g , ,g' src/Makefile-env.am
+
+    # Fix pythonpath
+    sed -i 's,export PYTHONPATH=,export PYTHONPATH+=:,g' src/Makefile-env.am
   '' + optionalString (versionAtLeast version "10.1.0") ''
     # Fix LDAP linking
     ! grep '\(-lldap\|LDAP_LIB\)' src/rgw/Makefile.am
     sed -i 's,LIBRGW_DEPS +=,\0 -lldap,g' src/rgw/Makefile.am
-
-    # Remove anything that depends on virtualenv
-    sed -i '/include ceph-\(disk\|detect-init\)/d' src/Makefile.am
   '';
 
   preConfigure = ''
@@ -195,11 +192,7 @@ stdenv.mkDerivation rec {
     ./autogen.sh
 
     # Fix the python site-packages install directory
-    sed -i "s,\(PYTHON\(\|_EXEC\)_PREFIX=\).*,\1'$lib',g" configure
-
-    # Fix the PYTHONPATH for installing ceph-detect-init to $out
-    mkdir -p "$(toPythonPath $out)"
-    export PYTHONPATH="$(toPythonPath $out):$PYTHONPATH"
+    sed -i "s,\$PYTHON\(_EXEC\)\?_PREFIX,$lib,g" configure
   '';
 
   configureFlags = [
@@ -269,19 +262,25 @@ stdenv.mkDerivation rec {
     (cd src/gmock; make -j $NIX_BUILD_CORES)
   '';
 
-  installFlags = [
-    "sysconfdir=\${out}/etc"
-  ];
+  preInstall = ''
+    installFlagsArray+=(
+      "sysconfdir=$out/etc"
+      "submandir=$out/etc/cron.hourly"
+      "localstatedir=$TMPDIR"
+    )
+  '';
 
   outputs = [ "out" "lib" ];
 
   postInstall = ''
-    wrapPythonPrograms $out/bin
-
     # Bring in lib as a native build input
     mkdir -p $out/nix-support
     echo "$lib" > $out/nix-support/propagated-native-build-inputs
-
+  '' + optionalString (versionAtLeast version "10.1.0") ''
+    # Move all of the python libraries to $lib
+    mv $(toPythonPath $out)/* $(toPythonPath $lib)
+    rm -rf $out/lib
+  '' + optionalString (versionOlder version "10.1.0") ''
     # Fix the python library loading
     find $lib/lib -name \*.pyc -or -name \*.pyd -exec rm {} \;
     for PY in $(find $lib/lib -name \*.py); do
@@ -306,6 +305,18 @@ stdenv.mkDerivation rec {
       test -f "$PY"c
       test -f "$PY"o
     done
+  '';
+
+  preFixup = ''
+    # Make sure the python libraries reference $lib/lib
+    for plib in $(find $(toPythonPath $lib) -name \*.so\* -type f); do
+      patchelf --set-rpath "$lib/lib:$(patchelf --print-rpath "$plib")" "$plib"
+    done
+
+    # Make sure libs in $lib/lib don't reference $out/lib
+    find $lib/lib -name \*.so\* -type f -exec patchelf --shrink-rpath {} \;
+    
+    wrapPythonPrograms $out/bin
   '';
 
   meta = with stdenv.lib; {

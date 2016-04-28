@@ -1250,6 +1250,8 @@ libev = callPackage ../all-pkgs/libev { };
 
 libevent = callPackage ../all-pkgs/libevent { };
 
+libfaketime = callPackage ../all-pkgs/libfaketime { };
+
 libffi = callPackage ../all-pkgs/libffi { };
 
 libfilezilla = callPackage ../all-pkgs/libfilezilla { };
@@ -6870,8 +6872,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libebur128 = callPackage ../development/libraries/libebur128 { };
 #
 #  libetpan = callPackage ../development/libraries/libetpan { };
-#
-  libfaketime = callPackage ../development/libraries/libfaketime { };
 #
 #  libfakekey = callPackage ../development/libraries/libfakekey { };
 #

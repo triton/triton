@@ -1,4 +1,6 @@
-{ stdenv, fetchurl }:
+{ stdenv
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
   name = "libfaketime-0.9.6";
@@ -9,14 +11,23 @@ stdenv.mkDerivation rec {
   };
 
   preBuild = ''
-    makeFlagsArray+=(PREFIX="$out" LIBDIRNAME=/lib)
+    grep -q '\-Werror' src/Makefile
+    sed -i 's,-Werror,,g' src/Makefile
+
+    makeFlagsArray+=(
+      "PREFIX=$out"
+      "LIBDIRNAME=/lib"
+    )
   '';
 
   meta = with stdenv.lib; {
     description = "Report faked system time to programs without having to change the system-wide time";
     homepage = http://www.code-wizards.com/projects/libfaketime/;
     license = licenses.gpl2;
-    platforms = platforms.all;
-    maintainers = [ maintainers.bjornfor ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

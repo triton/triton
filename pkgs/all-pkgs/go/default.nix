@@ -144,6 +144,17 @@ stdenv.mkDerivation {
     rm -r $out/share/go/{doc,misc}
     find $out -type f \( -name run -or -name \*.bash -or -name \*.sh \) -delete
     rm -r $out/share/go/src/cmd/go/testdata
+
+    while read exe; do
+      strip $exe || true
+      patchelf --shrink-rpath $exe || true
+    done < <(find $out/share/ \( -executable -and -not -type d \) -or -name \*.a)
+
+    TMPREP="$(printf "/%*s" "$(( ''${#TMPDIR} - 1))" | tr ' ' 'x')"
+    while read file; do
+      echo "Removing $TMPDIR from $file" >&2
+      sed -i "s,$TMPDIR,$TMPREP,g" "$file"
+    done < <(grep -r "$TMPDIR" $out | sed "s,.*\(''${out}[^ :]*\).*,\1,g" | sort | uniq)
   '';
 
   setupHook = ./setup-hook.sh;

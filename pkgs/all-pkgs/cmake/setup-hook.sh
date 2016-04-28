@@ -19,9 +19,11 @@ cmakeConfigurePhase() {
         fixCmakeFiles .
     fi
 
-    cmakeDir="$(pwd)"
-    mkdir -p $TMPDIR/build
-    cd $TMPDIR/build
+    if [ -n "${createCmakeBuildDir-true}" ]; then
+      cmakeDir="$(pwd)"
+      mkdir -p $TMPDIR/build
+      cd $TMPDIR/build
+    fi
 
     if [ -z "$dontAddPrefix" ]; then
       cmakeFlagsArray+=("-DCMAKE_INSTALL_PREFIX=$prefix")

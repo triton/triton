@@ -51,6 +51,9 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
 
+  # Some generated headers are not ready when needed
+  parallelBuild = false;
+
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/screen/;
     description = "A window manager that multiplexes a physical terminal";

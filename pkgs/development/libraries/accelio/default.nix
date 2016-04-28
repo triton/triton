@@ -24,8 +24,11 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
+    grep -q '\-g -ggdb -Wall -Werror' configure.ac
+    sed -i 's,-g -ggdb -Wall -Werror,-O2,g' configure.ac
+
     # Don't build broken examples
-    sed -i '/AC_CONFIG_SUBDIRS(\[\(examples\|tests\).*\/kernel/d' configure.ac
+    sed -i '/AC_CONFIG_SUBDIRS(\[\(examples\|tests\).*/d' configure.ac
 
     # Allow the installation of xio kernel headers
     sed -i 's,/opt/xio,''${out},g' src/kernel/xio/Makefile.in

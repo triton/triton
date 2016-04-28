@@ -1,17 +1,19 @@
 { stdenv
 , asciidoc
-, fetchurl
+, fetchFromGitHub
 , python
 , re2c
 }:
 
 stdenv.mkDerivation rec {
   name = "ninja-${version}";
-  version = "1.6.0";
+  version = "1.7.0";
 
-  src = fetchurl {
-    url = "https://github.com/martine/ninja/archive/v${version}.tar.gz";
-    sha256 = "1ryd1686bd31gfdjxnqm6k1ybnjmjz8v97px7lmdkr4g0vxqhgml";
+  src = fetchFromGitHub {
+    owner = "ninja-build";
+    repo = "ninja";
+    rev = "v${version}";
+    sha256 = "0a2872f269036d2210186beb782b4fe3d8bf9669a381abf4f0c1e88ca32edd93";
   };
 
   nativeBuildInputs = [

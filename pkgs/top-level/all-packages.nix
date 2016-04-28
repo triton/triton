@@ -1323,6 +1323,8 @@ libmpeg2 = callPackage ../all-pkgs/libmpeg2 {
 
 libmsgpack = callPackage ../all-pkgs/libmsgpack { };
 
+libmusicbrainz = callPackage ../all-pkgs/libmusicbrainz { };
+
 libnetfilter_conntrack = callPackage ../all-pkgs/libnetfilter_conntrack { };
 
 libnetfilter_cthelper = callPackage ../all-pkgs/libnetfilter_cthelper { };
@@ -7081,14 +7083,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libmsn = callPackage ../development/libraries/libmsn { };
 #
 #  libmspack = callPackage ../development/libraries/libmspack { };
-#
-#  libmusicbrainz2 = callPackage ../development/libraries/libmusicbrainz/2.x.nix { };
-#
-  libmusicbrainz3 = callPackage ../development/libraries/libmusicbrainz { };
-
-  libmusicbrainz5 = callPackage ../development/libraries/libmusicbrainz/5.x.nix { };
-
-  libmusicbrainz = libmusicbrainz3;
 #
 #  libmwaw = callPackage ../development/libraries/libmwaw { };
 #

@@ -21,7 +21,7 @@
 , gtk3
 , gtksourceview
 , json-glib
-, libmusicbrainz5
+, libmusicbrainz
 , pango
 , webkitgtk
 , xorg
@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
     gtk3
     gtksourceview
     json-glib
-    libmusicbrainz5
+    libmusicbrainz
     pango
     webkitgtk
     xorg.libX11
@@ -93,7 +93,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

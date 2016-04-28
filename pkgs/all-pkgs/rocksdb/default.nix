@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, perl
 
 , bzip2
 , google-gflags
@@ -21,6 +22,10 @@ stdenv.mkDerivation rec {
     rev = "v${version}";
     sha256 = "1b9b1ef7d63c9b0c35ff5290fa697e6830ce977b4885bbb8e90388f9b1c8b7e5";
   };
+
+  nativeBuildInputs = [
+    perl
+  ];
 
   buildInputs = [
     bzip2

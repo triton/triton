@@ -47,7 +47,7 @@
 , pulseaudio_lib
 , qt4
 #, qt5
-, samba
+, samba_client
 , schroedinger
 , SDL
 , SDL_image
@@ -124,7 +124,7 @@ stdenv.mkDerivation rec {
     pulseaudio_lib
     qt4
     #qt5.qtbase
-    samba
+    samba_client
     schroedinger
     SDL
     SDL_image

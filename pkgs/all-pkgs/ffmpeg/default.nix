@@ -132,7 +132,7 @@
 , rtmpdump
 , rubberband
 #, libquvi
-, samba
+, samba_client
 , schroedinger
 , SDL
 #, shine
@@ -196,7 +196,7 @@ assert
   || frei0r != null
   || opensslExtlib
   || rubberband != null
-  || samba != null
+  || samba_client != null
   #|| utvideo != null
   || vid-stab != null
   || x11grabExtlib
@@ -212,7 +212,7 @@ assert
   #opencore-amrnb != null
   #|| opencore-amrwb != null
   #||
-  samba != null
+  samba_client != null
   #|| vo-aacenc != null
   #|| vo-amrwbenc != null
   -> version3Licensing;
@@ -394,7 +394,7 @@ stdenv.mkDerivation rec {
     openjpeg_1
     rtmpdump
     rubberband
-    samba
+    samba_client
     schroedinger
     snappy
     tesseract
@@ -577,7 +577,7 @@ stdenv.mkDerivation rec {
     (fflag "libschroedinger" (schroedinger != null && full) null)
     #(fflag "libshine" (shine != null && full) "2.0")
     "--disable-libshine"
-    (fflag "libsmbclient" (samba != null && full) "2.3")
+    (fflag "libsmbclient" (samba_client != null && full) "2.3")
     (fflag "libsnappy" (snappy != null && full) "2.8")
     (fflag "libsoxr" (soxr != null) null)
     (fflag "libspeex" (speex != null) null)

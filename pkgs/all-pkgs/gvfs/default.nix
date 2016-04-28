@@ -29,7 +29,7 @@
 , libsoup
 , libxml2
 , openssh
-, samba
+, samba_client
 , systemd_lib
 , udisks
 }:
@@ -82,7 +82,7 @@ stdenv.mkDerivation rec {
     libsoup
     libxml2
     openssh
-    samba
+    samba_client
     systemd_lib
     udisks
   ];
@@ -113,7 +113,7 @@ stdenv.mkDerivation rec {
     (enFlag "keyring" (libgnome-keyring != null) null)
     (enFlag "bluray" (libbluray != null) null)
     "--enable-libmtp"
-    (enFlag "samba" (samba != null) null)
+    (enFlag "samba" (samba_client != null) null)
     (enFlag "gtk" (gtk3 != null) null)
     (enFlag "archive" (libarchive != null) null)
     "--enable-afp"

@@ -31,6 +31,7 @@ stdenv.mkDerivation rec {
     xorg.libX11
     xorg.libXinerama
     xorg.libXt
+    xorg.xproto
   ];
 
   preBuild = ''

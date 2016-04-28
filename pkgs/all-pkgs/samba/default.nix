@@ -42,14 +42,23 @@
 , tevent
 , uid_wrapper
 , zlib
+
+, type ? ""
 }:
 
 let
-  name = "samba-4.4.2";
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
+
+  version = "4.4.2";
+  name = "samba${if isClient then "-client" else ""}-${version}";
 
   tarballUrls = [
-    "mirror://samba/samba/stable/${name}.tar"
+    "mirror://samba/samba/stable/samba-${version}.tar"
   ];
+
+  isClient = type == "client";
 in
 stdenv.mkDerivation rec {
   inherit name;
@@ -74,22 +83,16 @@ stdenv.mkDerivation rec {
   buildInputs = [
     acl
     avahi
-    ceph_lib
     cups
-    dbus
-    glusterfs
     gnutls
     iniparser
     kerberos
     ldb
-    libaio
     libarchive
     libbsd
     libcap
     libgcrypt
     libgpg-error
-    libibverbs
-    librdmacm
     libunwind
     ncurses
     nss_wrapper
@@ -106,6 +109,13 @@ stdenv.mkDerivation rec {
     tevent
     uid_wrapper
     zlib
+  ] ++ optionals (!isClient) [
+    ceph_lib
+    dbus
+    glusterfs
+    libaio
+    libibverbs
+    librdmacm
   ];
 
   pythonPath = [
@@ -147,8 +157,8 @@ stdenv.mkDerivation rec {
     "--with-libarchive"
     "--with-cluster-support"
     "--with-regedit"
-    "--with-libcephfs=${ceph_lib}"
-    "--enable-glusterfs"
+    (if isClient then null else "--with-libcephfs=${ceph_lib}")
+    (if isClient then null else "--enable-glusterfs")
 
     # dynconfig/wscript options
     "--enable-fhs"
@@ -174,8 +184,8 @@ stdenv.mkDerivation rec {
     # "--without-ad-dc"
 
     # ctdb/wscript
-    "--enable-infiniband"
-    "--enable-pmda"
+    (if isClient then null else "--enable-infiniband")
+    (if isClient then null else "--enable-pmda")
   ];
 
   preInstall = ''
@@ -191,20 +201,62 @@ stdenv.mkDerivation rec {
     rm $out/bin/ctdb_run{_cluster,}_tests
   '';
 
-  preFixup = ''
+  preFixup = optionalString isClient ''
+    smbclient_bins=(
+      "$out/bin/smbclient"
+      "$out/bin/rpcclient"
+      "$out/bin/smbspool"
+      "$out/bin/smbtree"
+      "$out/bin/smbcacls"
+      "$out/bin/smbcquotas"
+      "$out/bin/smbget"
+      "$out/bin/net"
+      "$out/bin/nmblookup"
+      "$out/bin/smbtar"
+    )
+    for lib in $(find $out/lib -maxdepth 1 -not -type d); do
+      smbclient_bins+=("$lib")
+    done
+
+    smbclient_pcs=($(find "$out/lib/pkgconfig" -type f))
+    for smbclient_pc in "''${smbclient_pcs[@]}"; do
+      names=$(sed 's, -l,\n\0,g' $smbclient_pc | sed -n 's,.* -l\([^ ]*\).*,\1,p')
+      for name in $names; do
+        smbclient_bins+=($(find $out/lib -name lib''${name}.so\*))
+      done
+    done
+
+    for smbclient_bin in "''${smbclient_bins[@]}"; do
+      smbclient_bins+=($(ldd $smbclient_bin | awk '{ print $3 }' | grep $out || true))
+    done
+
+    declare -A smbclient_files
+    for i in "''${smbclient_bins[@]}" "''${smbclient_pcs[@]}" $(find $out/include $out/lib/python* -not -type d); do
+      smbclient_files["$i"]=1
+    done
+
+    for i in $(find $out -not -type d); do
+      if [ "''${smbclient_files[$i]}" != "1" ]; then
+        rm $i
+      fi
+    done
+    for dir in $(find $out -type d | sort -r); do
+      rmdir "$dir" || true
+    done
+  '' + ''
     # Correct python program paths
-    wrapPythonPrograms
+    wrapPythonPrograms $out/bin
   '';
 
   # We need to make sure rpaths are correct for all of our libraries
   postFixup = ''
     SAMBA_LIBS="$(find $out -type f -name \*.so -exec dirname {} \; | sort | uniq)"
-    find $out -type f | while read BIN; do
+    while read BIN; do
       OLD_LIBS="$(patchelf --print-rpath "$BIN" 2>/dev/null | tr ':' '\n')" || continue
       ALL_LIBS="$(echo -e "$SAMBA_LIBS\n$OLD_LIBS" | sort | uniq | tr '\n' ':')"
       patchelf --set-rpath "$ALL_LIBS" "$BIN" 2>/dev/null
       patchelf --shrink-rpath "$BIN"
-    done
+    done < <(find $out -type f)
   '';
 
   passthru = rec {

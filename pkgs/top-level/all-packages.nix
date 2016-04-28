@@ -1830,7 +1830,11 @@ ruby = callPackage ../all-pkgs/ruby { };
 
 sakura = callPackage ../all-pkgs/sakura { };
 
-samba = callPackage ../all-pkgs/samba { };
+samba_full = callPackage ../all-pkgs/samba { };
+
+samba_client = callPackageAlias "samba_full" {
+  type = "client";
+};
 
 scrot = callPackage ../all-pkgs/scrot { };
 

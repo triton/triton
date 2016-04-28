@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
   src = fetchurl rec {
     url = "http://webkitgtk.org/releases/${name}.tar.xz";
     sha1Confirm = "1bc2fc721fb088b9b8dfa535067d6005fee03abb";
-    sha256 = "a68604f8fd1bcb247d647709290226289b90c16acb1f3730538b688db8df5ea6";
+    sha256 = "5b1a2d5227553f3cecbdb258c68b384f9235747b2c07c15afb555fe4fa6ae896";
   };
 
   nativeBuildInputs = [
@@ -121,9 +121,9 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      rev = "7a86b94c61553bfa090488c0b73c477bdc062b7c";
       file = "webkitgtk/webkit-gtk-2.10.x-finding-harfbuzz-icu.patch";
-      sha256 = "5b1a2d5227553f3cecbdb258c68b384f9235747b2c07c15afb555fe4fa6ae896";
+      sha256 = "8eb3f4844b06c3c060233396045248a883177e9a09c491ddfaf9897d8e8ca2c4";
     })
   ];
 

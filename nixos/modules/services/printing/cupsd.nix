@@ -16,7 +16,7 @@ let
       mkdir -p $out
       if [ ! -e ${cups}/lib/cups/backend/smb ]; then
         mkdir -p $out/lib/cups/backend
-        ln -sv ${pkgs.samba}/bin/smbspool $out/lib/cups/backend/smb
+        ln -sv ${pkgs.samba_client}/bin/smbspool $out/lib/cups/backend/smb
       fi
 
       # Provide support for printing via HTTPS.

@@ -214,7 +214,7 @@ stdenv.mkDerivation rec {
       "$out/bin/nmblookup"
       "$out/bin/smbtar"
     )
-    for lib in $(find $out/lib -maxdepth 1 -not -type d); do
+    for lib in $(find $out/lib $out/lib/security -maxdepth 1 -not -type d); do
       smbclient_bins+=("$lib")
     done
 

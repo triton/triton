@@ -38,7 +38,6 @@
 , mpg123
 , openal
 , pulseaudio_lib
-, samba
 , shout
 , soxr
 , sqlite

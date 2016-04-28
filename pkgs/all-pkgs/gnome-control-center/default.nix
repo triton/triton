@@ -51,7 +51,7 @@
 , polkit
 , pulseaudio_lib
 , python
-, samba
+, samba_client
 , shared_mime_info
 , sound-theme-freedesktop
 , systemd_lib
@@ -133,7 +133,7 @@ stdenv.mkDerivation rec {
     networkmanager-applet
     polkit
     pulseaudio_lib
-    samba
+    samba_client
     shared_mime_info
     systemd_lib
     upower

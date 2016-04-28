@@ -1196,6 +1196,8 @@ krb5_lib = callPackageAlias "krb5_full" {
 
 kubernetes = callPackage ../all-pkgs/kubernetes { };
 
+kyotocabinet = callPackage ../all-pkgs/kyotocabinet { };
+
 lame = callPackage ../all-pkgs/lame { };
 
 ldb = callPackage ../all-pkgs/ldb { };
@@ -7831,8 +7833,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  tk-8_5 = callPackage ../development/libraries/tk/8.5.nix { tcl = tcl-8_5; };
 #
 #  tnt = callPackage ../development/libraries/tnt { };
-#
-  kyotocabinet = callPackage ../development/libraries/kyotocabinet { };
 #
 #  tokyocabinet = callPackage ../development/libraries/tokyo-cabinet { };
 #

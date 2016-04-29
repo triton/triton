@@ -1522,6 +1522,8 @@ mkvtoolnix = callPackage ../all-pkgs/mkvtoolnix { };
 
 mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 
+mosh = callPackage ../all-pkgs/mosh { };
+
 mp4v2 = callPackage ../all-pkgs/mp4v2 { };
 
 mpd = callPackage ../all-pkgs/mpd { };
@@ -3602,8 +3604,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    inherit (perlPackages) IPCRun TimeDate TimeDuration;
 #    docbook-xsl = docbook_xsl;
 #  };
-#
-  mosh = callPackage ../tools/networking/mosh { };
 #
 #  motuclient = python27Packages.motuclient;
 #

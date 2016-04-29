@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "gperftools";
     repo = "gperftools";
     rev = name;
-    sha256 = "2fb9500166b575f7cc685c23bf4648c292127296ee95881227b55cd2f6ca148e";
+    sha256 = "d7f078bfb62a240a2934c257970effb8ad8e6b744d9b4990f9a050b12f21f9e6";
   };
 
   nativeBuildInputs = [

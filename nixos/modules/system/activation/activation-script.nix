@@ -12,12 +12,15 @@ let
     '';
   });
 
-  path =
-    [ pkgs.coreutils pkgs.gnugrep pkgs.findutils
-      pkgs.glibc # needed for getent
-      pkgs.shadow
-      pkgs.net-tools # needed for hostname
-    ];
+  path = [
+    pkgs.coreutils
+    pkgs.gnugrep
+    pkgs.findutils
+    pkgs.e2fsprogs # needed for chattr
+    pkgs.glibc # needed for getent
+    pkgs.shadow
+    pkgs.net-tools # needed for hostname
+  ];
 
 in
 

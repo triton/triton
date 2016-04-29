@@ -148,7 +148,7 @@ stdenv.mkDerivation {
     while read exe; do
       strip $exe || true
       patchelf --shrink-rpath $exe || true
-    done < <(find $out/share/ \( -executable -and -not -type d \) -or -name \*.a)
+    done < <(find $out/share/ -executable -and -not -type d)
 
     TMPREP="$(printf "/%*s" "$(( ''${#TMPDIR} - 1))" | tr ' ' 'x')"
     while read file; do

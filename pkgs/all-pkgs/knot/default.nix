@@ -1,31 +1,37 @@
 { stdenv
 , fetchurl
 
+, fstrm
 , gnutls
 , jansson
+, libedit
 , libidn
 , liburcu
 , lmdb
 , nettle
+, protobuf-c
 , systemd_lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "knot-2.1.1";
+  name = "knot-2.2.0";
 
   src = fetchurl {
     url = "https://secure.nic.cz/files/knot-dns/${name}.tar.xz";
     allowHashOutput = false;
-    sha256 = "e110d11d4a4c4b5abb091b32fcb073934fb840046e975234323e0fc15f2f8f5b";
+    sha256 = "3f36e9671174136755b57ca7f4f52c03756721abe0a44fd3ca98c037eb799044";
   };
 
   buildInputs = [
+    fstrm
     gnutls
     jansson
+    libedit
     libidn
     liburcu
     lmdb
     nettle
+    protobuf-c
     systemd_lib
   ];
 
@@ -37,6 +43,7 @@ stdenv.mkDerivation rec {
     "--with-urcu=${liburcu}"
     "--with-lmdb=${lmdb}"
     "--with-libidn=${libidn}"
+    "--enable-dnstap"
   ];
 
   preInstall = ''

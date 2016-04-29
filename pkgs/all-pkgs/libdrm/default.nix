@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
   # This breaks libraries talking to the dri interfaces
   bindnow = false;
 
-  passthru = rec {
+  passthru = {
     srcVerified = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;

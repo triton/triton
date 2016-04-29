@@ -147,6 +147,10 @@ in
       makeWrapper
     ] ++ attrs.nativeBuildInputs;
 
+    patches = [
+      ./xorgserver-xkbcomp-path.patch
+    ];
+
     configureFlags = [
       "--enable-kdrive"             # not built by default
       "--with-sha1=libcrypto"

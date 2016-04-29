@@ -27,6 +27,12 @@ stdenv.mkDerivation rec {
     libressl
   ];
 
+  # Remove this rediculous timeout
+  postPatch = ''
+    grep -q 'timeout = 300;' src/ntp.c
+    sed -i '/timeout = 300;/d' src/ntp.c
+  '';
+
   configureFlags = [
     "--with-privsep-path=/var/empty"
     "--with-privsep-user=ntp"

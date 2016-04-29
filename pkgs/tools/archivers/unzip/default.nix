@@ -6,6 +6,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = mirror://sourceforge/infozip/unzip60.tar.gz;
+    multihash = "QmXo6yz71MZYwxNcd76XVvjNjP9B8Ngynn5naodRWurAb8";
     sha256 = "0dxx11knh3nk95p2gg2ak777dd11pr7jx5das2g49l262scrcv83";
   };
 

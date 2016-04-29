@@ -25,6 +25,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    xorg.glproto
     xorg.libX11
     xorg.libXext
     xorg.xorgserver

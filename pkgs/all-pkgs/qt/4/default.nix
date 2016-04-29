@@ -231,6 +231,8 @@ stdenv.mkDerivation rec {
     "-nomake docs"
   ];
 
+  CXXFLAGS = "-std=gnu++98";
+
   meta = with stdenv.lib; {
     description = "A cross-platform application framework for C++";
     homepage = http://qt-project.org/;

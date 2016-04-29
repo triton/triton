@@ -1423,6 +1423,8 @@ libusb = callPackageAlias "libusb_1" { };
 
 libusbmuxd = callPackage ../all-pkgs/libusbmuxd { };
 
+libutempter = callPackage ../all-pkgs/libutempter { };
+
 libuv = callPackage ../all-pkgs/libuv { };
 
 libva = callPackage ../all-pkgs/libva { };
@@ -7207,8 +7209,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   libungif = callPackage ../development/libraries/giflib/libungif.nix { };
 #
 #  libunibreak = callPackage ../development/libraries/libunibreak { };
-#
-#  libutempter = callPackage ../development/libraries/libutempter { };
 #
   libunwind = callPackage ../development/libraries/libunwind { };
 #

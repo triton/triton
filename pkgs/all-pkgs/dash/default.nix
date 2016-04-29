@@ -13,7 +13,7 @@ in
 stdenv.mkDerivation rec {
   name = "dash-${version}";
   release-version = "0.5.8";
-  patch-version = "2.1";
+  patch-version = "2.2";
   version = "${release-version}.${patch-version}";
 
   src = fetchurl {
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
     (fetchurl {
       url = "mirror://debian/pool/main/d/dash/"
           + "dash_${release-version}-${patch-version}.diff.gz";
-      sha256 = "1nm3bajpyv737j0b15hzhckg28hzwjiryhvgvhfp84bbin07nn4y";
+      sha256 = "e1a4c75d534775b9bf22366cce502e15a4973736676d76701b791d372503711e";
     })
     (fetchTritonPatch {
       rev = "2e96cc8e06eaf6ad9643acd1fdddb23aba7759ea";

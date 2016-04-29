@@ -2,8 +2,10 @@
 , fetchurl
 
 , expat
+, fstrm
 , libevent
 , openssl
+, protobuf-c
 }:
 
 stdenv.mkDerivation rec {
@@ -17,8 +19,10 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     expat
+    fstrm
     libevent
     openssl
+    protobuf-c
   ];
 
   configureFlags = [
@@ -29,6 +33,8 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--enable-pie"
     "--enable-relro-now"
+    "--enable-dnstap"
+    "--with-dnstap-socket-path=/run/dnstap.sock"
   ];
 
   preInstall = ''

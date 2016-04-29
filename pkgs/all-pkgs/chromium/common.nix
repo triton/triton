@@ -13,7 +13,7 @@
 , bison, gperf, fontconfig, libffi
 , glib, gtk_2, dbus-glib, pango
 , xorg, dbus, mesa, freetype
-, protobuf, speechd, cups
+, protobuf-cpp, speechd, cups
 
 # optional dependencies
 , libgcrypt # gnomeSupport || cupsSupport
@@ -116,7 +116,7 @@ let
       bison gperf kerberos
       glib gtk_2 dbus-glib
       xorg.libXScrnSaver xorg.libXcursor xorg.libXtst mesa
-      pciutils protobuf speechd xorg.libXdamage
+      pciutils protobuf-cpp speechd xorg.libXdamage
       pythonPackages.gyp pythonPackages.ply pythonPackages.jinja2
     ] ++ optional gnomeKeyringSupport libgnome-keyring
       ++ optionals gnomeSupport [ gconf libgcrypt ]

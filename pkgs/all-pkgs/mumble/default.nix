@@ -12,7 +12,7 @@
 , qt4
 , qt5
 , openssl
-, protobuf
+, protobuf-cpp
 , speex
 , xorg
 
@@ -45,7 +45,7 @@ let
       avahi
       boost
       openssl
-      protobuf
+      protobuf-cpp
     ] ++ optionals (source.qtVersion == 4) [
       qt4
     ] ++ optionals (source.qtVersion == 5) [

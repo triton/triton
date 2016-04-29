@@ -772,6 +772,8 @@ fcgi = callPackage ../all-pkgs/fcgi { };
 
 feh = callPackage ../all-pkgs/feh { };
 
+fstrm = callPackage ../all-pkgs/fstrm { };
+
 ffmpeg_2 = callPackage ../all-pkgs/ffmpeg {
   channel = "2";
 };

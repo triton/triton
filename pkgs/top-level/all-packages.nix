@@ -1719,6 +1719,8 @@ potrace = callPackage ../all-pkgs/potrace { };
 
 protobuf-c = callPackage ../all-pkgs/protobuf-c { };
 
+protobuf-cpp = callPackage ../all-pkgs/protobuf-cpp { };
+
 psmisc = callPackage ../all-pkgs/psmisc { };
 
 pugixml = callPackage ../all-pkgs/pugixml { };
@@ -7508,11 +7510,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  proj = callPackage ../development/libraries/proj { };
 #
 #  postgis = callPackage ../development/libraries/postgis { };
-#
-  protobuf = callPackageAlias "protobuf2_6" { };
-  protobuf3_0 = lowPrio (callPackage ../development/libraries/protobuf/3.0.nix { });
-  protobuf2_6 = callPackage ../development/libraries/protobuf/2.6.nix { };
-#  protobuf2_5 = callPackage ../development/libraries/protobuf/2.5.nix { };
 #
   pth = callPackage ../development/libraries/pth { };
 #

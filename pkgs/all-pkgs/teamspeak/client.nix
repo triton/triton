@@ -1,0 +1,138 @@
+{ stdenv
+, fetchurl
+, less
+, makeDesktopItem
+, makeWrapper
+, unzip
+, which
+
+, alsa-lib
+, fontconfig
+, freetype
+, glib
+, libpng
+, libredirect
+, pulseaudio_lib
+, qt5
+#, quazip
+, xkeyboard-config
+, xorg
+, zlib
+}:
+
+let
+  inherit (stdenv.lib)
+    makeLibraryPath;
+in
+
+stdenv.mkDerivation rec {
+  name = "teamspeak-client-${version}";
+  version = "3.0.19.1";
+
+  src = fetchurl {
+    urls = [
+      "http://dl.4players.de/ts/releases/${version}/TeamSpeak3-Client-linux_amd64-${version}.run"
+      "http://teamspeak.gameserver.gamed.de/ts3/releases/${version}/TeamSpeak3-Client-linux_amd64-${version}.run"
+    ];
+    sha256 = "1pgpsv1r216l76fx0grlqmldd9gha3sj84gnm44km8y98b3hj525";
+  };
+
+  # grab the plugin sdk for the desktop icon
+  pluginsdk = fetchurl {
+    url = "http://dl.4players.de/ts/client/pluginsdk/pluginsdk_3.0.19.1.zip";
+    sha256 = "108y52mfg44cnnhhipnmrr0cxh7ram5c2hnchxjkwvf5766vbaq4";
+  };
+
+  unpackPhase = ''
+    echo -e 'q\ny' | sh -xe $src
+    cd TeamSpeak*
+  '';
+
+  nativeBuildInputs = [
+    makeWrapper
+    less
+    which
+    unzip
+  ];
+
+  libPath = [
+    alsa-lib
+    fontconfig
+    freetype
+    glib
+    libpng
+    pulseaudio_lib
+    qt5.qtbase
+    xorg.libICE
+    xorg.libSM
+    xorg.libX11
+    xorg.libxcb
+    xorg.libXcursor
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXinerama
+    xorg.libXrandr
+    xorg.libXrender
+    zlib
+  ];
+
+  buildPhase = ''
+    mv -v ts3client_linux_amd64 ts3client
+    echo "patching ts3client..."
+    patchelf \
+      --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
+      --set-rpath ${makeLibraryPath libPath}:$(cat $NIX_CC/nix-support/orig-cc)/lib64 \
+      --force-rpath \
+      ts3client
+  '';
+
+  installPhase = ''
+    # Delete unecessary libraries - these are provided by Triton.
+    rm -v *.so*
+    rm -v qt.conf
+
+    # Install files.
+    mkdir -p $out/lib/teamspeak
+    mv -v * $out/lib/teamspeak/
+
+    # Make a desktop item
+    mkdir -pv $out/share/applications/ $out/share/icons/
+    unzip ${pluginsdk}
+    cp -v pluginsdk/docs/client_html/images/logo.png $out/share/icons/teamspeak.png
+    cp -v ${desktopItem}/share/applications/* $out/share/applications/
+
+    # Make a symlink to the binary from bin.
+    mkdir -pv $out/bin/
+    ln -sv $out/lib/teamspeak/ts3client $out/bin/ts3client
+
+    wrapProgram $out/bin/ts3client \
+      --set LD_LIBRARY_PATH "${qt5.quazip}/lib" \
+      --set LD_PRELOAD "${libredirect}/lib/libredirect.so" \
+      --set QT_PLUGIN_PATH "$out/lib/teamspeak/platforms" \
+      --set NIX_REDIRECTS /usr/share/X11/xkb=${xkeyboard-config}/share/X11/xkb
+  '';
+
+  desktopItem = makeDesktopItem {
+    name = "teamspeak";
+    exec = "ts3client";
+    icon = "teamspeak";
+    comment = "The TeamSpeak voice communication tool";
+    desktopName = "TeamSpeak";
+    genericName = "TeamSpeak";
+    categories = "Network";
+  };
+
+  dontStrip = true;
+  dontPatchELF = true;
+  
+  meta = with stdenv.lib; { 
+    description = "The TeamSpeak voice communication tool";
+    homepage = http://teamspeak.com/;
+    license = licenses.unfreeRedistributable;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = with platforms;
+      x86_64-linux;
+  };
+}

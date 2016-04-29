@@ -1930,6 +1930,9 @@ tcp-wrappers = callPackage ../all-pkgs/tcp-wrappers { };
 
 tdb = callPackage ../all-pkgs/tdb { };
 
+teamspeak_client = callPackage ../all-pkgs/teamspeak/client.nix { };
+teamspeak_server = callPackage ../all-pkgs/teamspeak/server.nix { };
+
 tesseract = callPackage ../all-pkgs/tesseract { };
 
 tevent = callPackage ../all-pkgs/tevent { };
@@ -11242,9 +11245,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  tailor = callPackage ../applications/version-management/tailor {};
 #
 #  tangogps = callPackage ../applications/misc/tangogps { };
-#
-  teamspeak_client = qt55.callPackage ../applications/networking/instant-messengers/teamspeak/client.nix { };
-#  teamspeak_server = callPackage ../applications/networking/instant-messengers/teamspeak/server.nix { };
 #
 #  taskjuggler = callPackage ../applications/misc/taskjuggler { };
 #

@@ -1715,7 +1715,9 @@ postgresql_91 = callPackageAlias "postgresql" {
   channel = "9.1";
 };
 
-potrace = callPackage ../all-pkgs/potrace {};
+potrace = callPackage ../all-pkgs/potrace { };
+
+protobuf-c = callPackage ../all-pkgs/protobuf-c { };
 
 psmisc = callPackage ../all-pkgs/psmisc { };
 
@@ -7511,10 +7513,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   protobuf3_0 = lowPrio (callPackage ../development/libraries/protobuf/3.0.nix { });
   protobuf2_6 = callPackage ../development/libraries/protobuf/2.6.nix { };
 #  protobuf2_5 = callPackage ../development/libraries/protobuf/2.5.nix { };
-#
-#  protobufc = protobufc1_1;
-#  protobufc1_1 = callPackage ../development/libraries/protobufc/1.1.nix { };
-#  protobufc1_0 = callPackage ../development/libraries/protobufc/1.0.nix { };
 #
   pth = callPackage ../development/libraries/pth { };
 #

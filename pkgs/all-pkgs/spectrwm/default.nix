@@ -4,6 +4,7 @@
 , makeWrapper
 
 , dmenu
+, fontconfig
 , freetype
 , xorg
 }:
@@ -33,16 +34,22 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     dmenu
+    fontconfig
     freetype
     xorg.libX11
-    xorg.libXrandr
+    xorg.libxcb
     xorg.libXcursor
     xorg.libXft
+    xorg.libXrandr
+    xorg.libXrender
     xorg.libXt
     xorg.libXtst
+    xorg.randrproto
+    xorg.renderproto
     xorg.xcbutil
     xorg.xcbutilkeysyms
     xorg.xcbutilwm
+    xorg.xproto
   ];
 
   sourceRoot = "spectrwm-SPECTRWM_${replace version}/linux";

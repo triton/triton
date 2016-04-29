@@ -67,6 +67,9 @@ stdenv.mkDerivation rec {
     "install-dev"
   ];
 
+  # This breaks sometimes
+  parallelInstall = false;
+
   meta = with stdenv.lib; {
     homepage = http://xfs.org/;
     description = "SGI XFS utilities";

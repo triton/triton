@@ -329,7 +329,7 @@ let
     rev = "v1.1.20";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "1pw7w2yrzxrc6x57lkj5vpdlw55w6q1qfwj6ldynskcxaw2gf7ad";
+    sha256 = "551ecc674e440d8a312c67f8c3799f36e049643a20f47bbbbad495a08840a4c5";
     buildInputs = [ testify gucumber tools ];
     propagatedBuildInputs = [ ini go-jmespath ];
 
@@ -956,7 +956,7 @@ let
   gcloud-golang = buildFromGoogle {
     rev = "90d95c0fd227ee148e2753691c9b16f0ba5c870d";
     repo = "cloud";
-    sha256 = "150pxdwlhd6dkirb4hn8r2jk378f5fhykjkpa73xjr3h9y9q7arh";
+    sha256 = "5fb05bb04b65a6f50427489418b607035bf90c035e27bce07aa5731902ad1b47";
     propagatedBuildInputs = [ net oauth2 protobuf google-api-go-client grpc ];
     excludedPackages = "oauth2";
     meta.hydraPlatforms = [ ];
@@ -2377,7 +2377,7 @@ let
     rev = "v0.4.1";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "0jg9y50kdnd5ihswi1s76bksljh415m5dc6s4p05h5z088jiizg5";
+    sha256 = "91be049bc3cf7f209a1552af721645ef854a1e0aec2071506f978a3849671894";
     gxSha256 = "1w97041fb0gnxjq0zi756xn9nb292z4sw6cjv4zbvpfwcd2zn815";
 
     subPackages = [

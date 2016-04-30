@@ -31,7 +31,7 @@ let
 
   nixos-rebuild = makeProg {
     name = "nixos-rebuild";
-    path = [ pkgs.rsync ];
+    rsync = pkgs.rsync;
     src = ./nixos-rebuild.sh;
     nix = config.nix.package;
   };

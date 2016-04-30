@@ -987,6 +987,8 @@ gperftools = callPackage ../all-pkgs/gperftools { };
 
 gpm = callPackage ../all-pkgs/gpm+ncurses { };
 
+gpsd = callPackages ../all-pkgs/gpsd { };
+
 gptfdisk = callPackage ../all-pkgs/gptfdisk { };
 
 granite = callPackage ../all-pkgs/granite { };
@@ -10238,8 +10240,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  gpsbabel = qt5.callPackage ../applications/misc/gpsbabel { };
 #
 #  gpscorrelate = callPackage ../applications/misc/gpscorrelate { };
-#
-#  gpsd = callPackage ../servers/gpsd { };
 #
 #  gpsprune = callPackage ../applications/misc/gpsprune { };
 #

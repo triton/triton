@@ -182,6 +182,7 @@ rec {
   savannah = [
     http://gnu.mirrors.pair.com/savannah/savannah
     http://download.savannah.gnu.org/releases
+    http://download-mirror.savannah.gnu.org/releases
   ];
 
   sourceforge = [

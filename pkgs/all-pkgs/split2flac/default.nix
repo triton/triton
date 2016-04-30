@@ -3,11 +3,13 @@
 , makeWrapper
 
 #, aacgain
+, coreutils
 , cuetools
 , enca
 , faac
 , flac
 , gawk
+, gnugrep
 , imagemagick
 , lame
 , mac
@@ -19,8 +21,6 @@
 , vorbis-tools
 #, vorbisgain
 , wavpack
-
-# iconv?
 }:
 
 stdenv.mkDerivation rec {
@@ -63,17 +63,20 @@ stdenv.mkDerivation rec {
   preFixup = ''
     wrapProgram $out/bin/split2flac \
       --set 'SPLIT2FLAC_CALLER' "\$0" \
+      --prefix 'PATH' : "${coreutils}/bin" \
       --prefix 'PATH' : "${cuetools}/bin" \
       --prefix 'PATH' : "${enca}/bin" \
       --prefix 'PATH' : "${faac}/bin" \
       --prefix 'PATH' : "${flac}/bin" \
       --prefix 'PATH' : "${gawk}/bin" \
+      --prefix 'PATH' : "${gnugrep}/bin" \
       --prefix 'PATH' : "${imagemagick}/bin" \
       --prefix 'PATH' : "${lame}/bin" \
       --prefix 'PATH' : "${mac}/bin" \
       --prefix 'PATH' : "${mp4v2}/bin" \
       --prefix 'PATH' : "${python2Packages.mutagen}/bin" \
       --prefix 'PATH' : "${shntool}/bin" \
+      --prefix 'PATH' : "${stdenv.libc}/bin" \
       --prefix 'PATH' : "${vorbis-tools}/bin" \
       --prefix 'PATH' : "${wavpack}/bin"
   '';

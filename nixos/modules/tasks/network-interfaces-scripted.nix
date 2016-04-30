@@ -155,7 +155,7 @@ in
                 '');
           };
 
-        createTunDevice = i: nameValuePair "${i.name}-netdev"
+        createTunDevice = i: nameValuePair "network-dev-${i.name}"
           { description = "Virtual Network Interface ${i.name}";
             requires = [ "dev-net-tun.device" ];
             after = [ "dev-net-tun.device" "network-pre.target" ];
@@ -176,7 +176,7 @@ in
             '';
           };
 
-        createBridgeDevice = n: v: nameValuePair "${n}-netdev"
+        createBridgeDevice = n: v: nameValuePair "network-dev-${n}"
           (let
             deps = map subsystemDevice v.interfaces;
           in
@@ -217,7 +217,7 @@ in
             '';
           });
 
-        createVswitchDevice = n: v: nameValuePair "${n}-netdev"
+        createVswitchDevice = n: v: nameValuePair "network-dev-${n}"
           (let
             deps = map subsystemDevice v.interfaces;
             ofRules = pkgs.writeText "vswitch-${n}-openFlowRules" v.openFlowRules;
@@ -250,7 +250,7 @@ in
             '';
           });
 
-        createBondDevice = n: v: nameValuePair "${n}-netdev"
+        createBondDevice = n: v: nameValuePair "network-dev-${n}"
           (let
             deps = map subsystemDevice v.interfaces;
           in
@@ -287,7 +287,7 @@ in
             postStop = destroyBond n;
           });
 
-        createMacvlanDevice = n: v: nameValuePair "${n}-netdev"
+        createMacvlanDevice = n: v: nameValuePair "network-dev-${n}"
           (let
             deps = [ (subsystemDevice v.interface) ];
           in
@@ -311,7 +311,7 @@ in
             '';
           });
 
-        createSitDevice = n: v: nameValuePair "${n}-netdev"
+        createSitDevice = n: v: nameValuePair "network-dev-${n}"
           (let
             deps = optional (v.dev != null) (subsystemDevice v.dev);
           in
@@ -338,7 +338,7 @@ in
             '';
           });
 
-        createVlanDevice = n: v: nameValuePair "${n}-netdev"
+        createVlanDevice = n: v: nameValuePair "network-dev-${n}"
           (let
             deps = [ (subsystemDevice v.interface) ];
           in

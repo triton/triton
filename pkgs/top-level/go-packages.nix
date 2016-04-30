@@ -1814,7 +1814,7 @@ let
     rev = "4a8bd8f8baf45afcf2bb385bbc17e5208d5d4c71";
     owner  = "jbenet";
     repo   = "go-multiaddr-net";
-    sha256 = "0161f35145a7adc5b4d103e99b74c8f78259735dae7b798e96142eccf12e550f";
+    sha256 = "ad7ecf58829264fd9780d4df964f3278afaa985934f9de0f6338567af67d0cfb";
     date = "2015-10-11";
   };
 

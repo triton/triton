@@ -159,13 +159,16 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     python2Packages.enum34
+    python2Packages.itsdangerous
     python2Packages.jellyfish
+    python2Packages.jinja2
     python2Packages.munkres
     python2Packages.musicbrainzngs
     python2Packages.mutagen
     python2Packages.pathlib
     python2Packages.pyyaml
     python2Packages.unidecode
+    python2Packages.werkzeug
   ] ++ optional enableAcoustid python2Packages.pyacoustid
     ++ optional (
       enableFetchart

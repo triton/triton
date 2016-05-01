@@ -90,7 +90,7 @@ in
 
       promptInit = mkOption {
         default = ''
-          PS1="[\u@\h:\w]\$ "
+          PS1="[\u@\h:\w]\\\$ "
         '';
         description = ''
           Shell script code used to initialise the bash prompt.

@@ -41,6 +41,7 @@
     pkgs.htop
     pkgs.iftop
     pkgs.iotop
+    pkgs.lm-sensors
     pkgs.mtr
     pkgs.nmap
     pkgs.openssl

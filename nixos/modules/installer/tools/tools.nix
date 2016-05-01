@@ -23,6 +23,7 @@ let
 
     inherit (pkgs) perl pathsFromGraph;
     nix = config.nix.package;
+    rsync = pkgs.rsync;
 
     nixClosure = pkgs.runCommand "closure"
       { exportReferencesGraph = ["refs" config.nix.package]; }
@@ -31,7 +32,6 @@ let
 
   nixos-rebuild = makeProg {
     name = "nixos-rebuild";
-    rsync = pkgs.rsync;
     src = ./nixos-rebuild.sh;
     nix = config.nix.package;
   };

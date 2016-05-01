@@ -594,6 +594,8 @@ ccid = callPackage ../all-pkgs/ccid { };
 
 cdparanoia = callPackage ../all-pkgs/cdparanoia { };
 
+cdrtools = callPackage ../all-pkgs/cdrtools { };
+
 # Only ever add ceph LTS releases
 # The default channel should be the latest LTS
 # Dev should always point to the latest versioned release
@@ -9785,8 +9787,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  cbatticon = callPackage ../applications/misc/cbatticon { };
 #
 #  cddiscid = callPackage ../applications/audio/cd-discid { };
-#
-#  cdrtools = callPackage ../applications/misc/cdrtools { };
 #
 #  centerim = callPackage ../applications/networking/instant-messengers/centerim { };
 #

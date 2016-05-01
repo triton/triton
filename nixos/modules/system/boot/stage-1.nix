@@ -411,6 +411,13 @@ in
       }
     ];
 
+    # We want to make sure we cache all of the dependencies needed for
+    # rebuilding the initrd locally
+    system.extraDependencies = [
+      pkgs.busybox
+    ] ++ initialRamdisk.buildInputs
+      ++ initialRamdisk.nativeBuildInputs;
+
     system.build.bootStage1 = bootStage1;
     system.build.initialRamdisk = initialRamdisk;
     system.build.extraUtils = extraUtils;

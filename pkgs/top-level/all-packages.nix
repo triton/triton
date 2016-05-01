@@ -1214,6 +1214,8 @@ leptonica = callPackage ../all-pkgs/leptonica { };
 
 letsencrypt = callPackage ../all-pkgs/letsencrypt { };
 
+lftp = callPackage ../all-pkgs/lftp { };
+
 libaccounts-glib = callPackage ../all-pkgs/libaccounts-glib { };
 
 libaio = callPackage ../all-pkgs/libaio { };
@@ -3438,8 +3440,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  leafpad = callPackage ../applications/editors/leafpad { };
 #
 #  leela = callPackage ../tools/graphics/leela { };
-#
-#  lftp = callPackage ../tools/networking/lftp { };
 #
   libconfig = callPackage ../development/libraries/libconfig { };
 #

@@ -35,12 +35,10 @@ stdenv.mkDerivation rec {
 
   preBuild = ''
     makeFlagsArray+=(
-      "INS_BASE=$out"
+      "INS_BASE=/"
       "DESTDIR=$out"
     )
   '';
-
-  GMAKE_NOWARN = true;
 
   # cdda2wav fails if > -j1, it tries to link/copy files out of order.
   parallelBuild = false;

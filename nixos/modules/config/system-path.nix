@@ -13,6 +13,7 @@ let
       pkgs.attr
       pkgs.bash
       pkgs.bzip2
+      pkgs.brotli
       pkgs.coreutils
       pkgs.curl
       pkgs.diffutils

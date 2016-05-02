@@ -728,6 +728,8 @@ dnscrypt-wrapper = callPackage ../all-pkgs/dnscrypt-wrapper { };
 
 dnsmasq = callPackage ../all-pkgs/dnsmasq { };
 
+dosfstools = callPackage ../all-pkgs/dosfstools { };
+
 dos2unix = callPackage ../all-pkgs/dos2unix { };
 
 dotconf = callPackage ../all-pkgs/dotconf { };
@@ -2794,8 +2796,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   docbook2x = callPackage ../tools/typesetting/docbook2x { };
 #
 #  dog = callPackage ../tools/system/dog { };
-#
-  dosfstools = callPackage ../tools/filesystems/dosfstools { };
 #
 #  dotnetfx35 = callPackage ../development/libraries/dotnetfx35 { };
 #

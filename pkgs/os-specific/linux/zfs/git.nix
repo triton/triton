@@ -7,7 +7,7 @@ callPackage ./generic.nix (args // rec {
     owner = "zfsonlinux";
     repo = "zfs";
     rev = "2b54cb14517b8b3877716dbe02fe75f12a47eb5e";
-    sha256 = "6738c6f22996566a19e5bebc30f460225d75e8a75bf2e776c0c692ed6daeef9b";
+    sha256 = "7e16de15c4b3ac2e48fe4218e5f2e775b7b19ce1b546274d0df3f6690a609f94";
   };
 
   patches = [ ./nix-build.patch ];

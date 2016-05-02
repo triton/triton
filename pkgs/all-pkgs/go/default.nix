@@ -6,7 +6,7 @@
 , patchelf
 
 , bash
-, iana_etc
+, iana-etc
 , mime-types
 , tzdata
 
@@ -98,14 +98,13 @@ stdenv.mkDerivation {
     # The os test wants to read files in an existing path. Just don't let it be /usr/bin.
     sed -i 's,/usr/bin,'"`pwd`", src/os/os_test.go
     sed -i 's,/bin/pwd,'"`type -P pwd`", src/os/os_test.go
-    # Disable the hostname test
-    sed -i '/TestHostname/areturn' src/os/os_test.go
-    # Remove the api check as it never worked
-    sed -i '/src\/cmd\/api\/run.go/ireturn nil' src/cmd/dist/test.go
+
+    # Don't run tests by default
+    sed -i '/run.bash/d' src/all.bash
 
     sed -i '\#"/etc/mime.types",#i"${mime-types}/etc/mime.types",' src/mime/type_unix.go
-    sed -i 's,/etc/protocols,${iana_etc}/etc/protocols,g' src/net/lookup_unix.go
-    sed -i 's,/etc/services,${iana_etc}/etc/services,g' src/net/port_unix.go src/net/parse_test.go
+    sed -i 's,/etc/protocols,${iana-etc}/etc/protocols,g' src/net/lookup_unix.go
+    sed -i 's,/etc/services,${iana-etc}/etc/services,g' src/net/port_unix.go src/net/parse_test.go
     sed -i '\#"/usr/share/zoneinfo/",#i"${tzdata}/share/zoneinfo/",' src/time/zoneinfo_unix.go
 
     # We need to fix shebangs which will be used in an output script

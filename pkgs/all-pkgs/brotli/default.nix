@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     owner = "google";
     repo = "brotli";
     rev = "v" + version;
-    sha256 = "cfcc35ca06f2c1b465b04999a6e84e6d6f855bceb49896b822c8b06779a18d49";
+    sha256 = "ff59abd8c28851b2233b31b4408a45c88505bf6196acdcab77a26963533d0108";
   };
 
   postUnpack = ''

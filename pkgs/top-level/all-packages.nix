@@ -1896,6 +1896,8 @@ sqlheavy = callPackage ../all-pkgs/sqlheavy { };
 
 sqlite = callPackage ../all-pkgs/sqlite { };
 
+squashfs-tools = callPackage ../all-pkgs/squashfs-tools { };
+
 st = callPackage ../all-pkgs/st {
   config = config.st.config or null;
   configFile = config.st.configFile or null;
@@ -4313,8 +4315,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  sourceHighlight = callPackage ../tools/text/source-highlight { };
 #
 #  spaceFM = callPackage ../applications/misc/spacefm { };
-#
-  squashfs-tools = callPackage ../tools/filesystems/squashfs { };
 #
 #  sshfsFuse = callPackage ../tools/filesystems/sshfs-fuse { };
 #

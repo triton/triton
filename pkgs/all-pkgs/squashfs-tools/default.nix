@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "plougher";
     repo = "squashfs-tools";
     rev = "9c1db6d13a51a2e009f0027ef336ce03624eac0d";
-    sha256 = "83979bacb8272301d6b157314a9d04a3bcf4119872e3e0a6d0dd1a681a5b2f7c";
+    sha256 = "7b266cb701e4d1202cca55cddd5ee638a4bc8d37cb30a780819a841527032b2d";
   };
 
   buildInputs = [

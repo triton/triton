@@ -224,10 +224,16 @@ generate_hash() {
   cd "$TMPDIR/$pkg"
   export TZ="UTC"
   git archive --format=tar --prefix="$name/" "$rev" | tar -xC "$tmp"
-  touch -t 200001010000 "$tmp/$name"
   
+  mtime=$(find "$tmp/$name" -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
+  echo -n "Clamping to date: " >&2
+  date -d "@$mtime" --utc >&2
+
   cd "$tmp"
-  tar --sort=name --owner=0 --group=0 --numeric-owner --mode=go=rX,u+rw,a-s -c "$name" | brotli --quality 6 --output "$tmp/$name.tar.br"
+  tar --sort=name --owner=0 --group=0 --numeric-owner \
+    --mode=go=rX,u+rw,a-s \
+    --clamp-mtime --mtime=@$mtime \
+    -c "$name" | brotli --quality 6 --output "$tmp/$name.tar.br"
 
   HASH="$(nix-prefetch-url "file://$tmp/$name.tar.br" 2>/dev/null)"
   rm -r "$tmp"

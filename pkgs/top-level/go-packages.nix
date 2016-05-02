@@ -25,13 +25,25 @@ let
       unpackFile "${src}"
       cd *
 
-      newtime=$(find . -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
+      mtime=$(find . -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
+      if [ "$(( $(date -u '+%s') - 600 ))" -lt "$mtime" ]; then
+        str="The newest file is too close to the current date (10 minutes):\n"
+        str+="  File: $(date -u -d "@$mtime")\n"
+        str+="  Current: $(date -u)\n"
+        echo -e "$str" >&2
+        exit 1
+      fi
+      echo -n "Clamping to date: " >&2
+      date -d "@$mtime" --utc >&2
 
       gx --verbose install --global
 
       echo "Building GX Archive" >&2
       cd "$unpackDir"
-      tar --sort=name --owner=0 --group=0 --numeric-owner --mtime=@946713600 --mode=go=rX,u+rw,a-s -c * | brotli --quality 6 --output "$out"
+      tar --sort=name --owner=0 --group=0 --numeric-owner \
+        --mode=go=rX,u+rw,a-s \
+        --clamp-mtime --mtime=@$mtime \
+        -c . | brotli --quality 6 --output "$out"
     '';
 
     buildInputs = [ gx.bin ];

@@ -71,27 +71,25 @@ lib.overrideDerivation (fetchurl (rec {
     mv "$unpackDir"/* "$TMPDIR/${name'}"
   '') + extraPostFetch + ''
     cd "$TMPDIR"
-
-  '' + lib.optionalString (!purgeTimestamps) ''
-    echo "Fixing mtime and atimes" >&2
-    touch -t 200001010000 "${name'}"
-    readarray -t files < <(find "${name'}")
-    i=0
-    max=$(( $NIX_BUILD_CORES * 4 ))
-    for file in "''${files[@]}"; do
-      touch -h -d "@$(stat -c '%Y' "$file")" "$file" &
-      i=$(( $i + 1 ))
-      if [ "$i" -ge "$max" ]; then
-        wait
-        i=0
-      fi
-    done
-    wait
+  '' + (if purgeTimestamps then ''
+    mtime="946713600"
+  '' else ''
+    mtime=$(find "${name'}" -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
+    if [ "$(( $(date -u '+%s') - 600 ))" -lt "$mtime" ]; then
+      str="The newest file is too close to the current date (10 minutes):\n"
+      str+="  File: $(date -u -d "@$mtime")\n"
+      str+="  Current: $(date -u)\n"
+      echo -e "$str" >&2
+      exit 1
+    fi
+  '') + ''
+    echo -n "Clamping to date: " >&2
+    date -d "@$mtime" --utc >&2
   '' + ''
     echo "Building Archive ${name}" >&2
     tar --sort=name --owner=0 --group=0 --numeric-owner \
       --mode=go=rX,u+rw,a-s \
-      ${lib.optionalString purgeTimestamps "--mtime=@946713600"} \
+      --clamp-mtime --mtime=@$mtime \
       -c "${name'}" | brotli --quality 6 --output "$out"
     du -bhs "$out"
     cp "$out" "$TMPDIR/${name}"

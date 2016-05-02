@@ -14,11 +14,11 @@ let
   channels = {
     "3" = {
       version = "3.0.8";
-      sha256 = "84e4ffdc989465fad522dd870f7655fd3d6c8ae573ee03ef6144854af5cfdeb6";
+      sha256 = "8712255d3ae45c1d7d18c1ae9d9ba8dc1cfb161db5bdcd806e1a4e6624f82fa0";
     };
     "2" = {
       version = "2.0.12";
-      sha256 = "401b0a06aa55e1e7b95a784e8b1959fb798fef2e1e82e441bfaccd613c6118fb";
+      sha256 = "5ed085e120674fbe30ca9de79c6395fdb19a2f2ea5f2863620f2496302ee9d40";
     };
   };
 

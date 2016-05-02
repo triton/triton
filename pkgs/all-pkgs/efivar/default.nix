@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "rhinstaller";
     repo = "efivar";
     rev = version;
-    sha256 = "8bffffef8b06c9084a7d8585fd4d408010d19227cfb69f0b1f930dcc211b2502";
+    sha256 = "8002bd15c3fda3511352a393556817281f2ef70a4eba8d2c24ac0dc192df9355";
   };
 
   buildInputs = [
@@ -60,9 +60,10 @@ stdenv.mkDerivation rec {
     description = "Tools and library to manipulate EFI variables";
     homepage = https://github.com/rhinstaller/efivar;
     license = licenses.lgpl21;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

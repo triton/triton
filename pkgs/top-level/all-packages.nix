@@ -1099,6 +1099,8 @@ hunspell = callPackage ../all-pkgs/hunspell { };
 
 hwdata = callPackage ../all-pkgs/hwdata { };
 
+iana-etc = callPackage ../all-pkgs/iana-etc { };
+
 iasl = callPackage ../all-pkgs/iasl { };
 
 ibus = callPackage ../all-pkgs/ibus { };
@@ -9547,8 +9549,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  inherit (callPackages ../data/fonts/gdouros { })
 #    aegean textfonts symbola aegyptus akkadian anatolian maya unidings musica analecta;
-#
-  iana_etc = callPackage ../data/misc/iana-etc { };
 #
 #  poppler_data = callPackage ../data/misc/poppler-data { };
 #

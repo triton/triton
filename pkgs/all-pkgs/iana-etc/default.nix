@@ -1,4 +1,6 @@
-{ stdenv, fetchFromGitHub }:
+{ stdenv
+, fetchFromGitHub
+}:
 
 stdenv.mkDerivation rec {
   name = "iana-etc-2015-12-07";
@@ -10,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "wkennington";
     repo = "iana-etc";
     rev = "f3ab93e036523757c540247bff80ff9904a28b42";
-    sha256 = "1e2d58d1063c3f29351b49e09b0d8e2f64031cad183d5ea0dd44a96354a75644";
+    sha256 = "ba296463fb8e75609af3225f1911abed55f98b2707166f5623fb686157179551";
   };
 
   buildPhase = ''
@@ -126,7 +128,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

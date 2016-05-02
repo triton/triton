@@ -34,8 +34,6 @@ stdenv.mkDerivation rec {
     libsepol
   ];
 
-  doCheck = true;
-
   meta = with stdenv.lib; {
     description = "Basic file, shell & text manipulation utilities of the GNU operating system";
     homepage = http://www.gnu.org/software/coreutils/;

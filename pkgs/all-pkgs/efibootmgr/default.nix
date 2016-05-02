@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     owner = "rhinstaller";
     repo = "efibootmgr";
     rev = name;
-    sha256 = "bf941f9c29315d7606c5e64c07d0f53ef9e5d5e63083e85c04035e38ffe92249";
+    sha256 = "a6074d20b9b62a3e9e84fbe762594ecc0fd16578f36edf17e852b5d7b0b8efc1";
   };
 
   nativeBuildInputs = [
@@ -46,7 +46,9 @@ stdenv.mkDerivation rec {
     description = "Application to modify the EFI Boot Manager";
     homepage = https://github.com/rhinstaller/efibootmgr;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

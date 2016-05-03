@@ -8456,8 +8456,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  neo4j = callPackage ../servers/nosql/neo4j { };
 #
-  net_snmp = callPackage ../servers/monitoring/net-snmp { };
-#
 #  newrelic-sysmond = callPackage ../servers/monitoring/newrelic-sysmond { };
 #
 #  riemann = callPackage ../servers/monitoring/riemann { };

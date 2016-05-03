@@ -1389,6 +1389,8 @@ libseccomp = callPackage ../all-pkgs/libseccomp { };
 
 libsecret = callPackage ../all-pkgs/libsecret { };
 
+libselinux = callPackage ../all-pkgs/libselinux { };
+
 libsepol = callPackage ../all-pkgs/libsepol { };
 
 libssh = callPackage ../all-pkgs/libssh { };
@@ -9034,8 +9036,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   buildLinux = callPackage ../os-specific/linux/kernel/manual-config.nix {};
 #
   keyutils = callPackage ../os-specific/linux/keyutils { };
-#
-  libselinux = callPackage ../os-specific/linux/libselinux { };
 #
   libsemanage = callPackage ../os-specific/linux/libsemanage { };
 #

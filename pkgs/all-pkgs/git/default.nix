@@ -27,13 +27,19 @@ let
   ];
 in
 
+let
+  version = "2.8.2";
+  tarballUrls = [
+    "mirror://kernel/software/scm/git/git-${version}.tar"
+  ];
+in
 stdenv.mkDerivation rec {
   name = "git-${version}";
-  version = "2.8.1";
 
   src = fetchurl {
-    url = "mirror://kernel/software/scm/git/git-${version}.tar.xz";
-    sha256 = "e6626b43ba4bc63ad4918df4c275f50bd7f8af2ab54bde60496ad75e91e927fc";
+    url = map (n: "${n}.xz") tarballUrls;
+    allowHashOutput = false;
+    sha256 = "ec0283d78a0f1c8408c5fd43610697b953fbaafe4077bb1e41446a9ee3a2f83d";
   };
 
   patches = [
@@ -70,6 +76,16 @@ stdenv.mkDerivation rec {
     "prefix=\${out}"
     "sysconfdir=/etc"
   ];
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      pgpDecompress = true;
+      pgpsigUrls = map (n: "${n}.sign") tarballUrls;
+      pgpKeyFingerprint = "96E0 7AF2 5771 9559 80DA  D100 20D0 4E5A 7136 60A7";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://git-scm.com/;

@@ -1587,6 +1587,8 @@ ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
 
 ncurses = callPackage ../all-pkgs/gpm+ncurses { };
 
+net-snmp = callPackage ../all-pkgs/net-snmp { };
+
 net-tools = callPackage ../all-pkgs/net-tools { };
 
 nettle = callPackage ../all-pkgs/nettle { };

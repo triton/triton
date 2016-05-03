@@ -14,13 +14,19 @@
 , zlib
 }:
 
+let
+  version = "4.5.2";
+  tarballUrls = [
+    "mirror://kernel/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar"
+  ];
+in
 stdenv.mkDerivation rec {
   name = "btrfs-progs-${version}";
-  version = "4.5.1";
 
   src = fetchurl {
-    url = "mirror://kernel/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar.xz";
-    sha256 = "eef87b2d0e231656afbffab35718c79a7774cc0101d33165abeb9bb2e017cefe";
+    urls = map (n: "${n}.xz") tarballUrls;
+    allowHashOutput = false;
+    sha256 = "aefb8914f72926706b54e5619a36c9b95ebb0283ba6bb032cdc3a3dfe2f81227";
   };
 
   nativeBuildInputs = [
@@ -39,6 +45,16 @@ stdenv.mkDerivation rec {
     util-linux_lib
     zlib
   ];
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      pgpDecompress = true;
+      pgpsigUrls = map (n: "${n}.sign") tarballUrls;
+      pgpKeyFingerprint = "F2B4 1200 C54E FB30 380C  1756 C565 D5F9 D76D 583B";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Utilities for the btrfs filesystem";

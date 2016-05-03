@@ -1353,6 +1353,8 @@ libnfnetlink = callPackage ../all-pkgs/libnfnetlink { };
 
 libnftnl = callPackage ../all-pkgs/libnftnl { };
 
+libnih = callPackage ../all-pkgs/libnih { };
+
 libnl = callPackage ../all-pkgs/libnl { };
 
 libogg = callPackage ../all-pkgs/libogg { };
@@ -7112,8 +7114,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libmx = callPackage ../development/libraries/libmx { };
 #
 #  libnet = callPackage ../development/libraries/libnet { };
-#
-#  libnih = callPackage ../development/libraries/libnih { };
 #
 #  libnova = callPackage ../development/libraries/libnova { };
 #

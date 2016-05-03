@@ -1,6 +1,14 @@
-{ stdenv, fetchurl, pkgconfig, dbus, expat }:
+{ stdenv
+, fetchurl
+, gettext
 
-let version = "1.0.3"; in
+, dbus
+, expat
+}:
+
+let
+  version = "1.0.3";
+in
 
 stdenv.mkDerivation rec {
   name = "libnih-${version}";
@@ -10,11 +18,23 @@ stdenv.mkDerivation rec {
     sha256 = "01glc6y7z1g726zwpvp2zm79pyb37ki729jkh45akh35fpgp4xc9";
   };
 
-  buildInputs = [ pkgconfig dbus expat ];
+  nativeBuildInputs = [
+    gettext
+  ];
 
-  meta = {
+  buildInputs = [
+    dbus
+    expat
+  ];
+
+  meta = with stdenv.lib; {
     description = "A small library for C application development";
     homepage = https://launchpad.net/libnih;
-    license = stdenv.lib.licenses.gpl2;
+    license = licenses.gpl2;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

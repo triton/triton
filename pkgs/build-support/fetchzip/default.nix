@@ -88,6 +88,7 @@ lib.overrideDerivation (fetchurl (rec {
   '' + ''
     echo "Building Archive ${name}" >&2
     tar --sort=name --owner=0 --group=0 --numeric-owner \
+      --no-acls --no-selinux --no-xattrs \
       --mode=go=rX,u+rw,a-s \
       --clamp-mtime --mtime=@$mtime \
       -c "${name'}" | brotli --quality 6 --output "$out"

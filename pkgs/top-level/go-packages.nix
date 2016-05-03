@@ -41,6 +41,7 @@ let
       echo "Building GX Archive" >&2
       cd "$unpackDir"
       tar --sort=name --owner=0 --group=0 --numeric-owner \
+        --no-acls --no-selinux --no-xattrs \
         --mode=go=rX,u+rw,a-s \
         --clamp-mtime --mtime=@$mtime \
         -c . | brotli --quality 6 --output "$out"

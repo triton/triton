@@ -8,14 +8,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openssl-1.0.2g";
+  name = "openssl-1.0.2h";
 
   src = fetchurl {
     urls = [
       "http://www.openssl.org/source/${name}.tar.gz"
       "http://openssl.linux-mirror.org/source/${name}.tar.gz"
     ];
-    sha256 = "b784b1b3907ce39abf4098702dade6365522a253ad1552e267a9a0e89594aa33";
+    sha256 = "1d4007e53aad94a5b2002fe045ee7bb0b3d98f1a47f8b2bc851dcd1c74332919";
   };
 
   patches = [
@@ -68,6 +68,19 @@ stdenv.mkDerivation rec {
   '';
 
   disallowedReferences = [ perl ];
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      sha256Urls = map (n: "${n}.sha256") src.urls;
+      pgpKeyFingerprints = [
+        "EFC0 A467 D613 CB83 C7ED  6D30 D894 E2CE 8B3D 79F5"
+        "8657 ABB2 60F0 56B1 E519  0839 D9C4 D26D 0E60 4491"
+      ];
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://www.openssl.org/;

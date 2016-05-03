@@ -70,11 +70,12 @@ in
 
 stdenv.mkDerivation rec {
   name = "vlc-${version}";
-  version = "2.2.2";
+  version = "2.2.3";
 
   src = fetchurl {
     url = "http://get.videolan.org/vlc/${version}/${name}.tar.xz";
-    sha256 = "1dazxbmzx2g5570pkg519a7fsj07rdr155kjsw7b9y8npql33lls";
+    allowHashOutput = false;
+    sha256 = "b9d7587d35f13c3c981964c8cc8b03f1c7c8edf528be476b3ca1d2efedd5bf5b";
   };
 
   buildInputs = [
@@ -171,6 +172,16 @@ stdenv.mkDerivation rec {
   '';
 
   bindnow = false;
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      sha256Urls = map (n: "${n}.sha256") src.urls;
+      pgpKeyFingerprint = "65F7 C6B4 206B D057 A7EB  7378 7180 713B E58D 1ADC";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Cross-platform media player and streaming server";

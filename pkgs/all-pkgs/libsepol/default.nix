@@ -1,17 +1,24 @@
-{ stdenv, fetchurl, flex }:
+{ stdenv
+, fetchurl
+, flex
+}:
 
+let
+  se_release = "20160223";
+  se_url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases";
+in
 stdenv.mkDerivation rec {
   name = "libsepol-${version}";
-  version = "2.4";
-  se_release = "20150202";
-  se_url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases";
+  version = "2.5";
 
   src = fetchurl {
     url = "${se_url}/${se_release}/libsepol-${version}.tar.gz";
-    sha256 = "0ncnwhpc1gx4hrrb822fqkwy5h75zzngsrfkd5mlqh1jk7aib419";
+    sha256 = "2bdeec56d0a08b082b93b40703b4b3329cc5562152f7254d8f6ef6b56afe850a";
   };
 
-  nativeBuildInputs = [ flex ];
+  nativeBuildInputs = [
+    flex
+  ];
 
   NIX_CFLAGS_COMPILE = "-fstack-protector-all";
 
@@ -20,7 +27,9 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=("DESTDIR=$out")
   '';
 
-  passthru = { inherit se_release se_url; };
+  passthru = {
+    inherit se_release se_url;
+  };
 
   meta = with stdenv.lib; {
     homepage = http://userspace.selinuxproject.org;

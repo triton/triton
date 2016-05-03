@@ -1389,6 +1389,8 @@ libseccomp = callPackage ../all-pkgs/libseccomp { };
 
 libsecret = callPackage ../all-pkgs/libsecret { };
 
+libsepol = callPackage ../all-pkgs/libsepol { };
+
 libssh = callPackage ../all-pkgs/libssh { };
 
 libssh2 = callPackage ../all-pkgs/libssh2 { };
@@ -9040,8 +9042,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  libsass = callPackage ../development/libraries/libsass { };
 #
 #  libsexy = callPackage ../development/libraries/libsexy { };
-#
-  libsepol = callPackage ../os-specific/linux/libsepol { };
 #
 #  libsmbios = callPackage ../os-specific/linux/libsmbios { };
 #

@@ -619,6 +619,8 @@ ceph_git = callPackage ../all-pkgs/ceph {
 
 check = callPackage ../all-pkgs/check { };
 
+cgmanager = callPackage ../all-pkgs/cgmanager { };
+
 chromaprint = callPackage ../all-pkgs/chromaprint { };
 
 chromium = callPackage ../all-pkgs/chromium {
@@ -8681,8 +8683,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
       CONFIG_UNXZ y
     '';
   };
-#
-#  cgmanager = callPackage ../os-specific/linux/cgmanager { };
 #
 #  checkpolicy = callPackage ../os-specific/linux/checkpolicy { };
 #

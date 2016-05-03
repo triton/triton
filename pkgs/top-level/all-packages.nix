@@ -1636,6 +1636,8 @@ nss_wrapper = callPackage ../all-pkgs/nss_wrapper { };
 
 ntfs-3g = callPackage ../all-pkgs/ntfs-3g { };
 
+ntp = callPackage ../all-pkgs/ntp { };
+
 numactl = callPackage ../all-pkgs/numactl { };
 
 nvidia-video-codec-sdk = callPackage ../all-pkgs/nvidia-video-codec-sdk { };
@@ -3752,8 +3754,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  nss_pam_ldapd = callPackage ../tools/networking/nss-pam-ldapd {};
 #
 #  ntopng = callPackage ../tools/networking/ntopng { };
-#
-  ntp = callPackage ../tools/networking/ntp { };
 #
 #  numdiff = callPackage ../tools/text/numdiff { };
 #

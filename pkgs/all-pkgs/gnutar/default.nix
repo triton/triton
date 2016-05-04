@@ -18,6 +18,11 @@ stdenv.mkDerivation rec {
       file = "gnutar/add-clamp-mtime.patch";
       sha256 = "6bcde813d36fed0a0d5cfffb2d715d53b85d4876c050aae672cda2e190c25c87";
     })
+    (fetchTritonPatch {
+      rev = "dc35113b79d1abbcf4d498e7ac2d469e1787cf0c";
+      file = "gnutar/fix-longlink.patch";
+      sha256 = "5b8a6c325cdaf83588fb87778328b47978db33230c44f24b4a909bc9306d2d86";
+    })
   ];
 
   meta = with stdenv.lib; {

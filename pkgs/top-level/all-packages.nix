@@ -1492,6 +1492,8 @@ lm-sensors = callPackage ../all-pkgs/lm-sensors { };
 
 lvm2 = callPackage ../all-pkgs/lvm2 { };
 
+lxc = callPackage ../all-pkgs/lxc { };
+
 lxd = pkgs.goPackages.lxd.bin // { outputs = [ "bin" ]; };
 
 lz4 = callPackage ../all-pkgs/lz4 { };
@@ -3518,8 +3520,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  lsh = lowPrio (callPackage ../tools/networking/lsh { });
 #
 #  lshw = callPackage ../tools/system/lshw { };
-#
-  lxc = callPackage ../os-specific/linux/lxc { };
 #
 #  lzop = callPackage ../tools/compression/lzop { };
 #

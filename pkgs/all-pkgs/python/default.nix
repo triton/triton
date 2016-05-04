@@ -161,6 +161,11 @@ stdenv.mkDerivation rec {
       fi
     done
   '' + ''
+    pushd $out/lib/pkgconfig
+    ln -sv python-*.pc python3.pc
+    popd
+    set +x
+  '' + ''
     touch $out/lib/python${versionMajor}/test/__init__.py
   '' + ''
     paxmark E $out/bin/python${versionMajor}

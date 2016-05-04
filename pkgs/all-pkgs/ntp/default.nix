@@ -44,6 +44,7 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--enable-ignore-dns-errors"
     "--enable-linuxcaps"
+    "--enable-seccomp"
   ];
 
   postInstall = ''

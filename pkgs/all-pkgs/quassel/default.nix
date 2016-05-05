@@ -28,11 +28,11 @@ assert client || daemon -> !monolithic;
 
 stdenv.mkDerivation rec {
   name = "quassel${tag}-${version}";
-  version = "0.12.3";
+  version = "0.12.4";
 
   src = fetchurl {
     url = "http://quassel-irc.org/pub/quassel-${version}.tar.bz2";
-    sha256 = "0d6lwf6qblj1ia5j9mjy112zrmpbbg9mmxgscbgxiqychldyjgjd";
+    sha256 = "0ka456fb8ha3w7g74xlzfg6w4azxjjxgrhl4aqpbwg3lnd6fbr4k";
   };
 
   nativeBuildInputs = [

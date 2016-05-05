@@ -7,13 +7,13 @@
 
 stdenv.mkDerivation rec {
   name = "vim-${version}";
-  version = "7.4.1714";
+  version = "7.4.1819";
 
   src = fetchFromGitHub {
     owner = "vim";
     repo = "vim";
     rev = "v${version}";
-    sha256 = "02059296a2c2d0f7c2864ec2a8ab68b9f3659986efcaed9112c3973a271a5c20";
+    sha256 = "63e15a592a06d7d777657348a82d2de3d88780080d8690e1eaf083f4e0a6208e";
   };
 
   nativeBuildInputs = [

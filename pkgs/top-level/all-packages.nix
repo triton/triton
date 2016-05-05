@@ -1067,6 +1067,8 @@ gtkspell_2 = callPackage ../all-pkgs/gtkspell/2.x.nix { };
 gtkspell_3 = callPackage ../all-pkgs/gtkspell/3.x.nix { };
 gtkspell = callPackageAlias "gtkspell_3" { };
 
+guile = callPackage ../all-pkgs/guile { };
+
 guitarix = callPackage ../all-pkgs/guitarix {
   fftw = fftwSinglePrec;
 };
@@ -5627,8 +5629,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  erlangPackages = callPackage ../development/erlang-modules { };
 #  hex2nix = erlangPackages.callPackage ../development/tools/erlang/hex2nix { };
-#
-  guile = callPackage ../development/interpreters/guile { };
 #
 #  jmeter = callPackage ../applications/networking/jmeter {};
 #

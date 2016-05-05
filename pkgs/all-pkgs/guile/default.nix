@@ -1,5 +1,15 @@
-{ fetchurl, stdenv, libtool, readline, gmp, boehmgc, libunistring
-, libffi, gawk, makeWrapper }:
+{ stdenv
+, fetchurl
+, makeWrapper
+
+, boehmgc
+, gawk
+, gmp
+, libffi
+, libunistring
+, libtool
+, readline
+}:
 
 stdenv.mkDerivation rec {
   name = "guile-2.0.11";
@@ -9,13 +19,21 @@ stdenv.mkDerivation rec {
     sha256 = "1qh3j7308qvsjgwf7h94yqgckpbgz2k3yqdkzsyhqcafvfka9l5f";
   };
 
-  nativeBuildInputs = [ makeWrapper gawk ];
-  buildInputs = [ readline libtool libunistring libffi gmp boehmgc ];
+  nativeBuildInputs = [
+    makeWrapper
+  ];
+  
+  buildInputs = [
+    boehmgc
+    gmp
+    libffi
+    libtool
+    libunistring
+    readline
+  ];
 
   # A native Guile 2.0 is needed to cross-build Guile.
   selfNativeBuildInput = true;
-
-  patches = [ ./disable-gc-sensitive-tests.patch ./eai_system.patch ./clang.patch ];
 
   # Fixes for parallel building
   postPatch = ''
@@ -40,16 +58,16 @@ stdenv.mkDerivation rec {
             s|-lltdl|-L${libtool}/lib -lltdl|g'
   '';
 
-  # make check doesn't work on darwin
-  doCheck = true;
-
   setupHook = ./setup-hook-2.0.sh;
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "Embeddable Scheme implementation";
-    homepage    = http://www.gnu.org/software/guile/;
-    license     = stdenv.lib.licenses.lgpl3Plus;
-    maintainers = with stdenv.lib.maintainers; [ ludo lovek323 ];
-    platforms   = stdenv.lib.platforms.all;
+    homepage = http://www.gnu.org/software/guile/;
+    license = licenses.lgpl3Plus;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

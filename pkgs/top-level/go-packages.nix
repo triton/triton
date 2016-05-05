@@ -1410,11 +1410,11 @@ let
   };
 
   hil = buildFromGitHub {
-    date = "2016-04-18";
-    rev = "01dc167cd239b7ccab78a683b866536cd5904719";
+    date = "2016-04-08";
+    rev = "6215360e5247e7c4bdc317a5f95e3fa5f084a33b";
     owner  = "hashicorp";
     repo   = "hil";
-    sha256 = "1zbs2yv0fx18k3qmk3262mj68xaz3hz7g24vw16iygdnfz02r5y8";
+    sha256 = "6b3ab530f6980279edb5a1994226adefc377b70aa3e993b5d29c7d498d5cdbd4";
     propagatedBuildInputs = [
       mapstructure
       reflectwalk
@@ -1696,11 +1696,11 @@ let
   };
 
   muxado = buildFromGitHub {
-    date = "2016-04-12";
-    rev = "abadcf80c5cad697d16042f459ec1dca9acef317";
+    date = "2014-03-12";
+    rev = "f693c7e88ba316d1a0ae3e205e22a01aa3ec2848";
     owner  = "inconshreveable";
     repo   = "muxado";
-    sha256 = "1ziszvgs3b6kzpbf1wkbnr16skfldrs6m5kpfcfx85hdhsdi3dbs";
+    sha256 = "db9a65b811003bcb48d1acefe049bb12c8de232537cf07e1a4a949a901d807a2";
   };
 
   mysql = buildFromGitHub {
@@ -1977,10 +1977,11 @@ let
   };
 
   runtime-spec = buildFromGitHub {
-    rev = "v0.5.0";
+    rev = "bf58a8f54497acc1f414a5e752057a6694feccf3";
+    date = "2016-05-04";
     owner  = "opencontainers";
     repo   = "runtime-spec";
-    sha256 = "1jv82zyvhdg5pqbdm0265i6rsc4mzwxll8cjzggfhwagypn467w5";
+    sha256 = "458cbe83d33e754f18da879f6313a05c68a58856bb2a36056a81d119d967f2c0";
     buildInputs = [
       gojsonschema
     ];

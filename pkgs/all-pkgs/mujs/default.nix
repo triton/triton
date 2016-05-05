@@ -3,13 +3,13 @@
 }:
 
 stdenv.mkDerivation {
-  name = "mujs-2016-04-19";
+  name = "mujs-2016-05-04";
 
   src = fetchFromGitHub {
     owner = "ccxvii";
     repo = "mujs";
-    rev = "4484271999bcded9ada0a76a5706235ca43b96e1";
-    sha256 = "a4c285926d2efdd709a6bf566046ab2ece51e7e96db582a14175e3f9baf4745f";
+    rev = "1930f35933654d02234249b8c9b8c0d1c8c9fb6b";
+    sha256 = "007ef0382e1f67547556afae93629a9e90e3e9df7df14591b47da65c497b2da0";
   };
 
   preInstall = ''

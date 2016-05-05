@@ -14,4 +14,5 @@ pull_tars() {
   echo "$OUT" | grep 'tar.bz2"' | sed 's,^.*href="\([^"]*\).tar.bz2".*,\1,g' | awk "{print \$0\" $1\"\$0\".tar.bz2\"}"
 }
 
-pull_tars $URL | sort -V -r | sed "s,$URL,$MIRROR,g" | awk '{print $2}' > tarballs-7.7.list
+pull_tars $URL | sort -V -r | sed "s,$URL,$MIRROR,g" | awk '{print $2}' | \
+  sed -n 's,\(^.*\)-[0-9]*\..*$,\0 \1,p' | uniq -f 1 | awk '{print $1}' > tarballs-7.7.list

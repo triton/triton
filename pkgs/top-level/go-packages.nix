@@ -455,7 +455,10 @@ let
   };
 
   consul-api = buildFromGitHub {
-    inherit (consul) rev owner repo sha256;
+    inherit (consul) owner repo;
+    rev = "65aa46838ec54cb59746c4ec28a1dc48132b27a0";
+    date = "2016-05-04";
+    sha256 = "3eef380bc56946ee92d2e0371217c9dc93a68a3159a97c17ee5c2333750463f6";
     buildInputs = [ go-cleanhttp serf ];
     subPackages = [ "api" "tlsutil" ];
   };
@@ -882,10 +885,10 @@ let
   };
 
   gopsutil = buildFromGitHub {
-    rev = "v2.0.0";
+    rev = "1.0.0";
     owner  = "shirou";
     repo   = "gopsutil";
-    sha256 = "05ww47x7847hzna1zpxzx290imj393vn3jqyl4s63bmw77zw6q8r";
+    sha256 = "76f0b4db2d01c2f4c13cb6cecb56c6176b64702c4d1ae40be117f0753d984a85";
   };
 
   goskiplist = buildFromGitHub {
@@ -1736,7 +1739,7 @@ let
 
     buildInputs = [
       datadog-go wmi armon_go-metrics go-radix aws-sdk-go perks speakeasy
-      bolt go-systemd docker go-units go-humanize go-dockerclient ini go-ole
+      bolt go-systemd go-units go-humanize go-dockerclient ini go-ole
       dbus protobuf cronexpr consul-api errwrap go-checkpoint go-cleanhttp
       go-getter go-immutable-radix go-memdb go-multierror go-syslog
       go-version golang-lru hcl logutils memberlist net-rpc-msgpackrpc raft

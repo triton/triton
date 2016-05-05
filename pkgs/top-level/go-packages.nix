@@ -520,7 +520,7 @@ let
     rev = "1a2ac62dd59a350a2efd5dd742454a3dcf98dbc7";
     owner = "syncthing";
     repo = "discosrv";
-    sha256 = "074c6lk7fp2zfly5nzzckjlm3l055n7q7p7rs571bxq9ifwy3fgi";
+    sha256 = "1b0abfd379010e85cc748e3dea9bd736e3386afbf1cb5c41c27eaeb2cc17fc57";
     buildInputs = [ ql groupcache pq ratelimit syncthing-lib ];
     date = "2016-04-30";
   };
@@ -715,7 +715,7 @@ let
     rev = "03efcb870d84809319ea509714dd6d19a1498483";
     owner = "camlistore";
     repo = "go4";
-    sha256 = "0zkmafigzr2whpdwal6zwkb9xzxv87qym92xs7nmriwrggqa3l6x";
+    sha256 = "4ae6361927b65dcd2747c11d808dbd441b465be50468623db36bc1cb4277264f";
     goPackagePath = "go4.org";
     goPackageAliases = [ "github.com/camlistore/go4" ];
     buildInputs = [ gcloud-golang net ];
@@ -1640,7 +1640,7 @@ let
     sha256 = "0q968aml9p5x49x70ay7myfg6ibggckir3gam5n6qydj6rviqpy7";
     goPackagePath = "gopkg.in/mgo.v2";
     goPackageAliases = [ "github.com/go-mgo/mgo" ];
-    buildInputs = [ pkgs.cyrus-sasl tomb ];
+    buildInputs = [ pkgs.cyrus-sasl tomb-v2 ];
   };
 
   missinggo = buildFromGitHub {
@@ -1663,8 +1663,8 @@ let
     rev = "r3.3.4";
     owner  = "mongodb";
     repo   = "mongo-tools";
-    sha256 = "0bqm4naz2a7mkxn4s9ji9j4k9y670ymhbyrm0401v327fhss8vks";
-    buildInputs = [ crypto mgo go-flags gopass openssl tomb ];
+    sha256 = "88a5ab20f2af8abcf80fdf726abcb775fd0d365b74fe4c8b96801639c093a1e0";
+    buildInputs = [ crypto mgo go-flags gopass openssl tomb-v2 ];
 
     # Mongodb incorrectly names all of their binaries main
     # Let's work around this with our own installer
@@ -1881,6 +1881,73 @@ let
     owner  = "prometheus";
     repo   = "procfs";
     sha256 = "08536i8yaip8lv4zas4xa59igs4ybvnb2wrmil8rzk3a2hl9zck8";
+  };
+
+  qart = buildFromGitHub {
+    date = "2014-04-20";
+    rev = "ccb109cf25f0cd24474da73b9fee4e7a3e8a8ce0";
+    owner  = "vitrun";
+    repo   = "qart";
+    sha256 = "0i0dw748avvskwdx7bq9yfxc44nr7v3gkn21qclzcq2rr3gz11x0";
+  };
+
+  ql = buildFromGitHub {
+    rev = "v1.0.3";
+    owner  = "cznic";
+    repo   = "ql";
+    sha256 = "1r1370h0zpkhi9fs57vx621vsj8g9j0ijki0y4mpw18nz2mq620n";
+    propagatedBuildInputs = [ go4 b exp strutil ];
+  };
+
+  raft = buildFromGitHub {
+    date = "2016-04-09";
+    rev = "1c84b7ca86424d341b95457cf6da85fdb367c4f0";
+    owner  = "hashicorp";
+    repo   = "raft";
+    sha256 = "0iv0kc4f1z4zrxymdranb5zic1b30cyy5b36nwjcf27kvk91zddy";
+    propagatedBuildInputs = [ armon_go-metrics ugorji_go ];
+  };
+
+  raft-boltdb = buildFromGitHub {
+    date = "2015-02-01";
+    rev = "d1e82c1ec3f15ee991f7cc7ffd5b67ff6f5bbaee";
+    owner  = "hashicorp";
+    repo   = "raft-boltdb";
+    sha256 = "07g818sprpnl0z15wl16wj9dvyl9igqaqa0w4y7mbfblnpydvgis";
+    propagatedBuildInputs = [ bolt ugorji_go raft ];
+  };
+
+  ratelimit = buildFromGitHub {
+    rev = "77ed1c8a01217656d2080ad51981f6e99adaa177";
+    date = "2015-11-25";
+    owner  = "juju";
+    repo   = "ratelimit";
+    sha256 = "0m7bvg8kg9ffl624lbcq47207n6r54z9by1wy0axslishgp1lh98";
+  };
+
+  raw = buildFromGitHub {
+    rev = "724aedf6e1a5d8971aafec384b6bde3d5608fba4";
+    owner  = "feyeleanor";
+    repo   = "raw";
+    sha256 = "0pkvvvln5cyyy0y2i82jv39gjnfgzpb5ih94iav404lfsachh8m1";
+    date = "2013-03-27";
+  };
+
+  relaysrv = buildFromGitHub rec {
+    rev = "v0.12.18";
+    owner  = "syncthing";
+    repo   = "relaysrv";
+    sha256 = "8853b92808f01ce1a81a64c13a7294b6769b29ffdf3f5796afcf09263e007a32";
+    buildInputs = [ syncthing-lib du ratelimit net ];
+    excludedPackages = "testutil";
+  };
+
+  reflectwalk = buildFromGitHub {
+    date = "2015-05-27";
+    rev = "eecf4c70c626c7cfbb95c90195bc34d386c74ac6";
+    owner  = "mitchellh";
+    repo   = "reflectwalk";
+    sha256 = "0zpapfp4vx9zr3zlw2405clgix7jzhhdphmsyhar4yhhs04fb3qz";
   };
 
   roaring = buildFromGitHub {

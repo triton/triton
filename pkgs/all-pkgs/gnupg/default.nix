@@ -10,7 +10,7 @@
 , libgcrypt
 , libgpg-error
 , libksba
-, libusb-compat
+, libusb
 , npth
 , openldap
 , pcsclite
@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
     libgcrypt
     libgpg-error
     libksba
-    libusb-compat
+    libusb
     npth
     openldap
     readline
@@ -72,6 +72,10 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     sed -i 's,"libpcsclite\.so[^"]*","${pcsclite}/lib/libpcsclite.so",g' scd/scdaemon.c
+  '';
+
+  preConfigure = ''
+    export CPPFLAGS="$CPPFLAGS -I$(echo "${libusb}"/include/*)"
   '';
 
   configureFlags = [

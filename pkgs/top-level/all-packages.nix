@@ -1757,6 +1757,8 @@ protobuf-cpp = callPackage ../all-pkgs/protobuf-cpp { };
 
 psmisc = callPackage ../all-pkgs/psmisc { };
 
+pth = callPackage ../all-pkgs/pth { };
+
 pugixml = callPackage ../all-pkgs/pugixml { };
 
 pulseaudio_full = callPackage ../all-pkgs/pulseaudio { };
@@ -7515,8 +7517,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  proj = callPackage ../development/libraries/proj { };
 #
 #  postgis = callPackage ../development/libraries/postgis { };
-#
-  pth = callPackage ../development/libraries/pth { };
 #
 #  ptlib = callPackage ../development/libraries/ptlib {};
 #

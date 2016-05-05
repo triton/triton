@@ -5,13 +5,16 @@
 
 #, adns
 , bzip2
+, curl
 , gnutls
 , libassuan
 , libgcrypt
 , libgpg-error
 , libksba
 , libusb
+, libusb-compat
 , npth
+, pth
 , openldap
 , pcsclite
 , readline
@@ -24,13 +27,15 @@
 let
   inherit (stdenv)
     targetSystem;
+
   inherit (stdenv.lib)
     elem
     optional
-    platforms;
-in
+    optionals
+    platforms
+    versionAtLeast
+    versionOlder;
 
-let
   sources = import ./sources.nix;
 
   tarballUrls = version: [
@@ -38,6 +43,18 @@ let
   ];
 
   version = sources.${channel}.version;
+
+  libusb' =
+    if versionAtLeast channel "2.1" then
+      libusb
+    else
+      libusb-compat;
+
+  pth' =
+    if versionAtLeast channel "2.1" then
+      npth
+    else
+      pth;
 in
 
 stdenv.mkDerivation rec {
@@ -62,12 +79,14 @@ stdenv.mkDerivation rec {
     libgcrypt
     libgpg-error
     libksba
-    libusb
-    npth
+    libusb'
+    pth'
     openldap
     readline
     sqlite
     zlib
+  ] ++ optionals (versionOlder version "2.1") [
+    curl
   ];
 
   postPatch = ''
@@ -75,7 +94,7 @@ stdenv.mkDerivation rec {
   '';
 
   preConfigure = ''
-    export CPPFLAGS="$CPPFLAGS -I$(echo "${libusb}"/include/*)"
+    export CPPFLAGS="$CPPFLAGS -I$(echo "${libusb'}"/include/*)"
   '';
 
   configureFlags = [

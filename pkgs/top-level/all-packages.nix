@@ -1638,6 +1638,8 @@ noise = callPackage ../all-pkgs/noise { };
 
 nomad = pkgs.goPackages.nomad.bin // { outputs = [ "bin" ]; };
 
+npth = callPackage ../all-pkgs/npth { };
+
 nss_wrapper = callPackage ../all-pkgs/nss_wrapper { };
 
 ntfs-3g = callPackage ../all-pkgs/ntfs-3g { };
@@ -3733,8 +3735,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  nlopt = callPackage ../development/libraries/nlopt {};
 #
   npapi_sdk = callPackage ../development/libraries/npapi-sdk { };
-
-  npth = callPackage ../development/libraries/npth { };
 
 #  notify-osd = callPackage ../applications/misc/notify-osd { };
 #

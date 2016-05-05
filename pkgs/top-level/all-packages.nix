@@ -2203,9 +2203,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    client = true;
 #  });
 #
-#  androidenv = callPackage ../development/mobile/androidenv {
-#  };
-#
 #  apg = callPackage ../tools/security/apg { };
 #
 #  bonnie = callPackage ../tools/filesystems/bonnie { };
@@ -2224,10 +2221,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  titaniumenv = callPackage ../development/mobile/titaniumenv {
 #  };
-#
-#  inherit (androidenv) androidsdk_4_4 androidndk;
-#
-#  androidsdk = androidenv.androidsdk_6_0;
 #
 #  arc-gtk-theme = callPackage ../misc/themes/arc { };
 #
@@ -3367,8 +3360,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   kexectools = callPackage ../os-specific/linux/kexectools { };
 #
-#  keybase = callPackage ../applications/misc/keybase { };
-#
 #  keychain = callPackage ../tools/misc/keychain { };
 #
 #  kibana = callPackage ../development/tools/misc/kibana { };
@@ -4244,8 +4235,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   sg3_utils = callPackage ../tools/system/sg3_utils { };
 
 #  shotwell = callPackage ../applications/graphics/shotwell { };
-#
-  shout = callPackage ../applications/networking/irc/shout { };
 #
 #  shellinabox = callPackage ../servers/shellinabox { };
 #
@@ -8329,8 +8318,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  gatling = callPackage ../servers/http/gatling { };
 #
 #  grafana = (callPackage ../servers/monitoring/grafana { }).bin // { outputs = ["bin"]; };
-#
-#  groovebasin = callPackage ../applications/audio/groovebasin { };
 #
 #  haka = callPackage ../tools/security/haka { };
 #

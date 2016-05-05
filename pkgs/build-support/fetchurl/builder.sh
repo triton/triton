@@ -233,7 +233,7 @@ tryDownload() {
             for verification in "${verifications[@]}"; do
               str+=" $verification"
             done
-            str+="\n  sha256: $lhash"
+            str+="\n  hash: $lhash"
           fi
           echo -e "$str" >&2
           if [ "$failEarly" = "1" ]; then

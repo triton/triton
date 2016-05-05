@@ -15,12 +15,12 @@ let
 in
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
-  version = "2.02.150";
+  version = "2.02.152";
 
   src = fetchurl {
     urls = map (n: "${n}/LVM2.${version}.tgz") baseUrls;
     allowHashOutput = false;
-    sha512 = "66d1a247170f685c72d91d5fc52a2394ba5d5a477686101b9a472a8ac163813f9c80c0d75e4f29939b16000456263e9191cd294520ab5b320915f23f0797f22e";
+    sha512 = "44ebf79ee90f371835d9525db09e98e439ca5a6fcec4bfe4cb790df4c11e32e6dc4abea6a60e2f4f5a5e85c635354f10cc4d5ad04bbbf21653a357ca581defac";
   };
 
   configureFlags = [

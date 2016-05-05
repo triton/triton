@@ -3824,11 +3824,13 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   };
 
   cffi = if isPyPy then null else buildPythonPackage rec {
-    name = "cffi-1.5.2";
+    name = "cffi-${version}";
+    version = "1.6.0";
 
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/c/cffi/${name}.tar.gz";
-      sha256 = "1p91p1n8n46y0k3q7ddgxxjnfh08rjqsjh7zbjxzfiifhycxx6ys";
+    src = fetchPyPi {
+      package = "cffi";
+      inherit version;
+      sha256 = "a7f75c4ef2362c0a0e54657add0a6c509fecbfa3b3807bc0925f5cb1c9f927db";
     };
 
     propagatedBuildInputs = [

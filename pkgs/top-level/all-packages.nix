@@ -5767,9 +5767,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  srecord = callPackage ../development/tools/misc/srecord { };
 #
-#  windowssdk = (
-#    callPackage ../development/misc/windows-sdk {});
-#
 #  xidel = callPackage ../tools/text/xidel { };
 #
 #  ### DEVELOPMENT / TOOLS
@@ -8514,12 +8511,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  restund = callPackage ../servers/restund {};
 #
 #  rethinkdb = callPackage ../servers/nosql/rethinkdb { };
-#
-#  rippled = callPackage ../servers/rippled {
-#    boost = boost159;
-#  };
-#
-#  ripple-rest = callPackage ../servers/rippled/ripple-rest.nix { };
 #
 #  s6 = callPackage ../tools/system/s6 { };
 #

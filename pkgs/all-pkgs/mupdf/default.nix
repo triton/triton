@@ -46,6 +46,10 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=(
       "MUJS_CFLAGS= -I${mujs}/include"
       "MUJS_LIBS= -lmujs"
+      "HAVE_MUJS=yes"
+      "build=release"
+      "verbose=yes"
+      "prefix=$out"
     )
 
     sed -e "s/libopenjpeg1/libopenjp2/" -i Makerules

@@ -3447,11 +3447,13 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   };
 
   cryptography = buildPythonPackage rec {
-    name = "cryptography-1.3.1";
+    name = "cryptography-${version}";
+    version = "1.3.2";
 
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/c/cryptography/${name}.tar.gz";
-      sha256 = "b4b36175e0f95ddc88435c26dbe3397edce48e2ff5fe41d504cdb3beddcd53e2";
+    src = fetchPyPi {
+      package = "cryptography";
+      inherit version;
+      sha256 = "fbaafa8827966dc588ccb00be813d3149fa8de04aec96e418ea0fdd5f0312088";
     };
 
     buildInputs = with self; [
@@ -3478,11 +3480,13 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   };
 
   cryptography_vectors = buildPythonPackage rec {
-    name = "cryptography_vectors-1.3.1";
+    name = "cryptography_vectors-${version}";
+    version = "1.3.2";
 
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/c/cryptography-vectors/${name}.tar.gz";
-      sha256 = "6bb1f939826b57fa7e7f726f4845e20110d5c9f164d1545a7f768d7ffda08484";
+    src = fetchPyPi {
+      package = "cryptography_vectors";
+      inherit version;
+      sha256 = "006a8b9a46ea8b7231d76ad3e613e2f6957b7a86d0a3aab6f0aefd779740466b";
     };
   };
 

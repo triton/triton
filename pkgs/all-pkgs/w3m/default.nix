@@ -22,16 +22,18 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "w3m-0.5.3-2016-02-27";
+  name = "w3m-0.5.3-2016-04-13";
 
   src = fetchzip {
     inherit name;
     url = "http://anonscm.debian.org/cgit/collab-maint/w3m.git/snapshot/"
-        + "692e2c04a0e7e216b670eab6133d68818260d5e8.tar.xz";
-    sha256 = "9b7522eeaab3f9696125fc010c8cbc167122698ad3b223816a425fffcf62ab2c";
+        + "9a1b7a25b32e426cebb4ee048133861ca8430d5e.tar.xz";
+    sha256 = "c2e30fe3aeee288d8da3a465fd419a443d4eba2372f0a9e5d7daacdd389c82b2";
   };
 
-  nativeBuildInputs = [ gettext ];
+  nativeBuildInputs = [
+    gettext
+  ];
 
   buildInputs = [
     boehmgc

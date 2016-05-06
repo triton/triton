@@ -9285,20 +9285,12 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
   gyp = buildPythonPackage rec {
     name = "gyp-${version}";
-    version = "2015-06-11";
+    version = "2016-05-04";
 
     src = pkgs.fetchgit {
       url = "https://chromium.googlesource.com/external/gyp.git";
-      rev = "fdc7b812f99e48c00e9a487bd56751bbeae07043";
-      sha256 = "1s2dddmjzp39yw3pqmd087k6znh8gzj6qq1yg2fcz8ahnhayakdf";
-    };
-
-    meta = {
-      description = "A tool to generate native build files";
-      homepage = https://chromium.googlesource.com/external/gyp/+/master/README.md;
-      license = licenses.bsd3;
-      maintainers = with maintainers; [ codyopel ];
-      platforms = platforms.all;
+      rev = "02b145a1a4f4e1c62e8bae06045caf852d9ef17f";
+      sha256 = "1amwrv82qxarc7nwnmjmnlz9ca281bkp435kzqhzskagzb5nm2kk";
     };
   };
 

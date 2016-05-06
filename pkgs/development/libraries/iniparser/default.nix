@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     owner = "ndevilla";
     repo = "iniparser";
     rev = "v${version}";
-    sha256 = "66a4071734526def51f466af48bbfbc49d4a8f4340359f36b91317f965906d35";
+    sha256 = "619194948447cf0e2bb76fbfad1561a86a0cf089700116f3ce08216d2f0fb27d";
   };
 
   patches = ./no-usr.patch;

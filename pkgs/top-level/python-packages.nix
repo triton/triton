@@ -252,9 +252,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ pillow ];
 
-    # error: invalid command 'test'
-    doCheck = false;
-
     # Fix impurity. TODO: Do the font lookup using fontconfig instead of this
     # manual method. Until that is fixed, we get this whenever we run aafigure:
     #   WARNING: font not found, using PIL default font
@@ -277,7 +274,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     version = "0.3.1";
 
     disabled = !isPy33;
-    doCheck = !isPy33;
 
     src = pkgs.fetchFromGitHub {
       owner = "yadayada";
@@ -331,7 +327,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     configurePhase = " ";
     buildPhase = " ";
     # the tests are... complex
-    doCheck = false;
 
     patchPhase = ''
       substituteInPlace acme_tiny.py --replace "openssl" "${pkgs.openssl}/bin/openssl"
@@ -367,7 +362,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # One test fails:
     #   UnicodeEncodeError: 'ascii' codec can't encode character u'\u3042' in position 0: ordinal not in range(128)
-    doCheck = false;
 
     meta = {
       description = "Generate activity-diagram image from spec-text file (similar to Graphviz)";
@@ -414,7 +408,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       self.chardet
     ] ++ optional (!isPy3k) self.subprocess32;
 
-    doCheck = false;
 
     preConfigure = ''
       substituteInPlace afew/DBACL.py --replace "'dbacl'" "'${pkgs.dbacl}/bin/dbacl'"
@@ -451,7 +444,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # 'Could not contact DNS servers'
-    doCheck = false;
 
     meta = {
       homepage = http://github.com/saghul/aiodns;
@@ -471,7 +463,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     disabled = pythonOlder "3.4";
 
-    doCheck = false; # Too many tests fail.
 
     buildInputs = with self; [ pytest gunicorn pytest-raisesregexp ];
     propagatedBuildInputs = with self; [ chardet ];
@@ -690,7 +681,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://code.google.com/p/py-amqplib/;
@@ -711,7 +701,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sed -i "s,/usr/,$out," lib/ansible/constants.py
     '';
 
-    doCheck = false;
     dontStrip = true;
     dontPatchELF = true;
     dontPatchShebangs = true;
@@ -743,7 +732,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sed -i "s,/usr/,$out," lib/ansible/constants.py
     '';
 
-    doCheck = false;
     dontStrip = true;
     dontPatchELF = true;
     dontPatchShebangs = true;
@@ -816,7 +804,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ pkgs.sqlite ];
 
     # python: double free or corruption (fasttop): 0x0000000002fd4660 ***
-    doCheck = false;
 
     meta = {
       description = "A Python wrapper for the SQLite embedded relational database engine";
@@ -853,7 +840,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       ordereddict
     ];
 
-    doCheck = false;
   };
 
   ordereddict = buildPythonPackage rec {
@@ -922,7 +908,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ self.boto ];
 
@@ -937,7 +922,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "1q3a6arjm6ysl2ff6lgdm504np7b1rbivrzspybjypq1nczcb7qy";
     };
 
-    doCheck = false;
     propagatedBuildInputs = with self; [ dateutil ];
 
     meta = {
@@ -953,7 +937,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     meta.maintainers = with maintainers; [ mornfall ];
 
     buildInputs = with self; [ pkgs.zlib ];
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/a/async/${name}.tar.gz";
@@ -1058,7 +1041,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # No tests, need to disable or py3k breaks
-    doCheck = false;
 
     meta = {
       description = "Cross-platform audio decoding";
@@ -1095,7 +1077,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # One test fails:
     # FAIL: test_recursive_should_not_crash_on_unicode_filename (test.test_autopep8.CommandLineTests)
-    doCheck = false;
 
     meta = {
       description = "A tool that automatically formats Python code to conform to the PEP 8 style guide";
@@ -1132,7 +1113,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "15ahl0irwwj558s964abdxg4vp6iwlabri7klsm2am6q5r0ngsky";
     };
 
-    doCheck = false;        # No such file or directory: './run_tests.py
 
     meta = {
       description = "A serialization and RPC framework";
@@ -1150,7 +1130,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # No tests included
-    doCheck = false;
 
     propagatedBuildInputs = with self; [
       botocore
@@ -1505,7 +1484,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://www.crummy.com/software/BeautifulSoup/;
@@ -1574,7 +1552,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       ];
 
     # http://hydra.nixos.org/build/4511591/log/raw
-    doCheck = false;
 
     meta = {
       maintainers = with maintainers; [ garbas iElectric ];
@@ -1661,7 +1638,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       ++ optionals (!isPyPy) [ cffi ];
 
     # No proper test suite. Included tests cannot be run because of relative import
-    doCheck = false;
 
     meta = {
       description = "Deduplication for Btrfs";
@@ -1712,7 +1688,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ argparse ];
     buildInputs = with self; [ pep8 nose ];
     # Pep8 tests fail...
-    doCheck = false;
 
     src = pkgs.fetchFromGitHub {
       owner = "peo3";
@@ -1736,7 +1711,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "5c07cdbe9bb4a9b82e52737ad590617b";
     };
 
-    doCheck = false; # weird error
 
     propagatedBuildInputs = with self; [ iowait psutil pyzmq tornado mock ];
   };
@@ -1787,7 +1761,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ pyramid simplejson ];
 
-    doCheck = false; # lazy packager
   };
 
   cvxopt = buildPythonPackage rec {
@@ -1799,7 +1772,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       url = "https://pypi.python.org/packages/source/c/${pname}/${name}.tar.gz";
       sha256 = "f856ea2e9e2947abc1a6557625cc6b0e45228984f397a90c420b2f468dc4cb97";
     };
-    doCheck = false;
     buildInputs = with pkgs; [ openblasCompat ];
     preConfigure = ''
       export CVXOPT_BLAS_LIB_DIR=${pkgs.openblasCompat}/lib
@@ -1832,7 +1804,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Tests were not included in release.
     # https://github.com/matplotlib/cycler/issues/31
-    doCheck = false;
 
     meta = {
       description = "Composable style cycles";
@@ -1919,7 +1890,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ cookies mock requests2 six ];
 
-    doCheck = false;
 
   };
 
@@ -1947,7 +1917,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     propagatedBuildInputs = with self; [ nose ];
-    doCheck = false;
 
     meta = {
       description = "A Python test framework that extends Python's built-in unittest module and Nose with features from TestNG";
@@ -2024,7 +1993,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ requests_oauth2 nose sh ];
 
-    doCheck = false;
 
     meta = {
       homepage = https://github.com/Sheeprider/BitBucket-api;
@@ -2059,7 +2027,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       description = "Module for binary data manipulation";
@@ -2179,7 +2146,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     # One test fails:
     #   ...
     #   FAIL: test_auto_font_detection (blockdiag.tests.test_boot_params.TestBootParams)
-    doCheck = false;
 
     meta = {
       description = "Generate block-diagram image from spec-text file (similar to Graphviz)";
@@ -2199,7 +2165,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
      };
 
      propagatedBuildInputs = with self; [ pygments ];
-     doCheck = false;
 
      meta = {
        description = "UNKNOWN";
@@ -2326,7 +2291,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     # Unable to locate credentials`. There also seems to be some mock
     # issues (`assert_called_once` doesn't exist in mock but boto
     # seems to think it is?).
-    doCheck = false;
 
     meta = {
       homepage = https://github.com/boto3/boto;
@@ -2365,7 +2329,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Network access
-    doCheck = false;
 
     meta = {
       homepage = https://github.com/boto/botocore;
@@ -2437,7 +2400,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
 
     # for the moment jira>=0.22 and megaplan>=1.4 are missing for running the test suite.
-    doCheck = false;
 
     meta = {
       homepage =  http://github.com/ralphbean/bugwarrior;
@@ -2458,7 +2420,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   #
   #   propagatedBuildInputs = with self; [ self.argparse ];
   #
-  #   doCheck = false;
   #
   #   meta = {
   #     homepage = http://www.liquidx.net/pybugz/;
@@ -2507,7 +2468,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "b18f7f0bcd02f52d40148c388ace9290";
     };
 
-    doCheck = false;
 
     meta = {
       homepage = https://github.com/mgedmin/check-manifest;
@@ -2605,7 +2565,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     name = "zc.recipe.egg-${version}";
 
     buildInputs = with self; [ buildout ];
-    doCheck = false;
 
     src = pkgs.fetchurl {
       inherit md5;
@@ -2632,7 +2591,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       url = "https://pypi.python.org/packages/source/b/bunch/${name}.tar.gz";
       sha256 = "1akalx2pd1fjlvrq69plvcx783ppslvikqdm93z2sdybq07pmish";
     };
-    doCheck = false;
   });
 
 
@@ -2723,7 +2681,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
         self.anyjson
       ];
 
-    doCheck = false; # depends on the network
 
     meta = {
       homepage = https://pypi.python.org/pypi/carrot;
@@ -2875,7 +2832,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = "http://www.cherrypy.org";
@@ -2919,7 +2875,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Error when running tests:
     # No local packages or download links found for requests
-    doCheck = false;
 
     meta = {
       homepage = https://github.com/ncrocfer/clf;
@@ -3047,7 +3002,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # ImportError of test suite
-    doCheck = false;
 
     meta = {
       description = "Extended pickling support for Python objects";
@@ -3067,7 +3021,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # there are no tests
-    doCheck = false;
 
     meta = {
       description = "A code generator for executing Python snippets in source files";
@@ -3107,7 +3060,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     LC_ALL="en_US.UTF-8";
 
-    doCheck = false;
 
     buildInputs = with self; [ flake8 pkgs.glibcLocales ];
     propagatedBuildInputs = with self; [ future ];
@@ -3146,7 +3098,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # ValueError: Could not parse auth file:
     # /tmp/nix-build-.../CoilMQ-0.6.1/coilmq/tests/resources/auth.ini
-    doCheck = false;
 
     meta = {
       description = "Simple, lightweight, and easily extensible STOMP message broker";
@@ -3205,7 +3156,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ colander sqlalchemy9 ];
 
     # string: argument name cannot be overridden via info kwarg.
-    doCheck = false;
 
     meta = {
       description = "Autogenerate Colander schemas based on SQLAlchemy models";
@@ -3228,7 +3178,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
 
     # error: invalid command 'test'
-    doCheck = false;
   };
 
 
@@ -3334,7 +3283,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "13pfndz8vbk4p2a44cfbjsypjarkrall71pgc97glk5fiiw9idnn";
     };
 
-    doCheck = false;
 
     meta = {
       description = "Friendlier RFC 6265-compliant cookie parser/renderer";
@@ -3386,7 +3334,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "13hdffhd37mx3gjby018xl179jaj957fy7kzi01crmimxvn2zi7y";
     };
 
-    doCheck = false; # Lots of weird compiler errors
 
     meta = {
       description = "An optimising static compiler for both the Python programming language and the extended Cython programming language";
@@ -3417,7 +3364,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Several tests fail with Python 3.5
     # https://github.com/pytoolz/cytoolz/issues/73
-    doCheck = !isPy35;
 
     meta = {
       homepage = "http://github.com/pytoolz/cytoolz/";
@@ -3439,7 +3385,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # TODO: tests fail: TypeError: object of type 'NoneType' has no len()
-    doCheck = false;
 
     meta = {
       maintainers = with maintainers; [ iElectric ];
@@ -3476,7 +3421,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       pyasn1
     ];
 
-    doCheck = false;
   };
 
   cryptography_vectors = buildPythonPackage rec {
@@ -3744,7 +3688,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0g0g6avplfqw1adzqybbrh1a2z0kfjl8qn3annkrc7w3ibz6sgxd";
     };
 
-    doCheck = false; # I don't know why, but with doCheck = true it fails.
 
     meta = {
       homepage = https://pypi.python.org/pypi/pkginfo;
@@ -3798,7 +3741,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # ImportError: No module named test
-    doCheck = false;
 
     meta = {
       maintainers = with maintainers; [ iElectric ];
@@ -3851,7 +3793,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Some tests fail because they refer to test data files that don't exist
     # (upstream packaging issue)
-    doCheck = false;
 
     meta = {
       description = "Python library for reading and writing collada documents";
@@ -3883,7 +3824,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       py
     ];
 
-    doCheck = false;
   };
 
   pytest_28 = self.pytest.override rec {
@@ -4005,7 +3945,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Trying to run tests fails with # RuntimeError: dictionary changed size during iteration
-    doCheck = false;
   };
 
   pytestquickcheck = buildPythonPackage rec {
@@ -4096,7 +4035,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "10h623qnp6dp1191jri7lvgmnd4yfkl36k9smqklp1qlf3iafd85";
     };
     # AttributeError: 'module' object has no attribute 'tests'
-    doCheck = false;
   };
 
   cssutils = buildPythonPackage (rec {
@@ -4110,7 +4048,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ self.mock ];
 
     # couple of failing tests
-    doCheck = false;
 
     meta = {
       description = "A Python package to parse and build CSS";
@@ -4138,7 +4075,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     # discussion.
 
     # AttributeError: 'module' object has no attribute 'test_darcsver'
-    doCheck = false;
 
     meta = {
       description = "Darcsver, generate a version number from Darcs history";
@@ -4166,7 +4102,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Segfault, likely in numpy
-    doCheck = false;
 
     meta = {
       description = "Minimal task scheduling abstraction";
@@ -4490,7 +4425,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0abf7wqqq7rk1sycy47ayn5p93yy7gjq50cb2z69wmik1qqrr60x";
     };
 
-    doCheck = false; # there are no tests
 
     preFixup = ''
       mkdir -p "$out/bin"
@@ -4569,7 +4503,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [objgraph];
 
     # failing tests
-    doCheck = false;
 
     meta = {
       description = "Serialize all of python (almost)";
@@ -4627,7 +4560,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ six requests2 websocket_client ];
 
     # Version conflict
-    doCheck = false;
 
     meta = {
       description = "An API client for docker written in Python";
@@ -4664,7 +4596,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     DEPS = "loose";
 
-    doCheck = false;
     propagatedBuildInputs = with self; [
       boto redis setuptools simplejson
     ];
@@ -4689,7 +4620,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     DEPS = "loose";
 
-    doCheck = false; # requires redis server
     propagatedBuildInputs = with self; [
       setuptools docker_registry_core blinker flask gevent gunicorn pyyaml
       requests2 rsa sqlalchemy9 setuptools backports_lzma pyasn1 m2crypto
@@ -4752,7 +4682,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "513b77ba1bd0c31bb15dd9dd0d8471af";
     };
 
-    doCheck = false;
 
     meta = {
       description = "A caching front-end based on the Dogpile lock";
@@ -4769,7 +4698,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "01cb19f52bba3e95c9b560f39341f045";
     };
 
-    doCheck = false;
 
     meta = {
       description = "A 'dogpile' lock, typically used as a component of a larger caching solution";
@@ -4786,7 +4714,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "95a0792eb92a8fc0db8a7e59389470fe";
     };
 
-    doCheck = true;
 
     meta = {
       description = "Easily manage your dotfiles";
@@ -4827,7 +4754,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       description = "Fast, simple packet creation / parsing, with definitions for the basic TCP/IP protocols";
@@ -4850,7 +4776,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       substituteInPlace test-requirements.txt --replace 'nose==1.3' 'nose'
     '';
 
-    doCheck = !isPy3k;  # lots of transient failures
     checkPhase = ''
       # Not worth the trouble
       rm test/with_dummyserver/test_poolmanager.py
@@ -4876,7 +4801,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   dropbox = buildPythonPackage rec {
     name = "dropbox-${version}";
     version = "3.37";
-    #doCheck = false; # python 2.7.9 does verify ssl certificates
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/d/dropbox/${name}.tar.gz";
@@ -4946,7 +4870,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Check is disabled because running them destroy the content of the local cluster!
     # https://github.com/elasticsearch/elasticsearch-py/tree/master/test_elasticsearch
-    doCheck = false;
     propagatedBuildInputs = with self; [ urllib3 requests2 ];
     buildInputs = with self; [ nosexcover mock ];
 
@@ -4971,7 +4894,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # ImportError: No module named test_elasticsearch_dsl
     # Tests require a local instance of elasticsearch
-    doCheck = false;
 
     meta = {
       description = "Python client for Elasticsearch";
@@ -4996,7 +4918,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     patchPhase = "sed -e 's#/usr/include/linux/input.h#${pkgs.linuxHeaders}/include/linux/input.h#' -i setup.py";
 
-    doCheck = false;
 
     meta = {
       description = "Provides bindings to the generic input event interface in Linux";
@@ -5031,7 +4952,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
 
     # tests call a running mongodb instance
-    doCheck = false;
 
     meta = {
       homepage = "http://python-eve.org/";
@@ -5124,7 +5044,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "be885ccd9612966bb81839670d2da099";
     };
 
-    doCheck = !isPy3k;  # failures..
 
     meta = {
       description = "rapid multi-Python deployment";
@@ -5189,7 +5108,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0nikc05iz1fx2c9pvxrhrs819cpmg566azm99450yq2m8qmp1cpd";
     };
     disabled = isPy3k;
-    doCheck = (!isPyPy);  # https://github.com/fabric/fabric/issues/11891
     propagatedBuildInputs = with self; [ paramiko pycrypto ];
     buildInputs = with self; [ fudge_9 nose ];
   };
@@ -5205,7 +5123,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ python python_fedora wrapPython ];
     postInstall = "mv $out/bin/fedpkg $out/bin/fedora-cert-fedpkg";
-    doCheck = false;
 
     postFixup = "wrapPythonPrograms";
   });
@@ -5505,7 +5422,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       nosetests
     '';
 
-    doCheck = false; # Bunch of tests fail because they need an actual git repo
 
     meta = {
       description = "Git Object Database";
@@ -5531,7 +5447,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     # All tests error with
     # InvalidGitRepositoryError: /tmp/nix-build-python2.7-GitPython-1.0.1.drv-0/GitPython-1.0.1
     # Maybe due to being in a chroot?
-    doCheck = false;
 
     meta = {
       description = "Python Git Library";
@@ -5723,7 +5638,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     buildInputs = with self; [ mock ];
 
-    doCheck = false;
 
     meta = {
       description = "python humanize utilities";
@@ -5749,7 +5663,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # one test assumes we have docutils 0.12
     # TODO: enable tests after upgrading docutils to 0.12
-    doCheck = false;
 
     meta = {
       description = "A tool to make impress.js presentations from reStructuredText";
@@ -5768,7 +5681,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "78d1835a80955e68e98a3ca5ab7f7dbd";
     };
 
-    doCheck = false;
 
     meta = {
       description = "WSGI HTTP Digest Authentication middleware";
@@ -5829,7 +5741,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Does not install tests
-    doCheck = false;
 
     meta = with stdenv.lib; {
       description = "Accessing and Modifying INI files";
@@ -5848,7 +5759,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # no tests in tarball
-    doCheck = false;
 
     meta = {
       description = "tools for i3 users and developers";
@@ -6013,7 +5923,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       pkgs.ledger ];
 
     # Tests are disable since they require hledger and python-ledger
-    doCheck = false;
 
     meta = {
       homepage = https://gitlab.com/egh/ledger-autosync;
@@ -6206,7 +6115,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     disabled = isPyPy;
-    doCheck = false; # doesn't find needed test data files
     buildInputs = with pkgs; [ boost harfbuzz icu mapnik ];
     propagatedBuildInputs = with self; [ pillow pycairo ];
 
@@ -6449,7 +6357,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ nose ];
 
     # the tests do not pass
-    doCheck = false;
 
     meta = {
       description = "A Python-based build/distribution/deployment scripting tool";
@@ -6556,7 +6463,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     version = "0.2.8";
 
     disabled = !isPy3k;
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/pirate-get/${name}.tar.gz";
@@ -6650,7 +6556,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = [ pkgs.c-ares ];
 
     # No tests included
-    doCheck = false;
 
     meta = {
       homepage = http://github.com/saghul/pycares;
@@ -6761,7 +6666,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Failing tests
     # https://github.com/Pylons/pyramid/issues/1899
-    doCheck = !isPy35;
 
   };
 
@@ -6945,7 +6849,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sqlalchemy
     ];
 
-    doCheck = true;
 
     meta = {
       homepage = http://www.radicale.org/;
@@ -6972,7 +6875,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # way too many dependencies to run tests
     # see https://github.com/getsentry/raven-python/blob/master/setup.py
-    doCheck = false;
 
     meta = {
       maintainers = with maintainers; [ iElectric ];
@@ -7046,7 +6948,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
        END
     '';
 
-    doCheck = false;
   };
 
   hyp = buildPythonPackage rec {
@@ -7179,7 +7080,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # should be fixed in next release
-    doCheck = false;
 
     buildInputs = with self; [ mock ];
     propagatedBuildInputs = with self; [ pyramid zodb zodburi ZEO ];
@@ -7277,7 +7177,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   random2 = self.buildPythonPackage rec {
     name = "random2-1.0.1";
 
-    doCheck = !isPyPy;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/r/random2/${name}.zip";
@@ -7414,7 +7313,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     propagatedBuildInputs = [ pkgs.git ];
-    doCheck = false;
 
     meta = {
       description = "Setuptools revision control system plugin for Git";
@@ -7430,7 +7328,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ argh pathtools pyyaml ];
 
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/w/watchdog/${name}.tar.gz";
@@ -7494,7 +7391,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "54c206827931cc4ed8a9b1cc78e380c5";
     };
 
-    doCheck = false;
 
     meta = {
       description = "Validate dicts against a schema";
@@ -7512,7 +7408,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # TODO: https://github.com/Pylons/venusian/issues/23
-    doCheck = false;
 
     meta = {
       maintainers = with maintainers; [ garbas iElectric ];
@@ -7530,7 +7425,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # TODO: https://github.com/malthe/chameleon/issues/139
-    doCheck = false;
 
     meta = {
        maintainers = with maintainers; [ garbas iElectric ];
@@ -7547,7 +7441,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "3b50a83dd58149dfcee98cb6565265d10b53e9c0a2bca7eeef7fb5f5524890a7";
     };
 
-    doCheck = false;
   };
 
 
@@ -7622,7 +7515,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://freedesktop.org/wiki/Software/pyxdg;
@@ -7676,7 +7568,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # too complicated to setup
-    doCheck = false;
 
     meta = {
       description = "A high-level Python Web framework";
@@ -7695,7 +7586,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # too complicated to setup
-    doCheck = false;
 
     # patch only $out/bin to avoid problems with starter templates (see #3134)
     postFixup = ''
@@ -7720,7 +7610,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # too complicated to setup
-    doCheck = false;
 
     # patch only $out/bin to avoid problems with starter templates (see #3134)
     postFixup = ''
@@ -7743,7 +7632,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # too complicated to setup
-    doCheck = false;
 
     # patch only $out/bin to avoid problems with starter templates (see #3134)
     postFixup = ''
@@ -7766,7 +7654,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # too complicated to setup
-    doCheck = false;
 
     # patch only $out/bin to avoid problems with starter templates (see #3134)
     postFixup = ''
@@ -7844,7 +7731,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ django_1_5 ];
 
@@ -7868,7 +7754,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ django_1_7 ];
 
     # tests appear to be broken on 0.6.1 at least
-    doCheck = ( version != "0.6.1" );
 
     meta = {
       description = "Class based template tags for Django";
@@ -8100,7 +7985,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # No tests included
-    doCheck = false;
 
     meta = with stdenv.lib; {
       description = "An HTTP handler for `urllib2` that supports HTTP 1.1 and keepalive.";
@@ -8196,7 +8080,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       description = "An input filter for Doxygen";
     };
 
-    doCheck = false;
   };
 
 
@@ -8248,7 +8131,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     python2Deps = if isPy3k then [ ] else [ self.rope ];
     propagatedBuildInputs = with self; [ flake8 autopep8 jedi importmagic ] ++ python2Deps;
 
-    doCheck = false; # there are no tests
 
     meta = {
       description = "Backend for the elpy Emacs mode";
@@ -8266,7 +8148,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "ce75c7c3c86741175a84456cc5bd531e";
     };
 
-    doCheck = !isPyPy;
 
     buildInputs = with self; [ ];
 
@@ -8296,7 +8177,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     propagatedBuildInputs = with self; [ sexpdata ];
-    doCheck = false;
 
     meta = {
       description = "EPC (RPC stack for Emacs Lisp) implementation in Python";
@@ -8346,7 +8226,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     buildInputs = with self; [ nose httplib2 pyopenssl  ];
 
-    doCheck = false;  # too much transient errors to bother
 
     propagatedBuildInputs = optionals (!isPyPy) [ self.greenlet ];
 
@@ -8410,7 +8289,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # lots of networking failures
-    doCheck = false;
 
     meta = {
       homepage = http://code.google.com/p/feedparser/;
@@ -8449,7 +8327,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # lots of networking and other fails
-    doCheck = false;
     buildInputs = with self; [ mock pytest nose ];
     propagatedBuildInputs = with self; [
       requests2 six pyyaml texttable docopt docker dockerpty websocket_client
@@ -8531,7 +8408,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       werkzeug
     ];
 
-    doCheck = false;
   };
 
   flask_cache = buildPythonPackage rec {
@@ -8616,7 +8492,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "2c249c43bc594726f908b1425a8b8081";
     };
 
-    doCheck = false;
 
     buildInputs = with self; [ nose ];
     propagatedBuildInputs = with self; [ paver feedparser sqlalchemy9 pyyaml rpyc
@@ -8679,7 +8554,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # has mostly networking dependent tests
-    doCheck = false;
     propagatedBuildInputs = with self; [ beautifulsoup ];
 
     meta = {
@@ -8721,7 +8595,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       pytz
     ];
 
-    doCheck = false;
   };
 
 
@@ -8779,7 +8652,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # The travis build fails since the migration from multiprocessing to threading for hosting the API under test.
     # OSError: [Errno 98] Address already in use
-    doCheck = false;
 
     # This patch is required if the tests are enabled
     # See https://github.com/falconry/falcon/issues/572
@@ -8881,7 +8753,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     # some Python byte/str errors, and others specific to resources tested.
     # Failing tests due to the latter is to be expected with this type of package.
     # Tests are therefore disabled.
-    doCheck = false;
 
     meta = {
       description = "Filesystem abstraction";
@@ -8922,7 +8793,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = [ pkgs.fuse ];
 
     # No tests included
-    doCheck = false;
 
     patchPhase = ''
       substituteInPlace fuse.py --replace \
@@ -8951,7 +8821,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0vm61j5br6jiry6pgcxnwvxhki8ksnirp7k9mcbmxmgib3r60xd3";
     };
 
-    doCheck = false;
 
     meta = {
       description = "Clean single-source support for Python 3 and 2";
@@ -8991,7 +8860,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Tests fail
-    doCheck = false;
 
     meta = with pkgs.stdenv.lib; {
       description = "Backport of the concurrent.futures package from Python 3.2";
@@ -9073,7 +8941,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # FAIL: test_sanitize_remove_script_elem (genshi.filters.tests.html.HTMLSanitizerTestCase)
     # FAIL: test_sanitize_remove_src_javascript (genshi.filters.tests.html.HTMLSanitizerTestCase)
-    doCheck = false;
 
     buildInputs = with self; [ pkgs.setuptools ];
 
@@ -9107,7 +8974,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
     propagatedBuildInputs = optionals (!isPyPy) [ self.greenlet ];
 
-    doCheck = false;
 
     meta = {
       description = "Coroutine-based networking library";
@@ -9250,7 +9116,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "1ghx62z63yyf8wv4bcvfxwxs5mc7b4nrcss6lc1i5s0yjvzvyi6h";
     };
 
-    doCheck = false;
 
     buildInputs = with self; [ unittest2 ];
     propagatedBuildInputs = with self; [ psutil setuptools bottle batinfo pkgs.hddtemp pysnmp ];
@@ -9285,7 +9150,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # TODO: only disable the tests that require network
-    doCheck = false;
 
     meta = with stdenv.lib; {
       homepage = http://github3py.readthedocs.org/en/master/;
@@ -9358,7 +9222,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       ${python.executable} setup.py google_test
     '';
 
-    doCheck = true;
 
     meta = {
       description = "Google Application Utilities for Python";
@@ -9454,7 +9317,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
 
     # A unicode test fails
-    doCheck = false;
 
     meta = {
       homepage = https://pypi.python.org/pypi/guessit;
@@ -9525,7 +9387,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # not there yet, but coming soon.
-    doCheck = false;
 
     meta = {
       homepage = "https://github.com/RedMoonStudios/hetzner";
@@ -9549,7 +9410,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # some tests fail, probably because of changes in lxml
     # not relevant for me, if releavnt for you, fix it...
-    doCheck = false;
 
     meta = {
       description = "Simple HTML cleanup utilities";
@@ -9657,7 +9517,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     name = "httpretty-${version}";
     version = "0.8.6";
     disabled = isPy3k;
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/h/httpretty/${name}.tar.gz";
@@ -9727,7 +9586,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # ImportError: No module named tests
-    doCheck = false;
     propagatedBuildInputs = with self; [ requests ];
 
     meta = {
@@ -9871,7 +9729,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       description = "Class and tools for handling of IPv4 and IPv6 addresses and networks";
@@ -9898,7 +9755,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Tests require backends.
     # I don't want to add all supported backends as propagatedBuildInputs
-    doCheck = false;
 
     meta = {
       description = "IPython Kernel for Jupyter";
@@ -9923,7 +9779,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ] ++ optionals (!isPy3k) [ futures ];
 
     # Requires access to cluster
-    doCheck = false;
 
     meta = {
       description = "Interactive Parallel Computing with IPython";
@@ -9950,7 +9805,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     LC_ALL="en_US.UTF-8";
 
-    doCheck = false; # Circular dependency with ipykernel
 
     checkPhase = ''
       nosetests
@@ -10123,7 +9977,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # 7 failed
-    doCheck = false;
 
     meta = {
       homepage = https://github.com/davidhalter/jedi;
@@ -10147,7 +10000,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       unicodecsv
     ];
 
-    doCheck = false;
 
     meta = {
       homepage = http://github.com/sunlightlabs/jellyfish;
@@ -10255,7 +10107,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Circular dependency with ipykernel
-    doCheck = false;
 
     meta = {
       description = "Jupyter protocol implementation and client libraries";
@@ -10282,7 +10133,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Several tests fail due to being in a chroot
-    doCheck = false;
 
     meta = {
       description = "Jupyter core package. A base package on which Jupyter projects rely";
@@ -10310,7 +10160,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
 
     # ImportError: No module named tests
-    doCheck = false;
 
     meta = {
       homepage = https://github.com/kennknowles/python-jsonpath-rw;
@@ -10379,7 +10228,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # tests broken on python 2.6? https://github.com/nose-devs/nose/issues/806
     # tests also appear to depend on anyjson, which has Py3k problems
-    doCheck = (pythonAtLeast "2.7") && !isPy3k ;
 
     meta = {
       description = "Messaging library for Python";
@@ -10436,7 +10284,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ six ];
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://code.google.com/p/pylast/;
@@ -10460,7 +10307,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Broken tests. Seem to be fixed upstream according to Travis.
-    doCheck = false;
 
     meta = {
       description = "A fast and thorough lazy object proxy";
@@ -10481,7 +10327,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     disabled = isPy3k;
 
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ simplejson psutil ];
 
@@ -10506,7 +10351,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     preConfigure = "cp libcloud/test/secrets.py-dist libcloud/test/secrets.py";
 
     # failing tests for 26 and 27
-    doCheck = false;
 
     meta = {
       description = "A unified interface to many cloud providers";
@@ -10529,7 +10373,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
     buildInputs = with self; [ pkgs.git ];
 
-    doCheck = false;
 
     meta = {
       description = "A modified version of Supybot, an IRC bot";
@@ -10663,7 +10506,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       pbr
     ];
 
-    doCheck = false;
 
     meta = {
       homepage = http://launchpad.net/pylockfile;
@@ -10738,7 +10580,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       substituteInPlace magic.py --replace "ctypes.util.find_library('magic')" "'${pkgs.file}/lib/libmagic.so'"
     '';
 
-    doCheck = false;
 
     # TODO: tests are failing
     #checkPhase = ''
@@ -10784,7 +10625,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     preBuild = "${python}/bin/${python.executable} setup.py build_ext --openssl=${pkgs.openssl}";
 
-    doCheck = false; # another test that depends on the network.
 
     meta = {
       description = "A Python crypto and SSL toolkit";
@@ -10805,7 +10645,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       markupsafe
     ];
 
-    doCheck = false;
   };
 
 
@@ -10846,7 +10685,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://www.freewisdom.org/projects/python-markdown;
@@ -10940,7 +10778,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ clientform ];
 
-    doCheck = false;
 
     meta = {
       description = "Stateful programmatic web browsing in Python";
@@ -10979,7 +10816,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "ca270506dd4ecb20ae26fa72fbd9b0be";
     };
 
-    doCheck = false;
 
     meta = {
       description = "An HTML/XML templating engine used by supervisor";
@@ -11040,7 +10876,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
 
     # Tests Fail Due to Syntax Warning, Fixed for v3.1.11+
-    doCheck = false;
     # sed calls will be unecessary in v3.1.11+
     preConfigure = ''
       sed -i 's/==/>=/' setup.py
@@ -11141,7 +10976,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0dhhgr0ww4x85pgl6mzp327sy4v6mv6hz3wvnsrwl0knkxknbadv";
     };
 
-    doCheck = false;
 
     patches = [
       ../development/python-modules/rainbowstream/image.patch
@@ -11212,7 +11046,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       ConfigArgParse pyperclip blinker construct pyparsing html2text tornado
     ];
 
-    doCheck = false;
 
     postInstall = ''
       for prog in "$out/bin/"*; do
@@ -11242,7 +11075,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       six
     ];
 
-    doCheck = false;
   };
 
   modestmaps = buildPythonPackage rec {
@@ -11310,7 +11142,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://code.google.com/p/pymox/;
@@ -11333,7 +11164,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "1lnghx821f6dqp3pa382ka07cncdz7hq0mkrh44d0q3grvrlrp9n";
     });
 
-    doCheck = false; # lazy packager
     propagatedBuildInputs = with self; [ pyramid simplejson konfig ];
 
     meta = {
@@ -11359,7 +11189,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
   };
 
 
@@ -11499,7 +11328,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://bmc.github.com/munkres/;
@@ -11558,7 +11386,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "16fnnhspniac2i7qswxafawsh2x2a803hmc6bn9k1zl5fxq1380a";
     };
 
-    doCheck = false;
 
     meta = {
       description = "Python multimedia tagging library";
@@ -11578,7 +11405,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Tests don't work
-    doCheck = false;
 
     meta = {
       description = "Utilities for use with console mail clients, like mutt";
@@ -11641,7 +11467,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     version = "2.0.10";
     name = "pygal-${version}";
 
-    doCheck = !isPyPy;  # one check fails with pypy
 
     src = pkgs.fetchFromGitHub {
       owner = "Kozea";
@@ -11696,7 +11521,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Wants to connect to MySQL
-    doCheck = false;
   };
 
   pymysqlsa = self.buildPythonPackage rec {
@@ -11737,7 +11561,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     disabled = isPy3k;
 
     # plenty of failing tests
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/M/MySQL-python/${name}.zip";
@@ -11781,7 +11604,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     propagatedBuildInputs = [ self.tkinter ];
 
@@ -11847,7 +11669,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # PermissionError. Likely due to being in a chroot
-    doCheck = false;
 
     meta = {
       description = "Converting Jupyter Notebooks";
@@ -12003,7 +11824,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ pyopenssl pyasn1 certifi passlib
       ipaddress backports_ssl_match_hostname_3_4_0_2 hpack ];
 
-    doCheck = false;
 
     meta = {
       description = "Man-in-the-middle proxy";
@@ -12099,7 +11919,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Tests fail due to getcwd returning ENOENT???
-    doCheck = false;
 
     propagatedBuildInputs = with self; [
      numpy
@@ -12175,7 +11994,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
     propagatedBuildInputs = with self; [ six ];
     # AttributeError: 'module' object has no attribute 'collector'
-    doCheck = false;
   };
 
   nose-cover3 = buildPythonPackage rec {
@@ -12191,7 +12009,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ nose ];
 
     # No tests included
-    doCheck = false;
 
     meta = {
       description = "Coverage 3.x support for Nose";
@@ -12270,7 +12087,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Certain tests fail due to being in a chroot.
     # PermissionError
-    doCheck = false;
     meta = {
       description = "The Jupyter HTML notebook is a web-based notebook environment for interactive computing";
       homepage = http://jupyter.org/;
@@ -12366,7 +12182,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       ${python.interpreter} $out/${python.sitePackages}/numba/runtests.py
     '';
     # ImportError: cannot import name '_typeconv'
-    doCheck = false;
 
     meta = {
       homepage = http://numba.pydata.org/;
@@ -12386,7 +12201,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Tests fail with python 3. https://github.com/pydata/numexpr/issues/177
-    # doCheck = !isPy3k;
 
     propagatedBuildInputs = with self; [ numpy ];
 
@@ -12483,7 +12297,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ blockdiag ];
 
     # tests fail
-    doCheck = false;
 
     meta = {
       description = "Generate network-diagram image from spec-text file (similar to Graphviz)";
@@ -12555,7 +12368,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ mock coverage ];
 
     # ServerNotFoundError: Unable to find the server at oauth-sandbox.sevengoslings.net
-    doCheck = false;
 
     meta = {
       homepage = "https://github.com/simplegeo/python-oauth2";
@@ -12575,7 +12387,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     propagatedBuildInputs = with self; [ six httplib2 pyasn1 pyasn1-modules rsa ];
-    doCheck = false;
 
     meta = {
       description = "A client library for OAuth 2.0";
@@ -12684,7 +12495,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       url = "https://pypi.python.org/packages/source/o/offtrac/${name}.tar.gz";
       sha256 = "06vd010pa1z7lyfj1na30iqzffr4kzj2k2sba09spik7drlvvl56";
     };
-    doCheck = false;
   };
 
   openpyxl = buildPythonPackage rec {
@@ -12723,7 +12533,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   #     cp * $dest/
   #   '';
   #
-  #   doCheck = false;
   #
   #   meta = {
   #     description = "A new experimental interface to optparse which works by introspecting a function definition";
@@ -12745,7 +12554,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Test suite appears broken
-    doCheck = false;
 
     meta = {
       homepage = http://www.dabeaz.com/ply/;
@@ -12782,7 +12590,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "a39ce0e321e40e9758bf7b9128d316c71b35b80eabc84f13df492083bb6f1cc6";
     };
 
-    doCheck = false;
     postInstall = "ln -s $out/bin/osc-wrapper.py $out/bin/osc";
 
     propagatedBuildInputs = with self; [ self.m2crypto ];
@@ -12797,7 +12604,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "1rjiiahw2y7pg5rl15fvhmfyh26vm433000nwp7c94khx7w85w75";
     };
 
-    doCheck = false;
 
     propagatedBuildInputs = with self; [
       pbr requests2 sphinx_1_2
@@ -12852,7 +12658,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     name = "bandit-${version}";
     version = "0.16.1";
     disabled = isPy33;
-    doCheck = !isPyPy; # a test fails
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/b/bandit/${name}.tar.gz";
@@ -13183,7 +12988,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # No tests included
-    doCheck = false;
 
     propagatedBuildInputs = with self; [
       pyparsing
@@ -13236,7 +13040,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
 
     # way too many assumptions
-    doCheck = false;
   };
 
   glanceclient = buildPythonPackage rec {
@@ -13636,7 +13439,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # tests take a long time to run and leave threads hanging
-    doCheck = false;
     #ZOOKEEPER_PATH = "${pkgs.zookeeper}";
 
     meta = with stdenv.lib; {
@@ -13781,7 +13583,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
    ];
 
    # too much magic in tests
-   doCheck = false;
 
    meta = with stdenv.lib; {
      homepage = http://launchpad.net/oslo;
@@ -13800,7 +13601,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ six ];
 
     # doesn't ship tests in tarball
-    doCheck = false;
 
     meta = with stdenv.lib; {
       homepage = https://github.com/rholder/retrying;
@@ -13822,7 +13622,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       ${python.interpreter} -m unittest discover
     '';
     # Tests are written for Python 3.x only (concurrent.futures)
-    doCheck = isPy3k;
 
 
     meta = with stdenv.lib; {
@@ -13844,7 +13643,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ mock ];
 
     # 2 tests error out
-    doCheck = false;
     checkPhase = ''
       ${python.interpreter} runtests.py
     '';
@@ -13919,7 +13717,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = [ self.mock ];
 
     # TODO: circular import on oslo-i18n
-    doCheck = false;
   };
 
   oslotest = buildPythonPackage rec {
@@ -14034,7 +13831,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     version = "1.10.5";
 
     # No tests in archive
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/w/wrapt/${name}.tar.gz";
@@ -14162,7 +13958,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "17c578775520c99131634e09cfca5a05ea9e1bd2a05cd06967ebece10df7af2d";
     };
 
-    doCheck = false;
   };
 
   paramiko = buildPythonPackage rec {
@@ -14213,7 +14008,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     buildInputs = with self; [ nose ];
 
-    doCheck = false; # some files required by the test seem to be missing
 
     meta = {
       description = "Tools for using a Web Server Gateway Interface stack";
@@ -14249,7 +14043,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "2b685be69d6ac8bc0fe6f558f119660259db26a15e16a4943c515fbee8093539";
     };
 
-    doCheck = false;
     buildInputs = with self; [ nose ];
     propagatedBuildInputs = with self; [ paste PasteDeploy cheetah argparse ];
 
@@ -14328,7 +14121,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # circular dependencies with fixtures
-    doCheck = false;
   };
 
   fixtures = buildPythonPackage rec {
@@ -14470,7 +14262,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Wants to run python in a subprocess
-    doCheck = false;
 
     meta = {
       homepage = http://www.noah.org/wiki/Pexpect;
@@ -14595,7 +14386,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "3e78d3066aaeb633d185a57afdccf700aa2e660436b4af618bcb6ff0fa511798";
     };
 
-    doCheck = false;
   };
 
 
@@ -14641,7 +14431,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0kyg6gldj6hi2jhc5xhi834bb2mcaiy24dvfik963shnldqr7kqg";
     };
 
-    doCheck = false;
 
     propagatedBuildInputs = with self ; [ pyparsing ];
 
@@ -14767,7 +14556,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Check is disabled because of assertion errors, see
     # https://github.com/python-pillow/Pillow/issues/1259
-    doCheck = false;
 
     buildInputs = with self; [
       pkgs.freetype pkgs.libjpeg pkgs.zlib pkgs.libtiff pkgs.libwebp pkgs.tcl nose ]
@@ -14856,7 +14644,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       description = "A library to manipulate gettext files (po and mo files)";
@@ -14878,7 +14665,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ pkgs.git pkgs.mercurial pkgs.bazaar self.psutil self.pygit2 ];
 
     # error: This is still beta and some tests still fail
-    doCheck = false;
 
     postInstall = ''
       install -dm755 "$out/share/fonts/OTF/"
@@ -14925,7 +14711,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
 
     # can't find the tests module?
-    doCheck = false;
 
     meta = {
       description = "Python Reddit API wrapper";
@@ -15012,7 +14797,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     installFlags = optional (versionAtLeast protobuf.version "2.6.0") "--cpp_implementation";
 
-    doCheck = true;
 
     meta = {
       description = "Protocol Buffers are Google's data interchange format";
@@ -15045,7 +14829,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     disabled = isPyPy;
 
     # error: invalid command 'test'
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/psycopg2/${name}.tar.gz";
@@ -15087,7 +14870,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Circular dependency on pytest
-    doCheck = false;
   };
 
 
@@ -15203,7 +14985,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # 16 failed, 427 passed, 17 error in 88.85 seconds
-    doCheck = false;
 
     meta = with stdenv.lib; {
       homepage = "https://github.com/rohe/pysaml2";
@@ -15361,7 +15142,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       pytz
     ];
 
-    doCheck = false;
   };
 
   pybfd = buildPythonPackage rec {
@@ -15438,7 +15218,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     version = "1.5.3";
     # FAIL:test_generate_entry and test_time
     # both tests fail due to time issue that doesn't seem to matter in practice
-    doCheck = false;
     src = pkgs.fetchurl {
       url = "https://github.com/pyblosxom/pyblosxom/archive/v${version}.tar.gz";
       sha256 = "0de9a7418f4e6d1c45acecf1e77f61c8f96f036ce034493ac67124626fd0d885";
@@ -15558,7 +15337,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = [ pkgs.cups ];
 
     # Wants to connect to CUPS
-    doCheck = false;
 
     meta = {
       description = "Python bindings for libcups";
@@ -15580,7 +15358,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ pkgs.curl pkgs.openssl ];
 
     # error: invalid command 'test'
-    doCheck = false;
 
     preConfigure = ''
       substituteInPlace setup.py --replace '--static-libs' '--libs'
@@ -15606,7 +15383,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: (6, "Couldn't resolve host 'h.wrttn.me'")
-    doCheck = false;
 
     buildInputs = with self; [ pkgs.curl simplejson unittest2 nose ];
 
@@ -15642,7 +15418,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Tests require a local instance of elasticsearch
-    doCheck = false;
     propagatedBuildInputs = with self; [ elasticsearch six simplejson certifi ];
     buildInputs = with self; [ nose mock ];
 
@@ -15670,7 +15445,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # dictionaries needed for tests
-    doCheck = false;
 
     meta = {
       description = "pyenchant: Python bindings for the Enchant spellchecker";
@@ -15715,7 +15489,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [xe];
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = "http://home.blarg.net/~steveha/pyfeed.html";
@@ -15737,7 +15510,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ numpy scipy ];
 
     # Tests cannot import pyfftw. pyfftw works fine though.
-    doCheck = false;
 
     preConfigure = ''
       export LDFLAGS="-L${pkgs.fftw}/lib -L${pkgs.fftwFloat}/lib -L${pkgs.fftwLongDouble}/lib"
@@ -15761,7 +15533,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0v8a18wvaqnb1jksyv5dc5n6zj0vrkyhz0ivmm8gfwpa0ky6n68y";
     };
 
-    doCheck = false;
 
     meta = {
       description = "FIGlet in pure Python";
@@ -15781,7 +15552,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     buildInputs = with self; [ unittest2 ];
 
-    doCheck = !isPyPy;
 
     meta = {
       homepage = https://launchpad.net/pyflakes;
@@ -15800,7 +15570,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # requires geoip samples
-    doCheck = false;
 
     buildInputs = with self; [ nose ];
 
@@ -15825,7 +15594,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       paths = concatStringsSep "," (map (l: "\"${l}/lib\"") libs);
     in "sed -i -e 's|directories\.extend.*lib[^]]*|&,${paths}|' pyglet/lib.py";
 
-    doCheck = false;
 
     meta = {
       homepage = "http://www.pyglet.org/";
@@ -15855,7 +15623,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ pkgs.gpgme ];
 
@@ -15977,7 +15744,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0k3zzz84wzz9q1fl3vvqr2ys96z9pcf4viq9q6s2a63zaysmcfd2";
     };
 
-    doCheck = false;
 
     disabled = isPyPy || isPy3k;
 
@@ -16015,7 +15781,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     version = "0.7.8dev-r4569-20111003";
     name = "kaa-metadata-${version}";
 
-    doCheck = false;
 
     buildInputs = [ pkgs.libdvdread ];
 
@@ -16086,7 +15851,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ pycrypto ecdsa pytestrunner ];
 
-    doCheck = false;
 
     meta = {
       description = "JSON Web Token implementation in Python";
@@ -16158,7 +15922,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://pyparsing.wikispaces.com/;
@@ -16230,7 +15993,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     disabled = isPyPy || isPy3k;
     version = "0.0.6";
 
-    doCheck = false;  # No such file or directory errors on 32bit
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/pyptlib/pyptlib-${version}.tar.gz";
@@ -16246,7 +16008,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     name = "pyqtgraph-${version}";
     version = "0.9.10";
 
-    doCheck = false;  # "PyQtGraph requires either PyQt4 or PySide; neither package could be imported."
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/pyqtgraph/${name}.tar.gz";
@@ -16371,7 +16132,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "10wq5311qrnk8rvzsh6gwzxi7h51pgvzw3d7s1mb39fsvf0vyjdk";
     };
 
-    doCheck = false;
 
     meta = {
       description = "SOCKS module for Python";
@@ -16391,7 +16151,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
     propagatedBuildInputs = with self; [ kitchen requests bunch paver six munch urllib3
       beautifulsoup4 ];
-    doCheck = false;
 
     # https://github.com/fedora-infra/python-fedora/issues/140
     preBuild = ''
@@ -16481,7 +16240,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://code.google.com/p/python-progressbar/;
@@ -16530,7 +16288,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # ERROR: testExtended (tests.test_acls.AclExtensions)
     # IOError: [Errno 0] Error
-    doCheck = false;
 
     buildInputs = with self; [ pkgs.acl ];
 
@@ -16573,7 +16330,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     configurePhase = "make";
 
-    doCheck = false;
 
     meta = {
       description = "Emacs Lisp to Python interface";
@@ -16653,7 +16409,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     # Tests have many dependencies
     # Extension types could not be found.
     # Should run test suite from $out/${python.sitePackages}
-    doCheck = false;
   };
 
   pyopenssl = buildPythonPackage rec {
@@ -16671,7 +16426,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
 
     # 12 tests failing, 26 error out
-    doCheck = false;
   };
 
 
@@ -16686,7 +16440,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ cssselect lxml webob ];
     # circular dependency on webtest
-    doCheck = false;
   };
 
 
@@ -16699,7 +16452,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     propagatedBuildInputs = with self; [ requests2 ];
-    doCheck = false;
 
     meta = {
       broken = true;  # missing lots of dependencies with rackspace-novaclient
@@ -16720,7 +16472,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = https://pypi.python.org/pypi/pyreport;
@@ -16757,7 +16508,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "3542ec0838793e61d6224e27ff05e8ce4ba5a5c5cc4ec5c6a3e8d49247985477";
     };
 
-    doCheck = false;
 
     meta = {
       homepage = "http://pyserial.sourceforge.net/";
@@ -16774,7 +16524,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "3c6b2317f8031bc1e200fd1ea35f00a96f4569e3f3f220a5e66ab6227d96ccaf";
     };
 
-    doCheck = false;
 
     meta = {
       homepage = "http://github.com/mongodb/mongo-python-driver";
@@ -16793,7 +16542,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Tests call a running mongodb instance
-    doCheck = false;
 
     meta = {
       homepage = "http://github.com/mongodb/mongo-python-driver";
@@ -16811,7 +16559,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "07q8krmi7phizzp192x3j7xbk1gzhc1kc3jp4mxrm32dn84sp1vh";
     };
 
-    doCheck = false;
 
     meta = {
       homepage = "https://github.com/asweigart/pyperclip";
@@ -16858,7 +16605,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://pysqlite.org/;
@@ -16978,7 +16724,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ zbase32 argparse twisted ];
     # Tests fail because they try to write new code into the twisted
     # package, apparently some kind of plugin.
-    doCheck = false;
 
     prePatch = optionalString isPyPy ''
       grep -rl 'utf-8-with-signature-unix' ./ | xargs sed -i -e "s|utf-8-with-signature-unix|utf-8|g"
@@ -17090,7 +16835,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     buildInputs = with self; [ pkgs.attr ];
 
@@ -17260,7 +17004,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0vx252nzq5h9m9brwnw2ph8aj526y26jr2dqcafzzcdx6z4l8vj4";
     };
 
-    doCheck = false;        # Internet tests fail when building in chroot
     propagatedBuildInputs = with self; [ oauthlib requests2 ];
 
     meta = {
@@ -17366,7 +17109,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [traitlets jupyter_core jupyter_client pygments ipykernel pyqt4];
 
     # : cannot connect to X server
-    doCheck = false;
 
     meta = {
       description = "Jupyter Qt console";
@@ -17452,7 +17194,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # tests require a running redis
-    doCheck = false;
 
     meta = {
       description = "Python client for Redis key-value store";
@@ -17541,7 +17282,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Tests fail, possibly broken.
-    doCheck = false;
 
     meta = with stdenv.lib; {
       description = "readme";
@@ -17601,7 +17341,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "04cva8qg79xig4zqhb4dwkpm7734dvhzqclzvrdz70fh59ki5b4f";
     };
 
-    doCheck = false;  # no tests in source
 
     buildInputs = with self; [ coverage mock nose geopy ];
     propagatedBuildInputs = with self; [
@@ -17628,7 +17367,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "04j1lxcsfyv03h0n0q7p2ig7a4n13x4x20fzxn8bkazpx6lyal22";
     };
 
-    doCheck = false;  # too much
 
     buildInputs = with self; [ mock tox pkgs.pylint ];
     meta = with stdenv.lib; {
@@ -17689,7 +17427,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ isodate html5lib SPARQLWrapper ];
 
@@ -17748,7 +17485,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       description = "Generic test automation framework";
@@ -17770,7 +17506,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    #doCheck = false;
 
     propagatedBuildInputs = with self; [ robotframework selenium docutils decorator ];
 
@@ -17812,7 +17547,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    #doCheck = false;
 
     buildInputs = with self; [ unittest2 ];
     propagatedBuildInputs = with self; [ robotframework lxml ];
@@ -17845,7 +17579,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       description = "Light-weight and intuitive editor for Robot Framework test case files";
@@ -18121,7 +17854,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     # Tests fail:
     #   ...
     #   ERROR: Failure: OSError ([Errno 2] No such file or directory: '/tmp/nix-build-python2.7-seqdiag-0.9.0.drv-0/seqdiag-0.9.0/src/seqdiag/tests/diagrams/')
-    doCheck = false;
 
     meta = {
       description = "Generate sequence-diagram image from spec-text file (similar to Graphviz)";
@@ -18163,7 +17895,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # needs a broker running and then ./qpid-python-test
-    doCheck = false;
 
   };
 
@@ -18176,7 +17907,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # https://github.com/xattr/xattr/issues/43
-    doCheck = false;
 
     postBuild = ''
       ${python.interpreter} -m compileall -f xattr
@@ -18296,7 +18026,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ pytest ];
 
     # Tests are not included. See https://github.com/pypa/scripttest/issues/11
-    doCheck = false;
 
     meta = {
       description = "A library for testing interactive command-line applications";
@@ -18319,7 +18048,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Computationally very demanding tests
-    doCheck = false;
 
     meta = {
       description = "statisitical data visualization";
@@ -18523,7 +18251,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "1n8msk71lpl3kv086xr2sv68ppgz6228575xfnbszc6p1mwr64rg";
     };
 
-    doCheck = false;  # weird error
 
     meta = {
       description = "A Parser Generator for Python";
@@ -18701,7 +18428,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ cffi numpy pkgs.portaudio ];
 
     # No tests included nor upstream available.
-    doCheck = false;
 
     prePatch = ''
       substituteInPlace sounddevice.py --replace "'portaudio'" "'${pkgs.portaudio}/lib/libportaudio.so.2'"
@@ -18723,7 +18449,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "149pjc0c3z6khjisn4yil3f94qjnzwafz093wc8rrzbw828qdkv8";
     };
 
-    doCheck = false;
 
     buildInputs = with self; [ oslosphinx ];
     propagatedBuildInputs = with self; [ pbr six argparse ];
@@ -18755,7 +18480,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Bunch of tests fail
     # https://github.com/countergram/pytidylib/issues/13
-    doCheck = false;
 
     patchPhase = ''
       sed -i 's#load_library(name)#load_library("${pkgs.html-tidy}/lib/libtidy.so")#' tidylib/__init__.py
@@ -18814,7 +18538,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0qnv7i9824nb5h9psj0rwzjyprwgfiwh5s5raa9avbqazy5hv5pi";
     };
 
-    doCheck = false;
 
   };
 
@@ -18855,7 +18578,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # tests fail, see https://github.com/matthewwithanm/pilkit/issues/9
-    doCheck = false;
 
     buildInputs = with self; [ pillow nose_progressive nose mock blessings ];
 
@@ -18919,7 +18641,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ pillow blessings ];
 
     # fails with obscure error
-    doCheck = !isPy3k;
 
     meta = {
       maintainers = with maintainers; [ iElectric ];
@@ -18935,7 +18656,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # 4 failing tests, 2to3
-    doCheck = false;
 
     buildInputs = with self; [ nose ];
     propagatedBuildInputs = with self; [ modules.curses ];
@@ -18958,7 +18678,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # strange setuptools error (can not import semantic.test)
-    doCheck = false;
 
     meta = with pkgs.stdenv.lib; {
       description = "Common Natural Language Processing Tasks for Python";
@@ -19008,7 +18727,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "efc44265bc27cb3d6ffed4fbf5733fc1";
     };
 
-    doCheck = false;
 
     meta = {
       description = "S-expression parser for Python";
@@ -19025,7 +18743,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "7af8df6c92d29ff927b6db0146bddec3";
     };
 
-    doCheck = false;
 
     meta = {
       description = "Python subprocess interface";
@@ -19075,7 +18792,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # error: invalid command 'test'
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ pkgs.xorg.libX11 pkgs.pythonDBus pygobject ];
 
@@ -19130,7 +18846,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Disabled due to an improper configuration error when tested against django. This looks like something broken in the test cases for sorl.
-    doCheck = false;
 
     meta = {
       homepage = http://sorl-thumbnail.readthedocs.org/en/latest/;
@@ -19153,7 +18868,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ meld3 ];
 
     # failing tests when building under chroot as root user doesn't exist
-    doCheck = false;
 
     meta = {
       description = "A system for controlling process state under UNIX";
@@ -19177,7 +18891,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
         --replace '/usr/' '${pkgs.bash}/'
     '';
 
-    doCheck = !isPyPy;
     checkPhase = ''
       ${python.interpreter} test_subprocess32.py
     '';
@@ -19198,7 +18911,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "c6871a784d24aba9270b6b28541537a57e2fcf4d7c799410eba18236bc76d6bc";
     };
 
-    doCheck = false;
 
     propagatedBuildInputs = with self; [
       alabaster
@@ -19249,7 +18961,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Check is disabled due to this issue:
     # https://bitbucket.org/pypa/setuptools/issue/137/typeerror-unorderable-types-str-nonetype
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/s/sphinxcontrib-httpdomain/${name}.tar.gz";
@@ -19312,7 +19023,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   sqlalchemy = self.sqlalchemy9.override rec {
     name = "SQLAlchemy-0.7.10";
     disabled = isPy34 || isPy35;
-    doCheck = !isPyPy;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/S/SQLAlchemy/${name}.tar.gz";
@@ -19331,7 +19041,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   sqlalchemy8 = self.sqlalchemy9.override rec {
     name = "SQLAlchemy-0.8.7";
     disabled = isPy34 || isPy35;
-    doCheck = !isPyPy;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/S/SQLAlchemy/${name}.tar.gz";
@@ -19355,7 +19064,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Test-only dependency pysqlite doesn't build on Python 3. This isn't an
     # acceptable reason to make all dependents unavailable on Python 3 as well
-    doCheck = !(isPyPy || isPy3k);
 
     checkPhase = ''
       ${python.executable} sqla_nose.py
@@ -19369,7 +19077,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
   sqlalchemy_1_0 = self.sqlalchemy9.override rec {
     name = "SQLAlchemy-1.0.10";
-    doCheck = !isPyPy;  # lots of tests fail
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/S/SQLAlchemy/${name}.tar.gz";
@@ -19398,7 +19105,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       py.test
       cd ..
     '';
-    doCheck = !isPyPy;  # failures due to sqla version mismatch
 
     meta = {
       homepage = https://github.com/crosspop/sqlalchemy-imageattach;
@@ -19445,7 +19151,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     version = "0.1.16";
 
     # the source wasn't transformed with 2to3 yet
-    doCheck = !isPy3k;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/s/sqlparse/${name}.tar.gz";
@@ -19484,7 +19189,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Many tests fail when using latest numpy and pandas.
     # See also https://github.com/statsmodels/statsmodels/issues/2602
-    doCheck = false;
   };
 
   python_statsd = buildPythonPackage rec {
@@ -19751,7 +19455,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ nose ];
 
     # Tests: cannot import common (relative import).
-    doCheck = false;
 
     meta = {
       description = "Pretty-print tabular data";
@@ -19823,7 +19526,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://taskcoach.org/;
@@ -19848,7 +19550,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # https://github.com/ralphbean/taskw/issues/98
-    doCheck = false;
 
     buildInputs = with self; [ nose pkgs.taskwarrior tox ];
     propagatedBuildInputs = with self; [ six dateutil pytz ];
@@ -19921,10 +19622,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     patchPhase = ''
       sed -i 's@python@${python.interpreter}@' .testr.conf
     '';
-    doCheck = ''
-      patchShebangs run_tests.sh
-      ./run_tests.sh
-    '';
 
     meta = {
       homepage = https://github.com/openstack/python-novaclient/;
@@ -19954,7 +19651,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
 
     # lots of "unhashable type" errors
-    doCheck = false;
   };
 
   testscenarios = buildPythonPackage rec {
@@ -20071,7 +19767,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       description = "A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges";
@@ -20091,7 +19786,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       description = "A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges";
@@ -20212,7 +19906,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ py virtualenv pluggy ];
 
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/t/tox/${name}.tar.gz";
@@ -20234,7 +19927,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     LC_ALL="en_US.UTF-8";
 
-    doCheck = false; # Many transient failures in performance tests and due to use of sleep
 
     meta = {
       description = "A Fast, Extensible Progress Meter";
@@ -20266,7 +19958,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # couple of failing tests
-    doCheck = false;
 
     PYTHON_EGG_CACHE = "`pwd`/.egg-cache";
 
@@ -20298,7 +19989,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     # https://github.com/enthought/traits/issues/187
     # https://github.com/enthought/traits/pull/188
     # Furthermore, some tests fail due to being in a chroot
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ numpy ];
 
@@ -20356,7 +20046,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
      };
 
      # tests fail, see http://hydra.nixos.org/build/4316603/log/raw
-     doCheck = false;
 
      propagatedBuildInputs = with self; [ zope_interface zope_testing ];
      meta = {
@@ -20431,7 +20120,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "4e8f1894e5aee522db6cb245ccbfde3c5d1aa08d31330c7e3af783b0e66eec23";
     };
 
-    doCheck = false;
 
     meta = {
       homepage = http://twiggy.wearpants.org;
@@ -20452,7 +20140,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "1m6b17irb9klc345k8174pni724jzy2973z2x2jg69h83hipjw2c";
     };
 
-    doCheck = false;
 
     meta = {
       description = "Twitter API library";
@@ -20532,7 +20219,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
      # test fail (timezone test fail)
-     doCheck = false;
 
     meta = with pkgs.stdenv.lib; {
       description = "Tzinfo object for the local timezone";
@@ -20551,7 +20237,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # No tests included
-    doCheck = false;
 
     # See for license
     # https://github.com/tytkal/python-hijiri-ummalqura/issues/4
@@ -20590,7 +20275,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # ImportError: No module named runtests
-    doCheck = false;
 
     meta = {
       description = "Drop-in replacement for Python2's stdlib csv module, with unicode support";
@@ -20609,7 +20293,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # # 1.0.0 and up create a circle dependency with traceback2/pbr
-    doCheck = false;
 
     patchPhase = ''
       # # fixes a transient error when collecting tests, see https://bugs.launchpad.net/python-neutronclient/+bug/1508547
@@ -20654,7 +20337,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ pbr linecache2 ];
     # circular dependencies for tests
-    doCheck = false;
 
     meta = {
       description = "A backport of traceback to older supported Pythons.";
@@ -20673,7 +20355,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     buildInputs = with self; [ pbr ];
     # circular dependencies for tests
-    doCheck = false;
 
     meta = with stdenv.lib; {
       description = "A backport of linecache to older supported Pythons.";
@@ -20695,7 +20376,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       urwid
     ];
 
-    doCheck = false;
 
     meta = {
       description = "Console UI for pass";
@@ -20714,7 +20394,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     propagatedBuildInputs = with self; [ requests2 ];
 
-    doCheck = false;
 
     meta = {
       description = "A python module that will check for package updates";
@@ -20733,7 +20412,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ pycurl ];
 
@@ -20750,7 +20428,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     name = "urwid-1.3.0";
 
     # multiple:  NameError: name 'evl' is not defined
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/u/urwid/${name}.tar.gz";
@@ -20833,7 +20510,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "1a74278b8adb383ce4c7619e33c753b1eb7b58dc1e449601c096ca4b76125f84";
     };
 
-    doCheck = false;
 
     #pythonPath = [ self.recursivePthLoader ];
 
@@ -20852,7 +20528,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [virtualenv];
 
     # needs tox to run the tests
-    doCheck = false;
 
     meta = {
       description = "Script to clone virtualenvs";
@@ -20940,7 +20615,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ requests2 ];
 
     # Tests disabled. They fail because they try to access the network
-    doCheck = false;
 
     meta = {
       description = "Vultr.com API Client";
@@ -20959,7 +20633,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       md5 = "da3f2e62b3676be5dd630703a68e2a04";
     };
 
-    doCheck = false;
 
     meta = {
        maintainers = with maintainers; [ garbas iElectric ];
@@ -20977,7 +20650,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       description = "Library for working with color names/values defined by the HTML and CSS specifications";
@@ -21016,7 +20688,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Checks fail due to missing tox.ini file:
-    doCheck = false;
 
     meta = {
       description = "Measures number of Terminal column cells of wide-character codes";
@@ -21133,7 +20804,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "729730a25f43a29ac6a79f08384ea18a3a125d07079492e15c3b3c2a3f090c37";
     };
 
-    doCheck = false;            # tests fail, not sure why
   };
 
   wheel = buildPythonPackage rec {
@@ -21200,7 +20870,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # circular dep on webtest
-    doCheck = false;
     propagatedBuildInputs = with self; [ six webob ];
 
     meta = {
@@ -21241,7 +20910,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = "http://home.blarg.net/~steveha/xe.html";
@@ -21258,7 +20926,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Tests require `pyutil' so disable them to avoid circular references.
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ pkgs.xorg.libX11 ];
 
@@ -21334,7 +21001,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Tests require `pyutil' so disable them to avoid circular references.
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ setuptoolsDarcs ];
 
@@ -21395,7 +21061,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = [ self.zconfig ];
 
     # too many deps..
-    doCheck = false;
 
     meta = {
       description = "A daemon process control library and tools for Unix-based systems";
@@ -21493,7 +21158,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # fails..
-    doCheck = false;
 
     meta = {
       homepage = https://pypi.python.org/pypi/zodbpickle;
@@ -21593,7 +21257,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
 
     # all tests fail
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/z/zope.browserresource/zope.browserresource-4.0.1.zip";
@@ -21615,7 +21278,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       zope_interface
     ];
 
-    doCheck = false;
   };
 
 
@@ -21644,7 +21306,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # a test is failing
-    doCheck = false;
 
     propagatedBuildInputs = with self; [
       zodb3 zope_broken zope_dottedname zope_publisher
@@ -21715,7 +21376,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
      propagatedBuildInputs = with self; [ zope_interface ];
 
      # circular deps
-     doCheck = false;
 
      meta = {
        description = "Exception interfaces and implementations";
@@ -21803,7 +21463,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sed -i '/zope.schema/d' setup.py
     '';
 
-    doCheck = false;
 
     meta = {
         maintainers = with maintainers; [ goibhniu ];
@@ -21822,7 +21481,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ zope_interface ];
 
     # circular deps
-    doCheck = false;
 
     meta = {
         maintainers = with maintainers; [ goibhniu ];
@@ -21902,7 +21560,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   zope_sqlalchemy = buildPythonPackage rec {
     name = "zope.sqlalchemy-0.7.5";
 
-    doCheck = !isPyPy; # https://github.com/zopefoundation/zope.sqlalchemy/issues/12
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/z/zope.sqlalchemy/${name}.zip";
@@ -21928,7 +21585,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "1yvglxhzvhl45mndvn9gskx2ph30zz1bz7rrlyfs62fv2pvih90s";
     };
 
-    doCheck = !isPyPy;
 
     propagatedBuildInputs = with self; [ zope_interface zope_exceptions zope_location ];
 
@@ -21972,7 +21628,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ zope_location zope_security zope_publisher transaction zope_tales ];
 
     # circular dependency on zope_browserresource
-    doCheck = false;
 
     meta = {
         maintainers = with maintainers; [ goibhniu ];
@@ -22005,7 +21660,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0yvhwdh8xx8rvaqd3pnnyb99hfa0zjdciadlc933p27hp9rf880p";
     };
     disabled = isPy3k || isPyPy;
-    doCheck = false;  # too many assumptions
 
     buildInputs = with self; [ nose ];
     propagatedBuildInputs = with self; [ hglib ];
@@ -22029,7 +21683,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ sphinx ];
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://liw.fi/cliapp/;
@@ -22046,7 +21699,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ cliapp ttystatus markdown ];
 
     # TODO: cmdtest tests must be run before the buildPhase
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = "http://code.liw.fi/debian/pool/main/c/cmdtest/cmdtest_0.18.orig.tar.xz";
@@ -22168,7 +21820,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ libarchive ];
 
     # tests are still failing
-    doCheck = false;
   };
 
 
@@ -22212,7 +21863,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "0nyqb0v8yrkqnrqsh1hlhvzr2pyvkxvkw701p3gpsvk29c0gb5n6";
     };
 
-    doCheck = false;  # some tests use networking
 
     buildInputs = with self; [ mock unittest2 ];
     propagatedBuildInputs = with self; [ requests ];
@@ -22250,7 +21900,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "1pjrw7xhhqx7h4s08h1lsaa499r2ymc41zdknjimn6zlqdjdk1fb";
     };
 
-    doCheck = false;
     buildInputs = [ self.testfixtures ];
     propagatedBuildInputs = with self; [ cornice mozsvc pybrowserid tokenlib ];
 
@@ -22277,7 +21926,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     # Test suite seems broken
     # TypeError: TestSuite() missing 1 required positional argument: 'm'
     # Haven't checked with newer version
-    doCheck = false;
 
     meta = with stdenv.lib; {
       homepage = "https://github.com/Simplistix/testfixtures";
@@ -22313,7 +21961,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ sphinx ];
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://liw.fi/tracing/;
@@ -22350,7 +21997,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ sphinx ];
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://liw.fi/ttystatus/;
@@ -22372,7 +22018,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     propagatedBuildInputs = with self; [ tracing ttystatus cliapp ];
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://liw.fi/larch/;
@@ -22411,7 +22056,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ routes markupsafe webob nose ];
 
     # TODO: failing tests https://bitbucket.org/bbangert/webhelpers/pull-request/1/fix-error-on-webob-123/diff
-    doCheck = false;
 
     meta = {
       maintainers = with maintainers; [ garbas iElectric ];
@@ -22447,7 +22091,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://graphite.wikidot.com/;
@@ -22598,7 +22241,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
   versiontools = buildPythonPackage rec {
     name = "versiontools-1.9.1";
-    doCheck = (!isPy3k);
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/v/versiontools/${name}.tar.gz";
@@ -22649,7 +22291,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # error: invalid command 'test'
-    doCheck = false;
 
     meta = {
       homepage = http://graphite.wikidot.com/;
@@ -22784,7 +22425,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # There are no tests
-    doCheck = false;
 
     meta = {
       homepage    = http://pyspotify.mopidy.com;
@@ -22807,7 +22447,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # There are no tests
-    doCheck = false;
 
     meta = {
       homepage = http://www.pykka.org;
@@ -22833,7 +22472,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # Tests depend on other packages
-    doCheck = false;
 
     meta = {
       homepage = https://ws4py.readthedocs.org;
@@ -22853,7 +22491,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # Fails with "error: invalid command 'test'"
-    doCheck = false;
 
     meta = {
       homepage = https://code.google.com/p/gdata-python-client/;
@@ -23067,7 +22704,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     '';
 
     # tests require dbusmock
-    doCheck = false;
 
     meta = {
       description = "Removable disk automounter for udisks";
@@ -23107,7 +22743,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
     buildInputs = with pkgs; [ cmake ];
     # no test data
-    doCheck = false;
     preConfigure = ''
       mkdir build
       cd build
@@ -23148,7 +22783,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # no tests available
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ pygobject3 dbus ];
 
@@ -23170,7 +22804,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # no tests available
-    doCheck = false;
 
     propagatedBuildInputs = with self; [ pygtk pywebkitgtk pyyaml chardet ];
 
@@ -23220,7 +22853,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # No tests included
-    doCheck = false;
   };
 
 
@@ -23233,7 +22865,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # No tests
-    doCheck = false;
 
     meta = {
       description = "Collection of fancy functional tools focused on practicality";
@@ -23250,7 +22881,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       url = https://pypi.python.org/packages/source/b/boto/boto-2.30.0.tar.gz;
       sha256 = "12gl8azmx1vv8dbv9jhnsbhjpc2dd1ng0jlbcg734k6ggwq1h6hh";
     };
-    doCheck = false;
     meta = {
       homepage = https://github.com/boto/boto;
       license = licenses.mit;
@@ -23282,7 +22912,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       maintainers = [ "Russell O'Connor <oconnorr@google.com>" ];
       license = licenses.asl20;
     };
-    doCheck = false;
 
     src = pkgs.fetchurl {
       url = https://pypi.python.org/packages/source/g/gsutil/gsutil-4.6.tar.gz;
@@ -23304,7 +22933,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       sha256 = "1fv85x2bz442iyxsvka2g75zibjcq48gp2fc7szaqcfqxq42syy9";
     };
 
-    doCheck = false;
 
     meta = {
       homepage = https://github.com/garbas/pypi2nix;
@@ -23373,7 +23001,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     ];
     buildInputs = with self; [ testfixtures unittest2  ];
 
-    #doCheck = false; # lazy packager
   };
 
   WSGIProxy = buildPythonPackage rec {
@@ -23700,7 +23327,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 	};
 
 	# ImportError: No module named tests
-	doCheck = false;
 
 	propagatedBuildInputs = with self; [ ofxhome ofxparse beautifulsoup keyring argparse ];
   };
@@ -23715,7 +23341,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 	buildInputs = with self; [ nose ];
 
 	# ImportError: No module named tests
-	doCheck = false;
 
     meta = {
       homepage = "https://github.com/captin411/ofxhome";
@@ -23776,7 +23401,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # The 'check' target is not supported by the `setup.py` script.
     # TODO : do the post install checks (`cd examples && ${python.interpreter} run_all.py`)
-    doCheck = false;
 
     meta = {
       homepage = "http://matplotlib.org/basemap/";
@@ -23872,7 +23496,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
 
     # No tests. Breaks when not disabling.
-    doCheck = false;
 
     meta = {
       description = "Python bindings for the Apache Thrift RPC system";
@@ -23897,7 +23520,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     /* build with tests fails with "Can not create application dirictory :
      /homeless-shelter/.geeknotebuilder". */
-    doCheck = false;
 
     propagatedBuildInputs = with self; [
         thrift
@@ -24017,7 +23639,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     };
     disabled = isPyPy;
     # Wants to set up Django
-    doCheck = false;
     propagatedBuildInputs = with self; [ django_1_9 smartypants jinja2 ];
     meta = {
       description = "Filters to enhance web typography, including support for Django & Jinja templates";
@@ -24331,7 +23952,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   ovh = buildPythonPackage rec {
     name = "ovh-${version}";
     version = "0.3.5";
-    doCheck = false; #test needs packages too explicit
     buildInputs = with self; [ d2to1 ];
     propagatedBuildInputs = with self; [ requests2 ];
 
@@ -24362,7 +23982,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # Test data is not included
     # https://github.com/torchbox/Willow/issues/34
-    doCheck = false;
 
     meta = {
       description = "A Python image library that sits on top of Pillow, Wand and OpenCV";
@@ -24376,7 +23995,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     simpleName = "importmagic";
     name = "${simpleName}-${version}";
     version = "0.1.3";
-    doCheck = false;  # missing json file from tarball
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/i/${simpleName}/${name}.tar.gz";
@@ -24429,7 +24047,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
     # No tests included
     # https://github.com/redacted/XKCD-password-generator/issues/32
-    doCheck = false;
 
     meta = {
       homepage = https://pypi.python.org/pypi/xkcdpass/;
@@ -24649,7 +24266,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ ecdsa mnemonic ];
 
     # There are no actual tests: "ImportError: No module named tests"
-    doCheck = false;
 
     meta = {
       description = "Python library for communicating with TREZOR Bitcoin Hardware Wallet";
@@ -24673,7 +24289,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
     buildInputs = with self; [ ecdsa mnemonic ];
 
     # There are no actual tests: "ImportError: No module named tests"
-    doCheck = false;
 
     meta = {
       description = "KeepKey Python client";

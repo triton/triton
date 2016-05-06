@@ -39,7 +39,6 @@ let self = _self // overrides; _self = with self; {
       platforms   = platforms.all;
     };
     # tests fails on nixos and hydra because of different purity issues
-    doCheck = false;
   };
 
   AlgorithmAnnotate = buildPerlPackage {
@@ -263,7 +262,6 @@ let self = _self // overrides; _self = with self; {
       patchShebangs .
     '';
 
-    doCheck = false;
 
     meta = {
       description = "Manage perl installations in your $HOME";
@@ -289,7 +287,6 @@ let self = _self // overrides; _self = with self; {
       StringShellQuote SubExporter TemplateTiny Throwable TryTiny TypeTiny URI
       URIdb libintlperl namespaceautoclean
     ];
-    doCheck = false;  # Can't find home directory.
     meta = {
       homepage = http://sqitch.org/;
       description = "Sane database change management";
@@ -317,7 +314,6 @@ let self = _self // overrides; _self = with self; {
     };
     buildInputs = [ TestFatal ];
     propagatedBuildInputs = [ ParamsValidate ];
-    doCheck = false;
     meta = {
       homepage = http://metacpan.org/release/Attribute-Params-Validate;
       description = "Define validation through subroutine attributes";
@@ -374,7 +370,6 @@ let self = _self // overrides; _self = with self; {
       url = "http://search.cpan.org/CPAN/authors/id/P/PH/PHRED/${name}.tar.gz";
       sha256 = "1y00ck1ihrd7jsvwkzsxhlzxi394dhh9c3kh9wa67javxv53r7qh";
     };
-    doCheck = false;
   };
 
   AuthenDecHpwd = buildPerlPackage rec {
@@ -674,7 +669,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "1s6i670dc3yb6ngvdk48y6szdk5n1f4icdcjv2vi1l2xp9fzviyj";
     };
     propagatedBuildInputs = [ DigestSHA1 Error IPCShareLite ];
-    doCheck = false; # randomly fails
   };
 
   CacheFastMmap = buildPerlPackage rec {
@@ -720,7 +714,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "1zykapgl9lxnlx79xfghzb26qimhry94xfxfyswwfhra1ywd9yyg";
     };
     propagatedBuildInputs = [ TimeDate DBFile DigestSHA1 FileNFSLock HeapFibonacci IOString ];
-    doCheck = false; # can time out
     meta = {
       maintainers = with maintainers; [ ocharles ];
       platforms   = stdenv.lib.platforms.all;
@@ -1044,7 +1037,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "0hqvckaw91q5yc25a33bp0d4qqxlgkp7rxlvi8n8svxd1406r55s";
     };
     propagatedBuildInputs = [ CatalystRuntime DateTime Moose namespaceautoclean ];
-    doCheck = false;
     meta = {
       description = "Request logging from within Catalyst";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
@@ -1462,7 +1454,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "98263afcc9f5d88c7cbbd39651c5431b434c1c815fe284962d887ed7be3a1dd3";
     };
     propagatedBuildInputs = [ FCGI if_ ];
-    doCheck = false;
     meta = {
       homepage = https://metacpan.org/module/CGI::Fast;
       license = "perl";
@@ -2093,7 +2084,6 @@ let self = _self // overrides; _self = with self; {
     };
     buildInputs = [ DateTime PathClass ];
     propagatedBuildInputs = [ ConfigStd GitPurePerl Moose ];
-    doCheck = false;
     meta = {
       description = "Simple, versioned access to configuration data";
       license = "perl";
@@ -2269,7 +2259,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "195v3lrfjzqxfiqi1zp02xmhp6mg9y3p7abmlfk2nj1rb28p0yrl";
     };
     buildInputs = [ JSONPP ];
-    doCheck = true;
     meta = {
       homepage = https://github.com/dagolden/CPAN-Meta-YAML;
       description = "Read and write a subset of YAML for CPAN Meta files";
@@ -2297,7 +2286,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "1mz20qlk0wjl4mwi4b9nji4hyh9a0l7m1v5bmypwwmhzpac5rq5c";
     };
     propagatedBuildInputs = [ ArchiveExtract LogMessage ModulePluggable ObjectAccessor PackageConstants ];
-    doCheck = false;
     meta = {
       homepage = http://github.com/jib/cpanplus-devel;
       description = "Ameliorated interface to the CPAN";
@@ -2846,7 +2834,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "14yvbgy9n8icwlm5zi86lskvxd6nsl42i1g9f5dwdaw9my463diy";
     };
     propagatedBuildInputs = [CarpClan BitVector];
-    doCheck = false; # some of the checks rely on the year being <2015
     meta = {
       maintainers = with maintainers; [ ocharles ];
       platforms   = stdenv.lib.platforms.all;
@@ -3446,7 +3433,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/H/HA/HAKANARDO/DBIx-HTMLView-LATEST.tar.gz;
       sha256 = "b1af44cba329a8f583d174c5e82a7a2e91fe4f3a35cc38cbf028449578114dfa";
     };
-    doCheck = false;
   };
 
   DBIxSearchBuilder = buildPerlPackage {
@@ -3735,7 +3721,6 @@ let self = _self // overrides; _self = with self; {
       description = "Distribution builder; installer not included!";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
     };
-    doCheck = false;
   };
 
   DistZillaPluginBundleTestingMania = buildPerlPackage {
@@ -4201,7 +4186,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "0vpqgbr5bj4bvrd7c2fh9hs1mz0m6nfybl2rdn5yb4h67bmxfkbp";
     };
     propagatedBuildInputs = [MailTools NetDNS];
-    doCheck = false;
   };
 
   Encode = buildPerlPackage {
@@ -4789,7 +4773,6 @@ let self = _self // overrides; _self = with self; {
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
     };
     preCheck = "export HOME=$TMPDIR";
-    doCheck = true;
   };
 
   FileKeePass = buildPerlPackage rec {
@@ -4836,7 +4819,6 @@ let self = _self // overrides; _self = with self; {
       url = "mirror://cpan/modules/by-module/File/${name}.tar.gz";
       sha256 = "006i9idnxv9hsz1gykc5bqs05ma5wz9dsjrpmah9293bgdy1ccxj";
     };
-    doCheck = false; # Failed test 'desktop file is the right one'
     propagatedBuildInputs = [ FileBaseDir FileDesktopEntry ];
   };
 
@@ -5082,7 +5064,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/M/MO/MOB/Forks-Super-0.72.tar.gz;
       sha256 = "0zyqwyndb3gnbsh43b6xyl3wmlnyi18vz3yrbsvp3lccz4d0v7qp";
     };
-    doCheck = false;
     meta = {
       description = "Extensions and convenience methods to manage background processes";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
@@ -5095,7 +5076,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/I/IL/ILYAZ/modules/FreezeThaw-0.5001.tar.gz;
       sha256 = "0h8gakd6b9770n2xhld1hhqghdar3hrq2js4mgiwxy86j4r0hpiw";
     };
-    doCheck = false;
   };
 
   GamesSolitaireVerify = buildPerlModule {
@@ -5128,7 +5108,6 @@ let self = _self // overrides; _self = with self; {
     patches = [ ../development/perl-modules/gd-options-passthrough-and-fontconfig.patch ];
 
     # tests fail
-    doCheck = false;
 
     makeMakerFlags = "--lib_png_path=${pkgs.libpng} --lib_jpeg_path=${pkgs.libjpeg} --lib_zlib_path=${pkgs.zlib} --lib_ft_path=${pkgs.freetype} --lib_fontconfig_path=${pkgs.fontconfig} --lib_xpm_path=${pkgs.xorg.libXpm}";
   };
@@ -5153,7 +5132,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "0qinkq2br1cjicbgqb5bvrhm73h7f9f4fgc6bjfs5r6x7316bdqf";
     };
     makeMakerFlags = "LIBS=-L${pkgs.geoip}/lib INC=-I${pkgs.geoip}/include";
-    doCheck = false; # seems to access the network
   };
 
   GetoptLong = buildPerlPackage rec {
@@ -5188,7 +5166,6 @@ let self = _self // overrides; _self = with self; {
     };
     buildInputs = [ Testutf8 ];
     propagatedBuildInputs = [ ConfigGitLike DataStreamBulk DateTime FileFindRule IODigest Moose MooseXStrictConstructor MooseXTypesPathClass namespaceautoclean ];
-    doCheck = false;
     meta = {
       description = "A Pure Perl interface to Git repositories";
       license = "perl";
@@ -5230,7 +5207,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "f73effe3ea7afa1907ce8977c87387abb0d4404f85a724ae2637b29a73154a9b";
     };
     propagatedBuildInputs = [ mod_perl2 DBI HTTPMessage LWP URI ];
-    doCheck = false; # no make target 'test'
     meta = {
       description = "HTTP transport for DBI stateless proxy driver DBD::Gofer";
     };
@@ -5508,7 +5484,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "1hn9shhbsi4pdp396ia2hky3i0imnxgwvhy57gp0jjhy5qyvafvm";
     };
     # a single test is failing on perl 5.20
-    doCheck = false;
     buildInputs = [ FileShareDirInstall PadWalker TestDifferences TestException TestMemoryCycle ];
     propagatedBuildInputs = [ ClassLoad DataClone DateTime DateTimeFormatStrptime EmailValid FileShareDir HTMLTree JSON ListAllUtils Moose MooseXGetopt MooseXTypes MooseXTypesCommon MooseXTypesLoadableClass SubExporter SubName TryTiny aliased namespaceautoclean ];
     meta = {
@@ -5704,7 +5679,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/C/CF/CFRANKS/HTML-Widget-1.11.tar.gz;
       sha256 = "02w21rd30cza094m5xs9clzw8ayigbhg2ddzl6jycp4jam0dyhmy";
     };
-    doCheck = false;
     propagatedBuildInputs = [
       TestNoWarnings ClassAccessor ClassAccessorChained
       ClassDataAccessor ModulePluggableFast HTMLTree
@@ -5842,7 +5816,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/J/JE/JESSE/HTTP-Server-Simple-0.44.tar.gz;
       sha256 = "05klpfkss2a6i5ihmvcm27fyar0f2v4ispg2f49agab3va1gix6g";
     };
-    doCheck = false;
     meta = {
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
     };
@@ -5919,7 +5892,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "15fa4hpw2rqg2iadyz10rnv99hns78wph5qlh3257a3mbfjjyyla";
     };
     propagatedBuildInputs = [IOSocketSSL URIIMAP];
-    doCheck = false; # nondeterministic
   };
 
   ImportInto = buildPerlPackage {
@@ -5941,7 +5913,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/G/GB/GBARR/IO-1.25.tar.gz;
       sha256 = "89790db8b9281235dc995c1a85d532042ff68a90e1504abd39d463f05623e7b5";
     };
-    doCheck = false;
     meta = {
       description = "Perl core IO modules";
       license = "perl";
@@ -5985,7 +5956,6 @@ let self = _self // overrides; _self = with self; {
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
       platforms = stdenv.lib.platforms.linux;
     };
-    doCheck = true;
   };
 
   IODigest = buildPerlPackage {
@@ -6045,7 +6015,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "08ad24f58335ce9696666e4411b2f3cd9c2e1fb72b306b6018c1a13971361ced";
     };
     propagatedBuildInputs = [ TermReadKey Want ];
-    doCheck = false; # needs access to /dev/tty
     meta = {
       description = "Interactively prompt for user input";
     };
@@ -6058,7 +6027,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "1fqypz6qa5rw2d5y2zq7f49frwra0aln13nhq5gi514j2zx21q45";
     };
     propagatedBuildInputs = [Socket6];
-    doCheck = false;
   };
 
   IOSocketSSL = buildPerlPackage {
@@ -6073,7 +6041,6 @@ let self = _self // overrides; _self = with self; {
       description = "Nearly transparent SSL encapsulation for IO::Socket::INET";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
     };
-    doCheck = false; # tries to connect to facebook.com etc.
   };
 
   IOSocketTimeout = buildPerlPackage rec {
@@ -6146,7 +6113,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/T/TO/TODDR/IPC-Run-0.92.tar.gz;
       sha256 = "1lj6kmr8rs6na77b3v673vvw6qsr511bmhgf257x4xqmvxnv91p1";
     };
-    doCheck = false; /* attempts a network connection to localhost */
     meta = {
       homepage = http://search.cpan.org/perldoc?CPAN::Meta::Spec;
       description = "System() and background procs w/ piping, redirs, ptys (Unix, Win32)";
@@ -6288,7 +6254,6 @@ let self = _self // overrides; _self = with self; {
     makeMakerFlags = "J2SDK=${pkgs.jdk}";
 
     # FIXME: Apparently tests want to access the network.
-    doCheck = false;
 
     meta = {
       description = "Inline::Java -- Write Perl classes in Java";
@@ -6427,7 +6392,6 @@ let self = _self // overrides; _self = with self; {
       cp -r $out/$out/. $out/.
       rm -r $out/nix
       '';
-    doCheck = false; # test would need to start apache httpd
     meta = {
       license = stdenv.lib.licenses.asl20;
     };
@@ -6563,7 +6527,6 @@ let self = _self // overrides; _self = with self; {
       url = "mirror://cpan/modules/by-module/Lingua/${name}.tar.gz";
       sha256 = "12avh2mnnc7llmmshrr5bgb473fvydxnlqrqbl2815mf2dp4pxcg";
     };
-    doCheck = false;
   };
 
   LinuxDistribution = buildPerlPackage {
@@ -6574,7 +6537,6 @@ let self = _self // overrides; _self = with self; {
     };
     # The tests fail if the distro it's built on isn't in the supported list.
     # This includes NixOS.
-    doCheck = false;
     meta = {
       description = "Perl extension to detect on which Linux distribution we are running";
       license = "perl";
@@ -6924,7 +6886,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "0agnga5dg94222h6rlzqxa0dri2sh3gayncvfb7jad9nxr87gxhy";
     };
     propagatedBuildInputs = [ LWP IOSocketSSL ];
-    doCheck = false; # tries to connect to https://www.apache.org/.
     meta = {
       description = "Provide https support for LWP::UserAgent";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
@@ -6972,7 +6933,6 @@ let self = _self // overrides; _self = with self; {
     # Tests require network connectivity
     # https://rt.cpan.org/Public/Bug/Display.html?id=63966 is the bug upstream,
     # which doesn't look like it will get fixed anytime soon.
-    doCheck = false;
   };
 
   LWPxParanoidAgent = buildPerlPackage rec {
@@ -6981,7 +6941,6 @@ let self = _self // overrides; _self = with self; {
       url = "mirror://cpan/authors/id/S/SA/SAXJAZMAN/lwp/${name}.tar.gz";
       sha256 = "0i306p7mdqx09qfsf6b3rnn5xw9v9r3md4swlbk9z0mskjl0l4w4";
     };
-    doCheck = false; # 3 tests fail, probably because they try to connect to the network
     propagatedBuildInputs = [ LWP NetDNS ];
   };
 
@@ -6996,7 +6955,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "1wd6mab4fp47v1nh85jfxsjmysnyv5mwvfv47cn5m2h2lb1s0piw";
     };
     propagatedBuildInputs = [ CryptOpenSSLRSA NetDNS MailTools ];
-    doCheck = false; # tries to access the domain name system
   };
 
   MailIMAPClient = buildPerlPackage {
@@ -7048,7 +7006,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "05bg10gg3ksn4h08yyyj7f31rqhdqap8d0jsbq61b3x0274wml0s";
     };
     buildInputs = [ pkgs.gmp ];
-    doCheck = false;
     NIX_CFLAGS_COMPILE = "-I${pkgs.gmp}/include";
     NIX_CFLAGS_LINK = "-L${pkgs.gmp}/lib -lgmp";
   };
@@ -7324,7 +7281,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/L/LE/LEONT/Module-Build-Deprecated-0.4210.tar.gz;
       sha256 = "be089313fc238ee2183473aca8c86b55fb3cf44797312cbe9b892d6362621703";
     };
-    doCheck = false;
     meta = {
       description = "A collection of modules removed from Module-Build";
       license = "perl";
@@ -7640,7 +7596,6 @@ let self = _self // overrides; _self = with self; {
     };
     makeMakerFlags = "MP_AP_DESTDIR=$out";
     buildInputs = [ pkgs.apacheHttpd ];
-    doCheck = false; # would try to start Apache HTTP server
     meta = {
       description = "Embed a Perl interpreter in the Apache HTTP server";
     };
@@ -8451,7 +8406,6 @@ let self = _self // overrides; _self = with self; {
     };
     # Build.PL in this package uses which to find pkg-config -- make it use path instead
     patchPhase = ''sed -ie 's/`which pkg-config`/"pkg-config"/' Build.PL'';
-    doCheck = false; # The main test performs network access
     #buildInputs = [ TestMore TestPod ];
     buildInputs = [ pkgs.pkgconfig ];
     propagatedBuildInputs = [ pkgs.libdiscid ];
@@ -8464,7 +8418,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "1gg62x6qv4jj73jsqh0sb237k96i22blj29afpbp1scp3m7i5g61";
     };
     propagatedBuildInputs = [ XMLLibXML LWP ClassAccessor URI ];
-    doCheck = false; # Test performs network access.
   };
 
   namespaceautoclean = buildPerlPackage rec {
@@ -8566,7 +8519,6 @@ let self = _self // overrides; _self = with self; {
       ];
     propagatedBuildInputs =
       [ DigestHMAC LWP LWPProtocolHttps Moose URI ParamsValidate XMLSimple ];
-    doCheck = false; # wants to create actual EC2 instances (for $$$)
   };
 
   NetAmazonMechanicalTurk = buildPerlPackage rec {
@@ -8623,7 +8575,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/C/CH/CHIPS/Net-AMQP-0.06.tar.gz;
       sha256 = "0b2ba7de2cd7ddd5fe102a2e2ae7aeba21eaab1078bf3bfd3c5a722937256380";
     };
-    doCheck = false; # failures on 32bit
     buildInputs = [ TestDeep ];
     propagatedBuildInputs = [ ClassAccessor ClassDataInheritable XMLLibXML ];
     meta = {
@@ -8681,7 +8632,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "0clwl4nqzg23d6l9d9gc8ijl1lbghhfrbavjlvhd1wll5r8ayr7g";
     };
     propagatedBuildInputs = [NetIP DigestHMAC];
-    doCheck = false;
   };
 
   NetHTTP = buildPerlPackage {
@@ -8765,7 +8715,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/R/RH/RHANDOM/Net-Server-2.007.tar.gz;
       sha256 = "0a03m237cw6j5bvm2yxk2b2gbfx7wj0w2x5zivi9ddqvbcad6vqw";
     };
-    doCheck = false; # seems to hang waiting for connections
     meta = {
       description = "Extensible, general Perl server engine";
     };
@@ -8778,7 +8727,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "01f3l4aj3ynl8syyrl122k4bmfds77yw5q36aafrgaq22fnb3b2a";
     };
     patchPhase = "chmod a-x Configure";
-    doCheck = false; # The test suite fails, because it requires network access.
   };
 
   NetSMTPSSL = buildPerlPackage {
@@ -8814,7 +8762,6 @@ let self = _self // overrides; _self = with self; {
       url = "mirror://cpan/authors/id/D/DT/DTOWN/Net-SNMP-v6.0.1.tar.gz";
       sha256 = "0hdpn1cw52x8cw24m9ayzpf4rwarm0khygn1sv3wvwxkrg0pphql";
     };
-    doCheck = false; # The test suite fails, see https://rt.cpan.org/Public/Bug/Display.html?id=85799
   };
 
   NetSSLeay = buildPerlPackage rec {
@@ -8825,7 +8772,6 @@ let self = _self // overrides; _self = with self; {
     };
     buildInputs = [ pkgs.openssl ];
     OPENSSL_PREFIX = pkgs.openssl;
-    doCheck = false; # Test performs network access.
     meta = {
       description = "Perl extension for using OpenSSL";
       license = "SSLeay";
@@ -8839,7 +8785,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "032gyn1h3r5d83wvz7nj3k7g50wcf73lbbmjc18466ml90vigys0";
     };
     propagatedBuildInputs = [ CryptSSLeay LWPUserAgent NetOAuth URI ];
-    doCheck = false;
     meta = {
       homepage = http://github.com/semifor/Net-Twitter-Lite;
       description = "A perl interface to the Twitter API";
@@ -8938,7 +8883,6 @@ let self = _self // overrides; _self = with self; {
       perl Makefile.PL PREFIX=$out INSTALLDIRS=site $makeMakerFlags
     '';
 
-    doCheck = false;
   };
 
   NetOpenIDCommon = buildPerlPackage rec {
@@ -9172,7 +9116,6 @@ let self = _self // overrides; _self = with self; {
       '';
     # This appears to be currently failing tests, though I don't know why.
     # -- ocharles
-    doCheck = false;
   };
 
   PathTools = buildPerlPackage {
@@ -9193,7 +9136,6 @@ let self = _self // overrides; _self = with self; {
     nativeBuildInputs = [ pkgs.pkgconfig ];
     NIX_CFLAGS_LINK = "-L${pkgs.pcsclite}/lib -lpcsclite";
     # tests fail; look unfinished
-    doCheck = false;
     meta = {
       homepage = http://ludovic.rousseau.free.fr/softwares/pcsc-perl/;
       description = "Communicate with a smart card using PC/SC";
@@ -9308,7 +9250,6 @@ let self = _self // overrides; _self = with self; {
       ''
         sed -i -e 's|my \$INC_magick = .*|my $INC_magick = "-I${pkgs.imagemagick}/include/ImageMagick";|' Makefile.PL
       '';
-    doCheck = false;
   };
 
   PerlOSType = buildPerlPackage rec {
@@ -9950,7 +9891,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "0spci3sj2hq9k916sk9k2gchqrbnz9lwmlcnwf1k33wzl8j2gh52";
     };
     propagatedBuildInputs = [LWP XMLLibXML XMLParser];
-    doCheck = false;
   };
 
   ReturnValue = buildPerlPackage {
@@ -10385,7 +10325,6 @@ let self = _self // overrides; _self = with self; {
     };
     buildInputs = [ LWP ModuleBuildTiny TestRequires ];
     propagatedBuildInputs = [ DataDump HTTPDate HTTPMessage HTTPParserXS NetServer Plack TestTCP ];
-    doCheck = false; # binds to various TCP ports
     meta = {
       inherit version;
       homepage = https://github.com/miyagawa/Starman;
@@ -10815,7 +10754,6 @@ let self = _self // overrides; _self = with self; {
       url = "mirror://cpan/authors/id/C/CH/CHORNY/Switch-2.17.tar.gz";
       sha256 = "0xbdjdgzfj9zwa4j3ipr8bfk7bcici4hk89hq5d27rhg2isljd9i";
     };
-    doCheck = false;                             # FIXME: 2/293 test failures
   };
 
   SymbolGlobalName = buildPerlPackage {
@@ -10875,7 +10813,6 @@ let self = _self // overrides; _self = with self; {
       url = "mirror://cpan/authors/id/S/SC/SCOTT/${name}.tar.gz";
       sha256 = "0hy1225zg2yg11xhgj0wbiapzjyf6slx17ln36zqvfm07k6widlx";
     };
-    doCheck = false; # no `hostname' in stdenv
     meta = {
       platforms = stdenv.lib.platforms.linux;
     };
@@ -11185,7 +11122,6 @@ let self = _self // overrides; _self = with self; {
       '';
 
     # Tests don't work because they require /dev/tty.
-    doCheck = false;
   };
 
   TermShellUI = buildPerlPackage rec {
@@ -11511,7 +11447,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/L/LE/LEONT/Test-Harness-3.33.tar.gz;
       sha256 = "c22e36287d5cee3c28fd2006e3c8b6e7cc76c6fc39d79c7ab74f1936d35e8fe2";
     };
-    doCheck = false; # makes assumptions about path to Perl
     meta = {
       homepage = http://testanything.org/;
       description = "Run Perl standard test scripts with statistics";
@@ -11996,7 +11931,6 @@ let self = _self // overrides; _self = with self; {
       url = "mirror://cpan/authors/id/J/JJ/JJNAPIORK/${name}.tar.gz";
       sha256 = "0nhhfrrai3ndziz873vpa1j0vljjnib4wqafd6yyvkf58ad7v0lv";
     };
-    doCheck = false; # listens on an external port
     propagatedBuildInputs = [ CatalystRuntime LWP Moose namespaceclean
       TestWWWMechanize WWWMechanize ];
     meta = {
@@ -12345,7 +12279,6 @@ let self = _self // overrides; _self = with self; {
 
     # In a NixOS chroot build, the tests fail because the font configuration
     # at /etc/fonts/font.conf is not available.
-    doCheck = false;
 
     propagatedBuildInputs = [ TestException IOStringy ClassAccessor Readonly
       ListMoreUtils TestPod TestPodCoverage GraphViz ReadonlyXS
@@ -12752,7 +12685,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/M/MU/MUIR/modules/Time-ParseDate-2015.103.tar.gz;
       sha256 = "2c1a06235bf811813caac9eaa9daa71af758667cdf7b082cb59863220fcaeed1";
     };
-    doCheck = false;
     meta = {
       description = "Parse and format time values";
       license = "unknown";
@@ -12770,7 +12702,6 @@ let self = _self // overrides; _self = with self; {
     configurePhase = ''
       perl Makefile.PL PREFIX=$out $makeMakerFlags
     '';
-    doCheck = false;
     meta ={
       homepage = "http://search.cpan.org/~srezic/Tk-804.032/Tk.pod";
       license = stdenv.lib.licenses.tcltk;
@@ -13104,7 +13035,6 @@ let self = _self // overrides; _self = with self; {
       ''
         substituteInPlace Makefile.PL --replace '"cpp"' '"gcc -E"'
       '';
-    doCheck = false; # performs network access
   };
 
   WWWMechanize = buildPerlPackage {
@@ -13114,7 +13044,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "1zrw8aadhwy48q51x2z2rqlkwf17bya4j4h3hy89mw783j96rmg9";
     };
     propagatedBuildInputs = [ HTMLForm HTMLParser HTMLTree HTTPDaemon HTTPMessage HTTPServerSimple LWP LWPUserAgent TestWarn URI ];
-    doCheck = false;
     meta = {
       homepage = https://github.com/bestpractical/www-mechanize;
       description = "Handy web browsing in a Perl object";
@@ -13186,7 +13115,6 @@ let self = _self // overrides; _self = with self; {
     propagatedBuildInputs = [ ExtUtilsXSpp AlienWxWidgets ];
     # Testing requires an X server:
     #   Error: Unable to initialize GTK+, is DISPLAY set properly?"
-    doCheck = false;
   };
 
   WxGLCanvas = buildPerlPackage rec {
@@ -13196,7 +13124,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "1q4gvj4gdx4l8k4mkgiix24p9mdfy1miv7abidf0my3gy2gw5lka";
     };
     propagatedBuildInputs = [ Wx OpenGL pkgs.mesa_glu ];
-    doCheck = false;
   };
 
   X11IdleTime = buildPerlPackage rec {
@@ -13221,7 +13148,6 @@ let self = _self // overrides; _self = with self; {
     };
     buildInputs = [pkgs.xlibsWrapper];
     NIX_CFLAGS_LINK = "-lX11";
-    doCheck = false; # requires an X server
   };
 
   X11GUITest = buildPerlPackage rec {
@@ -13232,7 +13158,6 @@ let self = _self // overrides; _self = with self; {
     };
     buildInputs = [pkgs.xlibsWrapper pkgs.xorg.libXtst pkgs.xorg.libXi];
     NIX_CFLAGS_LINK = "-lX11 -lXext -lXtst";
-    doCheck = false; # requires an X server
   };
 
   X11XCB = buildPerlPackage rec {
@@ -13249,7 +13174,6 @@ let self = _self // overrides; _self = with self; {
     ];
     propagatedBuildInputs = [ XSObjectMagic Mouse MouseXNativeTraits TryTiny ];
     NIX_CFLAGS_LINK = [ "-lxcb" "-lxcb-util" "-lxcb-xinerama" "-lxcb-icccm" ];
-    doCheck = false; # requires an X server
     meta = {
       description = "XCB bindings for X";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
@@ -13285,7 +13209,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/R/RB/RBERJON/XML-Filter-BufferText-1.01.tar.gz;
       sha256 = "8fd2126d3beec554df852919f4739e689202cbba6a17506e9b66ea165841a75c";
     };
-    doCheck = false;
   };
 
   XMLFilterXInclude = buildPerlPackage {
@@ -13294,7 +13217,6 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/M/MS/MSERGEANT/XML-Filter-XInclude-1.0.tar.gz;
       sha256 = "98746f3c1f6f049491fec203d455bb8f8c9c6e250f041904dda5d78e21187f93";
     };
-    doCheck = false;
   };
 
   XMLLibXML = buildPerlPackage rec {
@@ -13474,7 +13396,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "00af6plljrx2dc0js60975wqp725ka4i3gzs4y6gmzkpfj5fy39y";
     };
     propagatedBuildInputs = [XMLParser];
-    doCheck = false;  # requires lots of extra packages
   };
 
   XMLValidatorSchema = buildPerlPackage {

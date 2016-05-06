@@ -1932,10 +1932,13 @@ steam = steamPackages.steam-chrootenv.override {
 
 sublime-text = callPackage ../all-pkgs/sublime-text { };
 
-inherit (callPackages ../all-pkgs/subversion { })
-  subversion18 subversion19;
-
-subversion = callPackageAlias "subversion19" { };
+subversion = callPackage ../all-pkgs/subversion { };
+subversion_1_9 = callPackageAlias "subversion" {
+  channel = "1.9";
+};
+subversion_1_8 = callPackageAlias "subversion" {
+  channel = "1.8";
+};
 
 sushi = callPackage ../all-pkgs/sushi { };
 

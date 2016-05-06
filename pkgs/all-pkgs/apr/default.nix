@@ -7,7 +7,17 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://apache/apr/${name}.tar.bz2";
+    allowHashOutput = false;
     sha256 = "0ypn51xblix5ys9xy7da3ngdydip0qqh9rdq8nz54w9aq8lys0vx";
+  };
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "5B51 81C2 C0AB 13E5 9DA3  F7A3 EC58 2EB6 39FF 092C";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
   };
 
   meta = with stdenv.lib; {
@@ -18,7 +28,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

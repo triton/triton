@@ -8,13 +8,13 @@
 
 stdenv.mkDerivation rec {
   name = "hunspell-${version}";
-  version = "1.4.0";
+  version = "1.4.1";
 
   src = fetchFromGitHub {
     owner = "hunspell";
     repo = "hunspell";
     rev = "v${version}";
-    sha256 = "4e0e533c084032bdb9dc2d4c51e8d9f9f179dbec3fbabd5d1cb44a6e5f260fb2";
+    sha256 = "26595c2ba3270ecb7977cfb8f107493844be89c29f066b8d9bf081aabf10d9ad";
   };
 
   nativeBuildInputs = [

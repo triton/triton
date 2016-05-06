@@ -49,4 +49,5 @@ while [ "${#process[@]}" -gt "0" ]; do
 done
 
 echo "Realizing the srcs: $pkg" >&2
+echo "nix-store -k -r" "${srcs[@]}" >&2
 nix-store -k -r "${srcs[@]}"

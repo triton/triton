@@ -1,4 +1,6 @@
-{fetchurl, stdenv}:
+{ stdenv
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
   name = "libcddb-1.3.2";
@@ -8,9 +10,14 @@ stdenv.mkDerivation rec {
     sha256 = "0fr21a7vprdyy1bq6s99m0x420c9jm5fipsd63pqv8qyfkhhxkim";
   };
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "C library to access data on a CDDB server (freedb.org)";
-    license = stdenv.lib.licenses.lgpl2Plus;
     homepage = http://libcddb.sourceforge.net/;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

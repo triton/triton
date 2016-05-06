@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
     owner = "webmproject";
     repo = "libvpx";
     rev = "v${version}";
-    sha256 = "6521e74acfeea9a05dd4342adcfcc75658186f1eccbe46f2a12a01a042d83f7c";
+    sha256 = "4ec90d2174277927d93c8e40ddd35ec620bcd9bfb562a7d02654b6d5f2aed263";
   };
 
   patchPhase = ''patchShebangs .'';

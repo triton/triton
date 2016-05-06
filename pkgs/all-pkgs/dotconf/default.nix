@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     owner = "williamh";
     repo = "dotconf";
     rev = "v${version}";
-    sha256 = "dc3cba9439c9841393fe708dc1d7d927bf52aca5ea02fd87ef53d2b5be589001";
+    sha256 = "1e3b2e376a7c0c0261003439054fc17de456860f8a93b10e71e26cc5c7225dcd";
   };
 
   buildInputs = [

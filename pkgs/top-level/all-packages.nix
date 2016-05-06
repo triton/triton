@@ -1971,6 +1971,9 @@ tevent = callPackage ../all-pkgs/tevent { };
 
 texinfo = callPackage ../all-pkgs/texinfo { };
 
+tinc_1_0 = callPackage ../all-pkgs/tinc { channel = "1.0"; };
+tinc_1_1 = callPackage ../all-pkgs/tinc { channel = "1.1"; };
+
 tmux = callPackage ../all-pkgs/tmux { };
 
 totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
@@ -4439,10 +4442,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  tiled = qt5.callPackage ../applications/editors/tiled { };
 #
 #  timemachine = callPackage ../applications/audio/timemachine { };
-#
-  tinc = callPackage ../tools/networking/tinc { };
-#
-  tinc_pre = callPackage ../tools/networking/tinc/pre.nix { };
 #
 #  tiny8086 = callPackage ../applications/virtualization/8086tiny { };
 #

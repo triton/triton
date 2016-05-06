@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
     owner = "zeroc-ice";
     repo = "ice";
     rev = "v${version}";
-    sha256 = "778929f0c0a01c1be88d061ea428b43ce2fe8dd50b58815454c98ddbe0df39b2";
+    sha256 = "d228150a18b25b003269219bcd9699a14ac9ed93241dcd154045cf8ffd9f61b3";
   };
 
   buildInputs = [
@@ -43,7 +43,9 @@ stdenv.mkDerivation rec {
     description = "The internet communications engine";
     homepage = "http://www.zeroc.com/ice.html";
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

@@ -4,17 +4,27 @@
 , fetchurl
 , libxslt
 , python2
+, samba_full
 
 , ncurses
 , readline
 , talloc
 }:
 
+let
+  version = "0.9.28";
+  newVersion = "0.9.28";
+
+  tarballUrls = version: [
+    "mirror://samba/tevent/tevent-${version}.tar"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "tevent-0.9.28";
+  name = "tevent-${version}";
 
   src = fetchurl {
-    url = "mirror://samba/tevent/${name}.tar.gz";
+    urls = map (n: "${n}.gz") (tarballUrls version);
+    allowHashOutput = false;
     sha256 = "0a9ml52jjnzz7qg9z750mavlvs1yibjwrzy4yl55dc95j0vm7n84";
   };
 
@@ -40,6 +50,18 @@ stdenv.mkDerivation rec {
     "--builtin-libraries=replace"
   ];
 
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      urls = map (n: "${n}.gz") (tarballUrls newVersion);
+      pgpsigUrls = map (n: "${n}.asc") (tarballUrls newVersion);
+      pgpDecompress = true;
+      inherit (samba_full.pgp.library) pgpKeyFingerprint;
+      inherit (src) outputHashAlgo;
+      outputHash = "0a9ml52jjnzz7qg9z750mavlvs1yibjwrzy4yl55dc95j0vm7n84";
+    };
+  };
+
   meta = with stdenv.lib; {
     description = "An event system based on the talloc memory management library";
     homepage = http://tevent.samba.org/;
@@ -48,7 +70,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

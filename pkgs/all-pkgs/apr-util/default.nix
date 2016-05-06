@@ -15,6 +15,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://apache/apr/${name}.tar.bz2";
+    allowHashOutput = false;
     sha256 = "0bn81pfscy9yjvbmyx442svf43s6dhrdfcsnkpxz43fai5qk5kx6";
   };
 
@@ -51,6 +52,15 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/apu-1-config --prefix PATH : "${gnused}/bin"
   '';
 
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "5B51 81C2 C0AB 13E5 9DA3  F7A3 EC58 2EB6 39FF 092C";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
+
   meta = with stdenv.lib; {
     description = "A companion library to APR, the Apache Portable Runtime";
     homepage = http://apr.apache.org/;
@@ -59,7 +69,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

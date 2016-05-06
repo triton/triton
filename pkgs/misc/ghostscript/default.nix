@@ -124,22 +124,18 @@ stdenv.mkDerivation rec {
   # Sometimes throws weird errors for 9.18
   parallelInstall = false;
 
-  meta = {
+  passthru = {
+    inherit version;
+  };
+
+  meta = with stdenv.lib; {
     homepage = "http://www.ghostscript.com/";
     description = "PostScript interpreter (mainline version)";
-
-    longDescription = ''
-      Ghostscript is the name of a set of tools that provides (i) an
-      interpreter for the PostScript language and the PDF file format,
-      (ii) a set of C procedures (the Ghostscript library) that
-      implement the graphics capabilities that appear as primitive
-      operations in the PostScript language, and (iii) a wide variety
-      of output drivers for various file formats and printers.
-    '';
-
-    license = stdenv.lib.licenses.gpl3Plus;
-
-    platforms = stdenv.lib.platforms.all;
-    maintainers = [ stdenv.lib.maintainers.viric ];
+    license = licenses.gpl3Plus;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

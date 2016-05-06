@@ -4,7 +4,7 @@
 
 perl.stdenv.mkDerivation (
   {
-    doCheck = true;
+    doCheck = false;
     
     checkTarget = "test";
     

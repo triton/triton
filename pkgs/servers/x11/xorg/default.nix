@@ -2228,10 +2228,10 @@ let
   }) // {inherit inputproto randrproto xorgserver xproto ;};
 
   xf86inputevdev = (mkDerivation "xf86inputevdev" {
-    name = "xf86-input-evdev-2.10.1";
+    name = "xf86-input-evdev-2.10.2";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-evdev-2.10.1.tar.bz2;
-      sha256 = "05z05n39v8s2b0hwhcjb1bca7j8gc62bv9jxnibawwmjym3jp75g";
+      url = mirror://xorg/individual/driver/xf86-input-evdev-2.10.2.tar.bz2;
+      sha256 = "07gybpiv33rymcq5l729agan7nzv5f97wdczja6p145b846n6fm7";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ inputproto libevdev systemd_lib mtdev xorgserver xproto ];
@@ -2294,10 +2294,10 @@ let
   }) // {inherit inputproto xorgserver xproto ;};
 
   xf86inputlibinput = (mkDerivation "xf86inputlibinput" {
-    name = "xf86-input-libinput-0.18.0";
+    name = "xf86-input-libinput-0.19.0";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-libinput-0.18.0.tar.bz2;
-      sha256 = "0xsa2d4p3mz692gcry8hcbq1bimv5c743xilnl4yi335dfysnk4p";
+      url = mirror://xorg/individual/driver/xf86-input-libinput-0.19.0.tar.bz2;
+      sha256 = "0xzl3aiah9vma3pvi170g1847vxqrg4is3ilc51f72lbgkf30pbc";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ inputproto libinput xorgserver xproto ];
@@ -2404,10 +2404,10 @@ let
   }) // {inherit inputproto randrproto xorgserver xproto ;};
 
   xf86inputsynaptics = (mkDerivation "xf86inputsynaptics" {
-    name = "xf86-input-synaptics-1.8.3";
+    name = "xf86-input-synaptics-1.8.99.1";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-synaptics-1.8.3.tar.bz2;
-      sha256 = "009zx199pilcvlaqm6fx4mg94q81d6vvl5rznmw3frzkfh6117yk";
+      url = mirror://xorg/individual/driver/xf86-input-synaptics-1.8.99.1.tar.bz2;
+      sha256 = "1apbcwn20p7sy07ghlldmqcnxag2r9sdjqmb4xxzki0hz8wm72ac";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ inputproto libevdev randrproto recordproto libX11 libXi xorgserver xproto libXtst ];

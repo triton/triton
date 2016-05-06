@@ -21,8 +21,8 @@
 # https://github.com/pypa/pip/issues/881
 , setupPyBuildFlags ? []
 
-# enable tests by default
-, doCheck ? true
+# disable tests by default
+, doCheck ? false
 
 # DEPRECATED: use propagatedBuildInputs
 , pythonPath ? []

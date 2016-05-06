@@ -62,8 +62,6 @@ stdenv.mkDerivation rec {
     unbound
   ];
 
-  doCheck = true;
-
   passthru = {
     # Gnupg depends on this so we have to decouple this fetch from the rest of the build.
     srcVerified = fetchurl rec {

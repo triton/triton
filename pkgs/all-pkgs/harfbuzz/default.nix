@@ -20,11 +20,11 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "harfbuzz-1.2.6";
+  name = "harfbuzz-1.2.7";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2";
-    sha256 = "7537bacccb3524df0cd2a4d5bc7e168bcc10e8171e0324f3cd522583868192c1";
+    sha256 = "bba0600ae08b84384e6d2d7175bea10b5fc246c4583dc841498d01894d479026";
   };
 
   nativeBuildInputs = optionals doCheck [

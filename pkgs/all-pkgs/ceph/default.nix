@@ -134,11 +134,12 @@ stdenv.mkDerivation rec {
     libedit
   ] ++ optionals (versionAtLeast version "10.0.0") [
     lz4
-  ] ++ optionals hasXio [
+  ] ++ optionals hasXio ([
     accelio
+  ] ++ optionals (versionOlder version "11.0.0") [
     libibverbs
     librdmacm
-  ] ++ optionals hasRocksdb [
+  ]) ++ optionals hasRocksdb [
     rocksdb
   ] ++ optionals (versionOlder version "9.1.0") [
     libs3

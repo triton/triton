@@ -1167,6 +1167,8 @@ iproute = callPackage ../all-pkgs/iproute { };
 
 iptables = callPackage ../all-pkgs/iptables { };
 
+ipmitool = callPackage ../all-pkgs/ipmitool { };
+
 iputils = callPackage ../all-pkgs/iputils { };
 
 isl = callPackage ../all-pkgs/isl { };
@@ -3310,10 +3312,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   iperf2 = callPackage ../tools/networking/iperf/2.nix { };
   iperf3 = callPackage ../tools/networking/iperf/3.nix { };
   iperf = callPackageAlias "iperf3" { };
-
-  ipmitool = callPackage ../tools/system/ipmitool {
-    static = false;
-  };
 
   ipmiutil = callPackage ../tools/system/ipmiutil {};
 

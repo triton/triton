@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     owner = "glfw";
     repo = "GLFW";
     rev = "${version}";
-    sha256 = "0565ee9782a59262c87169cafed3c43023129d68b8b847cd4bbcd7c791a616c2";
+    sha256 = "0cf0013056b27f818cf0113fcc523889b9f739091530bcf161445b7f288cbfa3";
   };
 
   nativeBuildInputs = [

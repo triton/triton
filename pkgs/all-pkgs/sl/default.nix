@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "mtoyoda";
     repo = "sl";
     rev = version;
-    sha256 = "d52d3b025e9aa5d728dc459f8d945cb979f6f9b82a43254693f6b413ec94fc3e";
+    sha256 = "9c3930b1af9dd1d091024ed18c3eaad4b8d20f7669d510a94607a877157a4e88";
   };
 
   buildInputs = [

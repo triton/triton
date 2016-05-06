@@ -16,9 +16,10 @@ stdenv.mkDerivation rec {
     description = "An assembler for x86 and x86_64 instruction sets";
     homepage = http://www.nasm.us/;
     license = licenses.bsd2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

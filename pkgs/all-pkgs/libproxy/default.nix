@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "0.4.12";
+  version = "0.4.13";
 in
 stdenv.mkDerivation rec {
   name = "libproxy-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "libproxy";
     repo = "libproxy";
     rev = version;
-    sha256 = "845dc3a4f29349a9e62c0235e79fc753115fd519f2e4857aaa0f4c2503e59994";
+    sha256 = "eecc5f5fb1d897b5e73417223edb08001f38e8182dba6cf3c508d2568cf11dab";
   };
 
   nativeBuildInputs = [

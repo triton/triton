@@ -2,16 +2,26 @@
 , docbook_xsl
 , docbook_xml_dtd_42
 , fetchurl
-, python2
 , libxslt
+, python2
+, samba_full
 }:
 
+let
+  version = "2.1.7";
+  newVersion = "2.1.7";
+
+  tarballUrls = version: [
+    "mirror://samba/talloc/talloc-${version}.tar"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "talloc-2.1.6";
+  name = "talloc-${version}";
 
   src = fetchurl {
-    url = "mirror://samba/talloc/${name}.tar.gz";
-    sha256 = "0yyln462gn1vhwwg287bnpj9lxzg3jadj39fjjcrsdfbp981m3iv";
+    urls = map (n: "${n}.gz") (tarballUrls version);
+    allowHashOutput = false;
+    sha256 = "19154e728e48d29c7398f470b0a59d093edc836156b41ffe20d247d6ec9fa006";
   };
 
   nativeBuildInputs = [
@@ -31,6 +41,18 @@ stdenv.mkDerivation rec {
     "--builtin-libraries=replace"
   ];
 
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      urls = map (n: "${n}.gz") (tarballUrls newVersion);
+      pgpsigUrls = map (n: "${n}.asc") (tarballUrls newVersion);
+      pgpDecompress = true;
+      inherit (samba_full.pgp.library) pgpKeyFingerprint;
+      inherit (src) outputHashAlgo;
+      outputHash = "19154e728e48d29c7398f470b0a59d093edc836156b41ffe20d247d6ec9fa006";
+    };
+  };
+
   meta = with stdenv.lib; {
     description = "Hierarchical pool based memory allocator with destructors";
     homepage = http://tdb.samba.org/;
@@ -39,7 +61,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

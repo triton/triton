@@ -1494,6 +1494,8 @@ lmdb = callPackage ../all-pkgs/lmdb { };
 
 lm-sensors = callPackage ../all-pkgs/lm-sensors { };
 
+lsof = callPackage ../all-pkgs/lsof { };
+
 lvm2 = callPackage ../all-pkgs/lvm2 { };
 
 lxc = callPackage ../all-pkgs/lxc { };
@@ -6061,8 +6063,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #
 #  mlibtool = callPackage ../development/tools/misc/mlibtool { };
-#
-#  lsof = callPackage ../development/tools/misc/lsof { };
 #
   ltrace = callPackage ../development/tools/misc/ltrace { };
 #

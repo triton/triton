@@ -5,6 +5,7 @@
 , dbus
 , gnutls
 , libfilezilla
+, nettle
 , pugixml
 , sqlite
 , wxGTK
@@ -32,6 +33,7 @@ stdenv.mkDerivation rec {
     dbus
     gnutls
     libfilezilla
+    nettle
     pugixml
     sqlite
     wxGTK

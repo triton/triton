@@ -19,7 +19,10 @@ stdenv.mkDerivation rec {
   name = "fontconfig-2.11.1";
 
   src = fetchurl {
-    url = "http://fontconfig.org/release/${name}.tar.bz2";
+    urls = [
+      "https://www.freedesktop.org/software/fontconfig/release/${name}.tar.bz2"
+      "http://fontconfig.org/release/${name}.tar.bz2"
+    ];
     sha256 = "16baa4g5lswkyjlyf1h5lwc0zjap7c4d8grw79349a5w6dsl8qnw";
   };
 

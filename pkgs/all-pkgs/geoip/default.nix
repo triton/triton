@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     owner = "maxmind";
     repo = "geoip-api-c";
     rev = "v${version}";
-    sha256 = "c02841fc040a3499e12938fcce60654c10c4b8303f66a63cbafbd1d735dda6a4";
+    sha256 = "bf32c498fdd99af946419ed981b8d93c8eac8d3d01a6f372b68ed8f416b6865c";
   };
 
   nativeBuildInputs = [

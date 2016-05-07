@@ -11,25 +11,31 @@ in
 {
   config = mkIf (any (fs: fs == "btrfs") config.boot.supportedFilesystems) {
 
-    system.fsPackages = [ pkgs.btrfs-progs ];
+    system.fsPackages = [
+      pkgs.btrfs-progs
+    ];
 
-    boot.initrd.kernelModules = mkIf inInitrd [ "btrfs" "crc32c" ];
+    boot.initrd.kernelModules = mkIf inInitrd [
+      "btrfs"
+      "crc32c"
+    ];
 
-    boot.initrd.extraUtilsCommands = mkIf inInitrd
-      ''
-        copy_bin_and_libs ${pkgs.btrfs-progs}/bin/btrfs
-        ln -sv btrfs $out/bin/btrfsck
-        ln -sv btrfsck $out/bin/fsck.btrfs
-      '';
+    boot.initrd.extraUtilsCommands = mkIf inInitrd ''
+      copy_bin_and_libs ${pkgs.btrfs-progs}/bin/btrfs
+      ln -sv btrfs $out/bin/btrfsck
+      ln -sv btrfsck $out/bin/fsck.btrfs
+    '';
 
-    boot.initrd.extraUtilsCommandsTest = mkIf inInitrd
-      ''
-        $out/bin/btrfs --version
-      '';
+    boot.initrd.extraUtilsCommandsTest = mkIf inInitrd ''
+      $out/bin/btrfs --version
+    '';
 
-    boot.initrd.postDeviceCommands = mkIf inInitrd
-      ''
-        btrfs device scan
-      '';
+    boot.initrd.extraUdevRulesCommands = mkIf inInitrd ''
+      cp -v ${config.systemd.package}/lib/udev/rules.d/64-btrfs.rules $out
+    '';
+
+    boot.initrd.postDeviceCommands = mkIf inInitrd ''
+      btrfs device scan
+    '';
   };
 }

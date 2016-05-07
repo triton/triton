@@ -28,11 +28,19 @@ let
   # copy what we need.  Instead of using statically linked binaries,
   # we just copy what we need from Glibc and use patchelf to make it
   # work.
-  extraUtils = pkgs.runCommand "extra-utils"
-    { buildInputs = [pkgs.nukeReferences];
-      allowedReferences = [ "out" ]; # prevent accidents like glibc being included in the initrd
-    }
-    ''
+  extraUtils = pkgs.stdenv.mkDerivation {
+    name = "extra-utils";
+
+    nativeBuildInputs = [
+      pkgs.nukeReferences
+    ];
+
+    # prevent accidents like glibc being included in the initrd
+    allowedReferences = [
+      "out"
+    ];
+
+    buildCommand = ''
       set +o pipefail
 
       mkdir -p $out/bin $out/lib
@@ -51,30 +59,16 @@ let
       # Copy some utillinux stuff.
       copy_bin_and_libs ${pkgs.util-linux_full}/bin/blkid
 
-      # Copy dmsetup and lvm.
-      copy_bin_and_libs ${pkgs.lvm2}/bin/dmsetup
-      copy_bin_and_libs ${pkgs.lvm2}/bin/lvm
-
-      # Add RAID mdadm tool.
-      copy_bin_and_libs ${pkgs.mdadm}/bin/mdadm
-      copy_bin_and_libs ${pkgs.mdadm}/bin/mdmon
-
       # Copy udev.
       copy_bin_and_libs ${udev}/lib/systemd/systemd-udevd
       copy_bin_and_libs ${udev}/bin/udevadm
-      for BIN in ${udev}/lib/udev/*_id; do
-        copy_bin_and_libs $BIN
+      for BIN in ata_id cdrom_id scsi_id; do
+        copy_bin_and_libs ${udev}/lib/udev/$BIN
       done
 
       # Copy modprobe.
       copy_bin_and_libs ${pkgs.kmod}/bin/kmod
       ln -sf kmod $out/bin/modprobe
-
-      # Copy resize2fs if needed.
-      ${optionalString (any (fs: fs.autoResize) (attrValues config.fileSystems)) ''
-        # We need mke2fs in the initrd.
-        copy_bin_and_libs ${pkgs.e2fsprogs}/bin/resize2fs
-      ''}
 
       ${config.boot.initrd.extraUtilsCommands}
 
@@ -119,20 +113,27 @@ let
       export LD_LIBRARY_PATH=$out/lib
       $out/bin/mount --help 2>&1 | grep -q "BusyBox"
       $out/bin/blkid --help 2>&1 | grep -q 'libblkid'
-      $out/bin/udevadm --version
-      $out/bin/dmsetup --version 2>&1 | tee -a log | grep -q "version:"
-      LVM_SYSTEM_DIR=$out $out/bin/lvm version 2>&1 | tee -a log | grep -q "LVM"
-      $out/bin/mdadm --version
 
       ${config.boot.initrd.extraUtilsCommandsTest}
-    ''; # */
+    '';
+  };
 
 
   # The initrd only has to mount / or any FS marked as necessary for
   # booting (such as the FS containing /nix/store, or an FS needed for
   # mounting /, like / on a loopback).
   fileSystems = filter
-    (fs: fs.neededForBoot || elem fs.mountPoint [ "/" "/nix" "/nix/store" "/var" "/var/log" "/var/lib" "/etc" ])
+    (fs: fs.neededForBoot || elem fs.mountPoint [
+      "/"
+      "/etc"
+      "/nix"
+      "/nix/store"
+      "/var"
+      "/var/log"
+      "/var/lib"
+      "/var/tmp"
+      "/tmp"
+    ])
     (attrValues config.fileSystems);
 
 
@@ -144,24 +145,26 @@ let
 
       echo 'ENV{LD_LIBRARY_PATH}="${extraUtils}/lib"' > $out/00-env.rules
 
-      cp -v ${udev}/lib/udev/rules.d/60-cdrom_id.rules $out/
-      cp -v ${udev}/lib/udev/rules.d/60-persistent-storage.rules $out/
-      cp -v ${udev}/lib/udev/rules.d/80-drivers.rules $out/
-      cp -v ${pkgs.lvm2}/lib/udev/rules.d/*.rules $out/
+      rules=(
+        "50-udev-default.rules"
+        "60-block.rules"
+        "60-cdrom_id.rules"
+        "60-drm.rules"
+        "60-evdev.rules"
+        "60-persistent-input.rules"
+        "60-serial.rules"
+        "80-drivers.rules"
+      )
+      for rule in "${rules[@]}"; do
+        cp -v ${udev}/lib/udev/rules.d/$rule.rules $out/
+      done
       ${config.boot.initrd.extraUdevRulesCommands}
 
       for i in $out/*.rules; do
           substituteInPlace $i \
-            --replace ata_id ${extraUtils}/bin/ata_id \
-            --replace scsi_id ${extraUtils}/bin/scsi_id \
-            --replace cdrom_id ${extraUtils}/bin/cdrom_id \
-            --replace ${pkgs.util-linux_full}/sbin/blkid ${extraUtils}/bin/blkid \
-            --replace /sbin/blkid ${extraUtils}/bin/blkid \
-            --replace ${pkgs.lvm2}/sbin ${extraUtils}/bin \
-            --replace /sbin/mdadm ${extraUtils}/bin/mdadm \
-            --replace /bin/sh ${extraUtils}/bin/sh \
-            --replace /usr/bin/readlink ${extraUtils}/bin/readlink \
-            --replace /usr/bin/basename ${extraUtils}/bin/basename
+            --replace "=\"ata_id" "=\"${extraUtils}/bin/ata_id" \
+            --replace "=\"cdrom_id" "=\"${extraUtils}/bin/cdrom_id" \
+            --replace "=\"scsi_id" "=\"${extraUtils}/bin/scsi_id"
       done
 
       # Work around a bug in QEMU, which doesn't implement the "READ
@@ -181,13 +184,14 @@ let
 
 
   # The binary keymap for busybox to load at boot.
-  busyboxKeymap = pkgs.runCommand "boottime-keymap"
-    { preferLocalBuild = true; }
-    ''
+  busyboxKeymap = pkgs.stdenv.mkDerivation {
+    name = "boottime-keymap";
+    preferLocalBuild = true;
+    buildCommand =  ''
       ${pkgs.kbd}/bin/loadkeys -qb "${config.i18n.consoleKeyMap}" > $out ||
         ${pkgs.kbd}/bin/loadkeys -qbu "${config.i18n.consoleKeyMap}" > $out
     '';
-
+  };
 
   # The init script of boot stage 1 (loading kernel modules for
   # mounting the root FS).
@@ -231,9 +235,6 @@ let
     contents =
       [ { object = bootStage1;
           symlink = "/init";
-        }
-        { object = pkgs.writeText "mdadm.conf" config.boot.initrd.mdadmConf;
-          symlink = "/etc/mdadm.conf";
         }
         { object = pkgs.stdenv.mkDerivation {
             name = "initrd-${pkgs.kmod-blacklist-ubuntu.name}";
@@ -283,22 +284,6 @@ in
       type = types.bool;
       description = ''
         Whether to run <command>fsck</command> on journaling filesystems such as ext3.
-      '';
-    };
-
-    boot.initrd.mdadmConf = mkOption {
-      default = "";
-      type = types.lines;
-      description = ''
-        Contents of <filename>/etc/mdadm.conf</filename> in stage 1.
-      '';
-    };
-
-    boot.initrd.preLVMCommands = mkOption {
-      default = "";
-      type = types.lines;
-      description = ''
-        Shell commands to be executed immediately before LVM discovery.
       '';
     };
 

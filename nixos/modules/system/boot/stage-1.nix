@@ -155,7 +155,7 @@ let
         "60-serial.rules"
         "80-drivers.rules"
       )
-      for rule in "${rules[@]}"; do
+      for rule in "''${rules[@]}"; do
         cp -v ${udev}/lib/udev/rules.d/$rule.rules $out/
       done
       ${config.boot.initrd.extraUdevRulesCommands}
@@ -207,7 +207,7 @@ let
     inherit (config.boot) resumeDevice devSize runSize;
 
     inherit (config.boot.initrd) checkJournalingFS
-      preLVMCommands preDeviceCommands postDeviceCommands postMountCommands preFailCommands kernelModules;
+      preDeviceCommands postDeviceCommands postMountCommands preFailCommands kernelModules;
 
     resumeDevices = map (sd: if sd ? device then sd.device else "/dev/disk/by-label/${sd.label}")
                     (filter (sd: (sd ? label || hasPrefix "/dev/" sd.device) && !sd.randomEncryption) config.swapDevices);

@@ -63,7 +63,7 @@ in
       copy_bin_and_libs ${pkgs.mkinitcpio-nfs-utils}/bin/ipconfig
     '';
 
-    boot.initrd.preLVMCommands = mkBefore (
+    boot.initrd.preDeviceCommands = mkBefore (
       # Search for interface definitions in command line.
       ''
         for o in $(cat /proc/cmdline); do

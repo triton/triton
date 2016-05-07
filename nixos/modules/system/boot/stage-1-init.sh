@@ -163,7 +163,6 @@ done
 echo "running udev..."
 mkdir -p /etc/udev
 ln -sfn @udevRules@ /etc/udev/rules.d
-mkdir -p /dev/.mdadm
 systemd-udevd --daemon
 udevadm trigger --action=add
 udevadm settle
@@ -172,13 +171,6 @@ udevadm settle
 # Load boot-time keymap before any LVM/LUKS initialization
 @extraUtils@/bin/busybox loadkmap < "@busyboxKeymap@"
 
-
-# XXX: Use case usb->lvm will still fail, usb->luks->lvm is covered
-@preLVMCommands@
-
-
-echo "starting device mapper and LVM..."
-lvm vgchange -ay
 
 if test -n "$debug1devices"; then fail; fi
 
@@ -394,8 +386,6 @@ while read -u 3 mountPoint; do
         try=20
         while [ $try -gt 0 ]; do
             sleep 1
-            # also re-try lvm activation now that new block devices might have appeared
-            lvm vgchange -ay
             # and tell udev to create nodes for the new LVs
             udevadm trigger --action=add
             if test -e $device; then break; fi

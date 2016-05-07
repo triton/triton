@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , libtool
+, dhcp
 , docbook5_xsl
 
 , db
@@ -30,11 +31,12 @@ let
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
-  version = "9.10.3-P4";
+  version = "9.10.4";
 
   src = fetchurl {
     url = "http://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
-    sha256 = "0giys46ifypysf799w9v58kbaz1v3fbdzw3s212znifzzfsl9h1a";
+    allowHashOutput = false;
+    sha256 = "f8d412b38d5ac390275b943bde69f4608f67862a45487ec854b30e4448fcb056";
   };
 
   nativeBuildInputs = [
@@ -130,6 +132,15 @@ stdenv.mkDerivation rec {
     install -m 0644 $TMPDIR/$out/lib/*.so.* $out/lib
     install -m 0644 $TMPDIR/$out/share/man/man1/{dig,host,nslookup,nsupdate}.1 $out/share/man/man1
   '';
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sha512.asc") src.urls;
+      pgpKeyFile = dhcp.srcVerified.pgpKeyFile;
+      inherit (src) urls outputHashAlgo outputHash;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = "http://www.isc.org/software/bind";

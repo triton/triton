@@ -5,7 +5,7 @@ stdenv.mkDerivation {
   name = "fontconfig-ultimate-${version}";
 
   src = fetchFromGitHub {
-    sha256 = "9e5b5bf98683528eae0fcf0817aceaafdb52ab98d74e6500d63dfa01f62f31c4";
+    sha256 = "9735bc63814c6b27095341c56a6380730d3238438828f00d41dff0c925cdaccd";
     rev = version;
     repo = "fontconfig-ultimate";
     owner = "bohoomil";

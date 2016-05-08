@@ -31,6 +31,7 @@ stdenv.mkDerivation rec {
     wayland
     xorg.intelgputools
     xorg.libX11
+    xorg.xproto
   ];
 
   patchPhase = ''

@@ -159,16 +159,7 @@ with stdenv.lib; stdenv.mkDerivation {
   nativeBuildInputs = [ file python2 procps ];
   buildInputs = [ ncurses zlib ] ++ optional (!forceBundledLLVM) llvm;
 
-  enableParallelBuilding = true;
-
   outputs = [ "out" "doc" ];
 
   preCheck = "export TZDIR=${tzdata}/share/zoneinfo";
-
-  doCheck = true;
-
-  # Often fails with:
-  #   /tmp/nix-build-rustc-1.6.0.drv-0/rustc-1.6.0-src.tar.gz/mk/tests.mk:1087: recipe for target 'x86_64-unknown-linux-gnu/test/run-make/compiler-lookup-paths-2-T-x86_64-unknown-linux-gnu-H-x86_64-unknown-linux-gnu.ok' failed
-  #   make: *** [x86_64-unknown-linux-gnu/test/run-make/compiler-lookup-paths-2-T-x86_64-unknown-linux-gnu-H-x86_64-unknown-linux-gnu.ok] Error 2
-  parallelCheck = false;
 }

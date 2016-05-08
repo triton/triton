@@ -1,4 +1,7 @@
-{ stdenv, fetchurl, xorg }:
+{ stdenv
+, fetchurl
+, xorg
+}:
 
 stdenv.mkDerivation rec {
   name = "slock-1.3";
@@ -9,10 +12,13 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    xorg.xproto
     xorg.libX11
     xorg.libXext
     xorg.libXrandr
+    xorg.libXrender
+    xorg.randrproto
+    xorg.renderproto
+    xorg.xproto
   ];
 
   preInstall = ''
@@ -23,7 +29,10 @@ stdenv.mkDerivation rec {
     homepage = http://tools.suckless.org/slock;
     description = "Simple X display locker";
     license = licenses.mit;
-    maintainers = with maintainers; [ astsmtl ];
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

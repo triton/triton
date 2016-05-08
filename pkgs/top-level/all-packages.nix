@@ -1908,6 +1908,8 @@ shntool = callPackage ../all-pkgs/shntool { };
 
 sl = callPackage ../all-pkgs/sl { };
 
+slock = callPackage ../all-pkgs/slock { };
+
 socket_wrapper = callPackage ../all-pkgs/socket_wrapper { };
 
 soxr = callPackage ../all-pkgs/soxr { };
@@ -12349,8 +12351,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #  sct = callPackage ../tools/X11/sct {};
 #
 #  seafile-shared = callPackage ../misc/seafile-shared { };
-#
-  slock = callPackage ../misc/screensavers/slock { };
 #
 #  snapraid = callPackage ../tools/filesystems/snapraid { };
 #

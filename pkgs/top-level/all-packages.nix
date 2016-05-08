@@ -1238,6 +1238,8 @@ libassuan = callPackage ../all-pkgs/libassuan { };
 
 libatasmart = callPackage ../all-pkgs/libatasmart { };
 
+libavc1394 = callPackage ../all-pkgs/libavc1394 { };
+
 libbluray = callPackage ../all-pkgs/libbluray { };
 
 libbsd = callPackage ../all-pkgs/libbsd { };
@@ -6768,8 +6770,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libav = libav_11; # branch 11 is API-compatible with branch 10
 #  libav_all = callPackage ../development/libraries/libav { };
 #  inherit (libav_all) libav_0_8 libav_9 libav_11;
-#
-  libavc1394 = callPackage ../development/libraries/libavc1394 { };
 #
 #  libb2 = callPackage ../development/libraries/libb2 { };
 #

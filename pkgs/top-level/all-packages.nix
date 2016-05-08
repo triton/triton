@@ -1312,6 +1312,8 @@ libgxps = callPackage ../all-pkgs/libgxps { };
 
 libibverbs = callPackage ../all-pkgs/libibverbs { };
 
+libical = callPackage ../all-pkgs/libical { };
+
 libidl = callPackage ../all-pkgs/libidl { };
 
 libinput = callPackage ../all-pkgs/libinput { };
@@ -6975,8 +6977,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libibmad = callPackage ../development/libraries/libibmad { };
 #
 #  libibumad = callPackage ../development/libraries/libibumad { };
-#
-  libical = callPackage ../development/libraries/libical { };
 #
 #  libicns = callPackage ../development/libraries/libicns { };
 #

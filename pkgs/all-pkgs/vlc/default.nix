@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, gettext
 
 , a52dec
 , alsa-lib
@@ -13,8 +14,10 @@
 , freefont_ttf
 , fribidi
 , gnutls
+, gvfs
 , jack2_lib
 , libass
+, libavc1394
 , libbluray
 , libcaca
 , libcddb
@@ -23,6 +26,7 @@
 , libdvdnav
 , libebml
 , libgcrypt
+, libidn
 , libkate
 , libmad
 , libmatroska
@@ -78,6 +82,10 @@ stdenv.mkDerivation rec {
     sha256 = "b9d7587d35f13c3c981964c8cc8b03f1c7c8edf528be476b3ca1d2efedd5bf5b";
   };
 
+  nativeBuildInputs = [
+    gettext
+  ];
+
   buildInputs = [
     a52dec
     alsa-lib
@@ -90,8 +98,10 @@ stdenv.mkDerivation rec {
     freefont_ttf
     fribidi
     gnutls
+    gvfs
     jack2_lib
     libass
+    libavc1394
     libbluray
     libcaca
     libcddb
@@ -101,6 +111,7 @@ stdenv.mkDerivation rec {
     libdvdnav.libdvdread
     libebml
     libgcrypt
+    libidn
     libkate
     libmad
     libmatroska
@@ -135,9 +146,12 @@ stdenv.mkDerivation rec {
     unzip
     v4l_lib
     xorg.xcbutilkeysyms
+    xorg.libX11
+    xorg.libxcb
     xorg.libXpm
     xorg.libXv
     xorg.libXvMC
+    xorg.xproto
     xz
     zlib
   ];

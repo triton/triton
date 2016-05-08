@@ -10558,30 +10558,23 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   });
 
 
-  python_magic = buildPythonPackage rec {
-    name = "python-magic-0.4.10";
+  python-magic = buildPythonPackage rec {
+    name = "python-magic-${version}";
+    version = "0.4.11";
 
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/python-magic/${name}.tar.gz";
-      sha256 = "1hx2sjd4fdswswj3yydn2azxb59rjmi9b7jzh94lf1wnxijjizbr";
+    src = fetchPyPi {
+      package = "python-magic";
+      inherit version;
+      sha256 = "89021e288d6efd22cde2842349d79939b9664efdbf99f5790c9862a67759ea94";
     };
 
-    propagatedBuildInputs = with self; [ pkgs.file ];
+    propagatedBuildInputs = [
+      pkgs.file
+    ];
 
     patchPhase = ''
       substituteInPlace magic.py --replace "ctypes.util.find_library('magic')" "'${pkgs.file}/lib/libmagic.so'"
     '';
-
-
-    # TODO: tests are failing
-    #checkPhase = ''
-    #  ${python}/bin/${python.executable} ./test.py
-    #'';
-
-    meta = {
-      description = "A python interface to the libmagic file type identification library";
-      homepage = https://github.com/ahupp/python-magic;
-    };
   };
 
   magic = buildPythonPackage rec {
@@ -21829,11 +21822,13 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   };
 
   libarchive-c = buildPythonPackage rec {
-    name = "libarchive-c-2.1";
+    name = "libarchive-c-${version}";
+    version = "2.3";
 
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/l/libarchive-c/${name}.tar.gz";
-      sha256 = "089lrz6xyrfnk55v35vis6jyqyyl77w093057djyspnd2744wi2n";
+    src = fetchPyPi {
+      package = "libarchive-c";
+      inherit version;
+      sha256 = "4163a3e536218c8a9207c154dea905ed33437b8855dc408c124f3a93a4693c06";
     };
 
     patchPhase = ''
@@ -21841,7 +21836,11 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
         "find_library('archive')" "'${pkgs.libarchive}/lib/libarchive.so'"
     '';
 
-    buildInputs = [ pkgs.libarchive ];
+    buildInputs = [
+      pkgs.libarchive
+    ];
+
+    doCheck = false;
   };
 
   pybrowserid = buildPythonPackage rec {

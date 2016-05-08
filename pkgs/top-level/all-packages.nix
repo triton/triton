@@ -2800,12 +2800,8 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  di = callPackage ../tools/system/di { };
 #
-#  diffoscope = callPackage ../tools/misc/diffoscope {
-#    jdk = jdk7;
-#    pythonPackages = python3Packages;
-#    rpm = rpm.override { python = python3; };
-#  };
-#
+  diffoscope = callPackage ../tools/misc/diffoscope { };
+
 #  diffstat = callPackage ../tools/text/diffstat { };
 #
 #  dir2opus = callPackage ../tools/audio/dir2opus {

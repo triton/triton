@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     owner = "nvidia";
     repo = "libglvnd";
     rev = "5a69af6f77dd68fed4d54137c155676478dcccc3";
-    sha256 = "d9fab4260140b36b26e79dba47ff8739536dcad564c1be1ecf95c12177f7d2b2";
+    sha256 = "7ce43319f086c5e15a95c4306aca933a4de0ca031fa4b3e6eeb30a1d479c0fca";
   };
 
   nativeBuildInputs = [

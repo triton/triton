@@ -51,9 +51,11 @@ stdenv.mkDerivation rec {
     xorg.xproto
   ];
 
-  postPatch = ''
-      cd linux
-    '' +
+  postUnpack = ''
+    sourceRoot="$sourceRoot/linux"
+  '';
+
+  postPatch = 
     /* Fix freetype path */ ''
       sed -i Makefile \
         -e 's,/usr/include/freetype2,${freetype}/include/freetype,'

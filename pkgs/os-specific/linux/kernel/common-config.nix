@@ -153,7 +153,9 @@ with stdenv.lib;
   SCTP_COOKIE_HMAC_MD5 y
   L2TP_V3 y
   NET_CLS_IND y
-  BATMAN_ADV_BATMAN_V y
+  ${optionalString (versionAtLeast version "4.6") ''
+    BATMAN_ADV_BATMAN_V y
+  ''}
   BATMAN_ADV_DAT y
   BATMAN_ADV_NC y
   BATMAN_ADV_MCAST y
@@ -161,10 +163,14 @@ with stdenv.lib;
   NET_L3_MASTER_DEV y
 
   BNX2X_VXLAN y
-  BNX2X_GENEVE y
+  ${optionalString (versionAtLeast version "4.6") ''
+    BNX2X_GENEVE y
+  ''}
   IXGBE_VXLAN y
   I40E_VXLAN y
-  I40E_GENEVE y
+  ${optionalString (versionAtLeast version "4.6") ''
+    I40E_GENEVE y
+  ''}
   FM10K_VXLAN y
   MLX5_CORE_EN y
   QLCNIC_VXLAN y
@@ -192,11 +198,15 @@ with stdenv.lib;
   V4L_MEM2MEM_DRIVERS y
   DVB_PLATFORM_DRIVERS y
   RADIO_SI470X y
-  DRM_DP_AUX_CHARDEV y
+  ${optionalString (versionAtLeast version "4.6") ''
+    DRM_DP_AUX_CHARDEV y
+  ''}
   DRM_RADEON_USERPTR y
   DRM_AMDGPU_CIK y
   DRM_AMDGPU_USERPTR y
-  DRM_AMD_POWERPLAY y
+  ${optionalString (versionAtLeast version "4.5") ''
+    DRM_AMD_POWERPLAY y
+  ''}
   DRM_VMWGFX_FBCON y
   FIRMWARE_EDID y
   LOGO y
@@ -401,13 +411,14 @@ with stdenv.lib;
   DDR y
   FONTS y
   MOUSE_PS2_VMMOUSE y
-  I2C_DESIGNWARE_BAYTRAIL y
   GPIO_SYSFS y
   CHARGER_MANAGER y
   POWER_RESET y
   POWER_RESET_RESTART y
   POWER_AVS y
-  WATCHDOG_SYSFS y
+  ${optionalString (versionAtLeast version "4.5") ''
+    WATCHDOG_SYSFS y
+  ''}
   8139TOO_8129 y
   8139TOO_PIO n # PIO is slower
   AIC79XX_DEBUG_ENABLE n
@@ -431,13 +442,17 @@ with stdenv.lib;
   ''}
   BT_BNEP_MC_FILTER y
   BT_BNEP_PROTO_FILTER y
-  BT_LEDS y
+  ${optionalString (versionAtLeast version "4.6") ''
+    BT_LEDS y
+  ''}
   BT_HCIUART_ATH3K y
   BT_HCIUART_3WIRE y
   BT_HCIUART_INTEL y
   BT_HCIUART_BCM y
   BT_HCIUART_QCA y
-  BT_HCIUART_AG6XX y
+  ${optionalString (versionAtLeast version "4.6") ''
+    BT_HCIUART_AG6XX y
+  ''}
   MAC80211_MESH y
   MAC80211_RC_MINSTREL_VHT y
   RFKILL_INPUT y
@@ -490,7 +505,9 @@ with stdenv.lib;
   SCSI_MQ_DEFAULT y
   DM_MQ_DEFAULT y
   DM_UEVENT y
-  DM_VERITY_FEC y
+  ${optionalString (versionAtLeast version "4.5") ''
+    DM_VERITY_FEC y
+  ''}
   SCSI_SCAN_ASYNC y
   SCSI_DH y
   SCSI_LOGGING y # SCSI logging facility

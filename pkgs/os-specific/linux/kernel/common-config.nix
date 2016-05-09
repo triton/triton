@@ -50,6 +50,8 @@ with stdenv.lib;
     PM_RUNTIME y
   ''}
   PM_ADVANCED_DEBUG y
+  PM_AUTOSLEEP y
+  PM_WAKELOCKS y
   ${optionalString (versionAtLeast version "3.11") ''
     X86_INTEL_LPSS y
   ''}
@@ -61,6 +63,14 @@ with stdenv.lib;
   ${optionalString (versionOlder version "3.10") ''
     USB_SUSPEND y
   ''}
+  ACPI_PCI_SLOT y
+  ACPI_HOTPLUG_MEMORY y
+  ACPI_BGRT y
+  ACPI_APEI y
+  CPU_IDLE_GOV_LADDER y
+
+  HOTPLUG_PCI_ACPI y
+  HOTPLUG_PCI_CPCI y
 
   # Support drivers that need external firmware.
   STANDALONE n
@@ -81,7 +91,8 @@ with stdenv.lib;
   BLK_CGROUP y # required by CFQ
 
   # Enable NUMA.
-  NUMA? y
+  NUMA y
+  NUMA_BALANCING y
 
   # Disable some expensive (?) features.
   PM_TRACE_RTC n
@@ -107,17 +118,98 @@ with stdenv.lib;
   ${optionalString (versionOlder version "3.13") ''
     IPV6_PRIVACY y
   ''}
+  IP_MROUTE_MULTIPLE_TABLES y
+  IPV6_ROUTER_PREF y
+  IPV6_ROUTE_INFO y
+  IPV6_OPTIMISTIC_DAD y
+  IPV6_SIT_6RD y
+  IPV6_SUBTREES y
+  IPV6_MULTIPLE_TABLES y
+  IPV6_MROUTE_MULTIPLE_TABLES y
+  IPV6_MROUTE y
+  IPV6_PIMSM_V2 y
+  NETWORK_PHY_TIMESTAMPING y
   NETFILTER_ADVANCED y
   IP_VS_PROTO_TCP y
   IP_VS_PROTO_UDP y
   IP_VS_PROTO_ESP y
   IP_VS_PROTO_AH y
+  IP_VS_PROTO_SCTP y
   IP_DCCP_CCID3 n # experimental
   CLS_U32_PERF y
   CLS_U32_MARK y
   ${optionalString (stdenv.system == "x86_64-linux") ''
     BPF_JIT y
   ''}
+  NF_CONNTRACK_ZONES y
+  NF_CONNTRACK_EVENTS y
+  NF_CONNTRACK_TIMEOUT y
+  NF_CONNTRACK_TIMESTAMP y
+  NETFILTER_NETLINK_GLUE_CT y
+  IP_VS_IPV6 y
+  IP_DCCP_CCID3 y
+  SCTP_DEFAULT_COOKIE_HMAC_SHA1 y
+  SCTP_COOKIE_HMAC_SHA1 y
+  SCTP_COOKIE_HMAC_MD5 y
+  L2TP_V3 y
+  NET_CLS_IND y
+  BATMAN_ADV_BATMAN_V y
+  BATMAN_ADV_DAT y
+  BATMAN_ADV_NC y
+  BATMAN_ADV_MCAST y
+  NET_SWITCHDEV y
+  NET_L3_MASTER_DEV y
+
+  BNX2X_VXLAN y
+  BNX2X_GENEVE y
+  IXGBE_VXLAN y
+  I40E_VXLAN y
+  I40E_GENEVE y
+  FM10K_VXLAN y
+  MLX5_CORE_EN y
+  QLCNIC_VXLAN y
+  VIA_RHINE_MMIO y
+  DEFXX_MMIO y
+
+  ISDN y
+  NVM y
+
+  # Random Devices
+  SSB_PCMCIAHOST y
+  SSB_SDIOHOST y
+  SSB_SILENT y
+  SSB_DRIVER_GPIO y
+  BCMA_HOST_SOC y
+  BCMA_DRIVER_GMAC_CMN y
+  BCMA_DRIVER_GPIO y
+  MEDIA_ANALOG_TV_SUPPORT y
+  MEDIA_RADIO_SUPPORT y
+  MEDIA_SDR_SUPPORT y
+  MEDIA_CONTROLLER y
+  VIDEO_AU0828_RC y
+  MEDIA_PCI_SUPPORT y
+  V4L_PLATFORM_DRIVERS y
+  V4L_MEM2MEM_DRIVERS y
+  DVB_PLATFORM_DRIVERS y
+  RADIO_SI470X y
+  DRM_DP_AUX_CHARDEV y
+  DRM_RADEON_USERPTR y
+  DRM_AMDGPU_CIK y
+  DRM_AMDGPU_USERPTR y
+  DRM_AMD_POWERPLAY y
+  DRM_VMWGFX_FBCON y
+  FIRMWARE_EDID y
+  LOGO y
+  HID_BATTERY_STRENGTH y
+  USB_DYNAMIC_MINORS y
+  USB_MUSB_DUAL_ROLE y
+  ASYNC_TX_DMA y
+  VME_BUS y
+  PWM y
+  POWERCAP y
+  ISCSI_IBFT_FIND y
+
+  CAN_LEDS y
 
   # Wireless networking.
   CFG80211_WEXT? y # Without it, ipw2200 drivers don't build
@@ -125,8 +217,9 @@ with stdenv.lib;
   IPW2200_MONITOR? y # support promiscuous mode
   HOSTAP_FIRMWARE? y # Support downloading firmware images with Host AP driver
   HOSTAP_FIRMWARE_NVRAM? y
-  ATH9K_PCI? y # Detect Atheros AR9xxx cards on PCI(e) bus
-  ATH9K_AHB? y # Ditto, AHB bus
+  ATH9K_WOW y
+  ATH9K_PCI y # Detect Atheros AR9xxx cards on PCI(e) bus
+  ATH9K_AHB y # Ditto, AHB bus
   ${optionalString (versionAtLeast version "3.2") ''
     B43_PHY_HT? y
   ''}
@@ -144,6 +237,7 @@ with stdenv.lib;
   FB_SIS_300 y
   FB_SIS_315 y
   FB_3DFX_ACCEL y
+  FB_SIMPLE y
   FB_VESA y
   FRAMEBUFFER_CONSOLE y
   FRAMEBUFFER_CONSOLE_ROTATION y
@@ -169,6 +263,9 @@ with stdenv.lib;
   SND_AC97_POWER_SAVE y # AC97 Power-Saving Mode
   SND_HDA_INPUT_BEEP y # Support digital beep via input layer
   SND_USB_CAIAQ_INPUT y
+  SND_HDA_RECONFIG y
+  SND_HDA_PATCH_LOADER y
+  SND_HDA_CODEC_CA0132_DSP y
   PSS_MIXER y # Enable PSS mixer (Beethoven ADSP-16 and other compatible)
 
   # USB serial devices.
@@ -189,27 +286,34 @@ with stdenv.lib;
   # Filesystem options - in particular, enable extended attributes and
   # ACLs for all filesystems that support them.
   FANOTIFY y
-  EXT2_FS_XATTR y
-  EXT2_FS_POSIX_ACL y
-  EXT2_FS_SECURITY y
-  ${optionalString (versionOlder version "4.0") ''
-    EXT2_FS_XIP y # Ext2 execute in place support
-  ''}
-  EXT3_FS_POSIX_ACL y
-  EXT3_FS_SECURITY y
+  EXT2_FS n
+  EXT3_FS n
   EXT4_FS_POSIX_ACL y
   EXT4_FS_SECURITY y
-  REISERFS_FS_XATTR? y
-  REISERFS_FS_POSIX_ACL? y
-  REISERFS_FS_SECURITY? y
-  JFS_POSIX_ACL? y
-  JFS_SECURITY? y
-  XFS_QUOTA? y
-  XFS_POSIX_ACL? y
-  XFS_RT? y # XFS Realtime subvolume support
+  REISERFS_FS n
+  JFS_FS n
+  XFS_QUOTA y
+  XFS_POSIX_ACL y
+  XFS_RT y # XFS Realtime subvolume support
   OCFS2_DEBUG_MASKLOG? n
   BTRFS_FS_POSIX_ACL y
-  UBIFS_FS_ADVANCED_COMPR? y
+  F2FS_FS_SECURITY y
+  F2FS_FS_ENCRYPTION y
+  FS_DAX y
+  FANOTIFY_ACCESS_PERMISSIONS y
+  FSCACHE_STATS y
+  FSCACHE_HISTOGRAM y
+  NTFS_RW y
+  HFSPLUS_FS_POSIX_ACL y
+  UBIFS_FS_ADVANCED_COMPR y
+  UBIFS_ATIME_SUPPORT y
+  ${optionalString (versionAtLeast version "4.6") ''
+    FAT_DEFAULT_UTF8 y
+  ''}
+  JFFS2_FS_XATTR y
+  JFFS2_COMPRESSION_OPTIONS y
+  JFFS2_LZO y
+  JFFS2_CMODE_FAVOURLZO y
   ${optionalString (versionAtLeast version "4.0" && versionOlder version "4.6") ''
     NFSD_PNFS y
   ''}
@@ -230,15 +334,22 @@ with stdenv.lib;
     NFS_V4_2 y
     NFS_V4_SECURITY_LABEL y
   ''}
+  CIFS_STATS y
+  CIFS_UPCALL y
+  CIFS_ACL y
   CIFS_XATTR y
   CIFS_POSIX y
   CIFS_FSCACHE y
+  CIFS_DFS_UPCALL y
+  CIFS_SMB2 y
+  CIFS_SMB311 y
   ${optionalString (versionAtLeast version "3.12") ''
     CEPH_FSCACHE y
   ''}
   ${optionalString (versionAtLeast version "3.14") ''
     CEPH_FS_POSIX_ACL y
   ''}
+  CEPH_LIB_USE_DNS_RESOLVER y
   ${optionalString (versionAtLeast version "3.13") ''
     SQUASHFS_FILE_DIRECT y
     SQUASHFS_DECOMP_MULTI_PERCPU y
@@ -281,6 +392,22 @@ with stdenv.lib;
   ''}
 
   # Misc. options.
+  EXPERT y
+  STRIP_ASM_SYMS y
+  UNUSED_SYMBOLS y
+  PERSISTENT_KEYRINGS y
+  BIG_KEYS y
+  SECURITY_NETWORK_XFRM y
+  DDR y
+  FONTS y
+  MOUSE_PS2_VMMOUSE y
+  I2C_DESIGNWARE_BAYTRAIL y
+  GPIO_SYSFS y
+  CHARGER_MANAGER y
+  POWER_RESET y
+  POWER_RESET_RESTART y
+  POWER_AVS y
+  WATCHDOG_SYSFS y
   8139TOO_8129 y
   8139TOO_PIO n # PIO is slower
   AIC79XX_DEBUG_ENABLE n
@@ -302,14 +429,30 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "3.4") ''
     BT_RFCOMM_TTY? y # RFCOMM TTY support
   ''}
+  BT_BNEP_MC_FILTER y
+  BT_BNEP_PROTO_FILTER y
+  BT_LEDS y
+  BT_HCIUART_ATH3K y
+  BT_HCIUART_3WIRE y
+  BT_HCIUART_INTEL y
+  BT_HCIUART_BCM y
+  BT_HCIUART_QCA y
+  BT_HCIUART_AG6XX y
+  MAC80211_MESH y
+  MAC80211_RC_MINSTREL_VHT y
+  RFKILL_INPUT y
+  NFC_SHDLC y
   CRASH_DUMP? n
   ${optionalString (versionOlder version "3.1") ''
     DMAR? n # experimental
   ''}
+  NFTL_RW y
+  MTD_NAND_ECC_SMC y
+  MTD_NAND_ECC_BCH y
+  ZRAM_LZ4_COMPRESS y
   DVB_DYNAMIC_MINORS? y # we use udev
-  ${optionalString (versionAtLeast version "3.3") ''
-    EFI_STUB y # EFI bootloader in the bzImage itself
-  ''}
+  EFI_STUB y
+  EFI_MIXED y
   FHANDLE y # used by systemd
   FUSION y # Fusion MPT device support
   IDE_GD_ATAPI y # ATAPI floppy support
@@ -344,6 +487,12 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "3.10") ''
     RT2800USB_RT55XX y
   ''}
+  SCSI_MQ_DEFAULT y
+  DM_MQ_DEFAULT y
+  DM_UEVENT y
+  DM_VERITY_FEC y
+  SCSI_SCAN_ASYNC y
+  SCSI_DH y
   SCSI_LOGGING y # SCSI logging facility
   SERIAL_8250 y # 8250/16550 and compatible serial support
   SLIP_COMPRESSED y # CSLIP compressed headers
@@ -375,9 +524,11 @@ with stdenv.lib;
     CGROUP_MEM_RES_CTLR y
     CGROUP_MEM_RES_CTLR_SWAP y
   ''}
+  CGROUP_PIDS y
   DEVPTS_MULTIPLE_INSTANCES y
   BLK_DEV_THROTTLING y
   CFQ_GROUP_IOSCHED y
+  CFS_BANDWIDTH y
 
   # Enable staging drivers.  These are somewhat experimental, but
   # they generally don't hurt.
@@ -393,6 +544,7 @@ with stdenv.lib;
   KPROBES y
   FUNCTION_TRACER y
   FTRACE_SYSCALLS y
+  SCHED_AUTOGROUP y
   SCHED_TRACER y
   STACK_TRACER y
   ${optionalString (versionAtLeast version "3.10") ''
@@ -401,8 +553,21 @@ with stdenv.lib;
   FUNCTION_PROFILER y
   RING_BUFFER_BENCHMARK n
 
+  USERFAULTFD y
+
   # Devtmpfs support.
   DEVTMPFS y
+
+  X86_AMD_PLATFORM_DEVICE y
+
+  PREEMPT y
+  MEMORY y
+  MEMORY_HOTPLUG y
+  MEMORY_HOTREMOVE y
+  MEMORY_FAILURE y
+  HZ_300 y
+  KEXEC_FILE y
+  KEXEC_JUMP y
 
   # Easier debugging of NFS issues.
   ${optionalString (versionAtLeast version "3.4") ''
@@ -468,7 +633,9 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "3.9") ''
     VFIO_PCI_VGA y
   ''}
+  VIRTIO_MMIO_CMDLINE_DEVICES y
   VIRT_DRIVERS y
+  INTEL_IOMMU_SVM y
 
   # Media support.
   ${optionalString (versionAtLeast version "3.6") ''
@@ -486,8 +653,9 @@ with stdenv.lib;
   ''}
 
   # Enable the 9P cache to speed up NixOS VM tests.
-  9P_FSCACHE? y
-  9P_FS_POSIX_ACL? y
+  9P_FSCACHE y
+  9P_FS_POSIX_ACL y
+  9P_FS_SECURITY y
 
   # Enable transparent support for huge pages.
   TRANSPARENT_HUGEPAGE? y
@@ -511,7 +679,7 @@ with stdenv.lib;
   ''}
 
   # Disable the firmware helper fallback, udev doesn't implement it any more
-  FW_LOADER_USER_HELPER_FALLBACK? n
+  FW_LOADER_USER_HELPER_FALLBACK n
 
   # ChromiumOS support
   ${optionalString (features.chromiumos or false) ''

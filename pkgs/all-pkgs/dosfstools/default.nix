@@ -1,21 +1,33 @@
 { stdenv
-, fetchFromGitHub
+, fetchurl
+
+, systemd_lib
 }:
 
+let
+  version = "4.0";
+in
 stdenv.mkDerivation rec {
   name = "dosfstools-${version}";
-  version = "3.0.28";
 
-  src = fetchFromGitHub {
-    owner = "dosfstools";
-    repo = "dosfstools";
-    rev = "v${version}";
-    sha256 = "37c15455fd363278d85ac9f97b41c56eafc6e21170fe4aec683f1ef108758dc0";
+  src = fetchurl {
+    url = "https://github.com/dosfstools/dosfstools/releases/download/v${version}/${name}.tar.xz";
+    allowHashOutput = false;
+    sha256 = "9037738953559d1efe04fc5408b6846216cc0138f7f9d32de80b6ec3c35e7daf";
   };
 
-  preBuild = ''
-    makeFlagsArray+=("PREFIX=$out")
-  '';
+  buildInputs = [
+    systemd_lib
+  ];
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "2571 4AEC DBFD ACEE 1CE9  5FE7 7F60 2251 6E86 9F64";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Utilities for creating and checking FAT and VFAT file systems";

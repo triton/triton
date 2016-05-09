@@ -12,20 +12,19 @@
 let
   inherit (stdenv.lib)
     replaceStrings;
-in
 
-let
   replace = v: replaceStrings ["."] ["_"] v;
+
+  version = "3.0.1";
 in
 
 stdenv.mkDerivation rec {
   name = "spectrwm-${version}";
-  version = "2.7.2";
 
   src = fetchurl {
     url = "https://github.com/conformal/spectrwm/archive/"
         + "SPECTRWM_${replace version}.tar.gz";
-    sha256 = "23a5b306c5cdfda05eba365b652eca34e87f0b4317c7ff8059813adaa1c55afb";
+    sha256 = "315fe232e8ac727c289fde8c9b3a3eba19b98739ccb98015c29ce06eacee1853";
   };
 
   nativeBuildInputs = [
@@ -52,9 +51,9 @@ stdenv.mkDerivation rec {
     xorg.xproto
   ];
 
-  sourceRoot = "spectrwm-SPECTRWM_${replace version}/linux";
-
-  postPatch =
+  postPatch = ''
+      cd linux
+    '' +
     /* Fix freetype path */ ''
       sed -i Makefile \
         -e 's,/usr/include/freetype2,${freetype}/include/freetype,'

@@ -9,8 +9,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/libmtp/${name}.tar.gz";
-    multihash = "QmW9zJhmHV6JiAd9Ee6a2iB9z7ueybnch4nGamhNG1ifQh";
-    sha256 = "0183r5is1z6qmdbj28ryz8k8dqijll4drzh8lic9xqig0m68vvhy";
+    multihash = "QmWzAD93fuGJiAQ5nH2N74RnKLfQLNZrYLcmH3JmitgWvu";
+    allowHashOutput = false;
+    sha256 = "15d96dff79a4f7ad14338894a4096d4ac584c6ad25fdcca955bc4726303287e9";
   };
 
   buildInputs = [
@@ -20,6 +21,15 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     configureFlagsArray+=("--with-udev=$out/lib/udev")
   '';
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "D33B C5C3 C0CC 59B6 3989  D77B EA7B F397 0175 623E";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://libmtp.sourceforge.net;

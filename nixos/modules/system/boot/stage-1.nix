@@ -146,14 +146,14 @@ let
       echo 'ENV{LD_LIBRARY_PATH}="${extraUtils}/lib"' > $out/00-env.rules
 
       rules=(
-        "50-udev-default.rules"
-        "60-block.rules"
-        "60-cdrom_id.rules"
-        "60-drm.rules"
-        "60-evdev.rules"
-        "60-persistent-input.rules"
-        "60-serial.rules"
-        "80-drivers.rules"
+        "50-udev-default"
+        "60-block"
+        "60-cdrom_id"
+        "60-drm"
+        "60-evdev"
+        "60-persistent-input"
+        "60-serial"
+        "80-drivers"
       )
       for rule in "''${rules[@]}"; do
         cp -v ${udev}/lib/udev/rules.d/$rule.rules $out/

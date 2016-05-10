@@ -47,14 +47,15 @@ with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
   # Use stable patch releases, e.g. -9 or -10
-  version = "6.9.2-10";
+  version = "7.0.1-3";
 
   src = fetchurl {
-    url = [
-      "mirror://imagemagick/releases/ImageMagick-${version}.tar.xz"
-      "mirror://imagemagick/ImageMagick-${version}.tar.xz"
+    urls = map (n: "${n}/ImageMagick-${version}.tar.xz") [
+      "mirror://imagemagick/releases"
+      "mirror://imagemagick"
     ];
-    sha256 = "0g01q8rygrf977d9rpixg1bhnavqfwzz30qpn7fj17yn8fx6ybys";
+    allowHashOutput = false;
+    sha256 = "4f5a39f145bb0326f811e0826a9216b8c449ee4485550aa8c2e7cfdaf26f08a0";
   };
 
   buildInputs = [
@@ -175,7 +176,14 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  enableParallelBuilding = true;
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "D827 2EF5 1DA2 23E4 D05B  4669 89AB 63D4 8277 377A";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A collection of tools and libraries for many image formats";
@@ -186,7 +194,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

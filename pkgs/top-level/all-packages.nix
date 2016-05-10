@@ -726,6 +726,8 @@ discosrv = pkgs.goPackages.discosrv.bin // { outputs = [ "bin" ]; };
 
 diffutils = callPackage ../all-pkgs/diffutils { };
 
+dmidecode = callPackage ../all-pkgs/dmidecode { };
+
 dnscrypt-proxy = callPackage ../all-pkgs/dnscrypt-proxy { };
 
 dnscrypt-wrapper = callPackage ../all-pkgs/dnscrypt-wrapper { };
@@ -8682,8 +8684,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  gnustep-xcode = callPackage ../development/tools/build-managers/gnustep/xcode { };
 #
 #  disk_indicator = callPackage ../os-specific/linux/disk-indicator { };
-#
-  dmidecode = callPackage ../os-specific/linux/dmidecode { };
 #
 #  dmtcp = callPackage ../os-specific/linux/dmtcp { };
 #

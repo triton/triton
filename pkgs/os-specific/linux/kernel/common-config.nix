@@ -42,7 +42,9 @@ with stdenv.lib;
   CRYPTO_LZ4 y
   CRYPTO_LZ4HC y
   CRYPTO_LZO y
-  CRYPTO_ZLIB y
+  ${optionalString (versionOlder version "4.6") ''
+    CRYPTO_ZLIB y
+  ''}
   LZ4_COMPRESS y
   LZ4_DECOMPRESS y
   LZ4HC_COMPRESS y

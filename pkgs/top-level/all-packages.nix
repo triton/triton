@@ -1860,6 +1860,8 @@ quasselClient = (pkgs.quassel.override {
 
 rapidjson = callPackage ../all-pkgs/rapidjson { };
 
+re2c = callPackage ../all-pkgs/re2c { };
+
 readline = callPackage ../all-pkgs/readline { };
 
 recode = callPackage ../all-pkgs/recode { };
@@ -6155,8 +6157,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  ragel = callPackage ../development/tools/parsing/ragel { };
 #
 #  hammer = callPackage ../development/tools/parsing/hammer { };
-#
-  re2c = callPackage ../development/tools/parsing/re2c { };
 #
 #  remake = callPackage ../development/tools/build-managers/remake { };
 #

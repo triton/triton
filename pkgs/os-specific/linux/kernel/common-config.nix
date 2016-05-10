@@ -22,10 +22,42 @@ with stdenv.lib;
 
 ''
   # Compress kernel modules for a sizable disk space savings.
-  ${optionalString (versionAtLeast version "3.18") ''
-    MODULE_COMPRESS y
-    MODULE_COMPRESS_XZ y
-  ''}
+  # We chose XZ for size savings
+  MODULE_COMPRESS y
+  #MODULE_COMPRESS_GZIP y
+  MODULE_COMPRESS_XZ y
+
+  # Compress the kernel
+  #KERNEL_BZIP2 y
+  #KERNEL_GZIP y
+  #KERNEL_LZ4 y
+  #KERNEL_LZMA y
+  #KERNEL_LZO y
+  KERNEL_XZ y
+
+  # Enable all of the crypto libraries directly in the kernel
+  # This way the kernel supports any of the needed decompression
+  # schemes at boot.
+  CRYPTO_DEFLATE y
+  CRYPTO_LZ4 y
+  CRYPTO_LZ4HC y
+  CRYPTO_LZO y
+  CRYPTO_ZLIB y
+  LZ4_COMPRESS y
+  LZ4_DECOMPRESS y
+  LZ4HC_COMPRESS y
+  LZO_COMPRESS y
+  LZO_DECOMPRESS y
+  XZ_DEC y
+  XZ_DEC_X86 y
+  ZLIB_INFLATE y
+  ZLIB_DEFLATE y
+  DECOMPRESS_BZIP2 y
+  DECOMPRESS_GZIP y
+  DECOMPRESS_LZMA y
+  DECOMPRESS_LZO y
+  DECOMPRESS_LZ4 y
+  DECOMPRESS_XZ y
 
   # Debugging.
   DEBUG_KERNEL y

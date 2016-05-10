@@ -20,6 +20,10 @@ stdenv.mkDerivation rec {
     systemd_lib
   ];
 
+  configureFlags = [
+    "--enable-compat-symlinks"
+  ];
+
   passthru = {
     srcVerified = fetchurl {
       failEarly = true;

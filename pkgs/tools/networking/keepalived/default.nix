@@ -2,7 +2,7 @@
 , fetchurl
 
 , libnl
-, net_snmp
+, net-snmp
 , openssl
 }:
 
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libnl
-    net_snmp
+    net-snmp
     openssl
   ];
 

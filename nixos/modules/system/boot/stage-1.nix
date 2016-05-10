@@ -370,10 +370,12 @@ in
 
     boot.initrd.compressor = mkOption {
       internal = true;
-      default = "xz -6";
+      # We need --check=crc32 since the default crc64 is not supported
+      # by the kernel
+      default = "xz --check=crc32 -6";
       type = types.str;
       description = "The compressor to use on the initrd image.";
-      example = "xz";
+      example = "gzip -9n";
     };
 
     boot.initrd.supportedFilesystems = mkOption {

@@ -110,11 +110,11 @@ let
   };
 
   crypto = buildFromGitHub {
-    rev = "47ff8dfbc528fea3003fc0ce2d88ffbbfbc46a43";
-    date = "2016-05-06";
+    rev = "b76c864ef1dca1d8f271f917c290cddcce3d9e0d";
+    date = "2016-04-25";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "0bdz4az6xnsgj7ahl8mvxagcl9yrzqfd3q7f873f1a0jlwmkiha5";
+    sha256 = "1v823k7p7b0h3rhp9zg79gdpllqm86389sbbq9vr6p2c162wx4d2";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -152,11 +152,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "2a35e686583654a1b89ca79c4ac78cb3d6529ca3";
-    date = "2016-05-06";
+    rev = "96dbb961a39ddccf16860cdd355bfa639c497f23";
+    date = "2016-05-10";
     owner  = "golang";
     repo   = "net";
-    sha256 = "1zr4pq1kqn42fhxpxics9iw574bywbc21zmcd7ibjx97d3idbfh9";
+    sha256 = "05wg4mirlbpwsh360lifkyngrs17qrbr8bpbf3bnygiyrnl5m397";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -217,21 +217,21 @@ let
   };
 
   text = buildFromGitHub {
-    rev = "bd1c9905f55d983c0cd0b15cf0c3e2fe860c8902";
-    date = "2016-04-28";
+    rev = "f773ec03ce334298742df7f3108fc0d402646d22";
+    date = "2016-05-05";
     owner = "golang";
     repo = "text";
-    sha256 = "15p33l1sf4rm40lkz5jsx368xxyqz17r740pvjc68idhn3xgx6h2";
+    sha256 = "1ag0cy3cqdlg53zibha3b94a9xd7qr4xiv2kmxra6nln3qg09az7";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
   };
 
   tools = buildFromGitHub {
-    rev = "0b2f4dcf4db5371000beb66b65cde17aa91a28a2";
-    date = "2016-05-01";
+    rev = "c86fe5956d4575f29850535871a97abbd403a145";
+    date = "2016-04-13";
     owner = "golang";
     repo = "tools";
-    sha256 = "0dqpksaq6rrbf4bm0bd6d0s7rgawr14vc11qb7giqnlb23fmcdih";
+    sha256 = "080rmdnbcdll4jgdkc822vdsy662rb747p91rph1zzqbfmj02pm1";
     goPackagePath = "golang.org/x/tools";
     goPackageAliases = [ "code.google.com/p/go.tools" ];
 
@@ -300,10 +300,10 @@ let
   };
 
   aws-sdk-go = buildFromGitHub {
-    rev = "v1.1.23";
+    rev = "v1.1.24";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "1p86aavhqsy6lqvz833gkfq02k2c459hqszlxkaqqvcn81ymm9sf";
+    sha256 = "0ib4w5lvknlmww1pgyvkv1hy7vx64cq1scxak59j3mpjmh95qlsw";
     buildInputs = [ testify gucumber tools ];
     propagatedBuildInputs = [ ini go-jmespath ];
 
@@ -405,18 +405,18 @@ let
   };
 
   codegangsta-cli = buildFromGitHub {
-    rev = "v1.16.0";
+    rev = "v1.17.0";
     owner = "codegangsta";
     repo = "cli";
-    sha256 = "1m3m0znsc63cgsxhrq1krbh8f4z06632xyvv5zhq53d7r8wdlk8w";
+    sha256 = "0171xw72kvsk4zcygvrmslcir9qp7q4v1lh6rpllayf9ws1253dl";
     buildInputs = [ yaml-v2 ];
   };
 
   cli-go = buildFromGitHub {
-    rev = "v1.16.0";
+    rev = "v1.17.0";
     owner  = "codegangsta";
     repo   = "cli";
-    sha256 = "1m3m0znsc63cgsxhrq1krbh8f4z06632xyvv5zhq53d7r8wdlk8w";
+    sha256 = "0171xw72kvsk4zcygvrmslcir9qp7q4v1lh6rpllayf9ws1253dl";
   };
 
   columnize = buildFromGitHub {
@@ -529,11 +529,11 @@ let
   };
 
   dns = buildFromGitHub {
-    rev = "435593900842b8eff4c624ce6a903f71c9552ae2";
-    date = "2016-05-03";
+    rev = "b5deb9f6c09fdf6f81acb98398bff176d2b75904";
+    date = "2016-05-07";
     owner  = "miekg";
     repo   = "dns";
-    sha256 = "06a72hqgx40a9nmxj3ynlmw6yyhwyp2x1p2ankqz1i0yix1dlljq";
+    sha256 = "0dpz4zb93cxm2vgpxm780nqapyz12js3i4haqa2w6ia1wbp5h44q";
   };
 
   weppos-dnsimple-go = buildFromGitHub {
@@ -669,13 +669,13 @@ let
   };
 
   gcloud-golang = buildFromGoogle {
-    rev = "200292f09e3aaa34878d801ab71fe823b1f7d36a";
+    rev = "402fb3d2012d81d840852c2c0d87d1b83ac82e07";
     repo = "cloud";
-    sha256 = "ab7b5eec625a74410cd23b3fd1d214b7aaf241a0c33f13113a2dd21283b869db";
+    sha256 = "1apgwa1g4k229hpw01vpmhjmlcbrx4636kpdiy279fqilag6d1yr";
     propagatedBuildInputs = [ net oauth2 protobuf google-api-go-client grpc ];
     excludedPackages = "oauth2";
     meta.hydraPlatforms = [ ];
-    date = "2016-04-28";
+    date = "2016-05-10";
   };
 
   gcloud-golang-compute-metadata = buildFromGoogle {

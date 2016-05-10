@@ -8,23 +8,25 @@
 stdenv.mkDerivation {
   name = "squashfs.img";
 
-  buildInputs = [perl squashfs-tools];
+  buildInputs = [
+    perl
+    squashfs-tools
+  ];
 
   # For obtaining the closure of `storeContents'.
   exportReferencesGraph =
     map (x: [("closure-" + baseNameOf x) x]) storeContents;
 
-  buildCommand =
-    ''
-      # Add the closures of the top-level store objects.
-      storePaths=$(perl ${pathsFromGraph} closure-*)
+  buildCommand = ''
+    # Add the closures of the top-level store objects.
+    storePaths=$(perl ${pathsFromGraph} closure-*)
 
-      # Also include a manifest of the closures in a format suitable
-      # for nix-store --load-db.
-      printRegistration=1 perl ${pathsFromGraph} closure-* > nix-path-registration
+    # Also include a manifest of the closures in a format suitable
+    # for nix-store --load-db.
+    printRegistration=1 perl ${pathsFromGraph} closure-* > nix-path-registration
 
-      # Generate the squashfs image.
-      mksquashfs nix-path-registration $storePaths $out \
-        -keep-as-directory -all-root
-    '';
+    # Generate the squashfs image.
+    mksquashfs nix-path-registration $storePaths $out \
+      -keep-as-directory -all-root -comp xz
+  '';
 }

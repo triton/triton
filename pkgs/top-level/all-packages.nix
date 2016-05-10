@@ -503,6 +503,8 @@ adns = callPackage ../all-pkgs/adns { };
 
 adwaita-icon-theme = callPackage ../all-pkgs/adwaita-icon-theme { };
 
+alsa-lib = callPackage ../all-pkgs/alsa-lib { };
+
 amrnb = callPackage ../all-pkgs/amrnb { };
 
 amrwb = callPackage ../all-pkgs/amrwb { };
@@ -8610,8 +8612,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  alienfx = callPackage ../os-specific/linux/alienfx { };
 #
   alsa-firmware = callPackage ../os-specific/linux/alsa-firmware { };
-
-  alsa-lib = callPackage ../os-specific/linux/alsa-lib { };
 
   alsa-plugins = callPackage ../os-specific/linux/alsa-plugins { };
 

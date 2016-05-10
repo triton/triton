@@ -96,13 +96,13 @@ let
       usage_size=$(du -sb --apparent-size . | tr -cd '[:digit:]')
       # Make the image 110% as big as the files need to make up for FAT overhead
       image_size=$(( ($usage_size * 110) / 100 ))
-      # Make the image fit blocks of 1M
-      block_size=$((1024*1024))
+      # Make the image fit blocks of 1K and sectors of 63
+      block_size=$(( 1024 * 63 ))
       image_size=$(( ($image_size / $block_size + 1) * $block_size ))
       echo "Usage size: $usage_size"
       echo "Image size: $image_size"
       truncate --size=$image_size "$out"
-      ${pkgs.libfaketime}/bin/faketime "2000-01-01 00:00:00" ${pkgs.dosfstools}/sbin/mkfs.vfat -i 12345678 -n EFIBOOT "$out"
+      ${pkgs.libfaketime}/bin/faketime "2000-01-01 00:00:00" ${pkgs.dosfstools}/bin/mkfs.vfat -i 12345678 -n EFIBOOT "$out"
       mcopy -bpsvm -i "$out" ./* ::
     ''; # */
 

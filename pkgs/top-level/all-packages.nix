@@ -1351,6 +1351,8 @@ libmpeg2 = callPackage ../all-pkgs/libmpeg2 {
 
 libmsgpack = callPackage ../all-pkgs/libmsgpack { };
 
+libmtp = callPackage ../all-pkgs/libmtp { };
+
 libmusicbrainz = callPackage ../all-pkgs/libmusicbrainz { };
 
 libnetfilter_conntrack = callPackage ../all-pkgs/libnetfilter_conntrack { };
@@ -7011,8 +7013,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
   libmediainfo = callPackage ../development/libraries/libmediainfo { };
 #
 #  libmodbus = callPackage ../development/libraries/libmodbus {};
-#
-  libmtp = callPackage ../development/libraries/libmtp { };
 #
   libnatspec = callPackage ../development/libraries/libnatspec { };
 #

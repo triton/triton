@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
     owner = "ftrvxmtrx";
     repo = "split2flac";
     rev = version;
-    sha256 = "163b757cb6efa69c1d731484bb9fe701c65859b62f24072ef14aedbc2343bce4";
+    sha256 = "986ccf3dc48e4f03b3d7ceaa7628be11cb6b5ee0934e7e46229ac70dc6ffbd41";
   };
 
   nativeBuildInputs = [

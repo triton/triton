@@ -18,7 +18,7 @@ let
     version = "1.4.0-8";
     src = fetchzip {
       url = "mirror://debian/pool/main/v/vorbis-tools/vorbis-tools_${version}.debian.tar.xz";
-      sha256 = "87194f03a0fe06fede2b5d217edfef1acbe46bdb4de85a031000bd07fc0502ed";
+      sha256 = "733fb214874c35a535b2c5ac391bbf4059ea9bbad4edda75bdca828781eddbc8";
     };
     doConfigure = false;
     doBuild = false;

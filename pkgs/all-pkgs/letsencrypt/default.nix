@@ -13,7 +13,7 @@ pythonPackages.buildPythonPackage rec {
     owner = "letsencrypt";
     repo = "letsencrypt";
     rev = "v${version}";
-    sha256 = "4f2178ec975e3519b2be7848bcb4fc26d0b406c249fb4432f0672c925ca7fedf";
+    sha256 = "d1941faa21109f452d1d4e58cb6015b6bc8b188aa00a6f71191840f0b38ec302";
   };
 
   pythonPath = with pythonPackages; [

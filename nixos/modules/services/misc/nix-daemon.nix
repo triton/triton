@@ -376,6 +376,7 @@ in
           { Nice = cfg.daemonNiceLevel;
             IOSchedulingPriority = cfg.daemonIONiceLevel;
             LimitNOFILE = 4096;
+            LimitNPROC = 8192;
           };
 
         restartTriggers = [ nixConf ];

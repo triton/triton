@@ -252,6 +252,7 @@
       hydra-queue-runner = 235;
       hydra-www = 236;
       syncthing = 237;
+      knot = 238;
 
       # When adding a uid, make sure it doesn't match an existing gid. And don't use uids above 399!
 
@@ -479,6 +480,7 @@
       rmilter = 226;
       ipfs = 227;
       syncthing = 237;
+      knot = 238;
 
       # When adding a gid, make sure it doesn't match an existing
       # uid. Users and groups with the same name should have equal

@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://c-ares.haxx.se/download/${name}.tar.gz";
+    multihash = "QmXX8as81aiPEXrsD8msZjHhXTy1esYrPaDwUjnTjzkaDi";
     sha256 = "1z9y1f835dpi1ka2a2vzjygm3djdvr01036ml4l2js6r2xk2wqdk";
   };
 

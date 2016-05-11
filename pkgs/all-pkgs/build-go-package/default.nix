@@ -148,8 +148,9 @@ go.stdenv.mkDerivation (
       fi
     }
 
-    export -f buildGoDir
-    getGoDirs "" | parallel -j $NIX_BUILD_CORES buildGoDir install
+    while read dir; do
+      buildGoDir install "$dir"
+    done < <(getGoDirs "")
 
     runHook postBuild
   '';
@@ -157,7 +158,9 @@ go.stdenv.mkDerivation (
   checkPhase = args.checkPhase or ''
     runHook preCheck
 
-    getGoDirs test | parallel -j $NIX_BUILD_CORES buildGoDir test
+    while read dir; do
+      buildGoDir test "$dir"
+    done < <(getGoDirs test)
 
     runHook postCheck
   '';

@@ -1,4 +1,4 @@
-{stdenv, git, cacert}: let
+{stdenv, git}: let
   urlToName = url: rev: let
     base = baseNameOf (stdenv.lib.removeSuffix "/" url);
 

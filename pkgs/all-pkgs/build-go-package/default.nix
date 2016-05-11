@@ -124,7 +124,7 @@ go.stdenv.mkDerivation (
       d="$2"
       [ -n "$excludedPackages" ] && echo "$d" | grep -q "$excludedPackages" && return 0
       local OUT
-      if ! OUT="$(go $cmd $buildFlags "''${buildFlagsArray[@]}" -v $d 2>&1)"; then
+      if ! OUT="$(go $cmd -p $NIX_BUILD_CORES $buildFlags "''${buildFlagsArray[@]}" -v $d 2>&1)"; then
         if ! echo "$OUT" | grep -q '\(no buildable Go source files\)'; then
           echo "$OUT" >&2
           return 1

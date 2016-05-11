@@ -15,7 +15,7 @@ let
 
   replace = v: replaceStrings ["."] ["_"] v;
 
-  version = "3.0.1";
+  version = "2.7.2";
 in
 
 stdenv.mkDerivation rec {
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/conformal/spectrwm/archive/"
         + "SPECTRWM_${replace version}.tar.gz";
-    sha256 = "315fe232e8ac727c289fde8c9b3a3eba19b98739ccb98015c29ce06eacee1853";
+    sha256 = "23a5b306c5cdfda05eba365b652eca34e87f0b4317c7ff8059813adaa1c55afb";
   };
 
   nativeBuildInputs = [

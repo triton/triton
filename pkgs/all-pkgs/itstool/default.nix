@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
   src = fetchurl rec {
     url = "http://files.itstool.org/itstool/${name}.tar.bz2";
     sha256Url = "${url}.sha256sum";
+    multihash = "QmdREXRdirzgfKR9cXpkuL8VmoeGq3XrPfp2moi8fC78Ug";
     sha256 = "bf909fb59b11a646681a8534d5700fec99be83bb2c57badf8c1844512227033a";
   };
 

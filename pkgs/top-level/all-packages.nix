@@ -1180,6 +1180,8 @@ isl_0_14 = callPackage ../all-pkgs/isl { channel = "0.14"; };
 
 iso-codes = callPackage ../all-pkgs/iso-codes { };
 
+itstool = callPackage ../all-pkgs/itstool { };
+
 jam = callPackage ../all-pkgs/jam { };
 
 jansson = callPackage ../all-pkgs/jansson { };
@@ -6055,8 +6057,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ired = callPackage ../development/tools/analysis/radare/ired.nix { };
 #
-  itstool = callPackage ../development/tools/misc/itstool { };
-
 #  jikespg = callPackage ../development/tools/parsing/jikespg { };
 #
 #  jenkins = callPackage ../development/tools/continuous-integration/jenkins { };

@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     owner = "LMDB";
     repo = "lmdb";
     rev = "LMDB_${version}";
-    sha256 = "44173b3ed9f4fe0922ce14b125988e547a3a88dca079e3ee979e536556c974f9";
+    sha256 = "4a0916272d70cb47d2576259fc0e72c48efb9aa86bc16f253c247479670a5123";
   };
 
   prePatch = ''

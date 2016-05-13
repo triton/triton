@@ -21,11 +21,11 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "ncmpcpp-0.7.3";
+  name = "ncmpcpp-0.7.4";
 
   src = fetchurl {
     url = "http://ncmpcpp.rybczak.net/stable/${name}.tar.bz2";
-    sha256 = "04mj6r0whikliblxfbz92pibwcd7a3ywkryf01a89zd4bi1jk2rc";
+    sha256 = "d70425f1dfab074a12a206ddd8f37f663bce2bbdc0a20f7ecf290ebe051f1e63";
   };
 
   buildInputs = [

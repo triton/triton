@@ -31,11 +31,11 @@ in
 
 stdenv.mkDerivation rec {
   name = "kid3-${version}";
-  version = "3.3.2";
+  version = "3.4.0";
 
   src = fetchurl {
     url = "mirror://sourceforge/kid3/kid3/${version}/${name}.tar.gz";
-    sha256 = "d54c164e38ee8ff2c35473a7158e2748cbb6a9472822a96decf6e34a15458957";
+    sha256 = "4dd67023e047d62985339eb3ba75e95dda6cf71c30f58785b57f4823bf11bfbf";
   };
 
   nativeBuildInputs = [

@@ -6,14 +6,21 @@
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "mariadb-${version}";
-  version = "10.1.12";
+  version = "10.1.14";
 
   src = fetchurl {
-    url    = "https://downloads.mariadb.org/interstitial/mariadb-${version}/source/mariadb-${version}.tar.gz";
-    sha256 = "1rzlc2ns84x540asbkgdp9562haxhlszfpdqh64i9pz4q1m4cpvr";
+    urls = map (n: "${n}/${name}/source/${name}.tar.gz") [
+      "https://downloads.mariadb.org/interstitial"
+      "http://mirror.jmu.edu/pub/mariadb"
+    ];
+    allowHashOutput = false;
+    sha256 = "18e71974a059a268a3f28281599607344d548714ade823d575576121f76ada13";
   };
 
-  nativeBuildInputs = [ cmake ninja ];
+  nativeBuildInputs = [
+    cmake
+    ninja
+  ];
   buildInputs = [
     ncurses openssl zlib xz lzo lz4 bzip2 snappy
     pcre libxml2 boost judy bison libevent cracklib
@@ -82,7 +89,15 @@ stdenv.mkDerivation rec {
     rm $out/lib/*.a
   '';
 
-  passthru.mysqlVersion = "5.6";
+  passthru = {
+    mysqlVersion = "5.6";
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "1993 69E5 404B D5FC 7D2F  E43B CBCB 082A 1BB9 43DB";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "An enhanced, drop-in replacement for MySQL";

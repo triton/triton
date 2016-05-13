@@ -25,11 +25,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "colord-1.2.12";
+  name = "colord-1.3.2";
 
-  src = fetchurl {
-    url = "http://www.freedesktop.org/software/colord/releases/${name}.tar.xz";
-    sha256 = "0flcsr148xshjbff030pgyk9ar25an901m9q1pjgjdvaq5j1h96m";
+  src = fetchurl rec {
+    url = "https://www.freedesktop.org/software/colord/releases/${name}.tar.xz";
+    sha1Url = "${url}.sha1";
+    sha256 = "d4ab3f11ec5e98d1079242fda7ad0a84a51da93572405561362a6ce2c274b8f5";
   };
 
   nativeBuildInputs = [

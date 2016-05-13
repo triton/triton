@@ -34,13 +34,13 @@ assert xorg != null ->
 stdenv.mkDerivation rec {
   name = "vino-${version}";
   versionMajor = "3.20";
-  versionMinor = "1";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/vino/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/vino/${versionMajor}/${name}.sha256sum";
-    sha256 = "d7f4a6d58ae864904487ce6b8f298a6f51268e9148be377e64134aa542b15fc7";
+    sha256 = "660488adc1bf577958e783d13f61dbd99c1d9c4e81d2ca063437ea81d39e4413";
   };
 
   nativeBuildInputs = [

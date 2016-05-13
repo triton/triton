@@ -28,13 +28,13 @@ in
 stdenv.mkDerivation rec {
   name = "file-roller-${version}";
   versionMajor = "3.20";
-  versionMinor = "1";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/file-roller/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/file-roller/${versionMajor}/${name}.sha256sum";
-    sha256 = "c8b3db59ae12d0efde2e8e28d0cb475508ffc33bf08aa5194fbf5f702b6aa333";
+    sha256 = "93188a7ac9285cb85551c327082aeaeb51ac39a9722cb96b0e29d5ec2ae353c6";
   };
 
   nativeBuildInputs = [

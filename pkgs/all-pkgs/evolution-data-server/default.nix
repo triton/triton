@@ -39,7 +39,7 @@ in
 stdenv.mkDerivation rec {
   name = "evolution-data-server-${version}";
   versionMajor = "3.20";
-  versionMinor = "1";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
       + "${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/evolution-data-server/${versionMajor}/"
       + "${name}.sha256sum";
-    sha256 = "1dfbf6b45656c202f3d68212afb11710e40188db84748d3e487a89ccd4874b53";
+    sha256 = "8cdc74b08f1404f5df4b8cf5ccc4999a3e70a1db9ce472f71b623266941ffad9";
   };
 
   nativeBuildInputs = [

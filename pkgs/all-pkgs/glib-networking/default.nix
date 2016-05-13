@@ -17,12 +17,13 @@ in
 stdenv.mkDerivation rec {
   name = "glib-networking-${version}";
   versionMajor = "2.48";
-  versionMinor = "0";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/glib-networking/${versionMajor}/${name}.tar.xz";
-    sha256 = "7a1f3312e757b97af94e2db8a1f14eb9cc018c983931ecdf3b0c54acece39024";
+    sha256Url = "mirror://gnome/sources/glib-networking/${versionMajor}/${name}.sha256sum";
+    sha256 = "925c0c49d6b2b8b5695f2e33cd952d1dbb7d18d3f2f796413577719315bb3a84";
   };
 
   nativeBuildInputs = [

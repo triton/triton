@@ -65,13 +65,13 @@ in
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";
   versionMajor = "3.20";
-  versionMinor = "3";
+  versionMinor = "4";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.sha256sum";
-    sha256 = "3834f3bf23b260b3e5ebfea41102e2026a8af29e36c3620edf4a5cf05e82f694";
+    sha256 = "e7e3aaf54a54dd1c1ca0588939254abe31329e0bcd280a12290d5306b41ea03f";
   };
 
   nativeBuildInputs = [

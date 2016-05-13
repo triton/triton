@@ -22,12 +22,13 @@
 stdenv.mkDerivation rec {
   name = "gnome-calculator-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-calculator/${versionMajor}/${name}.tar.xz";
-    sha256 = "504da356f4ab9d2a6ec989e2769ccf00afdbfb5aa8bd57e60c1e8f21652e0c92";
+    sha256Url = "mirror://gnome/sources/gnome-calculator/${versionMajor}/${name}.sha256sum";
+    sha256 = "02edcf99857599ac10ecd2faaf33ad20a9f11f7c5a89a52ee1b511d99b594b90";
   };
 
   propagatedUserEnvPkgs = [

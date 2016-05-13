@@ -30,7 +30,8 @@
 , enableWeb ? true
 
 # External plugins
-, enableAlternatives ? false
+, enableAlternatives ? true
+, enableCopyArtifacts ? true
 
 , bash
 , bashCompletion
@@ -180,8 +181,11 @@ buildPythonPackage rec {
     ++ optional enableMpd python2Packages.mpd
     ++ optional enableThumbnails python2Packages.pyxdg
     ++ optional enableWeb python2Packages.flask
-    ++ optional enableAlternatives (import ./alternatives-plugin.nix {
+    ++ optional enableAlternatives (import ./plugins/beets-alternatives.nix {
       inherit stdenv buildPythonPackage python2Packages fetchFromGitHub;
+    })
+    ++ optional enableCopyArtifacts (import ./plugins/beets-copyartifacts.nix {
+      inherit stdenv buildPythonPackage python2Packages fetchFromGitHub fetchTritonPatch;
     });
 
   buildInputs = [

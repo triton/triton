@@ -48,13 +48,13 @@ assert stdenv.cc.isGNU;
 stdenv.mkDerivation rec {
   name = "glib-${version}";
   versionMajor = "2.48";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/glib/${versionMajor}/${name}.sha256sum";
-    sha256 = "744be6931ca914c68af98dc38ff6b0cf8381d65e335060faddfbf04c17147c34";
+    sha256 = "74411bff489cb2a3527bac743a51018841a56a4d896cc1e0d0d54f8166a14612";
   };
 
   nativeBuildInputs = [

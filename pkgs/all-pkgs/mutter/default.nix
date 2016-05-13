@@ -62,13 +62,13 @@ assert xorg != null ->
 stdenv.mkDerivation rec {
   name = "mutter-${version}";
   versionMajor = "3.20";
-  versionMinor = "1";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/mutter/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/mutter/${versionMajor}/${name}.sha256sum";
-    sha256 = "6a4903b9e2b0699c95195c36d1f31a789571c63f2ee3cfe2475e2955e7dca21c";
+    sha256 = "1e8c46a81e21f382f56729282fcd0bb1c3a2067135f4b0f3651b307bf7a5b454";
   };
 
   nativeBuildInputs = [

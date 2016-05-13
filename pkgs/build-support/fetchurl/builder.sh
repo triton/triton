@@ -397,7 +397,7 @@ curl="curl \
  --disable-epsv \
  --cookie-jar cookies \
  --speed-limit 10240 \
- --speed-time 5 \
+ --speed-time 10 \
  $curlOpts \
  $NIX_CURL_FLAGS"
 

@@ -64,12 +64,12 @@ in
 stdenv.mkDerivation rec {
   name = "mpd-${version}";
   versionMajor = "0.19";
-  versionMinor = "14";
+  versionMinor = "15";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url    = "http://www.musicpd.org/download/mpd/${versionMajor}/${name}.tar.xz";
-    sha256 = "2fd23805132e5002a4d24930001a7c7d3aaf55e3bd0cd71af5385895160e99e7";
+    url    = "https://www.musicpd.org/download/mpd/${versionMajor}/${name}.tar.xz";
+    sha256 = "0cb9a223894b038ce966ce6d651d9b3ea3bdc7d7b9bec8d1e9e7e091cbc29b8b";
   };
 
   buildInputs = [

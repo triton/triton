@@ -26,12 +26,12 @@ in
 stdenv.mkDerivation rec {
   name = "libgweather-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libgweather/${versionMajor}/${name}.tar.xz";
-    sha256 = "52629b8e9fcd979377f43a2223cf0e7096d3c3e940faa94021132ee0f879b8d6";
+    sha256 = "81eb829fab6375cc9a4d448ae0f790e48f9720e91eb74678b22264cfbc8938d0";
   };
 
   nativeBuildInputs = [

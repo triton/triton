@@ -24,11 +24,8 @@ let
 in
 
 let
-  version = "3103";
+  version = "3114";
 in
-
-assert stdenv.system != "x86_64-linux" ->
-  throw "Sublime Text is not supported on the `${system}` platform";
 
 let
   sublime-text-bin = stdenv.mkDerivation rec {
@@ -36,8 +33,8 @@ let
 
     src = fetchurl {
       url = "https://download.sublimetext.com/"
-          + "sublime_text_3_build_${version}_x64.tar.bz2";
-      sha256 = "1x8kb3prs6wa5s5rj0gfq96zx6k5q3s168yhfsa36x2szi6x6y4x";
+        + "sublime_text_3_build_${version}_x64.tar.bz2";
+      sha256 = "c6409bfc0841a02dfa3ba194015c7c87ea41ade9d61407d421ca947fe713b15a";
     };
 
     nativeBuildInputs = [
@@ -98,6 +95,12 @@ let
 
     dontStrip = true;
     dontPatchELF = true;
+
+    meta = with stdenv.lib; {
+      license = licenses.unfreeRedistributable;
+      platforms = with platforms;
+        x86_64-linux;
+    };
   };
 in
 
@@ -122,10 +125,10 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Sophisticated text editor for code, markup and prose";
     homepage = https://www.sublimetext.com/;
+    license = licenses.unfreeRedistributable;
     maintainers = with maintainers; [
       codyopel
     ];
-    license = licenses.unfreeRedistributable;
     platforms = with platforms;
       x86_64-linux;
   };

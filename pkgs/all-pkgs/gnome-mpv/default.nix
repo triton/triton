@@ -18,7 +18,7 @@
 , libepoxy
 , librsvg
 , mpv
-, pythonPackages
+, python2Packages
 , wayland
 , xorg
 }:
@@ -30,13 +30,13 @@ in
 
 stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
-  version = "2016-05-25";
+  version = "2016-05-13";
 
   src = fetchFromGitHub {
     owner = "gnome-mpv";
     repo = "gnome-mpv";
-    rev = "b1141f5c405b5b8d3cef63f74ca92fa0a59700fe";
-    sha256 = "8fea8e4df66bfdceff418074a10f68a9ea6f8e3421a04f27060eab268329c65f";
+    rev = "25331500ae54c7ec94bd9ac954125ae025219378";
+    sha256 = "2466643dae3c56dd33f7487375e014f07326a43d083349e5da0533ec07738fbb";
   };
 
   nativeBuildInputs = [
@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
     libepoxy
     librsvg
     mpv
-    pythonPackages.youtube-dl
+    python2Packages.youtube-dl
     wayland
     xorg.libX11
   ];

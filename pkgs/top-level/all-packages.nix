@@ -1232,6 +1232,8 @@ letsencrypt = callPackage ../all-pkgs/letsencrypt { };
 
 lftp = callPackage ../all-pkgs/lftp { };
 
+lib-bash = callPackage ../all-pkgs/lib-bash { };
+
 libaccounts-glib = callPackage ../all-pkgs/libaccounts-glib { };
 
 libaio = callPackage ../all-pkgs/libaio { };

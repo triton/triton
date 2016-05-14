@@ -2,7 +2,6 @@
 , buildPythonPackage
 , fetchFromGitHub
 , fetchTritonPatch
-
 , python2Packages
 }:
 
@@ -27,8 +26,10 @@ buildPythonPackage rec {
   ];
 
   postPatch = /* Prevent recursive dependency on beets */ ''
+    #sed -i setup.py \
+    #  -e '/install_requires/,/\]/{/beets/d}'
     sed -i setup.py \
-      -e '/install_requires/,/\]/{/beets/d}'
+      -e '/install_requires/d'
   '';
 
   meta = with stdenv.lib; {

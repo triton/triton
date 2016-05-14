@@ -6,35 +6,18 @@
 , makeWrapper
 , writeScript
 
-, python
-, python2Packages
+, bash
+, bashCompletion
+, bs1770gain
+, flac
 , imagemagick
-
-, enableAcousticbrainz ? true
-, enableAcoustid ? true
-, enableBadfiles ? true
-  , flac ? null
-  , mp3val ? null
-, enableBpd ? false
-  , gst-plugins-base_0 ? null
-  , gstreamer_0
-, enableDiscogs ? true
-, enableEchonest ? true
-, enableEmbyUpdate ? true
-, enableFetchart ? true
-, enableLastfm ? true
-, enableMpd ? true
-, enableReplaygain ? true
-  , bs1770gain ? null
-, enableThumbnails ? true
-, enableWeb ? true
+, mp3val
+, python2Packages
 
 # External plugins
 , enableAlternatives ? true
-, enableCopyArtifacts ? true
-
-, bash
-, bashCompletion
+#, enableCopyArtifacts ? true
+, enableDsedivecBeetsPlugins ? true
 }:
 
 let
@@ -54,40 +37,87 @@ let
     platforms;
 in
 
-assert enableAcoustid -> python2Packages.pyacoustid != null;
-assert enableBadfiles ->
-  flac != null
-  && mp3val != null;
-assert enableBpd ->
-  python2Packages.pygobject_2 != null
-  && gst-plugins-base_0 != null
-  && gstreamer_0 != null;
-assert enableDiscogs -> python2Packages.discogs_client != null;
-assert enableEchonest -> python2Packages.pyechonest != null;
-assert enableFetchart -> python2Packages.responses != null;
-assert enableLastfm -> python2Packages.pylast != null;
-assert enableMpd -> python2Packages.mpd != null;
-assert enableReplaygain -> bs1770gain != null;
-assert enableThumbnails -> python2Packages.pyxdg != null;
-assert enableWeb -> python2Packages.flask != null;
-
 let
   optionalPlugins = {
-    acousticbrainz = enableAcousticbrainz;
-    badfiles = enableBadfiles;
-    bpd = enableBpd;
-    chroma = enableAcoustid;
-    discogs = enableDiscogs;
-    echonest = enableEchonest;
-    embyupdate = enableEmbyUpdate;
-    fetchart = enableFetchart;
-    lastgenre = enableLastfm;
-    lastimport = enableLastfm;
-    mpdstats = enableMpd;
-    mpdupdate = enableMpd;
-    replaygain = enableReplaygain;
-    thumbnails = enableThumbnails;
-    web = enableWeb;
+    # TODO: write a generic function to detect null dependencies
+    acousticbrainz =
+      if python2Packages.requests2 != null then
+        true
+      else
+        false;
+    badfiles =
+      if flac != null
+         && mp3val != null then
+        true
+      else
+        false;
+    bpd =
+      #if python2Packages.pygobject_2 != null
+      #   && gst-plugins-base_0 != null
+      #   && gstreamer_0 != null then
+      #  true
+      #else
+        false;
+    chroma =
+      if python2Packages.pyacoustid != null then
+        true
+      else
+        false;
+    discogs =
+      if python2Packages.discogs_client != null then
+        true
+      else
+        false;
+    echonest =
+      if python2Packages.pyechonest != null then
+        true
+      else
+        false;
+    embyupdate =
+      if python2Packages.requests2 != null then
+        true
+      else
+        false;
+    fetchart =
+      if python2Packages.requests2 != null then
+        true
+      else
+        false;
+    lastgenre =
+      if python2Packages.pylast != null then
+        true
+      else
+        false;
+    lastimport =
+      if python2Packages.pylast != null then
+        true
+      else
+        false;
+    mpdstats =
+      if python2Packages.mpd != null then
+        true
+      else
+        false;
+    mpdupdate =
+      if python2Packages.mpd != null then
+        true
+      else
+        false;
+    replaygain =
+      if bs1770gain != null then
+        true
+      else
+        false;
+    thumbnails =
+      if python2Packages.pyxdg != null then
+        true
+      else
+        false;
+    web =
+      if python2Packages.flask != null then
+        true
+      else
+        false;
   };
 
   pluginsWithoutDeps = [
@@ -139,7 +169,6 @@ let
 
   testShell = "${bash}/bin/bash --norc";
   completion = "${bashCompletion}/share/bash-completion/bash_completion";
-
 in
 
 buildPythonPackage rec {
@@ -159,46 +188,64 @@ buildPythonPackage rec {
   ];
 
   propagatedBuildInputs = [
+    bs1770gain
+    flac
+    imagemagick
+    mp3val
+    python2Packages.beautifulsoup4
+    python2Packages.discogs_client
     python2Packages.enum34
+    python2Packages.flask
     python2Packages.itsdangerous
     python2Packages.jellyfish
     python2Packages.jinja2
+    python2Packages.mock
+    python2Packages.mpd
     python2Packages.munkres
     python2Packages.musicbrainzngs
     python2Packages.mutagen
-    python2Packages.pathlib
-    python2Packages.pyyaml
-    python2Packages.unidecode
-    python2Packages.werkzeug
-  ] ++ optional enableAcoustid python2Packages.pyacoustid
-    ++ optional (
-      enableFetchart
-      || enableEmbyUpdate
-      || enableAcousticbrainz) python2Packages.requests2
-    ++ optional enableDiscogs python2Packages.discogs_client
-    ++ optional enableEchonest python2Packages.pyechonest
-    ++ optional enableLastfm python2Packages.pylast
-    ++ optional enableMpd python2Packages.mpd
-    ++ optional enableThumbnails python2Packages.pyxdg
-    ++ optional enableWeb python2Packages.flask
-    ++ optional enableAlternatives (import ./plugins/beets-alternatives.nix {
-      inherit stdenv buildPythonPackage python2Packages fetchFromGitHub;
-    })
-    ++ optional enableCopyArtifacts (import ./plugins/beets-copyartifacts.nix {
-      inherit stdenv buildPythonPackage python2Packages fetchFromGitHub fetchTritonPatch;
-    });
-
-  buildInputs = [
-    python2Packages.beautifulsoup4
-    imagemagick
-    python2Packages.mock
     python2Packages.nose
+    python2Packages.pathlib
+    python2Packages.pyacoustid
+    python2Packages.pyechonest
+    python2Packages.pylast
+    python2Packages.pyxdg
+    python2Packages.pyyaml
     python2Packages.rarfile
     python2Packages.responses
-  ] ++ optionals enableBpd [
-    gst-plugins-base_0
-    gstreamer_0
-  ];
+    python2Packages.requests2
+    python2Packages.unidecode
+    python2Packages.werkzeug
+  ] ++ optional enableAlternatives (
+      import ./plugins/beets-alternatives.nix {
+        inherit
+          stdenv
+          buildPythonPackage
+          fetchFromGitHub
+          python2Packages;
+      }
+    )
+    /* FIXME: Causes other plugins to fail to load
+    ++ optional enableCopyArtifacts (
+      import ./plugins/beets-copyartifacts.nix {
+        inherit
+          stdenv
+          buildPythonPackage
+          fetchFromGitHub
+          fetchTritonPatch
+          python2Packages;
+      }
+    )*/
+    /* Provides edit & moveall plugins */
+    ++ optional enableDsedivecBeetsPlugins (
+      import ./plugins/dsedivec-beets-plugins.nix {
+        inherit
+          stdenv
+          buildPythonPackage
+          fetchFromGitHub
+          python2Packages;
+      }
+    );
 
   patches = [
     (fetchTritonPatch {
@@ -215,27 +262,18 @@ buildPythonPackage rec {
     sed -i -e '/^BASH_COMPLETION_PATHS *=/,/^])$/ {
       /^])$/i u"${completion}"
     }' beets/ui/commands.py
-  '' + optionalString enableBadfiles ''
+  '' + /* fix paths for badfiles plugin */ ''
     sed -i -e '/self\.run_command(\[/ {
       s,"flac","${flac}/bin/flac",
       s,"mp3val","${mp3val}/bin/mp3val",
     }' beetsplug/badfiles.py
-  '' + optionalString enableBpd
-  /* Hack to allow newer mpd clients to try to connect to bpd */ ''
-    sed -i beetsplug/bpd/__init__.py \
-      -e '/PROTOCOL_VERSION/ s/0.13.0/0.19.0/'
-  '' + optionalString enableReplaygain ''
+  '' + /* Replay gain */ ''
     sed -i -re '
       s!^( *cmd *= *b?['\'''"])(bs1770gain['\'''"])!\1${bs1770gain}/bin/\2!
     ' beetsplug/replaygain.py
     sed -i -e 's/if has_program.*bs1770gain.*:/if True:/' \
       test/test_replaygain.py
   '';
-
-  makeWrapperArgs = optionals enableBpd [
-    "--prefix GST_PLUGIN_PATH : ${
-      makeSearchPath "lib/gstreamer-0.10" [ gst-plugins-base_0 ]}"
-  ];
 
   preCheck = ''
     (${concatMapStrings (s: "echo \"${s}\";") allPlugins}) \
@@ -254,11 +292,12 @@ buildPythonPackage rec {
     fi
   '';
 
+  # TODO: fix LOCALE_ARCHIVE for freebsd
   checkPhase = ''
     runHook 'preCheck'
 
     LANG=en_US.UTF-8 \
-    LOCALE_ARCHIVE=${assert (elem targetSystem platforms.linux); glibcLocales}/lib/locale/locale-archive \
+    LOCALE_ARCHIVE=${glibcLocales}/lib/locale/locale-archive \
     BEETS_TEST_SHELL="${testShell}" \
     BASH_COMPLETION_SCRIPT="${completion}" \
     HOME="$(mktemp -d)" \

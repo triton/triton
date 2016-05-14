@@ -5,14 +5,14 @@
 }:
 
 buildPythonPackage rec {
-  name = "beets-alternatives-${version}";
-  version = "0.8.2";
+  name = "dsedivec-beets-plugins-${version}";
+  version = "2015-06-22";
 
   src = fetchFromGitHub {
-    owner = "geigerzaehler";
-    repo = "beets-alternatives";
-    rev = "v${version}";
-    sha256 = "23053856372813cdd0e063f0de71dae10ac169f24cf76e747172198f99c5879e";
+    owner = "dsedivec";
+    repo = "beets-plugins";
+    rev = "c67038d91bca79d9fd52ab316ad9150c1ba1a236";
+    sha256 = "080bbe6ded4b04983d743eec2305666bb24a3e5596a81968b0a2d470e2ecf4ac";
   };
 
   postPatch = /* Prevent recursive dependency on beets */ ''
@@ -20,13 +20,9 @@ buildPythonPackage rec {
       -e '/install_requires/,/\]/{/beets/d}'
   '';
 
-  propagatedBuildInputs = [
-    python2Packages.futures
-  ];
-
   meta = with stdenv.lib; {
-    description = "Beets plugin to manage external files";
-    homepage = "https://github.com/geigerzaehler/beets-alternatives";
+    description = "Beets tag editer & move untracked files plugins";
+    homepage = "https://github.com/dsedivec/beets-plugins";
     license = licenses.mit;
     maintainers = with maintainers; [
       codyopel

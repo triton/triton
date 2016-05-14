@@ -26,6 +26,31 @@ in
 
 stdenv.mkDerivation ({
   patches = [
+    /* Needed for CVE-2016-1234 */
+    (fetchTritonPatch {
+      rev = "a254481c1b7bbe53bbc3df8fe20ede98d0567544";
+      file = "glibc/glob.patch";
+      sha256 = "8e0075b593ec4a64d91e4a2002096eec521e0b097930d7cdbb878b76ef420292";
+    })
+
+
+    /* Security fixes */
+    (fetchTritonPatch {
+      rev = "a254481c1b7bbe53bbc3df8fe20ede98d0567544";
+      file = "glibc/CVE-2016-3075.patch";
+      sha256 = "f04f4dce939412121d162716b5a08b2ae4fe8cfaac05facb6ba4421aa9de65fa";
+    })
+    (fetchTritonPatch {
+      rev = "a254481c1b7bbe53bbc3df8fe20ede98d0567544";
+      file = "glibc/CVE-2016-1234.patch";
+      sha256 = "ef55541e8091bdc586ef078aeef1d954b4b21afd213531af01ec9c5ccf9493ec";
+    })
+    (fetchTritonPatch {
+      rev = "a254481c1b7bbe53bbc3df8fe20ede98d0567544";
+      file = "glibc/CVE-2016-3706.patch";
+      sha256 = "afdb67650b8982ecdb8a8ab4e42d61e482faec79363194a2dae5de2a4b56b7f3";
+    })
+
     /* Have rpcgen(1) look for cpp(1) in $PATH.  */
     (fetchTritonPatch {
       rev = "7ac98bac3cf181b4823633bfd9ce6ce7f831089e";

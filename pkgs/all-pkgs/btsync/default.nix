@@ -10,12 +10,12 @@ in
 
 stdenv.mkDerivation rec {
   name = "btsync-${version}";
-  version = "2.3.6";
+  version = "2.3.7";
 
   src  = fetchurl {
     url  = "https://download-cdn.getsync.com/${version}/"
       + "linux-x64/BitTorrent-Sync_x64.tar.gz";
-    sha256 = "fac80d415aa44d9f2e027b56cb4fea1aa8770489cffc037b64fd05135fa4d907";
+    sha256 = "a15d13f7daf14c9c38b78fd7659e982379c0b8a731d437c661367760f632dcc2";
   };
 
   nativeBuildInputs = [

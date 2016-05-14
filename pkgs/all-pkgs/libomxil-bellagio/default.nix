@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/omxil/omxil/Bellagio%20${version}/"
         + "${name}.tar.gz";
+    multihash = "Qmcf2jh7ceyaSCoi5QLP2C8JNiJDUmb8oizeXg8w5BBBaU";
     sha256 = "0k6p6h4npn8p1qlgq6z3jbfld6n1bqswzvxzndki937gr0lhfg2r";
   };
 

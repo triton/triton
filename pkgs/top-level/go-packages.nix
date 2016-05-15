@@ -110,11 +110,11 @@ let
   };
 
   crypto = buildFromGitHub {
-    rev = "b76c864ef1dca1d8f271f917c290cddcce3d9e0d";
-    date = "2016-04-25";
+    rev = "b6789ab629056511030d652d851e7dc10c9e9c9e";
+    date = "2016-05-04";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "1v823k7p7b0h3rhp9zg79gdpllqm86389sbbq9vr6p2c162wx4d2";
+    sha256 = "1a2jb9sx81x18fj6vf8awx7lwaqpxs1b7lvfw5srp6jhhvi0a2jv";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -152,11 +152,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "96dbb961a39ddccf16860cdd355bfa639c497f23";
-    date = "2016-05-10";
+    rev = "ef00b378c73f107bf44d5c9b69875255ce89b79a";
+    date = "2016-05-14";
     owner  = "golang";
     repo   = "net";
-    sha256 = "05wg4mirlbpwsh360lifkyngrs17qrbr8bpbf3bnygiyrnl5m397";
+    sha256 = "1fjqpfknz6vi83a5g17wfgxpr2wrdh70vqc68lkl1dkwws92pbrc";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -697,11 +697,11 @@ let
   };
 
   ginkgo = buildFromGitHub {
-    rev = "2c2e9bb47b4e44067024f29339588cac8b34dd12";
+    rev = "5437a97bf824dec14e58d68c56ee36e772670c2e";
     owner = "onsi";
     repo = "ginkgo";
-    sha256 = "36f14f864756e7d0af8580a64e73018e688f875fbee009a83405eb5f2316c423";
-    date = "2016-04-09";
+    sha256 = "18hbr3m7yk7zdj94cs5izgkfd491j7if2760wlip6mhlsxmfhwrh";
+    date = "2016-05-09";
   };
 
   ugorji_go = buildFromGitHub {
@@ -856,12 +856,12 @@ let
   };
 
   gomega = buildFromGitHub {
-    rev = "7ce781ea776b2fd506491011353bded2e40c8467";
+    rev = "815512bce8c889153a13104c9d9b2416153c1e02";
     owner  = "onsi";
     repo   = "gomega";
-    sha256 = "00728gg7inc980xvxdy158s2xklrgfldgzkl960jjsv1w10l2vbn";
+    sha256 = "1hn9lszcl8z68qw0wj26iv0i27r5i6ifla8g8hssasl4g9ml4xhy";
     buildInputs = [ protobuf ];
-    date = "2016-03-05";
+    date = "2016-04-16";
   };
 
   google-api-go-client = buildFromGitHub {
@@ -2116,10 +2116,10 @@ let
   };
 
   syncthing = buildFromGitHub rec {
-    rev = "v0.12.23";
+    rev = "v0.12.24";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "1kxfm0fmq1iqp37zakrq1wir1yfsini5q2p9fjjkijk63s0mcjd6";
+    sha256 = "0s6m9qp66bvldchd8zsd7yl3cwzylh4l1s92lxw29dyi5na2sx77";
     buildFlags = [ "-tags noupgrade,release" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext

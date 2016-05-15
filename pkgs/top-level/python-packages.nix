@@ -140,6 +140,8 @@ enum34 =
   else
     callPackage ../all-pkgs/enum34 { };
 
+futures = callPackage ../all-pkgs/futures { };
+
 py = callPackage ../all-pkgs/py { };
 
 pymysql = callPackage ../all-pkgs/pymysql { };
@@ -8753,42 +8755,6 @@ six = callPackage ../all-pkgs/six { };
       license = licenses.mit;
       maintainers = with maintainers; [ prikhi ];
       platforms = platforms.linux;
-    };
-  };
-
-  futures = buildPythonPackage rec {
-    name = "futures-${version}";
-    version = "3.0.4";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/f/futures/${name}.tar.gz";
-      sha256 = "19485d83f7bd2151c0aeaf88fbba3ee50dadfb222ffc3b66a344ef4952b782a3";
-    };
-
-    # This module is for backporting functionality to Python 2.x, it's builtin in py3k
-    disabled = isPy3k;
-
-    checkPhase = ''
-        ${python.interpreter} -m unittest discover
-    '';
-
-    # Tests fail
-
-    meta = with pkgs.stdenv.lib; {
-      description = "Backport of the concurrent.futures package from Python 3.2";
-      homepage = "https://github.com/agronholm/pythonfutures";
-      license = licenses.bsd2;
-      maintainers = with maintainers; [ garbas ];
-    };
-  };
-
-  futures_2_2 = self.futures.override rec {
-    version = "2.2.0";
-    name = "futures-${version}";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/f/futures/${name}.tar.gz";
-      sha256 = "1lqfzl3z3pkxakgbcrfy6x7x0fp3q18mj5lpz103ljj7fdqha70m";
     };
   };
 

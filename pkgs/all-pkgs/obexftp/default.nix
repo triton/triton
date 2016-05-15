@@ -4,16 +4,17 @@
 , ninja
 
 , bluez
+, expat
 , fuse
 , openobex
 }:
 
 stdenv.mkDerivation rec {
-  name = "obexftp-0.24";
+  name = "obexftp-0.24.2";
 
   src = fetchurl {
     url = "mirror://sourceforge/openobex/${name}-Source.tar.gz";
-    sha256 = "0szy7p3y75bd5h4af0j5kf0fpzx2w560fpy4kg3603mz11b9c1xr";
+    sha256 = "d40fb48e0a0eea997b3e582774b29f793919a625d54b87182e31a3f3d1c989a3";
   };
 
   nativeBuildInputs = [
@@ -23,6 +24,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bluez
+    expat
     fuse
     openobex
   ];
@@ -36,9 +38,10 @@ stdenv.mkDerivation rec {
     description = "File transfer over OBEX for mobile phones";
     homepage = http://dev.zuckschwerdt.org/openobex/wiki/ObexFtp;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

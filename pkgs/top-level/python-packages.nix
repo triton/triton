@@ -146,6 +146,8 @@ pymysql = callPackage ../all-pkgs/pymysql { };
 
 pytest = callPackage ../all-pkgs/pytest { };
 
+six = callPackage ../all-pkgs/six { };
+
 ################################################################################
 ################################################################################
 ################################################################################
@@ -18629,17 +18631,6 @@ pytest = callPackage ../all-pkgs/pytest { };
     propagatedBuildInputs = with self; [ cython pkgs.openssl dns dateutil xcaplib msrplib lxml ];
     buildInputs = with pkgs; [ alsaLib ffmpeg libv4l pkgconfig sqlite libvpx ];
   };
-
-
-  six = buildPythonPackage rec {
-    name = "six-1.10.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/s/six/${name}.tar.gz";
-      sha256 = "0snmb8xffb3vsma0z67i0h0w2g2dy0p3gsgh9gi4i0kgc5l8spqh";
-    };
-  };
-
 
   skype4py = buildPythonPackage (rec {
     name = "Skype4Py-1.0.32.0";

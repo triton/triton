@@ -3855,7 +3855,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "e775a40ee4a3a1d45018b199c44cc20bbe7f3df2dc8882f61465bb4141c78cdb";
     };
 
-    buildInputs = with self; [setuptools_scm pytest];
+    buildInputs = with self; [setuptools-scm pytest];
 
     meta = {
       description = "Invoke py.test as distutils command with dependency resolution";
@@ -13862,7 +13862,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "ada95d117c4559abe64080961daf5badda68561afdd34c278f8ca20f2fa466d2";
     };
 
-    buildInputs = with self; [setuptools_scm pytestrunner pytest pkgs.glibcLocales ];
+    buildInputs = with self; [setuptools-scm pytestrunner pytest pkgs.glibcLocales ];
 
     LC_ALL="en_US.UTF-8";
 

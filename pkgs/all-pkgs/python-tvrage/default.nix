@@ -25,6 +25,8 @@ buildPythonPackage rec {
     pythonPackages.beautifulsoup
   ];
 
+  doCheck = true;
+
   meta = with stdenv.lib; {
     description = "Client interface for tvrage.com's XML-based api feeds";
     homepage = https://github.com/ckreutzer/python-tvrage;

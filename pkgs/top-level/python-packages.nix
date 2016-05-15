@@ -8873,7 +8873,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0s1qd1qz0zyzksd5h38ynw06d1012h0k7z8522zhb6mzaq4144yz";
     };
 
-    propagatedBuildInputs = with self; [ gevent certifi backports_ssl_match_hostname_3_4_0_2 ];
+    propagatedBuildInputs = with self; [ gevent certifi backports-ssl-match-hostname ];
 
     meta = {
       homepage = http://github.com/gwik/geventhttpclient;
@@ -11669,7 +11669,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [ pyopenssl pyasn1 certifi passlib
-      ipaddress backports_ssl_match_hostname_3_4_0_2 hpack ];
+      ipaddress backports-ssl-match-hostname hpack ];
 
 
     meta = {
@@ -20567,7 +20567,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "a19f8c34e10e3c2d0d915c894224e521";
     };
 
-    propagatedBuildInputs = with self; [ feedparser pytz lxml praw pyenchant pygeoip backports_ssl_match_hostname_3_4_0_2 ];
+    propagatedBuildInputs = with self; [ feedparser pytz lxml praw pyenchant pygeoip backports-ssl-match-hostname ];
 
     meta = {
       description = "A simple, lightweight, open source, easy-to-use IRC utility bot, written in Python";
@@ -21724,7 +21724,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "b07a897511a3c585251fe2ea85a9d9d9";
     };
 
-    propagatedBuildInputs = with self; [ six backports_ssl_match_hostname_3_4_0_2 unittest2 argparse ];
+    propagatedBuildInputs = with self; [ six backports-ssl-match-hostname unittest2 argparse ];
 
     meta = {
       homepage = https://github.com/liris/websocket-client;

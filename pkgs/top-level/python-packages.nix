@@ -150,6 +150,8 @@ pytest = callPackage ../all-pkgs/pytest { };
 
 six = callPackage ../all-pkgs/six { };
 
+tzlocal = callPackage ../all-pkgs/tzlocal { };
+
 ################################################################################
 ################################################################################
 ################################################################################
@@ -20027,25 +20029,6 @@ six = callPackage ../all-pkgs/six { };
       '';
       license = licenses.mit;
       maintainers = [ ];
-    };
-  };
-
-  tzlocal = buildPythonPackage rec {
-    name = "tzlocal-1.1.1";
-
-    propagatedBuildInputs = with self; [ pytz ];
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/t/tzlocal/tzlocal-1.1.1.zip";
-      md5 = "56c2a04501b98f2a1188d003fd6d3dba";
-    };
-
-     # test fail (timezone test fail)
-
-    meta = with pkgs.stdenv.lib; {
-      description = "Tzinfo object for the local timezone";
-      homepage = https://github.com/regebro/tzlocal;
-      license = licenses.cddl;
     };
   };
 

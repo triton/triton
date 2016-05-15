@@ -133,6 +133,13 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
 discogs-client = callPackage ../all-pkgs/discogs-client { };
 
+enum34 =
+  # Python 3.4 Enum backported to 2.4 through 3.3
+  if pythonAtLeast "3.4" then
+    null
+  else
+    callPackage ../all-pkgs/enum34 { };
+
 py = callPackage ../all-pkgs/py { };
 
 pymysql = callPackage ../all-pkgs/pymysql { };
@@ -8070,16 +8077,6 @@ pytest = callPackage ../all-pkgs/pytest { };
     meta = {
       homepage = https://pypi.python.org/pypi/enum/;
       description = "Robust enumerated type support in Python";
-    };
-  };
-
-  enum34 = if pythonAtLeast "3.4" then null else buildPythonPackage rec {
-    name = "enum34-${version}";
-    version = "1.1.2";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/e/enum34/${name}.tar.gz";
-      sha256 = "2475d7fcddf5951e92ff546972758802de5260bf409319a9f1934e6bbc8b1dc7";
     };
   };
 

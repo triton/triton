@@ -147,6 +147,8 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   brotli = pkgs.brotli;
 };
 
+cherrypy = callPackage ../all-pkgs/cherrypy { };
+
 discogs-client = callPackage ../all-pkgs/discogs-client { };
 
 enum34 =
@@ -2802,25 +2804,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       description = "A template engine and code generation tool";
     };
   };
-
-
-  cherrypy = buildPythonPackage (rec {
-    name = "cherrypy-${version}";
-    version = "3.2.2";
-
-    src = pkgs.fetchurl {
-      url = "http://download.cherrypy.org/cherrypy/${version}/CherryPy-${version}.tar.gz";
-      sha256 = "14dn129h69wj0h8yr0bjwbrk8kygl6mkfnxc5m3fxhlm4xb8hnnw";
-    };
-
-    # error: invalid command 'test'
-
-    meta = {
-      homepage = "http://www.cherrypy.org";
-      description = "A pythonic, object-oriented HTTP framework";
-    };
-  });
-
 
   cjson = buildPythonPackage rec {
     name = "python-cjson-${version}";

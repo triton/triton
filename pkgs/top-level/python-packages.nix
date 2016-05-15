@@ -123,8 +123,6 @@ in {
 
   recursivePthLoader = callPackage ../all-pkgs/recursive-pth-loader { };
 
-  setuptools = callPackage ../development/python-modules/setuptools { };
-
 ################################################################################
 ################################################################################
 ################################################################################
@@ -172,6 +170,8 @@ pymysql = callPackage ../all-pkgs/pymysql { };
 pytest = callPackage ../all-pkgs/pytest { };
 
 pytz = callPackage ../all-pkgs/pytz { };
+
+setuptools = callPackage ../all-pkgs/setuptools { };
 
 singledispatch = callPackage ../all-pkgs/singledispatch { };
 

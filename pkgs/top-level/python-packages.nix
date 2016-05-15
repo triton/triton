@@ -31,12 +31,6 @@ let
     inherit sha256;
   };
 
-  callPackage = pkgs.newScope (self // {
-    inherit
-      fetchPyPi;
-    pythonPackages = self;
-  });
-
   buildPythonPackage = makeOverridable (callPackage ../development/python-modules/generic {
     bootstrapped-pip = callPackage ../development/python-modules/bootstrapped-pip {
       inherit (self) wrapPython;
@@ -57,6 +51,23 @@ let
       "pypy"
     else
       "";
+
+  callPackage = pkgs.newScope (self // {
+    inherit
+      buildPythonPackage
+      fetchPyPi
+      isPy27
+      isPy33
+      isPy34
+      isPy35
+      isPyPy
+      isPy3k
+      python
+      pythonAtLeast
+      pythonName
+      pythonOlder;
+    pythonPackages = self;
+  });
 
 in {
 

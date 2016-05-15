@@ -12,24 +12,25 @@ let
   isPyPy = python.executable == "pypy";
   isPy3k = strings.substring 0 1 python.versionMajor == "3";
 
-  fetchPyPi = { package, version, sha256, type ? ".tar.gz" }: pkgs.fetchurl rec {
-    name = "${package}-${version}${type}";
-    url = "http://localhost/not-a-url";
-    preFetch = ''
-      $curl 'https://pypi.python.org/pypi/${package}/json' | \
-        ${pkgs.jq}/bin/jq -r '
-          .releases["${version}"] |
-            reduce .[] as $item ("";
-              if $item.filename == "${name}" then
-                $item.url
-              else
-                .
-              end)
-        ' > "$TMPDIR/url"
-      urls=($(cat "$TMPDIR/url"))
-    '';
-    inherit sha256;
-  };
+  fetchPyPi = { package, version, sha256, type ? ".tar.gz" }:
+    pkgs.fetchurl rec {
+      name = "${package}-${version}${type}";
+      url = "http://localhost/not-a-url";
+      preFetch = ''
+        $curl 'https://pypi.python.org/pypi/${package}/json' | \
+          ${pkgs.jq}/bin/jq -r '
+            .releases["${version}"] |
+              reduce .[] as $item ("";
+                if $item.filename == "${name}" then
+                  $item.url
+                else
+                  .
+                end)
+          ' > "$TMPDIR/url"
+        urls=($(cat "$TMPDIR/url"))
+      '';
+      inherit sha256;
+    };
 
   buildPythonPackage = makeOverridable (callPackage ../development/python-modules/generic {
     bootstrapped-pip = callPackage ../development/python-modules/bootstrapped-pip {

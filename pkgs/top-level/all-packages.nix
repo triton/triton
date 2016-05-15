@@ -848,6 +848,8 @@ gconf = callPackage ../all-pkgs/gconf { };
 
 gcr = callPackage ../all-pkgs/gcr { };
 
+gd = callPackage ../all-pkgs/gd { };
+
 gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
 gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
 
@@ -6534,8 +6536,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  geos = callPackage ../development/libraries/geos { };
 #
 #  getdata = callPackage ../development/libraries/getdata { };
-#
-  gd = callPackage ../development/libraries/gd { };
 #
 #  gdal = callPackage ../development/libraries/gdal { };
 #

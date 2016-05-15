@@ -31,7 +31,11 @@ let
     inherit sha256;
   };
 
-  callPackage = pkgs.newScope (self // { inherit fetchPyPi; });
+  callPackage = pkgs.newScope (self // {
+    inherit
+      fetchPyPi;
+    pythonPackages = self;
+  });
 
   buildPythonPackage = makeOverridable (callPackage ../development/python-modules/generic {
     bootstrapped-pip = callPackage ../development/python-modules/bootstrapped-pip {

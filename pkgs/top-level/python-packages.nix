@@ -181,6 +181,8 @@ pyrss2gen = callPackage ../all-pkgs/pyrss2gen { };
 
 pytest = callPackage ../all-pkgs/pytest { };
 
+python-tvrage = callPackage ../all-pkgs/python-tvrage { };
+
 pytz = callPackage ../all-pkgs/pytz { };
 
 rebulk = callPackage ../all-pkgs/rebulk { };
@@ -8414,26 +8416,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       platforms = platforms.linux;
     };
   };
-
-  python_tvrage = buildPythonPackage (rec {
-    version = "0.4.1";
-    name = "tvrage-${version}";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/python-tvrage/python-tvrage-${version}.tar.gz";
-      md5 = "cdfec252158c5047b626861900186dfb";
-    };
-
-    # has mostly networking dependent tests
-    propagatedBuildInputs = with self; [ beautifulsoup ];
-
-    meta = {
-      homepage = https://github.com/ckreutzer/python-tvrage;
-      description = "Client interface for tvrage.com's XML-based api feeds";
-      license = licenses.bsd3;
-      maintainers = with maintainers; [ iElectric ];
-    };
-  });
 
   python2-pythondialog = buildPythonPackage rec {
     name = "python2-pythondialog-${version}";

@@ -1872,6 +1872,8 @@ quasselClient = (pkgs.quassel.override {
   tag = "-client";
 });
 
+radvd = callPackage ../all-pkgs/radvd { };
+
 rapidjson = callPackage ../all-pkgs/rapidjson { };
 
 re2c = callPackage ../all-pkgs/re2c { };
@@ -4112,8 +4114,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  quilt = callPackage ../development/tools/quilt { };
 #
 #  radamsa = callPackage ../tools/security/radamsa { };
-#
-#  radvd = callPackage ../tools/networking/radvd { };
 #
 #  ranger = callPackage ../applications/misc/ranger { };
 #

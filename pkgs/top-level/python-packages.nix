@@ -173,6 +173,8 @@ pytest = callPackage ../all-pkgs/pytest { };
 
 pytz = callPackage ../all-pkgs/pytz { };
 
+rebulk = callPackage ../all-pkgs/rebulk { };
+
 regex = callPackage ../all-pkgs/regex { };
 
 setuptools = callPackage ../all-pkgs/setuptools { };

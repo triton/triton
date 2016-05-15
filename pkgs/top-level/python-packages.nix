@@ -173,6 +173,8 @@ pytz = callPackage ../all-pkgs/pytz { };
 
 setuptools = callPackage ../all-pkgs/setuptools { };
 
+setuptools-scm = callPackage ../all-pkgs/setuptools-scm { };
+
 singledispatch = callPackage ../all-pkgs/singledispatch { };
 
 six = callPackage ../all-pkgs/six { };
@@ -17873,25 +17875,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
         x_ignore_nofocus.o
       cp -v x_ignore_nofocus.so py/selenium/webdriver/firefox/${if pkgs.stdenv.is64bit then "amd64" else "x86"}/
     '';
-  };
-
-  setuptools_scm = buildPythonPackage rec {
-    name = "setuptools_scm-${version}";
-    version = "1.10.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/s/setuptools_scm/${name}.tar.bz2";
-      sha256 = "1cdea91bbe1ec4d52b3e9c451ab32ae6e1f3aa3fd91e90580490a9eb75bea286";
-    };
-
-    buildInputs = with self; [ pip ];
-
-    meta = with stdenv.lib; {
-      homepage = https://bitbucket.org/pypa/setuptools_scm/;
-      description = "Handles managing your python package versions in scm metadata";
-      license = licenses.mit;
-      maintainers = with maintainers; [ jgeerds ];
-    };
   };
 
   setuptoolsDarcs = buildPythonPackage rec {

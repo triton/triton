@@ -21,7 +21,7 @@ let
     package = "setuptools";
     inherit (setuptools) version;
     type = "-py2.py3-none-any.whl";
-    sha256 = "a037098401257659ec664ad0818a041b8b29f69172c274e2013d4399326bcb70";
+    sha256 = "fb6378f65eb630281227720ae80276f38c1a1f16969eca499435c0ff2a815fe6";
   };
 
   pip_source = fetchPyPi {
@@ -31,6 +31,7 @@ let
     sha256 = "44b9c342782ab905c042c207d995aa069edc02621ddbdc2b9f25954a0fdac25c";
   };
 in
+
 stdenv.mkDerivation rec {
   name = "python-${python.version}-bootstrapped-pip-${version}";
   inherit (pip) version;

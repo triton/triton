@@ -173,6 +173,8 @@ pytest = callPackage ../all-pkgs/pytest { };
 
 pytz = callPackage ../all-pkgs/pytz { };
 
+regex = callPackage ../all-pkgs/regex { };
+
 setuptools = callPackage ../all-pkgs/setuptools { };
 
 setuptools-scm = callPackage ../all-pkgs/setuptools-scm { };

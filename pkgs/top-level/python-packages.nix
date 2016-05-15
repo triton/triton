@@ -161,6 +161,8 @@ pytest = callPackage ../all-pkgs/pytest { };
 
 pytz = callPackage ../all-pkgs/pytz { };
 
+singledispatch = callPackage ../all-pkgs/singledispatch { };
+
 six = callPackage ../all-pkgs/six { };
 
 twisted = callPackage ../all-pkgs/twisted { };
@@ -5165,21 +5167,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       homepage = https://code.google.com/p/funcparserlib/;
       license = licenses.mit;
       platforms = platforms.linux;
-    };
-  };
-
-  singledispatch = buildPythonPackage rec {
-    name = "singledispatch-3.4.0.3";
-
-    propagatedBuildInputs = with self; [ six ];
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/s/singledispatch/${name}.tar.gz";
-      md5 = "af2fc6a3d6cc5a02d0bf54d909785fcb";
-    };
-
-    meta = {
-      homepage = http://docs.python.org/3/library/functools.html;
     };
   };
 

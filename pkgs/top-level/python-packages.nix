@@ -160,6 +160,8 @@ enum34 =
 
 futures = callPackage ../all-pkgs/futures { };
 
+markupsafe = callPackage ../all-pkgs/markupsafe { };
+
 py = callPackage ../all-pkgs/py { };
 
 pymysql = callPackage ../all-pkgs/pymysql { };
@@ -10493,16 +10495,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       markupsafe
     ];
 
-  };
-
-
-  markupsafe = buildPythonPackage rec {
-    name = "MarkupSafe-0.23";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/M/MarkupSafe/${name}.tar.gz";
-      sha256 = "a4ec1aff59b95a14b45eb2e23761a0179e98319da5a7eb76b56ea8cdc7b871c3";
-    };
   };
 
   manuel = buildPythonPackage rec {

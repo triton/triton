@@ -161,6 +161,8 @@ enum34 =
 
 futures = callPackage ../all-pkgs/futures { };
 
+jinja2 = callPackage ../all-pkgs/jinja2 { };
+
 markupsafe = callPackage ../all-pkgs/markupsafe { };
 
 py = callPackage ../all-pkgs/py { };
@@ -9893,20 +9895,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       maintainers = with maintainers; [ rushmorem ];
     };
   };
-
-  jinja2 = buildPythonPackage rec {
-    name = "Jinja2-2.8";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/J/Jinja2/${name}.tar.gz";
-      sha256 = "1x0v41lp5m1pjix3l46zx02b7lqp2hflgpnxwkywxynvi3zz47xw";
-    };
-
-    propagatedBuildInputs = with self; [
-      markupsafe
-    ];
-  };
-
 
   jmespath = buildPythonPackage rec {
     name = "jmespath-0.7.1";

@@ -193,7 +193,7 @@ buildPythonPackage rec {
     imagemagick
     mp3val
     python2Packages.beautifulsoup
-    python2Packages.discogs_client
+    python2Packages.discogs-client
     python2Packages.enum34
     python2Packages.flask
     python2Packages.itsdangerous

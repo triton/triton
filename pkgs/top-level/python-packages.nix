@@ -131,6 +131,8 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   brotli = pkgs.brotli;
 };
 
+discogs-client = callPackage ../all-pkgs/discogs-client { };
+
 py = callPackage ../all-pkgs/py { };
 
 pymysql = callPackage ../all-pkgs/pymysql { };
@@ -4438,24 +4440,6 @@ pytest = callPackage ../all-pkgs/pytest { };
       description = "Serialize all of python (almost)";
       homepage = http://www.cacr.caltech.edu/~mmckerns/dill.htm;
       license = licenses.bsd3;
-    };
-  };
-
-  discogs_client = buildPythonPackage rec {
-    name = "discogs-client-2.2.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/d/discogs-client/${name}.tar.gz";
-      md5Confirm = "c82be8006e1c02fcfc2bb42a2e312151";
-      sha256 = "053ld2psh0yj3z0kg6z5bn4y3cr562m727494n0ayhgzbkjbacly";
-    };
-
-    propagatedBuildInputs = with self; [ oauthlib requests2 six ];
-
-    meta = {
-      description = "Official Python API client for Discogs";
-      license = licenses.bsd2;
-      homepage = "https://github.com/discogs/discogs_client";
     };
   };
 

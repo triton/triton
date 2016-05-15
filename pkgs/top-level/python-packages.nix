@@ -177,6 +177,8 @@ pymysql = callPackage ../all-pkgs/pymysql { };
 
 pynzb = callPackage ../all-pkgs/pynzb { };
 
+pyrss2gen = callPackage ../all-pkgs/pyrss2gen { };
+
 pytest = callPackage ../all-pkgs/pytest { };
 
 pytz = callPackage ../all-pkgs/pytz { };
@@ -15824,22 +15826,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license = licenses.mit;
       platforms = platforms.all;
       maintainers = with maintainers; [ bjornfor ];
-    };
-  });
-
-  pyrss2gen = buildPythonPackage (rec {
-    name = "PyRSS2Gen-1.0.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/P/PyRSS2Gen/${name}.tar.gz";
-      md5 = "eae2bc6412c5679c287ecc1a59588f75";
-    };
-
-    meta = {
-      homepage = http://www.dalkescientific.om/Python/PyRSS2Gen.html;
-      description = "Library for generating RSS 2.0 feeds";
-      license = licenses.bsd2;
-      maintainers = with maintainers; [ iElectric ];
     };
   });
 

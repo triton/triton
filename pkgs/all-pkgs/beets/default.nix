@@ -192,7 +192,7 @@ buildPythonPackage rec {
     flac
     imagemagick
     mp3val
-    python2Packages.beautifulsoup4
+    python2Packages.beautifulsoup
     python2Packages.discogs_client
     python2Packages.enum34
     python2Packages.flask

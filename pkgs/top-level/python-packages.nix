@@ -189,6 +189,8 @@ rebulk = callPackage ../all-pkgs/rebulk { };
 
 regex = callPackage ../all-pkgs/regex { };
 
+rpyc = callPackage ../all-pkgs/rpyc { };
+
 setuptools = callPackage ../all-pkgs/setuptools { };
 
 setuptools-scm = callPackage ../all-pkgs/setuptools-scm { };
@@ -17358,24 +17360,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       description = "Python interface to R";
       license = licenses.gpl2Plus;
       maintainers = with maintainers; [ joelmo ];
-    };
-  };
-
-  rpyc = buildPythonPackage rec {
-    name = "rpyc-${version}";
-    version = "3.3.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/r/rpyc/${name}.tar.gz";
-      md5 = "6931cb92c41f547591b525142ccaeef1";
-    };
-
-    propagatedBuildInputs = with self; [ nose plumbum ];
-
-    meta = {
-      description = "Remote Python Call (RPyC), a transparent and symmetric RPC library";
-      homepage = http://rpyc.readthedocs.org;
-      license = licenses.mit;
     };
   };
 

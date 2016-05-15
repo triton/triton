@@ -1278,6 +1278,8 @@ libepoxy = callPackage ../all-pkgs/libepoxy { };
 
 libev = callPackage ../all-pkgs/libev { };
 
+libevdev = callPackage ../all-pkgs/libevdev { };
+
 libevent = callPackage ../all-pkgs/libevent { };
 
 libfaketime = callPackage ../all-pkgs/libfaketime { };
@@ -3487,8 +3489,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  libee = callPackage ../development/libraries/libee { };
 #
 #  libestr = callPackage ../development/libraries/libestr { };
-#
-  libevdev = callPackage ../development/libraries/libevdev { };
 #
 #  libevhtp = callPackage ../development/libraries/libevhtp { };
 #

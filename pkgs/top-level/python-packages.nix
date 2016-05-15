@@ -135,6 +135,8 @@ in {
 ################################################################################
 ################################################################################
 
+apscheduler = callPackage ../all-pkgs/apscheduler { };
+
 backports-abc = callPackage ../all-pkgs/backports-abc { };
 
 backports-ssl-match-hostname =
@@ -912,40 +914,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/o/ordereddict/${name}.tar.gz";
       sha256 = "1c35b4ac206cef2d24816c89f89cf289dd3d38cf7c449bb3fab7bf6d43f01b1f";
-    };
-  };
-
-  apscheduler = buildPythonPackage rec {
-    name = "APScheduler-3.0.4";
-    disabled = !isPy27;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/A/APScheduler/${name}.tar.gz";
-      sha256 = "1ljjhn6cv8b1pccsi3mgc887ypi2vim317r9p0zh0amd0bhkk6wb";
-    };
-
-    buildInputs = with self; [
-      pytest
-      sqlalchemy9
-      tornado
-      twisted
-      mock
-      trollius
-      funcsigs
-      gevent
-    ];
-
-    propagatedBuildInputs = with self; [
-      six
-      pytz
-      tzlocal
-      futures
-    ];
-
-    meta = with pkgs.stdenv.lib; {
-      description = "A Python library that lets you schedule your Python code to be executed";
-      homepage = https://pypi.python.org/pypi/APScheduler/;
-      license = licenses.mit;
     };
   };
 

@@ -203,6 +203,8 @@ tmdb3 = callPackage ../all-pkgs/tmdb3 { };
 
 tornado = callPackage ../all-pkgs/tornado { };
 
+transmissionrpc = callPackage ../all-pkgs/transmissionrpc { };
+
 twisted = callPackage ../all-pkgs/twisted { };
 
 tzlocal = callPackage ../all-pkgs/tzlocal { };
@@ -19617,24 +19619,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       description = "Transaction management";
       homepage = https://pypi.python.org/pypi/transaction;
       license = licenses.zpt20;
-    };
-  };
-
-  transmissionrpc = buildPythonPackage rec {
-    name = "transmissionrpc-${version}";
-    version = "0.11";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/t/transmissionrpc/${name}.tar.gz";
-      md5 = "b2f918593e509f0e66e2e643291b436d";
-    };
-
-    propagatedBuildInputs = with self; [ six ];
-
-    meta = {
-      description = "Python implementation of the Transmission bittorent client RPC protocol";
-      homepage = https://pypi.python.org/pypi/transmissionrpc/;
-      license = licenses.mit;
     };
   };
 

@@ -11,7 +11,7 @@ buildPythonPackage rec {
 
   src = fetchPyPi {
     package = "Jinja2";
-    inherit verison;
+    inherit version;
     sha256 = "1x0v41lp5m1pjix3l46zx02b7lqp2hflgpnxwkywxynvi3zz47xw";
   };
 

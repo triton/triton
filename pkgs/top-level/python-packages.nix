@@ -169,6 +169,8 @@ jinja2 = callPackage ../all-pkgs/jinja2 { };
 
 markupsafe = callPackage ../all-pkgs/markupsafe { };
 
+progressbar = callPackage ../all-pkgs/progressbar { };
+
 py = callPackage ../all-pkgs/py { };
 
 pymysql = callPackage ../all-pkgs/pymysql { };
@@ -15963,24 +15965,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       homepage = http://github.com/ericflo/pynzb;
       description = "Unified API for parsing NZB files";
       license = licenses.bsd3;
-      maintainers = with maintainers; [ iElectric ];
-    };
-  });
-
-  progressbar = buildPythonPackage (rec {
-    name = "progressbar-2.2";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/progressbar/${name}.tar.gz";
-      md5 = "8ea4e2c17a8ec9e7d153767c5f2a7b28";
-    };
-
-    # invalid command 'test'
-
-    meta = {
-      homepage = http://code.google.com/p/python-progressbar/;
-      description = "Text progressbar library for python";
-      license = licenses.lgpl3Plus;
       maintainers = with maintainers; [ iElectric ];
     };
   });

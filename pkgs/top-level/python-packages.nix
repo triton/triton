@@ -136,6 +136,8 @@ in {
 ################################################################################
 ################################################################################
 
+backports-abc = callPackage ../all-pkgs/backports-abc { };
+
 beautifulsoup = callPackage ../all-pkgs/beautifulsoup { };
 
 brotli = callPackage ../all-pkgs/brotli/python.nix {

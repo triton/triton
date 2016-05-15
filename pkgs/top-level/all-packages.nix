@@ -1902,6 +1902,8 @@ samba_client = callPackageAlias "samba_full" {
   type = "client";
 };
 
+scons = callPackage ../all-pkgs/scons { };
+
 scrot = callPackage ../all-pkgs/scrot { };
 
 seabios = callPackage ../all-pkgs/seabios { };
@@ -6188,8 +6190,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  selenium-server-standalone = callPackage ../development/tools/selenium/server { };
 #
 #  selendroid = callPackage ../development/tools/selenium/selendroid { };
-#
-  scons = callPackage ../development/tools/build-managers/scons { };
 #
 #  sbt = callPackage ../development/tools/build-managers/sbt { };
 #  simpleBuildTool = sbt;

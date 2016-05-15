@@ -175,6 +175,8 @@ py = callPackage ../all-pkgs/py { };
 
 pymysql = callPackage ../all-pkgs/pymysql { };
 
+pynzb = callPackage ../all-pkgs/pynzb { };
+
 pytest = callPackage ../all-pkgs/pytest { };
 
 pytz = callPackage ../all-pkgs/pytz { };
@@ -15951,23 +15953,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       platforms = platforms.linux;
     };
   };
-
-
-  pynzb = buildPythonPackage (rec {
-    name = "pynzb-0.1.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pynzb/${name}.tar.gz";
-      md5 = "63c74a36348ac28aa99732dcb8be8c59";
-    };
-
-    meta = {
-      homepage = http://github.com/ericflo/pynzb;
-      description = "Unified API for parsing NZB files";
-      license = licenses.bsd3;
-      maintainers = with maintainers; [ iElectric ];
-    };
-  });
 
   ldap = buildPythonPackage rec {
     name = "ldap-2.4.19";

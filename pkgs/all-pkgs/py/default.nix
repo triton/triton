@@ -3,8 +3,6 @@
 , fetchurl
 }:
 
-# Circular dependency on pytest
-
 buildPythonPackage rec {
   name = "py-1.4.31";
 

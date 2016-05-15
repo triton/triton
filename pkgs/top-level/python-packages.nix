@@ -170,6 +170,8 @@ singledispatch = callPackage ../all-pkgs/singledispatch { };
 
 six = callPackage ../all-pkgs/six { };
 
+tornado = callPackage ../all-pkgs/tornado { };
+
 twisted = callPackage ../all-pkgs/twisted { };
 
 tzlocal = callPackage ../all-pkgs/tzlocal { };
@@ -21401,18 +21403,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     meta = {
       homepage = http://liw.fi/cmdtest/;
       description = "black box tests Unix command line tools";
-    };
-  };
-
-  tornado = buildPythonPackage rec {
-    name = "tornado-${version}";
-    version = "4.2.1";
-
-    propagatedBuildInputs = with self; [ backports_ssl_match_hostname_3_4_0_2 certifi ];
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/t/tornado/${name}.tar.gz";
-      sha256 = "a16fcdc4f76b184cb82f4f9eaeeacef6113b524b26a2cb331222e4a7fa6f2969";
     };
   };
 

@@ -129,6 +129,8 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   brotli = pkgs.brotli;
 };
 
+py = callPackage ../all-pkgs/py { };
+
 ################################################################################
 ################################################################################
 ################################################################################
@@ -14848,19 +14850,6 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
       license = licenses.mit;
     };
   };
-
-
-  py = buildPythonPackage rec {
-    name = "py-1.4.31";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/py/${name}.tar.gz";
-      sha256 = "a6501963c725fc2554dabfece8ae9a8fb5e149c0ac0a42fd2b02c5c1c57fc114";
-    };
-
-    # Circular dependency on pytest
-  };
-
 
   pyacoustid = buildPythonPackage rec {
     name = "pyacoustid-1.1.0";

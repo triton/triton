@@ -125,6 +125,8 @@ in {
 ################################################################################
 ################################################################################
 
+beautifulsoup = callPackage ../all-pkgs/beautifulsoup { };
+
 brotli = callPackage ../all-pkgs/brotli/python.nix {
   brotli = pkgs.brotli;
 };
@@ -1483,65 +1485,6 @@ pytest = callPackage ../all-pkgs/pytest { };
       description = "ReST document generation tools for botocore";
     };
   };
-
-  beautifulsoup = buildPythonPackage (rec {
-    name = "beautifulsoup-3.2.1";
-    disabled = isPy3k;
-
-    src = pkgs.fetchurl {
-      url = "http://www.crummy.com/software/BeautifulSoup/download/3.x/BeautifulSoup-3.2.1.tar.gz";
-      sha256 = "1nshbcpdn0jpcj51x0spzjp519pkmqz0n0748j7dgpz70zlqbfpm";
-    };
-
-    # error: invalid command 'test'
-
-    meta = {
-      homepage = http://www.crummy.com/software/BeautifulSoup/;
-      license = "bsd";
-      description = "Undemanding HTML/XML parser";
-    };
-  });
-
-  beautifulsoup4 = buildPythonPackage (rec {
-    name = "beautifulsoup4-4.4.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/b/beautifulsoup4/${name}.tar.gz";
-      sha256 = "1d36lc4pfkvl74fmzdib2nqnvknm0jddgf2n9yd7im150qyh3m47";
-    };
-
-    buildInputs = [ self.nose ];
-    checkPhase = ''
-      nosetests build/
-    '';
-
-    meta = {
-      homepage = http://crummy.com/software/BeautifulSoup/bs4/;
-      description = "HTML and XML parser";
-      license = licenses.mit;
-      maintainers = with maintainers; [ iElectric ];
-    };
-  });
-
-  # flexget needs beatifulsoup < 4.4 for now
-  beautifulsoup_4_1_3 = buildPythonPackage (rec {
-    name = "beautifulsoup4-4.1.3";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/b/beautifulsoup4/${name}.tar.gz";
-      sha256 = "0cbcml88bkx9gf1wznxa0kqz1wpyakfbyh9gmxw0wljhda1q0zk1";
-    };
-
-    meta = {
-      homepage = http://crummy.com/software/BeautifulSoup/bs4/;
-      description = "HTML and XML parser";
-      license = licenses.mit;
-      maintainers = with maintainers; [ iElectric ];
-    };
-
-    disabled = isPy3k;
-
-  });
 
   beaker = buildPythonPackage rec {
     name = "Beaker-1.7.0";
@@ -4339,7 +4282,7 @@ pytest = callPackage ../all-pkgs/pytest { };
     };
 
     propagatedBuildInputs =
-      [ self.beautifulsoup4
+      [ self.beautifulsoup
         self.peppercorn
         self.colander
         self.translationstring
@@ -4364,7 +4307,7 @@ pytest = callPackage ../all-pkgs/pytest { };
     };
 
     propagatedBuildInputs =
-      [ self.beautifulsoup4
+      [ self.beautifulsoup
         self.peppercorn
         self.colander
         self.translationstring
@@ -8482,7 +8425,7 @@ pytest = callPackage ../all-pkgs/pytest { };
 
     buildInputs = with self; [ nose ];
     propagatedBuildInputs = with self; [ paver feedparser sqlalchemy9 pyyaml rpyc
-	    beautifulsoup_4_1_3 html5lib pyrss2gen pynzb progressbar jinja2 flask
+	    beautifulsoup html5lib pyrss2gen pynzb progressbar jinja2 flask
 	    cherrypy requests dateutil_2_1 jsonschema python_tvrage tmdb3
       guessit pathpy apscheduler ]
 	# enable deluge and transmission plugin support, if they're installed
@@ -9587,7 +9530,7 @@ pytest = callPackage ../all-pkgs/pytest { };
     };
 
     buildInputs = with self; [ html5lib ];
-    propagatedBuildInputs = (with self; [ six beautifulsoup4 ])
+    propagatedBuildInputs = (with self; [ six beautifulsoup ])
                          ++ (with pkgs; [ ffmpeg swftools rtmpdump ]);
 
     meta = {
@@ -10769,7 +10712,7 @@ pytest = callPackage ../all-pkgs/pytest { };
       sha256 = "02jkwly4gw1jqm55l4wwn0j0ggnysx55inw9j96bif5l49z5cacd";
     };
 
-    propagatedBuildInputs = with self; [ requests2 beautifulsoup4 six ];
+    propagatedBuildInputs = with self; [ requests2 beautifulsoup six ];
 
     meta = {
       description = "A Python library for automating interaction with websites";
@@ -10843,7 +10786,7 @@ pytest = callPackage ../all-pkgs/pytest { };
 
     buildInputs = with self; [ pyflakes pep8 ];
     propagatedBuildInputs = with self; [
-      django_1_6 filebrowser_safe grappelli_safe bleach tzlocal beautifulsoup4
+      django_1_6 filebrowser_safe grappelli_safe bleach tzlocal beautifulsoup
       requests2 requests_oauthlib future pillow
     ];
 
@@ -12619,7 +12562,7 @@ pytest = callPackage ../all-pkgs/pytest { };
     };
 
     propagatedBuildInputs = with self; [ pbr six pyyaml appdirs stevedore ];
-    buildInputs = with self; [ beautifulsoup4 oslosphinx testtools testscenarios
+    buildInputs = with self; [ beautifulsoup oslosphinx testtools testscenarios
                                testrepository fixtures mock ];
     patchPhase = ''
       sed -i 's@python@${python.interpreter}@' .testr.conf
@@ -13827,7 +13770,7 @@ pytest = callPackage ../all-pkgs/pytest { };
       lxml
       # Disabling this because an upstream dependency, pep8, is broken on v3.5.
       (if isPy35 then null else html5lib)
-      beautifulsoup4
+      beautifulsoup
     ];
 
     # The flag `-A 'not network'` will disable tests that use internet.
@@ -14112,14 +14055,14 @@ pytest = callPackage ../all-pkgs/pytest { };
       mock
       nose
       markdown
-      beautifulsoup4
+      beautifulsoup
       lxml
       typogrify
     ];
 
     propagatedBuildInputs = with self; [
       jinja2 pygments docutils pytz unidecode six dateutil feedgenerator
-      blinker pillow beautifulsoup4 markupsafe
+      blinker pillow beautifulsoup markupsafe
     ];
 
     postPatch= ''
@@ -16091,7 +16034,7 @@ pytest = callPackage ../all-pkgs/pytest { };
       sha256 = "15m8lvbb5q4rg508i4ah8my872qrq5xjwgcgca4d3kzjv2x6fhim";
     };
     propagatedBuildInputs = with self; [ kitchen requests bunch paver six munch urllib3
-      beautifulsoup4 ];
+      beautifulsoup ];
 
     # https://github.com/fedora-infra/python-fedora/issues/140
     preBuild = ''
@@ -20720,7 +20663,7 @@ pytest = callPackage ../all-pkgs/pytest { };
       nose
       webob
       six
-      beautifulsoup4
+      beautifulsoup
       waitress
       mock
       pyquery
@@ -23303,7 +23246,7 @@ pytest = callPackage ../all-pkgs/pytest { };
 	  md5 = "4ad8a34e008d4893a61eadd593176f0f";
 	};
 
-	propagatedBuildInputs = with self; [ six beautifulsoup4 ];
+	propagatedBuildInputs = with self; [ six beautifulsoup ];
 
     meta = {
       homepage = "http://sites.google.com/site/ofxparse";
@@ -23470,7 +23413,7 @@ pytest = callPackage ../all-pkgs/pytest { };
 
     propagatedBuildInputs = with self; [
         thrift
-        beautifulsoup4
+        beautifulsoup
         markdown2
         sqlalchemy
         html2text

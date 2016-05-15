@@ -163,6 +163,8 @@ enum34 =
 
 futures = callPackage ../all-pkgs/futures { };
 
+guessit = callPackage ../all-pkgs/guessit { };
+
 jinja2 = callPackage ../all-pkgs/jinja2 { };
 
 markupsafe = callPackage ../all-pkgs/markupsafe { };
@@ -9118,29 +9120,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       url = "https://chromium.googlesource.com/external/gyp.git";
       rev = "02b145a1a4f4e1c62e8bae06045caf852d9ef17f";
       sha256 = "1amwrv82qxarc7nwnmjmnlz9ca281bkp435kzqhzskagzb5nm2kk";
-    };
-  };
-
-  guessit = buildPythonPackage rec {
-    version = "0.9.4";
-    name = "guessit-${version}";
-    disabled = isPy3k;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/g/guessit/${name}.tar.gz";
-      sha256 = "068d3dmyk4v04p2zna0340lsdnpkm10gyza62apd9akgjh9rfs48";
-    };
-
-    propagatedBuildInputs = with self; [
-      dateutil_2_1 requests stevedore babelfish pyyaml
-    ];
-
-    # A unicode test fails
-
-    meta = {
-      homepage = https://pypi.python.org/pypi/guessit;
-      license = licenses.lgpl3;
-      description = "A library for guessing information from video files";
     };
   };
 

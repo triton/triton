@@ -131,6 +131,8 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
 py = callPackage ../all-pkgs/py { };
 
+pytest = callPackage ../all-pkgs/pytest { };
+
 ################################################################################
 ################################################################################
 ################################################################################
@@ -3815,29 +3817,6 @@ py = callPackage ../all-pkgs/py { };
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/pycparser/${name}.tar.gz";
       sha256 = "7959b4a74abdc27b312fed1c21e6caf9309ce0b29ea86b591fd2e99ecdf27f73";
-    };
-  };
-
-  pytest = buildPythonPackage rec {
-    name = "pytest-2.9.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pytest/${name}.tar.gz";
-      sha256 = "0d48d27a127644fbe7c8158157e08b35f8255045d4476df694b91eb3a8147e65";
-    };
-
-    buildInputs = with self; [
-      py
-    ];
-
-  };
-
-  pytest_28 = self.pytest.override rec {
-    name = "pytest-2.8.6";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pytest/${name}.tar.gz";
-      sha256 = "ed38a3725b8e4478555dfdb549a4219ca3ba57955751141a1aaa45b706d84194";
     };
   };
 

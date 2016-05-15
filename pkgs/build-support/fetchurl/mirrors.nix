@@ -156,6 +156,10 @@ rec {
     ftp://ftp-archives.postgresql.org/pub
   ];
 
+  pypi = [
+    "https://pypi.python.org/packages/source"
+  ];
+
   # Roy marples mirrors
   roy = [
     http://roy.marples.name/downloads

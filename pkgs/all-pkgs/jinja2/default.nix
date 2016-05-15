@@ -12,12 +12,14 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "Jinja2";
     inherit version;
-    sha256 = "1x0v41lp5m1pjix3l46zx02b7lqp2hflgpnxwkywxynvi3zz47xw";
+    sha256 = "bc1ff2ff88dbfacefde4ddde471d1417d3b304e8df103a7a9437d47269201bf4";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pythonPackages.markupsafe
   ];
+
+  doCheck = true;
 
   meta = with stdenv.lib; {
     description = "Jinja2 is a template engine written in pure Python";

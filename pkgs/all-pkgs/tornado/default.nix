@@ -1,6 +1,6 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
 
 , pythonOlder
 , pythonPackages
@@ -12,10 +12,12 @@ let
 in
 
 buildPythonPackage rec {
-  name = "tornado-4.3";
+  name = "tornado-${version}";
+  version = "4.3";
 
-  src = fetchurl {
-    url = "mirror://pypi/t/tornado/${name}.tar.gz";
+  src = fetchPyPi {
+    package = "tornado";
+    inherit version;
     sha256 = "c9c2d32593d16eedf2cec1b6a41893626a2649b40b21ca9c4cac4243bde2efbf";
   };
 

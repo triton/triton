@@ -1,15 +1,17 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
 
 , pythonPackages
 }:
 
 buildPythonPackage rec {
-  name = "zope.interface-4.1.3";
+  name = "zope.interface-${version}";
+  version = "4.1.3";
 
-  src = fetchurl {
-    url = "mirror://pypi/z/zope.interface/${name}.tar.gz";
+  src = fetchPyPi {
+    package = "zope.interface";
+    inherit version;
     sha256 = "2e221a9eec7ccc58889a278ea13dcfed5ef939d80b07819a9a8b3cb1c681484f";
   };
 

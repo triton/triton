@@ -1,14 +1,16 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
 }:
 
 buildPythonPackage rec {
-  name = "pytz-2016.3";
+  name = "pytz-${version}";
+  version = "2016.4";
 
-  src = fetchurl {
-    url = "mirror://pypi/p/pytz/${name}.tar.gz";
-    sha256 = "3449da19051655d4c0bb5c37191331748bcad15804d81676a88451ef299370a8";
+  src = fetchPyPi {
+    package = "pytz";
+    inherit version;
+    sha256 = "c823de61ff40d1996fe087cec343e0503881ca641b897e0f9b86c7683a0bfee1";
   };
 
   meta = with stdenv.lib; {

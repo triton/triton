@@ -1,13 +1,15 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
 }:
 
 buildPythonPackage rec {
-  name = "backports_abc-0.4";
+  name = "backports_abc-${version}";
+  version = "0.4";
 
-  src = fetchurl {
-    url = "mirror://pypi/b/backports_abc/${name}.tar.gz";
+  src = fetchPyPi {
+    package = "backports_abc";
+    inherit version;
     sha256 = "8b3e4092ba3d541c7a2f9b7d0d9c0275b21c6a01c53a61c731eba6686939d0a5";
   };
 

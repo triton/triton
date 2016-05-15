@@ -1,6 +1,6 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
 
 , isPy3k
 , pythonPackages
@@ -12,10 +12,12 @@ let
 in
 
 buildPythonPackage rec {
-  name = "pytest-2.9.1";
+  name = "pytest-${version}";
+  version = "2.9.1";
 
-  src = fetchurl {
-    url = "mirror://pypi/p/pytest/${name}.tar.gz";
+  src = fetchPyPi {
+    package = "pytest";
+    inherit version;
     sha256 = "0d48d27a127644fbe7c8158157e08b35f8255045d4476df694b91eb3a8147e65";
   };
 

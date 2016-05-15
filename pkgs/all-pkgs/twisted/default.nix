@@ -1,15 +1,18 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
 
 , pythonPackages
 }:
 
 buildPythonPackage rec {
-  name = "Twisted-16.1.1";
+  name = "Twisted-${version}";
+  version = "16.1.1";
 
-  src = fetchurl {
-    url = "mirror://pypi/T/Twisted/${name}.tar.bz2";
+  src = fetchPyPi {
+    package = "Twisted";
+    inherit version;
+    type = ".tar.bz2";
     sha256 = "fe7d001d9a803ed26cd0fd2f69fa4212ff025f3af6ef1a559d905fe551ab04e9";
   };
 

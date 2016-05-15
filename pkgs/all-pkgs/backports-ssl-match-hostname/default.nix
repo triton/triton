@@ -1,13 +1,15 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
 }:
 
 buildPythonPackage rec {
-  name = "backports.ssl_match_hostname-3.5.0.1";
+  name = "backports.ssl_match_hostname-${version}";
+  version = "3.5.0.1";
 
-  src = fetchurl {
-    url = "mirror://pypi/b/backports.ssl_match_hostname/${name}.tar.gz";
+  src = fetchPyPi {
+    package = "backports.ssl_match_hostname";
+    inherit version;
     sha256 = "502ad98707319f4a51fa2ca1c677bd659008d27ded9f6380c79e8932e38dcdf2";
   };
 

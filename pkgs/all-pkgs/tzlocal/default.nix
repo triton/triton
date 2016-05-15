@@ -1,15 +1,17 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
 
 , pythonPackages
 }:
 
 buildPythonPackage rec {
-  name = "tzlocal-1.2.2";
+  name = "tzlocal-${version}";
+  version = "1.2.2";
 
-  src = fetchurl {
-    url = "mirror://pypi/t/tzlocal/${name}.tar.gz";
+  src = fetchPyPi {
+    package = "tzlocal";
+    inherit version;
     sha256 = "cbbaa4e9d25c36386f12af9febe315139fdd39317b91abcb42d782a5e93e525d";
   };
 

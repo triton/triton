@@ -1,22 +1,16 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
-, fetchzip
+, fetchPyPi
 }:
 
 buildPythonPackage rec {
   name = "enum34-${version}";
-  version = "1.1.4";
+  version = "1.1.5";
 
-  /* pypi botched this package and thinks 1.1.5 exists already
-  src = fetchurl {
-    url = "mirror://pypi/e/enum34/${name}.tar.gz";
-    sha256 = "865506c22462236b3a2e87a7d9587633e18470e7a93a79b594791de2d31e9bc8";
-  };*/
-
-  src = fetchzip {
-    url = "https://bitbucket.org/stoneleaf/enum34/get/${version}.tar.bz2";
-    sha256 = "652d7bcd794f8fdefbe59a5fff44a178f65cbe53e1f5b7eb6edadddd0e83ef8f";
+  src = fetchPyPi {
+    package = "enum34";
+    inherit version;
+    sha256 = "35cf09a65db802269a76b7df60f548940575579a0e8a00ec45294995d28b0862";
   };
 
   meta = with stdenv.lib; {

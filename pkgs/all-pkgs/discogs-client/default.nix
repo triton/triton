@@ -1,16 +1,17 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
 
 , pythonPackages
 }:
 
 buildPythonPackage rec {
-  name = "discogs-client-2.2.1";
+  name = "discogs-client-${version}";
+  version = "2.2.1";
 
-  src = fetchurl {
-    url = "mirror://pypi/d/discogs-client/${name}.tar.gz";
-    md5Confirm = "c82be8006e1c02fcfc2bb42a2e312151";
+  src = fetchPyPi {
+    package = "discogs-client";
+    inherit version;
     sha256 = "9e32b5e45cff41af8025891c71aa3025b3e1895de59b37c11fd203a8af687414";
   };
 

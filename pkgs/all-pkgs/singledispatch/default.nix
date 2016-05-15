@@ -1,15 +1,17 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
 
 , pythonPackages
 }:
 
 buildPythonPackage rec {
-  name = "singledispatch-3.4.0.3";
+  name = "singledispatch-${version}";
+  version = "3.4.0.3";
 
-  src = fetchurl {
-    url = "mirror://pypi/s/singledispatch/${name}.tar.gz";
+  src = fetchPyPi {
+    package = "singledispatch";
+    inherit version;
     sha256 = "5b06af87df13818d14f08a028e42f566640aef80805c3b50c5056b086e3c2b9c";
   };
 

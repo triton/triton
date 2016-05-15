@@ -1,13 +1,15 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
 }:
 
 buildPythonPackage rec {
-  name = "PyMySQL-0.7.2";
+  name = "pymysql-${version}";
+  version = "0.7.2";
 
-  src = fetchurl {
-    url = "mirror://pypi/P/PyMySQL/${name}.tar.gz";
+  src = fetchPyPi {
+    package = "PyMySQL";
+    inherit version;
     sha256 = "bd7acb4990dbf097fae3417641f93e25c690e01ed25c3ed32ea638d6c3ac04ba";
   };
 

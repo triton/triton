@@ -138,6 +138,9 @@ in {
 
 backports-abc = callPackage ../all-pkgs/backports-abc { };
 
+backports-ssl-match-hostname =
+  callPackage ../all-pkgs/backports-ssl-match-hostname { };
+
 beautifulsoup = callPackage ../all-pkgs/beautifulsoup { };
 
 brotli = callPackage ../all-pkgs/brotli/python.nix {
@@ -1415,20 +1418,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       homepage = "http://azure.microsoft.com/en-us/develop/python/";
       license = licenses.asl20;
       maintainers = with maintainers; [ olcai ];
-    };
-  };
-
-  backports_ssl_match_hostname_3_4_0_2 = self.buildPythonPackage rec {
-    name = "backports.ssl_match_hostname-3.4.0.2";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/b/backports.ssl_match_hostname/backports.ssl_match_hostname-3.4.0.2.tar.gz";
-      md5 = "788214f20214c64631f0859dc79f23c6";
-    };
-
-    meta = {
-      description = "The Secure Sockets layer is only actually *secure*";
-      homepage = http://bitbucket.org/brandon/backports.ssl_match_hostname;
     };
   };
 

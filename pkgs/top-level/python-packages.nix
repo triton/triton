@@ -199,6 +199,8 @@ singledispatch = callPackage ../all-pkgs/singledispatch { };
 
 six = callPackage ../all-pkgs/six { };
 
+tmdb3 = callPackage ../all-pkgs/tmdb3 { };
+
 tornado = callPackage ../all-pkgs/tornado { };
 
 twisted = callPackage ../all-pkgs/twisted { };
@@ -19473,22 +19475,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     meta = {
       description = "Quick Response code generation for Python";
       home = "https://pypi.python.org/pypi/qrcode";
-      license = licenses.bsd3;
-    };
-  };
-
-  tmdb3 = buildPythonPackage rec {
-    name = "tmdb3-${version}";
-    version = "0.6.17";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/t/tmdb3/${name}.zip";
-      md5 = "cd259427454472164c9a2479504c9cbb";
-    };
-
-    meta = {
-      description = "Python implementation of the v3 API for TheMovieDB.org, allowing access to movie and cast information";
-      homepage = https://pypi.python.org/pypi/tmdb3;
       license = licenses.bsd3;
     };
   };

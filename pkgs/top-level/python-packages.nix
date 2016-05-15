@@ -154,6 +154,8 @@ six = callPackage ../all-pkgs/six { };
 
 tzlocal = callPackage ../all-pkgs/tzlocal { };
 
+zope-event = callPackage ../all-pkgs/zope-event { };
+
 ################################################################################
 ################################################################################
 ################################################################################
@@ -21140,25 +21142,6 @@ tzlocal = callPackage ../all-pkgs/tzlocal { };
         maintainers = with maintainers; [ goibhniu ];
     };
   };
-
-
-  zope_event = buildPythonPackage rec {
-    name = "zope.event-${version}";
-    version = "4.0.3";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/z/zope.event/${name}.tar.gz";
-      sha256 = "1w858k9kmgzfj36h65kp27m9slrmykvi5cjq6c119xqnaz5gdzgm";
-    };
-
-    meta = {
-      description = "An event publishing system";
-      homepage = https://pypi.python.org/pypi/zope.event;
-      license = licenses.zpt20;
-      maintainers = with maintainers; [ goibhniu ];
-    };
-  };
-
 
   zope_exceptions = buildPythonPackage rec {
      name = "zope.exceptions-${version}";

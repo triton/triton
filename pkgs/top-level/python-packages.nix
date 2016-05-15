@@ -137,6 +137,8 @@ in {
 
 apscheduler = callPackage ../all-pkgs/apscheduler { };
 
+babelfish = callPackage ../all-pkgs/babelfish { };
+
 backports-abc = callPackage ../all-pkgs/backports-abc { };
 
 backports-ssl-match-hostname =
@@ -1418,23 +1420,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     meta = {
       describe = "Backport of Python 3.3's 'lzma' module for XZ/LZMA compressed files";
       homepage = https://github.com/peterjc/backports.lzma;
-      license = licenses.bsd3;
-    };
-  };
-
-  babelfish = buildPythonPackage rec {
-    version = "0.5.3";
-    name = "babelfish-${version}";
-    disabled = isPy3k;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/b/babelfish/${name}.tar.gz";
-      sha256 = "0wrw21dyq7v6lbffwvi1ik43d7dhmcv8xvgrrihhiv7ys1rd3gag";
-    };
-
-    meta = {
-      homepage = https://pypi.python.org/pypi/babelfish;
-      description = "A module to work with countries and languages";
       license = licenses.bsd3;
     };
   };

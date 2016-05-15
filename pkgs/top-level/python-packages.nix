@@ -131,6 +131,8 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
 py = callPackage ../all-pkgs/py { };
 
+pymysql = callPackage ../all-pkgs/pymysql { };
+
 pytest = callPackage ../all-pkgs/pytest { };
 
 ################################################################################
@@ -11473,24 +11475,6 @@ pytest = callPackage ../all-pkgs/pytest { };
       license = licenses.bsd3;
       maintainers = with maintainers; [ matthiasbeyer ];
     };
-  };
-
-  pymysql = buildPythonPackage rec {
-    name = "pymysql-${version}";
-    version = "0.6.6";
-    src = pkgs.fetchgit {
-      url = https://github.com/PyMySQL/PyMySQL.git;
-      rev = "refs/tags/pymysql-${version}";
-      sha256 = "12v8bw7pp455zqkwraxk69qycz2ngk18bbz60v72kdbp6kssnqhz";
-    };
-
-    buildInputs = with self; [ unittest2 ];
-
-    checkPhase = ''
-      ${python.interpreter} runtests.py
-    '';
-
-    # Wants to connect to MySQL
   };
 
   pymysqlsa = self.buildPythonPackage rec {

@@ -148,6 +148,8 @@ pymysql = callPackage ../all-pkgs/pymysql { };
 
 pytest = callPackage ../all-pkgs/pytest { };
 
+pytz = callPackage ../all-pkgs/pytz { };
+
 six = callPackage ../all-pkgs/six { };
 
 tzlocal = callPackage ../all-pkgs/tzlocal { };
@@ -16535,17 +16537,6 @@ tzlocal = callPackage ../all-pkgs/tzlocal { };
       maintainers = with maintainers; [ nckx ];
     };
   };
-
-
-  pytz = buildPythonPackage rec {
-    name = "pytz-2016.3";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pytz/${name}.tar.gz";
-      sha256 = "3449da19051655d4c0bb5c37191331748bcad15804d81676a88451ef299370a8";
-    };
-  };
-
 
   pyutil = buildPythonPackage (rec {
     name = "pyutil-2.0.0";

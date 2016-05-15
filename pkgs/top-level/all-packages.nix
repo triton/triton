@@ -999,7 +999,7 @@ gperftools = callPackage ../all-pkgs/gperftools { };
 
 gpm = callPackage ../all-pkgs/gpm+ncurses { };
 
-gpsd = callPackages ../all-pkgs/gpsd { };
+gpsd = callPackage ../all-pkgs/gpsd { };
 
 gptfdisk = callPackage ../all-pkgs/gptfdisk { };
 

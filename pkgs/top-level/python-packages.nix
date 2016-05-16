@@ -171,6 +171,8 @@ flask-restful = callPackage ../all-pkgs/flask-restful { };
 
 flask-restplus = callPackage ../all-pkgs/flask-restplus { };
 
+flexget = callPackage ../all-pkgs/flexget { };
+
 futures = callPackage ../all-pkgs/futures { };
 
 guessit = callPackage ../all-pkgs/guessit { };
@@ -8322,36 +8324,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       homepage = https://github.com/wtforms/wtforms;
       description = "A flexible forms validation and rendering library for Python";
       license = licenses.bsd3;
-    };
-  };
-
-  flexget = buildPythonPackage rec {
-    version = "1.2.337";
-    name = "FlexGet-${version}";
-    disabled = isPy3k;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/F/FlexGet/${name}.tar.gz";
-      md5 = "2c249c43bc594726f908b1425a8b8081";
-    };
-
-
-    buildInputs = with self; [ nose ];
-    propagatedBuildInputs = with self; [ paver feedparser sqlalchemy9 pyyaml rpyc
-	    beautifulsoup html5lib pyrss2gen pynzb progressbar jinja2 flask
-	    cherrypy requests dateutil_2_1 jsonschema python_tvrage tmdb3
-      guessit pathpy apscheduler ]
-	# enable deluge and transmission plugin support, if they're installed
-	++ stdenv.lib.optional (pkgs.config.pythonPackages.deluge or false)
-	    pythonpackages.deluge
-	++ stdenv.lib.optional (pkgs.transmission != null)
-	    self.transmissionrpc;
-
-    meta = {
-      homepage = http://flexget.com/;
-      description = "Multipurpose automation tool for content like torrents";
-      license = licenses.mit;
-      maintainers = with maintainers; [ iElectric ];
     };
   };
 

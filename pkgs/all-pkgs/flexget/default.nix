@@ -9,6 +9,8 @@
 let
   inherit (stdenv.lib)
     optionals;
+  inherit (pythonPackages)
+    pythonOlder;
 in
 
 buildPythonPackage rec {
@@ -44,7 +46,6 @@ buildPythonPackage rec {
     pythonPackages.html5lib
     pythonPackages.jinja2
     pythonPackages.jsonschema
-    pythonPackages.pathlib
     pythonPackages.pathpy
     pythonPackages.paver
     pythonPackages.progressbar
@@ -60,6 +61,8 @@ buildPythonPackage rec {
     pythonPackages.sqlalchemy
     pythonPackages.tmdb3
     pythonPackages.transmissionrpc
+  ] ++ optionals (pythonOlder "3.4") [
+    pythonPackages.pathlib
   ] ++ optionals (config.pythonPackages.deluge or false) [
     pythonPackages.deluge
   ];

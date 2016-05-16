@@ -167,6 +167,8 @@ flask-compress = callPackage ../all-pkgs/flask-compress { };
 
 flask-restful = callPackage ../all-pkgs/flask-restful { };
 
+flask-restplus = callPackage ../all-pkgs/flask-restplus { };
+
 futures = callPackage ../all-pkgs/futures { };
 
 guessit = callPackage ../all-pkgs/guessit { };

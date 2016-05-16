@@ -1,9 +1,0 @@
-diff --git a/misc/systemd/nix-daemon.service.in b/misc/systemd/nix-daemon.service.in
-index 5fc04a3..14235e0 100644
---- a/misc/systemd/nix-daemon.service.in
-+++ b/misc/systemd/nix-daemon.service.in
-@@ -7,3 +7,4 @@ ConditionPathIsReadWrite=@localstatedir@/nix/daemon-socket
- [Service]
- ExecStart=@@bindir@/nix-daemon nix-daemon --daemon
- KillMode=process
-+LimitNPROC=infinity

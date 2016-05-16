@@ -179,6 +179,8 @@ pymysql = callPackage ../all-pkgs/pymysql { };
 
 pynzb = callPackage ../all-pkgs/pynzb { };
 
+pyparsing = callPackage ../all-pkgs/pyparsing { };
+
 pyrss2gen = callPackage ../all-pkgs/pyrss2gen { };
 
 pytest = callPackage ../all-pkgs/pytest { };
@@ -6037,7 +6039,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
         pillow
         py
         pyPdf
-        pyparsing1
+        pyparsing
         qserve
         roman
         simplejson
@@ -15624,60 +15626,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license = licenses.gpl2Plus;
     };
   };
-
-
-  pyodbc = buildPythonPackage rec {
-    name = "pyodbc-3.0.7";
-    disabled = isPyPy;  # use pypypdbc instead
-
-    src = pkgs.fetchurl {
-      url = "https://pyodbc.googlecode.com/files/${name}.zip";
-      sha256 = "0ldkm8xws91j7zbvpqb413hvdz8r66bslr451q3qc0xi8cnmydfq";
-    };
-
-    buildInputs = with self; [ pkgs.libiodbc ];
-
-    meta = {
-      description = "Python ODBC module to connect to almost any database";
-      homepage = https://code.google.com/p/pyodbc/;
-      license = licenses.mit;
-      platforms = platforms.linux;
-      maintainers = with maintainers; [ bjornfor ];
-    };
-  };
-
-
-  pyparsing = buildPythonPackage rec {
-    name = "pyparsing-2.0.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pyparsing/${name}.tar.gz";
-      sha256 = "1r742rjbagf2i166k2w0r192adfw7l9lnsqz7wh4mflf00zws1q0";
-    };
-
-    # error: invalid command 'test'
-
-    meta = {
-      homepage = http://pyparsing.wikispaces.com/;
-      description = "An alternative approach to creating and executing simple grammars, vs. the traditional lex/yacc approach, or the use of regular expressions";
-    };
-  };
-
-  pyparsing1 = buildPythonPackage rec {
-    name = "pyparsing-1.5.7";
-    disabled = isPy3k;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pyparsing/${name}.tar.gz";
-      md5 = "9be0fcdcc595199c646ab317c1d9a709";
-    };
-
-    meta = {
-      homepage = http://pyparsing.wikispaces.com/;
-      description = "An alternative approach to creating and executing simple grammars, vs. the traditional lex/yacc approach, or the use of regular expressions";
-    };
-  };
-
 
   pyparted = buildPythonPackage rec {
     name = "pyparted-${version}";

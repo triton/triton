@@ -19,6 +19,8 @@ buildPythonPackage rec {
     pythonPackages.pytz
   ];
 
+  doCheck = true;
+
   meta = with stdenv.lib; {
     description = "tzinfo object for the local timezone";
     homepage = https://github.com/regebro/tzlocal;

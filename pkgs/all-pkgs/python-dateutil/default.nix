@@ -15,9 +15,11 @@ buildPythonPackage rec {
     sha256 = "1408fdb07c6a1fa9997567ce3fcee6a337b39a503d80699e0f213de4aa4b32ed";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pythonPackages.six
   ];
+
+  doCheck = true;
 
   meta = with stdenv.lib; {
     description = "Extensions to the standard Python datetime module";

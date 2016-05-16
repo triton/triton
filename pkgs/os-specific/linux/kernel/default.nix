@@ -34,6 +34,7 @@ let
 
   tarballUrls = [
     "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar"
+    "mirror://kernel/linux/kernel/v4.x/testing/linux-${version}.tar"
   ];
 
   src = fetchurl {

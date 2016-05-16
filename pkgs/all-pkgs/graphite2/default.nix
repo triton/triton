@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/silgraphite/graphite2/${name}.tgz";
+    multihash = "QmRbmYDFn4sZDjE7xGc4QM2Jx4a5Sw7KTjPB9RRp4mRWGG";
     sha256 = "9f3f25b3a8495ce0782e77f69075c0dd9b7c054847b9bf9ff130bec38f4c8cc2";
   };
 

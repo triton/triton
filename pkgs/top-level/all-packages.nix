@@ -1005,6 +1005,8 @@ gptfdisk = callPackage ../all-pkgs/gptfdisk { };
 
 granite = callPackage ../all-pkgs/granite { };
 
+graphite2 = callPackage ../all-pkgs/graphite2 { };
+
 graphviz = callPackage ../all-pkgs/graphviz { };
 
 grilo = callPackage ../all-pkgs/grilo { };
@@ -7710,7 +7712,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  shhopt = callPackage ../development/libraries/shhopt { };
 #
 #  silgraphite = callPackage ../development/libraries/silgraphite {};
-  graphite2 = callPackage ../development/libraries/silgraphite/graphite2.nix {};
 #
 #  simgear = callPackage ../development/libraries/simgear { };
 #

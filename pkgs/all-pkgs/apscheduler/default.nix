@@ -21,7 +21,7 @@ buildPythonPackage rec {
     sha256 = "96a7ca40dbfb16502b44740c31c935943532f5a13be114e75419ca86fa264486";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pythonPackages.enum34
     pythonPackages.pytz
     pythonPackages.setuptools

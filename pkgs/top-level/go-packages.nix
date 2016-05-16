@@ -908,11 +908,10 @@ let
   };
 
   go-base58 = buildFromGitHub {
-    rev = "6237cf65f3a6f7111cd8a42be3590df99a66bc7d";
+    rev = "1.0.0";
     owner  = "jbenet";
     repo   = "go-base58";
-    sha256 = "1d6zrd3f59sa5lvaprlf6pf07p9inm0kv1a1xzqwx4w0400sv6wm";
-    date = "2015-03-17";
+    sha256 = "0sbss2611iri3mclcz3k9b7kw2sqgwswg4yxzs02vjk3673dcbh2";
   };
 
   go-bencode = buildGoPackage rec {
@@ -1031,11 +1030,11 @@ let
   };
 
   go-humanize = buildFromGitHub {
-    rev = "8929fe90cee4b2cb9deb468b51fb34eba64d1bf0";
+    rev = "f3565c9525600a911af3bd34f8b535ea81b2a9e0";
     owner = "dustin";
     repo = "go-humanize";
-    sha256 = "1876x9742jh3ri3d23abdnpz5c7ww0cs118fii19c33q34w1gsc6";
-    date = "2015-11-25";
+    sha256 = "0dkxk6l1klhrndhszpncdbka3898p4rf2i7rxyjwvc0s1jnj9r3r";
+    date = "2016-05-09";
   };
 
   go-immutable-radix = buildFromGitHub {
@@ -1056,11 +1055,10 @@ let
   };
 
   go-ipfs-api = buildFromGitHub {
-    date = "2016-04-27";
-    rev = "60ded1996d84cc0c5607e7e32b8138cc91cb4b18";
+    rev = "v1.0.0";
     owner  = "ipfs";
     repo   = "go-ipfs-api";
-    sha256 = "0nhjwf56vsdxay4bjv4f09k9k847i9gbm1bxklr37hf5srpmqbgr";
+    sha256 = "0c54r9g10rcnrm9rzj815gjkcgmr5z3pjgh3b4b19vbsgm2rx7hf";
     excludedPackages = "tests";
     propagatedBuildInputs = [ go-multiaddr-net go-multipart-files tar-utils ];
   };
@@ -1149,22 +1147,22 @@ let
   };
 
   go-multiaddr = buildFromGitHub {
-    rev = "41d11170520e5b0ea0af2489d7ac5fbdd452e603";
-    date = "2016-01-19";
+    rev = "f3dff105e44513821be8fbe91c89ef15eff1b4d4";
+    date = "2016-05-09";
     owner  = "jbenet";
     repo   = "go-multiaddr";
-    sha256 = "07409gd1aw3i0lzmhh07yzgw791hmgrl6cg1ch642j0a46jff7zw";
+    sha256 = "0qdma38d4bmib063hh899h2491kgzgg16kgqdvypncchawq8nqlj";
     propagatedBuildInputs = [
       go-multihash
     ];
   };
 
   go-multiaddr-net = buildFromGitHub {
-    rev = "f1f304d1e018c4935b44aff20587579a94168954";
+    rev = "d4cfd691db9f50e430528f682ca603237b0eaae0";
     owner  = "jbenet";
     repo   = "go-multiaddr-net";
-    sha256 = "1wsxvqkpm6ycc5r7av4vqr7mvih3si3fryyaa3l9zd0dmzz0jfg4";
-    date = "2016-04-26";
+    sha256 = "0nwqaqfn30qxhwa0v2sbxankkj41krbwd30bp92y0xrkz5ivvi16";
+    date = "2016-05-16";
     propagatedBuildInputs = [
       go-multiaddr
       utp
@@ -1647,18 +1645,30 @@ let
   };
 
   missinggo = buildFromGitHub {
-    rev = "c49275eaef9c8b81592331bbd4c32ad6329e701c";
+    rev = "f7baaaa09ad66d89353045d8e7c459a4cf33ec33";
     owner  = "anacrolix";
     repo   = "missinggo";
-    sha256 = "0vc1xcgvbwfnwplp36qfa099c0bcpi5d441q28xiy8d5ig1sdpdq";
-    date = "2016-04-30";
+    sha256 = "1imwsm3a1zkddfxzp10zfcqsspfsbsi9wr1gmyw2mzxn2wrygbcd";
+    date = "2016-05-17";
     propagatedBuildInputs = [
       b
       btree
       docopt-go
+      envpprof
       goskiplist
       iter
       roaring
+      tagflag
+    ];
+  };
+
+  missinggo_lib = buildFromGitHub {
+    inherit (missinggo) rev owner repo sha256 date;
+    subPackages = [
+      "."
+    ];
+    propagatedBuildInputs = [
+      iter
     ];
   };
 
@@ -1965,11 +1975,10 @@ let
   };
 
   roaring = buildFromGitHub {
-    rev = "f292b80692877243664179967e342850a81f8941";
-    date = "2016-04-28";
+    rev = "v0.2.5";
     owner  = "RoaringBitmap";
     repo   = "roaring";
-    sha256 = "1c8fd039c79841c4ff572f5c168c19320f77a2d30cf4aaf280d68ef6fd144805";
+    sha256 = "1kc85xpk5p0fviywck9ci3i8nzsng34gx29i2j3322ax1nyj93ap";
   };
 
   runc = buildFromGitHub {
@@ -2176,6 +2185,19 @@ let
     ];
   };
 
+  tagflag = buildFromGitHub {
+    rev = "b4e0d6bdcd327e72ac967a672213c45c36fa9735";
+    date = "2016-05-11";
+    owner  = "anacrolix";
+    repo   = "tagflag";
+    sha256 = "1m1qjwlb4w9fvvxd2bbbm2ypvqbdlmrw2smqmc36vv8bw8gi6wcp";
+    propagatedBuildInputs = [
+      go-humanize
+      missinggo_lib
+      xstrings
+    ];
+  };
+
   tar-utils = buildFromGitHub {
     rev = "beab27159606f5a7c978268dd1c3b12a0f1de8a7";
     date = "2016-03-22";
@@ -2227,11 +2249,11 @@ let
   };
 
   utp = buildFromGitHub {
-    rev = "e509da33168949a91f52f58a7fb1de4ce2e181d1";
+    rev = "f203455078e08e0f977ba540107a30639d824f68";
     owner  = "anacrolix";
     repo   = "utp";
-    sha256 = "05apxm2mh8r41y891bylx1lpz7g2bfrqpr8nr142z8kk58ylvxpa";
-    date = "2016-04-30";
+    sha256 = "1ja2gfnqikwwz3347s0wm7lwz01lnr9i7js23zy4rwfvwacanhy5";
+    date = "2016-05-14";
     propagatedBuildInputs = [
       envpprof
       missinggo
@@ -2343,6 +2365,14 @@ let
     owner  = "calmh";
     repo   = "xdr";
     sha256 = "e72f1e0869388c5949d99d03dcb077b1e7edf0137c42eae8cc2b5c8e77dd92f2";
+  };
+
+  xstrings = buildFromGitHub {
+    rev = "3959339b333561bf62a38b424fd41517c2c90f40";
+    date = "2015-11-30";
+    owner  = "huandu";
+    repo   = "xstrings";
+    sha256 = "16l1cqpqsgipa4c6q55n8vlnpg9kbylkx1ix8hsszdikj25mcig1";
   };
 
   zappy = buildFromGitHub {

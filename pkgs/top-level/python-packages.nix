@@ -168,6 +168,8 @@ futures = callPackage ../all-pkgs/futures { };
 
 guessit = callPackage ../all-pkgs/guessit { };
 
+iotop = callPackage ../all-pkgs/iotop { };
+
 jinja2 = callPackage ../all-pkgs/jinja2 { };
 
 markupsafe = callPackage ../all-pkgs/markupsafe { };

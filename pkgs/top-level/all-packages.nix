@@ -1163,6 +1163,8 @@ inkscape = callPackage ../all-pkgs/inkscape { };
 
 intltool = callPackage ../all-pkgs/intltool { };
 
+iotop = pkgs.pythonPackages.iotop;
+
 ipfs = pkgs.goPackages.ipfs.bin // { outputs = [ "bin" ]; };
 
 ipfs-hasher = callPackage ../all-pkgs/ipfs-hasher { };
@@ -8749,8 +8751,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  iomelt = callPackage ../os-specific/linux/iomelt { };
 #
-  iotop = callPackage ../os-specific/linux/iotop { };
-
 #  irqbalance = callPackage ../os-specific/linux/irqbalance { };
 #
   iw = callPackage ../os-specific/linux/iw { };

@@ -12,7 +12,7 @@
 , flac
 , imagemagick
 , mp3val
-, python2Packages
+, pythonPackages
 
 # External plugins
 , enableAlternatives ? true
@@ -35,13 +35,15 @@ let
     optionals
     optionalString
     platforms;
+  inherit (pythonPackages)
+    isPy3k;
 in
 
 let
   optionalPlugins = {
     # TODO: write a generic function to detect null dependencies
     acousticbrainz =
-      if python2Packages.requests2 != null then
+      if pythonPackages.requests2 != null then
         true
       else
         false;
@@ -52,54 +54,54 @@ let
       else
         false;
     bpd =
-      #if python2Packages.pygobject_2 != null
+      #if pythonPackages.pygobject_2 != null
       #   && gst-plugins-base_0 != null
       #   && gstreamer_0 != null then
       #  true
       #else
         false;
     chroma =
-      if python2Packages.pyacoustid != null then
+      if pythonPackages.pyacoustid != null then
         true
       else
         false;
     discogs =
-      if python2Packages.discogs_client != null then
+      if pythonPackages.discogs_client != null then
         true
       else
         false;
     echonest =
-      if python2Packages.pyechonest != null then
+      if pythonPackages.pyechonest != null then
         true
       else
         false;
     embyupdate =
-      if python2Packages.requests2 != null then
+      if pythonPackages.requests2 != null then
         true
       else
         false;
     fetchart =
-      if python2Packages.requests2 != null then
+      if pythonPackages.requests2 != null then
         true
       else
         false;
     lastgenre =
-      if python2Packages.pylast != null then
+      if pythonPackages.pylast != null then
         true
       else
         false;
     lastimport =
-      if python2Packages.pylast != null then
+      if pythonPackages.pylast != null then
         true
       else
         false;
     mpdstats =
-      if python2Packages.mpd != null then
+      if pythonPackages.mpd != null then
         true
       else
         false;
     mpdupdate =
-      if python2Packages.mpd != null then
+      if pythonPackages.mpd != null then
         true
       else
         false;
@@ -109,12 +111,12 @@ let
       else
         false;
     thumbnails =
-      if python2Packages.pyxdg != null then
+      if pythonPackages.pyxdg != null then
         true
       else
         false;
     web =
-      if python2Packages.flask != null then
+      if pythonPackages.flask != null then
         true
       else
         false;
@@ -192,37 +194,37 @@ buildPythonPackage rec {
     flac
     imagemagick
     mp3val
-    python2Packages.beautifulsoup
-    python2Packages.discogs-client
-    python2Packages.enum34
-    python2Packages.flask
-    python2Packages.itsdangerous
-    python2Packages.jellyfish
-    python2Packages.jinja2
-    python2Packages.mock
-    python2Packages.mpd
-    python2Packages.munkres
-    python2Packages.musicbrainzngs
-    python2Packages.mutagen
-    python2Packages.nose
-    python2Packages.pathlib
-    python2Packages.pyacoustid
-    python2Packages.pyechonest
-    python2Packages.pylast
-    python2Packages.pyxdg
-    python2Packages.pyyaml
-    python2Packages.rarfile
-    python2Packages.responses
-    python2Packages.requests2
-    python2Packages.unidecode
-    python2Packages.werkzeug
+    pythonPackages.beautifulsoup
+    pythonPackages.discogs-client
+    pythonPackages.enum34
+    pythonPackages.flask
+    pythonPackages.itsdangerous
+    pythonPackages.jellyfish
+    pythonPackages.jinja2
+    pythonPackages.mock
+    pythonPackages.mpd
+    pythonPackages.munkres
+    pythonPackages.musicbrainzngs
+    pythonPackages.mutagen
+    pythonPackages.nose
+    pythonPackages.pathlib
+    pythonPackages.pyacoustid
+    pythonPackages.pyechonest
+    pythonPackages.pylast
+    pythonPackages.pyxdg
+    pythonPackages.pyyaml
+    pythonPackages.rarfile
+    pythonPackages.responses
+    pythonPackages.requests2
+    pythonPackages.unidecode
+    pythonPackages.werkzeug
   ] ++ optional enableAlternatives (
       import ./plugins/beets-alternatives.nix {
         inherit
           stdenv
           buildPythonPackage
           fetchFromGitHub
-          python2Packages;
+          pythonPackages;
       }
     )
     /* FIXME: Causes other plugins to fail to load
@@ -233,7 +235,7 @@ buildPythonPackage rec {
           buildPythonPackage
           fetchFromGitHub
           fetchTritonPatch
-          python2Packages;
+          pythonPackages;
       }
     )*/
     /* Provides edit & moveall plugins */
@@ -243,7 +245,7 @@ buildPythonPackage rec {
           stdenv
           buildPythonPackage
           fetchFromGitHub
-          python2Packages;
+          pythonPackages;
       }
     );
 
@@ -322,6 +324,7 @@ buildPythonPackage rec {
     runHook 'postInstallCheck'
   '';
 
+  disabled = isPy3k;
   doCheck = true;
   doInstallCheck = true;
 

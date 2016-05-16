@@ -33,12 +33,12 @@ buildPythonPackage rec {
     pythonPackages.regex
   ] ++ optionals doCheck [
     pythonPackages.pytest
-    #pythonPackages.pytest-benchmark
+    pythonPackages.pytest-benchmark
     pythonPackages.pytest-capturelog
     pythonPackages.pyyaml
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta = with stdenv.lib; {
     description = "A library for guessing information from video filenames";

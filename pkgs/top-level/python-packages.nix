@@ -223,6 +223,8 @@ singledispatch = callPackage ../all-pkgs/singledispatch { };
 
 six = callPackage ../all-pkgs/six { };
 
+sqlalchemy = callPackage ../all-pkgs/sqlalchemy { };
+
 statistics = callPackage ../all-pkgs/statistics { };
 
 tmdb3 = callPackage ../all-pkgs/tmdb3 { };
@@ -607,7 +609,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     buildInputs = with self; [ pytest pytestcov mock coverage ];
-    propagatedBuildInputs = with self; [ Mako sqlalchemy_1_0 python-editor ];
+    propagatedBuildInputs = with self; [ Mako sqlalchemy python-editor ];
 
     meta = {
       homepage = http://bitbucket.org/zzzeek/alembic;
@@ -688,12 +690,12 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       self.pyramid_jinja2
       self.pyramid_tm
       self.pytz
-      self.sqlalchemy8
+      self.sqlalchemy
       self.transaction
       self.waitress
       self.webhelpers
       self.psycopg2
-      (self.zope_sqlalchemy.override rec {propagatedBuildInputs = with self; [ sqlalchemy8 transaction ];})
+      (self.zope_sqlalchemy.override rec {propagatedBuildInputs = with self; [ sqlalchemy transaction ];})
     ];
 
     postInstall = ''
@@ -2052,7 +2054,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       pymongo
       pyyaml
       requests2
-      sqlalchemy_1_0
+      sqlalchemy
       tables
       toolz
     ];
@@ -3124,7 +3126,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     buildInputs = with self; [ unittest2 ];
-    propagatedBuildInputs = with self; [ colander sqlalchemy9 ];
+    propagatedBuildInputs = with self; [ colander sqlalchemy ];
 
     # string: argument name cannot be overridden via info kwarg.
 
@@ -4492,7 +4494,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     propagatedBuildInputs = with self; [
       setuptools docker_registry_core blinker flask gevent gunicorn pyyaml
-      requests2 rsa sqlalchemy9 setuptools backports_lzma pyasn1 m2crypto
+      requests2 rsa sqlalchemy setuptools backports_lzma pyasn1 m2crypto
     ];
 
     patchPhase = "> requirements/main.txt";
@@ -11206,7 +11208,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     name = "pymysqlsa-${version}";
     version = "1.0";
 
-    propagatedBuildInputs = with self; [ pymysql sqlalchemy9 ];
+    propagatedBuildInputs = with self; [ pymysql sqlalchemy ];
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/pymysql_sa/pymysql_sa-1.0.tar.gz";
@@ -12689,7 +12691,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      six stevedore sqlalchemy_migrate sqlalchemy_1_0 oslo-utils oslo-context
+      six stevedore sqlalchemy_migrate sqlalchemy oslo-utils oslo-context
       oslo-config oslo-i18n iso8601 Babel alembic pbr psycopg2
     ];
     buildInputs = with self; [
@@ -12833,7 +12835,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       singledispatch logutils
     ];
     buildInputs = with self; [
-      webtest Mako genshi Kajiki sqlalchemy_1_0 gunicorn jinja2 virtualenv
+      webtest Mako genshi Kajiki sqlalchemy gunicorn jinja2 virtualenv
     ];
 
     meta = with stdenv.lib; {
@@ -13548,7 +13550,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       pytz
       xlrd
       bottleneck
-      sqlalchemy_1_0
+      sqlalchemy
       lxml
       # Disabling this because an upstream dependency, pep8, is broken on v3.5.
       (if isPy35 then null else html5lib)
@@ -18520,70 +18522,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
   spyder = callPackage ../applications/science/spyder {
     rope = if isPy3k then null else self.rope;
-  };
-
-  sqlalchemy = self.sqlalchemy9.override rec {
-    name = "SQLAlchemy-0.7.10";
-    disabled = isPy34 || isPy35;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/S/SQLAlchemy/${name}.tar.gz";
-      sha256 = "0rhxgr85xdhjn467qfs0dkyj8x46zxcv6ad3dfx3w14xbkb3kakp";
-    };
-    patches = [
-      # see https://groups.google.com/forum/#!searchin/sqlalchemy/module$20logging$20handlers/sqlalchemy/ukuGhmQ2p6g/2_dOpBEYdDYJ
-      # waiting for 0.7.11 release
-      ../development/python-modules/sqlalchemy-0.7.10-test-failures.patch
-    ];
-    preConfigure = optionalString isPy3k ''
-      python3 sa2to3.py --no-diffs -w lib test examples
-    '';
-  };
-
-  sqlalchemy8 = self.sqlalchemy9.override rec {
-    name = "SQLAlchemy-0.8.7";
-    disabled = isPy34 || isPy35;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/S/SQLAlchemy/${name}.tar.gz";
-      md5 = "4f3377306309e46739696721b1785335";
-    };
-    preConfigure = optionalString isPy3k ''
-      python3 sa2to3.py --no-diffs -w lib test examples
-    '';
-  };
-
-  sqlalchemy9 = buildPythonPackage rec {
-    name = "SQLAlchemy-0.9.9";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/S/SQLAlchemy/${name}.tar.gz";
-      sha256 = "14az6hhrz4bgnicz4q373z119zmaf7j5zxl1jfbfl5lix5m1z9bj";
-    };
-
-    buildInputs = with self; [ nose mock ]
-      ++ stdenv.lib.optional doCheck pysqlite;
-
-    # Test-only dependency pysqlite doesn't build on Python 3. This isn't an
-    # acceptable reason to make all dependents unavailable on Python 3 as well
-
-    checkPhase = ''
-      ${python.executable} sqla_nose.py
-    '';
-
-    meta = {
-      homepage = http://www.sqlalchemy.org/;
-      description = "A Python SQL toolkit and Object Relational Mapper";
-    };
-  };
-
-  sqlalchemy_1_0 = self.sqlalchemy9.override rec {
-    name = "SQLAlchemy-1.0.10";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/S/SQLAlchemy/${name}.tar.gz";
-      sha256 = "963415bf4ea4fa13698893464bc6917d291331e0e8202dddd0ebfed2864ef7e3";
-    };
   };
 
   sqlalchemy_imageattach = buildPythonPackage rec {

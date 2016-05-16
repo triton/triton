@@ -175,6 +175,8 @@ jinja2 = callPackage ../all-pkgs/jinja2 { };
 
 markupsafe = callPackage ../all-pkgs/markupsafe { };
 
+pathlib = callPackage ../all-pkgs/pathlib { };
+
 progressbar = callPackage ../all-pkgs/progressbar { };
 
 py = callPackage ../all-pkgs/py { };
@@ -13727,23 +13729,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       description = "A pluggable command-line frontend, including commands to setup package file layouts";
       homepage = http://pythonpaste.org/script/;
       platforms = platforms.all;
-    };
-  };
-
-  pathlib = buildPythonPackage rec {
-    name = "pathlib-${version}";
-    version = "1.0.1";
-    disabled = pythonAtLeast "3.4"; # Was added to std library in Python 3.4
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pathlib/${name}.tar.gz";
-      sha256 = "17zajiw4mjbkkv6ahp3xf025qglkj0805m9s41c45zryzj6p2h39";
-    };
-
-    meta = {
-      description = "Object-oriented filesystem paths";
-      homepage = "https://pathlib.readthedocs.org/";
-      license = licenses.mit;
     };
   };
 

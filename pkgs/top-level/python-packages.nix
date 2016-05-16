@@ -75,27 +75,29 @@ in {
 
   # helpers
 
-  wrapPython = pkgs.makeSetupHook
-    { deps = pkgs.makeWrapper;
-      substitutions.libPrefix = python.libPrefix;
-      substitutions.executable = python.interpreter;
-      substitutions.magicalSedExpression = let
+  wrapPython = pkgs.makeSetupHook {
+    deps = pkgs.makeWrapper;
+    substitutions.libPrefix = python.libPrefix;
+    substitutions.executable = python.interpreter;
+    substitutions.magicalSedExpression =
+      let
         # Looks weird? Of course, it's between single quoted shell strings.
         # NOTE: Order DOES matter here, so single character quotes need to be
         #       at the last position.
-        quoteVariants = [ "'\"'''\"'" "\"\"\"" "\"" "'\"'\"'" ]; # hey Vim: ''
+        quoteVariants = [ "'\"'''\"'" "\"\"\"" "\"" "'\"'\"'" ];
 
-        mkStringSkipper = labelNum: quote: let
-          label = "q${toString labelNum}";
-          isSingle = elem quote [ "\"" "'\"'\"'" ];
-          endQuote = if isSingle then "[^\\\\]${quote}" else quote;
-        in ''
-          /^ *[a-z]?${quote}/ {
-            /${quote}${quote}|${quote}.*${endQuote}/{n;br}
-            :${label}; n; /^${quote}/{n;br}; /${endQuote}/{n;br}; b${label}
-          }
-        '';
-
+        mkStringSkipper =
+          labelNum: quote:
+          let
+            label = "q${toString labelNum}";
+            isSingle = elem quote [ "\"" "'\"'\"'" ];
+            endQuote = if isSingle then "[^\\\\]${quote}" else quote;
+          in ''
+            /^ *[a-z]?${quote}/ {
+              /${quote}${quote}|${quote}.*${endQuote}/{n;br}
+              :${label}; n; /^${quote}/{n;br}; /${endQuote}/{n;br}; b${label}
+            }
+          '';
       in ''
         1 {
           /^#!/!b; :r
@@ -105,8 +107,7 @@ in {
           /^ *[^# ]/i import sys; sys.argv[0] = '"'$(basename "$f")'"'
         }
       '';
-    }
-   ../development/python-modules/generic/wrap.sh;
+  } ../development/python-modules/generic/wrap.sh;
 
   # specials
 

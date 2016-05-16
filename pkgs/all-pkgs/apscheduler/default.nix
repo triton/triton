@@ -9,6 +9,8 @@
 let
   inherit (stdenv.lib)
     optionals;
+  inherit (pythonPackages)
+    pythonOlder;
 in
 
 buildPythonPackage rec {
@@ -22,16 +24,32 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.enum34
     pythonPackages.pytz
     pythonPackages.setuptools
     pythonPackages.setuptools-scm
     pythonPackages.six
     pythonPackages.tzlocal
+  ] ++ /* optional */ [
+    /* executors */
+    pythonPackages.gevent
+    pythonPackages.tornado
+    pythonPackages.twisted
+    /* job stores */
+    pythonPackages.pymongo
+    pythonPackages.redis
+    #pythonPackages.rethinkdb
+    pythonPackages.sqlalchemy
   ] ++ optionals (!isPy3k) /* python 2 only */ [
     pythonPackages.funcsigs
     pythonPackages.futures
+  ] ++ optionals (pythonOlder "3.4") [
+    pythonPackages.enum34
+  ] ++ optionals doCheck [
+    pythonPackages.pytest
   ];
+
+  # TODO: needs rethinkdb & QT4/5
+  doCheck = false;
 
   meta = with stdenv.lib; {
     description = "In-process task scheduler with Cron-like capabilities";

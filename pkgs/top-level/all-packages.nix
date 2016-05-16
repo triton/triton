@@ -1502,8 +1502,8 @@ lightdm-gtk-greeter = callPackage ../all-pkgs/lightdm-gtk-greeter { };
 
 linux-headers = callPackage ../all-pkgs/linux-headers { };
 
-linux-headers_4_5 = callPackage ../all-pkgs/linux-headers {
-  channel = "4.5";
+linux-headers_4_6 = callPackage ../all-pkgs/linux-headers {
+  channel = "4.6";
 };
 
 lirc = callPackage ../all-pkgs/lirc { };

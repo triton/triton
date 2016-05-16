@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 
+, linux-headers_4_6
 , python
 }:
 
@@ -14,6 +15,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
+    linux-headers_4_6
     python
   ];
 

@@ -3,21 +3,18 @@
 , fetchurl
 }:
 
+let
+  version = "1.29";
+in
 stdenv.mkDerivation rec {
   name = "gnutar-${version}";
-  version = "1.28";
 
   src = fetchurl {
     url = "mirror://gnu/tar/tar-${version}.tar.bz2";
-    sha256 = "0qkm2k9w8z91hwj8rffpjj9v1vhpiriwz4cdj36k9vrgc3hbzr30";
+    sha256 = "236b11190c0a3a6885bdb8d61424f2b36a5872869aa3f7f695dea4b4843ae2f2";
   };
 
   patches = [
-    (fetchTritonPatch {
-      rev = "58bea0bf6cf5a05014ad13bb8c914b137f87422f";
-      file = "gnutar/add-clamp-mtime.patch";
-      sha256 = "6bcde813d36fed0a0d5cfffb2d715d53b85d4876c050aae672cda2e190c25c87";
-    })
     (fetchTritonPatch {
       rev = "dc35113b79d1abbcf4d498e7ac2d469e1787cf0c";
       file = "gnutar/fix-longlink.patch";

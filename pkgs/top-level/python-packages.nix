@@ -135,6 +135,8 @@ in {
 ################################################################################
 ################################################################################
 
+aniso8601 = callPackage ../all-pkgs/aniso8601 { };
+
 apscheduler = callPackage ../all-pkgs/apscheduler { };
 
 babelfish = callPackage ../all-pkgs/babelfish { };

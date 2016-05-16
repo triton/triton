@@ -25,7 +25,14 @@ buildPythonPackage rec {
     pythonPackages.flask
     pythonPackages.pytz
     pythonPackages.six
+  ] ++ optionals doCheck [
+    pythonPackages.blinker
+    pythonPackages.mock
+    pythonPackages.nose
+    pythonPackages.pycrypto
   ];
+
+  doCheck = true;
 
   meta = with stdenv.lib; {
     description = "Simple framework for creating REST APIs";

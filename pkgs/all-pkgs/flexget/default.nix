@@ -21,7 +21,7 @@ buildPythonPackage rec {
   };
 
   postPatch =
-    /* Allow using newer apscheduler */ ''
+    /* Allow using newer dependencies */ ''
       sed -i requirements.txt \
         -e 's/, !=3.1.0//' \
         -e 's/flask-restplus==0.8.6/flask-restplus>=0.8.6/' \

@@ -233,10 +233,6 @@ in
                       (cfg.config.restrictProcWithGroup -> !cfg.config.restrictProc);
           message   = "You cannot enable both restrictProc and restrictProcWithGroup";
         }
-        { assertion = config.boot.kernelPackages.kernel.features ? grsecurity
-                   && config.boot.kernelPackages.kernel.features.grsecurity;
-          message = "grsecurity enabled, but kernel doesn't have grsec support";
-        }
         { assertion = (cfg.config.mode == "auto" && (cfg.config.virtualisationConfig != null)) ->
               cfg.config.hardwareVirtualisation != null;
           message   = "when using auto grsec mode with virtualisation, you must specify if your hardware has virtualisation extensions";

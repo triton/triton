@@ -219,8 +219,8 @@ let
 
   kernelPackages = config.boot.kernelPackages;
 
-  kernelHasRPFilter = kernelPackages.kernel.features.netfilterRPFilter or false;
-  kernelCanDisableHelpers = kernelPackages.kernel.features.canDisableNetfilterConntrackHelpers or false;
+  kernelHasRPFilter = true;
+  kernelCanDisableHelpers = true;
 
 in
 

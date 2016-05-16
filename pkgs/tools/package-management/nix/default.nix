@@ -17,6 +17,7 @@ let
 
     patches = [
       ./ca-certs.patch
+      ./nproc.patch
     ];
 
     propagatedBuildInputs = [ boehm-gc ];

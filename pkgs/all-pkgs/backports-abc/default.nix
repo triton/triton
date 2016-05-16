@@ -1,7 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+
+, pythonPackages
 }:
+
+let
+  inherit (pythonPackages)
+    pythonAtLeast;
+in
 
 buildPythonPackage rec {
   name = "backports_abc-${version}";
@@ -13,6 +20,8 @@ buildPythonPackage rec {
     sha256 = "8b3e4092ba3d541c7a2f9b7d0d9c0275b21c6a01c53a61c731eba6686939d0a5";
   };
 
+  # Backport of Python 3.5 "collections.abc"
+  disabled = pythonAtLeast "3.5";
   doCheck = true;
 
   meta = with stdenv.lib; {

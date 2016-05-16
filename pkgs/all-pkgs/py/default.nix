@@ -13,6 +13,8 @@ buildPythonPackage rec {
     sha256 = "a6501963c725fc2554dabfece8ae9a8fb5e149c0ac0a42fd2b02c5c1c57fc114";
   };
 
+  doCheck = true;
+
   meta = with stdenv.lib; {
     description = "Cross-python path, ini-parsing, io, code, log facilities";
     homepage = http://bitbucket.org/pytest-dev/py/;

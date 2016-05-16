@@ -1,19 +1,28 @@
-{ stdenv, fetchurl, pkgconfig, cmake }:
+{ stdenv
+, cmake
+, fetchurl
+, ninja
+}:
 
 stdenv.mkDerivation rec {
-  version = "1.3.3";
-  name = "graphite2-${version}";
+  name = "graphite2-1.3.8";
 
   src = fetchurl {
     url = "mirror://sourceforge/silgraphite/graphite2/${name}.tgz";
-    sha256 = "1n22vvi4jl83m4sqhvd7v31bhyhyd8j6c3yjgh4zjfyrvid16jrg";
+    sha256 = "9f3f25b3a8495ce0782e77f69075c0dd9b7c054847b9bf9ff130bec38f4c8cc2";
   };
 
-  nativeBuildInputs = [ pkgconfig cmake ];
+  nativeBuildInputs = [
+    cmake
+    ninja
+  ];
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "An advanced font engine";
-    maintainers = [ stdenv.lib.maintainers.raskin ];
-    hydraPlatforms = stdenv.lib.platforms.unix;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

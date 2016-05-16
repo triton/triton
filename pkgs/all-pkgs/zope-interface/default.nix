@@ -19,6 +19,8 @@ buildPythonPackage rec {
     pythonPackages.zope-event
   ];
 
+  doCheck = true;
+
   meta = with stdenv.lib; {
     description = "Interfaces for Python";
     homepage = http://zope.org/Products/ZopeInterface;

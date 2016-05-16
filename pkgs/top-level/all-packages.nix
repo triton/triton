@@ -562,8 +562,6 @@ bashCompletion = callPackage ../all-pkgs/bash-completion { };
 
 bc = callPackage ../all-pkgs/bc { };
 
-beets = callPackage ../all-pkgs/beets { };
-
 bison = callPackage ../all-pkgs/bison { };
 
 bluez = callPackage ../all-pkgs/bluez { };

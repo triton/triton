@@ -137,6 +137,8 @@ backports-ssl-match-hostname =
 
 beautifulsoup = callPackage ../all-pkgs/beautifulsoup { };
 
+beets = callPackage ../all-pkgs/beets { };
+
 brotli = callPackage ../all-pkgs/brotli/python.nix {
   brotli = pkgs.brotli;
 };

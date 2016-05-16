@@ -165,6 +165,8 @@ enum34 =
 
 flask-compress = callPackage ../all-pkgs/flask-compress { };
 
+flask-login = callPackage ../all-pkgs/flask-login { };
+
 flask-restful = callPackage ../all-pkgs/flask-restful { };
 
 flask-restplus = callPackage ../all-pkgs/flask-restplus { };

@@ -32,7 +32,7 @@ buildPythonPackage rec {
     pythonPackages.backports-abc
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta = with stdenv.lib; {
     description = "Web framework and asynchronous networking library";

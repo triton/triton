@@ -1,7 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+
+, pythonPackages
 }:
+
+let
+  inherit (pythonPackages)
+    pythonAtLeast;
+in
 
 buildPythonPackage rec {
   name = "enum34-${version}";
@@ -13,6 +20,8 @@ buildPythonPackage rec {
     sha256 = "35cf09a65db802269a76b7df60f548940575579a0e8a00ec45294995d28b0862";
   };
 
+  # Python 3.4 Enum backported to 2.4 through 3.3
+  disabled = pythonAtLeast "3.4";
   doCheck = true;
 
   meta = with stdenv.lib; {

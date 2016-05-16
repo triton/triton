@@ -148,12 +148,7 @@ cherrypy = callPackage ../all-pkgs/cherrypy { };
 
 discogs-client = callPackage ../all-pkgs/discogs-client { };
 
-enum34 =
-  # Python 3.4 Enum backported to 2.4 through 3.3
-  if pythonAtLeast "3.4" then
-    null
-  else
-    callPackage ../all-pkgs/enum34 { };
+enum34 = callPackage ../all-pkgs/enum34 { };
 
 flask-compress = callPackage ../all-pkgs/flask-compress { };
 

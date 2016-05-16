@@ -211,6 +211,8 @@ rpyc = callPackage ../all-pkgs/rpyc { };
 
 safe = callPackage ../all-pkgs/safe { };
 
+scons = callPackage ../all-pkgs/scons { };
+
 setuptools = callPackage ../all-pkgs/setuptools { };
 
 setuptools-scm = callPackage ../all-pkgs/setuptools-scm { };

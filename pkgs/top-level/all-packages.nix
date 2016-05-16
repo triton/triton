@@ -1912,7 +1912,7 @@ samba_client = callPackageAlias "samba_full" {
   type = "client";
 };
 
-scons = callPackage ../all-pkgs/scons { };
+scons = pkgs.pythonPackages.scons;
 
 scrot = callPackage ../all-pkgs/scrot { };
 

@@ -189,6 +189,8 @@ pymysql = callPackage ../all-pkgs/pymysql { };
 
 pynzb = callPackage ../all-pkgs/pynzb { };
 
+#pyodbc = callPackage ../all-pkgs/pyodbc { };
+
 pyparsing = callPackage ../all-pkgs/pyparsing { };
 
 pyrss2gen = callPackage ../all-pkgs/pyrss2gen { };

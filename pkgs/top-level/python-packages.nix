@@ -54,35 +54,24 @@ let
       "";
 
   callPackage = pkgs.newScope (self // {
-    inherit
-      buildPythonPackage
-      fetchPyPi
-      isPy27
-      isPy33
-      isPy34
-      isPy35
-      isPyPy
-      isPy3k
-      python
-      pythonAtLeast
-      pythonName
-      pythonOlder;
     pythonPackages = self;
   });
 
 in {
 
   inherit
-    python
+    buildPythonPackage
+    fetchPyPi
     isPy27
     isPy33
     isPy34
     isPy35
     isPyPy
     isPy3k
+    python
+    pythonAtLeast
     pythonName
-    fetchPyPi
-    buildPythonPackage;
+    pythonOlder;
 
   # helpers
 

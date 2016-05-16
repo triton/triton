@@ -2,7 +2,7 @@
 , fetchurl
 , makeWrapper
 
-, boehmgc
+, boehm-gc
 , gawk
 , gmp
 , libffi
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   ];
   
   buildInputs = [
-    boehmgc
+    boehm-gc
     gmp
     libffi
     libtool

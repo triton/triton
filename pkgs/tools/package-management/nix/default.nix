@@ -1,5 +1,5 @@
 { lib, stdenv, fetchurl, perl, curl, bzip2, sqlite, openssl ? null, xz
-, pkgconfig, boehmgc, perlPackages, libsodium
+, pkgconfig, boehm-gc, perlPackages, libsodium
 , storeDir ? "/nix/store"
 , stateDir ? "/nix/var"
 }:
@@ -19,7 +19,7 @@ let
       ./ca-certs.patch
     ];
 
-    propagatedBuildInputs = [ boehmgc ];
+    propagatedBuildInputs = [ boehm-gc ];
 
     # Note: bzip2 is not passed as a build input, because the unpack phase
     # would end up using the wrong bzip2 when cross-compiling.

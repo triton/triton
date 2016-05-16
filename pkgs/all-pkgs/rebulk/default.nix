@@ -5,6 +5,11 @@
 , pythonPackages
 }:
 
+let
+  inherit (stdenv.lib)
+    optionals;
+in
+
 buildPythonPackage rec {
   name = "rebulk-${version}";
   version = "0.7.2";
@@ -19,7 +24,11 @@ buildPythonPackage rec {
     pythonPackages.pytestrunner
     pythonPackages.regex
     pythonPackages.six
+  ] ++ optionals doCheck [
+    pythonPackages.pytest
   ];
+
+  doCheck = false;
 
   meta = with stdenv.lib; {
     description = "Define search patterns in bulk to perform matching on any string";

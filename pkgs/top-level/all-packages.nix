@@ -1848,8 +1848,6 @@ python2Packages = callPackageAlias "python27Packages" { };
 python3Packages = callPackageAlias "python35Packages" { };
 pythonPackages = callPackageAlias "python2Packages" { };
 
-buildPythonPackage = (callPackageAlias "pythonPackages" { }).buildPythonPackage;
-
 qbittorrent = callPackage ../all-pkgs/qbittorrent { };
 
 qjackctl = callPackage ../all-pkgs/qjackctl { };

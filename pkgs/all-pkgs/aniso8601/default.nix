@@ -16,7 +16,7 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.dateutil
+    pythonPackages.python-dateutil
   ];
 
   doCheck = true;

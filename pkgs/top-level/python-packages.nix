@@ -193,6 +193,8 @@ pyrss2gen = callPackage ../all-pkgs/pyrss2gen { };
 
 pytest = callPackage ../all-pkgs/pytest { };
 
+python-dateutil = callPackage ../all-pkgs/python-dateutil { };
+
 python-tvrage = callPackage ../all-pkgs/python-tvrage { };
 
 pytz = callPackage ../all-pkgs/pytz { };
@@ -384,7 +386,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1ywimbisgb5g7xl9nrfwcm7dv3j8fsrjfp7bxb3l58zbsrzj6z2s";
     };
 
-    propagatedBuildInputs = with self; [ appdirs colorama dateutil requests2 requests_toolbelt sqlalchemy ];
+    propagatedBuildInputs = with self; [ appdirs colorama python-dateutil requests2 requests_toolbelt sqlalchemy ];
 
     makeWrapperArgs = [ "--prefix LIBFUSE_PATH : ${pkgs.fuse}/lib/libfuse.so" ];
 
@@ -990,7 +992,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1q3a6arjm6ysl2ff6lgdm504np7b1rbivrzspybjypq1nczcb7qy";
     };
 
-    propagatedBuildInputs = with self; [ dateutil ];
+    propagatedBuildInputs = with self; [ python-dateutil ];
 
     meta = {
       description = "Twitter API library";
@@ -1237,7 +1239,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "5499efd85c54c757c0e757b5407ee47f";
     };
 
-    propagatedBuildInputs = with self; [ dateutil futures pyopenssl requests2 ];
+    propagatedBuildInputs = with self; [ python-dateutil futures pyopenssl requests2 ];
 
     meta = {
       description = "Microsoft Azure SDK for Python";
@@ -1405,7 +1407,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       url = https://pypi.python.org/packages/source/a/azure-storage/azure-storage-0.20.3.zip;
       sha256 = "06bmw6k2000kln5jwk5r9bgcalqbyvqirmdh9gq4s6nb4fv3c0jb";
     };
-    propagatedBuildInputs = with self; [ azure-common futures dateutil requests2 ];
+    propagatedBuildInputs = with self; [ azure-common futures python-dateutil requests2 ];
     postInstall = ''
       echo "__import__('pkg_resources').declare_namespace(__name__)" >> "$out/lib/${python.libPrefix}"/site-packages/azure/__init__.py
     '';
@@ -2197,7 +2199,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       markupsafe
       werkzeug
       itsdangerous
-      dateutil
+      python-dateutil
       requests
       six
       pygments
@@ -2295,7 +2297,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs =
-      [ self.dateutil
+      [ self.python-dateutil
         self.requests2
         self.jmespath
       ];
@@ -2373,7 +2375,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = with self; [ mock unittest2 nose /* jira megaplan */ ];
     propagatedBuildInputs = with self; [
-      twiggy requests2 offtrac bugzilla taskw dateutil pytz keyring six
+      twiggy requests2 offtrac bugzilla taskw python-dateutil pytz keyring six
       jinja2 pycurl dogpile_cache lockfile click
     ];
 
@@ -3748,7 +3750,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0i50lh98550pwr95zgzrgiqzsspm09wl52xlv83y5nrsz4mblylv";
     };
 
-    buildInputs = with self; [ numpy ] ++ (if isPy3k then [dateutil] else [dateutil_1_5]);
+    buildInputs = with self; [ numpy python-dateutil ];
 
     # Some tests fail because they refer to test data files that don't exist
     # (upstream packaging issue)
@@ -4057,7 +4059,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     buildInputs = with self; [ pytest mock ];
-    propagatedBuildInputs = with self; [ numpy multipledispatch dateutil ];
+    propagatedBuildInputs = with self; [ numpy multipledispatch python-dateutil ];
 
     checkPhase = ''
       py.test datashape/tests
@@ -4173,7 +4175,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = with self; [ nose nose-parameterized mock pkgs.glibcLocales ];
 
-    propagatedBuildInputs = with self; [ six jdatetime pyyaml dateutil umalqurra pytz ];
+    propagatedBuildInputs = with self; [ six jdatetime pyyaml python-dateutil umalqurra pytz ];
 
     meta = {
       description = "Date parsing library designed to parse dates from HTML pages";
@@ -4181,66 +4183,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license = licenses.bsd3;
     };
   };
-
-  dateutil = buildPythonPackage (rec {
-    name = "dateutil-${version}";
-    version = "2.4.2";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/python-dateutil/python-${name}.tar.gz";
-      sha256 = "3e95445c1db500a344079a47b171c45ef18f57d188dffdb0e4165c71bea8eb3d";
-    };
-
-    propagatedBuildInputs = with self; [ self.six ];
-
-    meta = {
-      description = "Powerful extensions to the standard datetime module";
-      homepage = https://pypi.python.org/pypi/python-dateutil;
-      license = "BSD-style";
-    };
-  });
-
-  # Buildbot 0.8.7p1 needs dateutil==1.5
-  dateutil_1_5 = buildPythonPackage (rec {
-    name = "dateutil-1.5";
-
-    disabled = isPy3k;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/python-dateutil/python-${name}.tar.gz";
-      sha256 = "02dhw57jf5kjcp7ng1if7vdrbnlpb9yjmz7wygwwvf3gni4766bg";
-    };
-
-    propagatedBuildInputs = with self; [ self.six ];
-
-    meta = {
-      description = "Powerful extensions to the standard datetime module";
-      homepage = https://pypi.python.org/pypi/python-dateutil;
-      license = "BSD-style";
-    };
-  });
-
-  # flexget requires 2.1
-  dateutil_2_1 = buildPythonPackage (rec {
-    name = "dateutil-2.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/python-dateutil/python-${name}.tar.gz";
-      sha256 = "1vlx0lpsxjxz64pz87csx800cwfqznjyr2y7nk3vhmzhkwzyqi2c";
-    };
-
-    propagatedBuildInputs = with self; [ self.six ];
-
-    buildInputs = [ pkgs.glibcLocales ];
-
-    LC_ALL="en_US.UTF-8";
-
-    meta = {
-      description = "Powerful extensions to the standard datetime module";
-      homepage = https://pypi.python.org/pypi/python-dateutil;
-      license = "BSD-style";
-    };
-  });
 
   ddar = buildPythonPackage {
     name = "ddar-1.0";
@@ -4808,7 +4750,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1gdcdshk881vy18p0czcmbb3i4s5hl8llnfg6961b6x7jkvhihbj";
     };
 
-    buildInputs = with self; [ covCore dateutil elasticsearch mock pytest pytestcov unittest2 urllib3 pytz ];
+    buildInputs = with self; [ covCore python-dateutil elasticsearch mock pytest pytestcov unittest2 urllib3 pytz ];
 
     # ImportError: No module named test_elasticsearch_dsl
     # Tests require a local instance of elasticsearch
@@ -5267,7 +5209,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       protobuf
       setuptools
       requests2
-      dateutil
+      python-dateutil
       proboscis
       mock
       appdirs
@@ -7762,7 +7704,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       (with self; [
         pygments
         simplejson
-        dateutil
+        python-dateutil
         requests2
         sqlparse
         jinja2
@@ -8295,7 +8237,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0wrkavjdjndknhp8ya8j850jq7a1cli4g5a93mg8nh1xz2gq50sc";
     };
 
-    buildInputs = with self; [
+    propagatedBuildInputs = with self; [
       itsdangerous
       jinja2
       werkzeug
@@ -8743,7 +8685,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     buildInputs = with self; [ gipc greenlet httplib2 six ];
-    propagatedBuildInputs = with self; [ dateutil fusepy google_api_python_client ];
+    propagatedBuildInputs = with self; [ python-dateutil fusepy google_api_python_client ];
 
     patchPhase = ''
       substituteInPlace gdrivefs/resources/requirements.txt \
@@ -9053,7 +8995,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sed -i '/ez_setup/d' setup.py
     '';
 
-    propagatedBuildInputs = with self; [ pytz gflags dateutil mox ];
+    propagatedBuildInputs = with self; [ pytz gflags python-dateutil mox ];
 
     checkPhase = ''
       ${python.executable} setup.py google_test
@@ -9362,7 +9304,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     buildInputs = with self; [ setuptools ];
-    propagatedBuildInputs = with self; [ dateutil pytz ];
+    propagatedBuildInputs = with self; [ python-dateutil pytz ];
 
     meta = {
       description = "A parser/generator of iCalendar files";
@@ -9871,7 +9813,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      pytz six tzlocal keyring argparse dateutil_1_5
+      pytz six tzlocal keyring argparse python-dateutil
       parsedatetime
     ];
 
@@ -10491,7 +10433,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       argparse
       cython
       colorama
-      dateutil
+      python-dateutil
       django_1_6
       mpmath
       readline
@@ -10776,7 +10718,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = with self; [
       pkgs.libjpeg pkgs.freetype pkgs.zlib pkgs.glibcLocales
-      pillow twitter pyfiglet requests2 arrow dateutil pysocks
+      pillow twitter pyfiglet requests2 arrow python-dateutil pysocks
     ];
 
     meta = {
@@ -11679,7 +11621,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     propagatedBuildInputs = with self; [
      numpy
-     dateutil
+     python-dateutil
      nose
      traits
      scipy
@@ -13619,7 +13561,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = with self; [ nose ];
     propagatedBuildInputs = with self; [
-      dateutil
+      python-dateutil
       numpy
       scipy
       numexpr
@@ -13921,7 +13863,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     ];
 
     propagatedBuildInputs = with self; [
-      jinja2 pygments docutils pytz unidecode six dateutil feedgenerator
+      jinja2 pygments docutils pytz unidecode six python-dateutil feedgenerator
       blinker pillow beautifulsoup markupsafe
     ];
 
@@ -14718,7 +14660,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     propagatedBuildInputs = with self; [
       repoze_who paste cryptography pycrypto pyopenssl ipaddress six cffi idna
-      enum34 pytz setuptools zope_interface dateutil requests2 pyasn1 webob decorator pycparser
+      enum34 pytz setuptools zope_interface python-dateutil requests2 pyasn1 webob decorator pycparser
     ];
     buildInputs = with self; [
       Mako pytest memcached pymongo mongodict pkgs.xmlsec
@@ -14792,7 +14734,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     disabled = isPy3k || isPyPy;
 
-    propagatedBuildInputs = with self; [ dateutil ];
+    propagatedBuildInputs = with self; [ python-dateutil ];
 
     patchPhase = ''
       # fails due to hash randomization
@@ -16972,7 +16914,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = with self; [ coverage mock nose geopy ];
     propagatedBuildInputs = with self; [
-      django_1_6 dateutil_1_5 Whoosh pysolr elasticsearch
+      django_1_6 python-dateutil Whoosh pysolr elasticsearch
     ];
 
     patchPhase = ''
@@ -17039,7 +16981,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     '';
 
     propagatedBuildInputs = with self;
-      [ django_1_6 recaptcha_client pytz memcached dateutil_1_5 paramiko flup
+      [ django_1_6 recaptcha_client pytz memcached python-dateutil paramiko flup
         pygments djblets django_evolution pycrypto pysvn pillow
         psycopg2 django-haystack python_mimeparse markdown django-multiselectfield
       ];
@@ -18352,7 +18294,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0xcyasas28q1ad1hgw4vd62b72mf1sng7xwfcls6dc05k9p3q8v3";
     };
 
-    propagatedBuildInputs = with self; [ cython pkgs.openssl dns dateutil xcaplib msrplib lxml ];
+    propagatedBuildInputs = with self; [ cython pkgs.openssl dns python-dateutil xcaplib msrplib lxml ];
     buildInputs = with pkgs; [ alsaLib ffmpeg libv4l pkgconfig sqlite libvpx ];
   };
 
@@ -18959,7 +18901,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      dateutil six
+      python-dateutil six
     ];
     buildInputs = [ self.mock self.nose ];
 
@@ -18981,7 +18923,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     disabled = isPy3k;
 
-    propagatedBuildInputs = with self; [ pkgs.syncthing dateutil pyinotify pkgs.libnotify pkgs.psmisc
+    propagatedBuildInputs = with self; [ pkgs.syncthing python-dateutil pyinotify pkgs.libnotify pkgs.psmisc
       pygobject3 pkgs.gtk3 ];
 
     patchPhase = ''
@@ -19132,7 +19074,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     # https://github.com/ralphbean/taskw/issues/98
 
     buildInputs = with self; [ nose pkgs.taskwarrior tox ];
-    propagatedBuildInputs = with self; [ six dateutil pytz ];
+    propagatedBuildInputs = with self; [ six python-dateutil pytz ];
 
     meta = {
       homepage =  http://github.com/ralphbean/taskw;
@@ -20318,7 +20260,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0rnshrzw8605x05mpd8ndrx3ri8h6cx713mp8sl4f04f4gcrz8ml";
     };
 
-    propagatedBuildInputs = with self; [twisted dateutil];
+    propagatedBuildInputs = with self; [twisted python-dateutil];
 
     meta = {
       description = "Some (mainly XMPP-related) additions to twisted";
@@ -22001,7 +21943,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [ pyyaml lxml grequests flaskbabel flask requests
-      gevent speaklater Babel pytz dateutil pygments ];
+      gevent speaklater Babel pytz python-dateutil pygments ];
 
     meta = {
       homepage = https://github.com/asciimoo/searx;
@@ -22630,7 +22572,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     setupPyBuildFlags = ["--qt" "--xdg"];
 
-    propagatedBuildInputs = with self; [ pillow prettytable pyyaml dateutil gdata requests2 mechanize feedparser lxml pkgs.gnupg pyqt4 pkgs.libyaml simplejson cssselect futures ];
+    propagatedBuildInputs = with self; [ pillow prettytable pyyaml python-dateutil gdata requests2 mechanize feedparser lxml pkgs.gnupg pyqt4 pkgs.libyaml simplejson cssselect futures ];
 
     meta = {
       homepage = http://weboob.org;

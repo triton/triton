@@ -1,8 +1,8 @@
 {
   "2" = {
     versionMajor = "8";
-    versionMinor = "6";
-    sha256 = "25bcedbdafadac3d09c325c1d46a51f53d858b26a260d5aed6b4f17fea6e07fa";
+    versionMinor = "7";
+    sha256 = "97be8a6c1cab2c52015544f76d40f6fd0babcb1b40cf601b4e57fb818564157c";
   };
   "3" = {
     versionMajor = "0";

@@ -15,7 +15,7 @@ buildPythonPackage rec {
     sha256 = "4fc462db59811f541bc25d865b86367153d8ce773ae75b16d54e2e1cd393b5cc";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pythonPackages.dateutil
   ];
 

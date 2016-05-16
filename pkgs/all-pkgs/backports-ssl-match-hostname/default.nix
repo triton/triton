@@ -13,6 +13,8 @@ buildPythonPackage rec {
     sha256 = "502ad98707319f4a51fa2ca1c677bd659008d27ded9f6380c79e8932e38dcdf2";
   };
 
+  doCheck = true;
+
   meta = with stdenv.lib; {
     description = "he ssl.match_hostname() function from Python 3.5";
     homepage = http://bitbucket.org/brandon/backports.ssl_match_hostname;

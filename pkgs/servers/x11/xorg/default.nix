@@ -1832,10 +1832,10 @@ let
   }) // {inherit libxcb ;};
 
   xcbutilcursor = (mkDerivation "xcbutilcursor" {
-    name = "xcb-util-cursor-0.1.2";
+    name = "xcb-util-cursor-0.1.3";
     src = fetchurl {
-      url = mirror://xorg/individual/xcb/xcb-util-cursor-0.1.2.tar.bz2;
-      sha256 = "0fpv46zb7kz04qxwvpax4cpd2kd8yhsm2n0if1isniqdh5xkcrgd";
+      url = mirror://xorg/individual/xcb/xcb-util-cursor-0.1.3.tar.bz2;
+      sha256 = "0krr4rcw6r42cncinzvzzdqnmxk3nrgpnadyg2h8k9x10q3hm885";
     };
     nativeBuildInputs = [ gnum4 utilmacros ];
     buildInputs = [ libxcb xcbutilimage xcbutilrenderutil ];
@@ -3614,10 +3614,10 @@ let
   }) // {inherit libX11 xproto ;};
 
   xproto = (mkDerivation "xproto" {
-    name = "xproto-7.0.28";
+    name = "xproto-7.0.29";
     src = fetchurl {
-      url = mirror://xorg/individual/proto/xproto-7.0.28.tar.bz2;
-      sha256 = "1jpnvm33vi2dar5y5zgz7jjh0m8fpkcxm0f0lbwfx37ns5l5bs19";
+      url = mirror://xorg/individual/proto/xproto-7.0.29.tar.bz2;
+      sha256 = "12lzpa9mrzkyrhrphzpi1014np3328qg7mdq08wj6wyaj9q4f6kc";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ ];

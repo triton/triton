@@ -25,7 +25,7 @@ buildPythonPackage rec {
       -e 's/python-dateutil<2.5.2/python-dateutil>=2.5.2/'
   '';
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pythonPackages.babelfish
     pythonPackages.pytestrunner
     pythonPackages.python-dateutil

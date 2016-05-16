@@ -108,7 +108,7 @@ for (( i = 0; i < "${#params[@]}"; i++ )); do
   if [ "${fpic-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f(pic|PIC|pie|PIE)$ ]]; then
     continue
   fi
-  if [ "${optimize-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-O ]]; then
+  if [ "${optimize-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-O([0-9]|s|g|fast)$ ]]; then
     continue
   fi
   new_params+=("${param}")

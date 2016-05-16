@@ -1502,6 +1502,10 @@ lightdm-gtk-greeter = callPackage ../all-pkgs/lightdm-gtk-greeter { };
 
 linux-headers = callPackage ../all-pkgs/linux-headers { };
 
+linux-headers_4_5 = callPackage ../all-pkgs/linux-headers {
+  channel = "4.5";
+};
+
 lirc = callPackage ../all-pkgs/lirc { };
 
 live555 = callPackage ../all-pkgs/live555 { };
@@ -8780,15 +8784,13 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 
   kernelPatches = callPackage ../os-specific/linux/kernel/patches.nix { };
 
-  linux_4_4 = callPackage ../os-specific/linux/kernel/linux-4.4.nix {
+  linux_4_6 = callPackage ../os-specific/linux/kernel {
+    channel = "4.6";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
-  linux_4_5 = callPackage ../os-specific/linux/kernel/linux-4.5.nix {
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
-  };
-
-  linux_testing = callPackage ../os-specific/linux/kernel/linux-testing.nix {
+  linux_testing = callPackage ../os-specific/linux/kernel {
+    channel = "testing";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 #
@@ -8972,22 +8974,19 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #
 #  # The current default kernel / kernel modules.
-  linuxPackages = pkgs.linuxPackages_4_4;
+  linuxPackages = pkgs.linuxPackages_4_6;
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
-  linuxPackages_latest = pkgs.linuxPackages_4_5;
+  linuxPackages_latest = pkgs.linuxPackages_4_6;
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
-  linuxPackages_4_4 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_4_4;
-  });
-  linuxPackages_4_5 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_4_5;
-  });
   linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_testing;
+  });
+  linuxPackages_4_6 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_4_6;
   });
   linuxPackages_custom = {version, src, configfile}:
                            let linuxPackages_self = (linuxPackagesFor (pkgs.linuxManualConfig {inherit version src configfile;

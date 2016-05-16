@@ -1,31 +1,57 @@
-{ stdenv, perl, buildLinux
-
-, # The kernel source tarball.
-  src
-
-, # The kernel version.
-  version
+{ stdenv, perl, buildLinux, fetchurl
 
 , # Overrides to the kernel config.
   extraConfig ? ""
-
-, # An attribute set whose attributes express the availability of
-  # certain features in this kernel.  E.g. `{iwlwifi = true;}'
-  # indicates a kernel that provides Intel wireless support.  Used in
-  # NixOS to implement kernel-specific behaviour.
-  features ? {}
 
 , # A list of patches to apply to the kernel.  Each element of this list
   # should be an attribute set {name, patch} where `name' is a
   # symbolic name and `patch' is the actual patch.  The patch may
   # optionally be compressed with gzip or bzip2.
   kernelPatches ? []
+
 , ignoreConfigErrors ? false
 , extraMeta ? {}
+, channel
 , ...
 }:
 
 let
+
+  sources = {
+    "4.6" = {
+      version = "4.6";
+      sha256 = "a93771cd5a8ad27798f22e9240538dfea48d3a2bf2a6a6ab415de3f02d25d866";
+    };
+    "testing" = {
+      version = "4.6-rc7";
+      sha256 = "8c7d08445395af998bba58f9be095c10610000a6045669b988e1d19bc40093f6";
+    };
+  };
+  
+  inherit (sources."${channel}")
+    version
+    sha256;
+
+  tarballUrls = [
+    "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar"
+  ];
+
+  src = fetchurl {
+    urls = map (n: "${n}.xz") tarballUrls;
+    allowHashOutput = false;
+    inherit sha256;
+  };
+
+  srcVerified = fetchurl {
+    failEarly = true;
+    pgpDecompress = true;
+    pgpsigUrls = map (n: "${n}.sign") tarballUrls;
+    pgpKeyFingerprints = [
+      "647F 2865 4894 E3BD 4571  99BE 38DB BDC8 6092 693E"
+      "ABAF 11C6 5A29 70B1 30AB  E3C4 79BE 3E43 0041 1886"
+    ];
+    inherit (src) urls outputHash outputHashAlgo;
+  };
 
   lib = stdenv.lib;
 
@@ -82,8 +108,6 @@ let
     '';
 
     installPhase = "mv .config $out";
-
-    enableParallelBuilding = true;
   };
 
   kernel = buildLinux {
@@ -99,18 +123,15 @@ let
   };
 
   passthru = {
-    # Combine the `features' attribute sets of all the kernel patches.
-    features = lib.fold (x: y: (x.features or {}) // y) features kernelPatches;
-
     meta = kernel.meta // extraMeta;
+
+    inherit srcVerified;
 
     passthru = kernel.passthru // (removeAttrs passthru [ "passthru" "meta" ]);
   };
 
   config = import ./common-config.nix
-    { inherit stdenv version extraConfig;
-      features = passthru.features; # Ensure we know of all extra patches, etc.
-    };
+    { inherit stdenv version extraConfig; };
 
   nativeDrv = lib.addPassthru kernel.nativeDrv passthru;
 

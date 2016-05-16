@@ -16,7 +16,7 @@
 
 */
 
-{ stdenv, version, extraConfig, features }:
+{ stdenv, version, extraConfig }:
 
 with stdenv.lib;
 
@@ -69,9 +69,7 @@ with stdenv.lib;
   DEBUG_DEVRES n
   DEBUG_NX_TEST n
   DEBUG_STACK_USAGE n
-  ${optionalString (!(features.grsecurity or false)) ''
-    DEBUG_STACKOVERFLOW n
-  ''}
+  DEBUG_STACKOVERFLOW n
   RCU_TORTURE_TEST n
   SCHEDSTATS n
   DETECT_HUNG_TASK y
@@ -290,10 +288,7 @@ with stdenv.lib;
   ''}
 
   # Video configuration.
-  # Enable KMS for devices whose X.org driver supports it.
-  ${optionalString (versionOlder version "4.3" && !(features.chromiumos or false)) ''
-    DRM_I915_KMS y
-  ''}
+
   # Allow specifying custom EDID on the kernel command line
   DRM_LOAD_EDID_FIRMWARE y
   ${optionalString (versionOlder version "3.9") ''
@@ -409,9 +404,7 @@ with stdenv.lib;
   # Security related features.
   STRICT_DEVMEM y # Filter access to /dev/mem
   SECURITY_SELINUX_BOOTPARAM_VALUE 0 # Disable SELinux by default
-  ${optionalString (!(features.grsecurity or false)) ''
-    DEVKMEM n # Disable /dev/kmem
-  ''}
+  DEVKMEM n # Disable /dev/kmem
   ${if versionOlder version "3.14" then ''
     CC_STACKPROTECTOR? y # Detect buffer overflows on the stack
   '' else ''
@@ -626,14 +619,8 @@ with stdenv.lib;
   ''}
 
   # Virtualisation.
-  PARAVIRT? y
-  ${optionalString (!(features.grsecurity or false))
-    (if versionAtLeast version "3.10" then ''
-      HYPERVISOR_GUEST y
-    '' else ''
-      PARAVIRT_GUEST? y
-    '')
-  }
+  PARAVIRT y
+  HYPERVISOR_GUEST y
   KVM_APIC_ARCHITECTURE y
   KVM_ASYNC_PF y
   ${optionalString (versionOlder version "3.7") ''
@@ -648,35 +635,31 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.0") ''
     KVM_GENERIC_DIRTYLOG_READ_PROTECT y
   ''}
-  ${optionalString (!features.grsecurity or true) ''
-    KVM_GUEST y
-  ''}
+  KVM_GUEST y
   KVM_MMIO y
   ${optionalString (versionAtLeast version "3.13") ''
     KVM_VFIO y
   ''}
   XEN? y
   XEN_DOM0? y
-  ${optionalString ((versionAtLeast version "3.18") && (features.xen_dom0 or false))  ''
-    PCI_XEN? y
-    HVC_XEN? y
-    HVC_XEN_FRONTEND? y
-    XEN_SYS_HYPERVISOR? y
-    SWIOTLB_XEN? y
-    XEN_BACKEND? y
-    XEN_BALLOON? y
-    XEN_BALLOON_MEMORY_HOTPLUG? y
-    XEN_EFI? y
-    XEN_HAVE_PVMMU? y
-    XEN_MCE_LOG? y
-    XEN_PVH? y
-    XEN_PVHVM? y
-    XEN_SAVE_RESTORE? y
-    XEN_SCRUB_PAGES? y
-    XEN_SELFBALLOONING? y
-    XEN_STUB? y
-    XEN_TMEM? y
-  ''}
+  PCI_XEN? y
+  HVC_XEN? y
+  HVC_XEN_FRONTEND? y
+  XEN_SYS_HYPERVISOR? y
+  SWIOTLB_XEN? y
+  XEN_BACKEND? y
+  XEN_BALLOON? y
+  XEN_BALLOON_MEMORY_HOTPLUG? y
+  XEN_EFI? y
+  XEN_HAVE_PVMMU? y
+  XEN_MCE_LOG? y
+  XEN_PVH? y
+  XEN_PVHVM? y
+  XEN_SAVE_RESTORE? y
+  XEN_SCRUB_PAGES? y
+  XEN_SELFBALLOONING? y
+  XEN_STUB? y
+  XEN_TMEM? y
   KSM y
   ${optionalString (stdenv.targetSystem == stdenv.lib.head stdenv.lib.platforms.i686-linux) ''
     HIGHMEM64G? y # We need 64 GB (PAE) support for Xen guest support.
@@ -731,67 +714,6 @@ with stdenv.lib;
 
   # Disable the firmware helper fallback, udev doesn't implement it any more
   FW_LOADER_USER_HELPER_FALLBACK n
-
-  # ChromiumOS support
-  ${optionalString (features.chromiumos or false) ''
-    CHROME_PLATFORMS y
-    VGA_SWITCHEROO n
-    MMC_SDHCI_PXAV2 n
-    NET_IPVTI n
-    IPV6_VTI n
-    REGULATOR_FIXED_VOLTAGE n
-    TPS6105X n
-    CPU_FREQ_STAT y
-    IPV6 y
-    MFD_CROS_EC y
-    MFD_CROS_EC_LPC y
-    MFD_CROS_EC_DEV y
-    CHARGER_CROS_USB_PD y
-    I2C y
-    MEDIA_SUBDRV_AUTOSELECT n
-    VIDEO_IR_I2C n
-    BLK_DEV_DM y
-    ANDROID_PARANOID_NETWORK n
-    DM_VERITY n
-    DRM_VGEM n
-    CPU_FREQ_GOV_INTERACTIVE n
-    INPUT_KEYRESET n
-    DM_BOOTCACHE n
-    UID_CPUTIME n
-
-    ${optionalString (versionAtLeast version "3.18") ''
-      CPUFREQ_DT n
-      EXTCON_CROS_EC n
-      DRM_POWERVR_ROGUE n
-      CHROMEOS_OF_FIRMWARE y
-      TEST_RHASHTABLE n
-      BCMDHD n
-      TRUSTY n
-    ''}
-
-    ${optionalString (versionOlder version "3.18") ''
-      MALI_MIDGARD n
-      DVB_USB_DIB0700 n
-      DVB_USB_DW2102 n
-      DVB_USB_PCTV452E n
-      DVB_USB_TTUSB2 n
-      DVB_USB_AF9015 n
-      DVB_USB_AF9035 n
-      DVB_USB_ANYSEE n
-      DVB_USB_AZ6007 n
-      DVB_USB_IT913X n
-      DVB_USB_LME2510 n
-      DVB_USB_RTL28XXU n
-      USB_S2255 n
-      VIDEO_EM28XX n
-      VIDEO_TM6000 n
-      USB_DWC2 n
-      USB_GSPCA n
-      SPEAKUP n
-      XO15_EBOOK n
-      USB_GADGET n
-    ''}
-  ''}
 
   ${extraConfig}
 ''

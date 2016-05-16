@@ -568,6 +568,8 @@ bison = callPackage ../all-pkgs/bison { };
 
 bluez = callPackage ../all-pkgs/bluez { };
 
+boehm-gc = callPackage ../all-pkgs/boehm-gc { };
+
 boost155 = callPackage ../all-pkgs/boost/1.55.nix { };
 boost160 = callPackage ../all-pkgs/boost/1.60.nix { };
 boost = callPackageAlias "boost160" { };
@@ -6330,8 +6332,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  belle-sip = callPackage ../development/libraries/belle-sip { };
 #
 #  bobcat = callPackage ../development/libraries/bobcat { };
-#
-  boehmgc = callPackage ../development/libraries/boehm-gc { };
 #
 #  boolstuff = callPackage ../development/libraries/boolstuff { };
 #

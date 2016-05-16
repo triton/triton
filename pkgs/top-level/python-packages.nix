@@ -193,6 +193,8 @@ pyrss2gen = callPackage ../all-pkgs/pyrss2gen { };
 
 pytest = callPackage ../all-pkgs/pytest { };
 
+pytest-benchmark = callPackage ../all-pkgs/pytest-benchmark { };
+
 python-dateutil = callPackage ../all-pkgs/python-dateutil { };
 
 python-tvrage = callPackage ../all-pkgs/python-tvrage { };

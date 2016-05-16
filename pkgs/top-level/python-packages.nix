@@ -193,6 +193,8 @@ regex = callPackage ../all-pkgs/regex { };
 
 rpyc = callPackage ../all-pkgs/rpyc { };
 
+safe = callPackage ../all-pkgs/safe { };
+
 setuptools = callPackage ../all-pkgs/setuptools { };
 
 setuptools-scm = callPackage ../all-pkgs/setuptools-scm { };

@@ -25,6 +25,8 @@ buildPythonPackage rec {
   # and http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=477103 for details.
   postInstall = "$out/bin/twistd --help > /dev/null";
 
+  doCheck = true;
+
   meta = with stdenv.lib; {
     description = "An event-driven networking engine written in Python";
     homepage = https://twistedmatrix.com/;

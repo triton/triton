@@ -65,7 +65,7 @@ with stdenv.lib;
   DEBUG_KERNEL y
   TIMER_STATS y
   BACKTRACE_SELF_TEST n
-  CPU_NOTIFIER_ERROR_INJECT? n
+  CPU_NOTIFIER_ERROR_INJECT n
   DEBUG_DEVRES n
   DEBUG_NX_TEST n
   DEBUG_STACK_USAGE n
@@ -78,23 +78,13 @@ with stdenv.lib;
   UNIX y
 
   # Power management.
-  ${optionalString (versionOlder version "3.19") ''
-    PM_RUNTIME y
-  ''}
   PM_ADVANCED_DEBUG y
   PM_AUTOSLEEP y
   PM_WAKELOCKS y
-  ${optionalString (versionAtLeast version "3.11") ''
-    X86_INTEL_LPSS y
-  ''}
-  ${optionalString (versionAtLeast version "3.10") ''
-    X86_INTEL_PSTATE y
-  ''}
+  X86_INTEL_LPSS y
+  X86_INTEL_PSTATE y
   INTEL_IDLE y
   CPU_FREQ_DEFAULT_GOV_PERFORMANCE y
-  ${optionalString (versionOlder version "3.10") ''
-    USB_SUSPEND y
-  ''}
   ACPI_PCI_SLOT y
   ACPI_HOTPLUG_MEMORY y
   ACPI_BGRT y
@@ -126,7 +116,7 @@ with stdenv.lib;
   NUMA y
   NUMA_BALANCING y
 
-  # Disable some expensive (?) features.
+  # Disable some expensive () features.
   PM_TRACE_RTC n
 
   # Enable various subsystems.
@@ -135,9 +125,6 @@ with stdenv.lib;
   DONGLE y # Serial dongle support
   HIPPI y
   MTD_COMPLEX_MAPPINGS y # needed for many devices
-  ${optionalString (versionOlder version "3.2") ''
-    NET_POCKET y # enable pocket and portable adapters
-  ''}
   SCSI_LOWLEVEL y # enable lots of SCSI devices
   SCSI_LOWLEVEL_PCMCIA y
   SCSI_SAS_ATA y  # added to enable detection of hard drive
@@ -147,9 +134,6 @@ with stdenv.lib;
 
   # Networking options.
   IP_PNP n
-  ${optionalString (versionOlder version "3.13") ''
-    IPV6_PRIVACY y
-  ''}
   IP_MROUTE_MULTIPLE_TABLES y
   IPV6_ROUTER_PREF y
   IPV6_ROUTE_INFO y
@@ -254,18 +238,16 @@ with stdenv.lib;
   CAN_LEDS y
 
   # Wireless networking.
-  CFG80211_WEXT? y # Without it, ipw2200 drivers don't build
-  IPW2100_MONITOR? y # support promiscuous mode
-  IPW2200_MONITOR? y # support promiscuous mode
-  HOSTAP_FIRMWARE? y # Support downloading firmware images with Host AP driver
-  HOSTAP_FIRMWARE_NVRAM? y
+  CFG80211_WEXT y # Without it, ipw2200 drivers don't build
+  IPW2100_MONITOR y # support promiscuous mode
+  IPW2200_MONITOR y # support promiscuous mode
+  HOSTAP_FIRMWARE y # Support downloading firmware images with Host AP driver
+  HOSTAP_FIRMWARE_NVRAM y
   ATH9K_WOW y
   ATH9K_PCI y # Detect Atheros AR9xxx cards on PCI(e) bus
   ATH9K_AHB y # Ditto, AHB bus
-  ${optionalString (versionAtLeast version "3.2") ''
-    B43_PHY_HT? y
-  ''}
-  BCMA_HOST_PCI? y
+  B43_PHY_HT y
+  BCMA_HOST_PCI y
 
   # Enable various FB devices.
   FB y
@@ -283,17 +265,12 @@ with stdenv.lib;
   FB_VESA y
   FRAMEBUFFER_CONSOLE y
   FRAMEBUFFER_CONSOLE_ROTATION y
-  ${optionalString (versionOlder version "3.9" || stdenv.system == "i686-linux") ''
-    FB_GEODE y
-  ''}
 
   # Video configuration.
 
   # Allow specifying custom EDID on the kernel command line
   DRM_LOAD_EDID_FIRMWARE y
-  ${optionalString (versionOlder version "3.9") ''
-    DRM_RADEON_KMS? y
-  ''}
+
   # Hybrid graphics support
   VGA_SWITCHEROO y
 
@@ -334,7 +311,7 @@ with stdenv.lib;
   XFS_QUOTA y
   XFS_POSIX_ACL y
   XFS_RT y # XFS Realtime subvolume support
-  OCFS2_DEBUG_MASKLOG? n
+  OCFS2_DEBUG_MASKLOG n
   BTRFS_FS_POSIX_ACL y
   F2FS_FS_SECURITY y
   F2FS_FS_ENCRYPTION y
@@ -360,19 +337,13 @@ with stdenv.lib;
   NFSD_V3 y
   NFSD_V3_ACL y
   NFSD_V4 y
-  ${optionalString (versionAtLeast version "3.11") ''
-    NFSD_V4_SECURITY_LABEL y
-  ''}
+  NFSD_V4_SECURITY_LABEL y
   NFS_FSCACHE y
-  ${optionalString (versionAtLeast version "3.6") ''
-    NFS_SWAP y
-  ''}
+  NFS_SWAP y
   NFS_V3_ACL y
-  ${optionalString (versionAtLeast version "3.11") ''
-    NFS_V4_1 y  # NFSv4.1 client support
-    NFS_V4_2 y
-    NFS_V4_SECURITY_LABEL y
-  ''}
+  NFS_V4_1 y  # NFSv4.1 client support
+  NFS_V4_2 y
+  NFS_V4_SECURITY_LABEL y
   CIFS_STATS y
   CIFS_UPCALL y
   CIFS_ACL y
@@ -382,37 +353,23 @@ with stdenv.lib;
   CIFS_DFS_UPCALL y
   CIFS_SMB2 y
   CIFS_SMB311 y
-  ${optionalString (versionAtLeast version "3.12") ''
-    CEPH_FSCACHE y
-  ''}
-  ${optionalString (versionAtLeast version "3.14") ''
-    CEPH_FS_POSIX_ACL y
-  ''}
+  CEPH_FSCACHE y
+  CEPH_FS_POSIX_ACL y
   CEPH_LIB_USE_DNS_RESOLVER y
-  ${optionalString (versionAtLeast version "3.13") ''
-    SQUASHFS_FILE_DIRECT y
-    SQUASHFS_DECOMP_MULTI_PERCPU y
-  ''}
+  SQUASHFS_FILE_DIRECT y
+  SQUASHFS_DECOMP_MULTI_PERCPU y
   SQUASHFS_XATTR y
   SQUASHFS_ZLIB y
   SQUASHFS_LZO y
   SQUASHFS_XZ y
-  ${optionalString (versionAtLeast version "3.19") ''
-    SQUASHFS_LZ4 y
-  ''}
+  SQUASHFS_LZ4 y
 
   # Security related features.
   STRICT_DEVMEM y # Filter access to /dev/mem
   SECURITY_SELINUX_BOOTPARAM_VALUE 0 # Disable SELinux by default
   DEVKMEM n # Disable /dev/kmem
-  ${if versionOlder version "3.14" then ''
-    CC_STACKPROTECTOR? y # Detect buffer overflows on the stack
-  '' else ''
-    CC_STACKPROTECTOR_REGULAR? y
-  ''}
-  ${optionalString (versionAtLeast version "3.12") ''
-    USER_NS y # Support for user namespaces
-  ''}
+  CC_STACKPROTECTOR_REGULAR y
+  USER_NS y # Support for user namespaces
 
   # AppArmor support
   SECURITY_APPARMOR y
@@ -422,11 +379,6 @@ with stdenv.lib;
   MICROCODE y
   MICROCODE_INTEL y
   MICROCODE_AMD y
-  ${optionalString (versionAtLeast version "3.11" && versionOlder version "4.4") ''
-    MICROCODE_EARLY y
-    MICROCODE_INTEL_EARLY y
-    MICROCODE_AMD_EARLY y
-  ''}
 
   # Misc. options.
   EXPERT y
@@ -451,22 +403,14 @@ with stdenv.lib;
   AIC79XX_DEBUG_ENABLE n
   AIC7XXX_DEBUG_ENABLE n
   AIC94XX_DEBUG n
-  ${optionalString (versionAtLeast version "3.3" && versionOlder version "3.13") ''
-    AUDIT_LOGINUID_IMMUTABLE y
-  ''}
-  ${optionalString (versionOlder version "4.4") ''
-    B43_PCMCIA? y
-  ''}
   BLK_DEV_CMD640_ENHANCED y # CMD640 enhanced support
   BLK_DEV_IDEACPI y # IDE ACPI support
   BLK_DEV_INTEGRITY y
   BSD_PROCESS_ACCT_V3 y
-  BT_HCIUART_BCSP? y
-  BT_HCIUART_H4? y # UART (H4) protocol support
-  BT_HCIUART_LL? y
-  ${optionalString (versionAtLeast version "3.4") ''
-    BT_RFCOMM_TTY? y # RFCOMM TTY support
-  ''}
+  BT_HCIUART_BCSP y
+  BT_HCIUART_H4 y # UART (H4) protocol support
+  BT_HCIUART_LL y
+  BT_RFCOMM_TTY y # RFCOMM TTY support
   BT_BNEP_MC_FILTER y
   BT_BNEP_PROTO_FILTER y
   ${optionalString (versionAtLeast version "4.6") ''
@@ -484,51 +428,40 @@ with stdenv.lib;
   MAC80211_RC_MINSTREL_VHT y
   RFKILL_INPUT y
   NFC_SHDLC y
-  CRASH_DUMP? n
-  ${optionalString (versionOlder version "3.1") ''
-    DMAR? n # experimental
-  ''}
+  CRASH_DUMP n
   NFTL_RW y
   MTD_NAND_ECC_SMC y
   MTD_NAND_ECC_BCH y
   ZRAM_LZ4_COMPRESS y
-  DVB_DYNAMIC_MINORS? y # we use udev
+  DVB_DYNAMIC_MINORS y # we use udev
   EFI_STUB y
   EFI_MIXED y
   FHANDLE y # used by systemd
   FUSION y # Fusion MPT device support
   IDE_GD_ATAPI y # ATAPI floppy support
   IRDA_ULTRA y # Ultra (connectionless) protocol
-  JOYSTICK_IFORCE_232? y # I-Force Serial joysticks and wheels
-  JOYSTICK_IFORCE_USB? y # I-Force USB joysticks and wheels
-  JOYSTICK_XPAD_FF? y # X-Box gamepad rumble support
-  JOYSTICK_XPAD_LEDS? y # LED Support for Xbox360 controller 'BigX' LED
+  JOYSTICK_IFORCE_232 y # I-Force Serial joysticks and wheels
+  JOYSTICK_IFORCE_USB y # I-Force USB joysticks and wheels
+  JOYSTICK_XPAD_FF y # X-Box gamepad rumble support
+  JOYSTICK_XPAD_LEDS y # LED Support for Xbox360 controller 'BigX' LED
   LDM_PARTITION y # Windows Logical Disk Manager (Dynamic Disk) support
   LEDS_TRIGGER_IDE_DISK y # LED IDE Disk Trigger
   LOGIRUMBLEPAD2_FF y # Logitech Rumblepad 2 force feedback
   LOGO n # not needed
   MEDIA_ATTACH y
   MEGARAID_NEWGEN y
-  ${optionalString (versionAtLeast version "3.15") ''
-    MLX4_EN_VXLAN y
-  ''}
+  MLX4_EN_VXLAN y
   MODVERSIONS y
   MOUSE_PS2_ELANTECH y # Elantech PS/2 protocol extension
   MTRR_SANITIZER y
   NET_FC y # Fibre Channel driver support
-  ${optionalString (versionAtLeast version "3.11") ''
-    PINCTRL_BAYTRAIL y # GPIO on Intel Bay Trail, for some Chromebook internal eMMC disks
-  ''}
+  PINCTRL_BAYTRAIL y # GPIO on Intel Bay Trail, for some Chromebook internal eMMC disks
   MMC_BLOCK_MINORS 32 # 8 is default. Modern gpt tables on eMMC may go far beyond 8.
   PPP_MULTILINK y # PPP multilink support
   PPP_FILTER y
   REGULATOR y # Voltage and Current Regulator Support
-  ${optionalString (versionAtLeast version "3.6") ''
-    RC_DEVICES? y # Enable IR devices
-  ''}
-  ${optionalString (versionAtLeast version "3.10") ''
-    RT2800USB_RT55XX y
-  ''}
+  RC_DEVICES y # Enable IR devices
+  RT2800USB_RT55XX y
   SCSI_MQ_DEFAULT y
   DM_MQ_DEFAULT y
   DM_UEVENT y
@@ -543,12 +476,7 @@ with stdenv.lib;
   SLIP_SMART y
   HWMON y
   THERMAL_HWMON y # Hardware monitoring support
-  ${optionalString (versionAtLeast version "3.15") ''
-    UEVENT_HELPER n
-  ''}
-  ${optionalString (versionOlder version "3.15") ''
-    USB_DEBUG? n
-  ''}
+  UEVENT_HELPER n
   USB_EHCI_ROOT_HUB_TT y # Root Hub Transaction Translators
   USB_EHCI_TT_NEWSCHED y # Improved transaction translator scheduling
   X86_CHECK_BIOS_CORRUPTION y
@@ -558,16 +486,11 @@ with stdenv.lib;
   HOTPLUG_PCI_PCIE y
 
   # Linux containers.
-  NAMESPACES? y #  Required by 'unshare' used by 'nixos-install'
-  RT_GROUP_SCHED? y
-  CGROUP_DEVICE? y
-  ${if versionAtLeast version "3.6" then ''
-    MEMCG y
-    MEMCG_SWAP y
-  '' else ''
-    CGROUP_MEM_RES_CTLR y
-    CGROUP_MEM_RES_CTLR_SWAP y
-  ''}
+  NAMESPACES y #  Required by 'unshare' used by 'nixos-install'
+  RT_GROUP_SCHED y
+  CGROUP_DEVICE y
+  MEMCG y
+  MEMCG_SWAP y
   CGROUP_PIDS y
   DEVPTS_MULTIPLE_INSTANCES y
   BLK_DEV_THROTTLING y
@@ -591,9 +514,7 @@ with stdenv.lib;
   SCHED_AUTOGROUP y
   SCHED_TRACER y
   STACK_TRACER y
-  ${optionalString (versionAtLeast version "3.10") ''
-    UPROBE_EVENT y
-  ''}
+  UPROBE_EVENT y
   FUNCTION_PROFILER y
   RING_BUFFER_BENCHMARK n
 
@@ -614,77 +535,65 @@ with stdenv.lib;
   KEXEC_JUMP y
 
   # Easier debugging of NFS issues.
-  ${optionalString (versionAtLeast version "3.4") ''
-    SUNRPC_DEBUG y
-  ''}
+  SUNRPC_DEBUG y
 
   # Virtualisation.
   PARAVIRT y
   HYPERVISOR_GUEST y
   KVM_APIC_ARCHITECTURE y
   KVM_ASYNC_PF y
-  ${optionalString (versionOlder version "3.7") ''
-    KVM_CLOCK? y
-  ''}
-  ${optionalString (versionAtLeast version "4.0") ''
-    KVM_COMPAT? y
-  ''}
-  ${optionalString (versionAtLeast version "3.10") ''
-    KVM_DEVICE_ASSIGNMENT? y
-  ''}
-  ${optionalString (versionAtLeast version "4.0") ''
-    KVM_GENERIC_DIRTYLOG_READ_PROTECT y
-  ''}
+  KVM_COMPAT y
+  KVM_DEVICE_ASSIGNMENT y
+  KVM_GENERIC_DIRTYLOG_READ_PROTECT y
   KVM_GUEST y
   KVM_MMIO y
-  ${optionalString (versionAtLeast version "3.13") ''
-    KVM_VFIO y
-  ''}
-  XEN? y
-  XEN_DOM0? y
-  PCI_XEN? y
-  HVC_XEN? y
-  HVC_XEN_FRONTEND? y
-  XEN_SYS_HYPERVISOR? y
-  SWIOTLB_XEN? y
-  XEN_BACKEND? y
-  XEN_BALLOON? y
-  XEN_BALLOON_MEMORY_HOTPLUG? y
-  XEN_EFI? y
-  XEN_HAVE_PVMMU? y
-  XEN_MCE_LOG? y
-  XEN_PVH? y
-  XEN_PVHVM? y
-  XEN_SAVE_RESTORE? y
-  XEN_SCRUB_PAGES? y
-  XEN_SELFBALLOONING? y
-  XEN_STUB? y
-  XEN_TMEM? y
+  KVM_VFIO y
+
+  XEN y
+  XEN_512GB y
+  XEN_ACPI y
+  XEN_AUTO_XLATE y
+  XEN_BACKEND y
+  XEN_BALLOON y
+  XEN_BALLOON_MEMORY_HOTPLUG y
+  XEN_DOM0 y
+  XEN_EFI y
+  XEN_HAVE_PVMMU y
+  XEN_HAVE_VPMU y
+  XEN_MCE_LOG y
+  XEN_PVH y
+  XEN_PVHVM y
+  XEN_SAVE_RESTORE y
+  XEN_SCRUB_PAGES y
+  #XEN_STUB y
+  XEN_SYMS y
+  XEN_SYS_HYPERVISOR y
+  #XEN_TMEM y
+  PCI_XEN y
+  HVC_XEN y
+  HVC_XEN_FRONTEND y
+  SWIOTLB_XEN y
+
   KSM y
+  CLEANCACHE y
+  FRONTSWAP y
+
   ${optionalString (stdenv.targetSystem == stdenv.lib.head stdenv.lib.platforms.i686-linux) ''
-    HIGHMEM64G? y # We need 64 GB (PAE) support for Xen guest support.
+    HIGHMEM64G y # We need 64 GB (PAE) support for Xen guest support.
   ''}
-  ${optionalString (versionAtLeast version "3.9") ''
-    VFIO_PCI_VGA y
-  ''}
+  VFIO_PCI_VGA y
   VIRTIO_MMIO_CMDLINE_DEVICES y
   VIRT_DRIVERS y
   INTEL_IOMMU_SVM y
 
   # Media support.
-  ${optionalString (versionAtLeast version "3.6") ''
-    MEDIA_DIGITAL_TV_SUPPORT y
-    MEDIA_CAMERA_SUPPORT y
-    MEDIA_RC_SUPPORT y
-  ''}
-  ${optionalString (versionAtLeast version "3.7") ''
-    MEDIA_USB_SUPPORT y
-  ''}
+  MEDIA_DIGITAL_TV_SUPPORT y
+  MEDIA_CAMERA_SUPPORT y
+  MEDIA_RC_SUPPORT y
+  MEDIA_USB_SUPPORT y
 
   # Our initrd init uses shebang scripts, so can't be modular.
-  ${optionalString (versionAtLeast version "3.10") ''
-    BINFMT_SCRIPT y
-  ''}
+  BINFMT_SCRIPT y
 
   # Enable the 9P cache to speed up NixOS VM tests.
   9P_FSCACHE y
@@ -692,19 +601,17 @@ with stdenv.lib;
   9P_FS_SECURITY y
 
   # Enable transparent support for huge pages.
-  TRANSPARENT_HUGEPAGE? y
-  TRANSPARENT_HUGEPAGE_ALWAYS? n
-  TRANSPARENT_HUGEPAGE_MADVISE? y
+  TRANSPARENT_HUGEPAGE y
+  TRANSPARENT_HUGEPAGE_ALWAYS n
+  TRANSPARENT_HUGEPAGE_MADVISE y
 
   # zram support (e.g for in-memory compressed swap).
-  ${optionalString (versionAtLeast version "3.4") ''
-    ZSMALLOC y
-  ''}
+  ZSMALLOC y
   ZRAM m
 
   # Enable PCIe and USB for the brcmfmac driver
-  BRCMFMAC_USB? y
-  BRCMFMAC_PCIE? y
+  BRCMFMAC_USB y
+  BRCMFMAC_PCIE y
 
   # Support x2APIC (which requires IRQ remapping).
   ${optionalString (stdenv.system == "x86_64-linux") ''

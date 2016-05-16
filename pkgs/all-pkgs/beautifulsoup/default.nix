@@ -13,6 +13,8 @@ buildPythonPackage rec {
     sha256 = "87d4013d0625d4789a4f56b8d79a04d5ce6db1152bb65f1d39744f7709a366b4";
   };
 
+  doCheck = true;
+
   meta = with stdenv.lib; {
     description = "HTML/XML parser";
     homepage = http://www.crummy.com/software/BeautifulSoup/;

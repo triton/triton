@@ -22,6 +22,18 @@ stdenv.mkDerivation rec {
     ncurses
   ];
 
+  preBuild = ''
+    makeFlagsArray+=(
+      "prefix=$out"
+      "python_libdir=$(toPythonPath $out)"
+    )
+  '';
+
+  # Unsure why this isn't installing the libraries correctly
+  postInstall = ''
+    find . \( -name libgps\*.so\* -or -name libgps\*.a \) -exec cp --preserve=links {} $out/lib \;
+  '';
+
   passthru = {
     srcVerified = fetchurl {
       failEarly = true;
@@ -30,8 +42,6 @@ stdenv.mkDerivation rec {
       inherit (src) urls outputHashAlgo outputHash;
     };
   };
-
-  parallelBuild = false;
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

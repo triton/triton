@@ -4,7 +4,7 @@
 , fetchzip
 , gettext
 
-, boehmgc
+, boehm-gc
 , gpm
 , imlib2
 , man
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    boehmgc
+    boehm-gc
     gpm
     ncurses
     openssl
@@ -75,7 +75,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--with-ssl=${openssl}"
-    "--with-gc=${boehmgc}"
+    "--with-gc=${boehm-gc}"
     "--enable-image=x11,fb"
   ];
 

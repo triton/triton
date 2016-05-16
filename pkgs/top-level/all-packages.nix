@@ -1250,6 +1250,8 @@ libassuan = callPackage ../all-pkgs/libassuan { };
 
 libatasmart = callPackage ../all-pkgs/libatasmart { };
 
+libatomic_ops = callPackage ../all-pkgs/libatomic_ops {};
+
 libavc1394 = callPackage ../all-pkgs/libavc1394 { };
 
 libbluray = callPackage ../all-pkgs/libbluray { };
@@ -6772,8 +6774,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libasr = callPackage ../development/libraries/libasr { };
 #
   libasyncns = callPackage ../development/libraries/libasyncns { };
-#
-  libatomic_ops = callPackage ../development/libraries/libatomic_ops {};
 #
 #  libaudclient = callPackage ../development/libraries/libaudclient { };
 #

@@ -19,6 +19,9 @@ buildPythonPackage rec {
     pythonPackages.flask
   ];
 
+  # No make check target
+  doCheck = false;
+
   meta = with stdenv.lib; {
     description = "User session management for Flask";
     homepage = https://github.com/maxcountryman/flask-login;

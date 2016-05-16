@@ -32,6 +32,8 @@ buildPythonPackage rec {
     pythonPackages.backports-abc
   ];
 
+  doCheck = true;
+
   meta = with stdenv.lib; {
     description = "Web framework and asynchronous networking library";
     homepage = http://www.tornadoweb.org/;

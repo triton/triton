@@ -5,6 +5,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = mirror://sourceforge/openjade/OpenSP-1.5.2.tar.gz;
+    multihash = "QmRB597tv5tC93i9XX92JS6gf8SAnNqEH6yqLLwpV3bX9f";
     sha256 = "1khpasr6l0a8nfz6kcf3s81vgdab8fm2dj291n5r2s53k228kx2p";
   };
 

@@ -215,6 +215,8 @@ singledispatch = callPackage ../all-pkgs/singledispatch { };
 
 six = callPackage ../all-pkgs/six { };
 
+statistics = callPackage ../all-pkgs/statistics { };
+
 tmdb3 = callPackage ../all-pkgs/tmdb3 { };
 
 tornado = callPackage ../all-pkgs/tornado { };

@@ -13,6 +13,8 @@ buildPythonPackage rec {
     sha256 = "bc8702099f6071ddd8b6404c110e22bb93e6a007fd9455e27f056be59a2ca801";
   };
 
+  doCheck = true;
+
   meta = with stdenv.lib; {
     description = "A pythonic, object-oriented HTTP framework";
     homepage = "http://www.cherrypy.org";

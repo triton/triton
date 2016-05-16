@@ -9,7 +9,6 @@ let
         url = "https://github.com/slashbeast/grsecurity-scrape/blob/master/${branch}/grsecurity-${grversion}-${kversion}-${revision}.patch?raw=true";
         inherit sha256;
       };
-      features.grsecurity = true;
     };
 
 in

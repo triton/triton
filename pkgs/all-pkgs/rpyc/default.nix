@@ -20,7 +20,7 @@ buildPythonPackage rec {
     sha256 = "43fa845314f0bf442f5f5fab15bb1d1b5fe2011a8fc603f92d8022575cef8b4b";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pythonPackages.plumbum
   ] ++ optionals doCheck [
     pythonPackages.nose

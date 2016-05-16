@@ -161,6 +161,8 @@ enum34 =
   else
     callPackage ../all-pkgs/enum34 { };
 
+flask-compress = callPackage ../all-pkgs/flask-compress { };
+
 futures = callPackage ../all-pkgs/futures { };
 
 guessit = callPackage ../all-pkgs/guessit { };

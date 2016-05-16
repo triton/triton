@@ -1,21 +1,19 @@
 { stdenv
 , fetchurl
 
-, linux-headers_4_6
 , python
 }:
 
 stdenv.mkDerivation rec {
-  name = "libevdev-1.5.0";
+  name = "libevdev-1.5.1";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libevdev/${name}.tar.xz";
     allowHashOutput = false;
-    sha256 = "8c80cbc4b0a0b0c347867c6d03a5ef58a64b0dec52d0c725e279226c9ab442fc";
+    sha256 = "17630821a57e6e3f02e01ade836f24068df9bd530067091152b0d468c3a86f40";
   };
 
   buildInputs = [
-    linux-headers_4_6
     python
   ];
 

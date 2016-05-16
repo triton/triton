@@ -4,7 +4,7 @@ Triton
 Triton is a collection of packages for the [Nix](https://nixos.org/nix/) package
 manager.
 
-[Triton](https://nixos.org/nixos/) linux distribution source code is located inside
+[Triton](https://nixos.org/nixos/) linux distribution source code is located inside the
 `nixos/` folder.
 
 [Documentation](https://triton.readthedocs.org/en/latest/)

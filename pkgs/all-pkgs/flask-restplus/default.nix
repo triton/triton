@@ -20,7 +20,7 @@ buildPythonPackage rec {
     sha256 = "c4313097a673ef2cffabceb44b6fdd03132ee5e7ab34d0289c37af12a3d11186";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pythonPackages.aniso8601
     pythonPackages.flask
     pythonPackages.jsonschema

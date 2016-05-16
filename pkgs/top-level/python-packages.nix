@@ -195,6 +195,8 @@ pytest = callPackage ../all-pkgs/pytest { };
 
 pytest-benchmark = callPackage ../all-pkgs/pytest-benchmark { };
 
+pytest-capturelog = callPackage ../all-pkgs/pytest-capturelog { };
+
 python-dateutil = callPackage ../all-pkgs/python-dateutil { };
 
 python-tvrage = callPackage ../all-pkgs/python-tvrage { };

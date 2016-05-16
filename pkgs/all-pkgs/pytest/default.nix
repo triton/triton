@@ -21,9 +21,11 @@ buildPythonPackage rec {
     sha256 = "0d48d27a127644fbe7c8158157e08b35f8255045d4476df694b91eb3a8147e65";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pythonPackages.py
   ];
+
+  doCheck = false;
 
   meta = with stdenv.lib; {
     description = "Simple powerful testing framework for Python";

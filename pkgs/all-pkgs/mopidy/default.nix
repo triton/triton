@@ -48,7 +48,7 @@ buildPythonPackage rec {
   preFixup = ''
     wrapProgram $out/bin/mopidy \
       --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
-      --prefix GST_PLUGIN_PATH : "$GST_PLUGIN_SYSTEM_PATH"
+      --prefix GST_PLUGIN_PATH : "$GST_PLUGIN_PATH"
   '';
 
   disabled = isPy3k;

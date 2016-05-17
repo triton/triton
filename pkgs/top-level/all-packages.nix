@@ -1566,6 +1566,8 @@ mg = callPackage ../all-pkgs/mg { };
 
 mime-types = callPackage ../all-pkgs/mime-types { };
 
+minipro = callPackage ../all-pkgs/minipro { };
+
 minisign = callPackage ../all-pkgs/minisign { };
 
 mixxx = callPackage ../all-pkgs/mixxx { };

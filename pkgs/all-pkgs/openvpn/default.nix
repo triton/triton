@@ -9,11 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openvpn-2.3.10";
+  name = "openvpn-2.3.11";
 
   src = fetchurl {
     url = "http://swupdate.openvpn.net/community/releases/${name}.tar.gz";
-    sha256 = "1xn8kv4v4h4v8mhd9k4s9rilb7k30jgb9rm7n4fwmfrm5swvbc7q";
+    allowHashOutput = false;
+    sha256 = "9117a4434fd35e61cf94f9ee7ef84b7aecbc6fa556f779ff599560f219756163";
   };
 
   buildInputs = [
@@ -29,6 +30,15 @@ stdenv.mkDerivation rec {
     "--enable-iproute2"
     "--enable-systemd"
   ];
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      pgpsigUrl = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "0330 0E11 FED1 6F59 715F  9996 C29D 97ED 198D 22A3";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A robust and highly flexible tunneling application";

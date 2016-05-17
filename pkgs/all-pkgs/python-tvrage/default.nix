@@ -5,6 +5,11 @@
 , pythonPackages
 }:
 
+let
+  inherit (stdenv.lib)
+    isPy3k;
+in
+
 buildPythonPackage rec {
   name = "tvrage-${version}";
   version = "0.4.1";
@@ -25,6 +30,7 @@ buildPythonPackage rec {
     pythonPackages.beautifulsoup
   ];
 
+  disabled = isPy3k;
   doCheck = true;
 
   meta = with stdenv.lib; {

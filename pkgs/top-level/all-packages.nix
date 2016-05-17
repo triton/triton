@@ -1236,8 +1236,6 @@ lego = pkgs.goPackages.lego.bin // { outputs = [ "bin" ]; };
 
 leptonica = callPackage ../all-pkgs/leptonica { };
 
-letsencrypt = callPackage ../all-pkgs/letsencrypt { };
-
 lftp = callPackage ../all-pkgs/lftp { };
 
 lib-bash = callPackage ../all-pkgs/lib-bash { };

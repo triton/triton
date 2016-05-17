@@ -145,6 +145,8 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   brotli = pkgs.brotli;
 };
 
+certbot = callPackage ../all-pkgs/certbot { };
+
 cherrypy = callPackage ../all-pkgs/cherrypy { };
 
 discogs-client = callPackage ../all-pkgs/discogs-client { };
@@ -408,9 +410,9 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
   };
 
   acme = buildPythonPackage rec {
-    inherit (pkgs.letsencrypt) src version;
+    inherit (self.certbot) src version;
     name = "acme-${version}";
-    sourceRoot = "letsencrypt-v${version}/acme";
+    sourceRoot = "certbot-v${version}/acme";
 
     propagatedBuildInputs = with self; [
       cryptography

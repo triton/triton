@@ -9,13 +9,13 @@
 
 stdenv.mkDerivation rec {
   name = "libglvnd-${version}";
-  version = "2016-05-05";
+  version = "2016-05-11";
 
   src = fetchFromGitHub {
     owner = "nvidia";
     repo = "libglvnd";
-    rev = "5a69af6f77dd68fed4d54137c155676478dcccc3";
-    sha256 = "7ce43319f086c5e15a95c4306aca933a4de0ca031fa4b3e6eeb30a1d479c0fca";
+    rev = "509de0dbc8b6be93dd9dc2e1b1b7b9268d4ddbdf";
+    sha256 = "13dd4e8bbad9e4fd64da22ea3a4b7f7e83b41c1a0620defe5a9f9fdbe8f4ef74";
   };
 
   nativeBuildInputs = [
@@ -33,7 +33,6 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    patchShebangs ./src/GLX/gen_stubs.pl
     patchShebangs ./src/generate
   '';
 

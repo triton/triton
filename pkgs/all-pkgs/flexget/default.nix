@@ -1,8 +1,9 @@
 { stdenv
 , buildPythonPackage
 , config
-, fetchurl
+, fetchPyPi
 
+, pkgs
 , pythonPackages
 }:
 
@@ -10,6 +11,7 @@ let
   inherit (stdenv.lib)
     optionals;
   inherit (pythonPackages)
+    isPy3k
     pythonOlder;
 in
 
@@ -17,9 +19,10 @@ buildPythonPackage rec {
   name = "flexget-${version}";
   version = "2.0.24";
 
-  src = fetchurl {
-    url = "https://github.com/Flexget/Flexget/archive/${version}.tar.gz";
-    sha256 = "1afef61d2da1f4a8cca0bf13e3da80ebfee615afcf071902e7d836e2c6abf96f";
+  src = fetchPyPi {
+    package = "FlexGet";
+    inherit version;
+    sha256 = "ab03b63cab522ace9ab8cd59e9c98a72b9239d3b425187096b2289a46d5bcc56";
   };
 
   postPatch =
@@ -47,19 +50,20 @@ buildPythonPackage rec {
     pythonPackages.jinja2
     pythonPackages.jsonschema
     pythonPackages.pathpy
-    pythonPackages.paver
-    pythonPackages.progressbar
+    #pythonPackages.progressbar
     pythonPackages.pynzb
     pythonPackages.pyparsing
     pythonPackages.pyrss2gen
     pythonPackages.python-dateutil
-    pythonPackages.python-tvrage
     pythonPackages.pyyaml
     pythonPackages.requests2
     pythonPackages.rpyc
     pythonPackages.safe
     pythonPackages.sqlalchemy
-    pythonPackages.tmdb3
+
+    #pythonPackages.paver
+    #pythonPackages.python-tvrage
+    #pythonPackages.tmdb3
     pythonPackages.transmissionrpc
   ] ++ optionals (pythonOlder "3.4") [
     pythonPackages.pathlib
@@ -67,6 +71,7 @@ buildPythonPackage rec {
     pythonPackages.deluge
   ];
 
+  disabled = isPy3k;
   doCheck = false;
 
   meta = with stdenv.lib; {

@@ -1,40 +1,36 @@
 { stdenv
-, fetchPyPi
-, wrapPython
+, pythonPackages
 
-, pip
-, python
-, setuptools
 , unzip
-, wheel
+, wrapPython
 }:
 
 let
-  wheel_source = fetchPyPi {
+  wheel_source = pythonPackages.fetchPyPi {
     package = "wheel";
-    inherit (wheel) version;
+    inherit (pythonPackages.wheel) version;
     type = "-py2.py3-none-any.whl";
     sha256 = "ea8033fc9905804e652f75474d33410a07404c1a78dd3c949a66863bd1050ebd";
   };
 
-  setuptools_source = fetchPyPi {
+  setuptools_source = pythonPackages.fetchPyPi {
     package = "setuptools";
-    inherit (setuptools) version;
+    inherit (pythonPackages.setuptools) version;
     type = "-py2.py3-none-any.whl";
     sha256 = "fb6378f65eb630281227720ae80276f38c1a1f16969eca499435c0ff2a815fe6";
   };
 
-  pip_source = fetchPyPi {
+  pip_source = pythonPackages.fetchPyPi {
     package = "pip";
-    inherit (pip) version;
+    inherit (pythonPackages.pip) version;
     type = "-py2.py3-none-any.whl";
     sha256 = "6464dd9809fb34fc8df2bf49553bb11dac4c13d2ffa7a4f8038ad86a4ccb92a1";
   };
 in
 
 stdenv.mkDerivation rec {
-  name = "python-${python.version}-bootstrapped-pip-${version}";
-  inherit (pip) version;
+  name = "python-${pythonPackages.python.version}-pip-bootstrap-${version}";
+  inherit (pythonPackages.pip) version;
 
   src = pip_source;
 
@@ -44,10 +40,10 @@ stdenv.mkDerivation rec {
   ];
 
   unpackPhase = ''
-    mkdir -p $out/${python.sitePackages}
-    unzip -d $out/${python.sitePackages} $src
-    unzip -d $out/${python.sitePackages} ${setuptools_source}
-    unzip -d $out/${python.sitePackages} ${wheel_source}
+    mkdir -p $out/${pythonPackages.python.sitePackages}
+    unzip -d $out/${pythonPackages.python.sitePackages} $src
+    unzip -d $out/${pythonPackages.python.sitePackages} ${setuptools_source}
+    unzip -d $out/${pythonPackages.python.sitePackages} ${wheel_source}
   '';
 
   patchPhase = ''
@@ -56,7 +52,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     # install pip binary
-    echo '${python.interpreter} -m pip "$@"' > $out/bin/pip
+    echo '${pythonPackages.python.interpreter} -m pip "$@"' > $out/bin/pip
     chmod +x $out/bin/pip
 
     wrapPythonPrograms $out/bin

@@ -3,7 +3,7 @@
    (http://pypi.python.org/pypi/setuptools/), which represents a large
    number of Python packages nowadays.  */
 
-{ python, setuptools, unzip, wrapPython, lib, bootstrapped-pip
+{ python, setuptools, unzip, wrapPython, lib, pip_bootstrap
 , ensureNewerSourcesHook }:
 
 { name
@@ -60,7 +60,7 @@ in
 python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] // {
   name = namePrefix + name;
 
-  buildInputs = [ wrapPython bootstrapped-pip ] ++ buildInputs ++ pythonPath
+  buildInputs = [ wrapPython pip_bootstrap ] ++ buildInputs ++ pythonPath
     ++ [ (ensureNewerSourcesHook { year = "1980"; }) ]
     ++ (lib.optional (lib.hasSuffix "zip" attrs.src.name or "") unzip);
 
@@ -95,7 +95,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
 
     pushd dist
-    ${bootstrapped-pip}/bin/pip install *.whl --no-index --prefix=$out --no-cache
+    ${pip_bootstrap}/bin/pip install *.whl --no-index --prefix=$out --no-cache
     popd
 
     runHook postInstall
@@ -126,7 +126,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
        export PATH="$tmp_path/bin:$PATH"
        export PYTHONPATH="$tmp_path/${python.sitePackages}:$PYTHONPATH"
        mkdir -p $tmp_path/${python.sitePackages}
-       ${bootstrapped-pip}/bin/pip install -e . --prefix $tmp_path
+       ${pip_bootstrap}/bin/pip install -e . --prefix $tmp_path
     fi
     ${postShellHook}
   '';

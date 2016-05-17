@@ -3392,10 +3392,11 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     propagatedBuildInputs = with self; [
       cffi
-      enum34
       idna
       ipaddress
       pyasn1
+    ] ++ optionals (pythonOlder "3.4") [
+      enum34
     ];
 
   };
@@ -5409,7 +5410,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     propagatedBuildInputs = with self; [
       cffi
       cryptography
-      enum34
       idna
       ipaddress
       ndg-httpsclient
@@ -5419,6 +5419,8 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       pycrypto
       requests2
       six
+    ] ++ optionals (pythonOlder "3.4") [
+      enum34
     ];
 
     meta = {
@@ -6288,11 +6290,14 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "caba1ce15d312bf68d65a5d2cf9ccff2";
     };
 
-    deps = if !isPy3k then [ self.pies2overrides self.enum34 ]
-           else if isPy33 then [ self.enum34 ]
-           else [];
+    deps =
+      if !isPy3k then [
+        self.pies2overrides
+      ] else [ ];
 
-    propagatedBuildInputs = deps;
+    propagatedBuildInputs = deps ++ optionals (pythonOlder "3.4") [
+      self.enum34
+    ];
 
     meta = {
       description = "The simplest way to write one program that runs on both Python 2 and Python 3";
@@ -9242,8 +9247,8 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0qyqq9akm4vshhn8cngjc1qykcvsn7cz6dlm6njfsgpbraqrmbbw";
     };
 
-    buildInputs = with self; [
-      enum34
+    buildInputs = optionals (pythonOlder "3.4") [
+      self.enum34
     ];
   };
 

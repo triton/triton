@@ -21,7 +21,7 @@ buildPythonPackage rec {
     sha256 = "c9c2d32593d16eedf2cec1b6a41893626a2649b40b21ca9c4cac4243bde2efbf";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pythonPackages.six
   ] ++ optionals (pythonOlder "3.2") [
     pythonPackages.backports-ssl-match-hostname

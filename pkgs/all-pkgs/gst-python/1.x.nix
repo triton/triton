@@ -5,7 +5,7 @@
 , gstreamer
 , gst-plugins-base
 , ncurses
-, python3Packages
+, pythonPackages
 }:
 
 stdenv.mkDerivation rec {
@@ -21,8 +21,9 @@ stdenv.mkDerivation rec {
     gst-plugins-base
     gstreamer
     ncurses
-    python3Packages.python
-    python3Packages.pygobject3
+    pythonPackages.python
+    pythonPackages.pygobject3
+    pythonPackages.wrapPython
   ];
 
   patches = [
@@ -35,8 +36,8 @@ stdenv.mkDerivation rec {
 
   preConfigure = ''
     configureFlagsArray+=(
-      # Fix override directory with Python3.5
-      "--with-pygi-overrides-dir=$out/lib/python3.5/site-packages/gi/overrides"
+      # Fix overrides site directory
+      "--with-pygi-overrides-dir=$out/lib/${pythonPackages.python.libPrefix}/site-packages/gi/overrides"
     )
   '';
 

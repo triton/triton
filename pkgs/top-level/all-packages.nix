@@ -1043,10 +1043,6 @@ gst-plugins-ugly_0 = callPackage ../all-pkgs/gst-plugins-ugly/0.x.nix { };
 gst-plugins-ugly_1 = callPackage ../all-pkgs/gst-plugins-ugly/1.x.nix { };
 gst-plugins-ugly = callPackageAlias "gst-plugins-ugly_1" { };
 
-gst-python_0 = callPackage ../all-pkgs/gst-python/0.x.nix { };
-gst-python_1 = callPackage ../all-pkgs/gst-python/1.x.nix { };
-gst-python = callPackageAlias "gst-python_1" { };
-
 gst-validate = callPackage ../all-pkgs/gst-validate { };
 
 gstreamer_0 = callPackage ../all-pkgs/gstreamer/0.x.nix { };

@@ -5,8 +5,7 @@
 , gst-plugins-base_0
 , gstreamer_0
 , libxml2
-, python2
-, python2Packages
+, pythonPackages
 }:
 
 stdenv.mkDerivation rec {
@@ -30,9 +29,9 @@ stdenv.mkDerivation rec {
     gst-plugins-base_0
     gstreamer_0
     libxml2
-    python2
-    python2Packages.pygobject
-    python2Packages.pygtk
+    pythonPackages.python
+    pythonPackages.pygobject
+    pythonPackages.pygtk
   ];
 
   postPatch =

@@ -165,6 +165,10 @@ flexget = callPackage ../all-pkgs/flexget { };
 
 futures = callPackage ../all-pkgs/futures { };
 
+gst-python_0 = callPackage ../all-pkgs/gst-python/0.x.nix { };
+gst-python_1 = callPackage ../all-pkgs/gst-python/1.x.nix { };
+gst-python = callPackageAlias "gst-python_1" { };
+
 guessit = callPackage ../all-pkgs/guessit { };
 
 iotop = callPackage ../all-pkgs/iotop { };
@@ -5431,10 +5435,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license = licenses.mit;
       maintainers = with maintainers; [ jgillich ];
     };
-  };
-
-  gst-python = callPackage ../development/libraries/gstreamer/python {
-    gst-plugins-base = pkgs.gst_all_1.gst-plugins-base;
   };
 
   gtimelog = buildPythonPackage rec {

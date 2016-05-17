@@ -175,6 +175,8 @@ markupsafe = callPackage ../all-pkgs/markupsafe { };
 
 pathlib = callPackage ../all-pkgs/pathlib { };
 
+pip = callPackage ../all-pkgs/pip { };
+
 progressbar = callPackage ../all-pkgs/progressbar { };
 
 py = callPackage ../all-pkgs/py { };
@@ -14037,19 +14039,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license = licenses.mit;
     };
   };
-
-  pip = buildPythonPackage rec {
-    name = "pip-${version}";
-    version = "8.1.1";
-
-    src = fetchPyPi {
-      package = "pip";
-      inherit version;
-      sha256 = "3e78d3066aaeb633d185a57afdccf700aa2e660436b4af618bcb6ff0fa511798";
-    };
-
-  };
-
 
   pika = buildPythonPackage {
     name = "pika-0.9.12";

@@ -10,8 +10,8 @@ stdenv.mkDerivation rec {
 
   src = fetchgit {
     url = "https://github.com/chlorm/arkive.git";
-    rev = "bc762b2f268fdbcd1d5a6af4918aed3696e5c5af";
-    sha256 = "13yl4jx77666zkdhvbsx426myyg3lhjs438wdcl2i5dmdwg3b7wz";
+    rev = "b9f98b00897531f2f183004b71f11507d9da3d34";
+    sha256 = "06h07rcbmsz7zdq8f22v49ibs5yn4666wqrxb1p456n15vjgqmh0";
   };
 
   nativeBuildInputs = [

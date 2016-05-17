@@ -6,6 +6,11 @@
 , pythonPackages
 }:
 
+let
+  inherit (pythonPackages)
+    isPy3k;
+in
+
 buildPythonPackage rec {
   name = "certbot-${version}";
   version = "0.6.0";
@@ -34,6 +39,7 @@ buildPythonPackage rec {
     pythonPackages.zope-interface
   ];
 
+  disabled = isPy3k;
   doCheck = true;
 
   meta = with stdenv.lib; {

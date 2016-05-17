@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchFromGitHub
-, python2Packages
+, pythonPackages
 }:
 
 buildPythonPackage rec {

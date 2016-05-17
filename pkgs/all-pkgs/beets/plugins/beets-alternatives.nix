@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchFromGitHub
-, python2Packages
+, pythonPackages
 }:
 
 buildPythonPackage rec {
@@ -21,7 +21,7 @@ buildPythonPackage rec {
   '';
 
   propagatedBuildInputs = [
-    python2Packages.futures
+    pythonPackages.futures
   ];
 
   meta = with stdenv.lib; {

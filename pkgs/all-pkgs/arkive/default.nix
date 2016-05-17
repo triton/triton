@@ -3,6 +3,7 @@
 , fetchgit
 
 , ffmpeg
+, lib-bash
 }:
 
 stdenv.mkDerivation rec {
@@ -10,8 +11,8 @@ stdenv.mkDerivation rec {
 
   src = fetchgit {
     url = "https://github.com/chlorm/arkive.git";
-    rev = "b9f98b00897531f2f183004b71f11507d9da3d34";
-    sha256 = "06h07rcbmsz7zdq8f22v49ibs5yn4666wqrxb1p456n15vjgqmh0";
+    rev = "538d6413673e6fee40ed0c936a534ca18b24ccf9";
+    sha256 = "19hjbn57y2a5gf9hwqr51cy380m5z9qmjmf5rjags3cqc36nqgag";
   };
 
   nativeBuildInputs = [
@@ -20,6 +21,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     ffmpeg
+    lib-bash
   ];
 
   meta = with stdenv.lib; {

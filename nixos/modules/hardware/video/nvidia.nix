@@ -29,8 +29,6 @@ let
       kernelPackages.nvidia-drivers_legacy304
     else if elem "nvidia-legacy340" drivers then
       kernelPackages.nvidia-drivers_legacy340
-    else if elem "nvidia-vulkan" drivers then
-      kernelPackages.nvidia-drivers_vulkan
     else
       null;
 

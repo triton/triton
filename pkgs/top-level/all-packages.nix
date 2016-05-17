@@ -8865,9 +8865,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
       nvidia-drivers_beta = kCallPackage ../all-pkgs/nvidia-drivers {
         channel = "beta";
       };
-      nvidia-drivers_vulkan = kCallPackage ../all-pkgs/nvidia-drivers {
-        channel = "vulkan";
-      };
 
       spl = kCallPackage ../os-specific/linux/spl {
         configFile = "kernel";

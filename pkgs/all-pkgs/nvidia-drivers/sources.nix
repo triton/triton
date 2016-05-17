@@ -32,12 +32,5 @@
     sha256i686   = "8fae0f29ab4bebf2b2e2d38e94adc3150217b52fac1adbd42df50aa65ccb2c59";
     sha256x86_64 = "8edfee9a1461721b3311a3fe056ccb246a2e268585c61a54aaab9b0756e6df0b";
   };
-  # https://developer.nvidia.com/vulkan-driver
-  "vulkan" = {
-    versionMajor = "355";
-    versionMinor = "00.29";
-    sha256i686   = "11n5m332krb0fwlqf1zlgs4b2nxxjjk4g1gdc177fga8gr5cvic7";
-    sha256x86_64 = "1n2ad6db6zg7rp6vdf8pz9j92s8d5ac6npyi6bnmia6l5i40391i";
-  };
 
 }

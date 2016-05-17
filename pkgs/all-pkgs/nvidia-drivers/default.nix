@@ -83,7 +83,6 @@ assert any (n: n == channel) [
   "long-lived"
   "short-lived"
   "beta"
-  "vulkan"
 ];
 assert buildKernelspace -> kernel != null;
 assert nvidiasettingsSupport -> (
@@ -111,21 +110,13 @@ stdenv.mkDerivation {
   src = fetchurl {
     url =
       if targetSystem == "i686-linux" then
-        if channel == "vulkan" then
-          "https://developer.nvidia.com/linux32bit"
-        else
-          "http://download.nvidia.com/XFree86/Linux-x86/${version}/" +
-          "NVIDIA-Linux-x86-${version}.run"
+        "http://download.nvidia.com/XFree86/Linux-x86/${version}/"
+          + "NVIDIA-Linux-x86-${version}.run"
       else if targetSystem == "x86_64-linux" then
-        if channel == "vulkan" then
-          "https://developer.nvidia.com/linux64bit"
-        else
-          "http://download.nvidia.com/XFree86/Linux-x86_64/${version}/" +
-          "NVIDIA-Linux-x86_64-${version}-no-compat32.run"
+        "http://download.nvidia.com/XFree86/Linux-x86_64/${version}/"
+          + "NVIDIA-Linux-x86_64-${version}-no-compat32.run"
       else
         throw "The NVIDIA drivers are not supported for the `${targetSystem}` platform";
-    # Remove rename once vulkan is mainlined
-    name = "NVIDIA-${targetSystem}-${version}.run";
     sha256 =
       if targetSystem == "i686-linux" then
         sha256i686

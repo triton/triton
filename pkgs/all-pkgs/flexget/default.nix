@@ -15,11 +15,11 @@ in
 
 buildPythonPackage rec {
   name = "flexget-${version}";
-  version = "2.0.22";
+  version = "2.0.24";
 
   src = fetchurl {
     url = "https://github.com/Flexget/Flexget/archive/${version}.tar.gz";
-    sha256 = "0d7112ce7354e4f9d6c48f25d717e62db7c24b8397187b03cb868d5f5c08a251";
+    sha256 = "1afef61d2da1f4a8cca0bf13e3da80ebfee615afcf071902e7d836e2c6abf96f";
   };
 
   postPatch =

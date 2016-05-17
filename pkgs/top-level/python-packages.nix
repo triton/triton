@@ -173,6 +173,8 @@ jinja2 = callPackage ../all-pkgs/jinja2 { };
 
 markupsafe = callPackage ../all-pkgs/markupsafe { };
 
+mutagen = callPackage ../all-pkgs/mutagen { };
+
 pathlib = callPackage ../all-pkgs/pathlib { };
 
 pip = callPackage ../all-pkgs/pip { };
@@ -11077,24 +11079,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       maintainers = with maintainers; [ DamienCassou ];
     };
   };
-
-  mutagen = buildPythonPackage (rec {
-    name = "mutagen-1.31";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/m/mutagen/${name}.tar.gz";
-      md5Confirm = "6db58c5b58d85ffb15d208f46a372c01";
-      sha256 = "16fnnhspniac2i7qswxafawsh2x2a803hmc6bn9k1zl5fxq1380a";
-    };
-
-
-    meta = {
-      description = "Python multimedia tagging library";
-      homepage = http://code.google.com/p/mutagen;
-      license = licenses.lgpl2;
-    };
-  });
-
 
   muttils = buildPythonPackage (rec {
     name = "muttils-1.3";

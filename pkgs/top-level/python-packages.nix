@@ -6495,7 +6495,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       virtualenv
       webtest
       zope_component
-      zope_interface
+      zope-interface
     ];
 
     propagatedBuildInputs = with self; [
@@ -6506,7 +6506,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       venusian
       webob
       zope_deprecation
-      zope_interface
+      zope-interface
     ];
 
     meta = {
@@ -6548,7 +6548,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     propagatedBuildInputs = with self; [
       chameleon
       pyramid
-      zope_interface
+      zope-interface
       setuptools
     ];
 
@@ -6827,7 +6827,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "d74c6dda31ff459a39fa5da9e98f2425";
     };
 
-    buildInputs = with self; [ zope_interface zodb ];
+    buildInputs = with self; [ zope-interface zodb ];
 
     meta = {
       maintainers = with maintainers; [ iElectric ];
@@ -6843,7 +6843,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "36aa2c96dec4cfeea57f54da2b733eb9";
     };
 
-    buildInputs = with self; [ zope_interface zope_location zope_schema ];
+    buildInputs = with self; [ zope-interface zope_location zope_schema ];
 
     meta = {
       maintainers = with maintainers; [ iElectric ];
@@ -7012,7 +7012,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
   ZEO = self.buildPythonPackage rec {
     name = "ZEO-4.0.0";
 
-    propagatedBuildInputs = with self; [ random2 zodb six transaction persistent zc_lockfile zconfig zdaemon zope_interface ];
+    propagatedBuildInputs = with self; [ random2 zodb six transaction persistent zc_lockfile zconfig zdaemon zope-interface ];
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/Z/ZEO/${name}.tar.gz";
@@ -7120,7 +7120,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "f2fee996ae28dc16eb48f1a3e8f64801";
     };
 
-    propagatedBuildInputs = with self; [ zope_interface sphinx ];
+    propagatedBuildInputs = with self; [ zope-interface sphinx ];
 
     meta = {
       maintainers = with maintainers; [ iElectric ];
@@ -7208,7 +7208,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
   zope_tales = buildPythonPackage rec {
     name = "zope.tales-4.0.2";
 
-    propagatedBuildInputs = with self; [ zope_interface six zope_testrunner ];
+    propagatedBuildInputs = with self; [ zope-interface six zope_testrunner ];
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/z/zope.tales/${name}.zip";
@@ -14618,7 +14618,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     propagatedBuildInputs = with self; [
       repoze_who paste cryptography pycrypto pyopenssl ipaddress six cffi idna
-      enum34 pytz setuptools zope_interface python-dateutil requests2 pyasn1 webob decorator pycparser
+      enum34 pytz setuptools zope-interface python-dateutil requests2 pyasn1 webob decorator pycparser
     ];
     buildInputs = with self; [
       Mako pytest memcached pymongo mongodict pkgs.xmlsec
@@ -14665,7 +14665,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      zope_interface webob
+      zope-interface webob
     ];
     buildInputs = with self; [
 
@@ -19409,7 +19409,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "b4ca5983c9e3a0808ff5ff7648092c76";
     };
 
-    propagatedBuildInputs = with self; [ zope_interface ];
+    propagatedBuildInputs = with self; [ zope-interface ];
 
     meta = {
       description = "Transaction management";
@@ -19429,7 +19429,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
      # tests fail, see http://hydra.nixos.org/build/4316603/log/raw
 
-     propagatedBuildInputs = with self; [ zope_interface zope_testing ];
+     propagatedBuildInputs = with self; [ zope-interface zope_testing ];
      meta = {
        description = "A tool which computes a dependency graph between active Python eggs";
        homepage = http://thomas-lotze.de/en/software/eggdeps/;
@@ -20414,7 +20414,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "21975c1609296e7834e8cf4025af3039";
     };
 
-    propagatedBuildInputs = with self; [ manuel transaction zc_lockfile zconfig zdaemon zope_interface zope_event BTrees persistent ZEO ];
+    propagatedBuildInputs = with self; [ manuel transaction zc_lockfile zconfig zdaemon zope-interface zope_event BTrees persistent ZEO ];
 
     meta = {
       description = "An object-oriented database for Python";
@@ -20435,7 +20435,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "092d787524b095164231742c96b32f50";
     };
 
-    propagatedBuildInputs = with self; [ manuel transaction zc_lockfile zconfig zdaemon zope_interface persistent BTrees ]
+    propagatedBuildInputs = with self; [ manuel transaction zc_lockfile zconfig zdaemon zope-interface persistent BTrees ]
       ++ optionals isPy3k [ zodbpickle ];
 
     preCheck = if isPy3k then ''
@@ -20471,7 +20471,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
   BTrees = self.buildPythonPackage rec {
     name = "BTrees-4.1.4";
 
-    propagatedBuildInputs = with self; [ persistent zope_interface transaction ];
+    propagatedBuildInputs = with self; [ persistent zope-interface transaction ];
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/B/BTrees/${name}.tar.gz";
@@ -20490,7 +20490,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
   persistent = self.buildPythonPackage rec {
     name = "persistent-4.0.8";
 
-    propagatedBuildInputs = with self; [ zope_interface ];
+    propagatedBuildInputs = with self; [ zope-interface ];
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/p/persistent/${name}.tar.gz";
@@ -20528,7 +20528,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "eff24d7918099a3e899ee63a9c31bee6";
     };
 
-    buildInputs = with self; [ zope_interface ];
+    buildInputs = with self; [ zope-interface ];
 
     meta = {
         maintainers = with maintainers; [ goibhniu ];
@@ -20544,7 +20544,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0f9r5rn9lzgi4hvkhgb6vgw8kpz9sv16jsfb9ws4am8gbqcgv2iy";
     };
 
-    propagatedBuildInputs = with self; [ zope_interface ];
+    propagatedBuildInputs = with self; [ zope-interface ];
 
     meta = {
         maintainers = with maintainers; [ goibhniu ];
@@ -20556,7 +20556,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     propagatedBuildInputs = with self; [
       zope_component zope_configuration zope_contenttype zope_i18n
-      zope_interface zope_location zope_publisher zope_schema zope_traversing
+      zope-interface zope_location zope_publisher zope_schema zope_traversing
     ];
 
     # all tests fail
@@ -20578,7 +20578,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     buildInputs = with self; [
-      zope_interface
+      zope-interface
     ];
 
   };
@@ -20657,7 +20657,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
        sha256 = "0zwxaaa66sqxg5k7zcrvs0fbg9ym1njnxnr28dfmchzhwjvwnfzl";
      };
 
-     propagatedBuildInputs = with self; [ zope_interface ];
+     propagatedBuildInputs = with self; [ zope-interface ];
 
      # circular deps
 
@@ -20762,7 +20762,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0pqwwmvm1prhwv1ziv9lp8iirz7xkwb6n2kyj36p2h0ppyyhjnm4";
     };
 
-    propagatedBuildInputs = with self; [ zope_interface ];
+    propagatedBuildInputs = with self; [ zope-interface ];
 
     # circular deps
 
@@ -20798,7 +20798,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1p943jdxb587dh7php4vx04qvn7b2877hr4qs5zyckvp5afhhank";
     };
 
-    propagatedBuildInputs = with self; [ zope_location zope_event zope_interface zope_testing ];
+    propagatedBuildInputs = with self; [ zope_location zope_event zope-interface zope_testing ];
 
     meta = {
         maintainers = with maintainers; [ goibhniu ];
@@ -20833,7 +20833,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "006xfkhvmypwd3ww9gbba4zly7n9w30bpp1h74d53la7l7fiqk2f";
     };
 
-    propagatedBuildInputs = with self; [ zope_i18nmessageid zope_interface ];
+    propagatedBuildInputs = with self; [ zope_i18nmessageid zope-interface ];
 
     meta = {
         maintainers = with maintainers; [ goibhniu ];
@@ -20850,7 +20850,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "0a468bd5b8884cd29fb71acbf7eaa31e";
     };
 
-    buildInputs = with self; [ zope_testing zope_interface ];
+    buildInputs = with self; [ zope_testing zope-interface ];
     propagatedBuildInputs = with self; [ sqlalchemy9 transaction ];
 
     meta = {
@@ -20870,7 +20870,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
 
-    propagatedBuildInputs = with self; [ zope_interface zope_exceptions zope_location ];
+    propagatedBuildInputs = with self; [ zope-interface zope_exceptions zope_location ];
 
     meta = {
       description = "Zope testing helpers";
@@ -20890,7 +20890,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1w09wbqiqmq6hvrammi4fzc7fr129v63gdnzlk4qi2b1xy5qpqab";
     };
 
-    propagatedBuildInputs = with self; [ zope_interface zope_exceptions zope_testing six ] ++ optional (!python.isPy3 or false) subunit;
+    propagatedBuildInputs = with self; [ zope-interface zope_exceptions zope_testing six ] ++ optional (!python.isPy3 or false) subunit;
 
     meta = {
       description = "A flexible test runner with layer support";
@@ -21367,7 +21367,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "f01db6d37726c6fc0a8aaa66a7bf14436b0dd0d62ef3c20ecb31605a4d365d2e";
     };
 
-    propagatedBuildInputs = with self; [ whisper txamqp zope_interface twisted ];
+    propagatedBuildInputs = with self; [ whisper txamqp zope-interface twisted ];
 
     meta = {
       homepage = http://graphite.wikidot.com/;

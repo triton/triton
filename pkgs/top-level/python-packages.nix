@@ -235,6 +235,8 @@ twisted = callPackage ../all-pkgs/twisted { };
 
 tzlocal = callPackage ../all-pkgs/tzlocal { };
 
+wheel = callPackage ../all-pkgs/wheel { };
+
 zope-component = callPackage ../all-pkgs/zope-component { };
 
 zope-event = callPackage ../all-pkgs/zope-event { };
@@ -20101,26 +20103,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "729730a25f43a29ac6a79f08384ea18a3a125d07079492e15c3b3c2a3f090c37";
     };
 
-  };
-
-  wheel = buildPythonPackage rec {
-    name = "wheel-${version}";
-    version = "0.29.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/w/wheel/${name}.tar.gz";
-      sha256 = "1ebb8ad7e26b448e9caa4773d2357849bf80ff9e313964bcaf79cbf0201a1648";
-    };
-
-    buildInputs = with self; [ pytest pytestcov coverage ];
-
-    propagatedBuildInputs = with self; [ jsonschema ];
-
-    meta = {
-      description = "A built-package format for Python";
-      license = with licenses; [ mit ];
-      homepage = https://bitbucket.org/pypa/wheel/;
-    };
   };
 
   willie = buildPythonPackage rec {

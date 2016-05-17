@@ -132,7 +132,7 @@ stdenv.mkDerivation {
   ];
 
   patches =
-    optionals (versionAtLeast kernel.version "4.6" && channel == "long-lived") [
+    optionals (versionAtLeast kernel.version "4.6" && channel == "short-lived") [
       (fetchTritonPatch {
         rev = "0a60fa7b87fd06185cc0369edd5212344c4da97d";
         file = "nvidia-drivers/364.19-kernel-4.6.patch";

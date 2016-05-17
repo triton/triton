@@ -1,5 +1,5 @@
 { stdenv
-, fetchurl
+, fetchFromGitHub
 
 , ipset
 , iptables
@@ -10,11 +10,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "keepalived-1.2.20";
+  name = "keepalived-2016-05-17";
 
-  src = fetchurl {
-    url = "http://keepalived.org/software/${name}.tar.gz";
-    sha256 = "1gw15z9996cfz9ppdvrnyf8sc0grgnc2pf9smgaca08g34bvjssn";
+  src = fetchFromGitHub {
+    owner = "acassen";
+    repo = "keepalived";
+    rev = "d96429be4a4f5df2bc70d1d83477fad0ea827b1a";
+    sha256 = "438bc7c6f11c6e20d32b7adff8dfdfdd81e7a5155c9ece2bf4b681bf3857ecb9";
   };
 
   buildInputs = [
@@ -34,6 +36,11 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-snmp"
+    "--enable-snmp-keepalived"
+    "--enable-snmp-checker"
+    "--enable-snmp-rfc"
+    "--enable-snmp-rfcv2"
+    "--enable-snmp-rfcv3"
     "--enable-sha1"
   ];
 

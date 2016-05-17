@@ -183,6 +183,8 @@ progressbar = callPackage ../all-pkgs/progressbar { };
 
 py = callPackage ../all-pkgs/py { };
 
+pykka = callPackage ../all-pkgs/pykka { };
+
 pymysql = callPackage ../all-pkgs/pymysql { };
 
 pynzb = callPackage ../all-pkgs/pynzb { };
@@ -21639,26 +21641,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license     = licenses.unfree;
       maintainers = with maintainers; [ lovek323 rickynils ];
       platforms   = platforms.all;
-    };
-  };
-
-  pykka = buildPythonPackage rec {
-    name = "pykka-${version}";
-
-    version = "1.2.0";
-
-    src = pkgs.fetchgit {
-      url = "https://github.com/jodal/pykka.git";
-      rev = "refs/tags/v${version}";
-      sha256 = "17vv2q636zp2fvxrp7ckgnz1ifaffcj5vdxvfb4isd1d32c49amb";
-    };
-
-    # There are no tests
-
-    meta = {
-      homepage = http://www.pykka.org;
-      description = "A Python implementation of the actor model";
-      maintainers = with maintainers; [ rickynils ];
     };
   };
 

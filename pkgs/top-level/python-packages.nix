@@ -54,6 +54,7 @@ let
       "";
 
   callPackage = pkgs.newScope (self // {
+    inherit pkgs;
     pythonPackages = self;
   });
 

@@ -1,20 +1,26 @@
 { stdenv
 , fetchurl
 
+, ipset
+, iptables
+, libnfnetlink
 , libnl
 , net-snmp
 , openssl
 }:
 
 stdenv.mkDerivation rec {
-  name = "keepalived-1.2.19";
+  name = "keepalived-1.2.20";
 
   src = fetchurl {
     url = "http://keepalived.org/software/${name}.tar.gz";
-    sha256 = "0lrq963pxhgh74qmxjyy5hvxdfpm4r50v4vsrp559n0w5irsxyrj";
+    sha256 = "1gw15z9996cfz9ppdvrnyf8sc0grgnc2pf9smgaca08g34bvjssn";
   };
 
   buildInputs = [
+    ipset
+    iptables
+    libnfnetlink
     libnl
     net-snmp
     openssl
@@ -23,10 +29,6 @@ stdenv.mkDerivation rec {
   postPatch = ''
     sed -i 's,$(DESTDIR)/usr/share,$out/share,g' Makefile.in
   '';
-
-  # It doesn't know about the include/libnl<n> directory
-  NIX_CFLAGS_COMPILE="-I${libnl}/include/libnl3";
-  NIX_LDFLAGS="-lnl-3 -lnl-genl-3";
 
   configureFlags = [
     "--sysconfdir=/etc"
@@ -43,7 +45,10 @@ stdenv.mkDerivation rec {
     homepage = http://keepalived.org;
     description = "routing software written in C";
     license = licenses.gpl2;
-    platforms = platforms.linux;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

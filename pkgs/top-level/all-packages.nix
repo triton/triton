@@ -519,10 +519,12 @@ apr-util = callPackage ../all-pkgs/apr-util { };
 
 ardour =  callPackage ../all-pkgs/ardour { };
 
+argyllcms = callPackage ../all-pkgs/argyllcms { };
+
 aria2 = callPackage ../all-pkgs/aria2 { };
 aria = aria2;
 
-argyllcms = callPackage ../all-pkgs/argyllcms { };
+arkive = callPackage ../all-pkgs/arkive { };
 
 asciidoc = callPackage ../all-pkgs/asciidoc { };
 

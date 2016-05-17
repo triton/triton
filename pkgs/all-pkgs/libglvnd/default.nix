@@ -20,7 +20,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoreconfHook
-    perl
     python2
   ];
 

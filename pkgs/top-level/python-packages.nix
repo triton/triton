@@ -230,6 +230,8 @@ twisted = callPackage ../all-pkgs/twisted { };
 
 tzlocal = callPackage ../all-pkgs/tzlocal { };
 
+zope-component = callPackage ../all-pkgs/zope-component { };
+
 zope-event = callPackage ../all-pkgs/zope-event { };
 
 zope-interface = callPackage ../all-pkgs/zope-interface { };
@@ -6494,7 +6496,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       docutils
       virtualenv
       webtest
-      zope_component
+      zope-component
       zope-interface
     ];
 
@@ -7063,7 +7065,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       cryptacular
       hypatia
       zope_copy
-      zope_component
+      zope-component
       zope_deprecation
       statsd
       pyramid_zodbconn
@@ -20555,7 +20557,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     name = "zope.browserresource-4.0.1";
 
     propagatedBuildInputs = with self; [
-      zope_component zope_configuration zope_contenttype zope_i18n
+      zope-component zope_configuration zope_contenttype zope_i18n
       zope-interface zope_location zope_publisher zope_schema zope_traversing
     ];
 
@@ -20566,23 +20568,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "81bbe92c1f04725561470f89d73222c5";
     };
   };
-
-
-
-  zope_component = buildPythonPackage rec {
-    name = "zope.component-4.2.2";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/z/zope.component/${name}.tar.gz";
-      sha256 = "282c112b55dd8e3c869a3571f86767c150ab1284a9ace2bdec226c592acaf81a";
-    };
-
-    buildInputs = with self; [
-      zope-interface
-    ];
-
-  };
-
 
   zope_configuration = buildPythonPackage rec {
     name = "zope.configuration-4.0.3";
@@ -20694,7 +20679,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "045nnimmshibcq71yym2d8yrs6wzzhxq5gl7wxjnkpyjm5y0hfkm";
     };
 
-    propagatedBuildInputs = with self; [ pytz zope_component ];
+    propagatedBuildInputs = with self; [ pytz zope-component ];
 
     meta = {
         maintainers = with maintainers; [ goibhniu ];
@@ -20724,7 +20709,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0s5brphqzzz89cykg61gy7zcmz0ryq1jj2va7gh2n1b3cccllp95";
     };
 
-    propagatedBuildInputs = with self; [ zope_event zope_component ];
+    propagatedBuildInputs = with self; [ zope_event zope-component ];
 
     meta = {
         maintainers = with maintainers; [ goibhniu ];
@@ -20815,7 +20800,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      zope_component zope_configuration zope_i18nmessageid zope_schema
+      zope-component zope_configuration zope_i18nmessageid zope_schema
       zope_proxy zope_testrunner
     ];
 

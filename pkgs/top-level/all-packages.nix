@@ -10583,8 +10583,6 @@ xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #    inherit (gnome) libgnomecanvas glib;
 #  };
 #
-#  mopidy = callPackage ../applications/audio/mopidy { };
-#
 #  mopidy-gmusic = callPackage ../applications/audio/mopidy-gmusic { };
 #
 #  mopidy-spotify = callPackage ../applications/audio/mopidy-spotify { };

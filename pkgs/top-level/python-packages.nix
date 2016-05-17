@@ -179,6 +179,8 @@ jinja2 = callPackage ../all-pkgs/jinja2 { };
 
 markupsafe = callPackage ../all-pkgs/markupsafe { };
 
+mopidy = callPackage ../all-pkgs/mopidy { };
+
 mutagen = callPackage ../all-pkgs/mutagen { };
 
 pathlib = callPackage ../all-pkgs/pathlib { };

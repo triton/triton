@@ -19,8 +19,8 @@ let
   tarballUrls = major: minor: [
     "ftp://ftp.gnutls.org/gcrypt/gnutls/v${major}/gnutls-${major}.${minor}.tar.xz"
   ];
-  major = "3.4";
-  minor = "11";
+  major = "3.5";
+  minor = "0";
 in
 
 stdenv.mkDerivation rec {
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls major minor;
     allowHashOutput = false;
-    sha256 = "70ef9c9f95822d363036c6e6b5479750e5b7fc34f50e750c3464a98ec65a9ab8";
+    sha256 = "fc6b3b544d411e6ca54dd6167541770559070ea15e6868946cf56a621d58ae25";
   };
 
   # This fixes some broken parallel dependencies
@@ -66,11 +66,11 @@ stdenv.mkDerivation rec {
     # Gnupg depends on this so we have to decouple this fetch from the rest of the build.
     srcVerified = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.4" "11";
+      urls = tarballUrls "3.5" "0";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "1F42 4189 05D8 206A A754  CCDC 29EE 58B9 9686 5171";
       inherit (src) outputHashAlgo;
-      outputHash = "70ef9c9f95822d363036c6e6b5479750e5b7fc34f50e750c3464a98ec65a9ab8";
+      outputHash = "fc6b3b544d411e6ca54dd6167541770559070ea15e6868946cf56a621d58ae25";
     };
   };
 

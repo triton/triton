@@ -132,7 +132,13 @@ stdenv.mkDerivation {
   ];
 
   patches =
-    optionals (versionAtLeast kernel.version "4.6" && channel == "beta") [
+    optionals (versionAtLeast kernel.version "4.6" && channel == "long-lived") [
+      (fetchTritonPatch {
+        rev = "0a60fa7b87fd06185cc0369edd5212344c4da97d";
+        file = "nvidia-drivers/364.19-kernel-4.6.patch";
+        sha256 = "a40489322dcab39acbef8f30d9e0adb742b123f9da771e9a5fff1f493bd19335";
+      })
+    ] ++ optionals (versionAtLeast kernel.version "4.6" && channel == "beta") [
       (fetchTritonPatch {
         rev = "162b8425413b69580d8b145aab7ddbf41d7282a4";
         file = "nvidia-drivers/364.15-kernel-4.6.patch";

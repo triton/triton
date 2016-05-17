@@ -58,6 +58,8 @@ let
     pythonPackages = self;
   });
 
+  callPackageAlias = package: newAttrs: self."${package}".override newAttrs;
+
 in {
 
   inherit

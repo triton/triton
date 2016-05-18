@@ -621,9 +621,11 @@ ceph_git = callPackage ../all-pkgs/ceph {
   channel = "git";
 };
 
-check = callPackage ../all-pkgs/check { };
+cgit = callPackage ../all-pkgs/cgit { };
 
 cgmanager = callPackage ../all-pkgs/cgmanager { };
+
+check = callPackage ../all-pkgs/check { };
 
 chromaprint = callPackage ../all-pkgs/chromaprint { };
 

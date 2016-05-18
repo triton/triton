@@ -2,7 +2,7 @@
   urlToName = url: rev: let
     base = baseNameOf (stdenv.lib.removeSuffix "/" url);
 
-    matched = builtins.match "(.*).git" base;
+    matched = builtins.match "([^.]*)(.git)?" base;
 
     short = builtins.substring 0 7 rev;
 

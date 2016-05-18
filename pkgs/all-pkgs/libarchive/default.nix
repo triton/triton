@@ -36,6 +36,11 @@ stdenv.mkDerivation rec {
       file = "libarchive/CVE-2015-2304.patch";
       sha256 = "5a862586b4684d819add1df9d747bc47f9a4f2fecd069175bf00f6927c9633bf";
     })
+    (fetchTritonPatch {
+      rev = "182777a92c9373d4679204b64b72f7d2176345ec";
+      file = "libarchive/CVE-2016-1541.patch";
+      sha256 = "a64f1c3e5e42adaa7f8bf9beebe094e1ce0d0a7ddc073c48a761e74c4a630848";
+    })
   ];
 
   buildInputs = [

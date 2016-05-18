@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , bzip2
@@ -33,6 +34,7 @@ let
   inherit (stdenv)
     isLinux;
   inherit (stdenv.lib)
+    any
     concatStringsSep
     optional
     optionals
@@ -49,17 +51,25 @@ let
   versionMajor = channel;
   isPy2 = versionOlder versionMajor "3.0";
   isPy3 = versionAtLeast versionMajor "3.0";
-  verFlag =
-    ver:
-    flag:
-    if ver then
-      flag
+  ifPy2 = a: b:
+    if isPy2 then
+      a
     else
-      null;
+      b;
+  ifPy3 = a: b:
+    if isPy3 then
+      a
+    else
+      b;
 in
 
-assert channel != null;
-assert isPy3;
+# Supported channels
+assert any (n: n == channel) [
+  "2.7"
+  "3.3"
+  "3.4"
+  "3.5"
+];
 
 stdenv.mkDerivation rec {
   name = "python-${version}";
@@ -83,8 +93,9 @@ stdenv.mkDerivation rec {
     readline
     sqlite
     stdenv.cc.libc
-    xz
     zlib
+  ] ++ optionals isPy3 [
+    xz
   ];
 
   setupHook = stdenv.mkDerivation {
@@ -95,16 +106,42 @@ stdenv.mkDerivation rec {
     preferLocalBuild = true;
   };
 
+  patches = optionals isPy2 [
+    # Patch python to put zero timestamp into pyc
+    # if DETERMINISTIC_BUILD env var is set
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "python/python-2.7-deterministic-build.patch";
+      sha256 = "7b8ed591008f8f0dafb7f2c95d06404501c84223197fe138df75791f12a9dc24";
+    })
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "python/python-2.7-properly-detect-curses.patch";
+      sha256 = "c0d17df5f1c920699f68a1c87973d626ea8423a4881927b0ac7a20f88ceedcb4";
+    })
+    # Python recompiles a Python if the mtime stored *in* the
+    # pyc/pyo file differs from the mtime of the source file.  This
+    # doesn't work in Nix because Nix changes the mtime of files in
+    # the Nix store to 1.  So treat that as a special case.
+    (fetchTritonPatch {
+      rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
+      file = "python/python-2.x-nix-store-mtime.patch";
+      sha256 = "0869ba7b51b1c4b8f9779118a75ce34332a69f41909e5dfcd9305d2a9bcce638";
+    })
+  ];
+
   postPatch =
     /* Prevent setup.py from looking for include/lib
        directories in impure paths */ ''
     for i in /usr /sw /opt /pkg ; do
-      substituteInPlace ./setup.py \
-        --replace $i /no-such-path
+      sed -i setup.py \
+        -e "s,$i,/no-such-path,"
     done
   '';
 
-  preConfigure = ''
+  preConfigure =
+    /* Something here makes portions of the build magically work,
+       otherwise boost_python never builds */ ''
     configureFlagsArray+=(
       CPPFLAGS="${concatStringsSep " " (map (p: "-I${p}/include") buildInputs)}"
       LDFLAGS="${concatStringsSep " " (map (p: "-L${p}/lib") buildInputs)}"
@@ -118,27 +155,30 @@ stdenv.mkDerivation rec {
     "--enable-shared"
     #"--disable-profiling"
     "--disable-toolbox-glue"
-    "--enable-loadable-sqlite-extensions"
+    (ifPy3 "--enable-loadable-sqlite-extensions" null)
     "--enable-ipv6"
-    #"--enable-big-digits"
+    (ifPy2 "--enable-unicode=ucs4" null)
     #(wtFlag "gcc" (!stdenv.cc.isClang) null)
-    #"--with-hash-algorithm"
-    # Flag is not a boolean
-    (verFlag (versionAtLeast versionMajor "3.5")
+    #"--enable-big-digits" # py3
+    #"--with-hash-algorithm" # py3
+    (if (versionAtLeast versionMajor "3.5") then
+      # Flag is not a boolean
       (if stdenv.cc.isClang then
         "--with-address-sanitizer"
        else
-         null))
+         null)
+     else
+       null)
     "--with-system-expat"
     "--with-system-ffi"
-    #"--with-system-libmpdec"
+    #"--with-system-libmpdec" # py3
     #"--with-dbmliborder"
     #"--with-signal-module"
     "--with-threads"
     #"--with-doc-strings"
     #"--with-tsc"
     #"--with-pymalloc"
-    #"--without-valgrind"
+    "--without-valgrind"
     #"--with-fpectl"
     #"--with-libm"
     #"--with-libc"
@@ -146,82 +186,99 @@ stdenv.mkDerivation rec {
     #"--with-ensurepip"
   ];
 
+  # Should this be stdenv.cc.isGnu???
   NIX_LDFLAGS = "-lgcc_s";
 
   postInstall =
     /* Needed for some packages, especially packages that
        backport functionality to 2.x from 3.x */ ''
-    # needed for some packages, especially packages that backport functionality
-    # to 2.x from 3.x
     for item in $out/lib/python${versionMajor}/test/* ; do
-      if [[ "$item" != */test_support.py* ]]; then
+      if [[ "$item" != */test_support.py* ]] ; then
         rm -rvf "$item"
       else
         echo $item
       fi
     done
-  '' + ''
+  '' + optionalString isPy3 ''
     pushd $out/lib/pkgconfig
-    ln -sv python-*.pc python3.pc
+      ln -sv python-*.pc python3.pc
     popd
     set +x
   '' + ''
     touch $out/lib/python${versionMajor}/test/__init__.py
   '' + ''
     paxmark E $out/bin/python${versionMajor}
-  '' +
+  '' + optionalString isPy3
     /* Some programs look for libpython<major>.<minor>.so */ ''
-    if [[ ! -f "$out/lib/libpython${versionMajor}.so" ]] ; then
+    if [ ! -f "$out/lib/libpython${versionMajor}.so" ] ; then
       ln -sv \
         $out/lib/libpython3.so \
         $out/lib/libpython${versionMajor}.so
     fi
-  '' +
+  '' + optionalString isPy3
     /* Symlink include directory */ ''
-    if [[ ! -d "$out/include/python${versionMajor}" ]] ; then
+    if [ ! -d "$out/include/python${versionMajor}" ] ; then
       ln -sv \
         $out/include/python${versionMajor}m \
         $out/include/python${versionMajor}
     fi
+  '' + optionalString isPy2 ''
+    # TODO: reference reason for pdb symlink
+    ln -sv $out/lib/python${versionMajor}/pdb.py $out/bin/pdb
+    ln -sv $out/lib/python${versionMajor}/pdb.py $out/bin/pdb${versionMajor}
+    ln -sv $out/share/man/man1/{python2.7.1.gz,python.1.gz}
   '';
 
-  # TODO: move tests to checkPhase
-  preFixup = ''
+  preFixup = /* Simple test to make sure modules built */ ''
     echo "Testing modules"
     $out/bin/python${versionMajor} -c "import bz2"
     $out/bin/python${versionMajor} -c "import crypt"
     $out/bin/python${versionMajor} -c "import ctypes"
     $out/bin/python${versionMajor} -c "import curses"
     $out/bin/python${versionMajor} -c "from curses import panel"
-    $out/bin/python${versionMajor} -c "from dbm import gnu"
-    $out/bin/python${versionMajor} -c "import lzma"
     $out/bin/python${versionMajor} -c "import math"
     $out/bin/python${versionMajor} -c "import readline"
     $out/bin/python${versionMajor} -c "import sqlite3"
     $out/bin/python${versionMajor} -c "import ssl"
     $out/bin/python${versionMajor} -c "import zlib"
+  '' + optionalString isPy2 ''
+    $out/bin/python${versionMajor} -c "import gdbm"
+  '' + optionalString isPy3 ''
+    $out/bin/python${versionMajor} -c "from dbm import gnu"
+    $out/bin/python${versionMajor} -c "import lzma"
   '';
 
   postFixup = ''
     # The lines we are replacing dont include libpython so we parse it out
-    LIBS_WITH_PYTHON="$(pkg-config --libs --static $out/lib/pkgconfig/python-*.*.pc)"
+    LIBS_WITH_PYTHON="$(pkg-config --libs --static $out/lib/pkgconfig/python-${versionMajor}.pc)"
     LIBS="$(echo "$LIBS_WITH_PYTHON" | sed 's,[ ]*\(-L\|-l\)[^ ]*python[^ ]*[ ]*, ,g')"
-
-    sed -i "s@^LIBS=.*@LIBS= $LIBS@g" $out/lib/python*/config*/Makefile
+  '' + ''
+    sed -i $out/lib/python${versionMajor}/config${ifPy3 "-${versionMajor}m" ""}/Makefile \
+      -e "s@^LIBS=.*@LIBS= $LIBS@g"
 
     # We need to update _sysconfigdata.py{,o,c}
-    sed -i "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g" $out/lib/python*/_sysconfigdata.py
-    rm $out/lib/python*/__pycache__/_sysconfigdata*.pyc
-    $out/bin/python3 -c "import _sysconfigdata"
-    $out/bin/python3 -O -c "import _sysconfigdata"
-    $out/bin/python3 -OO -c "import _sysconfigdata"
-    $out/bin/python3 -OOO -c "import _sysconfigdata"
+    sed -i "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g" $out/lib/python${versionMajor}/_sysconfigdata.py
+  '' + optionalString isPy2 ''
+    rm $out/lib/python${versionMajor}/_sysconfigdata.py{o,c}
+  '' + optionalString isPy3 ''
+    rm $out/lib/python${versionMajor}/__pycache__/_sysconfigdata*.pyc
+  '' + ''
+    $out/bin/python${versionMajor} -c "import _sysconfigdata"
+    $out/bin/python${versionMajor} -O -c "import _sysconfigdata"
+    $out/bin/python${versionMajor} -OO -c "import _sysconfigdata"
+    $out/bin/python${versionMajor} -OOO -c "import _sysconfigdata"
 
-    sed --follow-symlinks -i "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@g" $out/bin/python*-config
+    sed --follow-symlinks -i $out/bin/python${versionMajor}-config \
+      -e "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@g"
   '';
+
+  # Used by python-2.7-deterministic-build.patch
+  DETERMINISTIC_BUILD = 1;
 
   passthru = rec {
     inherit
+      isPy2
+      isPy3
       version
       versionMajor;
 
@@ -235,8 +292,6 @@ stdenv.mkDerivation rec {
     libPrefix = "python${versionMajor}";
     executable = "python${versionMajor}";
     buildEnv = callPackage ../wrapper.nix { python = self; };
-    isPy2 = false;
-    isPy3 = true;
     sitePackages = "lib/${libPrefix}/site-packages";
     interpreter = "${self}/bin/${executable}";
   };

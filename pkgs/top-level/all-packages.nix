@@ -1799,7 +1799,7 @@ pulseaudio_lib = callPackageAlias "pulseaudio_full" {
   prefix = "lib";
 };
 
-python27 = callPackage ../all-pkgs/python/2.x.nix {
+python27 = callPackage ../all-pkgs/python {
   channel = "2.7";
   self = callPackageAlias "python27" { };
 };

@@ -4,15 +4,13 @@ addPythonPath() {
 
 toPythonPath() {
   local i
-  local p
   local paths
   local result
 
   paths="${1}"
 
   for i in "${paths}" ; do
-    p="${i}/lib/python@VERSION_MAJOR@/site-packages"
-    result="${result}${result:+:}${p}"
+    result="${result:+${result}:}${i}/lib/python@VERSION_MAJOR@/site-packages"
   done
 
   echo "${result}"

@@ -32,11 +32,11 @@
 
 /* NOTICE: ONLY versions 304+ are supported on Triton
  *
- * BETA:        361.xx,   xorg <=1.18.x, linux <=4.4
- * SHORTLIVED:  358.xx,   xorg <=1.18.x, linux <=4.4
- * LONGLIVED:   352.xx,   xorg <=1.18.x, linux <=4.4 (stable) <- default
- * LEGACY:      340.xx,   xorg <=1.18.x, linux <=4.4
- * LEGACY:      304.xx,   xorg <=1.18.x, linux <=4.4
+ * BETA:        364.xx,   xorg <=1.18.x, linux <=4.5
+ * SHORTLIVED:  364.xx,   xorg <=1.18.x, linux <=4.5
+ * LONGLIVED:   361.xx,   xorg <=1.18.x, linux <=4.5 (stable) <- default
+ * LEGACY:      340.xx,   xorg <=1.18.x, linux <=4.5
+ * LEGACY:      304.xx,   xorg <=1.18.x, linux <=4.5
  * UNSUPPORTED: 173.14.x, xorg <=1.15.x, linux <=3.13
  * UNSUPPORTED: 96.43.x,  xorg <=1.12.x, linux <=3.7
  * UNSUPPORTED: 71.86.x,  xorg <=?,      linux <=?

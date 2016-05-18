@@ -3,10 +3,6 @@
     versionMinor = "11";
     sha256 = "0iiz844riiznsyhhyy962710pz228gmhv8qi3yk4w4jhmx2lqawn";
   };
-  "3.2" = {
-    versionMinor = "6";
-    sha256 = "1p3vvvh3qw8avq959hdl6bq5d6r7mbhrnigqzgx6mllzh40va4hx";
-  };
   "3.3" = {
     versionMinor = "6";
     sha256 = "0gsxpgd5p4mwd01gw501vsyahncyw3h9836ypkr3y32kgazy89jj";

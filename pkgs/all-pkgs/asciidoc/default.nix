@@ -16,6 +16,9 @@ stdenv.mkDerivation rec {
     pythonPackages.python
   ];
 
+  parallelBuild = false;
+  parallelInstall = false;
+
   meta = with stdenv.lib; {
     description = "A plain text human readable/writable document format";
     homepage = http://asciidoc.org/;

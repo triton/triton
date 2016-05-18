@@ -668,6 +668,14 @@ let
     sha256 = "16ygj65wk30cspvmrd38s6m8qjmlsviiq8zsnnvkhfy5l0gk4c86";
   };
 
+  gateway = buildFromGitHub {
+    date = "2016-03-20";
+    rev = "32194371ec3f370166ee10a5ee079206532fdd74";
+    owner  = "jackpal";
+    repo   = "gateway";
+    sha256 = "1q7cqp276w0g6h5b5nap8kswgdaf5vb2fiavarmmh6jlbh81yqk0";
+  };
+
   gcloud-golang = buildFromGoogle {
     rev = "e0379989b50c627becfa169dfeacbbb899453e81";
     repo = "cloud";
@@ -702,6 +710,14 @@ let
     repo = "ginkgo";
     sha256 = "18hbr3m7yk7zdj94cs5izgkfd491j7if2760wlip6mhlsxmfhwrh";
     date = "2016-05-09";
+  };
+
+  glob = buildFromGitHub {
+    rev = "49571a1557cd20e6a2410adc6421f85b66c730b5";
+    owner = "gobwas";
+    repo = "glob";
+    sha256 = "0wc653wy5rc4c9lk4ixwaw4hi2k1m6r8ykn4z3fak0laqbgk254q";
+    date = "2016-05-14";
   };
 
   ugorji_go = buildFromGitHub {
@@ -856,12 +872,15 @@ let
   };
 
   gomega = buildFromGitHub {
-    rev = "815512bce8c889153a13104c9d9b2416153c1e02";
+    rev = "c73e51675ad2455a4515b6213eb7145eaade4824";
     owner  = "onsi";
     repo   = "gomega";
-    sha256 = "1hn9lszcl8z68qw0wj26iv0i27r5i6ifla8g8hssasl4g9ml4xhy";
-    buildInputs = [ protobuf ];
-    date = "2016-04-16";
+    sha256 = "1fiv3vslwmvrj0hmq6ywa6zc3285qvyadr69dcxscbnf9gfzkcfx";
+    propagatedBuildInputs = [
+      protobuf
+      yaml-v2
+    ];
+    date = "2016-05-16";
   };
 
   google-api-go-client = buildFromGitHub {
@@ -1193,6 +1212,17 @@ let
     repo   = "go-multipart-files";
     sha256 = "0fdzi6v6rshh172hzxf8v9qq3d36nw3gc7g7d79wj88pinnqf5by";
     date = "2015-09-03";
+  };
+
+  go-nat-pmp = buildFromGitHub {
+    rev = "e9d7ecafd6f4cd4f59fc45bb9a47466ce637d0fe";
+    owner  = "AudriusButkevicius";
+    repo   = "go-nat-pmp";
+    sha256 = "0q4l5imqyym6jjynm9fca0kmcac4ra7rw8s35scb0pdvxbkxzgjq";
+    date = "2016-05-16";
+    buildInputs = [
+      gateway
+    ];
   };
 
   go-ole = buildFromGitHub {
@@ -2136,18 +2166,24 @@ let
   };
 
   syncthing = buildFromGitHub rec {
-    rev = "v0.12.24";
+    rev = "v0.13.0";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "0s6m9qp66bvldchd8zsd7yl3cwzylh4l1s92lxw29dyi5na2sx77";
-    buildFlags = [ "-tags noupgrade,release" ];
+    sha256 = "1pz3kjpf8kb3p0ql5vv3d4rcc8nn2gbjqj4sq90l25zv46drk2fp";
+    buildFlags = [ "-tags noupgrade" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext
       goleveldb suture qart crypto net text rcrowley_go-metrics
+      go-nat-pmp glob gateway
     ];
     postPatch = ''
       # Mostly a cosmetic change
       sed -i 's,unknown-dev,${rev},g' cmd/syncthing/main.go
+    '';
+    preBuild = ''
+      pushd go/src/$goPackagePath
+      go run script/genassets.go gui > lib/auto/gui.files.go
+      popd
     '';
   };
 
@@ -2360,11 +2396,10 @@ let
   };
 
   xdr = buildFromGitHub {
-    rev = "8cb24337527a8f0f70bd43be68676a4390ca1c14";
-    date = "2016-01-28";
+    rev = "v2.0.0";
     owner  = "calmh";
     repo   = "xdr";
-    sha256 = "e72f1e0869388c5949d99d03dcb077b1e7edf0137c42eae8cc2b5c8e77dd92f2";
+    sha256 = "017k3y66fy2azbv9iymxsixpyda9czz8v3mhpn17750vlg842dsp";
   };
 
   xstrings = buildFromGitHub {

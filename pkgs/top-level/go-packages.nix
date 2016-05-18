@@ -110,11 +110,11 @@ let
   };
 
   crypto = buildFromGitHub {
-    rev = "b6789ab629056511030d652d851e7dc10c9e9c9e";
-    date = "2016-05-04";
+    rev = "5bcd134fee4dd1475da17714aac19c0aa0142e2f";
+    date = "2016-05-17";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "1a2jb9sx81x18fj6vf8awx7lwaqpxs1b7lvfw5srp6jhhvi0a2jv";
+    sha256 = "0dgqrrs1ns2m5rh10nih5pg8mir7qnx1dkda8lj01q5rgqp525js";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -152,11 +152,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "ef00b378c73f107bf44d5c9b69875255ce89b79a";
-    date = "2016-05-14";
+    rev = "3b993948b6f0e651ffb58ba135d8538a68b1cddf";
+    date = "2016-05-18";
     owner  = "golang";
     repo   = "net";
-    sha256 = "1fjqpfknz6vi83a5g17wfgxpr2wrdh70vqc68lkl1dkwws92pbrc";
+    sha256 = "04hlmijbmvcq3a9q254waa38hjipf0xlzx1f81qg4csgwd6vyjdq";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -1503,11 +1503,11 @@ let
   };
 
   ipfs = buildFromGitHub {
-    rev = "v0.4.1";
+    rev = "v0.4.2";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "02zqb0mlb87qb7gcl18xkichi8zwsjfbr8dzakz52qkam97s4dbs";
-    gxSha256 = "1mc21qzxxgqnsig1cwhvaay9ncingz5rl3fdc4yfkp805wsfl5sr";
+    sha256 = "0vpc8pisrv55n7g9yxz8lm7kn328ha3fqfsjsybjd9yxpv5wi7y9";
+    gxSha256 = "049f1fq0lld0bq91cs4m6fw784jnarzsnghkvvgdral335xj7wrn";
 
     subPackages = [
       "cmd/ipfs"
@@ -2166,10 +2166,10 @@ let
   };
 
   syncthing = buildFromGitHub rec {
-    rev = "v0.13.0";
+    rev = "v0.13.1";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "1pz3kjpf8kb3p0ql5vv3d4rcc8nn2gbjqj4sq90l25zv46drk2fp";
+    sha256 = "07sg3pc64cg1bz7683wfag1qa40i7qzxm3xk5idcrac58x4475ii";
     buildFlags = [ "-tags noupgrade" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext

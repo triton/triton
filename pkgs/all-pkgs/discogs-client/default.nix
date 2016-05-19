@@ -15,7 +15,7 @@ buildPythonPackage rec {
     sha256 = "9e32b5e45cff41af8025891c71aa3025b3e1895de59b37c11fd203a8af687414";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pythonPackages.oauthlib
     pythonPackages.requests2
     pythonPackages.six

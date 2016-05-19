@@ -8,7 +8,7 @@
 #, cairo
 , dbus
 , dbus-glib
-#, ffmpeg
+, ffmpeg
 , file
 , fontconfig
 , freetype
@@ -49,7 +49,7 @@
 , debugBuild ? false
 
 # If you want the resulting program to be called "Firefox" instead of
-# "nightly", enable this option.  However, the resulting binaries may
+# "nightly", enable this option.  However, the resulting binaries can
 # not be re-distributed without permission from the Mozilla Foundation,
 # see http://www.mozilla.org/foundation/trademarks/.
 , enableOfficialBranding ? false
@@ -88,10 +88,11 @@ stdenv.mkDerivation rec {
   buildInputs = [
     alsa-lib
     bzip2
+    /* See comment in configureFlags */
     #cairo
     dbus
     dbus-glib
-    #ffmpeg
+    ffmpeg
     file
     fontconfig
     freetype
@@ -123,6 +124,7 @@ stdenv.mkDerivation rec {
     pythonPackages.python
     pythonPackages.pysqlite
     sqlite
+    stdenv.libc
     unzip
     xorg.compositeproto
     xorg.fixesproto
@@ -154,7 +156,7 @@ stdenv.mkDerivation rec {
   configureFlags =
     optionals (!debugBuild) [
       "--enable-release"
-    ] ++ [
+    ] ++ optionals (xorg != null) [
       "--with-x"
     ] ++ optionals debugBuild [
       "--enable-profiling"
@@ -184,19 +186,27 @@ stdenv.mkDerivation rec {
       "--enable-official-branding"
     ] ++ [
       "--enable-default-toolkit=cairo-gtk3"
-      #"--without-x"
+    ] ++ optionals (xorg == null) [
+      "--without-x"
+    ] ++ [
       "--enable-startup-notification"
+      # TODO: update after organization name decision
+      #"--with-distribution-id=org.triton"
       "--disable-gconf"
       #"--enable-libproxy"
-      #"--enable-gnomeui" # ??? gnome2 ???
+      #"--enable-hardware-aec-ns"
       "--enable-raw"
-      #"--enable-eme"
+      "--disable-directshow"
+      "--disable-wmf"
+      "--enable-eme"
+      #"--enable-media-navigator"
+      #"--enable-omx-plugin"
       "--with-system-libvpx"
       "--enable-alsa"
       "--enable-gstreamer=1.0"
       "--disable-crashreporter"
-    ] ++ optionals (libjpeg.type == "turbo") [
-      "--enable-libjpeg-turbo"
+    ] ++ optionals (libjpeg.type == "normal") [
+      "--disable-libjpeg-turbo"
     ] ++ [
       #"--enable-tree-freetype"
       #"--enable-maintenance-service"
@@ -206,20 +216,24 @@ stdenv.mkDerivation rec {
       "--enable-system-sqlite"
       "--enable-safe-browsing"
       "--enable-url-classifier"
+      #"--with-gl-provider=ID"
       "--enable-optimize"
       "--enable-approximate-location"
       "--enable-jemalloc"
+      #"--enable-clang-plugin"
       "--enable-strip"
+      #"--disable-elf-hack"
       #"--enable-b2g-ril"
       #"--enable-b2g-bt"
       #"--enable-nfc"
       #"--enable-synth-pico"
       #"--enable-b2g-camera"
-      #"--enable-system-cairo"
       #"--enable-xterm-updates"
+      # TODO: add a wrapper hook to use XDG_CONFIG_HOME/mozilla instead of .mozilla
+      #"--with-user-appdir=XDG_CONFIG_HOME/mozilla"
       "--enable-skia"
     ] /*++ optionals (cairo != null) [
-      # From firefox-40, using system cairo causes firefox to crash
+      # Since firefox-40, using system cairo causes firefox to crash
       # frequently when it is doing background rendering in a tab.
       "--enable-system-cairo"
     ]*/ ++ [
@@ -227,16 +241,13 @@ stdenv.mkDerivation rec {
       #"--enable-necko-protocols={http,ftp,default,all,none}"
       "--disable-necko-wifi"
       "--with-system-icu"
+      "--with-intl-api"
     ];
 
   preConfigure = ''
     mkdir -v ../objdir
     cd ../objdir
-    if [ -e ../${name} ] ; then
-      configureScript=../${name}/configure
-    else
-      configureScript=../mozilla-*/configure
-    fi
+    configureScript=../${name}/configure
   '';
 
   preInstall =
@@ -259,7 +270,7 @@ stdenv.mkDerivation rec {
         --prefix XDG_DATA_DIRS : "$out/share" \
         --suffix XDG_DATA_DIRS : "$XDG_ICON_DIRS"
     '' +
-    /* Basic test */ ''
+    /* Simple test */ ''
       "$out/bin/firefox" --version
     '';
 
@@ -268,7 +279,6 @@ stdenv.mkDerivation rec {
       gtk2
       nspr
       version;
-    isFirefox3Like = true;
 
     srcVerified = fetchurl rec {
       failEarly = true;

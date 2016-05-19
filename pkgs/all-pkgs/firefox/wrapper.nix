@@ -13,10 +13,6 @@
 , libcanberra
 , ffmpeg
 , gdk-pixbuf
-, gstreamer
-, gst-plugins-base
-, gst-plugins-good
-, gst-libav
 #, jrePlugin
 , icedtea_web
 , trezor-bridge
@@ -31,7 +27,7 @@
 , shared_mime_info
 }:
 
-with {
+let
   inherit (stdenv.lib)
     attrByPath
     concatStrings
@@ -44,7 +40,7 @@ with {
     splitString
     substring
     toUpper;
-};
+in
 
 ## configurability of the wrapper itself
 browser :
@@ -82,9 +78,7 @@ let
       ++ optional (cfg.enableAdobeReader or false) adobe-reader
      );
   libs = [
-    ffmpeg
-    gstreamer
-    gst-plugins-base
+    #ffmpeg
   ] ++ optionals (cfg.enableQuakeLive or false) (with xorg; [
     stdenv.cc
     libX11
@@ -135,10 +129,6 @@ stdenv.mkDerivation {
     dconf
     gdk-pixbuf
     glib
-    gst-plugins-base
-    gst-plugins-good
-    gst-libav
-    gstreamer
   ];
 
   buildCommand = ''
@@ -160,7 +150,6 @@ stdenv.mkDerivation {
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
       --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share" \
-      --prefix GST_PLUGIN_PATH : "$GST_PLUGIN_PATH" \
       --prefix-contents PATH ':' "$(filterExisting $(addSuffix /extra-bin-path $plugins))" \
       --set MOZ_OBJDIR "$(ls -d "${browser}/lib/${browserName}"*)"
 

@@ -78,7 +78,7 @@ let
       ++ optional (cfg.enableAdobeReader or false) adobe-reader
      );
   libs = [
-    #ffmpeg
+    ffmpeg
   ] ++ optionals (cfg.enableQuakeLive or false) (with xorg; [
     stdenv.cc
     libX11

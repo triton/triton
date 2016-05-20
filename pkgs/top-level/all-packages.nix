@@ -1427,6 +1427,8 @@ libselinux = callPackage ../all-pkgs/libselinux { };
 
 libsepol = callPackage ../all-pkgs/libsepol { };
 
+libsmbios = callPackage ../all-pkgs/libsmbios { };
+
 libssh = callPackage ../all-pkgs/libssh { };
 
 libssh2 = callPackage ../all-pkgs/libssh2 { };
@@ -9005,8 +9007,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  libsass = callPackage ../development/libraries/libsass { };
 #
 #  libsexy = callPackage ../development/libraries/libsexy { };
-#
-#  libsmbios = callPackage ../os-specific/linux/libsmbios { };
 #
 #  lockdep = callPackage ../os-specific/linux/lockdep { };
 #

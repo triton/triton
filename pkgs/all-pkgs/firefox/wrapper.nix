@@ -143,6 +143,7 @@ stdenv.mkDerivation {
       --suffix-each LD_LIBRARY_PATH ':' "$libs" \
       --suffix-each GTK_PATH ':' "$gtk_modules" \
       --suffix-each LD_PRELOAD ':' "$(cat $(filterExisting $(addSuffix /extra-ld-preload $plugins)))" \
+      --set 'GTK_THEME' 'Adwaita:light' \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \

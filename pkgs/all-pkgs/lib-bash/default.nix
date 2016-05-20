@@ -11,8 +11,8 @@ stdenv.mkDerivation rec {
     #owner = "chlorm";
     #repo = "lib-bash";
     url = "https://github.com/chlorm/lib-bash.git";
-    rev = "a739d16d2f92c71d7f336efc51be900dc680f5a9";
-    sha256 = "07n4pvqf8vpm6smhx2snff5sc8yb5im39bibd0qdh48x48r6l07q";
+    rev = "65606f8fc95e6001981036d013cbd379e46716b3";
+    sha256 = "054y8hf4vnhfdhsw5qx6wm1k0fij8nlysaggydxzpkf6fryv9czi";
   };
 
   nativeBuildInputs = [

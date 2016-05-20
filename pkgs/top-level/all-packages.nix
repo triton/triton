@@ -1256,6 +1256,8 @@ libatomic_ops = callPackage ../all-pkgs/libatomic_ops {};
 
 libavc1394 = callPackage ../all-pkgs/libavc1394 { };
 
+libdc1394 = callPackage ../all-pkgs/libdc1394 { };
+
 libbluray = callPackage ../all-pkgs/libbluray { };
 
 libbsd = callPackage ../all-pkgs/libbsd { };
@@ -6856,8 +6858,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #
 #  libdbusmenu_qt = callPackage ../development/libraries/libdbusmenu-qt { };
 #
-  libdc1394 = callPackage ../development/libraries/libdc1394 { };
-
   libdiscid = callPackage ../development/libraries/libdiscid { };
 #
 #  libdivsufsort = callPackage ../development/libraries/libdivsufsort { };

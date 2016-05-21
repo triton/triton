@@ -1,17 +1,17 @@
-{stdenv, fetchurl, zlib, cmake}:
+{stdenv, fetchurl, zlib, cmake, ninja}:
 
 stdenv.mkDerivation rec {
-  name = "taglib-1.10";
+  name = "taglib-1.11";
 
   src = fetchurl {
-    url = "http://taglib.github.io/releases/${name}.tar.gz";
-    sha256 = "1alv6vp72p0x9i9yscmz2a71anjwqy53y9pbcbqxvc1c0i82vhr4";
+    url = "https://taglib.github.io/releases/${name}.tar.gz";
+    sha256 = "ed4cabb3d970ff9a30b2620071c2b054c4347f44fc63546dbe06f97980ece288";
   };
 
   cmakeFlags = "-DWITH_ASF=ON -DWITH_MP4=ON";
 
   buildInputs = [ zlib ];
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [ cmake ninja ];
 
   meta = {
     homepage = http://developer.kde.org/~wheeler/taglib.html;

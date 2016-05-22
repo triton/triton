@@ -152,11 +152,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "4d07e8a493e586d735e32ed147c5e64a3da7c230";
-    date = "2016-05-20";
+    rev = "0c607074acd38c5f23d1344dfe74c977464d1257";
+    date = "2016-05-21";
     owner  = "golang";
     repo   = "net";
-    sha256 = "1r6bgqwmrmn0kylfawwp9ncpbm0b6byx5ar525f7dp83dysbgmk8";
+    sha256 = "1y4wc0cw3p5lqm7i3zqw0pl1wc860w0biyg4zv98k2dhy1i9lnbg";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -1214,11 +1214,11 @@ let
   };
 
   go-nat-pmp = buildFromGitHub {
-    rev = "e9d7ecafd6f4cd4f59fc45bb9a47466ce637d0fe";
+    rev = "452c97607362b2ab5a7839b8d1704f0396b640ca";
     owner  = "AudriusButkevicius";
     repo   = "go-nat-pmp";
-    sha256 = "0q4l5imqyym6jjynm9fca0kmcac4ra7rw8s35scb0pdvxbkxzgjq";
-    date = "2016-05-16";
+    sha256 = "0jjwqvanxxs15nhnkdx0mybxnyqm37bbg6yy0jr80czv623rp2bk";
+    date = "2016-05-22";
     buildInputs = [
       gateway
     ];
@@ -2189,10 +2189,10 @@ let
   };
 
   syncthing = buildFromGitHub rec {
-    rev = "v0.13.1";
+    rev = "v0.13.2";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "07sg3pc64cg1bz7683wfag1qa40i7qzxm3xk5idcrac58x4475ii";
+    sha256 = "1x6fgb1d2ygalpgqizydhwsjy966n96l6w1p7m5w6mlxhn7qrck9";
     buildFlags = [ "-tags noupgrade" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext

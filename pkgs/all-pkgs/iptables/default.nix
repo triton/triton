@@ -40,6 +40,9 @@ stdenv.mkDerivation rec {
     "--enable-shared"
   ];
 
+  # Sometimes breaks building nft.c before xtables-config-parser.h
+  parallelBuild = false;
+
   meta = with stdenv.lib; {
     description = "A program to configure the Linux IP packet filtering ruleset";
     homepage = http://www.netfilter.org/projects/iptables/index.html;

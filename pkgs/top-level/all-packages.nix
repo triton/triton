@@ -2012,6 +2012,8 @@ tevent = callPackage ../all-pkgs/tevent { };
 
 texinfo = callPackage ../all-pkgs/texinfo { };
 
+thin-provisioning-tools = callPackage ../all-pkgs/thin-provisioning-tools { };
+
 tinc_1_0 = callPackage ../all-pkgs/tinc { channel = "1.0"; };
 tinc_1_1 = callPackage ../all-pkgs/tinc { channel = "1.1"; };
 

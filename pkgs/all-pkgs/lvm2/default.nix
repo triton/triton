@@ -4,6 +4,7 @@
 , coreutils
 , readline
 , systemd_lib
+, thin-provisioning-tools
 , util-linux_full
 , util-linux_lib
 }:
@@ -23,6 +24,13 @@ stdenv.mkDerivation rec {
     sha512 = "44ebf79ee90f371835d9525db09e98e439ca5a6fcec4bfe4cb790df4c11e32e6dc4abea6a60e2f4f5a5e85c635354f10cc4d5ad04bbbf21653a357ca581defac";
   };
 
+  buildInputs = [
+    readline
+    thin-provisioning-tools
+    systemd_lib
+    util-linux_lib
+  ];
+
   configureFlags = [
     "--enable-udev_rules"
     "--enable-udev_sync"
@@ -30,12 +38,6 @@ stdenv.mkDerivation rec {
     "--enable-applib"
     "--enable-cmdlib"
     "--enable-dmeventd"
-  ];
-
-  buildInputs = [
-    readline
-    systemd_lib
-    util-linux_lib
   ];
 
   preConfigure = ''

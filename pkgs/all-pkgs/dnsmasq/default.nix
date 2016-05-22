@@ -18,11 +18,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "dnsmasq-2.75";
+  name = "dnsmasq-2.76";
 
   src = fetchurl {
     url = "http://www.thekelleys.org.uk/dnsmasq/${name}.tar.xz";
-    sha256 = "1wa1d4if9q6k3hklv8xi06a59k3aqb7pik8rhi2l53i99hflw334";
+    allowHashOutput = false;
+    sha256 = "4b92698dee19ca0cb2a8f2e48f1d2dffd01a21eb15d1fbed4cf085630c8c9f96";
   };
 
   buildInputs = [
@@ -58,6 +59,15 @@ stdenv.mkDerivation rec {
     SystemdService=dnsmasq.service
     END
   '';
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "2693 22E7 D925 5916 E039  4DD6 28FC 869A 289B 82B7";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "An integrated DNS, DHCP and TFTP server for small networks";

@@ -20,20 +20,23 @@ let
   inherit (stdenv.lib)
     optionalString
     optionals;
-in
 
-let
   isFull = suffix == "full";
   nameSuffix = optionalString (suffix != "") "-${suffix}";
-in
 
+  tarballUrls = version: [
+    "https://curl.haxx.se/download/curl-${version}.tar.bz2"
+  ];
+
+  version = "7.49.0";
+in
 stdenv.mkDerivation rec {
   name = "curl${nameSuffix}-${version}";
-  version = "7.48.0";
 
   src = fetchurl {
-    url = "https://curl.haxx.se/download/curl-${version}.tar.bz2";
-    sha256 = "864e7819210b586d42c674a1fdd577ce75a78b3dda64c63565abe5aefd72c753";
+    urls = tarballUrls version;
+    allowHashOutput = false;
+    sha256 = "14f44ed7b5207fea769ddb2c31bd9e720d37312e1c02315def67923a4a636078";
   };
 
   nativeBuildInputs = [
@@ -103,6 +106,17 @@ stdenv.mkDerivation rec {
     "--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt"
     "--with-ca-fallback"
   ];
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "7.49.0";
+      pgpsigUrls = map (n: "${n}.asc") urls;
+      pgpKeyFingerprint = "27ED EAF2 2F3A BCEB 50DB  9A12 5CC9 08FD B71E 12C2";
+      inherit (src) outputHashAlgo;
+      outputHash = "14f44ed7b5207fea769ddb2c31bd9e720d37312e1c02315def67923a4a636078";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A command line tool for transferring files with URL syntax";

@@ -1097,6 +1097,8 @@ hadoop = callPackage ../all-pkgs/hadoop { };
 
 harfbuzz = callPackage ../all-pkgs/harfbuzz { };
 
+hdparm = callPackage ../all-pkgs/hdparm { };
+
 help2man = callPackage ../all-pkgs/help2man { };
 
 hexchat = callPackage ../all-pkgs/hexchat { };
@@ -8728,13 +8730,9 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  gfxtablet = callPackage ../os-specific/linux/gfxtablet {};
 #
-  gpm-ncurses = gpm.override { inherit ncurses; };
-
 #  gradm = callPackage ../os-specific/linux/gradm {
 #    flex = flex_2_5_35;
 #  };
-#
-  hdparm = callPackage ../os-specific/linux/hdparm { };
 #
 #  hibernate = callPackage ../os-specific/linux/hibernate { };
 #

@@ -3,13 +3,20 @@
 , fetchurl
 }:
 
+let
+  version = "4.2";
+
+  tarballUrls = version: [
+    "mirror://gnu/make/make-${version}.tar.bz2"
+  ];
+in
 stdenv.mkDerivation rec {
   name = "gnumake-${version}";
-  version = "4.1";
 
   src = fetchurl {
-    url = "mirror://gnu/make/make-${version}.tar.bz2";
-    sha256 = "19gwwhik3wdwn0r42b7xcihkbxvjl9r2bdal8nifc3k5i4rn3iqb";
+    urls = tarballUrls version;
+    allowHashOutput = false;
+    sha256 = "4e5ce3b62fe5d75ff8db92b7f6df91e476d10c3aceebf1639796dc5bfece655f";
   };
 
   patchFlags = [
@@ -34,12 +41,23 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "4.2";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "3D25 54F0 A153 38AB 9AF1  BB9D 96B0 4715 6338 B6D4";
+      inherit (src) outputHashAlgo;
+      outputHash = "4e5ce3b62fe5d75ff8db92b7f6df91e476d10c3aceebf1639796dc5bfece655f";
+    };
+  };
+
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/make/;
     description = "A tool to control the generation of non-source files from sources";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [
-      simons
+      wkennington
     ];
     platforms = with platforms;
       i686-linux

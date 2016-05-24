@@ -94,6 +94,9 @@ stdenv.mkDerivation rec {
 
   dontAddPrefix = true;
 
+  # This is broken with make 4.2 and perl 5.22.1
+  parallelInstall = false;
+
   meta = with stdenv.lib; {
     description = "The Perl 5 programmming language";
     homepage = https://www.perl.org/;

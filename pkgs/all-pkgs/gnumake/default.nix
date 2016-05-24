@@ -28,13 +28,6 @@ stdenv.mkDerivation rec {
       file = "gnumake/impure-dirs.patch";
       sha256 = "64efcd56eb445568f2e83d3c4535f645750a3f48ae04999ca4852e263819d416";
     })
-
-    # Don't segfault if we can't get a tty name.
-    /*(fetchTritonPatch {
-      rev = "0a60fa7b87fd06185cc0369edd5212344c4da97d";
-      file = "gnumake/no-tty-name.patch";
-      sha256 = "b666267d98eedea29e1aab41254763b78fe83fc008ccaf26d7e6d4ac966e4c84";
-    })*/
   ];
 
   passthru = {

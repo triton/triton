@@ -7,11 +7,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libwacom-0.18";
+  name = "libwacom-0.19";
 
   src = fetchurl {
     url = "mirror://sourceforge/linuxwacom/libwacom/${name}.tar.bz2";
-    sha256 = "08mplxbgmdvpk1azh35y7iqz96jaf8bdibjjm2nz5hhfs6la5gvi";
+    sha256 = "620d88cd85d118107c69db094c07284ead2342048cc0e9a5f16eb951a8b855ff";
   };
 
   postPatch =

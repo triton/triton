@@ -77,6 +77,9 @@ stdenv.mkDerivation rec {
     "sysconfdir=/etc"
   ];
 
+  # Parallel building fails with make 4.2 (git-2.8.3)
+  parallelBuild = false;
+
   passthru = {
     srcVerified = fetchurl rec {
       failEarly = true;

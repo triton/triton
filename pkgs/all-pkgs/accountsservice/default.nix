@@ -50,6 +50,12 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  # This is a fix that should be removed in 0.6.41
+  postPatch = ''
+    grep -q 'systemd-login' configure
+    sed -i 's,systemd-login,systemd,g' configure
+  '';
+
   configureFlags = [
     "--enable-admin-group=wheel"
     # Heuristics for guessing system vs human users in the range 500-minimum-uid

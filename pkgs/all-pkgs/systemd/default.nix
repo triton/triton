@@ -64,14 +64,14 @@ let
 in
 
 stdenv.mkDerivation rec {
-  version = "229";
+  version = "230";
   name = "${type}systemd-${version}";
 
   src = fetchFromGitHub {
-    owner = "NixOS";
+    owner = "triton";
     repo = "systemd";
-    rev = "4936f6e6c05162516a685ebd227b55816cf2b670";
-    sha256 = "2ff63b1773de959797320f8702b3c9ace282bd948b197c28dfad0998ca0df117";
+    rev = "dde1d87f36a792a54e880cb7b2a85d7cbd4bf481";
+    sha256 = "0353b7733467dc6e9d09a12e70410afd0f3e097e90da29cb00d14951f31d6fbf";
   };
 
   nativeBuildInputs = [

@@ -1326,10 +1326,10 @@ let
   }) // {inherit ;};
 
   libxcb = (mkDerivation "libxcb" {
-    name = "libxcb-1.11.1";
+    name = "libxcb-1.12";
     src = fetchurl {
-      url = mirror://xorg/individual/xcb/libxcb-1.11.1.tar.bz2;
-      sha256 = "0c4xyvdyx5adh8dzyhnrmvwwz24gri4z1czxmxqm63i0gmngs85p";
+      url = mirror://xorg/individual/xcb/libxcb-1.12.tar.bz2;
+      sha256 = "0nvv0la91cf8p5qqlb3r5xnmg1jn2wphn4fb5jfbr6byqsvv3psa";
     };
     nativeBuildInputs = [ python utilmacros ];
     buildInputs = [ libpthreadstubs libXau xcbproto libXdmcp ];
@@ -1810,10 +1810,10 @@ let
   }) // {inherit libxcb xcbutil xcbutilwm xcbutilimage ;};
 
   xcbproto = (mkDerivation "xcbproto" {
-    name = "xcb-proto-1.11";
+    name = "xcb-proto-1.12";
     src = fetchurl {
-      url = mirror://xorg/individual/xcb/xcb-proto-1.11.tar.bz2;
-      sha256 = "0bp3f53l9fy5x3mn1rkj1g81aiyzl90wacwvqdgy831aa3kfxb5l";
+      url = mirror://xorg/individual/xcb/xcb-proto-1.12.tar.bz2;
+      sha256 = "01j91946q8f34l1mbvmmgvyc393sm28ym4lxlacpiav4qsjan8jr";
     };
     nativeBuildInputs = [ python ];
     buildInputs = [ ];

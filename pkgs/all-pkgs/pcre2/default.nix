@@ -1,16 +1,10 @@
 { stdenv
 , fetchurl
 
-, pcregrep ? false
-  , bzip2 ? null
-  , zlib ? null
+, bzip2
+, libedit
+, zlib
 }:
-
-let
-  inherit (stdenv.lib)
-    enFlag
-    optionals;
-in
 
 stdenv.mkDerivation rec {
   name = "pcre2-10.21";
@@ -20,8 +14,9 @@ stdenv.mkDerivation rec {
     sha256 = "1q6lrj9b08l1q39vxipb0fi88x6ybvkr6439h8bjb9r8jd81fsn6";
   };
 
-  buildInputs = optionals pcregrep [
+  buildInputs = [
     bzip2
+    libedit
     zlib
   ];
 
@@ -31,32 +26,25 @@ stdenv.mkDerivation rec {
     "--enable-pcre2-32"
     "--disable-debug"
     "--enable-jit"
-    (enFlag "pcre2grep-jit" pcregrep null)
+    "--enable-pcre2grep-jit"
     "--enable-unicode"
     "--enable-stack-for-recursion"
-    (enFlag "pcre2grep-libz" (pcregrep && zlib != null) null)
-    (enFlag "pcre2grep-libbz2" (pcregrep && bzip2 != null) null)
-    "--disable-pcre2test-libedit"
+    "--enable-pcre2grep-libz"
+    "--enable-pcre2grep-libbz2"
+    "--enable-pcre2test-libedit"
     "--disable-pcre2test-libreadline"
     "--disable-valgrind"
     "--disable-coverage"
   ];
 
-  outputs = [
-    "out"
-    "doc"
-    "man"
-  ];
-
-  doCheck = true;
-
   meta = with stdenv.lib; {
     description = "Perl Compatible Regular Expressions";
     homepage = "http://www.pcre.org/";
     license = licenses.bsd3;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

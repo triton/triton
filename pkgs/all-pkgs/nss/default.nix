@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , nspr
@@ -8,22 +9,18 @@
 }:
 
 let
-  nssPEM = fetchurl {
-    url = http://dev.gentoo.org/~polynomial-c/mozilla/nss-3.15.4-pem-support-20140109.patch.xz;
-    sha256 = "10ibz6y0hknac15zr6dw4gv9nb5r5z9ym6gq18j3xqx7v7n3vpdw";
-  };
+  version = "3.24";
 
-  version = "3.23";
-  baseUrl = "https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src";
+  baseUrl = "https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases"
+    + "/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src";
 in
 stdenv.mkDerivation rec {
   name = "nss-${version}";
-  inherit version;
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     sha256Url = "${baseUrl}/SHA256SUMS";
-    sha256 = "94b383e31c9671e9dfcca81084a8a813817e8f05a57f54533509b318d26e11cf";
+    sha256 = "2f0841492f91cca473b73dec6cab9cf765a485e032d48d2e8ae7261e54c419ed";
   };
 
   buildInputs = [
@@ -34,13 +31,25 @@ stdenv.mkDerivation rec {
   ];
 
   prePatch = ''
-    xz -d < ${nssPEM} | patch -p1
     cd nss
   '';
 
   patches = [
-    ./add-pkgconfig.patch
-    ./fix-sharedlib-loading.patch
+    (fetchTritonPatch {
+      rev = "c19fd3176ad33fc5e0b6c283c31bb07bf189c44a";
+      file = "nss/pem-support.patch";
+      sha256 = "12d887d26d437e3cb6d257f6dbf002bb1ea5941554ab8cd650845f9e8688f4ea";
+    })
+    (fetchTritonPatch {
+      rev = "c19fd3176ad33fc5e0b6c283c31bb07bf189c44a";
+      file = "nss/fix-sharedlib-loading.patch";
+      sha256 = "8e18d51b76b1f0e9d074c73dce323976956ffc0fab38c8ae36a77bf95a220380";
+    })
+    (fetchTritonPatch {
+      rev = "c19fd3176ad33fc5e0b6c283c31bb07bf189c44a";
+      file = "nss/add-pkgconfig.patch";
+      sha256 = "a42cfde4a40b11028527bc8c960327685b231c14dd6e2e1539804ba8b3d4dd5a";
+    })
   ];
 
   preBuild = ''

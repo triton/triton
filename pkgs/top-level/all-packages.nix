@@ -1680,6 +1680,8 @@ nomad = pkgs.goPackages.nomad.bin // { outputs = [ "bin" ]; };
 
 npth = callPackage ../all-pkgs/npth { };
 
+nss = callPackage ../all-pkgs/nss { };
+
 nss_wrapper = callPackage ../all-pkgs/nss_wrapper { };
 
 ntfs-3g = callPackage ../all-pkgs/ntfs-3g { };
@@ -7389,8 +7391,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  non = callPackage ../applications/audio/non { };
 #
   nspr = callPackage ../development/libraries/nspr { };
-
-  nss = lowPrio (callPackage ../development/libraries/nss { });
 
 #  nssTools = callPackage ../development/libraries/nss {
 #    includeTools = true;

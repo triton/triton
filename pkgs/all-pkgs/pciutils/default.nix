@@ -7,7 +7,7 @@
 }:
 
 let
-  name = "pciutils-3.5.0"; # with database from 2016-01
+  name = "pciutils-3.5.1"; # with database from 2016-01
   
   tarballUrls = [
     "mirror://kernel/software/utils/pciutils/${name}.tar"
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     allowHashOutput = true;
-    sha256 = "0ee5e2b4727bede6873b12000ed7e10e3e1273b6fc414152148c694a3ca0ce85";
+    sha256 = "2bf3a4605a562fb6b8b7673bff85a474a5cf383ed7e4bd8886b4f0939013d42f";
   };
 
   nativeBuildInputs = [

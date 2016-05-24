@@ -18,6 +18,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${name}.tar.bz2";
+    multihash = "QmY6pAiR7LysRcYL2VNXuvbBnF32Pp4aCfaeqiEMaQToHX";
     sha256 = "1pvra19ljkr5ky35y2iywjnsckrs9ch2anrf5b0dc91hw8v2vq5r";
   };
 

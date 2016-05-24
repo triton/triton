@@ -13,11 +13,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "imlib2-1.4.8";
+  name = "imlib2-1.4.9";
 
   src = fetchurl {
     url = "mirror://sourceforge/enlightenment/${name}.tar.bz2";
-    sha256 = "89ab531ff882c23c8c68e3e941d1bb59dde7a3b2a7853b87ab8c7615da7cb077";
+    multihash = "QmW4JVeh256xcdS6MGvRjDQCYHRjCSEKFNBxj5n6GAbJCc";
+    sha256 = "7d2864972801823ce44ca8d5584a67a88f0e54e2bf47fa8cf4a514317b4f0021";
   };
 
   buildInputs = [

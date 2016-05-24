@@ -1,4 +1,10 @@
-{ stdenv, fetchurl, pkgconfig, libpipeline, db, groff }:
+{ stdenv
+, fetchurl
+, groff
+
+, db
+, libpipeline
+}:
  
 stdenv.mkDerivation rec {
   name = "man-db-2.7.5";
@@ -7,8 +13,15 @@ stdenv.mkDerivation rec {
     url = "mirror://savannah/man-db/${name}.tar.xz";
     sha256 = "056a3il7agfazac12yggcg4gf412yq34k065im0cpfxbcw6xskaw";
   };
+
+  nativeBuildInputs = [
+    groff
+  ];
   
-  buildInputs = [ pkgconfig libpipeline db groff ];
+  buildInputs = [
+    db
+    libpipeline
+  ];
 
   configureFlags = [
     "--disable-setuid"
@@ -23,20 +36,20 @@ stdenv.mkDerivation rec {
     "--with-tbl=${groff}/bin/tbl"
   ];
 
-  installFlags = [ "DESTDIR=\${out}" ];
-
-  postInstall = ''
-    mv $out/$out/* $out
-    DIR=$out/$out
-    while rmdir $DIR 2>/dev/null; do
-      DIR="$(dirname "$DIR")"
-    done
+  preInstall = ''
+    installFlagsArray+=(
+      "sysconfdir=$out/etc"
+    )
   '';
 
   meta = with stdenv.lib; {
     homepage = "http://man-db.nongnu.org";
     description = "An implementation of the standard Unix documentation system accessed using the man command";
     license = licenses.gpl2;
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

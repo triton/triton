@@ -1548,6 +1548,8 @@ m4 = callPackageAlias "gnum4" { };
 
 mac = callPackage ../all-pkgs/mac { };
 
+man-db = callPackage ../all-pkgs/man-db { };
+
 man-pages = callPackage ../all-pkgs/man-pages { };
 
 mercurial = callPackage ../all-pkgs/mercurial { };
@@ -3586,8 +3588,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   man = callPackage ../tools/misc/man { };
 
-  man_db = callPackage ../tools/misc/man-db { };
-#
 #  mawk = callPackage ../tools/text/mawk { };
 #
 #  mbox = callPackage ../tools/security/mbox { };

@@ -155,8 +155,6 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--sysconfdir=/etc"
 
-    "--enable-compat-libs"  # Needed for accountsservice but will be removed in >229
-
     "--disable-address-sanitizer"  # TODO: Fix, breaks lvm2 invocation
     "--disable-undefined-sanitizer"  # TODO: Fix, breaks lvm2 invocation
     "--enable-utmp"
@@ -164,6 +162,7 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
     "--disable-selinux"
     "--disable-apparmor"
+    # "--disable-adm-group"
     # "--disable-wheel-group"
     "--disable-smack"
 
@@ -177,6 +176,7 @@ stdenv.mkDerivation rec {
     "--enable-backlight"
     "--enable-rfkill"
     "--enable-logind"
+    # "--without-kill-user-processes"
     "--enable-machined"
     "--enable-importd"
     "--enable-hostnamed"
@@ -222,6 +222,7 @@ stdenv.mkDerivation rec {
     "--enable-libidn"
     "--disable-libiptc"
     "--disable-gnuefi"
+    "--disable-tpm"
     "--disable-manpages"
   ] else [
     "--with-python"
@@ -246,6 +247,7 @@ stdenv.mkDerivation rec {
     "--enable-libidn"
     "--enable-libiptc"
     "--enable-gnuefi"
+    "--enable-tpm"
     "--enable-manpages"
     "--with-efi-libdir=${gnu-efi}/lib"
     "--with-efi-ldsdir=${gnu-efi}/lib"

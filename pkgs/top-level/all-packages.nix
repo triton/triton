@@ -1017,6 +1017,8 @@ grilo = callPackage ../all-pkgs/grilo { };
 
 grilo-plugins = callPackage ../all-pkgs/grilo-plugins { };
 
+groff = callPackage ../all-pkgs/groff { };
+
 gsettings-desktop-schemas = callPackage ../all-pkgs/gsettings-desktop-schemas { };
 
 gsm = callPackage ../all-pkgs/gsm { };
@@ -3169,10 +3171,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    json_c = json-c-0-11; # won't configure with 0.12; others are vulnerable
 #  };
 #
-  groff = callPackage ../tools/text/groff {
-    ghostscript = null;
-  };
-
 #  grub = callPackage_i686 ../tools/misc/grub {
 #    buggyBiosCDSupport = config.grub.buggyBiosCDSupport or true;
 #  };

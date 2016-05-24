@@ -2,39 +2,44 @@
 , fetchTritonPatch
 , fetchurl
 }:
-
+ 
 let
-  version = "4.2";
+  version = "4.1";
 
   tarballUrls = version: [
     "mirror://gnu/make/make-${version}.tar.bz2"
   ];
 in
+
 stdenv.mkDerivation rec {
   name = "gnumake-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
     allowHashOutput = false;
-    sha256 = "4e5ce3b62fe5d75ff8db92b7f6df91e476d10c3aceebf1639796dc5bfece655f";
+    sha256 = "19gwwhik3wdwn0r42b7xcihkbxvjl9r2bdal8nifc3k5i4rn3iqb";
   };
+
+  patchFlags = [
+    "-p0"
+  ];
 
   patches = [
     # Purity: don't look for library dependencies (of the form `-lfoo') in /lib
     # and /usr/lib. It's a stupid feature anyway. Likewise, when searching for
     # included Makefiles, don't look in /usr/include and friends.
     (fetchTritonPatch {
-      rev = "6f9e7e9f66f12ecaa55dcae27460b37f1ee40de4";
+      rev = "ebb8c6e18d124886be220fe157b41382f77a8a36";
       file = "gnumake/impure-dirs.patch";
-      sha256 = "64efcd56eb445568f2e83d3c4535f645750a3f48ae04999ca4852e263819d416";
+      sha256 = "47e2b15f79a9d5b4fa54661e3e18ff24cfbb112f6061684fbb770541b66c5728";
     })
 
     # Don't segfault if we can't get a tty name.
-    /*(fetchTritonPatch {
-      rev = "0a60fa7b87fd06185cc0369edd5212344c4da97d";
+    (fetchTritonPatch {
+      rev = "ebb8c6e18d124886be220fe157b41382f77a8a36";
       file = "gnumake/no-tty-name.patch";
       sha256 = "b666267d98eedea29e1aab41254763b78fe83fc008ccaf26d7e6d4ac966e4c84";
-    })*/
+    })
   ];
 
   passthru = {

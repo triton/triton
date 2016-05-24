@@ -1403,6 +1403,8 @@ libpcap = callPackage ../all-pkgs/libpcap { };
 
 libpeas = callPackage ../all-pkgs/libpeas { };
 
+libpipeline = callPackage ../all-pkgs/libpipeline { };
+
 libpng = callPackage ../all-pkgs/libpng { };
 
 libproxy = callPackage ../all-pkgs/libproxy { };
@@ -7146,8 +7148,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libp11 = callPackage ../development/libraries/libp11 { };
 #
 #  libpar2 = callPackage ../development/libraries/libpar2 { };
-#
-  libpipeline = callPackage ../development/libraries/libpipeline { };
 #
 #  libpgf = callPackage ../development/libraries/libpgf { };
 #

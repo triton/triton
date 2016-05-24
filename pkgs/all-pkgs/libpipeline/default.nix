@@ -1,4 +1,6 @@
-{ stdenv, fetchurl }:
+{ stdenv
+, fetchurl
+}:
  
 stdenv.mkDerivation rec {
   name = "libpipeline-1.4.1";
@@ -11,7 +13,11 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     homepage = "http://libpipeline.nongnu.org";
     description = "C library for manipulating pipelines of subprocesses in a flexible and convenient way";
-    platforms = platforms.all;
     license = licenses.gpl3;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

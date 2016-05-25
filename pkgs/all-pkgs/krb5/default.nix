@@ -23,12 +23,12 @@ in
 
 stdenv.mkDerivation rec {
   name = "${type}krb5-${version}";
-  version = "1.14.1";
+  version = "1.14.2";
 
   src = fetchurl {
     url = "${meta.homepage}dist/krb5/1.14/krb5-${version}.tar.gz";
     allowHashOutput = false;
-    sha256 = "c8faa44574246f5bd0ce5a3dedc48c32db48a74cc4323949bf70f0ac2d6f1a99";
+    sha256 = "6bcad7e6778d1965e4ce4af21d2efdc15b274c5ce5c69031c58e4c954cda8b27";
   };
 
   prePatch= ''
@@ -87,13 +87,13 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = rec {
-    newVersion = "1.14.1";
+    newVersion = "1.14.2";
     srcVerified = fetchurl rec {
       failEarly = true;
       url = "${meta.homepage}dist/krb5/1.14/krb5-${newVersion}.tar.gz";
       pgpsigUrl = "${url}.asc";
       pgpKeyFingerprint = "2C73 2B1C 0DBE F678 AB3A  F606 A32F 17FD 0055 C305";
-      sha256 = "c8faa44574246f5bd0ce5a3dedc48c32db48a74cc4323949bf70f0ac2d6f1a99";
+      sha256 = "6bcad7e6778d1965e4ce4af21d2efdc15b274c5ce5c69031c58e4c954cda8b27";
     };
   };
 

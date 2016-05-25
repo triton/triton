@@ -2109,6 +2109,8 @@ xdg-utils = callPackage ../all-pkgs/xdg-utils { };
 
 xf86-input-mtrack = callPackage ../all-pkgs/xf86-input-mtrack { };
 
+xf86-input-wacom = callPackage ../all-pkgs/xf86-input-wacom { };
+
 xfsprogs = callPackage ../all-pkgs/xfsprogs { };
 xfsprogs_lib = pkgs.xfsprogs.lib;
 
@@ -9292,8 +9294,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  xf86_input_multitouch =
 #    callPackage ../os-specific/linux/xf86-input-multitouch { };
-#
-xf86_input_wacom = callPackage ../os-specific/linux/xf86-input-wacom { };
 #
 #  xf86_video_nested = callPackage ../os-specific/linux/xf86-video-nested { };
 #

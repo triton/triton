@@ -1250,6 +1250,8 @@ libaio = callPackage ../all-pkgs/libaio { };
 
 libarchive = callPackage ../all-pkgs/libarchive { };
 
+libasr = callPackage ../all-pkgs/libasr { };
+
 libass = callPackage ../all-pkgs/libass { };
 
 libassuan = callPackage ../all-pkgs/libassuan { };
@@ -6776,8 +6778,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #
 #  libappindicator-gtk2 = callPackage ../development/libraries/libappindicator { gtkVersion = "2"; };
 #  libappindicator-gtk3 = callPackage ../development/libraries/libappindicator { gtkVersion = "3"; };
-#
-#  libasr = callPackage ../development/libraries/libasr { };
 #
   libasyncns = callPackage ../development/libraries/libasyncns { };
 #

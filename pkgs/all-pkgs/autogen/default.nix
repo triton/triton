@@ -8,13 +8,20 @@
 , libxml2
 }:
 
+let
+  version = "5.18.10";
+
+  tarballUrls = version: [
+    "mirror://gnu/autogen/rel${version}/autogen-${version}.tar.xz"
+  ];
+in
 stdenv.mkDerivation rec {
   name = "autogen-${version}";
-  version = "5.18.7";
 
   src = fetchurl {
-    url = "mirror://gnu/autogen/autogen-${version}.tar.xz";
-    sha256 = "01d4m8ckww12sy50vgyxlnz83z9dxqpyqp153cscncc9w6jq19d7";
+    urls = tarballUrls version;
+    allowHashOutput = false;
+    sha256 = "4e248e02c50404ea5c5fc29027d26600f895a9eae7ea5ef851be2c8587abc148";
   };
 
   nativeBuildInputs = [
@@ -33,6 +40,17 @@ stdenv.mkDerivation rec {
   postPatch = ''
     sed -i "s,sed '.*-I.*',sed 's/\\\(^\\\| \\\)-I/\\\1/g',g" configure
   '';
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "5.18.10";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "44A0 88E2 95C3 A722 C450  590E C9EF 76DE B74E E762";
+      inherit (src) outputHashAlgo;
+      outputHash = "4e248e02c50404ea5c5fc29027d26600f895a9eae7ea5ef851be2c8587abc148";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Automated text and program generation tool";

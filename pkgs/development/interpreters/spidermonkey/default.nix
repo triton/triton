@@ -69,6 +69,9 @@ let
       done
     '';
 
+    parallelBuild = false;
+    parallelInstall = false;
+
     meta = with stdenv.lib; {
       description = "Mozilla's JavaScript engine written in C/C++";
       homepage = https://developer.mozilla.org/en/SpiderMonkey;

@@ -1712,6 +1712,8 @@ openntpd = callPackage ../all-pkgs/openntpd { };
 
 openobex = callPackage ../all-pkgs/openobex { };
 
+opensmtpd = callPackage ../all-pkgs/opensmtpd { };
+
 openssh = callPackage ../all-pkgs/openssh { };
 
 openssl = callPackage ../all-pkgs/openssl { };
@@ -8385,7 +8387,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  openresty = callPackage ../servers/http/openresty { };
 #
-#  opensmtpd = callPackage ../servers/mail/opensmtpd { };
 #  opensmtpd-extras = callPackage ../servers/mail/opensmtpd/extras.nix { };
 #
 #  openxpki = callPackage ../servers/openxpki { };

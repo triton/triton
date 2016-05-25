@@ -10,16 +10,19 @@
 }:
 
 let
-  sitePackages = "\${out}/lib/${python.libPrefix}/site-packages";
-in
+  version = "2.9.4";
 
+  tarballUrls = version: [
+    "http://xmlsoft.org/sources/libxml2-${version}.tar.gz"
+  ];
+in
 stdenv.mkDerivation rec {
   name = "libxml2-${version}";
-  version = "2.9.3";
 
   src = fetchurl {
-    url = "http://xmlsoft.org/sources/${name}.tar.gz";
-    sha256 = "0bd17g6znn2r98gzpjppsqjg33iraky4px923j3k8kdl8qgy7sad";
+    urls = tarballUrls version;
+    allowHashOutput = false;
+    sha256 = "ffb911191e509b966deb55de705387f14156e1a56b21824357cdf0053233633c";
   };
 
   buildInputs = [
@@ -35,7 +38,9 @@ stdenv.mkDerivation rec {
   ];
 
   preConfigure = ''
-    configureFlagsArray+=("--with-python-install-dir=$(toPythonPath "$out")")
+    configureFlagsArray+=(
+      "--with-python-install-dir=$(toPythonPath "$out")"
+    )
   '';
 
   configureFlags = [
@@ -46,6 +51,17 @@ stdenv.mkDerivation rec {
     "--with-lzma=${xz}"
   ];
 
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "2.9.4";
+      pgpsigUrls = map (n: "${n}.asc") urls;
+      pgpKeyFingerprint = "C744 15BA 7C9C 7F78 F02E  1DC3 4606 B8A5 DE95 BC1F";
+      inherit (src) outputHashAlgo;
+      outputHash = "ffb911191e509b966deb55de705387f14156e1a56b21824357cdf0053233633c";
+    };
+  };
+
   meta = with stdenv.lib; {
     homepage = http://xmlsoft.org/;
     description = "An XML parsing library for C";
@@ -54,7 +70,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

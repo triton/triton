@@ -3,14 +3,14 @@
 }:
 
 let
-  version = "4.1.1";
+  version = "4.2.0";
 in
 stdenv.mkDerivation rec {
   name = "jemalloc-${version}";
 
   src = fetchurl {
     url = "https://github.com/jemalloc/jemalloc/releases/download/${version}/${name}.tar.bz2";
-    sha256 = "c8f13b72b3aced936337a864fbe614a43e968f4adf64314b2a39c6ce43c9adae";
+    sha256 = "b216ddaeb901697fe38bd30ea02d7505a4b60e8979092009f95cfda860d46acb";
   };
 
   meta = with stdenv.lib; {
@@ -21,7 +21,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

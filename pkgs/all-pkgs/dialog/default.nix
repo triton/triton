@@ -35,6 +35,9 @@ stdenv.mkDerivation rec {
     "install-full"
   ];
 
+  # Parallel install is broken with make 4.2 (dialog-1.3-20160209)
+  parallelInstall = false;
+
   passthru = {
     srcVerified = fetchurl {
       failEarly = true;

@@ -133,6 +133,8 @@ stdenv.mkDerivation rec {
     install -m 0644 $TMPDIR/$out/share/man/man1/{dig,host,nslookup,nsupdate}.1 $out/share/man/man1
   '';
 
+  parallelInstall = false;
+
   passthru = {
     srcVerified = fetchurl {
       failEarly = true;

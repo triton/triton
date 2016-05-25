@@ -136,6 +136,8 @@ stdenv.mkDerivation rec {
     "--enable-auth-sasldb"
   ];
 
+  parallelBuild = false;
+
   meta = with stdenv.lib; {
     description = "Library for authentication to connection-based protocols";
     homepage = "http://cyrusimap.web.cmu.edu/";

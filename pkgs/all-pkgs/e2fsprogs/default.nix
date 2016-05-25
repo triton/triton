@@ -51,6 +51,10 @@ stdenv.mkDerivation rec {
     "install-libs"
   ];
 
+  # Both have problems with make 4.2
+  parallelBuild = false;
+  parallelInstall = false;
+
   meta = with stdenv.lib; {
     homepage = http://e2fsprogs.sourceforge.net/;
     description = "Tools for creating and checking ext2/ext3/ext4 filesystems";

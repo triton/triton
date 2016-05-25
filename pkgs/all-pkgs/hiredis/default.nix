@@ -1,23 +1,32 @@
-{ stdenv, fetchFromGitHub }:
+{ stdenv
+, fetchFromGitHub
+}:
 
+let
+  version = "0.13.3";
+in
 stdenv.mkDerivation rec {
   name = "hiredis-${version}";
-  version = "0.13.1";
 
   src = fetchFromGitHub {
     owner = "redis";
     repo = "hiredis";
     rev = "v${version}";
-    sha256 = "15rzq7n7z9h143smrnd34f9gh24swwal6r9z9xlxsl0jxabiv71l";
+    sha256 = "20bfce29847c95118ed3a7280e8537036d192cefbd5fca91235b6923dc331a5d";
   };
 
-  PREFIX = "\${out}";
+  preBuild = ''
+    makeFlagsArray+=("PREFIX=$out")
+  '';
 
   meta = with stdenv.lib; {
     homepage = https://github.com/redis/hiredis;
     description = "Minimalistic C client for Redis >= 1.2";
     license = licenses.bsd3;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

@@ -1111,6 +1111,8 @@ hicolor_icon_theme = callPackageAlias "hicolor-icon-theme" { };
 
 highlight = callPackage ../all-pkgs/highlight { };
 
+hiredis = callPackage ../all-pkgs/hiredis { };
+
 htop = callPackage ../all-pkgs/htop { };
 
 hunspell = callPackage ../all-pkgs/hunspell { };
@@ -6658,8 +6660,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  heyefi = haskellPackages.heyefi;
 #
 #  hidapi = callPackage ../development/libraries/hidapi { };
-#
-#  hiredis = callPackage ../development/libraries/hiredis { };
 #
 #  hivex = callPackage ../development/libraries/hivex {
 #    inherit (perlPackages) IOStringy;

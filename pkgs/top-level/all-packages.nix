@@ -1934,6 +1934,8 @@ rtorrent = callPackage ../all-pkgs/rtorrent { };
 
 ruby = callPackage ../all-pkgs/ruby { };
 
+rustc_bootstrap = lowPrio (callPackage ../all-pkgs/rustc/bootstrap.nix { });
+
 sakura = callPackage ../all-pkgs/sakura { };
 
 samba_full = callPackage ../all-pkgs/samba { };

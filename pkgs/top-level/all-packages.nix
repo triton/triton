@@ -1538,6 +1538,8 @@ lm-sensors = callPackage ../all-pkgs/lm-sensors { };
 
 lsof = callPackage ../all-pkgs/lsof { };
 
+luajit = callPackage ../all-pkgs/luajit { };
+
 lvm2 = callPackage ../all-pkgs/lvm2 { };
 
 lxc = callPackage ../all-pkgs/lxc { };
@@ -5686,8 +5688,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  lua5_expat = callPackage ../development/interpreters/lua-5/expat.nix {};
 #  lua5_sec = callPackage ../development/interpreters/lua-5/sec.nix { };
-#
-#  luajit = callPackage ../development/interpreters/luajit {};
 #
 #  luarocks = luaPackages.luarocks;
 #

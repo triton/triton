@@ -1,6 +1,7 @@
 { stdenv
 , cmake
-, fetchurl
+, fetchhg
+#, fetchurl
 , ninja
 , yasm
 
@@ -29,11 +30,17 @@ in
 assert (elem targetSystem platforms.linux) -> numactl != null;
 
 let
-  version = "1.9";
+  /*version = "1.9";
   src = fetchurl {
     url = "https://bitbucket.org/multicoreware/x265/downloads/" +
           "x265_${version}.tar.gz";
     sha256 = "1j0mbcf10aj6zi1nxql45f9817jd2ndcpd7x123sjmyr7q9m8iiy";
+  };*/
+  version = "2016-05-13";
+  src = fetchhg {
+    url = "https://bitbucket.org/multicoreware/x265";
+    rev = "4723933fdec920debefe606d50a9a312f7bc7f6b";
+    sha256 = "1x0ycpacskm5i4xhgrcygz6xxm3i50jwwicmcwvy16jcmfmf04a5";
   };
   cmakeFlagsAll = [
     (cmFlag "ENABLE_TESTS" false)

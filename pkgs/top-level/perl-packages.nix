@@ -10125,6 +10125,7 @@ let self = _self // overrides; _self = with self; {
       url = mirror://cpan/authors/id/R/RA/RAAB/SGMLSpm-1.1.tar.gz;
       sha256 = "1gdjf3mcz2bxir0l9iljxiz6qqqg3a9gg23y5wjg538w552r432m";
     };
+    parallelInstall = false;
   };
 
   SignalMask = buildPerlPackage {

@@ -5610,37 +5610,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  opam = callPackage ../development/tools/ocaml/opam { };
 #
-  rustcMaster = callPackage ../development/compilers/rustc/head.nix { };
-  rustc = callPackage ../development/compilers/rustc { };
-#
-  rustPlatform = pkgs.rustStable;
-#
-  rustStable = recurseIntoAttrs (pkgs.makeRustPlatform pkgs.cargo);
-  rustUnstable = recurseIntoAttrs (pkgs.makeRustPlatform pkgs.cargoUnstable);
-#
-#  # rust platform to build cargo itself (with cargoSnapshot)
-  rustCargoPlatform = pkgs.makeRustPlatform (pkgs.cargoSnapshot pkgs.rustc);
-#  rustUnstableCargoPlatform = pkgs.makeRustPlatform (pkgs.cargoSnapshot pkgs.rustcMaster);
-#
-  makeRustPlatform = cargo:
-    let
-      callPackage = pkgs.newScope self;
-
-      self = {
-        inherit cargo;
-
-        rustc = cargo.rustc;
-
-        rustRegistry = callPackage ./rust-packages.nix { };
-
-        buildRustPackage = callPackage ../build-support/rust {
-          inherit cargo;
-        };
-      };
-    in self;
-#
-#  rustfmt = callPackage ../development/tools/rust/rustfmt { };
-#
 #  sbclBootstrap = callPackage ../development/compilers/sbcl/bootstrap.nix {};
 #  sbcl = callPackage ../development/compilers/sbcl {};
 #
@@ -5880,20 +5849,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  };
 #
 #  byacc = callPackage ../development/tools/parsing/byacc { };
-#
-  cargo = callPackage ../development/tools/build-managers/cargo {
-    # cargo needs to be built with rustCargoPlatform, which uses cargoSnapshot
-    rustPlatform = pkgs.rustCargoPlatform;
-  };
-#
-#  cargoUnstable = callPackage ../development/tools/build-managers/cargo/head.nix {
-#    rustPlatform = rustUnstableCargoPlatform;
-#  };
-#
-  cargoSnapshot = rustc:
-    callPackage ../development/tools/build-managers/cargo/snapshot.nix {
-      inherit rustc;
-    };
 #
 #  casperjs = callPackage ../development/tools/casperjs { };
 #
@@ -6184,8 +6139,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  premake4 = callPackage ../development/tools/misc/premake { };
 #
 #  premake = premake4;
-#
-#  racerRust = callPackage ../development/tools/rust/racer { };
 #
 #  radare = callPackage ../development/tools/analysis/radare {
 #    inherit (gnome) vte;

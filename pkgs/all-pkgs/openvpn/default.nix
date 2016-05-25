@@ -25,6 +25,11 @@ stdenv.mkDerivation rec {
     systemd_lib
   ];
 
+  # This fix should be removed in 2.3.11+
+  postPatch = ''
+    sed -i 's,systemd-daemon,systemd,g' configure
+  '';
+
   configureFlags = [
     "--enable-x509-alt-username"
     "--enable-iproute2"

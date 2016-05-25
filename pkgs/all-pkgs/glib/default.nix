@@ -146,7 +146,7 @@ stdenv.mkDerivation rec {
     "--disable-included-printf"
     "--disable-selinux"
     "--disable-fam"
-    (enFlag "attr" (attr != null) null)
+    (enFlag "xattr" (attr != null) null)
     (enFlag "libelf" (libelf != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"

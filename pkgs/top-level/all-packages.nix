@@ -1934,7 +1934,17 @@ rtorrent = callPackage ../all-pkgs/rtorrent { };
 
 ruby = callPackage ../all-pkgs/ruby { };
 
+rustc = hiPrio (callPackage ../all-pkgs/rustc { });
+
 rustc_bootstrap = lowPrio (callPackage ../all-pkgs/rustc/bootstrap.nix { });
+
+rustc_beta = callPackageAlias "rustc" {
+  channel = "beta";
+};
+
+rustc_dev = callPackageAlias "rustc" {
+  channel = "dev";
+};
 
 sakura = callPackage ../all-pkgs/sakura { };
 

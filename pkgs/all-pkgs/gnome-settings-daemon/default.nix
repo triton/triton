@@ -41,7 +41,7 @@
 , systemd_lib
 , upower
 , wayland
-, xf86_input_wacom
+, xf86-input-wacom
 , xorg
 }:
 
@@ -106,7 +106,7 @@ stdenv.mkDerivation rec {
     systemd_lib
     upower
     wayland
-    xf86_input_wacom
+    xf86-input-wacom
     xorg.inputproto
     xorg.libX11
     xorg.libXext

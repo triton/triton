@@ -1,4 +1,9 @@
-{ stdenv, fetchFromGitHub, sqlite, kyotocabinet }:
+{ stdenv
+, fetchFromGitHub
+
+, kyotocabinet
+, sqlite
+}:
 
 stdenv.mkDerivation rec {
   name = "leveldb-${version}";
@@ -11,7 +16,10 @@ stdenv.mkDerivation rec {
     sha256 = "6cce5114ed37a80ed6da3e9b580879d805eabb6e1fc101c2015f13469308469a";
   };
 
-  buildInputs = [ sqlite kyotocabinet ];
+  buildInputs = [
+    kyotocabinet
+    sqlite
+  ];
 
   buildPhase = ''
     make all db_bench{,_sqlite3,_tree_db} leveldbutil libmemenv.a
@@ -30,7 +38,10 @@ stdenv.mkDerivation rec {
     homepage = "https://code.google.com/p/leveldb/";
     description = "Fast and lightweight key/value database library by Google";
     license = licenses.bsd3;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

@@ -1242,6 +1242,8 @@ lego = pkgs.goPackages.lego.bin // { outputs = [ "bin" ]; };
 
 leptonica = callPackage ../all-pkgs/leptonica { };
 
+leveldb = callPackage ../all-pkgs/leveldb { };
+
 lftp = callPackage ../all-pkgs/lftp { };
 
 lib-bash = callPackage ../all-pkgs/lib-bash { };
@@ -6765,8 +6767,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  lensfun = callPackage ../development/libraries/lensfun {};
 #
   lesstif = callPackage ../development/libraries/lesstif { };
-
-  leveldb = callPackage ../development/libraries/leveldb { };
 
 #  levmar = callPackage ../development/libraries/levmar { };
 

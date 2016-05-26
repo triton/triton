@@ -6,21 +6,21 @@
 , libxml2
 }:
 
+let
+  tarballUrls = version: [
+    "http://xmlsoft.org/sources/libxslt-${version}.tar.gz"
+  ];
+
+  version = "1.1.29";
+in
 stdenv.mkDerivation rec {
-  name = "libxslt-1.1.28";
+  name = "libxslt-${version}";
 
   src = fetchurl {
-    url = "http://xmlsoft.org/sources/${name}.tar.gz";
-    sha256 = "13029baw9kkyjgr7q3jccw2mz38amq7mmpr5p3bh775qawd1bisz";
+    urls = tarballUrls version;
+    allowHashOutput = false;
+    sha256 = "b5976e3857837e7617b29f2249ebb5eeac34e249208d31f1fbf7a6ba7a4090ce";
   };
-
-  patches = [
-    (fetchpatch {
-      name = "CVE-2015-7995.patch";
-      url = "http://git.gnome.org/browse/libxslt/patch/?id=7ca19df892ca22";
-      sha256 = "1xzg0q94dzbih9nvqp7g9ihz0a3qb0w23l1158m360z9smbi8zbd";
-    })
-  ];
 
   buildInputs = [
     libxml2
@@ -39,6 +39,17 @@ stdenv.mkDerivation rec {
     "--without-debugger"
   ];
 
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "1.1.29";
+      pgpsigUrls = map (n: "${n}.asc") urls;
+      pgpKeyFingerprint = "C744 15BA 7C9C 7F78 F02E  1DC3 4606 B8A5 DE95 BC1F";
+      inherit (src) outputHashAlgo;
+      outputHash = "b5976e3857837e7617b29f2249ebb5eeac34e249208d31f1fbf7a6ba7a4090ce";
+    };
+  };
+
   meta = with stdenv.lib; {
     homepage = http://xmlsoft.org/XSLT/;
     description = "A C library and tools to do XSL transformations";
@@ -47,7 +58,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

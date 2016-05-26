@@ -2105,6 +2105,8 @@ webkitgtk = callPackage ../all-pkgs/webkitgtk { };
 
 which = callPackage ../all-pkgs/which { };
 
+wiredtiger = callPackage ../all-pkgs/wiredtiger { };
+
 wxGTK = callPackage ../all-pkgs/wxGTK { };
 
 x264 = callPackage ../all-pkgs/x264 { };
@@ -7934,8 +7936,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   webrtc-audio-processing = callPackage ../development/libraries/webrtc-audio-processing { };
 #
 #  wildmidi = callPackage ../development/libraries/wildmidi { };
-#
-#  wiredtiger = callPackage ../development/libraries/wiredtiger { };
 #
 #  wxGTK28 = callPackage ../development/libraries/wxGTK-2.8 { };
 #

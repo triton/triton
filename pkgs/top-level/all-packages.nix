@@ -1473,6 +1473,8 @@ libunique_1 = callPackage ../all-pkgs/libunique/1.x.nix { };
 libunique_3 = callPackage ../all-pkgs/libunique/3.x.nix { };
 libunique = callPackageAlias "libunique_3" { };
 
+libunwind = callPackage ../all-pkgs/libunwind { };
+
 liburcu = callPackage ../all-pkgs/liburcu { };
 
 libusb-compat = callPackage ../all-pkgs/libusb-compat { };
@@ -7228,8 +7230,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   libungif = callPackage ../development/libraries/giflib/libungif.nix { };
 #
 #  libunibreak = callPackage ../development/libraries/libunibreak { };
-#
-  libunwind = callPackage ../development/libraries/libunwind { };
 #
   v4l_lib = lowPrio (callPackageAlias "v4l_utils" {
     alsa-lib = null;

@@ -31,12 +31,12 @@ let
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
-  version = "9.10.4";
+  version = "9.10.4-P1";
 
   src = fetchurl {
     url = "http://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
     allowHashOutput = false;
-    sha256 = "f8d412b38d5ac390275b943bde69f4608f67862a45487ec854b30e4448fcb056";
+    sha256 = "7c3b7d1afe48a6bbead8f11f6971fb09eb57fa257dc32a088fcc20a0218131a2";
   };
 
   nativeBuildInputs = [

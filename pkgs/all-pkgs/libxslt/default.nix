@@ -1,5 +1,4 @@
 { stdenv
-, fetchpatch
 , fetchurl
 
 , findXMLCatalogs

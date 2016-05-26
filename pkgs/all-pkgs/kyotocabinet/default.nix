@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://fallabs.com/kyotocabinet/pkg/${name}.tar.gz";
+    multihash = "QmaCHam4Ct9TJMYtq56ZAKeWYhxTTn9NuBC2pKyQZdjyaA";
     sha256 = "0g6js20x7vnpq4p8ghbw3mh9wpqksya9vwhzdx6dnlf354zjsal1";
   };
 

@@ -13,6 +13,8 @@ stdenv.mkDerivation rec {
     sha256 = "b216ddaeb901697fe38bd30ea02d7505a4b60e8979092009f95cfda860d46acb";
   };
 
+  dontDisableStatic = true;
+
   meta = with stdenv.lib; {
     homepage = http://www.canonware.com/jemalloc/index.html;
     description = "General purpose malloc(3) implementation";

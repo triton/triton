@@ -1750,6 +1750,8 @@ parallel = callPackage ../all-pkgs/parallel { };
 
 patchelf = callPackage ../all-pkgs/patchelf { };
 
+patchutils = callPackage ../all-pkgs/patchutils { };
+
 pavucontrol = callPackage ../all-pkgs/pavucontrol { };
 
 pciutils = callPackage ../all-pkgs/pciutils { };
@@ -3927,8 +3929,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  par2cmdline = callPackage ../tools/networking/par2cmdline { };
 #
 #  parcellite = callPackage ../tools/misc/parcellite { };
-#
-  patchutils = callPackage ../tools/text/patchutils { };
 #
   parted = callPackage ../tools/misc/parted { hurd = null; };
 #

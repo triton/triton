@@ -19,6 +19,8 @@ stdenv.mkDerivation rec {
     ln -sv "$out/lib/"libffi*/include $out/include
   '';
 
+  dontDisableStatic = true;
+
   meta = with stdenv.lib; {
     description = "A foreign function call interface library";
     homepage = http://sourceware.org/libffi/;
@@ -28,7 +30,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

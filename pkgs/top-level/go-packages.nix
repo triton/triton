@@ -681,7 +681,7 @@ let
   gcloud-golang = buildFromGoogle {
     rev = "4da660f59adf463f364fca03a6f8422758101a84";
     repo = "cloud";
-    sha256 = "0ws6ir80fl1z2l9vzd1q9zigvsf4h5xvb14zammwpk8kvr34cljn";
+    sha256 = "7f7fa8843ae98fc5148d3251c38b32188bea82fd0dd8d39b4bbc9a5d238ddeab";
     propagatedBuildInputs = [ net oauth2 protobuf google-api-go-client grpc ];
     excludedPackages = "oauth2";
     meta.hydraPlatforms = [ ];

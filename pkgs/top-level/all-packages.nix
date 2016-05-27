@@ -7677,34 +7677,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   schroedinger = callPackage ../development/libraries/schroedinger { };
 
-  SDL = callPackage ../development/libraries/SDL { };
-#
-#  SDL_gfx = callPackage ../development/libraries/SDL_gfx { };
-#
-  SDL_image = callPackage ../development/libraries/SDL_image { };
-#
-#  SDL_mixer = callPackage ../development/libraries/SDL_mixer { };
-#
-#  SDL_net = callPackage ../development/libraries/SDL_net { };
-#
-#  SDL_sound = callPackage ../development/libraries/SDL_sound { };
-#
-#  SDL_stretch= callPackage ../development/libraries/SDL_stretch { };
-#
-#  SDL_ttf = callPackage ../development/libraries/SDL_ttf { };
-#
-  SDL2 = callPackage ../development/libraries/SDL2 { };
-#
-#  SDL2_image = callPackage ../development/libraries/SDL2_image { };
-#
-#  SDL2_mixer = callPackage ../development/libraries/SDL2_mixer { };
-#
-#  SDL2_net = callPackage ../development/libraries/SDL2_net { };
-#
-#  SDL2_gfx = callPackage ../development/libraries/SDL2_gfx { };
-#
-#  SDL2_ttf = callPackage ../development/libraries/SDL2_ttf { };
-#
 #  sblim-sfcc = callPackage ../development/libraries/sblim-sfcc {};
 #
 #  serd = callPackage ../development/libraries/serd {};

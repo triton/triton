@@ -5,14 +5,14 @@
 let
   sources = {
     "${stdenv.lib.head stdenv.lib.platforms.x86_64-linux}" = {
-      sha1 = "d29b7607d13d64078b6324aec82926fb493f59ba";
-      sha256 = "8deb8b687cb7d89ea943745c16c1061225fcbb5c64c0c121cdd1cb68673e683e";
+      sha1 = "1273b6b6aed421c9e40c59f366d0df6092ec0397";
+      sha256 = "a8ca657d78162a9f0a69a1ec8b0460e97259cdf2e6353ee256ae206876c9637e";
       platform = "linux-x86_64";
     };
   };
 
-  date = "2016-02-17";
-  rev = "4d3eebf";
+  date = "2016-03-18";
+  rev = "235d774";
   
   inherit (sources."${stdenv.targetSystem}")
     platform
@@ -20,7 +20,7 @@ let
     sha256;
 in
 stdenv.mkDerivation {
-  name = "rustc-bootstrap-1.8.0";
+  name = "rustc-bootstrap-${date}";
   
   src = fetchurl {
     url = "https://static.rust-lang.org/stage0-snapshots/rust-stage0-${date}-${rev}-${platform}-${sha1}.tar.bz2";

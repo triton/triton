@@ -1,40 +1,46 @@
 { stdenv
 , fetchurl
+, makeWrapper
+
 , rustc
+, zlib
 }:
 
 let
   sources = {
     "${stdenv.lib.head stdenv.lib.platforms.x86_64-linux}" = {
-      sha256 = "33ff44672b731fc71145974ce84194a1a9bafe6da3a74fd1e7543f12467f8894";
+      sha256 = "0655713cacab054e8e5a33e742081eebec8531a8c77d28a4294e6496123e8ab1";
       platform = "x86_64-unknown-linux-gnu";
     };
   };
 
-  version = "1.15.1";
-  
+  version = "0.16.0";
+
   inherit (sources."${stdenv.targetSystem}")
     platform
     sha256;
 in
 stdenv.mkDerivation rec {
-  name = "rustc-bootstrap-${version}";
-  
+  name = "cargo-bootstrap-${version}";
+
   src = fetchurl {
-    url = "https://static.rust-lang.org/dist/rustc-${version}-${platform}.tar.gz";
+    url = "https://static.rust-lang.org/dist/cargo-${version}-${platform}.tar.gz";
     hashOutput = false;
     inherit sha256;
   };
 
+  nativeBuildInputs = [
+    makeWrapper
+  ];
+
   installPhase = ''
     mkdir -p "$out"
-    cp -r rustc/* "$out"
-    FILES=($(find $out/{bin,lib} -type f))
-    for file in "''${FILES[@]}"; do
-      echo "Patching $file" >&2
-      patchelf --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" "$file" || true
-      patchelf --set-rpath "$out/lib:${stdenv.cc.cc}/lib" "$file" || true
-    done
+    cp -r cargo/bin "$out/bin"
+    patchelf --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" --set-rpath "${stdenv.cc.cc}/lib:${zlib}/lib" $out/bin/*
+    wrapProgram $out/bin/cargo --prefix PATH : "${rustc}/bin"
+
+    # Check that we can launch cargo
+    $out/bin/cargo --help
   '';
 
   passthru = {

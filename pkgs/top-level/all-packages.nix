@@ -3113,15 +3113,20 @@ rtorrent = callPackage ../all-pkgs/r/rtorrent { };
 
 ruby = callPackage ../all-pkgs/r/ruby { };
 
-rustc = hiPrio (callPackage ../all-pkgs/r/rustc { });
-#rustc_beta = callPackageAlias "rustc" {
-#  channel = "beta";
-#};
-#rustc_dev = callPackageAlias "rustc" {
-#  channel = "dev";
-#};
+rustPackages = recurseIntoAttrs (callPackage ./rust-packages.nix {
+  self = callPackageAlias "rustPackages" { };
+  channel = "stable";
+});
 
-rustc_bootstrap = lowPrio (callPackage ../all-pkgs/r/rustc/bootstrap.nix { });
+rustPackages_beta = callPackageAlias "rustPackages" {
+  self = callPackageAlias "rustPackages_beta" { };
+  channel = "beta";
+};
+
+rustPackages_dev = callPackageAlias "rustPackages" {
+  self = callPackageAlias "rustPackages_dev" { };
+  channel = "dev";
+};
 
 sakura = callPackage ../all-pkgs/s/sakura { };
 

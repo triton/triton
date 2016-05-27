@@ -4,7 +4,7 @@
 , makeWrapper
 , perl
 , pythonPackages
-, rustc
+, rustPackages
 , which
 , unzip
 , yasm
@@ -70,7 +70,7 @@ stdenv.mkDerivation rec {
     makeWrapper
     perl
     pythonPackages.python
-    rustc
+    rustPackages.rustc
     which
     unzip
     yasm

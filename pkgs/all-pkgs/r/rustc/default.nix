@@ -1,14 +1,15 @@
 { stdenv
+, cargo
 , cmake
 , fetchurl
 , file
 , python2
-, rustc_bootstrap
+, rustc
 , which
 
 , jemalloc
 , libffi
-, llvm
+, llvm_3-9
 , ncurses
 , zlib
 
@@ -24,6 +25,16 @@ let
     src
     srcVerification
     version;
+
+  local-rustc = stdenv.mkDerivation {
+    name = "local-rustc-for-${version}";
+    buildCommand = ''
+      mkdir -p "$out"/bin
+      ln -s "${cargo}"/bin/cargo "$out"/bin
+      ln -s "${rustc}"/bin/rustc "$out"/bin
+      ln -s "${rustc}"/lib "$out"
+    '';
+  };
 in
 stdenv.mkDerivation {
   name = "rustc-${version}";
@@ -49,17 +60,15 @@ stdenv.mkDerivation {
   prePatch = ''
     # Fix not filtering out -L lines from llvm-config
     sed -i '\#if len(lib) == 1#a\        continue\n    if lib[0:2] == "-L":' src/etc/mklldeps.py
-
-    # Fix llvm version constraints for 1.16.0
-    sed -i 's,(3.\[7-9\]\*),(*),g' configure
   '';
 
   configureFlags = [
     "--disable-docs"
+    "--disable-rustbuild"
     "--release-channel=${channel}"
     "--enable-local-rust"
-    "--local-rust-root=${rustc_bootstrap}"
-    "--llvm-root=${llvm}"
+    "--local-rust-root=${local-rustc}"
+    "--llvm-root=${llvm_3-9}"
     "--jemalloc-root=${jemalloc}/lib"
   ];
 
@@ -72,8 +81,13 @@ stdenv.mkDerivation {
 
   NIX_LDFLAGS = "-L${libffi}/lib -lffi";
 
+  # FIXME
+  buildDirCheck = false;
+
   passthru = {
-    inherit srcVerification;
+    inherit
+      srcVerification;
+    bootstrap = rustc;
   };
 
   meta = with stdenv.lib; {

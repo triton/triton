@@ -70,8 +70,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "triton";
     repo = "systemd";
-    rev = "828840d2a28be219a54076caee96ec83d650bca7";
-    sha256 = "a72219fefd6ba573827cfef639a3b6736d393dbbb172607d3d360fbee9ca93bc";
+    rev = "fba5ac64674ba4942e9851a17a0e9bf90e50202b";
+    sha256 = "4de9621a180afa2ae114a3719a75dc62363c9118345f5100e1c56351d98127e0";
   };
 
   nativeBuildInputs = [

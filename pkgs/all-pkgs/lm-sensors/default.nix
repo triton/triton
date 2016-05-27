@@ -25,6 +25,8 @@ stdenv.mkDerivation rec {
     installFlagsArray+=("ETCDIR=$out/etc")
   '';
 
+  parallelInstall = false;
+
   meta = with stdenv.lib; {
     homepage = http://www.lm-sensors.org/;
     description = "Tools for reading hardware sensors";

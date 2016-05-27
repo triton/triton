@@ -152,11 +152,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "dfd9ed699ea197b58a32e0d1dcfa2be66f127ec4";
-    date = "2016-05-26";
+    rev = "30db96677b74e24b967e23f911eb3364fc61a011";
+    date = "2016-05-25";
     owner  = "golang";
     repo   = "net";
-    sha256 = "13h16m84grqzavkrnd45dg1ln4qvrdirj6y1fgv76gxc43hkmhij";
+    sha256 = "0gaz2ih79f9fqjb0n571glivid7cfpyaknjpaga9jw2r5ghjnvvi";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -670,9 +670,12 @@ let
   gateway = buildFromGitHub {
     date = "2016-03-20";
     rev = "32194371ec3f370166ee10a5ee079206532fdd74";
-    owner  = "jackpal";
+    owner  = "calmh";
     repo   = "gateway";
     sha256 = "1q7cqp276w0g6h5b5nap8kswgdaf5vb2fiavarmmh6jlbh81yqk0";
+    goPackageAliases = [
+      "github.com/jackpal/gateway"
+    ];
   };
 
   gcloud-golang = buildFromGoogle {
@@ -2187,10 +2190,10 @@ let
   };
 
   syncthing = buildFromGitHub rec {
-    rev = "v0.13.2";
+    rev = "v0.13.4";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "1x6fgb1d2ygalpgqizydhwsjy966n96l6w1p7m5w6mlxhn7qrck9";
+    sha256 = "06wdyy6cy2rvxjz03pvxc4as8cb17r7qlj3zf3w58hi9m8v0g6fn";
     buildFlags = [ "-tags noupgrade" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext

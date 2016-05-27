@@ -1948,6 +1948,8 @@ scrot = callPackage ../all-pkgs/scrot { };
 
 SDL = callPackage ../all-pkgs/SDL { };
 
+SDL_image = callPackage ../all-pkgs/SDL_image { };
+
 seabios = callPackage ../all-pkgs/seabios { };
 
 seahorse = callPackage ../all-pkgs/seahorse { };

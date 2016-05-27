@@ -12,11 +12,11 @@ in
 with stdenv.lib;
 
 stdenv.mkDerivation rec {
-  name = "perl-5.22.2";
+  name = "perl-5.24.0";
 
   src = fetchurl {
-    url = "mirror://cpan/src/5.0/${name}.tar.gz";
-    sha256 = "81ad196385aa168cb8bd785031850e808c583ed18a7901d33e02d4f70ada83c2";
+    url = "mirror://cpan/src/5.0/${name}.tar.xz";
+    sha256 = "a9a37c0860380ecd7b23aa06d61c20fc5bc6d95198029f3684c44a9d7e2952f2";
   };
 
   setupHook = ./setup-hook.sh;

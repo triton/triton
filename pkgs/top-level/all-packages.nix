@@ -1946,6 +1946,8 @@ scons = pkgs.pythonPackages.scons;
 
 scrot = callPackage ../all-pkgs/scrot { };
 
+SDL = callPackage ../all-pkgs/SDL { };
+
 seabios = callPackage ../all-pkgs/seabios { };
 
 seahorse = callPackage ../all-pkgs/seahorse { };

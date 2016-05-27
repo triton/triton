@@ -2,9 +2,6 @@
 
 { name, buildInputs ? [], nativeBuildInputs ? [], passthru ? {}, preFixup ? ""
 
-# We want parallel builds by default
-, enableParallelBuilding ? true
-
 # Disabled flag
 , disabled ? false
 
@@ -146,7 +143,7 @@ go.stdenv.mkDerivation (
         echo "$subPackages" | tr ' ' '\n' | sed "s,\(^\| \|\n\),\1$goPackagePath/,g"
       else
         pushd go/src >/dev/null
-        find "$goPackagePath" -type f -name \*$type.go -exec dirname {} \; | sort | uniq | grep -v "\(/_\|examples\|Godeps\)"
+        find "$goPackagePath" -type f -name \*$type.go -exec dirname {} \; | LC_ALL=c sort | uniq | grep -v "\(/_\|examples\|Godeps\)"
         popd >/dev/null
       fi
     }
@@ -218,8 +215,6 @@ go.stdenv.mkDerivation (
     ++ lib.optional (!dontRenameImports) govers;
 
   passthru = passthru // lib.optionalAttrs (goPackageAliases != []) { inherit goPackageAliases; };
-
-  enableParallelBuilding = enableParallelBuilding;
 
   # I prefer to call this dev but propagatedBuildInputs expects $out to exist
   outputs = [ "out" "bin" ];

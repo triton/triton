@@ -1946,6 +1946,11 @@ scons = pkgs.pythonPackages.scons;
 
 scrot = callPackage ../all-pkgs/scrot { };
 
+# TODO SDL is a clusterfuck that needs to be fixed / renamed
+SDL = callPackage ../all-pkgs/SDL_1 { };
+
+SDL_image = callPackage ../all-pkgs/SDL_1_image { };
+
 SDL_2 = callPackage ../all-pkgs/SDL { };
 
 SDL_2_image = callPackage ../all-pkgs/SDL_image { };

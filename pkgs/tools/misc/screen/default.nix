@@ -1,6 +1,6 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
-, fetchpatch
 
 , ncurses
 , pam
@@ -21,11 +21,10 @@ stdenv.mkDerivation rec {
 
   # TODO: remove when updating the version of screen. Only patches for 4.3.1
   patches = [
-    (fetchpatch {
-      name = "CVE-2015-6806.patch";
-      stripLen = 1;
-      url = "http://git.savannah.gnu.org/cgit/screen.git/patch/?id=b7484c224738247b510ed0d268cd577076958f1b";
-      sha256 = "160zhpzi80qkvwib78jdvx4jcm2c2h59q5ap7hgnbz4xbkb3k37l";
+    (fetchTritonPatch {
+      rev = "0df4d797fa1d6e4b1ed757a8fcf79aba83a983bc";
+      file = "screen/CVE-2015-6806.patch";
+      sha256 = "153b91ef6ba32011149329065e83c446d093f0523d4f17bc5357b31b0b2ec94e";
     })
   ];
 

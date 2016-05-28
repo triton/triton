@@ -35,6 +35,11 @@ stdenv.mkDerivation rec {
     systemd_lib
   ];
 
+  # Don't depend on old systemd compat libs
+  preConfigure = ''
+    sed -i 's,libsystemd-[a-zA-Z]*,libsystemd,g' configure
+  '';
+
   configureFlags = [
     "--enable-multi-seat"
     "--disable-debug"

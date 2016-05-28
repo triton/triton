@@ -1,5 +1,5 @@
 { stdenv
-, fetchpatch
+, fetchTritonPatch
 , fetchurl
 }:
 
@@ -13,10 +13,10 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    (fetchpatch {
-      name = "libyaml-CVE-2014-9130.patch";
-      url = "http://bitbucket.org/xi/libyaml/commits/2b915675/raw/";
-      sha256 = "1vrkga2wk060wccg61c2mj5prcyv181qikgdfi1z4hz8ygmpvl04";
+    (fetchTritonPatch {
+      rev = "5f0bea0839c25b76893bdfccb73df7646a5198ab";
+      file = "libyaml/CVE-2014-9130.patch";
+      sha256 = "30546a280c4f9764a93ff5f4f88671a02222e9886e7f63ee19aebf1b2086a7fe";
     })
   ];
 

@@ -9,11 +9,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openobex-1.7.1";
+  name = "openobex-1.7.2";
 
   src = fetchurl {
     url = "mirror://sourceforge/openobex/${name}-Source.tar.gz";
-    sha256 = "0mza0mrdrbcw4yix6qvl31kqy7bdkgxjycr0yx7yl089v5jlc9iv";
+    sha256 = "158860aaea52f0fce0c8e4b64550daaae06df2689e05834697b7e8c7d73dd4fc";
   };
 
   nativeBuildInputs = [
@@ -40,9 +40,10 @@ stdenv.mkDerivation rec {
       gpl2
       lgpl21
     ];
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

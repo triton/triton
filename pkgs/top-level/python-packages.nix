@@ -191,6 +191,8 @@ progressbar = callPackage ../all-pkgs/progressbar { };
 
 py = callPackage ../all-pkgs/py { };
 
+pycountry = callPackage ../all-pkgs/pycountry { };
+
 pykka = callPackage ../all-pkgs/pykka { };
 
 pymysql = callPackage ../all-pkgs/pymysql { };
@@ -13168,16 +13170,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     meta = with stdenv.lib; {
       description = "FormEncode validates and converts nested structures.";
       homepage = "http://formencode.org";
-    };
-  };
-
-  pycountry = buildPythonPackage rec {
-    name = "pycountry-${version}";
-    version = "1.17";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pycountry/${name}.tar.gz";
-      sha256 = "1qvhq0c9xsh6d4apcvjphfzl6xnwhnk4jvhr8x2fdfnmb034lc26";
     };
   };
 

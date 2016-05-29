@@ -2,7 +2,7 @@ diff --git a/generic/tkWindow.c b/generic/tkWindow.c
 index b5cbbab..96b5501 100644
 --- a/generic/tkWindow.c
 +++ b/generic/tkWindow.c
-@@ -988,6 +988,7 @@ TkCreateMainWindow(
+@@ -988,6 +988,7 @@ 
  
      Tcl_SetVar2(interp, "tk_patchLevel", NULL, TK_PATCH_LEVEL, TCL_GLOBAL_ONLY);
      Tcl_SetVar2(interp, "tk_version",    NULL, TK_VERSION,     TCL_GLOBAL_ONLY);

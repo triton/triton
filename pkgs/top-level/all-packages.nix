@@ -2064,6 +2064,14 @@ thin-provisioning-tools = callPackage ../all-pkgs/thin-provisioning-tools { };
 tinc_1_0 = callPackage ../all-pkgs/tinc { channel = "1.0"; };
 tinc_1_1 = callPackage ../all-pkgs/tinc { channel = "1.1"; };
 
+tk_8-5 = callPackage ../all-pkgs/tk {
+  channel = "8.5";
+};
+tk_8-6 = callPackage ../all-pkgs/tk {
+  channel = "8.6";
+};
+tk = callPackageAlias "tk_8-6" { };
+
 tmux = callPackage ../all-pkgs/tmux { };
 
 totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
@@ -7784,10 +7792,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   tinyxml2 = callPackage ../development/libraries/tinyxml/2.6.2.nix { };
 #
-#  tk = tk-8_6;
-#
-#  tk-8_6 = callPackage ../development/libraries/tk/8.6.nix { };
-#  tk-8_5 = callPackage ../development/libraries/tk/8.5.nix { tcl = tcl-8_5; };
 #
 #  tnt = callPackage ../development/libraries/tnt { };
 #

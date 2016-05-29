@@ -132,6 +132,8 @@ aniso8601 = callPackage ../all-pkgs/aniso8601 { };
 
 apscheduler = callPackage ../all-pkgs/apscheduler { };
 
+attrs = callPackage ../all-pkgs/attrs { };
+
 babelfish = callPackage ../all-pkgs/babelfish { };
 
 backports-abc = callPackage ../all-pkgs/backports-abc { };

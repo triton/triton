@@ -237,6 +237,8 @@ safe = callPackage ../all-pkgs/safe { };
 
 scons = callPackage ../all-pkgs/scons { };
 
+service-identify = callPackage ../all-pkgs/service-identify { };
+
 setuptools = callPackage ../all-pkgs/setuptools { };
 
 setuptools-scm = callPackage ../all-pkgs/setuptools-scm { };
@@ -22194,24 +22196,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [pkgs.libsodium six cffi pycparser pytest];
-  };
-
-  service-identity = buildPythonPackage rec {
-    name = "service-identity-${version}";
-    version = "14.0.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/s/service_identity/service_identity-${version}.tar.gz";
-      sha256 = "0njg9bklkkp4rl2b9vsfh9aasxy3w2dmjkv9cq34jn65lwcs619i";
-    };
-
-    propagatedBuildInputs = with self; [
-      characteristic pyasn1 pyasn1-modules pyopenssl idna
-    ];
-
-    buildInputs = with self; [
-      pytest
-    ];
   };
 
   signedjson = buildPythonPackage rec {

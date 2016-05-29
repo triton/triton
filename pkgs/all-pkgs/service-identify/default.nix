@@ -20,13 +20,15 @@ buildPythonPackage rec {
     sha256 = "0630e222f59f91f3db498be46b1d879ff220955d7bbad719a5cb9ad14e3c3036";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pythonPackages.attrs
     pythonPackages.idna
     pythonPackages.pyasn1
     pythonPackages.pyasn1-modules
     pythonPackages.pyopenssl
-  ] ++ optionals doCheck [
+  ];
+
+  buildInputs = optionals doCheck [
     pythonPackages.pytest
   ];
 

@@ -247,6 +247,8 @@ singledispatch = callPackage ../all-pkgs/singledispatch { };
 
 six = callPackage ../all-pkgs/six { };
 
+slimit = callPackage ../all-pkgs/slimit { };
+
 sqlalchemy = callPackage ../all-pkgs/sqlalchemy { };
 
 statistics = callPackage ../all-pkgs/statistics { };

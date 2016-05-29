@@ -201,6 +201,8 @@ py = callPackage ../all-pkgs/py { };
 
 pycountry = callPackage ../all-pkgs/pycountry { };
 
+pygame = callPackage ../all-pkgs/pygame { };
+
 pygtk = callPackage ../all-pkgs/pygtk { };
 
 pykka = callPackage ../all-pkgs/pykka { };
@@ -342,8 +344,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
   pycangjie = if isPy3k then callPackage ../development/python-modules/pycangjie { } else throw "pycangjie not supported for interpreter ${python.executable}";
 
   pycrypto = callPackage ../development/python-modules/pycrypto { };
-
-  pygame = callPackage ../development/python-modules/pygame { };
 
   pygobject = callPackage ../development/python-modules/pygobject { };
 

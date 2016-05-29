@@ -2805,10 +2805,12 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     name = "characteristic-14.1.0";
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/c/characteristic/${name}.tar.gz";
-      md5 = "68ea7e28997fc57d3631791ec0567a05";
+      sha256 = "91e254948180678dd69e6143202b4686f2fa47cce136936079bb4d9a3b82419d";
     };
 
     buildInputs = with self; [ self.pytest ];
+
+    doCheck = true;
 
     meta = {
       description = "Python attributes without boilerplate";

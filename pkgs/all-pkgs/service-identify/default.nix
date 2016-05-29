@@ -5,6 +5,11 @@
 , pythonPackages
 }:
 
+let
+  inherit (stdenv.lib)
+    optionals;
+in
+
 buildPythonPackage rec {
   name = "service-identify-${version}";
   version = "16.0.0";
@@ -21,7 +26,11 @@ buildPythonPackage rec {
     pythonPackages.pyasn1
     pythonPackages.pyasn1-modules
     pythonPackages.pyopenssl
+  ] ++ optionals doCheck [
+    pythonPackages.pytest
   ];
+
+  doCheck = true;
 
   meta = with stdenv.lib; {
     description = "Service identity verification for pyOpenSSL";

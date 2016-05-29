@@ -14,8 +14,6 @@
 , glib
 #, gnome-online-accounts
 , gtk3
-# TODO: add hal support
-, hal ? null
 , libarchive
 , libbluray
 , libcdio
@@ -68,11 +66,11 @@ stdenv.mkDerivation rec {
     glib
     #gnome-online-accounts
     gtk3
-    hal
     libgdata
     libarchive
     libbluray
     libcdio
+    #libgdata
     libgudev
     libgcrypt
     libgnome-keyring
@@ -95,33 +93,41 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     (enFlag "gcr" (gcr != null) null)
     "--enable-nls"
-    "--enable-http"
+    (enFlag "http" (libsoup != null) null)
     (enFlag "avahi" (avahi != null) null)
     (enFlag "udev" (systemd_lib != null) null)
     (enFlag "fuse" (fuse != null) null)
-    "--enable-gdu"
-    (enFlag "udisks2" (udisks != null) null)
-    (enFlag "libsystemd-login" (systemd_lib != null) null)
-    (enFlag "hal" (hal != null) null)
+    "--disable-gdu"
+    (enFlag "udisks2" (
+      udisks != null
+      && systemd_lib != null) null)
+    (enFlag "libsystemd-login" (
+      systemd_lib != null
+      && udisks != null) null)
+    "--disable-hal"
     (enFlag "gudev" (libgudev != null) null)
-    "--enable-cdda"
+    (enFlag "cdda" (
+      libcdio != null
+      && systemd_lib != null) null)
     "--enable-afc"
     # Remove dependency on webkit
     "--disable-goa"
-    "--enable-google"
+    "--disable-google"
     (enFlag "gphoto2" (libgphoto2 != null) null)
     (enFlag "keyring" (libgnome-keyring != null) null)
     (enFlag "bluray" (libbluray != null) null)
-    "--enable-libmtp"
+    (enFlag "libmtp" (
+      libmtp != null
+      && systemd_lib != null) null)
     (enFlag "samba" (samba_client != null) null)
     (enFlag "gtk" (gtk3 != null) null)
     (enFlag "archive" (libarchive != null) null)
-    "--enable-afp"
+    (enFlag "afp" (libgcrypt != null) null)
     "--disable-nfs"
     "--enable-bash-completion"
     "--enable-more-warnings"
-    "--enable-installed-tests"
-    "--enable-always-build-tests"
+    "--disable-installed-tests"
+    "--disable-always-build-tests"
     #"--with-bash-completion-dir="
   ];
 

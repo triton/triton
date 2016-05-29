@@ -1465,9 +1465,7 @@ libtool = callPackage ../all-pkgs/libtool { };
 
 libtorrent = callPackage ../all-pkgs/libtorrent { };
 
-libtorrent-rasterbar_0 = callPackage ../all-pkgs/libtorrent-rasterbar/0.x.nix { };
-libtorrent-rasterbar_1 = callPackage ../all-pkgs/libtorrent-rasterbar/1.x.nix { };
-libtorrent-rasterbar = callPackageAlias "libtorrent-rasterbar_1" { };
+libtorrent-rasterbar = callPackage ../all-pkgs/libtorrent-rasterbar { };
 
 libtsm = callPackage ../all-pkgs/libtsm { };
 

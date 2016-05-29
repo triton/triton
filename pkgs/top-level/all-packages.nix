@@ -2046,6 +2046,14 @@ systemd_lib = callPackageAlias "systemd_full" {
 
 talloc = callPackage ../all-pkgs/talloc { };
 
+tcl_8-5 = callPackage ../all-pkgs/tcl {
+  channel = "8.5";
+};
+tcl_8-6 = callPackage ../all-pkgs/tcl {
+  channel = "8.6";
+};
+tcl = callPackageAlias "tcl_8-6" { };
+
 tcp-wrappers = callPackage ../all-pkgs/tcp-wrappers { };
 
 tdb = callPackage ../all-pkgs/tdb { };
@@ -5754,9 +5762,6 @@ zstd = callPackage ../all-pkgs/zstd { };
     spidermonkey_17
     spidermonkey_24;
   spidermonkey = callPackageAlias "spidermonkey_24" { };
-#
-#  tcl = tcl-8_6;
-#  tcl-8_6 = callPackage ../development/interpreters/tcl/8.6.nix { };
 #
 #  xulrunner = callPackage ../development/interpreters/xulrunner {
 #    inherit (gnome) libIDL;

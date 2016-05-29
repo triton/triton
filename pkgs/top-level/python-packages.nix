@@ -199,6 +199,8 @@ py = callPackage ../all-pkgs/py { };
 
 pycountry = callPackage ../all-pkgs/pycountry { };
 
+pygtk = callPackage ../all-pkgs/pygtk { };
+
 pykka = callPackage ../all-pkgs/pykka { };
 
 pymysql = callPackage ../all-pkgs/pymysql { };
@@ -341,13 +343,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
   pygobject3 = callPackage ../development/python-modules/pygobject/3.nix { };
 
-  pygtk = callPackage ../development/python-modules/pygtk { libglade = null; };
-
   pygtksourceview = callPackage ../development/python-modules/pygtksourceview { };
-
-  pyGtkGlade = self.pygtk.override {
-    libglade = pkgs.gnome.libglade;
-  };
 
   pyqt4 = callPackage ../development/python-modules/pyqt/4.x.nix {
     pythonDBus = self.dbus;

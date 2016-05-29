@@ -155,6 +155,8 @@ chardet = callPackage ../all-pkgs/chardet { };
 
 cherrypy = callPackage ../all-pkgs/cherrypy { };
 
+deluge = callPackage ../all-pkgs/deluge { };
+
 discogs-client = callPackage ../all-pkgs/discogs-client { };
 
 enum34 = callPackage ../all-pkgs/enum34 { };
@@ -7356,36 +7358,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     meta = {
       homepage = https://launchpad.net/python-distutils-extra;
       description = "Enhancements to Python's distutils";
-    };
-  };
-
-  deluge = buildPythonPackage rec {
-    name = "deluge-1.3.12";
-
-    src = pkgs.fetchurl {
-      url = "http://download.deluge-torrent.org/source/${name}.tar.bz2";
-      sha256 = "14rwc5k7q0d36b4jxnmxgnyvx9lnmaifxpyv0z07ymphlfr4amsn";
-    };
-
-    propagatedBuildInputs = with self; [
-      pyGtkGlade pkgs.libtorrentRasterbar twisted Mako chardet pyxdg self.pyopenssl
-    ];
-
-    nativeBuildInputs = [ pkgs.intltool ];
-
-    postInstall = ''
-       mkdir -p $out/share/applications
-       cp -R deluge/data/pixmaps $out/share/
-       cp -R deluge/data/icons $out/share/
-       cp deluge/data/share/applications/deluge.desktop $out/share/applications
-    '';
-
-    meta = {
-      homepage = http://deluge-torrent.org;
-      description = "Torrent client";
-      license = licenses.gpl3Plus;
-      maintainers = with maintainers; [ iElectric ebzzry ];
-      platforms = platforms.all;
     };
   };
 

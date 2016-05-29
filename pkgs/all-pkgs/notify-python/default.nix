@@ -19,6 +19,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     pkgs.libnotify
     pythonPackages.pygtk
+    pythonPackages.python
   ];
 
   patches = [

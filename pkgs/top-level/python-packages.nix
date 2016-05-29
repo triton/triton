@@ -149,6 +149,8 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
 
 certbot = callPackage ../all-pkgs/certbot { };
 
+chardet = callPackage ../all-pkgs/chardet { };
+
 cherrypy = callPackage ../all-pkgs/cherrypy { };
 
 discogs-client = callPackage ../all-pkgs/discogs-client { };
@@ -7397,22 +7399,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     meta = {
       homepage = http://freedesktop.org/wiki/Software/pyxdg;
       description = "Contains implementations of freedesktop.org standards";
-      license = licenses.lgpl2;
-      maintainers = with maintainers; [ iElectric ];
-    };
-  };
-
-  chardet = buildPythonPackage rec {
-    name = "chardet-2.3.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/c/chardet/${name}.tar.gz";
-      md5 = "25274d664ccb5130adae08047416e1a8";
-    };
-
-    meta = {
-      homepage = https://github.com/chardet/chardet;
-      description = "Universal encoding detector";
       license = licenses.lgpl2;
       maintainers = with maintainers; [ iElectric ];
     };

@@ -5,25 +5,47 @@
 , openssl
 , pythonPackages
 , zlib
+
+, channel ? null
 }:
 
 let
   inherit (stdenv.lib)
+    any
     enFlag
-    replaceChars;
+    replaceChars
+    versionOlder;
+  inherit (builtins.getAttr channel (import ./sources.nix))
+    sha256
+    version;
+in
+
+assert any (n: n == channel) [
+  "1.0"
+  "1.1"
+];
+
+let
+  versionFormatted =
+    # For initial minor releases drop the trailing zero
+    if replaceChars ["${channel}."] [""] version == "0" then
+      replaceChars ["."] ["_"] channel
+    else
+      replaceChars ["."] ["_"] version;
+  libtorrentOlder = chan: args:
+    if versionOlder channel chan then
+      args
+    else
+      null;
 in
 
 stdenv.mkDerivation rec {
   name = "libtorrent-rasterbar-${version}";
-  versionMajor = "1.1";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "https://github.com/arvidn/libtorrent/releases/download/"
-      + "libtorrent-${replaceChars ["."] ["_"] versionMajor}/"
-      + "${name}.tar.gz";
-    sha256 = "2713df7da4aec5263ac11b6626ea966f368a5a8081103fd8f2f2ed97b5cd731d";
+      + "libtorrent-${versionFormatted}/${name}.tar.gz";
+    inherit sha256;
   };
 
   buildInputs = [
@@ -34,11 +56,6 @@ stdenv.mkDerivation rec {
     stdenv.libc
     zlib
   ];
-
-  postUnpack = ''
-    # Use cmake instead of autotools
-    rm -fv configure
-  '';
 
   configureFlags = [
     "--enable-largefile"
@@ -52,11 +69,13 @@ stdenv.mkDerivation rec {
     "--enable-deprecated-functions"
     "--disable-statistics"
     "--disable-disk-stats"
+    (versionOlder "1.1" "--disable-geoip")
     "--disable-examples"
     "--disable-tests"
     (enFlag "python-binding" (pythonPackages.python != null) null)
     "--with-boost=${boost.dev}"
     "--with-boost-libdir=${boost.lib}/lib"
+    (versionOlder "1.1" "--without-libgeoip")
     "--with-libiconv"
     "--with-openssl=${openssl}"
     "--with-boost-python"

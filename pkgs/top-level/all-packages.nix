@@ -1465,7 +1465,13 @@ libtool = callPackage ../all-pkgs/libtool { };
 
 libtorrent = callPackage ../all-pkgs/libtorrent { };
 
-libtorrent-rasterbar = callPackage ../all-pkgs/libtorrent-rasterbar { };
+libtorrent-rasterbar_1-0 = callPackage ../all-pkgs/libtorrent-rasterbar {
+  channel = "1.0";
+};
+libtorrent-rasterbar_1-1 = callPackage ../all-pkgs/libtorrent-rasterbar {
+  channel = "1.1";
+};
+libtorrent-rasterbar = callPackageAlias "libtorrent-rasterbar_1-1" { };
 
 libtsm = callPackage ../all-pkgs/libtsm { };
 

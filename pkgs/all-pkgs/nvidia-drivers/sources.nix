@@ -16,9 +16,9 @@
   };
   "long-lived" = {
     versionMajor = "361";
-    versionMinor = "42";
-    sha256i686   = "e32d047f62da3aaabe718a5b835e6efa2c0265e76dd0f4e6b9af35266b6e4e82";
-    sha256x86_64 = "04cfc16efde964e0b1c62585ea82dc9445dcc8e3aeb76ad08801ff4ee6cfde13";
+    versionMinor = "45.11";
+    sha256i686   = "eb9a980ae048241a9c3e94b6907d78cbfa5c95fec771f1d5fec7ff04ff3adb0c";
+    sha256x86_64 = "e4007a04963d7de30512b7a5f062cbd9e3ecc362ac5cf5fa7f6c64865ced0bb9";
   };
   "short-lived" = {
     versionMajor = "364";

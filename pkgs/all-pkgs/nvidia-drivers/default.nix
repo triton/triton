@@ -138,12 +138,6 @@ stdenv.mkDerivation {
         file = "nvidia-drivers/364.19-kernel-4.6.patch";
         sha256 = "a40489322dcab39acbef8f30d9e0adb742b123f9da771e9a5fff1f493bd19335";
       })
-    ] ++ optionals (versionAtLeast kernel.version "4.6" && channel == "beta") [
-      (fetchTritonPatch {
-        rev = "162b8425413b69580d8b145aab7ddbf41d7282a4";
-        file = "nvidia-drivers/364.15-kernel-4.6.patch";
-        sha256 = "bfe68310290cb000343163c68d1b6f765d08c4355f82bc959970d82782230257";
-      })
     ];
 
   kernel =

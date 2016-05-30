@@ -15,7 +15,7 @@ in
 buildPythonPackage rec {
   name = "deluge-${version}";
   #version = "1.3.12";
-  version = "2.0.0.dev556";
+  version = "2016-05-18";
 
   /*src = fetchurl {
     url = "http://download.deluge-torrent.org/source/${name}.tar.bz2";
@@ -37,7 +37,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = [
   # geoip-database
   # setproctitle
-    pkgs.libtorrent-rasterbar
+    pkgs.libtorrent-rasterbar_1-0
     pkgs.librsvg
     pkgs.xdg-utils
     pythonPackages.chardet
@@ -65,7 +65,7 @@ buildPythonPackage rec {
 
   disabled = isPy3k;
 
-  #doCheck = true;
+  doCheck = true;
 
   meta = with stdenv.lib; {
     description = "BitTorrent client with a client/server model";

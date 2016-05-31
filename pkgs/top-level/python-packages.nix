@@ -271,6 +271,8 @@ twisted = callPackage ../all-pkgs/twisted { };
 
 tzlocal = callPackage ../all-pkgs/tzlocal { };
 
+werkzeug = callPackage ../all-pkgs/werkzeug { };
+
 wheel = callPackage ../all-pkgs/wheel { };
 
 zope-component = callPackage ../all-pkgs/zope-component { };
@@ -19951,16 +19953,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
   };
 
-
-  werkzeug = buildPythonPackage rec {
-    name = "Werkzeug-0.11.8";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/W/Werkzeug/${name}.tar.gz";
-      sha256 = "729730a25f43a29ac6a79f08384ea18a3a125d07079492e15c3b3c2a3f090c37";
-    };
-
-  };
 
   willie = buildPythonPackage rec {
     name = "willie-5.2.0";

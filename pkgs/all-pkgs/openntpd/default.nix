@@ -11,12 +11,12 @@ in
 
 stdenv.mkDerivation rec {
   name = "openntpd-${version}";
-  version = "5.9p1";
+  version = "6.0p1";
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     allowHashOutput = false;  # Upstream provides it directly
-    sha256 = "200c04056d4d6441653cac71d515611f3903aa7b15b8f5661a40dab3fb3697b3";
+    sha256 = "b1ab80094788912adb12b33cb1f251cc58db39294c1b5c6376972f5f7ba577e8";
   };
 
   nativeBuildInputs = [

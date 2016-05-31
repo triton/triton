@@ -135,8 +135,8 @@ rec {
   ];
 
   openbsd = [
-    http://openbsd.mirrors.pair.com
     http://ftp.openbsd.org/pub/OpenBSD
+    http://openbsd.mirrors.pair.com
   ];
 
   opensuse = [

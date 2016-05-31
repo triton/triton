@@ -2,7 +2,7 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, markupsafe
 }:
 
 buildPythonPackage rec {
@@ -16,7 +16,7 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.markupsafe
+    markupsafe
   ];
 
   doCheck = true;

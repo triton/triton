@@ -5,11 +5,13 @@
 
 stdenv.mkDerivation rec {
   name = "libpng-${version}";
-  version = "1.6.21";
+  version = "1.6.22";
 
   src = fetchurl {
     url = "mirror://sourceforge/libpng/libpng-${version}.tar.xz";
-    sha256 = "10r0xqasm8fi0dx95bpca63ab4myb8g600ypyndj2r4jxd4ii3vc";
+    allowHashOutput = false;
+    multihash = "QmU3V85XU2KWpwXQzwSUbekrcgvXJFsKHttBQwwrrpAcaX";
+    sha256 = "6b5a6ad5c5801ec4d24aacc87a0ed7b666cd586478174f69368a1d7747715226";
   };
 
   buildInputs = [
@@ -19,9 +21,18 @@ stdenv.mkDerivation rec {
   patches = [
     (fetchurl {
       url = "mirror://sourceforge/libpng-apng/libpng-${version}-apng.patch.gz";
-      sha256 = "0wwcc52yzjaxvpfkicz20j7yzpy02hpnsm4jjlvw74gy4qjhx9vd";
+      sha256 = "8fdcd293873ae88364e7d58b6e4bfc49ff1d8ac6663abc207992dd2b27e16e8b";
     })
   ];
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrl = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "8048 643B A2C8 40F4 F92A  195F F549 84BF A16C 640F";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "The official reference implementation for the PNG file format with animation patch";
@@ -31,7 +42,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

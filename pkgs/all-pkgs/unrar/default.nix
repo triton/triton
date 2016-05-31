@@ -4,23 +4,17 @@
 
 stdenv.mkDerivation rec {
   name = "unrar-${version}";
-  version = "5.3.11";
+  version = "5.4.2";
 
   src = fetchurl {
     url = "http://www.rarlab.com/rar/unrarsrc-${version}.tar.gz";
-    sha256 = "0qw77gvr57azjbn76cjlm4sv1hf2hh90g7n7n33gfvlpnbs7mf3p";
+    sha256 = "d91d5fa8abdbac60b3e2b7317cc1451a2b38c550adee977b847f22594c53f1bd";
   };
 
   preBuild = ''
-    export buildFlags="CXX=$CXX"
-  '';
-
-  installPhase = ''
-    installBin unrar
-
-    mkdir -p $out/share/doc/unrar
-    cp acknow.txt license.txt \
-        $out/share/doc/unrar
+    makeFlags+=(
+      DESTDIR=$out
+    )
   '';
 
   setupHook = ./setup-hook.sh;

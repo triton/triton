@@ -2,7 +2,9 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, oauthlib
+, requests2
+, six
 }:
 
 buildPythonPackage rec {
@@ -16,9 +18,9 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.oauthlib
-    pythonPackages.requests2
-    pythonPackages.six
+    oauthlib
+    requests2
+    six
   ];
 
   meta = with stdenv.lib; {

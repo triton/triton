@@ -32,11 +32,13 @@ let
       inherit sha256;
     };
 
-  buildPythonPackage = makeOverridable (callPackage ../all-pkgs/python/stdenv {
-    pip_bootstrap = callPackage ../all-pkgs/pip/bootstrap.nix {
-      inherit (self) wrapPython;
-    };
-  });
+  buildPythonPackage = makeOverridable (
+    callPackage ../all-pkgs/python/build-python-package {
+      pip_bootstrap = callPackage ../all-pkgs/pip/bootstrap.nix {
+        inherit (self) wrapPython;
+      };
+    }
+  );
 
   # Unique python version identifier
   pythonName =
@@ -110,7 +112,7 @@ in {
           /^ *[^# ]/i import sys; sys.argv[0] = '"'$(basename "$f")'"'
         }
       '';
-  } ../all-pkgs/python/stdenv/wrap.sh;
+  } ../all-pkgs/python/build-python-package/wrap.sh;
 
   # specials
 

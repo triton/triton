@@ -159,6 +159,8 @@ cherrypy = callPackage ../all-pkgs/cherrypy { };
 
 click = callPackage ../all-pkgs/click { };
 
+cython = callPackage ../all-pkgs/cython { };
+
 deluge = callPackage ../all-pkgs/deluge { };
 
 discogs-client = callPackage ../all-pkgs/discogs-client { };
@@ -3322,25 +3324,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       description = "Python module for generating objects that compute the Cyclic Redundancy Check (CRC)";
       homepage = http://crcmod.sourceforge.net/;
       license = licenses.mit;
-    };
-  };
-
-  cython = buildPythonPackage rec {
-    name = "Cython-${version}";
-    version = "0.23.4";
-
-    src = pkgs.fetchurl {
-      url = "http://www.cython.org/release/${name}.tar.gz";
-      sha256 = "13hdffhd37mx3gjby018xl179jaj957fy7kzi01crmimxvn2zi7y";
-    };
-
-
-    meta = {
-      description = "An optimising static compiler for both the Python programming language and the extended Cython programming language";
-      platforms = platforms.all;
-      homepage = http://cython.org;
-      license = licenses.asl20;
-      maintainers = with maintainers; [ fridh ];
     };
   };
 

@@ -2,7 +2,17 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, aniso8601
+, flask
+, jsonschema
+, pytz
+, six
+
+, blinker
+, mock
+, nose
+#, rednose
+, tzlocal
 }:
 
 let
@@ -21,17 +31,17 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.aniso8601
-    pythonPackages.flask
-    pythonPackages.jsonschema
-    pythonPackages.pytz
-    pythonPackages.six
+    aniso8601
+    flask
+    jsonschema
+    pytz
+    six
   ] ++ optionals doCheck [
-    pythonPackages.blinker
-    pythonPackages.mock
-    pythonPackages.nose
-    #pythonPackages.rednose
-    pythonPackages.tzlocal
+    blinker
+    mock
+    nose
+    #rednose
+    tzlocal
   ];
 
   doCheck = false;

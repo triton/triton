@@ -2,7 +2,7 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, flask
 }:
 
 buildPythonPackage rec {
@@ -16,7 +16,7 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    pythonPackages.flask
+    flask
   ];
 
   # No make check target

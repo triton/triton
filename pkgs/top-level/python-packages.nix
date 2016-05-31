@@ -155,6 +155,8 @@ chardet = callPackage ../all-pkgs/chardet { };
 
 cherrypy = callPackage ../all-pkgs/cherrypy { };
 
+click = callPackage ../all-pkgs/click { };
+
 deluge = callPackage ../all-pkgs/deluge { };
 
 discogs-client = callPackage ../all-pkgs/discogs-client { };
@@ -2882,15 +2884,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       description = "Command line tool to search snippets on Commandlinefu.com";
       license = licenses.mit;
       maintainers = with maintainers; [ koral ];
-    };
-  };
-
-  click = buildPythonPackage rec {
-    name = "click-6.4";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/c/click/${name}.tar.gz";
-      sha256 = "6eb86ac0e44e60b3085e7b87797fe2adf745dbea38b78d7db1f17ec96ca016ed";
     };
   };
 

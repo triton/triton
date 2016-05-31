@@ -2,7 +2,10 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, flask
+, itsdangerous
+, jinja2
+, werkzeug
 }:
 
 buildPythonPackage rec {
@@ -16,10 +19,10 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    pythonPackages.flask
-    pythonPackages.itsdangerous
-    pythonPackages.jinja2
-    pythonPackages.werkzeug
+    flask
+    itsdangerous
+    jinja2
+    werkzeug
   ];
 
   meta = with stdenv.lib; {

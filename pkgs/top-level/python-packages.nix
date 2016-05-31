@@ -163,6 +163,8 @@ discogs-client = callPackage ../all-pkgs/discogs-client { };
 
 enum34 = callPackage ../all-pkgs/enum34 { };
 
+flask = callPackage ../all-pkgs/flask { };
+
 flask-compress = callPackage ../all-pkgs/flask-compress { };
 
 flask-login = callPackage ../all-pkgs/flask-login { };
@@ -8215,22 +8217,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license = licenses.mit;
       maintainers = with maintainers; [ garbas ];
     };
-  };
-
-  flask = buildPythonPackage {
-    name = "flask-0.10.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/F/Flask/Flask-0.10.1.tar.gz";
-      sha256 = "0wrkavjdjndknhp8ya8j850jq7a1cli4g5a93mg8nh1xz2gq50sc";
-    };
-
-    propagatedBuildInputs = with self; [
-      itsdangerous
-      jinja2
-      werkzeug
-    ];
-
   };
 
   flask_cache = buildPythonPackage rec {

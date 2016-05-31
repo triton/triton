@@ -7,11 +7,12 @@
 
 stdenv.mkDerivation rec {
   name = "libraw-${version}";
-  version = "0.17.1";
+  version = "0.17.2";
 
   src = fetchurl {
     url = "http://www.libraw.org/data/LibRaw-${version}.tar.gz";
-    sha256 = "18fygk896gxbx47nh2rn5jp4skisgkl6pdfjqb7h0zn39hd6b6g5";
+    multihash = "QmVoz31h5dcgLeYvhdsDQpeAWRwF4HMxrhabEPJzRtr3y9";
+    sha256 = "0p6imxpsfn82i0i9w27fnzq6q6gwzvb9f7sygqqakv36fqnc9c4j";
   };
 
   buildInputs = [

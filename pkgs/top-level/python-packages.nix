@@ -32,7 +32,7 @@ let
       inherit sha256;
     };
 
-  buildPythonPackage = makeOverridable (callPackage ../development/python-modules/generic {
+  buildPythonPackage = makeOverridable (callPackage ../all-pkgs/python/stdenv {
     pip_bootstrap = callPackage ../all-pkgs/pip/bootstrap.nix {
       inherit (self) wrapPython;
     };
@@ -110,7 +110,7 @@ in {
           /^ *[^# ]/i import sys; sys.argv[0] = '"'$(basename "$f")'"'
         }
       '';
-  } ../development/python-modules/generic/wrap.sh;
+  } ../all-pkgs/python/stdenv/wrap.sh;
 
   # specials
 

@@ -1,36 +1,42 @@
 /* This function provides a generic Python package builder.  It is
-   intended to work with packages that use `distutils/setuptools'
-   (http://pypi.python.org/pypi/setuptools/), which represents a large
-   number of Python packages nowadays.  */
+ * intended to work with packages that use `distutils/setuptools`
+ * (http://pypi.python.org/pypi/setuptools/), which represents a
+ * large number of Python packages nowadays.
+ */
 
-{ python, setuptools, unzip, wrapPython, lib, pip_bootstrap
-, ensureNewerSourcesHook }:
+{ python
+, ensureNewerSourcesHook
+, lib
+, pip_bootstrap
+, setuptools
+, unzip
+, wrapPython
+}:
 
 { name
 
-# by default prefix `name` e.g. "python3.3-${name}"
+# package name prefix, e.g. `python3.3-`${name}
 , namePrefix ? python.libPrefix + "-"
 
-, buildInputs ? []
+, buildInputs ? [ ]
 
 # propagate build dependencies so in case we have A -> B -> C,
 # C can import package A propagated by B 
-, propagatedBuildInputs ? []
+, propagatedBuildInputs ? [ ]
 
 # passed to "python setup.py build_ext"
 # https://github.com/pypa/pip/issues/881
-, setupPyBuildFlags ? []
+, configureFlags ? [ ]
 
 # disable tests by default
 , doCheck ? false
 
-# DEPRECATED: use propagatedBuildInputs
-, pythonPath ? []
+, pythonPath ? [ ]
 
 # used to disable derivation, useful for specific python versions
 , disabled ? false
 
-, meta ? {}
+, meta ? { }
 
 # Execute before shell hook
 , preShellHook ? ""
@@ -40,15 +46,22 @@
 
 # Additional arguments to pass to the makeWrapper function, which wraps
 # generated binaries.
-, makeWrapperArgs ? []
+, makeWrapperArgs ? [ ]
 
 , ... } @ attrs:
 
+let
+  inherit (lib)
+    concatStringsSep
+    hasSuffix
+    optional
+    optionalString;
+in
 
 # Keep extra attributes from `attrs`, e.g., `patchPhase', etc.
-if disabled
-then throw "${name} not supported for interpreter ${python.executable}"
-else
+
+assert disabled ->
+  throw "`${name}` is not supported for interpreter `${python.executable}`";
 
 let
   # use setuptools shim (so that setuptools is imported before distutils)
@@ -57,23 +70,33 @@ let
   # For backwards compatibility, let's use an alias
   doInstallCheck = doCheck;
 in
+
 python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] // {
   name = namePrefix + name;
 
-  buildInputs = [ wrapPython pip_bootstrap ] ++ buildInputs ++ pythonPath
-    ++ [ (ensureNewerSourcesHook { year = "1980"; }) ]
-    ++ (lib.optional (lib.hasSuffix "zip" attrs.src.name or "") unzip);
+  buildInputs = [
+    wrapPython
+    pip_bootstrap
+  ] ++ [
+    (ensureNewerSourcesHook { year = "1980"; })
+  ] ++ buildInputs
+    ++ pythonPath
+    ++ (optional (hasSuffix "zip" attrs.src.name or "") unzip);
 
   # propagate python/setuptools to active setup-hook in nix-shell
-  propagatedBuildInputs = propagatedBuildInputs ++ [ python setuptools ];
+  propagatedBuildInputs = propagatedBuildInputs ++ [
+    python
+    setuptools
+  ];
 
   pythonPath = pythonPath;
 
   configurePhase = attrs.configurePhase or ''
     runHook preConfigure
 
-    # patch python interpreter to write null timestamps when compiling python files
-    # this way python doesn't try to update them when we freeze timestamps in nix store
+    # Enables writing null timestamps when compiling python files so
+    # that python doesn't try to update them when we freeze timestamps.
+    # See python-2.7-deterministic-build.patch for more information.
     export DETERMINISTIC_BUILD=1
 
     runHook postConfigure
@@ -83,19 +106,27 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   # many project make that assumption
   buildPhase = attrs.buildPhase or ''
     runHook preBuild
-    cp ${setuppy} nix_run_setup.py
-    ${python.interpreter} nix_run_setup.py ${lib.optionalString (setupPyBuildFlags != []) ("build_ext " + (lib.concatStringsSep " " setupPyBuildFlags))} bdist_wheel
+
+    cp -v ${setuppy} nix_run_setup.py
+
+    ${python.interpreter} nix_run_setup.py ${
+      optionalString (configureFlags != []) (
+        "build_ext " + (concatStringsSep " " configureFlags)
+      )
+    } bdist_wheel
+
     runHook postBuild
   '';
 
   installPhase = attrs.installPhase or ''
     runHook preInstall
 
-    mkdir -p "$out/${python.sitePackages}"
+    mkdir -pv "$out/${python.sitePackages}"
     export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
 
     pushd dist
-    ${pip_bootstrap}/bin/pip install *.whl --no-index --prefix=$out --no-cache
+      ${pip_bootstrap}/bin/pip -v install \
+        *.whl --no-index --prefix=$out --no-cache
     popd
 
     runHook postInstall
@@ -107,26 +138,27 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
   installCheckPhase = attrs.checkPhase or ''
     runHook preCheck
+
     ${python.interpreter} nix_run_setup.py test
+
     runHook postCheck
   '';
 
   postFixup = attrs.postFixup or ''
     wrapPythonPrograms
 
-    # check if we have two packages with the same name in closure and fail
-    # this shouldn't happen, something went wrong with dependencies specs
+    # Fail if two packages with the same name are found in the closure.
     ${python.interpreter} ${./catch_conflicts.py}
   '';
 
   shellHook = attrs.shellHook or ''
     ${preShellHook}
-    if test -e setup.py; then
+    if test -e setup.py ; then
        tmp_path=$(mktemp -d)
        export PATH="$tmp_path/bin:$PATH"
        export PYTHONPATH="$tmp_path/${python.sitePackages}:$PYTHONPATH"
-       mkdir -p $tmp_path/${python.sitePackages}
-       ${pip_bootstrap}/bin/pip install -e . --prefix $tmp_path
+       mkdir -pv $tmp_path/${python.sitePackages}
+       ${pip_bootstrap}/bin/pip -v install -e . --prefix $tmp_path
     fi
     ${postShellHook}
   '';
@@ -135,8 +167,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     # default to python's platforms
     platforms = python.meta.platforms;
   } // meta // {
-    # add extra maintainer(s) to every package
-    maintainers = (meta.maintainers or []) ++ [ chaoflow iElectric ];
+    maintainers = meta.maintainers or [ ];
     # a marker for release utilities to discover python packages
     isBuildPythonPackage = python.meta.platforms;
   };

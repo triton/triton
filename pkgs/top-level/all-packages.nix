@@ -2128,6 +2128,8 @@ vte = callPackage ../all-pkgs/vte { };
 
 w3m = callPackage ../all-pkgs/w3m { };
 
+wavpack = callPackage ../all-pkgs/wavpack { };
+
 wayland = callPackage ../all-pkgs/wayland { };
 wayland-docs = callPackage ../all-pkgs/wayland {
   enableDocumentation = true;
@@ -7887,8 +7889,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  vxl = callPackage ../development/libraries/vxl {
 #    libpng = libpng12;
 #  };
-#
-  wavpack = callPackage ../development/libraries/wavpack { };
 #
 #  websocketpp = callPackage ../development/libraries/websocket++ { };
 #

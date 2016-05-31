@@ -274,6 +274,8 @@ stdenv.mkDerivation rec {
       "$out/bin/firefox" --version
     '';
 
+  parallelBuild = false;
+
   passthru = {
     inherit
       gtk2

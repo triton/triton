@@ -33,7 +33,7 @@ let
     };
 
   buildPythonPackage = makeOverridable (
-    callPackage ../all-pkgs/python/build-python-package {
+    callPackage ../all-pkgs/build-python-package {
       pip_bootstrap = callPackage ../all-pkgs/pip/bootstrap.nix {
         inherit (self) wrapPython;
       };
@@ -112,7 +112,7 @@ in {
           /^ *[^# ]/i import sys; sys.argv[0] = '"'$(basename "$f")'"'
         }
       '';
-  } ../all-pkgs/python/build-python-package/wrap.sh;
+  } ../all-pkgs/build-python-package/wrap.sh;
 
   # specials
 

@@ -38,6 +38,12 @@ with stdenv.lib;
   # Enable all of the crypto libraries directly in the kernel
   # This way the kernel supports any of the needed decompression
   # schemes at boot.
+  ${optionalString (versionAtLeast version "4.7") ''
+    KEY_DH_OPERATIONS y
+    SECONDARY_TRUSTED_KEYRING y
+  ''}
+  ASYMMETRIC_KEY_TYPE y
+  SYSTEM_TRUSTED_KEYRING y
   CRYPTO_DEFLATE y
   CRYPTO_LZ4 y
   CRYPTO_LZ4HC y
@@ -189,6 +195,10 @@ with stdenv.lib;
   ''}
   FM10K_VXLAN y
   MLX5_CORE_EN y
+  ${optionalString (versionAtLeast version "4.7") ''
+    QEDE_VXLAN y
+    QEDE_GENEVE y
+  ''}
   QLCNIC_VXLAN y
   VIA_RHINE_MMIO y
   DEFXX_MMIO y
@@ -197,6 +207,10 @@ with stdenv.lib;
   NVM y
 
   # Random Devices
+  ${optionalString (versionAtLeast version "4.7") ''
+    SYNC_FILE y
+    INTEL_PMC_CORE y
+  ''}
   SSB_PCMCIAHOST y
   SSB_SDIOHOST y
   SSB_SILENT y

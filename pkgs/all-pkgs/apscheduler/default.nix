@@ -1,15 +1,31 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-
-, isPy3k
 , pythonPackages
+
+, enum34
+, funcsigs
+, futures
+, gevent
+, pymongo
+, pytz
+, redis
+#, rethinkdb
+, setuptools-scm
+, six
+, sqlalchemy
+, tornado
+, twisted
+, tzlocal
+
+, pytest
 }:
 
 let
   inherit (stdenv.lib)
     optionals;
   inherit (pythonPackages)
+    isPy3k
     pythonOlder;
 in
 
@@ -24,28 +40,27 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.pytz
-    pythonPackages.setuptools
-    pythonPackages.setuptools-scm
-    pythonPackages.six
-    pythonPackages.tzlocal
+    pytz
+    setuptools-scm
+    six
+    tzlocal
   ] ++ /* optional */ [
     /* executors */
-    pythonPackages.gevent
-    pythonPackages.tornado
-    pythonPackages.twisted
+    gevent
+    tornado
+    twisted
     /* job stores */
-    pythonPackages.pymongo
-    pythonPackages.redis
-    #pythonPackages.rethinkdb
-    pythonPackages.sqlalchemy
+    pymongo
+    redis
+    #rethinkdb
+    sqlalchemy
   ] ++ optionals (!isPy3k) /* python 2 only */ [
-    pythonPackages.funcsigs
-    pythonPackages.futures
+    funcsigs
+    futures
   ] ++ optionals (pythonOlder "3.4") [
-    pythonPackages.enum34
+    enum34
   ] ++ optionals doCheck [
-    pythonPackages.pytest
+    pytest
   ];
 
   # TODO: needs rethinkdb & QT4/5

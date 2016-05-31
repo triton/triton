@@ -2,7 +2,15 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, aniso8601
+, flask
+, pytz
+, six
+
+, blinker
+, mock
+, nose
+, pycrypto
 }:
 
 let
@@ -21,15 +29,15 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    pythonPackages.aniso8601
-    pythonPackages.flask
-    pythonPackages.pytz
-    pythonPackages.six
+    aniso8601
+    flask
+    pytz
+    six
   ] ++ optionals doCheck [
-    pythonPackages.blinker
-    pythonPackages.mock
-    pythonPackages.nose
-    pythonPackages.pycrypto
+    blinker
+    mock
+    nose
+    pycrypto
   ];
 
   doCheck = true;

@@ -39,6 +39,8 @@ stdenv.mkDerivation rec {
     )
   '';
 
+  parallelBuild = false;
+
   meta = with stdenv.lib; {
     description = "The internet communications engine";
     homepage = "http://www.zeroc.com/ice.html";

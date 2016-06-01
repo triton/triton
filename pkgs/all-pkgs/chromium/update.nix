@@ -206,12 +206,10 @@ in rec {
     getLinuxFlash = channelName: channel: let
       inherit (channel) version;
       fetchArch = arch: tryFetch (getDebURL channelName version arch debURL);
-      packages = lib.genAttrs ["i386" "amd64"] fetchArch;
+      packages = lib.genAttrs ["amd64"] fetchArch;
       isNew = arch: attr: !(builtins.hasAttr attr channel)
                        && packages.${arch}.success;
-    in channel // lib.optionalAttrs (isNew "i386" "sha256bin32") {
-      sha256bin32 = getHash (packages.i386.value);
-    } // lib.optionalAttrs (isNew "amd64" "sha256bin64") {
+    in channel // lib.optionalAttrs (isNew "amd64" "sha256bin64") {
       sha256bin64 = getHash (packages.amd64.value);
     };
 

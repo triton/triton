@@ -456,9 +456,8 @@ let
 
   consul-api = buildFromGitHub {
     inherit (consul) owner repo;
-    rev = "446d76b432b6a099b2a8d899de2cd36c243e2d22";
-    date = "2016-05-27";
-    sha256 = "b4e4acd8ec838f8fdd3b26d1b6bc1100f2996ed17477aa8718e12ecc466216bc";
+    rev = "v0.6.4";
+    sha256 = "157g5j6a8jf762p308w6sy4byhcqqvm3il5iyjwf5ykavvjizz31";
     buildInputs = [ go-cleanhttp serf ];
     subPackages = [ "api" "tlsutil" ];
   };
@@ -601,11 +600,11 @@ let
   };
 
   envpprof = buildFromGitHub {
-    rev = "8fa1da4090ff3fd48ec8b5a34bf2d063dbcd5526";
+    rev = "0383bfe017e02efb418ffd595fc54777a35e48b0";
     owner = "anacrolix";
     repo = "envpprof";
-    sha256 = "0r6d13b1nk1pf5h1nk3wp08s0gb9any6syk9h9y19hj0dvhsnah1";
-    date = "2016-04-16";
+    sha256 = "0i9d021hmcfkv9wv55r701p6j6r8mj55fpl1kmhdhvar8s92rjgl";
+    date = "2016-05-28";
   };
 
   du = buildFromGitHub {
@@ -1051,11 +1050,11 @@ let
   };
 
   go-humanize = buildFromGitHub {
-    rev = "f3565c9525600a911af3bd34f8b535ea81b2a9e0";
+    rev = "88e58c26e9fe8ac578a0d76a68e32838acf17a8d";
     owner = "dustin";
     repo = "go-humanize";
-    sha256 = "0dkxk6l1klhrndhszpncdbka3898p4rf2i7rxyjwvc0s1jnj9r3r";
-    date = "2016-05-09";
+    sha256 = "06xxhpm88ak5sgwvd0rjcxjx3dpw199dqgn2f7azhp7cjajzissb";
+    date = "2016-05-31";
   };
 
   go-immutable-radix = buildFromGitHub {
@@ -1686,11 +1685,11 @@ let
   };
 
   missinggo = buildFromGitHub {
-    rev = "83d79a090cb76c978cc7a68fb0961de1f25b8049";
+    rev = "e40875155efce3d98562ca9e265e152c364ada3e";
     owner  = "anacrolix";
     repo   = "missinggo";
-    sha256 = "0fjkknkshhh8mcim57jyi32kqm3abpfgmgkgic2whf2hlvalsqvc";
-    date = "2016-05-27";
+    sha256 = "0ph15im9qv4inny5vdiqcccfa5i5imckqn6h761bwlinazj5xz4i";
+    date = "2016-05-31";
     propagatedBuildInputs = [
       b
       btree
@@ -2308,11 +2307,11 @@ let
   };
 
   utp = buildFromGitHub {
-    rev = "065fae8ee7c83d42cea2b452019577e6dc210e6b";
+    rev = "787573b5b9864b9e1d12561b9b1bd1c8c951a51e";
     owner  = "anacrolix";
     repo   = "utp";
-    sha256 = "1djs6kz6jn6iyqspign5npams4dhh2g2g2gn6qbbk2db2kxn4jml";
-    date = "2016-05-27";
+    sha256 = "04z7myghdgvjk9zl3kl8cvw81xyjzs3ij71mdjqdbr9158afffc2";
+    date = "2016-05-31";
     propagatedBuildInputs = [
       envpprof
       missinggo

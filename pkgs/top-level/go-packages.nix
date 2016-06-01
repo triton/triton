@@ -456,8 +456,9 @@ let
 
   consul-api = buildFromGitHub {
     inherit (consul) owner repo;
-    rev = "v0.6.4";
-    sha256 = "157g5j6a8jf762p308w6sy4byhcqqvm3il5iyjwf5ykavvjizz31";
+    rev = "b43f900766ad92eebbd5a8f931fe0fe244f9969d";
+    date = "2016-05-29";
+    sha256 = "b23e92cc7a51574cc4a727915c58247d4e81cb2f47c7256f49ccbcf5311cef9e";
     buildInputs = [ go-cleanhttp serf ];
     subPackages = [ "api" "tlsutil" ];
   };

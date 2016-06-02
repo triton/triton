@@ -61,7 +61,7 @@ let
 
   hasRocksdb = versionAtLeast version "9.0.0" && !hasStaticRocksdb;
 
-  hasStaticRocksdb = versionAtLeast version "10.0.1";
+  hasStaticRocksdb = false; #versionAtLeast version "10.0.1";
 
   # Malloc implementation (can be jemalloc or tcmalloc)
   malloc = if versionAtLeast version "10.0.4" || !hasStaticRocksdb then jemalloc else gperftools;

@@ -5,11 +5,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "librdmacm-1.0.21";
+  name = "librdmacm-1.1.0";
 
   src = fetchurl {
     url = "https://www.openfabrics.org/downloads/rdmacm/${name}.tar.gz";
-    sha256 = "0yx2wr5dvmf5apvc4f4r2f2mlvn05piwvxsqfb60p3rk4jfx56dx";
+    sha256 = "8f10848d4810585d6d70b443abc876c1db8df5e9b8b07e095c7e6eaf4ac380c5";
   };
 
   buildInputs = [

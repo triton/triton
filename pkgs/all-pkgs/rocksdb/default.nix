@@ -14,13 +14,13 @@
 
 stdenv.mkDerivation rec {
   name = "rocksdb-${version}";
-  version = "4.5.1";
+  version = "4.6.1";
 
   src = fetchFromGitHub {
     owner = "facebook";
     repo = "rocksdb";
     rev = "v${version}";
-    sha256 = "1b9b1ef7d63c9b0c35ff5290fa697e6830ce977b4885bbb8e90388f9b1c8b7e5";
+    sha256 = "cdb32358f8dbdafa7480a507862d567e1043c6be348bacbbb7fe000be884403e";
   };
 
   nativeBuildInputs = [

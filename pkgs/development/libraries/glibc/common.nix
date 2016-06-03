@@ -50,6 +50,11 @@ stdenv.mkDerivation ({
       file = "glibc/CVE-2016-3706.patch";
       sha256 = "afdb67650b8982ecdb8a8ab4e42d61e482faec79363194a2dae5de2a4b56b7f3";
     })
+    (fetchTritonPatch {
+      rev = "76d5ccc564b0872d4d7f9e5f2e83aca48a4cc121";
+      file = "glibc/CVE-2016-4429.patch";
+      sha256 = "2541bca87849e1248b9a85bb44877da7029bc05b38a8b2e1b6fe303a77372676";
+    })
 
     /* Have rpcgen(1) look for cpp(1) in $PATH.  */
     (fetchTritonPatch {

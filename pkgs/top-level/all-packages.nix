@@ -2031,11 +2031,15 @@ subversion_1_8 = callPackageAlias "subversion" {
 
 sushi = callPackage ../all-pkgs/sushi { };
 
-swig = callPackage ../all-pkgs/swig { };
-
-swig2 = callPackageAlias "swig" {
+swig_2 = callPackage "swig" {
   channel = "2";
 };
+# Deprecated alias
+swig2 = callPackageAlias "swig_2" { };
+swig_3 = callPackage ../all-pkgs/swig {
+  channel = "3";
+};
+swig = callPackageAlias "swig_3" { };
 
 syncthing = pkgs.goPackages.syncthing.bin // { outputs = [ "bin" ]; };
 

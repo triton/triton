@@ -1,9 +1,22 @@
 { stdenv
 , buildPythonPackage
 , fetchFromGitHub
-
-, pkgs
 , pythonPackages
+
+, acme
+, ConfigArgParse
+, configobj
+, cryptography
+, parsedatetime
+, pkgs
+, psutil
+, pyopenssl
+, python2-pythondialog
+, pyRFC3339
+, pytz
+, six
+, zope-component
+, zope-interface
 }:
 
 let
@@ -13,30 +26,30 @@ in
 
 buildPythonPackage rec {
   name = "certbot-${version}";
-  version = "0.6.0";
+  version = "0.8.0";
 
   src = fetchFromGitHub {
     owner = "certbot";
     repo = "certbot";
     rev = "v${version}";
-    sha256 = "d3edc6764d4e7ef61e9788e887ae6088422199db4c1a3559e0304983b41c70a4";
+    sha256 = "757dd0fdfa4eb05343bf08737ab579c705663c9e12e44af193f1c97c7c9bdf98";
   };
 
   pythonPath = [
+    acme
+    ConfigArgParse
+    configobj
+    cryptography
+    parsedatetime
     pkgs.dialog
-    pythonPackages.acme
-    pythonPackages.ConfigArgParse
-    pythonPackages.configobj
-    pythonPackages.cryptography
-    pythonPackages.parsedatetime
-    pythonPackages.psutil
-    pythonPackages.pyopenssl
-    pythonPackages.python2-pythondialog
-    pythonPackages.pyRFC3339
-    pythonPackages.pytz
-    pythonPackages.six
-    pythonPackages.zope-component
-    pythonPackages.zope-interface
+    psutil
+    pyopenssl
+    python2-pythondialog
+    pyRFC3339
+    pytz
+    six
+    zope-component
+    zope-interface
   ];
 
   disabled = isPy3k;

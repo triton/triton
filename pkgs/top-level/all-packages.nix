@@ -726,8 +726,6 @@ dhcp = callPackage ../all-pkgs/dhcp { };
 
 dhcpcd = callPackage ../all-pkgs/dhcpcd { };
 
-discosrv = pkgs.goPackages.discosrv.bin // { outputs = [ "bin" ]; };
-
 diffutils = callPackage ../all-pkgs/diffutils { };
 
 dmidecode = callPackage ../all-pkgs/dmidecode { };
@@ -1921,8 +1919,6 @@ readline = callPackage ../all-pkgs/readline { };
 recode = callPackage ../all-pkgs/recode { };
 
 redis = callPackage ../all-pkgs/redis { };
-
-relaysrv = pkgs.goPackages.relaysrv.bin // { outputs = [ "bin" ]; };
 
 resolv_wrapper = callPackage ../all-pkgs/resolv_wrapper { };
 

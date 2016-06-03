@@ -6,11 +6,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "mg-20160118";
+  name = "mg-20160421";
 
   src = fetchurl {
     url = "http://homepage.boetes.org/software/mg/${name}.tar.gz";
-    sha256 = "0dl65cx7d71vh8v3l32hql41bhvxj6hj9zb5qjpv1h5ychjhni96";
+    sha256 = "16iswsirhdc8s9v7x1cpnazzryi55zr4ii484prz03warfz8zpdm";
   };
 
   buildInputs = [

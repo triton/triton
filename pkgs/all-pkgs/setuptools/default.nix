@@ -7,13 +7,13 @@
 
 stdenv.mkDerivation rec {
   name = "${python.executable}-setuptools-${version}";
-  # 18.4 and up breaks python34Packages.characteristic and many others
-  version = "21.2.2";
+  # Make sure to update pip/bootstrap.nix setuptools hash when updating
+  version = "22.0.5";
 
   src = fetchPyPi {
     package = "setuptools";
     inherit version;
-    sha256 = "0792954bf85cb23cf8dc07ca2e671730badebfe7c9225889129f2427718f03c6";
+    sha256 = "19aad19471052d5daefe96f2c1fa2e88dcdb17488bf8708d7e6356881ea833cb";
   };
 
   buildInputs = [

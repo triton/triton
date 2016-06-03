@@ -1,24 +1,16 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-
-, mysql
-, pythonPackages
 }:
-
-let
-  inherit (stdenv.lib)
-    optionals;
-in
 
 buildPythonPackage rec {
   name = "sqlalchemy-${version}";
-  version = "1.0.12";
+  version = "1.0.13";
 
   src = fetchPyPi {
     package = "SQLAlchemy";
     inherit version;
-    sha256 = "6679e20eae780b67ba136a4a76f83bb264debaac2542beefe02069d0206518d1";
+    sha256 = "e755fd23b8bd574163d392ae85f41f6cd32eca8fe5bd7b5692de77265bb220cf";
   };
 
   meta = with stdenv.lib; {

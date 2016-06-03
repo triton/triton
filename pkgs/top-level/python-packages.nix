@@ -3376,12 +3376,12 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
   cryptography = buildPythonPackage rec {
     name = "cryptography-${version}";
-    version = "1.3.2";
+    version = "1.3.4";
 
     src = fetchPyPi {
       package = "cryptography";
       inherit version;
-      sha256 = "fbaafa8827966dc588ccb00be813d3149fa8de04aec96e418ea0fdd5f0312088";
+      sha256 = "423ff890c01be7c70dbfeaa967eeef5146f1a43a5f810ffdc07b178e48a105a9";
     };
 
     buildInputs = with self; [
@@ -3409,12 +3409,12 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
   cryptography_vectors = buildPythonPackage rec {
     name = "cryptography_vectors-${version}";
-    version = "1.3.2";
+    version = "1.3.4";
 
     src = fetchPyPi {
       package = "cryptography_vectors";
       inherit version;
-      sha256 = "006a8b9a46ea8b7231d76ad3e613e2f6957b7a86d0a3aab6f0aefd779740466b";
+      sha256 = "4414bce0a3d7f0a3cdbf44da75ae5c7c586fd765c777d99023eb5a3ac58f0196";
     };
   };
 

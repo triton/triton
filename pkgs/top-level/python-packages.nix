@@ -9180,11 +9180,13 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
   };
 
   hypothesis = buildPythonPackage rec {
-    name = "hypothesis-3.1.0";
+    name = "hypothesis-${version}";
+    version = "3.4.0";
 
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/h/hypothesis/${name}.tar.gz";
-      sha256 = "0qyqq9akm4vshhn8cngjc1qykcvsn7cz6dlm6njfsgpbraqrmbbw";
+    src = fetchPyPi {
+      package = "hypothesis";
+      inherit version;
+      sha256 = "b9723e6cd0f1355e5f0db0c255b903fafd19d91506d72623231937cf75416610";
     };
 
     buildInputs = optionals (pythonOlder "3.4") [

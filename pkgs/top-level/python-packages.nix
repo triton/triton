@@ -231,6 +231,8 @@ py = callPackage ../all-pkgs/py { };
 
 pycountry = callPackage ../all-pkgs/pycountry { };
 
+pycparser = callPackage ../all-pkgs/pycparser { };
+
 pycryptodomex = callPackage ../all-pkgs/pycryptodomex { };
 
 pydenticon = callPackage ../all-pkgs/pydenticon { };
@@ -3769,15 +3771,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license = "BSD"; # they don't specify which BSD variant
       platforms = with platforms; linux;
       maintainers = with maintainers; [ bjornfor ];
-    };
-  };
-
-  pycparser = buildPythonPackage rec {
-    name = "pycparser-2.14";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pycparser/${name}.tar.gz";
-      sha256 = "7959b4a74abdc27b312fed1c21e6caf9309ce0b29ea86b591fd2e99ecdf27f73";
     };
   };
 

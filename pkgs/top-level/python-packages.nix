@@ -157,6 +157,8 @@ canonicaljson = callPackage ../all-pkgs/canonicaljson { };
 
 certbot = callPackage ../all-pkgs/certbot { };
 
+cffi = callPackage ../all-pkgs/cffi { };
+
 chardet = callPackage ../all-pkgs/chardet { };
 
 cherrypy = callPackage ../all-pkgs/cherrypy { };
@@ -3740,22 +3742,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license = licenses.asl20;
       homepage = https://github.com/pyca/bcrypt/;
     };
-  };
-
-  cffi = if isPyPy then null else buildPythonPackage rec {
-    name = "cffi-${version}";
-    version = "1.6.0";
-
-    src = fetchPyPi {
-      package = "cffi";
-      inherit version;
-      sha256 = "a7f75c4ef2362c0a0e54657add0a6c509fecbfa3b3807bc0925f5cb1c9f927db";
-    };
-
-    propagatedBuildInputs = [
-      pkgs.libffi
-      self.pycparser
-    ];
   };
 
   pycollada = buildPythonPackage rec {

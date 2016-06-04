@@ -1415,6 +1415,8 @@ libpng = callPackage ../all-pkgs/libpng { };
 
 libproxy = callPackage ../all-pkgs/libproxy { };
 
+libqmi = callPackage ../all-pkgs/libqmi { };
+
 libraw = callPackage ../all-pkgs/libraw { };
 
 libraw1394 = callPackage ../all-pkgs/libraw1394 { };
@@ -3580,8 +3582,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   libshout = callPackage ../development/libraries/libshout { };
 #
 #  libqb = callPackage ../development/libraries/libqb { };
-#
-  libqmi = callPackage ../development/libraries/libqmi { };
 
   libmbim = callPackage ../development/libraries/libmbim { };
 #

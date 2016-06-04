@@ -295,6 +295,8 @@ twisted = callPackage ../all-pkgs/twisted { };
 
 tzlocal = callPackage ../all-pkgs/tzlocal { };
 
+webob = callPackage ../all-pkgs/webob { };
+
 werkzeug = callPackage ../all-pkgs/werkzeug { };
 
 wheel = callPackage ../all-pkgs/wheel { };
@@ -19707,25 +19709,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       maintainers = with maintainers; [ layus ];
     };
   };
-
-  webob = buildPythonPackage rec {
-    version = "1.4.1";
-    name = "webob-${version}";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/W/WebOb/WebOb-${version}.tar.gz";
-      sha256 = "1nz9m6ijf46wfn33zfza13c0k1n4kjnmn3icdlrlgz5yj21vky0j";
-    };
-
-    propagatedBuildInputs = with self; [ nose ];
-
-    meta = {
-      description = "WSGI request and response object";
-      homepage = http://pythonpaste.org/webob/;
-      platforms = platforms.all;
-    };
-  };
-
 
   websockify = buildPythonPackage rec {
     version = "0.7.0";

@@ -17,15 +17,16 @@ let
   inherit (stdenv.lib)
     enFlag
     optionals;
-in
 
+  version = "1.11.0";
+in
 stdenv.mkDerivation rec {
   name = "wayland-${version}";
-  version = "1.10.0";
 
   src = fetchurl {
     url = "http://wayland.freedesktop.org/releases/${name}.tar.xz";
-    sha256 = "1p307ly1yyqjnzn9dbv78yffql2qszn84qk74lwanl3gma8fgxjb";
+    allowHashOutput = false;
+    sha256 = "9540925f7928becfdf5e3b84c70757f6589bf1ceef09bea78784d8e4772c0db0";
   };
 
   nativeBuildInputs = [ ]
@@ -50,6 +51,13 @@ stdenv.mkDerivation rec {
 
   passthru = {
     inherit version;
+
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "C722 3EBE 4EF6 6513 B892  5989 11A3 0156 E0E6 7611";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
   };
 
   meta = with stdenv.lib; {
@@ -61,7 +69,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

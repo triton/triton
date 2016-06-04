@@ -1602,6 +1602,8 @@ mixxx = callPackage ../all-pkgs/mixxx { };
 
 mkvtoolnix = callPackage ../all-pkgs/mkvtoolnix { };
 
+modemmanager = callPackage ../all-pkgs/modemmanager { };
+
 mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 
 mosh = callPackage ../all-pkgs/mosh { };
@@ -3714,8 +3716,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  mktemp = callPackage ../tools/security/mktemp { };
 #
 #  mktorrent = callPackage ../tools/misc/mktorrent { };
-#
-  modemmanager = callPackage ../tools/networking/modemmanager {};
 #
 #  modsecurity_standalone = callPackage ../tools/security/modsecurity { };
 #

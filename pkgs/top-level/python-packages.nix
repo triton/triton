@@ -261,6 +261,8 @@ regex = callPackage ../all-pkgs/regex { };
 
 requests = callPackage ../all-pkgs/requests { };
 
+repoze-who = callPackage ../all-pkgs/repoze-who { };
+
 rpyc = callPackage ../all-pkgs/rpyc { };
 
 safe = callPackage ../all-pkgs/safe { };
@@ -14401,30 +14403,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       homepage = "https://github.com/turicas/mongodict/";
     };
   };
-
-
-  repoze_who = buildPythonPackage rec {
-    name = "repoze.who-${version}";
-    version = "2.2";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/r/repoze.who/${name}.tar.gz";
-      sha256 = "12wsviar45nwn35w2y4i8b929dq2219vmwz8013wx7bpgkn2j9ij";
-    };
-
-    propagatedBuildInputs = with self; [
-      zope-interface webob
-    ];
-    buildInputs = with self; [
-
-    ];
-
-    meta = with stdenv.lib; {
-      description = "WSGI Authentication Middleware / API";
-      homepage = "http://www.repoze.org";
-    };
-  };
-
 
 
   vobject = buildPythonPackage rec {

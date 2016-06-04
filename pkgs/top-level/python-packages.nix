@@ -317,6 +317,8 @@ tzlocal = callPackage ../all-pkgs/tzlocal { };
 
 ujson = callPackage ../all-pkgs/ujson { };
 
+unpaddedbase64 = callPackage ../all-pkgs/unpaddedbase64 { };
+
 webob = callPackage ../all-pkgs/webob { };
 
 werkzeug = callPackage ../all-pkgs/werkzeug { };
@@ -21776,18 +21778,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     propagatedBuildInputs = with self; [ pynacl six ];
   };
-
-  unpaddedbase64 = buildPythonPackage rec {
-    name = "unpaddedbase64-${version}";
-    version = "1.0.1";
-
-    src = pkgs.fetchgit {
-      url = "https://github.com/matrix-org/python-unpaddedbase64.git";
-      rev = "refs/tags/v${version}";
-      sha256 = "f221240a6d414c4244ab906b1dc8983c4d1114acb778cb857f6fc50d710be502";
-    };
-  };
-
 
   thumbor = buildPythonPackage rec {
     name = "thumbor-${version}";

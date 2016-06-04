@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
 
   patches = [ ./CVE-2015-7747.patch ];
 
-  NIX_CFLAGS_COMPILE = "-std=gnu++98";
+  CXXFLAGS = "-std=gnu++98";
 
   meta = with stdenv.lib; {
     description = "Library for reading and writing audio files in various formats";

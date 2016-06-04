@@ -229,6 +229,8 @@ progressbar = callPackage ../all-pkgs/progressbar { };
 
 py = callPackage ../all-pkgs/py { };
 
+py-bcrypt = callPackage ../all-pkgs/py-bcrypt { };
+
 pycountry = callPackage ../all-pkgs/pycountry { };
 
 pycparser = callPackage ../all-pkgs/pycparser { };
@@ -6197,7 +6199,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5    = "2f872ae7c72ca338634c618f2cff5863";
     };
 
-    buildInputs = with self; [ nose pybcrypt];
+    buildInputs = with self; [ nose py-bcrypt];
 
     meta = {
       description = "A password hashing library for Python";
@@ -14486,22 +14488,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     meta = {
       description = "Interface for working with block devices";
       license = licenses.gpl2Plus;
-    };
-  };
-
-  pybcrypt = buildPythonPackage rec {
-    name = "pybcrypt";
-    version = "0.4";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/py-bcrypt/py-bcrypt-${version}.tar.gz";
-      md5 = "dd8b367d6b716a2ea2e72392525f4e36";
-    };
-
-    meta = {
-      description = "bcrypt password hashing and key derivation";
-      homepage = https://code.google.com/p/py-bcrypt2;
-      license = "BSD";
     };
   };
 

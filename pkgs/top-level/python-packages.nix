@@ -291,6 +291,8 @@ setuptools = callPackage ../all-pkgs/setuptools { };
 
 setuptools-scm = callPackage ../all-pkgs/setuptools-scm { };
 
+signedjson = callPackage ../all-pkgs/signedjson { };
+
 singledispatch = callPackage ../all-pkgs/singledispatch { };
 
 six = callPackage ../all-pkgs/six { };
@@ -21812,21 +21814,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [ pynacl six ];
-  };
-
-  signedjson = buildPythonPackage rec {
-    name = "signedjson-${version}";
-    version = "1.0.0";
-
-    src = pkgs.fetchgit {
-      url = "https://github.com/matrix-org/python-signedjson.git";
-      rev = "refs/tags/v${version}";
-      sha256 = "4ef1c89ea85846632d711a37a2e6aae1348c62b9d62ed0e80428b4a00642e9df";
-    };
-
-    propagatedBuildInputs = with self; [
-      canonicaljson unpaddedbase64 pynacl
-    ];
   };
 
   unpaddedbase64 = buildPythonPackage rec {

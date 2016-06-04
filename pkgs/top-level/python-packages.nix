@@ -215,6 +215,8 @@ pycountry = callPackage ../all-pkgs/pycountry { };
 
 pycryptodomex = callPackage ../all-pkgs/pycryptodomex { };
 
+pydenticon = callPackage ../all-pkgs/pydenticon { };
+
 pygame = callPackage ../all-pkgs/pygame { };
 
 pygtk = callPackage ../all-pkgs/pygtk { };
@@ -22008,19 +22010,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       url = "https://pypi.python.org/packages/source/d/daemonize/daemonize-${version}.tar.gz";
       sha256 = "0y139sq657bpzfv6k0aqm4071z4s40i6ybpni9qvngvdcz6r86n2";
     };
-  };
-
-  pydenticon = buildPythonPackage rec {
-    name = "pydenticon-${version}";
-    version = "0.2";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pydenticon/pydenticon-0.2.tar.gz";
-      sha256 = "035dawcspgjw2rksbnn863s7b0i9ac8cc1nshshvd1l837ir1czp";
-    };
-    propagatedBuildInputs = with self; [
-      pillow mock
-    ];
   };
 
   pymacaroons-pynacl = buildPythonPackage rec {

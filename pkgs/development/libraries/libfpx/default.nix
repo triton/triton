@@ -13,6 +13,8 @@ stdenv.mkDerivation rec {
     substituteInPlace jpeg/ejpeg.h --replace "int No_JPEG_Header_Flag" ""
   '';
 
+  CXXFLAGS = "-std=c++11";
+
   meta = with stdenv.lib; {
     homepage = http://www.imagemagick.org;
     description = "A library for manipulating FlashPIX images";

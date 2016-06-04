@@ -211,6 +211,8 @@ py = callPackage ../all-pkgs/py { };
 
 pycountry = callPackage ../all-pkgs/pycountry { };
 
+pycryptodomex = callPackage ../all-pkgs/pycryptodomex { };
+
 pygame = callPackage ../all-pkgs/pygame { };
 
 pygtk = callPackage ../all-pkgs/pygtk { };

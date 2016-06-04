@@ -54,6 +54,8 @@ stdenv.mkDerivation rec {
       --autostart=dbus \
   '';
 
+  CXXFLAGS = "-std=c++98";
+
   buildPhase = ''
     python waf build
   '';

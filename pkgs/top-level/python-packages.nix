@@ -153,6 +153,8 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   brotli = pkgs.brotli;
 };
 
+canonicaljson = callPackage ../all-pkgs/canonicaljson { };
+
 certbot = callPackage ../all-pkgs/certbot { };
 
 chardet = callPackage ../all-pkgs/chardet { };
@@ -21855,21 +21857,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       url = "https://pypi.python.org/packages/source/b/blist/blist-${version}.tar.gz";
       sha256 = "1hqz9pqbwx0czvq9bjdqjqh5bwfksva1is0anfazig81n18c84is";
     };
-  };
-
-  canonicaljson = buildPythonPackage rec {
-    name = "canonicaljson-${version}";
-    version = "1.0.0";
-
-    src = pkgs.fetchgit {
-      url = "https://github.com/matrix-org/python-canonicaljson.git";
-      rev = "refs/tags/v${version}";
-      sha256 = "29802d0effacd26ca1d6eccc8d4c7e4f543a194754ba89263861e87f44a83f0c";
-    };
-
-    propagatedBuildInputs = with self; [
-      frozendict simplejson
-    ];
   };
 
   daemonize = buildPythonPackage rec {

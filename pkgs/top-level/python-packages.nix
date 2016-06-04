@@ -446,7 +446,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1ywimbisgb5g7xl9nrfwcm7dv3j8fsrjfp7bxb3l58zbsrzj6z2s";
     };
 
-    propagatedBuildInputs = with self; [ appdirs colorama python-dateutil requests2 requests_toolbelt sqlalchemy ];
+    propagatedBuildInputs = with self; [ appdirs colorama python-dateutil requests requests_toolbelt sqlalchemy ];
 
     makeWrapperArgs = [ "--prefix LIBFUSE_PATH : ${pkgs.fuse}/lib/libfuse.so" ];
 
@@ -471,7 +471,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       pyasn1
       pyopenssl
       pytz
-      requests2
+      requests
       pyRFC3339
     ];
   };
@@ -545,7 +545,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1f32k18ck54adqlgvh6fjhy4yavcyrwy813prjyqppqqq4bn1a09";
     };
 
-    propagatedBuildInputs = with self; [ requests2 pyjwt ];
+    propagatedBuildInputs = with self; [ requests pyjwt ];
 
     meta = {
       description = "Library to make it easy for python application to authenticate to Azure Active Directory (AAD) in order to access AAD protected web resources";
@@ -1299,7 +1299,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "5499efd85c54c757c0e757b5407ee47f";
     };
 
-    propagatedBuildInputs = with self; [ python-dateutil futures pyopenssl requests2 ];
+    propagatedBuildInputs = with self; [ python-dateutil futures pyopenssl requests ];
 
     meta = {
       description = "Microsoft Azure SDK for Python";
@@ -1351,7 +1351,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       url = https://pypi.python.org/packages/source/a/azure-mgmt-common/azure-mgmt-common-0.20.0.zip;
       sha256 = "1rmzpz3733wv31rsnqpdy4bbafvk5dhbqx7q0xf62dlz7p0i4f66";
     };
-    propagatedBuildInputs = with self; [ azure-common azure-mgmt-nspkg requests2 ];
+    propagatedBuildInputs = with self; [ azure-common azure-mgmt-nspkg requests ];
     postInstall = ''
       echo "__import__('pkg_resources').declare_namespace(__name__)" >> "$out/lib/${python.libPrefix}"/site-packages/azure/__init__.py
       echo "__import__('pkg_resources').declare_namespace(__name__)" >> "$out/lib/${python.libPrefix}"/site-packages/azure/mgmt/__init__.py
@@ -1467,7 +1467,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       url = https://pypi.python.org/packages/source/a/azure-storage/azure-storage-0.20.3.zip;
       sha256 = "06bmw6k2000kln5jwk5r9bgcalqbyvqirmdh9gq4s6nb4fv3c0jb";
     };
-    propagatedBuildInputs = with self; [ azure-common futures python-dateutil requests2 ];
+    propagatedBuildInputs = with self; [ azure-common futures python-dateutil requests ];
     postInstall = ''
       echo "__import__('pkg_resources').declare_namespace(__name__)" >> "$out/lib/${python.libPrefix}"/site-packages/azure/__init__.py
     '';
@@ -1486,7 +1486,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       url = https://pypi.python.org/packages/source/a/azure-servicemanagement-legacy/azure-servicemanagement-legacy-0.20.1.zip;
       sha256 = "17dwrp99sx5x9cm4vldkaxhki9gbd6dlafa0lpr2n92xhh2838zs";
     };
-    propagatedBuildInputs = with self; [ azure-common requests2 ];
+    propagatedBuildInputs = with self; [ azure-common requests ];
     postInstall = ''
       echo "__import__('pkg_resources').declare_namespace(__name__)" >> "$out/lib/${python.libPrefix}"/site-packages/azure/__init__.py
     '';
@@ -1607,7 +1607,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1glzigrbip9w2jr2gcmwa96rffhi9x9l1455dhbcx2gh3pmcykl6";
     };
 
-    propagatedBuildInputs = [ self.requests2 ];
+    propagatedBuildInputs = [ self.requests ];
 
     meta = with stdenv.lib; {
       homepage = https://betamax.readthedocs.org/en/latest/;
@@ -1863,7 +1863,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     buildInputs = with self; [ pillow tox mock six nose ];
-    propagatedBuildInputs = with self; [ requests2 decorator simplejson ];
+    propagatedBuildInputs = with self; [ requests decorator simplejson ];
 
     meta = {
       description = "The Datadog Python library ";
@@ -1928,7 +1928,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1spcfxixyk9k7pk82jm6zqkwk031s95lh8q0mz7539jrb7269bcc";
     };
 
-    propagatedBuildInputs = with self; [ cookies mock requests2 six ];
+    propagatedBuildInputs = with self; [ cookies mock requests six ];
 
 
   };
@@ -2101,7 +2101,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       psutil
       pymongo
       pyyaml
-      requests2
+      requests
       sqlalchemy
       tables
       toolz
@@ -2294,7 +2294,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     '';
 
     buildInputs = [ self.nose self.mock ];
-    propagatedBuildInputs = [ self.requests2 self.httpretty ];
+    propagatedBuildInputs = [ self.requests self.httpretty ];
 
     meta = {
       homepage = https://github.com/boto/boto;
@@ -2358,7 +2358,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     propagatedBuildInputs =
       [ self.python-dateutil
-        self.requests2
+        self.requests
         self.jmespath
       ];
 
@@ -2435,7 +2435,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = with self; [ mock unittest2 nose /* jira megaplan */ ];
     propagatedBuildInputs = with self; [
-      twiggy requests2 offtrac bugzilla taskw python-dateutil pytz keyring six
+      twiggy requests offtrac bugzilla taskw python-dateutil pytz keyring six
       jinja2 pycurl dogpile_cache lockfile click
     ];
 
@@ -2480,7 +2480,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     patches = [ ../development/python-modules/bugzilla/checkPhase-fix-cookie-compare.patch ];
 
     buildInputs = with self; [ pep8 coverage logilab_common ];
-    propagatedBuildInputs = [ self.requests2 ];
+    propagatedBuildInputs = [ self.requests ];
 
     preCheck = ''
       mkdir -p check-phase
@@ -2526,7 +2526,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "3739af0f59151d1aaa67035fec8f97c6";
     };
 
-    propagatedBuildInputs = [ self.requests2 self.py ];
+    propagatedBuildInputs = [ self.requests self.py ];
 
     meta = {
       homepage = https://bitbucket.org/hpk42/devpi;
@@ -2894,7 +2894,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sed -i 's/==/>=/' requirements.txt
     '';
 
-    propagatedBuildInputs = with self; [ docopt requests2 pygments ];
+    propagatedBuildInputs = with self; [ docopt requests pygments ];
 
     # Error when running tests:
     # No local packages or download links found for requests
@@ -3245,7 +3245,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0vfyr499sbc4nnhhijp2lznyj507nnak95bvv9w8y78ngxggskbh";
     };
 
-    buildInputs = with self; [ requests2 six pytest ];
+    buildInputs = with self; [ requests six pytest ];
 
     meta = {
       description = "Python client for Consul (http://www.consul.io/)";
@@ -3441,7 +3441,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     propagatedBuildInputs = with self; [
       pbr stevedore netaddr iso8601 six oslo-i18n oslo-utils Babel pyyaml eventlet
-      requests2 urllib3 oslo-concurrency suds-jurko
+      requests urllib3 oslo-concurrency suds-jurko
     ];
     buildInputs = with self; [
       bandit oslosphinx coverage testtools testscenarios testrepository mock
@@ -3459,7 +3459,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      pbr argparse requests2 six keystoneclient cliff oslo-i18n oslo-serialization
+      pbr argparse requests six keystoneclient cliff oslo-i18n oslo-serialization
       oslo-utils
     ];
     buildInputs = with self; [
@@ -3509,7 +3509,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     buildInputs = with self; [
       pbr testtools testscenarios testrepository requests-mock fixtures ];
     propagatedBuildInputs = with self; [
-      Babel argparse prettytable requests2 simplejson six iso8601
+      Babel argparse prettytable requests simplejson six iso8601
       keystoneclient tempest-lib ];
 
     # TODO: check if removing this test is really harmless
@@ -3580,7 +3580,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     propagatedBuildInputs = with self; [
      pbr six Babel cliff os-client-config oslo-config oslo-i18n oslo-utils
-     glanceclient keystoneclient novaclient cinderclient neutronclient requests2
+     glanceclient keystoneclient novaclient cinderclient neutronclient requests
      stevedore cliff-tablib
     ];
     buildInputs = with self; [
@@ -4120,7 +4120,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = with self; [ mock sqlite3 ];
 
-    propagatedBuildInputs = with self; [ self.six requests2 ];
+    propagatedBuildInputs = with self; [ self.six requests ];
 
     meta = {
       description = "Persistent cache for requests library";
@@ -4452,7 +4452,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1l7q0179y4lmv24z4q12653141wc1b1zzgbfw46yzbs6mj7i4939";
     };
 
-    propagatedBuildInputs = with self; [ six requests2 websocket_client ];
+    propagatedBuildInputs = with self; [ six requests websocket_client ];
 
     # Version conflict
 
@@ -4517,7 +4517,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     propagatedBuildInputs = with self; [
       setuptools docker_registry_core blinker flask gevent gunicorn pyyaml
-      requests2 rsa sqlalchemy setuptools backports_lzma pyasn1 m2crypto
+      requests rsa sqlalchemy setuptools backports_lzma pyasn1 m2crypto
     ];
 
     patchPhase = "> requirements/main.txt";
@@ -4628,7 +4628,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 ="0ams289qcgna96aak96jbz6wybs6qb95h2gn8lb4lmx2p5sq4q56";
     };
 
-    propagatedBuildInputs = with self; [ requests2 six ];
+    propagatedBuildInputs = with self; [ requests six ];
 
     meta = {
       description = "Digital Ocean API python wrapper";
@@ -4702,7 +4702,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "f65c12bd97f09e29a951bc7cb30a74e005fc4b2f8bb48778796be3f73866b173";
     };
 
-    propagatedBuildInputs = with self; [ requests2 urllib3 mock setuptools ];
+    propagatedBuildInputs = with self; [ requests urllib3 mock setuptools ];
 
     meta = {
       description = "A Python library for Dropbox's HTTP-based Core and Datastore APIs";
@@ -4765,7 +4765,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     # Check is disabled because running them destroy the content of the local cluster!
     # https://github.com/elasticsearch/elasticsearch-py/tree/master/test_elasticsearch
-    propagatedBuildInputs = with self; [ urllib3 requests2 ];
+    propagatedBuildInputs = with self; [ urllib3 requests ];
     buildInputs = with self; [ nosexcover mock ];
 
     meta = {
@@ -5243,7 +5243,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       mutagen
       protobuf
       setuptools
-      requests2
+      requests
       python-dateutil
       proboscis
       mock
@@ -5435,7 +5435,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       pyasn1
       pycparser
       pycrypto
-      requests2
+      requests
       six
     ] ++ optionals (pythonOlder "3.4") [
       enum34
@@ -5714,7 +5714,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     '';
 
     propagatedBuildInputs = with self; [ six clint pyyaml docopt pytest
-      requests2 jsonpatch args ];
+      requests jsonpatch args ];
 
     meta = with stdenv.lib; {
       description = "A python wrapper for the various Internet Archive APIs";
@@ -6927,7 +6927,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       url = "https://pypi.python.org/packages/source/p/py3status/${name}.tar.gz";
       sha256 = "1aq4l1lj6j54a8mh9y3yscbxv41bbhz89fiwnydj2gx0md5sq5v5";
     };
-    propagatedBuildInputs = with self; [ requests2 ];
+    propagatedBuildInputs = with self; [ requests ];
     prePatch = ''
       sed -i -e "s|\[\"acpi\"|\[\"${pkgs.acpi}/bin/acpi\"|" py3status/modules/battery_level.py
     '';
@@ -7694,7 +7694,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
         pygments
         simplejson
         python-dateutil
-        requests2
+        requests
         sqlparse
         jinja2
         autopep8
@@ -8153,7 +8153,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     # lots of networking and other fails
     buildInputs = with self; [ mock pytest nose ];
     propagatedBuildInputs = with self; [
-      requests2 six pyyaml texttable docopt docker dockerpty websocket_client
+      requests six pyyaml texttable docopt docker dockerpty websocket_client
       enum34 jsonschema
     ];
     patchPhase = ''
@@ -8406,7 +8406,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "10ivzk88m8nn3bqbg6xgv6yfy2dgp6yzbcvr645y93pzlash4xpj";
     };
 
-    propagatedBuildInputs = with self; [ coverage ddt nose pyyaml requests2 six testtools python_mimeparse ];
+    propagatedBuildInputs = with self; [ coverage ddt nose pyyaml requests six testtools python_mimeparse ];
 
     # The travis build fails since the migration from multiprocessing to threading for hosting the API under test.
     # OSError: [Errno 98] Address already in use
@@ -8863,7 +8863,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = with self; [ unittest2 pytest mock betamax betamax-matchers ];
 
-    propagatedBuildInputs = with self; [ requests2 pyopenssl uritemplate_py
+    propagatedBuildInputs = with self; [ requests pyopenssl uritemplate_py
       ndg-httpsclient requests_toolbelt pyasn1 ];
 
     postPatch = ''
@@ -9216,7 +9216,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0f295zj272plr9lhf80kgz19dxkargwv3ar83rwavrcy516mgg9n";
     };
 
-    buildInputs = with self; [ tornado requests2 httplib2 sure nose coverage certifi ];
+    buildInputs = with self; [ tornado requests httplib2 sure nose coverage certifi ];
 
     propagatedBuildInputs = with self; [ urllib3 ];
 
@@ -9348,7 +9348,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     '';
 
     propagatedBuildInputs = with self; [
-      requests2
+      requests
       cgroup-utils docker-custom docutils lti mock pygments
       pymongo pyyaml rpyc sh simpleldap sphinx_rtd_theme tidylib
       websocket_client watchdog webpy-custom
@@ -9494,7 +9494,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     buildInputs = with self; [ nose pkgs.glibcLocales pygments ] ++ optionals isPy27 [mock];
 
     propagatedBuildInputs = with self;
-      [decorator pickleshare simplegeneric traitlets readline requests2 pexpect sqlite3];
+      [decorator pickleshare simplegeneric traitlets readline requests pexpect sqlite3];
 
     LC_ALL="en_US.UTF-8";
 
@@ -10091,7 +10091,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "03a306575cf274719b3206ecee0bda9e";
     };
 
-    propagatedBuildInputs = with self; [ requests2 ];
+    propagatedBuildInputs = with self; [ requests ];
 
     meta = {
       homepage = "https://github.com/ghickman/linode";
@@ -10128,7 +10128,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "90cf4d029d58ad58d19ea17a16e59c34";
     };
 
-    propagatedBuildInputs = [ self.msgpack self.requests2 self.flask self.gevent self.pyzmq ];
+    propagatedBuildInputs = [ self.msgpack self.requests self.flask self.gevent self.pyzmq ];
     buildInputs = [ self.mock self.unittest2 ];
 
     meta = {
@@ -10459,7 +10459,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "02jkwly4gw1jqm55l4wwn0j0ggnysx55inw9j96bif5l49z5cacd";
     };
 
-    propagatedBuildInputs = with self; [ requests2 beautifulsoup six ];
+    propagatedBuildInputs = with self; [ requests beautifulsoup six ];
 
     meta = {
       description = "A Python library for automating interaction with websites";
@@ -10534,7 +10534,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     buildInputs = with self; [ pyflakes pep8 ];
     propagatedBuildInputs = with self; [
       django_1_6 filebrowser_safe grappelli_safe bleach tzlocal beautifulsoup
-      requests2 requests_oauthlib future pillow
+      requests requests_oauthlib future pillow
     ];
 
     # Tests Fail Due to Syntax Warning, Fixed for v3.1.11+
@@ -10663,7 +10663,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = with self; [
       pkgs.libjpeg pkgs.freetype pkgs.zlib pkgs.glibcLocales
-      pillow twitter pyfiglet requests2 arrow python-dateutil pysocks
+      pillow twitter pyfiglet requests arrow python-dateutil pysocks
     ];
 
     meta = {
@@ -11687,7 +11687,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = with self; [nose pkgs.glibcLocales]  ++ optionals isPy27 [mock];
 
-    propagatedBuildInputs = with self; [jinja2 tornado ipython_genutils traitlets jupyter_core jupyter_client nbformat nbconvert ipykernel terminado requests2 pexpect];
+    propagatedBuildInputs = with self; [jinja2 tornado ipython_genutils traitlets jupyter_core jupyter_client nbformat nbconvert ipykernel terminado requests pexpect];
 
     checkPhase = ''
       nosetests -v
@@ -11897,7 +11897,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = [ pkgs.makeWrapper ];
 
-    propagatedBuildInputs = with self; [ pkgs.rtmpdump pycrypto requests2 ]
+    propagatedBuildInputs = with self; [ pkgs.rtmpdump pycrypto requests ]
       ++ optionals isPy27 [ singledispatch futures ]
       ++ optionals isPy33 [ singledispatch ];
 
@@ -12184,7 +12184,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
 
     propagatedBuildInputs = with self; [
-      pbr requests2 sphinx_1_2
+      pbr requests sphinx_1_2
     ];
   };
 
@@ -12491,7 +12491,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      six Babel simplejson requests2 keystoneclient prettytable argparse pbr
+      six Babel simplejson requests keystoneclient prettytable argparse pbr
     ];
     buildInputs = with self; [
       testrepository requests-mock
@@ -12516,7 +12516,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      pbr six simplejson keystoneclient requests2 oslo-utils oslo-serialization
+      pbr six simplejson keystoneclient requests oslo-utils oslo-serialization
       oslo-i18n netaddr iso8601 cliff argparse
     ];
     buildInputs = with self; [
@@ -12630,7 +12630,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
    };
 
    propagatedBuildInputs = with self; [
-     oslo-i18n oslo-utils six requests2 keystoneclient prettytable Babel pbr
+     oslo-i18n oslo-utils six requests keystoneclient prettytable Babel pbr
      argparse warlock
    ];
    buildInputs = with self; [
@@ -12878,7 +12878,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      pbr requests2 futures six
+      pbr requests futures six
     ];
     buildInputs = with self; [
       testtools testrepository mock
@@ -13107,7 +13107,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      requests2 oslo-config oslo-i18n oslo-serialization oslo-utils six
+      requests oslo-config oslo-i18n oslo-serialization oslo-utils six
     ];
     buildInputs = with self; [
       oslosphinx httpretty oslotest
@@ -13337,7 +13337,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     buildInputs = with self; [ pbr testtools testresources testrepository mock
                                pep8 fixtures mox3 requests-mock ];
-    propagatedBuildInputs = with self; [ argparse iso8601 requests2 six stevedore
+    propagatedBuildInputs = with self; [ argparse iso8601 requests six stevedore
                                          webob oslo-config ];
     patchPhase = ''
       sed -i 's@python@${python.interpreter}@' .testr.conf
@@ -13358,7 +13358,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     '';
 
     buildInputs = with self; [ pbr testtools testrepository mock ];
-    propagatedBuildInputs = with self; [ six requests2 ];
+    propagatedBuildInputs = with self; [ six requests ];
   };
 
   mox3 = buildPythonPackage rec {
@@ -13950,7 +13950,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1lz5f7xc53bk8ri4806xfpisvhyqdxdniwk0ywifinnhzx47jgp7";
      };
 
-     propagatedBuildInputs = with self; [ click_5 requests2 bottle pyserial lockfile colorama];
+     propagatedBuildInputs = with self; [ click_5 requests bottle pyserial lockfile colorama];
 
      meta = with stdenv.lib; {
      description = "An open source ecosystem for IoT development";
@@ -14195,7 +14195,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      requests2
+      requests
       decorator
       flake8
       mock
@@ -14362,7 +14362,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0lnl1760mz1d1jyl4w88mm9ji2ww7jzyis36d1g29bqnn6f065q1";
     };
 
-    propagatedBuildInputs = with self; [ requests2 audioread ];
+    propagatedBuildInputs = with self; [ requests audioread ];
 
     patches = [ ../development/python-modules/pyacoustid-py3.patch ];
 
@@ -15780,7 +15780,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0hvim60bhgfj91m7pp8jfmb49f087xqlgkqa505zw28r7yl0hcfp";
     };
 
-    propagatedBuildInputs = with self; [ requests2 ];
+    propagatedBuildInputs = with self; [ requests ];
 
     meta = {
       broken = true;  # missing lots of dependencies with rackspace-novaclient
@@ -16294,7 +16294,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0vx252nzq5h9m9brwnw2ph8aj526y26jr2dqcafzzcdx6z4l8vj4";
     };
 
-    propagatedBuildInputs = with self; [ oauthlib requests2 ];
+    propagatedBuildInputs = with self; [ oauthlib requests ];
 
     meta = {
       description = "OAuthlib authentication support for Requests";
@@ -16312,7 +16312,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "192pz6i1fp8vc1qasg6ccxpdsmpbqi3fqf5bgx3vpadp5x0rrz4f";
     };
 
-    propagatedBuildInputs = with self; [ requests2 ];
+    propagatedBuildInputs = with self; [ requests ];
 
     buildInputs = with self; [ betamax ];
 
@@ -16610,7 +16610,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      requests2
+      requests
     ];
     buildInputs = with self; [
 
@@ -18794,7 +18794,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
         oslotest pep8 ];
     propagatedBuildInputs = with self; [
         oslo-serialization oslo-config oslo-i18n oslo-utils
-        Babel argparse prettytable requests2 six iso8601 stevedore
+        Babel argparse prettytable requests six iso8601 stevedore
         netaddr debtcollector bandit webob mock pycrypto ];
 
     patchPhase = ''
@@ -18825,7 +18825,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     ];
     propagatedBuildInputs = with self; [
       pbr Babel oslo-config oslo-context oslo-i18n oslo-serialization oslo-utils
-      requests2 six webob keystoneclient pycadf oslo-messaging
+      requests six webob keystoneclient pycadf oslo-messaging
     ];
 
     # lots of "unhashable type" errors
@@ -19243,7 +19243,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0n2shilamgwhzmvf534xg7f6hrnznbixyl5pw2f5a3f391gwy37h";
     };
 
-    propagatedBuildInputs = with self; [ requests2 six requests_oauthlib ];
+    propagatedBuildInputs = with self; [ requests six requests_oauthlib ];
 
     meta = {
       homepage = "https://github.com/tweepy/tweepy";
@@ -19457,7 +19457,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "1daa54bac316be6624d7ee77373144bb";
     };
 
-    propagatedBuildInputs = with self; [ requests2 ];
+    propagatedBuildInputs = with self; [ requests ];
 
 
     meta = {
@@ -19677,7 +19677,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
         sha256 = "1qjvvr2v9gfnwskdl0ayazpcmiyw9zlgnijnhgq9mcri5gq9jw5h";
     };
 
-    propagatedBuildInputs = with self; [ requests2 ];
+    propagatedBuildInputs = with self; [ requests ];
 
     # Tests disabled. They fail because they try to access the network
 
@@ -20723,7 +20723,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
   tunigo = buildPythonPackage rec {
     name = "tunigo-${version}";
     version = "0.1.3";
-    propagatedBuildInputs = with self; [ requests2 ];
+    propagatedBuildInputs = with self; [ requests ];
 
     src = pkgs.fetchFromGitHub {
       owner = "trygveaa";
@@ -22130,7 +22130,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     setupPyBuildFlags = ["--qt" "--xdg"];
 
-    propagatedBuildInputs = with self; [ pillow prettytable pyyaml python-dateutil gdata requests2 mechanize feedparser lxml pkgs.gnupg pyqt4 pkgs.libyaml simplejson cssselect futures ];
+    propagatedBuildInputs = with self; [ pillow prettytable pyyaml python-dateutil gdata requests mechanize feedparser lxml pkgs.gnupg pyqt4 pkgs.libyaml simplejson cssselect futures ];
 
     meta = {
       homepage = http://weboob.org;
@@ -22876,7 +22876,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     name = "ovh-${version}";
     version = "0.3.5";
     buildInputs = with self; [ d2to1 ];
-    propagatedBuildInputs = with self; [ requests2 ];
+    propagatedBuildInputs = with self; [ requests ];
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/o/ovh/ovh-${version}.tar.gz";

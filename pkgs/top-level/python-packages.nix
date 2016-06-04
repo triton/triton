@@ -161,6 +161,8 @@ click = callPackage ../all-pkgs/click { };
 
 cython = callPackage ../all-pkgs/cython { };
 
+decorator = callPackage ../all-pkgs/decorator { };
+
 deluge = callPackage ../all-pkgs/deluge { };
 
 discogs-client = callPackage ../all-pkgs/discogs-client { };
@@ -4239,22 +4241,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       description = "Unix de-duplicating archiver";
       license = licenses.gpl3;
       homepage = https://github.com/basak/ddar;
-    };
-  };
-
-  decorator = buildPythonPackage rec {
-    name = "decorator-${version}";
-    version = "4.0.6";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/d/decorator/${name}.tar.gz";
-      sha256 = "1c6254597777fd003da2e8fb503c3dbf3d9e8f8d55f054709c0e65be3467209c";
-    };
-
-    meta = {
-      homepage = https://pypi.python.org/pypi/decorator;
-      description = "Better living through Python with decorators";
-      license = licenses.mit;
     };
   };
 

@@ -189,6 +189,8 @@ flask-restplus = callPackage ../all-pkgs/flask-restplus { };
 
 flexget = callPackage ../all-pkgs/flexget { };
 
+frozendict = callPackage ../all-pkgs/frozendict { };
+
 future = callPackage ../all-pkgs/future { };
 
 futures = callPackage ../all-pkgs/futures { };
@@ -4987,21 +4989,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     patches = [ ../development/python-modules/fedpkg-buildfix.diff ];
     propagatedBuildInputs = with self; [ rpkg offtrac urlgrabber fedora_cert ];
   });
-
-  frozendict = buildPythonPackage rec {
-    name = "frozendict-0.5";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/f/frozendict/${name}.tar.gz";
-      sha256 = "0m4kg6hbadvf99if78nx01q7qnbyhdw3x4znl5dasgciyi54432n";
-    };
-
-    meta = {
-      homepage = https://github.com/slezica/python-frozendict;
-      description = "An immutable dictionary";
-      license = stdenv.lib.licenses.mit;
-    };
-  };
 
   ftputil = buildPythonPackage rec {
     version = "3.3";

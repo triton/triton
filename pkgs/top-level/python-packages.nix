@@ -167,6 +167,8 @@ click = callPackage ../all-pkgs/click { };
 
 cython = callPackage ../all-pkgs/cython { };
 
+daemonize = callPackage ../all-pkgs/daemonize { };
+
 decorator = callPackage ../all-pkgs/decorator { };
 
 deluge = callPackage ../all-pkgs/deluge { };
@@ -21842,16 +21844,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/b/blist/blist-${version}.tar.gz";
       sha256 = "1hqz9pqbwx0czvq9bjdqjqh5bwfksva1is0anfazig81n18c84is";
-    };
-  };
-
-  daemonize = buildPythonPackage rec {
-    name = "daemonize-${version}";
-    version = "2.4.2";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/d/daemonize/daemonize-${version}.tar.gz";
-      sha256 = "0y139sq657bpzfv6k0aqm4071z4s40i6ybpni9qvngvdcz6r86n2";
     };
   };
 

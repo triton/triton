@@ -197,6 +197,8 @@ mopidy = callPackage ../all-pkgs/mopidy { };
 
 mutagen = callPackage ../all-pkgs/mutagen { };
 
+netaddr = callPackage ../all-pkgs/netaddr { };
+
 notify-python = callPackage ../all-pkgs/notify-python { };
 
 pathlib = callPackage ../all-pkgs/pathlib { };
@@ -11367,24 +11369,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       meta = "Elegant Python library for XMPP";
       license = licenses.mit;
       homepage = https://dev.louiz.org/projects/slixmpp;
-    };
-  };
-
-  netaddr = buildPythonPackage rec {
-    name = "netaddr-0.7.18";
-    disabled = isPy35;  # https://github.com/drkjam/netaddr/issues/117
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/n/netaddr/${name}.tar.gz";
-      sha256 = "06dxjlbcicq7q3vqy8agq11ra01kvvd47j4mk6dmghjsyzyckxd1";
-    };
-
-    LC_ALL = "en_US.UTF-8";
-    buildInputs = [ pkgs.glibcLocales ];
-
-    meta = {
-      homepage = https://github.com/drkjam/netaddr/;
-      description = "A network address manipulation library for Python";
     };
   };
 

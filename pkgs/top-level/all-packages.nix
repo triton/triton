@@ -9573,7 +9573,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  abook = callPackage ../applications/misc/abook { };
 #
-  adobe-reader = callPackage_i686 ../applications/misc/adobe-reader { };
+#  adobe-reader = callPackage_i686 ../applications/misc/adobe-reader { };
 #
 #  aewan = callPackage ../applications/editors/aewan { };
 #

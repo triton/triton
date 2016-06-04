@@ -11,7 +11,7 @@ let
 in
 
 buildPythonPackage rec {
-  name = "service-identify-${version}";
+  name = "service-identity-${version}";
   version = "16.0.0";
 
   src = fetchPyPi {

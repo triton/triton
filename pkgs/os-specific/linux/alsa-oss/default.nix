@@ -1,4 +1,11 @@
-{stdenv, fetchurl, alsaLib, gettext, ncurses, libsamplerate}:
+{ stdenv
+, fetchurl
+, gettext
+
+, alsa-lib
+, libsamplerate
+, ncurses
+}:
 
 stdenv.mkDerivation rec {
   name = "alsa-oss-1.0.28";
@@ -11,26 +18,28 @@ stdenv.mkDerivation rec {
     sha256 = "1mbabiywxjjlvdh257j3a0v4vvy69mwwnvc3xlq7pg50i2m2rris";
   };
 
-  buildInputs = [ alsaLib ncurses libsamplerate ];
   nativeBuildInputs = [ gettext ];
 
-  configureFlags = "--disable-xmlto";
+  buildInputs = [
+    alsa-lib
+    libsamplerate
+    ncurses
+  ];
 
-  installFlags = "ASOUND_STATE_DIR=$(TMPDIR)/dummy";
+  configureFlags = [
+    "--disable-xmlto"
+  ];
 
-  preConfigure =
-    ''
-    '';
+  installFlags = [
+    "ASOUND_STATE_DIR=$(TMPDIR)/dummy"
+  ];
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://www.alsa-project.org/;
-    description = "ALSA, the Advanced Linux Sound Architecture alsa-oss emulation";
-
-    longDescription = ''
-      The Advanced Linux Sound Architecture (ALSA) provides audio and
-      MIDI functionality to the Linux-based operating system.
-    '';
-
-    platforms = stdenv.lib.platforms.linux;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

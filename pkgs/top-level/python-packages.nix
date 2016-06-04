@@ -249,6 +249,8 @@ rebulk = callPackage ../all-pkgs/rebulk { };
 
 regex = callPackage ../all-pkgs/regex { };
 
+requests = callPackage ../all-pkgs/requests { };
+
 rpyc = callPackage ../all-pkgs/rpyc { };
 
 safe = callPackage ../all-pkgs/safe { };
@@ -16306,34 +16308,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       homepage = http://www.reportlab.com/;
     };
   };
-
-
-  requests1 = buildPythonPackage rec {
-    name = "requests-1.2.3";
-    disabled = !pythonOlder "3.4";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/r/requests/${name}.tar.gz";
-      md5 = "adbd3f18445f7fe5e77f65c502e264fb";
-    };
-
-    meta = {
-      description = "An Apache2 licensed HTTP library, written in Python, for human beings";
-      homepage = http://docs.python-requests.org/en/latest/;
-    };
-  };
-
-
-  requests2 = buildPythonPackage rec {
-    name = "requests-${version}";
-    version = "2.9.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/r/requests/${name}.tar.gz";
-      sha256 = "c577815dd00f1394203fc44eb979724b098f88264a9ef898ee45b8e5e9cf587f";
-    };
-  };
-
 
   requests_oauthlib = buildPythonPackage rec {
     version = "0.4.1";

@@ -205,6 +205,8 @@ netaddr = callPackage ../all-pkgs/netaddr { };
 
 notify-python = callPackage ../all-pkgs/notify-python { };
 
+paste = callPackage ../all-pkgs/paste { };
+
 pathlib = callPackage ../all-pkgs/pathlib { };
 
 pillow = callPackage ../all-pkgs/pillow { };
@@ -13521,25 +13523,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license = licenses.bsd2;
     };
   };
-
-  paste = buildPythonPackage rec {
-    name = "paste-1.7.5.1";
-    disabled = isPy3k;
-
-    src = pkgs.fetchurl {
-      url = https://pypi.python.org/packages/source/P/Paste/Paste-1.7.5.1.tar.gz;
-      md5 = "7ea5fabed7dca48eb46dc613c4b6c4ed";
-    };
-
-    buildInputs = with self; [ nose ];
-
-
-    meta = {
-      description = "Tools for using a Web Server Gateway Interface stack";
-      homepage = http://pythonpaste.org/;
-    };
-  };
-
 
   PasteDeploy = buildPythonPackage rec {
     version = "1.5.2";

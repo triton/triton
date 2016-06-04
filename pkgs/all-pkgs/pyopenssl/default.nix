@@ -20,9 +20,6 @@ buildPythonPackage {
 
   propagatedBuildInputs = [
     cryptography
-  ];
-
-  buildInputs = [
     six
   ];
 

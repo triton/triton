@@ -15,7 +15,7 @@
 #, python-appindicator
 #, notify-python
 , pyxdg
-, service-identify
+, service-identity
 , simplejson
 , slimit
 , twisted
@@ -61,7 +61,7 @@ buildPythonPackage rec {
     #python-appindicator
     #notify-python
     pyxdg
-    service-identify
+    service-identity
     # setproctitle
     simplejson
     twisted

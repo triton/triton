@@ -2,8 +2,13 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pkgs
-, pythonPackages
+, freetype
+, lcms2
+, libjpeg
+, libtiff
+, libwebp
+, openjpeg
+, zlib
 }:
 
 let
@@ -21,35 +26,20 @@ buildPythonPackage rec {
     sha256 = "64b0a057210c480aea99406c9391180cd866fc0fd8f0b53367e3af21b195784a";
   };
 
-  propagatedBuildInputs = [
-    pkgs.freetype
-    #imagequant
-    pkgs.lcms2
-    pkgs.libjpeg
-    pkgs.libtiff
-    # TODO: webp support
-    #pkgs.libwebp
-    pkgs.openjpeg
-    pkgs.tcl
-    pkgs.tk
-    pkgs.zlib
-    # TODO: tkinter support
-  ] ++ optionals doCheck [
-    pythonPackages.nose
+  buildInputs = [
+    freetype
+    lcms2
+    libjpeg
+    libtiff
+    libwebp
+    openjpeg
+    zlib
   ];
 
-  preConfigure = ''
-    sed -i "setup.py" \
-      -e 's|^FREETYPE_ROOT =.*$|FREETYPE_ROOT = _lib_include("${pkgs.freetype}")|g ;
-          s|^JPEG_ROOT =.*$|JPEG_ROOT = _lib_include("${pkgs.libjpeg}")|g ;
-          s|^ZLIB_ROOT =.*$|ZLIB_ROOT = _lib_include("${pkgs.zlib}")|g ;
-          s|^LCMS_ROOT =.*$|LCMS_ROOT = _lib_include("${pkgs.lcms2}")|g ;
-          s|^TIFF_ROOT =.*$|TIFF_ROOT = _lib_include("${pkgs.libtiff}")|g ;
-          s|^JPEG2K_ROOT =.*$|JPEG2K_ROOT = _lib_include("${pkgs.openjpeg}")|g ;
-          s|^TCL_ROOT=.*$|TCL_ROOT = _lib_include("${pkgs.tcl}")|g ;'
+  preBuild = ''
+    export CFLAGS="$(echo "$NIX_CFLAGS_COMPILE" | sed 's,-isystem ,-I,g')"
+    export LDFLAGS="$(echo "$NIX_LDFLAGS" | sed 's,-rpath [^ ]*,,g')"
   '';
-
-  doCheck = false;
 
   meta = with stdenv.lib; {
     description = "Fork of The Python Imaging Library (PIL)";
@@ -57,6 +47,7 @@ buildPythonPackage rec {
     license = licenses.free; # PIL license
     maintainers = with maintainers; [
       codyopel
+      wkennington
     ];
     platforms = with platforms;
       x86_64-linux;

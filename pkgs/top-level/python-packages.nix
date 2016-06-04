@@ -245,6 +245,8 @@ pykka = callPackage ../all-pkgs/pykka { };
 
 pymysql = callPackage ../all-pkgs/pymysql { };
 
+pynacl = callPackage ../all-pkgs/pynacl { };
+
 pynzb = callPackage ../all-pkgs/pynzb { };
 
 #pyodbc = callPackage ../all-pkgs/pyodbc { };
@@ -21810,18 +21812,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [ pynacl six ];
-  };
-
-  pynacl = buildPythonPackage rec {
-    name = "pynacl-${version}";
-    version = "0.3.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/P/PyNaCl/PyNaCl-0.3.0.tar.gz";
-      sha256 = "1hknxlp3a3f8njn19w92p8nhzl9jkfwzhv5fmxhmyq2m8hqrfj8j";
-    };
-
-    propagatedBuildInputs = with self; [pkgs.libsodium six cffi pycparser pytest];
   };
 
   signedjson = buildPythonPackage rec {

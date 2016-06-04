@@ -2,12 +2,14 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, six
 }:
 
-buildPythonPackage rec {
-  name = "python-dateutil-${version}";
+let
   version = "2.5.3";
+in
+buildPythonPackage {
+  name = "python-dateutil-${version}";
 
   src = fetchPyPi {
     package = "python-dateutil";
@@ -16,7 +18,7 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.six
+    six
   ];
 
   doCheck = true;

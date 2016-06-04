@@ -2,9 +2,14 @@
 , buildPythonPackage
 , fetchPyPi
 
+, decorator
+, future
+, paste
 , pycryptodomex
 , pyopenssl
+, python-dateutil
 , pytz
+, repoze-who
 , requests
 , six
 , zope-interface
@@ -23,9 +28,14 @@ buildPythonPackage {
   };
 
   buildInputs = [
+    decorator
+    future
+    paste
     pycryptodomex
     pyopenssl
+    python-dateutil
     pytz
+    repoze-who
     requests
     six
     zope-interface

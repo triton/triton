@@ -18,8 +18,11 @@ buildPythonPackage {
     sha256 = "363d10ee43d062285facf4e465f4f5163f9f702f9134f0a5896f134cbb92d17d";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     cryptography
+  ];
+
+  buildInputs = [
     six
   ];
 

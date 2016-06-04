@@ -227,6 +227,8 @@ pynzb = callPackage ../all-pkgs/pynzb { };
 
 #pyodbc = callPackage ../all-pkgs/pyodbc { };
 
+pyopenssl = callPackage ../all-pkgs/pyopenssl { };
+
 pyparsing = callPackage ../all-pkgs/pyparsing { };
 
 pyrss2gen = callPackage ../all-pkgs/pyrss2gen { };
@@ -15777,24 +15779,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     # Extension types could not be found.
     # Should run test suite from $out/${python.sitePackages}
   };
-
-  pyopenssl = buildPythonPackage rec {
-    name = "pyopenssl-${version}";
-    version = "16.0.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pyOpenSSL/pyOpenSSL-${version}.tar.gz";
-      sha256 = "363d10ee43d062285facf4e465f4f5163f9f702f9134f0a5896f134cbb92d17d";
-    };
-
-    propagatedBuildInputs = with self; [
-      cryptography
-      six
-    ];
-
-    # 12 tests failing, 26 error out
-  };
-
 
   pyquery = buildPythonPackage rec {
     name = "pyquery-${version}";

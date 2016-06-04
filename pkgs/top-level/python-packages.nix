@@ -233,6 +233,8 @@ pyparsing = callPackage ../all-pkgs/pyparsing { };
 
 pyrss2gen = callPackage ../all-pkgs/pyrss2gen { };
 
+pysaml2 = callPackage ../all-pkgs/pysaml2 { };
+
 pytest = callPackage ../all-pkgs/pytest { };
 
 pytest-benchmark = callPackage ../all-pkgs/pytest-benchmark { };
@@ -14436,34 +14438,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       description = "Python bindings for PortAudio";
       homepage = "http://people.csail.mit.edu/hubert/pyaudio/";
       license = licenses.mit;
-    };
-  };
-
-  pysaml2 = buildPythonPackage rec {
-    name = "pysaml2-${version}";
-    version = "3.0.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pysaml2/${name}.tar.gz";
-      sha256 = "1h2wvagvl59642jq0s63mfr01q637vq6526mr8riykrjnchcbbi2";
-    };
-
-    propagatedBuildInputs = with self; [
-      repoze_who paste cryptography pycrypto pyopenssl ipaddress six cffi idna
-      enum34 pytz setuptools zope-interface python-dateutil requests2 pyasn1 webob decorator pycparser
-    ];
-    buildInputs = with self; [
-      Mako pytest memcached pymongo mongodict pkgs.xmlsec
-    ];
-
-    preConfigure = ''
-      sed -i 's/pymongo==3.0.1/pymongo/' setup.py
-    '';
-
-    # 16 failed, 427 passed, 17 error in 88.85 seconds
-
-    meta = with stdenv.lib; {
-      homepage = "https://github.com/rohe/pysaml2";
     };
   };
 

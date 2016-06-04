@@ -315,6 +315,8 @@ twisted = callPackage ../all-pkgs/twisted { };
 
 tzlocal = callPackage ../all-pkgs/tzlocal { };
 
+ujson = callPackage ../all-pkgs/ujson { };
+
 webob = callPackage ../all-pkgs/webob { };
 
 werkzeug = callPackage ../all-pkgs/werkzeug { };
@@ -20881,24 +20883,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       homepage = http://graphite.wikidot.com/;
       description = "Backend data caching and persistence daemon for Graphite";
       maintainers = with maintainers; [ rickynils offline ];
-    };
-  };
-
-
-  ujson = buildPythonPackage rec {
-    name = "ujson-1.33";
-
-    disabled = isPyPy;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/u/ujson/${name}.zip";
-      md5 = "8148a2493fff78940feab1e11dc0a893";
-    };
-
-    meta = {
-      homepage = https://pypi.python.org/pypi/ujson;
-      description = "Ultra fast JSON encoder and decoder for Python";
-      license = licenses.bsd3;
     };
   };
 

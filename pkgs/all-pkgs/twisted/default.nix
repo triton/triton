@@ -1,23 +1,24 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, isPy3k
 
-, pythonPackages
+, zope-interface
 }:
 
 buildPythonPackage rec {
   name = "Twisted-${version}";
-  version = "16.1.1";
+  version = "16.2.0";
 
   src = fetchPyPi {
     package = "Twisted";
     inherit version;
     type = ".tar.bz2";
-    sha256 = "fe7d001d9a803ed26cd0fd2f69fa4212ff025f3af6ef1a559d905fe551ab04e9";
+    sha256 = "a090e8dc675e97fb20c3bb5f8114ae94169f4e29fd3b3cbede35705fd3cdbd79";
   };
 
   propagatedBuildInputs = [
-    pythonPackages.zope-interface
+    zope-interface
   ];
 
   # Generate Twisted's plug-in cache.  Twisted users must do it as well.  See
@@ -26,7 +27,7 @@ buildPythonPackage rec {
   postInstall = "$out/bin/twistd --help > /dev/null";
 
   # Tests are not fully compatible with Python 3
-  doCheck = !pythonPackages.isPy3k;
+  doCheck = !isPy3k;
 
   meta = with stdenv.lib; {
     description = "An event-driven networking engine written in Python";

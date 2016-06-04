@@ -13,8 +13,6 @@ buildPythonPackage rec {
     sha256 = "c823de61ff40d1996fe087cec343e0503881ca641b897e0f9b86c7683a0bfee1";
   };
 
-  doCheck = true;
-
   meta = with stdenv.lib; {
     description = "World timezone definitions, modern and historical";
     homepage = http://pythonhosted.org/pytz;

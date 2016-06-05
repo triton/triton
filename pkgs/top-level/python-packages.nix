@@ -291,6 +291,8 @@ python-tvrage = callPackage ../all-pkgs/python-tvrage { };
 
 pytz = callPackage ../all-pkgs/pytz { };
 
+pyyaml = callPackage ../all-pkgs/pyyaml { };
+
 rebulk = callPackage ../all-pkgs/rebulk { };
 
 regex = callPackage ../all-pkgs/regex { };
@@ -15935,24 +15937,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     meta = {
       description = "PyYAML-based module to produce pretty and readable YAML-serialized data";
       homepage = https://github.com/mk-fg/pretty-yaml;
-    };
-  });
-
-
-  pyyaml = buildPythonPackage (rec {
-    name = "PyYAML-3.11";
-
-    src = pkgs.fetchurl {
-      url = "http://pyyaml.org/download/pyyaml/${name}.zip";
-      sha256 = "19bb3ac350ef878dda84a62d37c7d5c17a137386dde9c2ce7249c7a21d7f6ac9";
-    };
-
-    propagatedBuildInputs = with self; [ pkgs.libyaml ];
-
-    meta = {
-      description = "The next generation YAML parser and emitter for Python";
-      homepage = http://pyyaml.org;
-      license = licenses.free; # !?
     };
   });
 

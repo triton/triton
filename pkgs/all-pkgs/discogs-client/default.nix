@@ -3,7 +3,7 @@
 , fetchPyPi
 
 , oauthlib
-, requests2
+, requests
 , six
 }:
 
@@ -19,7 +19,7 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     oauthlib
-    requests2
+    requests
     six
   ];
 

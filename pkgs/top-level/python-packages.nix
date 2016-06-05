@@ -213,6 +213,8 @@ idna = callPackage ../all-pkgs/idna { };
 
 iotop = callPackage ../all-pkgs/iotop { };
 
+ipaddress = callPackage ../all-pkgs/ipaddress { };
+
 jinja2 = callPackage ../all-pkgs/jinja2 { };
 
 markupsafe = callPackage ../all-pkgs/markupsafe { };
@@ -9409,15 +9411,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       description = "Google's IP address manipulation library";
       homepage = http://code.google.com/p/ipaddr-py/;
       license = licenses.asl20;
-    };
-  };
-
-  ipaddress = if (pythonAtLeast "3.3") then null else buildPythonPackage rec {
-    name = "ipaddress-1.0.16";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/i/ipaddress/${name}.tar.gz";
-      sha256 = "5a3182b322a706525c46282ca6f064d27a02cffbd449f9f47416f1dc96aa71b0";
     };
   };
 

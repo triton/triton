@@ -287,7 +287,7 @@ safe = callPackage ../all-pkgs/safe { };
 
 scons = callPackage ../all-pkgs/scons { };
 
-service-identity = callPackage ../all-pkgs/service-identity { };
+service_identity = callPackage ../all-pkgs/service_identity { };
 
 setuptools = callPackage ../all-pkgs/setuptools { };
 

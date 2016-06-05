@@ -2,17 +2,20 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, attrs
+, pyasn1-modules
+, pyopenssl
+, pytest
 }:
 
 let
   inherit (stdenv.lib)
     optionals;
-in
 
-buildPythonPackage rec {
-  name = "service-identity-${version}";
   version = "16.0.0";
+in
+buildPythonPackage rec {
+  name = "service_identity-${version}";
 
   src = fetchPyPi {
     package = "service_identity";
@@ -21,15 +24,13 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.attrs
-    pythonPackages.idna
-    pythonPackages.pyasn1
-    pythonPackages.pyasn1-modules
-    pythonPackages.pyopenssl
+    attrs
+    pyasn1-modules
+    pyopenssl
   ];
 
   buildInputs = optionals doCheck [
-    pythonPackages.pytest
+    pytest
   ];
 
   doCheck = true;
@@ -39,6 +40,7 @@ buildPythonPackage rec {
     homepage = https://github.com/pyca/service_identity;
     license = licenses.bsd3;
     maintainers = with maintainers; [
+      wkennington
       codyopel
     ];
     platforms = with platforms;

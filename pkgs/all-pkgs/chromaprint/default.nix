@@ -17,7 +17,10 @@ stdenv.mkDerivation rec {
   version = "1.3.1";
 
   src = fetchurl {
-    url = "http://bitbucket.org/acoustid/chromaprint/downloads/${name}.tar.gz";
+    url = [
+      "https://bitbucket.org/acoustid/chromaprint/downloads/${name}.tar.gz"
+      "mirror://gentoo/distfiles/${name}.tar.gz"
+    ];
     sha256 = "10dm9cfqb77g12pyjnqaw80860kzdcvskni02ll7afpywq8s15cg";
   };
 

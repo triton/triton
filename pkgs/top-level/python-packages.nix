@@ -209,6 +209,8 @@ guessit = callPackage ../all-pkgs/guessit { };
 
 html5lib = callPackage ../all-pkgs/html5lib { };
 
+idna = callPackage ../all-pkgs/idna { };
+
 iotop = callPackage ../all-pkgs/iotop { };
 
 jinja2 = callPackage ../all-pkgs/jinja2 { };
@@ -3561,15 +3563,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
   };
 
 
-
-  idna = buildPythonPackage rec {
-    name = "idna-2.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/i/idna/${name}.tar.gz";
-      sha256 = "ed36f281aebf3cd0797f163bb165d84c31507cedd15928b095b1675e2d04c676";
-    };
-  };
 
   mahotas = buildPythonPackage rec {
     name = "python-mahotas-${version}";

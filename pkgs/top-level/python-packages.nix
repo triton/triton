@@ -261,6 +261,8 @@ pygtk = callPackage ../all-pkgs/pygtk { };
 
 pykka = callPackage ../all-pkgs/pykka { };
 
+pymacaroons-pynacl = callPackage ../all-pkgs/pymacaroons-pynacl { };
+
 pymysql = callPackage ../all-pkgs/pymysql { };
 
 pynacl = callPackage ../all-pkgs/pynacl { };
@@ -21668,19 +21670,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       description = "WSGIProxy gives tools to proxy arbitrary(ish) WSGI requests to other";
       homepage = "http://pythonpaste.org/wsgiproxy/";
     };
-  };
-
-  pymacaroons-pynacl = buildPythonPackage rec {
-    name = "pymacaroons-pynacl-${version}";
-    version = "0.9.3";
-
-    src = pkgs.fetchgit {
-      url = "https://github.com/matrix-org/pymacaroons.git";
-      rev = "refs/tags/v${version}";
-      sha256 = "481a486520f5a3ad2761c3cd3954d2b08f456a94fb080aaa4ad1e68ddc705b52";
-    };
-
-    propagatedBuildInputs = with self; [ pynacl six ];
   };
 
   thumbor = buildPythonPackage rec {

@@ -776,6 +776,8 @@ evolution = callPackage ../all-pkgs/evolution { };
 
 evolution-data-server = callPackage ../all-pkgs/evolution-data-server { };
 
+exempi = callPackage ../all-pkgs/exempi { };
+
 expat = callPackage ../all-pkgs/expat { };
 
 f2fs-tools = callPackage ../all-pkgs/f2fs-tools { };
@@ -3016,8 +3018,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  eventstat = callPackage ../os-specific/linux/eventstat { };
 #
 #  evtest = callPackage ../applications/misc/evtest { };
-#
-  exempi = callPackage ../development/libraries/exempi { };
 #
 #  execline = callPackage ../tools/misc/execline { };
 #

@@ -18,7 +18,7 @@ buildPythonPackage {
     sha256 = "1293061adb5a9eebb7b260516e691785ac08cc1646c8976aeda7db9dbb1c6f4b";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     html5lib
     six
   ];

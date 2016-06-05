@@ -34,6 +34,10 @@ buildPythonPackage {
     sed -i '/def use_system():/a\    return True' setup.py
   '';
 
+  passthru = {
+    inherit version;
+  };
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

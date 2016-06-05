@@ -27,7 +27,7 @@ buildPythonPackage {
     sha256 = "2486ba2de001cf89823114f2d13a00dee8f1119553f7e8dee3750f5f50df2082";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     decorator
     future
     paste

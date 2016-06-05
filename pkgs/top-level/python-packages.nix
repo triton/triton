@@ -241,6 +241,10 @@ progressbar = callPackage ../all-pkgs/progressbar { };
 
 py = callPackage ../all-pkgs/py { };
 
+pyasn1 = callPackage ../all-pkgs/pyasn1 { };
+
+pyasn1-modules = callPackage ../all-pkgs/pyasn1-modules { };
+
 py-bcrypt = callPackage ../all-pkgs/py-bcrypt { };
 
 pycountry = callPackage ../all-pkgs/pycountry { };
@@ -14214,31 +14218,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
   };
 
-
-  pyasn1 = buildPythonPackage rec {
-    name = "pyasn1-${version}";
-    version = "0.1.9";
-
-    src = pkgs.fetchurl {
-      url = "mirror://sourceforge/pyasn1/${version}/${name}.tar.gz";
-      sha256 = "0zraxni14bqi20kr4bi6nwsh32aibz0fq0xaczfisw0zdpcsqg45";
-    };
-  };
-
-  pyasn1-modules = buildPythonPackage rec {
-    name = "pyasn1-modules-${version}";
-    version = "0.0.8";
-    disabled = isPyPy;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pyasn1-modules/${name}.tar.gz";
-      sha256 = "10561934f1829bcc455c7ecdcdacdb4be5ffd3696f26f468eb6eb41e107f3837";
-    };
-
-    buildInputs = with self; [
-      pyasn1
-    ];
-  };
 
   pyaudio = buildPythonPackage rec {
     name = "python-pyaudio-${version}";

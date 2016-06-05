@@ -149,6 +149,8 @@ beets = callPackage ../all-pkgs/beets { };
 
 bleach = callPackage ../all-pkgs/bleach { };
 
+blist = callPackage ../all-pkgs/blist { };
+
 brotli = callPackage ../all-pkgs/brotli/python.nix {
   brotli = pkgs.brotli;
 };
@@ -21738,17 +21740,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     meta = with stdenv.lib; {
       description = "WSGIProxy gives tools to proxy arbitrary(ish) WSGI requests to other";
       homepage = "http://pythonpaste.org/wsgiproxy/";
-    };
-  };
-
-  blist = buildPythonPackage rec {
-    name = "blist-${version}";
-    version = "1.3.6";
-    disabled = isPyPy;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/b/blist/blist-${version}.tar.gz";
-      sha256 = "1hqz9pqbwx0czvq9bjdqjqh5bwfksva1is0anfazig81n18c84is";
     };
   };
 

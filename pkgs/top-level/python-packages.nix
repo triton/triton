@@ -219,6 +219,8 @@ jinja2 = callPackage ../all-pkgs/jinja2 { };
 
 markupsafe = callPackage ../all-pkgs/markupsafe { };
 
+matrix-angular-sdk = callPackage ../all-pkgs/matrix-angular-sdk { };
+
 mopidy = callPackage ../all-pkgs/mopidy { };
 
 mutagen = callPackage ../all-pkgs/mutagen { };

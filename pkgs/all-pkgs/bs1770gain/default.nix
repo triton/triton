@@ -26,11 +26,15 @@ stdenv.mkDerivation rec {
         -e 's,av_free_packet,av_packet_unref,'
     '';
 
+  CFLAGS = "-std=gnu89";
+
   meta = with stdenv.lib; {
     description = "A audio/video loudness scanner implementing ITU-R BS.1770";
     homepage = "http://bs1770gain.sourceforge.net/";
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

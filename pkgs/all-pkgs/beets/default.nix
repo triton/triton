@@ -3,16 +3,41 @@
 , fetchFromGitHub
 , fetchTritonPatch
 , glibcLocales
+, isPy3k
 , makeWrapper
+, pythonPackages
 , writeScript
 
 , bash
 , bashCompletion
+, beautifulsoup
 , bs1770gain
+, discogs-client
+, enum34
 , flac
+, flask
 , imagemagick
+, itsdangerous
+, jellyfish
+, jinja2
+, mock
 , mp3val
-, pythonPackages
+, mpd
+, munkres
+, musicbrainzngs
+, mutagen
+, nose
+, pathlib
+, pyacoustid
+, pyechonest
+, pylast
+, pyxdg
+, pyyaml
+, rarfile
+, requests
+, responses
+, unidecode
+, werkzeug
 
 # External plugins
 , enableAlternatives ? true
@@ -35,15 +60,13 @@ let
     optionals
     optionalString
     platforms;
-  inherit (pythonPackages)
-    isPy3k;
 in
 
 let
   optionalPlugins = {
     # TODO: write a generic function to detect null dependencies
     acousticbrainz =
-      if pythonPackages.requests2 != null then
+      if requests != null then
         true
       else
         false;
@@ -54,54 +77,54 @@ let
       else
         false;
     bpd =
-      #if pythonPackages.pygobject_2 != null
+      #if pygobject_2 != null
       #   && gst-plugins-base_0 != null
       #   && gstreamer_0 != null then
       #  true
       #else
         false;
     chroma =
-      if pythonPackages.pyacoustid != null then
+      if pyacoustid != null then
         true
       else
         false;
     discogs =
-      if pythonPackages.discogs_client != null then
+      if discogs-client != null then
         true
       else
         false;
-    echonest =
-      if pythonPackages.pyechonest != null then
+    /*echonest =
+      if pyechonest != null then
         true
       else
-        false;
+        false;*/
     embyupdate =
-      if pythonPackages.requests2 != null then
+      if requests != null then
         true
       else
         false;
     fetchart =
-      if pythonPackages.requests2 != null then
+      if requests != null then
         true
       else
         false;
     lastgenre =
-      if pythonPackages.pylast != null then
+      if pylast != null then
         true
       else
         false;
     lastimport =
-      if pythonPackages.pylast != null then
+      if pylast != null then
         true
       else
         false;
     mpdstats =
-      if pythonPackages.mpd != null then
+      if mpd != null then
         true
       else
         false;
     mpdupdate =
-      if pythonPackages.mpd != null then
+      if mpd != null then
         true
       else
         false;
@@ -111,12 +134,12 @@ let
       else
         false;
     thumbnails =
-      if pythonPackages.pyxdg != null then
+      if pyxdg != null then
         true
       else
         false;
     web =
-      if pythonPackages.flask != null then
+      if flask != null then
         true
       else
         false;
@@ -133,11 +156,13 @@ let
     "edit"
     "embedart"
     "embyupdate"
+    "export"
     "filefilter"
     "freedesktop"
     "fromfilename"
     "ftintitle"
     "fuzzy"
+    "hook"
     "ihate"
     "importadded"
     "importfeeds"
@@ -175,14 +200,14 @@ in
 
 buildPythonPackage rec {
   name = "beets-${version}";
-  version = "1.3.17";
+  version = "1.3.18";
   namePrefix = "";
 
   src = fetchFromGitHub {
     owner = "sampsyo";
     repo = "beets";
     rev = "v${version}";
-    sha256 = "8b8c74478277e6b010cc1319c1e9b6fe97e1a8967bede341ebeabc205b7cc0f3";
+    sha256 = "80492fd821f2985b5d5f5b317ac9f30df6be4579b45aeb50ae1298437c71122d";
   };
 
   nativeBuildInputs = [
@@ -190,34 +215,34 @@ buildPythonPackage rec {
   ];
 
   propagatedBuildInputs = [
+    beautifulsoup
     bs1770gain
+    discogs-client
+    enum34
     flac
+    flask
     imagemagick
+    itsdangerous
+    jellyfish
+    jinja2
+    mock
     mp3val
-    pythonPackages.beautifulsoup
-    pythonPackages.discogs-client
-    pythonPackages.enum34
-    pythonPackages.flask
-    pythonPackages.itsdangerous
-    pythonPackages.jellyfish
-    pythonPackages.jinja2
-    pythonPackages.mock
-    pythonPackages.mpd
-    pythonPackages.munkres
-    pythonPackages.musicbrainzngs
-    pythonPackages.mutagen
-    pythonPackages.nose
-    pythonPackages.pathlib
-    pythonPackages.pyacoustid
-    pythonPackages.pyechonest
-    pythonPackages.pylast
-    pythonPackages.pyxdg
-    pythonPackages.pyyaml
-    pythonPackages.rarfile
-    pythonPackages.responses
-    pythonPackages.requests2
-    pythonPackages.unidecode
-    pythonPackages.werkzeug
+    mpd
+    munkres
+    musicbrainzngs
+    mutagen
+    nose
+    pathlib
+    pyacoustid
+    pyechonest
+    pylast
+    pyxdg
+    pyyaml
+    rarfile
+    responses
+    requests
+    unidecode
+    werkzeug
   ] ++ optional enableAlternatives (
       import ./plugins/beets-alternatives.nix {
         inherit

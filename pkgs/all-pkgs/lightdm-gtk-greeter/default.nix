@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , intltool
 , makeWrapper
@@ -35,6 +36,15 @@ stdenv.mkDerivation rec {
     xorg.libX11
   ];
 
+  patches = [
+    # Remove after 2.0.1
+    (fetchTritonPatch {
+      rev = "77e91ff8ea4b2a4d01c6618c7d98649e0a2db66b";
+      file = "lightdm-gtk-greeter/lightdm-gtk-greeter-2.0.1-r339-fix-deprecated-gdk-cursor.patch";
+      sha256 = "2de9eb1f182260cc36cde1edb4deae215f1396c263bc365f0869e3447774b84d";
+    })
+  ];
+
   configureFlags = [
     "--localstatedir=/var"
     "--sysconfdir=/etc"
@@ -53,6 +63,8 @@ stdenv.mkDerivation rec {
     wrapProgram "$out/sbin/lightdm-gtk-greeter" \
       --prefix XDG_DATA_DIRS ":" "${hicolor_icon_theme}/share"
   '';
+
+  parallelBuild = false;
 
   meta = with stdenv.lib; {
     homepage = http://launchpad.net/lightdm-gtk-greeter;

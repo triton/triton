@@ -167,6 +167,10 @@ cherrypy = callPackage ../all-pkgs/cherrypy { };
 
 click = callPackage ../all-pkgs/click { };
 
+cryptography = callPackage ../all-pkgs/cryptography { };
+
+cryptography_vectors = callPackage ../all-pkgs/cryptography_vectors { };
+
 cython = callPackage ../all-pkgs/cython { };
 
 daemonize = callPackage ../all-pkgs/daemonize { };
@@ -3388,50 +3392,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     meta = {
       maintainers = with maintainers; [ iElectric ];
-    };
-  };
-
-  cryptography = buildPythonPackage rec {
-    name = "cryptography-${version}";
-    version = "1.3.4";
-
-    src = fetchPyPi {
-      package = "cryptography";
-      inherit version;
-      sha256 = "423ff890c01be7c70dbfeaa967eeef5146f1a43a5f810ffdc07b178e48a105a9";
-    };
-
-    buildInputs = with self; [
-      cryptography_vectors
-      hypothesis
-      iso8601
-      pkgs.openssl
-      pretend
-      py
-      pyasn1-modules
-      pytest
-      six
-    ];
-
-    propagatedBuildInputs = with self; [
-      cffi
-      idna
-      ipaddress
-      pyasn1
-    ] ++ optionals (pythonOlder "3.4") [
-      enum34
-    ];
-
-  };
-
-  cryptography_vectors = buildPythonPackage rec {
-    name = "cryptography_vectors-${version}";
-    version = "1.3.4";
-
-    src = fetchPyPi {
-      package = "cryptography_vectors";
-      inherit version;
-      sha256 = "4414bce0a3d7f0a3cdbf44da75ae5c7c586fd765c777d99023eb5a3ac58f0196";
     };
   };
 

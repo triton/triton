@@ -29,7 +29,7 @@
 , pyrss2gen
 , python-dateutil
 , pyyaml
-, requests2
+, requests
 , rpyc
 , safe
 , sqlalchemy
@@ -46,12 +46,12 @@ in
 
 buildPythonPackage rec {
   name = "flexget-${version}";
-  version = "2.0.37";
+  version = "2.0.40";
 
   src = fetchPyPi {
     package = "FlexGet";
     inherit version;
-    sha256 = "8f9c5e53a2f4cf382b38c128229255bb7498fb9c9df8a113bdd2bc6ee39cd93f";
+    sha256 = "d94486b534c52be70e6d12efe3eb4792bb1b7cc96861fbf4b48801f5d44c8391";
   };
 
   postPatch =
@@ -85,7 +85,7 @@ buildPythonPackage rec {
     pyrss2gen
     python-dateutil
     pyyaml
-    requests2
+    requests
     rpyc
     safe
     sqlalchemy

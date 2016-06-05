@@ -62,6 +62,8 @@ stdenv.mkDerivation rec {
     (wtFlag "mp4v2" (mp4v2 != null) null)
   ];
 
+  CXXFLAGS = "-std=c++03";
+
   meta = with stdenv.lib; {
     description = "Open source MPEG-4 and MPEG-2 AAC encoder";
     homepage = http://www.audiocoding.com/faac.html;

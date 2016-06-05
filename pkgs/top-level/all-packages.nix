@@ -542,6 +542,8 @@ at-spi2-core = callPackage ../all-pkgs/at-spi2-core { };
 
 atom = callPackage ../all-pkgs/atom { };
 
+audiofile = callPackage ../all-pkgs/audiofile { };
+
 audit_full = callPackage ../all-pkgs/audit { };
 
 audit_lib = callPackageAlias "audit_full" {
@@ -6352,8 +6354,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  aqbanking = callPackage ../development/libraries/aqbanking { };
 #
 #  aubio = callPackage ../development/libraries/aubio { };
-#
-  audiofile = callPackage ../development/libraries/audiofile { };
 
   babl = callPackage ../development/libraries/babl { };
 #

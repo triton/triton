@@ -517,7 +517,7 @@ apr = callPackage ../all-pkgs/apr { };
 
 apr-util = callPackage ../all-pkgs/apr-util { };
 
-ardour =  callPackage ../all-pkgs/ardour { };
+#ardour =  callPackage ../all-pkgs/ardour { };
 
 argyllcms = callPackage ../all-pkgs/argyllcms { };
 

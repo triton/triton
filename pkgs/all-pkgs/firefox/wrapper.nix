@@ -5,7 +5,7 @@
 
 ## various stuff that can be plugged in
 , adwaita-icon-theme
-, flashplayer
+#, flashplayer
 , hal-flash
 , gecko_mediaplayer
 , xorg
@@ -65,7 +65,7 @@ let
      assert !(enableGnash && enableAdobeFlash);
      assert !(jre && icedtea);
      ([ ]
-      ++ optional enableAdobeFlash flashplayer
+      #++ optional enableAdobeFlash flashplayer
       #++ optional (cfg.enableDjvu or false) (djview4)
       #++ optional (cfg.enableGeckoMediaPlayer or false) gecko_mediaplayer
       #++ optional (jre && jrePlugin ? mozillaPlugin) jrePlugin

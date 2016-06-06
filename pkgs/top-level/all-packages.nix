@@ -179,9 +179,9 @@ let
   # inside the set for derivations.
   recurseIntoAttrs = attrs: attrs // { recurseForDerivations = true; };
 
-  builderDefs = lib.composedArgsAndFun (callPackage ../build-support/builder-defs/builder-defs.nix) {};
+  #builderDefs = lib.composedArgsAndFun (callPackage ../build-support/builder-defs/builder-defs.nix) {};
 
-  builderDefsPackage = builderDefs.builderDefsPackage builderDefs;
+  #builderDefsPackage = builderDefs.builderDefsPackage builderDefs;
 
   stringsWithDeps = lib.stringsWithDeps;
 
@@ -12322,49 +12322,50 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  texFunctions = callPackage ../tools/typesetting/tex/nix pkgs;
 #
 #  # All the new TeX Live is inside. See description in default.nix.
-  texlive = recurseIntoAttrs
+ texlive = recurseIntoAttrs
     (callPackage ../tools/typesetting/tex/texlive-new { });
+  texLive = callPackageAlias "texlive" { };
 
-  texLive = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive) {
-    ghostscript = ghostscriptX;
-  };
-
-  texLiveFull = lib.setName "texlive-full" (texLiveAggregationFun {
-    paths = [ texLive texLiveExtra lmodern texLiveCMSuper texLiveLatexXColor
-              texLivePGF texLiveBeamer texLiveModerncv tipa tex4ht texinfo
-              texLiveModerntimeline texLiveContext ];
-  });
-
-  /* Look in configurations/misc/raskin.nix for usage example (around revisions
-  where TeXLive was added)
-
-  (texLiveAggregationFun {
-    paths = [texLive texLiveExtra texLiveCMSuper
-      texLiveBeamer
-    ];
-  })
-
+#  texLive = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive) {
+#    ghostscript = ghostscriptX;
+#  };
+#
+#  texLiveFull = lib.setName "texlive-full" (texLiveAggregationFun {
+#    paths = [ texLive texLiveExtra lmodern texLiveCMSuper texLiveLatexXColor
+#              texLivePGF texLiveBeamer texLiveModerncv tipa tex4ht texinfo
+#              texLiveModerntimeline texLiveContext ];
+#  });
+#
+#  /* Look in configurations/misc/raskin.nix for usage example (around revisions
+#  where TeXLive was added)
+#
+#  (texLiveAggregationFun {
+#    paths = [texLive texLiveExtra texLiveCMSuper
+#      texLiveBeamer
+#    ];
+#  })
+#
 #  You need to use texLiveAggregationFun to regenerate, say, ls-R (TeX-related file list)
 #  Just installing a few packages doesn't work.
 #  */
-  texLiveAggregationFun = params:
-    builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/aggregate.nix) params;
-
-  texLiveContext = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/context.nix) {};
-
-  texLiveExtra = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/extra.nix) {};
-
-  texLiveCMSuper = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/cm-super.nix) {};
-
-  texLiveLatexXColor = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/xcolor.nix) {};
-
-  texLivePGF = pgf3;
-
-  texLiveBeamer = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/beamer.nix) {};
-
-  texLiveModerncv = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/moderncv.nix) {};
-
-  texLiveModerntimeline = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/moderntimeline.nix) {};
+#  texLiveAggregationFun = params:
+#    builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/aggregate.nix) params;
+#
+#  texLiveContext = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/context.nix) {};
+#
+#  texLiveExtra = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/extra.nix) {};
+#
+#  texLiveCMSuper = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/cm-super.nix) {};
+#
+#  texLiveLatexXColor = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/xcolor.nix) {};
+#
+#  texLivePGF = pgf3;
+#
+#  texLiveBeamer = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/beamer.nix) {};
+#
+#  texLiveModerncv = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/moderncv.nix) {};
+#
+#  texLiveModerntimeline = builderDefsPackage (callPackage ../tools/typesetting/tex/texlive/moderntimeline.nix) {};
 #
 #  ib-tws = callPackage ../applications/office/ib/tws { jdk=oraclejdk8; };
 #

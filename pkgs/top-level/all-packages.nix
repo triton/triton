@@ -6074,7 +6074,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  icestorm = callPackage ../development/tools/icestorm { };
 #
-#  icmake = callPackage ../development/tools/build-managers/icmake { };
+  icmake = callPackage ../development/tools/build-managers/icmake { };
 #
 #  iconnamingutils = callPackage ../development/tools/misc/icon-naming-utils {
 #    inherit (perlPackages) XMLSimple;

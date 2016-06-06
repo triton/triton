@@ -1667,6 +1667,8 @@ ninja = callPackage ../all-pkgs/ninja { };
 
 nmap = callPackage ../all-pkgs/nmap { };
 
+nodejs = callPackage ../all-pkgs/nodejs { };
+
 noise = callPackage ../all-pkgs/noise { };
 
 nomad = pkgs.goPackages.nomad.bin // { outputs = [ "bin" ]; };

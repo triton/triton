@@ -74,12 +74,12 @@ in
 
 stdenv.mkDerivation rec {
   name = "vlc-${version}";
-  version = "2.2.3";
+  version = "2.2.4";
 
   src = fetchurl {
     url = "http://get.videolan.org/vlc/${version}/${name}.tar.xz";
     allowHashOutput = false;
-    sha256 = "b9d7587d35f13c3c981964c8cc8b03f1c7c8edf528be476b3ca1d2efedd5bf5b";
+    sha256 = "1632e91d2a0087e0ef4c3fb4c95c3c2890f7715a9d1d43ffd46329f428cf53be";
   };
 
   nativeBuildInputs = [

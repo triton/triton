@@ -634,12 +634,12 @@ chromaprint = callPackage ../all-pkgs/chromaprint { };
 chromium = callPackage ../all-pkgs/chromium {
   channel = "stable";
 };
-chromium_beta = lowPrio (chromium.override {
+chromium_beta = callPackageAlias "chromium" {
   channel = "beta";
-});
-chromium_dev = lowPrio (chromium.override {
+};
+chromium_dev = callPackageAlias "chromium" {
   channel = "dev";
-});
+};
 
 civetweb = callPackage ../all-pkgs/civetweb { };
 

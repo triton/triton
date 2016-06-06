@@ -772,7 +772,7 @@ ethtool = callPackage ../all-pkgs/ethtool { };
 
 evince = callPackage ../all-pkgs/evince { };
 
-evolution = callPackage ../all-pkgs/evolution { };
+#evolution = callPackage ../all-pkgs/evolution { };
 
 evolution-data-server = callPackage ../all-pkgs/evolution-data-server { };
 

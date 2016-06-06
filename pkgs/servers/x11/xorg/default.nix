@@ -798,10 +798,10 @@ let
   }) // {inherit ;};
 
   intelgputools = (mkDerivation "intelgputools" {
-    name = "intel-gpu-tools-1.14";
+    name = "intel-gpu-tools-1.15";
     src = fetchurl {
-      url = mirror://xorg/individual/app/intel-gpu-tools-1.14.tar.bz2;
-      sha256 = "030g1akybk19y3jcxd8pp573ymrd4w7mmzxbspp064lwdv9y35im";
+      url = mirror://xorg/individual/app/intel-gpu-tools-1.15.tar.bz2;
+      sha256 = "1gb22hvj4gdjj92iqbwcp44kf2znk2l1fvbcrr4sm4i65l8mdwnw";
     };
     nativeBuildInputs = [ bison flex python python3 utilmacros ];
     buildInputs = [ cairo dri2proto glib libdrm systemd_lib libunwind libpciaccess libX11 libXext libXrandr libXv ];
@@ -1007,10 +1007,10 @@ let
   }) // {inherit libX11 xextproto xproto ;};
 
   libXfixes = (mkDerivation "libXfixes" {
-    name = "libXfixes-5.0.1";
+    name = "libXfixes-5.0.2";
     src = fetchurl {
-      url = mirror://xorg/individual/lib/libXfixes-5.0.1.tar.bz2;
-      sha256 = "0rs7qgzr6dpr62db7sd91c1b47hzhzfr010qwnpcm8sg122w1gk3";
+      url = mirror://xorg/individual/lib/libXfixes-5.0.2.tar.bz2;
+      sha256 = "1slsk898386xii0r3l7szwwq3s6y2m4dsj0x93ninjh8xkghxllv";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ fixesproto libX11 xextproto xproto ];
@@ -2228,10 +2228,10 @@ let
   }) // {inherit inputproto randrproto xorgserver xproto ;};
 
   xf86inputevdev = (mkDerivation "xf86inputevdev" {
-    name = "xf86-input-evdev-2.10.2";
+    name = "xf86-input-evdev-2.10.3";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-evdev-2.10.2.tar.bz2;
-      sha256 = "07gybpiv33rymcq5l729agan7nzv5f97wdczja6p145b846n6fm7";
+      url = mirror://xorg/individual/driver/xf86-input-evdev-2.10.3.tar.bz2;
+      sha256 = "18ijnclnylrr7vkvflalkw4bqfily3scg6baczjjgycdpsj1p8js";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ inputproto libevdev systemd_lib mtdev xorgserver xproto ];
@@ -3361,10 +3361,10 @@ let
   }) // {inherit inputproto libX11 libXaw xproto libXt ;};
 
   xkeyboardconfig = (mkDerivation "xkeyboardconfig" {
-    name = "xkeyboard-config-2.17";
+    name = "xkeyboard-config-2.18";
     src = fetchurl {
-      url = mirror://xorg/individual/data/xkeyboard-config/xkeyboard-config-2.17.tar.bz2;
-      sha256 = "00878f1v3034ki78pjpf2db0bh7jsmszsnxr3bf5qxripm2bxiny";
+      url = mirror://xorg/individual/data/xkeyboard-config/xkeyboard-config-2.18.tar.bz2;
+      sha256 = "1l6x2w357ja8vm94ns79s7yj9a5dlr01r9dxrjvzwncadiyr27f4";
     };
     nativeBuildInputs = [ intltool utilmacros ];
     buildInputs = [ libX11 xproto ];

@@ -197,6 +197,8 @@ flexget = callPackage ../all-pkgs/flexget { };
 
 frozendict = callPackage ../all-pkgs/frozendict { };
 
+funcsigs = callPackage ../all-pkgs/funcsigs { };
+
 future = callPackage ../all-pkgs/future { };
 
 futures = callPackage ../all-pkgs/futures { };
@@ -1049,20 +1051,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license = licenses.free;
     };
   } else null;
-
-  funcsigs = buildPythonPackage rec {
-    name = "funcsigs-1.0.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/f/funcsigs/${name}.tar.gz";
-      sha256 = "2310f9d4a77c284e920ec572dc2525366a107b08d216ff8dbb891d95b6a77563";
-    };
-
-    propagatedBuildInputs = with self; [
-      ordereddict
-    ];
-
-  };
 
   ordereddict = buildPythonPackage rec {
     name = "ordereddict-1.1";

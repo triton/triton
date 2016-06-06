@@ -7,11 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libnftnl-1.0.5";
+  name = "libnftnl-1.0.6";
 
   src = fetchurl {
     url = "http://netfilter.org/projects/libnftnl/files/${name}.tar.bz2";
-    sha256 = "15z4kcsklbvy94d24p2r0avyhc2rsvygjqr3gyccg2z30akzbm7n";
+    allowHashOutput = false;
+    sha256 = "ad3b932a39a1e567308e91b683b32239a5e1aea9b4582dfffe2288c3400ab07e";
   };
 
   buildInputs = [
@@ -24,6 +25,15 @@ stdenv.mkDerivation rec {
     "--with-json-parsing"
     "--with-xml-parsing"
   ];
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrl = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "a userspace library providing a low-level netlink API to the in-kernel nf_tables subsystem";

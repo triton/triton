@@ -1003,7 +1003,7 @@ gperf = callPackage ../all-pkgs/gperf { };
 
 gperftools = callPackage ../all-pkgs/gperftools { };
 
-gpm = callPackage ../all-pkgs/gpm+ncurses { };
+gpm = callPackage ../all-pkgs/gpm-ncurses { };
 
 gpsd = callPackage ../all-pkgs/gpsd { };
 

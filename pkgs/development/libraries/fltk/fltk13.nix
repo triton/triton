@@ -1,5 +1,5 @@
-{ composableDerivation, fetchurl, pkgconfig, xlibsWrapper, inputproto, libXi
-, freeglut, mesa, libjpeg, zlib, libXinerama, libXft, libpng
+{ composableDerivation, fetchurl
+, freeglut, mesa, libjpeg, zlib, xorg, libpng
 , cfg ? {}
 , automake, autoconf, libtool
 }:
@@ -21,12 +21,11 @@ composableDerivation.composableDerivation {} {
       --replace 'class Fl_XFont_On_Demand' 'class FL_EXPORT Fl_XFont_On_Demand'
   '';
 
-  propagatedBuildInputs = [ xlibsWrapper inputproto libXi freeglut ];
+  propagatedBuildInputs = [ xorg.inputproto xorg.libXi freeglut ];
 
   enableParallelBilding = true;
 
   nativeBuildInputs = [
-    pkgconfig
     automake autoconf libtool # only required because of patch
   ];
 
@@ -42,8 +41,8 @@ composableDerivation.composableDerivation {} {
     // edf { name = "localjpeg"; disable = { buildInputs = [libjpeg]; }; } #       use local JPEG library, default=auto
     // edf { name = "localzlib"; disable = { buildInputs = [zlib]; }; } #       use local ZLIB library, default=auto
     // edf { name = "localpng"; disable = { buildInputs = [libpng]; }; } #       use local PNG library, default=auto
-    // edf { name = "xinerama"; enable = { buildInputs = [libXinerama]; }; } #       turn on Xinerama support default=no
-    // edf { name = "xft"; enable = { buildInputs=[libXft]; }; } #            turn on Xft support default=no
+    // edf { name = "xinerama"; enable = { buildInputs = [xorg.libXinerama]; }; } #       turn on Xinerama support default=no
+    // edf { name = "xft"; enable = { buildInputs=[xorg.libXft]; }; } #            turn on Xft support default=no
     // edf { name = "xdbe"; };  #           turn on Xdbe support default=no
 
   cfg = {

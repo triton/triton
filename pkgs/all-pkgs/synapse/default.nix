@@ -36,7 +36,7 @@ buildPythonPackage {
     sha256 = "5a92555d9c509d6375d6da31d57c8e5b3ed486490cd4f995b0ade29b01096836";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     bleach
     blist
     canonicaljson

@@ -6354,7 +6354,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  belle-sip = callPackage ../development/libraries/belle-sip { };
 #
-#  bobcat = callPackage ../development/libraries/bobcat { };
+  bobcat = callPackage ../development/libraries/bobcat { };
 #
 #  boolstuff = callPackage ../development/libraries/boolstuff { };
 #

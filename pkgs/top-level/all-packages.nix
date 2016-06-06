@@ -277,7 +277,7 @@ let
 
   fetchgitPrivate = callPackage ../build-support/fetchgit/private.nix { };
 
-  fetchgitrevision = import ../build-support/fetchgitrevision runCommand git;
+  fetchgitrevision = import ../build-support/fetchgitrevision runCommand pkgs.git;
 
   fetchgitLocal = callPackage ../build-support/fetchgitlocal { };
 
@@ -289,7 +289,7 @@ let
     sshSupport = true;
   };
 
-  fetchsvnrevision = import ../build-support/fetchsvnrevision runCommand subversion;
+  fetchsvnrevision = import ../build-support/fetchsvnrevision runCommand pkgs.subversion;
 
   fetchsvnssh = callPackage ../build-support/fetchsvnssh {
     sshSupport = true;

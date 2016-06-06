@@ -1,5 +1,5 @@
 { stdenv, fetchurl, docbook_xsl, dbus_libs, dbus_glib, expat, gettext
-, gsettings_desktop_schemas, gdk_pixbuf, gtk2, gtk3, hicolor_icon_theme
+, gsettings_desktop_schemas, gdk_pixbuf, gtk2, gtk3, hicolor-icon-theme
 , imagemagick, itstool, librsvg, libtool, libxslt, lockfile, makeWrapper
 , pkgconfig, pythonFull, pythonPackages, vte }:
 
@@ -22,7 +22,7 @@ in stdenv.mkDerivation rec {
       makeWrapper pkgconfig pythonFull pythonPackages.lockfile ];
 
   propagatedBuildInputs =
-    [ dbus_libs dbus_glib gdk_pixbuf gettext gsettings_desktop_schemas gtk2 gtk3 hicolor_icon_theme vte ];
+    [ dbus_libs dbus_glib gdk_pixbuf gettext gsettings_desktop_schemas gtk2 gtk3 hicolor-icon-theme vte ];
 
   NIX_CFLAGS_COMPILE = [ "-I${dbus_glib}/include/dbus-1.0"
                          "-I${dbus_libs}/include/dbus-1.0"

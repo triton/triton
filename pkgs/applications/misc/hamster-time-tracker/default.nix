@@ -1,6 +1,6 @@
 { stdenv, fetchzip, buildPythonPackage, docbook2x, libxslt, gnome_doc_utils
 , intltool, dbus_glib, pygobject, pygtk, pyxdg, gnome_python, dbus, sqlite3
-, hicolor_icon_theme
+, hicolor-icon-theme
 }:
 
 # TODO: Add optional dependency 'wnck', for "workspace tracking" support. Fixes
@@ -19,7 +19,7 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    docbook2x libxslt gnome_doc_utils intltool dbus_glib hicolor_icon_theme
+    docbook2x libxslt gnome_doc_utils intltool dbus_glib hicolor-icon-theme
   ];
 
   propagatedBuildInputs = [ pygobject pygtk pyxdg gnome_python dbus sqlite3 ];

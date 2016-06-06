@@ -1,6 +1,6 @@
 { fetchurl, stdenv, gettext, intltool, makeWrapper, pkgconfig
 , geoclue2
-, guiSupport ? true, hicolor_icon_theme, gtk3, python, pygobject3, pyxdg
+, guiSupport ? true, hicolor-icon-theme, gtk3, python, pygobject3, pyxdg
 , drmSupport ? true, libdrm
 , randrSupport ? true, libxcb
 , vidModeSupport ? true, libX11, libXxf86vm
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ geoclue2 ]
-    ++ stdenv.lib.optionals guiSupport [ hicolor_icon_theme gtk3 python
+    ++ stdenv.lib.optionals guiSupport [ hicolor-icon-theme gtk3 python
       pygobject3 pyxdg ]
     ++ stdenv.lib.optionals drmSupport [ libdrm ]
     ++ stdenv.lib.optionals randrSupport [ libxcb ]
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
     wrapProgram "$out/bin/redshift-gtk" \
       --prefix PYTHONPATH : "$PYTHONPATH" \
       --prefix GI_TYPELIB_PATH : "$GI_TYPELIB_PATH" \
-      --prefix XDG_DATA_DIRS : "$out/share:${hicolor_icon_theme}/share"
+      --prefix XDG_DATA_DIRS : "$out/share:${hicolor-icon-theme}/share"
 
     install -Dm644 {.,$out/share/doc/redshift}/redshift.conf.sample
   '';

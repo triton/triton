@@ -4,7 +4,7 @@
 , intltool
 
 , gdk-pixbuf
-, hicolor_icon_theme
+, hicolor-icon-theme
 }:
 
 stdenv.mkDerivation rec {
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   propagatedBuildInputs = [
     # For convenience, we specify adwaita-icon-theme only in packages
-    hicolor_icon_theme
+    hicolor-icon-theme
   ];
 
   buildInputs = [

@@ -117,7 +117,7 @@ in
 
         # Oxygen icons moved to KDE Frameworks 5.16 and later.
         (kde5.oxygen-icons or kde5.oxygen-icons5)
-        pkgs.hicolor_icon_theme
+        pkgs.hicolor-icon-theme
 
         kde5.kde-gtk-config
       ]

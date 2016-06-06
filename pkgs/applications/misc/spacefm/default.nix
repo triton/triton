@@ -1,6 +1,6 @@
 { pkgs, fetchFromGitHub, stdenv, gtk3, udev, desktop_file_utils, shared_mime_info
 , intltool, pkgconfig, wrapGAppsHook, ffmpegthumbnailer, jmtpfs, ifuse, lsof, udisks
-, hicolor_icon_theme, adwaita-icon-theme }:
+, hicolor-icon-theme, adwaita-icon-theme }:
 
 stdenv.mkDerivation rec {
   name = "spacefm-${version}";

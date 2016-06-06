@@ -1,5 +1,5 @@
 { stdenv, fetchurl, desktop_file_utils, enchant, gnome, gstreamer, gstreamermm,
-  gst_plugins_base, gst_plugins_good, intltool, hicolor_icon_theme,
+  gst_plugins_base, gst_plugins_good, intltool, hicolor-icon-theme,
   libsigcxx, libxmlxx, makeWrapper, xdg_utils, pkgconfig } :
 
 let
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   buildInputs =  [
     desktop_file_utils enchant gnome.gtk gnome.gtkmm gstreamer gstreamermm
-    gst_plugins_base gst_plugins_good intltool hicolor_icon_theme libsigcxx libxmlxx
+    gst_plugins_base gst_plugins_good intltool hicolor-icon-theme libsigcxx libxmlxx
     makeWrapper xdg_utils pkgconfig
   ];
 

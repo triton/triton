@@ -1107,8 +1107,6 @@ help2man = callPackage ../all-pkgs/help2man { };
 hexchat = callPackage ../all-pkgs/hexchat { };
 
 hicolor-icon-theme = callPackage ../all-pkgs/hicolor-icon-theme { };
-# Deprecated
-hicolor_icon_theme = callPackageAlias "hicolor-icon-theme" { };
 
 highlight = callPackage ../all-pkgs/highlight { };
 

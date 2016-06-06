@@ -1,6 +1,6 @@
 { stdenv, fetchurl, pkgconfig, makeWrapper, intltool, libgpod, curl, flac,
   gnome, gtk3, glib, gettext, perl, perlXMLParser, flex, libglade, libid3tag,
-  libvorbis, hicolor_icon_theme, gdk_pixbuf }:
+  libvorbis, hicolor-icon-theme, gdk_pixbuf }:
 
 stdenv.mkDerivation rec {
   version = "2.1.5";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ pkgconfig makeWrapper intltool curl gettext perl perlXMLParser
     flex libgpod libid3tag flac libvorbis gtk3 gdk_pixbuf libglade gnome.anjuta
     gnome.gdl gnome.defaultIconTheme
-    hicolor_icon_theme ];
+    hicolor-icon-theme ];
 
   patchPhase = ''
     sed -i 's/which/type -P/' scripts/*.sh

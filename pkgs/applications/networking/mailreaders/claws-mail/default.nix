@@ -1,5 +1,5 @@
 { fetchurl, stdenv, wrapGAppsHook
-, curl, dbus, dbus_glib, enchant, gtk, gnutls, gnupg, gpgme, hicolor_icon_theme
+, curl, dbus, dbus_glib, enchant, gtk, gnutls, gnupg, gpgme, hicolor-icon-theme
 , libarchive, libcanberra, libetpan, libnotify, libsoup, libxml2, networkmanager
 , openldap , perl, pkgconfig, poppler, python, shared_mime_info, webkitgtk2
 , glib_networking, gsettings_desktop_schemas
@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildInputs =
-    [ curl dbus dbus_glib gtk gnutls gsettings_desktop_schemas hicolor_icon_theme
+    [ curl dbus dbus_glib gtk gnutls gsettings_desktop_schemas hicolor-icon-theme
       libetpan perl pkgconfig python wrapGAppsHook glib_networking
     ]
     ++ optional enableSpellcheck enchant

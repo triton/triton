@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, intltool, itstool, makeWrapper
-, python3Packages, gst, gtk3, hicolor_icon_theme
+, python3Packages, gst, gtk3, hicolor-icon-theme
 , gobject-introspection, librsvg, gnome3, libnotify
 }:
 

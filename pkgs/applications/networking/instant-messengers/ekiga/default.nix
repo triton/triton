@@ -1,7 +1,7 @@
 { stdenv, glib, fetchurl, cyrus_sasl, gettext, openldap, ptlib, opal, libXv, rarian, intltool
 , perl, perlXMLParser, evolution_data_server, gnome_doc_utils, avahi, autoreconfHook
 , libsigcxx, gtk, dbus_glib, libnotify, libXext, xextproto, gnome3, boost, libsecret
-, pkgconfig, libxml2, videoproto, unixODBC, db, nspr, nss, zlib, hicolor_icon_theme
+, pkgconfig, libxml2, videoproto, unixODBC, db, nspr, nss, zlib, hicolor-icon-theme
 , libXrandr, randrproto, which, libxslt, libtasn1, gmp, nettle, sqlite, makeWrapper }:
 
 stdenv.mkDerivation rec {

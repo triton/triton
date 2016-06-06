@@ -181,7 +181,7 @@ in {
       pkgs.gnome-themes-standard
       pkgs.gtk3
       pkgs.gvfs
-      pkgs.hicolor_icon_theme
+      pkgs.hicolor-icon-theme
       pkgs.ibus
       pkgs.shared_mime_info
     ] ++ config.services.xserver.desktopManager.gnome3.sessionPath;

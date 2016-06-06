@@ -6,7 +6,7 @@
 
 , glib
 , gtk3
-, hicolor_icon_theme
+, hicolor-icon-theme
 , lightdm
 , xorg
 }:
@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
     substituteInPlace "$out/share/xgreeters/lightdm-gtk-greeter.desktop" \
       --replace "Exec=lightdm-gtk-greeter" "Exec=$out/sbin/lightdm-gtk-greeter"
     wrapProgram "$out/sbin/lightdm-gtk-greeter" \
-      --prefix XDG_DATA_DIRS ":" "${hicolor_icon_theme}/share"
+      --prefix XDG_DATA_DIRS ":" "${hicolor-icon-theme}/share"
   '';
 
   parallelBuild = false;

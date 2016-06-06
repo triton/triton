@@ -15,7 +15,7 @@
 , gobject-introspection
 , gsettings-desktop-schemas
 , gtk3
-, hicolor_icon_theme
+, hicolor-icon-theme
 , iso-codes
 #, libglade
 , libgnome-keyring
@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   propagatedUserEnvPkgs = [
     gconf
     gnome-keyring
-    hicolor_icon_theme
+    hicolor-icon-theme
   ];
 
   nativeBuildInputs = [
@@ -69,7 +69,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gsettings-desktop-schemas
     gtk3
-    hicolor_icon_theme
+    hicolor-icon-theme
     iso-codes
     #libglade
     libgudev

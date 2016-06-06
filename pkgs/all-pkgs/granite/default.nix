@@ -10,7 +10,7 @@
 , glib
 , gobject-introspection
 , gtk3
-, hicolor_icon_theme
+, hicolor-icon-theme
 , libgee
 , pango
 , vala
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     libgee
     gobject-introspection
     gtk3
-    hicolor_icon_theme
+    hicolor-icon-theme
     pango
     vala
   ];

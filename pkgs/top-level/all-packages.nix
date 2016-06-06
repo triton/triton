@@ -1063,9 +1063,9 @@ gstreamermm = callPackage ../all-pkgs/gstreamermm { };
 
 gtk-doc = callPackage ../all-pkgs/gtk-doc { };
 
-gtk_2 = callPackage ../all-pkgs/gtk+/2.x.nix { };
+gtk_2 = callPackage ../all-pkgs/gtk/2.x.nix { };
 gtk2 = callPackageAlias "gtk_2" { };
-gtk_3 = callPackage ../all-pkgs/gtk+/3.x.nix { };
+gtk_3 = callPackage ../all-pkgs/gtk/3.x.nix { };
 gtk3 = callPackageAlias "gtk_3" { };
 
 gtkhtml = callPackage ../all-pkgs/gtkhtml { };

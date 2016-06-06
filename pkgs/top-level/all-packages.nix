@@ -9957,7 +9957,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  freewheeling = callPackage ../applications/audio/freewheeling { };
 #
-  fribid = callPackage ../applications/networking/browsers/mozilla-plugins/fribid { };
+#  fribid = callPackage ../applications/networking/browsers/mozilla-plugins/fribid { };
 #
 #  geany = callPackage ../applications/editors/geany { };
 #  geany-with-vte = callPackage ../applications/editors/geany/with-vte.nix { };

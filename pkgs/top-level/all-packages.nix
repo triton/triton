@@ -377,8 +377,8 @@ let
     '';
   };
 
-  fetchNuGet = callPackage ../build-support/fetchnuget { };
-  buildDotnetPackage = callPackage ../build-support/build-dotnet-package { };
+#  fetchNuGet = callPackage ../build-support/fetchnuget { };
+#  buildDotnetPackage = callPackage ../build-support/build-dotnet-package { };
 
   resolveMirrorURLs = {url}: pkgs.fetchurl {
     showURLs = true;

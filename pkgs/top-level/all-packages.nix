@@ -269,9 +269,9 @@ let
 
   fetchbzr = callPackage ../build-support/fetchbzr { };
 
-  fetchcvs = callPackage ../build-support/fetchcvs { };
+  #fetchcvs = callPackage ../build-support/fetchcvs { };
 
-  fetchdarcs = callPackage ../build-support/fetchdarcs { };
+  #fetchdarcs = callPackage ../build-support/fetchdarcs { };
 
   fetchgit = callPackage ../build-support/fetchgit { };
 
@@ -9797,7 +9797,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #      };
 #    };
 #
-  cvs = callPackage ../applications/version-management/cvs { };
+#  cvs = callPackage ../applications/version-management/cvs { };
 #
 #  cvsps = callPackage ../applications/version-management/cvsps { };
 #

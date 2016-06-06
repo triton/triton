@@ -30,8 +30,7 @@ stdenv.mkDerivation rec {
     for i in $out/bin/*; do
       wrapProgram $i \
         --prefix PATH : "${tcl}/bin" \
-        --prefix TCLLIBPATH ' ' $out/lib/* \
-        ${stdenv.lib.optionalString stdenv.isDarwin "--prefix DYLD_LIBRARY_PATH : $out/lib/expect${version}"}
+        --prefix TCLLIBPATH ' ' $out/lib/*
     done
   '';
 
@@ -39,7 +38,8 @@ stdenv.mkDerivation rec {
     description = "A tool for automating interactive applications";
     homepage = http://expect.nist.gov/;
     license = "Expect";
-    platforms = platforms.unix;
+    platforms = with platforms;
+      x86_64-linux;
     maintainers = with maintainers; [ wkennington ];
   };
 }

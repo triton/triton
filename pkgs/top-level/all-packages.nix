@@ -2011,12 +2011,12 @@ st = callPackage ../all-pkgs/st {
   configFile = config.st.configFile or null;
 };
 
-steamPackages = callPackage ../all-pkgs/steam { };
-steam = steamPackages.steam-chrootenv.override {
-  # DEPRECATED
-  withJava = config.steam.java or false;
-  withPrimus = config.steam.primus or false;
-};
+#steamPackages = callPackage ../all-pkgs/steam { };
+#steam = steamPackages.steam-chrootenv.override {
+#  # DEPRECATED
+#  withJava = config.steam.java or false;
+#  withPrimus = config.steam.primus or false;
+#};
 
 sublime-text = callPackage ../all-pkgs/sublime-text { };
 

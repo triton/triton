@@ -2006,6 +2006,8 @@ swig_3 = callPackage ../all-pkgs/swig {
 };
 swig = callPackageAlias "swig_3" { };
 
+sydent = pkgs.python2Packages.sydent;
+
 synapse = pkgs.python2Packages.synapse;
 
 syncthing = pkgs.goPackages.syncthing.bin // { outputs = [ "bin" ]; };

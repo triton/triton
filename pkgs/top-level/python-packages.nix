@@ -335,6 +335,8 @@ sqlalchemy = callPackage ../all-pkgs/sqlalchemy { };
 
 statistics = callPackage ../all-pkgs/statistics { };
 
+sydent = callPackage ../all-pkgs/sydent { };
+
 synapse = callPackage ../all-pkgs/synapse { };
 
 tmdb3 = callPackage ../all-pkgs/tmdb3 { };

@@ -15,12 +15,12 @@
 , gdk-pixbuf
 #, jrePlugin
 , icedtea_web
-, trezor-bridge
-, bluejeans
-, djview4
-, adobe-reader
+#, trezor-bridge
+#, bluejeans
+#, djview4
+#, adobe-reader
 , google_talk_plugin
-, fribid
+#, fribid
 , gnome-shell
 , dconf
 , glib
@@ -66,16 +66,16 @@ let
      assert !(jre && icedtea);
      ([ ]
       ++ optional enableAdobeFlash flashplayer
-      ++ optional (cfg.enableDjvu or false) (djview4)
-      ++ optional (cfg.enableGeckoMediaPlayer or false) gecko_mediaplayer
+      #++ optional (cfg.enableDjvu or false) (djview4)
+      #++ optional (cfg.enableGeckoMediaPlayer or false) gecko_mediaplayer
       #++ optional (jre && jrePlugin ? mozillaPlugin) jrePlugin
-      ++ optional icedtea icedtea_web
+      #++ optional icedtea icedtea_web
       ++ optional (cfg.enableGoogleTalkPlugin or false) google_talk_plugin
-      ++ optional (cfg.enableFriBIDPlugin or false) fribid
+      #++ optional (cfg.enableFriBIDPlugin or false) fribid
       ++ optional (cfg.enableGnomeExtensions or false) gnome-shell
-      ++ optional (cfg.enableTrezor or false) trezor-bridge
-      ++ optional (cfg.enableBluejeans or false) bluejeans
-      ++ optional (cfg.enableAdobeReader or false) adobe-reader
+      #++ optional (cfg.enableTrezor or false) trezor-bridge
+      #++ optional (cfg.enableBluejeans or false) bluejeans
+      #++ optional (cfg.enableAdobeReader or false) adobe-reader
      );
   libs = [
     ffmpeg

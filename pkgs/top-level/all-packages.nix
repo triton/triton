@@ -3020,7 +3020,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  extundelete = callPackage ../tools/filesystems/extundelete { };
 #
-#  expect = callPackage ../tools/misc/expect { };
+  expect = callPackage ../tools/misc/expect { };
 #
 #  Fabric = pythonPackages.Fabric;
 #

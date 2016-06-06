@@ -1653,7 +1653,7 @@ ncmpc = callPackage ../all-pkgs/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
 
-ncurses = callPackage ../all-pkgs/gpm+ncurses { };
+ncurses = callPackage ../all-pkgs/gpm-ncurses { };
 
 net-snmp = callPackage ../all-pkgs/net-snmp { };
 

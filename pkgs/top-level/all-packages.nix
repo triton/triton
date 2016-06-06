@@ -718,7 +718,7 @@ dialog = callPackage ../all-pkgs/dialog { };
 
 dmenu = callPackage ../all-pkgs/dmenu { };
 
-devil-nox = devil.override {
+devil_nox = callPackageAlias "devil" {
   xorg = null;
   mesa = null;
 };

@@ -319,6 +319,8 @@ setuptools = callPackage ../all-pkgs/setuptools { };
 
 setuptools-scm = callPackage ../all-pkgs/setuptools-scm { };
 
+setuptools-trial = callPackage ../all-pkgs/setuptools-trial { };
+
 signedjson = callPackage ../all-pkgs/signedjson { };
 
 simplejson = callPackage ../all-pkgs/simplejson { };

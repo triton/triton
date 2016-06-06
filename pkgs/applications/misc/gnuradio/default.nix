@@ -2,7 +2,7 @@
 # core dependencies
 , cmake, pkgconfig, git, boost, cppunit, fftw
 # python wrappers
-, python, swig2, numpy, scipy, matplotlib
+, python, swig_2, numpy, scipy, matplotlib
 # grc - the gnu radio companion
 , cheetahTemplate, pygtk
 # gr-wavelet: collection of wavelet blocks
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    cmake pkgconfig git boost cppunit fftw python swig2 orc lxml qt4
+    cmake pkgconfig git boost cppunit fftw python swig_2 orc lxml qt4
     qwt alsaLib SDL libusb1 uhd gsl makeWrapper
   ];
 

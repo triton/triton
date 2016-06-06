@@ -1,5 +1,5 @@
 { stdenv, fetchFromGitHub, autoreconfHook, pkgconfig, bison, flex
-, python, swig2, tcl, libsepol, libselinux, libxml2, sqlite, bzip2 }:
+, python, swig_2, tcl, libsepol, libselinux, libxml2, sqlite, bzip2 }:
 
 stdenv.mkDerivation rec {
   name = "setools-2015-02-12";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   NIX_CFLAGS_COMPILE = "-fstack-protector-all";
   NIX_LDFLAGS = "-L${libsepol}/lib -L${libselinux}/lib";
 
-  nativeBuildInputs = [ autoreconfHook pkgconfig python swig2 bison flex ];
+  nativeBuildInputs = [ autoreconfHook pkgconfig python swig_2 bison flex ];
   buildInputs = [ tcl libxml2 sqlite bzip2 ];
 
   meta = {

@@ -2434,7 +2434,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     patches = [ ../development/python-modules/box2d/disable-test.patch ];
 
-    propagatedBuildInputs = [ pkgs.swig2 pkgs.box2d ];
+    propagatedBuildInputs = [ pkgs.swig_2 pkgs.box2d ];
 
     meta = {
       homepage = https://code.google.com/p/pybox2d/;
@@ -10139,7 +10139,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       md5 = "f93d8462ff7646397a9f77a2fe602d17";
     };
 
-    buildInputs = with self; [ pkgs.swig2 pkgs.openssl ];
+    buildInputs = with self; [ pkgs.swig_2 pkgs.openssl ];
 
     preBuild = "${python}/bin/${python.executable} setup.py build_ext --openssl=${pkgs.openssl}";
 

@@ -1,15 +1,15 @@
-{ stdenv, fetchurl, pkgconfig, libxml2, swig2, python, glib }:
+{ stdenv, fetchurl, pkgconfig, libxml2, swig_2, python, glib }:
 
 stdenv.mkDerivation rec {
   name = "libplist-1.12";
 
-  nativeBuildInputs = [ pkgconfig swig2 ];
+  nativeBuildInputs = [ pkgconfig swig_2 ];
 
   #patches = [ ./swig.patch ];
 
   propagatedBuildInputs = [ libxml2 glib python ];
 
-  passthru.swig = swig2;
+  passthru.swig = swig_2;
 
   src = fetchurl {
     url = "http://www.libimobiledevice.org/downloads/${name}.tar.bz2";

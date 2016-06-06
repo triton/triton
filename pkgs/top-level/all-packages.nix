@@ -2033,8 +2033,6 @@ sushi = callPackage ../all-pkgs/sushi { };
 swig_2 = callPackage "swig" {
   channel = "2";
 };
-# Deprecated alias
-swig2 = callPackageAlias "swig_2" { };
 swig_3 = callPackage ../all-pkgs/swig {
   channel = "3";
 };
@@ -8600,7 +8598,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 
   microcodeIntel = callPackage ../os-specific/linux/microcode/intel.nix { };
 
-#  apparmor = callPackage ../os-specific/linux/apparmor { swig = swig2; };
+#  apparmor = callPackage ../os-specific/linux/apparmor { swig = swig_2; };
 #  libapparmor = apparmor.libapparmor;
 #  apparmor-pam = apparmor.apparmor-pam;
 #  apparmor-parser = apparmor.apparmor-parser;

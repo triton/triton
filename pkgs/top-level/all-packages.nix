@@ -4169,7 +4169,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  qjoypad = callPackage ../tools/misc/qjoypad { };
 #
-#  qpdf = callPackage ../development/libraries/qpdf { };
+  qpdf = callPackage ../development/libraries/qpdf { };
 #
 #  qprint = callPackage ../tools/text/qprint { };
 #

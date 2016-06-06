@@ -245,7 +245,7 @@ let
   #  importMeta = args.meta or {};
   #};
 
-  buildMaven = callPackage ../build-support/build-maven.nix {};
+  #buildMaven = callPackage ../build-support/build-maven.nix {};
 
   cmark = callPackage ../development/libraries/cmark { };
 

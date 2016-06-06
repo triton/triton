@@ -9678,7 +9678,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #    gtk = gtk3;
 #  };
 #
-  bluejeans = callPackage ../applications/networking/browsers/mozilla-plugins/bluejeans { };
+#  bluejeans = callPackage ../applications/networking/browsers/mozilla-plugins/bluejeans { };
 #
 #  bomi = qt5.callPackage ../applications/video/bomi {
 #    youtube-dl = pythonPackages.youtube-dl;

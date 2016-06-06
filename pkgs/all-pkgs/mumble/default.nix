@@ -6,9 +6,9 @@
 , avahi
 , boost
 , libcap
-, libopus
 , libsndfile
 , mesa_noglu
+, opus
 , qt4
 , qt5
 , openssl
@@ -108,9 +108,9 @@ let
 
     buildInputs = [
       alsa-lib
-      libopus
       libsndfile
       mesa_noglu
+      opus
       speex
       xorg.fixesproto
       xorg.inputproto

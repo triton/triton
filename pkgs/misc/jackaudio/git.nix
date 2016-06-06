@@ -3,7 +3,7 @@
 
 # Optional Dependencies
 , dbus ? null, pythonDBus ? null, libffado ? null, alsaLib ? null
-, libopus ? null
+, opus ? null
 
 # Extra options
 , prefix ? ""
@@ -19,7 +19,7 @@ let
   optPythonDBus = if libOnly then null else shouldUsePkg pythonDBus;
   optLibffado = if libOnly then null else shouldUsePkg libffado;
   optAlsaLib = if libOnly then null else shouldUsePkg alsaLib;
-  optLibopus = shouldUsePkg libopus;
+  optLibopus = shouldUsePkg opus;
 in
 stdenv.mkDerivation rec {
   name = "${prefix}jack2-${version}";

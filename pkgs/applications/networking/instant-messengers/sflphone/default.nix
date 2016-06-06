@@ -1,5 +1,5 @@
 { stdenv, fetchurl, libyaml, alsaLib, openssl, libuuid, pkgconfig, libpulseaudio, libsamplerate
-, commoncpp2, ccrtp, libzrtpcpp, dbus, dbus_cplusplus, expat, pcre, gsm, speex, ilbc, libopus
+, commoncpp2, ccrtp, libzrtpcpp, dbus, dbus_cplusplus, expat, pcre, gsm, speex, ilbc, opus
 , autoconf, automake, libtool, gettext, perl
 , cmake, qt4
 , gtk, glib, dbus_glib, libnotify, intltool, makeWrapper }:
@@ -44,7 +44,7 @@ rec {
       "--with-expat-lib=-lexpat --with-opus ";
 
     buildInputs = [ libyaml alsaLib openssl libuuid pkgconfig libpulseaudio libsamplerate
-      commoncpp2 ccrtp libzrtpcpp dbus dbus_cplusplus expat pcre gsm speex ilbc libopus
+      commoncpp2 ccrtp libzrtpcpp dbus dbus_cplusplus expat pcre gsm speex ilbc opus
       autoconf automake libtool gettext perl ];
   };
 

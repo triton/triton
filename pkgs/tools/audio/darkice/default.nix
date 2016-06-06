@@ -1,10 +1,10 @@
-{ stdenv, buildEnv, fetchurl, alsaLib, faac, libjack2, lame, libogg, libopus, libpulseaudio, libsamplerate, libvorbis }:
+{ stdenv, buildEnv, fetchurl, alsaLib, faac, libjack2, lame, libogg, opus, libpulseaudio, libsamplerate, libvorbis }:
 
 let
   oggEnv = buildEnv {
     name = "env-darkice-ogg";
     paths = [
-      libopus libvorbis libogg
+      opus libvorbis libogg
     ];
   };
 

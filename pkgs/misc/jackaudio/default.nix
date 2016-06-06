@@ -3,7 +3,7 @@
 
 # Optional Dependencies
 , dbus, pythonPackages, ffado_lib, alsa-lib
-, libopus
+, opus
 
 # Extra options
 , prefix ? ""
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
 
     libsamplerate libsndfile readline expat
 
-    dbus libopus
+    dbus opus
   ] ++ optionals (!libOnly) [
     alsa-lib
     ffado_lib

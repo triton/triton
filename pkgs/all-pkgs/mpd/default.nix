@@ -29,7 +29,6 @@
 , libmodplug
 , libmpdclient
 , libogg
-, libopus
 , libsamplerate
 , libshout
 , libsndfile
@@ -37,6 +36,7 @@
 , libvorbis
 , mpg123
 , openal
+, opus
 , pulseaudio_lib
 , soxr
 , sqlite
@@ -100,7 +100,6 @@ stdenv.mkDerivation rec {
     libmodplug
     libmpdclient
     libogg
-    libopus
     libsamplerate
     libshout
     libsndfile
@@ -108,6 +107,7 @@ stdenv.mkDerivation rec {
     libvorbis
     mpg123
     openal
+    opus
     pulseaudio_lib
     soxr
     sqlite
@@ -159,7 +159,7 @@ stdenv.mkDerivation rec {
     (enFlag "mpg123" (mpg123 != null) null)
     (enFlag "neighbor-plugins" true null)
     (enFlag "openal" (openal != null) null)
-    (enFlag "opus" (libopus != null) null)
+    (enFlag "opus" (opus != null) null)
     (enFlag "oss" true null)
     "--disable-osx"
     (enFlag "pipe-output" true null)

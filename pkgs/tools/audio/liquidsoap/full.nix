@@ -2,7 +2,7 @@
 , ocaml, ocamlPackages
 , libao, portaudio, alsaLib, libpulseaudio, libjack2
 , libsamplerate, libmad, taglib, lame, libogg
-, libvorbis, speex, libtheora, libopus, fdk_aac
+, libvorbis, speex, libtheora, opus, fdk_aac
 , faad2, flac, ladspaH, ffmpeg, frei0r, dssi
 , }:
 
@@ -29,7 +29,7 @@ stdenv.mkDerivation {
     [ which ocaml ocamlPackages.findlib pkgconfig
       libao portaudio alsaLib libpulseaudio libjack2
       libsamplerate libmad taglib lame libogg
-      libvorbis speex libtheora libopus fdk_aac
+      libvorbis speex libtheora opus fdk_aac
       faad2 flac ladspaH ffmpeg frei0r dssi
       ocamlPackages.xmlm ocamlPackages.ocaml_pcre
       ocamlPackages.camomile

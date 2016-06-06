@@ -19,7 +19,6 @@
 , libbs2b
 , libmms
 , libmodplug
-, libopus
 , librsvg
 , libsndfile
 , libvdpau
@@ -31,6 +30,7 @@
 #, opencv
 , openh264
 , openjpeg
+, opus
 , orc
 , schroedinger
 , SDL
@@ -80,7 +80,7 @@ stdenv.mkDerivation rec {
     libbs2b
     libmms
     libmodplug
-    libopus
+    opus
     librsvg
     libvdpau
     libvisual
@@ -271,7 +271,7 @@ stdenv.mkDerivation rec {
     (enFlag "openh264" (openh264 != null) null)
     (enFlag "openjpeg" (openjpeg != null) null)
     #(enFlag "openni2" ( != null) null)
-    (enFlag "opus" (libopus != null) null)
+    (enFlag "opus" (opus != null) null)
     #(enFlag "pvr" ( != null) null)
     (enFlag "rsvg" (librsvg != null) null)
     (enFlag "gl" (mesa != null) null)

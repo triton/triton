@@ -19,12 +19,12 @@
 , libmms
 , libmodplug
 , libmusicbrainz
-, libopus
 , librsvg
 , libsndfile
 , libvdpau
 , libvpx
 , openal
+, opus
 , orc
 , schroedinger
 , SDL
@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
     libmms
     #libmodplug
     libmusicbrainz
-    #libopus
+    #opus
     librsvg
     libsndfile
     libvdpau
@@ -225,7 +225,7 @@ stdenv.mkDerivation rec {
     #"--enable-ofa"
     (enFlag "openal" (openal != null) null)
     #"--enable-opencv"
-    #(enFlag "opus" (libopus != null) null)
+    #(enFlag "opus" (opus != null) null)
     #"--enable-pvr"
     (enFlag "rsvg" (librsvg != null) null)
     #"--enable-timidity"

@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, intltool, alsaLib, libpulseaudio, speex, gsm
-, libopus, ffmpeg, libX11, libXv, mesa, glew, libtheora, libvpx, SDL, libupnp
+, opus, ffmpeg, libX11, libXv, mesa, glew, libtheora, libvpx, SDL, libupnp
 , ortp, libv4l, libpcap, srtp, vim
 }:
 
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ pkgconfig intltool ];
 
   propagatedBuildInputs = [
-    alsaLib libpulseaudio speex gsm libopus
+    alsaLib libpulseaudio speex gsm opus
     ffmpeg libX11 libXv mesa glew libtheora libvpx SDL libupnp
     ortp libv4l libpcap srtp
     vim

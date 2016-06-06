@@ -1738,8 +1738,6 @@ openssl = callPackage ../all-pkgs/openssl { };
 openvpn = callPackage ../all-pkgs/openvpn { };
 
 opus = callPackage ../all-pkgs/opus { };
-# Deprecated
-libopus = callPackageAlias "opus" { };
 
 opus-tools = callPackage ../all-pkgs/opus-tools { };
 

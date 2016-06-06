@@ -10,13 +10,13 @@
 , libid3tag
 , libmad
 , libmodplug
-, libopus
 , libshout
 , libsndfile
 , libusb
 , libvorbis
 , mesa_noglu
 , mp4v2
+, opus
 , opusfile
 , portaudio
 , portmidi
@@ -58,13 +58,13 @@ stdenv.mkDerivation rec {
     libid3tag
     libmad
     libmodplug
-    libopus
     libshout
     libsndfile
     libusb
     libvorbis
     mesa_noglu
     mp4v2
+    opus
     opusfile
     portaudio
     portmidi
@@ -116,7 +116,7 @@ stdenv.mkDerivation rec {
     "profiling=0"
     "test=0"
     (scFlag "shoutcast" (libshout != null))
-    (scFlag "opus" (libopus != null))
+    (scFlag "opus" (opus != null))
     (scFlag "ffmpeg" (ffmpeg_2 != null))
     "optimize=portable"
     "autodjcrates=1"

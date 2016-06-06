@@ -1,9 +1,9 @@
 { stdenv
 , fetchurl
 
-, libogg
-, libopus
 , flac
+, libogg
+, opus
 }:
 
 let
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     flac
     libogg
-    libopus
+    opus
   ];
 
   configureFlags = [

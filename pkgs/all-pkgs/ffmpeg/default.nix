@@ -102,7 +102,7 @@
 , libmodplug
 #, libnut
 , libogg
-, libopus
+, opus
 , libsndio ? null
 , libssh
 , libtheora
@@ -354,7 +354,7 @@ stdenv.mkDerivation rec {
     libbluray
     libgcrypt
     libogg
-    libopus
+    opus
     libtheora
     libva
     libvdpau
@@ -569,7 +569,7 @@ stdenv.mkDerivation rec {
     #(fflag "libopenh264" (openh264 != null) "2.6")
     "--disable-libopenh264"
     (fflag "libopenjpeg" (openjpeg_1 != null && full) null)
-    (fflag "libopus" (libopus != null) null)
+    (fflag "libopus" (opus != null) null)
     (fflag "libpulse" (pulseaudio_lib != null) null)
     (deprfflag "libquvi" false "2.0" "2.8")
     (fflag "librubberband" (rubberband != null && full) "3.0")

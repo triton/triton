@@ -1,7 +1,7 @@
 { stdenv, ninja, which
 
 # default dependencies
-, atk, bzip2, flac, speex, libopus
+, atk, bzip2, flac, speex, opus
 , libevent, expat, libjpeg, snappy
 , libpng, libxml2, libxslt, libcap
 , xdg-utils, yasm, libwebp
@@ -78,7 +78,7 @@ let
   };
 
   defaultDependencies = [
-    bzip2 flac speex libopus
+    bzip2 flac speex opus
     libevent expat libjpeg snappy
     libpng libxml2 libxslt libcap
     xdg-utils yasm libwebp

@@ -22,7 +22,7 @@
 , gmeSupport ? true, game-music-emu
 , icuSupport ? true, icu
 , clientSupport ? true, mpd_clientlib
-, opusSupport ? true, libopus
+, opusSupport ? true, opus
 }:
 
 let
@@ -65,7 +65,7 @@ in stdenv.mkDerivation rec {
     ++ opt gmeSupport game-music-emu
     ++ opt icuSupport icu
     ++ opt clientSupport mpd_clientlib
-    ++ opt opusSupport libopus;
+    ++ opt opusSupport opus;
 
   configureFlags =
     [ (mkFlag (!stdenv.isDarwin && alsaSupport) "alsa")

@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, autoreconfHook, libsodium, ncurses, libopus
+{ stdenv, fetchFromGitHub, autoreconfHook, libsodium, ncurses, opus
 , libvpx, check, libconfig, pkgconfig }:
 
 let
@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
     autoreconfHook libsodium ncurses
     check libconfig pkgconfig
   ] ++ stdenv.lib.optionals (!stdenv.isArm) [
-    libopus
+    opus
   ];
 
   propagatedBuildInputs = stdenv.lib.optionals (!stdenv.isArm) [ libvpx ];

@@ -16,7 +16,7 @@
 ## Ubuntu
 , liberation_ttf, curl, utillinux, xdg_utils, wget
 ## Arch Linux.
-, flac, harfbuzz, icu, libpng, libopus, snappy, speechd
+, flac, harfbuzz, icu, libpng, opus, snappy, speechd
 ## Gentoo
 , bzip2, libcap
 
@@ -37,7 +37,7 @@ with (import ../chromium/source/update.nix {
 let
   dist = if channel == "dev" then "unstable" else channel;
 
-  opusWithCustomModes = libopus.override {
+  opusWithCustomModes = opus.override {
     withCustomModes = true;
   };
 

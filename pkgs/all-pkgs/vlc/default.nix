@@ -32,7 +32,6 @@
 , libmatroska
 , libmtp
 , liboggz
-, libopus
 , libraw1394
 , librsvg
 , libsamplerate
@@ -47,6 +46,7 @@
 , lua
 , libmpeg2
 , mesa_noglu
+, opus
 , perl
 , pulseaudio_lib
 , qt4
@@ -117,7 +117,6 @@ stdenv.mkDerivation rec {
     libmatroska
     libmtp
     liboggz
-    libopus
     libraw1394
     librsvg
     libsamplerate
@@ -132,6 +131,7 @@ stdenv.mkDerivation rec {
     lua
     libmpeg2
     mesa_noglu
+    opus
     perl
     pulseaudio_lib
     qt4

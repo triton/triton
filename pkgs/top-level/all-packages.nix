@@ -251,13 +251,13 @@ let
 
   #dockerTools = callPackage ../build-support/docker { };
 
-  dotnetenv = callPackage ../build-support/dotnetenv {
-    dotnetfx = dotnetfx40;
-  };
+  #dotnetenv = callPackage ../build-support/dotnetenv {
+  #  dotnetfx = dotnetfx40;
+  #};
 
-  dotnetbuildhelpers = callPackage ../build-support/dotnetbuildhelpers {
-    inherit helperFunctions;
-  };
+  #dotnetbuildhelpers = callPackage ../build-support/dotnetbuildhelpers {
+  #  inherit helperFunctions;
+  #};
 
   vsenv = callPackage ../build-support/vsenv {
     vs = vs90wrapper;

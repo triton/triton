@@ -506,7 +506,9 @@ with stdenv.lib;
   MEMCG y
   MEMCG_SWAP y
   CGROUP_PIDS y
-  DEVPTS_MULTIPLE_INSTANCES y
+  ${optionalString (versionOlder version "4.7") ''
+    DEVPTS_MULTIPLE_INSTANCES y
+  ''}
   BLK_DEV_THROTTLING y
   CFQ_GROUP_IOSCHED y
   CFS_BANDWIDTH y

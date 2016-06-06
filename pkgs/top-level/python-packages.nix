@@ -169,7 +169,7 @@ click = callPackage ../all-pkgs/click { };
 
 cryptography = callPackage ../all-pkgs/cryptography { };
 
-cryptography_vectors = callPackage ../all-pkgs/cryptography_vectors { };
+cryptography-vectors = callPackage ../all-pkgs/cryptography-vectors { };
 
 cython = callPackage ../all-pkgs/cython { };
 

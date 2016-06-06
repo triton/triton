@@ -2038,6 +2038,8 @@ swig_3 = callPackage ../all-pkgs/swig {
 };
 swig = callPackageAlias "swig_3" { };
 
+synapse = pkgs.python2Packages.synapse;
+
 syncthing = pkgs.goPackages.syncthing.bin // { outputs = [ "bin" ]; };
 
 syslinux = callPackage ../all-pkgs/syslinux { };

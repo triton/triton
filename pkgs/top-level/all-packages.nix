@@ -6045,7 +6045,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  jdepend = callPackage ../development/tools/analysis/jdepend { };
 #
-  flexcpp = callPackage ../development/tools/parsing/flexc++ { };
+#  flexcpp = callPackage ../development/tools/parsing/flexc++ { };
 
 #
 #  geis = callPackage ../development/libraries/geis { };
@@ -6074,7 +6074,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  icestorm = callPackage ../development/tools/icestorm { };
 #
-  icmake = callPackage ../development/tools/build-managers/icmake { };
+#  icmake = callPackage ../development/tools/build-managers/icmake { };
 #
 #  iconnamingutils = callPackage ../development/tools/misc/icon-naming-utils {
 #    inherit (perlPackages) XMLSimple;
@@ -6354,7 +6354,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  belle-sip = callPackage ../development/libraries/belle-sip { };
 #
-  bobcat = callPackage ../development/libraries/bobcat { };
+#  bobcat = callPackage ../development/libraries/bobcat { };
 #
 #  boolstuff = callPackage ../development/libraries/boolstuff { };
 #

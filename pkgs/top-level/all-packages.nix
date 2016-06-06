@@ -225,25 +225,25 @@ let
 
   buildEnv = callPackage ../build-support/buildenv { }; # not actually a package
 
-  buildFHSEnv = callPackage ../build-support/build-fhs-chrootenv/env.nix { };
+  #buildFHSEnv = callPackage ../build-support/build-fhs-chrootenv/env.nix { };
 
   chrootFHSEnv = callPackage ../build-support/build-fhs-chrootenv { };
   userFHSEnv = callPackage ../build-support/build-fhs-userenv {
    ruby = ruby_2_1_3;
   };
 
-  buildFHSChrootEnv = args: chrootFHSEnv {
-    env = buildFHSEnv (removeAttrs args [ "extraInstallCommands" ]);
-    extraInstallCommands = args.extraInstallCommands or "";
-  };
+  #buildFHSChrootEnv = args: chrootFHSEnv {
+  #  env = buildFHSEnv (removeAttrs args [ "extraInstallCommands" ]);
+  #  extraInstallCommands = args.extraInstallCommands or "";
+  #};
 
-  buildFHSUserEnv = args: userFHSEnv {
-    env = buildFHSEnv (removeAttrs args [ "runScript" "extraBindMounts" "extraInstallCommands" "meta" ]);
-    runScript = args.runScript or "bash";
-    extraBindMounts = args.extraBindMounts or [];
-    extraInstallCommands = args.extraInstallCommands or "";
-    importMeta = args.meta or {};
-  };
+  #buildFHSUserEnv = args: userFHSEnv {
+  #  env = buildFHSEnv (removeAttrs args [ "runScript" "extraBindMounts" "extraInstallCommands" "meta" ]);
+  #  runScript = args.runScript or "bash";
+  #  extraBindMounts = args.extraBindMounts or [];
+  #  extraInstallCommands = args.extraInstallCommands or "";
+  #  importMeta = args.meta or {};
+  #};
 
   buildMaven = callPackage ../build-support/build-maven.nix {};
 

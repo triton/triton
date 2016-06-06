@@ -6495,7 +6495,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   flite = callPackage ../development/libraries/flite { };
 #
-#  fltk13 = callPackage ../development/libraries/fltk/fltk13.nix { };
+  fltk13 = callPackage ../development/libraries/fltk/fltk13.nix { };
 #
 #  fltk20 = callPackage ../development/libraries/fltk { };
 #

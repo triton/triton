@@ -235,6 +235,10 @@ paste = callPackage ../all-pkgs/paste { };
 
 pathlib = callPackage ../all-pkgs/pathlib { };
 
+pathlib2 = callPackage ../all-pkgs/pathlib2 { };
+
+pbr = callPackage ../all-pkgs/pbr { };
+
 pillow = callPackage ../all-pkgs/pillow { };
 
 pip = callPackage ../all-pkgs/pip { };
@@ -13475,18 +13479,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       description = "Python APIs to create, process and manage payment";
       license = "PayPal SDK License";
     };
-  };
-
-  pbr = buildPythonPackage rec {
-    name = "pbr-${version}";
-    version = "1.9.1";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/pbr/${name}.tar.gz";
-      sha256 = "3997406c90894ebf3d1371811c1e099721440a901f946ca6dc4383350403ed51";
-    };
-
-    # circular dependencies with fixtures
   };
 
   fixtures = buildPythonPackage rec {

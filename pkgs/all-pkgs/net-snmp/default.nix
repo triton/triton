@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , file
 , perl
@@ -24,6 +25,14 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     openssl
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "fa150c43b9b4f3d0f3a01badc7cf368ebb1b34ab";
+      file = "net-snmp/perl-5.24-fix.patch";
+      sha256 = "56962215c560e4b7870300118855c132b96a542f8568ce16d95d195816e47cfd";
+    })
   ];
 
   preConfigure = ''
@@ -54,7 +63,6 @@ stdenv.mkDerivation rec {
     description = "Clients and server for the SNMP network monitoring protocol";
     homepage = http://net-snmp.sourceforge.net/;
     license = licenses.bsd3;
-    broken = true;
     maintainers = with maintainers; [
       wkennington
     ];

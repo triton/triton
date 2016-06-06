@@ -16,7 +16,7 @@
 , pynacl
 , pysaml2
 , pyyaml
-, service_identity
+, service-identity
 , signedjson
 , twisted
 , ujson
@@ -51,7 +51,7 @@ buildPythonPackage {
     pynacl
     pysaml2
     pyyaml
-    service_identity
+    service-identity
     signedjson
     twisted
     ujson

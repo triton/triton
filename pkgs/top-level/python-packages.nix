@@ -307,7 +307,7 @@ safe = callPackage ../all-pkgs/safe { };
 
 scons = callPackage ../all-pkgs/scons { };
 
-service_identity = callPackage ../all-pkgs/service_identity { };
+service-identity = callPackage ../all-pkgs/service-identity { };
 
 setuptools = callPackage ../all-pkgs/setuptools { };
 
@@ -8385,7 +8385,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "1wrnbdq3y3lfxnhx30yj9xbr3iy9512jb60k8qi1da1phalnwz5x";
     };
 
-    propagatedBuildInputs = [ self.twisted self.pyopenssl self.service_identity ];
+    propagatedBuildInputs = [ self.twisted self.pyopenssl self.service-identity ];
 
     meta = {
       homepage = http://foolscap.lothar.com/;

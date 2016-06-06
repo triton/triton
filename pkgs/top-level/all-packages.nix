@@ -10014,9 +10014,9 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #    { boost = boost155;
 #    };
 #
-  flashplayer = callPackage ../applications/networking/browsers/mozilla-plugins/flashplayer-11 {
-    debug = config.flashplayer.debug or false;
-  };
+#  flashplayer = callPackage ../applications/networking/browsers/mozilla-plugins/flashplayer-11 {
+#    debug = config.flashplayer.debug or false;
+#  };
 #
 #  flashplayer-standalone = pkgsi686Linux.flashplayer.sa;
 #

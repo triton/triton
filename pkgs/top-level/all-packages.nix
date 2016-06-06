@@ -1114,6 +1114,8 @@ hiredis = callPackage ../all-pkgs/hiredis { };
 
 htop = callPackage ../all-pkgs/htop { };
 
+http-parser = callPackage ../all-pkgs/http-parser { };
+
 hunspell = callPackage ../all-pkgs/hunspell { };
 
 hwdata = callPackage ../all-pkgs/hwdata { };

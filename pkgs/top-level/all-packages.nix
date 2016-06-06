@@ -832,7 +832,7 @@ firefox-esr-unwrapped = callPackage ../all-pkgs/firefox {
 };
 firefox_wrapper = callPackage ../all-pkgs/firefox/wrapper.nix { };
 
-firefox-bin = callPackage ../applications/networking/browsers/firefox-bin { };
+#firefox-bin = callPackage ../applications/networking/browsers/firefox-bin { };
 
 fish = callPackage ../all-pkgs/fish { };
 

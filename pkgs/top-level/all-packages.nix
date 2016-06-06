@@ -5084,7 +5084,7 @@ zstd = callPackage ../all-pkgs/zstd { };
     cross = null;
     libcCross = null;
 
-    isl = isl_0_14;
+    isl = pkgs.isl_0_14;
   }));
 #
   gcc5 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/5 {

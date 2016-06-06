@@ -1,7 +1,7 @@
 { stdenv, fetchurl, noSysDirs
 , langC ? true, langCC ? true, langFortran ? false
-, langObjC ? stdenv.isDarwin
-, langObjCpp ? stdenv.isDarwin
+, langObjC ? false
+, langObjCpp ? false
 , langJava ? false
 , langAda ? false
 , langVhdl ? false
@@ -46,9 +46,6 @@ assert cloog != null -> isl != null;
 
 # LTO needs libelf and zlib.
 assert libelf != null -> zlib != null;
-
-# Make sure we get GNU sed.
-assert stdenv.isDarwin -> gnused != null;
 
 # The go frontend is written in c++
 assert langGo -> langCC;
@@ -119,7 +116,6 @@ let version = "4.8.5";
 
     /* Cross-gcc settings */
     crossMingw = cross != null && cross.libc == "msvcrt";
-    crossDarwin = cross != null && cross.libc == "libSystem";
     crossConfigureFlags = let
         gccArch = stdenv.cross.gcc.arch or null;
         gccCpu = stdenv.cross.gcc.cpu or null;
@@ -164,10 +160,9 @@ let version = "4.8.5";
           " --disable-libatomic " +  # libatomic requires libc
           " --disable-decimal-float" # libdecnumber requires libc
           else
-          (if crossDarwin then " --with-sysroot=${libcCross}/share/sysroot"
-           else                " --with-headers=${libcCross}/include") +
+          " --with-headers=${libcCross}/include" +
           # Ensure that -print-prog-name is able to find the correct programs.
-          (stdenv.lib.optionalString (crossMingw || crossDarwin) (
+          (stdenv.lib.optionalString (crossMingw) (
             " --with-as=${binutilsCross}/bin/${cross.config}-as" +
             " --with-ld=${binutilsCross}/bin/${cross.config}-ld"
           )) +
@@ -286,10 +281,6 @@ stdenv.mkDerivation ({
     ++ (optionals (cross != null) [binutilsCross])
     ++ (optionals langAda [gnatboot])
     ++ (optionals langVhdl [gnat])
-
-    # The builder relies on GNU sed (for instance, Darwin's `sed' fails with
-    # "-i may not be used with stdin"), and `stdenvNative' doesn't provide it.
-    ++ (optional stdenv.isDarwin gnused)
     ;
 
 
@@ -298,15 +289,6 @@ stdenv.mkDerivation ({
     export LDFLAGS_FOR_TARGET="-Wl,-rpath,$prefix/lib/amd64 $LDFLAGS_FOR_TARGET"
     export CXXFLAGS_FOR_TARGET="-Wl,-rpath,$prefix/lib/amd64 $CXXFLAGS_FOR_TARGET"
     export CFLAGS_FOR_TARGET="-Wl,-rpath,$prefix/lib/amd64 $CFLAGS_FOR_TARGET"
-  '' + stdenv.lib.optionalString stdenv.isDarwin ''
-    if SDKROOT=$(/usr/bin/xcrun --show-sdk-path); then
-      configureFlagsArray+=(--with-native-system-header-dir=$SDKROOT/usr/include)
-      makeFlagsArray+=( \
-       CFLAGS_FOR_BUILD=-F$SDKROOT/System/Library/Frameworks \
-       CFLAGS_FOR_TARGET=-F$SDKROOT/System/Library/Frameworks \
-       FLAGS_FOR_TARGET=-F$SDKROOT/System/Library/Frameworks \
-      )
-    fi
   '';
 
   dontDisableStatic = true;
@@ -351,7 +333,6 @@ stdenv.mkDerivation ({
         ++ optional langGo       "go"
         ++ optional langObjC     "objc"
         ++ optional langObjCpp   "obj-c++"
-        ++ optionals crossDarwin [ "objc" "obj-c++" ]
         )
       )
     }
@@ -515,9 +496,7 @@ stdenv.mkDerivation ({
     # for the gnat (ada compiler).
     platforms =
       stdenv.lib.platforms.linux ++
-      stdenv.lib.platforms.freebsd ++
-      stdenv.lib.platforms.illumos ++
-      optionals (langAda == false) stdenv.lib.platforms.darwin;
+      stdenv.lib.platforms.freebsd;
   };
 }
 

@@ -9797,7 +9797,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #      };
 #    };
 #
-#  cvs = callPackage ../applications/version-management/cvs { };
+  cvs = callPackage ../applications/version-management/cvs { };
 #
 #  cvsps = callPackage ../applications/version-management/cvsps { };
 #

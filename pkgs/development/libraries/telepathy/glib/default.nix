@@ -1,5 +1,5 @@
 { stdenv, fetchurl, dbus-glib, dbus, glib, python, pkgconfig, libxslt
-, gobjectIntrospection, valaSupport ? true, vala }:
+, gobject-introspection, valaSupport ? true, vala }:
 
 stdenv.mkDerivation rec {
   name = "telepathy-glib-0.24.0";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = stdenv.lib.optional valaSupport "--enable-vala-bindings";
 
-  propagatedBuildInputs = [dbus-glib glib dbus python gobjectIntrospection];
+  propagatedBuildInputs = [dbus-glib glib dbus python gobject-introspection];
 
   buildInputs = [pkgconfig libxslt] ++ stdenv.lib.optional valaSupport vala;
 

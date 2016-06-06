@@ -7,7 +7,7 @@
 
 { fetchurl, fetchzip, stdenv, lua, callPackage, unzip, zziplib, pkgconfig, libtool
 , pcre, oniguruma, gnulib, tre, glibc, sqlite, openssl, expat, cairo
-, perl, gtk2, python, glib, gobjectIntrospection, libevent, zlib, autoreconfHook
+, perl, gtk2, python, glib, gobject-introspection, libevent, zlib, autoreconfHook
 , fetchFromGitHub
 }:
 
@@ -388,7 +388,7 @@ let
       platforms   = platforms.unix;
     };
 
-    buildInputs = [ glib gobjectIntrospection lua pkgconfig ];
+    buildInputs = [ glib gobject-introspection lua pkgconfig ];
 
     makeFlags = [ "LUA_VERSION=${lua.luaversion}" ];
 

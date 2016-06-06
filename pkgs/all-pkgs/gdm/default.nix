@@ -1,6 +1,6 @@
 { stdenv, fetchurl, pkgconfig, glib, itstool, libxml2, xorg, dbus
 , intltool, accountsservice, systemd_lib, gnome-session, gtk3
-, libcanberra, pam, libtool, gobjectIntrospection, dconf }:
+, libcanberra, pam, libtool, gobject-introspection, dconf }:
 
 stdenv.mkDerivation rec {
   name = "gdm-3.14.2";
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ pkgconfig glib itstool libxml2 intltool
                   accountsservice dconf systemd_lib
-                  gobjectIntrospection xorg.libX11 gtk3
+                  gobject-introspection xorg.libX11 gtk3
                   xorg.libXrandr
                   libcanberra pam libtool xorg.libXi xorg.libXext ];
 

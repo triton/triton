@@ -1,6 +1,6 @@
 { stdenv, fetchurl, pkgconfig, intltool, python, pygobject3
 , glib, gnome3, pango, libxml2, libxslt, sqlite, libsoup, glib_networking
-, webkitgtk, json_glib, gobjectIntrospection, gst_all_1
+, webkitgtk, json_glib, gobject-introspection, gst_all_1
 , libnotify
 , makeWrapper
 }:
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   buildInputs = with gst_all_1; [
     pkgconfig intltool python
     glib gnome3.gtk pango libxml2 libxslt sqlite libsoup
-    webkitgtk json_glib gobjectIntrospection gnome3.gsettings_desktop_schemas
+    webkitgtk json_glib gobject-introspection gnome3.gsettings_desktop_schemas
     gnome3.libpeas gnome3.dconf
     gst-plugins-base gst-plugins-good gst-plugins-bad
     gnome3.libgnome_keyring gnome3.defaultIconTheme

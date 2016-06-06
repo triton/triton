@@ -11,7 +11,7 @@
 , gdk-pixbuf-core
 , gdk-pixbuf
 , glib
-, gobjectIntrospection
+, gobject-introspection
 , libxkbcommon
 , pango
 , xorg
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
     (enFlag "cups" (cups != null) null)
     (enFlag "papi" false null)
     (enFlag "test-print-backend" (cups != null) null)
-    (enFlag "introspection" (gobjectIntrospection != null) null)
+    (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf-core
     gdk-pixbuf
     glib
-    gobjectIntrospection
+    gobject-introspection
     libxkbcommon
     pango
     xorg.inputproto

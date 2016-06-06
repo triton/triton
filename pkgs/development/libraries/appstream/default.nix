@@ -1,6 +1,6 @@
 { stdenv, fetchurl, cmake, pkgconfig, gettext, intltool
 , xmlto, docbook_xsl, docbook_xml_dtd_45
-, glib, xapian, libxml2, libyaml, gobjectIntrospection
+, glib, xapian, libxml2, libyaml, gobject-introspection
 }:
 
 stdenv.mkDerivation {
@@ -29,7 +29,7 @@ stdenv.mkDerivation {
   nativeBuildInputs = [
     cmake pkgconfig gettext intltool
     xmlto docbook_xsl docbook_xml_dtd_45
-    gobjectIntrospection
+    gobject-introspection
   ];
 
   buildInputs = [ glib xapian libxml2 libyaml ];

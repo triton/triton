@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, xlibsWrapper, glib, cairo, libpng, harfbuzz
-, fontconfig, freetype, libintlOrEmpty, gobjectIntrospection
+, fontconfig, freetype, libintlOrEmpty, gobject-introspection
 }:
 
 let
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     sha256 = "1dsf45m51i4rcyvh5wlxxrjfhvn5b67d5ckjc6vdcxbddjgmc8ak";
   };
 
-  buildInputs = with stdenv.lib; [ gobjectIntrospection ]
+  buildInputs = with stdenv.lib; [ gobject-introspection ]
     ++ optional stdenv.isDarwin fontconfig;
   nativeBuildInputs = [ pkgconfig ];
 

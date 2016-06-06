@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, autoreconfHook, pkgconfig, gtk_doc, gobjectIntrospection
+{ stdenv, fetchFromGitHub, autoreconfHook, pkgconfig, gtk_doc, gobject-introspection
 , libgsystem, xz, e2fsprogs, libsoup, gpgme
 }:
 
@@ -21,7 +21,7 @@ stdenv.mkDerivation {
   };
 
   nativeBuildInputs = [
-    autoreconfHook pkgconfig gtk_doc gobjectIntrospection
+    autoreconfHook pkgconfig gtk_doc gobject-introspection
   ];
 
   buildInputs = [ libgsystem xz e2fsprogs libsoup gpgme ];

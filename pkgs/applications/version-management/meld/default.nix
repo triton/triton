@@ -1,5 +1,5 @@
 { stdenv, fetchurl, itstool, buildPythonPackage, python27, intltool, makeWrapper
-, libxml2, pygobject3, gobjectIntrospection, gtk3, gnome3, pycairo, cairo
+, libxml2, pygobject3, gobject-introspection, gtk3, gnome3, pycairo, cairo
 }:
 
 
@@ -22,7 +22,7 @@ buildPythonPackage rec {
     gnome3.gtksourceview gnome3.gsettings_desktop_schemas pycairo cairo
     gnome3.defaultIconTheme
   ];
-  propagatedBuildInputs = [ gobjectIntrospection pygobject3 gtk3 ];
+  propagatedBuildInputs = [ gobject-introspection pygobject3 gtk3 ];
 
   installPhase = ''
     mkdir -p "$out/lib/${python27.libPrefix}/site-packages"

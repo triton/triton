@@ -995,7 +995,6 @@ go16Packages = callPackage ./go-packages.nix {
 goPackages = callPackageAlias "go16Packages" { };
 
 gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
-gobjectIntrospection = callPackageAlias "gobject-introspection" { }; # Deprecated alias
 
 google-gflags = callPackage ../all-pkgs/google-gflags { };
 

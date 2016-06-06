@@ -9,7 +9,7 @@
 , libgudev
 , libusb
 , systemd_lib
-, gobjectIntrospection
+, gobject-introspection
 }:
 
 stdenv.mkDerivation rec {
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
     libgudev
     libusb
     systemd_lib
-    gobjectIntrospection
+    gobject-introspection
   ];
 
   configureFlags = [

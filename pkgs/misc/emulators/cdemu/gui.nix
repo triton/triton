@@ -1,4 +1,4 @@
-{ callPackage, python, pygobject3, gtk3, glib, libnotify, intltool, makeWrapper, gobjectIntrospection, gnome3, gdk_pixbuf, librsvg }:
+{ callPackage, python, pygobject3, gtk3, glib, libnotify, intltool, makeWrapper, gobject-introspection, gnome3, gdk_pixbuf, librsvg }:
 let pkg = import ./base.nix {
   version = "3.0.1";
   pkgName = "gcdemu";

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, python3Packages, gst_all_1, makeWrapper, gobjectIntrospection
+{ stdenv, fetchurl, python3Packages, gst_all_1, makeWrapper, gobject-introspection
 , gtk3, libwnck3, keybinder, intltool, libcanberra }:
 
 
@@ -15,7 +15,7 @@ python3Packages.buildPythonPackage rec {
   # TODO: keybinder, appindicator3
   buildInputs = with python3Packages;
     [ pygobject3 pyxdg pycairo gst_all_1.gstreamer gst_all_1.gst-plugins-base
-      gst_all_1.gst-plugins-good gobjectIntrospection gtk3 libwnck3 distutils_extra
+      gst_all_1.gst-plugins-good gobject-introspection gtk3 libwnck3 distutils_extra
       intltool dbus ];
 
   # TODO: figure out why PYTHONPATH is not passed automatically for those programs

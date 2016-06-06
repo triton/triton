@@ -1,4 +1,4 @@
-{fetchurl, stdenv, gtk3, python34Packages, gobjectIntrospection}:
+{fetchurl, stdenv, gtk3, python34Packages, gobject-introspection}:
 python34Packages.buildPythonPackage rec {
   name = "solaar-${version}";
   version = "0.9.2";
@@ -8,7 +8,7 @@ python34Packages.buildPythonPackage rec {
     url = "https://github.com/pwr/Solaar/archive/${version}.tar.gz";
   };
 
-  propagatedBuildInputs = [python34Packages.pygobject3 python34Packages.pyudev gobjectIntrospection gtk3];
+  propagatedBuildInputs = [python34Packages.pygobject3 python34Packages.pyudev gobject-introspection gtk3];
   postInstall = ''
     wrapProgram "$out/bin/solaar" \
       --prefix PYTHONPATH : "$PYTHONPATH" \

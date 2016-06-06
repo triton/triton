@@ -42,7 +42,7 @@ pythonPackages.buildPythonPackage rec {
     runHook postInstall
   '';
 
-  # gobjectIntrospection package, wrap accordingly
+  # gobject-introspection package, wrap accordingly
   preFixup = ''
     wrapProgram $out/bin/gramps \
       --prefix GI_TYPELIB_PATH : "$GI_TYPELIB_PATH" \

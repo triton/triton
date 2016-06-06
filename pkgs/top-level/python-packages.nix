@@ -5379,7 +5379,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     LC_ALL="en_US.UTF-8";
 
     # TODO: AppIndicator
-    propagatedBuildInputs = with self; [ pkgs.gobjectIntrospection pygobject3 pkgs.makeWrapper pkgs.gtk3 ];
+    propagatedBuildInputs = with self; [ pkgs.gobject-introspection pygobject3 pkgs.makeWrapper pkgs.gtk3 ];
 
     checkPhase = ''
       substituteInPlace runtests --replace "/usr/bin/env python" "${python}/bin/${python.executable}"
@@ -21332,7 +21332,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       export XDG_RUNTIME_DIR=/tmp
     '';
 
-    propagatedBuildInputs = with self; [ pkgs.gobjectIntrospection pkgs.gtk3 pyyaml pygobject3 pkgs.libnotify pkgs.udisks2 pkgs.gettext self.docopt ];
+    propagatedBuildInputs = with self; [ pkgs.gobject-introspection pkgs.gtk3 pyyaml pygobject3 pkgs.libnotify pkgs.udisks2 pkgs.gettext self.docopt ];
 
     preFixup = ''
         wrapProgram "$out/bin/"* \
@@ -22112,7 +22112,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       self.trollius
       self.click
       self.pygobject3
-      pkgs.gobjectIntrospection
+      pkgs.gobject-introspection
       pkgs.makeWrapper
       pkgs.gtk3
     ];

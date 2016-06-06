@@ -1,6 +1,6 @@
 { stdenv, fetchurl, luaPackages, cairo, cmake, imagemagick, gdk_pixbuf
 , xorg, libstartup_notification, libxdg_basedir
-, xcb-util-cursor, makeWrapper, pango, gobjectIntrospection, unclutter
+, xcb-util-cursor, makeWrapper, pango, gobject-introspection, unclutter
 , compton, procps, iproute, coreutils, curl, alsaUtils, findutils, xterm
 , which, dbus, nettools, git, asciidoc, doxygen
 #, xmlto, docbook_xml_dtd_45 , docbook_xsl
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     dbus
     doxygen
     gdk_pixbuf
-    gobjectIntrospection
+    gobject-introspection
     git
     imagemagick
     lgi
@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
 
   #cmakeFlags = "-DGENERATE_MANPAGES=ON";
 
-  LD_LIBRARY_PATH = "${cairo}/lib:${pango}/lib:${gobjectIntrospection}/lib";
+  LD_LIBRARY_PATH = "${cairo}/lib:${pango}/lib:${gobject-introspection}/lib";
   GI_TYPELIB_PATH = "${pango}/lib/girepository-1.0";
   LUA_CPATH = "${lgi}/lib/lua/${lua.luaversion}/?.so";
   LUA_PATH  = "${lgi}/share/lua/${lua.luaversion}/?.lua;${lgi}/share/lua/${lua.luaversion}/lgi/?.lua";
@@ -69,7 +69,7 @@ stdenv.mkDerivation rec {
       --prefix LUA_CPATH ";" '"${lgi}/lib/lua/${lua.luaversion}/?.so"' \
       --prefix LUA_PATH ";" '"${lgi}/share/lua/${lua.luaversion}/?.lua;${lgi}/share/lua/${lua.luaversion}/lgi/?.lua"' \
       --prefix GI_TYPELIB_PATH : "$GI_TYPELIB_PATH" \
-      --prefix LD_LIBRARY_PATH : "${cairo}/lib:${pango}/lib:${gobjectIntrospection}/lib" \
+      --prefix LD_LIBRARY_PATH : "${cairo}/lib:${pango}/lib:${gobject-introspection}/lib" \
       --prefix PATH : "${compton}/bin:${unclutter}/bin:${procps}/bin:${iproute}/sbin:${coreutils}/bin:${curl}/bin:${alsaUtils}/bin:${findutils}/bin:${xterm}/bin"
 
     wrapProgram $out/bin/awesome-client \

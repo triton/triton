@@ -1,6 +1,6 @@
 { stdenv, fetchurl, python, cairomm, sparsehash, pycairo, autoreconfHook,
 pkgconfig, boost, expat, scipy, numpy, cgal, gmp, mpfr, lndir,
-gobjectIntrospection, pygobject3, gtk3, matplotlib }:
+gobject-introspection, pygobject3, gtk3, matplotlib }:
 
 stdenv.mkDerivation rec {
   version = "2.12";
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
     sparsehash
     # drawing
     cairomm
-    gobjectIntrospection
+    gobject-introspection
     gtk3
     pycairo
     matplotlib

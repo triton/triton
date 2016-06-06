@@ -1,6 +1,6 @@
 { stdenv, fetchurl, buildPythonPackage
 , python, cython, pkgconfig
-, xorg, gtk3, glib, pango, cairo, gdk_pixbuf, atk, pygobject3, pycairo, gobjectIntrospection
+, xorg, gtk3, glib, pango, cairo, gdk_pixbuf, atk, pygobject3, pycairo, gobject-introspection
 , makeWrapper, xkbcomp, xorgserver, getopt, xauth, utillinux, which, fontsConf, xkeyboard_config
 , ffmpeg, x264, libvpx, libwebp
 , libfakeXinerama }:
@@ -22,7 +22,7 @@ buildPythonPackage rec {
     xorg.xproto xorg.fixesproto xorg.libXtst xorg.libXfixes xorg.libXcomposite xorg.libXdamage
     xorg.libXrandr xorg.libxkbfile
 
-    pango cairo gdk_pixbuf atk gtk3 glib gobjectIntrospection
+    pango cairo gdk_pixbuf atk gtk3 glib gobject-introspection
 
     ffmpeg libvpx x264 libwebp
 

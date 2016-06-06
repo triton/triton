@@ -1,6 +1,6 @@
 { stdenv, fetchurl, pkgconfig, glib, itstool, libxml2, xorg, dbus
 , intltool, accountsservice, libX11, gnome3, systemd, gnome_session
-, gtk, libcanberra_gtk3, pam, libtool, gobjectIntrospection }:
+, gtk, libcanberra_gtk3, pam, libtool, gobject-introspection }:
 
 stdenv.mkDerivation rec {
   name = "gdm-${gnome3.version}.2";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ pkgconfig glib itstool libxml2 intltool
                   accountsservice gnome3.dconf systemd
-                  gobjectIntrospection libX11 gtk
+                  gobject-introspection libX11 gtk
                   libcanberra_gtk3 pam libtool ];
 
   #enableParallelBuilding = true; # problems compiling

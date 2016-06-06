@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, autoreconfHook, pkgconfig, gtk_doc, gobjectIntrospection
+{ stdenv, fetchFromGitHub, autoreconfHook, pkgconfig, gtk_doc, gobject-introspection
 , glib, attr, systemd
 }:
 
@@ -21,7 +21,7 @@ stdenv.mkDerivation {
   };
 
   nativeBuildInputs = [
-    autoreconfHook pkgconfig gtk_doc gobjectIntrospection
+    autoreconfHook pkgconfig gtk_doc gobject-introspection
   ];
 
   propagatedBuildInputs = [ glib attr systemd ];

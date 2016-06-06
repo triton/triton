@@ -1,6 +1,6 @@
 { stdenv, fetchurl, pkgconfig, intltool, itstool, makeWrapper
 , python3Packages, gst, gtk3, hicolor_icon_theme
-, gobjectIntrospection, librsvg, gnome3, libnotify
+, gobject-introspection, librsvg, gnome3, libnotify
 }:
 
 let
@@ -29,7 +29,7 @@ in stdenv.mkDerivation rec {
   nativeBuildInputs = [ pkgconfig intltool itstool makeWrapper ];
 
   buildInputs = [
-    gobjectIntrospection gtk3 librsvg gnome3.gnome_desktop
+    gobject-introspection gtk3 librsvg gnome3.gnome_desktop
     gnome3.defaultIconTheme
     gnome3.gsettings_desktop_schemas libnotify
   ] ++ (with gst; [

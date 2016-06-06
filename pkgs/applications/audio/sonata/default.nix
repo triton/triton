@@ -1,6 +1,6 @@
 { pkgs, stdenv, fetchFromGitHub, pkgconfig, intltool, wrapGAppsHook,
   python, buildPythonPackage, isPy3k,
-  gnome3, gtk3, gobjectIntrospection,
+  gnome3, gtk3, gobject-introspection,
   dbus, pygobject3, mpd2 }:
 
 with pkgs.lib;
@@ -33,7 +33,7 @@ buildPythonPackage rec {
   propagatedUserEnvPkgs = [ gnome3.gnome_themes_standard ];
 
   propagatedBuildInputs = [
-    gobjectIntrospection gtk3 pygobject3
+    gobject-introspection gtk3 pygobject3
   ];
 
   # The optional tagpy dependency (for editing metadata) is not yet

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, makeWrapper, ibus, anthy, intltool, pkgconfig, glib, gobjectIntrospection, python, pythonPackages }:
+{ stdenv, fetchurl, makeWrapper, ibus, anthy, intltool, pkgconfig, glib, gobject-introspection, python, pythonPackages }:
 
 stdenv.mkDerivation rec {
   name = "ibus-anthy-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = "--with-anthy-zipcode=${anthy}/share/anthy/zipcode.t";
 
-  buildInputs = [ makeWrapper ibus anthy intltool pkgconfig glib gobjectIntrospection python pythonPackages.pygobject3 ];
+  buildInputs = [ makeWrapper ibus anthy intltool pkgconfig glib gobject-introspection python pythonPackages.pygobject3 ];
 
   postFixup = ''
     substituteInPlace $out/share/ibus/component/anthy.xml --replace \$\{exec_prefix\} $out

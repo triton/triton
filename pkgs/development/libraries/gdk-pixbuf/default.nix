@@ -1,5 +1,5 @@
 { stdenv, fetchurl, pkgconfig, glib, libtiff, libjpeg, libpng, libX11
-, jasper, libintlOrEmpty, gobjectIntrospection, doCheck ? false }:
+, jasper, libintlOrEmpty, gobject-introspection, doCheck ? false }:
 
 let
   ver_maj = "2.32";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   # !!! We might want to factor out the gdk-pixbuf-xlib subpackage.
   buildInputs = [ libX11 libintlOrEmpty ];
 
-  nativeBuildInputs = [ pkgconfig gobjectIntrospection ];
+  nativeBuildInputs = [ pkgconfig gobject-introspection ];
 
   propagatedBuildInputs = [ glib libtiff libjpeg libpng jasper ];
 
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = "--with-libjasper --with-x11"
-    + stdenv.lib.optionalString (gobjectIntrospection != null) " --enable-introspection=yes"
+    + stdenv.lib.optionalString (gobject-introspection != null) " --enable-introspection=yes"
     ;
 
   # The tests take an excessive amount of time (> 1.5 hours) and memory (> 6 GB).

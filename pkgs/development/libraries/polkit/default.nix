@@ -1,5 +1,5 @@
 { stdenv, fetchurl, glib, expat, pam, intltool, spidermonkey_17
-, gobjectIntrospection, libxslt, docbook_xsl, docbook_xml_dtd_412, systemd_lib }:
+, gobject-introspection, libxslt, docbook_xsl, docbook_xml_dtd_412, systemd_lib }:
 
 let
 
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs =
-    [ glib expat pam intltool spidermonkey_17 gobjectIntrospection systemd_lib ]
+    [ glib expat pam intltool spidermonkey_17 gobject-introspection systemd_lib ]
     ++ [ libxslt docbook_xsl docbook_xml_dtd_412 ]; # man pages
 
   # Ugly hack to overwrite hardcoded directories

@@ -1,5 +1,5 @@
 { lib, stdenv, fetchurl, pulseaudio_lib, alsa-lib, libcap
-, usePulseAudio }:
+}:
 
 stdenv.mkDerivation rec {
   version = "1.2.0";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
   buildInputs =
     [ ] ++
-    lib.optional true (if usePulseAudio then pulseaudio_lib else alsa-lib) ++
+    lib.optional true pulseaudio_lib ++
     lib.optional true libcap;
 
   meta = {

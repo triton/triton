@@ -6,8 +6,8 @@
 ## various stuff that can be plugged in
 , adwaita-icon-theme
 #, flashplayer
-, hal-flash
-, gecko_mediaplayer
+#, hal-flash
+#, gecko_mediaplayer
 , xorg
 , pulseaudio_lib
 , libcanberra
@@ -89,7 +89,7 @@ let
     alsa-lib
     zlib
   ]) ++ optionals (enableAdobeFlash && (cfg.enableAdobeFlashDRM or false)) [
-    hal-flash
+    #hal-flash
   ] ++ optionals (config.pulseaudio or false) [
     pulseaudio_lib
   ];

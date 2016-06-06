@@ -12,7 +12,7 @@
 #, libcdio
 , libdvdread
 , libmad
-, mpeg2dec
+, libmpeg2
 , orc
 , x264
 }:
@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
     #libcdio
     libdvdread
     libmad
-    mpeg2dec
+    libmpeg2
     orc
     x264
   ];
@@ -82,7 +82,7 @@ stdenv.mkDerivation rec {
     (enFlag "dvdread" (libdvdread != null) null)
     (enFlag "lame" (lame != null) null)
     (enFlag "mad" (libmad != null) null)
-    (enFlag "mpeg2dec" (mpeg2dec != null) null)
+    (enFlag "mpeg2dec" (libmpeg2 != null) null)
     #(enFlag "sidplay" (sidplay != null) null)
     #(enFlag "twolame" (twolame != null) null)
     (enFlag "x264" (x264 != null) null)

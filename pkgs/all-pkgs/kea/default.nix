@@ -2,7 +2,7 @@
 , perl
 , bc
 , openssl
-, libmysql
+, mysql_lib
 , postgresql
 , log4cplus
 , boost
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     openssl
-    libmysql
+    mysql_lib
     postgresql
     log4cplus
     boost
@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
     "--without-lcov"
     "--with-openssl=${openssl}"
     "--without-botan-config"
-    "--with-dhcp-mysql=${libmysql}/bin/mysql_config"
+    "--with-dhcp-mysql=${mysql_lib}/bin/mysql_config"
     "--with-dhcp-pgsql=${postgresql}/bin/pg_config"
     "--with-log4cplus"
     "--disable-generate-parser"

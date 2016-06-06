@@ -10,7 +10,7 @@
 , unzip
 
 , aspell
-, boehmgc
+, boehm-gc
 , boost
 , cairo
 , cairomm
@@ -94,7 +94,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     aspell
-    boehmgc
+    boehm-gc
     boost
     cairo
     cairomm

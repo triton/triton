@@ -1080,9 +1080,9 @@ gtkspell = callPackageAlias "gtkspell_3" { };
 
 guile = callPackage ../all-pkgs/guile { };
 
-guitarix = callPackage ../all-pkgs/guitarix {
-  fftw = fftwSinglePrec;
-};
+#guitarix = callPackage ../all-pkgs/guitarix {
+#  fftw = pkgs.fftw_single;
+#};
 
 gupnp = callPackage ../all-pkgs/gupnp { };
 
@@ -1131,38 +1131,6 @@ icu = callPackage ../all-pkgs/icu { };
 id3lib = callPackage ../all-pkgs/id3lib { };
 
 id3v2 = callPackage ../all-pkgs/id3v2 { };
-
-imagemagick_light = imagemagick.override {
-  libcl = null;
-  perl = null;
-  jemalloc = null;
-  bzip2 = null;
-  zlib = null;
-  libX11 = null;
-  libXext = null;
-  libXt = null;
-  dejavu_fonts = null;
-  fftw = null;
-  libfpx = null;
-  djvulibre = null;
-  fontconfig = null;
-  freetype = null;
-  ghostscript = null;
-  graphviz = null;
-  jbigkit = null;
-  libjpeg = null;
-  lcms2 = null;
-  openjpeg = null;
-  liblqr1 = null;
-  xz = null;
-  openexr = null;
-  pango = null;
-  libpng = null;
-  librsvg = null;
-  libtiff = null;
-  libwebp = null;
-  libxml2 = null;
-};
 
 imagemagick = callPackage ../all-pkgs/imagemagick { };
 
@@ -1229,7 +1197,7 @@ krb5_lib = callPackageAlias "krb5_full" {
   type = "lib";
 };
 
-kubernetes = callPackage ../all-pkgs/kubernetes { };
+#kubernetes = callPackage ../all-pkgs/kubernetes { };
 
 kyotocabinet = callPackage ../all-pkgs/kyotocabinet { };
 
@@ -1505,7 +1473,7 @@ libverto = callPackage ../all-pkgs/libverto { };
 libvorbis = callPackage ../all-pkgs/libvorbis { };
 
 libvpx = callPackage ../all-pkgs/libvpx { };
-libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
+#libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
 
 libwacom = callPackage ../all-pkgs/libwacom { };
 
@@ -3308,7 +3276,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  hashcat = callPackage ../tools/security/hashcat { };
 #
-  hal-flash = callPackage ../os-specific/linux/hal-flash { };
+#  hal-flash = callPackage ../os-specific/linux/hal-flash { };
 #
 #  halibut = callPackage ../tools/typesetting/halibut { };
 #
@@ -3417,9 +3385,9 @@ zstd = callPackage ../all-pkgs/zstd { };
   iperf3 = callPackage ../tools/networking/iperf/3.nix { };
   iperf = callPackageAlias "iperf3" { };
 
-  ipmiutil = callPackage ../tools/system/ipmiutil {};
-
-  ipmiview = callPackage ../applications/misc/ipmiview {};
+#  ipmiutil = callPackage ../tools/system/ipmiutil {};
+#
+#  ipmiview = callPackage ../applications/misc/ipmiview {};
 #
 #  ipcalc = callPackage ../tools/networking/ipcalc {};
 #
@@ -5020,37 +4988,37 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   gcc = callPackageAlias "gcc6" { };
 
-  gcc_multi =
-    if system == "x86_64-linux" then lowPrio (
-      let
-        extraBuildCommands = ''
-          echo "dontMoveLib64=1" >> $out/nix-support/setup-hook
-        '';
-      in wrapCCWith (callPackage ../build-support/cc-wrapper) glibc_multi extraBuildCommands (gcc.cc.override {
-        stdenv = overrideCC pkgs.stdenv (wrapCCWith (callPackage ../build-support/cc-wrapper) glibc_multi "" gcc.cc);
-        profiledCompiler = false;
-        enableMultilib = true;
-      }))
-    else throw "Multilib gcc not supported on ‘${system}’";
+#  gcc_multi =
+#    if system == "x86_64-linux" then lowPrio (
+#      let
+#        extraBuildCommands = ''
+#          echo "dontMoveLib64=1" >> $out/nix-support/setup-hook
+#        '';
+#      in wrapCCWith (callPackage ../build-support/cc-wrapper) glibc_multi extraBuildCommands (gcc.cc.override {
+#        stdenv = overrideCC pkgs.stdenv (wrapCCWith (callPackage ../build-support/cc-wrapper) glibc_multi "" gcc.cc);
+#        profiledCompiler = false;
+#        enableMultilib = true;
+#      }))
+#    else throw "Multilib gcc not supported on ‘${system}’";
 
-  gcc_debug = lowPrio (wrapCC (gcc.cc.override {
-    stripped = false;
-  }));
-
-  gccCrossStageStatic = let
-    libcCross1 = null;
-    in wrapGCCCross {
-      gcc = forceNativeDrv (gcc.cc.override {
-        cross = crossSystem;
-        crossStageStatic = true;
-        langCC = false;
-        libcCross = libcCross1;
-        enableShared = false;
-      });
-      libc = libcCross1;
-      binutils = binutilsCross;
-      cross = crossSystem;
-  };
+#  gcc_debug = lowPrio (wrapCC (gcc.cc.override {
+#    stripped = false;
+#  }));
+#
+#  gccCrossStageStatic = let
+#    libcCross1 = null;
+#    in wrapGCCCross {
+#      gcc = forceNativeDrv (gcc.cc.override {
+#        cross = crossSystem;
+#        crossStageStatic = true;
+#        langCC = false;
+#        libcCross = libcCross1;
+#        enableShared = false;
+#      });
+#      libc = libcCross1;
+#      binutils = binutilsCross;
+#      cross = crossSystem;
+#  };
 #
 #  # Only needed for mingw builds
 #  gccCrossMingw2 = wrapGCCCross {
@@ -5060,19 +5028,19 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    cross = assert crossSystem != null; crossSystem;
 #  };
 #
-  gccCrossStageFinal = wrapGCCCross {
-    gcc = forceNativeDrv (gcc.cc.override {
-      cross = crossSystem;
-      crossStageStatic = false;
+#  gccCrossStageFinal = wrapGCCCross {
+#    gcc = forceNativeDrv (gcc.cc.override {
+#      cross = crossSystem;
+#      crossStageStatic = false;
 #
 #      # XXX: We have troubles cross-compiling libstdc++ on MinGW (see
 #      # <http://hydra.nixos.org/build/4268232>), so don't even try.
-      langCC = crossSystem.config != "i686-pc-mingw32";
-    });
-    libc = libcCross;
-    binutils = binutilsCross;
-    cross = crossSystem;
-  };
+#      langCC = crossSystem.config != "i686-pc-mingw32";
+#    });
+#    libc = libcCross;
+#    binutils = binutilsCross;
+#    cross = crossSystem;
+#  };
 #
   gcc48 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.8 {
     noSysDirs = true;
@@ -6658,11 +6626,11 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  # TODO : Let admin choose.
 #  # We are using mit-krb5 because it is better maintained
-  heimdal_full = callPackage ../development/libraries/kerberos/heimdal.nix { };
-
-  heimdal_lib = callPackageAlias "heimdal_full" {
-    type = "lib";
-  };
+#  heimdal_full = callPackage ../development/libraries/kerberos/heimdal.nix { };
+#
+#  heimdal_lib = callPackageAlias "heimdal_full" {
+#    type = "lib";
+#  };
 #
 #  hawknl = callPackage ../development/libraries/hawknl { };
 #
@@ -6769,19 +6737,17 @@ iniparser = callPackage ../development/libraries/iniparser { };
 
 #  lensfun = callPackage ../development/libraries/lensfun {};
 #
-  lesstif = callPackage ../development/libraries/lesstif { };
-
+#  lesstif = callPackage ../development/libraries/lesstif { };
+#
 #  levmar = callPackage ../development/libraries/levmar { };
-
+#
 #  lib3ds = callPackage ../development/libraries/lib3ds { };
 #
   libaacs = callPackage ../development/libraries/libaacs { };
 #
 #  libaal = callPackage ../development/libraries/libaal { };
 
-  libao = callPackage ../development/libraries/libao {
-    usePulseAudio = config.pulseaudio or true;
-  };
+  libao = callPackage ../development/libraries/libao { };
 #
 #  libabw = callPackage ../development/libraries/libabw { };
 #
@@ -7277,7 +7243,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libxmi = callPackage ../development/libraries/libxmi { };
 #
-#  libxmlxx = callPackage ../development/libraries/libxmlxx { };
+  libxmlxx = callPackage ../development/libraries/libxmlxx { };
 #
 #  libxmp = callPackage ../development/libraries/libxmp { };
 #
@@ -7307,7 +7273,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  log4cxx = callPackage ../development/libraries/log4cxx { };
 #
-#  log4cplus = callPackage ../development/libraries/log4cplus { };
+  log4cplus = callPackage ../development/libraries/log4cplus { };
 #
 #  loudmouth = callPackage ../development/libraries/loudmouth { };
 #
@@ -8807,7 +8773,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 
       accelio = kCallPackage ../development/libraries/accelio { };
 
-      cryptodev = cryptodevHeaders.override {
+      cryptodev = pkgs.cryptodevHeaders.override {
         onlyHeaders = false;
         inherit kernel;  # We shouldn't need this
       };
@@ -8953,18 +8919,18 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
                            in recurseIntoAttrs linuxPackages_self;
 #
 #  # Build a kernel for Xen dom0
-  linuxPackages_latest_xen_dom0 = recurseIntoAttrs (pkgs.linuxPackagesFor (pkgs.linux_latest.override { features.xen_dom0=true; }) pkgs.linuxPackages_latest);
+#  linuxPackages_latest_xen_dom0 = recurseIntoAttrs (pkgs.linuxPackagesFor (pkgs.linux_latest.override { features.xen_dom0=true; }) pkgs.linuxPackages_latest);
 #
 #  # grsecurity flavors
 #  # Stable kernels
-  linuxPackages_grsec_stable_desktop    = grPackage grFlavors.linux_grsec_stable_desktop;
-  linuxPackages_grsec_stable_server     = grPackage grFlavors.linux_grsec_stable_server;
-  linuxPackages_grsec_stable_server_xen = grPackage grFlavors.linux_grsec_stable_server_xen;
+#  linuxPackages_grsec_stable_desktop    = grPackage grFlavors.linux_grsec_stable_desktop;
+#  linuxPackages_grsec_stable_server     = grPackage grFlavors.linux_grsec_stable_server;
+#  linuxPackages_grsec_stable_server_xen = grPackage grFlavors.linux_grsec_stable_server_xen;
 #
 #  # Testing kernels: outdated ATM
-  linuxPackages_grsec_testing_desktop = grPackage grFlavors.linux_grsec_testing_desktop;
-  linuxPackages_grsec_testing_server  = grPackage grFlavors.linux_grsec_testing_server;
-  linuxPackages_grsec_testing_server_xen = grPackage grFlavors.linux_grsec_testing_server_xen;
+#  linuxPackages_grsec_testing_desktop = grPackage grFlavors.linux_grsec_testing_desktop;
+#  linuxPackages_grsec_testing_server  = grPackage grFlavors.linux_grsec_testing_server;
+#  linuxPackages_grsec_testing_server_xen = grPackage grFlavors.linux_grsec_testing_server_xen;
 #
 #  # A function to build a manually-configured kernel
   linuxManualConfig = pkgs.buildLinux;
@@ -8972,7 +8938,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   keyutils = callPackage ../os-specific/linux/keyutils { };
 #
-  libsemanage = callPackage ../os-specific/linux/libsemanage { };
+#  libsemanage = callPackage ../os-specific/linux/libsemanage { };
 #
 #  libsass = callPackage ../development/libraries/libsass { };
 #
@@ -8986,16 +8952,14 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 
   kmod-debian-aliases = callPackage ../os-specific/linux/kmod-debian-aliases { };
 
-  kvm = qemu_kvm;
-#
   libcap = callPackage ../os-specific/linux/libcap { };
 
-  libcap_progs = callPackage ../os-specific/linux/libcap/progs.nix { };
-
-  libcap_pam = callPackage ../os-specific/linux/libcap/pam.nix { };
-
-  libcap_manpages = callPackage ../os-specific/linux/libcap/man.nix { };
-
+#  libcap_progs = callPackage ../os-specific/linux/libcap/progs.nix { };
+#
+#  libcap_pam = callPackage ../os-specific/linux/libcap/pam.nix { };
+#
+#  libcap_manpages = callPackage ../os-specific/linux/libcap/man.nix { };
+#
 #  libnscd = callPackage ../os-specific/linux/libnscd { };
 #
   libnotify = callPackage ../development/libraries/libnotify { };
@@ -10142,9 +10106,9 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #    java = jre;
 #  };
 #
-  gecko_mediaplayer = callPackage ../applications/networking/browsers/mozilla-plugins/gecko-mediaplayer {
-    browser = firefox-unwrapped;
-  };
+#  gecko_mediaplayer = callPackage ../applications/networking/browsers/mozilla-plugins/gecko-mediaplayer {
+#    browser = firefox-unwrapped;
+#  };
 #
 #  geeqie = callPackage ../applications/graphics/geeqie { };
 #
@@ -10160,7 +10124,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  gollum = callPackage ../applications/misc/gollum { };
 #
-  google-chrome = callPackage ../applications/networking/browsers/google-chrome { };
+#  google-chrome = callPackage ../applications/networking/browsers/google-chrome { };
 #
 #  googleearth = callPackage_i686 ../applications/misc/googleearth { };
 #
@@ -11719,25 +11683,25 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  kakasi = callPackage ../tools/text/kakasi { };
 #
-  kde4 = recurseIntoAttrs pkgs.kde414;
+#  kde4 = recurseIntoAttrs pkgs.kde414;
+#
+#  kde414 =
+#    pkgs.kdePackagesFor
+#      {
+#        libcanberra = pkgs.libcanberra_kde;
+#        boost = pkgs.boost155;
+#        kdelibs = pkgs.kde5.kdelibs;
+#        subversionClient = pkgs.subversion18 { };
+#      }
+#      ../desktops/kde-4.14;
 
-  kde414 =
-    pkgs.kdePackagesFor
-      {
-        libcanberra = pkgs.libcanberra_kde;
-        boost = pkgs.boost155;
-        kdelibs = pkgs.kde5.kdelibs;
-        subversionClient = pkgs.subversion18 { };
-      }
-      ../desktops/kde-4.14;
 
-
-  kdePackagesFor = extra: dir:
-    let
-      # list of extra packages not included in KDE
-      # the real work in this function is done below this list
-      extraPackages = callPackage:
-        rec {
+#  kdePackagesFor = extra: dir:
+#    let
+#      # list of extra packages not included in KDE
+#      # the real work in this function is done below this list
+#      extraPackages = callPackage:
+#        rec {
 #          amarok = callPackage ../applications/audio/amarok { };
 #
 #          bangarang = callPackage ../applications/video/bangarang { };
@@ -11854,26 +11818,26 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #          zanshin = callPackage ../applications/office/zanshin { };
 #
 #          kwooty = callPackage ../applications/networking/newsreaders/kwooty { };
-        };
-
-      callPackageOrig = pkgs.newScope extra;
-
-      makePackages = extra:
-        let
-          callPackage = newScope (extra // self);
-          kde4 = callPackageOrig dir { inherit callPackage callPackageOrig; };
-          self =
-            kde4
-            // extraPackages callPackage
-            // {
-              inherit kde4;
-              wrapper = callPackage ../build-support/kdewrapper {};
-              recurseForRelease = true;
-            };
-        in self;
-
-    in lib.makeOverridable makePackages extra;
-
+#        };
+#
+#      callPackageOrig = pkgs.newScope extra;
+#
+#      makePackages = extra:
+#        let
+#          callPackage = newScope (extra // self);
+#          kde4 = callPackageOrig dir { inherit callPackage callPackageOrig; };
+#          self =
+#            kde4
+#            // extraPackages callPackage
+#            // {
+#              inherit kde4;
+#              wrapper = callPackage ../build-support/kdewrapper {};
+#              recurseForRelease = true;
+#            };
+#        in self;
+#
+#    in lib.makeOverridable makePackages extra;
+#
 #  redshift = callPackage ../applications/misc/redshift {
 #    inherit (python3Packages) python pygobject3 pyxdg;
 #  };
@@ -11898,7 +11862,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  numix-gtk-theme = callPackage ../misc/themes/gtk3/numix-gtk-theme { };
 #
-  kde5PackagesFun = self: with self; {
+#  kde5PackagesFun = self: with self; {
 #
 #    calamares = callPackage ../tools/misc/calamares rec {
 #      python = python3;
@@ -11915,49 +11879,49 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #    konversation = callPackage ../applications/networking/irc/konversation/1.6.nix {
 #    };
 #
-    quassel = callPackage ../all-pkgs/quassel {
-      monolithic = true;
-      daemon = false;
-      client = false;
-      tag = "-kf5";
-    };
-
-    quasselClient = quassel.override {
-      monolithic = false;
-      client = true;
-      tag = "-client-kf5";
-    };
-
-    quassel_qt5 = quassel.override {
-      tag = "-qt5";
-    };
-
-    quasselClient_qt5 = quasselClient.override {
-      tag = "-client-qt5";
-    };
-
-    quasselDaemon = quassel.override {
-      monolithic = false;
-      daemon = true;
-      tag = "-daemon-qt5";
-    };
-
-    sddm = callPackage ../applications/display-managers/sddm {
-      themes = [];  # extra themes, etc.
-    };
-
-  };
-
-  kde5 =
-    let
-      frameworks = import ../development/libraries/kde-frameworks-5.18 { inherit pkgs; };
-      plasma = import ../desktops/plasma-5.5 { inherit pkgs; };
-      apps = import ../applications/kde-apps-15.12 { inherit pkgs; };
-      named = self: { plasma = plasma self; frameworks = frameworks self; apps = apps self; };
-      merged = self:
-        named self // frameworks self // plasma self // apps self // kde5PackagesFun self;
-    in
-      recurseIntoAttrs (lib.makeScope qt55.newScope merged);
+#    quassel = callPackage ../all-pkgs/quassel {
+#      monolithic = true;
+#      daemon = false;
+#      client = false;
+#      tag = "-kf5";
+#    };
+#
+#    quasselClient = quassel.override {
+#      monolithic = false;
+#      client = true;
+#      tag = "-client-kf5";
+#    };
+#
+#    quassel_qt5 = quassel.override {
+#      tag = "-qt5";
+#    };
+#
+#    quasselClient_qt5 = quasselClient.override {
+#      tag = "-client-qt5";
+#    };
+#
+#    quasselDaemon = quassel.override {
+#      monolithic = false;
+#      daemon = true;
+#      tag = "-daemon-qt5";
+#    };
+#
+#    sddm = callPackage ../applications/display-managers/sddm {
+#      themes = [];  # extra themes, etc.
+#    };
+#
+#  };
+#
+#  kde5 =
+#    let
+#      frameworks = import ../development/libraries/kde-frameworks-5.18 { inherit pkgs; };
+#      plasma = import ../desktops/plasma-5.5 { inherit pkgs; };
+#      apps = import ../applications/kde-apps-15.12 { inherit pkgs; };
+#      named = self: { plasma = plasma self; frameworks = frameworks self; apps = apps self; };
+#      merged = self:
+#        named self // frameworks self // plasma self // apps self // kde5PackagesFun self;
+#    in
+#      recurseIntoAttrs (lib.makeScope qt55.newScope merged);
 #
 #  kde5_latest =
 #    let
@@ -12104,9 +12068,9 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
     cupsSupport = config.ghostscript.cups or true;
   };
 #
-  ghostscriptX = appendToName "with-X" (ghostscript.override {
-    x11Support = true;
-  });
+#  ghostscriptX = lib.appendToName "with-X" (pkgs.ghostscript.override {
+#    x11Support = true;
+#  });
 #
 #  gnuk = callPackage ../misc/gnuk { };
 #  gnuk-unstable = callPackage ../misc/gnuk/unstable.nix { };

@@ -11,15 +11,15 @@
 , glib
 , gst-plugins-base_0
 , gstreamer_0
+, jack2_lib
 , libcaca
 , libgudev
-, libjack2
 , libjpeg
 , libpng
-, libpulseaudio
 , libsoup
-, libv4l
+, v4l_lib
 , orc
+, pulseaudio_lib
 , speex
 , taglib
 , wavpack
@@ -54,15 +54,15 @@ stdenv.mkDerivation rec {
     glib
     gst-plugins-base_0
     gstreamer_0
+    jack2_lib
     libcaca
     libgudev
-    libjack2
     libjpeg
     libpng
-    libpulseaudio
     libsoup
-    libv4l
+    v4l_lib
     orc
+    pulseaudio_lib
     speex
     taglib
     wavpack
@@ -151,7 +151,7 @@ stdenv.mkDerivation rec {
     "--disable-sunaudio"
     "--disable-osx_audio"
     "--disable-osx_video"
-    (enFlag "gst_v4l2" (libv4l != null) null)
+    (enFlag "gst_v4l2" (v4l_lib != null) null)
     (enFlag "x" (xorg.libX11 != null) null)
     (enFlag "xshm" (xorg.libXext != null) null)
     (enFlag "xvideo" (xorg.libXv != null) null)
@@ -166,12 +166,12 @@ stdenv.mkDerivation rec {
     "--enable-gconf"
     (enFlag "gdk_pixbuf" (gdk-pixbuf != null) null)
     "--disable-hal"
-    (enFlag "jack" (libjack2 != null) null)
+    (enFlag "jack" (jack2_lib != null) null)
     (enFlag "jpeg" (libjpeg != null) null)
     (enFlag "libcaca" (libcaca != null) null)
     "--disable-libdv"
     (enFlag "libpng" (libpng != null) null)
-    (enFlag "pulse" (libpulseaudio != null) null)
+    (enFlag "pulse" (pulseaudio_lib != null) null)
     "--enable-dv1394"
     "--disable-shout2"
     (enFlag "soup" (libsoup != null) null)
@@ -182,7 +182,7 @@ stdenv.mkDerivation rec {
     (enFlag "bz2" (bzip2 != null) null)
     "--without-gtk"
     (wtFlag "gudev" (libgudev != null) null)
-    (wtFlag "libv4l2" (libv4l != null) null)
+    (wtFlag "libv4l2" (v4l_lib != null) null)
     "--with-x"
     #"--with-jpeg-mmx"
   ];

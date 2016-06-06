@@ -1,5 +1,9 @@
-{ stdenv, fetchurl, bzip2
-, enableNLS ? false, libnatspec }:
+{ stdenv
+, fetchurl
+
+, bzip2
+, libnatspec
+}:
 
 stdenv.mkDerivation {
   name = "unzip-6.0";
@@ -17,19 +21,26 @@ stdenv.mkDerivation {
     ./CVE-2014-9636.diff
     ./CVE-2015-7696.diff
     ./CVE-2015-7697.diff
-  ] ++ stdenv.lib.optional enableNLS
     (fetchurl {
       url = "http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/app-arch/unzip/files/unzip-6.0-natspec.patch?revision=1.1";
       name = "unzip-6.0-natspec.patch";
       sha256 = "67ab260ae6adf8e7c5eda2d1d7846929b43562943ec4aff629bd7018954058b1";
-    });
+    })
+  ];
 
   nativeBuildInputs = [ bzip2 ];
-  buildInputs = [ bzip2 ] ++ stdenv.lib.optional enableNLS libnatspec;
+
+  buildInputs = [
+    bzip2
+    libnatspec
+  ];
 
   makefile = "unix/Makefile";
 
-  NIX_LDFLAGS = [ "-lbz2" ] ++ stdenv.lib.optional enableNLS "-lnatspec";
+  NIX_LDFLAGS = [
+    "-lbz2"
+    "-lnatspec"
+  ];
 
   buildFlags = "generic D_USE_BZ2=-DUSE_BZIP2 L_BZ2=-lbz2";
 

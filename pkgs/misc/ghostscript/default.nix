@@ -13,12 +13,10 @@
 , lcms2
 , ijs
 , jbig2dec
-, x11Support ? false, xlibsWrapper ? null
-, cupsSupport ? false, cups ? null
+, x11Support ? false, xorg
+, cupsSupport ? false, cups
 }:
 
-assert x11Support -> xlibsWrapper != null;
-assert cupsSupport -> cups != null;
 let
   version = "9.19";
   versionNoP = lib.replaceChars ["."] [""] version;
@@ -68,8 +66,10 @@ stdenv.mkDerivation rec {
     lcms2
     ijs
     jbig2dec
-  ] ++ stdenv.lib.optional x11Support xlibsWrapper
-    ++ stdenv.lib.optional cupsSupport cups
+  ] ++ stdenv.lib.optionals x11Support [
+    xorg.xproto
+    xorg.libX11
+  ] ++ stdenv.lib.optional cupsSupport cups
       ;
 
   NIX_ZLIB_INCLUDE = "${zlib}/include";

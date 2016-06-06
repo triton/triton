@@ -1,26 +1,45 @@
-{ stdenv, fetchurl, pkgconfig, libxml2, glibmm, perl }:
+{ stdenv
+, fetchurl
+, perl
 
+, glibmm
+, libxml2
+}:
+
+let
+  major = "3.0";
+  minor = "0";
+  version = "${major}.${minor}";
+in
 stdenv.mkDerivation rec {
-  name = "libxml++-2.38.1";
+  name = "libxml++-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libxml++/2.38/${name}.tar.xz";
-    sha256 = "0px0ljcf9rsfa092dzmm097yn7wln6d5fgsvj9lnrnq3kcc2j9c8";
+    url = "mirror://gnome/sources/libxml++/${major}/${name}.tar.xz";
+    sha256 = "2ff3640417729d357bada2e3049061642e0b078c323a8e0d37ae68df96547952";
   };
 
-  nativeBuildInputs = [ pkgconfig perl ];
+  nativeBuildInputs = [
+    perl
+  ];
 
-  buildInputs = [ glibmm ];
+  buildInputs = [
+    glibmm
+    libxml2
+  ];
 
-  propagatedBuildInputs = [ libxml2 ];
-
-  configureFlags = "--disable-documentation"; #doesn't build without this for some reason
+  configureFlags = [
+    "--disable-documentation" #doesn't build without this for some reason
+  ];
 
   meta = with stdenv.lib; {
     homepage = http://libxmlplusplus.sourceforge.net/;
     description = "C++ wrapper for the libxml2 XML parser library";
     license = licenses.lgpl2Plus;
-    platforms = platforms.unix;
-    maintainers = with maintainers; [ phreedom wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

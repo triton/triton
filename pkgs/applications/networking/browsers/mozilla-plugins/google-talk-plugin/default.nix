@@ -1,6 +1,6 @@
 { stdenv, fetchurl, rpm, cpio, mesa, xorg, cairo
 , libpng, gtk2, glib, gdk-pixbuf, fontconfig, freetype, curl
-, dbus_glib, alsaLib, libpulseaudio, udev, pango
+, dbus-glib, alsa-lib, pulseaudio_lib, systemd_lib, pango
 }:
 
 with stdenv.lib;
@@ -33,10 +33,10 @@ let
       xorg.libXrender
       xorg.libXrandr
       stdenv.cc.cc
-      alsaLib
-      libpulseaudio
-      dbus_glib
-      udev
+      alsa-lib
+      pulseaudio_lib
+      dbus-glib
+      systemd_lib
       curl
       pango
       cairo

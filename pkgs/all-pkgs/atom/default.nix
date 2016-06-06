@@ -13,7 +13,7 @@
 , fontconfig
 , freetype
 , gconf
-, gdk-pixbuf-core
+, gdk-pixbuf_unwrapped
 , glib
 , gtk2
 , gvfs
@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
     fontconfig
     freetype
     gconf
-    gdk-pixbuf-core
+    gdk-pixbuf_unwrapped
     glib
     gtk2
     libcap

@@ -3,7 +3,7 @@
 , intltool
 
 , atk
-, gdk-pixbuf-core
+, gdk-pixbuf_unwrapped
 , glib
 , gnutls
 , gobject-introspection
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     atk
-    gdk-pixbuf-core
+    gdk-pixbuf_unwrapped
     glib
     gnutls
     gtk3

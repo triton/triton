@@ -1,5 +1,5 @@
 { stdenv
-, gdk-pixbuf-core
+, gdk-pixbuf_unwrapped
 , librsvg
 }:
 
@@ -7,7 +7,7 @@
 # gdk-pixbuf-core for the main gdk-pixbuf package.
 
 stdenv.mkDerivation rec {
-  name = "gdk-pixbuf-${gdk-pixbuf-core.version}";
+  name = "gdk-pixbuf_wrapped-${gdk-pixbuf_unwrapped.version}";
 
   setupHook = ./setup-hook.sh;
 
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   ];
 
   propagatedBuildInputs = [
-    gdk-pixbuf-core
+    gdk-pixbuf_unwrapped
     librsvg
   ];
 
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
 
     echo "Generating loaders.cache"
     gdk-pixbuf-query-loaders --update-cache \
-      ${gdk-pixbuf-core}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.so \
+      ${gdk-pixbuf_unwrapped}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.so \
       ${librsvg}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.so
   '';
 

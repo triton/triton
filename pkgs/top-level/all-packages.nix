@@ -856,8 +856,9 @@ gcr = callPackage ../all-pkgs/gcr { };
 
 gd = callPackage ../all-pkgs/gd { };
 
-gdk-pixbuf = callPackage ../all-pkgs/gdk-pixbuf { };
-gdk-pixbuf-core = callPackage ../all-pkgs/gdk-pixbuf-core { };
+gdk-pixbuf_wrapped = callPackage ../all-pkgs/gdk-pixbuf { };
+gdk-pixbuf_unwrapped = callPackage ../all-pkgs/gdk-pixbuf/unwrapped.nix { };
+gdk-pixbuf = callPackageAlias "gdk-pixbuf_wrapped" { };
 
 gdm = callPackage ../all-pkgs/gdm { };
 

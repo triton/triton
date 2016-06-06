@@ -22,7 +22,7 @@
 
 , nvidiasettingsSupport ? true
   , atk
-  , gdk-pixbuf-core
+  , gdk-pixbuf_unwrapped
   , glib
   , pango
   , gtk2 # <346
@@ -87,7 +87,7 @@ assert any (n: n == channel) [
 assert buildKernelspace -> kernel != null;
 assert nvidiasettingsSupport -> (
   atk != null
-  && gdk-pixbuf-core != null
+  && gdk-pixbuf_unwrapped != null
   && glib != null
   && pango != null
   && (
@@ -188,7 +188,7 @@ stdenv.mkDerivation {
     makeLibraryPath (
       [
         atk
-        gdk-pixbuf-core
+        gdk-pixbuf_unwrapped
         glib
         pango
       ] ++ (

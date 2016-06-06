@@ -1,5 +1,5 @@
 { fetchurl, stdenv, intltool, gettext, glib, libxml2, zlib, bzip2
-, python, perl, gdk-pixbuf-core }:
+, python, perl, gdk-pixbuf_unwrapped }:
 
 with { inherit (stdenv.lib) optionals; };
 
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ gettext bzip2 zlib python ]
     ++ stdenv.lib.optional doCheck perl;
 
-  propagatedBuildInputs = [ libxml2 glib gdk-pixbuf-core ];
+  propagatedBuildInputs = [ libxml2 glib gdk-pixbuf_unwrapped ];
 
   doCheck = true;
   preCheck = "patchShebangs ./tests/";

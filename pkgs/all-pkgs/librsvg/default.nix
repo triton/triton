@@ -3,7 +3,7 @@
 
 , bzip2
 , cairo
-, gdk-pixbuf-core
+, gdk-pixbuf_unwrapped
 , glib
 , gobject-introspection
 , libcroco
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     bzip2
     cairo
-    gdk-pixbuf-core
+    gdk-pixbuf_unwrapped
     glib
     gobject-introspection
     libcroco

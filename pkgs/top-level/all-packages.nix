@@ -522,7 +522,7 @@ apr-util = callPackage ../all-pkgs/apr-util { };
 argyllcms = callPackage ../all-pkgs/argyllcms { };
 
 aria2 = callPackage ../all-pkgs/aria2 { };
-aria = callPackageAlias "aria" { };
+aria = callPackageAlias "aria2" { };
 
 arkive = callPackage ../all-pkgs/arkive { };
 

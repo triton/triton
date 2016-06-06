@@ -20,7 +20,7 @@ buildPythonPackage {
     sha256 = "49440862475876d1e71e3d142ba75703cde7ccbffb77f20905d779a571118043";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     canonicaljson
     pynacl
     unpaddedbase64

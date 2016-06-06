@@ -744,7 +744,7 @@ dos2unix = callPackage ../all-pkgs/dos2unix { };
 
 dotconf = callPackage ../all-pkgs/dotconf { };
 
-dropbox = callPackage ../all-pkgs/dropbox { };
+#dropbox = callPackage ../all-pkgs/dropbox { };
 
 duplicity = callPackage ../all-pkgs/duplicity { };
 

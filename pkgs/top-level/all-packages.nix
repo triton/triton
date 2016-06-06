@@ -5849,7 +5849,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  astyle = callPackage ../development/tools/misc/astyle { };
 #
-  electron = callPackage ../development/tools/electron { };
+#  electron = callPackage ../development/tools/electron { };
 #
 #
 #  autobuild = callPackage ../development/tools/misc/autobuild { };

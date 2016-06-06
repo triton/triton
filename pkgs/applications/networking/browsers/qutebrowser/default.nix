@@ -1,6 +1,6 @@
 { stdenv, fetchurl, python, buildPythonPackage, qtmultimedia, pyqt5
 , jinja2, pygments, pyyaml, pypeg2, gst-plugins-base, gst-plugins-good
-, gst-plugins-bad, gst-libav, wrapGAppsHook, glib_networking }:
+, gst-plugins-bad, gst-libav, wrapGAppsHook, glib-networking }:
 
 let version = "0.5.1"; in
 
@@ -18,7 +18,7 @@ buildPythonPackage rec {
 
   buildInputs = [ wrapGAppsHook
     gst-plugins-base gst-plugins-good gst-plugins-bad gst-libav
-    glib_networking ];
+    glib-networking ];
 
   propagatedBuildInputs = [
     python pyyaml pyqt5 jinja2 pygments pypeg2

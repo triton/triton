@@ -1,6 +1,6 @@
 { stdenv, fetchurl, cmake, pkgconfig, intltool, vala, makeWrapper
 , gtk3, webkitgtk, librsvg, libnotify, sqlite
-, glib_networking, gsettings_desktop_schemas, libsoup
+, glib-networking, gsettings_desktop_schemas, libsoup
 }:
 
 let
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/midori \
-      --prefix GIO_EXTRA_MODULES : "${glib_networking}/lib/gio/modules" \
+      --prefix GIO_EXTRA_MODULES : "${glib-networking}/lib/gio/modules" \
       --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH"
   '';
 }

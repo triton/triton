@@ -2,7 +2,7 @@
 , curl, dbus, dbus_glib, enchant, gtk, gnutls, gnupg, gpgme, hicolor-icon-theme
 , libarchive, libcanberra, libetpan, libnotify, libsoup, libxml2, networkmanager
 , openldap , perl, pkgconfig, poppler, python, shared_mime_info, webkitgtk2
-, glib_networking, gsettings_desktop_schemas
+, glib-networking, gsettings_desktop_schemas
 
 # Build options
 # TODO: A flag to build the manual.
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
 
   buildInputs =
     [ curl dbus dbus_glib gtk gnutls gsettings_desktop_schemas hicolor-icon-theme
-      libetpan perl pkgconfig python wrapGAppsHook glib_networking
+      libetpan perl pkgconfig python wrapGAppsHook glib-networking
     ]
     ++ optional enableSpellcheck enchant
     ++ optionals (enablePgp || enablePluginSmime) [ gnupg gpgme ]

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, glib, fuse, curl, glib_networking, gsettings_desktop_schemas
+{ stdenv, fetchurl, pkgconfig, glib, fuse, curl, glib-networking, gsettings_desktop_schemas
 , makeWrapper }:
 
 stdenv.mkDerivation rec {
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   postInstall = ''
     for i in $(find $out/bin/ -type f); do
       wrapProgram "$i" \
-            --prefix GIO_EXTRA_MODULES : "${glib_networking}/lib/gio/modules" \
+            --prefix GIO_EXTRA_MODULES : "${glib-networking}/lib/gio/modules" \
             --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH"
     done
   '';

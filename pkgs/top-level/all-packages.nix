@@ -896,7 +896,6 @@ glib_tested = callPackageAlias "glib" {
 glibmm = callPackage ../all-pkgs/glibmm { };
 
 glib-networking = callPackage ../all-pkgs/glib-networking { };
-glib_networking = callPackageAlias "glib-networking" { }; # Deprecated alias
 
 glusterfs = callPackage ../all-pkgs/glusterfs { };
 

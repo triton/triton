@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
     patchShebangs ./libsoup/
   '';
 
-  # glib_networking is a runtime dependency, not a compile-time dependency
+  # glib-networking is a runtime dependency, not a compile-time dependency
   configureFlags = [
     "--disable-debug"
     "--enable-glibtest"

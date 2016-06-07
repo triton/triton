@@ -601,6 +601,13 @@ let
     sha256 = "01lxky92b71ayzc2fw1y7phdzn9m62sr7p1y1pm6adbzjaqlpg8n";
   };
 
+  emoji = buildFromGitHub {
+    owner = "kyokomi";
+    repo = "emoji";
+    rev = "v1.4";
+    sha256 = "a25d220b818f42d1de44b24109567e354d7ec033288fde179d626202419b07cd";
+  };
+
   envpprof = buildFromGitHub {
     rev = "0383bfe017e02efb418ffd595fc54777a35e48b0";
     owner = "anacrolix";

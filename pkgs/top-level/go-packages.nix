@@ -330,6 +330,16 @@ let
     sha256 = "1cj9zyv3shk8n687fb67clwgzlhv47y327180mvga7z741m48hap";
   };
 
+  blackfriday = buildFromGitHub {
+    owner = "russross";
+    repo = "blackfriday";
+    rev = "v1.4";
+    sha256 = "855a704b11b55ec6ca69cc5c84dc1900bfc4c2a7071b1cc4cc6e7353ea36bb8b";
+    buildInputs = [
+      sanitized-anchor-name
+    ];
+  };
+
   bolt = buildFromGitHub {
     rev = "v1.2.1";
     owner  = "boltdb";

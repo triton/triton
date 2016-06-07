@@ -67,15 +67,15 @@ stdenv.mkDerivation rec {
     "--enable-pool-allocators"
     "--disable-invariant-checks"
     "--enable-deprecated-functions"
-    "--disable-statistics"
+    (libtorrentOlder "1.1" "--disable-statistics")
     "--disable-disk-stats"
-    (versionOlder "1.1" "--disable-geoip")
+    (libtorrentOlder "1.1" "--disable-geoip")
     "--disable-examples"
     "--disable-tests"
     (enFlag "python-binding" (pythonPackages.python != null) null)
     "--with-boost=${boost.dev}"
     "--with-boost-libdir=${boost.lib}/lib"
-    (versionOlder "1.1" "--without-libgeoip")
+    (libtorrentOlder "1.1" "--without-libgeoip")
     "--with-libiconv"
     "--with-openssl=${openssl}"
     "--with-boost-python"

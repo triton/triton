@@ -1526,6 +1526,14 @@ let
     goPackageAliases = [ "github.com/go-inf/inf" ];
   };
 
+  inflect = buildFromGitHub {
+    owner = "bep";
+    repo = "inflect";
+    rev = "b896c45f5af983b1f416bdf3bb89c4f1f0926f69";
+    date = "2016-05-08";
+    sha256 = "8dc92f6a2b75f0d1e38d7fb7ac2be79878f6e05c316ee474a665fd860ccccf05";
+  };
+
   ini = buildFromGitHub {
     rev = "v1.12.0";
     owner  = "go-ini";

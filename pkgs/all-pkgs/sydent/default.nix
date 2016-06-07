@@ -41,6 +41,14 @@ buildPythonPackage {
     unpaddedbase64
   ];
 
+  postInstall = ''
+    mkdir -p $out/bin
+    echo '#!/bin/sh' >> "$out/bin/sydent"
+    echo "export PYTHONPATH='$PYTHONPATH'" >> "$out/bin/sydent"
+    echo "$(command -v python) -m sydent.sydent \"\$@\"" >> "$out/bin/sydent"
+    chmod +x "$out/bin/sydent"
+  '';
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

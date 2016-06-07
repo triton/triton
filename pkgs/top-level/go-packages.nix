@@ -2078,6 +2078,14 @@ let
     ];
   };
 
+  sanitized-anchor-name = buildFromGitHub {
+    owner = "shurcooL";
+    repo = "sanitized_anchor_name";
+    rev = "10ef21a441db47d8b13ebcc5fd2310f636973c77";
+    date = "2015-10-27";
+    sha256 = "7c4e047c746e2336c6e8fca1dc827aec081632324ac96c6350204712526fb35e";
+  };
+
   scada-client = buildFromGitHub {
     date = "2015-08-28";
     rev = "84989fd23ad4cc0e7ad44d6a871fd793eb9beb0a";

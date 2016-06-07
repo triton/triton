@@ -2362,6 +2362,14 @@ let
     date = "2015-10-22";
   };
 
+  urlesc = buildFromGitHub {
+    owner = "PuerkitoBio";
+    repo = "urlesc";
+    rev = "5fa9ff0392746aeae1c4b37fcc42c65afa7a9587";
+    sate = "2015-02-08";
+    sha256 = "24b587128143a8259f9a9e0f35b230f4fcc5d19d02144bfcc3c6bf35c31bc547";
+  };
+
   utp = buildFromGitHub {
     rev = "d7ad5aff2b8a5fa415d1c1ed00b71cfd8b4c69e0";
     owner  = "anacrolix";

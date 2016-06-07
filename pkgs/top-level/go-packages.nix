@@ -2347,6 +2347,13 @@ let
     goPackageAliases = [ "github.com/go-tomb/tomb" ];
   };
 
+  toml = buildFromGitHub {
+    owner = "BurntSushi";
+    repo = "toml";
+    rev = "v0.2.0";
+    sha256 = "bc57e22177107f0ec08305aed9a5aca41b4a3a5c37fef63cbb4c1fd1738910eb";
+  };
+
   units = buildFromGitHub {
     rev = "2efee857e7cfd4f3d0138cc3cbb1b4966962b93a";
     owner = "alecthomas";

@@ -245,6 +245,8 @@ pip = callPackage ../all-pkgs/pip { };
 
 progressbar = callPackage ../all-pkgs/progressbar { };
 
+psutil = callPackage ../all-pkgs/psutil { };
+
 py = callPackage ../all-pkgs/py { };
 
 pyasn1 = callPackage ../all-pkgs/pyasn1 { };
@@ -12312,7 +12314,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
 
     propagatedBuildInputs = with self; [
-      oslo-i18n oslo-utils oslo-serialization six psutil_1 Babel jinja2 pbr psutil_1
+      oslo-i18n oslo-utils oslo-serialization six psutil Babel jinja2 pbr
     ];
     buildInputs = with self; [
       coverage greenlet eventlet oslosphinx oslotest
@@ -14109,24 +14111,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     passthru.protobuf = protobuf;
   };
-
-
-  psutil = buildPythonPackage rec {
-    name = "psutil-4.1.0";
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/psutil/${name}.tar.gz";
-      sha256 = "c6abebec9c8833baaf1c51dd1b0259246d1d50b9b50e9a4aa66f33b1e98b8d17";
-    };
-  };
-
-  psutil_1 = self.psutil.overrideDerivation (self: rec {
-    name = "psutil-1.2.1";
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/psutil/${name}.tar.gz";
-      sha256 = "0ibclqy6a4qmkjhlk3g8jhpvnk0v9aywknc61xm3hfi5r124m3jh";
-    };
-  });
 
   psycopg2 = buildPythonPackage rec {
     name = "psycopg2-2.5.4";

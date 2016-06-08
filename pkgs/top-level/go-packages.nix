@@ -1529,6 +1529,17 @@ let
     sha256 = "0qhm2bn9idjg02vdjdcnlij69ag4wc3d5vcm6pcra989hiqllqb1";
   };
 
+  gohtml = buildFromGitHub {
+    owner = "yosssi";
+    repo = "gohtml";
+    rev = "ccf383eafddde21dfe37c6191343813822b30e6b";
+    date = "2015-09-22";
+    sha256 = "c0ae0c2fb29dd7ea2b6235efd06b2cadbcd0142a04b969b70ed8c4a3055eefb4";
+    propagatedBuildInputs = [
+      net
+    ];
+  };
+
   goquery = buildGoPackage rec {
     rev = "0.0.1"; #tag v.0.3.2
     name = "goquery-${stdenv.lib.strings.substring 0 7 rev}";

@@ -38,7 +38,6 @@
 , pango
 , poppler
 , popt
-, python
 , pythonPackages
 , pyxml
 , xorg
@@ -87,9 +86,9 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [
     /* Python is used at run-time to execute scripts, e.g.
        those in the "Effects" menu. */
-    python
     pyxml
     pythonPackages.lxml
+    pythonPackages.python
   ];
 
   buildInputs = [
@@ -164,7 +163,7 @@ stdenv.mkDerivation rec {
       -e 's/#if __cplusplus >= 201103L/#if true/'
   '' + ''
     sed -i src/extension/implementation/script.cpp \
-      -e 's|@EPYTHON@|${python.interpreter}|'
+      -e 's|@EPYTHON@|${pythonPackages.python.interpreter}|'
   '';
 
   preConfigure = (
@@ -214,7 +213,7 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = optionalString boxMakerPlugin ''
-    mkdir -p $out/share/inkscape/extensions/
+    mkdir -pv $out/share/inkscape/extensions/
     # boxmaker package version 0.91 in a directory called 0.85 ?!??
     unzip ${boxmaker}
     cp -v boxmake-upd-0.85/* $out/share/inkscape/extensions/
@@ -225,9 +224,7 @@ stdenv.mkDerivation rec {
       wrapProgram "$i" \
         --prefix PYTHONPATH : "$(toPythonPath ${pyxml})" \
         --prefix PYTHONPATH : "$(toPythonPath ${pythonPackages.lxml})" \
-        --prefix PATH : ${python}/bin || {
-          exit 2
-        }
+        --prefix PATH : ${pythonPackages.python}/bin
     done
     rm -v "$out/share/icons/hicolor/icon-theme.cache"
   '';
@@ -241,7 +238,9 @@ stdenv.mkDerivation rec {
       gpl2
       lgpl21
     ];
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

@@ -722,6 +722,16 @@ let
     sha256 = "16ygj65wk30cspvmrd38s6m8qjmlsviiq8zsnnvkhfy5l0gk4c86";
   };
 
+  fsnotify = buildFromGitHub {
+    owner = "fsnotify";
+    repo = "fsnotify";
+    rev = "v1.3.0";
+    sha256 = "1e8a18756881e530348b763ab6182e9686e36ec252c7de524419663d96705fbd";
+    buildInputs = [
+      sys
+    ];
+  };
+
   gateway = buildFromGitHub {
     date = "2016-05-22";
     rev = "edad739645120eeb82866bc1901d3317b57909b1";

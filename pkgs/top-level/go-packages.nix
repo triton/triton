@@ -792,6 +792,17 @@ let
     ];
   };
 
+  fsync = buildFromGitHub {
+    owner = "spf13";
+    repo = "fsync";
+    rev = "eefee59ad7de621617d4ff085cf768aab4b919b1";
+    date = "2016-03-01";
+    sha256 = "d0d292e0a10902919ff9b30159d9ae077fd68ddffd5977fe9cb1dd2a40aa53e1";
+    buildInputs = [
+      afero
+    ];
+  };
+
   gateway = buildFromGitHub {
     date = "2016-05-22";
     rev = "edad739645120eeb82866bc1901d3317b57909b1";

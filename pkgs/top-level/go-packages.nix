@@ -408,6 +408,17 @@ let
     };
   };
 
+  cast = buildFromGitHub {
+    owner = "spf13";
+    repo = "cast";
+    rev = "27b586b42e29bec072fe7379259cc719e1289da6";
+    date = "2016-03-03";
+    sha256 = "eebddee154709079698faada7bb175d8cf6ec48d56fab4d013cf4064b0ac5cac";
+    buildInputs = [
+      jwalterweatherman
+    ];
+  };
+
   check-v1 = buildFromGitHub {
     rev = "4f90aeace3a26ad7021961c297b22c42160c7b25";
     owner = "go-check";

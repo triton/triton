@@ -2175,7 +2175,7 @@ let
     rev = "1d5d1cfad45d42ec5f81fa8ef23de09cebc6dcc3";
     date = "2015-06-07";
     sha256 = "b2f08f8354c10ada86e67e29710de9862d5c2d282d7bd087f15bbf134f91a8b6";
-    buildInputs = [
+    propagatedBuildInputs = [
       urlesc
     ];
   };

@@ -308,8 +308,10 @@ let
     date = "2016-06-05";
     sha256 = "afcc21bb0886b2823dc77a1761b95e81c41201cc911524c9756b4f7f1037aedb";
     buildInputs = [
-      sftp
       text
+    ];
+    propagatedBuildInputs = [
+      sftp
     ];
   };
 

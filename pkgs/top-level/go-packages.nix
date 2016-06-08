@@ -484,11 +484,16 @@ let
 
     buildInputs = [
       datadog-go circbuf armon_go-metrics go-radix speakeasy bolt
-      go-bindata-assetfs go-dockerclient errwrap go-checkpoint go-cleanhttp
+      go-bindata-assetfs go-dockerclient errwrap go-checkpoint
       go-immutable-radix go-memdb ugorji_go go-multierror go-reap go-syslog
       golang-lru hcl logutils memberlist net-rpc-msgpackrpc raft raft-boltdb
-      scada-client serf yamux muxado dns mitchellh-cli mapstructure columnize
+      scada-client yamux muxado dns mitchellh-cli mapstructure columnize
       copystructure hil hashicorp-go-uuid crypto sys
+    ];
+
+    propagatedBuildInputs = [
+      go-cleanhttp
+      serf
     ];
 
     # Keep consul.ui for backward compatability

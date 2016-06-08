@@ -265,6 +265,14 @@ let
 
   ## THIRD PARTY
 
+  amber = buildFromGitHub {
+    owner = "eknkc";
+    repo = "amber";
+    rev = "91774f050c1453128146169b626489e60108ec03";
+    date = "2016-04-20";
+    sha256 = "c4b5a877a149a7f7e8c8b318d996b72f7738a49549b60072c5922f9fbfdd48c5";
+  };
+
   ansicolor = buildFromGitHub {
     date = "2015-11-20";
     rev = "a422bbe96644373c5753384a59d678f7d261ff10";

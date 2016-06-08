@@ -1977,6 +1977,14 @@ let
     sha256 = "1swhv3v8vxgigldpgzzbqxmzdwpvjdii11a3xql677mfbvgv7mpq";
   };
 
+  pflag = buildFromGitHub {
+    owner = "spf13";
+    repo = "pflag";
+    rev = "cb88ea77998c3f024757528e3305022ab50b43be";
+    date = "2016-03-16";
+    sha256 = "beaca26d54399fe81ea5ef66ed71c90539c51079a81613bebcd2e55f2c4c4687";
+  };
+
   pkg = buildFromGitHub rec {
     date = "2016-05-30";
     owner  = "coreos";

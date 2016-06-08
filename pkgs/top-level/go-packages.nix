@@ -1267,6 +1267,16 @@ let
     sha256 = "1bdh2wqp2hh81x00wmsb4px9fzj13jcrdl6w52pabqkr2wyyqwkf";
   };
 
+  go-md2man = buildFromGitHub {
+    owner = "cpuguy83";
+    repo = "go-md2man";
+    rev = "v1.0.5";
+    sha256 = "9da2292b250e3181d176520c9fc127fcd3441f6bebe79a80f9d32991800c791a";
+    propagatedBuildInputs = [
+      blackfriday
+    ];
+  };
+
   go-memdb = buildFromGitHub {
     date = "2016-03-01";
     rev = "98f52f52d7a476958fa9da671354d270c50661a7";

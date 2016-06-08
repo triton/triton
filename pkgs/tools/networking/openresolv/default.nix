@@ -1,39 +1,42 @@
-{ stdenv, fetchurl, makeWrapper, coreutils }:
+{ stdenv
+, fetchurl
+, makeWrapper
+
+, coreutils
+}:
 
 stdenv.mkDerivation rec {
-  name = "openresolv-3.7.3";
+  name = "openresolv-3.8.1";
 
   src = fetchurl {
     url = "mirror://roy/openresolv/${name}.tar.xz";
-    sha256 = "b3ee7960f8808c83ab4923ced3c4b114f1c0141367ab1c3d08765327c0782a02";
+    sha256 = "0hqxvrhc4r310hr59bwi1vbl16my27pdlnbrnbqqihiav67xfnfj";
   };
 
-  buildInputs = [ makeWrapper ];
+  nativeBuildInputs = [
+    makeWrapper
+  ];
 
-  configurePhase =
-    ''
-      cat > config.mk <<EOF
-      PREFIX=$out
-      SYSCONFDIR=/etc
-      SBINDIR=$out/sbin
-      LIBEXECDIR=$out/libexec/resolvconf
-      VARDIR=/var/run/resolvconf
-      MANDIR=$out/share/man
-      RESTARTCMD="false \1"
-      EOF
-    '';
+  configureFlags = [
+    "--sysconfdir=/etc"
+  ];
 
-  installFlags = "SYSCONFDIR=$(out)/etc";
+  preInstall = ''
+    installFlagsArray+=("SYSCONFDIR=$out/etc")
+  '';
 
   postInstall = ''
     wrapProgram "$out/sbin/resolvconf" --set PATH "${coreutils}/bin"
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "A program to manage /etc/resolv.conf";
     homepage = http://roy.marples.name/projects/openresolv;
-    license = stdenv.lib.licenses.bsd2;
-    maintainers = [ stdenv.lib.maintainers.eelco ];
-    platforms = stdenv.lib.platforms.linux;
+    license = licenses.bsd2;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

@@ -2194,6 +2194,19 @@ let
     ];
   };
 
+  sftp = buildFromGitHub {
+    owner = "pkg";
+    repo = "sftp";
+    rev = "526cf9b2b38d2f3675e34e473f2cef38e1e0565b";
+    date = "2016-05-30";
+    sha256 = "c3c6026c2a4130bcb1c6939d17c89148d6d4d9a477c7384922df39d4b4b4a2b5";
+    buildInputs = [
+      crypto
+      errors
+      fs
+    ];
+  };
+
   slices = buildFromGitHub {
     rev = "bb44bb2e4817fe71ba7082d351fd582e7d40e3ea";
     owner  = "feyeleanor";

@@ -514,6 +514,14 @@ let
     date = "2016-03-18";
   };
 
+  cssmin = buildFromGitHub {
+    owner = "dchest";
+    repo = "cssmin";
+    rev = "fb8d9b44afdc258bfff6052d3667521babcb2239";
+    date = "2015-12-10";
+    sha256 = "246676cd9dc5adcf50685d7bc9a891ed5249a2e8db6c3babdfcc63c155c33fd5";
+  };
+
   datadog-go = buildFromGitHub {
     date = "2016-03-29";
     rev = "cc2f4770f4d61871e19bfee967bc767fe730b0d9";

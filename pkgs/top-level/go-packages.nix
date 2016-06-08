@@ -505,9 +505,11 @@ let
     date = "2016-06-07";
     sha256 = "2ffddb068550e49ad5f7f3c6e11f52b5ecd40cd220629abcf7f73a798dd5a341";
     buildInputs = [
-      go-md2man
       pflag
       viper
+    ];
+    propagatedBuildInputs = [
+      go-md2man
     ];
   };
 

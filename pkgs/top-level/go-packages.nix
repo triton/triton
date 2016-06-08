@@ -391,7 +391,7 @@ let
     repo = "blackfriday";
     rev = "v1.4";
     sha256 = "855a704b11b55ec6ca69cc5c84dc1900bfc4c2a7071b1cc4cc6e7353ea36bb8b";
-    buildInputs = [
+    propagatedBuildInputs = [
       sanitized-anchor-name
     ];
   };

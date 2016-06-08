@@ -1773,6 +1773,16 @@ let
     ];
   };
 
+  mmark = buildFromGitHub {
+    owner = "miekg";
+    repo = "mmark";
+    rev = "v1.3.4";
+    sha256 = "7b4f3a9920c962b95304c639543cd7863c69c01c702781fbe6cc489290b1f656";
+    buildInputs = [
+      toml
+    ];
+  };
+
   mongo-tools = buildFromGitHub {
     rev = "r3.3.4";
     owner  = "mongodb";

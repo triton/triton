@@ -2090,6 +2090,13 @@ let
     sha256 = "08536i8yaip8lv4zas4xa59igs4ybvnb2wrmil8rzk3a2hl9zck8";
   };
 
+  properties = buildFromGitHub {
+    owner = "magiconair";
+    repo = "properties";
+    rev = "v1.7.0";
+    sha256 = "059d16df4de73d818e647127182629d251fdf71d1a110d4b91e3c15fdd594903";
+  };
+
   purell = buildFromGitHub {
     owner = "PuerkitoBio";
     repo = "purell";

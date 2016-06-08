@@ -1621,6 +1621,9 @@ let
     rev = "33c24e77fb80341fe7130ee7c594256ff08ccc46";
     date = "2016-03-01";
     sha256 = "ac455d7b5001ddd0e384c36b2584c22fdca19d17df38603558a9f358ac8ed970";
+    goPackageAliases = [
+      "github.com/spf13/jwalterweatherman"
+    ];
   };
 
   kingpin-v2 = buildFromGitHub {

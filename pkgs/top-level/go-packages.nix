@@ -1986,6 +1986,14 @@ let
     date = "2016-04-30";
   };
 
+  nitro = buildFromGitHub {
+    owner = "spf13";
+    repo = "nitro";
+    rev = "24d7ef30a12da0bdc5e2eb370a79c659ddccf0e8";
+    date = "2013-10-03";
+    sha256 = "bffdb21463525c2e9ab628c32c3d994c24114d49c30619f20dacd374987276b5";
+  };
+
   nomad = buildFromGitHub {
     rev = "v0.3.2";
     owner = "hashicorp";

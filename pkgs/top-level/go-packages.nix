@@ -727,7 +727,7 @@ let
     repo = "fsnotify";
     rev = "v1.3.0";
     sha256 = "1e8a18756881e530348b763ab6182e9686e36ec252c7de524419663d96705fbd";
-    buildInputs = [
+    propagatedBuildInputs = [
       sys
     ];
   };

@@ -46,6 +46,7 @@ lib.overrideDerivation (fetchurl (rec {
 
   postFetch = ''
     export PATH=${unzip}/bin:$PATH
+    start="$(date -u '+%s')"
 
     unpackDir="$TMPDIR/unpack"
     mkdir "$unpackDir"
@@ -75,7 +76,7 @@ lib.overrideDerivation (fetchurl (rec {
     mtime="946713600"
   '' else ''
     mtime=$(find "${name'}" -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
-    if [ "$(( $(date -u '+%s') - 600 ))" -lt "$mtime" ]; then
+    if [ "$start" -lt "$mtime" ]; then
       str="The newest file is too close to the current date (10 minutes):\n"
       str+="  File: $(date -u -d "@$mtime")\n"
       str+="  Current: $(date -u)\n"

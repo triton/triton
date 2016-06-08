@@ -1,7 +1,20 @@
 /* This file defines the composition for Go packages. */
 
-{ overrides, stdenv, go, buildGoPackage, git
-, fetchgit, fetchhg, fetchurl, fetchzip, fetchFromGitHub, fetchFromBitbucket, fetchbzr, pkgs }:
+{ stdenv
+, buildGoPackage
+, fetchbzr
+, fetchFromBitbucket
+, fetchFromGitHub
+, fetchgit
+, fetchhg
+, fetchTritonPatch
+, fetchurl
+, fetchzip
+, git
+, go
+, overrides
+, pkgs
+}:
 
 let
   self = _self // overrides; _self = with self; {

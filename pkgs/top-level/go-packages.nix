@@ -496,6 +496,19 @@ let
     sha256 = "0171xw72kvsk4zcygvrmslcir9qp7q4v1lh6rpllayf9ws1253dl";
   };
 
+  cobra = buildFromGitHub {
+    owner = "spf13";
+    repo = "cobra";
+    rev = "1238ba19d24b0b9ceee2094e1cb31947d45c3e86";
+    date = "2016-06-07";
+    sha256 = "2ffddb068550e49ad5f7f3c6e11f52b5ecd40cd220629abcf7f73a798dd5a341";
+    buildInputs = [
+      go-md2man
+      pflag
+      viper
+    ];
+  };
+
   columnize = buildFromGitHub {
     rev = "v2.1.0";
     owner  = "ryanuber";

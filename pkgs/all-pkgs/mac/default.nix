@@ -16,10 +16,16 @@ stdenv.mkDerivation rec {
     yasm
   ];
 
+  buildInputs = [
+    stdenv.libc
+  ];
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-assembly"
   ];
+
+  CXXFLAGS = "-DSHNTOOL";
 
   meta = with stdenv.lib; {
     description = "Monkey's Audio Codecs";

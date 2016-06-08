@@ -2024,16 +2024,12 @@ let
   purell = buildFromGitHub {
     owner = "PuerkitoBio";
     repo = "purell";
-    rev = "d69616f51cdfcd7514d6a380847a152dfc2a749d";
-    date = "2015-02-18";
-    sha256 = "6fe2d9dcc32655d19f093b1b799400f6b86a2152afa33275b07e161b4aba722d";
+    rev = "1d5d1cfad45d42ec5f81fa8ef23de09cebc6dcc3";
+    date = "2015-06-07";
+    sha256 = "b2f08f8354c10ada86e67e29710de9862d5c2d282d7bd087f15bbf134f91a8b6";
     buildInputs = [
       urlesc
     ];
-    postPatch = /* Fix import path */ ''
-      sed -i purell.go \
-        -e 's,github.com/opennota/urlesc,github.com/PuerkitoBio/urlesc,'
-    '';
   };
 
   qart = buildFromGitHub {

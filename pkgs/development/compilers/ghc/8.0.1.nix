@@ -1,43 +1,38 @@
-{ stdenv, fetchurl, fetchpatch, ghc, perl, gmp, ncurses, libiconv, binutils, coreutils
-, hscolour
+{ stdenv, fetchurl, fetchpatch, ghc, perl, gmp, ncurses, binutils, coreutils
+, libxml2, libxslt, docbook_xsl, docbook_xml_dtd_45, docbook_xml_dtd_42, hscolour
 }:
 
 stdenv.mkDerivation rec {
-  version = "8.0.0.20160204";
+  version = "8.0.1";
   name = "ghc-${version}";
 
   src = fetchurl {
-    url = "https://downloads.haskell.org/~ghc/8.0.1-rc2/${name}-src.tar.xz";
-    sha256 = "0v8pciva93i4a6h0l76vq6bbvrg76b1y4awwbxcg3m9gnqkvmy2k";
+    url = "https://downloads.haskell.org/~ghc/${version}/${name}-src.tar.xz";
+    sha256 = "90fb20cd8712e3c0fbeb2eac8dab6894404c21569746655b9b12ca9684c7d1d2";
   };
 
   patches = [
     ./dont-pass-linker-flags-via-response-files.patch   # https://github.com/NixOS/nixpkgs/issues/10752
   ];
 
-  buildInputs = [ ghc perl hscolour ];
+  buildInputs = [ ghc perl libxml2 libxslt docbook_xsl docbook_xml_dtd_45 docbook_xml_dtd_42 hscolour ];
 
   enableParallelBuilding = true;
 
   preConfigure = ''
-    sed -i -e 's|-isysroot /Developer/SDKs/MacOSX10.5.sdk||' configure
-  '' + stdenv.lib.optionalString (!stdenv.isDarwin) ''
+    export LD_LIBRARY_PATH="${gmp}/lib:${stdenv.libc}/lib"
     export NIX_LDFLAGS="$NIX_LDFLAGS -rpath $out/lib/ghc-${version}"
-  '' + stdenv.lib.optionalString stdenv.isDarwin ''
-    export NIX_LDFLAGS+=" -no_dtrace_dof"
   '';
 
   configureFlags = [
     "--with-gcc=${stdenv.cc}/bin/cc"
     "--with-gmp-includes=${gmp}/include" "--with-gmp-libraries=${gmp}/lib"
     "--with-curses-includes=${ncurses}/include" "--with-curses-libraries=${ncurses}/lib"
-  ] ++ stdenv.lib.optional stdenv.isDarwin [
-    "--with-iconv-includes=${libiconv}/include" "--with-iconv-libraries=${libiconv}/lib"
   ];
 
   # required, because otherwise all symbols from HSffi.o are stripped, and
   # that in turn causes GHCi to abort
-  stripDebugFlags = [ "-S" ] ++ stdenv.lib.optional (!stdenv.isDarwin) "--keep-file-symbols";
+  stripDebugFlags = [ "-S" "--keep-file-symbols" ];
 
   postInstall = ''
     # Install the bash completion file.

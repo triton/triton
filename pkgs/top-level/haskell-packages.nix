@@ -7,6 +7,13 @@ let
     ghc = ghc7103Binary;
     compilerConfig = callPackage ../development/haskell-modules/configuration-ghc-7.10.x.nix { };
   };
+
+  ghc801Binary = callPackage ../development/compilers/ghc/8.0.1-binary.nix { };
+
+  ghc801BinaryPkgs = callPackage ../development/haskell-modules {
+    ghc = ghc801Binary;
+    compilerConfig = callPackage ../development/haskell-modules/configuration-ghc-8.0.x.nix { };
+  };
 in
 rec {
 
@@ -18,9 +25,10 @@ rec {
       ghc = ghc7103Binary;
       inherit (ghc7103BinaryPkgs) hscolour;
     };
+
     ghc801 = callPackage ../development/compilers/ghc/8.0.1.nix {
-      ghc = ghc7103Binary;
-      inherit (ghc7103BinaryPkgs) hscolour;
+      ghc = ghc801Binary;
+      inherit (ghc801BinaryPkgs) hscolour;
     };
 
   };

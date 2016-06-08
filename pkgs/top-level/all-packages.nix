@@ -5350,7 +5350,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   haskell = callPackage ./haskell-packages.nix { };
 #
-  haskellPackages = pkgs.haskell.packages.ghc7103.override {
+  haskellPackages = pkgs.haskell.packages.ghc801.override {
     overrides = config.haskellPackageOverrides or (self: super: {});
   };
 #  inherit (haskellPackages) ghc cabal-install stack;

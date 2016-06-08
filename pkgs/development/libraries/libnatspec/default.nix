@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/natspec/${name}.tar.bz2";
+    multihash = "QmSXzeYey2FjPs5NYsXvWiz3xGUamPyWwFerhshqiEYJJn";
     sha256 = "0wffxjlc8svilwmrcg3crddpfrpv35mzzjgchf8ygqsvwbrbb3b7";
   };
 

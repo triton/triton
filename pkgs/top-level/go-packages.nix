@@ -122,6 +122,29 @@ let
     propagatedBuildInputs = [ protobuf net ];
   };
 
+  crypt = buildFromGitHub {
+    owner = "xordataexchange";
+    repo = "crypt";
+    rev = "749e360c8f236773f28fc6d3ddfce4a470795227";
+    date = "2015-05-23";
+    sha256 = "a5dfaca2c8a2e8e731ce3e912a5a610dc9e43838c55867fe0df66cbc6f05807d";
+    propagatedBuildInputs = [
+      consul
+      crypto
+    ];
+    patches = [
+      (fetchTritonPatch {
+        rev = "77ff70bae635d2ac5bae8c647120d336070a579e";
+        file = "crypt/crypt-2015-05-remove-etcd-support.patch";
+        sha256 = "e942558fc230884e4ddbbafd97f7a3ea56bacdfea90a24f8790d37c399265904";
+      })
+    ];
+    postPatch = ''
+      sed -i backend/consul/consul.go \
+        -e 's,"github.com/armon/consul-api",consulapi "github.com/hashicorp/consul/api",'
+    '';
+  };
+
   crypto = buildFromGitHub {
     rev = "5bcd134fee4dd1475da17714aac19c0aa0142e2f";
     date = "2016-05-17";

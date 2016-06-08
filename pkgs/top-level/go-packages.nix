@@ -307,11 +307,9 @@ let
     rev = "1a8ecf8b9da1fb5306e149e83128fc447957d2a8";
     date = "2016-06-05";
     sha256 = "afcc21bb0886b2823dc77a1761b95e81c41201cc911524c9756b4f7f1037aedb";
-    buildInputs = [
-      text
-    ];
     propagatedBuildInputs = [
       sftp
+      text
     ];
   };
 

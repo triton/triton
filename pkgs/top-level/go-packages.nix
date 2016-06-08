@@ -639,6 +639,13 @@ let
     sha256 = "02gri7xy9wp8szxpabcnjr18qic6078k213dr5k5712s1pg87qmj";
   };
 
+  errors = buildFromGitHub {
+    owner = "pkg";
+    repo = "errors";
+    rev = "v0.6.0";
+    sha256 = "c76fe5a641f77227f64c51e61d5cef967fda3ca752b53136bb3e928f850b830c";
+  };
+
   errwrap = buildFromGitHub {
     date = "2014-10-27";
     rev = "7554cd9344cec97297fa6649b055a8c98c2a1e55";

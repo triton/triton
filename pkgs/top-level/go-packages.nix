@@ -272,9 +272,6 @@ let
     date = "2016-06-05";
     sha256 = "afcc21bb0886b2823dc77a1761b95e81c41201cc911524c9756b4f7f1037aedb";
     buildInputs = [
-      crypto
-      errors
-      fs
       sftp
       text
     ];
@@ -2223,7 +2220,7 @@ let
     rev = "526cf9b2b38d2f3675e34e473f2cef38e1e0565b";
     date = "2016-05-30";
     sha256 = "c3c6026c2a4130bcb1c6939d17c89148d6d4d9a477c7384922df39d4b4b4a2b5";
-    buildInputs = [
+    propagatedBuildInputs = [
       crypto
       errors
       fs

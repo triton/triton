@@ -1676,6 +1676,38 @@ let
     date = "2016-02-19";
   };
 
+  hugo = buildFromGitHub {
+    owner = "spf13";
+    repo = "hugo";
+    rev = "v0.16";
+    sha256 = "c7234e7d3c747cd7fcf6050a04e411935d959b977a5dbc88a151eb5672f59339";
+    buildInputs = [
+      ace
+      afero
+      amber
+      blackfriday
+      cast
+      cobra
+      cssmin
+      emoji
+      fsnotify
+      fsync
+      inflect
+      jwalterweatherman
+      mapstructure
+      mmark
+      nitro
+      osext
+      pflag
+      purell
+      text
+      toml
+      viper
+      websocket
+      yaml-v2
+    ];
+  };
+
   inf = buildFromGitHub {
     rev = "v0.9.0";
     owner  = "go-inf";

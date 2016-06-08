@@ -2598,6 +2598,35 @@ let
     ];
   };
 
+  viper = buildFromGitHub {
+    owner = "spf13";
+    repo = "viper";
+    rev = "c1ccc378a054ea8d4e38d8c67f6938d4760b53dd";
+    date = "2016-06-05";
+    sha256 = "e7a14b1243a9c60aaaf739ba0d7fff0512395ec558d04a41f941ca5371688bb6";
+    buildInputs = [
+      crypt
+      pflag
+    ];
+    propagatedBuildInputs = [
+      cast
+      fsnotify
+      hcl
+      jwalterweatherman
+      mapstructure
+      properties
+      toml
+      yaml-v2
+    ];
+    patches = [
+      (fetchTritonPatch {
+        rev = "89c1dace6882bef6b3f05e5e6da3e9166665ef57";
+        file = "viper/viper-2016-06-remove-etcd-support.patch";
+        sha256 = "3cd7132e57b325168adf3f547f5123f744864ba8630ca653b8ee1e928e0e1ac9";
+      })
+    ];
+  };
+
   vultr = buildFromGitHub {
     rev = "v1.8";
     owner  = "JamesClonk";

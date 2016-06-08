@@ -152,6 +152,11 @@ stdenv.mkDerivation rec {
       file = "inkscape/inkscape-0.48.4-epython.patch";
       sha256 = "279c1dd278bf69c69f4ac2351d8d069f08aa444e45c32ccd564f6962304f3cdb";
     })
+    (fetchTritonPatch {
+      rev = "be944e6046862c9d2c0e39daf007ae8c26dc4c1e";
+      file = "inkscape/inkscape-0.91-deprecated-scopedptr.patch";
+      sha256 = "02c77e84c4abd8d20c7c92a02c53cf488cd6452ff2957d0d22406201a11b1cf6";
+    })
   ];
 
   postPatch = ''

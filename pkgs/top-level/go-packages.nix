@@ -301,6 +301,17 @@ let
 
   ## THIRD PARTY
 
+  ace = buildFromGitHub {
+    owner = "yosssi";
+    repo = "ace";
+    rev = "71afeb714739f9d5f7e1849bcd4a0a5938e1a70d";
+    date = "2016-01-02";
+    sha256 = "9fb20b243e6000cbc42ad57e22e88911f71a573fbe8a57e8ed6b1cc5c1bc8eaa";
+    buildInputs = [
+      gohtml
+    ];
+  };
+
   afero = buildFromGitHub {
     owner = "spf13";
     repo = "afero";

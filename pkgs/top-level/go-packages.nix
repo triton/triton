@@ -683,10 +683,14 @@ let
   };
 
   etcd = buildFromGitHub {
+    owner = "coreos";
+    repo = "etcd";
     rev = "v2.3.6";
-    owner  = "coreos";
-    repo   = "etcd";
     sha256 = "0x1fhn5hgdamj8xbry6b3dqaddy0ls00x4bcrpm4fp2n940k3l18";
+    buildInputs = [
+      pkgs.libpcap
+      tablewriter
+    ];
   };
 
   etcd-client = buildFromGitHub {

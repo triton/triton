@@ -53,7 +53,6 @@ stdenv.mkDerivation rec {
     openssl
     pythonPackages.python
     pythonPackages.wrapPython
-    stdenv.libc
     zlib
   ];
 

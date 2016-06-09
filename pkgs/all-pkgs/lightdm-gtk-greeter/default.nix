@@ -36,6 +36,11 @@ stdenv.mkDerivation rec {
     xorg.libX11
   ];
 
+  # Disable -Werror as there are issues with 2.0.1 on gcc 6.1.0
+  prePatch = ''
+    sed -i 's,-Werror[^ "]*,,g' configure
+  '';
+
   patches = [
     # Remove after 2.0.1
     (fetchTritonPatch {

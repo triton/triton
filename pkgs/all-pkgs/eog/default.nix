@@ -97,6 +97,11 @@ stdenv.mkDerivation rec {
     (wtFlag "x" (gtk3.x11_backend && xorg != null) null)
   ];
 
+  # Disable -Werror as there are issues with 3.20.2 on gcc 6.1.0
+  postPatch = ''
+    sed -i 's,-Werror[^ "]*,,g' configure
+  '';
+
   preFixup = ''
     wrapProgram $out/bin/eog \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \

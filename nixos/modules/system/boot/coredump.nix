@@ -9,7 +9,7 @@ with lib;
     systemd.coredump = {
 
       enable = mkOption {
-        default = false;
+        default = true;
         type = types.bool;
         description = ''
           Enables storing core dumps in systemd.
@@ -21,7 +21,7 @@ with lib;
       };
 
       extraConfig = mkOption {
-        default = "";
+        default = "Storage=none";
         type = types.lines;
         example = "Storage=journal";
         description = ''

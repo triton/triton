@@ -20,6 +20,8 @@ stdenv.mkDerivation rec {
     jasper
   ];
 
+  CXXFLAGS = "-std=c++03";
+
   meta = with stdenv.lib; {
     description = "Library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)";
     homepage = http://www.libraw.org/;

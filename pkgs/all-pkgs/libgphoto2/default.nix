@@ -6,7 +6,7 @@
 
 , gd
 , libexif
-, libjpeg
+, libjpeg-turbo_1-4
 #, libltdl
 , libusb
 , libxml2
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     gd
     libexif
-    libjpeg
+    libjpeg-turbo_1-4
     libusb
     libxml2
     #lockdev
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
     "--enable-largefile"
     "--disable-internal-docs"
     "--disable-docs"
-    (wtFlag "jpeg" (libjpeg != null) null)
+    (wtFlag "jpeg" (libjpeg-turbo_1-4 != null) null)
     "--with-camlibs=all"
   ];
 
@@ -58,7 +58,6 @@ stdenv.mkDerivation rec {
     license = licenses.gpl2;
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

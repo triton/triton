@@ -1325,7 +1325,7 @@ libjpeg-turbo_1-5 = callPackage ../all-pkgs/libjpeg-turbo {
   channel = "1.5";
 };
 libjpeg-turbo = callPackageAlias "libjpeg-turbo_1-5" { };
-libjpeg = callPackageAlias "libjpeg_turbo" { };
+libjpeg = callPackageAlias "libjpeg-turbo" { };
 
 libksba = callPackage ../all-pkgs/libksba { };
 

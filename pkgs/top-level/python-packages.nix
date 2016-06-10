@@ -11820,17 +11820,19 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
   };
 
   oauthlib = buildPythonPackage rec {
-    version = "1.0.3";
+    version = "1.1.2";
     name = "oauthlib-${version}";
 
-    src = pkgs.fetchurl {
-      url = "https://github.com/idan/oauthlib/archive/${version}.tar.gz";
-      sha256 = "1ywndn5pfrjfi46yqpdjq1cafbbgmbwvdipxcv806zkxz98yr6lq";
+    src = pkgs.fetchzip {
+      url = "https://github.com/idan/oauthlib/archive/v${version}.tar.gz";
+      sha256 = "c04e7c49bc98574bc1f626ef6e405f75ea1f2b665b4c267e4736d7abbaeccbc6";
     };
 
     buildInputs = with self; [ mock nose unittest2 ];
 
     propagatedBuildInputs = with self; [ cryptography pycrypto blinker pyjwt ];
+
+    doCheck = true;
 
     meta = {
       homepage = https://github.com/idan/oauthlib;

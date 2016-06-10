@@ -1318,7 +1318,13 @@ libidl = callPackage ../all-pkgs/libidl { };
 libinput = callPackage ../all-pkgs/libinput { };
 
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };
-libjpeg_turbo = callPackage ../all-pkgs/libjpeg-turbo { };
+libjpeg-turbo_1-4 = callPackage ../all-pkgs/libjpeg-turbo {
+  channel = "1.4";
+};
+libjpeg-turbo_1-5 = callPackage ../all-pkgs/libjpeg-turbo {
+  channel = "1.5";
+};
+libjpeg-turbo = callPackageAlias "libjpeg-turbo_1-5" { };
 libjpeg = callPackageAlias "libjpeg_turbo" { };
 
 libksba = callPackage ../all-pkgs/libksba { };

@@ -1,14 +1,22 @@
 { stdenv
 , fetchurl
 , yasm
+
+, channel ? null
 }:
 
+let
+  sources = import ./sources.nix;
+  source = sources."${channel}";
+  version = "${channel}.${source.versionPatch}";
+in
+
 stdenv.mkDerivation rec {
-  name = "libjpeg-turbo-1.5.0";
+  name = "libjpeg-turbo-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/libjpeg-turbo/${name}.tar.gz";
-    sha256 = "9f397c31a67d2b00ee37597da25898b03eb282ccd87b135a50a69993b6a2035f";
+    url = "mirror://sourceforge/libjpeg-turbo/libjpeg-turbo-${version}.tar.gz";
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [

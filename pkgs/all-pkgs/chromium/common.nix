@@ -1,19 +1,51 @@
-{ stdenv, ninja, which
+{ stdenv
+, bison
+, gperf
+, ninja
+, perl
+, pkgconfig
+, python
+, pythonPackages
+, which
+, yasm
 
-# default dependencies
-, atk, bzip2, flac, speex, opus
-, libevent, expat, libjpeg, snappy
-, libpng, libxml2, libxslt, libcap
-, xdg-utils, yasm, libwebp
-, libusb, pciutils, nss
-
-, python, pythonPackages, perl, pkgconfig
-, nspr, systemd_lib, kerberos
-, util-linux_full, alsa-lib, cairo
-, bison, gperf, fontconfig, libffi
-, glib, gtk_2, dbus-glib, pango
-, xorg, dbus, mesa, freetype
-, protobuf-cpp, speechd, cups
+, alsa-lib
+, atk
+, bzip2
+, cairo
+, cups
+, dbus
+, dbus-glib
+, expat
+, flac
+, fontconfig
+, freetype
+, glib
+, gtk_2
+, kerberos
+, libcap
+, libevent
+, libffi
+, libjpeg
+, libpng
+, libusb
+, libwebp
+, libxml2
+, libxslt
+, mesa
+, nspr
+, nss
+, opus
+, pango
+, pciutils
+, protobuf-cpp
+, snappy
+, speechd
+, speex
+, systemd_lib
+, util-linux_full
+, xdg-utils
+, xorg
 
 # optional dependencies
 , libgcrypt # gnomeSupport || cupsSupport
@@ -45,45 +77,16 @@ let
   mkGypFlags =
     let
       sanitize = value:
-        if value == true then "1"
-        else if value == false then "0"
-        else "${value}";
-      toFlag = key: value: "-D${key}=${sanitize value}";
-    in attrs: concatStringsSep " " (attrValues (mapAttrs toFlag attrs));
-
-  gypFlagsUseSystemLibs = {
-    use_system_bzip2 = true;
-    use_system_flac = true;
-    use_system_libevent = true;
-    use_system_libexpat = true;
-    use_system_libjpeg = true;
-    use_system_libpng = versionOlder upstream-info.version "51.0.0.0";
-    use_system_libwebp = true;
-    use_system_libxml = true;
-    use_system_opus = true;
-    use_system_snappy = true;
-    use_system_speex = true;
-    use_system_stlport = true;
-    use_system_xdg_utils = true;
-    use_system_yasm = true;
-    use_system_zlib = false;
-    use_system_protobuf = false; # needs newer protobuf
-
-    use_system_harfbuzz = false;
-    use_system_icu = false; # Doesn't support ICU 52 yet.
-    use_system_libusb = false; # http://crbug.com/266149
-    use_system_skia = false;
-    use_system_sqlite = false; # http://crbug.com/22208
-    use_system_v8 = false;
-  };
-
-  defaultDependencies = [
-    bzip2 flac speex opus
-    libevent expat libjpeg snappy
-    libpng libxml2 libxslt libcap
-    xdg-utils yasm libwebp
-    libusb
-  ];
+        if value == true then
+          "1"
+        else if value == false then
+          "0"
+        else
+          "${value}";
+      toFlag = key: value:
+        "-D${key}=${sanitize value}";
+    in attrs:
+    concatStringsSep " " (attrValues (mapAttrs toFlag attrs));
 
   # build paths and release info
   packageName = extraAttrs.packageName or extraAttrs.name;
@@ -105,19 +108,71 @@ let
         --exclude='*/tools/gyp'
     '';
 
-    buildInputs = defaultDependencies ++ [
-      atk xorg.libXfixes xorg.inputproto xorg.libX11 xorg.libXi xorg.libXrandr xorg.xextproto
-      xorg.libXcomposite xorg.compositeproto xorg.libXext xorg.libXrender dbus fontconfig
-      xorg.xproto xorg.fixesproto xorg.damageproto freetype pango libffi cairo
-      xorg.renderproto which
-      python perl pkgconfig
-      nspr nss systemd_lib
-      util-linux_full alsa-lib
-      bison gperf kerberos
-      glib gtk_2 dbus-glib
-      xorg.libXScrnSaver xorg.libXcursor xorg.libXtst mesa
-      pciutils protobuf-cpp speechd xorg.libXdamage
-      pythonPackages.gyp pythonPackages.ply pythonPackages.jinja2
+    buildInputs = [
+      bison
+      gperf
+      perl
+      pkgconfig
+      python
+      pythonPackages.gyp
+      pythonPackages.ply
+      pythonPackages.jinja2
+      which
+
+      alsa-lib
+      atk
+      bzip2
+      cairo
+      dbus
+      dbus-glib
+      expat
+      flac
+      freetype
+      glib
+      gtk_2
+      kerberos
+      libcap
+      libevent
+      libffi
+      libjpeg
+      libpng
+      libusb
+      libwebp
+      libxml2
+      libxslt
+      mesa
+      nspr
+      nss
+      opus
+      pango
+      pciutils
+      protobuf-cpp
+      snappy
+      speechd
+      speex
+      systemd_lib
+      util-linux_full
+      xdg-utils
+      xorg.compositeproto
+      xorg.inputproto
+      xorg.libX11
+      xorg.libXcomposite
+      xorg.libXcursor
+      xorg.libXdamage
+      xorg.libXext
+      xorg.libXfixes
+      xorg.libXi
+      xorg.libXrandr
+      xorg.libXrender
+      xorg.libXScrnSaver
+      xorg.libXtst
+      xorg.renderproto
+      xorg.xextproto
+      fontconfig
+      xorg.xproto
+      xorg.fixesproto
+      xorg.damageproto
+      yasm
     ] ++ optional gnomeKeyringSupport libgnome-keyring
       ++ optionals gnomeSupport [ gconf libgcrypt ]
       ++ optional enableSELinux libselinux
@@ -128,9 +183,10 @@ let
     patches = [
       ./patches/build_fixes_46.patch
       ./patches/widevine.patch
-      (if versionOlder version "50.0.0.0"
-       then ./patches/nix_plugin_paths_46.patch
-       else ./patches/nix_plugin_paths_50.patch)
+      (if versionOlder version "50.0.0.0" then
+         ./patches/nix_plugin_paths_46.patch
+       else
+         ./patches/nix_plugin_paths_50.patch)
     ];
 
     postPatch = ''
@@ -156,12 +212,37 @@ let
         chrome/browser/ui/webui/engagement/site_engagement_ui.cc
     '';
 
-    gypFlags = mkGypFlags (gypFlagsUseSystemLibs // {
+    gypFlags = mkGypFlags ({
+      use_system_bzip2 = true;
+      use_system_flac = true;
+      use_system_libevent = true;
+      use_system_libexpat = true;
+      use_system_libjpeg = true;
+      use_system_libpng = versionOlder upstream-info.version "51.0.0.0";
+      use_system_libwebp = true;
+      use_system_libxml = true;
+      use_system_opus = true;
+      use_system_snappy = true;
+      use_system_speex = true;
+      use_system_stlport = true;
+      use_system_xdg_utils = true;
+      use_system_yasm = true;
+      use_system_zlib = false;
+      use_system_protobuf = false; # needs newer protobuf
+
+      use_system_harfbuzz = false;
+      use_system_icu = false; # Doesn't support ICU 52 yet.
+      use_system_libusb = false; # http://crbug.com/266149
+      use_system_skia = false;
+      use_system_sqlite = false; # http://crbug.com/22208
+      use_system_v8 = false;
+
       linux_use_bundled_binutils = false;
       linux_use_bundled_gold = false;
       linux_use_gold_flags = true;
 
-      proprietary_codecs = false;
+      proprietary_codecs = proprietaryCodecs;
+      enable_hangout_services_extension = proprietaryCodecs;
       use_sysroot = false;
       use_gnome_keyring = gnomeKeyringSupport;
       use_gconf = gnomeSupport;
@@ -172,7 +253,7 @@ let
       enable_hotwording = enableHotwording;
       selinux = enableSELinux;
       use_cups = cupsSupport;
-    } // {
+
       werror = "";
       clang = false;
       enable_hidpi = hiDPISupport;
@@ -184,13 +265,8 @@ let
       google_api_key = "AIzaSyDGi15Zwl11UNe6Y-5XW_upsfyw31qwZPI";
       google_default_client_id = "404761575300.apps.googleusercontent.com";
       google_default_client_secret = "9rIFQjfnkykEmqb6FfjJQD1D";
-
-    } // optionalAttrs (versionOlder version "51.0.0.0") {
-      use_system_libexif = true;
     } // optionalAttrs proprietaryCodecs {
       # enable support for the H.264 codec
-      proprietary_codecs = true;
-      enable_hangout_services_extension = true;
       ffmpeg_branding = "Chrome";
     } // optionalAttrs (stdenv.system == "x86_64-linux") {
       target_arch = "x64";

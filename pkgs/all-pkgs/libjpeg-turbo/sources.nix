@@ -1,7 +1,7 @@
 {
   "1.4" = {
     versionPatch = "2";
-    multihash = "QmQ3xFNuKUC3agZbqH18S36vSMhRMR5Wa5EAXTyBd242qb;
+    multihash = "QmQ3xFNuKUC3agZbqH18S36vSMhRMR5Wa5EAXTyBd242qb";
     sha256 = "521bb5d3043e7ac063ce3026d9a59cc2ab2e9636c655a2515af5f4706122233e";
   };
   "1.5" = {

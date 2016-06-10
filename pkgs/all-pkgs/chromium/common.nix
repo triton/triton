@@ -210,6 +210,9 @@ let
       python build/gyp_chromium -f ninja --depth . ${gypFlags}
     '';
 
+    # TODO: remove this flag, it should be fixed in 53+?
+    CXXFLAGS = "-fno-delete-null-pointer-checks";
+
     buildPhase = let
       buildCommand = target: ''
         "${ninja}/bin/ninja" -C "${buildPath}"  \

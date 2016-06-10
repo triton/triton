@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/libjpeg-turbo/libjpeg-turbo-${version}.tar.gz";
-    inherit (source) sha256;
+    inherit (source) multihash sha256;
   };
 
   nativeBuildInputs = [

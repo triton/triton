@@ -4,16 +4,20 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libjpeg-turbo-1.4.2";
+  name = "libjpeg-turbo-1.5.0";
 
   src = fetchurl {
     url = "mirror://sourceforge/libjpeg-turbo/${name}.tar.gz";
-    sha256 = "0gi349hp1x7mb98s4mf66sb2xay2kjjxj9ihrriw0yiy0k9va6sj";
+    sha256 = "9f397c31a67d2b00ee37597da25898b03eb282ccd87b135a50a69993b6a2035f";
   };
 
   nativeBuildInputs = [
     yasm
   ];
+
+  passthru = {
+    type = "turbo";
+  };
 
   meta = with stdenv.lib; {
     description = "A faster (using SIMD) libjpeg implementation";
@@ -23,11 +27,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
-  };
-
-  passthru = {
-    type = "turbo";
+      x86_64-linux;
   };
 }

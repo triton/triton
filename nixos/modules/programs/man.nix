@@ -19,6 +19,8 @@ with lib;
 
   config = mkIf config.programs.man.enable {
 
+    environment.etc."man_db.conf".text = "";
+
     environment.systemPackages = [ pkgs.man-db ];
 
     environment.pathsToLink = [ "/share/man" ];

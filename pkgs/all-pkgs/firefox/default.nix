@@ -15,7 +15,6 @@
 , glib
 , gst-plugins-base
 , gstreamer
-, gtk2
 , gtk3
 , hunspell
 , icu
@@ -99,7 +98,6 @@ stdenv.mkDerivation rec {
     glib
     gst-plugins-base
     gstreamer
-    gtk2
     gtk3
     hunspell
     icu
@@ -278,7 +276,6 @@ stdenv.mkDerivation rec {
 
   passthru = {
     inherit
-      gtk2
       nspr
       version;
 

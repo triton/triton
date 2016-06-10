@@ -258,6 +258,10 @@ let
       clang = false;
       enable_hidpi = hiDPISupport;
 
+      # Don't build debug symbols
+      fastbuild = true;
+      remove_webcore_debug_symbols = true;
+
       # Google API keys, see:
       #   http://www.chromium.org/developers/how-tos/api-keys
       # Note: These are for NixOS/nixpkgs use ONLY. For your own distribution,

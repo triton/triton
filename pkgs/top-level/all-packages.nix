@@ -2099,6 +2099,13 @@ vala = callPackage ../all-pkgs/vala { };
 
 vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
+v4l-utils = callPackage ../all-pkgs/v4l-utils {
+  channel = "utils";
+};
+v4l_lib = callPackageAlias "v4l-utils" {
+  channel = "lib";
+};
+
 vim = callPackage ../all-pkgs/vim { };
 
 vino = callPackage ../all-pkgs/vino { };
@@ -7212,13 +7219,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libunibreak = callPackage ../development/libraries/libunibreak { };
 #
-  v4l_lib = lowPrio (callPackageAlias "v4l_utils" {
-    alsa-lib = null;
-    libX11 = null;
-    qt4 = null;
-    qt5 = null;
-  });
-#
 #  libvdpau-va-gl = callPackage ../development/libraries/libvdpau-va-gl { };
 #
 #  libvirt = callPackage ../development/libraries/libvirt { };
@@ -9226,10 +9226,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   usbutils = callPackage ../os-specific/linux/usbutils { };
 #
 #  usermount = callPackage ../os-specific/linux/usermount { };
-#
-  v4l_utils = callPackage ../os-specific/linux/v4l-utils {
-    qt5 = null;
-  };
 
   wirelesstools = callPackage ../os-specific/linux/wireless-tools { };
 

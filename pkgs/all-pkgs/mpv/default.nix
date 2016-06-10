@@ -41,9 +41,10 @@ in
 let
   # Purity: Waf is normally downloaded by bootstrap.py, but
   # for purity reasons this behavior should be avoided.
+  # FIXME: use waf package
   waf = fetchurl {
-    url = http://ftp.waf.io/pub/release/waf-1.8.12;
-    sha256 = "12y9c352zwliw0zk9jm2lhynsjcf5jy0k1qch1c1av8hnbm2pgq1";
+    url = https://waf.io/waf-1.8.21;
+    sha256 = "31383a18d183c72be70d251e09b47389a6eb4bebbc94b737cff3187ddd88dff1";
   };
 in
 

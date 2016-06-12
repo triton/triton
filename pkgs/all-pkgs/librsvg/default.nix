@@ -21,13 +21,13 @@ in
 stdenv.mkDerivation rec {
   name = "librsvg-${version}";
   versionMajor = "2.40";
-  versionMinor = "15";
+  versionMinor = "16";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url    = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.sha256sum";
-    sha256 = "d9cac4a123eec6e553a26e120979bab7425def9ae7ce7c079eba5e4a45db05f4";
+    sha256 = "d48bcf6b03fa98f07df10332fb49d8c010786ddca6ab34cbba217684f533ff2e";
   };
 
   buildInputs = [
@@ -75,7 +75,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

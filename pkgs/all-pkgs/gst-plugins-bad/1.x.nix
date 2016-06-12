@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, python
+, pythonPackages
 
 , bzip2
 , curl
@@ -50,16 +50,16 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-bad-1.8.1";
+  name = "gst-plugins-bad-1.8.2";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-plugins-bad/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "0bbd58f363734fc0c4a620b2d6fb01d427fdafdbda7b90b4e15d03b751ca40f5";
+    sha256 = "d7995317530c8773ec088f94d9320909d41da61996b801ebacce9a56af493f97";
   };
 
   nativeBuildInputs = [
-    python
+    pythonPackages.python
   ];
 
   buildInputs = [
@@ -106,8 +106,8 @@ stdenv.mkDerivation rec {
 
   postPatch =
     /* tests are slower than upstream expects */ ''
-    	sed -e 's:/\* tcase_set_timeout.*:tcase_set_timeout (tc_chain, 5 * 60);:' \
-    		-i tests/check/elements/audiomixer.c
+      sed -e 's:/\* tcase_set_timeout.*:tcase_set_timeout (tc_chain, 5 * 60);:' \
+        -i tests/check/elements/audiomixer.c
     '';
 
   configureFlags = [

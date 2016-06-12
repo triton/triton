@@ -3,11 +3,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gettext-0.19.8";
+  name = "gettext-0.19.8.1";
 
   src = fetchurl {
     url = "mirror://gnu/gettext/${name}.tar.gz";
-    sha256 = "3da4f6bd79685648ecf46dab51d66fcdddc156f41ed07e580a696a38ac61d48f";
+    sha256 = "ff942af0e438ced4a8b0ea4b0b6e0d6d657157c5e2364de57baa279c1c125c43";
   };
 
   postPatch = ''

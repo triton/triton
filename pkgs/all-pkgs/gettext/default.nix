@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
       -e "/^  .\?gettext/ s,^  ,\0$out/bin/,"
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "Well integrated set of translation tools and documentation";
     homepage = http://www.gnu.org/software/gettext/;
     platforms = with platforms;

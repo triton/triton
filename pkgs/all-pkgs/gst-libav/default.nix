@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, python
+, pythonPackages
 , yasm # internal libav
 
 , bzip2
@@ -18,16 +18,16 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "gst-libav-1.8.1";
+  name = "gst-libav-1.8.2";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-libav/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "44a49108c3531b5ac4f346a2247cd7fbafb0e8ab394394cb6d75a70300b38933";
+    sha256 = "b5f3c7a27b39b5f5c2f0bfd546b0c655020faf6b38d27b64b346c43e5ebf687a";
   };
 
   nativeBuildInputs = [
-    python
+    pythonPackages.python
     yasm
   ];
 

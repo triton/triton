@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, python
+, pythonPackages
 
 , aalib
 , bzip2
@@ -35,16 +35,16 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-good-1.8.1";
+  name = "gst-plugins-good-1.8.2";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-plugins-good/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "2103e17921d67894e82eafdd64fb9b06518599952fd93e625bfbc83ffead0972";
+    sha256 = "8d7549118a3b7a009ece6bb38a05b66709c551d32d2adfd89eded4d1d7a23944";
   };
 
   nativeBuildInputs = [
-    python
+    pythonPackages.python
   ];
 
   buildInputs = [
@@ -172,8 +172,8 @@ stdenv.mkDerivation rec {
     (enFlag "wavpack" (wavpack != null) null)
     (enFlag "zlib" (zlib != null) null)
     (enFlag "bz2" (bzip2 != null) null)
-    (wtFlag "--with-gudev" (libgudev != null) null)
-    (wtFlag "--with-libv4l2" (v4l_lib != null) null)
+    (wtFlag "gudev" (libgudev != null) null)
+    (wtFlag "libv4l2" (v4l_lib != null) null)
   ];
 
   meta = with stdenv.lib; {

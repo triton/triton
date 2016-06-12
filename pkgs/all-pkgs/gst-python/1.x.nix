@@ -9,12 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gst-python-1.8.1";
+  name = "gst-python-1.8.2";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-python/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "76a3bfb72f9cb81d2b2cf8d07e420478e5b3592ea4b8056bb8c8127f73810a98";
+    sha256 = "4f5015239482014c16f435559a45e6c87930340b65ee04e2e6fa164c8d724d97";
   };
 
   buildInputs = [

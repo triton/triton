@@ -25,13 +25,13 @@ assert xorg != null ->
 stdenv.mkDerivation rec {
   name = "at-spi2-core-${version}";
   versionMajor = "2.20";
-  versionMinor = "1";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/at-spi2-core/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/at-spi2-core/${versionMajor}/${name}.sha256sum";
-    sha256 = "6ed858e781f5aa9a9662b3beb5ef82f733dac040afc8255d85dffd2097f16900";
+    sha256 = "88a4de9d43139f13cca531b47b901bc1b56e0ab06ba899126644abd4ac16a143";
   };
 
   nativeBuildInputs = [

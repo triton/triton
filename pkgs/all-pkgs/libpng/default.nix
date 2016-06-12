@@ -1,17 +1,18 @@
 { stdenv
 , fetchurl
+
 , zlib
 }:
 
 stdenv.mkDerivation rec {
   name = "libpng-${version}";
-  version = "1.6.22";
+  version = "1.6.23";
 
   src = fetchurl {
     url = "mirror://sourceforge/libpng/libpng-${version}.tar.xz";
     allowHashOutput = false;
     multihash = "QmU3V85XU2KWpwXQzwSUbekrcgvXJFsKHttBQwwrrpAcaX";
-    sha256 = "6b5a6ad5c5801ec4d24aacc87a0ed7b666cd586478174f69368a1d7747715226";
+    sha256 = "6d921e7bdaec56e9f6594463ec1fe1981c3cd2d5fc925d3781e219b5349262f1";
   };
 
   buildInputs = [
@@ -21,7 +22,7 @@ stdenv.mkDerivation rec {
   patches = [
     (fetchurl {
       url = "mirror://sourceforge/libpng-apng/libpng-${version}-apng.patch.gz";
-      sha256 = "8fdcd293873ae88364e7d58b6e4bfc49ff1d8ac6663abc207992dd2b27e16e8b";
+      sha256 = "08906e0639a953f6be2d47857661cbdf04dcab93d3bf9f8cb0f7675567b07ad3";
     })
   ];
 

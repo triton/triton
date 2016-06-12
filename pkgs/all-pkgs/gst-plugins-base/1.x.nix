@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
-, python
+, pythonPackages
 
 , alsa-lib
 , cdparanoia
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
-    python
+    pythonPackages.python
   ];
 
   buildInputs = [

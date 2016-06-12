@@ -17,12 +17,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "gstreamer-1.8.1";
+  name = "gstreamer-1.8.2";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gstreamer/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "5a3722fb9302dd977c17ced4240293dc777cb716dc98c8cca63d75c27e5e3107";
+    sha256 = "9dbebe079c2ab2004ef7f2649fa317cabea1feb4fb5605c24d40744b90918341";
   };
 
   nativeBuildInputs = [

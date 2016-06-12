@@ -6,7 +6,7 @@
 , gobject-introspection
 , gst-plugins-base
 , gstreamer
-, python
+, pythonPackages
 }:
 
 let
@@ -15,12 +15,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "gst-validate-1.8.1";
+  name = "gst-validate-1.8.2";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-validate/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "a9b208c014cca2dc515599f01fd3a7a294133fd936366e74f439b9bc96a1ccbf";
+    sha256 = "33c5b585c5ca1659fe6c09fdf02e45d8132c0d386b405bf527b14ab481a0bafe";
   };
 
   nativeBuildInputs = [
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gst-plugins-base
     gstreamer
-    python
+    pythonPackages.python
   ];
 
   configureFlags = [

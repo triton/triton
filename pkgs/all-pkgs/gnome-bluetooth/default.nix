@@ -1,7 +1,13 @@
 { stdenv
+, autoconf
+, automake
+, fetchgit
 , fetchurl
+, gnome-common
+, gtk-doc
 , intltool
 , itstool
+, libtool
 , makeWrapper
 
 , adwaita-icon-theme
@@ -20,21 +26,34 @@
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    replaceStrings;
 in
 
 stdenv.mkDerivation rec {
   name = "gnome-bluetooth-${version}";
-  versionMajor = "3.18";
-  versionMinor = "3";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
-  src = fetchurl {
-    url = "mirror://gnome/sources/gnome-bluetooth/${versionMajor}/${name}.tar.xz";
+  /*src = fetchurl {
+    urls = "mirror://gnome/sources/gnome-bluetooth/${versionMajor}/${name}.tar.xz";
     sha256 = "e481b70423e52adc3c3aa919eeb033b47f9cd1598d6c0c7f384c0bd10f4e8ce3";
+  };*/
+  # # TODO: Use fetchurl again once upstream publishes a tarball
+  src = fetchgit {
+    url = "git://git.gnome.org/gnome-bluetooth";
+    rev = "refs/tags/GNOMEBT_V_${replaceStrings ["."] ["_"] version}";
+    sha256 = "1vji82jvcn1p14hgw21m9ma710m49zrbq432rj0l3lvjhbnxrfhn";
   };
 
-  nativeBuildInputs = [
+  nativeBuildInputs = /* XXX: Disable for release tarballs */ [
+    autoconf
+    automake
+    gnome-common
+    gtk-doc
+    libtool
+  ] ++ [
     intltool
     itstool
     makeWrapper
@@ -56,9 +75,13 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch =
-    /* Regenerate gdbus-codegen files to allow using any glib version
+    /* XXX: disable for release tarballs */ ''
+      USE_GNOME2_MACROS=1 gnome-autogen.sh
+    '' +
+    /* XXX: enable for release tarballs
+       Regenerate gdbus-codegen files to allow using any glib version
     	 https://bugzilla.gnome.org/show_bug.cgi?id=758096 */ ''
-    	rm -v lib/bluetooth-client-glue.{c,h}
+    	#rm -v lib/bluetooth-client-glue.{c,h}
     '';
 
   configureFlags = [
@@ -76,6 +99,11 @@ stdenv.mkDerivation rec {
     "--disable-iso-c"
     "--disable-documentation"
   ];
+
+  postConfigure =
+    /* https://bugzilla.gnome.org/show_bug.cgi?id=655517 */ ''
+      sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+    '';
 
   preFixup = ''
     wrapProgram $out/bin/bluetooth-sendto \

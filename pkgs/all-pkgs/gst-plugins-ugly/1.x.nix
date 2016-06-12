@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
-, python
+, pythonPackages
 
 , a52dec
 #, amrnb
@@ -25,18 +25,18 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "gst-plugins-ugly-1.8.1";
+  name = "gst-plugins-ugly-1.8.2";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-plugins-ugly/"
         + "${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "8e656a9a3be60d7e7ed3fb8e2a22d070b1f54f95d0b22accd876360e659446ce";
+    sha256 = "9c5b33a2a98fc1d6d6c99a1b536b1fb2de45f53cc8bf8ab85a8b8141fed1a8ac";
   };
 
   nativeBuildInputs = [
     gettext
-    python
+    pythonPackages.python
   ];
 
   buildInputs = [

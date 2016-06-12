@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "4.2";
+  version = "4.2.1";
 
   tarballUrls = version: [
     "mirror://gnu/make/make-${version}.tar.bz2"
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     allowHashOutput = false;
-    sha256 = "4e5ce3b62fe5d75ff8db92b7f6df91e476d10c3aceebf1639796dc5bfece655f";
+    sha256 = "d6e262bf3601b42d2b1e4ef8310029e1dcf20083c5446b4b7aa67081fdffc589";
   };
 
   patches = [
@@ -33,11 +33,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerified = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "4.2";
+      urls = tarballUrls "4.2.1";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "3D25 54F0 A153 38AB 9AF1  BB9D 96B0 4715 6338 B6D4";
       inherit (src) outputHashAlgo;
-      outputHash = "4e5ce3b62fe5d75ff8db92b7f6df91e476d10c3aceebf1639796dc5bfece655f";
+      outputHash = "d6e262bf3601b42d2b1e4ef8310029e1dcf20083c5446b4b7aa67081fdffc589";
     };
   };
 

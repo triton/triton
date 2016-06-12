@@ -10,11 +10,11 @@
 
 stdenv.mkDerivation rec {
   name = "unbound-${version}";
-  version = "1.5.8";
+  version = "1.5.9";
 
   src = fetchurl {
-    url = "http://unbound.net/downloads/${name}.tar.gz";
-    sha256 = "1gh9rng8jxxdfwkg2d3b6i5q5q8gngxj3h2fma6qya1yywh7lmik";
+    url = "https://unbound.net/downloads/${name}.tar.gz";
+    sha256 = "01328cfac99ab5b8c47115151896a244979e442e284eb962c0ea84b7782b6990";
   };
 
   buildInputs = [

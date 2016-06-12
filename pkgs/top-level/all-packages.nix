@@ -2136,6 +2136,8 @@ webkitgtk_2_4_gtk2 = webkitgtk_2_4_gtk3.override {
 webkitgtk_2_4 = webkitgtk_2_4_gtk3;
 webkitgtk = callPackage ../all-pkgs/webkitgtk { };
 
+wget = callPackage ../all-pkgs/wget { };
+
 which = callPackage ../all-pkgs/which { };
 
 wiredtiger = callPackage ../all-pkgs/wiredtiger { };
@@ -4839,8 +4841,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  webalizer = callPackage ../tools/networking/webalizer { };
 #
 #  weighttp = callPackage ../tools/networking/weighttp { };
-#
-  wget = callPackage ../tools/networking/wget { };
 #
 #  wicd = callPackage ../tools/networking/wicd { };
 #

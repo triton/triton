@@ -272,7 +272,7 @@ stdenv.mkDerivation rec {
       "$out/bin/firefox" --version
     '';
 
-  NIX_CFLAGS_COMPILE = "-fno-schedule-insns2 -fno-delete-null-pointer-checks";
+  NIX_CFLAGS_COMPILE = "-fno-lifetime-dse -fno-schedule-insns2 -fno-delete-null-pointer-checks";
 
   parallelBuild = false;
 

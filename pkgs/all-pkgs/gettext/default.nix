@@ -11,15 +11,12 @@ stdenv.mkDerivation rec {
   };
 
   postPatch = ''
-   substituteInPlace gettext-tools/projects/KDE/trigger --replace "/bin/pwd" pwd
-   substituteInPlace gettext-tools/projects/GNOME/trigger --replace "/bin/pwd" pwd
-   substituteInPlace gettext-tools/src/project-id --replace "/bin/pwd" pwd
+    sed \
+      -i gettext-tools/projects/KDE/trigger \
+      -i gettext-tools/projects/GNOME/trigger \
+      -i gettext-tools/src/project-id \
+      -e 's,/bin/pwd,pwd,g'
   '';
-
-  outputs = [
-    "out"
-    "doc"
-  ];
 
   preFixup = ''
     sed -i "$out/bin/gettext.sh" \
@@ -30,6 +27,9 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Well integrated set of translation tools and documentation";
     homepage = http://www.gnu.org/software/gettext/;
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       i686-linux
       ++ x86_64-linux;

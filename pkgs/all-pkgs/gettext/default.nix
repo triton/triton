@@ -3,20 +3,23 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gettext-0.19.7";
+  name = "gettext-0.19.8";
 
   src = fetchurl {
     url = "mirror://gnu/gettext/${name}.tar.gz";
-    sha256 = "0gy2b2aydj8r0sapadnjw8cmb8j2rynj28d5qs1mfa800njd51jk";
+    sha256 = "3da4f6bd79685648ecf46dab51d66fcdddc156f41ed07e580a696a38ac61d48f";
   };
 
-  outputs = [ "out" "doc" ];
-
-  patchPhase = ''
+  postPatch = ''
    substituteInPlace gettext-tools/projects/KDE/trigger --replace "/bin/pwd" pwd
    substituteInPlace gettext-tools/projects/GNOME/trigger --replace "/bin/pwd" pwd
    substituteInPlace gettext-tools/src/project-id --replace "/bin/pwd" pwd
   '';
+
+  outputs = [
+    "out"
+    "doc"
+  ];
 
   preFixup = ''
     sed -i "$out/bin/gettext.sh" \
@@ -27,6 +30,8 @@ stdenv.mkDerivation rec {
   meta = {
     description = "Well integrated set of translation tools and documentation";
     homepage = http://www.gnu.org/software/gettext/;
-    platforms = stdenv.lib.platforms.all;
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

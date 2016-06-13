@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
+, makeWrapper
 , perl
 
 , at-spi2-atk
@@ -65,17 +66,18 @@ in
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";
   versionMajor = "3.20";
-  versionMinor = "5";
+  versionMinor = "6";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.sha256sum";
-    sha256 = "9790b0267384904ad8a08e7f16e5f9ff1c4037de57788d48d1eaf528355b1564";
+    sha256 = "3f8016563a96b1cfef4ac9e795647f6316deb2978ff939b19e4e4f8f936fa4b2";
   };
 
   nativeBuildInputs = [
     gettext
+    makeWrapper
     perl
   ];
 
@@ -158,8 +160,13 @@ stdenv.mkDerivation rec {
 
   postInstall = "rm -rvf $out/share/gtk-doc";
 
-  # TODO: disable unnecessary tests
-  doCheck = false;
+  preFixup = ''
+    wrapProgram $out/bin/gtk3-demo-application \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
+
+    wrapProgram $out/bin/gtk3-widget-factory \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
+  '';
 
   passthru = {
     inherit

@@ -26,6 +26,8 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-cli"
+    # Only a static executable is built if --enable-shared is not passed
+    "--enable-shared"
     #"--enable-opencl"
     "--enable-gpl"
     "--enable-thread"

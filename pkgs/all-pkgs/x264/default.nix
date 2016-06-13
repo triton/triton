@@ -3,30 +3,16 @@
 , yasm
 
 , enable10bit ? false
-, chroma ? "all"
 }:
-
-let
-  inherit (stdenv.lib)
-    enFlag
-    otFlag;
-in
-
-assert (
-  chroma == "420" ||
-  chroma == "422" ||
-  chroma == "444" ||
-  chroma == "all"
-);
 
 stdenv.mkDerivation rec {
   name = "x264-${version}";
-  version = "20160301";
+  version = "20160613";
 
   src = fetchurl {
-    url = "http://ftp.videolan.org/pub/videolan/x264/snapshots/" +
-          "x264-snapshot-${version}-2245-stable.tar.bz2";
-    sha256 = "1h023a2id71mk15rcgk838lwqc6alk2df0nyflg7ycb97f85ckys";
+    url = "https://ftp.videolan.org/pub/videolan/x264/snapshots/"
+      + "x264-snapshot-${version}-2245-stable.tar.bz2";
+    sha256 = "de1dd21e73f565d9cd8b0a7e3e3aaf3e50b41f5ed475b7958132ef0156c9f8b7";
   };
 
   nativeBuildInputs = [
@@ -39,7 +25,11 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--enable-shared"
+    "--enable-cli"
+    #"--enable-opencl"
+    "--enable-gpl"
+    "--enable-thread"
+    "--disable-win32thread"
     "--disable-interlaced"
     "--bit-depth=${
       if (enable10bit) then
@@ -47,7 +37,10 @@ stdenv.mkDerivation rec {
       else
         "8"
     }"
-    "--chroma-format=${chroma}"
+    "--chroma-format=all"
+    "--enable-asm"
+    "--disable-debug"
+    "--disable-gprof"
     "--enable-pic"
     "--disable-avs"
     "--disable-swscale"
@@ -59,7 +52,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Library for encoding h.264/AVC video streams";
-    homepage = http://www.videolan.org/developers/x264.html;
+    homepage = https://www.videolan.org/developers/x264.html;
     license = licenses.gpl2;
     maintainers = [
       codyopel

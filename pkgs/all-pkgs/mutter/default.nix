@@ -121,6 +121,7 @@ stdenv.mkDerivation rec {
     xorg.libXrandr
     xorg.libXrender
     xorg.xkeyboardconfig
+    xorg.xproto
   ];
 
   patches = [

@@ -28,6 +28,8 @@ let
     wtFlag;
 in
 
+# FIXME: fix Xsync support
+
 stdenv.mkDerivation rec {
   name = "gnome-session-${version}";
   versionMajor = "3.20";
@@ -92,10 +94,15 @@ stdenv.mkDerivation rec {
   ];
 
   preFixup = ''
+    wrapProgram $out/bin/gnome-session \
+      --prefix 'PATH' : "${glib}/bin" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
+
     wrapProgram $out/libexec/gnome-session-binary \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
+      --prefix 'PATH' : "${gnome-settings-daemon}/bin" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"

@@ -3,7 +3,7 @@
 , libusb, gnutls, avahi, libpaper
 }:
 
-let version = "2.1.3"; in
+let version = "2.1.4"; in
 
 with stdenv.lib;
 stdenv.mkDerivation {
@@ -12,8 +12,11 @@ stdenv.mkDerivation {
   passthru = { inherit version; };
 
   src = fetchurl {
-    url = "https://www.cups.org/software/${version}/cups-${version}-source.tar.bz2";
-    sha256 = "1lyl3z01xhg9xb9c8m42398c6h9kw8qr6jwiv8bjdsjab11hv9rn";
+    urls = [
+      "https://github.com/apple/cups/releases/download/release-${version}/cups-${version}-source.tar.gz"
+      "https://www.cups.org/software/${version}/cups-${version}-source.tar.gz"
+    ];
+    sha256 = "4b14fd833180ac529ebebea766a09094c2568bf8426e219cb3a1715304ef728d";
   };
 
   buildInputs = [

@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
       -e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:'
   '' + /* Fix driver install path */ ''
     sed -i configure.ac \
-      -e "s:\`\$PKG_CONFIG libva --variable driverdir\`:$out/lib/xorg/modules/drivers:"
+      -e "s:\`\$PKG_CONFIG libva --variable driverdir\`:$out/lib/dri:"
   '';
 
   configureFlags = [

@@ -68,6 +68,7 @@ in
 
     hardware.opengl.package = nvidia-drivers;
     hardware.opengl.package32 = nvidia-drivers_libs32;
+    hardware.opengl.extraPackages = [ pkgs.libva-vdpau-driver ];
 
     services.acpid.enable = true;
 
@@ -81,7 +82,6 @@ in
       modules = [
         # x11glvnd module
         pkgs.libglvnd
-        pkgs.libva-vdpau-driver
         nvidia-drivers
       ];
       libPath = [

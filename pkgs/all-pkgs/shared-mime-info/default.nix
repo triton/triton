@@ -36,6 +36,8 @@ stdenv.mkDerivation rec {
   '';
 
   doCheck = true;
+  parallelBuild = false;
+  parallelInstall = false;
 
   meta = with stdenv.lib; {
     description = "The Shared MIME-info Database specification";

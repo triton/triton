@@ -7,11 +7,11 @@
 
 stdenv.mkDerivation rec {
   name = "dnscrypt-wrapper-${version}";
-  version = "0.2";
+  version = "0.2.1";
 
   src = fetchurl {
     url = "https://github.com/Cofyc/dnscrypt-wrapper/releases/download/v${version}/dnscrypt-wrapper-v${version}.tar.bz2";
-    sha256 = "d26f9d6329653b71bed5978885385b45f16596021f219f46e49da60d5813054e";
+    sha256 = "02f52859ec766e85b2825dabdb89a34c8d126c538b5550efe2349ecae2aeb266";
   };
 
   buildInputs = [

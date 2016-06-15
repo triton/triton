@@ -9,13 +9,13 @@
 
 stdenv.mkDerivation rec {
   name = "libglvnd-${version}";
-  version = "2016-05-27";
+  version = "2016-06-09";
 
   src = fetchFromGitHub {
     owner = "nvidia";
     repo = "libglvnd";
-    rev = "d0ced9a2e33c5415768be455c9cae08129844c0a";
-    sha256 = "4a4c8d01e5a15c6842ae561a4ee4178af50f7fa9b2690647367dbaf5b319c9c7";
+    rev = "093f0485da8f4e9d39949b8a4ee20fd318b318ad";
+    sha256 = "f5b49fa2eb19b9548df5396e415f93511f9b8491caee9335529acfca62ad9061";
   };
 
   nativeBuildInputs = [

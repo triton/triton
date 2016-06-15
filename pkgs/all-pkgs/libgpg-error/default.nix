@@ -9,7 +9,7 @@ let
     "mirror://gnupg/libgpg-error/libgpg-error-${version}.tar.bz2"
   ];
 
-  version = "1.22";
+  version = "1.23";
 in
 stdenv.mkDerivation rec {
   name = "libgpg-error-${version}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     allowHashOutput = false;
-    sha256 = "f2a04ee6317bdb41a625bea23fdc7f0b5a63fb677f02447c647ed61fb9e69d7b";
+    sha256 = "7f0c7f65b98c4048f649bfeebfa4d4c1559707492962504592b985634c939eaa";
   };
 
   postPatch = ''
@@ -27,10 +27,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerified = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.22";
+      urls = tarballUrls "1.23";
       pgpsigUrls = map (n: "${n}.sig") urls;
       inherit (gnupg.srcVerified) pgpKeyFingerprints;
-      outputHash = "f2a04ee6317bdb41a625bea23fdc7f0b5a63fb677f02447c647ed61fb9e69d7b";
+      outputHash = "7f0c7f65b98c4048f649bfeebfa4d4c1559707492962504592b985634c939eaa";
       inherit (src) outputHashAlgo;
     };
   };

@@ -7,13 +7,13 @@
 
 stdenv.mkDerivation rec {
   name = "ninja-${version}";
-  version = "1.7.0";
+  version = "1.7.1";
 
   src = fetchFromGitHub {
     owner = "ninja-build";
     repo = "ninja";
     rev = "v${version}";
-    sha256 = "6781288606aafa9a9a58cfa205eccee8a690babfeeb1b15f2d27689363badcde";
+    sha256 = "e16e452272dd651e5156e25fa88152c2650b4e7e62caaeaaf00c5043ff999ed9";
   };
 
   nativeBuildInputs = [

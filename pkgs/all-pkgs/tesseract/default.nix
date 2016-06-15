@@ -457,7 +457,7 @@ stdenv.mkDerivation rec {
 
   src = fetchzip {
     url = "https://github.com/tesseract-ocr/tesseract/archive/${version}.tar.gz";
-    sha256 = "7ea689d944dd683f4c03bf66b643631699380241eb3f5ee74b451f34e5fe8ac1";
+    sha256 = "3804a436576575ac8cb30ba4232edd266f00acef9d90b665430c47e6dec60327";
   };
 
   nativeBuildInputs = [

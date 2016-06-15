@@ -24,7 +24,7 @@
 }:
 
 let
-  version = "0.16.0-rc1";
+  version = "0.16.0";
 in
 buildPythonPackage {
   name = "synapse-${version}";
@@ -33,7 +33,7 @@ buildPythonPackage {
     owner = "matrix-org";
     repo = "synapse";
     rev = "v${version}";
-    sha256 = "5a92555d9c509d6375d6da31d57c8e5b3ed486490cd4f995b0ade29b01096836";
+    sha256 = "ce03172d045a0a87b321181dea13011e14ced24664ec0511ca3382a50acec568";
   };
 
   propagatedBuildInputs = [

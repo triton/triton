@@ -81,6 +81,7 @@ in
       modules = [
         # x11glvnd module
         pkgs.libglvnd
+        pkgs.libva-vdpau-driver
         nvidia-drivers
       ];
       libPath = [

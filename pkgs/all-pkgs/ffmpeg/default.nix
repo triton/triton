@@ -165,7 +165,6 @@
 , strippingDeveloper ? false
 
 , channel ? null
-, full ? false
 }:
 
 let
@@ -182,8 +181,6 @@ let
     versionMinor
     sha256;
 in
-
-assert channel != null;
 
 /*
  *  Licensing dependencies
@@ -346,14 +343,32 @@ stdenv.mkDerivation rec {
   buildInputs = [
     alsa-lib
     bzip2
+    celt
+    #chromaprint
     fontconfig
     freetype
+    frei0r
+    fribidi
+    game-music-emu
+    gmp
+    gsm
     gnutls
+    jack2_lib
+    ladspaH
     lame
     libass
     libbluray
+    libbs2b
+    libcaca
+    libdc1394
     libgcrypt
+    libmodplug
     libogg
+    libraw1394
+    libssh
+    libwebp
+    openal
+    openjpeg_1
     opus
     libtheora
     libva
@@ -362,57 +377,38 @@ stdenv.mkDerivation rec {
     libvpx
     mesa_noglu
     pulseaudio_lib
-    SDL
-    soxr
-    speex
-    v4l_lib
-    x264
-    x265
-    xorg.libX11
-    xorg.xproto
-    xvidcore
-    xz
-    zlib
-  ] ++ optionals full ([
-    celt
-    #chromaprint
-    frei0r
-    fribidi
-    gmp
-    game-music-emu
-    gsm
-    jack2_lib
-    ladspaH
-    libbs2b
-    libcaca
-    libdc1394
-    libmodplug
-    libraw1394
-    libssh
-    libwebp
-    openal
-    openjpeg_1
     rtmpdump
     rubberband
     samba_client
     schroedinger
+    SDL
+    soxr
     snappy
+    speex
     tesseract
+    v4l_lib
     vid-stab
     wavpack
+    x264
+    x265
     xavs
+    xorg.libX11
     xorg.libxcb
     xorg.libXext
     xorg.libXfixes
     xorg.libXv
+    xorg.xproto
+    xvidcore
+    xz
     zeromq4
+    zlib
   ] ++ optionals nonfreeLicensing [
     cudatoolkit
     faac
     fdk_aac
     openssl
     nvidia-video-codec-sdk
-  ]);
+  ];
 
   # TODO: figure out when this was fixed, assuming is was
   postPatch = ''
@@ -459,7 +455,7 @@ stdenv.mkDerivation rec {
     (fflag "ffmpeg" ffmpegProgram null)
     (fflag "ffplay" ffplayProgram null)
     (fflag "ffprobe" ffprobeProgram null)
-    (fflag "ffserver" (ffserverProgram && full) null)
+    (fflag "ffserver" ffserverProgram null)
     /*
      *  Library flags
      */
@@ -504,7 +500,7 @@ stdenv.mkDerivation rec {
     #(fflag "avisynth" (avisynth != null) null)
     "--disable-avisynth"
     (fflag "bzlib" (bzip2 != null) null)
-    (fflag "cuda" (cudaExtLib && full) "3.1")
+    (fflag "cuda" cudaExtLib "3.1")
     # Recursive dependency
     #(fflag "chromaprint" (chromaprint != null) "3.0")
     /**/(fflag "chromaprint" false "3.0")
@@ -512,123 +508,123 @@ stdenv.mkDerivation rec {
     #(fflag "crystalhd" (crystalhd != null) null)
     "--disable-crystalhd"
     (fflag "fontconfig" (fontconfig != null) null)
-    (fflag "frei0r" (frei0r != null && full) null)
+    (fflag "frei0r" (frei0r != null) null)
     # Undocumented before 3.0
     (fflag "gcrypt" (libgcrypt != null) "3.0")
-    (fflag "gmp" (gmp != null && full) "3.0")
+    (fflag "gmp" (gmp != null) "3.0")
     (fflag "gnutls" (
       gnutls != null
       && !opensslExtlib) null)
     (fflag "iconv" (stdenv.cc.libc != null) null)
-    (fflag "jni" (jni != null && full) "3.1")
-    (fflag "ladspa" (ladspaH != null && full) "2.1")
+    (fflag "jni" (jni != null) "3.1")
+    (fflag "ladspa" (ladspaH != null) "2.1")
     (deprfflag "libaacplus" false "0.7" "2.8")
     (fflag "libass" (libass != null) null)
     (fflag "libbluray" (libbluray != null) null)
-    (fflag "libbs2b" (libbs2b != null && full) "2.3")
-    (fflag "libcaca" (libcaca != null && full) null)
-    (fflag "libcelt" (celt != null && full) null)
+    (fflag "libbs2b" (libbs2b != null) "2.3")
+    (fflag "libcaca" (libcaca != null) null)
+    (fflag "libcelt" (celt != null) null)
     #(fflag "libcdio" (libcdio != null) null)
     "--disable-libcdio"
     (fflag "libdc1394" (
       libdc1394 != null
-      && libraw1394 != null && full) null)
+      && libraw1394 != null) null)
     # Undocumented
-    (deprfflag "libdcadec" (dcadec != null && full) "2.7" "3.0")
-    (fflag "libfaac" (faacExtlib && full) null)
-    (fflag "libfdk-aac" (fdkaacExtlib && full) null)
+    (deprfflag "libdcadec" (dcadec != null) "2.7" "3.0")
+    (fflag "libfaac" faacExtlib null)
+    (fflag "libfdk-aac" fdkaacExtlib null)
     #(fflag "libflite" (flite != null) null)
     "--disable-libflite"
     (fflag "libfreetype" (freetype != null) null)
-    (fflag "libfribidi" (fribidi != null && full) "2.3")
-    (fflag "libgme" (game-music-emu != null && full) "2.2")
-    #(fflag "libgsm" (gsm != null && full) null)
+    (fflag "libfribidi" (fribidi != null) "2.3")
+    (fflag "libgme" (game-music-emu != null) "2.2")
+    #(fflag "libgsm" (gsm != null) null)
     "--disable-libgsm"
     #(fflag "libiec61883" (
     #  libiec61883 != null
     #  && libavc1394 != null
-    #  && libraw1394 != null && full) null)
+    #  && libraw1394 != null) null)
     "--disable-libiec61883"
-    #(fflag "libilbc" (ilbc != null && full) null)
+    #(fflag "libilbc" (ilbc != null) null)
     "--disable-libilbc"
-    (fflag "libkvazaar" (kvazaar != null && full) "2.8")
-    #(fflag "libmfx" (libmfx != null && full) "2.6")
+    (fflag "libkvazaar" (kvazaar != null) "2.8")
+    #(fflag "libmfx" (libmfx != null) "2.6")
     "--disable-libmfx"
-    (fflag "libmodplug" (libmodplug != null && full) null)
+    (fflag "libmodplug" (libmodplug != null) null)
     (fflag "libmp3lame" (lame != null) null)
-    #(fflag "libnut" (libnut != null && full) null)
+    #(fflag "libnut" (libnut != null) null)
     "--disable-libnut"
-    #(fflag "libnpp" (npp != null && full) "3.1")
+    #(fflag "libnpp" (npp != null) "3.1")
     /**/(fflag "libnpp" false "3.1")
-    #(fflag "libopencore-amrnb" (opencore-amr != null && full) null)
+    #(fflag "libopencore-amrnb" (opencore-amr != null) null)
     "--disable-libopencore-amrnb"
-    #(fflag "libopencore-amrwb" (opencore-amr != null && full) null)
+    #(fflag "libopencore-amrwb" (opencore-amr != null) null)
     "--disable-libopencore-amrwb"
-    #(fflag "libopencv" (opencv != null && full) null)
+    #(fflag "libopencv" (opencv != null) null)
     "--disable-libopencv"
     #(fflag "libopenh264" (openh264 != null) "2.6")
     "--disable-libopenh264"
-    (fflag "libopenjpeg" (openjpeg_1 != null && full) null)
+    (fflag "libopenjpeg" (openjpeg_1 != null) null)
     (fflag "libopus" (opus != null) null)
     (fflag "libpulse" (pulseaudio_lib != null) null)
     (deprfflag "libquvi" false "2.0" "2.8")
-    (fflag "librubberband" (rubberband != null && full) "3.0")
-    (fflag "librtmp" (rtmpdump != null && full) null)
-    (fflag "libschroedinger" (schroedinger != null && full) null)
-    #(fflag "libshine" (shine != null && full) "2.0")
+    (fflag "librubberband" (rubberband != null) "3.0")
+    (fflag "librtmp" (rtmpdump != null) null)
+    (fflag "libschroedinger" (schroedinger != null) null)
+    #(fflag "libshine" (shine != null) "2.0")
     "--disable-libshine"
-    (fflag "libsmbclient" (samba_client != null && full) "2.3")
-    (fflag "libsnappy" (snappy != null && full) "2.8")
+    (fflag "libsmbclient" (samba_client != null) "2.3")
+    (fflag "libsnappy" (snappy != null) "2.8")
     (fflag "libsoxr" (soxr != null) null)
     (fflag "libspeex" (speex != null) null)
-    (fflag "libssh" (libssh != null && full) "2.1")
-    #(fflag "libtesseract" (tesseract != null && full) "3.0")
+    (fflag "libssh" (libssh != null) "2.1")
+    #(fflag "libtesseract" (tesseract != null) "3.0")
     /**/(fflag "libtesseract" false "3.0")
     (fflag "libtheora" (libtheora != null) null)
-    #(fflag "libtwolame" (twolame != null && full) null)
+    #(fflag "libtwolame" (twolame != null) null)
     "--disable-libtwolame"
-    #(fflag "libutvideo" (utvideo != null && full) null)
+    #(fflag "libutvideo" (utvideo != null) null)
     "--disable-libutvideo"
     (fflag "libv4l2" (v4l_lib != null) null)
-    (fflag "libvidstab" (vid-stab != null && full) "2.2")
+    (fflag "libvidstab" (vid-stab != null) "2.2")
     (deprfflag "libvo-aacenc" false "0.6" "2.8")
-    (fflag "libvo-amrwbenc" (vo-amrwbenc != null && full) null)
+    (fflag "libvo-amrwbenc" (vo-amrwbenc != null) null)
     (fflag "libvorbis" (libvorbis != null) null)
     (fflag "libvpx" (libvpx != null) null)
-    (fflag "libwavpack" (wavpack != null && full) "2.0")
-    (fflag "libwebp" (libwebp != null && full) "2.2")
+    (fflag "libwavpack" (wavpack != null) "2.0")
+    (fflag "libwebp" (libwebp != null) "2.2")
     (fflag "libx264" (x264 != null) null)
     (fflag "libx265" (x265 != null) "2.2")
-    (fflag "libxavs" (xavs != null && full) null)
-    #(enableFeature (xorg.libxcb != null && full) "libxcb") "2.5"
-    (fflag "libxcb-shm" (libxcbshmExtlib && full) "2.5")
-    (fflag "libxcb-xfixes" (libxcbxfixesExtlib && full) "2.5")
-    (fflag "libxcb-shape" (libxcbshapeExtlib && full) "2.5")
+    (fflag "libxavs" (xavs != null) null)
+    #(enableFeature (xorg.libxcb != null) "libxcb") "2.5"
+    (fflag "libxcb-shm" libxcbshmExtlib "2.5")
+    (fflag "libxcb-xfixes" libxcbxfixesExtlib "2.5")
+    (fflag "libxcb-shape" libxcbshapeExtlib "2.5")
     (fflag "libxvid" (xvidcore != null) null)
-    (fflag "libzimg" (libzimg != null && full) "3.0")
-    (fflag "libzmq" (zeromq4 != null && full) "2.0")
-    #(fflag "libzvbi" (zvbi != null && full) "2.1")
+    (fflag "libzimg" (libzimg != null) "3.0")
+    (fflag "libzmq" (zeromq4 != null) "2.0")
+    #(fflag "libzvbi" (zvbi != null) "2.1")
     "--disable-libzvbi"
     (fflag "lzma" (xz != null) "2.4")
-    #(fflag "decklink" (decklinkExtlib && full) "2.2")
+    #(fflag "decklink" decklinkExtlib "2.2")
     "--disable-decklink"
     (fflag "mediacodec" false "3.1") # android
-    #(fflag "mmal" (mmal != null && full) "2.7")
+    #(fflag "mmal" (mmal != null) "2.7")
     "--disable-mmal"
-    (fflag "netcdf" (netcdf != null && full) "3.0")
-    (fflag "nvenc" (nvencExtLib && full) "2.6")
-    (fflag "openal" (openal != null && full) null)
-    #(fflag "opencl" (opencl != null && full) "2.2")
+    (fflag "netcdf" (netcdf != null) "3.0")
+    (fflag "nvenc" nvencExtLib "2.6")
+    (fflag "openal" (openal != null) null)
+    #(fflag "opencl" (opencl != null) "2.2")
     "--disable-opencl"
     # OpenGL requires libX11 for GLX
     (fflag "opengl" (mesa_noglu != null && xorg.libX11 != null) "2.2")
-    (fflag "openssl" (opensslExtlib && full) null)
-    #(fflag "schannel" (schannel != null && full) "3.0")
+    (fflag "openssl" opensslExtlib null)
+    #(fflag "schannel" (schannel != null) "3.0")
     /**/(fflag "schannel" false "3.0")
     (fflag "sdl" (SDL != null) "2.5")
     (fflag "securetransport" false "2.7")
-    (fflag "x11grab" (x11grabExtlib && full) null)
-    #(enableFeature (xorg.libX11 != null && xorg.libXv != null && full) "xlib") "2.3"
+    (fflag "x11grab" x11grabExtlib null)
+    #(enableFeature (xorg.libX11 != null && xorg.libXv != null) "xlib") "2.3"
     (fflag "zlib" (zlib != null) null)
     /*
      *  Developer flags

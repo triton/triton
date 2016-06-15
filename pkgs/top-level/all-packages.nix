@@ -790,19 +790,69 @@ feh = callPackage ../all-pkgs/feh { };
 
 fstrm = callPackage ../all-pkgs/fstrm { };
 
-ffmpeg_2 = callPackage ../all-pkgs/ffmpeg {
+ffmpeg_generic = callPackage ../all-pkgs/ffmpeg {
+  # The following are disabled by default
+  celt = null;
+  dcadec = null;
+  faac = null;
+  fdk_aac = null;
+  frei0r = null;
+  fribidi = null;
+  game-music-emu = null;
+  gmp = null;
+  gsm = null;
+  #iblc = null;
+  jni = null;
+  kvazaar = null;
+  ladspaH = null;
+  #libavc1394 = null;
+  libbs2b = null;
+  libcaca = null;
+  libdc1394 = null;
+  #libiec61883 = null;
+  libraw1394 = null;
+  #libmfx = null;
+  libmodplug = null;
+  #libnut = null;
+  #libnpp = null;
+  libssh = null;
+  libwebp = null; # ???
+  libzimg = null;
+  mmal = null;
+  netcdf = null;
+  openal = null;
+  #opencl = null;
+  #opencore-amr = null;
+  opencv = null;
+  openjpeg_1 = null;
+  samba_client = null;
+  #schannel = null;
+  schroedinger = null;
+  #shine = null;
+  snappy = null;
+  rtmpdump = null;
+  rubberband = null;
+  tesseract = null;
+  #twolame = null;
+  #utvideo = null;
+  vid-stab = null;
+  vo-amrwbenc = null;
+  wavpack = null;
+  xavs = null;
+  xvidcore = null;
+  zeromq4 = null;
+  #zvbi = null;
+};
+ffmpeg_2 = callPackageAlias "ffmpeg_generic" {
   channel = "2";
 };
-ffmpeg_3 = callPackage ../all-pkgs/ffmpeg {
+ffmpeg_3 = callPackageAlias "ffmpeg_generic" {
   channel = "3";
 };
-ffmpeg_head = callPackage ../all-pkgs/ffmpeg {
+ffmpeg_head = callPackageAlias "ffmpeg_generic" {
   channel = "9";
 };
 ffmpeg = callPackageAlias "ffmpeg_3" { };
-ffmpeg_full = callPackageAlias "ffmpeg" {
-  full = true;
-};
 
 fftw_double = callPackage ../all-pkgs/fftw {
   precision = "double";

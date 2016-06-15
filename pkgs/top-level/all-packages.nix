@@ -1474,6 +1474,8 @@ libuv = callPackage ../all-pkgs/libuv { };
 
 libva = callPackage ../all-pkgs/libva { };
 
+libva-vdpau-driver = callPackage ../all-pkgs/libva-vdpau-driver { };
+
 libvdpau = callPackage ../all-pkgs/libvdpau { };
 
 libverto = callPackage ../all-pkgs/libverto { };
@@ -7843,8 +7845,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  v8 = callPackage ../development/libraries/v8 {
 #    inherit (pythonPackages) gyp;
 #  };
-#
-  vaapi-vdpau = callPackage ../development/libraries/vaapi-vdpau { };
 #
   vamp = callPackage ../development/libraries/audio/vamp { };
 #

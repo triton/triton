@@ -12,15 +12,15 @@
   };
 
   "10" = rec {
-    version = "10.2.1";
+    version = "10.2.2";
     rev = "refs/tags/v${version}";
-    sha256 = "03874gbd3sc0pmc6jmqkpvw4ls0jy7x4dh6zk21852jnrqrknw35";
+    sha256 = "1h837z7cp7l5957959m7nnmq33rb06i722a7wigrpp2r1d5kaihp";
   };
 
   "dev" = rec {
-    version = "10.2.1";
+    version = "10.2.2";
     rev = "refs/tags/v${version}";
-    sha256 = "03874gbd3sc0pmc6jmqkpvw4ls0jy7x4dh6zk21852jnrqrknw35";
+    sha256 = "1h837z7cp7l5957959m7nnmq33rb06i722a7wigrpp2r1d5kaihp";
   };
 
   "git" = rec {

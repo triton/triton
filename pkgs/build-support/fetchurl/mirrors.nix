@@ -92,6 +92,7 @@ rec {
   gnupg = [
     https://gnupg.org/ftp/gcrypt
     ftp://ftp.gnupg.org/gcrypt
+    ftp://ftp.ring.gr.jp/pub/net/gnupg
   ];
 
   # Hackage mirrors

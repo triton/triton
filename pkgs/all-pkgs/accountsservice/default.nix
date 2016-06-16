@@ -21,11 +21,11 @@ in
 
 stdenv.mkDerivation rec {
   name = "accountsservice-${version}";
-  version = "0.6.40";
+  version = "0.6.42";
 
   src = fetchurl {
-    url = "http://www.freedesktop.org/software/accountsservice/${name}.tar.xz";
-    sha256 = "0ayb3y3l25dmwxlh9g071h02mphjfbkvi2k5f635bayb01k7akzh";
+    url = "https://www.freedesktop.org/software/accountsservice/${name}.tar.xz";
+    sha256 = "e56494c2f18627900b57234e5628923cc16a37bf8fd16b06c46118d6ae9c007e";
   };
 
   nativeBuildInputs = [
@@ -42,20 +42,6 @@ stdenv.mkDerivation rec {
     systemd_lib
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "6f159bbe96eb07e94789b0124fbf7317763633bc";
-      file = "accountsservice/no-create-dirs.patch";
-      sha256 = "aeea5489710f7aa6abb09bfc4882aeb0a6a93a26bd08f13a81ce415b7944b702";
-    })
-  ];
-
-  # This is a fix that should be removed in 0.6.41
-  postPatch = ''
-    grep -q 'systemd-login' configure
-    sed -i 's,systemd-login,systemd,g' configure
-  '';
-
   configureFlags = [
     "--enable-admin-group=wheel"
     # Heuristics for guessing system vs human users in the range 500-minimum-uid
@@ -67,8 +53,16 @@ stdenv.mkDerivation rec {
     "--disable-docbook-docs"
     (enFlag "systemd" (systemd_lib != null) null)
     (wtFlag "systemdsystemunitdir" (systemd_lib != null) "$(out)/etc/systemd/system")
+    "--sysconfdir=/etc"
     "--localstatedir=/var"
   ];
+
+  preInstall = ''
+    installFlagsArray+=(
+      "localstatedir=$TMPDIR/var"
+      "sysconfdir=$out/etc"
+    )
+  '';
 
   preFixup = ''
     wrapProgram "$out/libexec/accounts-daemon" \
@@ -82,7 +76,6 @@ stdenv.mkDerivation rec {
     license = licenses.gpl3;
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

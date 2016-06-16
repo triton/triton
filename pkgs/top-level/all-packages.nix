@@ -682,6 +682,14 @@ cryptopp = callPackage ../all-pkgs/crypto++ { };
 
 cryptsetup = callPackage ../all-pkgs/cryptsetup { };
 
+nvidia-cuda-toolkit_7-5 = callPackage ../all-pkgs/nvidia-cuda-toolkit {
+  channel = "7.5";
+};
+#nvidia-cuda-toolkit_8-0 = callPackage ../all-pkgs/nvidia-cuda-toolkit {
+#  channel = "8.0";
+#};
+nvidia-cuda-toolkit = callPackageAlias "nvidia-cuda-toolkit_7-5" { };
+
 cuetools = callPackage ../all-pkgs/cuetools { };
 
 curl = callPackage ../all-pkgs/curl {
@@ -2864,16 +2872,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  cromfs = callPackage ../tools/archivers/cromfs { };
 #
 #  cron = callPackage ../tools/system/cron { };
-#
-  cudatoolkit5 = callPackage ../development/compilers/cudatoolkit/5.5.nix { };
-
-  cudatoolkit6 = callPackage ../development/compilers/cudatoolkit/6.0.nix { };
-
-  cudatoolkit65 = callPackage ../development/compilers/cudatoolkit/6.5.nix { };
-
-  cudatoolkit7 = callPackage ../development/compilers/cudatoolkit/7.0.nix { };
-
-  cudatoolkit = callPackageAlias "cudatoolkit7" { };
 
 #  cunit = callPackage ../tools/misc/cunit { };
 #

@@ -242,7 +242,7 @@ let
             name = "initrd-${pkgs.kmod-blacklist-ubuntu.name}";
             # Remove all of the logic for re-enabling iwlwifi as it has hardcoded
             # paths in it
-            builderCommand = ''
+            buildCommand = ''
               ${pkgs.perl}/bin/perl -0pe 's/## file: iwlwifi.conf(.+?)##/##/s;' \
                 ${pkgs.kmod-blacklist-ubuntu.file} > $out
             '';

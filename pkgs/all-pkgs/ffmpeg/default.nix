@@ -67,7 +67,7 @@
 #, chromaprint
 #, crystalhd
 , cudaExtLib ? false
-  , cudatoolkit
+  , nvidia-cuda-toolkit
 , dcadec ? null
 #, decklinkExtlib ? false
 #  , blackmagic-design-desktop-video
@@ -403,7 +403,7 @@ stdenv.mkDerivation rec {
     zeromq4
     zlib
   ] ++ optionals nonfreeLicensing [
-    cudatoolkit
+    nvidia-cuda-toolkit
     faac
     fdk_aac
     openssl

@@ -239,18 +239,17 @@ let
           symlink = "/etc/mdadm.conf";
         }
         { object = pkgs.stdenv.mkDerivation {
-            name = "initrd-kmod-blacklist-ubuntu";
-            builder = pkgs.writeText "builder.sh" ''
-              source $stdenv/setup
-              target=$out
-
-              ${pkgs.perl}/bin/perl -0pe 's/## file: iwlwifi.conf(.+?)##/##/s;' $src > $out
+            name = "initrd-${pkgs.kmod-blacklist-ubuntu.name}";
+            # Remove all of the logic for re-enabling iwlwifi as it has hardcoded
+            # paths in it
+            builderCommand = ''
+              ${pkgs.perl}/bin/perl -0pe 's/## file: iwlwifi.conf(.+?)##/##/s;' \
+                ${pkgs.kmod-blacklist-ubuntu.file} > $out
             '';
-            src = "${pkgs.kmod-blacklist-ubuntu}/modprobe.conf";
           };
           symlink = "/etc/modprobe.d/ubuntu.conf";
         }
-        { object = pkgs.kmod-debian-aliases;
+        { object = pkgs.kmod-debian-aliases.file;
           symlink = "/etc/modprobe.d/debian.conf";
         }
       ];

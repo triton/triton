@@ -5,6 +5,7 @@ This is probably missing a lot
 
 * pkgconfig is now part of stdenv
 * absolute-pkgconfig hook
+   + eliminates the need to propagate pkg-config dependencies
 * absolute-libtool hook
 * parallel building enabled by default
 * enableParallelBuilding is deprecated, use the following instead
@@ -65,3 +66,10 @@ This is probably missing a lot
 * fortifySource = true;
 * stackProtector = true;
 * optimize = true;
+* disable recursion in all-packages & add callPackageAlias.
+   + this is to prevent overrides not propagating through typical recursive aliases
+* merge ffmpeg builds (regular & full) & remove pre 2.x versions
+* gcc6 as default
+* fix pythonPackages's callPackage scope
+* compiler hardening by default (with overrides to disable individual flags)
+

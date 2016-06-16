@@ -1,32 +1,50 @@
-{ stdenv, fetchurl, gnugrep, findutils }:
+{ stdenv
+, fetchurl
+
+, findutils
+, gnugrep
+, kmod
+}:
+
 let
-  version = "3ubuntu1"; # Saucy
+  version = "22-1.1ubuntu1";
 in
 stdenv.mkDerivation {
   name = "kmod-blacklist-${version}";
 
   src = fetchurl {
-    url = "https://launchpad.net/ubuntu/+archive/primary/+files/kmod_9-${version}.debian.tar.gz";
-    sha256 = "0h6h0zw2490iqj9xa2sz4309jyfmcc50jdvkhxa1nw90npxglp67";
+    url = "https://launchpad.net/ubuntu/+archive/primary/+files/kmod_${version}.debian.tar.xz";
+    #allowHashOutput = false;
+    sha256 = "117ae90e093f7f8f43fb2ec9cb4e71e1503847b933d74ea8408bb103ce4be4cc";
   };
 
   installPhase = ''
-    mkdir "$out"
+    file="$out/etc/modprobe.d/ubuntu.conf"
+    mkdir -p "$(dirname "$file")"
+
     for f in modprobe.d/*.conf; do
-      echo "''\n''\n## file: "`basename "$f"`"''\n''\n" >> "$out"/modprobe.conf
-      cat "$f" >> "$out"/modprobe.conf
+      echo "''\n''\n## file: "`basename "$f"`"''\n''\n" >> "$file"
+      cat "$f" >> "$file"
     done
 
-    substituteInPlace "$out"/modprobe.conf \
-      --replace /sbin/lsmod /run/booted-system/sw/bin/lsmod \
-      --replace /sbin/rmmod /run/booted-system/sw/bin/rmmod \
-      --replace /sbin/modprobe /run/booted-system/sw/bin/modprobe \
-      --replace " grep " " ${gnugrep}/bin/grep " \
-      --replace " xargs " " ${findutils}/bin/xargs "
+    sed \
+      -e 's,grep,${gnugrep}/bin/grep,g' \
+      -e 's,xargs,${findutils}/bin/xargs,g' \
+      -e 's,/sbin/lsmod,${kmod}/bin/lsmod,g' \
+      -e 's,/sbin/rmmod,${kmod}/bin/rmmod,g' \
+      -e 's,/sbin/modprobe,${kmod}/bin/modprobe,g' \
+      -i "$file"
   '';
 
-  meta = {
+  preferLocalBuild = true;
+
+  meta = with stdenv.lib; {
     homepage = http://packages.ubuntu.com/source/saucy/kmod;
     description = "Linux kernel module blacklists from Ubuntu";
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

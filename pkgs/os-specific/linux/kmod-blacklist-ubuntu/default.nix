@@ -7,9 +7,11 @@
 }:
 
 let
+  path = "etc/modprobe.d/blacklist.conf";
+
   version = "22-1.1ubuntu1";
-in
-stdenv.mkDerivation {
+
+drv = stdenv.mkDerivation {
   name = "kmod-blacklist-${version}";
 
   src = fetchurl {
@@ -19,7 +21,7 @@ stdenv.mkDerivation {
   };
 
   installPhase = ''
-    file="$out/etc/modprobe.d/ubuntu.conf"
+    file="$out/${path}"
     mkdir -p "$(dirname "$file")"
 
     for f in modprobe.d/*.conf; do
@@ -38,6 +40,10 @@ stdenv.mkDerivation {
 
   preferLocalBuild = true;
 
+  passthru = {
+    file = "${drv}/${path}";
+  };
+
   meta = with stdenv.lib; {
     homepage = http://packages.ubuntu.com/source/saucy/kmod;
     description = "Linux kernel module blacklists from Ubuntu";
@@ -47,4 +53,5 @@ stdenv.mkDerivation {
     platforms = with platforms;
       x86_64-linux;
   };
-}
+};
+in drv

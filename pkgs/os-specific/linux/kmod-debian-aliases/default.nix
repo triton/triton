@@ -9,6 +9,7 @@ drv = stdenv.mkDerivation {
 
   src = fetchurl {
     url = "mirror://debian/pool/main/k/kmod/kmod_${version}.debian.tar.xz";
+    multihash = "QmbWo6UdawzzaYyo1c9QWZVLDCoMVqBGo2VrWugYYZeUmU";
     sha256 = "b02a6c171ddc5cb6ccb87d700132e937ac563533de2ba5a76558ee45acb84a35";
   };
 

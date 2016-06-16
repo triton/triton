@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   name = "npth-1.2";
 
   src = fetchurl {
-    url = "ftp://ftp.gnupg.org/gcrypt/npth/${name}.tar.bz2";
+    url = "mirror://gnupg/npth/${name}.tar.bz2";
     sha256 = "12n0nvhw4fzwp0k7gjv3rc6pdml0qiinbbfiz4ilg6pl5kdxvnvd";
   };
 

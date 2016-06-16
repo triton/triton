@@ -76,7 +76,7 @@ with lib;
 
   config = mkIf (!config.boot.isContainer) {
 
-    environment.etc."modprobe.d/ubuntu.conf".source = "${pkgs.kmod-blacklist-ubuntu.file}";
+    environment.etc."modprobe.d/blacklist.conf".source = "${pkgs.kmod-blacklist-ubuntu.file}";
 
     environment.etc."modprobe.d/nixos.conf".text =
       ''
@@ -85,7 +85,7 @@ with lib;
         '')}
         ${config.boot.extraModprobeConfig}
       '';
-    environment.etc."modprobe.d/debian.conf".source = pkgs.kmod-debian-aliases.file;
+    environment.etc."modprobe.d/aliases.conf".source = pkgs.kmod-debian-aliases.file;
 
     environment.systemPackages = [ config.system.sbin.modprobe pkgs.kmod ];
 

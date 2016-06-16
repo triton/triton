@@ -247,10 +247,10 @@ let
                 ${pkgs.kmod-blacklist-ubuntu.file} > $out
             '';
           };
-          symlink = "/etc/modprobe.d/ubuntu.conf";
+          symlink = "/etc/modprobe.d/blacklist.conf";
         }
         { object = pkgs.kmod-debian-aliases.file;
-          symlink = "/etc/modprobe.d/debian.conf";
+          symlink = "/etc/modprobe.d/aliases.conf";
         }
       ];
   };

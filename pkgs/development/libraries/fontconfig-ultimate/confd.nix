@@ -1,17 +1,19 @@
-{ stdenv, fetchFromGitHub }:
+{ stdenv
+, fetchFromGitHub
+}:
 
-let version = "2015-12-06"; in
+let
+  version = "2016-04-23";
+in
 stdenv.mkDerivation {
   name = "fontconfig-ultimate-${version}";
 
   src = fetchFromGitHub {
-    sha256 = "9735bc63814c6b27095341c56a6380730d3238438828f00d41dff0c925cdaccd";
-    rev = version;
-    repo = "fontconfig-ultimate";
     owner = "bohoomil";
+    repo = "fontconfig-ultimate";
+    rev = version;
+    sha256 = "b490bebc24fc19dcc5d24b5a878a0d850edbc1c47b550f9b5a190cd190e647e7";
   };
-
-  phases = "$prePhases unpackPhase installPhase $postPhases";
 
   installPhase = ''
     mkdir -p $out/etc/fonts/conf.d
@@ -37,4 +39,6 @@ stdenv.mkDerivation {
     cp fontconfig_patches/free/*.conf $out/etc/fonts/presets/free
     cp fontconfig_patches/ms/*.conf $out/etc/fonts/presets/ms
   '';
+
+  preferLocalBuild = true;
 }

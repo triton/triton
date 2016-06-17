@@ -36,11 +36,11 @@ let
           "x265_${version}.tar.gz";
     sha256 = "1j0mbcf10aj6zi1nxql45f9817jd2ndcpd7x123sjmyr7q9m8iiy";
   };*/
-  version = "2016-05-13";
+  version = "2016-06-14";
   src = fetchhg {
     url = "https://bitbucket.org/multicoreware/x265";
-    rev = "4723933fdec920debefe606d50a9a312f7bc7f6b";
-    sha256 = "1x0ycpacskm5i4xhgrcygz6xxm3i50jwwicmcwvy16jcmfmf04a5";
+    rev = "78ffb67a844e3e76facf18c52790f1bd544754d6";
+    sha256 = "1yw6ygdmg93gsi40jawy2sdmqmq10jiikh27vpb4k2hwh1j0bwa3";
   };
   cmakeFlagsAll = [
     (cmFlag "ENABLE_TESTS" false)
@@ -59,7 +59,7 @@ in
 
 /* By default, the library and the encoder are configured for only
  * one output bit depth.  Meaning, one has to rebuild libx265 if
- * they wants to produce HEVC files with a different bit depth,
+ * they want to produce HEVC files with a different bit depth,
  * which is annoying.  However, upstream supports proper namespacing
  * for 8bit, 10bit & 12bit HEVC and linking all that together so that
  * the resulting library can produce all three of them instead of

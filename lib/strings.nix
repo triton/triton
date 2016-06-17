@@ -16,12 +16,14 @@ rec {
     substring
     tail;
 
-  # Concatenate a list of strings.
-  concatStrings =
-    if builtins ? concatStringsSep then
-      builtins.concatStringsSep ""
-    else
-      lib.foldl' (x: y: x + y) "";
+  /**
+   * Concatenate a list of strings.
+   *
+   * Example:
+   *   concatStrings ["foo" "bar"]
+   *   => "foobar"
+   */
+  concatStrings = builtins.concatStringsSep "";
 
   # Map a function over a list and concatenate the resulting strings.
   concatMapStrings = f: list: concatStrings (map f list);

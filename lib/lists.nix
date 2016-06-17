@@ -59,30 +59,20 @@ rec {
    */
   foldl' = builtins.foldl' or foldl;
 
-  /**
+  /** Map with index
+   *
    * FIXME: why does this start to count at 1?
    *
-   * Map with index: `imap (i: v: "${v}-${toString i}") ["a" "b"] ==
-   * ["a-1" "b-2"]'.
+   * imap (i: v: "${v}-${toString i}") ["a" "b"] == ["a-1" "b-2"]'.
    */
-  imap =
-    if builtins ? genList then
-      f: list: genList (n: f (n + 1) (elemAt list n)) (length list)
-    else
-      f: list:
-      let
-        len = length list;
-        imap' = n:
-          if n == len then
-            [ ]
-          else
-            [ (f (n + 1) (elemAt list n)) ] ++ imap' (n + 1);
-      in
-      imap' 0;
+  imap = f: list: genList (n: f (n + 1) (elemAt list n)) (length list);
 
-  /**
-   * Map and concatenate the result.
-   */
+  /* Map and concatenate the result.
+
+     Example:
+       concatMap (x: [x] ++ ["z"]) ["a" "b"]
+       => [ "a" "z" "b" "z" ]
+  */
   concatMap = f: list: concatLists (map f list);
 
   /**
@@ -146,6 +136,7 @@ rec {
    */
   count = pred: foldl' (c: x: if pred x then c + 1 else c) 0;
 
+<<<<<<< HEAD
   /**
    * Return a singleton list if true or an empty list if not true.
    *
@@ -173,10 +164,16 @@ rec {
   /**
    * If argument is a list, return it; else, wrap it in a singleton
    * list.
-   * 
+   *
    * WARNING:
    *   If you're using this, you should almost certainly reconsider
    *   a more "well-typed" approach.
+   *
+   * Example:
+   *   toList [ 1 2 ]
+   *   => [ 1 2 ]
+   *   toList "hi"
+   *   => [ "hi "]
    */
   toList = x:
     if isList x then
@@ -186,24 +183,26 @@ rec {
 
   /**
    * Return a list of integers from `first' up to and including `last'.
+   *
+   * Example:
+   *   range 2 4
+   *   => [ 2 3 4 ]
+   *   range 3 2
+   *   => [ ]
    */
-  range =
-    if builtins ? genList then
-      first: last:
-        if first > last then
-          [ ]
-        else
-          genList (n: first + n) (last - first + 1)
-    else
-      first: last:
-        if last < first then
-          [ ]
-        else
-          [ first ] ++ range (first + 1) last;
+   range = first: last:
+     if first > last then
+       [ ]
+     else
+       builtins.genList (n: first + n) (last - first + 1);
 
   /**
    * Partition the elements of a list in two lists, `right' and
    * `wrong', depending on the evaluation of a predicate.
+   *
+   * Example:
+   *   partition (x: x > 2) [ 5 1 2 3 4 ]
+   *   => { right = [ 5 3 4 ]; wrong = [ 1 2 ]; }
    */
   partition = builtins.partition or (pred:
     fold (h: t:
@@ -218,38 +217,33 @@ rec {
       wrong = [ ];
     });
 
-  zipListsWith =
-    if builtins ? genList then
-      f: fst: snd:
-      genList (n:
-        f (elemAt fst n) (elemAt snd n)) (min (length fst) (length snd)
-      )
-    else
-      f: fst: snd:
-      let
-        len = min (length fst) (length snd);
-        zipListsWith' = n:
-          if n != len then
-            [ (f (elemAt fst n) (elemAt snd n)) ]
-            ++ zipListsWith' (n + 1)
-          else [ ];
-      in
-      zipListsWith' 0;
+  /**
+   * Merges two lists of the same size together. If the sizes aren't the same
+   * the merging stops at the shortest. How both lists are merged is defined
+   * by the first argument.
+   *
+   * Example:
+   *   zipListsWith (a: b: a + b) ["h" "l"] ["e" "o"]
+   *   => ["he" "lo"]
+   */
+  zipListsWith = f: fst: snd:
+    builtins.genList
+      (n: f (elemAt fst n) (elemAt snd n)) (min (length fst) (length snd));
 
   zipLists = zipListsWith (fst: snd: { inherit fst snd; });
 
   /**
    * Reverse the order of the elements of a list.
+   *
+   * Example:
+   *   reverseList [ "b" "o" "j" ]
+   *   => [ "j" "o" "b" ]
    */
-  reverseList =
-    if builtins ? genList then
-      xs:
-      let
-        l = length xs;
-      in
-      genList (n: elemAt xs (l - n - 1)) l
-    else
-      fold (e: acc: acc ++ [ e ]) [];
+  reverseList = xs:
+    let
+      l = length xs;
+    in
+    builtins.genList (n: elemAt xs (l - n - 1)) l;
 
   /**
    * Sort a list based on a comparator function which compares two
@@ -290,43 +284,35 @@ rec {
 
   /**
    * Return the first (at most) N elements of a list.
+   *
+   * Example:
+   *   take 2 [ "a" "b" "c" "d" ]
+   *   => [ "a" "b" ]
+   *   take 2 [ ]
+   *   => [ ]
    */
-  take =
-    if builtins ? genList then
-      count: sublist 0 count
-    else
-    count: list:
-      let
-        len = length list;
-        take' = n:
-          if n == len || n == count
-            then []
-          else
-            [ (elemAt list n) ] ++ take' (n + 1);
-      in
-      take' 0;
+  take = count: sublist 0 count;
 
   /**
    * Remove the first (at most) N elements of a list.
+   *
+   * Example:
+   *   drop 2 [ "a" "b" "c" "d" ]
+   *   => [ "c" "d" ]
+   *   drop 2 [ ]
+   *   => [ ]
    */
-  drop =
-    if builtins ? genList then
-      count: list: sublist count (length list) list
-    else
-      count: list:
-      let
-        len = length list;
-        drop' = n:
-          if n == -1 || n < count
-            then [ ]
-          else
-            drop' (n - 1) ++ [ (elemAt list n) ];
-      in
-      drop' (len - 1);
+  drop = count: list: sublist count (length list) list;
 
   /**
    * Return a list consisting of at most ‘count’ elements of ‘list’,
    * starting at index ‘start’.
+   *
+   * Example:
+   *   sublist 1 3 [ "a" "b" "c" "d" "e" ]
+   *   => [ "b" "c" "d" ]
+   *   sublist 1 3 [ ]
+   *   => [ ]
    */
   sublist = start: count: list:
     let

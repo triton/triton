@@ -14,20 +14,15 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "pcre-8.38";
+  name = "pcre-8.39";
 
   src = fetchurl {
     url = "http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${name}.tar.bz2";
-    multihash = "QmY6pAiR7LysRcYL2VNXuvbBnF32Pp4aCfaeqiEMaQToHX";
-    sha256 = "1pvra19ljkr5ky35y2iywjnsckrs9ch2anrf5b0dc91hw8v2vq5r";
+    multihash = "QmPjEjowUiEi149yAUYcutkXvvxNmFGWuxkQZq6V4o1T7H";
+    sha256 = "12wyajlqx2v7dsh39ra9v9m5hibjkrl129q90bp32c28haghjn5q";
   };
 
   patches = [
-    (fetchTritonPatch {
-      rev = "f595acad67433d7ac50f03c05b6e5d530b2cd78a";
-      file = "pcre/CVE-2016-1283.patch";
-      sha256 = "d133102d68c9f95aec3ff25afcc715294ee9a3e420e8a6529fac1b602fe2af36";
-    })
     (fetchTritonPatch {
       rev = "f595acad67433d7ac50f03c05b6e5d530b2cd78a";
       file = "pcre/head-overflow-r1636.patch";

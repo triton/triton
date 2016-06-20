@@ -1200,6 +1200,16 @@ intltool = callPackage ../all-pkgs/intltool { };
 
 iotop = pkgs.pythonPackages.iotop;
 
+iperf = callPackage ../all-pkgs/iperf { };
+
+iperf_2 = callPackageAlias "iperf" {
+  channel = "2";
+};
+
+iperf_3 = callPackageAlias "iperf" {
+  channel = "3";
+};
+
 ipfs = pkgs.goPackages.ipfs.bin // { outputs = [ "bin" ]; };
 
 ipfs-hasher = callPackage ../all-pkgs/ipfs-hasher { };
@@ -3454,10 +3464,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  ipad_charge = callPackage ../tools/misc/ipad_charge { };
 #
-  iperf2 = callPackage ../tools/networking/iperf/2.nix { };
-  iperf3 = callPackage ../tools/networking/iperf/3.nix { };
-  iperf = callPackageAlias "iperf3" { };
-
 #  ipmiutil = callPackage ../tools/system/ipmiutil {};
 #
 #  ipmiview = callPackage ../applications/misc/ipmiview {};

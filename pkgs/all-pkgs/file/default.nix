@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "file-5.27";
+  name = "file-5.28";
 
   src = fetchurl {
     url = "ftp://ftp.astron.com/pub/file/${name}.tar.gz";
-    multihash = "Qma4LVc63BjFA4dSDoQVnZCMrc9MVV2uUgC5MZcuRtNdsU";
-    sha256 = "19x16kxg0klks7v8v65z92ijkli4x5z2bk8yj0aljz0nn44xbry2";
+    multihash = "QmRwWmva3GTA6pM1YTnpLeGLHyqxobC3arVNuqyFsfZgy8";
+    sha256 = "04p0w9ggqq6cqvwhyni0flji1z0rwrz896hmhkxd2mc6dca5xjqf";
   };
 
   buildInputs = [

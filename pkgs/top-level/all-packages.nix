@@ -1997,6 +1997,8 @@ samba_client = callPackageAlias "samba_full" {
 
 scons = pkgs.pythonPackages.scons;
 
+screen = callPackage ../all-pkgs/screen { };
+
 scrot = callPackage ../all-pkgs/scrot { };
 
 # TODO SDL is a clusterfuck that needs to be fixed / renamed
@@ -4340,8 +4342,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  samplicator = callPackage ../tools/networking/samplicator { };
 #
 #  scanbd = callPackage ../tools/graphics/scanbd { };
-#
-  screen = callPackage ../tools/misc/screen { };
 #
 #  screen-message = callPackage ../tools/X11/screen-message { };
 #

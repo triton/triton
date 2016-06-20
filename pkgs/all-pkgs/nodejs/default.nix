@@ -11,7 +11,7 @@
 }:
 
 let
-  version = "6.2.1";
+  version = "6.2.2";
 
   dirUrls = [
     "https://nodejs.org/dist/v${version}"
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/node-v${version}.tar.xz") dirUrls;
     allowHashOutput = false;
-    sha256 = "dbaeb8fb68a599e5164b17c74f66d24f424ee4ab3a25d8de8a3c6808e5b42bfb";
+    sha256 = "2dfeeddba750b52a528b38a1c31e35c1fb40b19cf28fbf430c3c8c7a6517005a";
   };
 
   nativeBuildInputs = [
@@ -70,7 +70,10 @@ stdenv.mkDerivation rec {
       failEarly = true;
       sha256Urls = map (n: "${n}/SHASUMS256.txt.asc") dirUrls;
       #pgpsigSha256Urls = map (n: "${n}.asc") sha256Urls;
-      pgpKeyFingerprint = "DD8F 2338 BAE7 501E 3DD5  AC78 C273 792F 7D83 545D";
+      pgpKeyFingerprints = [
+        "DD8F 2338 BAE7 501E 3DD5  AC78 C273 792F 7D83 545D"
+        "B9AE 9905 FFD7 803F 2571  4661 B63B 535A 4C20 6CA9"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

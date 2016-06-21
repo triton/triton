@@ -8,12 +8,21 @@
 , util-linux_lib
 }:
 
+let
+  major = "1.7";
+  patch = "2";
+
+  version = "${major}.${patch}";
+
+  baseUrl = "mirror://kernel/linux/utils/cryptsetup/v${major}";
+in
 stdenv.mkDerivation rec {
-  name = "cryptsetup-1.7.1";
+  name = "cryptsetup-${version}";
 
   src = fetchurl {
-    url = "mirror://kernel/linux/utils/cryptsetup/v1.7/${name}.tar.xz";
-    sha256 = "1v0zj4181ahckn5hn95kg3zbqw944raz769wdam5cjwqriiqmp3k";
+    url = "${baseUrl}/${name}.tar.xz";
+    allowHashOutput = false;
+    sha256 = "dbb35dbf5f0c1749168c86c913fe98e872247bfc8425314b494c2423e7e43342";
   };
 
   buildInputs = [
@@ -29,6 +38,16 @@ stdenv.mkDerivation rec {
     "--with-crypto_backend=openssl"
     "--enable-python"
   ];
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrl = "${baseUrl}/${name}.tar.sign";
+      pgpDecompress = true;
+      pgpKeyFingerprint = "2A29 1824 3FDE 4664 8D06  86F9 D9B0 577B D93E 98FC";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "LUKS for dm-crypt";

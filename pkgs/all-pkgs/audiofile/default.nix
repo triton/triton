@@ -14,8 +14,11 @@ stdenv.mkDerivation rec {
   name = "audiofile-0.3.6";
 
   src = fetchurl {
-    url = "http://audiofile.68k.org/${name}.tar.gz";
-    sha256 = "0rb927zknk9kmhprd8rdr4azql4gn2dp75a36iazx2xhkbqhvind";
+    urls = [
+      "http://audiofile.68k.org/${name}.tar.xz"
+      "mirror://gentoo/distfiles/${name}.tar.xz"
+    ];
+    sha256 = "ea2449ad3f201ec590d811db9da6d02ffc5e87a677d06b92ab15363d8cb59782";
   };
 
   buildInputs = [

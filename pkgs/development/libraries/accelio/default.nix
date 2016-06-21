@@ -1,26 +1,37 @@
-{ stdenv, fetchFromGitHub, fetchTritonPatch, autoreconfHook, libibverbs, librdmacm, libevent
+{ stdenv
+, autoreconfHook
+, fetchFromGitHub
 
-# Linux only deps
-, numactl, kernel ? null
+, libevent
+, libibverbs
+, librdmacm
+, numactl
+
+, kernel ? null
 }:
 
+let
+  version = "1.6";
+in
 stdenv.mkDerivation rec {
   name = "accelio-${version}${stdenv.lib.optionalString (kernel != null) "-kernel"}";
-  version = "1.5";
 
   src = fetchFromGitHub {
     owner = "accelio";
     repo = "accelio";
-    rev = "v1.5";
-    sha256 = "0b05089964ea72d012ded2fe00c01f7f0bed114823d6b4675adefaff03be2b87";
+    rev = "v${version}";
+    sha256 = "89f8d22ef3fb4f0d05a780d56014f41c5f179bea87f62eebfd4c5cc90a239541";
   };
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "46327f20920c01ffb395dbd946cd7cffb67567b6";
-      file = "accelio/fix-printfs.patch";
-      sha256 = "2ab68c485eb00857a1977ba5c08d7656205ab3f2475031d1507816bb29120bc2";
-    })
+  nativeBuildInputs = [
+    autoreconfHook
+  ];
+
+  buildInputs = [
+    libevent
+    libibverbs
+    librdmacm
+    numactl
   ];
 
   postPatch = ''
@@ -28,7 +39,8 @@ stdenv.mkDerivation rec {
     sed -i 's,-g -ggdb -Wall -Werror,-O2,g' configure.ac
 
     # Don't build broken examples
-    sed -i '/AC_CONFIG_SUBDIRS(\[\(examples\|tests\).*/d' configure.ac
+    sed -i 's/AC_CONFIG_\(SUBDIRS\|FILES\)(\[\(examples\|tests\).*/AC_MSG_RESULT([Not building...])/' configure.ac
+    sed -i 's,subdirs.*\(examples\|tests\).*,AC_MSG_RESULT([Not building...]),g' configure.ac
 
     # Allow the installation of xio kernel headers
     sed -i 's,/opt/xio,''${out},g' src/kernel/xio/Makefile.in
@@ -37,9 +49,6 @@ stdenv.mkDerivation rec {
     sed -i '\,/etc/ld.so.conf.d/libxio.conf,d' src/usr/Makefile.am
     sed -i '\,/sbin/ldconfig,d' src/usr/Makefile.am
   '';
-
-  nativeBuildInputs = [ autoreconfHook ];
-  buildInputs = [ libevent libibverbs librdmacm numactl ];
 
   configureFlags = [
     "--enable-rdma"
@@ -55,12 +64,11 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     homepage = http://www.accelio.org/;
     description = "High-performance messaging and RPC library";
-    longDescription = ''
-      A high-performance asynchronous reliable messaging and RPC library
-      optimized for hardware acceleration.
-    '';
     license = licenses.bsd3;
-    platforms = with platforms; linux ++ freebsd;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

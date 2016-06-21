@@ -1231,6 +1231,8 @@ iso-codes = callPackage ../all-pkgs/iso-codes { };
 
 itstool = callPackage ../all-pkgs/itstool { };
 
+iw = callPackage ../all-pkgs/iw { };
+
 jam = callPackage ../all-pkgs/jam { };
 
 jansson = callPackage ../all-pkgs/jansson { };
@@ -8749,8 +8751,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  iomelt = callPackage ../os-specific/linux/iomelt { };
 #
 #  irqbalance = callPackage ../os-specific/linux/irqbalance { };
-#
-  iw = callPackage ../os-specific/linux/iw { };
 #
 #  jfbview = callPackage ../os-specific/linux/jfbview { };
 #

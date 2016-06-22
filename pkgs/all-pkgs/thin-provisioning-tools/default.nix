@@ -17,7 +17,7 @@ stdenv.mkDerivation {
     owner = "jthornber";
     repo = "thin-provisioning-tools";
     rev = "v${version}";
-    sha256 = "6553f888fbf265cf3e4f9b339fe5646693a5c20e53db46d3a2aa81d82452baeb";
+    sha256 = "25de728013ed4b64fe616bb7af79f6e432a9b90fa34682f0ae31cfcca2dd1e89";
   };
 
   nativeBuildInputs = [

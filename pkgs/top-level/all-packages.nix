@@ -1823,6 +1823,8 @@ pcsclite = callPackage ../all-pkgs/pcsclite { };
 
 perl = callPackage ../all-pkgs/perl { };
 
+pgbouncer = callPackage ../all-pkgs/pgbouncer { };
+
 pinentry = callPackage ../all-pkgs/pinentry { };
 
 pixman = callPackage ../all-pkgs/pixman { };

@@ -1,18 +1,23 @@
-{ stdenv, fetchurl }:
+{ stdenv
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
-  name = "webrtc-audio-processing-0.1";
+  name = "webrtc-audio-processing-0.3";
 
   src = fetchurl {
-    url = "http://freedesktop.org/software/pulseaudio/webrtc-audio-processing/${name}.tar.xz";
-    sha256 = "1p7yg8n39wwdfr52br2dq3bh8iypfx9md99mh1i9g2v8qbwm4jzd";
+    url = "https://freedesktop.org/software/pulseaudio/webrtc-audio-processing/${name}.tar.xz";
+    sha256 = "756e291d4f557d88cd50c4fe3b8454ec238362d22cedb3e6173240d90f0a80fa";
   };
 
   meta = with stdenv.lib; {
     homepage = http://www.freedesktop.org/software/pulseaudio/webrtc-audio-processing;
     description = "a more Linux packaging friendly copy of the AudioProcessing module from the WebRTC project";
     license = licenses.bsd3;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

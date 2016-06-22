@@ -51,22 +51,21 @@ let
     optionalString;
   inherit (builtins.getAttr resampleMethod (import ./resample-methods.nix))
     resampleMethodString;
-in
 
-let
   libOnly = prefix == "lib";
+
+  version = "9.0";
 in
 
 assert resampleMethodString != null;
 
 stdenv.mkDerivation rec {
   name = "${prefix}pulseaudio-${version}";
-  version = "8.0";
 
-  src = fetchurl {
-    url = "http://freedesktop.org/software/pulseaudio/releases/"
-        + "pulseaudio-${version}.tar.xz";
-    sha256 = "128rrlvrgb4ia3pbzipf5mi6nvrpm6zmxn5r3bynqiikhvify3k9";
+  src = fetchurl rec {
+    url = "https://freedesktop.org/software/pulseaudio/releases/pulseaudio-${version}.tar.xz";
+    sha1Url = "${url}.sha1";
+    sha256 = "c3d3d66b827f18fbe903fe3df647013f09fc1e2191c035be1ee2d82a9e404686";
   };
 
   nativeBuildInputs = [
@@ -183,6 +182,7 @@ stdenv.mkDerivation rec {
     "--with-access-group=audio"
     "--with-systemduserunitdir=\${out}/lib/systemd/user"
     "--with-bash-completion-dir=\${out}/share/bash-completions/completions"
+    "--enable-memfd"
   ] ++ optionals (libOnly) [
     "--disable-x11"
     "--disable-alsa"

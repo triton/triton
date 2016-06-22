@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
     owner = "ninja-build";
     repo = "ninja";
     rev = "v${version}";
-    sha256 = "e16e452272dd651e5156e25fa88152c2650b4e7e62caaeaaf00c5043ff999ed9";
+    sha256 = "ea115372745177ec1e55982fb48cd1b4fc8fb28080fb2d59d0e728d00f9c0e3f";
   };
 
   nativeBuildInputs = [

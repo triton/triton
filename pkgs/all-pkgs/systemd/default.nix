@@ -71,7 +71,7 @@ stdenv.mkDerivation rec {
     owner = "triton";
     repo = "systemd";
     rev = "70a6784be6cdc281f78a0dcdb56aaa44edb09f75";
-    sha256 = "645f2f15250c5244bc514c8e6a5b0e984521e9455fd85d2708727005eb221ea8";
+    sha256 = "79c48bb9cf7ee5b7218c3f512a95cc5f495997fab1e81837ad664f8bc4036198";
   };
 
   nativeBuildInputs = [

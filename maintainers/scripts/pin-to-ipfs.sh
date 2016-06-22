@@ -18,7 +18,12 @@ while [ ! -d "$TOPDIR/pkgs" ]; do
   TOPDIR="$(dirname "$TOPDIR")"
 done
 
-HASHES=($(grep -r '"Qm' "$TOPDIR/pkgs" | sed 's,.*"\(Qm[a-zA-Z0-9]*\)".*,\1,g'))
+HASHES=($(grep -r '"Qm' "$TOPDIR/pkgs" | sed 's,.*"\(Qm[a-zA-Z0-9]*\)".*,\1,g' | sort | uniq))
+
+declare -A current
+while read h; do
+  current["$h"]=1
+done < <(ipfs pin ls -t recursive | awk '{print $1}' | sort | uniq)
 
 fetch() {
   ipfs pin add "$1"
@@ -26,6 +31,10 @@ fetch() {
 
 ARGS=()
 for HASH in "${HASHES[@]}"; do
-  ARGS+=("-" "$HASH" "fetch" "$HASH")
+  if [ "${current[$HASH]}" != "1" ]; then
+    ARGS+=("-" "$HASH" "fetch" "$HASH")
+  fi
 done
-concurrent "${ARGS[@]}"
+if [ "${#ARGS[@]}" -gt "0" ]; then
+  concurrent "${ARGS[@]}"
+fi

@@ -13,7 +13,7 @@ buildPythonPackage {
     owner = "matrix-org";
     repo = "matrix-angular-sdk";
     rev = "v${version}";
-    sha256 = "cdf6ca2afcafe26b12186a02f5e0c00ffd20aa0fda7f38da1837c17df0406674";
+    sha256 = "fb46ea9a24fd067ef3723b3db05cc19ba3f10e097353f9c8bf2783fbc63a8938";
   };
 
   meta = with stdenv.lib; {

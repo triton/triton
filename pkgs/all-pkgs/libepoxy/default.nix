@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     owner = "anholt";
     repo = "libepoxy";
     rev = "v${version}";
-    sha256 = "84676bff4619b55d2c2d277b17868852ab86e1e65069dfcf31bde76b502dea22";
+    sha256 = "494f0e4ea5e0fa2d785ff3bb0aece4e5e2ef5cfe1b8a85497f6374da14d0f1fa";
   };
 
   nativeBuildInputs = [

@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     owner = "libical";
     repo = "libical";
     rev = "v${version}";
-    sha256 = "a8e452c7f5bd762aeccbc500b264f86cc802a1fb15d5e6f862b8279d0e521c4d";
+    sha256 = "4432bbe74cbc778f8d40df4d1d419a8154f2ccd329508cd55f267d2622e7f75a";
   };
 
   nativeBuildInputs = [

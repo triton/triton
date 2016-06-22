@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     url = "http://www.argyllcms.com/Argyll_V${version}_src.zip";
     purgeTimestamps = true;
-    sha256 = "02f9ef76bf0050233d388acb073e50e26c8e5fd28104caf94ef280e2da273fb3";
+    sha256 = "653503de46188a3d4f197c3844f11a68923c674bb2d826c5c505eaf5a4b790df";
     # The argyllcms web server doesn't like curl ...
     curlOpts = "--user-agent 'Mozilla/5.0'";
   };

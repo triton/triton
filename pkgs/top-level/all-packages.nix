@@ -2084,13 +2084,15 @@ subversion_1_8 = callPackageAlias "subversion" {
 
 sushi = callPackage ../all-pkgs/sushi { };
 
-swig_2 = callPackage "swig" {
+swig_2 = callPackageAlias "swig" {
   channel = "2";
 };
-swig_3 = callPackage ../all-pkgs/swig {
+
+swig_3 = callPackageAlias "swig" {
   channel = "3";
 };
-swig = callPackageAlias "swig_3" { };
+
+swig = callPackage ../all-pkgs/swig { };
 
 sydent = pkgs.python2Packages.sydent;
 

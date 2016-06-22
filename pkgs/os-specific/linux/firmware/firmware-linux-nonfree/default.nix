@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     owner = "wkennington";
     repo = "linux-firmware";
     rev = "9580f45dc5309a88d892605b2527c3905e301add";
-    sha256 = "b84743eec589aca6f63c594d986edbd115ab2d84afafea4d113ce45103a66d1a";
+    sha256 = "7ada34d25e7fcab2301d07c93812d3c3648f15c509cbe82f3cc50bb6bea684bd";
   };
 
   preInstall = ''

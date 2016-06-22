@@ -1,20 +1,20 @@
 { stdenv
-, fetchFromGitHub
+, fetchurl
 }:
 
+let
+  version = "0.4.0";
+in
 stdenv.mkDerivation rec {
   name = "brotli-${version}";
-  version = "0.3.0";
 
-  src = fetchFromGitHub {
-    owner = "google";
-    repo = "brotli";
-    rev = "v" + version;
-    sha256 = "ff59abd8c28851b2233b31b4408a45c88505bf6196acdcab77a26963533d0108";
+  src = fetchurl {
+    url = "https://github.com/google/brotli/releases/download/v${version}/Brotli-${version}.tar.gz";
+    sha256 = "d6a06624eece91f54e4b22b8088ce0090565c7d3f121386dc007b6d2723397ac";
   };
 
-  postUnpack = ''
-    sourceRoot="$sourceRoot/tools"
+  postPatch = ''
+    cd tools
   '';
 
   installPhase = ''
@@ -28,6 +28,7 @@ stdenv.mkDerivation rec {
     license = licenses.asl20;
     maintainers = with maintainers; [
       codyopel
+      wkennington
     ];
     platforms = with platforms;
       i686-linux

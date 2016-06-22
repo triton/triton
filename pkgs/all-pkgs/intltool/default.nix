@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://launchpad.net/intltool/trunk/${version}/+download/${name}.tar.gz";
+    multihash = "QmYHDppGQTJfhnQzENFcLPD7iRmqWM9rbqZVtVeHjpZZVu";
     sha256 = "1karx4sb7bnm2j67q0q74hspkfn6lqprpy5r99vkn5bb36a4viv7";
   };
 

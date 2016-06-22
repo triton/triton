@@ -3,12 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "fuse-2.9.6";
+  name = "fuse-2.9.7";
   
   src = fetchurl {
     url = "https://github.com/libfuse/libfuse/releases/download/${name}/${name}.tar.gz";
     allowHashOutput = false;
-    sha256 = "0cb48bbc7106632d15a0c6bb582496c9884b869e329428891fe075a9e916f16b";
+    sha256 = "832432d1ad4f833c20e13b57cf40ce5277a9d33e483205fc63c78111b3358874";
   };
 
   preConfigure = ''

@@ -1,17 +1,25 @@
-{ stdenv, fetchgit }:
+{ stdenv
+, fetchgit
+}:
 
 stdenv.mkDerivation {
-  name = "gnulib-0.1-357-gffe6467";
+  name = "gnulib-2016-06-20";
 
-  phases = ["unpackPhase" "installPhase"];
+  phases = [
+    "unpackPhase"
+    "installPhase"
+  ];
 
   src = fetchgit {
     url = "http://git.savannah.gnu.org/r/gnulib.git";
-    rev = "92b60e61666f008385d9b7f7443da17c7a44d1b1";
-    sha256 = "082k4ng7yax68if4byk4bqvs8s86gr1wvn6i8vzya6hi8vmyvflk";
+    rev = "0ba497e828236d81d79fd0bcbdca0fb5c37e4525";
+    sha256 = "1w4slirrysbhq998c9b10v2lmkqrdm354n2k0irfqdhn2zp372ha";
   };
 
-  installPhase = "mkdir -p $out; mv * $out/";
+  installPhase = ''
+    mkdir -p $out
+    mv * $out
+  '';
 
   meta = {
     homepage = "http://www.gnu.org/software/gnulib/";

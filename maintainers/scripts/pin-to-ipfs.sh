@@ -41,11 +41,11 @@ fetch() {
 }
 
 ARGS=()
-for HASH in "${HASHES[@]}"; do
+while read HASH; do
   if [ "${current[$HASH]}" != "1" ]; then
     ARGS+=("-" "$HASH" "fetch" "$HASH")
   fi
-done
+done < <(cat pin-to-ipfs-hashes)
 if [ "${#ARGS[@]}" -gt "0" ]; then
   concurrent "${ARGS[@]}"
 fi

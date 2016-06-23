@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+set -e
+set -o pipefail
+
 cd "$(dirname "$(readlink -f "$0")")"
 
 cleanup() {
@@ -18,7 +21,15 @@ while [ ! -d "$TOPDIR/pkgs" ]; do
   TOPDIR="$(dirname "$TOPDIR")"
 done
 
-HASHES=($(grep -r '"Qm' "$TOPDIR/pkgs" | sed 's,.*"\(Qm[a-zA-Z0-9]*\)".*,\1,g' | sort | uniq))
+cp pin-to-ipfs-hashes "$TMPDIR/hashes"
+REV="$(cat pin-to-ipfs-rev)"
+pushd "$TOPDIR" >/dev/null
+while read obj; do
+  git cat-file --batch | sed -n 's,.*"\(Qm[a-zA-Z0-9]*\)".*,\1,p' >> "$TMPDIR/hashes"
+done < <(git rev-list "$REV"..HEAD --objects | grep '\.nix$' | awk '{print $1}')
+popd >/dev/null
+cat "$TMPDIR/hashes" | sort | uniq > pin-to-ipfs-hashes
+git rev-list HEAD^..HEAD > pin-to-ipfs-rev
 
 declare -A current
 while read h; do

@@ -12,7 +12,7 @@ stdenv.mkDerivation {
     owner = "bohoomil";
     repo = "fontconfig-ultimate";
     rev = version;
-    sha256 = "b490bebc24fc19dcc5d24b5a878a0d850edbc1c47b550f9b5a190cd190e647e7";
+    sha256 = "bf329d5575fbea375393119f4cdbe8c9e605f7826a033ee7aeaa5f01aec71f63";
   };
 
   installPhase = ''

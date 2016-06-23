@@ -77,6 +77,12 @@ in
       KERNEL=="nvidia_uvm", RUN+="${pkgs.stdenv.shell} -c 'mknod -m 666 /dev/nvidia-uvm c $(grep nvidia-uvm /proc/devices | cut -d \  -f 1) 0'"
     '';
 
+    services.xserver.deviceSection =
+      /* Some laptops with nvida gpus cannot change screen brightness
+         after X.Org has been started without this option enabled */ ''
+        Option "RegistryDwords" "EnableBrightnessControl=1"
+      '';
+
     services.xserver.drivers = singleton {
       name = "nvidia";
       modules = [

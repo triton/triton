@@ -1066,10 +1066,10 @@ let
   };
 
   gopsutil = buildFromGitHub {
-    rev = "v2.1";
+    rev = "1.0.0";
     owner  = "shirou";
     repo   = "gopsutil";
-    sha256 = "1bq3fpw0jpjnkla2krf9i612v8k4kyfm0g1z7maikrnxhfiza4lc";
+    sha256 = "76f0b4db2d01c2f4c13cb6cecb56c6176b64702c4d1ae40be117f0753d984a85";
   };
 
   goskiplist = buildFromGitHub {
@@ -1197,11 +1197,11 @@ let
   };
 
   go-github = buildFromGitHub {
-    date = "2016-06-15";
-    rev = "07995e49c22dcb1e372c88ff12793b0194433e1c";
+    date = "2016-06-19";
+    rev = "1c08387e4c91df86627d0853f155a4efc8cb8a2d";
     owner = "google";
     repo = "go-github";
-    sha256 = "1rvk6bi5fls3r0q2x9mgv9jx9sgm191yabm0cfkxz3fw4v7vnkbg";
+    sha256 = "7438d37b5455d8f57f456bb588705355b65c12a75ca2adafaf2cb019ae859031";
     buildInputs = [ oauth2 ];
     propagatedBuildInputs = [ go-querystring ];
   };
@@ -1639,11 +1639,11 @@ let
   };
 
   hil = buildFromGitHub {
-    date = "2016-06-12";
-    rev = "7130f7330953adacbfb4ca0ad4b14b806bce3762";
+    date = "2016-04-08";
+    rev = "6215360e5247e7c4bdc317a5f95e3fa5f084a33b";
     owner  = "hashicorp";
     repo   = "hil";
-    sha256 = "0rwyjn15vq0fk02vj1ykr68ar36kvhpm6lyq6d7s4bck5b8gxiyj";
+    sha256 = "6b3ab530f6980279edb5a1994226adefc377b70aa3e993b5d29c7d498d5cdbd4";
     propagatedBuildInputs = [
       mapstructure
       reflectwalk
@@ -2005,11 +2005,11 @@ let
   };
 
   muxado = buildFromGitHub {
-    date = "2016-06-21";
-    rev = "ae9295605c1ab40eda134187357025d368f68c84";
+    date = "2014-03-12";
+    rev = "f693c7e88ba316d1a0ae3e205e22a01aa3ec2848";
     owner  = "inconshreveable";
     repo   = "muxado";
-    sha256 = "0j0imiwzcp6fykd6l3z0jknnq14kzyab9j3qym8r6rf03v1nd1r8";
+    sha256 = "db9a65b811003bcb48d1acefe049bb12c8de232537cf07e1a4a949a901d807a2";
   };
 
   mysql = buildFromGitHub {

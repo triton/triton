@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
     owner = "zeroc-ice";
     repo = "ice";
     rev = "v${version}";
-    sha256 = "d228150a18b25b003269219bcd9699a14ac9ed93241dcd154045cf8ffd9f61b3";
+    sha256 = "0a78df4ec3b6a04fe23f36e722be5965b54200e5f1042066ddfc5dbecbd5399f";
   };
 
   buildInputs = [

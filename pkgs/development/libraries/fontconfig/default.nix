@@ -13,20 +13,21 @@
 */
 
 let
-  configVersion = "2.12"; # bump whenever fontconfig breaks compatibility with older configurations
+  configVersion = "2.11"; # bump whenever fontconfig breaks compatibility with older configurations
 in
 stdenv.mkDerivation rec {
-  name = "fontconfig-2.12.0";
+  name = "fontconfig-2.11.1";
 
   src = fetchurl {
     urls = [
       "https://www.freedesktop.org/software/fontconfig/release/${name}.tar.bz2"
       "http://fontconfig.org/release/${name}.tar.bz2"
     ];
-    sha256 = "b433e4efff1f68fdd8aac221ed1df3ff1e580ffedbada020a703fe64017d8224";
+    sha256 = "16baa4g5lswkyjlyf1h5lwc0zjap7c4d8grw79349a5w6dsl8qnw";
   };
 
   patches = [
+    ./fix-fc-cache.patch  # Remove in 2.12+
     (substituteAll {
       src = ./config-compat.patch;
       inherit configVersion;

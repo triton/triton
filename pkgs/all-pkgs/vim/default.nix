@@ -20,7 +20,7 @@ in
 
 stdenv.mkDerivation rec {
   name = "vim-${version}";
-  version = "7.4.1939";
+  version = "7.4.1952";
 
   src = fetchFromGitHub {
     owner = "vim";

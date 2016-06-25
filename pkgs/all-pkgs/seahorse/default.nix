@@ -26,13 +26,14 @@ in
 
 stdenv.mkDerivation rec {
   name = "seahorse-${version}";
-  versionMajor = "3.18";
+  versionMajor = "3.20";
   versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/seahorse/${versionMajor}/${name}.tar.xz";
-    sha256 = "0rxnq47xcagmpqb63g49ay3lfiyjjnmmiay9yifx5jn406d8h32k";
+    sha256Url = "mirror://gnome/sources/seahorse/${versionMajor}/${name}.sha256sum";
+    sha256 = "e2b07461ed54a8333e5628e9b8e517ec2b731068377bf376570aad998274c6df";
   };
 
   nativeBuildInputs = [

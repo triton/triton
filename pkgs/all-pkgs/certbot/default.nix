@@ -32,7 +32,7 @@ buildPythonPackage rec {
     owner = "certbot";
     repo = "certbot";
     rev = "v${version}";
-    sha256 = "757dd0fdfa4eb05343bf08737ab579c705663c9e12e44af193f1c97c7c9bdf98";
+    sha256 = "a49c117446578bf2557f8a5d2ceb6d546ef690c19d9a3e812759b8e7c052a48a";
   };
 
   pythonPath = [

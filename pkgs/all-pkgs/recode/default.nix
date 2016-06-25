@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
     owner = "pinard";
     repo = "Recode";
     rev = "2d7092a9999194fc0e9449717a8048c8d8e26c18";
-    sha256 = "8ed71ccf4a897316b88ac2e1361f5391c5a55d0739c872a84a1fe4bba1329e0d";
+    sha256 = "b77e001979e55091e5bed2981e2355a70822d7dee568cce239587ea279ca4bd1";
   };
 
   nativeBuildInputs = [

@@ -15,10 +15,10 @@
 let
   debian-patches = stdenv.mkDerivation rec {
     name = "vorbis-tools-debian-patches-${version}";
-    version = "1.4.0-8";
+    version = "1.4.0-10";
     src = fetchzip {
       url = "mirror://debian/pool/main/v/vorbis-tools/vorbis-tools_${version}.debian.tar.xz";
-      sha256 = "733fb214874c35a535b2c5ac391bbf4059ea9bbad4edda75bdca828781eddbc8";
+      sha256 = "4310190197e98011a6190d640c905d15561dce269dd5c75b22a4416c5494fa6f";
     };
     doConfigure = false;
     doBuild = false;

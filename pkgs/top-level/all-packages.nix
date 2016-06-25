@@ -898,6 +898,8 @@ flex = callPackage ../all-pkgs/flex { };
 
 freeglut = callPackage ../all-pkgs/freeglut { };
 
+freetype = callPackage ../all-pkgs/freetype { };
+
 freetype2-infinality-ultimate =
   callPackage ../all-pkgs/freetype2-infinality-ultimate { };
 
@@ -6584,8 +6586,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  freealut = callPackage ../development/libraries/freealut { };
 #
 #  freenect = callPackage ../development/libraries/freenect { };
-
-  freetype = callPackage ../development/libraries/freetype { };
 
   frei0r = callPackage ../development/libraries/frei0r { };
 

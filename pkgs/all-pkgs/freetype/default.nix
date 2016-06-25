@@ -11,7 +11,6 @@
 
 , infinality ? true
   , freetype2-infinality-ultimate
-, patentEncumbered ? true
 
 , glib /* passthru only */
 }:
@@ -49,7 +48,6 @@ stdenv.mkDerivation rec {
     for i in '${freetype2-infinality-ultimate}/share/freetype2-infinality-ultimate/'*'.patch' ; do
       patches+=" $i"
     done
-    echo
   '';
 
   configureFlags = [

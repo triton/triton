@@ -185,6 +185,7 @@ rec {
   ];
 
   savannah = [
+    https://savannah.nongnu.org/download
     http://download.savannah.gnu.org/releases
     http://download-mirror.savannah.gnu.org/releases
   ];

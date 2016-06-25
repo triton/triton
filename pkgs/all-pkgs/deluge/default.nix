@@ -38,7 +38,7 @@ buildPythonPackage rec {
     url = "git://git.deluge-torrent.org/deluge";
     rev = "7e229ceb2f0bd119f307751bf55106bfec592297";
     branchName = "develop";
-    sha256 = "1ai34a1v2c35d0l9cabpp6f5x5acjpjrlnnvplvsw3z637s043jz";
+    sha256 = "01xjh4xn0swhpwn4arah7mr5hphp9b0vc1zhks2szmmd0y617189";
   };
 
   nativeBuildInputs = [

@@ -3,7 +3,20 @@
 , gettext
 
 , ncurses
+
+, configuration ? ''
+  " Disable vi compatibility if progname ends in `vim`
+  "   e.g. vim or gvim
+  if v:progname =~? 'vim''$'
+    set nocompatible
+  endif
+''
 }:
+
+let
+  inherit (stdenv.lib)
+    optionalString;
+in
 
 stdenv.mkDerivation rec {
   name = "vim-${version}";
@@ -30,7 +43,11 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = ''
-    ln -s $out/bin/vim $out/bin/vi
+    ln -sv $out/bin/vim $out/bin/vi
+  '' + optionalString (configuration != null) ''
+    cat > $out/share/vim/vimrc <<'CONFIGURATION'
+    ${configuration}
+    CONFIGURATION
   '';
 
   meta = with stdenv.lib; {

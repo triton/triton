@@ -796,8 +796,6 @@ fcgi = callPackage ../all-pkgs/fcgi { };
 
 feh = callPackage ../all-pkgs/feh { };
 
-fstrm = callPackage ../all-pkgs/fstrm { };
-
 ffmpeg_generic = callPackage ../all-pkgs/ffmpeg {
   # The following are disabled by default
   celt = null;
@@ -899,6 +897,8 @@ flac = callPackage ../all-pkgs/flac { };
 flex = callPackage ../all-pkgs/flex { };
 
 freeglut = callPackage ../all-pkgs/freeglut { };
+
+fstrm = callPackage ../all-pkgs/fstrm { };
 
 fuse = callPackage ../all-pkgs/fuse { };
 

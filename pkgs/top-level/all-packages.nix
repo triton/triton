@@ -898,6 +898,9 @@ flex = callPackage ../all-pkgs/flex { };
 
 freeglut = callPackage ../all-pkgs/freeglut { };
 
+freetype2-infinality-ultimate =
+  callPackage ../all-pkgs/freetype2-infinality-ultimate { };
+
 fstrm = callPackage ../all-pkgs/fstrm { };
 
 fuse = callPackage ../all-pkgs/fuse { };

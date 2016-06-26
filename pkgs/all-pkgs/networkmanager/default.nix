@@ -7,6 +7,7 @@
 , avahi
 , bind
 , bluez
+, coreutils
 , dbus
 , dbus-glib
 , dnsmasq
@@ -15,6 +16,7 @@
 , gnused
 , gnutls
 , gobject-introspection
+#, inetutils
 , iptables
 , libgcrypt
 , libgudev
@@ -36,8 +38,8 @@
 , xz
 
 , dhcp-client ? "dhclient"
-  , dhcp ? null
-  , dhcpcd ? null
+  , dhcp
+  , dhcpcd
 }:
 
 let
@@ -53,16 +55,16 @@ assert dhcp-client == "dhcpcd" -> dhcpcd != null;
 
 stdenv.mkDerivation rec {
   name = "network-manager-${version}";
-  versionMajor = "1.0";
-  versionMinor = "12";
+  versionMajor = "1.2";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl rec {
     url = "mirror://gnome/sources/NetworkManager/${versionMajor}/"
-        + "NetworkManager-${version}.tar.xz";
+      + "NetworkManager-${version}.tar.xz";
     sha256Url = "mirror://gnome/sources/NetworkManager/${versionMajor}/"
-              + "NetworkManager-${version}.sha256sum";
-    sha256 = "3a470f8c60109b1acb5784ddc2423501706b5fe34c793a6faee87e591eb04a9e";
+      + "NetworkManager-${version}.sha256sum";
+    sha256 = "41d8082e027f58bb5fa4181f93742606ab99c659794a18e2823eff22df0eecd9";
   };
 
   nativeBuildInputs = [
@@ -82,6 +84,7 @@ stdenv.mkDerivation rec {
     gnused
     gnutls
     gobject-introspection
+    #inetutils
     iptables
     libgcrypt
     libgudev
@@ -107,27 +110,39 @@ stdenv.mkDerivation rec {
     dhcpcd
   ];
 
-  patches = [
+  /*patches = [
     (fetchTritonPatch {
       rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
       file = "networkmanager/networkmanager-platform.patch";
       sha256 = "45d0235d3af0b8e471c2c7e14eb5bfc9e8029c6f5878c998e5273e84afab3e15";
     })
-  ];
+  ];*/
 
   preConfigure =
-    /* fix hardcoded `mobprobe` search path */ ''
+    /* FIXME: don't use an impure runtime path
+       fix hardcoded `mobprobe` search path */ ''
       sed -i src/NetworkManagerUtils.c \
         -e 's,/sbin/modprobe,/run/current-system/sw/sbin/modprobe,'
-    '' + /* fix hardcoded paths in udev rules */ ''
+    '' + /* Fix hardcoded paths in source */ /*''
+      sed -i src/devices/nm-device.c \
+        -e 's,/usr/bin/ping,${inetutils}/bin/ping,'
+    '' + *//* fix hardcoded paths in udev rules */ ''
       sed -i data/84-nm-drivers.rules \
         -e 's,/bin/sh,${stdenv.shell},'
       sed -i data/85-nm-unmanaged.rules \
         -e 's,/bin/sh,${stdenv.shell},' \
         -e 's,/usr/sbin/ethtool,${ethtool}/sbin/ethtool,' \
         -e 's,/bin/sed,${gnused}/bin/sed,'
+    '' + /* Fix hardcoded paths in configure script */ ''
+      sed -i configure{,.ac} \
+        -e 's,/usr/bin/uname,${coreutils}/bin/uname,'
+        #-e 's,/usr/bin/file,,'
     '' + ''
-      configureFlagsArray+=("--with-udev-dir=$out/lib/udev")
+      configureFlagsArray+=(
+        "--with-udev-dir=$out/lib/udev"
+        "--with-systemunitdir=$out/etc/systemd/system"
+        "--with-dbus-sys-dir=$out/etc/dbus-1/system.d"
+      )
     '';
 
   configureFlags = [
@@ -146,8 +161,6 @@ stdenv.mkDerivation rec {
     "--enable-wifi"
     (enFlag "introspection" (gobject-introspection != null) null)
     "--disable-qt"
-    # TODO: wimax support, requires intel wimax sdk
-    "--disable-wimax"
     #"--enable-teamdctl"
     (enFlag "polkit" (polkit != null) null)
     (enFlag "polkit-agent" (polkit != null) null)
@@ -167,28 +180,36 @@ stdenv.mkDerivation rec {
 
     #"--with-config-plugins-default"
     "--with-wext"
-    "--with-udev-dir=$(out)/lib/udev"
-    "--with-systemunitdir=$(out)/etc/systemd/system"
+    #"--without-libnm-glib"
+    #"--with-hostname-persist=default"
+    "--with-systemd-journal"
+    #"--with-logging-backend"
+    "--with-systemd-logind"
+    "--without-consolekit"
     "--with-session-tracking=systemd"
     "--with-suspend-resume=systemd"
     #"--with-selinux"
+    #"--with-libaudit=yes-disabled-by-default"
     "--with-crypto=nss"
+    #"--with-dbus-sys-dir"
     # TODO: make sure this path is correct
-    "--with-dbus-sys-dir=\${out}/etc/dbus-1/system.d"
     #"--with-pppd-plugin-dir"
     "--with-pppd=${ppp}/bin/pppd"
-    #"--with-pppoe"
     "--with-modem-manager-1"
     (wtFlag "dhclient" (dhcp-client == "dhclient") "${dhcp}/bin/dhclient")
     (wtFlag "dhcpcd" (dhcp-client == "dhcpcd") "${dhcpcd}/sbin/dhcpcd")
     "--with-resolvconf=${openresolv}/sbin/resolvconf"
-    #"--with-netconfig"
+    "--without-netconfig"
     "--with-iptables=${iptables}/bin/iptables"
     "--with-dnsmasq=${dnsmasq}/bin/dnsmasq"
-    #"--with-system-ca-path"
+    #"--with-dnssec-trigger=/path/to/dnssec-trigger-script"
+    #"--with-system-ca-path=/path/"
+    # FIXME: fix impure path
     "--with-kernel-firmware-dir=/run/current-system/firmware"
     (wtFlag "libsoup" (libsoup != null) null)
+    "--with-nmcli"
     "--with-nmtui"
+    "--with-more-asserts=0"
     "--without-valgrind"
     "--with-tests"
     "--without-valgrind-suppressions"
@@ -198,6 +219,7 @@ stdenv.mkDerivation rec {
     installFlagsArray+=(
       "sysconfdir=$out/etc"
       "localstatedir=$out/var"
+      "runstatedir=$out/var/run"
     )
   '';
 
@@ -210,9 +232,9 @@ stdenv.mkDerivation rec {
     /* systemd in Triton-LINUX doesn't use `systemctl enable`, so we
        need to establish aliases ourselves. */ ''
       mkdir -pv $out/etc/systemd/system
-      ln -sv \
-        $out/lib/systemd/system/NetworkManager.service \
-        $out/etc/systemd/system/networkmanager.service
+      #ln -sv \
+      #  $out/lib/systemd/system/NetworkManager.service \
+      #  $out/etc/systemd/system/networkmanager.service
       ln -sv \
         $out/lib/systemd/system/NetworkManager.service \
         $out/etc/systemd/system/dbus-org.freedesktop.NetworkManager.service
@@ -227,7 +249,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    description = "Network configuration and management tool";
+    description = "https://wiki.gnome.org/Projects/NetworkManager";
     homepage = http://projects.gnome.org/NetworkManager/;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [

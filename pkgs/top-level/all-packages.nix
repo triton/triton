@@ -1715,9 +1715,6 @@ net-tools = callPackage ../all-pkgs/net-tools { };
 
 nettle = callPackage ../all-pkgs/nettle { };
 
-# stripped down, needed by steam
-networkmanager098 = callPackage ../all-pkgs/networkmanager/0.9.8.nix { };
-
 networkmanager = callPackage ../all-pkgs/networkmanager { };
 
 networkmanager-openvpn = callPackage ../all-pkgs/networkmanager-openvpn { };

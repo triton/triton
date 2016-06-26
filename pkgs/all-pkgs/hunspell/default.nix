@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "hunspell";
     repo = "hunspell";
     rev = "v${version}";
-    sha256 = "26595c2ba3270ecb7977cfb8f107493844be89c29f066b8d9bf081aabf10d9ad";
+    sha256 = "87a69146d75c74a54f6705828b40d4d627139501d7f58ea862c2d4431f2857ad";
   };
 
   nativeBuildInputs = [

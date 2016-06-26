@@ -11,12 +11,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "feh-2.16";
+  name = "feh-2.16.1";
 
   src = fetchurl {
     url = "https://feh.finalrewind.org/${name}.tar.bz2";
     allowHashOutput = false;
-    sha256 = "a2639dec600ffac3ac3d3ffb4254bef7385082b9c417bef72167b7b258778e4c";
+    sha256 = "6e55289a3be4495a437a0b037c7b5e86edf64ec74ab63d2d26fa50df1b62b6b3";
   };
 
   nativeBuildInputs = [

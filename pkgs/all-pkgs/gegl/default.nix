@@ -25,15 +25,17 @@
 , vala
 }:
 
+let
+  versionMajor = "0.3";
+  versionMinor = "8";
+  version = "${versionMajor}.${versionMinor}";
+in
 stdenv.mkDerivation rec {
   name = "gegl-${version}";
-  versionMajor = "0.3";
-  versionMinor = "6";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/gegl/${versionMajor}/${name}.tar.bz2";
-    sha256 = "70e7fbbc74b9a5d7a8428d49f282855c8b14b4ea7c6a3cb83cb7f2291c6da722";
+    sha256 = "06ca9e67a59da026eb941b9d323269d7c19a922f1e478acdd3791a0eef8b229b";
   };
 
   nativeBuildInputs = [

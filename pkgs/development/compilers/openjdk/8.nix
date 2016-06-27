@@ -19,7 +19,7 @@ let
       throw "openjdk requires i686-linux or x86_64 linux";
 
   update = "112";
-  build = "00";
+  build = "01";
   baseurl = "http://hg.openjdk.java.net/jdk8u/jdk8u";
   repover = "jdk8u${update}-b${build}";
 
@@ -33,14 +33,14 @@ let
     name = "openjdk-8u${update}b${build}";
 
     srcs = [
-      (fetchjava "" "d83d601264d5bb028a87ca5266bc29167d256df339581f04172dcd7320ed70bb")
-      (fetchjava "langtools" "087c8255442ebd7cf1805b8c60d27acfae47f3b148c6f1cf41f4dd8b73c5bdb6")
-      (fetchjava "hotspot" "314d5c5e1697c1fecd4fb59f8bff7890bae71a624d29a69ff7ed0fb207bcbeee")
-      (fetchjava "corba" "d57f7b4a43090e1919d62fa00d429606a33ce5c64c6613debf4a6c23a272f7be")
-      (fetchjava "jdk" "664ced5f3bba7aac33e7bb1e9f7da9281bc84a63ea61a820c0b3b6b0c3a036b6")
-      (fetchjava "jaxws" "b2376599612f84b1d28825fc02752da285bd71db6c2bd06d7c00818ae9ec54f3")
-      (fetchjava "jaxp" "01d7edc76ed4d22d8790e2043e9fe78463976a6929a23a0c0c48fc645e325a6c")
-      (fetchjava "nashorn" "180996d59840473265cd268d6a8e1da7ae518efab8ed21efc860254ce6fea8bb")
+      (fetchjava "" "2eefbac6318c6ca8a3da2372ba042e96a7feb366e1c4511d65a6a94413ef1d8a")
+      (fetchjava "langtools" "005f211f5d9d5077e44efd901e2cf0f35af0ec6c70df4e0b534e61e0f2bc6da0")
+      (fetchjava "hotspot" "295789be51557ec814446bc42684a139d17cf8321034574a09bcdd8a1e7bcfa4")
+      (fetchjava "corba" "1a96dba56b62bd744b0a1e23c0c3f784fe8643696ee6ab9947b4014521864607")
+      (fetchjava "jdk" "18f8fde2a2155e8d02a78fb8226bd445e133ce6548cc9faa4cec39a6774c13f0")
+      (fetchjava "jaxws" "6d8950879e80e633ccb6b3bc9721a1469009893d0ae5b265722309c94b3886ba")
+      (fetchjava "jaxp" "82b778c5916b6202912e1d8e06c15f6988259c45a164693b13ed9ae12f147e67")
+      (fetchjava "nashorn" "e78d94202d999701075243f2e3698cd8cf289d1b01f4d1b163614f48e72e4197")
     ];
 
     sourceRoot = ".";
@@ -98,7 +98,11 @@ let
       "--with-zlib=system"
     ]);
 
-    NIX_LDFLAGS= if minimal then null else "-lfontconfig";
+    # GCC 6 Fixes
+    CXXFLAGS = "-std=gnu++98";
+    NIX_CFLAGS_COMPILE = "-fno-delete-null-pointer-checks -fno-lifetime-dse";
+
+    NIX_LDFLAGS = if minimal then null else "-lfontconfig";
 
     buildFlags = "all";
 

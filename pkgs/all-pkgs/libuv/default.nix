@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
     owner = "libuv";
     repo = "libuv";
     rev = "v${version}";
-    sha256 = "84487cc1e688e370fe19fc557199cde6d84a5363440666b3cda1ff6172c2de2d";
+    sha256 = "fcf5c65f24feb6cdb19f0c76462d929552d91d097c5c70672d96714192709943";
   };
 
   nativeBuildInputs = [

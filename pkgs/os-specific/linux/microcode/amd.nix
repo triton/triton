@@ -1,4 +1,9 @@
-{ stdenv, fetchurl, firmware-linux-nonfree, libarchive }:
+{ stdenv
+, fetchurl
+
+, firmware-linux-nonfree
+, libarchive
+}:
 
 stdenv.mkDerivation rec {
   name = "amd-ucode-${firmware-linux-nonfree.version}";
@@ -7,7 +12,9 @@ stdenv.mkDerivation rec {
 
   sourceRoot = ".";
 
-  buildInputs = [ libarchive ];
+  nativeBuildInputs = [
+    libarchive
+  ];
 
   buildPhase = ''
     mkdir -p kernel/x86/microcode
@@ -24,7 +31,10 @@ stdenv.mkDerivation rec {
     description = "AMD Processor microcode patch";
     homepage = http://www.amd64.org/support/microcode.html;
     license = licenses.unfreeRedistributableFirmware;
-    maintainers = with maintainers; [ wkennington ];
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

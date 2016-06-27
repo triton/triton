@@ -28,6 +28,10 @@ stdenv.mkDerivation rec {
     "DESTDIR=$(out)"
   ];
 
+  passthru = {
+    inherit version;
+  };
+
   meta = with stdenv.lib; {
     description = "Binary firmware collection packaged by kernel.org";
     homepage = http://packages.debian.org/sid/firmware-linux-nonfree;

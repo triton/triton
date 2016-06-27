@@ -1495,6 +1495,8 @@ libsepol = callPackage ../all-pkgs/libsepol { };
 
 libsmbios = callPackage ../all-pkgs/libsmbios { };
 
+libsndfile = callPackage ../all-pkgs/libsndfile { };
+
 libssh = callPackage ../all-pkgs/libssh { };
 
 libssh2 = callPackage ../all-pkgs/libssh2 { };
@@ -7224,8 +7226,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
 #  libqalculate = callPackage ../development/libraries/libqalculate { };
 #
 #  libsearpc = callPackage ../development/libraries/libsearpc { };
-#
-libsndfile = callPackage ../development/libraries/libsndfile { };
 #
 libstartup_notification = callPackage ../development/libraries/startup-notification { };
 #

@@ -79,6 +79,11 @@ let
         true
       else
         false;
+    beatport =
+      if requests != null then
+        true
+      else
+        false;
     bpd =
       #if pygobject_2 != null
       #   && gst-plugins-base_0 != null
@@ -203,14 +208,14 @@ in
 
 buildPythonPackage rec {
   name = "beets-${version}";
-  version = "1.3.18";
+  version = "1.3.19";
   namePrefix = "";
 
   src = fetchFromGitHub {
     owner = "sampsyo";
     repo = "beets";
     rev = "v${version}";
-    sha256 = "47e52fe862b37735d16e19b2e6f0ff34e4601a4972ca8209d3e69d12ff7375a6";
+    sha256 = "af9cacc3cf28e11aae007549ad7e6172c239d976aa90aea08484ad715cfa5946";
   };
 
   nativeBuildInputs = [

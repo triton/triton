@@ -201,7 +201,9 @@ stdenv.mkDerivation rec {
     done
   '' + optionalString isPy3 ''
     pushd $out/lib/pkgconfig
-      ln -sv python-*.pc python3.pc
+      if [ ! -f 'python3.pc' ] ; then
+        ln -sv python-*.pc python3.pc
+      fi
     popd
     set +x
   '' + ''

@@ -12,7 +12,7 @@
     sha256 = "18kb5c29w04rj4gyz3jngm72sy8izfnbjlm6ajv6rv2m061d75x7";
   };
   "3.5" = {
-    versionMinor = "1";
-    sha256 = "1j95yx32ggqx8jf13h3c8qfp34ixpyg8ipqcdjmn143d6q67rmf6";
+    versionMinor = "2";
+    sha256 = "0010f56100b9b74259ebcd5d4b295a32324b58b517403a10d1a2aa7cb22bca40";
   };
 }

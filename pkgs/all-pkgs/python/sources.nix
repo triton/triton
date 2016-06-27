@@ -8,8 +8,8 @@
     sha256 = "0gsxpgd5p4mwd01gw501vsyahncyw3h9836ypkr3y32kgazy89jj";
   };
   "3.4" = {
-    versionMinor = "4";
-    sha256 = "18kb5c29w04rj4gyz3jngm72sy8izfnbjlm6ajv6rv2m061d75x7";
+    versionMinor = "5";
+    sha256 = "ee64b1c8a47461009abf25252332d29a4e587cb4f0c1c96aa793a3732e9d898a";
   };
   "3.5" = {
     versionMinor = "2";

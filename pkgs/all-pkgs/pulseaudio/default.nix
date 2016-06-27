@@ -8,10 +8,6 @@
 , intltool
 , libtool
 
-, json-c
-, libsndfile
-
-# Optional Dependencies
 , alsa-lib
 , avahi
 , bluez
@@ -20,8 +16,10 @@
 , gconf
 , glib
 , gtk3
+, json-c
 , libasyncns
 , libcap
+, libsndfile
 , jack2_lib
 , lirc
 , openssl
@@ -33,15 +31,15 @@
 , webrtc-audio-processing
 , xorg
 
-# Extra options
 , prefix ? ""
 
-# Patch sources
 # Set latency_msec in module-loopback (Default: 200)
 , loopbackLatencyMsec ? "200"
 # Set default resampler (Default: speex-float-1)
 # See `resample-method` in manpage for pulse-daemon.conf, resample-methods.nix
 # or run `pulseaudio --dump-resample-methods` for possible values.
+# NOTE: Only speex resample methods supports dynamic sample rates used by
+#       some applications such as mumble.
 , resampleMethod ? "speex-float-1"
 }:
 
@@ -126,28 +124,31 @@ stdenv.mkDerivation rec {
   postPatch =
     optionalString (loopbackLatencyMsec != "200")
     /* Allow patching default latency_msec */ ''
-      sed -e 's/DEFAULT_LATENCY_MSEC 200/DEFAULT_LATENCY_MSEC ${loopbackLatencyMsec}/' \
-          -i src/modules/module-loopback.c
+      sed -i src/modules/module-loopback.c \
+        -e 's/DEFAULT_LATENCY_MSEC 200/DEFAULT_LATENCY_MSEC ${loopbackLatencyMsec}/'  
     '' + optionalString (resampleMethod != "speex-float-1")
     /* Allow patching default resampler */ ''
-      sed -e 's/unique_jhsdjhsdf_string/${resampleMethodString}/' \
-          -i src/pulsecore/resampler.c
+      sed -i src/pulsecore/resampler.c \
+        -e 's/unique_jhsdjhsdf_string/${resampleMethodString}/'
     '';
 
   preConfigure =
-    /* Performs and autoreconf */ ''
+    /* Performs an autoreconf */ ''
       export NOCONFIGURE="yes"
       patchShebangs bootstrap.sh
       ./bootstrap.sh
-    '' +
-    /* Move the udev rules under $(prefix). */ ''
+    '' + /* Move the udev rules under $(prefix). */ ''
       sed -i "src/Makefile.in" \
-          -e "s|udevrulesdir[[:blank:]]*=.*$|udevrulesdir = $out/lib/udev/rules.d|g"
-    '' +
-    /* don't install proximity-helper as root and setuid */ ''
+        -e "s|udevrulesdir[[:blank:]]*=.*$|udevrulesdir = $out/lib/udev/rules.d|g"
+    '' + /* don't install proximity-helper as root and setuid */ ''
       sed -i "src/Makefile.in" \
-          -e "s|chown root|true |" \
-          -e "s|chmod r+s |true |"
+        -e "s|chown root|true |" \
+        -e "s|chmod r+s |true |"
+    '' + ''
+      configureFlagsArray+=(
+        "--with-systemduserunitdir=$out/lib/systemd/user"
+        "--with-bash-completion-dir=$out/share/bash-completions/completions"
+      )
     '';
 
   configureFlags = [
@@ -180,8 +181,6 @@ stdenv.mkDerivation rec {
     "--with-system-user=pulse"
     "--with-system-group=pulse"
     "--with-access-group=audio"
-    "--with-systemduserunitdir=\${out}/lib/systemd/user"
-    "--with-bash-completion-dir=\${out}/share/bash-completions/completions"
     "--enable-memfd"
   ] ++ optionals (libOnly) [
     "--disable-x11"
@@ -223,13 +222,15 @@ stdenv.mkDerivation rec {
     "--enable-systemd-journal"
   ];
 
-  installFlags = [
-    "sysconfdir=$(out)/etc"
-    "pulseconfdir=$(out)/etc/pulse"
-  ];
+  preInstall = ''
+    installFlagsArray+=(
+      "sysconfdir=$out/etc"
+      "pulseconfdir=$out/etc/pulse"
+    )
+  '';
 
   postInstall = optionalString libOnly ''
-    rm -rf $out/{bin,share,etc,lib/{pulse-*,systemd}}
+    rm -rvf $out/{bin,share,etc,lib/{pulse-*,systemd}}
   '';
 
   meta = with stdenv.lib; {

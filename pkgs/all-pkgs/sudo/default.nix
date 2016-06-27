@@ -1,69 +1,92 @@
-{ stdenv, fetchurl, coreutils, pam, groff
-, sendmailPath ? "/var/setuid-wrappers/sendmail"
-, withInsults ? false
+{ stdenv
+, bison
+, fetchurl
+, flex
+, groff
+
+, audit_lib
+, coreutils
+, cyrus-sasl
+, openldap
+, pam
+, zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "sudo-1.8.16";
+  name = "sudo-1.8.17p1";
 
   src = fetchurl {
     url = "https://www.sudo.ws/dist/${name}.tar.gz";
-    sha256 = "2d83826fc5125bf073acc203dbda1cf2abeee017090ccc9dddb0431a53d5064d";
+    allowHashOutput = false;
+    sha256 = "c690d707fb561b3ecdf6a6de5563bc0b769388eff201c851edbace408bb155cc";
   };
 
+  nativeBuildInputs = [
+    bison
+    flex
+    groff
+  ];
+
+  buildInputs = [
+    audit_lib
+    cyrus-sasl
+    openldap
+    pam
+    zlib
+  ];
+
   configureFlags = [
-    "--with-env-editor"
-    "--with-editor=/run/current-system/sw/bin/nano"
+    "--with-linux-audit"
+    "--with-sssd"
+    "--with-pam"
+    "--with-logging=syslog"
     "--with-rundir=/run/sudo"
     "--with-vardir=/var/db/sudo"
-    "--with-logpath=/var/log/sudo.log"
-    "--with-iologdir=/var/log/sudo-io"
-    "--with-sendmail=${sendmailPath}"
-  ] ++ stdenv.lib.optional withInsults [
-    "--with-insults"
-    "--with-all-insults"
+    "--with-sendmail=/var/setuid-wrappers/sendmail"
+    "--with-env-editor"
+    "--with-ldap"
+    "--enable-zlib"
+    "--with-pam-login"
   ];
 
-  configureFlagsArray = [
-    "--with-passprompt=[sudo] password for %p: "  # intentional trailing space
-  ];
-
-  postConfigure =
-    ''
+  postConfigure = ''
     cat >> pathnames.h <<'EOF'
       #undef _PATH_MV
       #define _PATH_MV "${coreutils}/bin/mv"
     EOF
-    makeFlags="install_uid=$(id -u) install_gid=$(id -g)"
-    installFlags="sudoers_uid=$(id -u) sudoers_gid=$(id -g) sysconfdir=$out/etc rundir=$TMPDIR/dummy vardir=$TMPDIR/dummy"
-    '';
+    makeFlagsArray+=(
+      "install_uid=$(id -u)"
+      "install_gid=$(id -g)"
+    )
+    installFlagsArray+=(
+      "sudoers_uid=$(id -u)"
+      "sudoers_gid=$(id -g)"
+      "sysconfdir=$out/etc"
+      "rundir=$TMPDIR/dummy"
+      "vardir=$TMPDIR/dummy"
+    )
+  '';
 
-  buildInputs = [ coreutils pam groff ];
-
-  enableParallelBuilding = true;
-
-  postInstall =
-    ''
+  postInstall = ''
     rm -f $out/share/doc/sudo/ChangeLog
-    '';
+  '';
 
-  meta = {
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "CCB2 4BE9 E948 1B15 D341  5953 5A89 DFA2 7EE4 70C4";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
+
+  meta = with stdenv.lib; {
     description = "A command to run commands as root";
-
-    longDescription =
-      ''
-      Sudo (su "do") allows a system administrator to delegate
-      authority to give certain users (or groups of users) the ability
-      to run some (or all) commands as root or another user while
-      providing an audit trail of the commands and their arguments.
-      '';
-
     homepage = http://www.sudo.ws/;
-
-    license = http://www.sudo.ws/sudo/license.html;
-
-    maintainers = [ stdenv.lib.maintainers.eelco ];
-
-    platforms = stdenv.lib.platforms.linux;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

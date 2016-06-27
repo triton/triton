@@ -2086,6 +2086,8 @@ subversion_1_8 = callPackageAlias "subversion" {
   channel = "1.8";
 };
 
+sudo = callPackage ../all-pkgs/sudo { };
+
 sushi = callPackage ../all-pkgs/sushi { };
 
 swig_2 = callPackageAlias "swig" {
@@ -4471,8 +4473,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  sshuttle = callPackage ../tools/security/sshuttle { };
 #
 #  sstp = callPackage ../tools/networking/sstp {};
-#
-  sudo = callPackage ../tools/security/sudo { };
 #
 #  suidChroot = callPackage ../tools/system/suid-chroot { };
 #

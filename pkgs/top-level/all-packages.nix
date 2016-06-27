@@ -643,6 +643,8 @@ chromium_dev = callPackageAlias "chromium" {
 
 civetweb = callPackage ../all-pkgs/civetweb { };
 
+cjdns = callPackage ../all-pkgs/cjdns { };
+
 clang = wrapCC (callPackageAlias "llvm" { });
 
 clutter = callPackage ../all-pkgs/clutter { };
@@ -2784,8 +2786,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #      then openssl-chacha
 #      else openssl;
 #  };
-#
-#  cjdns = callPackage ../tools/networking/cjdns { };
 #
 #  cksfv = callPackage ../tools/networking/cksfv { };
 #

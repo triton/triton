@@ -257,6 +257,9 @@ stdenv.mkDerivation rec {
   ] ++ optionals (versionAtLeast version "10.1.0") [
     "--enable-subman"
     "--with-openldap"
+  ] ++ optionals (versionAtLeast version "11.0.0") [
+    "--with-reentrant-strsignal"
+    "--with-thread-safe-res-query"
   ];
 
   preBuild = optionalString (versionAtLeast version "9.0.0") ''

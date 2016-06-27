@@ -28,8 +28,12 @@ while read obj; do
   git cat-file --batch | sed -n 's,.*"\(Qm[a-zA-Z0-9]*\)".*,\1,p' >> "$TMPDIR/hashes"
 done < <(git rev-list "$REV"..HEAD --objects | grep '\.nix$' | awk '{print $1}')
 popd >/dev/null
-cat "$TMPDIR/hashes" | sort | uniq > pin-to-ipfs-hashes
-git rev-list HEAD^..HEAD > pin-to-ipfs-rev
+cat "$TMPDIR/hashes" | sort | uniq > "$TMPDIR/hashes.tmp"
+
+if ! diff -q "$TMPDIR/hashes.tmp" pin-to-ipfs-hashes >/dev/null 2>&1; then
+  cp "$TMPDIR/hashes.tmp" pin-to-ipfs-hashes
+  git rev-list HEAD^..HEAD > pin-to-ipfs-rev
+fi
 
 declare -A current
 while read h; do

@@ -814,7 +814,7 @@ let
   gcloud-golang = buildFromGoogle {
     rev = "a4c7c3139dc2772ad6c3bb73d0a9236a79063f8c";
     repo = "cloud";
-    sha256 = "0si9aaa0rl7vwn2jnbmc3lrbnkrxx0afld9nx2l22hywq31x421i";
+    sha256 = "df9357fc4e3d4bc28aed12931400a34327b70233cfae438364e050569f78f1ee";
     propagatedBuildInputs = [
       net
       oauth2

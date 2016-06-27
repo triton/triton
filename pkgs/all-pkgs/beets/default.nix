@@ -39,6 +39,9 @@
 , unidecode
 , werkzeug
 
+# For use in inline plugin
+, pycountry
+
 # External plugins
 , enableAlternatives ? true
 #, enableCopyArtifacts ? true
@@ -243,6 +246,8 @@ buildPythonPackage rec {
     requests
     unidecode
     werkzeug
+  ] ++ [
+    pycountry
   ] ++ optional enableAlternatives (
       import ./plugins/beets-alternatives.nix {
         inherit

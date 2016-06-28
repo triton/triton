@@ -441,9 +441,12 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
   pycrypto = callPackage ../development/python-modules/pycrypto { };
 
-  pygobject = callPackage ../development/python-modules/pygobject { };
-
-  pygobject3 = callPackage ../development/python-modules/pygobject/3.nix { };
+  pygobject_2 = callPackage ../development/python-modules/pygobject { };
+  # Deprecated Alias
+  pygobject = callPackageAlias "pygobject_2" { };
+  pygobject_3 = callPackage ../development/python-modules/pygobject/3.nix { };
+  # Deprecated Alias
+  pygobject3 = callPackageAlias "pygobject_3" { };
 
   pygtksourceview = callPackage ../development/python-modules/pygtksourceview { };
 

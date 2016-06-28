@@ -317,6 +317,9 @@ stdenv.mkDerivation rec {
   version =
     if channel == "9" then
       versionMajor
+    # For initial minor releases drop the trailing zero from the version
+    else if versionMinor == "0" then
+      branch
     else
       branch + "." + versionMinor;
 
@@ -410,7 +413,6 @@ stdenv.mkDerivation rec {
     nvidia-video-codec-sdk
   ];
 
-  # TODO: figure out when this was fixed, assuming is was
   postPatch = ''
     patchShebangs .
   '' + optionalString (versionOlder "2.8" branch) ''
@@ -432,7 +434,7 @@ stdenv.mkDerivation rec {
      *  Build flags
      */
     # On some ARM platforms --enable-thumb
-    "--disable-thumb"
+    /**/"--disable-thumb"
     "--enable-shared --disable-static"
     (fflag "pic" true "-")
     (if stdenv.cc.isClang then "--cc=clang" else null)
@@ -445,8 +447,8 @@ stdenv.mkDerivation rec {
     (fflag "safe-bitstream-reader" safeBitstreamReaderBuild null)
     (fflag "memalign-hack" memalignHackBuild null)
     "--enable-pthreads"
-    "--disable-w32threads"
-    "--disable-os2threads"
+    "--disable-w32threads" # windows
+    "--disable-os2threads" # os/2
     (fflag "network" networkBuild null)
     (fflag "pixelutils" pixelutilsBuild null)
     /*
@@ -485,29 +487,38 @@ stdenv.mkDerivation rec {
     /*
      *  Hardware accelerators
      */
-    "--disable-d3d11va"
-    "--disable-dxva2"
+    (fflag "audiotoolbox" false "3.1") # osx
+    (fflag "cuda" cudaExtLib "3.1")
+    /**/(fflag "cuvid" false "3.1")
+    "--disable-d3d11va" # windows
+    "--disable-dxva2" # windows
+    #(fflag "libmfx" (libmfx != null) "2.6")
+    /**/"--disable-libmfx"
+    #(fflag "libnpp" (npp != null) "3.1")
+    /**/(fflag "libnpp" false "3.1")
+    #(fflag "mmal" (mmal != null) "2.7")
+    /**/"--disable-mmal"
+    (fflag "nvenc" nvencExtLib "2.6")
     (fflag "vaapi" (libva != null) null)
-    "--disable-vda"
+    "--disable-vda" # osx
     (fflag "vdpau" (libvdpau != null) null)
-    "--disable-videotoolbox"
+    "--disable-videotoolbox" # osx
     # Undocumented
     "--enable-xvmc"
     /*
      *  External libraries
      */
-    (fflag "audiotoolbox" false "3.1")
     #(fflag "avisynth" (avisynth != null) null)
-    "--disable-avisynth"
+    /**/"--disable-avisynth"
     (fflag "bzlib" (bzip2 != null) null)
-    (fflag "cuda" cudaExtLib "3.1")
     # Recursive dependency
     #(fflag "chromaprint" (chromaprint != null) "3.0")
     /**/(fflag "chromaprint" false "3.0")
     # Undocumented (broadcom)
     #(fflag "crystalhd" (crystalhd != null) null)
-    "--disable-crystalhd"
-    (fflag "fontconfig" (fontconfig != null) null)
+    /**/"--disable-crystalhd"
+    # fontconfig -> libfontconfig since 3.1
+    (deprfflag "fontconfig" (fontconfig != null) "0.0" "3.0")
     (fflag "frei0r" (frei0r != null) null)
     # Undocumented before 3.0
     (fflag "gcrypt" (libgcrypt != null) "3.0")
@@ -525,21 +536,24 @@ stdenv.mkDerivation rec {
     (fflag "libcaca" (libcaca != null) null)
     (fflag "libcelt" (celt != null) null)
     #(fflag "libcdio" (libcdio != null) null)
-    "--disable-libcdio"
+    /**/"--disable-libcdio"
     (fflag "libdc1394" (
       libdc1394 != null
       && libraw1394 != null) null)
     # Undocumented
     (deprfflag "libdcadec" (dcadec != null) "2.7" "3.0")
+    #(fflag "libebur128" (libebur128 != null) "3.1")
+    /**/"--disable-libebur128"
     (fflag "libfaac" faacExtlib null)
     (fflag "libfdk-aac" fdkaacExtlib null)
+    (fflag "libfontconfig" (fontconfig != null) "3.1")
     #(fflag "libflite" (flite != null) null)
-    "--disable-libflite"
+    /**/"--disable-libflite"
     (fflag "libfreetype" (freetype != null) null)
     (fflag "libfribidi" (fribidi != null) "2.3")
     (fflag "libgme" (game-music-emu != null) "2.2")
     #(fflag "libgsm" (gsm != null) null)
-    "--disable-libgsm"
+    /**/"--disable-libgsm"
     #(fflag "libiec61883" (
     #  libiec61883 != null
     #  && libavc1394 != null
@@ -548,22 +562,18 @@ stdenv.mkDerivation rec {
     #(fflag "libilbc" (ilbc != null) null)
     "--disable-libilbc"
     (fflag "libkvazaar" (kvazaar != null) "2.8")
-    #(fflag "libmfx" (libmfx != null) "2.6")
-    "--disable-libmfx"
     (fflag "libmodplug" (libmodplug != null) null)
     (fflag "libmp3lame" (lame != null) null)
     #(fflag "libnut" (libnut != null) null)
-    "--disable-libnut"
-    #(fflag "libnpp" (npp != null) "3.1")
-    /**/(fflag "libnpp" false "3.1")
+    /**/"--disable-libnut"
     #(fflag "libopencore-amrnb" (opencore-amr != null) null)
-    "--disable-libopencore-amrnb"
+    /**/"--disable-libopencore-amrnb"
     #(fflag "libopencore-amrwb" (opencore-amr != null) null)
-    "--disable-libopencore-amrwb"
+    /**/"--disable-libopencore-amrwb"
     #(fflag "libopencv" (opencv != null) null)
-    "--disable-libopencv"
+    /**/"--disable-libopencv"
     #(fflag "libopenh264" (openh264 != null) "2.6")
-    "--disable-libopenh264"
+    /**/"--disable-libopenh264"
     (fflag "libopenjpeg" (openjpeg_1 != null) null)
     (fflag "libopus" (opus != null) null)
     (fflag "libpulse" (pulseaudio_lib != null) null)
@@ -572,7 +582,7 @@ stdenv.mkDerivation rec {
     (fflag "librtmp" (rtmpdump != null) null)
     (fflag "libschroedinger" (schroedinger != null) null)
     #(fflag "libshine" (shine != null) "2.0")
-    "--disable-libshine"
+    /**/"--disable-libshine"
     (fflag "libsmbclient" (samba_client != null) "2.3")
     (fflag "libsnappy" (snappy != null) "2.8")
     (fflag "libsoxr" (soxr != null) null)
@@ -582,9 +592,8 @@ stdenv.mkDerivation rec {
     /**/(fflag "libtesseract" false "3.0")
     (fflag "libtheora" (libtheora != null) null)
     #(fflag "libtwolame" (twolame != null) null)
-    "--disable-libtwolame"
-    #(fflag "libutvideo" (utvideo != null) null)
-    "--disable-libutvideo"
+    /**/"--disable-libtwolame"
+    (deprfflag "libutvideo" false "0.0" "3.0")
     (fflag "libv4l2" (v4l_lib != null) null)
     (fflag "libvidstab" (vid-stab != null) "2.2")
     (deprfflag "libvo-aacenc" false "0.6" "2.8")
@@ -604,18 +613,15 @@ stdenv.mkDerivation rec {
     (fflag "libzimg" (libzimg != null) "3.0")
     (fflag "libzmq" (zeromq4 != null) "2.0")
     #(fflag "libzvbi" (zvbi != null) "2.1")
-    "--disable-libzvbi"
+    /**/"--disable-libzvbi"
     (fflag "lzma" (xz != null) "2.4")
     #(fflag "decklink" decklinkExtlib "2.2")
-    "--disable-decklink"
+    /**/"--disable-decklink"
     (fflag "mediacodec" false "3.1") # android
-    #(fflag "mmal" (mmal != null) "2.7")
-    "--disable-mmal"
     (fflag "netcdf" (netcdf != null) "3.0")
-    (fflag "nvenc" nvencExtLib "2.6")
     (fflag "openal" (openal != null) null)
     #(fflag "opencl" (opencl != null) "2.2")
-    "--disable-opencl"
+    /**/"--disable-opencl"
     # OpenGL requires libX11 for GLX
     (fflag "opengl" (mesa_noglu != null && xorg.libX11 != null) "2.2")
     (fflag "openssl" opensslExtlib null)

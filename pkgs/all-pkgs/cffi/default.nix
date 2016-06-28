@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "1.6.0";
+  version = "1.7.0";
 in
 buildPythonPackage {
   name = "cffi-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "cffi";
     inherit version;
-    sha256 = "a7f75c4ef2362c0a0e54657add0a6c509fecbfa3b3807bc0925f5cb1c9f927db";
+    sha256 = "6ed5dd6afd8361f34819c68aaebf9e8fc12b5a5893f91f50c9e50c8886bb60df";
   };
 
   propagatedBuildInputs = [

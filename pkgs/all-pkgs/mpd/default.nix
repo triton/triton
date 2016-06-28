@@ -42,7 +42,7 @@
 , sqlite
 , systemd_lib
 #, twolame
-#, wavpack
+, wavpack
 , yajl
 , zlib
 , zziplib
@@ -64,12 +64,12 @@ in
 stdenv.mkDerivation rec {
   name = "mpd-${version}";
   versionMajor = "0.19";
-  versionMinor = "15";
+  versionMinor = "16";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url    = "https://www.musicpd.org/download/mpd/${versionMajor}/${name}.tar.xz";
-    sha256 = "0cb9a223894b038ce966ce6d651d9b3ea3bdc7d7b9bec8d1e9e7e091cbc29b8b";
+    url = "https://www.musicpd.org/download/mpd/${versionMajor}/${name}.tar.xz";
+    sha256 = "58ecbff4b07ec42a6f31bdbbb3c3eb51317978e4a0ea3071f6ae6127848a03d6";
   };
 
   buildInputs = [
@@ -112,7 +112,7 @@ stdenv.mkDerivation rec {
     soxr
     sqlite
     systemd_lib
-    #wavpack
+    wavpack
     yajl
     zlib
     zziplib
@@ -176,7 +176,7 @@ stdenv.mkDerivation rec {
     (enFlag "vorbis-encoder" (libvorbis != null) null)
     (enFlag "wave-encoder" true null)
     # FIXME: wavpack support
-    #(enFlag "wavpack" (wavpack != null) null)
+    (enFlag "wavpack" (wavpack != null) null)
     (wtFlag "zeroconf" (avahi != null && dbus != null) "avahi")
     (enFlag "zlib" (zlib != null) null)
     (enFlag "zzip" (zziplib != null) null)

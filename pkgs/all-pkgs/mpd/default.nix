@@ -175,7 +175,6 @@ stdenv.mkDerivation rec {
     (enFlag "vorbis" (libvorbis != null) null)
     (enFlag "vorbis-encoder" (libvorbis != null) null)
     (enFlag "wave-encoder" true null)
-    # FIXME: wavpack support
     (enFlag "wavpack" (wavpack != null) null)
     (wtFlag "zeroconf" (avahi != null && dbus != null) "avahi")
     (enFlag "zlib" (zlib != null) null)

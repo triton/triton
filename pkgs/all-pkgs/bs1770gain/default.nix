@@ -7,11 +7,11 @@
 
 stdenv.mkDerivation rec {
   name = "bs1770gain-${version}";
-  version = "0.4.8";
+  version = "0.4.9";
 
   src = fetchurl {
     url = "mirror://sourceforge/bs1770gain/${name}.tar.gz";
-    sha256 = "0lyrlxfs29fxy1ldhgni8bhwr3f94kykykp2p5hhzr0lzz1n8h4l";
+    sha256 = "d839cc429c371b06589974bf5f54585d265ca2309b07d6cac07b2687a9b6499b";
   };
 
   buildInputs = [
@@ -26,6 +26,7 @@ stdenv.mkDerivation rec {
         -e 's,av_free_packet,av_packet_unref,'
     '';
 
+  NIX_CFLAGS_COMPILE = "-Wno-error";
   CFLAGS = "-std=gnu89";
 
   meta = with stdenv.lib; {

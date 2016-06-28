@@ -20,13 +20,13 @@ in
 stdenv.mkDerivation rec {
   name = "gnome-themes-standard-${version}";
   versionMajor = "3.20";
-  #versionMinor = "0";
-  version = "${versionMajor}"; #.${versionMinor}";
+  versionMinor = "2";
+  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-themes-standard/${versionMajor}/" +
           "${name}.tar.xz";
-    sha256 = "1cde84b34da310e6f2d403bfdbe9abb0798e5f07a1d1b4fde82af8e97edd3bdc";
+    sha256 = "9d0d9c4b2c9f9008301c3c1878ebb95859a735b7fd4a6a518802b9637e4a7915";
   };
 
   nativeBuildInputs = [

@@ -19,13 +19,6 @@ stdenv.mkDerivation rec {
     sox
   ];
 
-  postPatch =
-    /* Compatibility with FFmpeg 3.0+, av_free_packet is deprecated.
-       Use av_packet_unref in its place. */ ''
-      sed -i libffsox-2/ffsox_source.c \
-        -e 's,av_free_packet,av_packet_unref,'
-    '';
-
   NIX_CFLAGS_COMPILE = "-Wno-error";
   CFLAGS = "-std=gnu89";
 

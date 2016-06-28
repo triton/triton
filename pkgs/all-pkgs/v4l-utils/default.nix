@@ -26,11 +26,11 @@ assert any (n: n == channel) [
 # See libv4l in all-packages.nix for the libs only (overrides alsa, libX11 & QT)
 
 stdenv.mkDerivation rec {
-  name = "v4l-utils-1.10.0";
+  name = "v4l-utils-1.10.1";
 
   src = fetchurl {
     url = "https://linuxtv.org/downloads/v4l-utils/${name}.tar.bz2";
-    sha256 = "78ead27ee58a701d7c6342303cf4520bdd4a2b88a7813bc99a0b389307e4336b";
+    sha256 = "6147ccc29fe7dd3c5c3994d613c4f2a099bac8b44694a96e5cf4d7caca8336c0";
   };
 
   buildInputs = optionals (channel == "utils") [

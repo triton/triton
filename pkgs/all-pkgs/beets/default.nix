@@ -16,6 +16,13 @@
 , enum34
 , flac
 , flask
+, gobject-introspection
+#, gst-plugins-bad
+, gst-plugins-base
+, gst-plugins-good
+#, gst-plugins-ugly
+, gst-python
+, gstreamer
 , imagemagick
 , itsdangerous
 , jellyfish
@@ -30,6 +37,7 @@
 , pathlib
 , pyacoustid
 , pyechonest
+, pygobject_3
 , pylast
 , pyxdg
 , pyyaml
@@ -85,11 +93,11 @@ let
       else
         false;
     bpd =
-      #if pygobject_2 != null
-      #   && gst-plugins-base_0 != null
-      #   && gstreamer_0 != null then
-      #  true
-      #else
+      if pygobject_3 != null
+         && gst-plugins-base != null
+         && gstreamer != null then
+        true
+      else
         false;
     chroma =
       if pyacoustid != null then
@@ -229,6 +237,9 @@ buildPythonPackage rec {
     enum34
     flac
     flask
+    # Need to for hook to set GI_TYPELIB_PATH
+    gobject-introspection
+    gstreamer
     imagemagick
     itsdangerous
     jellyfish
@@ -243,6 +254,7 @@ buildPythonPackage rec {
     pathlib
     pyacoustid
     pyechonest
+    pygobject_3
     pylast
     pyxdg
     pyyaml
@@ -284,6 +296,13 @@ buildPythonPackage rec {
       }
     );
 
+  GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [
+    gst-plugins-base
+    gst-plugins-good
+    #gst-plugins-bad
+    #gst-plugins-ugly
+  ];
+
   patches = [
     (fetchTritonPatch {
       rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
@@ -310,6 +329,12 @@ buildPythonPackage rec {
     ' beetsplug/replaygain.py
     sed -i -e 's/if has_program.*bs1770gain.*:/if True:/' \
       test/test_replaygain.py
+  '';
+
+  preFixup = ''
+    wrapProgram $out/bin/beet \
+      --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
+      --prefix 'GST_PLUGIN_PATH' : "$GST_PLUGIN_PATH"
   '';
 
   preCheck = ''

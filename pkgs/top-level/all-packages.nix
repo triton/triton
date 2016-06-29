@@ -2228,6 +2228,10 @@ which = callPackage ../all-pkgs/which { };
 
 wiredtiger = callPackage ../all-pkgs/wiredtiger { };
 
+wireguard = callPackage ../all-pkgs/wireguard {
+  kernel = null;
+};
+
 wxGTK = callPackage ../all-pkgs/wxGTK { };
 
 x264 = callPackage ../all-pkgs/x264 { };

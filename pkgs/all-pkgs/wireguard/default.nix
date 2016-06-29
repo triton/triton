@@ -5,15 +5,20 @@
 , libmnl
 }:
 
+let
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
+in
 stdenv.mkDerivation {
   name = "wireguard-2016-06-29";
 
   src = fetchzip {
-    url = "https://git.zx2c4.com/WireGuard/snapshot/WireGuard-530ee2b2906af4d635d4d5bbabda5250b4a2b33e.tar.xz";
-    sha256 = "28a0d50d760f6a67e75d37490888aab7434136c9c5a2ac422fdcd0bee086abdb";
+    url = "https://git.zx2c4.com/WireGuard/snapshot/WireGuard-ac2986638f3713020be3375c56fcdf8cb0661edf.tar.xz";
+    sha256 = "dab41820effc6709d703395370e5296422749b5179dfa913cf3894e0f3221770";
   };
 
-  buildInputs = [
+  buildInputs = optionals (kernel == null) [
     libmnl
   ];
 
@@ -21,14 +26,39 @@ stdenv.mkDerivation {
     cd src
   '';
 
-  makeFlags = [
+  makeFlags = if kernel != null then [
+    "-C"
+    "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+  ] else [
     "-C"
     "tools"
   ];
 
+  buildFlags = optionals (kernel != null) [
+    "modules"
+  ];
+
   preBuild = ''
     makeFlagsArray+=("PREFIX=$out")
+  '' + optionalString (kernel != null) ''
+    makeFlagsArray+=(
+      "M=$(pwd)"
+      "INSTALL_MOD_PATH=$out"
+    )
   '';
+
+  installTargets = optionals (kernel != null) [
+    "modules_install"
+  ];
+
+  # Kernel code doesn't support our hardening flags
+  optFlags = kernel == null;
+  pie = kernel == null;
+  fpic = kernel == null;
+  noStrictOverflow = kernel == null;
+  fortifySource = kernel == null;
+  stackProtector = kernel == null;
+  optimize = kernel == null;
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

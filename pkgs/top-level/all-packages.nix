@@ -8879,6 +8879,10 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
         inherit (kPkgs) kernel;  # We shouldn't need this
       };
 
+      wireguard = kCallPackage ../all-pkgs/wireguard {
+        inherit (kPkgs) kernel;
+      };
+
       zfs = kCallPackage ../os-specific/linux/zfs {
         configFile = "kernel";
         inherit (kPkgs) kernel spl;  # We shouldn't need this

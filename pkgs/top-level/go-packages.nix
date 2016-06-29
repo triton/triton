@@ -150,11 +150,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "e445b19913b9d40fdbdfe19ac5e3d314aafd6f63";
-    date = "2016-06-27";
+    rev = "8e573f4005aa312856df2ea97c32b9beac70dd89";
+    date = "2016-06-29";
     owner  = "golang";
     repo   = "net";
-    sha256 = "0p6v3wm8als3mkbswjyj06q13q0qj195ckb7c9wbdzy5v0w9971l";
+    sha256 = "1qy58rmgdiwi4l3glx80ikgqmzqs55zk2q48nqxzy1na71zzhm0y";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -184,11 +184,11 @@ let
 
 
   protobuf = buildFromGitHub {
-    rev = "0c1f6d65b5a189c2250d10e71a5506f06f9fa0a0";
-    date = "2016-06-14";
+    rev = "3852dcfda249c2097355a6aabb199a28d97b30df";
+    date = "2016-06-29";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "1cm649d6nz760n5z354kxmcd7bf0f0qa1jy2495yadmyn53wx929";
+    sha256 = "00p49xhc0542ldpicwa1anc5qw0sa0f470769hx5xx14sxnjybnj";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [ "code.google.com/p/goprotobuf" ];
   };
@@ -225,11 +225,11 @@ let
   };
 
   tools = buildFromGitHub {
-    rev = "a2a552218a0e22e6fb22469f49ef371b492f6178";
-    date = "2016-06-14";
+    rev = "1727758746e7a08feaaceb9366d1468498ac2ac2";
+    date = "2016-06-24";
     owner = "golang";
     repo = "tools";
-    sha256 = "06nngr7qic52fkf4g45jxgb68h7p34xgscblkra56i34kri62qwy";
+    sha256 = "1jp47p45lhgks3sns0c6jl8c0cic8jzv0xr5gdqpl4627wxsrqin";
     goPackagePath = "golang.org/x/tools";
     goPackageAliases = [ "code.google.com/p/go.tools" ];
 
@@ -329,10 +329,10 @@ let
   };
 
   aws-sdk-go = buildFromGitHub {
-    rev = "v1.1.36";
+    rev = "v1.2.1";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "15k90pckmyk3f7h51jwfx7535h18cr2phgy7gxn8fp9601dpclcb";
+    sha256 = "1xc1hkg2mn2r2ajpxvz17qgxgbw4zkgqx3dxid4m7sjhdpvxncch";
     buildInputs = [ testify gucumber tools ];
     propagatedBuildInputs = [ ini go-jmespath ];
 
@@ -450,13 +450,12 @@ let
   };
 
   urfave_cli = buildFromGitHub {
-    rev = "v1.17.0";
+    rev = "v1.18.0";
     owner = "urfave";
     repo = "cli";
-    sha256 = "0171xw72kvsk4zcygvrmslcir9qp7q4v1lh6rpllayf9ws1253dl";
-    goPackagePath = "github.com/codegangsta/cli";
+    sha256 = "1s25rph38nkmb78v0faackklrfjqvqwl3md5nci0qlb1wvfb1f7c";
     goPackageAliases = [
-      "github.com/urfave/cli"
+      "github.com/codegangsta/cli"
     ];
     buildInputs = [
       yaml-v2
@@ -812,9 +811,9 @@ let
   };
 
   gcloud-golang = buildFromGoogle {
-    rev = "a4c7c3139dc2772ad6c3bb73d0a9236a79063f8c";
+    rev = "177eb6aa499a0f004654ab4a191c30edc2d0ce3a";
     repo = "cloud";
-    sha256 = "df9357fc4e3d4bc28aed12931400a34327b70233cfae438364e050569f78f1ee";
+    sha256 = "18h835zkyq4jgnkppd1iz31nkkcixg8qydlp3r2mskh6zc7i5jmd";
     propagatedBuildInputs = [
       net
       oauth2
@@ -824,7 +823,7 @@ let
     ];
     excludedPackages = "oauth2";
     meta.hydraPlatforms = [ ];
-    date = "2016-06-24";
+    date = "2016-06-22";
   };
 
   gcloud-golang-for-go4 = buildFromGoogle {
@@ -1042,11 +1041,11 @@ let
   };
 
   google-api-go-client = buildFromGitHub {
-    rev = "63ade871fd3aec1225809d496e81ec91ab76ea29";
-    date = "2016-05-31";
+    rev = "7a1b48a03240285fcdb91f7890f647cd90358f84";
+    date = "2016-06-24";
     owner = "google";
     repo = "google-api-go-client";
-    sha256 = "02wb0k5hvybdpklbm4pwjll6f47z0vpkm8chks6cbj2bdnsmplrl";
+    sha256 = "0sp2k4gn6awgdgf7yiqmy9g83s3qbyxlcphwvanxakr6sim64r2m";
     goPackagePath = "google.golang.org/api";
     goPackageAliases = [
       "github.com/google/google-api-client"
@@ -1579,11 +1578,11 @@ let
   };
 
   gucumber = buildFromGitHub {
-    date = "2016-05-11";
-    rev = "5692705bb5ff96c5d7b33819b4739715008cc635";
+    date = "2016-06-27";
+    rev = "090009ec4b32fd019e2d5e1a6a92f66268441cee";
     owner = "lsegal";
     repo = "gucumber";
-    sha256 = "19hvwz21rmfkhxjdhj6jwjk0fmjwwa1yyfgvz9xyp7gi3fcnvnhy";
+    sha256 = "1ykr4k5xdvv89r1ys6l1wr5dc3ga95l349wkkafrsvp8qfsk5y9l";
     buildInputs = [ testify ];
     propagatedBuildInputs = [ ansicolor ];
   };
@@ -1717,10 +1716,10 @@ let
   };
 
   ini = buildFromGitHub {
-    rev = "v1.12.0";
+    rev = "v1.16.1";
     owner  = "go-ini";
     repo   = "ini";
-    sha256 = "0kh539ajs00ciiizf9dbf0244hfgwcflz1plk8prj4iw9070air7";
+    sha256 = "0drj5dis3bw96ac3whprzyqx3ly859b1fg94rikxd8113lqw5il6";
   };
 
   iter = buildFromGitHub {

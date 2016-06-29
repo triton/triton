@@ -1,15 +1,23 @@
-{ stdenv, fetchurl, libarchive }:
+{ stdenv
+, fetchurl
+, libarchive
+}:
 
+let
+  version = "20160607";
+  id = "26083";
+in
 stdenv.mkDerivation rec {
   name = "microcode-intel-${version}";
-  version = "20151106";
 
   src = fetchurl {
-    url = "http://downloadmirror.intel.com/25512/eng/microcode-${version}.tgz";
-    sha256 = "1rqphxk2q9470bf6bmd3kvrp8sx0faiizs2jwrmncrzgkr43jvh9";
+    url = "https://downloadmirror.intel.com/${id}/eng/microcode-${version}.tgz";
+    sha256 = "db821eb47af2caa39613caee0eb89a9584b2ebc4a9ab1b9624fe778f9a41fa7d";
   };
 
-  buildInputs = [ libarchive ];
+  nativeBuildInputs = [
+    libarchive
+  ];
 
   sourceRoot = ".";
 

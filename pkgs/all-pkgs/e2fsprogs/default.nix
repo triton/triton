@@ -1,18 +1,30 @@
 { stdenv
 , fetchurl
 
+, fuse
 , util-linux_lib
 }:
 
+let
+  version = "1.43.1";
+  name = "e2fsprogs-${version}";
+
+  baseTarballs = [
+    "mirror://kernel/linux/kernel/people/tytso/e2fsprogs/v${version}/${name}.tar"
+    "mirror://sourceforge/e2fsprogs/${name}.tar"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "e2fsprogs-1.42.13";
+  inherit name;
 
   src = fetchurl {
-    url = "mirror://sourceforge/e2fsprogs/${name}.tar.gz";
-    sha256 = "1m72lk90b5i3h9qnmss6aygrzyn8x2avy3hyaq2fb0jglkrkz6ar";
+    urls = map (n: "${n}.xz") baseTarballs;
+    allowHashOutput = false;
+    sha256 = "97e36a029224e2606baa6e9ea693b04a4d192ccd714572a1b50a2df9c687b23d";
   };
 
   buildInputs = [
+    fuse
     util-linux_lib
   ];
 
@@ -20,17 +32,15 @@ stdenv.mkDerivation rec {
     "--enable-symlink-install"
     "--enable-relative-symlinks"
     "--enable-symlink-relative-symlinks"
-    "--disable-compression"
-    "--enable-htree"
     "--enable-elf-shlibs"
     "--disable-profile"
     "--disable-gcov"
+    "--enable-hardening"
     "--disable-jbd-debug"
     "--disable-blkid-debug"
     "--disable-testio-debug"
     "--disable-libuuid"
     "--disable-libblkid"
-    "--enable-quota"
     "--disable-backtrace"
     "--disable-debugfs"
     "--enable-imager"
@@ -39,7 +49,12 @@ stdenv.mkDerivation rec {
     "--enable-fsck"
     "--disable-e2initrd-helper"
     "--enable-tls"
-    "--disable-uuidd"  # Build is broken in 1.42.13
+    "--disable-uuidd"  # Build is broken in 1.43.1
+    "--enable-mmp"
+    "--enable-tdb"
+    "--enable-bmap-stats"
+    "--enable-bmap-stats-ops"
+    "--enable-fuse2fs"
   ];
 
   installFlags = [
@@ -51,9 +66,19 @@ stdenv.mkDerivation rec {
     "install-libs"
   ];
 
-  # Both have problems with make 4.2
-  parallelBuild = false;
+  # Parallel install is broken
   parallelInstall = false;
+
+  passthru = {
+    srcVerified = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sign") baseTarballs;
+      pgpDecompress = true;
+      pgpKeyFingerprint = "3AB0 57B7 E78D 945C 8C55  91FB D36F 769B C118 04F0";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
+
 
   meta = with stdenv.lib; {
     homepage = http://e2fsprogs.sourceforge.net/;

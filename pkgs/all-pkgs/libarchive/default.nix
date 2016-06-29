@@ -15,12 +15,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libarchive-3.2.0";
+  name = "libarchive-3.2.1";
 
   src = fetchurl {
     url = "http://www.libarchive.org/downloads/${name}.tar.gz";
-    multihash = "QmXD2sW57EwFZVbtMoLshcvz5M1tDfAw9yScqhtvGZGAdn";
-    sha256 = "11xabdpmvdmcdkidigmqh4ymhra95lr7ipcys4hdq0gzf7ylbkkv";
+    multihash = "QmPRAWZWdDp1TzKruFjk8rsnzyyQ5fsu8R1bipX76XPYLc";
+    sha256 = "1lngng84k1kkljl74q0cdqc3s82vn2kimfm02dgm4d6m7x71mvkj";
   };
 
   buildInputs = [

@@ -2265,6 +2265,8 @@ zenity = callPackage ../all-pkgs/zenity {
   webkitgtk = null;
 };
 
+zeromq = callPackage ../all-pkgs/zeromq { };
+
 zip = callPackage ../all-pkgs/zip { };
 
 zlib = callPackage ../all-pkgs/zlib { };
@@ -8001,11 +8003,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  zlibStatic = lowPrio (appendToName "static" (callPackage ../development/libraries/zlib {
 #    static = true;
 #  }));
-#
-#  zeromq2 = callPackage ../development/libraries/zeromq/2.x.nix {};
-#  zeromq3 = callPackage ../development/libraries/zeromq/3.x.nix {};
-  zeromq4 = callPackage ../development/libraries/zeromq/4.x.nix {};
-  zeromq = callPackageAlias "zeromq4" { };
 #
 #  cppzmq = callPackage ../development/libraries/cppzmq {};
 #

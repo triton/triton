@@ -1,7 +1,7 @@
 {
   "2.7" = {
-    versionMinor = "11";
-    sha256 = "0iiz844riiznsyhhyy962710pz228gmhv8qi3yk4w4jhmx2lqawn";
+    versionMinor = "12";
+    sha256 = "d7837121dd5652a05fef807c361909d255d173280c4e1a4ded94d73d80a1f978";
   };
   "3.3" = {
     versionMinor = "6";

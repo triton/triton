@@ -17,12 +17,12 @@
 
 stdenv.mkDerivation rec {
   name = "lxc-${version}";
-  version = "2.0.1";
+  version = "2.0.3";
 
   src = fetchurl {
     url = "https://linuxcontainers.org/downloads/lxc/lxc-${version}.tar.gz";
     allowHashOutput = false;
-    sha256 = "e98761393e863a967d92b7568218d86cb746c674726da0dc54e5c63d99d18e50";
+    sha256 = "82df40a0cdd44639ee677d560be95348de48afa93a10a20e959dadb4431ee8d6";
   };
 
   nativeBuildInputs = [

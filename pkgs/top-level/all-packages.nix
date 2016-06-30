@@ -528,6 +528,8 @@ arkive = callPackage ../all-pkgs/arkive { };
 
 asciidoc = callPackage ../all-pkgs/asciidoc { };
 
+asciinema = pkgs.goPackages.asciinema.bin // { outputs = [ "bin" ]; };
+
 aspell = callPackage ../all-pkgs/aspell { };
 
 atk = callPackage ../all-pkgs/atk { };

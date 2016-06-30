@@ -303,11 +303,10 @@ let
   };
 
   asciinema = buildFromGitHub {
-    date = "2015-11-20";
-    rev = "a422bbe96644373c5753384a59d678f7d261ff10";
+    rev = "v1.2.0";
     owner  = "asciinema";
     repo   = "asciinema";
-    sha256 = "1qfq4ax68d7a3ixl60fb8kgyk0qx0mf7rrk562cnkpgzrhkdcm0w";
+    sha256 = "1vzcbrnd4367qkc5azqz48y97kkj7szdwzjrngx9dq5sgz6laxm0";
   };
 
   asn1-ber = buildFromGitHub {

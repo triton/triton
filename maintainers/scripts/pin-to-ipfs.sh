@@ -30,9 +30,11 @@ done < <(git rev-list "$REV"..HEAD --objects | grep '\.nix$' | awk '{print $1}')
 popd >/dev/null
 cat "$TMPDIR/hashes" | sort | uniq > "$TMPDIR/hashes.tmp"
 
-if ! diff -q "$TMPDIR/hashes.tmp" pin-to-ipfs-hashes >/dev/null 2>&1; then
-  cp "$TMPDIR/hashes.tmp" pin-to-ipfs-hashes
-  git rev-list HEAD^..HEAD > pin-to-ipfs-rev
+if [ "update" = "$1" ]; then
+  if ! diff -q "$TMPDIR/hashes.tmp" pin-to-ipfs-hashes >/dev/null 2>&1; then
+    cp "$TMPDIR/hashes.tmp" pin-to-ipfs-hashes
+    git rev-list HEAD^..HEAD > pin-to-ipfs-rev
+  fi
 fi
 
 declare -A current
@@ -49,7 +51,7 @@ while read HASH; do
   if [ "${current[$HASH]}" != "1" ]; then
     ARGS+=("-" "$HASH" "fetch" "$HASH")
   fi
-done < <(cat pin-to-ipfs-hashes)
+done < <(cat "$TMPDIR/hashes.tmp")
 if [ "${#ARGS[@]}" -gt "0" ]; then
   concurrent "${ARGS[@]}"
 fi

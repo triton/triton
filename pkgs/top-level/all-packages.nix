@@ -2112,6 +2112,8 @@ syncthing = pkgs.goPackages.syncthing.bin // { outputs = [ "bin" ]; };
 
 syslinux = callPackage ../all-pkgs/syslinux { };
 
+sysstat = callPackage ../all-pkgs/sysstat { };
+
 # TODO: Rename back to systemd once depedencies are sorted
 systemd_full = callPackage ../all-pkgs/systemd { };
 
@@ -9207,8 +9209,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  sysklogd = callPackage ../os-specific/linux/sysklogd { };
 #
-  sysstat = callPackage ../os-specific/linux/sysstat { };
-
 #  # In nixos, you can set systemd.package = pkgs.systemd_with_lvm2 to get
 #  # LVM2 working in systemd.
   systemd_with_lvm2 = pkgs.lib.overrideDerivation pkgs.systemd (p: {

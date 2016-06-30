@@ -132,6 +132,9 @@ stdenv.mkDerivation rec {
     psqlSchema = channel;
   };
 
+  # Sometimes fails
+  parallelInstall = false;
+
   meta = with stdenv.lib; {
     homepage = http://www.postgresql.org/;
     description = "A powerful, open source object-relational database system";

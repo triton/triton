@@ -41,4 +41,8 @@
   "bash43-040" = "0sypv66vsldmc95gwvf7ylz1k7y37vnvdsjg8ajjr6b2j9mkkfw4";
   "bash43-041" = "06ic2gdpbi1afik3wqf9d4vh95if4bz8bmhcgr555621dsb35i2f";
   "bash43-042" = "06a90k0p6bqc4wk2dsmapna69124an76xvlnlj3xm497vci968dc";
+  "bash43-043" = "1031g97w8gamimb41jr9r2qm7mn10k5mr3sd3y12avml0p0a7a27";
+  "bash43-044" = "16bzaq9fs2kaw2n2k6vvljkjw5k5kx06isnq8hxkfrxz60384f4k";
+  "bash43-045" = "08q02mj9imp2njpgm6f5q5m61i7qzp33rbxxzarixalyisbw6vms";
+  "bash43-046" = "13v8dymwj83wcvrfayjqrs5kqar05bcj4zpiacrjkkchnsk5dd5k";
 }

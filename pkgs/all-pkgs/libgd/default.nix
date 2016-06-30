@@ -11,12 +11,15 @@
 , zlib
 }:
 
+let
+  version = "2.2.2";
+in
 stdenv.mkDerivation rec {
-  name = "gd-2.1.1";
+  name = "libgd-${version}";
   
   src = fetchurl {
-    url = "https://github.com/libgd/libgd/releases/download/${name}/lib${name}.tar.xz";
-    sha256 = "11djy9flzxczphigqgp7fbbblbq35gqwwhn9xfcckawlapa1xnls";
+    url = "https://github.com/libgd/libgd/releases/download/gd-${version}/${name}.tar.xz";
+    sha256 = "489f756ce07f0c034b1a794f4d34fdb4d829256112cb3c36feb40bb56b79218c";
   };
 
   buildInputs = [

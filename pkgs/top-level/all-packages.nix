@@ -921,8 +921,6 @@ gconf = callPackage ../all-pkgs/gconf { };
 
 gcr = callPackage ../all-pkgs/gcr { };
 
-gd = callPackage ../all-pkgs/gd { };
-
 gdk-pixbuf_wrapped = callPackage ../all-pkgs/gdk-pixbuf { };
 gdk-pixbuf_unwrapped = callPackage ../all-pkgs/gdk-pixbuf/unwrapped.nix { };
 gdk-pixbuf = callPackageAlias "gdk-pixbuf_wrapped" { };
@@ -1355,6 +1353,8 @@ libffi = callPackage ../all-pkgs/libffi { };
 libfilezilla = callPackage ../all-pkgs/libfilezilla { };
 
 libgcrypt = callPackage ../all-pkgs/libgcrypt { };
+
+libgd = callPackage ../all-pkgs/libgd { };
 
 libgdata = callPackage ../all-pkgs/libgdata { };
 

@@ -6,13 +6,13 @@
 
 stdenv.mkDerivation rec {
   name = "libmsgpack-${version}";
-  version = "1.4.2";
+  version = "2.0.0";
 
   src = fetchFromGitHub {
     owner = "msgpack";
     repo = "msgpack-c";
     rev = "cpp-${version}";
-    sha256 = "2434b0015505f320088b6604feefb69856698f3a291cad83dbc1f2f8486f7b59";
+    sha256 = "147c7098de86025021de83b8921e2a197ab6520e6cba79d97b1ef31d0e162b92";
   };
 
   nativeBuildInputs = [

@@ -3,18 +3,26 @@
 , m4
 }:
 
+let
+  version = "6.1.1";
+
+  tarballUrls = version: [
+    "mirror://gnu/gmp/gmp-${version}.tar.bz2"
+    "ftp://ftp.gmplib.org/pub/gmp-${version}/gmp-${version}.tar.bz2"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "gmp-6.1.0";
+  name = "gmp-${version}";
 
   src = fetchurl {
-    urls = [
-      "mirror://gnu/gmp/${name}.tar.bz2"
-      "ftp://ftp.gmplib.org/pub/${name}/${name}.tar.bz2"
-    ];
-    sha256 = "1s3kddydvngqrpc6i1vbz39raya2jdcl042wi0ksbszgjjllk129";
+    urls = tarballUrls version;
+    allowHashOutput = false;
+    sha256 = "a8109865f2893f1373b0a8ed5ff7429de8db696fc451b1036bd7bdf95bbeffd6";
   };
 
-  nativeBuildInputs = [ m4 ];
+  nativeBuildInputs = [
+    m4
+  ];
 
   configureFlags = [
     "--with-pic"
@@ -23,6 +31,17 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = true;
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "6.1.1";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "343C 2FF0 FBEE 5EC2 EDBE  F399 F359 9FF8 28C6 7298";
+      inherit (src) outputHashAlgo;
+      outputHash = "a8109865f2893f1373b0a8ed5ff7429de8db696fc451b1036bd7bdf95bbeffd6";
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = "http://gmplib.org/";

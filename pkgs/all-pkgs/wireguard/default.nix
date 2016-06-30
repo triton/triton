@@ -9,13 +9,16 @@ let
   inherit (stdenv.lib)
     optionals
     optionalString;
+
+  rev = "9a052f64952cf7533ab6c4d0725bed5dec8e00b0";
+  date = "2016-06-30";
 in
 stdenv.mkDerivation {
-  name = "wireguard-2016-06-29";
+  name = "wireguard-${date}";
 
   src = fetchzip {
-    url = "https://git.zx2c4.com/WireGuard/snapshot/WireGuard-ac2986638f3713020be3375c56fcdf8cb0661edf.tar.xz";
-    sha256 = "dab41820effc6709d703395370e5296422749b5179dfa913cf3894e0f3221770";
+    url = "https://git.zx2c4.com/WireGuard/snapshot/WireGuard-${rev}.tar.xz";
+    sha256 = "e98fa071a874557f0f13ea03969f6321378e186149129817acf2a785b8364ae6";
   };
 
   buildInputs = optionals (kernel == null) [

@@ -36,6 +36,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "Open source implementation of a 16bit X86 BIOS";
     homepage = http://www.seabios.org;
+    broken = true;
     license = licenses.lgpl3;
     maintainers = with maintainers; [
       wkennington

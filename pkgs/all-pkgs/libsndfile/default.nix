@@ -1,10 +1,17 @@
 { stdenv
 , fetchurl
 
+, alsa-lib
 , flac
 , libogg
 , libvorbis
 }:
+
+let
+  inherit (stdenv.lib)
+    enFlag
+    optionalString;
+in
 
 stdenv.mkDerivation rec {
   name = "libsndfile-1.0.27";
@@ -17,9 +24,26 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
+    alsa-lib
     flac
     libogg
     libvorbis
+  ];
+
+  configureFlags = [
+    "--disable-experimental"
+    "--disable-werror"
+    "--disable-stack-smash-protection"
+    "--disable-gcc-pipe"
+    #"--enable-cpu-clip"
+    "--disable-sqlite"
+    "--enable-alsa"
+    "--enable-external-libs"
+    "--disable-octave"
+    "--disable-test-coverage"
+    "--without-octave"
+    "--without-mkoctfile"
+    "--without-octave-config"
   ];
 
   passthru = {
@@ -36,6 +60,7 @@ stdenv.mkDerivation rec {
     homepage = http://www.mega-nerd.com/libsndfile/;
     license = licenses.lgpl2Plus;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

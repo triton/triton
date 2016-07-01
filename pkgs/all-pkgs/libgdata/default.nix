@@ -23,12 +23,12 @@ in
 stdenv.mkDerivation rec {
   name = "libgdata-${version}";
   versionMajor = "0.17";
-  versionMinor = "4";
+  versionMinor = "5";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libgdata/${versionMajor}/${name}.tar.xz";
-    sha256 = "1xniw4y90hbk9fa548pa9pfclibw7amr2f458lfh16jdzq7gw5cz";
+    sha256 = "b3fbdae075aa0d83897ae0e9daf3c29075dce1724c8b8a27e0735688756355e8";
   };
 
   nativeBuildInputs = [
@@ -67,12 +67,6 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
   ];
 
-  NIX_CFLAGS_COMPILE = [
-    "-I${libsoup}/include/libsoup-gnome-2.4/"
-    "-I${gcr}/include/gcr-3"
-    "-I${gcr}/include/gck-1"
-  ];
-
   meta = with stdenv.lib; {
     description = "GLib library for online service APIs using the GData protocol";
     homepage = https://wiki.gnome.org/Projects/libgdata;
@@ -81,8 +75,7 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 
 }

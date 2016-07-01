@@ -5,11 +5,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "seabios-1.9.1";
+  name = "seabios-1.9.3";
 
   src = fetchurl {
-    url = "http://code.coreboot.org/p/seabios/downloads/get/${name}.tar.gz";
-    sha256 = "1sya3gi5gq0gj2pjvmdis64xc3j1xf0jgy49ngymap0pdpm0cmh0";
+    url = "https://code.coreboot.org/p/seabios/downloads/get/${name}.tar.gz";
+    sha256 = "1ae85dc049cdee1ca953612e9ab4cec3941a4a4e744b7036624c308781b0678d";
   };
 
   nativeBuildInputs = [
@@ -41,8 +41,7 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux
-      ++ i686-linux;
+      x86_64-linux;
   };
 }
 

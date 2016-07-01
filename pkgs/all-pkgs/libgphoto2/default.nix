@@ -4,8 +4,8 @@
 , gettext
 , libtool
 
-, gd
 , libexif
+, libgd
 , libjpeg-turbo_1-4
 #, libltdl
 , libusb
@@ -19,11 +19,11 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "libgphoto2-2.5.9";
+  name = "libgphoto2-2.5.10";
 
   src = fetchurl {
     url = "mirror://sourceforge/gphoto/${name}.tar.bz2";
-    sha256 = "0chz57rhzdz1cbdjw1q5rs439s879kk06jrci4jyn5rlm7iyic6d";
+    sha256 = "8d8668d432ba595c7466442aec2cf553bdf8782ec171291dbc65717c633a4ef2";
   };
 
   nativeBuildInputs = [
@@ -33,8 +33,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    gd
     libexif
+    libgd
     libjpeg-turbo_1-4
     libusb
     libxml2
@@ -56,7 +56,9 @@ stdenv.mkDerivation rec {
     description = "A library for accessing digital cameras";
     homepage = http://www.gphoto.org/proj/libgphoto2/;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

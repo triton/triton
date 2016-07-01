@@ -6,11 +6,11 @@
 
 stdenv.mkDerivation rec {
   name = "iasl-${version}";
-  version = "20160212";
+  version = "20160527";
 
   src = fetchurl {
     url = "https://acpica.org/sites/acpica/files/acpica-unix-${version}.tar.gz";
-    sha256 = "0hi9fj0p4agrc1i0x84n0lfr1h6lp1dp6ps1fvgzj04q5miy09md";
+    sha256 = "6b681732624de1eb58b2bcf1c7ef0744ba14ed35fcaa534d4421574782fbb848";
   };
 
   nativeBuildInputs = [
@@ -37,7 +37,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux
-      ++ i686-linux;
+      x86_64-linux;
   };
 }

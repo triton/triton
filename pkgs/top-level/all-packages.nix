@@ -1380,6 +1380,8 @@ libgpod = callPackage ../all-pkgs/libgpod {
   inherit (pkgs.pythonPackages) mutagen;
 };
 
+libgsf = callPackage ../all-pkgs/libgsf { };
+
 libgudev = callPackage ../all-pkgs/libgudev { };
 
 libgusb = callPackage ../all-pkgs/libgusb { };
@@ -7124,8 +7126,6 @@ iniparser = callPackage ../development/libraries/iniparser { };
   libsamplerate = callPackage ../development/libraries/libsamplerate { };
 #
 #  libsieve = callPackage ../development/libraries/libsieve { };
-#
-  libgsf = callPackage ../development/libraries/libgsf { };
 
   libid3tag = callPackage ../development/libraries/libid3tag { };
 

@@ -1,15 +1,16 @@
 { stdenv
 , fetchurl
+
 # Required
 , boost
+, curl
+, fftw_double
 , icu
 , libmpdclient
 , ncurses
 , readline
-# Optional
-, curl # Lyric fetching
-, fftw_double # Visualizer screen
-, taglib # Tag editor screen
+, taglib
+
 , outputsSupport ? false # outputs screen
 , clockSupport ? false # clock screen
 }:

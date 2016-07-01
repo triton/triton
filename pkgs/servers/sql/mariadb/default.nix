@@ -1,12 +1,34 @@
-{ stdenv, fetchurl, cmake, ncurses, zlib, xz, lzo, lz4, bzip2, snappy
-, openssl, pcre, boost, judy, bison, libxml2, ninja
-, libaio, libevent, groff, jemalloc, cracklib, systemd_lib, numactl, perl
+{ stdenv
+, cmake
+, fetchurl
+, ninja
+
+, ncurses
+, zlib
+, xz
+, lzo
+, lz4
+, bzip2
+, snappy
+, openssl
+, pcre
+, boost
+, judy
+, bison
+, libxml2
+, libaio
+, libevent
+, groff
+, jemalloc
+, cracklib
+, systemd_lib
+, numactl
+, perl
 }:
 
-with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "mariadb-${version}";
-  version = "10.1.14";
+  version = "10.1.15";
 
   src = fetchurl {
     urls = map (n: "${n}/${name}/source/${name}.tar.gz") [
@@ -14,17 +36,34 @@ stdenv.mkDerivation rec {
       "http://mirror.jmu.edu/pub/mariadb"
     ];
     allowHashOutput = false;
-    sha256 = "18e71974a059a268a3f28281599607344d548714ade823d575576121f76ada13";
+    sha256 = "7cc0e55eec64e9ef48345288abe67cf36e72dd2da30d52e4726332ad2a5fea0f";
   };
 
   nativeBuildInputs = [
     cmake
     ninja
   ];
+
   buildInputs = [
-    ncurses openssl zlib xz lzo lz4 bzip2 snappy
-    pcre libxml2 boost judy bison libevent cracklib
-    jemalloc libaio systemd_lib numactl
+    ncurses
+    openssl
+    zlib
+    xz
+    lzo
+    lz4
+    bzip2
+    snappy
+    pcre
+    libxml2
+    boost
+    judy
+    bison
+    libevent
+    cracklib
+    jemalloc
+    libaio
+    systemd_lib
+    numactl
   ];
 
   cmakeFlags = [
@@ -101,9 +140,12 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "An enhanced, drop-in replacement for MySQL";
-    homepage    = https://mariadb.org/;
-    license     = stdenv.lib.licenses.gpl2;
-    maintainers = with stdenv.lib.maintainers; [ thoughtpolice wkennington ];
-    platforms   = stdenv.lib.platforms.all;
+    homepage = https://mariadb.org/;
+    license = licenses.gpl2;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

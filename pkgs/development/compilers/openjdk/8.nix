@@ -6,17 +6,22 @@
 }:
 
 let
+  inherit (stdenv)
+    targetSystem;
+  inherit (stdenv.lib)
+    elem
+    platforms;
 
   /**
-   * The JRE libraries are in directories that depend on the CPU.
+   * JRE libraries are in architecture specific directories.
    */
   architecture =
-    if stdenv.system == "i686-linux" then
+    if elem targetSystem platforms.i686-linux then
       "i386"
-    else if stdenv.system == "x86_64-linux" then
+    else if elem targetSystem platforms.x86_64-linux then
       "amd64"
     else
-      throw "openjdk requires i686-linux or x86_64 linux";
+      throw "openjdk requires i686-linux or x86_64-linux";
 
   update = "112";
   build = "01";

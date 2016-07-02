@@ -1,5 +1,22 @@
-{ stdenv, fetchurl, cpio, file, which, unzip, zip, xorg, cups, freetype
-, alsa-lib, bootjdk, cacert, perl, liberation_ttf, fontconfig, zlib
+{ stdenv
+, fetchurl
+
+, alsa-lib
+, bootjdk
+, cacert
+, cpio
+, cups
+, file
+, fontconfig
+, freetype
+, liberation_ttf
+, perl
+, unzip
+, which
+, xorg
+, zip
+, zlib
+
 , setJavaClassPath
 , minimal ? false
 , enableInfinality ? true # font rendering patch
@@ -25,6 +42,7 @@ let
 
   update = "112";
   build = "01";
+
   baseurl = "http://hg.openjdk.java.net/jdk8u/jdk8u";
   repover = "jdk8u${update}-b${build}";
 
@@ -52,20 +70,41 @@ let
 
     outputs = [ "out" "jre" ];
 
-    # Enabling optimizations breaks compilation
-    fortifySource = false;
-    optimize = false;
-
     buildInputs = [
-      cpio file which unzip zip
-      xorg.xproto xorg.inputproto xorg.libICE xorg.xextproto xorg.renderproto
-      xorg.libX11 xorg.libSM xorg.libXt xorg.libXext xorg.libXrender xorg.libXtst
-      xorg.kbproto xorg.libXi xorg.libXinerama xorg.libXcursor xorg.lndir
-      cups freetype alsa-lib perl liberation_ttf fontconfig bootjdk zlib
+      alsa-lib
+      bootjdk
+      cpio
+      cups
+      file
+      fontconfig
+      freetype
+      liberation_ttf
+      perl
+      which
+      unzip
+      xorg.inputproto
+      xorg.kbproto
+      xorg.libICE
+      xorg.libSM
+      xorg.libX11
+      xorg.libXcursor
+      xorg.libXext
+      xorg.libXi
+      xorg.libXinerama
+      xorg.libXrender
+      xorg.libXt
+      xorg.libXtst
+      xorg.lndir
+      xorg.renderproto
+      xorg.xextproto
+      xorg.xproto
+      zip
+      zlib
     ];
 
     prePatch = ''
-      ls | grep jdk | grep -v '^jdk8u' | awk -F- '{print $1}' | while read p; do
+      ls | grep jdk | grep -v '^jdk8u' | awk -F- '{print $1}' | \
+      while read p; do
         mv $p-* $(ls | grep '^jdk8u')/$p
       done
       cd $(ls | grep '^jdk8u')
@@ -78,12 +117,14 @@ let
     ] ++ (if enableInfinality then [
       ./004_add-fontconfig.patch
       ./005_enable-infinality.patch
-    ] else []);
+    ] else [ ]);
 
     preConfigure = ''
       chmod +x configure
-      substituteInPlace configure --replace /bin/bash "$shell"
-      substituteInPlace hotspot/make/linux/adlc_updater --replace /bin/sh "$shell"
+      sed -i configure \
+        -e "s,/bin/bash,$shell,"
+      sed -i hotspot/make/linux/adlc_updater \
+        -e "s,/bin/sh,$shell,"
     '';
 
     configureFlags = [
@@ -110,11 +151,6 @@ let
     NIX_LDFLAGS = if minimal then null else "-lfontconfig";
 
     buildFlags = "all";
-
-    # Explicitly does not support parallel building at all
-    parallelBuild = false;
-    parallelCheck = false;
-    parallelInstall = false;
 
     installPhase = ''
       mkdir -p $out/lib/openjdk $out/share $jre/lib/openjdk
@@ -212,17 +248,29 @@ let
       done
     '';
 
-    meta = with stdenv.lib; {
-      homepage = http://openjdk.java.net/;
-      license = licenses.gpl2;
-      description = "The open-source Java Development Kit";
-      maintainers = with maintainers; [ edwtjo ];
-      platforms = platforms.linux;
-    };
+    # Enabling optimizations breaks compilation
+    fortifySource = false;
+    optimize = false;
+
+    # Explicitly does not support parallel building at all
+    parallelBuild = false;
+    parallelCheck = false;
+    parallelInstall = false;
 
     passthru = {
       inherit architecture;
       home = "${openjdk8}/lib/openjdk";
+    };
+
+    meta = with stdenv.lib; {
+      description = "The open-source Java Development Kit";
+      homepage = http://openjdk.java.net/;
+      license = licenses.gpl2;
+      maintainers = with maintainers; [
+        wkennington
+      ];
+      platforms = with platforms;
+        x86_64-linux;
     };
   };
 in openjdk8

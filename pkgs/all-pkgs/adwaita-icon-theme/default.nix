@@ -5,17 +5,22 @@
 
 , gdk-pixbuf
 , hicolor-icon-theme
+
+, channel ? null
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
+
 stdenv.mkDerivation rec {
-  name = "adwaita-icon-theme-${version}";
-  versionMajor = "3.20";
-  #versionMinor = "0";
-  version = "${versionMajor}"; #.${versionMinor}";
+  name = "adwaita-icon-theme-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/adwaita-icon-theme/${versionMajor}/${name}.tar.xz";
-    sha256 = "7a0a887349f340dd644032f89d81264b694c4b006bd51af1c2c368d431e7ae35";
+    url = "mirror://gnome/sources/adwaita-icon-theme/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/adwaita-icon-theme/${channel}/"
+      + "${name}.sha256sum";
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -24,6 +29,7 @@ stdenv.mkDerivation rec {
   ];
 
   propagatedBuildInputs = [
+    # FIXME
     # For convenience, we specify adwaita-icon-theme only in packages
     hicolor-icon-theme
   ];

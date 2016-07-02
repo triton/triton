@@ -501,7 +501,10 @@ acpid = callPackage ../all-pkgs/acpid { };
 
 adns = callPackage ../all-pkgs/adns { };
 
-adwaita-icon-theme = callPackage ../all-pkgs/adwaita-icon-theme { };
+adwaita-icon-theme_3-20 = callPackage ../all-pkgs/adwaita-icon-theme {
+  channel = "3.20";
+};
+adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-20" { };
 
 alsa-lib = callPackage ../all-pkgs/alsa-lib { };
 

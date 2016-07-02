@@ -33,11 +33,15 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    # nls creates unused directories
-    "--disable-nls"
+    "--enable-nls"
     "--enable-w32-cursors"
-    "--disable-l-xl-variants"
+    "--enable-l-xl-variants"
   ];
+
+  preInstall = ''
+    # Install fails to create these directories automatically
+    mkdir -pv $out/share/icons/Adwaita-{,Extra}Large/cursors
+  '';
 
   doCheck = false;
 

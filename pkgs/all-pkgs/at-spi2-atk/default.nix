@@ -11,24 +11,25 @@
 , glib
 
 , libxml2
+
+, channel ? null
 }:
 
 let
   inherit (stdenv.lib)
     optionals
     wtFlag;
+  source = (import ./sources.nix { })."${channel}";
 in
 
 stdenv.mkDerivation rec {
-  name = "at-spi2-atk-${version}";
-  versionMajor = "2.20";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
+  name = "at-spi2-atk-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/at-spi2-atk/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/at-spi2-atk/${versionMajor}/${name}.sha256sum";
-    sha256 = "2358a794e918e8f47ce0c7370eee8fc8a6207ff1afe976ec9ff547a03277bf8e";
+    url = "mirror://gnome/sources/at-spi2-atk/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/at-spi2-atk/${channel}/"
+      + "${name}.sha256sum";
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [

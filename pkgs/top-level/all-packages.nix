@@ -541,7 +541,10 @@ atkmm = callPackage ../all-pkgs/atkmm { };
 
 attr = callPackage ../all-pkgs/attr { };
 
-at-spi2-atk = callPackage ../all-pkgs/at-spi2-atk { };
+at-spi2-atk_2-20 = callPackage ../all-pkgs/at-spi2-atk {
+  channel = "2.20";
+};
+at-spi2-atk = callPackageAlias "at-spi2-atk_2-20" { };
 
 at-spi2-core = callPackage ../all-pkgs/at-spi2-core { };
 

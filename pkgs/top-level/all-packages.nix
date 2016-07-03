@@ -1209,6 +1209,8 @@ id3v2 = callPackage ../all-pkgs/id3v2 { };
 
 imagemagick = callPackage ../all-pkgs/imagemagick { };
 
+iniparser = callPackage ../all-pkgs/iniparser { };
+
 inkscape = callPackage ../all-pkgs/inkscape { };
 
 intltool = callPackage ../all-pkgs/intltool { };
@@ -6833,8 +6835,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  indicator-application-gtk3 = callPackage ../development/libraries/indicator-application/gtk3.nix { };
 #
 #  indilib = callPackage ../development/libraries/indilib { };
-#
-iniparser = callPackage ../development/libraries/iniparser { };
 #
 #  ip2location-c = callPackage ../development/libraries/ip2location-c { };
 #

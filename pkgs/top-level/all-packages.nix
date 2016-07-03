@@ -667,15 +667,17 @@ cmake = callPackage ../all-pkgs/cmake { };
 
 cogl = callPackage ../all-pkgs/cogl { };
 
+colord = callPackage ../all-pkgs/colord { };
+
+colord-gtk = callPackage ../all-pkgs/colord-gtk { };
+
 conntrack-tools = callPackage ../all-pkgs/conntrack-tools { };
 
 consul = pkgs.goPackages.consul.bin // { outputs = [ "bin" ]; };
 
-consul-ui = callPackage ../all-pkgs/consul-ui { };
-
 consul-template = pkgs.goPackages.consul-template.bin // { outputs = [ "bin" ]; };
 
-colord = callPackage ../all-pkgs/colord { };
+consul-ui = callPackage ../all-pkgs/consul-ui { };
 
 coreutils = callPackage ../all-pkgs/coreutils { };
 
@@ -2876,8 +2878,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  citrix_receiver = callPackage ../applications/networking/remote/citrix-receiver { };
 #
 #  cmst = qt5.callPackage ../tools/networking/cmst { };
-#
-  colord-gtk = callPackage ../tools/misc/colord-gtk { };
 #
 #  colordiff = callPackage ../tools/text/colordiff { };
 #

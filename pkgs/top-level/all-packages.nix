@@ -2267,6 +2267,54 @@ xmlto = callPackage ../all-pkgs/xmlto { };
 
 xmltoman = callPackage ../all-pkgs/xmltoman { };
 
+xorg = recurseIntoAttrs (
+  lib.callPackagesWith pkgs ../all-pkgs/xorg/default.nix {
+    inherit (pkgs)
+      asciidoc
+      autoconf
+      automake
+      autoreconfHook
+      bison
+      dbus
+      expat
+      fetchurl
+      fetchgit
+      fetchpatch
+      flex
+      fontconfig
+      freetype
+      gperf
+      intltool
+      libdrm
+      libevdev
+      libinput
+      libpng
+      libtool
+      libunwind
+      libxslt
+      m4
+      makeWrapper
+      mcpp
+      mesa_drivers
+      mtdev
+      openssl
+      perl
+      pixman
+      pkgconfig
+      python
+      spice-protocol
+      stdenv
+      systemd_lib
+      tradcpp
+      util-linux_lib
+      xmlto
+      zlib;
+    mesa = pkgs.mesa_noglu;
+  }
+);
+
+xwayland = callPackage ../all-pkgs/xorg/xwayland.nix { };
+
 xz = callPackage ../all-pkgs/xz { };
 
 yasm = callPackage ../all-pkgs/yasm { };
@@ -8596,16 +8644,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #    stdenv = clangStdenv;
 #  };
 #
-  xorg = recurseIntoAttrs (lib.callPackagesWith pkgs ../servers/x11/xorg/default.nix {
-    inherit (pkgs) fetchurl fetchgit fetchpatch stdenv pkgconfig intltool freetype fontconfig
-      libxslt expat libpng zlib perl mesa_drivers spice-protocol libunwind
-      dbus util-linux_lib openssl gperf m4 libevdev tradcpp libinput mcpp makeWrapper autoreconfHook
-      autoconf automake libtool xmlto asciidoc flex bison python mtdev pixman systemd_lib
-      libdrm;
-    mesa = pkgs.mesa_noglu;
-  });
-
-  xwayland = callPackage ../servers/x11/xorg/xwayland.nix { };
 #
 #  yaws = callPackage ../servers/http/yaws { erlang = erlangR17; };
 #

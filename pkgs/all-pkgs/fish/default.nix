@@ -4,6 +4,7 @@
 
 , ncurses
 , pcre2
+, which
 }:
 
 let
@@ -26,7 +27,14 @@ stdenv.mkDerivation rec {
     pcre2
   ];
 
+  postPatch = ''
+    sed -i 'share/functions/_.fish' \
+      -e 's,gettext ,${gettext}/bin/gettext ,g' \
+      -e 's,which ,${which}/bin/which ,'
+  '';
+
   configureFlags = [
+    "--with-gettext"
     "--without-included-pcre2"
   ];
 

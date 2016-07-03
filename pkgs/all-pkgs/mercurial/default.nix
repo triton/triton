@@ -37,6 +37,9 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
+    description = "Scalable distributed SCM";
+    homepage = https://www.mercurial-scm.org/;
+    license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington
     ];

@@ -1,10 +1,10 @@
 { stdenv
 , fetchurl
 
-, gd
 , geoip
 , gperftools
 , libatomic_ops
+, libgd
 , libxml2
 , libxslt
 , pcre
@@ -30,10 +30,10 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    gd
     geoip
     gperftools
     libatomic_ops
+    libgd
     libxml2
     libxslt
     pcre

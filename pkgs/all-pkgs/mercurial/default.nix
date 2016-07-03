@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "mercurial-3.8.1";
+  name = "mercurial-3.8.4";
 
   src = fetchurl {
     url = "https://www.mercurial-scm.org/release/${name}.tar.gz";
     allowHashOutput = false;
-    sha256 = "face1f058de5530b56b0dfd3b4d0b23d89590c588605c06f3d18b79e8c30d594";
+    sha256 = "4b2e3ef19d34fa1d781cb7425506a05d4b6b1172bab69d6ea78874175fdf3da6";
   };
 
   nativeBuildInputs = [

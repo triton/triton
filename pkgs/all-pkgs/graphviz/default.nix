@@ -9,11 +9,11 @@
 , cairo
 , devil
 , expat
-, gd
 , gts
 , fontconfig
-, libpng
+, libgd
 , libjpeg
+, libpng
 , pango
 , xorg
 , zlib
@@ -60,9 +60,9 @@ stdenv.mkDerivation rec {
   buildInputs = [
     devil
     expat
-    gd
     gts
     fontconfig
+    libgd
     libjpeg
     libpng
     pango

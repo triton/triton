@@ -145,8 +145,25 @@ let
     ]);
 
     # GCC 6 Fixes
-    CXXFLAGS = "-std=gnu++98";
-    NIX_CFLAGS_COMPILE = "-fno-delete-null-pointer-checks -fno-lifetime-dse";
+    NIX_CFLAGS_COMPILE = [
+      # FIXME: only pass C++ standard to C++ compiler, NIX_CFLAGS_COMPILE
+      #        does not differentiate between C & C++.  OpenJDK's build
+      #        system does not respect passing CXXFLAGS correctly and
+      #        sometimes misuses CFLAGS in place of CXXFLAGS. The
+      #        current solution is to pass the C++ standard to both the
+      #        C & C++ compiler and ignore the errors about an invalid
+      #        C standard in the mean time until a better solution is
+      #        proposed.
+      # https://bugzilla.redhat.com/show_bug.cgi?id=1306558
+      # http://hg.openjdk.java.net/jdk9/dev/rev/9d77f922d694
+      # http://mail.openjdk.java.net/pipermail/build-dev/2016-March/016767.html
+      # NOTE: This should be fixed in OpenJDK-9 (both gcc6 and CFLAGS vs.
+      #       CXXFLAGS)
+      "-std=gnu++98"
+      "-fno-delete-null-pointer-checks"
+      "-fno-lifetime-dse"
+      "-Wno-error"
+    ];
 
     NIX_LDFLAGS = if minimal then null else "-lfontconfig";
 

@@ -8,14 +8,15 @@
 }:
 
 let
-  version = "2.3.0";
+  version = "2.3.1";
 in
 stdenv.mkDerivation rec {
   name = "fish-${version}";
 
   src = fetchurl {
-    url = "http://fishshell.com/files/${version}/${name}.tar.gz";
-    sha256 = "1ralmp7lavdl0plc09ppm232aqsn0crxx6m3hgaa06ibam3sqawi";
+    url = "https://github.com/fish-shell/fish-shell/releases/download/${version}/${name}.tar.gz";
+    allowHashOutput = false;
+    sha256 = "328acad35d131c94118c1e187ff3689300ba757c4469c8cc1eaa994789b98664";
   };
 
   nativeBuildInputs = [
@@ -37,6 +38,15 @@ stdenv.mkDerivation rec {
     "--with-gettext"
     "--without-included-pcre2"
   ];
+
+  passthru = {
+    srcVerified = fetchurl rec {
+      failEarly = true;
+      pgpsigUrl = map (n: "${n}.asc") urls;
+      pgpKeyFingerprint = "0038 3798 6104 8788 35FA  516D 7A67 D962 D88A 709A ";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Smart and user-friendly command line shell";

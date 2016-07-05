@@ -47,7 +47,7 @@ with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
   # Use stable patch releases, e.g. -9 or -10
-  version = "6.9.3-10";
+  version = "7.0.1-10";
 
   src = fetchurl {
     urls = map (n: "${n}/ImageMagick-${version}.tar.xz") [
@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
       "mirror://imagemagick"
     ];
     allowHashOutput = false;
-    sha256 = "e33f021c879f31703f9e620f578ccf7d221a34941589da4bbe967b16a814336a";
+    sha256 = "4a17e54cd6b5f5fd0cea462dbe0cc1b74a91730d08e1d8edc4f539066feac8b8";
   };
 
   buildInputs = [

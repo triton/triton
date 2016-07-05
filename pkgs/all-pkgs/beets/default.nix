@@ -52,6 +52,7 @@
 
 # External plugins
 , enableAlternatives ? true
+, enableArtistCountry ? true
 #, enableCopyArtifacts ? true
 , enableDsedivecBeetsPlugins ? true
 }:
@@ -273,6 +274,14 @@ buildPythonPackage rec {
           fetchFromGitHub
           pythonPackages;
       }
+    ) ++ optional enableArtistCountry (
+      import ./plugins/beets-artistcountry.nix {
+        inherit
+          stdenv
+          buildPythonPackage
+          fetchFromGitHub
+          pythonPackages;
+      }
     )
     /* FIXME: Causes other plugins to fail to load
     ++ optional enableCopyArtifacts (
@@ -291,8 +300,7 @@ buildPythonPackage rec {
         inherit
           stdenv
           buildPythonPackage
-          fetchFromGitHub
-          pythonPackages;
+          fetchFromGitHub;
       }
     );
 

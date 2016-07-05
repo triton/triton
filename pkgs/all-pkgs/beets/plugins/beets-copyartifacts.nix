@@ -2,7 +2,6 @@
 , buildPythonPackage
 , fetchFromGitHub
 , fetchTritonPatch
-, pythonPackages
 }:
 
 buildPythonPackage rec {

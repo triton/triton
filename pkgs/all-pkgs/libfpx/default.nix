@@ -2,11 +2,6 @@
 , fetchurl
 }:
 
-let
-  inherit (stdenv.lib)
-    optionalString;
-in
-
 stdenv.mkDerivation rec {
   name = "libfpx-1.3.1-7";
 

@@ -1362,6 +1362,8 @@ libffi = callPackage ../all-pkgs/libffi { };
 
 libfilezilla = callPackage ../all-pkgs/libfilezilla { };
 
+libfpx = callPackage ../all-pkgs/libfpx { };
+
 libgcrypt = callPackage ../all-pkgs/libgcrypt { };
 
 libgd = callPackage ../all-pkgs/libgd { };
@@ -7036,8 +7038,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  };
 #
 #  libfprint = callPackage ../development/libraries/libfprint { };
-#
-  libfpx = callPackage ../development/libraries/libfpx { };
 #
 #  libgadu = callPackage ../development/libraries/libgadu { };
 #

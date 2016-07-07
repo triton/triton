@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "radvd-2.13";
+  name = "radvd-2.14";
   
   src = fetchurl {
     url = "http://www.litech.org/radvd/dist/${name}.tar.xz";
     allowHashOutput = false;
-    sha256 = "6a9269635e908117495dc9f79049c5fae46be5f4f3158bce6a94fd78bf79efd3";
+    sha256 = "f8133114821544c62207de8026c627086461b88650b7811b5a9c5f17fb0a4191";
   };
 
   nativeBuildInputs = [

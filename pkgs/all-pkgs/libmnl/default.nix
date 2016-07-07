@@ -3,12 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libmnl-1.0.3";
+  name = "libmnl-1.0.4";
 
   src = fetchurl {
     url = "http://netfilter.org/projects/libmnl/files/${name}.tar.bz2";
-    sha1Confirm = "c27e25f67c6422ebf893fc3a844af8085a1c5b63";
-    sha256 = "1pl4wwzl9ibn4klm60f8ynd4xrb2w6fbbfvivk165g6dk9p3653g";
+    sha1Confirm = "2db40dea612e88c62fd321906be40ab5f8f1685a";
+    sha256 = "171f89699f286a5854b72b91d06e8f8e3683064c5901fb09d954a9ab6f551f81";
   };
 
   meta = with stdenv.lib; {

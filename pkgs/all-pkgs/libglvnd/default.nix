@@ -27,7 +27,6 @@ stdenv.mkDerivation rec {
     xorg.glproto
     xorg.libX11
     xorg.libXext
-    xorg.xorgserver
     xorg.xproto
   ];
 

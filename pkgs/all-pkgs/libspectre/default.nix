@@ -10,7 +10,6 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "http://libspectre.freedesktop.org/releases/${name}.tar.gz";
-    sha1Url = "${url}.sha1";
     sha256 = "65256af389823bbc4ee4d25bfd1cc49023ffc29ae9f9677f2d200fa6e98bc7a8";
     allowHashOutput = false;
   };

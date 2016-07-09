@@ -4524,7 +4524,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     src = pkgs.fetchurl {
       url = "https://pypi.python.org/packages/source/d/dogpile.core/dogpile.core-0.4.1.tar.gz";
-      md5 = "01cb19f52bba3e95c9b560f39341f045";
+      sha256 = "be652fb11a8eaf66f7e5c94d418d2eaa60a2fe81dae500f3743a863cc9dbed76";
     };
 
 

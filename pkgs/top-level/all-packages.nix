@@ -1646,6 +1646,7 @@ mercurial = callPackage ../all-pkgs/mercurial { };
 
 mesa_glu =  callPackage ../all-pkgs/mesa-glu { };
 mesa_noglu = callPackage ../all-pkgs/mesa {
+  libglvnd = null;
   # makes it slower, but during runtime we link against just
   # mesa_drivers through mesa_noglu.driverSearchPath, which is overriden
   # according to config.grsecurity

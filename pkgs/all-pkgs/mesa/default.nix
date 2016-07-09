@@ -4,23 +4,22 @@
 , fetchTritonPatch
 , fetchurl
 , flex
+, gettext
 , intltool
-, python2
 , python2Packages
-, substituteAll
-
-#, libxml2Python
 
 , expat
-, file
+#, file
 , libclc
 , libdrm
 , libelf
 , libffi
+, libglvnd
 , libomxil-bellagio
 #, libva
 , libvdpau
 , llvm
+, openssl
 , systemd_lib
 , wayland
 , xorg
@@ -31,15 +30,19 @@
 }:
 
 /* Packaging design:
- * - The basic mesa ($out) contains headers and libraries (GLU is in mesa_glu now).
- *   This or the mesa attribute (which also contains GLU) are small (~ 2 MB,
- *   mostly headers) and are designed to be the buildInput of other packages.
+ * - The basic mesa ($out) contains headers and libraries (GLU is in mesa_glu
+ *   now).  This or the mesa attribute (which also contains GLU) are small
+ *   (~2MB, mostly headers) and are designed to be the buildInput of other
+ *   packages.
  * - DRI drivers are compiled into $drivers output, which is much bigger and
  *   depends on LLVM. These should be searched at runtime in
- *   "/run/opengl-driver-${stdenv.targetSystem}/lib/*" and so are kind-of impure (given by NixOS).
- *   (I suppose on non-NixOS one would create the appropriate symlinks from there.)
+ *   "/run/opengl-driver-${stdenv.targetSystem}/lib/*" and so are kind-of
+ *   impure (given by NixOS).  (I suppose on non-NixOS one would create the
+ *   appropriate symlinks from there.)
  * - libOSMesa is in $osmesa (~4 MB)
  */
+
+# FIXME: Wayland scanner
 
 let
   inherit (stdenv.lib)
@@ -58,7 +61,7 @@ in
 
 stdenv.mkDerivation rec {
   name = "mesa-noglu-${version}";
-  version = "11.2.2";
+  version = "12.0.1";
 
   src =  fetchurl {
     urls = [
@@ -70,16 +73,16 @@ stdenv.mkDerivation rec {
       "https://launchpad.net/mesa/trunk/${version}/+download/mesa-${version}.tar.xz"
     ];
     allowHashOutput = false;  # Provided by upstream directly
-    sha256 = "40e148812388ec7c6d7b6657d5a16e2e8dabba8b97ddfceea5197947647bdfb4";
+    sha256 = "bab24fb79f78c876073527f515ed871fc9c81d816f66c8a0b051d8d653896389";
   };
 
   nativeBuildInputs = [
     autoreconfHook
     bison
-    file
     flex
+    gettext
     intltool
-    python2
+    python2Packages.python
     python2Packages.Mako
     xorg.makedepend
   ];
@@ -90,17 +93,19 @@ stdenv.mkDerivation rec {
     libdrm
     libelf
     libffi
+    libglvnd
     libomxil-bellagio
     # FIXME: recursive dependency
     #libva
     libvdpau
-    #libxml2Python
     llvm
+    openssl
     systemd_lib
     wayland
     xorg.dri2proto
     xorg.dri3proto
     xorg.glproto
+    xorg.libpthreadstubs
     xorg.libX11
     xorg.libxcb
     xorg.libXdamage
@@ -129,28 +134,35 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     patchShebangs .
-  '' +
-  /* Set runtime driver search path */ ''
+  '' + /* Set runtime driver search path */ ''
     sed -i src/egl/main/egldriver.c \
       -e 's,_EGL_DRIVER_SEARCH_DIR,"${driverSearchPath}",'
-
-  '' +
-  /* Substitute the path to udev */ ''
+  '' + /* Substitute the path to udev */ ''
     grep -q '@udev@' src/loader/loader.c
-    sed -i 's,@udev@,${systemd_lib},g' src/loader/loader.c
+    sed -i src/loader/loader.c \
+      -e 's,@udev@,${systemd_lib},g'
+  '' + /* Upstream incorrectly specifies PYTHONPATH explicitly, overriding
+          the build environments PYTHONPATH */ ''
+    sed -e 's,PYTHONPATH=,PYTHONPATH=$(PYTHONPATH):,g' \
+      -i src/mesa/drivers/dri/i965/Makefile.am \
+      -i src/gallium/drivers/freedreno/Makefile.am
   '';
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-largefile"
-    "--disable-debug"
+    # TODO: Power 8 support
+    "--disable-pwr8-inst"
     # slight performance degradation, enable only for grsec
     (enFlag "glx-rts" grsecEnabled null)
+    "--disable-debug"
+    "--disable-profile"
+    (enFlag "libglvnd" (libglvnd != null) null)
     "--disable-mangling"
     (enFlag "texture-float" enableTextureFloats null)
     "--enable-asm"
-    # TODO: add selinux support
+    # TODO: selinux support
     "--disable-selinux"
     "--enable-opengl"
     "--enable-gles1"
@@ -167,6 +179,7 @@ stdenv.mkDerivation rec {
     "--enable-xvmc"
     "--enable-vdpau"
     "--enable-omx"
+    # FIXME: libva recursively depends on mesa
     #"--enable-va"
     # TODO: Figure out how to enable opencl without having a
     #       runtime dependency on clang
@@ -175,23 +188,27 @@ stdenv.mkDerivation rec {
     #        clang/Frontend/CompilerInstance.h: No such file
     "--disable-opencl"
     "--disable-opencl-icd"
-    "--disable-xlib-glx"
-    "--disable-r600-llvm-compiler"
     "--disable-gallium-tests"
     "--enable-shared-glapi"
+    "--enable-shader-cache"
     "--enable-sysfs"
-    "--enable-driglx-direct" # seems enabled anyway
+    "--enable-driglx-direct"
     "--enable-glx-tls"
     "--disable-glx-read-only-text"
     "--enable-gallium-llvm"
     "--disable-llvm-shared-libs"
+    "--disable-valgrind"
 
     #gl-lib-name=GL
     #osmesa-libname=OSMesa
     "--with-gallium-drivers=svga,i915,ilo,r300,r600,radeonsi,nouveau,freedreno,swrast"
+    "--with-sha1=libcrypto"
     "--with-dri-driverdir=$(drivers)/lib/dri"
     "--with-dri-searchpath=${driverSearchPath}/lib/dri"
     "--with-dri-drivers=i915,i965,nouveau,radeon,r200,swrast"
+    # TODO: vulkan support
+    #"--with-vulkan-drivers=intel"
+    #"--with-vulkan-icddir=DIR"
     #osmesa-bits=8
     #"--with-clang-libdir=${llvm}/lib"
     "--with-egl-platforms=x11,wayland,drm"
@@ -203,10 +220,12 @@ stdenv.mkDerivation rec {
     #d3d-libdir
   ];
 
-  installFlags = [
-    "sysconfdir=\${out}/etc"
-    "localstatedir=\${TMPDIR}"
-  ];
+  preInstall = ''
+    installFlagsArray+=(
+      "sysconfdir=$out/etc"
+      "localstatedir=$TMPDIR"
+    )
+  '';
 
   # move gallium-related stuff to $drivers, so $out doesn't depend on LLVM;
   #   also move libOSMesa to $osmesa, as it's relatively big
@@ -227,25 +246,31 @@ stdenv.mkDerivation rec {
 
     mv -t $osmesa/lib/pkgconfig/ \
       $out/lib/pkgconfig/osmesa.pc
-
   '' + /* fix references in .la files */ ''
     sed "/^libdir=/s,$out,$osmesa," -i \
       $osmesa/lib/libOSMesa*.la
-
   '' + /* work around bug #529, but maybe $drivers should also be patchelf'd */ ''
-    find $drivers/ $osmesa/ -type f -executable -print0 | xargs -0 strip -S || true
-
+    find $drivers/ $osmesa/ -type f -executable -print0 | \
+      xargs -0 strip -S || true
   '' + /* add RPATH so the drivers can find the moved libgallium and libdricore9 */ ''
     for lib in $drivers/lib/*.so* $drivers/lib/*/*.so*; do
-      if [[ ! -L "$lib" ]]; then
-        patchelf --set-rpath "$(patchelf --print-rpath $lib):$drivers/lib" "$lib"
+      if [[ ! -L "$lib" ]] ; then
+        patchelf \
+          --set-rpath "$(patchelf \
+          --print-rpath $lib):$drivers/lib" \
+          "$lib"
       fi
     done
   '' + /* set the default search path for DRI drivers; used e.g. by X server */ ''
-    substituteInPlace "$out/lib/pkgconfig/dri.pc" --replace '$(drivers)' "${driverSearchPath}"
+    sed -i "$out/lib/pkgconfig/dri.pc" \
+      -e 's,$(drivers),${driverSearchPath},'
   '';
 
-  outputs = [ "out" "drivers" "osmesa" ];
+  outputs = [
+    "out"
+    "drivers"
+    "osmesa"
+  ];
 
   doCheck = false;
 

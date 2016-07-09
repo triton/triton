@@ -6,11 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libspectre-0.2.7";
+  name = "libspectre-0.2.8";
 
-  src = fetchurl {
+  src = fetchurl rec {
     url = "http://libspectre.freedesktop.org/releases/${name}.tar.gz";
-    sha256 = "1v63lqc6bhhxwkpa43qmz8phqs8ci4dhzizyy16d3vkb20m846z8";
+    sha1Url = "${url}.sha1";
+    sha256 = "65256af389823bbc4ee4d25bfd1cc49023ffc29ae9f9677f2d200fa6e98bc7a8";
+    allowHashOutput = false;
   };
 
   buildInputs = [
@@ -36,15 +38,26 @@ stdenv.mkDerivation rec {
 
   doCheck = false;
 
+  passthru = {
+    srcVerification = fetchurl rec {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha1Urls = map (n: "${n}.sha1.asc") src.urls;
+      pgpKeyFingerprint = "E5E3 7500 1A75 9F58 1AC5  6C31 8F10 4E6A 523E 6462";
+      failEarly = true;
+    };
+  };
+
   meta = with stdenv.lib; {
     description = "PostScript rendering library";
     homepage = http://libspectre.freedesktop.org/;
-    license = stdenv.lib.licenses.gpl2Plus;
+    license = licenses.gpl2Plus;
     maintainers = with maintainers; [
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -53,7 +53,7 @@ assert editedCabalFile != null -> revision != null;
 let
 
   inherit (stdenv.lib) optional optionals optionalString versionOlder
-                       concatStringsSep enableFeature optionalAttrs toUpper;
+                       concatStringsSep enFlag optionalAttrs toUpper;
 
   isGhcjs = ghc.isGhcjs or false;
 
@@ -86,13 +86,17 @@ let
     (optionalString (enableSharedExecutables) "--ghc-option=-optl=-Wl,-rpath=$out/lib/${ghc.name}/${pname}-${version}")
     (optionalString enableParallelBuilding "--ghc-option=-j$NIX_BUILD_CORES")
     (optionalString useCpphs "--with-cpphs=${cpphs}/bin/cpphs --ghc-options=-cpp --ghc-options=-pgmP${cpphs}/bin/cpphs --ghc-options=-optP--cpp")
-    (enableFeature enableSplitObjs "split-objs")
-    (enableFeature enableLibraryProfiling "library-profiling")
-    (enableFeature enableExecutableProfiling (if versionOlder ghc.version "8" then "executable-profiling" else "profiling"))
-    (enableFeature enableSharedLibraries "shared")
-    (optionalString (isGhcjs || versionOlder "7" ghc.version) (enableFeature enableStaticLibraries "library-vanilla"))
-    (optionalString (isGhcjs || versionOlder "7.4" ghc.version) (enableFeature enableSharedExecutables "executable-dynamic"))
-    (optionalString (isGhcjs || versionOlder "7" ghc.version) (enableFeature doCheck "tests"))
+    (enFlag "split-objs" enableSplitObjs null)
+    (enFlag "library-profiling" enableLibraryProfiling null)
+    (enFlag (
+      if versionOlder ghc.version "8" then
+        "executable-profiling"
+      else
+        "profiling") enableExecutableProfiling null)
+    (enFlag "shared" enableSharedLibraries null)
+    (optionalString (isGhcjs || versionOlder "7" ghc.version) (enFlag "library-vanilla" enableStaticLibraries null))
+    (optionalString (isGhcjs || versionOlder "7.4" ghc.version) (enFlag "executable-dynamic" enableSharedExecutables null))
+    (optionalString (isGhcjs || versionOlder "7" ghc.version) (enFlag "tests" doCheck null))
   ] ++ optionals isGhcjs [
     "--with-hsc2hs=${ghc.nativeGhc}/bin/hsc2hs"
     "--ghcjs"

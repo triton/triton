@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
 
   propagatedUserEnvPkgs = [ obex_data_server ];
 
-  configureFlags = [ (lib.enableFeature withPulseAudio "pulseaudio") ];
+  configureFlags = [ (lib.enFlag withPulseAudio "pulseaudio" null) ];
 
   postFixup = ''
     makeWrapperArgs="\

@@ -193,12 +193,6 @@ rec {
       name = builtins.head (splitString sep filename);
     in assert name !=  filename; name;
 
-
-  # Create an --{enable,disable}-<feat> string that can be passed to
-  # standard GNU Autoconf scripts.
-  enableFeature = enable: feat: "--${if enable then "enable" else "disable"}-${feat}";
-
-
   # Create a fixed width string with additional prefix to match
   # required width.
   fixedWidthString = width: filler: str:

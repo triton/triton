@@ -1,4 +1,8 @@
-{stdenv, fetchFromGitHub, perl, yasm
+{stdenv
+, fetchFromGitHub
+, perl
+, yasm
+
 , vp8DecoderSupport ? true # VP8 decoder
 , vp8EncoderSupport ? true # VP8 encoder
 , vp9DecoderSupport ? true # VP9 decoder
@@ -25,11 +29,8 @@
 , errorConcealmentSupport ? false # decoder conceals losses
 , smallSupport ? false # favor smaller binary over speed
 , postprocVisualizerSupport ? false # macro block/block level visualizers
-, unitTestsSupport ? false, curl ? null, coreutils ? null # unit tests
 , webmIOSupport ? true # input from and output to webm container
 , libyuvSupport ? true # libyuv
-, decodePerfTestsSupport ? false # build decoder perf tests with unit tests
-, encodePerfTestsSupport ? false # build encoder perf tests with unit tests
 , multiResEncodingSupport ? false # multiple-resolution encoding
 , temporalDenoisingSupport ? true # use temporal denoising instead of spatial denoising
 , coefficientRangeCheckingSupport ? false # decoder checks if intermediate transform coefficients are in valid range
@@ -42,10 +43,14 @@
 }:
 
 let
+  inherit (stdenv)
+    targetSystem;
   inherit (stdenv.lib)
-    enableFeature
+    elem
+    enFlag
     optional
-    optionals;
+    optionals
+    platforms;
 in
 
 assert vp8DecoderSupport || vp8EncoderSupport || vp9DecoderSupport || vp9EncoderSupport;
@@ -55,7 +60,6 @@ assert internalStatsSupport && (vp9DecoderSupport || vp9EncoderSupport) -> postp
    but is only executed if spatialResamplingSupport is enabled */
 assert spatialResamplingSupport;
 assert postprocVisualizerSupport -> postprocSupport;
-assert unitTestsSupport -> curl != null && coreutils != null;
 assert vp9HighbitdepthSupport -> (vp9DecoderSupport || vp9EncoderSupport);
 
 stdenv.mkDerivation rec {
@@ -69,84 +73,94 @@ stdenv.mkDerivation rec {
     sha256 = "f0c64c183973ac26c65dc53f12d83188609687943eb98ce663fe7997ec707b6d";
   };
 
-  patchPhase = ''patchShebangs .'';
+  nativeBuildInputs = [
+    perl
+    yasm
+  ];
+
+  postPatch = ''
+    patchShebangs .
+  '';
 
   configureFlags = [
-    (enableFeature (vp8EncoderSupport || vp8DecoderSupport) "vp8")
-    (enableFeature vp8EncoderSupport "vp8-encoder")
-    (enableFeature vp8DecoderSupport "vp8-decoder")
-    (enableFeature (vp9EncoderSupport || vp9DecoderSupport) "vp9")
-    (enableFeature vp9EncoderSupport "vp9-encoder")
-    (enableFeature vp9DecoderSupport "vp9-decoder")
-    (enableFeature extraWarningsSupport "extra-warnings")
-    (enableFeature werrorSupport "werror")
+    (enFlag "vp8" (vp8EncoderSupport || vp8DecoderSupport) null)
+    (enFlag "vp8-encoder" vp8EncoderSupport null)
+    (enFlag "vp8-decoder" vp8DecoderSupport null)
+    (enFlag "vp9" (vp9EncoderSupport || vp9DecoderSupport) null)
+    (enFlag "vp9-encoder" vp9EncoderSupport null)
+    (enFlag "vp9-decoder" vp9DecoderSupport null)
+    (enFlag "extra-warnings" extraWarningsSupport null)
+    (enFlag "werror" werrorSupport null)
     "--disable-install-docs"
-    (enableFeature examplesSupport "install-bins")
+    (enFlag "install-bins" examplesSupport null)
     "--enable-install-libs"
     "--disable-install-srcs"
-    (enableFeature debugSupport "debug")
-    (enableFeature gprofSupport "gprof")
-    (enableFeature gcovSupport "gcov")
+    (enFlag "debug" debugSupport null)
+    (enFlag "gprof" gprofSupport null)
+    (enFlag "gcov" gcovSupport null)
     # Required to build shared libraries
-    (enableFeature true "pic")
-    (enableFeature true "use-x86inc")  # Fixme, we are always on x86 for now
-    (enableFeature optimizationsSupport "optimizations")
-    (enableFeature runtimeCpuDetectSupport "runtime-cpu-detect")
-    (enableFeature thumbSupport "thumb")
+    (enFlag "pic" true null)
+    (enFlag "use-x86inc" true null)  # Fixme, we are always on x86 for now
+    (enFlag "optimizations" optimizationsSupport null)
+    (enFlag "runtime-cpu-detect" runtimeCpuDetectSupport null)
+    (enFlag "thumb" thumbSupport null)
     "--enable-libs"
-    (enableFeature examplesSupport "examples")
+    (enFlag "examples" examplesSupport null)
     "--disable-docs"
     "--as=yasm"
     # Limit default decoder max to WHXGA
     (if sizeLimitSupport then "--size-limit=5120x3200" else null)
-    #(enableFeature fastUnalignedSupport "fast-unaligned")
+    #(enFlag fastUnalignedSupport "fast-unaligned" null)
     "--disable-codec-srcs"
-    (enableFeature debugLibsSupport "debug-libs")
-    #(enableFeature isMips "dequant-tokens")
-    #(enableFeature isMips "dc-recon")
-    (enableFeature postprocSupport "postproc")
-    (enableFeature (postprocSupport && (vp9DecoderSupport || vp9EncoderSupport)) "vp9-postproc")
-    (enableFeature multithreadSupport "multithread")
-    (enableFeature internalStatsSupport "internal-stats")
-    #(enableFeature memTrackerSupport "mem-tracker")
-    (enableFeature spatialResamplingSupport "spatial-resampling")
-    (enableFeature realtimeOnlySupport "realtime-only")
-    (enableFeature ontheflyBitpackingSupport "onthefly-bitpacking")
-    (enableFeature errorConcealmentSupport "error-concealment")
+    (enFlag "debug-libs" debugLibsSupport null)
+    #(enFlag "dequant-tokens" isMips null)
+    #(enFlag "dc-recon" isMips null)
+    (enFlag "postproc" postprocSupport null)
+    (enFlag "vp9-postproc" (
+      postprocSupport
+      && (vp9DecoderSupport || vp9EncoderSupport)) null)
+    (enFlag "multithread" multithreadSupport null)
+    (enFlag "internal-stats" internalStatsSupport null)
+    #(enFlag "mem-tracker" memTrackerSupport null)
+    (enFlag "spatial-resampling" spatialResamplingSupport null)
+    (enFlag "realtime-only" realtimeOnlySupport null)
+    (enFlag "onthefly-bitpacking" ontheflyBitpackingSupport null)
+    (enFlag "error-concealment" errorConcealmentSupport null)
     # Shared libraries are only supported on ELF platforms
     "--disable-static --enable-shared"
-    (enableFeature smallSupport "small")
-    (enableFeature postprocVisualizerSupport "postproc-visualizer")
-    (enableFeature unitTestsSupport "unit-tests")
-    (enableFeature webmIOSupport "webm-io")
-    (enableFeature libyuvSupport "libyuv")
-    (enableFeature decodePerfTestsSupport "decode-perf-tests")
-    (enableFeature encodePerfTestsSupport "encode-perf-tests")
-    (enableFeature multiResEncodingSupport "multi-res-encoding")
-    (enableFeature temporalDenoisingSupport "temporal-denoising")
-    (enableFeature (temporalDenoisingSupport && (vp9DecoderSupport || vp9EncoderSupport)) "vp9-temporal-denoising")
-    (enableFeature coefficientRangeCheckingSupport "coefficient-range-checking")
-    (enableFeature (vp9HighbitdepthSupport && stdenv.lib.elem stdenv.targetSystem stdenv.lib.platforms.bit64) "vp9-highbitdepth")
-    (enableFeature (experimentalSpatialSvcSupport ||
-                    experimentalFpMbStatsSupport ||
-                    experimentalEmulateHardwareSupport) "experimental")
+    (enFlag "small" smallSupport null)
+    (enFlag "postproc-visualizer" postprocVisualizerSupport null)
+    (enFlag "unit-tests" false null)
+    (enFlag "webm-io" webmIOSupport null)
+    (enFlag "libyuv" libyuvSupport null)
+    (enFlag "decode-perf-tests" false null)
+    (enFlag "encode-perf-tests" false null)
+    (enFlag "multi-res-encoding" multiResEncodingSupport null)
+    (enFlag "temporal-denoising" temporalDenoisingSupport null)
+    (enFlag "vp9-temporal-denoising" (
+      temporalDenoisingSupport
+      && (vp9DecoderSupport || vp9EncoderSupport)) null)
+    (enFlag "coefficient-range-checking" coefficientRangeCheckingSupport null)
+    (enFlag  "vp9-highbitdepth"(
+      vp9HighbitdepthSupport
+      && elem targetSystem platforms.bit64) null)
+    (enFlag "experimental" (
+      experimentalSpatialSvcSupport
+      || experimentalFpMbStatsSupport
+      || experimentalEmulateHardwareSupport) null)
     # Experimental features
   ] ++ optional experimentalSpatialSvcSupport "--enable-spatial-svc"
     ++ optional experimentalFpMbStatsSupport "--enable-fp-mb-stats"
     ++ optional experimentalEmulateHardwareSupport "--enable-emulate-hardware";
 
-  nativeBuildInputs = [ perl yasm ];
-
-  buildInputs = [ ]
-    ++ optionals unitTestsSupport [ coreutils curl ];
-
   meta = with stdenv.lib; {
     description = "WebM VP8/VP9 codec SDK";
-    homepage    = http://www.webmproject.org/;
-    license     = licenses.bsd3;
-    maintainers = with maintainers; [ codyopel ];
+    homepage = http://www.webmproject.org/;
+    license = licenses.bsd3;
+    maintainers = with maintainers; [
+        codyopel
+    ];
     platforms   = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

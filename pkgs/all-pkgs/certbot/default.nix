@@ -26,13 +26,13 @@ in
 
 buildPythonPackage rec {
   name = "certbot-${version}";
-  version = "0.8.0";
+  version = "0.8.1";
 
   src = fetchFromGitHub {
     owner = "certbot";
     repo = "certbot";
     rev = "v${version}";
-    sha256 = "a49c117446578bf2557f8a5d2ceb6d546ef690c19d9a3e812759b8e7c052a48a";
+    sha256 = "48c453db74457ac88130480052246c132497fafd81c69e6ff9ff02f33243b855";
   };
 
   pythonPath = [

@@ -9,7 +9,7 @@
 , libpng
 , zlib
 
-, infinality ? true
+, infinality ? false
   , freetype2-infinality-ultimate
 
 , glib /* passthru only */
@@ -24,7 +24,7 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "freetype-2.6.3";
+  name = "freetype-2.6.4";
 
   src = fetchurl {
     urls = [
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
       "mirror://sourceforge/freetype/${name}.tar.bz2"
     ];
     allowHashOutput = false;
-    sha256 = "371e707aa522acf5b15ce93f11183c725b8ed1ee8546d7b3af549863045863a2";
+    sha256 = "5f83ce531c7035728e03f7f0421cb0533fca4e6d90d5e308674d6d313c23074d";
   };
 
   buildInputs = [

@@ -36,11 +36,11 @@ let
           "x265_${version}.tar.gz";
     sha256 = "1j0mbcf10aj6zi1nxql45f9817jd2ndcpd7x123sjmyr7q9m8iiy";
   };*/
-  version = "2016-06-14";
+  version = "2016-07-04";
   src = fetchhg {
     url = "https://bitbucket.org/multicoreware/x265";
-    rev = "78ffb67a844e3e76facf18c52790f1bd544754d6";
-    sha256 = "1yw6ygdmg93gsi40jawy2sdmqmq10jiikh27vpb4k2hwh1j0bwa3";
+    rev = "a932b4366235ab6597c8d124c1569dade6ff790a";
+    sha256 = "0j5191dd3p1s657ls5v0511jhddw6h4qniz8ds0j45p5xyl7l4gp";
   };
   cmakeFlagsAll = [
     (cmFlag "ENABLE_TESTS" false)

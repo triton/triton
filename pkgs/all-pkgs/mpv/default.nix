@@ -50,11 +50,11 @@ in
 
 stdenv.mkDerivation rec {
   name = "mpv-${version}";
-  version = "0.18.0";
+  version = "0.18.1";
 
   src = fetchurl {
     url = "https://github.com/mpv-player/mpv/archive/v${version}.tar.gz";
-    sha256 = "b656638d4f6bce2621baaacb60d8be384aa492fcd86dfd43996aaa2c16fee02b";
+    sha256 = "e413d57fec4ad43b9f9b848f38d13fb921313fc9a4a64bf1e906c8d0f7a46329";
   };
 
   nativeBuildInputs = [

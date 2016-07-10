@@ -52,7 +52,7 @@
 
 # External plugins
 , enableAlternatives ? true
-, enableArtistCountry ? true
+#, enableArtistCountry ? true
 #, enableCopyArtifacts ? true
 , enableDsedivecBeetsPlugins ? true
 }:
@@ -274,7 +274,11 @@ buildPythonPackage rec {
           fetchFromGitHub
           pythonPackages;
       }
-    ) ++ optional enableArtistCountry (
+    )
+    # FIXME: Causes other plugins to fail to load
+    #  - Needs to use beets logging instead of printing error messages
+    #  - Needs musicbrainz fixes
+    /*++ optional enableArtistCountry (
       import ./plugins/beets-artistcountry.nix {
         inherit
           stdenv
@@ -282,9 +286,9 @@ buildPythonPackage rec {
           fetchFromGitHub
           pythonPackages;
       }
-    )
-    /* FIXME: Causes other plugins to fail to load
-    ++ optional enableCopyArtifacts (
+    )*/
+    # FIXME: Causes other plugins to fail to load
+    /*++ optional enableCopyArtifacts (
       import ./plugins/beets-copyartifacts.nix {
         inherit
           stdenv

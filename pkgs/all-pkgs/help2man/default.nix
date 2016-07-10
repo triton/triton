@@ -1,6 +1,5 @@
 { stdenv
 , fetchurl
-, perl
 , gettext
 , perlPackages
 , makeWrapper
@@ -16,13 +15,13 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     makeWrapper
-    perl
+    perlPackages.perl
     gettext
   ];
 
   postInstall = ''
     wrapProgram "$out/bin/help2man" \
-      --prefix PERL5LIB : "$(echo ${perlPackages.LocaleGettext}/lib/perl*/site_perl)"
+      --prefix PERL5LIB : "$(echo ${perlPackages.LocaleGettext}/${perlPackages.perl.libPrefix})"
   '';
 
   meta = with stdenv.lib; {

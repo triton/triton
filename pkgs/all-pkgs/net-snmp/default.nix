@@ -2,7 +2,7 @@
 , fetchTritonPatch
 , fetchurl
 , file
-, perl
+, perlPackages
 , unzip
 
 , openssl
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     file
-    perl
+    perlPackages.perl
     unzip
   ];
 
@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
     perlversion=$(perl -e 'use Config; print $Config{version};')
     perlarchname=$(perl -e 'use Config; print $Config{archname};')
     installFlagsArray+=(
-      "INSTALLSITEARCH=$out/lib/perl5/site_perl/$perlversion/$perlarchname"
+      "INSTALLSITEARCH=$out/${perlPackages.perl.libPrefix}/$perlversion/$perlarchname"
       "INSTALLSITEMAN3DIR=$out/share/man/man3"
     )
   '';

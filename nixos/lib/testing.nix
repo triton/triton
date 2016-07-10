@@ -23,14 +23,14 @@ rec {
         cp ${./test-driver/test-driver.pl} $out/bin/nixos-test-driver
         chmod u+x $out/bin/nixos-test-driver
 
-        libDir=$out/lib/perl5/site_perl
+        libDir=$out/${perlPackages.perl.libPrefix}
         mkdir -p $libDir
         cp ${./test-driver/Machine.pm} $libDir/Machine.pm
         cp ${./test-driver/Logger.pm} $libDir/Logger.pm
 
         wrapProgram $out/bin/nixos-test-driver \
           --prefix PATH : "${qemu_kvm}/bin:${vde2}/bin:${netpbm}/bin:${coreutils}/bin" \
-          --prefix PERL5LIB : "${with perlPackages; lib.makePerlPath [ TermReadLineGnu XMLWriter IOTty FileSlurp ]}:$out/lib/perl5/site_perl"
+          --prefix PERL5LIB : "${with perlPackages; lib.makeSearchPath "${perlPackages.perl.libPrefix}" [ TermReadLineGnu XMLWriter IOTty FileSlurp ]}:$out/${perlPackages.perl.libPrefix}"
       '';
   };
 

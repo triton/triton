@@ -15,7 +15,7 @@ let
     src = ./command-not-found.pl;
     isExecutable = true;
     inherit (pkgs) perl;
-    perlFlags = concatStrings (map (path: "-I ${path}/lib/perl5/site_perl ")
+    perlFlags = concatStrings (map (path: "-I ${path}/${pkgs.perlPackages.perl.libPrefix} ")
       [ pkgs.perlPackages.DBI pkgs.perlPackages.DBDSQLite pkgs.perlPackages.StringShellQuote ]);
   };
 

@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     for prog in xmltoman xmlmantohtml; do
       wrapProgram "$out/bin/$prog" \
         --set 'PERL5LIB' "${
-          makeSearchPath "lib/perl5/site_perl" [
+          makeSearchPath "${perlPackages.perl.libPrefix}" [
             perlPackages.XMLParser
           ]}"
     done

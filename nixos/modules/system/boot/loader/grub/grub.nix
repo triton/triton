@@ -428,10 +428,10 @@ in
       system.build.installBootLoader = pkgs.writeScript "install-grub.sh" (''
         #!${pkgs.stdenv.shell}
         set -e
-        export PERL5LIB=${makePerlPath (with pkgs.perlPackages; [ FileSlurp XMLLibXML XMLSAX XMLSAXBase ListCompare ])}
+        export PERL5LIB=${makeSearchPath "${pkgs.perlPackages.perl.libPrefix}" (with pkgs.perlPackages; [ FileSlurp XMLLibXML XMLSAX XMLSAXBase ListCompare ])}
         ${optionalString cfg.enableCryptodisk "export GRUB_ENABLE_CRYPTODISK=y"}
       '' + flip concatMapStrings cfg.mirroredBoots (args: ''
-        ${pkgs.perl}/bin/perl ${./install-grub.pl} ${grubConfig args} $@
+        ${pkgs.perlPackages.perl}/bin/perl ${./install-grub.pl} ${grubConfig args} $@
       ''));
 
       system.build.grub = grub;

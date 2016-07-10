@@ -9,7 +9,7 @@ let
     dir = "bin";
     isExecutable = true;
     src = ./nixos-container.pl;
-    perl = "${pkgs.perl}/bin/perl -I${pkgs.perlPackages.FileSlurp}/lib/perl5/site_perl";
+    perl = "${pkgs.perlPackages.perl}/bin/perl -I${pkgs.perlPackages.FileSlurp}/${pkgs.perlPackages.perl.libPrefix}";
     su = "${pkgs.shadow}/bin/su";
     inherit (pkgs) util-linux_full;
 

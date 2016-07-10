@@ -1,17 +1,23 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+
+, six
 }:
 
 buildPythonPackage rec {
   name = "cherrypy-${version}";
-  version = "5.4.0";
+  version = "6.0.2";
 
   src = fetchPyPi {
     package = "CherryPy";
     inherit version;
-    sha256 = "bc8702099f6071ddd8b6404c110e22bb93e6a007fd9455e27f056be59a2ca801";
+    sha256 = "3fce23f451c89948c585fbf4f7122f6fb688f33abcc738b781ca0d9bb794e2c5";
   };
+
+  propagatedBuildInputs = [
+    six
+  ];
 
   doCheck = false;
 

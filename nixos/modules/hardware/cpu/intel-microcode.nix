@@ -22,9 +22,11 @@ with lib;
   ###### implementation
 
   config = mkIf config.hardware.cpu.intel.updateMicrocode {
-    boot.initrd.prepend = [ "${pkgs.microcodeIntel}/intel-ucode.img" ];
+    boot.initrd.prepend = [
+      "${pkgs.intel-microcode}/intel-ucode.img"
+    ];
     system.extraDependencies = [
-      pkgs.microcodeIntel
+      pkgs.intel-microcode
     ];
   };
 

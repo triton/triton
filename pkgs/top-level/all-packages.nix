@@ -1213,6 +1213,8 @@ iniparser = callPackage ../all-pkgs/iniparser { };
 
 inkscape = callPackage ../all-pkgs/inkscape { };
 
+intel-microcode = callPackage ../all-pkgs/intel-microcode { };
+
 intltool = callPackage ../all-pkgs/intltool { };
 
 iotop = pkgs.pythonPackages.iotop;
@@ -8685,8 +8687,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   alsa-tools = callPackage ../os-specific/linux/alsa-tools { };
 
   microcodeAmd = callPackage ../os-specific/linux/microcode/amd.nix { };
-
-  microcodeIntel = callPackage ../os-specific/linux/microcode/intel.nix { };
 
 #  apparmor = callPackage ../os-specific/linux/apparmor { swig = swig_2; };
 #  libapparmor = apparmor.libapparmor;

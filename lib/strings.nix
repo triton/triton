@@ -214,10 +214,13 @@ rec {
   # Convert string to int
   # Obviously, it is a bit hacky to use fromJSON that way.
   toInt = str:
-    let may_be_int = builtins.fromJSON str; in
-    if builtins.isInt may_be_int
-    then may_be_int
-    else throw "Could not convert ${str} to int.";
+    let
+      may_be_int = builtins.fromJSON str;
+    in
+    if builtins.isInt may_be_int then
+      may_be_int
+    else
+      throw "Could not convert string to int: ${str}";
 
   # Read a list of paths from `file', relative to the `rootPath'. Lines
   # beginning with `#' are treated as comments and ignored. Whitespace

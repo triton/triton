@@ -47,20 +47,6 @@ rec {
   makeSearchPath = subDir: packages:
     concatStringsSep ":" (map (path: path + "/" + subDir) packages);
 
-
-  # Construct a library search path (such as RPATH) containing the
-  # libraries for a set of packages, e.g. "${pkg1}/lib:${pkg2}/lib:...".
-  makeLibraryPath = makeSearchPath "lib";
-
-  # Construct a binary search path (such as $PATH) containing the
-  # binaries for a set of packages, e.g. "${pkg1}/bin:${pkg2}/bin:...".
-  makeBinPath = makeSearchPath "bin";
-
-
-  # Idem for Perl search paths.
-  makePerlPath = makeSearchPath "lib/perl5/site_perl";
-
-
   # Dependening on the boolean `cond', return either the given string
   # or the empty string.
   optionalString = cond: string: if cond then string else "";

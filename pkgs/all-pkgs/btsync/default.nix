@@ -5,7 +5,7 @@
 
 let
   inherit (stdenv.lib)
-    makeLibraryPath;
+    makeSearchPath;
 in
 
 stdenv.mkDerivation rec {
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     patchelf
   ];
 
-  libPath = makeLibraryPath [
+  libPath = makeSearchPath "lib" [
     stdenv.cc.libc
   ];
 

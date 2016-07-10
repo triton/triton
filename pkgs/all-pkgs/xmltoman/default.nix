@@ -4,6 +4,11 @@
 , perlPackages
 }:
 
+let
+  inherit (stdenv.lib)
+    makeSearchPath;
+in
+
 stdenv.mkDerivation rec {
   name = "xmltoman-0.4";
 
@@ -29,7 +34,10 @@ stdenv.mkDerivation rec {
   preFixup = ''
     for prog in xmltoman xmlmantohtml; do
       wrapProgram "$out/bin/$prog" \
-        --set 'PERL5LIB' "${stdenv.lib.makePerlPath [ perlPackages.XMLParser ]}"
+        --set 'PERL5LIB' "${
+          makeSearchPath "lib/perl5/site_perl" [
+            perlPackages.XMLParser
+          ]}"
     done
   '';
 

@@ -32,7 +32,7 @@
 
 let
   inherit (stdenv.lib)
-    makeLibraryPath;
+    makeSearchPath;
 in
 
 stdenv.mkDerivation rec {
@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
     makeWrapper
   ];
 
-  atomLibs = makeLibraryPath [
+  atomLibs = makeSearchPath "lib" [
     alsa-lib
     atk
     bzip2

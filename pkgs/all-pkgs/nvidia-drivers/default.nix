@@ -53,7 +53,7 @@ let
   inherit (stdenv.lib)
     any
     elem
-    makeLibraryPath
+    makeSearchPath
     optionals
     optionalString
     platforms
@@ -166,11 +166,11 @@ stdenv.mkDerivation {
   builder = ./builder-generic.sh;
 
   libXvPath = optionalString (!libsOnly && nvidiasettingsSupport) (
-    makeLibraryPath [
+    makeSearchPath "lib" [
       xorg.libXv
     ]
   );
-  allLibPath = makeLibraryPath ([
+  allLibPath = makeSearchPath "lib" ([
     stdenv.cc.cc
     wayland
     xorg.libX11
@@ -185,7 +185,7 @@ stdenv.mkDerivation {
     xorg.libXvMC
   ]);
   gtkPath = optionalString (!libsOnly && nvidiasettingsSupport) (
-    makeLibraryPath (
+    makeSearchPath "lib" (
       [
         atk
         gdk-pixbuf_unwrapped

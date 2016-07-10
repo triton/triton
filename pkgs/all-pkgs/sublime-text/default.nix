@@ -19,7 +19,7 @@ let
   inherit (stdenv)
     system;
   inherit (stdenv.lib)
-    makeLibraryPath
+    makeSearchPath
     optionalString;
 in
 
@@ -41,7 +41,7 @@ let
       makeWrapper
     ];
 
-    libPath = makeLibraryPath [
+    libPath = makeSearchPath "lib" [
       cairo
       glib
       gtk2

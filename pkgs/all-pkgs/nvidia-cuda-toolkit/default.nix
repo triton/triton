@@ -23,7 +23,7 @@ let
     targetSystem;
   inherit (stdenv.lib)
     elem
-    makeLibraryPath
+    makeSearchPath
     platforms;
   inherit (builtins.getAttr channel (import ./sources.nix))
     rev_PPC64le
@@ -91,7 +91,7 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  rpath = "${makeLibraryPath runtimeDependencies}:${stdenv.cc.cc}/lib64";
+  rpath = "${makeSearchPath "lib" runtimeDependencies}:${stdenv.cc.cc}/lib64";
 
   unpackPhase = ''
     sh $src --keep --noexec

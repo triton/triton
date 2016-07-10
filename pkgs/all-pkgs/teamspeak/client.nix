@@ -22,7 +22,7 @@
 
 let
   inherit (stdenv.lib)
-    makeLibraryPath;
+    makeSearchPath;
 in
 
 stdenv.mkDerivation rec {
@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
     echo "patching ts3client..."
     patchelf \
       --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-      --set-rpath ${makeLibraryPath libPath}:$(cat $NIX_CC/nix-support/orig-cc)/lib64 \
+      --set-rpath ${makeSearchPath "lib" libPath}:$(cat $NIX_CC/nix-support/orig-cc)/lib64 \
       --force-rpath \
       ts3client
   '';

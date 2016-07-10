@@ -7293,7 +7293,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
     };
   };
 
-  django = self.django_1_7;
+  django = self.django_1_9;
 
   django_gis = self.django.override rec {
     patches = [
@@ -7307,12 +7307,12 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
   django_1_9 = buildPythonPackage rec {
     name = "Django-${version}";
-    version = "1.9.2";
+    version = "1.9.7";
     disabled = pythonOlder "2.7";
 
     src = pkgs.fetchurl {
-      url = "http://www.djangoproject.com/m/releases/1.9/${name}.tar.gz";
-      sha256 = "0bwapyjdl1w62cdv3kx27kj1s5zj93fyby8mhgysapdkxqi368vs";
+      url = "https://www.djangoproject.com/m/releases/1.9/${name}.tar.gz";
+      sha256 = "2b29e81c8c32b3c0d9a0119217416887c480d927ae2630bada2da83078c93bf6";
     };
 
     # patch only $out/bin to avoid problems with starter templates (see #3134)
@@ -10161,7 +10161,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       url = "https://pypi.python.org/packages/source/M/Mako/${name}.tar.gz";
       sha256 = "fed99dbe4d0ddb27a33ee4910d8708aca9ef1fe854e668387a9ab9a90cbf9059";
     };
-    
+
     buildInputs = with self; [
       markupsafe
     ];

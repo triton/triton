@@ -8,13 +8,13 @@
 
 buildPythonPackage rec {
   name = "Twisted-${version}";
-  version = "16.2.0";
+  version = "16.3.0";
 
   src = fetchPyPi {
     package = "Twisted";
     inherit version;
     type = ".tar.bz2";
-    sha256 = "a090e8dc675e97fb20c3bb5f8114ae94169f4e29fd3b3cbede35705fd3cdbd79";
+    sha256 = "d588a87243ac20e72daef520c1248cb5391e1d583999b8c29a7ae5f97474974f";
   };
 
   propagatedBuildInputs = [

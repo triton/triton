@@ -36,13 +36,16 @@ let
   inherit (stdenv.lib)
     any
     concatStringsSep
+    head
     optional
     optionals
     optionalString
+    splitString
     versionAtLeast
     versionOlder
     wtFlag;
   inherit (builtins.getAttr channel (import ./sources.nix))
+    pgpKeyFingerprint
     versionMinor
     sha256;
 in
@@ -61,6 +64,13 @@ let
       a
     else
       b;
+  # For alpha releases we need to discard a<int> from the version for
+  # part of the url.
+  baseVersionMinor =
+    let
+      s = splitString "a" versionMinor;
+    in
+    head s;
 in
 
 # Supported channels
@@ -69,6 +79,7 @@ assert any (n: n == channel) [
   "3.3"
   "3.4"
   "3.5"
+  "3.6"
 ];
 
 stdenv.mkDerivation rec {
@@ -78,8 +89,10 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "https://www.python.org/ftp/python/${version}/Python-${version}.tar.xz";
+    url = "https://www.python.org/ftp/python/"
+      + "${versionMajor}.${baseVersionMinor}/Python-${version}.tar.xz";
     inherit sha256;
+    allowHashOutput = false;
   };
 
   buildInputs = [
@@ -296,6 +309,16 @@ stdenv.mkDerivation rec {
     buildEnv = callPackage ../wrapper.nix { python = self; };
     sitePackages = "lib/${libPrefix}/site-packages";
     interpreter = "${self}/bin/${executable}";
+
+    srcVerification = fetchurl rec {
+      inherit pgpKeyFingerprint;
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+    };
   };
 
   meta = with stdenv.lib; {

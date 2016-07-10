@@ -28,7 +28,7 @@ in
       apply = list:
         {
           inherit list;
-          path = makeLibraryPath list;
+          path = makeSearchPath "lib" list;
         };
     };
 

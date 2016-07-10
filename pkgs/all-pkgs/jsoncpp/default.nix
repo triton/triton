@@ -7,13 +7,13 @@
 
 stdenv.mkDerivation rec {
   name = "jsoncpp-${version}";
-  version = "1.7.3";
+  version = "1.7.4";
 
   src = fetchFromGitHub {
     owner = "open-source-parsers";
     repo = "jsoncpp";
     rev = version;
-    sha256 = "b76245429f7bc925cb912fa81d357ae40961b43f701ad04cb939257e99bb531f";
+    sha256 = "1e65cec9dfe1a3f2719c71325855e4bfbddf7d8315add670ee5293741abc4397";
   };
 
   nativeBuildInputs = [

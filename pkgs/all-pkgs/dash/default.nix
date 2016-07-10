@@ -12,14 +12,15 @@ in
 
 stdenv.mkDerivation rec {
   name = "dash-${version}";
-  release-version = "0.5.8";
-  patch-version = "2.2";
+  release-version = "0.5.9";
+  patch-version = "0";
   version = "${release-version}.${patch-version}";
 
-  src = fetchurl {
+  src = fetchurl rec {
     url = "http://gondor.apana.org.au/~herbert/dash/files/"
         + "dash-${release-version}.tar.gz";
-    sha256 = "03y6z8akj72swa6f42h2dhq3p09xasbi6xia70h2vc27fwikmny6";
+    sha256Url = "${url}.sha256sum";
+    sha256 = "92793b14c017d79297001556389442aeb9e3c1cc559fd178c979169b1a47629c";
   };
 
   buildInputs = [
@@ -28,16 +29,11 @@ stdenv.mkDerivation rec {
 
   patches = [
     # http://debian.mirrors.pair.com/debian/pool/main/d/dash/
-    (fetchurl {
+    /*(fetchurl {
       url = "mirror://debian/pool/main/d/dash/"
           + "dash_${release-version}-${patch-version}.diff.gz";
-      sha256 = "e1a4c75d534775b9bf22366cce502e15a4973736676d76701b791d372503711e";
-    })
-    (fetchTritonPatch {
-      rev = "2e96cc8e06eaf6ad9643acd1fdddb23aba7759ea";
-      file = "dash/dash-0.5.5.1-octal.patch";
-      sha256 = "06741af243014a22ba1b530a5d4e4abd70b944dcb16f9e1ed86290745ff3dbd0";
-    })
+      sha256 = "fc7e390aec750c270ffc15a77ba861da3c931f323b2463130e1114ff47c6732b";
+    })*/
     (fetchTritonPatch {
       rev = "2e96cc8e06eaf6ad9643acd1fdddb23aba7759ea";
       file = "dash/dash-0.5.8.1-eval-warnx.patch";
@@ -66,7 +62,9 @@ stdenv.mkDerivation rec {
     description = "A POSIX-compliant implementation of /bin/sh";
     homepage = http://gondor.apana.org.au/~herbert/dash/;
     license = licenses.bsd3;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       i686-linux
       ++ x86_64-linux;

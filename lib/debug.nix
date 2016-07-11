@@ -1,51 +1,105 @@
-let lib = import ./default.nix;
+let
+  lib = import ./default.nix;
 
-inherit (builtins) trace attrNamesToStr isAttrs isFunction isList isInt
-        isString isBool head substring attrNames;
+  inherit (builtins)
+    add
+    toString
+    toXML
+    trace
+    attrNamesToStr
+    isAttrs
+    isFunction
+    isList
+    isInt
+    isString
+    isBool
+    head
+    substring
+    attrNames;
 
-inherit (lib) all id mapAttrsFlatten elem;
-
+  inherit (lib)
+    all
+    id
+    mapAttrsFlatten
+    elem;
 in
 
 rec {
 
   inherit (builtins) addErrorContext;
 
-  addErrorContextToAttrs = lib.mapAttrs (a: v: lib.addErrorContext "while evaluating ${a}" v);
+  addErrorContextToAttrs = lib.mapAttrs (a: v:
+    lib.addErrorContext "while evaluating ${a}" v
+  );
 
-  traceIf = p: msg: x: if p then trace msg x else x;
+  traceIf = p: msg: x:
+    if p then
+      trace msg x
+    else
+      x;
 
   traceVal = x: trace x x;
-  traceXMLVal = x: trace (builtins.toXML x) x;
-  traceXMLValMarked = str: x: trace (str + builtins.toXML x) x;
+  traceXMLVal = x: trace (toXML x) x;
+  traceXMLValMarked = str: x: trace (str + toXML x) x;
 
-  # this can help debug your code as well - designed to not produce thousands of lines
+  # this can help debug your code as well - designed to not produce thousands
+  # of lines
   traceShowVal = x : trace (showVal x) x;
   traceShowValMarked = str: x: trace (str + showVal x) x;
-  attrNamesToStr = a : lib.concatStringsSep "; " (map (x : "${x}=") (attrNames a));
+  attrNamesToStr = a :
+    lib.concatStringsSep "; " (map (x : "${x}=") (attrNames a));
   showVal = x :
       if isAttrs x then
-          if x ? outPath then "x is a derivation, name ${if x ? name then x.name else "<no name>"}, { ${attrNamesToStr x} }"
-          else "x is attr set { ${attrNamesToStr x} }"
-      else if isFunction x then "x is a function"
-      else if x == [] then "x is an empty list"
-      else if isList x then "x is a list, first element is: ${showVal (head x)}"
-      else if x == true then "x is boolean true"
-      else if x == false then "x is boolean false"
-      else if x == null then "x is null"
-      else if isInt x then "x is an integer `${toString x}'"
-      else if isString x then "x is a string `${substring 0 50 x}...'"
-      else "x is probably a path `${substring 0 50 (toString x)}...'";
+          if x ? outPath then
+            "x is a derivation, name "
+            + "${if x ? name then x.name else "<no name>"}, "
+            + "{ ${attrNamesToStr x} }"
+          else
+            "x is attr set { ${attrNamesToStr x} }"
+      else if isFunction x then
+        "x is a function"
+      else if x == [] then
+        "x is an empty list"
+      else if isList x then
+        "x is a list, first element is: ${showVal (head x)}"
+      else if x == true then
+        "x is boolean true"
+      else if x == false then
+        "x is boolean false"
+      else if x == null then
+        "x is null"
+      else if isInt x then
+        "x is an integer `${toString x}'"
+      else if isString x then
+        "x is a string `${substring 0 50 x}...'"
+      else
+        "x is probably a path `${substring 0 50 (toString x)}...'";
 
   # trace the arguments passed to function and its result
-  # maybe rewrite these functions in a traceCallXml like style. Then one function is enough
-  traceCall  = n : f : a : let t = n2 : x : traceShowValMarked "${n} ${n2}:" x; in t "result" (f (t "arg 1" a));
-  traceCall2 = n : f : a : b : let t = n2 : x : traceShowValMarked "${n} ${n2}:" x; in t "result" (f (t "arg 1" a) (t "arg 2" b));
-  traceCall3 = n : f : a : b : c : let t = n2 : x : traceShowValMarked "${n} ${n2}:" x; in t "result" (f (t "arg 1" a) (t "arg 2" b) (t "arg 3" c));
+  # maybe rewrite these functions in a traceCallXml like style. Then one
+  # function is enough
+  traceCall  = n : f : a :
+    let
+      t = n2 : x : traceShowValMarked "${n} ${n2}:" x;
+    in
+    t "result" (f (t "arg 1" a));
+  traceCall2 = n : f : a : b :
+    let
+      t = n2 : x : traceShowValMarked "${n} ${n2}:" x;
+    in 
+    t "result" (f (t "arg 1" a) (t "arg 2" b));
+  traceCall3 = n : f : a : b : c :
+    let
+      t = n2 : x : traceShowValMarked "${n} ${n2}:" x;
+    in
+    t "result" (f (t "arg 1" a) (t "arg 2" b) (t "arg 3" c));
 
   # FIXME: rename this?
   traceValIfNot = c: x:
-    if c x then true else trace (showVal x) false;
+    if c x then
+      true
+    else
+      trace (showVal x) false;
 
   /* Evaluate a set of tests.  A test is an attribute set {expr,
      expected}, denoting an expression and its expected result.  The
@@ -57,39 +111,60 @@ rec {
      Add attr { tests = ["testName"]; } to run these test only
   */
   runTests = tests: lib.concatLists (lib.attrValues (lib.mapAttrs (name: test:
-    let testsToRun = if tests ? tests then tests.tests else [];
-    in if (substring 0 4 name == "test" ||  elem name testsToRun)
-       && ((testsToRun == []) || elem name tests.tests)
-       && (test.expr != test.expected)
-
-      then [ { inherit name; expected = test.expected; result = test.expr; } ]
-      else [] ) tests));
+    let
+      testsToRun =
+        if tests ? tests then
+          tests.tests
+        else [ ];
+    in
+      if (substring 0 4 name == "test" ||  elem name testsToRun)
+        && ((testsToRun == []) || elem name tests.tests)
+        && (test.expr != test.expected) then [ {
+          inherit name;
+          expected = test.expected;
+          result = test.expr;
+      } ] else [ ] ) tests));
 
   # create a test assuming that list elements are true
   # usage: { testX = allTrue [ true ]; }
-  testAllTrue = expr : { inherit expr; expected = map (x: true) expr; };
+  testAllTrue = expr : {
+    inherit expr;
+    expected = map (x: true) expr;
+  };
 
   # evaluate everything once so that errors will occur earlier
   # hacky: traverse attrs by adding a dummy
   # ignores functions (should this behavior change?) See strictf
   #
-  # Note: This should be a primop! Something like seq of haskell would be nice to
-  # have as well. It's used fore debugging only anyway
+  # Note: This should be a primop! Something like seq of haskell would be nice
+  # to have as well. It's used fore debugging only anyway
   strict = x :
     let
-        traverse = x :
-          if isString x then true
-          else if isAttrs x then
-            if x ? outPath then true
-            else all id (mapAttrsFlatten (n: traverse) x)
-          else if isList x then
-            all id (map traverse x)
-          else if isBool x then true
-          else if isFunction x then true
-          else if isInt x then true
-          else if x == null then true
-          else true; # a (store) path?
-    in if traverse x then x else throw "else never reached";
+      traverse = x :
+        if isString x then
+          true
+        else if isAttrs x then
+          if x ? outPath then
+            true
+          else
+            all id (mapAttrsFlatten (n: traverse) x)
+        else if isList x then
+          all id (map traverse x)
+        else if isBool x then
+          true
+        else if isFunction x then
+          true
+        else if isInt x then
+          true
+        else if x == null then
+          true
+        else
+          true; # a (store) path?
+    in
+    if traverse x then
+      x
+    else
+      throw "else never reached";
 
   # example: (traceCallXml "myfun" id 3) will output something like
   # calling myfun arg 1: 3 result: 3
@@ -100,14 +175,17 @@ rec {
     if !isInt a then
       traceCallXml 1 "calling ${a}\n"
     else
-      let nr = a;
+      let
+        nr = a;
       in (str: expr:
-          if isFunction expr then
-            (arg:
-              traceCallXml (builtins.add 1 nr) "${str}\n arg ${builtins.toString nr} is \n ${builtins.toXML (strict arg)}" (expr arg)
-            )
-          else
-            let r = strict expr;
-            in trace "${str}\n result:\n${builtins.toXML r}" r
+        if isFunction expr then (arg:
+            traceCallXml (add 1 nr)
+              "${str}\n arg ${toString nr} is \n ${toXML (strict arg)}"
+              (expr arg)
+        ) else
+          let
+            r = strict expr;
+          in
+          trace "${str}\n result:\n${toXML r}" r
       );
 }

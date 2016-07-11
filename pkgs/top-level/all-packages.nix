@@ -548,8 +548,6 @@ at-spi2-atk = callPackageAlias "at-spi2-atk_2-20" { };
 
 at-spi2-core = callPackage ../all-pkgs/at-spi2-core { };
 
-atom = callPackage ../all-pkgs/atom { };
-
 audiofile = callPackage ../all-pkgs/audiofile { };
 
 audit_full = callPackage ../all-pkgs/audit { };

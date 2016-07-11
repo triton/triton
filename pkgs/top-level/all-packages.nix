@@ -1929,6 +1929,10 @@ python35 = hiPrio (callPackage ../all-pkgs/python {
   channel = "3.5";
   self = callPackageAlias "python35" { };
 });
+python36 = callPackage ../all-pkgs/python {
+  channel = "3.6";
+  self = callPackageAlias "python36" { };
+};
 pypy = callPackage ../all-pkgs/pypy {
   self = callPackageAlias "pypy" { };
 };
@@ -1951,6 +1955,10 @@ python34Packages = callPackage ../top-level/python-packages.nix {
 python35Packages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
   python = callPackageAlias "python35" { };
   self = callPackageAlias "python35Packages" { };
+});
+python36Packages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+  python = callPackageAlias "python36" { };
+  self = callPackageAlias "python36Packages" { };
 });
 pypyPackages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
   python = callPackageAlias "pypy" { };

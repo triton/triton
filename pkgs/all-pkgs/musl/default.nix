@@ -3,11 +3,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "musl-1.1.14";
+  name = "musl-1.1.15";
 
   src = fetchurl {
-    url = "http://www.musl-libc.org/releases/${name}.tar.gz";
-    sha256 = "1ddral87srzk741cqbfrx9aygnh8fpgfv7mjvbain2d6hh6c1xim";
+    url = "https://www.musl-libc.org/releases/${name}.tar.gz";
+    sha256 = "97e447c7ee2a7f613186ec54a93054fe15469fe34d7d323080f7ef38f5ecb0fa";
   };
 
   preConfigure = ''

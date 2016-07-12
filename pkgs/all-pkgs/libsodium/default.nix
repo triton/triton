@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   passthru = rec {
     newVersion = "1.0.9";
 
-    srcVerified = fetchurl rec {
+    srcVerification = fetchurl rec {
       failEarly = true;
       urls = genUrls newVersion;
       minisignUrls = map (n: "${n}.minisig") urls;

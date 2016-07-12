@@ -88,7 +88,7 @@ stdenv.mkDerivation rec {
 
   passthru = rec {
     newVersion = "1.14.2";
-    srcVerified = fetchurl rec {
+    srcVerification = fetchurl rec {
       failEarly = true;
       url = "${meta.homepage}dist/krb5/1.14/krb5-${newVersion}.tar.gz";
       pgpsigUrl = "${url}.asc";

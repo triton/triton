@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     # Gnupg depends on this so we have to decouple this fetch from the rest of the build.
-    srcVerified = fetchurl rec {
+    srcVerification = fetchurl rec {
       failEarly = true;
       urls = tarballUrls "3.5" "2";
       pgpsigUrls = map (n: "${n}.sig") urls;

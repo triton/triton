@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    srcVerified = fetchurl {
+    srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFingerprint = "2693 22E7 D925 5916 E039  4DD6 28FC 869A 289B 82B7";

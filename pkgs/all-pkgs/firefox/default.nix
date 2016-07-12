@@ -281,7 +281,7 @@ stdenv.mkDerivation rec {
       nspr
       version;
 
-    srcVerified = fetchurl rec {
+    srcVerification = fetchurl rec {
       failEarly = true;
       sha512Url = "${baseUrl}/SHA512SUMS";
       pgpsigSha512Url = "${sha512Url}.asc";

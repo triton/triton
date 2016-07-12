@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   };
 
   passthru = {
-    srcVerified = fetchurl rec {
+    srcVerification = fetchurl rec {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.tar.sign") baseFileUrls;
       pgpDecompress = true;

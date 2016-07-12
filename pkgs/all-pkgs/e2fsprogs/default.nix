@@ -70,7 +70,7 @@ stdenv.mkDerivation rec {
   parallelInstall = false;
 
   passthru = {
-    srcVerified = fetchurl {
+    srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sign") baseTarballs;
       pgpDecompress = true;

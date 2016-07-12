@@ -108,7 +108,7 @@ stdenv.mkDerivation rec {
   ];
 
   passthru = {
-    srcVerified = fetchurl rec {
+    srcVerification = fetchurl rec {
       failEarly = true;
       urls = tarballUrls "7.49.1";
       pgpsigUrls = map (n: "${n}.asc") urls;

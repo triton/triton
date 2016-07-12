@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   ];
 
   passthru = {
-    srcVerified = fetchurl rec {
+    srcVerification = fetchurl rec {
       failEarly = true;
       urls = tarballUrls "1.8";
       pgpsigUrls = map (n: "${n}.sig") urls;

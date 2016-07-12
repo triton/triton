@@ -133,7 +133,7 @@ stdenv.mkDerivation rec {
   parallelInstall = false;
 
   passthru = {
-    srcVerified = fetchurl {
+    srcVerification = fetchurl {
       failEarly = true;
       urls = map (n: "${n}.xz") (tarballUrls "2.28" null);
       pgpsigUrls = map (n: "${n}.sign") (tarballUrls "2.28" null);

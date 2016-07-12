@@ -43,7 +43,7 @@ let
     inherit sha256;
   };
 
-  srcVerified = fetchurl {
+  srcVerification = fetchurl {
     failEarly = true;
     pgpDecompress = true;
     pgpsigUrls = map (n: "${n}.sign") tarballUrls;
@@ -126,7 +126,7 @@ let
   passthru = {
     meta = kernel.meta // extraMeta;
 
-    inherit srcVerified;
+    inherit srcVerification;
 
     passthru = kernel.passthru // (removeAttrs passthru [ "passthru" "meta" ]);
   };

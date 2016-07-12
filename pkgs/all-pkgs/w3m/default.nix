@@ -84,7 +84,7 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    srcVerified = fetchzip {
+    srcVerification = fetchzip {
       inherit name;
       inherit (src) urls outputHash outputHashAlgo;
       allowInsecure = true;

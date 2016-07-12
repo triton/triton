@@ -87,7 +87,7 @@ stdenv.mkDerivation rec {
   parallelInstall = false;
 
   passthru = {
-    srcVerified = fetchurl {
+    srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFingerprint = "E7B2 A7F4 EC28 BE9F F8B3  8BA4 B64F FF12 09F9 FA74";

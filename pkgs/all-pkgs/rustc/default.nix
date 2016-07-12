@@ -20,7 +20,7 @@ let
 
   inherit (sources."${channel}")
     src
-    srcVerified
+    srcVerification
     version;
 in
 stdenv.mkDerivation {
@@ -54,7 +54,7 @@ stdenv.mkDerivation {
   NIX_LDFLAGS = "-L${libffi}/lib -lffi";
 
   passthru = {
-    inherit srcVerified;
+    inherit srcVerification;
   };
 
   meta = with stdenv.lib; {

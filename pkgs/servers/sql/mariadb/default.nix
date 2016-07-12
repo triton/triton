@@ -91,7 +91,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     mysqlVersion = "5.6";
-    srcVerified = fetchurl {
+    srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFingerprint = "1993 69E5 404B D5FC 7D2F  E43B CBCB 082A 1BB9 43DB";

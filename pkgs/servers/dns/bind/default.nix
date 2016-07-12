@@ -136,10 +136,10 @@ stdenv.mkDerivation rec {
   parallelInstall = false;
 
   passthru = {
-    srcVerified = fetchurl {
+    srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sha512.asc") src.urls;
-      pgpKeyFile = dhcp.srcVerified.pgpKeyFile;
+      pgpKeyFile = dhcp.srcVerification.pgpKeyFile;
       inherit (src) urls outputHashAlgo outputHash;
     };
   };

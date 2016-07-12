@@ -96,7 +96,7 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    srcVerified = fetchzip {
+    srcVerification = fetchzip {
       inherit (src) urls outputHash outputHashAlgo curlOpts;
       purgeTimestamps = true;
       allowInsecure = true;

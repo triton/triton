@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    srcVerified = fetchurl rec {
+    srcVerification = fetchurl rec {
       failEarly = true;
       sha256Urls = map (n: "${n}/SHASUMS256.txt.asc") dirUrls;
       #pgpsigSha256Urls = map (n: "${n}.asc") sha256Urls;

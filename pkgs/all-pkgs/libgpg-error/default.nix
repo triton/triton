@@ -25,11 +25,11 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    srcVerified = fetchurl rec {
+    srcVerification = fetchurl rec {
       failEarly = true;
       urls = tarballUrls "1.23";
       pgpsigUrls = map (n: "${n}.sig") urls;
-      inherit (gnupg.srcVerified) pgpKeyFingerprints;
+      inherit (gnupg.srcVerification) pgpKeyFingerprints;
       outputHash = "7f0c7f65b98c4048f649bfeebfa4d4c1559707492962504592b985634c939eaa";
       inherit (src) outputHashAlgo;
     };

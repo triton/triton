@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   passthru = rec {
     nextName = "dnscrypt-proxy-1.6.1";
 
-    srcVerified = fetchurl {
+    srcVerification = fetchurl {
       failEarly = true;
       url = "${baseUrl}/${nextName}.tar.bz2";
       minisignUrl = "${baseUrl}/${nextName}.tar.bz2.minisig";

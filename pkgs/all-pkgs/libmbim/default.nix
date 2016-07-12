@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     homepage = http://www.freedesktop.org/software/libmbim/;
-    description = "Library for WWAN modems & devices which use the Mobile Interface Broadband Model (MBIM) protocol";
+    description = "Library for WWAN modems & devices which use the Mobile Broadband Interface Model (MBIM) protocol";
     license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington

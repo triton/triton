@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     description = "Library for WWAN modems & devices which use the Mobile Broadband Interface Model (MBIM) protocol";
     license = with licenses; [
       gpl2Plus
-      lgpl2Plus
+      lgpl21Plus
     ];
     maintainers = with maintainers; [
       wkennington

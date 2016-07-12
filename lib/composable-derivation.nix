@@ -1,5 +1,11 @@
-{lib, pkgs} :
-let inherit (lib) nv nvs; in
+{ lib, pkgs }:
+
+let
+  inherit (lib)
+    nv
+    nvs;
+in
+
 {
 
   # composableDerivation basically mixes these features:
@@ -69,45 +75,67 @@ let inherit (lib) nv nvs; in
   # tasks the alternatives should be used
   #
   # If you have questions about this code ping Marc Weber.
-  composableDerivation = {
-        mkDerivation ? pkgs.stdenv.mkDerivation,
+  composableDerivation =
+    { mkDerivation ? pkgs.stdenv.mkDerivation
 
-        # list of functions to be applied before defaultOverridableDelayableArgs removes removeAttrs names
-        # prepareDerivationArgs handles derivation configurations
-        applyPreTidy ? [ lib.prepareDerivationArgs ],
+    , # list of functions to be applied before defaultOverridableDelayableArgs
+      # removes removeAttrs names prepareDerivationArgs handles derivation
+      # configurations
+      applyPreTidy ? [ lib.prepareDerivationArgs ]
 
-        # consider adding addtional elements by derivation.merge { removeAttrs = ["elem"]; };
-        removeAttrs ? ["cfg" "flags"]
+    , # consider adding addtional elements by
+      # derivation.merge { removeAttrs = [ "elem" ]; };
+      removeAttrs ? [ "cfg" "flags" ]
+    }:
 
-      }: (lib.defaultOverridableDelayableArgs ( a: mkDerivation a) 
-         {
-           inherit applyPreTidy removeAttrs;
-         }).merge;
+    (lib.defaultOverridableDelayableArgs ( a: mkDerivation a) {
+       inherit
+        applyPreTidy
+        removeAttrs;
+     }).merge;
 
   # some utility functions
   # use this function to generate flag attrs for prepareDerivationArgs
   # E nable  D isable F eature
-  edf = {name, feat ? name, enable ? {}, disable ? {} , value ? ""}:
+  edf =
+    { name
+    , feat ? name
+    , enable ? { }
+    , disable ? { }
+    , value ? ""
+    }:
     nvs name {
-    set = {
-      configureFlags = ["--enable-${feat}${if value == "" then "" else "="}${value}"];
-    } // enable;
-    unset = {
-      configureFlags = ["--disable-${feat}"];
-    } // disable;
-  };
+      set = {
+        configureFlags = [
+          (lib.enFlag feat true value)
+        ];
+      } // enable;
+      unset = {
+        configureFlags = [
+          (lib.enFlag feat false null)
+        ];
+      } // disable;
+    };
 
   # same for --with and --without-
   # W ith or W ithout F eature
-  wwf = {name, feat ? name, enable ? {}, disable ? {}, value ? ""}:
+  wwf =
+    { name
+    , feat ? name
+    , enable ? { }
+    , disable ? { }
+    , value ? ""
+    }:
     nvs name {
-    set = enable // {
-      configureFlags = ["--with-${feat}${if value == "" then "" else "="}${value}"]
-                       ++ lib.maybeAttr "configureFlags" [] enable;
+      set = enable // {
+        configureFlags = [
+          (lib.wtFlag feat true value)
+        ] ++ lib.maybeAttr "configureFlags" [ ] enable;
+      };
+      unset = disable // {
+        configureFlags = [
+          (lib.wtFlag feat false null)
+        ] ++ lib.maybeAttr "configureFlags" [ ] disable;
+      };
     };
-    unset = disable // {
-      configureFlags = ["--without-${feat}"]
-                       ++ lib.maybeAttr "configureFlags" [] disable;
-    };
-  };
 }

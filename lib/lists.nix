@@ -4,13 +4,22 @@ with import ./trivial.nix;
 
 rec {
 
-  inherit (builtins) head tail length isList elemAt concatLists filter elem genList;
+  inherit (builtins)
+    head
+    tail
+    length
+    isList
+    elemAt
+    concatLists
+    filter
+    elem
+    genList;
 
 
   # Create a list consisting of a single element.  `singleton x' is
   # sometimes more convenient with respect to indentation than `[x]'
   # when x spans multiple lines.
-  singleton = x: [x];
+  singleton = x: [ x ];
 
 
   # "Fold" a binary function `op' between successive elements of
@@ -21,10 +30,12 @@ rec {
     let
       len = length list;
       fold' = n:
-        if n == len
-        then nul
-        else op (elemAt list n) (fold' (n + 1));
-    in fold' 0;
+        if n == len then
+          nul
+        else
+          op (elemAt list n) (fold' (n + 1));
+    in
+    fold' 0;
 
   # Left fold: `fold op nul [x_1 x_2 ... x_n] == op (... (op (op nul
   # x_1) x_2) ... x_n)'.
@@ -32,10 +43,12 @@ rec {
     let
       len = length list;
       foldl' = n:
-        if n == -1
-        then nul
-        else op (foldl' (n - 1)) (elemAt list n);
-    in foldl' (length list - 1);
+        if n == -1 then
+          nul
+        else
+          op (foldl' (n - 1)) (elemAt list n);
+    in
+    foldl' (length list - 1);
 
 
   # Strict version of foldl.
@@ -52,10 +65,12 @@ rec {
       let
         len = length list;
         imap' = n:
-          if n == len
-            then []
-            else [ (f (n + 1) (elemAt list n)) ] ++ imap' (n + 1);
-      in imap' 0;
+          if n == len then
+            [ ]
+          else
+            [ (f (n + 1) (elemAt list n)) ] ++ imap' (n + 1);
+      in
+      imap' 0;
 
 
   # Map and concatenate the result.
@@ -66,9 +81,10 @@ rec {
   # spliced into the top-level lists.  E.g., `flatten [1 [2 [3] 4] 5]
   # == [1 2 3 4 5]' and `flatten 1 == [1]'.
   flatten = x:
-    if isList x
-    then foldl' (x: y: x ++ (flatten y)) [] x
-    else [x];
+    if isList x then
+      foldl' (x: y: x ++ (flatten y)) [ ] x
+    else
+      [ x ];
 
 
   # Remove elements equal to 'e' from a list.  Useful for buildInputs.
@@ -79,17 +95,27 @@ rec {
   # predicate, returns `default' if no such element exists, or
   # `multiple' if there are multiple matching elements.
   findSingle = pred: default: multiple: list:
-    let found = filter pred list; len = length found;
-    in if len == 0 then default
-      else if len != 1 then multiple
-      else head found;
+    let
+      found = filter pred list; len = length found;
+    in
+    if len == 0 then
+      default
+    else if len != 1 then
+      multiple
+    else
+      head found;
 
 
   # Find the first element in the list matching the specified
   # predicate or returns `default' if no such element exists.
   findFirst = pred: default: list:
-    let found = filter pred list;
-    in if found == [] then default else head found;
+    let
+      found = filter pred list;
+    in
+    if found == [ ] then
+      default
+    else
+      head found;
 
 
   # Return true iff function `pred' returns true for at least element
@@ -110,46 +136,67 @@ rec {
   # Return a singleton list or an empty list, depending on a boolean
   # value.  Useful when building lists with optional elements
   # (e.g. `++ optional (system == "i686-linux") flashplayer').
-  optional = cond: elem: if cond then [elem] else [];
+  optional = cond: elem:
+    if cond then
+      [ elem ]
+    else
+      [ ];
 
 
   # Return a list or an empty list, dependening on a boolean value.
-  optionals = cond: elems: if cond then elems else [];
+  optionals = cond: elems:
+    if cond then
+      elems
+    else
+      [ ];
 
 
   # If argument is a list, return it; else, wrap it in a singleton
   # list.  If you're using this, you should almost certainly
   # reconsider if there isn't a more "well-typed" approach.
-  toList = x: if isList x then x else [x];
+  toList = x:
+    if isList x then
+      x
+    else
+      [ x ];
 
 
   # Return a list of integers from `first' up to and including `last'.
   range =
     if builtins ? genList then
       first: last:
-        if first > last
-        then []
-        else genList (n: first + n) (last - first + 1)
+        if first > last then
+          [ ]
+        else
+          genList (n: first + n) (last - first + 1)
     else
       first: last:
-        if last < first
-        then []
-        else [first] ++ range (first + 1) last;
+        if last < first then
+          [ ]
+        else
+          [ first ] ++ range (first + 1) last;
 
 
   # Partition the elements of a list in two lists, `right' and
   # `wrong', depending on the evaluation of a predicate.
   partition = pred:
     fold (h: t:
-      if pred h
-      then { right = [h] ++ t.right; wrong = t.wrong; }
-      else { right = t.right; wrong = [h] ++ t.wrong; }
-    ) { right = []; wrong = []; };
+      if pred h then {
+        right = [ h ] ++ t.right;
+        wrong = t.wrong;
+      } else {
+        right = t.right;
+        wrong = [ h ] ++ t.wrong; }
+    ) {
+      right = [ ];
+      wrong = [ ];
+    };
 
 
   zipListsWith =
     if builtins ? genList then
-      f: fst: snd: genList (n: f (elemAt fst n) (elemAt snd n)) (min (length fst) (length snd))
+      f: fst: snd:
+      genList (n: f (elemAt fst n) (elemAt snd n)) (min (length fst) (length snd))
     else
       f: fst: snd:
       let
@@ -158,8 +205,9 @@ rec {
           if n != len then
             [ (f (elemAt fst n) (elemAt snd n)) ]
             ++ zipListsWith' (n + 1)
-          else [];
-      in zipListsWith' 0;
+          else [ ];
+      in
+      zipListsWith' 0;
 
   zipLists = zipListsWith (fst: snd: { inherit fst snd; });
 
@@ -167,7 +215,11 @@ rec {
   # Reverse the order of the elements of a list.
   reverseList =
     if builtins ? genList then
-      xs: let l = length xs; in genList (n: elemAt xs (l - n - 1)) l
+      xs:
+      let
+        l = length xs;
+      in
+      genList (n: elemAt xs (l - n - 1)) l
     else
       fold (e: acc: acc ++ [ e ]) [];
 
@@ -181,17 +233,31 @@ rec {
     let
       len = length list;
       first = head list;
-      pivot' = n: acc@{ left, right }: let el = elemAt list n; next = pivot' (n + 1); in
-        if n == len
-          then acc
-        else if strictLess first el
-          then next { inherit left; right = [ el ] ++ right; }
+      pivot' = n: acc@{ left, right }:
+        let
+          el = elemAt list n;
+          next = pivot' (n + 1);
+        in
+        if n == len then
+          acc
+        else if strictLess first el then
+          next {
+            inherit left;
+            right = [ el ] ++ right;
+          }
         else
-          next { left = [ el ] ++ left; inherit right; };
+          next {
+            left = [ el ] ++ left;
+            inherit right;
+          };
       pivot = pivot' 1 { left = []; right = []; };
     in
-      if len < 2 then list
-      else (sort strictLess pivot.left) ++  [ first ] ++  (sort strictLess pivot.right));
+    if len < 2 then
+      list
+    else
+      (sort strictLess pivot.left)
+      ++ [ first ]
+      ++  (sort strictLess pivot.right));
 
 
   # Return the first (at most) N elements of a list.
@@ -199,15 +265,16 @@ rec {
     if builtins ? genList then
       count: sublist 0 count
     else
-      count: list:
-        let
-          len = length list;
-          take' = n:
-            if n == len || n == count
-              then []
-            else
-              [ (elemAt list n) ] ++ take' (n + 1);
-        in take' 0;
+    count: list:
+      let
+        len = length list;
+        take' = n:
+          if n == len || n == count
+            then []
+          else
+            [ (elemAt list n) ] ++ take' (n + 1);
+      in
+      take' 0;
 
 
   # Remove the first (at most) N elements of a list.
@@ -216,51 +283,65 @@ rec {
       count: list: sublist count (length list) list
     else
       count: list:
-        let
-          len = length list;
-          drop' = n:
-            if n == -1 || n < count
-              then []
-            else
-              drop' (n - 1) ++ [ (elemAt list n) ];
-        in drop' (len - 1);
+      let
+        len = length list;
+        drop' = n:
+          if n == -1 || n < count
+            then [ ]
+          else
+            drop' (n - 1) ++ [ (elemAt list n) ];
+      in
+      drop' (len - 1);
 
 
   # Return a list consisting of at most ‘count’ elements of ‘list’,
   # starting at index ‘start’.
   sublist = start: count: list:
-    let len = length list; in
-    genList
-      (n: elemAt list (n + start))
-      (if start >= len then 0
-       else if start + count > len then len - start
-       else count);
+    let
+      len = length list;
+    in
+    genList (n: elemAt list (n + start)) (
+        if start >= len then
+          0
+        else if start + count > len then
+          len - start
+        else
+          count
+      );
 
 
   # Return the last element of a list.
   last = list:
-    assert list != []; elemAt list (length list - 1);
+    assert list != [ ];
+    elemAt list (length list - 1);
 
 
   # Return all elements but the last
-  init = list: assert list != []; take (length list - 1) list;
+  init = list:
+    assert list != [ ];
+    take (length list - 1) list;
 
 
-  deepSeqList = xs: y: if any (x: deepSeq x false) xs then y else y;
+  deepSeqList = xs: y:
+    if any (x: deepSeq x false) xs then
+      y
+    else
+      y;
 
 
-  crossLists = f: foldl (fs: args: concatMap (f: map f args) fs) [f];
+  crossLists = f: foldl (fs: args: concatMap (f: map f args) fs) [ f ];
 
 
   # Remove duplicate elements from the list. O(n^2) complexity.
   unique = list:
-    if list == [] then
-      []
+    if list == [ ] then
+      [ ]
     else
       let
         x = head list;
         xs = unique (drop 1 list);
-      in [x] ++ remove x xs;
+      in
+      [ x ] ++ remove x xs;
 
 
   # Intersects list 'e' and another list. O(nm) complexity.

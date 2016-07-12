@@ -6,11 +6,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libqmi-1.14.2";
+  name = "libqmi-1.16.0";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libqmi/${name}.tar.xz";
-    sha256 = "6283b80aea1b2721523e5229087764b4d6a1c9f53488690fa16a11adff4a0040";
+    sha256 = "7ab6bb47fd23bf4d3fa17424e40ea5552d08b19e5ee4f125f21f316c8086ba2a";
   };
 
   nativeBuildInputs = [

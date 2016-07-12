@@ -164,76 +164,238 @@ rec {
       drv' = (lib.head outputsList).value;
     in lib.deepSeq drv' drv';
 
-  /* Returns a configure flag string in an autotools format
-     trueStr: Prepended when cond is true
-     falseStr: Prepended when cond is false
-     cond: The condition for the prepended string type and value
-     name: The flag name
-     val: The value of the flag only set when cond is true */
-  atFlag =
-    trueStr:
-    falseStr:
-    flag:
-    condition:
-    value:
+  /**
+   * Implements a generic function for creating implmentation
+   * specific configure flags (e.g. autotools, cmake, scons).
+   * This also ensures that the entire flag is returned as a
+   * single string.
+   *
+   * preFlag: Prepend to beginning of flag (e.g. --enable or -D)
+   * flag: The name of the flag
+   * postFlag: Append to end of flag
+   * valueSep: The flag/value seperator, typically '='
+   * value: A value (or string) to pass to the flag (e.g. --flag=val)
+   *
+   * Returns a configure flag string
+   */
+  genericFlag = preFlag: flag: postFlag: valueSep: value:
+    let
+      # Prevent coercing null to a string
+      ifNotNull = x:
+        if x != null then
+          x
+        else
+          "";
+      _preFlag = ifNotNull preFlag;
+      _postFlag = ifNotNull postFlag;
+      _valueSep = ifNotNull valueSep;
+      _value = ifNotNull value;
+    in
+    assert flag == "" ->
+      throw "genericFlag argument `flag` cannot be null";
+    _preFlag + flag + _postFlag + _valueSep + _value;
 
-    if condition == null then
+  /**
+   * Autoconf style generic configure flag function
+   *
+   * trueStr: Prepended when cond is true (string)
+   * falseStr: Prepended when cond is false (string)
+   * flag: The flag name (string)
+   * boolean: The condition for the prepended string and value (boolean)
+   *   - flag is not passed if null
+   * value: The value of the flag is only appended when boolean is
+   *        true (null/string)
+   *
+   * Returns an Autoconf formatted configure flag string
+   */
+  acFlag = trueStr: falseStr: flag: boolean: value:
+    let
+      # Prevent coercing null to a string
+      ifNotNull = x:
+        if x != null then
+          x
+        else
+          "";
+      preFlag =
+        "--${
+              if boolean == true then
+                ifNotNull trueStr
+              else
+                ifNotNull falseStr
+            }${
+              # Allow autoconf flags without prepended true/false strings
+              if (boolean && trueStr != null && trueStr != "")
+                 || (!boolean && falseStr != null && falseStr != "") then
+                "-"
+              else
+                ""
+            }";
+      valueSep =
+        if boolean == true && value != null && value != "" then
+          "="
+        else
+          null;
+      _value =
+        if boolean == true && value != null && value != "" then
+          value
+        else
+          null;
+    in
+    if boolean == null then
       null
     else
-      "--${
-        if condition == true then
-          trueStr
-        else
-          falseStr
-      }${flag}${
-        if value != null && condition == true then
-          "=${value}"
-        else
-          ""
-      }";
+      genericFlag preFlag flag null valueSep _value;
 
-  /* Flag setting helpers for autotools like packages */
-  enFlag = atFlag "enable-" "disable-";
-  wtFlag = atFlag "with-" "without-";
-  otFlag =
-    flag:
-    bool:
-    value:
+  /**
+   * Autoconf style --enable/--disable configure flag
+   *
+   * flag: The name of the flag (string)
+   * boolean: The condition for the prepended string and value (boolean)
+   *   - flag is not passed if null
+   * value: The value of the flag is only appended when boolean is
+   *        true (null/string)
+   *
+   * Returns an Autoconf --enable/--disable formatted configure flag string
+   */
+  enFlag = flag: boolean: value:
+    acFlag "enable" "disable" flag boolean value;
 
-    if bool then
-      atFlag "" "" flag bool value
+  /**
+   * Autoconf style --with/--without configure flag
+   *
+   * flag: The name of the flag (string)
+   * boolean: The condition for the prepended string and value (boolean/null)
+   *   - flag is not passed if null
+   * value: The value of the flag is only appended when boolean is
+   *        true (null/string)
+   *
+   * Returns an Autoconf --with/--without formatted configure flag string
+   */
+  wtFlag = flag: boolean: value:
+    acFlag "with" "without" flag boolean value;
+
+  /**
+   * Autoconf style --custom configure flag
+   *
+   * flag: The name of the flag (string)
+   * boolean: The condition for passing the flag & the value (boolean)
+   *   - flag is not passed if null
+   * value: The value of the flag is only appended when boolean is
+   *        true (null/string)
+   *
+   * Returns a custom Autoconf formatted configure flag string
+   */
+  otFlag = flag: boolean: value:
+    let
+      _boolean =
+        if boolean == true then
+          true
+        else
+          # If boolean is not true, return null to make sure the
+          # configure flag is not returned.
+          null;
+    in
+    acFlag null null flag _boolean value;
+
+  /**
+   * CMake configure flag
+   *
+   * flag: The name of the flag. (string)
+   * value: Value passed to flag. (boolean/string)
+   *   - true/false booleans are automatically tranlated to ON/OFF.
+   *
+   * Returns a CMake formatted configure flag string
+   */
+  cmFlag = flag: value:
+    let
+      valueSep =
+        if value != null && value != "" then
+          "="
+        else
+          "";
+      _value =
+        if value == true then
+          "ON"
+        else if value == false then
+          "OFF"
+        else if value != null && value != "" then
+          value
+        else
+          "";
+    in
+    genericFlag "-D" flag null valueSep _value;
+
+  /**
+   * SCons configure flag
+   *
+   * flag: The name of the flag (string)
+   * value: Value passed to flag (boolean/string)
+   *   - true/false booleans are automatically tranlated to 1/0.
+   *
+   * Returns a SCons formatted configure flag string
+   */
+  scFlag = flag: value:
+    let
+      valueSep =
+        if value != null && value != "" then
+          "="
+        else
+          "";
+      _value =
+        if value == true then
+          "1"
+        else if value == false then
+          "0"
+        else if value != null && value != "" then
+          value
+        else
+          "";
+    in
+    genericFlag null flag null "=" _value;
+
+  # DEPRECATED use acFlag
+  mkFlag = trueStr: falseStr: boolean: flag: value:
+    let
+      preFlag =
+        "--${
+              if boolean then
+                trueStr
+              else
+                falseStr
+            }${
+              # Allow autoconf flags without prepended true/false strings
+              if (boolean && trueStr != "")
+                 || (!boolean && falseStr != "") then
+                "-"
+              else
+                ""
+            }";
+      postFlag = "";
+      valueSep =
+        if boolean && value != null then
+          "="
+        else
+          "";
+      _value =
+        if boolean && value != null then
+          value
+        else
+          "";
+    in
+    if boolean == null then
+      null
     else
-      null;
+      genericFlag preFlag flag postFlag valueSep _value;
 
-  cmFlag =
-    flag:
-    value:
+  # DEPRECATED use enFlag
+  mkEnable = mkFlag "enable" "disable";
 
-    "-D${flag}${
-      if value == true then
-        "=ON"
-      else if value == false then
-        "=OFF"
-      else if value != null then
-        "=${value}"
-      else
-        ""
-    }";
+  # DEPRECATED use wtFlag
+  mkWith = mkFlag "with" "without";
 
-  scFlag =
-    flag:
-    value:
+  # DEPRECATED use otFlag
+  mkOther = mkFlag "" "" true;
 
-    "${flag}${
-      if value == true then
-        "=1"
-      else if value == false then
-        "=0"
-      else if value != null then
-        "=${value}"
-      else
-        ""
-    }";
 
   /* Make a set of packages with a common scope. All packages called
      with the provided `callPackage' will be evaluated with the same
@@ -253,19 +415,5 @@ rec {
             in super // g super self_);
         };
     in self;
-
-
-
-
-
-  mkFlag = trueStr: falseStr: cond: name: val:
-    if cond == null then null else
-      "--${if cond != false then trueStr else falseStr}${name}"
-      + "${if val != null && cond != false then "=${val}" else ""}";
-
-  /* Flag setting helpers for autotools like packages */
-  mkEnable = mkFlag "enable-" "disable-";
-  mkWith = mkFlag "with-" "without-";
-  mkOther = mkFlag "" "" true;
 
 }

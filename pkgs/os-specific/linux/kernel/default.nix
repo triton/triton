@@ -19,12 +19,12 @@ let
 
   sources = {
     "4.6" = {
-      version = "4.6.3";
-      sha256 = "13188892941ea6c21d5db5a391ee73a27ef20de4cc81f14574aff0a522630967";
+      version = "4.6.4";
+      sha256 = "8568d41c7104e941989b14a380d167129f83db42c04e950d8d9337fe6012ff7e";
     };
     "testing" = {
-      version = "4.7-rc6";
-      sha256 = "194da8f333b71f0ae654e10d7874a079b78249425899ee7321b7ddd94d4591ce";
+      version = "4.7-rc7";
+      sha256 = "672da789ecd50ee57a4b527ab87ff6a234e09cfba88607617aaa66da613e8885";
     };
   };
   

@@ -323,7 +323,10 @@ rec {
         else
           "";
     in
-    genericFlag "-D" flag null valueSep _value;
+    if value != null then
+      genericFlag "-D" flag null valueSep _value
+    else
+      null;
 
   /**
    * SCons configure flag
@@ -351,7 +354,10 @@ rec {
         else
           "";
     in
-    genericFlag null flag null "=" _value;
+    if value != null then
+      genericFlag null flag null "=" _value
+    else
+      null;
 
   # DEPRECATED use acFlag
   mkFlag = trueStr: falseStr: boolean: flag: value:

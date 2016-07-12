@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , fetchpatch
 , which
@@ -20,6 +21,7 @@
 
 let
   inherit (stdenv.lib)
+    optionals
     optionalString;
 in
 
@@ -49,6 +51,26 @@ stdenv.mkDerivation rec {
       patches+=" $i"
     done
   '';
+
+  patches = optionals (!infinality) [
+    (fetchTritonPatch {
+      rev = "d6786694fc26fc7bde513fc9184c60bf73c8c053";
+      file = "freetype2/0001-Enable-table-validation-modules.patch";
+      sha256 = "253045d5394af690d7b81a360a744aa447f33db7182a315fc777fe621134a845";
+    })
+    (fetchTritonPatch {
+      rev = "d6786694fc26fc7bde513fc9184c60bf73c8c053";
+      file = "freetype2/0002-Enable-subpixel-rendering.patch";
+      sha256 = "a6ce1b930f61b0e3e96da31c5e3094cb89b2e7e6aa232610b3e351e17c6919cf";
+    })
+    # Provide a way to set the default subpixel hinting mode
+    # at runtime, without depending on the application to do so.
+    (fetchTritonPatch {
+      rev = "d6786694fc26fc7bde513fc9184c60bf73c8c053";
+      file = "freetype2/0003-Make-subpixel-hinting-mode-configurable.patch";
+      sha256 = "e5f229fe25f07bed38aac6935cbd7fa453386ed3a8e33df611d5a57f7feb19fb";
+    })
+  ];
 
   configureFlags = [
     "--enable-biarch-config"

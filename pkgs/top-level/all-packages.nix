@@ -1424,6 +1424,8 @@ libksba = callPackage ../all-pkgs/libksba { };
 
 libmatroska = callPackage ../all-pkgs/libmatroska { };
 
+libmbim = callPackage ../all-pkgs/libmbim { };
+
 libmcrypt = callPackage ../all-pkgs/libmcrypt {};
 
 libmediaart = callPackage ../all-pkgs/libmediaart {
@@ -3720,8 +3722,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libqb = callPackage ../development/libraries/libqb { };
 
-  libmbim = callPackage ../development/libraries/libmbim { };
-#
 #  libmongo-client = callPackage ../development/libraries/libmongo-client { };
 #
 #  libiberty = callPackage ../development/libraries/libiberty { };

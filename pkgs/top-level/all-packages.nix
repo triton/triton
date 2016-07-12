@@ -2012,6 +2012,8 @@ resolv_wrapper = callPackage ../all-pkgs/resolv_wrapper { };
 
 rest = callPackage ../all-pkgs/rest { };
 
+rfkill = callPackage ../all-pkgs/rfkill { };
+
 rocksdb = callPackage ../all-pkgs/rocksdb { };
 
 rtkit = callPackage ../all-pkgs/rtkit { };
@@ -9207,8 +9209,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  raspberrypifw = callPackage ../os-specific/linux/firmware/raspberrypi {};
 #
 #  regionset = callPackage ../os-specific/linux/regionset { };
-#
-  rfkill = callPackage ../os-specific/linux/rfkill { };
 #
 #  rfkill_udev = callPackage ../os-specific/linux/rfkill/udev.nix { };
 #

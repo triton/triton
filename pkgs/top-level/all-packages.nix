@@ -2057,6 +2057,8 @@ SDL_2 = callPackage ../all-pkgs/SDL { };
 
 SDL_2_image = callPackage ../all-pkgs/SDL_image { };
 
+sdparm = callPackage ../all-pkgs/sdparm { };
+
 seabios = callPackage ../all-pkgs/seabios { };
 
 seahorse = callPackage ../all-pkgs/seahorse { };
@@ -9219,8 +9221,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  scanmem = callPackage ../tools/misc/scanmem { };
 #
 #  schedtool = callPackage ../os-specific/linux/schedtool { };
-#
-  sdparm = callPackage ../os-specific/linux/sdparm { };
 #
 #  sepolgen = callPackage ../os-specific/linux/sepolgen { };
 #

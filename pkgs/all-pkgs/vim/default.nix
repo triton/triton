@@ -20,13 +20,13 @@ in
 
 stdenv.mkDerivation rec {
   name = "vim-${version}";
-  version = "7.4.1952";
+  version = "7.4.2033";
 
   src = fetchFromGitHub {
     owner = "vim";
     repo = "vim";
     rev = "v${version}";
-    sha256 = "0ab00a31fcf0f7e93f86bb6bab4aa23b67f3ac8b6921f87edcf1ff2062fe34a0";
+    sha256 = "442fd06d3a6bdae176562caef7c266f093ee377e2e6c0f66c4e862e4d45c71d5";
   };
 
   nativeBuildInputs = [

@@ -28,7 +28,7 @@ let
 in
 
 let
-  version = "2.9.0";
+  version = "2.9.1";
   tarballUrls = [
     "mirror://kernel/software/scm/git/git-${version}.tar"
   ];
@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = map (n: "${n}.xz") tarballUrls;
     allowHashOutput = false;
-    sha256 = "f41fa97949948fbf49af94a43d779e072a5452c6b5039d86ffa41ebab747b409";
+    sha256 = "e8fe60bc72c1c979feb43740b3c74fea7f8ffbe7712b71cd9734ddb9c89282a2";
   };
 
   patches = [

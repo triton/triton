@@ -16,19 +16,30 @@
 }:
 
 let
-  sources = import ./sources.nix { inherit fetchurl; };
+  sources = import ./sources.nix;
 
   gcc = if stdenv.cc.isGNU then stdenv.cc.cc else stdenv.cc.cc.gcc;
 
   inherit (stdenv.lib)
-    attrValues
-    filterAttrs
-    isDerivation;
+    flip
+    makeOverridable
+    mapAttrsToList;
+
+  srcs = flip mapAttrsToList sources.srcs (n: d:
+    let
+      version = d.version or sources.version;
+    in makeOverridable fetchurl {
+      url = "http://llvm.org/releases/${version}/${n}-${version}.src.tar.xz";
+      inherit (d) sha256;
+    }
+  );
 in
 stdenv.mkDerivation {
   name = "llvm-${sources.version}";
 
-  srcs = attrValues (filterAttrs (_: v: isDerivation v) sources);
+  srcs = flip map srcs (src: src.override {
+    allowHashOutput = false;
+  });
 
   sourceRoot = "llvm-${sources.version}.src";
 
@@ -52,9 +63,9 @@ stdenv.mkDerivation {
   prePatch = ''
     mkdir -p projects
     ls .. \
-      | grep '${sources.version}' \
+      | grep '[0-9]\.[0-9]\.[0-9]' \
       | grep -v 'llvm' \
-      | sed 's,\(.*\)-${sources.version}.src$,../\0 projects/\1,g' \
+      | sed 's,\(.*\)-[0-9]\.[0-9]\.[0-9].src$,../\0 projects/\1,g' \
       | xargs -n 2 mv
     mv projects/cfe tools/clang
     mv projects/clang-tools-extra tools/clang/tools/extra
@@ -99,6 +110,12 @@ stdenv.mkDerivation {
   passthru = {
     isClang = true;
     inherit gcc;
+
+    srcVerifications = flip map srcs (src: src.override {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "11E5 21D6 4698 2372 EB57  7A1F 8F08 71F2 0211 9294";
+    });
   };
 
   meta = with stdenv.lib; {

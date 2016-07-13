@@ -1495,6 +1495,8 @@ libraw = callPackage ../all-pkgs/libraw { };
 
 libraw1394 = callPackage ../all-pkgs/libraw1394 { };
 
+librelp = callPackage ../all-pkgs/librelp { };
+
 libressl = callPackage ../all-pkgs/libressl { };
 
 librdmacm = callPackage ../all-pkgs/librdmacm { };
@@ -7183,8 +7185,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  libre = callPackage ../development/libraries/libre {};
 #  librem = callPackage ../development/libraries/librem {};
-#
-#  librelp = callPackage ../development/libraries/librelp { };
 #
 #  libresample = callPackage ../development/libraries/libresample {};
 #

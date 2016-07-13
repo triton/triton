@@ -1905,6 +1905,10 @@ postgresql_91 = callPackageAlias "postgresql" {
 
 potrace = callPackage ../all-pkgs/potrace { };
 
+procps-ng = callPackage ../all-pkgs/procps-ng { };
+
+procps = callPackageAlias "procps-ng" { };
+
 protobuf-c = callPackage ../all-pkgs/protobuf-c { };
 
 protobuf-cpp = callPackage ../all-pkgs/protobuf-cpp { };
@@ -9196,8 +9200,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   procps-old = lowPrio (callPackage ../os-specific/linux/procps { });
 
-  procps = callPackage ../os-specific/linux/procps-ng { };
-#
 #  watch = callPackage ../os-specific/linux/procps/watch.nix { };
 #
 #  qemu_kvm = lowPrio (qemu.override { type = "kvm-only"; });

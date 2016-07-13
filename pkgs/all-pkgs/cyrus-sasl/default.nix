@@ -137,14 +137,16 @@ stdenv.mkDerivation rec {
   ];
 
   parallelBuild = false;
+  parallelInstall = false;
 
   meta = with stdenv.lib; {
     description = "Library for authentication to connection-based protocols";
     homepage = "http://cyrusimap.web.cmu.edu/";
     license = licenses.bsd3;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

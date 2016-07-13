@@ -1575,6 +1575,8 @@ libva-vdpau-driver = callPackage ../all-pkgs/libva-vdpau-driver { };
 
 libvdpau = callPackage ../all-pkgs/libvdpau { };
 
+libvdpau-va-gl = callPackage ../all-pkgs/libvdpau-va-gl { };
+
 libverto = callPackage ../all-pkgs/libverto { };
 
 libvorbis = callPackage ../all-pkgs/libvorbis { };

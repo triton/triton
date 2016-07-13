@@ -7,12 +7,13 @@
 , expat
 , libarchive
 , ncurses
+, xz
 , zlib
 }:
 
 let
-  majorVersion = "3.5";
-  minorVersion = "2";
+  majorVersion = "3.6";
+  minorVersion = "0";
   version = "${majorVersion}.${minorVersion}";
 in
 
@@ -21,7 +22,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://cmake.org/files/v${majorVersion}/cmake-${version}.tar.gz";
-    sha256 = "92d8410d3d981bb881dfff2aed466da55a58d34c7390d50449aa59b32bb5e62a";
+    sha256 = "fd05ed40cc40ef9ef99fac7b0ece2e0b871858a82feade48546f5d2940147670";
   };
 
   patches = [
@@ -38,6 +39,7 @@ stdenv.mkDerivation rec {
     expat
     libarchive
     ncurses
+    xz
     zlib
   ];
 

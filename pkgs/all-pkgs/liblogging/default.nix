@@ -1,5 +1,7 @@
-{ stdenv, fetchurl, pkgconfig
-, systemd ? null
+{ stdenv
+, fetchurl
+
+, systemd_lib
 }:
 
 stdenv.mkDerivation rec {
@@ -10,12 +12,14 @@ stdenv.mkDerivation rec {
     sha256 = "02w94j344q0ywlj4mdf9fnzwggdsn3j1yn43sdlsddvr29lw239i";
   };
 
-  buildInputs = [ pkgconfig systemd ];
+  buildInputs = [
+    systemd_lib
+  ];
 
   configureFlags = [
     "--enable-rfc3195"
     "--enable-stdlog"
-    (if systemd != null then "--enable-journal" else "--disable-journal")
+    "--enable-journal"
     "--enable-man-pages"
   ];
 
@@ -23,7 +27,10 @@ stdenv.mkDerivation rec {
     homepage = http://www.liblogging.org/;
     description = "Lightweight signal-safe logging library";
     license = licenses.bsd2;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

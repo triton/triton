@@ -20,6 +20,7 @@ let
       driverName = "intel";
       extraConfig = ''
         Option "DRI" "3"
+        Option "AccelMethod" "sna"
         Option "TearFree" "true"
       '';
     };

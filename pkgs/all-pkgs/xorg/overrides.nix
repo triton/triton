@@ -198,8 +198,8 @@ in
   xf86videointel = attrs: attrs // {
     name = "xf86-video-intel-2016-07-04";
     src = fetchurl {
-      url = "http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/26f8ab5429a554801641415f0ab3b2d68cea1d00.tar.gz";
-      sha256 = "00wcnhb3s4jd3wssl1fkhkgd7rvy9wvvad556ws0addqipb94sfl";
+      url = "https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/26f8ab5429a554801641415f0ab3b2d68cea1d00.tar.gz";
+      sha256 = "30747ea6c231a0757b5fdad299e0e67015ada5475d24fa6d54b4ba4ab954697a";
     };
     nativeBuildInputs = attrs.nativeBuildInputs ++ [
       args.autoreconfHook

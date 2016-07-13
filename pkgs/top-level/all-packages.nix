@@ -1422,6 +1422,8 @@ libjpeg = callPackageAlias "libjpeg-turbo" { };
 
 libksba = callPackage ../all-pkgs/libksba { };
 
+liblogging = callPackage ../all-pkgs/liblogging { };
+
 libmatroska = callPackage ../all-pkgs/libmatroska { };
 
 libmbim = callPackage ../all-pkgs/libmbim { };
@@ -7154,8 +7156,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   liblqr1 = callPackage ../development/libraries/liblqr-1 { };
 #
 #  liblockfile = callPackage ../development/libraries/liblockfile { };
-#
-#  liblogging = callPackage ../development/libraries/liblogging { };
 #
 #  liblognorm = callPackage ../development/libraries/liblognorm { };
 #

@@ -13,7 +13,8 @@ cleanup() {
 TMPDIR="$(mktemp -d)"
 trap cleanup EXIT HUP INT QUIT PIPE TERM
 
-CONCURRENT_LOG_DIR=$TMPDIR/logs
+export CONCURRENT_LOG_DIR=$TMPDIR/logs
+export CONCURRENT_LIMIT=10
 source concurrent.lib.sh
 
 TOPDIR="$(pwd)"

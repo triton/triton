@@ -1272,6 +1272,8 @@ jq = callPackage ../all-pkgs/jq { };
 
 jshon = callPackage ../all-pkgs/jshon { };
 
+json-c = callPackage ../all-pkgs/json-c { };
+
 jsoncpp = callPackage ../all-pkgs/jsoncpp { };
 
 json-glib = callPackage ../all-pkgs/json-glib { };
@@ -6889,9 +6891,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  jetty_util = callPackage ../development/libraries/java/jetty-util { };
 #
 #  jshon = callPackage ../development/tools/parsing/jshon { };
-#
-#  json-c-0-11 = callPackage ../development/libraries/json-c/0.11.nix { }; # vulnerable
-  json-c = callPackage ../development/libraries/json-c { };
 #
 #  libjson = callPackage ../development/libraries/libjson { };
 #

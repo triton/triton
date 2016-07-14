@@ -647,6 +647,8 @@ chromium_dev = callPackageAlias "chromium" {
   channel = "dev";
 };
 
+cifs-utils = callPackage ../all-pkgs/cifs-utils { };
+
 civetweb = callPackage ../all-pkgs/civetweb { };
 
 cjdns = callPackage ../all-pkgs/cjdns { };
@@ -8744,8 +8746,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  checkpolicy = callPackage ../os-specific/linux/checkpolicy { };
 #
 #  checksec = callPackage ../os-specific/linux/checksec { };
-#
-  cifs_utils = callPackage ../os-specific/linux/cifs-utils { };
 #
 #  conky = callPackage ../os-specific/linux/conky ({ } // config.conky or {});
 #

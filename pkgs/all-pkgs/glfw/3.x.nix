@@ -1,26 +1,28 @@
 { stdenv
 , cmake
-, fetchFromGitHub
+, fetchurl
 , ninja
+, unzip
 
 , mesa
 , xorg
 }:
 
+let
+  version = "3.2";
+in
 stdenv.mkDerivation rec {
-  version = "3.1.2";
   name = "glfw-${version}";
 
-  src = fetchFromGitHub {
-    owner = "glfw";
-    repo = "GLFW";
-    rev = "${version}";
-    sha256 = "0cf0013056b27f818cf0113fcc523889b9f739091530bcf161445b7f288cbfa3";
+  src = fetchurl {
+    url = "https://github.com/glfw/glfw/releases/download/${version}/${name}.zip";
+    sha256 = "d9983a129732bd400869dd26c9ef2ed253b1da0cfb79585ab7af63a175d0f652";
   };
 
   nativeBuildInputs = [
     cmake
     ninja
+    unzip
   ];
 
   buildInputs = [

@@ -2,15 +2,18 @@
 , fetchurl
 }:
 
+let
+  version = "1.0.5";
+in
 stdenv.mkDerivation rec {
   name = "judy-${version}";
-  version = "1.0.5";
 
   src = fetchurl {
     urls = [
-      "mirror://gentoo/distfiles/Judy-${version}.tar.gz"
       "mirror://sourceforge/judy/Judy-${version}.tar.gz"
+      "mirror://gentoo/distfiles/Judy-${version}.tar.gz"
     ];
+    multihash = "QmTNHKmtH8cxHbyQLiDkh8pc2AAiu2RRSKN2X1v4neiVMM";
     sha256 = "1sv3990vsx8hrza1mvq3bhvv9m6ff08y4yz7swn6znszz24l0w6j";
   };
 
@@ -23,9 +26,14 @@ stdenv.mkDerivation rec {
   # Fails for 1.0.5
   parallelBuild = false;
 
-  meta = {
-    homepage = http://judy.sourceforge.net/;
-    license = stdenv.lib.licenses.lgpl21Plus;
+  meta = with stdenv.lib; {
     description = "State-of-the-art C library that implements a sparse dynamic array";
+    homepage = http://judy.sourceforge.net/;
+    license = licenses.lgpl21Plus;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

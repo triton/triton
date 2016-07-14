@@ -1278,6 +1278,8 @@ jsoncpp = callPackage ../all-pkgs/jsoncpp { };
 
 json-glib = callPackage ../all-pkgs/json-glib { };
 
+judy = callPackage ../all-pkgs/judy { };
+
 kbd = callPackage ../all-pkgs/kbd { };
 
 kea = callPackage ../all-pkgs/kea { };
@@ -6897,8 +6899,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  libjson = callPackage ../development/libraries/libjson { };
 #
 #  libb64 = callPackage ../development/libraries/libb64 { };
-#
-  judy = callPackage ../development/libraries/judy { };
 #
 #  keybinder = callPackage ../development/libraries/keybinder {
 #    automake = automake111x;

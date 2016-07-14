@@ -742,6 +742,8 @@ dejagnu = callPackage ../all-pkgs/dejagnu { };
 
 dialog = callPackage ../all-pkgs/dialog { };
 
+ding-libs = callPackage ../all-pkgs/ding-libs { };
+
 dmenu = callPackage ../all-pkgs/dmenu { };
 
 devil_nox = callPackageAlias "devil" {

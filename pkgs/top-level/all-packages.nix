@@ -1471,6 +1471,8 @@ libmtp = callPackage ../all-pkgs/libmtp { };
 
 libmusicbrainz = callPackage ../all-pkgs/libmusicbrainz { };
 
+libmypaint = callPackage ../all-pkgs/libmypaint { };
+
 libnetfilter_conntrack = callPackage ../all-pkgs/libnetfilter_conntrack { };
 
 libnetfilter_cthelper = callPackage ../all-pkgs/libnetfilter_cthelper { };

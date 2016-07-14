@@ -10,14 +10,9 @@
 , libpng
 , zlib
 
-, infinality ? false
-  , freetype2-infinality-ultimate
-
-, glib /* passthru only */
+/* passthru only */
+, glib
 }:
-
-# NOTE: freetype2-infinality-ultimate must be updated in unison
-#       with freetype.
 
 let
   inherit (stdenv.lib)
@@ -26,7 +21,7 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "freetype-2.6.4";
+  name = "freetype-2.6.5";
 
   src = fetchurl {
     urls = [
@@ -34,7 +29,7 @@ stdenv.mkDerivation rec {
       "mirror://sourceforge/freetype/${name}.tar.bz2"
     ];
     allowHashOutput = false;
-    sha256 = "5f83ce531c7035728e03f7f0421cb0533fca4e6d90d5e308674d6d313c23074d";
+    sha256 = "e20a6e1400798fd5e3d831dd821b61c35b1f9a6465d6b18a53a9df4cf441acf0";
   };
 
   buildInputs = [
@@ -44,33 +39,25 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  prePatch = optionalString infinality ''
-    # freetype2-infinality-ultimate patch naming isn't completely
-    # predictable, so build include all patches at build time.
-    for i in '${freetype2-infinality-ultimate}/share/freetype2-infinality-ultimate/'*'.patch' ; do
-      patches+=" $i"
-    done
-  '';
-
-  patches = optionals (!infinality) [
-    (fetchTritonPatch {
-      rev = "d6786694fc26fc7bde513fc9184c60bf73c8c053";
-      file = "freetype2/0001-Enable-table-validation-modules.patch";
-      sha256 = "253045d5394af690d7b81a360a744aa447f33db7182a315fc777fe621134a845";
-    })
-    (fetchTritonPatch {
-      rev = "d6786694fc26fc7bde513fc9184c60bf73c8c053";
-      file = "freetype2/0002-Enable-subpixel-rendering.patch";
-      sha256 = "a6ce1b930f61b0e3e96da31c5e3094cb89b2e7e6aa232610b3e351e17c6919cf";
-    })
+  patches = [
+    # Patch from Arch Linux:
     # Provide a way to set the default subpixel hinting mode
     # at runtime, without depending on the application to do so.
     (fetchTritonPatch {
-      rev = "d6786694fc26fc7bde513fc9184c60bf73c8c053";
+      rev = "76504e1325b09e9d214deef685183df37ad78819";
       file = "freetype2/0003-Make-subpixel-hinting-mode-configurable.patch";
-      sha256 = "e5f229fe25f07bed38aac6935cbd7fa453386ed3a8e33df611d5a57f7feb19fb";
+      sha256 = "692f26495df74bedab2f0dc14e06d92fa655d633b5c5f48a60991c2970499ebf";
     })
   ];
+
+  postPatch = /* Enable table validation modules */ ''
+    sed -i modules.cfg \
+      -e 's,# AUX_MODULES += gxvalid,AUX_MODULES += gxvalid,' \
+      -e 's,# AUX_MODULES += otvalid,AUX_MODULES += otvalid,'
+  '' + /* Enable subpixel rendering */ ''
+    sed -i include/freetype/config/ftoption.h \
+      -e 's,/* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING */,#define FT_CONFIG_OPTION_SUBPIXEL_RENDERING,'
+  '';
 
   configureFlags = [
     "--enable-biarch-config"

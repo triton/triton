@@ -263,8 +263,8 @@ in
     systemd.services."networkmanager-init" = {
       description = "NetworkManager initialisation";
       wantedBy = [ "network.target" ];
-      wants = [ "network-manager.service" ];
-      before = [ "network-manager.service" ];
+      wants = [ "NetworkManager.service" ];
+      before = [ "NetworkManager.service" ];
       script = ''
         mkdir -m 700 -p /etc/NetworkManager/system-connections
         mkdir -m 755 -p ${stateDirs}
@@ -279,7 +279,7 @@ in
     };
 
     powerManagement.resumeCommands = ''
-      ${config.systemd.package}/bin/systemctl restart networkmanager
+      ${config.systemd.package}/bin/systemctl restart NetworkManager
     '';
 
     security.polkit.extraConfig = polkitConf;

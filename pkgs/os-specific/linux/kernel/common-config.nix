@@ -379,6 +379,7 @@ with stdenv.lib;
   SQUASHFS_LZ4 y
 
   # Security related features.
+  RANDOMIZE_BASE y
   STRICT_DEVMEM y # Filter access to /dev/mem
   SECURITY_SELINUX_BOOTPARAM_VALUE 0 # Disable SELinux by default
   DEVKMEM n # Disable /dev/kmem
@@ -417,8 +418,6 @@ with stdenv.lib;
   AIC79XX_DEBUG_ENABLE n
   AIC7XXX_DEBUG_ENABLE n
   AIC94XX_DEBUG n
-  BLK_DEV_CMD640_ENHANCED y # CMD640 enhanced support
-  BLK_DEV_IDEACPI y # IDE ACPI support
   BLK_DEV_INTEGRITY y
   BSD_PROCESS_ACCT_V3 y
   BT_HCIUART_BCSP y
@@ -452,14 +451,13 @@ with stdenv.lib;
   EFI_MIXED y
   FHANDLE y # used by systemd
   FUSION y # Fusion MPT device support
-  IDE_GD_ATAPI y # ATAPI floppy support
+  IDE n
   IRDA_ULTRA y # Ultra (connectionless) protocol
   JOYSTICK_IFORCE_232 y # I-Force Serial joysticks and wheels
   JOYSTICK_IFORCE_USB y # I-Force USB joysticks and wheels
   JOYSTICK_XPAD_FF y # X-Box gamepad rumble support
   JOYSTICK_XPAD_LEDS y # LED Support for Xbox360 controller 'BigX' LED
   LDM_PARTITION y # Windows Logical Disk Manager (Dynamic Disk) support
-  LEDS_TRIGGER_IDE_DISK y # LED IDE Disk Trigger
   LOGIRUMBLEPAD2_FF y # Logitech Rumblepad 2 force feedback
   LOGO n # not needed
   MEDIA_ATTACH y
@@ -549,12 +547,14 @@ with stdenv.lib;
   HZ_300 y
   KEXEC_FILE y
   KEXEC_JUMP y
+  IDLE_PAGE_TRACKING y
 
   # Easier debugging of NFS issues.
   SUNRPC_DEBUG y
 
   # Virtualisation.
   PARAVIRT y
+  PARAVIRT_SPINLOCKS y
   HYPERVISOR_GUEST y
   KVM_APIC_ARCHITECTURE y
   KVM_ASYNC_PF y
@@ -624,6 +624,7 @@ with stdenv.lib;
   # zram support (e.g for in-memory compressed swap).
   ZSMALLOC y
   ZRAM m
+  ZSWAP y
 
   # Enable PCIe and USB for the brcmfmac driver
   BRCMFMAC_USB y

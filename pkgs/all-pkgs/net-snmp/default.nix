@@ -3,7 +3,6 @@
 , fetchurl
 , file
 , perlPackages
-, unzip
 
 , openssl
 }:
@@ -12,15 +11,15 @@ stdenv.mkDerivation rec {
   name = "net-snmp-5.7.3";
 
   src = fetchurl {
-    url = "mirror://sourceforge/net-snmp/${name}.zip";
-    multihash = "QmPjQkxMk6KDfjDnTFG322EKsbVzdAnnbnNPR4tMLCGy9n";
-    sha256 = "0gkss3zclm23zwpqfhddca8278id7pk6qx1mydpimdrrcndwgpz8";
+    url = "mirror://sourceforge/net-snmp/${name}.tar.gz";
+    allowHashOutput = false;
+    multihash = "QmW7RctNcJdAKcqoayYwRUDWmzbZHAT4R3tLvpFuFBWxLE";
+    sha256 = "12ef89613c7707dc96d13335f153c1921efc9d61d3708ef09f3fc4a7014fb4f0";
   };
 
   nativeBuildInputs = [
     file
     perlPackages.perl
-    unzip
   ];
 
   buildInputs = [
@@ -58,6 +57,15 @@ stdenv.mkDerivation rec {
       "INSTALLSITEMAN3DIR=$out/share/man/man3"
     )
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "27CA A4A3 2E37 1383 A33E  D058 7D5F 9576 E0F8 1533";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Clients and server for the SNMP network monitoring protocol";

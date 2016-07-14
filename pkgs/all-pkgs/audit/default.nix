@@ -25,11 +25,12 @@ in
 
 stdenv.mkDerivation rec {
   name = "${prefix}audit-${version}";
-  version = "2.4.5";
+  version = "2.6.4";
 
   src = fetchurl {
-    url = "http://people.redhat.com/sgrubb/audit/audit-${version}.tar.gz";
-    sha256 = "1q1q51dvxscbi4kbakmd4bn0xrvwwaiwvaya79925cbrqwzxsg77";
+    url = "https://people.redhat.com/sgrubb/audit/audit-${version}.tar.gz";
+    multihash = "QmbkYBVbmDEpXierCsogmi6xW4GdXEpor6KPUgXr8T4m1H";
+    sha256 = "b5a79cecd9593c368c9e42d5af72fcd14f046676657e906970b6c4a1aa5d06c7";
   };
 
   nativeBuildInputs = [

@@ -566,6 +566,8 @@ automake = callPackage ../all-pkgs/automake { };
 
 avahi = callPackage ../all-pkgs/avahi { };
 
+babl = callPackage ../all-pkgs/babl { };
+
 bazaar = callPackage ../all-pkgs/bazaar { };
 
 bash = callPackage ../all-pkgs/bash { };
@@ -6505,8 +6507,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  aqbanking = callPackage ../development/libraries/aqbanking { };
 #
 #  aubio = callPackage ../development/libraries/aubio { };
-
-  babl = callPackage ../development/libraries/babl { };
 #
 #  beecrypt = callPackage ../development/libraries/beecrypt { };
 #

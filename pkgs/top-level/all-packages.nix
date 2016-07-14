@@ -1772,6 +1772,8 @@ networkmanager-openconnect = callPackage ../all-pkgs/networkmanager-openconnect 
 
 networkmanager-applet = callPackage ../all-pkgs/networkmanager-applet { };
 
+nfs-utils = callPackage ../all-pkgs/nfs-utils { };
+
 nftables = callPackage ../all-pkgs/nftables { };
 
 nghttp2_full = callPackage ../all-pkgs/nghttp2 { };
@@ -8685,8 +8687,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  autofs5 = callPackage ../os-specific/linux/autofs { };
 #
 #  _915resolution = callPackage ../os-specific/linux/915resolution { };
-#
-#  nfs-utils = callPackage ../os-specific/linux/nfs-utils { };
 #
   acpi = callPackage ../os-specific/linux/acpi { };
 

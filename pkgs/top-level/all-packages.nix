@@ -556,6 +556,8 @@ audit_lib = callPackageAlias "audit_full" {
   prefix = "lib";
 };
 
+augeas = callPackage ../all-pkgs/augeas { };
+
 autoconf = callPackage ../all-pkgs/autoconf { };
 
 autogen = callPackage ../all-pkgs/autogen { };
@@ -5990,8 +5992,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  activator = callPackage ../development/tools/activator { };
 #
 #  alloy = callPackage ../development/tools/alloy { };
-#
-#  augeas = callPackage ../tools/system/augeas { };
 #
 #  ansible = pythonPackages.ansible;
 #

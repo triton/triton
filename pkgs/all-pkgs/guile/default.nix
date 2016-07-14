@@ -40,6 +40,13 @@ stdenv.mkDerivation rec {
     readline
   ];
 
+  # Fixes for parallel building
+  postPatch = ''
+    sed -i libguile/Makefile.in \
+      -e 's,^.c.x:$,.c.x: $(BUILT_SOURCES),g' \
+      -e 's,DOT_X_FILES.*: ,\0$(DOT_I_FILES) ,g'
+  '';
+
   # A native Guile 2.0 is needed to cross-build Guile.
   selfNativeBuildInput = true;
 

@@ -1,5 +1,5 @@
 { stdenv
-, fetchFromGitHub
+, fetchurl
 
 , ipset
 , iptables
@@ -10,13 +10,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "keepalived-2016-05-17";
+  name = "keepalived-1.2.23";
 
-  src = fetchFromGitHub {
-    owner = "acassen";
-    repo = "keepalived";
-    rev = "d96429be4a4f5df2bc70d1d83477fad0ea827b1a";
-    sha256 = "438bc7c6f11c6e20d32b7adff8dfdfdd81e7a5155c9ece2bf4b681bf3857ecb9";
+  src = fetchurl {
+    url = "http://keepalived.org/software/${name}.tar.gz";
+    multihash = "QmRwvzN1VhvXf56BBr9GTxeepDRnLJ9fMk4Yg18cTN9rk3";
+    sha256 = "046rfl2fpzqkdy3ahg2ca8qpvdd02d0zib47m80yiwqgy6y35r0r";
   };
 
   buildInputs = [
@@ -24,7 +23,7 @@ stdenv.mkDerivation rec {
     iptables
     libnfnetlink
     libnl
-    #net-snmp
+    net-snmp
     openssl
   ];
 
@@ -35,18 +34,18 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    #"--enable-snmp"
-    #"--enable-snmp-keepalived"
-    #"--enable-snmp-checker"
-    #"--enable-snmp-rfc"
-    #"--enable-snmp-rfcv2"
-    #"--enable-snmp-rfcv3"
+    "--enable-snmp"
+    "--enable-snmp-keepalived"
+    "--enable-snmp-checker"
+    "--enable-snmp-rfc"
+    "--enable-snmp-rfcv2"
+    "--enable-snmp-rfcv3"
     "--enable-sha1"
   ];
 
-  installFlags = [
-    "sysconfdir=\${out}/etc"
-  ];
+  preInstall = ''
+    installFlagsArray+=("sysconfdir=$out/etc")
+  '';
 
   meta = with stdenv.lib; {
     homepage = http://keepalived.org;

@@ -24,6 +24,7 @@
 , libgudev
 , libjpeg
 , libmng
+, libmypaint
 , libpng
 , librsvg
 , libtiff
@@ -73,6 +74,7 @@ stdenv.mkDerivation rec {
     libgudev
     libjpeg
     libmng
+    libmypaint
     libpng
     librsvg
     libtiff

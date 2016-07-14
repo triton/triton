@@ -2127,6 +2127,8 @@ st = callPackage ../all-pkgs/st {
 #  withPrimus = config.steam.primus or false;
 #};
 
+strace = callPackage ../all-pkgs/strace { };
+
 sublime-text = callPackage ../all-pkgs/sublime-text { };
 
 subversion = callPackage ../all-pkgs/subversion { };
@@ -6409,8 +6411,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  sselp = callPackage ../tools/X11/sselp{ };
 #
 #  stm32flash = callPackage ../development/tools/misc/stm32flash { };
-#
-  strace = callPackage ../development/tools/misc/strace { };
 #
 #  swfmill = callPackage ../tools/video/swfmill { };
 #

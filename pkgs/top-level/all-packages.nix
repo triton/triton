@@ -927,6 +927,8 @@ gconf = callPackage ../all-pkgs/gconf { };
 
 gcr = callPackage ../all-pkgs/gcr { };
 
+gdbm = callPackage ../all-pkgs/gdbm { };
+
 gdk-pixbuf_wrapped = callPackage ../all-pkgs/gdk-pixbuf { };
 gdk-pixbuf_unwrapped = callPackage ../all-pkgs/gdk-pixbuf/unwrapped.nix { };
 gdk-pixbuf = callPackageAlias "gdk-pixbuf_wrapped" { };
@@ -6692,8 +6694,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gdome2 = callPackage ../development/libraries/gdome2 {
 #    inherit (gnome) gtkdoc;
 #  };
-#
-  gdbm = callPackage ../development/libraries/gdbm { };
 #
 #  gecode_3 = callPackage ../development/libraries/gecode/3.nix { };
 #  gecode_4 = callPackage ../development/libraries/gecode { };

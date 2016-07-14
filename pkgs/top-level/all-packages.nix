@@ -798,6 +798,8 @@ exempi = callPackage ../all-pkgs/exempi { };
 
 expat = callPackage ../all-pkgs/expat { };
 
+expect = callPackage ../all-pkgs/expect { };
+
 f2fs-tools = callPackage ../all-pkgs/f2fs-tools { };
 
 faac = callPackage ../all-pkgs/faac { };
@@ -3183,8 +3185,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  exiftags = callPackage ../tools/graphics/exiftags { };
 #
 #  extundelete = callPackage ../tools/filesystems/extundelete { };
-#
-  expect = callPackage ../tools/misc/expect { };
 #
 #  Fabric = pythonPackages.Fabric;
 #

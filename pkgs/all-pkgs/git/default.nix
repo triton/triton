@@ -1,7 +1,12 @@
 { stdenv
+, asciidoc
+, docbook_xml_dtd_45
+, docbook_xsl
 , fetchurl
 , gettext
+, libxslt
 , makeWrapper
+, xmlto
 
 , coreutils
 , cpio
@@ -47,8 +52,13 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
+    asciidoc
+    docbook_xml_dtd_45
+    docbook_xsl
     gettext
+    libxslt
     makeWrapper
+    xmlto
   ];
 
   buildInputs = [
@@ -77,8 +87,15 @@ stdenv.mkDerivation rec {
     "sysconfdir=/etc"
   ];
 
-  # Parallel building fails with make 4.2 (git-2.8.3)
-  parallelBuild = false;
+  buildFlags = [
+    "all"
+    "man"
+  ];
+
+  installTargets = [
+    "install"
+    "install-man"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

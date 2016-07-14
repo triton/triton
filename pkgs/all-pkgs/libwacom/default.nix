@@ -3,15 +3,17 @@
 
 , glib
 , libgudev
+, libxml2
 , systemd_lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "libwacom-0.19";
+  name = "libwacom-0.21";
 
   src = fetchurl {
     url = "mirror://sourceforge/linuxwacom/libwacom/${name}.tar.bz2";
-    sha256 = "620d88cd85d118107c69db094c07284ead2342048cc0e9a5f16eb951a8b855ff";
+    allowHashOutput = false;
+    sha256 = "c594cacc69a572356a76cd7909b913d3867759a872a2663b2005ff4e99984605";
   };
 
   postPatch =
@@ -23,17 +25,28 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glib
     libgudev
+    libxml2
     systemd_lib
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "3C2C 43D9 447D 5938 EF45  51EB E23B 7E70 B467 F0BF";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Library for identifying Wacom tablets and features";
     homepage = http://sourceforge.net/projects/linuxwacom/;
     license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 
 }

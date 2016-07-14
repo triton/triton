@@ -190,11 +190,14 @@ tryDownload() {
             method="cat \"$out\""
             if [ "${pgpDecompress}" = "1" ]; then
               case "$out" in
-                *.tar.xz | *.txz)
-                  method="xz -d -c \"$out\""
+                *.tar.bz2 | *.tbz2)
+                  method="bzip2 -d -c \"$out\""
                   ;;
                 *.tar.gz | *.tgz)
                   method="gzip -d -c \"$out\""
+                  ;;
+                *.tar.xz | *.txz)
+                  method="xz -d -c \"$out\""
                   ;;
                 *)
                   echo "Could not determine how to decompress $out for pgp verification" >&2

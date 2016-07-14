@@ -1272,6 +1272,8 @@ keepalived = callPackage ../all-pkgs/keepalived { };
 
 kerberos = callPackageAlias "krb5_lib" { };
 
+keyutils = callPackage ../all-pkgs/keyutils { };
+
 kid3 = callPackage ../all-pkgs/kid3 { };
 
 kmod = callPackage ../all-pkgs/kmod { };
@@ -9075,8 +9077,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  # A function to build a manually-configured kernel
   linuxManualConfig = pkgs.buildLinux;
   buildLinux = callPackage ../os-specific/linux/kernel/manual-config.nix {};
-#
-  keyutils = callPackage ../os-specific/linux/keyutils { };
 #
 #  libsemanage = callPackage ../os-specific/linux/libsemanage { };
 #

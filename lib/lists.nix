@@ -15,17 +15,19 @@ rec {
     elem
     genList;
 
-
-  # Create a list consisting of a single element.  `singleton x' is
-  # sometimes more convenient with respect to indentation than `[x]'
-  # when x spans multiple lines.
+  /**
+   * Create a list consisting of a single element.  `singleton x' is
+   * sometimes more convenient with respect to indentation than `[x]'
+   * when x spans multiple lines.
+   */
   singleton = x: [ x ];
 
-
-  # "Fold" a binary function `op' between successive elements of
-  # `list' with `nul' as the starting value, i.e., `fold op nul [x_1
-  # x_2 ... x_n] == op x_1 (op x_2 ... (op x_n nul))'.  (This is
-  # Haskell's foldr).
+  /**
+   * "Fold" a binary function `op' between successive elements of
+   * `list' with `nul' as the starting value, i.e., `fold op nul [x_1
+   * x_2 ... x_n] == op x_1 (op x_2 ... (op x_n nul))'.  (This is
+   * Haskell's foldr).
+   */
   fold = op: nul: list:
     let
       len = length list;
@@ -37,8 +39,10 @@ rec {
     in
     fold' 0;
 
-  # Left fold: `fold op nul [x_1 x_2 ... x_n] == op (... (op (op nul
-  # x_1) x_2) ... x_n)'.
+  /**
+   * Left fold: `fold op nul [x_1 x_2 ... x_n] == op (... (op (op nul
+   * x_1) x_2) ... x_n)'.
+   */
   foldl = op: nul: list:
     let
       len = length list;
@@ -50,13 +54,17 @@ rec {
     in
     foldl' (length list - 1);
 
-
-  # Strict version of foldl.
+  /**
+   * Strict version of foldl.
+   */
   foldl' = builtins.foldl' or foldl;
 
-
-  # Map with index: `imap (i: v: "${v}-${toString i}") ["a" "b"] ==
-  # ["a-1" "b-2"]'. FIXME: why does this start to count at 1?
+  /**
+   * FIXME: why does this start to count at 1?
+   *
+   * Map with index: `imap (i: v: "${v}-${toString i}") ["a" "b"] ==
+   * ["a-1" "b-2"]'.
+   */
   imap =
     if builtins ? genList then
       f: list: genList (n: f (n + 1) (elemAt list n)) (length list)
@@ -72,28 +80,30 @@ rec {
       in
       imap' 0;
 
-
-  # Map and concatenate the result.
+  /**
+   * Map and concatenate the result.
+   */
   concatMap = f: list: concatLists (map f list);
 
-
-  # Flatten the argument into a single list; that is, nested lists are
-  # spliced into the top-level lists.  E.g., `flatten [1 [2 [3] 4] 5]
-  # == [1 2 3 4 5]' and `flatten 1 == [1]'.
+  /**
+   * Flatten the argument into a single list; that is, nested lists are
+   * spliced into the top-level lists.  E.g., `flatten [1 [2 [3] 4] 5]
+   * == [1 2 3 4 5]' and `flatten 1 == [1]'.
+   */
   flatten = x:
     if isList x then
       foldl' (x: y: x ++ (flatten y)) [ ] x
     else
       [ x ];
 
-
   # Remove elements equal to 'e' from a list.  Useful for buildInputs.
   remove = e: filter (x: x != e);
 
-
-  # Find the sole element in the list matching the specified
-  # predicate, returns `default' if no such element exists, or
-  # `multiple' if there are multiple matching elements.
+  /**
+   * Find the sole element in the list matching the specified
+   * predicate, returns `default' if no such element exists, or
+   * `multiple' if there are multiple matching elements.
+   */
   findSingle = pred: default: multiple: list:
     let
       found = filter pred list; len = length found;
@@ -105,9 +115,10 @@ rec {
     else
       head found;
 
-
-  # Find the first element in the list matching the specified
-  # predicate or returns `default' if no such element exists.
+  /**
+   * Find the first element in the list matching the specified
+   * predicate or returns `default' if no such element exists.
+   */
   findFirst = pred: default: list:
     let
       found = filter pred list;
@@ -117,51 +128,65 @@ rec {
     else
       head found;
 
-
-  # Return true iff function `pred' returns true for at least element
-  # of `list'.
+  /**
+   * Return true only if function `pred' returns true for at least
+   * element of `list'.
+   */
   any = builtins.any or (pred: fold (x: y: if pred x then true else y) false);
 
-
-  # Return true iff function `pred' returns true for all elements of
-  # `list'.
+  /**
+   * Return true only if function `pred' returns true for all elements
+   * of `list'.
+   */
   all = builtins.all or (pred: fold (x: y: if pred x then y else false) true);
 
-
-  # Count how many times function `pred' returns true for the elements
-  # of `list'.
+  /**
+   * Count how many times function `pred' returns true for the elements
+   * of `list'.
+   */
   count = pred: foldl' (c: x: if pred x then c + 1 else c) 0;
 
-
-  # Return a singleton list or an empty list, depending on a boolean
-  # value.  Useful when building lists with optional elements
-  # (e.g. `++ optional (system == "i686-linux") flashplayer').
+  /**
+   * Return a singleton list if true or an empty list if not true.
+   *
+   * Example:
+   *   [ ] ++ optional (boolean argument) element)
+   */
   optional = cond: elem:
     if cond then
       [ elem ]
     else
       [ ];
 
-
-  # Return a list or an empty list, dependening on a boolean value.
+  /**
+   * Return a list if true or an empty list if not true.
+   *
+   * Example:
+   *   [ ] ++ optionals (boolean argument) [ element1 element2 ]
+   */
   optionals = cond: elems:
     if cond then
       elems
     else
       [ ];
 
-
-  # If argument is a list, return it; else, wrap it in a singleton
-  # list.  If you're using this, you should almost certainly
-  # reconsider if there isn't a more "well-typed" approach.
+  /**
+   * If argument is a list, return it; else, wrap it in a singleton
+   * list.
+   * 
+   * WARNING:
+   *   If you're using this, you should almost certainly reconsider
+   *   a more "well-typed" approach.
+   */
   toList = x:
     if isList x then
       x
     else
       [ x ];
 
-
-  # Return a list of integers from `first' up to and including `last'.
+  /**
+   * Return a list of integers from `first' up to and including `last'.
+   */
   range =
     if builtins ? genList then
       first: last:
@@ -176,9 +201,10 @@ rec {
         else
           [ first ] ++ range (first + 1) last;
 
-
-  # Partition the elements of a list in two lists, `right' and
-  # `wrong', depending on the evaluation of a predicate.
+  /**
+   * Partition the elements of a list in two lists, `right' and
+   * `wrong', depending on the evaluation of a predicate.
+   */
   partition = pred:
     fold (h: t:
       if pred h then {
@@ -192,11 +218,12 @@ rec {
       wrong = [ ];
     };
 
-
   zipListsWith =
     if builtins ? genList then
       f: fst: snd:
-      genList (n: f (elemAt fst n) (elemAt snd n)) (min (length fst) (length snd))
+      genList (n:
+        f (elemAt fst n) (elemAt snd n)) (min (length fst) (length snd)
+      )
     else
       f: fst: snd:
       let
@@ -211,8 +238,9 @@ rec {
 
   zipLists = zipListsWith (fst: snd: { inherit fst snd; });
 
-
-  # Reverse the order of the elements of a list.
+  /**
+   * Reverse the order of the elements of a list.
+   */
   reverseList =
     if builtins ? genList then
       xs:
@@ -223,11 +251,12 @@ rec {
     else
       fold (e: acc: acc ++ [ e ]) [];
 
-
-  # Sort a list based on a comparator function which compares two
-  # elements and returns true if the first argument is strictly below
-  # the second argument.  The returned list is sorted in an increasing
-  # order.  The implementation does a quick-sort.
+  /**
+   * Sort a list based on a comparator function which compares two
+   * elements and returns true if the first argument is strictly below
+   * the second argument.  The returned list is sorted in an increasing
+   * order.  The implementation does a quick-sort.
+   */
   sort = builtins.sort or (
     strictLess: list:
     let
@@ -259,8 +288,9 @@ rec {
       ++ [ first ]
       ++  (sort strictLess pivot.right));
 
-
-  # Return the first (at most) N elements of a list.
+  /**
+   * Return the first (at most) N elements of a list.
+   */
   take =
     if builtins ? genList then
       count: sublist 0 count
@@ -276,8 +306,9 @@ rec {
       in
       take' 0;
 
-
-  # Remove the first (at most) N elements of a list.
+  /**
+   * Remove the first (at most) N elements of a list.
+   */
   drop =
     if builtins ? genList then
       count: list: sublist count (length list) list
@@ -293,9 +324,10 @@ rec {
       in
       drop' (len - 1);
 
-
-  # Return a list consisting of at most ‘count’ elements of ‘list’,
-  # starting at index ‘start’.
+  /**
+   * Return a list consisting of at most ‘count’ elements of ‘list’,
+   * starting at index ‘start’.
+   */
   sublist = start: count: list:
     let
       len = length list;
@@ -309,18 +341,19 @@ rec {
           count
       );
 
-
-  # Return the last element of a list.
+  /**
+   * Return the last element of a list.
+   */
   last = list:
     assert list != [ ];
     elemAt list (length list - 1);
 
-
-  # Return all elements but the last
+  /**
+   * Return all elements but the last
+   */
   init = list:
     assert list != [ ];
     take (length list - 1) list;
-
 
   deepSeqList = xs: y:
     if any (x: deepSeq x false) xs then
@@ -328,11 +361,13 @@ rec {
     else
       y;
 
-
   crossLists = f: foldl (fs: args: concatMap (f: map f args) fs) [ f ];
 
-
-  # Remove duplicate elements from the list. O(n^2) complexity.
+  /**
+   * Remove duplicate elements from the list.
+   *
+   * O(n^2) complexity.
+   */
   unique = list:
     if list == [ ] then
       [ ]
@@ -343,12 +378,18 @@ rec {
       in
       [ x ] ++ remove x xs;
 
-
-  # Intersects list 'e' and another list. O(nm) complexity.
+  /**
+   * Intersects list 'e' and another list.
+   *
+   * O(nm) complexity.
+   */
   intersectLists = e: filter (x: elem x e);
 
-
-  # Subtracts list 'e' from another list. O(nm) complexity.
+  /**
+   * Subtracts list 'e' from another list.
+   *
+   * O(nm) complexity.
+   */
   subtractLists = e: filter (x: !(elem x e));
 
 }

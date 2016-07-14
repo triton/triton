@@ -12,6 +12,7 @@ let
     versionAtLeast
     versionOlder;
   inherit (builtins.getAttr channel (import ./sources.nix))
+    multihash
     sha256
     version;
 in
@@ -39,7 +40,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/tcl/tcl${version}-src.tar.gz";
-    inherit sha256;
+    inherit multihash sha256;
   };
 
   buildInputs = [

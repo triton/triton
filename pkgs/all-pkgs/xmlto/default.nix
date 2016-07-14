@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, findXMLCatalogs
 , flex
 , makeWrapper
 
@@ -19,6 +20,12 @@ stdenv.mkDerivation rec {
   buildInputs = [
     getopt
     libxml2
+  ];
+
+  # When using xmlto, it needs the ability to set the environment variables
+  # for all of the XML Catalogs in the build inputs.
+  propagatedBuildInputs = [
+    findXMLCatalogs
   ];
 
   preConfigure = ''

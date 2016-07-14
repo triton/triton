@@ -732,6 +732,8 @@ dconf-editor = callPackage ../all-pkgs/dconf-editor { };
 
 ddrescue = callPackage ../all-pkgs/ddrescue { };
 
+dejagnu = callPackage ../all-pkgs/dejagnu { };
+
 dialog = callPackage ../all-pkgs/dialog { };
 
 dmenu = callPackage ../all-pkgs/dmenu { };
@@ -6118,8 +6120,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  libsigrok = callPackage ../development/tools/libsigrok { };
 #
 #  libsigrokdecode = callPackage ../development/tools/libsigrokdecode { };
-#
-  dejagnu = callPackage ../development/tools/misc/dejagnu { };
 #
 #  dfeet = callPackage ../development/tools/misc/d-feet {
 #    inherit (pythonPackages) pep8;

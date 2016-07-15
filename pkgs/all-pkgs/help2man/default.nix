@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     wrapProgram "$out/bin/help2man" \
-      --prefix PERL5LIB : "$(echo ${perlPackages.LocaleGettext}/${perlPackages.perl.libPrefix})"
+      --prefix PERL5LIB : "$(echo ${perlPackages.Locale-gettext}/${perlPackages.perl.libPrefix})"
   '';
 
   passthru = {

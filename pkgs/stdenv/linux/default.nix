@@ -251,7 +251,7 @@ let
         texinfo = pkgs.texinfo.override {
           interactive = false;
         };
-        inherit (pkgs) perl autoconf automake perlPackages
+        inherit (pkgs) perl autoconf automake newScope perlPackages
           libtool buildPerlPackage help2man makeWrapper autoreconfHook nghttp2_full;
         jansson = null;
       };

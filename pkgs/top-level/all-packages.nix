@@ -3243,10 +3243,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   mdadm = callPackage ../os-specific/linux/mdadm { };
 #
-  aggregateModules = modules:
-    callPackage ../all-pkgs/kmod/aggregator.nix {
-      inherit modules;
-    };
 #
   procps-old = lowPrio (callPackage ../os-specific/linux/procps { });
 #

@@ -4,7 +4,7 @@
 
 { name
 , buildInputs ? []
-, preConfigure ? ""
+, postPatch ? ""
 , postFixup ? ""
 , ...
 } @ attrs:
@@ -25,29 +25,35 @@ stdenv.mkDerivation ({
 } // attrs // {
   name = "perl-" + name;
 
+  nativeBuildInputs = [
+    perl
+  ];
+
   buildInputs = [
     perl
   ] ++ buildInputs;
 
-  preConfigure = preConfigure + ''
-    export PERL5LIB="$PERL5LIB${PERL5LIB:+:}$out/lib/perl5/site_perl"
+  postPatch = postPatch + ''
+    export PERL5LIB="$PERL5LIB''${PERL5LIB:+:}$out/${perl.libPrefix}"
 
-    perlFlags=()
+    perlFlags=""
     for i in $(IFS=:; echo $PERL5LIB); do
-      perlFlags+=("-I$i")
+      perlFlags+=" -I$i"
     done
 
-    find . | while read fn; do
-      if test -f "$fn"; then
-        first=$(dd if="$fn" count=2 bs=1 2> /dev/null)
-        if test "$first" = "#!"; then
-          echo "patching $fn..."
-          sed -i "s|^#\!\(.*/perl.*\)$|#\! \1$perlFlags|" "$fn"
-        fi
+    while read file; do
+      first=$(dd if="$file" count=2 bs=1 2> /dev/null)
+      if test "$first" = "#!"; then
+        echo "patching $file..."
+        sed -i "s|^#\!\(.*/perl.*\)$|#\! \1$perlFlags|" "$file"
       fi
-    done
+    done < <(find . -type f)
+  '';
 
+  configurePhase = ''
+    runHook preConfigure
     perl Makefile.PL "PREFIX=$out" "INSTALLDIRS=site" $makeMakerFlags
+    runHook postConfigure
   '';
 
   postFixup = ''

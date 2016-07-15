@@ -10,7 +10,7 @@ let
     "mirror://gnupg/libgcrypt/libgcrypt-${version}.tar.bz2"
   ];
 
-  version = "1.7.1";
+  version = "1.7.2";
 in
 stdenv.mkDerivation rec {
   name = "libgcrypt-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = tarballUrls version;
     allowHashOutput = false;
-    sha256 = "450d9cfcbf1611c64dbe3bd04b627b83379ef89f11406d94c8bba305e36d7a95";
+    sha256 = "3d35df906d6eab354504c05d749a9b021944cb29ff5f65c8ef9c3dd5f7b6689f";
   };
 
   buildInputs = [
@@ -42,10 +42,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.7.1";
+      urls = tarballUrls "1.7.2";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "D869 2123 C406 5DEA 5E0F  3AB5 249B 39D2 4F25 E3B6";
-      outputHash = "450d9cfcbf1611c64dbe3bd04b627b83379ef89f11406d94c8bba305e36d7a95";
+      outputHash = "3d35df906d6eab354504c05d749a9b021944cb29ff5f65c8ef9c3dd5f7b6689f";
       inherit (src) outputHashAlgo;
     };
   };

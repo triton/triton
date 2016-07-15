@@ -27,5 +27,7 @@ buildPerlPackage = callPackage ../all-pkgs/build-perl-package { };
 ################################################################################
 ################################################################################
 
+DBI = callPackage ../all-pkgs/DBI { };
+
 Locale-gettext = callPackage ../all-pkgs/Locale-gettext { };
 }

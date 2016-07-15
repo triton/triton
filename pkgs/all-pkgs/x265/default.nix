@@ -5,7 +5,7 @@
 , ninja
 , yasm
 
-, numactl ? null
+, numactl
 
 # Optionals
 , cliSupport ? true # Build standalone CLI application
@@ -30,17 +30,17 @@ in
 assert (elem targetSystem platforms.linux) -> numactl != null;
 
 let
-  /*version = "1.9";
-  src = fetchurl {
+  version = "2.0";
+  /*src = fetchurl {
     url = "https://bitbucket.org/multicoreware/x265/downloads/" +
           "x265_${version}.tar.gz";
-    sha256 = "1j0mbcf10aj6zi1nxql45f9817jd2ndcpd7x123sjmyr7q9m8iiy";
+    sha256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
   };*/
-  version = "2016-07-04";
+  #version = "2016-07-04";
   src = fetchhg {
     url = "https://bitbucket.org/multicoreware/x265";
-    rev = "a932b4366235ab6597c8d124c1569dade6ff790a";
-    sha256 = "0j5191dd3p1s657ls5v0511jhddw6h4qniz8ds0j45p5xyl7l4gp";
+    rev = "${version}";
+    sha256 = "0a1gdxwzzwlgr76hg78v9hczf2lqq9l38k3dd6b29gxsprq2capd";
   };
   cmakeFlagsAll = [
     (cmFlag "ENABLE_TESTS" false)
@@ -103,8 +103,7 @@ let
          pkg-config/libtool hooks */ ''
         rm -frv $out/includes
         rm -frv $out/lib/pkgconfig
-      '' +
-      /* Rename the library to a unique name */ ''
+      '' + /* Rename the library to a unique name */ ''
         mv -v $out/lib/libx265.a $out/lib/libx265_main10.a
       '';
   };
@@ -140,8 +139,7 @@ let
          pkg-config/libtool hooks */ ''
         rm -frv $out/includes
         rm -frv $out/lib/pkgconfig
-      '' +
-      /* Rename the library to a unique name */ ''
+      '' + /* Rename the library to a unique name */ ''
         mv -v $out/lib/libx265.a $out/lib/libx265_main12.a
       '';
   };

@@ -7,7 +7,6 @@
 , openssl
 , util-linux_lib
 
-, perl
 , perlPackages
 , python3
 }:
@@ -36,7 +35,7 @@ stdenv.mkDerivation rec {
     openssl
     util-linux_lib
   ] ++ optionals doCheck [
-    perl
+    perlPackages.perl
     perlPackages.IOSocketSSL
     perlPackages.LWP
     python3

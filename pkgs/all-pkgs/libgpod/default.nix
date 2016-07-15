@@ -2,7 +2,6 @@
 , fetchurl
 , gettext
 , intltool
-, perl
 , perlPackages
 
 , gdk-pixbuf
@@ -39,8 +38,8 @@ stdenv.mkDerivation rec {
     gettext
     intltool
     libimobiledevice.swig
-    perl
-    perlPackages.XMLParser
+    perlPackages.perl
+    perlPackages.XML-Parser
   ];
 
   buildInputs = [

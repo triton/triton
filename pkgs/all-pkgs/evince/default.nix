@@ -4,7 +4,6 @@
 , intltool
 , itstool
 , makeWrapper
-, perl
 , perlPackages
 
 , adwaita-icon-theme
@@ -64,8 +63,8 @@ stdenv.mkDerivation rec {
     intltool
     itstool
     makeWrapper
-    perl
-    perlPackages.XMLParser
+    perlPackages.perl
+    perlPackages.XML-Parser
   ];
 
   buildInputs = [

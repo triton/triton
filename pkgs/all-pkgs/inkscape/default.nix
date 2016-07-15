@@ -5,7 +5,6 @@
 , gettext
 , intltool
 , makeWrapper
-, perl
 , perlPackages
 , unzip
 
@@ -79,8 +78,8 @@ stdenv.mkDerivation rec {
     intltool
     libxslt
     makeWrapper
-    perl
-    perlPackages.XMLParser
+    perlPackages.perl
+    perlPackages.XML-Parser
   ] ++ optional boxMakerPlugin unzip;
 
   propagatedBuildInputs = [

@@ -1845,6 +1845,12 @@ nginx_unstable = callPackageAlias "nginx" {
 
 ninja = callPackage ../all-pkgs/ninja { };
 
+nix = callPackage ../all-pkgs/nix { };
+
+nix_unstable = callPackageAlias "nix" {
+  channel = "unstable";
+};
+
 nmap = callPackage ../all-pkgs/nmap { };
 
 nodejs = callPackage ../all-pkgs/nodejs { };
@@ -3398,13 +3404,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
     prefix = "lib";
   };
 #
-  inherit (callPackages ../tools/package-management/nix {
-      storeDir = config.nix.storeDir or "/nix/store";
-      stateDir = config.nix.stateDir or "/nix/var";
-      })
-    nix
-    nixStable
-    nixUnstable;
 #
   nixos-artwork = callPackage ../data/misc/nixos-artwork { };
 #

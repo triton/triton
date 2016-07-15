@@ -12,9 +12,11 @@
 , spCompat
 }:
 
-stdenv.mkDerivation rec {
-  name = "iputils-${version}";
+let
   version = "20151218";
+in
+stdenv.mkDerivation {
+  name = "iputils-${version}";
 
   src = fetchurl {
     url = "http://www.skbuff.net/iputils/iputils-s${version}.tar.bz2";
@@ -50,7 +52,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     docbook_sgml_dtd_31
-    perlPackages.SGMLSpm
+    perlPackages.SGMLS
   ];
 
   buildInputs = [
@@ -68,10 +70,10 @@ stdenv.mkDerivation rec {
     "ninfod"
   ];
 
+  # iputils does not provide a make install target
   installPhase = ''
     runHook 'preInstall'
-  '' +
-  /* iputils does not provide a make install target */ ''
+
     install -vDm 755 ping $out/bin/ping
     install -vDm 755 ping6 $out/bin/ping6
     install -vDm 755 tracepath $out/bin/tracepath
@@ -91,7 +93,7 @@ stdenv.mkDerivation rec {
     install -vDm 644 doc/ninfod.8 $out/share/man/man8/ninfod.8
     ln -s $out/share/man/man8/{ping,ping6}.8
     ln -s $out/share/man/man8/{tracepath,tracepath6}.8
-  '' + ''
+
     runHook 'postInstall'
   '';
 

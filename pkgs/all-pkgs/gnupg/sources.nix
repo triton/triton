@@ -7,9 +7,9 @@
   };
 
   "2.1" = {
-    version = "2.1.13";
-    newVersion = "2.1.13";
-    sha256 = "4f9d83a6221daa60130fa79f0b1d37d6c20fffdd0320b640c7a597c5b6219675";
-    newSha256 = "4f9d83a6221daa60130fa79f0b1d37d6c20fffdd0320b640c7a597c5b6219675";
+    version = "2.1.14";
+    newVersion = "2.1.14";
+    sha256 = "9450dee9693b6a12bf0c374dae77b66c30f69ff8f35fc9266ab8dd76998eba42";
+    newSha256 = "9450dee9693b6a12bf0c374dae77b66c30f69ff8f35fc9266ab8dd76998eba42";
   };
 }

@@ -34,4 +34,6 @@ DBI = callPackage ../all-pkgs/DBI { };
 Locale-gettext = callPackage ../all-pkgs/Locale-gettext { };
 
 WWW-Curl = callPackage ../all-pkgs/WWW-Curl { };
+
+XML-Parser = callPackage ../all-pkgs/XML-Parser { };
 }

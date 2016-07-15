@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     makeWrapper
     perlPackages.perl
-    perlPackages.XMLParser
+    perlPackages.XML-Parser
   ];
 
   postPatch = ''
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
       wrapProgram "$out/bin/$prog" \
         --set 'PERL5LIB' "${
           makeSearchPath "${perlPackages.perl.libPrefix}" [
-            perlPackages.XMLParser
+            perlPackages.XML-Parser
           ]}"
     done
   '';

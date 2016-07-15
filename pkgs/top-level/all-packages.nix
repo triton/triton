@@ -604,6 +604,10 @@ btsync = callPackage ../all-pkgs/btsync { };
 
 bzip2 = callPackage ../all-pkgs/bzip2 { };
 
+bzrtools = callPackage ../all-pkgs/bzrtools { };
+
+cacert = callPackage ../all-pkgs/cacert { };
+
 c-ares = callPackage ../all-pkgs/c-ares { };
 
 cairo = callPackage ../all-pkgs/cairo { };
@@ -3243,6 +3247,10 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   mdadm = callPackage ../os-specific/linux/mdadm { };
 #
+  aggregateModules = modules:
+    callPackage ../all-pkgs/kmod/aggregator.nix {
+      inherit modules;
+    };
 #
   procps-old = lowPrio (callPackage ../os-specific/linux/procps { });
 #
@@ -3290,8 +3298,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   zfs_git = callPackage ../os-specific/linux/zfs/git.nix {
     configFile = "user";
   };
-#
-  cacert = callPackage ../data/misc/cacert { };
 #
   cantarell_fonts = callPackage ../data/fonts/cantarell-fonts { };
 #

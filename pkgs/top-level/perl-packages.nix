@@ -33,6 +33,8 @@ DBI = callPackage ../all-pkgs/DBI { };
 
 Encode-Locale = callPackage ../all-pkgs/Encode-Locale { };
 
+HTTP-Date = callPackage ../all-pkgs/HTTP-Date { };
+
 Locale-gettext = callPackage ../all-pkgs/Locale-gettext { };
 
 SGMLS = callPackage ../all-pkgs/SGMLS { };

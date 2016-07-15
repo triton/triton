@@ -13,8 +13,9 @@ buildPerlPackage rec {
     sha256 = "1ae9d07ee9c35326b3d9aad56eae71a6730a73a116b9fe9e8a4758b7cc033216";
   };
 
-  buildInputs = [
-    expat
+  configureFlags = [
+    "EXPATINCPATH=${expat}/include"
+    "EXPATLIBPATH=${expat}/lib"
   ];
 
   meta = with stdenv.lib; {

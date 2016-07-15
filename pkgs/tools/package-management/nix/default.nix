@@ -34,8 +34,8 @@ let
       ''
         --with-store-dir=${storeDir} --localstatedir=${stateDir} --sysconfdir=/etc
         --with-dbi=${perlPackages.DBI}/${perl.libPrefix}
-        --with-dbd-sqlite=${perlPackages.DBDSQLite}/${perl.libPrefix}
-        --with-www-curl=${perlPackages.WWWCurl}/${perl.libPrefix}
+        --with-dbd-sqlite=${perlPackages.DBD-SQLite}/${perl.libPrefix}
+        --with-www-curl=${perlPackages.WWW-Curl}/${perl.libPrefix}
         --disable-init-state
         --enable-gc
       '';
@@ -56,8 +56,8 @@ let
         ''
           --with-store-dir=${storeDir} --localstatedir=${stateDir}
           --with-dbi=${perlPackages.DBI}/${perl.libPrefix}
-          --with-dbd-sqlite=${perlPackages.DBDSQLite}/${perl.libPrefix}
-          --with-www-curl=${perlPackages.WWWCurl}/${perl.libPrefix}
+          --with-dbd-sqlite=${perlPackages.DBD-SQLite}/${perl.libPrefix}
+          --with-www-curl=${perlPackages.WWW-Curl}/${perl.libPrefix}
           --disable-init-state
           --enable-gc
         '' + stdenv.lib.optionalString (

@@ -6,11 +6,14 @@
 }:
 
 let
+  inherit (stdenv.lib)
+    optional
+    optionalString;
+
   libc = if stdenv.cc.libc or null != null then stdenv.cc.libc else "/usr";
+
+  perlLib = "lib/perl5";
 in
-
-with stdenv.lib;
-
 stdenv.mkDerivation rec {
   name = "perl-5.24.0";
 
@@ -19,7 +22,13 @@ stdenv.mkDerivation rec {
     sha256 = "a9a37c0860380ecd7b23aa06d61c20fc5bc6d95198029f3684c44a9d7e2952f2";
   };
 
-  setupHook = ./setup-hook.sh;
+  setupHook = stdenv.mkDerivation {
+    name = "perl-setup-hook";
+
+    buildCommand = ''
+      sed 's,@LIB_PREFIX@,${libPrefix},g' "${./setup-hook.sh.in}" > "$out"
+    '';
+  };
 
   patches = [
     # Do not look in /usr etc. for dependencies.
@@ -32,14 +41,14 @@ stdenv.mkDerivation rec {
 
   # Build a thread-safe Perl with a dynamic libperls.o.  We need the
   # "installstyle" option to ensure that modules are put under
-  # $out/lib/perl5 - this is the general default, but because $out
+  # $out/${perlLib} - this is the general default, but because $out
   # contains the string "perl", Configure would select $out/lib.
   # Miniperl needs -lm. perl needs -lrt.
   configureFlags = [
     "-de"
     "-Dcc=cc"
     "-Uinstallusrbinperl"
-    "-Dinstallstyle=lib/perl5"
+    "-Dinstallstyle=${perlLib}"
     "-Duseshrplib"
     "-Dlocincpth=${libc}/include"
     "-Dloclibpth=${libc}/lib"
@@ -69,11 +78,11 @@ stdenv.mkDerivation rec {
   # Inspired by nuke-references, which I can't depend on because it uses perl. Perhaps it should just use sed :)
   postInstall = ''
     self=$(echo $out | sed -n "s|^$NIX_STORE/\\([a-z0-9]\{32\}\\)-.*|\1|p")
-    sed -i "/$self/b; s|$NIX_STORE/[a-z0-9]\{32\}-|$NIX_STORE/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-|g" "$out"/lib/perl5/*/*/Config.pm
-    sed -i "/$self/b; s|$NIX_STORE/[a-z0-9]\{32\}-|$NIX_STORE/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-|g" "$out"/lib/perl5/*/*/Config_heavy.pl
+    sed -i "/$self/b; s|$NIX_STORE/[a-z0-9]\{32\}-|$NIX_STORE/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-|g" "$out"/${perlLib}/*/*/Config.pm
+    sed -i "/$self/b; s|$NIX_STORE/[a-z0-9]\{32\}-|$NIX_STORE/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-|g" "$out"/${perlLib}/*/*/Config_heavy.pl
   '';
 
-  passthru.libPrefix = "lib/perl5/site_perl";
+  libPrefix = "${perlLib}/site_perl";
 
   dontAddPrefix = true;
 
@@ -87,7 +96,9 @@ stdenv.mkDerivation rec {
       artistic1
       gpl1Plus
     ];
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       i686-linux
       ++ x86_64-linux;

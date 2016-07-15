@@ -1,0 +1,5 @@
+addPerlLibPath () {
+  addToSearchPath PERL5LIB $1/@LIB_PREFIX@
+}
+
+envHooks+=(addPerlLibPath)

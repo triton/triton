@@ -2107,6 +2107,8 @@ shared_mime_info = callPackage ../all-pkgs/shared-mime-info { };
 
 sharutils = callPackage ../all-pkgs/sharutils { };
 
+smartmontools = callPackage ../all-pkgs/smartmontools { };
+
 snappy = callPackage ../all-pkgs/snappy { };
 
 shntool = callPackage ../all-pkgs/shntool { };
@@ -4538,8 +4540,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  };
 #
 #  slsnif = callPackage ../tools/misc/slsnif { };
-#
-  smartmontools = callPackage ../tools/system/smartmontools { };
 #
 #  smbldaptools = callPackage ../tools/networking/smbldaptools {
 #    inherit (perlPackages) NetLDAP CryptSmbHash DigestSHA1;

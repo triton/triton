@@ -35,6 +35,8 @@ Encode-Locale = callPackage ../all-pkgs/Encode-Locale { };
 
 HTTP-Date = callPackage ../all-pkgs/HTTP-Date { };
 
+HTTP-Message = callPackage ../all-pkgs/HTTP-Message { };
+
 Locale-gettext = callPackage ../all-pkgs/Locale-gettext { };
 
 SGMLS = callPackage ../all-pkgs/SGMLS { };

@@ -5,9 +5,11 @@
 , perlPackages
 }:
 
+let
+  version = "0.51.0";
+in
 stdenv.mkDerivation rec {
   name = "intltool-${version}";
-  version = "0.51.0";
 
   src = fetchurl {
     url = "https://launchpad.net/intltool/trunk/${version}/+download/${name}.tar.gz";
@@ -19,7 +21,7 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [
     gettext
     perlPackages.perl
-    perlPackages.XMLParser
+    perlPackages.XML-Parser
   ];
 
   meta = with stdenv.lib; {
@@ -27,7 +29,7 @@ stdenv.mkDerivation rec {
     homepage = http://launchpad.net/intltool/;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
-      raskin
+      wkennington
     ];
     platforms = with platforms;
       x86_64-linux;

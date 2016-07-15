@@ -9,7 +9,8 @@
 , ...
 } @ attrs:
 
-stdenv.mkDerivation ({
+let
+self = stdenv.mkDerivation ({
   checkTarget = "test";
   
   # Prevent CPAN downloads.
@@ -65,4 +66,6 @@ stdenv.mkDerivation ({
       ln -s $out/nix-support/propagated-native-build-inputs $out/nix-support/propagated-user-env-packages
     fi
   '' + postFixup;
-})
+}); in self // {
+  libPath = "${self}/${perl.libPrefix}";
+}

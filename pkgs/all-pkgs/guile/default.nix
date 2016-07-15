@@ -11,12 +11,20 @@
 , readline
 }:
 
+let
+  version = "2.0.12";
+
+  tarballUrls = version: [
+    "mirror://gnu/guile/guile-${version}.tar.xz"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "guile-2.0.11";
+  name = "guile-${version}";
 
   src = fetchurl {
-    url = "mirror://gnu/guile/${name}.tar.xz";
-    sha256 = "1qh3j7308qvsjgwf7h94yqgckpbgz2k3yqdkzsyhqcafvfka9l5f";
+    urls = tarballUrls version;
+    allowHashOutput = false;
+    sha256 = "de8187736f9b260f2fa776ed39b52cb74dd389ccf7039c042f0606270196b7e9";
   };
 
   nativeBuildInputs = [
@@ -35,30 +43,22 @@ stdenv.mkDerivation rec {
   # A native Guile 2.0 is needed to cross-build Guile.
   selfNativeBuildInput = true;
 
-  # Fixes for parallel building
-  postPatch = ''
-    sed -i libguile/Makefile.in \
-      -e 's,^.c.x:$,.c.x: $(BUILT_SOURCES),g' \
-      -e 's,DOT_X_FILES.*: ,\0$(DOT_I_FILES) ,g'
-  '';
-
-  # Explicitly link against libgcc_s, to work around the infamous
-  # "libgcc_s.so.1 must be installed for pthread_cancel to work".
-  LDFLAGS = "-lgcc_s";
-
   postInstall = ''
     wrapProgram $out/bin/guile-snarf --prefix PATH : "${gawk}/bin"
-
-    # XXX: See http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/18903 for
-    # why `--with-libunistring-prefix' and similar options coming from
-    # `AC_LIB_LINKFLAGS_BODY' don't work on NixOS/x86_64.
-    sed -i "$out/lib/pkgconfig/guile-2.0.pc"    \
-        -e 's|-lunistring|-L${libunistring}/lib -lunistring|g ;
-            s|^Cflags:\(.*\)$|Cflags: -I${libunistring}/include \1|g ;
-            s|-lltdl|-L${libtool}/lib -lltdl|g'
   '';
 
   setupHook = ./setup-hook-2.0.sh;
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "2.0.12";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "FF47 8FB2 64DE 32EC 2967  25A3 DDC0 F535 8812 F8F2";
+      inherit (src) outputHashAlgo;
+      outputHash = "de8187736f9b260f2fa776ed39b52cb74dd389ccf7039c042f0606270196b7e9";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Embeddable Scheme implementation";

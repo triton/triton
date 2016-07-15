@@ -28,7 +28,7 @@ buildPerlPackage rec {
     })
   ];
 
-  makeMakerFlags = [
+  configureFlags = [
     "SQLITE_LOCATION=${sqlite}"
   ];
 

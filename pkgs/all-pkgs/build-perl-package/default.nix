@@ -52,7 +52,7 @@ stdenv.mkDerivation ({
 
   configurePhase = ''
     runHook preConfigure
-    perl Makefile.PL "PREFIX=$out" "INSTALLDIRS=site" $makeMakerFlags
+    perl Makefile.PL "PREFIX=$out" "INSTALLDIRS=site" $configureFlags "''${configureFlagsArray[@]}"
     runHook postConfigure
   '';
 

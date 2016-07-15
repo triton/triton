@@ -35,6 +35,8 @@ Locale-gettext = callPackage ../all-pkgs/Locale-gettext { };
 
 SGMLS = callPackage ../all-pkgs/SGMLS { };
 
+URI = callPackage ../all-pkgs/URI { };
+
 WWW-Curl = callPackage ../all-pkgs/WWW-Curl { };
 
 XML-Parser = callPackage ../all-pkgs/XML-Parser { };

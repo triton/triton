@@ -39,6 +39,8 @@ HTTP-Message = callPackage ../all-pkgs/HTTP-Message { };
 
 Locale-gettext = callPackage ../all-pkgs/Locale-gettext { };
 
+LWP = callPackage ../all-pkgs/LWP { };
+
 SGMLS = callPackage ../all-pkgs/SGMLS { };
 
 URI = callPackage ../all-pkgs/URI { };

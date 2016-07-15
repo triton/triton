@@ -27,6 +27,8 @@ buildPerlPackage = callPackage ../all-pkgs/build-perl-package { };
 ################################################################################
 ################################################################################
 
+DBD-SQLite = callPackage ../all-pkgs/DBD-SQLite { };
+
 DBI = callPackage ../all-pkgs/DBI { };
 
 Locale-gettext = callPackage ../all-pkgs/Locale-gettext { };

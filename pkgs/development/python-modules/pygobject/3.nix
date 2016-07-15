@@ -18,12 +18,12 @@ with {
 stdenv.mkDerivation rec {
   name = "pygobject-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/pygobject/${versionMajor}/${name}.tar.xz";
-    sha256 = "31ab4701f40490082aa98af537ccddba889577abe66d242582f28577e8807f46";
+    sha256 = "3d261005d6fed6a92ac4c25f283792552f7dad865d1b7e0c03c2b84c04dbd745";
   };
 
   buildInputs = [

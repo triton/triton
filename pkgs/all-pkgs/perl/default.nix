@@ -48,49 +48,32 @@ stdenv.mkDerivation rec {
   configureScript = "${stdenv.shell} ./Configure";
 
   postPatch = ''
-    pwd="$(type -P pwd)"
-    substituteInPlace dist/PathTools/Cwd.pm \
-      --replace "pwd_cmd = 'pwd'" "pwd_cmd = '$pwd'"
+    sed \
+      -e "s,pwd_cmd = 'pwd',pwd_cmd = '$(type -tP pwd)',g" \
+      -e "s,'\(/usr\|\)/bin/pwd,'$(type -tP pwd),g" \
+      -i dist/PathTools/Cwd.pm
   '';
 
   preConfigure = ''
-    configureFlags="$configureFlags -Dprefix=$out -Dman1dir=$out/share/man/man1 -Dman3dir=$out/share/man/man3"
+    configureFlagsArray+=(
+      "-Dprefix=$out"
+      "-Dman1dir=$out/share/man/man1"
+      "-Dman3dir=$out/share/man/man3"
+    )
   '' + optionalString (!enableThreading)
   /* We need to do this because the bootstrap doesn't have a
      static libpthread */ ''
     sed -i 's,\(libswanted.*\)pthread,\1,g' Configure
   '';
 
-  preBuild = optionalString (!(stdenv ? cc && stdenv.cc.nativeTools))
-    /* Make Cwd work on NixOS (where we don't have a /bin/pwd). */ ''
-      substituteInPlace dist/PathTools/Cwd.pm --replace "'/bin/pwd'" "'$(type -tP pwd)'"
-    '';
-
   # Inspired by nuke-references, which I can't depend on because it uses perl. Perhaps it should just use sed :)
   postInstall = ''
     self=$(echo $out | sed -n "s|^$NIX_STORE/\\([a-z0-9]\{32\}\\)-.*|\1|p")
-
     sed -i "/$self/b; s|$NIX_STORE/[a-z0-9]\{32\}-|$NIX_STORE/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-|g" "$out"/lib/perl5/*/*/Config.pm
     sed -i "/$self/b; s|$NIX_STORE/[a-z0-9]\{32\}-|$NIX_STORE/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-|g" "$out"/lib/perl5/*/*/Config_heavy.pl
   '';
 
   passthru.libPrefix = "lib/perl5/site_perl";
-
-  outputs = [ "out" "man" ];
-
-  preCheck =
-  /* Try and setup a local hosts file */ ''
-    if [ -f "${libc}/lib/libnss_files.so" ] ; then
-      mkdir $TMPDIR/fakelib
-      cp "${libc}/lib/libnss_files.so" $TMPDIR/fakelib
-      sed -i 's,/etc/hosts,/dev/fd/3,g' $TMPDIR/fakelib/libnss_files.so
-      export LD_LIBRARY_PATH=$TMPDIR/fakelib
-    fi
-  '';
-
-  postCheck = ''
-    unset LD_LIBRARY_PATH
-  '';
 
   dontAddPrefix = true;
 

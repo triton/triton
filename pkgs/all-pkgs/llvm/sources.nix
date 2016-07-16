@@ -6,12 +6,10 @@
       sha256 = "4cd3836dfb4b88b597e075341cae86d61c63ce3963e45c7fe6a8bf59bb382cdf";
     };
     clang-tools-extra = {
-      version = "3.8.0";
-      sha256 = "1i0yrgj8qrzjjswraz0i55lg92ljpqhvjr619d268vka208aigdg";
+      sha256 = "664a5c60220de9c290bf2a5b03d902ab731a4f95fe73a00856175ead494ec396";
     };
     compiler-rt = {
-      version = "3.8.0";
-      sha256 = "1c2nkp9563873ffz22qmhc0wakgj428pch8rmhym8agjamz3ily8";
+      sha256 = "0df011dae14d8700499dfc961602ee0a9572fef926202ade5dcdfe7858411e5c";
     };
     libcxx = {
       sha256 = "77d7f3784c88096d785bd705fa1bab7031ce184cd91ba8a7008abf55264eeecc";

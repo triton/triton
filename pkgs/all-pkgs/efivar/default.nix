@@ -1,42 +1,29 @@
 { stdenv
-, fetchFromGitHub
-, fetchpatch
-, fetchTritonPatch
+, fetchurl
 
 , popt
 }:
 
+let
+  version = "0.24";
+in
 stdenv.mkDerivation rec {
   name = "efivar-${version}";
-  version = "0.23";
 
-  src = fetchFromGitHub {
-    owner = "rhinstaller";
-    repo = "efivar";
-    rev = version;
-    sha256 = "8002bd15c3fda3511352a393556817281f2ef70a4eba8d2c24ac0dc192df9355";
+  src = fetchurl {
+    url = "https://github.com/rhinstaller/efivar/releases/download/${version}/${name}.tar.bz2";
+    sha256 = "be7e067cb6a6842d669eb36e66a15523b9463afa73d558abda6bf4e02cc69e4c";
   };
 
   buildInputs = [
     popt
   ];
 
-  patches = [
-    # Remove patch for 0.24+
-    (fetchTritonPatch {
-      rev = "a4ffceabb7dc8678c71803facfde88d9c0b4fac2";
-      file = "efivar/efivar-0.21-nvme_ioctl.h.patch";
-      sha256 = "f71fb95d12800bc6934213ee2541dbeea2adb8e545929330b4baf5a049bb52e6";
-    })
-  ];
-
-  postPatch =
-    /* FIXME:
-       ld.so not properly linked in with ld --no-allow-shlib-undefined
-       https://sourceware.org/bugzilla/show_bug.cgi?id=19249 */ ''
-      sed -i gcc.specs \
-        -e 's/--no-allow-shlib-undefined//'
-    '';
+  # FIXME: ld.so not properly linked in with ld --no-allow-shlib-undefined
+  #   https://sourceware.org/bugzilla/show_bug.cgi?id=19249
+  postPatch = ''
+    sed -i 's/--no-allow-shlib-undefined//' gcc.specs
+  '';
 
   makeFlags = [
     # Avoid building static binary/libs
@@ -52,9 +39,6 @@ stdenv.mkDerivation rec {
       "mandir=$out/share/man"
     )
   '';
-
-  # Parallel building should be fixed in 0.24+
-  parallelBuild = false;
 
   meta = with stdenv.lib; {
     description = "Tools and library to manipulate EFI variables";

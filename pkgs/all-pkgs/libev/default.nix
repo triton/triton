@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
       "mirror://gentoo/distfiles/${name}.tar.gz"
       "http://dist.schmorp.de/libev/Attic/${name}.tar.gz"
     ];
+    multihash = "QmPcmhWko3gMDNEdYxSkWD3HZnTT4Rj562hfv1zwpZbTSN";
     sha256 = "1mhvy38g9947bbr0n0hzc34zwfvvfd99qgzpkbap8g2lmkl7jq3k";
   };
 

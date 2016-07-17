@@ -15,12 +15,12 @@ in
 
 stdenv.mkDerivation rec {
   name = "opus-${version}";
-  version = "1.1.2";
+  version = "1.1.3";
 
   src = fetchurl {
     url = "http://downloads.xiph.org/releases/opus/opus-${version}.tar.gz";
     sha256Url = "http://downloads.xiph.org/releases/opus/SHA256SUMS.txt";
-    sha256 = "1z87x5c5x951lhnm70iqr2gqn15wns5cqsw8nnkvl48jwdw00a8f";
+    sha256 = "58b6fe802e7e30182e95d0cde890c0ace40b6f125cffc50635f0ad2eef69b633";
   };
 
   configureFlags = [

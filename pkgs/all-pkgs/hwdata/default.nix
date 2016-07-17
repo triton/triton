@@ -1,11 +1,13 @@
-{ stdenv, fetchurl }:
+{ stdenv
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
-  name = "hwdata-0.284";
+  name = "hwdata-0.290";
 
   src = fetchurl {
     url = "https://git.fedorahosted.org/cgit/hwdata.git/snapshot/${name}.tar.xz";
-    sha256 = "0s1mxdwi77cf13ad6rs9rqkgh6jsn1i7abjdrxss82afvn0xxz0f";
+    sha256 = "b7c693b93f248e0ce8bba60f0003a4d0aac8da868e2669db4d955418854d92e9";
   };
 
   postPatch = ''
@@ -20,9 +22,10 @@ stdenv.mkDerivation rec {
     description = "Hardware Database, including Monitors, pci.ids, usb.ids, and video cards";
     homepage = "https://fedorahosted.org/hwdata/";
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

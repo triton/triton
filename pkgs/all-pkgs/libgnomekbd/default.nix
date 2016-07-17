@@ -1,5 +1,13 @@
-{ stdenv, fetchurl, pkgconfig, file, intltool, glib, gtk3, libxklavier
-, makeWrapper, xorg
+{ stdenv
+, fetchurl
+, file
+, intltool
+, makeWrapper
+
+, glib
+, gtk3
+, libxklavier
+, xorg
 }:
 
 stdenv.mkDerivation rec {
@@ -10,7 +18,17 @@ stdenv.mkDerivation rec {
     sha256 = "c41ea5b0f64da470925ba09f9f1b46b26b82d4e433e594b2c71eab3da8856a09";
   };
 
-  buildInputs = [ pkgconfig file intltool glib gtk3 libxklavier makeWrapper xorg.libX11 ];
+  nativeBuildInputs = [
+    intltool
+    makeWrapper
+  ];
+
+  buildInputs = [
+    glib
+    gtk3
+    libxklavier
+    xorg.libX11
+  ];
 
   preFixup = ''
     wrapProgram $out/bin/gkbd-keyboard-display \

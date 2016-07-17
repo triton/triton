@@ -20,14 +20,14 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "lftp-4.7.2";
+  name = "lftp-4.7.3";
 
   src = fetchurl {
     urls = [
       "https://lftp.yar.ru/ftp/${name}.tar.bz2"
       "https://lftp.yar.ru/ftp/old/${name}.tar.bz2"
     ];
-    sha256 = "5c3ec18fbeb2671c6c85d17409d9140d3ccc4bb92a1c8ceb427a24b0059f810d";
+    sha256 = "4c75f797717c8de614794795926a7b61bb67d2fea598d3bd3f463d837a62551a";
   };
 
   nativeBuildInputs = [

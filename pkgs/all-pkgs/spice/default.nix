@@ -15,12 +15,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "spice-0.12.7";
+  name = "spice-0.12.8";
 
   src = fetchurl {
     url = "http://www.spice-space.org/download/releases/${name}.tar.bz2";
     allowHashOutput = false;
-    sha256 = "1c8e96cb9e833e23372e2f461508135903b697fd8c6daff565e9e87f6d2f6aba";
+    sha256 = "f901a5c5873d61acac84642f9eea5c4d6386fc3e525c2b68792322794e1c407d";
   };
 
   nativeBuildInputs = [

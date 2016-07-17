@@ -3,11 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dpdk-2.2.0";
+  name = "dpdk-16.04";
 
   src = fetchurl {
-    url = "http://dpdk.org/browse/dpdk/snapshot/${name}.tar.gz";
-    sha256 = "03b1pliyx5psy3mkys8j1mk6y2x818j6wmjrdvpr7v0q6vcnl83p";
+    url = "http://fast.dpdk.org/rel/${name}.tar.xz";
+    multihash = "QmNa4P2aH5qNajc72LJbh9LdtSBPxuaYWq6wKDRiwsSoDP";
+    sha256 = "1fwqljvg0lr94qlba2xzn3zqg1jcbj4yz450k72fgj4mqpjsdmys";
   };
 
   # We want to make sure we always target nehalem for all builds

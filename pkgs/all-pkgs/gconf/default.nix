@@ -18,13 +18,13 @@ let
   inherit (stdenv.lib)
     enFlag
     wtFlag;
-in
 
-stdenv.mkDerivation rec {
-  name = "gconf-${version}";
   versionMajor = "3.2";
   versionMinor = "6";
   version = "${versionMajor}.${versionMinor}";
+in
+stdenv.mkDerivation rec {
+  name = "gconf-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/GConf/${versionMajor}/GConf-${version}.tar.xz";
@@ -105,7 +105,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

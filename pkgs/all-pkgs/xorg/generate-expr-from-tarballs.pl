@@ -332,10 +332,8 @@ let
       postPatch = (attrs.postPatch or "") + ''
         patchShebangs .
       '';
-      meta.platforms = [
-        "x86_64-linux"
-        "i686-linux"
-      ];
+      meta.platforms = with stdenv.lib.platforms;
+        x86_64-linux;
 	});
 
   overrides = import ./overrides.nix {inherit args xorg;};

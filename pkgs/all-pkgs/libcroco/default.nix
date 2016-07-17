@@ -5,11 +5,13 @@
 , libxml2
 }:
 
-stdenv.mkDerivation rec {
-  name = "libcroco-${version}";
+let
   versionMajor = "0.6";
   versionMinor = "11";
   version = "${versionMajor}.${versionMinor}";
+in
+stdenv.mkDerivation rec {
+  name = "libcroco-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libcroco/${versionMajor}/${name}.tar.xz";
@@ -38,7 +40,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

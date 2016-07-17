@@ -3,11 +3,13 @@
 , doxygen
 }:
 
-stdenv.mkDerivation rec {
-  name = "libmpdclient-${version}";
+let
   versionMajor = "2";
   versionMinor = "10";
   version = "${versionMajor}.${versionMinor}";
+in
+stdenv.mkDerivation rec {
+  name = "libmpdclient-${version}";
 
   src = fetchurl {
     url = "http://www.musicpd.org/download/libmpdclient/${versionMajor}/"
@@ -33,7 +35,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

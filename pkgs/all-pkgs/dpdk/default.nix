@@ -29,11 +29,10 @@ stdenv.mkDerivation rec {
     description = "Libraries and drivers for fast packet processing";
     homepage = http://dpdk.org/;
     license = licenses.bsd3;
-    platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
     maintainers = with maintainers; [
       wkennington
     ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

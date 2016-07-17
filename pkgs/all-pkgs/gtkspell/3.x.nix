@@ -18,11 +18,11 @@
 let
   inherit (stdenv.lib)
     enFlag;
-in
 
+  version = "3.0.7";
+in
 stdenv.mkDerivation rec {
   name = "gtkspell-${version}";
-  version = "3.0.7";
 
   src = fetchurl {
     url = "mirror://sourceforge/gtkspell/gtkspell3-${version}.tar.gz";
@@ -67,7 +67,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

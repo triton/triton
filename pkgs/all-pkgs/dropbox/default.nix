@@ -24,13 +24,11 @@ let
   sha256 =
     {
       "x86_64-linux" = "16d0g9bygvaixv4r42p72z6a6wqhkf5qzb058lijih93zjr8zjlj";
-      "i686-linux" = "1pgqz6axzzyaahql01g0l80an39hd9j4dnq0vfavwvb2qkb27dph";
     }."${stdenv.system}" or (throw "system ${stdenv.system} not supported");
 
   arch =
     {
       "x86_64-linux" = "x86_64";
-      "i686-linux" = "x86";
     }."${stdenv.system}" or (throw "system ${stdenv.system} not supported");
 
   # relative location where the dropbox libraries are stored
@@ -151,6 +149,6 @@ stdenv.mkDerivation {
     homepage = "http://www.dropbox.com";
     description = "Online stored folders (daemon version)";
     maintainers = with stdenv.lib.maintainers; [ ttuegel ];
-    platforms = [ "i686-linux" "x86_64-linux" ];
+    platforms = [ "x86_64-linux" ];
   };
 }

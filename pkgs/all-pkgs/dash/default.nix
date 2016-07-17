@@ -8,13 +8,13 @@
 let
   inherit (stdenv.lib)
     wtFlag;
-in
 
-stdenv.mkDerivation rec {
-  name = "dash-${version}";
   release-version = "0.5.9";
   patch-version = "0";
   version = "${release-version}.${patch-version}";
+in
+stdenv.mkDerivation rec {
+  name = "dash-${version}";
 
   src = fetchurl rec {
     url = "http://gondor.apana.org.au/~herbert/dash/files/"
@@ -66,7 +66,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -60,11 +60,10 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     license = licenses.mpl2;
-    platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
     maintainers = with maintainers; [
       wkennington
     ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

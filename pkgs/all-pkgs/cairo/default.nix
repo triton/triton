@@ -23,13 +23,6 @@ let
     enFlag
     optionalString;
 in
-
-assert xorg != null ->
-  xorg.libX11 != null
-  && xorg.libxcb != null
-  && xorg.libXext != null
-  && xorg.libXrender != null;
-
 stdenv.mkDerivation rec {
   name = "cairo-1.14.6";
 
@@ -156,7 +149,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

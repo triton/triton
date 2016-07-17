@@ -84,7 +84,6 @@ stdenv.mkDerivation rec {
     maintainers = gnome3.maintainers;
     license = licenses.gpl2;
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

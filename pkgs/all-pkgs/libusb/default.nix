@@ -43,9 +43,10 @@ stdenv.mkDerivation rec {
     description = "Userspace access to USB devices";
     homepage = http://www.libusb.info;
     license = licenses.lgpl21;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

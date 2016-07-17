@@ -19,13 +19,14 @@ let
   inherit (stdenv.lib)
     enFlag
     optionalString;
+
+  versionMajor = "1.22";
+  versionMinor = "0";
+  version = "${versionMajor}.${versionMinor}";
 in
 
 stdenv.mkDerivation rec {
   name = "cogl-${version}";
-  versionMajor = "1.22";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/cogl/${versionMajor}/${name}.tar.xz";
@@ -126,7 +127,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

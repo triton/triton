@@ -16,7 +16,6 @@ let
   minorVersion = "0";
   version = "${majorVersion}.${minorVersion}";
 in
-
 stdenv.mkDerivation rec {
   name = "cmake-${version}";
 
@@ -77,7 +76,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

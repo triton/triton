@@ -16,13 +16,14 @@
 let
   inherit (stdenv.lib)
     enFlag;
+
+  versionMajor = "2.0";
+  versionMinor = "16";
+  version = "${versionMajor}.${versionMinor}";
 in
 
 stdenv.mkDerivation rec {
   name = "clutter-gst-${version}";
-  versionMajor = "2.0";
-  versionMinor = "16";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/clutter-gst/${versionMajor}/${name}.tar.xz";
@@ -61,7 +62,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms =  with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

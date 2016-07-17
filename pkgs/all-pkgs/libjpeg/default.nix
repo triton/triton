@@ -2,13 +2,19 @@
 , fetchurl
 }:
 
+let
+  version = "9b";
+in
 stdenv.mkDerivation rec {
   name = "libjpeg-${version}";
-  version = "9b";
 
   src = fetchurl {
     url = "http://www.ijg.org/files/jpegsrc.v${version}.tar.gz";
     sha256 = "0lnhpahgdwlrkd41lx6cr90r199f8mc6ydlh7jznj5klvacd63r4";
+  };
+
+  passthru = {
+    type = "normal";
   };
 
   meta = with stdenv.lib; {
@@ -19,11 +25,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
-  };
-
-  passthru = {
-    type = "normal";
+      x86_64-linux;
   };
 }

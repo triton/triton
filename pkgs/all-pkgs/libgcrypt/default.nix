@@ -1,7 +1,8 @@
 { stdenv
 , fetchurl
-, libgpg-error
+
 , libcap
+, libgpg-error
 , pth
 }:
 
@@ -22,8 +23,8 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    libgpg-error
     #libcap  Breaks application not expecting it
+    libgpg-error
     #pth  Currently Broken
   ];
 
@@ -58,7 +59,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

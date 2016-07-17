@@ -7,9 +7,11 @@
 , xorg
 }:
 
+let
+  version = "2016-06-09";
+in
 stdenv.mkDerivation rec {
   name = "libglvnd-${version}";
-  version = "2016-06-09";
 
   src = fetchFromGitHub {
     owner = "nvidia";
@@ -42,7 +44,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

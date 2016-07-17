@@ -9,11 +9,12 @@
 let
   inherit (stdenv.lib)
     enFlag;
+
+  version = "230";
 in
 
 stdenv.mkDerivation rec {
   name = "libgudev-${version}";
-  version = "230";
 
   src = fetchurl {
     url = "https://download.gnome.org/sources/libgudev/${version}/${name}.tar.xz";
@@ -41,7 +42,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

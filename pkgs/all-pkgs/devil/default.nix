@@ -15,14 +15,12 @@
 let
   inherit (stdenv.lib)
     optionals;
+
+  version = "1.7.8";
 in
 
-assert xorg != null -> xorg.libX11 != null;
-
 stdenv.mkDerivation rec {
-
   name ="devil-${version}";
-  version = "1.7.8";
 
   src = fetchurl {
     url = "mirror://sourceforge/openil/DevIL-${version}.tar.gz";
@@ -101,7 +99,6 @@ stdenv.mkDerivation rec {
     license = licenses.lgpl21;
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

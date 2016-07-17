@@ -5,9 +5,11 @@
 , python2
 }:
 
+let
+  version = "2.6.0";
+in
 stdenv.mkDerivation rec {
   name = "bzrtools-${version}";
-  version = "2.6.0";
 
   src = fetchurl {
     url = "http://launchpad.net/bzrtools/stable/${version}/+download/${name}.tar.gz";
@@ -29,7 +31,6 @@ stdenv.mkDerivation rec {
     license = licenses.gpl2;
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

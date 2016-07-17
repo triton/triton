@@ -181,7 +181,6 @@ stdenv.mkDerivation rec {
     license     = licenses.bsd3;
     maintainers = with maintainers; [ codyopel ];
     platforms   = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

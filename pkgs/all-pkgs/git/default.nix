@@ -111,11 +111,10 @@ stdenv.mkDerivation rec {
     homepage = http://git-scm.com/;
     description = "Distributed version control system";
     license = licenses.gpl2;
-    platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
     maintainers = with maintainers; [
       wkennington
     ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

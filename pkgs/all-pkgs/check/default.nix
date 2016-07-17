@@ -2,9 +2,11 @@
 , fetchurl
 }:
 
+let
+  version = "0.10.0";
+in
 stdenv.mkDerivation rec {
   name = "check-${version}";
-  version = "0.10.0";
 
   src = fetchurl {
     url = "mirror://sourceforge/check/${version}/check-${version}.tar.gz";
@@ -19,7 +21,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

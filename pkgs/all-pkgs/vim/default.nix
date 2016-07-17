@@ -16,11 +16,12 @@
 let
   inherit (stdenv.lib)
     optionalString;
+
+  version = "7.4.2033";
 in
 
 stdenv.mkDerivation rec {
   name = "vim-${version}";
-  version = "7.4.2033";
 
   src = fetchFromGitHub {
     owner = "vim";
@@ -58,7 +59,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

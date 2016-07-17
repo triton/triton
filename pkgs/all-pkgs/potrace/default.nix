@@ -4,9 +4,11 @@
 , zlib
 }:
 
+let
+  version = "1.13";
+in
 stdenv.mkDerivation rec {
   name = "potrace-${version}";
-  version = "1.13";
 
   src = fetchurl {
     url = "http://potrace.sourceforge.net/download/${version}/potrace-${version}.tar.gz";
@@ -29,7 +31,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

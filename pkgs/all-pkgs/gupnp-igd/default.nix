@@ -17,13 +17,13 @@ let
   inherit (stdenv.lib)
     enFlag
     optionals;
-in
 
-stdenv.mkDerivation rec {
-  name = "gupnp-igd-${version}";
   versionMajor = "0.2";
   versionMinor = "4";
   version = "${versionMajor}.${versionMinor}";
+in
+stdenv.mkDerivation rec {
+  name = "gupnp-igd-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gupnp-igd/${versionMajor}/${name}.tar.xz";
@@ -72,7 +72,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

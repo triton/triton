@@ -101,9 +101,10 @@ stdenv.mkDerivation rec {
     description = "Network monitoring tools including ping and ping6";
     homepage = http://www.skbuff.net/iputils/;
     license = licenses.bsdOriginal;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

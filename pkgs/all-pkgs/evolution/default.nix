@@ -130,8 +130,7 @@ stdenv.mkDerivation rec {
     license = licenses.lgpl2Plus;
     maintainers = gnome3.maintainers;
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
     # evolution does not support webkit-2.10+
     broken = true;
   };

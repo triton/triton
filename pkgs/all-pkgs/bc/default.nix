@@ -65,9 +65,10 @@ stdenv.mkDerivation rec {
       lgpl21
       gpl2
     ];
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

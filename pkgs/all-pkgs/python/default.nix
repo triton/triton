@@ -44,7 +44,7 @@ let
     versionAtLeast
     versionOlder
     wtFlag;
-  inherit (builtins.getAttr channel (import ./sources.nix))
+  inherit ((import ./sources.nix)."${channel}")
     pgpKeyFingerprint
     versionMinor
     sha256;

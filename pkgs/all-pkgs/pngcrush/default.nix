@@ -6,11 +6,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "pngcrush-1.8.0";
+  name = "pngcrush-1.8.2";
 
   src = fetchurl {
     url = "mirror://sourceforge/pmt/${name}-nolib.tar.xz";
-    sha256 = "1gv36pkar5n87703mabclrmd81ij7c4vg7bnqjhf6hf3a61h99xs";
+    sha256 = "4a2b4a0445008f0d528cffebd143ca9b15ec41cbc5abb79ce244d6eedaf452b1";
   };
 
   buildInputs = [
@@ -34,7 +34,9 @@ stdenv.mkDerivation rec {
     description = "Portable Network Graphics (PNG) optimizing utility";
     homepage = http://pmt.sourceforge.net/pngcrush;
     license = licenses.free; # pngcrush license
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

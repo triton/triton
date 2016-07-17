@@ -1290,6 +1290,8 @@ keepalived = callPackage ../all-pkgs/keepalived { };
 
 kerberos = callPackageAlias "krb5_lib" { };
 
+kexec-tools = callPackage ../all-pkgs/kexec-tools { };
+
 keyutils = callPackage ../all-pkgs/keyutils { };
 
 kid3 = callPackage ../all-pkgs/kid3 { };
@@ -3649,8 +3651,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  kalibrate-rtl = callPackage ../tools/misc/kalibrate-rtl { };
 #
 #  kdbplus = callPackage_i686 ../applications/misc/kdbplus { };
-#
-  kexectools = callPackage ../os-specific/linux/kexectools { };
 #
 #  keychain = callPackage ../tools/misc/keychain { };
 #

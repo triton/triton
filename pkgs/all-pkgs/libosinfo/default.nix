@@ -19,11 +19,11 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "libosinfo-0.3.0";
+  name = "libosinfo-0.3.1";
 
   src = fetchurl {
     url = "https://fedorahosted.org/releases/l/i/libosinfo/${name}.tar.gz";
-    sha256 = "1g7g5hc4lhi4y0j3mbcj19hawlqkflni1zk4aggrx49fg5l392jk";
+    sha256 = "50b272943d68b77d5259f72be860acfd048126bc27e7aa9c2f9c77a7eacf3894";
   };
 
   nativeBuildInputs = [
@@ -66,7 +66,6 @@ stdenv.mkDerivation rec {
     ];
     maintainers = with maintainers; [ ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

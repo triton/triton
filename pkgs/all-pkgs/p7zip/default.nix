@@ -12,11 +12,11 @@ in
 
 stdenv.mkDerivation rec {
   name = "p7zip-${version}";
-  version = "15.14.1";
+  version = "16.02";
 
   src = fetchurl {
     url = "mirror://sourceforge/p7zip/p7zip_${version}_src_all.tar.bz2";
-    sha256 = "699db4da3621904113e040703220abb1148dfef477b55305e2f14a4f1f8f25d4";
+    sha256 = "5eb20ac0e2944f6cb9c2d51dd6c4518941c185347d4089ea89087ffdd6e2341f";
   };
 
   postPatch = optionalString (!rarSupport) ''

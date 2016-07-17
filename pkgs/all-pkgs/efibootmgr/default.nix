@@ -1,46 +1,32 @@
 { stdenv
 , fetchFromGitHub
-, perl
 
 , efivar
-, pciutils
-, zlib
+, popt
 }:
 
 stdenv.mkDerivation rec {
-  name = "efibootmgr-${version}";
-  version = "0.12";
+  name = "efibootmgr-2016-07-01";
 
   src = fetchFromGitHub {
     owner = "rhinstaller";
     repo = "efibootmgr";
-    rev = name;
-    sha256 = "a6074d20b9b62a3e9e84fbe762594ecc0fd16578f36edf17e852b5d7b0b8efc1";
+    rev = "94a9adc005073af7725cf5a54018544f68bfa03f";
+    sha256 = "8c5e8b039e178cd3e39e93abea7627b9a52d60b308dacebeb106e3f7bae656b8";
   };
-
-  nativeBuildInputs = [
-    perl
-  ];
 
   buildInputs = [
     efivar
-    pciutils
-    zlib
+    popt
   ];
 
-  postPatch = ''
-    patchShebangs ./tools/install.pl
+  preBuild = ''
+    makeFlagsArray+=("prefix=$out")
   '';
 
   NIX_CFLAGS_COMPILE = [
     "-I${efivar}/include/efivar"
   ];
-
-  preInstall = ''
-    installFlagsArray+=(
-      "BINDIR=$out/sbin"
-    )
-  '';
 
   meta = with stdenv.lib; {
     description = "Application to modify the EFI Boot Manager";

@@ -38,6 +38,7 @@ stdenv.mkDerivation rec {
       || (elem targetSystem platforms.x86-all && fixedPoint)) null)
     "--disable-assertions"
     "--disable-fuzzing"
+    "--enable-ambisonics"
     "--disable-doc"
     "--disable-extra-programs"
   ];

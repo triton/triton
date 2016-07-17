@@ -5,12 +5,12 @@
 
 buildPythonPackage rec {
   name = "psutil-${version}";
-  version = "4.2.0";
+  version = "4.3.0";
 
   src = fetchPyPi {
     package = "psutil";
     inherit version;
-    sha256 = "544f013a0aea7199e07e3efe5627f5d4165179a04c66050b234cc3be2eca1ace";
+    sha256 = "86197ae5978f216d33bfff4383d5cc0b80f079d09cf45a2a406d1abb5d0299f0";
   };
 
   meta = with stdenv.lib; {

@@ -11,13 +11,16 @@
 , zlib
 }:
 
+let
+  version = "2.4.23";
+in
 stdenv.mkDerivation rec {
-  version = "2.4.18";
   name = "apache-httpd-${version}";
 
   src = fetchurl {
     url = "mirror://apache/httpd/httpd-${version}.tar.bz2";
-    sha256 = "0k7xm6ldzvakzq39nw6b39190ihlkc28all2gkvckxa1vr8b0i06";
+    allowHashOutput = false;
+    sha256 = "0c1694b2aad7765896faf92843452ee2555b9591ae10d4f19b245f2adfe85e58";
   };
 
   nativeBuildInputs = [
@@ -55,6 +58,15 @@ stdenv.mkDerivation rec {
     echo "removing manual"
     rm -rf $out/manual
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "A93D 62EC C3C8 EA12 DB22  0EC9 34EA 76E6 7914 85A8";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Apache HTTPD, the world's most popular web server";

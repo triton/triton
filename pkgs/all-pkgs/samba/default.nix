@@ -189,14 +189,19 @@ stdenv.mkDerivation rec {
   ];
 
   preInstall = ''
-    sed \
-      -e "s,'/etc,'$out/etc,g" \
-      -e "s,'/var,'$TMPDIR/var,g" \
-      -i bin/c4che/default.cache.py
+    installFlagsArray+=("DESTDIR=$out")
   '';
 
   postInstall = ''
+    dir="$out/$out"
+    mv "$out/$out"/* "$out"
+    while [ "$out" != "$dir" ]; do
+      rmdir "$dir"
+      dir="$(dirname "$dir")"
+    done
+
     # Remove unecessary components
+    rm -r $out/var
     rm -r $out/{lib,share}/ctdb-tests
     rm $out/bin/ctdb_run{_cluster,}_tests
   '';

@@ -218,7 +218,6 @@ stdenv.mkDerivation rec {
         ln -sv python-*.pc python3.pc
       fi
     popd
-    set +x
   '' + ''
     touch $out/lib/python${versionMajor}/test/__init__.py
   '' + ''

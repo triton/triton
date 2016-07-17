@@ -34,7 +34,6 @@ let
   inherit (stdenv)
     isLinux;
   inherit (stdenv.lib)
-    any
     concatStringsSep
     head
     optional
@@ -72,15 +71,6 @@ let
     in
     head s;
 in
-
-# Supported channels
-assert any (n: n == channel) [
-  "2.7"
-  "3.3"
-  "3.4"
-  "3.5"
-  "3.6"
-];
 
 stdenv.mkDerivation rec {
   name = "python-${version}";

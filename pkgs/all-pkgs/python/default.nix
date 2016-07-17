@@ -148,7 +148,7 @@ stdenv.mkDerivation rec {
        directories in impure paths */ ''
     for i in /usr /sw /opt /pkg ; do
       sed -i setup.py \
-        -e "s,$i,/no-such-path,"
+        -e "s,$i,/no-such-path,g"
     done
   '';
 

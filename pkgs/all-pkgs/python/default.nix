@@ -199,9 +199,6 @@ stdenv.mkDerivation rec {
     #"--with-ensurepip"
   ];
 
-  # Should this be stdenv.cc.isGnu???
-  NIX_LDFLAGS = "-lgcc_s";
-
   postInstall =
     /* Needed for some packages, especially packages that
        backport functionality to 2.x from 3.x */ ''

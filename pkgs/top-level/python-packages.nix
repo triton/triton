@@ -181,6 +181,8 @@ deluge = callPackage ../all-pkgs/deluge { };
 
 discogs-client = callPackage ../all-pkgs/discogs-client { };
 
+duplicity = callPackage ../all-pkgs/duplicity { };
+
 enum34 = callPackage ../all-pkgs/enum34 { };
 
 flask = callPackage ../all-pkgs/flask { };

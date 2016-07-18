@@ -776,7 +776,7 @@ dpdk = callPackage ../all-pkgs/dpdk { };
 
 #dropbox = callPackage ../all-pkgs/dropbox { };
 
-duplicity = callPackage ../all-pkgs/duplicity { };
+duplicity = pkgs.pythonPackages.duplicity;
 
 e2fsprogs = callPackage ../all-pkgs/e2fsprogs { };
 

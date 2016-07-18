@@ -1,33 +1,29 @@
 { stdenv
+, buildPythonPackage
 , fetchurl
-, pythonPackages
 
 , librsync
+, lockfile
 }:
 
-pythonPackages.buildPythonPackage rec {
+let
+  version = "0.7.08";
+in
+buildPythonPackage rec {
   name = "duplicity-${version}";
-  version = "0.7.06";
 
   src = fetchurl {
-    url = "http://code.launchpad.net/duplicity/0.7-series/${version}/+download/${name}.tar.gz";
-    sha256 = "133zdi1rbiacvzjys7q3vjm7x84kmr51bsgs037rjhw9vdg5jx80";
+    url = "https://code.launchpad.net/duplicity/0.7-series/${version}/+download/${name}.tar.gz";
+    sha256 = "d6d0b25ac2a39daa32f269a9bf6b3ea6d9202dcab388fa91bd645868defb0f17";
   };
-
-  pythonPath = [
-    pythonPackages.lockfile
-  ];
-
-  nativeBuildInputs = [
-    pythonPackages.wrapPython
-  ];
 
   buildInputs = [
     librsync
-    pythonPackages.lockfile
   ];
 
-  doCheck = false;
+  propagatedBuildInputs = [
+    lockfile
+  ];
 
   meta = with stdenv.lib; {
     description = "Encrypted bandwidth-efficient backup using the rsync algorithm";

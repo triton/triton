@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     owner = "librsync";
     repo = "librsync";
     rev = "v${version}";
-    sha256 = "0yad7nkw6d8j824qkxrj008ak2wq6yw5p894sbhr35yc1wr5mki6";
+    sha256 = "566991bf13ac8ad1c7510dac68b1f411e6f8e1ccd0c2ab81cbe9fa7f20d5cafa";
   };
 
   nativeBuildInputs = [

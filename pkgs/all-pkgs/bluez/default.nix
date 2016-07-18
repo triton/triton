@@ -13,12 +13,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "bluez-5.40";
+  name = "bluez-5.41";
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     allowHashOutput = false;
-    sha256 = "dada8b812055afcad4546d9966f9a763e4723169e89706e2b240c7b7e998dc27";
+    sha256 = "df7dc4462494dad4e60a2943240d584f6e760235dca64f5f10eba46dbab7f5f0";
   };
 
   buildInputs = [

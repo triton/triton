@@ -2139,6 +2139,8 @@ sqlite = callPackage ../all-pkgs/sqlite { };
 
 squashfs-tools = callPackage ../all-pkgs/squashfs-tools { };
 
+sssd = callPackage ../all-pkgs/sssd { };
+
 st = callPackage ../all-pkgs/st {
   config = config.st.config or null;
   configFile = config.st.configFile or null;
@@ -9434,7 +9436,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 
   docbook_xml_dtd_43 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.3.nix { };
 #
-#  docbook_xml_dtd_44 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.4.nix { };
+  docbook_xml_dtd_44 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.4.nix { };
 #
   docbook_xml_dtd_45 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.5.nix { };
 #

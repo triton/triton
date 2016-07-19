@@ -15,10 +15,8 @@ let
       postPatch = (attrs.postPatch or "") + ''
         patchShebangs .
       '';
-      meta.platforms = [
-        "x86_64-linux"
-        "i686-linux"
-      ];
+      meta.platforms = with stdenv.lib.platforms;
+        x86_64-linux;
 	});
 
   overrides = import ./overrides.nix {inherit args xorg;};
@@ -2811,10 +2809,10 @@ let
   }) // {inherit fontsproto libdrm randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ;};
 
   xf86videoopenchrome = (mkDerivation "xf86videoopenchrome" {
-    name = "xf86-video-openchrome-0.4.0";
+    name = "xf86-video-openchrome-0.5.0";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-openchrome-0.4.0.tar.bz2;
-      sha256 = "09z9wf9jcbrmwwk1d64fqmlr1fbc23y8nki0p79l9mnh05nrdrvk";
+      url = mirror://xorg/individual/driver/xf86-video-openchrome-0.5.0.tar.bz2;
+      sha256 = "1fsmr455lk89zl795d6b5ypyqjim40j3h2vjch52lcssjw9xdza9";
     };
     nativeBuildInputs = [ ];
     buildInputs = [ fontsproto glproto libdrm systemd_lib libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xf86driproto xorgserver xproto libXvMC ];
@@ -3537,10 +3535,10 @@ let
   }) // {inherit libX11 libXi ;};
 
   xorgserver = (mkDerivation "xorgserver" {
-    name = "xorg-server-1.18.3";
+    name = "xorg-server-1.18.4";
     src = fetchurl {
-      url = mirror://xorg/individual/xserver/xorg-server-1.18.3.tar.bz2;
-      sha256 = "1ka206v4nbw6qz072gh0543aq44azq2zv9f0yysy5nvwa4i9qwza";
+      url = mirror://xorg/individual/xserver/xorg-server-1.18.4.tar.bz2;
+      sha256 = "1j1i3n5xy1wawhk95kxqdc54h34kg7xp4nnramba2q8xqfr5k117";
     };
     nativeBuildInputs = [ bison flex utilmacros ];
     buildInputs = [ bigreqsproto compositeproto damageproto dbus libdmx dmxproto mesa_noglu dri2proto dri3proto libepoxy fixesproto fontsproto glproto inputproto kbproto libdrm systemd_lib libunwind openssl libpciaccess pixman presentproto randrproto recordproto renderproto resourceproto scrnsaverproto videoproto wayland windowswmproto libX11 libXau libXaw libxcb xcbutil xcbutilwm xcbutilimage xcbutilkeysyms xcbutilrenderutil xcmiscproto libXdmcp libXext xextproto xf86bigfontproto xf86dgaproto xf86driproto xf86vidmodeproto libXfixes libXfont libXi xineramaproto libxkbfile libXmu libXpm xproto libXrender libXres libxshmfence libXt xtrans libXtst ];

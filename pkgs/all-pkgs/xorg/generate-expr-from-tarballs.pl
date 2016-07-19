@@ -33,6 +33,7 @@ $pcMap{"spice-server"} = "spice";
 $pcMap{"freetype2"} = "freetype";
 $pcMap{"epoxy"} = "libepoxy";
 $pcMap{"libsystemd-daemon"} = "systemd_lib";
+$pcMap{"libsystemd"} = "systemd_lib";
 $pcMap{"libpng12"} = "libpng";
 $pcMap{"libpng"} = "libpng";
 $pcMap{"libpcsclite"} = "pcsclite";
@@ -97,7 +98,7 @@ while (<>) {
     $pkgURLs{$pkg} = $tarball;
     $pkgNames{$pkg} = $pkgName;
 
-    my ($hash, $path) = `PRINT_PATH=1 QUIET=1 nix-prefetch-url -I nixpkgs=../../../../ '$tarball'`;
+    my ($hash, $path) = `PRINT_PATH=1 QUIET=1 nix-prefetch-url -I nixpkgs=../../../ '$tarball'`;
     chomp $hash;
     chomp $path;
     $pkgHashes{$pkg} = $hash;

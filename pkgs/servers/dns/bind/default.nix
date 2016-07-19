@@ -28,15 +28,16 @@ let
   inherit (stdenv.lib)
     optionals
     optionalString;
+
+  version = "9.10.4-P2";
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
-  version = "9.10.4-P1";
 
   src = fetchurl {
     url = "http://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
     allowHashOutput = false;
-    sha256 = "7c3b7d1afe48a6bbead8f11f6971fb09eb57fa257dc32a088fcc20a0218131a2";
+    sha256 = "b35b8af8fe030196d03b3e487f5ecd0c0836b5e124abc7a3ecd184740b444423";
   };
 
   nativeBuildInputs = [

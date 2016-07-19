@@ -2242,6 +2242,8 @@ tzdata = callPackage ../all-pkgs/tzdata { };
 
 udisks = callPackage ../all-pkgs/udisks { };
 
+uefi-shell = callPackage ../all-pkgs/uefi-shell { };
+
 uhub = callPackage ../all-pkgs/uhub { };
 
 uid_wrapper = callPackage ../all-pkgs/uid_wrapper { };

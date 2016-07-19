@@ -297,6 +297,8 @@ pytest-capturelog = callPackage ../all-pkgs/pytest-capturelog { };
 
 python-dateutil = callPackage ../all-pkgs/python-dateutil { };
 
+python-ldap = callPackage ../all-pkgs/python-ldap { };
+
 python-tvrage = callPackage ../all-pkgs/python-tvrage { };
 
 pytz = callPackage ../all-pkgs/pytz { };
@@ -15333,19 +15335,6 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       license = licenses.lgpl21Plus;
       platforms = platforms.linux;
     };
-  };
-
-  ldap = buildPythonPackage rec {
-    name = "ldap-2.4.19";
-    disabled = isPy3k;
-
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/p/python-ldap/python-${name}.tar.gz";
-      sha256 = "0j5hzaar4d0vhnrlpmkczgwm7ci2wibr99a7zx04xddzrhxdpz82";
-    };
-
-    NIX_CFLAGS_COMPILE = "-I${pkgs.cyrus_sasl}/include/sasl";
-    propagatedBuildInputs = with self; [pkgs.openldap pkgs.cyrus_sasl pkgs.openssl];
   };
 
   ptyprocess = buildPythonPackage rec {

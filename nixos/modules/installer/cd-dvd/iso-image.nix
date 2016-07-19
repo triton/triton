@@ -78,6 +78,10 @@ let
     echo "initrd /boot/initrd" >> $out/loader/entries/nixos-livecd-nomodeset.conf
     echo "options init=${config.system.build.toplevel}/init ${toString config.boot.kernelParams} nomodeset" >> $out/loader/entries/nixos-livecd-nomodeset.conf
 
+    echo "title UEFI Shell" >> $out/loader/entries/uefi-shell.conf
+    echo "efi /boot/Shell.efi" >> $out/loader/entries/uefi-shell.conf
+
+
     echo "default nixos-livecd" > $out/loader/loader.conf
     echo "timeout ${builtins.toString config.boot.loader.timeout}" >> $out/loader/loader.conf
   '';
@@ -89,8 +93,9 @@ let
       mkdir ./contents && cd ./contents
       cp -rp "${efiDir}"/* .
       mkdir ./boot
-      cp -p "${config.boot.kernelPackages.kernel}/bzImage" \
+      cp -pv "${config.boot.kernelPackages.kernel}/bzImage" \
         "${config.system.build.initialRamdisk}/initrd" ./boot/
+      cp "${pkgs.uefi-shell.shell}" ./boot/Shell.efi
       touch --date=@0 ./*
 
       usage_size=$(du -sb --apparent-size . | tr -cd '[:digit:]')

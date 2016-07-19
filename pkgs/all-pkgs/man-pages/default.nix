@@ -2,12 +2,20 @@
 , fetchurl
 }:
 
+let
+  name = "man-pages-4.07";
+
+  tarballUrls = [
+    "mirror://kernel/linux/docs/man-pages/${name}.tar"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "man-pages-4.05";
+  inherit name;
 
   src = fetchurl {
-    url = "mirror://kernel/linux/docs/man-pages/${name}.tar.xz";
-    sha256 = "460051b94c2a0a4d158276e5d3f68e7114cb5782a050d878645e33b81f56a60d";
+    url = map (n: "${n}.xz") tarballUrls;
+    allowHashOutput = false;
+    sha256 = "1f236e112eedca15fc09a2857c160c81a64af8b786674376edf49aa0f69035ee";
   };
 
   preBuild = ''
@@ -15,6 +23,16 @@ stdenv.mkDerivation rec {
   '';
 
   preferLocalBuild = true;
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sign") tarballUrls;
+      pgpDecompress = true;
+      pgpKeyFingerprint = "E522 595B 52ED A4E6 BFCC  CB5E 8561 9911 3A35 CE5E";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Linux development manual pages";

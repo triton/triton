@@ -8863,6 +8863,11 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
+  linux_4_7 = callPackage ../os-specific/linux/kernel {
+    channel = "4.7";
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
+  };
+
   linux_testing = callPackage ../os-specific/linux/kernel {
     channel = "testing";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
@@ -9053,15 +9058,18 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
-  linuxPackages_latest = pkgs.linuxPackages_4_6;
+  linuxPackages_latest = pkgs.linuxPackages_4_7;
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
-  linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_testing;
-  });
   linuxPackages_4_6 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4_6;
+  });
+  linuxPackages_4_7 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_4_7;
+  });
+  linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_testing;
   });
   linuxPackages_custom = {version, src, configfile}:
                            let linuxPackages_self = (linuxPackagesFor (pkgs.linuxManualConfig {inherit version src configfile;

@@ -19,11 +19,13 @@ let
   enableAutoSnapshots = cfgSnapshots.enable;
   enableZfs = inInitrd || inSystem || enableAutoSnapshots;
 
-  kernel = config.boot.kernelPackages;
+  kernelPackages = config.boot.kernelPackages;
 
-  splKernelPkg = if cfgZfs.useGit then kernel.spl_git else kernel.spl;
-  zfsKernelPkg = if cfgZfs.useGit then kernel.zfs_git else kernel.zfs;
-  zfsUserPkg = if cfgZfs.useGit then pkgs.zfs_git else pkgs.zfs;
+  useGit = cfgZfs.useGit || versionAtLeast kernelPackages.kernel.version "4.7";
+
+  splKernelPkg = if useGit then kernelPackages.spl_git else kernelPackages.spl;
+  zfsKernelPkg = if useGit then kernelPackages.zfs_git else kernelPackages.zfs;
+  zfsUserPkg = if useGit then pkgs.zfs_git else pkgs.zfs;
 
   autosnapPkg = pkgs.zfstools.override {
     zfs = zfsUserPkg;

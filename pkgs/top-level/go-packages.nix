@@ -150,11 +150,11 @@ let
   };
 
   net = buildFromGitHub {
-    rev = "3797cd8864994d713d909eda5e61ede8683fdc12";
-    date = "2016-07-16";
+    rev = "4d38db76854b199960801a1734443fd02870d7e1";
+    date = "2016-07-20";
     owner  = "golang";
     repo   = "net";
-    sha256 = "09jciqi3vjap271y1nrg2q654qkgnbyhw92v4wsqc0vl73haz9pp";
+    sha256 = "1b03d1j67m8acb8s7yyibk25g74x8498nr4xkbal98sdbcvpz0kk";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -1826,12 +1826,12 @@ let
   };
 
   ipfs = buildFromGitHub {
-    date = "2016-07-14";
-    rev = "6912f47a446e61f6a4168fc859b0d9ade501a2ca";
+    date = "2016-07-20";
+    rev = "c6622dd7653036226816d8c6eb8c2d47e5cde2e6";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "1166ed6d199056157bc11a5560abe3aa3bb717884ddb59f6adc084e1f727f963";
-    gxSha256 = "0aq97liijy8xp2g4k8s92jcwazsybwr7idk1x14n2kj33vrlr0rf";
+    sha256 = "27a950895d9df9ca47981071c10052cebd02e9b9a512954fa15f0cd1aae91f60";
+    gxSha256 = "0mnyqqwjp0jc9djcvnhalm1qnnqi6wy9rdy00x4lxg3y4bpggik0";
 
     subPackages = [
       "cmd/ipfs"

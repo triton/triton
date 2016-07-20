@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libdrm-2.4.68";
+  name = "libdrm-2.4.69";
 
   src = fetchurl {
     url = "https://dri.freedesktop.org/libdrm/${name}.tar.bz2";
     allowHashOutput = false;
-    sha256 = "5b4bd9a5922929bc716411cb74061fbf31b06ba36feb89bc1358a91a8d0ca9df";
+    sha256 = "09510cbc75adba7e84fd3ec86586fd352a787fd534a63377de9e19ff85280b33";
   };
 
   buildInputs = [
@@ -27,7 +27,6 @@ stdenv.mkDerivation rec {
     "--enable-radeon"
     "--enable-amdgpu"
     "--enable-nouveau"
-    "--enable-vmxgfx" # vmware
     "--enable-omap-experimental-api"
     "--enable-exynos-experimental-api"
     "--enable-freedreno"
@@ -48,7 +47,10 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "E8EB 5B34 081C E1EE A26E  FE19 5B5B DA07 1D49 CC38";
+      pgpKeyFingerprints = [
+        "E8EB 5B34 081C E1EE A26E  FE19 5B5B DA07 1D49 CC38"
+        "FC9B AE14 35A9 F7F6 64B8  2057 B5D6 2936 D1FC 9EE8"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

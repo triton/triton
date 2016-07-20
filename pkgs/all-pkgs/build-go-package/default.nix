@@ -32,6 +32,15 @@ let
   removeExpr = refs: lib.flip lib.concatMapStrings refs (ref: ''
     | sed "s,${ref},$(echo "${ref}" | sed "s,$NIX_STORE/[^-]*,$NIX_STORE/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,"),g" \
   '');
+
+  srcList = [
+    {
+      inherit goPackagePath;
+      src = null;
+    }
+  ] ++ extraSrcs;
+
+  srcPathsExpr = lib.concatStringsSep "\\|" (map ({ src, goPackagePath }: goPackagePath) srcList);
 in
 
 go.stdenv.mkDerivation (
@@ -182,7 +191,7 @@ go.stdenv.mkDerivation (
       subPackageExpr+='\)'
     fi
     while read f; do
-      echo "$f" | grep -q '^./\(src\|pkg/[^/]*\)/${goPackagePath}'"$subPackageExpr" || continue
+      echo "$f" | grep -q '^./\(src\|pkg/[^/]*\)/\(${srcPathsExpr}\)'"$subPackageExpr" || continue
       mkdir -p "$(dirname "$NIX_BUILD_TOP/${name}/$f")"
       cp "$NIX_BUILD_TOP/go/$f" "$NIX_BUILD_TOP/${name}/$f"
     done < <(find . -type f)

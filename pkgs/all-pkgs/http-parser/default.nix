@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "2.7.0";
+  version = "2.7.1";
 in
 stdenv.mkDerivation {
   name = "http-parser-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation {
     owner = "nodejs";
     repo = "http-parser";
     rev = "v${version}";
-    sha256 = "f780a8e4698be06c3b15c5751703aa5d0dd2437db956685c57cfc89ed6d6cb36";
+    sha256 = "36a70a437524904f1520d578f4c95e1c606b1746611863979eecfc20d2602469";
   };
 
   postPatch = ''

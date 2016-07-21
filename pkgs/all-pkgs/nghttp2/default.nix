@@ -56,7 +56,6 @@ stdenv.mkDerivation rec {
     "--without-neverbleed"
     "--without-cython"
     "--without-mruby"
-    "--${if isLib then "with" else "without"}-libonly"
   ];
 
   meta = with stdenv.lib; {

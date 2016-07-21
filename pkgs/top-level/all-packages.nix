@@ -1731,6 +1731,8 @@ mpv = callPackage ../all-pkgs/mpv { };
 
 ms-sys = callPackage ../all-pkgs/ms-sys { };
 
+mtdev = callPackage ../all-pkgs/mtdev { };
+
 mtools = callPackage ../all-pkgs/mtools { };
 
 inherit (callPackages ../all-pkgs/mumble {
@@ -7497,8 +7499,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  mpich2 = callPackage ../development/libraries/mpich2 { };
 #
 #  mstpd = callPackage ../os-specific/linux/mstpd { };
-#
-  mtdev = callPackage ../development/libraries/mtdev { };
 #
 #  mtpfs = callPackage ../tools/filesystems/mtpfs { };
 #

@@ -100,7 +100,6 @@ stdenv.mkDerivation rec {
     "--disable-beos"
     "--disable-drm"
     "--disable-gallium"
-    (enFlag "libpng" (libpng != null) null)
     # Only one OpenGL backend may be selected at compile time
     # OpenGL X (gl), or OpenGL ES 2.0 (glesv2)
     (enFlag "gl" (!gles2) null)

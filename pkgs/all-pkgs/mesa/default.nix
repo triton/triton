@@ -152,8 +152,6 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-largefile"
-    # TODO: Power 8 support
-    "--disable-pwr8-inst"
     # slight performance degradation, enable only for grsec
     (enFlag "glx-rts" grsecEnabled null)
     "--disable-debug"

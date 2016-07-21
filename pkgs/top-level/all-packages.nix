@@ -1292,6 +1292,8 @@ kea = callPackage ../all-pkgs/kea { };
 
 keepalived = callPackage ../all-pkgs/keepalived { };
 
+keepassx = callPackage ../all-pkgs/keepassx { };
+
 kerberos = callPackageAlias "krb5_lib" { };
 
 kexec-tools = callPackage ../all-pkgs/kexec-tools { };

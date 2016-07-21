@@ -772,6 +772,8 @@ dos2unix = callPackage ../all-pkgs/dos2unix { };
 
 dotconf = callPackage ../all-pkgs/dotconf { };
 
+double-conversion = callPackage ../all-pkgs/double-conversion { };
+
 dpdk = callPackage ../all-pkgs/dpdk { };
 
 #dropbox = callPackage ../all-pkgs/dropbox { };

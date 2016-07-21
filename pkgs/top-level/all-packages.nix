@@ -1432,6 +1432,8 @@ libical = callPackage ../all-pkgs/libical { };
 
 libidl = callPackage ../all-pkgs/libidl { };
 
+libidn = callPackage ../all-pkgs/libidn { };
+
 libinput = callPackage ../all-pkgs/libinput { };
 
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };
@@ -7222,8 +7224,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  libsieve = callPackage ../development/libraries/libsieve { };
 
   libid3tag = callPackage ../development/libraries/libid3tag { };
-
-  libidn = callPackage ../development/libraries/libidn { };
 
   idnkit = callPackage ../development/libraries/idnkit { };
 

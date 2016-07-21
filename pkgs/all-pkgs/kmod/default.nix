@@ -6,12 +6,20 @@
 , zlib
 }:
 
+let
+  name = "kmod-23";
+
+  tarballUrls = [
+    "mirror://kernel/linux/utils/kernel/kmod/${name}.tar"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "kmod-22";
+  inherit name;
 
   src = fetchurl {
-    url = "mirror://kernel/linux/utils/kernel/kmod/${name}.tar.xz";
-    sha256 = "10lzfkmnpq6a43a3gkx7x633njh216w0bjwz31rv8a1jlgg1sfxs";
+    urls = map (n: "${n}.xz") tarballUrls;
+    allowHashOutput = false;
+    sha256 = "d303d5519faec9d69e1132f6b37db2579db17a7fb5c1517da0115d03ba168155";
   };
 
   nativeBuildInputs = [
@@ -41,6 +49,16 @@ stdenv.mkDerivation rec {
       ln -sv $out/bin/kmod $out/sbin/$prog
     done
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrl = map (n: "${n}.sign") tarballUrls;
+      pgpDecompress = true;
+      pgpKeyFingerprint = "EAB3 3C96 9001 3C73 3916  AC83 9BA2 A5A6 30CB EA53";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://www.kernel.org/pub/linux/utils/kernel/kmod/;

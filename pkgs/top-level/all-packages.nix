@@ -2024,18 +2024,20 @@ qrencode = callPackage ../all-pkgs/qrencode { };
 
 qt4 = callPackage ../all-pkgs/qt/4 { };
 
+qt5 = callPackage ../all-pkgs/qt/5.x.nix { };
+
 quassel = callPackage ../all-pkgs/quassel rec {
   monolithic = true;
   daemon = false;
   client = false;
 };
-quasselDaemon = (pkgs.quassel.override {
+quasselDaemon = pkgs.quassel.override {
   monolithic = false;
   daemon = true;
   client = false;
   tag = "-daemon";
-});
-quasselClient = (pkgs.quassel.override {
+};
+quasselClient = hiPrio (pkgs.quassel.override {
   monolithic = false;
   daemon = false;
   client = true;
@@ -7691,69 +7693,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #    libpng = libpng12;
 #  };
 
-  qt54 =
-    let imported = import ../development/libraries/qt-5/5.4 { inherit pkgs; };
-    in recurseIntoAttrs (imported.override (super: pkgs.qt5LibsFun));
-
-  qt55 =
-    let imported = import ../development/libraries/qt-5/5.5 { inherit pkgs; };
-    in recurseIntoAttrs (imported.override (super: pkgs.qt5LibsFun));
-
-  qt5 = pkgs.qt55;
-
-  qt5LibsFun = self: let inherit (self) callPackage; in {
-
-#    accounts-qt = callPackage ../development/libraries/accounts-qt { };
-#
-#    grantlee = callPackage ../development/libraries/grantlee/5.x.nix { };
-#
-    libdbusmenu = callPackage ../development/libraries/libdbusmenu-qt/qt-5.5.nix { };
-#
-#    libkeyfinder = callPackage ../development/libraries/libkeyfinder { };
-#
-#    mlt = callPackage ../development/libraries/mlt/qt-5.nix {};
-#
-#    openbr = callPackage ../development/libraries/openbr { };
-#
-#    phonon = callPackage ../development/libraries/phonon/qt5 { };
-#
-#    phonon-backend-gstreamer = callPackage ../development/libraries/phonon-backend-gstreamer/qt5 { };
-#
-#    phonon-backend-vlc = callPackage ../development/libraries/phonon-backend-vlc/qt5 { };
-#
-    polkit-qt = callPackage ../development/libraries/polkit-qt-1 {
-      withQt5 = true;
-    };
-#
-#    poppler = callPackage ../development/libraries/poppler {
-#      lcms = lcms2;
-#      qt5Support = true;
-#      suffix = "qt5";
-#    };
-#
-    qca-qt5 = callPackage ../development/libraries/qca-qt5 { };
-#
-#    qmltermwidget = callPackage ../development/libraries/qmltermwidget { };
-#
-#    qtcreator = callPackage ../development/qtcreator {
-#      withDocumentation = true;
-#    };
-#
-    quazip = callPackage ../development/libraries/quazip {
-      qt = qtbase;
-    };
-#
-#    qwt = callPackage ../development/libraries/qwt/6.nix { };
-#
-#    signon = callPackage ../development/libraries/signon { };
-#
-#    telepathy = callPackage ../development/libraries/telepathy/qt { };
-
-  };
-#
-  qtEnv = qt5.env;
-  qt5Full = qt5.full;
-#
 #  qtkeychain = callPackage ../development/libraries/qtkeychain { };
 #
 #  qtscriptgenerator = callPackage ../development/libraries/qtscriptgenerator { };

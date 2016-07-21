@@ -41,12 +41,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    qt5.qtbase
-  ] ++ optionals buildCore [
-    qt5.qtscript
-    qt5.qca-qt5
-  ] ++ optionals buildClient [
-    qt5.libdbusmenu
+    qt5
   ];
 
   cmakeFlags = [

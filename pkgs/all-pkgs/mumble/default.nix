@@ -38,7 +38,7 @@ let
       ++ optionals (source.qtVersion == 4) [
       qt4
     ] ++ optionals (source.qtVersion == 5) [
-      qt5.qtbase
+      qt5
     ];
 
     buildInputs = (overrides.buildInputs or [ ]) ++ [
@@ -49,7 +49,7 @@ let
     ] ++ optionals (source.qtVersion == 4) [
       qt4
     ] ++ optionals (source.qtVersion == 5) [
-      qt5.qtbase
+      qt5
     ];
 
     configureFlags = (overrides.configureFlags or [ ])
@@ -102,10 +102,6 @@ let
   client = source: generic {
     type = "mumble";
 
-    nativeBuildInputs = optionals (source.qtVersion == 5) [
-      qt5.qttools
-    ];
-
     buildInputs = [
       alsa-lib
       libsndfile
@@ -119,8 +115,6 @@ let
       xorg.libXfixes
       xorg.libXi
       xorg.xproto
-    ] ++ optionals (source.qtVersion == 5) [
-      qt5.qtsvg
     ] ++ optionals jackSupport [
       jack2_lib
     ] ++ optionals speechdSupport [
@@ -175,13 +169,13 @@ let
   };
 
   gitSource = rec {
-    version = "1.3.0-git-2016-06-29";
+    version = "1.3.0-git-2016-07-20";
     qtVersion = 5;
 
     src = fetchgit {
       url = "https://github.com/mumble-voip/mumble";
-      rev = "4f4e5ac20834798f819fe94ee5d8a526266a148d";
-      sha256 = "080aq80s327bbncwgy8grjidv0cdjpv9di3dcm6xyp8s2sfmkski";
+      rev = "2f886052e4232905ea3c2cb5c027cac8a3ba72c2";
+      sha256 = "15j14dcbfpi2ls06m2x0ahi46m5cbjh1954l97gm30warzrwfwan";
     };
 
     # TODO: Remove fetchgit as it requires git

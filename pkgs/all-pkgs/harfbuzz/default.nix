@@ -20,11 +20,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "harfbuzz-1.2.7";
+  name = "harfbuzz-1.3.0";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2";
-    sha256 = "bba0600ae08b84384e6d2d7175bea10b5fc246c4583dc841498d01894d479026";
+    allowHashOutput = false;
+    sha256 = "b04be31633efee2cae1d62d46434587302554fa837224845a62565ec68a0334d";
   };
 
   nativeBuildInputs = optionals doCheck [
@@ -70,9 +71,20 @@ stdenv.mkDerivation rec {
     "--without-coretext"
   ];
 
-  postInstall = "rm -rvf $out/share/gtk-doc";
+  postInstall = ''
+    rm -rvf $out/share/gtk-doc
+  '';
 
   doCheck = true;
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      sha256Urls = map (n: "${n}.sha256.asc") src.urls;
+      pgpKeyFingerprint = "2277 650A 4E8B DFE4 B7F6  BE41 9FEE 04E5 D353 1115";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "An OpenType text shaping engine";

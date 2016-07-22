@@ -12,14 +12,14 @@
 }:
 
 let
-  version = "2.2.2";
+  version = "2.2.3";
 in
 stdenv.mkDerivation rec {
   name = "libgd-${version}";
   
   src = fetchurl {
     url = "https://github.com/libgd/libgd/releases/download/gd-${version}/${name}.tar.xz";
-    sha256 = "489f756ce07f0c034b1a794f4d34fdb4d829256112cb3c36feb40bb56b79218c";
+    sha256 = "746b6cbd6769a22ff3ba6f5756f3512a769bd4cdf4695dff17f4867f25fa7d3c";
   };
 
   buildInputs = [

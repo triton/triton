@@ -170,6 +170,7 @@ stdenv.mkDerivation rec {
     x264
     x265
     xorg.libICE
+    xorg.libSM
     xorg.libX11
     xorg.libxcb
     xorg.libXext

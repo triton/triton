@@ -1474,6 +1474,8 @@ libmicrohttpd = callPackage ../all-pkgs/libmicrohttpd { };
 
 libmnl = callPackage ../all-pkgs/libmnl { };
 
+libmodplug = callPackage ../all-pkgs/libmodplug { };
+
 libmpc = callPackage ../all-pkgs/libmpc { };
 
 libmpdclient = callPackage ../all-pkgs/libmpdclient { };
@@ -7277,8 +7279,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
   libmng = callPackage ../development/libraries/libmng { };
 
-  libmodplug = callPackage ../development/libraries/libmodplug {};
-#
 #  libmp3splt = callPackage ../development/libraries/libmp3splt { };
 #
 #  libmrss = callPackage ../development/libraries/libmrss { };

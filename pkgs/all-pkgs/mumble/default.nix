@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , fetchgit
+, python
 
 , alsa-lib
 , avahi
@@ -102,6 +103,10 @@ let
   client = source: generic {
     type = "mumble";
 
+    nativeBuildInputs = [
+      python
+    ];
+
     buildInputs = [
       alsa-lib
       libsndfile
@@ -122,6 +127,10 @@ let
     ] ++ optionals pulseSupport [
       pulseaudio_lib
     ];
+
+    postPatch = ''
+      export MUMBLE_PYTHON="$(type -tP python)"
+    '';
 
     configureFlags = [
       "CONFIG+=no-server"

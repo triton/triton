@@ -4,13 +4,16 @@
 , ncurses
 }:
 
+let
+  version = "2.0.2";
+in
 stdenv.mkDerivation rec {
   name = "htop-${version}";
-  version = "2.0.1";
 
   src = fetchurl {
-    url = "http://hisham.hm/htop/releases/${version}/${name}.tar.gz";
-    sha256 = "0rjn9ybqx5sav7z4gn18f1q6k23nmqyb6yydfgghzdznz9nn447l";
+    url = "https://hisham.hm/htop/releases/${version}/${name}.tar.gz";
+    multihash = "QmYxK5YMHnM31CskD7WycoUoyykyREqGXe6YoCH1atoxrP";
+    sha256 = "179be9dccb80cee0c5e1a1f58c8f72ce7b2328ede30fb71dcdf336539be2f487";
   };
 
   buildInputs = [

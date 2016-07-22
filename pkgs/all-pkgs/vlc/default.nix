@@ -2,6 +2,7 @@
 , fetchTritonPatch
 , fetchurl
 , gettext
+, yasm
 
 , a52dec
 , alsa-lib
@@ -11,9 +12,13 @@
 , faad2
 , flac
 , ffmpeg_2
+, fontconfig
 , freefont_ttf
+, freetype
 , fribidi
 , gnutls
+, gstreamer_1
+, gst-plugins-base_1
 , gvfs
 , jack2_lib
 , libass
@@ -30,11 +35,15 @@
 , libkate
 , libmad
 , libmatroska
+, libmodplug
 , libmtp
 , liboggz
+, libpng
 , libraw1394
 , librsvg
 , libsamplerate
+, libshout
+, libssh2
 , libtheora
 , libtiff
 , libtiger
@@ -42,6 +51,7 @@
 , libva
 , libvdpau
 , libvorbis
+, libvpx
 , libxml2
 , lua
 , libmpeg2
@@ -60,6 +70,8 @@
 , taglib
 , unzip
 , v4l_lib
+, x264
+, x265
 , xorg
 , xz
 , zlib
@@ -84,6 +96,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
+    yasm
   ];
 
   buildInputs = [
@@ -95,9 +108,13 @@ stdenv.mkDerivation rec {
     faad2
     flac
     ffmpeg_2
+    fontconfig
     freefont_ttf
+    freetype
     fribidi
     gnutls
+    gstreamer_1
+    gst-plugins-base_1
     gvfs
     jack2_lib
     libass
@@ -115,11 +132,15 @@ stdenv.mkDerivation rec {
     libkate
     libmad
     libmatroska
+    libmodplug
     libmtp
     liboggz
+    libpng
     libraw1394
     librsvg
     libsamplerate
+    libshout
+    libssh2
     libtheora
     libtiff
     libtiger
@@ -127,6 +148,7 @@ stdenv.mkDerivation rec {
     libva
     libvdpau
     libvorbis
+    libvpx
     libxml2
     lua
     libmpeg2
@@ -145,12 +167,19 @@ stdenv.mkDerivation rec {
     taglib
     unzip
     v4l_lib
-    xorg.xcbutilkeysyms
+    x264
+    x265
+    xorg.libICE
     xorg.libX11
     xorg.libxcb
+    xorg.libXext
+    xorg.libXinerama
     xorg.libXpm
     xorg.libXv
     xorg.libXvMC
+    xorg.xcbutilkeysyms
+    xorg.xextproto
+    xorg.xineramaproto
     xorg.xproto
     xz
     zlib

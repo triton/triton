@@ -1555,23 +1555,25 @@ libselinux = callPackage ../all-pkgs/libselinux { };
 
 libsepol = callPackage ../all-pkgs/libsepol { };
 
-libsmbios = callPackage ../all-pkgs/libsmbios { };
-
-libsndfile = callPackage ../all-pkgs/libsndfile { };
-
-libssh = callPackage ../all-pkgs/libssh { };
-
-libssh2 = callPackage ../all-pkgs/libssh2 { };
+libshout = callPackage ../all-pkgs/libshout { };
 
 libsigcxx = callPackage ../all-pkgs/libsigcxx { };
 
 libsigsegv = callPackage ../all-pkgs/libsigsegv { };
+
+libsmbios = callPackage ../all-pkgs/libsmbios { };
+
+libsndfile = callPackage ../all-pkgs/libsndfile { };
 
 libsodium = callPackage ../all-pkgs/libsodium { };
 
 libsoup = callPackage ../all-pkgs/libsoup { };
 
 libspectre = callPackage ../all-pkgs/libspectre { };
+
+libssh = callPackage ../all-pkgs/libssh { };
+
+libssh2 = callPackage ../all-pkgs/libssh2 { };
 
 libtasn1 = callPackage ../all-pkgs/libtasn1 { };
 
@@ -3787,8 +3789,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  libsrs2 = callPackage ../development/libraries/libsrs2 { };
 #
 #  libtermkey = callPackage ../development/libraries/libtermkey { };
-#
-  libshout = callPackage ../development/libraries/libshout { };
 #
 #  libqb = callPackage ../development/libraries/libqb { };
 

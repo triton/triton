@@ -22,11 +22,14 @@ stdenv.mkDerivation rec {
     speex
   ];
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "icecast 'c' language bindings";
     homepage = http://www.icecast.org;
-    license = stdenv.lib.licenses.gpl2;
-    maintainers = with stdenv.lib.maintainers; [ ];
-
+    license = licenses.gpl2;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

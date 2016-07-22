@@ -1900,6 +1900,8 @@ pinentry = callPackage ../all-pkgs/pinentry { };
 
 pixman = callPackage ../all-pkgs/pixman { };
 
+pkcs11-helper = callPackage ../all-pkgs/pkcs11-helper { };
+
 pkgconf = callPackage ../all-pkgs/pkgconf { };
 pkg-config = callPackage ../all-pkgs/pkgconfig { };
 pkgconfig = callPackageAlias "pkgconf" { };

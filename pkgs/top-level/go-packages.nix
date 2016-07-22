@@ -172,11 +172,11 @@ let
   };
 
   oauth2 = buildFromGitHub {
-    rev = "12e1e986157ec46fb273824565d9937bd4235105";
-    date = "2016-07-18";
+    rev = "1364adb2c63445016c5ed4518fc71f6a3cda6169";
+    date = "2016-07-21";
     owner = "golang";
     repo = "oauth2";
-    sha256 = "047zcxszyxk7016v46ssc9xm15b240gvvnp3iysn62g8vwgz6lpc";
+    sha256 = "15zmy65iv4x7jvdwsykm7r4a2jybq73k2n74bn85gpnajhc19k52";
     goPackagePath = "golang.org/x/oauth2";
     goPackageAliases = [ "github.com/golang/oauth2" ];
     propagatedBuildInputs = [ net gcloud-golang-compute-metadata ];
@@ -227,11 +227,11 @@ let
   };
 
   tools = buildFromGitHub {
-    rev = "d4a8e583a10c1e702d1accc9e66c104f992115c8";
-    date = "2016-07-19";
+    rev = "f3284303b68708e9943bf3e940fd1a5483438cc1";
+    date = "2016-07-21";
     owner = "golang";
     repo = "tools";
-    sha256 = "0rg6x12plw5z48y1llnl4b2nhnk2cwvdas8cyy6fnsapm0viivmj";
+    sha256 = "0mfbjmpkdg9pxp16pcp9irnk87adiw0jbdi16yx80ryvl0xf8qwh";
     goPackagePath = "golang.org/x/tools";
     goPackageAliases = [ "code.google.com/p/go.tools" ];
 
@@ -338,10 +338,10 @@ let
   };
 
   aws-sdk-go = buildFromGitHub {
-    rev = "v1.2.6";
+    rev = "v1.2.7";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "0nw8zd2375xpd4baf2sbijcyh9y90byclp9xms83q7yjp2mbgbhw";
+    sha256 = "1zfaidbysnkm33065z3rxrccrmhpbrrh1hvamglj11pz6jrpd6x6";
     buildInputs = [ testify gucumber tools ];
     propagatedBuildInputs = [ ini go-jmespath ];
 
@@ -848,10 +848,10 @@ let
   };
 
   gcloud-golang = buildFromGitHub {
-    rev = "6b0a9a7885816ca5868f56f4be1abbe98c6e1f37";
+    rev = "4f1a5ca1c906ba5ff5ff9fba3bee49d526a8d03f";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "17bd8bgpzippn4hyhdpx7whd8kkwxp05vyna28yj959kx98xkxj9";
+    sha256 = "158874k282dn4iljignamg77mvg3j32xj4v8xfqna5civbgzsvx9";
     goPackagePath = "google.golang.org/cloud";
     propagatedBuildInputs = [
       net
@@ -862,7 +862,7 @@ let
     ];
     excludedPackages = "oauth2";
     meta.hydraPlatforms = [ ];
-    date = "2016-07-14";
+    date = "2016-07-19";
   };
 
   gcloud-golang-for-go4 = buildFromGitHub {
@@ -1091,11 +1091,11 @@ let
   };
 
   google-api-go-client = buildFromGitHub {
-    rev = "1f15007067029efc20c6f09037b4f489312c634f";
-    date = "2016-07-19";
+    rev = "663fefdcec4e1ec9033ba302202321d3bff5fe6d";
+    date = "2016-07-11";
     owner = "google";
     repo = "google-api-go-client";
-    sha256 = "0dzgvdg7nr358dnkfy3wh04bflm5pifvfjkv7p024rywcsziri3b";
+    sha256 = "15w2sb2yrzjs0dnaf6crdxv7xf4s3jvl0b144bz6xlb8s6p1s7hl";
     goPackagePath = "google.golang.org/api";
     goPackageAliases = [
       "github.com/google/google-api-client"
@@ -2128,11 +2128,11 @@ let
   };
 
   mow-cli = buildFromGitHub {
-    rev = "772320464101e904cd51198160eb4d489be9cc49";
+    rev = "0de8a769b5ad3ab01a480561cfbd4b220240311f";
     owner  = "jawher";
     repo   = "mow.cli";
-    sha256 = "1dwy7pwh3mig3xj1x8bcd8cm6ilv2581vah9rwi992agx3b8318s";
-    date = "2016-02-21";
+    sha256 = "00db6mpm1jdsnqg05dv4w5a8va5w11ms9z2wlkjnmsnr44zhlykq";
+    date = "2016-07-20";
   };
 
   mux = buildFromGitHub {

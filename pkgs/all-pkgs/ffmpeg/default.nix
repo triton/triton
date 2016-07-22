@@ -543,7 +543,7 @@ stdenv.mkDerivation rec {
     # Undocumented
     (deprfflag "libdcadec" (dcadec != null) "2.7" "3.0")
     #(fflag "libebur128" (libebur128 != null) "3.1")
-    /**/"--disable-libebur128"
+    /**/(fflag "libebur128" false "3.1")
     (fflag "libfaac" faacExtlib null)
     (fflag "libfdk-aac" fdkaacExtlib null)
     (fflag "libfontconfig" (fontconfig != null) "3.1")

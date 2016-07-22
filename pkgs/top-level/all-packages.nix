@@ -2024,6 +2024,8 @@ pythonPackages = callPackageAlias "python2Packages" { };
 
 qbittorrent = callPackage ../all-pkgs/qbittorrent { };
 
+qca = callPackage ../all-pkgs/qca { };
+
 qjackctl = callPackage ../all-pkgs/qjackctl { };
 
 qrencode = callPackage ../all-pkgs/qrencode { };

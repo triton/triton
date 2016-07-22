@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
     libgpg-error
     libsecret
     ncurses
-    qt5.qtbase
+    qt5
   ];
 
   prePatch = ''

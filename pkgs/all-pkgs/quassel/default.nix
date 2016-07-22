@@ -4,7 +4,9 @@
 , makeWrapper
 
 , dconf
+, qca
 , qt5
+, zlib
 
 , daemon ? false # build Quassel daemon
 , client ? false # build Quassel client
@@ -42,6 +44,14 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     qt5
+    zlib
+  ] ++ optionals buildCore [
+    qca
+  ];
+
+  # Prevent ``undefined reference to `qt_version_tag''' in SSL check
+  NIX_CFLAGS_COMPILE = [
+    "-DQT_NO_VERSION_TAGGING=1"
   ];
 
   cmakeFlags = [

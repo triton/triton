@@ -10,15 +10,15 @@ let
     optionals
     optionalString;
 
-  rev = "e935a774fb358e6658fa83d8c06552459028ba9d";
-  date = "2016-07-15";
+  rev = "d877ccf5e86dd4506086cb4fd7e1cfb3952ff705";
+  date = "2016-07-21";
 in
 stdenv.mkDerivation {
   name = "wireguard-${date}";
 
   src = fetchzip {
     url = "https://git.zx2c4.com/WireGuard/snapshot/WireGuard-${rev}.tar.xz";
-    sha256 = "c2316b06bb1a1568c0cc03ade2fc461981034e7de093c68e1421b0d6b533c8a3";
+    sha256 = "f0cb1e6a9621e790e5209c71d960c17d172ea20960c3895ef1235c5bfc9c6c59";
   };
 
   buildInputs = optionals (kernel == null) [

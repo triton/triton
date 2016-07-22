@@ -181,12 +181,8 @@ let
       ++ optional (versionOlder version "51.0.0.0") libexif;
 
     patches = [
-      ./patches/build_fixes_46.patch
       ./patches/widevine.patch
-      (if versionOlder version "50.0.0.0" then
-         ./patches/nix_plugin_paths_46.patch
-       else
-         ./patches/nix_plugin_paths_50.patch)
+      ./patches/nix_plugin_paths_52.patch
     ];
 
     postPatch = ''
@@ -196,18 +192,12 @@ let
         -e "/python_arch/s/: *'[^']*'/: '""'/" \
         build/common.gypi chrome/chrome_tests.gypi
 
-      ${optionalString (versionOlder version "51.0.0.0") ''
-        sed -i -e '/module_path *=.*libexif.so/ {
-          s|= [^;]*|= base::FilePath().AppendASCII("${libexif}/lib/libexif.so")|
-        }' chrome/utility/media_galleries/image_metadata_extractor.cc
-      ''}
-
       sed -i -e '/lib_loader.*Load/s!"\(libudev\.so\)!"${systemd_lib}/lib/\1!' \
         device/udev_linux/udev?_loader.cc
 
       sed -i -e '/libpci_loader.*Load/s!"\(libpci\.so\)!"${pciutils}/lib/\1!' \
         gpu/config/gpu_info_collector_linux.cc
-    '' + optionalString (!versionOlder version "51.0.0.0") ''
+
       sed -i -re 's/([^:])\<(isnan *\()/\1std::\2/g' \
         chrome/browser/ui/webui/engagement/site_engagement_ui.cc
     '';

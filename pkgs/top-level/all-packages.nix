@@ -810,6 +810,8 @@ evolution-data-server = callPackage ../all-pkgs/evolution-data-server { };
 
 exempi = callPackage ../all-pkgs/exempi { };
 
+exiv2 = callPackage ../all-pkgs/exiv2 { };
+
 expat = callPackage ../all-pkgs/expat { };
 
 expect = callPackage ../all-pkgs/expect { };
@@ -6661,8 +6663,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  esdl = callPackage ../development/libraries/esdl { };
 #
-  exiv2 = callPackage ../development/libraries/exiv2 { };
-
 #  eventlog = callPackage ../development/libraries/eventlog { };
 #
 #  facile = callPackage ../development/libraries/facile { };

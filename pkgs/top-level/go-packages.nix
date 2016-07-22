@@ -1826,15 +1826,16 @@ let
   };
 
   ipfs = buildFromGitHub {
-    date = "2016-07-20";
-    rev = "c6622dd7653036226816d8c6eb8c2d47e5cde2e6";
+    date = "2016-07-22";
+    rev = "83d9c1c106251fba95ea5a8eebd8f75eee7795e1";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "27a950895d9df9ca47981071c10052cebd02e9b9a512954fa15f0cd1aae91f60";
-    gxSha256 = "0mnyqqwjp0jc9djcvnhalm1qnnqi6wy9rdy00x4lxg3y4bpggik0";
+    sha256 = "0948b8b3b2160b4b8f42a66084f181ec8bebfc91fbc92d993ad3c18eadcfdb11";
+    gxSha256 = "0hxr687626wn9vrv8a6mw36v431xh21p2pw69c99zh23273d22vl";
 
     subPackages = [
       "cmd/ipfs"
+      "cmd/ipfswatch"
     ];
   };
 

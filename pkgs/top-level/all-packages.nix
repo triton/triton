@@ -1328,6 +1328,8 @@ leptonica = callPackage ../all-pkgs/leptonica { };
 
 leveldb = callPackage ../all-pkgs/leveldb { };
 
+letskencrypt = callPackage ../all-pkgs/letskencrypt { };
+
 lftp = callPackage ../all-pkgs/lftp { };
 
 lib-bash = callPackage ../all-pkgs/lib-bash { };

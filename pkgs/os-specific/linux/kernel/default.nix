@@ -23,12 +23,12 @@ let
       sha256 = "8568d41c7104e941989b14a380d167129f83db42c04e950d8d9337fe6012ff7e";
     };
     "4.7" = {
-      version = "4.7-rc7";
-      sha256 = "672da789ecd50ee57a4b527ab87ff6a234e09cfba88607617aaa66da613e8885";
+      version = "4.7";
+      sha256 = "5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10";
     };
     "testing" = {
-      version = "4.7-rc7";
-      sha256 = "672da789ecd50ee57a4b527ab87ff6a234e09cfba88607617aaa66da613e8885";
+      version = "4.7";
+      sha256 = "5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10";
     };
   };
   

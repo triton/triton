@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libdrm-2.4.69";
+  name = "libdrm-2.4.70";
 
   src = fetchurl {
     url = "https://dri.freedesktop.org/libdrm/${name}.tar.bz2";
     allowHashOutput = false;
-    sha256 = "09510cbc75adba7e84fd3ec86586fd352a787fd534a63377de9e19ff85280b33";
+    sha256 = "b17d4b39ed97ca0e4cffa0db06ff609e617bac94646ec38e8e0579d530540e7b";
   };
 
   buildInputs = [
@@ -50,6 +50,7 @@ stdenv.mkDerivation rec {
       pgpKeyFingerprints = [
         "E8EB 5B34 081C E1EE A26E  FE19 5B5B DA07 1D49 CC38"
         "FC9B AE14 35A9 F7F6 64B8  2057 B5D6 2936 D1FC 9EE8"
+        "D628 5B5E 8992 99F3 DA74  6184 191C 9B90 5522 B045"
       ];
       inherit (src) urls outputHash outputHashAlgo;
     };

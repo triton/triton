@@ -10,12 +10,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libwebp-${version}";
-  version = "0.5.0";
+  name = "libwebp-0.5.1";
 
   src = fetchurl {
-    url = "http://downloads.webmproject.org/releases/webp/${name}.tar.gz";
-    sha256 = "0x5jvwvrxq025srjbcjyzn47dgxbvg41sqdxf171zzrsc9xvplsw";
+    url = "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/${name}.tar.gz";
+    sha256 = "6ad66c6fcd60a023de20b6856b03da8c7d347269d76b1fd9c3287e8b5e8813df";
   };
 
   configureFlags = [

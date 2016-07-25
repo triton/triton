@@ -10,11 +10,11 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "libmatroska-1.4.4";
+  name = "libmatroska-1.4.5";
 
   src = fetchurl {
-    url = "http://dl.matroska.org/downloads/libmatroska/${name}.tar.bz2";
-    sha256 = "1mvb54q3gag9dj0pkwci8w75gp6mm14gi85y0ld3ar1rdngsmvyk";
+    url = "https://dl.matroska.org/downloads/libmatroska/${name}.tar.bz2";
+    sha256 = "79023fa46901e5562b27d93a9dd168278fa101361d7fd11a35e84e58e11557bc";
   };
 
   buildInputs = [

@@ -70,7 +70,7 @@ stdenv.mkDerivation rec {
 
   installFlags = [
     "sysconfdir=\${out}/etc"
-    "DEFAULT_INITCONF_DIR=\${out}/default"
+    "DEFAULT_INITCONF_DIR=\${out}/etc/default"
   ];
 
   postInstall = ''
@@ -79,6 +79,8 @@ stdenv.mkDerivation rec {
   '' + optionalString buildUser ''
     # Remove provided services as they are buggy
     rm $out/etc/systemd/system/zfs-import-*.service
+
+    rm -r $out/share/zfs
 
     sed -i '/zfs-import-scan.service/d' $out/etc/systemd/system/*
 

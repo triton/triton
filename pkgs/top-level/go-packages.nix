@@ -126,11 +126,11 @@ let
   };
 
   crypto = buildFromGitHub {
-    rev = "911fafb28f4ee7c7bd483539a6c96190bbbccc3f";
-    date = "2016-05-09";
+    rev = "bc89c496413265e715159bdc8478ee9a92fdc265";
+    date = "2016-07-08";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "0z447ipqf32fpj2wjr2nvd3xl0jyrh6f9a8ymy8jp9v57j36c4ib";
+    sha256 = "18y4d6yfq7y1sagfqgxzl12ix6y6mqilbmrhdinwzqvn68386j1b";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -2109,10 +2109,10 @@ let
   };
 
   mongo-tools = buildFromGitHub {
-    rev = "r3.3.9";
+    rev = "r3.3.10";
     owner  = "mongodb";
     repo   = "mongo-tools";
-    sha256 = "08s9j5djgw5sj616fcdrhng5hk34ycck2cnn67syj9xdf7p7bqz4";
+    sha256 = "1zmy87hi7gizq61k1nxz2wpnv41bzp2d92jahsigy3b8yk01qwwm";
     buildInputs = [ crypto mgo go-flags gopass openssl tomb-v2 ];
 
     # Mongodb incorrectly names all of their binaries main
@@ -2257,11 +2257,11 @@ let
   };
 
   openssl = buildFromGitHub {
-    date = "2015-03-30";
-    rev = "4c6dbafa5ec35b3ffc6a1b1e1fe29c3eba2053ec";
+    date = "2016-07-25";
+    rev = "f9da722b0b07a40892332b3caa7715935f133edd";
     owner = "10gen";
     repo = "openssl";
-    sha256 = "1yyq8acz9pb19mnr9j5hd0axpw6xlm8fbqnkp4m16mmfjd6l5kii";
+    sha256 = "0aqpplil87jvdfgslvlqg1jwgv5knba5nhxwdpc49614hr1jlnng";
     goPackageAliases = [ "github.com/spacemonkeygo/openssl" ];
     nativeBuildInputs = [ pkgs.pkgconfig ];
     buildInputs = [ pkgs.openssl ];

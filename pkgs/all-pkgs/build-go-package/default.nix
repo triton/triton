@@ -106,10 +106,13 @@ go.stdenv.mkDerivation (
         NEWPATH="$NEWPATH:$path"
       fi
     done | parallel -j "$NIX_BUILD_CORES" decompress
-    EXTRAPATH="$(find $NIX_BUILD_TOP/unpack -maxdepth 1 -mindepth 1 | tr '\n' ':')"
     popd
-    export GOPATH="$EXTRAPATH$NEWPATH"
     IFS="$OLDIFS"
+
+    while read dir; do
+      NEWPATH="$NEWPATH:$dir"
+    done < <(find "$NIX_BUILD_TOP/unpack" -maxdepth 1 -mindepth 1)
+    export GOPATH="$NEWPATH"
 
     runHook postConfigure
   '';

@@ -51,6 +51,9 @@ stdenv.mkDerivation {
     "--jemalloc-root=${jemalloc}/lib"
   ];
 
+  # Fix an issues with gcc6
+  NIX_CFLAGS_COMPILE = "-Wno-error";
+
   NIX_LDFLAGS = "-L${libffi}/lib -lffi";
 
   passthru = {

@@ -5,33 +5,34 @@
 let
   sources = {
     "${stdenv.lib.head stdenv.lib.platforms.x86_64-linux}" = {
-      sha1 = "1273b6b6aed421c9e40c59f366d0df6092ec0397";
-      sha256 = "a8ca657d78162a9f0a69a1ec8b0460e97259cdf2e6353ee256ae206876c9637e";
-      platform = "linux-x86_64";
+      sha256 = "d0704d10237c66c3efafa6f7e5570c59a1d3fe5c6d99487540f90ebb37cd84c4";
+      platform = "x86_64-unknown-linux-gnu";
     };
   };
 
-  date = "2016-03-18";
-  rev = "235d774";
+  version = "1.9.0";
   
   inherit (sources."${stdenv.targetSystem}")
     platform
-    sha1
     sha256;
 in
 stdenv.mkDerivation {
-  name = "rustc-bootstrap-${date}";
+  name = "rustc-bootstrap-${version}";
   
   src = fetchurl {
-    url = "https://static.rust-lang.org/stage0-snapshots/rust-stage0-${date}-${rev}-${platform}-${sha1}.tar.bz2";
-    sha1Confirm = sha1;
+    url = "https://static.rust-lang.org/dist/rustc-${version}-${platform}.tar.gz";
     inherit sha256;
   };
 
   installPhase = ''
     mkdir -p "$out"
-    cp -r bin "$out/bin"
-    patchelf --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" --set-rpath "${stdenv.cc.cc}/lib" $out/bin/*
+    cp -r rustc/* "$out"
+    FILES=($(find $out/{bin,lib} -type f))
+    for file in "''${FILES[@]}"; do
+      echo "Patching $file" >&2
+      patchelf --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" "$file" || true
+      patchelf --set-rpath "$out/lib:${stdenv.cc.cc}/lib" "$file" || true
+    done
   '';
 
   meta = with stdenv.lib; {

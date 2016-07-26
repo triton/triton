@@ -164,7 +164,7 @@ in
     postInstall = ''
       rm -fr $out/share/X11/xkb/compiled
       ln -s /var/tmp $out/share/X11/xkb/compiled
-      
+
       wrapProgram $out/bin/Xephyr \
         --set XKB_BINDIR "${xorg.xkbcomp}/bin" \
         --add-flags "-xkbdir ${xorg.xkeyboardconfig}/share/X11/xkb"
@@ -196,10 +196,10 @@ in
   };
 
   xf86videointel = attrs: attrs // {
-    name = "xf86-video-intel-2016-07-04";
+    name = "xf86-video-intel-2016-07-21";
     src = fetchurl {
-      url = "https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/26f8ab5429a554801641415f0ab3b2d68cea1d00.tar.gz";
-      sha256 = "30747ea6c231a0757b5fdad299e0e67015ada5475d24fa6d54b4ba4ab954697a";
+      url = "https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/6988b873b041130d88dd0aae70c10f86550ee2b3.tar.gz";
+      sha256 = "90995935371cc5e573007d029957ce5926cfefe8cfedb9ccd58c3079556c41ff";
     };
     nativeBuildInputs = attrs.nativeBuildInputs ++ [
       args.autoreconfHook

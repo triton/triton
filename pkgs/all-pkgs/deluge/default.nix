@@ -32,13 +32,13 @@ in
 
 buildPythonPackage rec {
   name = "deluge-${version}";
-  version = "2016-05-25";
+  version = "2016-07-20";
 
   src = fetchgit {
     url = "git://git.deluge-torrent.org/deluge";
-    rev = "7e229ceb2f0bd119f307751bf55106bfec592297";
+    rev = "9c27ed29ae6faaa7d3de1a53dea02c4ed527e218";
     branchName = "develop";
-    sha256 = "01xjh4xn0swhpwn4arah7mr5hphp9b0vc1zhks2szmmd0y617189";
+    sha256 = "11yiwf4pkbzp4ajsi7bjs2cwcm8651b61b6s9gmzxxqis3m0za53";
   };
 
   nativeBuildInputs = [
@@ -48,7 +48,7 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     chardet
-    # geoip-database
+    #geoip-database
     Mako
     #pillow
     pkgs.libtorrent-rasterbar_1-0
@@ -62,7 +62,7 @@ buildPythonPackage rec {
     #notify-python
     pyxdg
     service-identity
-    # setproctitle
+    #setproctitle
     simplejson
     twisted
   ] ++ [

@@ -1328,6 +1328,8 @@ ldb = callPackage ../all-pkgs/ldb { };
 
 lego = pkgs.goPackages.lego.bin // { outputs = [ "bin" ]; };
 
+lensfun = callPackage ../all-pkgs/lensfun { };
+
 leptonica = callPackage ../all-pkgs/leptonica { };
 
 leveldb = callPackage ../all-pkgs/leveldb { };
@@ -6949,8 +6951,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   lcms1 = callPackage ../development/libraries/lcms { };
 
   lcms2 = callPackage ../development/libraries/lcms2 { };
-
-#  lensfun = callPackage ../development/libraries/lensfun {};
 #
 #  lesstif = callPackage ../development/libraries/lesstif { };
 #

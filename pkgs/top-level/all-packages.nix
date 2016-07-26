@@ -6707,7 +6707,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #
 #  freetts = callPackage ../development/libraries/freetts { };
 #
-#  cfitsio = callPackage ../development/libraries/cfitsio { };
+cfitsio = callPackage ../development/libraries/cfitsio { };
 #
 #  fontconfig_210 = callPackage ../development/libraries/fontconfig/2.10.nix { };
 

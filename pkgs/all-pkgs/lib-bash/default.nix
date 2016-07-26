@@ -1,18 +1,16 @@
 { stdenv
 , cmake
-#, fetchFromGitHub
-, fetchgit
+, fetchFromGitHub
 }:
 
 stdenv.mkDerivation rec {
-  name = "lib-bash-2016-05-22";
+  name = "lib-bash-2016-07-17";
 
-  src = fetchgit {
-    #owner = "chlorm";
-    #repo = "lib-bash";
-    url = "https://github.com/chlorm/lib-bash.git";
-    rev = "297497796e06be22976a35d57ce4eb628be297aa";
-    sha256 = "00d3gq17c3yvc3j08706048hfncpmpnfhi3wzw8vnb3n7755955d";
+  src = fetchFromGitHub {
+    owner = "chlorm";
+    repo = "lib-bash";
+    rev = "3dd5796244253b6eb38209bfa5a89ce935c974c5";
+    sha256 = "717df96ecde5b004f9e586a9d58cb2b954fca9d7ce007c39ed0d6a69f94c7366";
   };
 
   nativeBuildInputs = [

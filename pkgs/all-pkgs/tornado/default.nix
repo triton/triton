@@ -13,12 +13,12 @@ in
 
 buildPythonPackage rec {
   name = "tornado-${version}";
-  version = "4.4";
+  version = "4.4.1";
 
   src = fetchPyPi {
     package = "tornado";
     inherit version;
-    sha256 = "3176545b6cb2966870db4def4f646da6ab7a0c19400576969c57279a7561ab02";
+    sha256 = "371d0cf3d56c47accc66116a77ad558d76eebaa8458a6b677af71ca606522146";
   };
 
   propagatedBuildInputs = [

@@ -23,7 +23,9 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "An interactive process viewer for Linux";
     homepage = "http://htop.sourceforge.net";
+    licenses = license.gpl2;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

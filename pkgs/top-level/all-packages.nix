@@ -2276,6 +2276,8 @@ udisks = callPackage ../all-pkgs/udisks { };
 
 uefi-shell = callPackage ../all-pkgs/uefi-shell { };
 
+ufraw = callPackage ../all-pkgs/ufraw { };
+
 uhub = callPackage ../all-pkgs/uhub { };
 
 uid_wrapper = callPackage ../all-pkgs/uid_wrapper { };
@@ -4833,8 +4835,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  udftools = callPackage ../tools/filesystems/udftools {};
 #
 #  udptunnel = callPackage ../tools/networking/udptunnel { };
-#
-#  ufraw = callPackage ../applications/graphics/ufraw { };
 #
 #  umlet = callPackage ../tools/misc/umlet { };
 #

@@ -138,6 +138,12 @@ stdenv.mkDerivation {
         file = "nvidia-drivers/364.19-kernel-4.6.patch";
         sha256 = "a40489322dcab39acbef8f30d9e0adb742b123f9da771e9a5fff1f493bd19335";
       })
+    ] ++ optionals (versionAtLeast kernel.version "4.7" && channel == "long-lived") [
+      (fetchTritonPatch {
+        rev = "caffa3c33c275b99523b530eb8b871c5cf04e8d6";
+        file = "nvidia-drivers/nvidia-drivers-367.35-linux-4.7.patch";
+        sha256 = "e0ea9150593c85fd583cb0a99bc975d7a29aa23087d969ae001032ecb6eb6ea2";
+      })
     ];
 
   kernel =

@@ -1912,6 +1912,8 @@ pkgconf = callPackage ../all-pkgs/pkgconf { };
 pkg-config = callPackage ../all-pkgs/pkgconfig { };
 pkgconfig = callPackageAlias "pkgconf" { };
 
+plymouth = callPackage ../all-pkgs/plymouth { };
+
 pngcrush = callPackage ../all-pkgs/pngcrush { };
 
 poppler_qt4 = callPackageAlias "poppler" {

@@ -61,17 +61,17 @@ let
       ln -sv ${elfutils}/{lib,include} $out
     '';
   };
-in
 
+  version = "231";
+in
 stdenv.mkDerivation rec {
-  version = "230";
   name = "${type}systemd-${version}";
 
   src = fetchFromGitHub {
     owner = "triton";
     repo = "systemd";
-    rev = "70a6784be6cdc281f78a0dcdb56aaa44edb09f75";
-    sha256 = "79c48bb9cf7ee5b7218c3f512a95cc5f495997fab1e81837ad664f8bc4036198";
+    rev = "ca0a4ad1275b9a0aa104db025804bddbf334daf2";
+    sha256 = "41ccd0dc1dee53d4c979fa08ad4a76f223011ab3baeeb4761d94db62287eb78d";
   };
 
   nativeBuildInputs = [

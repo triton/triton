@@ -9,7 +9,7 @@ let
     "mirror://gnu/libtasn1/libtasn1-${version}.tar.gz"
   ];
 
-  version = "4.8";
+  version = "4.9";
 in
 stdenv.mkDerivation rec {
   name = "libtasn1-${version}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     allowHashOutput = false;
-    sha256 = "fa802fc94d79baa00e7397cedf29eb6827d4bd8b4dd77b577373577c93a8c513";
+    sha256 = "4f6f7a8fd691ac2b8307c8ca365bad711db607d4ad5966f6938a9d2ecd65c920";
   };
 
   nativeBuildInputs = [
@@ -28,10 +28,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "4.8";
+      urls = tarballUrls "4.9";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "1F42 4189 05D8 206A A754  CCDC 29EE 58B9 9686 5171";
-      outputHash = "fa802fc94d79baa00e7397cedf29eb6827d4bd8b4dd77b577373577c93a8c513";
+      outputHash = "4f6f7a8fd691ac2b8307c8ca365bad711db607d4ad5966f6938a9d2ecd65c920";
       inherit (src) outputHashAlgo;
     };
   };

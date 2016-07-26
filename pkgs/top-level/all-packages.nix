@@ -1160,6 +1160,8 @@ gtk3 = callPackageAlias "gtk_3" { };
 
 gtkhtml = callPackage ../all-pkgs/gtkhtml { };
 
+gtkimageview = callPackage ../all-pkgs/gtkimageview { };
+
 gtkmm_2 = callPackage ../all-pkgs/gtkmm/2.x.nix { };
 gtkmm_3 = callPackage ../all-pkgs/gtkmm/3.x.nix { };
 
@@ -6820,8 +6822,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  gsoap = callPackage ../development/libraries/gsoap { };
 #
   gss = callPackage ../development/libraries/gss { };
-#
-#  gtkimageview = callPackage ../development/libraries/gtkimageview { };
 #
 #  gtkmathview = callPackage ../development/libraries/gtkmathview { };
 #

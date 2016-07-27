@@ -1965,6 +1965,8 @@ postgresql_91 = callPackageAlias "postgresql" {
 
 potrace = callPackage ../all-pkgs/potrace { };
 
+powertop = callPackage ../all-pkgs/powertop { };
+
 procps-ng = callPackage ../all-pkgs/procps-ng { };
 
 procps = callPackageAlias "procps-ng" { };

@@ -156,8 +156,6 @@ stdenv.mkDerivation rec {
   postPatch = ''
     export PYTHONPATH="$(toPythonPath $lib):$(toPythonPath $out):$PYTHONPATH"
 
-    patchShebangs src/gmock/gtest/scripts/fuse_gtest_files.py
-
     # Fix zfs pkgconfig detection
     sed -i 's,\[zfs\],\[libzfs\],g' configure.ac
 
@@ -179,6 +177,8 @@ stdenv.mkDerivation rec {
     # Fix LDAP linking
     ! grep '\(-lldap\|LDAP_LIB\)' src/rgw/Makefile.am
     sed -i 's,LIBRGW_DEPS +=,\0 -lldap,g' src/rgw/Makefile.am
+  '' + optionalString (versionOlder version "12.0.0") ''
+    patchShebangs src/gmock/gtest/scripts/fuse_gtest_files.py
   '';
 
   preConfigure = ''
@@ -262,7 +262,7 @@ stdenv.mkDerivation rec {
     "--with-thread-safe-res-query"
   ];
 
-  preBuild = optionalString (versionAtLeast version "9.0.0") ''
+  preBuild = optionalString (versionAtLeast version "9.0.0" && versionOlder version "12.0.0") ''
     (cd src/gmock; make -j $NIX_BUILD_CORES)
   '';
 

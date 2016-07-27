@@ -1,9 +1,13 @@
 { stdenv
 , fetchurl
 
+, bluez
+, kmod
 , libnl
 , ncurses
 , pciutils
+, util-linux_full
+, xorg
 }:
 
 stdenv.mkDerivation rec {
@@ -15,10 +19,26 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
+    bluez
+    kmod
     libnl
     ncurses
     pciutils
+    util-linux_full
+    xorg.xset
   ];
+
+  postPatch = ''
+    sed -i "s,/usr/bin/xset,$(type -tP xset),g" src/calibrate/calibrate.cpp
+    sed \
+      -e "s,/usr/bin/hcitool,$(type -tP hcitool),g" \
+      -e "s,/usr/sbin/hciconfig,$(type -tP hciconfig),g" \
+      -i src/tuning/bluetooth.cpp
+    sed \
+      -e "s,/bin/mount,$(type -tP mount),g" \
+      -e "s,/sbin/modprobe,$(type -tP modprobe),g" \
+      -i src/main.cpp
+  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

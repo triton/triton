@@ -9186,8 +9186,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  policycoreutils = callPackage ../os-specific/linux/policycoreutils { };
 #
-#  powertop = callPackage ../os-specific/linux/powertop { };
-#
 #  prayer = callPackage ../servers/prayer { };
 #
   procps-old = lowPrio (callPackage ../os-specific/linux/procps { });

@@ -8829,6 +8829,11 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
     channel = "testing";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
+
+  linux_bcache = callPackage ../os-specific/linux/kernel {
+    channel = "bcache";
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
+  };
 #
 #  /* grsec configuration
 #
@@ -8843,25 +8848,25 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #     to EC2, where Xen is the Hypervisor.
 #  */
 #
-  grFlavors = import ../build-support/grsecurity/flavors.nix;
+#  grFlavors = import ../build-support/grsecurity/flavors.nix;
 #
-  mkGrsecurity = opts:
-    (callPackage ../build-support/grsecurity {
-      grsecOptions = opts;
-    });
+#  mkGrsecurity = opts:
+#    (callPackage ../build-support/grsecurity {
+#      grsecOptions = opts;
+#    });
 #
-  grKernel  = opts: (mkGrsecurity opts).grsecKernel;
-  grPackage = opts: recurseIntoAttrs (mkGrsecurity opts).grsecPackage;
+#  grKernel  = opts: (mkGrsecurity opts).grsecKernel;
+#  grPackage = opts: recurseIntoAttrs (mkGrsecurity opts).grsecPackage;
 #
 #  # Stable kernels
 #  # This is no longer supported. Please see the official announcement on the
 #  # grsecurity page. https://grsecurity.net/announce.php
-  linux_grsec_stable_desktop    = throw "No longer supported due to https://grsecurity.net/announce.php. "
-    + "Please use linux_grsec_testing_desktop.";
-  linux_grsec_stable_server     = throw "No longer supported due to https://grsecurity.net/announce.php. "
-    + "Please use linux_grsec_testing_server.";
-  linux_grsec_stable_server_xen = throw "No longer supporteddue to https://grsecurity.net/announce.php. "
-    + "Please use linux_grsec_testing_server_xen.";
+#  linux_grsec_stable_desktop    = throw "No longer supported due to https://grsecurity.net/announce.php. "
+#    + "Please use linux_grsec_testing_desktop.";
+#  linux_grsec_stable_server     = throw "No longer supported due to https://grsecurity.net/announce.php. "
+#    + "Please use linux_grsec_testing_server.";
+#  linux_grsec_stable_server_xen = throw "No longer supporteddue to https://grsecurity.net/announce.php. "
+#    + "Please use linux_grsec_testing_server_xen.";
 #
 #  # Testing kernels: outdated ATM
 #  #linux_grsec_testing_desktop = grKernel grFlavors.linux_grsec_testing_desktop;
@@ -9027,6 +9032,9 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   });
   linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_testing;
+  });
+  linuxPackages_bcache = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_bcache;
   });
   linuxPackages_custom = {version, src, configfile}:
                            let linuxPackages_self = (linuxPackagesFor (pkgs.linuxManualConfig {inherit version src configfile;

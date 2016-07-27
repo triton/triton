@@ -1,4 +1,8 @@
-{ stdenv, perl, buildLinux, fetchurl
+{ stdenv
+, buildLinux
+, fetchFromGitHub
+, fetchurl
+, perl
 
 , # Overrides to the kernel config.
   extraConfig ? ""
@@ -30,22 +34,39 @@ let
       version = "4.7";
       sha256 = "5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10";
     };
+    "bcache" = {
+      version = "4.7";
+      owner = "wkennington";
+      repo = "linux";
+      rev = "092baea7e09ebf89217de9c00ee0922b3336dc0f";
+      sha256 = "7ccf9be46f45ba58ac191d8b5a2a12b1a293e3d885ba0e613f5d350b5da011ff";
+    };
   };
   
-  inherit (sources."${channel}")
-    version
-    sha256;
+  source = sources."${channel}";
+
+  inherit (source)
+    version;
 
   tarballUrls = [
     "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar"
     "mirror://kernel/linux/kernel/v4.x/testing/linux-${version}.tar"
   ];
 
-  src = fetchurl {
-    urls = map (n: "${n}.xz") tarballUrls;
-    allowHashOutput = false;
-    inherit sha256;
-  };
+  src = if source ? rev then
+    fetchFromGitHub {
+      inherit (source)
+        owner
+        repo
+        rev
+        sha256;
+    }
+  else
+    fetchurl {
+      urls = map (n: "${n}.xz") tarballUrls;
+      allowHashOutput = false;
+      inherit (source) sha256;
+    };
 
   srcVerification = fetchurl {
     failEarly = true;

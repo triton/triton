@@ -1105,6 +1105,8 @@ gpsd = callPackage ../all-pkgs/gpsd { };
 
 gptfdisk = callPackage ../all-pkgs/gptfdisk { };
 
+grafana = pkgs.goPackages.grafana.bin // { outputs = [ "bin" ]; };
+
 granite = callPackage ../all-pkgs/granite { };
 
 graphite2 = callPackage ../all-pkgs/graphite2 { };
@@ -1971,7 +1973,7 @@ procps-ng = callPackage ../all-pkgs/procps-ng { };
 
 procps = callPackageAlias "procps-ng" { };
 
-prometheus = pkgs.goPackages.prometheus // { outputs = [ "bin" ]; };
+prometheus = pkgs.goPackages.prometheus.bin // { outputs = [ "bin" ]; };
 
 protobuf-c = callPackage ../all-pkgs/protobuf-c { };
 

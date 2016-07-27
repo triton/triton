@@ -576,6 +576,12 @@ bashCompletion = callPackage ../all-pkgs/bash-completion { };
 
 bc = callPackage ../all-pkgs/bc { };
 
+bcache-tools = callPackage ../all-pkgs/bcache-tools { };
+
+bcache-tools_dev = callPackageAlias "bcache-tools" {
+  channel = "dev";
+};
+
 bison = callPackage ../all-pkgs/bison { };
 
 bluez = callPackage ../all-pkgs/bluez { };

@@ -4,12 +4,12 @@
 
 stdenv.mkDerivation rec {
   name = "libfilezilla-${version}";
-  version = "0.5.3";
+  version = "0.6.1";
 
   src = fetchurl {
     url = "mirror://sourceforge/project/filezilla/libfilezilla/${version}/${name}.tar.bz2";
-    multihash = "Qmcfd2WRjaw9jVMtpcjwPxhSDbFPYMGoqTAvag5Zojq4ki";
-    sha256 = "11303c1581073aaf6aa8b5aa0913fb1fc4cd96e1563cbedaa01e5914af68e917";
+    multihash = "Qmb7k9Ly992SmbRJqKfyWimGKSb6dzfnRgMKcrjfYyYALb";
+    sha256 = "73c3ada6f9c5649abd93e6a3e7ecc6682d4f43248660b5506918eab76a7b901b";
   };
 
   meta = with stdenv.lib; {

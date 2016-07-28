@@ -5,15 +5,15 @@
 }:
 
 let
-  version = "3.2.1";
+  version = "3.2.2";
 in
 stdenv.mkDerivation rec {
   name = "redis-${version}";
 
   src = fetchurl {
     url = "http://download.redis.io/releases/${name}.tar.gz";
-    sha1Confirm = "26c0fc282369121b4e278523fce122910b65fbbf";
-    sha256 = "df7bfb7b527d99981eba3912ae22703764eb19adda1357818188b22fdd09d5c9";
+    sha1Confirm = "3141be9757532139f445bd5f6f4fae293bc33d27";
+    sha256 = "05cf63502b2248b5d39588962100bfa4fcb47dabd56931a8cb60b301b1d8daea";
   };
 
   preBuild = ''

@@ -1494,11 +1494,11 @@ let
   };
 
   go-humanize = buildFromGitHub {
-    rev = "fef948f2d241bd1fd0631108ecc2c9553bae60bf";
+    rev = "2fcb5204cdc65b4bec9fd0a87606bb0d0e3c54e8";
     owner = "dustin";
     repo = "go-humanize";
-    sha256 = "19fsp2g44dn084dbsn2zmc2p4chmnwmsv1lyxp7hjks2pgb65vcm";
-    date = "2016-06-23";
+    sha256 = "1hb6b9nsyy7nclkri1f9fql2kvjqlkxhdpxcnklxb9nxxyqb1rm2";
+    date = "2016-07-20";
   };
 
   go-immutable-radix = buildFromGitHub {
@@ -2134,12 +2134,12 @@ let
   };
 
   ipfs = buildFromGitHub {
-    date = "2016-07-22";
-    rev = "83d9c1c106251fba95ea5a8eebd8f75eee7795e1";
+    date = "2016-07-28";
+    rev = "0bd8ced0d6aa40572cbb467fc5fd3a7f93ab38a6";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "0948b8b3b2160b4b8f42a66084f181ec8bebfc91fbc92d993ad3c18eadcfdb11";
-    gxSha256 = "0hxr687626wn9vrv8a6mw36v431xh21p2pw69c99zh23273d22vl";
+    sha256 = "d26e953ce31497f9eebc054a370cb5f4f1c9ed3e115516e7a285d18aa5f96d43";
+    gxSha256 = "168nwqwgdx9kni3nb3w1f0bl2gld977yfjgvss92blg0lvv33z5b";
 
     subPackages = [
       "cmd/ipfs"
@@ -3331,11 +3331,11 @@ let
   };
 
   utp = buildFromGitHub {
-    rev = "2d2a5d62549da0b2d2a3c23b7823ee6930ca8e07";
+    rev = "59dfcf2995f0a175d717fe0b5b7c526771a0ad83";
     owner  = "anacrolix";
     repo   = "utp";
-    sha256 = "0c2gyr43hyiar2yjsms1v8f50pahxyh50narnq3xdx07xwwvd5nj";
-    date = "2016-07-13";
+    sha256 = "0d5dygl3qkcjk3l99pr9l1syj5sfh1x8r3hb866myzmrqyd99w1n";
+    date = "2016-07-22";
     propagatedBuildInputs = [
       envpprof
       missinggo

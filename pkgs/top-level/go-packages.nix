@@ -184,11 +184,11 @@ let
 
 
   protobuf = buildFromGitHub {
-    rev = "874264fbbb43f4d91e999fecb4b40143ed611400";
-    date = "2016-07-11";
+    rev = "c3cefd437628a0b7d31b34fe44b3a7a540e98527";
+    date = "2016-07-27";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "0aqwq10vvx9wb40gfwd99jy4ih7q16qr3r0l0iwlbg6yjh3nrn4i";
+    sha256 = "1820809rk1j5maqwl7yaxjwmlq492smq1q0k2ndxz7a18fvrznp5";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [
       "code.google.com/p/goprotobuf"
@@ -976,10 +976,10 @@ let
   };
 
   gcloud-golang = buildFromGitHub {
-    rev = "9bf4be2c015475b60ac43fde6366ca99661929c8";
+    rev = "1da7ac3d5f2b6a48521b20a6ed80569f506b87ce";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "0hzf8bnf0b3073b2ws6572n0937vjh1ih9fgp208gbg65k4vb3yk";
+    sha256 = "0gif6b2b8bny9rmw8lgm3kda0g95m0gz8m9zrylgm2l7nsm08hfh";
     goPackagePath = "google.golang.org/cloud";
     propagatedBuildInputs = [
       net
@@ -990,7 +990,7 @@ let
     ];
     excludedPackages = "oauth2";
     meta.hydraPlatforms = [ ];
-    date = "2016-07-25";
+    date = "2016-07-20";
   };
 
   gcloud-golang-for-go4 = buildFromGitHub {
@@ -1282,11 +1282,11 @@ let
   };
 
   google-api-go-client = buildFromGitHub {
-    rev = "663fefdcec4e1ec9033ba302202321d3bff5fe6d";
-    date = "2016-07-11";
+    rev = "fa0566afd4c8fdae644725fdf9b57b5851a20742";
+    date = "2016-07-18";
     owner = "google";
     repo = "google-api-go-client";
-    sha256 = "15w2sb2yrzjs0dnaf6crdxv7xf4s3jvl0b144bz6xlb8s6p1s7hl";
+    sha256 = "1b1khxrh8mp5z9r57hzz5l3mhhns3n1lb0wwn7c6shmccf59l98p";
     goPackagePath = "google.golang.org/api";
     goPackageAliases = [
       "github.com/google/google-api-client"
@@ -3182,10 +3182,10 @@ let
   };
 
   syncthing = buildFromGitHub rec {
-    rev = "v0.14.2";
+    rev = "v0.14.3";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "1s5j7m0p1sfqnq0wh9b8b0030h2h3qmjf1nvm603bzq9ci4hq1jn";
+    sha256 = "004rb68q924vdngsvgffs072fw3ljfvq6iyd0s8rvilfddfyg1xn";
     buildFlags = [ "-tags noupgrade" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext

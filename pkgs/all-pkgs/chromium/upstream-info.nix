@@ -7,8 +7,8 @@
   };
   dev = {
     sha256 = "1vxs6lxmnnljkydflmivhcaxisk8mf736cv69fb1q32gy9xakx38";
-    sha256bin64 = "17gnnds5srmlfqhw5dg289kv2krlsfnhfsz4h4s10y9k52n40zaa";
-    version = "53.0.2785.21";
+    sha256bin64 = "028dyisicc1slc8bjr28qaaz33gc9zs5acrsgnpgm322195rfsha";
+    version = "53.0.2785.30";
   };
   stable = {
     sha256 = "1d3yqfi74dnllxwx15ckrliwf1n7x450f7pxivb8bxlwvwan1pm7";

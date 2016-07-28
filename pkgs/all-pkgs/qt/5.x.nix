@@ -42,12 +42,17 @@
 , wayland
 , xorg
 , zlib
+
+, buildWebEngine ? false
 }:
 
 let
   versionMajor = "5.7";
   versionPatch = "0";
   version = "${versionMajor}.${versionPatch}";
+
+  inherit (stdenv.lib)
+    optionals;
 in
 stdenv.mkDerivation {
   name = "qt-${version}";
@@ -59,10 +64,11 @@ stdenv.mkDerivation {
   };
 
   nativeBuildInputs = [
-    bison
-    gperf
     perl
     python2
+  ] ++ optionals buildWebEngine [
+    bison
+    gperf
     which
   ];
 
@@ -72,16 +78,13 @@ stdenv.mkDerivation {
     cups
     dbus
     double-conversion
-    expat
     fontconfig
     freetype
     glib
     gstreamer_1
     gst-plugins-base_1
     harfbuzz
-    hunspell
     icu
-    libcap
     libdrm
     libevdev
     libinput
@@ -93,7 +96,6 @@ stdenv.mkDerivation {
     mtdev
     mysql
     openssl
-    pciutils
     pcre
     postgresql
     pulseaudio_lib
@@ -101,26 +103,15 @@ stdenv.mkDerivation {
     systemd_lib
     tslib
     wayland
-    xorg.compositeproto
-    xorg.damageproto
     xorg.fixesproto
     xorg.inputproto
     xorg.libX11
     xorg.libxcb
-    xorg.libXcomposite
-    xorg.libXcursor
-    xorg.libXdamage
     xorg.libXext
     xorg.libXfixes
     xorg.libXi
-    xorg.libXrandr
     xorg.libXrender
-    xorg.libXScrnSaver
-    xorg.libXtst
-    xorg.randrproto
-    xorg.recordproto
     xorg.renderproto
-    xorg.scrnsaverproto
     xorg.xcbutilimage
     xorg.xcbutilkeysyms
     xorg.xcbutilrenderutil
@@ -128,7 +119,26 @@ stdenv.mkDerivation {
     xorg.xextproto
     xorg.xproto
     zlib
+  ] ++ optionals buildWebEngine [
+    expat
+    hunspell
+    libcap
+    pciutils
+    xorg.compositeproto
+    xorg.damageproto
+    xorg.libXcomposite
+    xorg.libXcursor
+    xorg.libXdamage
+    xorg.libXrandr
+    xorg.libXtst
+    xorg.libXScrnSaver
+    xorg.randrproto
+    xorg.recordproto
+    xorg.scrnsaverproto
   ];
+
+  # For some reason libdrm doesn't map drm.h correctly
+  NIX_CFLAGS_COMPILE = "-I${libdrm}/include/libdrm";
 
   postPatch = ''
     # Fix references to pwd
@@ -195,7 +205,6 @@ stdenv.mkDerivation {
     "-no-gtk" # TODO: Figure out how to enable this
     
     "-nomake" "examples"
-    # "-skip" "WebEngine"
     "-no-compile-examples"
     "-verbose"
     "-nis"
@@ -218,6 +227,8 @@ stdenv.mkDerivation {
     "-libinput"
     "-gstreamer" "1.0"
     "-system-proxies"
+  ] ++ optionals (!buildWebEngine) [
+    "-skip" "webengine"
   ];
 
   # This is really broken and should be fixed uptream

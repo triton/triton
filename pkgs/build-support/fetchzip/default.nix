@@ -30,14 +30,12 @@ let
         rest = if item == "tar" then lib.tail rest' else rest';
       in list ++ removeTarZip rest;
 
-  name' = args.name or (lib.concatStringsSep "." (removeTarZip (lib.splitString "." tarball)));
-
   urls' = (if url != null then [ url ] else [ ]) ++ urls;
 
   tarball = baseNameOf (lib.head urls');
-in
 
-assert urls' != [ ];
+  name' = args.name or (lib.concatStringsSep "." (removeTarZip (lib.splitString "." tarball)));
+in
 
 lib.overrideDerivation (fetchurl (rec {
   name = "${name'}.tar.br";
@@ -52,8 +50,8 @@ lib.overrideDerivation (fetchurl (rec {
     mkdir "$unpackDir"
     cd "$unpackDir"
 
-    mv "$downloadedFile" "$TMPDIR/tmp.${tarball}"
-    unpackFile "$TMPDIR/tmp.${tarball}"
+    mv "$downloadedFile" "$TMPDIR/tarball.${name'}"
+    unpackFile "$TMPDIR/tarball.${name'}"
 
     shopt -s dotglob
     mkdir "$TMPDIR/${name'}"

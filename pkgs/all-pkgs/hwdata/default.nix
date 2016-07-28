@@ -1,13 +1,14 @@
 { stdenv
-, fetchurl
+, fetchzip
 }:
 
 stdenv.mkDerivation rec {
   name = "hwdata-0.290";
 
-  src = fetchurl {
+  src = fetchzip {
     url = "https://git.fedorahosted.org/cgit/hwdata.git/snapshot/${name}.tar.xz";
-    sha256 = "b7c693b93f248e0ce8bba60f0003a4d0aac8da868e2669db4d955418854d92e9";
+    multihash = "Qmdwi5owxzh4rrcPUvRvnHuEq2WTfPp2ZykxaxWYz83Jm1";
+    sha256 = "d48ed0597d43a2b98ae24402cc8408c5aa370341d6eeba1550fe2d92dadc8e29";
   };
 
   postPatch = ''

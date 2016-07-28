@@ -518,8 +518,12 @@ if ($showHardwareConfig) {
         my $bootLoaderConfig = "";
         if (-e "/sys/firmware/efi/efivars") {
             $bootLoaderConfig = <<EOF;
-  # Use the gummiboot efi boot loader.
-  boot.loader.gummiboot.enable = true;
+  # Use the GRUB 2 boot loader.
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.efiSupport = true;
+  # Define on which hard drive you want to install GRUB on.
+  # boot.loader.grub.device = "/dev/sda"; # or specify "nodev";
   boot.loader.efi.canTouchEfiVariables = true;
 EOF
         } elsif ($virt ne "systemd-nspawn") {
@@ -527,7 +531,7 @@ EOF
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
-  # Define on which hard drive you want to install Grub.
+  # Define on which hard drive you want to install GRUB on.
   # boot.loader.grub.device = "/dev/sda";
 EOF
         }

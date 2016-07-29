@@ -8,11 +8,11 @@
 
 stdenv.mkDerivation rec {
   name = "libcap-ng-${version}";
-  version = "0.7.7";
+  version = "0.7.8";
 
   src = fetchurl {
-    url = "${meta.homepage}/${name}.tar.gz";
-    sha256 = "0syhyrixk7fqvwis3k7iddn75g0qxysc1q5fifvzccxk7774jmb1";
+    url = "https://people.redhat.com/sgrubb/libcap-ng/${name}.tar.gz";
+    sha256 = "c21af997445cd4107a55d386f955c5ea6f6e96ead693e9151277c0ab5f97d05f";
   };
 
   nativeBuildInputs = [
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Library for working with POSIX capabilities";
-    homepage = http://people.redhat.com/sgrubb/libcap-ng/;
+    homepage = https://people.redhat.com/sgrubb/libcap-ng/;
     license = licenses.lgpl21;
     maintainers = with maintainers; [
       wkennington

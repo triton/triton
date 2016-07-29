@@ -9,17 +9,17 @@
 let
   inherit (stdenv.lib)
     enFlag;
-in
 
+  versionMajor = "1.2";
+  versionMinor = "2";
+  version = "${versionMajor}.${versionMinor}";
+in
 stdenv.mkDerivation rec {
   name = "json-glib-${version}";
-  versionMajor = "1.2";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/json-glib/${versionMajor}/${name}.tar.xz";
-    sha256 = "99d6dfbe49c08fd7529f1fe8dcb1893b810a1bb222f1e7b65f41507658b8a7d3";
+    sha256 = "ea128ab52a824fcd06e5448fbb2bd8d9a13740d51c66d445828edba71321a621";
   };
 
   nativeBuildInputs = [

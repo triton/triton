@@ -1,13 +1,13 @@
 { callPackage, fetchFromGitHub, ... } @ args:
 
 callPackage ./generic.nix (args // rec {
-  version = "2016-07-20";
+  version = "2016-07-29";
 
   src = fetchFromGitHub {
     owner = "zfsonlinux";
     repo = "spl";
-    rev = "d2f97b2a2651d8e1a6e9e1dcb07cfe8570efcfff";
-    sha256 = "4c1143175f15c4b3897e3042dff578a863984f39f7c8234d7cbccc959bc212b4";
+    rev = "b7c7008ba28ca926fbda929aec52f3761d72cffe";
+    sha256 = "0760492b71c928d070b997271605c3999e3defef3a845b4e2eb91f06183c05c4";
   };
 
   patches = [ ./patches.patch ];

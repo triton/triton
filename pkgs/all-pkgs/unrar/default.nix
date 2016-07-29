@@ -4,11 +4,11 @@
 
 stdenv.mkDerivation rec {
   name = "unrar-${version}";
-  version = "5.4.2";
+  version = "5.4.4";
 
   src = fetchurl {
     url = "http://www.rarlab.com/rar/unrarsrc-${version}.tar.gz";
-    sha256 = "d91d5fa8abdbac60b3e2b7317cc1451a2b38c550adee977b847f22594c53f1bd";
+    sha256 = "556b65d61164b018c4a3ce10e6290b16f4d042a603f6a4e17f74b19ac25d2d83";
   };
 
   preBuild = ''
@@ -24,6 +24,7 @@ stdenv.mkDerivation rec {
     homepage = http://www.rarlab.com/;
     license = licenses.unfreeRedistributable;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

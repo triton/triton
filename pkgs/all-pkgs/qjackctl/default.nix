@@ -6,6 +6,7 @@
 , jack2_lib
 , portaudio
 , qt5
+, xorg
 }:
 
 let
@@ -15,21 +16,22 @@ let
 in
 
 stdenv.mkDerivation rec {
-  version = "0.4.1";
+  version = "0.4.2";
   name = "qjackctl-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/qjackctl/${name}.tar.gz";
-    sha256 = "1ldzw84vb0x51y7r2sizx1hj4js9sr8s1v8g55nc2npmm4g4w0lq";
+    sha256 = "cf1c4aff22f8410feba9122e447b1e28c8fa2c71b12cfc0551755d351f9eaf5e";
   };
 
   buildInputs = [
     alsa-lib
     dbus
     jack2_lib
-    qt5.qtbase
-    qt5.qttranslations
-    qt5.qtx11extras
+    qt5
+    xorg.libX11
+    xorg.libxcb
+    xorg.xproto
   ];
 
   configureFlags = [
@@ -47,14 +49,6 @@ stdenv.mkDerivation rec {
     (enFlag "dbus" (dbus != null) null)
     "--enable-xunique"
     "--disable-stacktrace"
-  ];
-
-  NIX_CFLAGS_COMPILE = optionals (portaudio != null) [
-    "-I${portaudio}/include"
-  ];
-
-  NIX_LDFLAGS = optionals (portaudio != null) [
-    "-L${portaudio}/lib"
   ];
 
   meta = with stdenv.lib; {

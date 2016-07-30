@@ -2084,6 +2084,8 @@ radvd = callPackage ../all-pkgs/radvd { };
 
 rapidjson = callPackage ../all-pkgs/rapidjson { };
 
+raptor2 = callPackage ../all-pkgs/raptor2 { };
+
 re2c = callPackage ../all-pkgs/re2c { };
 
 readline = callPackage ../all-pkgs/readline { };
@@ -7750,8 +7752,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  };
 #
 #  librdf_raptor = callPackage ../development/libraries/librdf/raptor.nix { };
-#
-  librdf_raptor2 = callPackage ../development/libraries/librdf/raptor2.nix { };
 #
 #  librdf_rasqal = callPackage ../development/libraries/librdf/rasqal.nix { };
 #

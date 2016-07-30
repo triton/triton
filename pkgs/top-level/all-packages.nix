@@ -1183,9 +1183,9 @@ gtkspell = callPackageAlias "gtkspell_3" { };
 
 guile = callPackage ../all-pkgs/guile { };
 
-#guitarix = callPackage ../all-pkgs/guitarix {
-#  fftw = pkgs.fftw_single;
-#};
+guitarix = callPackage ../all-pkgs/guitarix {
+  fftw = pkgs.fftw_single;
+};
 
 gupnp = callPackage ../all-pkgs/gupnp { };
 

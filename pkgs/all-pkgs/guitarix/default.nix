@@ -17,7 +17,7 @@
 , glibmm
 , gtk2
 , gtkmm_2
-, libjack2
+, jack2_lib
 , ladspaH
 , librdf
 , librsvg
@@ -43,18 +43,11 @@ in
 
 stdenv.mkDerivation rec {
   name = "guitarix-${version}";
-  #version = "0.34.0";
-  version = "2016-02-14";
+  version = "0.35.1";
 
-  /*src = fetchurl {
-    url = "mirror://sourceforge/guitarix/guitarix2-${version}.tar.bz2";
-    sha256 = "0pamaq8iybsaglq6y1m1rlmz4wgbs2r6m24bj7x4fwg4grjvzjl8";
-  };*/
-  # Support for disabling webkitgtk will be in the 0.35.0 release
-  src = fetchgit {
-    url = "http://git.code.sf.net/p/guitarix/git";
-    rev = "4682d8ca6d9c76d3b1bc8da489ded7d043d27d65";
-    sha256 = "0j3x64llfy51szmysn83fgs79qj8sz20rgiq59kwc1qm081z1hvm";
+  src = fetchurl {
+    url = "mirror://sourceforge/guitarix/guitarix2-${version}.tar.xz";
+    sha256 = "e6ed0189e02f843d059a37a47b0c97540828d34b716da081e17898f983dad818";
   };
 
   nativeBuildInputs = [
@@ -76,7 +69,7 @@ stdenv.mkDerivation rec {
     glibmm
     gtk2
     gtkmm_2
-    libjack2
+    jack2_lib
     ladspaH
     librdf
     librsvg
@@ -90,11 +83,6 @@ stdenv.mkDerivation rec {
     zita-convolver
     zita-resampler
   ];
-
-  /* remove for 0.35.0 release */
-  postUnpack = ''
-    sourceRoot=$sourceRoot/trunk
-  '';
 
   postPatch = ''
     patchShebangs waf
@@ -111,7 +99,6 @@ stdenv.mkDerivation rec {
   ] ++ optional optimizationSupport "--optimization";
 
   NIX_CFLAGS_COMPILE = [
-    #"-std=c++11"
     "-I${eigen}/include/eigen3"
   ];
 

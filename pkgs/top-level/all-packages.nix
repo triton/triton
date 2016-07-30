@@ -2457,8 +2457,8 @@ zeromq = callPackage ../all-pkgs/zeromq { };
 zip = callPackage ../all-pkgs/zip { };
 
 zita-convolver = callPackage ../all-pkgs/zita-convolver { };
-#
-  zita-resampler = callPackage ../all-pkgs/zita-resampler { };
+
+zita-resampler = callPackage ../all-pkgs/zita-resampler { };
 
 zlib = callPackage ../all-pkgs/zlib { };
 

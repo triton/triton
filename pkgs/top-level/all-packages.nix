@@ -1686,6 +1686,8 @@ lsof = callPackage ../all-pkgs/lsof { };
 
 luajit = callPackage ../all-pkgs/luajit { };
 
+lv2 = callPackage ../all-pkgs/lv2 { };
+
 lvm2 = callPackage ../all-pkgs/lvm2 { };
 
 lxc = callPackage ../all-pkgs/lxc { };
@@ -7759,8 +7761,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  lilv = callPackage ../development/libraries/audio/lilv { };
 #  lilv-svn = callPackage ../development/libraries/audio/lilv/lilv-svn.nix { };
-#
-#  lv2 = callPackage ../development/libraries/audio/lv2 { };
 #
 #  lvtk = callPackage ../development/libraries/audio/lvtk { };
 #

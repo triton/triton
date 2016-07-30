@@ -2149,6 +2149,8 @@ seabios = callPackage ../all-pkgs/seabios { };
 
 seahorse = callPackage ../all-pkgs/seahorse { };
 
+serd = callPackage ../all-pkgs/serd {};
+
 serf = callPackage ../all-pkgs/serf { };
 
 shared_mime_info = callPackage ../all-pkgs/shared-mime-info { };
@@ -7784,8 +7786,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   schroedinger = callPackage ../development/libraries/schroedinger { };
 
 #  sblim-sfcc = callPackage ../development/libraries/sblim-sfcc {};
-#
-#  serd = callPackage ../development/libraries/serd {};
 #
 #  sfsexp = callPackage ../development/libraries/sfsexp {};
 #

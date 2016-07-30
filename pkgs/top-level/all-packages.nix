@@ -1682,6 +1682,8 @@ lmdb = callPackage ../all-pkgs/lmdb { };
 
 lm-sensors = callPackage ../all-pkgs/lm-sensors { };
 
+lrdf = callPackage ../all-pkgs/lrdf { };
+
 lsof = callPackage ../all-pkgs/lsof { };
 
 luajit = callPackage ../all-pkgs/luajit { };
@@ -7141,8 +7143,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
 #  liblo = callPackage ../development/libraries/liblo { };
 #
-#  liblrdf = librdf;
-#
 #  liblscp = callPackage ../development/libraries/liblscp { };
 #
 #  libe-book = callPackage ../development/libraries/libe-book {};
@@ -7756,8 +7756,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  librdf_rasqal = callPackage ../development/libraries/librdf/rasqal.nix { };
 #
 #  librdf_redland = callPackage ../development/libraries/librdf/redland.nix { };
-#
-#  librdf = callPackage ../development/libraries/librdf { };
 #
 #  libsmf = callPackage ../development/libraries/audio/libsmf { };
 #

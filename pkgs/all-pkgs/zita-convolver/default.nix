@@ -4,8 +4,11 @@
 , fftw_single
 }:
 
+let
+  version = "3.1.0";
+in
 stdenv.mkDerivation rec {
-  name = "zita-convolver-3.1.0";
+  name = "zita-convolver-${version}";
 
   src = fetchurl {
     url = "http://kokkinizita.linuxaudio.org/linuxaudio/downloads/"
@@ -30,6 +33,14 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=(
       "PREFIX=$out"
     )
+  '';
+
+  preFixup = /* Fix lib directory name */ ''
+    mv -v $out/lib64 $out/lib
+  '' + /* Create shared object version symlink for compatibility */ ''
+    ln -sv \
+      $out/lib/libzita-convolver.so.${version} \
+      $out/lib/libzita-convolver.so.3
   '';
 
   meta = with stdenv.lib; {

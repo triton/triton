@@ -794,6 +794,8 @@ efibootmgr = callPackage ../all-pkgs/efibootmgr { };
 
 efivar = callPackage ../all-pkgs/efivar { };
 
+eigen = callPackage ../all-pkgs/eigen {};
+
 elfutils = callPackage ../all-pkgs/elfutils { };
 
 emacs = callPackage ../all-pkgs/emacs { };
@@ -6672,10 +6674,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  dssi = callPackage ../development/libraries/dssi {};
 #
 #  dxflib = callPackage ../development/libraries/dxflib {};
-#
-#  eigen = callPackage ../development/libraries/eigen {};
-#
-#  eigen2 = callPackage ../development/libraries/eigen/2.0.nix {};
 #
 #  enet = callPackage ../development/libraries/enet { };
 #

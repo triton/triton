@@ -2457,6 +2457,8 @@ zeromq = callPackage ../all-pkgs/zeromq { };
 zip = callPackage ../all-pkgs/zip { };
 
 zita-convolver = callPackage ../all-pkgs/zita-convolver { };
+#
+  zita-resampler = callPackage ../all-pkgs/zita-resampler { };
 
 zlib = callPackage ../all-pkgs/zlib { };
 
@@ -8072,8 +8074,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  zimlib = callPackage ../development/libraries/zimlib { };
 #
 #  zita-alsa-pcmi = callPackage ../development/libraries/audio/zita-alsa-pcmi { };
-#
-  zita-resampler = callPackage ../development/libraries/audio/zita-resampler { };
 #
   zziplib = callPackage ../development/libraries/zziplib { };
 #

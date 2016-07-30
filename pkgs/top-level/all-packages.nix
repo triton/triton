@@ -2448,6 +2448,8 @@ zeromq = callPackage ../all-pkgs/zeromq { };
 
 zip = callPackage ../all-pkgs/zip { };
 
+zita-convolver = callPackage ../all-pkgs/zita-convolver { };
+
 zlib = callPackage ../all-pkgs/zlib { };
 
 zsh = callPackage ../all-pkgs/zsh { };
@@ -8070,8 +8072,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  czmq = callPackage ../development/libraries/czmq { };
 #
 #  zimlib = callPackage ../development/libraries/zimlib { };
-#
-#  zita-convolver = callPackage ../development/libraries/audio/zita-convolver { };
 #
 #  zita-alsa-pcmi = callPackage ../development/libraries/audio/zita-alsa-pcmi { };
 #

@@ -7759,7 +7759,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  libsmf = callPackage ../development/libraries/audio/libsmf { };
 #
-#  lilv = callPackage ../development/libraries/audio/lilv { };
+  lilv = callPackage ../development/libraries/audio/lilv { };
 #  lilv-svn = callPackage ../development/libraries/audio/lilv/lilv-svn.nix { };
 #
 #  lvtk = callPackage ../development/libraries/audio/lvtk { };
@@ -7815,7 +7815,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  soqt = callPackage ../development/libraries/soqt { };
 #
-#  sord = callPackage ../development/libraries/sord {};
+  sord = callPackage ../development/libraries/sord {};
 #  sord-svn = callPackage ../development/libraries/sord/sord-svn.nix {};
 #
   soundtouch = callPackage ../development/libraries/soundtouch {};
@@ -7838,7 +7838,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  spice_gtk = callPackage ../development/libraries/spice-gtk { };
 #
-#  sratom = callPackage ../development/libraries/audio/sratom { };
+  sratom = callPackage ../development/libraries/audio/sratom { };
 #
 #  srm = callPackage ../tools/security/srm { };
 #
@@ -8073,7 +8073,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  zita-alsa-pcmi = callPackage ../development/libraries/audio/zita-alsa-pcmi { };
 #
-#  zita-resampler = callPackage ../development/libraries/audio/zita-resampler { };
+  zita-resampler = callPackage ../development/libraries/audio/zita-resampler { };
 #
   zziplib = callPackage ../development/libraries/zziplib { };
 #

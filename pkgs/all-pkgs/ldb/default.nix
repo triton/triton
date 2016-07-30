@@ -12,11 +12,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ldb-1.1.26";
+  name = "ldb-1.1.27";
 
   src = fetchurl {
     url = "mirror://samba/ldb/${name}.tar.gz";
-    sha256 = "1rmjv12pf57vga8s5z9p9d90rlfckc1lqjbcp89r83cq5fkwfhw8";
+    sha256 = "cdb8269cba09006ddf3766eb7721192b52ae3fdc8a6b95f4318b6b740b9d35ac";
   };
 
   nativeBuildInputs = [
@@ -43,10 +43,13 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    description = "a LDAP-like embedded database";
+    description = "An LDAP-like embedded database";
     homepage = http://ldb.samba.org/;
     license = licenses.lgpl3Plus;
-    maintainers = with maintainers; [ wkennington ];
-    platforms = platforms.all;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

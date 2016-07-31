@@ -2173,6 +2173,8 @@ slock = callPackage ../all-pkgs/slock { };
 
 socket_wrapper = callPackage ../all-pkgs/socket_wrapper { };
 
+sord = callPackage ../all-pkgs/sord { };
+
 soxr = callPackage ../all-pkgs/soxr { };
 
 spectrwm = callPackage ../all-pkgs/spectrwm { };
@@ -7818,9 +7820,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  soprano = callPackage ../development/libraries/soprano { };
 #
 #  soqt = callPackage ../development/libraries/soqt { };
-#
-  sord = callPackage ../development/libraries/sord {};
-#  sord-svn = callPackage ../development/libraries/sord/sord-svn.nix {};
 #
   soundtouch = callPackage ../development/libraries/soundtouch {};
 

@@ -1147,8 +1147,6 @@ gstreamer-editing-services = callPackage ../all-pkgs/gstreamer-editing-services 
 
 gstreamer-vaapi = callPackage ../all-pkgs/gstreamer-vaapi { };
 
-gstreamermm = callPackage ../all-pkgs/gstreamermm { };
-
 gtk-doc = callPackage ../all-pkgs/gtk-doc { };
 
 gtk_2 = callPackage ../all-pkgs/gtk/2.x.nix { };

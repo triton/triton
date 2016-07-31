@@ -1,12 +1,14 @@
 { stdenv
 , fetchTritonPatch
-, fetchurl
+, fetchzip
 , which
 
 , boost
 , dbus
 , libtorrent-rasterbar
 , qt5
+, zlib
+
 , webuiSupport ? true
 }:
 
@@ -14,20 +16,19 @@ let
   inherit (stdenv.lib)
     enFlag
     optionals;
+
+  version = "3.3.5";
 in
 
-assert qt5 != null ->
-  dbus != null
-  && qt5.qtbase != null
-  && qt5.qttools != null;
+assert qt5 != null -> dbus != null;
 
 stdenv.mkDerivation rec {
-  name = "qbittorrent-${version}";
-  version = "3.3.3";
+  name = "qbittorrent-" + version;
 
-  src = fetchurl {
-    url = "mirror://sourceforge/qbittorrent/${name}.tar.xz";
-    sha256 = "0lyv230vqwb77isjqm6fwwgv8hdap88zir9yrccj0qxj7zf8p3cw";
+  src = fetchzip {
+    url = "https://github.com/qbittorrent/qBittorrent/archive/"
+      + "release-${version}.tar.gz";
+    sha256 = "4dc222e0362765f57b2f9177e8f2f1fd2ecae6c0626b7a5ba6e4b4e0d3886de8";
   };
 
   nativeBuildInputs = [
@@ -37,10 +38,10 @@ stdenv.mkDerivation rec {
   buildInputs = [
     boost
     libtorrent-rasterbar
+    zlib
   ] ++ optionals (qt5 != null) [
     dbus
-    qt5.qtbase
-    qt5.qttools
+    qt5
   ];
 
   patches = [

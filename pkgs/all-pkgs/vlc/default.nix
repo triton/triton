@@ -17,8 +17,8 @@
 , freetype
 , fribidi
 , gnutls
-, gstreamer_1
-, gst-plugins-base_1
+, gstreamer
+, gst-plugins-base
 , gvfs
 , jack2_lib
 , libass
@@ -113,8 +113,8 @@ stdenv.mkDerivation rec {
     freetype
     fribidi
     gnutls
-    gstreamer_1
-    gst-plugins-base_1
+    gstreamer
+    gst-plugins-base
     gvfs
     jack2_lib
     libass

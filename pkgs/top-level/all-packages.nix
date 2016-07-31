@@ -1666,6 +1666,8 @@ lightdm = callPackage ../all-pkgs/lightdm { };
 
 lightdm-gtk-greeter = callPackage ../all-pkgs/lightdm-gtk-greeter { };
 
+lilv = callPackage ../all-pkgs/lilv { };
+
 linux-headers = callPackage ../all-pkgs/linux-headers { };
 
 linux-headers_4_6 = callPackage ../all-pkgs/linux-headers {
@@ -7764,9 +7766,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  librdf_redland = callPackage ../development/libraries/librdf/redland.nix { };
 #
 #  libsmf = callPackage ../development/libraries/audio/libsmf { };
-#
-  lilv = callPackage ../development/libraries/audio/lilv { };
-#  lilv-svn = callPackage ../development/libraries/audio/lilv/lilv-svn.nix { };
 #
 #  lvtk = callPackage ../development/libraries/audio/lvtk { };
 #

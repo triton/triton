@@ -173,6 +173,8 @@ in
         --set XORG_DRI_DRIVER_PATH ${args.mesa}/lib/dri \
         --add-flags "-xkbdir ${xorg.xkeyboardconfig}/share/X11/xkb"
     '';
+
+    bindnow = false;
   };
 
   lndir = attrs: attrs // {

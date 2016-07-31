@@ -1129,8 +1129,6 @@ gsound = callPackage ../all-pkgs/gsound { };
 
 gssdp = callPackage ../all-pkgs/gssdp { };
 
-gst-ffmpeg = callPackage ../all-pkgs/gst-ffmpeg { };
-
 gst-libav = callPackage ../all-pkgs/gst-libav { };
 
 gst-plugins-bad = callPackage ../all-pkgs/gst-plugins-bad { };

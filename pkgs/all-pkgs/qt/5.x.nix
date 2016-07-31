@@ -15,8 +15,8 @@
 , fontconfig
 , freetype
 , glib
-, gstreamer_1
-, gst-plugins-base_1
+, gstreamer
+, gst-plugins-base
 , harfbuzz
 , hunspell
 , icu
@@ -81,8 +81,8 @@ stdenv.mkDerivation {
     fontconfig
     freetype
     glib
-    gstreamer_1
-    gst-plugins-base_1
+    gstreamer
+    gst-plugins-base
     harfbuzz
     icu
     libdrm
@@ -203,7 +203,7 @@ stdenv.mkDerivation {
     "-pulseaudio"
     "-alsa"
     "-no-gtk" # TODO: Figure out how to enable this
-    
+
     "-nomake" "examples"
     "-no-compile-examples"
     "-verbose"

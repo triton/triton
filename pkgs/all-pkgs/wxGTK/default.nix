@@ -3,8 +3,8 @@
 
 , cairo
 , gconf
-, gstreamer_0
-, gst-plugins-base_0
+, gstreamer
+, gst-plugins-base
 , gtk3
 , expat
 , libjpeg
@@ -31,8 +31,8 @@ stdenv.mkDerivation rec {
   buildInputs = [
     cairo
     gconf
-    gstreamer_0
-    gst-plugins-base_0
+    gstreamer
+    gst-plugins-base
     expat
     libjpeg
     libmsgpack
@@ -58,9 +58,10 @@ stdenv.mkDerivation rec {
   SEARCH_LIB = "${mesa}/lib";
 
   preConfigure = ''
-    substituteInPlace configure --replace 'SEARCH_INCLUDE=' 'DUMMY_SEARCH_INCLUDE='
-    substituteInPlace configure --replace 'SEARCH_LIB=' 'DUMMY_SEARCH_LIB='
-    substituteInPlace configure --replace /usr /no-such-path
+    sed -i configure \
+      -e 's/SEARCH_INCLUDE=/DUMMY_SEARCH_INCLUDE=/' \
+      -e 's/SEARCH_LIB=/DUMMY_SEARCH_LIB=/' \
+      -e 's,/usr,/no-such-path,'
   '';
 
   configureFlags = [

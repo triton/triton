@@ -2189,6 +2189,8 @@ sqlite = callPackage ../all-pkgs/sqlite { };
 
 squashfs-tools = callPackage ../all-pkgs/squashfs-tools { };
 
+sratom = callPackage ../all-pkgs/sratom { };
+
 sssd = callPackage ../all-pkgs/sssd { };
 
 st = callPackage ../all-pkgs/st {
@@ -7839,8 +7841,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  sphinxsearch = callPackage ../servers/search/sphinxsearch { };
 #
 #  spice_gtk = callPackage ../development/libraries/spice-gtk { };
-#
-  sratom = callPackage ../development/libraries/audio/sratom { };
 #
 #  srm = callPackage ../tools/security/srm { };
 #

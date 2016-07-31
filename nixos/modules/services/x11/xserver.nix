@@ -25,6 +25,7 @@ let
       '';
     };
     intel-testing = { modules = with pkgs.xorg; [ xf86videointel-testing glamoregl ]; driverName = "intel"; };
+    modesetting = { };
   };
 
   fontsForXServer =

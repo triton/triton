@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   
   src = fetchurl {
     url = "mirror://sourceforge/mad/${name}.tar.gz";
+    multihash = "QmWuZPxbgcQEspBQGJwrrHNshYFbdBGUDTjpdBAKf1nQwf";
     sha256 = "bbfac3ed6bfbc2823d3775ebb931087371e142bb0e9bb1bee51a76a6e0078690";
   };
 

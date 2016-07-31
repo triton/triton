@@ -7820,6 +7820,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
     src = pkgs.fetchurl {
       url = "mirror://sourceforge/docutils/${name}.tar.gz";
+      multihash = "QmcfbEz6Kv8ri9DL47SdejSsWuCspmsqV9UeEYWmK2YrAg";
       sha256 = "1ylnjnw1x4b2y7blr6x35ncdzn69k253kw4cdkv6asdb21w73ny7";
     };
   };

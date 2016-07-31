@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/libmng/${name}.tar.xz";
+    multihash = "QmPxNUkbJDnDwa5mk4VV7tdcndzCyMMCUzjt1tsAxcFZjC";
     sha256 = "1lvxnpds0vcf0lil6ia2036ghqlbl740c4d2sz0q5g6l93fjyija";
   };
 

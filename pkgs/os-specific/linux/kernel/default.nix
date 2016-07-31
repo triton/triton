@@ -40,6 +40,7 @@ let
       repo = "linux";
       rev = "bccc01fdbc62066325ef0f31baaf68b94a6a0a7c";
       sha256 = "654d05df819c80a01741f21f5e26fa2e5c0ef0dc642343d7cf37893b1a147427";
+      features.bcachefs = true;
     };
   };
   
@@ -152,6 +153,8 @@ let
     meta = kernel.meta // extraMeta;
 
     inherit srcVerification;
+
+    features = source.features or { };
 
     passthru = kernel.passthru // (removeAttrs passthru [ "passthru" "meta" ]);
   };

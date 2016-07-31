@@ -14,11 +14,9 @@
 , libjpeg
 , libpng
 , openjpeg
+, qt5
 , zlib
-# QT4
-, qt4 ? null
-# QT5
-, qt5 ? null
+
 , utils ? false
 , suffix ? "glib"
 }:
@@ -33,7 +31,6 @@ in
 
 assert (
   suffix == "glib" ||
-  suffix == "qt4" ||
   suffix == "qt5" ||
   suffix == "utils"
 );
@@ -59,9 +56,9 @@ stdenv.mkDerivation rec {
     libpng
     libtiff
     openjpeg
-    qt4
+    qt5
     zlib
-  ] ++ optional (qt5 != null) qt5.base;
+  ];
 
   patches = [
     (fetchTritonPatch {
@@ -89,7 +86,7 @@ stdenv.mkDerivation rec {
       cairo != null &&
       glib != null &&
       gobject-introspection != null) null)
-    (enFlag "poppler-qt4" (qt4 != null) null)
+    "--disable-popper-qt4"
     (enFlag "poppler-qt5" (qt5 != null) null)
     (enFlag "poppler-cpp" true null)
     #"gtk-test"

@@ -1920,22 +1920,15 @@ plymouth = callPackage ../all-pkgs/plymouth { };
 
 pngcrush = callPackage ../all-pkgs/pngcrush { };
 
-poppler_qt4 = callPackageAlias "poppler" {
-  suffix = "qt4";
-  qt4 = qt4;
-  qt5 = null;
-};
-poppler_qt5 = callPackageAlias "poppler" {
+poppler_qt = callPackageAlias "poppler" {
   suffix = "qt5";
-  qt4 = null;
-  qt5 = qt54;
+  qt5 = pkgs.qt5;
 };
 poppler_utils = callPackageAlias "poppler" {
   suffix = "utils";
   utils = true;
 };
 poppler = callPackage ../all-pkgs/poppler {
-  qt4 = null;
   qt5 = null;
 };
 

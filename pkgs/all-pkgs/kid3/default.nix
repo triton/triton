@@ -18,7 +18,8 @@
 , libvorbis
 , mp4v2
 #, phonon
-, qt4
+, python
+, qt5
 , readline
 , taglib
 , zlib
@@ -56,7 +57,8 @@ stdenv.mkDerivation rec {
     libogg
     libvorbis
     #phonon
-    qt4
+    python
+    qt5
     readline
     taglib
     zlib
@@ -81,8 +83,8 @@ stdenv.mkDerivation rec {
     (cmFlag "WITH_PHONON" false)
     #WITH_QAUDIODECODER:BOOL=OFF
     #WITH_QML:BOOL=ON
-    "-DWITH_QT4=ON"
-    "-DWITH_QT5=OFF"
+    "-DWITH_QT4=OFF"
+    "-DWITH_QT5=ON"
     (cmFlag "WITH_READLINE" (readline != null))
     (cmFlag "WITH_TAGLIB" (taglib != null))
     #WITH_UBUNTUCOMPONENTS:BOOL=OFF

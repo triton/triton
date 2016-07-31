@@ -28,11 +28,13 @@ let
     isPy3k;
   inherit (stdenv.lib)
     optionals;
-in
 
+  version = "2016-07-20";
+  # Using an invalid version breaks compatibility with some trackers
+  versionSpoof = "1.3.999";
+in
 buildPythonPackage rec {
   name = "deluge-${version}";
-  version = "2016-07-20";
 
   src = fetchgit {
     url = "git://git.deluge-torrent.org/deluge";
@@ -75,7 +77,7 @@ buildPythonPackage rec {
 
   postPatch = /* Fix version detection */ ''
     sed -i setup.py \
-      -e 's/_version = .*/_version = "${version}.dev"/'
+      -e 's/_version = .*/_version = "${versionSpoof}"/' # .dev"/'
   '' + /* Fix incorrect path to build directory */ ''
     sed -i setup.py \
       -e '/js_basedir/ s|self.build_lib, ||'

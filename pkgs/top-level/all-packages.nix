@@ -1055,9 +1055,7 @@ gnum4 = callPackage ../all-pkgs/gnum4 { };
 
 gnumake = callPackage ../all-pkgs/gnumake { };
 
-gnonlin_0 = callPackage ../all-pkgs/gnonlin/0.x.nix { };
-gnonlin_1 = callPackage ../all-pkgs/gnonlin/1.x.nix { };
-gnonlin = callPackageAlias "gnonlin_1" { };
+gnonlin = callPackage ../all-pkgs/gnonlin { };
 
 gnupatch = callPackage ../all-pkgs/gnupatch { };
 

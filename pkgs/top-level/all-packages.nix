@@ -1135,9 +1135,7 @@ gst-libav = callPackage ../all-pkgs/gst-libav { };
 
 gst-plugins-bad = callPackage ../all-pkgs/gst-plugins-bad { };
 
-gst-plugins-base_0 = callPackage ../all-pkgs/gst-plugins-base/0.x.nix { };
-gst-plugins-base_1 = callPackage ../all-pkgs/gst-plugins-base/1.x.nix { };
-gst-plugins-base = callPackageAlias "gst-plugins-base_1" { };
+gst-plugins-base = callPackage ../all-pkgs/gst-plugins-base { };
 
 gst-plugins-good_0 = callPackage ../all-pkgs/gst-plugins-good/0.x.nix { };
 gst-plugins-good_1 = callPackage ../all-pkgs/gst-plugins-good/1.x.nix { };

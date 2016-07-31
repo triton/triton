@@ -794,7 +794,7 @@ efibootmgr = callPackage ../all-pkgs/efibootmgr { };
 
 efivar = callPackage ../all-pkgs/efivar { };
 
-eigen = callPackage ../all-pkgs/eigen {};
+eigen = callPackage ../all-pkgs/eigen { };
 
 elfutils = callPackage ../all-pkgs/elfutils { };
 
@@ -1089,7 +1089,7 @@ go16Packages = callPackage ./go-packages.nix {
     go = callPackageAlias "go_1_6" { };
     govers = (callPackageAlias "go16Packages" { }).govers.bin;
   };
-  overrides = (config.goPackageOverrides or (p: {})) pkgs;
+  overrides = (config.goPackageOverrides or (p: { })) pkgs;
 };
 goPackages = callPackageAlias "go16Packages" { };
 
@@ -1364,7 +1364,7 @@ libassuan = callPackage ../all-pkgs/libassuan { };
 
 libatasmart = callPackage ../all-pkgs/libatasmart { };
 
-libatomic_ops = callPackage ../all-pkgs/libatomic_ops {};
+libatomic_ops = callPackage ../all-pkgs/libatomic_ops { };
 
 libavc1394 = callPackage ../all-pkgs/libavc1394 { };
 
@@ -1476,7 +1476,7 @@ libmatroska = callPackage ../all-pkgs/libmatroska { };
 
 libmbim = callPackage ../all-pkgs/libmbim { };
 
-libmcrypt = callPackage ../all-pkgs/libmcrypt {};
+libmcrypt = callPackage ../all-pkgs/libmcrypt { };
 
 libmediaart = callPackage ../all-pkgs/libmediaart {
   qt5 = null;
@@ -2155,7 +2155,7 @@ seabios = callPackage ../all-pkgs/seabios { };
 
 seahorse = callPackage ../all-pkgs/seahorse { };
 
-serd = callPackage ../all-pkgs/serd {};
+serd = callPackage ../all-pkgs/serd { };
 
 serf = callPackage ../all-pkgs/serf { };
 

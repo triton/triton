@@ -1139,9 +1139,7 @@ gst-plugins-base = callPackage ../all-pkgs/gst-plugins-base { };
 
 gst-plugins-good = callPackage ../all-pkgs/gst-plugins-good { };
 
-gst-plugins-ugly_0 = callPackage ../all-pkgs/gst-plugins-ugly/0.x.nix { };
-gst-plugins-ugly_1 = callPackage ../all-pkgs/gst-plugins-ugly/1.x.nix { };
-gst-plugins-ugly = callPackageAlias "gst-plugins-ugly_1" { };
+gst-plugins-ugly = callPackage ../all-pkgs/gst-plugins-ugly { };
 
 gst-validate = callPackage ../all-pkgs/gst-validate { };
 

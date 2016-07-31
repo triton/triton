@@ -228,12 +228,22 @@ stdenv.mkDerivation {
       versionMajor;
     inherit (mesa_noglu)
       driverSearchPath;
+    drm =
+      if versionAtLeast version "346.16" then
+        true
+      else
+        false;
+    kms =
+      if versionAtLeast version "346.16" then
+        true
+      else
+        false;
     nvenc =
       if versionAtLeast versionMajor "340" then
         true
       else
         false;
-    cudaUVM =
+    uvm =
       # 340.xx supported UVM for both i686 & x86_64
       if versionAtLeast versionMajor "340"
          && versionOlder versionMajor "346"

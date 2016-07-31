@@ -57,6 +57,18 @@ in
       nvidia-drivers
     ];
 
+    boot.kernelModules = optionals nvidia-drivers.drm [
+      "nvidia-drm"
+    ] ++ optionals nvidia-drivers.kms [
+      "nvidia-modeset"
+    ] ++ optionals nvidia-drivers.uvm [
+      "nvidia-uvm"
+    ];
+
+    boot.kernelParams = optionals nvidia-drivers.kms [
+      "nvidia-drm.modeset=1"
+    ];
+
     environment.etc."OpenCL/vendors/nvidia.icd".source =
       "${nvidia-drivers}/etc/OpenCL/vendors/nvidia.icd";
     environment.etc."nvidia/nvidia-application-profiles-rc.d".source =
@@ -73,7 +85,7 @@ in
     services.acpid.enable = true;
 
     # Create /dev/nvidia-uvm when the nvidia-uvm module is loaded.
-    services.udev.extraRules = optionalString nvidia-drivers.cudaUVM ''
+    services.udev.extraRules = optionalString nvidia-drivers.uvm ''
       KERNEL=="nvidia_uvm", RUN+="${pkgs.stdenv.shell} -c 'mknod -m 666 /dev/nvidia-uvm c $(grep nvidia-uvm /proc/devices | cut -d \  -f 1) 0'"
     '';
 

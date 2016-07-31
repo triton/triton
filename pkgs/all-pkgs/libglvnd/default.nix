@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "2016-06-09";
+  version = "2016-07-13";
 in
 stdenv.mkDerivation rec {
   name = "libglvnd-${version}";
@@ -16,8 +16,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "nvidia";
     repo = "libglvnd";
-    rev = "093f0485da8f4e9d39949b8a4ee20fd318b318ad";
-    sha256 = "d143e7b617bdbd0f5f240b01f61a4713a16e386ba5509649f5a51c7f6521860a";
+    rev = "bb63d820dfd1ba4503ee849643ac1c24d90b9a90";
+    sha256 = "bb489b730b3d685b664663499e40d75c1e964db526014c95624705558f6f5b58";
   };
 
   nativeBuildInputs = [

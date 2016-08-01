@@ -6,12 +6,19 @@
 , libusb
 }:
 
+let
+  name = "ccid-1.4.24";
+
+  tarballUrls = id: [
+    "https://alioth.debian.org/frs/download.php/file/${id}/${name}.tar.bz2"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "ccid-1.4.22";
+  inherit name;
 
   src = fetchurl {
-    url = "https://alioth.debian.org/frs/download.php/file/4162/ccid-1.4.22.tar.bz2";
-    sha256 = "01n1b3grmz18dl8p545yfqnnwxsaq8hafzkspqb37lxncpj8np4w";
+    urls = tarballUrls "4171";
+    sha256 = "62cb73c6c009c9799c526f05a05e25f00f0ad86d50f82a714dedcfbf4a7e4176";
   };
 
   nativeBuildInputs = [
@@ -32,6 +39,19 @@ stdenv.mkDerivation rec {
 
     configureFlagsArray+=("--enable-usbdropdir=$out/pcsc/drivers")
   '';
+
+  configureFlags = [
+    "--enable-composite-as-multislot"
+  ];
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") (tarballUrls "4172");
+      pgpKeyFingerprint = "F5E1 1B9F FE91 1146 F41D  953D 78A1 B4DF E8F9 C57E";
+      inherit (src) urls outputHashAlgo outputHash;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "ccid drivers for pcsclite";

@@ -27,11 +27,7 @@
 
 let
   inherit (stdenv.lib)
-    cmFlag
-    enFlag
-    optional
-    optionals
-    wtFlag;
+    cmFlag;
 
   # If a is true, return b
   ifDo = a: b:

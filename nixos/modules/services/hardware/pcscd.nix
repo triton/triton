@@ -44,8 +44,8 @@ with lib;
       '';
       serviceConfig = {
         Type = "forking";
-        ExecStart = "${pkgs.pcsclite}/sbin/pcscd --auto-exit -c ${cfgFile}";
-        ExecReload = "${pkgs.pcsclite}/sbin/pcscd --hotplug";
+        ExecStart = "${pkgs.pcsc-lite}/sbin/pcscd --auto-exit -c ${cfgFile}";
+        ExecReload = "${pkgs.pcsc-lite}/sbin/pcscd --hotplug";
       };
     };
 

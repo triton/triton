@@ -15,9 +15,7 @@ let
 in
 
 assert gdk-pixbuf != null -> qt5 == null;
-assert qt5 != null ->
-  gdk-pixbuf == null
-  && qt5.qtbase != null;
+assert qt5 != null -> gdk-pixbuf == null;
 
 stdenv.mkDerivation rec {
   name = "libmediaart-${version}";
@@ -34,9 +32,8 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gobject-introspection
+    qt5
     vala
-  ] ++ optionals (qt5 != null) [
-    qt5.qtbase
   ];
 
   configureFlags = [

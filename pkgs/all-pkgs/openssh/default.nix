@@ -9,11 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openssh-7.2p2";
+  name = "openssh-7.3p1";
 
   src = fetchurl {
     url = "mirror://openbsd/OpenSSH/portable/${name}.tar.gz";
-    sha256 = "132lh9aanb0wkisji1d6cmsxi520m8nh7c7i9wi6m1s3l38q29x7";
+    allowHashOutput = false;
+    sha256 = "3ffb989a6dcaa69594c3b550d4855a5a2e1718ccdde7f5e36387b424220fbecc";
   };
 
   patches = [
@@ -53,6 +54,15 @@ stdenv.mkDerivation rec {
   installTargets = [
     "install-nokeys"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "59C2 118E D206 D927 E667  EBE3 D3E5 F56B 6D92 0D30";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = "http://www.openssh.org/";

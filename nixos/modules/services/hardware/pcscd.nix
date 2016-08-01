@@ -4,6 +4,15 @@ let
   cfgFile = pkgs.writeText "reader.conf" "";
 
   polkitRules = "polkit-1/rules.d/50-pcscd.rules";
+
+  pcscPolkit = pkgs.stdenv.mkDerivation {
+    name = "polkit-${pkgs.pcsc-lite.name}";
+
+    buildCommand = ''
+      mkdir -p "$out/share"
+      ln -sv "${pkgs.pcsc-lite}/share/polkit-1" "$out/share/polkit-1"
+    '';
+  };
 in
 
 with lib;
@@ -46,7 +55,7 @@ with lib;
   config = mkIf config.services.pcscd.enable {
 
     environment.systemPackages = [
-      pkgs.pcsc-lite
+      pcscPolkit
     ];
 
     security.polkit.enable = true;

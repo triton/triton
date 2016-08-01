@@ -2172,6 +2172,20 @@ spice = callPackage ../all-pkgs/spice { };
 
 spice-protocol = callPackage ../all-pkgs/spice-protocol { };
 
+spidermonkey = callPackage ../all-pkgs/spidermonkey { };
+
+spidermonkey_45 = callPackageAlias "spidermonkey" {
+  channel = "45";
+};
+
+spidermonkey_24 = callPackageAlias "spidermonkey" {
+  channel = "24";
+};
+
+spidermonkey_17 = callPackageAlias "spidermonkey" {
+  channel = "17";
+};
+
 split2flac = callPackage ../all-pkgs/split2flac { };
 
 sqlheavy = callPackage ../all-pkgs/sqlheavy { };
@@ -5996,11 +6010,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  rq = callPackage ../applications/networking/cluster/rq { };
 #
 #  scsh = callPackage ../development/interpreters/scsh { };
-#
-  inherit (callPackages ../development/interpreters/spidermonkey { })
-    spidermonkey_17
-    spidermonkey_24;
-  spidermonkey = callPackageAlias "spidermonkey_24" { };
 #
 #  xulrunner = callPackage ../development/interpreters/xulrunner {
 #    inherit (gnome) libIDL;

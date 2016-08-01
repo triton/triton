@@ -1,5 +1,5 @@
 { stdenv
-, fetchpatch
+, cmake
 , fetchTritonPatch
 , fetchurl
 
@@ -13,6 +13,8 @@
 , lcms2
 , libjpeg
 , libpng
+, nspr
+, nss
 , openjpeg
 , qt5
 , zlib
@@ -21,12 +23,22 @@
 , suffix ? "glib"
 }:
 
+# FIXME: gobject-introspection and openjpeg support is not working currently
+
 let
   inherit (stdenv.lib)
+    cmFlag
     enFlag
     optional
     optionals
     wtFlag;
+
+  # If a is true, return b
+  ifDo = a: b:
+    if a then
+      b
+    else
+      false;
 in
 
 assert (
@@ -37,12 +49,16 @@ assert (
 
 stdenv.mkDerivation rec {
   name = "poppler-${suffix}-${version}";
-  version = "0.40.0";
+  version = "0.46.0";
 
   src = fetchurl {
-    url = "http://poppler.freedesktop.org/poppler-${version}.tar.xz";
-    sha256 = "1bbfxq0aclhaiyj1jcjr583prv5662jvphdqsafgr3q3srwa43dw";
+    url = "https://poppler.freedesktop.org/poppler-${version}.tar.xz";
+    sha256 = "967d35d13d61dee2fee656b80efef9e388a9e752bc79b7123f15b49c7769e487";
   };
+
+  nativeBuildInputs = [
+    cmake
+  ];
 
   buildInputs = [
     cairo
@@ -50,15 +66,21 @@ stdenv.mkDerivation rec {
     fontconfig
     freetype
     glib
-    gobject-introspection
+    #gobject-introspection
     lcms2
     libjpeg
     libpng
     libtiff
+    nspr
+    nss
     openjpeg
     qt5
     zlib
   ];
+
+  postUnpack = ''
+    rm -v $sourceRoot/configure{,.ac}
+  '';
 
   patches = [
     (fetchTritonPatch {
@@ -68,32 +90,41 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  configureFlags = [
-    "--enable-xpdf-headers"
-    "--disable-single-precision"
-    "--disable-fixed-point"
-    "--enable-cmyk"
-    (enFlag "libopenjpeg" (openjpeg != null) null)
-    (enFlag "libtiff" (libtiff != null) null)
-    (enFlag "zlib" (zlib != null) null)
-    (enFlag "libcurl" (curl != null) null)
-    (enFlag "libjpeg" (libjpeg != null) null)
-    (enFlag "libpng" (libpng != null) null)
-    (wtFlag "font-configuration" (fontconfig != null) "fontconfig")
-    #"--enable-splash"
-    (enFlag "cairo-output" (cairo != null) null)
-    (enFlag "poppler-glib" (
-      cairo != null &&
-      glib != null &&
-      gobject-introspection != null) null)
-    "--disable-popper-qt4"
-    (enFlag "poppler-qt5" (qt5 != null) null)
-    (enFlag "poppler-cpp" true null)
-    #"gtk-test"
-    (enFlag "utils" utils null)
-    #"compile-warnings"
-    #"cms"
-    #"testdatadir"
+  cmakeFlags = [
+    "-DBUILD_CPP_TESTS=OFF"
+    "-DBUILD_GTK_TESTS=OFF"
+    "-DBUILD_QT4_TESTS=OFF"
+    "-DBUILD_QT5_TESTS=OFF"
+    (cmFlag "ENABLE_CMS" (ifDo (lcms2 != null) "lcms2"))
+    "-DENABLE_CPP=ON"
+    (cmFlag "ENABLE_LIBCURL" (curl != null))
+    (cmFlag "ENABLE_LIBOPENJPEG" (ifDo (openjpeg != null) "openjpeg2"))
+    #"-DENABLE_SPLASH=ON"
+    (cmFlag "ENABLE_UTILS" utils)
+    "-DENABLE_XPDF_HEADERS=ON"
+    (cmFlag "ENABLE_ZLIB" (zlib != null))
+    (cmFlag "ENABLE_ZLIB_UNCOMPRESS" (zlib != null))
+    (cmFlag "FONT_CONFIGURATION" (ifDo (fontconfig != null) "fontconfig"))
+    "-DSPLASH_CMYK=ON"
+    "-DUSE_FIXEDPOINT=OFF"
+    "-DUSE_FLOAT=ON"
+    (cmFlag "WITH_Cairo" (cairo != null))
+    (cmFlag "WITH_GLIB" (
+      cairo != null
+      && glib != null
+      && gobject-introspection != null))
+    #(cmFlag "WITH_GObjectIntrospection" (gobject-introspection != null))
+    #(cmFlag "WITH_GTK" (gtk3 != null))
+    "-DWITH_Iconv=ON"
+    (cmFlag "WITH_JPEG" (libjpeg != null))
+    (cmFlag "WITH_NSS3" (nss != null))
+    (cmFlag "WITH_PNG" (libpng != null))
+    "-DWITH_Qt4=OFF"
+    (cmFlag "WITH_TIFF" (libtiff != null))
+  ];
+
+  NIX_CFLAGS_COMPILE = [
+    "-Wno-deprecated-declarations"
   ];
 
   meta = with stdenv.lib; {

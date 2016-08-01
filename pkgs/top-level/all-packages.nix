@@ -2364,6 +2364,8 @@ xf86-input-mtrack = callPackage ../all-pkgs/xf86-input-mtrack { };
 
 xf86-input-wacom = callPackage ../all-pkgs/xf86-input-wacom { };
 
+xfe = callPackage ../all-pkgs/xfe { };
+
 xfsprogs = callPackage ../all-pkgs/xfsprogs { };
 xfsprogs_lib = pkgs.xfsprogs.lib;
 
@@ -11616,10 +11618,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  win-qemu = callPackage ../applications/virtualization/driver/win-qemu { };
 #  win-pvdrivers = callPackage ../applications/virtualization/driver/win-pvdrivers { };
 #  win-signed-gplpv-drivers = callPackage ../applications/virtualization/driver/win-signed-gplpv-drivers { };
-#
-#  xfe = callPackage ../applications/misc/xfe {
-#    fox = fox_1_6;
-#  };
 #
 #  xfig = callPackage ../applications/graphics/xfig { };
 #

@@ -2,6 +2,8 @@
 
 let
   cfgFile = pkgs.writeText "reader.conf" "";
+
+  polkitRules = "polkit-1/rules.d/50-pcscd.rules";
 in
 
 with lib;
@@ -19,6 +21,21 @@ with lib;
         description = "Whether to enable the PCSC-Lite daemon.";
       };
 
+      allowedUsers = mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+        description = ''
+          A list of users who can access pcsclite backed devices.
+        '';
+      };
+
+      allowedGroups = mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+        description = ''
+          A list of groups who can access pcsclite backed devices.
+        '';
+      };
     };
 
   };
@@ -27,6 +44,32 @@ with lib;
   ###### implementation
 
   config = mkIf config.services.pcscd.enable {
+
+    environment.systemPackages = [
+      pkgs.pcsc-lite
+    ];
+
+    security.polkit.enable = true;
+
+    security.polkit.extraConfig = ''
+      polkit.addRule(function(action, subject) {
+        if (action.id != "org.debian.pcsc-lite.access_card" ||
+            action.id != "org.debian.pcsc-lite.access_pcsc") {
+          return;
+        }
+    '' + flip concatMapStrings config.services.pcscd.allowedUsers (n: ''
+        if (subject.user == "${n}") {
+          return polkit.Result.YES;
+        }
+    '') + flip concatMapStrings config.services.pcscd.allowedGroups (n: ''
+        for each (var group in subject.groups) {
+          if (group == "${n}") {
+            return polkit.Result.YES;
+          }
+        }
+    '') + ''
+      });
+    '';
 
     systemd.sockets.pcscd = {
       description = "PCSC-Lite Socket";
@@ -38,9 +81,9 @@ with lib;
     systemd.services.pcscd = {
       description = "PCSC-Lite daemon";
       preStart = ''
-          mkdir -p /var/lib/pcsc
-          rm -Rf /var/lib/pcsc/drivers
-          ln -s ${pkgs.ccid}/pcsc/drivers /var/lib/pcsc/
+        mkdir -p /var/lib/pcsc
+        rm -Rf /var/lib/pcsc/drivers
+        ln -s ${pkgs.ccid}/pcsc/drivers /var/lib/pcsc/
       '';
       serviceConfig = {
         Type = "forking";

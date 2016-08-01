@@ -2449,6 +2449,8 @@ xwayland = callPackage ../all-pkgs/xorg/xwayland.nix { };
 
 xz = callPackage ../all-pkgs/xz { };
 
+yaml-cpp = callPackage ../all-pkgs/yaml-cpp { };
+
 yasm = callPackage ../all-pkgs/yasm { };
 
 yelp-tools = callPackage ../all-pkgs/yelp-tools { };
@@ -7460,8 +7462,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #  libxmp = callPackage ../development/libraries/libxmp { };
 #
 #  libixp_hg = callPackage ../development/libraries/libixp-hg { };
-#
-#  libyamlcpp = callPackage ../development/libraries/libyaml-cpp { };
 #
 #  libykneomgr = callPackage ../development/libraries/libykneomgr { };
 #

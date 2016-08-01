@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     repo = "wiredtiger";
     owner = "wiredtiger";
     rev = version;
-    sha256 = "1430f6286c99a7fa5520cb58ffede4226e49b63453098e821f63b8deea85f39a";
+    sha256 = "70ba31afabe65f02f84b1edeebf0c6be8eac93056b20a4027ae11b77eabc85a6";
   };
 
   nativeBuildInputs = [

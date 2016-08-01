@@ -1,25 +1,22 @@
 { stdenv
 , cmake
-, fetchurl
+, fetchFromGitHub
 , ninja
 
 , libsodium
 }:
 
 let
-  genUrls = version: [
-    "https://github.com/jedisct1/minisign/archive/${version}.tar.gz"
-  ];
+  version = "0.7";
 in
-
 stdenv.mkDerivation rec {
   name = "minisign-${version}";
-  version = "0.6";
 
-  src = fetchurl {
-    urls = genUrls version;
-    allowHashOutput = false;
-    sha256 = "f2267a07bece923d4d174ccacccc56eff9c05b28c4d971e601de896355442f09";
+  src = fetchFromGitHub {
+    owner = "jedisct1";
+    repo = "minisign";
+    rev = version;
+    sha256 = "ca07c13806d039057c711e67dc85ea01f52f2801b0db4a152aca43aeec5f674e";
   };
 
   nativeBuildInputs = [
@@ -30,18 +27,6 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libsodium
   ];
-
-  passthru = rec {
-    nextVersion = "0.6";
-
-    srcVerification = fetchurl {
-      failEarly = true;
-      urls = genUrls version;
-      minisignUrl = "https://github.com/jedisct1/minisign/releases/download/${nextVersion}/minisign-${nextVersion}.tar.gz.minisig";
-      minisignPub = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      sha256 = "f2267a07bece923d4d174ccacccc56eff9c05b28c4d971e601de896355442f09";
-    };
-  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

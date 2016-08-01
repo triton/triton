@@ -65,11 +65,6 @@ stdenv.mkDerivation rec {
     "--disable-test"
   ];
 
-  #preBuild = ''
-  #  cat src/polkit/Makefile
-  #  exit 1
-  #'';
-
   preInstall = ''
     installFlagsArray+=(
       "sysconfdir=$out/etc"
@@ -77,10 +72,6 @@ stdenv.mkDerivation rec {
       "INTROSPECTION_GIRDIR=$out/share/gir-1.0"
       "INTROSPECTION_TYPELIBDIR=$out/lib/girepository-1.0"
     )
-    #makeFlagsArray+=(
-    #  "INTROSPECTION_GIRDIR=$out/share/gir-1.0"
-    #  "INTROSPECTION_TYPELIBDIR=$out/lib/girepository-1.0"
-    #)
   '';
 
   parallelInstall = false;

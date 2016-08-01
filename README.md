@@ -22,7 +22,7 @@ manager.
   * `armv8l-linux`
   * `aarch64-linux`
 + `x86` requires: `MMX`,`SSE`,`SSE2`,`SSE3`,`SSSE3`,`SSE4`,`SSE4.1`,`SSE4.2`,`AES`
- (aka. at least Intel Westmere, AMD 14h, or VIA Eden x4)
+ (aka. at least Intel Westmere, AMD 15h, or VIA Eden x4)
   * `i686-freebsd` (libs only)
   * `i686-linux` (libs only)
   * `x86_64-freebsd`

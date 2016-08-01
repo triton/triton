@@ -12,6 +12,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "mirror://sourceforge/procps-ng/procps-ng-${version}.tar.xz";
+    multihash = "QmRgtzxS6QizqhxMKg4c467ULX53fSnc13pFkPPW6vTG8H";
     sha256 = "6ed65ab86318f37904e8f9014415a098bec5bc53653e5d9ab404f95ca5e1a7d4";
   };
 

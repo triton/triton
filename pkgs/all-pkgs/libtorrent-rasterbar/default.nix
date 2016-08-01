@@ -11,7 +11,6 @@
 
 let
   inherit (stdenv.lib)
-    any
     enFlag
     replaceChars
     versionOlder;
@@ -19,11 +18,6 @@ let
     sha256
     version;
 in
-
-assert any (n: n == channel) [
-  "1.0"
-  "1.1"
-];
 
 let
   versionFormatted =
@@ -50,10 +44,16 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     boost
-    openssl
     pythonPackages.python
     pythonPackages.wrapPython
     zlib
+  ];
+
+  # FIXME: openssl header not found by qbittorrent
+  #        include/libtorrent/hasher.hpp:53:25: fatal error:
+  #        openssl/sha.h: No such file or directory
+  propagatedBuildInputs = [
+    openssl
   ];
 
   configureFlags = [

@@ -932,6 +932,8 @@ flac = callPackage ../all-pkgs/flac { };
 
 flex = callPackage ../all-pkgs/flex { };
 
+fox = callPackage ../all-pkgs/fox { };
+
 freeglut = callPackage ../all-pkgs/freeglut { };
 
 freetype = callPackage ../all-pkgs/freetype { };
@@ -3335,10 +3337,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 #  forktty = callPackage ../os-specific/linux/forktty {};
 #
 #  fortune = callPackage ../tools/misc/fortune { };
-#
-#  fox = callPackage ../development/libraries/fox/default.nix {
-#    libpng = libpng12;
-#  };
 #
 #  fox_1_6 = callPackage ../development/libraries/fox/fox-1.6.nix { };
 #

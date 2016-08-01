@@ -62,7 +62,7 @@ with lib;
 
     security.polkit.extraConfig = ''
       polkit.addRule(function(action, subject) {
-        if (action.id != "org.debian.pcsc-lite.access_card" ||
+        if (action.id != "org.debian.pcsc-lite.access_card" &&
             action.id != "org.debian.pcsc-lite.access_pcsc") {
           return;
         }

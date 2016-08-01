@@ -17,7 +17,7 @@ let
     enFlag
     wtFlag;
 
-  version = "1.7.56";
+  version = "1.6.51";
 in
 
 assert xorg != null ->
@@ -38,8 +38,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "http://ftp.fox-toolkit.org/pub/${name}.tar.gz";
-    sha1Url = url + ".sha1sum";
-    sha256 = "41a03ff6a211c584e7547004002a1cfc768cdc32c84a46ec1499a4c345190885";
+    #sha1Url = url + ".sha1sum";
+    sha256 = "15a99792965d933a4936e48b671c039657546bdec6a318c223ab1131624403d1";
   };
 
   buildInputs = [
@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-debug"
     "--enable-release"
-    "--disable-native"
+    #"--disable-native"
     (enFlag "jpeg" (libjpeg != null) null)
     #(enFlag "jp2" (openjpeg != null) null)
     (enFlag "png" (libpng != null) null)
@@ -85,7 +85,7 @@ stdenv.mkDerivation rec {
     (wtFlag "xfixes" (xorg != null) null)
     (wtFlag "xinput" (xorg != null) null)
     (wtFlag "xim" (xorg != null) null)
-    (wtFlag "opengl" true null)
+    (wtFlag "opengl" (mesa != null) null)
   ];
 
   doCheck = true;

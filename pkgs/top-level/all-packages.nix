@@ -1741,6 +1741,8 @@ mkvtoolnix = callPackage ../all-pkgs/mkvtoolnix { };
 
 modemmanager = callPackage ../all-pkgs/modemmanager { };
 
+mongodb = callPackage ../all-pkgs/mongodb { };
+
 mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 
 mosh = callPackage ../all-pkgs/mosh { };
@@ -8481,8 +8483,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   mariadb = callPackage ../servers/sql/mariadb { };
 
-  mongodb = callPackage ../servers/nosql/mongodb { };
-#
 #  riak = callPackage ../servers/nosql/riak/1.3.1.nix { };
 #  riak2 = callPackage ../servers/nosql/riak/2.1.1.nix { };
 #

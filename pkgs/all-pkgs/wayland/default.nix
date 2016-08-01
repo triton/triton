@@ -1,5 +1,5 @@
 { stdenv
-, docbook_xsl
+, docbook-xsl
 , doxygen
 , fetchurl
 , graphviz
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ ]
     ++ optionals enableDocumentation [
-      docbook_xsl
+      docbook-xsl
       doxygen
       graphviz
       libxslt

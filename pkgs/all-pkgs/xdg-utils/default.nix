@@ -1,6 +1,6 @@
 { stdenv
 , docbook_xml_dtd_412
-, docbook_xsl
+, docbook-xsl
 , fetchurl
 , libxslt
 , xmlto
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libxslt
     docbook_xml_dtd_412
-    docbook_xsl
+    docbook-xsl
     xmlto
     w3m
   ];

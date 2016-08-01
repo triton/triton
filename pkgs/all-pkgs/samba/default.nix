@@ -1,7 +1,7 @@
 { stdenv
 , docbook_xml_dtd_42
 , docbook_xml_dtd_45
-, docbook_xsl
+, docbook-xsl
 , fetchurl
 , gettext
 , libxslt
@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
     pythonPackages.python
     perl
     libxslt
-    docbook_xsl
+    docbook-xsl
     docbook_xml_dtd_42
     docbook_xml_dtd_45
     pythonPackages.wrapPython

@@ -2,7 +2,7 @@
 , fetchurl
 , libtool
 , dhcp
-, docbook5_xsl
+, docbook-xsl-ns
 
 , db
 , idnkit
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    docbook5_xsl
+    docbook-xsl-ns
     libtool
   ];
 
@@ -101,7 +101,7 @@ stdenv.mkDerivation rec {
     "--enable-rpz-nsip"
     "--enable-rpz-nsdname"
     "--enable-filter-aaaa"
-    "--with-docbook-xsl=${docbook5_xsl}/share/xsl/docbook"
+    "--with-docbook-xsl=${docbook-xsl-ns}/share/xsl/docbook"
     "--with-idn=${idnkit}"
     "--without-atf"
     "--with-tuning=large"

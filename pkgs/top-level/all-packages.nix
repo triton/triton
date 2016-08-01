@@ -772,6 +772,12 @@ dnscrypt-wrapper = callPackage ../all-pkgs/dnscrypt-wrapper { };
 
 dnsmasq = callPackage ../all-pkgs/dnsmasq { };
 
+docbook-xsl = callPackage ../all-pkgs/docbook-xsl { };
+
+docbook-xsl-ns = callPackageAlias "docbook-xsl" {
+  type = "ns";
+};
+
 dosfstools = callPackage ../all-pkgs/dosfstools { };
 
 dos2unix = callPackage ../all-pkgs/dos2unix { };
@@ -1921,6 +1927,8 @@ pkgconfig = callPackageAlias "pkgconf" { };
 plymouth = callPackage ../all-pkgs/plymouth { };
 
 pngcrush = callPackage ../all-pkgs/pngcrush { };
+
+polkit = callPackage ../all-pkgs/polkit { };
 
 poppler_qt = callPackageAlias "poppler" {
   suffix = "qt5";
@@ -7672,8 +7680,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
 #  polarssl = mbedtls;
 #
-  polkit = callPackage ../development/libraries/polkit { };
-#
 #  polkit_qt4 = callPackage ../development/libraries/polkit-qt-1 { };
 #
   popt = callPackage ../development/libraries/popt { };
@@ -9394,13 +9400,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  docbook_xml_ebnf_dtd = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook-ebnf { };
 #
-  inherit (callPackages ../data/sgml+xml/stylesheets/xslt/docbook-xsl { })
-    docbook_xsl
-    docbook_xsl_ns;
-#
 #  docbook_xml_xslt = docbook_xsl;
-#
-  docbook5_xsl = callPackageAlias "docbook_xsl_ns" { };
 #
 #  dosemu_fonts = callPackage ../data/fonts/dosemu-fonts { };
 #

@@ -14,8 +14,8 @@
 , cracklib
 , cups
 , dconf
-, docbook_xsl
-, docbook_xsl_ns
+, docbook-xsl
+, docbook-xsl-ns
 , fontconfig
 , gdk-pixbuf
 , glib
@@ -99,8 +99,8 @@ stdenv.mkDerivation rec {
     colord-gtk
     cups
     dconf
-    docbook_xsl
-    docbook_xsl_ns
+    docbook-xsl
+    docbook-xsl-ns
     fontconfig
     gdk-pixbuf
     glib

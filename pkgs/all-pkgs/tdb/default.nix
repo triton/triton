@@ -1,6 +1,6 @@
 { stdenv
 , docbook_xml_dtd_42
-, docbook_xsl
+, docbook-xsl
 , fetchurl
 , libxslt
 , python
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     docbook_xml_dtd_42
-    docbook_xsl
+    docbook-xsl
     libxslt
     python
   ];

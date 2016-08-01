@@ -7,7 +7,7 @@
 , libxml2
 , libxslt
 , docbook_xml_dtd_43
-, docbook_xsl
+, docbook-xsl
 , gnome_doc_utils
 # TODO: reenable once texlive is fixed
 #, dblatex
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     <?xml version="1.0"?>
     <!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN" "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
     <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-      <nextCatalog  catalog="${docbook_xsl}/xml/xsl/docbook/catalog.xml" />
+      <nextCatalog  catalog="${docbook-xsl}/xml/xsl/docbook/catalog.xml" />
       <nextCatalog  catalog="${docbook_xml_dtd_43}/xml/dtd/docbook/catalog.xml" />
     </catalog>
     EOF
@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
     libxml2
     libxslt
     docbook_xml_dtd_43
-    docbook_xsl
+    docbook-xsl
     gnome_doc_utils
     #dblatex
     gettext

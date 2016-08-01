@@ -17,7 +17,7 @@
 , curl
 , docbook_xml_dtd_42
 , docbook_xml_dtd_45
-, docbook_xsl
+, docbook-xsl
 , elfutils
 , gnu-efi
 , gnutls
@@ -82,7 +82,7 @@ stdenv.mkDerivation rec {
     libtool
     perl
   ] ++ optionals (!libOnly) [
-    docbook_xsl
+    docbook-xsl
     docbook_xml_dtd_42
     docbook_xml_dtd_45
     gettext

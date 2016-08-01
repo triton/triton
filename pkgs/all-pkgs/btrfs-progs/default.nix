@@ -1,6 +1,6 @@
 { stdenv
 , asciidoc
-, docbook_xsl
+, docbook-xsl
 , docbook_xml_dtd_45
 , fetchurl
 , libxslt
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     asciidoc
-    docbook_xsl
+    docbook-xsl
     docbook_xml_dtd_45
     libxslt
     xmlto

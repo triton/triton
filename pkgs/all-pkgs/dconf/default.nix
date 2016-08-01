@@ -1,6 +1,6 @@
 { stdenv
-, docbook_xsl
-, docbook_xsl_ns
+, docbook-xsl
+, docbook-xsl-ns
 , fetchurl
 , gettext
 , intltool

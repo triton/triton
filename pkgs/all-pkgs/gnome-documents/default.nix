@@ -1,5 +1,5 @@
 { stdenv
-, docbook_xsl
+, docbook-xsl
 , fetchurl
 , intltool
 , itstool
@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    docbook_xsl
+    docbook-xsl
     intltool
     itstool
     libxslt

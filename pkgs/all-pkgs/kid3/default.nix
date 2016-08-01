@@ -2,7 +2,7 @@
 , fetchurl
 , cmake
 , docbook_xml_dtd_45
-, docbook_xsl
+, docbook-xsl
 , libxslt
 , ninja
 , perl
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     cmake
     docbook_xml_dtd_45
-    docbook_xsl
+    docbook-xsl
     libxslt
     ninja
     perl
@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
   ];
 
   preConfigure = ''
-    export DOCBOOKDIR="${docbook_xsl}/xml/xsl/docbook/"
+    export DOCBOOKDIR="${docbook-xsl}/xml/xsl/docbook/"
   '';
 
   cmakeFlags = [

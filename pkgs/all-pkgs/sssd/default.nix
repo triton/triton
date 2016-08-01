@@ -1,6 +1,6 @@
 { stdenv
 , docbook_xml_dtd_44
-, docbook_xsl
+, docbook-xsl
 , fetchurl
 , libxslt
 , libxml2
@@ -45,7 +45,7 @@ let
 
     buildCommand = ''
       xmlcatalog --noout --create "$out"
-      xmlcatalog --noout --add nextCatalog "$(find ${docbook_xsl} -name catalog.xml)" "" "$out"
+      xmlcatalog --noout --add nextCatalog "$(find ${docbook-xsl} -name catalog.xml)" "" "$out"
       xmlcatalog --noout --add nextCatalog "$(find ${docbook_xml_dtd_44} -name catalog.xml)" "" "$out"
     '';
   };

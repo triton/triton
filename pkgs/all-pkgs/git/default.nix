@@ -1,7 +1,7 @@
 { stdenv
 , asciidoc
 , docbook_xml_dtd_45
-, docbook_xsl
+, docbook-xsl
 , fetchurl
 , gettext
 , libxslt
@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     asciidoc
     docbook_xml_dtd_45
-    docbook_xsl
+    docbook-xsl
     gettext
     libxslt
     makeWrapper

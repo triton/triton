@@ -20,7 +20,7 @@
 , opusfile
 , portaudio
 , portmidi
-, protobuf
+, protobuf-cpp
 , qt5
 , rubberband
 , soundtouch
@@ -68,12 +68,8 @@ stdenv.mkDerivation rec {
     opusfile
     portaudio
     portmidi
-    protobuf
-    qt5.qtbase
-    qt5.qtscript
-    qt5.qtsvg
-    qt5.qttranslations
-    qt5.qtxmlpatterns
+    protobuf-cpp
+    qt5
     rubberband
     soundtouch
     sqlite
@@ -91,7 +87,7 @@ stdenv.mkDerivation rec {
   sconsFlags = [
     "build=release"
     "qt5=1"
-    "qtdir=${qt5.qtbase}"
+    "qtdir=${qt5}"
 
     "opengles=0"
     "hss1394=0"

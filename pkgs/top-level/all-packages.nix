@@ -1900,7 +1900,7 @@ pcre = callPackage ../all-pkgs/pcre { };
 
 pcre2 = callPackage ../all-pkgs/pcre2 { };
 
-pcsclite = callPackage ../all-pkgs/pcsclite { };
+pcsc-lite = callPackage ../all-pkgs/pcsc-lite { };
 
 perl = callPackage ../all-pkgs/perl { };
 

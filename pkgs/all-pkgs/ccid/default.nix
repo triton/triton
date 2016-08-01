@@ -2,7 +2,7 @@
 , fetchurl
 , perl
 
-, pcsclite
+, pcsc-lite
 , libusb
 }:
 
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libusb
-    pcsclite
+    pcsc-lite
   ];
 
   preConfigure = ''

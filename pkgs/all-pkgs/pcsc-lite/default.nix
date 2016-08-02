@@ -8,7 +8,7 @@
 , polkit
 , systemd_lib
 
-, type ? "full"
+, libOnly
 }:
 
 let
@@ -18,9 +18,13 @@ let
   tarballUrls = id: version: [
     "https://alioth.debian.org/frs/download.php/file/${id}/pcsc-lite-${version}.tar.bz2"
   ];
+
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "pcsc-lite-${version}";
+  name = "${if libOnly then "lib" else ""}pcsc-lite-${version}";
 
   src = fetchurl {
     urls = tarballUrls id version;
@@ -28,12 +32,12 @@ stdenv.mkDerivation rec {
     sha256 = "d72b6f8654024f2a1d2de70f8f1d39776bd872870a4f453f436fd93d4312026f";
   };
 
-  nativeBuildInputs = [
+  nativeBuildInputs = optionals (!libOnly) [
     perl
     python2
   ];
 
-  buildInputs = [
+  buildInputs = optionals (!libOnly) [
     dbus
     libusb
     polkit
@@ -52,13 +56,33 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--enable-usbdropdir=/var/lib/pcsc/drivers"
     "--enable-confdir=/etc"
+  ] ++ optionals libOnly [
+    "--disable-usb"
+  ] ++ optionals (!libOnly) [
     "--enable-libudev"
     "--enable-polkit"
+  ];
+
+  preBuild = optionalString libOnly ''
+    cd src
+    echo 'myBuildLibs: $(lib_LTLIBRARIES)' >> Makefile
+    echo 'myBuildSources: $(BUILT_SOURCES)' >> Makefile
+  '';
+
+  buildFlags = optionals libOnly [
+    "myBuildSources"
+    "myBuildLibs"
   ];
 
   preInstall = ''
     installFlagsArray+=("POLICY_DIR=$out/share/polkit-1/actions")
   '';
+
+  installTargets = optionals libOnly [
+    "install-libLTLIBRARIES"
+    "install-nobase_includeHEADERS"
+    "install-pcDATA"
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

@@ -1,5 +1,4 @@
 { stdenv
-, autoreconfHook
 , fetchurl
 , unzip
 }:
@@ -22,7 +21,6 @@ stdenv.mkDerivation rec{
   };
 
   nativeBuildInputs = [
-    autoreconfHook
     unzip
   ];
 

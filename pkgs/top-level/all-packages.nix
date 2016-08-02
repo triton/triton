@@ -2168,6 +2168,11 @@ socket_wrapper = callPackage ../all-pkgs/socket_wrapper { };
 
 sord = callPackage ../all-pkgs/sord { };
 
+sox = callPackage ../all-pkgs/sox {
+  amrnb = null;
+  amrwb = null;
+};
+
 soxr = callPackage ../all-pkgs/soxr { };
 
 spectrwm = callPackage ../all-pkgs/spectrwm { };
@@ -3359,7 +3364,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   rsync = callPackage ../applications/networking/sync/rsync { };
 #
-  sox = callPackage ../applications/misc/audio/sox { };
 #
   spotify = callPackage ../applications/audio/spotify {
     libgcrypt = libgcrypt_1_5;

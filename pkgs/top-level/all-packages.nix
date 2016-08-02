@@ -1882,6 +1882,8 @@ opus = callPackage ../all-pkgs/opus { };
 
 opus-tools = callPackage ../all-pkgs/opus-tools { };
 
+opusfile = callPackage ../all-pkgs/opusfile { };
+
 orbit2 = callPackage ../all-pkgs/orbit2 { };
 
 orc = callPackage ../all-pkgs/orc { };
@@ -3354,8 +3356,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   };
 #
   ncdu = callPackage ../tools/misc/ncdu { };
-#
-  opusfile = callPackage ../applications/audio/opusfile { };
 #
   rsync = callPackage ../applications/networking/sync/rsync { };
 #

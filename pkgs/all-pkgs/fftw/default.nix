@@ -6,6 +6,8 @@
 let
   inherit (stdenv.lib)
     optionals;
+
+  version = "3.3.5";
 in
 
 assert stdenv.lib.elem precision [
@@ -17,11 +19,11 @@ assert stdenv.lib.elem precision [
 
 stdenv.mkDerivation rec {
   name = "fftw-${precision}-${version}";
-  version = "3.3.4";
 
   src = fetchurl {
-    url = "ftp://ftp.fftw.org/pub/fftw/fftw-${version}.tar.gz";
-    sha256 = "10h9mzjxnwlsjziah4lri85scc05rlajz39nqf3mbh4vja8dw34g";
+    url = "http://www.fftw.org/fftw-${version}.tar.gz";
+    md5Url = "http://www.fftw.org/fftw-3.3.5.tar.gz.md5sum";
+    sha256 = "8ecfe1b04732ec3f5b7d279fdb8efcad536d555f9d1e8fabd027037d45ea8bcf";
   };
 
   configureFlags = [

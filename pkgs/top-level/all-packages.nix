@@ -2315,6 +2315,8 @@ unbound = callPackage ../all-pkgs/unbound { };
 
 unrar = callPackage ../all-pkgs/unrar { };
 
+upower = callPackage ../all-pkgs/upower { };
+
 usbmuxd = callPackage ../all-pkgs/usbmuxd { };
 
 util-linux_full = callPackage ../all-pkgs/util-linux { };
@@ -9314,8 +9316,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #  uksmtools = callPackage ../os-specific/linux/uksmtools { };
 #
 #  untie = callPackage ../os-specific/linux/untie { };
-#
-  upower = callPackage ../os-specific/linux/upower { };
 
 #  upstart = callPackage ../os-specific/linux/upstart { };
 #

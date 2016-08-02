@@ -80,6 +80,7 @@ stdenv.mkDerivation rec {
 
   installTargets = optionals libOnly [
     "install-libLTLIBRARIES"
+    "install-nodistheaderDATA"
     "install-nobase_includeHEADERS"
     "install-pcDATA"
   ];

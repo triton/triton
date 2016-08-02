@@ -6,26 +6,36 @@
 stdenv.mkDerivation rec {
   name = "amrwb-11.0.0.0";
 
-  srcAmr = fetchurl {
-    url = http://www.3gpp.org/ftp/Specs/archive/26_series/26.204/26204-b00.zip;
-    sha256 = "1v4zhs6f1mf1xkrzhljh05890in0rpr5d5pcak9h4igxhd2c91f8";
+  # http://www.3gpp.org/DynaReport/26204.htm
+  # NOTE: When updating amrwb-3gpp, update every instance of 26204-d10 to the
+  #       updated file name.
+  amrwb_3gpp = fetchurl {
+    url = http://www.3gpp.org/ftp/Specs/archive/26_series/26.204/26204-d10.zip;
+    sha256 = "c922636b1878e77d1d4a96bb9c4a014312edef280e1a6939d927acc1775c3452";
   };
 
   src = fetchurl {
     url = "http://www.penguin.cz/~utx/ftp/amr/${name}.tar.bz2";
-    sha256 = "1p6m9nd08mv525w14py9qzs9zwsa5i3vxf5bgcmcvc408jqmkbsw";
+    sha256 = "5caf59b14480b0cd2a7babb8be472c4af39ff4c7c95f1278116557049a4dd5dc";
   };
 
   nativeBuildInputs = [
     unzip
   ];
 
+  postPatch = /* Fix hardcoded 3GPP source version */ ''
+    sed -i Makefile.{in,am} \
+      -i configure{,.ac} \
+      -i prepare_sources.sh.in \
+      -e 's/26204-b00/26204-d10/g'
+  '';
+
   configureFlags = [
     "--without-downloader"
   ];
 
   postConfigure = ''
-    cp -v $srcAmr 26204-b00.zip
+    cp -v $amrwb_3gpp 26204-d10.zip
   '';
 
   meta = with stdenv.lib; {

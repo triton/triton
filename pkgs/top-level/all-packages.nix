@@ -704,14 +704,6 @@ cryptopp = callPackage ../all-pkgs/crypto++ { };
 
 cryptsetup = callPackage ../all-pkgs/cryptsetup { };
 
-nvidia-cuda-toolkit_7-5 = callPackage ../all-pkgs/nvidia-cuda-toolkit {
-  channel = "7.5";
-};
-#nvidia-cuda-toolkit_8-0 = callPackage ../all-pkgs/nvidia-cuda-toolkit {
-#  channel = "8.0";
-#};
-nvidia-cuda-toolkit = callPackageAlias "nvidia-cuda-toolkit_7-5" { };
-
 cuetools = callPackage ../all-pkgs/cuetools { };
 
 cups = callPackage ../all-pkgs/cups { };
@@ -1857,6 +1849,14 @@ ntfs-3g = callPackage ../all-pkgs/ntfs-3g { };
 ntp = callPackage ../all-pkgs/ntp { };
 
 numactl = callPackage ../all-pkgs/numactl { };
+
+nvidia-cuda-toolkit_7-5 = callPackage ../all-pkgs/nvidia-cuda-toolkit {
+  channel = "7.5";
+};
+#nvidia-cuda-toolkit_8-0 = callPackage ../all-pkgs/nvidia-cuda-toolkit {
+#  channel = "8.0";
+#};
+nvidia-cuda-toolkit = callPackageAlias "nvidia-cuda-toolkit_7-5" { };
 
 nvidia-video-codec-sdk = callPackage ../all-pkgs/nvidia-video-codec-sdk { };
 

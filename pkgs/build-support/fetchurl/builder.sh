@@ -124,7 +124,7 @@ tryDownload() {
                 break
               fi
             else
-              verifications+=('sha512')
+              verifications+=("$sha512Verification")
             fi
           fi
 
@@ -139,7 +139,7 @@ tryDownload() {
                 break
               fi
             else
-              verifications+=('sha256')
+              verifications+=("$sha256Verification")
             fi
           fi
 
@@ -154,7 +154,7 @@ tryDownload() {
                 break
               fi
             else
-              verifications+=('sha1')
+              verifications+=("$sha1Verification")
             fi
           fi
 
@@ -169,7 +169,7 @@ tryDownload() {
                 break
               fi
             else
-              verifications+=('md5')
+              verifications+=("$md5Verification")
             fi
           fi
 
@@ -516,6 +516,7 @@ for url in "${sha512Urls[@]}"; do
         echo "$TMPDIR/sha512.asc pgpsig does not validate" >&2
         exit 1
       fi
+      sha512Verification="pgp*sha512"
       sha512Confirm="$(getHash "$TMPDIR/sha512" 128)"
       break
     else
@@ -528,7 +529,9 @@ for url in "${sha512Urls[@]}"; do
             echo "$TMPDIR/sha512 pgpsig does not validate" >&2
             exit 1
          fi
+         sha512Verification="pgp*"
       fi
+      sha512Verification="${sha512Verification}sha512"
       sha512Confirm="$(getHash "$TMPDIR/sha512" 128)"
       break
     else
@@ -545,6 +548,7 @@ for url in "${sha256Urls[@]}"; do
         echo "$TMPDIR/sha256.asc pgpsig does not validate" >&2
         exit 1
       fi
+      sha256Verification="pgp*sha256"
       sha256Confirm="$(getHash "$TMPDIR/sha256" 64)"
       break
     else
@@ -557,7 +561,9 @@ for url in "${sha256Urls[@]}"; do
             echo "$TMPDIR/sha256 pgpsig does not validate" >&2
             exit 1
          fi
+         sha256Verification="pgp*"
       fi
+      sha256Verification="${sha256Verification}sha256"
       sha256Confirm="$(getHash "$TMPDIR/sha256" 64)"
       break
     else
@@ -570,10 +576,11 @@ for url in "${sha1Urls[@]}"; do
   echo "Trying $url" >&2
   if echo "$url" | grep -q '\.asc$'; then
     if $curl -C - --fail "$url" --output "$TMPDIR/sha1.asc"; then
-       if ! gpg --lock-never --output "$TMPDIR/sha1" --decrypt "$TMPDIR/sha1.asc"; then
-          echo "$TMPDIR/sha1.asc pgpsig does not validate" >&2
-          exit 1
-       fi
+      if ! gpg --lock-never --output "$TMPDIR/sha1" --decrypt "$TMPDIR/sha1.asc"; then
+         echo "$TMPDIR/sha1.asc pgpsig does not validate" >&2
+         exit 1
+      fi
+      sha1Verification="pgp*sha1"
       sha1Confirm="$(getHash "$TMPDIR/sha1" 40)"
       break
     else
@@ -586,7 +593,9 @@ for url in "${sha1Urls[@]}"; do
             echo "$TMPDIR/sha1 pgpsig does not validate" >&2
             exit 1
          fi
+         sha1Verification="pgp*"
       fi
+      sha1Verification="${sha1Verification}sha1"
       sha1Confirm="$(getHash "$TMPDIR/sha1" 40)"
       break
     else
@@ -599,10 +608,11 @@ for url in "${md5Urls[@]}"; do
   echo "Trying $url" >&2
   if echo "$url" | grep -q '\.asc$'; then
     if $curl -C - --fail "$url" --output "$TMPDIR/md5.asc"; then
-       if ! gpg --lock-never --output "$TMPDIR/md5" --decrypt "$TMPDIR/md5.asc"; then
-          echo "$TMPDIR/md5 pgpsig does not validate" >&2
-          exit 1
-       fi
+      if ! gpg --lock-never --output "$TMPDIR/md5" --decrypt "$TMPDIR/md5.asc"; then
+         echo "$TMPDIR/md5 pgpsig does not validate" >&2
+         exit 1
+      fi
+      md5Verification="pgp*md5"
       md5Confirm="$(getHash "$TMPDIR/md5" 32)"
       break
     else
@@ -615,7 +625,9 @@ for url in "${md5Urls[@]}"; do
             echo "$TMPDIR/md5 pgpsig does not validate" >&2
             exit 1
          fi
+         md5Verification="pgp*"
       fi
+      md5Verification="${md5Verification}md5"
       md5Confirm="$(getHash "$TMPDIR/md5" 32)"
       break
     else

@@ -16,7 +16,7 @@
 , npth
 , pth
 , openldap
-, pcsc-lite
+, pcsc-lite_lib
 , readline
 , sqlite
 , zlib
@@ -90,7 +90,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    sed -i 's,"libpcsclite\.so[^"]*","${pcsc-lite}/lib/libpcsclite.so",g' scd/scdaemon.c
+    sed -i 's,"libpcsclite\.so[^"]*","${pcsc-lite_lib}/lib/libpcsclite.so",g' scd/scdaemon.c
   '';
 
   preConfigure = ''

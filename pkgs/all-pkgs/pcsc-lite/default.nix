@@ -7,6 +7,8 @@
 , libusb
 , polkit
 , systemd_lib
+
+, type ? "full"
 }:
 
 let

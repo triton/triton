@@ -6,11 +6,11 @@ let
   polkitRules = "polkit-1/rules.d/50-pcscd.rules";
 
   pcscPolkit = pkgs.stdenv.mkDerivation {
-    name = "polkit-${pkgs.pcsc-lite.name}";
+    name = "polkit-${pkgs.pcsc-lite_full.name}";
 
     buildCommand = ''
       mkdir -p "$out/share"
-      ln -sv "${pkgs.pcsc-lite}/share/polkit-1" "$out/share/polkit-1"
+      ln -sv "${pkgs.pcsc-lite_full}/share/polkit-1" "$out/share/polkit-1"
     '';
   };
 in
@@ -96,8 +96,8 @@ with lib;
       '';
       serviceConfig = {
         Type = "forking";
-        ExecStart = "${pkgs.pcsc-lite}/sbin/pcscd --auto-exit -c ${cfgFile}";
-        ExecReload = "${pkgs.pcsc-lite}/sbin/pcscd --hotplug";
+        ExecStart = "${pkgs.pcsc-lite_full}/sbin/pcscd --auto-exit -c ${cfgFile}";
+        ExecReload = "${pkgs.pcsc-lite_full}/sbin/pcscd --hotplug";
       };
     };
 

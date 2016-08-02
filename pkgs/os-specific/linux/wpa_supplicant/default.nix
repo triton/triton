@@ -1,5 +1,5 @@
 { stdenv, fetchpatch, fetchurl, lib, openssl, libnl
-, dbus, readline, pcsc-lite, ncurses
+, dbus, readline, pcsc-lite_lib, ncurses
 }:
 
 with stdenv.lib;
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     CONFIG_HS20=y
     CONFIG_P2P=y
     CONFIG_TDLS=y
-  '' + optionalString (pcsc-lite != null) ''
+  '' + optionalString (pcsc-lite_lib != null) ''
     CONFIG_EAP_SIM=y
     CONFIG_EAP_AKA=y
     CONFIG_EAP_AKA_PRIME=y
@@ -70,7 +70,7 @@ stdenv.mkDerivation rec {
     substituteInPlace Makefile --replace /usr/local $out
     export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE \
       -I$(echo "${libnl}"/include/libnl*/) \
-      -I${pcsc-lite}/include/PCSC/"
+      -I${pcsc-lite_lib}/include/PCSC/"
   '';
 
   buildInputs = [
@@ -79,7 +79,7 @@ stdenv.mkDerivation rec {
     dbus
     ncurses
     readline
-    pcsc-lite
+    pcsc-lite_lib
   ];
 
   patches = [

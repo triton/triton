@@ -1912,7 +1912,11 @@ pcre = callPackage ../all-pkgs/pcre { };
 
 pcre2 = callPackage ../all-pkgs/pcre2 { };
 
-pcsc-lite = callPackage ../all-pkgs/pcsc-lite { };
+pcsc-lite_full = callPackage ../all-pkgs/pcsc-lite { };
+
+pcsc-lite_lib = callPackageAias "pcsc-lite_full" {
+  type = "lib";
+};
 
 perl = callPackage ../all-pkgs/perl { };
 

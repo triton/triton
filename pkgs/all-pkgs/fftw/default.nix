@@ -20,9 +20,9 @@ assert stdenv.lib.elem precision [
 stdenv.mkDerivation rec {
   name = "fftw-${precision}-${version}";
 
-  src = fetchurl {
+  src = fetchurl rec {
     url = "http://www.fftw.org/fftw-${version}.tar.gz";
-    md5Url = "http://www.fftw.org/fftw-${version}.tar.gz.md5sum";
+    md5Url = url + ".md5sum";
     sha256 = "8ecfe1b04732ec3f5b7d279fdb8efcad536d555f9d1e8fabd027037d45ea8bcf";
   };
 

@@ -714,6 +714,8 @@ nvidia-cuda-toolkit = callPackageAlias "nvidia-cuda-toolkit_7-5" { };
 
 cuetools = callPackage ../all-pkgs/cuetools { };
 
+cups = callPackage ../all-pkgs/cups { };
+
 curl = callPackage ../all-pkgs/curl {
   suffix = "";
 };
@@ -3389,8 +3391,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
     motif = lesstif;
     base14Fonts = "${ghostscript}/share/ghostscript/fonts";
   };
-#
-  cups = callPackage ../misc/cups { };
 
   cups_filters = callPackage ../misc/cups/filters.nix { };
 #

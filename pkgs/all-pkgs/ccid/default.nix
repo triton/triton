@@ -30,13 +30,15 @@ stdenv.mkDerivation rec {
     pcsc-lite_lib
   ];
 
-  preConfigure = ''
+  postPatch = ''
     # Perl scripts are using /usr/bin/env and need to be patched
     patchShebangs .
 
     # We dont have /bin/echo
     sed -i 's,/bin/echo,echo,g' src/Makefile.in
+  '';
 
+  preConfigure = ''
     configureFlagsArray+=("--enable-usbdropdir=$out/pcsc/drivers")
   '';
 

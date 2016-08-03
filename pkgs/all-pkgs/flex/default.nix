@@ -4,12 +4,15 @@
 , m4
 }:
 
+let
+  version = "2.6.1";
+in
 stdenv.mkDerivation rec {
-  name = "flex-2.6.0";
+  name = "flex-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/flex/${name}.tar.bz2";
-    sha256 = "1sdqx63yadindzafrq1w31ajblf9gl1c301g068s20s7bbpi3ri4";
+    url = "https://github.com/westes/flex/releases/download/v${version}/${name}.tar.xz";
+    sha256 = "2c7a412c1640e094cb058d9b2fe39d450186e09574bebb7aa28f783e3799103f";
   };
 
   nativeBuildInputs = [

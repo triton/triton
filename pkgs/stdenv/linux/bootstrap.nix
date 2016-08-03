@@ -27,7 +27,7 @@ if [ hostSystem ] == lib.platforms.x86_64-linux then {
   };
 
   bootstrapTools = makeUrls {
-    file = "bootstrap-tools";
+    file = "bootstrap-tools.tar.xz";
     nix-hash = "rimjf9i78mfc3k7xzznwgnrrjjbsgsii";
     multihash = "QmZNS3KdwfaFuXgmp4aVnQiHARZNeMsTSUek4x7tXQ4nAC";
     sha256 = "04rxw6d0rnhhyan0g8wkn4yrx10bydh2958fpzdfr1d33yy6w85b";
@@ -39,17 +39,17 @@ if [ hostSystem ] == lib.platforms.x86_64-linux then {
 } else if [ hostSystem ] == lib.platforms.i686-linux then {
   busybox = makeUrls {
     file = "bootstrap-busybox";
-    nix-hash = "dn8ihwragjgfyjv89l3zflwsby9nffx5";
-    multihash = "QmemDcocPBMvmzmmf7cCTBHNt9uuc5Lfzo1G3uBqn84B7K";
-    sha256 = "14l4rzv35d2kqsj8d69gpnhf4wxk63d53k2zchgsjk6sgzm4gfgx";
+    nix-hash = "66zksl5jd4yq07nlz1p6a2nmlq6qcn60";
+    multihash = "QmV7shxYLE3qAe36j72wQHyA2Z5gh18RaVrfEG6HQEKwLQ";
+    sha256 = "0niq9636qqfph73qggqky58x1hjq78qfd9mg5ksmmys6sizg63ai";
     executable = true;
   };
 
   bootstrapTools = makeUrls {
-    file = "bootstrap-tools";
-    nix-hash = "dn8ihwragjgfyjv89l3zflwsby9nffx5";
-    multihash = "Qmc3Nc2pKHcnV3apxRq887cAJBrWU3bsADWMhh5xC1VPgf";
-    sha256 = "0n5xvjjvwribhr9vlsm9gf02kyfk3hwd2zl57db8yprbd7x449vg";
+    file = "bootstrap-tools.tar.xz";
+    nix-hash = "66zksl5jd4yq07nlz1p6a2nmlq6qcn60";
+    multihash = "QmR4pkiPEjFMdnZj6Z2UbWvZzvwTxyuDVmor1Qicd5j7Ed";
+    sha256 = "00b6bwz6ij4734w8fj89gchann6yncz0y2n9wa34b5ixcfzkz0zn";
   };
 
   langC = true;

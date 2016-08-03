@@ -2,6 +2,11 @@ rec {
   # Mirrors for mirror://site/filename URIs, where "site" is
   # "sourceforge", "gnu", etc.
 
+  alsa = [
+    "ftp://ftp.alsa-project.org/pub"
+    "http://alsa.cybermirror.org"
+  ];
+
   apache = [
     https://www.apache.org/dist
     http://apache.mirrors.pair.com

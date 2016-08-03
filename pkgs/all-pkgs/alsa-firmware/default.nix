@@ -1,18 +1,17 @@
-{stdenv, fetchurl}:
+{ stdenv
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
   name = "alsa-firmware-1.0.29";
 
   src = fetchurl {
-    urls = [
-      "ftp://ftp.alsa-project.org/pub/firmware/${name}.tar.bz2"
-      "http://alsa.cybermirror.org/firmware/${name}.tar.bz2"
-    ];
+    url = "mirror://alsa/firmware/${name}.tar.bz2";
     sha256 = "0gfcyj5anckjn030wcxx5v2xk2s219nyf99s9m833275b5wz2piw";
   };
 
-  configureFlags = ''
-    --with-hotplug-dir=$(out)/lib/firmware
+  preConfigure = ''
+    configureFlagsArray+=("--with-hotplug-dir=$out/lib/firmware")
   '';
 
   dontStrip = true;
@@ -27,9 +26,14 @@ stdenv.mkDerivation rec {
     rm -rf $out/bin
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://www.alsa-project.org/main/index.php/Main_Page;
     description = "Soundcard firmwares from the alsa project";
-    license = stdenv.lib.licenses.gpl2Plus;
+    license = licenses.gpl2Plus;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

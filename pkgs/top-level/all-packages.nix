@@ -1759,6 +1759,8 @@ ms-sys = callPackage ../all-pkgs/ms-sys { };
 
 mtdev = callPackage ../all-pkgs/mtdev { };
 
+mtr = callPackage ../all-pkgs/mtr { };
+
 mtools = callPackage ../all-pkgs/mtools { };
 
 inherit (callPackages ../all-pkgs/mumble {
@@ -2548,8 +2550,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   man = callPackage ../tools/misc/man { };
 #
   memtest86plus = callPackage ../tools/misc/memtest86+ { };
-#
-  mtr = callPackage ../tools/networking/mtr {};
 #
   netcat = callPackage ../tools/networking/netcat { };
 #

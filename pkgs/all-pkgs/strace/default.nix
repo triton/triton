@@ -36,12 +36,13 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = http://strace.sourceforge.net/;
     description = "A system call tracer for Linux";
+    homepage = http://strace.sourceforge.net/;
     license = licenses.bsd3;
     maintainers = with maintainers; [
       wkennington
     ];
-    platforms = platforms.linux;
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

@@ -49,7 +49,6 @@
 
 # optional dependencies
 , libgcrypt # gnomeSupport || cupsSupport
-, libexif # only needed for Chromium before version 51
 
 # package customization
 , enableSELinux ? false, libselinux
@@ -177,8 +176,7 @@ let
       ++ optionals gnomeSupport [ gconf libgcrypt ]
       ++ optional enableSELinux libselinux
       ++ optionals cupsSupport [ libgcrypt cups ]
-      ++ optional pulseSupport pulseaudio_lib
-      ++ optional (versionOlder version "51.0.0.0") libexif;
+      ++ optional pulseSupport pulseaudio_lib;
 
     patches = [
       ./patches/widevine.patch
@@ -208,7 +206,7 @@ let
       use_system_libevent = true;
       use_system_libexpat = true;
       use_system_libjpeg = true;
-      use_system_libpng = versionOlder upstream-info.version "51.0.0.0";
+      use_system_libpng = false;
       use_system_libwebp = true;
       use_system_libxml = true;
       use_system_opus = true;

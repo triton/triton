@@ -6,7 +6,7 @@
 , avahi
 , dbus
 , gnutls
-, kerberos
+#, kerberos
 , libgcrypt
 , libpaper
 , libusb
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     avahi
     dbus
     gnutls
-    kerberos
+    #kerberos
     libgcrypt
     libpaper
     libusb
@@ -80,7 +80,7 @@ stdenv.mkDerivation rec {
     "--disable-debug-printfs"
     "--disable-unit-tests"
     #"--enable-relro"
-    (enFlag "gssapi" (kerberos != null) null)
+    #(enFlag "gssapi" (kerberos != null) null)
     "--enable-threads"
     (enFlag "ssl" (
       gnutls != null

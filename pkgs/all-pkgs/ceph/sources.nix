@@ -24,8 +24,8 @@
   };
 
   "git" = rec {
-    version = "2016-07-27";
-    rev = "aed7de291964a0844715d387062955606f33d843";
-    sha256 = "1qsplw6dslf8hklqi4rpwr8xkccjmw9biyq8j9h48md31h2j60jv";
+    version = "2016-08-02";
+    rev = "c162a8a08d8aea57cb1d8374ed71c265a207372d";
+    sha256 = "03v6q343f03s2psp7rr7ircxh481160rqq2q03x6k5dn2rss4rx5";
   };
 }

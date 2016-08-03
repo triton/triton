@@ -6,6 +6,7 @@
 , fetchTritonPatch
 , git
 , libtool
+, perl
 , pythonPackages
 , which
 , yasm
@@ -89,6 +90,7 @@ stdenv.mkDerivation rec {
     (ensureNewerSourcesHook { year = "1980"; })
     git
     libtool
+    perl
     pythonPackages.python
     pythonPackages.wrapPython
     which

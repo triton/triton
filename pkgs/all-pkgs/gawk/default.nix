@@ -22,8 +22,6 @@ stdenv.mkDerivation rec {
     "--with-readline=${readline}"
   ];
 
-  doCheck = true;
-
   postInstall = ''
     rm $out/bin/gawk-*
   '';

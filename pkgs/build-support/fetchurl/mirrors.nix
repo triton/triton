@@ -192,6 +192,7 @@ rec {
 
   sourceforge = [
     https://downloads.sourceforge.net/sourceforge
+    https://downloads.sourceforge.net
   ];
 
   # SourceForge.jp

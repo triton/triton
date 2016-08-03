@@ -5,17 +5,14 @@
 , libunwind
 }:
 
-let
-  version = "4.12";
-in
 stdenv.mkDerivation rec {
-  name = "strace-${version}";
+  name = "strace-4.13";
 
   src = fetchurl {
-    url = "mirror://sourceforge/strace/${version}/${name}.tar.xz";
+    url = "mirror://sourceforge/strace/${name}.tar.xz";
     allowHashOutput = false;
-    multihash = "QmZ1WtnKojqG2NQb2G87puKio8d4jvBQAUT1CRvcmywLXt";
-    sha256 = "51144b78cb9ba22211b95a5aafe0af3694c0d575b25975d80ca9dd4dfd7c1e59";
+    multihash = "QmVNenX4iNRJapAgfR9ohNswkt2fQAKSYEZtkadazVasr4";
+    sha256 = "d48f732576c91ece36a5843d63f9be054c40ef59f1e4773986042636861625d7";
   };
 
   nativeBuildInputs = [

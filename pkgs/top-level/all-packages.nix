@@ -1652,6 +1652,8 @@ libyaml = callPackage ../all-pkgs/libyaml { };
 
 libzapojit = callPackage ../all-pkgs/libzapojit { };
 
+libzip = callPackage ../all-pkgs/libzip { };
+
 lightdm = callPackage ../all-pkgs/lightdm { };
 
 lightdm-gtk-greeter = callPackage ../all-pkgs/lightdm-gtk-greeter { };
@@ -2946,8 +2948,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   libzen = callPackage ../development/libraries/libzen { };
 
-  libzip = callPackage ../development/libraries/libzip { };
-#
   log4cplus = callPackage ../development/libraries/log4cplus { };
 #
   neon = callPackage ../development/libraries/neon {

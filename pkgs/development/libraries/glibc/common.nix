@@ -145,6 +145,7 @@ stdenv.mkDerivation ({
     "--with-headers=${linux-headers}/include"
     "--enable-profile"
     "--enable-kernel=2.6.32"
+    "--disable-werror"
     "--with-fp"
     "--with-tls"
   ];

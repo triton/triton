@@ -8,8 +8,8 @@
 , libxkbcommon
 , mesa
 , pango
-, pixman
 , systemd_lib
+, xorg
 }:
 
 stdenv.mkDerivation rec {
@@ -31,8 +31,8 @@ stdenv.mkDerivation rec {
     libxkbcommon
     mesa
     pango
-    pixman
     systemd_lib
+    xorg.pixman
   ];
 
   # Don't depend on old systemd compat libs

@@ -4,7 +4,6 @@
 
 , mtdev
 , xorg
-, pixman
 }:
 
 stdenv.mkDerivation rec {
@@ -25,8 +24,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     mtdev
-    pixman
     xorg.inputproto
+    xorg.pixman
     xorg.xproto
     xorg.xorgserver
   ];

@@ -4,7 +4,6 @@
 , file
 , ncurses
 , systemd_lib
-, pixman
 , xorg
 }:
 
@@ -18,7 +17,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     ncurses
-    pixman
     systemd_lib
     xorg.inputproto
     xorg.kbproto
@@ -28,6 +26,7 @@ stdenv.mkDerivation rec {
     xorg.libXinerama
     xorg.libXrandr
     xorg.libXrender
+    xorg.pixman
     xorg.randrproto
     xorg.xorgserver
     xorg.xproto

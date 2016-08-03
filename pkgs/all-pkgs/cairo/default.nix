@@ -10,7 +10,6 @@
 , libpng
 , libspectre
 , lzo
-, pixman
 , mesa_noglu
 , xorg
 , zlib
@@ -43,11 +42,11 @@ stdenv.mkDerivation rec {
     libspectre
     lzo
     mesa_noglu
-    pixman
     xorg.libX11
     xorg.libxcb
     xorg.libXext
     xorg.libXrender
+    xorg.pixman
     zlib
   ];
 

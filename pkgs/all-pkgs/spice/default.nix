@@ -8,9 +8,9 @@
 , libcacard
 , libjpeg
 , lz4
-, pixman
 , openssl
 , spice-protocol
+, xorg
 , zlib
 }:
 
@@ -34,9 +34,9 @@ stdenv.mkDerivation rec {
     libcacard
     libjpeg
     lz4
-    pixman
     openssl
     spice-protocol
+    xorg.pixman
     zlib
   ];
 

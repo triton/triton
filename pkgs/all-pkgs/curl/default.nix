@@ -28,7 +28,7 @@ let
     "https://curl.haxx.se/download/curl-${version}.tar.bz2"
   ];
 
-  version = "7.50.0";
+  version = "7.50.1";
 in
 stdenv.mkDerivation rec {
   name = "curl${nameSuffix}-${version}";
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     allowHashOutput = false;
-    sha256 = "608dfe2db77f48db792c387e7791aca55a25f0b42385707ad927164199ecfa9a";
+    sha256 = "3c12c5f54ccaa1d40abc65d672107dcc75d3e1fcb38c267484334280096e5156";
   };
 
   nativeBuildInputs = [
@@ -110,11 +110,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "7.50.0";
+      urls = tarballUrls "7.50.1";
       pgpsigUrls = map (n: "${n}.asc") urls;
       pgpKeyFingerprint = "27ED EAF2 2F3A BCEB 50DB  9A12 5CC9 08FD B71E 12C2";
       inherit (src) outputHashAlgo;
-      outputHash = "608dfe2db77f48db792c387e7791aca55a25f0b42385707ad927164199ecfa9a";
+      outputHash = "3c12c5f54ccaa1d40abc65d672107dcc75d3e1fcb38c267484334280096e5156";
     };
   };
 

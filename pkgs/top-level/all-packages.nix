@@ -508,6 +508,8 @@ adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-20" { };
 
 alsa-lib = callPackage ../all-pkgs/alsa-lib { };
 
+alsa-utils = callPackage ../all-pkgs/alsa-utils { };
+
 amrnb = callPackage ../all-pkgs/amrnb { };
 
 amrwb = callPackage ../all-pkgs/amrwb { };
@@ -3089,8 +3091,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   alsa-plugins = callPackage ../os-specific/linux/alsa-plugins { };
 
   alsa-plugin-wrapper = callPackage ../os-specific/linux/alsa-plugins/wrapper.nix { };
-
-  alsa-utils = callPackage ../os-specific/linux/alsa-utils { };
 
   alsa-oss = callPackage ../os-specific/linux/alsa-oss { };
 

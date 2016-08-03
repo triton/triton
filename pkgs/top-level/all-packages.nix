@@ -560,6 +560,10 @@ augeas = callPackage ../all-pkgs/augeas { };
 
 autoconf = callPackage ../all-pkgs/autoconf { };
 
+autoconf_21x = callPackageAlias "autoconf" {
+  channel = "2.1x";
+};
+
 autogen = callPackage ../all-pkgs/autogen { };
 
 automake = callPackage ../all-pkgs/automake { };

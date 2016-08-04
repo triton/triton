@@ -1947,6 +1947,10 @@ pcsc-lite_lib = callPackageAlias "pcsc-lite_full" {
 
 perl = callPackage ../all-pkgs/perl { };
 
+perlPackages = recurseIntoAttrs (callPackage ./perl-packages.nix {
+  self = callPackageAlias "perlPackages" { };
+});
+
 pgbouncer = callPackage ../all-pkgs/pgbouncer { };
 
 pinentry = callPackage ../all-pkgs/pinentry { };
@@ -3032,12 +3036,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   yajl = callPackage ../development/libraries/yajl { };
 #
   zziplib = callPackage ../development/libraries/zziplib { };
-#
-  buildPerlPackage = callPackage ../development/perl-modules/generic { };
-
-  perlPackages = recurseIntoAttrs (callPackage ./perl-packages.nix {
-    overrides = (config.perlPackageOverrides or (p: {})) pkgs;
-  });
 #
   pyxml = callPackage ../development/python-modules/pyxml { };
 #

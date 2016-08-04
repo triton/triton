@@ -32,7 +32,7 @@ let
 
   urls' = (if url != null then [ url ] else [ ]) ++ urls;
 
-  tarball = baseNameOf (lib.head urls');
+  tarball = args.name or baseNameOf (lib.head urls');
 
   name' = args.name or (lib.concatStringsSep "." (removeTarZip (lib.splitString "." tarball)));
 in
@@ -50,8 +50,8 @@ lib.overrideDerivation (fetchurl (rec {
     mkdir "$unpackDir"
     cd "$unpackDir"
 
-    mv "$downloadedFile" "$TMPDIR/tarball.${name'}"
-    unpackFile "$TMPDIR/tarball.${name'}"
+    mv "$downloadedFile" "$TMPDIR/tarball.${tarball}"
+    unpackFile "$TMPDIR/tarball.${tarball}"
 
     shopt -s dotglob
     mkdir "$TMPDIR/${name'}"

@@ -1,4 +1,5 @@
 { stdenv
+, autoreconfHook
 , fetchTritonPatch
 , fetchurl
 , gnum4
@@ -15,6 +16,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    # FIXME: remove once CVE is patched upstream
+    autoreconfHook
     gnum4
   ];
 

@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   name = "alsa-utils-1.1.2";
 
   src = fetchurl {
-    url = "mirror://alsa/utils/${name}.tae.bz2";
+    url = "mirror://alsa/utils/${name}.tar.bz2";
     multihash = "QmRmwwxqHowPTrZzGWYaB9pvy2YMkAMCf312Bpp5UaT2e7";
     sha256 = "0wcha78c2sm8qqk5r3w83cvm8fp6fb1zpd35kmcm24kxhz007xks";
   };

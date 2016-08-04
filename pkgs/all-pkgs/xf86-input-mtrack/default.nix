@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
     xorg.xorgserver
   ];
 
-  CFLAGS = "-I${pixman}/include/pixman-1";
+  CFLAGS = "-I${xorg.pixman}/include/pixman-1";
 
   meta = with stdenv.lib; {
     homepage = https://github.com/BlueDragonX/xf86-input-mtrack;

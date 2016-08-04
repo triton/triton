@@ -232,9 +232,6 @@ stdenv.mkDerivation rec {
     /* systemd in Triton-LINUX doesn't use `systemctl enable`, so we
        need to establish aliases ourselves. */ ''
       mkdir -pv $out/etc/systemd/system
-      #ln -sv \
-      #  $out/lib/systemd/system/NetworkManager.service \
-      #  $out/etc/systemd/system/networkmanager.service
       ln -sv \
         $out/lib/systemd/system/NetworkManager.service \
         $out/etc/systemd/system/dbus-org.freedesktop.NetworkManager.service

@@ -32,7 +32,7 @@ let
 
   urls' = (if url != null then [ url ] else [ ]) ++ urls;
 
-  tarball = args.name or baseNameOf (lib.head urls');
+  tarball = args.name or (baseNameOf (lib.head urls'));
 
   name' = args.name or (lib.concatStringsSep "." (removeTarZip (lib.splitString "." tarball)));
 in

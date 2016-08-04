@@ -21,6 +21,14 @@ stdenv.mkDerivation rec {
     gmp
   ];
 
+  patches = [
+    (fetchTritonPatch {
+      rev = "553ec8a8988737c3dcacaa987746db09cca006a2";
+      file = "nettle/nettle-3.2-CVE-2016-6489.patch";
+      sha256 = "0bc6f90da2e682ebdfe1444ee83a591c4a47ba9ef70cfa955530a626e4f5888d";
+    })
+  ];
+
   doCheck = true;
 
   meta = with stdenv.lib; {

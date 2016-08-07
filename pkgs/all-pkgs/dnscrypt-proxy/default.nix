@@ -5,16 +5,12 @@
 , systemd_lib
 }:
 
-let
-  baseUrl = "https://download.dnscrypt.org/dnscrypt-proxy";
-in
-
 stdenv.mkDerivation rec {
-  name = "dnscrypt-proxy-1.6.1";
+  name = "dnscrypt-proxy-1.7.0";
 
   src = fetchurl {
-    url = "${baseUrl}/${name}.tar.bz2";
-    sha256 = "895ac36f5d4898dabf0ed65e0a579d0aa4d9a9be9cca4dca7b573a0ff170919a";
+    url = "https://download.dnscrypt.org/dnscrypt-proxy/${name}.tar.bz2";
+    sha256 = "1daf77df9092491ea0b5176ec4b170f7b0645f97b62d1a50412a960656b482e3";
   };
 
   buildInputs = [
@@ -28,14 +24,11 @@ stdenv.mkDerivation rec {
   ];
 
   passthru = rec {
-    nextName = "dnscrypt-proxy-1.6.1";
-
     srcVerification = fetchurl {
       failEarly = true;
-      url = "${baseUrl}/${nextName}.tar.bz2";
-      minisignUrl = "${baseUrl}/${nextName}.tar.bz2.minisig";
+      minisignUrls = map (n: "${n}.minisig") src.urls;
       minisignPub = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      sha256 = "895ac36f5d4898dabf0ed65e0a579d0aa4d9a9be9cca4dca7b573a0ff170919a";
+      inherit (src) urls outputHash outputHashAlgo;
     };
   };
 

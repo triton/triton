@@ -2,15 +2,17 @@
 , fetchFromGitHub
 }:
 
+let
+  version = "0.7.5";
+in
 stdenv.mkDerivation rec {
   name = "zstd-${version}";
-  version = "0.7.4";
 
   src = fetchFromGitHub {
     owner = "Cyan4973";
     repo = "zstd";
     rev = "v${version}";
-    sha256 = "77046e9073950a9dd468ca92eba065d9c7921b798b1758d733a5760cb37f359c";
+    sha256 = "f7939c3c93f223c785de5f1202527d71b6221be89f235727e46a89e4acae3bfe";
   };
 
   # Makefile builds during the install phase

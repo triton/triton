@@ -7,12 +7,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "libressl-2.4.1";
+  name = "libressl-2.4.2";
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     allowHashOutput = false;  # Upstream provides it directly
-    sha256 = "121922b13169cd47a85e3e77f0bc129f8d04247193b42491cb1fab9074e80477";
+    sha256 = "5f87d778e5d62822d60e38fa9621c1c5648fc559d198ba314bd9d89cbf67d9e3";
   };
 
   configureFlags = [

@@ -47,7 +47,6 @@ let
     optionalString
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "evince-${version}";
   versionMajor = "3.20";

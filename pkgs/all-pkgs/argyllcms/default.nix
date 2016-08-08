@@ -62,8 +62,6 @@ stdenv.mkDerivation rec {
     inputEnv
   ];
 
-  NIX_LDFLAGS = "-L${inputEnv}";
-
   patches = [
     (fetchTritonPatch {
       rev = "b664680703ddf56e54f54264001e13e39e6127f7";
@@ -79,6 +77,8 @@ stdenv.mkDerivation rec {
     # Fix all of the usr references
     sed -i 's,/usr,${inputEnv},g' Jamtop
   '';
+
+  NIX_LDFLAGS = "-L${inputEnv}";
 
   buildPhase = ''
     jam DESTDIR="/" PREFIX="$out" -j $NIX_BUILD_CORES -q -fJambase

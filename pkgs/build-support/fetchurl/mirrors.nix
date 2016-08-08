@@ -140,6 +140,12 @@ rec {
     http://mysql.mirrors.pair.com/Downloads
   ];
 
+  nvidia = [
+    "http://download.nvidia.com"
+    # Some files are only available on the US mirror
+    "http://us.download.nvidia.com"
+  ];
+
   openbsd = [
     http://ftp.openbsd.org/pub/OpenBSD
     http://openbsd.mirrors.pair.com

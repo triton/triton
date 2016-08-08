@@ -1,5 +1,5 @@
+{ }:
 {
-
   # http://www.nvidia.com/object/unix.html
 
   "legacy304" = {
@@ -13,6 +13,11 @@
     versionMinor = "96";
     sha256i686   = "13j739gg1igll88xpfsx46m7pan4fwpzx5hqdskkdc0srmw2f3n4";
     sha256x86_64 = "1i0lri76ghhr4c6fdlv5gwzd99n70hv3kw21w51anb55msr9s3r8";
+  };
+  "tesla" = {
+    versionMajor = "352";
+    versionMinor = "99";
+    sha256x86_64 = "055ee6acd3ca1f4a07fdb1a4a16abb9abc6bfcb17fe2158808060838a4e84b83";
   };
   "long-lived" = {
     versionMajor = "367";
@@ -32,5 +37,4 @@
     sha256i686   = "9a5184308a981b1b36dde4466006b7b45ff4c2a2f364374b3835112899a55dbd";
     sha256x86_64 = "2e512251203af2ae7d3691046de669b23b62ff3c2940e517940f2e510a93b376";
   };
-
 }

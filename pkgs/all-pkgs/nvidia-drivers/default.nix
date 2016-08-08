@@ -35,6 +35,7 @@
  * BETA:        367.xx,   xorg <=1.18.x, linux <=4.6
  * SHORTLIVED:  364.xx,   xorg <=1.18.x, linux <=4.5
  * LONGLIVED:   367.xx,   xorg <=1.18.x, linux <=4.6 (stable) <- default
+ * TESLA:       352.xx,   xorg <=1.18.x, linux <=4.???
  * LEGACY:      340.xx,   xorg <=1.18.x, linux <=4.5
  * LEGACY:      304.xx,   xorg <=1.18.x, linux <=4.5
  * UNSUPPORTED: 173.14.x, xorg <=1.15.x, linux <=3.13
@@ -59,15 +60,11 @@ let
     platforms
     versionAtLeast
     versionOlder;
-  inherit (builtins.getAttr channel (import ./sources.nix))
-    versionMajor
-    versionMinor
-    sha256i686
-    sha256x86_64;
+  source = ((import ./sources.nix { })."${channel}");
 in
 
 let
-  version = "${versionMajor}.${versionMinor}";
+  version = "${source.versionMajor}.${source.versionMinor}";
   buildKernelspace = any (n: n == buildConfig) [ "kernelspace" "all" ];
   buildUserspace = any (n: n == buildConfig) [ "userspace" "all" ];
 in
@@ -80,6 +77,7 @@ assert any (n: n == buildConfig) [
 assert any (n: n == channel) [
   "legacy304"
   "legacy340"
+  "tesla"
   "long-lived"
   "short-lived"
   "beta"
@@ -91,7 +89,7 @@ assert nvidiasettingsSupport -> (
   && glib != null
   && pango != null
   && (
-    if versionAtLeast versionMajor "346" then
+    if versionAtLeast source.versionMajor "346" then
       cairo != null
       && gtk3 != null
     else
@@ -99,6 +97,11 @@ assert nvidiasettingsSupport -> (
   )
 );
 assert libsOnly -> !buildKernelspace;
+assert channel == "tesla" -> elem targetSystem platforms.x86_64-linux;
+
+# FIXME: remove once drivers are updated upstream to support 4.7+
+assert !(versionAtLeast source.versionMajor "364") ->
+  versionOlder kernel.version "4.7";
 
 assert elem targetSystem platforms.bit32 && !libsOnly ->
   throw "Only libs are supported for 32bit platforms";
@@ -109,19 +112,20 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url =
-      if targetSystem == "i686-linux" then
-        "http://download.nvidia.com/XFree86/Linux-x86/${version}/"
+      if elem targetSystem platforms.i686-linux then
+        "mirror://nvidia/XFree86/Linux-x86/${version}/"
           + "NVIDIA-Linux-x86-${version}.run"
-      else if targetSystem == "x86_64-linux" then
-        "http://download.nvidia.com/XFree86/Linux-x86_64/${version}/"
-          + "NVIDIA-Linux-x86_64-${version}-no-compat32.run"
+      else if elem targetSystem platforms.x86_64-linux then
+        "mirror://nvidia/XFree86/Linux-x86_64/${version}/"
+          + "NVIDIA-Linux-x86_64-${version}"
+          + "${if channel == "tesla" then "" else "-no-compat32"}.run"
       else
         throw "The NVIDIA drivers are not supported for the `${targetSystem}` platform";
     sha256 =
-      if targetSystem == "i686-linux" then
-        sha256i686
-      else if targetSystem == "x86_64-linux" then
-        sha256x86_64
+      if elem targetSystem platforms.i686-linux then
+        source.sha256i686
+      else if elem targetSystem platforms.x86_64-linux then
+        source.sha256x86_64
       else
         throw "The NVIDIA drivers are not supported for the `${targetSystem}` platform";
   };
@@ -138,13 +142,22 @@ stdenv.mkDerivation {
         file = "nvidia-drivers/364.19-kernel-4.6.patch";
         sha256 = "a40489322dcab39acbef8f30d9e0adb742b123f9da771e9a5fff1f493bd19335";
       })
-    ] ++ optionals (versionAtLeast kernel.version "4.7" && channel == "long-lived") [
-      (fetchTritonPatch {
-        rev = "caffa3c33c275b99523b530eb8b871c5cf04e8d6";
-        file = "nvidia-drivers/nvidia-drivers-367.35-linux-4.7.patch";
-        sha256 = "e0ea9150593c85fd583cb0a99bc975d7a29aa23087d969ae001032ecb6eb6ea2";
-      })
     ];
+
+  postPatch =
+    # 364+ & Linux 4.7
+    optionalString (versionAtLeast kernel.version "4.7" && versionAtLeast source.versionMajor "364") (
+      /* Collision between function added in Linux 4.7 */ ''
+        sed -i kernel/nvidia-uvm/uvm_linux.h \
+          -i kernel/nvidia-uvm/uvm8_gpu.c \
+          -e 's/radix_tree_empty/nvidia_radix_tree_empty/'
+      '' + /* Change to drm_gem_object_lookup in Linux 4.7 */ ''
+        sed -i kernel/nvidia-drm/nvidia-drm-fb.c \
+          -i kernel/nvidia-drm/nvidia-drm-gem.c \
+          -i kernel/nvidia-uvm/uvm_linux.h \
+          -e 's/drm_gem_object_lookup(dev, file,/drm_gem_object_lookup(file,/'
+      ''
+    );
 
   kernel =
     if buildKernelspace then
@@ -166,7 +179,8 @@ stdenv.mkDerivation {
     libsOnly
     nvidiasettingsSupport
     targetSystem
-    version
+    version;
+  inherit (source)
     versionMajor;
 
   builder = ./builder-generic.sh;
@@ -187,7 +201,7 @@ stdenv.mkDerivation {
     xorg.libXrandr
     xorg.libXv
     zlib
-  ] ++ optionals (versionOlder versionMajor "305") [
+  ] ++ optionals (versionOlder source.versionMajor "305") [
     xorg.libXvMC
   ]);
   gtkPath = optionalString (!libsOnly && nvidiasettingsSupport) (
@@ -198,7 +212,7 @@ stdenv.mkDerivation {
         glib
         pango
       ] ++ (
-        if versionAtLeast versionMajor "346" then [
+        if versionAtLeast source.versionMajor "346" then [
           cairo
           gtk3
         ] else [
@@ -224,7 +238,8 @@ stdenv.mkDerivation {
 
   passthru = {
     inherit
-      version
+      version;
+    inherit (source)
       versionMajor;
     inherit (mesa_noglu)
       driverSearchPath;
@@ -239,19 +254,19 @@ stdenv.mkDerivation {
       else
         false;
     nvenc =
-      if versionAtLeast versionMajor "340" then
+      if versionAtLeast source.versionMajor "340" then
         true
       else
         false;
     uvm =
       # 340.xx supported UVM for both i686 & x86_64
-      if versionAtLeast versionMajor "340"
-         && versionOlder versionMajor "346"
+      if versionAtLeast source.versionMajor "340"
+         && versionOlder source.versionMajor "346"
          && ((elem targetSystem platforms.i686-linux)
               || (elem targetSystem platforms.x86_64-linux)) then
         true
       # 346.xx+ only supports UVM for x86_64
-      else if versionAtLeast versionMajor "346"
+      else if versionAtLeast source.versionMajor "346"
               && (elem targetSystem platforms.x86_64) then
         true
       else

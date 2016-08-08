@@ -580,7 +580,7 @@ babl = callPackage ../all-pkgs/babl { };
 
 bash = callPackage ../all-pkgs/bash { };
 
-bashCompletion = callPackage ../all-pkgs/bash-completion { };
+bash-completion = callPackage ../all-pkgs/bash-completion { };
 
 bc = callPackage ../all-pkgs/bc { };
 

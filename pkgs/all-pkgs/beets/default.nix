@@ -9,7 +9,7 @@
 , writeScript
 
 , bash
-, bashCompletion
+, bash-completion
 , beautifulsoup
 , bs1770gain
 , discogs-client
@@ -212,7 +212,7 @@ let
   allEnabledPlugins = pluginsWithoutDeps ++ enabledOptionalPlugins;
 
   testShell = "${bash}/bin/bash --norc";
-  completion = "${bashCompletion}/share/bash-completion/bash_completion";
+  completion = "${bash-completion}/share/bash-completion/bash_completion";
 in
 
 buildPythonPackage rec {

@@ -1,26 +1,32 @@
-{ stdenv, fetchurl }:
+{ stdenv
+, fetchurl
+}:
 
+let
+  version = "2.3";
+in
 stdenv.mkDerivation rec {
-  name = "bash-completion-2.1";
+  name = "bash-completion-${version}";
 
   src = fetchurl {
-    url = "http://bash-completion.alioth.debian.org/files/${name}.tar.bz2";
-    sha256 = "0kxf8s5bw7y50x0ksb77d3kv0dwadixhybl818w27y6mlw26hq1b";
+    url = "https://github.com/scop/bash-completion/releases/download/"
+      + "${version}/${name}.tar.xz";
+    sha256 = "b2e081af317f3da4fff3a332bfdbebeb5514ebc6c2d2a9cf781180acab15e8e9";
   };
-
-  patches = [ ./bash-4.3.patch ];
 
   doCheck = true;
   parallelBuild = false;
   parallelInstall = false;
   parallelCheck = false;
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = "http://bash-completion.alioth.debian.org/";
     description = "Programmable completion for the bash shell";
-    license = "GPL";
-
-    platforms = stdenv.lib.platforms.all;
-    maintainers = [ stdenv.lib.maintainers.simons ];
+    license = licenses.gpl2;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

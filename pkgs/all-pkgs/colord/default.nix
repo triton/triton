@@ -5,7 +5,7 @@
 , intltool
 
 , argyllcms
-, bashCompletion
+, bash-completion
 , dbus
 , glib
 , gobject-introspection
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     argyllcms
-    bashCompletion
+    bash-completion
     dbus
     glib
     gobject-introspection

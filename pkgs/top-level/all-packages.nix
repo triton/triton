@@ -905,11 +905,14 @@ ffmpeg = callPackageAlias "ffmpeg_3" { };
 fftw_double = callPackage ../all-pkgs/fftw {
   precision = "double";
 };
-fftw_single = callPackageAlias "fftw_double" {
-  precision = "single";
-};
-fftw_long-double = callPackageAlias "fftw_double" {
+fftw_long-double = callPackage ../all-pkgs/fftw {
   precision = "long-double";
+};
+fftw_quad = callPackage ../all-pkgs/fftw {
+  precision = "quad-precision";
+};
+fftw_single = callPackage ../all-pkgs/fftw {
+  precision = "single";
 };
 
 file = callPackage ../all-pkgs/file { };

@@ -1,20 +1,26 @@
 { stdenv
 , fetchurl
+
 , precision
 }:
 
 let
+  inherit (stdenv)
+    targetSystem;
   inherit (stdenv.lib)
-    optionals;
+    elem
+    enFlag
+    optionals
+    platforms;
 
   version = "3.3.5";
 in
 
-assert stdenv.lib.elem precision [
-  "single"
-  "double"
-  "long-double"
-  "quad-precision"
+assert elem precision [
+  "single" # libfftw3f
+  "double" # libfftw3
+  "long-double" # libfftw3l
+  "quad-precision" # libfftw3q
 ];
 
 stdenv.mkDerivation rec {
@@ -27,20 +33,50 @@ stdenv.mkDerivation rec {
   };
 
   configureFlags = [
+    (enFlag "single" (precision == "single") null)
+    (enFlag "float" (precision == "single") null)
+    ###(enFlag "double" (precision == "double") null)
+    (enFlag "long-double" (precision == "long-double") null)
+    (enFlag "quad-precision" (precision == "quad-precision") null)
+    (enFlag "sse" (
+      elem targetSystem platforms.x86-all
+      && precision == "single") null)
+    (enFlag "sse2" (
+      elem targetSystem platforms.x86-all
+      && (precision == "single" || precision == "double")) null)
+    # Could be enabled when our minimum is sandy bridge
+    "--disable-avx"
+    # Could be enabled when our minimum is haswell
+    "--disable-avx2"
+    "--disable-avx512"
+    "--disable-avx-128-fma"
+    "--disable-kcvi"
+    (enFlag "altivec" (elem targetSystem platforms.powerpc-all) null)
+    "--disable-vsx"
+    (enFlag "neon" (elem targetSystem platforms.arm-all) null)
+    #--enable-armv8cyclecounter
+    (enFlag "generic-simd128" (
+      precision == "single"
+      || precision == "double") null)
+    (enFlag "generic-simd256" (
+      precision == "single"
+      || precision == "double") null)
+    #--enable-mips-zbus-timer
     "--enable-fma"
-  ] ++ optionals (precision != "double") [
-    "--enable-${precision}"
-  ] ++ optionals (precision == "single") [
-    "--enable-sse"
-    # "--enable-altivec"
-    # "--enable-neon"  # Could be enabled on arm
-  ] ++ optionals (precision == "single" || precision == "double") [
-    "--enable-sse2"
-    # "--enable-avx"  # Could be enabled when our minimum is sandy bridge
-  ] ++ [
+    #(enFlag "mpi" (
+    #  mpi != null
+    #  && (
+    #    precision == "single"
+    #    || precision == "double"
+    #    || precision == "long-double")) null)
     "--disable-fortran"
     "--enable-openmp"
     "--enable-threads"
+    "--without-slow-timer"
+    "--without-our-malloc"
+    "--without-our-malloc16"
+    "--without-g77-wrappers"
+    "--without-combined-threads"
   ];
 
   # Since this is used in a lot of shared libraries we need fPIC
@@ -49,10 +85,11 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    description = "Fastest Fourier Transform in the West library";
+    description = "Library for Fast Discrete Fourier Transform";
     homepage = http://www.fftw.org/;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

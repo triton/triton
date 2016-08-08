@@ -9,13 +9,14 @@ let
   inherit (stdenv.lib)
     optionals
     optionalString;
+
+  version = "1.0.6";
 in
 
 assert shared || static;
 
 stdenv.mkDerivation rec {
   name = "bzip2-${version}";
-  version = "1.0.6";
 
   src = fetchurl {
     url = "http://www.bzip.org/${version}/${name}.tar.gz";

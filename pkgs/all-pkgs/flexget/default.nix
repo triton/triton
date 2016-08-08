@@ -43,7 +43,6 @@ let
     isPy3k
     pythonOlder;
 in
-
 buildPythonPackage rec {
   name = "flexget-${version}";
   version = "2.2.11";

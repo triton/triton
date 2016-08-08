@@ -9,7 +9,6 @@ let
   inherit (pythonPackages)
     pythonAtLeast;
 in
-
 buildPythonPackage rec {
   name = "backports.ssl_match_hostname-${version}";
   version = "3.5.0.1";
@@ -25,7 +24,7 @@ buildPythonPackage rec {
   doCheck = true;
 
   meta = with stdenv.lib; {
-    description = "he ssl.match_hostname() function from Python 3.5";
+    description = "The ssl.match_hostname() function from Python 3.5";
     homepage = http://bitbucket.org/brandon/backports.ssl_match_hostname;
     license = licenses.free; # python sfl
     maintainers = with maintainers; [

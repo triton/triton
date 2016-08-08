@@ -29,8 +29,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = http://www.exiv2.org/;
     description = "A library and command-line utility to manage image metadata";
+    homepage = http://www.exiv2.org/;
     maintainers = with maintainers; [
       wkennington
     ];

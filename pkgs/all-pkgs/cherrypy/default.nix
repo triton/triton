@@ -23,7 +23,7 @@ buildPythonPackage rec {
 
   meta = with stdenv.lib; {
     description = "A pythonic, object-oriented HTTP framework";
-    homepage = "http://www.cherrypy.org";
+    homepage = http://www.cherrypy.org;
     license = licenses.bsd3;
     maintainers = with maintainers; [
       codyopel

@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   name = "dbus-glib-0.106";
 
   src = fetchurl {
-    url = "https://dbus.freedesktop.org/releases/dbus-glib//${name}.tar.gz";
+    url = "https://dbus.freedesktop.org/releases/dbus-glib/${name}.tar.gz";
     sha256 = "0in0i6v68ixcy0ip28i84hdczf10ykq9x682qgcvls6gdmq552dk";
   };
 

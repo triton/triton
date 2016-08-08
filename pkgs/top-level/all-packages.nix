@@ -838,7 +838,7 @@ fcgi = callPackage ../all-pkgs/fcgi { };
 
 feh = callPackage ../all-pkgs/feh { };
 
-ffmpeg_generic = callPackage ../all-pkgs/ffmpeg {
+ffmpeg_generic = overrides: callPackage ../all-pkgs/ffmpeg ({
   # The following are disabled by default
   celt = null;
   dcadec = null;
@@ -890,14 +890,15 @@ ffmpeg_generic = callPackage ../all-pkgs/ffmpeg {
   xvidcore = null;
   zeromq4 = null;
   #zvbi = null;
-};
-ffmpeg_2 = callPackageAlias "ffmpeg_generic" {
+} // overrides);
+
+ffmpeg_2 = pkgs.ffmpeg_generic {
   channel = "2";
 };
-ffmpeg_3 = callPackageAlias "ffmpeg_generic" {
+ffmpeg_3 = pkgs.ffmpeg_generic {
   channel = "3";
 };
-ffmpeg_head = callPackageAlias "ffmpeg_generic" {
+ffmpeg_head = pkgs.ffmpeg_generic {
   channel = "9";
 };
 ffmpeg = callPackageAlias "ffmpeg_3" { };

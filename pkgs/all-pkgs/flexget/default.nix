@@ -46,20 +46,21 @@ in
 
 buildPythonPackage rec {
   name = "flexget-${version}";
-  version = "2.0.40";
+  version = "2.2.11";
 
   src = fetchPyPi {
     package = "FlexGet";
     inherit version;
-    sha256 = "d94486b534c52be70e6d12efe3eb4792bb1b7cc96861fbf4b48801f5d44c8391";
+    sha256 = "c4dfcbb1cf983d5dec2a571bbe21c781cbb2720aa4d2275808c9c9cbeffc1ccd";
   };
 
   postPatch =
     /* Allow using newer dependencies */ ''
       sed -i requirements.txt \
-        -e 's/, !=3.1.0//' \
-        -e 's/flask-restplus==0.8.6/flask-restplus>=0.8.6/' \
-        -e 's/guessit<=2.0.4/guessit>=2.0.4/'
+        -e 's/,.*<.*//' \
+        -e 's/<.*//' \
+        -e 's/!=.*//' \
+        -e 's/==.*//'
     '';
 
   propagatedBuildInputs = [

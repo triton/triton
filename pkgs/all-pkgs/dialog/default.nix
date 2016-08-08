@@ -7,8 +7,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dialog-${version}";
-  version = "1.3-20160209";
+  name = "dialog-1.3-20160209";
 
   src = fetchurl {
     url = "ftp://invisible-island.net/dialog/${name}.tgz";

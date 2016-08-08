@@ -17,7 +17,6 @@ let
   inherit (stdenv.lib)
     optionals;
 in
-
 buildPythonPackage rec {
   name = "flask-restful-${version}";
   version = "0.3.5";

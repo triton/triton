@@ -9,7 +9,6 @@ let
   inherit (pythonPackages)
     pythonAtLeast;
 in
-
 buildPythonPackage rec {
   name = "backports_abc-${version}";
   version = "0.4";

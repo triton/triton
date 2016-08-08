@@ -2373,6 +2373,8 @@ vte = callPackage ../all-pkgs/vte { };
 
 w3m = callPackage ../all-pkgs/w3m { };
 
+waf = callPackage ../all-pkgs/waf { };
+
 wavpack = callPackage ../all-pkgs/wavpack { };
 
 wayland = callPackage ../all-pkgs/wayland { };
@@ -2606,8 +2608,6 @@ zstd = callPackage ../all-pkgs/zstd { };
   systemd-cryptsetup-generator = callPackage ../os-specific/linux/systemd/cryptsetup-generator.nix { };
 
   unzipNLS = lowPrio (unzip.override { enableNLS = true; });
-#
-  waf = callPackage ../development/tools/build-managers/waf { };
 #
   xorriso = callPackage ../tools/cd-dvd/xorriso { };
 #

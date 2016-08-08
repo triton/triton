@@ -9,7 +9,6 @@ let
   inherit (pythonPackages)
     pythonAtLeast;
 in
-
 buildPythonPackage rec {
   name = "enum34-${version}";
   version = "1.1.6";

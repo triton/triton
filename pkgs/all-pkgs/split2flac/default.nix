@@ -45,10 +45,6 @@ stdenv.mkDerivation rec {
         -e "s/\''${0##\*split2}/\''${SPLIT2FLAC_CALLER##\*split2}/"
     '';
 
-  doConfigure = false;
-
-  doBuild = false;
-
   installPhase = ''
     install -D -m755 -v 'split2flac' "$out/bin/split2flac"
     ln -sv $out/bin/split2flac $out/bin/split2m4a

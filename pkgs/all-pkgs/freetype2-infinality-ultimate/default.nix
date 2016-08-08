@@ -12,10 +12,6 @@ stdenv.mkDerivation rec {
     sha256 = "c6f2036d11aa8ce4f8f0454c305da32e97127857850050709b623c44352ef2fe";
   };
 
-  doConfigure = false;
-
-  doBuild = false;
-
   installPhase = ''
     mkdir -pv $out/share/freetype2-infinality-ultimate
 

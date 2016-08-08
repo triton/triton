@@ -26,10 +26,6 @@ stdenv.mkDerivation {
     unzip
   ];
 
-  doConfigure = false;
-
-  doBuild = false;
-
   installPhase = ''
     mkdir -p $out
     cp -a * $out

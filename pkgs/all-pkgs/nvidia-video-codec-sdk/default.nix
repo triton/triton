@@ -25,10 +25,6 @@ stdenv.mkDerivation rec {
     unzip
   ];
 
-  doConfigure = false;
-
-  doBuild = false;
-
   installPhase = ''
     install -D -m644 -v 'Samples/common/inc/nvEncodeAPI.h' \
       "$out/include/nvEncodeAPI.h"

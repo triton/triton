@@ -13,15 +13,16 @@
 }:
 
 let
+  debian-patches-version = "1.4.0-10";
+
   debian-patches = stdenv.mkDerivation rec {
     name = "vorbis-tools-debian-patches-${version}";
-    version = "1.4.0-10";
+
     src = fetchzip {
-      url = "mirror://debian/pool/main/v/vorbis-tools/vorbis-tools_${version}.debian.tar.xz";
+      url = "mirror://debian/pool/main/v/vorbis-tools/vorbis-tools_${debian-patches-version}.debian.tar.xz";
       sha256 = "4310190197e98011a6190d640c905d15561dce269dd5c75b22a4416c5494fa6f";
     };
-    doConfigure = false;
-    doBuild = false;
+
     installPhase = ''
       mkdir -pv $out
       find . -type f -regextype posix-extended -regex ".*\.(diff|patch)" -exec cp -v {} $out \;

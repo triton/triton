@@ -30,10 +30,10 @@ stdenv.mkDerivation rec {
     inherit multihash sha256;
   };
 
-  doConfigure = false;
-
-  # Do NOT disable build phase or build will fail
-  buildPhase = "true";
+  # Running make will cause the build to fail
+  buildPhase = ''
+    true
+  '';
 
   installPhase = ''
     dst="$out/share/xml/${pname}"

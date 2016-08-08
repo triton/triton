@@ -70,7 +70,8 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    sed -i 's|/usr/share/locale|${gettext}/share/locale|g' lisp/international/mule-cmds.el
+    sed -i lisp/international/mule-cmds.el \
+      -e 's|/usr/share/locale|${gettext}/share/locale|g'
 
     find . -name Makefile.in -exec sed -i 's,/bin/pwd,pwd,g' {} \;
 

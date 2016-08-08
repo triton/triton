@@ -8,10 +8,12 @@
 , hunspell
 }:
 
+let
+  version = "1.6.0";
+in
 stdenv.mkDerivation rec {
   name = "enchant-${version}";
-  version = "1.6.0";
-  
+
   src = fetchurl {
     url = "http://www.abisource.com/downloads/enchant/${version}/${name}.tar.gz";
     md5Url = "http://www.abisource.com/downloads/enchant/${version}/MD5SUM";

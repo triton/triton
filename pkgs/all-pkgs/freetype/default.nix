@@ -19,7 +19,6 @@ let
     optionals
     optionalString;
 in
-
 stdenv.mkDerivation rec {
   name = "freetype-2.6.5";
 

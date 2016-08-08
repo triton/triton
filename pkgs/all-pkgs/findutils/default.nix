@@ -19,8 +19,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
+    description = "GNU Find Utilities, basic directory searching utilities";
     homepage = http://www.gnu.org/software/findutils/;
-    description = "GNU Find Utilities, the basic directory searching utilities of the GNU operating system";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [
       wkennington

@@ -14,21 +14,20 @@ stdenv.mkDerivation rec {
     configureFlagsArray+=("--with-hotplug-dir=$out/lib/firmware")
   '';
 
-  dontStrip = true;
-
   postInstall = ''
-    # These are lifted from the Arch PKGBUILD
-    # remove files which conflicts with linux-firmware
+    # Remove files which conflict with linux-firmware
     rm -rf $out/lib/firmware/{ct{efx,speq}.bin,ess,korg,sb16,yamaha}
-    # remove broken symlinks (broken upstream)
+    # Remove broken symlinks (broken upstream)
     rm -rf $out/lib/firmware/turtlebeach
-    # remove empty dir
+    # Remove empty dir
     rm -rf $out/bin
   '';
 
+  dontStrip = true;
+
   meta = with stdenv.lib; {
-    homepage = http://www.alsa-project.org/main/index.php/Main_Page;
     description = "Soundcard firmwares from the alsa project";
+    homepage = http://www.alsa-project.org/main/index.php/Main_Page;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
       wkennington

@@ -16,7 +16,7 @@ buildPythonPackage {
   };
 
   meta = with stdenv.lib; {
-    description = "An optimising static compiler for both the Python programming language and the extended Cython programming language";
+    description = "An optimising static compiler for the Python and Cython programming languages";
     homepage = http://cython.org;
     license = licenses.asl20;
     maintainers = with maintainers; [

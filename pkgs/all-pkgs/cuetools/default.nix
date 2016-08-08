@@ -9,9 +9,11 @@
 , vorbis-tools
 }:
 
+let
+  version = "1.4.1";
+in
 stdenv.mkDerivation rec {
   name = "cuetools-${version}";
-  version = "1.4.1";
 
   src = fetchzip {
     url = "https://github.com/svend/cuetools/archive/${version}.tar.gz";

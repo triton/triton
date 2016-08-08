@@ -37,8 +37,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
+    description = "A central privileged daemon that manages all your cgroups";
     homepage = https://linuxcontainers.org/cgmanager/introduction/;
-    description = "a central privileged daemon that manages all your cgroups";
     license = licenses.lgpl21;
     maintainers = with maintainers; [
       wkennington

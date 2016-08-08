@@ -23,7 +23,6 @@ let
   inherit (pythonPackages)
     isPy3k;
 in
-
 buildPythonPackage rec {
   name = "certbot-${version}";
   version = "0.8.1";

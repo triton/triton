@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   name = "gksu-2.0.2";
 
   src = fetchurl {
-    url = "http://people.debian.org/~kov/gksu/${name}.tar.gz";
+    url = "https://people.debian.org/~kov/gksu/${name}.tar.gz";
     sha256 = "0npfanlh28daapkg25q4fncxd89rjhvid5fwzjaw324x0g53vpm1";
   };
 
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
   postPatch = ''
     sed -i gksu.desktop \
       -e 's|/usr/bin/x-terminal-emulator|-l gnome-terminal|g'
-  '' + ''
+  '' + /* Use correct autoconf macro */ ''
     sed -i configure.ac \
       -e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:'
   '';
@@ -57,7 +57,9 @@ stdenv.mkDerivation rec {
     description = "A graphical frontend for libgksu";
     homepage = "http://www.nongnu.org/gksu/";
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

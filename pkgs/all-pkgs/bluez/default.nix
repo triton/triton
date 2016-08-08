@@ -11,7 +11,6 @@
 let
   baseUrl = "mirror://kernel/linux/bluetooth";
 in
-
 stdenv.mkDerivation rec {
   name = "bluez-5.41";
 
@@ -30,8 +29,9 @@ stdenv.mkDerivation rec {
   ];
 
   preConfigure = ''
-    substituteInPlace tools/hid2hci.rules --replace /sbin/udevadm ${systemd_lib}/bin/udevadm
-    substituteInPlace tools/hid2hci.rules --replace "hid2hci " "$out/lib/udev/hid2hci "
+    sed tools/hid2hci.rules \
+      -e 's,/sbin/udevadm,${systemd_lib}/bin/udevadm,' \
+      -e 's,hid2hci ,$out/lib/udev/hid2hci ,'
 
     configureFlagsArray+=(
       "--with-dbusconfdir=$out/etc"

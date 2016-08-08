@@ -27,14 +27,14 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://www.gnu.org/software/gawk/;
     description = "GNU implementation of the Awk programming language";
+    homepage = http://www.gnu.org/software/gawk/;
     license = stdenv.lib.licenses.gpl3Plus;
     maintainers = with maintainers; [
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux
-      ++ i686-linux;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

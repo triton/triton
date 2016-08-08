@@ -4,9 +4,10 @@
 
 stdenv.mkDerivation rec {
   name = "fuse-2.9.7";
-  
+
   src = fetchurl {
-    url = "https://github.com/libfuse/libfuse/releases/download/${name}/${name}.tar.gz";
+    url = "https://github.com/libfuse/libfuse/releases/download/${name}/"
+      + "${name}.tar.gz";
     allowHashOutput = false;
     sha256 = "832432d1ad4f833c20e13b57cf40ce5277a9d33e483205fc63c78111b3358874";
   };
@@ -19,7 +20,8 @@ stdenv.mkDerivation rec {
   '';
 
   preBuild = ''
-    sed -e 's@/bin/@/run/current-system/sw/bin/@g' -i lib/mount_util.c
+    sed -i lib/mount_util.c \
+      -e 's@/bin/@/run/current-system/sw/bin/@g'
   '';
 
   configureFlags = [
@@ -36,8 +38,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
+    description = "Kernel module and library for filesystems in user space";
     homepage = http://fuse.sourceforge.net/;
-    description = "Kernel module and library that allows filesystems to be implemented in user space";
     maintainers = with maintainers; [
       wkennington
     ];

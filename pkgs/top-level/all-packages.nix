@@ -2378,9 +2378,6 @@ waf = callPackage ../all-pkgs/waf { };
 wavpack = callPackage ../all-pkgs/wavpack { };
 
 wayland = callPackage ../all-pkgs/wayland { };
-wayland-docs = callPackage ../all-pkgs/wayland {
-  enableDocumentation = true;
-};
 
 wayland-protocols = callPackage ../all-pkgs/wayland-protocols { };
 

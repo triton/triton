@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "4.0.9";
+  version = "4.0.10";
 in
 buildPythonPackage {
   name = "decorator-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "decorator";
     inherit version;
-    sha256 = "90022e83316363788a55352fe39cfbed357aa3a71d90e5f2803a35471de4bba8";
+    sha256 = "9c6e98edcb33499881b86ede07d9968c81ab7c769e28e9af24075f0a5379f070";
   };
 
   meta = with stdenv.lib; {

@@ -20,8 +20,8 @@ stdenv.mkDerivation rec {
   parallelCheck = false;
 
   meta = with stdenv.lib; {
-    homepage = "http://bash-completion.alioth.debian.org/";
     description = "Programmable completion for the bash shell";
+    homepage = "https://github.com/scop/bash-completion/";
     license = licenses.gpl2;
     maintainers = with maintainers; [
       codyopel

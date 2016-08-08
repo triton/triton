@@ -143,6 +143,8 @@ backports-abc = callPackage ../all-pkgs/backports-abc { };
 backports-ssl-match-hostname =
   callPackage ../all-pkgs/backports-ssl-match-hostname { };
 
+bazaar = callPackage ../all-pkgs/bazaar { };
+
 beautifulsoup = callPackage ../all-pkgs/beautifulsoup { };
 
 beets = callPackage ../all-pkgs/beets { };
@@ -13980,7 +13982,7 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
       sha256 = "0gnh5yyackmqcphiympan48dm5lc834yzspss1lp4g1wq3vpyraf";
     };
 
-    propagatedBuildInputs = with self; [ pkgs.git pkgs.mercurial pkgs.bazaar self.psutil self.pygit2 ];
+    propagatedBuildInputs = with self; [ pkgs.git pkgs.mercurial bazaar self.psutil self.pygit2 ];
 
     # error: This is still beta and some tests still fail
 

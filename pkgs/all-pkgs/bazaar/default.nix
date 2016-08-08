@@ -1,12 +1,20 @@
 { stdenv
+, buildPythonPackage
 , fetchTritonPatch
 , fetchurl
+, pythonPackages
 
-, python2
-, python2Packages
+, paramiko
+, pycurl
+, wrapPython
 }:
 
-stdenv.mkDerivation rec {
+let
+  inherit (pythonPackages)
+    isPy3k;
+in
+
+buildPythonPackage rec {
   name = "bazaar-${version}";
     versionMajor = "2.7";
     versionMinor = "0";
@@ -18,10 +26,9 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    python2
-    python2Packages.paramiko
-    python2Packages.pycurl
-    python2Packages.wrapPython
+    paramiko
+    pycurl
+    wrapPython
   ];
 
   patches = [
@@ -38,18 +45,15 @@ stdenv.mkDerivation rec {
         --subst-var-by TritonCACertPath /etc/ssl/certs/ca-certificates.crt
     '';
 
-  installPhase = ''
-    runHook 'preInstall'
-    ${python2.interpreter} setup.py install --prefix=$out
-    wrapPythonPrograms
-    runHook 'postInstall'
-  '';
+  disabled = isPy3k;
 
   meta = with stdenv.lib; {
     description = "Bazaar is a next generation distributed version control system";
     homepage = http://bazaar-vcs.org/;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

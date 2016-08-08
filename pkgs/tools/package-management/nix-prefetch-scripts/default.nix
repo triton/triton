@@ -1,5 +1,6 @@
 { stdenv, makeWrapper, buildEnv,
-  git, subversion, mercurial, bazaar, cvs, unzip, curl, gnused, coreutils, nix
+  git, subversion, mercurial, cvs, unzip, curl, gnused, coreutils, nix
+, pythonPackages
 }:
 
 let mkPrefetchScript = tool: src: deps:
@@ -27,12 +28,12 @@ let mkPrefetchScript = tool: src: deps:
 
     meta = with stdenv.lib; {
       description = "Script used to obtain source hashes for fetch${tool}";
-      maintainers = with maintainers; [ bennofs ];
-      platforms = stdenv.lib.platforms.unix;
+      maintainers = with maintainers; [ ];
+      platforms = stdenv.lib.platforms.all;
     };
   };
 in rec {
-  nix-prefetch-bzr = mkPrefetchScript "bzr" ../../../build-support/fetchbzr/nix-prefetch-bzr [bazaar];
+  nix-prefetch-bzr = mkPrefetchScript "bzr" ../../../build-support/fetchbzr/nix-prefetch-bzr [pythonPackages.bazaar];
   nix-prefetch-cvs = mkPrefetchScript "cvs" ../../../build-support/fetchcvs/nix-prefetch-cvs [cvs];
   nix-prefetch-git = mkPrefetchScript "git" ../../../build-support/fetchgit/nix-prefetch-git [git coreutils];
   nix-prefetch-hg  = mkPrefetchScript "hg"  ../../../build-support/fetchhg/nix-prefetch-hg   [mercurial];

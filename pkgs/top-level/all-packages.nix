@@ -578,8 +578,6 @@ avahi = callPackage ../all-pkgs/avahi { };
 
 babl = callPackage ../all-pkgs/babl { };
 
-bazaar = callPackage ../all-pkgs/bazaar { };
-
 bash = callPackage ../all-pkgs/bash { };
 
 bashCompletion = callPackage ../all-pkgs/bash-completion { };

@@ -5,14 +5,14 @@
 }:
 
 let
-  version = "7.4.2";
+  version = "7.6.0";
 in
 stdenv.mkDerivation rec {
   name = "boehm-gc-${version}";
 
   src = fetchurl {
     url = "http://www.hboehm.info/gc/gc_source/gc-${version}.tar.gz";
-    sha256 = "18mg28rr6kwr5clc65k4l4hkyy4kd16amx831sjf8q2lqkbhlck3";
+    sha256 = "a14a28b1129be90e55cd6f71127ffc5594e1091d5d54131528c24cd0c03b7d90";
   };
 
   buildInputs = [

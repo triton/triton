@@ -14,9 +14,9 @@
 
 let
   version = "3.20.0";
+
   baseFileUrl = "mirror://sourceforge/project/filezilla/FileZilla_Client/${version}/FileZilla_${version}";
 in
-
 stdenv.mkDerivation rec {
   name = "filezilla-${version}";
 
@@ -46,8 +46,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = http://filezilla-project.org/;
     description = "Graphical FTP, FTPS and SFTP client";
+    homepage = http://filezilla-project.org/;
     license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington

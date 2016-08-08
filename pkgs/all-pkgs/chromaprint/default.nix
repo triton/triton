@@ -11,7 +11,6 @@ let
   inherit (stdenv.lib)
     cmFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "chromaprint-${version}";
   version = "1.3.1";
@@ -48,7 +47,9 @@ stdenv.mkDerivation rec {
     description = "AcoustID audio fingerprinting library";
     homepage = "http://acoustid.org/chromaprint";
     license = licenses.lgpl21Plus;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

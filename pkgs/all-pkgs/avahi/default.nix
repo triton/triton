@@ -11,9 +11,6 @@
 , expat
 , glib
 , libdaemon
-
-# Remove this flag
-, withLibdnssdCompat ? true
 }:
 
 let

@@ -11,8 +11,8 @@ stdenv.mkDerivation rec {
     sha256 = "1761vymxbp4wb5rzjvabhdkskk95pghnn67464byvzb5mfl8jpm2";
   };
 
-  # We need to directly reference coreutils
-  # Otherwise the output depends on the bootstrap
+  # We need to directly reference coreutils, otherwise the
+  # output depends on the bootstrap.
   buildInputs = [
     coreutils
   ];

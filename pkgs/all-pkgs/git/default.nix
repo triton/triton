@@ -30,9 +30,7 @@ let
     gnugrep
     gnused
   ];
-in
 
-let
   version = "2.9.2";
   tarballUrls = [
     "mirror://kernel/software/scm/git/git-${version}.tar"
@@ -108,8 +106,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = http://git-scm.com/;
     description = "Distributed version control system";
+    homepage = http://git-scm.com/;
     license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington

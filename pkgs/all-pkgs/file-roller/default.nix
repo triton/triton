@@ -24,7 +24,6 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "file-roller-${version}";
   versionMajor = "3.20";
@@ -88,8 +87,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://wiki.gnome.org/Apps/FileRoller;
     description = "Archive manager for the GNOME desktop environment";
+    homepage = https://wiki.gnome.org/Apps/FileRoller;
     licenses = licenses.free;
     maintainers = with maintainers; [
       codyopel

@@ -22,7 +22,6 @@ let
   inherit (stdenv.lib)
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "gjs-${version}";
   versionMajor = "1.44";

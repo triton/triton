@@ -79,10 +79,9 @@ stdenv.mkDerivation rec {
     };
   };
 
-
   meta = with stdenv.lib; {
-    homepage = http://e2fsprogs.sourceforge.net/;
     description = "Tools for creating and checking ext2/ext3/ext4 filesystems";
+    homepage = http://e2fsprogs.sourceforge.net/;
     license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington

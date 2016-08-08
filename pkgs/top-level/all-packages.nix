@@ -992,9 +992,7 @@ gjs = callPackage ../all-pkgs/gjs { };
 
 gksu = callPackage ../all-pkgs/gksu { };
 
-glfw = callPackageAlias "glfw3" { };
-glfw2 = callPackage ../all-pkgs/glfw/2.x.nix { };
-glfw3 = callPackage ../all-pkgs/glfw/3.x.nix { };
+glfw = callPackage ../all-pkgs/glfw { };
 
 glib = callPackage ../all-pkgs/glib {
   channel = "2.48";

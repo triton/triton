@@ -13,7 +13,6 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "gcab-${version}";
   version = "0.6";

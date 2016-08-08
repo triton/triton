@@ -19,7 +19,6 @@ let
   inherit (stdenv.lib)
     optionals;
 in
-
 buildPythonPackage rec {
   name = "flask-restplus-${version}";
   version = "0.9.2";

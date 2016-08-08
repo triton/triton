@@ -31,12 +31,12 @@ in
 
 buildPythonPackage rec {
   name = "apscheduler-${version}";
-  version = "3.1.0";
+  version = "3.2.0";
 
   src = fetchPyPi {
     package = "APScheduler";
     inherit version;
-    sha256 = "96a7ca40dbfb16502b44740c31c935943532f5a13be114e75419ca86fa264486";
+    sha256 = "5baa1195ba711868fae257612cf80372ff1124014ca896884bf132f75636f638";
   };
 
   propagatedBuildInputs = [

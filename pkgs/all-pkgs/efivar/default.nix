@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     popt
   ];
 
-  # FIXME: ld.so not properly linked in with ld --no-allow-shlib-undefined
+  # FIXME: ld.so is not properly linked in with ld --no-allow-shlib-undefined
   #   https://sourceware.org/bugzilla/show_bug.cgi?id=19249
   postPatch = ''
     sed -i 's/--no-allow-shlib-undefined//' gcc.specs

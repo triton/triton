@@ -50,8 +50,9 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://www.alsa-project.org/;
     description = "ALSA, the Advanced Linux Sound Architecture utils";
+    homepage = http://www.alsa-project.org/;
+    license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington
     ];

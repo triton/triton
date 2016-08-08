@@ -7,7 +7,6 @@
 let
   version = stdenv.lib.replaceStrings ["v"] [""] goPackages.consul.rev;
 in
-
 stdenv.mkDerivation {
   name = "consul-ui-${version}";
 

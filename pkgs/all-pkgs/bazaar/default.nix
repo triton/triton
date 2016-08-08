@@ -13,7 +13,6 @@ let
   inherit (pythonPackages)
     isPy3k;
 in
-
 buildPythonPackage rec {
   name = "bazaar-${version}";
     versionMajor = "2.7";
@@ -21,7 +20,8 @@ buildPythonPackage rec {
     version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "http://launchpad.net/bzr/${versionMajor}/${version}/+download/bzr-${version}.tar.gz";
+    url = "http://launchpad.net/bzr/${versionMajor}/${version}/+download/"
+      + "bzr-${version}.tar.gz";
     sha256 = "1cysix5k3wa6y7jjck3ckq3abls4gvz570s0v0hxv805nwki4i8d";
   };
 
@@ -48,7 +48,7 @@ buildPythonPackage rec {
   disabled = isPy3k;
 
   meta = with stdenv.lib; {
-    description = "Bazaar is a next generation distributed version control system";
+    description = "Bazaar is a distributed version control system";
     homepage = http://bazaar-vcs.org/;
     license = licenses.gpl2;
     maintainers = with maintainers; [

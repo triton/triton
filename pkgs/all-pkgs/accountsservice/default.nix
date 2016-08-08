@@ -17,7 +17,6 @@ let
     enFlag
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "accountsservice-0.6.42";
 

@@ -12,7 +12,6 @@
 let
   source = (import ./sources.nix { })."${channel}";
 in
-
 stdenv.mkDerivation rec {
   name = "adwaita-icon-theme-${source.version}";
 

@@ -891,7 +891,6 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/ffmpeg ({
   zeromq4 = null;
   #zvbi = null;
 } // overrides);
-
 ffmpeg_2 = pkgs.ffmpeg_generic {
   channel = "2";
 };

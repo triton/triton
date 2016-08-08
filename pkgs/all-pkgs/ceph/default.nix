@@ -276,7 +276,10 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  outputs = [ "out" "lib" ];
+  outputs = [
+    "out"
+    "lib"
+  ];
 
   postInstall = ''
     # Bring in lib as a native build input
@@ -321,9 +324,11 @@ stdenv.mkDerivation rec {
 
     # Make sure libs in $lib/lib don't reference $out/lib
     find $lib/lib -name \*.so\* -type f -exec patchelf --shrink-rpath {} \;
-    
+
     wrapPythonPrograms $out/bin
   '';
+
+  passthru.version = version;
 
   meta = with stdenv.lib; {
     description = "Distributed storage system";
@@ -335,6 +340,4 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       x86_64-linux;
   };
-
-  passthru.version = version;
 }

@@ -10,7 +10,6 @@ let
   inherit (stdenv.lib)
     optionalString;
 in
-
 stdenv.mkDerivation rec {
   name = "cryptodev-linux-1.8";
 

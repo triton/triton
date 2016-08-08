@@ -5,9 +5,11 @@
 , sox
 }:
 
+let
+  version = "0.4.9";
+in
 stdenv.mkDerivation rec {
   name = "bs1770gain-${version}";
-  version = "0.4.9";
 
   src = fetchurl {
     url = "mirror://sourceforge/bs1770gain/${name}.tar.gz";

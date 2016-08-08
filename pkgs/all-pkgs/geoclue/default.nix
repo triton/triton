@@ -15,17 +15,16 @@
 let
   inherit (stdenv.lib)
     enFlag;
-in
 
+  versionMajor = "2.4";
+  version = "${versionMajor}.3";
+in
 stdenv.mkDerivation rec {
   name = "geoclue-${version}";
-  versionMajor = "2.4";
-  versionMinor = "3";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/geoclue/releases/"
-        + "${versionMajor}/${name}.tar.xz";
+      + "${versionMajor}/${name}.tar.xz";
     sha256 = "ada9dba870dd79e1b21923aeda4d82b66cbda39e57978fbe3d83d356cc3c605e";
   };
 

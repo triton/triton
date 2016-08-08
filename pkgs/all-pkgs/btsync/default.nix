@@ -6,11 +6,14 @@
 let
   inherit (stdenv.lib)
     makeSearchPath;
-in
 
+  libPath = makeSearchPath "lib" [
+    stdenv.cc.libc
+  ];
+in
 stdenv.mkDerivation rec {
   name = "btsync-${version}";
-  version = "2.3.7";
+  version = "2.3.8";
 
   src  = fetchurl {
     url  = "https://download-cdn.getsync.com/${version}/"
@@ -20,10 +23,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     patchelf
-  ];
-
-  libPath = makeSearchPath "lib" [
-    stdenv.cc.libc
   ];
 
   sourceRoot = ".";

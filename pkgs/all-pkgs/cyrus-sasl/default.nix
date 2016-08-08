@@ -104,36 +104,36 @@ stdenv.mkDerivation rec {
       file = "cyrus-sasl/cyrus-sasl-2.1.26-send-imap-logout.patch";
       sha256 = "021289615c690937dacf7bd0d1f23823255d141ea0c7f81a9f98d4d2b42260d4";
     })
-
   ];
 
   postPatch = ''
     # Get rid of the -R switch (runpath_switch for Sun)
     # >=gcc-4.6 errors out with unknown option
-    sed -i -e '/LIB_SQLITE.*-R/s/ -R[^"]*//' \
-      configure.in || die
+    sed -i configure.in \
+      -e '/LIB_SQLITE.*-R/s/ -R[^"]*//'
 
     # Use plugindir for sasldir
-    sed -i '/^sasldir =/s:=.*:= $(plugindir):' \
-      plugins/Makefile.{am,in} || die "sed failed"
+    sed -i plugins/Makefile.{am,in} \
+      -e '/^sasldir =/s:=.*:= $(plugindir):'
 
-    sed -i -e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:g' \
-      -e 's:AC_CONFIG_MACRO_DIR:AC_CONFIG_MACRO_DIRS:g' \
-      configure.in || die
-    sed -i -e 's:AC_CONFIG_MACRO_DIR:AC_CONFIG_MACRO_DIRS:g' \
-      saslauthd/configure.in || die
+    sed -i configure.in \
+      -e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:g' \
+      -e 's:AC_CONFIG_MACRO_DIR:AC_CONFIG_MACRO_DIRS:g'
+
+    sed -i saslauthd/configure.in \
+      -e 's:AC_CONFIG_MACRO_DIR:AC_CONFIG_MACRO_DIRS:g'
   '';
 
   # Set this variable at build-time to make sure $out can be evaluated.
   preConfigure = ''
     configureFlagsArray+=("--with-plugindir=$out/lib/sasl2")
     configureFlagsArray+=("--with-configdir=$out/lib/sasl2")
-    configureFlagsArray+=("--with-saslauthd=/run/saslauthd")
   '';
 
   configureFlags = [
-    "--with-openssl=${openssl}"
     "--enable-auth-sasldb"
+    "--with-openssl=${openssl}"
+    "--with-saslauthd=/run/saslauthd"
   ];
 
   parallelBuild = false;
@@ -144,6 +144,7 @@ stdenv.mkDerivation rec {
     homepage = "http://cyrusimap.web.cmu.edu/";
     license = licenses.bsd3;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

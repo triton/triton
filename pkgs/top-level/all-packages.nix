@@ -996,10 +996,8 @@ glfw = callPackageAlias "glfw3" { };
 glfw2 = callPackage ../all-pkgs/glfw/2.x.nix { };
 glfw3 = callPackage ../all-pkgs/glfw/3.x.nix { };
 
-glib = callPackage ../all-pkgs/glib { };
-# checked version separate to break recursion
-glib_tested = callPackageAlias "glib" {
-  doCheck = true;
+glib = callPackage ../all-pkgs/glib {
+  channel = "2.48";
 };
 
 glibmm = callPackage ../all-pkgs/glibmm { };

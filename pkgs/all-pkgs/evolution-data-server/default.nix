@@ -35,7 +35,6 @@ let
     enFlag
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "evolution-data-server-${version}";
   versionMajor = "3.20";

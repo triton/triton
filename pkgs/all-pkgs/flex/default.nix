@@ -30,13 +30,13 @@ stdenv.mkDerivation rec {
   dontDisableStatic = true;
 
   meta = with stdenv.lib; {
-    homepage = http://flex.sourceforge.net/;
     description = "A fast lexical analyser generator";
+    homepage = http://flex.sourceforge.net/;
     maintainers = with maintainers; [
       wkennington
     ];
     platforms = with platforms;
-      x86_64-linux
-      ++ i686-linux;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

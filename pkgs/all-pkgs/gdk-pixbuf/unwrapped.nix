@@ -20,7 +20,6 @@ let
     optionals
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "gdk-pixbuf-${version}";
   versionMajor = "2.34";

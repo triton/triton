@@ -100,6 +100,13 @@ with stdenv.lib;
   HOTPLUG_PCI_ACPI y
   HOTPLUG_PCI_CPCI y
 
+  ${optionalString (versionAtLeast version "4.8") ''
+    GCC_PLUGINS y
+    CPU_FREQ_STAT y
+    PCIE_DPC y
+    SLAB_FREELIST_RANDOM y
+  ''}
+
   # Support drivers that need external firmware.
   STANDALONE n
 
@@ -184,22 +191,25 @@ with stdenv.lib;
   NET_SWITCHDEV y
   NET_L3_MASTER_DEV y
 
-  BNX2X_VXLAN y
-  ${optionalString (versionAtLeast version "4.6") ''
-    BNX2X_GENEVE y
-  ''}
-  IXGBE_VXLAN y
-  I40E_VXLAN y
-  ${optionalString (versionAtLeast version "4.6") ''
-    I40E_GENEVE y
-  ''}
-  FM10K_VXLAN y
   MLX5_CORE_EN y
-  ${optionalString (versionAtLeast version "4.7") ''
-    QEDE_VXLAN y
-    QEDE_GENEVE y
+  ${optionalString (versionOlder version "4.8") ''
+    MLX4_EN_VXLAN y
+    BNX2X_VXLAN y
+    ${optionalString (versionAtLeast version "4.6") ''
+      BNX2X_GENEVE y
+    ''}
+    IXGBE_VXLAN y
+    I40E_VXLAN y
+    ${optionalString (versionAtLeast version "4.6") ''
+      I40E_GENEVE y
+    ''}
+    FM10K_VXLAN y
+    ${optionalString (versionAtLeast version "4.7") ''
+      QEDE_VXLAN y
+      QEDE_GENEVE y
+    ''}
+    QLCNIC_VXLAN y
   ''}
-  QLCNIC_VXLAN y
   VIA_RHINE_MMIO y
   DEFXX_MMIO y
 
@@ -238,6 +248,9 @@ with stdenv.lib;
     DRM_AMD_POWERPLAY y
   ''}
   DRM_VMWGFX_FBCON y
+  ${optionalString (versionAtLeast version "4.8") ''
+    DRM_I915_GVT y
+  ''}
   FIRMWARE_EDID y
   LOGO y
   HID_BATTERY_STRENGTH y
@@ -250,6 +263,9 @@ with stdenv.lib;
   ISCSI_IBFT_FIND y
 
   CAN_LEDS y
+  ${optionalString (versionAtLeast version "4.8") ''
+    LEDS_TRIGGER_DISK y
+  ''}
 
   # Wireless networking.
   CFG80211_WEXT y # Without it, ipw2200 drivers don't build
@@ -320,6 +336,9 @@ with stdenv.lib;
   EXT3_FS n
   EXT4_FS_POSIX_ACL y
   EXT4_FS_SECURITY y
+  ${optionalString (versionAtLeast version "4.8") ''
+    EXT4_ENCRYPTION y
+  ''}
   REISERFS_FS n
   JFS_FS n
   XFS_QUOTA y
@@ -344,6 +363,9 @@ with stdenv.lib;
   JFFS2_COMPRESSION_OPTIONS y
   JFFS2_LZO y
   JFFS2_CMODE_FAVOURLZO y
+  ${optionalString (versionAtLeast version "4.8") ''
+    EXPORTFS_BLOCK_OPS y
+  ''}
   ${optionalString (versionAtLeast version "4.0" && versionOlder version "4.6") ''
     NFSD_PNFS y
   ''}
@@ -358,6 +380,9 @@ with stdenv.lib;
   NFS_V4_1 y  # NFSv4.1 client support
   NFS_V4_2 y
   NFS_V4_SECURITY_LABEL y
+  ${optionalString (versionAtLeast version "4.8") ''
+    NFSD_FLEXFILELAYOUT y
+  ''}
   CIFS_STATS y
   CIFS_UPCALL y
   CIFS_ACL y
@@ -370,6 +395,9 @@ with stdenv.lib;
   CEPH_FSCACHE y
   CEPH_FS_POSIX_ACL y
   CEPH_LIB_USE_DNS_RESOLVER y
+  ${optionalString (versionAtLeast version "4.8") ''
+    PSTORE_LZ4_COMPRESS y
+  ''}
   SQUASHFS_FILE_DIRECT y
   SQUASHFS_DECOMP_MULTI_PERCPU y
   SQUASHFS_XATTR y
@@ -445,7 +473,9 @@ with stdenv.lib;
   NFTL_RW y
   MTD_NAND_ECC_SMC y
   MTD_NAND_ECC_BCH y
-  ZRAM_LZ4_COMPRESS y
+  ${optionalString (versionOlder version "4.8") ''
+    ZRAM_LZ4_COMPRESS y
+  ''}
   DVB_DYNAMIC_MINORS y # we use udev
   EFI_STUB y
   EFI_MIXED y
@@ -462,11 +492,17 @@ with stdenv.lib;
   LOGO n # not needed
   MEDIA_ATTACH y
   MEGARAID_NEWGEN y
-  MLX4_EN_VXLAN y
   MODVERSIONS y
   MOUSE_PS2_ELANTECH y # Elantech PS/2 protocol extension
   MTRR_SANITIZER y
+  ${optionalString (versionAtLeast version "4.8") ''
+    SUNXI_CCU y
+    SUN8I_H3_CCU y
+  ''}
   NET_FC y # Fibre Channel driver support
+  ${optionalString (versionAtLeast version "4.8") ''
+    NET_NCSI y
+  ''}
   PINCTRL_BAYTRAIL y # GPIO on Intel Bay Trail, for some Chromebook internal eMMC disks
   MMC_BLOCK_MINORS 32 # 8 is default. Modern gpt tables on eMMC may go far beyond 8.
   PPP_MULTILINK y # PPP multilink support
@@ -556,7 +592,9 @@ with stdenv.lib;
   PARAVIRT y
   PARAVIRT_SPINLOCKS y
   HYPERVISOR_GUEST y
-  KVM_APIC_ARCHITECTURE y
+  ${optionalString (versionOlder version "4.8") ''
+    KVM_APIC_ARCHITECTURE y
+  ''}
   KVM_ASYNC_PF y
   KVM_COMPAT y
   KVM_DEVICE_ASSIGNMENT y

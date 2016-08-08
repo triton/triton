@@ -12,9 +12,11 @@
 , zlib
 }:
 
+let
+  version = "18.3";
+in
 stdenv.mkDerivation rec {
   name = "erlang-${version}";
-  version = "18.3";
 
   src = fetchurl {
     url = "http://erlang.org/download/otp_src_${version}.tar.gz";
@@ -38,7 +40,7 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     find . -name configure -exec sed -i "s,/bin/rm,$(type -P rm),g" {} \;
-    
+
     # Fix otb builder
     sed -i "s,/bin/pwd,$(type -P pwd),g" otp_build
     export HOME=$PWD/../

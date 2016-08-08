@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/appstream-glib/"
-        + "releases/${name}.tar.xz";
+      + "releases/${name}.tar.xz";
     sha256 = "ee32f3e4d20b7e8fe58da85f277d2e1821ab845de23cdb61bda4e50c84b9c308";
   };
 
@@ -81,5 +81,4 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       x86_64-linux;
   };
-
 }

@@ -5,10 +5,13 @@
 }:
 
 let
+  inherit (stdenv)
+    targetSystem;
   inherit (stdenv.lib)
-    enFlag;
+    elem
+    enFlag
+    platforms;
 in
-
 stdenv.mkDerivation rec {
   name = "flac-1.3.1";
 
@@ -18,12 +21,11 @@ stdenv.mkDerivation rec {
   };
 
   configureFLags = [
-    "--enable-option-checking"
     "--enable-largefile"
     "--enable-asm-optimizations"
     "--disable-debug"
-    "--enable-sse"  # X86 Only, we need this fixed at some point
-    "--disable-altivec"  # Power Architecture
+    (enFlag "sse" (elem targetSystem platforms.x86-all) null)
+    (enFlag "altivec" (elem targetSystem platforms.powerpc-all) null)
     "--disable-thorough-tests"
     "--disable-exhaustive-tests"
     "--disable-werror"
@@ -48,7 +50,6 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = false;
-  enableParallelBuilding = true;
 
   meta = with stdenv.lib; {
     description = "FLAC lossless audio file format";

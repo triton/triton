@@ -30,14 +30,16 @@ stdenv.mkDerivation rec {
     inherit multihash sha256;
   };
 
-  buildPhase = ''
-    true
-  '';
+  doConfigure = false;
+
+  # Do NOT disable build phase or build will fail
+  buildPhase = "true";
 
   installPhase = ''
-    dst="$out"/share/xml/${pname}
-    mkdir -p "$dst"
-    rm -rf RELEASE* README* INSTALL TODO NEWS* BUGS install.sh svn* tools log Makefile tests extensions webhelp
+    dst="$out/share/xml/${pname}"
+    mkdir -pv "$dst"
+    rm -rvf RELEASE* README* INSTALL TODO NEWS* BUGS install.sh \
+      svn* tools log Makefile tests extensions webhelp
     mv * "$dst"
 
     # Backwards compatibility. Will remove eventually.
@@ -46,8 +48,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
+    description = "XSL stylesheets for converting DocBook documents into other formats";
     homepage = http://wiki.docbook.org/topic/DocBookXslStylesheets;
-    description = "XSL stylesheets for transforming DocBook documents into HTML and various other formats";
     maintainers = with maintainers; [
       wkennington
     ];

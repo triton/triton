@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   version = "4.3.4";
 
   src = fetchurl {
-    url = "http://ftp.isc.org/isc/dhcp/${version}/${name}.tar.gz";
+    url = "https://ftp.isc.org/isc/dhcp/${version}/${name}.tar.gz";
     allowHashOutput = false;
     sha256 = "f5115aee3dd3e6925de4ba47b80ab732ba48b481c8364b6ebade2d43698d607e";
   };
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    sed -i "includes/dhcpd.h" \
+    sed -i includes/dhcpd.h \
       -e "s|^ *#define \+_PATH_DHCLIENT_SCRIPT.*$|#define _PATH_DHCLIENT_SCRIPT \"$out/bin/dhclient-script\"|g"
   '';
 
@@ -60,11 +60,14 @@ stdenv.mkDerivation rec {
   '';
 
   postInstall = ''
-    cp client/scripts/linux $out/bin/dhclient-script
-    substituteInPlace $out/bin/dhclient-script \
-      --replace /sbin/ip ${iproute}/bin/ip
-    wrapProgram "$out/bin/dhclient-script" --prefix PATH : \
-      "${net-tools}/bin:${iputils}/bin:${coreutils}/bin:${gnused}/bin"
+    cp -v client/scripts/linux $out/bin/dhclient-script
+    sed -i $out/bin/dhclient-script \
+      -e 's,/sbin/ip,${iproute}/bin/ip,'
+    wrapProgram "$out/bin/dhclient-script" \
+      --prefix PATH : "${coreutils}/bin" \
+      --prefix PATH : "${gnused}/bin" \
+      --prefix PATH : "${iputils}/bin" \
+      --prefix PATH : "${net-tools}/bin"
   '';
 
   # Fails to build the bind library if run in parallel

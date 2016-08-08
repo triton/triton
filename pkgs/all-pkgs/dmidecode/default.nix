@@ -25,8 +25,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
+    description = "Gathers hardware information from the BIOS via the SMBIOS/DMI standard";
     homepage = http://www.nongnu.org/dmidecode/;
-    description = "A tool that reads information about your system's hardware from the BIOS according to the SMBIOS/DMI standard";
     maintainers = with maintainers; [
       wkennington
     ];

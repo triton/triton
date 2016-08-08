@@ -157,6 +157,8 @@ brotli = callPackage ../all-pkgs/brotli/python.nix {
   brotli = pkgs.brotli;
 };
 
+bzrtools = callPackage ../all-pkgs/bzrtools { };
+
 canonicaljson = callPackage ../all-pkgs/canonicaljson { };
 
 certbot = callPackage ../all-pkgs/certbot { };

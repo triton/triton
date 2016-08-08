@@ -610,8 +610,6 @@ btsync = callPackage ../all-pkgs/btsync { };
 
 bzip2 = callPackage ../all-pkgs/bzip2 { };
 
-bzrtools = callPackage ../all-pkgs/bzrtools { };
-
 c-ares = callPackage ../all-pkgs/c-ares { };
 
 cairo = callPackage ../all-pkgs/cairo { };

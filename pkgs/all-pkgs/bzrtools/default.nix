@@ -1,14 +1,14 @@
 { stdenv
+, buildPythonPackage
 , fetchurl
 
 , bazaar
-, python2
 }:
 
 let
   version = "2.6.0";
 in
-stdenv.mkDerivation rec {
+buildPythonPackage rec {
   name = "bzrtools-${version}";
 
   src = fetchurl {
@@ -18,18 +18,15 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bazaar
-    python2
   ];
-
-  installPhase = ''
-    ${python2.interpreter} ./setup.py install --prefix=$out
-  '';
 
   meta = with stdenv.lib; {
     description = "BzrTools is a useful collection of utilities for bzr";
     homepage = http://wiki.bazaar.canonical.com/BzrTools;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

@@ -1551,6 +1551,8 @@ librsync = callPackage ../all-pkgs/librsync { };
 
 libs3 = callPackage ../all-pkgs/libs3 { };
 
+libsamplerate = callPackage ../all-pkgs/libsamplerate { };
+
 libseccomp = callPackage ../all-pkgs/libseccomp { };
 
 libsecret = callPackage ../all-pkgs/libsecret { };
@@ -2889,8 +2891,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libplist = callPackage ../development/libraries/libplist { };
 #
   librevenge = callPackage ../development/libraries/librevenge {};
-#
-  libsamplerate = callPackage ../development/libraries/libsamplerate { };
 
   libid3tag = callPackage ../development/libraries/libid3tag { };
 

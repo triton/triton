@@ -5,12 +5,12 @@
 
 buildPythonPackage rec {
   name = "attrs-${version}";
-  version = "15.2.0";
+  version = "16.0.0";
 
   src = fetchPyPi {
     package = "attrs";
     inherit version;
-    sha256 = "9f895d2ecefa0be054e29375769f1d0ee88e93ce820088cf5c49390529bf7ee7";
+    sha256 = "de6827a454d23716442b571bb35b0efb32a1b5c1037f09cfc7aaf405c7d68abc";
   };
 
   meta = with stdenv.lib; {

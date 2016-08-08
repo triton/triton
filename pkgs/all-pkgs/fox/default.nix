@@ -30,8 +30,7 @@ assert xorg != null ->
   && xorg.libXrandr != null
   && xorg.libXrender != null
   && xorg.renderproto != null
-  && xorg.xproto != null
-  ;
+  && xorg.xproto != null;
 
 stdenv.mkDerivation rec {
   name = "fox-${version}";

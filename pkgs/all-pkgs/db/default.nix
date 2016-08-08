@@ -1,15 +1,17 @@
 { stdenv
 , fetchurl
+
 , channel ? "5"
 }:
 
 let
-  sources = import ./sources.nix {
-    inherit (stdenv.lib) licenses;
-  };
-  source = sources.${channel};
+  source = (
+    import ./sources.nix {
+      inherit (stdenv.lib)
+        licenses;
+    }
+  )."${channel}";
 in
-
 stdenv.mkDerivation rec {
   name = "db-${source.version}";
 
@@ -36,7 +38,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Berkeley DB";
-    homepage = "http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/index.html";
+    homepage = http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/index.html;
     license = source.license;
     maintainers = with maintainers; [
       wkennington

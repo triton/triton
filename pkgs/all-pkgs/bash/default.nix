@@ -9,11 +9,14 @@
 }:
 
 let
+  inherit (stdenv.lib)
+    attrNames
+    flip
+    length
+    mapAttrsToList;
+
   patchSha256s = import ./patches.nix;
 in
-
-with stdenv.lib;
-
 stdenv.mkDerivation rec {
   name = "bash-${version}-p${toString (length (attrNames patchSha256s))}";
   version = "4.3";
@@ -61,7 +64,10 @@ stdenv.mkDerivation rec {
     ln -s bash "$out/bin/sh"
   '';
 
-  outputs = [ "out" "doc" ];
+  outputs = [
+    "out"
+    "doc"
+  ];
 
   passthru = {
     shellPath = "/bin/bash";

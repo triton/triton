@@ -13,7 +13,6 @@ let
     enFlag
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "faac-${version}";
   version = "1.28";
@@ -50,11 +49,10 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postPatch =
-    /* Fix reference to obsolete macro */ ''
-      sed -i configure.in \
-        -e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:'
-    '';
+  postPatch = /* Fix reference to obsolete macro */ ''
+    sed -i configure.in \
+      -e 's:AM_CONFIG_HEADER:AC_CONFIG_HEADERS:'
+  '';
 
   configureFlags = [
     (enFlag "drm" drmSupport null)

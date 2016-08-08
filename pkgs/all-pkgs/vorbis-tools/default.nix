@@ -16,7 +16,7 @@ let
   debian-patches-version = "1.4.0-10";
 
   debian-patches = stdenv.mkDerivation rec {
-    name = "vorbis-tools-debian-patches-${version}";
+    name = "vorbis-tools-debian-patches-${debian-patches-version}";
 
     src = fetchzip {
       url = "mirror://debian/pool/main/v/vorbis-tools/vorbis-tools_${debian-patches-version}.debian.tar.xz";

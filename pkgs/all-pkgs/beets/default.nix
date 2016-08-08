@@ -72,9 +72,7 @@ let
     optionals
     optionalString
     platforms;
-in
 
-let
   optionalPlugins = {
     # TODO: write a generic function to detect null dependencies
     acousticbrainz =
@@ -213,12 +211,11 @@ let
 
   testShell = "${bash}/bin/bash --norc";
   completion = "${bash-completion}/share/bash-completion/bash_completion";
-in
 
+  version = "1.3.19";
+in
 buildPythonPackage rec {
   name = "beets-${version}";
-  version = "1.3.19";
-  namePrefix = "";
 
   src = fetchFromGitHub {
     owner = "sampsyo";
@@ -308,13 +305,6 @@ buildPythonPackage rec {
       }
     );
 
-  GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [
-    gst-plugins-base
-    gst-plugins-good
-    #gst-plugins-bad
-    #gst-plugins-ugly
-  ];
-
   patches = [
     (fetchTritonPatch {
       rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
@@ -342,6 +332,13 @@ buildPythonPackage rec {
     sed -i -e 's/if has_program.*bs1770gain.*:/if True:/' \
       test/test_replaygain.py
   '';
+
+  GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [
+    gst-plugins-base
+    gst-plugins-good
+    #gst-plugins-bad
+    #gst-plugins-ugly
+  ];
 
   preFixup = ''
     wrapProgram $out/bin/beet \

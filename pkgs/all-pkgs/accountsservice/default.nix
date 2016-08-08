@@ -1,16 +1,15 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
 , gettext
 , intltool
 , libtool
 , makeWrapper
 
+, coreutils
 , glib
 , gobject-introspection
 , polkit
 , systemd_lib
-, coreutils
 }:
 
 let
@@ -20,8 +19,7 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "accountsservice-${version}";
-  version = "0.6.42";
+  name = "accountsservice-0.6.42";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/accountsservice/${name}.tar.xz";
@@ -46,7 +44,7 @@ stdenv.mkDerivation rec {
     "--enable-admin-group=wheel"
     # Heuristics for guessing system vs human users in the range 500-minimum-uid
     #"--enable-user-heuristics"
-    # Set minimum uid for human users
+    # FIXME: Set minimum uid for human users
     #"--with-minimum-uid=1000"
     "--disable-coverage"
     "--disable-more-warnings"
@@ -74,7 +72,9 @@ stdenv.mkDerivation rec {
     description = "D-Bus interface for user account query and manipulation";
     homepage = http://www.freedesktop.org/wiki/Software/AccountsService;
     license = licenses.gpl3;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

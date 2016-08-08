@@ -18,8 +18,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = "http://darwinsys.com/file";
     description = "A program that shows the type of files";
+    homepage = "http://darwinsys.com/file";
     maintainers = with maintainers; [
       wkennington
     ];

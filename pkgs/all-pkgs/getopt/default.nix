@@ -21,8 +21,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
+    description = "Program to help shell scripts parse command-line parameters";
     homepage = "http://frodo.looijaard.name/project/getopt";
-    description = "a program to help shell scripts parse command-line parameters";
     license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington

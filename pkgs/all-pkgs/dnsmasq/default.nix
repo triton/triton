@@ -16,7 +16,6 @@ let
     "-DHAVE_CONNTRACK"
   ];
 in
-
 stdenv.mkDerivation rec {
   name = "dnsmasq-2.76";
 
@@ -47,8 +46,10 @@ stdenv.mkDerivation rec {
   # XXX: Does the systemd service definition really belong here when our NixOS
   # module can create it in Nix-land?
   postInstall = ''
-    install -Dm644 trust-anchors.conf $out/share/dnsmasq/trust-anchors.conf
-    install -Dm644 dbus/dnsmasq.conf $out/etc/dbus-1/system.d/dnsmasq.conf
+    install -D -m 644 -v trust-anchors.conf \
+      $out/share/dnsmasq/trust-anchors.conf
+    install -D -m 644 -v dbus/dnsmasq.conf \
+      $out/etc/dbus-1/system.d/dnsmasq.conf
 
     mkdir -p $out/share/dbus-1/system-services
     cat <<END > $out/share/dbus-1/system-services/uk.org.thekelleys.dnsmasq.service

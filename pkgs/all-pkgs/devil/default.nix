@@ -14,11 +14,11 @@
 
 let
   inherit (stdenv.lib)
-    optionals;
+    optionals
+    optionalString;
 
   version = "1.7.8";
 in
-
 stdenv.mkDerivation rec {
   name ="devil-${version}";
 
@@ -78,7 +78,7 @@ stdenv.mkDerivation rec {
       -e 's, -std=gnu99,,g'
     sed -i src-ILU/ilur/ilur.c \
       -e 's,malloc.h,stdlib.h,g'
-  '' + stdenv.lib.optionalString stdenv.cc.isClang ''
+  '' + optionalString stdenv.cc.isClang ''
     sed -i lib/Makefile.in \
       -e 's/libIL_la_CXXFLAGS = $(AM_CFLAGS)/libIL_la_CXXFLAGS =/g'
   '';

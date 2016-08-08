@@ -41,8 +41,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    homepage = http://www.samba.org/linux-cifs/cifs-utils/;
     description = "Tools for managing Linux CIFS client filesystems";
+    homepage = http://www.samba.org/linux-cifs/cifs-utils/;
     license = licenses.lgpl3;
     maintainers = with maintainers; [
       wkennington

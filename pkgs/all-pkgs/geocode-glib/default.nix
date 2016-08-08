@@ -13,17 +13,17 @@
 let
   inherit (stdenv.lib)
     enFlag;
-in
 
+  versionMajor = "3.20";
+  version = "${versionMajor}.1";
+in
 stdenv.mkDerivation rec {
   name = "geocode-glib-${version}";
-  versionMajor = "3.20";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/geocode-glib/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/geocode-glib/${versionMajor}/${name}.sha256sum";
+    sha256Url = "mirror://gnome/sources/geocode-glib/${versionMajor}/"
+      + "${name}.sha256sum";
     sha256 = "669fc832cabf8cc2f0fc4194a8fa464cdb9c03ebf9aca5353d7cf935ba8637a2";
   };
 

@@ -21,12 +21,14 @@ in
 stdenv.mkDerivation rec {
   name = "grilo-${version}";
   versionMajor = "0.3";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/grilo/${versionMajor}/${name}.tar.xz";
-    sha256 = "1fd1a87d606f56adb3086954baec3ea6e25d9ba3fb010f11d1d3ddc9ec66bc60";
+    sha256Url = "mirror://gnome/sources/grilo/${versionMajor}/"
+      + "${name}.sha256sum";
+    sha256 = "ebbdc61dc7920a8cac436895e8625a0ee64d6a4b352987fb5d361ef87243cd4c";
   };
 
   nativeBuildInputs = [

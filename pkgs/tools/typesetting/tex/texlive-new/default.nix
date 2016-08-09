@@ -25,16 +25,14 @@
 */
 
 { stdenv, lib, fetchurl, runCommand, writeText, buildEnv
-, callPackage, ghostscriptX, harfbuzz, poppler
+, callPackage, ghostscript, harfbuzz, poppler
 , makeWrapper, perl, python, ruby
 , useFixedHashes ? true
 , recurseIntoAttrs
 }:
 let
   # various binaries (compiled)
-  bin = callPackage ./bin.nix {
-    ghostscript = ghostscriptX;
-  };
+  bin = callPackage ./bin.nix { };
 
   # map: name -> fixed-output hash
   # sha1 in base32 was chosen as a compromise between security and length

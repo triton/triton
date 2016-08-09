@@ -1,9 +1,13 @@
 { stdenv, lib, fetchurl
 , config
 , zlib, bzip2, ncurses, libpng, flex, bison
-, freetype, t1lib, gd, icu, ghostscript, ed
+, freetype, t1lib
+, libgd
+, icu, ghostscript, ed
 , perl, ruby, expat, curl, libjpeg, python, fontconfig, pkgconfig
-, poppler, libpaper, graphite2, lesstif, zziplib, harfbuzz, texinfo, potrace, gmp, mpfr
+, poppler, libpaper, graphite2
+#, lesstif
+, zziplib, harfbuzz, texinfo, potrace, gmp, mpfr
 , xpdf, cairo, pixman, xorg
 , makeWrapper
 }:
@@ -33,7 +37,7 @@ let
       ++ withSystemLibs [
       # see "from TL tree" vs. "Using installed"  in configure output
       "zziplib" "xpdf" "poppler" "mpfr" "gmp"
-      "pixman" "potrace" "gd" "freetype2" "libpng" "libpaper" "zlib"
+      "pixman" "potrace" "libgd" "freetype2" "libpng" "libpaper" "zlib"
         # beware: xpdf means to use stuff from poppler :-/
     ];
 
@@ -60,12 +64,14 @@ core = stdenv.mkDerivation rec {
   buildInputs = [
     pkgconfig
     /*teckit*/ zziplib poppler mpfr gmp
-    pixman potrace gd freetype libpng libpaper zlib
+    pixman potrace
+    libgd
+    freetype libpng libpaper zlib
     perl
   ];
 
   preConfigure = ''
-    rm -r libs/{cairo,freetype2,gd,gmp,graphite2,harfbuzz,icu,libpaper,libpng} \
+    rm -r libs/{cairo,freetype2,libgd,gmp,graphite2,harfbuzz,icu,libpaper,libpng} \
       libs/{mpfr,pixman,poppler,potrace,xpdf,zlib,zziplib}
     mkdir Work
     cd Work
@@ -193,7 +199,7 @@ dvipng = stdenv.mkDerivation {
 
   inherit (common) src;
 
-  buildInputs = [ pkgconfig core/*kpathsea*/ zlib libpng freetype gd ghostscript makeWrapper ];
+  buildInputs = [ pkgconfig core/*kpathsea*/ zlib libpng freetype libgd ghostscript makeWrapper ];
 
   preConfigure = "cd texk/dvipng";
 

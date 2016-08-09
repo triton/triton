@@ -50,16 +50,18 @@ let
     enFlag
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "gnome-settings-daemon-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-settings-daemon/${versionMajor}/${name}.tar.xz";
-    sha256 = "bb2e40b3566f9014315765fc4d40f749ccf284727277294cdfb7707ced162c6c";
+    url = "mirror://gnome/sources/gnome-settings-daemon/${versionMajor}/"
+      + "${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/gnome-settings-daemon/${versionMajor}/"
+      + "${name}.sha256sum";
+    sha256 = "e84a075d895ca3baeefb8508e0a901027b66f7d5a7ee8c966e31d301b38e78e7";
   };
 
   nativeBuildInputs = [

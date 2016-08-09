@@ -257,10 +257,6 @@ let
   #  inherit helperFunctions;
   #};
 
-  vsenv = callPackage ../build-support/vsenv {
-    vs = vs90wrapper;
-  };
-
   fetchbower = callPackage ../build-support/fetchbower {
     inherit (nodePackages) fetch-bower;
   };

@@ -228,9 +228,7 @@ let
   #buildFHSEnv = callPackage ../build-support/build-fhs-chrootenv/env.nix { };
 
   chrootFHSEnv = callPackage ../build-support/build-fhs-chrootenv { };
-  userFHSEnv = callPackage ../build-support/build-fhs-userenv {
-   ruby = ruby_2_1_3;
-  };
+  userFHSEnv = callPackage ../build-support/build-fhs-userenv { };
 
   #buildFHSChrootEnv = args: chrootFHSEnv {
   #  env = buildFHSEnv (removeAttrs args [ "extraInstallCommands" ]);

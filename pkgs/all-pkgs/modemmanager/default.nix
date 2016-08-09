@@ -14,13 +14,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ModemManager-${version}";
-  # Use 1.6-rc3 to work around compilation bugs on gcc6
-  version = "1.5.992";
+  name = "ModemManager-1.6.0";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/ModemManager/${name}.tar.xz";
-    sha256 = "43827fc814d016d5e77e79bbcc49f91fb88d6dd9fbfc61ab887379275bd2c795";
+    sha256 = "a94f4657a8fa6835e2734fcc6edf20aa8c8d452f62299d7748541021c3eb2445";
   };
 
   nativeBuildInputs = [

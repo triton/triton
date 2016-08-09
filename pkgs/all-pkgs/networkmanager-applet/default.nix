@@ -33,17 +33,18 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "network-manager-applet-${version}";
-  versionMajor = "1.0";
-  versionMinor = "10";
+  versionMajor = "1.2";
+  versionMinor = "4";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/network-manager-applet/${versionMajor}/" +
-          "${name}.tar.xz";
-    sha256 = "1szh5jyijxm6z55irkp5s44pwah0nikss40mx7pvpk38m8zaqidh";
+    url = "mirror://gnome/sources/network-manager-applet/${versionMajor}/"
+      + "${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/network-manager-applet/${versionMajor}/"
+      + "${name}.sha256sum";
+    sha256 = "dff72956c939743e899954c9d32f0ebff4f213f1307a8157adc548584a0da37a";
   };
 
   propagatedUserEnvPkgs = [
@@ -87,12 +88,11 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-iso-codes"
     "--disable-migration"
-    "--enable-introspection"
     (enFlag "introspection" (gobject-introspection != null) null)
     "--enable-schemas-compile"
     "--enable-more-warnings"
-    "--with-bluetooth"
-    "--without-modem-manager-1"
+    #"--with-appindicator"
+    "--with-wwan"
   ];
 
   makeFlags = [

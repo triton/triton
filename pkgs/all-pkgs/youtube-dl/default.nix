@@ -8,11 +8,6 @@
 , zip
 }:
 
-let
-  inherit (stdenv.lib)
-    optionalString;
-in
-
 # Pandoc is required to build the package's man page. Release tarballs
 # contain a formatted man page already, though, so it's fine to pass
 # "pandoc = null" to this derivation; the man page will still be
@@ -20,14 +15,22 @@ in
 # case someone wants to use this derivation to build a Git version of
 # the tool that doesn't have the formatted man page included.
 
+let
+  inherit (stdenv.lib)
+    optionalString;
+
+  version = "2016.08.07";
+in
 buildPythonPackage rec {
   name = "youtube-dl-${version}";
-  version = "2016.06.03";
 
   src = fetchurl {
     url = "https://github.com/rg3/youtube-dl/releases/download/"
-      + "${version}_tmp/${name}.tar.gz";
-    sha256 = "29d9eb4eeea9c781010ee6111a8d0dc6469b9974fbd76c6c6d1641f3e8d489e2";
+      + "${version}/${name}.tar.gz";
+    sha512Url = "https://github.com/rg3/youtube-dl/releases/download/"
+      + "${version}/SHA2-512SUMS";
+    allowHashOutput = false;
+    sha256 = "6f42477c562291cd392b7a034a7b828bbf1e209a48de7629848ba82a3aacdc1f";
   };
 
   nativeBuildInputs = [
@@ -41,8 +44,21 @@ buildPythonPackage rec {
       --prefix PATH : "${ffmpeg}/bin"
   '';
 
-  # Requires network
+  # Tests requires network access
   doCheck = false;
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        sha512Urls
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "ED7F 5BF4 6B3B BED8 1C87  368E 2C39 3E0F 18A9 236D";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "CLI tool to download videos from YouTube.com & other sites";

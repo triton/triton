@@ -31,16 +31,16 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "grilo-plugins-${version}";
   versionMajor = "0.3";
-  versionMinor = "1";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/grilo-plugins/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/grilo-plugins/${versionMajor}/${name}.sha256sum";
+    sha256Url = "mirror://gnome/sources/grilo-plugins/${versionMajor}/"
+      + "${name}.sha256sum";
     sha256 = "605d04c40a9ed4fec4c590ff3e0da0de175e3a064bba96bdb26c5a7c0d3e6daa";
   };
 

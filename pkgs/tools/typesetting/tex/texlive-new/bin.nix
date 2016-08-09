@@ -6,7 +6,7 @@
 , icu, ghostscript, ed
 , perl, ruby, expat, curl, libjpeg, python, fontconfig, pkgconfig
 , poppler, libpaper, graphite2
-#, lesstif
+, motif
 , zziplib, harfbuzz, texinfo, potrace, gmp, mpfr
 , xpdf, cairo, pixman, xorg
 , makeWrapper

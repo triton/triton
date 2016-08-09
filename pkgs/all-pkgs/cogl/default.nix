@@ -30,6 +30,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/cogl/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/cogl/${versionMajor}/${name}.sha256sum";
     sha256 = "14daxqrid5039xmq9yl4pk86awng1n9zgl6ysblhc4gw2ifzp7b8";
   };
 

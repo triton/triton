@@ -8,7 +8,7 @@
 , poppler, libpaper, graphite2
 , motif
 , zziplib, harfbuzz, texinfo, potrace, gmp, mpfr
-, xpdf, cairo, pixman, xorg
+, xpdf, cairo, xorg
 , makeWrapper
 }:
 
@@ -64,7 +64,7 @@ core = stdenv.mkDerivation rec {
   buildInputs = [
     pkgconfig
     /*teckit*/ zziplib poppler mpfr gmp
-    pixman potrace
+    xorg.pixman potrace
     libgd
     freetype libpng libpaper zlib
     perl

@@ -1935,8 +1935,6 @@ pgbouncer = callPackage ../all-pkgs/pgbouncer { };
 
 pinentry = callPackage ../all-pkgs/pinentry { };
 
-pixman = callPackage ../all-pkgs/pixman { };
-
 pkcs11-helper = callPackage ../all-pkgs/pkcs11-helper { };
 
 pkgconf = callPackage ../all-pkgs/pkgconf { };

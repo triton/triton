@@ -69,7 +69,7 @@ let
     libsamplerate
     libmikmod
     libtheora
-    pixman
+    xorg.pixman
     speex
     SDL_image
     SDL_ttf

@@ -19,9 +19,9 @@ let
   inherit (stdenv.lib)
     optionals
     wtFlag;
+
   source = (import ./sources.nix { })."${channel}";
 in
-
 stdenv.mkDerivation rec {
   name = "at-spi2-atk-${source.version}";
 

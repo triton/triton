@@ -11,7 +11,6 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "atk-${version}";
   versionMajor = "2.20";
@@ -20,6 +19,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/atk/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/atk/${versionMajor}/${name}.sha256sum";
     sha256 = "493a50f6c4a025f588d380a551ec277e070b28a82e63ef8e3c06b3ee7c1238f0";
   };
 

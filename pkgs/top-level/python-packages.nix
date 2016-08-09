@@ -10079,25 +10079,25 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #  };
 
 
- #  lxml = buildPythonPackage ( rec {
- #    name = "lxml-3.4.4";
- #    # Warning : as of nov. 9th, 2015, version 3.5.0b1 breaks a lot of things,
- #    # more work is needed before upgrading
+   lxml = buildPythonPackage ( rec {
+     name = "lxml-3.4.4";
+     # Warning : as of nov. 9th, 2015, version 3.5.0b1 breaks a lot of things,
+     # more work is needed before upgrading
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/l/lxml/${name}.tar.gz";
- #      sha256 = "16a0fa97hym9ysdk3rmqz32xdjqmy4w34ld3rm3jf5viqjx65lxk";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/l/lxml/${name}.tar.gz";
+       sha256 = "16a0fa97hym9ysdk3rmqz32xdjqmy4w34ld3rm3jf5viqjx65lxk";
+     };
 
- #    buildInputs = with self; [ pkgs.libxml2 pkgs.libxslt ];
+     buildInputs = with self; [ pkgs.libxml2 pkgs.libxslt ];
 
- #    meta = {
- #      description = "Pythonic binding for the libxml2 and libxslt libraries";
- #      homepage = http://lxml.de;
- #      license = licenses.bsd3;
- #      maintainers = with maintainers; [ sjourdois ];
- #    };
- #  });
+     meta = {
+       description = "Pythonic binding for the libxml2 and libxslt libraries";
+       homepage = http://lxml.de;
+       license = licenses.bsd3;
+       maintainers = with maintainers; [ sjourdois ];
+     };
+   });
 
 
  #  python-magic = buildPythonPackage rec {

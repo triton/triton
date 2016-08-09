@@ -17,16 +17,17 @@ let
     enFlag
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "gnome-keyring-${version}";
-  versionMajor = "3.18";
-  versionMinor = "3";
+  versionMajor = "3.20";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-keyring/${versionMajor}/${name}.tar.xz";
-    sha256 = "167dq1yvm080g5s38hqjl0xx5cgpkcl1xqy9p5sxmgc92zb0srrz";
+    sha256Url = "mirror://gnome/sources/gnome-keyring/${versionMajor}/"
+      + "${name}.sha256sum";
+    sha256 = "bc17cecd748a0e46e302171d11c3ae3d76bba5258c441fabec3786f418e7ec99";
   };
 
   nativeBuildInputs = [

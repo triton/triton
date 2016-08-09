@@ -6,10 +6,9 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (pythonPackages)
     isPy3k;
 in
-
 buildPythonPackage rec {
   name = "tvrage-${version}";
   version = "0.4.1";

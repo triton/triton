@@ -19,7 +19,6 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "clutter-gst-${version}";
   versionMajor = "3.0";

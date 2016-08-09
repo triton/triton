@@ -2826,9 +2826,9 @@ let
       sha256 = "018ic9ddxfnjcv2yss0mwk1gq6rmip1hrgi2wxwqkbqx1cpx4yp5";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ fontsproto libcacard libdrm pcsclite systemd_lib libpciaccess randrproto renderproto spice-protocol spice videoproto xf86dgaproto xorgserver xproto ];
+    buildInputs = [ fontsproto libcacard libdrm pcsclite_lib systemd_lib libpciaccess randrproto renderproto spice-protocol spice videoproto xf86dgaproto xorgserver xproto ];
 
-  }) // {inherit fontsproto libcacard libdrm pcsclite systemd_lib libpciaccess randrproto renderproto spice-protocol spice videoproto xf86dgaproto xorgserver xproto ;};
+  }) // {inherit fontsproto libcacard libdrm pcsclite_lib systemd_lib libpciaccess randrproto renderproto spice-protocol spice videoproto xf86dgaproto xorgserver xproto ;};
 
   xf86videor128 = (mkDerivation "xf86videor128" {
     name = "xf86-video-r128-6.10.1";

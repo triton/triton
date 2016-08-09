@@ -826,15 +826,15 @@ expat = callPackage ../all-pkgs/e/expat { };
 
 expect = callPackage ../all-pkgs/e/expect { };
 
-f2fs-tools = callPackage ../all-pkgs/f2fs-tools { };
+f2fs-tools = callPackage ../all-pkgs/f/f2fs-tools { };
 
-faac = callPackage ../all-pkgs/faac { };
+faac = callPackage ../all-pkgs/f/faac { };
 
-fcgi = callPackage ../all-pkgs/fcgi { };
+fcgi = callPackage ../all-pkgs/f/fcgi { };
 
-feh = callPackage ../all-pkgs/feh { };
+feh = callPackage ../all-pkgs/f/feh { };
 
-ffmpeg_generic = overrides: callPackage ../all-pkgs/ffmpeg ({
+ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   # The following are disabled by default
   celt = null;
   dcadec = null;
@@ -898,55 +898,55 @@ ffmpeg_head = pkgs.ffmpeg_generic {
 };
 ffmpeg = callPackageAlias "ffmpeg_3" { };
 
-fftw_double = callPackage ../all-pkgs/fftw {
+fftw_double = callPackage ../all-pkgs/f/fftw {
   precision = "double";
 };
-fftw_long-double = callPackage ../all-pkgs/fftw {
+fftw_long-double = callPackage ../all-pkgs/f/fftw {
   precision = "long-double";
 };
-fftw_quad = callPackage ../all-pkgs/fftw {
+fftw_quad = callPackage ../all-pkgs/f/fftw {
   precision = "quad-precision";
 };
-fftw_single = callPackage ../all-pkgs/fftw {
+fftw_single = callPackage ../all-pkgs/f/fftw {
   precision = "single";
 };
 
-file = callPackage ../all-pkgs/file { };
+file = callPackage ../all-pkgs/f/file { };
 
-file-roller = callPackage ../all-pkgs/file-roller { };
+file-roller = callPackage ../all-pkgs/f/file-roller { };
 
-filezilla = callPackage ../all-pkgs/filezilla { };
+filezilla = callPackage ../all-pkgs/f/filezilla { };
 
-findutils = callPackage ../all-pkgs/findutils { };
+findutils = callPackage ../all-pkgs/f/findutils { };
 
 firefox = pkgs.firefox_wrapper pkgs.firefox-unwrapped { };
 firefox-esr = pkgs.firefox_wrapper pkgs.firefox-esr-unwrapped { };
-firefox-unwrapped = callPackage ../all-pkgs/firefox { };
-firefox-esr-unwrapped = callPackage ../all-pkgs/firefox {
+firefox-unwrapped = callPackage ../all-pkgs/f/firefox { };
+firefox-esr-unwrapped = callPackage ../all-pkgs/f/firefox {
   channel = "esr";
 };
-firefox_wrapper = callPackage ../all-pkgs/firefox/wrapper.nix { };
+firefox_wrapper = callPackage ../all-pkgs/f/firefox/wrapper.nix { };
 
 #firefox-bin = callPackage ../applications/networking/browsers/firefox-bin { };
 
-fish = callPackage ../all-pkgs/fish { };
+fish = callPackage ../all-pkgs/f/fish { };
 
-flac = callPackage ../all-pkgs/flac { };
+flac = callPackage ../all-pkgs/f/flac { };
 
-flex = callPackage ../all-pkgs/flex { };
+flex = callPackage ../all-pkgs/f/flex { };
 
-fox = callPackage ../all-pkgs/fox { };
+fox = callPackage ../all-pkgs/f/fox { };
 
-freeglut = callPackage ../all-pkgs/freeglut { };
+freeglut = callPackage ../all-pkgs/f/freeglut { };
 
-freetype = callPackage ../all-pkgs/freetype { };
+freetype = callPackage ../all-pkgs/f/freetype { };
 
 freetype2-infinality-ultimate =
-  callPackage ../all-pkgs/freetype2-infinality-ultimate { };
+  callPackage ../all-pkgs/f/freetype2-infinality-ultimate { };
 
-fstrm = callPackage ../all-pkgs/fstrm { };
+fstrm = callPackage ../all-pkgs/f/fstrm { };
 
-fuse = callPackage ../all-pkgs/fuse { };
+fuse = callPackage ../all-pkgs/f/fuse { };
 
 game-music-emu = callPackage ../all-pkgs/game-music-emu { };
 

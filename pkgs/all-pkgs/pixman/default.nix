@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    description = "";
+    description = "Low-level software library for pixel manipulation";
     homepage = https://www.cairographics.org/;
     license = licenses.mit;
     maintainers = with maintainers; [

@@ -3,7 +3,7 @@
 , perl
 
 , aalib
-, alsaLib
+, alsa-lib
 , ffmpeg
 , flac
 , fontconfig
@@ -16,16 +16,17 @@
 , libdvdcss
 , libmng
 , libmodplug
-, libmpcdec
-, libpulseaudio
+, libmpc
+, libogg
 , libtheora
-, libv4l
 , libvdpau
 , libvorbis
 , libvpx
 , mesa
+, pulseaudio_lib
 , speex
-, vcdimager
+, v4l_lib
+###, vcdimager
 , wavpack
 , xorg
 , zlib
@@ -45,7 +46,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     aalib
-    alsaLib
+    alsa-lib
     ffmpeg
     flac
     fontconfig
@@ -58,22 +59,30 @@ stdenv.mkDerivation rec {
     libdvdcss
     libmng
     libmodplug
-    libmpcdec
-    libpulseaudio
+    libmpc
+    libogg
     libtheora
-    libv4l
     libvdpau
     libvorbis
     libvpx
     mesa
+    pulseaudio_lib
     speex
-    vcdimager
+    v4l_lib
+    ###vcdimager
     wavpack
     xorg.libX11
     xorg.libxcb
     xorg.libXext
     xorg.libXinerama
+    xorg.libXt
     xorg.libXv
+    xorg.libXvMC
+    xorg.videoproto
+    xorg.xextproto
+    xorg.xf86vidmodeproto
+    xorg.xineramaproto
+    xorg.xproto
     zlib
   ];
 
@@ -158,7 +167,7 @@ stdenv.mkDerivation rec {
     #--with-external-dvdnav  Use external dvdnav library (not recommended)
     "--with-imagemagick"
     "--with-libflac"
-    "--with-speex"
+    #"--with-speex"
     "--with-theora"
     "--with-vorbis"
     "--with-wavpack"

@@ -13,12 +13,13 @@
 stdenv.mkDerivation rec {
   name = "vala-${version}";
   versionMajor = "0.32";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/vala/${versionMajor}/${name}.tar.xz";
-    sha256 = "07a2aa4ede040789b4b5af817a42249d703bfe8affccb7732ca2b53d00c1fb6e";
+    sha256Url = "mirror://gnome/sources/vala/${versionMajor}/${name}.sha256sum";
+    sha256 = "dd0d47e548a34cfb1e4b04149acd082a86414c49057ffb79902eb9a508a161a9";
   };
 
   nativeBuildInputs = [

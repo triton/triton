@@ -33,7 +33,7 @@ let
     };
 
   buildPythonPackage = makeOverridable (
-    callPackage ../all-pkgs/build-python-package {
+    callPackage ../all-pkgs/b/build-python-package {
       pip_bootstrap = callPackage ../all-pkgs/pip/bootstrap.nix {
         inherit (self) wrapPython;
       };

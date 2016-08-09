@@ -570,39 +570,39 @@ automake = callPackage ../all-pkgs/a/automake { };
 
 avahi = callPackage ../all-pkgs/a/avahi { };
 
-babl = callPackage ../all-pkgs/babl { };
+babl = callPackage ../all-pkgs/b/babl { };
 
-bash = callPackage ../all-pkgs/bash { };
+bash = callPackage ../all-pkgs/b/bash { };
 
-bash-completion = callPackage ../all-pkgs/bash-completion { };
+bash-completion = callPackage ../all-pkgs/b/bash-completion { };
 
-bc = callPackage ../all-pkgs/bc { };
+bc = callPackage ../all-pkgs/b/bc { };
 
-bcache-tools = callPackage ../all-pkgs/bcache-tools { };
+bcache-tools = callPackage ../all-pkgs/b/bcache-tools { };
 
 bcache-tools_dev = callPackageAlias "bcache-tools" {
   channel = "dev";
 };
 
-bison = callPackage ../all-pkgs/bison { };
+bison = callPackage ../all-pkgs/b/bison { };
 
-bluez = callPackage ../all-pkgs/bluez { };
+bluez = callPackage ../all-pkgs/b/bluez { };
 
-boehm-gc = callPackage ../all-pkgs/boehm-gc { };
+boehm-gc = callPackage ../all-pkgs/b/boehm-gc { };
 
-boost155 = callPackage ../all-pkgs/boost/1.55.nix { };
-boost161 = callPackage ../all-pkgs/boost/1.61.nix { };
+boost155 = callPackage ../all-pkgs/b/boost/1.55.nix { };
+boost161 = callPackage ../all-pkgs/b/boost/1.61.nix { };
 boost = callPackageAlias "boost161" { };
 
-brotli = callPackage ../all-pkgs/brotli { };
+brotli = callPackage ../all-pkgs/b/brotli { };
 
-bs1770gain = callPackage ../all-pkgs/bs1770gain { };
+bs1770gain = callPackage ../all-pkgs/b/bs1770gain { };
 
-btrfs-progs = callPackage ../all-pkgs/btrfs-progs { };
+btrfs-progs = callPackage ../all-pkgs/b/btrfs-progs { };
 
-btsync = callPackage ../all-pkgs/btsync { };
+btsync = callPackage ../all-pkgs/b/btsync { };
 
-bzip2 = callPackage ../all-pkgs/bzip2 { };
+bzip2 = callPackage ../all-pkgs/b/bzip2 { };
 
 c-ares = callPackage ../all-pkgs/c-ares { };
 
@@ -1084,7 +1084,7 @@ go_1_6 = callPackageAlias "go" {
 
 go16Packages = callPackage ./go-packages.nix {
   go = callPackageAlias "go_1_6" { };
-  buildGoPackage = callPackage ../all-pkgs/build-go-package {
+  buildGoPackage = callPackage ../all-pkgs/b/build-go-package {
     go = callPackageAlias "go_1_6" { };
     govers = (callPackageAlias "go16Packages" { }).govers.bin;
   };

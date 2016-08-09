@@ -3376,7 +3376,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   xdg-user-dirs = callPackage ../tools/X11/xdg-user-dirs { };
 #
   xpdf = callPackage ../applications/misc/xpdf {
-    motif = lesstif;
     base14Fonts = "${ghostscript}/share/ghostscript/fonts";
   };
 

@@ -487,88 +487,88 @@ wrapCC = wrapCCWith (callPackage ../build-support/cc-wrapper) pkgs.stdenv.cc.lib
 ################################################################################
 ################################################################################
 
-accountsservice = callPackage ../all-pkgs/accountsservice { };
+accountsservice = callPackage ../all-pkgs/a/accountsservice { };
 
-acl = callPackage ../all-pkgs/acl { };
+acl = callPackage ../all-pkgs/a/acl { };
 
-acpid = callPackage ../all-pkgs/acpid { };
+acpid = callPackage ../all-pkgs/a/acpid { };
 
-adns = callPackage ../all-pkgs/adns { };
+adns = callPackage ../all-pkgs/a/adns { };
 
-adwaita-icon-theme_3-20 = callPackage ../all-pkgs/adwaita-icon-theme {
+adwaita-icon-theme_3-20 = callPackage ../all-pkgs/a/adwaita-icon-theme {
   channel = "3.20";
 };
 adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-20" { };
 
-alsa-firmware = callPackage ../all-pkgs/alsa-firmware { };
+alsa-firmware = callPackage ../all-pkgs/a/alsa-firmware { };
 
-alsa-lib = callPackage ../all-pkgs/alsa-lib { };
+alsa-lib = callPackage ../all-pkgs/a/alsa-lib { };
 
-alsa-plugins = callPackage ../all-pkgs/alsa-plugins { };
+alsa-plugins = callPackage ../all-pkgs/a/alsa-plugins { };
 
-alsa-utils = callPackage ../all-pkgs/alsa-utils { };
+alsa-utils = callPackage ../all-pkgs/a/alsa-utils { };
 
-amrnb = callPackage ../all-pkgs/amrnb { };
+amrnb = callPackage ../all-pkgs/a/amrnb { };
 
-amrwb = callPackage ../all-pkgs/amrwb { };
+amrwb = callPackage ../all-pkgs/a/amrwb { };
 
-appdata-tools = callPackage ../all-pkgs/appdata-tools { };
+appdata-tools = callPackage ../all-pkgs/a/appdata-tools { };
 
-appstream-glib = callPackage ../all-pkgs/appstream-glib { };
+appstream-glib = callPackage ../all-pkgs/a/appstream-glib { };
 
-apr = callPackage ../all-pkgs/apr { };
+apr = callPackage ../all-pkgs/a/apr { };
 
-apr-util = callPackage ../all-pkgs/apr-util { };
+apr-util = callPackage ../all-pkgs/a/apr-util { };
 
-#ardour =  callPackage ../all-pkgs/ardour { };
+#ardour =  callPackage ../all-pkgs/a/ardour { };
 
-argyllcms = callPackage ../all-pkgs/argyllcms { };
+argyllcms = callPackage ../all-pkgs/a/argyllcms { };
 
-aria2 = callPackage ../all-pkgs/aria2 { };
+aria2 = callPackage ../all-pkgs/a/aria2 { };
 aria = callPackageAlias "aria2" { };
 
-arkive = callPackage ../all-pkgs/arkive { };
+arkive = callPackage ../all-pkgs/a/arkive { };
 
-asciidoc = callPackage ../all-pkgs/asciidoc { };
+asciidoc = callPackage ../all-pkgs/a/asciidoc { };
 
 asciinema = pkgs.goPackages.asciinema.bin // { outputs = [ "bin" ]; };
 
-aspell = callPackage ../all-pkgs/aspell { };
+aspell = callPackage ../all-pkgs/a/aspell { };
 
-atk = callPackage ../all-pkgs/atk { };
+atk = callPackage ../all-pkgs/a/atk { };
 
-atkmm = callPackage ../all-pkgs/atkmm { };
+atkmm = callPackage ../all-pkgs/a/atkmm { };
 
-attr = callPackage ../all-pkgs/attr { };
+attr = callPackage ../all-pkgs/a/attr { };
 
-at-spi2-atk_2-20 = callPackage ../all-pkgs/at-spi2-atk {
+at-spi2-atk_2-20 = callPackage ../all-pkgs/a/at-spi2-atk {
   channel = "2.20";
 };
 at-spi2-atk = callPackageAlias "at-spi2-atk_2-20" { };
 
-at-spi2-core = callPackage ../all-pkgs/at-spi2-core { };
+at-spi2-core = callPackage ../all-pkgs/a/at-spi2-core { };
 
-audiofile = callPackage ../all-pkgs/audiofile { };
+audiofile = callPackage ../all-pkgs/a/audiofile { };
 
-audit_full = callPackage ../all-pkgs/audit { };
+audit_full = callPackage ../all-pkgs/a/audit { };
 
 audit_lib = callPackageAlias "audit_full" {
   prefix = "lib";
 };
 
-augeas = callPackage ../all-pkgs/augeas { };
+augeas = callPackage ../all-pkgs/a/augeas { };
 
-autoconf = callPackage ../all-pkgs/autoconf { };
+autoconf = callPackage ../all-pkgs/a/autoconf { };
 
 autoconf_21x = callPackageAlias "autoconf" {
   channel = "2.1x";
 };
 
-autogen = callPackage ../all-pkgs/autogen { };
+autogen = callPackage ../all-pkgs/a/autogen { };
 
-automake = callPackage ../all-pkgs/automake { };
+automake = callPackage ../all-pkgs/a/automake { };
 
-avahi = callPackage ../all-pkgs/avahi { };
+avahi = callPackage ../all-pkgs/a/avahi { };
 
 babl = callPackage ../all-pkgs/babl { };
 
@@ -3031,7 +3031,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   pyxml = callPackage ../development/python-modules/pyxml { };
 #
-  apache-httpd = callPackage ../all-pkgs/apache-httpd  { };
+  apache-httpd = callPackage ../all-pkgs/a/apache-httpd  { };
 
   apacheHttpdPackagesFor = apacheHttpd: self: let callPackage = pkgs.newScope self; in {
     inherit apacheHttpd;

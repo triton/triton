@@ -22,6 +22,10 @@ stdenv.mkDerivation rec {
     ln -sv "$out/bin/bro" "$out/bin/brotli"
   '';
 
+  passthru = {
+    inherit version;
+  };
+
   meta = with stdenv.lib; {
     description = "A generic-purpose lossless compression algorithm and tool";
     homepage = https://github.com/google/brotli;

@@ -16,14 +16,16 @@
 
 stdenv.mkDerivation rec {
   name = "gnome-screenshot-${version}";
-  versionMajor = "3.18";
-  versionMinor = "0";
+  versionMajor = "3.20";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-screenshot/${versionMajor}/" +
-          "${name}.tar.xz";
-    sha256 = "eba64dbf4acf0ab8222fec549d0a4f2dd7dbd51c255e7978dedf1f5c06a98841";
+    url = "mirror://gnome/sources/gnome-screenshot/${versionMajor}/"
+      + "${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/gnome-screenshot/${versionMajor}/"
+      + "${name}.sha256sum";
+    sha256 = "06a89b6887146cdbbeb64adf11bdae21acf22b0422337041c66eedb21ef7e143";
   };
 
   nativeBuildInputs = [

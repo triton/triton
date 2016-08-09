@@ -2607,7 +2607,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   systemd-cryptsetup-generator = callPackage ../os-specific/linux/systemd/cryptsetup-generator.nix { };
 
-  unzipNLS = lowPrio (unzip.override { enableNLS = true; });
+  unzipNLS = lowPrio (pkgs.unzip.override { enableNLS = true; });
 #
   xorriso = callPackage ../tools/cd-dvd/xorriso { };
 #

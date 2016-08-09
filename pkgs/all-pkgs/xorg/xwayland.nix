@@ -1,11 +1,18 @@
 
-{ stdenv, wayland, xorgserver, xkbcomp, xkeyboard_config, libepoxy, libxslt, libunwind, makeWrapper }:
+{ stdenv
+, wayland
+, libepoxy
+, libxslt
+, libunwind
+, makeWrapper
+, xorg
+}:
 
 with stdenv.lib;
 
-overrideDerivation xorgserver (oldAttrs: {
+overrideDerivation xorg.xorgserver (oldAttrs: {
 
-  name = "xwayland-${xorgserver.version}";
+  name = "xwayland-${xorg.xorgserver.name}";
   propagatedNativeBuildInputs = oldAttrs.propagatedNativeBuildInputs
     ++ [wayland libepoxy libxslt makeWrapper libunwind];
   configureFlags = [
@@ -18,8 +25,8 @@ overrideDerivation xorgserver (oldAttrs: {
     "--disable-xquartz"
     "--disable-xwin"
     "--with-default-font-path="
-    "--with-xkb-bin-directory=${xkbcomp}/bin"
-    "--with-xkb-path=${xkeyboard_config}/etc/X11/xkb"
+    "--with-xkb-bin-directory=${xorg.xkbcomp}/bin"
+    "--with-xkb-path=${xorg.xkeyboard_config}/etc/X11/xkb"
     "--with-xkb-output=$(out)/share/X11/xkb/compiled"
   ];
 

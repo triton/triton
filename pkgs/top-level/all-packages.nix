@@ -604,50 +604,50 @@ btsync = callPackage ../all-pkgs/b/btsync { };
 
 bzip2 = callPackage ../all-pkgs/b/bzip2 { };
 
-c-ares = callPackage ../all-pkgs/c-ares { };
+c-ares = callPackage ../all-pkgs/c/c-ares { };
 
-cairo = callPackage ../all-pkgs/cairo { };
+cairo = callPackage ../all-pkgs/c/cairo { };
 
-cairomm = callPackage ../all-pkgs/cairomm { };
+cairomm = callPackage ../all-pkgs/c/cairomm { };
 
-caribou = callPackage ../all-pkgs/caribou { };
+caribou = callPackage ../all-pkgs/c/caribou { };
 
-ccid = callPackage ../all-pkgs/ccid { };
+ccid = callPackage ../all-pkgs/c/ccid { };
 
-cdparanoia = callPackage ../all-pkgs/cdparanoia { };
+cdparanoia = callPackage ../all-pkgs/c/cdparanoia { };
 
-cdrtools = callPackage ../all-pkgs/cdrtools { };
+cdrtools = callPackage ../all-pkgs/c/cdrtools { };
 
 # Only ever add ceph LTS releases
 # The default channel should be the latest LTS
 # Dev should always point to the latest versioned release
 ceph_lib = pkgs.ceph.lib;
-ceph = hiPrio (callPackage ../all-pkgs/ceph { });
-ceph_0_94 = callPackage ../all-pkgs/ceph {
+ceph = hiPrio (callPackage ../all-pkgs/c/ceph { });
+ceph_0_94 = callPackage ../all-pkgs/c/ceph {
   channel = "0.94";
 };
-ceph_9 = callPackage ../all-pkgs/ceph {
+ceph_9 = callPackage ../all-pkgs/c/ceph {
   channel = "9";
 };
-ceph_10 = callPackage ../all-pkgs/ceph {
+ceph_10 = callPackage ../all-pkgs/c/ceph {
   channel = "10";
 };
-ceph_dev = callPackage ../all-pkgs/ceph {
+ceph_dev = callPackage ../all-pkgs/c/ceph {
   channel = "dev";
 };
-ceph_git = callPackage ../all-pkgs/ceph {
+ceph_git = callPackage ../all-pkgs/c/ceph {
   channel = "git";
 };
 
-cgit = callPackage ../all-pkgs/cgit { };
+cgit = callPackage ../all-pkgs/c/cgit { };
 
-cgmanager = callPackage ../all-pkgs/cgmanager { };
+cgmanager = callPackage ../all-pkgs/c/cgmanager { };
 
-check = callPackage ../all-pkgs/check { };
+check = callPackage ../all-pkgs/c/check { };
 
-chromaprint = callPackage ../all-pkgs/chromaprint { };
+chromaprint = callPackage ../all-pkgs/c/chromaprint { };
 
-chromium = callPackage ../all-pkgs/chromium {
+chromium = callPackage ../all-pkgs/c/chromium {
   channel = "stable";
 };
 chromium_beta = callPackageAlias "chromium" {
@@ -657,58 +657,58 @@ chromium_dev = callPackageAlias "chromium" {
   channel = "dev";
 };
 
-cifs-utils = callPackage ../all-pkgs/cifs-utils { };
+cifs-utils = callPackage ../all-pkgs/c/cifs-utils { };
 
-civetweb = callPackage ../all-pkgs/civetweb { };
+civetweb = callPackage ../all-pkgs/c/civetweb { };
 
-cjdns = callPackage ../all-pkgs/cjdns { };
+cjdns = callPackage ../all-pkgs/c/cjdns { };
 
 clang = wrapCC (callPackageAlias "llvm" { });
 
-clutter = callPackage ../all-pkgs/clutter { };
+clutter = callPackage ../all-pkgs/c/clutter { };
 
-clutter-gst_2 = callPackage ../all-pkgs/clutter-gst/2.x.nix { };
-clutter-gst_3 = callPackage ../all-pkgs/clutter-gst/3.x.nix { };
+clutter-gst_2 = callPackage ../all-pkgs/c/clutter-gst/2.x.nix { };
+clutter-gst_3 = callPackage ../all-pkgs/c/clutter-gst/3.x.nix { };
 clutter-gst = callPackageAlias "clutter-gst_3" { };
 
-clutter-gtk = callPackage ../all-pkgs/clutter-gtk { };
+clutter-gtk = callPackage ../all-pkgs/c/clutter-gtk { };
 
-cmake = callPackage ../all-pkgs/cmake { };
+cmake = callPackage ../all-pkgs/c/cmake { };
 
-cogl = callPackage ../all-pkgs/cogl { };
+cogl = callPackage ../all-pkgs/c/cogl { };
 
-colord = callPackage ../all-pkgs/colord { };
+colord = callPackage ../all-pkgs/c/colord { };
 
-colord-gtk = callPackage ../all-pkgs/colord-gtk { };
+colord-gtk = callPackage ../all-pkgs/c/colord-gtk { };
 
-conntrack-tools = callPackage ../all-pkgs/conntrack-tools { };
+conntrack-tools = callPackage ../all-pkgs/c/conntrack-tools { };
 
 consul = pkgs.goPackages.consul.bin // { outputs = [ "bin" ]; };
 
 consul-template = pkgs.goPackages.consul-template.bin // { outputs = [ "bin" ]; };
 
-consul-ui = callPackage ../all-pkgs/consul-ui { };
+consul-ui = callPackage ../all-pkgs/c/consul-ui { };
 
-coreutils = callPackage ../all-pkgs/coreutils { };
+coreutils = callPackage ../all-pkgs/c/coreutils { };
 
-cpio = callPackage ../all-pkgs/cpio { };
+cpio = callPackage ../all-pkgs/c/cpio { };
 
-cracklib = callPackage ../all-pkgs/cracklib { };
+cracklib = callPackage ../all-pkgs/c/cracklib { };
 
-cryptodevHeaders = callPackage ../all-pkgs/cryptodev {
+cryptodevHeaders = callPackage ../all-pkgs/c/cryptodev {
   onlyHeaders = true;
   kernel = null;
 };
 
-cryptopp = callPackage ../all-pkgs/crypto++ { };
+cryptopp = callPackage ../all-pkgs/c/crypto++ { };
 
-cryptsetup = callPackage ../all-pkgs/cryptsetup { };
+cryptsetup = callPackage ../all-pkgs/c/cryptsetup { };
 
-cuetools = callPackage ../all-pkgs/cuetools { };
+cuetools = callPackage ../all-pkgs/c/cuetools { };
 
-cups = callPackage ../all-pkgs/cups { };
+cups = callPackage ../all-pkgs/c/cups { };
 
-curl = callPackage ../all-pkgs/curl {
+curl = callPackage ../all-pkgs/c/curl {
   suffix = "";
 };
 
@@ -716,7 +716,7 @@ curl_full = callPackageAlias "curl" {
   suffix = "full";
 };
 
-cyrus-sasl = callPackage ../all-pkgs/cyrus-sasl { };
+cyrus-sasl = callPackage ../all-pkgs/c/cyrus-sasl { };
 
 dash = callPackage ../all-pkgs/dash { };
 

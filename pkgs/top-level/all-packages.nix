@@ -3375,7 +3375,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 
   telepathy_mission_control = callPackage ../applications/networking/instant-messengers/telepathy/mission-control { };
 #
-  trezor-bridge = callPackage ../applications/networking/browsers/mozilla-plugins/trezor { };
+  #trezor-bridge = callPackage ../applications/networking/browsers/mozilla-plugins/trezor { };
 #
   xdg-user-dirs = callPackage ../tools/X11/xdg-user-dirs { };
 #

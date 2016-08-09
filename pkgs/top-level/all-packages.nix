@@ -1744,6 +1744,8 @@ mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 
 mosh = callPackage ../all-pkgs/mosh { };
 
+motif = callPackage ../all-pkgs/motif { };
+
 mp4v2 = callPackage ../all-pkgs/mp4v2 { };
 
 mpd = callPackage ../all-pkgs/mpd { };

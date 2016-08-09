@@ -66,7 +66,6 @@ let
     enFlag
     optionalString;
 in
-
 stdenv.mkDerivation rec {
   name = "gnome-control-center-${version}";
   versionMajor = "3.20";
@@ -78,11 +77,6 @@ stdenv.mkDerivation rec {
     sha256Url = "mirror://gnome/sources/gnome-control-center/${versionMajor}/${name}.sha256sum";
     sha256 = "ce6474fc60f78ed3cfaf555e55a52ec3ebb6437fa184e08ad6077bbec380a1ed";
   };
-
-  propagatedUserEnvPkgs = [
-    gnome-themes-standard
-    libgnomekbd
-  ];
 
   nativeBuildInputs = [
     autoreconfHook
@@ -142,6 +136,11 @@ stdenv.mkDerivation rec {
     xorg.libX11
     xorg.libXi
     xorg.libxkbfile
+  ];
+
+  propagatedUserEnvPkgs = [
+    gnome-themes-standard
+    libgnomekbd
   ];
 
   postUnpack = ''

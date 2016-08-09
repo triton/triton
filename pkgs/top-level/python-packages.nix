@@ -1179,14 +1179,14 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
  #  };
 
- #  argparse = buildPythonPackage rec {
- #    name = "argparse-1.4.0";
+   argparse = buildPythonPackage rec {
+     name = "argparse-1.4.0";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/a/argparse/${name}.tar.gz";
- #      sha256 = "1r6nznp64j68ih1k537wms7h57nvppq0szmwsaf99n71bfjqkc32";
- #    };
- #  };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/a/argparse/${name}.tar.gz";
+       sha256 = "1r6nznp64j68ih1k537wms7h57nvppq0szmwsaf99n71bfjqkc32";
+     };
+   };
 
  #  astroid = buildPythonPackage rec {
  #    name = "astroid-1.4.4";
@@ -1229,23 +1229,23 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  });
 
- #  audioread = buildPythonPackage rec {
- #    name = "audioread-${version}";
- #    version = "2.1.1";
+   audioread = buildPythonPackage rec {
+     name = "audioread-${version}";
+     version = "2.1.1";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/a/audioread/${name}.tar.gz";
- #      sha256 = "ffb601de7a9e40850d4ec3256a3a6bbe8fa40466dafb5c65f41b08e4bb963f1e";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/a/audioread/${name}.tar.gz";
+       sha256 = "ffb601de7a9e40850d4ec3256a3a6bbe8fa40466dafb5c65f41b08e4bb963f1e";
+     };
 
- #    # No tests, need to disable or py3k breaks
+     # No tests, need to disable or py3k breaks
 
- #    meta = {
- #      description = "Cross-platform audio decoding";
- #      homepage = "https://github.com/sampsyo/audioread";
- #      license = licenses.mit;
- #    };
- #  };
+     meta = {
+       description = "Cross-platform audio decoding";
+       homepage = "https://github.com/sampsyo/audioread";
+       license = licenses.mit;
+     };
+   };
 
  #  audiotools = buildPythonPackage rec {
  #    name = "audiotools-${version}";
@@ -2845,22 +2845,22 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  certifi = buildPythonPackage rec {
- #    name = "certifi-${version}";
- #    version = "2015.9.6.2";
+   certifi = buildPythonPackage rec {
+     name = "certifi-${version}";
+     version = "2015.9.6.2";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/c/certifi/${name}.tar.gz";
- #      sha256 = "19mfly763c6bzya9dwm6qgc48z4x3gk6ldl6fprdncqhklnjnfnw";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/c/certifi/${name}.tar.gz";
+       sha256 = "19mfly763c6bzya9dwm6qgc48z4x3gk6ldl6fprdncqhklnjnfnw";
+     };
 
- #    meta = {
- #      homepage = http://certifi.io/;
- #      description = "Python package for providing Mozilla's CA Bundle";
- #      license = licenses.isc;
- #      maintainers = with maintainers; [ koral ];
- #    };
- #  };
+     meta = {
+       homepage = http://certifi.io/;
+       description = "Python package for providing Mozilla's CA Bundle";
+       license = licenses.isc;
+       maintainers = with maintainers; [ koral ];
+     };
+   };
 
  #  characteristic = buildPythonPackage rec {
  #    name = "characteristic-14.1.0";
@@ -3324,21 +3324,21 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  cookies = buildPythonPackage rec {
- #    name = "cookies-2.2.1";
+   cookies = buildPythonPackage rec {
+     name = "cookies-2.2.1";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/c/cookies/${name}.tar.gz";
- #      sha256 = "13pfndz8vbk4p2a44cfbjsypjarkrall71pgc97glk5fiiw9idnn";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/c/cookies/${name}.tar.gz";
+       sha256 = "13pfndz8vbk4p2a44cfbjsypjarkrall71pgc97glk5fiiw9idnn";
+     };
 
 
- #    meta = {
- #      description = "Friendlier RFC 6265-compliant cookie parser/renderer";
- #      homepage = https://github.com/sashahart/cookies;
- #      license = licenses.mit;
- #    };
- #  };
+     meta = {
+       description = "Friendlier RFC 6265-compliant cookie parser/renderer";
+       homepage = https://github.com/sashahart/cookies;
+       license = licenses.mit;
+     };
+   };
 
  #  coverage = buildPythonPackage rec {
  #    name = "coverage-4.0.3";
@@ -3857,25 +3857,25 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  pytestrunner = buildPythonPackage rec {
- #    version = "2.6.2";
- #    name = "pytest-runner-${version}";
+   pytestrunner = buildPythonPackage rec {
+     version = "2.6.2";
+     name = "pytest-runner-${version}";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/p/pytest-runner/${name}.tar.gz";
- #      sha256 = "e775a40ee4a3a1d45018b199c44cc20bbe7f3df2dc8882f61465bb4141c78cdb";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/p/pytest-runner/${name}.tar.gz";
+       sha256 = "e775a40ee4a3a1d45018b199c44cc20bbe7f3df2dc8882f61465bb4141c78cdb";
+     };
 
- #    buildInputs = with self; [setuptools-scm pytest];
+     buildInputs = with self; [setuptools-scm pytest];
 
- #    meta = {
- #      description = "Invoke py.test as distutils command with dependency resolution";
- #      homepage = https://bitbucket.org/pytest-dev/pytest-runner;
- #      license = licenses.mit;
- #    };
+     meta = {
+       description = "Invoke py.test as distutils command with dependency resolution";
+       homepage = https://bitbucket.org/pytest-dev/pytest-runner;
+       license = licenses.mit;
+     };
 
- #    # Trying to run tests fails with # RuntimeError: dictionary changed size during iteration
- #  };
+     # Trying to run tests fails with # RuntimeError: dictionary changed size during iteration
+   };
 
  #  pytestquickcheck = buildPythonPackage rec {
  #    name = "pytest-quickcheck-0.8.2";
@@ -5043,21 +5043,21 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  functools32 = if isPy3k then null else buildPythonPackage rec {
- #    name = "functools32-${version}";
- #    version = "3.2.3-2";
+   functools32 = if isPy3k then null else buildPythonPackage rec {
+     name = "functools32-${version}";
+     version = "3.2.3-2";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/f/functools32/functools32-${version}.tar.gz";
- #      sha256 = "0v8ya0b58x47wp216n1zamimv4iw57cxz3xxhzix52jkw3xks9gn";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/f/functools32/functools32-${version}.tar.gz";
+       sha256 = "0v8ya0b58x47wp216n1zamimv4iw57cxz3xxhzix52jkw3xks9gn";
+     };
 
 
- #    meta = with stdenv.lib; {
- #      description = "This is a backport of the functools standard library module from";
- #      homepage = "https://github.com/MiCHiLU/python-functools32";
- #    };
- #  };
+     meta = with stdenv.lib; {
+       description = "This is a backport of the functools standard library module from";
+       homepage = "https://github.com/MiCHiLU/python-functools32";
+     };
+   };
 
  #  gateone = buildPythonPackage rec {
  #    name = "gateone-1.2-0d57c3";
@@ -6061,19 +6061,19 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  ndg-httpsclient = buildPythonPackage rec {
- #    version = "0.4.0";
- #    name = "ndg-httpsclient-${version}";
+   ndg-httpsclient = buildPythonPackage rec {
+     version = "0.4.0";
+     name = "ndg-httpsclient-${version}";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/n/ndg-httpsclient/ndg_httpsclient-${version}.tar.gz";
- #      sha256 = "e8c155fdebd9c4bcb0810b4ed01ae1987554b1ee034dd7532d7b8fdae38a6274";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/n/ndg-httpsclient/ndg_httpsclient-${version}.tar.gz";
+       sha256 = "e8c155fdebd9c4bcb0810b4ed01ae1987554b1ee034dd7532d7b8fdae38a6274";
+     };
 
- #    buildInputs = with self; [
- #      pyopenssl
- #    ];
- #  };
+     buildInputs = with self; [
+       pyopenssl
+     ];
+   };
 
  #  netcdf4 = buildPythonPackage rec {
  #    name = "netCDF4-${version}";
@@ -7817,15 +7817,15 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #  };
 
 
- #  docutils = buildPythonPackage rec {
- #    name = "docutils-0.12";
+   docutils = buildPythonPackage rec {
+     name = "docutils-0.12";
 
- #    src = pkgs.fetchurl {
- #      url = "mirror://sourceforge/docutils/${name}.tar.gz";
- #      multihash = "QmcfbEz6Kv8ri9DL47SdejSsWuCspmsqV9UeEYWmK2YrAg";
- #      sha256 = "1ylnjnw1x4b2y7blr6x35ncdzn69k253kw4cdkv6asdb21w73ny7";
- #    };
- #  };
+     src = pkgs.fetchurl {
+       url = "mirror://sourceforge/docutils/${name}.tar.gz";
+       multihash = "QmcfbEz6Kv8ri9DL47SdejSsWuCspmsqV9UeEYWmK2YrAg";
+       sha256 = "1ylnjnw1x4b2y7blr6x35ncdzn69k253kw4cdkv6asdb21w73ny7";
+     };
+   };
 
  #  doxypy = buildPythonPackage rec {
  #    name = "doxypy-0.4.2";
@@ -7860,25 +7860,25 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #  };
 
 
- #  ecdsa = buildPythonPackage rec {
- #    name = "ecdsa-${version}";
- #    version = "0.13";
+   ecdsa = buildPythonPackage rec {
+     name = "ecdsa-${version}";
+     version = "0.13";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/e/ecdsa/${name}.tar.gz";
- #      sha256 = "1yj31j0asmrx4an9xvsaj2icdmzy6pw0glfpqrrkrphwdpi1xkv4";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/e/ecdsa/${name}.tar.gz";
+       sha256 = "1yj31j0asmrx4an9xvsaj2icdmzy6pw0glfpqrrkrphwdpi1xkv4";
+     };
 
- #    # Only needed for tests
- #    buildInputs = with self; [ pkgs.openssl ];
+     # Only needed for tests
+     buildInputs = with self; [ pkgs.openssl ];
 
- #    meta = {
- #      description = "ECDSA cryptographic signature library";
- #      homepage = "https://github.com/warner/python-ecdsa";
- #      license = licenses.mit;
- #      maintainers = with maintainers; [ aszlig ];
- #    };
- #  };
+     meta = {
+       description = "ECDSA cryptographic signature library";
+       homepage = "https://github.com/warner/python-ecdsa";
+       license = licenses.mit;
+       maintainers = with maintainers; [ aszlig ];
+     };
+   };
 
 
  #  elpy = buildPythonPackage rec {
@@ -8309,19 +8309,18 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
      };
    });
 
- #  vcversioner = buildPythonPackage rec {
- #    name = "vcversioner-${version}";
- #    version = "2.14.0.0";
+   vcversioner = buildPythonPackage rec {
+     name = "vcversioner-${version}";
+     version = "2.14.0.0";
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/v/vcversioner/vcversioner-${version}.tar.gz";
+      sha256 = "11ivq1bm7v0yb4nsfbv9m7g7lyjn112gbvpjnjz8nv1fx633dm5c";
+     };
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/v/vcversioner/vcversioner-${version}.tar.gz";
- #      sha256 = "11ivq1bm7v0yb4nsfbv9m7g7lyjn112gbvpjnjz8nv1fx633dm5c";
- #    };
-
- #    meta = with stdenv.lib; {
- #      homepage = "https://github.com/habnabit/vcversioner";
- #    };
- #  };
+     meta = with stdenv.lib; {
+       homepage = "https://github.com/habnabit/vcversioner";
+     };
+   };
 
  #  falcon = buildPythonPackage (rec {
  #    name = "falcon-0.3.0";
@@ -8865,23 +8864,23 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  greenlet = buildPythonPackage rec {
- #    name = "greenlet-${version}";
- #    version = "0.4.9";
- #    disabled = isPyPy;  # builtin for pypy
+   greenlet = buildPythonPackage rec {
+     name = "greenlet-${version}";
+     version = "0.4.9";
+     disabled = isPyPy;  # builtin for pypy
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/g/greenlet/${name}.zip";
- #      sha256 = "0li2vm6ix982mmqdnqb6pgrq0jfvd0lfi5dz2rb6ap07wyig7cjq";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/g/greenlet/${name}.zip";
+       sha256 = "0li2vm6ix982mmqdnqb6pgrq0jfvd0lfi5dz2rb6ap07wyig7cjq";
+     };
 
- #    meta = {
- #      homepage = https://pypi.python.org/pypi/greenlet;
- #      description = "Module for lightweight in-process concurrent programming";
- #      license     = licenses.lgpl2;
- #      platforms   = platforms.all;
- #    };
- #  };
+     meta = {
+       homepage = https://pypi.python.org/pypi/greenlet;
+       description = "Module for lightweight in-process concurrent programming";
+       license     = licenses.lgpl2;
+       platforms   = platforms.all;
+    };
+   };
 
  #  gspread = buildPythonPackage rec {
  #    version = "0.2.3";
@@ -8899,16 +8898,16 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  gyp = buildPythonPackage rec {
- #    name = "gyp-${version}";
- #    version = "2016-06-20";
+   gyp = buildPythonPackage rec {
+     name = "gyp-${version}";
+     version = "2016-06-20";
 
- #    src = pkgs.fetchgit {
- #      url = "https://chromium.googlesource.com/external/gyp.git";
- #      rev = "35eafcd939515d51d19556c543f9cf97faf75ee6";
- #      sha256 = "11zk38brsw7sfsiz1m0q2lvc88vc6h6a55cnkx2x1cxfv85qbiy8";
- #    };
- #  };
+     src = pkgs.fetchgit {
+       url = "https://chromium.googlesource.com/external/gyp.git";
+       rev = "35eafcd939515d51d19556c543f9cf97faf75ee6";
+       sha256 = "11zk38brsw7sfsiz1m0q2lvc88vc6h6a55cnkx2x1cxfv85qbiy8";
+     };
+   };
 
  #  gunicorn = buildPythonPackage rec {
  #    name = "gunicorn-19.1.0";
@@ -10709,23 +10708,23 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #  };
 
 
- #  mpd = buildPythonPackage rec {
- #    name = "python-mpd-0.3.0";
+   mpd = buildPythonPackage rec {
+     name = "python-mpd-0.3.0";
 
- #    disabled = isPy3k;
+     disabled = isPy3k;
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/p/python-mpd/python-mpd-0.3.0.tar.gz";
- #      md5Confirm = "5b3849b131e2fb12f251434597d65635";
- #      sha256 = "1d11rl46prk5n8chmaxwwhi3c85s4gxadxapfkilc3rf3nx2x082";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/p/python-mpd/python-mpd-0.3.0.tar.gz";
+       md5Confirm = "5b3849b131e2fb12f251434597d65635";
+       sha256 = "1d11rl46prk5n8chmaxwwhi3c85s4gxadxapfkilc3rf3nx2x082";
+     };
 
- #    meta = with pkgs.stdenv.lib; {
- #      description = "An MPD (Music Player Daemon) client library written in pure Python";
- #      homepage = http://jatreuman.indefero.net/p/python-mpd/;
- #      license = licenses.gpl3;
- #    };
- #  };
+     meta = with pkgs.stdenv.lib; {
+       description = "An MPD (Music Player Daemon) client library written in pure Python";
+       homepage = http://jatreuman.indefero.net/p/python-mpd/;
+      license = licenses.gpl3;
+     };
+   };
 
  #  mpd2 = buildPythonPackage rec {
  #    name = "mpd2-${version}";
@@ -11975,45 +11974,45 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #  #   };
  #  # });
 
- #  ply = buildPythonPackage (rec {
- #    name = "ply-3.8";
+   ply = buildPythonPackage (rec {
+     name = "ply-3.8";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/p/ply/${name}.tar.gz";
- #      sha256 = "e7d1bdff026beb159c9942f7a17e102c375638d9478a7ecd4cc0c76afd8de0b8";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/p/ply/${name}.tar.gz";
+       sha256 = "e7d1bdff026beb159c9942f7a17e102c375638d9478a7ecd4cc0c76afd8de0b8";
+     };
 
- #    checkPhase = ''
- #      ${python.interpreter} test/testlex.py
- #      ${python.interpreter} test/testyacc.py
- #    '';
+     checkPhase = ''
+       ${python.interpreter} test/testlex.py
+       ${python.interpreter} test/testyacc.py
+     '';
 
- #    # Test suite appears broken
+     # Test suite appears broken
 
- #    meta = {
- #      homepage = http://www.dabeaz.com/ply/;
+     meta = {
+       homepage = http://www.dabeaz.com/ply/;
 
- #      description = "PLY (Python Lex-Yacc), an implementation of the lex and yacc parsing tools for Python";
+       description = "PLY (Python Lex-Yacc), an implementation of the lex and yacc parsing tools for Python";
 
- #      longDescription = ''
- #        PLY is an implementation of lex and yacc parsing tools for Python.
- #        In a nutshell, PLY is nothing more than a straightforward lex/yacc
- #        implementation.  Here is a list of its essential features: It's
- #        implemented entirely in Python; It uses LR-parsing which is
- #        reasonably efficient and well suited for larger grammars; PLY
- #        provides most of the standard lex/yacc features including support for
- #        empty productions, precedence rules, error recovery, and support for
- #        ambiguous grammars; PLY is straightforward to use and provides very
- #        extensive error checking; PLY doesn't try to do anything more or less
- #        than provide the basic lex/yacc functionality.  In other words, it's
- #        not a large parsing framework or a component of some larger system.
- #      '';
+       longDescription = ''
+         PLY is an implementation of lex and yacc parsing tools for Python.
+         In a nutshell, PLY is nothing more than a straightforward lex/yacc
+         implementation.  Here is a list of its essential features: It's
+         implemented entirely in Python; It uses LR-parsing which is
+         reasonably efficient and well suited for larger grammars; PLY
+        provides most of the standard lex/yacc features including support for
+         empty productions, precedence rules, error recovery, and support for
+         ambiguous grammars; PLY is straightforward to use and provides very
+         extensive error checking; PLY doesn't try to do anything more or less
+         than provide the basic lex/yacc functionality.  In other words, it's
+         not a large parsing framework or a component of some larger system.
+       '';
 
- #      license = licenses.bsd3;
+       license = licenses.bsd3;
 
- #      maintainers = [ ];
- #    };
- #  });
+       maintainers = [ ];
+     };
+   });
 
  #  osc = buildPythonPackage (rec {
  #    name = "osc-0.133+git";
@@ -13941,16 +13940,16 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
 
  #  };
 
- #  plumbum = buildPythonPackage rec {
- #    name = "plumbum-1.5.0";
+   plumbum = buildPythonPackage rec {
+     name = "plumbum-1.5.0";
 
- #    buildInputs = with self; [ self.six ];
+     buildInputs = with self; [ self.six ];
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/p/plumbum/${name}.tar.gz";
- #      sha256 = "b759f9e3b6771dff3332f01bc0683d1a56218f44d97942dabd906a0cd1cfb756";
- #    };
- #  };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/p/plumbum/${name}.tar.gz";
+       sha256 = "b759f9e3b6771dff3332f01bc0683d1a56218f44d97942dabd906a0cd1cfb756";
+     };
+   };
 
 
  #  polib = buildPythonPackage rec {
@@ -15035,28 +15034,28 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  pyjwt = buildPythonPackage rec {
- #    version = "1.4.0";
- #    name = "pyjwt-${version}";
+   pyjwt = buildPythonPackage rec {
+     version = "1.4.0";
+     name = "pyjwt-${version}";
 
- #    src = pkgs.fetchurl {
- #      url = "http://github.com/progrium/pyjwt/archive/${version}.tar.gz";
- #      sha256 = "1gpr1hrbshvgznq2sr5jxmcan9ln8pzm29c32z4d2vwbrgb2w742";
- #    };
+     src = pkgs.fetchurl {
+       url = "http://github.com/progrium/pyjwt/archive/${version}.tar.gz";
+       sha256 = "1gpr1hrbshvgznq2sr5jxmcan9ln8pzm29c32z4d2vwbrgb2w742";
+     };
 
- #    propagatedBuildInputs = with self; [ pycrypto ecdsa pytestrunner ];
+     propagatedBuildInputs = with self; [ pycrypto ecdsa pytestrunner ];
 
 
- #    meta = {
- #      description = "JSON Web Token implementation in Python";
- #      longDescription = "A Python implementation of JSON Web Token draft 01";
- #      homepage = https://github.com/progrium/pyjwt;
- #      downloadPage = https://github.com/progrium/pyjwt/releases;
- #      license = licenses.mit;
- #      maintainers = with maintainers; [ prikhi ];
- #      platforms = platforms.linux;
- #    };
- #  };
+     meta = {
+       description = "JSON Web Token implementation in Python";
+       longDescription = "A Python implementation of JSON Web Token draft 01";
+       homepage = https://github.com/progrium/pyjwt;
+       downloadPage = https://github.com/progrium/pyjwt/releases;
+       license = licenses.mit;
+       maintainers = with maintainers; [ prikhi ];
+       platforms = platforms.linux;
+     };
+   };
 
  #  pykickstart = buildPythonPackage rec {
  #    name = "pykickstart-${version}";
@@ -18518,23 +18517,23 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    # lots of "unhashable type" errors
  #  };
 
- #  testscenarios = buildPythonPackage rec {
- #    name = "testscenarios-${version}";
- #    version = "0.4";
+   testscenarios = buildPythonPackage rec {
+     name = "testscenarios-${version}";
+     version = "0.4";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/t/testscenarios/${name}.tar.gz";
- #      sha256 = "1671jvrvqlmbnc42j7pc5y6vc37q44aiwrq0zic652pxyy2fxvjg";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/t/testscenarios/${name}.tar.gz";
+       sha256 = "1671jvrvqlmbnc42j7pc5y6vc37q44aiwrq0zic652pxyy2fxvjg";
+     };
 
- #    propagatedBuildInputs = with self; [ testtools ];
+     propagatedBuildInputs = with self; [ testtools ];
 
- #    meta = {
- #      description = "a pyunit extension for dependency injection";
- #      homepage = https://pypi.python.org/pypi/testscenarios;
- #      license = licenses.asl20;
- #    };
- #  };
+     meta = {
+       description = "a pyunit extension for dependency injection";
+       homepage = https://pypi.python.org/pypi/testscenarios;
+       license = licenses.asl20;
+     };
+   };
 
  #  testrepository = buildPythonPackage rec {
  #    name = "testrepository-${version}";
@@ -18575,28 +18574,28 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  testtools = buildPythonPackage rec {
- #    name = "testtools-${version}";
- #    version = "1.8.0";
+   testtools = buildPythonPackage rec {
+     name = "testtools-${version}";
+     version = "1.8.0";
 
- #    # Python 2 only judging from SyntaxError
- #    disabled = isPy3k;
+     # Python 2 only judging from SyntaxError
+     disabled = isPy3k;
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/t/testtools/${name}.tar.gz";
- #      sha256 = "15yxz8d70iy1b1x6gd7spvblq0mjxjardl4vnaqasxafzc069zca";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/t/testtools/${name}.tar.gz";
+       sha256 = "15yxz8d70iy1b1x6gd7spvblq0mjxjardl4vnaqasxafzc069zca";
+     };
 
- #    propagatedBuildInputs = with self; [ pbr python_mimeparse extras lxml unittest2 ];
- #    buildInputs = with self; [ traceback2 ];
- #    patches = [ ../development/python-modules/testtools_support_unittest2.patch ];
+     propagatedBuildInputs = with self; [ pbr python_mimeparse extras lxml unittest2 ];
+     buildInputs = with self; [ traceback2 ];
+     patches = [ ../development/python-modules/testtools_support_unittest2.patch ];
 
- #    meta = {
- #      description = "A set of extensions to the Python standard library's unit testing framework";
- #      homepage = https://pypi.python.org/pypi/testtools;
- #      license = licenses.mit;
- #    };
- #  };
+     meta = {
+       description = "A set of extensions to the Python standard library's unit testing framework";
+       homepage = https://pypi.python.org/pypi/testtools;
+       license = licenses.mit;
+    };
+   };
 
  #  traitlets = buildPythonPackage rec {
  #    version = "4.1.0";
@@ -18622,42 +18621,42 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  python_mimeparse = buildPythonPackage rec {
- #    name = "python-mimeparse-${version}";
- #    version = "0.1.4";
+   python_mimeparse = buildPythonPackage rec {
+     name = "python-mimeparse-${version}";
+     version = "0.1.4";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/p/python-mimeparse/${name}.tar.gz";
- #      sha256 = "1hyxg09kaj02ri0rmwjqi86wk4nd1akvv7n0dx77azz76wga4s9w";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/p/python-mimeparse/${name}.tar.gz";
+       sha256 = "1hyxg09kaj02ri0rmwjqi86wk4nd1akvv7n0dx77azz76wga4s9w";
+     };
 
- #    # error: invalid command 'test'
+     # error: invalid command 'test'
 
- #    meta = {
- #      description = "A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges";
- #      homepage = https://code.google.com/p/mimeparse/;
- #      license = licenses.mit;
- #    };
- #  };
+     meta = {
+       description = "A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges";
+       homepage = https://code.google.com/p/mimeparse/;
+       license = licenses.mit;
+     };
+   };
 
 
- #  extras = buildPythonPackage rec {
- #    name = "extras-${version}";
- #    version = "0.0.3";
+   extras = buildPythonPackage rec {
+     name = "extras-${version}";
+     version = "0.0.3";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/e/extras/extras-${version}.tar.gz";
- #      sha256 = "1h7zx4dfyclalg0fqnfjijpn0f793a9mx8sy3b27gd31nr6dhq3s";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/e/extras/extras-${version}.tar.gz";
+       sha256 = "1h7zx4dfyclalg0fqnfjijpn0f793a9mx8sy3b27gd31nr6dhq3s";
+     };
 
- #    # error: invalid command 'test'
+     # error: invalid command 'test'
 
- #    meta = {
- #      description = "A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges";
- #      homepage = https://code.google.com/p/mimeparse/;
- #      license = licenses.mit;
- #    };
- #  };
+     meta = {
+       description = "A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges";
+       homepage = https://code.google.com/p/mimeparse/;
+       license = licenses.mit;
+     };
+   };
 
  #  termstyle = self.buildPythonPackage rec {
  #    name = "termstyle-0.1.10";
@@ -19017,49 +19016,49 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  unicodecsv = buildPythonPackage rec {
- #    version = "0.14.1";
- #    name = "unicodecsv-${version}";
+   unicodecsv = buildPythonPackage rec {
+     version = "0.14.1";
+     name = "unicodecsv-${version}";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/u/unicodecsv/${name}.tar.gz";
- #      sha256 = "1z7pdwkr6lpsa7xbyvaly7pq3akflbnz8gq62829lr28gl1hi301";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/u/unicodecsv/${name}.tar.gz";
+       sha256 = "1z7pdwkr6lpsa7xbyvaly7pq3akflbnz8gq62829lr28gl1hi301";
+     };
 
- #    # ImportError: No module named runtests
+     # ImportError: No module named runtests
 
- #    meta = {
- #      description = "Drop-in replacement for Python2's stdlib csv module, with unicode support";
- #      homepage = https://github.com/jdunck/python-unicodecsv;
- #      maintainers = with maintainers; [ koral ];
- #    };
- #  };
+     meta = {
+       description = "Drop-in replacement for Python2's stdlib csv module, with unicode support";
+       homepage = https://github.com/jdunck/python-unicodecsv;
+       maintainers = with maintainers; [ koral ];
+     };
+   };
 
- #  unittest2 = buildPythonPackage rec {
- #    version = "1.1.0";
- #    name = "unittest2-${version}";
+   unittest2 = buildPythonPackage rec {
+     version = "1.1.0";
+     name = "unittest2-${version}";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/u/unittest2/unittest2-${version}.tar.gz";
- #      sha256 = "0y855kmx7a8rnf81d3lh5lyxai1908xjp0laf4glwa4c8472m212";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/u/unittest2/unittest2-${version}.tar.gz";
+       sha256 = "0y855kmx7a8rnf81d3lh5lyxai1908xjp0laf4glwa4c8472m212";
+     };
 
- #    # # 1.0.0 and up create a circle dependency with traceback2/pbr
+     # # 1.0.0 and up create a circle dependency with traceback2/pbr
 
- #    patchPhase = ''
- #      # # fixes a transient error when collecting tests, see https://bugs.launchpad.net/python-neutronclient/+bug/1508547
- #      sed -i '510i\        return None, False' unittest2/loader.py
- #      # https://github.com/pypa/packaging/pull/36
- #      sed -i 's/version=VERSION/version=str(VERSION)/' setup.py
- #    '';
+     patchPhase = ''
+       # # fixes a transient error when collecting tests, see https://bugs.launchpad.net/python-neutronclient/+bug/1508547
+       sed -i '510i\        return None, False' unittest2/loader.py
+       # https://github.com/pypa/packaging/pull/36
+       sed -i 's/version=VERSION/version=str(VERSION)/' setup.py
+     '';
 
- #    propagatedBuildInputs = with self; [ six argparse traceback2 ];
+     propagatedBuildInputs = with self; [ six argparse traceback2 ];
 
- #    meta = {
- #      description = "A backport of the new features added to the unittest testing framework";
- #      homepage = https://pypi.python.org/pypi/unittest2;
- #    };
- #  };
+     meta = {
+       description = "A backport of the new features added to the unittest testing framework";
+       homepage = https://pypi.python.org/pypi/unittest2;
+     };
+   };
 
  #  uritemplate_py = buildPythonPackage rec {
  #    name = "uritemplate.py-${version}";
@@ -19078,41 +19077,41 @@ zope-interface = callPackage ../all-pkgs/zope-interface { };
  #    };
  #  };
 
- #  traceback2 = buildPythonPackage rec {
- #    version = "1.4.0";
- #    name = "traceback2-${version}";
+   traceback2 = buildPythonPackage rec {
+     version = "1.4.0";
+     name = "traceback2-${version}";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/t/traceback2/traceback2-${version}.tar.gz";
- #      sha256 = "0c1h3jas1jp1fdbn9z2mrgn3jj0hw1x3yhnkxp7jw34q15xcdb05";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/t/traceback2/traceback2-${version}.tar.gz";
+       sha256 = "0c1h3jas1jp1fdbn9z2mrgn3jj0hw1x3yhnkxp7jw34q15xcdb05";
+     };
 
- #    propagatedBuildInputs = with self; [ pbr linecache2 ];
- #    # circular dependencies for tests
+     propagatedBuildInputs = with self; [ pbr linecache2 ];
+     # circular dependencies for tests
 
- #    meta = {
- #      description = "A backport of traceback to older supported Pythons.";
- #      homepage = https://pypi.python.org/pypi/traceback2/;
- #    };
- #  };
+     meta = {
+       description = "A backport of traceback to older supported Pythons.";
+       homepage = https://pypi.python.org/pypi/traceback2/;
+     };
+   };
 
- #  linecache2 = buildPythonPackage rec {
- #    name = "linecache2-${version}";
- #    version = "1.0.0";
+   linecache2 = buildPythonPackage rec {
+     name = "linecache2-${version}";
+     version = "1.0.0";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/l/linecache2/${name}.tar.gz";
- #      sha256 = "0z79g3ds5wk2lvnqw0y2jpakjf32h95bd9zmnvp7dnqhf57gy9jb";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/l/linecache2/${name}.tar.gz";
+       sha256 = "0z79g3ds5wk2lvnqw0y2jpakjf32h95bd9zmnvp7dnqhf57gy9jb";
+     };
 
- #    buildInputs = with self; [ pbr ];
- #    # circular dependencies for tests
+     buildInputs = with self; [ pbr ];
+     # circular dependencies for tests
 
- #    meta = with stdenv.lib; {
- #      description = "A backport of linecache to older supported Pythons.";
- #      homepage = "https://github.com/testing-cabal/linecache2";
- #    };
- #  };
+     meta = with stdenv.lib; {
+       description = "A backport of linecachetestscenarios to older supported Pythons.";
+       homepage = "https://github.com/testing-cabal/linecache2";
+     };
+   };
 
  #  upass = buildPythonPackage rec {
  #    version = "0.1.4";

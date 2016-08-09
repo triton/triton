@@ -5,12 +5,12 @@
 
 buildPythonPackage rec {
   name = "pyparsing-${version}";
-  version = "2.1.4";
+  version = "2.1.6";
 
   src = fetchPyPi {
     package = "pyparsing";
     inherit version;
-    sha256 = "a9234dea79b50d49b92a994132cd1c84e873f3936db94977a66f0a4159b1797c";
+    sha256 = "3bbdeb6ba83077136cebf642fb0ac526a4230f72944e7f6a240df2fdd83c6e66";
   };
 
   doCheck = true;

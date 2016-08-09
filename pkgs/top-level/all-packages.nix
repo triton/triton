@@ -788,43 +788,43 @@ dtc = callPackage ../all-pkgs/d/dtc { };
 
 duplicity = pkgs.pythonPackages.duplicity;
 
-e2fsprogs = callPackage ../all-pkgs/e2fsprogs { };
+e2fsprogs = callPackage ../all-pkgs/e/e2fsprogs { };
 
-edac-utils = callPackage ../all-pkgs/edac-utils { };
+edac-utils = callPackage ../all-pkgs/e/edac-utils { };
 
-efibootmgr = callPackage ../all-pkgs/efibootmgr { };
+efibootmgr = callPackage ../all-pkgs/e/efibootmgr { };
 
-efivar = callPackage ../all-pkgs/efivar { };
+efivar = callPackage ../all-pkgs/e/efivar { };
 
-eigen = callPackage ../all-pkgs/eigen { };
+eigen = callPackage ../all-pkgs/e/eigen { };
 
-elfutils = callPackage ../all-pkgs/elfutils { };
+elfutils = callPackage ../all-pkgs/e/elfutils { };
 
-emacs = callPackage ../all-pkgs/emacs { };
+emacs = callPackage ../all-pkgs/e/emacs { };
 
-enca = callPackage ../all-pkgs/enca { };
+enca = callPackage ../all-pkgs/e/enca { };
 
-enchant = callPackage ../all-pkgs/enchant { };
+enchant = callPackage ../all-pkgs/e/enchant { };
 
-eog = callPackage ../all-pkgs/eog { };
+eog = callPackage ../all-pkgs/e/eog { };
 
-erlang = callPackage ../all-pkgs/erlang { };
+erlang = callPackage ../all-pkgs/e/erlang { };
 
-ethtool = callPackage ../all-pkgs/ethtool { };
+ethtool = callPackage ../all-pkgs/e/ethtool { };
 
-evince = callPackage ../all-pkgs/evince { };
+evince = callPackage ../all-pkgs/e/evince { };
 
-#evolution = callPackage ../all-pkgs/evolution { };
+#evolution = callPackage ../all-pkgs/e/evolution { };
 
-evolution-data-server = callPackage ../all-pkgs/evolution-data-server { };
+evolution-data-server = callPackage ../all-pkgs/e/evolution-data-server { };
 
-exempi = callPackage ../all-pkgs/exempi { };
+exempi = callPackage ../all-pkgs/e/exempi { };
 
-exiv2 = callPackage ../all-pkgs/exiv2 { };
+exiv2 = callPackage ../all-pkgs/e/exiv2 { };
 
-expat = callPackage ../all-pkgs/expat { };
+expat = callPackage ../all-pkgs/e/expat { };
 
-expect = callPackage ../all-pkgs/expect { };
+expect = callPackage ../all-pkgs/e/expect { };
 
 f2fs-tools = callPackage ../all-pkgs/f2fs-tools { };
 

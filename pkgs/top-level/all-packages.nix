@@ -281,7 +281,7 @@ let
 
   fetchgitLocal = callPackage ../build-support/fetchgitlocal { };
 
-  packer = callPackage ../development/tools/packer { };
+  #packer = callPackage ../development/tools/packer { };
 
   fetchpatch = callPackage ../build-support/fetchpatch { };
 
@@ -421,7 +421,7 @@ let
 
   composableDerivation = callPackage ../../lib/composable-derivation.nix { };
 
-  platforms = import ./platforms.nix;
+  #platforms = import ./platforms.nix;
 
   setJavaClassPath = makeSetupHook { } ../build-support/setup-hooks/set-java-classpath.sh;
 
@@ -1722,11 +1722,11 @@ mesa = pkgs.buildEnv {
   passthru = pkgs.mesa_glu.passthru // pkgs.mesa_noglu.passthru;
 };
 
-mesos = callPackage ../all-pkgs/mesos {
-  inherit (pythonPackages) python boto setuptools wrapPython;
-  pythonProtobuf = pythonPackages.protobuf2_5;
-  perf = linuxPackages.perf;
-};
+#mesos = callPackage ../all-pkgs/mesos {
+#  inherit (pythonPackages) python boto setuptools wrapPython;
+#  pythonProtobuf = pythonPackages.protobuf2_5;
+ # perf = linuxPackages.perf;
+#};
 
 mg = callPackage ../all-pkgs/mg { };
 
@@ -1793,7 +1793,7 @@ nautilus = callPackage ../all-pkgs/nautilus { };
 
 ncdc = callPackage ../all-pkgs/ncdc { };
 
-ncmpc = callPackage ../all-pkgs/ncmpc { };
+#ncmpc = callPackage ../all-pkgs/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
 
@@ -1937,6 +1937,8 @@ pgbouncer = callPackage ../all-pkgs/pgbouncer { };
 
 pinentry = callPackage ../all-pkgs/pinentry { };
 
+pixman = callPackage ../all-pkgs/pixman { };
+
 pkcs11-helper = callPackage ../all-pkgs/pkcs11-helper { };
 
 pkgconf = callPackage ../all-pkgs/pkgconf { };
@@ -2025,9 +2027,9 @@ python36 = callPackage ../all-pkgs/python {
   channel = "3.6";
   self = callPackageAlias "python36" { };
 };
-pypy = callPackage ../all-pkgs/pypy {
-  self = callPackageAlias "pypy" { };
-};
+#pypy = callPackage ../all-pkgs/pypy {
+#  self = callPackageAlias "pypy" { };
+#};
 python2 = callPackageAlias "python27" { };
 python3 = callPackageAlias "python35" { };
 python = callPackageAlias "python2" { };
@@ -2052,10 +2054,10 @@ python36Packages = recurseIntoAttrs (callPackage ../top-level/python-packages.ni
   python = callPackageAlias "python36" { };
   self = callPackageAlias "python36Packages" { };
 });
-pypyPackages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
-  python = callPackageAlias "pypy" { };
-  self = callPackageAlias "pypyPackages" { };
-});
+#pypyPackages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+#  python = callPackageAlias "pypy" { };
+#  self = callPackageAlias "pypyPackages" { };
+#});
 python2Packages = callPackageAlias "python27Packages" { };
 python3Packages = callPackageAlias "python35Packages" { };
 pythonPackages = callPackageAlias "python2Packages" { };
@@ -2124,13 +2126,13 @@ rustc = hiPrio (callPackage ../all-pkgs/rustc { });
 
 rustc_bootstrap = lowPrio (callPackage ../all-pkgs/rustc/bootstrap.nix { });
 
-rustc_beta = callPackageAlias "rustc" {
-  channel = "beta";
-};
+#rustc_beta = callPackageAlias "rustc" {
+#  channel = "beta";
+#};
 
-rustc_dev = callPackageAlias "rustc" {
-  channel = "dev";
-};
+#rustc_dev = callPackageAlias "rustc" {
+#  channel = "dev";
+#};
 
 sakura = callPackage ../all-pkgs/sakura { };
 
@@ -2291,8 +2293,8 @@ tcp-wrappers = callPackage ../all-pkgs/tcp-wrappers { };
 
 tdb = callPackage ../all-pkgs/tdb { };
 
-teamspeak_client = callPackage ../all-pkgs/teamspeak/client.nix { };
-teamspeak_server = callPackage ../all-pkgs/teamspeak/server.nix { };
+#teamspeak_client = callPackage ../all-pkgs/teamspeak/client.nix { };
+#teamspeak_server = callPackage ../all-pkgs/teamspeak/server.nix { };
 
 tesseract = callPackage ../all-pkgs/tesseract { };
 
@@ -2563,7 +2565,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   spCompat = callPackage ../tools/text/sgml/opensp/compat.nix { };
 #
-  parted = callPackage ../tools/misc/parted { hurd = null; };
+  #parted = callPackage ../tools/misc/parted { hurd = null; };
 #
   ppp = callPackage ../tools/networking/ppp { };
 
@@ -2675,7 +2677,7 @@ zstd = callPackage ../all-pkgs/zstd { };
 #    openjdk = openjdk7.override { minimal = true; };
 #  };
   openjdk8-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
-    openjdk = openjdk8.override { minimal = true; };
+    openjdk = pkgs.openjdk8.override { minimal = true; };
   };
 #
 #  openjdk7 = callPackage ../development/compilers/openjdk/7.nix {
@@ -2995,7 +2997,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   speexdsp = callPackage ../development/libraries/speexdsp { };
 #
-  sqlite-interactive = sqlite;
+  sqlite-interactive = pkgs.sqlite;
 #
   t1lib = callPackage ../development/libraries/t1lib { };
 
@@ -3035,7 +3037,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   apache-httpd = callPackage ../all-pkgs/apache-httpd  { };
 
-  apacheHttpdPackagesFor = apacheHttpd: self: let callPackage = newScope self; in {
+  apacheHttpdPackagesFor = apacheHttpd: self: let callPackage = pkgs.newScope self; in {
     inherit apacheHttpd;
 
     mod_dnssd = callPackage ../servers/http/apache-modules/mod_dnssd { };
@@ -3267,7 +3269,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
 #  # In nixos, you can set systemd.package = pkgs.systemd_with_lvm2 to get
 #  # LVM2 working in systemd.
-  systemd_with_lvm2 = pkgs.lib.overrideDerivation pkgs.systemd (p: {
+  systemd_with_lvm2 = pkgs.lib.overrideDerivation pkgs.systemd_full (p: {
       name = p.name + "-with-lvm2";
       postInstall = p.postInstall + ''
         cp "${pkgs.lvm2}/lib/systemd/system-generators/"* $out/lib/systemd/system-generators
@@ -3348,7 +3350,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   mcpp = callPackage ../development/compilers/mcpp { };
 #
-  mediainfo = callPackage ../applications/misc/mediainfo { };
+  #mediainfo = callPackage ../applications/misc/mediainfo { };
 #
   mp3val = callPackage ../applications/audio/mp3val { };
 #
@@ -3365,9 +3367,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   rsync = callPackage ../applications/networking/sync/rsync { };
 #
 #
-  spotify = callPackage ../applications/audio/spotify {
-    libgcrypt = libgcrypt_1_5;
-  };
+  #spotify = callPackage ../applications/audio/spotify { };
 #
   subunit = callPackage ../development/libraries/subunit { };
 #

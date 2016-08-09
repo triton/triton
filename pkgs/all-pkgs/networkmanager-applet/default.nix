@@ -23,6 +23,7 @@
 , libnotify
 , libsecret
 , mobile_broadband_provider_info
+, modemmanager
 , networkmanager
 , pango
 , polkit
@@ -31,7 +32,8 @@
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    wtFlag;
 in
 stdenv.mkDerivation rec {
   name = "network-manager-applet-${version}";
@@ -76,6 +78,7 @@ stdenv.mkDerivation rec {
     libgudev
     libnotify
     libsecret
+    modemmanager
     networkmanager
     pango
     polkit
@@ -86,13 +89,13 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--disable-maintainer-mode"
     "--enable-nls"
-    "--enable-iso-codes"
+    (enFlag "iso-codes" (iso-codes != null) null)
     "--disable-migration"
     (enFlag "introspection" (gobject-introspection != null) null)
     "--enable-schemas-compile"
     "--enable-more-warnings"
     #"--with-appindicator"
-    "--with-wwan"
+    (wtFlag "wwan" (modemmanager != null) null)
   ];
 
   makeFlags = [
@@ -100,7 +103,7 @@ stdenv.mkDerivation rec {
   ];
 
   preInstall = ''
-    installFlagsArray+=( "sysconfdir=$out/etc" )
+    installFlagsArray+=("sysconfdir=$out/etc")
   '';
 
   preFixup = ''

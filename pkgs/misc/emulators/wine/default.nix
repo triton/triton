@@ -6,9 +6,9 @@
 # };
 # Make additional configurations on demand:
 # wine.override { wineBuild = "wine32"; wineRelease = "staging"; };
-{ lib, pkgs, system, callPackage,
+{ stdenv, lib, pkgs, callPackage,
   wineRelease ? "stable",
-  wineBuild ? (if system == "x86_64-linux" then "wineWow" else "wine32"),
+  wineBuild ? (if lib.elem stdenv.targetSystem lib.platforms.x86_64-linux then "wineWow" else "wine32"),
   pulseaudioSupport ? false,
   libtxc_dxtn_Name ? "libtxc_dxtn_s2tc" }:
 

@@ -1,4 +1,4 @@
-{ system, stdenv, stdenv_32bit, lib, pkgs, pkgsi686Linux, callPackage,
+{ stdenv, stdenv_32bit, lib, pkgs, pkgsi686Linux, callPackage,
   pulseaudioSupport,
   wineRelease ? "stable"
 }:

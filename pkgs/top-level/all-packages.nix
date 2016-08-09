@@ -3410,16 +3410,16 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
     (callPackage ../tools/typesetting/tex/texlive-new { });
   texLive = callPackageAlias "texlive" { };
 #
-  wine = callPackage ../misc/emulators/wine {
-    wineRelease = config.wine.release or "stable";
-    wineBuild = config.wine.build or "wine32";
-    pulseaudioSupport = config.pulseaudio or true;
-  };
-  wineStable = wine.override { wineRelease = "stable"; };
-  wineUnstable = lowPrio (wine.override { wineRelease = "unstable"; });
-  wineStaging = lowPrio (wine.override { wineRelease = "staging"; });
+  #wine = callPackage ../misc/emulators/wine {
+  #  wineRelease = config.wine.release or "stable";
+  #  wineBuild = config.wine.build or "wine32";
+  #  pulseaudioSupport = config.pulseaudio or true;
+  #};
+  #wineStable = wine.override { wineRelease = "stable"; };
+  #wineUnstable = lowPrio (wine.override { wineRelease = "unstable"; });
+  #wineStaging = lowPrio (wine.override { wineRelease = "staging"; });
 
-  winetricks = callPackage ../misc/emulators/wine/winetricks.nix { };
+  #winetricks = callPackage ../misc/emulators/wine/winetricks.nix { };
 #
   myEnvFun = callPackage ../misc/my-env { };
 #

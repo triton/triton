@@ -26,17 +26,18 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "gnome-online-accounts-${version}";
   versionMajor = "3.20";
-  versionMinor = "1";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-online-accounts/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-online-accounts/${versionMajor}/${name}.sha256sum";
-    sha256 = "c37aebc1e12f31f5516d33a354181e4d202a07da4f7d3a95b0da8cf0028c0c93";
+    url = "mirror://gnome/sources/gnome-online-accounts/${versionMajor}/"
+      + "${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/gnome-online-accounts/"
+      + "${versionMajor}/${name}.sha256sum";
+    sha256 = "094fc04cf3e0b4ace667fce3b5bdcca5093e0c93f9184439e663c69546c1e046";
   };
 
   nativeBuildInputs = [

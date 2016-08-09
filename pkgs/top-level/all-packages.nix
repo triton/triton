@@ -718,9 +718,9 @@ curl_full = callPackageAlias "curl" {
 
 cyrus-sasl = callPackage ../all-pkgs/c/cyrus-sasl { };
 
-dash = callPackage ../all-pkgs/dash { };
+dash = callPackage ../all-pkgs/d/dash { };
 
-db = callPackage ../all-pkgs/db { };
+db = callPackage ../all-pkgs/d/db { };
 db_5 = callPackageAlias "db" {
   channel = "5";
 };
@@ -728,63 +728,63 @@ db_6 = callPackageAlias "db" {
   channel = "6";
 };
 
-dbus = callPackage ../all-pkgs/dbus { };
+dbus = callPackage ../all-pkgs/d/dbus { };
 
-dbus-glib = callPackage ../all-pkgs/dbus-glib { };
+dbus-glib = callPackage ../all-pkgs/d/dbus-glib { };
 
-dconf = callPackage ../all-pkgs/dconf { };
+dconf = callPackage ../all-pkgs/d/dconf { };
 
-dconf-editor = callPackage ../all-pkgs/dconf-editor { };
+dconf-editor = callPackage ../all-pkgs/d/dconf-editor { };
 
-ddrescue = callPackage ../all-pkgs/ddrescue { };
+ddrescue = callPackage ../all-pkgs/d/ddrescue { };
 
-dejagnu = callPackage ../all-pkgs/dejagnu { };
+dejagnu = callPackage ../all-pkgs/d/dejagnu { };
 
-dialog = callPackage ../all-pkgs/dialog { };
+dialog = callPackage ../all-pkgs/d/dialog { };
 
-ding-libs = callPackage ../all-pkgs/ding-libs { };
+ding-libs = callPackage ../all-pkgs/d/ding-libs { };
 
-dmenu = callPackage ../all-pkgs/dmenu { };
+dmenu = callPackage ../all-pkgs/d/dmenu { };
 
 devil_nox = callPackageAlias "devil" {
   xorg = null;
   mesa = null;
 };
-devil = callPackage ../all-pkgs/devil { };
+devil = callPackage ../all-pkgs/d/devil { };
 
-dhcp = callPackage ../all-pkgs/dhcp { };
+dhcp = callPackage ../all-pkgs/d/dhcp { };
 
-dhcpcd = callPackage ../all-pkgs/dhcpcd { };
+dhcpcd = callPackage ../all-pkgs/d/dhcpcd { };
 
-diffutils = callPackage ../all-pkgs/diffutils { };
+diffutils = callPackage ../all-pkgs/d/diffutils { };
 
-dmidecode = callPackage ../all-pkgs/dmidecode { };
+dmidecode = callPackage ../all-pkgs/d/dmidecode { };
 
-dnscrypt-proxy = callPackage ../all-pkgs/dnscrypt-proxy { };
+dnscrypt-proxy = callPackage ../all-pkgs/d/dnscrypt-proxy { };
 
-dnscrypt-wrapper = callPackage ../all-pkgs/dnscrypt-wrapper { };
+dnscrypt-wrapper = callPackage ../all-pkgs/d/dnscrypt-wrapper { };
 
-dnsmasq = callPackage ../all-pkgs/dnsmasq { };
+dnsmasq = callPackage ../all-pkgs/d/dnsmasq { };
 
-docbook-xsl = callPackage ../all-pkgs/docbook-xsl { };
+docbook-xsl = callPackage ../all-pkgs/d/docbook-xsl { };
 
 docbook-xsl-ns = callPackageAlias "docbook-xsl" {
   type = "ns";
 };
 
-dosfstools = callPackage ../all-pkgs/dosfstools { };
+dosfstools = callPackage ../all-pkgs/d/dosfstools { };
 
-dos2unix = callPackage ../all-pkgs/dos2unix { };
+dos2unix = callPackage ../all-pkgs/d/dos2unix { };
 
-dotconf = callPackage ../all-pkgs/dotconf { };
+dotconf = callPackage ../all-pkgs/d/dotconf { };
 
-double-conversion = callPackage ../all-pkgs/double-conversion { };
+double-conversion = callPackage ../all-pkgs/d/double-conversion { };
 
-dpdk = callPackage ../all-pkgs/dpdk { };
+dpdk = callPackage ../all-pkgs/d/dpdk { };
 
-#dropbox = callPackage ../all-pkgs/dropbox { };
+#dropbox = callPackage ../all-pkgs/d/dropbox { };
 
-dtc = callPackage ../all-pkgs/dtc { };
+dtc = callPackage ../all-pkgs/d/dtc { };
 
 duplicity = pkgs.pythonPackages.duplicity;
 

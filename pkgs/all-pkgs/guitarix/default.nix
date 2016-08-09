@@ -19,7 +19,7 @@
 , gtkmm_2
 , jack2_lib
 , ladspaH
-, librdf
+, lrdf
 , librsvg
 , libsndfile
 , lilv
@@ -40,7 +40,6 @@ let
   inherit (stdenv.lib)
     optional;
 in
-
 stdenv.mkDerivation rec {
   name = "guitarix-${version}";
   version = "0.35.1";
@@ -71,7 +70,7 @@ stdenv.mkDerivation rec {
     gtkmm_2
     jack2_lib
     ladspaH
-    librdf
+    lrdf
     librsvg
     libsndfile
     lilv
@@ -85,7 +84,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    patchShebangs waf
+    patchShebangs ./waf
   '';
 
   configureFlags = [
@@ -98,13 +97,13 @@ stdenv.mkDerivation rec {
     "--no-faust"
   ] ++ optional optimizationSupport "--optimization";
 
+  configurePhase = ''
+    ./waf configure --prefix=$out $configureFlags
+  '';
+
   NIX_CFLAGS_COMPILE = [
     "-I${eigen}/include/eigen3"
   ];
-
-  configurePhase = ''
-      ./waf configure --prefix=$out $configureFlags
-    '';
 
   buildPhase = ''
     ./waf build

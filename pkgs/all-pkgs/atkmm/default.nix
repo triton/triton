@@ -14,6 +14,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/atkmm/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/atkmm/${versionMajor}/${name}.sha256sum";
     sha256 = "1gaqwhviadsmy0fsr47686yglv1p4mpkamj0in127bz2b5bki5gz";
   };
 

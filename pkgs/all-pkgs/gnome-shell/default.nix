@@ -78,17 +78,17 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "gnome-shell-${version}";
   versionMajor = "3.20";
-  versionMinor = "2";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-shell/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-shell/${versionMajor}/${name}.sha256sum";
-    sha256 = "eaff6b177cc5bab16b252c45393a6c9305ad3837a288e738388c7b4d4bae13cd";
+    sha256Url = "mirror://gnome/sources/gnome-shell/${versionMajor}/"
+      + "${name}.sha256sum";
+    sha256 = "b23fd558623bfdc726066be3f47bb5fb8ed9c0ad980a95d6afc6397b6d41171e";
   };
 
   nativeBuildInputs = [

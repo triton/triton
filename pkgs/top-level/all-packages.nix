@@ -2467,8 +2467,6 @@ xorg = recurseIntoAttrs (
   }
 );
 
-xwayland = callPackage ../all-pkgs/xorg/xwayland.nix { };
-
 xz = callPackage ../all-pkgs/xz { };
 
 yaml-cpp = callPackage ../all-pkgs/yaml-cpp { };

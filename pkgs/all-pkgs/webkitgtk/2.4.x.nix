@@ -17,7 +17,7 @@
 , fontconfig
 , freetype
 , gdk-pixbuf
-, geoclue2
+, geoclue
 , glib
 , gobject-introspection
 , gtk2
@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
     fontconfig
     freetype
     gdk-pixbuf
-    geoclue2
+    geoclue
     glib
     gobject-introspection
     gtk2

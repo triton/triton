@@ -30,6 +30,6 @@ stdenv.mkDerivation {
     '';
     homepage = http://www.jedsoft.org/most/index.html;
     license = stdenv.lib.licenses.gpl2;
-    platforms = stdenv.lib.platforms.gnu; # random choice
+    platforms = stdenv.lib.platforms.all; # random choice
   };
 }

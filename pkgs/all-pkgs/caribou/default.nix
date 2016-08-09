@@ -5,12 +5,14 @@
 stdenv.mkDerivation rec {
   name = "caribou-${version}";
   versionMajor = "0.4";
-  versionMinor = "19";
+  versionMinor = "21";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/caribou/${versionMajor}/${name}.tar.xz";
-    sha256 = "0i2s2xy9ami3wslam15cajhggpcsj4c70qm7qddcz52z9k0x02rg";
+    sha256Url = "mirror://gnome/sources/caribou/${versionMajor}/"
+      + "${name}.sha256sum";
+    sha256 = "9c43d9f4bd30f4fea7f780d4e8b14f7589107c52e9cb6bd202bd0d1c2064de55";
   };
 
   buildInputs =

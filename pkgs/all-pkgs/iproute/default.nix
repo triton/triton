@@ -8,7 +8,8 @@
 }:
 
 let
-  version = "4.6.0";
+  version = "4.7.0";
+
   tarballUrls = [
     "mirror://kernel/linux/utils/net/iproute2/iproute2-${version}.tar"
   ];
@@ -19,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     allowHashOutput = false;
-    sha256 = "74fc6a8ad085be095a159f8158bbaf385b42af9e101619f233f1ae466829d406";
+    sha256 = "8f60dbcfb33a79daae0638f53bdcaa4310c0aa59ae39af8a234020dc69bb7b92";
   };
 
   nativeBuildInputs = [

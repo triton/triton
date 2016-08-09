@@ -5,14 +5,16 @@
 , enable10bit ? false
 }:
 
+let
+  version = "20160808";
+in
 stdenv.mkDerivation rec {
   name = "x264-${version}";
-  version = "20160613";
 
   src = fetchurl {
     url = "https://ftp.videolan.org/pub/videolan/x264/snapshots/"
       + "x264-snapshot-${version}-2245-stable.tar.bz2";
-    sha256 = "de1dd21e73f565d9cd8b0a7e3e3aaf3e50b41f5ed475b7958132ef0156c9f8b7";
+    sha256 = "81348d5fadc9234d4c609897ec9465d314930f9d90eeb9fa752f0c70786af83d";
   };
 
   nativeBuildInputs = [

@@ -50,12 +50,13 @@ in
 stdenv.mkDerivation rec {
   name = "evince-${version}";
   versionMajor = "3.20";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/evince/${versionMajor}/${name}.tar.xz";
-    sha256 = "cf8358a453686c2a7f85d245f83fe918c0ce02eb6532339f3e02e31249a5a280";
+    sha256Url = "mirror://gnome/sources/evince/${versionMajor}/${name}.sha256sum";
+    sha256 = "fc7ac23036939c24f02e9fed6dd6e28a85b4b00b60fa4b591b86443251d20055";
   };
 
   nativeBuildInputs = [

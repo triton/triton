@@ -14,15 +14,16 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "gupnp-${version}";
   majorVersion = "0.20";
-  version = "${majorVersion}.16";
+  version = "${majorVersion}.18";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gupnp/${majorVersion}/${name}.tar.xz";
-    sha256 = "ff1119eff12529c46837e03c742f69dc4fae48d59097d79582d38a383b832602";
+    sha256Url = "mirror://gnome/sources/gupnp/${majorVersion}/"
+      + "${name}.sha256sum";
+    sha256 = "c5e0e11061f8d0ff9c8dccc196f39c45a49c0153c9a72abf6290ab34d1cbb021";
   };
 
   buildInputs = [

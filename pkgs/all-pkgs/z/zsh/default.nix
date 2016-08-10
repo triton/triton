@@ -14,16 +14,14 @@ let
     enFlag
     optionals
     wtFlag;
-in
 
-let
   version = "5.2";
+
   documentation = fetchurl {
     url = "mirror://sourceforge/zsh/zsh-${version}-doc.tar.gz";
     sha256 = "1r9r91gmrrflzl0yq10bib9gxbqyhycb09hcx28m2g3vv9skmccj";
   };
 in
-
 stdenv.mkDerivation {
   name = "zsh-${version}";
 
@@ -50,6 +48,15 @@ stdenv.mkDerivation {
     rm -fv ./Test/C02cond.ztst
   '';
 
+  preConfigure = ''
+    configureFlagsArray+=(
+      #"--enable-zshenv="
+      "--enable-zprofile=$out/etc/zprofile"
+      #"--enable-zlogin="
+      #"--enable-zlogout="
+    )
+  '';
+
   configureFlags = [
     "--disable-zsh-debug"
     # Internal malloc is broken
@@ -61,10 +68,6 @@ stdenv.mkDerivation {
     "--disable-zsh-hash-debug"
     # Tests fail with stack allocation enabled >=5.2
     "--disable-stack-allocation"
-    #"--enable-zshenv="
-    "--enable-zprofile=$(out)/etc/zprofile"
-    #"--enable-zlogin="
-    #"--enable-zlogout="
     "--enable-dynamic"
     "--enable-locale"
     "--disable-ansi2knr"
@@ -86,8 +89,7 @@ stdenv.mkDerivation {
   postInstall = ''
     mkdir -p $out/share
     tar xf ${documentation} -C $out/share
-  '' +
-  /* TODO: convert this to install a static file */ ''
+  '' + /* TODO: convert this to install a static file */ ''
     mkdir -p $out/etc
     cat > $out/etc/zprofile <<EOF
     if test -e /etc/NIXOS; then
@@ -120,7 +122,7 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "The Z command shell";
-    homepage = "http://www.zsh.org/";
+    homepage = http://www.zsh.org/;
     license = licenses.mit;
     maintainers = with maintainers; [
       codyopel

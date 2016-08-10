@@ -1701,16 +1701,16 @@ lzo = callPackage ../all-pkgs/l/lzo { };
 
 m4 = callPackageAlias "gnum4" { };
 
-mac = callPackage ../all-pkgs/mac { };
+mac = callPackage ../all-pkgs/m/mac { };
 
-man-db = callPackage ../all-pkgs/man-db { };
+man-db = callPackage ../all-pkgs/m/man-db { };
 
-man-pages = callPackage ../all-pkgs/man-pages { };
+man-pages = callPackage ../all-pkgs/m/man-pages { };
 
-mercurial = callPackage ../all-pkgs/mercurial { };
+mercurial = callPackage ../all-pkgs/m/mercurial { };
 
-mesa_glu =  callPackage ../all-pkgs/mesa-glu { };
-mesa_noglu = callPackage ../all-pkgs/mesa {
+mesa_glu =  callPackage ../all-pkgs/m/mesa-glu { };
+mesa_noglu = callPackage ../all-pkgs/m/mesa {
   libglvnd = null;
   # makes it slower, but during runtime we link against just
   # mesa_drivers through mesa_noglu.driverSearchPath, which is overriden
@@ -1724,53 +1724,53 @@ mesa = pkgs.buildEnv {
   passthru = pkgs.mesa_glu.passthru // pkgs.mesa_noglu.passthru;
 };
 
-#mesos = callPackage ../all-pkgs/mesos {
+#mesos = callPackage ../all-pkgs/m/mesos {
 #  inherit (pythonPackages) python boto setuptools wrapPython;
 #  pythonProtobuf = pythonPackages.protobuf2_5;
  # perf = linuxPackages.perf;
 #};
 
-mg = callPackage ../all-pkgs/mg { };
+mg = callPackage ../all-pkgs/m/mg { };
 
-mime-types = callPackage ../all-pkgs/mime-types { };
+mime-types = callPackage ../all-pkgs/m/mime-types { };
 
-minipro = callPackage ../all-pkgs/minipro { };
+minipro = callPackage ../all-pkgs/m/minipro { };
 
-minisign = callPackage ../all-pkgs/minisign { };
+minisign = callPackage ../all-pkgs/m/minisign { };
 
-mixxx = callPackage ../all-pkgs/mixxx { };
+mixxx = callPackage ../all-pkgs/m/mixxx { };
 
-mkvtoolnix = callPackage ../all-pkgs/mkvtoolnix { };
+mkvtoolnix = callPackage ../all-pkgs/m/mkvtoolnix { };
 
-modemmanager = callPackage ../all-pkgs/modemmanager { };
+modemmanager = callPackage ../all-pkgs/m/modemmanager { };
 
-mongodb = callPackage ../all-pkgs/mongodb { };
+mongodb = callPackage ../all-pkgs/m/mongodb { };
 
 mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };
 
-mosh = callPackage ../all-pkgs/mosh { };
+mosh = callPackage ../all-pkgs/m/mosh { };
 
-motif = callPackage ../all-pkgs/motif { };
+motif = callPackage ../all-pkgs/m/motif { };
 
-mp4v2 = callPackage ../all-pkgs/mp4v2 { };
+mp4v2 = callPackage ../all-pkgs/m/mp4v2 { };
 
-mpd = callPackage ../all-pkgs/mpd { };
+mpd = callPackage ../all-pkgs/m/mpd { };
 
-mpdris2 = callPackage ../all-pkgs/mpdris2 { };
+mpdris2 = callPackage ../all-pkgs/m/mpdris2 { };
 
-mpfr = callPackage ../all-pkgs/mpfr { };
+mpfr = callPackage ../all-pkgs/m/mpfr { };
 
-mpv = callPackage ../all-pkgs/mpv { };
+mpv = callPackage ../all-pkgs/m/mpv { };
 
-ms-sys = callPackage ../all-pkgs/ms-sys { };
+ms-sys = callPackage ../all-pkgs/m/ms-sys { };
 
-mtdev = callPackage ../all-pkgs/mtdev { };
+mtdev = callPackage ../all-pkgs/m/mtdev { };
 
-mtr = callPackage ../all-pkgs/mtr { };
+mtr = callPackage ../all-pkgs/m/mtr { };
 
-mtools = callPackage ../all-pkgs/mtools { };
+mtools = callPackage ../all-pkgs/m/mtools { };
 
-inherit (callPackages ../all-pkgs/mumble {
+inherit (callPackages ../all-pkgs/m/mumble {
   jackSupport = config.jack or false;
   speechdSupport = config.mumble.speechdSupport or false;
   pulseSupport = config.pulseaudio or false;
@@ -1781,13 +1781,13 @@ inherit (callPackages ../all-pkgs/mumble {
   murmur
   murmur_git;
 
-musepack = callPackage ../all-pkgs/musepack { };
+musepack = callPackage ../all-pkgs/m/musepack { };
 
-musl = callPackage ../all-pkgs/musl { };
+musl = callPackage ../all-pkgs/m/musl { };
 
-mutter = callPackage ../all-pkgs/mutter { };
+mutter = callPackage ../all-pkgs/m/mutter { };
 
-mxml = callPackage ../all-pkgs/mxml { };
+mxml = callPackage ../all-pkgs/m/mxml { };
 
 nano = callPackage ../all-pkgs/nano { };
 
@@ -3352,9 +3352,9 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   mpg123 = callPackage ../applications/audio/mpg123 { };
 #
-  mujs = callPackage ../all-pkgs/mujs { };
+  mujs = callPackage ../all-pkgs/m/mujs { };
 
-  mupdf = callPackage ../all-pkgs/mupdf {
+  mupdf = callPackage ../all-pkgs/m/mupdf {
     openjpeg = pkgs.openjpeg_2_0;
   };
 #

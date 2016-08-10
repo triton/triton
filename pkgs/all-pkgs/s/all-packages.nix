@@ -2351,28 +2351,28 @@ util-linux_lib = callPackageAlias "util-linux_full" {
   type = "lib";
 };
 
-vaapi-intel = callPackage ../all-pkgs/vaapi-intel { };
+vaapi-intel = callPackage ../all-pkgs/v/vaapi-intel { };
 
-vala = callPackage ../all-pkgs/vala { };
+vala = callPackage ../all-pkgs/v/vala { };
 
 vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
-v4l-utils = callPackage ../all-pkgs/v4l-utils {
+v4l-utils = callPackage ../all-pkgs/v/v4l-utils {
   channel = "utils";
 };
 v4l_lib = callPackageAlias "v4l-utils" {
   channel = "lib";
 };
 
-vim = callPackage ../all-pkgs/vim { };
+vim = callPackage ../all-pkgs/v/vim { };
 
-vino = callPackage ../all-pkgs/vino { };
+vino = callPackage ../all-pkgs/v/vino { };
 
-vlc = callPackage ../all-pkgs/vlc { };
+vlc = callPackage ../all-pkgs/v/vlc { };
 
-vorbis-tools = callPackage ../all-pkgs/vorbis-tools { };
+vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 
-vte = callPackage ../all-pkgs/vte { };
+vte = callPackage ../all-pkgs/v/vte { };
 
 w3m = callPackage ../all-pkgs/w3m { };
 

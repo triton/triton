@@ -1,22 +1,64 @@
-let
+# https://spdx.org/licenses/
+# https://github.com/gentoo/gentoo/blob/master/profiles/license_groups
 
-  lib = import ./default.nix;
+rec {
 
-  spdx = lic: lic // {
-    url = "http://spdx.org/licenses/${lic.spdxId}";
+  AFL_1-1 = {
+    id = "AFL-1.1";
+    name = "Academic Free License v1.1";
+    url = https://spdx.org/licenses/AFL-1.1.html;
+    #file = ./license-files/afl/afl-1.1.txt;
+    free = true;
+    redistributable = true;
+    gpl-compatible = false;
+    osi-approved = false;
+    fsf-approved = false;
   };
 
-in
+  AFL_1-2 = {
+    id = "AFL-1.2";
+    name = "Academic Free License v1.2";
+    url = https://spdx.org/licenses/AFL-1.2.html;
+    free = true;
+    redistributable = true;
+    gpl-compatible = false;
+    osi-approved = false;
+    fsf-approved = false;
+  };
 
-lib.mapAttrs (n: v: v // { shortName = n; }) rec {
-  /* License identifiers from spdx.org where possible.
-   * If you cannot find your license here, then look for a similar license or
-   * add it to this list. The URL mentioned above is a good source for inspiration.
-   */
+  AFL_2-0 = {
+    id = "AFL-2.0";
+    name = "Academic Free License v2.0";
+    url = https://spdx.org/licenses/AFL-2.0.html;
+    free = true;
+    redistributable = true;
+    gpl-compatible = false;
+    osi-approved = false;
+    fsf-approved = false;
+  };
 
-  afl21 = spdx {
-    spdxId = "AFL-2.1";
-    fullName = "Academic Free License";
+  AFL_2-1 = {
+    id = "AFL-2.1";
+    name = "Academic Free License v2.1";
+    url = https://spdx.org/licenses/AFL-2.1.html;
+    free = true;
+    redistributable = true;
+    gpl-compatible = false;
+    osi-approved = false;
+    fsf-approved = true;
+  };
+  # Deprecated alias
+  afl21 = AFL-2-1;
+
+  AFL_3-0 = {
+    id = "AFL-3.0";
+    name = "Academic Free License v3.0";
+    url = https://spdx.org/licenses/AFL-3.0.html;
+    free = true;
+    redistributable = true;
+    gpl-compatible = false;
+    osi-approved = true;
+    fsf-approved = true;
   };
 
   agpl3 = spdx {

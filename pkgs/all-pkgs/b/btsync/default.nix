@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src  = fetchurl {
     url  = "https://download-cdn.getsync.com/${version}/"
       + "linux-x64/BitTorrent-Sync_x64.tar.gz";
-    sha256 = "a15d13f7daf14c9c38b78fd7659e982379c0b8a731d437c661367760f632dcc2";
+    sha256 = "9e1a63d7e346278f7301f149626013242a3c605db90a645ebe757c164cd1c50a";
   };
 
   nativeBuildInputs = [

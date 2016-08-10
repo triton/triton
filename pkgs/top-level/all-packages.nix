@@ -1208,33 +1208,33 @@ hunspell = callPackage ../all-pkgs/h/hunspell { };
 
 hwdata = callPackage ../all-pkgs/h/hwdata { };
 
-iana-etc = callPackage ../all-pkgs/iana-etc { };
+iana-etc = callPackage ../all-pkgs/i/iana-etc { };
 
-iasl = callPackage ../all-pkgs/iasl { };
+iasl = callPackage ../all-pkgs/i/iasl { };
 
-ibus = callPackage ../all-pkgs/ibus { };
+ibus = callPackage ../all-pkgs/i/ibus { };
 
-ice = callPackage ../all-pkgs/ice { };
+ice = callPackage ../all-pkgs/i/ice { };
 
-icu = callPackage ../all-pkgs/icu { };
+icu = callPackage ../all-pkgs/i/icu { };
 
-id3lib = callPackage ../all-pkgs/id3lib { };
+id3lib = callPackage ../all-pkgs/i/id3lib { };
 
-id3v2 = callPackage ../all-pkgs/id3v2 { };
+id3v2 = callPackage ../all-pkgs/i/id3v2 { };
 
-imagemagick = callPackage ../all-pkgs/imagemagick { };
+imagemagick = callPackage ../all-pkgs/i/imagemagick { };
 
-iniparser = callPackage ../all-pkgs/iniparser { };
+iniparser = callPackage ../all-pkgs/i/iniparser { };
 
-inkscape = callPackage ../all-pkgs/inkscape { };
+inkscape = callPackage ../all-pkgs/i/inkscape { };
 
-intel-microcode = callPackage ../all-pkgs/intel-microcode { };
+intel-microcode = callPackage ../all-pkgs/i/intel-microcode { };
 
-intltool = callPackage ../all-pkgs/intltool { };
+intltool = callPackage ../all-pkgs/i/intltool { };
 
 iotop = pkgs.pythonPackages.iotop;
 
-iperf = callPackage ../all-pkgs/iperf { };
+iperf = callPackage ../all-pkgs/i/iperf { };
 
 iperf_2 = callPackageAlias "iperf" {
   channel = "2";
@@ -1246,26 +1246,26 @@ iperf_3 = callPackageAlias "iperf" {
 
 ipfs = pkgs.goPackages.ipfs.bin // { outputs = [ "bin" ]; };
 
-ipfs-hasher = callPackage ../all-pkgs/ipfs-hasher { };
+ipfs-hasher = callPackage ../all-pkgs/i/ipfs-hasher { };
 
-ipset = callPackage ../all-pkgs/ipset { };
+ipset = callPackage ../all-pkgs/i/ipset { };
 
-iproute = callPackage ../all-pkgs/iproute { };
+iproute = callPackage ../all-pkgs/i/iproute { };
 
-iptables = callPackage ../all-pkgs/iptables { };
+iptables = callPackage ../all-pkgs/i/iptables { };
 
-ipmitool = callPackage ../all-pkgs/ipmitool { };
+ipmitool = callPackage ../all-pkgs/i/ipmitool { };
 
-iputils = callPackage ../all-pkgs/iputils { };
+iputils = callPackage ../all-pkgs/i/iputils { };
 
-isl = callPackage ../all-pkgs/isl { };
-isl_0_14 = callPackage ../all-pkgs/isl { channel = "0.14"; };
+isl = callPackage ../all-pkgs/i/isl { };
+isl_0_14 = callPackage ../all-pkgs/i/isl { channel = "0.14"; };
 
-iso-codes = callPackage ../all-pkgs/iso-codes { };
+iso-codes = callPackage ../all-pkgs/i/iso-codes { };
 
-itstool = callPackage ../all-pkgs/itstool { };
+itstool = callPackage ../all-pkgs/i/itstool { };
 
-iw = callPackage ../all-pkgs/iw { };
+iw = callPackage ../all-pkgs/i/iw { };
 
 jam = callPackage ../all-pkgs/jam { };
 

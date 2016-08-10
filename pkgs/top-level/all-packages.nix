@@ -1789,89 +1789,89 @@ mutter = callPackage ../all-pkgs/m/mutter { };
 
 mxml = callPackage ../all-pkgs/m/mxml { };
 
-nano = callPackage ../all-pkgs/nano { };
+nano = callPackage ../all-pkgs/n/nano { };
 
-nasm = callPackage ../all-pkgs/nasm { };
+nasm = callPackage ../all-pkgs/n/nasm { };
 
-nautilus = callPackage ../all-pkgs/nautilus { };
+nautilus = callPackage ../all-pkgs/n/nautilus { };
 
-ncdc = callPackage ../all-pkgs/ncdc { };
+ncdc = callPackage ../all-pkgs/n/ncdc { };
 
-#ncmpc = callPackage ../all-pkgs/ncmpc { };
+#ncmpc = callPackage ../all-pkgs/n/ncmpc { };
 
-ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
+ncmpcpp = callPackage ../all-pkgs/n/ncmpcpp { };
 
 ncurses = callPackage ../all-pkgs/g/gpm-ncurses { };
 
-net-snmp = callPackage ../all-pkgs/net-snmp { };
+net-snmp = callPackage ../all-pkgs/n/net-snmp { };
 
-net-tools = callPackage ../all-pkgs/net-tools { };
+net-tools = callPackage ../all-pkgs/n/net-tools { };
 
-nettle = callPackage ../all-pkgs/nettle { };
+nettle = callPackage ../all-pkgs/n/nettle { };
 
-networkmanager = callPackage ../all-pkgs/networkmanager { };
+networkmanager = callPackage ../all-pkgs/n/networkmanager { };
 
-networkmanager-openvpn = callPackage ../all-pkgs/networkmanager-openvpn { };
+networkmanager-openvpn = callPackage ../all-pkgs/n/networkmanager-openvpn { };
 
-networkmanager-pptp = callPackage ../all-pkgs/networkmanager-pptp { };
+networkmanager-pptp = callPackage ../all-pkgs/n/networkmanager-pptp { };
 
-networkmanager-l2tp = callPackage ../all-pkgs/networkmanager-l2tp { };
+networkmanager-l2tp = callPackage ../all-pkgs/n/networkmanager-l2tp { };
 
-networkmanager-vpnc = callPackage ../all-pkgs/networkmanager-vpnc { };
+networkmanager-vpnc = callPackage ../all-pkgs/n/networkmanager-vpnc { };
 
-networkmanager-openconnect = callPackage ../all-pkgs/networkmanager-openconnect { };
+networkmanager-openconnect = callPackage ../all-pkgs/n/networkmanager-openconnect { };
 
-networkmanager-applet = callPackage ../all-pkgs/networkmanager-applet { };
+networkmanager-applet = callPackage ../all-pkgs/n/networkmanager-applet { };
 
-nfs-utils = callPackage ../all-pkgs/nfs-utils { };
+nfs-utils = callPackage ../all-pkgs/n/nfs-utils { };
 
-nftables = callPackage ../all-pkgs/nftables { };
+nftables = callPackage ../all-pkgs/n/nftables { };
 
-nghttp2_full = callPackage ../all-pkgs/nghttp2 { };
+nghttp2_full = callPackage ../all-pkgs/n/nghttp2 { };
 
 nghttp2_lib = callPackageAlias "nghttp2_full" {
   prefix = "lib";
 };
 
-nginx = callPackage ../all-pkgs/nginx { };
+nginx = callPackage ../all-pkgs/n/nginx { };
 
 nginx_unstable = callPackageAlias "nginx" {
   channel = "unstable";
 };
 
-ninja = callPackage ../all-pkgs/ninja { };
+ninja = callPackage ../all-pkgs/n/ninja { };
 
-nmap = callPackage ../all-pkgs/nmap { };
+nmap = callPackage ../all-pkgs/n/nmap { };
 
-nodejs = callPackage ../all-pkgs/nodejs { };
+nodejs = callPackage ../all-pkgs/n/nodejs { };
 
-noise = callPackage ../all-pkgs/noise { };
+noise = callPackage ../all-pkgs/n/noise { };
 
 nomad = pkgs.goPackages.nomad.bin // { outputs = [ "bin" ]; };
 
-npth = callPackage ../all-pkgs/npth { };
+npth = callPackage ../all-pkgs/n/npth { };
 
-nspr = callPackage ../all-pkgs/nspr { };
+nspr = callPackage ../all-pkgs/n/nspr { };
 
-nss = callPackage ../all-pkgs/nss { };
+nss = callPackage ../all-pkgs/n/nss { };
 
-nss_wrapper = callPackage ../all-pkgs/nss_wrapper { };
+nss_wrapper = callPackage ../all-pkgs/n/nss_wrapper { };
 
-ntfs-3g = callPackage ../all-pkgs/ntfs-3g { };
+ntfs-3g = callPackage ../all-pkgs/n/ntfs-3g { };
 
-ntp = callPackage ../all-pkgs/ntp { };
+ntp = callPackage ../all-pkgs/n/ntp { };
 
-numactl = callPackage ../all-pkgs/numactl { };
+numactl = callPackage ../all-pkgs/n/numactl { };
 
-nvidia-cuda-toolkit_7-5 = callPackage ../all-pkgs/nvidia-cuda-toolkit {
+nvidia-cuda-toolkit_7-5 = callPackage ../all-pkgs/n/nvidia-cuda-toolkit {
   channel = "7.5";
 };
-#nvidia-cuda-toolkit_8-0 = callPackage ../all-pkgs/nvidia-cuda-toolkit {
+#nvidia-cuda-toolkit_8-0 = callPackage ../all-pkgs/n/nvidia-cuda-toolkit {
 #  channel = "8.0";
 #};
 nvidia-cuda-toolkit = callPackageAlias "nvidia-cuda-toolkit_7-5" { };
 
-nvidia-video-codec-sdk = callPackage ../all-pkgs/nvidia-video-codec-sdk { };
+nvidia-video-codec-sdk = callPackage ../all-pkgs/n/nvidia-video-codec-sdk { };
 
 obexftp = callPackage ../all-pkgs/obexftp { };
 
@@ -3156,22 +3156,22 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 
       e1000e = kCallPackage ../os-specific/linux/e1000e {};
 
-      nvidia-drivers_legacy304 = kCallPackage ../all-pkgs/nvidia-drivers {
+      nvidia-drivers_legacy304 = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "legacy304";
       };
-      nvidia-drivers_legacy340 = kCallPackage ../all-pkgs/nvidia-drivers {
+      nvidia-drivers_legacy340 = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "legacy340";
       };
-      nvidia-drivers_tesla = kCallPackage ../all-pkgs/nvidia-drivers {
+      nvidia-drivers_tesla = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "tesla";
       };
-      nvidia-drivers_long-lived = kCallPackage ../all-pkgs/nvidia-drivers {
+      nvidia-drivers_long-lived = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "long-lived";
       };
-      nvidia-drivers_short-lived = kCallPackage ../all-pkgs/nvidia-drivers {
+      nvidia-drivers_short-lived = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "short-lived";
       };
-      nvidia-drivers_beta = kCallPackage ../all-pkgs/nvidia-drivers {
+      nvidia-drivers_beta = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "beta";
       };
 

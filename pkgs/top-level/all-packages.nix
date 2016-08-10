@@ -2605,8 +2605,6 @@ zstd = callPackage ../all-pkgs/zstd { };
 
   systemd-cryptsetup-generator = callPackage ../os-specific/linux/systemd/cryptsetup-generator.nix { };
 #
-  #xorriso = callPackage ../tools/cd-dvd/xorriso { };
-#
   gcc = callPackageAlias "gcc6" { };
 #
   gcc48 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.8 {

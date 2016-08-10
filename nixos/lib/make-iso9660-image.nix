@@ -1,4 +1,4 @@
-{ stdenv, perl, pathsFromGraph, xorriso, syslinux
+{ stdenv, perl, pathsFromGraph, libisoburn, syslinux
 
 , # The file name of the resulting ISO image.
   isoName ? "cd.iso"
@@ -48,7 +48,7 @@ assert usbBootable -> isohybridMbrImage != "";
 stdenv.mkDerivation {
   name = isoName;
   builder = ./make-iso9660-image.sh;
-  buildInputs = [perl xorriso syslinux];
+  buildInputs = [perl libisoburn syslinux];
 
   inherit isoName bootable bootImage compressImage volumeID pathsFromGraph efiBootImage efiBootable isohybridMbrImage usbBootable;
 

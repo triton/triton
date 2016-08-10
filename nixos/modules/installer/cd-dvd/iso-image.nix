@@ -364,7 +364,7 @@ in
 
     # Create the ISO image.
     system.build.isoImage = import ../../../lib/make-iso9660-image.nix ({
-      inherit (pkgs) stdenv perl pathsFromGraph xorriso syslinux;
+      inherit (pkgs) stdenv perl pathsFromGraph libisoburn syslinux;
 
       inherit (config.isoImage) isoName compressImage volumeID contents;
 

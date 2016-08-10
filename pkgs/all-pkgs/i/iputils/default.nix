@@ -1,33 +1,25 @@
 { stdenv
 , docbook_sgml_dtd_31
-, fetchTritonPatch
-, fetchurl
+, fetchFromGitHub
 , perlPackages
 
 , libcap
-, libgcrypt
 , libidn
-, nettle
 , openssl
 , spCompat
 }:
 
+let
+in
 stdenv.mkDerivation rec {
-  name = "iputils-${version}";
-  version = "20151218";
+  name = "iputils-2016-08-04";
 
-  src = fetchurl {
-    url = "http://www.skbuff.net/iputils/iputils-s${version}.tar.bz2";
-    sha256 = "189592jlkhxdgy8jc07m4bsl41ik9r6i6aaqb532prai37bmi7sl";
+  src = fetchFromGitHub {
+    owner = "iputils";
+    repo = "iputils";
+    rev = "3c7b5f7177b62245babe42e1e5b572865186ab7b";
+    sha256 = "a2859de8ed13d7d189551cfec8248587bc33ab5e22e498c3b9ed6a5c82e0e7cf";
   };
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "8643f2a69732482dfeff4f4deb9176bc0f144ee1";
-      file = "iputils/iputils-20151218-nonroot-floodping.patch";
-      sha256 = "c67c1b5b332b1d9c14bd2c2eaa8c8b8e6a937fa30d14213c4ac9acdd18dc9f9c";
-    })
-  ];
 
   postPatch =
   /* Fix expected filename */ ''
@@ -41,7 +33,8 @@ stdenv.mkDerivation rec {
     "USE_SYSFS=no" # Deprecated
     "USE_IDN=yes" # Experimental
     "WITHOUT_IFADDRS=no"
-    "USE_GCRYPT=yes"
+    "USE_NETTLE=no"
+    "USE_GCRYPT=no"
     "USE_CRYPTO=shared"
     "USE_RESOLV=yes"
     "ENABLE_PING6_RTHDR=no" # Deprecated
@@ -55,9 +48,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libcap
-    libgcrypt
     libidn
-    nettle
     openssl
     spCompat
   ];
@@ -73,24 +64,24 @@ stdenv.mkDerivation rec {
   '' +
   /* iputils does not provide a make install target */ ''
     install -vDm 755 ping $out/bin/ping
-    install -vDm 755 ping6 $out/bin/ping6
     install -vDm 755 tracepath $out/bin/tracepath
-    install -vDm 755 tracepath6 $out/bin/tracepath6
     install -vDm 755 clockdiff $out/bin/clockdiff
     install -vDm 755 arping $out/bin/arping
     install -vDm 755 rdisc $out/bin/rdisc
     install -vDm 755 ninfod/ninfod $out/bin/ninfod
-    install -vDm 755 tracepath $out/bin/tracepath
-    install -vDm 755 tracepath $out/bin/tracepath
+    install -vDm 755 traceroute6 $out/bin/traceroute6
+    install -vDm 755 tftpd $out/bin/tftpd
+    install -vDm 755 rarpd $out/bin/rarpd
 
+    install -vDm 644 doc/ping.8 $out/share/man/man8/ping.8
+    install -vDm 644 doc/tracepath.8 $out/share/man/man8/tracepath.8
     install -vDm 644 doc/clockdiff.8 $out/share/man/man8/clockdiff.8
     install -vDm 644 doc/arping.8 $out/share/man/man8/arping.8
-    install -vDm 644 doc/ping.8 $out/share/man/man8/ping.8
     install -vDm 644 doc/rdisc.8 $out/share/man/man8/rdisc.8
-    install -vDm 644 doc/tracepath.8 $out/share/man/man8/tracepath.8
     install -vDm 644 doc/ninfod.8 $out/share/man/man8/ninfod.8
-    ln -s $out/share/man/man8/{ping,ping6}.8
-    ln -s $out/share/man/man8/{tracepath,tracepath6}.8
+    install -vDm 644 doc/traceroute6.8 $out/share/man/man8/traceroute6.8
+    install -vDm 644 doc/tftpd.8 $out/share/man/man8/tftpd.8
+    install -vDm 644 doc/rarpd.8 $out/share/man/man8/rarpd.8
   '' + ''
     runHook 'postInstall'
   '';

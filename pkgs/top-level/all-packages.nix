@@ -1873,35 +1873,35 @@ nvidia-cuda-toolkit = callPackageAlias "nvidia-cuda-toolkit_7-5" { };
 
 nvidia-video-codec-sdk = callPackage ../all-pkgs/n/nvidia-video-codec-sdk { };
 
-obexftp = callPackage ../all-pkgs/obexftp { };
+obexftp = callPackage ../all-pkgs/o/obexftp { };
 
-oniguruma = callPackage ../all-pkgs/oniguruma { };
+oniguruma = callPackage ../all-pkgs/o/oniguruma { };
 
-openldap = callPackage ../all-pkgs/openldap { };
+openldap = callPackage ../all-pkgs/o/openldap { };
 
-openntpd = callPackage ../all-pkgs/openntpd { };
+openntpd = callPackage ../all-pkgs/o/openntpd { };
 
-openobex = callPackage ../all-pkgs/openobex { };
+openobex = callPackage ../all-pkgs/o/openobex { };
 
-opensmtpd = callPackage ../all-pkgs/opensmtpd { };
+opensmtpd = callPackage ../all-pkgs/o/opensmtpd { };
 
-opensmtpd-extras = callPackage ../all-pkgs/opensmtpd-extras { };
+opensmtpd-extras = callPackage ../all-pkgs/o/opensmtpd-extras { };
 
-openssh = callPackage ../all-pkgs/openssh { };
+openssh = callPackage ../all-pkgs/o/openssh { };
 
-openssl = callPackage ../all-pkgs/openssl { };
+openssl = callPackage ../all-pkgs/o/openssl { };
 
-openvpn = callPackage ../all-pkgs/openvpn { };
+openvpn = callPackage ../all-pkgs/o/openvpn { };
 
-opus = callPackage ../all-pkgs/opus { };
+opus = callPackage ../all-pkgs/o/opus { };
 
-opus-tools = callPackage ../all-pkgs/opus-tools { };
+opus-tools = callPackage ../all-pkgs/o/opus-tools { };
 
-opusfile = callPackage ../all-pkgs/opusfile { };
+opusfile = callPackage ../all-pkgs/o/opusfile { };
 
-orbit2 = callPackage ../all-pkgs/orbit2 { };
+orbit2 = callPackage ../all-pkgs/o/orbit2 { };
 
-orc = callPackage ../all-pkgs/orc { };
+orc = callPackage ../all-pkgs/o/orc { };
 
 p7zip = callPackage ../all-pkgs/p7zip { };
 

@@ -8,11 +8,15 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "iso-codes-3.67";
+  name = "iso-codes-3.68";
 
   src = fetchurl {
-    url = "http://pkg-isocodes.alioth.debian.org/downloads/${name}.tar.xz";
-    sha256 = "603f51e0b5ebd762b66d9aa3bd0d9a33af1aaedae88caaaf196fcc5bb4abf00c";
+    urls = [
+      "http://pkg-isocodes.alioth.debian.org/downloads/${name}.tar.xz"
+      "mirror://gentoo/distfiles/${name}.tar.xz"
+    ];
+    allowHashOutput = false;
+    sha256 = "5881cf7caa5adfffb14ade99138949324c28a277babe8d07dafbff521acef9d1";
   };
 
   nativeBuildInputs = [

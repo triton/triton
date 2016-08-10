@@ -57,20 +57,39 @@ rec {
   # Determine whether a string has given prefix/suffix.
   hasPrefix = pref: str:
     substring 0 (stringLength pref) str == pref;
-  hasSuffix = suff: str:
-    let
-      lenStr = stringLength str;
-      lenSuff = stringLength suff;
-    in
-    lenStr >= lenSuff
-    && substring (lenStr - lenSuff) lenStr str == suff;
 
-  # Convert a string to a list of characters (i.e. singleton strings).
-  # For instance, "abc" becomes ["a" "b" "c"].  This allows you to,
-  # e.g., map a function over each character.  However, note that this
-  # will likely be horribly inefficient; Nix is not a general purpose
-  # programming language.  Complex string manipulations should, if
-  # appropriate, be done in a derivation.
+  /* Determine whether a string has given suffix.
+
+     Example:
+       hasSuffix "foo" "foobar"
+       => false
+       hasSuffix "foo" "barfoo"
+       => true
+  */
+  hasSuffix = suffix: content:
+    let
+      lenContent = stringLength content;
+      lenSuffix = stringLength suffix;
+    in
+    lenContent >= lenSuffix &&
+      substring (lenContent - lenSuffix) lenContent content == suffix;
+
+  /* Convert a string to a list of characters (i.e. singleton strings).
+     This allows you to, e.g., map a function over each character.  However,
+     note that this will likely be horribly inefficient; Nix is not a
+     general purpose programming language. Complex string manipulations
+     should, if appropriate, be done in a derivation.
+     Also note that Nix treats strings as a list of bytes and thus doesn't
+     handle unicode.
+
+     Example:
+       stringToCharacters ""
+       => [ ]
+       stringToCharacters "abc"
+       => [ "a" "b" "c" ]
+       stringToCharacters "💩"
+       => [ "�" "�" "�" "�" ]
+  */
   stringToCharacters = s:
     map (p: substring p 1 s) (lib.range 0 (stringLength s - 1));
 

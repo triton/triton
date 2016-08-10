@@ -1267,23 +1267,23 @@ itstool = callPackage ../all-pkgs/i/itstool { };
 
 iw = callPackage ../all-pkgs/i/iw { };
 
-jam = callPackage ../all-pkgs/jam { };
+jam = callPackage ../all-pkgs/j/jam { };
 
-jansson = callPackage ../all-pkgs/jansson { };
+jansson = callPackage ../all-pkgs/j/jansson { };
 
-jemalloc = callPackage ../all-pkgs/jemalloc { };
+jemalloc = callPackage ../all-pkgs/j/jemalloc { };
 
-jq = callPackage ../all-pkgs/jq { };
+jq = callPackage ../all-pkgs/j/jq { };
 
-jshon = callPackage ../all-pkgs/jshon { };
+jshon = callPackage ../all-pkgs/j/jshon { };
 
-json-c = callPackage ../all-pkgs/json-c { };
+json-c = callPackage ../all-pkgs/j/json-c { };
 
-jsoncpp = callPackage ../all-pkgs/jsoncpp { };
+jsoncpp = callPackage ../all-pkgs/j/jsoncpp { };
 
-json-glib = callPackage ../all-pkgs/json-glib { };
+json-glib = callPackage ../all-pkgs/j/json-glib { };
 
-judy = callPackage ../all-pkgs/judy { };
+judy = callPackage ../all-pkgs/j/judy { };
 
 kbd = callPackage ../all-pkgs/kbd { };
 

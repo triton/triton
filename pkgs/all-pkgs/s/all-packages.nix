@@ -2327,25 +2327,25 @@ tslib = callPackage ../all-pkgs/t/tslib { };
 
 tzdata = callPackage ../all-pkgs/t/tzdata { };
 
-udisks = callPackage ../all-pkgs/udisks { };
+udisks = callPackage ../all-pkgs/u/udisks { };
 
-uefi-shell = callPackage ../all-pkgs/uefi-shell { };
+uefi-shell = callPackage ../all-pkgs/u/uefi-shell { };
 
-ufraw = callPackage ../all-pkgs/ufraw { };
+ufraw = callPackage ../all-pkgs/u/ufraw { };
 
-uhub = callPackage ../all-pkgs/uhub { };
+uhub = callPackage ../all-pkgs/u/uhub { };
 
-uid_wrapper = callPackage ../all-pkgs/uid_wrapper { };
+uid_wrapper = callPackage ../all-pkgs/u/uid_wrapper { };
 
-unbound = callPackage ../all-pkgs/unbound { };
+unbound = callPackage ../all-pkgs/u/unbound { };
 
-unrar = callPackage ../all-pkgs/unrar { };
+unrar = callPackage ../all-pkgs/u/unrar { };
 
-upower = callPackage ../all-pkgs/upower { };
+upower = callPackage ../all-pkgs/u/upower { };
 
-usbmuxd = callPackage ../all-pkgs/usbmuxd { };
+usbmuxd = callPackage ../all-pkgs/u/usbmuxd { };
 
-util-linux_full = callPackage ../all-pkgs/util-linux { };
+util-linux_full = callPackage ../all-pkgs/u/util-linux { };
 
 util-linux_lib = callPackageAlias "util-linux_full" {
   type = "lib";

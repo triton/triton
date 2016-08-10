@@ -939,6 +939,8 @@ fox = callPackage ../all-pkgs/f/fox { };
 
 freeglut = callPackage ../all-pkgs/f/freeglut { };
 
+freeipmi = callPackage ../all-pkgs/f/freeipmi { };
+
 freetype = callPackage ../all-pkgs/f/freetype { };
 
 freetype2-infinality-ultimate =

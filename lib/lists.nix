@@ -92,7 +92,7 @@ rec {
    */
   flatten = x:
     if isList x then
-      foldl' (x: y: x ++ (flatten y)) [ ] x
+      concatMap (y: flatten y) x
     else
       [ x ];
 

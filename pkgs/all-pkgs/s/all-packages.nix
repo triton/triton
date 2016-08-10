@@ -2475,13 +2475,13 @@ xorg = recurseIntoAttrs (
 
 xz = callPackage ../all-pkgs/x/xz { };
 
-yaml-cpp = callPackage ../all-pkgs/yaml-cpp { };
+yaml-cpp = callPackage ../all-pkgs/y/yaml-cpp { };
 
-yasm = callPackage ../all-pkgs/yasm { };
+yasm = callPackage ../all-pkgs/y/yasm { };
 
-yelp-tools = callPackage ../all-pkgs/yelp-tools { };
+yelp-tools = callPackage ../all-pkgs/y/yelp-tools { };
 
-yelp-xsl = callPackage ../all-pkgs/yelp-xsl { };
+yelp-xsl = callPackage ../all-pkgs/y/yelp-xsl { };
 
 zeitgeist = callPackage ../all-pkgs/zeitgeist { };
 

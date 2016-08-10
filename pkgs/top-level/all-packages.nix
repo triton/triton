@@ -2064,19 +2064,19 @@ python2Packages = callPackageAlias "python27Packages" { };
 python3Packages = callPackageAlias "python35Packages" { };
 pythonPackages = callPackageAlias "python2Packages" { };
 
-qbittorrent = callPackage ../all-pkgs/qbittorrent { };
+qbittorrent = callPackage ../all-pkgs/q/qbittorrent { };
 
-qca = callPackage ../all-pkgs/qca { };
+qca = callPackage ../all-pkgs/q/qca { };
 
-qjackctl = callPackage ../all-pkgs/qjackctl { };
+qjackctl = callPackage ../all-pkgs/q/qjackctl { };
 
-qrencode = callPackage ../all-pkgs/qrencode { };
+qrencode = callPackage ../all-pkgs/q/qrencode { };
 
-qt4 = callPackage ../all-pkgs/qt/4 { };
+qt4 = callPackage ../all-pkgs/q/qt/4 { };
 
-qt5 = callPackage ../all-pkgs/qt/5.x.nix { };
+qt5 = callPackage ../all-pkgs/q/qt/5.x.nix { };
 
-quassel = callPackage ../all-pkgs/quassel rec {
+quassel = callPackage ../all-pkgs/q/quassel rec {
   monolithic = true;
   daemon = false;
   client = false;

@@ -137,7 +137,7 @@ let
       owner = "tesseract-ocr";
       repo = "tessdata";
       rev = "3cf1e2df1fe1d1da29295c9ef0983796c7958b7d";
-      sha256 = "53eee3ad9e64db9bc88830f5cb3905b273bf84d78579497c55c5dd441a15fdda";
+      sha256 = "6d646243ae7a2fc976182c5aa03dd9e395ef1507cc2e461fad6b0d6497818b06";
     };
 
     phases = [ "unpackPhase" "installPhase" ];
@@ -457,7 +457,7 @@ stdenv.mkDerivation rec {
 
   src = fetchzip {
     url = "https://github.com/tesseract-ocr/tesseract/archive/${version}.tar.gz";
-    sha256 = "3804a436576575ac8cb30ba4232edd266f00acef9d90b665430c47e6dec60327";
+    sha256 = "c333c95030740d52cc8ae69b2c7db773ab0fb430d844a6bbea6a52fb130a2381";
   };
 
   nativeBuildInputs = [
@@ -478,12 +478,6 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postPatch =
-    /* Fix leptonica header search path */ ''
-      sed -i configure.ac \
-        -e 's,/opt/local/include/leptonica,${leptonica}/include,'
-    '';
-
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-graphics"
@@ -497,19 +491,14 @@ stdenv.mkDerivation rec {
     "--enable-largefile"
   ];
 
-  preConfigure =
-    /* Patch include directory where configure looks for leptonica's headers */ ''
-      substituteInPlace configure \
-        --replace 'LIBLEPT_HEADERSDIR="/usr/local/include /usr/include"' \
-                  'LIBLEPT_HEADERSDIR=${leptonica}/include'
-    '';
+  /* Fix leptonica header search path */
+  LIBLEPT_HEADERSDIR = "${leptonica}/include";
 
-  postInstall =
-    /* Symlink all installed tessdata files into tesseract */ ''
-      for i in ${tessdata}/* ; do
-        ln -fsv $i $out/share/tessdata
-      done
-    '';
+  postInstall = /* Symlink all installed tessdata files into tesseract */ ''
+    for i in ${tessdata}/* ; do
+      ln -fsv $i $out/share/tessdata
+    done
+  '';
 
   meta = with stdenv.lib; {
     description = "OCR engine";

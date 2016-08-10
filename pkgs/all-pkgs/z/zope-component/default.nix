@@ -10,7 +10,7 @@ let
   version = "4.2.2";
 in
 buildPythonPackage rec {
-  name = "zope-component-${version}";
+  name = "zope.component-${version}";
 
   src = fetchPyPi {
     package = "zope.component";

@@ -1903,31 +1903,31 @@ orbit2 = callPackage ../all-pkgs/o/orbit2 { };
 
 orc = callPackage ../all-pkgs/o/orc { };
 
-p7zip = callPackage ../all-pkgs/p7zip { };
+p7zip = callPackage ../all-pkgs/p/p7zip { };
 
-pam = callPackage ../all-pkgs/pam { };
+pam = callPackage ../all-pkgs/p/pam { };
 
-pango = callPackage ../all-pkgs/pango { };
+pango = callPackage ../all-pkgs/p/pango { };
 
-pangomm = callPackage ../all-pkgs/pangomm { };
+pangomm = callPackage ../all-pkgs/p/pangomm { };
 
-pangox-compat = callPackage ../all-pkgs/pangox-compat { };
+pangox-compat = callPackage ../all-pkgs/p/pangox-compat { };
 
-parallel = callPackage ../all-pkgs/parallel { };
+parallel = callPackage ../all-pkgs/p/parallel { };
 
-patchelf = callPackage ../all-pkgs/patchelf { };
+patchelf = callPackage ../all-pkgs/p/patchelf { };
 
-patchutils = callPackage ../all-pkgs/patchutils { };
+patchutils = callPackage ../all-pkgs/p/patchutils { };
 
-pavucontrol = callPackage ../all-pkgs/pavucontrol { };
+pavucontrol = callPackage ../all-pkgs/p/pavucontrol { };
 
-pciutils = callPackage ../all-pkgs/pciutils { };
+pciutils = callPackage ../all-pkgs/p/pciutils { };
 
-pcre = callPackage ../all-pkgs/pcre { };
+pcre = callPackage ../all-pkgs/p/pcre { };
 
-pcre2 = callPackage ../all-pkgs/pcre2 { };
+pcre2 = callPackage ../all-pkgs/p/pcre2 { };
 
-pcsc-lite_full = callPackage ../all-pkgs/pcsc-lite {
+pcsc-lite_full = callPackage ../all-pkgs/p/pcsc-lite {
   libOnly = false;
 };
 
@@ -1935,23 +1935,23 @@ pcsc-lite_lib = callPackageAlias "pcsc-lite_full" {
   libOnly = true;
 };
 
-perl = callPackage ../all-pkgs/perl { };
+perl = callPackage ../all-pkgs/p/perl { };
 
-pgbouncer = callPackage ../all-pkgs/pgbouncer { };
+pgbouncer = callPackage ../all-pkgs/p/pgbouncer { };
 
-pinentry = callPackage ../all-pkgs/pinentry { };
+pinentry = callPackage ../all-pkgs/p/pinentry { };
 
-pkcs11-helper = callPackage ../all-pkgs/pkcs11-helper { };
+pkcs11-helper = callPackage ../all-pkgs/p/pkcs11-helper { };
 
-pkgconf = callPackage ../all-pkgs/pkgconf { };
-pkg-config = callPackage ../all-pkgs/pkgconfig { };
+pkgconf = callPackage ../all-pkgs/p/pkgconf { };
+pkg-config = callPackage ../all-pkgs/p/pkgconfig { };
 pkgconfig = callPackageAlias "pkgconf" { };
 
-plymouth = callPackage ../all-pkgs/plymouth { };
+plymouth = callPackage ../all-pkgs/p/plymouth { };
 
-pngcrush = callPackage ../all-pkgs/pngcrush { };
+pngcrush = callPackage ../all-pkgs/p/pngcrush { };
 
-polkit = callPackage ../all-pkgs/polkit { };
+polkit = callPackage ../all-pkgs/p/polkit { };
 
 poppler_qt = callPackageAlias "poppler" {
   suffix = "qt5";
@@ -1961,11 +1961,11 @@ poppler_utils = callPackageAlias "poppler" {
   suffix = "utils";
   utils = true;
 };
-poppler = callPackage ../all-pkgs/poppler {
+poppler = callPackage ../all-pkgs/p/poppler {
   qt5 = null;
 };
 
-postgresql = callPackage ../all-pkgs/postgresql { };
+postgresql = callPackage ../all-pkgs/p/postgresql { };
 postgresql_lib = callPackageAlias "postgresql" { };
 postgresql_95 = callPackageAlias "postgresql" {
   channel = "9.5";
@@ -1983,53 +1983,53 @@ postgresql_91 = callPackageAlias "postgresql" {
   channel = "9.1";
 };
 
-potrace = callPackage ../all-pkgs/potrace { };
+potrace = callPackage ../all-pkgs/p/potrace { };
 
-powertop = callPackage ../all-pkgs/powertop { };
+powertop = callPackage ../all-pkgs/p/powertop { };
 
-procps-ng = callPackage ../all-pkgs/procps-ng { };
+procps-ng = callPackage ../all-pkgs/p/procps-ng { };
 
 procps = callPackageAlias "procps-ng" { };
 
 prometheus = pkgs.goPackages.prometheus.bin // { outputs = [ "bin" ]; };
 
-protobuf-c = callPackage ../all-pkgs/protobuf-c { };
+protobuf-c = callPackage ../all-pkgs/p/protobuf-c { };
 
-protobuf-cpp = callPackage ../all-pkgs/protobuf-cpp { };
+protobuf-cpp = callPackage ../all-pkgs/p/protobuf-cpp { };
 
-psmisc = callPackage ../all-pkgs/psmisc { };
+psmisc = callPackage ../all-pkgs/p/psmisc { };
 
-pth = callPackage ../all-pkgs/pth { };
+pth = callPackage ../all-pkgs/p/pth { };
 
-pugixml = callPackage ../all-pkgs/pugixml { };
+pugixml = callPackage ../all-pkgs/p/pugixml { };
 
-pulseaudio_full = callPackage ../all-pkgs/pulseaudio { };
+pulseaudio_full = callPackage ../all-pkgs/p/pulseaudio { };
 
 pulseaudio_lib = callPackageAlias "pulseaudio_full" {
   prefix = "lib";
 };
 
-python27 = callPackage ../all-pkgs/python {
+python27 = callPackage ../all-pkgs/p/python {
   channel = "2.7";
   self = callPackageAlias "python27" { };
 };
-python33 = callPackage ../all-pkgs/python {
+python33 = callPackage ../all-pkgs/p/python {
   channel = "3.3";
   self = callPackageAlias "python33" { };
 };
-python34 = callPackage ../all-pkgs/python {
+python34 = callPackage ../all-pkgs/p/python {
   channel = "3.4";
   self = callPackageAlias "python34" { };
 };
-python35 = hiPrio (callPackage ../all-pkgs/python {
+python35 = hiPrio (callPackage ../all-pkgs/p/python {
   channel = "3.5";
   self = callPackageAlias "python35" { };
 });
-python36 = callPackage ../all-pkgs/python {
+python36 = callPackage ../all-pkgs/p/python {
   channel = "3.6";
   self = callPackageAlias "python36" { };
 };
-#pypy = callPackage ../all-pkgs/pypy {
+#pypy = callPackage ../all-pkgs/p/pypy {
 #  self = callPackageAlias "pypy" { };
 #};
 python2 = callPackageAlias "python27" { };

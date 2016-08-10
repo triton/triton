@@ -2281,51 +2281,51 @@ systemd_lib = callPackageAlias "systemd_full" {
   type = "lib";
 };
 
-talloc = callPackage ../all-pkgs/talloc { };
+talloc = callPackage ../all-pkgs/t/talloc { };
 
-tcl_8-5 = callPackage ../all-pkgs/tcl {
+tcl_8-5 = callPackage ../all-pkgs/t/tcl {
   channel = "8.5";
 };
-tcl_8-6 = callPackage ../all-pkgs/tcl {
+tcl_8-6 = callPackage ../all-pkgs/t/tcl {
   channel = "8.6";
 };
 tcl = callPackageAlias "tcl_8-6" { };
 
-tcp-wrappers = callPackage ../all-pkgs/tcp-wrappers { };
+tcp-wrappers = callPackage ../all-pkgs/t/tcp-wrappers { };
 
-tdb = callPackage ../all-pkgs/tdb { };
+tdb = callPackage ../all-pkgs/t/tdb { };
 
-#teamspeak_client = callPackage ../all-pkgs/teamspeak/client.nix { };
-#teamspeak_server = callPackage ../all-pkgs/teamspeak/server.nix { };
+#teamspeak_client = callPackage ../all-pkgs/t/teamspeak/client.nix { };
+#teamspeak_server = callPackage ../all-pkgs/t/teamspeak/server.nix { };
 
-tesseract = callPackage ../all-pkgs/tesseract { };
+tesseract = callPackage ../all-pkgs/t/tesseract { };
 
-tevent = callPackage ../all-pkgs/tevent { };
+tevent = callPackage ../all-pkgs/t/tevent { };
 
-texinfo = callPackage ../all-pkgs/texinfo { };
+texinfo = callPackage ../all-pkgs/t/texinfo { };
 
-thin-provisioning-tools = callPackage ../all-pkgs/thin-provisioning-tools { };
+thin-provisioning-tools = callPackage ../all-pkgs/t/thin-provisioning-tools { };
 
-tinc_1_0 = callPackage ../all-pkgs/tinc { channel = "1.0"; };
-tinc_1_1 = callPackage ../all-pkgs/tinc { channel = "1.1"; };
+tinc_1_0 = callPackage ../all-pkgs/t/tinc { channel = "1.0"; };
+tinc_1_1 = callPackage ../all-pkgs/t/tinc { channel = "1.1"; };
 
-tk_8-5 = callPackage ../all-pkgs/tk {
+tk_8-5 = callPackage ../all-pkgs/t/tk {
   channel = "8.5";
 };
-tk_8-6 = callPackage ../all-pkgs/tk {
+tk_8-6 = callPackage ../all-pkgs/t/tk {
   channel = "8.6";
 };
 tk = callPackageAlias "tk_8-6" { };
 
-tmux = callPackage ../all-pkgs/tmux { };
+tmux = callPackage ../all-pkgs/t/tmux { };
 
-totem-pl-parser = callPackage ../all-pkgs/totem-pl-parser { };
+totem-pl-parser = callPackage ../all-pkgs/t/totem-pl-parser { };
 
-tracker = callPackage ../all-pkgs/tracker { };
+tracker = callPackage ../all-pkgs/t/tracker { };
 
-tslib = callPackage ../all-pkgs/tslib { };
+tslib = callPackage ../all-pkgs/t/tslib { };
 
-tzdata = callPackage ../all-pkgs/tzdata { };
+tzdata = callPackage ../all-pkgs/t/tzdata { };
 
 udisks = callPackage ../all-pkgs/udisks { };
 

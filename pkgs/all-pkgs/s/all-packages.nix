@@ -2483,25 +2483,25 @@ yelp-tools = callPackage ../all-pkgs/y/yelp-tools { };
 
 yelp-xsl = callPackage ../all-pkgs/y/yelp-xsl { };
 
-zeitgeist = callPackage ../all-pkgs/zeitgeist { };
+zeitgeist = callPackage ../all-pkgs/z/zeitgeist { };
 
-zenity = callPackage ../all-pkgs/zenity {
+zenity = callPackage ../all-pkgs/z/zenity {
   webkitgtk = null;
 };
 
-zeromq = callPackage ../all-pkgs/zeromq { };
+zeromq = callPackage ../all-pkgs/z/zeromq { };
 
-zip = callPackage ../all-pkgs/zip { };
+zip = callPackage ../all-pkgs/z/zip { };
 
-zita-convolver = callPackage ../all-pkgs/zita-convolver { };
+zita-convolver = callPackage ../all-pkgs/z/zita-convolver { };
 
-zita-resampler = callPackage ../all-pkgs/zita-resampler { };
+zita-resampler = callPackage ../all-pkgs/z/zita-resampler { };
 
-zlib = callPackage ../all-pkgs/zlib { };
+zlib = callPackage ../all-pkgs/z/zlib { };
 
-zsh = callPackage ../all-pkgs/zsh { };
+zsh = callPackage ../all-pkgs/z/zsh { };
 
-zstd = callPackage ../all-pkgs/zstd { };
+zstd = callPackage ../all-pkgs/z/zstd { };
 
 ################################################################################
 ################################################################################

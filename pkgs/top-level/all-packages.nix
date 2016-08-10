@@ -948,117 +948,117 @@ fstrm = callPackage ../all-pkgs/f/fstrm { };
 
 fuse = callPackage ../all-pkgs/f/fuse { };
 
-game-music-emu = callPackage ../all-pkgs/game-music-emu { };
+game-music-emu = callPackage ../all-pkgs/g/game-music-emu { };
 
-gawk = callPackage ../all-pkgs/gawk { };
+gawk = callPackage ../all-pkgs/g/gawk { };
 
-gcab = callPackage ../all-pkgs/gcab { };
+gcab = callPackage ../all-pkgs/g/gcab { };
 
-gconf = callPackage ../all-pkgs/gconf { };
+gconf = callPackage ../all-pkgs/g/gconf { };
 
-gcr = callPackage ../all-pkgs/gcr { };
+gcr = callPackage ../all-pkgs/g/gcr { };
 
-gdbm = callPackage ../all-pkgs/gdbm { };
+gdbm = callPackage ../all-pkgs/g/gdbm { };
 
-gdk-pixbuf_wrapped = callPackage ../all-pkgs/gdk-pixbuf { };
-gdk-pixbuf_unwrapped = callPackage ../all-pkgs/gdk-pixbuf/unwrapped.nix { };
+gdk-pixbuf_wrapped = callPackage ../all-pkgs/g/gdk-pixbuf { };
+gdk-pixbuf_unwrapped = callPackage ../all-pkgs/g/gdk-pixbuf/unwrapped.nix { };
 gdk-pixbuf = callPackageAlias "gdk-pixbuf_wrapped" { };
 
-gdm = callPackage ../all-pkgs/gdm { };
+gdm = callPackage ../all-pkgs/g/gdm { };
 
-geoclue = callPackage ../all-pkgs/geoclue { };
+geoclue = callPackage ../all-pkgs/g/geoclue { };
 
-gegl = callPackage ../all-pkgs/gegl { };
+gegl = callPackage ../all-pkgs/g/gegl { };
 
-geocode-glib = callPackage ../all-pkgs/geocode-glib { };
+geocode-glib = callPackage ../all-pkgs/g/geocode-glib { };
 
-geoip = callPackage ../all-pkgs/geoip { };
+geoip = callPackage ../all-pkgs/g/geoip { };
 
-getopt = callPackage ../all-pkgs/getopt { };
+getopt = callPackage ../all-pkgs/g/getopt { };
 
-gettext = callPackage ../all-pkgs/gettext { };
+gettext = callPackage ../all-pkgs/g/gettext { };
 
-gexiv2 = callPackage ../all-pkgs/gexiv2 { };
+gexiv2 = callPackage ../all-pkgs/g/gexiv2 { };
 
-gimp = callPackage ../all-pkgs/gimp { };
+gimp = callPackage ../all-pkgs/g/gimp { };
 
-git = callPackage ../all-pkgs/git { };
+git = callPackage ../all-pkgs/g/git { };
 
-gjs = callPackage ../all-pkgs/gjs { };
+gjs = callPackage ../all-pkgs/g/gjs { };
 
-gksu = callPackage ../all-pkgs/gksu { };
+gksu = callPackage ../all-pkgs/g/gksu { };
 
-glfw = callPackage ../all-pkgs/glfw { };
+glfw = callPackage ../all-pkgs/g/glfw { };
 
-glib = callPackage ../all-pkgs/glib {
+glib = callPackage ../all-pkgs/g/glib {
   channel = "2.48";
 };
 
-glibmm = callPackage ../all-pkgs/glibmm { };
+glibmm = callPackage ../all-pkgs/g/glibmm { };
 
-glib-networking = callPackage ../all-pkgs/glib-networking { };
+glib-networking = callPackage ../all-pkgs/g/glib-networking { };
 
-glusterfs = callPackage ../all-pkgs/glusterfs { };
+glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 
-gmp = callPackage ../all-pkgs/gmp { };
+gmp = callPackage ../all-pkgs/g/gmp { };
 
-gnome-backgrounds = callPackage ../all-pkgs/gnome-backgrounds { };
+gnome-backgrounds = callPackage ../all-pkgs/g/gnome-backgrounds { };
 
-gnome-bluetooth = callPackage ../all-pkgs/gnome-bluetooth { };
+gnome-bluetooth = callPackage ../all-pkgs/g/gnome-bluetooth { };
 
-gnome-calculator = callPackage ../all-pkgs/gnome-calculator { };
+gnome-calculator = callPackage ../all-pkgs/g/gnome-calculator { };
 
-gnome-clocks = callPackage ../all-pkgs/gnome-clocks { };
+gnome-clocks = callPackage ../all-pkgs/g/gnome-clocks { };
 
-gnome-common = callPackage ../all-pkgs/gnome-common { };
+gnome-common = callPackage ../all-pkgs/g/gnome-common { };
 
-gnome-control-center = callPackage ../all-pkgs/gnome-control-center { };
+gnome-control-center = callPackage ../all-pkgs/g/gnome-control-center { };
 
-gnome-desktop = callPackage ../all-pkgs/gnome-desktop { };
+gnome-desktop = callPackage ../all-pkgs/g/gnome-desktop { };
 
-gnome-documents = callPackage ../all-pkgs/gnome-documents { };
+gnome-documents = callPackage ../all-pkgs/g/gnome-documents { };
 
-gnome-keyring = callPackage ../all-pkgs/gnome-keyring { };
+gnome-keyring = callPackage ../all-pkgs/g/gnome-keyring { };
 
-gnome-menus = callPackage ../all-pkgs/gnome-menus { };
+gnome-menus = callPackage ../all-pkgs/g/gnome-menus { };
 
-gnome-mpv = callPackage ../all-pkgs/gnome-mpv { };
+gnome-mpv = callPackage ../all-pkgs/g/gnome-mpv { };
 
-gnome-online-accounts = callPackage ../all-pkgs/gnome-online-accounts { };
+gnome-online-accounts = callPackage ../all-pkgs/g/gnome-online-accounts { };
 
-gnome-online-miners = callPackage ../all-pkgs/gnome-online-miners { };
+gnome-online-miners = callPackage ../all-pkgs/g/gnome-online-miners { };
 
-gnome-screenshot = callPackage ../all-pkgs/gnome-screenshot { };
+gnome-screenshot = callPackage ../all-pkgs/g/gnome-screenshot { };
 
-gnome-session = callPackage ../all-pkgs/gnome-session { };
+gnome-session = callPackage ../all-pkgs/g/gnome-session { };
 
-gnome-settings-daemon = callPackage ../all-pkgs/gnome-settings-daemon { };
+gnome-settings-daemon = callPackage ../all-pkgs/g/gnome-settings-daemon { };
 
-gnome-shell = callPackage ../all-pkgs/gnome-shell { };
+gnome-shell = callPackage ../all-pkgs/g/gnome-shell { };
 
-gnome-shell-extensions = callPackage ../all-pkgs/gnome-shell-extensions { };
+gnome-shell-extensions = callPackage ../all-pkgs/g/gnome-shell-extensions { };
 
-gnome-terminal = callPackage ../all-pkgs/gnome-terminal { };
+gnome-terminal = callPackage ../all-pkgs/g/gnome-terminal { };
 
-gnome-themes-standard = callPackage ../all-pkgs/gnome-themes-standard { };
+gnome-themes-standard = callPackage ../all-pkgs/g/gnome-themes-standard { };
 
-gnome-user-share = callPackage ../all-pkgs/gnome-user-share { };
+gnome-user-share = callPackage ../all-pkgs/g/gnome-user-share { };
 
 gnome-wrapper = makeSetupHook {
   deps = [ makeWrapper ];
 } ../build-support/setup-hooks/gnome-wrapper.sh;
 
-gnu-efi = callPackage ../all-pkgs/gnu-efi { };
+gnu-efi = callPackage ../all-pkgs/g/gnu-efi { };
 
-gnugrep = callPackage ../all-pkgs/gnugrep { };
+gnugrep = callPackage ../all-pkgs/g/gnugrep { };
 
-gnum4 = callPackage ../all-pkgs/gnum4 { };
+gnum4 = callPackage ../all-pkgs/g/gnum4 { };
 
-gnumake = callPackage ../all-pkgs/gnumake { };
+gnumake = callPackage ../all-pkgs/g/gnumake { };
 
-gnonlin = callPackage ../all-pkgs/gnonlin { };
+gnonlin = callPackage ../all-pkgs/g/gnonlin { };
 
-gnupatch = callPackage ../all-pkgs/gnupatch { };
+gnupatch = callPackage ../all-pkgs/g/gnupatch { };
 
 gnupg_2_0 = callPackageAlias "gnupg" {
   channel = "2.0";
@@ -1068,15 +1068,15 @@ gnupg_2_1 = callPackageAlias "gnupg" {
   channel = "2.1";
 };
 
-gnupg = callPackage ../all-pkgs/gnupg { };
+gnupg = callPackage ../all-pkgs/g/gnupg { };
 
-gnused = callPackage ../all-pkgs/gnused { };
+gnused = callPackage ../all-pkgs/g/gnused { };
 
-gnutar = callPackage ../all-pkgs/gnutar { };
+gnutar = callPackage ../all-pkgs/g/gnutar { };
 
-gnutls = callPackage ../all-pkgs/gnutls { };
+gnutls = callPackage ../all-pkgs/g/gnutls { };
 
-go = callPackage ../all-pkgs/go { };
+go = callPackage ../all-pkgs/g/go { };
 
 go_1_6 = callPackageAlias "go" {
   channel = "1.6";
@@ -1092,97 +1092,97 @@ go16Packages = callPackage ./go-packages.nix {
 };
 goPackages = callPackageAlias "go16Packages" { };
 
-gobject-introspection = callPackage ../all-pkgs/gobject-introspection { };
+gobject-introspection = callPackage ../all-pkgs/g/gobject-introspection { };
 
-google-gflags = callPackage ../all-pkgs/google-gflags { };
+google-gflags = callPackage ../all-pkgs/g/google-gflags { };
 
-gperf = callPackage ../all-pkgs/gperf { };
+gperf = callPackage ../all-pkgs/g/gperf { };
 
-gperftools = callPackage ../all-pkgs/gperftools { };
+gperftools = callPackage ../all-pkgs/g/gperftools { };
 
-gpm = callPackage ../all-pkgs/gpm-ncurses { };
+gpm = callPackage ../all-pkgs/g/gpm-ncurses { };
 
-gpsd = callPackage ../all-pkgs/gpsd { };
+gpsd = callPackage ../all-pkgs/g/gpsd { };
 
-gptfdisk = callPackage ../all-pkgs/gptfdisk { };
+gptfdisk = callPackage ../all-pkgs/g/gptfdisk { };
 
 grafana = pkgs.goPackages.grafana.bin // { outputs = [ "bin" ]; };
 
-granite = callPackage ../all-pkgs/granite { };
+granite = callPackage ../all-pkgs/g/granite { };
 
-graphite2 = callPackage ../all-pkgs/graphite2 { };
+graphite2 = callPackage ../all-pkgs/g/graphite2 { };
 
-graphviz = callPackage ../all-pkgs/graphviz { };
+graphviz = callPackage ../all-pkgs/g/graphviz { };
 
-grilo = callPackage ../all-pkgs/grilo { };
+grilo = callPackage ../all-pkgs/g/grilo { };
 
-grilo-plugins = callPackage ../all-pkgs/grilo-plugins { };
+grilo-plugins = callPackage ../all-pkgs/g/grilo-plugins { };
 
-groff = callPackage ../all-pkgs/groff { };
+groff = callPackage ../all-pkgs/g/groff { };
 
-gsettings-desktop-schemas = callPackage ../all-pkgs/gsettings-desktop-schemas { };
+gsettings-desktop-schemas = callPackage ../all-pkgs/g/gsettings-desktop-schemas { };
 
-gsm = callPackage ../all-pkgs/gsm { };
+gsm = callPackage ../all-pkgs/g/gsm { };
 
-gsound = callPackage ../all-pkgs/gsound { };
+gsound = callPackage ../all-pkgs/g/gsound { };
 
-gssdp = callPackage ../all-pkgs/gssdp { };
+gssdp = callPackage ../all-pkgs/g/gssdp { };
 
-gst-libav = callPackage ../all-pkgs/gst-libav { };
+gst-libav = callPackage ../all-pkgs/g/gst-libav { };
 
-gst-plugins-bad = callPackage ../all-pkgs/gst-plugins-bad { };
+gst-plugins-bad = callPackage ../all-pkgs/g/gst-plugins-bad { };
 
-gst-plugins-base = callPackage ../all-pkgs/gst-plugins-base { };
+gst-plugins-base = callPackage ../all-pkgs/g/gst-plugins-base { };
 
-gst-plugins-good = callPackage ../all-pkgs/gst-plugins-good { };
+gst-plugins-good = callPackage ../all-pkgs/g/gst-plugins-good { };
 
-gst-plugins-ugly = callPackage ../all-pkgs/gst-plugins-ugly { };
+gst-plugins-ugly = callPackage ../all-pkgs/g/gst-plugins-ugly { };
 
-gst-validate = callPackage ../all-pkgs/gst-validate { };
+gst-validate = callPackage ../all-pkgs/g/gst-validate { };
 
-gstreamer = callPackage ../all-pkgs/gstreamer { };
+gstreamer = callPackage ../all-pkgs/g/gstreamer { };
 
-gstreamer-editing-services = callPackage ../all-pkgs/gstreamer-editing-services { };
+gstreamer-editing-services = callPackage ../all-pkgs/g/gstreamer-editing-services { };
 
-gstreamer-vaapi = callPackage ../all-pkgs/gstreamer-vaapi { };
+gstreamer-vaapi = callPackage ../all-pkgs/g/gstreamer-vaapi { };
 
-gtk-doc = callPackage ../all-pkgs/gtk-doc { };
+gtk-doc = callPackage ../all-pkgs/g/gtk-doc { };
 
-gtk_2 = callPackage ../all-pkgs/gtk/2.x.nix { };
+gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
 gtk2 = callPackageAlias "gtk_2" { };
-gtk_3 = callPackage ../all-pkgs/gtk/3.x.nix { };
+gtk_3 = callPackage ../all-pkgs/g/gtk/3.x.nix { };
 gtk3 = callPackageAlias "gtk_3" { };
 
-gtkhtml = callPackage ../all-pkgs/gtkhtml { };
+gtkhtml = callPackage ../all-pkgs/g/gtkhtml { };
 
-gtkimageview = callPackage ../all-pkgs/gtkimageview { };
+gtkimageview = callPackage ../all-pkgs/g/gtkimageview { };
 
-gtkmm_2 = callPackage ../all-pkgs/gtkmm/2.x.nix { };
-gtkmm_3 = callPackage ../all-pkgs/gtkmm/3.x.nix { };
+gtkmm_2 = callPackage ../all-pkgs/g/gtkmm/2.x.nix { };
+gtkmm_3 = callPackage ../all-pkgs/g/gtkmm/3.x.nix { };
 
-gtksourceview = callPackage ../all-pkgs/gtksourceview { };
+gtksourceview = callPackage ../all-pkgs/g/gtksourceview { };
 
-gtkspell_2 = callPackage ../all-pkgs/gtkspell/2.x.nix { };
-gtkspell_3 = callPackage ../all-pkgs/gtkspell/3.x.nix { };
+gtkspell_2 = callPackage ../all-pkgs/g/gtkspell/2.x.nix { };
+gtkspell_3 = callPackage ../all-pkgs/g/gtkspell/3.x.nix { };
 gtkspell = callPackageAlias "gtkspell_3" { };
 
-guile = callPackage ../all-pkgs/guile { };
+guile = callPackage ../all-pkgs/g/guile { };
 
-guitarix = callPackage ../all-pkgs/guitarix {
+guitarix = callPackage ../all-pkgs/g/guitarix {
   fftw = pkgs.fftw_single;
 };
 
-gupnp = callPackage ../all-pkgs/gupnp { };
+gupnp = callPackage ../all-pkgs/g/gupnp { };
 
-gupnp-av = callPackage ../all-pkgs/gupnp-av { };
+gupnp-av = callPackage ../all-pkgs/g/gupnp-av { };
 
-gupnp-igd = callPackage ../all-pkgs/gupnp-igd { };
+gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 
-gvfs = callPackage ../all-pkgs/gvfs { };
+gvfs = callPackage ../all-pkgs/g/gvfs { };
 
 gx = pkgs.goPackages.gx.bin // { outputs = [ "bin" ]; };
 
-gzip = callPackage ../all-pkgs/gzip { };
+gzip = callPackage ../all-pkgs/g/gzip { };
 
 hadoop = callPackage ../all-pkgs/hadoop { };
 
@@ -1801,7 +1801,7 @@ ncdc = callPackage ../all-pkgs/ncdc { };
 
 ncmpcpp = callPackage ../all-pkgs/ncmpcpp { };
 
-ncurses = callPackage ../all-pkgs/gpm-ncurses { };
+ncurses = callPackage ../all-pkgs/g/gpm-ncurses { };
 
 net-snmp = callPackage ../all-pkgs/net-snmp { };
 
@@ -2805,7 +2805,7 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
   gmime = callPackage ../development/libraries/gmime { };
 #
-  gom = callPackage ../all-pkgs/gom { };
+  gom = callPackage ../all-pkgs/g/gom { };
 #
   gpgme = callPackage ../development/libraries/gpgme { };
 #

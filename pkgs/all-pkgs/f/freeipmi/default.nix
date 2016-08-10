@@ -22,10 +22,6 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
   ];
 
-  preBuild = ''
-    cat libipmimonitoring/Makefile
-  '';
-
   preInstall = ''
     installFlagsArray+=(
       "sysconfdir=$out/etc"
@@ -53,9 +49,6 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    description = ''Command-line interface to IPMI-enabled devices'';
-    homepage = http://ipmitool.sourceforge.net;
-    license = licenses.bsd3;
     maintainers = with maintainers; [
       wkennington
     ];

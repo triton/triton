@@ -126,11 +126,11 @@ let
   };
 
   crypto = buildFromGitHub {
-    rev = "e0d166c33c321d0ff863f459a5882096e334f508";
-    date = "2016-08-04";
+    rev = "5f961cd492ac9d43fc33a8ef646bae79d113fd97";
+    date = "2016-08-10";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "1bmx8nlaw74cx7zip0nhv1qq7pxm1fv9bz3dr3lxdlg4cxkhfhls";
+    sha256 = "0imyv7rmxqi1sgq1h2w5mrqn8zdjrqch00j0yypxq4jxh3j4mqwq";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -172,11 +172,11 @@ let
   };
 
   oauth2 = buildFromGitHub {
-    rev = "04e1573abc896e70388bd387a69753c378d46466";
-    date = "2016-07-30";
+    rev = "4784bb855e56a530f1ce5d788959359ed6cb4a16";
+    date = "2016-08-10";
     owner = "golang";
     repo = "oauth2";
-    sha256 = "1sqdqgr858dhyi65mccgarkmqx5466w3pldkpj3h8f4ykr7xj4ig";
+    sha256 = "1799kncljprlbaznbl9ss38n1m781rdbnfjr94gz68hgj82d4z9w";
     goPackagePath = "golang.org/x/oauth2";
     goPackageAliases = [ "github.com/golang/oauth2" ];
     propagatedBuildInputs = [
@@ -979,13 +979,13 @@ let
   };
 
   gcloud-golang = buildFromGitHub {
-    rev = "c14fbfa4d259bf20a9a236a19c03a8b05f12b444";
+    rev = "a9cebc475d9078bb97616aa855761a77cbe30865";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "0gijj73yia2wbnibzlvbcq5c73rvcaffrzrmj48znpz5r17himmr";
-    goPackagePath = "google.golang.org/cloud";
+    sha256 = "c0a3f2b756bd5bd2ca1cef74a33c8fe702c1f98e9e4837d1f8a51193fe3f28c7";
+    goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
-      "cloud.google.com/go"
+      "google.golang.org/cloud"
     ];
     propagatedBuildInputs = [
       net
@@ -995,8 +995,7 @@ let
       grpc
     ];
     excludedPackages = "oauth2";
-    meta.hydraPlatforms = [ ];
-    date = "2016-08-03";
+    date = "2016-08-10";
   };
 
   gcloud-golang-for-go4 = buildFromGitHub {
@@ -1288,11 +1287,11 @@ let
   };
 
   google-api-go-client = buildFromGitHub {
-    rev = "518eda9a0920a55ffe7190db96fe8ed85a62e376";
-    date = "2016-08-09";
+    rev = "8ae9b02432fd8417fb9359af58f473036b094d20";
+    date = "2016-08-10";
     owner = "google";
     repo = "google-api-go-client";
-    sha256 = "11flvn7a0xrc645jvdhq9mnm2vv5hj93i0qlni1ivvhzlij2kkk8";
+    sha256 = "1gxj0i226bpl0pi1ghjxj2ypj9syaw6s3cjd1jq6vajixa5q0fyn";
     goPackagePath = "google.golang.org/api";
     goPackageAliases = [
       "github.com/google/google-api-client"
@@ -3188,10 +3187,10 @@ let
   };
 
   syncthing = buildFromGitHub rec {
-    rev = "v0.14.3";
+    rev = "v0.14.4";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "004rb68q924vdngsvgffs072fw3ljfvq6iyd0s8rvilfddfyg1xn";
+    sha256 = "158s8j7q0n51br306inadjy2j2icbfd1n1ypylhh5ipvxxiybbk0";
     buildFlags = [ "-tags noupgrade" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext

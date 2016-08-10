@@ -2376,6 +2376,8 @@ vino = callPackage ../all-pkgs/v/vino { };
 
 vlc = callPackage ../all-pkgs/v/vlc { };
 
+vobsub2srt = callPackage ../all-pkgs/v/vobsub2srt { };
+
 vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 
 vte = callPackage ../all-pkgs/v/vte { };
@@ -2590,8 +2592,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   tcpdump = callPackage ../tools/networking/tcpdump { };
 #
   trousers = callPackage ../tools/security/trousers { };
-#
-  vobsub2srt = callPackage ../tools/cd-dvd/vobsub2srt { };
 #
   vpnc = callPackage ../tools/networking/vpnc { };
 

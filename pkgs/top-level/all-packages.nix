@@ -2094,39 +2094,39 @@ quasselClient = hiPrio (pkgs.quassel.override {
   tag = "-client";
 });
 
-radvd = callPackage ../all-pkgs/radvd { };
+radvd = callPackage ../all-pkgs/r/radvd { };
 
-rapidjson = callPackage ../all-pkgs/rapidjson { };
+rapidjson = callPackage ../all-pkgs/r/rapidjson { };
 
-raptor2 = callPackage ../all-pkgs/raptor2 { };
+raptor2 = callPackage ../all-pkgs/r/raptor2 { };
 
-re2c = callPackage ../all-pkgs/re2c { };
+re2c = callPackage ../all-pkgs/r/re2c { };
 
-readline = callPackage ../all-pkgs/readline { };
+readline = callPackage ../all-pkgs/r/readline { };
 
-recode = callPackage ../all-pkgs/recode { };
+recode = callPackage ../all-pkgs/r/recode { };
 
-redis = callPackage ../all-pkgs/redis { };
+redis = callPackage ../all-pkgs/r/redis { };
 
-resolv_wrapper = callPackage ../all-pkgs/resolv_wrapper { };
+resolv_wrapper = callPackage ../all-pkgs/r/resolv_wrapper { };
 
-rest = callPackage ../all-pkgs/rest { };
+rest = callPackage ../all-pkgs/r/rest { };
 
-rfkill = callPackage ../all-pkgs/rfkill { };
+rfkill = callPackage ../all-pkgs/r/rfkill { };
 
-rocksdb = callPackage ../all-pkgs/rocksdb { };
+rocksdb = callPackage ../all-pkgs/r/rocksdb { };
 
-rtkit = callPackage ../all-pkgs/rtkit { };
+rtkit = callPackage ../all-pkgs/r/rtkit { };
 
-rtmpdump = callPackage ../all-pkgs/rtmpdump { };
+rtmpdump = callPackage ../all-pkgs/r/rtmpdump { };
 
-rtorrent = callPackage ../all-pkgs/rtorrent { };
+rtorrent = callPackage ../all-pkgs/r/rtorrent { };
 
-ruby = callPackage ../all-pkgs/ruby { };
+ruby = callPackage ../all-pkgs/r/ruby { };
 
-rustc = hiPrio (callPackage ../all-pkgs/rustc { });
+rustc = hiPrio (callPackage ../all-pkgs/r/rustc { });
 
-rustc_bootstrap = lowPrio (callPackage ../all-pkgs/rustc/bootstrap.nix { });
+rustc_bootstrap = lowPrio (callPackage ../all-pkgs/r/rustc/bootstrap.nix { });
 
 #rustc_beta = callPackageAlias "rustc" {
 #  channel = "beta";

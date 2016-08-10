@@ -1604,6 +1604,8 @@ libtorrent-rasterbar = callPackageAlias "libtorrent-rasterbar_1-1" { };
 
 libtsm = callPackage ../all-pkgs/l/libtsm { };
 
+libu2f-host = callPackage ../all-pkgs/l/libu2f-host { };
+
 libunique_1 = callPackage ../all-pkgs/l/libunique/1.x.nix { };
 libunique_3 = callPackage ../all-pkgs/l/libunique/3.x.nix { };
 libunique = callPackageAlias "libunique_3" { };

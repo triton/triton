@@ -2374,36 +2374,36 @@ vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 
 vte = callPackage ../all-pkgs/v/vte { };
 
-w3m = callPackage ../all-pkgs/w3m { };
+w3m = callPackage ../all-pkgs/w/w3m { };
 
-waf = callPackage ../all-pkgs/waf { };
+waf = callPackage ../all-pkgs/w/waf { };
 
-wavpack = callPackage ../all-pkgs/wavpack { };
+wavpack = callPackage ../all-pkgs/w/wavpack { };
 
-wayland = callPackage ../all-pkgs/wayland { };
+wayland = callPackage ../all-pkgs/w/wayland { };
 
-wayland-protocols = callPackage ../all-pkgs/wayland-protocols { };
+wayland-protocols = callPackage ../all-pkgs/w/wayland-protocols { };
 
-webkitgtk_2_4_gtk3 = callPackage ../all-pkgs/webkitgtk/2.4.x.nix {
+webkitgtk_2_4_gtk3 = callPackage ../all-pkgs/w/webkitgtk/2.4.x.nix {
   gtkVer = "3";
 };
 webkitgtk_2_4_gtk2 = callPackageAlias "webkitgtk_2_4_gtk3" {
   gtkVer = "2";
 };
 webkitgtk_2_4 = callPackageAlias "webkitgtk_2_4_gtk3" { };
-webkitgtk = callPackage ../all-pkgs/webkitgtk { };
+webkitgtk = callPackage ../all-pkgs/w/webkitgtk { };
 
-wget = callPackage ../all-pkgs/wget { };
+wget = callPackage ../all-pkgs/w/wget { };
 
-which = callPackage ../all-pkgs/which { };
+which = callPackage ../all-pkgs/w/which { };
 
-wiredtiger = callPackage ../all-pkgs/wiredtiger { };
+wiredtiger = callPackage ../all-pkgs/w/wiredtiger { };
 
-wireguard = callPackage ../all-pkgs/wireguard {
+wireguard = callPackage ../all-pkgs/w/wireguard {
   kernel = null;
 };
 
-wxGTK = callPackage ../all-pkgs/wxGTK { };
+wxGTK = callPackage ../all-pkgs/w/wxGTK { };
 
 x264 = callPackage ../all-pkgs/x264 { };
 
@@ -3185,7 +3185,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
         inherit (kPkgs) kernel;  # We shouldn't need this
       };
 
-      wireguard = kCallPackage ../all-pkgs/wireguard {
+      wireguard = kCallPackage ../all-pkgs/w/wireguard {
         inherit (kPkgs) kernel;
       };
 

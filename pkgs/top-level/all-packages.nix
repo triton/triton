@@ -1445,6 +1445,8 @@ libidn = callPackage ../all-pkgs/libidn { };
 
 libinput = callPackage ../all-pkgs/libinput { };
 
+libisofs = callPackage ../all-pkgs/libisofs { };
+
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };
 libjpeg-turbo_1-4 = callPackage ../all-pkgs/libjpeg-turbo {
   channel = "1.4";

@@ -1196,6 +1196,8 @@ hexchat = callPackage ../all-pkgs/h/hexchat { };
 
 hicolor-icon-theme = callPackage ../all-pkgs/h/hicolor-icon-theme { };
 
+hidapi = callPackage ../all-pkgs/h/hidapi { };
+
 highlight = callPackage ../all-pkgs/h/highlight { };
 
 hiredis = callPackage ../all-pkgs/h/hiredis { };

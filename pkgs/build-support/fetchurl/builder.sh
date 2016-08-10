@@ -124,7 +124,7 @@ tryDownload() {
                 break
               fi
             else
-              verifications+=("$sha512Verification")
+              verifications+=("${sha512Verification:-sha512}")
             fi
           fi
 
@@ -139,7 +139,7 @@ tryDownload() {
                 break
               fi
             else
-              verifications+=("$sha256Verification")
+              verifications+=("${sha256Verification:-sha256}")
             fi
           fi
 
@@ -154,7 +154,7 @@ tryDownload() {
                 break
               fi
             else
-              verifications+=("$sha1Verification")
+              verifications+=("${sha1Verification:-sha1}")
             fi
           fi
 
@@ -169,7 +169,7 @@ tryDownload() {
                 break
               fi
             else
-              verifications+=("$md5Verification")
+              verifications+=("${md5Verification:-md5}")
             fi
           fi
 

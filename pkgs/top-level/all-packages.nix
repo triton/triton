@@ -1285,37 +1285,37 @@ json-glib = callPackage ../all-pkgs/j/json-glib { };
 
 judy = callPackage ../all-pkgs/j/judy { };
 
-kbd = callPackage ../all-pkgs/kbd { };
+kbd = callPackage ../all-pkgs/k/kbd { };
 
-kea = callPackage ../all-pkgs/kea { };
+kea = callPackage ../all-pkgs/k/kea { };
 
-keepalived = callPackage ../all-pkgs/keepalived { };
+keepalived = callPackage ../all-pkgs/k/keepalived { };
 
-keepassx = callPackage ../all-pkgs/keepassx { };
+keepassx = callPackage ../all-pkgs/k/keepassx { };
 
 kerberos = callPackageAlias "krb5_lib" { };
 
-kexec-tools = callPackage ../all-pkgs/kexec-tools { };
+kexec-tools = callPackage ../all-pkgs/k/kexec-tools { };
 
-keyutils = callPackage ../all-pkgs/keyutils { };
+keyutils = callPackage ../all-pkgs/k/keyutils { };
 
-kid3 = callPackage ../all-pkgs/kid3 { };
+kid3 = callPackage ../all-pkgs/k/kid3 { };
 
-kmod = callPackage ../all-pkgs/kmod { };
+kmod = callPackage ../all-pkgs/k/kmod { };
 
-kmscon = callPackage ../all-pkgs/kmscon { };
+kmscon = callPackage ../all-pkgs/k/kmscon { };
 
-knot = callPackage ../all-pkgs/knot { };
+knot = callPackage ../all-pkgs/k/knot { };
 
-krb5_full = callPackage ../all-pkgs/krb5 { };
+krb5_full = callPackage ../all-pkgs/k/krb5 { };
 
 krb5_lib = callPackageAlias "krb5_full" {
   type = "lib";
 };
 
-#kubernetes = callPackage ../all-pkgs/kubernetes { };
+#kubernetes = callPackage ../all-pkgs/k/kubernetes { };
 
-kyotocabinet = callPackage ../all-pkgs/kyotocabinet { };
+kyotocabinet = callPackage ../all-pkgs/k/kyotocabinet { };
 
 lame = callPackage ../all-pkgs/lame { };
 
@@ -3244,7 +3244,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   mdadm = callPackage ../os-specific/linux/mdadm { };
 #
   aggregateModules = modules:
-    callPackage ../all-pkgs/kmod/aggregator.nix {
+    callPackage ../all-pkgs/k/kmod/aggregator.nix {
       inherit modules;
     };
 #

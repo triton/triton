@@ -3,9 +3,11 @@
 , fetchPyPi
 }:
 
+let
+  version = "4.2.0";
+in
 buildPythonPackage rec {
   name = "zope.event-${version}";
-  version = "4.2.0";
 
   src = fetchPyPi {
     package = "zope.event";

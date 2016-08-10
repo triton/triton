@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/ipmitool/${name}.tar.bz2";
+    multihash = "QmdofyZF3hzpf3NSwzG4NfH4qU1K6cG6qYKjnrpErXyGTZ";
     sha256 = "97fa20efd9c87111455b174858544becae7fcc03a3cb7bf5c19b09065c842d02";
   };
 

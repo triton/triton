@@ -1184,29 +1184,29 @@ gx = pkgs.goPackages.gx.bin // { outputs = [ "bin" ]; };
 
 gzip = callPackage ../all-pkgs/g/gzip { };
 
-hadoop = callPackage ../all-pkgs/hadoop { };
+hadoop = callPackage ../all-pkgs/h/hadoop { };
 
-harfbuzz = callPackage ../all-pkgs/harfbuzz { };
+harfbuzz = callPackage ../all-pkgs/h/harfbuzz { };
 
-hdparm = callPackage ../all-pkgs/hdparm { };
+hdparm = callPackage ../all-pkgs/h/hdparm { };
 
-help2man = callPackage ../all-pkgs/help2man { };
+help2man = callPackage ../all-pkgs/h/help2man { };
 
-hexchat = callPackage ../all-pkgs/hexchat { };
+hexchat = callPackage ../all-pkgs/h/hexchat { };
 
-hicolor-icon-theme = callPackage ../all-pkgs/hicolor-icon-theme { };
+hicolor-icon-theme = callPackage ../all-pkgs/h/hicolor-icon-theme { };
 
-highlight = callPackage ../all-pkgs/highlight { };
+highlight = callPackage ../all-pkgs/h/highlight { };
 
-hiredis = callPackage ../all-pkgs/hiredis { };
+hiredis = callPackage ../all-pkgs/h/hiredis { };
 
-htop = callPackage ../all-pkgs/htop { };
+htop = callPackage ../all-pkgs/h/htop { };
 
-http-parser = callPackage ../all-pkgs/http-parser { };
+http-parser = callPackage ../all-pkgs/h/http-parser { };
 
-hunspell = callPackage ../all-pkgs/hunspell { };
+hunspell = callPackage ../all-pkgs/h/hunspell { };
 
-hwdata = callPackage ../all-pkgs/hwdata { };
+hwdata = callPackage ../all-pkgs/h/hwdata { };
 
 iana-etc = callPackage ../all-pkgs/iana-etc { };
 

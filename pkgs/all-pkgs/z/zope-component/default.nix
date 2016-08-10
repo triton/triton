@@ -2,12 +2,15 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, zope-event
+, zope-interface
 }:
 
+let
+  version = "4.2.2";
+in
 buildPythonPackage rec {
   name = "zope-component-${version}";
-  version = "4.2.2";
 
   src = fetchPyPi {
     package = "zope.component";
@@ -16,14 +19,14 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.zope-event
-    pythonPackages.zope-interface
+    zope-event
+    zope-interface
   ];
 
   meta = with stdenv.lib; {
     description = "Zope Component Architecture";
     homepage = https://github.com/zopefoundation/zope.component;
-    license = licenses.free; # zope pl
+    license = licenses.zpt20;
     maintainers = with maintainers; [
       codyopel
     ];

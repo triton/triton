@@ -2,12 +2,14 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, zope-event
 }:
 
+let
+  version = "4.2.0";
+in
 buildPythonPackage rec {
   name = "zope.interface-${version}";
-  version = "4.2.0";
 
   src = fetchPyPi {
     package = "zope.interface";
@@ -16,7 +18,7 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    pythonPackages.zope-event
+    zope-event
   ];
 
   meta = with stdenv.lib; {

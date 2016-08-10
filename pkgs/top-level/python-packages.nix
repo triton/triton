@@ -112,7 +112,7 @@ in {
           /^ *[^# ]/i import sys; sys.argv[0] = '"'$(basename "$f")'"'
         }
       '';
-  } ../all-pkgs/build-python-package/wrap.sh;
+  } ../all-pkgs/b/build-python-package/wrap.sh;
 
   # specials
 

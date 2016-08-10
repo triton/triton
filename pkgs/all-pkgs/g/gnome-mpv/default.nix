@@ -27,16 +27,15 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
-  version = "2016-06-25";
+  version = "2016-08-10";
 
   src = fetchFromGitHub {
     owner = "gnome-mpv";
     repo = "gnome-mpv";
-    rev = "685fee1932b67fbdde45e2c781c57cbe6dba1469";
-    sha256 = "38d83d244c7c4397d803fd30a85c8db4bc737dc2838f299b478b38edaffa1ac4";
+    rev = "5cdb7c68fbe68e0a38cbadd9df41198a769b548e";
+    sha256 = "3c117e8266b6b1b442070b2300b59a4ae3c95ece106cba08ad3e783d0058d904";
   };
 
   nativeBuildInputs = [
@@ -65,12 +64,11 @@ stdenv.mkDerivation rec {
     xorg.libX11
   ];
 
-  preConfigure =
-    /* Ignore autogen.sh and run the commands manually */ ''
-      aclocal --install -I m4
-      intltoolize --copy --automake
-      autoreconf --install -Wno-portability
-    '';
+  preConfigure = /* Ignore autogen.sh and run the commands manually */ ''
+    aclocal --install -I m4
+    intltoolize --copy --automake
+    autoreconf --install -Wno-portability
+  '';
 
   configureFlags = [
     "--disable-maintainer-mode"

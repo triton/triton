@@ -2405,31 +2405,31 @@ wireguard = callPackage ../all-pkgs/w/wireguard {
 
 wxGTK = callPackage ../all-pkgs/w/wxGTK { };
 
-x264 = callPackage ../all-pkgs/x264 { };
+x264 = callPackage ../all-pkgs/x/x264 { };
 
-x265 = callPackage ../all-pkgs/x265 { };
+x265 = callPackage ../all-pkgs/x/x265 { };
 
-xdg-utils = callPackage ../all-pkgs/xdg-utils { };
+xdg-utils = callPackage ../all-pkgs/x/xdg-utils { };
 
-xf86-input-mtrack = callPackage ../all-pkgs/xf86-input-mtrack { };
+xf86-input-mtrack = callPackage ../all-pkgs/x/xf86-input-mtrack { };
 
-xf86-input-wacom = callPackage ../all-pkgs/xf86-input-wacom { };
+xf86-input-wacom = callPackage ../all-pkgs/x/xf86-input-wacom { };
 
-xfe = callPackage ../all-pkgs/xfe { };
+xfe = callPackage ../all-pkgs/x/xfe { };
 
-xfsprogs = callPackage ../all-pkgs/xfsprogs { };
+xfsprogs = callPackage ../all-pkgs/x/xfsprogs { };
 xfsprogs_lib = pkgs.xfsprogs.lib;
 
-xine-lib = callPackage ../all-pkgs/xine-lib { };
+xine-lib = callPackage ../all-pkgs/x/xine-lib { };
 
-xine-ui = callPackage ../all-pkgs/xine-ui { };
+xine-ui = callPackage ../all-pkgs/x/xine-ui { };
 
-xmlto = callPackage ../all-pkgs/xmlto { };
+xmlto = callPackage ../all-pkgs/x/xmlto { };
 
-xmltoman = callPackage ../all-pkgs/xmltoman { };
+xmltoman = callPackage ../all-pkgs/x/xmltoman { };
 
 xorg = recurseIntoAttrs (
-  lib.callPackagesWith pkgs ../all-pkgs/xorg/default.nix {
+  lib.callPackagesWith pkgs ../all-pkgs/x/xorg/default.nix {
     inherit (pkgs)
       asciidoc
       autoconf
@@ -2473,7 +2473,7 @@ xorg = recurseIntoAttrs (
   }
 );
 
-xz = callPackage ../all-pkgs/xz { };
+xz = callPackage ../all-pkgs/x/xz { };
 
 yaml-cpp = callPackage ../all-pkgs/yaml-cpp { };
 

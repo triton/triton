@@ -1445,6 +1445,8 @@ libidn = callPackage ../all-pkgs/libidn { };
 
 libinput = callPackage ../all-pkgs/libinput { };
 
+libisoburn = callPackage ../all-pkgs/libisoburn { };
+
 libisofs = callPackage ../all-pkgs/libisofs { };
 
 libjpeg_original = callPackage ../all-pkgs/libjpeg { };

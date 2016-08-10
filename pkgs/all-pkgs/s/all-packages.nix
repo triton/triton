@@ -2136,9 +2136,9 @@ rustc_bootstrap = lowPrio (callPackage ../all-pkgs/r/rustc/bootstrap.nix { });
 #  channel = "dev";
 #};
 
-sakura = callPackage ../all-pkgs/sakura { };
+sakura = callPackage ../all-pkgs/s/sakura { };
 
-samba_full = callPackage ../all-pkgs/samba { };
+samba_full = callPackage ../all-pkgs/s/samba { };
 
 samba_client = callPackageAlias "samba_full" {
   type = "client";
@@ -2146,61 +2146,61 @@ samba_client = callPackageAlias "samba_full" {
 
 scons = pkgs.pythonPackages.scons;
 
-screen = callPackage ../all-pkgs/screen { };
+screen = callPackage ../all-pkgs/s/screen { };
 
-scrot = callPackage ../all-pkgs/scrot { };
+scrot = callPackage ../all-pkgs/s/scrot { };
 
 # TODO SDL is a clusterfuck that needs to be fixed / renamed
-SDL = callPackage ../all-pkgs/SDL_1 { };
+SDL = callPackage ../all-pkgs/s/SDL_1 { };
 
-SDL_image = callPackage ../all-pkgs/SDL_1_image { };
+SDL_image = callPackage ../all-pkgs/s/SDL_1_image { };
 
-SDL_2 = callPackage ../all-pkgs/SDL { };
+SDL_2 = callPackage ../all-pkgs/s/SDL { };
 
-SDL_2_image = callPackage ../all-pkgs/SDL_image { };
+SDL_2_image = callPackage ../all-pkgs/s/SDL_image { };
 
-sdparm = callPackage ../all-pkgs/sdparm { };
+sdparm = callPackage ../all-pkgs/s/sdparm { };
 
-seabios = callPackage ../all-pkgs/seabios { };
+seabios = callPackage ../all-pkgs/s/seabios { };
 
-seahorse = callPackage ../all-pkgs/seahorse { };
+seahorse = callPackage ../all-pkgs/s/seahorse { };
 
-serd = callPackage ../all-pkgs/serd { };
+serd = callPackage ../all-pkgs/s/serd { };
 
-serf = callPackage ../all-pkgs/serf { };
+serf = callPackage ../all-pkgs/s/serf { };
 
-shared_mime_info = callPackage ../all-pkgs/shared-mime-info { };
+shared_mime_info = callPackage ../all-pkgs/s/shared-mime-info { };
 
-sharutils = callPackage ../all-pkgs/sharutils { };
+sharutils = callPackage ../all-pkgs/s/sharutils { };
 
-smartmontools = callPackage ../all-pkgs/smartmontools { };
+smartmontools = callPackage ../all-pkgs/s/smartmontools { };
 
-snappy = callPackage ../all-pkgs/snappy { };
+snappy = callPackage ../all-pkgs/s/snappy { };
 
-shntool = callPackage ../all-pkgs/shntool { };
+shntool = callPackage ../all-pkgs/s/shntool { };
 
-sl = callPackage ../all-pkgs/sl { };
+sl = callPackage ../all-pkgs/s/sl { };
 
-slock = callPackage ../all-pkgs/slock { };
+slock = callPackage ../all-pkgs/s/slock { };
 
-socket_wrapper = callPackage ../all-pkgs/socket_wrapper { };
+socket_wrapper = callPackage ../all-pkgs/s/socket_wrapper { };
 
-sord = callPackage ../all-pkgs/sord { };
+sord = callPackage ../all-pkgs/s/sord { };
 
-sox = callPackage ../all-pkgs/sox {
+sox = callPackage ../all-pkgs/s/sox {
   amrnb = null;
   amrwb = null;
 };
 
-soxr = callPackage ../all-pkgs/soxr { };
+soxr = callPackage ../all-pkgs/s/soxr { };
 
-spectrwm = callPackage ../all-pkgs/spectrwm { };
+spectrwm = callPackage ../all-pkgs/s/spectrwm { };
 
-spice = callPackage ../all-pkgs/spice { };
+spice = callPackage ../all-pkgs/s/spice { };
 
-spice-protocol = callPackage ../all-pkgs/spice-protocol { };
+spice-protocol = callPackage ../all-pkgs/s/spice-protocol { };
 
-spidermonkey = callPackage ../all-pkgs/spidermonkey { };
+spidermonkey = callPackage ../all-pkgs/s/spidermonkey { };
 
 spidermonkey_45 = callPackageAlias "spidermonkey" {
   channel = "45";
@@ -2214,35 +2214,35 @@ spidermonkey_17 = callPackageAlias "spidermonkey" {
   channel = "17";
 };
 
-split2flac = callPackage ../all-pkgs/split2flac { };
+split2flac = callPackage ../all-pkgs/s/split2flac { };
 
-sqlheavy = callPackage ../all-pkgs/sqlheavy { };
+sqlheavy = callPackage ../all-pkgs/s/sqlheavy { };
 
-sqlite = callPackage ../all-pkgs/sqlite { };
+sqlite = callPackage ../all-pkgs/s/sqlite { };
 
-squashfs-tools = callPackage ../all-pkgs/squashfs-tools { };
+squashfs-tools = callPackage ../all-pkgs/s/squashfs-tools { };
 
-sratom = callPackage ../all-pkgs/sratom { };
+sratom = callPackage ../all-pkgs/s/sratom { };
 
-sssd = callPackage ../all-pkgs/sssd { };
+sssd = callPackage ../all-pkgs/s/sssd { };
 
-st = callPackage ../all-pkgs/st {
+st = callPackage ../all-pkgs/s/st {
   config = config.st.config or null;
   configFile = config.st.configFile or null;
 };
 
-#steamPackages = callPackage ../all-pkgs/steam { };
+#steamPackages = callPackage ../all-pkgs/s/steam { };
 #steam = steamPackages.steam-chrootenv.override {
 #  # DEPRECATED
 #  withJava = config.steam.java or false;
 #  withPrimus = config.steam.primus or false;
 #};
 
-strace = callPackage ../all-pkgs/strace { };
+strace = callPackage ../all-pkgs/s/strace { };
 
-sublime-text = callPackage ../all-pkgs/sublime-text { };
+sublime-text = callPackage ../all-pkgs/s/sublime-text { };
 
-subversion = callPackage ../all-pkgs/subversion { };
+subversion = callPackage ../all-pkgs/s/subversion { };
 subversion_1_9 = callPackageAlias "subversion" {
   channel = "1.9";
 };
@@ -2250,9 +2250,9 @@ subversion_1_8 = callPackageAlias "subversion" {
   channel = "1.8";
 };
 
-sudo = callPackage ../all-pkgs/sudo { };
+sudo = callPackage ../all-pkgs/s/sudo { };
 
-sushi = callPackage ../all-pkgs/sushi { };
+sushi = callPackage ../all-pkgs/s/sushi { };
 
 swig_2 = callPackageAlias "swig" {
   channel = "2";
@@ -2262,7 +2262,7 @@ swig_3 = callPackageAlias "swig" {
   channel = "3";
 };
 
-swig = callPackage ../all-pkgs/swig { };
+swig = callPackage ../all-pkgs/s/swig { };
 
 sydent = pkgs.python2Packages.sydent;
 
@@ -2270,12 +2270,12 @@ synapse = pkgs.python2Packages.synapse;
 
 syncthing = pkgs.goPackages.syncthing.bin // { outputs = [ "bin" ]; };
 
-syslinux = callPackage ../all-pkgs/syslinux { };
+syslinux = callPackage ../all-pkgs/s/syslinux { };
 
-sysstat = callPackage ../all-pkgs/sysstat { };
+sysstat = callPackage ../all-pkgs/s/sysstat { };
 
 # TODO: Rename back to systemd once depedencies are sorted
-systemd_full = callPackage ../all-pkgs/systemd { };
+systemd_full = callPackage ../all-pkgs/s/systemd { };
 
 systemd_lib = callPackageAlias "systemd_full" {
   type = "lib";

@@ -3,7 +3,7 @@
 }:
 
 let
-  inherit (import ../../../. {
+  inherit (import ../../../../. {
     inherit targetSystem hostSystem;
   }) lib runCommand fetchurl writeText stdenv curl cacert nix;
 

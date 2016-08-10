@@ -1359,6 +1359,8 @@ libbluray = callPackage ../all-pkgs/libbluray { };
 
 libbsd = callPackage ../all-pkgs/libbsd { };
 
+libburn = callPackage ../all-pkgs/libburn { };
+
 libcacard = callPackage ../all-pkgs/libcacard { };
 
 libcanberra = callPackage ../all-pkgs/libcanberra { };

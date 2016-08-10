@@ -5,8 +5,8 @@
 }:
 
 let
-  date = "2016-02-15";
-  gitRev = "bd8bceaed2311651710331a7f8990c3e31be9840";
+  date = "2016-07-10";
+  gitRev = "115f1af2494ded1fcd21c8419d5e289bc4df380f";
 in
 
 stdenv.mkDerivation rec {
@@ -14,8 +14,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     name = "${name}.tar.xz";
-    multihash = "QmQo77UM6kGXvznbkDFYcDeJZV2aLLUzcw8zGiPepRSrZZ";
-    sha256 = "ff6f8986a56cdab0f012084def538357fba117ad81660ed6f7130f6c48b8e963";
+    multihash = "QmSDSsjomFu6VZ5szCWGh9hyYQDFRKzFbQRJ1Deafh1cm7";
+    sha256 = "fc8ebe223a7144b6cde07eceac3b7ed7e71b350107002a21162542680ddfee2d";
   };
 
   nativeBuildInputs = [
@@ -38,12 +38,12 @@ stdenv.mkDerivation rec {
       src = fetchgit {
         url = "http://git.code.sf.net/p/net-tools/code";
         rev = gitRev;
-        sha256 = "1h8iryf5qc4svyz2ri1v4a8117w4r79rw6iqn8n7qavg0w45b30k";
+        sha256 = "1f7myyc490nq29dhs45sm2njxwdnck69pm9ixiwgj44mxdmj3rbm";
       };
 
       buildPhase = ''
-        cp -rv ${src} ${name}
-        tar Jcfv ${name}.tar.xz ${name}
+        cd ..
+        tar Jcfv ${name}.tar.xz $sourceRoot
       '';
 
       installPhase = ''

@@ -1,14 +1,15 @@
 { stdenv
 , buildPythonPackage
 , fetchFromGitHub
+, isPy3k
 , pythonPackages
 
 , acme
 , ConfigArgParse
 , configobj
 , cryptography
+, dialog
 , parsedatetime
-, pkgs
 , psutil
 , pyopenssl
 , python2-pythondialog
@@ -19,10 +20,6 @@
 , zope-interface
 }:
 
-let
-  inherit (pythonPackages)
-    isPy3k;
-in
 buildPythonPackage rec {
   name = "certbot-${version}";
   version = "0.8.1";
@@ -34,13 +31,13 @@ buildPythonPackage rec {
     sha256 = "48c453db74457ac88130480052246c132497fafd81c69e6ff9ff02f33243b855";
   };
 
-  pythonPath = [
+  propagatedBuildInputs = [
     acme
     ConfigArgParse
     configobj
     cryptography
+    dialog
     parsedatetime
-    pkgs.dialog
     psutil
     pyopenssl
     python2-pythondialog

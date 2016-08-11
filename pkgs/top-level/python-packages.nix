@@ -2849,18 +2849,19 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    certifi = buildPythonPackage rec {
      name = "certifi-${version}";
-     version = "2015.9.6.2";
+     version = "2016.8.8";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/c/certifi/${name}.tar.gz";
-       sha256 = "19mfly763c6bzya9dwm6qgc48z4x3gk6ldl6fprdncqhklnjnfnw";
+     src = fetchPyPi {
+       package = "certifi";
+       inherit version;
+       sha256 = "99864ed602d8a9d212e339b15ffa438895002eda7b7db20dca5309dac9605ae9";
      };
 
      meta = {
        homepage = http://certifi.io/;
        description = "Python package for providing Mozilla's CA Bundle";
        license = licenses.isc;
-       maintainers = with maintainers; [ koral ];
+       maintainers = with maintainers; [ ];
      };
    };
 

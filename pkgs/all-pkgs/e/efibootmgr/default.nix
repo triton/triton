@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "efibootmgr-2016-07-01";
+  name = "efibootmgr-2016-08-11";
 
   src = fetchFromGitHub {
     owner = "rhinstaller";
     repo = "efibootmgr";
-    rev = "94a9adc005073af7725cf5a54018544f68bfa03f";
-    sha256 = "8c5e8b039e178cd3e39e93abea7627b9a52d60b308dacebeb106e3f7bae656b8";
+    rev = "0bb83cf5640ef834eb4c32a146d140c40034247b";
+    sha256 = "940162b6960a7696767c39da250d49d27f4853bf3474b58355459bdaf4892760";
   };
 
   buildInputs = [

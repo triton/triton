@@ -10,7 +10,7 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "2.4.25";
+  version = "2.4.27";
 in
 buildPythonPackage {
   name = "python-ldap-${version}";
@@ -18,7 +18,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "python-ldap";
     inherit version;
-    sha256 = "62d00dbc86f3f9b21beacd9b826e8f9895f900637a60a6d4e7ab59a1cdc64e56";
+    sha256 = "6306a57a3c659ffda0003b386b1a23fdcee0b903a0ede0ce04c33ba78be64a2e";
   };
 
   NIX_CFLAGS_COMPILE = "-I${cyrus-sasl}/include/sasl";

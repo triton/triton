@@ -8317,10 +8317,11 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    vcversioner = buildPythonPackage rec {
      name = "vcversioner-${version}";
-     version = "2.14.0.0";
-    src = pkgs.fetchurl {
-      url = "https://pypi.python.org/packages/source/v/vcversioner/vcversioner-${version}.tar.gz";
-      sha256 = "11ivq1bm7v0yb4nsfbv9m7g7lyjn112gbvpjnjz8nv1fx633dm5c";
+     version = "2.16.0.0";
+    src = fetchPyPi {
+      package = "vcversioner";
+      inherit version;
+      sha256 = "dae60c17a479781f44a4010701833f1829140b1eeccd258762a74974aa06e19b";
      };
 
      meta = with stdenv.lib; {

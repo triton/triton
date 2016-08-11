@@ -9544,12 +9544,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  });
 
    jellyfish = buildPythonPackage rec {
-     version = "0.5.1";
+     version = "0.5.6";
      name = "jellyfish-${version}";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/j/jellyfish/${name}.tar.gz";
-       sha256 = "e297b7a5d00579b0da0474a89273fff759f305de88e05d6a1d0ebd4cb58c49e8";
+     src = fetchPyPi {
+       package = "jellyfish";
+       inherit version;
+       sha256 = "887a9a49d0caee913a883c3e7eb185f6260ebe2137562365be422d1316bd39c9";
      };
 
      buildInputs = with self; [
@@ -9561,7 +9562,7 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
      meta = {
        homepage = http://github.com/sunlightlabs/jellyfish;
        description = "Approximate and phonetic matching of strings";
-       maintainers = with maintainers; [ koral ];
+       maintainers = with maintainers; [ ];
      };
    };
 

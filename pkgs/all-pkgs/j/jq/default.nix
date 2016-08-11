@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 #, oniguruma  # Broken for some reason
@@ -16,9 +17,20 @@ stdenv.mkDerivation rec {
     #oniguruma
   ];
 
+  patches = [
+    (fetchTritonPatch {
+      rev = "17b376c8a31a31c1b962aa6a856830cbafd13651";
+      file = "jq/jq-1.5-cve-2015-8863.patch";
+      sha256 = "c0cc0da8be2324ece805b6324173d6b12c4865c744cec38d95a51c338442ee5c";
+    })
+  ];
+
   # For some reason jq doesn't have the rpath for libjq.so
   preFixup = ''
-    patchelf --set-rpath "$out/lib:$(patchelf --print-rpath "$out/bin/jq")" "$out/bin/jq"
+    patchelf \
+      --set-rpath "$out/lib:$(patchelf \
+      --print-rpath "$out/bin/jq")" \
+      "$out/bin/jq"
   '';
 
   meta = with stdenv.lib; {

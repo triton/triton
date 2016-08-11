@@ -1231,11 +1231,12 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    audioread = buildPythonPackage rec {
      name = "audioread-${version}";
-     version = "2.1.1";
+     version = "2.1.4";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/a/audioread/${name}.tar.gz";
-       sha256 = "ffb601de7a9e40850d4ec3256a3a6bbe8fa40466dafb5c65f41b08e4bb963f1e";
+     src = fetchPyPi {
+       package = "audioread";
+       inherit version;
+       sha256 = "8ffee2d2787258c214841853f600c52943baea9ad2303cb3d4b625cde4f08fff";
      };
 
      # No tests, need to disable or py3k breaks

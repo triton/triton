@@ -18612,9 +18612,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
      name = "testtools-${version}";
      version = "1.9.0";
 
-     # Python 2 only judging from SyntaxError
-     disabled = isPy3k;
-
      src = fetchPyPi {
        package = "testtools";
        inherit version;
@@ -18638,9 +18635,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
    testtools = buildPythonPackage rec {
      name = "testtools-${version}";
      version = "2.2.0";
-
-     # Python 2 only judging from SyntaxError
-     disabled = isPy3k;
 
      src = fetchPyPi {
        package = "testtools";

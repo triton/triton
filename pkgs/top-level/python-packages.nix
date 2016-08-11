@@ -8875,12 +8875,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    greenlet = buildPythonPackage rec {
      name = "greenlet-${version}";
-     version = "0.4.9";
+     version = "0.4.10";
      disabled = isPyPy;  # builtin for pypy
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/g/greenlet/${name}.zip";
-       sha256 = "0li2vm6ix982mmqdnqb6pgrq0jfvd0lfi5dz2rb6ap07wyig7cjq";
+     src = fetchPyPi {
+       package = "greenlet";
+       inherit version;
+       sha256 = "c4417624aa88380cdf0fe110a8a6e0dbcc26f80887197fe5df0427dfa348ae62";
      };
 
      meta = {

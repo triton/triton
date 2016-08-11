@@ -9,11 +9,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "mosh-1.2.5";
+  name = "mosh-1.2.6";
 
   src = fetchurl {
-    url = "http://mosh.mit.edu/${name}.tar.gz";
-    sha256 = "1qsb0y882yfgwnpy6f98pi5xqm6kykdsrxzvaal37hs7szjhky0s";
+    url = "https://mosh.mit.edu/${name}.tar.gz";
+    sha256 = "7e82b7fbfcc698c70f5843bb960dadb8e7bd7ac1d4d2151c9d979372ea850e85";
   };
 
   nativeBuildInputs = [

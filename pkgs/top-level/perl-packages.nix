@@ -963,29 +963,29 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  CatalystEngineHTTPPrefork = buildPerlPackage rec {
-    name = "Catalyst-Engine-HTTP-Prefork-0.51";
-    src = fetchurl {
-      url = "mirror://cpan/authors/id/A/AG/AGRUNDMA/${name}.tar.gz";
-      sha256 = "1ygmrzc9akjaqfxid8br11ajj9qgfvhkimakcv4ffk4s5v7q2sii";
-    };
-    propagatedBuildInputs = [
-      CatalystRuntime HTTPBody NetServer
-      CookieXS HTTPHeaderParserXS
-    ];
-    buildInputs = [TestPod TestPodCoverage];
-    patches = [
-      # Fix chunked transfers (they were missing the final CR/LF at
-      # the end, which makes curl barf).
-      ../development/perl-modules/catalyst-fix-chunked-encoding.patch
-    ];
+  # CatalystEngineHTTPPrefork = buildPerlPackage rec {
+  #   name = "Catalyst-Engine-HTTP-Prefork-0.51";
+  #   src = fetchurl {
+  #     url = "mirror://cpan/authors/id/A/AG/AGRUNDMA/${name}.tar.gz";
+  #     sha256 = "1ygmrzc9akjaqfxid8br11ajj9qgfvhkimakcv4ffk4s5v7q2sii";
+  #   };
+  #   propagatedBuildInputs = [
+  #     CatalystRuntime HTTPBody NetServer
+  #     CookieXS HTTPHeaderParserXS
+  #   ];
+  #   buildInputs = [TestPod TestPodCoverage];
+  #   patches = [
+  #     # Fix chunked transfers (they were missing the final CR/LF at
+  #     # the end, which makes curl barf).
+  #     ../development/perl-modules/catalyst-fix-chunked-encoding.patch
+  #   ];
 
-    meta = {
-      # Depends on some old version of Catalyst-Runtime that contains
-      # Catalyst::Engine::CGI. But those version do not compile.
-      broken = true;
-    };
-  };
+  #   meta = {
+  #     # Depends on some old version of Catalyst-Runtime that contains
+  #     # Catalyst::Engine::CGI. But those version do not compile.
+  #     broken = true;
+  #   };
+  # };
 
   CatalystManual = buildPerlPackage rec {
     name = "Catalyst-Manual-5.9009";
@@ -3229,21 +3229,21 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  DevelSizeMe = buildPerlPackage {
-    name = "Devel-SizeMe-0.19";
-    src = fetchurl {
-      url = mirror://cpan/authors/id/T/TI/TIMB/Devel-SizeMe-0.19.tar.gz;
-      sha256 = "546e31ba83c0bf7cef37b38a462860461850473479d7d4ac6c0dadfb78d54717";
-    };
-    propagatedBuildInputs = [ DBDSQLite DBI DataDumperConcise HTMLParser JSONXS Moo ];
-    meta = {
-      homepage = https://github.com/timbunce/devel-sizeme;
-      description = "Unknown";
-      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
-      # See https://rt.cpan.org/Public/Bug/Display.html?id=92348
-      broken = true;
-    };
-  };
+  # DevelSizeMe = buildPerlPackage {
+  #   name = "Devel-SizeMe-0.19";
+  #   src = fetchurl {
+  #     url = mirror://cpan/authors/id/T/TI/TIMB/Devel-SizeMe-0.19.tar.gz;
+  #     sha256 = "546e31ba83c0bf7cef37b38a462860461850473479d7d4ac6c0dadfb78d54717";
+  #   };
+  #   propagatedBuildInputs = [ DBDSQLite DBI DataDumperConcise HTMLParser JSONXS Moo ];
+  #   meta = {
+  #     homepage = https://github.com/timbunce/devel-sizeme;
+  #     description = "Unknown";
+  #     license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
+  #     # See https://rt.cpan.org/Public/Bug/Display.html?id=92348
+  #     broken = true;
+  #   };
+  # };
 
   DevelTrace = buildPerlPackage {
     name = "Devel-Trace-0.12";
@@ -10282,7 +10282,7 @@ let self = _self // overrides; _self = with self; {
       platforms = stdenv.lib.platforms.linux;
     };
   };
-  
+
   PackageVariant = buildPerlPackage {
     name = "Package-Variant-1.002002";
     src = fetchurl {
@@ -12850,21 +12850,21 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  UnicodeICUCollator = buildPerlPackage {
-    name = "Unicode-ICU-Collator-0.002";
-    src = fetchurl {
-      url = mirror://cpan/authors/id/T/TO/TONYC/Unicode-ICU-Collator-0.002.tar.gz;
-      sha256 = "0gimwydam0mdgm6qjzzxny4gw8zda9kc2843kcl2xrpq7z7ww3f9";
-    };
-    meta = {
-      description = "Wrapper around ICU collation services";
-      license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ ocharles ];
-      platforms   = stdenv.lib.platforms.all;
-      broken = true; # tests fail http://hydra.nixos.org/build/25141764/nixlog/1/raw
-    };
-    buildInputs = [ pkgs.icu ];
-  };
+  # UnicodeICUCollator = buildPerlPackage {
+  #   name = "Unicode-ICU-Collator-0.002";
+  #   src = fetchurl {
+  #     url = mirror://cpan/authors/id/T/TO/TONYC/Unicode-ICU-Collator-0.002.tar.gz;
+  #     sha256 = "0gimwydam0mdgm6qjzzxny4gw8zda9kc2843kcl2xrpq7z7ww3f9";
+  #   };
+  #   meta = {
+  #     description = "Wrapper around ICU collation services";
+  #     license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
+  #     maintainers = with maintainers; [ ocharles ];
+  #     platforms   = stdenv.lib.platforms.all;
+  #     broken = true; # tests fail http://hydra.nixos.org/build/25141764/nixlog/1/raw
+  #   };
+  #   buildInputs = [ pkgs.icu ];
+  # };
 
   UnicodeLineBreak = buildPerlPackage rec {
     name = "Unicode-LineBreak-2015.07.16";

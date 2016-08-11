@@ -13513,22 +13513,24 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #    };
  #  };
 
- #  fixtures = buildPythonPackage rec {
- #    name = "fixtures-1.4.0";
+   fixtures = buildPythonPackage rec {
+     name = "fixtures-${version}";
+     version = "3.0.0";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/f/fixtures/${name}.tar.gz";
- #      sha256 = "0djxvdwm8s60dbfn7bhf40x6g818p3b3mlwijm1c3bqg7msn271y";
- #    };
+     src = fetchPyPi {
+       package = "fixtures";
+       inherit version;
+       sha256 = "fcf0d60234f1544da717a9738325812de1f42c2fa085e2d9252d8fff5712b2ef";
+     };
 
- #    buildInputs = with self; [ pbr testtools mock ];
+     buildInputs = with self; [ pbr testtools_1 mock ];
 
- #    meta = {
- #      description = "Reusable state for writing clean tests and more";
- #      homepage = "https://pypi.python.org/pypi/fixtures";
- #      license = licenses.asl20;
- #    };
- #  };
+     meta = {
+       description = "Reusable state for writing clean tests and more";
+       homepage = "https://pypi.python.org/pypi/fixtures";
+       license = licenses.asl20;
+     };
+   };
 
  #  pelican = buildPythonPackage rec {
  #    name = "pelican-${version}";

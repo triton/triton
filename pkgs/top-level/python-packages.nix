@@ -10090,13 +10090,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
 
    lxml = buildPythonPackage ( rec {
-     name = "lxml-3.4.4";
-     # Warning : as of nov. 9th, 2015, version 3.5.0b1 breaks a lot of things,
-     # more work is needed before upgrading
+     name = "lxml-${version}";
+     version = "3.6.1";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/l/lxml/${name}.tar.gz";
-       sha256 = "16a0fa97hym9ysdk3rmqz32xdjqmy4w34ld3rm3jf5viqjx65lxk";
+     src = fetchPyPi {
+       package = "lxml";
+       inherit version;
+       sha256 = "3eefcfbc548f8df38063b26c9686554268c1eb736e52cd230ff148aa550239d1";
      };
 
      buildInputs = with self; [ pkgs.libxml2 pkgs.libxslt ];
@@ -10105,7 +10105,7 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        description = "Pythonic binding for the libxml2 and libxslt libraries";
        homepage = http://lxml.de;
        license = licenses.bsd3;
-       maintainers = with maintainers; [ sjourdois ];
+       maintainers = with maintainers; [ ];
      };
    });
 

@@ -6066,12 +6066,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
    ndg-httpsclient = buildPythonPackage rec {
-     version = "0.4.0";
      name = "ndg-httpsclient-${version}";
+     version = "0.4.2";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/n/ndg-httpsclient/ndg_httpsclient-${version}.tar.gz";
-       sha256 = "e8c155fdebd9c4bcb0810b4ed01ae1987554b1ee034dd7532d7b8fdae38a6274";
+     src = fetchPyPi {
+       package = "ndg_httpsclient";
+       inherit version;
+       sha256 = "580987ef194334c50389e0d7de885fccf15605c13c6eecaabd8d6c43768eb8ac";
      };
 
      buildInputs = with self; [

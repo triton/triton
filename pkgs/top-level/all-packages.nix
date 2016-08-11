@@ -3166,12 +3166,12 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 
       e1000e = kCallPackage ../os-specific/linux/e1000e {};
 
-      nvidia-drivers_legacy304 = kCallPackage ../all-pkgs/n/nvidia-drivers {
-        channel = "legacy304";
-      };
-      nvidia-drivers_legacy340 = kCallPackage ../all-pkgs/n/nvidia-drivers {
-        channel = "legacy340";
-      };
+      #nvidia-drivers_legacy304 = kCallPackage ../all-pkgs/n/nvidia-drivers {
+      #  channel = "legacy304";
+      #};
+      #nvidia-drivers_legacy340 = kCallPackage ../all-pkgs/n/nvidia-drivers {
+      #  channel = "legacy340";
+      #};
       nvidia-drivers_tesla = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "tesla";
       };

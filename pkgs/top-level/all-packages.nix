@@ -2421,6 +2421,8 @@ x264 = callPackage ../all-pkgs/x/x264 { };
 
 x265 = callPackage ../all-pkgs/x/x265 { };
 
+xdg-user-dirs = callPackage ../all-pkgs/x/xdg-user-dirs { };
+
 xdg-utils = callPackage ../all-pkgs/x/xdg-utils { };
 
 xf86-input-mtrack = callPackage ../all-pkgs/x/xf86-input-mtrack { };
@@ -3382,8 +3384,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   telepathy_mission_control = callPackage ../applications/networking/instant-messengers/telepathy/mission-control { };
 #
   #trezor-bridge = callPackage ../applications/networking/browsers/mozilla-plugins/trezor { };
-#
-  xdg-user-dirs = callPackage ../tools/X11/xdg-user-dirs { };
 #
   xpdf = callPackage ../applications/misc/xpdf {
     base14Fonts = "${ghostscript}/share/ghostscript/fonts";

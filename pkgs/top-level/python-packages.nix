@@ -13472,12 +13472,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
    pathpy = buildPythonPackage rec {
-     version = "8.1.2";
+     version = "8.2.1";
      name = "path.py-${version}";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/path.py/${name}.tar.gz";
-       sha256 = "ada95d117c4559abe64080961daf5badda68561afdd34c278f8ca20f2fa466d2";
+     src = fetchPyPi {
+       package = "path.py";
+       inherit version;
+       sha256 = "c9ad2d462a7f8d7f6f6d2b89220bd50425221e399a4b8dfe5fa6725eb26fd708";
      };
 
      buildInputs = with self; [setuptools-scm pytestrunner pytest pkgs.glibcLocales ];

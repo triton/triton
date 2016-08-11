@@ -5,12 +5,12 @@
 
 buildPythonPackage rec {
   name = "mutagen-${version}";
-  version = "1.32";
+  version = "1.34";
 
   src = fetchPyPi {
     package = "mutagen";
     inherit version;
-    sha256 = "7721ded04caf36fc30661165ae311fed342f7503b048e9db3d52764108ed3ab5";
+    sha256 = "baf089121710c36ce317d9f107d552a3c7ec14dfcaa9618b809c4b25ef775619";
   };
 
   doCheck = false;

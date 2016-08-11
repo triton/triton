@@ -20816,11 +20816,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
 
    unidecode = buildPythonPackage rec {
-     name = "Unidecode-0.04.18";
+     name = "Unidecode-${version}";
+     version = "0.04.19";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/U/Unidecode/${name}.tar.gz";
-       sha256 = "12hhblqy1ajvidm38im4171x4arg83pfmziyn53nizp29p3m14gi";
+     src = fetchPyPi {
+       package = "Unidecode";
+       inherit version;
+       sha256 = "51477646a9169469e37e791b13ae65fcc75b7f7f570d0d3e514d077805c02e1e";
      };
 
      LC_ALL="en_US.UTF-8";

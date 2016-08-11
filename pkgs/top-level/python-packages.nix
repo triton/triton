@@ -9817,12 +9817,12 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    pylast = buildPythonPackage rec {
      name = "pylast-${version}";
-     version = "1.5.1";
+     version = "1.6.0";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/pylast/${name}.tar.gz";
-       md5Confirm = "2cd634d9ca4d9b064be0424689210193";
-       sha256 = "10znd9xr1vs2ix519jkz3ccm90zciaddcdr2w2wrrh2jyy3bc59a";
+     src = fetchPyPi {
+       package = "pylast";
+       inherit version;
+       sha256 = "6bf325ee0fdeb35780554843cf64df99304abb98c5ce2e451c0df7e95e08b42e";
      };
 
      propagatedBuildInputs = with self; [ six ];

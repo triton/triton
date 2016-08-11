@@ -8254,12 +8254,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    python2-pythondialog = buildPythonPackage rec {
      name = "python2-pythondialog-${version}";
-     version = "3.3.0";
+     version = "3.4.0";
      disabled = !isPy27;
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/python2-pythondialog/python2-pythondialog-${version}.tar.gz";
-       sha256 = "1yhkagsh99bfi592ymczf8rnw8rk6n9hdqy3dd98m3yrx8zmjvry";
+     src = fetchPyPi {
+       package = "python2-pythondialog";
+       inherit version;
+       sha256 = "a96d9cea9a371b5002b5575d1ec351233112519268d382ba6f3582323b3d1335";
      };
 
      patchPhase = ''

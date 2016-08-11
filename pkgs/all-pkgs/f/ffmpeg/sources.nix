@@ -12,6 +12,6 @@
   "9" = { # Git
     versionMajor = "2016.05.16";
     versionMinor = "8767470fb572f394104d24acffb70eea9ce48ad3";
-    sha256 = "5d27714efef468a25a0edd1f51641c3eaea42f5040de0b70e63287f6dd105e0e";
+    sha256 = "582dc01a5cc2fc421c32789cb505a5cf7d52dcd3ac14904d8542d80141b87e91";
   };
 }

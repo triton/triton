@@ -2,7 +2,7 @@
 , fetchurl
 
 , gettext
-, python
+, python3
 
 , iso-codes
 }:
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
-    python
+    python3
   ];
 
   postPatch = ''

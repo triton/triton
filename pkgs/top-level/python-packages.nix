@@ -254,11 +254,11 @@ psutil = callPackage ../all-pkgs/p/psutil { };
 
 py = callPackage ../all-pkgs/p/py { };
 
+py-bcrypt = callPackage ../all-pkgs/p/py-bcrypt { };
+
 pyasn1 = callPackage ../all-pkgs/p/pyasn1 { };
 
 pyasn1-modules = callPackage ../all-pkgs/p/pyasn1-modules { };
-
-py-bcrypt = callPackage ../all-pkgs/p/py-bcrypt { };
 
 pycountry = callPackage ../all-pkgs/p/pycountry { };
 

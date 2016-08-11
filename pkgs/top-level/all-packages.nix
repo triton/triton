@@ -2327,6 +2327,8 @@ tk = callPackageAlias "tk_8-6" { };
 
 tmux = callPackage ../all-pkgs/t/tmux { };
 
+tor = callPackage ../all-pkgs/t/tor { };
+
 totem-pl-parser = callPackage ../all-pkgs/t/totem-pl-parser { };
 
 tracker = callPackage ../all-pkgs/t/tracker { };

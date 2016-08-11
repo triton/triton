@@ -1,11 +1,11 @@
 { stdenv, fetchurl, curl, libxml2 }:
 
 stdenv.mkDerivation rec {
-  name = "xmlrpc-c-1.33.17";
+  name = "xmlrpc-c-1.39.08";
 
   src = fetchurl {
     url = "mirror://sourceforge/xmlrpc-c/${name}.tgz";
-    sha256 = "0makq1zpfqnrj6xx1xc7wi4mh115ri9p4yz2rbvjhj0il4y8l4ah";
+    sha256 = "eedc028443aaa6bcc9261eb97dd4af77a684a4171be3c86ba96ab7b4de569505";
   };
 
   buildInputs = [ curl libxml2 ];
@@ -16,7 +16,9 @@ stdenv.mkDerivation rec {
 
   # Build and install the "xmlrpc" tool (like the Debian package)
   postInstall = ''
-    (cd tools/xmlrpc && make && make install)
+    pushd tools/xmlrpc
+      make && make install
+    popd
   '';
 
   meta = with stdenv.lib; {
@@ -26,6 +28,6 @@ stdenv.mkDerivation rec {
     # "ABYSS Web Server License" and "Python 1.5.2 License"
     license = licenses.bsd3;
     platforms = platforms.linux;
-    maintainers = [ maintainers.bjornfor ];
+    maintainers = [ ];
   };
 }

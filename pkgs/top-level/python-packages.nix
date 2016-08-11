@@ -7757,29 +7757,30 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
    };
 
 
- #  SPARQLWrapper = buildPythonPackage rec {
- #    name = "SPARQLWrapper-${version}";
- #    version = "1.7.4";
+   SPARQLWrapper = buildPythonPackage rec {
+     name = "SPARQLWrapper-${version}";
+     version = "1.7.6";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/S/SPARQLWrapper/SPARQLWrapper-${version}.tar.gz";
- #      sha256 = "1dpwwlcdk4m8wr3d9lb24g1xcvs202c0ir4q3jcijy88is3bvgmp";
- #    };
+     src = fetchPyPi {
+       package = "SPARQLWrapper";
+       inherit version;
+       sha256 = "dccabec900eb9c97cb47834bd4b66ceaeb4d9ea11bae24a24fe734e9f48522f8";
+     };
 
- #    # break circular dependency loop
- #    patchPhase = ''
- #      sed -i '/rdflib/d' requirements.txt
- #    '';
+     # break circular dependency loop
+     patchPhase = ''
+       sed -i '/rdflib/d' requirements.txt
+     '';
 
- #    propagatedBuildInputs = with self; [
- #      six isodate pyparsing html5lib keepalive
- #    ];
+     propagatedBuildInputs = with self; [
+       six isodate pyparsing html5lib keepalive
+     ];
 
- #    meta = with stdenv.lib; {
- #      description = "This is a wrapper around a SPARQL service. It helps in creating the query URI and, possibly, convert the result into a more manageable format.";
- #      homepage = "http://rdflib.github.io/sparqlwrapper";
- #    };
- #  };
+     meta = with stdenv.lib; {
+       description = "This is a wrapper around a SPARQL service. It helps in creating the query URI and, possibly, convert the result into a more manageable format.";
+       homepage = "http://rdflib.github.io/sparqlwrapper";
+     };
+   };
 
 
  #  dulwich = buildPythonPackage rec {

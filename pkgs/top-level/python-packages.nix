@@ -7739,22 +7739,22 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
 
- #  keepalive = buildPythonPackage rec {
- #    name = "keepalive-${version}";
- #    version = "0.5";
+   keepalive = buildPythonPackage rec {
+     name = "keepalive-${version}";
+     version = "0.5";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/k/keepalive/keepalive-${version}.tar.gz";
- #      sha256 = "3c6b96f9062a5a76022f0c9d41e9ef5552d80b1cadd4fccc1bf8f183ba1d1ec1";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/k/keepalive/keepalive-${version}.tar.gz";
+       sha256 = "3c6b96f9062a5a76022f0c9d41e9ef5552d80b1cadd4fccc1bf8f183ba1d1ec1";
+     };
 
- #    # No tests included
+     # No tests included
 
- #    meta = with stdenv.lib; {
- #      description = "An HTTP handler for `urllib2` that supports HTTP 1.1 and keepalive.";
- #      homepage = "https://github.com/wikier/keepalive";
- #    };
- #  };
+     meta = with stdenv.lib; {
+       description = "An HTTP handler for `urllib2` that supports HTTP 1.1 and keepalive.";
+       homepage = "https://github.com/wikier/keepalive";
+     };
+   };
 
 
  #  SPARQLWrapper = buildPythonPackage rec {

@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "0.6";
+  version = "1.0";
 in
 buildPythonPackage {
   name = "frozendict-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "frozendict";
     inherit version;
-    sha256 = "168791393c2c642264a6839aac5e7c6a34b3a284aa02b8c950739962f756163c";
+    sha256 = "4852b8d74173f69bfaaca2dc77b69b0ae85ceddbead80d1954aa250d90e66f32";
   };
 
   meta = with stdenv.lib; {

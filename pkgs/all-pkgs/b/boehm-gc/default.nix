@@ -12,6 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://www.hboehm.info/gc/gc_source/gc-${version}.tar.gz";
+    multihash = "QmV6pGGQW7HvkyAXnE8D8SEwp2B9u75PefYjHBUgYJiU5Z";
     sha256 = "a14a28b1129be90e55cd6f71127ffc5594e1091d5d54131528c24cd0c03b7d90";
   };
 

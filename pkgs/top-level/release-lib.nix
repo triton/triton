@@ -4,9 +4,20 @@
 , scrubJobs ? true
 }:
 
-with import ../../lib;
-
 let
+  lib = import ../../lib;
+
+  inherit (lib)
+    elem
+    filter
+    genAttrs
+    getAttrFromPath
+    hydraJob
+    id
+    isDerivation
+    mapAttrs
+    mapAttrsRecursive;
+
   allPackages' = args: allPackages args // {
     config = {
       allowUnfree = false;
@@ -20,12 +31,15 @@ let
     targetSystem = "x86_64-linux";
     hostSystem = "x86_64-linux";
   };
+
   pkgs_i686-linux = allPackages' {
     targetSystem = "i686-linux";
     hostSystem = "x86_64-linux";
   };
 in
 rec {
+  inherit lib;
+
   /* !!! Hack: poor man's memoisation function.  Necessary to prevent
      Nixpkgs from being evaluated again and again for every
      job/platform pair. */
@@ -36,6 +50,11 @@ rec {
       pkgs_i686-linux
     else
       abort "unsupported system type: ${targetSystem} built by ${hostSystem}";
+
+  pkgsNative = pkgsFor {
+    targetSystem = builtins.currentSystem;
+    hostSystem = builtins.currentSystem;
+  };
 
   hydraJob' = if scrubJobs then hydraJob else id;
 

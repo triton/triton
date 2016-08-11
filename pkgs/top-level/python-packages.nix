@@ -15052,12 +15052,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
    pyjwt = buildPythonPackage rec {
-     version = "1.4.0";
+     version = "1.4.2";
      name = "pyjwt-${version}";
 
-     src = pkgs.fetchurl {
-       url = "http://github.com/progrium/pyjwt/archive/${version}.tar.gz";
-       sha256 = "1gpr1hrbshvgznq2sr5jxmcan9ln8pzm29c32z4d2vwbrgb2w742";
+     src = fetchPyPi {
+       package = "PyJWT";
+       inherit version;
+       sha256 = "87a831b7a3bfa8351511961469ed0462a769724d4da48a501cb8c96d1e17f570";
      };
 
      propagatedBuildInputs = with self; [ pycrypto ecdsa pytestrunner ];
@@ -15065,11 +15066,9 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
      meta = {
        description = "JSON Web Token implementation in Python";
-       longDescription = "A Python implementation of JSON Web Token draft 01";
-       homepage = https://github.com/progrium/pyjwt;
-       downloadPage = https://github.com/progrium/pyjwt/releases;
+       homepage = https://github.com/jpadilla/pyjwt;
        license = licenses.mit;
-       maintainers = with maintainers; [ prikhi ];
+       maintainers = with maintainers; [ ];
        platforms = platforms.linux;
      };
    };

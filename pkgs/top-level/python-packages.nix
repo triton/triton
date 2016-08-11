@@ -14177,17 +14177,16 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
    pyacoustid = buildPythonPackage rec {
-     name = "pyacoustid-1.1.0";
+     name = "pyacoustid-${version}";
+     version = "1.1.2";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/pyacoustid/${name}.tar.gz";
-       md5Confirm = "b27c714d530300b917eb869726334226";
-       sha256 = "0lnl1760mz1d1jyl4w88mm9ji2ww7jzyis36d1g29bqnn6f065q1";
+     src = fetchPyPi {
+       package = "pyacoustid";
+       inherit version;
+       sha256 = "e5f2990c12232807bd5c534e60b6b1955d8bc9ddade37473ae5aea9d890f2945";
      };
 
      propagatedBuildInputs = with self; [ requests audioread ];
-
-     patches = [ ../development/python-modules/pyacoustid-py3.patch ];
 
      postPatch = ''
        sed -i \

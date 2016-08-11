@@ -100,7 +100,7 @@ assert libsOnly -> !buildKernelspace;
 assert channel == "tesla" -> elem targetSystem platforms.x86_64-linux;
 
 # FIXME: remove once drivers are updated upstream to support 4.7+
-assert !(versionAtLeast source.versionMajor "364") ->
+assert versionOlder source.versionMajor "364" ->
   versionOlder kernel.version "4.7";
 
 assert elem targetSystem platforms.bit32 && !libsOnly ->

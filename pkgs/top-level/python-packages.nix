@@ -8580,11 +8580,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
    gevent = buildPythonPackage rec {
-     name = "gevent-1.1rc3";
+     name = "gevent-${version}";
+     version = "1.1.2";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/g/gevent/${name}.tar.gz";
-       sha256 = "17g187dhr769s1rm99f2i5cjrhvmh0h3shkjdcdjciyi9ggzz56b";
+     src = fetchPyPi {
+       package = "gevent";
+       inherit version;
+       sha256 = "cb15cf73d69a2eeefed330858f09634e2c50bf46da9f9e7635730fcfb872c02c";
      };
 
      prePatch = ''
@@ -8602,7 +8604,7 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        homepage = http://www.gevent.org/;
        license = licenses.mit;
        platforms = platforms.all;
-       maintainers = with maintainers; [ bjornfor ];
+       maintainers = with maintainers; [ ];
      };
    };
 

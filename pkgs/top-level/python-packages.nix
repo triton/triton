@@ -18593,6 +18593,21 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #    };
  #  };
 
+  pyrsistent = buildPythonPackage rec {
+    name = "pyrsistent-${version}";
+    version = "0.11.13";
+
+    src = fetchPyPi {
+      package = "pyrsistent";
+      inherit version;
+      sha256 = "cfbf194cb33b97722f6a3d6efa7b6e7a93b09bb13571266cfc9c1556fdb26f29";
+    };
+
+    propagatedBuildInputs = with self; [
+      six
+    ];
+  };
+
    testtools = buildPythonPackage rec {
      name = "testtools-${version}";
      version = "1.8.0";

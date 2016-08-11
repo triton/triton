@@ -18608,6 +18608,33 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
     ];
   };
 
+   testtools_1 = buildPythonPackage rec {
+     name = "testtools-${version}";
+     version = "1.9.0";
+
+     # Python 2 only judging from SyntaxError
+     disabled = isPy3k;
+
+     src = fetchPyPi {
+       package = "testtools";
+       inherit version;
+       sha256 = "b46eec2ad3da6e83d53f2b0eca9a8debb687b4f71343a074f83a16bbdb3c0644";
+     };
+
+     propagatedBuildInputs = with self; [
+      extras
+      pyrsistent
+      pbr python_mimeparse extras lxml unittest2
+    ];
+     buildInputs = with self; [ traceback2 ];
+
+     meta = {
+       description = "A set of extensions to the Python standard library's unit testing framework";
+       homepage = https://pypi.python.org/pypi/testtools;
+       license = licenses.mit;
+    };
+   };
+
    testtools = buildPythonPackage rec {
      name = "testtools-${version}";
      version = "1.8.0";

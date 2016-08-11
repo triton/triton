@@ -18661,11 +18661,12 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    extras = buildPythonPackage rec {
      name = "extras-${version}";
-     version = "0.0.3";
+     version = "1.0.0";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/e/extras/extras-${version}.tar.gz";
-       sha256 = "1h7zx4dfyclalg0fqnfjijpn0f793a9mx8sy3b27gd31nr6dhq3s";
+     src = fetchPyPi {
+       package = "extras";
+       inherit version;
+       sha256 = "132e36de10b9c91d5d4cc620160a476e0468a88f16c9431817a6729611a81b4e";
      };
 
      # error: invalid command 'test'

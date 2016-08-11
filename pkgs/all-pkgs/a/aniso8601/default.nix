@@ -2,12 +2,14 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, python-dateutil
 }:
 
+let
+  version = "1.1.0";
+in
 buildPythonPackage rec {
   name = "aniso8601-${version}";
-  version = "1.1.0";
 
   src = fetchPyPi {
     package = "aniso8601";
@@ -16,7 +18,7 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.python-dateutil
+    python-dateutil
   ];
 
   doCheck = true;

@@ -3,11 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libatomic_ops-7.4.2";
+  name = "libatomic_ops-7.4.4";
 
   src = fetchurl {
     url = "http://www.ivmaisoft.com/_bin/atomic_ops/${name}.tar.gz";
-    sha256 = "1pdm0h1y7bgkczr8byg20r6bq15m5072cqm5pny4f9crc9gn3yh4";
+    multihash = "QmSYucF6vEfzhFcs4DhJkMnr2Jaxik5kf4hxiyUQGqh5Cn";
+    sha256 = "bf210a600dd1becbf7936dd2914cf5f5d3356046904848dcfd27d0c8b12b6f8f";
   };
 
   meta = with stdenv.lib; {

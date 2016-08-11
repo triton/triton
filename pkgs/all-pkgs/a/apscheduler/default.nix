@@ -28,7 +28,6 @@ let
     isPy3k
     pythonOlder;
 in
-
 buildPythonPackage rec {
   name = "apscheduler-${version}";
   version = "3.2.0";

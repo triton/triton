@@ -2,30 +2,34 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, pytestrunner
+, regex
+, six
+
+, pytest
 }:
 
 let
   inherit (stdenv.lib)
     optionals;
-in
 
+  version = "0.7.3";
+in
 buildPythonPackage rec {
   name = "rebulk-${version}";
-  version = "0.7.2";
 
   src = fetchPyPi {
     package = "rebulk";
     inherit version;
-    sha256 = "ee4c75819c6d0eeedb531fb22c214e50f303ccc4703f27db1f993cd082ed5a20";
+    sha256 = "1ee0f672be5cfeed793d294c1cfc078c254fb0966af59191e4f6a0785b3b1697";
   };
 
   buildInputs = [
-    pythonPackages.pytestrunner
-    pythonPackages.regex
-    pythonPackages.six
+    pytestrunner
+    regex
+    six
   ] ++ optionals doCheck [
-    pythonPackages.pytest
+    pytest
   ];
 
   doCheck = false;

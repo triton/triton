@@ -8,12 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xfsprogs-4.5.0";
+  name = "xfsprogs-4.7.0";
 
   src = fetchurl {
     urls = map (dir: "ftp://oss.sgi.com/projects/xfs/${dir}/${name}.tar.gz")
       [ "cmd_tars" "previous" ];
-    sha256 = "1y49rwvbbvqdq2a1x7p5i05bcfyv6xhmrfwafl6vvvw494qyp6z4";
+    sha256 = "88580bb3e6847c3edef436703a4fae403fc19b20739db4c31166ee4b256178d7";
   };
 
   nativeBuildInputs = [
@@ -42,9 +42,14 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "07aa30f6f5e0f4a08903cf93cdc1825d75a81404";
-      file = "xfsprogs/xfsprogs-4.3.0-sharedlibs.patch";
-      sha256 = "23bf3127cd1eab6e96055d2a5f3ae61f417a8d4ae52d5c421be2bbb05576bb46";
+      rev = "f2cc828cd4a47b008b7503974f35bcdd2a9c74b3";
+      file = "xfsprogs/xfsprogs-4.7.0-sharedlibs.patch";
+      sha256 = "983b08b2a4a4ee91be21f14063167a3752554b41fd78aead6dfd6ac38702a5a7";
+    })
+    (fetchTritonPatch {
+      rev = "f2cc828cd4a47b008b7503974f35bcdd2a9c74b3";
+      file = "xfsprogs/xfsprogs-4.7.0-libxcmd-link.patch";
+      sha256 = "06cced4aeeb9a2d8c90e6d6fd1ff6571020122dbfe62140513f52bd82bf9abe8";
     })
   ];
 
@@ -67,14 +72,28 @@ stdenv.mkDerivation rec {
     "install-dev"
   ];
 
-  # This breaks sometimes
   parallelInstall = false;
 
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "9893 A827 C19F 7D96 164A  38FF ADE8 2947 F475 FA1D";
+    };
+  };
+
   meta = with stdenv.lib; {
-    homepage = http://xfs.org/;
     description = "SGI XFS utilities";
+    homepage = http://xfs.org/;
     license = licenses.lgpl21;
-    platforms = platforms.linux;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

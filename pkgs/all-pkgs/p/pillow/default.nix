@@ -18,12 +18,12 @@ in
 
 buildPythonPackage rec {
   name = "pillow-${version}";
-  version = "3.2.0";
+  version = "3.3.0";
 
   src = fetchPyPi {
     package = "Pillow";
     inherit version;
-    sha256 = "64b0a057210c480aea99406c9391180cd866fc0fd8f0b53367e3af21b195784a";
+    sha256 = "031e7c9c885a4f343d1ad366c7fd2340449dc70318acb4a28d6411994f0accd1";
   };
 
   buildInputs = [

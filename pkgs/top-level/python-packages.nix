@@ -224,6 +224,8 @@ ipaddress = callPackage ../all-pkgs/i/ipaddress { };
 
 jinja2 = callPackage ../all-pkgs/j/jinja2 { };
 
+ldap3 = callPackage ../all-pkgs/l/ldap3 { };
+
 markupsafe = callPackage ../all-pkgs/m/markupsafe { };
 
 matrix-angular-sdk = callPackage ../all-pkgs/m/matrix-angular-sdk { };

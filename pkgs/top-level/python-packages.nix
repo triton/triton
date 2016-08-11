@@ -13955,13 +13955,15 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
    plumbum = buildPythonPackage rec {
-     name = "plumbum-1.5.0";
+     name = "plumbum-${version}";
+     version = "1.6.2";
 
      buildInputs = with self; [ self.six ];
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/plumbum/${name}.tar.gz";
-       sha256 = "b759f9e3b6771dff3332f01bc0683d1a56218f44d97942dabd906a0cd1cfb756";
+     src = fetchPyPi {
+       package = "plumbum";
+       inherit version;
+       sha256 = "75eff3a55e056d8fc06f7b7ceb603ce4c26650cd6a2196bcdb0b80fee59471a8";
      };
    };
 

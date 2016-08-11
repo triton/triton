@@ -45,12 +45,12 @@ let
 in
 buildPythonPackage rec {
   name = "flexget-${version}";
-  version = "2.2.11";
+  version = "2.2.15";
 
   src = fetchPyPi {
     package = "FlexGet";
     inherit version;
-    sha256 = "c4dfcbb1cf983d5dec2a571bbe21c781cbb2720aa4d2275808c9c9cbeffc1ccd";
+    sha256 = "968a8788d62a0c08ede28adcb0617b9c8ee799bc01f7c933e39b5c0cd120d154";
   };
 
   postPatch =

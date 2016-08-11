@@ -1,7 +1,6 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-
 , pythonPackages
 }:
 
@@ -9,7 +8,6 @@ let
   inherit (pythonPackages)
     pythonAtLeast;
 in
-
 buildPythonPackage rec {
   name = "pathlib-${version}";
   version = "1.0.1";

@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "2.3.0";
+  version = "2.3.1";
 in
 stdenv.mkDerivation rec {
   name = "libseccomp-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/seccomp/libseccomp/releases/download/v${version}/${name}.tar.gz";
     allowHashOutput = false;
-    sha256 = "d756e3a77578259a808698a50c43d44612aae3339ea42ab5b15ea983f26b901d";
+    sha256 = "ff5bdd2168790f1979e24eaa498f8606c2f2d96f08a8dc4006a2e88affa4562b";
   };
 
   buildInputs = [

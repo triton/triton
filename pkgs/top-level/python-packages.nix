@@ -14556,12 +14556,14 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
    pycurl = buildPythonPackage (rec {
-     name = "pycurl-7.19.5";
+     name = "pycurl-${version}";
+     version = "7.43.0";
      disabled = isPyPy; # https://github.com/pycurl/pycurl/issues/208
 
-     src = pkgs.fetchurl {
-       url = "http://pycurl.sourceforge.net/download/${name}.tar.gz";
-       sha256 = "0hqsap82zklhi5fxhc69kxrwzb0g9566f7sdpz7f9gyxkmyam839";
+     src = fetchPyPi {
+       package = "pycurl";
+       inherit version;
+       sha256 = "aa975c19b79b6aa6c0518c0cc2ae33528900478f0b500531dbcdbf05beec584c";
      };
 
      propagatedBuildInputs = with self; [ pkgs.curl pkgs.openssl ];
@@ -14574,7 +14576,7 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
      '';
 
      meta = {
-       homepage = http://pycurl.sourceforge.net/;
+       homepage = http://pycurl.io/;
        description = "Python wrapper for libcurl";
        platforms = platforms.linux;
      };

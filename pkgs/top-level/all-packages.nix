@@ -3172,9 +3172,9 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
       #nvidia-drivers_legacy340 = kCallPackage ../all-pkgs/n/nvidia-drivers {
       #  channel = "legacy340";
       #};
-      nvidia-drivers_tesla = kCallPackage ../all-pkgs/n/nvidia-drivers {
-        channel = "tesla";
-      };
+      #nvidia-drivers_tesla = kCallPackage ../all-pkgs/n/nvidia-drivers {
+      #  channel = "tesla";
+      #};
       nvidia-drivers_long-lived = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "long-lived";
       };

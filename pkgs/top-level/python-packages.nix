@@ -15591,11 +15591,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
    pymongo = buildPythonPackage rec {
-     name = "pymongo-3.0.3";
+     name = "pymongo-${version}";
+     version = "3.3.0";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/pymongo/${name}.tar.gz";
-       sha256 = "3c6b2317f8031bc1e200fd1ea35f00a96f4569e3f3f220a5e66ab6227d96ccaf";
+     src = fetchPyPi {
+       package = "pymongo";
+       inherit version;
+       sha256 = "3d45302fc2622fabf34356ba274c69df41285bac71bbd229f1587283b851b91e";
      };
 
 

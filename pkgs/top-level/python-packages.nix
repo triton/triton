@@ -3861,12 +3861,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
    pytestrunner = buildPythonPackage rec {
-     version = "2.6.2";
      name = "pytest-runner-${version}";
+     version = "2.9";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/pytest-runner/${name}.tar.gz";
-       sha256 = "e775a40ee4a3a1d45018b199c44cc20bbe7f3df2dc8882f61465bb4141c78cdb";
+     src = fetchPyPi {
+       package = "pytest-runner";
+       inherit version;
+       sha256 = "50378de59b02f51f64796d3904dfe71b9dc6f06d88fc6bfbd5c8e8366ae1d131";
      };
 
      buildInputs = with self; [setuptools-scm pytest];

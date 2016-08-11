@@ -43,10 +43,10 @@ in pkgs.buildEnv {
     gnugrep
     gnutar
     git
+    go
     nix
     ncurses
     util-linux_full
-    curl
     findutils
   ];
 }'
@@ -101,76 +101,31 @@ cp $TMPDIR/nix-list $TMPDIR/list
 rm $TMPDIR/nix-list
 
 
-echo "Finding package repos..." >&2
-build_redirect() {
-  if echo "$1" | grep -q '\(github.com\|bitbucket.org\)'; then
-    echo "$1" | sed 's,^[^h],https://\0,g'
-    return 0
-  fi
-
-  local OUTPUT
-  OUTPUT="$(curl -d "go-get=1" "$1")"
-  echo "$OUTPUT" >&2
-  local IMPORT
-  IMPORT="$(echo "$OUTPUT" | grep 'go-import' || true)"
-  if [ -n "$IMPORT" ]; then
-    if echo "$IMPORT" | grep -q 'git'; then
-      echo "$IMPORT" | awk '
-        {
-          match($0, /content="([^"]*)"/, array);
-          split(array[1], import, " ");
-          print import[3];
-        }'
-      return 0
-    fi
-    local REDIRECT
-    REDIRECT="$(echo "$OUTPUT" | awk '{ if (/go-source/) { print $4 } }')"
-    echo "$REDIRECT" >&2
-    build_redirect "$REDIRECT"
-  else
-    echo "This site is unrecognized: $1" >&2
-    exit 1
-  fi
-}
-build_redirect_list() {
-  local REDIRECT
-  REDIRECT="$(build_redirect "$1")"
-  exec 3<>"$TMPDIR/list.lock"
-  flock -x 3
-  sed -i "s,^[ \t]*$1 ,$1 $REDIRECT ,g" "$TMPDIR/list"
-  exec 3>&-
-}
-ARGS=($(awk '{ print "- " $1 " build_redirect_list " $1; }' $TMPDIR/list))
-concurrent "${ARGS[@]}"
-
 echo "Fetching package revisions..." >&2
 
-while read line; do
-  pkg="$(echo "$line" | awk '{print $1}')"
-  url="$(echo "$line" | awk '{print $2}')"
+export GOPATH="$TMPDIR"
 
-  mkdir -p "$TMPDIR/$pkg"
-  cd "$TMPDIR/$pkg"
-  git init >/dev/null
-  git remote add origin "$url"
-
-done < $TMPDIR/list
-
-fetch_git() {
-  cd $TMPDIR/$1
-  git fetch --tags
+fetch_go() {
+  if ! ERR="$(go get -d "$1" 2>&1)"; then
+    if ! echo "$ERR" | grep -q 'no buildable Go source files'; then
+      echo "$ERR" >&2
+      exit 1
+    fi
+  fi
 }
-ARGS=($(awk '{ print "- " $1 " fetch_git " $1; }' $TMPDIR/list))
+ARGS=($(awk '{ print "- " $1 " fetch_go " $1; }' $TMPDIR/list))
+export CONCURRENT_LIMIT=1
 concurrent "${ARGS[@]}"
+export CONCURRENT_LIMIT=10
 
 hasUpdates=0
 while read line; do
   pkg="$(echo "$line" | awk '{print $1}')"
-  rev="$(echo "$line" | awk '{print $3}')"
-  date="$(echo "$line" | awk '{print $4}')"
-  names="$(echo "$line" | awk '{print $5}')"
+  rev="$(echo "$line" | awk '{print $2}')"
+  date="$(echo "$line" | awk '{print $3}')"
+  names="$(echo "$line" | awk '{print $4}')"
 
-  cd $TMPDIR/$pkg
+  cd $TMPDIR/src/$pkg
 
   VERSION="$(git tag --sort "v:refname" | grep '\([0-9]\+\.\)\+[0-9]\+$' | grep -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
   HEAD_DATE="$(git log origin/master -n 1 --date=short | awk '{ if (/Date/) { print $2 } }')"
@@ -221,7 +176,7 @@ generate_hash() {
   tmp="$TMPDIR/tars/$pkg"
   mkdir -p "$tmp"
 
-  cd "$TMPDIR/$pkg"
+  cd "$TMPDIR/src/$pkg"
   export TZ="UTC"
   git archive --format=tar --prefix="$name/" "$rev" | tar -xC "$tmp"
   
@@ -238,7 +193,7 @@ generate_hash() {
 
   HASH="$(nix-prefetch-url "file://$tmp/$name.tar.br" 2>/dev/null)"
   rm -r "$tmp"
-  rm -r "$TMPDIR/$pkg"
+  rm -r "$TMPDIR/src/$pkg"
 
   exec 3<>"$TMPDIR/updates.lock"
   flock -x 3

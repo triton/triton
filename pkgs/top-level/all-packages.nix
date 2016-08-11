@@ -2133,6 +2133,8 @@ rfkill = callPackage ../all-pkgs/r/rfkill { };
 
 rocksdb = callPackage ../all-pkgs/r/rocksdb { };
 
+rpm = callPackage ../all-pkgs/r/rpm { };
+
 rtkit = callPackage ../all-pkgs/r/rtkit { };
 
 rtmpdump = callPackage ../all-pkgs/r/rtmpdump { };
@@ -2597,8 +2599,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   qpdf = callPackage ../development/libraries/qpdf { };
 #
   rng_tools = callPackage ../tools/security/rng-tools { };
-#
-  rpm = callPackage ../tools/package-management/rpm { };
 #
   sg3_utils = callPackage ../tools/system/sg3_utils { };
 #

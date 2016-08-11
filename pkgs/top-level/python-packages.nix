@@ -10846,12 +10846,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
    munkres = buildPythonPackage rec {
-     name = "munkres-1.0.7";
+     name = "munkres-${version}";
+     version = "1.0.8";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/m/munkres/${name}.tar.gz";
-       md5Confirm = "d534612326f7c7cadcfa61d109f96289";
-       sha256 = "1i6nf45i0kkzdx6k70giybsqxz4dxsjbrkrfqgjd7znfkf25sjik";
+     src = fetchPyPi {
+       package = "munkres";
+       inherit version;
+       sha256 = "185f1a9c4d2c31f2f19afa48bc2ec726c11e945eded4784d272da2fd49bf7a55";
      };
 
      # error: invalid command 'test'
@@ -10860,7 +10861,7 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        homepage = http://bmc.github.com/munkres/;
        description = "Munkres algorithm for the Assignment Problem";
        license = licenses.bsd3;
-       maintainers = with maintainers; [ iElectric ];
+       maintainers = with maintainers; [ ];
      };
    };
 

@@ -3,6 +3,7 @@
 , fetchFromGitHub
 , fetchTritonPatch
 , glibcLocales
+, isPy27
 , isPy3k
 , makeWrapper
 , pythonPackages
@@ -71,7 +72,8 @@ let
     optional
     optionals
     optionalString
-    platforms;
+    platforms
+    versionOlder;
 
   optionalPlugins = {
     # TODO: write a generic function to detect null dependencies
@@ -212,7 +214,7 @@ let
   testShell = "${bash}/bin/bash --norc";
   completion = "${bash-completion}/share/bash-completion/bash_completion";
 
-  version = "1.3.19";
+  version = "2016-08-10";
 in
 buildPythonPackage rec {
   name = "beets-${version}";
@@ -220,8 +222,8 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "sampsyo";
     repo = "beets";
-    rev = "v${version}";
-    sha256 = "af9cacc3cf28e11aae007549ad7e6172c239d976aa90aea08484ad715cfa5946";
+    rev = "10d7a6f46ac58d40bc12661d943d2e3ae24761cd";
+    sha256 = "0e978aa1ccf49b18a6a1914199c8b3110efcaa2c52bc6682c214e0f2fcd0fa7a";
   };
 
   nativeBuildInputs = [
@@ -232,7 +234,6 @@ buildPythonPackage rec {
     beautifulsoup
     bs1770gain
     discogs-client
-    enum34
     flac
     flask
     # Need to for hook to set GI_TYPELIB_PATH
@@ -249,7 +250,6 @@ buildPythonPackage rec {
     musicbrainzngs
     mutagen
     nose
-    pathlib
     pyacoustid
     pyechonest
     pygobject_3
@@ -261,6 +261,10 @@ buildPythonPackage rec {
     requests
     unidecode
     werkzeug
+  ] ++ optionals isPy27 [
+    enum34
+  ] ++ optionals (versionOlder pythonPackages.python.versionMajor "3.5") [
+    pathlib
   ] ++ [
     pycountry
   ] ++ optional enableAlternatives (
@@ -269,6 +273,8 @@ buildPythonPackage rec {
           stdenv
           buildPythonPackage
           fetchFromGitHub
+          isPy27
+          optionals
           pythonPackages;
       }
     )
@@ -371,8 +377,9 @@ buildPythonPackage rec {
     LOCALE_ARCHIVE=${glibcLocales}/lib/locale/locale-archive \
     BEETS_TEST_SHELL="${testShell}" \
     BASH_COMPLETION_SCRIPT="${completion}" \
-    HOME="$(mktemp -d)" \
-      nosetests -v
+    HOME="$(mktemp -d)"
+    nosetests -v
+    mkdir -p $HOME/
 
     runHook 'postCheck'
   '';
@@ -393,8 +400,7 @@ buildPythonPackage rec {
     runHook 'postInstallCheck'
   '';
 
-  disabled = isPy3k;
-  doCheck = true;
+  doCheck = !isPy3k;
   doInstallCheck = true;
 
   meta = with stdenv.lib; {

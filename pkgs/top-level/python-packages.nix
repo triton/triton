@@ -2003,12 +2003,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
    };
 
    rarfile = self.buildPythonPackage rec {
-     name = "rarfile-2.7";
+     name = "rarfile-${version}";
+     version = "2.8";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/r/rarfile/${name}.tar.gz";
-       md5Confirm = "d143205f22078830451e0066c123580d";
-       sha256 = "0d8n1dlpiz7av8dmbp0vclrwl9cnxizr4f2c9xvj1h5nvn480527";
+     src = fetchPyPi {
+       package = "rarfile";
+       inherit version;
+       sha256 = "2a27e401daa6d8ff0df1112a274a3661ca3e4afaac626217506fb1391069ca61";
      };
 
      meta = {

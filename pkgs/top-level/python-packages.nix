@@ -18639,19 +18639,23 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    testtools = buildPythonPackage rec {
      name = "testtools-${version}";
-     version = "1.8.0";
+     version = "2.2.0";
 
      # Python 2 only judging from SyntaxError
      disabled = isPy3k;
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/t/testtools/${name}.tar.gz";
-       sha256 = "15yxz8d70iy1b1x6gd7spvblq0mjxjardl4vnaqasxafzc069zca";
+     src = fetchPyPi {
+       package = "testtools";
+       inherit version;
+       sha256 = "80f606607a6e4ce4d0e24e5b786562aa42c581906f3c070607a4265f3da65810";
      };
 
-     propagatedBuildInputs = with self; [ pbr python_mimeparse extras lxml unittest2 ];
+     propagatedBuildInputs = with self; [
+      extras
+      fixtures
+      pbr python_mimeparse extras lxml unittest2
+    ];
      buildInputs = with self; [ traceback2 ];
-     patches = [ ../development/python-modules/testtools_support_unittest2.patch ];
 
      meta = {
        description = "A set of extensions to the Python standard library's unit testing framework";

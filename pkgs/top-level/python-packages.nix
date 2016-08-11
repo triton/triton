@@ -16438,23 +16438,23 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #  };
 
 
- #  rdflib = buildPythonPackage (rec {
- #    name = "rdflib-4.1.2";
+   rdflib = buildPythonPackage (rec {
+     name = "rdflib-4.2.1";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/r/rdflib/${name}.tar.gz";
- #      sha256 = "0kvaf332cqbi47rqzlpdx4mbkvw12mkrzkj8n9l19wk713d4py9w";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/r/rdflib/${name}.tar.gz";
+       sha256 = "eb02bd235606ef3b26e213da3e576557a6392ce103efd8c6c8ff1e08321608c8";
+     };
 
- #    # error: invalid command 'test'
+     # error: invalid command 'test'
 
- #    propagatedBuildInputs = with self; [ isodate html5lib SPARQLWrapper ];
+     propagatedBuildInputs = with self; [ isodate html5lib SPARQLWrapper ];
 
- #    meta = {
- #      description = "A Python library for working with RDF, a simple yet powerful language for representing information";
- #      homepage = http://www.rdflib.net/;
- #    };
- #  });
+     meta = {
+       description = "A Python library for working with RDF, a simple yet powerful language for representing information";
+       homepage = http://www.rdflib.net/;
+     };
+   });
 
    isodate = buildPythonPackage rec {
      name = "isodate-${version}";

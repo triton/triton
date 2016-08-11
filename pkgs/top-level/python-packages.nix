@@ -10867,12 +10867,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
 
    musicbrainzngs = buildPythonPackage rec {
-     name = "musicbrainzngs-0.5";
+     name = "musicbrainzngs-${version}";
+     version = "0.6";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/m/musicbrainzngs/${name}.tar.gz";
-       md5Confirm = "9e17a181af72d04a291c9a960bc73d44";
-       sha256 = "12f48llmdf5rkiqxcb70k2k1dmhm8byq0ifazvlrca8dfnmqh4r8";
+     src = fetchPyPi {
+       package = "musicbrainzngs";
+       inherit version;
+       sha256 = "28ef261a421dffde0a25281dab1ab214e1b407eec568cd05a53e73256f56adb5";
      };
 
      buildInputs = [ pkgs.glibcLocales ];
@@ -10883,7 +10884,7 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        homepage = http://alastair/python-musicbrainz-ngs;
        description = "Python bindings for musicbrainz NGS webservice";
        license = licenses.bsd2;
-       maintainers = with maintainers; [ iElectric ];
+       maintainers = with maintainers; [ ];
      };
    };
 

@@ -7,9 +7,11 @@
 , canonicaljson
 , daemonize
 , jinja2
+, ldap3
 , matrix-angular-sdk
 , netaddr
 , pillow
+, psutil
 , py-bcrypt
 , pydenticon
 , pymacaroons-pynacl
@@ -42,9 +44,11 @@ buildPythonPackage {
     canonicaljson
     daemonize
     jinja2
+    ldap3
     matrix-angular-sdk
     netaddr
     pillow
+    psutil
     py-bcrypt
     pydenticon
     pymacaroons-pynacl

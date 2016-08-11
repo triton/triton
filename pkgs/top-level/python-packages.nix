@@ -16456,20 +16456,20 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #    };
  #  });
 
- #  isodate = buildPythonPackage rec {
- #    name = "isodate-${version}";
- #    version = "0.5.4";
+   isodate = buildPythonPackage rec {
+     name = "isodate-${version}";
+     version = "0.5.4";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/i/isodate/${name}.tar.gz";
- #      sha256 = "42105c41d037246dc1987e36d96f3752ffd5c0c24834dd12e4fdbe1e79544e31";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/i/isodate/${name}.tar.gz";
+       sha256 = "42105c41d037246dc1987e36d96f3752ffd5c0c24834dd12e4fdbe1e79544e31";
+     };
 
- #    meta = {
- #      description = "ISO 8601 date/time parser";
- #      homepage = http://cheeseshop.python.org/pypi/isodate;
- #    };
- #  };
+     meta = {
+       description = "ISO 8601 date/time parser";
+       homepage = http://cheeseshop.python.org/pypi/isodate;
+     };
+   };
 
  #  robomachine = buildPythonPackage rec {
  #    name = "robomachine-0.6";

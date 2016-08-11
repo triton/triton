@@ -29,8 +29,8 @@ stdenv.mkDerivation rec {
 		homepage = "http://zookeeper.apache.org";
 		description = "Apache Zookeeper";
 		license = licenses.asl20;
-		maintainers = [ maintainers.nathan-gs ];	
-		platforms = platforms.unix;	
-	};		
+		maintainers = [ maintainers.nathan-gs ];
+		platforms = platforms.all;
+	};
 
 }

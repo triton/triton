@@ -10,9 +10,9 @@
 , gobject-introspection
 , gtk3
 , json-glib
-, librdf_raptor2
 , python
 , pythonPackages
+, raptor2
 , sqlite
 , telepathy_glib
 , vala
@@ -22,7 +22,6 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "zeitgeist-${version}";
   versionMajor = "0.9";
@@ -47,9 +46,9 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gtk3
     json-glib
-    librdf_raptor2
     python
     pythonPackages.rdflib
+    raptor2
     sqlite
     telepathy_glib
     vala

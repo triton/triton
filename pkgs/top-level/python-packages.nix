@@ -10722,8 +10722,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
    mpd = buildPythonPackage rec {
      name = "python-mpd-0.3.0";
 
-     disabled = isPy3k;
-
      src = pkgs.fetchurl {
        url = "https://pypi.python.org/packages/source/p/python-mpd/python-mpd-0.3.0.tar.gz";
        md5Confirm = "5b3849b131e2fb12f251434597d65635";

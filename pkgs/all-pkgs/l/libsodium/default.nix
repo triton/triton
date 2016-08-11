@@ -21,6 +21,11 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
 
+  postInstall = ''
+    ln -sv sodium "$out"/include/nacl
+    ln -sv "$(basename "$(readlink -f "$out/lib/libsodium.so")")" "$out/lib/libnacl.so"
+  '';
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

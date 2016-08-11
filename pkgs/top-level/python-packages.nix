@@ -18690,11 +18690,12 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    python_mimeparse = buildPythonPackage rec {
      name = "python-mimeparse-${version}";
-     version = "0.1.4";
+     version = "1.5.2";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/python-mimeparse/${name}.tar.gz";
-       sha256 = "1hyxg09kaj02ri0rmwjqi86wk4nd1akvv7n0dx77azz76wga4s9w";
+     src = fetchPyPi {
+       package = "python-mimeparse";
+       inherit version;
+       sha256 = "bef134a59598cc6aa598f84553162aa7a0c01f3f431588225bb9a208964b1827";
      };
 
      # error: invalid command 'test'

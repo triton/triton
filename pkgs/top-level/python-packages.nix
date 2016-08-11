@@ -558,6 +558,8 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        requests
        pyRFC3339
      ];
+
+     disabled = isPy3k;
    };
 
  #  acme-tiny = buildPythonPackage rec {

@@ -1405,6 +1405,8 @@ libgcrypt = callPackage ../all-pkgs/l/libgcrypt { };
 
 libgd = callPackage ../all-pkgs/l/libgd { };
 
+libgda = callPackage ../all-pkgs/l/libgda { };
+
 libgdata = callPackage ../all-pkgs/l/libgdata { };
 
 libgee = callPackage ../all-pkgs/l/libgee { };

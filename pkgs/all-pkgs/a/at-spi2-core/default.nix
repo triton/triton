@@ -8,13 +8,9 @@
 , glib
 , gobject-introspection
 , xorg
-}:
 
-let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
-in
+, channel
+}:
 
 assert xorg != null ->
   xorg.libSM != null
@@ -22,16 +18,21 @@ assert xorg != null ->
   && xorg.libXi != null
   && xorg.libXtst != null;
 
+let
+  inherit (stdenv.lib)
+    enFlag
+    wtFlag;
+
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "at-spi2-core-${version}";
-  versionMajor = "2.20";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  name = "at-spi2-core-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/at-spi2-core/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/at-spi2-core/${versionMajor}/${name}.sha256sum";
-    sha256 = "88a4de9d43139f13cca531b47b901bc1b56e0ab06ba899126644abd4ac16a143";
+    url = "mirror://gnome/sources/at-spi2-core/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/at-spi2-core/${channel}/"
+      + "${name}.sha256sum";
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [

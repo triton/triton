@@ -2302,6 +2302,8 @@ systemd_lib = callPackageAlias "systemd_full" {
   type = "lib";
 };
 
+taglib = callPackage ../all-pkgs/t/taglib { };
+
 talloc = callPackage ../all-pkgs/t/talloc { };
 
 tcl_8-5 = callPackage ../all-pkgs/t/tcl {
@@ -3019,8 +3021,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   sqlite-interactive = pkgs.sqlite;
 #
   t1lib = callPackage ../development/libraries/t1lib { };
-
-  taglib = callPackage ../development/libraries/taglib { };
 #
   telepathy_glib = callPackage ../development/libraries/telepathy/glib { };
 #

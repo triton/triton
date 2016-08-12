@@ -11,23 +11,24 @@
 , gtk3
 , json-glib
 , pango
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
     enFlag;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "clutter-gtk-${version}";
-  versionMajor = "1.8";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "clutter-gtk-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/clutter-gtk/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/clutter-gtk/${versionMajor}/"
+    url = "mirror://gnome/sources/clutter-gtk/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/clutter-gtk/${channel}/"
       + "${name}.sha256sum";
-    sha256 = "742ef9d68ece36cbb1b2e1a4a6fbdad932f6645360be7e6de75abbb140dfbf1d";
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [

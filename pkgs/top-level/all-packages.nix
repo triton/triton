@@ -687,7 +687,10 @@ clutter-gst_3 = callPackage ../all-pkgs/c/clutter-gst {
 };
 clutter-gst = callPackageAlias "clutter-gst_3" { };
 
-clutter-gtk = callPackage ../all-pkgs/c/clutter-gtk { };
+clutter-gtk_1-8 = callPackage ../all-pkgs/c/clutter-gtk {
+  channel = "1.8";
+};
+clutter-gtk = callPackageAlias "clutter-gtk_1-8" { };
 
 cmake = callPackage ../all-pkgs/c/cmake { };
 

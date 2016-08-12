@@ -545,7 +545,10 @@ at-spi2-core_2-20 = callPackage ../all-pkgs/a/at-spi2-core {
 };
 at-spi2-core = callPackageAlias "at-spi2-core_2-20" { };
 
-atk = callPackage ../all-pkgs/a/atk { };
+atk_2-20 = callPackage ../all-pkgs/a/atk {
+  channel = "2.20";
+};
+atk = callPackageAlias "atk_2-20" { };
 
 atkmm = callPackage ../all-pkgs/a/atkmm { };
 

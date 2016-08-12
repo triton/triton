@@ -5,22 +5,23 @@
 
 , glib
 , gobject-introspection
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
     enFlag;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "atk-${version}";
-  versionMajor = "2.20";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "atk-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/atk/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/atk/${versionMajor}/${name}.sha256sum";
-    sha256 = "493a50f6c4a025f588d380a551ec277e070b28a82e63ef8e3c06b3ee7c1238f0";
+    url = "mirror://gnome/sources/atk/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/atk/${channel}/${name}.sha256sum";
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [

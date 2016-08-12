@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     (enFlag "introspection" (gobject-introspection != null) null)
-    "--enable-schemas-compile"
+    "--disable-schemas-compile"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"

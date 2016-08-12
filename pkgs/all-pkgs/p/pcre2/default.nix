@@ -7,7 +7,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "pcre2-10.21";
+  name = "pcre2-10.22";
 
   src = fetchurl {
     url = "http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${name}.tar.bz2";

@@ -674,7 +674,10 @@ cjdns = callPackage ../all-pkgs/c/cjdns { };
 
 clang = wrapCC (callPackageAlias "llvm" { });
 
-clutter = callPackage ../all-pkgs/c/clutter { };
+clutter_1-26 = callPackage ../all-pkgs/c/clutter {
+  channel = "1.26";
+};
+clutter = callPackageAlias "clutter_1-26" { };
 
 clutter-gst_2 = callPackage ../all-pkgs/c/clutter-gst/2.x.nix { };
 clutter-gst_3 = callPackage ../all-pkgs/c/clutter-gst/3.x.nix { };

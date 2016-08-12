@@ -22,14 +22,9 @@
 , systemd_lib
 , xorg
 , wayland
-}:
 
-let
-  inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
-in
+, channel
+}:
 
 assert xorg != null ->
   xorg.inputproto != null
@@ -40,17 +35,21 @@ assert xorg != null ->
   && xorg.libXi != null
   && xorg.libXrandr != null;
 
+let
+  inherit (stdenv.lib)
+    enFlag
+    optionals
+    wtFlag;
+
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "clutter-${version}";
-  versionMajor = "1.26";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "clutter-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/clutter/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/clutter/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "67514e7824b3feb4723164084b36d6ce1ae41cb3a9897e9f1a56c8334993ce06";
+    url = "mirror://gnome/sources/clutter/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/clutter/${channel}/${name}.sha256sum";
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -126,7 +125,9 @@ stdenv.mkDerivation rec {
     description = "Library for creating graphical user interfaces";
     homepage = http://www.clutter-project.org/;
     license = licenses.lgpl2Plus;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

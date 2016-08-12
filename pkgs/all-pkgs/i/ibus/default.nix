@@ -12,6 +12,7 @@
 , gtk2
 , gtk3
 , iso-codes
+, json-glib
 , libnotify
 , libxkbcommon
 , python3
@@ -25,14 +26,13 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "ibus-${version}";
-  version = "1.5.13";
+  version = "1.5.14";
 
   src = fetchurl {
     url = "https://github.com/ibus/ibus/releases/download/${version}/${name}.tar.gz";
-    sha256 = "ed73d80542dfdcca190b7958431048cd6830c2ce25c467384630b6a7e957a5f1";
+    sha256 = "a42b40fe4642f36bf2a6f0b4649f54f4043812d6bfee4faca38117799a009d3c";
   };
 
   nativeBuildInputs = [
@@ -49,6 +49,7 @@ stdenv.mkDerivation rec {
     gtk2
     gtk3
     iso-codes
+    json-glib
     libnotify
     libxkbcommon
     python3
@@ -77,6 +78,9 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--disable-gconf"
     "--enable-schemas-install"
+    "--disable-memconf"
+    (enFlag "dconf" (dconf != null) null)
+    "--disable-schemas-compile"
     (enFlag "python-library" (python3 != null) null)
     "--enable-setup"
     (enFlag "dbus-python-check" (python3 != null) null)
@@ -85,12 +89,13 @@ stdenv.mkDerivation rec {
     "--enable-ui"
     "--enable-engine"
     "--enable-libnotify"
+    "--disable-emoji-dict"
     "--with-python=${python3.interpreter}"
   ];
 
   preConfigure = ''
-    substituteInPlace data/dconf/Makefile.in \
-      --replace "dconf update" "echo"
+    sed -i data/dconf/Makefile.in \
+      -e 's/dconf update/echo/'
     sed -i configure \
       -e "s|PYTHON2_LIBDIR=.*|PYTHON2_LIBDIR=$out/lib/${python3.libPrefix}|"
   '';

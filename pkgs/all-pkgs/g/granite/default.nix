@@ -18,16 +18,15 @@
 
 let
   channel = "0.4";
-  version = "${channel}";
+  version = "${channel}.0.1";
 in
-
 stdenv.mkDerivation rec {
   name = "granite-${version}";
 
   src = fetchurl {
-    url = "https://launchpad.net/granite/${channel}/loki-alpha1/"
+    url = "https://launchpad.net/granite/${channel}/${version}/"
       + "+download/${name}.tar.xz";
-    sha256 = "73066f393d4c0aa637046e6fa0d6130a2612f277b9e493366f2f99267d85c5d9";
+    sha256 = "95a142a8befeedc35a089d638e759b657905508dc3007036d6c1fa3efe94c4dd";
   };
 
   nativeBuildInputs = [

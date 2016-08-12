@@ -38,18 +38,17 @@
 let
   inherit (stdenv.lib)
     makeSearchPath;
-in
 
+  channel = "0.4";
+  version = "${channel}";
+in
 stdenv.mkDerivation rec {
   name = "noise-${version}";
-  versionMajor = "0.3";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "https://launchpad.net/noise/${versionMajor}.x/${version}/" +
-          "+download/${name}.tgz";
-    sha256 = "07hfdrjbqq683f3lp0yiysx7vmvszsghh97dafdyajwls1clcp14";
+    url = "https://launchpad.net/noise/${channel}.x/${version}/" +
+          "+download/${name}.tar.xz";
+    sha256 = "ae7b1f07df1f1e773c602cad224188ebc26799f1b759525b114edc698d044ab1";
   };
 
   nativeBuildInputs = [

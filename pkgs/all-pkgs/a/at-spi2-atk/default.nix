@@ -12,7 +12,7 @@
 
 , libxml2
 
-, channel ? null
+, channel
 }:
 
 let

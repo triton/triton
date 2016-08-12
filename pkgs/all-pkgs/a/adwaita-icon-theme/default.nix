@@ -6,7 +6,7 @@
 , gdk-pixbuf
 , hicolor-icon-theme
 
-, channel ? null
+, channel
 }:
 
 let

@@ -102,6 +102,9 @@ stdenv.mkDerivation rec {
 
   postInstall = "rm -rvf $out/share/gtk-doc";
 
+  bindnow = false;
+  pie = false;
+
   passthru = {
     gioModuleDir = "lib/gio-modules/${name}/gio/modules";
     inherit flattenInclude;

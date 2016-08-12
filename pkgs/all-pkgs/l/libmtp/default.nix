@@ -5,13 +5,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libmtp-1.1.11";
+  name = "libmtp-1.1.12";
 
   src = fetchurl {
     url = "mirror://sourceforge/libmtp/${name}.tar.gz";
-    multihash = "QmWzAD93fuGJiAQ5nH2N74RnKLfQLNZrYLcmH3JmitgWvu";
+    multihash = "QmS2d3fXyGmNR9WxbpXwAhgvecKrcxYJ6CiXEiMnJmy41J";
     allowHashOutput = false;
-    sha256 = "15d96dff79a4f7ad14338894a4096d4ac584c6ad25fdcca955bc4726303287e9";
+    sha256 = "cdf59e816c6cda3e908a876c7fb42943f40b85669aea0029a1ca431c89afa1a0";
   };
 
   buildInputs = [
@@ -26,7 +26,10 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "D33B C5C3 C0CC 59B6 3989  D77B EA7B F397 0175 623E";
+      pgpKeyFingerprints = [
+        "7C4A FD61 D8AA E757 0796  A517 2209 D690 2F96 9C95"
+        "D33B C5C3 C0CC 59B6 3989  D77B EA7B F397 0175 623E"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

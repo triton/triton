@@ -535,12 +535,6 @@ asciinema = pkgs.goPackages.asciinema.bin // { outputs = [ "bin" ]; };
 
 aspell = callPackage ../all-pkgs/a/aspell { };
 
-atk = callPackage ../all-pkgs/a/atk { };
-
-atkmm = callPackage ../all-pkgs/a/atkmm { };
-
-attr = callPackage ../all-pkgs/a/attr { };
-
 at-spi2-atk_2-20 = callPackage ../all-pkgs/a/at-spi2-atk {
   channel = "2.20";
 };
@@ -550,6 +544,12 @@ at-spi2-core_2-20 = callPackage ../all-pkgs/a/at-spi2-core {
   channel = "2.20";
 };
 at-spi2-core = callPackageAlias "at-spi2-core_2-20" { };
+
+atk = callPackage ../all-pkgs/a/atk { };
+
+atkmm = callPackage ../all-pkgs/a/atkmm { };
+
+attr = callPackage ../all-pkgs/a/attr { };
 
 audiofile = callPackage ../all-pkgs/a/audiofile { };
 

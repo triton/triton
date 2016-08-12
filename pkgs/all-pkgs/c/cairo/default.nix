@@ -136,6 +136,8 @@ stdenv.mkDerivation rec {
     rm -rvf $out/share/gtk-doc
   '' + glib.flattenInclude;
 
+  bindnow = false;
+
   meta = with stdenv.lib; {
     description = "A vector graphics library with cross-device output support";
     homepage = http://cairographics.org/;

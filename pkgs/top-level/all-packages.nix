@@ -550,7 +550,10 @@ atk_2-20 = callPackage ../all-pkgs/a/atk {
 };
 atk = callPackageAlias "atk_2-20" { };
 
-atkmm = callPackage ../all-pkgs/a/atkmm { };
+atkmm_2-24 = callPackage ../all-pkgs/a/atkmm {
+  channel = "2.24";
+};
+atkmm = callPackageAlias "atkmm_2-24" { };
 
 attr = callPackage ../all-pkgs/a/attr { };
 

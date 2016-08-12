@@ -4,18 +4,20 @@
 , atk
 , glibmm
 , libsigcxx
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "atkmm-${version}";
-  versionMajor = "2.24";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  name = "atkmm-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/atkmm/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/atkmm/${versionMajor}/${name}.sha256sum";
-    sha256 = "1gaqwhviadsmy0fsr47686yglv1p4mpkamj0in127bz2b5bki5gz";
+    url = "mirror://gnome/sources/atkmm/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/atkmm/${channel}/${name}.sha256sum";
+    inherit (source) sha256;
   };
 
   buildInputs = [

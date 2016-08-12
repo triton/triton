@@ -8,7 +8,11 @@ stdenv.mkDerivation rec {
     sha256 = "ed4cabb3d970ff9a30b2620071c2b054c4347f44fc63546dbe06f97980ece288";
   };
 
-  cmakeFlags = "-DWITH_ASF=ON -DWITH_MP4=ON";
+  cmakeFlags = [
+    "-DBUILD_SHARED_LIBS=ON"
+    "-DWITH_ASF=ON"
+    "-DWITH_MP4=ON"
+  ];
 
   buildInputs = [ zlib ];
   nativeBuildInputs = [ cmake ninja ];

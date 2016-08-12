@@ -359,50 +359,6 @@ rec {
     else
       null;
 
-  # DEPRECATED use acFlag
-  mkFlag = trueStr: falseStr: boolean: flag: value:
-    let
-      preFlag =
-        "--${
-              if boolean then
-                trueStr
-              else
-                falseStr
-            }${
-              # Allow autoconf flags without prepended true/false strings
-              if (boolean && trueStr != "")
-                 || (!boolean && falseStr != "") then
-                "-"
-              else
-                ""
-            }";
-      postFlag = "";
-      valueSep =
-        if boolean && value != null then
-          "="
-        else
-          "";
-      _value =
-        if boolean && value != null then
-          value
-        else
-          "";
-    in
-    if boolean == null then
-      null
-    else
-      genericFlag preFlag flag postFlag valueSep _value;
-
-  # DEPRECATED use enFlag
-  mkEnable = mkFlag "enable" "disable";
-
-  # DEPRECATED use wtFlag
-  mkWith = mkFlag "with" "without";
-
-  # DEPRECATED use otFlag
-  mkOther = mkFlag "" "" true;
-
-
   /* Make a set of packages with a common scope. All packages called
      with the provided `callPackage' will be evaluated with the same
      arguments. Any package in the set may depend on any other. The

@@ -13,49 +13,57 @@
 , json-glib
 , libgudev
 , pango
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    optionals
+    strings;
+
+  is3x = strings.substring 0 1 channel == "3";
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "clutter-gst-${version}";
-  versionMajor = "3.0";
-  versionMinor = "18";
-  version = "${versionMajor}.${versionMinor}";
+  name = "clutter-gst-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/clutter-gst/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/clutter-gst/${versionMajor}/"
+    url = "mirror://gnome/sources/clutter-gst/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/clutter-gst/${channel}/"
       + "${name}.sha256sum";
-    sha256 = "0aec0d0c6020cd19a5bb0dab1165a92748f81a9a3acdfabb0f966d5f53bc8093";
+    inherit (source) sha256;
   };
 
   buildInputs = [
     atk
     clutter
     cogl
-    gdk-pixbuf
     glib
     gobject-introspection
     gst-plugins-base
     gstreamer
     gtk3
     json-glib
-    libgudev
     pango
+  ] ++ optionals is3x [
+    gdk-pixbuf
+    libgudev
   ];
 
   configureFlags = [
-    (enFlag "udev" (libgudev != null) null)
-    "--enable-gl-texture-upload"
+    #"--help"
     "--disable-maintainer-flags"
     "--disable-debug"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     (enFlag "introspection" (gobject-introspection != null) null)
+  ] ++ optionals is3x [
+    (enFlag "udev" (libgudev != null) null)
+    "--enable-gl-texture-upload"
   ];
 
   postBuild = "rm -rvf $out/share/gtk-doc";

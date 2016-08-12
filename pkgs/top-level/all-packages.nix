@@ -679,8 +679,12 @@ clutter_1-26 = callPackage ../all-pkgs/c/clutter {
 };
 clutter = callPackageAlias "clutter_1-26" { };
 
-clutter-gst_2 = callPackage ../all-pkgs/c/clutter-gst/2.x.nix { };
-clutter-gst_3 = callPackage ../all-pkgs/c/clutter-gst/3.x.nix { };
+clutter-gst_2 = callPackage ../all-pkgs/c/clutter-gst {
+  channel = "2.0";
+};
+clutter-gst_3 = callPackage ../all-pkgs/c/clutter-gst {
+  channel = "3.0";
+};
 clutter-gst = callPackageAlias "clutter-gst_3" { };
 
 clutter-gtk = callPackage ../all-pkgs/c/clutter-gtk { };

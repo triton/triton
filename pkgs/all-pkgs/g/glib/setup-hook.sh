@@ -56,14 +56,47 @@ fix_gschemas_install_path() {
     "${out}/share/gschemas/${name}"
 }
 
-# Recompile schemas to make sure all schemas are compiled and to
-# ensure gschemas.compiled exists.
+# Recache gio modules to ensure all modules are cached and that
+# giomodule.cache exists.
+cache_gio_modules() {
+  local giomodulesdir
+
+  if [ -d "${out}/lib/gio-modules/${name}/gio/modules" ] ; then
+    giomodulesdir="${out}/lib/gio-modules/${name}/gio/modules"
+  # Incase fix_gio_modules_install_path and compile_gschemas are
+  # run out-of-order.
+  elif [ -d "${out}/lib/gio/modules" ] ; then
+    giomodulesdir="${out}/lib/gio/modules"
+  else
+    return 0
+  fi
+
+  echo "Caching gio modules in: ${giomodulesdir}"
+  if [ -x "${out}/bin/gio-querymodules" ] ; then
+    # Do not try to cache gio modules in glib itself
+    :
+  elif type -P gio-querymodules ; then
+    # Remove existing gschemas.compiled
+    if [ -f "${giomodulesdir}/giomodule.cache" ] ; then
+      rm -fv "${giomodulesdir}/giomodule.cache"
+    fi
+    gio-querymodules "${giomodulesdir}/"
+  else
+    echo 'ERROR: cache_gio_modules failed, gio-querymodules not'
+    echo '       found in PATH or $out/bin/gio-querymodules'
+    return 1
+  fi
+}
+
+# Recompile schemas to ensure all schemas are compiled and that
+# gschemas.compiled exists.
 compile_gschemas() {
   local gschemas_dir
 
   if [ -d "${out}/share/gschemas/${name}/glib-2.0/schemas" ] ; then
     gschemas_dir="${out}/share/gschemas/${name}/glib-2.0/schemas"
-  # Incase fix_gschemas_install_path and compile_gschemas are run out-of-order.
+  # Incase fix_gschemas_install_path and compile_gschemas are
+  # run out-of-order.
   elif [ -d "${out}/share/glib-2.0/schemas" ] ; then
     gschemas_dir="${out}/share/glib-2.0/schemas"
   # If no gschemas directories exists exit hook.
@@ -82,9 +115,9 @@ compile_gschemas() {
     fi
     glib-compile-schemas "${gschemas_dir}/"
   else
-    echo 'ERROR: fix_compiled_gsettings_schemas failed, glib-compile-schemas'
-    echo '       not found in PATH or $out/bin/glib-compile-schemas'
-    return out
+    echo 'ERROR: compile_gschemas failed, glib-compile-schemas not'
+    echo '       found in PATH or $out/bin/glib-compile-schemas'
+    return 1
   fi
 }
 
@@ -97,4 +130,5 @@ installFlagsArray+=(
 
 preFixupPhases+=('fix_gio_modules_install_path')
 preFixupPhases+=('fix_gschemas_install_path')
+preFixupPhases+=('cache_gio_modules')
 preFixupPhases+=('compile_gschemas')

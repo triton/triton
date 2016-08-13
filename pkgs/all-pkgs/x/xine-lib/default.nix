@@ -173,7 +173,10 @@ stdenv.mkDerivation rec {
     "--with-wavpack"
   ];
 
-  NIX_LDFLAGS = "-rpath ${libdvdcss}/lib -L${libdvdcss}/lib -ldvdcss";
+  NIX_LDFLAGS = [
+    "-lgcc_s"
+    "-rpath ${libdvdcss}/lib -L${libdvdcss}/lib -ldvdcss"
+  ];
 
   meta = with stdenv.lib; {
     description = "A multimedia playback engine";

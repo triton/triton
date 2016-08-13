@@ -38,8 +38,8 @@ let
       version = "4.7";
       owner = "wkennington";
       repo = "linux";
-      rev = "628e15ca237f7139c54dd824300206138d391e34";
-      sha256 = "5f72bb0b0d5d792f14f45c44e0c7ffbbfc9e7e88d20e6f9236e346e08790a00d";
+      rev = "8478a659ceb2219a6a55251a0db87f54fd82bebf";
+      sha256 = "6763a27a10c0584ff9e100092b3ca90be311977d0483b1ee8c64f71e2c09bef0";
       features.bcachefs = true;
     };
   };

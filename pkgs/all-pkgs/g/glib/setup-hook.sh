@@ -55,10 +55,30 @@ fix_gsettings_schemas_install_path() {
     "${1}/share/gsettings-schemas/$(basename "${1}")"
 }
 
-envHooks+=(
-  'find_gio_modules'
-  'find_gsettings_schemas'
-)
+# Recompile schemas to make sure all schemas are compiled and to
+# ensure gschemas.compiled exists.
+fix_compiled_gsettings_schemas() {
+  if [ -d "${1}/share/gsettings-schemas/$(basename "${1}")/glib-2.0/schemas" ] ; then
+    if type -P glib-compile-schemas ; then
+      # Remove existing gschemas.compiled
+      if [ -f "${1}/share/gsettings-schemas/$(basename "${1}")/glib-2.0/schemas/gschemas.compiled" ] ; then
+        rm -fv "${1}/share/gsettings-schemas/$(basename "${1}")/glib-2.0/schemas/gschemas.compiled"
+      fi
+      glib-compile-schemas \
+        "${1}/share/gsettings-schemas/$(basename "${1}")/glib-2.0/schemas/"
+    elif [ -x "${1}/bin/glib-compile-schemas" ] ; then
+      # Do not try to compile schemas in glib itself
+      :
+    else
+      echo 'ERROR: fix_compiled_gsettings_schemas failed, glib-compile-schemas'
+      echo '       not found in PATH or $out/bin/glib-compile-schemas'
+      return 1
+    fi
+  fi
+}
+
+envHooks+=('find_gio_modules')
+envHooks+=('find_gsettings_schemas')
 
 installFlagsArray+=(
   "gsettingsschemadir=${out}/share/gsettings-schemas/${name}/glib-2.0/schemas/"
@@ -66,3 +86,4 @@ installFlagsArray+=(
 
 preFixupPhases+=('fix_gio_modules_install_path')
 preFixupPhases+=('fix_gsettings_schemas_install_path')
+preFixupPhases+=('fix_compiled_gsettings_schemas')

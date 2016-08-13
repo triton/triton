@@ -25,10 +25,20 @@ fix_gio_modules_install_path() {
   # so we must place these directories in a unique directory.
 
   if [ -d "${out}/lib/gio/modules" ] ; then
-    mkdir -pv "${out}/lib/gio-modules/${name}"
-    mv -v \
-      "${out}/lib/gio" \
-      "${out}/lib/gio-modules/${name}/"
+    # Ignore empty directories
+    if [ "$(ls -A "${out}/lib/gio/modules")" ] ; then
+      mkdir -pv "${out}/lib/gio-modules/${name}"
+      mv -v \
+        "${out}/lib/gio" \
+        "${out}/lib/gio-modules/${name}/"
+    fi
+    # If the directory is empty after moving files remove it.
+    if [ ! "$(ls -A "${out}/lib/gio/modules")" ] ; then
+      rm -rvf "${out}/lib/gio/modules"
+      if [ ! "$(ls -A "${out}/lib/gio")" ] ; then
+        rm -rvf "${out}/lib/gio"
+      fi
+    fi
   fi
 
   addToSearchPath GIO_EXTRA_MODULES \
@@ -46,10 +56,20 @@ fix_gschemas_install_path() {
   # we must place these directories in a unique directory.
 
   if [ -d "${out}/share/glib-2.0/schemas" ] ; then
-    mkdir -pv "${out}/share/gschemas/${name}/glib-2.0"
-    mv -v \
-      "${out}/share/glib-2.0/schemas" \
-      "${out}/share/gschemas/${name}/glib-2.0/"
+    # Ignore empty directories
+    if [ "$(ls -A "${out}/share/glib-2.0/schemas")" ] ; then
+      mkdir -pv "${out}/share/gschemas/${name}/glib-2.0"
+      mv -v \
+        "${out}/share/glib-2.0/schemas" \
+        "${out}/share/gschemas/${name}/glib-2.0/"
+    fi
+    # If the directory is empty after moving files remove it.
+    if [ ! "$(ls -A "${out}/share/glib-2.0/schemas")" ] ; then
+      rm -rvf "${out}/share/glib-2.0/schemas"
+      if [ ! "$(ls -A "${out}/share/glib-2.0")" ] ; then
+        rm -rvf "${out}/share/glib-2.0"
+      fi
+    fi
   fi
 
   addToSearchPath GSETTINGS_SCHEMAS_PATH \

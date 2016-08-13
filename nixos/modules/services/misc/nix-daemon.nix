@@ -304,7 +304,7 @@ in
 
       allowedUsers = mkOption {
         type = types.listOf types.str;
-        default = [ "*" ];
+        default = [ ];
         example = [ "@wheel" "@builders" "alice" "bob" ];
         description = ''
           A list of names of users (separated by whitespace) that are

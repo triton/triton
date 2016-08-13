@@ -3,12 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "hwdata-0.290";
+  name = "hwdata-0.291";
 
   src = fetchzip {
     url = "https://git.fedorahosted.org/cgit/hwdata.git/snapshot/${name}.tar.xz";
-    multihash = "Qmdwi5owxzh4rrcPUvRvnHuEq2WTfPp2ZykxaxWYz83Jm1";
-    sha256 = "d48ed0597d43a2b98ae24402cc8408c5aa370341d6eeba1550fe2d92dadc8e29";
+    multihash = "QmVK9tFW7bpf1uTHLWdRiTrQ1KqVGrjQvsy5NUiZLPGhXm";
+    sha256 = "5595cd3ba209c01a51514f5604fcb7f93146a8ea4e7f686b63a157377a021c83";
   };
 
   postPatch = ''

@@ -28,18 +28,23 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    sed -ri -e 's!\<(dmenu|stest)\>!'"$out/bin"'/&!g' dmenu_run
+    sed -i dmenu_run \
+      -i dmenu_path \
+      -re 's!\<(dmenu|dmenu_run|dmenu_path|stest)\>!'"$out/bin"'/&!g'
   '';
 
   preConfigure = ''
-    sed -i "s@PREFIX = /usr/local@PREFIX = $out@g" config.mk
+    sed -i config.mk \
+      -e "s,PREFIX = /usr/local,PREFIX = $out,g"
   '';
 
   meta = with stdenv.lib; {
     description = "Dynamic menu for X";
     homepage = http://tools.suckless.org/dmenu;
     license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

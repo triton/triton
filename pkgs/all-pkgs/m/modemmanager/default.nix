@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
     libgudev
     polkit
     dbus-glib
-    ppp
+    #ppp
     libmbim
     libqmi
   ];

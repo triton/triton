@@ -926,7 +926,6 @@ in
         pkgs.openresolv
       ]
       ++ optionals config.networking.wireless.enable [
-        pkgs.wirelesstools # FIXME: obsolete?
         pkgs.iw
         pkgs.rfkill
       ]

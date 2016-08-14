@@ -175,7 +175,6 @@ with import ./release-lib.nix { inherit supportedSystems; };
   which = all;
   wicd = linux;
   wireshark = linux;
-  wirelesstools = linux;
   wpa_supplicant = linux;
   xfsprogs = linux;
   xkeyboard_config = linux;

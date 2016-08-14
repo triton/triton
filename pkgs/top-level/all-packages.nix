@@ -3326,8 +3326,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 #
   usbutils = callPackage ../os-specific/linux/usbutils { };
 
-  wirelesstools = callPackage ../os-specific/linux/wireless-tools { };
-
   wpa_supplicant = callPackage ../os-specific/linux/wpa_supplicant { };
 #
   zfs = callPackage ../os-specific/linux/zfs {

@@ -5,7 +5,6 @@
 , intltool
 
 , avahi
-, bind
 , bluez
 , coreutils
 , dbus
@@ -34,7 +33,6 @@
 , systemd_full
 , util-linux_lib
 , vala
-, wirelesstools
 , xz
 
 , dhcp-client ? "dhclient"
@@ -74,7 +72,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     avahi
-    bind
     bluez
     dbus
     dbus-glib
@@ -102,7 +99,6 @@ stdenv.mkDerivation rec {
     systemd_full
     util-linux_lib
     vala
-    wirelesstools
     xz
   ] ++ optionals (dhcp-client == "dhclient") [
     dhcp

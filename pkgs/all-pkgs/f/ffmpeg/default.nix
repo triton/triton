@@ -23,7 +23,7 @@
 # Alpha channel support in swscale
 , swscaleAlphaBuild ? true
 # Hardcode decode tables instead of runtime generation
-, hardcodedTablesBuild ? true 
+, hardcodedTablesBuild ? true
 , safeBitstreamReaderBuild ? true # Buffer boundary checking in bitreaders
 , memalignHackBuild ? false # Emulate memalign
 , multithreadBuild ? true # Multithreading via pthreads/win32 threads
@@ -98,7 +98,6 @@
 , libdc1394, libraw1394
 #, libiec61883, libavc1394
 , libgcrypt
-#, libmfx
 , libmodplug
 #, libnut
 , libogg
@@ -116,6 +115,7 @@
 , libxcbxfixesExtlib ? true
 , libxcbshapeExtlib ? true
 , libzimg ? null
+, mfx-dispatcher
 , mmal ? null
 , netcdf ? null
 , nvencExtLib ? false
@@ -379,6 +379,7 @@ stdenv.mkDerivation rec {
     libvorbis
     libvpx
     mesa_noglu
+    mfx-dispatcher
     pulseaudio_lib
     rtmpdump
     rubberband
@@ -487,22 +488,21 @@ stdenv.mkDerivation rec {
     /*
      *  Hardware accelerators
      */
-    (fflag "audiotoolbox" false "3.1") # osx
+    (fflag "audiotoolbox" false "3.1") # darwin
     (fflag "cuda" cudaExtLib "3.1")
     /**/(fflag "cuvid" false "3.1")
     "--disable-d3d11va" # windows
     "--disable-dxva2" # windows
-    #(fflag "libmfx" (libmfx != null) "2.6")
-    /**/"--disable-libmfx"
+    (fflag "libmfx" (mfx-dispatcher != null) "2.6")
     #(fflag "libnpp" (npp != null) "3.1")
     /**/(fflag "libnpp" false "3.1")
     #(fflag "mmal" (mmal != null) "2.7")
     /**/"--disable-mmal"
     (fflag "nvenc" nvencExtLib "2.6")
     (fflag "vaapi" (libva != null) null)
-    "--disable-vda" # osx
+    "--disable-vda" # darwin
     (fflag "vdpau" (libvdpau != null) null)
-    "--disable-videotoolbox" # osx
+    "--disable-videotoolbox" # darwin
     # Undocumented
     "--enable-xvmc"
     /*

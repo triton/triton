@@ -2299,7 +2299,6 @@ sysstat = callPackage ../all-pkgs/s/sysstat { };
 
 # TODO: Rename back to systemd once depedencies are sorted
 systemd_full = callPackage ../all-pkgs/s/systemd { };
-
 systemd_lib = callPackageAlias "systemd_full" {
   type = "lib";
 };
@@ -2373,16 +2372,9 @@ upower = callPackage ../all-pkgs/u/upower { };
 usbmuxd = callPackage ../all-pkgs/u/usbmuxd { };
 
 util-linux_full = callPackage ../all-pkgs/u/util-linux { };
-
 util-linux_lib = callPackageAlias "util-linux_full" {
   type = "lib";
 };
-
-vaapi-intel = callPackage ../all-pkgs/v/vaapi-intel { };
-
-vala = callPackage ../all-pkgs/v/vala { };
-
-vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
 v4l-utils = callPackage ../all-pkgs/v/v4l-utils {
   channel = "utils";
@@ -2390,6 +2382,12 @@ v4l-utils = callPackage ../all-pkgs/v/v4l-utils {
 v4l_lib = callPackageAlias "v4l-utils" {
   channel = "lib";
 };
+
+vaapi-intel = callPackage ../all-pkgs/v/vaapi-intel { };
+
+vala = callPackage ../all-pkgs/v/vala { };
+
+vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
 vim = callPackage ../all-pkgs/v/vim { };
 

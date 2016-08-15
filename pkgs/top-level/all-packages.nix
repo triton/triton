@@ -1751,6 +1751,8 @@ mesa = pkgs.buildEnv {
 #  perf = linuxPackages.perf;
 #};
 
+mfx-dispatcher = callPackage ../all-pkgs/m/mfx-dispatcher { };
+
 mg = callPackage ../all-pkgs/m/mg { };
 
 mime-types = callPackage ../all-pkgs/m/mime-types { };

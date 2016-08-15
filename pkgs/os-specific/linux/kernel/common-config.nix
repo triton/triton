@@ -105,6 +105,7 @@ with stdenv.lib;
     CPU_FREQ_STAT y
     PCIE_DPC y
     SLAB_FREELIST_RANDOM y
+    HARDENED_USERCOPY y
   ''}
 
   # Support drivers that need external firmware.

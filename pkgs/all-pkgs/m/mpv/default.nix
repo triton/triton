@@ -1,9 +1,10 @@
 { stdenv
-, fetchurl
+, fetchzip
 , makeWrapper
 , perl
 , pkgconfig
 , python
+, waf
 , which
 
 , alsa-lib
@@ -36,25 +37,15 @@ let
     optional
     optionals
     optionalString;
-in
 
-let
-  # Purity: Waf is normally downloaded by bootstrap.py, but
-  # for purity reasons this behavior should be avoided.
-  # FIXME: use waf package
-  waf = fetchurl {
-    url = https://waf.io/waf-1.8.21;
-    sha256 = "31383a18d183c72be70d251e09b47389a6eb4bebbc94b737cff3187ddd88dff1";
-  };
+  version = "0.19.0";
 in
-
 stdenv.mkDerivation rec {
   name = "mpv-${version}";
-  version = "0.18.1";
 
-  src = fetchurl {
+  src = fetchzip {
     url = "https://github.com/mpv-player/mpv/archive/v${version}.tar.gz";
-    sha256 = "e413d57fec4ad43b9f9b848f38d13fb921313fc9a4a64bf1e906c8d0f7a46329";
+    sha256 = "671162b752f5ededbfb917a0c0a83bc6258ab018f357c446b13d9a25961bdee2";
   };
 
   nativeBuildInputs = [
@@ -62,6 +53,7 @@ stdenv.mkDerivation rec {
     perl
     python
     pythonPackages.docutils
+    waf
     which
   ];
 
@@ -99,10 +91,6 @@ stdenv.mkDerivation rec {
     xorg.libXxf86vm
   ];
 
-  postPatch = ''
-    patchShebangs ./TOOLS/
-  '';
-
   configureFlags = [
     "--enable-libmpv-shared"
     "--disable-libmpv-static"
@@ -113,19 +101,10 @@ stdenv.mkDerivation rec {
     "--enable-vaapi"
   ];
 
-  configurePhase = ''
-    python ${waf} configure --prefix=$out $configureFlags
-  '';
-
-  buildPhase = ''
-    python ${waf} build
-  '';
-
-  installPhase = ''
-    python ${waf} install
-  '' + /* Use a standard font */ ''
+  postInstall = /* Use a standard font */ ''
     mkdir -pv $out/share/mpv
-    ln -sv ${freefont_ttf}/share/fonts/truetype/FreeSans.ttf $out/share/mpv/subfont.ttf
+    ln -sv ${freefont_ttf}/share/fonts/truetype/FreeSans.ttf \
+      $out/share/mpv/subfont.ttf
   '';
 
   preFixup =

@@ -730,7 +730,6 @@ cups = callPackage ../all-pkgs/c/cups { };
 curl = callPackage ../all-pkgs/c/curl {
   suffix = "";
 };
-
 curl_full = callPackageAlias "curl" {
   suffix = "full";
 };
@@ -1015,9 +1014,9 @@ glib = callPackage ../all-pkgs/g/glib {
   channel = "2.48";
 };
 
-glibmm = callPackage ../all-pkgs/g/glibmm { };
-
 glib-networking = callPackage ../all-pkgs/g/glib-networking { };
+
+glibmm = callPackage ../all-pkgs/g/glibmm { };
 
 glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 
@@ -1069,6 +1068,8 @@ gnome-wrapper = makeSetupHook {
   deps = [ makeWrapper ];
 } ../build-support/setup-hooks/gnome-wrapper.sh;
 
+gnonlin = callPackage ../all-pkgs/g/gnonlin { };
+
 gnu-efi = callPackage ../all-pkgs/g/gnu-efi { };
 
 gnugrep = callPackage ../all-pkgs/g/gnugrep { };
@@ -1077,18 +1078,14 @@ gnum4 = callPackage ../all-pkgs/g/gnum4 { };
 
 gnumake = callPackage ../all-pkgs/g/gnumake { };
 
-gnonlin = callPackage ../all-pkgs/g/gnonlin { };
-
 gnupatch = callPackage ../all-pkgs/g/gnupatch { };
 
 gnupg_2_0 = callPackageAlias "gnupg" {
   channel = "2.0";
 };
-
 gnupg_2_1 = callPackageAlias "gnupg" {
   channel = "2.1";
 };
-
 gnupg = callPackage ../all-pkgs/g/gnupg { };
 
 gnused = callPackage ../all-pkgs/g/gnused { };
@@ -1098,7 +1095,6 @@ gnutar = callPackage ../all-pkgs/g/gnutar { };
 gnutls = callPackage ../all-pkgs/g/gnutls { };
 
 go = callPackage ../all-pkgs/g/go { };
-
 go_1_6 = callPackageAlias "go" {
   channel = "1.6";
 };
@@ -1167,12 +1163,12 @@ gstreamer-editing-services = callPackage ../all-pkgs/g/gstreamer-editing-service
 
 gstreamer-vaapi = callPackage ../all-pkgs/g/gstreamer-vaapi { };
 
-gtk-doc = callPackage ../all-pkgs/g/gtk-doc { };
-
 gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
 gtk2 = callPackageAlias "gtk_2" { };
 gtk_3 = callPackage ../all-pkgs/g/gtk/3.x.nix { };
 gtk3 = callPackageAlias "gtk_3" { };
+
+gtk-doc = callPackage ../all-pkgs/g/gtk-doc { };
 
 gtkhtml = callPackage ../all-pkgs/g/gtkhtml { };
 
@@ -1258,11 +1254,9 @@ intltool = callPackage ../all-pkgs/i/intltool { };
 iotop = pkgs.pythonPackages.iotop;
 
 iperf = callPackage ../all-pkgs/i/iperf { };
-
 iperf_2 = callPackageAlias "iperf" {
   channel = "2";
 };
-
 iperf_3 = callPackageAlias "iperf" {
   channel = "3";
 };
@@ -1271,13 +1265,13 @@ ipfs = pkgs.goPackages.ipfs.bin // { outputs = [ "bin" ]; };
 
 ipfs-hasher = callPackage ../all-pkgs/i/ipfs-hasher { };
 
-ipset = callPackage ../all-pkgs/i/ipset { };
+ipmitool = callPackage ../all-pkgs/i/ipmitool { };
 
 iproute = callPackage ../all-pkgs/i/iproute { };
 
-iptables = callPackage ../all-pkgs/i/iptables { };
+ipset = callPackage ../all-pkgs/i/ipset { };
 
-ipmitool = callPackage ../all-pkgs/i/ipmitool { };
+iptables = callPackage ../all-pkgs/i/iptables { };
 
 iputils = callPackage ../all-pkgs/i/iputils { };
 
@@ -1302,9 +1296,9 @@ jshon = callPackage ../all-pkgs/j/jshon { };
 
 json-c = callPackage ../all-pkgs/j/json-c { };
 
-jsoncpp = callPackage ../all-pkgs/j/jsoncpp { };
-
 json-glib = callPackage ../all-pkgs/j/json-glib { };
+
+jsoncpp = callPackage ../all-pkgs/j/jsoncpp { };
 
 judy = callPackage ../all-pkgs/j/judy { };
 
@@ -1331,7 +1325,6 @@ kmscon = callPackage ../all-pkgs/k/kmscon { };
 knot = callPackage ../all-pkgs/k/knot { };
 
 krb5_full = callPackage ../all-pkgs/k/krb5 { };
-
 krb5_lib = callPackageAlias "krb5_full" {
   type = "lib";
 };
@@ -1350,9 +1343,9 @@ lensfun = callPackage ../all-pkgs/l/lensfun { };
 
 leptonica = callPackage ../all-pkgs/l/leptonica { };
 
-leveldb = callPackage ../all-pkgs/l/leveldb { };
-
 letskencrypt = callPackage ../all-pkgs/l/letskencrypt { };
+
+leveldb = callPackage ../all-pkgs/l/leveldb { };
 
 lftp = callPackage ../all-pkgs/l/lftp { };
 
@@ -1376,8 +1369,6 @@ libatomic_ops = callPackage ../all-pkgs/l/libatomic_ops { };
 
 libavc1394 = callPackage ../all-pkgs/l/libavc1394 { };
 
-libdc1394 = callPackage ../all-pkgs/l/libdc1394 { };
-
 libbluray = callPackage ../all-pkgs/l/libbluray { };
 
 libbsd = callPackage ../all-pkgs/l/libbsd { };
@@ -1395,6 +1386,8 @@ libclc = callPackage ../all-pkgs/l/libclc { };
 libcroco = callPackage ../all-pkgs/l/libcroco { };
 
 libcue = callPackage ../all-pkgs/l/libcue { };
+
+libdc1394 = callPackage ../all-pkgs/l/libdc1394 { };
 
 libdrm = callPackage ../all-pkgs/l/libdrm { };
 
@@ -1639,11 +1632,11 @@ libunwind = callPackage ../all-pkgs/l/libunwind { };
 
 liburcu = callPackage ../all-pkgs/l/liburcu { };
 
-libusb-compat = callPackage ../all-pkgs/l/libusb-compat { };
-
 libusb_0 = callPackageAlias "libusb-compat" { };
 libusb_1 = callPackage ../all-pkgs/l/libusb { };
 libusb = callPackageAlias "libusb_1" { };
+
+libusb-compat = callPackage ../all-pkgs/l/libusb-compat { };
 
 libusbmuxd = callPackage ../all-pkgs/l/libusbmuxd { };
 
@@ -1693,7 +1686,6 @@ lightdm-gtk-greeter = callPackage ../all-pkgs/l/lightdm-gtk-greeter { };
 lilv = callPackage ../all-pkgs/l/lilv { };
 
 linux-headers = callPackage ../all-pkgs/l/linux-headers { };
-
 linux-headers_4_6 = callPackage ../all-pkgs/l/linux-headers {
   channel = "4.6";
 };
@@ -1704,9 +1696,9 @@ live555 = callPackage ../all-pkgs/l/live555 { };
 
 llvm = callPackage ../all-pkgs/l/llvm { };
 
-lmdb = callPackage ../all-pkgs/l/lmdb { };
-
 lm-sensors = callPackage ../all-pkgs/l/lm-sensors { };
+
+lmdb = callPackage ../all-pkgs/l/lmdb { };
 
 lrdf = callPackage ../all-pkgs/l/lrdf { };
 
@@ -1756,7 +1748,7 @@ mesa = pkgs.buildEnv {
 #mesos = callPackage ../all-pkgs/m/mesos {
 #  inherit (pythonPackages) python boto setuptools wrapPython;
 #  pythonProtobuf = pythonPackages.protobuf2_5;
- # perf = linuxPackages.perf;
+#  perf = linuxPackages.perf;
 #};
 
 mg = callPackage ../all-pkgs/m/mg { };
@@ -1795,9 +1787,9 @@ ms-sys = callPackage ../all-pkgs/m/ms-sys { };
 
 mtdev = callPackage ../all-pkgs/m/mtdev { };
 
-mtr = callPackage ../all-pkgs/m/mtr { };
-
 mtools = callPackage ../all-pkgs/m/mtools { };
+
+mtr = callPackage ../all-pkgs/m/mtr { };
 
 inherit (callPackages ../all-pkgs/m/mumble {
   jackSupport = config.jack or false;
@@ -1840,30 +1832,28 @@ nettle = callPackage ../all-pkgs/n/nettle { };
 
 networkmanager = callPackage ../all-pkgs/n/networkmanager { };
 
+networkmanager-applet = callPackage ../all-pkgs/n/networkmanager-applet { };
+
+networkmanager-l2tp = callPackage ../all-pkgs/n/networkmanager-l2tp { };
+
+networkmanager-openconnect = callPackage ../all-pkgs/n/networkmanager-openconnect { };
+
 networkmanager-openvpn = callPackage ../all-pkgs/n/networkmanager-openvpn { };
 
 networkmanager-pptp = callPackage ../all-pkgs/n/networkmanager-pptp { };
 
-networkmanager-l2tp = callPackage ../all-pkgs/n/networkmanager-l2tp { };
-
 networkmanager-vpnc = callPackage ../all-pkgs/n/networkmanager-vpnc { };
-
-networkmanager-openconnect = callPackage ../all-pkgs/n/networkmanager-openconnect { };
-
-networkmanager-applet = callPackage ../all-pkgs/n/networkmanager-applet { };
 
 nfs-utils = callPackage ../all-pkgs/n/nfs-utils { };
 
 nftables = callPackage ../all-pkgs/n/nftables { };
 
 nghttp2_full = callPackage ../all-pkgs/n/nghttp2 { };
-
 nghttp2_lib = callPackageAlias "nghttp2_full" {
   prefix = "lib";
 };
 
 nginx = callPackage ../all-pkgs/n/nginx { };
-
 nginx_unstable = callPackageAlias "nginx" {
   channel = "unstable";
 };
@@ -1968,7 +1958,6 @@ pcre2 = callPackage ../all-pkgs/p/pcre2 { };
 pcsc-lite_full = callPackage ../all-pkgs/p/pcsc-lite {
   libOnly = false;
 };
-
 pcsc-lite_lib = callPackageAlias "pcsc-lite_full" {
   libOnly = true;
 };
@@ -1981,8 +1970,9 @@ pinentry = callPackage ../all-pkgs/p/pinentry { };
 
 pkcs11-helper = callPackage ../all-pkgs/p/pkcs11-helper { };
 
-pkgconf = callPackage ../all-pkgs/p/pkgconf { };
 pkg-config = callPackage ../all-pkgs/p/pkgconfig { };
+
+pkgconf = callPackage ../all-pkgs/p/pkgconf { };
 pkgconfig = callPackageAlias "pkgconf" { };
 
 plymouth = callPackage ../all-pkgs/p/plymouth { };
@@ -2025,9 +2015,9 @@ potrace = callPackage ../all-pkgs/p/potrace { };
 
 powertop = callPackage ../all-pkgs/p/powertop { };
 
-procps-ng = callPackage ../all-pkgs/p/procps-ng { };
-
 procps = callPackageAlias "procps-ng" { };
+
+procps-ng = callPackage ../all-pkgs/p/procps-ng { };
 
 prometheus = pkgs.goPackages.prometheus.bin // { outputs = [ "bin" ]; };
 
@@ -2042,7 +2032,6 @@ pth = callPackage ../all-pkgs/p/pth { };
 pugixml = callPackage ../all-pkgs/p/pugixml { };
 
 pulseaudio_full = callPackage ../all-pkgs/p/pulseaudio { };
-
 pulseaudio_lib = callPackageAlias "pulseaudio_full" {
   prefix = "lib";
 };
@@ -2165,21 +2154,18 @@ rtorrent = callPackage ../all-pkgs/r/rtorrent { };
 ruby = callPackage ../all-pkgs/r/ruby { };
 
 rustc = hiPrio (callPackage ../all-pkgs/r/rustc { });
-
-rustc_bootstrap = lowPrio (callPackage ../all-pkgs/r/rustc/bootstrap.nix { });
-
 #rustc_beta = callPackageAlias "rustc" {
 #  channel = "beta";
 #};
-
 #rustc_dev = callPackageAlias "rustc" {
 #  channel = "dev";
 #};
 
+rustc_bootstrap = lowPrio (callPackage ../all-pkgs/r/rustc/bootstrap.nix { });
+
 sakura = callPackage ../all-pkgs/s/sakura { };
 
 samba_full = callPackage ../all-pkgs/s/samba { };
-
 samba_client = callPackageAlias "samba_full" {
   type = "client";
 };
@@ -2213,11 +2199,11 @@ shared_mime_info = callPackage ../all-pkgs/s/shared-mime-info { };
 
 sharutils = callPackage ../all-pkgs/s/sharutils { };
 
+shntool = callPackage ../all-pkgs/s/shntool { };
+
 smartmontools = callPackage ../all-pkgs/s/smartmontools { };
 
 snappy = callPackage ../all-pkgs/s/snappy { };
-
-shntool = callPackage ../all-pkgs/s/shntool { };
 
 sl = callPackage ../all-pkgs/s/sl { };
 
@@ -2241,15 +2227,12 @@ spice = callPackage ../all-pkgs/s/spice { };
 spice-protocol = callPackage ../all-pkgs/s/spice-protocol { };
 
 spidermonkey = callPackage ../all-pkgs/s/spidermonkey { };
-
 spidermonkey_45 = callPackageAlias "spidermonkey" {
   channel = "45";
 };
-
 spidermonkey_24 = callPackageAlias "spidermonkey" {
   channel = "24";
 };
-
 spidermonkey_17 = callPackageAlias "spidermonkey" {
   channel = "17";
 };
@@ -2297,11 +2280,9 @@ sushi = callPackage ../all-pkgs/s/sushi { };
 swig_2 = callPackageAlias "swig" {
   channel = "2";
 };
-
 swig_3 = callPackageAlias "swig" {
   channel = "3";
 };
-
 swig = callPackage ../all-pkgs/s/swig { };
 
 sydent = pkgs.python2Packages.sydent;

@@ -17,16 +17,22 @@ stdenv.mkDerivation rec {
     python2
   ];
 
+  setupHook = ./setup-hook.sh;
+
+  postPatch = ''
+    patchShebangs ./waf-light
+  '';
+
   configurePhase = ''
-    python waf-light configure
+    ./waf-light configure
   '';
 
   buildPhase = ''
-    python waf-light build
+    ./waf-light build
   '';
 
   installPhase = ''
-    install waf $out
+    install -D -m755 -v waf $out/bin/waf
   '';
 
   meta = with stdenv.lib; {

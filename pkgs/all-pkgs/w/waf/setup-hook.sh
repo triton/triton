@@ -34,12 +34,14 @@ remove_waf_link() {
   rm -fv 'waf'
 }
 
-preConfigurePhases+=('waf_unpack')
+if [ -n "${wafSetupHook-true}" ] ; then
+  preConfigurePhases+=('waf_unpack')
 
-configurePhase='wafConfigurePhase'
+  configurePhase='wafConfigurePhase'
 
-buildPhase='wafBuildPhase'
+  buildPhase='wafBuildPhase'
 
-installPhase='wafInstallPhase'
+  installPhase='wafInstallPhase'
 
-postPhases+=('remove_waf_link')
+  postPhases+=('remove_waf_link')
+fi

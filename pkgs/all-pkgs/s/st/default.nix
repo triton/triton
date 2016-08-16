@@ -1,5 +1,5 @@
 { stdenv
-, fetchgit
+, fetchurl
 , writeText
 
 , freetype
@@ -26,12 +26,12 @@ let
       null;
 in
 stdenv.mkDerivation rec {
-  name = "st-2016-03-28";
+  name = "st-0.7";
   
-  src = fetchgit {
-    url = "git://git.suckless.org/st";
-    rev = "39964614b742c4ec98a326762d98470cb987a45b";
-    sha256 = "0vi3i43vzdc5333mrai684ay6sfm05mgaq3gqzzydc9mbal6319i";
+  src = fetchurl {
+    url = "http://dl.suckless.org/st/${name}.tar.gz";
+    multihash = "QmV1FssAdXN44hWi4QjWp5GLn5ZqwqnvBjJ8JRNayMRi5Z";
+    sha256 = "f7870d906ccc988926eef2cc98950a99cc78725b685e934c422c03c1234e6000";
   };
 
   preBuild = optionalString (configFile' != null) ''

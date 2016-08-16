@@ -15,14 +15,16 @@
 , libseccomp
 }:
 
+let
+  version = "2.0.4";
+in
 stdenv.mkDerivation rec {
   name = "lxc-${version}";
-  version = "2.0.3";
 
   src = fetchurl {
     url = "https://linuxcontainers.org/downloads/lxc/lxc-${version}.tar.gz";
     allowHashOutput = false;
-    sha256 = "82df40a0cdd44639ee677d560be95348de48afa93a10a20e959dadb4431ee8d6";
+    sha256 = "14c9e699a4bf4e23a420922eb5ae3e163bb151c3d2bf6a3dcbea48c2dd3e9582";
   };
 
   nativeBuildInputs = [

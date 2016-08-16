@@ -14,9 +14,12 @@
 }:
 
 let
-  sources = import ./sources.nix;
 
-  source = sources."${channel}";
+  inherit ((import ./sources.nix)."${channel}")
+    version
+    sha256
+    sha256Bootstrap
+    patches;
 
   goPlatform =
     if stdenv.hostSystem == "x86_64-linux" then
@@ -30,7 +33,7 @@ let
     src = fetchurl {
       url = "https://storage.googleapis.com/golang/go${channel}.${goPlatform}.tar.gz";
       allowHashOutput = false;
-      sha256 = source.sha256Bootstrap."${stdenv.hostSystem}";
+      sha256 = sha256Bootstrap."${stdenv.hostSystem}";
     };
 
     nativeBuildInputs = [
@@ -51,14 +54,17 @@ let
       $out/bin/go help
     '';
   };
-in
 
+  inherit (stdenv.lib)
+    optionalString
+    versionOlder;
+in
 stdenv.mkDerivation {
-  name = "go-${source.version}";
+  name = "go-${version}";
 
   src = fetchurl {
-    url = "https://storage.googleapis.com/golang/go${source.version}.src.tar.gz";
-    inherit (source) sha256;
+    url = "https://storage.googleapis.com/golang/go${version}.src.tar.gz";
+    inherit sha256;
   };
 
   # perl is used for testing go vet
@@ -84,13 +90,7 @@ stdenv.mkDerivation {
     cd go
   '';
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "e55948eaf64c06f2c147cb6b18522a9d9bf72641";
-      file = "go/remove-tools.patch";
-      sha256 = "275c4428ce5c0ff45e853f93b8259ed656fd2c53cdb83aeb287a9f305c1f84a7";
-    })
-  ];
+  patches = map (p: fetchTritonPatch p) patches;
 
   postPatch = ''
     patchShebangs ./ # replace /bin/bash
@@ -106,7 +106,7 @@ stdenv.mkDerivation {
     sed -i 's,/etc/protocols,${iana-etc}/etc/protocols,g' src/net/lookup_unix.go
     sed -i 's,/etc/services,${iana-etc}/etc/services,g' src/net/port_unix.go src/net/parse_test.go
     sed -i '\#"/usr/share/zoneinfo/",#i"${tzdata}/share/zoneinfo/",' src/time/zoneinfo_unix.go
-
+  '' + optionalString (versionOlder version "1.7") ''
     # We need to fix shebangs which will be used in an output script
     # We can't use patch shebangs because this is an embedded script fix
     sed -i 's,#!/usr/bin/env bash,#! ${stdenv.shell},g' misc/cgo/testcarchive/test.bash
@@ -136,6 +136,10 @@ stdenv.mkDerivation {
     cd ./src
     echo Building
     ./all.bash
+
+    find "$out/bin" -mindepth 1 -exec mv {} "$out/share/go/bin" \;
+    rmdir "$out/bin"
+    ln -sv share/go/bin "$out/bin"
   '';
 
   preFixup = ''
@@ -158,7 +162,10 @@ stdenv.mkDerivation {
 
   setupHook = ./setup-hook.sh;
 
-  disallowedReferences = [ goBootstrap bash ];
+  disallowedReferences = [
+    bash
+    goBootstrap
+  ];
 
   meta = with stdenv.lib; {
     branch = "1.6";

@@ -1095,8 +1095,13 @@ gnutar = callPackage ../all-pkgs/g/gnutar { };
 gnutls = callPackage ../all-pkgs/g/gnutls { };
 
 go = callPackage ../all-pkgs/g/go { };
+
 go_1_6 = callPackageAlias "go" {
   channel = "1.6";
+};
+
+go_1_7 = callPackageAlias "go" {
+  channel = "1.7";
 };
 
 go16Packages = callPackage ./go-packages.nix {

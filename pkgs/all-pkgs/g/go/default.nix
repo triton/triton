@@ -10,7 +10,7 @@
 , mime-types
 , tzdata
 
-, channel ? "1.6"
+, channel ? "1.7"
 }:
 
 let

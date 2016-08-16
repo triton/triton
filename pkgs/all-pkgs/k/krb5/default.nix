@@ -15,20 +15,23 @@ let
   inherit (stdenv.lib)
     optionals
     optionalString;
-in
 
-let
   libOnly = type == "lib";
-in
 
+  tarballUrls = major: patch: [
+    "https://web.mit.edu/kerberos/dist/krb5/${major}/krb5-${major}.${patch}.tar.gz"
+  ];
+
+  major = "1.14";
+  patch = "3";
+in
 stdenv.mkDerivation rec {
-  name = "${type}krb5-${version}";
-  version = "1.14.2";
+  name = "${type}krb5-${major}.${patch}";
 
   src = fetchurl {
-    url = "${meta.homepage}dist/krb5/1.14/krb5-${version}.tar.gz";
+    urls = tarballUrls major patch;
     allowHashOutput = false;
-    sha256 = "6bcad7e6778d1965e4ce4af21d2efdc15b274c5ce5c69031c58e4c954cda8b27";
+    sha256 = "cd4620d520cf0df0dd8791309912df2bb20fcba76790b9fba4e25c1da08ff2c9";
   };
 
   prePatch= ''
@@ -87,13 +90,12 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = rec {
-    newVersion = "1.14.2";
     srcVerification = fetchurl rec {
       failEarly = true;
-      url = "${meta.homepage}dist/krb5/1.14/krb5-${newVersion}.tar.gz";
-      pgpsigUrl = "${url}.asc";
+      urls = tarballUrls "1.14" "3";
+      pgpsigUrls = map (n: "${n}.asc") urls;
       pgpKeyFingerprint = "2C73 2B1C 0DBE F678 AB3A  F606 A32F 17FD 0055 C305";
-      sha256 = "6bcad7e6778d1965e4ce4af21d2efdc15b274c5ce5c69031c58e4c954cda8b27";
+      sha256 = "cd4620d520cf0df0dd8791309912df2bb20fcba76790b9fba4e25c1da08ff2c9";
     };
   };
 

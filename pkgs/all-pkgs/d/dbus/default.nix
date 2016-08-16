@@ -9,11 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dbus-1.10.8";
+  name = "dbus-1.10.10";
   
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus/${name}.tar.gz";
-    sha256 = "0560y3hxpgh346w6avcrcz79c8ansmn771y5xpcvvlr6m8mx5wxs";
+    allowHashOutput = false;
+    sha256 = "9d8f1d069ab4d1a0255d7b400ea3bcef4430c42e729b1012abb2890e3f739a43";
   };
 
   buildInputs = [
@@ -47,6 +48,15 @@ stdenv.mkDerivation rec {
     "--enable-x11-autolaunch"
     "--enable-user-session"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "DA98 F25C 0871 C49A 59EA  FF2C 4DE8 FF2A 63C7 CC90";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A message bus system for interprocess communication (IPC)";

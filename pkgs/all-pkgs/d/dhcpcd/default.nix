@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dhcpcd-6.11.2";
+  name = "dhcpcd-6.11.3";
 
   src = fetchurl {
     url = "mirror://roy/dhcpcd/${name}.tar.xz";
-    multihash = "QmNVFaTvQaWDtDesxnrqPrrjH55CUY5T2sxY1X6eDtxeVG";
-    sha256 = "1ahy18s83z0nfy7s5is2bz56xhip09ys2yid2ykjf2jljw5vb7zi";
+    multihash = "QmUNkGXU2YKCooZzeLD1mhjc5ZUrGXAi4oEJAVvefMX9wL";
+    sha256 = "5abd12c4df2947d608f60a35227f9bf8ae8ab9de06ce975cdab1144d8f229b06";
   };
 
   buildInputs = [

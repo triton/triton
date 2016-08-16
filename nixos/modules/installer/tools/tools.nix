@@ -21,9 +21,9 @@ let
     name = "nixos-install";
     src = ./nixos-install.sh;
 
-    inherit (pkgs) perl pathsFromGraph;
+    inherit (pkgs) perl pathsFromGraph rsync;
     nix = config.nix.package;
-    rsync = pkgs.rsync;
+    nixbld_gid = config.ids.gids.nixbld;
 
     nixClosure = pkgs.runCommand "closure"
       { exportReferencesGraph = ["refs" config.nix.package]; }

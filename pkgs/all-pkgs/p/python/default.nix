@@ -14,8 +14,7 @@
 , xz
 , zlib
 
-# Inherit generics
-, channel ? null
+, channel
 
 # Passthru
 , callPackage
@@ -31,8 +30,6 @@
  */
 
 let
-  inherit (stdenv)
-    isLinux;
   inherit (stdenv.lib)
     concatStringsSep
     head
@@ -43,16 +40,11 @@ let
     versionAtLeast
     versionOlder
     wtFlag;
-  inherit ((import ./sources.nix)."${channel}")
-    pgpKeyFingerprint
-    versionMinor
-    sha256;
-in
 
-let
-  versionMajor = channel;
-  isPy2 = versionOlder versionMajor "3.0";
-  isPy3 = versionAtLeast versionMajor "3.0";
+  source = (import ./sources.nix)."${channel}";
+
+  isPy2 = versionOlder channel "3.0";
+  isPy3 = versionAtLeast channel "3.0";
   ifPy2 = a: b:
     if isPy2 then
       a
@@ -63,25 +55,25 @@ let
       a
     else
       b;
+
   # For alpha releases we need to discard a<int> from the version for
   # part of the url.
-  baseVersionMinor =
+  baseVersionPatch =
     let
-      s = splitString "a" versionMinor;
+      s = splitString "a" source.versionPatch;
     in
     head s;
+
+  version = "${channel}.${source.versionPatch}";
 in
 
 stdenv.mkDerivation rec {
   name = "python-${version}";
-  inherit versionMajor;
-  inherit versionMinor;
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "https://www.python.org/ftp/python/"
-      + "${versionMajor}.${baseVersionMinor}/Python-${version}.tar.xz";
-    inherit sha256;
+    url = "https://www.python.org/ftp/python/${channel}.${baseVersionPatch}/"
+      + "Python-${version}.tar.xz";
+    inherit (source) sha256;
     allowHashOutput = false;
   };
 
@@ -102,9 +94,9 @@ stdenv.mkDerivation rec {
   ];
 
   setupHook = stdenv.mkDerivation {
-    name = "python-${versionMajor}-setup-hook";
+    name = "python-${channel}-setup-hook";
     buildCommand = ''
-      sed 's,@VERSION_MAJOR@,${versionMajor},g' ${./setup-hook.sh.in} > $out
+      sed 's,@VERSION_MAJOR@,${channel},g' ${./setup-hook.sh.in} > $out
     '';
     preferLocalBuild = true;
   };
@@ -164,7 +156,7 @@ stdenv.mkDerivation rec {
     #(wtFlag "gcc" (!stdenv.cc.isClang) null)
     #"--enable-big-digits" # py3
     #"--with-hash-algorithm" # py3
-    (if (versionAtLeast versionMajor "3.5") then
+    (if (versionAtLeast channel "3.5") then
       # Flag is not a boolean
       (if stdenv.cc.isClang then
         "--with-address-sanitizer"
@@ -192,7 +184,7 @@ stdenv.mkDerivation rec {
   postInstall =
     /* Needed for some packages, especially packages that
        backport functionality to 2.x from 3.x */ ''
-    for item in $out/lib/python${versionMajor}/test/* ; do
+    for item in $out/lib/python${channel}/test/* ; do
       if [[ "$item" != */test_support.py* ]] ; then
         rm -rvf "$item"
       else
@@ -206,70 +198,70 @@ stdenv.mkDerivation rec {
       fi
     popd
   '' + ''
-    touch $out/lib/python${versionMajor}/test/__init__.py
+    touch $out/lib/python${channel}/test/__init__.py
   '' + ''
-    paxmark E $out/bin/python${versionMajor}
+    paxmark E $out/bin/python${channel}
   '' + optionalString isPy3
     /* Some programs look for libpython<major>.<minor>.so */ ''
-    if [ ! -f "$out/lib/libpython${versionMajor}.so" ] ; then
+    if [ ! -f "$out/lib/libpython${channel}.so" ] ; then
       ln -sv \
         $out/lib/libpython3.so \
-        $out/lib/libpython${versionMajor}.so
+        $out/lib/libpython${channel}.so
     fi
   '' + optionalString isPy3
     /* Symlink include directory */ ''
-    if [ ! -d "$out/include/python${versionMajor}" ] ; then
+    if [ ! -d "$out/include/python${channel}" ] ; then
       ln -sv \
-        $out/include/python${versionMajor}m \
-        $out/include/python${versionMajor}
+        $out/include/python${channel}m \
+        $out/include/python${channel}
     fi
   '' + optionalString isPy2 ''
     # TODO: reference reason for pdb symlink
-    ln -sv $out/lib/python${versionMajor}/pdb.py $out/bin/pdb
-    ln -sv $out/lib/python${versionMajor}/pdb.py $out/bin/pdb${versionMajor}
+    ln -sv $out/lib/python${channel}/pdb.py $out/bin/pdb
+    ln -sv $out/lib/python${channel}/pdb.py $out/bin/pdb${channel}
     ln -sv $out/share/man/man1/{python2.7.1.gz,python.1.gz}
   '';
 
   preFixup = /* Simple test to make sure modules built */ ''
     echo "Testing modules"
-    $out/bin/python${versionMajor} -c "import bz2"
-    $out/bin/python${versionMajor} -c "import crypt"
-    $out/bin/python${versionMajor} -c "import ctypes"
-    $out/bin/python${versionMajor} -c "import curses"
-    $out/bin/python${versionMajor} -c "from curses import panel"
-    $out/bin/python${versionMajor} -c "import math"
-    $out/bin/python${versionMajor} -c "import readline"
-    $out/bin/python${versionMajor} -c "import sqlite3"
-    $out/bin/python${versionMajor} -c "import ssl"
-    $out/bin/python${versionMajor} -c "import zlib"
+    $out/bin/python${channel} -c "import bz2"
+    $out/bin/python${channel} -c "import crypt"
+    $out/bin/python${channel} -c "import ctypes"
+    $out/bin/python${channel} -c "import curses"
+    $out/bin/python${channel} -c "from curses import panel"
+    $out/bin/python${channel} -c "import math"
+    $out/bin/python${channel} -c "import readline"
+    $out/bin/python${channel} -c "import sqlite3"
+    $out/bin/python${channel} -c "import ssl"
+    $out/bin/python${channel} -c "import zlib"
   '' + optionalString isPy2 ''
-    $out/bin/python${versionMajor} -c "import gdbm"
+    $out/bin/python${channel} -c "import gdbm"
   '' + optionalString isPy3 ''
-    $out/bin/python${versionMajor} -c "from dbm import gnu"
-    $out/bin/python${versionMajor} -c "import lzma"
+    $out/bin/python${channel} -c "from dbm import gnu"
+    $out/bin/python${channel} -c "import lzma"
   '';
 
   postFixup = ''
     # The lines we are replacing dont include libpython so we parse it out
-    LIBS_WITH_PYTHON="$(pkg-config --libs --static $out/lib/pkgconfig/python-${versionMajor}.pc)"
+    LIBS_WITH_PYTHON="$(pkg-config --libs --static $out/lib/pkgconfig/python-${channel}.pc)"
     LIBS="$(echo "$LIBS_WITH_PYTHON" | sed 's,[ ]*\(-L\|-l\)[^ ]*python[^ ]*[ ]*, ,g')"
   '' + ''
-    sed -i $out/lib/python${versionMajor}/config${ifPy3 "-${versionMajor}m" ""}/Makefile \
+    sed -i $out/lib/python${channel}/config${ifPy3 "-${channel}m" ""}/Makefile \
       -e "s@^LIBS=.*@LIBS= $LIBS@g"
 
     # We need to update _sysconfigdata.py{,o,c}
-    sed -i "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g" $out/lib/python${versionMajor}/_sysconfigdata.py
+    sed -i "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g" $out/lib/python${channel}/_sysconfigdata.py
   '' + optionalString isPy2 ''
-    rm $out/lib/python${versionMajor}/_sysconfigdata.py{o,c}
+    rm $out/lib/python${channel}/_sysconfigdata.py{o,c}
   '' + optionalString isPy3 ''
-    rm $out/lib/python${versionMajor}/__pycache__/_sysconfigdata*.pyc
+    rm $out/lib/python${channel}/__pycache__/_sysconfigdata*.pyc
   '' + ''
-    $out/bin/python${versionMajor} -c "import _sysconfigdata"
-    $out/bin/python${versionMajor} -O -c "import _sysconfigdata"
-    $out/bin/python${versionMajor} -OO -c "import _sysconfigdata"
-    $out/bin/python${versionMajor} -OOO -c "import _sysconfigdata"
+    $out/bin/python${channel} -c "import _sysconfigdata"
+    $out/bin/python${channel} -O -c "import _sysconfigdata"
+    $out/bin/python${channel} -OO -c "import _sysconfigdata"
+    $out/bin/python${channel} -OOO -c "import _sysconfigdata"
 
-    sed --follow-symlinks -i $out/bin/python${versionMajor}-config \
+    sed --follow-symlinks -i $out/bin/python${channel}-config \
       -e "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@g"
   '';
 
@@ -281,7 +273,7 @@ stdenv.mkDerivation rec {
       isPy2
       isPy3
       version
-      versionMajor;
+      channel;
 
     dbSupport = db != null;
     opensslSupport = openssl != null;
@@ -290,14 +282,14 @@ stdenv.mkDerivation rec {
     tkSupport = false;
     zlibSupport = zlib != null;
 
-    libPrefix = "python${versionMajor}";
-    executable = "python${versionMajor}";
+    libPrefix = "python${channel}";
+    executable = "python${channel}";
     buildEnv = callPackage ../wrapper.nix { python = self; };
     sitePackages = "lib/${libPrefix}/site-packages";
     interpreter = "${self}/bin/${executable}";
 
     srcVerification = fetchurl rec {
-      inherit pgpKeyFingerprint;
+      inherit (source) pgpKeyFingerprint;
       inherit (src)
         outputHash
         outputHashAlgo

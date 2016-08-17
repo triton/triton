@@ -35,11 +35,11 @@ let
       sha256 = "699d161b038fbcff85b1c4b00c9f204ef5abf5c737729388d7ee4c25f46e1ed5";
     };
     "bcache" = {
-      version = "4.7";
+      version = "4.7.1";
       owner = "wkennington";
       repo = "linux";
-      rev = "8478a659ceb2219a6a55251a0db87f54fd82bebf";
-      sha256 = "6763a27a10c0584ff9e100092b3ca90be311977d0483b1ee8c64f71e2c09bef0";
+      rev = "712bd2c30d69d40d2d3d9e26f39a57bb619a1cb5";
+      sha256 = "9d3d0b7971ea9a62d0ae03b921672bc9a7a7aa4802e939e85c5f1e605a4ed325";
       features.bcachefs = true;
     };
   };

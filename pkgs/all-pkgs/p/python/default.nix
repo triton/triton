@@ -16,6 +16,8 @@
 
 , channel
 
+, pydebug ? false
+
 # Passthru
 , callPackage
 , self
@@ -33,7 +35,6 @@ let
   inherit (stdenv.lib)
     concatStringsSep
     head
-    optional
     optionals
     optionalString
     splitString
@@ -155,6 +156,7 @@ stdenv.mkDerivation rec {
     (ifPy2 "--enable-unicode=ucs4" null)
     #(wtFlag "gcc" (!stdenv.cc.isClang) null)
     #"--enable-big-digits" # py3
+    (wtFlag "pydebug" pydebug null)
     #"--with-hash-algorithm" # py3
     (if (versionAtLeast channel "3.5") then
       # Flag is not a boolean
@@ -241,29 +243,36 @@ stdenv.mkDerivation rec {
     $out/bin/python${channel} -c "import lzma"
   '';
 
-  postFixup = ''
-    # The lines we are replacing dont include libpython so we parse it out
-    LIBS_WITH_PYTHON="$(pkg-config --libs --static $out/lib/pkgconfig/python-${channel}.pc)"
-    LIBS="$(echo "$LIBS_WITH_PYTHON" | sed 's,[ ]*\(-L\|-l\)[^ ]*python[^ ]*[ ]*, ,g')"
-  '' + ''
-    sed -i $out/lib/python${channel}/config${ifPy3 "-${channel}m" ""}/Makefile \
-      -e "s@^LIBS=.*@LIBS= $LIBS@g"
+  postFixup =
+    let
+      ifPyDebug =
+        if pydebug then
+          "d"
+        else
+          "";
+    in ''
+      # The lines we are replacing dont include libpython so we parse it out
+      LIBS_WITH_PYTHON="$(pkg-config --libs --static $out/lib/pkgconfig/python-${channel}.pc)"
+      LIBS="$(echo "$LIBS_WITH_PYTHON" | sed 's,[ ]*\(-L\|-l\)[^ ]*python[^ ]*[ ]*, ,g')"
+    '' + ''
+      sed -i $out/lib/python${channel}/config${ifPy3 "-${channel}${ifPyDebug}m" ""}/Makefile \
+        -e "s@^LIBS=.*@LIBS= $LIBS@g"
 
-    # We need to update _sysconfigdata.py{,o,c}
-    sed -i "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g" $out/lib/python${channel}/_sysconfigdata.py
-  '' + optionalString isPy2 ''
-    rm $out/lib/python${channel}/_sysconfigdata.py{o,c}
-  '' + optionalString isPy3 ''
-    rm $out/lib/python${channel}/__pycache__/_sysconfigdata*.pyc
-  '' + ''
-    $out/bin/python${channel} -c "import _sysconfigdata"
-    $out/bin/python${channel} -O -c "import _sysconfigdata"
-    $out/bin/python${channel} -OO -c "import _sysconfigdata"
-    $out/bin/python${channel} -OOO -c "import _sysconfigdata"
+      # We need to update _sysconfigdata.py{,o,c}
+      sed -i "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g" $out/lib/python${channel}/_sysconfigdata.py
+    '' + optionalString isPy2 ''
+      rm $out/lib/python${channel}/_sysconfigdata.py{o,c}
+    '' + optionalString isPy3 ''
+      rm $out/lib/python${channel}/__pycache__/_sysconfigdata*.pyc
+    '' + ''
+      $out/bin/python${channel} -c "import _sysconfigdata"
+      $out/bin/python${channel} -O -c "import _sysconfigdata"
+      $out/bin/python${channel} -OO -c "import _sysconfigdata"
+      $out/bin/python${channel} -OOO -c "import _sysconfigdata"
 
-    sed --follow-symlinks -i $out/bin/python${channel}-config \
-      -e "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@g"
-  '';
+      sed --follow-symlinks -i $out/bin/python${channel}-config \
+        -e "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@g"
+    '';
 
   # Used by python-2.7-deterministic-build.patch
   DETERMINISTIC_BUILD = 1;

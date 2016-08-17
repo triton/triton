@@ -32,9 +32,9 @@
     sha256x86_64 = "d7fcc78409d9ebc5663d1d925076199de2c64bbc16df84d9ed783f8f873e8c5d";
   };
   "beta" = {
-    versionMajor = "367";
-    versionMinor = "18";
-    sha256i686   = "9a5184308a981b1b36dde4466006b7b45ff4c2a2f364374b3835112899a55dbd";
-    sha256x86_64 = "2e512251203af2ae7d3691046de669b23b62ff3c2940e517940f2e510a93b376";
+    versionMajor = "370";
+    versionMinor = "23";
+    sha256i686   = "7a275413a3709ef11649ed65d07bae92368c0a1b754fec5c9f9769e516a19263";
+    sha256x86_64 = "6c462f240ed434a1bb64b7b82a325c63b9056cc135dfe6d54473c9afedbf9693";
   };
 }

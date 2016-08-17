@@ -3,14 +3,14 @@
 with pkgs.lib;
 
 let
-  pythonAtLeast = versionAtLeast python.versionMajor;
-  pythonOlder = versionOlder python.versionMajor;
-  isPy27 = python.versionMajor == "2.7";
-  isPy33 = python.versionMajor == "3.3";
-  isPy34 = python.versionMajor == "3.4";
-  isPy35 = python.versionMajor == "3.5";
+  pythonAtLeast = versionAtLeast python.channel;
+  pythonOlder = versionOlder python.channel;
+  isPy27 = python.channel == "2.7";
+  isPy33 = python.channel == "3.3";
+  isPy34 = python.channel == "3.4";
+  isPy35 = python.channel == "3.5";
   isPyPy = python.executable == "pypy";
-  isPy3k = strings.substring 0 1 python.versionMajor == "3";
+  isPy3k = strings.substring 0 1 python.channel == "3";
 
   fetchPyPi = { package, version, sha256, type ? ".tar.gz" }:
     pkgs.fetchurl rec {

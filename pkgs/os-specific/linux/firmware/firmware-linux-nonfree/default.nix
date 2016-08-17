@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "2016-08-04";
+  version = "2016-08-14";
 in
 stdenv.mkDerivation rec {
   name = "firmware-linux-nonfree-${version}";
@@ -16,8 +16,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "wkennington";
     repo = "linux-firmware";
-    rev = "c170c8d95794d6aedbaeea44674daaa96baf04f7";
-    sha256 = "25ff9cc9289b04a4e849b1c36ddbddb079ede52586372c4b410ec01bac655f18";
+    rev = "70a3c2adcce7c51e4f26e929d666237904f6fd31";
+    sha256 = "c71f5d142276dc7775f547f89d92b12a5072462bc64be9da461b7ddc78d213e5";
   };
 
   preInstall = ''

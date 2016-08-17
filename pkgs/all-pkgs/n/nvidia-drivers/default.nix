@@ -146,7 +146,10 @@ stdenv.mkDerivation {
 
   postPatch =
     # 364+ & Linux 4.7
-    optionalString (versionAtLeast kernel.version "4.7" && versionAtLeast source.versionMajor "364") (
+    optionalString (
+      versionAtLeast kernel.version "4.7"
+      && versionAtLeast source.versionMajor "364"
+      && versionOlder source.versionMajor "370") (
       /* Collision between function added in Linux 4.7 */ ''
         sed -i kernel/nvidia-uvm/uvm_linux.h \
           -i kernel/nvidia-uvm/uvm8_gpu.c \

@@ -1238,6 +1238,8 @@ htop = callPackage ../all-pkgs/h/htop { };
 
 http-parser = callPackage ../all-pkgs/h/http-parser { };
 
+httping = callPackage ../all-pkgs/h/httping { };
+
 hunspell = callPackage ../all-pkgs/h/hunspell { };
 
 hwdata = callPackage ../all-pkgs/h/hwdata { };

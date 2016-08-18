@@ -118,6 +118,11 @@ rec {
     ftp://imagemagick.mirrorcatalogs.com/imagemagick
   ];
 
+  ipfs = [
+    https://ipfs.wak.io
+    https://ipfs.io
+  ];
+
   # Mirrors of ftp://ftp.kde.org/pub/kde/.
   kde = [
     http://kde.mirrors.pair.com

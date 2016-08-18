@@ -642,7 +642,11 @@ done
 
 # We only ever want to access the official gateway as a last resort as it can be slow
 if [ -n "$multihash" ]; then
-  tryDownload "https://ipfs.wak.io/ipfs/$multihash"
+  ipfsUrls="mirror://ipfs/ipfs/$multihash"
+  fixUrls 'ipfsUrls'
+  for url in "${ipfsUrls[@]}"; do
+    tryDownload "$url"
+  done
 fi
 
 

@@ -352,6 +352,8 @@ six = callPackage ../all-pkgs/s/six { };
 
 slimit = callPackage ../all-pkgs/s/slimit { };
 
+snowballstemmer = callPackage ../all-pkgs/s/snowballstemmer { };
+
 sqlalchemy = callPackage ../all-pkgs/s/sqlalchemy { };
 
 statistics = callPackage ../all-pkgs/s/statistics { };
@@ -15194,22 +15196,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #    };
  #  };
 
- #  PyStemmer = buildPythonPackage rec {
- #    name = "PyStemmer-1.3.0";
-
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/P/PyStemmer/${name}.tar.gz";
- #      sha256 = "14fb8y4n8d7nj19pg3j2r5bl7qpbqwx6x9zvzjbid34pckmi9b6i";
- #    };
-
- #    meta = {
- #      description = "Snowball stemming algorithms, for information retrieval";
- #      homepage = http://snowball.tartarus.org/;
- #      license = licenses.mit;
- #      platforms = platforms.all;
- #    };
- #  };
-
  #  pyro3 = buildPythonPackage (rec {
  #    name = "Pyro-3.16";
  #    disabled = isPy3k;
@@ -17235,24 +17221,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #      homepage = "http://code.google.com/p/slowaes/";
  #      description = "AES implemented in pure python";
  #      license = with licenses; [ asl20 ];
- #    };
- #  };
-
- #  snowballstemmer = buildPythonPackage rec {
- #    name = "snowballstemmer-1.2.1";
-
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/s/snowballstemmer/${name}.tar.gz";
- #      sha256 = "919f26a68b2c17a7634da993d91339e288964f93c274f1343e3bbbe2096e1128";
- #    };
-
- #    buildInputs = with self; [ PyStemmer ];
-
- #    meta = {
- #      description = "16 stemmer algorithms (15 + Poerter English stemmer) generated from Snowball algorithms";
- #      homepage = http://sigal.saimon.org/en/latest/index.html;
- #      license = licenses.bsd3;
- #      platforms = platforms.all;
  #    };
  #  };
 

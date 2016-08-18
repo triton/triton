@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, cmake
+{ stdenv, fetchurl, cmake, ninja
 , alsaSupport ? true, alsa-lib ? null
 , pulseSupport ? true, pulseaudio_lib ? null
 }:
@@ -9,15 +9,18 @@ assert alsaSupport -> alsa-lib != null;
 assert pulseSupport -> pulseaudio_lib != null;
 
 stdenv.mkDerivation rec {
-  version = "1.16.0";
+  version = "1.17.2";
   name = "openal-soft-${version}";
 
   src = fetchurl {
-    url = "http://kcat.strangesoft.net/openal-releases/${name}.tar.bz2";
-    sha256 = "0pqdykdclycfnk66v166srjrry936y39d1dz9wl92qz27wqwsg9g";
+    urls = [
+      "mirror://gentoo/distfiles/${name}.tar.bz2"
+      "http://kcat.strangesoft.net/openal-releases/${name}.tar.bz2"
+    ];
+    sha256 = "a341f8542f1f0b8c65241a17da13d073f18ec06658e1a1606a8ecc8bbc2b3314";
   };
 
-  buildInputs = [ cmake ]
+  buildInputs = [ cmake ninja ]
     ++ optional alsaSupport alsa-lib
     ++ optional pulseSupport pulseaudio_lib;
 

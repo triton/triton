@@ -189,6 +189,8 @@ deluge = callPackage ../all-pkgs/d/deluge { };
 
 discogs-client = callPackage ../all-pkgs/d/discogs-client { };
 
+docutils = callPackage ../all-pkgs/d/docutils { };
+
 duplicity = callPackage ../all-pkgs/d/duplicity { };
 
 enum34 = callPackage ../all-pkgs/e/enum34 { };
@@ -7829,17 +7831,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #      maintainers = with maintainers; [ koral ];
  #    };
  #  };
-
-
-   docutils = buildPythonPackage rec {
-     name = "docutils-0.12";
-
-     src = pkgs.fetchurl {
-       url = "mirror://sourceforge/docutils/${name}.tar.gz";
-       multihash = "QmcfbEz6Kv8ri9DL47SdejSsWuCspmsqV9UeEYWmK2YrAg";
-       sha256 = "1ylnjnw1x4b2y7blr6x35ncdzn69k253kw4cdkv6asdb21w73ny7";
-     };
-   };
 
  #  doxypy = buildPythonPackage rec {
  #    name = "doxypy-0.4.2";

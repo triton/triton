@@ -52,15 +52,13 @@
 , pycountry
 
 # External plugins
-, enableAlternatives ? true
+, enableAlternatives ? false
 #, enableArtistCountry ? true
 #, enableCopyArtifacts ? true
 , enableDsedivecBeetsPlugins ? true
 }:
 
 let
-  inherit (stdenv)
-    targetSystem;
   inherit (stdenv.lib)
     attrNames
     concatMapStrings
@@ -214,7 +212,7 @@ let
   testShell = "${bash}/bin/bash --norc";
   completion = "${bash-completion}/share/bash-completion/bash_completion";
 
-  version = "2016-08-10";
+  version = "2016-08-18";
 in
 buildPythonPackage rec {
   name = "beets-${version}";
@@ -222,8 +220,8 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "sampsyo";
     repo = "beets";
-    rev = "10d7a6f46ac58d40bc12661d943d2e3ae24761cd";
-    sha256 = "0e978aa1ccf49b18a6a1914199c8b3110efcaa2c52bc6682c214e0f2fcd0fa7a";
+    rev = "4c4d8cff60b574296194075bce54a05d017f053b";
+    sha256 = "90dbbdd1fc3912bb3cefa247ab6b45971ae477d3c099a23aa05e04512a89a27c";
   };
 
   nativeBuildInputs = [
@@ -263,7 +261,7 @@ buildPythonPackage rec {
     werkzeug
   ] ++ optionals isPy27 [
     enum34
-  ] ++ optionals (versionOlder pythonPackages.python.versionMajor "3.5") [
+  ] ++ optionals (versionOlder pythonPackages.python.channel "3.5") [
     pathlib
   ] ++ [
     pycountry

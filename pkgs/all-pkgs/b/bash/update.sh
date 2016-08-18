@@ -5,7 +5,7 @@ set -e
 # Get the current directory containing the nix expressions
 NIX_DIR="$(dirname "$(readlink -f "$0")")"
 
-source $NIX_DIR/../../../maintainers/scripts/concurrent.lib.sh
+source $NIX_DIR/../../../../maintainers/scripts/concurrent.lib.sh
 
 # Setup the temporary storage area
 TMPDIR=""

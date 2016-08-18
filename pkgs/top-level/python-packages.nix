@@ -280,6 +280,8 @@ pydenticon = callPackage ../all-pkgs/p/pydenticon { };
 
 pygame = callPackage ../all-pkgs/p/pygame { };
 
+pygments = callPackage ../all-pkgs/p/pygments { };
+
 pygtk = callPackage ../all-pkgs/p/pygtk { };
 
 pykka = callPackage ../all-pkgs/p/pykka { };
@@ -14803,15 +14805,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #      description = "A cross-platform windowing and multimedia library";
  #      license = licenses.bsd3;
  #      platforms = platforms.mesaPlatforms;
- #    };
- #  };
-
- #  pygments = buildPythonPackage rec {
- #    name = "Pygments-2.1.3";
-
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/P/Pygments/${name}.tar.gz";
- #      sha256 = "10axnp2wpjnq9g8wg53fx0c70dfxqrz498jyz8mrdx9a3flwir48";
  #    };
  #  };
 

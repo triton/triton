@@ -5,9 +5,11 @@
 , markupsafe
 }:
 
+let
+  version = "2.8";
+in
 buildPythonPackage rec {
   name = "Jinja2-${version}";
-  version = "2.8";
 
   src = fetchPyPi {
     package = "Jinja2";

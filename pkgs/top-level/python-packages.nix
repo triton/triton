@@ -354,6 +354,8 @@ slimit = callPackage ../all-pkgs/s/slimit { };
 
 snowballstemmer = callPackage ../all-pkgs/s/snowballstemmer { };
 
+sphinx = callPackage ../all-pkgs/s/sphinx { };
+
 sqlalchemy = callPackage ../all-pkgs/s/sqlalchemy { };
 
 statistics = callPackage ../all-pkgs/s/statistics { };
@@ -17799,28 +17801,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #      description = "Backport of the subprocess module from Python 3.2.5 for use on 2.x";
  #      maintainers = with maintainers; [ garbas ];
  #    };
- #  };
-
-
- #  sphinx = buildPythonPackage rec {
- #    name = "Sphinx-1.4.1";
-
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/S/Sphinx/${name}.tar.gz";
- #      sha256 = "c6871a784d24aba9270b6b28541537a57e2fcf4d7c799410eba18236bc76d6bc";
- #    };
-
-
- #    propagatedBuildInputs = with self; [
- #      alabaster
- #      Babel
- #      docutils
- #      imagesize
- #      jinja2
- #      pygments
- #      snowballstemmer
- #      six
- #    ];
  #  };
 
  #  sphinx_rtd_theme = buildPythonPackage (rec {

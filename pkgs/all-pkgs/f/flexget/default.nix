@@ -45,22 +45,13 @@ let
 in
 buildPythonPackage rec {
   name = "flexget-${version}";
-  version = "2.2.15";
+  version = "2.3.0";
 
   src = fetchPyPi {
     package = "FlexGet";
     inherit version;
-    sha256 = "968a8788d62a0c08ede28adcb0617b9c8ee799bc01f7c933e39b5c0cd120d154";
+    sha256 = "4257c052dbd1b68b9f00590a890352fe2b1dfcafeb70305ac6356280356ed5a9";
   };
-
-  postPatch =
-    /* Allow using newer dependencies */ ''
-      sed -i requirements.txt \
-        -e 's/,.*<.*//' \
-        -e 's/<.*//' \
-        -e 's/!=.*//' \
-        -e 's/==.*//'
-    '';
 
   propagatedBuildInputs = [
     apscheduler
@@ -100,8 +91,16 @@ buildPythonPackage rec {
     deluge
   ];
 
-  disabled = isPy3k;
-  doCheck = false;
+  postPatch =
+    /* Allow using newer dependencies */ ''
+      sed -i requirements.txt \
+        -e 's/,.*<.*//' \
+        -e 's/<.*//' \
+        -e 's/!=.*//' \
+        -e 's/==.*//'
+    '';
+
+    pipWhlFile = "*py3*";
 
   meta = with stdenv.lib; {
     description = "Automation tool for content like torrents, nzbs, podcasts";

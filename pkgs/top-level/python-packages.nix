@@ -730,16 +730,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #    };
  #  };
 
- #  alabaster = buildPythonPackage rec {
- #    name = "alabaster-0.7.7";
-
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/a/alabaster/${name}.tar.gz";
- #      sha256 = "f416a84e0d0ddbc288f6b8f2c276d10b40ca1238562cd9ed5a751292ec647b71";
- #    };
- #  };
-
-
  #  alembic = buildPythonPackage rec {
  #    name = "alembic-0.8.3";
 

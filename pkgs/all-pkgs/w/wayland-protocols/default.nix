@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "wayland-protocols-1.4";
+  name = "wayland-protocols-1.7";
 
   src = fetchurl {
     url = "https://wayland.freedesktop.org/releases/${name}.tar.xz";
     allowHashOutput = false;
-    sha256 = "014a9a23c21ed14f49b1005b3e8efa66d6337d4ceafc97f7b0d6707e7e3df572";
+    sha256 = "635f2a937d318f1fecb97b54074ca211486e38af943868dd0fa82ea38d091c1f";
   };
 
   buildInputs = [
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Wayland protocol files";
-    homepage = http://wayland.freedesktop.org/;
+    homepage = https://wayland.freedesktop.org/;
     license = licenses.mit;
     maintainers = with maintainers; [
       codyopel

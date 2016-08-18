@@ -1,7 +1,6 @@
 { stdenv
 , fetchurl
 
-# Required
 , boost
 , curl
 , fftw_double
@@ -17,16 +16,15 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+    boolEn
+    boolWt;
 in
-
 stdenv.mkDerivation rec {
-  name = "ncmpcpp-0.7.4";
+  name = "ncmpcpp-0.7.5";
 
   src = fetchurl {
-    url = "http://ncmpcpp.rybczak.net/stable/${name}.tar.bz2";
-    sha256 = "d70425f1dfab074a12a206ddd8f37f663bce2bbdc0a20f7ecf290ebe051f1e63";
+    url = "https://rybczak.net/ncmpcpp/stable/${name}.tar.bz2";
+    sha256 = "7e4f643020b36698462879013a8b16111f8c3a4c5819cf186aed78032a41e07d";
   };
 
   buildInputs = [
@@ -42,19 +40,19 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "BOOST_LIB_SUFFIX="
-    (enFlag "outputs" outputsSupport null)
-    (enFlag "visualizer" (fftw_double != null) null)
-    (enFlag "clock" clockSupport null)
+    "--${boolEn outputsSupport}-outputs"
+    "--${boolEn (fftw_double != null)}-visualizer"
+    "--${boolEn clockSupport}-clock"
     "--enable-unicode"
-    (wtFlag "curl" (curl != null) null)
-    (wtFlag "fftw" (fftw_double != null) null)
+    "--${boolWt (curl != null)}-curl"
+    "--${boolWt (fftw_double != null)}-fftw"
     "--without-pdcurses"
-    (wtFlag "taglib" (taglib != null) null)
+    "--${boolWt (taglib != null)}-taglib"
   ];
 
   meta = with stdenv.lib; {
-    description = "A featureful ncurses based MPD client inspired by ncmpc";
-    homepage = http://ncmpcpp.rybczak.net/;
+    description = "A featureful ncurses based MPD client";
+    homepage = https://rybczak.net/ncmpcpp/;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
       codyopel

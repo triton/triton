@@ -226,6 +226,8 @@ idna = callPackage ../all-pkgs/i/idna { };
 
 iotop = callPackage ../all-pkgs/i/iotop { };
 
+imagesize = callPackage ../all-pkgs/i/imagesize { };
+
 ipaddress = callPackage ../all-pkgs/i/ipaddress { };
 
 jinja2 = callPackage ../all-pkgs/j/jinja2 { };
@@ -17858,15 +17860,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #      snowballstemmer
  #      six
  #    ];
- #  };
-
- #  imagesize = buildPythonPackage rec {
- #    name = "imagesize-0.7.0";
-
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/i/imagesize/${name}.tar.gz";
- #      sha256 = "bb3d10fca0f66f771298d19035d8e6d01aaafb9ec8d9ae972dcb8acb2cf94f57";
- #    };
  #  };
 
  #  sphinx_rtd_theme = buildPythonPackage (rec {

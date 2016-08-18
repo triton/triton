@@ -1038,7 +1038,10 @@ gnome-control-center = callPackage ../all-pkgs/g/gnome-control-center { };
 
 gnome-desktop = callPackage ../all-pkgs/g/gnome-desktop { };
 
-gnome-documents = callPackage ../all-pkgs/g/gnome-documents { };
+gnome-documents_3-20 = callPackage ../all-pkgs/g/gnome-documents {
+  channel = "3.20";
+};
+gnome-documents = callPackageAlias "gnome-documents_3-20" { };
 
 gnome-keyring = callPackage ../all-pkgs/g/gnome-keyring { };
 

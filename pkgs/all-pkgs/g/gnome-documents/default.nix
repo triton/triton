@@ -34,18 +34,21 @@
 , rest
 , tracker
 , webkitgtk
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gnome-documents-${version}";
-  versionMajor = "3.20";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gnome-documents-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-documents/${versionMajor}/"
-        + "${name}.tar.xz";
-    sha256 = "a5fa496c5e80eccb8d2e5bba7f4d7dc4cc6c9f53d5bc028402428771be1237d2";
+    url = "mirror://gnome/sources/gnome-documents/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/gnome-documents/${channel}/"
+      + "${name}.sha256sum";
+    sha256 = "c73810ded97431360ba80c127d3244b1e6e416643fba0ba96411d22729211394";
   };
 
   nativeBuildInputs = [

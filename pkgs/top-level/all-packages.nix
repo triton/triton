@@ -723,6 +723,8 @@ cryptopp = callPackage ../all-pkgs/c/crypto++ { };
 
 cryptsetup = callPackage ../all-pkgs/c/cryptsetup { };
 
+cscope = callPackage ../all-pkgs/c/cscope { };
+
 cuetools = callPackage ../all-pkgs/c/cuetools { };
 
 cups = callPackage ../all-pkgs/c/cups { };

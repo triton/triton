@@ -2464,6 +2464,7 @@ xf86-input-wacom = callPackage ../all-pkgs/x/xf86-input-wacom { };
 xfe = callPackage ../all-pkgs/x/xfe { };
 
 xfsprogs = callPackage ../all-pkgs/x/xfsprogs { };
+
 xfsprogs_lib = pkgs.xfsprogs.lib;
 
 xine-lib = callPackage ../all-pkgs/x/xine-lib { };

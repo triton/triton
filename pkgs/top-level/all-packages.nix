@@ -531,7 +531,7 @@ arkive = callPackage ../all-pkgs/a/arkive { };
 
 asciidoc = callPackage ../all-pkgs/a/asciidoc { };
 
-asciinema = pkgs.goPackages.asciinema.bin // { outputs = [ "bin" ]; };
+asciinema = pkgs.python3Packages.asciinema;
 
 aspell = callPackage ../all-pkgs/a/aspell { };
 
@@ -1270,7 +1270,7 @@ intel-microcode = callPackage ../all-pkgs/i/intel-microcode { };
 
 intltool = callPackage ../all-pkgs/i/intltool { };
 
-iotop = pkgs.pythonPackages.iotop;
+iotop = pkgs.python3Packages.iotop;
 
 iperf = callPackage ../all-pkgs/i/iperf { };
 iperf_2 = callPackageAlias "iperf" {

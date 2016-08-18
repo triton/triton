@@ -136,6 +136,8 @@ aniso8601 = callPackage ../all-pkgs/a/aniso8601 { };
 
 apscheduler = callPackage ../all-pkgs/a/apscheduler { };
 
+asciinema = callPackage ../all-pkgs/a/asciinema { };
+
 attrs = callPackage ../all-pkgs/a/attrs { };
 
 babel = callPackage ../all-pkgs/b/babel { };

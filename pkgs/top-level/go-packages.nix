@@ -317,13 +317,6 @@ let
     sha256 = "1qfq4ax68d7a3ixl60fb8kgyk0qx0mf7rrk562cnkpgzrhkdcm0w";
   };
 
-  asciinema = buildFromGitHub {
-    rev = "v1.3.0";
-    owner  = "asciinema";
-    repo   = "asciinema";
-    sha256 = "03dznhwa2wxyqdhjkjrjmlw185kx8bi29cn2hb1zlq27nqsfv5ly";
-  };
-
   asn1-ber = buildFromGitHub {
     rev = "v1.1";
     owner  = "go-asn1-ber";

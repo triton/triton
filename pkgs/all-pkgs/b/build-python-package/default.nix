@@ -21,7 +21,7 @@
 , buildInputs ? [ ]
 
 # propagate build dependencies so in case we have A -> B -> C,
-# C can import package A propagated by B 
+# C can import package A propagated by B
 , propagatedBuildInputs ? [ ]
 
 # passed to "python setup.py build_ext"
@@ -126,7 +126,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
     pushd dist
       ${pip_bootstrap}/bin/pip -v install \
-        *.whl --no-index --prefix=$out --no-cache
+        ''${pipWhlFile-*}.whl --no-index --prefix=$out --no-cache
     popd
 
     runHook postInstall

@@ -2428,13 +2428,6 @@ wayland = callPackage ../all-pkgs/w/wayland { };
 
 wayland-protocols = callPackage ../all-pkgs/w/wayland-protocols { };
 
-webkitgtk_2_4_gtk3 = callPackage ../all-pkgs/w/webkitgtk/2.4.x.nix {
-  gtkVer = "3";
-};
-webkitgtk_2_4_gtk2 = callPackageAlias "webkitgtk_2_4_gtk3" {
-  gtkVer = "2";
-};
-webkitgtk_2_4 = callPackageAlias "webkitgtk_2_4_gtk3" { };
 webkitgtk = callPackage ../all-pkgs/w/webkitgtk { };
 
 wget = callPackage ../all-pkgs/w/wget { };

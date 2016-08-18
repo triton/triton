@@ -11,9 +11,10 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
+    boolEn
+    boolString
+    boolWt
+    optionals;
 
   version = "5.2";
 
@@ -44,7 +45,7 @@ stdenv.mkDerivation {
   postPatch = ''
     patchShebangs ./Misc/
     patchShebangs ./Util/
-  '' + /* Test requires filesystem with atime enabled */ ''
+  '' + /* Test requires filesystem to have atime enabled */ ''
     rm -fv ./Test/C02cond.ztst
   '';
 
@@ -74,15 +75,15 @@ stdenv.mkDerivation {
     "--enable-function-subdirs"
     "--enable-maildir-support"
     "--enable-readnullcmd=pager"
-    (enFlag "pcre" (pcre != null) null)
-    (enFlag "cap" (libcap != null) null)
-    (enFlag "gdbm" (gdbm != null) null)
+    "--${boolEn (pcre != null)}-pcre"
+    "--${boolEn (libcap != null)}-cap"
+    "--${boolEn (gdbm != null)}-gdbm"
     "--enable-largefile"
     "--enable-multibyte"
     # TODO: musl libc support
     "--disable-libc-musl"
     "--enable-dynamic-nss"
-    (wtFlag "term-lib" (ncurses != null) "ncursesw")
+    "--${boolWt (ncurses != null)}-term-lib${boolString (ncurses != null) "=ncursesw" ""}"
     "--with-tcsetpgrp"
   ];
 

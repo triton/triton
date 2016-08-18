@@ -130,6 +130,8 @@ in {
 ################################################################################
 ################################################################################
 
+alabaster = callPackage ../all-pkgs/a/alabaster { };
+
 aniso8601 = callPackage ../all-pkgs/a/aniso8601 { };
 
 apscheduler = callPackage ../all-pkgs/a/apscheduler { };

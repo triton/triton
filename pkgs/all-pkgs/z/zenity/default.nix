@@ -17,22 +17,23 @@
 , libxml2
 , webkitgtk
 , xorg
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag
+    boolEn
     optionals;
-in
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "zenity-${version}";
-  versionMajor = "3.20";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "zenity-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/zenity/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/zenity/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/zenity/${channel}/${name}.sha256sum";
     sha256 = "02e8759397f813c0a620b93ebeacdab9956191c9dc0d0fcba1815c5ea3f15a48";
   };
 
@@ -60,8 +61,8 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    (enFlag "libnotify" (libnotify != null) null)
-    (enFlag "webkitgtk" (webkitgtk != null) null)
+    "--${boolEn (libnotify != null)}-libnotify"
+    "--${boolEn (webkitgtk != null)}-webkitgtk"
     "--disable-debug"
     "--enable-compile-warnings"
     "--disable-iso-c"

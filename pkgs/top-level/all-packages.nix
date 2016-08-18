@@ -2530,9 +2530,13 @@ yelp-xsl = callPackage ../all-pkgs/y/yelp-xsl { };
 
 zeitgeist = callPackage ../all-pkgs/z/zeitgeist { };
 
-zenity = callPackage ../all-pkgs/z/zenity {
+zenity_generics = overrides: callPackage ../all-pkgs/z/zenity ({
   webkitgtk = null;
+} // overrides);
+zenity_3-20 = pkgs.zenity_generics {
+  channel = "3.20";
 };
+zenity = callPackageAlias "zenity_3-20" { };
 
 zeromq = callPackage ../all-pkgs/z/zeromq { };
 

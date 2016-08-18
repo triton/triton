@@ -138,6 +138,8 @@ apscheduler = callPackage ../all-pkgs/a/apscheduler { };
 
 attrs = callPackage ../all-pkgs/a/attrs { };
 
+babel = callPackage ../all-pkgs/b/babel { };
+
 babelfish = callPackage ../all-pkgs/b/babelfish { };
 
 backports-abc = callPackage ../all-pkgs/b/backports-abc { };

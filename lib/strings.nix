@@ -240,4 +240,26 @@ rec {
     in
       absolutePaths;
 
+  /**
+   * Implements a generic function for creating custom boolean
+   * strings.
+   */
+  boolString = boolean: trueString: falseString:
+    if boolean then
+      "${trueString}"
+    else
+      "${falseString}";
+
+  /**
+   * Commonly used boolean strings
+   */
+  boolEn = boolean:
+    boolString boolean "enable" "disable";
+  boolWt = boolean:
+    boolString boolean "with" "without";
+  boolOn = boolean:
+    boolString boolean "ON" "OFF";
+  bool01 = boolean:
+    boolString boolean "1" "0";
+
 }

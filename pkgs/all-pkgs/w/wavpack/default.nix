@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://www.wavpack.com/${name}.tar.bz2";
+    multihash = "QmSj1A89S3tnTSWEF2iSqVdPKiT1aaq3kCekuStgk3BkCU";
     sha256 = "79182ea75f7bd1ca931ed230062b435fde4a4c2e0dbcad048007bd1ef1e66be9";
   };
 

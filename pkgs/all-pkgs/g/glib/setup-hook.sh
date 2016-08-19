@@ -1,16 +1,16 @@
 # Add gio modules to GIO_EXTRA_MODULES
 find_gio_modules() {
-  if [ -d "${out}/lib/gio-modules/${name}/gio/modules" ] ; then
+  if [ -d "${1}/lib/gio-modules/"*"/gio/modules" ] ; then
     addToSearchPath GIO_EXTRA_MODULES \
-      "${out}/lib/gio-modules/${name}/gio/modules"
+      "${1}/lib/gio-modules/"*"/gio/modules"
   fi
 }
 
 # Add gsettings schemas to GSETTINGS_SCHEMAS_PATH
 find_gsettings_schemas() {
-  if [ -d "${out}/share/gschemas/${name}/glib-2.0/schemas" ] ; then
+  if [ -d "${1}/share/gschemas/"*"/glib-2.0/schemas" ] ; then
     addToSearchPath GSETTINGS_SCHEMAS_PATH \
-      "${out}/share/gschemas/${name}"
+      "${1}/share/gschemas/"*
   fi
 }
 

@@ -3,36 +3,31 @@
 , fetchurl
 , nasm
 
-# Use libsndfile instead of lame's internal routines
-, sndfileFileIOSupport ? false
-  , libsndfile
+, libsndfile
 }:
 
 let
   inherit (stdenv)
     targetSystem;
   inherit (stdenv.lib)
+    boolEn
+    boolString
     elem
-    enFlag
     optional
-    platforms
-    wtFlag;
-in
+    platforms;
 
-let
   sndfileFileIO =
-    if sndfileFileIOSupport then
+    if libsndfile != null then
       "sndfile"
     else
       "lame";
 in
-
 stdenv.mkDerivation rec {
-  name = "lame-${version}";
-  version = "3.99.5";
+  name = "lame-3.99.5";
 
   src = fetchurl {
     url = "mirror://sourceforge/lame/${name}.tar.gz";
+    multihash = "QmbmNaXnEaCEREJ36QCgR5ExhbMuDuHQKMPU1BRETn63Sm";
     sha256 = "1zr3kadv35ii6liia0bpfgxpag27xcivp571ybckpbz4b10nnd14";
   };
 
@@ -49,14 +44,14 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [ ]
-    ++ optional sndfileFileIOSupport libsndfile;
+    ++ optional (libsndfile != null) libsndfile;
 
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-largefile"
-    (enFlag "nasm" (
+    "--${boolEn (
       elem targetSystem platforms.i686
-      || elem targetSystem platforms.x86_64) null)
+      || elem targetSystem platforms.x86_64)}-nasm"
     "--enable-rpath"
     "--enable-cpml"
     "--disable-gtktest"
@@ -69,13 +64,13 @@ stdenv.mkDerivation rec {
     "--enable-dynamic-frontends"
     "--enable-expopt=norm"
     "--disable-debug"
-    (wtFlag "fileio" sndfileFileIOSupport sndfileFileIO)
+    "--with-fileio=${boolString (libsndfile != null) "sndfile" "lame"}"
   ];
 
   meta = with stdenv.lib; {
     description = "A high quality MPEG Audio Layer III (MP3) encoder";
-    homepage  = http://lame.sourceforge.net;
-    license   = licenses.lgpl2;
+    homepage = http://lame.sourceforge.net;
+    license = licenses.lgpl2;
     maintainers = with maintainers; [
       codyopel
     ];

@@ -25,17 +25,17 @@
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    boolEn;
 in
 stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
-  version = "2016-08-10";
+  version = "2016-08-18";
 
   src = fetchFromGitHub {
     owner = "gnome-mpv";
     repo = "gnome-mpv";
-    rev = "5cdb7c68fbe68e0a38cbadd9df41198a769b548e";
-    sha256 = "3c117e8266b6b1b442070b2300b59a4ae3c95ece106cba08ad3e783d0058d904";
+    rev = "36bdc1cc579c8a1f4da63f3b18f12d934f66a1e6";
+    sha256 = "09997ec37c628c0ffcfabe4abfd780a36cb26fa710ffbda02057de3cc31792db";
   };
 
   nativeBuildInputs = [
@@ -76,7 +76,7 @@ stdenv.mkDerivation rec {
     "--enable-schemas-compile"
     "--disable-debug"
     "--enable-opencl-cb"
-    (enFlag "appstream-util" (appstream-glib != null) null)
+    "--${boolEn (appstream-glib != null)}-appstream-util"
   ];
 
   preFixup = ''

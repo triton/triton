@@ -13,6 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (dir: "ftp://oss.sgi.com/projects/xfs/${dir}/${name}.tar.gz")
       [ "cmd_tars" "previous" ];
+    multihash = "QmdtRkJHmtuLiSo4w4LdNk1V5X5mekdX4RyoVyRYwPnbab";
     sha256 = "88580bb3e6847c3edef436703a4fae403fc19b20739db4c31166ee4b256178d7";
   };
 

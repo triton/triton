@@ -3,17 +3,12 @@
 }:
 
 let
+  mirrors = import ../../build-support/fetchurl/mirrors.nix;
+
   makeUrls = { multihash, nix-hash, file, sha256, executable ? false }:
     import <nix/fetchurl.nix> {
       name = file;
-      url = "https://ipfs.wak.io/ipfs/${multihash}";
-      #urls = [
-      #  "http://127.0.0.1/ipfs/${multihash}"
-      #  "http://127.0.0.1:8080/ipfs/${multihash}"
-      #  "https://pub.wak.io/nixos/bootstrap/${hostSystem}/${nix-hash}/${file}"
-      #  "https://ipfs.wak.io/ipfs/${multihash}"
-      #  "https://gateway.ipfs.io/ipfs/${multihash}"
-      #];
+      url = "${lib.head mirrors.ipfs}/ipfs/${multihash}";
       inherit sha256 executable;
     };
 in

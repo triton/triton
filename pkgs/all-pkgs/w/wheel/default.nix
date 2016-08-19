@@ -2,17 +2,21 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, jsonschema
+
+, coverage
+, pytest
+, pytestcov
 }:
 
 let
   inherit (stdenv.lib)
     optionals;
-in
 
+  version = "0.29.0";
+in
 buildPythonPackage rec {
   name = "wheel-${version}";
-  version = "0.29.0";
 
   src = fetchPyPi {
     package = "wheel";
@@ -21,13 +25,13 @@ buildPythonPackage rec {
   };
 
   buildInputs = optionals doCheck [
-    pythonPackages.coverage
-    pythonPackages.pytest
-    pythonPackages.pytestcov
+    coverage
+    pytest
+    pytestcov
   ];
 
   propagatedBuildInputs = [
-    pythonPackages.jsonschema
+    jsonschema
   ];
 
   doCheck = false;

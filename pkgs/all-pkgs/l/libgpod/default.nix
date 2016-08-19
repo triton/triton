@@ -11,7 +11,6 @@
 , libusb
 , libxml2
 , mutagen
-, python
 , pythonPackages
 , sg3-utils
 , sqlite
@@ -22,16 +21,17 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
-    optionalString
-    wtFlag;
+    boolEn
+    boolString
+    boolWt;
 in
 stdenv.mkDerivation rec {
   name = "libgpod-0.8.3";
 
   src = fetchurl {
     url = "mirror://sourceforge/gtkpod/${name}.tar.bz2";
-    sha256 = "0pcmgv1ra0ymv73mlj4qxzgyir026z9jpl5s5bkg35afs1cpk2k3";
+    multihash = "QmQHafZSqYSAdTqbNqjFLdo9zhcAP4URDbUhdHftjg6WVX";
+    sha256 = "638a7959d04e95f1e62abad02bd33702e4e8dfef98485ac7d9d50395c37e955d";
   };
 
   nativeBuildInputs = [
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
     libxml2
     mutagen
     pythonPackages.pygobject
-    python
+    pythonPackages.python
     sg3-utils
     sqlite
     systemd_lib
@@ -58,28 +58,43 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  preConfigure = ''
+    configureFlagsArray+=("--with-udev-dir=$out/share/udev")
+  '';
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"
-    (enFlag "udev" (systemd_lib != null) null)
-    (enFlag "libxml" (libxml2 != null) null)
-    (enFlag "gdk-pixbuf" (gdk-pixbuf != null) null)
-    (enFlag "pygobject" (pythonPackages.pygobject != null) null)
+    "--${boolEn (systemd_lib != null)}-udev"
+    "--${boolEn (libxml2 != null)}-libxml"
+    "--${boolEn (gdk-pixbuf != null)}-gdk-pixbuf"
+    "--${boolEn (pythonPackages.pygobject != null)}-pygobject"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--disable-more-warnings"
-    #(wtFlag "hal" (hal != null) null)
-    (wtFlag "libimobiledevice" (libimobiledevice != null) null)
-    (wtFlag "udev-dir" (systemd_lib != null) "\${out}/share/udev")
-    (wtFlag "python" (python != null) null)
+    "--without-hal"
+    "--${boolWt (libimobiledevice != null)}-libimobiledevice"
+    "--${boolWt (pythonPackages.python != null)}-python"
     "--without-mono"
   ];
 
-  preFixup =
+  postInstall =
     /* libgpod installs libgpod-sharp.pc unconditionally */ ''
       rm -vf $out/lib/pkgconfig/libgpod-sharp.pc
     '';
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sign") src.urls;
+      pgpKeyFingerprint = "A525 E3EA 186A AB45 DD0F  86AF 24A4 69FB 7A56 F78E";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Library to access the contents of an iPod";

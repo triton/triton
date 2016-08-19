@@ -7,7 +7,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.tortall.net/projects/yasm/releases/${name}.tar.gz";
-    sha256 = "0gv0slmm0qpq91za3v2v9glff3il594x5xsrbgab7xcmnh0ndkix";
+    multihash = "QmeFZY6fWZsBgDu2BvPADAzabKSKS6j9VB2xrjN1jn7uHR";
+    sha256 = "3dce6601b495f5b3d45b59f7d2492a340ee7e84b5beca17e48f862502bd5603f";
   };
 
   configureFlags = [

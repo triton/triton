@@ -3353,14 +3353,14 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
      };
    };
 
- #  coverage = buildPythonPackage rec {
- #    name = "coverage-4.0.3";
+   coverage = buildPythonPackage rec {
+     name = "coverage-4.0.3";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/c/coverage/${name}.tar.gz";
- #      sha256 = "85b1275b6d7a61ccc8024a4e9a4c9e896394776edce1a5d075ec116f91925462";
- #    };
- #  };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/c/coverage/${name}.tar.gz";
+       sha256 = "85b1275b6d7a61ccc8024a4e9a4c9e896394776edce1a5d075ec116f91925462";
+     };
+   };
 
  #  covCore = buildPythonPackage rec {
  #    name = "cov-core-1.15.0";
@@ -3908,22 +3908,22 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
  #    };
  #  };
 
- #  pytestcov = buildPythonPackage (rec {
- #    name = "pytest-cov-2.2.0";
+   pytestcov = buildPythonPackage (rec {
+     name = "pytest-cov-2.2.0";
 
- #    src = pkgs.fetchurl {
- #      url = "https://pypi.python.org/packages/source/p/pytest-cov/${name}.tar.gz";
- #      sha256 = "1lf9jsmhqk5nc4w3kzwglmdzjvmi7ajvrsnwv826j3bn0wzx8c92";
- #    };
+     src = pkgs.fetchurl {
+       url = "https://pypi.python.org/packages/source/p/pytest-cov/${name}.tar.gz";
+       sha256 = "1lf9jsmhqk5nc4w3kzwglmdzjvmi7ajvrsnwv826j3bn0wzx8c92";
+     };
 
- #   buildInputs = with self; [ covCore pytest ];
+    buildInputs = with self; [ covCore pytest ];
 
- #    meta = {
- #      description = "plugin for coverage reporting with support for both centralised and distributed testing, including subprocesses and multiprocessing";
- #      homepage = https://github.com/schlamar/pytest-cov;
- #      license = licenses.mit;
- #    };
- #  });
+     meta = {
+       description = "plugin for coverage reporting with support for both centralised and distributed testing, including subprocesses and multiprocessing";
+       homepage = https://github.com/schlamar/pytest-cov;
+       license = licenses.mit;
+     };
+   });
 
  #  pytest_xdist = buildPythonPackage rec {
  #    name = "pytest-xdist-1.8";

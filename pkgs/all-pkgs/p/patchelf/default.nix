@@ -13,9 +13,9 @@ stdenv.mkDerivation rec {
   setupHook = ./setup-hook.sh;
 
   meta = with stdenv.lib; {
+    description = "Utility to modify the dynamic linker & RPATH of ELF executables";
     homepage = http://nixos.org/patchelf.html;
     license = licenses.gpl3;
-    description = "A small utility to modify the dynamic linker and RPATH of ELF executables";
     maintainers = with maintainers; [
       wkennington
     ];

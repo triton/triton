@@ -13,14 +13,13 @@
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    boolEn;
 in
-
 stdenv.mkDerivation rec {
   name = "pavucontrol-3.0";
 
   src = fetchurl {
-    url = "http://freedesktop.org/software/pulseaudio/pavucontrol/${name}.tar.xz";
+    url = "https://freedesktop.org/software/pulseaudio/pavucontrol/${name}.tar.xz";
     sha256 = "14486c6lmmirkhscbfygz114f6yzf97h35n3h3pdr27w4mdfmlmk";
   };
 
@@ -38,14 +37,15 @@ stdenv.mkDerivation rec {
     pulseaudio_lib
   ];
 
+  postPatch = /* Use an icon that is supported in adwaita */ ''
+    sed -i src/pavucontrol.glade \
+      -e 's/stock_lock/insert-link-symbolic/'
+  '';
+
   configureFlags = [
-    (enFlag "gtk3" (gtkmm_3 != null) null)
+    "--${boolEn (gtkmm_3 != null)}-gtk3"
     "--disable-lynx"
     "--enable-nls"
-  ];
-
-  NIX_CFLAGS_COMPILE = [
-    "-std=c++11"
   ];
 
   preFixup = ''
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "PulseAudio Volume Control";
-    homepage = http://freedesktop.org/software/pulseaudio/pavucontrol/ ;
+    homepage = https://freedesktop.org/software/pulseaudio/pavucontrol/ ;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
       codyopel

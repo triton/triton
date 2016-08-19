@@ -12,15 +12,17 @@
 , gnused
 }:
 
+let
+  rev = "338f54e0dbf3d9e9583f34c9dde194c39ba0b4e8";
+  version = "2016-06-10";
+in
 stdenv.mkDerivation rec {
   name = "xdg-utils-${version}";
-  rev = "c7ecf26e036c7a5f8a921d12c7efe1435f3e996b";
-  version = "2016-02-16";
 
   src = fetchurl {
     name = "${name}.tar.gz";
     url = "https://cgit.freedesktop.org/xdg/xdg-utils/snapshot/${rev}.tar.gz";
-    sha256 = "0sncry55w7xqlyb8l3wc2cv4w52wws939855cfq26pnf5xx2vg1n";
+    sha256 = "541ba6e0b8c090f387ed6858d7da202dbbcf5d7701d257d76ebaeea538bef3b7";
   };
 
   buildInputs = [

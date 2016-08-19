@@ -36,6 +36,10 @@ buildPythonPackage rec {
 
   doCheck = false;
 
+  passthru = {
+    inherit version;
+  };
+
   meta = with stdenv.lib; {
     description = "A built-package format for Python";
     homepage = https://bitbucket.org/pypa/wheel/;

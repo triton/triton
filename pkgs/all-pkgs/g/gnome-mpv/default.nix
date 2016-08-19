@@ -42,7 +42,6 @@ stdenv.mkDerivation rec {
     autoconf
     autoconf-archive
     automake
-    dconf
     gettext
     intltool
     libtool
@@ -53,6 +52,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     adwaita-icon-theme
     appstream-glib
+    dconf
     gdk-pixbuf
     glib
     gtk3

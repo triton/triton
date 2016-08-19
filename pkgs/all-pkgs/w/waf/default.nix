@@ -5,11 +5,10 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "waf-${version}";
-  version = "1.9.2";
+  name = "waf-1.9.2";
 
   src = fetchurl {
-    url = "https://waf.io/waf-${version}.tar.bz2";
+    url = "https://waf.io/${name}.tar.bz2";
     sha256 = "2eb02767b611c291bf5ce581624b360d354d5fa929fadfb275fcd223c5f8bfb6";
   };
 

@@ -5,9 +5,11 @@
 , libtool
 }:
 
+let
+  version = "1.9.1";
+in
 stdenv.mkDerivation rec {
   name = "libuv-${version}";
-  version = "1.9.1";
 
   src = fetchFromGitHub {
     owner = "libuv";

@@ -26,8 +26,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = http://code.google.com/p/yaml-cpp/;
     description = "A YAML parser and emitter for C++";
+    homepage = https://github.com/jbeder/yaml-cpp/;
     license = licenses.mit;
     maintainers = with maintainers; [
       wkennington

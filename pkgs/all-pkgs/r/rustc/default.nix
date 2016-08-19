@@ -1,4 +1,5 @@
 { stdenv
+, cmake
 , fetchurl
 , file
 , python2
@@ -29,6 +30,7 @@ stdenv.mkDerivation {
   inherit src;
 
   nativeBuildInputs = [
+    cmake
     file
     python2
   ];
@@ -37,6 +39,10 @@ stdenv.mkDerivation {
     ncurses
     zlib
   ];
+
+  # We don't directly run the cmake configure
+  # The build system uses it for building compiler-rt
+  cmakeConfigure = false;
 
   prePatch = ''
     # Fix not filtering out -L lines from llvm-config

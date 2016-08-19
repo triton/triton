@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "http://sg.danny.cz/sg/p/${name}.tgz";
     multihash = "QmfAZiUCRW79h4wRoyjxdnMJmd7XZNhAtxoygomd4YcifG";
-    sha256 = "190hhkhl096fxkspkr93lrq1n79xz5c5i2n4n4g998qc3yv3hjyq";
+    sha256 = "1dcb7a0309bd0ba3d4a83acb526973b80106ee26cd9f7398186cd3f0633c9ef3";
   };
 
   meta = with stdenv.lib; {

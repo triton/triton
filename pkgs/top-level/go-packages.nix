@@ -983,10 +983,11 @@ let
   };
 
   gcloud-golang = buildFromGitHub {
-    rev = "v0.1.0";
+    rev = "05253f6a829103296c351b643f6815aedd81a3fb";
+    date = "2016-08-17";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "0ffivk0nrna5wf7vk4a7djfwjq1hfnj9w3lw6afazdf6zsgpqp7x";
+    sha256 = "65e80ea0c3255382962635c5c7af441b12e0560ef1c8774144ca3f866c6f90b9";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -1002,7 +1003,7 @@ let
   };
 
   gcloud-golang-for-go4 = buildFromGitHub {
-    inherit (gcloud-golang) rev owner repo sha256 goPackagePath goPackageAliases;
+    inherit (gcloud-golang) rev date owner repo sha256 goPackagePath goPackageAliases;
     subPackages = [
       "storage"
     ];
@@ -1015,7 +1016,7 @@ let
   };
 
   gcloud-golang-compute-metadata = buildFromGitHub {
-    inherit (gcloud-golang) rev owner repo sha256 goPackagePath goPackageAliases;
+    inherit (gcloud-golang) rev date owner repo sha256 goPackagePath goPackageAliases;
     subPackages = [ "compute/metadata" "internal" ];
     buildInputs = [ net ];
   };

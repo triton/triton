@@ -13,7 +13,7 @@
 , mutagen
 , python
 , pythonPackages
-, sg3_utils
+, sg3-utils
 , sqlite
 , systemd_lib
 , taglib
@@ -26,7 +26,6 @@ let
     optionalString
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "libgpod-0.8.3";
 
@@ -52,7 +51,7 @@ stdenv.mkDerivation rec {
     mutagen
     pythonPackages.pygobject
     python
-    sg3_utils
+    sg3-utils
     sqlite
     systemd_lib
     taglib

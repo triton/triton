@@ -1,7 +1,9 @@
-{ stdenv, fetchurl }:
+{ stdenv
+, fetchurl
+}:
 
 stdenv.mkDerivation rec {
-  name = "sg3_utils-1.43";
+  name = "sg3_utils-1.42";
 
   src = fetchurl {
     url = "http://sg.danny.cz/sg/p/${name}.tgz";

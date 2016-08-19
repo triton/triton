@@ -2219,6 +2219,8 @@ serd = callPackage ../all-pkgs/s/serd { };
 
 serf = callPackage ../all-pkgs/s/serf { };
 
+sg3-utils = callPackage ../all-pkgs/s/sg3-utils { };
+
 shared_mime_info = callPackage ../all-pkgs/s/shared-mime-info { };
 
 sharutils = callPackage ../all-pkgs/s/sharutils { };
@@ -2623,8 +2625,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   qpdf = callPackage ../development/libraries/qpdf { };
 #
   rng_tools = callPackage ../tools/security/rng-tools { };
-#
-  sg3_utils = callPackage ../tools/system/sg3_utils { };
 #
   strongswan = callPackage ../tools/networking/strongswan { };
 #

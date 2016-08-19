@@ -20,17 +20,18 @@
 
 let
   inherit (stdenv.lib)
-    enFlag;
-in
-stdenv.mkDerivation rec {
-  name = "zeitgeist-${version}";
+    boolEn;
+
   versionMajor = "0.9";
   versionMinor = "16";
   version = "${versionMajor}.${versionMinor}";
+in
+stdenv.mkDerivation rec {
+  name = "zeitgeist-${version}";
 
   src = fetchurl {
-    url = "https://launchpad.net/zeitgeist/${versionMajor}/${version}/" +
-          "+download/${name}.tar.xz";
+    url = "https://launchpad.net/zeitgeist/${versionMajor}/${version}/"
+      + "+download/${name}.tar.xz";
     sha256 = "0fkxjbqcpnjmhy2g6xqryyq0xhgsrbn9ph9lw67aabnq1h6ydlvf";
   };
 
@@ -66,6 +67,12 @@ stdenv.mkDerivation rec {
     patchShebangs ./data/ontology2code
   '';
 
+  preConfigure = ''
+    configureFlagsArray+=(
+      "--with-session-bus-services-dir=$out/share/dbus-1/services"
+    )
+  '';
+
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"
@@ -76,15 +83,16 @@ stdenv.mkDerivation rec {
     "--enable-telepathy"
     "--enable-downloads-monitor"
     "--disable-docs"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    "--with-session-bus-services-dir=$(out)/share/dbus-1/services"
+    "--${boolEn (gobject-introspection != null)}-introspection"
   ];
 
   meta = with stdenv.lib; {
     description = "A service which logs the users's activities and events";
     homepage = https://launchpad.net/zeitgeist;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

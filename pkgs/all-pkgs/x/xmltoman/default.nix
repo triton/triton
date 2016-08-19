@@ -8,13 +8,13 @@ let
   inherit (stdenv.lib)
     makeSearchPath;
 in
-
 stdenv.mkDerivation rec {
   name = "xmltoman-0.4";
 
   src = fetchurl {
     url = "mirror://sourceforge/xmltoman/${name}.tar.gz";
-    sha256 = "1c0lvzr7kdy63wbn1jv6s126ds7add3pxqb0vlxd3v5a2sir91wl";
+    multihash = "QmS75WNMsPBp2hkSM6Cze81hJKp5G3jGXAZM1VbUHJiax9";
+    sha256 = "948794a316aaecd13add60e17e476beae86644d066cb60171fc6b779f2df14b0";
   };
 
   nativeBuildInputs = [

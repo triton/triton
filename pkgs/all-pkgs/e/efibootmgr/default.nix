@@ -1,18 +1,19 @@
 { stdenv
-, fetchFromGitHub
+, fetchurl
 
 , efivar
 , popt
 }:
 
+let
+  version = "13";
+in
 stdenv.mkDerivation rec {
-  name = "efibootmgr-2016-08-11";
+  name = "efibootmgr-${version}";
 
-  src = fetchFromGitHub {
-    owner = "rhinstaller";
-    repo = "efibootmgr";
-    rev = "0bb83cf5640ef834eb4c32a146d140c40034247b";
-    sha256 = "940162b6960a7696767c39da250d49d27f4853bf3474b58355459bdaf4892760";
+  src = fetchurl {
+    url = "https://github.com/rhinstaller/efibootmgr/releases/download/${version}/${name}.tar.bz2";
+    sha256 = "45d31914454bd4b8d9b2c4489c7f35c5e8588ea63a1cec5686b83a9633d678e1";
   };
 
   buildInputs = [

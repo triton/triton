@@ -6,15 +6,17 @@
 , zope-interface
 }:
 
+let
+  version = "16.3.1";
+in
 buildPythonPackage rec {
   name = "Twisted-${version}";
-  version = "16.3.0";
 
   src = fetchPyPi {
     package = "Twisted";
     inherit version;
     type = ".tar.bz2";
-    sha256 = "d588a87243ac20e72daef520c1248cb5391e1d583999b8c29a7ae5f97474974f";
+    sha256 = "2b9b118574e527d66e383e21dcb30c5801ce23931fe9ea1f2073eabf4aa1ee8f";
   };
 
   propagatedBuildInputs = [

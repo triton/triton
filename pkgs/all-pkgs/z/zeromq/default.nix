@@ -8,13 +8,12 @@
 
 let
   inherit (builtins)
-    replaceStrings;
-  inherit (stdenv.lib)
-    strings;
+    replaceStrings
+    substring;
 
   version = "4.1.5";
 
-  versionMajorMinor = replaceStrings ["."] ["-"] (strings.substring 0 3 version);
+  versionMajorMinor = replaceStrings ["."] ["-"] (substring 0 3 version);
 in
 stdenv.mkDerivation rec {
   name = "zeromq-${version}";

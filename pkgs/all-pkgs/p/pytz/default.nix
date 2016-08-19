@@ -3,9 +3,11 @@
 , fetchPyPi
 }:
 
+let
+  version = "2016.6.1";
+in
 buildPythonPackage rec {
   name = "pytz-${version}";
-  version = "2016.6.1";
 
   src = fetchPyPi {
     package = "pytz";

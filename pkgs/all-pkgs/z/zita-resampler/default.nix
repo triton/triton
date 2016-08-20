@@ -10,7 +10,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://kokkinizita.linuxaudio.org/linuxaudio/downloads/${name}.tar.bz2";
-    sha256 = "0r9ary5sc3y8vba5pad581ha7mgsrlyai83w7w4x2fmhfy64q0wq";
+    multihash = "Qmb3z4bagfp3h9zuwh1GvgRdJNrEngVZS9BvxcR4cnDv6e";
+    sha256 = "98034c8c77b03ad1093f7ca0a83ccdfad5a36040a5a95bd4dac80fa68bcf2a65";
   };
 
   postUnpack = ''
@@ -23,9 +24,7 @@ stdenv.mkDerivation rec {
   '';
 
   preBuild = ''
-    makeFlagsArray+=(
-      "PREFIX=$out"
-    )
+    makeFlagsArray+=("PREFIX=$out")
   '';
 
   preFixup = /* Fix lib directory name */ ''

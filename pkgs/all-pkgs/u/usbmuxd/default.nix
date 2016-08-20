@@ -10,14 +10,13 @@ let
   inherit (stdenv.lib)
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
-  name = "usbmuxd-${version}";
-  version = "1.1.0";
+  name = "usbmuxd-1.1.0";
 
   src = fetchurl {
     url = "http://www.libimobiledevice.org/downloads/${name}.tar.bz2";
-    sha256 = "0bdlc7a8plvglqqx39qqampqm6y0hcdws76l9dffwl22zss4i29y";
+    multihash = "QmY9sEX9b2pEYR3WbY3GTfsa4MEysyU7HA8PLvZdCkhWpQ";
+    sha256 = "3e8948b4fe4250ee5c4bd41ccd1b83c09b8a6f5518a7d131a66fd38bd461b42d";
   };
 
   buildInputs = [
@@ -26,8 +25,11 @@ stdenv.mkDerivation rec {
     libusb
   ];
 
+  preConfigure = ''
+    configureFlagsArray+=("--with-udevrulesdir=$out/lib/udev/rules.d")
+  '';
+
   configureFlags = [
-    "--with-udevrulesdir=$(out)/lib/udev/rules.d"
     "--without-systemd"
     "--without-systemdsystemunitdir"
   ];

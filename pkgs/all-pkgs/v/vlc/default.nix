@@ -83,13 +83,12 @@ let
   inherit (stdenv.lib)
     optional;
 in
-
 stdenv.mkDerivation rec {
   name = "vlc-${version}";
   version = "2.2.4";
 
   src = fetchurl {
-    url = "http://get.videolan.org/vlc/${version}/${name}.tar.xz";
+    url = "https://get.videolan.org/vlc/${version}/${name}.tar.xz";
     allowHashOutput = false;
     sha256 = "1632e91d2a0087e0ef4c3fb4c95c3c2890f7715a9d1d43ffd46329f428cf53be";
   };
@@ -229,7 +228,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Cross-platform media player and streaming server";
-    homepage = http://www.videolan.org/vlc/;
+    homepage = https://www.videolan.org/vlc/;
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [ ];
     platforms = with platforms;

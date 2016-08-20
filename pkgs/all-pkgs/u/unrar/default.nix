@@ -2,27 +2,28 @@
 , fetchurl
 }:
 
+let
+  version = "5.4.5";
+in
 stdenv.mkDerivation rec {
   name = "unrar-${version}";
-  version = "5.4.4";
 
   src = fetchurl {
     url = "http://www.rarlab.com/rar/unrarsrc-${version}.tar.gz";
-    sha256 = "556b65d61164b018c4a3ce10e6290b16f4d042a603f6a4e17f74b19ac25d2d83";
+    multihash = "QmaqfJQwrnMAVu3XDQF5PYhud7nxuWVDHJv7mw2b21trqU";
+    sha256 = "e470c584332422893fb52e049f2cbd99e24dc6c6da971008b4e2ae4284f8796c";
   };
 
-  preBuild = ''
-    makeFlags+=(
-      DESTDIR=$out
-    )
-  '';
-
   setupHook = ./setup-hook.sh;
+
+  preBuild = ''
+    makeFlags+=("DESTDIR=$out")
+  '';
 
   meta = with stdenv.lib; {
     description = "Utility for RAR archives";
     homepage = http://www.rarlab.com/;
-    license = licenses.unfreeRedistributable;
+    license = licenses.unfreeRedistributable; # unRAR
     maintainers = with maintainers; [
       codyopel
       wkennington

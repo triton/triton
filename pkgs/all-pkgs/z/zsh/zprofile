@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+
+if test -e /etc/NIXOS ; then
+  if test -r /etc/zprofile ; then
+    . /etc/zprofile
+  fi
+  if test -r /etc/zprofile.local ; then
+    . /etc/zprofile.local
+  fi
+else
+  # On non-Triton based systems source systems zprofile if
+  # one exists.
+  if test -r /etc/zprofile ; then
+    . /etc/zprofile
+  fi
+fi

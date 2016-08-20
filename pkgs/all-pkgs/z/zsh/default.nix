@@ -19,16 +19,20 @@ let
   version = "5.2";
 
   documentation = fetchurl {
-    url = "mirror://sourceforge/zsh/zsh-${version}-doc.tar.gz";
-    sha256 = "1r9r91gmrrflzl0yq10bib9gxbqyhycb09hcx28m2g3vv9skmccj";
+    url = "mirror://sourceforge/zsh/zsh-${version}-doc.tar.xz";
+    multihash = "QmTtr2J9Xja65dV2ehuer4UtPGPL7v7QT2fPyg5syJFDjN";
+    allowHashOutput = false;
+    sha256 = "328352cf3d5d0ec4b6e31dcefd25ff5b4c0e6b8077d1fe84448ebb50d6ada52a";
   };
 in
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "zsh-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/zsh/zsh-${version}.tar.gz";
-    sha256 = "0dsr450v8nydvpk8ry276fvbznlrjgddgp7zvhcw4cv69i9lr4ps";
+    url = "mirror://sourceforge/zsh/zsh-${version}.tar.xz";
+    multihash = "Qmf4djuLdrXw15ACTq5TeUwm7CjNCFPF8CQgZFMghtp5t6";
+    allowHashOutput = false;
+    sha256 = "f17916320ffaa844bbd7ce48ceeb5945fc5f3eff64b149b4229bbfbdf3795a9d";
   };
 
   nativeBuildInputs = [
@@ -87,39 +91,35 @@ stdenv.mkDerivation {
     "--with-tcsetpgrp"
   ];
 
-  postInstall = ''
-    mkdir -p $out/share
+  postInstall = /* Install documentation */ ''
+    mkdir -pv $out/share
     tar xf ${documentation} -C $out/share
-  '' + /* TODO: convert this to install a static file */ ''
-    mkdir -p $out/etc
-    cat > $out/etc/zprofile <<EOF
-    if test -e /etc/NIXOS; then
-      if test -r /etc/zprofile; then
-        . /etc/zprofile
-      else
-        emulate bash
-        alias shopt=false
-        . /etc/profile
-        unalias shopt
-        emulate zsh
-      fi
-      if test -r /etc/zprofile.local; then
-        . /etc/zprofile.local
-      fi
-    else
-      # on non-nixos we just source the global /etc/zprofile as if we did
-      # not use the configure flag
-      if test -r /etc/zprofile; then
-        . /etc/zprofile
-      fi
-    fi
-    EOF
-
-    $out/bin/zsh -c "zcompile $out/etc/zprofile"
-    mv $out/etc/zprofile $out/etc/zprofile_zwc_is_used
+  '' + /* Install configs */ ''
+    install -D -m644 -v '${./zprofile}' "$out/etc/zprofile"
   '';
 
   doCheck = true;
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "F7B2 754C 7DE2 8309 1466  1F0E A71D 9A9D 4BDB 27B3";
+    };
+    srcVerification-documentation = fetchurl rec {
+      inherit (documentation)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") documentation.urls;
+      pgpKeyFingerprint = "F7B2 754C 7DE2 8309 1466  1F0E A71D 9A9D 4BDB 27B3";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "The Z command shell";

@@ -3158,11 +3158,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
 
   kernelPatches = callPackage ../os-specific/linux/kernel/patches.nix { };
 
-  linux_4_6 = callPackage ../os-specific/linux/kernel {
-    channel = "4.6";
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
-  };
-
   linux_4_7 = callPackage ../os-specific/linux/kernel {
     channel = "4.7";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
@@ -3248,7 +3243,7 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   in kPkgs;
 #
 #  # The current default kernel / kernel modules.
-  linuxPackages = pkgs.linuxPackages_4_6;
+  linuxPackages = pkgs.linuxPackages_4_7;
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
@@ -3256,9 +3251,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
-  linuxPackages_4_6 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_4_6;
-  });
   linuxPackages_4_7 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4_7;
   });

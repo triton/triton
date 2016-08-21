@@ -9,14 +9,16 @@
 , zlib
 }:
 
+let
+  version = "1.26.0";
+in
 stdenv.mkDerivation rec {
   name = "aria2-${version}";
-  version = "1.25.0";
 
   src = fetchurl {
     url = "https://github.com/tatsuhiro-t/aria2/releases/download/"
       + "release-${version}/${name}.tar.xz";
-    sha256 = "ff89eb4c76cfc816a6f5abc7dfd416cc3f339e7d02c761f822fa965a18cf0d35";
+    sha256 = "c828f3375e9ab251239747fbbbf747e5027339080b9fdec29ac746a0b8c6088d";
   };
 
   buildInputs = [

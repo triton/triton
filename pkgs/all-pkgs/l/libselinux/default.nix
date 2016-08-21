@@ -8,11 +8,14 @@
 }:
 
 let
-  inherit (libsepol) se_release se_url;
+  inherit (libsepol)
+    se_release
+    se_url;
+
+  version = "2.5";
 in
 stdenv.mkDerivation rec {
   name = "libselinux-${version}";
-  version = "2.5";
 
   src = fetchurl {
     url = "${se_url}/${se_release}/libselinux-${version}.tar.gz";

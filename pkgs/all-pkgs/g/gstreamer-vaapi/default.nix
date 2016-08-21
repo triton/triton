@@ -21,15 +21,14 @@ let
     enFlag
     optionalString;
 in
-
 stdenv.mkDerivation rec {
-  name = "gstreamer-vaapi-1.8.2";
+  name = "gstreamer-vaapi-1.8.3";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gstreamer-vaapi/"
-        + "${name}.tar.xz";
-    sha256Url = "${url}.sha256sum";
-    sha256 = "5479e86f593d80c00bbd4a43b16b2027cb935412a2bb22c9ba4ac085627a9229";
+      + "${name}.tar.xz";
+    sha256Url = url + ".sha256sum";
+    sha256 = "6cf3ded097924d23df40239c8f00811d1c727aa41cdc9baaedfc2a39ff2aac0c";
   };
 
   nativeBuildInputs = [

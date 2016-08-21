@@ -329,20 +329,6 @@ let
     ];
   };
 
-  assertions = buildGoPackage rec {
-    version = "1.5.0";
-    name = "assertions-${version}";
-    goPackagePath = "github.com/smartystreets/assertions";
-    src = fetchurl {
-      name = "${name}.tar.gz";
-      url = "https://github.com/smartystreets/assertions/archive/${version}.tar.gz";
-      sha256 = "1s4b0v49yv7jmy4izn7grfqykjrg7zg79dg5hsqr3x40d5n7mk02";
-    };
-    buildInputs = [ oglematchers ];
-    propagatedBuildInputs = [ goconvey ];
-    doCheck = false;
-  };
-
   aws-sdk-go = buildFromGitHub {
     rev = "v1.4.3";
     owner  = "aws";
@@ -676,17 +662,11 @@ let
     ];
   };
 
-  context = buildGoPackage rec {
+  context = buildFromGitHub {
     rev = "v1.1";
-    name = "config-${stdenv.lib.strings.substring 0 7 rev}";
-    goPackagePath = "github.com/gorilla/context";
-
-    src = fetchFromGitHub {
-      inherit rev;
-      owner = "gorilla";
-      repo = "context";
+    owner = "gorilla";
+    repo = "context";
     sha256 = "0fsm31ayvgpcddx3bd8fwwz7npyd7z8d5ja0w38lv02yb634daj6";
-    };
   };
 
   copystructure = buildFromGitHub {
@@ -1182,19 +1162,6 @@ let
     date = "2016-08-18";
   };
 
-  goconvey = buildGoPackage rec {
-    version = "1.5.0";
-    name = "goconvey-${version}";
-    goPackagePath = "github.com/smartystreets/goconvey";
-    src = fetchurl {
-      name = "${name}.tar.gz";
-      url = "https://github.com/smartystreets/goconvey/archive/${version}.tar.gz";
-      sha256 = "0g3965cb8kg4kf9b0klx4pj9ycd7qwbw1jqjspy6i5d4ccd6mby4";
-    };
-    buildInputs = [ oglematchers ];
-    doCheck = false; # please check again
-  };
-
   gojsonpointer = buildFromGitHub {
     rev = "e0fe6f68307607d540ed8eac07a342c33fa1b54a";
     owner  = "xeipuuv";
@@ -1406,17 +1373,6 @@ let
     owner  = "jbenet";
     repo   = "go-base58";
     sha256 = "0sbss2611iri3mclcz3k9b7kw2sqgwswg4yxzs02vjk3673dcbh2";
-  };
-
-  go-bencode = buildGoPackage rec {
-    version = "1.1.1";
-    name = "go-bencode-${version}";
-    goPackagePath = "github.com/ehmry/go-bencode";
-
-    src = fetchurl {
-      url = "https://${goPackagePath}/archive/v${version}.tar.gz";
-      sha256 = "0y2kz2sg1f7mh6vn70kga5d0qhp04n01pf1w7k6s8j2nm62h24j6";
-    };
   };
 
   go-bindata-assetfs = buildFromGitHub {
@@ -2608,7 +2564,9 @@ let
     owner = "gorilla";
     repo = "mux";
     sha256 = "1iicj9v3ippji2i1jf2g0jmrvql1k2yydybim3hsb0jashnq7794";
-    propagatedBuildInputs = [ context ];
+    propagatedBuildInputs = [
+      context
+    ];
   };
 
   muxado = buildFromGitHub {

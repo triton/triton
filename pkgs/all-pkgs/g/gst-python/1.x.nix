@@ -9,12 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gst-python-1.8.2";
+  name = "gst-python-1.8.3";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-python/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "4f5015239482014c16f435559a45e6c87930340b65ee04e2e6fa164c8d724d97";
+    sha256 = "149e7b9c2c361832bc765d39bce004d1ffe1b330c09c42dc902ca48867e804ce";
   };
 
   buildInputs = [
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A Python Interface to GStreamer";
-    homepage = http://gstreamer.freedesktop.org;
+    homepage = https://gstreamer.freedesktop.org;
     license = licenses.lgpl2;
     maintainers = with maintainers; [
       codyopel

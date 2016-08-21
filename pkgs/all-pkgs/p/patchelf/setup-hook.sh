@@ -7,12 +7,15 @@ fixupOutputHooks+=('if [ -z "$dontPatchELF" ]; then patchELF "$prefix"; fi')
 patchELF() {
   header "patching ELF executables and libraries in $prefix"
   if [ -e "$prefix" ]; then
-    while read file; do
+    local files
+    files=($(find "$prefix" -type f -a \( -name '*.so*' -o -name '*.a*' -o -perm -0100 \)))
+    for file in "${files[@]}"; do
+      echo "Found binary: $file" >&2
       if readelf -S "$file" 2>&1 | grep -q '.dynamic'; then
         echo "Shrink rpath: $file" >&2
         patchelf --shrink-rpath "$file"
       fi
-    done < <(find "$prefix" -type f -a \( -name "*.so*" -o -perm -0100 \))
+    done
   fi
   stopNest
 }

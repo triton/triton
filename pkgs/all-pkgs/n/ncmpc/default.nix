@@ -18,8 +18,8 @@
 , searchScreen ? true
 , songScreen ? true
 , keyScreen ? false
-, lyricsScreen ? true
-  , pandoc
+, lyricsScreen ? false
+  #, pandoc
   , python
   , pythonPackages
   , ruby
@@ -33,21 +33,19 @@ let
     enFlag
     optionals
     optionalString;
-in
 
-let
   ncmpc-lyrics-plugins = stdenv.mkDerivation rec {
     name = "ncmpc-lyrics-plugins-${version}";
     version = "3";
 
     src = fetchurl {
-      url = "https://github.com/codyopel/ncmpc-lyrics-plugins/archive/" +
-            "v${version}.tar.gz";
+      url = "https://github.com/codyopel/ncmpc-lyrics-plugins/archive/"
+        + "v${version}.tar.gz";
       sha256 = "0cn1c2x6db06ajsrvp83r7s1a8x03a4ks6ws6j0kz8qcx0g15p7b";
     };
 
     buildInputs = [
-      pandoc
+      #pandoc
       python
       ruby
     ];
@@ -56,13 +54,13 @@ let
       pythonPackages.requests2
     ];
 
-    installPhase = ''
+    /*installPhase = ''
       for p in ./* ; do
         sed -i $p -e 's|"pandoc"|"${pandoc}/bin/pandoc"|'
         install -vD -m 755 "$p" "$out/bin/$(basename "$p")"
       done
 
-    '';
+    '';*/
 
     meta = with stdenv.lib; {
       description = "Meta package of ncmpc lyrics plugins";
@@ -78,12 +76,11 @@ let
 in
 
 stdenv.mkDerivation rec {
-  version = "0.24";
-  name = "ncmpc-${version}";
+  name = "ncmpc-0.25";
 
   src = fetchurl {
-    url = "http://www.musicpd.org/download/ncmpc/0/ncmpc-${version}.tar.xz";
-    sha256 = "1sf3nirs3mcx0r5i7acm9bsvzqzlh730m0yjg6jcyj8ln6r7cvqf";
+    url = "https://www.musicpd.org/download/ncmpc/0/${name}.tar.xz";
+    sha256 = "6e328acb71d06ae9e6c5fced99bc28ae78bcab1a73130b42ce9ab08a814ecea4";
   };
 
   nativeBuildInputs = [

@@ -1844,7 +1844,7 @@ nautilus = callPackage ../all-pkgs/n/nautilus { };
 
 ncdc = callPackage ../all-pkgs/n/ncdc { };
 
-#ncmpc = callPackage ../all-pkgs/n/ncmpc { };
+ncmpc = callPackage ../all-pkgs/n/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/n/ncmpcpp { };
 

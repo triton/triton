@@ -979,6 +979,16 @@ let
     sha256 = "16ygj65wk30cspvmrd38s6m8qjmlsviiq8zsnnvkhfy5l0gk4c86";
   };
 
+  fsnotify = buildFromGitHub {
+    owner = "fsnotify";
+    repo = "fsnotify";
+    rev = "v1.3.1";
+    sha256 = "cffd92500f2452c6df734672d15ada139a551f936b3a0aa7046bc05609238493";
+    propagatedBuildInputs = [
+      sys
+    ];
+  };
+
   fsnotify_v1 = buildFromGitHub {
     owner = "fsnotify";
     repo = "fsnotify";
@@ -3572,6 +3582,7 @@ let
       jwalterweatherman
       mapstructure
       properties
+      toml
       yaml_v2
     ];
     patches = [

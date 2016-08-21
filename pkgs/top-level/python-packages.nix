@@ -217,7 +217,7 @@ future = callPackage ../all-pkgs/f/future { };
 
 futures = callPackage ../all-pkgs/f/futures { };
 
-gst-python_1 = callPackage ../all-pkgs/g/gst-python/1.x.nix { };
+gst-python_1 = callPackage ../all-pkgs/g/gst-python { };
 gst-python = callPackageAlias "gst-python_1" { };
 
 guessit = callPackage ../all-pkgs/g/guessit { };

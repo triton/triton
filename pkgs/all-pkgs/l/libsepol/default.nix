@@ -6,10 +6,11 @@
 let
   se_release = "20160223";
   se_url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases";
+
+  version = "2.5";
 in
 stdenv.mkDerivation rec {
   name = "libsepol-${version}";
-  version = "2.5";
 
   src = fetchurl {
     url = "${se_url}/${se_release}/libsepol-${version}.tar.gz";
@@ -22,9 +23,15 @@ stdenv.mkDerivation rec {
 
   NIX_CFLAGS_COMPILE = "-fstack-protector-all";
 
+  postPatch = ''
+    find . -name Makefile -exec sed -i 's, -Werror,,g' {} \;
+  '';
+
   preBuild = ''
-    makeFlagsArray+=("PREFIX=$out")
-    makeFlagsArray+=("DESTDIR=$out")
+    makeFlagsArray+=(
+      "DESTDIR=$out"
+      "PREFIX=$out"
+    )
   '';
 
   passthru = {

@@ -48,14 +48,13 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
-  name = "gst-plugins-bad-1.8.2";
+  name = "gst-plugins-bad-1.8.3";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-plugins-bad/${name}.tar.xz";
-    sha256Url = "${url}.sha256sum";
-    sha256 = "d7995317530c8773ec088f94d9320909d41da61996b801ebacce9a56af493f97";
+    sha256Url = url + ".sha256sum";
+    sha256 = "7899fcb18e6a1af2888b19c90213af018a57d741c6e72ec56b133bc73ec8509b";
   };
 
   nativeBuildInputs = [

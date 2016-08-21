@@ -10,12 +10,14 @@
 stdenv.mkDerivation rec {
   name = "pangomm-${version}";
   versionMajor = "2.40";
-  versionMinor = "0";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/pangomm/${versionMajor}/${name}.tar.xz";
-    sha256 = "7dd0afa9dcce57cdb0aad77da9ea46823ee8515d5f3ffd895b9ede7365c3d70d";
+    sha256Url = "mirror://gnome/sources/pangomm/${versionMajor}/"
+      + "${name}.sha256sum";
+    sha256 = "9762ee2a2d5781be6797448d4dd2383ce14907159b30bc12bf6b08e7227be3af";
   };
 
   buildInputs = [

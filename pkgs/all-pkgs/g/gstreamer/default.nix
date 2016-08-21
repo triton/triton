@@ -15,14 +15,13 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
-  name = "gstreamer-1.8.2";
+  name = "gstreamer-1.8.3";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gstreamer/${name}.tar.xz";
-    sha256Url = "${url}.sha256sum";
-    sha256 = "9dbebe079c2ab2004ef7f2649fa317cabea1feb4fb5605c24d40744b90918341";
+    sha256Url = url + ".sha256sum";
+    sha256 = "66b37762d4fdcd63bce5a2bec57e055f92420e95037361609900278c0db7c53f";
   };
 
   nativeBuildInputs = [

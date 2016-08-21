@@ -33,14 +33,13 @@ let
     enFlag
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
-  name = "gst-plugins-good-1.8.2";
+  name = "gst-plugins-good-1.8.3";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-plugins-good/${name}.tar.xz";
-    sha256Url = "${url}.sha256sum";
-    sha256 = "8d7549118a3b7a009ece6bb38a05b66709c551d32d2adfd89eded4d1d7a23944";
+    sha256Url = url + ".sha256sum";
+    sha256 = "a1d6579ba203a7734927c24b90bf6590d846c5a5fcec01a48201018c8ad2827a";
   };
 
   nativeBuildInputs = [

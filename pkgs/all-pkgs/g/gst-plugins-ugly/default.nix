@@ -23,15 +23,14 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
-  name = "gst-plugins-ugly-1.8.2";
+  name = "gst-plugins-ugly-1.8.3";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/gst-plugins-ugly/"
-        + "${name}.tar.xz";
-    sha256Url = "${url}.sha256sum";
-    sha256 = "9c5b33a2a98fc1d6d6c99a1b536b1fb2de45f53cc8bf8ab85a8b8141fed1a8ac";
+      + "${name}.tar.xz";
+    sha256Url = url + ".sha256sum";
+    sha256 = "6fa2599fdd072d31fbaf50c34af406e2be944a010b1f4eab67a5fe32a0310693";
   };
 
   nativeBuildInputs = [

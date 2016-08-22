@@ -12,12 +12,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "conntrack-tools-1.4.3";
+  name = "conntrack-tools-1.4.4";
 
   src = fetchurl {
     url = "http://www.netfilter.org/projects/conntrack-tools/files/${name}.tar.bz2";
-    sha1Confirm = "509db30f34b283f4a74a7e638ba0ca713d3fe98c";
-    sha256 = "0mrzrzp6y41pmxc6ixc4fkgz6layrpwsmzb522adzzkc6mhcqg5g";
+    allowHashOutput = false;
+    multihash = "QmRzqG5Q7QtX9ZmLAZMyEA1k3m9Lqcd51Utbx6e8WZCkqp";
+    sha256 = "b7caf4fcc4c03575df57d25e5216584d597fd916c891f191dac616ce68bdba6c";
   };
 
   nativeBuildInputs = [
@@ -49,6 +50,15 @@ stdenv.mkDerivation rec {
       -i "$out/libexec/primary-backup.sh"
     chmod +x "$out/libexec/primary-backup.sh"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrl = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Connection tracking userspace tools";

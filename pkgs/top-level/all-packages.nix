@@ -1874,6 +1874,8 @@ networkmanager-pptp = callPackage ../all-pkgs/n/networkmanager-pptp { };
 
 networkmanager-vpnc = callPackage ../all-pkgs/n/networkmanager-vpnc { };
 
+nfacct = callPackage ../all-pkgs/n/nfacct { };
+
 nfs-utils = callPackage ../all-pkgs/n/nfs-utils { };
 
 nftables = callPackage ../all-pkgs/n/nftables { };

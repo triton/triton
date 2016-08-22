@@ -2168,12 +2168,12 @@ let
   };
 
   ipfs = buildFromGitHub {
-    date = "2016-08-18";
-    rev = "10048ceca9b39ae32d3282efe7a72530ab2c31aa";
+    date = "2016-08-22";
+    rev = "8830aae9bcef257b11401b7c9e834a3aa107386a";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "d8f1875f12f4247c33e1413933169e2996044a20c521e862c8ac960ff00e53be";
-    gxSha256 = "04kcdzi1i2z5l2ygngwdbxixag03k9xdrhjmwv28h8lwxpnsf6l9";
+    sha256 = "b80c6d292f07bc94a1c0d599c9196de39f63d2ff8cca4ce3c29e9a1400ea289f";
+    gxSha256 = "11mlqwahx9ppg5kl9g5mc6hfg5gpg9yir74z2l55vxi4wy9kdv55";
 
     subPackages = [
       "cmd/ipfs"

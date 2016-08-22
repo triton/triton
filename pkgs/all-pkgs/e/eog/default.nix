@@ -38,13 +38,13 @@ assert xorg != null -> xorg.libX11 != null;
 stdenv.mkDerivation rec {
   name = "eog-${version}";
   versionMajor = "3.20";
-  versionMinor = "3";
+  versionMinor = "4";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/eog/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/eog/${versionMajor}/${name}.sha256sum";
-    sha256 = "16308c389deced3acb801dcc180c5e5e18b1db6ba5bd5835b5320cba9b0d2c26";
+    sha256 = "968774cc07ea0d3c27ac552dc0f1d51cf682b9036d342b447688a208f31a5be3";
   };
 
   nativeBuildInputs = [

@@ -7,14 +7,15 @@
 }:
 
 let
-  version = "0.7.08";
+  version = "0.7.10";
 in
 buildPythonPackage rec {
   name = "duplicity-${version}";
 
   src = fetchurl {
-    url = "https://code.launchpad.net/duplicity/0.7-series/${version}/+download/${name}.tar.gz";
-    sha256 = "d6d0b25ac2a39daa32f269a9bf6b3ea6d9202dcab388fa91bd645868defb0f17";
+    url = "https://code.launchpad.net/duplicity/0.7-series/${version}/"
+      + "+download/${name}.tar.gz";
+    sha256 = "485fef15526d163c061e00ec08de216cf7d652e67d41de5dc3bed9fb42214842";
   };
 
   buildInputs = [

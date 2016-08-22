@@ -15,7 +15,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://www.netfilter.org/projects/iptables/files/${name}.tar.bz2";
-    md5Confirm = "27ba3451cb622467fc9267a176f19a31";
+    allowHashOutput = false;
+    multihash = "QmeAvUH8wfRoDEPRQj3N8qdwkrTQyUgZ4XJaCsMF8rp795";
     sha256 = "4bb72a0a0b18b5a9e79e87631ddc4084528e5df236bc7624472dcaa8480f1c60";
   };
 
@@ -42,6 +43,15 @@ stdenv.mkDerivation rec {
 
   # Sometimes breaks building nft.c before xtables-config-parser.h
   parallelBuild = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrl = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A program to configure the Linux IP packet filtering ruleset";

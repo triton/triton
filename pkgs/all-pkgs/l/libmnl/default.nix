@@ -7,8 +7,18 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://netfilter.org/projects/libmnl/files/${name}.tar.bz2";
-    sha1Confirm = "2db40dea612e88c62fd321906be40ab5f8f1685a";
+    allowHashOutput = false;
+    multihash = "QmbfB1C9Rcc5eLnMa3ZK8hv1vpTvmcB9b6B3a77ynPUgQD";
     sha256 = "171f89699f286a5854b72b91d06e8f8e3683064c5901fb09d954a9ab6f551f81";
+  };
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrl = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "C09D B206 3F1D 7034 BA61  52AD AB46 55A1 26D2 92E4";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
   };
 
   meta = with stdenv.lib; {

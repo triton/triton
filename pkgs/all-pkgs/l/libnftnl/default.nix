@@ -12,6 +12,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "http://netfilter.org/projects/libnftnl/files/${name}.tar.bz2";
     allowHashOutput = false;
+    multihash = "QmS8XnqnLPGzfqCq4GMsoMQU56zHUugRyu2NiTYfKfKi6M";
     sha256 = "ad3b932a39a1e567308e91b683b32239a5e1aea9b4582dfffe2288c3400ab07e";
   };
 

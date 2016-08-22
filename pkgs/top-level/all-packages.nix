@@ -1540,6 +1540,8 @@ libmusicbrainz = callPackage ../all-pkgs/l/libmusicbrainz { };
 
 libmypaint = callPackage ../all-pkgs/l/libmypaint { };
 
+libnetfilter_acct = callPackage ../all-pkgs/l/libnetfilter_acct { };
+
 libnetfilter_conntrack = callPackage ../all-pkgs/l/libnetfilter_conntrack { };
 
 libnetfilter_cthelper = callPackage ../all-pkgs/l/libnetfilter_cthelper { };

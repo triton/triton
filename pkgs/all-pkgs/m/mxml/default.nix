@@ -3,12 +3,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "mxml-2.9";
+  name = "mxml-2.10";
 
   src = fetchurl {
     url = "http://www.msweet.org/files/project3/${name}.tar.gz";
-    md5Confirm = "e21cad0f7aacd18f942aa0568a8dee19";
-    sha256 = "cded54653c584b24c4a78a7fa1b3b4377d49ac4f451ddf170ebbc8161d85ff92";
+    md5Confirm = "8804c961a24500a95690ef287d150abe";
+    multihash = "QmVB3H25sYwTSgZvMvd8u5fu3dPWz8NpGqAN5ZtDdVaL4a";
+    sha256 = "267ff58b64ddc767170d71dab0c729c06f45e1df9a9b6f75180b564f09767891";
   };
 
   configureFlags = [

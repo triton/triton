@@ -1799,6 +1799,8 @@ mosh = callPackage ../all-pkgs/m/mosh { };
 
 motif = callPackage ../all-pkgs/m/motif { };
 
+mp3val = callPackage ../all-pkgs/m/mp3val { };
+
 mp4v2 = callPackage ../all-pkgs/m/mp4v2 { };
 
 mpd = callPackage ../all-pkgs/m/mpd { };
@@ -3384,8 +3386,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   mcpp = callPackage ../development/compilers/mcpp { };
 #
   #mediainfo = callPackage ../applications/misc/mediainfo { };
-#
-  mp3val = callPackage ../applications/audio/mp3val { };
 #
   mpg123 = callPackage ../applications/audio/mpg123 { };
 #

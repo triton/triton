@@ -12,7 +12,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus-glib/${name}.tar.gz";
-    sha256 = "0in0i6v68ixcy0ip28i84hdczf10ykq9x682qgcvls6gdmq552dk";
+    multihash = "QmZEuNUHEMkwgSEGAkQ4gzi11bniqLut3bjTnismHwyTvY";
+    sha256 = "b38952706dcf68bad9c302999ef0f420b8cf1a2428227123f0ac4764b689c046";
   };
 
   nativeBuildInputs = [

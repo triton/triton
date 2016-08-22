@@ -126,11 +126,11 @@ let
   };
 
   crypto = buildFromGitHub {
-    rev = "88d0005bf4c3ec17306ecaca4281a8d8efd73e91";
-    date = "2016-08-11";
+    rev = "b35ccbc95a0eaae49fb65c5d627cb7149ed8d1ab";
+    date = "2016-08-19";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "0g0mc8q3fra4s3bqhagg7f29b5ydyhhds3b73am24c255k3byc6m";
+    sha256 = "1i8s6spm57f3ljp8qjf0i9ga9qm3gnzza1nh07hsm9f3frzrmqwr";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -3007,10 +3007,10 @@ let
   };
 
   roaring = buildFromGitHub {
-    rev = "v0.2.5";
+    rev = "v0.2.6";
     owner  = "RoaringBitmap";
     repo   = "roaring";
-    sha256 = "1kc85xpk5p0fviywck9ci3i8nzsng34gx29i2j3322ax1nyj93ap";
+    sha256 = "0prvp5i0ra0ib3lxjw27cl0bk671n1scr18rj9zycq3af4wh7cg0";
   };
 
   runc = buildFromGitHub {

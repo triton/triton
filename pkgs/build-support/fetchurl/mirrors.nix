@@ -118,8 +118,11 @@ rec {
     ftp://imagemagick.mirrorcatalogs.com/imagemagick
   ];
 
-  ipfs = [
+  ipfs-cached = [
     https://ipfs.wak.io
+  ];
+
+  ipfs-nocache = [
     https://ipfs.io
   ];
 

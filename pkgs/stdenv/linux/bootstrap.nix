@@ -8,7 +8,7 @@ let
   makeUrls = { multihash, nix-hash, file, sha256, executable ? false }:
     import <nix/fetchurl.nix> {
       name = file;
-      url = "${lib.head mirrors.ipfs}/ipfs/${multihash}";
+      url = "${lib.head mirrors.ipfs-cached}/ipfs/${multihash}";
       inherit sha256 executable;
     };
 in

@@ -407,8 +407,15 @@ curl="curl \
 runHook preFetch
 
 # Download the actual file from ipfs before doing anything else
-if [ -n "$multihash" ] && [ -n "$IPFS_API" ]; then
-  tryDownload "http://$IPFS_API/ipfs/$multihash"
+if [ -n "$multihash" ]; then
+  if [ -n "$IPFS_API" ]; then
+    tryDownload "http://$IPFS_API/ipfs/$multihash"
+  fi
+  ipfsUrls="mirror://ipfs-cached/ipfs/$multihash"
+  fixUrls 'ipfsUrls'
+  for url in "${ipfsUrls[@]}"; do
+    tryDownload "$url"
+  done
 fi
 
 # Import needed gnupg keys
@@ -642,7 +649,7 @@ done
 
 # We only ever want to access the official gateway as a last resort as it can be slow
 if [ -n "$multihash" ]; then
-  ipfsUrls="mirror://ipfs/ipfs/$multihash"
+  ipfsUrls="mirror://ipfs-nocache/ipfs/$multihash"
   fixUrls 'ipfsUrls'
   for url in "${ipfsUrls[@]}"; do
     tryDownload "$url"

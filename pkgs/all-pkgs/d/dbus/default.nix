@@ -10,9 +10,10 @@
 
 stdenv.mkDerivation rec {
   name = "dbus-1.10.10";
-  
+
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus/${name}.tar.gz";
+    multihash = "QmbMf7PkUhkcdygFYWNZ7eJUZxDEUkaxQ6HGw5YifARqtB";
     allowHashOutput = false;
     sha256 = "9d8f1d069ab4d1a0255d7b400ea3bcef4430c42e729b1012abb2890e3f739a43";
   };

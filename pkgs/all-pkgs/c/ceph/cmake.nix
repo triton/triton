@@ -2,6 +2,7 @@
 , cmake
 , fetchgit
 , ninja
+, perl
 , pythonPackages
 , python2Packages
 , python3Packages
@@ -48,6 +49,7 @@ stdenv.mkDerivation {
   nativeBuildInputs = [
     cmake
     #ninja
+    perl
     pythonPackages.sphinx
     python2Packages.python
     python3Packages.cython
@@ -77,6 +79,17 @@ stdenv.mkDerivation {
     xfsprogs_lib
     zlib
   ];
+
+  postPatch = ''
+    # Our cc-wrapper currently has a bug that strips march and mfpu flags
+    sed \
+      -e 's,-march=armv8,-not-a-flag,g' \
+      -e 's,-mfpu=neon,-not-a-flag,g' \
+      -i src/CMakeLists.txt
+
+    # We manually set the version of ceph directly so we don't have to depend on git
+    sed -i 's,GITDIR-NOTFOUND,"${version}",g' cmake/modules/GetGitRevisionDescription.cmake
+  '';
 
   cmakeFlags = [
     "-DWITH_XIO=ON"

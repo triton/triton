@@ -135,12 +135,30 @@ stdenv.mkDerivation {
     nukeReferences
   ];
 
+  postUnpack =
+    /* Rather than patching a patch, create a symlink with
+       a predictable name. */ ''
+      ln -fsv \
+        nvidia-application-profiles-${version}-rc \
+        nvidia-application-profiles-rc
+    '';
+
+  patchFlags = [
+    "--follow-symlinks"
+  ];
+
   patches =
     optionals (versionAtLeast kernel.version "4.6" && channel == "short-lived") [
       (fetchTritonPatch {
         rev = "0a60fa7b87fd06185cc0369edd5212344c4da97d";
         file = "nvidia-drivers/364.19-kernel-4.6.patch";
         sha256 = "a40489322dcab39acbef8f30d9e0adb742b123f9da771e9a5fff1f493bd19335";
+      })
+    ] ++ optionals (versionAtLeast source.versionMajor "367") [
+      (fetchTritonPatch {
+        rev = "daeb3f279f0c923644b352ac318e7f13c8692f0c";
+        file = "nvidia-drivers/nvidia-drivers-367.35-fix-application-profiles-typo.patch";
+        sha256 = "caae27b1883c5c6b3c4684720d2902421ad16ab49577ee7302a95c964236141d";
       })
     ];
 

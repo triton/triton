@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     patchelf \
-      --set-rpath "$nvLibPath" \
+      --set-rpath "${nvLibPath}" \
       "$out/lib/libnvidia-ml.so.1"
   '';
 

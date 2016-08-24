@@ -183,11 +183,6 @@ stdenv.mkDerivation {
 
   builder = ./builder-generic.sh;
 
-  libXvPath = optionalString (!libsOnly) (
-    makeSearchPath "lib" [
-      xorg.libXv
-    ]
-  );
   allLibPath = makeSearchPath "lib" ([
     stdenv.cc.cc
     wayland

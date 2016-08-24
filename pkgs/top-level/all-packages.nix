@@ -1931,6 +1931,11 @@ nvidia-cuda-toolkit_7-5 = callPackage ../all-pkgs/n/nvidia-cuda-toolkit {
 #};
 nvidia-cuda-toolkit = callPackageAlias "nvidia-cuda-toolkit_7-5" { };
 
+nvidia-settings_370 = callPackage ../all-pkgs/n/nvidia-settings {
+  channel = "370";
+};
+nvidia-settings = callPackageAlias "nvidia-settings_370" { };
+
 nvidia-video-codec-sdk = callPackage ../all-pkgs/n/nvidia-video-codec-sdk { };
 
 obexftp = callPackage ../all-pkgs/o/obexftp { };

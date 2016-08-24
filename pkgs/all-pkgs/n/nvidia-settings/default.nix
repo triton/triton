@@ -78,6 +78,17 @@ stdenv.mkDerivation rec {
     "NVML_AVAILABLE=${bool01 (nvidia-gpu-deployment-kit != null)}"
   ];
 
+  postInstall = /* NVIDIA Settings .desktop entry */ ''
+    install -D -m 644 -v 'doc/nvidia-settings.desktop' \
+      "$out/share/applications/nvidia-settings.desktop"
+    sed -i "$out/share/applications/nvidia-settings.desktop" \
+      -e "s,__UTILS_PATH__,$out/bin," \
+      -e "s,__PIXMAP_PATH__,$out/share/pixmaps,"
+  '' + /* NVIDIA Settings icon */ ''
+    install -D -m644 -v 'doc/nvidia-settings.png' \
+      "$out/share/pixmaps/nvidia-settings.png"
+  '';
+
   meta = with stdenv.lib; {
     description = "NVIDIA driver control panel";
     homepage = http://www.nvidia.com/;

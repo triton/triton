@@ -21,8 +21,8 @@
 
 stdenv.mkDerivation rec {
   name = "gnome-calculator-${version}";
-  versionMajor = "3.20";
-  versionMinor = "2";
+  versionMajor = "3.21";
+  versionMinor = "90";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
       + "${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/gnome-calculator/${versionMajor}/"
       + "${name}.sha256sum";
-    sha256 = "2af1c12a12a230f90fc221ff908efd80fe7eebfeaad56cd698c393d2fc34a8fb";
+    sha256 = "07408cb200ed1e1ef831a7afdd48f92e1ab4738a421d057fcc75ad134203bdc2";
   };
 
   propagatedUserEnvPkgs = [

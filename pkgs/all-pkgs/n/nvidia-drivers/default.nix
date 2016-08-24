@@ -5,7 +5,7 @@
 , nukeReferences
 
 , buildConfig ? "all"
-, channel ? null
+, channel
 
 # Kernelspace dependencies
 , kernel ? null
@@ -64,12 +64,6 @@ assert any (n: n == buildConfig) [
   "kernelspace"
   "userspace"
   "all"
-];
-assert any (n: n == channel) [
-  "tesla"
-  "long-lived"
-  "short-lived"
-  "beta"
 ];
 assert buildKernelspace -> kernel != null;
 assert libsOnly -> !buildKernelspace;

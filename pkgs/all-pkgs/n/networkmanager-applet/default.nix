@@ -37,8 +37,8 @@ let
 in
 stdenv.mkDerivation rec {
   name = "network-manager-applet-${version}";
-  versionMajor = "1.2";
-  versionMinor = "4";
+  versionMajor = "1.4";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
       + "${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/network-manager-applet/${versionMajor}/"
       + "${name}.sha256sum";
-    sha256 = "dff72956c939743e899954c9d32f0ebff4f213f1307a8157adc548584a0da37a";
+    sha256 = "d9f5f1e151b8edbbcebb6f818eed9a49b53aadcb4e8aed2cae4fc09996278331";
   };
 
   propagatedUserEnvPkgs = [

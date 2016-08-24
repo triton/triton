@@ -21,7 +21,7 @@
 , libsOnly ? false
 }:
 
-/* NOTICE: ONLY versions 304+ are supported on Triton
+/* NOTICE: ONLY versions 352+ are supported on Triton
  *
  * BETA:        367.xx,   xorg <=1.18.x, linux <=4.7
  * SHORTLIVED:  364.xx,   xorg <=1.18.x, linux <=4.5
@@ -198,14 +198,8 @@ stdenv.mkDerivation {
 
   # Make sure anything that isn't declared within the derivation
   # is inherited so that it is passed to the builder.
-  inherit
-    buildKernelspace
-    buildUserspace
-    libsOnly
-    targetSystem
-    version;
-  inherit (source)
-    versionMajor;
+  inherit version;
+  inherit (source) versionMajor;
 
   builder = ./builder-generic.sh;
 

@@ -9,12 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openvpn-2.3.11";
+  name = "openvpn-2.3.12";
 
   src = fetchurl {
-    url = "http://swupdate.openvpn.net/community/releases/${name}.tar.gz";
+    url = "https://swupdate.openvpn.net/community/releases/${name}.tar.gz";
     allowHashOutput = false;
-    sha256 = "9117a4434fd35e61cf94f9ee7ef84b7aecbc6fa556f779ff599560f219756163";
+    sha256 = "f5d39b8c55f75b0aab943059b20571452b494146d997b12d48ce9bd753c01cff";
   };
 
   buildInputs = [
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
     systemd_lib
   ];
 
-  # This fix should be removed in 2.3.11+
+  # This fix should be removed in 2.3.12+
   postPatch = ''
     sed -i 's,systemd-daemon,systemd,g' configure
   '';

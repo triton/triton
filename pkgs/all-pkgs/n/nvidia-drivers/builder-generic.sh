@@ -10,11 +10,6 @@ source "${stdenv}/setup"
 # Fail on any error
 set -e
 
-# PatchELF RPATH shrink removes libXv from the RPATH of `nvidia-settings',
-# as a work around we run `patchelf' on everything except `nvidia-settings'
-# (see `nvidia_patchelf`)
-dontPatchELF=1
-
 nvidia_bin_install() {
   # Usage:
   # $1 - Min version (0 = null, for no minimum)
@@ -24,7 +19,7 @@ nvidia_bin_install() {
   if ([ ${1} -eq 0 ] || [ ${versionMajor} -ge ${1} ]) && \
      ([ ${2} -eq 0 ] || [ ${versionMajor} -le ${2} ]) ; then
     # Install the executable
-    install -D -m 755 -v "${3}" "${out}/bin/$(basename ${3})"
+    install -D -m755 -v "${3}" "${out}/bin/$(basename ${3})"
   fi
 }
 
@@ -38,7 +33,7 @@ nvidia_header_install() {
   if ([ ${1} -eq 0 ] || [ ${versionMajor} -ge ${1} ]) && \
      ([ ${2} -eq 0 ] || [ ${versionMajor} -le ${2} ]) ; then
     # Install the header
-    install -D -m 644 -v "${3}.h" "${out}/include${4:+/${4}}/$(basename ${3}).h"
+    install -D -m644 -v "${3}.h" "${out}/include${4:+/${4}}/$(basename ${3}).h"
   fi
 }
 
@@ -66,12 +61,12 @@ nvidia_lib_install() {
       soVersion="${5}"
     fi
 
-    # Handle cases where the file being installed is in a subdirectory within
-    # the source directory
+    # Handle cases where the file being installed is in a subdirectory
+    # within the source directory
     libFile="$(basename "${3}")"
 
     # Install the library
-    install -D -m 755 -v "${3}.so${soVersion:+.${soVersion}}" \
+    install -D -m755 -v "${3}.so${soVersion:+.${soVersion}}" \
       "${out}/lib${6:+/${6}}/${libFile}.so${soVersion:+.${soVersion}}"
 
     # Always create a symlink from the library to *.so
@@ -99,7 +94,7 @@ nvidia_man_install() {
   if ([ ${1} -eq 0 ] || [ ${versionMajor} -ge ${1} ]) && \
      ([ ${2} -eq 0 ] || [ ${versionMajor} -le ${2} ]) ; then
     # Install the manpage
-    install -D -m 644 -v "${3}.1.gz" \
+    install -D -m644 -v "${3}.1.gz" \
       "${out}/share/man/man1/$(basename ${3}).1.gz"
   fi
 }
@@ -225,20 +220,20 @@ installPhase() {
 
     # NVIDIA kernel module
     nuke-refs 'kernel/nvidia.ko'
-    install -D -m 644 -v 'kernel/nvidia.ko' \
+    install -D -m644 -v 'kernel/nvidia.ko' \
       "${out}/lib/modules/${kernelVersion}/misc/nvidia.ko"
 
     # NVIDIA direct rendering manager kernel modesetting (DRM KMS) kernel module
     if [ ${versionMajor} -ge 364 ] ; then
       nuke-refs 'kernel/nvidia-drm.ko'
-      install -D -m 644 -v 'kernel/nvidia-drm.ko' \
+      install -D -m644 -v 'kernel/nvidia-drm.ko' \
         "${out}/lib/modules/${kernelVersion}/misc/nvidia-drm.ko"
     fi
 
   # NVIDIA modesetting kernel module
   if [ ${versionMajor} -ge 358 ] ; then
     nuke-refs 'kernel/nvidia-modeset.ko'
-    install -D -m 644 -v 'kernel/nvidia-modeset.ko' \
+    install -D -m644 -v 'kernel/nvidia-modeset.ko' \
       "${out}/lib/modules/${kernelVersion}/misc/nvidia-modeset.ko"
   fi
 
@@ -247,38 +242,15 @@ installPhase() {
       # The uvm kernel module build directory changed in 355+
       if [ ${versionMajor} -ge 355 ] && [ "${targetSystem}" == 'x86_64-linux' ] ; then
         nuke-refs 'kernel/nvidia-uvm.ko'
-        install -D -m 644 -v 'kernel/nvidia-uvm.ko' \
+        install -D -m644 -v 'kernel/nvidia-uvm.ko' \
           "${out}/lib/modules/${kernelVersion}/misc/nvidia-uvm.ko"
       elif ([ ${versionMajor} -ge 346 ] && [ "${targetSystem}" == 'x86_64-linux' ]) || \
            ([ ${versionMajor} -ge 340 ] && [ ${versionMajor} -lt 346 ]) ; then
         nuke-refs 'kernel/uvm/nvidia-uvm.ko'
-        install -D -m 644 -v 'kernel/uvm/nvidia-uvm.ko' \
+        install -D -m644 -v 'kernel/uvm/nvidia-uvm.ko' \
           "${out}/lib/modules/${kernelVersion}/misc/nvidia-uvm.ko"
       fi
     fi
-
-    #
-    ## Executables
-    #
-
-    nvidia_bin_install 340 0 'nvidia-cuda-mps-control'
-    nvidia_bin_install 340 0 'nvidia-cuda-mps-server'
-    nvidia_bin_install 304 304 'nvidia-cuda-proxy-control'
-    nvidia_bin_install 304 304 'nvidia-cuda-proxy-server'
-    ###nvidia_bin_install 340 0 'nvidia-modprobe'
-    nvidia_bin_install 340 0 'nvidia-persistenced'
-    # System Management Interface
-    nvidia_bin_install 0 0 'nvidia-smi'
-
-    #
-    ## Manpages
-    #
-
-    nvidia_man_install 340 0 'nvidia-cuda-mps-control'
-    nvidia_man_install 304 304 'nvidia-cuda-proxy-control'
-    ###nvidia_man_install 0 0 'nvidia-modprobe'
-    nvidia_man_install 340 0 'nvidia-persistenced'
-    nvidia_man_install 0 0 'nvidia-smi'
   }
   if test -n "${buildKernelspace}" ; then
     nvidia_kernelspace
@@ -387,13 +359,9 @@ installPhase() {
     # NVENC video encoding library
     nvidia_lib_install 340 0 'libnvidia-encode'
 
-    # NVIDIA GTK+ 3 library
-    # For versions older than 346 see nvidia_bin_install
-    if test -n "${nvidiasettingsSupport}" && \
-       test -z "${libsOnly}" && \
-       [ ${versionMajor} -ge 346 ] ; then
-      nvidia_lib_install 346 0 'libnvidia-gtk3'
-    fi
+    # NVIDIA Settings GTK+ 2/3 libraries
+    ###nvidia_lib_install 346 0 'libnvidia-gtk2'
+    ###nvidia_lib_install 346 0 'libnvidia-gtk3'
 
     #
     ## Headers
@@ -414,11 +382,17 @@ installPhase() {
     if test -z "${libsOnly}" ; then
       ###nvidia_bin_install 0 0 'mkprecompiled'
       ###nvidia_bin_install 0 0 'nvidia-bug-report.sh'
+      nvidia_bin_install 340 0 'nvidia-cuda-mps-control'
+      nvidia_bin_install 340 0 'nvidia-cuda-mps-server'
+      nvidia_bin_install 304 304 'nvidia-cuda-proxy-control'
+      nvidia_bin_install 304 304 'nvidia-cuda-proxy-server'
       nvidia_bin_install 304 0 'nvidia-debugdump'
       ###nvidia_bin_install 0 0 'nvidia-installer'
-      if test -n "${nvidiasettingsSupport}" ; then
-        nvidia_bin_install 0 0 'nvidia-settings'
-      fi
+      ###nvidia_bin_install 340 0 'nvidia-modprobe'
+      nvidia_bin_install 340 0 'nvidia-persistenced'
+      ###nvidia_bin_install 0 0 'nvidia-settings'
+      # System Management Interface
+      nvidia_bin_install 0 0 'nvidia-smi'
       ###nvidia_bin_install 0 0 'nvidia-xconfig'
       ###nvidia_bin_install 0 0 'tls_test' (also tls_test.so)
     fi
@@ -428,11 +402,14 @@ installPhase() {
     #
 
     if test -z "${libsOnly}" ; then
+      nvidia_man_install 340 0 'nvidia-cuda-mps-control'
+      nvidia_man_install 304 304 'nvidia-cuda-proxy-control'
       ###nvidia_man_install 361 0 'nvidia-gridd'
       ###nvidia_man_install 0 0 'nvidia-installer'
-      if test -n "${nvidiasettingsSupport}" ; then
-        nvidia_man_install 0 0 'nvidia-settings'
-      fi
+      ###nvidia_man_install 0 0 'nvidia-modprobe'
+      nvidia_man_install 340 0 'nvidia-persistenced'
+      ###nvidia_man_install 0 0 'nvidia-settings'
+      nvidia_man_install 0 0 'nvidia-smi'
       ###nvidia_man_install 0 0 'nvidia-xconfig'
     fi
 
@@ -443,9 +420,9 @@ installPhase() {
     if test -z "${libsOnly}" ; then
       # NVIDIA application profiles
       if [ ${versionMajor} -ge 340 ] ; then
-        install -D -m 644 -v "nvidia-application-profiles-${version}-key-documentation" \
+        install -D -m644 -v "nvidia-application-profiles-${version}-key-documentation" \
           "${out}/share/doc/nvidia-application-profiles-${version}-key-documentation"
-        install -D -m 644 -v "nvidia-application-profiles-${version}-rc" \
+        install -D -m644 -v "nvidia-application-profiles-${version}-rc" \
           "${out}/share/doc/nvidia-application-profiles-${version}-rc"
         mkdir -pv "${out}/etc/nvidia"
         ln -fsv \
@@ -454,11 +431,11 @@ installPhase() {
       fi
 
       # OpenCL ICD config
-      install -D -m 644 -v 'nvidia.icd' "${out}/etc/OpenCL/vendors/nvidia.icd"
+      install -D -m644 -v 'nvidia.icd' "${out}/etc/OpenCL/vendors/nvidia.icd"
 
       # X.Org driver configuration file
       if [ ${versionMajor} -ge 346 ] ; then
-        install -D -m 644 -v 'nvidia-drm-outputclass.conf' \
+        install -D -m644 -v 'nvidia-drm-outputclass.conf' \
           "$out/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf"
       fi
     fi
@@ -467,28 +444,18 @@ installPhase() {
     ## Desktop Entries
     #
 
-    if test -z "${libsOnly}" ; then
-      if test -n "${nvidiasettingsSupport}" ; then
-        # NVIDIA Settings .desktop entry
-        install -D -m 644 -v 'nvidia-settings.desktop' \
-          "${out}/share/applications/nvidia-settings.desktop"
-        sed -i "${out}/share/applications/nvidia-settings.desktop" \
-          -e "s,__UTILS_PATH__,${out}/bin," \
-          -e "s,__PIXMAP_PATH__,${out}/share/pixmaps,"
-      fi
-    fi
+    # NVIDIA Settings .desktop entry
+    ###install -D -m 644 -v 'nvidia-settings.desktop' \
+    ###  "${out}/share/applications/nvidia-settings.desktop"
+    ###sed -i "${out}/share/applications/nvidia-settings.desktop" \
 
     #
     ## Icons
     #
 
-    if test -z "${libsOnly}" ; then
-      if test -n "${nvidiasettingsSupport}" ; then
-        # NVIDIA Settings icon
-        install -D -m 644 -v 'nvidia-settings.png' \
-          "${out}/share/pixmaps/nvidia-settings.png"
-      fi
-    fi
+    # NVIDIA Settings icon
+    ###install -D -m 644 -v 'nvidia-settings.png' \
+    ###  "${out}/share/pixmaps/nvidia-settings.png"
   }
   if test -n "${buildUserspace}" ; then
     nvidia_userspace
@@ -498,55 +465,10 @@ installPhase() {
 preFixup() {
   # Patch RPATH's in libraries and executables
   nvidia_patchelf
-
-  # nvidia-settings special case
-  if test -z "${libsOnly}" && test -n "${nvidiasettingsSupport}" ; then
-    # Handle GTK+ path for nvidia-settings separately
-    if [ ${versionMajor} -ge 346 ] ; then
-      # NVIDIA GTK+3 library
-      local gtkLib="${out}/lib/libnvidia-gtk3.so.${version}"
-      if [ -f "${gtkLib}" ] ; then
-        echo "patchelf: ${gtkLib} : rpath -> ${out}/lib:${allLibPath}:${gtkPath}"
-        patchelf \
-          --set-rpath "${out}/lib:${allLibPath}:${gtkPath}" \
-          "${gtkLib}"
-        echo "patchelf: ${gtkLib} : shrink-rpath"
-        patchelf --shrink-rpath "${gtkLib}"
-      fi
-    else
-      local nvSetBin="${out}/bin/nvidia-settings"
-      if [ -f "${nvSetBin}" ] ; then
-        echo "patchelf: ${nvSetBin} : rpath -> ${out}/lib:${allLibPath}:${gtkPath}"
-        patchelf \
-          --set-rpath "${out}/lib:${allLibPath}:${gtkPath}" \
-          "${nvSetBin}"
-        echo "patchelf: ${nvSetBin} : shrink-rpath"
-        patchelf --shrink-rpath "${nvSetBin}"
-      fi
-    fi
-
-    # nvidia-settings loads libXv at runtime, so shrink rpath
-    # strips it out; re-add libXv here.
-    if [ -f "$out/bin/nvidia-settings" ] && \
-       test -n "${nvidiasettingsSupport}" ; then
-      local storeNvSettingsRpath
-      storeNvSettingsRpath="$(patchelf --print-rpath $out/bin/nvidia-settings)"
-      storeNvSettingsRpath="${storeNvSettingsRpath}:${libXvPath}"
-      echo "patchelf: ${out}/bin/nvidia-settings : rpath -> ${storeNvSettingsRpath}"
-      patchelf \
-        --set-rpath "${storeNvSettingsRpath}" \
-        "${out}/bin/nvidia-settings"
-    fi
-  fi
 }
 
 # Run some tests
 postFixup() {
-  # This only guarantees that libc rpath's were patched successfully
-  if test -z "${libsOnly}" && test -n "${nvidiasettingsSupport}" ; then
-    ${out}/bin/nvidia-settings --version
-  fi
-
   # Fail if libraries contain broken RPATH's
   local TestLib
   find "${out}/lib" -name '*.so*' -type f |

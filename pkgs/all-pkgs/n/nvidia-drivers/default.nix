@@ -19,15 +19,6 @@
 , mesa_noglu
 
 , libsOnly ? false
-
-, nvidiasettingsSupport ? true
-  , atk
-  , gdk-pixbuf_unwrapped
-  , glib
-  , pango
-  , gtk2 # <346
-  , gtk3 # >346
-  , cairo
 }:
 
 /* NOTICE: ONLY versions 304+ are supported on Triton
@@ -83,19 +74,6 @@ assert any (n: n == channel) [
   "beta"
 ];
 assert buildKernelspace -> kernel != null;
-assert nvidiasettingsSupport -> (
-  atk != null
-  && gdk-pixbuf_unwrapped != null
-  && glib != null
-  && pango != null
-  && (
-    if versionAtLeast source.versionMajor "346" then
-      cairo != null
-      && gtk3 != null
-    else
-      gtk2 != null
-  )
-);
 assert libsOnly -> !buildKernelspace;
 assert channel == "tesla" -> elem targetSystem platforms.x86_64-linux;
 
@@ -108,7 +86,7 @@ assert elem targetSystem platforms.bit32 && !libsOnly ->
 
 stdenv.mkDerivation {
   name = "nvidia-drivers-${buildConfig}-${version}"
-       + "${optionalString buildKernelspace "-${kernel.version}"}";
+    + "${optionalString buildKernelspace "-${kernel.version}"}";
 
   src = fetchurl {
     url =
@@ -198,7 +176,6 @@ stdenv.mkDerivation {
     buildKernelspace
     buildUserspace
     libsOnly
-    nvidiasettingsSupport
     targetSystem
     version;
   inherit (source)
@@ -206,7 +183,7 @@ stdenv.mkDerivation {
 
   builder = ./builder-generic.sh;
 
-  libXvPath = optionalString (!libsOnly && nvidiasettingsSupport) (
+  libXvPath = optionalString (!libsOnly) (
     makeSearchPath "lib" [
       xorg.libXv
     ]
@@ -225,23 +202,6 @@ stdenv.mkDerivation {
   ] ++ optionals (versionOlder source.versionMajor "305") [
     xorg.libXvMC
   ]);
-  gtkPath = optionalString (!libsOnly && nvidiasettingsSupport) (
-    makeSearchPath "lib" (
-      [
-        atk
-        gdk-pixbuf_unwrapped
-        glib
-        pango
-      ] ++ (
-        if versionAtLeast source.versionMajor "346" then [
-          cairo
-          gtk3
-        ] else [
-          gtk2
-        ]
-      )
-    )
-  );
 
   /*preFixup = ''
     ln -fns ${libglvnd}/include/glvnd $out/include
@@ -253,9 +213,9 @@ stdenv.mkDerivation {
       $out/lib/xorg/modules/extensions
   '';*/
 
-  dontStrip = true;
-  optFlags = false;
   fpic = false;
+  optFlags = false;
+  stackProtector = false;
 
   passthru = {
     inherit

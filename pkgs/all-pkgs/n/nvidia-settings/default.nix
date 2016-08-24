@@ -10,6 +10,7 @@
 , jansson
 , libvdpau
 , mesa_noglu
+, nvidia-gpu-deployment-kit
 , pango
 , xorg
 
@@ -18,6 +19,7 @@
 
 let
   inherit (stdenv.lib)
+    bool01
     makeSearchPath;
 
   source = (import ./sources.nix { })."${channel}";
@@ -44,6 +46,7 @@ stdenv.mkDerivation rec {
     jansson
     libvdpau
     mesa_noglu
+    nvidia-gpu-deployment-kit
     pango
     xorg.libX11
     xorg.libXext
@@ -72,8 +75,7 @@ stdenv.mkDerivation rec {
     "GTK3_AVAILABLE=1"
     "NV_VERBOSE=1"
     "NV_USE_BUNDLED_LIBJANSSON=0"
-    # TODO: package nvidia-gpu-deployment-kit
-    "NVML_AVAILABLE=0"
+    "NVML_AVAILABLE=${bool01 (nvidia-gpu-deployment-kit != null)}"
   ];
 
   meta = with stdenv.lib; {

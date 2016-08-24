@@ -2,16 +2,13 @@
 
 { config, lib, pkgs, ... }:
 
-with {
+let
   inherit (lib)
     elem
     mkIf
     optionals
     optionalString
     singleton;
-};
-
-let
 
   drivers = config.services.xserver.videoDrivers;
 
@@ -25,10 +22,8 @@ let
       kernelPackages.nvidia-drivers_short-lived
     else if elem "nvidia-beta" drivers then
       kernelPackages.nvidia-drivers_beta
-    else if elem "nvidia-legacy304" drivers then
-      kernelPackages.nvidia-drivers_legacy304
-    else if elem "nvidia-legacy340" drivers then
-      kernelPackages.nvidia-drivers_legacy340
+    else if elem "nvidia-tesla" drivers then
+      kernelPackages.nvidia-drivers_tesla
     else
       null;
 

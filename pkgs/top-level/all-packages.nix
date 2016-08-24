@@ -1931,6 +1931,9 @@ nvidia-cuda-toolkit_7-5 = callPackage ../all-pkgs/n/nvidia-cuda-toolkit {
 #};
 nvidia-cuda-toolkit = callPackageAlias "nvidia-cuda-toolkit_7-5" { };
 
+nvidia-gpu-deployment-kit =
+  callPackage ../all-pkgs/n/nvidia-gpu-deployment-kit { };
+
 nvidia-settings_370 = callPackage ../all-pkgs/n/nvidia-settings {
   channel = "370";
 };

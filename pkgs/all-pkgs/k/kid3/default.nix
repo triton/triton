@@ -29,14 +29,15 @@ let
   inherit (stdenv.lib)
     cmFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "kid3-${version}";
-  version = "3.4.0";
+  version = "3.4.2";
 
   src = fetchurl {
     url = "mirror://sourceforge/kid3/kid3/${version}/${name}.tar.gz";
-    sha256 = "4dd67023e047d62985339eb3ba75e95dda6cf71c30f58785b57f4823bf11bfbf";
+    multihash = "QmShzrc31XbMaWYzBnAn8SABTJ45oLQJfnzzpE8nS1jroE";
+    allowHashOutput = false;
+    sha256 = "5c0707f1be73c486d09522ca086693d3ee830b7a28a88dbd2c010c5494256a3e";
   };
 
   nativeBuildInputs = [
@@ -90,6 +91,18 @@ stdenv.mkDerivation rec {
     #WITH_UBUNTUCOMPONENTS:BOOL=OFF
     (cmFlag "WITH_VORBIS" (libvorbis != null))
   ];
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "7D09 794C 2812 F621 94B0  81C1 4CAD 3442 6E35 4DD2";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A simple and powerful audio tag editor";

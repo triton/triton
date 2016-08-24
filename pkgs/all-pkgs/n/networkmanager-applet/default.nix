@@ -17,6 +17,7 @@
 , gtk3
 , hicolor-icon-theme
 , iso-codes
+, jansson
 #, libglade
 , libgnome-keyring
 , libgudev
@@ -74,6 +75,7 @@ stdenv.mkDerivation rec {
     gtk3
     hicolor-icon-theme
     iso-codes
+    jansson
     #libglade
     libgudev
     libnotify

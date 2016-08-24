@@ -27,8 +27,8 @@
  * SHORTLIVED:  364.xx,   xorg <=1.18.x, linux <=4.5
  * LONGLIVED:   367.xx,   xorg <=1.18.x, linux <=4.7 (stable) <- default
  * TESLA:       352.xx,   xorg <=1.18.x, linux <=4.5
- * LEGACY:      340.xx,   xorg <=1.18.x, linux <=4.5
- * LEGACY:      304.xx,   xorg <=1.18.x, linux <=4.5
+ * UNSUPPORTED: 340.xx,   xorg <=1.18.x, linux <=4.5
+ * UNSUPPORTED: 304.xx,   xorg <=1.18.x, linux <=4.5
  * UNSUPPORTED: 173.14.x, xorg <=1.15.x, linux <=3.13
  * UNSUPPORTED: 96.43.x,  xorg <=1.12.x, linux <=3.7
  * UNSUPPORTED: 71.86.x,  xorg <=?,      linux <=?
@@ -66,8 +66,6 @@ assert any (n: n == buildConfig) [
   "all"
 ];
 assert any (n: n == channel) [
-  "legacy304"
-  "legacy340"
   "tesla"
   "long-lived"
   "short-lived"
@@ -183,7 +181,7 @@ stdenv.mkDerivation {
 
   builder = ./builder-generic.sh;
 
-  allLibPath = makeSearchPath "lib" ([
+  allLibPath = makeSearchPath "lib" [
     stdenv.cc.cc
     wayland
     xorg.libX11
@@ -194,9 +192,7 @@ stdenv.mkDerivation {
     xorg.libXrandr
     xorg.libXv
     zlib
-  ] ++ optionals (versionOlder source.versionMajor "305") [
-    xorg.libXvMC
-  ]);
+  ];
 
   /*preFixup = ''
     ln -fns ${libglvnd}/include/glvnd $out/include
@@ -219,34 +215,10 @@ stdenv.mkDerivation {
       versionMajor;
     inherit (mesa_noglu)
       driverSearchPath;
-    drm =
-      if versionAtLeast version "346.16" then
-        true
-      else
-        false;
-    kms =
-      if versionAtLeast version "346.16" then
-        true
-      else
-        false;
-    nvenc =
-      if versionAtLeast source.versionMajor "340" then
-        true
-      else
-        false;
-    uvm =
-      # 340.xx supported UVM for both i686 & x86_64
-      if versionAtLeast source.versionMajor "340"
-         && versionOlder source.versionMajor "346"
-         && ((elem targetSystem platforms.i686-linux)
-              || (elem targetSystem platforms.x86_64-linux)) then
-        true
-      # 346.xx+ only supports UVM for x86_64
-      else if versionAtLeast source.versionMajor "346"
-              && (elem targetSystem platforms.x86_64) then
-        true
-      else
-        false;
+    drm = true;
+    kms = true;
+    nvenc = true;
+    uvm = true;
   };
 
   meta = with stdenv.lib; {

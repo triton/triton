@@ -2,18 +2,6 @@
 {
   # http://www.nvidia.com/object/unix.html
 
-  "legacy304" = {
-    versionMajor = "304";
-    versionMinor = "131";
-    sha256i686   = "1a1d0fsahgijcvs2p59vwhs0dpp7pp2wmvgcs1i7fzl6yyv4nmfj";
-    sha256x86_64 = "0gpqzb5gvhrcgrp3kph1p0yjkndx9wfzgh5j88ysrlflkv3q4vig";
-  };
-  "legacy340" = {
-    versionMajor = "340";
-    versionMinor = "96";
-    sha256i686   = "13j739gg1igll88xpfsx46m7pan4fwpzx5hqdskkdc0srmw2f3n4";
-    sha256x86_64 = "1i0lri76ghhr4c6fdlv5gwzd99n70hv3kw21w51anb55msr9s3r8";
-  };
   "tesla" = {
     versionMajor = "352";
     versionMinor = "99";

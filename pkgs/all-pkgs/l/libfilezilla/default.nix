@@ -2,9 +2,11 @@
 , fetchurl
 }:
 
+let
+  version = "0.6.1";
+in
 stdenv.mkDerivation rec {
   name = "libfilezilla-${version}";
-  version = "0.6.1";
 
   src = fetchurl {
     url = "mirror://sourceforge/project/filezilla/libfilezilla/${version}/${name}.tar.bz2";

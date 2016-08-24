@@ -55,8 +55,8 @@ assert dhcp-client == "dhcpcd" -> dhcpcd != null;
 
 stdenv.mkDerivation rec {
   name = "NetworkManager-${version}";
-  versionMajor = "1.2";
-  versionMinor = "4";
+  versionMajor = "1.4";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl rec {
@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
       + "${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/NetworkManager/${versionMajor}/"
       + "${name}.sha256sum";
-    sha256 = "19bfb7306dd472d010443a8027d91f9fd50fe6e0c5aa4ea8083845de0fa38faa";
+    sha256 = "c4d5e075998a291074501602a5068a7e54d9e0f2658aba079d58145d65be531d";
   };
 
   nativeBuildInputs = [

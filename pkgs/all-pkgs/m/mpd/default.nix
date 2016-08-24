@@ -59,17 +59,18 @@ let
     wtFlag
     optional
     optionals;
-in
 
+  versionMajor = "0.19";
+  versionMinor = "19";
+  version = "${versionMajor}.${versionMinor}";
+in
 stdenv.mkDerivation rec {
   name = "mpd-${version}";
-  versionMajor = "0.19";
-  versionMinor = "17";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "https://www.musicpd.org/download/mpd/${versionMajor}/${name}.tar.xz";
-    sha256 = "487ec8ad2b1c1c193c2a7c8975a8b8fe2e4f0335bcc2e9356b2b34a0179fb2f7";
+    multihash = "QmbjyKPGKkaFKxABi1omFEUSgDGNSJYALeZEbGKJHfHkWD";
+    sha256 = "bc856cda4136403446d53d11576f86990b61d1fe4668f6008e9eae47450d4e1d";
   };
 
   buildInputs = [

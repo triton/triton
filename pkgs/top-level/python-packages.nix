@@ -181,6 +181,8 @@ cryptography = callPackage ../all-pkgs/c/cryptography { };
 
 cryptography-vectors = callPackage ../all-pkgs/c/cryptography-vectors { };
 
+cvs2svn = callPackage ../all-pkgs/c/cvs2svn { };
+
 cython = callPackage ../all-pkgs/c/cython { };
 
 daemonize = callPackage ../all-pkgs/d/daemonize { };

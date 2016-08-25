@@ -79,6 +79,7 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
             inherit (pkg) rev;
             date = pkg.date or "nodate";
             autoUpdate = pkg.meta.autoUpdate or true;
+            useUnstable = pkg.meta.useUnstable or false;
             names = let
               names = pkgs.lib.attrNames (pkgs.lib.filterAttrs
               (n: d: d ? goPackagePath && d.goPackagePath == pkg.goPackagePath) pkgs.goPackages);
@@ -92,7 +93,7 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
       { }
       pkgList;
     pkgOutput = pkgs.lib.mapAttrsToList
-      (n: d: "${n} ${d.rev} ${d.date} ${pkgs.lib.concatStringsSep "," d.names}\n")
+      (n: d: "${n} ${d.rev} ${d.date} ${pkgs.lib.concatStringsSep "," d.names} ${if d.useUnstable then "1" else "0"}\n")
       (pkgs.lib.filterAttrs (n: d: d.autoUpdate) combinedList);
   in
     pkgs.writeText "current-go-package-list" pkgOutput
@@ -124,6 +125,7 @@ while read line; do
   rev="$(echo "$line" | awk '{print $2}')"
   date="$(echo "$line" | awk '{print $3}')"
   names="$(echo "$line" | awk '{print $4}')"
+  useUnstable="$(echo "$line" | awk '{print $5}')"
 
   cd $TMPDIR/src/$pkg
 
@@ -131,7 +133,7 @@ while read line; do
   HEAD_DATE="$(git log origin/master -n 1 --date=short | awk '{ if (/Date/) { print $2 } }')"
   REV="$(git rev-parse origin/master)"
   DATE="$HEAD_DATE"
-  if [ -n "$VERSION" ]; then
+  if [ "$useUnstable" = "0" ] && [ -n "$VERSION" ]; then
     VERSION_DATE="$(git log "$VERSION" -n 1 --date=short | awk '{ if (/Date/) { print $2 } }')"
     # Make sure we have had a release in the past 6 months
     if [ "$(expr $(date -d "$HEAD_DATE" +'%s') - $(date -d "$VERSION_DATE" +'%s'))" -lt "15000000" ]; then

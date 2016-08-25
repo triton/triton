@@ -68,6 +68,8 @@ in
       "${nvidia-drivers}/etc/OpenCL/vendors/nvidia.icd";
     environment.etc."nvidia/nvidia-application-profiles-rc.d".source =
       "${nvidia-drivers}/etc/nvidia/nvidia-application-profiles-rc.d";
+    environment.etc."nvidia/nvidia-application-profiles-key-documentation".source =
+      "${nvidia-drivers}/etc/nvidia/nvidia-application-profiles-key-documentation";
 
     environment.systemPackages = [
       nvidia-drivers

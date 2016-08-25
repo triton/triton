@@ -62,9 +62,11 @@ stdenv.mkDerivation rec {
   postPatch = /* libXv is normally loaded at runtime via LD_LIBRARY_PATH */ ''
     sed -i src/libXNVCtrlAttributes/NvCtrlAttributesXv.c \
       -e 's,"libXv.so.1","${xorg.libXv}/lib/libXv.so.1",'
-  '' + /* Fix nvidia-application-profiles-key-documentation loading */ ''
+  '' + # FIXME: nvidia-settings should depend on the nvidia-drivers directly
+       #        for this file rather than using /etc.
+    /* Fix nvidia-application-profiles-key-documentation loading */ ''
     sed -i src/gtk+-2.x/ctkappprofile.c  \
-      -e "s,/usr/share,$out,"
+      -e "s,/usr/share,/etc,"
   '';
 
   preBuild = ''

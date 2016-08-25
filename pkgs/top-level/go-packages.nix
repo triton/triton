@@ -624,9 +624,9 @@ let
 
   consul_api = buildFromGitHub {
     inherit (consul) owner repo;
-    rev = "36dc9201f2e006d4b5db1f0446b17357811297bf";
-    date = "2016-08-18";
-    sha256 = "30fc2f0516f45c915caf6e33710f4938037d3e7cb9a79da12c0c9f09cb621564";
+    rev = "6af6baf02ced3f3163831290dc559583726770e9";
+    date = "2016-07-29";
+    sha256 = "a6c14a88a4e613df46b50d87571027dc1ecbccfd3c9382faf9f217f4de091ffb";
     propagatedBuildInputs = [
       go-cleanhttp
       serf
@@ -636,7 +636,7 @@ let
       "lib"
       "tlsutil"
     ];
-    meta.useUnstable = true;
+    meta.autoUpdate = false;
   };
 
   consul-template = buildFromGitHub {
@@ -3058,11 +3058,10 @@ let
   };
 
   runc = buildFromGitHub {
-    date = "2016-08-24";
-    rev = "46d9535096662d8d6a734e4fdfc1c27ab03bc328";
+    rev = "v1.0.0-rc1";
     owner = "opencontainers";
     repo = "runc";
-    sha256 = "0dn9iw7jqxvixksixc2mrgf95xi2fszf47ilzvjgl3lmdakpzbd8";
+    sha256 = "75b869ab4d184c870de0c203d5466d846c279652ba412f35af7ddeca6835ff5c";
     propagatedBuildInputs = [
       go-units
       logrus
@@ -3074,7 +3073,7 @@ let
       urfave_cli
       runtime-spec
     ];
-    meta.useUnstable = true;
+    meta.autoUpdate = false;
   };
 
   runtime-spec = buildFromGitHub {

@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation {
-  name = "letskencrypt-2016-08-06";
+  name = "letskencrypt-2016-08-22";
 
   src = fetchFromGitHub {
     owner = "kristapsdz";
     repo = "letskencrypt-portable";
-    rev = "a50e0fa1bd02686372ac36c1de6abc949886622a";
-    sha256 = "b71981e402f595c43c50d5bf3cb4af82ea9a9e8249dc42ce894d00e420146321";
+    rev = "ec55b5616bbeef9388fe5a2a557b319c6653a763";
+    sha256 = "00cb44b6c9f278410292109369c5d4cc56fdbcf2de324454bdea10c5c6ee6f0e";
   };
 
   buildInputs = [

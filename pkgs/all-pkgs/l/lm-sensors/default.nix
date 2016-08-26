@@ -3,6 +3,8 @@
 , fetchurl
 , flex
 , which
+
+, perl
 }:
 
 stdenv.mkDerivation rec {
@@ -19,6 +21,10 @@ stdenv.mkDerivation rec {
     bison
     flex
     which
+  ];
+
+  buildInputs = [
+    perl  # Needed for sensors-detect
   ];
 
   preBuild = ''

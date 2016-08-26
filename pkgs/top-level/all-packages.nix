@@ -2373,6 +2373,8 @@ tevent = callPackage ../all-pkgs/t/tevent { };
 
 texinfo = callPackage ../all-pkgs/t/texinfo { };
 
+thermal_daemon = callPackage ../all-pkgs/t/thermal_daemon { };
+
 thin-provisioning-tools = callPackage ../all-pkgs/t/thin-provisioning-tools { };
 
 tinc_1_0 = callPackage ../all-pkgs/t/tinc { channel = "1.0"; };

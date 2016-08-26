@@ -13,10 +13,16 @@
 , libxml2
 , ncurses
 , zlib
+
+, channel ? "3.8"
 }:
 
 let
   sources = import ./sources.nix;
+
+  inherit (sources."${channel}")
+    version
+    srcs;
 
   gcc = if stdenv.cc.isGNU then stdenv.cc.cc else stdenv.cc.cc.gcc;
 
@@ -25,23 +31,23 @@ let
     makeOverridable
     mapAttrsToList;
 
-  srcs = flip mapAttrsToList sources.srcs (n: d:
+  srcs' = flip mapAttrsToList srcs (n: d:
     let
-      version = d.version or sources.version;
+      version' = d.version or version;
     in makeOverridable fetchurl {
-      url = "http://llvm.org/releases/${version}/${n}-${version}.src.tar.xz";
+      url = "http://llvm.org/releases/${version'}/${n}-${version'}.src.tar.xz";
       inherit (d) sha256;
     }
   );
 in
 stdenv.mkDerivation {
-  name = "llvm-${sources.version}";
+  name = "llvm-${version}";
 
-  srcs = flip map srcs (src: src.override {
+  srcs = flip map srcs' (src: src.override {
     allowHashOutput = false;
   });
 
-  sourceRoot = "llvm-${sources.version}.src";
+  sourceRoot = "llvm-${version}.src";
 
   nativeBuildInputs = [
     cmake
@@ -111,7 +117,7 @@ stdenv.mkDerivation {
     isClang = true;
     inherit gcc;
 
-    srcVerifications = flip map srcs (src: src.override {
+    srcVerifications = flip map srcs' (src: src.override {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
       pgpKeyFingerprint = "11E5 21D6 4698 2372 EB57  7A1F 8F08 71F2 0211 9294";

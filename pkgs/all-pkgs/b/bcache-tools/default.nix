@@ -1,7 +1,10 @@
 { stdenv
 , fetchFromGitHub
 
+, keyutils
 , libnih
+, libscrypt
+, libsodium
 , util-linux_lib
 
 , channel ? "stable"
@@ -15,11 +18,15 @@ let
       sha256 = "496ae8691eb9c5a233bd99ed7984cbe129d702c322dc540143cd4012b24a4dad";
     };
     "dev" = {
-      version = "2016-01-15";
-      rev = "006a6a003d9529d50ecee205340b7a109bde4d76";
-      sha256 = "f23a4209e196fa0483bd82804aec8e21b368492746d61b3235b46c44f8c654d0";
+      version = "2016-08-25";
+      rev = "97de91cb580a2e31352860dfc0642579d21d3b7a";
+      sha256 = "0f42bcd2f3226ad6e1bb0d3f8948a149467dcfa6e37d12c0421656159cb4d51c";
     };
   };
+
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
 
   inherit (sources.${channel})
     rev
@@ -38,6 +45,10 @@ stdenv.mkDerivation {
   buildInputs = [
     libnih
     util-linux_lib
+  ] ++ optionals (channel == "dev") [
+    keyutils
+    libscrypt
+    libsodium
   ];
 
   preBuild = ''
@@ -45,13 +56,15 @@ stdenv.mkDerivation {
       "PREFIX=$out"
       "UDEVLIBDIR=$out/lib/udev"
     )
+    sed -i '/-static/d' Makefile
   '';
 
   preInstall = ''
-    mkdir -p "$out/lib/udev/rules.d"
     mkdir -p "$out/bin"
     mkdir -p "$out/sbin"
     mkdir -p "$out/share/man/man8"
+  '' + optionalString (channel == "stable") ''
+    mkdir -p "$out/lib/udev/rules.d"
   '';
 
   meta = with stdenv.lib; {

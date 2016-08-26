@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "1.3.3";
+  version = "1.3.4";
   name = "nfs-utils-${version}";
 
   baseTarballs = [
@@ -26,8 +26,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.bz2") baseTarballs;
     allowHashOutput = false;
-    multihash = "Qmc8KJfF9mssK2CCZ5cgpvaS3Tw22BbHjz6WHWFq8mweah";
-    sha256 = "fe8e04f7a869975e11765085d27e91ca3f765e08811a527bb4e32056e41176eb";
+    multihash = "QmYSe6736HZBZejfyZL3emutsExTrCTtiZ1BEEn4GAnfMS";
+    sha256 = "c529c82a82320daae811f3d3a143f83d2714d7e7a43beadd42fcd6022c17d590";
   };
 
   buildInputs = [

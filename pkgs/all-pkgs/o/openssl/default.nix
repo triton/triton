@@ -84,9 +84,6 @@ stdenv.mkDerivation rec {
     installFlagsArray+=("OPENSSLDIR=$out/etc/ssl")
   '';
 
-  # Parallel building is broken for openssl 1.1.0
-  parallelBuild = channel != "1.1.0";
-
   # Parallel installing is broken in OpenSSL, it creates invaild shared objects.
   parallelInstall = false;
 

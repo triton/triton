@@ -29,13 +29,17 @@ let
   inherit (stdenv.lib)
     flip
     makeOverridable
-    mapAttrsToList;
+    mapAttrsToList
+    replaceChars;
 
   srcs' = flip mapAttrsToList srcs (n: d:
     let
       version' = d.version or version;
     in makeOverridable fetchurl {
-      url = "http://llvm.org/releases/${version'}/${n}-${version'}.src.tar.xz";
+      urls = map (u: "${u}/${replaceChars ["-"] ["/"] version'}/${n}-${replaceChars ["-"] [""] version'}.src.tar.xz") [
+        "http://llvm.org/releases"
+        "http://llvm.org/pre-releases"
+      ];
       inherit (d) sha256;
     }
   );
@@ -47,7 +51,7 @@ stdenv.mkDerivation {
     allowHashOutput = false;
   });
 
-  sourceRoot = "llvm-${version}.src";
+  sourceRoot = "llvm-${replaceChars ["-"] [""] version}.src";
 
   nativeBuildInputs = [
     cmake
@@ -120,7 +124,10 @@ stdenv.mkDerivation {
     srcVerifications = flip map srcs' (src: src.override {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "11E5 21D6 4698 2372 EB57  7A1F 8F08 71F2 0211 9294";
+      pgpKeyFingerprints = [
+        "11E5 21D6 4698 2372 EB57  7A1F 8F08 71F2 0211 9294"
+        "B6C8 F982 82B9 44E3 B0D5  C253 0FC3 042E 345A D05D"
+      ];
     });
   };
 

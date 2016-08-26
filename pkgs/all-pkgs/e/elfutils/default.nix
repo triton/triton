@@ -14,7 +14,6 @@ let
 
   tarballUrls = version: [
     "https://fedorahosted.org/releases/e/l/elfutils/${version}/elfutils-${version}.tar.bz2"
-    "mirror://gentoo/elfutils-${version}.tar.bz2"
   ];
 
   version = "0.167";
@@ -24,8 +23,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = tarballUrls version;
-    allowHashOutput = false;
     multihash = "QmTUVjSnPLPmYQmDFKb5Twfb3AQxv9Rx7FcLwjoQPfa6My";
+    allowHashOutput = false;
     sha256 = "3f300087c42b6f35591163b48246b4098ce39c4c6f5d55a83023c903c5776553";
   };
 
@@ -46,6 +45,8 @@ stdenv.mkDerivation rec {
   ];
 
   passthru = {
+    inherit version;
+
     srcVerification = fetchurl rec {
       failEarly = true;
       urls = tarballUrls "0.167";
@@ -54,8 +55,6 @@ stdenv.mkDerivation rec {
       inherit (src) outputHashAlgo;
       outputHash = "3f300087c42b6f35591163b48246b4098ce39c4c6f5d55a83023c903c5776553";
     };
-
-    inherit version;
   };
 
   meta = with stdenv.lib; {

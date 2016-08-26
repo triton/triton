@@ -6,8 +6,8 @@
   };
   "3" = {
     versionMajor = "1";
-    versionMinor = "2";
-    sha256 = "58d2a2b69f0f46fe8aacd45e582c62e380ba611b5baf6a4dfcf2906eb2b9bd61";
+    versionMinor = "3";
+    sha256 = "f8575c071e2a64437aeb70c8c030b385cddbe0b5cde20c9b18a6def840128822";
   };
   "9" = { # Git
     versionMajor = "2016.05.16";

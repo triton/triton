@@ -1754,6 +1754,8 @@ man-db = callPackage ../all-pkgs/m/man-db { };
 
 man-pages = callPackage ../all-pkgs/m/man-pages { };
 
+mediainfo = callPackage ../all-pkgs/m/mediainfo { };
+
 mercurial = callPackage ../all-pkgs/m/mercurial { };
 
 mesa_glu =  callPackage ../all-pkgs/m/mesa-glu { };
@@ -3387,8 +3389,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   ladspaH = callPackage ../applications/audio/ladspa-sdk/ladspah.nix { };
 #
   mcpp = callPackage ../development/compilers/mcpp { };
-#
-  #mediainfo = callPackage ../applications/misc/mediainfo { };
 #
   mpg123 = callPackage ../applications/audio/mpg123 { };
 #

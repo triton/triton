@@ -30,13 +30,13 @@ let
 in
 stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
-  version = "2016-08-18";
+  version = "2016-08-21";
 
   src = fetchFromGitHub {
     owner = "gnome-mpv";
     repo = "gnome-mpv";
-    rev = "36bdc1cc579c8a1f4da63f3b18f12d934f66a1e6";
-    sha256 = "09997ec37c628c0ffcfabe4abfd780a36cb26fa710ffbda02057de3cc31792db";
+    rev = "2b96f085038eadb45d57f122048d4c54a32fab5f";
+    sha256 = "b5fa7402878566e9889dfb3dc1863a7e2af17986c2c8d8644a177c3d5a00b7f3";
   };
 
   nativeBuildInputs = [

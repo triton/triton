@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://user-dirs.freedesktop.org/releases/${name}.tar.gz";
+    multihash = "QmTS4GA6yAUYFDQhV27FZ131qMrN7aMs6NKuFVZfa4gFNp";
     sha256 = "20b4a751f41d0554bce3e0ce5e8d934be98cc62d48f0b90a894c3e1916552786";
   };
 

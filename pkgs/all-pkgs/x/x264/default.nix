@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "20160808";
+  version = "20160827";
 in
 stdenv.mkDerivation rec {
   name = "x264-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://ftp.videolan.org/pub/videolan/x264/snapshots/"
       + "x264-snapshot-${version}-2245-stable.tar.bz2";
-    sha256 = "81348d5fadc9234d4c609897ec9465d314930f9d90eeb9fa752f0c70786af83d";
+    sha256 = "1a985db59a64fda7dabac73b705ee7b0efac7ab34767a20c4730973b785d299d";
   };
 
   nativeBuildInputs = [
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
     "--disable-win32thread"
     "--disable-interlaced"
     "--bit-depth=${
-      if (enable10bit) then
+      if enable10bit then
         "10"
       else
         "8"

@@ -14,8 +14,6 @@
 , pcre2
 , vala
 , zlib
-
-, selectTextPatch ? false
 }:
 
 let
@@ -24,7 +22,6 @@ let
     optional
     wtFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "vte-${version}";
   versionMajor = "0.44";
@@ -55,9 +52,6 @@ stdenv.mkDerivation rec {
     vala
     zlib
   ];
-
-  patches = [ ]
-    ++ optional selectTextPatch ./expose_select_text.0.40.0.patch;
 
   postPatch = ''
     patchShebangs ./src/box_drawing_generate.sh

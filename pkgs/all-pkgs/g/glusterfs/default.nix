@@ -22,17 +22,18 @@
 , zlib
 }:
 
-let 
+let
   versionMajor = "3.8";
-  versionMinor = "2";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
   name = "glusterfs-${version}";
 
   src = fetchurl {
-    url = "https://download.gluster.org/pub/gluster/glusterfs/${versionMajor}/${version}/${name}.tar.gz";
-    sha256 = "af3c666a7eca3f2d85bfa729cae38182e73d0abba48ee40b78be2f722aa0364e";
+    url = "https://download.gluster.org/pub/gluster/glusterfs/${versionMajor}/"
+      + "${version}/${name}.tar.gz";
+    sha256 = "d409b93942557adda8466c215ab93eee1be10a7ca52058ff0bf16b833bf3bf95";
   };
 
   nativeBuildInputs = [
@@ -93,7 +94,8 @@ stdenv.mkDerivation rec {
   '';
 
   preFixup = ''
-    # For some reason this pkgconfig file depends on an unknown library that doesn't exist
+    # For some reason this pkgconfig file depends on an unknown library
+    # that doesn't exist
     grep -q '\-lgfchangedb' $out/lib/pkgconfig/libgfdb.pc
     sed -i 's, -lgfchangedb,,g' $out/lib/pkgconfig/libgfdb.pc
   '';

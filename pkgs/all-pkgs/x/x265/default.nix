@@ -1,7 +1,6 @@
 { stdenv
 , cmake
-, fetchhg
-#, fetchurl
+, fetchurl
 , ninja
 , yasm
 
@@ -9,7 +8,9 @@
 
 # Optionals
 , cliSupport ? true # Build standalone CLI application
+
 , unittestsSupport ? false # Unit tests
+
 # Debugging options
 , debugSupport ? false # Run-time sanity checks (debugging)
 , werrorSupport ? false # Warnings as errors
@@ -20,51 +21,46 @@ let
   inherit (stdenv)
     targetSystem;
   inherit (stdenv.lib)
-    cmFlag
+    boolOn
     concatStringsSep
     elem
     optionals
     platforms;
+
+  version = "2.0";
+
+  src = fetchurl {
+    url = "https://bitbucket.org/multicoreware/x265/downloads/"
+      + "x265_${version}.tar.gz";
+    multihash = "Qme81DrdptaPWWKmwKqgqwY3N3Ecp3MgcgzhQyTp1A5h9n";
+    sha256 = "5a7f6797bee33310c690be5d9a6c63125f36663ac3478e98ac6b6142a70bce1f";
+  };
+
+  cmakeFlagsAll = [
+    "-DCHECKED_BUILD=${boolOn debugSupport}"
+    "-DENABLE_AGGRESSIVE_CHECKS=OFF"
+    "-DENABLE_ASSEMBLY=ON"
+    "-DENABLE_LIBNUMA=${boolOn (
+      elem targetSystem platforms.linux
+      && numactl != null)}"
+    "-DENABLE_PIC=ON"
+    "-DENABLE_PPA=OFF"
+    "-DENABLE_TESTS=OFF"
+    "-DENABLE_VTUNE=OFF"
+    "-DWARNINGS_AS_ERRORS=OFF"
+  ];
 in
 
 assert (elem targetSystem platforms.linux) -> numactl != null;
 
-let
-  version = "2.0";
-  /*src = fetchurl {
-    url = "https://bitbucket.org/multicoreware/x265/downloads/" +
-          "x265_${version}.tar.gz";
-    sha256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
-  };*/
-  #version = "2016-07-04";
-  src = fetchhg {
-    url = "https://bitbucket.org/multicoreware/x265";
-    rev = "${version}";
-    sha256 = "0a1gdxwzzwlgr76hg78v9hczf2lqq9l38k3dd6b29gxsprq2capd";
-  };
-  cmakeFlagsAll = [
-    (cmFlag "ENABLE_TESTS" false)
-    (cmFlag "ENABLE_AGGRESSIVE_CHECKS" false)
-    (cmFlag "CHECKED_BUILD" debugSupport)
-    (cmFlag "WARNINGS_AS_ERRORS" false)
-    (cmFlag "ENABLE_PPA" false)
-    (cmFlag "ENABLE_VTUNE" false)
-    (cmFlag "ENABLE_PIC" true)
-    (cmFlag "ENABLE_LIBNUMA" (
-      (elem targetSystem platforms.linux)
-      && numactl != null))
-    (cmFlag "ENABLE_ASSEMBLY" true)
-  ];
-in
-
-/* By default, the library and the encoder are configured for only
- * one output bit depth.  Meaning, one has to rebuild libx265 if
- * they want to produce HEVC files with a different bit depth,
- * which is annoying.  However, upstream supports proper namespacing
- * for 8bit, 10bit & 12bit HEVC and linking all that together so that
- * the resulting library can produce all three of them instead of
- * only one.  The API requires the bit depth parameter, so that
- * libx265 can then chose which variant of the encoder to use.  To
+/* By default, the compiled library is configured for only one
+ * output bit depth.  Meaning, one has to rebuild libx265 if they
+ * want to produce HEVC files with a different bit depth, which
+ * is annoying.  However, upstream supports proper namespacing
+ * for 8bit, 10bit & 12bit HEVC and linking all that together so
+ * that the resulting library can produce all three of bit depths
+ * instead of only one.  The API requires the bit depth parameter,
+ * so that libx265 can then chose which variant of the encoder to use.  To
  * achieve this, we have to build one (static) library for each
  * non-main variant, and link it into the main library.  Upstream
  * documents using the 8bit variant as main library, hence we do not
@@ -77,11 +73,14 @@ let
     inherit src;
 
     cmakeFlags = [
-      (cmFlag "HIGH_BIT_DEPTH" true)
-      (cmFlag "EXPORT_C_API" false)
-      (cmFlag "ENABLE_SHARED" false)
-      (cmFlag "ENABLE_CLI" false)
-      (cmFlag "MAIN12" false)
+      "-DENABLE_CLI=OFF"
+      "-DENABLE_SHARED=OFF"
+      "-DEXPORT_C_API=OFF"
+      "-DHIGH_BIT_DEPTH=ON"
+      "-DLINKED_8BIT=OFF"
+      "-DLINKED_10BIT=OFF"
+      "-DLINKED_12BIT=OFF"
+      "-DMAIN12=OFF"
     ] ++ cmakeFlagsAll;
 
     preConfigure = /* x265 source directory is `source`, not `src` */ ''
@@ -113,11 +112,14 @@ let
     inherit src;
 
     cmakeFlags = [
-      (cmFlag "HIGH_BIT_DEPTH" true)
-      (cmFlag "EXPORT_C_API" false)
-      (cmFlag "ENABLE_SHARED" false)
-      (cmFlag "ENABLE_CLI" false)
-      (cmFlag "MAIN12" true)
+      "-DENABLE_CLI=OFF"
+      "-DENABLE_SHARED=OFF"
+      "-DEXPORT_C_API=OFF"
+      "-DHIGH_BIT_DEPTH=ON"
+      "-DLINKED_8BIT=OFF"
+      "-DLINKED_10BIT=OFF"
+      "-DLINKED_12BIT=OFF"
+      "-DMAIN12=ON"
     ] ++ cmakeFlagsAll;
 
     preConfigure = /* x265 source directory is `source`, not `src` */ ''
@@ -169,7 +171,7 @@ stdenv.mkDerivation rec {
 
   postPatch = /* Work around to set version in the compiled binary */ ''
     sed -i cmake/version.cmake \
-      -e 's/unknown/${version}/g'
+      -e 's/0.0/${version}/g'
   '';
 
   x265AdditionalLibs = [
@@ -177,19 +179,21 @@ stdenv.mkDerivation rec {
     "${libx265-12}/lib/libx265_main12.a"
   ];
 
-  x265Libs = "${concatStringsSep ";" x265AdditionalLibs}";
+  x265Libs = concatStringsSep ";" x265AdditionalLibs;
 
   cmakeFlags = [
-    (cmFlag "ENABLE_SHARED" true)
-    (cmFlag "STATIC_LINK_CRT" false)
-    (cmFlag "DETAILED_CU_STATS" custatsSupport)
-    (cmFlag "ENABLE_CLI" cliSupport)
-  ] ++ cmakeFlagsAll
-    ++ [
-    (cmFlag "EXTRA_LIB" "${x265Libs}")
-    (cmFlag "LINKED_10BIT" true)
-    (cmFlag "LINKED_12BIT" true)
-  ];
+    "-DDETAILED_CU_STATS=${boolOn custatsSupport}"
+    "-DENABLE_CLI=${boolOn cliSupport}"
+    "-DENABLE_SHARED=ON"
+    "-DHIGH_BIT_DEPTH=OFF"
+    "-DLINKED_8BIT=OFF"
+    "-DLINKED_10BIT=ON"
+    "-DLINKED_12BIT=ON"
+    #"NO_ATOMICS"
+    "-DSTATIC_LINK_CRT=OFF"
+    "-DEXPORT_C_API=ON"
+    "-DEXTRA_LIB=${x265Libs}"
+  ] ++ cmakeFlagsAll;
 
   postInstall = /* Remove static library */ ''
     rm -v $out/lib/libx265.a

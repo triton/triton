@@ -16,16 +16,17 @@ let
     "https://fedorahosted.org/releases/e/l/elfutils/${version}/elfutils-${version}.tar.bz2"
     "mirror://gentoo/elfutils-${version}.tar.bz2"
   ];
-in
 
+  version = "0.167";
+in
 stdenv.mkDerivation rec {
   name = "elfutils-${version}";
-  version = "0.166";
 
   src = fetchurl {
     urls = tarballUrls version;
     allowHashOutput = false;
-    sha256 = "3c056914c8a438b210be0d790463b960fc79d234c3f05ce707cbff80e94cba30";
+    multihash = "QmTUVjSnPLPmYQmDFKb5Twfb3AQxv9Rx7FcLwjoQPfa6My";
+    sha256 = "3f300087c42b6f35591163b48246b4098ce39c4c6f5d55a83023c903c5776553";
   };
 
   nativeBuildInputs = [
@@ -47,12 +48,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "0.166";
+      urls = tarballUrls "0.167";
       pgpsigUrls = map (n: "${n}.sig") urls;
-      pgpKeyFingerprint = "47CC 0331 081B 8BC6 D0FD  4DA0 8370 665B 5781 6A6A ";
+      pgpKeyFingerprint = "47CC 0331 081B 8BC6 D0FD  4DA0 8370 665B 5781 6A6A";
       inherit (src) outputHashAlgo;
-      outputHash = "3c056914c8a438b210be0d790463b960fc79d234c3f05ce707cbff80e94cba30";
+      outputHash = "3f300087c42b6f35591163b48246b4098ce39c4c6f5d55a83023c903c5776553";
     };
+
+    inherit version;
   };
 
   meta = with stdenv.lib; {

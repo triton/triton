@@ -27,10 +27,11 @@
 let
   inherit (stdenv.lib)
     boolEn;
+
+  version = "2016-08-21";
 in
 stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
-  version = "2016-08-21";
 
   src = fetchFromGitHub {
     owner = "gnome-mpv";

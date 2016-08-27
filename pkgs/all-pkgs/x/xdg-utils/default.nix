@@ -22,6 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     name = "${name}.tar.gz";
     url = "https://cgit.freedesktop.org/xdg/xdg-utils/snapshot/${rev}.tar.gz";
+    multihash = "QmTYcdd5NwEfG4cS9aGLKjYsjmYiVnYVpSQPRQtUnqVuuA";
     sha256 = "541ba6e0b8c090f387ed6858d7da202dbbcf5d7701d257d76ebaeea538bef3b7";
   };
 

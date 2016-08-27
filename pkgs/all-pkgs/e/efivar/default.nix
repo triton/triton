@@ -1,5 +1,5 @@
 { stdenv
-, fetchurl
+, fetchzip
 
 , popt
 }:
@@ -10,7 +10,7 @@ in
 stdenv.mkDerivation rec {
   name = "efivar-${version}";
 
-  src = fetchurl {
+  src = fetchzip {
     url = "https://github.com/rhinstaller/efivar/archive/${version}.tar.gz";
     sha256 = "d9457b06f234c9430aeaa6f30f7d7c786fb8ce3261a935afa8de51e2c1b4816d";
   };

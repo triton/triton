@@ -38,14 +38,14 @@ let
     optionals
     optionalString;
 
-  version = "0.19.0";
+  version = "0.20.0";
 in
 stdenv.mkDerivation rec {
   name = "mpv-${version}";
 
   src = fetchzip {
     url = "https://github.com/mpv-player/mpv/archive/v${version}.tar.gz";
-    sha256 = "671162b752f5ededbfb917a0c0a83bc6258ab018f357c446b13d9a25961bdee2";
+    sha256 = "de18bf3bd6e048ad347822dd3daccaf2366e94fb96750edcdb2e5e56563c0b09";
   };
 
   nativeBuildInputs = [

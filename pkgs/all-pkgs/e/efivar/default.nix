@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchzip {
     url = "https://github.com/rhinstaller/efivar/archive/${version}.tar.gz";
-    sha256 = "d9457b06f234c9430aeaa6f30f7d7c786fb8ce3261a935afa8de51e2c1b4816d";
+    sha256 = "844a96d5f015d483dd1f977ee6bcc4f3805bf531482be4e22f1b8f490ad17e14";
   };
 
   buildInputs = [

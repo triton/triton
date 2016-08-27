@@ -13,25 +13,22 @@
 , pango
 , wayland
 , xorg
+
+, channel ? "1.22"
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag
+    boolEn
     optionalString;
-
-  versionMajor = "1.22";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
 in
-
 stdenv.mkDerivation rec {
-  name = "cogl-${version}";
+  name = "cogl-${channel}.2";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/cogl/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/cogl/${versionMajor}/${name}.sha256sum";
-    sha256 = "14daxqrid5039xmq9yl4pk86awng1n9zgl6ysblhc4gw2ifzp7b8";
+    url = "mirror://gnome/sources/cogl/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/cogl/${channel}/${name}.sha256sum";
+    sha256 = "39a718cdb64ea45225a7e94f88dddec1869ab37a21b339ad058a9d898782c00d";
   };
 
   nativeBuildInputs = [
@@ -79,17 +76,19 @@ stdenv.mkDerivation rec {
     #"--enable-emscripten"
     "--disable-standalone"
     "--disable-debug"
-    (enFlag "unit-tests" doCheck null)
-    (enFlag "cairo" (cairo != null) null)
+    "--${boolEn doCheck}-unit-tests"
+    "--${boolEn (cairo != null)}-cairo"
     "--disable-profile"
     "--disable-maintainer-flags"
     "--enable-deprecated"
-    (enFlag "glibtest" (glib != null) null)
-    (enFlag "glib" (glib != null) null)
-    (enFlag "cogl-pango" (pango != null) null)
-    (enFlag "cogl-gst" (gstreamer != null && gst-plugins-base != null) null)
+    "--${boolEn (glib != null)}-glibtest"
+    "--${boolEn (glib != null)}-glib"
+    "--${boolEn (pango != null)}-cogl-pango"
+    "--${boolEn (
+      gstreamer != null
+      && gst-plugins-base != null)}-cogl-gst"
     "--enable-cogl-path"
-    (enFlag "gdk-pixbuf" (gdk-pixbuf != null) null)
+    "--${boolEn (gdk-pixbuf != null)}-gdk-pixbuf"
     "--disable-quartz-image"
     "--disable-examples-install"
     "--enable-gles1"
@@ -111,7 +110,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--enable-nls"
     "--enable-rpath"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--with-x"
   ];
 

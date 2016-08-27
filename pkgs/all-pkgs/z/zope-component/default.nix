@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "4.2.2";
+  version = "4.3.0";
 in
 buildPythonPackage rec {
   name = "zope.component-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "zope.component";
     inherit version;
-    sha256 = "282c112b55dd8e3c869a3571f86767c150ab1284a9ace2bdec226c592acaf81a";
+    sha256 = "bb4136c7443610f8c2d2d357cad247c3e90bb5e6f0b7a02b0edfb11924ff9bc2";
   };
 
   propagatedBuildInputs = [

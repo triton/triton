@@ -907,14 +907,16 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   zeromq4 = null;
   #zvbi = null;
 } // overrides);
-ffmpeg_2 = pkgs.ffmpeg_generic {
-  channel = "2";
+ffmpeg_2-8 = pkgs.ffmpeg_generic {
+  channel = "2.8";
 };
-ffmpeg_3 = pkgs.ffmpeg_generic {
-  channel = "3";
+ffmpeg_2 = callPackageAlias "ffmpeg_2-8" { };
+ffmpeg_3-1 = pkgs.ffmpeg_generic {
+  channel = "3.1";
 };
+ffmpeg_3 = callPackageAlias "ffmpeg_3-1" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
-  channel = "9";
+  channel = "9.9";
 };
 ffmpeg = callPackageAlias "ffmpeg_3" { };
 

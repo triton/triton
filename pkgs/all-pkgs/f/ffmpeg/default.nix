@@ -164,22 +164,20 @@
 , extraWarningsDeveloper ? false
 , strippingDeveloper ? false
 
-, channel ? null
+, channel
 }:
 
 let
   inherit (builtins)
     compareVersions;
   inherit (stdenv.lib)
-    enFlag
+    boolEn
     optional
     optionals
     optionalString
     versionOlder;
-  inherit (builtins.getAttr channel (import ./sources.nix))
-    versionMajor
-    versionMinor
-    sha256;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 
 /*
@@ -286,15 +284,10 @@ assert x11grabExtlib ->
   && xorg.libXv != null;
 
 let
-  branch =
-    if channel == "9" then
-      "9.9"
-    else
-      channel + "." + versionMajor;
   # Minimum/maximun/matching version
-  reqMin = v: (compareVersions v branch != 1);
-  reqMax = v: (compareVersions branch v != 1);
-  reqMatch = v: (compareVersions v branch == 0);
+  reqMin = v: (compareVersions v channel != 1);
+  reqMax = v: (compareVersions channel v != 1);
+  reqMatch = v: (compareVersions v channel == 0);
 
   # Usage:
   # f - Configure flags w/o --enable/disable
@@ -302,39 +295,34 @@ let
   # v - Version that the configure option was added
   fflag = f: b: v:
     if v == null || reqMin v  then
-      enFlag f b null
+    "--${boolEn b}-${f}"
     else
       null;
   deprfflag = f: b: vmin: vmax:
     if reqMin vmin && reqMax vmax then
-      enFlag f b null
+    "--${boolEn b}-${f}"
     else
       null;
 in
 
 stdenv.mkDerivation rec {
-  name = "ffmpeg-${version}";
-  version =
-    if channel == "9" then
-      versionMajor
-    # For initial minor releases drop the trailing zero from the version
-    else if versionMinor == "0" then
-      branch
-    else
-      branch + "." + versionMinor;
+  name = "ffmpeg-${source.version}";
 
   src =
-    if channel == "9" then
+    if channel == "9.9" then
       fetchFromGitHub {
         owner = "ffmpeg";
         repo = "ffmpeg";
-        rev = versionMinor;
-        inherit sha256;
+        inherit (source)
+          rev
+          sha256;
       }
     else
       fetchurl {
         url = "https://www.ffmpeg.org/releases/${name}.tar.xz";
-        inherit sha256;
+        inherit (source)
+          multihash
+          sha256;
       };
 
   nativeBuildInputs = [
@@ -416,7 +404,7 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     patchShebangs .
-  '' + optionalString (versionOlder "2.8" branch) ''
+  '' + optionalString (versionOlder "2.8" channel) ''
     sed -i libavcodec/libvpxenc.c \
       -e '/VP8E_UPD_ENTROPY/d' \
       -e '/VP8E_USE_REFERENCE/d' \
@@ -649,6 +637,18 @@ stdenv.mkDerivation rec {
   postInstall = optionalString qtFaststartProgram ''
     install -D -m 755 -v 'tools/qt-faststart' "$out/bin/qt-faststart"
   '';
+
+  passthru = {
+    srcVerification = assert channel != "9.9"; fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "FCF9 86EA 15E6 E293 A564  4F10 B432 2F04 D676 58D8";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Complete solution to record, convert & stream audio/video";

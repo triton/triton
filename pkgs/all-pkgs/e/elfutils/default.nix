@@ -3,6 +3,7 @@
 , m4
 
 , bzip2
+, linux-headers_4_6
 , xz
 , zlib
 }:
@@ -43,6 +44,12 @@ stdenv.mkDerivation rec {
     # This is probably desireable but breaks things
     "--disable-sanitize-undefined"
   ];
+
+  # Fix an issue where we are missing new enough headers to compile BPF
+  # Moving this outside of preBuild would cause a mass rebuild
+  preBuild = ''
+    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I${linux-headers_4_6}/include"
+  '';
 
   passthru = {
     inherit version;

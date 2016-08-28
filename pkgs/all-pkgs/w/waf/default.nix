@@ -5,11 +5,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "waf-1.9.2";
+  name = "waf-1.9.3";
 
   src = fetchurl {
     url = "https://waf.io/${name}.tar.bz2";
-    sha256 = "2eb02767b611c291bf5ce581624b360d354d5fa929fadfb275fcd223c5f8bfb6";
+    multihash = "QmerWxk5w69MvZLaEdMrW827cP2tZKDi9zSzqQG2bBAdXY";
+    #allowHashOutput = false;
+    sha256 = "1799bf4a4782552f673084a9a08ea29b4f16cb06b24b1f643dd7799332c6eac7";
   };
 
   buildInputs = [
@@ -33,6 +35,18 @@ stdenv.mkDerivation rec {
   installPhase = ''
     install -D -m755 -v waf $out/bin/waf
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Meta build system";

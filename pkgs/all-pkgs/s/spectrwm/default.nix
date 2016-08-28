@@ -1,6 +1,6 @@
 { stdenv
 , fetchpatch
-, fetchurl
+, fetchFromGitHub
 , makeWrapper
 
 , dmenu
@@ -9,22 +9,14 @@
 , xorg
 }:
 
-let
-  inherit (stdenv.lib)
-    replaceStrings;
-
-  replace = v: replaceStrings ["."] ["_"] v;
-
-  version = "2.7.2";
-in
-
 stdenv.mkDerivation rec {
-  name = "spectrwm-${version}";
+  name = "spectrwm-2016-06-26";
 
-  src = fetchurl {
-    url = "https://github.com/conformal/spectrwm/archive/"
-        + "SPECTRWM_${replace version}.tar.gz";
-    sha256 = "23a5b306c5cdfda05eba365b652eca34e87f0b4317c7ff8059813adaa1c55afb";
+  src = fetchFromGitHub {
+    owner = "conformal";
+    repo = "spectrwm";
+    rev = "9d338b286b1a2a240f92070bf1e95dc6f4c27bea";
+    sha256 = "783d78d6fb84be0995db898c0e81a425f73a546537662cf08a88718049e0987c";
   };
 
   nativeBuildInputs = [
@@ -55,17 +47,15 @@ stdenv.mkDerivation rec {
     sourceRoot="$sourceRoot/linux"
   '';
 
-  postPatch = 
-    /* Fix freetype path */ ''
+  postPatch =
+    /* Remove legacy scrotwm alias */ ''
       sed -i Makefile \
-        -e 's,/usr/include/freetype2,${freetype}/include/freetype,'
-    '' +
-    /* Fix libswmhack.so path */ ''
-      sed -i ../spectrwm.c \
-        -e "s,/usr/local/lib/libswmhack.so,$out/lib/libswmhack.so,"
+        -e '/scrotwm/d';
     '';
 
-  preConfigure = ''
+  configurePhase = ":";
+
+  preBuild = ''
     makeFlagsArray+=("PREFIX=$out")
   '';
 

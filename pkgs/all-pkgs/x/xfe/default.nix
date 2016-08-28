@@ -17,6 +17,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/xfe/${name}.tar.gz";
+    multihash = "QmX2wiGjkX27UoA83CYgqYm7Ph5NtfeUZEyoCKaFrTvB2f";
     sha256 = "a1e3e892584988c80b3a492f7b3cb78e1ee84d7148e6d1fc9d6054bbd8063bec";
   };
 

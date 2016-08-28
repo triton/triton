@@ -15,7 +15,7 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
+    boolEn
     optionals;
 
   version = "1.11.0";
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-libraries"
-    (enFlag "documentation" enableDocumentation null)
+    "--${boolEn enableDocumentation}-documentation"
   ];
 
   passthru = {

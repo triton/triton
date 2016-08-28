@@ -34,8 +34,12 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+    boolString
+    boolWt
+    optionalString;
+
+  # Use stable patch releases, e.g. -9 or -10
+  version = "7.0.2-10";
 in
 
 assert xorg != null ->
@@ -43,11 +47,8 @@ assert xorg != null ->
   && xorg.libXext != null
   && xorg.libXt != null;
 
-with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
-  # Use stable patch releases, e.g. -9 or -10
-  version = "7.0.1-10";
 
   src = fetchurl {
     urls = map (n: "${n}/ImageMagick-${version}.tar.xz") [
@@ -55,7 +56,7 @@ stdenv.mkDerivation rec {
       "mirror://imagemagick"
     ];
     allowHashOutput = false;
-    sha256 = "4a17e54cd6b5f5fd0cea462dbe0cc1b74a91730d08e1d8edc4f539066feac8b8";
+    sha256 = "dad306bfd7730e1665c6fdb6eb478fb2c41e2db71ab56451bbaebe9df546b1d2";
   };
 
   buildInputs = [
@@ -127,49 +128,48 @@ stdenv.mkDerivation rec {
     "--with-modules"
     "--with-frozenpaths"
     "--with-magick-plus-plus"
-    (wtFlag "perl" (perl != null) null)
-    (wtFlag "perl-options" (perl != null) "PREFIX=\${out}")
-    (wtFlag "jemalloc" (jemalloc != null) null)
-    #(wtFlag "umem" ( != null) null)
-    (wtFlag "bzlib" (bzip2 != null) null)
-    (wtFlag "x" (xorg != null) null)
-    (wtFlag "zlib" (zlib != null) null)
-    #(wtFlag "autotrace" ( != null) null)
-    #(wtFlag "dps" ( != null) null)
-    (wtFlag "dejavu-font-dir" (dejavu_fonts != null)
-      "${dejavu_fonts}/share/fonts/truetype/")
-    (wtFlag "fftw" (fftw_single != null) null)
-    (wtFlag "fpx" (libfpx != null) null)
-    (wtFlag "djvu" (djvulibre != null) null)
-    (wtFlag "fontconfig" (fontconfig != null) null)
-    (wtFlag "freetype" (freetype != null) null)
-    (wtFlag "gslib" (ghostscript != null) null)
-    #(wtFlag "fontpath=" ( != null) null)
-    (if (ghostscript != null) then
-      "--with-gs-font-dir=${ghostscript}/share/ghostscript/fonts/"
-     else
-       "--without-gs-font-dir")
-    (wtFlag "gvc" (graphviz != null) null)
-    (wtFlag "jbig" (jbigkit != null) null)
-    (wtFlag "jpeg" (libjpeg != null) null)
-    (wtFlag "lcms" (lcms2 != null) null)
-    (wtFlag "openjp2" (openjpeg != null) null)
-    (wtFlag "lqr" (liblqr1 != null) null)
-    (wtFlag "lzma" (xz != null) null)
-    (wtFlag "openexr" (openexr != null) null)
-    (wtFlag "pango" (pango != null) null)
-    (wtFlag "png" (libpng != null) null)
-    (wtFlag "rsvg" (librsvg != null) null)
-    (wtFlag "tiff" (libtiff != null) null)
-    (wtFlag "webp" (libwebp != null) null)
-    #(wtFlag "windows-font-dir=" ( != null) null)
-    #(wtFlag "wmf" ( != null) null)
-    (wtFlag "xml" (libxml2 != null) null)
+    "--${boolWt (perl != null)}-perl"
+    "--${boolWt  (perl != null)}-perl-options${
+      boolString (perl != null) "=PREFIX=\${out}" ""}"
+    "--${boolWt (jemalloc != null)}-jemalloc"
+    #"--${boolWt ( != null)}-umem"
+    "--${boolWt (bzip2 != null)}-bzlib"
+    "--${boolWt (xorg != null)}-x"
+    "--${boolWt (zlib != null)}-zlib"
+    #"--${boolWt ( != null)}-autotrace"
+    #"--${boolWt ( != null)}-dps"
+    "--${boolWt (dejavu_fonts != null)}-dejavu-font-dir${
+      boolString (dejavu_fonts != null) "=${dejavu_fonts}/share/fonts/truetype/" ""}"
+    "--${boolWt (fftw_single != null)}-fftw"
+    "--${boolWt (libfpx != null)}-fpx"
+    "--${boolWt (djvulibre != null)}-djvu"
+    "--${boolWt (fontconfig != null)}-fontconfig"
+    "--${boolWt (freetype != null)}-freetype"
+    "--${boolWt (ghostscript != null)}-gslib"
+    #"--${boolWt }-fontpath=" ( != null) null)
+    "--${boolWt (ghostscript != null)}-gs-font-dir${
+      boolString (ghostscript != null) "=${ghostscript}/share/ghostscript/fonts/" ""}"
+    "--${boolWt (graphviz != null)}-gvc"
+    "--${boolWt (jbigkit != null)}-jbig"
+    "--${boolWt (libjpeg != null)}-jpeg"
+    "--${boolWt (lcms2 != null)}-lcms"
+    "--${boolWt (openjpeg != null)}-openjp2"
+    "--${boolWt (liblqr1 != null)}-lqr"
+    "--${boolWt (xz != null)}-lzma"
+    "--${boolWt (openexr != null)}-openexr"
+    "--${boolWt (pango != null)}-pango"
+    "--${boolWt (libpng != null)}-png"
+    "--${boolWt (librsvg != null)}-rsvg"
+    "--${boolWt (libtiff != null)}-tiff"
+    "--${boolWt (libwebp != null)}-webp"
+    #"--${boolWt ( != null)}-windows-font-dir="
+    #"--${boolWt ( != null)}-wmf"
+    "--${boolWt (libxml2 != null)}-xml"
   ];
 
   postInstall = ''
     (cd "$out/include" && ln -s ImageMagick* ImageMagick)
-  '' + stdenv.lib.optionalString (ghostscript != null) ''
+  '' + optionalString (ghostscript != null) ''
     for la in $out/lib/*.la ; do
       sed -i $la \
         -e 's|-lgs|-L${ghostscript}/lib -lgs|'
@@ -178,10 +178,13 @@ stdenv.mkDerivation rec {
 
   passthru = {
     srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFingerprint = "D827 2EF5 1DA2 23E4 D05B  4669 89AB 63D4 8277 377A";
-      inherit (src) urls outputHash outputHashAlgo;
     };
   };
 

@@ -2174,6 +2174,8 @@ quasselClient = hiPrio (pkgs.quassel.override {
   tag = "-client";
 });
 
+quazip = callPackage ../all-pkgs/q/quazip { };
+
 radvd = callPackage ../all-pkgs/r/radvd { };
 
 rapidjson = callPackage ../all-pkgs/r/rapidjson { };

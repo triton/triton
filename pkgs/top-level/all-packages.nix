@@ -1503,6 +1503,8 @@ libjpeg-turbo_1-5 = callPackage ../all-pkgs/l/libjpeg-turbo {
 libjpeg-turbo = callPackageAlias "libjpeg-turbo_1-5" { };
 libjpeg = callPackageAlias "libjpeg-turbo" { };
 
+libkate = callPackage ../all-pkgs/l/libkate { };
+
 libksba = callPackage ../all-pkgs/l/libksba { };
 
 liblogging = callPackage ../all-pkgs/l/liblogging { };
@@ -2969,8 +2971,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   idnkit = callPackage ../development/libraries/idnkit { };
 
   libiec61883 = callPackage ../development/libraries/libiec61883 { };
-#
-  libkate = callPackage ../development/libraries/libkate { };
 #
   libmad = callPackage ../development/libraries/libmad { };
 #

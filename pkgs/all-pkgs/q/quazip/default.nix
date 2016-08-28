@@ -35,6 +35,11 @@ stdenv.mkDerivation rec {
     "-DBUILD_WITH_QT4=OFF"
   ];
 
+  postInstall = /* Create symlink for compatibility */ ''
+    ln -sv $out/lib/libquazip5.so \
+      $out/lib/libquazip.so
+  '';
+
   meta = with stdenv.lib; {
     description = "Provides access to ZIP archives from Qt programs";
     homepage = http://quazip.sourceforge.net/;

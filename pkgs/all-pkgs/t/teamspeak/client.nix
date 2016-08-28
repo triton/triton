@@ -12,10 +12,10 @@
 , glib
 , libpng
 , libredirect
+, llvm
 , pulseaudio_lib
 , qt5
-#, quazip
-, xkeyboard-config
+, quazip
 , xorg
 , zlib
 }:
@@ -23,24 +23,24 @@
 let
   inherit (stdenv.lib)
     makeSearchPath;
-in
 
+  version = "3.0.19.4";
+in
 stdenv.mkDerivation rec {
   name = "teamspeak-client-${version}";
-  version = "3.0.19.1";
 
   src = fetchurl {
     urls = [
       "http://dl.4players.de/ts/releases/${version}/TeamSpeak3-Client-linux_amd64-${version}.run"
       "http://teamspeak.gameserver.gamed.de/ts3/releases/${version}/TeamSpeak3-Client-linux_amd64-${version}.run"
     ];
-    sha256 = "1pgpsv1r216l76fx0grlqmldd9gha3sj84gnm44km8y98b3hj525";
+    sha256 = "f74617d2a2f5cb78e0ead345e6ee66c93e4a251355779018fd060828e212294a";
   };
 
   # grab the plugin sdk for the desktop icon
   pluginsdk = fetchurl {
     url = "http://dl.4players.de/ts/client/pluginsdk/pluginsdk_3.0.19.1.zip";
-    sha256 = "108y52mfg44cnnhhipnmrr0cxh7ram5c2hnchxjkwvf5766vbaq4";
+    sha256 = "ca9301b2bbd13b3a3e5f25d21f73200094af3e4a97da28103cb9ab82bfd13ae4";
   };
 
   unpackPhase = ''
@@ -55,14 +55,17 @@ stdenv.mkDerivation rec {
     unzip
   ];
 
-  libPath = [
+  buildInputs = [
     alsa-lib
     fontconfig
     freetype
     glib
     libpng
+    libredirect
+    llvm
     pulseaudio_lib
-    qt5.qtbase
+    qt5
+    quazip
     xorg.libICE
     xorg.libSM
     xorg.libX11
@@ -81,7 +84,7 @@ stdenv.mkDerivation rec {
     echo "patching ts3client..."
     patchelf \
       --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-      --set-rpath ${makeSearchPath "lib" libPath}:$(cat $NIX_CC/nix-support/orig-cc)/lib64 \
+      --set-rpath ${makeSearchPath "lib" buildInputs}:$(cat $NIX_CC/nix-support/orig-cc)/lib64 \
       --force-rpath \
       ts3client
   '';
@@ -106,10 +109,8 @@ stdenv.mkDerivation rec {
     ln -sv $out/lib/teamspeak/ts3client $out/bin/ts3client
 
     wrapProgram $out/bin/ts3client \
-      --set LD_LIBRARY_PATH "${qt5.quazip}/lib" \
-      --set LD_PRELOAD "${libredirect}/lib/libredirect.so" \
       --set QT_PLUGIN_PATH "$out/lib/teamspeak/platforms" \
-      --set NIX_REDIRECTS /usr/share/X11/xkb=${xkeyboard-config}/share/X11/xkb
+      --set NIX_REDIRECTS /usr/share/X11/xkb=${xorg.xkeyboardconfig}/share/X11/xkb
   '';
 
   desktopItem = makeDesktopItem {
@@ -124,8 +125,8 @@ stdenv.mkDerivation rec {
 
   dontStrip = true;
   dontPatchELF = true;
-  
-  meta = with stdenv.lib; { 
+
+  meta = with stdenv.lib; {
     description = "The TeamSpeak voice communication tool";
     homepage = http://teamspeak.com/;
     license = licenses.unfreeRedistributable;

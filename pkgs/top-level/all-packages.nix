@@ -2374,7 +2374,7 @@ tcp-wrappers = callPackage ../all-pkgs/t/tcp-wrappers { };
 
 tdb = callPackage ../all-pkgs/t/tdb { };
 
-#teamspeak_client = callPackage ../all-pkgs/t/teamspeak/client.nix { };
+teamspeak_client = callPackage ../all-pkgs/t/teamspeak/client.nix { };
 #teamspeak_server = callPackage ../all-pkgs/t/teamspeak/server.nix { };
 
 tesseract = callPackage ../all-pkgs/t/tesseract { };

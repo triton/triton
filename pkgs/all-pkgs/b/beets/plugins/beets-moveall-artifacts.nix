@@ -4,14 +4,13 @@
 }:
 
 buildPythonPackage rec {
-  name = "dsedivec-beets-plugins-${version}";
-  version = "2015-06-22";
+  name = "beets-moveall-artifacts-2016-08-28";
 
   src = fetchFromGitHub {
-    owner = "dsedivec";
-    repo = "beets-plugins";
-    rev = "c67038d91bca79d9fd52ab316ad9150c1ba1a236";
-    sha256 = "080bbe6ded4b04983d743eec2305666bb24a3e5596a81968b0a2d470e2ecf4ac";
+    owner = "chlorm";
+    repo = "beets-moveall-artifacts";
+    rev = "9772a55569558903a3f14cf78600d332fdde28d6";
+    sha256 = "96b8541cce2485b3a8f679f0217d2f4acb646eabf4251bf24c5f8892946cde87";
   };
 
   postPatch = /* Prevent recursive dependency on beets */ ''
@@ -20,8 +19,8 @@ buildPythonPackage rec {
   '';
 
   meta = with stdenv.lib; {
-    description = "Beets tag editer & move untracked files plugins";
-    homepage = "https://github.com/dsedivec/beets-plugins";
+    description = "Beets move untracked files plugins";
+    homepage = "https://github.com/chlorm/beets-moveall-artifacts";
     license = licenses.mit;
     maintainers = with maintainers; [
       codyopel

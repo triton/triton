@@ -55,7 +55,7 @@
 , enableAlternatives ? false
 #, enableArtistCountry ? true
 #, enableCopyArtifacts ? true
-, enableDsedivecBeetsPlugins ? true
+, enableBeetsMoveAllArtifacts ? true
 }:
 
 let
@@ -212,7 +212,7 @@ let
   testShell = "${bash}/bin/bash --norc";
   completion = "${bash-completion}/share/bash-completion/bash_completion";
 
-  version = "2016-08-18";
+  version = "2016-08-26";
 in
 buildPythonPackage rec {
   name = "beets-${version}";
@@ -220,8 +220,8 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "sampsyo";
     repo = "beets";
-    rev = "4c4d8cff60b574296194075bce54a05d017f053b";
-    sha256 = "90dbbdd1fc3912bb3cefa247ab6b45971ae477d3c099a23aa05e04512a89a27c";
+    rev = "ed0adc2b6343358274c8b4ab28889f4db245e796";
+    sha256 = "66c2ace8077ded84579105868fc4651afdc06c9090d125ddb801f555753e315e";
   };
 
   nativeBuildInputs = [
@@ -300,8 +300,8 @@ buildPythonPackage rec {
       }
     )*/
     /* Provides edit & moveall plugins */
-    ++ optional enableDsedivecBeetsPlugins (
-      import ./plugins/dsedivec-beets-plugins.nix {
+    ++ optional enableBeetsMoveAllArtifacts (
+      import ./plugins/beets-moveall-artifacts.nix {
         inherit
           stdenv
           buildPythonPackage

@@ -760,6 +760,8 @@ ddrescue = callPackage ../all-pkgs/d/ddrescue { };
 
 dejagnu = callPackage ../all-pkgs/d/dejagnu { };
 
+dejavu-fonts = callPackage ../all-pkgs/d/dejavu-fonts { };
+
 dialog = callPackage ../all-pkgs/d/dialog { };
 
 ding-libs = callPackage ../all-pkgs/d/ding-libs { };
@@ -3363,8 +3365,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   cacert = callPackage ../data/misc/cacert { };
 #
   cantarell_fonts = callPackage ../data/fonts/cantarell-fonts { };
-#
-  dejavu_fonts = callPackage ../data/fonts/dejavu-fonts { };
 #
   docbook5 = callPackage ../data/sgml+xml/schemas/docbook-5.0 { };
 

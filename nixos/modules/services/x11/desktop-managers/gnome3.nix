@@ -124,7 +124,7 @@ in {
     hardware.bluetooth.enable = mkDefault true;
 
     fonts.fonts = [
-      pkgs.dejavu_fonts
+      pkgs.dejavu-fonts
       pkgs.cantarell_fonts
     ];
 

@@ -2,7 +2,7 @@
 , fetchurl
 
 , bzip2
-, dejavu_fonts
+, dejavu-fonts
 , djvulibre
 , fftw_single
 , fontconfig
@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bzip2
-    dejavu_fonts
+    dejavu-fonts
     djvulibre
     fftw_single
     fontconfig
@@ -138,8 +138,8 @@ stdenv.mkDerivation rec {
     "--${boolWt (zlib != null)}-zlib"
     #"--${boolWt ( != null)}-autotrace"
     #"--${boolWt ( != null)}-dps"
-    "--${boolWt (dejavu_fonts != null)}-dejavu-font-dir${
-      boolString (dejavu_fonts != null) "=${dejavu_fonts}/share/fonts/truetype/" ""}"
+    "--${boolWt (dejavu-fonts != null)}-dejavu-font-dir${
+      boolString (dejavu-fonts != null) "=${dejavu-fonts}/share/fonts/truetype/" ""}"
     "--${boolWt (fftw_single != null)}-fftw"
     "--${boolWt (libfpx != null)}-fpx"
     "--${boolWt (djvulibre != null)}-djvu"

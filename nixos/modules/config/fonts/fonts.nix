@@ -11,7 +11,7 @@ with lib;
       # TODO: find another name for it.
       fonts = mkOption {
         type = types.listOf types.path;
-        example = literalExample "[ pkgs.dejavu_fonts ]";
+        example = literalExample "[ pkgs.dejavu-fonts ]";
         description = "List of primary font paths.";
       };
 
@@ -25,7 +25,7 @@ with lib;
       [ pkgs.xorg.fontbhttf
         pkgs.xorg.fontbhlucidatypewriter100dpi
         pkgs.xorg.fontbhlucidatypewriter75dpi
-        pkgs.dejavu_fonts
+        pkgs.dejavu-fonts
         pkgs.freefont_ttf
         pkgs.liberation_ttf
         pkgs.xorg.fontbh100dpi

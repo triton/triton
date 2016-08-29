@@ -1187,6 +1187,8 @@ gstreamer-editing-services = callPackage ../all-pkgs/g/gstreamer-editing-service
 
 gstreamer-vaapi = callPackage ../all-pkgs/g/gstreamer-vaapi { };
 
+googletest = callPackage ../all-pkgs/g/googletest { };
+
 gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
 gtk2 = callPackageAlias "gtk_2" { };
 gtk_3 = callPackage ../all-pkgs/g/gtk/3.x.nix { };
@@ -2633,8 +2635,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   grub2_efi = callPackageAlias "grub2" {
     efiSupport = true;
   };
-#
-  gtest = callPackage ../development/libraries/gtest {};
 #
   iftop = callPackage ../tools/networking/iftop { };
 #

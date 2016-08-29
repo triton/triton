@@ -4,12 +4,20 @@
 , readline
 }:
 
+let
+  version = "4.1.4";
+
+  tarballUrls = version: [
+    "mirror://gnu/gawk/gawk-${version}.tar.xz"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "gawk-4.1.3";
+  name = "gawk-${version}";
 
   src = fetchurl {
-    url = "mirror://gnu/gawk/${name}.tar.xz";
-    sha256 = "09d6pmx6h3i2glafm0jd1v1iyrs03vcyv2rkz12jisii3vlmbkz3";
+    url = tarballUrls version;
+    allowHashOutput = false;
+    sha256 = "53e184e2d0f90def9207860531802456322be091c7b48f23fdc79cda65adc266";
   };
 
   buildInputs = [
@@ -23,13 +31,26 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = ''
-    rm $out/bin/gawk-*
+    rm -v $out/bin/gawk-*
   '';
+
+  passthru = {
+    inherit version;
+
+    srcVerification = fetchurl rec {
+      inherit (src) outputHashAlgo;
+      failEarly = true;
+      urls = tarballUrls "4.1.4";
+      outputHash = "53e184e2d0f90def9207860531802456322be091c7b48f23fdc79cda65adc266";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "D196 7C63 7887 1317 7D86  1ED7 DF59 7815 937E C0D2";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "GNU implementation of the Awk programming language";
     homepage = http://www.gnu.org/software/gawk/;
-    license = stdenv.lib.licenses.gpl3Plus;
+    license = licenses.gpl3Plus;
     maintainers = with maintainers; [
       wkennington
     ];

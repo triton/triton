@@ -11,12 +11,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "feh-2.16.2";
+  name = "feh-2.17";
 
   src = fetchurl {
     url = "https://feh.finalrewind.org/${name}.tar.bz2";
+    multihash = "QmdH43AW16i5v7Xs7JMiTLgPkV6yfuFT6cLMZPLSogz5AE";
     allowHashOutput = false;
-    sha256 = "aa37124ae010e7dac7d101d5c66f3d49da79e96c7ce21d77bfe3c9322ed2e7ca";
+    sha256 = "dfe6fd362a988eba964de3eb1ecc083cfbdf5132ade36e68b6f18e07a78980d4";
   };
 
   nativeBuildInputs = [
@@ -58,7 +59,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A light-weight image viewer";
-    homepage = https://derf.homelinux.org/projects/feh/;
+    homepage = https://feh.finalrewind.org/;
     license = licenses.mit;
     maintainers = with maintainers; [
       wkennington

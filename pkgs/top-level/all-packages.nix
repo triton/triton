@@ -1489,6 +1489,10 @@ libidl = callPackage ../all-pkgs/l/libidl { };
 
 libidn = callPackage ../all-pkgs/l/libidn { };
 
+libiodbc = callPackage ../all-pkgs/l/libiodbc {
+  gtk_2 = null;
+};
+
 libinput = callPackage ../all-pkgs/l/libinput { };
 
 libisoburn = callPackage ../all-pkgs/l/libisoburn { };

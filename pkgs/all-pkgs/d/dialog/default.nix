@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dialog-1.3-20160209";
+  name = "dialog-1.3-20160828";
 
   src = fetchurl {
     url = "ftp://invisible-island.net/dialog/${name}.tgz";
     allowHashOutput = false;
-    sha256 = "0314f7f2195edc58e7567a024dc1d658c2f8ea732796d8fa4b4927df49803f87";
+    sha256 = "453095abaec288bfbc1ca9faced917e17742cff1ea45ec46210071ac153562f9";
   };
 
   nativeBuildInputs = [
@@ -33,9 +33,6 @@ stdenv.mkDerivation rec {
   installTargets = [
     "install-full"
   ];
-
-  # Parallel install is broken with make 4.2 (dialog-1.3-20160209)
-  parallelInstall = false;
 
   passthru = {
     srcVerification = fetchurl {

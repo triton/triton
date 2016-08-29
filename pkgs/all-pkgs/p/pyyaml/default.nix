@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "3.11";
+  version = "3.12";
 in
 buildPythonPackage {
   name = "PyYAML-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "PyYAML";
     inherit version;
-    sha256 = "c36c938a872e5ff494938b33b14aaa156cb439ec67548fcab3535bb78b0846e8";
+    sha256 = "592766c6303207a20efc445587778322d7f73b161bd994f227adaa341ba212ab";
   };
 
   buildInputs = [

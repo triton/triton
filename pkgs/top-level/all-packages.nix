@@ -1427,6 +1427,8 @@ libelf = callPackage ../all-pkgs/l/libelf { };
 
 libepoxy = callPackage ../all-pkgs/l/libepoxy { };
 
+liberation-fonts = callPackage ../all-pkgs/l/liberation-fonts { };
+
 libev = callPackage ../all-pkgs/l/libev { };
 
 libevdev = callPackage ../all-pkgs/l/libevdev { };
@@ -3387,10 +3389,6 @@ unixODBC = callPackage ../development/libraries/unixODBC { };
   docbook_xml_dtd_45 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.5.nix { };
 #
   freefont_ttf = callPackage ../data/fonts/freefont-ttf { };
-#
-  liberation_ttf_from_source = callPackage ../data/fonts/redhat-liberation-fonts { };
-  liberation_ttf_binary = callPackage ../data/fonts/redhat-liberation-fonts/binary.nix { };
-  liberation_ttf = pkgs.liberation_ttf_binary;
 #
   meslo-lg = callPackage ../data/fonts/meslo-lg {};
 #

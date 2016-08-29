@@ -2159,6 +2159,8 @@ qca = callPackage ../all-pkgs/q/qca { };
 
 qjackctl = callPackage ../all-pkgs/q/qjackctl { };
 
+qpdf = callPackage ../all-pkgs/q/qpdf { };
+
 qrencode = callPackage ../all-pkgs/q/qrencode { };
 
 qt4 = callPackage ../all-pkgs/q/qt/4 { };
@@ -2666,8 +2668,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   ppp = callPackage ../tools/networking/ppp { };
 
   pptp = callPackage ../tools/networking/pptp {};
-#
-  qpdf = callPackage ../development/libraries/qpdf { };
 #
   rng_tools = callPackage ../tools/security/rng-tools { };
 #

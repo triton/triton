@@ -9,8 +9,8 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "chlorm";
     repo = "beets-moveall-artifacts";
-    rev = "9772a55569558903a3f14cf78600d332fdde28d6";
-    sha256 = "96b8541cce2485b3a8f679f0217d2f4acb646eabf4251bf24c5f8892946cde87";
+    rev = "9a193d2a149fc40e3dea0e6e26b57001589e2d02";
+    sha256 = "6420bd62987607396517d0087294ec69036b50b8ce42a63a0f75b983807089fd";
   };
 
   postPatch = /* Prevent recursive dependency on beets */ ''

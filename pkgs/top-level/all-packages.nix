@@ -2424,6 +2424,9 @@ uid_wrapper = callPackage ../all-pkgs/u/uid_wrapper { };
 
 unbound = callPackage ../all-pkgs/u/unbound { };
 
+unicode-character-database =
+  callPackage ../all-pkgs/u/unicode-character-database { };
+
 unrar = callPackage ../all-pkgs/u/unrar { };
 
 upower = callPackage ../all-pkgs/u/upower { };

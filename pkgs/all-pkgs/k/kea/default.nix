@@ -6,7 +6,7 @@
 , postgresql
 , log4cplus
 , boost
-, gtest
+, googletest
 }:
 
 stdenv.mkDerivation rec {
@@ -40,8 +40,9 @@ stdenv.mkDerivation rec {
     "--with-werror"
     "--disable-static-link"
     "--with-pythonpath"
-    #"--without-gtest-source"
-    "--with-gtest=${gtest}"
+    # Flag is not a boolean
+    "--with-gtest-source=${googletest}/src/gtest"
+    "--with-gtest=${googletest}"
     "--without-lcov"
     "--with-openssl=${openssl}"
     "--without-botan-config"

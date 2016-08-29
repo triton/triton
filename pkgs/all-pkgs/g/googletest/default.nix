@@ -1,6 +1,7 @@
 { stdenv
 , autoreconfHook
 , cmake
+, fetchTritonPatch
 , fetchzip
 , ninja
 

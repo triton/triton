@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "16.3.2";
+  version = "16.4.0";
 in
 buildPythonPackage rec {
   name = "Twisted-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage rec {
     package = "Twisted";
     inherit version;
     type = ".tar.bz2";
-    sha256 = "22c32e68feb6be7ea68bcbc8f89184f06b5693a9f1b59d052927d19597645967";
+    sha256 = "cd8820901900542d21fb1dee2cd4d4d334fff130e3fc30b777f81dd7d7f2836e";
   };
 
   propagatedBuildInputs = [

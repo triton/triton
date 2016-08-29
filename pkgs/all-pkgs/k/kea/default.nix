@@ -1,4 +1,5 @@
-{ stdenv, fetchurl
+{ stdenv
+, fetchurl
 , perl
 , bc
 , openssl
@@ -19,8 +20,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    perl
     bc
+    perl
   ];
 
   buildInputs = [
@@ -38,7 +39,8 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-debug"
     "--with-werror"
-    "--disable-static-link"
+    # Flag is not a boolean
+    #"--disable-static-link"
     "--with-pythonpath"
     # Flag is not a boolean
     "--with-gtest-source=${googletest}/src/gtest"
@@ -54,6 +56,13 @@ stdenv.mkDerivation rec {
     "--disable-install-configurations"
     "--disable-logger-checks"
   ];
+
+  makeFlags = [
+    # Spoof libtool since googletest no longer provides libtool files.
+    "GTEST_LDADD=${googletest}/lib/libgtest.so"
+  ];
+
+  CXXFLAGS = "-std=c++11";
 
   preFixup = ''
     sed -i 's,openssl-1.0.0,openssl,g' $out/lib/pkgconfig/dns++.pc

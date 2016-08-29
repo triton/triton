@@ -9,7 +9,7 @@
 , file
 , fontconfig
 , freetype
-, liberation_ttf
+, liberation-fonts
 , perl
 , unzip
 , which
@@ -78,7 +78,7 @@ let
       file
       fontconfig
       freetype
-      liberation_ttf
+      liberation-fonts
       perl
       which
       unzip
@@ -191,7 +191,7 @@ let
       mv $out/lib/openjdk/jre $jre/lib/openjdk/
       mkdir $out/lib/openjdk/jre
       mkdir -p $jre/lib/openjdk/jre/lib/fonts/fallback
-      lndir ${liberation_ttf}/share/fonts/truetype $jre/lib/openjdk/jre/lib/fonts/fallback
+      lndir ${liberation-fonts}/share/fonts/truetype $jre/lib/openjdk/jre/lib/fonts/fallback
       lndir $jre/lib/openjdk/jre $out/lib/openjdk/jre
 
       rm -rf $out/lib/openjdk/jre/bina

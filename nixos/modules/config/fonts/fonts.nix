@@ -27,7 +27,7 @@ with lib;
         pkgs.xorg.fontbhlucidatypewriter75dpi
         pkgs.dejavu-fonts
         pkgs.freefont_ttf
-        pkgs.liberation_ttf
+        pkgs.liberation-fonts
         pkgs.xorg.fontbh100dpi
         pkgs.xorg.fontmiscmisc
         pkgs.xorg.fontcursormisc

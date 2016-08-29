@@ -8,7 +8,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://mp4v2.googlecode.com/files/${name}.tar.bz2";
-    sha256 = "0f438bimimsvxjbdp4vsr8hjw2nwggmhaxgcw07g2z361fkbj683";
+    multihash = "QmUqS6HpKpUxXm7Pun24MAewxdLT6RGjt4siDvzJTf7nbV";
+    sha256 = "0319b9a60b667cf10ee0ec7505eb7bdc0a2e21ca7a93db96ec5bd758e3428338";
   };
 
   meta = with stdenv.lib; {

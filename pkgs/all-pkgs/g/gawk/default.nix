@@ -35,8 +35,6 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    inherit version;
-
     srcVerification = fetchurl rec {
       inherit (src) outputHashAlgo;
       failEarly = true;

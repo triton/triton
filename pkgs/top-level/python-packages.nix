@@ -211,6 +211,8 @@ flask-restplus = callPackage ../all-pkgs/f/flask-restplus { };
 
 flexget = callPackage ../all-pkgs/f/flexget { };
 
+fonttools = callPackage ../all-pkgs/f/fonttools { };
+
 frozendict = callPackage ../all-pkgs/f/frozendict { };
 
 funcsigs = callPackage ../all-pkgs/f/funcsigs { };

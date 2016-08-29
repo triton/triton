@@ -1,21 +1,25 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
-
+, fetchPyPi
 , isPyPy
-, pkgs
+
+, libiodbc
 }:
 
+let
+  version = "3.0.10";
+in
 buildPythonPackage rec {
-  name = "pyodbc-3.0.10";
+  name = "pyodbc-${version}";
 
-  src = pkgs.fetchurl {
-    url = "https://pyodbc.googlecode.com/files/${name}.zip";
-    sha256 = "0ldkm8xws91j7zbvpqb413hvdz8r66bslr451q3qc0xi8cnmydfq";
+  src = fetchPyPi {
+    package = "pyodbc";
+    inherit version;
+    sha256 = "a66d4f347f036df49a00addf38ca6769ad52f61acdb931c95bc3a9245d8f2b58";
   };
 
   buildInputs = [
-    pkgs.libiodbc
+    libiodbc
   ];
 
   # use pypyodbc instead

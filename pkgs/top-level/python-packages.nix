@@ -300,7 +300,7 @@ pynacl = callPackage ../all-pkgs/p/pynacl { };
 
 pynzb = callPackage ../all-pkgs/p/pynzb { };
 
-#pyodbc = callPackage ../all-pkgs/p/pyodbc { };
+pyodbc = callPackage ../all-pkgs/p/pyodbc { };
 
 pyopenssl = callPackage ../all-pkgs/p/pyopenssl { };
 

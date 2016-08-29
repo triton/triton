@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "1.4.5";
+  version = "1.4.6";
 in
 buildPythonPackage {
   name = "Sphinx-${version}";
@@ -21,7 +21,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Sphinx";
     inherit version;
-    sha256 = "c5df65d97a58365cbf4ea10212186a9a45d89c61ed2c071de6090cdf9ddb4028";
+    sha256 = "9e43430aa9b491ecd86302a1320edb8977da624f63422d494257eab2541a79d3";
   };
 
   propagatedBuildInputs = [

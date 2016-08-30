@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
   name = "mp4v2-2.0.0";
 
   src = fetchurl {
-    url = "https://mp4v2.googlecode.com/files/${name}.tar.bz2";
+    name = "${name}.tar.bz2";
     multihash = "QmUqS6HpKpUxXm7Pun24MAewxdLT6RGjt4siDvzJTf7nbV";
     sha256 = "0319b9a60b667cf10ee0ec7505eb7bdc0a2e21ca7a93db96ec5bd758e3428338";
   };

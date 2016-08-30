@@ -852,6 +852,8 @@ f2fs-tools = callPackage ../all-pkgs/f/f2fs-tools { };
 
 faac = callPackage ../all-pkgs/f/faac { };
 
+fbterm = callPackage ../all-pkgs/f/fbterm { };
+
 fcgi = callPackage ../all-pkgs/f/fcgi { };
 
 feh = callPackage ../all-pkgs/f/feh { };

@@ -16,6 +16,10 @@ let
     optionals
     optionalString
     wtFlag;
+
+  versionMajor = "1.40";
+  versionMinor = "2";
+  version = "${versionMajor}.${versionMinor}";
 in
 
 assert xorg != null ->
@@ -25,14 +29,11 @@ assert xorg != null ->
 
 stdenv.mkDerivation rec {
   name = "pango-${version}";
-  versionMajor = "1.40";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/pango/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/pango/${versionMajor}/${name}.sha256sum";
-    sha256 = "e27af54172c72b3ac6be53c9a4c67053e16c905e02addcf3a603ceb2005c1a40";
+    sha256 = "90582a02bc89318d205814fc097f2e9dd164d26da5f27c53ea42d583b34c3cd1";
   };
 
   buildInputs = [

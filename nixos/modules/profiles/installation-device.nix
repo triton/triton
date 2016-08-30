@@ -16,7 +16,8 @@ with lib;
 
       # Include a copy of Nixpkgs so that nixos-install works out of
       # the box.
-      ../installer/cd-dvd/channel.nix
+      # TODO: Re-enable when we have a real channel
+      #../installer/cd-dvd/channel.nix
     ];
 
   config = {

@@ -290,6 +290,7 @@ in
 
       binaryCachePublicKeys = mkOption {
         type = types.listOf types.str;
+        default = [ "cache.triton.wak.io-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspaDShjY=" ];
         example = [ "hydra.triton.wak.io-1:CNHJZBh9K4tP3EKF6FkkgeVYsS3ohTl+oS0Qa8beaVs=" ];
         description = ''
           List of public keys used to sign binary caches. If
@@ -353,8 +354,6 @@ in
   ###### implementation
 
   config = {
-
-    nix.binaryCachePublicKeys = [ "cache.triton.wak.io-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspaDShjY=" ];
 
     environment.etc."nix/nix.conf".source = nixConf;
 

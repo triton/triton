@@ -1,8 +1,8 @@
 {
   "0.94" = rec {
-    version = "0.94.7";
+    version = "0.94.9";
     rev = "refs/tags/v${version}";
-    sha256 = "0p17c23v5y26ixm4b2ijifqn8d2rg6k301ng2vw81x6va9v6kg00";
+    sha256 = "1sbfs3ds2yhizxclhfscnsjxgb02qg3h45g9y5n3nypdlkf8wnnj";
   };
 
   "9" = rec {

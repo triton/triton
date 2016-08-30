@@ -1914,14 +1914,11 @@ nginx_unstable = callPackageAlias "nginx" {
 
 ninja = callPackage ../all-pkgs/n/ninja { };
 
-nix = callPackage ../all-pkgs/n/nix {
-  channel = "1.11";
+nix = callPackage ../all-pkgs/n/nix { };
+
+nix_dev = callPackageAlias "nix" {
+  channel = "dev";
 };
-nix_unstable = callPackage ../all-pkgs/n/nix {
-  channel = "unstable";
-};
-# Deprecated alias
-nixUnstable = callPackageAlias "nix_unstable" { };
 
 nmap = callPackage ../all-pkgs/n/nmap { };
 

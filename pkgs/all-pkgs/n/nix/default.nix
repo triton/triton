@@ -1,6 +1,5 @@
 { stdenv
 , config
-, fetchFromGitHub
 , fetchurl
 , perl
 
@@ -13,23 +12,25 @@
 , sqlite
 , xz
 
-, channel
+, channel ? "stable"
 
 , storeDir ? config.nix.storeDir or "/nix/store"
 , stateDir ? config.nix.stateDir or "/nix/var"
 }:
 
 let
-  source = ((import ./sources.nix {
-      inherit
-        fetchFromGitHub
-        fetchurl;
-    })."${channel}");
+  inherit ((import ./sources.nix)."${channel}")
+    version
+    multihash
+    sha256;
 in
 stdenv.mkDerivation rec {
-  name = "nix-${source.version}";
+  name = "nix-${version}";
 
-  src = source.src;
+  src = fetchurl {
+    url = "https://nixos.org/releases/nix/nix-${version}/nix-${version}.tar.xz";
+    inherit multihash sha256;
+  };
 
   nativeBuildInputs = [
     perl
@@ -60,11 +61,9 @@ stdenv.mkDerivation rec {
     export LIBRARY_PATH="${bzip2}/lib"
   '';
 
-  CXXFLAGS = "-Wno-error=reserved-user-defined-literal";
-
   configureFlags = [
-    "--localstatedir=${stateDir}"
     "--sysconfdir=/etc"
+    "--localstatedir=${stateDir}"
     "--with-store-dir=${storeDir}"
     "--with-dbi=${perlPackages.DBI}/${perl.libPrefix}"
     "--with-dbd-sqlite=${perlPackages.DBDSQLite}/${perl.libPrefix}"
@@ -73,42 +72,17 @@ stdenv.mkDerivation rec {
     "--enable-gc"
   ];
 
-  preBuild = ''
-    makeFlagsArray+=("profiledir=$out/etc/profile.d")
-  '';
-
   preInstall = ''
-    installFlagsArray+=("sysconfdir=$out/etc")
+    installFlagsArray+=(
+      "sysconfdir=$out/etc"
+      "profiledir=$out/etc/profile.d"
+    )
   '';
-
-  doInstallCheck = false;
 
   outputs = [
     "out"
     "doc"
   ];
-
-  crossAttrs = {
-    postUnpack = ''
-      export CPATH="${bzip2.crossDrv}/include"
-      export NIX_CROSS_LDFLAGS="-L${bzip2.crossDrv}/lib -rpath-link ${bzip2.crossDrv}/lib $NIX_CROSS_LDFLAGS"
-    '';
-
-    configureFlags = ''
-      --with-store-dir=${storeDir} --localstatedir=${stateDir}
-      --with-dbi=${perlPackages.DBI}/${perl.libPrefix}
-      --with-dbd-sqlite=${perlPackages.DBDSQLite}/${perl.libPrefix}
-      --with-www-curl=${perlPackages.WWWCurl}/${perl.libPrefix}
-      --disable-init-state
-      --enable-gc
-    '' + stdenv.lib.optionalString (
-          stdenv.cross ? nix && stdenv.cross.nix ? system
-      ) ''
-      --with-system=${stdenv.cross.nix.system}
-    '';
-
-    doInstallCheck = false;
-  };
 
   meta = with stdenv.lib; {
     description = "Package manager that makes packages reproducible";

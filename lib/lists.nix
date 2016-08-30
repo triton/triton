@@ -205,7 +205,7 @@ rec {
    * Partition the elements of a list in two lists, `right' and
    * `wrong', depending on the evaluation of a predicate.
    */
-  partition = pred:
+  partition = builtins.partition or (pred:
     fold (h: t:
       if pred h then {
         right = [ h ] ++ t.right;
@@ -216,7 +216,7 @@ rec {
     ) {
       right = [ ];
       wrong = [ ];
-    };
+    });
 
   zipListsWith =
     if builtins ? genList then

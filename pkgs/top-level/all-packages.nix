@@ -632,7 +632,7 @@ cdrtools = callPackage ../all-pkgs/c/cdrtools { };
 # Dev should always point to the latest versioned release
 ceph_lib = pkgs.ceph.lib;
 ceph = hiPrio (callPackage ../all-pkgs/c/ceph { });
-ceph_0_94 = callPackage ../all-pkgs/c/ceph {
+ceph_0-94 = callPackage ../all-pkgs/c/ceph {
   channel = "0.94";
 };
 ceph_9 = callPackage ../all-pkgs/c/ceph {

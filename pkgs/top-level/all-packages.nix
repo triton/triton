@@ -1646,6 +1646,8 @@ libtasn1 = callPackage ../all-pkgs/l/libtasn1 { };
 
 libtheora = callPackage ../all-pkgs/l/libtheora { };
 
+libtiger = callPackage ../all-pkgs/l/libtiger { };
+
 libtirpc = callPackage ../all-pkgs/l/libtirpc { };
 
 libtool = callPackage ../all-pkgs/l/libtool { };
@@ -3000,8 +3002,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
 libtiff = callPackage ../development/libraries/libtiff { };
 
-  libtiger = callPackage ../development/libraries/libtiger { };
-#
   libtxc_dxtn = callPackage ../development/libraries/libtxc_dxtn { };
 #
   libtxc_dxtn_s2tc = callPackage ../development/libraries/libtxc_dxtn_s2tc { };

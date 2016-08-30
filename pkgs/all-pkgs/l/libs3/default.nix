@@ -12,7 +12,7 @@ stdenv.mkDerivation {
     owner = "bji";
     repo = "libs3";
     rev = "11a4e976c28ba525e7d61fbc3867c345a2af1519";
-    sha256 = "43020187c916ee454d292fc9cdf7f80ba77a9362099dc15d0cf66510d427c453";
+    sha256 = "55e5655cd59d676efdbb242d8426b0b25cfe6312ff2b78755679d755d1667e35";
   };
 
   buildInputs = [

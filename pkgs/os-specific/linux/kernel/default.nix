@@ -32,10 +32,10 @@ let
     };
     "bcache" = {
       version = "4.7.2";
-      owner = "wkennington";
-      repo = "linux";
-      rev = "7ee7563d606148a767e65e7ad862a430acdd85bd";
-      sha256 = "447eb03b7ee45606206e92c5210f40ce8cb8b23a5624326178b8048cd268b542";
+      urls = [
+        "https://github.com/wkennington/linux/releases/download/bcachefs-2016-08-29/linux-bcachefs-2016-08-29.tar.xz"
+      ];
+      sha256 = "205a91321cb07ccd662f2b16d9172931d69ab0757efc6094ef3176ee0b0535b5";
       features.bcachefs = true;
     };
   };
@@ -60,7 +60,7 @@ let
     }
   else
     fetchurl {
-      urls = map (n: "${n}.xz") tarballUrls;
+      urls = source.urls or (map (n: "${n}.xz") tarballUrls);
       allowHashOutput = false;
       inherit (source) sha256;
     };

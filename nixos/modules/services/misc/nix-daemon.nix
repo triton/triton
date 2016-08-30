@@ -45,6 +45,8 @@ let
         trusted-binary-caches = ${toString cfg.trustedBinaryCaches}
         binary-cache-public-keys = ${toString cfg.binaryCachePublicKeys}
         auto-optimise-store = ${if cfg.autoOptimiseStore then "true" else "false"}
+        gc-keep-derivations = ${if cfg.gcKeepDerivations then "true" else "false"}
+        gc-keep-outputs = ${if cfg.gcKeepOutputs then "true" else "false"}
         ${optionalString cfg.requireSignedBinaryCaches ''
           signed-binary-caches = *
         ''}
@@ -128,13 +130,25 @@ in
         '';
       };
 
+      gcKeepDerivations = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Whether the store will allow .drv for alives paths to be deleted.
+        '';
+      };
+
+      gcKeepOutputs = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Whether the store will allow outputs only used for building to be deleted.
+        '';
+      };
+
       extraOptions = mkOption {
         type = types.lines;
         default = "";
-        example = ''
-          gc-keep-outputs = true
-          gc-keep-derivations = true
-        '';
         description = "Additional text appended to <filename>nix.conf</filename>.";
       };
 

@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
   # NOTE: When updating amrwb-3gpp, update every instance of 26204-d10 to the
   #       updated file name.
   amrwb_3gpp = fetchurl {
+    # Rel-13
     url = http://www.3gpp.org/ftp/Specs/archive/26_series/26.204/26204-d10.zip;
     sha256 = "c922636b1878e77d1d4a96bb9c4a014312edef280e1a6939d927acc1775c3452";
   };

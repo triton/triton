@@ -987,12 +987,12 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    lxml = buildPythonPackage ( rec {
      name = "lxml-${version}";
-     version = "3.6.1";
+     version = "3.6.4";
 
      src = fetchPyPi {
        package = "lxml";
        inherit version;
-       sha256 = "3eefcfbc548f8df38063b26c9686554268c1eb736e52cd230ff148aa550239d1";
+       sha256 = "61d5d3e00b5821e6cda099b3b4ccfea4527bf7c595e0fb3a7a760490cedd6172";
      };
 
      buildInputs = with self; [ pkgs.libxml2 pkgs.libxslt ];

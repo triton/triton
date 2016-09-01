@@ -1,48 +1,59 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, isPy3k
 
-, pkgs
-, pythonPackages
+, gobject-introspection
+, gst-plugins-bad
+, gst-plugins-base
+, gst-plugins-good
+, gst-plugins-ugly
+, gst-python
+, gstreamer
+, pygobject3
+, pykka
+, requests
+, tornado
 }:
 
 let
   inherit (stdenv.lib)
     makeSearchPath;
-  inherit (pythonPackages)
-    isPy3k;
+
+  version = "2.0.1";
 in
 
 buildPythonPackage rec {
   name = "mopidy-${version}";
-  version = "2.0.0";
 
   src = fetchPyPi {
     package = "Mopidy";
     inherit version;
-    sha256 = "14a04c249f83d42f2012b580f3a05853f56320f1bb68ac91c4068b64c81a9265";
+    sha256 = "af3129d8b7e45c8a2af34f2b50592f64c00aaa0400ef6e6c742b6587ea9bdf67";
   };
 
   buildInputs = [
-    pkgs.gobject-introspection
-    pkgs.gst-plugins-base
-    pkgs.gst-plugins-good
-    pkgs.gst-plugins-ugly
-    pkgs.gstreamer
+    gobject-introspection
+    gst-plugins-bad
+    gst-plugins-base
+    gst-plugins-good
+    gst-plugins-ugly
+    gstreamer
   ];
 
   propagatedBuildInputs = [
-    pythonPackages.gst-python
-    pythonPackages.pygobject3
-    pythonPackages.pykka
-    pythonPackages.requests2
-    pythonPackages.tornado
+    gst-python
+    pygobject3
+    pykka
+    requests
+    tornado
   ];
 
   GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [
-    pkgs.gst-plugins-base
-    pkgs.gst-plugins-good
-    pkgs.gst-plugins-ugly
+    gst-plugins-bad
+    gst-plugins-base
+    gst-plugins-good
+    gst-plugins-ugly
   ];
 
   preFixup = ''

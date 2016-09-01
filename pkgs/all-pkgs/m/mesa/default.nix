@@ -46,19 +46,16 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
+    boolEn
     head
     optional
     optionals
     optionalString
     splitString;
-in
 
-let
   # this is the default search path for DRI drivers
   driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
 in
-
 stdenv.mkDerivation rec {
   name = "mesa-noglu-${version}";
   version = "12.0.1";
@@ -153,12 +150,12 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--enable-largefile"
     # slight performance degradation, enable only for grsec
-    (enFlag "glx-rts" grsecEnabled null)
+    "--${boolEn grsecEnabled}-glx-rts"
     "--disable-debug"
     "--disable-profile"
-    (enFlag "libglvnd" (libglvnd != null) null)
+    "--${boolEn (libglvnd != null)}-libglvnd"
     "--disable-mangling"
-    (enFlag "texture-float" enableTextureFloats null)
+    "--${boolEn enableTextureFloats}-texture-float"
     "--enable-asm"
     # TODO: selinux support
     "--disable-selinux"
@@ -169,7 +166,7 @@ stdenv.mkDerivation rec {
     "--enable-dri3"
     "--enable-glx"
     "--disable-osmesa"
-    "--enable-gallium-osmesa" # used by wine
+    "--enable-gallium-osmesa"
     "--enable-egl"
     "--enable-xa" # used in vmware driver
     "--enable-gbm"
@@ -177,7 +174,7 @@ stdenv.mkDerivation rec {
     "--enable-xvmc"
     "--enable-vdpau"
     "--enable-omx"
-    # FIXME: libva recursively depends on mesa
+    # FIXME: We use mesa as libgl at build time and libva depends on libgl
     #"--enable-va"
     # TODO: Figure out how to enable opencl without having a
     #       runtime dependency on clang
@@ -204,8 +201,7 @@ stdenv.mkDerivation rec {
     "--with-dri-driverdir=$(drivers)/lib/dri"
     "--with-dri-searchpath=${driverSearchPath}/lib/dri"
     "--with-dri-drivers=i915,i965,nouveau,radeon,r200,swrast"
-    # TODO: vulkan support
-    #"--with-vulkan-drivers=intel"
+    "--with-vulkan-drivers=intel"
     #"--with-vulkan-icddir=DIR"
     #osmesa-bits=8
     #"--with-clang-libdir=${llvm}/lib"

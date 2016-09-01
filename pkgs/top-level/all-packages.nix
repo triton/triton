@@ -555,6 +555,8 @@ atkmm_2-24 = callPackage ../all-pkgs/a/atkmm {
 };
 atkmm = callPackageAlias "atkmm_2-24" { };
 
+atom = callPackage ../all-pkgs/a/atom { };
+
 attr = callPackage ../all-pkgs/a/attr { };
 
 audiofile = callPackage ../all-pkgs/a/audiofile { };

@@ -18,9 +18,9 @@ let
       sha256 = "496ae8691eb9c5a233bd99ed7984cbe129d702c322dc540143cd4012b24a4dad";
     };
     "dev" = {
-      version = "2016-08-25";
-      rev = "97de91cb580a2e31352860dfc0642579d21d3b7a";
-      sha256 = "0f42bcd2f3226ad6e1bb0d3f8948a149467dcfa6e37d12c0421656159cb4d51c";
+      version = "2016-08-30";
+      rev = "580ec0497a545bb52de204023928d4939dd14eb4";
+      sha256 = "63800e6c504a0186080870a32ff8a0e90a76d5cb95f30a541810b4cd7388f9e3";
     };
   };
 
@@ -59,11 +59,10 @@ stdenv.mkDerivation {
     sed -i '/-static/d' Makefile
   '';
 
-  preInstall = ''
+  preInstall = optionalString (channel == "stable") ''
     mkdir -p "$out/bin"
     mkdir -p "$out/sbin"
     mkdir -p "$out/share/man/man8"
-  '' + optionalString (channel == "stable") ''
     mkdir -p "$out/lib/udev/rules.d"
   '';
 

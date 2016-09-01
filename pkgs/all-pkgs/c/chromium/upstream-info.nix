@@ -11,7 +11,7 @@
     version = "54.0.2840.6";
   };
   stable = {
-    sha256 = "00d16yr8d9280b2rcjmjxkqvdzgy6a7l7fmnsjrj8404vcgax551";
+    sha256 = "2e3c5f7b12b5b4f150b93004a718fb85778aeddc4df05bbf92b99a19a1c63dee";
     sha256bin64 = "0vbf2zc3i88cqnp0nkanyv6phqhj90p449zdqrjjfyhpjcqzci50";
     version = "53.0.2785.89";
   };

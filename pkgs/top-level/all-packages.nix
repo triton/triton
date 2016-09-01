@@ -971,9 +971,6 @@ freeipmi = callPackage ../all-pkgs/f/freeipmi { };
 
 freetype = callPackage ../all-pkgs/f/freetype { };
 
-freetype2-infinality-ultimate =
-  callPackage ../all-pkgs/f/freetype2-infinality-ultimate { };
-
 fstrm = callPackage ../all-pkgs/f/fstrm { };
 
 fuse = callPackage ../all-pkgs/f/fuse { };

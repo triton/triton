@@ -317,14 +317,6 @@ stdenv.mkDerivation rec {
   '';
 
   preFixup = ''
-    # Make sure the python libraries reference $lib/lib
-    for plib in $(find $(toPythonPath $lib) -name \*.so\* -type f); do
-      patchelf --set-rpath "$lib/lib:$(patchelf --print-rpath "$plib")" "$plib"
-    done
-
-    # Make sure libs in $lib/lib don't reference $out/lib
-    find $lib/lib -name \*.so\* -type f -exec patchelf --shrink-rpath {} \;
-
     wrapPythonPrograms $out/bin
   '';
 

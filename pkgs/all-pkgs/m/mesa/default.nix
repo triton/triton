@@ -224,7 +224,10 @@ stdenv.mkDerivation rec {
   # move gallium-related stuff to $drivers, so $out doesn't depend on LLVM;
   #   also move libOSMesa to $osmesa, as it's relatively big
   # ToDo: probably not all .la files are completely fixed, but it shouldn't matter
-  postInstall = ''
+  postInstall = /* Remove vendored Vulkan headers */ ''
+    rm -fv $out/include/vulkan/vk_platform.h
+    rm -fv $out/include/vulkan/vulkan.h
+  '' + ''
     mv -t "$drivers/lib/" \
       $out/lib/libXvMC* \
       $out/lib/d3d \

@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.6.24";
+  version = "1.6.25";
 in
 stdenv.mkDerivation rec {
   name = "libpng-${version}";
@@ -13,19 +13,21 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/libpng/libpng-${version}.tar.xz";
     allowHashOutput = false;
-    multihash = "QmVzBnjR7i7XKimSxHJvhbWCqhjLbKRhUaDvfMzeiCs7NN";
-    sha256 = "7932dc9e5e45d55ece9d204e90196bbb5f2c82741ccb0f7e10d07d364a6fd6dd";
+    multihash = "QmZAxyJJzj8o9Sg1HMZqZ8GGMRKFBvoguu1Wr56ztdmuaF";
+    sha256 = "09fe8d8341e8bfcfb3263100d9ac7ea2155b28dd8535f179111c1672ac8d8811";
   };
 
   buildInputs = [
     zlib
   ];
 
+  patchFlags = "-p0";
+
   patches = [
     (fetchurl {
-      url = "mirror://sourceforge/libpng-apng/libpng-1.6.23-apng.patch.gz";
-      multihash = "QmUmLE2SXhvrJcJbn9d3EChfTp36CVq3YYhdcKCXucdSC5";
-      sha256 = "08906e0639a953f6be2d47857661cbdf04dcab93d3bf9f8cb0f7675567b07ad3";
+      url = "mirror://sourceforge/libpng-apng/libpng-1.6.25-apng.patch.gz";
+      multihash = "QmRsNvEsh1W6XwdGT6Ye2bGc7A7KERDozrxpR9gsFDwXaC";
+      sha256 = "e264d917d84872f01af3acf9666471a9bf64b75558b4b35236fef1e23c2a094f";
     })
   ];
 

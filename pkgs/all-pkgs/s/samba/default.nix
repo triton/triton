@@ -253,17 +253,6 @@ stdenv.mkDerivation rec {
     wrapPythonPrograms $out/bin
   '';
 
-  # We need to make sure rpaths are correct for all of our libraries
-  postFixup = ''
-    SAMBA_LIBS="$(find $out -type f -name \*.so -exec dirname {} \; | sort | uniq)"
-    while read BIN; do
-      OLD_LIBS="$(patchelf --print-rpath "$BIN" 2>/dev/null | tr ':' '\n')" || continue
-      ALL_LIBS="$(echo -e "$SAMBA_LIBS\n$OLD_LIBS" | sort | uniq | tr '\n' ':')"
-      patchelf --set-rpath "$ALL_LIBS" "$BIN" 2>/dev/null
-      patchelf --shrink-rpath "$BIN"
-    done < <(find $out -type f)
-  '';
-
   passthru = rec {
     srcVerification = fetchurl {
       failEarly = true;

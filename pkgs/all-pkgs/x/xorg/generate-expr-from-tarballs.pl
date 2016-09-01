@@ -98,7 +98,7 @@ while (<>) {
     $pkgURLs{$pkg} = $tarball;
     $pkgNames{$pkg} = $pkgName;
 
-    my ($hash, $path) = `PRINT_PATH=1 QUIET=1 nix-prefetch-url -I nixpkgs=../../../ '$tarball'`;
+    my ($hash, $path) = `PRINT_PATH=1 QUIET=1 nix-prefetch-url -I nixpkgs=../../../../ '$tarball'`;
     chomp $hash;
     chomp $path;
     $pkgHashes{$pkg} = $hash;

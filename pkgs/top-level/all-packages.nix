@@ -2876,14 +2876,30 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 
   fontconfig-ultimate = callPackage ../development/libraries/fontconfig-ultimate {};
 #
-  makeFontsConf = let fontconfig_ = pkgs.fontconfig; in {fontconfig ? fontconfig_, fontDirectories}:
+  makeFontsConf =
+    let
+      fontconfig_ = pkgs.fontconfig;
+    in {
+      fontconfig ? fontconfig_
+      , fontDirectories
+    }:
     callPackage ../development/libraries/fontconfig/make-fonts-conf.nix {
-      inherit fontconfig fontDirectories;
+      inherit
+        fontconfig
+        fontDirectories;
     };
 #
-  makeFontsCache = let fontconfig_ = pkgs.fontconfig; in {fontconfig ? fontconfig_, fontDirectories}:
+  makeFontsCache =
+    let
+      fontconfig_ = pkgs.fontconfig;
+    in {
+      fontconfig ? fontconfig_
+      , fontDirectories
+    }:
     callPackage ../development/libraries/fontconfig/make-fonts-cache.nix {
-      inherit fontconfig fontDirectories;
+      inherit
+        fontconfig
+        fontDirectories;
     };
 
   frei0r = callPackage ../development/libraries/frei0r { };

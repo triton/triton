@@ -40,7 +40,11 @@ patchELF() {
         # We also want to add any shared object containing outputs to the rpath
         local notmprpath
         notmprpath="$(echo "$oldrpath" | tr ':' '\n' | grep -v "$TMPDIR")"
-        rpath="$(echo "${sodirs}${notmprpath}" | tr '\n' ':' | sed 's,:$,\n,')"
+        if [ "${patchELFAddRpath-1}" = "1" ]; then
+          rpath="$(echo -e "${sodirs}\n${notmprpath}" | grep -v '^$' | tr '\n' ':' | sed 's,:$,\n,')"
+        else
+          rpath="$(echo "${notmprpath}" | tr '\n' ':' | sed 's,:$,\n,')"
+        fi
         if [ "$NIX_DEBUG" = 1 ]; then
           echo "Old Rpath: $oldrpath" >&2
           echo "NoTmp Rpath: $notmprpath" >&2

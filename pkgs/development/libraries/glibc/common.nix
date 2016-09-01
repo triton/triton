@@ -183,6 +183,7 @@ stdenv.mkDerivation ({
   NIX_NO_SELF_RPATH = true;
   NIX_CFLAGS_LINK = false;
   NIX_LDFLAGS_BEFORE = false;
+  patchELFAddRpath = false;
 
   preBuild = ''
     unset CFLAGS

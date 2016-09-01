@@ -961,6 +961,8 @@ flac = callPackage ../all-pkgs/f/flac { };
 
 flex = callPackage ../all-pkgs/f/flex { };
 
+fontconfig = callPackage ../all-pkgs/f/fontconfig { };
+
 fox = callPackage ../all-pkgs/f/fox { };
 
 freeglut = callPackage ../all-pkgs/f/freeglut { };
@@ -2871,8 +2873,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   fltk13 = callPackage ../development/libraries/fltk/fltk13.nix { };
 #
 cfitsio = callPackage ../development/libraries/cfitsio { };
-#
-  fontconfig = callPackage ../development/libraries/fontconfig { };
 
   fontconfig-ultimate = callPackage ../development/libraries/fontconfig-ultimate {};
 #

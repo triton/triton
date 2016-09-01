@@ -36,6 +36,13 @@
         sha256 = "453c27e1581614bb3b6351bf5a2da2939563ea9d1de99c420f85ca8d87b928a2";
       };
     };
+    patches = [
+      {
+        rev = "1a001778aab424ecd36774befa1f546b0004c5fc";
+        file = "llvm/fix-llvm-config.patch";
+        sha256 = "059655c0e6ea5dd248785ffc1b2e6402eeb66544ffe36ff15d76543dd7abb413";
+      }
+    ];
   };
   "3.9" = {
     version = "3.9.0-rc2";
@@ -74,5 +81,12 @@
         sha256 = "6944fc6a445953c421cb020011cf45752794067c5c93153b7e16c4d5a7334ef8";
       };
     };
+    patches = [
+      {
+        rev = "9bbc7b11d649bbb0c5d8112cdd9a4eb5e437c76d";
+        file = "l/llvm/fix-llvm-config.patch";
+        sha256 = "45e71e71de3a8e2f41516832f5044e7226b35a273d25afac076e14fc3ae46036";
+      }
+    ];
   };
 }

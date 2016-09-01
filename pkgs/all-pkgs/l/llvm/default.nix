@@ -22,6 +22,7 @@ let
 
   inherit (sources."${channel}")
     version
+    patches
     srcs;
 
   gcc = if stdenv.cc.isGNU then stdenv.cc.cc else stdenv.cc.cc.gcc;
@@ -75,19 +76,13 @@ stdenv.mkDerivation {
     ls .. \
       | grep '[0-9]\.[0-9]\.[0-9]' \
       | grep -v 'llvm' \
-      | sed 's,\(.*\)-[0-9]\.[0-9]\.[0-9].src$,../\0 projects/\1,g' \
+      | sed 's,\(.*\)-[0-9]\.[0-9]\.[0-9]\(\|rc[0-9]\).src$,../\0 projects/\1,g' \
       | xargs -n 2 mv
     mv projects/cfe tools/clang
     mv projects/clang-tools-extra tools/clang/tools/extra
   '';
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "1a001778aab424ecd36774befa1f546b0004c5fc";
-      file = "llvm/fix-llvm-config.patch";
-      sha256 = "059655c0e6ea5dd248785ffc1b2e6402eeb66544ffe36ff15d76543dd7abb413";
-    })
-  ];
+  patches = map (d: fetchTritonPatch d) patches;
 
   cmakeFlags = with stdenv; [
     "-DCMAKE_BUILD_TYPE=Release"

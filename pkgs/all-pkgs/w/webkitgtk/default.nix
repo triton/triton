@@ -57,12 +57,12 @@ assert xorg != null ->
   xorg.libX11 != null;
 
 stdenv.mkDerivation rec {
-  name = "webkitgtk-2.12.3";
+  name = "webkitgtk-2.12.4";
 
   src = fetchurl rec {
     url = "https://webkitgtk.org/releases/${name}.tar.xz";
     sha1Url = url + ".sha1";
-    sha256 = "173cbb9a2eca23eee52e99965483ab25aa9c0569ef5b57041fc0c129cc26c307";
+    sha256 = "424d3177599abbc1eb1a1ad7928dd280a62006e992f2fada2e059375a9609a77";
   };
 
   nativeBuildInputs = [

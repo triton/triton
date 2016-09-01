@@ -26,7 +26,29 @@ my %pcMap;
 my %extraAttrs;
 
 
-my @missingPCs = ("fontconfig", "libdrm", "libXaw", "zlib", "perl", "python", "python3", "mkfontscale", "mkfontdir", "bdftopcf", "libxslt", "openssl", "gperf", "gnum4", "libunwind", "libcacard", "spice-protocol", "libbsd", "intltool", "bison", "flex");
+my @missingPCs = (
+  "bdftopcf",
+  "bison",
+  "flex",
+  "fontconfig",
+  "gnum4",
+  "gperf",
+  "intltool",
+  "libbsd",
+  "libcacard",
+  "libdrm",
+  "libunwind",
+  "libXaw",
+  "libxslt",
+  "mkfontdir",
+  "mkfontscale",
+  "openssl",
+  "perl",
+  "python",
+  "python3",
+  "spice-protocol",
+  "zlib"
+);
 $pcMap{$_} = $_ foreach @missingPCs;
 $pcMap{"libpci"} = "pciutils";
 $pcMap{"spice-server"} = "spice";

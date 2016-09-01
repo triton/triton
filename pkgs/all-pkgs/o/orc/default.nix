@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "orc-0.4.25";
+  name = "orc-0.4.26";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/orc/${name}.tar.xz";
     sha256Url = "${url}.sha256sum";
-    sha256 = "c1b1d54a58f26d483f0b3881538984789fe5d5460ab8fab74a1cacbd3d1c53d1";
+    sha256 = "7d52fa80ef84988359c3434e1eea302d077a08987abdde6905678ebcad4fa649";
   };
 
   buildInputs = [

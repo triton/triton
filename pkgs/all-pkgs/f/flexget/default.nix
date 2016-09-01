@@ -42,15 +42,16 @@ let
   inherit (pythonPackages)
     isPy3k
     pythonOlder;
+
+  version = "2.3.15";
 in
 buildPythonPackage rec {
   name = "flexget-${version}";
-  version = "2.3.0";
 
   src = fetchPyPi {
     package = "FlexGet";
     inherit version;
-    sha256 = "4257c052dbd1b68b9f00590a890352fe2b1dfcafeb70305ac6356280356ed5a9";
+    sha256 = "c3c017d27f52ca9d4583136d39a512bb96d4b57a3a3e974c135b48244e5d51fd";
   };
 
   propagatedBuildInputs = [

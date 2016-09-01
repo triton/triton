@@ -1532,6 +1532,8 @@ libmediaart = callPackage ../all-pkgs/l/libmediaart {
   qt5 = null;
 };
 
+libmediainfo = callPackage ../all-pkgs/l/libmediainfo { };
+
 libmhash = callPackage ../all-pkgs/l/libmhash { };
 
 libmicrohttpd = callPackage ../all-pkgs/l/libmicrohttpd { };
@@ -2986,8 +2988,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libimobiledevice = callPackage ../development/libraries/libimobiledevice { };
 #
   liblqr1 = callPackage ../development/libraries/liblqr-1 { };
-#
-  libmediainfo = callPackage ../development/libraries/libmediainfo { };
 #
   libnatspec = callPackage ../development/libraries/libnatspec { };
 #

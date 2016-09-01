@@ -10,8 +10,6 @@
 , libpng
 , zlib
 
-, freetype2-infinality-ultimate
-
 /* passthru only */
 , glib
 }:

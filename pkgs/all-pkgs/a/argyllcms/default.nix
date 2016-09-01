@@ -48,6 +48,7 @@ stdenv.mkDerivation rec {
 
   src = fetchzip {
     url = "http://www.argyllcms.com/Argyll_V${version}_src.zip";
+    multihash = "QmQjL1Bejc5pXDNgoQzj9VUS2jZ8aMRKngGKNzMok8GtUV";
     purgeTimestamps = true;
     sha256 = "653503de46188a3d4f197c3844f11a68923c674bb2d826c5c505eaf5a4b790df";
     # The argyllcms web server doesn't like curl ...
@@ -80,24 +81,24 @@ stdenv.mkDerivation rec {
 
   NIX_LDFLAGS = "-L${inputEnv}";
 
-  buildPhase = ''
-    jam DESTDIR="/" PREFIX="$out" -j $NIX_BUILD_CORES -q -fJambase
-  '';
-
-  installPhase = ''
-    jam DESTDIR="/" PREFIX="$out" -j $NIX_BUILD_CORES -q -fJambase install
-
+  postInstall = /* Remove invalid file in bin/ */ ''
     rm -v $out/bin/License.txt
+  '' + /* Install udev rule */ ''
     mkdir -pv $out/etc/udev/rules.d
     sed -i '/udev-acl/d' usb/55-Argyll.rules
     cp -v usb/55-Argyll.rules $out/etc/udev/rules.d/
+  '' + /* Fix output directory */ ''
     mkdir -pv $out/share/
     mv -v $out/ref $out/share/argyllcms
   '';
 
   passthru = {
     srcVerification = fetchzip {
-      inherit (src) urls outputHash outputHashAlgo curlOpts;
+      inherit (src)
+        curlOpts
+        outputHash
+        outputHashAlgo
+        urls;
       purgeTimestamps = true;
       allowInsecure = true;
     };

@@ -10,6 +10,8 @@
 , libpng
 , zlib
 
+, freetype2-infinality-ultimate
+
 /* passthru only */
 , glib
 }:
@@ -39,24 +41,21 @@ stdenv.mkDerivation rec {
   ];
 
   patches = [
-    # Patch from Arch Linux:
-    # Provide a way to set the default subpixel hinting mode
-    # at runtime, without depending on the application to do so.
+    # XXX: if fontconfig-infinality-ultimate updates to support 2.6.5+
+    #      then revert to using their patches, in the meantime
+    #      https://github.com/archfan/infinality_bundle, provides
+    #      updated versions of the patches.
     (fetchTritonPatch {
-      rev = "76504e1325b09e9d214deef685183df37ad78819";
-      file = "freetype2/0003-Make-subpixel-hinting-mode-configurable.patch";
-      sha256 = "692f26495df74bedab2f0dc14e06d92fa655d633b5c5f48a60991c2970499ebf";
+      rev = "3787a34c73fd56e2dc4bf10d1bd28bcba0b0b6ed";
+      file = "f/freetype2/0001-Enable-table-validation-modules.patch";
+      sha256 = "530bf17009dffa78ebf2222c8cd5fb0ee1ecb3f7e1a7bdaa55e91b0055510514";
+    })
+    (fetchTritonPatch {
+      rev = "3787a34c73fd56e2dc4bf10d1bd28bcba0b0b6ed";
+      file = "f/freetype2/0002-infinality-2.6.5-2016.08.18.patch";
+      sha256 = "af4238937fd47d6ecf143bd6d7a5e5122b8bffe20967c1b9fd3a6b9147915771";
     })
   ];
-
-  postPatch = /* Enable table validation modules */ ''
-    sed -i modules.cfg \
-      -e 's,# AUX_MODULES += gxvalid,AUX_MODULES += gxvalid,' \
-      -e 's,# AUX_MODULES += otvalid,AUX_MODULES += otvalid,'
-  '' + /* Enable subpixel rendering */ ''
-    sed -i include/freetype/config/ftoption.h \
-      -e 's,/* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING */,#define FT_CONFIG_OPTION_SUBPIXEL_RENDERING,'
-  '';
 
   configureFlags = [
     "--enable-biarch-config"

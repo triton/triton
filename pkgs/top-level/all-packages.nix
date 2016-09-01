@@ -2479,6 +2479,8 @@ vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 
 vte = callPackage ../all-pkgs/v/vte { };
 
+vulkan-headers = callPackage ../all-pkgs/v/vulkan-headers { };
+
 w3m = callPackage ../all-pkgs/w/w3m { };
 
 waf = callPackage ../all-pkgs/w/waf { };

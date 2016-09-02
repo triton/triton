@@ -45,7 +45,7 @@ let
     };
   };
 
-  inherit (versions."${version}")
+  inherit (versions."${toString version}")
     brotli
     tar;
 

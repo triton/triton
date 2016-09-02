@@ -1,9 +1,5 @@
 { stdenv
-, autoconf
-, automake
-, bison
-, fetchFromGitHub
-, libtool
+, fetchurl
 
 , pcre
 
@@ -12,40 +8,38 @@
 
 let
   inherit (builtins.getAttr channel (import ./sources.nix))
+    multihash
     sha256
     version;
 in
 
 stdenv.mkDerivation rec {
   name = "swig-${version}";
-  inherit version;
 
-  src = fetchFromGitHub {
-    owner = "swig";
-    repo = "swig";
-    rev = "rel-${version}";
-    inherit sha256;
+  src = fetchurl {
+    url = "mirror://sourceforge/swig/swig/${name}/${name}.tar.gz";
+    inherit multihash sha256;
   };
-
-  nativeBuildInputs = [
-    autoconf
-    automake
-    bison
-    libtool
-  ];
 
   buildInputs = [
     pcre
   ];
 
-  preConfigure = ''
-    ./autogen.sh
-  '';
-
   configureFlags = [
     "--with-pcre"
     "--disable-ccache"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        urls
+        outputHash
+        outputHashAlgo;
+      failEarly = true;
+      insecureHashOutput = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Interface compiler that connects C/C++ & high-level languages";

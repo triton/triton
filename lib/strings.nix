@@ -71,8 +71,8 @@ rec {
       lenContent = stringLength content;
       lenSuffix = stringLength suffix;
     in
-    lenContent >= lenSuffix &&
-      substring (lenContent - lenSuffix) lenContent content == suffix;
+    lenContent >= lenSuffix
+    && substring (lenContent - lenSuffix) lenContent content == suffix;
 
   /* Convert a string to a list of characters (i.e. singleton strings).
      This allows you to, e.g., map a function over each character.  However,

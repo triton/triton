@@ -1,19 +1,19 @@
 { stdenv
 , asciidoc
-, fetchFromGitHub
+, fetchurl
 , python
 , re2c
 }:
 
+let
+  version = "1.7.1";
+in
 stdenv.mkDerivation rec {
   name = "ninja-${version}";
-  version = "1.7.1";
 
-  src = fetchFromGitHub {
-    owner = "ninja-build";
-    repo = "ninja";
-    rev = "v${version}";
-    sha256 = "ea115372745177ec1e55982fb48cd1b4fc8fb28080fb2d59d0e728d00f9c0e3f";
+  src = fetchurl {
+    url = "https://github.com/triton/ninja/releases/download/v${version}/${name}.tar.xz";
+    sha256 = "6e8bb087370819bb7d655c2d6b1b15d417d40b21556745ac7b77c1a8c51b6e15";
   };
 
   nativeBuildInputs = [
@@ -21,8 +21,6 @@ stdenv.mkDerivation rec {
     python
     re2c
   ];
-
-  setupHook = ./setup-hook.sh;
 
   postPatch = ''
     patchShebangs ./configure.py
@@ -42,6 +40,8 @@ stdenv.mkDerivation rec {
     install -vD 'doc/manual.html' "$out/share/doc/ninja/doc/manual.html"
     runHook 'postInstall'
   '';
+
+  setupHook = ./setup-hook.sh;
 
   meta = with stdenv.lib; {
     description = "Small build system with a focus on speed";

@@ -32,7 +32,6 @@ patchELF() {
     for file in "${files[@]}"; do
       echo "Found binary: $file" >&2
       if readelf -S "$file" 2>&1 | grep -q '.dynamic'; then
-        echo "Remove temporary dirs: $file" >&2
         local oldrpath
         oldrpath="$(patchelf --print-rpath "$file")"
 
@@ -50,8 +49,9 @@ patchELF() {
           echo "NoTmp Rpath: $notmprpath" >&2
           echo "New Rpath: $rpath" >&2
         fi
+        echo "Removing temporary dirs: $file" >&2
         patchelf --set-rpath "$rpath" "$file"
-        echo "Shrink rpath: $file" >&2
+        echo "Shrinking rpath: $file" >&2
         patchelf --shrink-rpath "$file"
         if [ "$NIX_DEBUG" = 1 ]; then
           echo "Shrunk Rpath: $(patchelf --print-rpath "$file")" >&2

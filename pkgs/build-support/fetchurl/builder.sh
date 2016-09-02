@@ -97,11 +97,12 @@ tryDownload() {
   if echo "$url" | grep -q '^https'; then
     extraOpts+=('--ssl-reqd')
     if [ "$2" != "1" ] || [ "$insecureProtolDowngrade" != "1" ]; then
-      extraOpts+=('--proto-redir=-all,https')
+      extraOpts+=('--proto-redir' '-all,https')
     fi
-    if [ "$2" = "1" ] &&  && echo "$curlOpts" | grep -q -v '\--insecure'; then
+    if [ "$2" = "1" ] && [ "$insecureProtocolDowngrade" != "1" ] && echo "$curlOpts" | grep -q -v '\--insecure'; then
       verifications+=('https')
     fi
+  fi
 
   echo
   header "trying $url"

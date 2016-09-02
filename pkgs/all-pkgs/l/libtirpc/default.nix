@@ -4,11 +4,14 @@
 , krb5_lib
 }:
 
+let
+  version = "1.0.1";
+in
 stdenv.mkDerivation rec {
-  name = "libtirpc-1.0.1";
+  name = "libtirpc-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/libtirpc/${name}.tar.bz2";
+    url = "mirror://sourceforge/libtirpc/libtirpc/${version}/${name}.tar.bz2";
     sha256 = "17mqrdgsgp9m92pmq7bvr119svdg753prqqxmg4cnz5y657rfmji";
   };
 

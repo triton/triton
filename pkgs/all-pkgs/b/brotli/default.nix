@@ -3,18 +3,26 @@
 }:
 
 let
-  version = "0.4.0";
+  version = "0.5.2";
 in
 stdenv.mkDerivation rec {
   name = "brotli-${version}";
 
   src = fetchurl {
     url = "https://github.com/google/brotli/releases/download/v${version}/Brotli-${version}.tar.gz";
-    sha256 = "d6a06624eece91f54e4b22b8088ce0090565c7d3f121386dc007b6d2723397ac";
+    sha256 = "60453b0d24a7dbff802b92c6e1d244d986ea517b3edb9eb71c39aa53f05cb144";
   };
 
-  postPatch = ''
-    cd tools
+  # Only ships with cmake / bazel now but it simple enough to build our own
+  buildPhase = ''
+    readarray -t cfiles < <(find . -name \*.c)
+    args=()
+    for cfile in "''${cfiles[@]}"; do
+      ( set -x; gcc -O2 -c -o "''${cfile%.c}.o" "$cfile" ) &
+      args+=("''${cfile%.c}.o")
+    done
+    wait
+    ( set -x; gcc -o bro "''${args[@]}" -lm )
   '';
 
   installPhase = ''

@@ -136,7 +136,6 @@ rec {
    */
   count = pred: foldl' (c: x: if pred x then c + 1 else c) 0;
 
-<<<<<<< HEAD
   /**
    * Return a singleton list if true or an empty list if not true.
    *

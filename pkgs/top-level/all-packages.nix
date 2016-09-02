@@ -605,6 +605,12 @@ boost155 = callPackage ../all-pkgs/b/boost/1.55.nix { };
 boost161 = callPackage ../all-pkgs/b/boost/1.61.nix { };
 boost = callPackageAlias "boost161" { };
 
+brotli_0-4-0 = callPackageAlias "brotli" {
+  version = "0.4.0";
+};
+brotli_0-5-2 = callPackageAlias "brotli" {
+  version = "0.5.2";
+};
 brotli = callPackage ../all-pkgs/b/brotli { };
 
 bs1770gain = callPackage ../all-pkgs/b/bs1770gain { };

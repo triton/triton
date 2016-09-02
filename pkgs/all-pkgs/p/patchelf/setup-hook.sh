@@ -38,9 +38,9 @@ patchELF() {
         # We want to remove any temporary directories from the path
         # We also want to add any shared object containing outputs to the rpath
         local notmprpath
-        notmprpath="$(echo "$oldrpath" | tr ':' '\n' | grep -v "$TMPDIR")"
+        notmprpath="$(echo "$oldrpath" | tr ':' '\n' | sed "\,$TMPDIR,d")"
         if [ "${patchELFAddRpath-1}" = "1" ]; then
-          rpath="$(echo -e "${sodirs}\n${notmprpath}" | grep -v '^$' | tr '\n' ':' | sed 's,:$,\n,')"
+          rpath="$(echo -e "${sodirs}\n${notmprpath}" | sed '/^$/d' | tr '\n' ':' | sed 's,:$,\n,')"
         else
           rpath="$(echo "${notmprpath}" | tr '\n' ':' | sed 's,:$,\n,')"
         fi

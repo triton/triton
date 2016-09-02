@@ -60,6 +60,7 @@ in
 
 , hashOutput ? true
 , insecureHashOutput ? false
+, insecureProtocolDowngrade ? false
 
 , sha256Url ? ""
 , sha256Urls ? []
@@ -206,6 +207,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
     failEarly
     hashOutput
     insecureHashOutput
+    insecureProtocolDowngrade
     curlOpts
     showURLs
     mirrorsFile

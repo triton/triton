@@ -1389,6 +1389,8 @@ gsettings-desktop-schemas_3-22 =
 gsettings-desktop-schemas =
   callPackageAlias "gsettings-desktop-schemas_3-22" { };
 
+grpc = callPackage ../all-pkgs/g/grpc { };
+
 gsm = callPackage ../all-pkgs/g/gsm { };
 
 gsound = callPackage ../all-pkgs/g/gsound { };

@@ -605,10 +605,10 @@ boost155 = callPackage ../all-pkgs/b/boost/1.55.nix { };
 boost161 = callPackage ../all-pkgs/b/boost/1.61.nix { };
 boost = callPackageAlias "boost161" { };
 
-brotli_0-4-0 = callPackageAlias "brotli" {
+brotli_0-4-0 = callPackage ../all-pkgs/b/brotli {
   version = "0.4.0";
 };
-brotli_0-5-2 = callPackageAlias "brotli" {
+brotli_0-5-2 = callPackage ../all-pkgs/b/brotli {
   version = "0.5.2";
 };
 brotli = callPackage ../all-pkgs/b/brotli { };
@@ -1108,7 +1108,7 @@ gnupg = callPackage ../all-pkgs/g/gnupg { };
 
 gnused = callPackage ../all-pkgs/g/gnused { };
 
-gnutar_1-29 = callPackageAlias "gnutar" {
+gnutar_1-29 = callPackage ../all-pkgs/g/gnutar {
   version = "1.29";
 };
 gnutar = callPackage ../all-pkgs/g/gnutar { };

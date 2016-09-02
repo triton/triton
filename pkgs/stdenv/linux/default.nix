@@ -224,7 +224,8 @@ let
         inherit (pkgs) stdenv gcc xz zlib attr acl gmp coreutils binutils
           gpm ncurses readline bash nghttp2_lib cryptodevHeaders gettext bison flex
           openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
-          gawk gnutar gzip brotli bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
+          gawk gnutar gnutar_1-29 gzip brotli brotli_0-5-2 bzip2 gnumake gnupatch
+          pkgconf pkgconfig patchelf;
 
         gcc6 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -303,7 +304,8 @@ let
       inherit (stage3Pkgs) gcc6 gcc xz zlib attr acl gmp coreutils binutils
         gpm ncurses readline bash nghttp2_lib cryptodevHeaders gettext bison flex
         openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
-        gawk gnutar gzip brotli bzip2 gnumake gnupatch pkgconf pkgconfig patchelf;
+        gawk gnutar gnutar_1-29 gzip brotli brotli_0-5-2 bzip2 gnumake gnupatch
+        pkgconf pkgconfig patchelf;
     };
   });
 

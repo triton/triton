@@ -14,7 +14,7 @@ patchELF() {
     if [ -z "${sodirs+1}" ]; then
       echo "Finding shared object directories" >&2
       local output
-      for output in "$outputs"; do
+      for output in $outputs; do
         sodirs="$(find "${!output}" -type f -a -name '*.so*' -exec dirname {} \;)"
       done
       sodirs="$(echo "$sodirs" | sort | uniq)"

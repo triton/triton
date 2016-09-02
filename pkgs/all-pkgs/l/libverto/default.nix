@@ -13,6 +13,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://fedorahosted.org/releases/l/i/libverto/${name}.tar.gz";
+    multihash = "QmZMZ6mYD6wY4Sun6jYpS24FzEA9C6rgpXjf4jXSNUxYn3";
     sha256 = "17hwr55ga0rkm5cnyfiipyrk9n372x892ph9wzi88j2zhnisdv0p";
   };
 

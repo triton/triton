@@ -70,18 +70,13 @@ let
       cc = null;
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage0Pkgs is missing package definition for `${n}`") pkgs) // rec {
-        inherit (pkgs) stdenv fetchFromGitHub fetchTritonPatch gcc;
+        inherit (pkgs) stdenv fetchTritonPatch gcc;
 
         fetchurl = pkgs.fetchurl.override {
           stdenv = stage0Pkgs.stdenv;
           curl = bootstrapTools;
           openssl = bootstrapTools;
           inherit (finalPkgs) gnupg;
-        };
-
-        fetchzip = pkgs.fetchzip.override {
-          lib = stage0Pkgs.stdenv.lib;
-          unzip = bootstrapTools;
         };
 
         patchelf = stage0Pkgs.stdenv.mkDerivation {
@@ -144,7 +139,7 @@ let
         };
 
         # These are only needed to evaluate
-        inherit (stage0Pkgs) fetchurl fetchzip fetchFromGitHub fetchTritonPatch patchelf;
+        inherit (stage0Pkgs) fetchurl fetchTritonPatch patchelf;
         inherit (pkgs) gcc;
         bison = null;
       };
@@ -196,7 +191,7 @@ let
         };
 
         # These are only needed to evaluate
-        inherit (stage0Pkgs) fetchurl fetchzip fetchFromGitHub fetchTritonPatch patchelf;
+        inherit (stage0Pkgs) fetchurl fetchTritonPatch patchelf;
         coreutils = bootstrapTools;
         binutils = bootstrapTools;
         gnugrep = bootstrapTools;
@@ -246,7 +241,7 @@ let
         };
 
         # Do not export these packages to the final stdenv
-        inherit (stage0Pkgs) fetchurl fetchzip fetchFromGitHub fetchTritonPatch;
+        inherit (stage0Pkgs) fetchurl fetchTritonPatch;
         libiconv = null;
         texinfo = pkgs.texinfo.override {
           interactive = false;

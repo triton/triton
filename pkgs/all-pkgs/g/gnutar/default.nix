@@ -1,14 +1,18 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+
+, version ? "1.29"
 }:
 
 let
-  version = "1.29";
-
   tarballUrls = version: [
     "mirror://gnu/tar/tar-${version}.tar.bz2"
   ];
+
+  sha256s = {
+    "1.29" = "236b11190c0a3a6885bdb8d61424f2b36a5872869aa3f7f695dea4b4843ae2f2";
+  };
 in
 stdenv.mkDerivation rec {
   name = "gnutar-${version}";
@@ -16,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "236b11190c0a3a6885bdb8d61424f2b36a5872869aa3f7f695dea4b4843ae2f2";
+    sha256 = sha256s."${version}";
   };
 
   patches = [

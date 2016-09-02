@@ -1108,6 +1108,9 @@ gnupg = callPackage ../all-pkgs/g/gnupg { };
 
 gnused = callPackage ../all-pkgs/g/gnused { };
 
+gnutar_1-29 = callPackageAlias "gnutar" {
+  version = "1.29";
+};
 gnutar = callPackage ../all-pkgs/g/gnutar { };
 
 gnutls = callPackage ../all-pkgs/g/gnutls { };

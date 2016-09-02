@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = genUrls version;
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "a14549db3c49f6ae2170cbbf4664bd48ace50681045e8dbea7c8d9fb96f9c765";
   };
 

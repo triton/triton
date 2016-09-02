@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/e2fsprogs/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmaMJb99wi2Rt7DRi7ihyKfHXGPdGXnej3K7EZurvWikFK";
     sha256 = "20085fd43d52b8f81bda259a7df5c2b1a7a745b6fd3d082a2915965dd77f5365";
   };

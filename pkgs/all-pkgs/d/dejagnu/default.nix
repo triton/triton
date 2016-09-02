@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnu/dejagnu/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "00b64a618e2b6b581b16eb9131ee80f721baa2669fa0cdee93c500d1a652d763";
   };
 

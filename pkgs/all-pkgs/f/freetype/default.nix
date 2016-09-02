@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
       "mirror://savannah/freetype/${name}.tar.bz2"
       "mirror://sourceforge/freetype/${name}.tar.bz2"
     ];
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "e20a6e1400798fd5e3d831dd821b61c35b1f9a6465d6b18a53a9df4cf441acf0";
   };
 

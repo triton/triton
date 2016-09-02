@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnu/freeipmi/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "5d36225b01cc965812e234e708d640381d030edf7689d4264d6f64c26a3c9868";
   };
 

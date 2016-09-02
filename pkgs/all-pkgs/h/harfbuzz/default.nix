@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "b04be31633efee2cae1d62d46434587302554fa837224845a62565ec68a0334d";
   };
 

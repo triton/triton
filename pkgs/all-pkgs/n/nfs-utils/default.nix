@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = map (n: "${n}.bz2") baseTarballs;
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmYSe6736HZBZejfyZL3emutsExTrCTtiZ1BEEn4GAnfMS";
     sha256 = "c529c82a82320daae811f3d3a143f83d2714d7e7a43beadd42fcd6022c17d590";
   };

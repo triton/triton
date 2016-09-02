@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "${baseUrl}/source/firefox-${version}.source.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     inherit sha512;
   };
 

@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://files.libburnia-project.org/releases/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmWkE5BPAKKmQusdRBuFca7zNrGAJ3Yz4tYyiZA4a5Ee4K";
     sha256 = "1bf7040d6f1274acd868aec02a3c13241d0da8d9078067d228f2966ca40e7d14";
   };

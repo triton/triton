@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://apache/subversion/${name}.tar.bz2";
-    allowHashOutput = false;
+    hashOutput = false;
     inherit (source) sha256;
   };
 

@@ -32,7 +32,7 @@ let
 
     src = fetchurl {
       url = "https://storage.googleapis.com/golang/go${channel}.${goPlatform}.tar.gz";
-      allowHashOutput = false;
+      hashOutput = false;
       sha256 = sha256Bootstrap."${stdenv.hostSystem}";
     };
 

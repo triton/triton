@@ -266,7 +266,7 @@ let
 
       src = fetchurl {
         url = "http://www.php.net/distributions/php-${version}.tar.xz";
-        allowHashOutput = false;
+        hashOutput = false;
         inherit sha256;
       };
 

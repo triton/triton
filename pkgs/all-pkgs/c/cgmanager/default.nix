@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://linuxcontainers.org/downloads/cgmanager/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "29b155befb3ac233d5d29dbca7c791c8138bab01bfa78ea4757ebb88ce23b458";
   };
 

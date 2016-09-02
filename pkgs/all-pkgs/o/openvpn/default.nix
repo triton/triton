@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://swupdate.openvpn.net/community/releases/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "f5d39b8c55f75b0aab943059b20571452b494146d997b12d48ce9bd753c01cff";
   };
 

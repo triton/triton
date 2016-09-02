@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/libfuse/libfuse/releases/download/${name}/"
       + "${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "832432d1ad4f833c20e13b57cf40ce5277a9d33e483205fc63c78111b3358874";
   };
 

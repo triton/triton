@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://dl.hexchat.net/hexchat/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "5201b0c6d17dcb8c2cb79e9c39681f8e052999ba8f7b5986d5c1e7dc68fa7c6b";
   };
 

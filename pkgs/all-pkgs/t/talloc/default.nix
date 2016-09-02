@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = map (n: "${n}.gz") (tarballUrls version);
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "22d14911164d4de67ff76b5269fa5250d01f78c955bc77e28615350996877130";
   };
 

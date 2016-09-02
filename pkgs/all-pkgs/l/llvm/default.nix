@@ -49,7 +49,7 @@ stdenv.mkDerivation {
   name = "llvm-${version}";
 
   srcs = flip map srcs' (src: src.override {
-    allowHashOutput = false;
+    hashOutput = false;
   });
 
   sourceRoot = "llvm-${replaceChars ["-"] [""] version}.src";

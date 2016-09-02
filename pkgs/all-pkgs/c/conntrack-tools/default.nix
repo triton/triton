@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://www.netfilter.org/projects/conntrack-tools/files/${name}.tar.bz2";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmRzqG5Q7QtX9ZmLAZMyEA1k3m9Lqcd51Utbx6e8WZCkqp";
     sha256 = "b7caf4fcc4c03575df57d25e5216584d597fd916c891f191dac616ce68bdba6c";
   };

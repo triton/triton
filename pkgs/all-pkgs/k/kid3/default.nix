@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/kid3/kid3/${version}/${name}.tar.gz";
     multihash = "QmShzrc31XbMaWYzBnAn8SABTJ45oLQJfnzzpE8nS1jroE";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "5c0707f1be73c486d09522ca086693d3ee830b7a28a88dbd2c010c5494256a3e";
   };
 

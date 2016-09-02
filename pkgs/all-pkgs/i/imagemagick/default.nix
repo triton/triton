@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
       "mirror://imagemagick/releases"
       "mirror://imagemagick"
     ];
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "dad306bfd7730e1665c6fdb6eb478fb2c41e2db71ab56451bbaebe9df546b1d2";
   };
 

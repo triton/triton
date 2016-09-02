@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libevdev/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "Qmbe5g3mDVKgTv16kqFLW6n9zX1N7ZLYHRcKBcWSzMpAkU";
     sha256 = "11fe76d62cc76fbc9dbf8e94696a80eee63780139161e5cf54c55ec21a8173a4";
   };

@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
       "http://www.openssl.org/source/${name}.tar.gz"
       "http://openssl.linux-mirror.org/source/${name}.tar.gz"
     ];
-    allowHashOutput = false;
+    hashOutput = false;
     inherit sha256;
   };
 

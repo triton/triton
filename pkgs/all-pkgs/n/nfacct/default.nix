@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://netfilter.org/projects/nfacct/files/${name}.tar.bz2";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmZtqnk4vHgPWK5XinUGnvpTMZtCy9AEZM2MzNLecut5EB";
     sha256 = "ecff2218754be318bce3c3a5d1775bab93bf4168b2c4aac465785de5655fbd69";
   };

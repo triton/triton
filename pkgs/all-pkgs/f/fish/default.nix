@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/fish-shell/fish-shell/releases/download/${version}/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "328acad35d131c94118c1e187ff3689300ba757c4469c8cc1eaa994789b98664";
   };
 

@@ -89,7 +89,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://get.videolan.org/vlc/${version}/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "1632e91d2a0087e0ef4c3fb4c95c3c2890f7715a9d1d43ffd46329f428cf53be";
   };
 

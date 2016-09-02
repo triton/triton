@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
       "https://downloads.mariadb.org/interstitial"
       "http://mirror.jmu.edu/pub/mariadb"
     ];
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "4ca45ac5e34418761868115ebc8c068d511fed08e283b2cac52559d63ba4aab5";
   };
 

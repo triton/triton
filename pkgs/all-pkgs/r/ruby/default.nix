@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://cache.ruby-lang.org/pub/ruby/${major}/${name}.tar.gz";
-    allowHashOutput = false;  # Get the hash from the website
+    hashOutput = false;  # Get the hash from the website
     sha256 = "b87c738cb2032bf4920fef8e3864dc5cf8eae9d89d8d523ce0236945c5797dcd";
   };
 

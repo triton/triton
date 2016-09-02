@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
-    allowHashOutput = false;  # Upstream provides it directly
+    hashOutput = false;  # Upstream provides it directly
     sha256 = "b1ab80094788912adb12b33cb1f251cc58db39294c1b5c6376972f5f7ba577e8";
   };
 

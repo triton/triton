@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = map (n: "${n}/LVM2.${version}.tgz") baseUrls;
-    allowHashOutput = false;
+    hashOutput = false;
     sha512 = "791f07be852f1fe3197a0c118ff58937ae9e0dadcf8c74527acdda3d00488a254f73c80262b4d0fce85069f6bb07f3f5c5b9246f48cd3867e855396c0d95c405";
   };
 

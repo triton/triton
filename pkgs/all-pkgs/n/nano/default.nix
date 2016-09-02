@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
       "https://www.nano-editor.org/dist/v${major}/${name}.tar.gz"
       "mirror://gnu/nano/${name}.tar.gz"
     ];
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "5dd1e9cf8e3de676c141a0b23f312e68380ef049926e2913e2114bbe32fbeac3";
   };
 

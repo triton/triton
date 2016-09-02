@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://savannah/dmidecode/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "0iby0xfk5x3cdr0x0gxj5888jjyjhafvaq0l79civ73jjfqmphvy";
   };
 

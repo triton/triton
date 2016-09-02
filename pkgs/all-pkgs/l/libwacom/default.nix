@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/linuxwacom/libwacom/${name}.tar.bz2";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmR65skfUpWkcTQtNgr4B9QqEFsWmXnKddPh9bFd7odKku";
     sha256 = "97c19c216cbf4a2c54a5fc4f80d5a363bfa732500f0831a345bbc8ab385720c0";
   };

@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/libmtp/${name}.tar.gz";
     multihash = "QmS2d3fXyGmNR9WxbpXwAhgvecKrcxYJ6CiXEiMnJmy41J";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "cdf59e816c6cda3e908a876c7fb42943f40b85669aea0029a1ca431c89afa1a0";
   };
 

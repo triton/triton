@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://waf.io/${name}.tar.bz2";
     multihash = "QmerWxk5w69MvZLaEdMrW827cP2tZKDi9zSzqQG2bBAdXY";
-    #allowHashOutput = false;
+    #hashOutput = false;
     sha256 = "1799bf4a4782552f673084a9a08ea29b4f16cb06b24b1f643dd7799332c6eac7";
   };
 

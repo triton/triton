@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/pmt/${name}-nolib.tar.xz";
     multihash = "QmbFB4XbmSyLSm6qYDtTrUo7DkR3u7iiNYsJqbiKswbqhr";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "1f843d836de8ef90b99b0a9e3e37f4ff4776278b5605293d5644b6efd537d934";
   };
 

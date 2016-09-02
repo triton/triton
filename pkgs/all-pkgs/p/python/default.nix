@@ -75,7 +75,7 @@ stdenv.mkDerivation rec {
     url = "https://www.python.org/ftp/python/${channel}.${baseVersionPatch}/"
       + "Python-${version}.tar.xz";
     inherit (source) sha256;
-    allowHashOutput = false;
+    hashOutput = false;
   };
 
   buildInputs = [

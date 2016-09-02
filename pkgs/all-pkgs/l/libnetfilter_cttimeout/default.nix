@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://netfilter.org/projects/libnetfilter_cttimeout/files/${name}.tar.bz2";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmfXM2FKbCHPoYdaCie4oTQKYekJfQPkfjngAn9Gv1UCEA";
     sha256 = "aeab12754f557cba3ce2950a2029963d817490df7edb49880008b34d7ff8feba";
   };

@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
     url = "https://www.freedesktop.org/software/colord/releases/${name}.tar.xz";
     sha1Url = "${url}.sha1";
     sha256 = "28d00b7f157ea3e2ea5315387b2660fde82faba16674861c50465e55d61a3e45";
-    allowHashOutput = false;
+    hashOutput = false;
   };
 
   nativeBuildInputs = [

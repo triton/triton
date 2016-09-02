@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/net-snmp/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmW7RctNcJdAKcqoayYwRUDWmzbZHAT4R3tLvpFuFBWxLE";
     sha256 = "12ef89613c7707dc96d13335f153c1921efc9d61d3708ef09f3fc4a7014fb4f0";
   };

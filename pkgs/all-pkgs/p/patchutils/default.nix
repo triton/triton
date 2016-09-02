@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://cyberelk.net/tim/data/patchutils/stable/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmbaGXMUCXL2WueY4FMT5CwaygYK4AnDGiEY1YBTcXZVvb";
     sha256 = "cf55d4db83ead41188f5b6be16f60f6b76a87d5db1c42f5459d596e81dabe876";
   };

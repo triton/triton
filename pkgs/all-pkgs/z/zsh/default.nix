@@ -21,7 +21,7 @@ let
   documentation = fetchurl {
     url = "mirror://sourceforge/zsh/zsh-${version}-doc.tar.xz";
     multihash = "QmTtr2J9Xja65dV2ehuer4UtPGPL7v7QT2fPyg5syJFDjN";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "328352cf3d5d0ec4b6e31dcefd25ff5b4c0e6b8077d1fe84448ebb50d6ada52a";
   };
 in
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/zsh/zsh-${version}.tar.xz";
     multihash = "Qmf4djuLdrXw15ACTq5TeUwm7CjNCFPF8CQgZFMghtp5t6";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "f17916320ffaa844bbd7ce48ceeb5945fc5f3eff64b149b4229bbfbdf3795a9d";
   };
 

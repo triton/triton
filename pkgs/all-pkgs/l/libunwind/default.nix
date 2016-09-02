@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://savannah/libunwind/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "d222f186b6bc60f49dac5030516ec35a7ed0ccca675551d6cf81008112116abc";
   };
 

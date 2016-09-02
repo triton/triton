@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://wayland.freedesktop.org/releases/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "9540925f7928becfdf5e3b84c70757f6589bf1ceef09bea78784d8e4772c0db0";
   };
 

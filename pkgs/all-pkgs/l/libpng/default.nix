@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/libpng/libpng-${version}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmZAxyJJzj8o9Sg1HMZqZ8GGMRKFBvoguu1Wr56ztdmuaF";
     sha256 = "09fe8d8341e8bfcfb3263100d9ac7ea2155b28dd8535f179111c1672ac8d8811";
   };

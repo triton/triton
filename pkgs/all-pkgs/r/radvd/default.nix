@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   
   src = fetchurl {
     url = "http://www.litech.org/radvd/dist/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "f8133114821544c62207de8026c627086461b88650b7811b5a9c5f17fb0a4191";
   };
 

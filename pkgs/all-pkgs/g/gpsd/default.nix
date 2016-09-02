@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://savannah/gpsd/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "03579af13a4d3fe0c5b79fa44b5f75c9f3cac6749357f1d99ce5d38c09bc2029";
   };
 

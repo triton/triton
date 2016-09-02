@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "b35b8af8fe030196d03b3e487f5ecd0c0836b5e124abc7a3ecd184740b444423";
   };
 

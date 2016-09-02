@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = tarballUrls version;
-    allowHashOutput = false;
+    hashOutput = false;
     inherit (sources.${channel}) sha256;
   };
 

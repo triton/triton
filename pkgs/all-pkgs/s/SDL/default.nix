@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.libsdl.org/release/SDL2-${version}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "da55e540bf6331824153805d58b590a29c39d2d506c6d02fa409aedeab21174b";
   };
 

@@ -69,7 +69,7 @@ stdenv.mkDerivation rec {
         + ".x/${version}/mesa-${version}.tar.xz")
       "https://launchpad.net/mesa/trunk/${version}/+download/mesa-${version}.tar.xz"
     ];
-    allowHashOutput = false;  # Provided by upstream directly
+    hashOutput = false;  # Provided by upstream directly
     sha256 = "bab24fb79f78c876073527f515ed871fc9c81d816f66c8a0b051d8d653896389";
   };
 

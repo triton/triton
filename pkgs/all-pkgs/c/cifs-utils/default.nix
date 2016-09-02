@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://samba/linux-cifs/cifs-utils/${name}.tar.bz2";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "e2776578b8267c6dc0862897f5e10f87f10f8337fca9ca6a9118f5eb30cf49f7";
   };
 

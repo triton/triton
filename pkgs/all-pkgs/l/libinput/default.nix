@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libinput/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmcD8x9agASGkd3UQsumB5nuXorNJ1bZ5bEcvkTXXKxVGS";
     sha256 = "8c38826a785594811bef6a9daadbfa2e172e3f070f8863393d6fb7ca4c68e451";
   };

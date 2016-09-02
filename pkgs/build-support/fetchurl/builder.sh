@@ -91,7 +91,7 @@ tryDownload() {
   )
   local verifications
   verifications=()
-  if [ -n "$allowInsecure" ]; then
+  if [ -n "$insecureHashOutput" ]; then
     verifications+=('insecure')
   fi
   if [ "$2" = "1" ] && echo "$url" | grep -q '^https' && echo "$curlOpts" | grep -q -v '\--insecure'; then
@@ -230,7 +230,7 @@ tryDownload() {
           str="Got a bad hash:\n"
           str+="  URL: $url\n"
           str+="  File: $out\n"
-          if [ -n "$allowHashOutput" ] && [ "${#verifications[@]}" -gt 0 ]; then
+          if [ -n "$hashOutput" ] && [ "${#verifications[@]}" -gt 0 ]; then
             str+='  Verification:'
             local verification
             for verification in "${verifications[@]}"; do

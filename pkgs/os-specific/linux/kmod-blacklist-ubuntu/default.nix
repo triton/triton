@@ -17,7 +17,7 @@ drv = stdenv.mkDerivation {
   src = fetchurl {
     url = "https://launchpad.net/ubuntu/+archive/primary/+files/kmod_${version}.debian.tar.xz";
     multihash = "QmSeMFuEtT3qq272pq8uGoBB5bsm2M9ctz8kdsPiKRf8fn";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "117ae90e093f7f8f43fb2ec9cb4e71e1503847b933d74ea8408bb103ce4be4cc";
   };
 

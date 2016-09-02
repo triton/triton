@@ -61,7 +61,7 @@ let
   else
     fetchurl {
       urls = source.urls or (map (n: "${n}.xz") tarballUrls);
-      allowHashOutput = false;
+      hashOutput = false;
       inherit (source) sha256;
     };
 

@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/thom311/libnl/releases/download/libnl${version'}/libnl-${version}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "cd608992c656e8f6e3ab6c1391b162a5a51c49336b9219f7f390e61fc5437c41";
   };
 

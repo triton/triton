@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "ftp://invisible-island.net/dialog/${name}.tgz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "453095abaec288bfbc1ca9faced917e17742cff1ea45ec46210071ac153562f9";
   };
 

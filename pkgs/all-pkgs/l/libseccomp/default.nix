@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/seccomp/libseccomp/releases/download/v${version}/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "ff5bdd2168790f1979e24eaa498f8606c2f2d96f08a8dc4006a2e88affa4562b";
   };
 

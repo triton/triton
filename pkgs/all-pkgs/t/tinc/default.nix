@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.tinc-vpn.org/packages/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     inherit (source) sha256;
   };
 

@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.torproject.org/dist/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "3dc9fc02f7cd22ed5fce707e0d9b26a72b1bd0976766a804cb13078d32e3ab5a";
   };
 

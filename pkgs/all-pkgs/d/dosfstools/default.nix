@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/dosfstools/dosfstools/releases/download/v${version}/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "9037738953559d1efe04fc5408b6846216cc0138f7f9d32de80b6ec3c35e7daf";
   };
 

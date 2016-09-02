@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://download.augeas.net/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmRW3q4gHMpABYou2APHi3QDKkG9KY9xsAzn2e7uzRuYEM";
     sha256 = "223bb6e6fe3e9e92277dafd5d34e623733eb969a72a382998d204feab253f73f";
   };

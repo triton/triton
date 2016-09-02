@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnu/screen/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "ef722a54759a3bf23aad272bbf33c414c1078cad6bcd982fada93c0d7917218b";
   };
 

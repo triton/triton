@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
   
   src = fetchurl {
     url = "http://waterlan.home.xs4all.nl/dos2unix/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "8ccda7bbc5a2f903dafd95900abb5bf5e77a769b572ef25150fde4056c5f30c5";
   };
 

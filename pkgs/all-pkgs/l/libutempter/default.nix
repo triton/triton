@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
       "mirror://gentoo/distfiles/${name}.tar.bz2"
       "ftp://ftp.altlinux.org/pub/people/ldv/utempter/${name}.tar.bz2"
     ];
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "15y3xbgznjxnfmix4xg3bwmqdvghdw7slbhazb0ybmyf65gmd65q";
   };
 

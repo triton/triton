@@ -29,7 +29,7 @@ buildPythonPackage rec {
       + "${version}/${name}.tar.gz";
     sha512Url = "https://github.com/rg3/youtube-dl/releases/download/"
       + "${version}/SHA2-512SUMS";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "520d913129ef03fb62c3f1a430db257c962da61b534caccbdd3a0b01e7a96487";
   };
 

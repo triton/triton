@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
       "http://pkg-isocodes.alioth.debian.org/downloads/${name}.tar.xz"
       "mirror://gentoo/distfiles/${name}.tar.xz"
     ];
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "5881cf7caa5adfffb14ade99138949324c28a277babe8d07dafbff521acef9d1";
   };
 

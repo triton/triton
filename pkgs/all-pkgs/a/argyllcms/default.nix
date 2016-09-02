@@ -98,9 +98,9 @@ stdenv.mkDerivation rec {
         curlOpts
         outputHash
         outputHashAlgo
+        purgeTimestamps
         urls;
-      purgeTimestamps = true;
-      allowInsecure = true;
+      insecureHashOutput = true;
     };
   };
 

@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/apple/cups/releases/download/release-${version}/"
       + "cups-${version}-source.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "4b14fd833180ac529ebebea766a09094c2568bf8426e219cb3a1715304ef728d";
   };
 

@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://people.freedesktop.org/~aplattner/vdpau/${name}.tar.bz2";
     multihash = "Qmant8W2qcuE8iyP8gAXPzkRxn9gFaKXgjKxNPqFbtQPPj";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "857a01932609225b9a3a5bf222b85e39b55c08787d0ad427dbd9ec033d58d736";
   };
 

@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = tarballUrls version;
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "de8187736f9b260f2fa776ed39b52cb74dd389ccf7039c042f0606270196b7e9";
   };
 

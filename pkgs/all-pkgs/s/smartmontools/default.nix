@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/smartmontools/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmW27uSxPozmCPXhwYvmWkVbi6DN37ZDj6ybUkTPZ3qp65";
     sha256 = "89e8bb080130bc6ce148573ba5bb91bfe30236b64b1b5bbca26515d4b5c945bc";
   };

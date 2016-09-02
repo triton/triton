@@ -87,7 +87,7 @@ stdenv.mkDerivation rec {
     srcVerification = fetchzip {
       inherit name;
       inherit (src) urls outputHash outputHashAlgo;
-      allowInsecure = true;
+      insecureHashOutput = true;
     };
   };
 

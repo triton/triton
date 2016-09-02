@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = map (n: "${n}/node-v${version}.tar.xz") dirUrls;
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "49b6882db88a9b08939b1d06e4e926bec0d6f4f67eee3bdb475e3487c6bd7dac";
   };
 

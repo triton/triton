@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://www.mega-nerd.com/libsndfile/files/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmRYMLHB4bmnaxgqgBdNd1wjqU6PPv9rUBCmeDVMSqwGRv";
     sha256 = "1h7s61nhf7vklh9sdsbbqzb6x287q4x4j1jc5gmjragl4wprb4d3";
   };

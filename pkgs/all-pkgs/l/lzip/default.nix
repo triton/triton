@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://savannah/lzip/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "9443855e0a33131233b22cdb6c62c9313a483f16cc7415efe88d4a494cea0352";
   };
 

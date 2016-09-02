@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://developers.yubico.com/libu2f-host/Releases/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmTZLXMWFrvYorMP4tfp3FyBC7ZRYM5be5kQzkYrhqSTbq";
     sha256 = "5bcdfbc5e6f972da5395185b71de2272f9a397f0f0d431860e71545f52f1c56a";
   };

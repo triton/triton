@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/dhcp/${version}/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "f5115aee3dd3e6925de4ba47b80ab732ba48b481c8364b6ebade2d43698d607e";
   };
 

@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://secure.nic.cz/files/knot-dns/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "8abf9a6562ecf2f7f4222d16ca6c75463399870db360eda7caa40530b469533c";
   };
 

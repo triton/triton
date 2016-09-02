@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.keepassx.org/releases/${version}/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmV9iRABvuHbGxmS5qH9G92MCxsainUWpjLEQWTTHFYPtb";
     sha256 = "204bdcf49c72078cd6f02b4f29b062923cca9e7b2d3551f2bf352763daa236b8";
   };

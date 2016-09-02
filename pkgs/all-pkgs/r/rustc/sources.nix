@@ -6,7 +6,7 @@
     version = "1.11.0";
     src = fetchurl {
       url = "https://static.rust-lang.org/dist/rustc-${version}-src.tar.gz";
-      allowHashOutput = false;
+      hashOutput = false;
       sha256 = "3685034a78e70637bdfa3117619f759f2481002fd9abbc78cc0f737c9974de6a";
     };
     srcVerification = fetchurl {

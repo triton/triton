@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.sudo.ws/dist/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "c690d707fb561b3ecdf6a6de5563bc0b769388eff201c851edbace408bb155cc";
   };
 

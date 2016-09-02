@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnu/ddrescue/${name}.tar.lz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "f09e4eb6a209cbd0fe8ee6db2d558238cdc969afa1d94150f263402ac882e1ac";
   };
 

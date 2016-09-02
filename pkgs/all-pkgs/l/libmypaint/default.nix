@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/mypaint/libmypaint/releases/download/v${version}/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "d39138b21b9057376138e64f09f4c4741a14a7baed71d6f0ba9bc2504d69f9ee";
   };
 

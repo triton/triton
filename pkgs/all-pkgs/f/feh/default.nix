@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://feh.finalrewind.org/${name}.tar.bz2";
     multihash = "QmdH43AW16i5v7Xs7JMiTLgPkV6yfuFT6cLMZPLSogz5AE";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "a9e818a4ad6ab427597e1799527a7576856c233525e67afb1eb2cb3ae709d853";
   };
 

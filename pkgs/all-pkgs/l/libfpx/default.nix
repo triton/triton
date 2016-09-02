@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://imagemagick/delegates/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "10be1bd3e041d676f8daecd0cf55533ee25091bc502b433f90cd700316af48e8";
   };
 

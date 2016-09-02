@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   
   src = fetchurl {
     url = "https://fedorahosted.org/released/sssd/${name}.tar.gz";
-    allowHashOutput = false;
+    hashOutput = false;
     sha256 = "764a211f40cbcf2c9a613fc7ce0d77799d5ee469221b8b6739972e76f09e9fad";
   };
 

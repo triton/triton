@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/strace/${name}.tar.xz";
-    allowHashOutput = false;
+    hashOutput = false;
     multihash = "QmVNenX4iNRJapAgfR9ohNswkt2fQAKSYEZtkadazVasr4";
     sha256 = "d48f732576c91ece36a5843d63f9be054c40ef59f1e4773986042636861625d7";
   };

@@ -296,7 +296,7 @@ let
 
   fetchTritonPatch = { rev, file, sha256 }: pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/triton/triton-patches/${rev}/${file}";
-    allowHashOutput = false;
+    hashOutput = false;
     inherit sha256;
   };
 

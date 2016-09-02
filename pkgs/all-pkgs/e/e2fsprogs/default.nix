@@ -5,22 +5,14 @@
 , util-linux_lib
 }:
 
-let
-  version = "1.43.1";
-  name = "e2fsprogs-${version}";
-
-  baseTarballs = [
-    "mirror://kernel/linux/kernel/people/tytso/e2fsprogs/v${version}/${name}.tar"
-    "mirror://sourceforge/e2fsprogs/${name}.tar"
-  ];
-in
 stdenv.mkDerivation rec {
-  inherit name;
+  name = "e2fsprogs-1.43.2";
 
   src = fetchurl {
-    urls = map (n: "${n}.xz") baseTarballs;
+    url = "mirror://sourceforge/e2fsprogs/${name}.tar.gz";
     allowHashOutput = false;
-    sha256 = "97e36a029224e2606baa6e9ea693b04a4d192ccd714572a1b50a2df9c687b23d";
+    multihash = "QmaMJb99wi2Rt7DRi7ihyKfHXGPdGXnej3K7EZurvWikFK";
+    sha256 = "20085fd43d52b8f81bda259a7df5c2b1a7a745b6fd3d082a2915965dd77f5365";
   };
 
   buildInputs = [
@@ -72,8 +64,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sign") baseTarballs;
-      pgpDecompress = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFingerprint = "3AB0 57B7 E78D 945C 8C55  91FB D36F 769B C118 04F0";
       inherit (src) urls outputHash outputHashAlgo;
     };

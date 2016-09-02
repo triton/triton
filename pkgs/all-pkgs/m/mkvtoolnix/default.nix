@@ -19,18 +19,18 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
+    boolEn
+    boolString
+    boolWt
+    optionals;
 in
-
 stdenv.mkDerivation rec {
-  name = "mkvtoolnix-${version}";
-  version = "9.3.1";
+  name = "mkvtoolnix-9.4.0";
 
   src = fetchurl {
     url = "https://mkvtoolnix.download/sources/${name}.tar.xz";
-    sha256 = "f3695761bf0a5fdcd6144cfb0a624094c10c9d66d43a340ebb917b7c6a8b39a2";
+    multihash = "Qmd5dq1S9xeXHPmnaH1e86yCWDJ84p92eF7H5RGnd3LXrm";
+    sha256 = "af633768ac3ca193070c76c93bbf496b41e451d1652e1d3d6fd4c20361e56265";
   };
 
   nativeBuildInputs = [
@@ -63,13 +63,14 @@ stdenv.mkDerivation rec {
     "--disable-profiling"
     "--enable-optimization"
     "--disable-precompiled-headers"
-    (enFlag "qt" (qt5 != null) null)
+    "--${boolEn (qt5 != null)}-qt"
     "--disable-static-qt"
     "--enable-magic"
-    (wtFlag "flac" (flac != null) null)
+    "--${boolWt (flac != null)}-flac"
     "--without-curl"
-    (wtFlag "boost" (boost != null) null)
-    (wtFlag "boost-libdir" (boost != null) "${boost.lib}/lib")
+    "--${boolWt (boost != null)}-boost"
+    "--${boolWt (boost != null)}-boost-libdir${
+      boolString (boost != null) "=${boost.lib}/lib" ""}"
     "--with-gettext"
     "--without-tools"
   ];
@@ -79,7 +80,7 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
-    ./drake install -j $NIX_BUILD_CORES
+    ./drake -j $NIX_BUILD_CORES install
   '';
 
   passthru = {

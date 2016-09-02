@@ -210,8 +210,9 @@ rec {
   ];
 
   sourceforge = [
-    https://downloads.sourceforge.net/sourceforge
-    https://downloads.sourceforge.net
+    http://heanet.dl.sourceforge.net/project
+    http://vorboss.dl.sourceforge.net/project
+    http://internode.dl.sourceforge.net/project
   ];
 
   # SourceForge.jp

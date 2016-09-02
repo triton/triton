@@ -8,6 +8,9 @@
 { lib
 , fetchurl
 , unzip
+, gnutar_1-29
+, brotli_0-4-0
+, brotli_0-5-2
 }:
 
 { # Optionally move the contents of the unpacked tree up one level.
@@ -16,6 +19,7 @@
 , url ? null
 , urls ? []
 , extraPostFetch ? ""
+, version ? 1  # TODO: Remove the default value and provide a meaningful error
 , ... } @ args:
 
 let
@@ -29,6 +33,21 @@ let
         list = if lib.any (n: item == n) [ "tar" "zip" ] then [ ] else [ item ];
         rest = if item == "tar" then lib.tail rest' else rest';
       in list ++ removeTarZip rest;
+
+  versions = {
+    "1" = {
+      brotli = brotli_0-4-0;
+      tar = gnutar_1-29;
+    };
+    "2" = {
+      brotli = brotli_0-5-2;
+      tar = gnutar_1-29;
+    };
+  };
+
+  inherit (versions."${version}")
+    brotli
+    tar;
 
   urls' = (if url != null then [ url ] else [ ]) ++ urls;
 
@@ -86,11 +105,11 @@ lib.overrideDerivation (fetchurl (rec {
     date -d "@$mtime" --utc >&2
   '' + ''
     echo "Building Archive ${name}" >&2
-    tar --sort=name --owner=0 --group=0 --numeric-owner \
+    ${tar}/bin/tar --sort=name --owner=0 --group=0 --numeric-owner \
       --no-acls --no-selinux --no-xattrs \
       --mode=go=rX,u+rw,a-s \
       --clamp-mtime --mtime=@$mtime \
-      -c "${name'}" | brotli --quality 6 --output "$out"
+      -c "${name'}" | ${brotli}/bin/brotli --quality 6 --output "$out"
     du -bhs "$out"
     cp "$out" "$TMPDIR/${name}"
   '';

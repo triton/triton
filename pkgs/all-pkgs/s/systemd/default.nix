@@ -1,11 +1,9 @@
 { stdenv
-, autoconf
-, automake
-, fetchFromGitHub
+, fetchurl
 , gettext
+, gperf
 , gnum4
 , intltool
-, libtool
 , libxslt
 , perl
 
@@ -21,7 +19,6 @@
 , elfutils
 , gnu-efi
 , gnutls
-, gperf
 , iptables
 , kbd
 , kmod
@@ -62,24 +59,21 @@ let
     '';
   };
 
-  version = "231";
+  upstreamVersion = "231";
+  version = "${upstreamVersion}-10-gb6932fc";
 in
 stdenv.mkDerivation rec {
   name = "${type}systemd-${version}";
 
-  src = fetchFromGitHub {
-    owner = "triton";
-    repo = "systemd";
-    rev = "ca0a4ad1275b9a0aa104db025804bddbf334daf2";
-    sha256 = "41ccd0dc1dee53d4c979fa08ad4a76f223011ab3baeeb4761d94db62287eb78d";
+  src = fetchurl {
+    url = "https://github.com/triton/systemd/releases/download/v${version}/systemd-${upstreamVersion}.tar.xz";
+    sha256 = "e24ad52e1d7be7ced87b9d4a39e6b85ea972464f1b8920fd0d56ab403359362b";
   };
 
   nativeBuildInputs = [
-    autoconf
-    automake
-    gnum4
+    gperf
+    #gnum4
     intltool
-    libtool
     perl
   ] ++ optionals (!libOnly) [
     docbook-xsl
@@ -90,7 +84,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    gperf
     libcap
 
     xz
@@ -122,33 +115,19 @@ stdenv.mkDerivation rec {
     util-linux_full
   ];
 
-  preConfigure = optionalString (!libOnly) ''
-    # FIXME: patch this in systemd properly (and send upstream).
-    for i in src/remount-fs/remount-fs.c src/core/mount.c src/core/swap.c src/fsck/fsck.c units/emergency.service.in units/rescue.service.in src/journal/cat.c src/core/shutdown.c src/nspawn/nspawn.c src/shared/generator.c; do
-      test -e $i
-      substituteInPlace $i \
-        --replace /usr/bin/getent ${stdenv.cc.libc}/bin/getent \
-        --replace /bin/mount ${util-linux_full}/bin/mount \
-        --replace /bin/umount ${util-linux_full}/bin/umount \
-        --replace /sbin/swapon ${util-linux_full}/sbin/swapon \
-        --replace /sbin/swapoff ${util-linux_full}/sbin/swapoff \
-        --replace /bin/echo ${coreutils}/bin/echo \
-        --replace /bin/cat ${coreutils}/bin/cat \
-        --replace /sbin/sulogin ${util-linux_full}/sbin/sulogin \
-        --replace /usr/lib/systemd/systemd-fsck $out/lib/systemd/systemd-fsck
-    done
-
-    substituteInPlace src/journal/catalog.c \
-      --replace /usr/lib/systemd/catalog/ $out/lib/systemd/catalog/
-  '' + ''
+  preConfigure = ''
     configureFlagsArray+=(
       "--with-rootprefix=$out"
       "--with-dbuspolicydir=$out/etc/dbus-1/system.d"
       "--with-dbussessionservicedir=$out/share/dbus-1/services"
       "--with-dbussystemservicedir=$out/share/dbus-1/system-services"
     )
-
-    ./autogen.sh
+    exit() {
+      status=$?
+      find . -name config.log -exec cat {} \;
+      return $status
+    }
+    trap exit TERM INT ERR
   '';
 
   configureFlags = [
@@ -190,7 +169,6 @@ stdenv.mkDerivation rec {
     "--enable-networkd"
     "--enable-efi"
     # "--enable-tpm"
-    "--disable-kdbus" # We can't enable this since bus1 is a thing now
     "--enable-myhostname"
     "--enable-hwdb"
     "--enable-hibernate"
@@ -321,11 +299,6 @@ stdenv.mkDerivation rec {
     ln -s $out/lib/systemd/systemd $out/sbin/telinit
     for i in init halt poweroff runlevel reboot shutdown; do
       ln -s $out/bin/systemctl $out/sbin/$i
-    done
-
-    # Fix reference to /bin/false in the D-Bus services.
-    for i in $out/share/dbus-1/system-services/*.service; do
-      substituteInPlace $i --replace /bin/false ${coreutils}/bin/false
     done
 
     # Remove all of the rpm folders

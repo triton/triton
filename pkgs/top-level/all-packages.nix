@@ -2387,6 +2387,8 @@ systemd_lib = callPackageAlias "systemd_full" {
   type = "lib";
 };
 
+systemd_dist = callPackage ../all-pkgs/s/systemd/dist.nix { };
+
 taglib = callPackage ../all-pkgs/t/taglib { };
 
 talloc = callPackage ../all-pkgs/t/talloc { };

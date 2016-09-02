@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   name = "libusb-1.0.20";
 
   src = fetchurl {
-    url = "mirror://sourceforge/libusb/${name}.tar.bz2";
+    url = "mirror://sourceforge/libusb/libusb-1.0/${name}/${name}.tar.bz2";
     sha256 = "1zzp6hc7r7m3gl6zjbmzn92zkih4664cckaf49l1g5hapa8721fb";
   };
 

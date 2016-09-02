@@ -129,7 +129,8 @@ rec {
   # Mirrors of ftp://ftp.kde.org/pub/kde/.
   kde = [
     http://kde.mirrors.pair.com
-    "http://download.kde.org/download.php?url="
+    http://mirrors.mit.edu/kde
+    http://download.kde.org
     ftp://ftp.kde.org/pub/kde
   ];
 

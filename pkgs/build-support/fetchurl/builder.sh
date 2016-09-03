@@ -299,6 +299,13 @@ fixUrls() {
   done
 
   eval $varname='("${result[@]}")'
+
+  if test -n "$showURLs"; then
+    echo "${varname}:" >&2
+    for url in "${!array}"; do
+      echo "  $url" >&2
+    done
+  fi
 }
 
 fixUrls 'urls'
@@ -312,83 +319,6 @@ fixUrls 'pgpsigMd5Urls'
 fixUrls 'pgpsigSha1Urls'
 fixUrls 'pgpsigSha256Urls'
 fixUrls 'pgpsigSha512Urls'
-
-if test -n "$showURLs"; then
-  echo "URLs:"
-  for url in "${urls[@]}"; do
-    echo "  $url" >&2
-  done
-
-  if [ "${#sha512Urls[@]}" -gt 0 ]; then
-    echo "sha512 URLs:"
-    for url in "${sha512Urls[@]}"; do
-      echo "  $url" >&2
-    done
-  fi
-
-  if [ "${#sha256Urls[@]}" -gt 0 ]; then
-    echo "sha256 URLs:"
-    for url in "${sha256Urls[@]}"; do
-      echo "  $url" >&2
-    done
-  fi
-
-  if [ "${#sha1Urls[@]}" -gt 0 ]; then
-    echo "sha1 URLs:"
-    for url in "${sha1Urls[@]}"; do
-      echo "  $url" >&2
-    done
-  fi
-
-  if [ "${#md5Urls[@]}" -gt 0 ]; then
-    echo "md5 URLs:"
-    for url in "${md5Urls[@]}"; do
-      echo "  $url" >&2
-    done
-  fi
-
-  if [ "${#minisignUrls[@]}" -gt 0 ]; then
-    echo "Minisign URLs:"
-    for url in "${minisignUrls[@]}"; do
-      echo "  $url" >&2
-    done
-  fi
-
-  if [ "${#pgpsigUrls[@]}" -gt 0 ]; then
-    echo "ASC URLs:"
-    for url in "${pgpsigUrls[@]}"; do
-      echo "  $url" >&2
-    done
-  fi
-
-  if [ "${#pgpsigMd5Urls[@]}" -gt 0 ]; then
-    echo "ASC MD5 URLs:"
-    for url in "${pgpsigMd5Urls[@]}"; do
-      echo "  $url" >&2
-    done
-  fi
-
-  if [ "${#pgpsigSha1Urls[@]}" -gt 0 ]; then
-    echo "ASC SHA1 URLs:"
-    for url in "${pgpsigSha1Urls[@]}"; do
-      echo "  $url" >&2
-    done
-  fi
-
-  if [ "${#pgpsigSha256Urls[@]}" -gt 0 ]; then
-    echo "ASC SHA256 URLs:"
-    for url in "${pgpsigSha256Urls[@]}"; do
-      echo "  $url" >&2
-    done
-  fi
-
-  if [ "${#pgpsigSha512Urls[@]}" -gt 0 ]; then
-    echo "ASC SHA512 URLs:"
-    for url in "${pgpsigSha512Urls[@]}"; do
-      echo "  $url" >&2
-    done
-  fi
-fi
 
 if ! test -f /etc/ssl/certs/ca-certificates.crt; then
   echo "Warning, downloading without validating SSL cert." >&2

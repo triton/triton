@@ -84,6 +84,8 @@ BEGIN {
 tryDownload() {
   local url
   url="$1"
+  local typ
+  typ="$2"
   local extraOpts
   extraOpts=(
     "--continue-at" "-"
@@ -96,10 +98,10 @@ tryDownload() {
   fi
   if echo "$url" | grep -q '^https'; then
     extraOpts+=('--ssl-reqd')
-    if [ "$2" != "1" ] || [ "$insecureProtolDowngrade" != "1" ]; then
+    if [ "$typ" != "main" ] || [ "$insecureProtocolDowngrade" != "1" ]; then
       extraOpts+=('--proto-redir' '-all,https')
     fi
-    if [ "$2" = "1" ] && [ "$insecureProtocolDowngrade" != "1" ] && echo "$curlOpts" | grep -q -v '\--insecure'; then
+    if [ "$typ" = "main" ] && [ "$insecureProtocolDowngrade" != "1" ] && echo "$curlOpts" | grep -q -v '\--insecure'; then
       verifications+=('https')
     fi
   fi
@@ -117,7 +119,7 @@ tryDownload() {
     if $curl "${extraOpts[@]}" "$url" --output "$downloadedFile"; then
       runHook postFetch
       if [ "$outputHashMode" = "flat" ]; then
-        if [ "$2" = "1" ]; then
+        if [ "$typ" = "main" ]; then
           if [ -n "$sha512Confirm" ]; then
             local sha512
             sha512="$(openssl sha512 -r -hex "$out" 2>/dev/null | tail -n 1 | awk '{print $1}')"
@@ -414,12 +416,12 @@ runHook preFetch
 # Download the actual file from ipfs before doing anything else
 if [ -n "$multihash" ]; then
   if [ -n "$IPFS_API" ]; then
-    tryDownload "http://$IPFS_API/ipfs/$multihash"
+    tryDownload "http://$IPFS_API/ipfs/$multihash" "ipfs"
   fi
   ipfsUrls="mirror://ipfs-cached/ipfs/$multihash"
   fixUrls 'ipfsUrls'
   for url in "${ipfsUrls[@]}"; do
-    tryDownload "$url"
+    tryDownload "$url" "ipfs"
   done
 fi
 
@@ -648,8 +650,9 @@ for url in "${md5Urls[@]}"; do
   fi
 done
 
+# Try to download from the main mirrors
 for url in "${urls[@]}"; do
-  tryDownload "$url" "1"
+  tryDownload "$url" "main"
 done
 
 # We only ever want to access the official gateway as a last resort as it can be slow
@@ -657,7 +660,7 @@ if [ -n "$multihash" ]; then
   ipfsUrls="mirror://ipfs-nocache/ipfs/$multihash"
   fixUrls 'ipfsUrls'
   for url in "${ipfsUrls[@]}"; do
-    tryDownload "$url"
+    tryDownload "$url" "ipfs"
   done
 fi
 

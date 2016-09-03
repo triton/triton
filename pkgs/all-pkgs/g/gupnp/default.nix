@@ -20,8 +20,8 @@ stdenv.mkDerivation rec {
   version = "${majorVersion}.18";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gupnp/${majorVersion}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gupnp/${majorVersion}/"
+    url = "mirror://gnome-insecure/sources/gupnp/${majorVersion}/${name}.tar.xz";
+    sha256Url = "mirror://gnome-secure/sources/gupnp/${majorVersion}/"
       + "${name}.sha256sum";
     sha256 = "c5e0e11061f8d0ff9c8dccc196f39c45a49c0153c9a72abf6290ab34d1cbb021";
   };

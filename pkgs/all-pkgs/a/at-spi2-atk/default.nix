@@ -26,8 +26,8 @@ stdenv.mkDerivation rec {
   name = "at-spi2-atk-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/at-spi2-atk/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/at-spi2-atk/${channel}/"
+    url = "mirror://gnome-insecure/sources/at-spi2-atk/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome-secure/sources/at-spi2-atk/${channel}/"
       + "${name}.sha256sum";
     inherit (source) sha256;
   };

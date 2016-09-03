@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/yelp-tools/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/yelp-tools/${versionMajor}/${name}.tar.xz";
     sha256 = "c6c1d65f802397267cdc47aafd5398c4b60766e0a7ad2190426af6c0d0716932";
   };
 

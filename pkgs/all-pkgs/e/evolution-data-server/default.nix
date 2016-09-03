@@ -42,9 +42,9 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/evolution-data-server/${versionMajor}/"
+    url = "mirror://gnome-insecure/sources/evolution-data-server/${versionMajor}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/evolution-data-server/${versionMajor}/"
+    sha256Url = "mirror://gnome-secure/sources/evolution-data-server/${versionMajor}/"
       + "${name}.sha256sum";
     sha256 = "0d1586cd326d997497a2a6fddd939a83892be07cb20f8c88fda5013f8c5bbe7e";
   };

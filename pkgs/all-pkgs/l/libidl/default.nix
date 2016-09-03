@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libIDL/${versionMajor}/${name}.tar.bz2";
+    url = "mirror://gnome-insecure/sources/libIDL/${versionMajor}/${name}.tar.bz2";
     sha256 = "08129my8s9fbrk0vqvnmx6ph4nid744g5vbwphzkaik51664vln5";
   };
 

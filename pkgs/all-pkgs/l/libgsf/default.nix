@@ -28,8 +28,8 @@ stdenv.mkDerivation rec {
   name = "libgsf-${channel}.39";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libgsf/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/libgsf/${channel}/${name}.sha256sum";
+    url = "mirror://gnome-insecure/sources/libgsf/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome-secure/sources/libgsf/${channel}/${name}.sha256sum";
     sha256 = "3dcfc911438bf6fae5fe842e85a9ac14324d85165bd4035caad4a4420f15a175";
   };
 

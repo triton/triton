@@ -17,8 +17,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/vala/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/vala/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome-insecure/sources/vala/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome-secure/sources/vala/${versionMajor}/${name}.sha256sum";
     sha256 = "dd0d47e548a34cfb1e4b04149acd082a86414c49057ffb79902eb9a508a161a9";
   };
 

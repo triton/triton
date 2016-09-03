@@ -31,8 +31,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/file-roller/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/file-roller/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome-insecure/sources/file-roller/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome-secure/sources/file-roller/${versionMajor}/${name}.sha256sum";
     sha256 = "6b5c2de4c6bd52318cacd2a398cdfa45a5f1df8a77c6652a38a6a1d3e53644e9";
   };
 

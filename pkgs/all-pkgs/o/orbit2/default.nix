@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/ORBit2/${versionMajor}/${name}.tar.bz2";
+    url = "mirror://gnome-insecure/sources/ORBit2/${versionMajor}/${name}.tar.bz2";
     sha256 = "0l3mhpyym9m5iz09fz0rgiqxl2ym6kpkwpsp1xrr4aa80nlh1jam";
   };
 

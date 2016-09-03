@@ -28,8 +28,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtksourceview/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gtksourceview/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome-insecure/sources/gtksourceview/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome-secure/sources/gtksourceview/${versionMajor}/${name}.sha256sum";
     sha256 = "7a0e6ac95ff3862bd8ef77a40e95a942939e73cb407f2eb67af600d7ce533d01";
   };
 

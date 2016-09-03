@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libgee/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/libgee/${versionMajor}/${name}.tar.xz";
     sha256 = "16a34js81w9m2bw4qd8csm4pcgr3zq5z87867j4b8wfh6zwrxnaa";
   };
 

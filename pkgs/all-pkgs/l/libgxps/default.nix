@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libgxps/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/libgxps/${versionMajor}/${name}.tar.xz";
     sha256 = "09s19ci9j5zvy7bmasii7m7sxrdjy6skh7p309klwnk6hpnz19bf";
   };
 

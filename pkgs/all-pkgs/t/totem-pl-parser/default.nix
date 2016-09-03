@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/totem-pl-parser/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/totem-pl-parser/${versionMajor}/${name}.tar.xz";
     sha256 = "0mv7aw9mw77w04zg95zjf0zmk6ckshpysbb9nap15h5is6zdk9cq";
   };
 

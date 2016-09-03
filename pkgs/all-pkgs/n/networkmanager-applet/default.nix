@@ -43,9 +43,9 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/network-manager-applet/${versionMajor}/"
+    url = "mirror://gnome-insecure/sources/network-manager-applet/${versionMajor}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/network-manager-applet/${versionMajor}/"
+    sha256Url = "mirror://gnome-secure/sources/network-manager-applet/${versionMajor}/"
       + "${name}.sha256sum";
     sha256 = "d9f5f1e151b8edbbcebb6f818eed9a49b53aadcb4e8aed2cae4fc09996278331";
   };

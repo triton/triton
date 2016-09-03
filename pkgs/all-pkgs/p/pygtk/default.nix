@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   name = "pygtk-2.24.0";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/pygtk/2.24/${name}.tar.bz2";
+    url = "mirror://gnome-insecure/sources/pygtk/2.24/${name}.tar.bz2";
     sha256 = "04k942gn8vl95kwf0qskkv6npclfm31d78ljkrkgyqxxcni1w76d";
   };
 

@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/NetworkManager-pptp/${versionMajor}/"
+    url = "mirror://gnome-insecure/sources/NetworkManager-pptp/${versionMajor}/"
         + "${name}.tar.xz";
     sha256 = "0k1416p2378clq1kkahk2ngrja84zwrmblfgg7vr1n3hy6x33w3g";
   };

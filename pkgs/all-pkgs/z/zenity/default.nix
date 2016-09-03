@@ -32,8 +32,8 @@ stdenv.mkDerivation rec {
   name = "zenity-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/zenity/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/zenity/${channel}/${name}.sha256sum";
+    url = "mirror://gnome-insecure/sources/zenity/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome-secure/sources/zenity/${channel}/${name}.sha256sum";
     sha256 = "02e8759397f813c0a620b93ebeacdab9956191c9dc0d0fcba1815c5ea3f15a48";
   };
 

@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   name = "gupnp-igd-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gupnp-igd/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/gupnp-igd/${versionMajor}/${name}.tar.xz";
     sha256 = "38c4a6d7718d17eac17df95a3a8c337677eda77e58978129ad3182d769c38e44";
   };
 

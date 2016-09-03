@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gdk-pixbuf/${versionMajor}/"
+    url = "mirror://gnome-insecure/sources/gdk-pixbuf/${versionMajor}/"
       + "gdk-pixbuf-${version}.tar.xz";
     sha256 = "d55e5b383ee219bd0e23bf6ed4427d56a7db5379729a6e3e0a0e0eba9a8d8879";
   };

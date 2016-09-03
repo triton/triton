@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gjs/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/gjs/${versionMajor}/${name}.tar.xz";
     sha256 = "106fgpr4y99sj68l72pnfa2za11ps4bn6p9z28fr79j7mpv61jc8";
   };
 

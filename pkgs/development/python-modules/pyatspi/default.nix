@@ -5,7 +5,7 @@ stdenv.mkDerivation rec {
   name = "pyatspi-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/pyatspi/2.18/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/pyatspi/2.18/${name}.tar.xz";
     sha256 = "0imbyk2v6c11da7pkwz91313pkkldxs8zfg81zb2ql6h0nnh6vzq";
   };
 

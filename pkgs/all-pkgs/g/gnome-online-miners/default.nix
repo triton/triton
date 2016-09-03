@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-online-miners/${versionMajor}/" +
+    url = "mirror://gnome-insecure/sources/gnome-online-miners/${versionMajor}/" +
           "${name}.tar.xz";
     sha256 = "f46dac7743283385d2aeea588eeead216274d9f365e323b90f586de982336e36";
   };

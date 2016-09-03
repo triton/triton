@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/NetworkManager-openvpn/${versionMajor}/"
+    url = "mirror://gnome-insecure/sources/NetworkManager-openvpn/${versionMajor}/"
         + "${name}.tar.xz";
     sha256 = "1b0ji6krnj6f149ajg7flx693b9znp2mcj4xfa7dg91bswcrb5qv";
   };

@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
   name = "ekiga-4.0.1";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/ekiga/4.0/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/ekiga/4.0/${name}.tar.xz";
     sha256 = "5f4f491c9496cf65ba057a9345d6bb0278f4eca07bcda5baeecf50bfcd9a4a3b";
   };
 

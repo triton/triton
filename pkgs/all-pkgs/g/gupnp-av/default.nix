@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gupnp-av/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/gupnp-av/${versionMajor}/${name}.tar.xz";
     sha256 = "759bc7d46aff894c282d17f508d9b5be82de96aa74b10cb6b0fc6c5e07cc273c";
   };
 

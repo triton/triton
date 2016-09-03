@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   name = "pangox-compat-0.0.2";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/pangox-compat/0.0/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/pangox-compat/0.0/${name}.tar.xz";
     sha256 = "0ip0ziys6mrqqmz4n71ays0kf5cs1xflj1gfpvs4fgy2nsrr482m";
   };
 

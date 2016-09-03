@@ -16,8 +16,8 @@ stdenv.mkDerivation rec {
   name = "adwaita-icon-theme-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/adwaita-icon-theme/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/adwaita-icon-theme/${channel}/"
+    url = "mirror://gnome-insecure/sources/adwaita-icon-theme/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome-secure/sources/adwaita-icon-theme/${channel}/"
       + "${name}.sha256sum";
     inherit (source) sha256;
   };

@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   name = "libsecret-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libsecret/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/libsecret/${versionMajor}/${name}.tar.xz";
     sha256 = "9ce7bd8dd5831f2786c935d82638ac428fa085057cc6780aba0e39375887ccb3";
   };
 

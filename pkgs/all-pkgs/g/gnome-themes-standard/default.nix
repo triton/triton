@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-themes-standard/${versionMajor}/" +
+    url = "mirror://gnome-insecure/sources/gnome-themes-standard/${versionMajor}/" +
           "${name}.tar.xz";
     sha256 = "9d0d9c4b2c9f9008301c3c1878ebb95859a735b7fd4a6a518802b9637e4a7915";
   };

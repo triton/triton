@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   name = "json-glib-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/json-glib/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/json-glib/${versionMajor}/${name}.tar.xz";
     sha256 = "ea128ab52a824fcd06e5448fbb2bd8d9a13740d51c66d445828edba71321a621";
   };
 

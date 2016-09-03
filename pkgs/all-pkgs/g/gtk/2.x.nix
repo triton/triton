@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/gtk+/${versionMajor}/${name}.tar.xz";
     sha256 = "0l6aqk86aw5w132ygy6hv6nlxvd1h6xg7c85qbm60p6mnv1ww58d";
   };
 

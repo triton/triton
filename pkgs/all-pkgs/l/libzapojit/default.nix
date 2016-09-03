@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libzapojit/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/libzapojit/${versionMajor}/${name}.tar.xz";
     sha256 = "0zn3s7ryjc3k1abj4k55dr2na844l451nrg9s6cvnnhh569zj99x";
   };
 

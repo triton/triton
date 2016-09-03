@@ -73,8 +73,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-control-center/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-control-center/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome-insecure/sources/gnome-control-center/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome-secure/sources/gnome-control-center/${versionMajor}/${name}.sha256sum";
     sha256 = "ce6474fc60f78ed3cfaf555e55a52ec3ebb6437fa184e08ad6077bbec380a1ed";
   };
 

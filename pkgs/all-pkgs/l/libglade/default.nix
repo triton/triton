@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libglade/${versionMajor}/${name}.tar.bz2";
+    url = "mirror://gnome-insecure/sources/libglade/${versionMajor}/${name}.tar.bz2";
     sha256 = "64361e7647839d36ed8336d992fd210d3e8139882269bed47dc4674980165dec";
   };
 

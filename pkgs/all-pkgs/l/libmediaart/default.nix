@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libmediaart/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome-insecure/sources/libmediaart/${versionMajor}/${name}.tar.xz";
     sha256 = "0vshvm3sfwqs365glamvkmgnzjnmxd15j47xn0ak3p6l57dqlrll";
   };
 

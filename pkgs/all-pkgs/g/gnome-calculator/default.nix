@@ -26,9 +26,9 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-calculator/${versionMajor}/"
+    url = "mirror://gnome-insecure/sources/gnome-calculator/${versionMajor}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-calculator/${versionMajor}/"
+    sha256Url = "mirror://gnome-secure/sources/gnome-calculator/${versionMajor}/"
       + "${name}.sha256sum";
     sha256 = "07408cb200ed1e1ef831a7afdd48f92e1ab4738a421d057fcc75ad134203bdc2";
   };

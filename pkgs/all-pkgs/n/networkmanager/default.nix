@@ -60,9 +60,9 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl rec {
-    url = "mirror://gnome/sources/NetworkManager/${versionMajor}/"
+    url = "mirror://gnome-insecure/sources/NetworkManager/${versionMajor}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/NetworkManager/${versionMajor}/"
+    sha256Url = "mirror://gnome-secure/sources/NetworkManager/${versionMajor}/"
       + "${name}.sha256sum";
     sha256 = "c4d5e075998a291074501602a5068a7e54d9e0f2658aba079d58145d65be531d";
   };

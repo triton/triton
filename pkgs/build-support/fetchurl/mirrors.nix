@@ -211,10 +211,9 @@ rec {
   ];
 
   sourceforge = [
+    # kent: https://sourceforge.mirrorservice.org/
+    http://kent.dl.sourceforge.net
     http://downloads.sourceforge.net
-    http://heanet.dl.sourceforge.net/project
-    http://vorboss.dl.sourceforge.net/project
-    http://internode.dl.sourceforge.net/project
   ];
 
   # SourceForge.jp

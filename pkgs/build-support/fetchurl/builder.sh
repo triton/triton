@@ -425,6 +425,7 @@ sigDownload "pgpsigSha512"
 
 # We want to download signatures first
 getHashOrEmpty() {
+  local match_expr
   match_expr="\( \|\t\|/\|(\|\*\)$(basename "$urls")\()\| \|\t\|$\)"
   if grep -q "$match_expr" "$1"; then
     grep "$match_expr" "$1" | sed -n "s,.*\\([0-9A-Za-z]\\{$2\\}\\).*,\\1,p"
@@ -443,133 +444,49 @@ getHash() {
   fi
 }
 
-for url in "${sha512Urls[@]}"; do
-  echo "Trying $url" >&2
-  if echo "$url" | grep -q '\.asc$'; then
-    if $curl --continue-at - --fail "$url" --output "$TMPDIR/sha512.asc"; then
-      if ! gpg --lock-never --output "$TMPDIR/sha512" --decrypt "$TMPDIR/sha512.asc"; then
-        echo "$TMPDIR/sha512.asc pgpsig does not validate" >&2
+getHashConfirmation() {
+  local varname
+  varname="$1"
+  local size
+  size="$2"
+
+  local urlsVar
+  urlsVar="${varname}Urls[@]"
+  for url in "${!urlsVar}"; do
+    if ! auxDownload "$url" "$TMPDIR/$varname"; then
+      eval "${varname}Confirm"='"broken"'
+      continue
+    fi
+    if echo "$url" | grep -q '\.asc$'; then
+      mv "$TMPDIR/$varname" "$TMPDIR/$varname.asc"
+      if ! gpg --lock-never --output "$TMPDIR/$varname" --decrypt "$TMPDIR/$varname.asc"; then
+        echo "$TMPDIR/$varname.asc pgpsig does not validate" >&2
         exit 1
       fi
-      sha512Verification="pgp*sha512"
-      sha512Confirm="$(getHash "$TMPDIR/sha512" 128)"
+      eval "${varname}Verification"='"${usedHttps+https*}pgp*${varname}"'
+      eval "${varname}Confirm"='"$(getHash "$TMPDIR/$varname" "$size")"'
       break
     else
-      sha512Confirm="broken"
-    fi
-  else
-    if $curl --continue-at - --fail "$url" --output "$TMPDIR/sha512"; then
-      if [ "${#pgpsigSha512Urls[@]}" -gt "0" ]; then
-         if ! gpg --lock-never --verify "$TMPDIR/pgpsigSha512" "$TMPDIR/sha512"; then
-            echo "$TMPDIR/sha512 pgpsig does not validate" >&2
+      local numPgpUrls
+      eval 'numPgpUrls'="\"\${#pgpsig${varname^}Urls[@]}\""
+      if [ "$numPgpUrls" -gt "0" ]; then
+         if ! gpg --lock-never --verify "$TMPDIR/pgpsig${varname^}" "$TMPDIR/${varname}"; then
+            echo "$TMPDIR/${varname} pgpsig does not validate" >&2
             exit 1
          fi
-         sha512Verification="pgp*"
+         eval "${varname}Verification"='"pgp*"'
       fi
-      sha512Verification="${sha512Verification}sha512"
-      sha512Confirm="$(getHash "$TMPDIR/sha512" 128)"
+      eval "${varname}Verification"="\"\${usedHttps+https*}\${${varname}Verification}${varname}\""
+      eval "${varname}Confirm"='"$(getHash "$TMPDIR/$varname" "$size")"'
       break
-    else
-      sha512Confirm="broken"
     fi
-  fi
-done
+  done
+}
 
-for url in "${sha256Urls[@]}"; do
-  echo "Trying $url" >&2
-  if echo "$url" | grep -q '\.asc$'; then
-    if $curl -C - --fail "$url" --output "$TMPDIR/sha256.asc"; then
-      if ! gpg --lock-never --output "$TMPDIR/sha256" --decrypt "$TMPDIR/sha256.asc"; then
-        echo "$TMPDIR/sha256.asc pgpsig does not validate" >&2
-        exit 1
-      fi
-      sha256Verification="pgp*sha256"
-      sha256Confirm="$(getHash "$TMPDIR/sha256" 64)"
-      break
-    else
-      sha256Confirm="broken"
-    fi
-  else
-    if $curl --continue-at - --fail "$url" --output "$TMPDIR/sha256"; then
-      if [ "${#pgpsigSha256Urls[@]}" -gt "0" ]; then
-         if ! gpg --lock-never --verify "$TMPDIR/pgpsigSha256" "$TMPDIR/sha256"; then
-            echo "$TMPDIR/sha256 pgpsig does not validate" >&2
-            exit 1
-         fi
-         sha256Verification="pgp*"
-      fi
-      sha256Verification="${sha256Verification}sha256"
-      sha256Confirm="$(getHash "$TMPDIR/sha256" 64)"
-      break
-    else
-      sha256Confirm="broken"
-    fi
-  fi
-done
-
-for url in "${sha1Urls[@]}"; do
-  echo "Trying $url" >&2
-  if echo "$url" | grep -q '\.asc$'; then
-    if $curl --continue-at - --fail "$url" --output "$TMPDIR/sha1.asc"; then
-      if ! gpg --lock-never --output "$TMPDIR/sha1" --decrypt "$TMPDIR/sha1.asc"; then
-         echo "$TMPDIR/sha1.asc pgpsig does not validate" >&2
-         exit 1
-      fi
-      sha1Verification="pgp*sha1"
-      sha1Confirm="$(getHash "$TMPDIR/sha1" 40)"
-      break
-    else
-      sha1Confirm="broken"
-    fi
-  else
-    if $curl --continue-at - --fail "$url" --output "$TMPDIR/sha1"; then
-      if [ "${#pgpsigSha1Urls[@]}" -gt "0" ]; then
-         if ! gpg --lock-never --verify "$TMPDIR/pgpsigSha1" "$TMPDIR/sha1"; then
-            echo "$TMPDIR/sha1 pgpsig does not validate" >&2
-            exit 1
-         fi
-         sha1Verification="pgp*"
-      fi
-      sha1Verification="${sha1Verification}sha1"
-      sha1Confirm="$(getHash "$TMPDIR/sha1" 40)"
-      break
-    else
-      sha1Confirm="broken"
-    fi
-  fi
-done
-
-for url in "${md5Urls[@]}"; do
-  echo "Trying $url" >&2
-  if echo "$url" | grep -q '\.asc$'; then
-    if $curl --continue-at - --fail "$url" --output "$TMPDIR/md5.asc"; then
-      if ! gpg --lock-never --output "$TMPDIR/md5" --decrypt "$TMPDIR/md5.asc"; then
-         echo "$TMPDIR/md5 pgpsig does not validate" >&2
-         exit 1
-      fi
-      md5Verification="pgp*md5"
-      md5Confirm="$(getHash "$TMPDIR/md5" 32)"
-      break
-    else
-      md5Confirm="broken"
-    fi
-  else
-    if $curl --continue-at - --fail "$url" --output "$TMPDIR/md5"; then
-      if [ "${#pgpsigMd5Urls[@]}" -gt "0" ]; then
-         if ! gpg --lock-never --verify "$TMPDIR/pgpsigMd5" "$TMPDIR/md5"; then
-            echo "$TMPDIR/md5 pgpsig does not validate" >&2
-            exit 1
-         fi
-         md5Verification="pgp*"
-      fi
-      md5Verification="${md5Verification}md5"
-      md5Confirm="$(getHash "$TMPDIR/md5" 32)"
-      break
-    else
-      md5Confirm="broken"
-    fi
-  fi
-done
+getHashConfirmation 'md5'    '32'
+getHashConfirmation 'sha1'   '40'
+getHashConfirmation 'sha256' '64'
+getHashConfirmation 'sha512' '128'
 
 # Try to download from the main mirrors
 for url in "${urls[@]}"; do

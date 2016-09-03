@@ -377,60 +377,51 @@ while [ "$i" -lt "${#pgpKeyFingerprints[@]}" ]; do
   i=$(($i + 1))
 done
 
+auxDownload() {
+  local url
+  url="$1"
+  local output
+  output="$2"
+
+  if echo "$url" | grep -q '^https'; then
+    extraOpts+=('--ssl-reqd')
+    if [ "$insecureProtocolDowngrade" != "1" ]; then
+      extraOpts+=('--proto-redir' '-all,https')
+    fi
+  fi
+
+  if [ "$insecureProtocolDowngrade" != "1" ] && echo "$curlOpts" | grep -q -v '\--insecure'; then
+    usedHttps=
+  else
+    unset usedHttps
+  fi
+
+  echo "Trying $url" >&2
+  if $curl "${extraOpts[@]}" --continue-at - --fail "$url" --output "$output"; then
+    return 0
+  else
+    rm -f "$output"
+    return 1
+  fi
+}
+
 # Download sig files
-for url in "${minisignUrls[@]}"; do
-  echo "Trying $url" >&2
-  if $curl --continue-at - --fail "$url" --output "$TMPDIR/minisign"; then
-    break
-  else
-    rm -f "$TMPDIR/minisign"
-  fi
-done
+sigDownload() {
+  local varname
+  varname="$1"
 
-for url in "${pgpsigMd5Urls[@]}"; do
-  echo "Trying $url" >&2
-  if $curl --continue-at - --fail "$url" --output "$TMPDIR/pgpsigMd5"; then
-    break
-  else
-    rm -f "$TMPDIR/pgpsigMd5"
-  fi
-done
-
-for url in "${pgpsigSha1Urls[@]}"; do
-  echo "Trying $url" >&2
-  if $curl --continue-at - --fail "$url" --output "$TMPDIR/pgpsigSha1"; then
-    break
-  else
-    rm -f "$TMPDIR/pgpsigSha1"
-  fi
-done
-
-for url in "${pgpsigSha256Urls[@]}"; do
-  echo "Trying $url" >&2
-  if $curl --continue-at - --fail "$url" --output "$TMPDIR/pgpsigSha256"; then
-    break
-  else
-    rm -f "$TMPDIR/pgpsigSha256"
-  fi
-done
-
-for url in "${pgpsigSha512Urls[@]}"; do
-  echo "Trying $url" >&2
-  if $curl --continue-at - --fail "$url" --output "$TMPDIR/pgpsigSha512"; then
-    break
-  else
-    rm -f "$TMPDIR/pgpsigSha512"
-  fi
-done
-
-for url in "${pgpsigUrls[@]}"; do
-  echo "Trying $url" >&2
-  if $curl --continue-at - --fail "$url" --output "$TMPDIR/pgpsig"; then
-    break
-  else
-    rm -f "$TMPDIR/pgpsig"
-  fi
-done
+  local urls
+  urls="$varname[@]"
+  for url in "${!urls}"; do
+    auxDownload "$url" "$TMPDIR/$varname" && break
+  done
+}
+sigDownload "minisign"
+sigDownload "pgpsig"
+sigDownload "pggsigMd5"
+sigDownload "pgpsigSha1"
+sigDownload "pgpsigSha256"
+sigDownload "pgpsigSha512"
 
 # We want to download signatures first
 getHashOrEmpty() {

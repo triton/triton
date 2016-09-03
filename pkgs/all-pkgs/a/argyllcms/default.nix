@@ -47,6 +47,7 @@ stdenv.mkDerivation rec {
   version = "1.8.3";
 
   src = fetchzip {
+    version = 1;
     url = "http://www.argyllcms.com/Argyll_V${version}_src.zip";
     multihash = "QmQjL1Bejc5pXDNgoQzj9VUS2jZ8aMRKngGKNzMok8GtUV";
     purgeTimestamps = true;
@@ -94,6 +95,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     srcVerification = fetchzip {
+    version = 1;
       inherit (src)
         curlOpts
         outputHash

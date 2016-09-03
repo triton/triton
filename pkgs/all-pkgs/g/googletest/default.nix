@@ -19,6 +19,7 @@ stdenv.mkDerivation rec {
   name = "googletest-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/google/googletest/archive/"
       + "release-${version}.tar.gz";
     sha256 = "6c0f5c6f4e325b840ac9c69b0e70e0c21eacfce31c1bdcaad685879dff21d5bc";

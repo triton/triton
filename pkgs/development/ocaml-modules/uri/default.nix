@@ -8,6 +8,7 @@ stdenv.mkDerivation {
   name = "ocaml-uri-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mirage/ocaml-uri/archive/v${version}.tar.gz";
     sha256 = "0v3jxqgyi4kj92r3x83rszfpnvvzy9lyb913basch4q64yka3w85";
   };

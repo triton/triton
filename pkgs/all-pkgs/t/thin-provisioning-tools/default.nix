@@ -14,6 +14,7 @@ stdenv.mkDerivation {
   name = "thin-provisioning-tools-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "jthornber";
     repo = "thin-provisioning-tools";
     rev = "v${version}";

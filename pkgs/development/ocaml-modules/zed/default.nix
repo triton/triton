@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   name = "ocaml-zed-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/diml/zed/archive/${version}.tar.gz";
     sha256 = "0d8qfy0qiydrrqi8qc9rcwgjigql6vx9gl4zp62jfz1lmjgb2a3w";
   };

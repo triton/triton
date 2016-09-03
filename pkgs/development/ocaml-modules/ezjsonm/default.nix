@@ -6,6 +6,7 @@ stdenv.mkDerivation {
   name = "ocaml-ezjsonm-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mirage/ezjsonm/archive/${version}.tar.gz";
     sha256 = "0cfjh8awajvw6kkmxr65dvri4k6h29pynxvk76a8c2lkixpsc095";
   };

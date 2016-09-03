@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
   name = "tslib-2015-08-20";
   
   src = fetchFromGitHub {
+    version = 1;
     owner = "kergoth";
     repo = "tslib";
     rev = "0a11148eff4111afc8b241b59fdca541fcfa69c1";

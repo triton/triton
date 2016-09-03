@@ -9,6 +9,7 @@ stdenv.mkDerivation {
   name = "civetweb-2016-04-20";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "civetweb";
     repo = "civetweb";
     rev = "47e1dc92ac12e02eabb407418c13586243de90ef";

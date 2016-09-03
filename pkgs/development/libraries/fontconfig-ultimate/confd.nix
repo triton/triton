@@ -9,6 +9,7 @@ stdenv.mkDerivation {
   name = "fontconfig-ultimate-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "bohoomil";
     repo = "fontconfig-ultimate";
     rev = version;

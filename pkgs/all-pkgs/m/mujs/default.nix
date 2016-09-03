@@ -6,6 +6,7 @@ stdenv.mkDerivation {
   name = "mujs-2016-05-04";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "ccxvii";
     repo = "mujs";
     rev = "1930f35933654d02234249b8c9b8c0d1c8c9fb6b";

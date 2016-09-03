@@ -6,6 +6,7 @@ stdenv.mkDerivation rec {
   name = "zeal-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "zealdocs";
     repo = "zeal";
     rev = "v${version}";

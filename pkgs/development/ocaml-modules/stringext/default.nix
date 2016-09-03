@@ -9,6 +9,7 @@ stdenv.mkDerivation {
   name = "ocaml-stringext-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/rgrinberg/stringext/archive/v${version}.tar.gz";
     sha256 = "1jp0x9rkss8a48z9wbnc4v5zvmnysin30345psl3xnxb2aqzwlii";
   };

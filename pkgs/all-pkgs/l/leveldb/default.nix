@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
   version = "1.18";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "google";
     repo = "leveldb";
     rev = "v${version}";

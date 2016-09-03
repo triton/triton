@@ -13,6 +13,7 @@ stdenv.mkDerivation rec {
   name = "libproxy-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "libproxy";
     repo = "libproxy";
     rev = version;

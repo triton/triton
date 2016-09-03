@@ -6,6 +6,7 @@ stdenv.mkDerivation rec {
   version = "2.1.6";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "axkibe";
     repo = "lsyncd";
     rev = "release-${version}";

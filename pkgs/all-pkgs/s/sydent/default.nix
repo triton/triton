@@ -20,6 +20,7 @@ buildPythonPackage {
   name = "sydent-2016-07-05";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "matrix-org";
     repo = "sydent";
     rev = "f2c5d5fda430f7f1f22105cd89d6e5bcd432e5f1";

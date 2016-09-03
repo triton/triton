@@ -3,6 +3,7 @@
 stdenv.mkDerivation {
   name = "ocaml-fontconfig-20131103";
   src = fetchFromGitHub {
+    version = 1;
     owner = "flh";
     repo = "ocaml-fontconfig";
     rev = "42daf1697ffcee9c89ee4be3103b6427f7a7b7e5";

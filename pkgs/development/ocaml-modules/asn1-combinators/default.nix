@@ -8,6 +8,7 @@ stdenv.mkDerivation {
   name = "ocaml-asn1-combinators-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mirleft/ocaml-asn1-combinators/archive/${version}.tar.gz";
     sha256 = "13vpdgcyph4vq3gcp8b16756s4nz3crpxhxfhcqgc1ffz61gc0h5";
   };

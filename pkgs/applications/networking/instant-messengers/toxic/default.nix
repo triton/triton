@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   name = "toxic-dev-20150125";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "Tox";
     repo = "toxic";
     rev = "4badc983ea";

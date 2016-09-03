@@ -27,6 +27,7 @@ stdenv.mkDerivation rec {
   version = "0.9.8.7";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "seriyps";
     repo = "NetworkManager-l2tp";
     rev = version;

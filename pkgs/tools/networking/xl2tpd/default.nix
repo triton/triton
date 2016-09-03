@@ -5,6 +5,7 @@ in stdenv.mkDerivation {
   name = "xl2tpd-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "xelerance";
     repo = "xl2tpd";
     rev = "v${version}";

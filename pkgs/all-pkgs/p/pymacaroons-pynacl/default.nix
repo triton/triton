@@ -13,6 +13,7 @@ buildPythonPackage {
   name = "pymacaroons-pynacl-${version}";
   
   src = fetchFromGitHub {
+    version = 1;
     owner = "matrix-org";
     repo = "pymacaroons";
     rev = "v${version}";

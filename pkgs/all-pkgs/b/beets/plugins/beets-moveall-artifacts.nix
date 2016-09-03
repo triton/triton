@@ -7,6 +7,7 @@ buildPythonPackage rec {
   name = "beets-moveall-artifacts-2016-08-28";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "chlorm";
     repo = "beets-moveall-artifacts";
     rev = "9a193d2a149fc40e3dea0e6e26b57001589e2d02";

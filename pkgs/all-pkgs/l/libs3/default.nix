@@ -9,6 +9,7 @@ stdenv.mkDerivation {
   name = "libs3-2015-04-23";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "bji";
     repo = "libs3";
     rev = "11a4e976c28ba525e7d61fbc3867c345a2af1519";

@@ -10,6 +10,7 @@ buildPythonPackage {
   name = "matrix-angular-sdk-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "matrix-org";
     repo = "matrix-angular-sdk";
     rev = "v${version}";

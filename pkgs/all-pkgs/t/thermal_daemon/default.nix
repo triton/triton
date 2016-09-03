@@ -15,6 +15,7 @@ stdenv.mkDerivation {
   name = "thermal_daemon-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "01org";
     repo = "thermal_daemon";
     rev = "v${version}";

@@ -8,6 +8,7 @@ let
   v = "3.0.0";
 
   contribSrc = fetchzip {
+    version = 1;
     url = "https://github.com/Itseez/opencv_contrib/archive/3.0.0.tar.gz";
     sha256 = "1gx7f9v85hmzh37s0zaillg7bs6cy9prm3wl0jb5zc5zrf9d8bm8";
     name = "opencv-contrib-3.0.0-src";

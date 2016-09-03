@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
   version = "0.9.1-stable";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "Aseman-Land";
     repo = "TelegramQML";
     rev = "v${version}";

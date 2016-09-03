@@ -14,6 +14,7 @@ stdenv.mkDerivation rec {
   name = "libglvnd-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/NVIDIA/libglvnd/archive/v${version}.tar.gz";
     sha256 = "a303021878625568e09712245d3b121788fa4c3ce246b449058ffae55ad40135";
   };

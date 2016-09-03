@@ -7,6 +7,7 @@ self = stdenv.mkDerivation {
   name = "uefi-shell-2016-07-11";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "tianocore";
     repo = "edk2";
     rev = "0f65154396df0cae940b779f715da127c7d0b28f";

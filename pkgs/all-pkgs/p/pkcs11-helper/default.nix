@@ -9,6 +9,7 @@ stdenv.mkDerivation {
   name = "pkcs11-helper-2016-06-11";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "OpenSC";
     repo = "pkcs11-helper";
     rev = "2ccb555deeb22586cf0342e79d6e6142cf95c377";

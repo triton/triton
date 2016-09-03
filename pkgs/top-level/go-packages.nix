@@ -85,6 +85,7 @@ let
         name = name';
         src = let
           src' = fetchFromGitHub {
+    version = 1;
             name = name';
             inherit rev owner repo sha256;
           };
@@ -101,6 +102,7 @@ let
       inherit rev goPackagePath;
       name = name';
       src  = fetchzip {
+    version = 1;
         name = name';
         url = "https://code.googlesource.com/go${repo}/+archive/${rev}.tar.gz";
         inherit sha256;
@@ -1140,6 +1142,7 @@ let
     rev = "75cd24fc2f2c2a2088577d12123ddee5f54e0675";
 
     src = fetchFromBitbucket {
+    version = 1;
       inherit rev;
       owner  = "ww";
       repo   = "goautoneg";

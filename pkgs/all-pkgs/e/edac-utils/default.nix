@@ -12,6 +12,7 @@ stdenv.mkDerivation {
   name = "edac-utils-2015-07-11";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "grondo";
     repo = "edac-utils";
     rev = "556ebce6e1a5a8ad8c07090979a36be7a2276e2e";

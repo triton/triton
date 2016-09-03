@@ -58,6 +58,7 @@ let
     disabled = isLua52;
 
     src = fetchzip {
+    version = 1;
       url = "https://github.com/harningt/luaevent/archive/v${version}.tar.gz";
       sha256 = "1c1n2zqx5rwfwkqaq1jj8gvx1vswvbihj2sy445w28icz1xfhpik";
     };
@@ -110,6 +111,7 @@ let
   luafilesystem = buildLuaPackage rec {
     name = "filesystem-1.6.2";
     src = fetchzip {
+    version = 1;
       url = "https://github.com/keplerproject/luafilesystem/archive/v1_6_2.tar.gz";
       sha256 = "134azkxw84xp9g5qmzjsmcva629jm7plwcmjxkdzdg05vyd7kig1";
     };
@@ -146,6 +148,7 @@ let
   luasec = buildLuaPackage rec {
     name = "sec-0.6pre-2015-04-17";
     src = fetchFromGitHub {
+    version = 1;
       owner = "brunoos";
       repo = "luasec";
       rev = "12e1b1f1d9724974ecc6ca273a0661496d96b3e7";
@@ -194,6 +197,7 @@ let
     name = "zip-${version}";
     version = "1.2.3";
     src = fetchzip {
+    version = 1;
       url = "https://github.com/luaforge/luazip/archive/0b8f5c958e170b1b49f05bc267bc0351ad4dfc44.zip";
       sha256 = "0zrrwhmzny5zbpx91bjbl77gzkvvdi3qhhviliggp0aj8w3faxsr";
     };
@@ -213,6 +217,7 @@ let
     version = "0.4";
 
     src = fetchzip {
+    version = 1;
       url = "https://github.com/brimworks/lua-zlib/archive/v${version}.tar.gz";
       sha256 = "1pgxnjc0gvk25wsr69nsm60y5ad86z1nlq7mzj3ckygzkgi782dd";
     };
@@ -242,6 +247,7 @@ let
   luastdlib = buildLuaPackage {
     name = "stdlib";
     src = fetchzip {
+    version = 1;
       url = "https://github.com/lua-stdlib/lua-stdlib/archive/release.zip";
       sha256 = "0636absdfjx8ybglwydmqxwfwmqz1c4b9s5mhxlgm4ci18lw3hms";
     };
@@ -257,6 +263,7 @@ let
     name = "lrexlib-${version}";
     version = "2.7.2";
     src = fetchzip {
+    version = 1;
       url = "https://github.com/rrthomas/lrexlib/archive/150c251be57c4e569da0f48bf6b01fbca97179fe.zip";
       sha256 = "0acb3258681bjq61piz331r99bdff6cnkjaigq5phg3699iz5h75";
     };
@@ -293,6 +300,7 @@ let
     name = "sqlite3-${version}";
     version = "2.1.1";
     src = fetchzip {
+    version = 1;
       url = "https://github.com/LuaDist/luasql-sqlite3/archive/2acdb6cb256e63e5b5a0ddd72c4639d8c0feb52d.zip";
       sha256 = "17zsa0jzciildil9k4lb0rjn9s1nj80dy16pzx9bxqyi75pjf2d4";
     };
@@ -359,6 +367,7 @@ let
     name = "lua-MessagePack-${version}";
     version = "0.3.1";
     src = fetchzip {
+    version = 1;
       url = "https://github.com/fperrad/lua-MessagePack/archive/${version}.tar.gz";
       sha256 = "1xlif8fkwd8bb78wrvf2z309p7apms350lbg6qavylsvz57lkjm6";
     };
@@ -376,6 +385,7 @@ let
     version = "0.7.2";
 
     src = fetchzip {
+    version = 1;
       url    = "https://github.com/pavouk/lgi/archive/${version}.tar.gz";
       sha256 = "10i2ssfs01d49fdmmriqzxc8pshys4rixhx30wzd9p1m1q47a5pn";
     };
@@ -402,6 +412,7 @@ let
     version = "2.1.3";
 
     src = fetchzip {
+    version = 1;
       url    = "http://git.sysphere.org/vicious/snapshot/vicious-${version}.tar.xz";
       sha256 = "1c901siza5vpcbkgx99g1vkqiki5qgkzx2brnj4wrpbsbfzq0bcq";
     };

@@ -8,6 +8,7 @@ stdenv.mkDerivation {
   name = "ocaml-${pname}-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mjambon/${pname}/archive/v${version}.tar.gz";
     sha256 = "10dvkndgwanvw4agbjln7kgb1n9s6lii7jw82kwxczl5rd1sgmvl";
   };

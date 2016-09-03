@@ -59,6 +59,7 @@ stdenv.mkDerivation rec {
   version = "1.6.0";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "webmproject";
     repo = "libvpx";
     rev = "v${version}";

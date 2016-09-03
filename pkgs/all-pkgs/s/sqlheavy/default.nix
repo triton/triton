@@ -18,6 +18,7 @@ stdenv.mkDerivation rec {
   version = "2015-06-13";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "chlorm-forks";
     repo = "sqlheavy";
     rev = "e83b497a9528e455baf77c9221041d9e600ea972";

@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
   version = "131";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "Cyan4973";
     repo = "lz4";
     rev = "r${version}";

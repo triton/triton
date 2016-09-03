@@ -26,6 +26,7 @@ stdenv.mkDerivation rec {
   name = "qbittorrent-" + version;
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/qbittorrent/qBittorrent/archive/"
       + "release-${version}.tar.gz";
     sha256 = "4dc222e0362765f57b2f9177e8f2f1fd2ecae6c0626b7a5ba6e4b4e0d3886de8";

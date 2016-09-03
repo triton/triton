@@ -7,6 +7,7 @@ let
     name = "filter_audio-20150516";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "irungentoo";
       repo = "filter_audio";
       rev = "612c5a102550c614e4c8f859e753ea64c0b7250c";
@@ -24,6 +25,7 @@ in stdenv.mkDerivation rec {
   name = "utox-dev-20151220";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "GrayHatter";
     repo = "uTox";
     rev = "7e2907470835746b6819d631b48dd54bc9c4de66";

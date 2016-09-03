@@ -44,6 +44,7 @@ stdenv.mkDerivation rec {
   name = "mpv-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mpv-player/mpv/archive/v${version}.tar.gz";
     sha256 = "de18bf3bd6e048ad347822dd3daccaf2366e94fb96750edcdb2e5e56563c0b09";
   };

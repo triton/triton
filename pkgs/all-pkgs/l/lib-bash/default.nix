@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
   name = "lib-bash-2016-07-17";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "chlorm";
     repo = "lib-bash";
     rev = "3dd5796244253b6eb38209bfa5a89ce935c974c5";

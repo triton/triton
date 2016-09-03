@@ -5,6 +5,7 @@ let version = "3.0"; in
 stdenv.mkDerivation {
   name = "ocaml-dolog-${version}";
   src = fetchzip {
+    version = 1;
     url = "https://github.com/UnixJunkie/dolog/archive/v${version}.tar.gz";
     sha256 = "0gx2s4509vkkkaikl2yp7k5x7bqv45s1y1vsy408d8rakd7yl1zb";
   };

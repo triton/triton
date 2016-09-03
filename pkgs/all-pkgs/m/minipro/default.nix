@@ -8,6 +8,7 @@ stdenv.mkDerivation {
   name = "minipro-2016-05-12";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "vdudouyt";
     repo = "minipro";
     rev = "484abde7d924404f5bb30ebc66a80d93b5a65c3e";

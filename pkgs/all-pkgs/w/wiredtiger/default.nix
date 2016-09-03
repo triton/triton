@@ -18,6 +18,7 @@ stdenv.mkDerivation rec {
   version = "2.8.0";
 
   src = fetchFromGitHub {
+    version = 1;
     repo = "wiredtiger";
     owner = "wiredtiger";
     rev = version;

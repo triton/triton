@@ -4,6 +4,7 @@ stdenv.mkDerivation rec {
   name = "bazel-20150326.981b7bc1";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "google";
     repo = "bazel";
     rev = "981b7bc1";

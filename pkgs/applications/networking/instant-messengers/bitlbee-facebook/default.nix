@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   name = "bitlbee-facebook-2015-08-27";
 
   src = fetchFromGitHub {
+    version = 1;
     rev = "094a11b542e2cd8fac4f00fe01870ecd1cb4c062";
     owner = "jgeboski";
     repo = "bitlbee-facebook";

@@ -13,6 +13,7 @@ stdenv.mkDerivation rec {
   name = "syslinux-2016-06-12";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "geneC";
     repo = "syslinux";
     rev = "fa1629d888d6ee6325fb2de346e49cdd76156ba0";

@@ -134,6 +134,7 @@ let
     name = "tessdata-2016-08-03";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "tesseract-ocr";
       repo = "tessdata";
       rev = "3cf1e2df1fe1d1da29295c9ef0983796c7958b7d";
@@ -456,6 +457,7 @@ stdenv.mkDerivation rec {
   version = "3.04.00";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/tesseract-ocr/tesseract/archive/${version}.tar.gz";
     sha256 = "c333c95030740d52cc8ae69b2c7db773ab0fb430d844a6bbea6a52fb130a2381";
   };

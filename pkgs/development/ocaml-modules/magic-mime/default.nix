@@ -6,6 +6,7 @@ stdenv.mkDerivation {
   name = "ocaml-magic-mime-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mirage/ocaml-magic-mime/archive/v${version}.tar.gz";
     sha256 = "058d83hmxd5mjccxdm3ydchmhk2lca5jdg82jg0klsigmf4ida6v";
   };

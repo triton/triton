@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
   version = "1.1.3";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "google";
     repo = "snappy";
     rev = version;

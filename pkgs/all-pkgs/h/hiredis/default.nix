@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
   name = "hiredis-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "redis";
     repo = "hiredis";
     rev = "v${version}";

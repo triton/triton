@@ -132,6 +132,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     version = "1.2.0";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "BlueMountainCapital";
       repo = baseName;
       rev = "v${version}";
@@ -140,6 +141,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
 
     # Enough files from this repo are needed that it will be quicker to just get the entire repo
     fsharpDataSrc = fetchFromGitHub {
+    version = 1;
       owner = "fsharp";
       repo = "FSharp.Data";
       rev = "2.2.3";
@@ -178,6 +180,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     version = "0.32.0";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "Excel-DNA";
       repo = "ExcelDna";
       rev = "10a163843bcc2fb5517f6f3d499e18a8b64df511";
@@ -209,6 +212,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     rev = "69abb1b3528f40dbcf425e13690aaeab5f707bb6";
 
     src = fetchFromGitHub {
+    version = 1;
       inherit rev;
       owner = "Excel-DNA";
       repo = "Registration";
@@ -237,6 +241,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     version = "0.8.46";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "jack-pappas";
       repo = "ExtCore";
       rev = "0269b6d3c479f45abd7aa983aaeca08d07473943";
@@ -271,6 +276,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     version = "0.18.2";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "fsharp";
       repo = "FSharp.AutoComplete";
       rev = version;
@@ -305,6 +311,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     version = "0.0.90";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "fsharp";
       repo = "FSharp.Compiler.Service";
       rev = "a87939ab3f3c571cad79bc3b5f298aa3e180e6b3";
@@ -332,6 +339,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     version = "2.2.3";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "fsharp";
       repo = baseName;
       rev = version;
@@ -440,6 +448,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     outputFiles = [ "bin/*" ];
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "mono";
       repo = "mono-addins";
       rev = "mono-addins-${version}";
@@ -466,6 +475,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
   #   broken = true;
 
   #   src = fetchFromGitHub {
+    version = 1;
   #     owner = "fsharp";
   #     repo = "fsharpbinding";
   #     rev = "a09c8185ebf23fe2f7d22b14b4af2e3268d4f011";
@@ -589,6 +599,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     version = "2.8.5";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "mono";
       repo = "nuget-binary";
       rev = "da1f2102f8172df6f7a1370a4998e3f88b91c047";
@@ -609,6 +620,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     version = "1.18.2";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "fsprojects";
       repo = "Paket";
       rev = version;
@@ -672,6 +684,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     rev = "715a21e5cd3c86310387562618b04e979d0ec9c4";
 
     src = fetchFromGitHub {
+    version = 1;
       inherit rev;
       owner = "kjnilsson";
       repo = "projekt";
@@ -704,6 +717,7 @@ let self = dotnetPackages // overrides; dotnetPackages = with self; {
     version = "0.8.7";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "nessos";
       repo = "UnionArgParser";
       rev = "acaeb946e53cbb0bd9768977c656b3242146070a";

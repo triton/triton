@@ -218,6 +218,7 @@ buildPythonPackage rec {
   name = "beets-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "sampsyo";
     repo = "beets";
     rev = "27f48eff0f0d9934c8f7ba69f3e504d1c732dc83";

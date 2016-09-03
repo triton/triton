@@ -12,6 +12,7 @@ stdenv.mkDerivation rec {
   name = "libuv-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "libuv";
     repo = "libuv";
     rev = "v${version}";

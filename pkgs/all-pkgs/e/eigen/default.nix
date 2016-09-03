@@ -14,6 +14,7 @@ stdenv.mkDerivation rec {
   name = "eigen-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://bitbucket.org/eigen/eigen/get/${version}.tar.bz2";
     sha256 = "d8e1576145d707f9b1094ccd2f6212bf7451aa38f9dcb49c3175cf2c8951324c";
   };

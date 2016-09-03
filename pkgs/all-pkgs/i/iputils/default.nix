@@ -15,6 +15,7 @@ stdenv.mkDerivation rec {
   name = "iputils-2016-08-04";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "iputils";
     repo = "iputils";
     rev = "3c7b5f7177b62245babe42e1e5b572865186ab7b";

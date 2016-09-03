@@ -11,6 +11,7 @@ buildPythonPackage rec {
   version = "0.8.2";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "geigerzaehler";
     repo = "beets-alternatives";
     rev = "v${version}";

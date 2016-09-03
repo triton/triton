@@ -9,6 +9,7 @@ stdenv.mkDerivation {
   name = "http-parser-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "nodejs";
     repo = "http-parser";
     rev = "v${version}";

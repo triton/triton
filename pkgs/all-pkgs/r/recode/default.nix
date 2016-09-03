@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
   name = "recode-2014-02-02";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "pinard";
     repo = "Recode";
     rev = "2d7092a9999194fc0e9449717a8048c8d8e26c18";

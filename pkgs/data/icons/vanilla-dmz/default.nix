@@ -4,6 +4,7 @@ stdenv.mkDerivation rec {
   name = "vanilla-dmz-${version}";
   version = "0.4.4";
   src = fetchzip {
+    version = 1;
     url = "http://ftp.de.debian.org/debian/pool/main/d/dmz-cursor-theme/dmz-cursor-theme_${version}.tar.gz";
     sha256 = "1l0c0svk7dy0d7icg7j2181wdn3fvks5gmyqnvjk749ppy5ks8mj";
   };

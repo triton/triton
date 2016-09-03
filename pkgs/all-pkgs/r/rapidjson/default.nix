@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
   version = "1.0.2";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "miloyip";
     repo = "rapidjson";
     rev = "v${version}";

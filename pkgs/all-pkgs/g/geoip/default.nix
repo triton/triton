@@ -8,6 +8,7 @@ stdenv.mkDerivation rec {
   version = "1.6.9";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "maxmind";
     repo = "geoip-api-c";
     rev = "v${version}";

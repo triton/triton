@@ -8504,6 +8504,7 @@ let self = _self // overrides; _self = with self; {
   NetAmazonEC2 = buildPerlPackage rec {
     name = "Net-Amazon-EC2-0.14-stanaka-bc66577e13";
     src = fetchFromGitHub {
+    version = 1;
       owner = "stanaka";
       repo = "net-amazon-ec2";
       rev = "bc66577e1312e828e252937d95f9f5f637af6a0b";

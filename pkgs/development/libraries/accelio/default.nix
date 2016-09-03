@@ -17,6 +17,7 @@ stdenv.mkDerivation rec {
   name = "accelio-${version}${stdenv.lib.optionalString (kernel != null) "-kernel"}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "accelio";
     repo = "accelio";
     rev = "v${version}";

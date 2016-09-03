@@ -189,6 +189,7 @@ let
 
     # TODO: Remove fetchgit as it requires git
     /*src = fetchFromGitHub {
+    version = 1;
       owner = "mumble-voip";
       repo = "mumble";
       rev = "13e494c60beb20748eeb8be126b27e1226d168c8";
@@ -196,6 +197,7 @@ let
     };
 
     theme = fetchFromGitHub {
+    version = 1;
       owner = "mumble-voip";
       repo = "mumble-theme";
       rev = "16b61d958f131ca85ab0f601d7331601b63d8f30";

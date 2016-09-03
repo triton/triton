@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   version = "2.010";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "adobe-fonts";
     repo = "source-code-pro";
     rev = "2.010R-ro/1.030R-it";

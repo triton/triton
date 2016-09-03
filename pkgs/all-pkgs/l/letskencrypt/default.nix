@@ -9,6 +9,7 @@ stdenv.mkDerivation {
   name = "letskencrypt-2016-08-22";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "kristapsdz";
     repo = "letskencrypt-portable";
     rev = "ec55b5616bbeef9388fe5a2a557b319c6653a763";

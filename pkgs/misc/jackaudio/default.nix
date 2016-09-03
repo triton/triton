@@ -20,6 +20,7 @@ stdenv.mkDerivation rec {
   version = "1.9.10";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "jackaudio";
     repo = "jack2";
     rev = "v${version}";

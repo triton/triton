@@ -10,6 +10,7 @@ buildPythonPackage {
   name = "unpaddedbase64-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "matrix-org";
     repo = "python-unpaddedbase64";
     rev = "v${version}";

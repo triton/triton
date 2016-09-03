@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
   version = "2.1.2";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "gflags";
     repo = "gflags";
     rev = "v${version}";

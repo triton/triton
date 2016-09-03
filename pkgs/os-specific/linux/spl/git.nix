@@ -4,6 +4,7 @@ callPackage ./generic.nix (args // rec {
   version = "2016-08-19";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "zfsonlinux";
     repo = "spl";
     rev = "aeb9baa618beea1458ab3ab22cbc0f39213da6cf";

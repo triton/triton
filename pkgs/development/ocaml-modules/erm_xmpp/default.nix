@@ -12,6 +12,7 @@ stdenv.mkDerivation {
   name = "ocaml-erm_xmpp-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/ermine/xmpp/archive/v${version}.tar.gz";
     sha256 = "0saw2dmrzv2aadrznvyvchnhivvcwm78x9nwf6flq5v0pqddapk2";
   };

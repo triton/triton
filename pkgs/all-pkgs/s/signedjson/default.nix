@@ -14,6 +14,7 @@ buildPythonPackage {
   name = "signedjson-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "matrix-org";
     repo = "python-signedjson";
     rev = "v${version}";

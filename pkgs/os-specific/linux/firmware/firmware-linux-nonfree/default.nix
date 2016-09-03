@@ -14,6 +14,7 @@ stdenv.mkDerivation rec {
   # the usual set of firmware. firmware/linux-firmware usually lags kernel releases
   # so iwlwifi cards will fail to load on newly released kernels.
   src = fetchFromGitHub {
+    version = 1;
     owner = "wkennington";
     repo = "linux-firmware";
     rev = "70a3c2adcce7c51e4f26e929d666237904f6fd31";

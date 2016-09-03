@@ -16,6 +16,7 @@ stdenv.mkDerivation rec {
   name = "libvdpau-va-gl-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "i-rinat";
     repo = "libvdpau-va-gl";
     rev = "v" + version;

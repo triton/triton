@@ -5,6 +5,7 @@ let version = "0.7"; in
 stdenv.mkDerivation {
   name = "ocsigen-deriving-${version}";
   src = fetchzip {
+    version = 1;
     url = "https://github.com/ocsigen/deriving/archive/${version}.tar.gz";
     sha256 = "05z606gly1iyan292x3mflg3zasgg68n8i2mivz0zbshx2hz2jbw";
     };

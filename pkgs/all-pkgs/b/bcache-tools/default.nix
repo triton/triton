@@ -37,6 +37,7 @@ stdenv.mkDerivation {
   name = "bcache-tools-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "wkennington";
     repo = "bcache-tools";
     inherit rev sha256;

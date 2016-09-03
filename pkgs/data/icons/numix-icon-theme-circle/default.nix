@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ unzip ];
   
   src = fetchFromGitHub {
+    version = 1;
     owner = "numixproject";
     repo = package-name;
     rev = version;

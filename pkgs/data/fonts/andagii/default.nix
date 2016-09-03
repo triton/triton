@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   version = "1.0.2";
 
   src = fetchzip {
+    version = 1;
     url = http://www.i18nguy.com/unicode/andagii.zip;
     sha256 = "0a0c43y1fd5ksj50axhng7p00kgga0i15p136g68p35wj7kh5g2k";
     stripRoot = false;

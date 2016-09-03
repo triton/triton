@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   version = "1.0.3";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "GoogleCloudPlatform";
     repo = "kubernetes";
     rev = "v${version}";

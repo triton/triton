@@ -6,6 +6,7 @@ stdenv.mkDerivation {
   name = "ocaml-io-page-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mirage/io-page/archive/v${version}.tar.gz";
     sha256 = "0y92wbvi129d0i7wr4lpk1ps9l247zaf1ibqqz0i6spgl28dyq79";
   };

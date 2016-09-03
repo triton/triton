@@ -15,6 +15,7 @@ stdenv.mkDerivation rec {
   name = "mfx_dispatch-2016-03-17";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "lu-zero";
     repo = "mfx_dispatch";
     rev = "7adf2e463149adf6820de745a4d9e5d9a1ba8763";

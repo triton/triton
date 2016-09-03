@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   name = "bitlbee-steam-2015-09-10";
 
   src = fetchFromGitHub {
+    version = 1;
     rev = "011375b2d3c67c15d51ca203de0ecaab3b4b7587";
     owner = "jgeboski";
     repo = "bitlbee-steam";

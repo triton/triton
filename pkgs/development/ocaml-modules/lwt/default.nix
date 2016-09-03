@@ -12,6 +12,7 @@ stdenv.mkDerivation {
   name = "ocaml-lwt-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/ocsigen/lwt/archive/${version}.tar.gz";
     sha256 = "0jgg51aqbnia33l7bhgirnfpqybjwzpd85qzzd9znnc1a27gv8vr";
   };

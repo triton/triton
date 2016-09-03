@@ -10,6 +10,7 @@ stdenv.mkDerivation {
   name = "hidapi-2016-03-03";
   
   src = fetchFromGitHub {
+    version = 1;
     owner = "signal11";
     repo = "hidapi";
     rev = "b5b2e1779b6cd2edda3066bbbf0921a2d6b1c3c0";

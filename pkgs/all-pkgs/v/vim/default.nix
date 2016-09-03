@@ -24,6 +24,7 @@ stdenv.mkDerivation rec {
   name = "vim-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "vim";
     repo = "vim";
     rev = "v${version}";

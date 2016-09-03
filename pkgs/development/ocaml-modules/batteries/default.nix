@@ -6,6 +6,7 @@ stdenv.mkDerivation {
   name = "ocaml-batteries-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/ocaml-batteries-team/batteries-included/archive/v${version}.tar.gz";
     sha256 = "0bxp5d05w1igwh9vcgvhd8sd6swf2ddsjphw0mkakdck9afnimmd";
   };

@@ -9,6 +9,7 @@ buildPythonPackage rec {
   version = "0.1.1";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "agrausem";
     repo = "beets-artistcountry";
     rev = "${version}";

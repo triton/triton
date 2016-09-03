@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
   version = "5.02";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "mtoyoda";
     repo = "sl";
     rev = version;

@@ -5,6 +5,7 @@ stdenv.mkDerivation {
   name = "gale-1.1happy";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "grawity";
     repo = "gale";
     rev = "b34a67288e8bd6f0b51b60abb704858172a3665c";

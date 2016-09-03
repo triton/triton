@@ -16,6 +16,7 @@ stdenv.mkDerivation {
   name = "systemd-dist-v231-10-gb6932fc";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "triton";
     repo = "systemd";
     rev = "ca0a4ad1275b9a0aa104db025804bddbf334daf2";

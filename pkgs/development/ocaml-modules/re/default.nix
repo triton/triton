@@ -4,6 +4,7 @@ stdenv.mkDerivation rec {
   name = "ocaml-re-1.4.1";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/ocaml/ocaml-re/archive/${name}.tar.gz";
     sha256 = "1wmfgazydd20hc796zisqpmsw0sb5lv9g3x77ckmf50v3z8hyhvk";
   };

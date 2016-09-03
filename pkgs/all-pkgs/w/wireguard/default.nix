@@ -17,6 +17,7 @@ stdenv.mkDerivation {
   name = "wireguard-${date}";
 
   src = fetchzip {
+    version = 1;
     url = "https://git.zx2c4.com/WireGuard/snapshot/WireGuard-${rev}.tar.xz";
     sha256 = "52431e4a578347f0d47e337cb880a058fa96765fa750adbfb876377ea4f0ac3e";
   };

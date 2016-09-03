@@ -8,6 +8,7 @@ stdenv.mkDerivation rec {
   version = "4.0";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "ndevilla";
     repo = "iniparser";
     rev = "v${version}";

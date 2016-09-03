@@ -6,6 +6,7 @@ stdenv.mkDerivation rec {
   name = "vulkan-headers-1.0.25";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "KhronosGroup";
     repo = "Vulkan-Docs";
     rev = "85184f305afe0f2e9e99cc9525e8ce25c32e74e0";

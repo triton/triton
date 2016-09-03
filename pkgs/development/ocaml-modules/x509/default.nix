@@ -6,6 +6,7 @@ stdenv.mkDerivation {
   name = "ocaml-x509-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mirleft/ocaml-x509/archive/${version}.tar.gz";
     sha256 = "0i9618ph4i2yk5dvvhiqhm7wf3qmd6b795mxwff8jf856gb2gdyn";
   };

@@ -15,6 +15,7 @@ stdenv.mkDerivation rec {
   version = "3.6.2";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "zeroc-ice";
     repo = "ice";
     rev = "v${version}";

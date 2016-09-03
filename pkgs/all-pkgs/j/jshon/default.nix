@@ -8,6 +8,7 @@ stdenv.mkDerivation {
   name = "jshon-2016-01-16";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "keenerd";
     repo = "jshon";
     rev = "783d3bff938ebe15ce36d60a845bdc742e9555dd";

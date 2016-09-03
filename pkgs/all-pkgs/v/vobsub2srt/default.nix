@@ -12,6 +12,7 @@ stdenv.mkDerivation rec {
   version = "2016-05-21";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "ruediger";
     repo = "VobSub2SRT";
     rev = "04bd6c98a1b326a77ba2abd5b4f1c003535a4a28";

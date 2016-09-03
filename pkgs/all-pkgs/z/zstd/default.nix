@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
   name = "zstd-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "Cyan4973";
     repo = "zstd";
     rev = "v${version}";

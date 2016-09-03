@@ -27,6 +27,7 @@ stdenv.mkDerivation rec {
   version = "2016-03-10";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "rakshasa";
     repo = "rtorrent";
     rev = "9abcea84c7f7594ef9cc99f151467cf8b718a9c0";

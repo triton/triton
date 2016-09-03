@@ -19,6 +19,7 @@ let
     name = "vorbis-tools-debian-patches-${debian-patches-version}";
 
     src = fetchzip {
+    version = 1;
       url = "mirror://debian/pool/main/v/vorbis-tools/vorbis-tools_${debian-patches-version}.debian.tar.xz";
       sha256 = "4310190197e98011a6190d640c905d15561dce269dd5c75b22a4416c5494fa6f";
     };

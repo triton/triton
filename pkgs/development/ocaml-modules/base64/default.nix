@@ -6,6 +6,7 @@ stdenv.mkDerivation {
   name = "ocaml-base64-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mirage/ocaml-base64/archive/v${version}.tar.gz";
     sha256 = "1nv55gwq5vaxmrcz9ja2s165b1p9fhcxszc1l76043gpa56qm4fs";
   };

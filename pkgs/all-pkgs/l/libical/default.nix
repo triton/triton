@@ -12,6 +12,7 @@ stdenv.mkDerivation rec {
   version = "2.0.0";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "libical";
     repo = "libical";
     rev = "v${version}";

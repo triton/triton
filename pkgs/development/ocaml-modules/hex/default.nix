@@ -6,6 +6,7 @@ stdenv.mkDerivation {
   name = "ocaml-hex-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mirage/ocaml-hex/archive/${version}.tar.gz";
     sha256 = "0g4cq4bsksga15fa5ln083gkglawknbnhi2s4k8yk0yi5xngvwm4";
   };

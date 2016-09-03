@@ -6,6 +6,7 @@ stdenv.mkDerivation {
   name = "ocaml-ocplib-endian-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/OCamlPro/ocplib-endian/archive/${version}.tar.gz";
     sha256 = "12xjvzw245mj4s02dgi4k2sx5gam7wxi4mbxmz6k18zg64n48yjd";
   };

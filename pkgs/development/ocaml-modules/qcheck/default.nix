@@ -6,6 +6,7 @@ stdenv.mkDerivation {
 
   name = "ocaml-qcheck-0.4.0.1";
   src = fetchzip {
+    version = 1;
     url = https://github.com/c-cube/qcheck/archive/0.4.0.1.tar.gz;
     sha256 = "0j2jdrfz8rrslgjihnfgg8yy12860z2vvf7hqzjbmfmf03hz4pgv";
   };

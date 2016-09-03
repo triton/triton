@@ -6,6 +6,7 @@ stdenv.mkDerivation rec {
   name = "hwdata-0.291";
 
   src = fetchzip {
+    version = 1;
     url = "https://git.fedorahosted.org/cgit/hwdata.git/snapshot/${name}.tar.xz";
     multihash = "QmVK9tFW7bpf1uTHLWdRiTrQ1KqVGrjQvsy5NUiZLPGhXm";
     sha256 = "5595cd3ba209c01a51514f5604fcb7f93146a8ea4e7f686b63a157377a021c83";

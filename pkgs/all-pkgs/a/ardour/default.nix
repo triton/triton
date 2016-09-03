@@ -21,6 +21,7 @@ stdenv.mkDerivation rec {
   name = "ardour-${tag}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "Ardour";
     repo = "ardour";
     rev = "b00d75adf63db155ef2873bd9d259dc8ca256be6";

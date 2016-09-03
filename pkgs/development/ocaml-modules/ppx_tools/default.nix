@@ -3,6 +3,7 @@
 stdenv.mkDerivation {
   name = "ocaml-ppx_tools-0.99.2";
   src = fetchzip {
+    version = 1;
     url = https://github.com/alainfrisch/ppx_tools/archive/ppx_tools_0.99.2.tar.gz;
     sha256 = "1m09r2sjcb37i4dyhpbk9n2wxkcvpib6bvairsird91fm9w0vqw7";
   };

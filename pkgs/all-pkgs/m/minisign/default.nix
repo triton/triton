@@ -13,6 +13,7 @@ stdenv.mkDerivation rec {
   name = "minisign-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "jedisct1";
     repo = "minisign";
     rev = version;

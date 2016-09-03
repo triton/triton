@@ -12,6 +12,7 @@ stdenv.mkDerivation rec {
   version = "1.3.1";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "anholt";
     repo = "libepoxy";
     rev = "v${version}";

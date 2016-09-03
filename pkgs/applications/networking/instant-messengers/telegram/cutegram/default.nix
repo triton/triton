@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
   version = "2.7.0-stable";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "Aseman-Land";
     repo = "Cutegram";
     rev = "v${version}";

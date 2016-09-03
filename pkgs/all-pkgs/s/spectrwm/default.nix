@@ -13,6 +13,7 @@ stdenv.mkDerivation rec {
   name = "spectrwm-2016-06-26";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "conformal";
     repo = "spectrwm";
     rev = "9d338b286b1a2a240f92070bf1e95dc6f4c27bea";

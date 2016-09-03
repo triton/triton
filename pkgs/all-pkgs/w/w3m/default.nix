@@ -25,6 +25,7 @@ stdenv.mkDerivation rec {
   name = "w3m-0.5.3-2016-06-20";
 
   src = fetchzip {
+    version = 1;
     inherit name;
     url = "http://anonscm.debian.org/cgit/collab-maint/w3m.git/snapshot/"
         + "537e574131535e7f1c738780c693ba356da1d707.tar.xz";
@@ -85,6 +86,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     srcVerification = fetchzip {
+    version = 1;
       inherit name;
       inherit (src) urls outputHash outputHashAlgo;
       insecureHashOutput = true;

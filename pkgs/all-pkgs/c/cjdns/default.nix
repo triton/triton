@@ -14,6 +14,7 @@ stdenv.mkDerivation {
   name = "cjdns-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "cjdelisle";
     repo = "cjdns";
     rev = "cjdns-v${version}";

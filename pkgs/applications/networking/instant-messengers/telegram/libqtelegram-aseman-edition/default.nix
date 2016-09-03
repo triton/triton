@@ -6,6 +6,7 @@ stdenv.mkDerivation rec {
   version = "6.0";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "Aseman-Land";
     repo = "libqtelegram-aseman-edition";
     rev = "v${version}";

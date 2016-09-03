@@ -5,6 +5,7 @@ buildOcaml rec {
   version = "0.4.5";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mirage/alcotest/archive/${version}.tar.gz";
     sha256 = "1wcn9hkjf4cbnrz99w940qfjpi0lvd8v63yxwpnafkff871dwk6k";
   };

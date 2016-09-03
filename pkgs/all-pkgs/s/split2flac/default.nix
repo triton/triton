@@ -28,6 +28,7 @@ stdenv.mkDerivation rec {
   version = "122";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "ftrvxmtrx";
     repo = "split2flac";
     rev = version;

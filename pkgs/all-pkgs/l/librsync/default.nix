@@ -14,6 +14,7 @@ stdenv.mkDerivation rec {
   version = "2.0.0";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "librsync";
     repo = "librsync";
     rev = "v${version}";

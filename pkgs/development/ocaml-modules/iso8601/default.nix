@@ -5,6 +5,7 @@ let version = "0.2.4"; in
 stdenv.mkDerivation {
   name = "ocaml-iso8601-${version}";
   src = fetchzip {
+    version = 1;
     url = "https://github.com/sagotch/ISO8601.ml/archive/${version}.tar.gz";
     sha256 = "0ypdd1p04xdjxxx3b61wp7abswfrq3vcvwwaxvywxwqljw0dhydi";
   };

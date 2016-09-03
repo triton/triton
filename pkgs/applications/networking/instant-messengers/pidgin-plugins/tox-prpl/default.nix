@@ -8,6 +8,7 @@ stdenv.mkDerivation rec {
   name = "tox-prpl-${date}-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "jin-eld";
     repo = "tox-prpl";
     rev = "${version}";

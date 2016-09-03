@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
   version = "1.7.4";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "open-source-parsers";
     repo = "jsoncpp";
     rev = version;

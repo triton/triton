@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
   name = "squashfs-4.4dev";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "plougher";
     repo = "squashfs-tools";
     rev = "9c1db6d13a51a2e009f0027ef336ce03624eac0d";

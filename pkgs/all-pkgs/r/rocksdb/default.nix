@@ -19,6 +19,7 @@ stdenv.mkDerivation rec {
   name = "rocksdb-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "facebook";
     repo = "rocksdb";
     rev = "v${version}";

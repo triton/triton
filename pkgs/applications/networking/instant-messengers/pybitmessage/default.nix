@@ -6,6 +6,7 @@ stdenv.mkDerivation rec {
   version = "0.4.4";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "bitmessage";
     repo = "PyBitmessage";
     rev = "v${version}";

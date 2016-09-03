@@ -25,6 +25,7 @@ buildPythonPackage rec {
   version = "0.8.1";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "certbot";
     repo = "certbot";
     rev = "v${version}";

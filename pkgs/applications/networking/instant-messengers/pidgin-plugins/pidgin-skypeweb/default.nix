@@ -8,6 +8,7 @@ stdenv.mkDerivation rec {
   name = "pidgin-skypeweb-${date}-${rev}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "EionRobb";
     repo = "skype4pidgin";
     rev = "${rev}";

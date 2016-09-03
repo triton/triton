@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
   version = "0.3.1";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "BlueDragonX";
     repo = "xf86-input-mtrack";
     rev = "v${version}";

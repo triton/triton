@@ -4,6 +4,7 @@ rec {
   noto-fonts = let version = "git-2015-09-08"; in stdenv.mkDerivation {
     name = "noto-fonts-${version}";
     src = fetchFromGitHub {
+    version = 1;
       owner = "googlei18n";
       repo = "noto-fonts";
       rev = "9d677e7e47a13f6e88052833277783fe4f27671f";
@@ -90,6 +91,7 @@ rec {
     name = "noto-fonts-emoji-${version}";
 
     src = fetchFromGitHub {
+    version = 1;
       owner = "googlei18n";
       repo = "noto-emoji";
       rev = "ffd7cfd0c84b7bf37210d0908ac94adfe3259ff2";

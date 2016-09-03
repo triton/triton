@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
   version = "0.9.18";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "LMDB";
     repo = "lmdb";
     rev = "LMDB_${version}";

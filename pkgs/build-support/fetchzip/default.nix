@@ -19,8 +19,10 @@
 , url ? null
 , urls ? []
 , extraPostFetch ? ""
-, version ? 1  # TODO: Remove the default value and provide a meaningful error
+, version ? null
 , ... } @ args:
+
+assert version != null || throw "Missing fetchzip version. The latest version is 2.";
 
 let
   removeTarZip = l:
@@ -113,6 +115,6 @@ lib.overrideDerivation (fetchurl (rec {
     du -bhs "$out"
     cp "$out" "$TMPDIR/${name}"
   '';
-} // removeAttrs args [ "name" "purgeTimestamps" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))
+} // removeAttrs args [ "name" "version" "purgeTimestamps" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))
 # Hackety-hack: we actually need unzip hooks, too
 (x: {nativeBuildInputs = x.nativeBuildInputs++ [unzip];})

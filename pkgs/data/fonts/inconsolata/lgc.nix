@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   version = "git-2015-04-18";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "MihailJP";
     repo = "Inconsolata-LGC";
     rev = "30bbc1bd82502bf76f1cc5553f17388da2ba20e7";

@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   version = "4.2.2-1";
   
   src = fetchFromGitHub {
+    version = 1;
     owner = "csssuf";
     repo = "rtl8812au";
     rev = "874906aec694c800bfc29b146737b88dae767832";

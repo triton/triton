@@ -3,6 +3,7 @@
 stdenv.mkDerivation {
   name = "ocaml-macaque-0.7.2";
   src = fetchzip {
+    version = 1;
     url = https://github.com/ocsigen/macaque/archive/0.7.2.tar.gz;
     sha256 = "14i0a8cndzndjmlkyhf31r451q99cnkndgxcj0id4qjqhdl4bmjv";
   };

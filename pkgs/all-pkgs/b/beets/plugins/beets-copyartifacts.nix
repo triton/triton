@@ -9,6 +9,7 @@ buildPythonPackage rec {
   version = "2015-12-12";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "sbarakat";
     repo = "beets-copyartifacts";
     rev = "dac4a1605111e24bb5b498aa84cead7c87480834";

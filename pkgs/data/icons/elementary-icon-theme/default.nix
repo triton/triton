@@ -8,6 +8,7 @@ stdenv.mkDerivation rec {
   name = "${package-name}-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://launchpad.net/elementaryicons/3.x/${version}/+download/elementary-icon-theme-${version}.tar.xz";
     sha256 = "0b6sgvkzc5h9zm3la6f0ngs9pfjrsj318qcynxd3yydb50cd3hnf";
   };

@@ -13,6 +13,7 @@ buildPythonPackage {
   name = "canonicaljson-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "matrix-org";
     repo = "python-canonicaljson";
     rev = "v${version}";

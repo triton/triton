@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   version = "0.016";
 
   src = fetchzip {
+    version = 1;
     url = "https://bitbucket.org/georgd/eb-garamond/downloads/EBGaramond-${version}.zip";
     sha256 = "0j40bg1di39q7zis64il67xchldyznrl8wij9il10c4wr8nl4r9z";
   };

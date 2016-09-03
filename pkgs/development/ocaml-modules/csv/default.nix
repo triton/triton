@@ -5,6 +5,7 @@ stdenv.mkDerivation {
   name = "ocaml-csv-1.4.2";
 
   src = fetchzip {
+    version = 1;
     url = https://github.com/Chris00/ocaml-csv/releases/download/1.4.2/csv-1.4.2.tar.gz;
     sha256 = "05s8py2qr3889c72g1q07r15pzch3j66xdphxi2sd93h5lvnpi4j";
   };

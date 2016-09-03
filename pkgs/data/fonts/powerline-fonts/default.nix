@@ -4,6 +4,7 @@ stdenv.mkDerivation {
   name = "powerline-fonts-2015-12-11";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "powerline";
     repo = "fonts";
     rev = "a44abd0e742ad6e7fd8d8bc4c3cad5155c9f3a92";

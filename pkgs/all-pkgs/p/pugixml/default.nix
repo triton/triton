@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
   version = "1.7";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "zeux";
     repo = "pugixml";
     rev = "v${version}";

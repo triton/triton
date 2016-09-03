@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
   name = "gperftools-2.5";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "gperftools";
     repo = "gperftools";
     rev = name;

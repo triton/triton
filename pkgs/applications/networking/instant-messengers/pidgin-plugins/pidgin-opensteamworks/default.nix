@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   version = "1.6.1";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "EionRobb";
     repo = "pidgin-opensteamworks";
     rev = "${version}";

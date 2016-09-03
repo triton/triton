@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
   name = "yaml-cpp-0.5.3";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "jbeder";
     repo = "yaml-cpp";
     rev = name;

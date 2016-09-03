@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
   #   http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
   #   http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml
   src = fetchFromGitHub {
+    version = 1;
     owner = "wkennington";
     repo = "iana-etc";
     rev = "98262ed1f255e8eb454148e79d51cf5a1de9a4e3";

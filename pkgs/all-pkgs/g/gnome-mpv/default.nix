@@ -34,6 +34,7 @@ stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "gnome-mpv";
     repo = "gnome-mpv";
     rev = "2b96f085038eadb45d57f122048d4c54a32fab5f";

@@ -11,6 +11,7 @@ stdenv.mkDerivation {
   name = "libclc-2016-02-09";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "llvm-mirror";
     repo = "libclc";
     rev = "b518692b52a0bbdf9cf0e2167b9629dd9501abcd";

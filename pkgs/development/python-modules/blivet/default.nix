@@ -11,6 +11,7 @@ in buildPythonPackage rec {
   version = "0.67";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "dwlehman";
     repo = "blivet";
     rev = name;

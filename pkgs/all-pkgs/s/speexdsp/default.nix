@@ -18,6 +18,7 @@ stdenv.mkDerivation rec {
   name = "speexdsp-2016-08-09";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "xiph";
     repo = "speexdsp";
     # Upstream has not tagged a release since 2014

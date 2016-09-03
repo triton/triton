@@ -8,6 +8,7 @@ stdenv.mkDerivation rec {
   name = "${package-name}-20160120-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "numixproject";
     repo = package-name;
     rev = version;

@@ -11,6 +11,7 @@ stdenv.mkDerivation {
   name = "ocaml-nocrypto-${version}";
 
   src = fetchzip {
+    version = 1;
     url = "https://github.com/mirleft/ocaml-nocrypto/archive/${version}.tar.gz";
     sha256 = "15gffvixk12ghsfra9amfszd473c8h188zfj03ngvblbdm0d80m0";
   };

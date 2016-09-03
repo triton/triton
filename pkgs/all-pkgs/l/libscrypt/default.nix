@@ -9,6 +9,7 @@ stdenv.mkDerivation {
   name = "libscrypt-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "technion";
     repo = "libscrypt";
     rev = "v${version}";

@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   version = "2.2";
 
   src = fetchzip {
+    version = 1;
     stripRoot = false;
     url = "https://github.com/akryukov/oldstand/releases/download/v${version}/${name}.otf.zip";
     sha256 = "1hl78jw5szdjq9dhbcv2ln75wpp2lzcxrnfc36z35v5wk4l7jc3h";

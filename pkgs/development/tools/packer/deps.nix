@@ -6,6 +6,7 @@ let
     {
       root = "github.com/mitchellh/packer";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "packer";
         rev = "f8f7b7a34c1be06058f5aca23a51247db12cdbc5";
@@ -15,6 +16,7 @@ let
     {
       root = "github.com/mitchellh/gox";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "gox";
         rev = "ef1967b9f538fe467e6a82fc42ec5dff966ad4ea";
@@ -24,6 +26,7 @@ let
     {
       root = "github.com/mitchellh/iochan";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "iochan";
         rev = "87b45ffd0e9581375c491fef3d32130bb15c5bd7";
@@ -33,6 +36,7 @@ let
     {
       root = "github.com/hashicorp/atlas-go";
       src = fetchFromGitHub {
+    version = 1;
         owner = "hashicorp";
         repo = "atlas-go";
         rev = "d1d08e8e25f0659388ede7bb8157aaa4895f5347";
@@ -42,6 +46,7 @@ let
     {
       root = "github.com/hashicorp/go-checkpoint";
       src = fetchFromGitHub {
+    version = 1;
         owner = "hashicorp";
         repo = "go-checkpoint";
         rev = "88326f6851319068e7b34981032128c0b1a6524d";
@@ -51,6 +56,7 @@ let
     {
       root = "github.com/hashicorp/go-msgpack";
       src = fetchFromGitHub {
+    version = 1;
         owner = "hashicorp";
         repo = "go-msgpack";
         rev = "fa3f63826f7c23912c15263591e65d54d080b458";
@@ -60,6 +66,7 @@ let
     {
       root = "github.com/hashicorp/go-multierror";
       src = fetchFromGitHub {
+    version = 1;
         owner = "hashicorp";
         repo = "go-multierror";
         rev = "56912fb08d85084aa318edcf2bba735b97cf35c5";
@@ -69,6 +76,7 @@ let
     {
       root = "github.com/hashicorp/go-version";
       src = fetchFromGitHub {
+    version = 1;
         owner = "hashicorp";
         repo = "go-version";
         rev = "999359b6b7a041ce16e695d51e92145b83f01087";
@@ -78,6 +86,7 @@ let
     {
       root = "github.com/hashicorp/yamux";
       src = fetchFromGitHub {
+    version = 1;
         owner = "hashicorp";
         repo = "yamux";
         rev = "ae139c4ae7fe21e9d99459d2acc57967cebb6918";
@@ -87,6 +96,7 @@ let
     {
       root = "github.com/mitchellh/cli";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "cli";
         rev = "8102d0ed5ea2709ade1243798785888175f6e415";
@@ -96,6 +106,7 @@ let
     {
       root = "github.com/mitchellh/mapstructure";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "mapstructure";
         rev = "281073eb9eb092240d33ef253c404f1cca550309";
@@ -105,6 +116,7 @@ let
     {
       root = "github.com/mitchellh/osext";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "osext";
         rev = "0dd3f918b21bec95ace9dc86c7e70266cfc5c702";
@@ -114,6 +126,7 @@ let
     {
       root = "github.com/mitchellh/panicwrap";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "panicwrap";
         rev = "45cbfd3bae250c7676c077fb275be1a2968e066a";
@@ -123,6 +136,7 @@ let
     {
       root = "github.com/mitchellh/prefixedio";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "prefixedio";
         rev = "89d9b535996bf0a185f85b59578f2e245f9e1724";
@@ -132,6 +146,7 @@ let
     {
       root = "github.com/mitchellh/reflectwalk";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "reflectwalk";
         rev = "eecf4c70c626c7cfbb95c90195bc34d386c74ac6";
@@ -141,6 +156,7 @@ let
     {
       root = "github.com/mitchellh/go-fs";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "go-fs";
         rev = "a34c1b9334e86165685a9449b782f20465eb8c69";
@@ -150,6 +166,7 @@ let
     {
       root = "github.com/mitchellh/goamz";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "goamz";
         rev = "caaaea8b30ee15616494ee68abd5d8ebbbef05cf";
@@ -159,6 +176,7 @@ let
     {
       root = "github.com/mitchellh/multistep";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "multistep";
         rev = "162146fc57112954184d90266f4733e900ed05a5";
@@ -168,6 +186,7 @@ let
     {
       root = "github.com/ActiveState/tail";
       src = fetchFromGitHub {
+    version = 1;
         owner = "ActiveState";
         repo = "tail";
         rev = "4b368d1590196ade29993d6a0896591403180bbd";
@@ -225,6 +244,7 @@ let
     {
       root = "github.com/golang/protobuf";
       src = fetchFromGitHub {
+    version = 1;
         owner = "golang";
         repo = "protobuf";
         rev = "59b73b37c1e45995477aae817e4a653c89a858db";
@@ -234,6 +254,7 @@ let
     {
       root = "github.com/mitchellh/gophercloud-fork-40444fb";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "gophercloud-fork-40444fb";
         rev = "40444fbc2b10960682b34e6822eb9179216e1ae1";
@@ -243,6 +264,7 @@ let
     {
       root = "github.com/racker/perigee";
       src = fetchFromGitHub {
+    version = 1;
         owner = "racker";
         repo = "perigee";
         rev = "44a7879d89b7040bcdb51164a83292ef5bf9deec";
@@ -252,6 +274,7 @@ let
     {
       root = "github.com/going/toolkit";
       src = fetchFromGitHub {
+    version = 1;
         owner = "going";
         repo = "toolkit";
         rev = "5bff591dc40da25dcc875d3fa1a3373d74d45411";
@@ -261,6 +284,7 @@ let
     {
       root = "github.com/mitchellh/go-vnc";
       src = fetchFromGitHub {
+    version = 1;
         owner = "mitchellh";
         repo = "go-vnc";
         rev = "723ed9867aed0f3209a81151e52ddc61681f0b01";
@@ -270,6 +294,7 @@ let
     {
       root = "github.com/howeyc/fsnotify";
       src = fetchFromGitHub {
+    version = 1;
         owner = "howeyc";
         repo = "fsnotify";
         rev = "4894fe7efedeeef21891033e1cce3b23b9af7ad2";
@@ -287,6 +312,7 @@ let
     {
       root = "github.com/vaughan0/go-ini";
       src = fetchFromGitHub {
+    version = 1;
         owner = "vaughan0";
         repo = "go-ini";
         rev = "a98ad7ee00ec53921f08832bc06ecf7fd600e6a1";
@@ -296,6 +322,7 @@ let
     {
       root = "github.com/aws/aws-sdk-go";
       src = fetchFromGitHub {
+    version = 1;
         owner = "aws";
         repo = "aws-sdk-go";
         rev = "f096b7d61df3d7d6d97f0e701f92616d1ea5420d";
@@ -305,6 +332,7 @@ let
     {
       root = "github.com/digitalocean/godo";
       src = fetchFromGitHub {
+    version = 1;
         owner = "digitalocean";
         repo = "godo";
         rev = "2a0d64a42bb60a95677748a4d5729af6184330b4";
@@ -314,6 +342,7 @@ let
     {
       root = "github.com/dylanmei/winrmtest";
       src = fetchFromGitHub {
+    version = 1;
         owner = "dylanmei";
         repo = "winrmtest";
         rev = "025617847eb2cf9bd1d851bc3b22ed28e6245ce5";
@@ -323,6 +352,7 @@ let
     {
       root = "github.com/klauspost/pgzip";
       src = fetchFromGitHub {
+    version = 1;
         owner = "klauspost";
         repo = "pgzip";
         rev = "47f36e165cecae5382ecf1ec28ebf7d4679e307d";
@@ -332,6 +362,7 @@ let
     {
       root = "github.com/masterzen/winrm";
       src = fetchFromGitHub {
+    version = 1;
         owner = "masterzen";
         repo = "winrm";
         rev = "54ea5d01478cfc2afccec1504bd0dfcd8c260cfa";
@@ -341,6 +372,7 @@ let
     {
       root = "github.com/google/go-querystring";
       src = fetchFromGitHub {
+    version = 1;
         owner = "google";
         repo = "go-querystring";
         rev = "2a60fc2ba6c19de80291203597d752e9ba58e4c0";
@@ -350,6 +382,7 @@ let
     {
       root = "github.com/go-ini/ini";
       src = fetchFromGitHub {
+    version = 1;
         owner = "go-ini";
         repo = "ini";
         rev = "afbd495e5aaea13597b5e14fe514ddeaa4d76fc3";
@@ -359,6 +392,7 @@ let
     {
       root = "github.com/klauspost/compress";
       src = fetchFromGitHub {
+    version = 1;
         owner = "klauspost";
         repo = "compress";
         rev = "112706bf3743c241303219f9c5ce2e6635f69221";
@@ -368,6 +402,7 @@ let
     {
       root = "github.com/masterzen/simplexml";
       src = fetchFromGitHub {
+    version = 1;
         owner = "masterzen";
         repo = "simplexml";
         rev = "95ba30457eb1121fa27753627c774c7cd4e90083";
@@ -377,6 +412,7 @@ let
     {
       root = "github.com/masterzen/xmlpath";
       src = fetchFromGitHub {
+    version = 1;
         owner = "masterzen";
         repo = "xmlpath";
         rev = "13f4951698adc0fa9c1dda3e275d489a24201161";
@@ -386,6 +422,7 @@ let
     {
       root = "github.com/jmespath/go-jmespath";
       src = fetchFromGitHub {
+    version = 1;
         owner = "jmespath";
         repo = "go-jmespath";
         rev = "c01cf91b011868172fdcd9f41838e80c9d716264";
@@ -395,6 +432,7 @@ let
     {
       root = "github.com/klauspost/cpuid";
       src = fetchFromGitHub {
+    version = 1;
         owner = "klauspost";
         repo = "cpuid";
         rev = "349c675778172472f5e8f3a3e0fe187e302e5a10";
@@ -404,6 +442,7 @@ let
     {
       root = "github.com/nu7hatch/gouuid";
       src = fetchFromGitHub {
+    version = 1;
         owner = "nu7hatch";
         repo = "gouuid";
         rev = "179d4d0c4d8d407a32af483c2354df1d2c91e6c3";
@@ -413,6 +452,7 @@ let
     {
       root = "github.com/klauspost/crc32";
       src = fetchFromGitHub {
+    version = 1;
         owner = "klauspost";
         repo = "crc32";
         rev = "999f3125931f6557b991b2f8472172bdfa578d38";
@@ -422,6 +462,7 @@ let
     {
       root = "github.com/pierrec/lz4";
       src = fetchFromGitHub {
+    version = 1;
         owner = "pierrec";
         repo = "lz4";
         rev = "383c0d87b5dd7c090d3cddefe6ff0c2ffbb88470";
@@ -431,6 +472,7 @@ let
     {
       root = "github.com/packer-community/winrmcp";
       src = fetchFromGitHub {
+    version = 1;
         owner = "packer-community";
         repo = "winrmcp";
         rev = "3d184cea22ee1c41ec1697e0d830ff0c78f7ea97";
@@ -440,6 +482,7 @@ let
     {
       root = "github.com/dylanmei/iso8601";
       src = fetchFromGitHub {
+    version = 1;
         owner = "dylanmei";
         repo = "iso8601";
         rev = "2075bf119b58e5576c6ed9f867b8f3d17f2e54d4";
@@ -449,6 +492,7 @@ let
     {
       root = "github.com/pierrec/xxHash";
       src = fetchFromGitHub {
+    version = 1;
         owner = "pierrec";
         repo = "xxHash";
         rev = "5a004441f897722c627870a981d02b29924215fa";
@@ -458,6 +502,7 @@ let
     {
       root = "github.com/satori/go.uuid";
       src = fetchFromGitHub {
+    version = 1;
         owner = "satori";
         repo = "go.uuid";
         rev = "d41af8bb6a7704f00bc3b7cba9355ae6a5a80048";
@@ -467,6 +512,7 @@ let
     {
       root = "github.com/rackspace/gophercloud";
       src = fetchFromGitHub {
+    version = 1;
         owner = "rackspace";
         repo = "gophercloud";
         rev = "680aa02616313d8399abc91f17a444cf9292f0e1";
@@ -476,6 +522,7 @@ let
     {
       root = "gopkg.in/fsnotify.v0";
       src = fetchFromGitHub {
+    version = 1;
         owner = "go-fsnotify";
         repo = "fsnotify";
         rev = "ea925a0a47d225b2ca7f9932b01d2ed4f3ec74f6";
@@ -485,6 +532,7 @@ let
     {
       root = "github.com/tent/http-link-go";
       src = fetchFromGitHub {
+    version = 1;
         owner = "tent";
         repo = "http-link-go";
         rev = "ac974c61c2f990f4115b119354b5e0b47550e888";

@@ -32,6 +32,7 @@ buildPythonPackage {
   name = "synapse-${version}";
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "matrix-org";
     repo = "synapse";
     rev = "v${version}";

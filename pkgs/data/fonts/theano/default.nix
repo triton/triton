@@ -5,6 +5,7 @@ stdenv.mkDerivation rec {
   version = "2.0";
 
   src = fetchzip {
+    version = 1;
     stripRoot = false;
     url = "https://github.com/akryukov/theano/releases/download/v${version}/theano-${version}.otf.zip";
     sha256 = "1z3c63rcp4vfjyfv8xwc3br10ydwjyac3ipbl09y01s7qhfz02gp";

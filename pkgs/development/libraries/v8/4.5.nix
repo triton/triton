@@ -58,6 +58,7 @@ stdenv.mkDerivation rec {
   inherit doCheck;
 
   src = fetchFromGitHub {
+    version = 1;
     owner = "v8";
     repo = "v8";
     rev = version;

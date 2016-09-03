@@ -28,66 +28,77 @@ let
   # you'll get necessary revision information.
   ejdeps = {
     cache_tab = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "cache_tab";
       rev = "1.0.1";
       sha256 = "1mq5vgqskb0v2pdn6i3610hzd9iyjznh8143pdbz8z57rrhxpxg4";
     };
     p1_tls = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "tls";
       rev = "1.0.0";
       sha256 = "1q6l5drgmwj4fp4nfh0075lczplia4n40sirk9pd5x76d59qcmnj";
     };
     p1_stringprep = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "stringprep";
       rev = "1.0.0";
       sha256 = "105xc0af61xrd4vjxrg49gxbij8x0fq4yribywa8qly303d1nwwa";
     };
     p1_xml = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "xml";
       rev = "1.1.1";
       sha256 = "07zxc8ky78sd2mcbhhrxha68arbbk8vyayn9gwi402avnqcic7cx";
     };
     esip = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "p1_sip";
       rev = "1.0.0";
       sha256 = "02k920995b0js6srarx0rabavs428rl0dp7zz90x74l8b589zq9a";
     };
     p1_stun = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "stun";
       rev = "0.9.0";
       sha256 = "0ghf2p6z1m55f5pm4pv5gj7h7fdcwcsyqz1wzax4w8bgs9id06dm";
     };
     p1_yaml = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "p1_yaml";
       rev = "1.0.0";
       sha256 = "0is0vr8ygh3fbiyf0jb85cfpfakxmx31fqk6s4j90gmfhlbm16f8";
     };
     p1_utils = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "p1_utils";
       rev = "1.0.2";
       sha256 = "11b71bnc90riy1qplkpwx6l1yr9849jai3ckri35cavfsk35j687";
     };
     jiffy = fetchFromGitHub {
+    version = 1;
       owner = "davisp";
       repo = "jiffy";
       rev = "0.14.5";
       sha256 = "1xs01cl4gq1x6sjj7d1qgg4iq9iwzv3cjqjrj0kr7rqrbfqx2nq3";
     };
     oauth2 = fetchFromGitHub {
+    version = 1;
       owner = "kivra";
       repo = "oauth2";
       rev = "8d129fbf8866930b4ffa6dd84e65bd2b32b9acb8";
       sha256 = "0mbmw6668l945iqppba991793nmmkyvvf18zxgdahxcwgxg1majn";
     };
     xmlrpc = fetchFromGitHub {
+    version = 1;
       owner = "rds13";
       repo = "xmlrpc";
       rev = "1.15";
@@ -95,42 +106,49 @@ let
     };
 
     p1_mysql = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "mysql";
       rev = "1.0.0";
       sha256 = "1v3g75hhfpv5bnrar23y7lsk3pd02xl5cy4mj13j0qxl6bc4dgss";
     };
     p1_pgsql = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "pgsql";
       rev = "1.0.0";
       sha256 = "1r7dkjzxhwplmhvgvdx990xn98gpslckah5jpkx8c2gm9nj3xi33";
     };
     sqlite3 = fetchFromGitHub {
+    version = 1;
       owner = "alexeyr";
       repo = "erlang-sqlite3";
       rev = "cbc3505f7a131254265d3ef56191b2581b8cc172";
       sha256 = "1xrvygv0zhslsqf8044m5ml1zr6di7znvv2zycg3amsz190w0w2g";
     };
     p1_pam = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "epam";
       rev = "1.0.0";
       sha256 = "0dlbmfwndhyg855vnhwyccxcjqzf2wcgc7522mjb9q38cva50rpr";
     };
     p1_zlib = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "zlib";
       rev = "1.0.0";
       sha256 = "1a6m7wz6cbb8526fwhmgm7mva62absmvyjm8cjnq7cs0mzp18r0m";
     };
     hamcrest = fetchFromGitHub {
+    version = 1;
       owner = "hyperthunk";
       repo = "hamcrest-erlang";
       rev = "908a24fda4a46776a5135db60ca071e3d783f9f6";
       sha256 = "0irxidwrb37m0xwls6q9nn2zfs3pyxrgbnjgrhnh7gm35ib51hkj";
     };
     riakc = fetchFromGitHub {
+    version = 1;
       owner = "basho";
       repo = "riak-erlang-client";
       rev = "527722d12d0433b837cdb92a60900c2cb5df8942";
@@ -138,6 +156,7 @@ let
     };
     # dependency of riakc
     riak_pb = fetchFromGitHub {
+    version = 1;
       owner = "basho";
       repo = "riak_pb";
       rev = "2.1.0.7";
@@ -145,30 +164,35 @@ let
     };
     # dependency of riak_pb
     protobuffs = fetchFromGitHub {
+    version = 1;
       owner = "basho";
       repo = "erlang_protobuffs";
       rev = "0.8.2";
       sha256 = "0w4jmsnc9x2ykqh1q6b12pl8a9973dxdhqk3y0ph17n83q5xz3h7";
     };
     rebar_elixir_plugin = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "rebar_elixir_plugin";
       rev = "0.1.0";
       sha256 = "0x04ff53mxwd9va8nl4m70dbamp6p4dpxs646c168iqpnpadk3sk";
     };
     elixir = fetchFromGitHub {
+    version = 1;
       owner = "elixir-lang";
       repo = "elixir";
       rev = "v1.1.0";
       sha256 = "0r5673x2qdvfbwmvyvj8ddvzgxnkl3cv9jsf1yzsxgdifjbrzwx7";
     };
     p1_iconv = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "eiconv";
       rev = "0.9.0";
       sha256 = "1ikccpj3aq6mip6slrq8c7w3kilpb82dr1jdy8kwajmiy9cmsq97";
     };
     lager = fetchFromGitHub {
+    version = 1;
       owner = "basho";
       repo = "lager";
       rev = "3.0.2";
@@ -176,24 +200,28 @@ let
     };
     # dependency of lager
     goldrush = fetchFromGitHub {
+    version = 1;
       owner = "DeadZen";
       repo = "goldrush";
       rev = "0.1.7";
       sha256 = "1104j8v86hdavxf08yjyjkpi5vf95rfvsywdx29c69x3z33i4z3m";
     };
     p1_logger = fetchFromGitHub {
+    version = 1;
       owner = "processone";
       repo = "p1_logger";
       rev = "1.0.0";
       sha256 = "0z11xsr139a75w09syjws4sja6ky2l9rsrwkjr6wcl7p1jz02h4r";
     };
     meck = fetchFromGitHub {
+    version = 1;
       owner = "eproxus";
       repo = "meck";
       rev = "0.8.2";
       sha256 = "0s4qbvryap46cz63awpbv5zzmlcay5pn2lixgmgvcjarqv70cbs7";
     };
     eredis = fetchFromGitHub {
+    version = 1;
       owner = "wooga";
       repo = "eredis";
       rev = "v1.0.8";

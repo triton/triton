@@ -80,6 +80,7 @@ rec {
   gnome = [
     https://download.gnome.org
     https://mirrorservice.org/sites/ftp.gnome.org/pub/GNOME
+    https://mirror.umd.edu/gnome
   ];
 
   gnu = [

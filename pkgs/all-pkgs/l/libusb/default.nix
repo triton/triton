@@ -14,6 +14,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/libusb/libusb-1.0/${name}/${name}.tar.bz2";
+    multihash = "QmVhJXs3ZHHguFH9KbQuFNPeN4sePqMB6BUmgBQUHWZnWp";
     sha256 = "1zzp6hc7r7m3gl6zjbmzn92zkih4664cckaf49l1g5hapa8721fb";
   };
 

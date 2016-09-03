@@ -13,18 +13,19 @@
 
 let
   inherit (stdenv.lib)
-    enFlag;
-in
+    boolEn;
 
+  version = "1.22";
+in
 stdenv.mkDerivation rec {
   name = "libaccounts-glib-${version}";
-  version = "1.21";
 
   src = fetchFromGitLab {
+    version = 2;
     owner = "accounts-sso";
     repo = "libaccounts-glib";
     rev = "VERSION_${version}";
-    sha256 = "8119ee6972dbb416c0644d981f034d795bb71791e3a3f04d34edd039e4ae1dd6";
+    sha256 = "00502aaf6547efdedbd279408dcc85e83dccee8854f4314a04f7fe079a97d60c";
   };
 
   nativeBuildInputs = [
@@ -46,7 +47,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-tests"
     "--disable-gcov"
     "--disable-gtk-doc"
@@ -64,4 +65,15 @@ stdenv.mkDerivation rec {
   makeFlags = [
     "INTROSPECTION_TYPELIBDIR=$(out)/lib/girepository-1.0/"
   ];
+
+  meta = with stdenv.lib; {
+    description = "GLib-based client library for the accounts database";
+    homepage = https://gitlab.com/accounts-sso/libaccounts-glib;
+    license = licenses.lgpl21;
+    maintainers = with maintainers; [
+    codyopel
+    ];
+    platforms = with platforms;
+      x86_64-linux;
+  };
 }

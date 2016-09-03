@@ -311,7 +311,7 @@ stdenv.mkDerivation rec {
   src =
     if channel == "9.9" then
       fetchFromGitHub {
-        version = 1;
+        version = 2;
         owner = "ffmpeg";
         repo = "ffmpeg";
         inherit (source)

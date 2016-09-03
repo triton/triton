@@ -43,8 +43,8 @@ stdenv.mkDerivation rec {
   name = "glib-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/glib/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/glib/${channel}/${name}.sha256sum";
+    url = "mirror://gnome/sources/glib/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/glib/${channel}/${name}.sha256sum";
     sha256 = source.sha256;
   };
 

@@ -25,8 +25,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/librsvg/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/librsvg/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.sha256sum";
     sha256 = "d48bcf6b03fa98f07df10332fb49d8c010786ddca6ab34cbba217684f533ff2e";
   };
 

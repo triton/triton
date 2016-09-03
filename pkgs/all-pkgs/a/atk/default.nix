@@ -19,8 +19,8 @@ stdenv.mkDerivation rec {
   name = "atk-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/atk/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/atk/${channel}/${name}.sha256sum";
+    url = "mirror://gnome/sources/atk/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/atk/${channel}/${name}.sha256sum";
     inherit (source) sha256;
   };
 

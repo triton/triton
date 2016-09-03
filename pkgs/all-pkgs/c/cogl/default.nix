@@ -26,8 +26,8 @@ stdenv.mkDerivation rec {
   name = "cogl-${channel}.2";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/cogl/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/cogl/${channel}/${name}.sha256sum";
+    url = "mirror://gnome/sources/cogl/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/cogl/${channel}/${name}.sha256sum";
     sha256 = "39a718cdb64ea45225a7e94f88dddec1869ab37a21b339ad058a9d898782c00d";
   };
 

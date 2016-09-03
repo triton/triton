@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/libgdata/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/libgdata/${versionMajor}/${name}.tar.xz";
     sha256 = "b3fbdae075aa0d83897ae0e9daf3c29075dce1724c8b8a27e0735688756355e8";
   };
 

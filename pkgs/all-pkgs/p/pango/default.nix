@@ -31,8 +31,8 @@ stdenv.mkDerivation rec {
   name = "pango-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/pango/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/pango/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome/sources/pango/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/pango/${versionMajor}/${name}.sha256sum";
     sha256 = "90582a02bc89318d205814fc097f2e9dd164d26da5f27c53ea42d583b34c3cd1";
   };
 

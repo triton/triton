@@ -23,9 +23,9 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/libgnome-keyring/${versionMajor}/"
+    url = "mirror://gnome/sources/libgnome-keyring/${versionMajor}/"
         + "${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/libgnome-keyring/${versionMajor}/"
+    sha256Url = "mirror://gnome/sources/libgnome-keyring/${versionMajor}/"
               + "${name}.sha256sum";
     sha256 = "c4c178fbb05f72acc484d22ddb0568f7532c409b0a13e06513ff54b91e947783";
   };

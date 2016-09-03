@@ -21,8 +21,8 @@ stdenv.mkDerivation rec {
   name = "geocode-glib-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/geocode-glib/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/geocode-glib/${versionMajor}/"
+    url = "mirror://gnome/sources/geocode-glib/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/geocode-glib/${versionMajor}/"
       + "${name}.sha256sum";
     sha256 = "669fc832cabf8cc2f0fc4194a8fa464cdb9c03ebf9aca5353d7cf935ba8637a2";
   };

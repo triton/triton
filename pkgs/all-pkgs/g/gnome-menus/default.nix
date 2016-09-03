@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gnome-menus/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gnome-menus/${versionMajor}/${name}.tar.xz";
     sha256 = "0kk5dirr9n34yxxayv643d6yi5bm9635hkm0icmza79qzyw6wi3w";
   };
 

@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/libunique/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/libunique/${versionMajor}/${name}.tar.xz";
     sha256 = "0f70lkw66v9cj72q0iw1s2546r6bwwcd8idcm3621fg2fgh2rw58";
   };
 

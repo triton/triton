@@ -38,8 +38,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/grilo-plugins/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/grilo-plugins/${versionMajor}/"
+    url = "mirror://gnome/sources/grilo-plugins/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/grilo-plugins/${versionMajor}/"
       + "${name}.sha256sum";
     sha256 = "605d04c40a9ed4fec4c590ff3e0da0de175e3a064bba96bdb26c5a7c0d3e6daa";
   };

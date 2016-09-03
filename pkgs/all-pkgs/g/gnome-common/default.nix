@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gnome-common/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gnome-common/${versionMajor}/${name}.tar.xz";
     sha256 = "22569e370ae755e04527b76328befc4c73b62bfd4a572499fde116b8318af8cf";
   };
 

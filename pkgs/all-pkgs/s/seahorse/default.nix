@@ -31,8 +31,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/seahorse/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/seahorse/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome/sources/seahorse/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/seahorse/${versionMajor}/${name}.sha256sum";
     sha256 = "e2b07461ed54a8333e5628e9b8e517ec2b731068377bf376570aad998274c6df";
   };
 

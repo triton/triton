@@ -14,8 +14,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/pangomm/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/pangomm/${versionMajor}/"
+    url = "mirror://gnome/sources/pangomm/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/pangomm/${versionMajor}/"
       + "${name}.sha256sum";
     sha256 = "9762ee2a2d5781be6797448d4dd2383ce14907159b30bc12bf6b08e7227be3af";
   };

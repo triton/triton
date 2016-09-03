@@ -21,8 +21,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/glib-networking/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/glib-networking/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome/sources/glib-networking/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/glib-networking/${versionMajor}/${name}.sha256sum";
     sha256 = "925c0c49d6b2b8b5695f2e33cd952d1dbb7d18d3f2f796413577719315bb3a84";
   };
 

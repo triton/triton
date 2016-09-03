@@ -26,9 +26,9 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gnome-shell-extensions/${versionMajor}/"
+    url = "mirror://gnome/sources/gnome-shell-extensions/${versionMajor}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/gnome-shell-extensions/${versionMajor}/"
+    sha256Url = "mirror://gnome/sources/gnome-shell-extensions/${versionMajor}/"
       + "${name}.sha256sum";
     sha256 = "e84a075d895ca3baeefb8508e0a901027b66f7d5a7ee8c966e31d301b38e78e7";
   };

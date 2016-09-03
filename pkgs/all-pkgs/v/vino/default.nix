@@ -38,8 +38,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/vino/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/vino/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome/sources/vino/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/vino/${versionMajor}/${name}.sha256sum";
     sha256 = "660488adc1bf577958e783d13f61dbd99c1d9c4e81d2ca063437ea81d39e4413";
   };
 

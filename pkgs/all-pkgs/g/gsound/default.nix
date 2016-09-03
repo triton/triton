@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gsound/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gsound/${versionMajor}/${name}.tar.xz";
     sha256 = "0lwfwx2c99qrp08pfaj59pks5dphsnxjgrxyadz065d8xqqgza5v";
   };
 

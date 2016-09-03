@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   name = "gfbgraph-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gfbgraph/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gfbgraph/${versionMajor}/${name}.tar.xz";
     sha256 = "1dp0v8ia35fxs9yhnqpxj3ir5lh018jlbiwifjfn8ayy7h47j4fs";
   };
 

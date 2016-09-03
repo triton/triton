@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   name = "gconf-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/GConf/${versionMajor}/GConf-${version}.tar.xz";
+    url = "mirror://gnome/sources/GConf/${versionMajor}/GConf-${version}.tar.xz";
     sha256 = "0k3q9nh53yhc9qxf1zaicz4sk8p3kzq4ndjdsgpaa2db0ccbj4hr";
   };
 

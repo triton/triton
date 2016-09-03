@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   inherit name;
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/${pname}/${version}/${name}.tar.xz";
+    url = "mirror://gnome/sources/${pname}/${version}/${name}.tar.xz";
     sha256 = "72507a732e0cd16cf27424bb094b1c7a03e2206c119ad124722a283e587755f1";
   };
 

@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/pygobject/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/pygobject/${versionMajor}/${name}.tar.xz";
     sha256 = "3d261005d6fed6a92ac4c25f283792552f7dad865d1b7e0c03c2b84c04dbd745";
   };
 

@@ -40,8 +40,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/nautilus/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/nautilus/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome/sources/nautilus/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/nautilus/${versionMajor}/${name}.sha256sum";
     sha256 = "46600a2361a022a0170304aef7167caa29c0d52232063a3556bec6a77881310e";
   };
 

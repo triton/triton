@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   name = "libxml++-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/libxml++/${major}/${name}.tar.xz";
+    url = "mirror://gnome/sources/libxml++/${major}/${name}.tar.xz";
     sha256 = "2ff3640417729d357bada2e3049061642e0b078c323a8e0d37ae68df96547952";
   };
 

@@ -31,8 +31,8 @@ stdenv.mkDerivation rec {
   name = "clutter-gst-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/clutter-gst/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/clutter-gst/${channel}/"
+    url = "mirror://gnome/sources/clutter-gst/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/clutter-gst/${channel}/"
       + "${name}.sha256sum";
     inherit (source) sha256;
   };

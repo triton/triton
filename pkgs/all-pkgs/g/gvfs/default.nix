@@ -43,8 +43,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gvfs/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/gvfs/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome/sources/gvfs/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/gvfs/${versionMajor}/${name}.sha256sum";
     sha256 = "458c4cb68570f6ef4a9e152995c62d0057c3e0a07ed64d84c7200cdd22f0bd17";
   };
 

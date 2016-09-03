@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   name = "gdm-${gnome3.version}.2";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gdm/${gnome3.version}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gdm/${gnome3.version}/${name}.tar.xz";
     sha256 = "0mhv3q8z208qvhz00zrxlqn7w9gi5vy6w8dpjh5s2ka28l3yhbn3";
   };
 

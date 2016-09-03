@@ -24,8 +24,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/libsoup/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/libsoup/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome/sources/libsoup/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/libsoup/${versionMajor}/${name}.sha256sum";
     sha256 = "47b42c232034734d66e5f093025843a5d8cc4b2357c011085a2fd04ef02dd633";
   };
 

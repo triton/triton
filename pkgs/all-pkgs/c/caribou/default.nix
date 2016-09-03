@@ -9,8 +9,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/caribou/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/caribou/${versionMajor}/"
+    url = "mirror://gnome/sources/caribou/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/caribou/${versionMajor}/"
       + "${name}.sha256sum";
     sha256 = "9c43d9f4bd30f4fea7f780d4e8b14f7589107c52e9cb6bd202bd0d1c2064de55";
   };

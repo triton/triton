@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   name = "libcroco-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/libcroco/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/libcroco/${versionMajor}/${name}.tar.xz";
     sha256 = "0mm0wldbi40am5qn0nv7psisbg01k42rwzjxl3gv11l5jj554aqk";
   };
 

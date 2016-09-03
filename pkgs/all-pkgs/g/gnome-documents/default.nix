@@ -45,8 +45,8 @@ stdenv.mkDerivation rec {
   name = "gnome-documents-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gnome-documents/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/gnome-documents/${channel}/"
+    url = "mirror://gnome/sources/gnome-documents/${channel}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/gnome-documents/${channel}/"
       + "${name}.sha256sum";
     sha256 = "c73810ded97431360ba80c127d3244b1e6e416643fba0ba96411d22729211394";
   };

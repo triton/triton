@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/tracker/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/tracker/${versionMajor}/${name}.tar.xz";
     sha256 = "a11f31a373bfec3abae38ae719d0a59f666f1f067d8789ade2ed7032a152907d";
   };
 

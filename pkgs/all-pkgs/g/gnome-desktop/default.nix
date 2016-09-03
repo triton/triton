@@ -43,8 +43,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gnome-desktop/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/gnome-desktop/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome/sources/gnome-desktop/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/gnome-desktop/${versionMajor}/${name}.sha256sum";
     sha256 = "492c2da7aa8c3a8b65796e8171fc8f0dfb5d322dd2799c0d76392e1fb061e2b2";
   };
 

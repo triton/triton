@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
   name = "libnotify-${ver_maj}.${ver_min}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/libnotify/${ver_maj}/${name}.tar.xz";
+    url = "mirror://gnome/sources/libnotify/${ver_maj}/${name}.tar.xz";
     sha256 = "0dyq8zgjnnzcah31axnx6afb21kl7bks1gvrg4hjh3nk02j1rxhf";
   };
 

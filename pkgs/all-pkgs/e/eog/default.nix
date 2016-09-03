@@ -42,8 +42,8 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/eog/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/eog/${versionMajor}/${name}.sha256sum";
+    url = "mirror://gnome/sources/eog/${versionMajor}/${name}.tar.xz";
+    sha256Url = "mirror://gnome/sources/eog/${versionMajor}/${name}.sha256sum";
     sha256 = "968774cc07ea0d3c27ac552dc0f1d51cf682b9036d342b447688a208f31a5be3";
   };
 

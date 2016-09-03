@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/libpeas/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/libpeas/${versionMajor}/${name}.tar.xz";
     sha256 = "bf49842c64c36925bbc41d954de490b6ff7faa29b45f6fd9e91ddcc779165e26";
   };
 

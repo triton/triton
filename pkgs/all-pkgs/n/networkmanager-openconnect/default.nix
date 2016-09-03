@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/NetworkManager-openconnect/${versionMajor}/"
+    url = "mirror://gnome/sources/NetworkManager-openconnect/${versionMajor}/"
         + "${name}.tar.xz";
     sha256 = "1rnp0qj33y4yz51ww88k7ncmfvxims66r3ldx4ky7jmczy22igy1";
   };

@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gsettings-desktop-schemas/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gsettings-desktop-schemas/${versionMajor}/${name}.tar.xz";
     sha256 = "55a41b533c0ab955e0a36a84d73829451c88b027d8d719955d8f695c35c6d9c1";
   };
 

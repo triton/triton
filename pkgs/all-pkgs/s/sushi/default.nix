@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/sushi/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/sushi/${versionMajor}/${name}.tar.xz";
     sha256 = "6e729c789e9e7f02505e25d4ac6cfed47e676366f0942fca740094f7fe9eae9e";
   };
 

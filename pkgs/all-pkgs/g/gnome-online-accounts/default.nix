@@ -33,9 +33,9 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gnome-online-accounts/${versionMajor}/"
+    url = "mirror://gnome/sources/gnome-online-accounts/${versionMajor}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/gnome-online-accounts/"
+    sha256Url = "mirror://gnome/sources/gnome-online-accounts/"
       + "${versionMajor}/${name}.sha256sum";
     sha256 = "094fc04cf3e0b4ace667fce3b5bdcca5093e0c93f9184439e663c69546c1e046";
   };

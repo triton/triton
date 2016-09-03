@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   version = "1.24";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gtk-doc/${version}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gtk-doc/${version}/${name}.tar.xz";
     sha256 = "12xmmcnq4138dlbhmqa45wqza8dky4lf856sp80h6xjwl2g7a85l";
   };
 

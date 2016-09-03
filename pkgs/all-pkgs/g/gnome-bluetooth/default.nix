@@ -36,9 +36,9 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gnome-bluetooth/${versionMajor}/"
+    url = "mirror://gnome/sources/gnome-bluetooth/${versionMajor}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome-secure/sources/gnome-bluetooth/${versionMajor}/"
+    sha256Url = "mirror://gnome/sources/gnome-bluetooth/${versionMajor}/"
       + "${name}.sha256sum";
     sha256 = "93b3ca16b348a168d044b3f777049b7dba2a9292c4adb2751a771e3bc5e4eb53";
   };

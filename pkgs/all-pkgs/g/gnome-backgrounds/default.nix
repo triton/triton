@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   version = "${versionMajor}"; #.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gnome-backgrounds/${versionMajor}/" +
+    url = "mirror://gnome/sources/gnome-backgrounds/${versionMajor}/" +
           "${name}.tar.xz";
     sha256 = "d66c6e165e5c16b79ee4ab83102fa73fa20ce4e14191036ee68e8e82cf537127";
   };

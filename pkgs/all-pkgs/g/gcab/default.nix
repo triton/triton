@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   version = "0.6";
 
   src = fetchurl {
-    url = "mirror://gnome-insecure/sources/gcab/${version}/${name}.tar.xz";
+    url = "mirror://gnome/sources/gcab/${version}/${name}.tar.xz";
     sha256 = "1frl2dpjz5qzqkhyp3qbjck6wsr5m6gdzz2v2nsjfwps9f83ni50";
   };
 

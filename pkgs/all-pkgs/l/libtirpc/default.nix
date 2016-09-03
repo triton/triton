@@ -12,6 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/libtirpc/libtirpc/${version}/${name}.tar.bz2";
+    multihash = "QmNnzPhLJsDQy7qencHjxSopwrEX5VmaPtHPP7jtChPg5d";
     sha256 = "17mqrdgsgp9m92pmq7bvr119svdg753prqqxmg4cnz5y657rfmji";
   };
 

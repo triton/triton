@@ -215,6 +215,7 @@ rec {
   ];
 
   sourceforge = [
+    http://downloads.sourceforge.net
     http://heanet.dl.sourceforge.net/project
     http://vorboss.dl.sourceforge.net/project
     http://internode.dl.sourceforge.net/project

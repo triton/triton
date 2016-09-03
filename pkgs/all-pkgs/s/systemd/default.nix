@@ -67,12 +67,12 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/triton/systemd/releases/download/v${version}/systemd-${upstreamVersion}.tar.xz";
-    sha256 = "e24ad52e1d7be7ced87b9d4a39e6b85ea972464f1b8920fd0d56ab403359362b";
+    sha256 = "2ca1a22a1a0c7eb449eef778e3d21fd75fcdaaa682317d1ddeca952f76ea8147";
   };
 
   nativeBuildInputs = [
     gperf
-    #gnum4
+    gnum4
     intltool
     perl
   ] ++ optionals (!libOnly) [
@@ -122,12 +122,6 @@ stdenv.mkDerivation rec {
       "--with-dbussessionservicedir=$out/share/dbus-1/services"
       "--with-dbussystemservicedir=$out/share/dbus-1/system-services"
     )
-    exit() {
-      status=$?
-      find . -name config.log -exec cat {} \;
-      return $status
-    }
-    trap exit TERM INT ERR
   '';
 
   configureFlags = [

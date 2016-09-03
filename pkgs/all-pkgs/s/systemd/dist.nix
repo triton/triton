@@ -9,6 +9,8 @@
 , libxslt
 
 , libcap
+, libgcrypt
+, libgpg-error
 , util-linux_lib
 }:
 
@@ -34,6 +36,8 @@ stdenv.mkDerivation {
 
   buildInputs = [
     libcap
+    libgcrypt
+    libgpg-error
     util-linux_lib
   ];
 

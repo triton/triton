@@ -1108,6 +1108,7 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
      name = "oauthlib-${version}";
 
      src = pkgs.fetchzip {
+       version = 1;
        url = "https://github.com/idan/oauthlib/archive/v${version}.tar.gz";
        sha256 = "c04e7c49bc98574bc1f626ef6e405f75ea1f2b665b4c267e4736d7abbaeccbc6";
      };

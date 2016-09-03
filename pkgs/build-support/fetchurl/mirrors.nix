@@ -77,7 +77,12 @@ rec {
     http://distfiles.gentoo.org
   ];
 
-  gnome = [
+  gnome-insecure = [
+    # This one redirects to some mirror closeby, so it should be all you need.
+    http://download.gnome.org
+  ];
+
+  gnome-secure = [
     # This one redirects to some mirror closeby, so it should be all you need.
     https://download.gnome.org
   ];

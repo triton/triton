@@ -45,40 +45,40 @@
     ];
   };
   "3.9" = {
-    version = "3.9.0-rc2";
+    version = "3.9.0";
     srcs = {
       cfe = {
-        sha256 = "2d2d7aad5c7b67dd2bd324d0ce10435a797a85b04fa06e4944a6143dfefb4b89";
+        sha256 = "7596a7c7d9376d0c89e60028fe1ceb4d3e535e8ea8b89e0eb094e0dcb3183d28";
       };
       clang-tools-extra = {
-        sha256 = "0d027a895b1f2036395aab470fdb94d4c49d75ed55ca4808cf981f29379f41a1";
+        sha256 = "5b7aec46ec8e999ec683c87ad744082e1133781ee4b01905b4bdae5d20785f14";
       };
       compiler-rt = {
-        sha256 = "6ff0db5660508c84d7107d5f34419ce83b885f5f34bc2f3b66f713694c3de723";
+        sha256 = "e0e5224fcd5740b61e416c549dd3dcda92f10c524216c1edb5e979e42078a59a";
       };
       libcxx = {
-        sha256 = "3bda7b35226efaa7616cfc3dd23f147c89a7b6565553e9fc9907d434aa013560";
+        sha256 = "d0b38d51365c6322f5666a2a8105785f2e114430858de4c25a86b49f227f5b06";
       };
       libcxxabi = {
-        sha256 = "bb7eaed3749744345f0a6dc006fd2d84573626973b72a02747e3393742a42f09";
+        sha256 = "b037a92717856882e05df57221e087d7d595a2ae9f170f7bc1a23ec7a92c8019";
       };
       libunwind = {
-        sha256 = "40fe8f781c0e5f82a035f2f0d1398c0fe2dc35a844aedb90d71a39c61e33448e";
+        sha256 = "66675ddec5ba0d36689757da6008cb2596ee1a9067f4f598d89ce5a3b43f4c2b";
       };
       lld = {
-        sha256 = "4524ada47c4d392cda9f3de3e7132aac9d704bc3ef613d5589059a1563b47c1e";
+        sha256 = "986e8150ec5f457469a20666628bf634a5ca992a53e157f3b69dbc35056b32d9";
       };
       lldb = {
-        sha256 = "b8e1a8ea68d1c34f8dcccdd827734f1032f702c44caf31238e3f37ab5d72a84f";
+        sha256 = "61280e07411e3f2b4cca0067412b39c16b0a9edd19d304d3fc90249899d12384";
       };
       llvm = {
-        sha256 = "d7516c9887f6a6ba0ac40fa394f0fd09a65e0b5721468fc85db8a13b47d1dc69";
+        sha256 = "66c73179da42cee1386371641241f79ded250e117a79f571bbd69e56daa48948";
       };
       openmp = {
-        sha256 = "84db3e5bb11adb42ffd9c0d5c95b51b9e93093a792db35ddd4fc5e57fae0c17e";
+        sha256 = "df88f90d7e5b5e9525a35fa2e2b93cbbb83c4882f91df494e87ee3ceddacac91";
       };
       polly = {
-        sha256 = "6944fc6a445953c421cb020011cf45752794067c5c93153b7e16c4d5a7334ef8";
+        sha256 = "ef0dd25010099baad84597cf150b543c84feac2574d055d6780463d5de8cd97e";
       };
     };
     patches = [

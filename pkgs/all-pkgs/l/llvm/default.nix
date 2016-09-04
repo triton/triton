@@ -14,7 +14,7 @@
 , ncurses
 , zlib
 
-, channel ? "3.8"
+, channel ? "3.9"
 }:
 
 let

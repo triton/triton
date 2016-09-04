@@ -114,12 +114,12 @@ let
   };
 
   crypto = buildFromGitHub {
-    version = 1;
-    rev = "351dc6a5bf92a5f2ae22fadeee08eb6a45aa2d93";
-    date = "2016-08-24";
+    version = 2;
+    rev = "9e590154d2353f3f5e1b24da7275686040dcf491";
+    date = "2016-09-02";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "0a35l1wmzcvncl18j5g6fz4bqfi974g9fvp44s3rjgmvwymjrvqp";
+    sha256 = "1c8ax5r2rplh165f4nxim4czn7whhhz4ibcgbbcicfqspak81r9c";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -140,12 +140,12 @@ let
   };
 
   net = buildFromGitHub {
-    version = 1;
-    rev = "7394c112eae4dba7e96bfcfe738e6373d61772b4";
-    date = "2016-08-19";
+    version = 2;
+    rev = "1358eff22f0dd0c54fc521042cc607f6ff4b531a";
+    date = "2016-09-01";
     owner  = "golang";
     repo   = "net";
-    sha256 = "10by9ivmx76mwyfqpi3jyvsa2ab9v0ybqz1jbzyiamv04qcw26mp";
+    sha256 = "1846vrb4zgjc7n4p3pdafz113x4gipzlci03m28ak9aszf8bcrg2";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -217,12 +217,12 @@ let
   };
 
   text = buildFromGitHub {
-    version = 1;
-    rev = "d69c40b4be55797923cec7457fac7a244d91a9b6";
-    date = "2016-08-16";
+    version = 2;
+    rev = "ceefd2213ed29504fff30155163c8f59827734f3";
+    date = "2016-08-31";
     owner = "golang";
     repo = "text";
-    sha256 = "09a1j9r7lbl0w69n9nvqx49x6plzb18b3bcm4dcj3cc4s2vcknvj";
+    sha256 = "11djh44ip5zsn10da6fk3450c0svpaic4cfy07yaq5ln00gjdzz6";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
   };
@@ -539,11 +539,11 @@ let
   };
 
   urfave_cli = buildFromGitHub {
-    version = 1;
-    rev = "v1.18.0";
+    version = 2;
+    rev = "v1.18.1";
     owner = "urfave";
     repo = "cli";
-    sha256 = "1s25rph38nkmb78v0faackklrfjqvqwl3md5nci0qlb1wvfb1f7c";
+    sha256 = "0vcmwlb9cp7jxza78wm3g2xwdw06fd5my7b43a2pgfhy0621jwi3";
     goPackageAliases = [
       "github.com/codegangsta/cli"
     ];
@@ -2160,11 +2160,11 @@ let
   };
 
   gx-go = buildFromGitHub {
-    version = 1;
-    rev = "v1.2.1";
+    version = 2;
+    rev = "v1.3.0";
     owner = "whyrusleeping";
     repo = "gx-go";
-    sha256 = "1rqwr7hsa3ifrp33s5v3mwl9yjmlqs9iciidibjigmlffkzzxhv9";
+    sha256 = "117l1nlkv6il587bxjh774jzjqrzwfw6mjlj8w3bvp5gx0zxb8c3";
     buildInputs = [
       urfave_cli
       fs
@@ -2369,13 +2369,13 @@ let
   };
 
   ipfs = buildFromGitHub {
-    version = 1;
-    date = "2016-08-29";
-    rev = "28b01dda7e87cdd0c4f95627cd04c5dd543418c3";
+    version = 2;
+    date = "2016-09-04";
+    rev = "0f0cf44800efcd4ae449922ba4e3c45d1c5db121";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "74d760e852a6d4ddcb49e5b9aceab822ab2eff867c57d311a0c55fccd530d8d5";
-    gxSha256 = "1z4sapjsq833mr81fjp69hymwbhfvjd25sns0by21yggmzy53imj";
+    sha256 = "26b7f9a98bd6b916f6dba1dccbf0e8984c80309d9a7187e490ab8889a59efa68";
+    gxSha256 = "160v2jl15skbvvhd2cva59j7v2aj1l16gd94f0h46wbh9pr710wg";
 
     subPackages = [
       "cmd/ipfs"
@@ -3290,11 +3290,11 @@ let
   };
 
   roaring = buildFromGitHub {
-    version = 1;
-    rev = "v0.2.6";
+    version = 2;
+    rev = "v0.2.7";
     owner  = "RoaringBitmap";
     repo   = "roaring";
-    sha256 = "0prvp5i0ra0ib3lxjw27cl0bk671n1scr18rj9zycq3af4wh7cg0";
+    sha256 = "03h1r15yswfzpr1f43wjlmj6q8lvjl42kfhyyd4i80hwvbrgnay0";
   };
 
   runc = buildFromGitHub {

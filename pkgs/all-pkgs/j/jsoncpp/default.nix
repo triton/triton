@@ -5,9 +5,11 @@
 , python
 }:
 
+let
+  version = "1.7.5";
+in
 stdenv.mkDerivation rec {
   name = "jsoncpp-${version}";
-  version = "1.7.5";
 
   src = fetchFromGitHub {
     version = 2;

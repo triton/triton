@@ -25,6 +25,7 @@ let
     name = "gx-src-${src.name}";
 
     impureEnvVars = [ "IPFS_API" ];
+
     buildCommand = ''
       if ! [ -f /etc/ssl/certs/ca-certificates.crt ]; then
         echo "Missing /etc/ssl/certs/ca-certificates.crt" >&2
@@ -53,11 +54,11 @@ let
 
       echo "Building GX Archive" >&2
       cd "$unpackDir"
-      tar --sort=name --owner=0 --group=0 --numeric-owner \
+      ${src.tar}/bin/tar --sort=name --owner=0 --group=0 --numeric-owner \
         --no-acls --no-selinux --no-xattrs \
         --mode=go=rX,u+rw,a-s \
         --clamp-mtime --mtime=@$mtime \
-        -c . | brotli --quality 6 --output "$out"
+        -c . | ${src.brotli}/bin/brotli --quality 6 --output "$out"
     '';
 
     buildInputs = [ gx.bin ];

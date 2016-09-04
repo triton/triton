@@ -117,4 +117,10 @@ lib.overrideDerivation (fetchurl (rec {
   '';
 } // removeAttrs args [ "name" "version" "purgeTimestamps" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))
 # Hackety-hack: we actually need unzip hooks, too
-(x: {nativeBuildInputs = x.nativeBuildInputs++ [unzip];})
+(x: {
+  nativeBuildInputs = x.nativeBuildInputs ++ [
+    unzip
+  ];
+}) // {
+  inherit brotli tar;
+}

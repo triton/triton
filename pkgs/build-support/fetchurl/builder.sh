@@ -410,9 +410,9 @@ sigDownload() {
   local varname
   varname="$1"
 
-  local urls
-  urls="$varname[@]"
-  for url in "${!urls}"; do
+  local urlsVar
+  urlsVar="${varname}Urls[@]"
+  for url in "${!urlsVar}"; do
     auxDownload "$url" "$TMPDIR/$varname" && break
   done
 }

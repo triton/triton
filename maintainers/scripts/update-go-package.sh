@@ -6,6 +6,11 @@ if [ "0" -eq "$#" ]; then
   exit 1
 fi
 
+# Parameters to conform to fetchzip versioning
+FETCHZIP_VERSION=2
+FETCHZIP_BROTLI=brotli_0-5-2
+FETCHZIP_TAR=gnutar_1-29
+
 # Setup the temporary storage area
 TMPDIR=""
 cleanup() {
@@ -32,16 +37,16 @@ TOP_LEVEL="$(pwd)"
 
 # Build all of the packages needed to run this script
 echo "Building script dependencies..." >&2
-exp='let pkgs = import ./. { };
+exp="let pkgs = import ./. { };
 in pkgs.buildEnv {
-  name = "goUpdater";
+  name = \"goUpdater\";
   paths = with pkgs; [
     coreutils
-    brotli_0-5-2
+    $FETCHZIP_BROTLI
     gawk
     gnused
     gnugrep
-    gnutar_1-29
+    $FETCHZIP_TAR
     git
     go
     nix
@@ -49,7 +54,7 @@ in pkgs.buildEnv {
     util-linux_full
     findutils
   ];
-}'
+}"
 if ! nix-build --out-link $TMPDIR/nix-env -E "$exp"; then
   echo "Failed to build dependencies of this script" >&2
   exit 1
@@ -206,9 +211,11 @@ ARGS=($(awk '{ print "- " $1 " generate_hash " $1 " " $2 " " $3; }' $TMPDIR/upda
 concurrent "${ARGS[@]}"
 
 export TMPDIR
+export FETCHZIP_VERSION
 awk '
 BEGIN {
   updateFile=ENVIRON["TMPDIR"] "/updates";
+  fetchzipVersion=ENVIRON["FETCHZIP_VERSION"];
   while((getline line < updateFile) > 0) {
     split(line, splitLine);
     split(splitLine[5], names, ",");
@@ -245,7 +252,7 @@ BEGIN {
         print "    sha256 = \"" hashes[currentPkg] "\";";
       }
       if (shouldSetVersion) {
-        print "    version = 2;";
+        print "    version = " fetchzipVersion ";";
       }
     }
     currentPkg = "";
@@ -268,7 +275,7 @@ BEGIN {
     shouldSetHash = 0;
   } else if (/^    [ ]*version[ ]*=[ ]*/ && exists[currentPkg]) {
     if (shouldSetVersion) {
-      print "    version = 2;";
+      print "    version = " fetchzipVersion ";";
     }
     shouldSetVersion = 0;
   } else {

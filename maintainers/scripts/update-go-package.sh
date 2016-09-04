@@ -37,11 +37,11 @@ in pkgs.buildEnv {
   name = "goUpdater";
   paths = with pkgs; [
     coreutils
-    brotli
+    brotli_0-5-2
     gawk
     gnused
     gnugrep
-    gnutar
+    gnutar_1-29
     git
     go
     nix
@@ -229,6 +229,7 @@ BEGIN {
     shouldSetDate = dates[$1] != "nodate" && /(buildFromGitHub|buildFromGoogle)/;
     shouldSetRev = 1;
     shouldSetHash = 1;
+    shouldSetVersion = 1;
   }
 
   # Find the closing stmt and add any unadded fields
@@ -242,6 +243,9 @@ BEGIN {
       }
       if (shouldSetHash) {
         print "    sha256 = \"" hashes[currentPkg] "\";";
+      }
+      if (shouldSetVersion) {
+        print "    version = 2;";
       }
     }
     currentPkg = "";
@@ -262,6 +266,11 @@ BEGIN {
       print "    sha256 = \"" hashes[currentPkg] "\";";
     }
     shouldSetHash = 0;
+  } else if (/^    [ ]*version[ ]*=[ ]*/ && exists[currentPkg]) {
+    if (shouldSetVersion) {
+      print "    version = 2;";
+    }
+    shouldSetVersion = 0;
   } else {
     if (/^    [ ]*inherit.*rev/) {
       shouldSetRev = 0;
@@ -271,6 +280,9 @@ BEGIN {
     }
     if (/^    [ ]*inherit.*sha256/) {
       shouldSetHash = 0;
+    }
+    if (/^    [ ]*inherit.*version/) {
+      shouldSetVersion = 0;
     }
     if (/^    [ ]*inherit.*src/) {
       shouldSetRev = 0;

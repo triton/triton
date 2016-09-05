@@ -15,14 +15,14 @@
 }:
 
 stdenv.mkDerivation {
-  name = "systemd-dist-v231-10-gb6932fc";
+  name = "systemd-dist-v231-11-g76c65dc";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "triton";
     repo = "systemd";
-    rev = "ca0a4ad1275b9a0aa104db025804bddbf334daf2";
-    sha256 = "41ccd0dc1dee53d4c979fa08ad4a76f223011ab3baeeb4761d94db62287eb78d";
+    rev = "76c65dc2825d0a6ce433270b60a7eedf888ea926";
+    sha256 = "f0fd25e1533261166dc51986ba04f4a14ded169055435136341b2ebe5c1d4012";
   };
 
   nativeBuildInputs = [
@@ -34,6 +34,7 @@ stdenv.mkDerivation {
     libtool
   ];
 
+  # All of these inputs are needed for the DISTFILES to generate correctly
   buildInputs = [
     libcap
     libgcrypt
@@ -43,6 +44,17 @@ stdenv.mkDerivation {
 
   preConfigure = ''
     ./autogen.sh
+
+    # We don't actually want to depend on libraries just to have distfiles added correctly
+    cp configure configure.old
+    sed \
+      -e 's,\(.*_\(TRUE\|FALSE\)=\).*,\1,g' \
+      -e 's,test -z "''${[A-Za-z0-9_]*_\(TRUE\|FALSE\).*;,false;,g' \
+      -i configure
+  '';
+
+  postConfigure = ''
+    mv configure.old configure
   '';
 
   configureFlags = [

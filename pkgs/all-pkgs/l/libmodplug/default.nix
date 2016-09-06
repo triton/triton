@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   name = "libmodplug-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/project/modplug-xmms/libmodplug/${version}/${name}.tar.gz";
+    url = "mirror://sourceforge/modplug-xmms/libmodplug/${version}/${name}.tar.gz";
     multihash = "QmSfTtNJjzvM29zfgGGWS7DhXL57n6A3u9Fjp1xdUjgD6R";
     sha256 = "1bfsladg7h6vnii47dd66f5vh1ir7qv12mfb8n36qiwrxq92sikp";
   };

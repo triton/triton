@@ -5,11 +5,14 @@
 , util-linux_lib
 }:
 
+let
+  version = "1.43.3";
+in
 stdenv.mkDerivation rec {
-  name = "e2fsprogs-1.43.3";
+  name = "e2fsprogs-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/e2fsprogs/${name}.tar.gz";
+    url = "mirror://sourceforge/e2fsprogs/e2fsprogs/v${version}/${name}.tar.gz";
     hashOutput = false;
     multihash = "QmTKE4hEyybo8Y36rcKg4DwMhzzoYejoGUSTywV7a3QXP5";
     sha256 = "ce8ef1bbb0d4730f170167284fda156ac9d6bf18db2750eb94af619a81b19927";

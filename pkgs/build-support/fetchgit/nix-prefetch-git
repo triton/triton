@@ -299,10 +299,10 @@ clone_user_rev() {
 
     echo "Building Archive $out" >&2
     cd "$tmpdir"
-    tar --sort=name --owner=0 --group=0 --numeric-owner \
+    @tar@/bin/tar --sort=name --owner=0 --group=0 --numeric-owner \
       --mode=go=rX,u+rw,a-s \
       --mtime=@946713600 \
-      -c "$name" | brotli --quality 6 --output "$out"
+      -c "$name" | @brotli@/bin/bro --quality 6 --output "$out"
 }
 
 if test -z "$branchName"; then

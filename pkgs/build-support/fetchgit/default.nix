@@ -1,4 +1,9 @@
-{stdenv, git}: let
+{stdenv
+, git
+, gnutar_1-29
+, brotli_0-4-0
+, brotli_0-5-2
+}: let
   urlToName = url: rev: let
     base = baseNameOf (stdenv.lib.removeSuffix "/" url);
 
@@ -11,10 +16,16 @@
       else "";
   in "${if matched == null then base else builtins.head matched}${appendShort}";
 in
-{ url, rev ? "HEAD", md5 ? "", sha256 ? "", leaveDotGit ? deepClone
-, fetchSubmodules ? true, deepClone ? false
+{ url
+, rev ? "HEAD"
+, md5 ? ""
+, sha256 ? ""
+, leaveDotGit ? deepClone
+, fetchSubmodules ? true
+, deepClone ? false
 , branchName ? null
 , name ? urlToName url rev
+, version ? 1
 }:
 
 /* NOTE:
@@ -42,11 +53,34 @@ in
 assert md5 != "" || sha256 != "";
 assert deepClone -> leaveDotGit;
 
+let
+  versions = {
+    "1" = {
+      brotli = brotli_0-4-0;
+      tar = gnutar_1-29;
+    };
+    "2" = {
+      brotli = brotli_0-5-2;
+      tar = gnutar_1-29;
+    };
+  };
+
+  inherit (versions."${toString version}")
+    brotli
+    tar;
+in
 stdenv.mkDerivation {
   innerName = name;
   name = "${name}.tar.br";
   builder = ./builder.sh;
-  fetcher = ./nix-prefetch-git;
+  fetcher = stdenv.mkDerivation {
+    name = "fetchgit-fetcher-hook";
+    buildCommand = ''
+      sed -e 's,@brotli@,${brotli},g' \
+        -e 's,@tar@,${tar},g' ${./nix-prefetch-git} > $out
+    '';
+    preferLocalBuild = true;
+  };
   buildInputs = [git];
 
   outputHashAlgo = if sha256 == "" then "md5" else "sha256";

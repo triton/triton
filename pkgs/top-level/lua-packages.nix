@@ -177,10 +177,11 @@ let
     name = "socket-2016-06-22";
 
     src = fetchFromGitHub {
+      version = 2;
       owner = "diegonehab";
       repo = "luasocket";
       rev = "316a9455b9cb4637fe6e62b20fbe05f5141fec54";
-      sha256 = "0j8jx8bjicvp9khs26xjya8c495wrpb7parxfnabdqa5nnsxjrwb";
+      sha256 = "84521d2700749c53143a92885511adc63b37b532471f89eb80f7d2fcd246257f";
     };
 
     patchPhase = ''

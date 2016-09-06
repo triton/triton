@@ -820,8 +820,6 @@ duplicity = pkgs.pythonPackages.duplicity;
 
 e2fsprogs = callPackage ../all-pkgs/e/e2fsprogs { };
 
-e2fsprogs-libs = callPackage ../all-pkgs/e/e2fsprogs-libs { };
-
 edac-utils = callPackage ../all-pkgs/e/edac-utils { };
 
 efibootmgr = callPackage ../all-pkgs/e/efibootmgr { };
@@ -853,8 +851,6 @@ evolution-data-server = callPackage ../all-pkgs/e/evolution-data-server { };
 exempi = callPackage ../all-pkgs/e/exempi { };
 
 exiv2 = callPackage ../all-pkgs/e/exiv2 { };
-
-extra-cmake-modules = callPackage ../all-pkgs/e/extra-cmake-modules { };
 
 expat = callPackage ../all-pkgs/e/expat { };
 
@@ -2261,8 +2257,6 @@ scons = pkgs.pythonPackages.scons;
 screen = callPackage ../all-pkgs/s/screen { };
 
 scrot = callPackage ../all-pkgs/s/scrot { };
-
-sddm = callPackage ../all-pkgs/s/sddm { };
 
 # TODO SDL is a clusterfuck that needs to be fixed / renamed
 SDL = callPackage ../all-pkgs/s/SDL_1 { };

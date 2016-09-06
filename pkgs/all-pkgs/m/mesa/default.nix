@@ -58,7 +58,7 @@ let
 in
 stdenv.mkDerivation rec {
   name = "mesa-noglu-${version}";
-  version = "12.0.1";
+  version = "12.0.2";
 
   src =  fetchurl {
     urls = [
@@ -70,7 +70,7 @@ stdenv.mkDerivation rec {
       "https://launchpad.net/mesa/trunk/${version}/+download/mesa-${version}.tar.xz"
     ];
     hashOutput = false;  # Provided by upstream directly
-    sha256 = "bab24fb79f78c876073527f515ed871fc9c81d816f66c8a0b051d8d653896389";
+    sha256 = "d957a5cc371dcd7ff2aa0d87492f263aece46f79352f4520039b58b1f32552cb";
   };
 
   nativeBuildInputs = [

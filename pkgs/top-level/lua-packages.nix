@@ -174,10 +174,12 @@ let
   };
 
   luasocket = buildLuaPackage rec {
-    name = "socket-${version}";
-    version = "3.0-rc1";
-    src = fetchurl {
-      url = "https://github.com/diegonehab/luasocket/archive/v${version}.tar.gz";
+    name = "socket-2016-06-22";
+
+    src = fetchFromGitHub {
+      owner = "diegonehab";
+      repo = "luasocket";
+      rev = "316a9455b9cb4637fe6e62b20fbe05f5141fec54";
       sha256 = "0j8jx8bjicvp9khs26xjya8c495wrpb7parxfnabdqa5nnsxjrwb";
     };
 
@@ -186,10 +188,15 @@ let
           -i src/makefile
     '';
 
-    meta = {
-      homepage = "http://w3.impa.br/~diego/software/luasocket/";
-      hydraPlatforms = stdenv.lib.platforms.linux;
-      maintainers = with maintainers; [ mornfall ];
+    meta = with stdenv.lib; {
+      description = "Network support for the Lua language";
+      homepage = http://w3.impa.br/~diego/software/luasocket/;
+      license = licenses.mit;
+      maintainers = with maintainers; [
+        codyopel
+      ];
+      platforms = with platforms;
+        x86_64-linux;
     };
   };
 

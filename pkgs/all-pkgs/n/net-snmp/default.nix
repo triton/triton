@@ -7,11 +7,14 @@
 , openssl
 }:
 
+let
+  version = "5.7.3";
+in
 stdenv.mkDerivation rec {
-  name = "net-snmp-5.7.3";
+  name = "net-snmp-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/net-snmp/${name}.tar.gz";
+    url = "mirror://sourceforge/net-snmp/net-snmp/${version}/${name}.tar.gz";
     hashOutput = false;
     multihash = "QmW7RctNcJdAKcqoayYwRUDWmzbZHAT4R3tLvpFuFBWxLE";
     sha256 = "12ef89613c7707dc96d13335f153c1921efc9d61d3708ef09f3fc4a7014fb4f0";

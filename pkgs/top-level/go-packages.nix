@@ -163,12 +163,12 @@ let
   };
 
   oauth2 = buildFromGitHub {
-    version = 1;
-    rev = "c10ba270aa0bf8b8c1c986e103859c67a9103061";
-    date = "2016-08-24";
+    version = 2;
+    rev = "3c3a985cb79f52a3190fbc056984415ca6763d01";
+    date = "2016-08-26";
     owner = "golang";
     repo = "oauth2";
-    sha256 = "0683g8iz4yj42ys274n5y3z0wjq3wb4kgni1s6l3vyqnh4m50lcn";
+    sha256 = "0519swla7184nvn62bpvrvlpwxxgrmq5vdf37v92ipda31l5hvm9";
     goPackagePath = "golang.org/x/oauth2";
     goPackageAliases = [ "github.com/golang/oauth2" ];
     propagatedBuildInputs = [
@@ -179,12 +179,12 @@ let
 
 
   protobuf = buildFromGitHub {
-    version = 1;
-    rev = "888eb0692c857ec880338addf316bd662d5e630e";
-    date = "2016-08-23";
+    version = 2;
+    rev = "1f49d83d9aa00e6ce4fc8258c71cc7786aec968a";
+    date = "2016-08-24";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "1higr6dlr987fa089333xh79999p76pavfbism8vjcmjhwwf5dk5";
+    sha256 = "0q04is47nj8bryh548k5j52c62w4h2x2lw8rr34257xqp7i51vmc";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [
       "code.google.com/p/goprotobuf"
@@ -1072,12 +1072,12 @@ let
   };
 
   gcloud-golang = buildFromGitHub {
-    version = 1;
-    date = "2016-08-24";
-    rev = "65251e303031ca54158297bcd90cb8b18d63dc16";
+    version = 2;
+    date = "2016-09-06";
+    rev = "a47b182e769f5e75f5fc927ff6ee2678f7f552cf";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "14y9fj5qazfbaxr9mybq0ih45kjcbqxgg3j90z866vyyamayi1w1";
+    sha256 = "0n3791sfcigpaamhh9vx34wqzch3llapsr0j1f648l67qk6s68hk";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -1087,7 +1087,7 @@ let
       oauth2
       protobuf
       google-api-go-client
-      grpc-go
+      grpc
     ];
     excludedPackages = "oauth2";
     meta.useUnstable = true;
@@ -1100,7 +1100,7 @@ let
     ];
     propagatedBuildInputs = [
       google-api-go-client
-      grpc-go
+      grpc
       net
       oauth2
     ];
@@ -1110,6 +1110,21 @@ let
     inherit (gcloud-golang) rev date owner repo sha256 version goPackagePath goPackageAliases meta;
     subPackages = [ "compute/metadata" "internal" ];
     buildInputs = [ net ];
+  };
+
+  genproto = buildFromGitHub {
+    version = 2;
+    date = "2016-08-16";
+    rev = "44808ed2d86e258615bb701d395cbbfe6686a3e6";
+    owner  = "google";
+    repo   = "go-genproto";
+    goPackagePath = "google.golang.org/genproto";
+    sha256 = "00bbwg0w389s9knb1hbspvik3kf9njl17ndjxbpxfmy6zzgi028c";
+    propagatedBuildInputs = [
+      grpc
+      net
+      protobuf
+    ];
   };
 
   geoip2-golang = buildFromGitHub {
@@ -1138,12 +1153,12 @@ let
   };
 
   ginkgo = buildFromGitHub {
-    version = 1;
-    rev = "43e2af1f01ace55adbb6d7d0f30416476db1baae";
+    version = 2;
+    rev = "7b6efc7d7b052568b49ac02d3141c9d7a5a494a4";
     owner = "onsi";
     repo = "ginkgo";
-    sha256 = "1rmjg2xp1y3scgzw1c6a9yp37nghphpl92953r3n9dkzfs17dmha";
-    date = "2016-08-17";
+    sha256 = "1zrc3lf0cq1j600d5p9gfrn4mg43fn975nix82m55c4namqdgwpd";
+    date = "2016-09-02";
   };
 
   glob = buildFromGitHub {
@@ -1375,12 +1390,12 @@ let
   };
 
   goleveldb = buildFromGitHub {
-    version = 1;
-    rev = "75d6fe32d6a043803db42238a38ffdf430ac99e0";
-    date = "2016-08-24";
+    version = 2;
+    rev = "6ae1797c0b42b9323fc27ff7dcf568df88f2f33d";
+    date = "2016-08-25";
     owner = "syndtr";
     repo = "goleveldb";
-    sha256 = "121nyv4ab7c8caifnf1lmm79xkl3w4sdlpisi24kzydapvqgrdw9";
+    sha256 = "057ml2rlla20g4qywbdzrh2iw7l7fqj6rsvrhhwagqxwhcmpzcb4";
     propagatedBuildInputs = [ ginkgo gomega snappy ];
   };
 
@@ -1398,18 +1413,19 @@ let
   };
 
   google-api-go-client = buildFromGitHub {
-    version = 1;
-    rev = "f4e2385bc1995adebbf0aad237b4f20d6cd85702";
-    date = "2016-08-24";
+    version = 2;
+    rev = "63cb68f1e3834e44683ca062ddf06cb9a889380a";
+    date = "2016-09-01";
     owner = "google";
     repo = "google-api-go-client";
-    sha256 = "1r47zklfxi8zf5phb9znhzq8kgrib56aij5a7zz842qqf8kk8rvc";
+    sha256 = "0g03kbs5hj9pr1biw6glfabk9zsayzlvdnr188i5vnkf1wgd1bxd";
     goPackagePath = "google.golang.org/api";
     goPackageAliases = [
       "github.com/google/google-api-client"
     ];
     buildInputs = [
-      grpc-go
+      genproto
+      grpc
       net
       oauth2
     ];
@@ -2110,18 +2126,18 @@ let
     buildInputs = [ protobuf ];
   };
 
-  grpc-go = buildFromGitHub {
-    version = 1;
-    rev = "9874075aee19e6927aa4ff5b76ee25701bb95922";
+  grpc = buildFromGitHub {
+    version = 2;
+    rev = "0e6ec3a4501ee9ee2d023abe92e436fd04ed4081";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "1wswi0ji04ysvbk8972gc4705v2gqz5n9vsyfjzxwjxpn73m3ps3";
+    sha256 = "1ph5dpzgnhs7al22vq1npczjs6sypv3445rc1692nnizhlwfczcd";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [ "github.com/grpc/grpc-go" ];
     propagatedBuildInputs = [ http2 net protobuf oauth2 glog ];
     excludedPackages = "\\(test\\|benchmark\\)";
     meta.useUnstable = true;
-    date = "2016-08-24";
+    date = "2016-09-06";
   };
 
   gucumber = buildFromGitHub {
@@ -3043,12 +3059,12 @@ let
   };
 
   pq = buildFromGitHub {
-    version = 1;
-    rev = "80f8150043c80fb52dee6bc863a709cdac7ec8f8";
+    version = 2;
+    rev = "50761b0867bd1d9d069276790bcd4a3bccf2324a";
     owner  = "lib";
     repo   = "pq";
-    sha256 = "059zn2vxalad9fx29g2ls14rhwdf7773cs4p0padjrz1aixcifgz";
-    date = "2016-08-06";
+    sha256 = "143sd61qzzmnb16n33z89zgva1z2cznavlhzx38w1prckhf9j644";
+    date = "2016-08-31";
   };
 
   prometheus = buildFromGitHub {
@@ -3543,11 +3559,11 @@ let
   };
 
   syncthing = buildFromGitHub rec {
-    version = 1;
-    rev = "v0.14.5";
+    version = 2;
+    rev = "v0.14.6";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "08bbx86izs2mz3894n559nw0z91a2vvh4fgbxdy6dlpxf79clwck";
+    sha256 = "0nba0ddkc7zdqaw5gyhy1s0bdvd3ghsfvxc732v1m144w074z8yq";
     buildFlags = [ "-tags noupgrade" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext
@@ -3832,7 +3848,7 @@ let
       appengine
       asn1-ber
       mgo_v2
-      grpc-go
+      grpc
       pester
       logxi
       go-colorable

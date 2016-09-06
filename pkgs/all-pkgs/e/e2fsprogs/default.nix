@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "e2fsprogs-1.43.2";
+  name = "e2fsprogs-1.43.3";
 
   src = fetchurl {
     url = "mirror://sourceforge/e2fsprogs/${name}.tar.gz";
     hashOutput = false;
-    multihash = "QmaMJb99wi2Rt7DRi7ihyKfHXGPdGXnej3K7EZurvWikFK";
-    sha256 = "20085fd43d52b8f81bda259a7df5c2b1a7a745b6fd3d082a2915965dd77f5365";
+    multihash = "QmTKE4hEyybo8Y36rcKg4DwMhzzoYejoGUSTywV7a3QXP5";
+    sha256 = "ce8ef1bbb0d4730f170167284fda156ac9d6bf18db2750eb94af619a81b19927";
   };
 
   buildInputs = [

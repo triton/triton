@@ -3115,9 +3115,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   telepathy_glib = callPackage ../development/libraries/telepathy/glib { };
 #
-  tinyxml2 = callPackage ../development/libraries/tinyxml/2.6.2.nix { };
-#
-unixODBC = callPackage ../development/libraries/unixODBC { };
+nixODBC = callPackage ../development/libraries/unixODBC { };
 #
   uthash = callPackage ../development/libraries/uthash { };
 #

@@ -287,6 +287,7 @@ fixUrls() {
       mirror="$(echo "$url" | awk -F/ '{print $3}')"
       base="$(echo "$url" | awk -F/ '{ for (i=4; i<=NF; i++) { printf "%s", "/" $i; } }')"
       while read mirror; do
+        eval mirror="\"$mirror\""
         result+=("$mirror$base")
       done < <(awk -v mirror="$mirror" '{
           if ($0 ~ "^" mirror " ") {

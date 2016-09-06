@@ -856,6 +856,8 @@ expat = callPackage ../all-pkgs/e/expat { };
 
 expect = callPackage ../all-pkgs/e/expect { };
 
+extra-cmake-modules = callPackage ../all-pkgs/e/extra-cmake-modules { };
+
 f2fs-tools = callPackage ../all-pkgs/f/f2fs-tools { };
 
 faac = callPackage ../all-pkgs/f/faac { };

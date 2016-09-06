@@ -6,7 +6,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "e2fsprogs-1.43.2";
+  name = "e2fsprogs-1.43.3";
 
   src = fetchurl {
     url = "mirror://sourceforge/e2fsprogs/${name}.tar.gz";

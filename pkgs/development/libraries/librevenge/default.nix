@@ -5,7 +5,7 @@ let
     baseName="librevenge";
     version="0.0.4";
     name="${baseName}-${version}";
-    url="mirror://sourceforge/project/libwpd/librevenge/librevenge-${version}/librevenge-${version}.tar.xz";
+    url="mirror://sourceforge/libwpd/librevenge/librevenge-${version}/librevenge-${version}.tar.xz";
     sha256="1cj76cz4mqcy2mgv9l5xlc95bypyk8zbq0ls9cswqrs2y0lhfgwk";
   };
   buildInputs = [

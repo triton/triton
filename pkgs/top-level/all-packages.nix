@@ -2260,6 +2260,8 @@ screen = callPackage ../all-pkgs/s/screen { };
 
 scrot = callPackage ../all-pkgs/s/scrot { };
 
+sddm = callPackage ../all-pkgs/s/sddm { };
+
 # TODO SDL is a clusterfuck that needs to be fixed / renamed
 SDL = callPackage ../all-pkgs/s/SDL_1 { };
 

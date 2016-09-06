@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   name = "libfilezilla-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/project/filezilla/libfilezilla/${version}/${name}.tar.bz2";
+    url = "mirror://sourceforge/filezilla/libfilezilla/${version}/${name}.tar.bz2";
     multihash = "Qmb7k9Ly992SmbRJqKfyWimGKSb6dzfnRgMKcrjfYyYALb";
     sha256 = "73c3ada6f9c5649abd93e6a3e7ecc6682d4f43248660b5506918eab76a7b901b";
   };

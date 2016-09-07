@@ -113,17 +113,56 @@ let
           fi
       done
 
+      check_test_string() {
+        if [ "$1" == "$2" ] ; then
+          echo 'test passed'
+        else
+          echo 'test failed'
+          # Allow running command for additional debug information
+          eval $3
+          return 1
+        fi
+      }
+
       # Make sure that the patchelf'ed binaries still work.
       echo "testing patched programs..."
-      $out/bin/ash -c 'echo hello world' | grep "hello world"
+
+      echo 'TESTING: ash'
+      TEST_ASH="$(
+        $out/bin/ash -c 'echo hello world' | grep -o "hello world" || :
+      )"
+      check_test_string 'hello world' "$TEST_ASH"
+
       export LD_LIBRARY_PATH=$out/lib
-      $out/bin/mount --help 2>&1 | grep -q "BusyBox"
-      $out/bin/blkid --help 2>&1 | grep -q 'libblkid'
+
+      echo 'TESTING: mount'
+      TEST_MOUNT="$($out/bin/mount --help 2>&1 | grep -o "BusyBox" || :)"
+      check_test_string 'BusyBox' "$TEST_MOUNT" "$out/bin/mount --help"
+
+      echo 'TESTING: blkid'
+      TEST_BLKID="$($out/bin/blkid --help 2>&1 | grep -o 'libblkid' || :)"
+      check_test_string 'libblkid' "$TEST_BLKID" "$out/bin/blkid --help"
+
+      echo 'TESTING: udevadm'
       $out/bin/udevadm --version
-      $out/bin/dmsetup --version 2>&1 | tee -a log | grep -q "version:"
-      LVM_SYSTEM_DIR=$out $out/bin/lvm version 2>&1 | tee -a log | grep -q "LVM"
+
+      echo 'TESTING: dmsetup'
+      TEST_DMSETUP="$(
+        $out/bin/dmsetup --version 2>&1 | tee -a log | grep -o "version:" || :
+      )"
+      check_test_string 'version:' "$TEST_DMSETUP" "$out/bin/dmsetup --version"
+
+      echo 'TESTING: lvm'
+      TEST_LVM="$(
+        LVM_SYSTEM_DIR="$out" \
+          $out/bin/lvm version 2>&1 | tee -a log | grep -o "LVM" || :
+      )"
+      check_test_string 'LVM' "$TEST_LVM" "$out/bin/lvm version"
+
+      echo 'TESTING: mdadm'
       $out/bin/mdadm --version
 
+      echo 'running boot.initrd.extraUtilsCommandsTest'
       ${config.boot.initrd.extraUtilsCommandsTest}
     ''; # */
 

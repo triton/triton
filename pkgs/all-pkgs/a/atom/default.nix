@@ -31,7 +31,7 @@ let
   inherit (stdenv.lib)
     makeSearchPath;
 
-  version = "1.10.0";
+  version = "1.10.2";
 in
 stdenv.mkDerivation rec {
   name = "atom-${version}";

@@ -3,17 +3,17 @@
 }:
 
 let
-  version = "0.8.1";
+  version = "1.0.0";
 in
 stdenv.mkDerivation rec {
   name = "zstd-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
-    owner = "Cyan4973";
+    version = 2;
+    owner = "facebook";
     repo = "zstd";
     rev = "v${version}";
-    sha256 = "08f4ba5492877a20ffd5c98d1ed5e41c6133e43ec6da5d1fe120b4b2e57caaa3";
+    sha256 = "d69340e794c30a20497e54de78e04f1c1951b64c3d65fc76f66b906c305ff115";
   };
 
   # Makefile builds during the install phase

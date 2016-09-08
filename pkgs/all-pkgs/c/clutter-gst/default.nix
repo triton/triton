@@ -54,7 +54,6 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    #"--help"
     "--disable-maintainer-flags"
     "--disable-debug"
     "--disable-gtk-doc"

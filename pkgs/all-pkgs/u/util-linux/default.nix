@@ -35,7 +35,7 @@ let
   tarballUrls = base: patch: map (n: "${n}/util-linux-${version base patch}.tar") (baseUrls base);
 
   base = "2.28";
-  patch = "1";
+  patch = "2";
 in
 
 stdenv.mkDerivation rec {
@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls base patch);
     hashOutput = false;
-    sha256 = "3ece4ea4a34ef786b68f5c415e848390424232abd1ee00f7ee5bddc30657b60f";
+    sha256 = "b89d37146f20bede93a42c847bce881a17e6dbd8066ff2db2bee733fa409f0cd";
   };
 
   nativeBuildInputs = [
@@ -68,9 +68,9 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "b84e67b8138aa3305c7047b5affa393b7d875af2";
-      file = "util-linux/fix-paths.patch";
-      sha256 = "0925c16024be1927250fa32378bf6a69f37e9be2d91d9a5a7541aa54340af384";
+      rev = "a1d83ec4599abadc041176fb3949a2fc33e6a8fb";
+      file = "u/util-linux/fix-paths.patch";
+      sha256 = "f471c78e42aa88b55924a39c0692815fc37a4814668ded26fd3b05352b9575e8";
     })
   ];
 
@@ -135,12 +135,12 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      urls = map (n: "${n}.xz") (tarballUrls "2.28" "1");
-      pgpsigUrls = map (n: "${n}.sign") (tarballUrls "2.28" "1");
+      urls = map (n: "${n}.xz") (tarballUrls "2.28" "2");
+      pgpsigUrls = map (n: "${n}.sign") (tarballUrls "2.28" "2");
       pgpsigSha256Urls = map (n: "${n}/sha256sums.asc") (baseUrls "2.28");
       pgpKeyFingerprint = "B0C6 4D14 301C C6EF AEDF  60E4 E4B7 1D5E EC39 C284";
       pgpDecompress = true;
-      outputHash = "3ece4ea4a34ef786b68f5c415e848390424232abd1ee00f7ee5bddc30657b60f";
+      outputHash = "b89d37146f20bede93a42c847bce881a17e6dbd8066ff2db2bee733fa409f0cd";
       inherit (src) outputHashAlgo;
     };
   };

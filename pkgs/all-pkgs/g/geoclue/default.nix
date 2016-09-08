@@ -17,7 +17,7 @@ let
     enFlag;
 
   versionMajor = "2.4";
-  version = "${versionMajor}.3";
+  version = "${versionMajor}.4";
 in
 stdenv.mkDerivation rec {
   name = "geoclue-${version}";
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://www.freedesktop.org/software/geoclue/releases/"
       + "${versionMajor}/${name}.tar.xz";
-    sha256 = "ada9dba870dd79e1b21923aeda4d82b66cbda39e57978fbe3d83d356cc3c605e";
+    sha256 = "9c43fb9d0c12067ea64400500abb0640194947d4c2c55e38545afe5d9c5c315c";
   };
 
   nativeBuildInputs = [

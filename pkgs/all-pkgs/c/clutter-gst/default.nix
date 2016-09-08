@@ -19,7 +19,7 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
+    boolEn
     optionals
     strings;
 
@@ -59,9 +59,9 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
   ] ++ optionals is3x [
-    (enFlag "udev" (libgudev != null) null)
+    "--${boolEn (libgudev != null)}-udev"
     "--enable-gl-texture-upload"
   ];
 

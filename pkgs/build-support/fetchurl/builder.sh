@@ -389,10 +389,12 @@ auxDownload() {
     if [ "$insecureProtocolDowngrade" != "1" ]; then
       extraOpts+=('--proto-redir' '-all,https')
     fi
-  fi
 
-  if [ "$insecureProtocolDowngrade" != "1" ] && echo "$curlOpts" | grep -q -v '\--insecure'; then
-    usedHttps=
+    if [ "$insecureProtocolDowngrade" != "1" ] && echo "$curlOpts" | grep -q -v '\--insecure'; then
+      usedHttps=
+    else
+      unset usedHttps
+    fi
   else
     unset usedHttps
   fi

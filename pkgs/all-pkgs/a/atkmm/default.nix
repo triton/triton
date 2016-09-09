@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/atkmm/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/atkmm/${channel}/${name}.sha256sum";
+    hashOutput = false;
     inherit (source) sha256;
   };
 
@@ -33,6 +33,18 @@ stdenv.mkDerivation rec {
     "--without-libsigc-doc"
     "--without-glibmm-doc"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/atkmm/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "C++ interface for the ATK library";

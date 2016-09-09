@@ -14,7 +14,7 @@
 , wayland
 , xorg
 
-, channel ? "1.22"
+, channel
 }:
 
 let

@@ -17,8 +17,8 @@
 
 let
   inherit (stdenv.lib)
-    optionals
-    wtFlag;
+    boolWt
+    optionals;
 
   source = (import ./sources.nix { })."${channel}";
 in
@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-schemas-compile"
     "--enable-p2p"
-    (wtFlag "tests" doCheck null)
+    "--${boolWt doCheck}-tests"
   ];
 
   doCheck = false;

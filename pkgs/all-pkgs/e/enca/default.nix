@@ -6,11 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "enca-1.18";
+  name = "enca-1.19";
 
   src = fetchurl {
     url = "https://dl.cihar.com/enca/${name}.tar.xz";
-    sha256 = "019995e9324510f0667b73e88753bc496c744f93bff48bbfb114165f8875326c";
+    multihash = "QmeByvryGNDd9ysbSk4omYmNAvuGvueKMRn22EWZ1pCiRY";
+    sha256 = "3a487eca40b41021e2e4b7a6440b97d822e6532db5464471f572ecf77295e8b8";
   };
 
   postPatch = ''

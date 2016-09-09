@@ -704,7 +704,7 @@ clutter-gtk = callPackageAlias "clutter-gtk_1-8" { };
 
 cmake = callPackage ../all-pkgs/c/cmake { };
 
-cogl_1-22 callPackage = ../all-pkgs/c/cogl {
+cogl_1-22 = callPackage ../all-pkgs/c/cogl {
   channel = "1.22";
 };
 cogl = callPackageAlias "cogl_1-22" { };

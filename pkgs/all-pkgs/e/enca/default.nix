@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Detects encoding of text files and can convert them";
-    homepage = http://???;
+    homepage = http://cihar.com/software/enca/;
     license = licenses.gpl2;
     maintainers = with maintainers; [
       codyopel

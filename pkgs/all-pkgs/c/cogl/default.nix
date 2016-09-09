@@ -21,14 +21,16 @@ let
   inherit (stdenv.lib)
     boolEn
     optionalString;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "cogl-${channel}.2";
 
   src = fetchurl {
     url = "mirror://gnome/sources/cogl/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/cogl/${channel}/${name}.sha256sum";
-    sha256 = "39a718cdb64ea45225a7e94f88dddec1869ab37a21b339ad058a9d898782c00d";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -115,6 +117,18 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/cogl/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "2D graphics library with support for multiple output devices";

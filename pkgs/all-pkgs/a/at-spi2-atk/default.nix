@@ -27,6 +27,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/at-spi2-atk/${channel}/${name}.tar.xz";
+    hashOutput = false;
     inherit (source) sha256;
   };
 

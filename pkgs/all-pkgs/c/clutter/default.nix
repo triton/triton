@@ -37,9 +37,9 @@ assert xorg != null ->
 
 let
   inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
+    boolEn
+    boolWt
+    optionals;
 
   source = (import ./sources.nix { })."${channel}";
 in
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/clutter/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/clutter/${channel}/${name}.sha256sum";
+    hashOutput = false;
     inherit (source) sha256;
   };
 
@@ -89,26 +89,26 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-glibtest"
     "--enable-Bsymbolic"
-    (enFlag "x11-backend" (xorg != null) null)
+    "--${boolEn (xorg != null)}-x11-backend"
     "--disable-win32-backend"
     "--disable-quartz-backend"
     "--enable-gdk-backend"
-    (enFlag "wayland-backend" (wayland != null) null)
+    "--${boolEn (wayland != null)}-wayland-backend"
     "--enable-egl-backend"
     "--disable-mir-backend"
     "--disable-cex100-backend"
     # TODO: tslib, touch screen support
     "--disable-tslib-input"
     "--enable-evdev-input"
-    (enFlag "wayland-compositor" (wayland != null) null)
-    (enFlag "xinput" (xorg != null) null)
-    (enFlag "gdk-pixbuf" (gdk-pixbuf != null) null)
+    "--${boolEn (wayland != null)}-wayland-compositor"
+    "--${boolEn (xorg != null)}-xinput"
+    "--${boolEn (gdk-pixbuf != null)}-gdk-pixbuf"
     "--disable-debug"
     "--disable-deprecated"
     "--disable-maintainer-flags"
     #"--disable-Werror"
     "--disable-gcov"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -118,8 +118,20 @@ stdenv.mkDerivation rec {
     "--disable-installed-tests"
     "--disable-always-build-tests"
     "--disable-examples"
-    (wtFlag "x" (xorg != null) null)
+    "--${boolWt (xorg != null)}-x"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/clutter/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Library for creating graphical user interfaces";

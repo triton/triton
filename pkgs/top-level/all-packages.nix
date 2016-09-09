@@ -762,7 +762,10 @@ dbus = callPackage ../all-pkgs/d/dbus { };
 
 dbus-glib = callPackage ../all-pkgs/d/dbus-glib { };
 
-dconf = callPackage ../all-pkgs/d/dconf { };
+dconf_0-26 = callPackage ../all-pkgs/d/dconf {
+  channel = "0.26";
+};
+dconf = callPackageAlias "dconf_0-26" { };
 
 dconf-editor = callPackage ../all-pkgs/d/dconf-editor { };
 

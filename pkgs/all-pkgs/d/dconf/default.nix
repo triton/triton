@@ -13,18 +13,20 @@
 , gtk3
 , libxml2
 , vala
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "dconf-${version}";
-  versionMajor = "0.26";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "dconf-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/dconf/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/dconf/${versionMajor}/${name}.sha256sum";
-    sha256 = "8683292eb31a3fae31e561f0a4220d8569b0f6d882e9958b68373f9043d658c9";
+    url = "mirror://gnome/sources/dconf/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -50,6 +52,18 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--disable-gcov"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/dconf/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Simple low-level configuration system";

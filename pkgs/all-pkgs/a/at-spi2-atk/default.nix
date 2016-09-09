@@ -27,8 +27,6 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/at-spi2-atk/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/at-spi2-atk/${channel}/"
-      + "${name}.sha256sum";
     inherit (source) sha256;
   };
 
@@ -55,6 +53,18 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/at-spi2-atk/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Gtk module for bridging AT-SPI to Atk";

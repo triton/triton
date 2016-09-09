@@ -20,8 +20,8 @@ assert xorg != null ->
 
 let
   inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+    boolEn
+    boolWt;
 
   source = (import ./sources.nix { })."${channel}";
 in
@@ -30,8 +30,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/at-spi2-core/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/at-spi2-core/${channel}/"
-      + "${name}.sha256sum";
+    hashOutput = false;
     inherit (source) sha256;
   };
 
@@ -56,16 +55,28 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-nls"
-    (enFlag "x11" (xorg != null) null)
+    "--${boolEn (xorg != null)}-x11"
     # xevie is deprecated/broken since xorg-1.6/1.7
     "--disable-xevie"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (wtFlag "x" (xorg != null) null)
+    "--${boolWt (xorg != null)}-x"
     "--with-dbus-daemondir=/run/current-system/sw/bin/"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/at-spi2-core/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "D-Bus accessibility specifications and registration daemon";

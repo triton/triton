@@ -491,6 +491,8 @@ accountsservice = callPackage ../all-pkgs/a/accountsservice { };
 
 acl = callPackage ../all-pkgs/a/acl { };
 
+acme-client = callPackage ../all-pkgs/a/acme-client { };
+
 acpid = callPackage ../all-pkgs/a/acpid { };
 
 adns = callPackage ../all-pkgs/a/adns { };
@@ -1386,8 +1388,6 @@ lego = pkgs.goPackages.lego.bin // { outputs = [ "bin" ]; };
 lensfun = callPackage ../all-pkgs/l/lensfun { };
 
 leptonica = callPackage ../all-pkgs/l/leptonica { };
-
-letskencrypt = callPackage ../all-pkgs/l/letskencrypt { };
 
 leveldb = callPackage ../all-pkgs/l/leveldb { };
 

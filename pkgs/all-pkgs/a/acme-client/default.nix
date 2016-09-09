@@ -6,14 +6,14 @@
 }:
 
 stdenv.mkDerivation {
-  name = "letskencrypt-2016-08-22";
+  name = "acme-client-2016-09-03";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "kristapsdz";
-    repo = "letskencrypt-portable";
-    rev = "ec55b5616bbeef9388fe5a2a557b319c6653a763";
-    sha256 = "00cb44b6c9f278410292109369c5d4cc56fdbcf2de324454bdea10c5c6ee6f0e";
+    repo = "acme-client-portable";
+    rev = "e15995f0fcd196a8c8fd7fe376f5c30c6c463b55";
+    sha256 = "78669a67d695ce1adad08082d2c42b988641d5ce435995e08bf6521406817640";
   };
 
   buildInputs = [

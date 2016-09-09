@@ -32,8 +32,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/clutter-gst/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/clutter-gst/${channel}/"
-      + "${name}.sha256sum";
+    hashOutput = false;
     inherit (source) sha256;
   };
 
@@ -66,6 +65,18 @@ stdenv.mkDerivation rec {
   ];
 
   postBuild = "rm -rvf $out/share/gtk-doc";
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/clutter-gst/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "GStreamer bindings for clutter";

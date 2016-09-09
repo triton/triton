@@ -19,44 +19,46 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
-    wtFlag
+    boolEn
+    boolString
+    boolWt
     optionalString;
-in
 
+    channel = "2.24";
+    version = "2.24.31";
+in
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";
-  versionMajor = "2.24";
-  versionMinor = "30";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
-    sha256 = "0l6aqk86aw5w132ygy6hv6nlxvd1h6xg7c85qbm60p6mnv1ww58d";
+    url = "mirror://gnome/sources/gtk+/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    sha256 = "68c1922732c7efc08df4656a5366dcc3afdc8791513400dac276009b40954658";
   };
 
   configureFlags = [
-    (enFlag "shm" (xorg.libXext != null) null)
-    (enFlag "xkb" (libxkbcommon != null) null)
-    (enFlag "xinerama" (xorg.libXinerama != null) null)
+    "--${boolEn (xorg.libXext != null)}-shm"
+    "--${boolEn (libxkbcommon != null)}-xkb"
+    "--${boolEn (xorg.libXinerama != null)}-xinerama"
     "--enable-rebuilds"
     "--enable-visibility"
     "--enable-explicit-deps"
     "--enable-glibtest"
     "--enable-modules"
     "--disable-quartz-relocation"
-    (enFlag "cups" (cups != null) null)
-    (enFlag "papi" false null)
-    (enFlag "test-print-backend" (cups != null) null)
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (cups != null)}-cups"
+    "--disable-papi"
+    "--${boolEn (cups != null)}-test-print-backend"
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--enable-man"
-    (wtFlag "xinput" (xorg.libXi != null) null)
-    (wtFlag "gdktarget" (true) "x11") # add xorg deps
+    "--${boolWt (xorg.libXi != null)}-xinput"
+    "--${boolWt (xorg != null)}-gdktarget${
+      boolString (xorg != null) "=x11" ""}"
     #"--with-gdktarget=directfb"
-    (wtFlag "x" (xorg != null) null)
+    "--${boolWt (xorg != null)}-x"
   ];
 
   nativeBuildInputs = [
@@ -91,8 +93,6 @@ stdenv.mkDerivation rec {
 
   postInstall = "rm -rf $out/share/gtk-doc";
 
-  enableParallelBuilding = true;
-
   passthru = {
     gtkExeEnvPostBuild = ''
       rm -v $out/lib/gtk-2.0/2.10.0/immodules.cache
@@ -100,6 +100,16 @@ stdenv.mkDerivation rec {
         $out/lib/gtk-2.0/2.10.0/immodules/*.so > \
         $out/lib/gtk-2.0/2.10.0/immodules.cache
     ''; # workaround for bug of nix-mode for Emacs */ '';
+
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gtk+/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
   };
 
   meta = with stdenv.lib; {

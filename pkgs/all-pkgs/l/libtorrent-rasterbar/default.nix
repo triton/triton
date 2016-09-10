@@ -6,20 +6,18 @@
 , pythonPackages
 , zlib
 
-, channel ? null
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag
+    boolEn
     replaceChars
     versionOlder;
   inherit (builtins.getAttr channel (import ./sources.nix))
     sha256
     version;
-in
 
-let
   versionFormatted =
     # For initial minor releases drop the trailing zero
     if replaceChars ["${channel}."] [""] version == "0" then
@@ -32,7 +30,6 @@ let
     else
       null;
 in
-
 stdenv.mkDerivation rec {
   name = "libtorrent-rasterbar-${version}";
 
@@ -71,7 +68,7 @@ stdenv.mkDerivation rec {
     (libtorrentOlder "1.1" "--disable-geoip")
     "--disable-examples"
     "--disable-tests"
-    (enFlag "python-binding" (pythonPackages.python != null) null)
+    "--${boolEn (pythonPackages.python != null)}-python-binding"
     "--with-boost=${boost.dev}"
     "--with-boost-libdir=${boost.lib}/lib"
     (libtorrentOlder "1.1" "--without-libgeoip")

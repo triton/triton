@@ -30,18 +30,17 @@
 let
   inherit (stdenv.lib)
     enFlag;
+
+    channel = "0.3";
+    version = "0.3.3";
 in
 stdenv.mkDerivation rec {
   name = "grilo-plugins-${version}";
-  versionMajor = "0.3";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/grilo-plugins/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/grilo-plugins/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "605d04c40a9ed4fec4c590ff3e0da0de175e3a064bba96bdb26c5a7c0d3e6daa";
+    url = "mirror://gnome/sources/grilo-plugins/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    sha256 = "fe66e887847fef9c361bcb7226047c43b2bc22b172aaf22afd5534947cc85b9c";
   };
 
   nativeBuildInputs = [
@@ -108,6 +107,18 @@ stdenv.mkDerivation rec {
   installFlags = [
     "GRL_PLUGINS_DIR=$(out)/lib/grilo-0.2"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/grilo-plugins/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A collection of plugins for the Grilo framework";

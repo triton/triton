@@ -212,7 +212,7 @@ let
   testShell = "${bash}/bin/bash --norc";
   completion = "${bash-completion}/share/bash-completion/bash_completion";
 
-  version = "2016-08-31";
+  version = "2016-09-09";
 in
 buildPythonPackage rec {
   name = "beets-${version}";
@@ -221,8 +221,8 @@ buildPythonPackage rec {
     version = 1;
     owner = "sampsyo";
     repo = "beets";
-    rev = "27f48eff0f0d9934c8f7ba69f3e504d1c732dc83";
-    sha256 = "9f717a989c75a1f84dcf6b535ad9d45031aeeefaad1bbbe09ef14b5015ce033b";
+    rev = "b63ac3aef7a586ff86fd5768a7d0bc0f0f3c7e10";
+    sha256 = "991965702d6af93a3c8b6e9af8d0d2d30cf7cbbb47c0a01d6f3f3b302e88b796";
   };
 
   nativeBuildInputs = [

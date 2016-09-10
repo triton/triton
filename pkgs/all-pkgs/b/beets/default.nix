@@ -54,7 +54,7 @@
 # External plugins
 , enableAlternatives ? false
 #, enableArtistCountry ? true
-#, enableCopyArtifacts ? true
+, enableCopyArtifacts ? true
 , enableBeetsMoveAllArtifacts ? true
 }:
 
@@ -290,16 +290,15 @@ buildPythonPackage rec {
       }
     )*/
     # FIXME: Causes other plugins to fail to load
-    /*++ optional enableCopyArtifacts (
+    ++ optional enableCopyArtifacts (
       import ./plugins/beets-copyartifacts.nix {
         inherit
           stdenv
           buildPythonPackage
           fetchFromGitHub
-          fetchTritonPatch
-          pythonPackages;
+          fetchTritonPatch;
       }
-    )*/
+    )
     /* Provides edit & moveall plugins */
     ++ optional enableBeetsMoveAllArtifacts (
       import ./plugins/beets-moveall-artifacts.nix {

@@ -26,10 +26,15 @@ buildPythonPackage rec {
   ];
 
   postPatch = /* Prevent recursive dependency on beets */ ''
-    #sed -i setup.py \
-    #  -e '/install_requires/,/\]/{/beets/d}'
     sed -i setup.py \
-      -e '/install_requires/d'
+      -e '/install_requires/,/\]/{/beets/d}' \
+      -e '/namespace_packages/d' setup.py
+  '' + ''
+    cat > beetsplug/__init__.py <<'EOF'
+    from pkgutil import extend_path
+    __path__ = extend_path(__path__, __name__)
+
+    EOF
   '';
 
   meta = with stdenv.lib; {

@@ -28,7 +28,7 @@ let
   inherit (stdenv.lib)
     boolEn;
 
-  version = "2016-08-21";
+  version = "2016-08-31";
 in
 stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
@@ -37,8 +37,8 @@ stdenv.mkDerivation rec {
     version = 1;
     owner = "gnome-mpv";
     repo = "gnome-mpv";
-    rev = "2b96f085038eadb45d57f122048d4c54a32fab5f";
-    sha256 = "b5fa7402878566e9889dfb3dc1863a7e2af17986c2c8d8644a177c3d5a00b7f3";
+    rev = "626642745f2da546860c587aea05dfb3ab0e7095";
+    sha256 = "d2521c1e57a2d479a31f3d0e32ec8e8a9046f08a46bff7403dd60fd2479c68e9";
   };
 
   nativeBuildInputs = [

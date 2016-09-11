@@ -13034,10 +13034,10 @@ let self = _self // overrides; _self = with self; {
       sha256 = "1fmp9aib1kaps9vhs4dwxn7b15kgnlz9f714bxvqsd1j1q8spzsj";
     };
     buildInputs = [ pkgs.curl ];
-    preConfigure =
-      ''
-        substituteInPlace Makefile.PL --replace '"cpp"' '"gcc -E"'
-      '';
+    NIX_CFLAGS_COMPILE = "-DCURL_STRICTER";
+    preConfigure = ''
+      sed -e 's,"cpp","gcc -E",g' -i Makefile.PL
+    '';
   };
 
   WWWMechanize = buildPerlPackage {

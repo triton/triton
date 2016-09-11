@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "2016-08-14";
+  version = "2016-08-30";
 in
 stdenv.mkDerivation rec {
   name = "firmware-linux-nonfree-${version}";
@@ -14,11 +14,11 @@ stdenv.mkDerivation rec {
   # the usual set of firmware. firmware/linux-firmware usually lags kernel releases
   # so iwlwifi cards will fail to load on newly released kernels.
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "wkennington";
     repo = "linux-firmware";
-    rev = "70a3c2adcce7c51e4f26e929d666237904f6fd31";
-    sha256 = "c71f5d142276dc7775f547f89d92b12a5072462bc64be9da461b7ddc78d213e5";
+    rev = "c883a6b6186bb2415761d287cbac773062911212";
+    sha256 = "27e5577b9324503413b146858d0d212db20d0b9d6816ea8f0d405545d4b904c6";
   };
 
   preInstall = ''

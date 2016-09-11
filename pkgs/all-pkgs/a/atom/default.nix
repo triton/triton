@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
     url = "https://github.com/atom/atom/releases/download/v${version}/"
       + "atom-amd64.deb";
     name = "${name}.deb";
-    sha256 = "ee0a75f850f555a5c7c655e1f880d2d2ab0f55796b82bc79c140e0d239c406de";
+    sha256 = "d7ccccf8b645db9516f66fe5febea2174877067a67e29ca7efcb3a124bae3fde";
   };
 
   nativeBuildInputs = [

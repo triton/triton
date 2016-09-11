@@ -21,7 +21,7 @@ let
 
   kernelPackages = config.boot.kernelPackages;
 
-  useGit = cfgZfs.useGit || versionAtLeast kernelPackages.kernel.version "4.7";
+  useGit = cfgZfs.useGit || versionAtLeast kernelPackages.kernel.version "4.9";
 
   splKernelPkg = if useGit then kernelPackages.spl_git else kernelPackages.spl;
   zfsKernelPkg = if useGit then kernelPackages.zfs_git else kernelPackages.zfs;

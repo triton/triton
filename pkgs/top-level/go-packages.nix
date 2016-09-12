@@ -3317,7 +3317,7 @@ let
     sha256 = "00s9b7fmzhg3j55hs48s3pvzslfj54k1h9vicj782gg79pgid785";
   };
 
-  gogo_protobuf = buildFromGitHub {
+  protobuf_gogo = buildFromGitHub {
     version = 1;
     owner = "gogo";
     repo = "protobuf";
@@ -3551,7 +3551,7 @@ let
       redis_v2
     ];
   };
-  
+
   sets = buildFromGitHub {
     version = 1;
     rev = "6c54cb57ea406ff6354256a4847e37298194478f";
@@ -3714,7 +3714,7 @@ let
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext
       goleveldb suture qart crypto net text rcrowley_go-metrics
-      go-nat-pmp glob gateway ql groupcache pq gogo_protobuf
+      go-nat-pmp glob gateway ql groupcache pq protobuf_gogo
       geoip2-golang
     ];
     postPatch = ''

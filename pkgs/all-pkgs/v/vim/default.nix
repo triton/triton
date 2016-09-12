@@ -2,6 +2,8 @@
 , fetchFromGitHub
 , gettext
 
+, acl
+, gpm
 , ncurses
 
 , configuration ? ''
@@ -17,18 +19,18 @@ let
   inherit (stdenv.lib)
     optionalString;
 
-  version = "7.4.2243";
+  version = "8.0.0003";
 in
 
 stdenv.mkDerivation rec {
   name = "vim-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "vim";
     repo = "vim";
     rev = "v${version}";
-    sha256 = "20cfe039476a642ffa0e56bb00f2a1b6affa10365c561aca45696ee20f9aeffc";
+    sha256 = "f6adbbebc979718397eae85c504050e2fe26bb69fe5ac5aa1b92a1c99b55e7b8";
   };
 
   nativeBuildInputs = [
@@ -36,6 +38,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    acl
+    gpm
     ncurses
   ];
 

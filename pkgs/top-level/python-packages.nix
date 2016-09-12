@@ -140,6 +140,8 @@ asciinema = callPackage ../all-pkgs/a/asciinema { };
 
 attrs = callPackage ../all-pkgs/a/attrs { };
 
+aws-cli = callPackage ../all-pkgs/a/aws-cli { };
+
 babel = callPackage ../all-pkgs/b/babel { };
 
 babelfish = callPackage ../all-pkgs/b/babelfish { };

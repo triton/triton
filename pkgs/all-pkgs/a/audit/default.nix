@@ -22,15 +22,15 @@ in
 let
   libOnly = prefix == "lib";
 
-  version = "2.6.6";
+  version = "2.6.7";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}audit-${version}";
 
   src = fetchurl {
     url = "https://people.redhat.com/sgrubb/audit/audit-${version}.tar.gz";
-    multihash = "QmVFp1j8wZU3KxGNUVJz7GWtmEUGkWZv7uPLTFhxeax8Na";
-    sha256 = "61d8dc61e882fdbb75153a1316817a8f8c8fca25de588256edd81fbb03e7994b";
+    multihash = "QmS3gYy2Y5dW69Z6RfMvM2VLNx2qahvHg1PafVDXHxqEvU";
+    sha256 = "8923917332daa7833bbc0c1d9eb012167093fbad000da4a9630fb3356aff8cdc";
   };
 
   nativeBuildInputs = [

@@ -19,8 +19,9 @@ let
   tarballUrls = major: minor: [
     "mirror://gnupg/gnutls/v${major}/gnutls-${major}.${minor}.tar.xz"
   ];
+
   major = "3.5";
-  minor = "3";
+  minor = "4";
 in
 stdenv.mkDerivation rec {
   name = "gnutls-${version}";
@@ -29,7 +30,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls major minor;
     hashOutput = false;
-    sha256 = "92c4bc999a10a1b95299ebefaeea8333f19d8a98d957a35b5eae74881bdb1fef";
+    sha256 = "4e38014332e0f70c5d19b0eca8d85025ccd0d8be85894c0aaa498b42f6b9a8eb";
   };
 
   # This fixes some broken parallel dependencies
@@ -65,11 +66,11 @@ stdenv.mkDerivation rec {
     # Gnupg depends on this so we have to decouple this fetch from the rest of the build.
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.5" "3";
+      urls = tarballUrls "3.5" "4";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "1F42 4189 05D8 206A A754  CCDC 29EE 58B9 9686 5171";
       inherit (src) outputHashAlgo;
-      outputHash = "92c4bc999a10a1b95299ebefaeea8333f19d8a98d957a35b5eae74881bdb1fef";
+      outputHash = "4e38014332e0f70c5d19b0eca8d85025ccd0d8be85894c0aaa498b42f6b9a8eb";
     };
   };
 

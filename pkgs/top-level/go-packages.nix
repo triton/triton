@@ -1324,6 +1324,15 @@ let
     propagatedBuildInputs = [ gojsonreference ];
   };
 
+  gollectd = buildFromGitHub {
+    version = 2;
+    owner = "kimor79";
+    repo = "gollectd";
+    date = "2016-03-21";
+    rev = "b5dddb1667dcc1e6355b9305e2c1608a2db6983c";
+    sha256 = "d127cf9c35e4dbc58e92815047b772d8e6d2ac299ca15c723fa331a68e4d5e61";
+  };
+
   gomemcache = buildFromGitHub {
     version = 1;
     rev = "fb1f79c6b65acda83063cbc69f6bba1522558bfc";

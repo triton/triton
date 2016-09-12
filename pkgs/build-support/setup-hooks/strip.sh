@@ -30,7 +30,12 @@ stripDirs() {
 
     if [ -n "${dirs}" ]; then
         header "stripping (with flags $stripFlags) in$dirs"
-        find $dirs -type f -print0 | xargs -0 ${xargsFlags:--r} strip $commonStripFlags $stripFlags || true
+        local files
+        files=($(find $dirs -type f))
+        for file in "${files[@]}"; do
+          echo "Stripping: $file" >&2
+          strip $commonStripFlags $stripFlags "$file" || true
+        done
         stopNest
     fi
 }

@@ -1588,6 +1588,32 @@ let
     sha256 = "1knpnv6wg2fnnsk2h2bj4m003f7xsvwm58vnn9gc753mbr78vx00";
   };
 
+  go-collectd = buildFromGitHub {
+    version = 2;
+    owner = "collectd";
+    repo = "go-collectd";
+    date = "2016-09-05";
+    rev = "88dae2b879b6ab15e3b3874485dee775625bc6b3";
+    sha256 = "bb28de1cf4fafeb1417e53f5bb79fca11233f5553e0b8b6a31a095e8d22621ce";
+    goPackagePath = "collectd.org";
+    buildInputs = [
+      grpc
+      net
+      pkgs.collectd
+      protobuf
+    ];
+    preBuild = ''
+      export COLLECTD_SRC="$(pwd)/collectd-src"
+      mkdir -pv "$COLLECTD_SRC"
+      tar -vxjf '${pkgs.collectd.src}' -C "$COLLECTD_SRC"
+      # Run configure to generate config.h
+      pushd "$COLLECTD_SRC/${pkgs.collectd.name}"
+        ./configure
+      popd
+      export CGO_CPPFLAGS="-I$COLLECTD_SRC/${pkgs.collectd.name}/src/daemon -I$COLLECTD_SRC/${pkgs.collectd.name}/src"
+    '';
+  };
+
   go-colorable = buildFromGitHub {
     version = 1;
     rev = "v0.0.6";

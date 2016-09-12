@@ -908,6 +908,27 @@ let
     date = "2015-08-30";
   };
 
+  elastic_v2 = buildFromGitHub {
+    version = 2;
+    owner = "olivere";
+    repo = "elastic";
+    rev = "v2.0.54";
+    sha256 = "9360c71601d67abd5b611ff6221ad92d02985d555046c874af61ef1d9bdb7fb7";
+    goPackagePath = "gopkg.in/olivere/elastic.v2";
+  };
+
+  elastic_v3 = buildFromGitHub {
+    version = 2;
+    owner = "olivere";
+    repo = "elastic";
+    rev = "v2.0.54";
+    sha256 = "bae5ce04d03227fc34d875ffe230dc95891369e581ffeb596b4ed33fb74d103b";
+    goPackagePath = "gopkg.in/olivere/elastic.v3";
+    propagatedBuildInputs = [
+      elastic_v2
+    ];
+  };
+
   emoji = buildFromGitHub {
     version = 1;
     owner = "kyokomi";

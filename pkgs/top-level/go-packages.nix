@@ -1560,6 +1560,15 @@ let
     sha256 = "d77d906fb806bb9bd9af7f54f0c3277d6b86d84015e198cb367f1d7788c8b938";
   };
 
+  go-bitstream = buildFromGitHub {
+    version = 2;
+    owner = "dgryski";
+    repo = "go-bitstream";
+    date = "2016-07-01";
+    rev = "7d46cd22db7004f0cceb6f7975824b560cf0e486";
+    sha256 = "32a82d1220c6d2ec05cf2d6150ed8f2a3ce6c544f626cc7574acaa57e31bbd9c";
+  };
+
   go-checkpoint = buildFromGitHub {
     version = 1;
     date = "2016-08-16";

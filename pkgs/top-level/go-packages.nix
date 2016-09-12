@@ -2352,6 +2352,15 @@ let
     meta.autoUpdate = false;
   };
 
+  hllpp = buildFromGitHub {
+    version = 2;
+    owner = "retailnext";
+    repo = "hllpp";
+    date = "2015-03-19";
+    rev = "38a7bb71b483e855d35010808143beaf05b67f9d";
+    sha256 = "3a98569b08ed14b834fb91c7da0827c74ddec9d1c057356c9d9999440bd45157";
+  };
+
   http2 = buildFromGitHub {
     version = 1;
     rev = "aa7658c0e9902e929a9ed0996ef949e59fc0f3ab";

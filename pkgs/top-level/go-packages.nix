@@ -1551,6 +1551,15 @@ let
     date = "2016-08-22";
   };
 
+  go-bits = buildFromGitHub {
+    version = 2;
+    owner = "dgryski";
+    repo = "go-bits";
+    date = "2016-06-01";
+    rev = "2ad8d707cc05b1815ce6ff2543bb5e8d8f9298ef";
+    sha256 = "d77d906fb806bb9bd9af7f54f0c3277d6b86d84015e198cb367f1d7788c8b938";
+  };
+
   go-checkpoint = buildFromGitHub {
     version = 1;
     date = "2016-08-16";

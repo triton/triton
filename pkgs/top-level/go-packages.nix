@@ -937,6 +937,15 @@ let
     sha256 = "1k87kd0h4qk2klbxx3r86g07wk9mgrb0jhdj8kgd2hlgh45j4pd2";
   };
 
+  encoding = buildFromGitHub {
+    version = 2;
+    owner = "jwilder";
+    repo = "encoding";
+    date = "2016-05-26";
+    rev = "ac74639f65b2180a2e5eb5ff197f0c122441aed0";
+    sha256 = "4577efbd2cfa6efe9bfc3d2023334c161a106ede885f7c34098e1da5adf6c539";
+  };
+
   engine-api = buildFromGitHub {
     version = 1;
     rev = "v0.4.0";

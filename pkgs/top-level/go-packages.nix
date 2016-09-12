@@ -3194,6 +3194,16 @@ let
     goPackagePath = "gopkg.in/flosch/pongo2.v3";
   };
 
+  pool_v2 = buildFromGitHub {
+    version = 2;
+    owner = "fatih";
+    repo = "pool";
+    date = "2016-07-21";
+    rev = "20a0a429c5f93de45c90f5f09ea297c25e0929b3";
+    sha256 = "2dad7d86c3724e9f90e373ead150d0f1f6b02bbfb98a2347e801db5ea1c67d07";
+    goPackagePath = "gopkg.in/fatih/pool.v2";
+  };
+
   pq = buildFromGitHub {
     version = 2;
     rev = "50761b0867bd1d9d069276790bcd4a3bccf2324a";

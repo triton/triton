@@ -1829,6 +1829,15 @@ let
     ];
   };
 
+  go-logging = buildFromGitHub {
+    version = 2;
+    owner = "op";
+    repo = "go-logging";
+    date = "2016-03-15";
+    rev = "970db520ece77730c7e4724c61121037378659d9";
+    sha256 = "8087016a076abb7ab630f22c6e2b0ae8ce310350aad9792123c7842b299f87a7";
+  };
+
   go-lxc_v2 = buildFromGitHub {
     version = 1;
     rev = "f8a6938e600c634232eeef79dc04a1226f73a88b";

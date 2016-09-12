@@ -335,6 +335,9 @@ buildPythonPackage rec {
     ' beetsplug/replaygain.py
     sed -i -e 's/if has_program.*bs1770gain.*:/if True:/' \
       test/test_replaygain.py
+  '' + /* Prevent type casting byte string to string */ ''
+    sed -i beetsplug/discogs.py \
+      -e 's/re.sub(br/re.sub(b/'
   '';
 
   GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [

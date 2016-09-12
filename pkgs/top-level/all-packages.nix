@@ -709,6 +709,8 @@ cogl_1-22 = callPackage ../all-pkgs/c/cogl {
 };
 cogl = callPackageAlias "cogl_1-22" { };
 
+collectd = callPackage ../all-pkgs/c/collectd { };
+
 colord = callPackage ../all-pkgs/c/colord { };
 
 colord-gtk = callPackage ../all-pkgs/c/colord-gtk { };

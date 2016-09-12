@@ -179,6 +179,8 @@ cherrypy = callPackage ../all-pkgs/c/cherrypy { };
 
 click = callPackage ../all-pkgs/c/click { };
 
+colorama = callPackage ../all-pkgs/c/colorama { };
+
 cryptography = callPackage ../all-pkgs/c/cryptography { };
 
 cryptography-vectors = callPackage ../all-pkgs/c/cryptography-vectors { };

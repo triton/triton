@@ -3648,6 +3648,19 @@ let
     sha256 = "19aki04z76qzgdr8l3zlz904mkalspfa46cja2fdjy70sfvfjdp1";
   };
 
+  statik = buildFromGitHub {
+    version = 2;
+    owner = "rakyll";
+    repo = "statik";
+    date = "2016-09-06";
+    rev = "e383bbf6b2ec1a2fb8492dfd152d945fb88919b6";
+    sha256 = "3e7a626af83340a966a52f634198ede41b0a564946902e5fa1b4341a8d0dccdd";
+    postPatch = /* Remove recursive import of itself */ ''
+      sed -i example/main.go \
+        -e '/"github.com\/rakyll\/statik\/example\/statik"/d'
+    '';
+  };
+
   structs = buildFromGitHub {
     version = 1;
     date = "2016-08-07";

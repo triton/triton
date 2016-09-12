@@ -33,6 +33,8 @@ let
         exit 1
       fi
 
+      start="$(date -u '+%s')"
+
       unpackDir="$TMPDIR/src"
       mkdir "$unpackDir"
       cd "$unpackDir"
@@ -40,8 +42,8 @@ let
       cd *
 
       mtime=$(find . -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
-      if [ "$(( $(date -u '+%s') - 600 ))" -lt "$mtime" ]; then
-        str="The newest file is too close to the current date (10 minutes):\n"
+      if [ "$start" -lt "$mtime" ]; then
+        str="The newest file is too close to the current date:\n"
         str+="  File: $(date -u -d "@$mtime")\n"
         str+="  Current: $(date -u)\n"
         echo -e "$str" >&2

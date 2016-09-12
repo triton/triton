@@ -3578,6 +3578,24 @@ let
     ];
   };
 
+  skyring-common = buildFromGitHub {
+    version = 2;
+    owner = "skyrings";
+    repo = "skyring-common";
+    date = "2016-08-25";
+    rev = "c6b24a3a8ae3d8ed85747bf7cdd406836a490235";
+    sha256 = "fef5978cb1637eedfe6ebff5c0affb42da46af1219bdabe921602b8f02bd18a9";
+    buildInputs = [
+      go-logging
+      go-python
+      influxdb
+    ];
+    postPatch = /* go-python now uses float64 */ ''
+      sed -i tools/gopy/gopy.go \
+        -e 's/python.PyFloat_FromDouble(f32)/python.PyFloat_FromDouble(f64)/'
+    '';
+  };
+
   slices = buildFromGitHub {
     version = 1;
     rev = "bb44bb2e4817fe71ba7082d351fd582e7d40e3ea";

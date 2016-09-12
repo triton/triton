@@ -3124,6 +3124,15 @@ let
     sha256 = "aad2d84661ea918168e60ed7bab467d4e0fce28fe9372e786c2714c10f6490a7";
   };
 
+  pb = buildFromGitHub {
+    version = 2;
+    owner = "cheggaaa";
+    repo = "pb";
+    date = "2016-09-05";
+    rev = "ad4efe000aa550bb54918c06ebbadc0ff17687b9";
+    sha256 = "9c47c25cd544f48064e148ea428f95930505fd2f74e3a2e606aff1adfe92db42";
+  };
+
   beorn7_perks = buildFromGitHub {
     version = 1;
     date = "2016-08-04";

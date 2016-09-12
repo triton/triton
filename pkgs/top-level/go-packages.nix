@@ -3115,6 +3115,15 @@ let
     ];
   };
 
+  pat = buildFromGitHub {
+    version = 2;
+    owner = "bmizerany";
+    repo = "pat";
+    date = "2016-02-17";
+    rev = "c068ca2f0aacee5ac3681d68e4d0a003b7d1fd2c";
+    sha256 = "aad2d84661ea918168e60ed7bab467d4e0fce28fe9372e786c2714c10f6490a7";
+  };
+
   beorn7_perks = buildFromGitHub {
     version = 1;
     date = "2016-08-04";

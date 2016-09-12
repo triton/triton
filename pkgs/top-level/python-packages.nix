@@ -238,6 +238,8 @@ ipaddress = callPackage ../all-pkgs/i/ipaddress { };
 
 jinja2 = callPackage ../all-pkgs/j/jinja2 { };
 
+jmespath = callPackage ../all-pkgs/j/jmespath { };
+
 ldap3 = callPackage ../all-pkgs/l/ldap3 { };
 
 markupsafe = callPackage ../all-pkgs/m/markupsafe { };

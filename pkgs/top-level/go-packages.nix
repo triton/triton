@@ -3912,6 +3912,15 @@ let
     date = "2015-02-08";
   };
 
+  usage-client = buildFromGitHub {
+    version = 2;
+    owner = "influxdata";
+    repo = "usage-client";
+    date = "2016-08-29";
+    rev = "6d3895376368aa52a3a81d2a16e90f0f52371967";
+    sha256 = "37a9a3330c2a7fac370ccb7117c681dd6fafeef57d327b3071ec13a279fa7996";
+  };
+
   utp = buildFromGitHub {
     version = 1;
     rev = "59dfcf2995f0a175d717fe0b5b7c526771a0ad83";

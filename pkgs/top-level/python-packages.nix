@@ -342,6 +342,8 @@ repoze-who = callPackage ../all-pkgs/r/repoze-who { };
 
 rpyc = callPackage ../all-pkgs/r/rpyc { };
 
+rsa = callPackage ../all-pkgs/r/rsa { };
+
 s3transfer = callPackage ../all-pkgs/s/s3transfer { };
 
 safe = callPackage ../all-pkgs/s/safe { };

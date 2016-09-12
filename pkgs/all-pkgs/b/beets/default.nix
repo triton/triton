@@ -338,6 +338,9 @@ buildPythonPackage rec {
   '' + /* Prevent type casting byte string to string */ ''
     sed -i beetsplug/discogs.py \
       -e 's/re.sub(br/re.sub(b/'
+  '' + optionalString isPy3k ''
+    sed -i beetsplug/fromfilename.py \
+      -e 's/d.values()/list(d.values())/'
   '';
 
   GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [

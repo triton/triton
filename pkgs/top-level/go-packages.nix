@@ -2018,6 +2018,21 @@ let
     sha256 = "0b7rlp5ic60d4a9ibchxxb6i2lc4ish9nwwxr0p57wmlbjbq3lbf";
   };
 
+  go-python = buildFromGitHub {
+    version = 2;
+    owner = "sbinet";
+    repo = "go-python";
+    date = "2016-08-09";
+    rev = "ac4579f132fff506b2f6b3eda4c9282b4be59a08";
+    sha256 = "034c9b58c1ef250eff9a46c9ac743014df110f11fa8f580033767907bfbe2750";
+    nativeBuildInputs = [
+      pkgs.pkgconfig
+    ];
+    buildInputs = [
+      pkgs.python2Packages.python
+    ];
+  };
+
   go-querystring = buildFromGitHub {
     version = 1;
     date = "2016-03-10";

@@ -20,8 +20,8 @@
     pgpKeyFingerprint = "97FC 712E 4C02 4BBE A48A  61ED 3A5C A953 F73C 700D";
   };
   "3.6" = {
-    versionPatch = "0a4";
-    sha256 = "63acec349d20de412682f64c013f7c3374c695430b44e1c0ef12076da1d7fd2c";
+    versionPatch = "0b1";
+    sha256 = "a83b094a8abf8a1fba7c548a5e8dd0aabe87a87a6ebd87c97f4a5a2527a74d42";
     pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
   };
 }

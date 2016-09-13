@@ -32,6 +32,8 @@
  */
 
 let
+  inherit (stdenv)
+    targetSystem;
   inherit (stdenv.lib)
     concatStringsSep
     head
@@ -57,13 +59,15 @@ let
     else
       b;
 
-  # For alpha releases we need to discard a<int> from the version for
-  # part of the url.
+  # For alpha/beta releases we need to discard a<int> from the version
+  # for part of the url.
   baseVersionPatch =
-    let
-      s = splitString "a" source.versionPatch;
-    in
-    head s;
+    if head (splitString "a" source.versionPatch) != source.versionPatch then
+      head (splitString "a" source.versionPatch)
+    else if head (splitString "b" source.versionPatch) != source.versionPatch then
+      head (splitString "b" source.versionPatch)
+    else
+      source.versionPatch;
 
   version = "${channel}.${source.versionPatch}";
 in
@@ -250,25 +254,46 @@ stdenv.mkDerivation rec {
           "d"
         else
           "";
+      # e.g. _sysconfigdata_m_linux_x86_64-linux-gnu
+      sysconfigdata =
+        if versionAtLeast channel "3.6" then
+          "_sysconfigdata_m_linux_${targetSystem}-gnu"
+        else
+          "_sysconfigdata";
+      sysconfigdatapy = "${sysconfigdata}.py";
+      configdir =
+        if versionOlder channel "3.0" then
+          "config"
+        else if versionAtLeast channel "3.6" then
+          # FIXME: implement a list of platform tuples instead of
+          #        using the targetSystem string.  We may eventually
+          #        add a non-GNU system and our tuples differ
+          #        from those returned by the autoconf macro.
+          "config-${channel}${ifPyDebug}m-${targetSystem}-gnu"
+        else
+          "config-${channel}${ifPyDebug}m";
     in ''
       # The lines we are replacing dont include libpython so we parse it out
       LIBS_WITH_PYTHON="$(pkg-config --libs --static $out/lib/pkgconfig/python-${channel}.pc)"
       LIBS="$(echo "$LIBS_WITH_PYTHON" | sed 's,[ ]*\(-L\|-l\)[^ ]*python[^ ]*[ ]*, ,g')"
     '' + ''
-      sed -i $out/lib/python${channel}/config${ifPy3 "-${channel}${ifPyDebug}m" ""}/Makefile \
+      sed -i $out/lib/python${channel}/${configdir}/Makefile \
         -e "s@^LIBS=.*@LIBS= $LIBS@g"
 
       # We need to update _sysconfigdata.py{,o,c}
-      sed -i "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g" $out/lib/python${channel}/_sysconfigdata.py
+      sed -i $out/lib/python${channel}/${sysconfigdatapy} \
+        -e "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g"
     '' + optionalString isPy2 ''
-      rm $out/lib/python${channel}/_sysconfigdata.py{o,c}
+      rm $out/lib/python${channel}/${sysconfigdatapy}{o,c}
     '' + optionalString isPy3 ''
       rm $out/lib/python${channel}/__pycache__/_sysconfigdata*.pyc
-    '' + ''
-      $out/bin/python${channel} -c "import _sysconfigdata"
-      $out/bin/python${channel} -O -c "import _sysconfigdata"
-      $out/bin/python${channel} -OO -c "import _sysconfigdata"
-      $out/bin/python${channel} -OOO -c "import _sysconfigdata"
+    '' + /* FIXME: the platform triplet included in the module name
+                   currently includes invalid characters (-). */
+      optionalString (versionOlder channel "3.6") ''
+      $out/bin/python${channel} -c "import ${sysconfigdata}"
+      $out/bin/python${channel} -O -c "import ${sysconfigdata}"
+      $out/bin/python${channel} -OO -c "import ${sysconfigdata}"
+      $out/bin/python${channel} -OOO -c "import ${sysconfigdata}"
 
       sed --follow-symlinks -i $out/bin/python${channel}-config \
         -e "s@^LIBS=\".*\"@LIBS=\"$LIBS_WITH_PYTHON\"@g"

@@ -338,9 +338,9 @@ rebulk = callPackage ../all-pkgs/r/rebulk { };
 
 regex = callPackage ../all-pkgs/r/regex { };
 
-requests = callPackage ../all-pkgs/r/requests { };
-
 repoze-who = callPackage ../all-pkgs/r/repoze-who { };
+
+requests = callPackage ../all-pkgs/r/requests { };
 
 rpyc = callPackage ../all-pkgs/r/rpyc { };
 

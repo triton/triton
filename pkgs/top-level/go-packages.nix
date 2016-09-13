@@ -3787,6 +3787,15 @@ let
     ];
   };
 
+  sha256-simd = buildFromGitHub {
+    version = 2;
+    owner = "minio";
+    repo = "sha256-simd";
+    date = "2016-09-06";
+    rev = "672e7bc9f3482375df73741cf57a157fe187ec26";
+    sha256 = "60e3b179cd36fa04296bbb41bb8b490e340769aa511bcce16aefe5f35201872c";
+  };
+
   skyring-common = buildFromGitHub {
     version = 2;
     owner = "skyrings";

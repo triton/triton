@@ -640,14 +640,16 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
     };
 
    pytestcov = buildPythonPackage (rec {
-     name = "pytest-cov-2.2.0";
+     name = "pytest-cov-${version}";
+     version = "2.3.1";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/pytest-cov/${name}.tar.gz";
-       sha256 = "1lf9jsmhqk5nc4w3kzwglmdzjvmi7ajvrsnwv826j3bn0wzx8c92";
+     src = fetchPyPi {
+       package = "pytest-cov";
+       inherit version;
+       sha256 = "fa0a212283cdf52e2eecc24dd6459bb7687cc29adb60cb84258fab73be8dda0f";
      };
 
-    buildInputs = with self; [ covCore pytest ];
+    buildInputs = with self; [ cov-core pytest ];
 
      meta = {
        description = "plugin for coverage reporting with support for both centralised and distributed testing, including subprocesses and multiprocessing";

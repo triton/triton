@@ -2320,6 +2320,15 @@ let
     sha256 = "0141xh0s9yqwx4ypgxzgz643vwwq4xyxs31h3dnq9g3ncqi6hwdm";
   };
 
+  handlers = buildFromGitHub {
+    version = 2;
+    owner = "gorilla";
+    repo = "handlers";
+    date = "2016-08-16";
+    rev = "a5775781a543af3c6b9f5baf10995e4d14168950";
+    sha256 = "ae12e2f1bd47a1f29b51655a55b42b7ad653467a82ad366a49b9d1660fbcd13e";
+  };
+
   hashstructure = buildFromGitHub {
     version = 1;
     date = "2016-06-09";

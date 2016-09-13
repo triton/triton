@@ -3,14 +3,16 @@
 , fetchPyPi
 }:
 
+let
+  version = "0.7.9";
+in
 buildPythonPackage rec {
   name = "pymysql-${version}";
-  version = "0.7.2";
 
   src = fetchPyPi {
     package = "PyMySQL";
     inherit version;
-    sha256 = "bd7acb4990dbf097fae3417641f93e25c690e01ed25c3ed32ea638d6c3ac04ba";
+    sha256 = "2331f82b7b85d407c8d9d7a8d7901a6abbeb420533e5d5d64ded5009b5c6dcc3";
   };
 
   doCheck = true;

@@ -36,19 +36,30 @@ patchELF() {
         oldrpath="$(patchelf --print-rpath "$file")"
 
         # We want to remove any temporary directories from the path
-        # We also want to add any shared object containing outputs to the rpath
         local notmprpath
         notmprpath="$(echo "$oldrpath" | tr ':' '\n' | sed "\,$TMPDIR,d")"
+
+        # We also want to add any shared object containing outputs to the rpath
+        local rpathlist
         if [ "${patchELFAddRpath-1}" = "1" ]; then
-          rpath="$(echo -e "${sodirs}\n${notmprpath}" | sed '/^$/d' | tr '\n' ':' | sed 's,:$,\n,')"
+          # We want to make sure we know exactly what new paths we need to add
+          local extradirs
+          extradirs="$(find ${sodirs} -mindepth 1 -maxdepth 1 -name 'no-such-file' $(patchelf --print-needed "$file" | awk '{ print "-or"; print "-name"; print $0}') -exec dirname {} \;)"
+          rpathlist="$(echo -e "${extradirs}\n${notmprpath}" | sed '/^$/d')"
         else
-          rpath="$(echo "${notmprpath}" | tr '\n' ':' | sed 's,:$,\n,')"
+          rpathlist="${notmprpath}"
         fi
+
+        # Convert rpath lines into a semicolon separated string
+        local rpath
+        rpath="$(echo "$rpathlist" | sort | uniq | tr '\n' ':' | sed -e 's,^:,,' -e 's,:$,\n,')"
+
         if [ "$NIX_DEBUG" = 1 ]; then
           echo "Old Rpath: $oldrpath" >&2
           echo "NoTmp Rpath: $notmprpath" >&2
           echo "New Rpath: $rpath" >&2
         fi
+
         echo "Removing temporary dirs: $file" >&2
         patchelf --set-rpath "$rpath" "$file"
         echo "Shrinking rpath: $file" >&2

@@ -2,40 +2,46 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pythonPackages
+, babelfish
+, pytestrunner
+, python-dateutil
+, rebulk
+, regex
+
+, pytest
+, pytest-benchmark
+, pytest-capturelog
+, pyyaml
 }:
 
 let
   inherit (stdenv.lib)
     optionals;
-in
 
+  version = "2.1.0";
+in
 buildPythonPackage rec {
   name = "guessit-${version}";
-  version = "2.0.5";
 
   src = fetchPyPi {
     package = "guessit";
     inherit version;
-    sha256 = "626e0024c5cca9b84883b65246e4f238e3f39064664486f69f086c853a63ff61";
+    sha256 = "a534a46bef3bbac7b313a55744860a9ddd5b7fae6abb6f6ae8bbace2b3e973b1";
   };
 
-  postPatch = ''
-    sed -i setup.py \
-      -e 's/python-dateutil<2.5.2/python-dateutil>=2.5.2/'
-  '';
+  buildInputs = optionals doCheck [
+    pytest
+    pytest-benchmark
+    pytest-capturelog
+    pyyaml
+  ];
 
   propagatedBuildInputs = [
-    pythonPackages.babelfish
-    pythonPackages.pytestrunner
-    pythonPackages.python-dateutil
-    pythonPackages.rebulk
-    pythonPackages.regex
-  ] ++ optionals doCheck [
-    pythonPackages.pytest
-    pythonPackages.pytest-benchmark
-    pythonPackages.pytest-capturelog
-    pythonPackages.pyyaml
+    babelfish
+    pytestrunner
+    python-dateutil
+    rebulk
+    regex
   ];
 
   doCheck = false;

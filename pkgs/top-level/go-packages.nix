@@ -539,6 +539,15 @@ let
     sha256 = "0a8jkz7fjnfb6yjbzhr23q166ffdms9wq7mf6w3ahrk1sa34ndyr";
   };
 
+  cli_minio = buildFromGitHub {
+    version = 2;
+    owner = "minio";
+    repo = "cli";
+    date = "2016-09-08";
+    rev = "2e10078e4de1ca37fb1bd62cc79ab87c024b3a1b";
+    sha256 = "91256fee4f36fe631ab1d5acb50f58d7efc41f2dcd64ab72b9702cc99d0d5b6d";
+  };
+
   mitchellh_cli = buildFromGitHub {
     version = 1;
     date = "2016-08-15";

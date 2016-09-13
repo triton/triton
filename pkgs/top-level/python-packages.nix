@@ -593,11 +593,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
    };
 
    coverage = buildPythonPackage rec {
-     name = "coverage-4.0.3";
+     name = "coverage-${version}";
+     version = "4.2";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/c/coverage/${name}.tar.gz";
-       sha256 = "85b1275b6d7a61ccc8024a4e9a4c9e896394776edce1a5d075ec116f91925462";
+     src = fetchPyPi {
+       package = "coverage";
+       inherit version;
+       sha256 = "e312776d3ef04632ec742ce2d2b7048b635073e0245e4f44dfe8b08cc50ac656";
      };
    };
 

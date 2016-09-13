@@ -2442,6 +2442,15 @@ let
     date = "2016-01-16";
   };
 
+  http2curl = buildFromGitHub {
+    version = 2;
+    owner = "moul";
+    repo = "http2curl";
+    date = "2016-05-20";
+    rev = "b1479103caacaa39319f75e7f57fc545287fca0d";
+    sha256 = "1070935f2cdbf8146090438593278d1fe09af77ad67cddd8db6cf495e4d308b3";
+  };
+
   httprouter = buildFromGitHub {
     version = 1;
     rev = "d8ff598a019f2c7bad0980917a588193cf26666e";

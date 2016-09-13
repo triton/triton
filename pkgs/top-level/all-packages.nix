@@ -2297,9 +2297,7 @@ sharutils = callPackage ../all-pkgs/s/sharutils { };
 
 shntool = callPackage ../all-pkgs/s/shntool { };
 
-smartmontools = callPackage ../all-pkgs/s/smartmontools { };
-
-snappy = callPackage ../all-pkgs/s/snappy { };
+signify = callPackage ../all-pkgs/s/signify { };
 
 sl = callPackage ../all-pkgs/s/sl { };
 

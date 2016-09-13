@@ -13,7 +13,7 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "0.7.3";
+  version = "0.7.4";
 in
 buildPythonPackage rec {
   name = "rebulk-${version}";
@@ -21,7 +21,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "rebulk";
     inherit version;
-    sha256 = "1ee0f672be5cfeed793d294c1cfc078c254fb0966af59191e4f6a0785b3b1697";
+    sha256 = "1bbea5ebcc18b70c5deb19ba6924fb76392d5130b0fe712e3af7a4e4bee18e21";
   };
 
   buildInputs = [

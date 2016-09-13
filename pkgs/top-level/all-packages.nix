@@ -302,13 +302,13 @@ let
 
   fetchzip = callPackage ../build-support/fetchzip { };
 
-  fetchFromGitHub = { owner, repo, rev, sha256, version, name ? "${repo}-${rev}" }: pkgs.fetchzip {
+  fetchFromGitHub = { owner, repo, rev, sha256, version ? null, name ? "${repo}-${rev}" }: pkgs.fetchzip {
     inherit name sha256 version;
     url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
     meta.homepage = "https://github.com/${owner}/${repo}/";
   } // { inherit rev; };
 
-  fetchFromBitbucket = { owner, repo, rev, sha256, version, name ? "${repo}-${rev}" }: pkgs.fetchzip {
+  fetchFromBitbucket = { owner, repo, rev, sha256, version ? null, name ? "${repo}-${rev}" }: pkgs.fetchzip {
     inherit name sha256 version;
     url = "https://bitbucket.org/${owner}/${repo}/get/${rev}.tar.gz";
     meta.homepage = "https://bitbucket.org/${owner}/${repo}/";
@@ -318,21 +318,21 @@ let
   };
 
   # cgit example, snapshot support is optional in cgit
-  fetchFromSavannah = { repo, rev, sha256, version, name ? "${repo}-${rev}" }: pkgs.fetchzip {
+  fetchFromSavannah = { repo, rev, sha256, version ? null, name ? "${repo}-${rev}" }: pkgs.fetchzip {
     inherit name sha256 version;
     url = "http://git.savannah.gnu.org/cgit/${repo}.git/snapshot/${repo}-${rev}.tar.gz";
     meta.homepage = "http://git.savannah.gnu.org/cgit/${repo}.git/";
   };
 
   # gitlab example
-  fetchFromGitLab = { owner, repo, rev, sha256, version, name ? "${repo}-${rev}" }: pkgs.fetchzip {
+  fetchFromGitLab = { owner, repo, rev, sha256, version ? null, name ? "${repo}-${rev}" }: pkgs.fetchzip {
     inherit name sha256 version;
     url = "https://gitlab.com/${owner}/${repo}/repository/archive.tar.gz?ref=${rev}";
     meta.homepage = "https://gitlab.com/${owner}/${repo}/";
   };
 
   # gitweb example, snapshot support is optional in gitweb
-  fetchFromRepoOrCz = { repo, rev, sha256, version, name ? "${repo}-${rev}" }: pkgs.fetchzip {
+  fetchFromRepoOrCz = { repo, rev, sha256, version ? null, name ? "${repo}-${rev}" }: pkgs.fetchzip {
     inherit name sha256 version;
     url = "http://repo.or.cz/${repo}.git/snapshot/${rev}.tar.gz";
     meta.homepage = "http://repo.or.cz/${repo}.git/";

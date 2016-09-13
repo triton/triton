@@ -421,6 +421,15 @@ let
     date = "2016-05-31";
   };
 
+  blake2b-simd = buildFromGitHub {
+    version = 2;
+    owner = "minio";
+    repo = "blake2b-simd";
+    date = "2016-07-23";
+    rev = "3f5f724cb5b182a5c278d6d3d55b40e7f8c2efb4";
+    sha256 = "5ead55b23a24393a96cb6504b0a64c48812587c4af12527101c3a7c79c2d35e5";
+  };
+
   bolt = buildFromGitHub {
     version = 1;
     rev = "v1.3.0";

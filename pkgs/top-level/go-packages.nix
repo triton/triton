@@ -3229,6 +3229,15 @@ let
     ];
   };
 
+  notify = buildFromGitHub {
+    version = 2;
+    owner = "rjeczalik";
+    repo = "notify";
+    date = "2016-08-20";
+    rev = "7e20c15e6693a7d6ad269a94b70ed68bc4a875a7";
+    sha256 = "f6bd315a30a2e14d1defc64a979d1db4371122b33d330afa62b2e3179328382a";
+  };
+
   objx = buildFromGitHub {
     version = 1;
     date = "2015-09-28";

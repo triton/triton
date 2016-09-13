@@ -800,11 +800,12 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    flask-cors = buildPythonPackage rec {
      name = "Flask-Cors-${version}";
-     version = "2.1.2";
+     version = "3.0.2";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/F/Flask-Cors/${name}.tar.gz";
-       sha256 = "0fd618a4f88ykqx4x55viz47cm9rl214q1b45a0b4mz5vhxffqpj";
+     src = fetchPyPi {
+       package = "Flask-Cors";
+       inherit version;
+       sha256 = "0a09f3559ded4759387dfa2a355de59bc161f67269a1f4b7b0712a64b1f7dad6";
      };
     buildInputs = with self; [ nose ];
      propagatedBuildInputs = with self; [ flask six ];

@@ -2915,6 +2915,29 @@ let
     ];
   };
 
+  mc = buildFromGitHub {
+    version = 2;
+    owner = "minio";
+    repo = "mc";
+    date = "2016-09-08";
+    rev = "b404c7583bc99d7d60dbaa655f759a3d13b28d81";
+    sha256 = "c520cc89450fc05e5b8deb40d26c97cc4ab2d9be2b3663848508c6d3c711064d";
+    propagatedBuildInputs = [
+      cli_minio
+      color
+      go-colorable
+      go-homedir_minio
+      go-humanize
+      go-version
+      minio_pkg
+      minio-go
+      notify
+      pb
+      profile
+      structs
+    ];
+  };
+
   mdns = buildFromGitHub {
     version = 1;
     date = "2015-12-05";

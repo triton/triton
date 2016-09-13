@@ -29,6 +29,10 @@ buildPythonPackage rec {
     s3transfer
   ];
 
+  postInstall = ''
+    rm -f "$out"/bin/{aws.cmd,aws_completer,aws_bash_completer,aws_zsh_completer.sh}
+  '';
+
   meta = with stdenv.lib; {
     description = "Command Line Interface for Amazon Web Services";
     homepage = https://github.com/aws/aws-cli;

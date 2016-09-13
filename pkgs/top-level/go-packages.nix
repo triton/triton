@@ -3873,7 +3873,10 @@ let
     buildInputs = [
       go-logging
       go-python
+      gorequest
+      graphite-golang
       influxdb
+      mgo_v2
     ];
     postPatch = /* go-python now uses float64 */ ''
       sed -i tools/gopy/gopy.go \

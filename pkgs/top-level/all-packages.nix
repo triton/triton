@@ -2303,6 +2303,10 @@ sl = callPackage ../all-pkgs/s/sl { };
 
 slock = callPackage ../all-pkgs/s/slock { };
 
+smartmontools = callPackage ../all-pkgs/s/smartmontools { };
+
+snappy = callPackage ../all-pkgs/s/snappy { };
+
 socket_wrapper = callPackage ../all-pkgs/s/socket_wrapper { };
 
 sord = callPackage ../all-pkgs/s/sord { };

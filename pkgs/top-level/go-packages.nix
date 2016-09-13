@@ -2232,6 +2232,18 @@ let
     sha256 = "13rqz6v8q5gncdn5ca25n262slvs46h9grzym43z1wpwdpal4wwv";
   };
 
+  gorequest = buildFromGitHub {
+    version = 2;
+    owner = "parnurzeal";
+    repo = "gorequest";
+    rev = "v0.2.14";
+    sha256 = "4a32bc0da7c70933937f20fa0cccd9b47c8fd583155b937b2ab8349998193ad1";
+    propagatedBuildInputs = [
+      http2curl
+      net
+    ];
+  };
+
   grafana = buildFromGitHub {
     version = 1;
     owner = "grafana";

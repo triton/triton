@@ -2985,19 +2985,86 @@ let
     sha256 = "9e24f59dc2ae923af9d70ad39387406b7cba6a0ec2c26c2d870f8eb588191b50";
     buildInputs = [
       amqp
+      blake2b-simd
+      cli_minio
       color
+      cors
       crypto
       elastic_v3
       jwt-go
       go-bindata-assetfs
+      go-homedir_minio
       go-humanize
-      #gorilla
       go-version
+      handlers
       logrus
+      mc
+      minio-go
+      miniobrowser
       mux
       pb
-      #reedsolomon
+      profile
+      redigo
+      reedsolomon
+      rpc
+      sha256-simd
+      skyring-common
       structs
+    ];
+  };
+
+  # The pkg package from minio, for bootstrapping minio
+  minio_pkg = buildFromGitHub {
+    inherit (minio) version owner repo date rev sha256;
+    propagatedBuildInputs = [
+      # Propagate minio_pkg_probe from here for consistency
+      minio_pkg_probe
+      pb
+      structs
+    ];
+    postUnpack = ''
+      mv -v "$sourceRoot" "''${sourceRoot}.old"
+      mkdir -pv "$sourceRoot"
+      mv -v "''${sourceRoot}.old"/pkg "$sourceRoot"/pkg
+      rm -rf "''${sourceRoot}.old"
+    '';
+  };
+
+  # Probe pkg was remove in later releases, but still required by mc
+  minio_pkg_probe = buildFromGitHub {
+    version = 2;
+    inherit (minio) owner repo;
+    rev = "RELEASE.2016-04-17T22-09-24Z";
+    sha256 = "41c8749f0a7c6a22ef35f7cb2577e31871bff95c4c5c035a936b220f198ed04e";
+    propagatedBuildInputs = [
+      go-humanize
+    ];
+    postUnpack = ''
+      mv -v "$sourceRoot" "''${sourceRoot}.old"
+      mkdir -pv "$sourceRoot"/pkg
+      mv -v "''${sourceRoot}.old"/pkg/probe "$sourceRoot"/pkg/probe
+      rm -rf "''${sourceRoot}.old"
+    '';
+  };
+
+  minio-go = buildFromGitHub {
+    version = 2;
+    owner = "minio";
+    repo = "minio-go";
+    date = "2016-09-12";
+    rev = "e8557e5528f375cbc787bd8f2a4f0487e94c7310";
+    sha256 = "6c6d8fd3c7bd8b2c9ce6b80eb412aa23d9cf84c6b194acb4cc44e0a4b4f7f2c3";
+  };
+
+  miniobrowser = buildFromGitHub {
+    version = 2;
+    owner = "minio";
+    repo = "miniobrowser";
+    date = "2016-0-30";
+    rev = "0eb58dea0d828f22d4a48434de00b9420432edaa";
+    sha256 = "c0b0571beafd62a2b8e5ce404bc8793e75f7691b2d909d534e41f692f857644e";
+    propagatedBuildInputs = [
+      go-bindata-assetfs
     ];
   };
 

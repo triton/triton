@@ -3608,6 +3608,15 @@ let
     ];
   };
 
+  redigo = buildFromGitHub {
+    version = 2;
+    owner = "minio";
+    repo = "redigo";
+    date = "2016-07-23";
+    rev = "5e2117cd32d677a36dcd8c9c83776a065555653b";
+    sha256 = "3991316f879ff46e423e73f4006b26b620a0a98397fd649e0d667ff7cd35093a";
+  };
+
   redis_v2 = buildFromGitHub {
     version = 1;
     rev = "v2.3.2";

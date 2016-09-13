@@ -2276,6 +2276,15 @@ let
     ];
   };
 
+  graphite-golang = buildFromGitHub {
+    version = 2;
+    owner = "marpaia";
+    repo = "graphite-golang";
+    date = "2016-09-01";
+    rev = "c98f562aa632f89588e321a4f6013c3ae57aa48c";
+    sha256 = "a91e293445a5de759ee3906f641ae4278e5c35196a2f88f844624f23a8278df4";
+  };
+
   groupcache = buildFromGitHub {
     version = 1;
     date = "2016-08-03";

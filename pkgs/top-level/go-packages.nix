@@ -2434,11 +2434,34 @@ let
   };
 
   influxdb = buildFromGitHub {
-    version = 1;
+    version = 2;
     owner = "influxdata";
     repo = "influxdb";
-    rev = "v0.13.0";
-    sha256 = "0jws9s6p5mwira09sn1di37yc3kxfhfyck785ji46v04ysw01s8w";
+    date = "2016-09-09";
+    rev = "b1d074c01927d241da8fca7ed1a7bd48dfcd95a0";
+    sha256 = "d07f5d43717d19d2c48050ac969dba22f3475e3dd79de2612e744d7129b66793";
+    propagatedBuildInputs = [
+      bolt
+      gollectd
+      crypto
+      encoding
+      go-bits
+      go-bitstream
+      go-collectd
+      hllpp
+      jwt-go
+      liner
+      pat
+      pool_v2
+      protobuf_gogo
+      snappy
+      statik
+      toml
+      usage-client
+    ];
+    postPatch = /* Remove broken tests */ ''
+      rm -rf services/collectd/test_client
+    '';
   };
 
   influxdb_client = buildFromGitHub {
@@ -2845,6 +2868,31 @@ let
     excludedPackages = "dbtest";
     buildInputs = [
       pkgs.cyrus-sasl
+    ];
+  };
+
+  minio = buildFromGitHub {
+    version = 2;
+    owner = "minio";
+    repo = "minio";
+    date = "2016-09-11";
+    rev = "85e2d886bcb005d49f3876d6849a2b5a55e03cd3";
+    sha256 = "9e24f59dc2ae923af9d70ad39387406b7cba6a0ec2c26c2d870f8eb588191b50";
+    buildInputs = [
+      amqp
+      color
+      crypto
+      elastic_v3
+      jwt-go
+      go-bindata-assetfs
+      go-humanize
+      #gorilla
+      go-version
+      logrus
+      mux
+      pb
+      #reedsolomon
+      structs
     ];
   };
 
@@ -3457,6 +3505,15 @@ let
     owner  = "RoaringBitmap";
     repo   = "roaring";
     sha256 = "03h1r15yswfzpr1f43wjlmj6q8lvjl42kfhyyd4i80hwvbrgnay0";
+  };
+
+  rpc = buildFromGitHub {
+    version = 2;
+    owner = "gorilla";
+    repo = "rpc";
+    date = "2016-08-16";
+    rev = "e592e2e099465ae27afa66ec089d570904cd2d53";
+    sha256 = "131d59d755657b3d50a4c778c2911e9c1d0fe4be717259ee99619065cb3121e5";
   };
 
   runc = buildFromGitHub {

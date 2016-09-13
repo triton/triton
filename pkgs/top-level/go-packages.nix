@@ -738,6 +738,18 @@ let
     sha256 = "0g40jrk6d06mh8d4pb7k2i22pvy4ffs5mgn2s7v7fnmji1jggkh4";
   };
 
+  cors = buildFromGitHub {
+    version = 2;
+    owner = "rs";
+    repo = "cors";
+    rev = "v1.0";
+    sha256 = "018bf66d3425cffafa913e6ebf4d5ba26a5c22313e041140ed177921b53e4852";
+    propagatedBuildInputs = [
+      net
+      xhandler
+    ];
+  };
+
   cpuid = buildFromGitHub {
     version = 1;
     rev = "v1.0";

@@ -1195,14 +1195,16 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
    };
 
    paramiko = buildPythonPackage rec {
-     name = "paramiko-1.16.0";
+     name = "paramiko-${version}";
+     version = "2.0.2";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/paramiko/${name}.tar.gz";
-       sha256 = "14k8z7ndc3zk5xivnm4d8lncchx475ll5izpf8vmfbq7rp9yp5rj";
+     src = fetchPyPi {
+       package = "paramiko";
+       inherit version;
+       sha256 = "411bf90fa22b078a923ff19ef9772c1115a0953702db93549a2848acefd141dc";
      };
 
-     propagatedBuildInputs = with self; [ pycrypto ecdsa ];
+     propagatedBuildInputs = with self; [ cryptography pyasn1 pycrypto ecdsa six ];
 
      meta = {
        homepage = "https://github.com/paramiko/paramiko/";

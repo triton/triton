@@ -1745,6 +1745,15 @@ let
     sha256 = "0lacs15dkbs9ag6mdq5xg4w72g7m8p4042f7z4lrnk3r36c53zjq";
   };
 
+  go-homedir_minio = buildFromGitHub {
+    version = 2;
+    owner = "minio";
+    repo = "go-homedir";
+    date = "2016-02-15";
+    rev = "0b1069c753c94b3633cc06a1995252dbcc27c7a6";
+    sha256 = "0e595179466b94fcf18515a1791319cbfdd60b3e12b06dfc2cc7778a79a201c7";
+  };
+
   hailocab_go-hostpool = buildFromGitHub {
     version = 1;
     rev = "e80d13ce29ede4452c43dea11e79b9bc8a15b478";

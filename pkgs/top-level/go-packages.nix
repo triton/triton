@@ -4385,6 +4385,18 @@ let
     sha256 = "017k3y66fy2azbv9iymxsixpyda9czz8v3mhpn17750vlg842dsp";
   };
 
+  xhandler = buildFromGitHub {
+    version = 2;
+    owner = "rs";
+    repo = "xhandler";
+    date = "2016-06-18";
+    rev = "ed27b6fd65218132ee50cd95f38474a3d8a2cd12";
+    sha256 = "14e5d9f09a28bff8a9687e2f1d2250e034852b2dd784eb8c1ee04fac676f9357";
+    propagatedBuildInputs = [
+      net
+    ];
+  };
+
   xorm = buildFromGitHub {
     version = 1;
     rev = "v0.5.4";

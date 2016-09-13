@@ -1136,13 +1136,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
    };
 
    oauthlib = buildPythonPackage rec {
-     version = "1.1.2";
      name = "oauthlib-${version}";
+       version = "2.0.0";
 
-     src = pkgs.fetchzip {
-       version = 1;
-       url = "https://github.com/idan/oauthlib/archive/v${version}.tar.gz";
-       sha256 = "c04e7c49bc98574bc1f626ef6e405f75ea1f2b665b4c267e4736d7abbaeccbc6";
+     src = fetchPyPi {
+       package = "oauthlib";
+       inherit version;
+       sha256 = "0ad22b4f03fd75ef18d5793e1fed5e2361af5d374009f7722b4af390a0030dfd";
      };
 
      buildInputs = with self; [ mock nose unittest2 ];

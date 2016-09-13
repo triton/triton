@@ -3561,6 +3561,14 @@ let
     propagatedBuildInputs = [ bolt ugorji_go raft ];
   };
 
+  ratecounter = buildFromGitHub {
+    version = 2;
+    owner = "paulbellamy";
+    repo = "ratecounter";
+    rev = "v0.1.0";
+    sha256 = "a4f573a38ec36fbbefea687e750abce13bd8dc80134596c87f60d15179e3cbdc";
+  };
+
   ratelimit = buildFromGitHub {
     version = 1;
     rev = "77ed1c8a01217656d2080ad51981f6e99adaa177";

@@ -142,7 +142,7 @@ mirror://xorg/individual/driver/xf86-input-mouse-1.9.1.tar.bz2
 mirror://xorg/individual/driver/xf86-input-microtouch-1.2.0.tar.bz2
 mirror://xorg/individual/driver/xf86-input-magictouch-1.0.0.5.tar.bz2
 mirror://xorg/individual/driver/xf86-input-magellan-1.2.0.tar.bz2
-mirror://xorg/individual/driver/xf86-input-libinput-0.19.0.tar.bz2
+mirror://xorg/individual/driver/xf86-input-libinput-0.19.1.tar.bz2
 mirror://xorg/individual/driver/xf86-input-keyboard-1.8.1.tar.bz2
 mirror://xorg/individual/driver/xf86-input-joystick-1.6.2.tar.bz2
 mirror://xorg/individual/driver/xf86-input-jamstudio-1.2.0.tar.bz2
@@ -285,7 +285,7 @@ mirror://xorg/individual/lib/libFS-1.0.7.tar.bz2
 mirror://xorg/individual/lib/libAppleWM-1.4.1.tar.bz2
 mirror://xorg/individual/app/lbxproxy-1.0.3.tar.bz2
 mirror://xorg/individual/proto/kbproto-1.0.7.tar.bz2
-mirror://xorg/individual/app/intel-gpu-tools-1.15.tar.bz2
+mirror://xorg/individual/app/intel-gpu-tools-1.16.tar.bz2
 mirror://xorg/individual/proto/inputproto-2.3.2.tar.bz2
 mirror://xorg/individual/util/imake-1.0.7.tar.bz2
 mirror://xorg/individual/app/ico-1.0.4.tar.bz2

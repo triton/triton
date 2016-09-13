@@ -796,10 +796,10 @@ let
   }) // {inherit ;};
 
   intelgputools = (mkDerivation "intelgputools" {
-    name = "intel-gpu-tools-1.15";
+    name = "intel-gpu-tools-1.16";
     src = fetchurl {
-      url = mirror://xorg/individual/app/intel-gpu-tools-1.15.tar.bz2;
-      sha256 = "1gb22hvj4gdjj92iqbwcp44kf2znk2l1fvbcrr4sm4i65l8mdwnw";
+      url = mirror://xorg/individual/app/intel-gpu-tools-1.16.tar.bz2;
+      sha256 = "1q9sfb15081zm1rq4z67sfj13ryvbdha4fa6pdzdsfd9261nvgn6";
     };
     nativeBuildInputs = [ bison flex python python3 utilmacros ];
     buildInputs = [ cairo dri2proto glib libdrm systemd_lib libunwind libpciaccess libX11 libXext libXrandr libXv ];
@@ -2292,10 +2292,10 @@ let
   }) // {inherit inputproto xorgserver xproto ;};
 
   xf86inputlibinput = (mkDerivation "xf86inputlibinput" {
-    name = "xf86-input-libinput-0.19.0";
+    name = "xf86-input-libinput-0.19.1";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-libinput-0.19.0.tar.bz2;
-      sha256 = "0xzl3aiah9vma3pvi170g1847vxqrg4is3ilc51f72lbgkf30pbc";
+      url = mirror://xorg/individual/driver/xf86-input-libinput-0.19.1.tar.bz2;
+      sha256 = "0381rnahg8mbzcisify092jyjycxzswpqg7dnqldrwjadx0ckwf7";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ inputproto libinput xorgserver xproto ];

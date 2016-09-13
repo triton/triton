@@ -951,11 +951,11 @@ let
     version = 2;
     owner = "olivere";
     repo = "elastic";
-    rev = "v2.0.54";
-    sha256 = "bae5ce04d03227fc34d875ffe230dc95891369e581ffeb596b4ed33fb74d103b";
+    rev = "v3.0.50";
+    sha256 = "0790081ec7a09f26f5ef18a83272a0eb35f4b5532fc51eacbe0140b5aff1d4c9";
     goPackagePath = "gopkg.in/olivere/elastic.v3";
     propagatedBuildInputs = [
-      elastic_v2
+      net
     ];
   };
 

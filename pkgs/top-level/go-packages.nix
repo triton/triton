@@ -3375,6 +3375,15 @@ let
     date = "2016-08-31";
   };
 
+  profile = buildFromGitHub {
+    version = 2;
+    owner = "pkg";
+    repo = "profile";
+    date = "2016-08-22";
+    rev = "303fad789382e54372c3b92956e55fadf81b413d";
+    sha256 = "021c6d8e9ee11b184e6f001aadfb7bb0d31c4ab5cec397830805bdccd6d88236";
+  };
+
   prometheus = buildFromGitHub {
     version = 1;
     rev = "v1.0.1";

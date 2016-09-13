@@ -1,4 +1,10 @@
-{ stdenv, curl, openssl, minisign, gnupg }: # Note that `curl' and `openssl' may be `null', in case of the native stdenv.
+{ stdenv
+, curl
+, openssl
+, minisign
+, gnupg
+, signify
+}: # Note that `curl' and `openssl' may be `null', in case of the native stdenv.
 
 let
 
@@ -97,6 +103,10 @@ in
 , pgpsigSha512Urls ? []
 , pgpDecompress ? false
 
+, signifyPub ? ""
+, signifyUrl ? ""
+, signifyUrls ? []
+
 , failEarly ? false
 
 , recursiveHash ? false
@@ -146,6 +156,7 @@ let
   pgpsigSha256Urls_ = (if pgpsigSha256Url != "" then [ pgpsigSha256Url ] else [ ]) ++ pgpsigSha256Urls;
   pgpsigSha512Urls_ = (if pgpsigSha512Url != "" then [ pgpsigSha512Url ] else [ ]) ++ pgpsigSha512Urls;
   pgpKeyFingerprints_ = map (n: stdenv.lib.replaceChars [" "] [""] n) ((if pgpKeyFingerprint != "" then [ pgpKeyFingerprint ] else [ ]) ++ pgpKeyFingerprints);
+  signifyUrls_ = (if signifyUrl != "" then [ signifyUrl ] else [ ]) ++ signifyUrls;
 
 in
 
@@ -165,6 +176,8 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
     minisign
   ] ++ stdenv.lib.optionals (pgpKeyFile != null || pgpKeyFingerprints_ != []) [
     gnupg
+  ] ++ stdenv.lib.optionals (signifyPub != "") [
+    signify
   ];
 
   urls = urls_;
@@ -179,6 +192,7 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
   pgpsigSha256Urls = pgpsigSha256Urls_;
   pgpsigSha512Urls = pgpsigSha512Urls_;
   pgpKeyFingerprints = pgpKeyFingerprints_;
+  signifyUrls = signifyUrls_;
 
   # New-style output content requirements.
   outputHashAlgo =
@@ -222,7 +236,8 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
     multihash
     minisignPub
     pgpKeyFile
-    pgpDecompress;
+    pgpDecompress
+    signifyPub;
 
   # Doing the download on a remote machine just duplicates network
   # traffic, so don't do that.

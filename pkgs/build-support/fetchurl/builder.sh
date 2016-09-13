@@ -11,6 +11,7 @@ pgpsigMd5Urls=($pgpsigMd5Urls)
 pgpsigSha1Urls=($pgpsigSha1Urls)
 pgpsigSha256Urls=($pgpsigSha256Urls)
 pgpsigSha512Urls=($pgpsigSha512Urls)
+signifyUrls=($signifyUrls)
 
 pgpKeyFingerprints=($pgpKeyFingerprints)
 
@@ -181,7 +182,7 @@ tryDownload() {
           fi
 
           if [ -n "$minisignPub" ]; then
-            if ! minisign -V -x "$TMPDIR/minisign" -m "$out" -P "$minisignPub" -q; then
+            if ! minisign -V -x "$TMPDIR/minisign" -m "$out" -P "$minisignPub"; then
               echo "$out Minisig does not validate" >&2
               if [ "$failEarly" = "1" ]; then
                 exit 1
@@ -221,6 +222,21 @@ tryDownload() {
               fi
             else
               verifications+=('pgp')
+            fi
+          fi
+          if [ -n "$signifyPub" ]; then
+            echo "untrusted comment: signify public key" > "$TMPDIR/signify.pub"
+            echo "$signifyPub" >> "$TMPDIR/signify.pub"
+            ln -s "$out" "$name"
+            if ! signify -C -p "$TMPDIR/signify.pub" -x "$TMPDIR/signify"; then
+              echo "$out Signify does not validate" >&2
+              if [ "$failEarly" = "1" ]; then
+                exit 1
+              else
+                break
+              fi
+            else
+              verifications+=('signify')
             fi
           fi
         fi
@@ -320,6 +336,7 @@ fixUrls 'pgpsigMd5Urls'
 fixUrls 'pgpsigSha1Urls'
 fixUrls 'pgpsigSha256Urls'
 fixUrls 'pgpsigSha512Urls'
+fixUrls 'signifyUrls'
 
 if ! test -f /etc/ssl/certs/ca-certificates.crt; then
   echo "Warning, downloading without validating SSL cert." >&2
@@ -425,6 +442,7 @@ sigDownload "pggsigMd5"
 sigDownload "pgpsigSha1"
 sigDownload "pgpsigSha256"
 sigDownload "pgpsigSha512"
+sigDownload "signify"
 
 # We want to download signatures first
 getHashOrEmpty() {
@@ -460,7 +478,7 @@ getHashConfirmation() {
       eval "${varname}Confirm"='"broken"'
       continue
     fi
-    if echo "$url" | grep -q '\.asc$'; then
+    if echo "$url" | grep -q '\.\(asc\|sig\)$'; then
       mv "$TMPDIR/$varname" "$TMPDIR/$varname.asc"
       if ! gpg --lock-never --output "$TMPDIR/$varname" --decrypt "$TMPDIR/$varname.asc"; then
         echo "$TMPDIR/$varname.asc pgpsig does not validate" >&2

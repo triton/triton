@@ -2,20 +2,22 @@
 , buildPythonPackage
 , fetchPyPi
 
+, setuptools-scm
 , six
 }:
 
 buildPythonPackage rec {
   name = "cherrypy-${version}";
-  version = "7.1.0";
+  version = "8.1.0";
 
   src = fetchPyPi {
     package = "CherryPy";
     inherit version;
-    sha256 = "64dca80ccadae4ed8e4ea94119bf76ed9746743c2bd57ec40af534680cbef021";
+    sha256 = "b4fa89b76adcb909daded1f14a373413ad6c34bbb0f99e2c497c248e91dd616f";
   };
 
   propagatedBuildInputs = [
+    setuptools-scm
     six
   ];
 

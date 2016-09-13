@@ -624,6 +624,21 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
      # Trying to run tests fails with # RuntimeError: dictionary changed size during iteration
    };
 
+   cov-core = buildPythonPackage rec {
+     name = "cov-core-${version}";
+     version = "1.15.0";
+
+     src = fetchPyPi {
+       package = "cov-core";
+       inherit version;
+       sha256 = "4a14c67d520fda9d42b0da6134638578caae1d374b9bb462d8de00587dba764c";
+     };
+
+     propagatedBuildInputs = with self; [
+        coverage
+     ];
+    };
+
    pytestcov = buildPythonPackage (rec {
      name = "pytest-cov-2.2.0";
 

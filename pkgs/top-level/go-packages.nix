@@ -2532,10 +2532,14 @@ let
       pat
       pool_v2
       protobuf_gogo
+      ratecounter
       snappy
       statik
       toml
       usage-client
+    ];
+    goPackageAliases = [
+      "github.com/influxdb/influxdb"
     ];
     postPatch = /* Remove broken tests */ ''
       rm -rf services/collectd/test_client

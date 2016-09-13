@@ -11,13 +11,22 @@
 , zlib
 }:
 
-stdenv.mkDerivation rec {
+let
+  version = "6.0.0p1";
+
   name = "opensmtpd-${version}";
-  version = "5.9.2p1";
+
+  baseUrls = [
+    "https://www.opensmtpd.org/archives/${name}"
+  ];
+in
+stdenv.mkDerivation rec {
+  inherit name;
 
   src = fetchurl {
-    url = "https://www.opensmtpd.org/archives/${name}.tar.gz";
-    sha256 = "3522f273c1630c781facdb2b921228e338ed4e651909316735df775d6a70a71d";
+    url = map (n: "${n}.tar.gz") baseUrls;
+    hashOutput = false;
+    sha256 = "a97e79589fe4147bfc124fcf39207eee8e0ad35d0b3411ca31830bd35710f81d";
   };
 
   nativeBuildInputs = [
@@ -59,6 +68,15 @@ stdenv.mkDerivation rec {
       "sysconfdir=$out/etc"
     )
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      signifyUrls = map (n: "${n}.sum.sig") baseUrls;
+      signifyPub = "RWSoKNlSRN/G8zpyHzdK1MVuLrQi3J1Yfo9XsjgFHnCvabkcb6bBRBf0";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = https://www.opensmtpd.org/;

@@ -3499,6 +3499,18 @@ let
     meta.autoUpdate = false;
   };
 
+  reedsolomon = buildFromGitHub {
+    version = 2;
+    owner = "klauspost";
+    repo = "reedsolomon";
+    date = "2016-09-12";
+    rev = "c54154da9e35cab25232314cf69ab9d78447f9a5";
+    sha256 = "be827a3365ddda0f55461370ea0b3af4382840e550f80a1b67908309308d7186";
+    propagatedBuildInputs = [
+      cpuid
+    ];
+  };
+
   reflectwalk = buildFromGitHub {
     version = 1;
     date = "2015-05-27";

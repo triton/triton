@@ -487,6 +487,8 @@ wrapCC = wrapCCWith (callPackage ../build-support/cc-wrapper) pkgs.stdenv.cc.lib
 ################################################################################
 ################################################################################
 
+"389-ds-base" = callPackage ../all-pkgs/3/389-ds-base { };
+
 accountsservice = callPackage ../all-pkgs/a/accountsservice { };
 
 acl = callPackage ../all-pkgs/a/acl { };

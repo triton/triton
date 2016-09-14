@@ -18,7 +18,7 @@ let
     wtFlag;
 
   versionMajor = "1.40";
-  versionMinor = "2";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 in
 
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/pango/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/pango/${versionMajor}/${name}.sha256sum";
-    sha256 = "90582a02bc89318d205814fc097f2e9dd164d26da5f27c53ea42d583b34c3cd1";
+    sha256 = "abba8b5ce728520c3a0f1535eab19eac3c14aeef7faa5aded90017ceac2711d3";
   };
 
   buildInputs = [

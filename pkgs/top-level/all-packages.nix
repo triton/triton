@@ -2379,6 +2379,8 @@ sudo = callPackage ../all-pkgs/s/sudo { };
 
 sushi = callPackage ../all-pkgs/s/sushi { };
 
+svrcore = callPackage ../all-pkgs/s/svrcore { };
+
 swig_2 = callPackageAlias "swig" {
   channel = "2";
 };

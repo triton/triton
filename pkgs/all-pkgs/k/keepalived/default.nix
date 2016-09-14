@@ -10,12 +10,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "keepalived-1.2.23";
+  name = "keepalived-1.2.24";
 
   src = fetchurl {
     url = "http://keepalived.org/software/${name}.tar.gz";
-    multihash = "QmRwvzN1VhvXf56BBr9GTxeepDRnLJ9fMk4Yg18cTN9rk3";
-    sha256 = "046rfl2fpzqkdy3ahg2ca8qpvdd02d0zib47m80yiwqgy6y35r0r";
+    multihash = "QmVUJ7SnDaW6Dj9AyKwnnKa2wbQbHRznWfGzrraFgL1CAH";
+    sha256 = "3071804478077e606197a2348b5733d7d53af2843906af5e0d544945565c36ef";
   };
 
   buildInputs = [

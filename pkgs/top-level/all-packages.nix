@@ -1539,6 +1539,8 @@ libkate = callPackage ../all-pkgs/l/libkate { };
 
 libksba = callPackage ../all-pkgs/l/libksba { };
 
+liblfds = callPackage ../all-pkgs/l/liblfds { };
+
 liblogging = callPackage ../all-pkgs/l/liblogging { };
 
 libmatroska = callPackage ../all-pkgs/l/libmatroska { };

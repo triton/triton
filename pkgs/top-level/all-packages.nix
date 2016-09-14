@@ -1985,6 +1985,8 @@ nvidia-settings = callPackage ../all-pkgs/n/nvidia-settings { };
 
 nvidia-video-codec-sdk = callPackage ../all-pkgs/n/nvidia-video-codec-sdk { };
 
+nunc-stans = callPackage ../all-pkgs/n/nunc-stans { };
+
 obexftp = callPackage ../all-pkgs/o/obexftp { };
 
 oniguruma = callPackage ../all-pkgs/o/oniguruma { };

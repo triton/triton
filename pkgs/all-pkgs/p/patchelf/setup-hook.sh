@@ -41,10 +41,10 @@ patchELF() {
 
         # We also want to add any shared object containing outputs to the rpath
         local rpathlist
-        if [ "${patchELFAddRpath-1}" = "1" ]; then
+        if [ "${patchELFAddRpath-1}" = "1" ] && [ -n "$sodirs" ]; then
           # We want to make sure we know exactly what new paths we need to add
           local extradirs
-          extradirs="$(find ${sodirs} -mindepth 1 -maxdepth 1 -name 'no-such-file' $(patchelf --print-needed "$file" | awk '{ print "-or"; print "-name"; print $0}') -exec dirname {} \;)"
+          extradirs="$(find ${sodirs} -mindepth 1 -maxdepth 1 \( -name 'no-such-file' $(patchelf --print-needed "$file" | awk '{ print "-or"; print "-name"; print $0}') \) -exec dirname {} \;)"
           rpathlist="$(echo -e "${extradirs}\n${notmprpath}" | sed '/^$/d')"
         else
           rpathlist="${notmprpath}"

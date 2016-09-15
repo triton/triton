@@ -3324,6 +3324,13 @@ let
     subPackages = [
       "."
     ];
+
+    # Remove deprecated consul api.HealthUnknown
+    postPatch = ''
+      sed -i nomad/structs/structs.go \
+        -e 's/api.HealthUnknown, //' \
+        -e '/api.HealthUnknown/d'
+    '';
   };
 
   notify = buildFromGitHub {

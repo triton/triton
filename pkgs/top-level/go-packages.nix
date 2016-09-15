@@ -3652,7 +3652,7 @@ let
     rev = "5f09c4ffdbcd2a53768e78c47717415de12b6728";
     owner  = "hashicorp";
     repo   = "raft";
-    sha256 = "10zs6l37j0y8hm61gbgp2a2ajsh8k4h0kiy7rw4zrzicjq4pqdl7";
+    sha256 = "87367c09962cfefc09cfc7c7092099086aa98412f7ad174c85c803790635fa83";
     propagatedBuildInputs = [ armon_go-metrics ugorji_go ];
   };
 

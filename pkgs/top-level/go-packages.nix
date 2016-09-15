@@ -661,7 +661,7 @@ let
       datadog-go circbuf armon_go-metrics go-radix speakeasy bolt
       go-bindata-assetfs go-dockerclient errwrap go-checkpoint
       go-immutable-radix go-memdb ugorji_go go-multierror go-reap go-syslog
-      golang-lru hcl logutils memberlist net-rpc-msgpackrpc raft raft-boltdb
+      golang-lru hcl logutils memberlist net-rpc-msgpackrpc raft_v2 raft-boltdb
       scada-client yamux muxado dns mitchellh_cli mapstructure columnize
       copystructure hil hashicorp-go-uuid crypto sys
     ];
@@ -3301,7 +3301,7 @@ let
       logutils
       memberlist
       net-rpc-msgpackrpc
-      raft
+      raft_v1
       raft-boltdb
       scada-client
       serf
@@ -3637,16 +3637,29 @@ let
     date = "2016-09-06";
   };
 
-  raft = buildFromGitHub {
+  raft_v1 = buildFromGitHub {
     version = 2;
     date = "2016-08-23";
+    # Use the library-v2-stage-one branch until it is merged
+    # into master.
+    rev = "5f09c4ffdbcd2a53768e78c47717415de12b6728";
+    owner  = "hashicorp";
+    repo   = "raft";
+    sha256 = "10zs6l37j0y8hm61gbgp2a2ajsh8k4h0kiy7rw4zrzicjq4pqdl7";
+    propagatedBuildInputs = [ armon_go-metrics ugorji_go ];
+  };
+
+  raft_v2 = buildFromGitHub {
+    version = 2;
+    date = "2016-08-01";
     # Use the library-v2-stage-one branch until it is merged
     # into master.
     rev = "c69c15dd73b6695ba75b3502ce6b332cc0042c83";
     owner  = "hashicorp";
     repo   = "raft";
-    sha256 = "8a8425ef6eb06d3f183ade8f911dcd399c53444d79ed9b108fc937c884a822f0";
+    sha256 = "0497abed17b6759ccce623ca318188a4ccd806e77bb94ca6f2ca5ced48888119";
     propagatedBuildInputs = [ armon_go-metrics ugorji_go ];
+    meta.autoUpdate = false;
   };
 
   raft-boltdb = buildFromGitHub {
@@ -3656,7 +3669,7 @@ let
     owner  = "hashicorp";
     repo   = "raft-boltdb";
     sha256 = "0kj22b0xk7avzwymkdi98f9vbbgslfd187njd7128nhgmdvfdn0m";
-    propagatedBuildInputs = [ bolt ugorji_go raft ];
+    propagatedBuildInputs = [ bolt ugorji_go raft_v2 ];
   };
 
   ratecounter = buildFromGitHub {

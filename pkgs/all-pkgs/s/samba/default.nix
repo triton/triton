@@ -16,7 +16,7 @@
 , glusterfs
 , gnutls
 , iniparser
-, kerberos
+, krb5_full
 , ldb
 , libaio
 , libarchive
@@ -51,7 +51,7 @@ let
     optionals
     optionalString;
 
-  version = "4.4.5";
+  version = "4.5.0";
   name = "samba${if isClient then "-client" else ""}-${version}";
 
   tarballUrls = [
@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "b876ef2e63f66265490e80a122e66ef2d7616112b839df68f56ac2e1ce17a7bd";
+    sha256 = "d3a9a439b746ddd2c5f119f60c72ef8a026bcee1efb1199bf19e44f114f6b586";
   };
 
   nativeBuildInputs = [
@@ -86,7 +86,7 @@ stdenv.mkDerivation rec {
     cups
     gnutls
     iniparser
-    kerberos
+    #krb5_full
     ldb
     libarchive
     libbsd
@@ -180,12 +180,12 @@ stdenv.mkDerivation rec {
     "--enable-gnutls"
 
     # wscript options
-    "--with-system-mitkrb5"
+    #"--with-system-mitkrb5"
     # "--without-ad-dc"
 
     # ctdb/wscript
     (if isClient then null else "--enable-infiniband")
-    (if isClient then null else "--enable-pmda")
+    #(if isClient then null else "--enable-pmda")
   ];
 
   preInstall = ''
@@ -202,8 +202,10 @@ stdenv.mkDerivation rec {
 
     # Remove unecessary components
     rm -r $out/var
-    rm -r $out/{lib,share}/ctdb-tests
+    rm -r $out/libexec/ctdb/tests
+    rm -r $out/lib/python2.7/site-packages/samba/tests
     rm $out/bin/ctdb_run{_cluster,}_tests
+    rm -r $out/share/ctdb-tests
   '';
 
   preFixup = optionalString isClient ''

@@ -676,10 +676,7 @@ let
   };
 
   consul_api = buildFromGitHub {
-    version = 2;
-    inherit (consul) owner repo;
-    rev = "v0.7.0";
-    sha256 = "1xfq0c25z1qsv3psdqw4ydyvmlxdp971dqrky1panmw7b2s9hyi3";
+    inherit (consul) rev owner repo sha256 version;
     propagatedBuildInputs = [
       go-cleanhttp
       serf

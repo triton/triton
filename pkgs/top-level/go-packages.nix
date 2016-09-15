@@ -1739,6 +1739,8 @@ let
     sha256 = "0sp59zf5jqbhvk81n0blbz5ddz30173m3zx57m12sqizr9zvvis9";
     propagatedBuildInputs = [
       aws-sdk-go
+      go-homedir
+      go-netrc
     ];
   };
 
@@ -2024,6 +2026,15 @@ let
     buildInputs = [
       gateway
     ];
+  };
+
+  go-netrc = buildFromGitHub {
+    version = 2;
+    owner = "bgentry";
+    repo = "go-netrc";
+    date = "2014-05-22";
+    rev = "9fd32a8b3d3d3f9d43c341bfe098430e07609480";
+    sha256 = "68984543a73f4d7ad4b58708207a483bd74fc9388ac582eac532434b11361a9e";
   };
 
   go-ole = buildFromGitHub {

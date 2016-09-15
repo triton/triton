@@ -24,16 +24,16 @@ let
     enFlag
     wtFlag;
 
-  version = "2.1.4";
+  version = "2.2.0";
 in
 stdenv.mkDerivation rec {
   name = "cups-${version}";
 
   src = fetchurl {
-    url = "https://github.com/apple/cups/releases/download/release-${version}/"
+    url = "https://github.com/apple/cups/releases/download/v${version}/"
       + "cups-${version}-source.tar.gz";
     hashOutput = false;
-    sha256 = "4b14fd833180ac529ebebea766a09094c2568bf8426e219cb3a1715304ef728d";
+    sha256 = "cc6945b8bb631fc1a6dbdec8b598c41c19dc86b979c5fe518eec760d93c3ab4c";
   };
 
   buildInputs = [

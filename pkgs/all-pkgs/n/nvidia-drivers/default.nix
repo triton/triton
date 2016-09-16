@@ -118,12 +118,10 @@ stdenv.mkDerivation {
 
       # The line you are looking for `skip=` is within the first 20 lines of
       # the file, make sure that you aren't grepping/awking/sedding the entire
-      # 60,000+ line file for 1 line (hense the use of `head`).
-      skip="$(
-        head --lines 20 "$src" |
-          awk -F= '/skip=/ { print $2 ; exit }' |
-          grep --only-matching '[0-9]*'
-      )"
+      # 60,000+ line file for 1 line.
+      skip="$(awk -F= '{if(NR<=20&&/skip=/){print $2;exit}}' "$src")"
+      # Make sure skip is an integer
+      skip="''${skip//[^0-9]/}"
 
       # If the `skip=' value is null, more than likely the hash wasn't updated
       # after bumping the version.

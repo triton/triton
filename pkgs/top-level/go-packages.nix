@@ -3397,8 +3397,10 @@ let
     version = 2;
     owner = "cheggaaa";
     repo = "pb";
-    rev = "v1.0.5";
-    sha256 = "0m3d8m8bf230jfq69l42vfzaqn80fdlwmwap7jhx8c5867fnynci";
+    date = "2016-09-05";
+    rev = "ad4efe000aa550bb54918c06ebbadc0ff17687b9";
+    sha256 = "9c47c25cd544f48064e148ea428f95930505fd2f74e3a2e606aff1adfe92db42";
+    meta.autoUpdate = false;
   };
 
   beorn7_perks = buildFromGitHub {
@@ -3758,11 +3760,13 @@ let
     version = 2;
     owner = "klauspost";
     repo = "reedsolomon";
-    rev = "v1.1";
-    sha256 = "0c67q1k46q7s50alvvr9hpbd06p8aj4qiyxs5ykprrhs4amxifpp";
+    date = "2016-09-12";
+    rev = "c54154da9e35cab25232314cf69ab9d78447f9a5";
+    sha256 = "be827a3365ddda0f55461370ea0b3af4382840e550f80a1b67908309308d7186";
     propagatedBuildInputs = [
       cpuid
     ];
+    meta.autoUpdate = false;
   };
 
   reflectwalk = buildFromGitHub {

@@ -1,5 +1,4 @@
 { stdenv
-, bison
 , fetchurl
 , gettext
 , texinfo
@@ -16,19 +15,18 @@ let
     mapAttrsToList;
 
   patchSha256s = import ./patches.nix;
+
+  version = "4.4";
 in
 stdenv.mkDerivation rec {
   name = "bash-${version}-p${toString (length (attrNames patchSha256s))}";
-  version = "4.3";
 
   src = fetchurl {
     url = "mirror://gnu/bash/bash-${version}.tar.gz";
-    sha256 = "1m14s1f61mf6bijfibcjm9y6pkyvz6gibyl8p4hxq90fisi8gimg";
+    sha256 = "d86b3392c1202e8ff5a423b302e6284db7f8f435ea9f39b5b1b20fd3ac36dfcb";
   };
 
-  # Note: Bison is needed because the patches above modify parse.y.
   nativeBuildInputs = [
-    bison
     gettext
     texinfo
   ];

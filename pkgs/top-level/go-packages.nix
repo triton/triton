@@ -931,6 +931,16 @@ let
     sha256 = "1k865gc1x14fmlx2i0g19iwbj09zfkjxmdws8pzxzdns5dvxwbp4";
   };
 
+  dsync = buildFromGitHub {
+    version = 2;
+    owner = "minio";
+    repo = "dsync";
+    date = "2016-08-27";
+    rev = "4b32c34fa9dea3f41d08d31fb14fdfbc02046c52";
+    sha256 = "0aeaa0257a722b2ee80c3a4b11a1efd6a4110b6376667f8c39881ca071b6eecb";
+    meta.autoUpdate = false;
+  };
+
   ed25519 = buildFromGitHub {
     version = 1;
     owner = "agl";
@@ -1223,6 +1233,18 @@ let
     repo = "ginkgo";
     sha256 = "04pydk7pkwni4ns98qkhancjsshavy2p6n5xqidhrz7qnyvvpf6m";
     date = "2016-09-14";
+  };
+
+  gjson = buildFromGitHub {
+    version = 2;
+    owner = "tidwall";
+    repo = "gjson";
+    date = "2016-09-09";
+    rev = "2dec1c4e7be3fff111b388536cf94ae23c38add7";
+    sha256 = "27fd3bb5362d171b3f730e56b5d318e693cae5533dc31fd1c96b1f11370ce939";
+    propagatedBuildInputs = [
+      match
+    ];
   };
 
   glob = buildFromGitHub {
@@ -2923,6 +2945,15 @@ let
     sha256 = "1f97xd835qnyy1wb2aj2zw66c2l1kaq44n3511avm8alhaicqky9";
   };
 
+  match = buildFromGitHub {
+    version = 2;
+    owner = "tidwall";
+    repo = "match";
+    date = "2016-08-30";
+    rev = "173748da739a410c5b0b813b956f89ff94730b4c";
+    sha256 = "362da507bd9755044b3a1f9c0f048ec8758012ca55593b9a1dd63edd76e4e5f9";
+  };
+
   mathutil = buildFromGitHub {
     version = 1;
     date = "2016-06-13";
@@ -3020,20 +3051,21 @@ let
       color
       cors
       crypto
+      dsync
       elastic_v3
-      jwt-go
+      gjson
       go-bindata-assetfs
       go-homedir_minio
       go-humanize
       go-version
       handlers
+      jwt-go
       logrus
       mc
       minio-go
       miniobrowser
       mux
       pb
-      #probe
       profile
       redigo
       reedsolomon

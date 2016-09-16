@@ -80,11 +80,13 @@ stdenv.mkDerivation rec {
     "--disable-debug-printfs"
     "--disable-unit-tests"
     #"--enable-relro"
-    #(enFlag "gssapi" (kerberos != null) null)
+    # FIXME: kerberos support causes chromium to fail to build
+    #"--${boolEn (kerberos != null)}-gssapi"
     "--enable-threads"
     "--${boolEn (
       gnutls != null
       && libgcrypt != null)}-ssl"
+    #"--enable-cdsassl"
     "--${boolEn (pam != null)}-pam"
     "--${boolEn (
       gnutls != null
@@ -93,6 +95,7 @@ stdenv.mkDerivation rec {
     "--disable-dnssd"
     "--disable-launchd"
     "--${boolEn (systemd_lib != null)}-systemd"
+    #"--disable-upstart"
     #"--enable-page-logging"
     #"--enable-browsing"
     #"--enable-default-shared"

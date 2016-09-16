@@ -39,11 +39,9 @@ stdenv.mkDerivation rec {
        issue with some versions so it is best to do it manually instead. */ ''
       local skip
 
-      skip="$(
-        head --lines 200 "$src" |
-          awk -F= '/OLDSKIP=/ { print $2 ; exit }' |
-          grep --only-matching '[0-9]*'
-      )"
+      skip="$(awk -F= '{if(NR<=200&&/OLDSKIP=/){print $2;exit}}' "$src")"
+      # Make sure skip is an integer
+      skip="''${skip//[^0-9]/}"
 
       [ ! -z "$skip" ] || {
         echo 'skip is null while a value was expected'

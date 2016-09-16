@@ -144,11 +144,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "de35ec43e7a9aabd6a9c54d2898220ea7e44de7d";
-    date = "2016-09-13";
+    rev = "71a035914f99bb58fe82eac0f1289f10963d876c";
+    date = "2016-09-12";
     owner  = "golang";
     repo   = "net";
-    sha256 = "183k5hj72vrijk2hihk13l42ic7rij1bihyzfk1rajivn53wr224";
+    sha256 = "0xi3rz0062pv2z7pjkmjq0pxlyqh1ba1y3wmcnd1l6z4zvn6rmid";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -661,7 +661,7 @@ let
       datadog-go circbuf armon_go-metrics go-radix speakeasy bolt
       go-bindata-assetfs go-dockerclient errwrap go-checkpoint
       go-immutable-radix go-memdb ugorji_go go-multierror go-reap go-syslog
-      golang-lru hcl logutils memberlist net-rpc-msgpackrpc raft_v2 raft-boltdb
+      golang-lru hcl logutils memberlist net-rpc-msgpackrpc raft_v2 raft-boltdb_v2
       scada-client yamux muxado dns mitchellh_cli mapstructure columnize
       copystructure hil hashicorp-go-uuid crypto sys
     ];
@@ -1144,10 +1144,10 @@ let
   gcloud-golang = buildFromGitHub {
     version = 2;
     date = "2016-09-15";
-    rev = "1c43d7b0fe498512e7b301de9ce39d0c4a046305";
+    rev = "99eed3309ff7980d16154d2258600a5b38b129a9";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "16y3swg61npy2sfdhdn35xv18gxscydw74mv7j9y32cbacqk9n9v";
+    sha256 = "0rcg065in37hrc55qxa699855alz3g35xmgxd06m6nxaxjlmi3l8";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -3333,7 +3333,7 @@ let
       memberlist
       net-rpc-msgpackrpc
       raft_v1
-      raft-boltdb
+      raft-boltdb_v1
       scada-client
       serf
       yamux
@@ -3682,8 +3682,6 @@ let
   raft_v1 = buildFromGitHub {
     version = 2;
     date = "2016-08-23";
-    # Use the library-v2-stage-one branch until it is merged
-    # into master.
     rev = "5f09c4ffdbcd2a53768e78c47717415de12b6728";
     owner  = "hashicorp";
     repo   = "raft";
@@ -3704,14 +3702,27 @@ let
     meta.autoUpdate = false;
   };
 
-  raft-boltdb = buildFromGitHub {
+  raft-boltdb_v2 = buildFromGitHub {
     version = 2;
     date = "2016-09-13";
     rev = "a8adffd05b79e3d8b1817d46bbe387a112265b3e";
     owner  = "hashicorp";
     repo   = "raft-boltdb";
     sha256 = "0kj22b0xk7avzwymkdi98f9vbbgslfd187njd7128nhgmdvfdn0m";
-    propagatedBuildInputs = [ bolt ugorji_go raft_v2 ];
+    propagatedBuildInputs = [
+      bolt
+      ugorji_go
+      raft_v2
+    ];
+  };
+
+  raft-boltdb_v1 = buildFromGitHub {
+    inherit (raft-boltdb_v2) version rev date owner repo sha256;
+    propagatedBuildInputs = [
+      bolt
+      ugorji_go
+      raft_v1
+    ];
   };
 
   ratecounter = buildFromGitHub {

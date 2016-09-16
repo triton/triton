@@ -21,8 +21,8 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+    boolEn
+    boolWt;
 
   version = "2.2.0";
 in
@@ -68,11 +68,11 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--sysconfdir=/etc"
     "--disable-mallinfo"
-    (enFlag "libpaper" (libpaper != null) null)
-    (enFlag "libusb" (libusb != null) null)
+    "--${boolEn (libpaper != null)}-libpaper"
+    "--${boolEn (libusb != null)}-libusb"
     #--enable-tcp-wrappers
-    (enFlag "acl" (acl != null) null)
-    (enFlag "dbus" (dbus != null) null)
+    "--${boolEn (acl != null)}-acl"
+    "--${boolEn (dbus != null)}-dbus"
     "--enable-shared"
     "--disable-libtool-unsupported"
     "--disable-debug"
@@ -82,23 +82,23 @@ stdenv.mkDerivation rec {
     #"--enable-relro"
     #(enFlag "gssapi" (kerberos != null) null)
     "--enable-threads"
-    (enFlag "ssl" (
+    "--${boolEn (
       gnutls != null
-      && libgcrypt != null) null)
-    (enFlag "pam" (pam != null) null)
-    (enFlag "gnutls" (
+      && libgcrypt != null)}-ssl"
+    "--${boolEn (pam != null)}-pam"
+    "--${boolEn (
       gnutls != null
-      && libgcrypt != null) null)
-    (enFlag "avahi" (avahi != null) null)
+      && libgcrypt != null)}-gnutls"
+    "--${boolEn (avahi != null)}-avahi"
     "--disable-dnssd"
     "--disable-launchd"
-    (enFlag "systemd" (systemd_lib != null) null)
+    "--${boolEn (systemd_lib != null)}-systemd"
     #"--enable-page-logging"
     #"--enable-browsing"
     #"--enable-default-shared"
     "--enable-raw-printing"
     #"--enable-webif"
-    # "--with-dbusdir$out/etc/dbus-1"
+    # "--with-dbusdir=$out/etc/dbus-1"
     "--with-components=all"
     # --with-cachedir
     # --with-icondir
@@ -108,7 +108,7 @@ stdenv.mkDerivation rec {
     # --with-rundir=/run/cups
     # XXX: flag is not a proper boolean, build fails with optim enabled
     #"--without-optim"
-    (wtFlag "systemd" (systemd_lib != null) null)
+    "--${boolWt (systemd_lib != null)}-systemd"
     "--with-languages=all"
     # --with-cups-user=lp
     # --with-cups-group=lp
@@ -117,7 +117,7 @@ stdenv.mkDerivation rec {
     "--without-java"
     "--without-perl"
     "--without-php"
-    (wtFlag "python" (python2 != null) null)
+    "--${boolWt (python2 != null)}-python"
   ];
 
   preInstall = ''

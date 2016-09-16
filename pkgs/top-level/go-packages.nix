@@ -3065,8 +3065,8 @@ let
   minio_pkg_probe = buildFromGitHub {
     version = 2;
     inherit (minio) owner repo;
-    rev = "7a549096ded5f0d9bc86c7953ca2a66dde96e4ea";
-    sha256 = "1n7h58xxjqv353vj1cxnqvlyxa74yxfw3kdw7h3zzyna2yx52d84";
+    rev = "RELEASE.2016-04-17T22-09-24Z";
+    sha256 = "41c8749f0a7c6a22ef35f7cb2577e31871bff95c4c5c035a936b220f198ed04e";
     propagatedBuildInputs = [
       go-humanize
     ];
@@ -3076,15 +3076,17 @@ let
       mv -v "''${sourceRoot}.old"/pkg/probe "$sourceRoot"/pkg/probe
       rm -rf "''${sourceRoot}.old"
     '';
-    date = "2016-09-15";
+    meta.autoUpdate = false;
   };
 
   minio-go = buildFromGitHub {
     version = 2;
     owner = "minio";
     repo = "minio-go";
-    rev = "v2.0.1";
-    sha256 = "02a168jdbrdrzbz5igpc74jpmnz2993s1rjwcs1hg0c6p89vn2yl";
+    date = "2016-09-12";
+    rev = "e8557e5528f375cbc787bd8f2a4f0487e94c7310";
+    sha256 = "6c6d8fd3c7bd8b2c9ce6b80eb412aa23d9cf84c6b194acb4cc44e0a4b4f7f2c3";
+    meta.autoUpdate = false;
   };
 
   miniobrowser = buildFromGitHub {
@@ -3483,8 +3485,10 @@ let
     version = 2;
     owner = "pkg";
     repo = "profile";
-    rev = "v1.2.0";
-    sha256 = "02mq7xinxxln3wz3pgqaklpj0ry3ipp8agvzci72l2b56v50aas2";
+    date = "2016-08-22";
+    rev = "303fad789382e54372c3b92956e55fadf81b413d";
+    sha256 = "021c6d8e9ee11b184e6f001aadfb7bb0d31c4ab5cec397830805bdccd6d88236";
+    meta.autoUpdate = false;
   };
 
   prometheus = buildFromGitHub {
@@ -3731,8 +3735,10 @@ let
     version = 2;
     owner = "minio";
     repo = "redigo";
-    rev = "v1.0.0";
-    sha256 = "0qzc8zmj1dyrj44v864ny4s4abca8djp0x7hhq2b9jwy63sn3gp2";
+    date = "2016-07-23";
+    rev = "5e2117cd32d677a36dcd8c9c83776a065555653b";
+    sha256 = "3991316f879ff46e423e73f4006b26b620a0a98397fd649e0d667ff7cd35093a";
+    meta.autoUpdate = false;
   };
 
   redis_v2 = buildFromGitHub {

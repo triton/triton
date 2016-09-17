@@ -168,7 +168,7 @@ stdenv.mkDerivation ({
     + " -Wno-error=strict-prototypes";
 }
 
-// (removeAttrs args [ "fetchurl" "fetchTritonPatch" ]) //
+// (removeAttrs args [ "fetchurl" "fetchTritonPatch" "linux-headers" ]) //
 
 {
   name = name + "-${version}";

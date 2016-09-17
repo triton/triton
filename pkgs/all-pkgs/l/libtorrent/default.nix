@@ -11,14 +11,14 @@
 
 stdenv.mkDerivation rec {
   name = "libtorrent-${version}";
-  version = "2016-03-22";
+  version = "2016-09-05";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "rakshasa";
     repo = "libtorrent";
-    rev = "ef46ca30f778057095c9ef932527d5e7a8785fad";
-    sha256 = "0936c6fe429e6e1ba9cb141358f23b18ff66a147036fba946e3061f008412f30";
+    rev = "c97b462e706872cb317d5c9d67d8f470e30bf031";
+    sha256 = "92f2aabb7e4daecee70c73a2f6ae0830b998ca16d2c88975e42e4547a328b56b";
   };
 
   nativeBuildInputs = [

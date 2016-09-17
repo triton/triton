@@ -61,18 +61,33 @@ go.stdenv.mkDerivation (
 
     # Deal with gx dependencies
     if [ -d "go/src/$goPackagePath/vendor/gx" ]; then
+      if ! gx-go --help >/dev/null 2>&1; then
+        echo "You must add gx-go.bin as a native build input." >&2
+        exit 1
+      fi
+
       mv go/src/$goPackagePath/vendor/gx go/src
       pushd go/src
       find gx -name vendor | xargs rm -rf
-      ARGS=()
-      while read dep; do
-        RDEP="$(awk 'BEGIN { FS="\""; } { if (/dvcsimport/) { print $4; } }' "$dep")"
-        if [ -z "$RDEP" ]; then
+      deps=($(find gx -name package.json -exec dirname {} \;))
+      for dep in "''${deps[@]}"; do
+        local rdep
+        rdep="$(awk -F\" '{ if (/dvcsimport/) { print $4; exit 0; } }' "$dep/package.json")"
+        if [ -z "$rdep" ]; then
           continue
         fi
-        ARGS+=("-e" "s,\([^a-zA-Z/]\)$RDEP\(\"\|/\),\1$(dirname "$dep")\2,g")
-      done < <(find gx -name package.json)
-      find . -type f | xargs -n 1 -P $NIX_BUILD_CORES sed -i "''${ARGS[@]}"
+
+        # Patch go files for dependencies
+        ln -sv "$(pwd)" "$dep/vendor"
+        pushd "$dep"
+        gx-go rewrite
+        popd
+        rm "$dep/vendor"
+
+        # Patch go files for self
+        find "$dep" -type f -name \*.go -print0 \
+          | xargs -n 1 -0 -P $NIX_BUILD_CORES sed -i "s,\([^a-zA-Z/]\)$rdep\(\"\|/\),\1$dep\2,g"
+      done
       popd
     fi
 

@@ -205,6 +205,10 @@ let
           valid = false;
           reason = "broken";
           errormsg = "is not supported on ‘${result.system}’";
+        } else if lib.any (n: lib.any (c: c == "-") (lib.stringToCharacters n)) (lib.attrNames attrs) then {
+          valid = false;
+          reason = "broken";
+          errormsg = " has environment variables that contain hypens.";
         } else {
           valid = true;
         };

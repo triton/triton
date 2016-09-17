@@ -331,9 +331,7 @@ fi
 _addToNativeEnv() {
   local pkg="$1"
 
-  if [ -d $1/bin ] ; then
-      addToSearchPath '_PATH' "$1/bin"
-  fi
+  addToSearchPath '_PATH' "$1/bin"
 
   # Run the package-specific hooks set by the setup-hook scripts.
   runHook 'envHook' "$pkg"
@@ -349,9 +347,7 @@ _addToCrossEnv() {
   # Some programs put important build scripts (freetype-config and similar)
   # into their crossDrv bin path. Intentionally these should go after
   # the nativePkgs in PATH.
-  if [ -d "$1/bin" ] ; then
-    addToSearchPath '_PATH' "$1/bin"
-  fi
+  addToSearchPath '_PATH' "$1/bin"
 
   # Run the package-specific hooks set by the setup-hook scripts.
   runHook 'crossEnvHook' "$pkg"
@@ -839,11 +835,11 @@ fixupPhase() {
 installCheckPhase() {
   runHook 'preInstallCheck'
 
-  echo "installcheck flags: $makeFlags ${makeFlagsArray[@]} $installCheckFlags ${installCheckFlagsArray[@]}"
-  make ${makefile:+-f $makefile} \
-    ${enableParallelBuilding:+-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES}} \
-    $makeFlags "${makeFlagsArray[@]}" \
-    $installCheckFlags "${installCheckFlagsArray[@]}" ${installCheckTarget:-installcheck}
+  local actualMakeFlags
+  commonMakeFlags 'installCheck'
+  actualMakeFlags+=(${installCheckTargets:-installcheck})
+  printMakeFlags 'installCheck'
+  make "${actualMakeFlags[@]}"
 
   runHook 'postInstallCheck'
 }
@@ -852,15 +848,18 @@ installCheckPhase() {
 distPhase() {
   runHook 'preDist'
 
-  echo "dist flags: $distFlags ${distFlagsArray[@]}"
-  make ${makefile:+-f $makefile} $distFlags "${distFlagsArray[@]}" ${distTarget:-dist}
+  local actualMakeFlags
+  commonMakeFlags 'dist'
+  actualMakeFlags+=(${distTargets:-dist})
+  printMakeFlags 'dist'
+  make "${actualMakeFlags[@]}"
 
-  if [ "$dontCopyDist" != 1 ] ; then
+  if [ "${copyDist-1}" != "1" ] ; then
     mkdir -p "$out/tarballs"
 
     # Note: don't quote $tarballs, since we explicitly permit
     # wildcards in there.
-    cp -pvd ${tarballs:-*.tar.gz} "$out/tarballs"
+    cp -pvd ${tarballs:-*.tar.*} "$out/tarballs"
   fi
 
   runHook 'postDist'

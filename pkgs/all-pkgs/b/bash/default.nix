@@ -62,6 +62,11 @@ stdenv.mkDerivation rec {
     ln -s bash "$out/bin/sh"
   '';
 
+  # Fix bootstrap references
+  preFixup = ''
+    sed -i 's,INSTALL = .*install,INSTALL = install,' "$out"/lib/bash/Makefile.inc
+  '';
+
   outputs = [
     "out"
     "doc"

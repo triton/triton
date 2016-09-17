@@ -406,14 +406,14 @@ export NIX_INDENT_MAKE=1
 # means that we're supposed to try and auto-detect the number of
 # available CPU cores at run-time.
 
-if [ -z "${NIX_BUILD_CORES:-}" ] ; then
-  NIX_BUILD_CORES=1
+if [ -z "${NIX_BUILD_CORES//[^0-9]/}" ] ; then
+  NIX_BUILD_CORES='1'
 elif [ "$NIX_BUILD_CORES" -le 0 ] ; then
   NIX_BUILD_CORES=$(nproc 2>/dev/null || true)
   if expr >/dev/null 2>&1 "$NIX_BUILD_CORES" : "^[0-9][0-9]*$" ; then
     :
   else
-    NIX_BUILD_CORES=1
+    NIX_BUILD_CORES='1'
   fi
 fi
 export NIX_BUILD_CORES

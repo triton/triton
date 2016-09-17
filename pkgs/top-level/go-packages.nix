@@ -1985,24 +1985,25 @@ let
   };
 
   go-multiaddr = buildFromGitHub {
-    version = 1;
-    rev = "1dd0034f7fe862dd8dc86a02602ff6f9e546f5fe";
-    date = "2016-08-15";
+    version = 2;
+    rev = "907bb9f0e4eb47daae675d78a3060ca173598239";
+    date = "2016-09-15";
     owner  = "jbenet";
     repo   = "go-multiaddr";
-    sha256 = "0a4pppx02hsh6i2gdfl3cy4bvm0jizg2p5wpmsl9zl27qv7naipm";
+    sha256 = "14jylqvypng4hljad1pb9j8d09dr7vbingm1ham877sijhwf1d1d";
     propagatedBuildInputs = [
       go-multihash
     ];
   };
 
   go-multiaddr-net = buildFromGitHub {
-    version = 1;
-    rev = "ff394cdaae087d110150f15418ea4585c23541c6";
-    owner  = "jbenet";
+    version = 2;
+    rev = "825144c9a253d8f75fcaced0ac16181d8b384b22";
+    owner  = "multiformats";
     repo   = "go-multiaddr-net";
-    sha256 = "0wygvqscyydlm4cjlpk4apy1hx3wdnayfmbny8fy8q97g8n7cnlc";
-    date = "2016-06-10";
+    sha256 = "08xrslkxvp5m6birf748k1jkpn2qirgmk1nldm313hjksiwq24df";
+    date = "2016-09-15";
+    goPackageAliases = [ "github.com/jbenet/go-multiaddr-net" ];
     propagatedBuildInputs = [
       go-multiaddr
       utp
@@ -2370,11 +2371,11 @@ let
   };
 
   gx = buildFromGitHub {
-    version = 1;
-    rev = "v0.9.0";
+    version = 2;
+    rev = "v0.9.1";
     owner = "whyrusleeping";
     repo = "gx";
-    sha256 = "1zk1lkx01vhy2cl0l46hfjzc4rp3f2fn3vf8s926a73q6jma44fh";
+    sha256 = "1zj73pk1m4gjkhkmjwhfwpxvkpn6i6d8dgvk27y7mfcb38gwpzjx";
     propagatedBuildInputs = [
       go-git-ignore
       go-homedir
@@ -2663,10 +2664,12 @@ let
     repo = "go-ipfs";
     sha256 = "aac7c76ce3be455df629b742d3feb22446cd8c4471e1db24cc5389b7f496a2f6";
     gxSha256 = "1fih2cinl47dd5x9mwb1igr7l26ag5la3csm3whbc3rndsxfmv2y";
-
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"
+    ];
+    nativeBuildInputs = [
+      gx-go.bin
     ];
   };
 

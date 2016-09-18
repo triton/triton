@@ -39,31 +39,51 @@ patchELF() {
         local notmprpath
         notmprpath="$(echo "$oldrpath" | tr ':' '\n' | sed "\,$TMPDIR,d")"
 
+        # Make sure the paths in the rpath exist
+        local existrpath
+        existrpath=""
+        for rpath in $notmprpath; do
+          if [ "$rpath" = '$ORIGIN' ] || [ -d "$rpath" ]; then
+            existrpath+="$(printf "%s\n" "$rpath")"
+          fi
+        done
+
         # We also want to add any shared object containing outputs to the rpath
         local rpathlist
         if [ "${patchELFAddRpath-1}" = "1" ] && [ -n "$sodirs" ]; then
           # We want to make sure we know exactly what new paths we need to add
           local extradirs
           extradirs="$(find ${sodirs} -mindepth 1 -maxdepth 1 \( -name 'no-such-file' $(patchelf --print-needed "$file" | awk '{ print "-or"; print "-name"; print $0}') \) -exec dirname {} \;)"
-          rpathlist="$(echo -e "${extradirs}\n${notmprpath}" | sed '/^$/d')"
+          rpathlist="$(printf "%s\n%s" "${extradirs}" "${existrpath}" | sed '/^$/d')"
         else
-          rpathlist="${notmprpath}"
+          rpathlist="${existrpath}"
         fi
 
         # Convert rpath lines into a semicolon separated string
         local rpath
-        rpath="$(echo "$rpathlist" | sort | uniq | tr '\n' ':' | sed -e 's,^:,,' -e 's,:$,\n,')"
+        if [ -z "$rpathlist" ]; then
+          rpath=""
+        else
+          rpath="$(echo "$rpathlist" | nl | sort -k 2 | uniq -f 1 | sort -n | cut -f 2 | tr '\n' ':' | sed -e 's,^:,,' -e 's,:$,\n,')"
+        fi
 
         if [ "$NIX_DEBUG" = 1 ]; then
           echo "Old Rpath: $oldrpath" >&2
           echo "NoTmp Rpath: $notmprpath" >&2
+          echo "Exist Rpath: $existrpath" >&2
+          echo "Extra Dirs: $extradirs" >&2
+          echo "Rpathlist: $rpathlist" >&2
           echo "New Rpath: $rpath" >&2
         fi
 
-        echo "Removing temporary dirs: $file" >&2
-        patchelf --set-rpath "$rpath" "$file"
+        if [ "$rpath" != "$oldrpath" ]; then
+          echo "Setting a new rpath: $file" >&2
+          patchelf --set-rpath "$rpath" "$file"
+        fi
+
         echo "Shrinking rpath: $file" >&2
         patchelf --shrink-rpath "$file"
+
         if [ "$NIX_DEBUG" = 1 ]; then
           echo "Shrunk Rpath: $(patchelf --print-rpath "$file")" >&2
         fi

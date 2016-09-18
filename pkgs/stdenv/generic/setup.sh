@@ -482,8 +482,8 @@ substituteAll() {
   local input="$1"
   local output="$2"
 
-  # Select all environment variables that start with a lowercase character.
-  for envVar in $(env | sed -e $'s/^\([a-z][^=]*\)=.*/\\1/; t \n d') ; do
+  # Select all environment variables
+  for envVar in $(env -0 | sed -z -n 's,^\([^=]*\).*,\1\n,p') ; do
     if [ "$NIX_DEBUG" = "1" ]; then
       echo "$envVar -> ${!envVar}"
     fi

@@ -483,7 +483,7 @@ substituteAll() {
   local output="$2"
 
   # Select all environment variables
-  for envVar in $(env -0 | sed -z -n 's,^\([^=]*\).*,\1\n,p') ; do
+  for envVar in $(env -0 | sed -z -n 's,^\([^=]*\).*,\1,p' | tr '\0' '\n') ; do
     if [ "$NIX_DEBUG" = "1" ]; then
       echo "$envVar -> ${!envVar}"
     fi

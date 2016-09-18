@@ -579,6 +579,8 @@ autoconf_21x = callPackageAlias "autoconf" {
   channel = "2.1x";
 };
 
+autoconf-archive = callPackage ../all-pkgs/a/autoconf-archive { };
+
 autogen = callPackage ../all-pkgs/a/autogen { };
 
 automake = callPackage ../all-pkgs/a/automake { };
@@ -2863,8 +2865,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   ant = callPackageAlias "apacheAnt" { };
 
   apacheAnt = callPackage ../development/tools/build-managers/apache-ant { };
-#
-  autoconf-archive = callPackage ../development/tools/misc/autoconf-archive { };
 #
   automoc4 = callPackage ../development/tools/misc/automoc4 { };
 #

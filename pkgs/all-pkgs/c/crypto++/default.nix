@@ -1,14 +1,22 @@
-{ fetchurl
-, stdenv
+{ stdenv
+, fetchurl
 , unzip
 }:
 
+let
+  inherit (stdenv.lib)
+    replaceStrings;
+
+  version = "5.6.4";
+
+  versionNoDecimal = replaceStrings ["."] [""] version;
+in
 stdenv.mkDerivation rec {
-  name = "crypto++-5.6.3";
+  name = "cryptopp-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/cryptopp/cryptopp563.zip";
-    sha256 = "1japr6fhdxpn56is2627dl2lpvv98bvhcsvbibsd038p2h56g44k";
+    url = "mirror://sourceforge/cryptopp/cryptopp/${version}/cryptopp${versionNoDecimal}.zip";
+    sha256 = "be430377b05c15971d5ccb6e44b4d95470f561024ed6d701fe3da3a188c84ad7";
   };
 
   nativeBuildInputs = [
@@ -19,11 +27,6 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     mv config.recommend config.h
-
-    sed \
-      -e 's|-march=[^ ]*|-march=${stdenv.platform.march}|g' \
-      -e 's|-mtune=[^ ]*|-mtune=${stdenv.platform.mtune}|g' \
-      -i GNUmakefile
   '';
 
   preBuild = ''

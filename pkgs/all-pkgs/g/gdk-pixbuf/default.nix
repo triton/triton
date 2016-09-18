@@ -11,19 +11,14 @@ stdenv.mkDerivation rec {
 
   setupHook = ./setup-hook.sh;
 
-  phases = [
-    "$prePhases"
-    "patchPhase"
-    "buildPhase"
-    "installPhase"
-    "fixupPhase"
-    "$postPhases"
-  ];
+  unpackPhase = ":";
 
   propagatedBuildInputs = [
     gdk-pixbuf_unwrapped
     librsvg
   ];
+
+  configurePhase = ":";
 
   buildPhase = ''
     export GDK_PIXBUF_MODULE_FILE='loaders.cache'

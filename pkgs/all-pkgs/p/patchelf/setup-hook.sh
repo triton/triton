@@ -43,8 +43,8 @@ patchELF() {
         local existrpath
         existrpath=""
         for rpath in $notmprpath; do
-          if [ "$rpath" = '$ORIGIN' ] || [ -d "$rpath" ]; then
-            existrpath+="$(printf "%s\n" "$rpath")"
+          if [ "$rpath" = '$ORIGIN' ] || [ -d "$(readlink -f "$rpath")" ]; then
+            existrpath="$(printf "%s\n%s" "$existrpath" "$rpath")"
           fi
         done
 

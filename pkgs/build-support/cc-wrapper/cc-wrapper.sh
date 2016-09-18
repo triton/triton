@@ -102,7 +102,7 @@ for (( i = 0; i < "${#params[@]}"; i++ )); do
   if [ "${stackProtector-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f.*stack-protector.* ]]; then
     continue
   fi
-  if [[ "${param}" =~ ^-m(arch|tune|fpmath) ]]; then
+  if [[ "${param}" =~ ^-m(arch|tune)=native$ ]]; then
     continue
   fi
   if [ "${fpic-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f(pic|PIC|pie|PIE)$ ]]; then

@@ -3,7 +3,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "adns-1.5.0";
+  name = "adns-1.5.1";
 
   src = fetchurl {
     urls = [
@@ -11,8 +11,8 @@ stdenv.mkDerivation rec {
       "http://www.chiark.greenend.org.uk/~ian/adns/ftp/${name}.tar.gz"
       "ftp://ftp.chiark.greenend.org.uk/users/ian/adns/${name}.tar.gz"
     ];
-    multihash = "QmUj1XpX2yuKFEJYoqLAqL8b5asTDuAvYgxKxjRkkQEvYS";
-    sha256 = "0hg89b5n84zjhzvbzrpvhl0hbm4s6d1z2pzllfis64ai656ypibz";
+    multihash = "QmWhYWVbbwVF9u7ueanFab3qKucWMojanSEgCokqCyksvv";
+    sha256 = "5b1026f18b8274be869245ed63427bf8ddac0739c67be12c4a769ac948824eeb";
   };
 
   meta = with stdenv.lib; {

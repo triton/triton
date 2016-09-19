@@ -1722,6 +1722,8 @@ libuv = callPackage ../all-pkgs/l/libuv { };
 
 libva = callPackage ../all-pkgs/l/libva { };
 
+libva-intel-driver = callPackage ../all-pkgs/l/libva-intel-driver { };
+
 libva-vdpau-driver = callPackage ../all-pkgs/l/libva-vdpau-driver { };
 
 libvdpau = callPackage ../all-pkgs/l/libvdpau { };
@@ -2513,8 +2515,6 @@ v4l-utils = callPackage ../all-pkgs/v/v4l-utils {
 v4l_lib = callPackageAlias "v4l-utils" {
   channel = "lib";
 };
-
-vaapi-intel = callPackage ../all-pkgs/v/vaapi-intel { };
 
 vala = callPackage ../all-pkgs/v/vala { };
 

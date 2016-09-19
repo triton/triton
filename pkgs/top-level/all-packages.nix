@@ -1767,6 +1767,8 @@ lightdm-gtk-greeter = callPackage ../all-pkgs/l/lightdm-gtk-greeter { };
 
 lilv = callPackage ../all-pkgs/l/lilv { };
 
+linux-firmware = callPackage ../all-pkgs/l/linux-firmware { };
+
 linux-headers = callPackage ../all-pkgs/l/linux-headers { };
 linux-headers_4_6 = callPackage ../all-pkgs/l/linux-headers {
   channel = "4.6";
@@ -3379,8 +3381,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
     };
 #
   procps-old = lowPrio (callPackage ../os-specific/linux/procps { });
-#
-  firmware-linux-nonfree = callPackage ../os-specific/linux/firmware/firmware-linux-nonfree { };
 #
   shadow = callPackage ../os-specific/linux/shadow { };
 #

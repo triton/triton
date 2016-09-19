@@ -2490,6 +2490,8 @@ unbound = callPackage ../all-pkgs/u/unbound { };
 unicode-character-database =
   callPackage ../all-pkgs/u/unicode-character-database { };
 
+unixODBC = callPackage ../all-pkgs/u/unixODBC { };
+
 unrar = callPackage ../all-pkgs/u/unrar { };
 
 upower = callPackage ../all-pkgs/u/upower { };
@@ -3146,8 +3148,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   t1lib = callPackage ../development/libraries/t1lib { };
 #
   telepathy_glib = callPackage ../development/libraries/telepathy/glib { };
-#
-nixODBC = callPackage ../development/libraries/unixODBC { };
 #
   uthash = callPackage ../development/libraries/uthash { };
 #

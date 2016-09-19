@@ -1,6 +1,7 @@
 { stdenv
+, autoconf
 , bison
-, fetchurl
+, fetchFromGitHub
 , flex
 , libxml2
 , libxslt
@@ -13,17 +14,21 @@
 }:
 
 let
-  version = "18.3";
+  version = "19.0.7";
 in
 stdenv.mkDerivation rec {
   name = "erlang-${version}";
 
-  src = fetchurl {
-    url = "http://erlang.org/download/otp_src_${version}.tar.gz";
-    sha256 = "1hy9slq9gjvwdb504dmvp6rax90isnky6chqkyq5v4ybl4lq3azx";
+  src = fetchFromGitHub {
+    version = 2;
+    owner = "erlang";
+    repo = "otp";
+    rev = "OTP-${version}";
+    sha256 = "b113de739d52f56c6dcc7e45a03f2d502e451fa381e5f51247aabcad6a30b521";
   };
 
   nativeBuildInputs = [
+    autoconf
     bison
     flex
     libxml2
@@ -44,6 +49,10 @@ stdenv.mkDerivation rec {
     # Fix otb builder
     sed -i "s,/bin/pwd,$(type -P pwd),g" otp_build
     export HOME=$PWD/../
+  '';
+
+  preConfigure = ''
+    ./otp_build autoconf
   '';
 
   configureFlags = [

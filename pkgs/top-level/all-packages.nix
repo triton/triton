@@ -1822,6 +1822,8 @@ man-db = callPackage ../all-pkgs/m/man-db { };
 
 man-pages = callPackage ../all-pkgs/m/man-pages { };
 
+mdadm = callPackage ../all-pkgs/m/mdadm { };
+
 mediainfo = callPackage ../all-pkgs/m/mediainfo { };
 
 mercurial = callPackage ../all-pkgs/m/mercurial { };
@@ -3372,8 +3374,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   libcap = callPackage ../os-specific/linux/libcap { };
 #
   libnotify = callPackage ../development/libraries/libnotify { };
-#
-  mdadm = callPackage ../os-specific/linux/mdadm { };
 #
   aggregateModules = modules:
     callPackage ../all-pkgs/k/kmod/aggregator.nix {

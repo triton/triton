@@ -21,13 +21,17 @@
 , util-linux_lib
 }:
 
+let
+  inherit (stdenv.lib)
+    boolEn;
+in
 stdenv.mkDerivation rec {
-  name = "appstream-glib-0.5.13";
+  name = "appstream-glib-0.6.3";
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/appstream-glib/"
       + "releases/${name}.tar.xz";
-    sha256 = "ee32f3e4d20b7e8fe58da85f277d2e1821ab845de23cdb61bda4e50c84b9c308";
+    sha256 = "3ec355c950b86cd792b6e396a5a4a72487999e300fcacf7466a663974ec4ad24";
   };
 
   nativeBuildInputs = [
@@ -56,7 +60,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-largefile"
-    "--enable-introspection"
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-nls"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -69,6 +73,7 @@ stdenv.mkDerivation rec {
     #"--disable-alpm"
     "--disable-man"
     "--enable-dep11"
+    #"--${boolEn (snowball-stemmer != null)}-stemmer"
   ];
 
   meta = with stdenv.lib; {

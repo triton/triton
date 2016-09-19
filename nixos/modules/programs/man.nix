@@ -27,6 +27,9 @@ with lib;
 
     environment.outputsToLink = [ "man" ];
 
+    users.extraUsers.man.uid = config.ids.uids.man;
+    users.extraGroups.man.gid = config.ids.gids.man;
+
   };
 
 }

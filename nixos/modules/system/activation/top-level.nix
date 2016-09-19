@@ -106,7 +106,8 @@ let
       allowSubstitutes = false;
       buildCommand = systemBuilder;
 
-      inherit (pkgs) util-linux_full coreutils;
+      inherit (pkgs) coreutils;
+      swapoff = "${pkgs.util-linux_full}/bin/swapoff";
       systemd = config.systemd.package;
 
       inherit children;

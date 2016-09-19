@@ -11,7 +11,7 @@ let
     src = ./nixos-container.pl;
     perl = "${pkgs.perlPackages.perl}/bin/perl -I${pkgs.perlPackages.FileSlurp}/${pkgs.perlPackages.perl.libPrefix}";
     su = "${pkgs.shadow}/bin/su";
-    inherit (pkgs) util-linux_full;
+    nsenter = "${pkgs.util-linux_full}/bin/nsenter";
 
     postInstall = ''
       t=$out/etc/bash_completion.d

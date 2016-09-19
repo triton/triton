@@ -8,12 +8,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dbus-glib-0.106";
+  name = "dbus-glib-0.108";
 
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus-glib/${name}.tar.gz";
-    multihash = "QmZEuNUHEMkwgSEGAkQ4gzi11bniqLut3bjTnismHwyTvY";
-    sha256 = "b38952706dcf68bad9c302999ef0f420b8cf1a2428227123f0ac4764b689c046";
+    multihash = "QmSJoCBLa7mMCHW5JXZBrt8tE4nurAJ7mECH9FBFVu559T";
+    hashOutput = false;
+    sha256 = "9f340c7e2352e9cdf113893ca77ca9075d9f8d5e81476bf2bf361099383c602c";
   };
 
   nativeBuildInputs = [
@@ -26,8 +27,33 @@ stdenv.mkDerivation rec {
     glib
   ];
 
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--disable-tests"
+    "--disable-ansi"
+    "--disable-gcov"
+    "--enable-bash-completition"
+    "--disable-asserts"
+    "--disable-checks"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+  ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "DA98 F25C 0871 C49A 59EA  FF2C 4DE8 FF2A 63C7 CC90";
+    };
+  };
+
   meta = with stdenv.lib; {
-    description = "Obsolete glib bindings for D-Bus lightweight IPC mechanism";
+    description = "GLib bindings for D-Bus";
     homepage = http://dbus.freedesktop.org;
     license = licenses.gpl2;
     maintainers = with maintainers; [

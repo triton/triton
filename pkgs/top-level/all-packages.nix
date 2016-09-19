@@ -945,6 +945,8 @@ ffmpeg_3-1 = pkgs.ffmpeg_generic {
 ffmpeg_3 = callPackageAlias "ffmpeg_3-1" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
   channel = "9.9";
+  # Use latest dependencies
+  libvpx = libvpx_head;
 };
 ffmpeg = callPackageAlias "ffmpeg_3" { };
 

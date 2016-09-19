@@ -1728,8 +1728,16 @@ libverto = callPackage ../all-pkgs/l/libverto { };
 
 libvorbis = callPackage ../all-pkgs/l/libvorbis { };
 
-libvpx = callPackage ../all-pkgs/l/libvpx { };
-#libvpx_HEAD = callPackage ../development/libraries/libvpx/git.nix { };
+libvpx_1-6 = callPackage ../all-pkgs/l/libvpx {
+  channel = "1.6";
+};
+libvpx_head = callPackage ../all-pkgs/l/libvpx {
+  channel = "1.999";
+};
+libvpx_next = callPackage ../all-pkgs/l/libvpx {
+  channel = "2.999";
+};
+libvpx = callPackageAlias "libvpx_1-6" { };
 
 libwacom = callPackage ../all-pkgs/l/libwacom { };
 

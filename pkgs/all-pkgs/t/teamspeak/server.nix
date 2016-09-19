@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "3.0.13.3";
+  version = "3.0.13.4";
 in
 stdenv.mkDerivation {
   name = "teamspeak-server-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation {
       "http://dl.4players.de/ts/releases/${version}/teamspeak3-server_linux_amd64-${version}.tar.bz2"
       "http://teamspeak.gameserver.gamed.de/ts3/releases/${version}/teamspeak3-server_linux_amd64-${version}.tar.bz2"
     ];
-    sha256 = "e9f48c8a9bad75165e3a7c9d9f6b18639fd8aba63adaaa40aebd8114166273ae";
+    sha256 = "cff353c3f395175ba251c787c5ca1cbb3d339be1ae1afe0cf10216a6e81ae5af";
   };
 
   nativeBuildInputs = [

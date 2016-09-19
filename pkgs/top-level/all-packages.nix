@@ -512,6 +512,8 @@ alsa-plugins = callPackage ../all-pkgs/a/alsa-plugins { };
 
 alsa-utils = callPackage ../all-pkgs/a/alsa-utils { };
 
+amd-microcode = callPackage ../all-pkgs/a/amd-microcode { };
+
 amrnb = callPackage ../all-pkgs/a/amrnb { };
 
 amrwb = callPackage ../all-pkgs/a/amrwb { };
@@ -3228,8 +3230,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   alsa-tools = callPackage ../os-specific/linux/alsa-tools { };
 
-  microcodeAmd = callPackage ../os-specific/linux/microcode/amd.nix { };
-#
   atop = callPackage ../os-specific/linux/atop { };
 #
   busybox = callPackage ../os-specific/linux/busybox { };

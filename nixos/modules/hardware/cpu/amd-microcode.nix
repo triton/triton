@@ -22,9 +22,9 @@ with lib;
   ###### implementation
 
   config = mkIf config.hardware.cpu.amd.updateMicrocode {
-    boot.initrd.prepend = [ "${pkgs.microcodeAmd}/amd-ucode.img" ];
+    boot.initrd.prepend = [ "${pkgs.amd-microcode}/amd-ucode.img" ];
     system.extraDependencies = [
-      pkgs.microcodeAmd
+      pkgs.amd-microcode
     ];
   };
 

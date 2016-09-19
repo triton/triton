@@ -6,7 +6,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "amd-ucode-${linux-firmware.version}";
+  name = "amd-microcode-${linux-firmware.version}";
 
   src = linux-firmware;
 

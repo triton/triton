@@ -54,7 +54,7 @@ patchELF() {
           # We want to make sure we know exactly what new paths we need to add
           local extradirs
           extradirs="$(find ${sodirs} -mindepth 1 -maxdepth 1 \( -name 'no-such-file' $(patchelf --print-needed "$file" | awk '{ print "-or"; print "-name"; print $0}') \) -exec dirname {} \;)"
-          rpathlist="$(printf "%s\n%s" "${extradirs}" "${existrpath}" | sed '/^$/d')"
+          rpathlist="$(printf "%s\n%s" "${extradirs}" "${existrpath}")"
         else
           rpathlist="${existrpath}"
         fi
@@ -64,7 +64,7 @@ patchELF() {
         if [ -z "$rpathlist" ]; then
           rpath=""
         else
-          rpath="$(echo "$rpathlist" | nl | sort -k 2 | uniq -f 1 | sort -n | cut -f 2 | tr '\n' ':' | sed -e 's,^:,,' -e 's,:$,\n,')"
+          rpath="$(echo "$rpathlist" | sed '/^$/d' | nl | sort -k 2 | uniq -f 1 | sort -n | cut -f 2 | tr '\n' ':' | sed -e 's,^:,,' -e 's,:$,\n,')"
         fi
 
         if [ "$NIX_DEBUG" = 1 ]; then

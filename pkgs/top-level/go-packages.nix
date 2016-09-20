@@ -118,11 +118,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "81372b2fc2f10bef2a7f338da115c315a56b2726";
-    date = "2016-09-13";
+    rev = "6ab629be5e31660579425a738ba8870beb5b7404";
+    date = "2016-09-19";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "0amy263gdk4nzhgfrsqbhikzjf7r44iyf903j6029qvl9mz68h4r";
+    sha256 = "1fkf5fdny2d4zwrijxr7jv041hcs7rsqhmd9agmp11s9brvbx2x4";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -144,11 +144,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "71a035914f99bb58fe82eac0f1289f10963d876c";
-    date = "2016-09-12";
+    rev = "f4fe4abe3c785295ddf81c7f1823bcd3bad391b6";
+    date = "2016-09-20";
     owner  = "golang";
     repo   = "net";
-    sha256 = "0xi3rz0062pv2z7pjkmjq0pxlyqh1ba1y3wmcnd1l6z4zvn6rmid";
+    sha256 = "1nyzzvfl5q488apjizr4v2071bww0lkb11dqxl3c46i807b00z21";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -221,11 +221,11 @@ let
 
   text = buildFromGitHub {
     version = 2;
-    rev = "04b8648d973c126ae60143b3e1473bc1576c7597";
+    rev = "2df9074612f50810d82416d2229398a1e7188c5c";
     date = "2016-09-15";
     owner = "golang";
     repo = "text";
-    sha256 = "01a5nxvg10rznv0knc1mim3canxjak0s26g1q940q9shzxrp3i2s";
+    sha256 = "0iw4ck14mhdll6l825nw1dp6jcbr2ccy3x3zpp2zkk433gx90iml";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
   };
@@ -1860,7 +1860,12 @@ let
     repo   = "go-ipfs-api";
     sha256 = "0c54r9g10rcnrm9rzj815gjkcgmr5z3pjgh3b4b19vbsgm2rx7hf";
     excludedPackages = "tests";
-    propagatedBuildInputs = [ go-multiaddr-net go-multipart-files tar-utils ];
+    propagatedBuildInputs = [
+      go-multiaddr
+      go-multiaddr-net
+      go-multipart-files
+      tar-utils
+    ];
   };
 
   go-isatty = buildFromGitHub {
@@ -1986,11 +1991,12 @@ let
 
   go-multiaddr = buildFromGitHub {
     version = 2;
-    rev = "907bb9f0e4eb47daae675d78a3060ca173598239";
-    date = "2016-09-15";
-    owner  = "jbenet";
+    rev = "197f65382f3b21e04b5ad4608274ec497dd49e4d";
+    date = "2016-09-19";
+    owner  = "multiformats";
     repo   = "go-multiaddr";
-    sha256 = "14jylqvypng4hljad1pb9j8d09dr7vbingm1ham877sijhwf1d1d";
+    sha256 = "15d9za3yrxhs63zdnd8d058bqws707ci2a1ryy1i1hr2jdj7dlvv";
+    goPackageAliases = [ "github.com/jbenet/go-multiaddr" ];
     propagatedBuildInputs = [
       go-multihash
     ];
@@ -1998,11 +2004,11 @@ let
 
   go-multiaddr-net = buildFromGitHub {
     version = 2;
-    rev = "825144c9a253d8f75fcaced0ac16181d8b384b22";
+    rev = "34f8967f85254a2a930af5d384ba3e286fd9dc2a";
     owner  = "multiformats";
     repo   = "go-multiaddr-net";
-    sha256 = "08xrslkxvp5m6birf748k1jkpn2qirgmk1nldm313hjksiwq24df";
-    date = "2016-09-15";
+    sha256 = "0p71s8yxg8c8wnzsglqsm70zrmscggb9gan361xcj8mnxvj64yry";
+    date = "2016-09-19";
     goPackageAliases = [ "github.com/jbenet/go-multiaddr-net" ];
     propagatedBuildInputs = [
       go-multiaddr
@@ -2658,12 +2664,12 @@ let
 
   ipfs = buildFromGitHub {
     version = 2;
-    date = "2016-09-13";
-    rev = "85da76a4eea9098d5874c168c728591d1d2f58a1";
+    date = "2016-09-19";
+    rev = "e10453b67bb8e683082ebde345d0080f05aeca12";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "aac7c76ce3be455df629b742d3feb22446cd8c4471e1db24cc5389b7f496a2f6";
-    gxSha256 = "1fih2cinl47dd5x9mwb1igr7l26ag5la3csm3whbc3rndsxfmv2y";
+    sha256 = "38f48703cf43eda32c4071ea29546d0e746064b41ab08f1037bae867cf46edc7";
+    gxSha256 = "04ak7xgchnrxcyw1cih2xvix73j13f0zrh425l1cv2sycjdn0n9q";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"
@@ -3822,10 +3828,10 @@ let
 
   roaring = buildFromGitHub {
     version = 2;
-    rev = "v0.2.7";
+    rev = "v0.2.8";
     owner  = "RoaringBitmap";
     repo   = "roaring";
-    sha256 = "03h1r15yswfzpr1f43wjlmj6q8lvjl42kfhyyd4i80hwvbrgnay0";
+    sha256 = "1hkm77ghjqlw2jzdvcqqa4yjxqk06xbdjhr4bc819vdgmshhijaf";
   };
 
   rpc = buildFromGitHub {

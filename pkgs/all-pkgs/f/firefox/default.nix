@@ -137,7 +137,9 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-default-toolkit=cairo-gtk3"
     "--enable-eme=widevine"
+    "--disable-tests"
     "--enable-jemalloc=4"
+    "--enable-system-hunspell"
     "--enable-alsa"
     "--enable-approximate-location"
     "--enable-content-sandbox"

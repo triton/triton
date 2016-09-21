@@ -2,16 +2,17 @@
 , fetchurl
 , autoreconfHook
 
+, libselinux
 , util-linux_lib
 }:
 
 stdenv.mkDerivation rec {
   name = "f2fs-tools-${version}";
-  version = "1.6.1";
+  version = "1.7.0";
 
   src = fetchurl {
-    url = "http://git.kernel.org/cgit/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/${name}.tar.gz";
-    sha256 = "1fkq1iqr5kxs6ihhbmjk4i19q395azcl60mnslqwfrlbrd3p40gm";
+    url = "https://git.kernel.org/cgit/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/${name}.tar.gz";
+    sha256 = "33d454c2e95aabef5659949c4fff15f6c9877b48349e64411de502bc62b0cbd4";
   };
 
   nativeBuildInputs = [
@@ -19,12 +20,13 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    libselinux
     util-linux_lib
   ];
 
   meta = with stdenv.lib; {
     description = "Userland tools for the f2fs filesystem";
-    homepage = "http://git.kernel.org/cgit/linux/kernel/git/jaegeuk/f2fs-tools.git/";
+    homepage = https://git.kernel.org/cgit/linux/kernel/git/jaegeuk/f2fs-tools.git/;
     license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington

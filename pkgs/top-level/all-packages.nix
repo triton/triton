@@ -545,36 +545,30 @@ at-spi2-atk_2-20 = callPackage ../all-pkgs/a/at-spi2-atk {
   channel = "2.20";
   at-spi2-core = pkgs.at-spi2-core_2-20;
   atk = pkgs.atk_2-20;
-  glib = pkgs.glib_2-48;
 };
 at-spi2-atk_2-22 = callPackage ../all-pkgs/a/at-spi2-atk {
   channel = "2.21";
   at-spi2-core = pkgs.at-spi2-core_2-22;
   atk = pkgs.atk_2-22;
-  glib = pkgs.glib_2-50;
 };
 at-spi2-atk = callPackageAlias "at-spi2-atk_2-20" { };
 
 at-spi2-core_2-20 = callPackage ../all-pkgs/a/at-spi2-core {
   channel = "2.20";
-  glib = pkgs.glib_2-48;
   gobject-introspection = pkgs.gobject-introspection_1-48;
 };
 at-spi2-core_2-22 = callPackage ../all-pkgs/a/at-spi2-core {
   channel = "2.21";
-  glib = pkgs.glib_2-50;
   gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 at-spi2-core = callPackageAlias "at-spi2-core_2-20" { };
 
 atk_2-20 = callPackage ../all-pkgs/a/atk {
   channel = "2.20";
-  glib = pkgs.glib_2-48;
   gobject-introspection = pkgs.gobject-introspection_1-48;
 };
 atk_2-22 = callPackage ../all-pkgs/a/atk {
   channel = "2.22";
-  glib = pkgs.glib_2-50;
   gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 atk = callPackageAlias "atk_2-20" { };
@@ -1050,12 +1044,10 @@ gdk-pixbuf_wrapped = callPackageAlias "gdk-pixbuf_wrapped_2-34" { };
 # Actual gdk-pixbuf
 gdk-pixbuf_unwrapped_2-34 = callPackage ../all-pkgs/g/gdk-pixbuf/unwrapped.nix {
   channel = "2.34";
-  glib = pkgs.glib_2-48;
   gobject-introspection = pkgs.gobject-introspection_1-48;
 };
 gdk-pixbuf_unwrapped_2-36 = callPackage ../all-pkgs/g/gdk-pixbuf/unwrapped.nix {
   channel = "2.36";
-  glib = pkgs.glib_2-50;
   gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 gdk-pixbuf_unwrapped = callPackageAlias "gdk-pixbuf_unwrapped_2-34" { };
@@ -1090,14 +1082,7 @@ gksu = callPackage ../all-pkgs/g/gksu { };
 
 glfw = callPackage ../all-pkgs/g/glfw { };
 
-glib_2-48 = callPackage ../all-pkgs/g/glib {
-  channel = "2.48";
-};
-
-glib_2-50 = callPackage ../all-pkgs/g/glib {
-  channel = "2.50";
-};
-glib = callPackageAlias "glib_2-48" { };
+glib = callPackage ../all-pkgs/g/glib { };
 
 glib-networking = callPackage ../all-pkgs/g/glib-networking { };
 
@@ -1217,11 +1202,9 @@ goPackages = callPackageAlias "go17Packages" { };
 
 gobject-introspection_1-48 = callPackage ../all-pkgs/g/gobject-introspection {
   channel = "1.48";
-  glib = pkgs.glib_2-48;
 };
 gobject-introspection_1-50 = callPackage ../all-pkgs/g/gobject-introspection {
   channel = "1.50";
-  glib = pkgs.glib_2-50;
 };
 gobject-introspection = callPackageAlias "gobject-introspection_1-48" { };
 
@@ -1287,7 +1270,6 @@ gtk_3-20 = callPackage ../all-pkgs/g/gtk/3.x.nix {
   at-spi2-atk = pkgs.at-spi2-atk_2-20;
   atk = pkgs.atk_2-20;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
-  glib = pkgs.glib_2-48;
   gobject-introspection = pkgs.gobject-introspection_1-48;
 };
 gtk_3-22 = callPackage ../all-pkgs/g/gtk/3.x.nix {
@@ -1295,7 +1277,6 @@ gtk_3-22 = callPackage ../all-pkgs/g/gtk/3.x.nix {
   at-spi2-atk = pkgs.at-spi2-atk_2-22;
   atk = pkgs.atk_2-22;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  glib = pkgs.glib_2-50;
   gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 gtk_3 = callPackageAlias "gtk_3-20" { };

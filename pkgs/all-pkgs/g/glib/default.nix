@@ -12,8 +12,6 @@
 , pcre
 , util-linux_lib
 , zlib
-
-, channel
 }:
 
 let
@@ -36,18 +34,19 @@ let
     ln -sr -t "$out/include/" "$out"/lib/*/include/* 2>/dev/null || true
   '';
 
-  source = (import ./sources.nix { })."${channel}";
+  channel = "2.50";
+  version = "${channel}.0";
 in
 
 assert stdenv.cc.isGNU;
 
 stdenv.mkDerivation rec {
-  name = "glib-${source.version}";
+  name = "glib-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${channel}/${name}.tar.xz";
     hashOutput = false;
-    inherit (source) sha256;
+    sha256 = "830b551fa626bda06e12729205b3c5bb0d82b924a8cf64d948945878f01b7d70";
   };
 
   nativeBuildInputs = [

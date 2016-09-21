@@ -66,8 +66,8 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/adwaita-icon-theme/"
-        + "${channel}/${name}.sha256sum";
+      sha256Url = "https://download.gnome.org/sources/clutter-gtk/${channel}/"
+        + "${name}.sha256sum";
       failEarly = true;
     };
   };

@@ -1,7 +1,7 @@
 { }:
 {
   "1.8" = {
-    version = "1.8.0";
-    sha256 = "742ef9d68ece36cbb1b2e1a4a6fbdad932f6645360be7e6de75abbb140dfbf1d";
+    version = "1.8.2";
+    sha256 = "da27d486325490ad3f65d2abf9413aeb8b4a8f7b559e4b2f73567a5344a26b94";
   };
 }

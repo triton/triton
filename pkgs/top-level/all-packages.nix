@@ -1327,7 +1327,17 @@ gupnp-av = callPackage ../all-pkgs/g/gupnp-av { };
 
 gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 
-gvfs = callPackage ../all-pkgs/g/gvfs { };
+gvfs_1-28 = callPackage ../all-pkgs/g/gvfs {
+  channel = "1.28";
+  gtk = pkgs.gtk_3-20;
+  libsoup = pkgs.libsoup_2-54;
+};
+gvfs_1-30 = callPackage ../all-pkgs/g/gvfs {
+  channel = "1.30";
+  gtk = pkgs.gtk_3-22;
+  libsoup = pkgs.libsoup_2-56;
+};
+gvfs = callPackageAlias "gvfs_1-28" { };
 
 gx = pkgs.goPackages.gx.bin // { outputs = [ "bin" ]; };
 

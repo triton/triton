@@ -13,7 +13,7 @@
 , gcr
 , glib
 #, gnome-online-accounts
-, gtk3
+, gtk
 , libarchive
 , libbluray
 , libcdio
@@ -30,22 +30,23 @@
 , samba_client
 , systemd_lib
 , udisks
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    boolEn;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gvfs-${version}";
-  versionMajor = "1.28";
-  versionMinor = "3";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gvfs-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gvfs/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gvfs/${versionMajor}/${name}.sha256sum";
-    sha256 = "458c4cb68570f6ef4a9e152995c62d0057c3e0a07ed64d84c7200cdd22f0bd17";
+    url = "mirror://gnome/sources/gvfs/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -64,7 +65,7 @@ stdenv.mkDerivation rec {
     gcr
     glib
     #gnome-online-accounts
-    gtk3
+    gtk
     libgdata
     libarchive
     libbluray
@@ -90,38 +91,38 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "gcr" (gcr != null) null)
+    "--${boolEn (gcr != null)}-gcr"
     "--enable-nls"
-    (enFlag "http" (libsoup != null) null)
-    (enFlag "avahi" (avahi != null) null)
-    (enFlag "udev" (systemd_lib != null) null)
-    (enFlag "fuse" (fuse != null) null)
+    "--${boolEn (libsoup != null)}-http"
+    "--${boolEn (avahi != null)}-avahi"
+    "--${boolEn (systemd_lib != null)}-udev"
+    "--${boolEn (fuse != null)}-fuse"
     "--disable-gdu"
-    (enFlag "udisks2" (
+    "--${boolEn (
       udisks != null
-      && systemd_lib != null) null)
-    (enFlag "libsystemd-login" (
+      && systemd_lib != null)}-udisks2"
+    "--${boolEn (
       systemd_lib != null
-      && udisks != null) null)
+      && udisks != null)}-libsystemd-login"
     "--disable-hal"
-    (enFlag "gudev" (libgudev != null) null)
-    (enFlag "cdda" (
+    "--${boolEn (libgudev != null)}-gudev"
+    "--${boolEn (
       libcdio != null
-      && systemd_lib != null) null)
+      && systemd_lib != null)}-cdda"
     "--enable-afc"
     # Remove dependency on webkit
     "--disable-goa"
     "--disable-google"
-    (enFlag "gphoto2" (libgphoto2 != null) null)
-    (enFlag "keyring" (libgnome-keyring != null) null)
-    (enFlag "bluray" (libbluray != null) null)
-    (enFlag "libmtp" (
+    "--${boolEn (libgphoto2 != null)}-gphoto2"
+    "--${boolEn (libgnome-keyring != null)}-keyring"
+    "--${boolEn (libbluray != null)}-bluray"
+    "--${boolEn (
       libmtp != null
-      && systemd_lib != null) null)
-    (enFlag "samba" (samba_client != null) null)
-    (enFlag "gtk" (gtk3 != null) null)
-    (enFlag "archive" (libarchive != null) null)
-    (enFlag "afp" (libgcrypt != null) null)
+      && systemd_lib != null)}-libmtp"
+    "--${boolEn (samba_client != null)}-samba"
+    "--${boolEn (gtk != null)}-gtk"
+    "--${boolEn (libarchive != null)}-archive"
+    "--${boolEn (libgcrypt != null)}-afp"
     "--disable-nfs"
     "--enable-bash-completion"
     "--enable-more-warnings"
@@ -135,6 +136,18 @@ stdenv.mkDerivation rec {
       --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix XDG_DATA_DIRS : "$out/share"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gvfs/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Virtual filesystem implementation for gio";

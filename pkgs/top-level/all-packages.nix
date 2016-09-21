@@ -1742,7 +1742,15 @@ libsndfile = callPackage ../all-pkgs/l/libsndfile { };
 
 libsodium = callPackage ../all-pkgs/l/libsodium { };
 
-libsoup = callPackage ../all-pkgs/l/libsoup { };
+libsoup_2-54 = callPackage ../all-pkgs/l/libsoup {
+  channel = "2.54";
+  gobject-introspection = pkgs.gobject-introspection_1-48;
+};
+libsoup_2-56 = callPackage ../all-pkgs/l/libsoup {
+  channel = "2.56";
+  gobject-introspection = pkgs.gobject-introspection_1-50;
+};
+libsoup = callPackageAlias "libsoup_2-54" { };
 
 libspectre = callPackage ../all-pkgs/l/libspectre { };
 

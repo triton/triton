@@ -7,26 +7,28 @@
 , glib
 , glib-networking
 , gobject-introspection
+, kerberos
 , libxml2
 , sqlite
 , vala
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag;
-in
+    boolEn
+    boolWt;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "libsoup-${version}";
-  versionMajor = "2.54";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
+  name = "libsoup-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libsoup/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/libsoup/${versionMajor}/${name}.sha256sum";
-    sha256 = "47b42c232034734d66e5f093025843a5d8cc4b2357c011085a2fd04ef02dd633";
+    url = "mirror://gnome/sources/libsoup/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -39,6 +41,7 @@ stdenv.mkDerivation rec {
     glib
     glib-networking
     gobject-introspection
+    kerberos
     libxml2
     sqlite
     vala
@@ -58,14 +61,14 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (vala != null)}-vala"
     "--disable-tls-check"
     "--disable-code-coverage"
     "--enable-more-warnings"
     "--with-gnome"
-    #"--with-apache-httpd"
-    #"--with-gssapi"
+    "--without-apache-httpd"
+    "--${boolWt (kerberos != null)}-gssapi"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";
@@ -74,6 +77,16 @@ stdenv.mkDerivation rec {
     propagatedUserEnvPackages = [
       glib-networking
     ];
+
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/libsoup/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
   };
 
   meta = with stdenv.lib; {

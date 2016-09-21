@@ -16,6 +16,7 @@
 , gtk
 , libarchive
 , libbluray
+, libcap
 , libcdio
 , libgcrypt
 , libgdata
@@ -27,6 +28,7 @@
 , libsoup
 , libxml2
 , openssh
+, polkit
 , samba_client
 , systemd_lib
 , udisks
@@ -66,13 +68,13 @@ stdenv.mkDerivation rec {
     glib
     #gnome-online-accounts
     gtk
-    libgdata
     libarchive
     libbluray
+    libcap
     libcdio
-    #libgdata
     libgudev
     libgcrypt
+    libgdata
     libgnome-keyring
     libgphoto2
     libmtp
@@ -80,6 +82,7 @@ stdenv.mkDerivation rec {
     libsoup
     libxml2
     openssh
+    polkit
     samba_client
     systemd_lib
     udisks
@@ -93,6 +96,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--${boolEn (gcr != null)}-gcr"
     "--enable-nls"
+    "--${boolEn (polkit != null)}-admin"
     "--${boolEn (libsoup != null)}-http"
     "--${boolEn (avahi != null)}-avahi"
     "--${boolEn (systemd_lib != null)}-udev"

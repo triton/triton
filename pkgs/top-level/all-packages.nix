@@ -890,6 +890,8 @@ eog = callPackage ../all-pkgs/e/eog { };
 
 erlang = callPackage ../all-pkgs/e/erlang { };
 
+etcd = pkgs.goPackages.etcd.bin // { outputs = [ "bin" ]; };
+
 ethtool = callPackage ../all-pkgs/e/ethtool { };
 
 evince = callPackage ../all-pkgs/e/evince { };

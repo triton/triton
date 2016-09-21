@@ -1132,7 +1132,7 @@ gnome-desktop_3-20 = callPackage ../all-pkgs/g/gnome-desktop {
   atk = pkgs.atk_2-20;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
   gobject-introspection = pkgs.gobject-introspection_1-48;
-  gsettings-desktop-schemas = gsettings-desktop-schemas_3-20;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
   gtk = pkgs.gtk_3-20;
 };
 gnome-desktop_3-22 = callPackage ../all-pkgs/g/gnome-desktop {
@@ -1140,7 +1140,7 @@ gnome-desktop_3-22 = callPackage ../all-pkgs/g/gnome-desktop {
   atk = pkgs.atk_2-22;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gobject-introspection = pkgs.gobject-introspection_1-50;
-  gsettings-desktop-schemas = gsettings-desktop-schemas_3-22;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
   gtk = pkgs.gtk_3-22;
 };
 gnome-desktop = callPackageAlias "gnome-desktop_3-20" { };
@@ -1285,7 +1285,8 @@ gsettings-desktop-schemas_3-22 =
     gnome-backgrounds = pkgs.gnome-backgrounds_3-22;
     gobject-introspection = pkgs.gobject-introspection_1-50;
   };
-gsettings-desktop-schemas = callPackage ../all-pkgs/g/gsettings-desktop-schemas { };
+gsettings-desktop-schemas =
+  callPackageAlias "gsettings-desktop-schemas_3-20" { };
 
 gsm = callPackage ../all-pkgs/g/gsm { };
 

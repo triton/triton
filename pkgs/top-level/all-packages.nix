@@ -543,6 +543,15 @@ aspell = callPackage ../all-pkgs/a/aspell { };
 
 at-spi2-atk_2-20 = callPackage ../all-pkgs/a/at-spi2-atk {
   channel = "2.20";
+  at-spi2-core = pkgs.at-spi2-core_2-20;
+  atk = pkgs.atk_2-20;
+  glib = pkgs.glib_2-48;
+};
+at-spi2-atk_2-22 = callPackage ../all-pkgs/a/at-spi2-atk {
+  channel = "2.21";
+  at-spi2-core = pkgs.at-spi2-core_2-22;
+  atk = pkgs.atk_2-22;
+  glib = pkgs.glib_2-50;
 };
 at-spi2-atk = callPackageAlias "at-spi2-atk_2-20" { };
 

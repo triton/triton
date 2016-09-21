@@ -61,8 +61,8 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/at-spi2-atk/"
-        + "${channel}/${name}.sha256sum";
+      sha256Url = "https://download.gnome.org/sources/at-spi2-atk/${channel}/"
+        + "${name}.sha256sum";
       failEarly = true;
     };
   };

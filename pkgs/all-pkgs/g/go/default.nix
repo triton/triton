@@ -168,7 +168,7 @@ stdenv.mkDerivation {
   ];
 
   meta = with stdenv.lib; {
-    branch = "1.6";
+    branch = channel;
     homepage = http://golang.org/;
     description = "The Go Programming language";
     license = licenses.bsd3;

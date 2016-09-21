@@ -19,16 +19,15 @@ let
   inherit (stdenv.lib)
     enFlag;
 in
-
 stdenv.mkDerivation rec {
   name = "libgdata-${version}";
   versionMajor = "0.17";
-  versionMinor = "5";
+  versionMinor = "6";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libgdata/${versionMajor}/${name}.tar.xz";
-    sha256 = "b3fbdae075aa0d83897ae0e9daf3c29075dce1724c8b8a27e0735688756355e8";
+    sha256 = "8b6a3ff1db23bd9e5ebbcc958b29b769a898f892eed4798222d562ba69df30b0";
   };
 
   nativeBuildInputs = [

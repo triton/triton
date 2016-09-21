@@ -2583,6 +2583,8 @@ tdb = callPackage ../all-pkgs/t/tdb { };
 teamspeak_client = callPackage ../all-pkgs/t/teamspeak/client.nix { };
 teamspeak_server = callPackage ../all-pkgs/t/teamspeak/server.nix { };
 
+teleport = pkgs.goPackages.teleport.bin // { outputs = [ "bin" ]; };
+
 tesseract = callPackage ../all-pkgs/t/tesseract { };
 
 tevent = callPackage ../all-pkgs/t/tevent { };

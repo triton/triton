@@ -1015,9 +1015,31 @@ gcr = callPackage ../all-pkgs/g/gcr { };
 
 gdbm = callPackage ../all-pkgs/g/gdbm { };
 
-gdk-pixbuf_wrapped = callPackage ../all-pkgs/g/gdk-pixbuf { };
-gdk-pixbuf_unwrapped = callPackage ../all-pkgs/g/gdk-pixbuf/unwrapped.nix { };
-gdk-pixbuf = callPackageAlias "gdk-pixbuf_wrapped" { };
+# Combined gdk-pixbuf loaders.cache
+gdk-pixbuf_wrapped_2-34 = callPackage ../all-pkgs/g/gdk-pixbuf {
+  gdk-pixbuf_unwrapped = pkgs.gdk-pixbuf_unwrapped_2-34;
+};
+gdk-pixbuf_wrapped_2-36 = callPackage ../all-pkgs/g/gdk-pixbuf {
+  gdk-pixbuf_unwrapped = pkgs.gdk-pixbuf_unwrapped_2-36;
+};
+gdk-pixbuf_wrapped = callPackageAlias "gdk-pixbuf_wrapped_2-34" { };
+
+# Actual gdk-pixbuf
+gdk-pixbuf_unwrapped_2-34 = callPackage ../all-pkgs/g/gdk-pixbuf/unwrapped.nix {
+  channel = "2.34";
+  glib = pkgs.glib_2-48;
+  gobject-introspection = pkgs.gobject-introspection_1-48;
+};
+gdk-pixbuf_unwrapped_2-36 = callPackage ../all-pkgs/g/gdk-pixbuf/unwrapped.nix {
+  channel = "2.36";
+  glib = pkgs.glib_2-50;
+  gobject-introspection = pkgs.gobject-introspection_1-50;
+};
+gdk-pixbuf_unwrapped = callPackageAlias "gdk-pixbuf_unwrapped_2-34" { };
+
+gdk-pixbuf_2-34 = callPackageAlias "gdk-pixbuf_wrapped_2-34" { };
+gdk-pixbuf_2-36 = callPackageAlias "gdk-pixbuf_wrapped_2-36" { };
+gdk-pixbuf = callPackageAlias "gdk-pixbuf_wrapped_2-34" { };
 
 gdm = callPackage ../all-pkgs/g/gdm { };
 

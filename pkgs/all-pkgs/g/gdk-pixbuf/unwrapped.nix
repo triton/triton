@@ -12,24 +12,25 @@
 , jasper
 , shared_mime_info
 , xorg
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
+    boolEn
+    boolWt
+    optionals;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gdk-pixbuf-${version}";
-  versionMajor = "2.34";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gdk-pixbuf-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gdk-pixbuf/${versionMajor}/"
-      + "gdk-pixbuf-${version}.tar.xz";
-    sha256 = "d55e5b383ee219bd0e23bf6ed4427d56a7db5379729a6e3e0a0e0eba9a8d8879";
+    url = "mirror://gnome/sources/gdk-pixbuf/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -70,7 +71,7 @@ stdenv.mkDerivation rec {
     "--enable-rpath"
     "--enable-glibtest"
     "--enable-modules"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -81,17 +82,31 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
     # Enabling relocations breaks setting loaders.cache path
     "--disable-relocations"
-    (wtFlag "libpng" (libpng != null) null)
-    (wtFlag "libjpeg" (libjpeg != null) null)
-    (wtFlag "libtiff" (libtiff != null) null)
-    (wtFlag "libjasper" (jasper != null) null)
+    "--${boolWt (libpng != null)}-libpng"
+    "--${boolWt (libjpeg != null)}-libjpeg"
+    "--${boolWt (libtiff != null)}-libtiff"
+    "--${boolWt (jasper != null)}-libjasper"
     "--without-gdiplus"
-    (wtFlag "x11" (xorg != null) null)
+    "--${boolWt (xorg != null)}-x11"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";
 
   doCheck = false;
+
+  passthru = {
+    inherit (source) version;
+
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gdk-pixbuf/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A library for image loading and manipulation";

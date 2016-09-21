@@ -1109,7 +1109,13 @@ glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 
 gmp = callPackage ../all-pkgs/g/gmp { };
 
-gnome-backgrounds = callPackage ../all-pkgs/g/gnome-backgrounds { };
+gnome-backgrounds_3-20 = callPackage ../all-pkgs/g/gnome-backgrounds {
+  channel = "3.20";
+};
+gnome-backgrounds_3-22 = callPackage ../all-pkgs/g/gnome-backgrounds {
+  channel = "3.22";
+};
+gnome-backgrounds = callPackageAlias "gnome-backgrounds_3-20" { };
 
 gnome-bluetooth = callPackage ../all-pkgs/g/gnome-bluetooth { };
 

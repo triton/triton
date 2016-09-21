@@ -553,6 +553,13 @@ at-spi2-core = callPackageAlias "at-spi2-core_2-20" { };
 
 atk_2-20 = callPackage ../all-pkgs/a/atk {
   channel = "2.20";
+  glib = pkgs.glib_2-48;
+  gobject-introspection = pkgs.gobject-introspection_1-48;
+};
+atk_2-22 = callPackage ../all-pkgs/a/atk {
+  channel = "2.22";
+  glib = pkgs.glib_2-50;
+  gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 atk = callPackageAlias "atk_2-20" { };
 

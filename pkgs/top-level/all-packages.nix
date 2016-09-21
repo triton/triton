@@ -1127,7 +1127,23 @@ gnome-common = callPackage ../all-pkgs/g/gnome-common { };
 
 gnome-control-center = callPackage ../all-pkgs/g/gnome-control-center { };
 
-gnome-desktop = callPackage ../all-pkgs/g/gnome-desktop { };
+gnome-desktop_3-20 = callPackage ../all-pkgs/g/gnome-desktop {
+  channel = "3.20";
+  atk = pkgs.atk_2-20;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
+  gobject-introspection = pkgs.gobject-introspection_1-48;
+  gsettings-desktop-schemas = gsettings-desktop-schemas_3-20;
+  gtk = pkgs.gtk_3-20;
+};
+gnome-desktop_3-22 = callPackage ../all-pkgs/g/gnome-desktop {
+  channel = "3.22";
+  atk = pkgs.atk_2-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gobject-introspection = pkgs.gobject-introspection_1-50;
+  gsettings-desktop-schemas = gsettings-desktop-schemas_3-22;
+  gtk = pkgs.gtk_3-22;
+};
+gnome-desktop = callPackageAlias "gnome-desktop_3-20" { };
 
 gnome-documents_3-20 = callPackage ../all-pkgs/g/gnome-documents {
   channel = "3.20";

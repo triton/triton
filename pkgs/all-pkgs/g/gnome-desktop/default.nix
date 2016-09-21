@@ -11,7 +11,7 @@
 , gnome_doc_utils
 , gobject-introspection
 , gsettings-desktop-schemas
-, gtk3
+, gtk
 , iso-codes
 , itstool
 , libxml2
@@ -19,14 +19,9 @@
 , python
 , wayland
 , xorg
-}:
 
-let
-  inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
-in
+, channel
+}:
 
 assert xorg != null ->
   xorg.libX11 != null
@@ -36,16 +31,21 @@ assert xorg != null ->
   && xorg.xkeyboardconfig != null
   && xorg.xproto != null;
 
+let
+  inherit (stdenv.lib)
+    boolEn
+    boolWt
+    optionals;
+
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gnome-desktop-${version}";
-  versionMajor = "3.20";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gnome-desktop-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-desktop/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-desktop/${versionMajor}/${name}.sha256sum";
-    sha256 = "492c2da7aa8c3a8b65796e8171fc8f0dfb5d322dd2799c0d76392e1fb061e2b2";
+    url = "mirror://gnome/sources/gnome-desktop/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     gsettings-desktop-schemas
-    gtk3
+    gtk
     iso-codes
     libxml2
     pango
@@ -87,12 +87,24 @@ stdenv.mkDerivation rec {
     "--disable-debug-tools"
     "--disable-installed-tests"
     "--disable-always-build-tests"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (wtFlag "x" (xorg != null) null)
+    "--${boolWt (xorg != null)}-x"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-desktop/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Libraries for the gnome desktop that are not part of the UI";

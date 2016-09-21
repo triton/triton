@@ -8,18 +8,20 @@
 
 , glib
 , gobject-introspection
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "vala-${version}";
-  versionMajor = "0.32";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
+  name = "vala-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/vala/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/vala/${versionMajor}/${name}.sha256sum";
-    sha256 = "dd0d47e548a34cfb1e4b04149acd082a86414c49057ffb79902eb9a508a161a9";
+    url = "mirror://gnome/sources/vala/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -52,9 +54,21 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
 
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/vala/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
   meta = with stdenv.lib; {
     description = "Compiler for GObject type system";
-    homepage = "http://live.gnome.org/Vala";
+    homepage = http://live.gnome.org/Vala;
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [
       codyopel

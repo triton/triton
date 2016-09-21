@@ -7,27 +7,28 @@
 , bzip2
 , glib
 , libffi
-, python
+, python2
+
+, channel
 
 , cairo
 }:
 
 let
   inherit (stdenv.lib)
+    boolWt
     optionals
-    optionalString
-    wtFlag;
-in
+    optionalString;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gobject-introspection-${versionMajor}.${versionMinor}";
-  versionMajor = "1.48";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gobject-introspection-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gobject-introspection/${versionMajor}/${name}.tar.xz";
-    sha256 = "fa275aaccdbfc91ec0bc9a6fd0562051acdba731e7d584b64a277fec60e75877";
+    url = "mirror://gnome/sources/gobject-introspection/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -39,7 +40,7 @@ stdenv.mkDerivation rec {
     bzip2
     glib
     libffi
-    python
+    python2
   ] ++ optionals doCheck [
     cairo
   ];
@@ -57,7 +58,7 @@ stdenv.mkDerivation rec {
   postPatch =
   /* patchShebangs does not catch @PYTHON@ */ ''
     sed -i tools/g-ir-tool-template.in \
-      -e 's|#!/usr/bin/env @PYTHON@|#!${python.interpreter}|'
+      -e 's|#!/usr/bin/env @PYTHON@|#!${python2.interpreter}|'
   '' +
   optionalString doCheck (''
       patchShebangs ./tests/gi-tester
@@ -74,12 +75,24 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--disable-doctool"
     "--enable-Bsymbolic"
-    (wtFlag "cairo" doCheck null)
+    "--${boolWt doCheck}-cairo"
   ];
 
   postInstall = "rm -frv $out/share/gtk-doc";
 
   doCheck = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gobject-introspection/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A middleware layer between C libraries and language bindings";

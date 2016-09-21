@@ -1170,7 +1170,15 @@ go17Packages = callPackage ./go-packages.nix {
 
 goPackages = callPackageAlias "go17Packages" { };
 
-gobject-introspection = callPackage ../all-pkgs/g/gobject-introspection { };
+gobject-introspection_1-48 = callPackage ../all-pkgs/g/gobject-introspection {
+  channel = "1.48";
+  glib = pkgs.glib_2-48;
+};
+gobject-introspection_1-50 = callPackage ../all-pkgs/g/gobject-introspection {
+  channel = "1.50";
+  glib = pkgs.glib_2-50;
+};
+gobject-introspection = callPackageAlias "gobject-introspection_1-48" { };
 
 google-gflags = callPackage ../all-pkgs/g/google-gflags { };
 

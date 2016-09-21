@@ -17,6 +17,7 @@
 , libxml2
 , pango
 , python
+, systemd_lib
 , wayland
 , xorg
 
@@ -66,6 +67,7 @@ stdenv.mkDerivation rec {
     iso-codes
     libxml2
     pango
+    systemd_lib
   ] ++ optionals (xorg != null) [
     xorg.libX11
     xorg.libXext
@@ -87,6 +89,7 @@ stdenv.mkDerivation rec {
     "--disable-debug-tools"
     "--disable-installed-tests"
     "--disable-always-build-tests"
+    "--${boolEn (systemd_lib != null)}-udev"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"

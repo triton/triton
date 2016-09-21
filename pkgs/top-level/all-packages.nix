@@ -1211,21 +1211,8 @@ gnutls = callPackage ../all-pkgs/g/gnutls { };
 
 go = callPackage ../all-pkgs/g/go { };
 
-go_1_6 = callPackageAlias "go" {
-  channel = "1.6";
-};
-
 go_1_7 = callPackageAlias "go" {
   channel = "1.7";
-};
-
-go16Packages = callPackage ./go-packages.nix {
-  go = callPackageAlias "go_1_6" { };
-  buildGoPackage = callPackage ../all-pkgs/b/build-go-package {
-    go = callPackageAlias "go_1_6" { };
-    govers = (callPackageAlias "go16Packages" { }).govers.bin;
-  };
-  overrides = (config.goPackageOverrides or (p: { })) pkgs;
 };
 
 go17Packages = callPackage ./go-packages.nix {

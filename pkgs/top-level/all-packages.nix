@@ -1257,6 +1257,18 @@ grilo-plugins = callPackage ../all-pkgs/g/grilo-plugins { };
 
 groff = callPackage ../all-pkgs/g/groff { };
 
+gsettings-desktop-schemas_3-20 =
+  callPackage ../all-pkgs/g/gsettings-desktop-schemas {
+    channel = "3.20";
+    gnome-backgrounds = pkgs.gnome-backgrounds_3-20;
+    gobject-introspection = pkgs.gobject-introspection_1-48;
+  };
+gsettings-desktop-schemas_3-22 =
+  callPackage ../all-pkgs/g/gsettings-desktop-schemas {
+    channel = "3.22";
+    gnome-backgrounds = pkgs.gnome-backgrounds_3-22;
+    gobject-introspection = pkgs.gobject-introspection_1-50;
+  };
 gsettings-desktop-schemas = callPackage ../all-pkgs/g/gsettings-desktop-schemas { };
 
 gsm = callPackage ../all-pkgs/g/gsm { };

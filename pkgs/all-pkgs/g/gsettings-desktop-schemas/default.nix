@@ -6,22 +6,24 @@
 , glib
 , gnome-backgrounds
 , gobject-introspection
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag;
-in
+    boolEn;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gsettings-desktop-schemas-${version}";
-  versionMajor = "3.20";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gsettings-desktop-schemas-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gsettings-desktop-schemas/${versionMajor}/${name}.tar.xz";
-    sha256 = "55a41b533c0ab955e0a36a84d73829451c88b027d8d719955d8f695c35c6d9c1";
+    url = "mirror://gnome/sources/gsettings-desktop-schemas/${channel}/"
+      + "${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -42,9 +44,21 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-schemas-compile"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-nls"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/"
+        + "gsettings-desktop-schemas/${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Collection of GSettings schemas for GNOME desktop";

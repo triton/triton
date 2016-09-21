@@ -16,7 +16,8 @@ assert xorg != null ->
   xorg.libSM != null
   && xorg.libX11 != null
   && xorg.libXi != null
-  && xorg.libXtst != null;
+  && xorg.libXtst != null
+  && xorg.xextproto != null;
 
 let
   inherit (stdenv.lib)
@@ -51,6 +52,7 @@ stdenv.mkDerivation rec {
     xorg.libX11
     xorg.libXi
     xorg.libXtst
+    xorg.xextproto
   ];
 
   configureFlags = [

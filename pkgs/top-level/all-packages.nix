@@ -501,6 +501,11 @@ adns = callPackage ../all-pkgs/a/adns { };
 
 adwaita-icon-theme_3-20 = callPackage ../all-pkgs/a/adwaita-icon-theme {
   channel = "3.20";
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
+};
+adwaita-icon-theme_3-22 = callPackage ../all-pkgs/a/adwaita-icon-theme {
+  channel = "3.21";
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-20" { };
 

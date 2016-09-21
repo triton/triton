@@ -37,7 +37,6 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--enable-nls"
     "--enable-w32-cursors"
     "--enable-l-xl-variants"
   ];

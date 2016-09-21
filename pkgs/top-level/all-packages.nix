@@ -1284,9 +1284,19 @@ gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
 gtk2 = callPackageAlias "gtk_2" { };
 gtk_3-20 = callPackage ../all-pkgs/g/gtk/3.x.nix {
   channel = "3.20";
+  at-spi2-atk = pkgs.at-spi2-atk_2-20;
+  atk = pkgs.atk_2-20;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
+  glib = pkgs.glib_2-48;
+  gobject-introspection = pkgs.gobject-introspection_1-48;
 };
 gtk_3-22 = callPackage ../all-pkgs/g/gtk/3.x.nix {
   channel = "3.22";
+  at-spi2-atk = pkgs.at-spi2-atk_2-22;
+  atk = pkgs.atk_2-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  glib = pkgs.glib_2-50;
+  gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 gtk_3 = callPackageAlias "gtk_3-20" { };
 # Deprecated alias

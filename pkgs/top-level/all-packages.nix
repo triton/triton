@@ -1222,8 +1222,16 @@ gstreamer-vaapi = callPackage ../all-pkgs/g/gstreamer-vaapi { };
 googletest = callPackage ../all-pkgs/g/googletest { };
 
 gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
+# Deprecated alias
 gtk2 = callPackageAlias "gtk_2" { };
-gtk_3 = callPackage ../all-pkgs/g/gtk/3.x.nix { };
+gtk_3-20 = callPackage ../all-pkgs/g/gtk/3.x.nix {
+  channel = "3.20";
+};
+gtk_3-22 = callPackage ../all-pkgs/g/gtk/3.x.nix {
+  channel = "3.22";
+};
+gtk_3 = callPackageAlias "gtk_3-20" { };
+# Deprecated alias
 gtk3 = callPackageAlias "gtk_3" { };
 
 gtk-doc = callPackage ../all-pkgs/g/gtk-doc { };

@@ -25,14 +25,9 @@
 , wayland
 , wayland-protocols
 , xorg
-}:
 
-let
-  inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
-in
+, channel
+}:
 
 assert xorg != null ->
   xorg.inputproto != null
@@ -50,6 +45,11 @@ assert xorg != null ->
   && xorg.libXrender != null;
 
 let
+  inherit (stdenv.lib)
+    boolEn
+    boolWt
+    optionals;
+
   broadway_backend = true;
   wayland_backend =
     if wayland != null && wayland-protocols != null then
@@ -61,18 +61,16 @@ let
       true
     else
       false;
-in
 
+  source = (import ./3-sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gtk+-${version}";
-  versionMajor = "3.20";
-  versionMinor = "9";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gtk+-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gtk+/${versionMajor}/${name}.sha256sum";
-    sha256 = "83a609ba2f3424b5509e73967c49c67833af466d6f91081b24ee5c64fce6ac17";
+    url = "mirror://gnome/sources/gtk+/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -121,41 +119,42 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
+    "--enable-nls"
     "--enable-largefile"
     "--disable-debug"
     "--disable-installed-tests"
-    (enFlag "xkb" (libxkbcommon != null) null)
-    (enFlag "xinerama" (xorg != null) null)
-    (enFlag "xrandr" (xorg != null) null)
-    (enFlag "xfixes" (xorg != null) null)
-    (enFlag "xcomposite" (xorg != null) null)
-    (enFlag "xdamage" (xorg != null) null)
-    (enFlag "x11-backend" (xorg != null) null)
+    "--${boolEn (libxkbcommon != null)}-xkb"
+    "--${boolEn (xorg != null)}-xinerama"
+    "--${boolEn (xorg != null)}-xrandr"
+    "--${boolEn (xorg != null)}-xfixes"
+    "--${boolEn (xorg != null)}-xcomposite"
+    "--${boolEn (xorg != null)}-xdamage"
+    "--${boolEn (xorg != null)}-x11-backend"
     "--disable-win32-backend"
     "--disable-quartz-backend"
-    (enFlag "broadway-backend" true null)
-    (enFlag "wayland-backend" (
+    "--${boolEn true}-broadway-backend"
+    "--${boolEn (
       wayland != null
-      && wayland-protocols != null) null)
+      && wayland-protocols != null)}-wayland-backend"
     "--disable-mir-backend"
     "--disable-quartz-relocation"
     #"--enable-explicit-deps"
     "--enable-glibtest"
     #"--enable-modules"
-    (enFlag "cups" (cups != null) null)
+    "--${boolEn (cups != null)}-cups"
     "--disable-papi"
-    (enFlag "cloudprint" (rest != null && json-glib != null) null)
-    (enFlag "test-print-backend" (cups != null) null)
+    "--${boolEn (rest != null && json-glib != null)}-cloudprint"
+    "--${boolEn (cups != null)}-test-print-backend"
     "--enable-schemas-compile"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "colord" (colord != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (colord != null)}-colord"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--disable-man"
     "--disable-doc-cross-references"
     "--enable-Bsymbolic"
-    (wtFlag "x" (xorg != null) null)
+    "--${boolWt (xorg != null)}-x"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";
@@ -178,6 +177,16 @@ stdenv.mkDerivation rec {
       $out/bin/gtk-query-immodules-3.0 $out/lib/gtk-3.0/3.0.0/immodules/*.so > \
         $out/lib/gtk-3.0/3.0.0/immodules.cache
     ''; # workaround for bug of nix-mode for Emacs */ '';
+
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gtk+/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
   };
 
   meta = with stdenv.lib; {

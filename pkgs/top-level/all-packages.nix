@@ -800,7 +800,19 @@ dconf_0-26 = callPackage ../all-pkgs/d/dconf {
 };
 dconf = callPackageAlias "dconf_0-26" { };
 
-dconf-editor = callPackage ../all-pkgs/d/dconf-editor { };
+dconf-editor_3-20 = callPackage ../all-pkgs/d/dconf-editor {
+  channel = "3.20";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-20;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
+  gtk_3 = pkgs.gtk_3-20;
+};
+dconf-editor_3-22 = callPackage ../all-pkgs/d/dconf-editor {
+  channel = "3.22";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gtk_3 = pkgs.gtk_3-22;
+};
+dconf-editor = callPackageAlias "dconf-editor_3-20" { };
 
 ddrescue = callPackage ../all-pkgs/d/ddrescue { };
 

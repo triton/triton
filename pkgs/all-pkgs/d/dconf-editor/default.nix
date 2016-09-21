@@ -9,24 +9,25 @@
 , dconf
 , gdk-pixbuf
 , glib
-, gtk3
+, gtk_3
 , libxml2
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    boolEn;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "dconf-editor-${version}";
-  versionMajor = "3.20";
-  versionMinor = "3";
-  version = "${versionMajor}.${versionMinor}";
+  name = "dconf-editor-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/dconf-editor/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/dconf-editor/${versionMajor}/${name}.sha256sum";
-    sha256 = "a8721499a277550b28d8dd94dafbea6efeb95fa153020da10603d0d4d628c579";
+    url = "mirror://gnome/sources/dconf-editor/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -41,18 +42,18 @@ stdenv.mkDerivation rec {
     dconf
     gdk-pixbuf
     glib
-    gtk3
+    gtk_3
     libxml2
   ];
 
   configureFlags = [
     "--enable-schemas-compile"
-    (enFlag "appstream-util" (appstream-glib != null) null)
+    "--${boolEn (appstream-glib != null)}-appstream-util"
     "--enable-nls"
   ];
 
   preFixup = ''
-    wrapProgram $out/bin/dconf-editor \
+    wrapProgram "$out/bin/dconf-editor" \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
@@ -60,6 +61,18 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/dconf-editor/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Graphical tool for editing the dconf configuration database";

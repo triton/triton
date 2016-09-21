@@ -1045,9 +1045,14 @@ gksu = callPackage ../all-pkgs/g/gksu { };
 
 glfw = callPackage ../all-pkgs/g/glfw { };
 
-glib = callPackage ../all-pkgs/g/glib {
+glib_2-48 = callPackage ../all-pkgs/g/glib {
   channel = "2.48";
 };
+
+glib_2-50 = callPackage ../all-pkgs/g/glib {
+  channel = "2.50";
+};
+glib = callPackageAlias "glib_2-48" { };
 
 glib-networking = callPackage ../all-pkgs/g/glib-networking { };
 

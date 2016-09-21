@@ -10,6 +10,7 @@
 , libelf
 , libffi
 , pcre
+, util-linux_lib
 , zlib
 
 , channel
@@ -17,9 +18,10 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
+    boolEn
     optionals
-    optionalString;
+    optionalString
+    versionAtLeast;
 
   # Some packages don't get "Cflags" from pkgconfig correctly
   # and then fail to build when directly including like <glib/...>.
@@ -44,8 +46,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/glib/${channel}/${name}.sha256sum";
-    sha256 = source.sha256;
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -60,6 +62,7 @@ stdenv.mkDerivation rec {
     libelf
     libffi
     pcre
+    util-linux_lib
     zlib
   ];
 
@@ -83,8 +86,12 @@ stdenv.mkDerivation rec {
     "--disable-included-printf"
     "--disable-selinux"
     "--disable-fam"
-    (enFlag "xattr" (attr != null) null)
-    (enFlag "libelf" (libelf != null) null)
+    "--${boolEn (attr != null)}-xattr"
+    "--${boolEn (libelf != null)}-libelf"
+    (if versionAtLeast channel "2.50" then
+      "--${boolEn (util-linux_lib != null)}-libmount"
+     else
+       null)
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -108,6 +115,16 @@ stdenv.mkDerivation rec {
   passthru = {
     gioModuleDir = "lib/gio-modules/${name}/gio/modules";
     inherit flattenInclude;
+
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/glib/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
   };
 
   meta = with stdenv.lib; {

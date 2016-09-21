@@ -1777,7 +1777,13 @@ libsepol = callPackage ../all-pkgs/l/libsepol { };
 
 libshout = callPackage ../all-pkgs/l/libshout { };
 
-libsigcxx = callPackage ../all-pkgs/l/libsigcxx { };
+libsigcxx_2-8 = callPackage ../all-pkgs/l/libsigcxx {
+  channel = "2.8";
+};
+libsigcxx_2-10 = callPackage ../all-pkgs/l/libsigcxx {
+  channel = "2.10";
+};
+libsigcxx = callPackageAlias "libsigcxx_2-8" { };
 
 libsigsegv = callPackage ../all-pkgs/l/libsigsegv { };
 

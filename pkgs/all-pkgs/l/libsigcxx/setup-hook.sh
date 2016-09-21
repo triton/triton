@@ -5,7 +5,7 @@ addLibsigcxxParams() {
 }
 
 if [ -n "$crossConfig" ]; then
-  crossEnvHooks+=(addLibsigcxxParams)
+  crossEnvHooks+=('addLibsigcxxParams')
 else
-  envHooks+=(addLibsigcxxParams)
+  envHooks+=('addLibsigcxxParams')
 fi

@@ -1,14 +1,20 @@
 { stdenv
 , fetchurl
 , gnum4
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "libsigc++-2.8.0";
+  name = "libsigc++-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libsigc++/2.8/${name}.tar.xz";
-    sha256 = "774980d027c52947cb9ee4fac6ffe2ca60cc2f753068a89dfd281c83dbff9651";
+    url = "mirror://gnome/sources/libsigc++/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -18,10 +24,24 @@ stdenv.mkDerivation rec {
   # This is to fix c++11 comaptability with other applications
   setupHook = ./setup-hook.sh;
 
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/libsigc++/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
   meta = with stdenv.lib; {
-    homepage = http://libsigc.sourceforge.net/;
     description = "A typesafe callback system for standard C++";
+    homepage = http://libsigc.sourceforge.net/;
+    license = licenses.lgpl21Plus;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

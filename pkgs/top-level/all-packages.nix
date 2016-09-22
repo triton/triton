@@ -1121,6 +1121,8 @@ glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 
 gmp = callPackage ../all-pkgs/g/gmp { };
 
+gnome-autoar = callPackage ../all-pkgs/g/gnome-autoar { };
+
 gnome-backgrounds_3-20 = callPackage ../all-pkgs/g/gnome-backgrounds {
   channel = "3.20";
 };

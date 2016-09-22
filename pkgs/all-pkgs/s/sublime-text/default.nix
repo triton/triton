@@ -24,7 +24,7 @@ let
 in
 
 let
-  version = "3114";
+  version = "3124";
 in
 
 let
@@ -34,7 +34,7 @@ let
     src = fetchurl {
       url = "https://download.sublimetext.com/"
         + "sublime_text_3_build_${version}_x64.tar.bz2";
-      sha256 = "c6409bfc0841a02dfa3ba194015c7c87ea41ade9d61407d421ca947fe713b15a";
+      sha256 = "8466c09660396b7e739e72db9d8a6527c321e5c196294871cf4d50073edb517b";
     };
 
     nativeBuildInputs = [
@@ -54,15 +54,13 @@ let
       "/usr/bin/pkexec=${pkexecPath}"
     ];
 
-    postPatch =
-      /* Fix paths */ ''
-        sed -i sublime_text.desktop \
-          -e 's,/opt/sublime_text/,,' \
-          -e 's,sublime-text,sublime_text,'
-      '' +
-      /* Rename icon file */ ''
-        mv -v Icon/256x256/sublime-text.png Icon/256x256/sublime_text.png
-      '';
+    postPatch = /* Fix paths */ ''
+      sed -i sublime_text.desktop \
+        -e 's,/opt/sublime_text/,,' \
+        -e 's,sublime-text,sublime_text,'
+    '' + /* Rename icon file */ ''
+      mv -v Icon/256x256/sublime-text.png Icon/256x256/sublime_text.png
+    '';
 
     buildPhase = ''
       for i in 'sublime_text' 'plugin_host' 'crash_reporter' ; do
@@ -71,9 +69,8 @@ let
           --set-rpath ${libPath}:${stdenv.cc.cc}/lib64 \
           $i
       done
-    '' +
-    /* Rewrite gksudo/pkexec argument. Note that we can't delete
-       bytes in binary. */ ''
+    '' + /* Rewrite gksudo/pkexec argument. Note that we can't delete
+            bytes in binary. */ ''
       sed -i sublime_text \
         -e 's,/bin/cp\x00,cp\x00\x00\x00\x00\x00\x00,g'
     '';
@@ -85,8 +82,7 @@ let
       wrapProgram $out/sublime_text \
         --set LD_PRELOAD '${libredirect}/lib/libredirect.so' \
         --set NIX_REDIRECTS ${builtins.concatStringsSep ":" redirects}
-    '' +
-    /* Without this, plugin_host crashes, even though it has the rpath */ ''
+    '' + /* Without this, plugin_host crashes, even though it has the rpath */ ''
       wrapProgram $out/plugin_host \
         --prefix LD_PRELOAD : '${stdenv.cc.cc}/li64/libgcc_s.so.1' \
         --prefix LD_PRELOAD : '${openssl}/lib/libssl.so' \

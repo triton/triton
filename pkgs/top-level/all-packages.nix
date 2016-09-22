@@ -894,6 +894,22 @@ evince = callPackage ../all-pkgs/e/evince { };
 
 #evolution = callPackage ../all-pkgs/e/evolution { };
 
+evolution-data-server_3-20 = callPackage ../all-pkgs/e/evolution-data-server {
+  channel = "3.20";
+  #gnome-online-accounts
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
+  gtk = pkgs.gtk_3-20;
+  libsoup = pkgs.libsoup_2-54;
+  vala = pkgs.vala_0-32;
+};
+evolution-data-server_3-22 = callPackage ../all-pkgs/e/evolution-data-server {
+  channel = "3.22";
+  #gnome-online-accounts
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
+  gtk = pkgs.gtk_3-22;
+  libsoup = pkgs.libsoup_2-56;
+  vala = pkgs.vala_0-34;
+};
 evolution-data-server = callPackage ../all-pkgs/e/evolution-data-server { };
 
 exempi = callPackage ../all-pkgs/e/exempi { };

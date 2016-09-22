@@ -10,7 +10,7 @@
 , gobject-introspection
 , gperf
 , gsettings-desktop-schemas
-, gtk3
+, gtk
 , icu
 , kerberos
 , libaccounts-glib
@@ -28,25 +28,26 @@
 , sqlite
 , vala
 , zlib
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+    boolEn
+    boolString
+    boolWt;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "evolution-data-server-${version}";
-  versionMajor = "3.20";
-  versionMinor = "5";
-  version = "${versionMajor}.${versionMinor}";
+  name = "evolution-data-server-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/evolution-data-server/${versionMajor}/"
+    url = "mirror://gnome/sources/evolution-data-server/${channel}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/evolution-data-server/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "0d1586cd326d997497a2a6fddd939a83892be07cb20f8c88fda5013f8c5bbe7e";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -62,7 +63,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gperf
     gsettings-desktop-schemas
-    gtk3
+    gtk
     icu
     kerberos
     libaccounts-glib
@@ -91,38 +92,51 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "gtk" (gtk3 != null) null)
+    "--${boolEn (gtk != null)}-gtk"
     # TODO: add google auth support
     "--disable-google-auth"
     "--disable-examples"
     # Remove dependency on webkit
-    #(enFlag "goa" (gnome-online-accounts != null) null)
+    #"--${boolEn }-goa" (gnome-online-accounts != null) null)
     "--disable-goa"
     # TODO: requires libsignon-glib (Ubuntu online accounts)
     "--disable-uoa"
     "--enable-backend-per-process"
     "--disable-backtraces"
-    (enFlag "smime" (nss != null) null)
+    "--${boolEn (nss != null)}-smime"
     "--enable-ipv6"
-    (enFlag "weather" (libgweather != null) null)
+    "--${boolEn (libgweather != null)}-weather"
     "--enable-dot-locking"
     "--enable-file-locking"
     "--disable-purify"
     "--enable-google"
     "--enable-largefile"
     "--enable-glibtest"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala-bindings" (vala != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (vala != null)}-vala-bindings"
     # TODO: libphonenumber support
     "--without-phonenumber"
     "--without-private-docs"
-    (wtFlag "libdb" (db != null) "${db}")
-    (wtFlag "krb5" (kerberos != null) "${kerberos}")
-    (wtFlag "openldap" (openldap != null) null)
+    "--${boolWt (db != null)}-libdb${boolString (db != null) "=${db}" ""}"
+    "--${boolWt (kerberos != null)}-krb5${
+      boolString (kerberos != null) "=${kerberos}" ""}"
+    "--${boolWt (openldap != null)}-openldap"
     "--without-static-ldap"
     "--without-sunldap"
     "--without-static-sunldap"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/evolution-data-server/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Evolution groupware backend";

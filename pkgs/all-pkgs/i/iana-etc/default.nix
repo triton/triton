@@ -3,17 +3,17 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "iana-etc-2016-06-21";
+  name = "iana-etc-2016-09-21";
 
   # The upstream repo is generated from:
   #   http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
   #   http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "wkennington";
     repo = "iana-etc";
-    rev = "98262ed1f255e8eb454148e79d51cf5a1de9a4e3";
-    sha256 = "e3ee35e01c6124a552bba3e8885b963c9ca19f1f36d961e027b67db055f62da7";
+    rev = "b3cea4fa4904168b51968df80111c08e1f76aead";
+    sha256 = "f9ad62196a9003e22050510a793c1e8be0cfe94796fe684d9c82757ce4ae732c";
   };
 
   buildPhase = ''

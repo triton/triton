@@ -930,7 +930,7 @@ evolution-data-server_3-22 = callPackage ../all-pkgs/e/evolution-data-server {
   libsoup = pkgs.libsoup_2-56;
   vala = pkgs.vala_0-34;
 };
-evolution-data-server = callPackage ../all-pkgs/e/evolution-data-server { };
+evolution-data-server = callPackageAlias "evolution-data-server_3-20" { };
 
 exempi = callPackage ../all-pkgs/e/exempi { };
 

@@ -9,8 +9,6 @@
 , libffi
 , python2
 
-, channel
-
 , cairo
 }:
 
@@ -20,15 +18,16 @@ let
     optionals
     optionalString;
 
-  source = (import ./sources.nix { })."${channel}";
+  channel = "1.50";
+  version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
-  name = "gobject-introspection-${source.version}";
+  name = "gobject-introspection-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gobject-introspection/${channel}/${name}.tar.xz";
     hashOutput = false;
-    inherit (source) sha256;
+    sha256 = "1c6597c666f543c70ef3d7c893ab052968afae620efdc080c36657f4226337c5";
   };
 
   nativeBuildInputs = [

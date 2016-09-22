@@ -560,21 +560,17 @@ at-spi2-atk = callPackageAlias "at-spi2-atk_2-20" { };
 
 at-spi2-core_2-20 = callPackage ../all-pkgs/a/at-spi2-core {
   channel = "2.20";
-  gobject-introspection = pkgs.gobject-introspection_1-48;
 };
 at-spi2-core_2-22 = callPackage ../all-pkgs/a/at-spi2-core {
   channel = "2.21";
-  gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 at-spi2-core = callPackageAlias "at-spi2-core_2-20" { };
 
 atk_2-20 = callPackage ../all-pkgs/a/atk {
   channel = "2.20";
-  gobject-introspection = pkgs.gobject-introspection_1-48;
 };
 atk_2-22 = callPackage ../all-pkgs/a/atk {
   channel = "2.22";
-  gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 atk = callPackageAlias "atk_2-20" { };
 
@@ -1063,11 +1059,9 @@ gdk-pixbuf_wrapped = callPackageAlias "gdk-pixbuf_wrapped_2-34" { };
 # Actual gdk-pixbuf
 gdk-pixbuf_unwrapped_2-34 = callPackage ../all-pkgs/g/gdk-pixbuf/unwrapped.nix {
   channel = "2.34";
-  gobject-introspection = pkgs.gobject-introspection_1-48;
 };
 gdk-pixbuf_unwrapped_2-36 = callPackage ../all-pkgs/g/gdk-pixbuf/unwrapped.nix {
   channel = "2.36";
-  gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 gdk-pixbuf_unwrapped = callPackageAlias "gdk-pixbuf_unwrapped_2-34" { };
 
@@ -1133,7 +1127,6 @@ gnome-desktop_3-20 = callPackage ../all-pkgs/g/gnome-desktop {
   channel = "3.20";
   atk = pkgs.atk_2-20;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
-  gobject-introspection = pkgs.gobject-introspection_1-48;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
   gtk = pkgs.gtk_3-20;
 };
@@ -1141,7 +1134,6 @@ gnome-desktop_3-22 = callPackage ../all-pkgs/g/gnome-desktop {
   channel = "3.22";
   atk = pkgs.atk_2-22;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gobject-introspection = pkgs.gobject-introspection_1-50;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
   gtk = pkgs.gtk_3-22;
 };
@@ -1228,13 +1220,7 @@ go17Packages = callPackage ./go-packages.nix {
 
 goPackages = callPackageAlias "go17Packages" { };
 
-gobject-introspection_1-48 = callPackage ../all-pkgs/g/gobject-introspection {
-  channel = "1.48";
-};
-gobject-introspection_1-50 = callPackage ../all-pkgs/g/gobject-introspection {
-  channel = "1.50";
-};
-gobject-introspection = callPackageAlias "gobject-introspection_1-48" { };
+gobject-introspection = callPackage ../all-pkgs/g/gobject-introspection { };
 
 google-gflags = callPackage ../all-pkgs/g/google-gflags { };
 
@@ -1266,13 +1252,11 @@ gsettings-desktop-schemas_3-20 =
   callPackage ../all-pkgs/g/gsettings-desktop-schemas {
     channel = "3.20";
     gnome-backgrounds = pkgs.gnome-backgrounds_3-20;
-    gobject-introspection = pkgs.gobject-introspection_1-48;
   };
 gsettings-desktop-schemas_3-22 =
   callPackage ../all-pkgs/g/gsettings-desktop-schemas {
     channel = "3.22";
     gnome-backgrounds = pkgs.gnome-backgrounds_3-22;
-    gobject-introspection = pkgs.gobject-introspection_1-50;
   };
 gsettings-desktop-schemas =
   callPackageAlias "gsettings-desktop-schemas_3-20" { };
@@ -1311,14 +1295,12 @@ gtk_3-20 = callPackage ../all-pkgs/g/gtk/3.x.nix {
   at-spi2-atk = pkgs.at-spi2-atk_2-20;
   atk = pkgs.atk_2-20;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
-  gobject-introspection = pkgs.gobject-introspection_1-48;
 };
 gtk_3-22 = callPackage ../all-pkgs/g/gtk/3.x.nix {
   channel = "3.22";
   at-spi2-atk = pkgs.at-spi2-atk_2-22;
   atk = pkgs.atk_2-22;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 gtk_3 = callPackageAlias "gtk_3-20" { };
 # Deprecated alias
@@ -1784,11 +1766,9 @@ libsodium = callPackage ../all-pkgs/l/libsodium { };
 
 libsoup_2-54 = callPackage ../all-pkgs/l/libsoup {
   channel = "2.54";
-  gobject-introspection = pkgs.gobject-introspection_1-48;
 };
 libsoup_2-56 = callPackage ../all-pkgs/l/libsoup {
   channel = "2.56";
-  gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 libsoup = callPackageAlias "libsoup_2-54" { };
 
@@ -2644,11 +2624,9 @@ v4l_lib = callPackageAlias "v4l-utils" {
 
 vala_0-32 = callPackage ../all-pkgs/v/vala {
   channel = "0.32";
-  gobject-introspection = pkgs.gobject-introspection_1-48;
 };
 vala_0-34 = callPackage ../all-pkgs/v/vala {
   channel = "0.34";
-  gobject-introspection = pkgs.gobject-introspection_1-50;
 };
 vala = callPackageAlias "vala_0-32" { };
 

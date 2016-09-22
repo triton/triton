@@ -2835,6 +2835,13 @@ let
     nativeBuildInputs = [
       gx-go.bin
     ];
+    # Prevent our Godeps remover from work here
+    preConfigure = ''
+      mv Godeps "$TMPDIR"
+    '';
+    postConfigure = ''
+      mv "$TMPDIR/Godeps" "go/src/$goPackagePath"
+    '';
   };
 
   json-filter = buildFromGitHub {

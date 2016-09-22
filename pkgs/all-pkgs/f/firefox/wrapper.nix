@@ -152,7 +152,7 @@ stdenv.mkDerivation {
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
       --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share" \
       --prefix-contents PATH ':' "$(filterExisting $(addSuffix /extra-bin-path $plugins))" \
-      --set MOZ_OBJDIR "$(ls -d "${browser}/lib/${browserName}"*)"
+      --set MOZ_OBJDIR "$(ls -d "${browser}/lib/${browserName}"* | head -1)"
 
     ${optionalString libtrick
     ''

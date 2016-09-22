@@ -12,8 +12,8 @@
 let
   sources = {
     "1.0.2" = {
-      version = "1.0.2h";
-      sha256 = "1d4007e53aad94a5b2002fe045ee7bb0b3d98f1a47f8b2bc851dcd1c74332919";
+      version = "1.0.2i";
+      sha256 = "9287487d11c9545b6efb287cdb70535d4e9b284dd10d51441d9b9963d000de6f";
       patches = [
         (fetchTritonPatch {
            rev = "f2bfa2d2db51744e6fcb5677543b3bce8504bf82";
@@ -23,8 +23,8 @@ let
       ];
     };
     "1.1.0" = {
-      version = "1.1.0";
-      sha256 = "f5c69ff9ac1472c80b868efc1c1c0d8dcfc746d29ebe563de2365dd56dbd8c82";
+      version = "1.1.0a";
+      sha256 = "c2e696e34296cde2c9ec5dcdad9e4f042cd703932591d395c389de488302442b";
       patches = [
         (fetchTritonPatch {
           rev = "caf82b1cce7289f53531e0ae4775fe0f4aa417a9";
@@ -34,6 +34,10 @@ let
       ];
     };
   };
+
+  inherit (stdenv.lib)
+    optionals
+    versionOlder;
 
   inherit (sources."${channel}")
     patches
@@ -45,7 +49,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = [
-      "http://www.openssl.org/source/${name}.tar.gz"
+      "https://www.openssl.org/source/${name}.tar.gz"
       "http://openssl.linux-mirror.org/source/${name}.tar.gz"
     ];
     hashOutput = false;
@@ -72,8 +76,9 @@ stdenv.mkDerivation rec {
     "--libdir=lib"
     "--openssldir=/etc/ssl"
     # TODO: Enable krb5
-    "disable-ssl2"
     "disable-ssl3"
+  ] ++ optionals (versionOlder version "1.1.0") [
+    "disable-ssl2"
   ];
 
   preBuild = ''

@@ -1055,6 +1055,8 @@ fish = callPackage ../all-pkgs/f/fish { };
 
 flac = callPackage ../all-pkgs/f/flac { };
 
+flash-player = callPackage ../all-pkgs/f/flash-player { };
+
 flex = callPackage ../all-pkgs/f/flex { };
 
 fontconfig = callPackage ../all-pkgs/f/fontconfig { };

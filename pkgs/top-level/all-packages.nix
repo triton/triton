@@ -771,7 +771,7 @@ cups = callPackage ../all-pkgs/c/cups { };
 curl = callPackage ../all-pkgs/c/curl {
   suffix = "";
 };
-curl_full = callPackageAlias "curl" {
+curl_full = callPackage ../all-pkgs/c/curl {
   suffix = "full";
 };
 
@@ -2123,7 +2123,7 @@ nfs-utils = callPackage ../all-pkgs/n/nfs-utils { };
 nftables = callPackage ../all-pkgs/n/nftables { };
 
 nghttp2_full = callPackage ../all-pkgs/n/nghttp2 { };
-nghttp2_lib = callPackageAlias "nghttp2_full" {
+nghttp2_lib = callPackage ../all-pkgs/n/nghttp2 {
   prefix = "lib";
 };
 
@@ -2196,10 +2196,11 @@ opensmtpd-extras = callPackage ../all-pkgs/o/opensmtpd-extras { };
 openssh = callPackage ../all-pkgs/o/openssh { };
 
 openssl = callPackage ../all-pkgs/o/openssl { };
-openssl_1-0-2 = callPackageAlias "openssl" {
+
+openssl_1-0-2 = callPackage ../all-pkgs/o/openssl {
   channel = "1.0.2";
 };
-openssl_1-1-0 = callPackageAlias "openssl" {
+openssl_1-1-0 = callPackage ../all-pkgs/o/openssl {
   channel = "1.1.0";
 };
 

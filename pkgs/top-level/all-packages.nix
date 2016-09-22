@@ -2607,7 +2607,27 @@ tor = callPackage ../all-pkgs/t/tor { };
 
 totem-pl-parser = callPackage ../all-pkgs/t/totem-pl-parser { };
 
-tracker = callPackage ../all-pkgs/t/tracker { };
+tracker_1-8 = callPackage ../all-pkgs/t/tracker {
+  channel = "1.8";
+  #evolution
+  evolution-data-server = pkgs.evolution-data-server_3-20;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
+  gnome-themes-standard = pkgs.gnome-themes-standard;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
+  gtk = pkgs.gtk_3-20;
+  vala = pkgs.vala_0-32;
+};
+tracker_1-10 = callPackage ../all-pkgs/t/tracker {
+  channel = "1.10";
+  #evolution
+  evolution-data-server = pkgs.evolution-data-server_3-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gnome-themes-standard = pkgs.gnome-themes-standard;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
+  gtk = pkgs.gtk_3-22;
+  vala = pkgs.vala_0-34;
+};
+tracker = callPackageAlias "tracker_1-8" { };
 
 tslib = callPackage ../all-pkgs/t/tslib { };
 

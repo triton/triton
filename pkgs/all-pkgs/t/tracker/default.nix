@@ -25,7 +25,7 @@
 , gst-libav
 , gst-plugins-base
 , gstreamer
-, gtk3
+, gtk
 , icu
 , libcue
 , libexif
@@ -52,22 +52,23 @@
 , util-linux_lib
 , vala
 , zlib
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag;
-in
+    boolEn;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "tracker-${version}";
-  versionMajor = "1.8";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "tracker-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/tracker/${versionMajor}/${name}.tar.xz";
-    sha256 = "a11f31a373bfec3abae38ae719d0a59f666f1f067d8789ade2ed7032a152907d";
+    url = "mirror://gnome/sources/tracker/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   propagatedUserEnvPkgs = [
@@ -107,7 +108,7 @@ stdenv.mkDerivation rec {
     gst-plugins-base
     gstreamer
     #gtk2
-    gtk3
+    gtk
     #gupnp-dlna
     icu
     #libcue
@@ -149,7 +150,7 @@ stdenv.mkDerivation rec {
     "--enable-schemas-compile"
     "--disable-installed-tests"
     "--disable-always-build-tests"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-nls"
     "--disable-gcov"
     "--disable-minimal"
@@ -163,15 +164,14 @@ stdenv.mkDerivation rec {
     "--disable-libstemmer"
     "--enable-tracker-fts"
     "--disable-unit-tests"
-    (enFlag "upower" (upower != null) null)
-    # TODO: hal support
+    "--${boolEn (upower != null)}-upower"
     "--disable-hal"
-    (enFlag "network-manager" (networkmanager != null) null)
-    (enFlag "libmediaart" (libmediaart != null) null)
-    (enFlag "libexif" (libexif != null) null)
+    "--${boolEn (networkmanager != null)}-network-manager"
+    "--${boolEn (libmediaart != null)}-libmediaart"
+    "--${boolEn (libexif != null)}-libexif"
     # TODO: libiptcdata support
     "--disable-libiptcdata"
-    (enFlag "exempi" (exempi != null) null)
+    "--${boolEn (exempi != null)}-exempi"
     "--disable-meegotouch"
     "--enable-miner-fs"
     "--enable-extract"
@@ -188,25 +188,25 @@ stdenv.mkDerivation rec {
     "--disable-miner-firefox"
     # TODO: nautilus support
     "--disable-nautilus-extension"
-    (enFlag "taglib" (taglib != null) null)
+    "--${boolEn (taglib != null)}-taglib"
     "--enable-tracker-needle"
     "--enable-tracker-preferences"
     "--disable-enca"
     "--enable-icu-charset-detection"
-    (enFlag "libxml2" (libxml2 != null) null)
+    "--${boolEn (libxml2 != null)}-libxml2"
     "--enable-cfg-man-pages"
     #"--enable-generic-media-extractor="
     "--enable-unzip-ps-gz-files"
-    (enFlag "poppler" (poppler != null) null)
-    (enFlag "libgxps" (libgxps != null) null)
-    (enFlag "libgsf" (libgsf != null) null)
-    (enFlag "libosinfo" (libosinfo != null) null)
-    (enFlag "libgif" (giflib != null) null)
-    (enFlag "libjpeg" (libjpeg != null) null)
-    (enFlag "libtiff" (libtiff != null) null)
-    (enFlag "libpng" (libpng != null) null)
-    (enFlag "libvorbis" (libvorbis != null) null)
-    (enFlag "libflac" (flac != null) null)
+    "--${boolEn (poppler != null)}-poppler"
+    "--${boolEn (libgxps != null)}-libgxps"
+    "--${boolEn (libgsf != null)}-libgsf"
+    "--${boolEn (libosinfo != null)}-libosinfo"
+    "--${boolEn (giflib != null)}-libgif"
+    "--${boolEn (libjpeg != null)}-libjpeg"
+    "--${boolEn (libtiff != null)}-libtiff"
+    "--${boolEn (libpng != null)}-libpng"
+    "--${boolEn (libvorbis != null)}-libvorbis"
+    "--${boolEn (flac != null)}-libflac"
     # TODO: libcue support
     "--disable-libcue"
     "--enable-abiword"
@@ -262,6 +262,18 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/tracker/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "User information store, search tool and indexer";

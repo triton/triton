@@ -2044,7 +2044,27 @@ nano = callPackage ../all-pkgs/n/nano { };
 
 nasm = callPackage ../all-pkgs/n/nasm { };
 
-nautilus = callPackage ../all-pkgs/n/nautilus { };
+nautilus_3-20 = callPackage ../all-pkgs/n/nautilus {
+  channel = "3.20";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-20;
+  atk = pkgs.atk_2-20;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
+  gnome-desktop = pkgs.gnome-desktop_3-20;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
+  gtk = pkgs.gtk_3-20;
+  tracker = pkgs.tracker_1-8;
+};
+nautilus_3-22 = callPackage ../all-pkgs/n/nautilus {
+  channel = "3.22";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+  atk = pkgs.atk_2-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gnome-desktop = pkgs.gnome-desktop_3-22;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
+  gtk = pkgs.gtk_3-22;
+  tracker = pkgs.tracker_1-10;
+};
+nautilus = callPackageAlias "nautilus_3-20" { };
 
 ncdc = callPackage ../all-pkgs/n/ncdc { };
 

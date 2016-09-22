@@ -12,10 +12,11 @@
 , exempi
 , gdk-pixbuf
 , glib
+, gnome-autoar
 , gnome-desktop
 , gobject-introspection
 , gsettings-desktop-schemas
-, gtk3
+, gtk
 , gvfs
 , libexif
 , libnotify
@@ -26,23 +27,25 @@
 , shared_mime_info
 , tracker
 , xorg
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag;
-in
+    boolEn
+    optionals
+    versionOlder;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "nautilus-${version}";
-  versionMajor = "3.20";
-  versionMinor = "3";
-  version = "${versionMajor}.${versionMinor}";
+  name = "nautilus-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/nautilus/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/nautilus/${versionMajor}/${name}.sha256sum";
-    sha256 = "46600a2361a022a0170304aef7167caa29c0d52232063a3556bec6a77881310e";
+    url = "mirror://gnome/sources/nautilus/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -59,10 +62,11 @@ stdenv.mkDerivation rec {
     exempi
     gdk-pixbuf
     glib
+    gnome-autoar
     gnome-desktop
     gobject-introspection
     gsettings-desktop-schemas
-    gtk3
+    gtk
     gvfs
     libexif
     libnotify
@@ -75,7 +79,7 @@ stdenv.mkDerivation rec {
     xorg.libX11
   ];
 
-  patches = [
+  patches = optionals (versionOlder channel "3.22") [
     (fetchTritonPatch {
       rev = "734f89c9d36781e3f50f30dc9aa33d071136dbd0";
       file = "nautilus/extension_dir.patch";
@@ -97,15 +101,15 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--disable-profiling"
     "--enable-nst-extension"
-    (enFlag "libexif" (libexif != null) null)
+    "--${boolEn (libexif != null)}-libexif"
     "--enable-xmp"
     "--disable-selinux"
     # Flag is not a proper boolean
     #"--disable-empty-view"
     "--enable-packagekit"
     "--enable-more-warnings"
-    (enFlag "tracker" (tracker != null) null)
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (tracker != null)}-tracker"
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-update-mimedb"
   ];
 
@@ -120,6 +124,18 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/nautilus/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A file manager for the GNOME desktop";

@@ -9,30 +9,31 @@
 , geocode-glib
 , glib
 , gobject-introspection
-, gtk3
+, gtk
 , libsoup
 , libxml2
 , pango
 , tzdata
 , vala
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+    boolEn
+    boolString
+    boolWt;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "libgweather-${version}";
-  versionMajor = "3.20";
-  versionMinor = "3";
-  version = "${versionMajor}.${versionMinor}";
+  name = "libgweather-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libgweather/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/libgweather/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "fb6bc5b64ef5db3dc40a9798f072b83ebcafe7ff5af472aaee70600619b56c0b";
+    url = "mirror://gnome/sources/libgweather/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -47,7 +48,7 @@ stdenv.mkDerivation rec {
     geocode-glib
     glib
     gobject-introspection
-    gtk3
+    gtk
     libsoup
     libxml2
     pango
@@ -64,10 +65,23 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
-    (wtFlag "zoneinfo-dir" (tzdata != null) "${tzdata}/share/zoneinfo")
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (vala != null)}-vala"
+    "--${boolWt (tzdata != null)}-zoneinfo-dir${
+      boolString (tzdata != null) "=${tzdata}/share/zoneinfo" ""}"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/libgweather/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Library to access weather information from online services";

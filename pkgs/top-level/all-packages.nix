@@ -1617,7 +1617,15 @@ libgudev = callPackage ../all-pkgs/l/libgudev { };
 
 libgusb = callPackage ../all-pkgs/l/libgusb { };
 
-libgweather = callPackage ../all-pkgs/l/libgweather { };
+libgweather_3-20 = callPackage ../all-pkgs/l/libgweather {
+  channel = "3.20";
+  atk = pkgs.atk_2-20;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
+  gtk = pkgs.gtk_3-20;
+  libsoup = pkgs.libsoup_2-54;
+  vala = pkgs.vala_0-32;
+};
+libgweather = callPackageAlias "libgweather_3-20" { };
 
 libgxps = callPackage ../all-pkgs/l/libgxps { };
 

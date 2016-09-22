@@ -5,14 +5,17 @@
 , zlib
 }:
 
+let
+  version = "1.8.6";
+in
 stdenv.mkDerivation rec {
-  name = "pngcrush-1.8.5";
+  name = "pngcrush-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/pmt/${name}-nolib.tar.xz";
+    url = "mirror://sourceforge/pmt/pngcrush/${version}/${name}-nolib.tar.xz";
     multihash = "QmbFB4XbmSyLSm6qYDtTrUo7DkR3u7iiNYsJqbiKswbqhr";
     hashOutput = false;
-    sha256 = "1f843d836de8ef90b99b0a9e3e37f4ff4776278b5605293d5644b6efd537d934";
+    sha256 = "14e5975c856d732d1661397e292fa2c2f42a5d39070025f57ce03d77b6e0a3df";
   };
 
   buildInputs = [
@@ -38,6 +41,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
+      insecureProtocolDowngrade = true;
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFingerprint = "8048 643B A2C8 40F4 F92A  195F F549 84BF A16C 640F";

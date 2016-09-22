@@ -890,7 +890,27 @@ etcd = pkgs.goPackages.etcd.bin // { outputs = [ "bin" ]; };
 
 ethtool = callPackage ../all-pkgs/e/ethtool { };
 
-evince = callPackage ../all-pkgs/e/evince { };
+evince_3-20 = callPackage ../all-pkgs/e/evince {
+  channel = "3.20";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-20;
+  atk = pkgs.atk_2-20;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
+  gtk = pkgs.gtk_3-20;
+  gvfs = pkgs.gvfs_1-28;
+  nautilus = pkgs.nautilus_3-20;
+};
+evince_3-22 = callPackage ../all-pkgs/e/evince {
+  channel = "3.22";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+  atk = pkgs.atk_2-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
+  gtk = pkgs.gtk_3-22;
+  gvfs = pkgs.gvfs_1-30;
+  nautilus = pkgs.nautilus_3-22;
+};
+evince = callPackageAlias "evince_3-20" { };
 
 #evolution = callPackage ../all-pkgs/e/evolution { };
 

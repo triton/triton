@@ -36,27 +36,28 @@
 , python
 
 , recentListSize ? null # 5 is not enough, allow passing a different number
+
+, channel
 }:
 
 let
   inherit (builtins)
     toString;
   inherit (stdenv.lib)
-    enFlag
+    boolEn
+    boolWt
     optionals
-    optionalString
-    wtFlag;
+    optionalString;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "evince-${version}";
-  versionMajor = "3.20";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
+  name = "evince-${source.version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/evince/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/evince/${versionMajor}/${name}.sha256sum";
-    sha256 = "fc7ac23036939c24f02e9fed6dd6e28a85b4b00b60fa4b591b86443251d20055";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -118,49 +119,49 @@ stdenv.mkDerivation rec {
     "--disable-iso-cxx"
     "--enable-nls"
     "--enable-scheams-compile"
-    (enFlag "dbus" (glib != null) null)
+    "--${boolEn (glib != null)}-dbus"
     "--enable-libgnome-desktop"
-    (enFlag "libgnome-desktop" (gnome-desktop != null) null)
-    (enFlag "multimedia" (
+    "--${boolEn (gnome-desktop != null)}-libgnome-desktop"
+    "--${boolEn (
       gstreamer != null
       && gst-plugins-base != null
-      && gst-plugins-good != null) null)
+      && gst-plugins-good != null)}-multimedia"
     "--disable-debug"
-    (enFlag "nautilus" (
+    "--${boolEn (
       nautilus != null
       && gtk3 != null
-      && glib != null) null)
+      && glib != null)}-nautilus"
     "--enable-viewer"
     "--enable-thumbnailer"
-    (enFlag "previewer" (
+    "--${boolEn (
       gtk3 != null
-      && glib != null) null)
-    (enFlag "browser-plugin" (
+      && glib != null)}-previewer"
+    "--${boolEn (
       gtk3 != null
-      && glib != null) null)
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "pdf" (
+      && glib != null)}-browser-plugin"
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (
       poppler != null
-      && libxml2 != null) null)
-    (enFlag "ps" (libspectre != null) null)
-    (enFlag "tiff" (
+      && libxml2 != null)}-pdf"
+    "--${boolEn (libspectre != null)}-ps"
+    "--${boolEn (
       libtiff != null
-      && zlib != null) null)
+      && zlib != null)}-tiff"
     "--enable-djvu"
-    (enFlag "djvu" (djvulibre != null) null)
+    "--${boolEn (djvulibre != null)}-djvu"
     # TODO: dvi support (kpathsea)
     "--disable-dvi"
     "--enable-t1lib"
     "--enable-comics"
-    (enFlag "xps" (libgxps != null) null)
+    "--${boolEn (libgxps != null)}-xps"
     "--enable-compile-warnings"
     "--disable-iso-c"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--with-platform=gnome"
-    (wtFlag "gtk-unix-print" (gtk3 != null) null)
-    (wtFlag "keyring" (libsecret != null) null)
+    "--${boolWt (gtk3 != null)}-gtk-unix-print"
+    "--${boolWt (libsecret != null)}-keyring"
   ];
 
   preFixup = ''
@@ -187,6 +188,18 @@ stdenv.mkDerivation rec {
   '';
 
   doCheck = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/evince/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Simple document viewer for GNOME";

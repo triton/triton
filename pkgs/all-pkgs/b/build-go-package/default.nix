@@ -91,7 +91,7 @@ go.stdenv.mkDerivation (
       popd
     fi
 
-    rm -rf go/src/$goPackagePath/vendor
+    find go/src/$goPackagePath -type d \( -name vendor -or -name Godeps \) -prune -exec rm -r {} \;
 
   '' + lib.flip lib.concatMapStrings extraSrcs ({ src, goPackagePath }: ''
     mkdir extraSrc

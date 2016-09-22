@@ -7,14 +7,14 @@
 
 stdenv.mkDerivation rec {
   name = "glibmm-${version}";
-  versionMajor = "2.48";
-  versionMinor = "1";
+  versionMajor = "2.50";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/glibmm/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/glibmm/${versionMajor}/${name}.sha256sum";
-    sha256 = "dc225f7d2f466479766332483ea78f82dc349d59399d30c00de50e5073157cdf";
+    sha256 = "df726e3c6ef42b7621474b03b644a2e40ec4eef94a1c5a932c1e740a78f95e94";
   };
 
   buildInputs = [

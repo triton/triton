@@ -9,6 +9,7 @@
 , jinja2
 , ldap3
 , matrix-angular-sdk
+, msgpack-python
 , netaddr
 , pillow
 , psutil
@@ -47,6 +48,7 @@ buildPythonPackage {
     jinja2
     ldap3
     matrix-angular-sdk
+    msgpack-python
     netaddr
     pillow
     psutil
@@ -65,8 +67,7 @@ buildPythonPackage {
 
   postPatch = ''
     sed \
-      -e 's,4.0.0,5.0.0,g' \
-      -e 's,0.3.0,${pynacl.version},g' \
+      -e '/\(pynacl\|pysaml2\)/ s/\(,\|\)\(>\|<\|=\)\(=\|\)[0-9.]\+//g' \
       -i synapse/python_dependencies.py
   '';
 

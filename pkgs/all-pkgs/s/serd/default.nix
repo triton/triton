@@ -6,11 +6,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "serd-0.22.0";
+  name = "serd-0.24.0";
 
   src = fetchurl {
     url = "https://download.drobilla.net/${name}.tar.bz2";
-    sha256 = "7b030287b4b75f35e6212b145648bec0be6580cc5434caa6d2fe64a38562afd2";
+    sha256 = "8cfb8ade8d9a6f784da6e00ac05a28b7de440df5d2513796cd34aaa2754f6a6c";
   };
 
   nativeBuildInputs = [
@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFingerprint = "907D 226E 7E13 FA33 7F01  4A08 3672 782A 9BF3 68F3";
     };
   };

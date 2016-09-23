@@ -254,6 +254,8 @@ matrix-angular-sdk = callPackage ../all-pkgs/m/matrix-angular-sdk { };
 
 mopidy = callPackage ../all-pkgs/m/mopidy { };
 
+msgpack-python = callPackage ../all-pkgs/m/msgpack-python { };
+
 mutagen = callPackage ../all-pkgs/m/mutagen { };
 
 netaddr = callPackage ../all-pkgs/n/netaddr { };

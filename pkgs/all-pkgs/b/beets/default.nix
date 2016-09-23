@@ -212,17 +212,17 @@ let
   testShell = "${bash}/bin/bash --norc";
   completion = "${bash-completion}/share/bash-completion/bash_completion";
 
-  version = "2016-09-09";
+  version = "2016-09-20";
 in
 buildPythonPackage rec {
   name = "beets-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "sampsyo";
     repo = "beets";
-    rev = "b63ac3aef7a586ff86fd5768a7d0bc0f0f3c7e10";
-    sha256 = "991965702d6af93a3c8b6e9af8d0d2d30cf7cbbb47c0a01d6f3f3b302e88b796";
+    rev = "6b73aa25d2bffdb9e0bdcbe925af0e78af9c1cce";
+    sha256 = "0e4c086df0da552b87495d16055d322746ca36e9488abc85a00e3372cc757a1e";
   };
 
   nativeBuildInputs = [
@@ -335,12 +335,6 @@ buildPythonPackage rec {
     ' beetsplug/replaygain.py
     sed -i -e 's/if has_program.*bs1770gain.*:/if True:/' \
       test/test_replaygain.py
-  '' + /* Prevent type casting byte string to string */ ''
-    sed -i beetsplug/discogs.py \
-      -e 's/re.sub(br/re.sub(b/'
-  '' + optionalString isPy3k ''
-    sed -i beetsplug/fromfilename.py \
-      -e 's/d.values()/list(d.values())/'
   '';
 
   GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [

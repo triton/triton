@@ -12,9 +12,9 @@
   };
 
   "10" = rec {
-    version = "10.2.2";
+    version = "10.2.3";
     rev = "refs/tags/v${version}";
-    sha256 = "0kzjsahpv55hh0mk2vf81bjhpkyfcq1wbmzc0cf79mn8ps4244sm";
+    sha256 = "0hb16n58pbx67hg15qanzs95vqghi26r4k07bk0fh6b5cw678aa8";
   };
 
   "dev" = rec {

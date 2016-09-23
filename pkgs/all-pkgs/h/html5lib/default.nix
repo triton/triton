@@ -20,6 +20,9 @@ buildPythonPackage {
 
   buildInputs = [
     six
+  ];
+
+  propagatedBuildInputs = [
     webencodings
   ];
 

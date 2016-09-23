@@ -122,12 +122,12 @@ mirror://xorg/individual/driver/xf86-video-dummy-0.3.7.tar.bz2
 mirror://xorg/individual/driver/xf86-video-cyrix-1.1.0.tar.bz2
 mirror://xorg/individual/driver/xf86-video-cirrus-1.5.3.tar.bz2
 mirror://xorg/individual/driver/xf86-video-chips-1.2.6.tar.bz2
-mirror://xorg/individual/driver/xf86-video-ati-7.7.0.tar.bz2
+mirror://xorg/individual/driver/xf86-video-ati-7.7.1.tar.bz2
 mirror://xorg/individual/driver/xf86-video-ast-1.1.5.tar.bz2
 mirror://xorg/individual/driver/xf86-video-ark-0.7.5.tar.bz2
 mirror://xorg/individual/driver/xf86-video-apm-1.2.5.tar.bz2
 mirror://xorg/individual/driver/xf86-video-amd-2.7.7.7.tar.bz2
-mirror://xorg/individual/driver/xf86-video-amdgpu-1.1.0.tar.bz2
+mirror://xorg/individual/driver/xf86-video-amdgpu-1.1.2.tar.bz2
 mirror://xorg/individual/driver/xf86-input-void-1.4.1.tar.bz2
 mirror://xorg/individual/driver/xf86-input-vmmouse-13.1.0.tar.bz2
 mirror://xorg/individual/driver/xf86-input-ur98-1.1.0.tar.bz2

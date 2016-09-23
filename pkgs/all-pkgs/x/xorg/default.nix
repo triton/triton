@@ -2534,10 +2534,10 @@ let
   }) // {inherit fontsproto libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ;};
 
   xf86videoati = (mkDerivation "xf86videoati" {
-    name = "xf86-video-ati-7.7.0";
+    name = "xf86-video-ati-7.7.1";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-ati-7.7.0.tar.bz2;
-      sha256 = "1hy1n8an98mflfbdcb3q7wv59x971j7nf9zhivf90p0lgdbiqkc4";
+      url = mirror://xorg/individual/driver/xf86-video-ati-7.7.1.tar.bz2;
+      sha256 = "1387cn4b2wwawvzqmy17hrg9d394pl5r5if5jn831vk2vf48b980";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ fontsproto glamoregl libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ];

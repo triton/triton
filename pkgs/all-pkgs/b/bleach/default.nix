@@ -24,7 +24,7 @@ buildPythonPackage {
   ];
 
   preConfigure = ''
-    sed -i '/html5lib/ s/\(,\|\)\(>\|<\)\(=\|\)[0-9.]\+//g' setup.py bleach.egg-info/requires.txt
+    sed -i '/html5lib/ s/\(,\|\)\(>\|<\|=\)\(=\|\)[0-9.]\+//g' setup.py bleach.egg-info/requires.txt
   '';
 
   meta = with stdenv.lib; {

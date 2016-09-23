@@ -396,6 +396,8 @@ ujson = callPackage ../all-pkgs/u/ujson { };
 
 unpaddedbase64 = callPackage ../all-pkgs/u/unpaddedbase64 { };
 
+webencodings = callPackage ../all-pkgs/w/webencodings { };
+
 webob = callPackage ../all-pkgs/w/webob { };
 
 werkzeug = callPackage ../all-pkgs/w/werkzeug { };

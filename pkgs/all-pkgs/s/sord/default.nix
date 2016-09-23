@@ -6,11 +6,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "sord-0.14.0";
+  name = "sord-0.16.0";
 
   src = fetchurl {
     url = "https://download.drobilla.net/${name}.tar.bz2";
-    sha256 = "7656d8ec56a43e0f0a168fe78670a7628a42d3a597b53c7a72ac243a74e0f19a";
+    sha256 = "9d3cb2c9966e93f537f37377171f162023cea6784ca069699be4a7770c8a035a";
   };
 
   nativeBuildInputs = [
@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFingerprint = "907D 226E 7E13 FA33 7F01  4A08 3672 782A 9BF3 68F3";
     };
   };

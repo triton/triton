@@ -117,11 +117,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "6ab629be5e31660579425a738ba8870beb5b7404";
-    date = "2016-09-19";
+    rev = "8e06e8ddd9629eb88639aba897641bff8031f1d3";
+    date = "2016-09-10";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "1fkf5fdny2d4zwrijxr7jv041hcs7rsqhmd9agmp11s9brvbx2x4";
+    sha256 = "0lj7xqdggyqi0k034x242ny7rkn1ybgxvd1hnil3zis3nmidql7v";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -220,13 +220,14 @@ let
 
   text = buildFromGitHub {
     version = 2;
-    rev = "2df9074612f50810d82416d2229398a1e7188c5c";
-    date = "2016-09-15";
+    rev = "a7c023693a94aedd6b6df43ae7526bfe9d2b7d22";
+    date = "2016-09-22";
     owner = "golang";
     repo = "text";
-    sha256 = "0iw4ck14mhdll6l825nw1dp6jcbr2ccy3x3zpp2zkk433gx90iml";
+    sha256 = "002r51abslnm7d4mgvgq9nxgrm7mbh009mk8l1abgj11safzxf2v";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
+    excludedPackages = "cmd";
   };
 
   tools = buildFromGitHub {
@@ -444,11 +445,11 @@ let
 
   btree = buildFromGitHub {
     version = 2;
-    rev = "7b8aed74a691c0b46d439180d8cf3c9835f187cc";
+    rev = "7364763242911ab6d418d2722e237194938ebad0";
     owner  = "google";
     repo   = "btree";
-    sha256 = "1hz5r5xw9d3dmmaiawkdj6xf2b6wrhg5j4wbdaq3yxjzgd0k0z5c";
-    date = "2016-09-21";
+    sha256 = "16cnqa77msnikx3h18nbny23csr2mbai050aa78niznv0kyzg3lp";
+    date = "2016-09-23";
   };
 
   bufio_v1 = buildFromGitHub {
@@ -1925,12 +1926,12 @@ let
   };
 
   go-humanize = buildFromGitHub {
-    version = 1;
-    rev = "2fcb5204cdc65b4bec9fd0a87606bb0d0e3c54e8";
+    version = 2;
+    rev = "bd88f87ad3a420f7bcf05e90566fd1ceb351fa7f";
     owner = "dustin";
     repo = "go-humanize";
-    sha256 = "1hb6b9nsyy7nclkri1f9fql2kvjqlkxhdpxcnklxb9nxxyqb1rm2";
-    date = "2016-07-20";
+    sha256 = "0j2dza7xz93ksmc67cc8qhfxn7wpqq4xdjdr2p9f2ilqyq31pavh";
+    date = "2016-09-23";
   };
 
   go-immutable-radix = buildFromGitHub {
@@ -2822,12 +2823,12 @@ let
 
   ipfs = buildFromGitHub {
     version = 2;
-    date = "2016-09-19";
-    rev = "e10453b67bb8e683082ebde345d0080f05aeca12";
+    date = "2016-09-20";
+    rev = "300187ac52325453a632313fc8bf3423c078882e";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "38f48703cf43eda32c4071ea29546d0e746064b41ab08f1037bae867cf46edc7";
-    gxSha256 = "04ak7xgchnrxcyw1cih2xvix73j13f0zrh425l1cv2sycjdn0n9q";
+    sha256 = "001n6fxxdnwp6lc0lqqnmmiinc2i3cv2szv62c6gvgvv73bssnj1";
+    gxSha256 = "03h00jk4zwgxqiq5y96w93z1ls2sickmraklz7bq0ffs3aqp5j3a";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"
@@ -2842,6 +2843,7 @@ let
     postConfigure = ''
       mv "$TMPDIR/Godeps" "go/src/$goPackagePath"
     '';
+    meta.useUnstable = true;
   };
 
   json-filter = buildFromGitHub {

@@ -5,26 +5,26 @@
 , cairomm
 , gdk-pixbuf
 , glibmm
-, gtk3
+, gtk
 , libepoxy
 , pangomm
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag;
-in
+    boolEn;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gtkmm-${version}";
-  versionMajor = "3.20";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gtkmm-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtkmm/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gtkmm/${versionMajor}/${name}.sha256sum";
-    sha256 = "051de1b8756ca6ec61f26264338cfc3060af936fd70bf4558bfe1e115418c612";
+    url = "mirror://gnome/sources/gtkmm/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   buildInputs = [
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     cairomm
     gdk-pixbuf
     glibmm
-    gtk3
+    gtk
     libepoxy
     pangomm
   ];
@@ -41,10 +41,10 @@ stdenv.mkDerivation rec {
     "--disable-maintainer-mode"
     "--disable-win32-backend"
     "--disable-quartz-backend"
-    (enFlag "x11-backend" gtk3.x11_backend null)
-    (enFlag "wayland-backend" gtk3.wayland_backend null)
-    (enFlag "broadway-backend" gtk3.broadway_backend null)
-    (enFlag "api-atkmm" (atkmm != null) null)
+    "--${boolEn gtk.x11_backend}-x11-backend"
+    "--${boolEn gtk.wayland_backend}-wayland-backend"
+    "--${boolEn gtk.broadway_backend}-broadway-backend"
+    "--${boolEn (atkmm != null)}-api-atkmm"
     # Requires deprecated api to build
     "--enable-deprecated-api"
     "--disable-documentation"
@@ -56,6 +56,18 @@ stdenv.mkDerivation rec {
     "--without-pangomm-doc"
     "--without-atkmm-doc"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gtkmm/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "C++ interface for GTK+";

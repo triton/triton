@@ -25,7 +25,7 @@ let
   source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "cogl-${channel}.2";
+  name = "cogl-${source.version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/cogl/${channel}/${name}.tar.xz";

@@ -2649,7 +2649,13 @@ vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
 vim = callPackage ../all-pkgs/v/vim { };
 
-vino = callPackage ../all-pkgs/v/vino { };
+vino_3-22 = callPackage ../all-pkgs/v/vino {
+  channel = "3.22";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+  gtk = pkgs.gtk_3-22;
+  libsoup = pkgs.libsoup_2-56;
+};
+vino = callPackageAlias "vino_3-22" { };
 
 vlc = callPackage ../all-pkgs/v/vlc { };
 

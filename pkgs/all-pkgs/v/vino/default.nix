@@ -10,7 +10,7 @@
 , file
 , glib
 , gnutls
-, gtk3
+, gtk
 , libgcrypt
 , libjpeg
 , libnotify
@@ -19,28 +19,32 @@
 , telepathy_glib
 , xorg
 , zlib
+
+, channel
 }:
+
+assert xorg != null ->
+  xorg.libICE != null
+  && xorg.libSM != null
+  && xorg.libX11 != null
+  && xorg.libXext != null
+  && xorg.libXtst != null
+  && xorg.xproto != null;
 
 let
   inherit (stdenv.lib)
-    optionals
-    wtFlag;
+    boolWt
+    optionals;
+
+  source = (import ./sources.nix { })."${channel}";
 in
-
-assert xorg != null ->
-  xorg.libSM != null
-  && xorg.libX11 != null;
-
 stdenv.mkDerivation rec {
-  name = "vino-${version}";
-  versionMajor = "3.20";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  name = "vino-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/vino/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/vino/${versionMajor}/${name}.sha256sum";
-    sha256 = "660488adc1bf577958e783d13f61dbd99c1d9c4e81d2ca063437ea81d39e4413";
+    url = "mirror://gnome/sources/vino/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -56,7 +60,7 @@ stdenv.mkDerivation rec {
     file
     glib
     gnutls
-    gtk3
+    gtk
     libgcrypt
     libjpeg
     libnotify
@@ -65,8 +69,12 @@ stdenv.mkDerivation rec {
     telepathy_glib
     zlib
   ] ++ optionals (xorg != null) [
+    xorg.libICE
     xorg.libSM
     xorg.libX11
+    xorg.libXext
+    xorg.libXtst
+    xorg.xproto
   ];
 
   configureFlags = [
@@ -77,14 +85,14 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-ipv6"
     "--enable-schemas-compile"
-    (wtFlag "telepathy" (telepathy_glib != null) null)
-    (wtFlag "secret" (libsecret != null) null)
-    (wtFlag "x" (xorg != null) null)
-    (wtFlag "gnutls" (gnutls != null) null)
-    (wtFlag "gcrypt" (libgcrypt != null) null)
-    (wtFlag "avahi" (avahi != null) null)
-    (wtFlag "zlib" (zlib != null) null)
-    (wtFlag "jpeg" (libjpeg != null) null)
+    "--${boolWt (telepathy_glib != null)}-telepathy"
+    "--${boolWt (libsecret != null)}-secret"
+    "--${boolWt (xorg != null)}-x"
+    "--${boolWt (gnutls != null)}-gnutls"
+    "--${boolWt (libgcrypt != null)}-gcrypt"
+    "--${boolWt (avahi != null)}-avahi"
+    "--${boolWt (zlib != null)}-zlib"
+    "--${boolWt (libjpeg != null)}-jpeg"
   ];
 
   preFixup = ''
@@ -97,6 +105,18 @@ stdenv.mkDerivation rec {
   '';
 
   doCheck = true;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/vino/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "GNOME desktop sharing server";

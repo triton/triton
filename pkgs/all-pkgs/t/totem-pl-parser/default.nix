@@ -22,12 +22,12 @@ in
 stdenv.mkDerivation rec {
   name = "totem-pl-parser-${version}";
   versionMajor = "3.10";
-  versionMinor = "6";
+  versionMinor = "7";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/totem-pl-parser/${versionMajor}/${name}.tar.xz";
-    sha256 = "0mv7aw9mw77w04zg95zjf0zmk6ckshpysbb9nap15h5is6zdk9cq";
+    sha256 = "9c8285bc3131faa309d5cba5a919d5166abc2b8cc5a0c850fe861be8b14e089c";
   };
 
   nativeBuildInputs = [

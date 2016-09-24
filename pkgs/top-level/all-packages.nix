@@ -499,15 +499,11 @@ acpid = callPackage ../all-pkgs/a/acpid { };
 
 adns = callPackage ../all-pkgs/a/adns { };
 
-adwaita-icon-theme_3-20 = callPackage ../all-pkgs/a/adwaita-icon-theme {
-  channel = "3.20";
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
-};
 adwaita-icon-theme_3-22 = callPackage ../all-pkgs/a/adwaita-icon-theme {
   channel = "3.22";
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
-adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-20" { };
+adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-22" { };
 
 alsa-firmware = callPackage ../all-pkgs/a/alsa-firmware { };
 
@@ -546,33 +542,22 @@ asciinema = pkgs.python3Packages.asciinema;
 
 aspell = callPackage ../all-pkgs/a/aspell { };
 
-at-spi2-atk_2-20 = callPackage ../all-pkgs/a/at-spi2-atk {
-  channel = "2.20";
-  at-spi2-core = pkgs.at-spi2-core_2-20;
-  atk = pkgs.atk_2-20;
-};
 at-spi2-atk_2-22 = callPackage ../all-pkgs/a/at-spi2-atk {
   channel = "2.21";
   at-spi2-core = pkgs.at-spi2-core_2-22;
   atk = pkgs.atk_2-22;
 };
-at-spi2-atk = callPackageAlias "at-spi2-atk_2-20" { };
+at-spi2-atk = callPackageAlias "at-spi2-atk_2-22" { };
 
-at-spi2-core_2-20 = callPackage ../all-pkgs/a/at-spi2-core {
-  channel = "2.20";
-};
 at-spi2-core_2-22 = callPackage ../all-pkgs/a/at-spi2-core {
   channel = "2.21";
 };
-at-spi2-core = callPackageAlias "at-spi2-core_2-20" { };
+at-spi2-core = callPackageAlias "at-spi2-core_2-22" { };
 
-atk_2-20 = callPackage ../all-pkgs/a/atk {
-  channel = "2.20";
-};
 atk_2-22 = callPackage ../all-pkgs/a/atk {
   channel = "2.22";
 };
-atk = callPackageAlias "atk_2-20" { };
+atk = callPackageAlias "atk_2-22" { };
 
 atkmm_2-24 = callPackage ../all-pkgs/a/atkmm {
   channel = "2.24";
@@ -796,19 +781,13 @@ dconf_0-26 = callPackage ../all-pkgs/d/dconf {
 };
 dconf = callPackageAlias "dconf_0-26" { };
 
-dconf-editor_3-20 = callPackage ../all-pkgs/d/dconf-editor {
-  channel = "3.20";
-  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-20;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
-  gtk_3 = pkgs.gtk_3-20;
-};
 dconf-editor_3-22 = callPackage ../all-pkgs/d/dconf-editor {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gtk_3 = pkgs.gtk_3-22;
 };
-dconf-editor = callPackageAlias "dconf-editor_3-20" { };
+dconf-editor = callPackageAlias "dconf-editor_3-22" { };
 
 ddrescue = callPackage ../all-pkgs/d/ddrescue { };
 
@@ -890,16 +869,6 @@ etcd = pkgs.goPackages.etcd.bin // { outputs = [ "bin" ]; };
 
 ethtool = callPackage ../all-pkgs/e/ethtool { };
 
-evince_3-20 = callPackage ../all-pkgs/e/evince {
-  channel = "3.20";
-  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-20;
-  atk = pkgs.atk_2-20;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
-  gtk = pkgs.gtk_3-20;
-  gvfs = pkgs.gvfs_1-28;
-  nautilus = pkgs.nautilus_3-20;
-};
 evince_3-22 = callPackage ../all-pkgs/e/evince {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
@@ -910,18 +879,10 @@ evince_3-22 = callPackage ../all-pkgs/e/evince {
   gvfs = pkgs.gvfs_1-30;
   nautilus = pkgs.nautilus_3-22;
 };
-evince = callPackageAlias "evince_3-20" { };
+evince = callPackageAlias "evince_3-22" { };
 
 #evolution = callPackage ../all-pkgs/e/evolution { };
 
-evolution-data-server_3-20 = callPackage ../all-pkgs/e/evolution-data-server {
-  channel = "3.20";
-  #gnome-online-accounts
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
-  gtk = pkgs.gtk_3-20;
-  libsoup = pkgs.libsoup_2-54;
-  vala = pkgs.vala_0-32;
-};
 evolution-data-server_3-22 = callPackage ../all-pkgs/e/evolution-data-server {
   channel = "3.22";
   #gnome-online-accounts
@@ -930,7 +891,7 @@ evolution-data-server_3-22 = callPackage ../all-pkgs/e/evolution-data-server {
   libsoup = pkgs.libsoup_2-56;
   vala = pkgs.vala_0-34;
 };
-evolution-data-server = callPackageAlias "evolution-data-server_3-20" { };
+evolution-data-server = callPackageAlias "evolution-data-server_3-22" { };
 
 exempi = callPackage ../all-pkgs/e/exempi { };
 
@@ -1086,26 +1047,19 @@ gcr = callPackage ../all-pkgs/g/gcr { };
 gdbm = callPackage ../all-pkgs/g/gdbm { };
 
 # Combined gdk-pixbuf loaders.cache
-gdk-pixbuf_wrapped_2-34 = callPackage ../all-pkgs/g/gdk-pixbuf {
-  gdk-pixbuf_unwrapped = pkgs.gdk-pixbuf_unwrapped_2-34;
-};
 gdk-pixbuf_wrapped_2-36 = callPackage ../all-pkgs/g/gdk-pixbuf {
   gdk-pixbuf_unwrapped = pkgs.gdk-pixbuf_unwrapped_2-36;
 };
-gdk-pixbuf_wrapped = callPackageAlias "gdk-pixbuf_wrapped_2-34" { };
+gdk-pixbuf_wrapped = callPackageAlias "gdk-pixbuf_wrapped_2-36" { };
 
 # Actual gdk-pixbuf
-gdk-pixbuf_unwrapped_2-34 = callPackage ../all-pkgs/g/gdk-pixbuf/unwrapped.nix {
-  channel = "2.34";
-};
 gdk-pixbuf_unwrapped_2-36 = callPackage ../all-pkgs/g/gdk-pixbuf/unwrapped.nix {
   channel = "2.36";
 };
-gdk-pixbuf_unwrapped = callPackageAlias "gdk-pixbuf_unwrapped_2-34" { };
+gdk-pixbuf_unwrapped = callPackageAlias "gdk-pixbuf_unwrapped_2-36" { };
 
-gdk-pixbuf_2-34 = callPackageAlias "gdk-pixbuf_wrapped_2-34" { };
 gdk-pixbuf_2-36 = callPackageAlias "gdk-pixbuf_wrapped_2-36" { };
-gdk-pixbuf = callPackageAlias "gdk-pixbuf_wrapped_2-34" { };
+gdk-pixbuf = callPackageAlias "gdk-pixbuf_wrapped_2-36" { };
 
 gdm = callPackage ../all-pkgs/g/gdm { };
 
@@ -1135,25 +1089,17 @@ glfw = callPackage ../all-pkgs/g/glfw { };
 
 glib = callPackage ../all-pkgs/g/glib { };
 
-glib-networking_2-48 = callPackage ../all-pkgs/g/glib-networking {
-  channel = "2.48";
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
-};
 glib-networking_2-50 = callPackage ../all-pkgs/g/glib-networking {
   channel = "2.50";
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
 };
-glib-networking = callPackage ../all-pkgs/g/glib-networking { };
+glib-networking = callPackageAlias "glib-networking_2-50" { };
 
-glibmm_2-48 = callPackage ../all-pkgs/g/glibmm {
-  channel = "2.48";
-  libsigcxx = pkgs.libsigcxx_2-8;
-};
 glibmm_2-50 = callPackage ../all-pkgs/g/glibmm {
   channel = "2.50";
   libsigcxx = pkgs.libsigcxx_2-10;
 };
-glibmm = callPackageAlias "glibmm_2-48" { };
+glibmm = callPackageAlias "glibmm_2-50" { };
 
 glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 
@@ -1161,13 +1107,10 @@ gmp = callPackage ../all-pkgs/g/gmp { };
 
 gnome-autoar = callPackage ../all-pkgs/g/gnome-autoar { };
 
-gnome-backgrounds_3-20 = callPackage ../all-pkgs/g/gnome-backgrounds {
-  channel = "3.20";
-};
 gnome-backgrounds_3-22 = callPackage ../all-pkgs/g/gnome-backgrounds {
   channel = "3.22";
 };
-gnome-backgrounds = callPackageAlias "gnome-backgrounds_3-20" { };
+gnome-backgrounds = callPackageAlias "gnome-backgrounds_3-22" { };
 
 gnome-bluetooth = callPackage ../all-pkgs/g/gnome-bluetooth { };
 
@@ -1179,13 +1122,6 @@ gnome-common = callPackage ../all-pkgs/g/gnome-common { };
 
 gnome-control-center = callPackage ../all-pkgs/g/gnome-control-center { };
 
-gnome-desktop_3-20 = callPackage ../all-pkgs/g/gnome-desktop {
-  channel = "3.20";
-  atk = pkgs.atk_2-20;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
-  gtk = pkgs.gtk_3-20;
-};
 gnome-desktop_3-22 = callPackage ../all-pkgs/g/gnome-desktop {
   channel = "3.22";
   atk = pkgs.atk_2-22;
@@ -1193,7 +1129,7 @@ gnome-desktop_3-22 = callPackage ../all-pkgs/g/gnome-desktop {
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
   gtk = pkgs.gtk_3-22;
 };
-gnome-desktop = callPackageAlias "gnome-desktop_3-20" { };
+gnome-desktop = callPackageAlias "gnome-desktop_3-22" { };
 
 gnome-documents_3-20 = callPackage ../all-pkgs/g/gnome-documents {
   channel = "3.20";
@@ -1304,18 +1240,13 @@ grilo-plugins = callPackage ../all-pkgs/g/grilo-plugins { };
 
 groff = callPackage ../all-pkgs/g/groff { };
 
-gsettings-desktop-schemas_3-20 =
-  callPackage ../all-pkgs/g/gsettings-desktop-schemas {
-    channel = "3.20";
-    gnome-backgrounds = pkgs.gnome-backgrounds_3-20;
-  };
 gsettings-desktop-schemas_3-22 =
   callPackage ../all-pkgs/g/gsettings-desktop-schemas {
     channel = "3.22";
     gnome-backgrounds = pkgs.gnome-backgrounds_3-22;
   };
 gsettings-desktop-schemas =
-  callPackageAlias "gsettings-desktop-schemas_3-20" { };
+  callPackageAlias "gsettings-desktop-schemas_3-22" { };
 
 gsm = callPackage ../all-pkgs/g/gsm { };
 
@@ -1346,19 +1277,14 @@ googletest = callPackage ../all-pkgs/g/googletest { };
 gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
 # Deprecated alias
 gtk2 = callPackageAlias "gtk_2" { };
-gtk_3-20 = callPackage ../all-pkgs/g/gtk/3.x.nix {
-  channel = "3.20";
-  at-spi2-atk = pkgs.at-spi2-atk_2-20;
-  atk = pkgs.atk_2-20;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
-};
+
 gtk_3-22 = callPackage ../all-pkgs/g/gtk/3.x.nix {
   channel = "3.22";
   at-spi2-atk = pkgs.at-spi2-atk_2-22;
   atk = pkgs.atk_2-22;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
-gtk_3 = callPackageAlias "gtk_3-20" { };
+gtk_3 = callPackageAlias "gtk_3-22" { };
 # Deprecated alias
 gtk3 = callPackageAlias "gtk_3" { };
 
@@ -1389,17 +1315,12 @@ gupnp-av = callPackage ../all-pkgs/g/gupnp-av { };
 
 gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 
-gvfs_1-28 = callPackage ../all-pkgs/g/gvfs {
-  channel = "1.28";
-  gtk = pkgs.gtk_3-20;
-  libsoup = pkgs.libsoup_2-54;
-};
 gvfs_1-30 = callPackage ../all-pkgs/g/gvfs {
   channel = "1.30";
   gtk = pkgs.gtk_3-22;
   libsoup = pkgs.libsoup_2-56;
 };
-gvfs = callPackageAlias "gvfs_1-28" { };
+gvfs = callPackageAlias "gvfs_1-30" { };
 
 gx = pkgs.goPackages.gx.bin // { outputs = [ "bin" ]; };
 
@@ -1659,11 +1580,11 @@ libgusb = callPackage ../all-pkgs/l/libgusb { };
 
 libgweather_3-20 = callPackage ../all-pkgs/l/libgweather {
   channel = "3.20";
-  atk = pkgs.atk_2-20;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
-  gtk = pkgs.gtk_3-20;
-  libsoup = pkgs.libsoup_2-54;
-  vala = pkgs.vala_0-32;
+  atk = pkgs.atk_2-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gtk = pkgs.gtk_3-22;
+  libsoup = pkgs.libsoup_2-56;
+  vala = pkgs.vala_0-34;
 };
 libgweather = callPackageAlias "libgweather_3-20" { };
 
@@ -1812,13 +1733,10 @@ libsepol = callPackage ../all-pkgs/l/libsepol { };
 
 libshout = callPackage ../all-pkgs/l/libshout { };
 
-libsigcxx_2-8 = callPackage ../all-pkgs/l/libsigcxx {
-  channel = "2.8";
-};
 libsigcxx_2-10 = callPackage ../all-pkgs/l/libsigcxx {
   channel = "2.10";
 };
-libsigcxx = callPackageAlias "libsigcxx_2-8" { };
+libsigcxx = callPackageAlias "libsigcxx_2-10" { };
 
 libsigsegv = callPackage ../all-pkgs/l/libsigsegv { };
 
@@ -1828,13 +1746,10 @@ libsndfile = callPackage ../all-pkgs/l/libsndfile { };
 
 libsodium = callPackage ../all-pkgs/l/libsodium { };
 
-libsoup_2-54 = callPackage ../all-pkgs/l/libsoup {
-  channel = "2.54";
-};
 libsoup_2-56 = callPackage ../all-pkgs/l/libsoup {
   channel = "2.56";
 };
-libsoup = callPackageAlias "libsoup_2-54" { };
+libsoup = callPackageAlias "libsoup_2-56" { };
 
 libspectre = callPackage ../all-pkgs/l/libspectre { };
 
@@ -2082,16 +1997,6 @@ nano = callPackage ../all-pkgs/n/nano { };
 
 nasm = callPackage ../all-pkgs/n/nasm { };
 
-nautilus_3-20 = callPackage ../all-pkgs/n/nautilus {
-  channel = "3.20";
-  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-20;
-  atk = pkgs.atk_2-20;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
-  gnome-desktop = pkgs.gnome-desktop_3-20;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
-  gtk = pkgs.gtk_3-20;
-  tracker = pkgs.tracker_1-8;
-};
 nautilus_3-22 = callPackage ../all-pkgs/n/nautilus {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
@@ -2102,7 +2007,7 @@ nautilus_3-22 = callPackage ../all-pkgs/n/nautilus {
   gtk = pkgs.gtk_3-22;
   tracker = pkgs.tracker_1-10;
 };
-nautilus = callPackageAlias "nautilus_3-20" { };
+nautilus = callPackageAlias "nautilus_3-22" { };
 
 ncdc = callPackage ../all-pkgs/n/ncdc { };
 
@@ -2666,16 +2571,6 @@ tor = callPackage ../all-pkgs/t/tor { };
 
 totem-pl-parser = callPackage ../all-pkgs/t/totem-pl-parser { };
 
-tracker_1-8 = callPackage ../all-pkgs/t/tracker {
-  channel = "1.8";
-  #evolution
-  evolution-data-server = pkgs.evolution-data-server_3-20;
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-34;
-  gnome-themes-standard = pkgs.gnome-themes-standard;
-  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
-  gtk = pkgs.gtk_3-20;
-  vala = pkgs.vala_0-32;
-};
 tracker_1-10 = callPackage ../all-pkgs/t/tracker {
   channel = "1.10";
   #evolution
@@ -2686,7 +2581,7 @@ tracker_1-10 = callPackage ../all-pkgs/t/tracker {
   gtk = pkgs.gtk_3-22;
   vala = pkgs.vala_0-34;
 };
-tracker = callPackageAlias "tracker_1-8" { };
+tracker = callPackageAlias "tracker_1-10" { };
 
 tslib = callPackage ../all-pkgs/t/tslib { };
 
@@ -2727,13 +2622,10 @@ v4l_lib = callPackageAlias "v4l-utils" {
   channel = "lib";
 };
 
-vala_0-32 = callPackage ../all-pkgs/v/vala {
-  channel = "0.32";
-};
 vala_0-34 = callPackage ../all-pkgs/v/vala {
   channel = "0.34";
 };
-vala = callPackageAlias "vala_0-32" { };
+vala = callPackageAlias "vala_0-34" { };
 
 vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 

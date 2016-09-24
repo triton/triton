@@ -24,7 +24,7 @@ let
 in
 
 let
-  version = "3124";
+  version = "3126";
 in
 
 let
@@ -34,7 +34,8 @@ let
     src = fetchurl {
       url = "https://download.sublimetext.com/"
         + "sublime_text_3_build_${version}_x64.tar.bz2";
-      sha256 = "8466c09660396b7e739e72db9d8a6527c321e5c196294871cf4d50073edb517b";
+      multihash = "QmY76AscajnPmFYWAryuZdPVBUZHcWD45Srt5HrYWAcwXb";
+      sha256 = "18db132e9a305fa3129014b608628e06f9442f48d09cfe933b3b1a84dd18727a";
     };
 
     nativeBuildInputs = [

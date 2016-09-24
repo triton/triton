@@ -401,6 +401,8 @@ auxDownload() {
   local output
   output="$2"
 
+  local extraOpts
+  extraOpts=()
   if echo "$url" | grep -q '^https'; then
     extraOpts+=('--ssl-reqd')
     if [ "$insecureProtocolDowngrade" != "1" ]; then

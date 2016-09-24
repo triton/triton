@@ -17,7 +17,7 @@ manager.
 * [Nix Wiki](https://nixos.org/wiki/)
 
 ##### Supported Platforms `(not all platforms implemented)`
-+ `ARM` requires: armv7+
++ `ARM` requires: `NEON`, `VFPv3+` (aka. armv7+)
   * `armv7l-linux`
   * `armv8l-linux`
   * `aarch64-linux`

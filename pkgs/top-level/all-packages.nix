@@ -2151,7 +2151,10 @@ pam = callPackage ../all-pkgs/p/pam { };
 
 pango = callPackage ../all-pkgs/p/pango { };
 
-pangomm = callPackage ../all-pkgs/p/pangomm { };
+pangomm_2-40 = callPackage ../all-pkgs/p/pangomm {
+  channel = "2.40";
+};
+pangomm = callPackageAlias "pangomm_2-40" { };
 
 pangox-compat = callPackage ../all-pkgs/p/pangox-compat { };
 

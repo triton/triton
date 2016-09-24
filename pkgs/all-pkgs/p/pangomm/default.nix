@@ -5,19 +5,20 @@
 , glibmm
 , libpng
 , pango
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "pangomm-${version}";
-  versionMajor = "2.40";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
+  name = "pangomm-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/pangomm/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/pangomm/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "9762ee2a2d5781be6797448d4dd2383ce14907159b30bc12bf6b08e7227be3af";
+    url = "mirror://gnome/sources/pangomm/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   buildInputs = [
@@ -37,6 +38,18 @@ stdenv.mkDerivation rec {
     "--without-glibmm-doc"
     "--without-cairomm-doc"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/pangomm/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "C++ interface to the Pango text rendering library";

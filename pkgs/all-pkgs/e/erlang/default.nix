@@ -7,14 +7,21 @@
 , libxslt
 , perl
 
+, mesa
 , ncurses
 , openssl
 , unixODBC
+, wxGTK
 , zlib
+
+, graphical ? false
 }:
 
 let
-  version = "19.0.7";
+  version = "19.1";
+
+  inherit (stdenv.lib)
+    optionals;
 in
 stdenv.mkDerivation rec {
   name = "erlang-${version}";
@@ -24,7 +31,7 @@ stdenv.mkDerivation rec {
     owner = "erlang";
     repo = "otp";
     rev = "OTP-${version}";
-    sha256 = "b113de739d52f56c6dcc7e45a03f2d502e451fa381e5f51247aabcad6a30b521";
+    sha256 = "e1c0568870b21db231c2260aeedfcbe356e0e9493abc6ae6baa70a960ce47fbb";
   };
 
   nativeBuildInputs = [
@@ -41,6 +48,9 @@ stdenv.mkDerivation rec {
     openssl
     unixODBC
     zlib
+  ] ++ optionals graphical [
+    mesa
+    wxGTK
   ];
 
   postPatch = ''

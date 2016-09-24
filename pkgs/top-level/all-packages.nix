@@ -1137,7 +1137,15 @@ glib = callPackage ../all-pkgs/g/glib { };
 
 glib-networking = callPackage ../all-pkgs/g/glib-networking { };
 
-glibmm = callPackage ../all-pkgs/g/glibmm { };
+glibmm_2-48 = callPackage ../all-pkgs/g/glibmm {
+  channel = "2.48";
+  libsigcxx = pkgs.libsigcxx_2-8;
+};
+glibmm_2-50 = callPackage ../all-pkgs/g/glibmm {
+  channel = "2.50";
+  libsigcxx = pkgs.libsigcxx_2-10;
+};
+glibmm = callPackageAlias "glibmm_2-48" { };
 
 glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 

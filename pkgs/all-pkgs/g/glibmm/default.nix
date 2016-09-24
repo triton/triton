@@ -3,18 +3,20 @@
 
 , glib
 , libsigcxx
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "glibmm-${version}";
-  versionMajor = "2.50";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "glibmm-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/glibmm/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/glibmm/${versionMajor}/${name}.sha256sum";
-    sha256 = "df726e3c6ef42b7621474b03b644a2e40ec4eef94a1c5a932c1e740a78f95e94";
+    url = "mirror://gnome/sources/glibmm/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   buildInputs = [
@@ -33,6 +35,18 @@ stdenv.mkDerivation rec {
     "--without-libstdc-doc"
     "--without-libsigc-doc"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/glibmm/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "C++ interface to the GLib library";

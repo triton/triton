@@ -2771,10 +2771,14 @@ zeitgeist = callPackage ../all-pkgs/z/zeitgeist { };
 zenity_generics = overrides: callPackage ../all-pkgs/z/zenity ({
   webkitgtk = null;
 } // overrides);
-zenity_3-20 = pkgs.zenity_generics {
-  channel = "3.20";
+zenity_3-22 = pkgs.zenity_generics {
+  channel = "3.22";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+  at-spi2-core = pkgs.at-spi2-core_2-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gtk = pkgs.gtk_3-22;
 };
-zenity = callPackageAlias "zenity_3-20" { };
+zenity = callPackageAlias "zenity_3-22" { };
 
 zeromq = callPackage ../all-pkgs/z/zeromq { };
 

@@ -12,7 +12,7 @@
 , at-spi2-core
 , gdk-pixbuf
 , glib
-, gtk3
+, gtk
 , libnotify
 , libxml2
 , webkitgtk
@@ -33,8 +33,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/zenity/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/zenity/${channel}/${name}.sha256sum";
-    sha256 = "02e8759397f813c0a620b93ebeacdab9956191c9dc0d0fcba1815c5ea3f15a48";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -51,11 +51,11 @@ stdenv.mkDerivation rec {
     adwaita-icon-theme
     gdk-pixbuf
     glib
-    gtk3
+    gtk
     libnotify
     libxml2
     webkitgtk
-  ] ++ optionals gtk3.x11_backend [
+  ] ++ optionals gtk.x11_backend [
     xorg.libX11
   ];
 
@@ -75,6 +75,18 @@ stdenv.mkDerivation rec {
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/zenity/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Creates simple interactive graphical dialogs";

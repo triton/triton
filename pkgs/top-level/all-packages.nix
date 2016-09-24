@@ -1135,6 +1135,14 @@ glfw = callPackage ../all-pkgs/g/glfw { };
 
 glib = callPackage ../all-pkgs/g/glib { };
 
+glib-networking_2-48 = callPackage ../all-pkgs/g/glib-networking {
+  channel = "2.48";
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-20;
+};
+glib-networking_2-50 = callPackage ../all-pkgs/g/glib-networking {
+  channel = "2.50";
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
+};
 glib-networking = callPackage ../all-pkgs/g/glib-networking { };
 
 glibmm_2-48 = callPackage ../all-pkgs/g/glibmm {

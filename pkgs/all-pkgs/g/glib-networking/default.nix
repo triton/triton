@@ -7,23 +7,23 @@
 , gsettings-desktop-schemas
 , libproxy
 , p11_kit
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    wtFlag;
-in
+    boolWt;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "glib-networking-${version}";
-  versionMajor = "2.48";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  name = "glib-networking-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/glib-networking/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/glib-networking/${versionMajor}/${name}.sha256sum";
-    sha256 = "925c0c49d6b2b8b5695f2e33cd952d1dbb7d18d3f2f796413577719315bb3a84";
+    url = "mirror://gnome/sources/glib-networking/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -46,11 +46,11 @@ stdenv.mkDerivation rec {
     "--disable-always-build-tests"
     "--disable-gcov"
     "--enable-more-warnings"
-    (wtFlag "libproxy" (libproxy != null) null)
+    "--${boolWt (libproxy != null)}-libproxy"
     "--with-gnome-proxy"
-    (wtFlag "gnutls" (gnutls != null) null)
+    "--${boolWt (gnutls != null)}-gnutls"
     "--with-ca-certificates=/etc/ssl/certs/ca-certificates.crt"
-    (wtFlag "pkcs11" (p11_kit != null) null)
+    "--${boolWt (p11_kit != null)}-pkcs11"
   ];
 
   preBuild = ''
@@ -59,6 +59,18 @@ stdenv.mkDerivation rec {
   '';
 
   doCheck = false; # tests need to access the certificates (among other things)
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/glib-networking/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Network-related giomodules for glib";

@@ -8,7 +8,9 @@ let
   inherit (stdenv)
     targetSystem;
   inherit (stdenv.lib)
-    boolEn;
+    boolEn
+    elem
+    platforms;
 in
 stdenv.mkDerivation rec {
   name = "opus-1.1.3";
@@ -29,6 +31,10 @@ stdenv.mkDerivation rec {
     "--enable-asm"
     "--enable-rtcd"
     "--enable-intrinsics"
+    # Enable intrinsics optimizations for ARM & X86
+    "--${boolEn (
+      (elem targetSystem platforms.arm-all)
+      || (elem targetSystem platforms.x86-all))}-intrinsics"
     "--disable-assertions"
     "--disable-fuzzing"
     "--enable-ambisonics"

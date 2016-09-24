@@ -1081,6 +1081,8 @@ gettext = callPackage ../all-pkgs/g/gettext { };
 
 gexiv2 = callPackage ../all-pkgs/g/gexiv2 { };
 
+giflib = callPackage ../all-pkgs/g/giflib { };
+
 gimp = callPackage ../all-pkgs/g/gimp { };
 
 git = callPackage ../all-pkgs/g/git { };
@@ -1784,6 +1786,8 @@ libtorrent-rasterbar = callPackageAlias "libtorrent-rasterbar_1-1" { };
 libtsm = callPackage ../all-pkgs/l/libtsm { };
 
 libu2f-host = callPackage ../all-pkgs/l/libu2f-host { };
+
+libungif = callPackage ../all-pkgs/l/libungif { };
 
 libunique_1 = callPackage ../all-pkgs/l/libunique/1.x.nix { };
 libunique_3 = callPackage ../all-pkgs/l/libunique/3.x.nix { };
@@ -3191,12 +3195,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   libupnp = callPackage ../development/libraries/pupnp { };
 
-  giflib = callPackageAlias "giflib_5_1" { };
-  giflib_4_1 = callPackage ../development/libraries/giflib/4.1.nix { };
-  giflib_5_1 = callPackage ../development/libraries/giflib/5.1.nix { };
-
-  libungif = callPackage ../development/libraries/giflib/libungif.nix { };
-#
   libvisio = callPackage ../development/libraries/libvisio { };
 
   libvisual = callPackage ../development/libraries/libvisual { };

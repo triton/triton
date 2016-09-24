@@ -1,7 +1,7 @@
 {
   stable = {
-    version = "49.0";
-    sha512 = "9431f86dec5587131699ae57ae428be168e4d6c7d1d48df643c10540e8e18bc5eadfcd08bb204950be611c87d35d8a40aa8ece454b7dfa3992239639c2d688a9";
+    version = "49.0.1";
+    sha512 = "6f56adde39db1b50937be3a50152a473d9d7221dd4d3f7ad4eb341f8a69ef1078a1073b783dfc8ee3150ebcc5eead4c4f0a9aa07f0fe5ab47731da575d571a16";
   };
   esr = {
     version = "45.3.0esr";

@@ -16,13 +16,13 @@ in
 
 stdenv.mkDerivation rec {
   name = "rest-${version}";
-  versionMajor = "0.7";
-  versionMinor = "93";
+  versionMajor = "0.8";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/rest/${versionMajor}/${name}.tar.xz";
-    sha256 = "05mj10hhiik23ai8w4wkk5vhsp7hcv24bih5q3fl82ilam268467";
+    sha256 = "e7b89b200c1417073aef739e8a27ff2ab578056c27796ec74f5886a5e0dff647";
   };
 
   nativeBuildInputs = [

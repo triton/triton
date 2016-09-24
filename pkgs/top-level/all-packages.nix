@@ -3102,11 +3102,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
   gss = callPackage ../development/libraries/gss { };
 #
-  gtkLibs = {
-    inherit (pkgs) glib glibmm atk atkmm cairo pango pangomm gdk-pixbuf gtk2
-      gtkmm2;
-  };
-#
   gts = callPackage ../development/libraries/gts { };
 #
   ilmbase = callPackage ../development/libraries/ilmbase { };

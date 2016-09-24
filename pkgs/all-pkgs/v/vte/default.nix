@@ -7,31 +7,32 @@
 , glib
 , gnutls
 , gobject-introspection
-, gtk3
+, gtk
 , libxml2
 , ncurses
 , pango
 , pcre2
 , vala
 , zlib
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag
-    optional
-    wtFlag;
+    boolEn
+    boolWt
+    optional;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "vte-${version}";
-  versionMajor = "0.44";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  name = "vte-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/vte/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/vte/${versionMajor}/${name}.sha256sum";
-    sha256 = "a1ea594814bb136a3a9a6c7656b46240571f6a198825c1111007fe99194b0949";
+    url = "mirror://gnome/sources/vte/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -43,7 +44,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf_unwrapped
     glib
     gnutls
-    gtk3
+    gtk
     libxml2
     ncurses
     gobject-introspection
@@ -64,18 +65,29 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-Bsymbolic"
     "--disable-glade"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (vala != null)}-vala"
     # test application uses deprecated functions
     "--disable-test-application"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (wtFlag "gnutls" (gnutls != null) null)
-    (wtFlag "pcre2" (pcre2 != null) null)
+    "--${boolWt (gnutls != null)}-gnutls"
   ];
 
   doCheck = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/vte/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A library implementing a terminal emulator widget for GTK+";

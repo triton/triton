@@ -2657,7 +2657,14 @@ vobsub2srt = callPackage ../all-pkgs/v/vobsub2srt { };
 
 vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 
-vte = callPackage ../all-pkgs/v/vte { };
+vte_0-46 = callPackage ../all-pkgs/v/vte {
+  channel = "0.46";
+  atk = pkgs.atk_2-22;
+  gdk-pixbuf_unwrapped = pkgs.gdk-pixbuf_unwrapped_2-36;
+  gtk = pkgs.gtk_3-22;
+  vala = pkgs.vala_0-34;
+};
+vte = callPackageAlias "vte_0-46" { };
 
 vulkan-headers = callPackage ../all-pkgs/v/vulkan-headers { };
 

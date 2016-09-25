@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, fetchTritonPatch
 
 , dbus
 , libcap
@@ -13,6 +14,14 @@ stdenv.mkDerivation rec {
     multihash = "QmXaoewTKsfRK6N3PPGdcMKHrDY6eFruUfHwZseD1wkmLQ";
     sha256 = "1l5cb1gp6wgpc9vq6sx021qs6zb0nxg3cn1ba00hjhgnrw4931b8";
   };
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "8b421ec0c7ae98deb1f1cf79fe6e100ee92e047a";
+      file = "r/rtkit/SECURITY-pass-uid-of-caller-to-polkit.patch";
+      sha256 = "50dd1740add5896cad7fbcfc7d825599c9c66054e46449d6a81041988eb707e7";
+    })
+  ];
 
   buildInputs = [
     dbus

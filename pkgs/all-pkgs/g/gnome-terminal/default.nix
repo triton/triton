@@ -15,23 +15,25 @@
 , gdk-pixbuf
 , glib
 , gsettings-desktop-schemas
-, gtk3
+, gtk
 , nautilus
 , vala
 , vte
 , xorg
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gnome-terminal-${version}";
-  versionMajor = "3.20";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gnome-terminal-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-terminal/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-terminal/${versionMajor}/${name}.sha256sum";
-    sha256 = "f5383060730f1de70af35e917f82d5b6a14d963ad9cfd6a0e705f90011645a23";
+    url = "mirror://gnome/sources/gnome-terminal/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -52,7 +54,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gsettings-desktop-schemas
-    gtk3
+    gtk
     nautilus
     vala
     vte
@@ -65,7 +67,7 @@ stdenv.mkDerivation rec {
   ];
 
   preFixup = ''
-    wrapProgram $out/libexec/gnome-terminal-server \
+    wrapProgram "$out/libexec/gnome-terminal-server" \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
@@ -73,6 +75,18 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-terminal/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "The Gnome Terminal";

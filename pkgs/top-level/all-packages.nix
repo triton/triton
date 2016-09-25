@@ -1162,7 +1162,17 @@ gnome-shell = callPackage ../all-pkgs/g/gnome-shell { };
 
 gnome-shell-extensions = callPackage ../all-pkgs/g/gnome-shell-extensions { };
 
-gnome-terminal = callPackage ../all-pkgs/g/gnome-terminal { };
+gnome-terminal_3-22 = callPackage ../all-pkgs/g/gnome-terminal {
+  channel = "3.22";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
+  gtk = pkgs.gtk_3-22;
+  nautilus = pkgs.nautilus_3-22;
+  vala = pkgs.vala_0-34;
+  vte = pkgs.vte_0-46;
+};
+gnome-terminal = callPackageAlias "gnome-terminal_3-22" { };
 
 gnome-themes-standard = callPackage ../all-pkgs/g/gnome-themes-standard { };
 

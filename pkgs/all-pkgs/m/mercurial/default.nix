@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "mercurial-3.8.4";
+  name = "mercurial-3.9.1";
 
   src = fetchurl {
     url = "https://www.mercurial-scm.org/release/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "4b2e3ef19d34fa1d781cb7425506a05d4b6b1172bab69d6ea78874175fdf3da6";
+    sha256 = "625e4fc7e85ec2278c2828bdc547fce74091b3bbe4d9eeeba2d61af51195df74";
   };
 
   nativeBuildInputs = [
@@ -31,7 +31,10 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "FAD6 1395 F642 FC2B 33C8  4B9A 2057 81AC 682A 2D72";
+      pgpKeyFingerprints = [
+        "FAD6 1395 F642 FC2B 33C8  4B9A 2057 81AC 682A 2D72"
+        "3A81 5516 3D0E 20A5 30FC  B786 47A6 7FFA A346 AACE"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

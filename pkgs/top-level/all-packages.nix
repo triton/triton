@@ -2054,7 +2054,16 @@ musepack = callPackage ../all-pkgs/m/musepack { };
 
 musl = callPackage ../all-pkgs/m/musl { };
 
-mutter = callPackage ../all-pkgs/m/mutter { };
+mutter_3-22 = callPackage ../all-pkgs/m/mutter {
+  channel = "3.22";
+  atk = pkgs.atk_2-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gnome-desktop = pkgs.gnome-desktop_3-22;
+  #gnome-settings-daemon = pkgs.gnome-settings-daemon_3-22;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
+  gtk = pkgs.gtk_3-22;
+};
+mutter = callPackageAlias "mutter_3-22" { };
 
 mxml = callPackage ../all-pkgs/m/mxml { };
 

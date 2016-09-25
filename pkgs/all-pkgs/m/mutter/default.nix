@@ -7,6 +7,9 @@
 , makeWrapper
 
 , atk
+, cairo
+, clutter
+, cogl
 , dconf
 , gdk-pixbuf
 , geocode-glib
@@ -15,32 +18,26 @@
 , gnome-settings-daemon
 , gobject-introspection
 , gsettings-desktop-schemas
+, gtk
 , json-glib
-, upower
-, cairo
-, pango
-, cogl
-, clutter
-, libstartup_notification
 , libcanberra
+, libdrm
 , libgudev
-, mesa_noglu
-, zenity
-, libxkbcommon
 , libinput
+, libstartup_notification
+, libxkbcommon
+, linux-headers_4_6
+, mesa_noglu
+, pango
 , systemd_lib
+, upower
 , wayland
 , wayland-protocols
 , xorg
-, gtk3
-}:
+, zenity
 
-let
-  inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
-in
+, channel
+}:
 
 assert xorg != null ->
   xorg.libICE != null
@@ -59,16 +56,21 @@ assert xorg != null ->
   && xorg.libXrender != null
   && xorg.xkeyboardconfig != null;
 
+let
+  inherit (stdenv.lib)
+    boolEn
+    boolWt
+    optionals;
+
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "mutter-${version}";
-  versionMajor = "3.20";
-  versionMinor = "3";
-  version = "${versionMajor}.${versionMinor}";
+  name = "mutter-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/mutter/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/mutter/${versionMajor}/${name}.sha256sum";
-    sha256 = "142c5271df4bde968c725ed09026173292c07b4dd7ba75f19c4b14fc363af916";
+    url = "mirror://gnome/sources/mutter/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -91,13 +93,15 @@ stdenv.mkDerivation rec {
     gnome-settings-daemon
     gobject-introspection
     gsettings-desktop-schemas
-    gtk3
+    gtk
     json-glib
     libcanberra
+    libdrm
     libgudev
     libinput
     libstartup_notification
     libxkbcommon
+    linux-headers_4_6
     mesa_noglu
     pango
     systemd_lib
@@ -143,15 +147,15 @@ stdenv.mkDerivation rec {
     "--enable-schemas-compile"
     "--enable-verbose-mode"
     "--enable-sm"
-    (enFlag "startup-notification" (libstartup_notification != null) null)
+    "--${boolEn (libstartup_notification != null)}-startup-notification"
     "--disable-installed-tests"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-native-backend"
-    (enFlag "wayland" (wayland != null) null)
+    "--${boolEn (wayland != null)}-wayland"
     "--disable-debug"
     "--enable-compile-warnings"
-    (wtFlag "libcanberra" (libcanberra != null) null)
-    (wtFlag "x" (xorg != null) null)
+    "--${boolWt (libcanberra != null)}-libcanberra"
+    "--${boolWt (xorg != null)}-x"
   ];
 
   preFixup =
@@ -162,7 +166,7 @@ stdenv.mkDerivation rec {
           $out/lib/mutter \
           $out/lib/girepository-1.0
       fi
-
+    '' + ''
       wrapProgram $out/bin/mutter \
         --set 'GSETTINGS_BACKEND' 'dconf' \
         --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \

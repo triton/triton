@@ -4,27 +4,27 @@
 
 , glib
 , gobject-introspection
-, gtk3
+, gtk
 , libsoup
 , vala
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+    boolEn
+    boolWt;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gssdp-${version}";
-  versionMajor = "0.14";
-  versionMinor = "16";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gssdp-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gssdp/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gssdp/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "54520bfb230b9c8c938eba88d87df44e04749682c95fb8aa381d13441345c5b2";
+    url = "mirror://gnome/sources/gssdp/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glib
     gobject-introspection
-    gtk3
+    gtk
     libsoup
     vala
   ];
@@ -42,15 +42,27 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-compile-warnings"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (wtFlag "gtk" (gtk3 != null) null)
+    "--${boolWt (gtk != null)}-gtk"
   ];
 
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gssdp/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
   meta = with stdenv.lib; {
-    description = "GObject-based API for resource discovery and announcement over SSDP";
+    description = "GObject-based API for resource discovery over SSDP";
     homepage = https://wiki.gnome.org/Projects/GUPnP;
     license = licenses.lgpl2;
     maintainers = with maintainers; [

@@ -8,22 +8,23 @@
 , libxml2
 , util-linux_lib
 , vala
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    boolEn;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gupnp-${version}";
-  majorVersion = "0.20";
-  version = "${majorVersion}.18";
+  name = "gupnp-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gupnp/${majorVersion}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gupnp/${majorVersion}/"
-      + "${name}.sha256sum";
-    sha256 = "c5e0e11061f8d0ff9c8dccc196f39c45a49c0153c9a72abf6290ab34d1cbb021";
+    url = "mirror://gnome/sources/gupnp/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   buildInputs = [
@@ -37,20 +38,29 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--enable-largefile"
+    "--disable-maintainer-mode"
     "--disable-debug"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--enable-largefile"
+    "--enable-compile-warnings"
+    "--disable-Werror"
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     #--with-context-manager=[network-manager/connman/unix/linux]
   ];
 
-  postInstall = ''
-    ln -sv ${libsoup}/include/libsoup-[0-9].[0-9]+/libsoup $out/include
-    ln -sv ${libxml2}/include/*/libxml $out/include
-    ln -sv ${gssdp}/include/*/libgssdp $out/include
-  '';
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gupnp/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "An implementation of the UPnP specification";

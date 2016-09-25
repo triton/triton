@@ -1362,7 +1362,13 @@ guitarix = callPackage ../all-pkgs/g/guitarix {
   fftw = pkgs.fftw_single;
 };
 
-gupnp = callPackage ../all-pkgs/g/gupnp { };
+gupnp_1-0 = callPackage ../all-pkgs/g/gupnp {
+  channel = "1.0";
+  gssdp = pkgs.gssdp_1-0;
+  libsoup = pkgs.libsoup_2-56;
+  vala = pkgs.vala_0-34;
+};
+gupnp = callPackageAlias "gupnp_1-0" { };
 
 gupnp-av = callPackage ../all-pkgs/g/gupnp-av { };
 

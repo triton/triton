@@ -11,26 +11,26 @@
 , gmp
 , gnome-themes-standard
 , gsettings-desktop-schemas
-, gtk3
+, gtk
 , gtksourceview
 , librsvg
 , libsoup
 , libxml2
 , mpfr
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gnome-calculator-${version}";
-  versionMajor = "3.21";
-  versionMinor = "90";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gnome-calculator-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-calculator/${versionMajor}/"
-      + "${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-calculator/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "07408cb200ed1e1ef831a7afdd48f92e1ab4738a421d057fcc75ad134203bdc2";
+    url = "mirror://gnome/sources/gnome-calculator/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   propagatedUserEnvPkgs = [
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
     glib
     gmp
     gsettings-desktop-schemas
-    gtk3
+    gtk
     gtksourceview
     librsvg
     libsoup
@@ -74,6 +74,18 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-calculator/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A calculator application for GNOME";

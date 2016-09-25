@@ -695,6 +695,8 @@ clang = wrapCC (callPackageAlias "llvm" { });
 
 clutter_1-26 = callPackage ../all-pkgs/c/clutter {
   channel = "1.26";
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gtk = pkgs.gtk_3-22;
 };
 clutter = callPackageAlias "clutter_1-26" { };
 

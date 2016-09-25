@@ -11,7 +11,7 @@
 , gdk-pixbuf
 , glib
 , gobject-introspection
-, gtk3
+, gtk
 , json-glib
 , libdrm
 , libgudev
@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gobject-introspection
-    gtk3
+    gtk
     json-glib
     libdrm
     libgudev
@@ -127,8 +127,8 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/clutter/"
-        + "${channel}/${name}.sha256sum";
+      sha256Url = "https://download.gnome.org/sources/clutter/${channel}/"
+        + "${name}.sha256sum";
       failEarly = true;
     };
   };

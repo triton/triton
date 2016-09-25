@@ -31,13 +31,13 @@ let
       sha256 = "a27cecf657caac1e5c122c50c3b833a7e0c1e81f66b7ab3beb38c6b3a292e740";
     };
     "bcache" = let
-      date = "2016-09-23";
+      date = "2016-09-24";
     in {
-      version = "4.7.4";
+      version = "4.7.5";
       urls = [
         "https://github.com/wkennington/linux/releases/download/bcachefs-${version}-${date}/linux-bcachefs-${version}-${date}.tar.xz"
       ];
-      sha256 = "e018c25132fc282a580fd21bd22d8b49f97f12c68d4ed1a12f09a8f7200b4058";
+      sha256 = "e1d00de8fad7b8920d46c0481da029e8b324279b907db7772b12b332222884d9";
       features.bcachefs = true;
     };
   };

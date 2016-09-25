@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--enable-glib-cast-checks"
-    "--enable-glib-asserts"
+    "--disable-glib-asserts"
   ];
 
   meta = with stdenv.lib; {

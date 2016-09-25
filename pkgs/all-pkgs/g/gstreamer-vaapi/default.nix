@@ -68,7 +68,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--enable-gobject-cast-checks"
-    "--enable-glib-asserts"
+    "--disable-glib-asserts"
   ];
 
   NIX_CFLAGS_COMPILE = [

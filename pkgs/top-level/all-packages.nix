@@ -1253,6 +1253,8 @@ gperf = callPackage ../all-pkgs/g/gperf { };
 
 gperftools = callPackage ../all-pkgs/g/gperftools { };
 
+gpgme = callPackage ../all-pkgs/g/gpgme { };
+
 gpm = callPackage ../all-pkgs/g/gpm-ncurses { };
 
 gpsd = callPackage ../all-pkgs/g/gpsd { };
@@ -3158,8 +3160,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   gmime = callPackage ../development/libraries/gmime { };
 #
   gom = callPackage ../all-pkgs/g/gom { };
-#
-  gpgme = callPackage ../development/libraries/gpgme { };
 #
   gsl = callPackage ../development/libraries/gsl { };
 #

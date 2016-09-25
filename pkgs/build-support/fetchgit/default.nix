@@ -25,7 +25,7 @@ in
 , deepClone ? false
 , branchName ? null
 , name ? urlToName url rev
-, version ? 1
+, version ? null
 }:
 
 /* NOTE:
@@ -52,6 +52,7 @@ in
 
 assert md5 != "" || sha256 != "";
 assert deepClone -> leaveDotGit;
+assert version != null || throw "Missing fetchzip version. The latest version is 2.";
 
 let
   versions = {

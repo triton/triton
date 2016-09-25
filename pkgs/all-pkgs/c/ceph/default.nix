@@ -54,6 +54,7 @@ let
     versionOlder;
 
   inherit ((import ./sources.nix).${channel})
+    fetchVersion
     version
     rev
     sha256;
@@ -74,6 +75,7 @@ stdenv.mkDerivation rec {
   src = fetchgit {
     url = "https://github.com/ceph/ceph.git";
     inherit rev sha256;
+    version = fetchVersion;
   };
 
   patches = optionals (versionOlder version "9.0.0") [

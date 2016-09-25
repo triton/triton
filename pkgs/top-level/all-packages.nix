@@ -1327,7 +1327,14 @@ gtkmm_3-22 = callPackage ../all-pkgs/g/gtkmm {
 };
 gtkmm_3 = callPackageAlias "gtkmm_3-22" { };
 
-gtksourceview = callPackage ../all-pkgs/g/gtksourceview { };
+gtksourceview_3-22 = callPackage ../all-pkgs/g/gtksourceview {
+  channel = "3.22";
+  atk = pkgs.atk_2-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gtk = pkgs.gtk_3-22;
+  vala = pkgs.vala_0-34;
+};
+gtksourceview = callPackageAlias "gtksourceview_3-22" { };
 
 gtkspell_2 = callPackage ../all-pkgs/g/gtkspell/2.x.nix { };
 gtkspell_3 = callPackage ../all-pkgs/g/gtkspell/3.x.nix { };

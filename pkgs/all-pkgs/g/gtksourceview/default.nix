@@ -8,29 +8,29 @@
 , cairo
 , gdk-pixbuf
 , glib
-, gtk3
+, gtk
 , pango
 , libxml2
 , perl
 , gobject-introspection
 , vala
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag;
-in
+    boolEn;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gtksourceview-${version}";
-  versionMajor = "3.20";
-  versionMinor = "4";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gtksourceview-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gtksourceview/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gtksourceview/${versionMajor}/${name}.sha256sum";
-    sha256 = "7a0e6ac95ff3862bd8ef77a40e95a942939e73cb407f2eb67af600d7ce533d01";
+    url = "mirror://gnome/sources/gtksourceview/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
     cairo
     gdk-pixbuf
     glib
-    gtk3
+    gtk
     pango
     libxml2
     perl
@@ -72,15 +72,27 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--disable-installed-tests"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-code-coverage"
-    (enFlag "vala" (vala != null) null)
+    "--${boolEn (vala != null)}-vala"
   ];
 
   preBuild = ''
-    substituteInPlace gtksourceview/gtksourceview-utils.c \
-      --replace "@NIX_SHARE_PATH@" "$out/share"
+    sed -i gtksourceview/gtksourceview-utils.c \
+      -e "s,@NIX_SHARE_PATH@,$out/share,"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gtksourceview/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A text widget for syntax highlighting and other features";

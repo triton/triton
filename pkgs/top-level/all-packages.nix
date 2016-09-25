@@ -1118,7 +1118,14 @@ gnome-backgrounds_3-22 = callPackage ../all-pkgs/g/gnome-backgrounds {
 };
 gnome-backgrounds = callPackageAlias "gnome-backgrounds_3-22" { };
 
-gnome-bluetooth = callPackage ../all-pkgs/g/gnome-bluetooth { };
+gnome-bluetooth_3-20 = callPackage ../all-pkgs/g/gnome-bluetooth {
+  channel = "3.20";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+  atk = pkgs.atk_2-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gtk = pkgs.gtk_3-22;
+};
+gnome-bluetooth = callPackageAlias "gnome-bluetooth_3-20" { };
 
 gnome-calculator = callPackage ../all-pkgs/g/gnome-calculator { };
 

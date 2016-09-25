@@ -16,31 +16,31 @@
 , gdk-pixbuf
 , glib
 , gobject-introspection
-, gtk3
+, gtk
 , libcanberra
 , libnotify
 , libxml2
 , pango
 , systemd_lib
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag
+    boolEn
     replaceStrings;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gnome-bluetooth-${version}";
-  versionMajor = "3.20";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gnome-bluetooth-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-bluetooth/${versionMajor}/"
+    url = "mirror://gnome/sources/gnome-bluetooth/${channel}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-bluetooth/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "93b3ca16b348a168d044b3f777049b7dba2a9292c4adb2751a771e3bc5e4eb53";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gobject-introspection
-    gtk3
+    gtk
     libcanberra
     libnotify
     libxml2
@@ -79,7 +79,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--disable-desktop-update"
     "--disable-icon-update"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-debug"
     "--enable-compile-warnings"
     "--disable-iso-c"
@@ -100,6 +100,18 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-bluetooth/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Bluetooth graphical utilities integrated with GNOME";

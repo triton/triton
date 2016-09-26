@@ -21,7 +21,11 @@ let
 
   kernelPackages = config.boot.kernelPackages;
 
-  useGit = cfgZfs.useGit || versionAtLeast kernelPackages.kernel.version "4.9";
+  useGit =
+    if cfgZfs.useGit != null then
+      cfgZfs.useGit
+    else
+      versionAtLeast kernelPackages.kernel.version "4.9";
 
   splKernelPkg = if useGit then kernelPackages.spl_git else kernelPackages.spl;
   zfsKernelPkg = if useGit then kernelPackages.zfs_git else kernelPackages.zfs;
@@ -56,8 +60,8 @@ in
   options = {
     boot.zfs = {
       useGit = mkOption {
-        type = types.bool;
-        default = false;
+        type = types.nullOr types.bool;
+        default = null;
         example = true;
         description = ''
           Use the git version of the SPL and ZFS packages.

@@ -1,5 +1,4 @@
 { stdenv
-, fetchgit
 , fetchurl
 , gettext
 , intltool

@@ -37,6 +37,7 @@ buildPythonPackage rec {
   name = "deluge-${version}";
 
   src = fetchgit {
+    version = 1;
     url = "git://git.deluge-torrent.org/deluge";
     rev = "9c27ed29ae6faaa7d3de1a53dea02c4ed527e218";
     branchName = "develop";

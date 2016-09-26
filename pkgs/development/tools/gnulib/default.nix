@@ -3,7 +3,7 @@
 }:
 
 stdenv.mkDerivation {
-  name = "gnulib-2016-06-20";
+  name = "gnulib-2016-09-24";
 
   phases = [
     "unpackPhase"
@@ -11,9 +11,10 @@ stdenv.mkDerivation {
   ];
 
   src = fetchgit {
+    version = 2;
     url = "http://git.savannah.gnu.org/r/gnulib.git";
-    rev = "0ba497e828236d81d79fd0bcbdca0fb5c37e4525";
-    sha256 = "1w4slirrysbhq998c9b10v2lmkqrdm354n2k0irfqdhn2zp372ha";
+    rev = "85854baba34817be27d9ad3b6c013fde9fb08236";
+    sha256 = "0zy86k347d6h4bjvb2s1vsp8i8a1gliz4nziqylpz1jmcmz27km4";
   };
 
   installPhase = ''

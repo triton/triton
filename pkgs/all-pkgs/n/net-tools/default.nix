@@ -36,6 +36,7 @@ stdenv.mkDerivation rec {
       name = "net-tools-tarball-${date}";
 
       src = fetchgit {
+        version = 1;
         url = "http://git.code.sf.net/p/net-tools/code";
         rev = gitRev;
         sha256 = "1f7myyc490nq29dhs45sm2njxwdnck69pm9ixiwgj44mxdmj3rbm";

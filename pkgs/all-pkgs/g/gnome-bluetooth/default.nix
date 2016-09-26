@@ -1,7 +1,6 @@
 { stdenv
 , autoconf
 , automake
-, fetchgit
 , fetchurl
 , gnome-common
 , gtk-doc

@@ -15,6 +15,7 @@ stdenv.mkDerivation rec {
   version = "2015-12-23";
 
   src = fetchgit {
+    version = 1;
     url = git://git.ffmpeg.org/rtmpdump;
     # Currently the latest commit is used (a release has not
     # been made since 2011, i.e. '2.4')

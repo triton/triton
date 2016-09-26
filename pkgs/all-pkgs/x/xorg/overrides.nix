@@ -199,7 +199,8 @@ in
 
   xf86videointel = attrs: attrs // {
     name = "xf86-video-intel-2016-09-08";
-    src = fetchurl {
+    src = fetchzip {
+      version = 2;
       url = "https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/15c5ff12459a034b552c787047d1af6d61047cd6.tar.gz";
       sha256 = "030037b8b8b8f2c59e89e361d95db5812be320b9b14691d36e0d9768286def59";
     };

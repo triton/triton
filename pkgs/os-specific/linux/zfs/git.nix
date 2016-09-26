@@ -16,4 +16,6 @@ callPackage ./generic.nix (args // rec {
   ];
 
   spl = spl_git;
+
+  maxKernelVersion = "4.9";
 })

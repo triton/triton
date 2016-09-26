@@ -25,7 +25,8 @@ let
     if cfgZfs.useGit != null then
       cfgZfs.useGit
     else
-      versionAtLeast kernelPackages.kernel.version "4.9";
+      versionAtLeast kernelPackages.kernel.version kernelPackages.spl.maxKernelVersion
+      || versionAtLeast kernelPackages.kernel.version kernelPackages.zfs.maxKernelVersion;
 
   splKernelPkg = if useGit then kernelPackages.spl_git else kernelPackages.spl;
   zfsKernelPkg = if useGit then kernelPackages.zfs_git else kernelPackages.zfs;

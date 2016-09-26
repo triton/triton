@@ -12,4 +12,6 @@ callPackage ./generic.nix (args // rec {
   };
 
   patches = [ ./nix-build.patch ];
+
+  maxKernelVersion = "4.9";
 })

@@ -5,7 +5,7 @@
 , kernel ? null
 
 # Version specific parameters
-, version, src, patches
+, version, src, patches, maxKernelVersion
 , ...
 }:
 
@@ -17,6 +17,9 @@ in
 
 assert any (n: n == configFile) [ "kernel" "user" "all" ];
 assert buildKernel -> kernel != null;
+
+assert kernel != null -> versionOlder kernel.version maxKernelVersion
+  || throw "SPL ${version} is too old for kernel ${kernel.version}";
 
 stdenv.mkDerivation rec {
   name = "spl-${configFile}-${version}${optionalString buildKernel "-${kernel.version}"}";
@@ -52,6 +55,10 @@ stdenv.mkDerivation rec {
   fortifySource = !buildKernel;
   stackProtector = !buildKernel;
   optimize = !buildKernel;
+
+  passthru = {
+    inherit maxKernelVersion;
+  };
 
   meta = {
     description = "Kernel module driver for solaris porting layer (needed by in-kernel zfs)";

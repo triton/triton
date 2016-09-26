@@ -10,7 +10,7 @@ let
     "mirror://gnupg/libksba/libksba-${version}.tar.bz2"
   ];
 
-  version = "1.3.4";
+  version = "1.3.5";
 in
 stdenv.mkDerivation rec {
   name = "libksba-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "f6c2883cebec5608692d8730843d87f237c0964d923bbe7aa89c05f20558ad4f";
+    sha256 = "41444fd7a6ff73a79ad9728f985e71c9ba8cd3e5e53358e70d5f066d35c1a340";
   };
 
   buildInputs = [
@@ -28,10 +28,10 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.3.4";
+      urls = tarballUrls "1.3.5";
       pgpsigUrls = map (n: "${n}.sig") urls;
       inherit (gnupg.srcVerification) pgpKeyFingerprints;
-      outputHash = "f6c2883cebec5608692d8730843d87f237c0964d923bbe7aa89c05f20558ad4f";
+      outputHash = "41444fd7a6ff73a79ad9728f985e71c9ba8cd3e5e53358e70d5f066d35c1a340";
       inherit (src) outputHashAlgo;
     };
   };

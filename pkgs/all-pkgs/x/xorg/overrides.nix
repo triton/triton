@@ -1,7 +1,7 @@
 { args, xorg }:
 
 let
-  inherit (args) stdenv makeWrapper fetchurl;
+  inherit (args) stdenv makeWrapper fetchurl fetchzip;
   inherit (stdenv) lib targetSystem;
   inherit (lib) elem overrideDerivation platforms;
 in
@@ -202,7 +202,7 @@ in
     src = fetchzip {
       version = 2;
       url = "https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/15c5ff12459a034b552c787047d1af6d61047cd6.tar.gz";
-      sha256 = "030037b8b8b8f2c59e89e361d95db5812be320b9b14691d36e0d9768286def59";
+      sha256 = "91c47532fd37705ba44e8b9eda92f2b38999b7eeff8887806caca181cbc76d91";
     };
     nativeBuildInputs = attrs.nativeBuildInputs ++ [
       args.autoreconfHook

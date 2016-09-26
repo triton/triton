@@ -2794,7 +2794,7 @@ xorg = recurseIntoAttrs (
       dbus
       expat
       fetchurl
-      fetchgit
+      fetchzip
       fetchpatch
       flex
       fontconfig

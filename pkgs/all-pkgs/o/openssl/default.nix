@@ -12,8 +12,8 @@
 let
   sources = {
     "1.0.2" = {
-      version = "1.0.2i";
-      sha256 = "9287487d11c9545b6efb287cdb70535d4e9b284dd10d51441d9b9963d000de6f";
+      version = "1.0.2j";
+      sha256 = "e7aff292be21c259c6af26469c7a9b3ba26e9abaaffd325e3dccc9785256c431";
       patches = [
         (fetchTritonPatch {
            rev = "f2bfa2d2db51744e6fcb5677543b3bce8504bf82";

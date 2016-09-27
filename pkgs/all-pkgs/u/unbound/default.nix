@@ -8,13 +8,20 @@
 , protobuf-c
 }:
 
+let
+  tarballUrls = version: [
+    "https://unbound.net/downloads/unbound-${version}.tar.gz"
+  ];
+
+  version = "1.5.10";
+in
 stdenv.mkDerivation rec {
   name = "unbound-${version}";
-  version = "1.5.9";
 
   src = fetchurl {
-    url = "https://unbound.net/downloads/${name}.tar.gz";
-    sha256 = "01328cfac99ab5b8c47115151896a244979e442e284eb962c0ea84b7782b6990";
+    urls = tarballUrls version;
+    hashOutput = false;
+    sha256 = "a39b8b4fcca2a2b35a2daa53fe35150cc3f09038dc9acede09c912fc248a9486";
   };
 
   buildInputs = [
@@ -40,6 +47,17 @@ stdenv.mkDerivation rec {
   preInstall = ''
     installFlagsArray+=("configfile=$out/etc/unbound/unbound.conf")
   '';
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "1.5.10";
+      pgpsigUrls = map (n: "${n}.asc") urls;
+      pgpKeyFingerprint = "EDFA A3F2 CA4E 6EB0 5681  AF8E 9F6F 1C2D 7E04 5F8D";
+      inherit (src) outputHashAlgo;
+      outputHash = "a39b8b4fcca2a2b35a2daa53fe35150cc3f09038dc9acede09c912fc248a9486";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Validating, recursive, and caching DNS resolver";

@@ -36,7 +36,6 @@
   ./hardware/network/rtl8192c.nix
   ./hardware/opengl.nix
   ./hardware/pcmcia.nix
-  ./hardware/video/bumblebee.nix
   ./hardware/video/webcam/facetimehd.nix
   ./installer/tools/auto-upgrade.nix
   ./installer/tools/tools.nix
@@ -423,6 +422,7 @@
   ./services-new/a/accountsservice
   ./services-new/a/alsa
   ./services-new/a/at-spi2-core
+  ./services-new/b/bumblebee
   ./services-new/d/dconf
   ./services-new/e/evolution-data-server
   ./services-new/g/geoclue

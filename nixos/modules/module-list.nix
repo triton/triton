@@ -371,7 +371,6 @@
   ./services/system/kerberos.nix
   ./services/system/nscd.nix
   ./services/system/uptimed.nix
-  ./services/torrent/deluge.nix
   ./services/torrent/peerflix.nix
   ./services/torrent/transmission.nix
   ./services/ttys/agetty.nix
@@ -423,6 +422,7 @@
   ./services-new/a/at-spi2-core
   ./services-new/b/bumblebee
   ./services-new/d/dconf
+  ./services-new/d/deluge
   ./services-new/e/evolution-data-server
   ./services-new/g/geoclue
   ./services-new/g/gnome-documents

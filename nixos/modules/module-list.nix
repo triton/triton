@@ -91,7 +91,6 @@
   ./services/backup/rsnapshot.nix
   ./services/backup/sitecopy-backup.nix
   ./services/backup/tarsnap.nix
-  ./services/cluster/fleet.nix
   ./services/cluster/kubernetes.nix
   ./services/cluster/panamax.nix
   ./services/computing/torque/server.nix
@@ -424,6 +423,7 @@
   ./services-new/d/dconf
   ./services-new/d/deluge
   ./services-new/e/evolution-data-server
+  ./services-new/f/fleet
   ./services-new/g/geoclue
   ./services-new/g/gnome-documents
   ./services-new/g/gnome-keyring

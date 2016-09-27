@@ -91,7 +91,6 @@
   ./services/backup/rsnapshot.nix
   ./services/backup/sitecopy-backup.nix
   ./services/backup/tarsnap.nix
-  ./services/cluster/kubernetes.nix
   ./services/cluster/panamax.nix
   ./services/computing/torque/server.nix
   ./services/computing/torque/mom.nix
@@ -430,6 +429,7 @@
   ./services-new/g/gnome-online-miners
   ./services-new/g/gnome-user-share
   ./services-new/g/gvfs
+  ./services-new/k/kubernetes
   ./services-new/m/mpd
   ./services-new/n/nautilus
   ./services-new/n/nginx

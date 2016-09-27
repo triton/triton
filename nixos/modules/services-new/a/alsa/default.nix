@@ -3,12 +3,6 @@
 
 with lib;
 
-let
-
-  inherit (pkgs) alsa-utils;
-
-in
-
 {
 
   ###### interface
@@ -64,7 +58,7 @@ in
 
   config = mkIf config.sound.enable {
 
-    environment.systemPackages = [ alsa-utils ];
+    environment.systemPackages = [ pkgs.alsa-utils ];
 
     environment.etc = mkIf (config.sound.extraConfig != "")
       [
@@ -74,7 +68,7 @@ in
       ];
 
     # ALSA provides a udev rule for restoring volume settings.
-    services.udev.packages = [ alsa-utils ];
+    services.udev.packages = [ pkgs.alsa-utils ];
 
     boot.kernelModules = optional config.sound.enableOSSEmulation "snd_pcm_oss";
 
@@ -87,7 +81,7 @@ in
           Type = "oneshot";
           RemainAfterExit = true;
           ExecStart = "${pkgs.coreutils}/bin/mkdir -p /var/lib/alsa";
-          ExecStop = "${alsa-utils}/sbin/alsactl store --ignore";
+          ExecStop = "${pkgs.alsa-utils}/sbin/alsactl store --ignore";
         };
       };
 
@@ -97,22 +91,22 @@ in
         # "Mute" media key
         { keys = [ 113 ];
           events = [ "key" ];
-          command = "${alsa-utils}/bin/amixer -q set Master toggle"; }
+          command = "${pkgs.alsa-utils}/bin/amixer -q set Master toggle"; }
 
         # "Lower Volume" media key
         { keys = [ 114 ];
           events = [ "key" "rep" ];
-          command = "${alsa-utils}/bin/amixer -q set Master 1- unmute"; }
+          command = "${pkgs.alsa-utils}/bin/amixer -q set Master 1- unmute"; }
 
         # "Raise Volume" media key
         { keys = [ 115 ];
           events = [ "key" "rep" ];
-          command = "${alsa-utils}/bin/amixer -q set Master 1+ unmute"; }
+          command = "${pkgs.alsa-utils}/bin/amixer -q set Master 1+ unmute"; }
 
         # "Mic Mute" media key
         { keys = [ 190 ];
           events = [ "key" ];
-          command = "${alsa-utils}/bin/amixer -q set Capture toggle"; }
+          command = "${pkgs.alsa-utils}/bin/amixer -q set Capture toggle"; }
       ];
     };
 

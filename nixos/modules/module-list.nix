@@ -82,7 +82,6 @@
   ./security/sudo.nix
   ./services/amqp/activemq/default.nix
   ./services/amqp/rabbitmq.nix
-  ./services/audio/alsa.nix
   ./services/audio/icecast.nix
   ./services/audio/liquidsoap.nix
   ./services/audio/mpd.nix
@@ -424,6 +423,7 @@
   ./services/x11/xserver.nix
 
   ./services-new/a/accountsservice
+  ./services-new/a/alsa
   ./services-new/a/at-spi2-core
   ./services-new/d/dconf
   ./services-new/e/evolution-data-server

@@ -1,13 +1,4 @@
-{ stdenv, fetchurl, pam }:
-
-let
-
-  dots_in_usernames = fetchurl {
-    url = http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/sys-apps/shadow/files/shadow-4.1.3-dots-in-usernames.patch;
-    sha256 = "1fj3rg6x3jppm5jvi9y7fhd2djbi4nc5pgwisw00xlh4qapgz692";
-  };
-
-in
+{ stdenv, fetchTritonPatch, fetchurl, pam }:
 
 stdenv.mkDerivation rec {
   name = "shadow-4.2.1";
@@ -23,7 +14,11 @@ stdenv.mkDerivation rec {
 
   patches = [
     ./keep-path.patch
-    dots_in_usernames
+    (fetchTritonPatch {
+      rev = "b3c3a622bd5f15c2e2d8087534e8ebe1790cb264";
+      file = "s/shadow/shadow-4.1.3-dots-in-usernames.patch";
+      sha256 = "2299ffaec204d20e00d791bf5b982571c9261a74c7a7b865a9f7cad1cdcb43ba";
+    })
   ];
 
   # Assume System V `setpgrp (void)', which is the default on GNU variants

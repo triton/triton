@@ -367,7 +367,6 @@
   ./services/security/tor.nix
   ./services/security/torsocks.nix
   ./services/system/cloud-init.nix
-  ./services/system/dbus.nix
   ./services/system/kerberos.nix
   ./services/system/nscd.nix
   ./services/system/uptimed.nix
@@ -421,6 +420,7 @@
   ./services-new/a/alsa
   ./services-new/a/at-spi2-core
   ./services-new/b/bumblebee
+  ./services-new/d/dbus
   ./services-new/d/dconf
   ./services-new/d/deluge
   ./services-new/e/evolution-data-server

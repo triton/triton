@@ -84,7 +84,6 @@
   ./services/amqp/rabbitmq.nix
   ./services/audio/icecast.nix
   ./services/audio/liquidsoap.nix
-  ./services/audio/mpd.nix
   ./services/audio/mopidy.nix
   ./services/backup/almir.nix
   ./services/backup/bacula.nix
@@ -434,6 +433,7 @@
   ./services-new/g/gnome-online-miners
   ./services-new/g/gnome-user-share
   ./services-new/g/gvfs
+  ./services-new/m/mpd
   ./services-new/s/seahorse
   ./services-new/s/sushi
   ./services-new/t/tracker

@@ -5,17 +5,25 @@
 
 let
   patchSha256s = import ./patches.nix;
+
+  tarballUrls = version: [
+    "mirror://gnu/mpfr/mpfr-${version}.tar.xz"
+  ];
+
+  version = "3.1.5";
+
+  inherit (stdenv.lib)
+    flip
+    length
+    mapAttrsToList;
 in
-
-with stdenv.lib;
-
 stdenv.mkDerivation rec {
   name = "mpfr-${version}-p${toString (length patches)}";
-  version = "3.1.4";
 
   src = fetchurl {
-    url = "mirror://gnu/mpfr/mpfr-${version}.tar.bz2";
-    sha256 = "0xbpgwwwqqnnx9jilxygs690qknhpv21hdhzb3nhf95drn03l46k";
+    urls = tarballUrls version;
+    hashOutput = false;
+    sha256 = "015fde82b3979fbe5f83501986d328331ba8ddf008c1ff3da3c238f49ca062bc";
   };
 
   patches = flip mapAttrsToList patchSha256s (n: sha256: fetchurl {
@@ -34,7 +42,18 @@ stdenv.mkDerivation rec {
 
   doCheck = true;
 
-  meta = {
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "3.1.5";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "07F3 DBBE CC1A 3960 5078  094D 980C 1976 98C3 739D";
+      inherit (src) outputHashAlgo;
+      outputHash = "015fde82b3979fbe5f83501986d328331ba8ddf008c1ff3da3c238f49ca062bc";
+    };
+  };
+
+  meta = with stdenv.lib; {
     homepage = http://www.mpfr.org/;
     description = "Library for multiple-precision floating-point arithmetic";
     license = licenses.lgpl2Plus;

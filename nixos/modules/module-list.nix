@@ -37,7 +37,6 @@
   ./hardware/opengl.nix
   ./hardware/pcmcia.nix
   ./hardware/video/bumblebee.nix
-  ./hardware/video/nvidia.nix
   ./hardware/video/webcam/facetimehd.nix
   ./installer/tools/auto-upgrade.nix
   ./installer/tools/tools.nix
@@ -434,6 +433,8 @@
   ./services-new/g/gnome-user-share
   ./services-new/g/gvfs
   ./services-new/m/mpd
+  ./services-new/n/nautilus
+  ./services-new/n/nvidia-drivers
   ./services-new/s/seahorse
   ./services-new/s/sushi
   ./services-new/t/tracker

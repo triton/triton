@@ -133,7 +133,6 @@
   ./services/hardware/tlp.nix
   ./services/hardware/thinkfan.nix
   ./services/hardware/udev.nix
-  ./services/hardware/udisks.nix
   ./services/hardware/upower.nix
   ./services/hardware/thermald.nix
   ./services/logging/fluentd.nix
@@ -438,6 +437,7 @@
   ./services-new/s/seahorse
   ./services-new/s/sushi
   ./services-new/t/tracker
+  ./services-new/u/udisks
 
   ./system/activation/activation-script.nix
   ./system/activation/top-level.nix

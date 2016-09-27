@@ -423,20 +423,20 @@
   ./services/x11/xfs.nix
   ./services/x11/xserver.nix
 
-  ./services-new/accountsservice
-  ./services-new/at-spi2-core
-  ./services-new/dconf
-  ./services-new/evolution-data-server
-  ./services-new/geoclue
-  ./services-new/gnome-documents
-  ./services-new/gnome-keyring
-  ./services-new/gnome-online-accounts
-  ./services-new/gnome-online-miners
-  ./services-new/gnome-user-share
-  ./services-new/gvfs
-  ./services-new/seahorse
-  ./services-new/sushi
-  ./services-new/tracker
+  ./services-new/a/accountsservice
+  ./services-new/a/at-spi2-core
+  ./services-new/d/dconf
+  ./services-new/e/evolution-data-server
+  ./services-new/g/geoclue
+  ./services-new/g/gnome-documents
+  ./services-new/g/gnome-keyring
+  ./services-new/g/gnome-online-accounts
+  ./services-new/g/gnome-online-miners
+  ./services-new/g/gnome-user-share
+  ./services-new/g/gvfs
+  ./services-new/s/seahorse
+  ./services-new/s/sushi
+  ./services-new/t/tracker
 
   ./system/activation/activation-script.nix
   ./system/activation/top-level.nix

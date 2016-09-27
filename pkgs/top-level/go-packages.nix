@@ -143,11 +143,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "6d3beaea10370160dea67f5c9327ed791afd5389";
-    date = "2016-09-11";
+    rev = "f09c4662a0bd6bd8943ac7b4931e185df9471da4";
+    date = "2016-09-24";
     owner  = "golang";
     repo   = "net";
-    sha256 = "102b58chm2nxg1ss23bkbs1vy43jzigj08xybnbv761hqjhh9nxl";
+    sha256 = "0cqip7b0s2r9yy27l1wc9zpiz6wagrhyay466ggdn3xlnbjkvqyg";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -182,11 +182,11 @@ let
 
   protobuf = buildFromGitHub {
     version = 2;
-    rev = "1f49d83d9aa00e6ce4fc8258c71cc7786aec968a";
-    date = "2016-08-24";
+    rev = "87c000235d3d852c1628dc9490cd21ab36a7d69f";
+    date = "2016-09-26";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "0q04is47nj8bryh548k5j52c62w4h2x2lw8rr34257xqp7i51vmc";
+    sha256 = "17h4j6ykbjn6s7vqfpcv6n4aap9sry8vbfdsg6xf8bkznjh64xyg";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [
       "code.google.com/p/goprotobuf"
@@ -1211,11 +1211,11 @@ let
 
   gcloud-golang = buildFromGitHub {
     version = 2;
-    date = "2016-09-19";
-    rev = "0a9baebe991e5ff35dd9f35578eb002cf07d229c";
+    date = "2016-09-27";
+    rev = "808221182713bac8542cd1bcae4c244c1454dfb5";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "05g3nf94qmsaf7gl29av4zyw6bnb16ckqgzzhrb1b06rdn599rs7";
+    sha256 = "0h5wvfcik03y6kqkylz64j6d6wvc2h3bs9g15hpwnmvrspnzf9im";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -1291,11 +1291,11 @@ let
 
   ginkgo = buildFromGitHub {
     version = 2;
-    rev = "46c87bb63f2d8d62b3076873b7a84da124da72ce";
+    rev = "45a5f6ffb2a14e4f29698c16ae4c0a34018a8951";
     owner = "onsi";
     repo = "ginkgo";
-    sha256 = "04pydk7pkwni4ns98qkhancjsshavy2p6n5xqidhrz7qnyvvpf6m";
-    date = "2016-09-14";
+    sha256 = "0dgk6apfgzy5lfgqk6wiyavfk2narpl9czv9liwncbafpkfcgkdr";
+    date = "2016-09-26";
   };
 
   gjson = buildFromGitHub {
@@ -1339,11 +1339,11 @@ let
 
   go4 = buildFromGitHub {
     version = 2;
-    date = "2016-09-19";
-    rev = "27882e489dcd7ade28c033b82c6d498661c4dc42";
+    date = "2016-09-23";
+    rev = "399a9d7bfe85437346a5ec4ef0450fc2f1084e61";
     owner = "camlistore";
     repo = "go4";
-    sha256 = "1rnr69lcnkzxzlvfyl1afcrd7mnyd3zfaw1720dxhmsh14f1vhs8";
+    sha256 = "1bm6a0apz38kqw5yrvw7y3qqw55hd7dq4nk52jcm5isdzvqy0vlr";
     goPackagePath = "go4.org";
     goPackageAliases = [ "github.com/camlistore/go4" ];
     buildInputs = [
@@ -1592,11 +1592,11 @@ let
 
   google-api-go-client = buildFromGitHub {
     version = 2;
-    rev = "a69f0f19d246419bb931b0ac8f4f8d3f3e6d4feb";
-    date = "2016-09-08";
+    rev = "adba394bac5800ff2e620d040e9401528f5b7615";
+    date = "2016-09-27";
     owner = "google";
     repo = "google-api-go-client";
-    sha256 = "09kf4zw0fxrls8jr86s78lhrcvv4wqn7abficii5l7y6rchk7g20";
+    sha256 = "1xki4qklvf039px7639swkjdf2rw14a04pj89d1vdkw92cnpfw1c";
     goPackagePath = "google.golang.org/api";
     goPackageAliases = [
       "github.com/google/google-api-client"
@@ -2025,11 +2025,12 @@ let
   };
 
   go-lz4 = buildFromGitHub {
-    version = 1;
-    rev = "v1.0.0";
+    version = 2;
+    rev = "7224d8d8f27ef618c0a95f1ae69dbb0488abc33a";
     owner  = "bkaradzic";
     repo   = "go-lz4";
-    sha256 = "1bdh2wqp2hh81x00wmsb4px9fzj13jcrdl6w52pabqkr2wyyqwkf";
+    sha256 = "1hbbagvmq7kxrlwqkn0i4mz66i3n37ch7y6bm9yncnjgd97kldms";
+    date = "2016-09-24";
   };
 
   go-md2man = buildFromGitHub {
@@ -2474,16 +2475,16 @@ let
 
   grpc = buildFromGitHub {
     version = 2;
-    rev = "71d2ea4f75286a63b606aca2422cd17ff37fd5b8";
+    rev = "590256047f42067a8c96e0e7fd497d3896dc041a";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "0x5scmm33hac8kd16mgmys6w0wk6cf7wmdk2gyhay33lq0srf570";
+    sha256 = "0gsg5qqisaz015fxczzrlj2s4k0pbrs8y23g06ssrs9syz5yw417";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [ "github.com/grpc/grpc-go" ];
     propagatedBuildInputs = [ http2 net protobuf oauth2 glog ];
     excludedPackages = "\\(test\\|benchmark\\)";
     meta.useUnstable = true;
-    date = "2016-09-14";
+    date = "2016-09-26";
   };
 
   grpc-gateway = buildFromGitHub {

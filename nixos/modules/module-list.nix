@@ -344,7 +344,6 @@
   ./services/networking/xinetd.nix
   ./services/networking/zerotierone.nix
   ./services/networking/znc.nix
-  ./services/printing/cupsd.nix
   ./services/scheduling/atd.nix
   ./services/scheduling/chronos.nix
   ./services/scheduling/cron.nix
@@ -420,6 +419,7 @@
   ./services-new/a/alsa
   ./services-new/a/at-spi2-core
   ./services-new/b/bumblebee
+  ./services-new/c/cups
   ./services-new/d/dbus
   ./services-new/d/dconf
   ./services-new/d/deluge

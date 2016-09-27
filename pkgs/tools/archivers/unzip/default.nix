@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , bzip2
@@ -21,10 +22,10 @@ stdenv.mkDerivation {
     ./CVE-2014-9636.diff
     ./CVE-2015-7696.diff
     ./CVE-2015-7697.diff
-    (fetchurl {
-      url = "http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/app-arch/unzip/files/unzip-6.0-natspec.patch?revision=1.1";
-      name = "unzip-6.0-natspec.patch";
-      sha256 = "67ab260ae6adf8e7c5eda2d1d7846929b43562943ec4aff629bd7018954058b1";
+    (fetchTritonPatch {
+      rev = "4b3bc1c3e645b919a385c408f004bf8c1a161c74";
+      file = "u/unzip/unzip-6.0-natspec.patch";
+      sha256 = "cf7b6146b034e5687e77c328a9e55efc68ddb75636fdcce84853995ab60082dd";
     })
   ];
 

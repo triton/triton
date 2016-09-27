@@ -27,8 +27,11 @@ This is probably missing a lot
   aware.  stdenv.system is now stdenv.hostSystem & stdenv,targetSystem.
 
   + Usage
+
     - lib.elem stdenv.targetSystem lib.platforms.<required platform>
+
   + Deprecated
+
     - isLinux
     - isFreeBSD
     - is64bit

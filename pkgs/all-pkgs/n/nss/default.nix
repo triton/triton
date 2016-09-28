@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "3.26";
+  version = "3.27";
 
   baseUrl = "https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases"
     + "/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     sha256Url = "${baseUrl}/SHA256SUMS";
-    sha256 = "91783a570ab953693eb977ce47c501f04c104cec287fa011c91bcc8970d1c564";
+    sha256 = "021aa936b06f5815474dd5c137f2325b3fe06caa38d9798ca53ec30b537301fa";
   };
 
   buildInputs = [
@@ -36,19 +36,19 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "c19fd3176ad33fc5e0b6c283c31bb07bf189c44a";
-      file = "nss/pem-support.patch";
-      sha256 = "12d887d26d437e3cb6d257f6dbf002bb1ea5941554ab8cd650845f9e8688f4ea";
+      rev = "95043ea498ca0e8d0c5b7d2101263c5131814428";
+      file = "n/nss/0001-Add-pem-support.patch";
+      sha256 = "a2c64c308eef8885e731cdb5cca5e00ab00fcde5e12c0b234e2e125fa9ed162c";
     })
     (fetchTritonPatch {
-      rev = "c19fd3176ad33fc5e0b6c283c31bb07bf189c44a";
-      file = "nss/fix-sharedlib-loading.patch";
-      sha256 = "8e18d51b76b1f0e9d074c73dce323976956ffc0fab38c8ae36a77bf95a220380";
+      rev = "95043ea498ca0e8d0c5b7d2101263c5131814428";
+      file = "n/nss/0002-Fix-sharedlib-loading.patch";
+      sha256 = "a7e9547fc47736997e129f997af77582335d1d7b59f8fae11ab4caa153740257";
     })
     (fetchTritonPatch {
-      rev = "c19fd3176ad33fc5e0b6c283c31bb07bf189c44a";
-      file = "nss/add-pkgconfig.patch";
-      sha256 = "a42cfde4a40b11028527bc8c960327685b231c14dd6e2e1539804ba8b3d4dd5a";
+      rev = "95043ea498ca0e8d0c5b7d2101263c5131814428";
+      file = "n/nss/0003-Add-pkgconfig-files.patch";
+      sha256 = "0f8aea9c9a50561e3e704259883984a55d9eaade34a1fd589abb143ed9a20e72";
     })
   ];
 

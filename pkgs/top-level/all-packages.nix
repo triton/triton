@@ -2683,6 +2683,8 @@ unixODBC = callPackage ../all-pkgs/u/unixODBC { };
 
 unrar = callPackage ../all-pkgs/u/unrar { };
 
+unzip = callPackage ../all-pkgs/u/unzip { };
+
 upower = callPackage ../all-pkgs/u/upower { };
 
 usbmuxd = callPackage ../all-pkgs/u/usbmuxd { };
@@ -2953,8 +2955,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   time = callPackage ../tools/misc/time { };
 #
   tre = callPackage ../development/libraries/tre { };
-#
-  unzip = callPackage ../tools/archivers/unzip { };
 
   systemd-cryptsetup-generator = callPackage ../os-specific/linux/systemd/cryptsetup-generator.nix { };
 #

@@ -2660,6 +2660,8 @@ tracker_1-10 = callPackage ../all-pkgs/t/tracker {
 };
 tracker = callPackageAlias "tracker_1-10" { };
 
+trousers = callPackage ../all-pkgs/t/trousers { };
+
 tslib = callPackage ../all-pkgs/t/tslib { };
 
 tzdata = callPackage ../all-pkgs/t/tzdata { };
@@ -2939,8 +2941,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   strongswan = callPackage ../tools/networking/strongswan { };
 #
   tcpdump = callPackage ../tools/networking/tcpdump { };
-#
-  trousers = callPackage ../tools/security/trousers { };
 #
   vpnc = callPackage ../tools/networking/vpnc { };
 

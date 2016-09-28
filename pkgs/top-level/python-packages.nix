@@ -374,6 +374,8 @@ slimit = callPackage ../all-pkgs/s/slimit { };
 
 snowballstemmer = callPackage ../all-pkgs/s/snowballstemmer { };
 
+speedtest-cli = callPackage ../all-pkgs/s/speedtest-cli { };
+
 sphinx = callPackage ../all-pkgs/s/sphinx { };
 
 sqlalchemy = callPackage ../all-pkgs/s/sqlalchemy { };

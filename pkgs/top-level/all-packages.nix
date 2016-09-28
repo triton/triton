@@ -3099,8 +3099,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 #
   ltrace = callPackage ../development/tools/misc/ltrace { };
 #
-  speedtest-cli = callPackage ../tools/networking/speedtest-cli { };
-#
   gdb = callPackage ../development/tools/misc/gdb {
     guile = null;
   };

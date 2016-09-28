@@ -13,17 +13,17 @@
 
 let
   inherit (stdenv.lib)
-    enFlag;
-in
+    boolEn;
 
+  version = "0.13.3";
+in
 stdenv.mkDerivation rec {
   name = "libass-${version}";
-  version = "0.13.2";
 
   src = fetchurl {
-    url = "https://github.com/libass/libass/releases/download/${version}/" +
-          "${name}.tar.xz";
-    sha256 = "1kpsw4zw95v4cjvild9wpk73dzavn1khsm3bm32kcz6amnkd166n";
+    url = "https://github.com/libass/libass/releases/download/${version}/"
+      + "${name}.tar.xz";
+    sha256 = "a641b653d7c9f2f3b9d6a5e5a906a004ac3e110487ad485d9dd029e944bb3f6d";
   };
 
   nativeBuildInputs = [
@@ -38,16 +38,16 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    (enFlag "test" doCheck null)
+    "--${boolEn doCheck}-test"
     "--disable-profile"
-    (enFlag "fontconfig" (fontconfig != null) null)
+    "--${boolEn (fontconfig != null)}-fontconfig"
     "--disable-directwrite" # Windows
     "--disable-coretext" # OSX
     "--enable-require-system-font-provider"
-    (enFlag "harfbuzz" (harfbuzz != null) null)
-    (enFlag "asm" (yasm != null) null)
-    (enFlag "rasterizer" rasterizerSupport null)
-    (enFlag "large-tiles" largeTilesSupport null)
+    "--${boolEn (harfbuzz != null)}-harfbuzz"
+    "--${boolEn (yasm != null)}-asm"
+    "--${boolEn rasterizerSupport}-rasterizer"
+    "--${boolEn largeTilesSupport}-large-tiles"
   ];
 
   doCheck = false;

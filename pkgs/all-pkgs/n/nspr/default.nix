@@ -7,14 +7,20 @@ let
     elem
     optionals
     platforms;
+
+  version = "4.13";
+
+  baseUrls = [
+    "https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v${version}/src"
+  ];
 in
 stdenv.mkDerivation rec {
   name = "nspr-${version}";
-  version = "4.12";
 
   src = fetchurl {
-    url = "http://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v${version}/src/nspr-${version}.tar.gz";
-    sha256 = "1pk98bmc5xzbl62q5wf2d6mryf0v95z6rsmxz27nclwiaqg0mcg0";
+    urls = map (n: "${n}/nspr-${version}.tar.gz") baseUrls;
+    sha256Urls = map (n: "${n}/SHA256SUMS") baseUrls;
+    sha256 = "19c33334bb3fa6d24800ffa65d7d806c54ad5f8c3758a5c11352ad43212ab181";
   };
 
   prePatch = ''

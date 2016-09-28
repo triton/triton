@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.7.5";
+  version = "1.7.6";
 in
 stdenv.mkDerivation rec {
   name = "jsoncpp-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "open-source-parsers";
     repo = "jsoncpp";
     rev = version;
-    sha256 = "031cdc027931af67abdf3cc808e66b04379d30877fc476edd3ed3bc9192de7fd";
+    sha256 = "d601bf79f48f0198a49cb12f428e0a6c18956a26198bd7335d589984a50d1e3b";
   };
 
   nativeBuildInputs = [
@@ -32,8 +32,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/open-source-parsers/jsoncpp;
     description = "A simple API to manipulate JSON data in C++";
+    homepage = https://github.com/open-source-parsers/jsoncpp;
     license = licenses.mit;
     maintainers = with maintainers; [
       wkennington

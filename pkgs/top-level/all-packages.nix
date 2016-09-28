@@ -823,6 +823,8 @@ dnscrypt-wrapper = callPackage ../all-pkgs/d/dnscrypt-wrapper { };
 
 dnsmasq = callPackage ../all-pkgs/d/dnsmasq { };
 
+dnstop = callPackage ../all-pkgs/d/dnstop { };
+
 docbook-xsl = callPackage ../all-pkgs/d/docbook-xsl { };
 
 docbook-xsl-ns = callPackageAlias "docbook-xsl" {
@@ -2885,8 +2887,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   desktop_file_utils = callPackage ../tools/misc/desktop-file-utils { };
 #
   dnssec-root = callPackage ../data/misc/dnssec-root { };
-#
-  dnstop = callPackage ../tools/networking/dnstop { };
 #
   diffoscope = callPackage ../tools/misc/diffoscope { };
 #

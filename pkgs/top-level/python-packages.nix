@@ -549,12 +549,12 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    certifi = buildPythonPackage rec {
      name = "certifi-${version}";
-     version = "2016.8.31";
+     version = "2016.9.26";
 
      src = fetchPyPi {
        package = "certifi";
        inherit version;
-       sha256 = "f7708a42d86f29ccc7c8c4ff9d34a8d854d8d78eb2973d1f28406bb43d6b8919";
+       sha256 = "8275aef1bbeaf05c53715bfc5d8569bd1e04ca1e8e69608cc52bcaac2604eb19";
      };
 
      meta = {

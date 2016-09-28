@@ -20,7 +20,7 @@
 , gst-plugins-base
 , gst-plugins-good
 , gstreamer
-, gtk3
+, gtk
 , gvfs
 , libgxps
 , libsecret
@@ -55,7 +55,7 @@ stdenv.mkDerivation rec {
   name = "evince-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/evince/${versionMajor}/${name}.tar.xz";
+    url = "mirror://gnome/sources/evince/${channel}/${name}.tar.xz";
     hashOutput = false;
     inherit (source) sha256;
   };
@@ -83,7 +83,7 @@ stdenv.mkDerivation rec {
     gst-plugins-base
     gst-plugins-good
     gstreamer
-    gtk3
+    gtk
     gvfs
     libgxps
     libsecret
@@ -129,15 +129,15 @@ stdenv.mkDerivation rec {
     "--disable-debug"
     "--${boolEn (
       nautilus != null
-      && gtk3 != null
+      && gtk != null
       && glib != null)}-nautilus"
     "--enable-viewer"
     "--enable-thumbnailer"
     "--${boolEn (
-      gtk3 != null
+      gtk != null
       && glib != null)}-previewer"
     "--${boolEn (
-      gtk3 != null
+      gtk != null
       && glib != null)}-browser-plugin"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--${boolEn (
@@ -160,7 +160,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--with-platform=gnome"
-    "--${boolWt (gtk3 != null)}-gtk-unix-print"
+    "--${boolWt (gtk != null)}-gtk-unix-print"
     "--${boolWt (libsecret != null)}-keyring"
   ];
 

@@ -72,12 +72,15 @@ stdenv.mkDerivation rec {
     libbluray
     libcap
     libcdio
-    libgudev
     libgcrypt
-    libgdata
+    #libgdata # goa
     libgnome-keyring
     libgphoto2
+    libgudev
+    #libimobiledevice
+    #libplist
     libmtp
+    #libnfs
     libsecret
     libsoup
     libxml2

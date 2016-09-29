@@ -8,12 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "httping-2.4";
+  name = "httping-2.5";
 
   src = fetchurl {
     url = "https://www.vanheusden.com/httping/${name}.tgz";
-    multihash = "QmbiJH478zL3yz3DzGr6HVjRS4N5tA6aeXnrnf5PWpwT1M";
-    sha256 = "dab59f02b08bfbbc978c005bb16d2db6fe21e1fc841fde96af3d497ddfc82084";
+    multihash = "QmSd6Cengd6iqWepaFn1yb5ZggvJUutvjdG6xgLwVgiu6v";
+    sha256 = "3e895a0a6d7bd79de25a255a1376d4da88eb09c34efdd0476ab5a907e75bfaf8";
   };
 
   nativeBuildInputs = [

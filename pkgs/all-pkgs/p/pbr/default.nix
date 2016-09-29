@@ -16,6 +16,8 @@ buildPythonPackage {
   };
 
   meta = with stdenv.lib; {
+    description = "Injects default behaviors into setuptools";
+    homepage = https://launchpad.net/pbr;
     maintainers = with maintainers; [
       wkennington
     ];

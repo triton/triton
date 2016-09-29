@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   name = "${config}-${source.version}";
 
   src =
-    if source.dev then
+    if channel == "git" then
       fetchgit {
         version = source.fetchzipversion;
         url = "https://github.com/mumble-voip/mumble";

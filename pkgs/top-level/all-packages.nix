@@ -1091,7 +1091,13 @@ gimp = callPackage ../all-pkgs/g/gimp { };
 
 git = callPackage ../all-pkgs/g/git { };
 
-gjs = callPackage ../all-pkgs/g/gjs { };
+gjs_1-46 = callPackage ../all-pkgs/g/gjs {
+  channel = "1.46";
+  atk = pkgs.atk_2-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gtk = pkgs.gtk_3-22;
+};
+gjs = callPackageAlias "gjs_1-46" { };
 
 gksu = callPackage ../all-pkgs/g/gksu { };
 

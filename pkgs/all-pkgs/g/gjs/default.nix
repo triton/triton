@@ -9,28 +9,30 @@
 , gdk-pixbuf
 , glib
 , gobject-introspection
-, gtk3
+, gtk
 , libffi
 , libxml2
 , pango
 , readline
 , spidermonkey_24
 , xorg
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    wtFlag;
+    boolWt;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gjs-${version}";
-  versionMajor = "1.44";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gjs-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gjs/${versionMajor}/${name}.tar.xz";
-    sha256 = "106fgpr4y99sj68l72pnfa2za11ps4bn6p9z28fr79j7mpv61jc8";
+    url = "mirror://gnome/sources/gjs/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -45,7 +47,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gobject-introspection
-    gtk3
+    gtk
     libffi
     libxml2
     pango
@@ -62,16 +64,30 @@ stdenv.mkDerivation rec {
     "--disable-systemtap"
     "--disable-dtrace"
     "--enable-Bsymbolic"
-    (wtFlag "cairo" (cairo != null) null)
-    (wtFlag "gtk" (gtk3 != null) null)
+    "--${boolWt (cairo != null)}-cairo"
+    "--${boolWt (gtk != null)}-gtk"
+    "--without-xvfb-tests"
+    "--without-dbus-tests"
   ];
 
   postInstall = ''
     sed -i $out/lib/libgjs.la \
       -e 's|-lreadline|-L${readline}/lib -lreadline|g'
-  '' + /* Remove empty directory tree (for installed tests)) */ ''
+  '' + /* Remove empty directory tree (for installed tests) */ ''
     rm -frv $out/libexec
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gjs/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Javascript bindings for GNOME";

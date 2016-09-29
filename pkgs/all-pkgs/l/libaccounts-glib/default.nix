@@ -15,7 +15,7 @@ let
   inherit (stdenv.lib)
     boolEn;
 
-  version = "1.22";
+  version = "1.23";
 in
 stdenv.mkDerivation rec {
   name = "libaccounts-glib-${version}";
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
     owner = "accounts-sso";
     repo = "libaccounts-glib";
     rev = "VERSION_${version}";
-    sha256 = "00502aaf6547efdedbd279408dcc85e83dccee8854f4314a04f7fe079a97d60c";
+    sha256 = "da801fd903413634e257157ec4a363749cd71a742a9f9721a44237ad6df1906d";
   };
 
   nativeBuildInputs = [

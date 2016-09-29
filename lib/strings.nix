@@ -282,5 +282,7 @@ rec {
     boolString boolean "ON" "OFF";
   bool01 = boolean:
     boolString boolean "1" "0";
+  boolNo = boolean:
+    boolString boolean "" "no-";
 
 }

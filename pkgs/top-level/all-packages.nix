@@ -2619,7 +2619,14 @@ subversion_1_8 = callPackageAlias "subversion" {
 
 sudo = callPackage ../all-pkgs/s/sudo { };
 
-sushi = callPackage ../all-pkgs/s/sushi { };
+sushi_3-22 = callPackage ../all-pkgs/s/sushi {
+  channel = "3.21";
+  atk = pkgs.atk_2-22;
+  gjs = pkgs.gjs_1-46;
+  gtk = pkgs.gtk_3-22;
+  gtksourceview = pkgs.gtksourceview_3-22;
+};
+sushi = callPackageAlias "sushi_3-22" { };
 
 svrcore = callPackage ../all-pkgs/s/svrcore { };
 

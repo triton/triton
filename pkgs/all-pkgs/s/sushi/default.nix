@@ -18,24 +18,27 @@
 , gobject-introspection
 , gst-plugins-base
 , gstreamer
-, gtk3
+, gtk
 , gtksourceview
 , json-glib
 , libmusicbrainz
 , pango
 , webkitgtk
 , xorg
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "sushi-${version}";
-  versionMajor = "3.20";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "sushi-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/sushi/${versionMajor}/${name}.tar.xz";
-    sha256 = "6e729c789e9e7f02505e25d4ac6cfed47e676366f0942fca740094f7fe9eae9e";
+    url = "mirror://gnome/sources/sushi/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -59,7 +62,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gst-plugins-base
     gstreamer
-    gtk3
+    gtk
     gtksourceview
     json-glib
     libmusicbrainz
@@ -84,6 +87,18 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/sushi/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A quick previewer for Nautilus";

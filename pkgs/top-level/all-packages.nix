@@ -2180,6 +2180,17 @@ obexftp = callPackage ../all-pkgs/o/obexftp { };
 
 oniguruma = callPackage ../all-pkgs/o/oniguruma { };
 
+openjpeg_1-5 = callPackage ../all-pkgs/o/openjpeg {
+  channel = "1.5";
+};
+openjpeg_2-0 = callPackage ../all-pkgs/o/openjpeg {
+  channel = "2.0";
+};
+openjpeg_2-1 = callPackage ../all-pkgs/o/openjpeg {
+  channel = "2.1";
+};
+openjpeg = callPackageAlias "openjpeg_2-1" { };
+
 openldap = callPackage ../all-pkgs/o/openldap { };
 
 openntpd = callPackage ../all-pkgs/o/openntpd { };
@@ -3303,11 +3314,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   openexr = callPackage ../development/libraries/openexr { };
 #
   openh264 = callPackage ../development/libraries/openh264 { };
-#
-  openjpeg_1 = callPackage ../development/libraries/openjpeg/1.x.nix { };
-  openjpeg_2_0 = callPackage ../development/libraries/openjpeg/2.0.nix { };
-  openjpeg_2_1 = callPackage ../development/libraries/openjpeg/2.1.nix { };
-  openjpeg = callPackageAlias "openjpeg_2_1" { };
 #
   p11_kit = callPackage ../development/libraries/p11-kit { };
 #

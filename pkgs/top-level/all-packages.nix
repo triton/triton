@@ -2041,16 +2041,35 @@ mtools = callPackage ../all-pkgs/m/mtools { };
 
 mtr = callPackage ../all-pkgs/m/mtr { };
 
-inherit (callPackages ../all-pkgs/m/mumble {
-  jackSupport = config.jack or false;
-  speechdSupport = config.mumble.speechdSupport or false;
-  pulseSupport = config.pulseaudio or false;
-  iceSupport = config.murmur.iceSupport or true;
-})
-  mumble
-  mumble_git
-  murmur
-  murmur_git;
+mumble_generics = overrides: callPackage ../all-pkgs/m/mumble ({
+  jack2_lib = null;
+  portaudio = null;
+  pulseaudio_lib = null;
+  speechd = null;
+} // overrides);
+mumble_1-2 = pkgs.mumble_generics {
+  channel = "1.2";
+  config = "mumble";
+  qt5 = null;
+};
+mumble_git = pkgs.mumble_generics {
+  channel = "git";
+  config = "mumble";
+  qt4 = null;
+};
+mumble = callPackageAlias "mumble_1-2" { };
+
+murmur_1-2 = pkgs.mumble_generics {
+  channel = "1.2";
+  config = "murmur";
+  qt5 = null;
+};
+murmur_git = pkgs.mumble_generics {
+  channel = "git";
+  config = "murmur";
+  qt4 = null;
+};
+murmur = callPackageAlias "murmur_1-2" { };
 
 musepack = callPackage ../all-pkgs/m/musepack { };
 

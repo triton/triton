@@ -7,20 +7,18 @@
 
 let
   inherit (stdenv.lib)
-    wtFlag;
+    boolWt;
 
-  release-version = "0.5.9";
-  patch-version = "0";
-  version = "${release-version}.${patch-version}";
+  version = "0.5.9.1";
 in
 stdenv.mkDerivation rec {
   name = "dash-${version}";
 
   src = fetchurl rec {
     url = "http://gondor.apana.org.au/~herbert/dash/files/"
-        + "dash-${release-version}.tar.gz";
-    sha256Url = "${url}.sha256sum";
-    sha256 = "92793b14c017d79297001556389442aeb9e3c1cc559fd178c979169b1a47629c";
+      + "${name}.tar.gz";
+    multihash = "QmW4FcN8vawARi5hB8jbCLHaQP6vfEj94EhTqHfKEZtVY2";
+    sha256 = "5ecd5bea72a93ed10eb15a1be9951dd51b52e5da1d4a7ae020efd9826b49e659";
   };
 
   buildInputs = [
@@ -28,12 +26,6 @@ stdenv.mkDerivation rec {
   ];
 
   patches = [
-    # http://debian.mirrors.pair.com/debian/pool/main/d/dash/
-    /*(fetchurl {
-      url = "mirror://debian/pool/main/d/dash/"
-          + "dash_${release-version}-${patch-version}.diff.gz";
-      sha256 = "fc7e390aec750c270ffc15a77ba861da3c931f323b2463130e1114ff47c6732b";
-    })*/
     (fetchTritonPatch {
       rev = "2e96cc8e06eaf6ad9643acd1fdddb23aba7759ea";
       file = "dash/dash-0.5.8.1-eval-warnx.patch";
@@ -41,22 +33,32 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postPatch =
-    /* Fix the invalid sort */ ''
-      sed -i  src/mkbuiltins \
-        -e 's/LC_COLLATE=C/LC_ALL=C/g'
-    '';
+  postPatch = /* Fix the invalid sort */ ''
+    sed -i  src/mkbuiltins \
+      -e 's/LC_COLLATE=C/LC_ALL=C/g'
+  '';
 
   configureFlags = [
     "--enable-fnmatch"
-    # Do not pass --enable-glob due to
-    # https://bugs.gentoo.org/show_bug.cgi?id=443552.
+    /* Do not pass --enable-glob due to
+       https://bugs.gentoo.org/show_bug.cgi?id=443552. */
     #"--enable-glob"
-  	# Autotools use $LINENO as a proxy for extended debug support
-  	# (i.e. they're running bash), so disable it.
+  	/* Autotools use $LINENO as a proxy for extended debug support
+  	   (i.e. they're running bash), so disable it. */
     "--disable-lineno"
-    (wtFlag "libedit" (libedit != null) null)
+    "--${boolWt (libedit != null)}-libedit"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A POSIX-compliant implementation of /bin/sh";

@@ -12,35 +12,34 @@
 , gnome-desktop
 , gnome-settings-daemon
 , gsettings-desktop-schemas
-, gtk3
+, gtk
 , json-glib
 , mesa_noglu
 , mutter
 , systemd_lib
 , upower
 , xorg
-}:
 
-let
-  inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
-in
+, channel
+}:
 
 # FIXME: fix Xsync support
 
+let
+  inherit (stdenv.lib)
+    boolEn
+    boolWt
+    optionals;
+
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gnome-session-${version}";
-  versionMajor = "3.20";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gnome-session-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-session/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-session/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "025f97e0b9f5431890598d6130040e1e7071771cc29e1d29d8e2e7c84d95f6da";
+    url = "mirror://gnome/sources/gnome-session/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -58,7 +57,7 @@ stdenv.mkDerivation rec {
     gnome-desktop
     gnome-settings-daemon
     gsettings-desktop-schemas
-    gtk3
+    gtk
     json-glib
     mesa_noglu
     mutter # gschemas
@@ -83,15 +82,15 @@ stdenv.mkDerivation rec {
     "--enable-deprecation-flags"
     "--enable-session-selector"
     # Support legacy gconf autostart
-    (enFlag "gconf" (gconf != null) null)
-    (enFlag "systemd" (systemd_lib != null) null)
+    "--${boolEn (gconf != null)}-gconf"
+    "--${boolEn (systemd_lib != null)}-systemd"
     "--disable-consolekit"
     "--disable-docbook-docs"
     "--disable-man"
     "--enable-nls"
     "--enable-schemas-compile"
     "--enable-ipv6"
-    (wtFlag "xtrans" (xorg != null) null)
+    "--${boolWt (xorg != null)}-xtrans"
   ];
 
   preFixup = ''
@@ -108,6 +107,18 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-session/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Gnome session manager";

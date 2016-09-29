@@ -1151,11 +1151,11 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        sha256 = "0ad22b4f03fd75ef18d5793e1fed5e2361af5d374009f7722b4af390a0030dfd";
      };
 
-     buildInputs = with self; [ mock nose unittest2 ];
+     buildInputs = with self; optionals doCheck [ mock nose unittest2 ];
 
      propagatedBuildInputs = with self; [ cryptography pycrypto blinker pyjwt ];
 
-     doCheck = true;
+     doCheck = false;
 
      meta = {
        homepage = https://github.com/idan/oauthlib;

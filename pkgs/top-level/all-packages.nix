@@ -1175,7 +1175,15 @@ gnome-online-miners = callPackage ../all-pkgs/g/gnome-online-miners { };
 
 gnome-screenshot = callPackage ../all-pkgs/g/gnome-screenshot { };
 
-gnome-session = callPackage ../all-pkgs/g/gnome-session { };
+gnome-session_3-22 = callPackage ../all-pkgs/g/gnome-session {
+  channel = "3.22";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gnome-desktop = pkgs.gnome-desktop_3-22;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
+  gtk = pkgs.gtk_3-22;
+};
+gnome-session = callPackageAlias "gnome-session_3-22" { };
 
 gnome-settings-daemon = callPackage ../all-pkgs/g/gnome-settings-daemon { };
 

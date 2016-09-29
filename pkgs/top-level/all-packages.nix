@@ -955,7 +955,7 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   #opencl = null;
   #opencore-amr = null;
   opencv = null;
-  openjpeg_1 = null;
+  openjpeg_1-5 = null;
   samba_client = null;
   #schannel = null;
   schroedinger = null;
@@ -3667,7 +3667,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
   mujs = callPackage ../all-pkgs/m/mujs { };
 
   mupdf = callPackage ../all-pkgs/m/mupdf {
-    openjpeg = pkgs.openjpeg_2_0;
+    openjpeg = pkgs.openjpeg_2-0;
   };
 #
   ncdu = callPackage ../tools/misc/ncdu { };

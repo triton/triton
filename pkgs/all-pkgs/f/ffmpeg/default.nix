@@ -126,7 +126,7 @@
 , opencv
 , mesa_noglu
 #, openh264
-, openjpeg_1
+, openjpeg_1-5
 , opensslExtlib ? false, openssl
 , pulseaudio_lib
 , rtmpdump
@@ -360,7 +360,7 @@ stdenv.mkDerivation rec {
     libssh
     libwebp
     openal
-    openjpeg_1
+    openjpeg_1-5
     opus
     libtheora
     libva
@@ -563,7 +563,7 @@ stdenv.mkDerivation rec {
     /**/"--disable-libopencv"
     #(fflag "libopenh264" (openh264 != null) "2.6")
     /**/"--disable-libopenh264"
-    (fflag "libopenjpeg" (openjpeg_1 != null) null)
+    (fflag "libopenjpeg" (openjpeg_1-5 != null) null)
     (fflag "libopus" (opus != null) null)
     (fflag "libpulse" (pulseaudio_lib != null) null)
     (deprfflag "libquvi" false "2.0" "2.8")

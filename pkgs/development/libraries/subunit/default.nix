@@ -11,9 +11,20 @@ stdenv.mkDerivation rec {
     sha256 = "0lcah7p66c05p7xpw6ns1is0i02lh0nq8gq51mv4wyvbr6zaasa8";
   };
 
-  buildInputs = [ pkgconfig check cppunit perl pythonPackages.wrapPython ];
+  buildInputs = [
+    pkgconfig
+    check
+    cppunit
+    perl
+    pythonPackages.wrapPython
+    pythonPackages.python
+  ];
 
-  propagatedBuildInputs = with pythonPackages; [ testtools testscenarios ];
+  propagatedBuildInputs = [
+    # FIXME: remove dependency on pbr until #74 is fixed
+    #pythonPackages.testtools
+    #pythonPackages.testscenarios
+  ];
 
   postFixup = "wrapPythonPrograms";
 

@@ -2310,6 +2310,9 @@ poppler = callPackage ../all-pkgs/p/poppler {
 
 postgresql = callPackage ../all-pkgs/p/postgresql { };
 postgresql_lib = callPackageAlias "postgresql" { };
+postgresql_96 = callPackageAlias "postgresql" {
+  channel = "9.6";
+};
 postgresql_95 = callPackageAlias "postgresql" {
   channel = "9.5";
 };

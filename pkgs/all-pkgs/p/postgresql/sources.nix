@@ -23,4 +23,9 @@
     version = "9.5.4";
     sha256 = "cf5e571164ad66028ecd7dd8819e3765470d45bcd440d258b686be7e69c76ed0";
   };
+
+  "9.6" = {
+    version = "9.6.0";
+    sha256 = "3b5fe9634b80a4511aac1832a087586a7caa8c3413619562bdda009a015863ce";
+  };
 }

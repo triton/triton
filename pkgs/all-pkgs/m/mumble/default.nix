@@ -134,11 +134,11 @@ stdenv.mkDerivation rec {
     "CONFIG+=no-wasapi"
     # TODO: asio support, ASIOInput.h
     "CONFIG+=no-asio"
-    "CONFIG+=${boolNo (speex != null)}bundled-speex"
+    "CONFIG+=no-bundled-speex"
     # sbcelt
     "CONFIG+=bundled-celt"
     "CONFIG+=${boolNo (opus != null)}opus"
-    "CONFIG+=${boolNo (opus != null)}bundled-opus"
+    "CONFIG+=no-bundled-opus"
     "CONFIG+=vorbis-recording"
     "CONFIG+=${boolNo mumbleOverlay}overlay"
     "CONFIG+=${boolNo (qt5 != null)}qt4-legacy-compat"

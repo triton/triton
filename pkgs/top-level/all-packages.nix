@@ -1555,6 +1555,8 @@ lensfun = callPackage ../all-pkgs/l/lensfun { };
 
 leptonica = callPackage ../all-pkgs/l/leptonica { };
 
+less = callPackage ../all-pkgs/l/less { };
+
 leveldb = callPackage ../all-pkgs/l/leveldb { };
 
 lftp = callPackage ../all-pkgs/l/lftp { };
@@ -2963,8 +2965,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   };
 #
   iftop = callPackage ../tools/networking/iftop { };
-#
-  less = callPackage ../tools/misc/less { };
 #
   most = callPackage ../tools/misc/most { };
 #

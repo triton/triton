@@ -993,6 +993,8 @@ ffmpeg_head = pkgs.ffmpeg_generic {
 };
 ffmpeg = callPackageAlias "ffmpeg_3" { };
 
+ffms = callPackage ../all-pkgs/f/ffms { };
+
 fftw_double = callPackage ../all-pkgs/f/fftw {
   precision = "double";
 };
@@ -3174,8 +3176,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   cppunit = callPackage ../development/libraries/cppunit { };
 
   faad2 = callPackage ../development/libraries/faad2 { };
-#
-  ffms = callPackage ../development/libraries/ffms { };
 #
   flite = callPackage ../development/libraries/flite { };
 #

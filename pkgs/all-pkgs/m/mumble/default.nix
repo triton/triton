@@ -141,7 +141,7 @@ stdenv.mkDerivation rec {
     "CONFIG+=no-bundled-opus"
     "CONFIG+=vorbis-recording"
     "CONFIG+=${boolNo mumbleOverlay}overlay"
-    "CONFIG+=${boolNo (qt5 != null)}qt4-legacy-compat"
+    "CONFIG+=${boolNo (qt5 == null)}qt4-legacy-compat"
   ] ++ optionals (config == "murmur") [
     "CONFIG+=${boolNo (ice != null)}ice"
     # TODO: grpc support, protoc-gen-grpc not found

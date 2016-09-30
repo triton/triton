@@ -1,31 +1,31 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , isPy3k
 , py
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionalString;
 in
-
 buildPythonPackage rec {
   name = "pytest-${version}";
-  version = "3.0.2";
+  version = "3.0.3";
 
   src = fetchPyPi {
     package = "pytest";
     inherit version;
-    sha256 = "64d8937626dd2a4bc15ef0edd307d26636a72a3f3f9664c424d78e40efb1e339";
+    sha256 = "f213500a356800a483e8a146ff971ae14a8df3f2c0ae4145181aad96996abee7";
   };
 
   propagatedBuildInputs = [
     py
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Simple powerful testing framework for Python";
     homepage = https://pytest.org/;
     license = licenses.mit;

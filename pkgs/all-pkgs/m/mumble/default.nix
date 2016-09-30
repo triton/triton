@@ -150,7 +150,8 @@ stdenv.mkDerivation rec {
   ];
 
   configurePhase = ''
-    qmake $configureFlags DEFINES+="PLUGIN_PATH=$out/lib"
+    echo "configureFlags: $configureFlags"
+    qmake $configureFlags DEFINES+="PLUGIN_PATH=$out/lib" -recursive
   '';
 
   makeFlags = [

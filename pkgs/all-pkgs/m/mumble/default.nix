@@ -164,20 +164,22 @@ stdenv.mkDerivation rec {
 
     mkdir -pv $out/share/man/man1
     cp -v man/mum* $out/share/man/man1
-  '' + optionalString (config == "mumble") ''
-    install -D -m755 -v 'scripts/mumble-overlay' "$out/bin/mumble-overlay"
-    sed -i "$out/bin/mumble-overlay" \
-      -e "s,/usr/lib,$out/lib,g"
+  '' + optionalString (config == "mumble") (
+      optionalString mumbleOverlay ''
+      install -D -m755 -v 'scripts/mumble-overlay' "$out/bin/mumble-overlay"
+      sed -i "$out/bin/mumble-overlay" \
+        -e "s,/usr/lib,$out/lib,g"
+    '' + ''
+      install -D -m644 -v 'scripts/mumble.desktop' \
+        "$out/share/applications/mumble.desktop"
 
-    install -D -m644 -v 'scripts/mumble.desktop' \
-      "$out/share/applications/mumble.desktop"
-
-    mkdir -p $out/share/icons/hicolor/scalable/apps
-    install -D -m644 -v 'icons/mumble.svg' "$out/share/icons/mumble.svg"
-    ln -sv \
-      "$out/share/icon/mumble.svg" \
-      "$out/share/icons/hicolor/scalable/apps"
-  '';
+      mkdir -p $out/share/icons/hicolor/scalable/apps
+      install -D -m644 -v 'icons/mumble.svg' "$out/share/icons/mumble.svg"
+      ln -sv \
+        "$out/share/icon/mumble.svg" \
+        "$out/share/icons/hicolor/scalable/apps"
+    ''
+  );
 
   meta = with stdenv.lib; {
     description = "Low-latency, high quality voice chat software";

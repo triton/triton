@@ -797,6 +797,10 @@ dejagnu = callPackage ../all-pkgs/d/dejagnu { };
 
 dejavu-fonts = callPackage ../all-pkgs/d/dejavu-fonts { };
 
+desktop-file-utils = callPackage ../all-pkgs/d/desktop-file-utils { };
+# Deprecated alias
+desktop_file_utils = callPackageAlias "desktop-file-utils" { };
+
 dialog = callPackage ../all-pkgs/d/dialog { };
 
 ding-libs = callPackage ../all-pkgs/d/ding-libs { };
@@ -2937,8 +2941,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 ################################################################################
 ################################################################################
 ################################################################################
-#
-  desktop_file_utils = callPackage ../tools/misc/desktop-file-utils { };
 #
   dnssec-root = callPackage ../data/misc/dnssec-root { };
 #

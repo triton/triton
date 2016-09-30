@@ -2610,6 +2610,8 @@ st = callPackage ../all-pkgs/s/st {
   configFile = config.st.configFile or null;
 };
 
+stalonetray = callPackage ../all-pkgs/s/stalonetray { };
+
 #steamPackages = callPackage ../all-pkgs/s/steam { };
 #steam = steamPackages.steam-chrootenv.override {
 #  # DEPRECATED

@@ -6,7 +6,7 @@
 with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "mariadb-${version}";
-  version = "10.1.17";
+  version = "10.1.18";
 
   src = fetchurl {
     urls = map (n: "${n}/${name}/source/${name}.tar.gz") [
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
       "http://mirror.jmu.edu/pub/mariadb"
     ];
     hashOutput = false;
-    sha256 = "4ca45ac5e34418761868115ebc8c068d511fed08e283b2cac52559d63ba4aab5";
+    sha256 = "d7336907e9ff44496d6453f92526b25bd253638a64a051ca879f953499873b73";
   };
 
   nativeBuildInputs = [
@@ -103,7 +103,7 @@ stdenv.mkDerivation rec {
     description = "An enhanced, drop-in replacement for MySQL";
     homepage    = https://mariadb.org/;
     license     = stdenv.lib.licenses.gpl2;
-    maintainers = with stdenv.lib.maintainers; [ thoughtpolice wkennington ];
+    maintainers = with stdenv.lib.maintainers; [ wkennington ];
     platforms   = stdenv.lib.platforms.all;
   };
 }

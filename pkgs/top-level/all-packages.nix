@@ -1984,6 +1984,8 @@ m4 = callPackageAlias "gnum4" { };
 
 mac = callPackage ../all-pkgs/m/mac { };
 
+man = callPackage ../all-pkgs/m/man { };
+
 man-db = callPackage ../all-pkgs/m/man-db { };
 
 man-pages = callPackage ../all-pkgs/m/man-pages { };
@@ -2971,8 +2973,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   libconfig = callPackage ../development/libraries/libconfig { };
 #
   liboauth = callPackage ../development/libraries/liboauth { };
-#
-  man = callPackage ../tools/misc/man { };
 #
   memtest86plus = callPackage ../tools/misc/memtest86+ { };
 #

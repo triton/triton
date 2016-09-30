@@ -3359,10 +3359,10 @@ let
   }) // {inherit inputproto libX11 libXaw xproto libXt ;};
 
   xkeyboardconfig = (mkDerivation "xkeyboardconfig" {
-    name = "xkeyboard-config-2.18";
+    name = "xkeyboard-config-2.19";
     src = fetchurl {
-      url = mirror://xorg/individual/data/xkeyboard-config/xkeyboard-config-2.18.tar.bz2;
-      sha256 = "1l6x2w357ja8vm94ns79s7yj9a5dlr01r9dxrjvzwncadiyr27f4";
+      url = mirror://xorg/individual/data/xkeyboard-config/xkeyboard-config-2.19.tar.bz2;
+      sha256 = "09sqyi430bbg13pp8j0j60p9p9xn2lpqx38xw1lyv77bp63d3pw3";
     };
     nativeBuildInputs = [ intltool utilmacros ];
     buildInputs = [ libX11 xproto ];

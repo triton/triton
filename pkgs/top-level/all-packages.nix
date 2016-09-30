@@ -540,6 +540,8 @@ asciidoc = callPackage ../all-pkgs/a/asciidoc { };
 
 asciinema = pkgs.python3Packages.asciinema;
 
+asio = callPackage ../all-pkgs/a/asio { };
+
 aspell = callPackage ../all-pkgs/a/aspell { };
 
 at-spi2-atk_2-22 = callPackage ../all-pkgs/a/at-spi2-atk {

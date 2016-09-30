@@ -1,7 +1,7 @@
 { stdenv
 , fetchgit
 , fetchurl
-, python
+, python2
 
 , alsa-lib
 , avahi
@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
       };
 
   nativeBuildInputs = optionals (config == "mumble")[
-    python
+    python2
     qt4
     qt5
   ];
@@ -103,9 +103,13 @@ stdenv.mkDerivation rec {
     ./mumble-jack-support.patch
   ];
 
-  postPatch = optionalString (config == "mumble") ''
-    export MUMBLE_PYTHON="${python}/bin/python"
-  '' + optionalString (config == "murmur" && ice != null) ''
+  postPatch = optionalString (config == "mumble") (
+    ''
+      export MUMBLE_PYTHON="${python2}/bin/python"
+    '' + optionalString (channel != "1.2") ''
+      patchShebangs ./scripts/rcc-depends.py
+    ''
+  ) + optionalString (config == "murmur" && ice != null) ''
     grep -Rl '/usr/share/Ice' . | \
       xargs sed -i 's,/usr/share/Ice/,${ice}/,g'
   '';

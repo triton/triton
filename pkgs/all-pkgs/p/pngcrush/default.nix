@@ -6,16 +6,15 @@
 }:
 
 let
-  version = "1.8.6";
+  version = "1.8.7";
 in
 stdenv.mkDerivation rec {
   name = "pngcrush-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/pmt/pngcrush/${version}/${name}-nolib.tar.xz";
-    multihash = "QmbFB4XbmSyLSm6qYDtTrUo7DkR3u7iiNYsJqbiKswbqhr";
     hashOutput = false;
-    sha256 = "14e5975c856d732d1661397e292fa2c2f42a5d39070025f57ce03d77b6e0a3df";
+    sha256 = "f0cfc0d6f4df67106a184600f891b164875b6be7173111c87bec48a509fac60b";
   };
 
   buildInputs = [

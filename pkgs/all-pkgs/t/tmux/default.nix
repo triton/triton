@@ -5,13 +5,15 @@
 , libevent
 }:
 
+let
+  version = "2.3";
+in
 stdenv.mkDerivation rec {
   name = "tmux-${version}";
-  version = "2.2";
 
   src = fetchurl {
     url = "https://github.com/tmux/tmux/releases/download/${version}/${name}.tar.gz";
-    sha256 = "bc28541b64f99929fe8e3ae7a02291263f3c97730781201824c0f05d7c8e19e4";
+    sha256 = "55313e132f0f42de7e020bf6323a1939ee02ab79c48634aa07475db41573852b";
   };
 
   buildInputs = [

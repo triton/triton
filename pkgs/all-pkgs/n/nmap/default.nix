@@ -7,12 +7,19 @@
 , python2Packages
 }:
 
+let
+  baseUrls = [
+    "https://nmap.org/dist"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "nmap-7.12";
+  name = "nmap-7.30";
 
   src = fetchurl {
-    url = "https://nmap.org/dist/${name}.tar.bz2";
-    sha256 = "63df082a87c95a189865d37304357405160fc6333addcf5b84204c95e0539b04";
+    url = map (n: "${n}/${name}.tar.bz2") baseUrls;
+    hashOutput = false;
+    multihash = "QmZxtyZVPQWkRYhAv5DpifH1JmVzsMGwhDga8xx4GKZcoQ";
+    sha256 = "ba38a042ec67e315d903d28a4976b74999da94c646667c0c63f31e587d6d8d0f";
   };
 
   nativeBuildInputs = [
@@ -34,6 +41,15 @@ stdenv.mkDerivation rec {
   preFixup = ''
     wrapPythonPrograms $out/bin
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}/sigs/${name}.tar.bz2.asc") baseUrls;
+      pgpKeyFingerprint = "436D 66AB 9A79 8425 FDA0  E3F8 01AF 9F03 6B93 55D0";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

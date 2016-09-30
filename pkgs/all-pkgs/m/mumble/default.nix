@@ -23,6 +23,7 @@
 , xorg
 
 , mumbleOverlay ? true
+, releaseType ? "release"
 
 , channel
 , config
@@ -35,6 +36,8 @@
           syntax version. (Defaulted to proto2 syntax.) */
 
 assert (config == "mumble" || config == "murmur");
+
+assert (releaseType == "release" || releaseType == "debug");
 
 let
   inherit (stdenv.lib)
@@ -115,6 +118,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
+    "${releaseType}"
     "${boolNo (config == "mumble")}client"
     "${boolNo (config == "murmur")}server"
     "shared"
@@ -163,13 +167,13 @@ stdenv.mkDerivation rec {
   '';
 
   makeFlags = [
-    "release"
+    "${releaseType}"
   ];
 
   installPhase = ''
     mkdir -pv "$out"/{lib,bin}
-    find release -type f -not -name \*.\* -exec cp -v {} $out/bin \;
-    find release -type f -name \*.\* -exec cp -v {} $out/lib \;
+    find ${releaseType} -type f -not -name \*.\* -exec cp -v {} $out/bin \;
+    find ${releaseType} -type f -name \*.\* -exec cp -v {} $out/lib \;
 
     mkdir -pv $out/share/man/man1
     cp -v man/mum* $out/share/man/man1

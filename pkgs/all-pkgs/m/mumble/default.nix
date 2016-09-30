@@ -115,47 +115,51 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "CONFIG+=${boolNo (config == "mumble")}client"
-    "CONFIG+=${boolNo (config == "murmur")}server"
-    "CONFIG+=shared"
-    "CONFIG+=no-static"
-    "CONFIG+=no-g15"
-    "CONFIG+=dbus"
-    "CONFIG+=${boolNo (avahi != null)}bonjour"
-    "CONFIG+=embed-tango-icons"
+    "${boolNo (config == "mumble")}client"
+    "${boolNo (config == "murmur")}server"
+    "shared"
+    "no-static"
+    "no-g15"
+    "dbus"
+    "${boolNo (avahi != null)}bonjour"
+    "embed-tango-icons"
     # static_qt_plugins
-    "CONFIG+=no-static_qt_plugins"
-    "CONFIG+=packaged"
-    "CONFIG+=no-update"
-    "CONFIG+=no-embed-qt-translations"
-    "CONFIG+=${boolNo (speechd != null)}speechd"
+    "no-static_qt_plugins"
+    "packaged"
+    "no-update"
+    "no-embed-qt-translations"
+    "${boolNo (speechd != null)}speechd"
   ] ++ optionals (config == "mumble") [
-    "CONFIG+=${boolNo (alsa-lib != null)}alsa"
-    "CONFIG+=no-directsound"
-    "CONFIG+=${boolNo (jack2_lib != null)}jackaudio"
-    "CONFIG+=no-oss"
-    "CONFIG+=${boolNo (portaudio != null)}portaudio"
-    "CONFIG+=no-wasapi"
+    "${boolNo (alsa-lib != null)}alsa"
+    "no-directsound"
+    "${boolNo (jack2_lib != null)}jackaudio"
+    "no-oss"
+    "${boolNo (portaudio != null)}portaudio"
+    "no-wasapi"
     # TODO: asio support, ASIOInput.h
-    "CONFIG+=no-asio"
-    "CONFIG+=no-bundled-speex"
+    "no-asio"
+    "no-bundled-speex"
     # sbcelt
-    "CONFIG+=bundled-celt"
-    "CONFIG+=${boolNo (opus != null)}opus"
-    "CONFIG+=no-bundled-opus"
-    "CONFIG+=vorbis-recording"
-    "CONFIG+=${boolNo mumbleOverlay}overlay"
-    "CONFIG+=${boolNo (qt5 == null)}qt4-legacy-compat"
+    "bundled-celt"
+    "${boolNo (opus != null)}opus"
+    "no-bundled-opus"
+    "vorbis-recording"
+    "${boolNo mumbleOverlay}overlay"
+    "${boolNo (qt5 == null)}qt4-legacy-compat"
   ] ++ optionals (config == "murmur") [
-    "CONFIG+=${boolNo (ice != null)}ice"
+    "${boolNo (ice != null)}ice"
     # TODO: grpc support, protoc-gen-grpc not found
-    "CONFIG+=no-grpc"
-    "CONFIG+=qssldiffiehellmanparameters"
+    "no-grpc"
+    "qssldiffiehellmanparameters"
   ];
 
   configurePhase = ''
     echo "configureFlags: $configureFlags"
-    qmake $configureFlags DEFINES+="PLUGIN_PATH=$out/lib" -recursive
+    export QT_SELECT=${if (qt5 != null) then "qt5" else "qt4"}
+    qmake ./main.pro \
+      -recursive \
+      "CONFIG += $configureFlags" \
+      "DEFINES += PLUGIN_PATH=$out/lib"
   '';
 
   makeFlags = [

@@ -2595,8 +2595,6 @@ spidermonkey_17 = callPackageAlias "spidermonkey" {
 
 split2flac = callPackage ../all-pkgs/s/split2flac { };
 
-sqlheavy = callPackage ../all-pkgs/s/sqlheavy { };
-
 sqlite = callPackage ../all-pkgs/s/sqlite { };
 
 squashfs-tools = callPackage ../all-pkgs/s/squashfs-tools { };

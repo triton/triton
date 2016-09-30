@@ -28,7 +28,6 @@
 , librsvg
 , libsoup
 , libxml2
-, sqlheavy
 , taglib
 , vala
 , zeitgeist

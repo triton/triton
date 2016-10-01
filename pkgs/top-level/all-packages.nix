@@ -677,13 +677,13 @@ check = callPackage ../all-pkgs/c/check { };
 
 chromaprint = callPackage ../all-pkgs/c/chromaprint { };
 
-chromium = callPackage ../all-pkgs/c/chromium {
+chromium_old = callPackage ../all-pkgs/c/chromium_old {
   channel = "stable";
 };
-chromium_beta = callPackageAlias "chromium" {
+chromium_old_beta = callPackageAlias "chromium_old" {
   channel = "beta";
 };
-chromium_dev = callPackageAlias "chromium" {
+chromium_old_dev = callPackageAlias "chromium_old" {
   channel = "dev";
 };
 

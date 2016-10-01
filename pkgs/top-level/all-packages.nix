@@ -1273,6 +1273,17 @@ goPackages = callPackageAlias "go17Packages" { };
 
 gobject-introspection = callPackage ../all-pkgs/g/gobject-introspection { };
 
+google-chrome_stable = callPackage ../all-pkgs/g/google-chrome {
+  channel = "stable";
+};
+google-chrome_beta = callPackage ../all-pkgs/g/google-chrome {
+  channel = "beta";
+};
+google-chrome_unstable = callPackage ../all-pkgs/g/google-chrome {
+  channel = "unstable";
+};
+google-chrome = callPackageAlias "google-chrome_stable" { };
+
 google-gflags = callPackage ../all-pkgs/g/google-gflags { };
 
 gperf = callPackage ../all-pkgs/g/gperf { };

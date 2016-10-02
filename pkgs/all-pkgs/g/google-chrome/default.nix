@@ -38,8 +38,14 @@ let
     makeSearchPath
     platforms;
 
+  chromiumChannel =
+    if channel == "unstable" then
+      "dev"
+    else
+      channel;
+
   source = (import ./sources.nix { })."${channel}";
-  version = (import ../../c/chromium/sources.nix { })."${channel}".version;
+  version = (import ../../c/chromium/sources.nix { })."${chromiumChannel}".version;
 
   arch =
     if elem targetSystem platforms.x86_64 then

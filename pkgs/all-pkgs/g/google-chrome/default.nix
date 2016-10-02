@@ -100,11 +100,8 @@ stdenv.mkDerivation rec {
     xorg.libXtst
   ];
 
-  chromeLib32Path = makeSearchPath "lib" buildInputs;
-  chromeLib64Path = makeSearchPath "lib" buildInputs;
-  chromeLibPath = chromeLib32Path + ":" + chromeLib64Path;
-
   chromeBinPath = makeSearchPath "bin" buildInputs;
+  chromeLibPath = makeSearchPath "lib" buildInputs;
 
   unpackPhase = ''
     ar x $src

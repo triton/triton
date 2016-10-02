@@ -27,13 +27,13 @@ let
     optionals
     platforms;
 
-  version = "2.0";
+  version = "2.1";
 
   src = fetchurl {
     url = "https://bitbucket.org/multicoreware/x265/downloads/"
       + "x265_${version}.tar.gz";
-    multihash = "Qme81DrdptaPWWKmwKqgqwY3N3Ecp3MgcgzhQyTp1A5h9n";
-    sha256 = "5a7f6797bee33310c690be5d9a6c63125f36663ac3478e98ac6b6142a70bce1f";
+    multihash = "QmW92vUhh1nXAkV5GkdB7aXYhVFi4P7NY4SUDP8NXeEZZT";
+    sha256 = "b3bc83754e91ed5655c8cba5a2ed48e6b9ab39699c9ed6554c670211d5870f9c";
   };
 
   cmakeFlagsAll = [

@@ -14,7 +14,7 @@
 , ncurses
 , zlib
 
-, channel ? "3.9"
+, channel ? "3.8"
 }:
 
 let
@@ -107,8 +107,7 @@ stdenv.mkDerivation {
     "-DLLVM_LINK_LLVM_DYLIB=ON"
   ];
 
-  # Currently broken but the build is fine
-  doCheck = false;
+  doCheck = true;
 
   preBuild = ''
     export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I$(pwd)/tools/clang/include"

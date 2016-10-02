@@ -40,6 +40,7 @@ let
       urls = map (u: "${u}/${replaceChars ["-"] ["/"] version'}/${n}-${replaceChars ["-"] [""] version'}.src.tar.xz") [
         "http://llvm.org/releases"
         "http://llvm.org/pre-releases"
+        "https://distfile.macports.org/llvm"
       ];
       inherit (d) sha256;
     }

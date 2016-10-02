@@ -34,9 +34,10 @@
 
 let
   inherit ((import ./sources.nix)."${channel}")
-    version
+    fetchVersion
     rev
-    sha256;
+    sha256
+    version;
 in
 stdenv.mkDerivation {
   name = "ceph-${version}";
@@ -44,7 +45,9 @@ stdenv.mkDerivation {
   src = fetchgit {
     url = "https://github.com/ceph/ceph.git";
     inherit rev sha256;
+    version = fetchVersion;
   };
+
 
   nativeBuildInputs = [
     cmake
@@ -81,12 +84,6 @@ stdenv.mkDerivation {
   ];
 
   postPatch = ''
-    # Our cc-wrapper currently has a bug that strips march and mfpu flags
-    sed \
-      -e 's,-march=armv8,-not-a-flag,g' \
-      -e 's,-mfpu=neon,-not-a-flag,g' \
-      -i src/CMakeLists.txt
-
     # We manually set the version of ceph directly so we don't have to depend on git
     sed -i 's,GITDIR-NOTFOUND,"${version}",g' cmake/modules/GetGitRevisionDescription.cmake
   '';

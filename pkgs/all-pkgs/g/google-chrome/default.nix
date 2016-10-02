@@ -94,6 +94,7 @@ stdenv.mkDerivation rec {
     systemd_lib
     xdg-utils
     xorg.libX11
+    xorg.libxcb
     xorg.libXcomposite
     xorg.libXcursor
     xorg.libXdamage

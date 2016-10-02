@@ -117,11 +117,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "a20de3fa94e069ec699987416679230d72e030a3";
-    date = "2016-09-23";
+    rev = "568507f56e5b05b3c219ffd7fba12655c07bcc86";
+    date = "2016-09-29";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "1i71i8a9xq9sq4m9i5la0kd3jyy0rxl2mc9ng09prbavj6m9v8n5";
+    sha256 = "0nad82csmk512xfzas8gcicwabvs1wm2vg27cgyvrjslg55i0zbj";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -143,11 +143,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "a333c534c871727fb95745870e8b98a69447f2ce";
-    date = "2016-09-29";
+    rev = "cd95c68ba21fc7ee16ee38cc420473e3d8c4afd8";
+    date = "2016-10-01";
     owner  = "golang";
     repo   = "net";
-    sha256 = "0j09wvllnpy2ycbqdrc222f4afdkdsprkzipai70wzq7xi4rh6mr";
+    sha256 = "1a9vjy14mdzz9iy47jriq3q38vb3qd3nvzfmvh7yl5ssyi2yhayq";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -182,11 +182,11 @@ let
 
   protobuf = buildFromGitHub {
     version = 2;
-    rev = "87c000235d3d852c1628dc9490cd21ab36a7d69f";
-    date = "2016-09-26";
+    rev = "df1d3ca07d2d07bba352d5b73c4313b4e2a6203e";
+    date = "2016-09-27";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "17h4j6ykbjn6s7vqfpcv6n4aap9sry8vbfdsg6xf8bkznjh64xyg";
+    sha256 = "02afl1gbq0dzph61jljw1mvjv647ghcr69b5mgw978jjwf0cxx6a";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [
       "code.google.com/p/goprotobuf"
@@ -1067,8 +1067,8 @@ let
     version = 2;
     owner = "coreos";
     repo = "etcd";
-    rev = "v3.0.9";
-    sha256 = "16b7a0d79a4znwx8mmn1ra9ns9ngyywyfjprs66j7sr63h0hc7la";
+    rev = "v3.0.10";
+    sha256 = "1my1v7rf1m1n19na2chn9plw6qd3093mnyq51pjy9l1cf1rd9lrj";
     buildInputs = [
       bolt
       btree
@@ -1211,11 +1211,11 @@ let
 
   gcloud-golang = buildFromGitHub {
     version = 2;
-    date = "2016-09-28";
-    rev = "debdc0ca0113dd546ebebeb2000c9d938059f41d";
+    date = "2016-09-30";
+    rev = "90296fd601ebfc594192e722a022663b0c3f8756";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "1635f1gvjn22cb0z1jj175kjfv3mz6jnz49sgyrf15npsfqc72vc";
+    sha256 = "1vb2ld2dl0yd3f9bjgqj99rbi3y74lfl08c0xi4h1l29mn0i4gy2";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -1329,11 +1329,11 @@ let
 
   ugorji_go = buildFromGitHub {
     version = 2;
-    date = "2016-09-20";
-    rev = "b7eff9abce531d6aeda923e759ae668e56601d21";
+    date = "2016-09-27";
+    rev = "faddd6128c66c4708f45fdc007f575f75e592a3c";
     owner = "ugorji";
     repo = "go";
-    sha256 = "02kqy6nndr0x9xfmqsykqcv1bywp2x2yzk72wdasvzdxhb4pbafq";
+    sha256 = "0gav420a4xglf7p7g9ikm8bnm51y447v6plwyngajmam2ywp16gr";
     goPackageAliases = [ "github.com/hashicorp/go-msgpack" ];
   };
 
@@ -2173,11 +2173,11 @@ let
 
   go-oidc = buildFromGitHub {
     version = 2;
-    date = "2016-08-29";
-    rev = "fe7346e2e6855bda769d5b3db7d917f159c5613c";
+    date = "2016-09-25";
+    rev = "16c5ecc505f1efa0fe4685826fd9962c4d137e87";
     owner  = "coreos";
     repo   = "go-oidc";
-    sha256 = "0jdb2k17g58lkv0dfhdchyz9pxs601h4p17rhwzp9bdj5w146jww";
+    sha256 = "0cxaf9wnk86n4i0dpgxwj6pfalsrr3y6xmc5lvpy3qgfabj8869s";
     propagatedBuildInputs = [
       clockwork
       pkg
@@ -4675,9 +4675,9 @@ let
     version = 2;
     owner = "gravitational";
     repo = "trace";
-    rev = "b1245743853e40288997baebf2cabac2cec392be";
-    sha256 = "0d7mws6gklfs57y0kfrddf4lhfy26d1x82k1nv74i246p6pyh950";
-    date = "2016-09-13";
+    rev = "6e153c7add15eb07e311f892779fb294373c4cfa";
+    sha256 = "0y1ly0n5x9vgvcc86xbs70my13ih0ag7qcys08dildl7cc6c1dh8";
+    date = "2016-09-29";
     propagatedBuildInputs = [
       clockwork
       grpc

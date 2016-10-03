@@ -1091,7 +1091,10 @@ getopt = callPackage ../all-pkgs/g/getopt { };
 
 gettext = callPackage ../all-pkgs/g/gettext { };
 
-gexiv2 = callPackage ../all-pkgs/g/gexiv2 { };
+gexiv2_0-10 = callPackage ../all-pkgs/g/gexiv2 {
+  channel = "0.10";
+};
+gexiv2 = callPackageAlias "gexiv2_0-10" { };
 
 giflib = callPackage ../all-pkgs/g/giflib { };
 

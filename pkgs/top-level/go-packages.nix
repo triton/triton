@@ -4009,13 +4009,13 @@ let
 
   raft_v2 = buildFromGitHub {
     version = 2;
-    date = "2016-08-01";
+    date = "2016-09-29";
     # Use the library-v2-stage-one branch until it is merged
     # into master.
-    rev = "c69c15dd73b6695ba75b3502ce6b332cc0042c83";
+    rev = "7c09f497f6830afdb2c8bcc1e411aee8c2c24b0d";
     owner  = "hashicorp";
     repo   = "raft";
-    sha256 = "0497abed17b6759ccce623ca318188a4ccd806e77bb94ca6f2ca5ced48888119";
+    sha256 = "98b58635fb9f1d26d4958c5f72bbbb95796c037b2e458a7a9690620bdfaed4a1";
     propagatedBuildInputs = [ armon_go-metrics ugorji_go ];
     meta.autoUpdate = false;
   };

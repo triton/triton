@@ -2735,8 +2735,8 @@ let
     version = 2;
     owner = "influxdata";
     repo = "influxdb";
-    rev = "v1.0.0";
-    sha256 = "1821pzpshwnbxmwn9a61x01b8ms160llqhppa5v0cg6w6zxndwqi";
+    rev = "v1.0.1";
+    sha256 = "04qdvc98nisgiybz5p11kzr8yxfwg2l31fbdbbzzdf2f73hclzdw";
     propagatedBuildInputs = [
       bolt
       gollectd

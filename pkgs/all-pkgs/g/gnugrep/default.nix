@@ -4,13 +4,15 @@
 , perl
 }:
 
+let
+  version = "2.26";
+in
 stdenv.mkDerivation rec {
   name = "gnugrep-${version}";
-  version = "2.25";
 
   src = fetchurl {
     url = "mirror://gnu/grep/grep-${version}.tar.xz";
-    sha256 = "e21e83bac50450e0d0d61a42c154ee0dceaacdbf4f604ef6e79071cb8e596830";
+    sha256 = "246a8fb37e82aa33d495b07c22fdab994c039ab0f818538eac81b01e78636870";
   };
 
   nativeBuildInputs = [

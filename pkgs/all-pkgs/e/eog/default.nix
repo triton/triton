@@ -3,6 +3,7 @@
 , gettext
 , intltool
 , itstool
+, lib
 , makeWrapper
 
 , adwaita-icon-theme
@@ -14,7 +15,7 @@
 , gnome-desktop
 , gobject-introspection
 , gsettings-desktop-schemas
-, gtk3
+, gtk
 , lcms2
 , libexif
 , libjpeg
@@ -24,27 +25,27 @@
 , pango
 , shared_mime_info
 , xorg
-}:
 
-let
-  inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
-in
+, channel
+}:
 
 assert xorg != null -> xorg.libX11 != null;
 
+let
+  inherit (lib)
+    boolEn
+    boolWt
+    optionals;
+
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "eog-${version}";
-  versionMajor = "3.20";
-  versionMinor = "4";
-  version = "${versionMajor}.${versionMinor}";
+  name = "eog-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/eog/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/eog/${versionMajor}/${name}.sha256sum";
-    sha256 = "968774cc07ea0d3c27ac552dc0f1d51cf682b9036d342b447688a208f31a5be3";
+    url = "mirror://gnome/sources/eog/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -64,7 +65,7 @@ stdenv.mkDerivation rec {
     gnome-desktop
     gobject-introspection
     gsettings-desktop-schemas
-    gtk3
+    gtk
     lcms2
     libexif
     libjpeg
@@ -86,20 +87,20 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--enable-nls"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-schemas-compile"
     "--disable-installed-tests"
-    (wtFlag "libexif" (libexif != null) null)
-    (wtFlag "cms" (xorg != null && lcms2 != null) null)
-    (wtFlag "xmp" (exempi != null) null)
-    (wtFlag "libjpeg" (libjpeg != null) null)
-    (wtFlag "librsvg" (librsvg != null) null)
-    (wtFlag "x" (gtk3.x11_backend && xorg != null) null)
+    "--${boolWt (libexif != null)}-libexif"
+    "--${boolWt (xorg != null && lcms2 != null)}-cms"
+    "--${boolWt (exempi != null)}-xmp"
+    "--${boolWt (libjpeg != null)}-libjpeg"
+    "--${boolWt (librsvg != null)}-librsvg"
+    "--${boolWt (gtk.x11_backend && xorg != null)}-x"
   ];
 
   # Disable -Werror as there are issues with 3.20.2 on gcc 6.1.0
   postPatch = ''
-    sed -i 's,-Werror[^ "]*,,g' configure
+    #sed -i 's,-Werror[^ "]*,,g' configure
   '';
 
   preFixup = ''
@@ -114,7 +115,19 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share"
   '';
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/eog/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "The Eye of GNOME image viewer";
     homepage = https://wiki.gnome.org/Apps/EyeOfGnome;
     license = licenses.gpl2Plus;

@@ -2177,7 +2177,10 @@ networkmanager-openvpn_1-2 = callPackage ../all-pkgs/n/networkmanager-openvpn {
 };
 networkmanager-openvpn = callPackageAlias "networkmanager-openvpn_1-2" { };
 
-networkmanager-pptp = callPackage ../all-pkgs/n/networkmanager-pptp { };
+networkmanager-pptp_1-2 = callPackage ../all-pkgs/n/networkmanager-pptp {
+  channel = "1.2";
+};
+networkmanager-pptp = callPackageAlias "networkmanager-pptp_1-2" { };
 
 networkmanager-vpnc = callPackage ../all-pkgs/n/networkmanager-vpnc { };
 

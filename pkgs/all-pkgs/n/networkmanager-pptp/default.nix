@@ -3,28 +3,35 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , dbus-glib
 , glib
-, gtk3
+, gtk_3
 , libgnome-keyring
 , libsecret
 , networkmanager
 , networkmanager-applet
 , ppp
 , pptp
+
+, channel
 }:
 
+let
+  inherit (lib)
+    boolWt;
+
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "NetworkManager-pptp-${version}";
-  versionMajor = "1.0";
-  versionMinor = "8";
-  version = "${versionMajor}.${versionMinor}";
+  name = "NetworkManager-pptp-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/NetworkManager-pptp/${versionMajor}/"
-        + "${name}.tar.xz";
-    sha256 = "0k1416p2378clq1kkahk2ngrja84zwrmblfgg7vr1n3hy6x33w3g";
+    url = "mirror://gnome/sources/NetworkManager-pptp/${channel}/"
+      + "${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -35,7 +42,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     dbus-glib
     glib
-    gtk3
+    gtk_3
     libsecret
     networkmanager
     networkmanager-applet
@@ -53,22 +60,36 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
+    #"--enable-absolute-paths"
     "--enable-nls"
     "--enable-more-warnings"
     #"--with-pppd-plugin-dir"
-    "--with-gnome"
+    "--${boolWt (
+      gtk_3 != null
+      && networkmanager-applet != null
+      && libsecret != null)}-gnome"
+    "--with-libnm-glib"
   ];
 
-  postConfigure = ''
-    sed -i Makefile */Makefile \
-      -e 's/-Werror//g'
-  '';
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/NetworkManager-pptp/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "NetworkManager PPTP plugin";
     homepage = https://wiki.gnome.org/Projects/NetworkManager;
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

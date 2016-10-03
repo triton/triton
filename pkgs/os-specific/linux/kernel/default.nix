@@ -26,22 +26,27 @@ let
       version = "4.7.6";
       sha256 = "7b516520c3dc3a18b1ad30ca54603d9bb31e32ab51fa6b882a02b05e10d32dd2";
     };
+    "4.8" = {
+      version = "4.8";
+      sha256 = "3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a";
+    };
     "testing" = {
       version = "4.8-rc8";
       sha256 = "676b5e3e0529385a75baa650b2e2395a4b001821447869735baa83616942597f";
     };
-    "bcache" = let
-      date = "2016-10-01";
-    in {
-      version = "4.7.6";
-      urls = [
-        "https://github.com/wkennington/linux/releases/download/bcachefs-${version}-${date}/linux-bcachefs-${version}-${date}.tar.xz"
-      ];
-      sha256 = "17ac16c494c16117c927d10caab2aaaaae10424b95735e40374fa5ca773dd454";
-      features.bcachefs = true;
-    };
+    "bcache" =
+      let
+        date = "2016-10-01";
+      in {
+        version = "4.7.6";
+        urls = [
+          "https://github.com/wkennington/linux/releases/download/bcachefs-${version}-${date}/linux-bcachefs-${version}-${date}.tar.xz"
+        ];
+        sha256 = "17ac16c494c16117c927d10caab2aaaaae10424b95735e40374fa5ca773dd454";
+        features.bcachefs = true;
+      };
   };
-  
+
   source = sources."${channel}";
 
   inherit (source)

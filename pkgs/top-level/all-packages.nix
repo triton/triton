@@ -3516,6 +3516,11 @@ libtiff = callPackage ../development/libraries/libtiff { };
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
+  linux_4_8 = callPackage ../os-specific/linux/kernel {
+    channel = "4.8";
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
+  };
+
   linux_testing = callPackage ../os-specific/linux/kernel {
     channel = "testing";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
@@ -3594,12 +3599,15 @@ libtiff = callPackage ../development/libraries/libtiff { };
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
-  linuxPackages_latest = pkgs.linuxPackages_4_7;
+  linuxPackages_latest = pkgs.linuxPackages_4_8;
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
   linuxPackages_4_7 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4_7;
+  });
+  linuxPackages_4_8 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_4_8;
   });
   linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_testing;

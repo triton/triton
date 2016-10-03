@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , precision
 }:
@@ -7,9 +8,9 @@
 let
   inherit (stdenv)
     targetSystem;
-  inherit (stdenv.lib)
+  inherit (lib)
+    boolEn
     elem
-    enFlag
     optionals
     platforms;
 
@@ -28,22 +29,23 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "http://www.fftw.org/fftw-${version}.tar.gz";
-    md5Url = url + ".md5sum";
+    multihash = "QmPVvMpw6XJhgiEv6X8vPPA2xLaGdjuUvQrGg5ASeKpeMy";
+    hashOutput = false;
     sha256 = "8ecfe1b04732ec3f5b7d279fdb8efcad536d555f9d1e8fabd027037d45ea8bcf";
   };
 
   configureFlags = [
-    (enFlag "single" (precision == "single") null)
-    (enFlag "float" (precision == "single") null)
-    ###(enFlag "double" (precision == "double") null)
-    (enFlag "long-double" (precision == "long-double") null)
-    (enFlag "quad-precision" (precision == "quad-precision") null)
-    (enFlag "sse" (
+    "--${boolEn (precision == "single")}-single"
+    "--${boolEn (precision == "single")}-float"
+    ###"--${boolEn (precision == "double")}-double"
+    "--${boolEn (precision == "long-double")}-long-double"
+    "--${boolEn (precision == "quad-precision")}-quad-precision"
+    "--${boolEn (
       elem targetSystem platforms.x86-all
-      && precision == "single") null)
-    (enFlag "sse2" (
+      && precision == "single")}-sse"
+    "--${boolEn (
       elem targetSystem platforms.x86-all
-      && (precision == "single" || precision == "double")) null)
+      && (precision == "single" || precision == "double"))}-sse2"
     # Could be enabled when our minimum is sandy bridge
     "--disable-avx"
     # Could be enabled when our minimum is haswell
@@ -51,24 +53,24 @@ stdenv.mkDerivation rec {
     "--disable-avx512"
     "--disable-avx-128-fma"
     "--disable-kcvi"
-    (enFlag "altivec" (elem targetSystem platforms.powerpc-all) null)
+    "--${boolEn (elem targetSystem platforms.powerpc-all)}-altivec"
     "--disable-vsx"
-    (enFlag "neon" (elem targetSystem platforms.arm-all) null)
+    "--${boolEn (elem targetSystem platforms.arm-all)}-neon"
     #--enable-armv8cyclecounter
-    (enFlag "generic-simd128" (
+    "--${boolEn (
       precision == "single"
-      || precision == "double") null)
-    (enFlag "generic-simd256" (
+      || precision == "double")}-generic-simd128"
+    "--${boolEn (
       precision == "single"
-      || precision == "double") null)
+      || precision == "double")}-generic-simd256"
     #--enable-mips-zbus-timer
     "--enable-fma"
-    #(enFlag "mpi" (
+    #"--${boolEn (
     #  mpi != null
     #  && (
     #    precision == "single"
     #    || precision == "double"
-    #    || precision == "long-double")) null)
+    #    || precision == "long-double"))}-mpi"  null)
     "--disable-fortran"
     "--enable-openmp"
     "--enable-threads"
@@ -84,7 +86,18 @@ stdenv.mkDerivation rec {
     "-fPIC"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      md5Url = map (n: "${n}.md5sum") src.urls;
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Library for Fast Discrete Fourier Transform";
     homepage = http://www.fftw.org/;
     license = licenses.gpl2Plus;

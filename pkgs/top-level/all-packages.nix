@@ -2166,7 +2166,10 @@ nettle = callPackage ../all-pkgs/n/nettle { };
 
 networkmanager = callPackage ../all-pkgs/n/networkmanager { };
 
-networkmanager-applet = callPackage ../all-pkgs/n/networkmanager-applet { };
+networkmanager-applet_1-4 = callPackage ../all-pkgs/n/networkmanager-applet {
+  channel = "1.4";
+};
+networkmanager-applet = callPackageAlias "networkmanager-applet_1-4" { };
 
 networkmanager-l2tp = callPackage ../all-pkgs/n/networkmanager-l2tp { };
 

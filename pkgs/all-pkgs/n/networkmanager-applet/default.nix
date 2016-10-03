@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , intltool
+, lib
 , makeWrapper
 
 , adwaita-icon-theme
@@ -14,7 +15,7 @@
 , gnome-keyring
 , gobject-introspection
 , gsettings-desktop-schemas
-, gtk3
+, gtk_3
 , hicolor-icon-theme
 , iso-codes
 , jansson
@@ -29,25 +30,25 @@
 , pango
 , polkit
 , systemd_lib
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+  inherit (lib)
+    boolEn
+    boolWt;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "network-manager-applet-${version}";
-  versionMajor = "1.4";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "network-manager-applet-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/network-manager-applet/${versionMajor}/"
+    url = "mirror://gnome/sources/network-manager-applet/${channel}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/network-manager-applet/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "d9f5f1e151b8edbbcebb6f818eed9a49b53aadcb4e8aed2cae4fc09996278331";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   propagatedUserEnvPkgs = [
@@ -72,7 +73,7 @@ stdenv.mkDerivation rec {
     libgnome-keyring
     gobject-introspection
     gsettings-desktop-schemas
-    gtk3
+    gtk_3
     hicolor-icon-theme
     iso-codes
     jansson
@@ -91,13 +92,13 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--disable-maintainer-mode"
     "--enable-nls"
-    (enFlag "iso-codes" (iso-codes != null) null)
+    "--${boolEn (iso-codes != null)}-iso-codes"
     "--disable-migration"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-schemas-compile"
     "--enable-more-warnings"
     #"--with-appindicator"
-    (wtFlag "wwan" (modemmanager != null) null)
+    "--${boolWt (modemmanager != null)}-wwan"
   ];
 
   makeFlags = [
@@ -113,7 +114,7 @@ stdenv.mkDerivation rec {
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
-      --prefix XDG_DATA_DIRS : "${gtk3}/share" \
+      --prefix XDG_DATA_DIRS : "${gtk_3}/share" \
       --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix XDG_DATA_DIRS : "$XDG_ICON_DIRS" \
       --prefix XDG_DATA_DIRS : "$out/share"
@@ -122,13 +123,25 @@ stdenv.mkDerivation rec {
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
-      --prefix XDG_DATA_DIRS : "${gtk3}/share" \
+      --prefix XDG_DATA_DIRS : "${gtk_3}/share" \
       --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix XDG_DATA_DIRS : "$XDG_ICON_DIRS" \
       --prefix XDG_DATA_DIRS : "$out/share"
   '';
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/network-manager-applet/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "NetworkManager control applet";
     homepage = http://projects.gnome.org/NetworkManager/;
     license = licenses.gpl2;

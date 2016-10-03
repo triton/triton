@@ -2176,7 +2176,12 @@ networkmanager-applet = callPackageAlias "networkmanager-applet_1-4" { };
 
 networkmanager-l2tp = callPackage ../all-pkgs/n/networkmanager-l2tp { };
 
-networkmanager-openconnect = callPackage ../all-pkgs/n/networkmanager-openconnect { };
+networkmanager-openconnect_1-2 =
+  callPackage ../all-pkgs/n/networkmanager-openconnect {
+    channel = "1.2";
+  };
+networkmanager-openconnect =
+  callPackageAlias "networkmanager-openconnect_1-2" { };
 
 networkmanager-openvpn_1-2 = callPackage ../all-pkgs/n/networkmanager-openvpn {
   channel = "1.2";

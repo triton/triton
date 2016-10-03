@@ -3,32 +3,34 @@
 , gettext
 , intltool
 , kmod
+, lib
 , procps
 
 , dbus-glib
 , glib
-, gtk3
+, gtk_3
 , libsecret
 , libxml2
 , networkmanager
 , openconnect
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    wtFlag;
-in
+  inherit (lib)
+    boolWt;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "NetworkManager-openconnect-${version}";
-  versionMajor = "1.0";
-  versionMinor = "8";
-  version = "${versionMajor}.${versionMinor}";
+  name = "NetworkManager-openconnect-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/NetworkManager-openconnect/${versionMajor}/"
-        + "${name}.tar.xz";
-    sha256 = "1rnp0qj33y4yz51ww88k7ncmfvxims66r3ldx4ky7jmczy22igy1";
+    url = "mirror://gnome/sources/NetworkManager-openconnect/${channel}/"
+      + "${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -39,7 +41,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     dbus-glib
     glib
-    gtk3
+    gtk_3
     libsecret
     libxml2
     networkmanager
@@ -47,40 +49,47 @@ stdenv.mkDerivation rec {
   ];
 
   preConfigure = ''
-     substituteInPlace "configure" \
-       --replace "/sbin/sysctl" "${procps}/sbin/sysctl"
-     substituteInPlace "src/nm-openconnect-service.c" \
-       --replace "/usr/sbin/openconnect" "${openconnect}/sbin/openconnect" \
-       --replace "/sbin/modprobe" "${kmod}/sbin/modprobe"
+    sed -i configure \
+      -e 's,/sbin/sysctl,${procps}/sbin/sysctl,g'
+    sed -i src/nm-openconnect-service.c \
+      -e 's,/usr/sbin/openconnect,${openconnect}/sbin/openconnect,g' \
+      -e 's,/sbin/modprobe,${kmod}/sbin/modprobe,g'
   '';
 
   configureFlags = [
     "--disable-maintainer-mode"
+    #"--enable-absolute-paths"
     "--enable-nls"
     "--enable-more-warnings"
-    (wtFlag "gnome" (
-      gtk3 != null
-      && libsecret != null) null)
-    (wtFlag "authdlg" (
-      gtk3 != null
+    "--${boolWt (
+      gtk_3 != null
+      && libsecret != null)}-gnome"
+    "--with-libnm-glib"
+    "--${boolWt (
+      gtk_3 != null
       && libsecret != null
-      && openconnect != null) null)
+      && openconnect != null)}-authdlg"
   ];
 
-  postConfigure = ''
-     substituteInPlace "./auth-dialog/Makefile" \
-       --replace "-Wstrict-prototypes" "" \
-       --replace "-Werror" ""
-     substituteInPlace "properties/Makefile" \
-       --replace "-Wstrict-prototypes" "" \
-       --replace "-Werror" ""
-  '';
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/"
+        + "NetworkManager-openconnect/${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "NetworkManager OpenConnect plugin";
     homepage = https://wiki.gnome.org/Projects/NetworkManager;
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

@@ -3,6 +3,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , avahi
 , bind
@@ -40,31 +41,31 @@
 , dhcp-client ? "dhclient"
   , dhcp
   , dhcpcd
-}:
 
-let
-  inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
-in
+, channel
+}:
 
 assert dhcp-client == "dhclient" || dhcp-client == "dhcpcd";
 assert dhcp-client == "dhclient" -> dhcp != null;
 assert dhcp-client == "dhcpcd" -> dhcpcd != null;
 
+let
+  inherit (lib)
+    boolEn
+    boolString
+    boolWt
+    optionals;
+
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "NetworkManager-${version}";
-  versionMajor = "1.4";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  name = "NetworkManager-${source.version}";
 
   src = fetchurl rec {
-    url = "mirror://gnome/sources/NetworkManager/${versionMajor}/"
+    url = "mirror://gnome/sources/NetworkManager/${channel}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/NetworkManager/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "a864e347ddf6da8dabd40e0185b8c10a655d4a94b45cbaa2b3bb4b5e8360d204";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -159,20 +160,20 @@ stdenv.mkDerivation rec {
     "--disable-ifnet"
     "--disable-code-coverage"
     "--enable-wifi"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-qt"
     #"--enable-teamdctl"
-    (enFlag "polkit" (polkit != null) null)
-    (enFlag "polkit-agent" (polkit != null) null)
+    "--${boolEn (polkit != null)}-polkit"
+    "--${boolEn (polkit != null)}-polkit-agent"
     #"--enable-modify-system"
-    (enFlag "ppp" (ppp != null) null)
+    "--${boolEn (ppp != null)}-ppp"
     "--enable-bluez5-dun"
     #"--enable-concheck"
     "--disable-more-warnings"
     "--disable-more-asserts"
     "--disable-more-logging"
     "--disable-lto"
-    (enFlag "vala" (vala != null) null)
+    "--${boolEn (vala != null)}-vala"
     "--enable-tests"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -196,8 +197,10 @@ stdenv.mkDerivation rec {
     #"--with-pppd-plugin-dir"
     "--with-pppd=${ppp}/bin/pppd"
     "--with-modem-manager-1"
-    (wtFlag "dhclient" (dhcp-client == "dhclient") "${dhcp}/bin/dhclient")
-    (wtFlag "dhcpcd" (dhcp-client == "dhcpcd") "${dhcpcd}/sbin/dhcpcd")
+    "--${boolWt (dhcp-client == "dhclient")}-dhclient${
+      boolString (dhcp-client == "dhclient") "=${dhcp}/bin/dhclient" ""}"
+    "--${boolWt (dhcp-client == "dhcpcd")}-dhcpcd${
+      boolString (dhcp-client == "dhcpcd") "=${dhcpcd}/bin/dhcpcd" ""}"
     "--with-resolvconf=${openresolv}/sbin/resolvconf"
     "--without-netconfig"
     "--with-iptables=${iptables}/bin/iptables"
@@ -206,7 +209,7 @@ stdenv.mkDerivation rec {
     #"--with-system-ca-path=/path/"
     # FIXME: fix impure path
     "--with-kernel-firmware-dir=/run/current-system/firmware"
-    (wtFlag "libsoup" (libsoup != null) null)
+    "--${boolWt (libsoup != null)}-libsoup"
     "--with-nmcli"
     "--with-nmtui"
     "--with-more-asserts=0"
@@ -243,9 +246,19 @@ stdenv.mkDerivation rec {
   passthru = {
     inherit
       dhcp-client;
+
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/NetworkManager/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "https://wiki.gnome.org/Projects/NetworkManager";
     homepage = http://projects.gnome.org/NetworkManager/;
     license = licenses.gpl2Plus;

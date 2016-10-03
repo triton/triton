@@ -1020,9 +1020,9 @@ let
     version = 2;
     owner = "jwilder";
     repo = "encoding";
-    date = "2016-05-26";
-    rev = "ac74639f65b2180a2e5eb5ff197f0c122441aed0";
-    sha256 = "4577efbd2cfa6efe9bfc3d2023334c161a106ede885f7c34098e1da5adf6c539";
+    date = "2016-09-27";
+    rev = "4dada27c33277820fe35c7ee71ed34fbc9477d00";
+    sha256 = "14xlhzr94x0qyrik05ijfjxpcbnnda8rhndgm02kfh2fi5kqk37z";
   };
 
   engine-api = buildFromGitHub {

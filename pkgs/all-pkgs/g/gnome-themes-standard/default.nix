@@ -2,31 +2,33 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , adwaita-icon-theme
 , cairo
 , gdk-pixbuf
 , glib
-, gtk2
-, gtk3
+, gtk_2
+, gtk
 , librsvg
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
-in
+  inherit (lib)
+    boolEn;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gnome-themes-standard-${version}";
-  versionMajor = "3.20";
-  versionMinor = "2";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gnome-themes-standard-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-themes-standard/${versionMajor}/" +
-          "${name}.tar.xz";
-    sha256 = "9d0d9c4b2c9f9008301c3c1878ebb95859a735b7fd4a6a518802b9637e4a7915";
+    url = "mirror://gnome/sources/gnome-themes-standard/${channel}/"
+      + "${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -39,19 +41,31 @@ stdenv.mkDerivation rec {
     cairo
     gdk-pixbuf
     glib
-    gtk2
-    gtk3
+    gtk_2
+    gtk
     librsvg
   ];
 
   configureFlags = [
     "--enable-glibtest"
     "--enable-nls"
-    (enFlag "gtk3-engine" (gtk3 != null) null)
-    (enFlag "gtk2-engine" (gtk2 != null) null)
+    "--${boolEn (gtk != null)}-gtk3-engine"
+    "--${boolEn (gtk_2 != null)}-gtk2-engine"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-themes-standard/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Standard Themes for GNOME Applications";
     homepage = https://git.gnome.org/browse/gnome-themes-standard/;
     license = licenses.lgpl21Plus;

@@ -1152,7 +1152,7 @@ gnome-calculator_3-22 = callPackage ../all-pkgs/g/gnome-calculator {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  #gnome-themes-standard = pkgs.gnome-themes-standard_3-20;
+  gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
   gtk = pkgs.gtk_3-22;
   gtksourceview = pkgs.gtksourceview_3-22;
@@ -1220,7 +1220,13 @@ gnome-terminal_3-22 = callPackage ../all-pkgs/g/gnome-terminal {
 };
 gnome-terminal = callPackageAlias "gnome-terminal_3-22" { };
 
-gnome-themes-standard = callPackage ../all-pkgs/g/gnome-themes-standard { };
+gnome-themes-standard_3-22 = callPackage ../all-pkgs/g/gnome-themes-standard {
+  channel = "3.22";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gtk = pkgs.gtk_3-22;
+};
+gnome-themes-standard = callPackageAlias "gnome-themes-standard_3-22" { };
 
 gnome-user-share = callPackage ../all-pkgs/g/gnome-user-share { };
 
@@ -2735,7 +2741,7 @@ tracker_1-10 = callPackage ../all-pkgs/t/tracker {
   #evolution
   evolution-data-server = pkgs.evolution-data-server_3-22;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gnome-themes-standard = pkgs.gnome-themes-standard;
+  gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
   gtk = pkgs.gtk_3-22;
   vala = pkgs.vala_0-34;

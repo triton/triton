@@ -14,15 +14,17 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+    boolEn
+    boolString
+    boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "accountsservice-0.6.42";
+  name = "accountsservice-0.6.43";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/accountsservice/${name}.tar.xz";
-    sha256 = "e56494c2f18627900b57234e5628923cc16a37bf8fd16b06c46118d6ae9c007e";
+    multihash = "QmSNrbCYfdeNwq3nqs7WctLmZ8jK2NmGPfWdDWuWLtVpC7";
+    sha256 = "ed3ba94aa38ceb822a0e1a1ac71bf1a8123babf90be049397b3a00900e48d6cc";
   };
 
   nativeBuildInputs = [
@@ -39,7 +41,19 @@ stdenv.mkDerivation rec {
     systemd_lib
   ];
 
+  preConfigure = ''
+    configureFlagsArray+=(
+      "--${boolWt (systemd_lib != null)}-systemdsystemunitdir${
+        boolString (systemd_lib != null) "=$out/etc/systemd/system" ""}"
+    )
+  '';
+
   configureFlags = [
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
+    "--enable-nls"
+    "--disable-maintainer-mode"
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-admin-group=wheel"
     # Heuristics for guessing system vs human users in the range 500-minimum-uid
     #"--enable-user-heuristics"
@@ -47,11 +61,11 @@ stdenv.mkDerivation rec {
     #"--with-minimum-uid=1000"
     "--disable-coverage"
     "--disable-more-warnings"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
     "--disable-docbook-docs"
-    (enFlag "systemd" (systemd_lib != null) null)
-    (wtFlag "systemdsystemunitdir" (systemd_lib != null) "$(out)/etc/systemd/system")
-    "--sysconfdir=/etc"
-    "--localstatedir=/var"
+    "--${boolEn (systemd_lib != null)}-systemd"
   ];
 
   preInstall = ''

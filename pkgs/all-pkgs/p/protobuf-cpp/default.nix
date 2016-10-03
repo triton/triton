@@ -5,14 +5,14 @@
 }:
 
 let
-  version = "3.0.2";
+  version = "3.1.0";
 in
 stdenv.mkDerivation rec {
   name = "protobuf-cpp-${version}";
 
   src = fetchurl {
     url = "https://github.com/google/protobuf/releases/download/v${version}/${name}.tar.gz";
-    sha256 = "0a6f73ab32b2888bf7f8c29608f8624a78950de4ae992c3688c3b123b6c84802";
+    sha256 = "51ceea9957c875bdedeb1f64396b5b0f3864fe830eed6a2d9c066448373ea2d6";
   };
 
   buildInputs = [

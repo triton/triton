@@ -545,7 +545,7 @@ asio = callPackage ../all-pkgs/a/asio { };
 aspell = callPackage ../all-pkgs/a/aspell { };
 
 at-spi2-atk_2-22 = callPackage ../all-pkgs/a/at-spi2-atk {
-  channel = "2.21";
+  channel = "2.22";
   at-spi2-core = pkgs.at-spi2-core_2-22;
   atk = pkgs.atk_2-22;
 };

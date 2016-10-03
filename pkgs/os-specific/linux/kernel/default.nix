@@ -36,13 +36,13 @@ let
     };
     "bcache" =
       let
-        date = "2016-10-01";
+        date = "2016-10-03";
       in {
         version = "4.7.6";
         urls = [
           "https://github.com/wkennington/linux/releases/download/bcachefs-${version}-${date}/linux-bcachefs-${version}-${date}.tar.xz"
         ];
-        sha256 = "17ac16c494c16117c927d10caab2aaaaae10424b95735e40374fa5ca773dd454";
+        sha256 = "b99620696115a2c0d49036fa1bc773da04d5e5f99c0b877b115bb6d4cd40eedd";
         features.bcachefs = true;
       };
   };

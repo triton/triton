@@ -2182,7 +2182,10 @@ networkmanager-pptp_1-2 = callPackage ../all-pkgs/n/networkmanager-pptp {
 };
 networkmanager-pptp = callPackageAlias "networkmanager-pptp_1-2" { };
 
-networkmanager-vpnc = callPackage ../all-pkgs/n/networkmanager-vpnc { };
+networkmanager-vpnc_1-2 = callPackage ../all-pkgs/n/networkmanager-vpnc {
+  channel = "1.2";
+};
+networkmanager-vpnc = callPackageAlias "networkmanager-vpnc_1-2" { };
 
 nfacct = callPackage ../all-pkgs/n/nfacct { };
 

@@ -1020,7 +1020,13 @@ fftw_single = callPackage ../all-pkgs/f/fftw {
 
 file = callPackage ../all-pkgs/f/file { };
 
-file-roller = callPackage ../all-pkgs/f/file-roller { };
+file-roller_3-22 = callPackage ../all-pkgs/f/file-roller {
+  channel = "3.22";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gtk = pkgs.gtk_3-22;
+};
+file-roller = callPackageAlias "file-roller_3-22" { };
 
 filezilla = callPackage ../all-pkgs/f/filezilla { };
 

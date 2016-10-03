@@ -3,6 +3,7 @@
 , gettext
 , intltool
 , itstool
+, lib
 , makeWrapper
 
 , adwaita-icon-theme
@@ -11,29 +12,29 @@
 , file
 , gdk-pixbuf
 , glib
-, gtk3
+, gtk
 , json-glib
 , libarchive
 , libnotify
 , libxml2
-, nautilus
 , pango
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
+
+  source = (import ./source.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "file-roller-${version}";
-  versionMajor = "3.20";
-  versionMinor = "3";
-  version = "${versionMajor}.${versionMinor}";
+  name = "file-roller-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/file-roller/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/file-roller/${versionMajor}/${name}.sha256sum";
-    sha256 = "6b5c2de4c6bd52318cacd2a398cdfa45a5f1df8a77c6652a38a6a1d3e53644e9";
+    url = "mirror://gnome/sources/file-roller/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -49,23 +50,21 @@ stdenv.mkDerivation rec {
     file
     gdk-pixbuf
     glib
-    gtk3
+    gtk
     json-glib
     libarchive
     libnotify
     libxml2
-    nautilus
   ];
 
   configureFlags = [
-    "--enable-schemas-compile"
+    "--disable-schemas-compile"
     "--disable-debug"
     "--disable-run-in-place"
-    (enFlag "nautilus-actions" (nautilus != null) null)
     #"--enable-packagekit"
-    (enFlag "notification" (libnotify != null) null)
+    "--${boolEn (libnotify != null)}-notification"
     #"--enable-magic"
-    (enFlag "libarchive" (libarchive != null) null)
+    "--${boolEn (libarchive != null)}-libarchive"
     "--enable-nls"
     "--disable-deprecated"
   ];
@@ -86,7 +85,19 @@ stdenv.mkDerivation rec {
       --prefix XDG_DATA_DIRS : "$XDG_ICON_DIRS"
   '';
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/file-roller/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Archive manager for the GNOME desktop environment";
     homepage = https://wiki.gnome.org/Apps/FileRoller;
     licenses = licenses.free;

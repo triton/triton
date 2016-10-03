@@ -3,14 +3,14 @@
 }:
 
 let
-  version = "0.7.0";
+  version = "0.7.1";
 in
 stdenv.mkDerivation rec {
   name = "libfilezilla-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/filezilla/libfilezilla/${version}/${name}.tar.bz2";
-    sha256 = "276528e4aafca9c89dc5ed6dd047f2db1aa72aa3f2c564eb3fd6cf9f594bab1d";
+    sha256 = "d95d2db75e523462c3f4b72b663b395dfe988cb71c3abef609f794a155a6ddd3";
   };
 
   meta = with stdenv.lib; {

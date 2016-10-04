@@ -2746,7 +2746,7 @@ let
       go-bitstream
       go-collectd
       hllpp
-      jwt-go
+      jwt-go_v2
       liner
       pat
       pool_v2
@@ -2873,11 +2873,20 @@ let
   };
 
   jwt-go = buildFromGitHub {
-    version = 1;
+    version = 2;
     owner = "dgrijalva";
     repo = "jwt-go";
     rev = "v3.0.0";
-    sha256 = "0gmxycray168ppybd3g9ic9dvkvlnl1y7rn00gcycsv23phszprz";
+    sha256 = "0llmcxijl24gz6w75il6rnijc9gzda4byl5kwr4qnzpw9j0q87n9";
+  };
+
+  jwt-go_v2 = buildFromGitHub {
+    version = 2;
+    owner = "dgrijalva";
+    repo = "jwt-go";
+    rev = "v2.7.0";
+    sha256 = "bee3aac16ad7dfcf79cac6442ae4ef300698b0b3125026d34c36cd46b27060e6";
+    meta.autoUpdate = false;
   };
 
   gravitational_kingpin = buildFromGitHub {

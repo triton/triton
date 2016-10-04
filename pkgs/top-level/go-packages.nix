@@ -972,10 +972,10 @@ let
     version = 2;
     owner = "minio";
     repo = "dsync";
-    date = "2016-08-27";
-    rev = "4b32c34fa9dea3f41d08d31fb14fdfbc02046c52";
-    sha256 = "0aeaa0257a722b2ee80c3a4b11a1efd6a4110b6376667f8c39881ca071b6eecb";
-    meta.autoUpdate = false;
+    date = "2016-10-03";
+    rev = "4cc59442ace8c253062b0827b57ada9a9b7f1c76";
+    sha256 = "1i47jyimsf7nnk98bvkv9kbd7qqxf5xrm4zrxgq7x8mfzq993a1r";
+    meta.useUnstable = false;
   };
 
   ed25519 = buildFromGitHub {

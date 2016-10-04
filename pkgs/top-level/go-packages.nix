@@ -4314,9 +4314,9 @@ let
     version = 2;
     owner = "skyrings";
     repo = "skyring-common";
-    date = "2016-08-25";
-    rev = "c6b24a3a8ae3d8ed85747bf7cdd406836a490235";
-    sha256 = "fef5978cb1637eedfe6ebff5c0affb42da46af1219bdabe921602b8f02bd18a9";
+    date = "2016-09-29";
+    rev = "d1c0bb1cbd5ed8438be1385c85c4f494608cde1e";
+    sha256 = "0wr3bw55daf8ryz46hviwvs1wz1l2c6x3rrccr70gllg74lg1wd5";
     buildInputs = [
       go-logging
       go-python

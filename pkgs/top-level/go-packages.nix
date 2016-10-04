@@ -3372,10 +3372,10 @@ let
     version = 2;
     owner = "minio";
     repo = "minio-go";
-    date = "2016-09-12";
-    rev = "e8557e5528f375cbc787bd8f2a4f0487e94c7310";
-    sha256 = "6c6d8fd3c7bd8b2c9ce6b80eb412aa23d9cf84c6b194acb4cc44e0a4b4f7f2c3";
-    meta.autoUpdate = false;
+    rev = "8092353280bf7339e34c8dd1c60b7893673f9936";
+    sha256 = "1b9c2q31y4kk4n89fzz3ddn77q7idbsllqnz7kaix0j2gk28bn3a";
+    meta.useUnstable = true;
+    date = "2016-10-03";
   };
 
   miniobrowser = buildFromGitHub {

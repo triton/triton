@@ -418,12 +418,12 @@ let
     version = 2;
     owner = "russross";
     repo = "blackfriday";
-    rev = "35eb537633d9950afc8ae7bdf0edb6134584e9fc";
-    sha256 = "1yh8fyh5jnfh78fix3mkqmhv2sv3rin30vyyywdgrndlx3hvhqnd";
+    rev = "5f33e7b7878355cd2b7e6b8eefc48a5472c69f70";
+    sha256 = "15j4y3a3s0p0phdi5wyzz8c4v7zlvpy78f2nkczm8k15syyrjih8";
     propagatedBuildInputs = [
       sanitized-anchor-name
     ];
-    date = "2016-09-08";
+    date = "2016-10-03";
   };
 
   blake2b-simd = buildFromGitHub {
@@ -496,9 +496,9 @@ let
     version = 2;
     owner = "spf13";
     repo = "cast";
-    rev = "60e7a69a428e9ac1cf7e0c865fc2fe810d34363e";
-    date = "2016-09-19";
-    sha256 = "1x594jijqskg7lq2bipxa6gqg6h8y420dbglhvf8i596afv50gjp";
+    rev = "2580bc98dc0e62908119e4737030cc2fdfc45e4c";
+    date = "2016-09-26";
+    sha256 = "0imay4f5yy39vwfmzr5yy8csc0jzcpfqllzijwhn5p7rcm14yny2";
     buildInputs = [
       jwalterweatherman
     ];
@@ -554,12 +554,12 @@ let
   };
 
   mitchellh_cli = buildFromGitHub {
-    version = 1;
-    date = "2016-08-15";
-    rev = "fcf521421aa29bde1d93b6920dfce826d7932208";
+    version = 2;
+    date = "2016-10-03";
+    rev = "3acdca71948da01ac07e382e696e4798f0215ccc";
     owner = "mitchellh";
     repo = "cli";
-    sha256 = "0mwr7f87cbcjvjmr3k14xr3qkjxp9pnza00k4237ihhqp75nzarz";
+    sha256 = "08wf9j2lgkx7i2x04viz0ws75chzx31h4hjwv38bqs2lbbxa59gi";
     propagatedBuildInputs = [ crypto go-radix speakeasy go-isatty ];
   };
 
@@ -876,12 +876,12 @@ let
   };
 
   dns = buildFromGitHub {
-    version = 1;
-    rev = "db96a2b759cdef4f11a34506a42eb8d1290c598e";
-    date = "2016-07-25";
+    version = 2;
+    rev = "3f1f7c8ec9ead89493df11f2c3d8bec353a2c2c0";
+    date = "2016-10-03";
     owner  = "miekg";
     repo   = "dns";
-    sha256 = "1bkggzlhyd2pvw26rycsl6zkxsyd9g6ml5bpky8yyhlwb39w2snh";
+    sha256 = "047r5z8vv0ll78ci1k807bxr2p05qjlrlhacg3qs0cqg4iwqbzhi";
   };
 
   weppos-dnsimple-go = buildFromGitHub {
@@ -1050,8 +1050,8 @@ let
     version = 2;
     owner = "pkg";
     repo = "errors";
-    rev = "v0.7.1";
-    sha256 = "0gcdd3h26g4hbmx648c40vk17y422rdpkfchg0rghnbicx3492kg";
+    rev = "v0.8.0";
+    sha256 = "00fi35kiry67anhr4lxryyw5l9c26xj2zc5wzspr4z39paxgb4km";
   };
 
   errwrap = buildFromGitHub {
@@ -1163,11 +1163,11 @@ let
   };
 
   fsnotify = buildFromGitHub {
-    version = 1;
+    version = 2;
     owner = "fsnotify";
     repo = "fsnotify";
-    rev = "v1.3.1";
-    sha256 = "cffd92500f2452c6df734672d15ada139a551f936b3a0aa7046bc05609238493";
+    rev = "v1.4.0";
+    sha256 = "16ks5160s25illxhzmwa70pyr11rmalckk2s39kwbbv05hyawr50";
     propagatedBuildInputs = [
       sys
     ];
@@ -2264,12 +2264,12 @@ let
   };
 
   go-retryablehttp = buildFromGitHub {
-    version = 1;
-    rev = "f4ed9b0fa01a2ac614afe7c897ed2e3d8208f3e8";
+    version = 2;
+    rev = "6e85be8fee1dcaa02c0eaaac2df5a8fbecf94145";
     owner = "hashicorp";
     repo = "go-retryablehttp";
-    sha256 = "1sf83bmy1x43wmgbzcbg4ddskyja4azgymwqcizi5lvsrhb55c17";
-    date = "2016-08-10";
+    sha256 = "1fssinl8qxdmg3b6wvbyd44p473fbkb03wi792bhqaq15jmysqqy";
+    date = "2016-09-29";
     propagatedBuildInputs = [
       go-cleanhttp
     ];
@@ -3891,11 +3891,11 @@ let
 
   prometheus_common = buildFromGitHub {
     version = 2;
-    date = "2016-09-17";
-    rev = "9a94032291f2192936512bab367bc45e77990d6a";
+    date = "2016-10-02";
+    rev = "85637ea67b04b5c3bb25e671dacded2977f8f9f6";
     owner = "prometheus";
     repo = "common";
-    sha256 = "18zack1w905rnw2szh6wn3x162dvdlmz1qg0002zz76bk73ixkcr";
+    sha256 = "02dd278ns2m0gg6kn8fdqq6cjqg30lvd1mwwx71rm5z3dxcfr1hy";
     buildInputs = [
       logrus
       net
@@ -4290,9 +4290,9 @@ let
     version = 2;
     owner = "pkg";
     repo = "sftp";
-    rev = "8197a2e580736b78d704be0fc47b2324c0591a32";
-    date = "2016-09-08";
-    sha256 = "11jdqi93ivpp6mr4bxdis20jnjpqf8b2kvn1gd7917n8i9bjdlxj";
+    rev = "4d0e916071f68db74f8a73926335f809396d6b42";
+    date = "2016-10-01";
+    sha256 = "0bkhab0byjdjq476hxi3as685p7x18l2np7gj2kmrzpadadv1w0a";
     propagatedBuildInputs = [
       crypto
       errors
@@ -4881,9 +4881,9 @@ let
     version = 2;
     owner = "spf13";
     repo = "viper";
-    rev = "a78f70b5b977efe08e313a9e2341c3f5457abdaf";
-    date = "2016-09-20";
-    sha256 = "1hh449y372qzizqbcg9kv7knmc0ydd1nrrz5yq7rmy7y7pmgdx7d";
+    rev = "382f87b929b84ce13e9c8a375a4b217f224e6c65";
+    date = "2016-09-26";
+    sha256 = "11q2n6m8sshwq7y3vg3m4hg88i81f34xwv1ic51i69v3gnlalavy";
     buildInputs = [
       crypt
       pflag

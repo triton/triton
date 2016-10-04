@@ -12,7 +12,7 @@
 , swig
 , zlib
 
-, channel ? "1.9"
+, channel
 }:
 
 let

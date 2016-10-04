@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , python3
 , yasm
 
@@ -14,21 +15,27 @@
 , systemd_lib
 , wayland
 , xorg
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    optionalString;
+  inherit (lib)
+    boolEn
+    optionals;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gstreamer-vaapi-1.8.3";
+  name = "gstreamer-vaapi-${source.version}";
 
   src = fetchurl rec {
-    url = "https://gstreamer.freedesktop.org/src/gstreamer-vaapi/"
-      + "${name}.tar.xz";
-    sha256Url = url + ".sha256sum";
-    sha256 = "6cf3ded097924d23df40239c8f00811d1c727aa41cdc9baaedfc2a39ff2aac0c";
+    urls = map (n: "${n}/${name}.tar.xz") [
+      "https://gstreamer.freedesktop.org/src/gstreamer-vaapi"
+      "mirror://gnome/sources/gstreamer-vaapi/${channel}"
+    ];
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -47,6 +54,7 @@ stdenv.mkDerivation rec {
     mesa
     systemd_lib
     wayland
+  ] ++ optionals (xorg != null) [
     xorg.libX11
     xorg.libXrandr
     xorg.libXrender
@@ -59,11 +67,11 @@ stdenv.mkDerivation rec {
     "--disable-extra-checks"
     "--disable-debug"
     "--enable-encoders"
-    (enFlag "drm" (libdrm != null) null)
-    (enFlag "x11" (xorg.libX11 != null) null)
-    (enFlag "glx" (xorg.libX11 != null && mesa != null) null)
-    (enFlag "wayland" (wayland != null) null)
-    (enFlag "egl" (wayland != null && mesa != null) null)
+    "--${boolEn (libdrm != null)}-drm"
+    "--${boolEn (xorg != null)}-x11"
+    "--${boolEn (xorg != null && mesa != null)}-glx"
+    "--${boolEn (wayland != null)}-wayland"
+    "--${boolEn (wayland != null && mesa != null)}-egl"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -79,7 +87,21 @@ stdenv.mkDerivation rec {
 
   postInstall = "rm -rvf $out/share/gtk-doc";
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Sebastian Dröge
+      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "GStreamer VA-API hardware accelerated video processing";
     homepage = https://github.com/01org/gstreamer-vaapi;
     license = licenses.lgpl21Plus;

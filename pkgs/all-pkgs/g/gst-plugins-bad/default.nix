@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
-, pythonPackages
+, lib
+, python3
 
 , bzip2
 , curl
@@ -42,23 +43,30 @@
 , x265
 , xorg
 , xvidcore
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gst-plugins-bad-1.8.3";
+  name = "gst-plugins-bad-${source.version}";
 
   src = fetchurl rec {
-    url = "https://gstreamer.freedesktop.org/src/gst-plugins-bad/${name}.tar.xz";
-    sha256Url = url + ".sha256sum";
-    sha256 = "7899fcb18e6a1af2888b19c90213af018a57d741c6e72ec56b133bc73ec8509b";
+    urls = map (n: "${n}/${name}.tar.xz") [
+      "https://gstreamer.freedesktop.org/src/gst-plugins-bad"
+      "mirror://gnome/sources/gst-plugins-bad/${channel}"
+    ];
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
-    pythonPackages.python
+    python3
   ];
 
   buildInputs = [
@@ -122,14 +130,14 @@ stdenv.mkDerivation rec {
     "--disable-examples"
     "--enable-external"
     "--enable-experimental"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--enable-gobject-cast-checks"
     "--disable-glib-asserts"
     "--enable-Bsymbolic"
-    (enFlag "orc" (orc != null) null)
+    "--${boolEn (orc != null)}-orc"
     "--disable-static-plugins"
     # Internal Plugins
     "--enable-accurip"
@@ -219,95 +227,109 @@ stdenv.mkDerivation rec {
     "--disable-apple_media"
     "--disable-bluez"
     "--disable-avc"
-    (enFlag "shm" (xorg != null) null)
+    "--${boolEn (xorg != null)}-shm"
     #--disable-vcd
     #--disable-opensles
     #--disable-uvch264
     #"--disable-nvenc"
     #"--disable-tinyalsa"
-    (enFlag "assrender" (libass != null) null)
-    #(enFlag "voamrwbenc" (vo-amrwbenc != null) null)
-    #(enFlag "voaacenc" (vo-aacenc != null) null)
-    #(enFlag "apexsink" ( != null) null)
-    (enFlag "bs2b" (libbs2b != null) null)
-    (enFlag "bz2" (bzip2 != null) null)
-    #(enFlag "chromaprint" ( != null) null)
-    (enFlag "curl" (curl != null) null)
-    #(enFlag "dash" ( != null) null)
-    #(enFlag "dc1394" ( != null) null)
-    #(enFlag "decklink" ( != null) null)
-    #(enFlag "directfb" ( != null) null)
-    (enFlag "wayland" (wayland != null) null)
-    (enFlag "webp" (libwebp != null) null)
-    #(enFlag "daala" ( != null) null)
-    #(enFlag "dts" ( != null) null)
-    #(enFlag "resindvd" ( != null) null)
-    (enFlag "faac" (faac != null) null)
-    (enFlag "faad" (faad2 != null) null)
-    #(enFlag "fbdev" ( != null) null)
-    (enFlag "flite" (flite != null) null)
-    (enFlag "gsm" (gsm != null) null)
-    #(enFlag "fluidsynth" ( != null) null)
-    #(enFlag "kate" ( != null) null)
-    (enFlag "ladspa" (ladspaH != null) null)
-    #(enFlag "lv2" ( != null) null)
-    #(enFlag "libde265" ( != null) null)
-    (enFlag "libmms" (libmms != null) null)
-    #(enFlag "srtp" ( != null) null)
-    #(enFlag "dtls" ( != null) null)
-    #(enFlag "linsys" ( != null) null)
-    (enFlag "modplug" (libmodplug != null) null)
-    #(enFlag "mimic" ( != null) null)
-    #(enFlag "mpeg2enc" ( != null) null)
-    #(enFlag "mplex" ( != null) null)
-    (enFlag "musepack" (musepack != null) null)
-    #(enFlag "nas" ( != null) null)
-    #(enFlag "neon" ( != null) null)
-    #(enFlag "ofa" ( != null) null)
-    (enFlag "openal" (openal != null) null)
-    #(enFlag "opencv" (opencv != null) null)
-    #(enFlag "openexr" ( != null) null)
-    (enFlag "openh264" (openh264 != null) null)
-    (enFlag "openjpeg" (openjpeg != null) null)
-    #(enFlag "openni2" ( != null) null)
-    (enFlag "opus" (opus != null) null)
-    #(enFlag "pvr" ( != null) null)
-    (enFlag "rsvg" (librsvg != null) null)
-    (enFlag "gl" (mesa != null) null)
-    #(enFlag "gtk3" ( != null) null)
-    #(enFlag "qt" ( != null) null)
+    "--${boolEn (libass != null)}-assrender"
+    #"--${boolEn (vo-amrwbenc != null)}-voamrwbenc"
+    #"--${boolEn (vo-aacenc != null)}-voaacenc"
+    #"--${boolEn ( != null)}-apexsink"
+    "--${boolEn (libbs2b != null)}-bs2b"
+    "--${boolEn (bzip2 != null)}-bz2"
+    #"--${boolEn ( != null)}-chromaprint"
+    "--${boolEn (curl != null)}-curl"
+    #"--${boolEn ( != null)}-dash"
+    #"--${boolEn ( != null)}-dc1394"
+    #"--${boolEn ( != null)}-decklink"
+    #"--${boolEn ( != null)}-directfb"
+    "--${boolEn (wayland != null)}-wayland"
+    "--${boolEn (libwebp != null)}-webp"
+    #"--${boolEn ( != null)}-daala"
+    #"--${boolEn ( != null)}-dts"
+    #"--${boolEn ( != null)}-resindvd"
+    "--${boolEn (faac != null)}-faac"
+    "--${boolEn (faad2 != null)}-faad"
+    #"--${boolEn ( != null)}-fbdev"
+    "--${boolEn (flite != null)}-flite"
+    "--${boolEn (gsm != null)}-gsm"
+    #"--${boolEn ( != null)}-fluidsynth"
+    #"--${boolEn ( != null)}-kate"
+    "--${boolEn (ladspaH != null)}-ladspa"
+    #"--${boolEn ( != null)}-lv2"
+    #"--${boolEn ( != null)}-libde265"
+    "--${boolEn (libmms != null)}-libmms"
+    #"--${boolEn ( != null)}-srtp"
+    #"--${boolEn ( != null)}-dtls"
+    #"--${boolEn ( != null)}-linsys"
+    "--${boolEn (libmodplug != null)}-modplug"
+    #"--${boolEn ( != null)}-mimic"
+    #"--${boolEn ( != null)}-mpeg2enc"
+    #"--${boolEn ( != null)}-mplex"
+    "--${boolEn (musepack != null)}-musepack"
+    #"--${boolEn ( != null)}-nas"
+    #"--${boolEn ( != null)}-neon"
+    #"--${boolEn ( != null)}-ofa"
+    "--${boolEn (openal != null)}-openal"
+    #"--${boolEn (opencv != null)}-opencv"
+    #"--${boolEn ( != null)}-openexr"
+    "--${boolEn (openh264 != null)}-openh264"
+    "--${boolEn (openjpeg != null)}-openjpeg"
+    #"--${boolEn ( != null)}-openni2"
+    "--${boolEn (opus != null)}-opus"
+    #"--${boolEn ( != null)}-pvr"
+    "--${boolEn (librsvg != null)}-rsvg"
+    "--${boolEn (mesa != null)}-gl"
+    #"--${boolEn ( != null)}-gtk3"
+    #"--${boolEn ( != null)}-qt"
     #"--disable-vulkan"
-    (enFlag "libvisual" (libvisual != null) null)
-    #(enFlag "timidity" ( != null) null)
-    #(enFlag "teletextdec" ( != null) null)
-    #(enFlag "wildmidi" ( != null) null)
-    (enFlag "sdl" (SDL != null) null)
-    #(enFlag "sdltest" ( != null) null)
-    #(enFlag "smoothstreaming" ( != null) null)
-    (enFlag "sndfile" (libsndfile != null) null)
-    (enFlag "soundtouch" (soundtouch != null) null)
-    #(enFlag "spc" ( != null) null)
-    (enFlag "gme" (game-music-emu != null) null)
-    (enFlag "xvid" (xvidcore != null) null)
-    #(enFlag "dvb" ( != null) null)
-    #(enFlag "wininet" ( != null) null)
-    #(enFlag "acm" ( != null) null)
-    (enFlag "vdpau" (libvdpau != null) null)
-    #(enFlag "sbc" ( != null) null)
-    (enFlag "schro" (schroedinger != null) null)
-    #(enFlag "zbar" ( != null) null)
-    #(enFlag "rtmp" ( != null) null)
-    (enFlag "spandsp" (spandsp != null) null)
-    #(enFlag "gsettings" ( != null) null)
+    "--${boolEn (libvisual != null)}-libvisual"
+    #"--${boolEn ( != null)}-timidity"
+    #"--${boolEn ( != null)}-teletextdec"
+    #"--${boolEn ( != null)}-wildmidi"
+    "--${boolEn (SDL != null)}-sdl"
+    #"--${boolEn ( != null)}-sdltest"
+    #"--${boolEn ( != null)}-smoothstreaming"
+    "--${boolEn (libsndfile != null)}-sndfile"
+    "--${boolEn (soundtouch != null)}-soundtouch"
+    #"--${boolEn ( != null)}-spc"
+    "--${boolEn (game-music-emu != null)}-gme"
+    "--${boolEn (xvidcore != null)}-xvid"
+    #"--${boolEn ( != null)}-dvb"
+    #"--${boolEn ( != null)}-wininet"
+    #"--${boolEn ( != null)}-acm"
+    "--${boolEn (libvdpau != null)}-vdpau"
+    #"--${boolEn ( != null)}-sbc"
+    "--${boolEn (schroedinger != null)}-schro"
+    #"--${boolEn ( != null)}-zbar"
+    #"--${boolEn ( != null)}-rtmp"
+    "--${boolEn (spandsp != null)}-spandsp"
+    #"--${boolEn ( != null)}-gsettings"
     "--enable-schemas-compile"
-    #(enFlag "sndio" ( != null) null)
-    #(enFlag "hls" ( != null) null)
-    (enFlag "x265" (x265 != null) null)
+    #"--${boolEn ( != null)}-sndio"
+    #"--${boolEn ( != null)}-hls"
+    "--${boolEn (x265 != null)}-x265"
 
     "--without-gtk"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Sebastian Dröge
+      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Less plugins for GStreamer";
     homepage = http://gstreamer.freedesktop.org;
     license = licenses.lgpl2;

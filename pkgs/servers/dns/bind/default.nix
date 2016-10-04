@@ -15,7 +15,7 @@
 , ncurses
 , openldap
 , openssl
-, postgresql_lib
+, postgresql
 , python
 , readline
 
@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
     db
     openldap
     mysql_lib
-    postgresql_lib
+    postgresql
   ];
 
   configureFlags = [
@@ -110,7 +110,7 @@ stdenv.mkDerivation rec {
     "--without-make-clean"
     "--enable-full-report"
   ] ++ optionals (!toolsOnly) [
-    "--with-dlz-postgres=${postgresql_lib}"
+    "--with-dlz-postgres=${postgresql}"
     "--with-dlz-mysql=${mysql_lib}"
     "--with-dlz-bdb=${db}"
     "--with-dlz-filesystem"

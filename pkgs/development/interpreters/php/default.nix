@@ -1,5 +1,5 @@
 { lib, stdenv, fetchurl, composableDerivation, autoconf, automake, flex, bison
-, mysql_lib, libxml2, readline, zlib, curl, postgresql_lib, gettext
+, mysql_lib, libxml2, readline, zlib, curl, postgresql, gettext
 , openssl, pkgconfig, sqlite, config, libjpeg, libpng, freetype
 , libxslt, libmcrypt, bzip2, icu, openldap, cyrus-sasl, libmhash
 , pam, gmp, apache-httpd }:
@@ -89,13 +89,13 @@ let
         };
 
         postgresql = {
-          configureFlags = ["--with-pgsql=${postgresql_lib}"];
-          buildInputs = [ postgresql_lib ];
+          configureFlags = ["--with-pgsql=${postgresql}"];
+          buildInputs = [ postgresql ];
         };
 
         pdo_pgsql = {
-          configureFlags = ["--with-pdo-pgsql=${postgresql_lib}"];
-          buildInputs = [ postgresql_lib ];
+          configureFlags = ["--with-pdo-pgsql=${postgresql}"];
+          buildInputs = [ postgresql ];
         };
 
         mysql = {

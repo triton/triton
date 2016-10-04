@@ -2460,7 +2460,6 @@ postgresql_91 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.1";
 };
 postgresql = callPackageAlias "postgresql_96" { };
-postgresql_lib = callPackageAlias "postgresql" { };
 
 potrace = callPackage ../all-pkgs/p/potrace { };
 

@@ -22,7 +22,7 @@
 , lvm2
 , mysql_lib
 , net-snmp
-, postgresql_lib
+, postgresql
 , protobuf-c
 , python2
 #, rabbitmq-c
@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
     lvm2
     mysql_lib
     net-snmp
-    postgresql_lib
+    postgresql
     protobuf-c
     python2
     systemd_lib

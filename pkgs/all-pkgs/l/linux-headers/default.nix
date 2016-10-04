@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, channel ? "3.18"
+, channel
 }:
 
 let

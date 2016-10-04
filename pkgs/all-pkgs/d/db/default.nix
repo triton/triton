@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 
-, channel ? "5"
+, channel
 }:
 
 let

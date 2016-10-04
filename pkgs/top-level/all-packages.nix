@@ -768,13 +768,13 @@ cyrus-sasl = callPackage ../all-pkgs/c/cyrus-sasl { };
 
 dash = callPackage ../all-pkgs/d/dash { };
 
-db = callPackage ../all-pkgs/d/db { };
-db_5 = callPackageAlias "db" {
+db_5 = callPackage ../all-pkgs/d/db {
   channel = "5";
 };
-db_6 = callPackageAlias "db" {
+db_6 = callPackage ../all-pkgs/d/db {
   channel = "6";
 };
+db = callPackageAlias "db_5" { };
 
 dbus = callPackage ../all-pkgs/d/dbus { };
 

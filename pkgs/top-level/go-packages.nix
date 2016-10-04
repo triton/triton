@@ -3718,7 +3718,7 @@ let
     date = "2016-09-05";
     rev = "ad4efe000aa550bb54918c06ebbadc0ff17687b9";
     sha256 = "9c47c25cd544f48064e148ea428f95930505fd2f74e3a2e606aff1adfe92db42";
-    meta.autoUpdate = false;
+    meta.useUnstable = true;
   };
 
   pb_v1 = buildFromGitHub {

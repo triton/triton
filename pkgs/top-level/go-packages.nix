@@ -1000,8 +1000,8 @@ let
     version = 2;
     owner = "olivere";
     repo = "elastic";
-    rev = "v3.0.50";
-    sha256 = "0790081ec7a09f26f5ef18a83272a0eb35f4b5532fc51eacbe0140b5aff1d4c9";
+    rev = "v3.0.55";
+    sha256 = "0zgnllrzkdfiv6jp1dj1fvglhk3vdw1jwlq031ryc6ys9krwp5im";
     goPackagePath = "gopkg.in/olivere/elastic.v3";
     propagatedBuildInputs = [
       net

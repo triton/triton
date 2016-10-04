@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
-, pythonPackages
+, lib
+, python3
 
 , aalib
 , bzip2
@@ -26,24 +27,31 @@
 , wavpack
 , xorg
 , zlib
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+  inherit (lib)
+    boolEn
+    boolWt;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gst-plugins-good-1.8.3";
+  name = "gst-plugins-good-${source.version}";
 
   src = fetchurl rec {
-    url = "https://gstreamer.freedesktop.org/src/gst-plugins-good/${name}.tar.xz";
-    sha256Url = url + ".sha256sum";
-    sha256 = "a1d6579ba203a7734927c24b90bf6590d846c5a5fcec01a48201018c8ad2827a";
+    urls = map (n: "${n}/${name}.tar.xz") [
+      "https://gstreamer.freedesktop.org/src/gst-plugins-good"
+      "mirror://gnome/sources/gst-plugins-good/${channel}"
+    ];
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
-    pythonPackages.python
+    python3
   ];
 
   buildInputs = [
@@ -93,7 +101,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--enable-gobject-cast-checks"
     "--disable-glib-asserts"
-    (enFlag "orc" (orc != null) null)
+    "--${boolEn (orc != null)}-orc"
     "--enable-Bsymbolic"
     "--disable-static-plugins"
     # Internal plugins
@@ -148,34 +156,48 @@ stdenv.mkDerivation rec {
     "--disable-sunaudio"
     "--disable-osx_audio"
     "--disable-osx_video"
-    (enFlag "gst_v4l2" (v4l_lib != null) null)
-    (enFlag "v4l2-probe" (v4l_lib != null) null)
-    (enFlag "x" (xorg != null) null)
-    (enFlag "aalib" (aalib != null) null)
+    "--${boolEn (v4l_lib != null)}-gst_v4l2"
+    "--${boolEn (v4l_lib != null)}-v4l2-probe"
+    "--${boolEn (xorg != null)}-x"
+    "--${boolEn (aalib != null)}-aalib"
     "--disable-aalibtest"
-    (enFlag "cairo" (cairo != null) null)
-    (enFlag "flac" (flac != null) null)
-    (enFlag "gdk_pixbuf" (gdk-pixbuf != null) null)
-    (enFlag "jack" (jack2_lib != null) null)
-    (enFlag "jpeg" (libjpeg != null) null)
-    (enFlag "libcaca" (libcaca != null) null)
+    "--${boolEn (cairo != null)}-cairo"
+    "--${boolEn (flac != null)}-flac"
+    "--${boolEn (gdk-pixbuf != null)}-gdk_pixbuf"
+    "--${boolEn (jack2_lib != null)}-jack"
+    "--${boolEn (libjpeg != null)}-jpeg"
+    "--${boolEn (libcaca != null)}-libcaca"
     "--disable-libdv"
-    (enFlag "libpng" (libpng != null) null)
-    (enFlag "pulse" (pulseaudio_lib != null) null)
+    "--${boolEn (libpng != null)}-libpng"
+    "--${boolEn (pulseaudio_lib != null)}-pulse"
     "--disable-dv1394"
-    (enFlag "shout2" (libshout != null) null)
-    (enFlag "soup" (libsoup != null) null)
-    (enFlag "speex" (speex != null) null)
-    (enFlag "taglib" (taglib != null) null)
-    (enFlag "vpx" (libvpx != null) null)
-    (enFlag "wavpack" (wavpack != null) null)
-    (enFlag "zlib" (zlib != null) null)
-    (enFlag "bz2" (bzip2 != null) null)
-    (wtFlag "gudev" (libgudev != null) null)
-    (wtFlag "libv4l2" (v4l_lib != null) null)
+    "--${boolEn (libshout != null)}-shout2"
+    "--${boolEn (libsoup != null)}-soup"
+    "--${boolEn (speex != null)}-speex"
+    "--${boolEn (taglib != null)}-taglib"
+    "--${boolEn (libvpx != null)}-vpx"
+    "--${boolEn (wavpack != null)}-wavpack"
+    "--${boolEn (zlib != null)}-zlib"
+    "--${boolEn (bzip2 != null)}-bz2"
+    "--${boolWt (libgudev != null)}-gudev"
+    "--${boolWt (v4l_lib != null)}-libv4l2"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Sebastian Dröge
+      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Basepack of plugins for GStreamer";
     homepage = http://gstreamer.freedesktop.org;
     license = licenses.lgpl2Plus;

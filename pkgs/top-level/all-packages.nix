@@ -1359,9 +1359,18 @@ gst-libav = callPackage ../all-pkgs/g/gst-libav { };
 
 gst-plugins-bad = callPackage ../all-pkgs/g/gst-plugins-bad { };
 
-gst-plugins-base = callPackage ../all-pkgs/g/gst-plugins-base { };
+gst-plugins-base_1-8 = callPackage ../all-pkgs/g/gst-plugins-base {
+  channel = "1.8";
+  gstreamer = pkgs.gstreamer_1-8;
+};
+gst-plugins-base = callPackageAlias "gst-plugins-base_1-8" { };
 
-gst-plugins-good = callPackage ../all-pkgs/g/gst-plugins-good { };
+gst-plugins-good_1-8 = callPackage ../all-pkgs/g/gst-plugins-good {
+  channel = "1.8";
+  gst-plugins-base = pkgs.gst-plugins-base_1-8;
+  gstreamer = pkgs.gstreamer_1-8;
+};
+gst-plugins-good = callPackageAlias "gst-plugins-good_1-8" { };
 
 gst-plugins-ugly = callPackage ../all-pkgs/g/gst-plugins-ugly { };
 

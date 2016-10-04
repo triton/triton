@@ -2626,7 +2626,7 @@ let
       mapstructure
       reflectwalk
     ];
-    meta.autoUpdate = false;
+    meta.useUnstable = true;
   };
 
   hllpp = buildFromGitHub {

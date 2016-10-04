@@ -3,7 +3,7 @@
 
 , pcre
 
-, channel ? "3"
+, channel
 }:
 
 let

@@ -2761,13 +2761,13 @@ sushi = callPackageAlias "sushi_3-22" { };
 
 svrcore = callPackage ../all-pkgs/s/svrcore { };
 
-swig_2 = callPackageAlias "swig" {
+swig_2 = callPackage ../all-pkgs/s/swig {
   channel = "2";
 };
-swig_3 = callPackageAlias "swig" {
+swig_3 = callPackage ../all-pkgs/s/swig {
   channel = "3";
 };
-swig = callPackage ../all-pkgs/s/swig { };
+swig = callPackageAlias "swig_3" { };
 
 sydent = pkgs.python2Packages.sydent;
 

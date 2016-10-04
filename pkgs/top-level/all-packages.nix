@@ -1550,13 +1550,13 @@ intltool = callPackage ../all-pkgs/i/intltool { };
 
 iotop = pkgs.python3Packages.iotop;
 
-iperf = callPackage ../all-pkgs/i/iperf { };
-iperf_2 = callPackageAlias "iperf" {
+iperf_2 = callPackage ../all-pkgs/i/iperf {
   channel = "2";
 };
-iperf_3 = callPackageAlias "iperf" {
+iperf_3 = callPackage ../all-pkgs/i/iperf {
   channel = "3";
 };
+iperf = callPackageAlias "iperf_3" { };
 
 ipfs = pkgs.goPackages.ipfs.bin // { outputs = [ "bin" ]; };
 

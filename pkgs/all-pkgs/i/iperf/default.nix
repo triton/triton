@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 
-, channel ? "3"
+, channel
 }:
 
 let
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://software.es.net/iperf/; 
+    homepage = http://software.es.net/iperf/;
     description = "Tool to measure IP bandwidth using UDP or TCP";
     license = licenses.bsd3;
     maintainers = with maintainers; [

@@ -117,11 +117,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "484eb34681af59703e639b971bc307019182c41f";
-    date = "2015-11-08";
+    rev = "2cbd8ea802d1adf67a6ef1df6b9ade342c37241d";
+    date = "2016-01-05";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "10lr2p1p8ln9v89qqz8s2qfyzfl8yxvlasmyxhfirvd3mw0fspch";
+    sha256 = "1ymvmy57gyb9zw5jlsmmbdz9535wgkf4pn8lbrjg8dhjw607qbsf";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -1389,12 +1389,12 @@ let
   };
 
   gocapability = buildFromGitHub {
-    version = 1;
-    rev = "2c00daeb6c3b45114c80ac44119e7b8801fdd852";
+    version = 2;
+    rev = "e7cb7fa329f456b3855136a2642b197bad7366ba";
     owner = "syndtr";
     repo = "gocapability";
-    sha256 = "0kwcqvj2fq6wl453hcc3q4fmyrv3yk9m3igxwksx9rmpnzaclz8r";
-    date = "2015-07-16";
+    sha256 = "0k8nbsg4h9b8srd2ykkilf73m19b8lm6ib2cx98n5s6m0af4m7y7";
+    date = "2016-09-28";
   };
 
   gocql = buildFromGitHub {
@@ -1569,11 +1569,11 @@ let
 
   goleveldb = buildFromGitHub {
     version = 2;
-    rev = "6ae1797c0b42b9323fc27ff7dcf568df88f2f33d";
-    date = "2016-08-25";
+    rev = "8d31aaf25e3fff25a66d0e116a4453ad7ccc7b76";
+    date = "2016-10-01";
     owner = "syndtr";
     repo = "goleveldb";
-    sha256 = "057ml2rlla20g4qywbdzrh2iw7l7fqj6rsvrhhwagqxwhcmpzcb4";
+    sha256 = "1xwcr9f4442lr4w0g8j38yi0qr7jnqy6nf6dlxn2na5lfx904kzi";
     propagatedBuildInputs = [ ginkgo gomega snappy ];
   };
 
@@ -1611,11 +1611,11 @@ let
 
   gopass = buildFromGitHub {
     version = 2;
-    date = "2016-09-12";
-    rev = "26c6e1184fd5255fa5f5289d0b789a4819c203a4";
+    date = "2016-10-03";
+    rev = "f5387c492211eb133053880d23dfae62aa14123d";
     owner = "howeyc";
     repo = "gopass";
-    sha256 = "1fxdmi9blj9k9z3cbgz25n8ml50qcl2ji3a7rxq9km652v3iyx1b";
+    sha256 = "0cjbnrbv0fa09jgvmwszs9cphk6vn31kcpysvxfsyfzg9bfiannf";
     propagatedBuildInputs = [
       crypto
     ];
@@ -2327,11 +2327,11 @@ let
 
   go-sqlite3 = buildFromGitHub {
     version = 2;
-    rev = "3fb7a0e792edd47bf0cf1e919dfc14e2be412e15";
-    date = "2016-09-08";
+    rev = "e5a3c16c5c1d80b24f633e68aecd6b0702786d3d";
+    date = "2016-10-05";
     owner  = "mattn";
     repo   = "go-sqlite3";
-    sha256 = "11d021759kvdy2r0hdimwckik0qyri8qv22hk744gc4b13mwdcrp";
+    sha256 = "05ys44l7fc74v2df0a98hhpdjj3vyx5bp4glxhaxrmj1y9xz2mfq";
     excludedPackages = "test";
     buildInputs = [
       goquery
@@ -3129,10 +3129,10 @@ let
 
   lxd = buildFromGitHub {
     version = 2;
-    rev = "lxd-2.2";
+    rev = "lxd-2.3";
     owner  = "lxc";
     repo   = "lxd";
-    sha256 = "124fzw5hik8hjmy993cw73qk6hc6arzws8vjab0k44sgdz1lj99z";
+    sha256 = "12gcqh1r7a2vihxj4xidi1nvjy75az4d7g5nj8zg26jnbaxwi2zx";
     excludedPackages = "test"; # Don't build the binary called test which causes conflicts
     buildInputs = [
       crypto
@@ -3654,11 +3654,11 @@ let
 
   openssl = buildFromGitHub {
     version = 2;
-    date = "2016-09-19";
-    rev = "39b8bbe27924f463a6458a8c0423c4ca7960d83b";
+    date = "2016-09-22";
+    rev = "5be686e264d836e7a01ca7fc7c53acdb8edbe768";
     owner = "10gen";
     repo = "openssl";
-    sha256 = "0n28xjl4xz6jfgib4dg4a14gxab9vfbgm88d4wy5w4bkvr864gcc";
+    sha256 = "0jlr0y8812ayj5xfpn7m0m1pfm8pf1g43xbw7ngs4zxcs0ip7l9g";
     goPackageAliases = [ "github.com/spacemonkeygo/openssl" ];
     nativeBuildInputs = [ pkgs.pkgconfig ];
     buildInputs = [ pkgs.openssl ];
@@ -4471,10 +4471,10 @@ let
 
   syncthing = buildFromGitHub rec {
     version = 2;
-    rev = "v0.14.7";
+    rev = "v0.14.8";
     owner = "syncthing";
     repo = "syncthing";
-    sha256 = "1ns9dv9xbmgnw97cc7am3fb4rg8zn2cgzp45l3ax1ffrrx0fcfgn";
+    sha256 = "0ys0ks065bswb33v2ykjcxr6y4nv80xjs0pacn1wzjykcyamsb80";
     buildFlags = [ "-tags noupgrade" ];
     buildInputs = [
       go-lz4 du luhn xdr snappy ratelimit osext
@@ -4518,12 +4518,12 @@ let
   };
 
   tablewriter = buildFromGitHub {
-    version = 1;
-    rev = "daf2955e742cf123959884fdff4685aa79b63135";
-    date = "2016-06-21";
+    version = 2;
+    rev = "bdcc175572fd7abece6c831e643891b9331bc9e7";
+    date = "2016-09-23";
     owner  = "olekukonko";
     repo   = "tablewriter";
-    sha256 = "096014asbb9d27wyyrg81n922icf7p0r0wr2cipg6ymqrfa2d32f";
+    sha256 = "1f8mndah5b3b4ia8vssx7zaw9704fjwwgywy9vgz32a3y2ps2j2d";
     propagatedBuildInputs = [
       go-runewidth
     ];

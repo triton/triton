@@ -4166,9 +4166,9 @@ let
     version = 2;
     owner = "gorilla";
     repo = "rpc";
-    date = "2016-08-16";
-    rev = "e592e2e099465ae27afa66ec089d570904cd2d53";
-    sha256 = "131d59d755657b3d50a4c778c2911e9c1d0fe4be717259ee99619065cb3121e5";
+    date = "2016-09-24";
+    rev = "22c016f3df3febe0c1f6727598b6389507e03a18";
+    sha256 = "0ny16dm38zkd7j6v11vayfx8j5q6bmfhsl3hj855f79c90i4bkaq";
   };
 
   rsc = buildFromGitHub {

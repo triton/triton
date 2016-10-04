@@ -34,7 +34,7 @@
 , openssl
 , pciutils
 , pcre
-, postgresql
+, postgresql_95
 , pulseaudio_lib
 , sqlite
 , systemd_lib
@@ -97,7 +97,7 @@ stdenv.mkDerivation {
     mysql
     openssl
     pcre
-    postgresql
+    postgresql_95
     pulseaudio_lib
     sqlite
     systemd_lib

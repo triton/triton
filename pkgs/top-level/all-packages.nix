@@ -1355,7 +1355,12 @@ gssdp_1-0 = callPackage ../all-pkgs/g/gssdp {
 };
 gssdp = callPackageAlias "gssdp_1-0" { };
 
-gst-libav = callPackage ../all-pkgs/g/gst-libav { };
+gst-libav_1-8 = callPackage ../all-pkgs/g/gst-libav {
+  channel = "1.8";
+  gst-plugins-base = pkgs.gst-plugins-base_1-8;
+  gstreamer = pkgs.gstreamer_1-8;
+};
+gst-libav = callPackageAlias "gst-libav_1-8" { };
 
 gst-plugins-bad = callPackage ../all-pkgs/g/gst-plugins-bad { };
 

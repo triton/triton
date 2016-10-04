@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
-, pythonPackages
+, lib
+, python3
 , yasm # internal libav
 
 , bzip2
@@ -10,23 +11,30 @@
 , orc
 , xz
 , zlib # internal libav
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gst-libav-1.8.3";
+  name = "gst-libav-${source.version}";
 
   src = fetchurl rec {
-    url = "https://gstreamer.freedesktop.org/src/gst-libav/${name}.tar.xz";
-    sha256Url = url + ".sha256sum";
-    sha256 = "9006a05990089f7155ee0e848042f6bb24e52ab1d0a59ff8d1b5d7e33001a495";
+    urls = map (n: "${n}/${name}.tar.xz") [
+      "https://gstreamer.freedesktop.org/src/gst-libav"
+      "mirror://gnome/sources/gst-libav/${channel}"
+    ];
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
-    pythonPackages.python
+    python3
     yasm
   ];
 
@@ -42,7 +50,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    (enFlag "orc" (orc != null) null)
+    "--${boolEn (orc != null)}-orc"
     "--disable-fatal-warnings"
     "--disable-extra-checks"
     "--disable-valgrind"
@@ -60,7 +68,21 @@ stdenv.mkDerivation rec {
     "--without-system-libav"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Sebastian Dröge
+      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "FFmpeg based gstreamer plugin";
     homepage = http://gstreamer.freedesktop.org;
     license = licenses.gpl2;

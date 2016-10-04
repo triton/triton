@@ -3,7 +3,7 @@
 
 , gmp
 
-, channel ? "0.16"
+, channel
 }:
 
 let

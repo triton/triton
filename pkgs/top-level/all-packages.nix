@@ -1572,8 +1572,15 @@ iptables = callPackage ../all-pkgs/i/iptables { };
 
 iputils = callPackage ../all-pkgs/i/iputils { };
 
-isl = callPackage ../all-pkgs/i/isl { };
-isl_0_14 = callPackage ../all-pkgs/i/isl { channel = "0.14"; };
+isl_0-14 = callPackage ../all-pkgs/i/isl {
+  channel = "0.14";
+};
+# Deprecated alias
+isl_0_14 = callPackageAlias "isl_0-14" { };
+isl_0-16 = callPackage ../all-pkgs/i/isl {
+  channel = "0.16";
+};
+isl = callPackageAlias "isl_0-16" { };
 
 iso-codes = callPackage ../all-pkgs/i/iso-codes { };
 

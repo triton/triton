@@ -1,22 +1,32 @@
 { stdenv
 , fetchurl
-, python
+, lib
+, python3
 
 , glib
 , gst-plugins-base
 , gstreamer
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gnonlin-1.4.0";
+  name = "gnonlin-${source.version}";
 
-  src = fetchurl {
-    url = "https://gstreamer.freedesktop.org/src/gnonlin/${name}.tar.xz";
-    sha256 = "0zv60rq2h736a6fivd3a3wp59dj1jar7b2vwzykahvl168b7wrid";
+  src = fetchurl rec {
+    urls = map (n: "${n}/${name}.tar.xz") [
+      "https://gstreamer.freedesktop.org/src/gnonlin"
+      "mirror://gnome/sources/gnonlin/${channel}"
+    ];
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
-    python
+    python3
   ];
 
   buildInputs = [
@@ -35,11 +45,25 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--enable-gobject-cast-checks"
-    "--enable-glib-asserts"
+    "--disable-glib-asserts"
     "--disable-static-plugins"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Sebastian Dröge
+      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "GStreamer elements for non-linear multimedia editors";
     homepage = http://gstreamer.freedesktop.org;
     license = licenses.lgpl2;

@@ -11,7 +11,7 @@
 , openssl
 , zlib
 
-, channel ? "stable"
+, channel
 }:
 
 let

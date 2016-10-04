@@ -2287,10 +2287,13 @@ nghttp2_lib = callPackage ../all-pkgs/n/nghttp2 {
   prefix = "lib";
 };
 
-nginx = callPackage ../all-pkgs/n/nginx { };
-nginx_unstable = callPackageAlias "nginx" {
+nginx_stable = callPackage ../all-pkgs/n/nginx {
+  channel = "stable";
+};
+nginx_unstable = callPackage ../all-pkgs/n/nginx {
   channel = "unstable";
 };
+nginx = callPackageAlias "nginx_stable" { };
 
 ninja = callPackage ../all-pkgs/n/ninja { };
 

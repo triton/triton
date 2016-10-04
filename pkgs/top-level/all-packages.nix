@@ -2441,26 +2441,26 @@ poppler = callPackage ../all-pkgs/p/poppler {
   qt5 = null;
 };
 
-postgresql = callPackage ../all-pkgs/p/postgresql { };
-postgresql_lib = callPackageAlias "postgresql" { };
-postgresql_96 = callPackageAlias "postgresql" {
+postgresql_96 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.6";
 };
-postgresql_95 = callPackageAlias "postgresql" {
+postgresql_95 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.5";
 };
-postgresql_94 = callPackageAlias "postgresql" {
+postgresql_94 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.4";
 };
-postgresql_93 = callPackageAlias "postgresql" {
+postgresql_93 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.3";
 };
-postgresql_92 = callPackageAlias "postgresql" {
+postgresql_92 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.2";
 };
-postgresql_91 = callPackageAlias "postgresql" {
+postgresql_91 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.1";
 };
+postgresql = callPackageAlias "postgresql_96" { };
+postgresql_lib = callPackageAlias "postgresql" { };
 
 potrace = callPackage ../all-pkgs/p/potrace { };
 

@@ -20,7 +20,7 @@
 # Extra Arguments
 , blockSizeKB ? 8, segmentSizeGB ? 1
 , walBlockSizeKB ? 8, walSegmentSizeMB ? 16
-, channel ? "9.6"
+, channel
 }:
 
 let

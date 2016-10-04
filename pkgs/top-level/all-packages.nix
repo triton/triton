@@ -1282,11 +1282,10 @@ gnutar = callPackage ../all-pkgs/g/gnutar { };
 
 gnutls = callPackage ../all-pkgs/g/gnutls { };
 
-go = callPackage ../all-pkgs/g/go { };
-
-go_1_7 = callPackageAlias "go" {
+go_1_7 = callPackage ../all-pkgs/g/go {
   channel = "1.7";
 };
+go = callPackageAlias "go_1_7" { };
 
 go17Packages = callPackage ./go-packages.nix {
   go = callPackageAlias "go_1_7" { };

@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , cairo
 , glib
@@ -10,23 +11,24 @@
 , libjpeg
 , libpng
 , libtiff
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
-in
+  inherit (lib)
+    boolEn
+    boolWt;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "libgxps-${version}";
-  versionMajor = "0.2";
-  versionMinor = "3.2";
-  version = "${versionMajor}.${versionMinor}";
+  name = "libgxps-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libgxps/${versionMajor}/${name}.tar.xz";
-    sha256 = "09s19ci9j5zvy7bmasii7m7sxrdjy6skh7p309klwnk6hpnz19bf";
+    url = "mirror://gnome/sources/libgxps/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   buildInputs = [
@@ -53,13 +55,25 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--enable-man"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (wtFlag "libjpeg" (libjpeg != null) null)
-    (wtFlag "libtiff" (libtiff != null) null)
-    (wtFlag "liblcms2" (lcms2 != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolWt (libjpeg != null)}-libjpeg"
+    "--${boolWt (libtiff != null)}-libtiff"
+    "--${boolWt (lcms2 != null)}-liblcms2"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/libgxps/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Library for handling and rendering XPS documents";
     homepage = https://wiki.gnome.org/Projects/libgxps;
     license = licenses.lgpl21;

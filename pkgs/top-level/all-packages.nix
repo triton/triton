@@ -1761,7 +1761,10 @@ libgweather_3-20 = callPackage ../all-pkgs/l/libgweather {
 };
 libgweather = callPackageAlias "libgweather_3-20" { };
 
-libgxps = callPackage ../all-pkgs/l/libgxps { };
+libgxps_0-2 = callPackage ../all-pkgs/l/libgxps {
+  channel = "0.2";
+};
+libgxps = callPackageAlias "libgxps_0-2" { };
 
 libibverbs = callPackage ../all-pkgs/l/libibverbs { };
 

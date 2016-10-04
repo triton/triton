@@ -4130,7 +4130,7 @@ let
     propagatedBuildInputs = [
       cpuid
     ];
-    meta.autoUpdate = false;
+    meta.useUnstable = true;
   };
 
   reflectwalk = buildFromGitHub {

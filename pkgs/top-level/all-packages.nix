@@ -2369,14 +2369,13 @@ opensmtpd-extras = callPackage ../all-pkgs/o/opensmtpd-extras { };
 
 openssh = callPackage ../all-pkgs/o/openssh { };
 
-openssl = callPackage ../all-pkgs/o/openssl { };
-
 openssl_1-0-2 = callPackage ../all-pkgs/o/openssl {
   channel = "1.0.2";
 };
 openssl_1-1-0 = callPackage ../all-pkgs/o/openssl {
   channel = "1.1.0";
 };
+openssl = callPackageAlias "openssl_1-0-2" { };
 
 openvpn = callPackage ../all-pkgs/o/openvpn { };
 

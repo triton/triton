@@ -6,7 +6,7 @@
 , cryptodevHeaders
 , zlib
 
-, channel ? "1.0.2"
+, channel
 }:
 
 let

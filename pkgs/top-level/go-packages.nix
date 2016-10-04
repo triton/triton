@@ -3382,9 +3382,9 @@ let
     version = 2;
     owner = "minio";
     repo = "miniobrowser";
-    date = "2016-0-30";
-    rev = "0eb58dea0d828f22d4a48434de00b9420432edaa";
-    sha256 = "c0b0571beafd62a2b8e5ce404bc8793e75f7691b2d909d534e41f692f857644e";
+    date = "2016-10-03";
+    rev = "aeeaf471f37a0375a9283edb0fb07cf59b5b561e";
+    sha256 = "0biqvi5nx99cc76kiccjiicnmxhs1n9ivk8yzwh7hvcah6bgjmqn";
     propagatedBuildInputs = [
       go-bindata-assetfs
     ];

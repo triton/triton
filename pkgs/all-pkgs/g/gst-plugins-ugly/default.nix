@@ -1,7 +1,8 @@
 { stdenv
 , fetchurl
 , gettext
-, pythonPackages
+, lib
+, python3
 
 , a52dec
 #, amrnb
@@ -17,25 +18,31 @@
 , mpg123
 , orc
 , x264
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gst-plugins-ugly-1.8.3";
+  name = "gst-plugins-ugly-${source.version}";
 
   src = fetchurl rec {
-    url = "https://gstreamer.freedesktop.org/src/gst-plugins-ugly/"
-      + "${name}.tar.xz";
-    sha256Url = url + ".sha256sum";
-    sha256 = "6fa2599fdd072d31fbaf50c34af406e2be944a010b1f4eab67a5fe32a0310693";
+    urls = map (n: "${n}/${name}.tar.xz") [
+      "https://gstreamer.freedesktop.org/src/gst-plugins-ugly"
+      "mirror://gnome/sources/gst-plugins-ugly/${channel}"
+    ];
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
     gettext
-    pythonPackages.python
+    python3
   ];
 
   buildInputs = [
@@ -73,7 +80,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--enable-gobject-cast-checks"
     "--disable-glib-asserts"
-    (enFlag "orc" (orc != null) null)
+    "--${boolEn (orc != null)}-orc"
     "--enable-Bsymbolic"
     # Internal plugins
     "--disable-static-plugins"
@@ -83,21 +90,35 @@ stdenv.mkDerivation rec {
     "--enable-xingmux"
     "--enable-realmedia"
     # External plugins
-    (enFlag "a52dec" (a52dec != null) null)
-    #(enFlag "amrnb" (amrnb != null) null)
-    #(enFlag "amrwb" (amrnb != null) null)
-    (enFlag "cdio" (libcdio != null) null)
-    (enFlag "dvdread" (libdvdread != null) null)
-    (enFlag "lame" (lame != null) null)
-    (enFlag "mad" (libmad != null) null)
-    (enFlag "mpeg2dec" (libmpeg2 != null) null)
-    (enFlag "mpg123" (mpg123 != null) null)
-    #(enFlag "sidplay" (sidplay != null) null)
-    #(enFlag "twolame" (twolame != null) null)
-    (enFlag "x264" (x264 != null) null)
+    "--${boolEn (a52dec != null)}-a52dec"
+    #"--${boolEn (amrnb != null)}-amrnb"
+    #"--${boolEn (amrnb != null)}-amrwb"
+    "--${boolEn (libcdio != null)}-cdio"
+    "--${boolEn (libdvdread != null)}-dvdread"
+    "--${boolEn (lame != null)}-lame"
+    "--${boolEn (libmad != null)}-mad"
+    "--${boolEn (libmpeg2 != null)}-mpeg2dec"
+    "--${boolEn (mpg123 != null)}-mpg123"
+    #"--${boolEn (sidplay != null)}-sidplay"
+    #"--${boolEn (twolame != null)}-twolame"
+    "--${boolEn (x264 != null)}-x264"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Sebastian Dröge
+      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Basepack of plugins for gstreamer";
     homepage = http://gstreamer.freedesktop.org;
     license = licenses.gpl2;

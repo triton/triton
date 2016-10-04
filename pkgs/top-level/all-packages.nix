@@ -1387,7 +1387,10 @@ gst-plugins-good_1-8 = callPackage ../all-pkgs/g/gst-plugins-good {
 };
 gst-plugins-good = callPackageAlias "gst-plugins-good_1-8" { };
 
-gst-plugins-ugly = callPackage ../all-pkgs/g/gst-plugins-ugly { };
+gst-plugins-ugly_1-8 = callPackage ../all-pkgs/g/gst-plugins-ugly {
+  channel = "1.8";
+};
+gst-plugins-ugly = callPackageAlias "gst-plugins-ugly_1-8" { };
 
 gst-validate = callPackage ../all-pkgs/g/gst-validate { };
 

@@ -1,37 +1,41 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 
 , glib
 , gobject-introspection
 , gst-plugins-base
 , gstreamer
-, pythonPackages
+, python3
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gst-validate-1.8.3";
+  name = "gst-validate-${source.version}";
 
   src = fetchurl rec {
-    url = "https://gstreamer.freedesktop.org/src/gst-validate/${name}.tar.xz";
-    sha256Url = url + ".sha256sum";
-    sha256 = "4525a4fb5b85b8a49674e00d652bee9ac62c56241c148abbff23efa50a224e34";
+    urls = map (n: "${n}/${name}.tar.xz") [
+      "https://gstreamer.freedesktop.org/src/gst-validate"
+      "mirror://gnome/sources/gst-validate/${channel}"
+    ];
+    hashOutput = false;
+    inherit (source) sha256;
   };
-
-  nativeBuildInputs = [
-    gettext
-  ];
 
   buildInputs = [
     glib
     gobject-introspection
     gst-plugins-base
     gstreamer
-    pythonPackages.python
+    python3
   ];
 
   configureFlags = [
@@ -41,7 +45,7 @@ stdenv.mkDerivation rec {
     "--disable-debug"
     "--disable-valgrind"
     "--disable-gcov"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-docbook"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -50,7 +54,21 @@ stdenv.mkDerivation rec {
     "--disable-glib-asserts"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Sebastian Dröge
+      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Integration testing infrastructure for the GStreamer framework";
     homepage = "https://gstreamer.freedesktop.org";
     license = licenses.lgpl2Plus;

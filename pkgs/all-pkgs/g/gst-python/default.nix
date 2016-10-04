@@ -1,20 +1,29 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 
-, gstreamer
 , gst-plugins-base
+, gstreamer
 , ncurses
 , pythonPackages
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gst-python-1.8.3";
+  name = "gst-python-${source.version}";
 
   src = fetchurl rec {
-    url = "https://gstreamer.freedesktop.org/src/gst-python/${name}.tar.xz";
-    sha256Url = "${url}.sha256sum";
-    sha256 = "149e7b9c2c361832bc765d39bce004d1ffe1b330c09c42dc902ca48867e804ce";
+    urls = map (n: "${n}/${name}.tar.xz") [
+      "https://gstreamer.freedesktop.org/src/gst-python"
+      "mirror://gnome/sources/gst-python/${channel}"
+    ];
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   buildInputs = [
@@ -46,7 +55,21 @@ stdenv.mkDerivation rec {
     "--disable-valgrind"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Sebastian Dröge
+      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "A Python Interface to GStreamer";
     homepage = https://gstreamer.freedesktop.org;
     license = licenses.lgpl2;

@@ -21,7 +21,7 @@
 , sqlite
 , zlib
 
-, channel ? "2.1"
+, channel
 }:
 
 let

@@ -1,26 +1,24 @@
 { stdenv
 , fetchFromGitHub
 , python2
-, ninja
 
 , clang
 , llvm
 }:
 
 stdenv.mkDerivation {
-  name = "libclc-2016-02-09";
+  name = "libclc-2016-09-21";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "llvm-mirror";
     repo = "libclc";
-    rev = "b518692b52a0bbdf9cf0e2167b9629dd9501abcd";
-    sha256 = "d03726e7f3de1c74f201782b0f6754a70810c3593c542eb61320ee350f4fde1a";
+    rev = "520743b0b72862a987ead6213dc1a5321a2010f9";
+    sha256 = "0d4a526e7ba77ba583557f026e97845b6588495a55acde22c54fa401277bf524";
   };
 
   nativeBuildInputs = [
     python2
-    ninja
   ];
 
   buildInputs = [
@@ -39,7 +37,6 @@ stdenv.mkDerivation {
   configureScript = "./configure.py";
 
   configureFlags = [
-    "-g" "ninja"
     "--with-cxx-compiler=${clang}/bin/clang++"
   ];
 

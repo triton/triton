@@ -143,11 +143,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "0f2be02c5ddfa7c7936000ad519b04c6c795eab3";
-    date = "2016-10-01";
+    rev = "ffe101cce3477a6c6d8f0754d103bb0a84ec1266";
+    date = "2016-10-03";
     owner  = "golang";
     repo   = "net";
-    sha256 = "06adf8srjzwzminiid6bfrjpi8y1qhrhb0z1m6r0m7v38wqwgmc8";
+    sha256 = "1jprpimfb5clslk6ds1g4mbnv6kmq8023bs3lf8gklx5iwsh9lbn";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"

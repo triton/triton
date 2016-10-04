@@ -3216,9 +3216,8 @@ let
     version = 2;
     owner = "minio";
     repo = "mc";
-    date = "2016-09-08";
-    rev = "b404c7583bc99d7d60dbaa655f759a3d13b28d81";
-    sha256 = "c520cc89450fc05e5b8deb40d26c97cc4ab2d9be2b3663848508c6d3c711064d";
+    rev = "f03aaef72f99ac30f5f2dec742d48cc6e5160e42";
+    sha256 = "0rnjx5xdidl51vrfwi2acarj60aba8bb918xyz328118l3ydfv9d";
     propagatedBuildInputs = [
       cli_minio
       color
@@ -3229,10 +3228,11 @@ let
       minio_pkg
       minio-go
       notify
-      pb
+      pb_v1
       profile
       structs
     ];
+    date = "2016-10-03";
   };
 
   mdns = buildFromGitHub {

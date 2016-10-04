@@ -1367,7 +1367,10 @@ gst-plugins-ugly = callPackage ../all-pkgs/g/gst-plugins-ugly { };
 
 gst-validate = callPackage ../all-pkgs/g/gst-validate { };
 
-gstreamer = callPackage ../all-pkgs/g/gstreamer { };
+gstreamer_1-8 = callPackage ../all-pkgs/g/gstreamer {
+  channel = "1.8";
+};
+gstreamer = callPackageAlias "gstreamer_1-8" { };
 
 gstreamer-editing-services = callPackage ../all-pkgs/g/gstreamer-editing-services { };
 

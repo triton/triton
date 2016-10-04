@@ -3,25 +3,33 @@
 , fetchurl
 , flex
 , gettext
+, lib
 , perl
 , python
 
 , glib
 , gobject-introspection
 , libcap
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gstreamer-1.8.3";
+  name = "gstreamer-${source.version}";
 
   src = fetchurl rec {
-    url = "https://gstreamer.freedesktop.org/src/gstreamer/${name}.tar.xz";
-    sha256Url = url + ".sha256sum";
-    sha256 = "66b37762d4fdcd63bce5a2bec57e055f92420e95037361609900278c0db7c53f";
+    urls = map (n: "${n}/${name}.tar.xz") [
+      "https://gstreamer.freedesktop.org/src/gstreamer"
+      "mirror://gnome/sources/gstreamer/${channel}"
+    ];
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -66,7 +74,7 @@ stdenv.mkDerivation rec {
     "--enable-tools"
     "--disable-poisoning"
     "--enable-largefile"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-docbook"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -84,7 +92,21 @@ stdenv.mkDerivation rec {
         $out/libexec/gstreamer-0.10/gst-plugin-scanner
     '';
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Sebastian Dröge
+      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Multimedia framework";
     homepage = http://gstreamer.freedesktop.org;
     license = licenses.lgpl2Plus;

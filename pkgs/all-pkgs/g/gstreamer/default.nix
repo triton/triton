@@ -89,7 +89,7 @@ stdenv.mkDerivation rec {
     /* Needed for orc-using gst plugins on hardened/PaX systems */ ''
       paxmark m \
         $out/bin/gst-launch* \
-        $out/libexec/gstreamer-0.10/gst-plugin-scanner
+        $out/libexec/gstreamer-1.0/gst-plugin-scanner
     '';
 
   passthru = {

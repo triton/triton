@@ -9,7 +9,7 @@
 , readline
 , zlib
 
-, channel ? "45"
+, channel
 }:
 
 let

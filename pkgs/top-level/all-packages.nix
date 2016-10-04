@@ -2701,16 +2701,16 @@ spice = callPackage ../all-pkgs/s/spice { };
 
 spice-protocol = callPackage ../all-pkgs/s/spice-protocol { };
 
-spidermonkey = callPackage ../all-pkgs/s/spidermonkey { };
-spidermonkey_45 = callPackageAlias "spidermonkey" {
+spidermonkey_45 = callPackage ../all-pkgs/s/spidermonkey {
   channel = "45";
 };
-spidermonkey_24 = callPackageAlias "spidermonkey" {
+spidermonkey_24 = callPackage ../all-pkgs/s/spidermonkey {
   channel = "24";
 };
-spidermonkey_17 = callPackageAlias "spidermonkey" {
+spidermonkey_17 = callPackage ../all-pkgs/s/spidermonkey {
   channel = "17";
 };
+spidermonkey = callPackageAlias "spidermonkey_45" { };
 
 split2flac = callPackage ../all-pkgs/s/split2flac { };
 

@@ -5,12 +5,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libdrm-2.4.70";
+  name = "libdrm-2.4.71";
 
   src = fetchurl {
     url = "https://dri.freedesktop.org/libdrm/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "b17d4b39ed97ca0e4cffa0db06ff609e617bac94646ec38e8e0579d530540e7b";
+    multihash = "QmWZznUmnCeyirF3Wk1MhG1mKDExh59ds9shZnLSVJYam2";
+    sha256 = "c66287ddeee5f46ea8f8880b94b80acb3bbc33ba6321d17767eef145046df9b8";
   };
 
   buildInputs = [

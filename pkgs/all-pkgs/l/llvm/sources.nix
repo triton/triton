@@ -65,9 +65,11 @@
       libunwind = {
         sha256 = "66675ddec5ba0d36689757da6008cb2596ee1a9067f4f598d89ce5a3b43f4c2b";
       };
-      lld = {
-        sha256 = "986e8150ec5f457469a20666628bf634a5ca992a53e157f3b69dbc35056b32d9";
-      };
+      # Currently disabled because it breaks the build
+      # TODO: fix building lld
+      #lld = {
+      #  sha256 = "986e8150ec5f457469a20666628bf634a5ca992a53e157f3b69dbc35056b32d9";
+      #};
       lldb = {
         sha256 = "61280e07411e3f2b4cca0067412b39c16b0a9edd19d304d3fc90249899d12384";
       };

@@ -3228,7 +3228,7 @@ let
       minio_pkg
       minio-go
       notify
-      pb_v1
+      pb
       profile
       structs
     ];
@@ -3298,9 +3298,8 @@ let
     version = 2;
     owner = "minio";
     repo = "minio";
-    date = "2016-09-15";
-    rev = "7a549096ded5f0d9bc86c7953ca2a66dde96e4ea";
-    sha256 = "1n7h58xxjqv353vj1cxnqvlyxa74yxfw3kdw7h3zzyna2yx52d84";
+    rev = "RELEASE.2016-09-11T17-42-18Z";
+    sha256 = "a1e43f383fe94c9e5056c4144d9fa0264d7a44b85bcc12dd7970f1acf9953445";
     buildInputs = [
       amqp
       blake2b-simd
@@ -3335,7 +3334,7 @@ let
 
   # The pkg package from minio, for bootstrapping minio
   minio_pkg = buildFromGitHub {
-    inherit (minio) version owner repo date rev sha256;
+    inherit (minio) version owner repo rev sha256;
     propagatedBuildInputs = [
       # Propagate minio_pkg_probe from here for consistency
       minio_pkg_probe

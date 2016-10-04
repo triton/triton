@@ -1406,7 +1406,14 @@ gstreamer_1-8 = callPackage ../all-pkgs/g/gstreamer {
 };
 gstreamer = callPackageAlias "gstreamer_1-8" { };
 
-gstreamer-editing-services = callPackage ../all-pkgs/g/gstreamer-editing-services { };
+gstreamer-editing-services_1-8 =
+  callPackage ../all-pkgs/g/gstreamer-editing-services {
+    channel = "1.8";
+    gst-plugins-base = pkgs.gst-plugins-base_1-8;
+    gstreamer = pkgs.gstreamer_1-8;
+  };
+gstreamer-editing-services =
+  callPackageAlias "gstreamer-editing-services_1-8" { };
 
 gstreamer-vaapi = callPackage ../all-pkgs/g/gstreamer-vaapi { };
 

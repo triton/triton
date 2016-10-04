@@ -1,8 +1,9 @@
 { stdenv
 , fetchurl
 , flex
+, lib
 , perl
-, python
+, python3
 
 , glib
 , gnonlin
@@ -10,26 +11,32 @@
 , gst-plugins-base
 , gstreamer
 , libxml2
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gstreamer-editing-services-1.8.3";
+  name = "gstreamer-editing-services-${source.version}";
 
   src = fetchurl rec {
-    url = "https://gstreamer.freedesktop.org/src/gstreamer-editing-services/"
-      + "${name}.tar.xz";
-    sha256Url = url + ".sha256sum";
-    sha256 = "c48a75ab2a3b72ed33f69d8279c56c0f3a2d0881255f8b169a7a13518eaa13cd";
+    urls = map (n: "${n}/${name}.tar.xz") [
+      "https://gstreamer.freedesktop.org/src/gstreamer-editing-services"
+      "mirror://gnome/sources/gstreamer-editing-services/${channel}"
+    ];
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
     flex
     perl
-    python
+    python3
   ];
 
   buildInputs = [
@@ -50,7 +57,7 @@ stdenv.mkDerivation rec {
     "--disable-valgrind"
     "--disable-gcov"
     "--disable-examples"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-docbook"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -64,7 +71,21 @@ stdenv.mkDerivation rec {
     "--without-gtk"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Sebastian Dröge
+      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "SDK for making video editors and more";
     homepage = http://gstreamer.freedesktop.org;
     license = licenses.lgpl2plus;

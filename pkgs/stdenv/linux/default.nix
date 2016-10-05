@@ -123,7 +123,7 @@ let
       };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage1Pkgs is missing package definition for `${n}`") pkgs) // {
-        inherit (pkgs) stdenv glibc linux-headers;
+        inherit (pkgs) stdenv glibc linux-headers_3-18 linux-headers;
 
         gcc6 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -163,12 +163,12 @@ let
       };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage2Pkgs is missing package definition for `${n}`") pkgs) // {
-        inherit (stage1Pkgs) glibc linux-headers;
-        inherit (pkgs) stdenv gnum4 m4 which gettext elfutils gcc;
+        inherit (stage1Pkgs) glibc linux-headers_3-18 linux-headers;
+        inherit (pkgs) stdenv gnum4 m4 which gettext elfutils gcc isl;
         bzip2 = pkgs.bzip2.override { static = true; shared = false; };
         libelf = pkgs.libelf.override { static = true; shared = false; };
         gmp = pkgs.gmp.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
-        isl = pkgs.isl.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
+        isl_0-16 = pkgs.isl_0-16.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
         libmpc = pkgs.libmpc.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
         mpfr = pkgs.mpfr.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
         xz = pkgs.xz.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
@@ -219,13 +219,13 @@ let
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage3Pkgs is missing package definition for `${n}`") pkgs) // {
         pkgs = stage3Pkgs;
-        inherit (stage1Pkgs) glibc linux-headers;
+        inherit (stage1Pkgs) glibc linux-headers_3-18 linux-headers;
         inherit (stage2Pkgs) m4 gnum4 which;
         inherit (pkgs) stdenv gcc xz zlib attr acl gmp coreutils binutils
           gpm ncurses readline bash nghttp2_lib cryptodevHeaders gettext bison flex
-          openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
-          gawk gnutar gnutar_1-29 gzip brotli brotli_0-5-2 bzip2 gnumake gnupatch
-          pkgconf pkgconfig patchelf;
+          openssl_1-0-2 openssl c-ares curl libsigsegv pcre findutils diffutils
+          gnused gnugrep gawk gnutar gnutar_1-29 gzip brotli brotli_0-5-2 bzip2
+          gnumake gnupatch pkgconf pkgconfig patchelf;
 
         gcc6 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -299,13 +299,13 @@ let
     };
 
     overrides = pkgs: {
-      inherit (stage1Pkgs) glibc linux-headers;
+      inherit (stage1Pkgs) glibc linux-headers_3-18 linux-headers;
       inherit (stage2Pkgs) m4 gnum4 which;
       inherit (stage3Pkgs) gcc6 gcc xz zlib attr acl gmp coreutils binutils
         gpm ncurses readline bash nghttp2_lib cryptodevHeaders gettext bison flex
-        openssl c-ares curl libsigsegv pcre findutils diffutils gnused gnugrep
-        gawk gnutar gnutar_1-29 gzip brotli brotli_0-5-2 bzip2 gnumake gnupatch
-        pkgconf pkgconfig patchelf;
+        openssl_1-0-2 openssl c-ares curl libsigsegv pcre findutils diffutils
+        gnused gnugrep gawk gnutar gnutar_1-29 gzip brotli brotli_0-5-2 bzip2
+        gnumake gnupatch pkgconf pkgconfig patchelf;
     };
   });
 

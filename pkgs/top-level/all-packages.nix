@@ -2044,8 +2044,6 @@ linux-headers_3-18 = callPackage ../all-pkgs/l/linux-headers {
 linux-headers_4-6 = callPackage ../all-pkgs/l/linux-headers {
   channel = "4.6";
 };
-# Deprecated alias
-linux-headers_4_6 = callPackageAlias "linux-headers_4-6" { };
 linux-headers = callPackageAlias "linux-headers_3-18" { };
 
 lirc = callPackage ../all-pkgs/l/lirc { };

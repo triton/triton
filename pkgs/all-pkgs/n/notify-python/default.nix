@@ -3,8 +3,9 @@
 , fetchTritonPatch
 , fetchurl
 
-, pkgs
-, pythonPackages
+, libnotify
+, pygtk
+, python
 }:
 
 stdenv.mkDerivation rec {
@@ -13,13 +14,14 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "http://www.galago-project.org/files/releases/source/notify-python/"
       + "${name}.tar.bz2";
+    multihash = "QmR6QMACtcHr8hBbCg1MZgJ5CwMXTRbrjkQiECUFDQm7rL";
     sha256 = "7d3bbb7c3d8f56c922cc31d02ef9057a4f06998cc2fd4f3119a576fcf8d504ce";
   };
 
   buildInputs = [
-    pkgs.libnotify
-    pythonPackages.pygtk
-    pythonPackages.python
+    libnotify
+    pygtk
+    python
   ];
 
   patches = [
@@ -35,12 +37,12 @@ stdenv.mkDerivation rec {
     rm -fv src/pynotify.c
 
     sed -i configure \
-      -e '/^PYGTK_CODEGEN/s|=.*|="${pythonPackages.pygtk}/bin/pygtk-codegen-2.0"|'
+      -e '/^PYGTK_CODEGEN/s|=.*|="${pygtk}/bin/pygtk-codegen-2.0"|'
   '';
 
   postInstall = ''
     pushd $out/lib/python*/site-packages
-      ln -s gtk-*/pynotify .
+      ln -sv gtk-*/pynotify .
     popd
   '';
 

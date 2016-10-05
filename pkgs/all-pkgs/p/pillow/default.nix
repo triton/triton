@@ -15,7 +15,7 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "3.3.1";
+  version = "3.4.1";
 in
 buildPythonPackage rec {
   name = "pillow-${version}";
@@ -23,7 +23,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "Pillow";
     inherit version;
-    sha256 = "3491ca65d9fdba4db094ab3f8e17170425e7dd670e507921a665a1975d1b3df1";
+    sha256 = "590ecade57d9d373b9e73816b811b269693fbd231374b9f52d1bdee1c17d9b40";
   };
 
   buildInputs = [

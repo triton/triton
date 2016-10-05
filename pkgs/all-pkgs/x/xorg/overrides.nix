@@ -198,11 +198,11 @@ in
   };
 
   xf86videointel = attrs: attrs // {
-    name = "xf86-video-intel-2016-09-08";
+    name = "xf86-video-intel-2016-10-04";
     src = fetchzip {
       version = 2;
-      url = "https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/15c5ff12459a034b552c787047d1af6d61047cd6.tar.gz";
-      sha256 = "91c47532fd37705ba44e8b9eda92f2b38999b7eeff8887806caca181cbc76d91";
+      url = "https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/bd33d0a7e9801e710b77fd32df90b3cc953045fe.tar.gz";
+      sha256 = "2285790827da420c0443e2a633deffc862091a84e023d846b9d7280d2f6fb9da";
     };
     nativeBuildInputs = attrs.nativeBuildInputs ++ [
       args.autoreconfHook

@@ -117,11 +117,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "2cbd8ea802d1adf67a6ef1df6b9ade342c37241d";
-    date = "2016-01-05";
+    rev = "7682e7e3945130cf3cde089834664f68afdd1523";
+    date = "2016-10-03";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "1ymvmy57gyb9zw5jlsmmbdz9535wgkf4pn8lbrjg8dhjw607qbsf";
+    sha256 = "1l928dcvxvd8vrx6fqgmlj9djpjbczdcqxadzm54a1jsxykgzism";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -1211,11 +1211,11 @@ let
 
   gcloud-golang = buildFromGitHub {
     version = 2;
-    date = "2016-09-17";
-    rev = "fe3d41e1ecb2ce36ad3a979037c9b9a2b726226f";
+    date = "2016-10-04";
+    rev = "31ae667e89ed2a2f9cae09ce4f109f485f9e1b9f";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "0w83bl4y9gzv2jw43233ms1zv8gglzy546849l464wnsrkvfqj42";
+    sha256 = "0apbwsv1r4flpvb23wchm5rfd9sxh92cyrz13l4s6m6zr4r5ys9j";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"

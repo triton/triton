@@ -2,67 +2,76 @@
 , buildPythonPackage
 , fetchgit
 , fetchurl
+, gettext
+, intltool
+, lib
 , pythonPackages
 
 , chardet
+, geoip
+, librsvg
+, libtorrent-rasterbar
 , Mako
-#, pillow
-, pkgs
+, pillow
 #, pygame
-, pygobject
+, pygobject_2
 , pygtk
 , pyopenssl
 #, python-appindicator
-#, notify-python
+, notify-python
 , pyxdg
 , service-identity
 , simplejson
 , slimit
 , twisted
 
+, atk
+, cairo
+, pango
+
 , pytest
+, zope-interface
 }:
 
 let
   inherit (pythonPackages)
     isPy3k;
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 
-  version = "2016-07-20";
+  version = "2016-09-28";
   # Using an invalid version breaks compatibility with some trackers
-  versionSpoof = "1.3.999";
+  versionSpoof = "1.3.13";
 in
 buildPythonPackage rec {
   name = "deluge-${version}";
 
   src = fetchgit {
-    version = 1;
+    version = 2;
     url = "git://git.deluge-torrent.org/deluge";
-    rev = "9c27ed29ae6faaa7d3de1a53dea02c4ed527e218";
+    rev = "aa164cdbcea86db9cd53c680c18a08b161ec6976";
     branchName = "develop";
-    sha256 = "11yiwf4pkbzp4ajsi7bjs2cwcm8651b61b6s9gmzxxqis3m0za53";
+    sha256 = "10gpj6g0kpgf0bpp6rlw3wnai3i54glvb2kwifxgmd8d072awmd5";
   };
 
   nativeBuildInputs = [
-    pkgs.gettext
-    pkgs.intltool
+    gettext
+    intltool
   ];
 
   propagatedBuildInputs = [
     chardet
-    #geoip-database
+    geoip
+    librsvg
+    libtorrent-rasterbar
     Mako
-    #pillow
-    pkgs.libtorrent-rasterbar_1-0
-    pkgs.librsvg
-    pkgs.xdg-utils
+    pillow
     #pygame
-    pygobject
+    pygobject_2
     pygtk
     pyopenssl
     #python-appindicator
-    #notify-python
+    notify-python
     pyxdg
     service-identity
     #setproctitle
@@ -74,6 +83,7 @@ buildPythonPackage rec {
 
   buildInputs = optionals doCheck [
     pytest
+    zope-interface
   ];
 
   postPatch = /* Fix version detection */ ''
@@ -82,6 +92,10 @@ buildPythonPackage rec {
   '' + /* Fix incorrect path to build directory */ ''
     sed -i setup.py \
       -e '/js_basedir/ s|self.build_lib, ||'
+  '';
+
+  preBuild = ''
+    python setup.py build
   '';
 
   postInstall = ''
@@ -96,7 +110,7 @@ buildPythonPackage rec {
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "BitTorrent client with a client/server model";
     homepage = http://deluge-torrent.org;
     license = licenses.gpl3Plus;

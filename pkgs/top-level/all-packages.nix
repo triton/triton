@@ -1590,6 +1590,8 @@ jam = callPackage ../all-pkgs/j/jam { };
 
 jansson = callPackage ../all-pkgs/j/jansson { };
 
+jasper = callPackage ../all-pkgs/j/jasper { };
+
 jemalloc = callPackage ../all-pkgs/j/jemalloc { };
 
 jq = callPackage ../all-pkgs/j/jq { };
@@ -3356,8 +3358,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   imlib2 = callPackage ../development/libraries/imlib2 { };
 
   ijs = callPackage ../development/libraries/ijs { };
-#
-  jasper = callPackage ../development/libraries/jasper { };
 #
   jbig2dec = callPackage ../development/libraries/jbig2dec { };
 

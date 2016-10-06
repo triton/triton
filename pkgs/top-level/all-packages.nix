@@ -930,6 +930,10 @@ fbterm = callPackage ../all-pkgs/f/fbterm { };
 
 fcgi = callPackage ../all-pkgs/f/fcgi { };
 
+fdk-aac = callPackage ../all-pkgs/f/fdk-aac { };
+# Deprecated alias
+fdk_aac = callPackageAlias "fdk-aac" { };
+
 feh = callPackage ../all-pkgs/f/feh { };
 
 ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
@@ -3073,8 +3077,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   diffoscope = callPackage ../tools/misc/diffoscope { };
 #
   docbook2x = callPackage ../tools/typesetting/docbook2x { };
-#
-  fdk_aac = callPackage ../development/libraries/fdk-aac { };
 #
   fontforge = lowPrio (callPackage ../tools/misc/fontforge { });
 #

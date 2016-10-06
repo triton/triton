@@ -630,8 +630,6 @@ bs1770gain = callPackage ../all-pkgs/b/bs1770gain { };
 
 btrfs-progs = callPackage ../all-pkgs/b/btrfs-progs { };
 
-btsync = callPackage ../all-pkgs/b/btsync { };
-
 bzip2 = callPackage ../all-pkgs/b/bzip2 { };
 
 c-ares = callPackage ../all-pkgs/c/c-ares { };
@@ -2599,6 +2597,8 @@ readline = callPackage ../all-pkgs/r/readline { };
 recode = callPackage ../all-pkgs/r/recode { };
 
 redis = callPackage ../all-pkgs/r/redis { };
+
+resilio = callPackage ../all-pkgs/r/resilio { };
 
 resolv_wrapper = callPackage ../all-pkgs/r/resolv_wrapper { };
 

@@ -10,15 +10,16 @@ let
   libPath = makeSearchPath "lib" [
     stdenv.cc.libc
   ];
+
+  version = "2.4.1";
 in
 stdenv.mkDerivation rec {
-  name = "btsync-${version}";
-  version = "2.3.8";
+  name = "resilio-${version}";
 
   src  = fetchurl {
-    url  = "https://download-cdn.getsync.com/${version}/"
-      + "linux-x64/BitTorrent-Sync_x64.tar.gz";
-    sha256 = "9e1a63d7e346278f7301f149626013242a3c605db90a645ebe757c164cd1c50a";
+    url  = "https://download-cdn.resilio.com/${version}/"
+      + "linux-x64/resilio-sync_x64.tar.gz";
+    sha256 = "1597b39eb1e47a38240bda2e80e9579e0ff2ab0d8b99eb6d19b7e3f283456271";
   };
 
   nativeBuildInputs = [
@@ -28,21 +29,21 @@ stdenv.mkDerivation rec {
   sourceRoot = ".";
 
   installPhase = ''
-    install -D -m755 -v btsync $out/bin/btsync
+    install -D -m755 -v rslsync $out/bin/rslsync
   '';
 
   preFixup = ''
     patchelf \
       --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
       --set-rpath "${libPath}" \
-      "$out/bin/btsync"
+      "$out/bin/rslsync"
   '';
 
   dontStrip = true;
 
   meta = with stdenv.lib; {
     description = "Automatically sync files via secure, distributed technology";
-    homepage = "http://www.bittorrent.com/sync";
+    homepage = https://www.resilio.com/individuals/;
     license = licenses.unfreeRedistributable;
     maintainers = with maintainers; [
       codyopel

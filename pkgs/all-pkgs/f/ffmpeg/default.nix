@@ -299,7 +299,7 @@ let
     else
       null;
   deprfflag = f: b: vmin: vmax:
-    if reqMin vmin && reqMax vmax then
+    if (vmin == null || reqMin vmin) && (vmax == null || reqMax vmax) then
     "--${boolEn b}-${f}"
     else
       null;
@@ -533,7 +533,7 @@ stdenv.mkDerivation rec {
     (deprfflag "libdcadec" (dcadec != null) "2.7" "3.0")
     #(fflag "libebur128" (libebur128 != null) "3.1")
     /**/(fflag "libebur128" false "3.1")
-    (fflag "libfaac" faacExtlib null)
+    (deprfflag "libfaac" faacExtlib null "3.1")
     (fflag "libfdk-aac" fdkaacExtlib null)
     (fflag "libfontconfig" (fontconfig != null) "3.1")
     #(fflag "libflite" (flite != null) null)

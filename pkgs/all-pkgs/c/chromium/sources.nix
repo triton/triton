@@ -6,8 +6,8 @@
     sha256 = "c52a58b79bfb27bb87e4a0a6ff213001485fbc747657b290f75d39ddce07dcc3";
   };
   "beta" = {
-    version = "54.0.2840.41";
-    sha256 = "2462033decbcd39ab51d9304525ea75c5b9fc301ffb7d5f436c638ce3e2f3dd2";
+    version = "54.0.2840.50";
+    sha256 = "9b0b58f3af8353751e93fb6759660bd18de853fd3caabf88cbd48047e1c6cc38";
   };
   "dev" = {
     version = "55.0.2873.0";

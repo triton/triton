@@ -8,7 +8,7 @@
   };
   "beta" = {
     "x86_64-linux" = {
-      sha256 = "38bf6fce59214df6dd434cf4ad836163ab4f6052dba368d08f088551fe352a0b";
+      sha256 = "34000aeb764599801711a0a126c3e5f9b3c492648751a088e2d40a1ad84e9b09";
     };
   };
   "unstable" = {

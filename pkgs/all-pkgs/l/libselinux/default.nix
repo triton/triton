@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
-, python
+, lib
+, python2
 , swig
 
 , libsepol
@@ -8,22 +9,20 @@
 }:
 
 let
-  inherit (libsepol)
-    se_release
-    se_url;
-
+  release = "20160223";
   version = "2.5";
 in
 stdenv.mkDerivation rec {
   name = "libselinux-${version}";
 
   src = fetchurl {
-    url = "${se_url}/${se_release}/libselinux-${version}.tar.gz";
+    url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/"
+      + "files/releases/${release}/${name}.tar.gz";
     sha256 = "94c9e97706280bedcc288f784f67f2b9d3d6136c192b2c9f812115edba58514f";
   };
 
   nativeBuildInputs = [
-    python
+    python2
     swig
   ];
 
@@ -32,15 +31,14 @@ stdenv.mkDerivation rec {
     pcre
   ];
 
-  NIX_CFLAGS_COMPILE = "-fstack-protector-all -std=gnu89";
-
   postPatch = ''
-    sed -i -e 's|\$(LIBDIR)/libsepol.a|${libsepol}/lib/libsepol.a|' src/Makefile
+    sed -i src/Makefile \
+      -e 's|$(LIBDIR)/libsepol.a|${libsepol}/lib/libsepol.a|'
   '';
 
   preBuild = ''
     # Build fails without this precreated
-    mkdir -p $out/include
+    mkdir -pv $out/include
 
     makeFlagsArray+=(
       "PREFIX=$out"
@@ -53,7 +51,13 @@ stdenv.mkDerivation rec {
     "install-pywrap"
   ];
 
-  meta = libsepol.meta // {
-    description = "SELinux core library";
+  meta = with lib; {
+    description = "SELinux userland library";
+    homepage = http://userspace.selinuxproject.org;
+    license = licenses.gpl2;
+    maintainers = with maintainers; [ ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

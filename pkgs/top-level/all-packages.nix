@@ -615,8 +615,8 @@ bluez = callPackage ../all-pkgs/b/bluez { };
 boehm-gc = callPackage ../all-pkgs/b/boehm-gc { };
 
 boost155 = callPackage ../all-pkgs/b/boost/1.55.nix { };
-boost161 = callPackage ../all-pkgs/b/boost/1.61.nix { };
-boost = callPackageAlias "boost161" { };
+boost162 = callPackage ../all-pkgs/b/boost/1.62.nix { };
+boost = callPackageAlias "boost162" { };
 
 brotli_0-4-0 = callPackage ../all-pkgs/b/brotli {
   version = "0.4.0";

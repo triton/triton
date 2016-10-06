@@ -101,7 +101,7 @@ stdenv.mkDerivation rec {
     "--disable-systemtap"
     "--disable-coverage"
     "--enable-Bsymbolic"
-    "--disable-znodelete"
+    "--enable-znodelete"
     "--enable-compile-warnings"
     # The internal pcre is not patched to support gcc5, among other
     # fixes specific to Triton

@@ -13,20 +13,20 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
+    boolEn
+    boolWt
     optionals
-    optionalString
-    wtFlag;
+    optionalString;
 in
 
 stdenv.mkDerivation rec {
-  name = "harfbuzz-1.3.1";
+  name = "harfbuzz-1.3.2";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2";
-    multihash = "QmRzSMJMkDHqbCEQDwizF1A1fxyEtJKPCjx22iVwV44Ge2";
+    multihash = "QmSUBwGSDyWgrD4aY2wdV7dV8FM48ACsRUsGc8RKKFSsH4";
     hashOutput = false;
-    sha256 = "a242206dd119d5e6cc1b2253c116abbae03f9d930cb60b515fb0d248decf89a1";
+    sha256 = "8543a6372f08c5987c632dfaa86210c7edb3f43fbacd96095c609bc3539ce027";
   };
 
   nativeBuildInputs = optionals doCheck [
@@ -59,14 +59,14 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (wtFlag "glib" (glib != null) null)
-    (wtFlag "gobject" (glib != null) null)
-    (wtFlag "cairo" (cairo != null) null)
-    (wtFlag "fontconfig" (fontconfig != null) null)
-    (wtFlag "icu" (icu != null) null)
-    (wtFlag "graphite2" (graphite2 != null) null)
-    (wtFlag "freetype" (freetype != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolWt (glib != null)}-glib"
+    "--${boolWt (glib != null)}-gobject"
+    "--${boolWt (cairo != null)}-cairo"
+    "--${boolWt (fontconfig != null)}-fontconfig"
+    "--${boolWt (icu != null)}-icu"
+    "--${boolWt (graphite2 != null)}-graphite2"
+    "--${boolWt (freetype != null)}-freetype"
     "--without-uniscribe"
     "--without-directwrite"
     "--without-coretext"

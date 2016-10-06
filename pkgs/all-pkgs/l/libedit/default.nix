@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libedit-20160618-3.1";
+  name = "libedit-20160903-3.1";
 
   src = fetchurl {
-    url = "http://www.thrysoee.dk/editline/${name}.tar.gz";
-    multihash = "QmewmzBgwRCyTNM33YEZXhGiDf4SHxGVJ7UzULB5qm14hr";
-    sha256 = "1mpmm62xxh0s3y9c86ic8rn39yhfjs5mv9x2kqs7z2pcqv05kcdn";
+    url = "http://thrysoee.dk/editline/${name}.tar.gz";
+    multihash = "QmNmfgvb2fhGc6NvSoPg7RYtvpURzPhAqyuQmAJjZWJbJH";
+    sha256 = "0ccbd2e7d46097f136fcb1aaa0d5bc24e23bb73f57d25bee5a852a683eaa7567";
   };
 
   # Have `configure' avoid `/usr/bin/nroff' in non-chroot builds.
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = "http://www.thrysoee.dk/editline/";
+    homepage = "http://thrysoee.dk/editline/";
     description = "A port of the NetBSD Editline library (libedit)";
     license = licenses.bsd3;
     maintainers = with maintainers; [

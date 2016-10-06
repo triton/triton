@@ -1,19 +1,19 @@
 { stdenv
 , fetchurl
 , flex
+, lib
 }:
 
 let
-  se_release = "20160223";
-  se_url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases";
-
+  release = "20160223";
   version = "2.5";
 in
 stdenv.mkDerivation rec {
   name = "libsepol-${version}";
 
   src = fetchurl {
-    url = "${se_url}/${se_release}/libsepol-${version}.tar.gz";
+    url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/"
+      + "files/releases/${release}/${name}.tar.gz";
     sha256 = "2bdeec56d0a08b082b93b40703b4b3329cc5562152f7254d8f6ef6b56afe850a";
   };
 
@@ -21,11 +21,9 @@ stdenv.mkDerivation rec {
     flex
   ];
 
-  NIX_CFLAGS_COMPILE = "-fstack-protector-all";
-
-  postPatch = ''
-    find . -name Makefile -exec sed -i 's, -Werror,,g' {} \;
-  '';
+  NIX_CFLAGS_COMPILE = [
+    "-Wno-error"
+  ];
 
   preBuild = ''
     makeFlagsArray+=(
@@ -34,14 +32,13 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  passthru = {
-    inherit se_release se_url;
-  };
-
-  meta = with stdenv.lib; {
+  meta = with lib; {
+    description = "SELinux binary policy representation library";
     homepage = http://userspace.selinuxproject.org;
-    platforms = platforms.linux;
-    maintainers = [ maintainers.phreedom ];
-    license = stdenv.lib.licenses.gpl2;
+    license = licenses.gpl2;
+    maintainers = with maintainers; [ ];
+    platforms = with platforms;
+      i686-linux
+      ++ x86_64-linux;
   };
 }

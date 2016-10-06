@@ -9,6 +9,7 @@
 , attr
 , libelf
 , libffi
+, libselinux
 , pcre
 , util-linux_lib
 , zlib
@@ -18,8 +19,7 @@ let
   inherit (stdenv.lib)
     boolEn
     optionals
-    optionalString
-    versionAtLeast;
+    optionalString;
 
   # Some packages don't get "Cflags" from pkgconfig correctly
   # and then fail to build when directly including like <glib/...>.
@@ -60,7 +60,9 @@ stdenv.mkDerivation rec {
     attr
     libelf
     libffi
+    libselinux
     pcre
+    stdenv.libc
     util-linux_lib
     zlib
   ];
@@ -75,22 +77,22 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--disable-debug"
+    # FIXME: Figure out why disabling debug causes segfaults in applications
+    #        using glib.  It seems like glib asserts may be triggering
+    #        segfaults, but more debugging is needed.
+    #"--disable-debug"
     "--disable-gc-friendly"
-    #"--enable-mem-pools"
+    "--enable-mem-pools"
     "--enable-rebuilds"
     "--disable-installed-tests"
     "--disable-always-build-tests"
     "--enable-largefile"
     "--disable-included-printf"
-    "--disable-selinux"
+    "--${boolEn (libselinux != null)}-selinux"
     "--disable-fam"
-    "--${boolEn (attr != null)}-xattr"
+    "--${boolEn (attr != null)}-xattr" # glibc or attr
     "--${boolEn (libelf != null)}-libelf"
-    (if versionAtLeast channel "2.50" then
-      "--${boolEn (util-linux_lib != null)}-libmount"
-     else
-       null)
+    "--${boolEn (util-linux_lib != null)}-libmount"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -99,7 +101,7 @@ stdenv.mkDerivation rec {
     "--disable-systemtap"
     "--disable-coverage"
     "--enable-Bsymbolic"
-    #"--disable-znodelete"
+    "--disable-znodelete"
     "--enable-compile-warnings"
     # The internal pcre is not patched to support gcc5, among other
     # fixes specific to Triton
@@ -107,9 +109,6 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";
-
-  bindnow = false;
-  pie = false;
 
   passthru = {
     gioModuleDir = "lib/gio-modules/${name}/gio/modules";

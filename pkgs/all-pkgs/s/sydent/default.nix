@@ -4,6 +4,7 @@
 
 , daemonize
 , funcsigs
+, mock
 , pathlib2
 , pbr
 , pyasn1
@@ -26,6 +27,10 @@ buildPythonPackage {
     rev = "0d0dba43a469986d31ece161044cd9c5875c519d";
     sha256 = "408187bebcd13388c91a6a4e208954936317f72e65d9ea1e8ea88176584a1b16";
   };
+
+  buildInputs = [
+    mock
+  ];
 
   propagatedBuildInputs = [
     daemonize

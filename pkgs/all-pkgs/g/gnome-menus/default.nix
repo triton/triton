@@ -3,25 +3,27 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , glib
 , gobject-introspection
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
-in
+  inherit (lib)
+    boolEn;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gnome-menus-${version}";
-  versionMajor = "3.13";
-  versionMinor = "3";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gnome-menus-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-menus/${versionMajor}/${name}.tar.xz";
-    sha256 = "0kk5dirr9n34yxxayv643d6yi5bm9635hkm0icmza79qzyw6wi3w";
+    url = "mirror://gnome/sources/gnome-menus/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -54,15 +56,29 @@ stdenv.mkDerivation rec {
     "--disable-iso-c"
     "--enable-deprecation-flags"
     "--disable-debug"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
   ];
 
-  makeFlags = [
-    "INTROSPECTION_GIRDIR=$(out)/share/gir-1.0/"
-    "INTROSPECTION_TYPELIBDIR=$(out)/lib/girepository-1.0"
-  ];
+  preBuild = ''
+    makeFlagsArray+=(
+      "INTROSPECTION_GIRDIR=$out/share/gir-1.0/"
+      "INTROSPECTION_TYPELIBDIR=$out/lib/girepository-1.0"
+    )
+  '';
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-menus/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Library for the Desktop Menu fd.o specification";
     homepage = https://git.gnome.org/browse/gnome-menus;
     license = with licenses; [

@@ -1197,7 +1197,10 @@ gnome-documents = callPackageAlias "gnome-documents_3-20" { };
 
 gnome-keyring = callPackage ../all-pkgs/g/gnome-keyring { };
 
-gnome-menus = callPackage ../all-pkgs/g/gnome-menus { };
+gnome-menus_3-13 = callPackage ../all-pkgs/g/gnome-menus {
+  channel = "3.13";
+};
+gnome-menus = callPackageAlias "gnome-menus_3-13" { };
 
 gnome-mpv = callPackage ../all-pkgs/g/gnome-mpv { };
 

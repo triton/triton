@@ -1,21 +1,24 @@
-{ stdenv, fetchpatch, fetchurl, lib, openssl, libnl
-, dbus, readline, pcsc-lite_lib, ncurses
+{ stdenv
+, fetchurl
+, writeText
+
+, dbus
+, libnl
+, ncurses
+, openssl
+, pcsc-lite_lib
+, readline
 }:
 
-with stdenv.lib;
-stdenv.mkDerivation rec {
-  version = "2.5";
+let
+  version = "2.6";
 
-  name = "wpa_supplicant-${version}";
-
-  src = fetchurl {
-    url = "http://hostap.epitest.fi/releases/${name}.tar.gz";
-    sha256 = "05mkp5bx1c3z7h5biddsv0p49gkrq9ksany3anp4wdiv92p5prfc";
-  };
+  inherit (stdenv.lib)
+    optionalString;
 
   # TODO: Patch epoll so that the dbus actually responds
   # TODO: Figure out how to get privsep working, currently getting SIGBUS
-  extraConfig = ''
+  extraConfigFile = writeText "wpa_supplicant-config" (''
     CONFIG_AP=y
     CONFIG_LIBNL32=y
     CONFIG_EAP_FAST=y
@@ -60,31 +63,38 @@ stdenv.mkDerivation rec {
     CONFIG_READLINE=y
   '' else ''
     CONFIG_WPA_CLI_EDIT=y
-  '');
+  ''));
+
+in
+stdenv.mkDerivation rec {
+  name = "wpa_supplicant-${version}";
+
+  src = fetchurl {
+    url = "https://w1.fi/releases/${name}.tar.gz";
+    hashOutput = false;
+    sha256 = "b4936d34c4e6cdd44954beba74296d964bc2c9668ecaa5255e499636fe2b1450";
+  };
 
   preBuild = ''
     cd wpa_supplicant
     cp -v defconfig .config
-    echo "$extraConfig" >> .config
+    cat '${extraConfigFile}' >> .config
     cat -n .config
-    substituteInPlace Makefile --replace /usr/local $out
+
+    sed -i 's,/usr/local,$out,g' Makefile
+
     export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE \
       -I$(echo "${libnl}"/include/libnl*/) \
       -I${pcsc-lite_lib}/include/PCSC/"
   '';
 
   buildInputs = [
-    openssl
-    libnl
     dbus
+    libnl
     ncurses
-    readline
+    openssl
     pcsc-lite_lib
-  ];
-
-  patches = [
-    ./build-fix.patch
-    ./libressl.patch
+    readline
   ];
 
   postInstall = ''
@@ -99,11 +109,23 @@ stdenv.mkDerivation rec {
     rm $out/share/man/man8/wpa_priv.8
   '';
 
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "EC4A A0A9 91A5 F246 4582  D52D 2B6E F432 EFC8 95FA";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
+
   meta = with stdenv.lib; {
     homepage = http://hostap.epitest.fi/wpa_supplicant/;
     description = "A tool for connecting to WPA and WPA2-protected wireless networks";
     license = licenses.bsd3;
-    maintainers = with maintainers; [ marcweber urkud wkennington ];
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

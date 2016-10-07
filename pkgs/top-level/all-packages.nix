@@ -2964,6 +2964,8 @@ wireguard = callPackage ../all-pkgs/w/wireguard {
   kernel = null;
 };
 
+wpa_supplicant = callPackage ../all-pkgs/w/wpa_supplicant { };
+
 wxGTK = callPackage ../all-pkgs/w/wxGTK { };
 
 x264 = callPackage ../all-pkgs/x/x264 { };
@@ -3794,8 +3796,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   wirelesstools = callPackage ../os-specific/linux/wireless-tools { };
 
-  wpa_supplicant = callPackage ../os-specific/linux/wpa_supplicant { };
-#
   zfs = callPackage ../os-specific/linux/zfs {
     configFile = "user";
   };

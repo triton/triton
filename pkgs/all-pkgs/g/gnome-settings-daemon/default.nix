@@ -23,7 +23,7 @@
 , gnome-desktop
 , gnome-themes-standard
 , gsettings-desktop-schemas
-, gtk3
+, gtk
 , ibus
 , lcms2
 , libcanberra
@@ -43,25 +43,25 @@
 , wayland
 , xf86-input-wacom
 , xorg
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+    boolEn
+    boolWt;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "gnome-settings-daemon-${version}";
-  versionMajor = "3.20";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gnome-settings-daemon-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-settings-daemon/${versionMajor}/"
+    url = "mirror://gnome/sources/gnome-settings-daemon/${channel}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-settings-daemon/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "e84a075d895ca3baeefb8508e0a901027b66f7d5a7ee8c966e31d301b38e78e7";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -90,7 +90,7 @@ stdenv.mkDerivation rec {
     gnome-desktop
     gnome-themes-standard
     gsettings-desktop-schemas
-    gtk3
+    gtk
     #ibus
     lcms2
     libcanberra
@@ -128,18 +128,18 @@ stdenv.mkDerivation rec {
     "--enable-compile-warnings"
     "--disable-iso-c"
     "--enable-schemas-compile"
-    (enFlag "gudev" (libgudev != null) null)
-    (enFlag "alsa" (alsa-lib != null) null)
-    (enFlag "wayland" (wayland != null) null)
-    (enFlag "smartcard-support" (nss != null) null)
-    (enFlag "cups" (cups != null) null)
+    "--${boolEn (libgudev != null)}-gudev"
+    "--${boolEn (alsa-lib != null)}-alsa"
+    "--${boolEn (wayland != null)}-wayland"
+    "--${boolEn (nss != null)}-smartcard-support"
+    "--${boolEn (cups != null)}-cups"
     "--enable-rfkill"
-    (enFlag "network-manager" (networkmanager != null) null)
+    "--${boolEn (networkmanager != null)}-network-manager"
     "--disable-profiling"
-    (enFlag "man" (libxslt != null) null)
+    "--${boolEn (libxslt != null)}-man"
     "--disable-more-warnings"
     "--disable-debug"
-    (wtFlag "nssdb" (nss != null) null)
+    "--${boolWt (nss != null)}-nssdb"
   ];
 
   preFixup = ''
@@ -157,6 +157,18 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/"
+        + "gnome-settings-daemon/${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Gnome Settings Daemon";

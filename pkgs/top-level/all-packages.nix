@@ -1220,7 +1220,17 @@ gnome-session_3-22 = callPackage ../all-pkgs/g/gnome-session {
 };
 gnome-session = callPackageAlias "gnome-session_3-22" { };
 
-gnome-settings-daemon = callPackage ../all-pkgs/g/gnome-settings-daemon { };
+gnome-settings-daemon_3-22 =
+  callPackage ../all-pkgs/g/gnome-settings-daemon {
+    channel = "3.22";
+    adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+    gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+    gnome-desktop = pkgs.gnome-desktop_3-22;
+    gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
+    gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
+    gtk = pkgs.gtk_3-22;
+  };
+gnome-settings-daemon = callPackageAlias "gnome-settings-daemon_3-22" { };
 
 gnome-shell = callPackage ../all-pkgs/g/gnome-shell { };
 

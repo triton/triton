@@ -1690,6 +1690,8 @@ libcanberra = callPackage ../all-pkgs/l/libcanberra { };
 
 libcap-ng = callPackage ../all-pkgs/l/libcap-ng { };
 
+libcdio = callPackage ../all-pkgs/l/libcdio { };
+
 libclc = callPackage ../all-pkgs/l/libclc { };
 
 libcroco = callPackage ../all-pkgs/l/libcroco { };
@@ -3383,8 +3385,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libcaca = callPackage ../development/libraries/libcaca { };
 #
   libcddb = callPackage ../development/libraries/libcddb { };
-
-  libcdio = callPackage ../development/libraries/libcdio { };
 #
   libcdr = callPackage ../development/libraries/libcdr { lcms = callPackageAlias "lcms2" { }; };
 #

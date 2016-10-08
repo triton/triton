@@ -617,6 +617,8 @@ boehm-gc = callPackage ../all-pkgs/b/boehm-gc { };
 boost162 = callPackage ../all-pkgs/b/boost/1.62.nix { };
 boost = callPackageAlias "boost162" { };
 
+borgbackup = pkgs.python3Packages.borgbackup;
+
 brotli_0-4-0 = callPackage ../all-pkgs/b/brotli {
   version = "0.4.0";
 };

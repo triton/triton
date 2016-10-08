@@ -161,6 +161,8 @@ bleach = callPackage ../all-pkgs/b/bleach { };
 
 blist = callPackage ../all-pkgs/b/blist { };
 
+borgbackup = callPackage ../all-pkgs/b/borgbackup { };
+
 botocore = callPackage ../all-pkgs/b/botocore { };
 
 brotli = callPackage ../all-pkgs/b/brotli/python.nix {

@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "2.1.9";
+  version = "2.1.10";
 in
 buildPythonPackage rec {
   name = "pyparsing-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pyparsing";
     inherit version;
-    sha256 = "93326f5490bcfe7069806ff342692e75f72529cfa82f20683b5fceeb5d4a7fc2";
+    sha256 = "811c3e7b0031021137fc83e051795025fcb98674d07eb8fe922ba4de53d39188";
   };
 
   meta = with stdenv.lib; {

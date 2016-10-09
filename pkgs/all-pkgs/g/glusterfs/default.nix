@@ -79,12 +79,9 @@ stdenv.mkDerivation rec {
     "--enable-bd-xlator"
     "--enable-crypt-xlator"
     "--enable-qemu-block"
-    "--disable-firewalld"
-    "--disable-systemtap"
   ];
 
   preInstall = ''
-    find . -name Makefile | xargs sed -i "s,\(pyglupydir = \)${python},\1$out,g"
     installFlagsArray+=(
       "sysconfdir=$out/etc"
       "localstatedir=$TMPDIR"

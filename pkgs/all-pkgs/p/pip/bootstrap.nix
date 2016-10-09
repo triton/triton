@@ -17,7 +17,7 @@ let
     package = "setuptools";
     inherit (pythonPackages.setuptools) version;
     type = "-py2.py3-none-any.whl";
-    sha256 = "5497cc872ab2c11eddaeab86526f4d4c219f0d89e06cf9d3472fdbcb94d8f579";
+    sha256 = "873b8e61eba51c38266ad8499ec10f669ea9299a2e8d217b086cead83194a495";
   };
 
   pip_source = pythonPackages.fetchPyPi {

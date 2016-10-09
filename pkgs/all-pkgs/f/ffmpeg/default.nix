@@ -321,6 +321,7 @@ stdenv.mkDerivation rec {
     else
       fetchurl {
         url = "https://www.ffmpeg.org/releases/${name}.tar.xz";
+        hashOutput = false;
         inherit (source)
           multihash
           sha256;

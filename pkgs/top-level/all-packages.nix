@@ -2885,6 +2885,16 @@ tracker_1-10 = callPackage ../all-pkgs/t/tracker {
 };
 tracker = callPackageAlias "tracker_1-10" { };
 
+transmission_2 = callPackage ../all-pkgs/t/transmission {
+  channel = "2";
+  qt5 = null;
+};
+transmission_head = callPackage ../all-pkgs/t/transmission {
+  channel = "head";
+  qt5 = null;
+};
+transmission = callPackageAlias "transmission_2" { };
+
 trousers = callPackage ../all-pkgs/t/trousers { };
 
 tslib = callPackage ../all-pkgs/t/tslib { };

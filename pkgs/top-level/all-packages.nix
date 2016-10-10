@@ -2011,6 +2011,8 @@ libusbmuxd = callPackage ../all-pkgs/l/libusbmuxd { };
 
 libutempter = callPackage ../all-pkgs/l/libutempter { };
 
+libutp = callPackage ../all-pkgs/l/libutp { };
+
 libuv = callPackage ../all-pkgs/l/libuv { };
 
 libva = callPackage ../all-pkgs/l/libva { };

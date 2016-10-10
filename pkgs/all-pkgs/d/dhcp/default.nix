@@ -4,21 +4,25 @@
 , perl
 
 , coreutils
+, cyrus-sasl
 , gnused
 , iproute
 , iputils
+, krb5_lib
 , net-tools
 , openldap
 }:
 
+let
+  version = "4.3.5";
+in
 stdenv.mkDerivation rec {
   name = "dhcp-${version}";
-  version = "4.3.4";
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/dhcp/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "f5115aee3dd3e6925de4ba47b80ab732ba48b481c8364b6ebade2d43698d607e";
+    sha256 = "eb95936bf15d2393c55dd505bc527d1d4408289cec5a9fa8abb99f7577e7f954";
   };
 
   nativeBuildInputs = [
@@ -27,6 +31,8 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    cyrus-sasl
+    krb5_lib
     openldap
   ];
 
@@ -42,7 +48,7 @@ stdenv.mkDerivation rec {
     "--enable-failover"
     "--enable-execute"
     "--enable-tracing"
-    "--enable-delayed-ack"  # Experimental in 4.3.2
+    "--enable-delayed-ack"
     "--enable-dhcpv6"
     "--enable-paranoia"
     "--enable-early-chroot"
@@ -50,9 +56,12 @@ stdenv.mkDerivation rec {
     "--disable-use-sockets"
     "--disable-secs-byteorder"
     "--disable-log-pid"
+    "--enable-binary-leases"
     "--without-libbind"
     "--with-ldap"
     "--with-ldapcrypto"
+    "--with-ldap-gssapi"
+    "--without-ldapcasa"
   ];
 
   preInstall = ''

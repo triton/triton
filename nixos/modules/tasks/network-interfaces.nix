@@ -919,7 +919,7 @@ in
       ];
 
     environment.systemPackages =
-      [ pkgs.dnsutils
+      [ pkgs.bind_tools
         pkgs.iproute
         pkgs.iputils
         pkgs.net-tools

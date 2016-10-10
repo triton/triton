@@ -37,7 +37,7 @@
 
     # Misc tools
     config.programs.ssh.package
-    pkgs.dnsutils
+    pkgs.bind_tools
     pkgs.htop
     pkgs.iftop
     pkgs.iotop

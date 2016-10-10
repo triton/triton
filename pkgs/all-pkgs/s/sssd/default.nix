@@ -6,12 +6,12 @@
 , libxml2
 
 , augeas
+, bind_tools
 , c-ares
 , cifs-utils
 , cyrus-sasl
 , dbus
 , ding-libs
-, dnsutils
 , glib
 , http-parser
 , jansson
@@ -66,12 +66,12 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     augeas
+    bind_tools
     c-ares
     cifs-utils
     cyrus-sasl
     dbus
     ding-libs
-    dnsutils
     glib
     http-parser
     jansson

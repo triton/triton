@@ -620,8 +620,10 @@ bluez = callPackage ../all-pkgs/b/bluez { };
 
 boehm-gc = callPackage ../all-pkgs/b/boehm-gc { };
 
-boost162 = callPackage ../all-pkgs/b/boost/1.62.nix { };
-boost = callPackageAlias "boost162" { };
+boost_1-62 = callPackage ../all-pkgs/b/boost {
+  channel = "1.62";
+};
+boost = callPackageAlias "boost_1-62" { };
 
 borgbackup = pkgs.python3Packages.borgbackup;
 

@@ -1,4 +1,6 @@
-{ stdenv, icu, expat, zlib, bzip2, python2
+{ stdenv
+, fetchurl
+, icu, expat, zlib, bzip2, python2
 , toolset ? if stdenv.cc.isClang then "clang" else null
 , enableRelease ? true
 , enableDebug ? false
@@ -12,9 +14,7 @@
 , patches ? null
 , mpi ? null
 
-# Attributes inherit from specific versions
-, version, src
-, ...
+, channel
 }:
 
 # We must build at least one type of libraries
@@ -23,6 +23,8 @@ assert !enableShared -> enableStatic;
 with stdenv.lib;
 
 let
+
+  source = (import ./sources.nix { })."${channel}";
 
   variant = concatStringsSep ","
     (optional enableRelease "release" ++
@@ -114,9 +116,13 @@ let
 in
 
 stdenv.mkDerivation {
-  name = "boost-${version}";
+  name = "boost-${source.version}";
 
-  inherit src patches;
+  src = fetchurl {
+    url = "mirror://sourceforge/boost/boost/${source.version}/"
+      + "boost_${replaceStrings ["."] ["_"] source.version}.tar.bz2";
+    inherit (source) sha256;
+  };
 
   preConfigure = ''
     NIX_LDFLAGS="$(echo $NIX_LDFLAGS | sed "s,$out,$lib,g")"

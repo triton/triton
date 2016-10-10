@@ -1857,8 +1857,6 @@ libmpeg2 = callPackage ../all-pkgs/l/libmpeg2 {
   xorg = null;
 };
 
-libmsgpack = callPackage ../all-pkgs/l/libmsgpack { };
-
 libmtp = callPackage ../all-pkgs/l/libmtp { };
 
 libmusicbrainz = callPackage ../all-pkgs/l/libmusicbrainz { };
@@ -2176,6 +2174,8 @@ mpfr = callPackage ../all-pkgs/m/mpfr { };
 mpv = callPackage ../all-pkgs/m/mpv { };
 
 ms-sys = callPackage ../all-pkgs/m/ms-sys { };
+
+msgpack-c = callPackage ../all-pkgs/m/msgpack-c { };
 
 mtdev = callPackage ../all-pkgs/m/mtdev { };
 

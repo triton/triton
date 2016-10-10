@@ -1,24 +1,29 @@
 { stdenv
 , cmake
-, fetchFromGitHub
+, fetchurl
 , ninja
+
+, zlib
 }:
 
-stdenv.mkDerivation rec {
-  name = "libmsgpack-${version}";
+let
   version = "2.0.0";
+in
+stdenv.mkDerivation rec {
+  name = "msgpack-c-${version}";
 
-  src = fetchFromGitHub {
-    version = 1;
-    owner = "msgpack";
-    repo = "msgpack-c";
-    rev = "cpp-${version}";
-    sha256 = "147c7098de86025021de83b8921e2a197ab6520e6cba79d97b1ef31d0e162b92";
+  src = fetchurl {
+    url = "https://github.com/msgpack/msgpack-c/releases/download/cpp-${version}/msgpack-${version}.tar.gz";
+    sha256 = "41de0989a3385061ab7307a1005655e780def6fc9c89af0ec942616aa787e136";
   };
 
   nativeBuildInputs = [
     cmake
     ninja
+  ];
+
+  buildInputs = [
+    zlib
   ];
 
   meta = with stdenv.lib; {

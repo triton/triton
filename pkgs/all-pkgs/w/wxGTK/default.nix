@@ -8,11 +8,11 @@
 , gtk3
 , expat
 , libjpeg
-, libmsgpack
 , libnotify
 , libpng
 , libtiff
 , mesa
+, msgpack-c
 , xorg
 , xz
 , zlib
@@ -35,11 +35,11 @@ stdenv.mkDerivation rec {
     gst-plugins-base
     expat
     libjpeg
-    libmsgpack
     libnotify
     libpng
     libtiff
     mesa
+    msgpack-c
     xorg.libICE
     xorg.libSM
     xorg.libX11

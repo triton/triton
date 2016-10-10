@@ -9,13 +9,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dbus-1.10.10";
+  name = "dbus-1.10.12";
 
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus/${name}.tar.gz";
-    multihash = "QmbMf7PkUhkcdygFYWNZ7eJUZxDEUkaxQ6HGw5YifARqtB";
+    multihash = "QmdiNrNvtnngm7ZZdEMuqA7PP6cQm9Lofm4RK7ermN4LhB";
     hashOutput = false;
-    sha256 = "9d8f1d069ab4d1a0255d7b400ea3bcef4430c42e729b1012abb2890e3f739a43";
+    sha256 = "210a79430b276eafc6406c71705e9140d25b9956d18068df98a70156dc0e475d";
   };
 
   buildInputs = [

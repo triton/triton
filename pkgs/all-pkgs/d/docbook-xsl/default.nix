@@ -21,12 +21,14 @@ let
     sha256;
 
   pname = "docbook-xsl${if type != "" then "-${type}" else ""}";
+
+  version = "1.79.1";
 in
 stdenv.mkDerivation rec {
-  name = "${pname}-1.79.1";
+  name = "${pname}-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/docbook/${name}.tar.bz2";
+    url = "mirror://sourceforge/docbook/${pname}/${version}/${name}.tar.bz2";
     inherit multihash sha256;
   };
 

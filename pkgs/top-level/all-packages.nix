@@ -2155,6 +2155,8 @@ minipro = callPackage ../all-pkgs/m/minipro { };
 
 minisign = callPackage ../all-pkgs/m/minisign { };
 
+miniupnpc = callPackage ../all-pkgs/m/miniupnpc { };
+
 mixxx = callPackage ../all-pkgs/m/mixxx { };
 
 mkvtoolnix = callPackage ../all-pkgs/m/mkvtoolnix { };

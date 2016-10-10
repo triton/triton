@@ -1,6 +1,7 @@
 { stdenv, fetchurl, cmake, ncurses, zlib, xz, lzo, lz4, bzip2, snappy
-, openssl, pcre, boost, judy, bison, libxml2, ninja
+, openssl, pcre, boost, judy, bison, libxml2, ninja, kytea, msgpack-c
 , libaio, libevent, groff, jemalloc, cracklib, systemd_lib, numactl, perl
+, zeromq
 }:
 
 with stdenv.lib;
@@ -24,7 +25,8 @@ stdenv.mkDerivation rec {
   buildInputs = [
     ncurses openssl zlib xz lzo lz4 bzip2 snappy
     pcre libxml2 boost judy bison libevent cracklib
-    jemalloc libaio systemd_lib numactl
+    jemalloc libaio systemd_lib numactl kytea msgpack-c
+    zeromq
   ];
 
   cmakeFlags = [

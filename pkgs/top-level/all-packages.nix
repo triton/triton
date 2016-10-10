@@ -608,6 +608,12 @@ bcache-tools_dev = callPackageAlias "bcache-tools" {
   channel = "dev";
 };
 
+bind = callPackage ../all-pkgs/b/bind { };
+
+bind_tools = callPackageAlias "bind" {
+  suffix = "tools";
+};
+
 bison = callPackage ../all-pkgs/b/bison { };
 
 bluez = callPackage ../all-pkgs/b/bluez { };
@@ -802,12 +808,6 @@ desktop-file-utils = callPackage ../all-pkgs/d/desktop-file-utils { };
 # Deprecated alias
 desktop_file_utils = callPackageAlias "desktop-file-utils" { };
 
-dialog = callPackage ../all-pkgs/d/dialog { };
-
-ding-libs = callPackage ../all-pkgs/d/ding-libs { };
-
-dmenu = callPackage ../all-pkgs/d/dmenu { };
-
 devil_nox = callPackageAlias "devil" {
   xorg = null;
   mesa = null;
@@ -818,7 +818,13 @@ dhcp = callPackage ../all-pkgs/d/dhcp { };
 
 dhcpcd = callPackage ../all-pkgs/d/dhcpcd { };
 
+dialog = callPackage ../all-pkgs/d/dialog { };
+
 diffutils = callPackage ../all-pkgs/d/diffutils { };
+
+ding-libs = callPackage ../all-pkgs/d/ding-libs { };
+
+dmenu = callPackage ../all-pkgs/d/dmenu { };
 
 dmidecode = callPackage ../all-pkgs/d/dmidecode { };
 
@@ -3578,12 +3584,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   };
 #
   apacheHttpdPackages = pkgs.apacheHttpdPackagesFor pkgs.apacheHttpd pkgs.apacheHttpdPackages;
-#
-  bind = callPackage ../servers/dns/bind { };
-
-  dnsutils = callPackageAlias "bind" {
-    suffix = "tools";
-  };
 #
 #  # Backwards compatibility.
   mod_dnssd = pkgs.apacheHttpdPackages.mod_dnssd;

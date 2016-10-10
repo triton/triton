@@ -5,19 +5,23 @@
 , docbook-xsl-ns
 
 , db
+, fstrm
 , idnkit
 , json-c
 , kerberos
 , libcap
 , libseccomp
 , libxml2
+, lmdb
 , mysql_lib
 , ncurses
 , openldap
 , openssl
 , postgresql
-, python
+, protobuf-c
+, pythonPackages
 , readline
+, zlib
 
 , suffix ? ""
 }:
@@ -29,7 +33,7 @@ let
     optionals
     optionalString;
 
-  version = "9.10.4-P3";
+  version = "9.11.0";
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
@@ -37,7 +41,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "http://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
     hashOutput = false;
-    sha256 = "a075e5ce89fddccb0e64d1777d59161387dd5151cf4e7d1a93875a487812baef";
+    sha256 = "6f0b403036e0281b272a0fbdd0dc3417f3050b625cb059c5409432611418058b";
   };
 
   nativeBuildInputs = [
@@ -52,25 +56,36 @@ stdenv.mkDerivation rec {
     libcap
     libseccomp
     libxml2
+    lmdb
     ncurses
     openssl
-    python
+    pythonPackages.python
+    pythonPackages.ply
     readline
+    zlib
   ] ++ optionals (!toolsOnly) [
     db
+    fstrm
     openldap
     mysql_lib
     postgresql
+    protobuf-c
   ];
+
+  # Fix broken zlib detection
+  postPatch = ''
+    sed -i 's,''${with_zlib}/zlib.h,''${with_zlib}/include/zlib.h,g' configure
+  '';
 
   configureFlags = [
     "--localstatedir=/var"
     "--sysconfdir=/etc"
     "--enable-seccomp"
-    "--with-python=${python.interpreter}"
+    "--with-python=${pythonPackages.python.interpreter}"
     "--enable-kqueue"
     "--enable-epoll"
     "--enable-devpoll"
+    "--enable-threads"
     "--without-geoip"  # TODO(wkennington): GeoDNS support
     "--with-gssapi=${kerberos}"
     "--with-libtool"
@@ -80,11 +95,12 @@ stdenv.mkDerivation rec {
     "--with-ecdsa"
     "--without-gost"  # Insecure cipher
     "--with-aes"
+    "--with-cc-alg=sha256"
     "--enable-openssl-hash"
-    "--enable-sit"
-    "--with-sit-alg=aes"
+    "--with-lmdb=${lmdb}"
     "--with-libxml2=${libxml2}"
     "--with-libjson=${json-c}"
+    "--with-zlib=${zlib}"
     "--enable-largefile"
     "--without-purify"
     "--without-gperftools-profiler"
@@ -117,6 +133,9 @@ stdenv.mkDerivation rec {
     "--with-dlz-ldap=${openldap}"
     "--without-dlz-odbc"
     "--with-dlz-stub"
+    "--with-protobuf-c=${protobuf-c}"
+    "--with-libfstrm=${fstrm}"
+    "--enable-dnstap"
   ];
 
   installFlags = [

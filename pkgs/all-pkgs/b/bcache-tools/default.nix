@@ -13,14 +13,16 @@
 let
   sources = {
     "stable" = {
+      fetchzipVersion = 2;
       version = "1.0.8";
       rev = "03bc5a32e5c14b75fb757902754480b8bcc3069e";
       sha256 = "339e97128db8a70c8da4cd51584634dda49d569314a0078361d075bf023580e6";
     };
     "dev" = {
-      version = "2016-09-05";
-      rev = "837a476cc139167fc483016f0a2635a048f7709e";
-      sha256 = "da105b85089621bdb8b69236538d1e5d6d3ea221b19a9cb727264da4f5ae2325";
+      fetchzipVersion = 2;
+      version = "2016-10-06";
+      rev = "f3a8d548376295279d2d27fda5764adbe377c55b";
+      sha256 = "bd54114561b9c703fb53d29e445fff3042cd3625167b8e8f956a6998309c1402";
     };
   };
 
@@ -29,6 +31,7 @@ let
     optionalString;
 
   inherit (sources.${channel})
+    fetchzipVersion
     rev
     sha256
     version;
@@ -37,7 +40,7 @@ stdenv.mkDerivation {
   name = "bcache-tools-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = fetchzipVersion;
     owner = "wkennington";
     repo = "bcache-tools";
     inherit rev sha256;

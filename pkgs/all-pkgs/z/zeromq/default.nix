@@ -1,5 +1,10 @@
 { stdenv
+, asciidoc
+, docbook_xml_dtd_45
+, docbook-xsl
 , fetchurl
+, libxslt
+, xmlto
 
 , krb5_lib
 , libsodium
@@ -23,6 +28,14 @@ stdenv.mkDerivation rec {
       + "download/v${version}/${name}.tar.gz";
     sha256 = "04aac57f081ffa3a2ee5ed04887be9e205df3a7ddade0027460b8042432bdbcf";
   };
+
+  nativeBuildInputs = [
+    asciidoc
+    docbook_xml_dtd_45
+    docbook-xsl
+    libxslt
+    xmlto
+  ];
 
   buildInputs = [
     krb5_lib

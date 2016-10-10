@@ -10,13 +10,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "serf-1.3.8";
+  name = "serf-1.3.9";
 
   src = fetchurl {
     url = "mirror://apache/serf/${name}.tar.bz2";
     multihash = "QmW49Y4ZNoRj8meZo89mZMrdtvMpQKkgZf9Lv2vxzSK4vW";
-    sha1Confirm = "1d45425ca324336ce2f4ae7d7b4cfbc5567c5446";
-    sha256 = "14155g48gamcv5s0828bzij6vr14nqmbndwq8j8f9g6vcph0nl70";
+    sha1Confirm = "26015c63e3bbb108c1689bf2090e4c26351db674";
+    sha256 = "549c2d21c577a8a9c0450facb5cca809f26591f048e466552240947bdf7a87cc";
   };
 
   nativeBuildInputs = [

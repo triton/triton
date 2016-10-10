@@ -19,11 +19,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "libosinfo-0.3.1";
+  name = "libosinfo-1.0.0";
 
   src = fetchurl {
     url = "https://fedorahosted.org/releases/l/i/libosinfo/${name}.tar.gz";
-    sha256 = "50b272943d68b77d5259f72be860acfd048126bc27e7aa9c2f9c77a7eacf3894";
+    hashOutput = false;
+    sha256 = "f7b425ecde5197d200820eb44401c5033771a5d114bd6390230de768aad0396b";
   };
 
   nativeBuildInputs = [
@@ -56,6 +57,15 @@ stdenv.mkDerivation rec {
     "--with-usb-ids-path=${hwdata}/data/hwdata/usb.ids"
     "--with-pci-ids-path=${hwdata}/data/hwdata/pci.ids"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "DAF3 A6FD B26B 6291 2D0E  8E3F BE86 EBB4 1510 4FDF";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "GObject library for managing information about real/virtual OSes";

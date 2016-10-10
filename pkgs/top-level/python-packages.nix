@@ -280,6 +280,8 @@ pillow = callPackage ../all-pkgs/p/pillow { };
 
 pip = callPackage ../all-pkgs/p/pip { };
 
+ply = callPackage ../all-pkgs/p/ply { };
+
 progressbar = callPackage ../all-pkgs/p/progressbar { };
 
 psutil = callPackage ../all-pkgs/p/psutil { };
@@ -1170,31 +1172,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        maintainers = with maintainers; [ ];
      };
    };
-
-   ply = buildPythonPackage (rec {
-     name = "ply-${version}";
-     version = "3.9";
-
-     src = fetchPyPi {
-       package = "ply";
-       inherit version;
-       sha256 = "0d7e2940b9c57151392fceaa62b0865c45e06ce1e36687fd8d03f011a907f43e";
-     };
-
-     checkPhase = ''
-       ${python.interpreter} test/testlex.py
-       ${python.interpreter} test/testyacc.py
-     '';
-
-     # Test suite appears broken
-
-     meta = {
-       homepage = http://www.dabeaz.com/ply/;
-       description = "Python implementation of the lex & yacc parsing tools";
-       license = licenses.bsd3;
-       maintainers = [ ];
-     };
-   });
 
    parsedatetime = buildPythonPackage rec {
      name = "parsedatetime-2.1";

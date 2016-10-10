@@ -1871,6 +1871,8 @@ libmusicbrainz = callPackage ../all-pkgs/l/libmusicbrainz { };
 
 libmypaint = callPackage ../all-pkgs/l/libmypaint { };
 
+libnatpmp = callPackage ../all-pkgs/l/libnatpmp { };
+
 libnetfilter_acct = callPackage ../all-pkgs/l/libnetfilter_acct { };
 
 libnetfilter_conntrack = callPackage ../all-pkgs/l/libnetfilter_conntrack { };

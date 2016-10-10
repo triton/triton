@@ -818,6 +818,8 @@ dhcp = callPackage ../all-pkgs/d/dhcp { };
 
 dhcpcd = callPackage ../all-pkgs/d/dhcpcd { };
 
+dht = callPackage ../all-pkgs/d/dht { };
+
 dialog = callPackage ../all-pkgs/d/dialog { };
 
 diffutils = callPackage ../all-pkgs/d/diffutils { };

@@ -1701,6 +1701,8 @@ libatomic_ops = callPackage ../all-pkgs/l/libatomic_ops { };
 
 libavc1394 = callPackage ../all-pkgs/l/libavc1394 { };
 
+libb64 = callPackage ../all-pkgs/l/libb64 { };
+
 libbluray = callPackage ../all-pkgs/l/libbluray { };
 
 libbsd = callPackage ../all-pkgs/l/libbsd { };

@@ -10,7 +10,7 @@
 , chardet
 , geoip
 , librsvg
-, libtorrent-rasterbar
+, libtorrent-rasterbar_1-0
 , Mako
 , pillow
 #, pygame
@@ -63,7 +63,7 @@ buildPythonPackage rec {
     chardet
     geoip
     librsvg
-    libtorrent-rasterbar
+    libtorrent-rasterbar_1-0
     Mako
     pillow
     #pygame

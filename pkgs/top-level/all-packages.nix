@@ -1655,6 +1655,8 @@ krb5_lib = callPackageAlias "krb5_full" {
 
 kyotocabinet = callPackage ../all-pkgs/k/kyotocabinet { };
 
+kytea = callPackage ../all-pkgs/k/kytea { };
+
 lame = callPackage ../all-pkgs/l/lame {
   libsndfile = null;
 };

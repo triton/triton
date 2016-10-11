@@ -9,6 +9,7 @@
 , ninja
 
 
+, adwaita-icon-theme
 , curl
 , dbus
 , dht
@@ -134,6 +135,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    adwaita-icon-theme
     curl
     dbus
     dht
@@ -160,7 +162,8 @@ stdenv.mkDerivation rec {
     "-DENABLE_CLI=ON"
     "-DENABLE_DAEMON=ON"
     "-DENABLE_GTK=${boolOn (
-      dbus != null
+      adwaita-icon-theme != null
+      && dbus != null
       && glib != null
       && gtk_3 != null)}"
     "-DENABLE_LIGHTWEIGHT=OFF"

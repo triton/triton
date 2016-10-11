@@ -45,11 +45,11 @@ assert (
 
 stdenv.mkDerivation rec {
   name = "poppler-${suffix}-${version}";
-  version = "0.47.0";
+  version = "0.48.0";
 
   src = fetchurl {
     url = "https://poppler.freedesktop.org/poppler-${version}.tar.xz";
-    sha256 = "b872e7228fc34a71ce4b47a5aea2a57ae67528818fa846e1e0eda089319bd242";
+    sha256 = "85a003968074c85d8e13bf320ec47cef647b496b56dcff4c790b34e5482fef93";
   };
 
   nativeBuildInputs = [

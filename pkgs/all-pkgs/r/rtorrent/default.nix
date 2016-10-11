@@ -24,14 +24,14 @@ in
 
 stdenv.mkDerivation rec {
   name = "rtorrent-${version}";
-  version = "2016-09-09";
+  version = "2016-10-10";
 
   src = fetchFromGitHub {
     version = 2;
     owner = "rakshasa";
     repo = "rtorrent";
-    rev = "ce0008510723b6c96c86f8fe944affc84f90cd69";
-    sha256 = "e493542335297ebccb9f16741df72d9d01eb874e100454bfd30504729d45199c";
+    rev = "c3f6db03841c0b1e5c71fd69a6b11cf8d8e3eaa5";
+    sha256 = "17a799e8fc5b4b8bef4c5d832e8f9a68264b3a11ad3914b70dd81c64c0c9af03";
   };
 
   nativeBuildInputs = [

@@ -18,12 +18,12 @@ in
 stdenv.mkDerivation rec {
   name = "gupnp-av-${version}";
   versionMajor = "0.12";
-  versionMinor = "8";
+  versionMinor = "9";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gupnp-av/${versionMajor}/${name}.tar.xz";
-    sha256 = "759bc7d46aff894c282d17f508d9b5be82de96aa74b10cb6b0fc6c5e07cc273c";
+    sha256 = "62c56449256a1a97b66c8ee59aa6455b90a7921285745ef3b79566218e85d447";
   };
 
   buildInputs = [

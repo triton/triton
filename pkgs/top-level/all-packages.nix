@@ -489,6 +489,8 @@ wrapCC = wrapCCWith (callPackage ../build-support/cc-wrapper) pkgs.stdenv.cc.lib
 
 "389-ds-base" = callPackage ../all-pkgs/3/389-ds-base { };
 
+accelio = callPackage ../all-pkgs/a/accelio { };
+
 accountsservice = callPackage ../all-pkgs/a/accountsservice { };
 
 acl = callPackage ../all-pkgs/a/acl { };
@@ -3347,8 +3349,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 #
   aalib = callPackage ../development/libraries/aalib { };
 #
-  accelio = callPackage ../development/libraries/accelio { };
-#
   celt = callPackage ../development/libraries/celt {};
   celt_0_7 = callPackage ../development/libraries/celt/0.7.nix {};
   celt_0_5_1 = callPackage ../development/libraries/celt/0.5.1.nix {};
@@ -3700,7 +3700,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
     kPkgs = {
       inherit kernel;
 
-      accelio = kCallPackage ../development/libraries/accelio { };
+      accelio = kCallPackage ../all-pkgs/a/accelio { };
 
       cryptodev = pkgs.cryptodevHeaders.override {
         onlyHeaders = false;

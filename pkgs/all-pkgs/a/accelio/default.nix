@@ -11,17 +11,17 @@
 }:
 
 let
-  version = "1.6";
+  version = "1.7";
 in
 stdenv.mkDerivation rec {
   name = "accelio-${version}${stdenv.lib.optionalString (kernel != null) "-kernel"}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "accelio";
     repo = "accelio";
     rev = "v${version}";
-    sha256 = "89f8d22ef3fb4f0d05a780d56014f41c5f179bea87f62eebfd4c5cc90a239541";
+    sha256 = "126243e08af4356335f554be2b7885e5ea2b31824b8414c08b6f2c83a46655a5";
   };
 
   nativeBuildInputs = [

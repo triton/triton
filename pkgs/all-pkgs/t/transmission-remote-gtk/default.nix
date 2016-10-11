@@ -4,10 +4,12 @@
 , gettext
 , intltool
 , lib
+, makeWrapper
 
 , adwaita-icon-theme
 , appstream-glib
 , curl
+, dconf
 , gdk-pixbuf
 , geoip
 , glib
@@ -37,12 +39,14 @@ stdenv.mkDerivation rec {
     autoconf-archive
     gettext
     intltool
+    makeWrapper
   ];
 
   buildInputs = [
     adwaita-icon-theme
     appstream-glib
     curl
+    dconf
     gdk-pixbuf
     geoip
     glib

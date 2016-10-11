@@ -116,11 +116,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "d172538b2cfce0c13cee31e647d0367aa8cd2486";
-    date = "2015-06-02";
+    rev = "dc7f3af03ebbba4b0c90f8d95c682dba7d4c70f5";
+    date = "2016-10-05";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "1n034kiz772awpwxpbynz7pjqhs5ql2inx1hrhdlf6v0fj3k64f0";
+    sha256 = "10n0gdvjh1wbfnxalxlv34c92606w5d2qjhidihbx721njb9zdmc";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -206,11 +206,11 @@ let
 
   sys = buildFromGitHub {
     version = 2;
-    rev = "8d1157a435470616f975ff9bb013bea8d0962067";
-    date = "2016-10-06";
+    rev = "67f277b6fe017c42fc3b4a445edc999dd99edd58";
+    date = "2016-10-10";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "1ahd3c0bi2ljcpz36b440glmq9x7x269cf8y8ddczg2yk1rm675j";
+    sha256 = "10k05n6y2s8h7rywrspjfnrdzb8adhx0hp1qn32z1b015bcf23nc";
     goPackagePath = "golang.org/x/sys";
     goPackageAliases = [
       "github.com/golang/sys"
@@ -554,11 +554,11 @@ let
 
   mitchellh_cli = buildFromGitHub {
     version = 2;
-    date = "2016-10-03";
-    rev = "3acdca71948da01ac07e382e696e4798f0215ccc";
+    date = "2016-10-06";
+    rev = "2b05dd12fcaee6566e0a8a256c7996d7038ddf6c";
     owner = "mitchellh";
     repo = "cli";
-    sha256 = "08wf9j2lgkx7i2x04viz0ws75chzx31h4hjwv38bqs2lbbxa59gi";
+    sha256 = "19kq50hzwjiyiyxjpgwmg4jsdhrd58mpqp67g68r5kzfpq71hk4s";
     propagatedBuildInputs = [ crypto go-radix speakeasy go-isatty ];
   };
 
@@ -729,21 +729,23 @@ let
   };
 
   consul-template = buildFromGitHub {
-    version = 1;
-    rev = "v0.15.0";
+    version = 2;
+    rev = "v0.16.0";
     owner = "hashicorp";
     repo = "consul-template";
-    sha256 = "04fppwf7hr11s15rgzfpnhgqrwzn6akp9phjrn9gymlp7ak3i4jc";
+    sha256 = "0c5wl8azm65w5pcqbqmw0cdq336r5fsvbayc6j4qhxs3sjxfcph5";
 
     buildInputs = [
       consul_api
       go-cleanhttp
       go-multierror
       go-reap
+      go-shellwords
       go-syslog
       logutils
       mapstructure
       serf
+      toml
       yaml_v2
       vault_api
     ];
@@ -2308,6 +2310,15 @@ let
     sha256 = "0fmah32srkcsrz14mxkx2drry0kcrykhr1ks78qmh98i91nmkpbw";
   };
 
+  go-shellwords = buildFromGitHub {
+    version = 2;
+    rev = "525bedee691b5a8df547cb5cf9f86b7fb1883e24";
+    owner  = "mattn";
+    repo   = "go-shellwords";
+    sha256 = "0ch7f3128mac8ymfh15p2nrsis5472h9yr6dzwmmc6dbcslpvfk1";
+    date = "2016-03-15";
+  };
+
   go-simplejson = buildFromGitHub {
     version = 1;
     rev = "v0.5.0";
@@ -2604,11 +2615,11 @@ let
 
   hcl = buildFromGitHub {
     version = 2;
-    date = "2016-09-16";
-    rev = "ef8133da8cda503718a74741312bf50821e6de79";
+    date = "2016-10-08";
+    rev = "6f5bfed9a0a22222fbe4e731ae3481730ba41e93";
     owner  = "hashicorp";
     repo   = "hcl";
-    sha256 = "1nav7i0yrqqbrxxw83a6fl12q24haybbwxra9iyxssph078ch7gh";
+    sha256 = "0bwqhac2wi9217bxd640xd1k88i74za34kv2b579hvphja13n98q";
   };
 
   hdrhistogram = buildFromGitHub {
@@ -3193,12 +3204,12 @@ let
   };
 
   mapstructure = buildFromGitHub {
-    version = 1;
-    date = "2016-08-08";
-    rev = "ca63d7c062ee3c9f34db231e352b60012b4fd0c1";
+    version = 2;
+    date = "2016-10-06";
+    rev = "a6ef2f080c66d0a2e94e97cf74f80f772855da63";
     owner  = "mitchellh";
     repo   = "mapstructure";
-    sha256 = "1f97xd835qnyy1wb2aj2zw66c2l1kaq44n3511avm8alhaicqky9";
+    sha256 = "1j01ijni13hmmsdq66prza3v1rdjjl58396bi11srsikbrdvch7m";
   };
 
   match = buildFromGitHub {
@@ -4695,6 +4706,7 @@ let
     repo = "toml";
     rev = "v0.2.0";
     sha256 = "1sqhi5rx27scpcygdzipbhx4l6x4mjjxkbh5hg00wzqhfwhy4mxw";
+    goPackageAliases = [ "github.com/burntsushi/toml" ];
   };
 
   trace = buildFromGitHub {

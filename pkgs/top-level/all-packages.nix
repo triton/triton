@@ -2886,12 +2886,19 @@ tracker_1-10 = callPackage ../all-pkgs/t/tracker {
   vala = pkgs.vala_0-34;
 };
 tracker = callPackageAlias "tracker_1-10" { };
-
-transmission_2 = callPackage ../all-pkgs/t/transmission {
+transmission_generic = overrides: callPackage ../all-pkgs/t/transmission ({
+  # The following are disabled by default
+  adwaita-icon-theme = null;
+  dbus = null;
+  glib = null;
+  gtk_3 = null;
+  qt5 = null;
+} // overrides);
+transmission_2 = pkgs.transmission_generic {
   channel = "2";
   qt5 = null;
 };
-transmission_head = callPackage ../all-pkgs/t/transmission {
+transmission_head = pkgs.transmission_generic {
   channel = "head";
   qt5 = null;
 };

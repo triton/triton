@@ -36,6 +36,7 @@ let
     boolOn
     elem
     optionals
+    optionalString
     platforms;
 
   source = (import ./sources.nix { })."${channel}";
@@ -190,7 +191,11 @@ stdenv.mkDerivation rec {
     "-D_LARGEFILE64_SOURCE=1"
   ];
 
-  preFixup = ''
+  preFixup = optionalString (
+    adwaita-icon-theme != null
+    && dbus != null
+    && glib != null
+    && gtk_3 != null) ''
     wrapProgram $out/bin/transmission-gtk \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \

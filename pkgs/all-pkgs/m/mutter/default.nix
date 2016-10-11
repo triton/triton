@@ -176,6 +176,18 @@ stdenv.mkDerivation rec {
         --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
     '';
 
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/mutter/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
   meta = with stdenv.lib; {
     description = "GNOME 3 compositing window manager based on Clutter";
     homepage = https://git.gnome.org/browse/mutter/;

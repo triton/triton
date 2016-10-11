@@ -5,11 +5,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libibverbs-1.2.0";
+  name = "libibverbs-1.2.1";
 
   src = fetchurl {
     url = "https://www.openfabrics.org/downloads/verbs/${name}.tar.gz";
-    sha256 = "dff6a3126fd19e84d57fb849f1fc43f161699c39fc6a0866e573378339b42ed0";
+    sha256 = "c352a7f24e9a9d30ea74faa35d1b721d78d770506a0c03732e3132b7c85ac330";
   };
 
   buildInputs = [

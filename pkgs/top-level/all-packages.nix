@@ -2904,6 +2904,8 @@ transmission_head = pkgs.transmission_generic {
 };
 transmission = callPackageAlias "transmission_2" { };
 
+transmission-remote-gtk = callPackage ../all-pkgs/t/transmission-remote-gtk { };
+
 trousers = callPackage ../all-pkgs/t/trousers { };
 
 tslib = callPackage ../all-pkgs/t/tslib { };

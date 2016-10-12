@@ -9,7 +9,7 @@
 , yasm
 
 , accelio
-, boost
+, boost_1-61
 , curl
 , expat
 , fcgi
@@ -62,7 +62,7 @@ stdenv.mkDerivation {
 
   buildInputs = [
     accelio
-    boost
+    boost_1-61
     curl
     expat
     fcgi

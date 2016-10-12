@@ -1,7 +1,6 @@
 { stdenv
 , cmake
 , fetchgit
-, ninja
 , perl
 , pythonPackages
 , python2Packages
@@ -33,6 +32,9 @@
 }:
 
 let
+  inherit (stdenv.lib)
+    replaceChars;
+
   inherit ((import ./sources.nix)."${channel}")
     fetchVersion
     rev
@@ -48,13 +50,12 @@ stdenv.mkDerivation {
     version = fetchVersion;
   };
 
-
   nativeBuildInputs = [
     cmake
-    #ninja
     perl
     pythonPackages.sphinx
     python2Packages.python
+    python2Packages.wrapPython
     python3Packages.cython
     python3Packages.python
     yasm
@@ -85,13 +86,20 @@ stdenv.mkDerivation {
 
   postPatch = ''
     # We manually set the version of ceph directly so we don't have to depend on git
-    sed -i 's,GITDIR-NOTFOUND,"${version}",g' cmake/modules/GetGitRevisionDescription.cmake
+    sed \
+      -e 's,GIT-NOTFOUND,${version},g' \
+      -e 's,GITDIR-NOTFOUND,${replaceChars ["-" "."] ["" ""] version},g' \
+      -i cmake/modules/GetGitRevisionDescription.cmake
   '';
 
   cmakeFlags = [
+    #"-DWITH_SPDK=ON"
     "-DWITH_XIO=ON"
     "-DHAVE_BABELTRACE=OFF"
-    "-DHAVE_LIBZFS=ON"
+    "-DDEBUG_GATHER=OFF"
+    #"-DHAVE_LIBZFS=ON"  # Broken build and broken for using anyway
+    "-DWITH_TESTS=OFF"
+    #"-DWITH_FIO=ON"
     "-DWITH_SYSTEMD=ON"
 
     "-DBUILD_SHARED_LIBS=ON"
@@ -102,6 +110,10 @@ stdenv.mkDerivation {
   makeFlags = [
     "VERBOSE=1"
   ];
+
+  preFixup = ''
+    wrapPythonPrograms "$out"/bin
+  '';
   
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

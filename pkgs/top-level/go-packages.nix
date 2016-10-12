@@ -142,11 +142,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "f4b625ec9b21d620bb5ce57f2dfc3e08ca97fce6";
-    date = "2016-10-05";
+    rev = "cf4effbb9db1f3ef07f7e1891402991b6afbb276";
+    date = "2016-10-11";
     owner  = "golang";
     repo   = "net";
-    sha256 = "0n3648g86cjicax00m88wq1cbq1v5qxm93s3s1a50zjhk59j99sa";
+    sha256 = "19dy3m8iizd3llwrpqf10jm6cq56v81f64jyyfzljmvcr5farjqk";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -219,11 +219,11 @@ let
 
   text = buildFromGitHub {
     version = 2;
-    rev = "ede1cb9f9f2f84c3bace9ca113fd740fc916cdd0";
-    date = "2016-09-29";
+    rev = "e5ad07f5f636e1fc5963f1e794f8e30edec9c52a";
+    date = "2016-10-06";
     owner = "golang";
     repo = "text";
-    sha256 = "1zny1ilc2mkng74vpwczvf1jx5v6w4ksm9qbhcvwalxvdmkg9vx6";
+    sha256 = "0h24rcbwnd2h0x1yy90gmkjjwhn6jxq4y78m6dgh999yjwfkj4hl";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
     excludedPackages = "cmd";
@@ -961,12 +961,12 @@ let
   };
 
   duo_api_golang = buildFromGitHub {
-    version = 1;
-    date = "2016-06-24";
-    rev = "60cf4266ffce4f3d8b332fb4af4558c8383dc970";
+    version = 2;
+    date = "2016-06-27";
+    rev = "2b2d787eb38e28ce4fd906321d717af19fad26a6";
     owner = "duosecurity";
     repo = "duo_api_golang";
-    sha256 = "1k865gc1x14fmlx2i0g19iwbj09zfkjxmdws8pzxzdns5dvxwbp4";
+    sha256 = "17vi9qg1dd02pmqjajqkspvdl676f0jhfzh4vzr4rxrcwgnqxdwx";
   };
 
   dsync = buildFromGitHub {
@@ -1068,8 +1068,8 @@ let
     version = 2;
     owner = "coreos";
     repo = "etcd";
-    rev = "v3.0.10";
-    sha256 = "1my1v7rf1m1n19na2chn9plw6qd3093mnyq51pjy9l1cf1rd9lrj";
+    rev = "v3.0.12";
+    sha256 = "1y4b0pz3y1fgjd4qfmbs89r2gx0xw87fj94j4a2gl80y43lydxrj";
     buildInputs = [
       bolt
       btree
@@ -1222,10 +1222,10 @@ let
   gcloud-golang = buildFromGitHub {
     version = 2;
     date = "2016-10-10";
-    rev = "daafb8782bb0c3cc73c413c1a11a140989243b31";
+    rev = "8eb0f0f03ccb91217117fe064820a9e6a3585c3e";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "1v8nmdwsfg3lqj1abb10yvfb4l9cdz7lcgj4bcnbm43nlx2fjagk";
+    sha256 = "01xcbc5ylwqzz0c3xz83ilym5441r7plz4bix9x189vmcz14c821";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -2498,16 +2498,16 @@ let
 
   grpc = buildFromGitHub {
     version = 2;
-    rev = "2131fedea9b3fe419b5c06200a674cdbc7bf986d";
+    rev = "72d072e4c18c02bfe6c98fc661a4df74da546145";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "1j0pvcg39yc62r4j5f3g19vxzbjz7il7qhja06y0ivr4v7wwfs2b";
+    sha256 = "035crj0611nlssqj079qzh3qgfsd5r3bapkz8w6cgnn4f6x9dj1q";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [ "github.com/grpc/grpc-go" ];
     propagatedBuildInputs = [ http2 net protobuf oauth2 glog ];
     excludedPackages = "\\(test\\|benchmark\\)";
     meta.useUnstable = true;
-    date = "2016-10-07";
+    date = "2016-10-10";
   };
 
   grpc-gateway = buildFromGitHub {
@@ -3833,11 +3833,11 @@ let
 
   pq = buildFromGitHub {
     version = 2;
-    rev = "fcb9ef54da7cae1ea08f0b5a92f236d83e59294a";
+    rev = "068cb1c8e4be77b9bdef4d0d91f162160537779e";
     owner  = "lib";
     repo   = "pq";
-    sha256 = "0yih32jhsfydbxdmwqhyrzrz0x17r2f421z4vrdpy7ad7lybm4cs";
-    date = "2016-10-07";
+    sha256 = "1v43wfwfxmrivdcva9ar0f467aylxrj8agnnnpp7qchxp1yvidni";
+    date = "2016-10-11";
   };
 
   probing = buildFromGitHub {

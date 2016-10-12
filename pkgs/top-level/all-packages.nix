@@ -756,8 +756,6 @@ cryptodevHeaders = callPackage ../all-pkgs/c/cryptodev {
   kernel = null;
 };
 
-cryptopp = callPackage ../all-pkgs/c/crypto++ { };
-
 cryptsetup = callPackage ../all-pkgs/c/cryptsetup { };
 
 cscope = callPackage ../all-pkgs/c/cscope { };

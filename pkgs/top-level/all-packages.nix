@@ -2523,6 +2523,8 @@ procps = callPackageAlias "procps-ng" { };
 
 procps-ng = callPackage ../all-pkgs/p/procps-ng { };
 
+progress = callPackage ../all-pkgs/p/progress { };
+
 prometheus = pkgs.goPackages.prometheus.bin // { outputs = [ "bin" ]; };
 
 protobuf-c = callPackage ../all-pkgs/p/protobuf-c { };

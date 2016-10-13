@@ -92,6 +92,15 @@ stdenv.mkDerivation {
       -i cmake/modules/GetGitRevisionDescription.cmake
   '';
 
+  preConfigure = ''
+    cmakeFlagsArray+=(
+      #"-DCMAKE_INSTALL_SYSCONFDIR=/etc"
+      #"-DCMAKE_INSTALL_LOCALSTATEDIR=/var"
+      "-DCMAKE_INSTALL_INCLUDEDIR=$lib/include"
+      "-DCMAKE_INSTALL_LIBDIR=$lib/lib"
+    )
+  '';
+
   cmakeFlags = [
     #"-DWITH_SPDK=ON"
     "-DWITH_XIO=ON"
@@ -111,10 +120,25 @@ stdenv.mkDerivation {
     "VERBOSE=1"
   ];
 
+  postInstall = ''
+    # Move python libraries to lib
+    mv "$out"/lib/python* "$lib"/lib
+    rmdir "$out"/lib
+
+    # Bring in lib as a native build input
+    mkdir -p "$out"/nix-support
+    echo "$lib" > "$out"/nix-support/propagated-native-build-inputs
+  '';
+
   preFixup = ''
     wrapPythonPrograms "$out"/bin
   '';
   
+  outputs = [
+    "out"
+    "lib"
+  ];
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

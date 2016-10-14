@@ -6,12 +6,13 @@
 }:
 
 stdenv.mkDerivation {
-  name = "sqlite-3.14.2";
+  name = "sqlite-3.15.0";
 
   src = fetchurl {
-    url = "https://sqlite.org/2016/sqlite-autoconf-3140200.tar.gz";
-    sha1Confirm = "5d3a6bccd9154963641960db61df901a4e0b3ca0";
-    sha256 = "644f0c127f7d0cbe8765b9bbdf9ed09d6a2f2b9dfba48ddfd8ca0a42fdb5b3fc";
+    url = "https://sqlite.org/2016/sqlite-autoconf-3150000.tar.gz";
+    multihash = "QmeV3Xst1urfG3iZBz5ktbKJx7oe84piCAN3c7HU6TPNNM";
+    sha1Confirm = "b34cb4ee9710368598c62df0222f5c24dfc9c860";
+    sha256 = "77162da9b4a0336d7e77d5252b690662850f62b47c12d9125f74ab9de78ded27";
   };
 
   buildInputs = [
@@ -20,7 +21,9 @@ stdenv.mkDerivation {
   ];
 
   configureFlags = [
-    "--enable-threadsafe"
+    "--enable-fts5"
+    "--enable-json1"
+    "--enable-session"
   ];
 
   NIX_CFLAGS_COMPILE = [
@@ -30,6 +33,7 @@ stdenv.mkDerivation {
     "-DSQLITE_ENABLE_FTS3"
     "-DSQLITE_ENABLE_FTS3_PARENTHESIS"
     "-DSQLITE_ENABLE_FTS4"
+    "-DSQLITE_ENABLE_FTS5"
     "-DSQLITE_ENABLE_RTREE"
     "-DSQLITE_ENABLE_STMT_SCANSTATUS"
     "-DSQLITE_ENABLE_UNLOCK_NOTIFY"

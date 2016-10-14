@@ -296,8 +296,8 @@ let
 in {
 
   php70 = generic {
-    version = "7.0.11";
-    sha256 = "d4cccea8da1d27c11b89386f8b8e95692ad3356610d571253d00ca67d524c735";
+    version = "7.0.12";
+    sha256 = "f3d6c49e1c242e5995dec15e503fde996c327eb86cd7ec45c690e93c971b83ff";
   };
 
 }

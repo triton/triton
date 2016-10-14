@@ -116,11 +116,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "dc7f3af03ebbba4b0c90f8d95c682dba7d4c70f5";
-    date = "2016-10-05";
+    rev = "5f31782cfb2b6373211f8f9fbf31283fa234b570";
+    date = "2016-10-12";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "10n0gdvjh1wbfnxalxlv34c92606w5d2qjhidihbx721njb9zdmc";
+    sha256 = "0y7l93myq3w21jlxfnjh1vcv8bvhwhcl5p2sxymdbjyrj99jb200";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -142,11 +142,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "cf4effbb9db1f3ef07f7e1891402991b6afbb276";
-    date = "2016-10-11";
+    rev = "8b4af36cd21a1f85a7484b49feb7c79363106d8e";
+    date = "2016-10-13";
     owner  = "golang";
     repo   = "net";
-    sha256 = "19dy3m8iizd3llwrpqf10jm6cq56v81f64jyyfzljmvcr5farjqk";
+    sha256 = "1jb29g54mjgpq1kj2a0v4jzz5hdf9wyhwjf2a9jk51q9fb5p6kh9";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "code.google.com/p/go.net"
@@ -181,11 +181,11 @@ let
 
   protobuf = buildFromGitHub {
     version = 2;
-    rev = "df1d3ca07d2d07bba352d5b73c4313b4e2a6203e";
-    date = "2016-09-27";
+    rev = "98fa357170587e470c5f27d3c3ea0947b71eb455";
+    date = "2016-10-12";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "02afl1gbq0dzph61jljw1mvjv647ghcr69b5mgw978jjwf0cxx6a";
+    sha256 = "0mpihn7fbn3xqlzsrwrw8ld20iy7df4z6aqb61dq5m0fpad06ng1";
     goPackagePath = "github.com/golang/protobuf";
     goPackageAliases = [
       "code.google.com/p/goprotobuf"
@@ -206,11 +206,11 @@ let
 
   sys = buildFromGitHub {
     version = 2;
-    rev = "67f277b6fe017c42fc3b4a445edc999dd99edd58";
-    date = "2016-10-10";
+    rev = "9bb9f0998d48b31547d975974935ae9b48c7a03c";
+    date = "2016-10-12";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "10k05n6y2s8h7rywrspjfnrdzb8adhx0hp1qn32z1b015bcf23nc";
+    sha256 = "0yhpk2qd0bfvvsmpsg7b7c822i6s6h93il8s05y4pkhxvssbb0gl";
     goPackagePath = "golang.org/x/sys";
     goPackageAliases = [
       "github.com/golang/sys"
@@ -219,11 +219,11 @@ let
 
   text = buildFromGitHub {
     version = 2;
-    rev = "e5ad07f5f636e1fc5963f1e794f8e30edec9c52a";
-    date = "2016-10-06";
+    rev = "c745997bb18563e8788428768ce0f034f2b663df";
+    date = "2016-10-12";
     owner = "golang";
     repo = "text";
-    sha256 = "0h24rcbwnd2h0x1yy90gmkjjwhn6jxq4y78m6dgh999yjwfkj4hl";
+    sha256 = "1d128bn858n6q9h6736ash2qdp8b2zya4cj26wxxh0hwrkkz3j63";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
     excludedPackages = "cmd";
@@ -231,11 +231,11 @@ let
 
   tools = buildFromGitHub {
     version = 2;
-    rev = "8453f27cc7e9bc769059b8eb7c88f61da9382d1e";
-    date = "2016-10-07";
+    rev = "69f6f5b782e1f090edb33f68be67d96673a8059e";
+    date = "2016-10-13";
     owner = "golang";
     repo = "tools";
-    sha256 = "1g9afwhli7wiq1lnx62z4nh46z77d1gcvql1m49bc889r5nrjqb4";
+    sha256 = "1pw1agh3g4nvnj86nqwhk2zh4gjxdhknrakvcayj89ib7z4vfvsc";
     goPackagePath = "golang.org/x/tools";
     goPackageAliases = [ "code.google.com/p/go.tools" ];
 
@@ -349,10 +349,10 @@ let
 
   aws-sdk-go = buildFromGitHub {
     version = 2;
-    rev = "v1.4.15";
+    rev = "v1.4.17";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "1ynly8838jlmn5d6ira1sbxwzfgfj2miqsm118i93lf8p0mxwwjc";
+    sha256 = "1i0aacxlfg8wvrd3czix3pvbjikpax9pc1k5a294adqfv209r7rm";
     excludedPackages = "\\(awstesting\\|example\\)";
     buildInputs = [
       tools
@@ -1221,11 +1221,11 @@ let
 
   gcloud-golang = buildFromGitHub {
     version = 2;
-    date = "2016-10-10";
-    rev = "8eb0f0f03ccb91217117fe064820a9e6a3585c3e";
+    date = "2016-10-13";
+    rev = "324a60ed5211861ba3ef5a71f502fa8dd2e0d02e";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "01xcbc5ylwqzz0c3xz83ilym5441r7plz4bix9x189vmcz14c821";
+    sha256 = "0dx71rgdlxc57cmaydjsp6v792skgcb16ncnhbp837786yl290c6";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -1579,11 +1579,11 @@ let
 
   goleveldb = buildFromGitHub {
     version = 2;
-    rev = "bc7a33199fc2a9e9051b71001a441f10983ffac6";
-    date = "2016-10-10";
+    rev = "6b4daa5362b502898ddf367c5c11deb9e7a5c727";
+    date = "2016-10-11";
     owner = "syndtr";
     repo = "goleveldb";
-    sha256 = "1kwdyzqkaza85fpn3ndca9axnsprydsy5j0vlybspd4rs620hmbz";
+    sha256 = "0d54ykb9l45v4zn7k0aw8qayvnpazmdnrizqqkllyphahlppi8pz";
     propagatedBuildInputs = [ ginkgo gomega snappy ];
   };
 
@@ -2498,16 +2498,16 @@ let
 
   grpc = buildFromGitHub {
     version = 2;
-    rev = "72d072e4c18c02bfe6c98fc661a4df74da546145";
+    rev = "b0578483843681a8905bc4d77c593c5ce0741210";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "035crj0611nlssqj079qzh3qgfsd5r3bapkz8w6cgnn4f6x9dj1q";
+    sha256 = "0vc4asaspmypmvcx2krxwid9dh7q8dcn2amqsdgnirl9rpw0v210";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [ "github.com/grpc/grpc-go" ];
     propagatedBuildInputs = [ http2 net protobuf oauth2 glog ];
     excludedPackages = "\\(test\\|benchmark\\)";
     meta.useUnstable = true;
-    date = "2016-10-10";
+    date = "2016-10-14";
   };
 
   grpc-gateway = buildFromGitHub {
@@ -3223,11 +3223,11 @@ let
 
   mathutil = buildFromGitHub {
     version = 2;
-    date = "2016-10-10";
-    rev = "bac787157c7fd34d64d3aad5e2317085316a0aa4";
+    date = "2016-10-12";
+    rev = "4609a45a9e61188d0d69a5d8ad42600c3df35002";
     owner = "cznic";
     repo = "mathutil";
-    sha256 = "1gqb89iqgajay34s36dll7zr375bj2la2c62wllxywihlbr4pc34";
+    sha256 = "02kbxfgnbyvczrcig2cgjf3b1lnd0365cny94wrxfdrcfxblzn30";
     buildInputs = [ bigfft ];
   };
 
@@ -3833,11 +3833,11 @@ let
 
   pq = buildFromGitHub {
     version = 2;
-    rev = "068cb1c8e4be77b9bdef4d0d91f162160537779e";
+    rev = "ae8357db35d721c58dcdc911318b55bef6b1b001";
     owner  = "lib";
     repo   = "pq";
-    sha256 = "1v43wfwfxmrivdcva9ar0f467aylxrj8agnnnpp7qchxp1yvidni";
-    date = "2016-10-11";
+    sha256 = "1ys9x2mcnpi39q3fi32jfwvh1pnzqzy90pgamcpkvm09arvyx00m";
+    date = "2016-10-13";
   };
 
   probing = buildFromGitHub {
@@ -4935,11 +4935,11 @@ let
   };
 
   vultr = buildFromGitHub {
-    version = 1;
-    rev = "v1.9";
+    version = 2;
+    rev = "v1.10";
     owner  = "JamesClonk";
     repo   = "vultr";
-    sha256 = "1nrvs4vh42l47hn0rwj56wsjby25072g46r7sra8ci16jnpcsqrq";
+    sha256 = "189dx9djv80lcybyfwxm7lxyicgvxrz197f8j92yzqy0c8kfswi3";
     propagatedBuildInputs = [
       mow-cli
       tokenbucket

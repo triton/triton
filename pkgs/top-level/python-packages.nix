@@ -958,12 +958,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    gyp = buildPythonPackage rec {
      name = "gyp-${version}";
-     version = "2016-08-10";
+     version = "2016-10-13";
 
      src = pkgs.fetchgit {
+       version = 2;
        url = "https://chromium.googlesource.com/external/gyp.git";
-       rev = "702ac58e477214c635d9b541932e75a95d349352";
-       sha256 = "17kra7fgjqsnv3in9cckqkj604i5jxk47xafzf41fwpldmbwa42m";
+       rev = "920ee58c3d3109dea3cd37d88054014891a93db7";
+       sha256 = "0la5hvwjy1dap9f7vx48d2x59f5809vvp8500ig988p830b27fv1";
      };
    };
 

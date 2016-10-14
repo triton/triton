@@ -1,19 +1,25 @@
 { stdenv
-, fetchFromGitHub
+, fetchurl
 
 , libbsd
 , libressl
 }:
 
-stdenv.mkDerivation {
-  name = "acme-client-2016-09-03";
+let
+  version = "0.1.11";
 
-  src = fetchFromGitHub {
-    version = 2;
-    owner = "kristapsdz";
-    repo = "acme-client-portable";
-    rev = "e15995f0fcd196a8c8fd7fe376f5c30c6c463b55";
-    sha256 = "78669a67d695ce1adad08082d2c42b988641d5ce435995e08bf6521406817640";
+  fileUrls = [
+    "https://kristaps.bsd.lv/acme-client/snapshots/acme-client-portable-${version}"
+  ];
+in
+stdenv.mkDerivation rec {
+  name = "acme-client-${version}";
+
+  src = fetchurl {
+    urls = map (n: "${n}.tgz") fileUrls;
+    multihash = "QmcYbwZxsyp7XsDgA6bmX1rCGFLxCAipv4ckLJUWCZLozd";
+    hashOutput = false;
+    sha256 = "cb197820ad5dbe0f264f96f3b39ba71c295ab07ea6447632ee0f11329dbff126";
   };
 
   buildInputs = [
@@ -24,6 +30,14 @@ stdenv.mkDerivation {
   preBuild = ''
     makeFlagsArray+=("PREFIX=$out")
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha512Urls = map (n: "${n}.sha512") fileUrls;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

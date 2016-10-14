@@ -21,10 +21,10 @@
   };
 
   "dev" = rec {
-    fetchVersion = 1;
-    version = "11.0.0";
+    fetchVersion = 2;
+    version = "11.0.1";
     rev = "refs/tags/v${version}";
-    sha256 = "1is9jdd9clb6cvdxcqbx9fxkyd0kjjgvnm0irw7yzzsb6zpryb4m";
+    sha256 = "1gn36y6x33x5zrycg1z5zlplphk211zcywk46ffdsvm1cc4fml5i";
   };
 
   "git" = rec {

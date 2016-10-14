@@ -29,15 +29,6 @@ cmakeConfigurePhase() {
       cmakeFlagsArray+=("-DCMAKE_INSTALL_PREFIX=$prefix")
     fi
 
-    # This installs shared libraries with a fully-specified install
-    # name. By default, cmake installs shared libraries with just the
-    # basename as the install name, which means that, on Darwin, they
-    # can only be found by an executable at runtime if the shared
-    # libraries are in a system path or in the same directory as the
-    # executable. This flag makes the shared library accessible from its
-    # nix/store directory.
-    cmakeFlagsArray+=("-DCMAKE_INSTALL_NAME_DIR=$prefix/lib")
-
     # Avoid cmake resetting the rpath of binaries, on make install
     # And build always Release, to ensure optimisation flags
     cmakeFlagsArray+=(

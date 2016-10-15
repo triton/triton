@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, perl
 
 , bzip2
 , gdk-pixbuf_unwrapped
@@ -12,25 +13,24 @@
 , python
 , zlib
 
-, perl
-
-, channel ? "1.14"
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag
-    optionals
-    wtFlag;
-in
+    boolEn
+    boolWt
+    optionals;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "libgsf-${channel}.39";
+  name = "libgsf-${source.version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libgsf/${channel}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/libgsf/${channel}/${name}.sha256sum";
-    sha256 = "3dcfc911438bf6fae5fe842e85a9ac14324d85165bd4035caad4a4420f15a175";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -62,20 +62,30 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    "--enable-compile-warnings"
-    "--disable-iso-c"
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--with-zlib"
-    "--with-bz2"
-    (wtFlag "gdk-pixbuf" (gdk-pixbuf_unwrapped != null) null)
+    "--${boolWt (zlib != null)}-zlib"
+    "--${boolWt (bzip2 != null)}-bz2"
+    "--${boolEn (gdk-pixbuf_unwrapped != null)}-gdk-pixbuf"
   ];
 
   preCheck = "patchShebangs ./tests/";
 
   doCheck = true;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/libgsf/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "GNOME's Structured File Library";

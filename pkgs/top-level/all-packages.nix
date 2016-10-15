@@ -1794,7 +1794,10 @@ libgpod = callPackage ../all-pkgs/l/libgpod {
   inherit (pkgs.pythonPackages) mutagen;
 };
 
-libgsf = callPackage ../all-pkgs/l/libgsf { };
+libgsf_1-14 = callPackage ../all-pkgs/l/libgsf {
+  channel = "1.14";
+};
+libgsf = callPackageAlias "libgsf_1-14" { };
 
 libgudev = callPackage ../all-pkgs/l/libgudev { };
 

@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , file
 , glib
@@ -11,23 +12,25 @@
 , libgcrypt
 , libsoup
 , libxml2
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
-in
+  inherit (lib)
+    boolEn
+    boolString
+    boolWt;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "totem-pl-parser-${version}";
-  versionMajor = "3.10";
-  versionMinor = "7";
-  version = "${versionMajor}.${versionMinor}";
+  name = "totem-pl-parser-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/totem-pl-parser/${versionMajor}/${name}.tar.xz";
-    sha256 = "9c8285bc3131faa309d5cba5a919d5166abc2b8cc5a0c850fe861be8b14e089c";
+    url = "mirror://gnome/sources/totem-pl-parser/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -52,19 +55,32 @@ stdenv.mkDerivation rec {
     "--enable-gmime-i-know-what-im-doing"
     # TODO: quvi support
     "--disable-quvi"
-    (enFlag "libarchive" (libarchive != null) null)
-    (enFlag "libgcrypt" (libgcrypt != null) null)
+    "--${boolEn (libarchive != null)}-libarchive"
+    "--${boolEn (libgcrypt != null)}-libgcrypt"
     "--disable-debug"
     "--enable-cxx-warnings"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-code-coverage"
-    (wtFlag "libgcrypt-prefix" (libgcrypt != null) libgcrypt)
+    "--${boolWt (libgcrypt != null)}-libgcrypt-prefix${
+      boolString (libgcrypt != null) "=${libgcrypt}" ""}"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/totem-pl-parser/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "GObject library to parse and save playlist formats";
     homepage = https://wiki.gnome.org/Apps/Videos;
     license = licenses.lgpl2;

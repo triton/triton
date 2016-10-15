@@ -2890,7 +2890,10 @@ tmux = callPackage ../all-pkgs/t/tmux { };
 
 tor = callPackage ../all-pkgs/t/tor { };
 
-totem-pl-parser = callPackage ../all-pkgs/t/totem-pl-parser { };
+totem-pl-parser_3-10 = callPackage ../all-pkgs/t/totem-pl-parser {
+  channel = "3.10";
+};
+totem-pl-parser = callPackageAlias "totem-pl-parser_3-10" { };
 
 tracker_1-10 = callPackage ../all-pkgs/t/tracker {
   channel = "1.10";

@@ -1,31 +1,33 @@
 { stdenv
 , fetchurl
 , gawk
+, gettext
 , intltool
 , itstool
-, gettext
 
 , libxml2
 , libxslt
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "yelp-xsl-${version}";
-  versionMajor = "3.20";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
+  name = "yelp-xsl-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/yelp-xsl/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/yelp-xsl/${versionMajor}/${name}.sha256sum";
-    sha256 = "dc61849e5dca473573d32e28c6c4e3cf9c1b6afe241f8c26e29539c415f97ba0";
+    url = "mirror://gnome/sources/yelp-xsl/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
     gawk
+    gettext
     intltool
     itstool
-    gettext
   ];
 
   buildInputs = [
@@ -37,6 +39,18 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--disable-doc"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/yelp-xsl/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "XSL stylesheets for yelp";

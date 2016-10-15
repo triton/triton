@@ -3105,7 +3105,10 @@ yasm = callPackage ../all-pkgs/y/yasm { };
 
 yelp-tools = callPackage ../all-pkgs/y/yelp-tools { };
 
-yelp-xsl = callPackage ../all-pkgs/y/yelp-xsl { };
+yelp-xsl_3-20 = callPackage ../all-pkgs/y/yelp-xsl {
+  channel = "3.20";
+};
+yelp-xsl = callPackageAlias "yelp-xsl_3-20" { };
 
 zeitgeist = callPackage ../all-pkgs/z/zeitgeist { };
 

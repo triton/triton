@@ -17,11 +17,11 @@
 
 stdenv.mkDerivation rec {
   name = "gtk-doc-${version}";
-  version = "1.24";
+  version = "1.25";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gtk-doc/${version}/${name}.tar.xz";
-    sha256 = "12xmmcnq4138dlbhmqa45wqza8dky4lf856sp80h6xjwl2g7a85l";
+    sha256 = "1ea46ed400e6501f975acaafea31479cea8f32f911dca4dff036f59e6464fd42";
   };
 
   preConfigure =

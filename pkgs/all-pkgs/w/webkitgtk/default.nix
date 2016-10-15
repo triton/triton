@@ -57,12 +57,12 @@ assert xorg != null ->
   xorg.libX11 != null;
 
 stdenv.mkDerivation rec {
-  name = "webkitgtk-2.14.0";
+  name = "webkitgtk-2.14.1";
 
   src = fetchurl rec {
     url = "https://webkitgtk.org/releases/${name}.tar.xz";
-    sha1Url = url + ".sha1";
-    sha256 = "0513ad836c624a3d24bdf1a99f4b4aead984ab6684150bc70f16db651590ea0a";
+    hashOutput = false;
+    sha256 = "2e2d76c328de65bed6e0e4f096b2720a366654b27fc1af0830ece90bc4b7ceb5";
   };
 
   nativeBuildInputs = [
@@ -184,6 +184,17 @@ stdenv.mkDerivation rec {
   NIX_CFLAGS_COMPILE = [
     "-I${gst-plugins-base}/include/gstreamer-1.0"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha1Url = map (n: "${n}.sha1") src.urls;
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Web content rendering engine, GTK+ port";

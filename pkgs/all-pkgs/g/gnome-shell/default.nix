@@ -80,15 +80,15 @@ let
 in
 stdenv.mkDerivation rec {
   name = "gnome-shell-${version}";
-  versionMajor = "3.20";
-  versionMinor = "4";
+  versionMajor = "3.22";
+  versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-shell/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/gnome-shell/${versionMajor}/"
       + "${name}.sha256sum";
-    sha256 = "0c13eba5ecd3b516538815ab33765ae04bd6faf1549407e81f3bf17b08f2a94d";
+    sha256 = "ca9492fae6c647e6bf98624a7cef6e4776894e4888f54b63e60b672b754fb217";
   };
 
   nativeBuildInputs = [

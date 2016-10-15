@@ -2,31 +2,32 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , atk
 , gdk-pixbuf
 , glib
 , gobject-introspection
-, gtk3
+, gtk_3
 , pango
-, python3
 , python3Packages
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
-in
+  inherit (lib)
+    boolEn;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "libpeas-${version}";
-  versionMajor = "1.18";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "libpeas-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libpeas/${versionMajor}/${name}.tar.xz";
-    sha256 = "bf49842c64c36925bbc41d954de490b6ff7faa29b45f6fd9e91ddcc779165e26";
+    url = "mirror://gnome/sources/libpeas/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -39,23 +40,23 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gobject-introspection
-    gtk3
+    gtk_3
     pango
-    python3
     python3Packages.pygobject3
+    python3Packages.python
   ];
 
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-nls"
-    (enFlag "gtk" (gtk3 != null) null)
+    "--${boolEn (gtk_3 != null)}-gtk"
     # Flag is not a Boolean
     #"--disable-gcov"
     "--disable-glade-catalog"
     "--disable-lua5.1"
     "--disable-luajit"
     "--disable-python2"
-    (enFlag "python3" (python3 != null) null)
+    "--${boolEn (python3Packages.python != null)}-python3"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -64,7 +65,19 @@ stdenv.mkDerivation rec {
     "--disable-iso-c"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/libpeas/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "A GObject plugins library";
     homepage = "https://developer.gnome.org/libpeas/stable/";
     license = licenses.gpl2Plus;

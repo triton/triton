@@ -1921,7 +1921,10 @@ libossp-uuid = callPackage ../all-pkgs/l/libossp-uuid { };
 
 libpcap = callPackage ../all-pkgs/l/libpcap { };
 
-libpeas = callPackage ../all-pkgs/l/libpeas { };
+libpeas_1-20 = callPackage ../all-pkgs/l/libpeas {
+  channel = "1.20";
+};
+libpeas = callPackageAlias "libpeas_1-20" { };
 
 libpipeline = callPackage ../all-pkgs/l/libpipeline { };
 

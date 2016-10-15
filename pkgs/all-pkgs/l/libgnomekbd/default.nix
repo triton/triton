@@ -2,20 +2,36 @@
 , fetchurl
 , file
 , intltool
+, lib
 , makeWrapper
 
+, atk
+, gdk-pixbuf
 , glib
-, gtk3
+, gobject-introspection
+, gtk_3
 , libxklavier
+, pango
 , xorg
+
+, channel
 }:
 
+let
+  inherit (lib)
+    boolEn
+    boolWt
+    optionals;
+
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "libgnomekbd-3.6.0";
+  name = "libgnomekbd-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libgnomekbd/3.6/${name}.tar.xz";
-    sha256 = "c41ea5b0f64da470925ba09f9f1b46b26b82d4e433e594b2c71eab3da8856a09";
+    url = "mirror://gnome/sources/libgnomekbd/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -24,21 +40,52 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    atk
+    gdk-pixbuf
     glib
-    gtk3
+    gobject-introspection
+    gtk_3
     libxklavier
+    pango
+  ] ++ optionals (xorg != null) [
     xorg.libX11
+  ];
+
+  configureFlags = [
+    "--disable-schemas-compile"
+    "--enable-nls"
+    "--enable-rpath"
+    "--disable-tests"
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolWt (xorg != null)}-x"
   ];
 
   preFixup = ''
     wrapProgram $out/bin/gkbd-keyboard-display \
-      --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH"
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
   '';
 
-  meta = with stdenv.lib; {
-    description = "Keyboard management library";
-    #maintainers = gnome3.maintainers;
-    license = licenses.gpl2;
+  doCheck = true;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/libgnomekbd/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
+    description = "Gnome keyboard configuration library";
+    homepage = https://www.gnome.org;
+    license = licenses.lgpl2Plus;
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

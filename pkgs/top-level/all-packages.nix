@@ -1781,7 +1781,10 @@ libglvnd = callPackage ../all-pkgs/l/libglvnd { };
 
 libgnome-keyring = callPackage ../all-pkgs/l/libgnome-keyring { };
 
-libgnomekbd = callPackage ../all-pkgs/l/libgnomekbd { };
+libgnomekbd_3-22 = callPackage ../all-pkgs/l/libgnomekbd {
+  channel = "3.22";
+};
+libgnomekbd = callPackageAlias "libgnomekbd_3-22" { };
 
 libgpg-error = callPackage ../all-pkgs/l/libgpg-error { };
 

@@ -5,22 +5,23 @@
 , glib
 , gobject-introspection
 , vala
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
-    enFlag;
-in
+    boolEn;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "libgee-${version}";
-  versionMajor = "0.18";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
+  name = "libgee-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/libgee/${versionMajor}/${name}.tar.xz";
-    sha256 = "16a34js81w9m2bw4qd8csm4pcgr3zq5z87867j4b8wfh6zwrxnaa";
+    url = "mirror://gnome/sources/libgee/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   buildInputs = [
@@ -42,13 +43,25 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
     "--disable-benchmark"
     "--enable-internal-asserts"
-    "--disable-consisteency-checks"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
+    "--disable-consistency-checks"
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (vala != null)}-vala"
     "--disable-vala-fatal-warnings"
   ];
 
   doCheck = true;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/libgee/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "GObject-based interfaces and classes for common data structures";

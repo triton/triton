@@ -1,16 +1,23 @@
 { stdenv
 , fetchurl
 , gettext
+#, gtk-doc
+, lib
 
 , glib
+, gobject-introspection
 , iso-codes
 , libxml2
+, vala
 , xorg
 }:
 
+let
+  inherit (lib)
+    boolEn;
+in
 stdenv.mkDerivation rec {
-  name = "libxklavier-${version}";
-  version = "5.4";
+  name = "libxklavier-5.4";
 
   src = fetchurl rec {
     url = "http://pkgs.fedoraproject.org/repo/pkgs/libxklavier/${name}.tar.bz2/${md5Confirm}/${name}.tar.bz2";
@@ -20,18 +27,36 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
+    #gtk-doc
   ];
 
   buildInputs = [
     glib
+    gobject-introspection
     iso-codes
     libxml2
+    vala
     xorg.libX11
     xorg.libXi
+    xorg.libxkbfile
     xorg.xkbcomp
+    xorg.xkeyboardconfig
   ];
 
-  meta = with stdenv.lib; {
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--enable-rpath"
+    "--enable-nls"
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (vala != null)}-vala"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--${boolEn (xorg.libxkbfile != null)}-xkb-support"
+    "--enable-xmodmap-support"
+  ];
+
+  meta = with lib; {
     description = "Library providing high-level API for X Keyboard Extension known as XKB";
     homepage = http://freedesktop.org/wiki/Software/LibXklavier;
     license = licenses.lgpl2Plus;

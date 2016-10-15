@@ -23,13 +23,13 @@
 stdenv.mkDerivation rec {
   name = "gnome-user-share-${version}";
   versionMajor = "3.18";
-  versionMinor = "2";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-user-share/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/gnome-user-share/${versionMajor}/${name}.sha256sum";
-    sha256 = "155ddbd7d467e9b2b8f39fade93244d6124652f4985e286364ceeaa3357ece35";
+    sha256 = "3092fa7ad137531e35484195dde4ecbbc75a8a3d9b8209aef4c852717cf4bbf1";
   };
 
   NIX_CFLAGS_COMPILE = "-I${glib}/include/gio-unix-2.0";

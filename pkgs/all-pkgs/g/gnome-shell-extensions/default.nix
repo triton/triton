@@ -21,7 +21,7 @@
 
 stdenv.mkDerivation rec {
   name = "gnome-shell-extensions-${version}";
-  versionMajor = "3.20";
+  versionMajor = "3.22";
   versionMinor = "1";
   version = "${versionMajor}.${versionMinor}";
 
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
       + "${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/gnome-shell-extensions/${versionMajor}/"
       + "${name}.sha256sum";
-    sha256 = "e84a075d895ca3baeefb8508e0a901027b66f7d5a7ee8c966e31d301b38e78e7";
+    sha256 = "e6fd8974758d3e97a8708fe0b0fb92ca00b48f67bc24590ff718f756b820c6cd";
   };
 
   nativeBuildInputs = [

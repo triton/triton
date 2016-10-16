@@ -1510,7 +1510,10 @@ gupnp_1-0 = callPackage ../all-pkgs/g/gupnp {
 };
 gupnp = callPackageAlias "gupnp_1-0" { };
 
-gupnp-av = callPackage ../all-pkgs/g/gupnp-av { };
+gupnp-av_0-12 = callPackage ../all-pkgs/g/gupnp-av {
+  channel = "0.12";
+};
+gupnp-av = callPackageAlias "gupnp-av_0-12" { };
 
 gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 

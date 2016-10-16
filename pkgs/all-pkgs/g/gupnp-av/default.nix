@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , glib
 , gobject-introspection
@@ -8,22 +9,23 @@
 , libsoup
 , libxml2
 , vala
+
+, channel
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
-in
+  inherit (lib)
+    boolEn;
 
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gupnp-av-${version}";
-  versionMajor = "0.12";
-  versionMinor = "9";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gupnp-av-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gupnp-av/${versionMajor}/${name}.tar.xz";
-    sha256 = "62c56449256a1a97b66c8ee59aa6455b90a7921285745ef3b79566218e85d447";
+    url = "mirror://gnome/sources/gupnp-av/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   buildInputs = [
@@ -39,13 +41,25 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--disable-debug"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gupnp-av/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Utility library to ease the handling UPnP A/V profiles";
     homepage = http://gupnp.org/;
     license = licenses.gpl2;

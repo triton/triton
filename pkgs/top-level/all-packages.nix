@@ -1570,6 +1570,8 @@ id3lib = callPackage ../all-pkgs/i/id3lib { };
 
 id3v2 = callPackage ../all-pkgs/i/id3v2 { };
 
+iftop = callPackage ../all-pkgs/i/iftop { };
+
 imagemagick = callPackage ../all-pkgs/i/imagemagick { };
 
 iniparser = callPackage ../all-pkgs/i/iniparser { };
@@ -3171,8 +3173,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   grub2_efi = callPackageAlias "grub2" {
     efiSupport = true;
   };
-#
-  iftop = callPackage ../tools/networking/iftop { };
 #
   most = callPackage ../tools/misc/most { };
 #

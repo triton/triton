@@ -104,8 +104,12 @@ stdenv.mkDerivation rec {
     sed -i $out/share/applications/atom${source.suffix}.desktop \
       -e "s,/usr/share/atom${source.suffix},$out/bin,"
 
+    # Fix beta detection
+    sed -i $out/bin/atom${source.suffix} \
+      -e 's,$(basename $0),atom${source.suffix},'
+
     wrapProgram $out/bin/atom${source.suffix} \
-      --prefix "PATH" : "${gvfs}/bin"
+      --prefix 'PATH' : "${gvfs}/bin"
 
     patchelf \
       --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \

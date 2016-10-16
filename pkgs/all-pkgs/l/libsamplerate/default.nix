@@ -7,14 +7,15 @@
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    boolEn;
 in
 stdenv.mkDerivation rec {
-  name = "libsamplerate-0.1.8";
+  name = "libsamplerate-0.1.9";
 
   src = fetchurl {
     url = "http://www.mega-nerd.com/SRC/${name}.tar.gz";
-    sha256 = "01hw5xjbjavh412y63brcslj5hi9wdgkjd3h9csx5rnm8vglpdck";
+    multihash = "QmWDo6utmhKrmLrQCgKX5xstVJz4fBJinjrTfhZznRALzZ";
+    sha256 = "0a7eb168e2f21353fb6d84da152e4512126f7dc48ccb0be80578c565413444c1";
   };
 
   buildInputs = [
@@ -27,9 +28,9 @@ stdenv.mkDerivation rec {
     #"--disable-gcc-werror"
     "--enable-gcc-pipe"
     "--enable-gcc-opt"
-    (enFlag "fftw" (fftw_double != null) null)
+    "--${boolEn (fftw_double != null)}-fftw"
     "--enable-cpu-clip"
-    (enFlag "sndfile" (libsndfile != null) null)
+    "--${boolEn (libsndfile != null)}-sndfile"
   ];
 
   meta = with stdenv.lib; {

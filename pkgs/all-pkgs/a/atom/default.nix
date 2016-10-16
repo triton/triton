@@ -25,22 +25,24 @@
 , systemd_lib
 , xorg
 , zlib
+
+, channel
 }:
 
 let
   inherit (stdenv.lib)
     makeSearchPath;
 
-  version = "1.11.1";
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "atom-${version}";
+  name = "atom${source.suffix}-${source.version}";
 
   src = fetchurl {
-    url = "https://github.com/atom/atom/releases/download/v${version}/"
+    url = "https://github.com/atom/atom/releases/download/v${source.version}/"
       + "atom-amd64.deb";
     name = "${name}.deb";
-    sha256 = "380c8f456f34e2b2bb808a9fec82b015492574019d3d540e088792dd92bceef2";
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -79,6 +81,7 @@ stdenv.mkDerivation rec {
     xorg.libXi
     xorg.libXrandr
     xorg.libXrender
+    xorg.libXScrnSaver
     xorg.libXtst
     zlib
   ];
@@ -87,31 +90,34 @@ stdenv.mkDerivation rec {
   libPath64 = makeSearchPath "lib64" buildInputs;
   libPath = "${libPath_}:${libPath64}";
 
-  buildCommand = ''
-    mkdir -p $out/usr/
-    ar p $src data.tar.gz | tar -C $out -xz ./usr
-    substituteInPlace $out/usr/share/applications/atom.desktop \
-      --replace /usr/share/atom $out/bin
-    mv $out/usr/* $out/
-    rm -r $out/share/lintian
-    rm -r $out/usr/
+  unpackPhase = ''
+    mkdir -pv "$out"
+    ar p $src data.tar.gz | tar -xz
+  '';
 
-    wrapProgram $out/bin/atom \
+  installPhase = ''
+    rm -rv usr/share/lintian
+    mv -v usr/* $out/
+  '';
+
+  preFixup = ''
+    sed -i $out/share/applications/atom${source.suffix}.desktop \
+      -e "s,/usr/share/atom${source.suffix},$out/bin,"
+
+    wrapProgram $out/bin/atom${source.suffix} \
       --prefix "PATH" : "${gvfs}/bin"
-
-    fixupPhase
 
     patchelf \
       --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-      --set-rpath "${libPath}:$out/share/atom" \
-      $out/share/atom/atom
+      --set-rpath "${libPath}:$out/share/atom${source.suffix}" \
+      $out/share/atom${source.suffix}/atom
     patchelf \
       --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
       --set-rpath "${libPath}" \
-      $out/share/atom/resources/app/apm/bin/node
+      $out/share/atom${source.suffix}/resources/app/apm/bin/node
     patchelf \
       --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-      $out/share/atom/resources/app.asar.unpacked/node_modules/symbols-view/vendor/ctags-linux
+      $out/share/atom${source.suffix}/resources/app.asar.unpacked/node_modules/symbols-view/vendor/ctags-linux
   '';
 
   dontStrip = true;

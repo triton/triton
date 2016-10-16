@@ -568,7 +568,13 @@ atkmm_2-24 = callPackage ../all-pkgs/a/atkmm {
 };
 atkmm = callPackageAlias "atkmm_2-24" { };
 
-atom = callPackage ../all-pkgs/a/atom { };
+atom_stable = callPackage ../all-pkgs/a/atom {
+  channel = "stable";
+};
+atom_beta = callPackage ../all-pkgs/a/atom {
+  channel = "beta";
+};
+atom = callPackageAlias "atom_stable" { };
 
 attr = callPackage ../all-pkgs/a/attr { };
 

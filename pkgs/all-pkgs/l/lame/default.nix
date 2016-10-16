@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 , nasm
 
 , libsndfile
@@ -9,7 +10,7 @@
 let
   inherit (stdenv)
     targetSystem;
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolString
     elem
@@ -21,14 +22,16 @@ let
       "sndfile"
     else
       "lame";
+
+  channel = "3.99";
+  version = "${channel}.5";
 in
 stdenv.mkDerivation rec {
-  name = "lame-3.99.5";
+  name = "lame-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/lame/${name}.tar.gz";
-    multihash = "QmbmNaXnEaCEREJ36QCgR5ExhbMuDuHQKMPU1BRETn63Sm";
-    sha256 = "1zr3kadv35ii6liia0bpfgxpag27xcivp571ybckpbz4b10nnd14";
+    url = "mirror://sourceforge/lame/lame/${channel}/${name}.tar.gz";
+    sha256 = "24346b4158e4af3bd9f2e194bb23eb473c75fb7377011523353196b19b9a23ff";
   };
 
   patches = [
@@ -49,9 +52,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-largefile"
-    "--${boolEn (
-      elem targetSystem platforms.i686
-      || elem targetSystem platforms.x86_64)}-nasm"
+    "--${boolEn (elem targetSystem platforms.x86-all)}-nasm"
     "--enable-rpath"
     "--enable-cpml"
     "--disable-gtktest"
@@ -67,7 +68,7 @@ stdenv.mkDerivation rec {
     "--with-fileio=${boolString (libsndfile != null) "sndfile" "lame"}"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A high quality MPEG Audio Layer III (MP3) encoder";
     homepage = http://lame.sourceforge.net;
     license = licenses.lgpl2;

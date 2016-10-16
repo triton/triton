@@ -2536,6 +2536,8 @@ potrace = callPackage ../all-pkgs/p/potrace { };
 
 powertop = callPackage ../all-pkgs/p/powertop { };
 
+ppp = callPackage ../all-pkgs/p/ppp { };
+
 pptp = callPackage ../all-pkgs/p/pptp { };
 
 procps = callPackageAlias "procps-ng" { };
@@ -3197,8 +3199,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   spCompat = callPackage ../tools/text/sgml/opensp/compat.nix { };
 #
   #parted = callPackage ../tools/misc/parted { hurd = null; };
-#
-  ppp = callPackage ../tools/networking/ppp { };
 #
   rng_tools = callPackage ../tools/security/rng-tools { };
 #

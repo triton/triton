@@ -31,7 +31,7 @@ let
   inherit (stdenv.lib)
     makeSearchPath;
 
-  version = "1.10.2";
+  version = "1.11.1";
 in
 stdenv.mkDerivation rec {
   name = "atom-${version}";
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
     url = "https://github.com/atom/atom/releases/download/v${version}/"
       + "atom-amd64.deb";
     name = "${name}.deb";
-    sha256 = "d7ccccf8b645db9516f66fe5febea2174877067a67e29ca7efcb3a124bae3fde";
+    sha256 = "380c8f456f34e2b2bb808a9fec82b015492574019d3d540e088792dd92bceef2";
   };
 
   nativeBuildInputs = [

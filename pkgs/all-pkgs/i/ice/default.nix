@@ -12,14 +12,14 @@
 
 stdenv.mkDerivation rec {
   name = "ice-${version}";
-  version = "3.6.2";
+  version = "3.6.3";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "zeroc-ice";
     repo = "ice";
     rev = "v${version}";
-    sha256 = "0a78df4ec3b6a04fe23f36e722be5965b54200e5f1042066ddfc5dbecbd5399f";
+    sha256 = "da1b4df462dc68f367aa1754c20e08976a56b93d45bed7854666d122d8dd13ee";
   };
 
   buildInputs = [
@@ -35,9 +35,7 @@ stdenv.mkDerivation rec {
   '';
 
   preConfigure = ''
-    makeFlagsArray+=(
-      "prefix=$out"
-    )
+    makeFlagsArray+=("prefix=$out")
   '';
 
   parallelBuild = false;

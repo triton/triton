@@ -107,6 +107,10 @@ with stdenv.lib;
     SLAB_FREELIST_RANDOM y
     HARDENED_USERCOPY y
   ''}
+  ${optionalString (versionAtLeast version "4.9") ''
+    PCIE_PTM y
+    QCOM_EBI2 y
+  ''}
 
   # Support drivers that need external firmware.
   STANDALONE n
@@ -191,6 +195,9 @@ with stdenv.lib;
   BATMAN_ADV_MCAST y
   NET_SWITCHDEV y
   NET_L3_MASTER_DEV y
+  ${optionalString (versionAtLeast version "4.9") ''
+    AF_RXRPC_IPV6 y
+  ''}
 
   MLX5_CORE_EN y
   ${optionalString (versionOlder version "4.8") ''
@@ -245,8 +252,11 @@ with stdenv.lib;
   DRM_RADEON_USERPTR y
   DRM_AMDGPU_CIK y
   DRM_AMDGPU_USERPTR y
-  ${optionalString (versionAtLeast version "4.5") ''
+  ${optionalString (versionAtLeast version "4.5" && versionOlder version "4.9") ''
     DRM_AMD_POWERPLAY y
+  ''}
+  ${optionalString (versionAtLeast version "4.9") ''
+    DRM_AMDGPU_SI y
   ''}
   DRM_VMWGFX_FBCON y
   ${optionalString (versionAtLeast version "4.8") ''
@@ -466,6 +476,9 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.6") ''
     BT_HCIUART_AG6XX y
   ''}
+  ${optionalString (versionAtLeast version "4.9") ''
+    BT_HCIUART_MRVL y
+  ''}
   MAC80211_MESH y
   MAC80211_RC_MINSTREL_VHT y
   RFKILL_INPUT y
@@ -496,7 +509,7 @@ with stdenv.lib;
   MODVERSIONS y
   MOUSE_PS2_ELANTECH y # Elantech PS/2 protocol extension
   MTRR_SANITIZER y
-  ${optionalString (versionAtLeast version "4.8") ''
+  ${optionalString (versionAtLeast version "4.8" && versionOlder version "4.9") ''
     SUNXI_CCU y
     SUN8I_H3_CCU y
   ''}
@@ -511,6 +524,9 @@ with stdenv.lib;
   REGULATOR y # Voltage and Current Regulator Support
   RC_DEVICES y # Enable IR devices
   RT2800USB_RT55XX y
+  ${optionalString (versionAtLeast version "4.9") ''
+    RTC_DRV_DS1307_CENTURY y
+  ''}
   SCSI_MQ_DEFAULT y
   DM_MQ_DEFAULT y
   DM_UEVENT y
@@ -585,6 +601,9 @@ with stdenv.lib;
   KEXEC_FILE y
   KEXEC_JUMP y
   IDLE_PAGE_TRACKING y
+  ${optionalString (versionAtLeast version "4.9") ''
+    GCC_PLUGIN_LATENT_ENTROPY y
+  ''}
 
   # Easier debugging of NFS issues.
   SUNRPC_DEBUG y

@@ -120,6 +120,12 @@ stdenv.mkDerivation {
     "VERBOSE=1"
   ];
 
+  # Ensure we have the correct rpath already to work around
+  # a broken patchelf.
+  preBuild = ''
+    export NIX_LDFLAGS="$NIX_LDFLAGS -rpath $lib/lib"
+  '';
+
   postInstall = ''
     # Move python libraries to lib
     mv "$out"/lib/python* "$lib"/lib

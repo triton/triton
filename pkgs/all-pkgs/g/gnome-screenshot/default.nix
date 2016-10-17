@@ -9,7 +9,7 @@
 , gdk-pixbuf
 , glib
 , gsettings-desktop-schemas
-, gtk3
+, gtk
 , libcanberra
 , xorg
 
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gsettings-desktop-schemas
-    gtk3
+    gtk
     libcanberra
     xorg.libX11
     xorg.libXext

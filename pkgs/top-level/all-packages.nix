@@ -1231,6 +1231,10 @@ gnome-online-miners = callPackage ../all-pkgs/g/gnome-online-miners { };
 
 gnome-screenshot_3-22 = callPackage ../all-pkgs/g/gnome-screenshot {
   channel = "3.22";
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+  gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-22;
+  gtk = pkgs.gtk_3-22;
 };
 gnome-screenshot = callPackageAlias "gnome-screenshot_3-22" { };
 

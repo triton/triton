@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
     cat '${extraConfigFile}' >> .config
     cat -n .config
 
-    sed -i 's,/usr/local,$out,g' Makefile
+    sed -i "s,/usr/local,$out,g" Makefile
 
     export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE \
       -I$(echo "${libnl}"/include/libnl*/) \

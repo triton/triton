@@ -8,12 +8,12 @@
 stdenv.mkDerivation rec {
   name = "${python.executable}-setuptools-${version}";
   # Make sure to update pkgs/p/pip/bootstrap.nix setuptools hash when updating
-  version = "28.3.0";
+  version = "28.6.0";
 
   src = fetchPyPi {
     package = "setuptools";
     inherit version;
-    sha256 = "e31c9397fcb3bf20c257f5804d0ea2a17cf220027f4ab65b9ee5158010d41fc2";
+    sha256 = "4fdaf635f2ea815f914d94cfe2f7f856b5d46697defa68fcfb335870707bc2d9";
   };
 
   buildInputs = [

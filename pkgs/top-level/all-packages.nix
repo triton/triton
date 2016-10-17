@@ -1559,6 +1559,8 @@ highlight = callPackage ../all-pkgs/h/highlight { };
 
 hiredis = callPackage ../all-pkgs/h/hiredis { };
 
+hsts-list = callPackage ../all-pkgs/h/hsts-list { };
+
 htop = callPackage ../all-pkgs/h/htop { };
 
 http-parser = callPackage ../all-pkgs/h/http-parser { };

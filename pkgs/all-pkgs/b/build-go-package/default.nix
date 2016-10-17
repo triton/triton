@@ -138,7 +138,11 @@ go.stdenv.mkDerivation (
         (buildInputs ++ (args.propagatedBuildInputs or [ ]));
       rename = to: from: "echo Renaming '${from}' to '${to}'; govers -d -m ${from} ${to}";
       renames = p: lib.concatMapStringsSep "\n" (rename p.goPackagePath) p.goPackageAliases;
-    in lib.concatMapStringsSep "\n" renames inputsWithAliases);
+    in ''
+      pushd "go/src/$goPackagePath"
+      ${lib.concatMapStringsSep "\n" renames inputsWithAliases}
+      popd
+    '');
 
   buildPhase = args.buildPhase or ''
     runHook preBuild

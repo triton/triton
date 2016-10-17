@@ -12,20 +12,21 @@
 , gtk3
 , libcanberra
 , xorg
+
+, channel
 }:
 
+let
+  source = (import ./sources.nix { })."${channel}";
+in
 stdenv.mkDerivation rec {
-  name = "gnome-screenshot-${version}";
-  versionMajor = "3.20";
-  versionMinor = "1";
-  version = "${versionMajor}.${versionMinor}";
+  name = "gnome-screenshot-${source.version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gnome-screenshot/${versionMajor}/"
+    url = "mirror://gnome/sources/gnome-screenshot/${channel}/"
       + "${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/gnome-screenshot/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "06a89b6887146cdbbeb64adf11bdae21acf22b0422337041c66eedb21ef7e143";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -62,6 +63,18 @@ stdenv.mkDerivation rec {
   '';
 
   doCheck = true;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gnome-screenshot/"
+        + "${channel}/${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Utility used in the GNOME desktop environment for screenshots";

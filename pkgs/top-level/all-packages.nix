@@ -1229,7 +1229,10 @@ gnome-online-accounts = callPackage ../all-pkgs/g/gnome-online-accounts { };
 
 gnome-online-miners = callPackage ../all-pkgs/g/gnome-online-miners { };
 
-gnome-screenshot = callPackage ../all-pkgs/g/gnome-screenshot { };
+gnome-screenshot_3-22 = callPackage ../all-pkgs/g/gnome-screenshot {
+  channel = "3.22";
+};
+gnome-screenshot = callPackageAlias "gnome-screenshot_3-22" { };
 
 gnome-session_3-22 = callPackage ../all-pkgs/g/gnome-session {
   channel = "3.22";

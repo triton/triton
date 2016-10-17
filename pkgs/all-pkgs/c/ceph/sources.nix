@@ -22,9 +22,9 @@
 
   "dev" = rec {
     fetchVersion = 2;
-    version = "11.0.1";
+    version = "11.0.2";
     rev = "refs/tags/v${version}";
-    sha256 = "1gn36y6x33x5zrycg1z5zlplphk211zcywk46ffdsvm1cc4fml5i";
+    sha256 = "0illa8yfphi95l4ibv9ii6657lny434lwcinm8qdz51y05svpwcb";
   };
 
   "git" = rec {

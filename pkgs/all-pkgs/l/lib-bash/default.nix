@@ -4,14 +4,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "lib-bash-2016-09-20";
+  name = "lib-bash-2016-10-16";
 
   src = fetchFromGitHub {
     version = 2;
     owner = "chlorm";
     repo = "lib-bash";
-    rev = "d59cc8a1af6937e06ee662f24a5664b89c3e735c";
-    sha256 = "68fb7ca59fcc07030882efc4d62ea6d1bbc120967a8234faeba3651345719645";
+    rev = "abb084744afe7a5345d8c5bae5ee9c0b178af581";
+    sha256 = "195e24ecd19b56fd7a6fb55feb324952a58ec2e4e5fad6b388f74e12d9f681ab";
   };
 
   nativeBuildInputs = [

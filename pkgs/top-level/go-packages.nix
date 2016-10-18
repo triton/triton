@@ -896,15 +896,16 @@ let
 
   docker = buildFromGitHub {
     version = 2;
-    rev = "v1.12.2";
+    rev = "29cc38da53df8f4fea0c22ba77d3c6e458e1ccca";
+    date = "2016-10-18";
     owner = "docker";
     repo = "docker";
-    sha256 = "1j5l26zrz8dh7fcq5f2bh2wzd0hzsdcf8l4y0ll5kkrdyp8n6qq8";
+    sha256 = "1dg1z5s4hhbjfbfcx0vavqqsyd6ql601qm7x3fwzrzjg49snh41l";
     meta.useUnstable = true;
   };
 
   docker_for_runc = buildFromGitHub {
-    inherit (docker) rev owner repo sha256 version;
+    inherit (docker) rev date owner repo sha256 version;
     subPackages = [
       "pkg/mount"
       "pkg/symlink"
@@ -917,7 +918,7 @@ let
   };
 
   docker_for_go-dockerclient = buildFromGitHub {
-    inherit (docker) rev owner repo sha256 version;
+    inherit (docker) rev date owner repo sha256 version;
     subPackages = [
       "api/types/filters"
       "api/types/mount"
@@ -943,7 +944,7 @@ let
   };
 
   docker_for_teleport = buildFromGitHub {
-    inherit (docker) rev owner repo sha256 version;
+    inherit (docker) rev date owner repo sha256 version;
     subPackages = [
       "pkg/term"
     ];

@@ -1,7 +1,11 @@
 { stdenv
+, autoreconfHook
+, fetchgit
 , fetchurl
 
 , fixedPoint ? false
+
+, channel
 }:
 
 let
@@ -10,27 +14,44 @@ let
   inherit (stdenv.lib)
     boolEn
     elem
+    optionals
     platforms;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "opus-1.1.3";
+  name = "opus-${source.version}";
 
-  src = fetchurl {
-    url = "http://downloads.xiph.org/releases/opus/${name}.tar.gz";
-    hashOutput = false;
-    sha256 = "58b6fe802e7e30182e95d0cde890c0ace40b6f125cffc50635f0ad2eef69b633";
-  };
+  nativeBuildInputs = [ ]
+    ++ optionals (channel == "head") [
+      autoreconfHook
+    ];
+
+  src =
+    if channel == "head" then
+      fetchgit {
+        version = source.fetchzipversion;
+        url = "git://git.xiph.org/opus.git";
+        inherit (source) rev sha256;
+      }
+    else
+    fetchurl {
+      url = "http://downloads.xiph.org/releases/opus/${name}.tar.gz";
+      hashOutput = false;
+      inherit (source) sha256;
+    };
 
   configureFlags = [
     "--disable-maintainer-mode"
     "--${boolEn fixedPoint}-fixed-point"
+    "--disable-fixed-point-debug"
     "--${boolEn (!fixedPoint)}-float-api"
     # non-Opus modes, e.g. 44.1 kHz & 2^n frames
     "--enable-custom-modes"
-    "--disable-float-approx"
+    # Requires IEEE 754 floating point
+    "--enable-float-approx"
     "--enable-asm"
     "--enable-rtcd"
-    "--enable-intrinsics"
     # Enable intrinsics optimizations for ARM & X86
     "--${boolEn (
       (elem targetSystem platforms.arm-all)
@@ -40,6 +61,8 @@ stdenv.mkDerivation rec {
     "--enable-ambisonics"
     "--disable-doc"
     "--disable-extra-programs"
+    (if channel == "head" then "--enable-update-draft" else null)
+    #--with-NE10
   ];
 
   passthru = {

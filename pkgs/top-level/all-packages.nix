@@ -2456,7 +2456,13 @@ openssl = callPackageAlias "openssl_1-0-2" { };
 
 openvpn = callPackage ../all-pkgs/o/openvpn { };
 
-opus = callPackage ../all-pkgs/o/opus { };
+opus_stable = callPackage ../all-pkgs/o/opus {
+  channel = "stable";
+};
+opus_head = callPackage ../all-pkgs/o/opus {
+  channel = "head";
+};
+opus = callPackageAlias "opus_stable" { };
 
 opus-tools = callPackage ../all-pkgs/o/opus-tools { };
 

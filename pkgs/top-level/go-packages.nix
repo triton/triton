@@ -142,11 +142,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "8b4af36cd21a1f85a7484b49feb7c79363106d8e";
-    date = "2016-10-13";
+    rev = "a625e3953219464fdd5611bb48bf87c927717295";
+    date = "2016-10-18";
     owner  = "golang";
     repo   = "net";
-    sha256 = "1jb29g54mjgpq1kj2a0v4jzz5hdf9wyhwjf2a9jk51q9fb5p6kh9";
+    sha256 = "01666cha5b7xm1nbv89shwa1k6c432ygji78bab4yzw8w5gkacj5";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "github.com/hashicorp/go.net"
@@ -979,10 +979,9 @@ let
     version = 2;
     owner = "minio";
     repo = "dsync";
-    date = "2016-10-03";
-    rev = "4cc59442ace8c253062b0827b57ada9a9b7f1c76";
-    sha256 = "1i47jyimsf7nnk98bvkv9kbd7qqxf5xrm4zrxgq7x8mfzq993a1r";
-    meta.useUnstable = false;
+    date = "2016-10-16";
+    rev = "75aeb8f3db42f1de80e6af28751b462ab6cbd25c";
+    sha256 = "06fsp2s0ibd73s6cc3kmgchmhn2k7ksqv3b85i8br0pn8xwfhw93";
   };
 
   ed25519 = buildFromGitHub {
@@ -1007,8 +1006,8 @@ let
     version = 2;
     owner = "olivere";
     repo = "elastic";
-    rev = "v3.0.55";
-    sha256 = "0zgnllrzkdfiv6jp1dj1fvglhk3vdw1jwlq031ryc6ys9krwp5im";
+    rev = "v3.0.56";
+    sha256 = "1jz8h5gn1yibmnwsg4ff7w9q2y3dsch39p6syrn29zmp50bqvqhn";
     goPackagePath = "gopkg.in/olivere/elastic.v3";
     propagatedBuildInputs = [
       net
@@ -1318,9 +1317,9 @@ let
     version = 2;
     owner = "tidwall";
     repo = "gjson";
-    date = "2016-09-09";
-    rev = "2dec1c4e7be3fff111b388536cf94ae23c38add7";
-    sha256 = "27fd3bb5362d171b3f730e56b5d318e693cae5533dc31fd1c96b1f11370ce939";
+    date = "2016-10-17";
+    rev = "800ce5e92777d1d865edd8b4f12082584869c1d1";
+    sha256 = "02zbw4d52zzhsba5cf9n1pklwd41rad4hdxdy866f8ajx45n67cw";
     propagatedBuildInputs = [
       match
     ];
@@ -3280,8 +3279,8 @@ let
     version = 2;
     owner = "minio";
     repo = "mc";
-    rev = "f03aaef72f99ac30f5f2dec742d48cc6e5160e42";
-    sha256 = "0rnjx5xdidl51vrfwi2acarj60aba8bb918xyz328118l3ydfv9d";
+    rev = "6de2b4559ea43d2455e5ef7da33195c72c341998";
+    sha256 = "1k79w9jq5nmf6af1wwrn2zs6nl7rlgsyp7z4pxzq0w99vhplhb2f";
     propagatedBuildInputs = [
       cli_minio
       color
@@ -3296,7 +3295,7 @@ let
       profile
       structs
     ];
-    date = "2016-10-03";
+    date = "2016-10-17";
   };
 
   mdns = buildFromGitHub {
@@ -3435,19 +3434,19 @@ let
     version = 2;
     owner = "minio";
     repo = "minio-go";
-    rev = "8092353280bf7339e34c8dd1c60b7893673f9936";
-    sha256 = "1b9c2q31y4kk4n89fzz3ddn77q7idbsllqnz7kaix0j2gk28bn3a";
+    rev = "c040578255dbb1a1f41cbdc5bd944de4140b4149";
+    sha256 = "12gvrczvc4m2904qf717zfy74hg5qvj4m365mlai99aqhhvixzvv";
     meta.useUnstable = true;
-    date = "2016-10-03";
+    date = "2016-10-10";
   };
 
   miniobrowser = buildFromGitHub {
     version = 2;
     owner = "minio";
     repo = "miniobrowser";
-    date = "2016-10-03";
-    rev = "aeeaf471f37a0375a9283edb0fb07cf59b5b561e";
-    sha256 = "0biqvi5nx99cc76kiccjiicnmxhs1n9ivk8yzwh7hvcah6bgjmqn";
+    date = "2016-10-15";
+    rev = "bef3b7fd860fdd0e518620b8412c55ae5ca9e50b";
+    sha256 = "0a88dxjbzaxnfkymgs9qi0jl1pfyy6ryc0g0y45fb2mqxvhy8f3s";
     propagatedBuildInputs = [
       go-bindata-assetfs
     ];

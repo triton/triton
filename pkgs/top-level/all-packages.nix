@@ -2201,6 +2201,8 @@ mg = callPackage ../all-pkgs/m/mg { };
 
 mime-types = callPackage ../all-pkgs/m/mime-types { };
 
+minio = pkgs.goPackages.minio.bin // { outputs = [ "bin" ]; };
+
 minipro = callPackage ../all-pkgs/m/minipro { };
 
 minisign = callPackage ../all-pkgs/m/minisign { };

@@ -12,6 +12,8 @@
 , pango
 , python3Packages
 
+, ncurses
+
 , channel
 }:
 
@@ -44,6 +46,9 @@ stdenv.mkDerivation rec {
     pango
     python3Packages.pygobject3
     python3Packages.python
+  ] ++ [
+    # Fix ncurses not being detected via python3.6's pkgconfig path
+    ncurses
   ];
 
   configureFlags = [

@@ -5,12 +5,12 @@
 
 buildPythonPackage rec {
   name = "sqlalchemy-${version}";
-  version = "1.1.0";
+  version = "1.1.2";
 
   src = fetchPyPi {
     package = "SQLAlchemy";
     inherit version;
-    sha256 = "3b06994fafb472b5db3fdb73284f8fdc412016d481516fa93b03219e52601c2c";
+    sha256 = "1692c35bc0f7026d20cabd43b0f6f265e855129f44eb4574fea361e3c5cc89a5";
   };
 
   meta = with stdenv.lib; {

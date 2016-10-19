@@ -7,7 +7,7 @@
   };
   "beta" = {
     suffix = "-beta";
-    version = "1.12.0-beta2";
-    sha256 = "2d9b0fbb14cc9ed1e3a4837203fc6d9952f553a74943c9898c520e0fc6a1dc26";
+    version = "1.12.0-beta3";
+    sha256 = "c761f45b242f1011c71c28c210e06d0b48e638a6802ebbaae7b200f10e5e17fe";
   };
 }

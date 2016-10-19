@@ -13,7 +13,7 @@
 
 let
   ver_branch = "2.0";
-  version = "2.0.1";
+  version = "2.0.2";
 in
 
 stdenv.mkDerivation rec {
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://launchpad.net/lightdm-gtk-greeter/${ver_branch}/${version}/+download/${name}.tar.gz";
-    sha256 = "031iv7zrpv27zsvahvfyrm75zdrh7591db56q89k8cjiiy600r1j";
+    sha256 = "8ee6d93d1d6837b3590f64ac4d5bac5db888a8861dff1cb2ef10f7816ad36690";
   };
 
   nativeBuildInputs = [

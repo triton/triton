@@ -39,7 +39,7 @@ buildPythonPackage rec {
     pycrypto
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta = with stdenv.lib; {
     description = "Simple framework for creating REST APIs";

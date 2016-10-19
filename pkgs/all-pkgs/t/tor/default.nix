@@ -12,12 +12,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "tor-0.2.8.8";
+  name = "tor-0.2.8.9";
 
   src = fetchurl {
     url = "https://www.torproject.org/dist/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "b1af02c61253dcdb4e1a4f552adaba4e07aed0e5468e45c0764550161480e3de";
+    sha256 = "3f5c273bb887be4aff11f4d99b9e2e52d293b81ff4f6302b730161ff16dc5316";
   };
 
   nativeBuildInputs = [
@@ -53,7 +53,10 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "B35B F85B F194 89D0 4E28  C33C 2119 4EBB 1657 33EA";
+      pgpKeyFingerprints = [
+        "B35B F85B F194 89D0 4E28  C33C 2119 4EBB 1657 33EA"
+        "2133 BC60 0AB1 33E1 D826  D173 FE43 009C 4607 B1FB"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

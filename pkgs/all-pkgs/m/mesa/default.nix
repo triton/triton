@@ -67,8 +67,8 @@ stdenv.mkDerivation rec {
       ("ftp://ftp.freedesktop.org/pub/mesa/older-versions/"
         + head (splitString "." version)
         + ".x/${version}/mesa-${version}.tar.xz")
-      "https://launchpad.net/mesa/trunk/${version}/+download/mesa-${version}.tar.xz"
     ];
+    multihash = "QmT7WzMaNSBaMWDVJhPiqgfe7cpA1QwsWdyZvJjWGpsQwY";
     hashOutput = false;  # Provided by upstream directly
     sha256 = "1dc86dd9b51272eee1fad3df65e18cda2e556ef1bc0b6e07cd750b9757f493b1";
   };

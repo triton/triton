@@ -25,12 +25,12 @@ let
     optionals;
 in
 stdenv.mkDerivation rec {
-  name = "mkvtoolnix-9.4.2";
+  name = "mkvtoolnix-9.5.0";
 
   src = fetchurl {
     url = "https://mkvtoolnix.download/sources/${name}.tar.xz";
-    multihash = "QmctXNgXUwryom82RVk2ku5RYBzqAY4BU698mqtNzZ3ARe";
-    sha256 = "df2c3773c0e7a75d88e75906cc425f9ed7f07ce36a99854162e14202ccd42904";
+    multihash = "QmNek1av8NmWddXC296rut1Eo8Z921yvSdSDxMMWd7rXAi";
+    sha256 = "dde9969c43ad04d03ded73934e52388d978d5947fc5d5528d1eb4dc722dc86c0";
   };
 
   nativeBuildInputs = [

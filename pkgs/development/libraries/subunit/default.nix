@@ -21,9 +21,8 @@ stdenv.mkDerivation rec {
   ];
 
   propagatedBuildInputs = [
-    # FIXME: remove dependency on pbr until #74 is fixed
-    #pythonPackages.testtools
-    #pythonPackages.testscenarios
+    pythonPackages.testtools
+    pythonPackages.testscenarios
   ];
 
   postFixup = "wrapPythonPrograms";

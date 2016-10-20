@@ -39,11 +39,10 @@ buildPythonPackage rec {
     })
   ];
 
-  postPatch =
-    /* Bazaar patch doesn't set the cacert path */ ''
-      substituteInPlace bzrlib/transport/http/_urllib2_wrappers.py \
-        --subst-var-by TritonCACertPath /etc/ssl/certs/ca-certificates.crt
-    '';
+  postPatch = /* Bazaar patch doesn't set the cacert path */ ''
+    sed -i bzrlib/transport/http/_urllib2_wrappers.py \
+      -e 's,@TritonCACertPath@,/etc/ssl/certs/ca-certificates.crt,'
+  '';
 
   disabled = isPy3k;
 

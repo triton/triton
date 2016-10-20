@@ -21,7 +21,7 @@ patchSingleBinaryWrapped() {
 
   # Check to see if we have a dynamic executable
   local oldrpath
-  if ! oldrpath="$(patchelf --print-rpath "$file")"; then
+  if ! oldrpath="$(patchelf --print-rpath "$file" 2>/dev/null)"; then
     echo "  Binary is not dynamic"
     return 0
   fi

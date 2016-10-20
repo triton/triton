@@ -654,6 +654,8 @@ btrfs-progs = callPackage ../all-pkgs/b/btrfs-progs { };
 
 bzip2 = callPackage ../all-pkgs/b/bzip2 { };
 
+cacert = callPackage ../all-pkgs/c/cacert { };
+
 c-ares = callPackage ../all-pkgs/c/c-ares { };
 
 cairo = callPackage ../all-pkgs/c/cairo { };
@@ -3901,8 +3903,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   usbutils = callPackage ../os-specific/linux/usbutils { };
 
-  cacert = callPackage ../data/misc/cacert { };
-#
   cantarell_fonts = callPackage ../data/fonts/cantarell-fonts { };
 #
   docbook5 = callPackage ../data/sgml+xml/schemas/docbook-5.0 { };

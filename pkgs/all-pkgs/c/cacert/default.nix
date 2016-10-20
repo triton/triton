@@ -1,15 +1,22 @@
-{ stdenv, nss, curl, perl, perlPackages }:
+{ stdenv
+, curl
+, nss
+, perlPackages
+}:
 
 stdenv.mkDerivation rec {
   name = "nss-cacert-${nss.version}";
 
   src = nss.src;
 
+  nativeBuildInputs = [
+    perlPackages.perl
+    perlPackages.LWP
+  ];
+
   postPatch = ''
     unpackFile ${curl.src};
   '';
-
-  nativeBuildInputs = [ perl perlPackages.LWP ];
 
   buildPhase = ''
     perl curl-*/lib/mk-ca-bundle.pl -d "file://$(pwd)/nss/lib/ckfw/builtins/certdata.txt" ca-bundle.crt
@@ -23,7 +30,10 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     homepage = http://curl.haxx.se/docs/caextract.html;
     description = "A bundle of X.509 certificates of public Certificate Authorities (CA)";
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

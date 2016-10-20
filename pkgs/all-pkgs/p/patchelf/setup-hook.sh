@@ -69,11 +69,11 @@ patchSingleBinaryWrapped() {
   fi
 
   if [ "$rpath" != "$oldrpath" ]; then
-    echo "  Setting a new rpath: $file"
+    echo "  Setting a new rpath"
     patchelf --set-rpath "$rpath" "$file"
   fi
 
-  echo "  Shrinking rpath: $file"
+  echo "  Shrinking rpath"
   patchelf --shrink-rpath "$file"
 
   if [ "$NIX_DEBUG" = 1 ]; then

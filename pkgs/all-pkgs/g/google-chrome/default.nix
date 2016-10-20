@@ -142,12 +142,31 @@ stdenv.mkDerivation rec {
       -e "s,$out/share/google/chrome/google-chrome${channame},$out/bin/google-chrome${channame},"
 
 
-    for elf in $out/share/google/chrome${channame}/{chrome,chrome-sandbox,nacl_helper} ; do
-      patchelf \
-        --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-        --set-rpath "$chromeLibPath" \
-        "$elf"
-    done
+    pushd "$out/share/google/chrome${channame}/"
+      local -a patch_exes=(
+        'chrome'
+        'chrome-sandbox'
+        'nacl_helper'
+      )
+      for elfExecutable in "''${patch_exes[@]}" ; do
+        echo "patching: $elfExecutable"
+        patchelf \
+          --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
+          --set-rpath "$chromeLibPath" \
+          "$elfExecutable"
+      done
+
+      local -a patch_libs=(
+        'libwidevinecdm.so'
+        'libwidevinecdm.so'
+      )
+      for elfLibraries in "''${patch_libs[@]}" ; do
+        echo "patching: $elfLibraries"
+        patchelf \
+          --set-rpath "$chromeLibPath" \
+          "$elfLibraries"
+      done
+    popd
 
     ln -sv \
       "$out/share/google/chrome${channame}/google-chrome${channame}" \

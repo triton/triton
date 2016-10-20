@@ -4,6 +4,83 @@
 
 fixupOutputHooks+=('if [ -z "$dontPatchELF" ]; then patchELF "$prefix"; fi')
 
+# Wrapper to make logging a single statement
+patchSingleBinary() {
+  local output
+  local ret=1
+  if output="$(patchSingleBinaryWrapped "$@")"; then
+    ret=0
+  fi
+  echo "$output" >&2
+  return ret
+}
+
+patchSingleBinaryWrapped() {
+  local file="$1"
+  echo "Attempting to patch possible binary: $file"
+
+  # Check to see if we have a dynamic executable
+  local oldrpath
+  if ! oldrpath="$(patchelf --print-rpath "$file")"; then
+    echo "  Binary is not dynamic"
+    return 0
+  fi
+
+  # We want to remove any temporary directories from the path
+  local notmprpath
+    notmprpath="$(echo "$oldrpath" | tr ':' '\n' | sed "\,$TMPDIR,d")"
+
+  # Make sure the paths in the rpath exist
+  local existrpath
+  existrpath=""
+  for rpath in $notmprpath; do
+    if [ "$rpath" = '$ORIGIN' ] || [ -d "$(readlink -f "$rpath")" ]; then
+      existrpath="$(printf "%s\n%s" "$existrpath" "$rpath")"
+    fi
+  done
+
+  # We also want to add any shared object containing outputs to the rpath
+  local rpathlist
+  if [ "${patchELFAddRpath-1}" = "1" ] && [ -n "$sodirs" ]; then
+    # We want to make sure we know exactly what new paths we need to add
+    local extradirs
+    findparams=$(patchelf --print-needed "$file" | awk '{ print "-or"; print "-name"; print $0}')
+    extradirs="$(find ${sodirs} -mindepth 1 -maxdepth 1 \( -name 'no-such-file' $findparams \) -exec dirname {} \;)"
+    rpathlist="$(printf "%s\n%s" "${extradirs}" "${existrpath}")"
+  else
+    rpathlist="${existrpath}"
+  fi
+
+  # Convert rpath lines into a semicolon separated string
+  local rpath
+  if [ -z "$rpathlist" ]; then
+    rpath=""
+  else
+    rpath="$(echo "$rpathlist" | sed '/^$/d' | nl | sort -k 2 | uniq -f 1 | sort -n | cut -f 2 | tr '\n' ':' | sed -e 's,^:,,' -e 's,:$,\n,')"
+  fi
+
+  if [ "$NIX_DEBUG" = 1 ]; then
+    echo "  Old Rpath: $oldrpath"
+    echo "  NoTmp Rpath: $notmprpath"
+    echo "  Exist Rpath: $existrpath"
+    echo "  Extra Dirs: $extradirs"
+    echo "  Rpathlist: $rpathlist"
+    echo "  New Rpath: $rpath"
+  fi
+
+  if [ "$rpath" != "$oldrpath" ]; then
+    echo "  Setting a new rpath: $file"
+    patchelf --set-rpath "$rpath" "$file"
+  fi
+
+  echo "  Shrinking rpath: $file"
+  patchelf --shrink-rpath "$file"
+
+  if [ "$NIX_DEBUG" = 1 ]; then
+    echo "  Shrunk Rpath: $(patchelf --print-rpath "$file")"
+  fi
+}
+
 patchELF() {
   header "patching ELF executables and libraries in $prefix"
   if [ -e "$prefix" ]; then
@@ -29,65 +106,14 @@ patchELF() {
     # For each of the execuatable or library fix the rpath
     local files
     files=($(find "$prefix" -type f -a \( -name '*.so*' -o -name '*.a*' -o -perm -0100 \)))
+    local outstanding=0
     for file in "${files[@]}"; do
-      echo "Found binary: $file" >&2
-      if patchelf --print-soname "$file" >/dev/null 2>&1; then
-        local oldrpath
-        oldrpath="$(patchelf --print-rpath "$file")"
-
-        # We want to remove any temporary directories from the path
-        local notmprpath
-        notmprpath="$(echo "$oldrpath" | tr ':' '\n' | sed "\,$TMPDIR,d")"
-
-        # Make sure the paths in the rpath exist
-        local existrpath
-        existrpath=""
-        for rpath in $notmprpath; do
-          if [ "$rpath" = '$ORIGIN' ] || [ -d "$(readlink -f "$rpath")" ]; then
-            existrpath="$(printf "%s\n%s" "$existrpath" "$rpath")"
-          fi
-        done
-
-        # We also want to add any shared object containing outputs to the rpath
-        local rpathlist
-        if [ "${patchELFAddRpath-1}" = "1" ] && [ -n "$sodirs" ]; then
-          # We want to make sure we know exactly what new paths we need to add
-          local extradirs
-          extradirs="$(find ${sodirs} -mindepth 1 -maxdepth 1 \( -name 'no-such-file' $(patchelf --print-needed "$file" | awk '{ print "-or"; print "-name"; print $0}') \) -exec dirname {} \;)"
-          rpathlist="$(printf "%s\n%s" "${extradirs}" "${existrpath}")"
-        else
-          rpathlist="${existrpath}"
-        fi
-
-        # Convert rpath lines into a semicolon separated string
-        local rpath
-        if [ -z "$rpathlist" ]; then
-          rpath=""
-        else
-          rpath="$(echo "$rpathlist" | sed '/^$/d' | nl | sort -k 2 | uniq -f 1 | sort -n | cut -f 2 | tr '\n' ':' | sed -e 's,^:,,' -e 's,:$,\n,')"
-        fi
-
-        if [ "$NIX_DEBUG" = 1 ]; then
-          echo "Old Rpath: $oldrpath" >&2
-          echo "NoTmp Rpath: $notmprpath" >&2
-          echo "Exist Rpath: $existrpath" >&2
-          echo "Extra Dirs: $extradirs" >&2
-          echo "Rpathlist: $rpathlist" >&2
-          echo "New Rpath: $rpath" >&2
-        fi
-
-        if [ "$rpath" != "$oldrpath" ]; then
-          echo "Setting a new rpath: $file" >&2
-          patchelf --set-rpath "$rpath" "$file"
-        fi
-
-        echo "Shrinking rpath: $file" >&2
-        patchelf --shrink-rpath "$file"
-
-        if [ "$NIX_DEBUG" = 1 ]; then
-          echo "Shrunk Rpath: $(patchelf --print-rpath "$file")" >&2
-        fi
+      if [ "$outstanding" -gt "$NIX_BUILD_CORES" ]; then
+        wait
+        outstanding=0
       fi
+      patchSingleBinary "$file" &
+      outstanding+=1
     done
   fi
   stopNest

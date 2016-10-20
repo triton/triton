@@ -19,7 +19,7 @@ let
   inherit (stdenv.lib)
     optionalString;
 
-  version = "2016.09.11.1";
+  version = "2016.10.19";
 in
 buildPythonPackage rec {
   name = "youtube-dl-${version}";
@@ -27,10 +27,8 @@ buildPythonPackage rec {
   src = fetchurl {
     url = "https://github.com/rg3/youtube-dl/releases/download/"
       + "${version}/${name}.tar.gz";
-    sha512Url = "https://github.com/rg3/youtube-dl/releases/download/"
-      + "${version}/SHA2-512SUMS";
     hashOutput = false;
-    sha256 = "6cdeb0876295bef0325b8433c47c1ed13ebab3b108ef5ee27171e06b6958cb35";
+    sha256 = "ed8d4a247c4cfffe2a1171b4f9c20be19e84d96bcf3716f46988c8503b1b7713";
   };
 
   nativeBuildInputs = [
@@ -52,11 +50,13 @@ buildPythonPackage rec {
       inherit (src)
         outputHash
         outputHashAlgo
-        sha512Urls
         urls;
-      failEarly = true;
+      sha512Url = "https://github.com/rg3/youtube-dl/releases/download/"
+        + "${version}/SHA2-512SUMS";
       pgpsigUrls = map (n: "${n}.sig") src.urls;
+      # Sergey M.
       pgpKeyFingerprint = "ED7F 5BF4 6B3B BED8 1C87  368E 2C39 3E0F 18A9 236D";
+      failEarly = true;
     };
   };
 

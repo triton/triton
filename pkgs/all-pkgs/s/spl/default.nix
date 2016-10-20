@@ -43,6 +43,12 @@ stdenv.mkDerivation rec {
     version = source.fetchzipVersion;
   };
 
+  buildInputs = [
+    autoconf
+    automake
+    libtool
+  ];
+
   patches = [
     (fetchTritonPatch {
       rev = "518382a2bbf31f798bf5271105ac4005510f185d";
@@ -59,12 +65,6 @@ stdenv.mkDerivation rec {
       file = "s/spl/0003-Fix-paths.patch";
       sha256 = "214357f623fb397c79cc3ab1ea0a0bc833d828277646928e242a50e76eb26755";
     })
-  ];
-
-  buildInputs = [
-    autoconf
-    automake
-    libtool
   ];
 
   preConfigure = ''
@@ -90,7 +90,10 @@ stdenv.mkDerivation rec {
 
   passthru = {
     inherit (source) maxKernelVersion;
+    inherit channel type;
   };
+
+  allowedReferences = if buildKernel then [ ] else null;
 
   meta = with stdenv.lib; {
     description = "Kernel module driver for solaris porting layer (needed by in-kernel zfs)";

@@ -20,9 +20,9 @@ let
     };
     "dev" = {
       fetchzipVersion = 2;
-      version = "2016-10-06";
-      rev = "f3a8d548376295279d2d27fda5764adbe377c55b";
-      sha256 = "bd54114561b9c703fb53d29e445fff3042cd3625167b8e8f956a6998309c1402";
+      version = "2016-10-11";
+      rev = "4e158e155327d09868453ae9759a58284245175a";
+      sha256 = "3bc6ec9e498bdad2a6335ab6853d6e36e572739a7f3d32e4166830e08322ab14";
     };
   };
 

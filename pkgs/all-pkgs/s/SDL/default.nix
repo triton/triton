@@ -1,6 +1,6 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
+, lib
 
 , alsa-lib
 , dbus
@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "2.0.4";
+  version = "2.0.5";
 in
 stdenv.mkDerivation rec {
   name = "SDL-${version}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://www.libsdl.org/release/SDL2-${version}.tar.gz";
     hashOutput = false;
-    sha256 = "da55e540bf6331824153805d58b590a29c39d2d506c6d02fa409aedeab21174b";
+    sha256 = "442038cf55965969f2ff06d976031813de643af9c9edc9e331bd761c242e8785";
   };
 
   buildInputs = [
@@ -50,14 +50,6 @@ stdenv.mkDerivation rec {
     xorg.xproto
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "8465dfdbd2609209e7c671ab789d5bbab3c26def";
-      file = "SDL/fix-wayland.patch";
-      sha256 = "79c477c164271a3a5c33490ffffa56c8cec59f1928214d65f0fd50d285e6278a";
-    })
-  ];
-
   # There is a build bug with `--disable-static`
   dontDisableStatic = true;
 
@@ -74,7 +66,10 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
+    description = "Simple Direct Media Layer";
+    homepage = http://www.libsdl.org;
+    license = licenses.zlib;
     maintainers = with maintainers; [
       wkennington
     ];

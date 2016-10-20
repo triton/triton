@@ -1802,6 +1802,8 @@ libgee = callPackageAlias "libgee_0-18" { };
 
 libgfbgraph = callPackage ../all-pkgs/l/libgfbgraph { };
 
+libgit2 = callPackage ../all-pkgs/l/libgit2 { };
+
 libgksu = callPackage ../all-pkgs/l/libgksu { };
 
 libglade = callPackage ../all-pkgs/l/libglade { };

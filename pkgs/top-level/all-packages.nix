@@ -3903,6 +3903,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   usbutils = callPackage ../os-specific/linux/usbutils { };
 
+  wirelesstools = callPackage ../os-specific/linux/wireless-tools { };
+
   cantarell_fonts = callPackage ../data/fonts/cantarell-fonts { };
 #
   docbook5 = callPackage ../data/sgml+xml/schemas/docbook-5.0 { };

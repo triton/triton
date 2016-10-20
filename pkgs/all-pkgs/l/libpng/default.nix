@@ -5,16 +5,20 @@
 }:
 
 let
-  version = "1.6.25";
+  libpng-apng = fetchurl {
+    url = "mirror://sourceforge/libpng-apng/libpng16/1.6.25/libpng-1.6.25-apng.patch.gz";
+    sha256 = "e264d917d84872f01af3acf9666471a9bf64b75558b4b35236fef1e23c2a094f";
+  };
+
+  version = "1.6.26";
 in
 stdenv.mkDerivation rec {
   name = "libpng-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/libpng/libpng-${version}.tar.xz";
+    url = "mirror://sourceforge/libpng/libpng16/${version}/${name}.tar.xz";
     hashOutput = false;
-    multihash = "QmZAxyJJzj8o9Sg1HMZqZ8GGMRKFBvoguu1Wr56ztdmuaF";
-    sha256 = "09fe8d8341e8bfcfb3263100d9ac7ea2155b28dd8535f179111c1672ac8d8811";
+    sha256 = "266743a326986c3dbcee9d89b640595f6b16a293fd02b37d8c91348d317b73f9";
   };
 
   buildInputs = [
@@ -23,13 +27,19 @@ stdenv.mkDerivation rec {
 
   patchFlags = "-p0";
 
-  patches = [
+  /*patches = [
     (fetchurl {
-      url = "mirror://sourceforge/libpng-apng/libpng-1.6.25-apng.patch.gz";
-      multihash = "QmRsNvEsh1W6XwdGT6Ye2bGc7A7KERDozrxpR9gsFDwXaC";
+      url = "mirror://sourceforge/libpng-apng/libpng16/1.6.25/libpng-1.6.25-apng.patch.gz";
       sha256 = "e264d917d84872f01af3acf9666471a9bf64b75558b4b35236fef1e23c2a094f";
     })
-  ];
+  ];*/
+  prePatch = ''
+    echo "applying libpng-apng.patch"
+    gzip -d < "${libpng-apng}" 2>&1 > libpng-apng.patch
+    sed -i libpng-apng.patch \
+      -e'/pngpriv.h/,/#define PNG_BGR/s|0x[0-9]*|&U|'
+    patch ${patchFlags} libpng-apng.patch
+  '';
 
   passthru = {
     srcVerification = fetchurl {

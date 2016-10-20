@@ -39,7 +39,8 @@ stdenv.mkDerivation rec {
 
   preConfigure = ''
     # http://comments.gmane.org/gmane.network.net-snmp.user/32434
-    substituteInPlace "man/Makefile.in" --replace 'grep -vE' '@EGREP@ -v'
+    sed -i 'man/Makefile.in' \
+      -e 's/grep -vE/@EGREP@ -v/'
   '';
 
   configureFlags = [

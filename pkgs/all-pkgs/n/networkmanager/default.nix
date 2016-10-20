@@ -5,6 +5,7 @@
 , intltool
 , lib
 
+, audit_lib
 , avahi
 , bind
 , bluez
@@ -19,14 +20,18 @@
 , gobject-introspection
 #, inetutils
 , iptables
+, jansson
 , libgcrypt
 , libgudev
 , libndp
 , libnl
+, libselinux
 , libsoup
+#, libteam
 , modemmanager
 , newt
 , nss
+#, ofono
 , openresolv
 , perl
 , polkit
@@ -35,7 +40,7 @@
 , systemd_full
 , util-linux_lib
 , vala
-, wireless-tools
+, wpa_supplicant
 , xz
 
 , dhcp-client ? "dhclient"
@@ -74,6 +79,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    audit_lib
     avahi
     bind
     bluez
@@ -87,10 +93,12 @@ stdenv.mkDerivation rec {
     gobject-introspection
     #inetutils
     iptables
+    jansson
     libgcrypt
     libgudev
     libndp
     libnl
+    libselinux
     libsoup
     modemmanager
     newt
@@ -103,7 +111,7 @@ stdenv.mkDerivation rec {
     systemd_full
     util-linux_lib
     vala
-    wireless-tools
+    wpa_supplicant
     xz
   ] ++ optionals (dhcp-client == "dhclient") [
     dhcp
@@ -137,7 +145,6 @@ stdenv.mkDerivation rec {
     '' + /* Fix hardcoded paths in configure script */ ''
       sed -i configure{,.ac} \
         -e 's,/usr/bin/uname,${coreutils}/bin/uname,'
-        #-e 's,/usr/bin/file,,'
     '' + ''
       configureFlagsArray+=(
         "--with-udev-dir=$out/lib/udev"
@@ -159,7 +166,7 @@ stdenv.mkDerivation rec {
     "--disable-ifupdown"
     "--disable-ifnet"
     "--disable-code-coverage"
-    "--enable-wifi"
+    "--${boolEn (wpa_supplicant != null)}-wifi"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-qt"
     #"--enable-teamdctl"
@@ -167,7 +174,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (polkit != null)}-polkit-agent"
     #"--enable-modify-system"
     "--${boolEn (ppp != null)}-ppp"
-    "--enable-bluez5-dun"
+    "--${boolEn (bluez != null)}-bluez5-dun"
     #"--enable-concheck"
     "--disable-more-warnings"
     "--disable-more-asserts"
@@ -180,7 +187,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
 
     #"--with-config-plugins-default"
-    "--with-wext"
+    "--${boolWt (wpa_supplicant != null)}-wext"
     #"--without-libnm-glib"
     #"--with-hostname-persist=default"
     "--with-systemd-journal"
@@ -189,8 +196,8 @@ stdenv.mkDerivation rec {
     "--without-consolekit"
     "--with-session-tracking=systemd"
     "--with-suspend-resume=systemd"
-    #"--with-selinux"
-    #"--with-libaudit=yes-disabled-by-default"
+    "--${boolWt (libselinux != null)}-selinux"
+    "--${boolWt (audit_lib != null)}-libaudit"
     "--with-crypto=nss"
     #"--with-dbus-sys-dir"
     # TODO: make sure this path is correct

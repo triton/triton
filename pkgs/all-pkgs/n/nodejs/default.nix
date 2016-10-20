@@ -11,7 +11,7 @@
 }:
 
 let
-  version = "6.9.0";
+  version = "6.9.1";
 
   dirUrls = [
     "https://nodejs.org/dist/v${version}"
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/node-v${version}.tar.xz") dirUrls;
     hashOutput = false;
-    sha256 = "656342ed8a84c95a36af902f309aeeca7103b16d61c02925bd37bd47d2194915";
+    sha256 = "0bdd8d1305777cc8cd206129ea494d6c6ce56001868dd80147aff531d6df0729";
   };
 
   nativeBuildInputs = [
@@ -75,6 +75,7 @@ stdenv.mkDerivation rec {
         "B9AE 9905 FFD7 803F 2571  4661 B63B 535A 4C20 6CA9"
         "FD3A 5288 F042 B685 0C66  B31F 09FE 4473 4EB7 990E"
         "94AE 3667 5C46 4D64 BAFA  68DD 7434 390B DBE9 B9C5"
+        "C4F0 DFFF 4E8C 1A82 3640  9D08 E73B C641 CC11 F4C8"
       ];
       inherit (src) urls outputHash outputHashAlgo;
     };

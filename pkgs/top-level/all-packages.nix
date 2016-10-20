@@ -3901,8 +3901,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   usbutils = callPackage ../os-specific/linux/usbutils { };
 
-  wirelesstools = callPackage ../os-specific/linux/wireless-tools { };
-
   cacert = callPackage ../data/misc/cacert { };
 #
   cantarell_fonts = callPackage ../data/fonts/cantarell-fonts { };

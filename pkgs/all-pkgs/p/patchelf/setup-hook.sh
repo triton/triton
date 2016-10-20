@@ -12,7 +12,7 @@ patchSingleBinary() {
     ret=0
   fi
   echo "$output" >&2
-  return ret
+  return $ret
 }
 
 patchSingleBinaryWrapped() {

@@ -6,8 +6,8 @@
 
 let
   libpng-apng = fetchurl {
-    url = "mirror://sourceforge/libpng-apng/libpng16/1.6.25/libpng-1.6.25-apng.patch.gz";
-    sha256 = "e264d917d84872f01af3acf9666471a9bf64b75558b4b35236fef1e23c2a094f";
+    url = "mirror://sourceforge/libpng-apng/libpng16/1.6.26/libpng-1.6.26-apng.patch.gz";
+    sha256 = "01dec904d91ee8c90a9a78f253d01d8fac0e37a3f4beacb60e136ea7c814d72c";
   };
 
   version = "1.6.26";

@@ -41,7 +41,7 @@ let
       throw "openjdk requires i686-linux or x86_64-linux";
 
   update = "122";
-  build = "00";
+  build = "03";
 
   baseurl = "http://hg.openjdk.java.net/jdk8u/jdk8u";
   repover = "jdk8u${update}-b${build}";
@@ -49,6 +49,7 @@ let
   fetchjava = name: sha256: fetchurl {
     name = "${repover}-${name}.tar.gz";
     url = "${baseurl}/${name}/archive/${repover}.tar.gz";
+    insecureHashOutput = true;
     inherit sha256;
   };
 
@@ -56,14 +57,14 @@ let
     name = "openjdk-8u${update}b${build}";
 
     srcs = [
-      (fetchjava "" "6d04884139836584b6c55bb314503455349f37f81adf226fb5314fb36e173e2e")
-      (fetchjava "langtools" "2a8fbaba37e41f8e214509b405c27576882f765c5f344c51bbcbf7ed88b1c9f3")
-      (fetchjava "hotspot" "67b34ff0a9092c988166824d28e8d7719adeda60263432123db881afa48ff4c3")
-      (fetchjava "corba" "25eb218bab66c4c5b9431f71255058ebedbd4ae3f4d4b49f2383f89a00c8e614")
-      (fetchjava "jdk" "b093e33e847e1c8a9592f2a3a340c9900869787f6182d1ff19403327aa04c4c2")
-      (fetchjava "jaxws" "2edabfe9f3b2f15ad3d5c1eaebe81d49fbd010b709627346fa3682c906577bd1")
-      (fetchjava "jaxp" "5b2dd1b9a1c7413e38c4de23d758fc18df1fa45954dfe5fee3e048777ce67187")
-      (fetchjava "nashorn" "8a075dc4a00aa2f6eff5c6f26901a7baa547f2a97ff4a1848a3b2d39471aef14")
+      (fetchjava "" "d5689617e8701e3db3ec93525642dc273715ab876edf7c11be32e971627c7168")
+      (fetchjava "langtools" "9da834a96a5bb8ab53df9168c1393286b81a2adba1bda611d86cea0ac21f2ff5")
+      (fetchjava "hotspot" "c9de908ec5c609ba3767ddacd4834e24b001cf3bb8c69ed9aba7709c1f99e0ff")
+      (fetchjava "corba" "d07eb405155e05f35f15f49f3ac28b94ad8c0ebb1ff11144b7eed3cb4df422f6")
+      (fetchjava "jdk" "523044ec3522584d4ae420b7569f44eeadeae202560efa22268335642a672907")
+      (fetchjava "jaxws" "4bf372da731135d01b3c593596ce0728ca125a1e7131d70d5856fe84ede67f10")
+      (fetchjava "jaxp" "9bc0c44d04031e39f01788fc6d90a49ecc319de6511d455fbb16894dd4e5abf9")
+      (fetchjava "nashorn" "30aabd07070ac7eb65224f713c3ffc82eeaae99c35cfa369b198c600b95b7705")
     ];
 
     sourceRoot = ".";

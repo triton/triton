@@ -941,6 +941,8 @@ exempi = callPackage ../all-pkgs/e/exempi { };
 
 exiv2 = callPackage ../all-pkgs/e/exiv2 { };
 
+exo = callPackage ../all-pkgs/e/exo { };
+
 expat = callPackage ../all-pkgs/e/expat { };
 
 expect = callPackage ../all-pkgs/e/expect { };

@@ -2094,6 +2094,11 @@ libwebp = callPackage ../all-pkgs/l/libwebp { };
 
 libwps = callPackage ../all-pkgs/l/libwps { };
 
+libxfce4ui_4-12 = callPackage ../all-pkgs/l/libxfce4ui {
+  channel = "4.12";
+};
+libxfce4ui = callPackageAlias "libxfce4ui_4-12" { };
+
 libxfce4util_4-12 = callPackage ../all-pkgs/l/libxfce4util {
   channel = "4.12";
 };

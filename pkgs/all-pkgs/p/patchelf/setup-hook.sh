@@ -8,7 +8,7 @@ fixupOutputHooks+=('if [ -z "$dontPatchELF" ]; then patchELF "$prefix"; fi')
 patchSingleBinary() {
   local output
   local ret=1
-  if output="$(patchSingleBinaryWrapped "$@")"; then
+  if output="$(patchSingleBinaryWrapped "$@" 2>&1)"; then
     ret=0
   fi
   echo "$output" >&2

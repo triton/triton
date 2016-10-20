@@ -115,6 +115,7 @@ patchELF() {
       patchSingleBinary "$file" &
       outstanding+=1
     done
+    wait
   fi
   stopNest
 }

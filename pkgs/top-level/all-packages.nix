@@ -2776,6 +2776,8 @@ serf = callPackage ../all-pkgs/s/serf { };
 
 sg3-utils = callPackage ../all-pkgs/s/sg3-utils { };
 
+shadow = callPackage ../all-pkgs/s/shadow { };
+
 shared_mime_info = callPackage ../all-pkgs/s/shared-mime-info { };
 
 sharutils = callPackage ../all-pkgs/s/sharutils { };
@@ -3895,19 +3897,8 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   procps-old = lowPrio (callPackage ../os-specific/linux/procps { });
 #
-  shadow = callPackage ../os-specific/linux/shadow { };
-#
   sysfsutils = callPackage ../os-specific/linux/sysfsutils { };
-#
-#  # In nixos, you can set systemd.package = pkgs.systemd_with_lvm2 to get
-#  # LVM2 working in systemd.
-  systemd_with_lvm2 = pkgs.lib.overrideDerivation pkgs.systemd_full (p: {
-      name = p.name + "-with-lvm2";
-      postInstall = p.postInstall + ''
-        cp "${pkgs.lvm2}/lib/systemd/system-generators/"* $out/lib/systemd/system-generators
-      '';
-  });
-#
+
 #  # TODO(dezgeg): either refactor & use ubootTools directly, or remove completely
   ubootChooser = name: ubootTools;
 

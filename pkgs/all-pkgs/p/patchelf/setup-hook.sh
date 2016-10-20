@@ -31,7 +31,7 @@ patchELF() {
     files=($(find "$prefix" -type f -a \( -name '*.so*' -o -name '*.a*' -o -perm -0100 \)))
     for file in "${files[@]}"; do
       echo "Found binary: $file" >&2
-      if readelf -S "$file" 2>&1 | grep -q '.dynamic'; then
+      if patchelf --print-soname "$file" >/dev/null 2>&1; then
         local oldrpath
         oldrpath="$(patchelf --print-rpath "$file")"
 

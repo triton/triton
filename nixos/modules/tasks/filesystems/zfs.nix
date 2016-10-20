@@ -21,16 +21,16 @@ let
 
   kernelPackages = config.boot.kernelPackages;
 
-  useGit =
-    if cfgZfs.useGit != null then
-      cfgZfs.useGit
+  useDev =
+    if cfgZfs.useDev != null then
+      cfgZfs.useDev
     else
       versionAtLeast kernelPackages.kernel.version kernelPackages.spl.maxKernelVersion
       || versionAtLeast kernelPackages.kernel.version kernelPackages.zfs.maxKernelVersion;
 
-  splKernelPkg = if useGit then kernelPackages.spl_git else kernelPackages.spl;
-  zfsKernelPkg = if useGit then kernelPackages.zfs_git else kernelPackages.zfs;
-  zfsUserPkg = if useGit then pkgs.zfs_git else pkgs.zfs;
+  splKernelPkg = if useDev then kernelPackages.spl_dev else kernelPackages.spl;
+  zfsKernelPkg = if useDev then kernelPackages.zfs_git else kernelPackages.zfs;
+  zfsUserPkg = if useDev then pkgs.zfs_git else pkgs.zfs;
 
   autosnapPkg = pkgs.zfstools.override {
     zfs = zfsUserPkg;
@@ -60,7 +60,7 @@ in
 
   options = {
     boot.zfs = {
-      useGit = mkOption {
+      useDev = mkOption {
         type = types.nullOr types.bool;
         default = null;
         example = true;

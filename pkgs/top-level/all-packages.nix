@@ -2808,6 +2808,15 @@ spidermonkey_17 = callPackage ../all-pkgs/s/spidermonkey {
 };
 spidermonkey = callPackageAlias "spidermonkey_45" { };
 
+spl = callPackage ../all-pkgs/s/spl {
+  channel = "stable";
+  type = "user";
+};
+spl_dev = callPackage ../all-pkgs/s/spl {
+  channel = "dev";
+  type = "user";
+};
+
 split2flac = callPackage ../all-pkgs/s/split2flac { };
 
 sqlite = callPackage ../all-pkgs/s/sqlite { };
@@ -3778,13 +3787,15 @@ libtiff = callPackage ../development/libraries/libtiff { };
         channel = "beta";
       };
 
-      spl = kCallPackage ../os-specific/linux/spl {
-        configFile = "kernel";
+      spl = kCallPackage ../all-pkgs/s/spl {
+        channel = "stable";
+        type = "kernel";
         inherit (kPkgs) kernel;  # We shouldn't need this
       };
 
-      spl_git = kCallPackage ../os-specific/linux/spl/git.nix {
-        configFile = "kernel";
+      spl_dev = kCallPackage ../all-pkgs/s/spl {
+        channel = "dev";
+        type = "kernel";
         inherit (kPkgs) kernel;  # We shouldn't need this
       };
 
@@ -3799,7 +3810,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
       zfs_git = kCallPackage ../os-specific/linux/zfs/git.nix {
         configFile = "kernel";
-        inherit (kPkgs) kernel spl_git;  # We shouldn't need this
+        inherit (kPkgs) kernel spl_dev;  # We shouldn't need this
       };
 
     };
@@ -3852,13 +3863,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   procps-old = lowPrio (callPackage ../os-specific/linux/procps { });
 #
   shadow = callPackage ../os-specific/linux/shadow { };
-#
-  spl = callPackage ../os-specific/linux/spl {
-    configFile = "user";
-  };
-  spl_git = callPackage ../os-specific/linux/spl/git.nix {
-    configFile = "user";
-  };
 #
   sysfsutils = callPackage ../os-specific/linux/sysfsutils { };
 #

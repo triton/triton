@@ -35,7 +35,7 @@
 , systemd_full
 , util-linux_lib
 , vala
-, wirelesstools
+, wireless-tools
 , xz
 
 , dhcp-client ? "dhclient"
@@ -103,7 +103,7 @@ stdenv.mkDerivation rec {
     systemd_full
     util-linux_lib
     vala
-    wirelesstools
+    wireless-tools
     xz
   ] ++ optionals (dhcp-client == "dhclient") [
     dhcp

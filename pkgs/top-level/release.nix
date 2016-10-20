@@ -201,7 +201,6 @@ let
       weechat = linux;
       wicd = linux;
       wine = ["i686-linux"];
-      wirelesstools = linux;
       wxGTK = linux;
       x11_ssh_askpass = linux;
       xchm = linux;

@@ -3089,6 +3089,8 @@ wireguard = callPackage ../all-pkgs/w/wireguard {
   kernel = null;
 };
 
+wireless-tools = callPackage ../all-pkgs/w/wireless-tools { };
+
 wpa_supplicant = callPackage ../all-pkgs/w/wpa_supplicant { };
 
 wxGTK = callPackage ../all-pkgs/w/wxGTK { };
@@ -3910,8 +3912,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   };
 #
   usbutils = callPackage ../os-specific/linux/usbutils { };
-
-  wirelesstools = callPackage ../os-specific/linux/wireless-tools { };
 
   cantarell_fonts = callPackage ../data/fonts/cantarell-fonts { };
 #

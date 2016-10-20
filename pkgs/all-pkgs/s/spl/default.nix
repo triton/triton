@@ -90,7 +90,8 @@ stdenv.mkDerivation rec {
 
   passthru = {
     inherit (source) maxKernelVersion;
-    inherit channel type;
+    inherit channel;
+    buildType = type;
   };
 
   allowedReferences = if buildKernel then [ ] else null;

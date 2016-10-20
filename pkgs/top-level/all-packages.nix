@@ -3177,6 +3177,17 @@ zenity = callPackageAlias "zenity_3-22" { };
 
 zeromq = callPackage ../all-pkgs/z/zeromq { };
 
+zfs = callPackage ../all-pkgs/z/zfs {
+  channel = "stable";
+  type = "user";
+  spl = null;
+};
+zfs_dev = callPackage ../all-pkgs/z/zfs {
+  channel = "dev";
+  type = "user";
+  spl = null;
+};
+
 zip = callPackage ../all-pkgs/z/zip { };
 
 zita-convolver = callPackage ../all-pkgs/z/zita-convolver { };
@@ -3803,14 +3814,17 @@ libtiff = callPackage ../development/libraries/libtiff { };
         inherit (kPkgs) kernel;
       };
 
-      zfs = kCallPackage ../os-specific/linux/zfs {
-        configFile = "kernel";
+      zfs = kCallPackage ../all-pkgs/z/zfs {
+        channel = "stable";
+        type = "kernel";
         inherit (kPkgs) kernel spl;  # We shouldn't need this
       };
 
-      zfs_git = kCallPackage ../os-specific/linux/zfs/git.nix {
-        configFile = "kernel";
-        inherit (kPkgs) kernel spl_dev;  # We shouldn't need this
+      zfs_dev = kCallPackage ../all-pkgs/z/zfs {
+        channel = "dev";
+        type = "kernel";
+        inherit (kPkgs) kernel;  # We shouldn't need this
+        spl = kPkgs.spl_dev;
       };
 
     };
@@ -3889,13 +3903,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   wirelesstools = callPackage ../os-specific/linux/wireless-tools { };
 
-  zfs = callPackage ../os-specific/linux/zfs {
-    configFile = "user";
-  };
-  zfs_git = callPackage ../os-specific/linux/zfs/git.nix {
-    configFile = "user";
-  };
-#
   cacert = callPackage ../data/misc/cacert { };
 #
   cantarell_fonts = callPackage ../data/fonts/cantarell-fonts { };

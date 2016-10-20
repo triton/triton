@@ -29,8 +29,8 @@ let
       || versionAtLeast kernelPackages.kernel.version kernelPackages.zfs.maxKernelVersion;
 
   splKernelPkg = if useDev then kernelPackages.spl_dev else kernelPackages.spl;
-  zfsKernelPkg = if useDev then kernelPackages.zfs_git else kernelPackages.zfs;
-  zfsUserPkg = if useDev then pkgs.zfs_git else pkgs.zfs;
+  zfsKernelPkg = if useDev then kernelPackages.zfs_dev else kernelPackages.zfs;
+  zfsUserPkg = if useDev then pkgs.zfs_dev else pkgs.zfs;
 
   autosnapPkg = pkgs.zfstools.override {
     zfs = zfsUserPkg;
@@ -65,7 +65,7 @@ in
         default = null;
         example = true;
         description = ''
-          Use the git version of the SPL and ZFS packages.
+          Use the dev version of the SPL and ZFS packages.
           Note that these are unreleased versions, with less testing, and therefore
           may be more unstable.
         '';

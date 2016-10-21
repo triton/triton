@@ -3,6 +3,8 @@
 , lib
 , ninja
 , python2
+
+, source-channel ? "stable"
 }:
 
 let
@@ -13,7 +15,7 @@ let
   # chromium/src/build/config, chromium/testing/gtest, &
   # chromium/src/third_patry/libevent.tar.gz in addition to
   # chromium/tools/gn.
-  source = (import ../../c/chromium/sources.nix { })."dev";
+  source = (import ../../c/chromium/sources.nix { })."${source-channel}";
 in
 stdenv.mkDerivation rec {
   name = "gn-${source.version}";

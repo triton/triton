@@ -19,9 +19,8 @@
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    boolEn;
 in
-
 stdenv.mkDerivation rec {
   name = "libcanberra-0.30";
 
@@ -32,7 +31,8 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    # gtk: Don't assume all GdkDisplays are GdkX11Displays: broadway/wayland (from 'master')
+    # gtk: Don't assume all GdkDisplays are GdkX11Displays: broadway/wayland
+    # Fixed in >0.30
     (fetchTritonPatch {
       rev = "d3fc5e59bd2b4b465c2652aae5e7428b24eb5669";
       file = "libcanberra/libcanberra-0.30-wayland.patch";
@@ -61,23 +61,26 @@ stdenv.mkDerivation rec {
     xorg.libX11
   ];
 
+  preConfigure = ''
+    configureFlagsArray+=("--with-systemdsystemunitdir=$out/lib/systemd/system")
+  '';
+
   configureFlags = [
-    (enFlag "alsa" (alsa-lib != null) null)
+    "--${boolEn (alsa-lib != null)}-alsa"
     "--disable-oss"
-    (enFlag "pulse" (pulseaudio_lib != null) null)
-    (enFlag "udev" (systemd_lib != null) null)
-    (enFlag "gstreamer" (
+    "--${boolEn (pulseaudio_lib != null)}-pulse"
+    "--${boolEn (systemd_lib != null)}-udev"
+    "--${boolEn (
       gstreamer != null
-      && gst-plugins-base != null) null)
+      && gst-plugins-base != null)}-gstreamer"
     "--enable-null"
     "--disable-gtk"
-    (enFlag "gtk3" (gtk3 != null) null)
-    (enFlag "tdb" (tdb != null) null)
+    "--${boolEn (gtk3 != null)}-gtk3"
+    "--${boolEn (tdb != null)}-tdb"
     "--disable-lynx"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--with-systemdsystemunitdir=$(out)/lib/systemd/system"
   ];
 
   passthru = {

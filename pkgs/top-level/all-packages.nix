@@ -3143,6 +3143,7 @@ xorg = recurseIntoAttrs (
       fetchurl
       fetchzip
       fetchpatch
+      fetchTritonPatch
       flex
       fontconfig
       freetype

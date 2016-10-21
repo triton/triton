@@ -1,7 +1,7 @@
 { args, xorg }:
 
 let
-  inherit (args) stdenv makeWrapper fetchurl fetchzip;
+  inherit (args) stdenv makeWrapper fetchurl fetchzip fetchTritonPatch;
   inherit (stdenv) lib targetSystem;
   inherit (lib) elem overrideDerivation platforms;
 in
@@ -51,6 +51,17 @@ in
     configureFlags = [
       "--enable-xkb"
       "--enable-xinput"
+    ];
+  };
+
+  libXi = attrs: attrs // {
+    patches = [
+      # Remove after 1.7.7
+      (fetchTritonPatch {
+        rev = "0aa0ee67eab1da90e91e01acd3a3d384279591ee";
+        file = "l/libxi/fix-gtk2-segfault.patch";
+        sha256 = "34ac1854b6bb14cbb048ddbd20cce7a4b2ad1e8ffa6b116aa20b0dfc56655c4b";
+      })
     ];
   };
 

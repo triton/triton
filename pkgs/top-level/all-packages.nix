@@ -1175,6 +1175,8 @@ glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 
 gmp = callPackage ../all-pkgs/g/gmp { };
 
+gn = callPackage ../all-pkgs/g/gn { };
+
 gnome-autoar = callPackage ../all-pkgs/g/gnome-autoar { };
 
 gnome-backgrounds_3-22 = callPackage ../all-pkgs/g/gnome-backgrounds {

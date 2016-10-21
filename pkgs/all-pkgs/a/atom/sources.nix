@@ -2,8 +2,8 @@
 {
   "stable" = {
     suffix = "";
-    version = "1.11.0";
-    sha256 = "020cf5b8df3aa7a571392cbb6668892307f82f2cf9fc915f75c3b5a77b9a9418";
+    version = "1.11.2";
+    sha256 = "f542fad7d0fa8f5383da41875a95e059954a53eac0da92622b757b08649074d7";
   };
   "beta" = {
     suffix = "-beta";

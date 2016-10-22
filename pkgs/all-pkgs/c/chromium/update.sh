@@ -5,10 +5,45 @@ set -o errtrace
 set -o functrace
 set -o pipefail
 
-type curl openssl jq > /dev/null || {
-  echo 'missing dependencies for chromium updater'
-  exit 1
+# Setup the temporary storage area
+export TMPDIR=""
+cleanup() {
+  CODE="$?"
+  echo "Cleaning up..." >&2
+  if [ -n "$TMPDIR" ]; then
+    rm -rf "$TMPDIR"
+  fi
+  exit "$?"
 }
+trap cleanup EXIT ERR INT QUIT PIPE TERM
+export TMPDIR="$(mktemp -d /tmp/chromium-updater.XXXXXXXXXX)"
+
+# Find the top git level
+TOP_LEVEL="$(pwd)"
+while ! [ -d "${TOP_LEVEL}/.git" ]; do
+  TOP_LEVEL="$(readlink -f "${TOP_LEVEL}/..")"
+done
+
+# Build all of the packages needed to run this script
+echo "Building script dependencies..." >&2
+declare -r exp="let pkgs = import ./. { };
+in pkgs.buildEnv {
+  name = \"chromium-updater\";
+  paths = with pkgs; [
+    coreutils
+    curl
+    gawk
+    jq
+    openssl
+  ];
+}"
+pushd "$TOP_LEVEL" >/dev/null
+if ! nix-build --out-link "${TMPDIR}/nix-env" -E "${exp}"; then
+  echo "Failed to build dependencies of this script" >&2
+  exit 1
+fi
+popd
+export PATH="$(readlink -f "${TMPDIR}/nix-env")/bin"
 
 declare -r omahaproxy='https://omahaproxy.appspot.com'
 declare -r bucket_url='https://commondatastorage.googleapis.com/chromium-browser-official'
@@ -65,9 +100,6 @@ declare -a CHROMIUM_LATEST_VERSIONS
 
 version_latest() {
   local -r Channel="${1}"
-  local TMPDIR
-
-  TMPDIR=`mktemp -d`
 
   curl ${CURL_ARGS[@]} "${omahaproxy}/all.json" -o "${TMPDIR}/all.json"
 
@@ -82,11 +114,8 @@ hash_chromium() {
   local -r HashAlgo="${1}"
   local -a Hashes
   local -r Version="${2}"
-  local TMPDIR
 
   [ -n "${Version}" ]
-
-  TMPDIR=`mktemp -d`
 
   curl ${CURL_ARGS[@]} "${bucket_url}/chromium-${Version}.tar.xz.hashes" \
     -o "${TMPDIR}/chromium-${Version}.tar.xz.hashes"
@@ -118,10 +147,7 @@ hash_google_chrome() {
   local -r Channel="${2}"
   local Hash
   local -r HashAlgo="${1}"
-  local TMPDIR
   local -r Version="${3}"
-
-  TMPDIR=`mktemp -d`
 
   curl ${CURL_ARGS[@]} \
     "${deb_url}/google-chrome-${Channel}/google-chrome-${Channel}_${Version}-1_${Arch}.deb" \

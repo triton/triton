@@ -1,4 +1,4 @@
-{ stdenv, runCommand, bc, perl, kmod, openssl, writeTextFile, ubootChooser }:
+{ stdenv, runCommand, bc, gmp, mpfr, libmpc, perl, kmod, openssl, writeTextFile, ubootChooser }:
 
 let
   readConfig = configfile: import (runCommand "config.nix" {} ''
@@ -233,7 +233,9 @@ in
 stdenv.mkDerivation ((drvAttrs config (kernelPatches ++ nativeKernelPatches) configfile) // {
   name = "linux-${version}";
 
-  nativeBuildInputs = [ perl bc openssl ];
+  # GMP / MPFR / libmpc is a hack that should be fixed in gcc
+  nativeBuildInputs = [ perl bc openssl ]
+    ++ stdenv.lib.optionals (stdenv.lib.versionAtLeast version "4.9") [ gmp mpfr libmpc ];
 
   makeFlags = commonMakeFlags ++ [
     "ARCH=${common.kernelArch}"

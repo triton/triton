@@ -22,7 +22,7 @@ cleanup() {
   exit "$?"
 }
 trap cleanup EXIT ERR INT QUIT PIPE TERM
-TMPDIR="$(mktemp -d)"
+TMPDIR="$(mktemp -d /tmp/update-go-package.XXXXXXXXXX)"
 
 # Include the concurrent library
 cd "$(readlink -f "$0" | xargs dirname)"
@@ -39,7 +39,7 @@ TOP_LEVEL="$(pwd)"
 echo "Building script dependencies..." >&2
 exp="let pkgs = import ./. { };
 in pkgs.buildEnv {
-  name = \"goUpdater\";
+  name = \"update-go-package-env\";
   paths = with pkgs; [
     coreutils
     $FETCHZIP_BROTLI

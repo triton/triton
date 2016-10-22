@@ -2872,7 +2872,7 @@ let
     owner = "ipfs";
     repo = "go-ipfs";
     sha256 = "1czkc8fbwcnd785r0z52x9n0ww4gz4wqzvx7gx3a8pjdqyarfffq";
-    gxSha256 = "1gcjszr7vashzkp5i0m919fqr2by0q2ksc5yhq8mxi7qc1cy2vwd";
+    gxSha256 = "1ginaidqqsjg3wacinl8qzm1rhaas9i90fhg6nwsbkffjbcxaynh";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"

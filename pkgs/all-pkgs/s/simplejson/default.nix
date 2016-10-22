@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "3.8.2";
+  version = "3.9.0";
 in
 buildPythonPackage {
   name = "simplejson-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "simplejson";
     inherit version;
-    sha256 = "d58439c548433adcda98e695be53e526ba940a4b9c44fb9a05d92cd495cdd47f";
+    sha256 = "e9abeee37424f4bfcd27d001d943582fb8c729ffc0b74b72bd0e9b626ed0d1b6";
   };
 
   meta = with stdenv.lib; {

@@ -27,8 +27,8 @@ let
       sha256 = "92459ba55210522ac96408c0049ca2a9a3147e7a690c70fb4b536526412b59dc";
     };
     "4.8" = {
-      version = "4.8.3";
-      sha256 = "f9d7c000cf5d1efbc2a1868e702427b1a060438faf7cded97614478899964003";
+      version = "4.8.4";
+      sha256 = "c1cb8d3d912ab23b7bc689b5473828ea6cc9485f13137e9c9892a2d4d81422b0";
     };
     "testing" = {
       version = "4.9-rc1";

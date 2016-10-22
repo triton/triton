@@ -374,6 +374,7 @@ let
     owner  = "Azure";
     repo   = "azure-sdk-for-go";
     sha256 = "1vlhkl6mzx5kxrir3fkp365xj4sqp9smzzxappff0wcmv1aml7kh";
+    excludedPackages = "Gododir";
     buildInputs = [
       go-autorest
       satori_uuid
@@ -467,15 +468,6 @@ let
     owner  = "cznic";
     repo   = "bufs";
     sha256 = "0551h2slsb7lg3r6yif65xvf6k8f0izqwyiigpipm3jhlln37c6p";
-  };
-
-  candiedyaml = buildFromGitHub {
-    version = 1;
-    date = "2016-04-29";
-    rev = "99c3df83b51532e3615f851d8c2dbb638f5313bf";
-    owner  = "cloudfoundry-incubator";
-    repo   = "candiedyaml";
-    sha256 = "104giv2wjiispfsm82q3lk5qjvfjgrqhhnxm2yma9i21klmvir0y";
   };
 
   cascadia = buildFromGitHub {
@@ -1224,6 +1216,19 @@ let
     ];
   };
 
+  gax-go = buildFromGitHub {
+    version = 2;
+    date = "2016-10-18";
+    rev = "4f7da601ca02aa546c5ef911a0b6595fdadf4e18";
+    owner  = "googleapis";
+    repo   = "gax-go";
+    sha256 = "0l67gkipqpkqqnlwf4cq61lrqrxs1fln0v3nzivhi8mnrql1x8ln";
+    propagatedBuildInputs = [
+      grpc
+      net
+    ];
+  };
+
   gcloud-golang = buildFromGitHub {
     version = 2;
     date = "2016-10-21";
@@ -1252,6 +1257,7 @@ let
       "storage"
     ];
     propagatedBuildInputs = [
+      gax-go
       google-api-go-client
       grpc
       net
@@ -4865,7 +4871,6 @@ let
       govalidator
       aws-sdk-go
       speakeasy
-      candiedyaml
       etcd_client
       go-mssqldb
       duo_api_golang
@@ -5006,7 +5011,7 @@ let
     repo = "yaml";
     sha256 = "0fh5r36y69pkl5byxgg7y75ks857p60gy6sliiyy21cg43hkcq61";
     propagatedBuildInputs = [
-      candiedyaml
+      yaml_v2
     ];
   };
 

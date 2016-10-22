@@ -2,10 +2,12 @@
 , fetchgit
 , fetchurl
 , python2
+, which
 
 , alsa-lib
 , avahi
 , boost
+, grpc
 , ice
 , jack2_lib
 , libcap
@@ -67,10 +69,12 @@ stdenv.mkDerivation rec {
         inherit (source) sha256;
       };
 
-  nativeBuildInputs = optionals (config == "mumble")[
+  nativeBuildInputs = optionals (config == "mumble") [
     python2
     qt4
     qt5
+  ] ++ optionals (config == "murmur") [
+    which
   ];
 
   buildInputs = [
@@ -98,6 +102,7 @@ stdenv.mkDerivation rec {
     xorg.libXi
     xorg.xproto
   ] ++ optionals (config == "murmur") [
+    grpc
     ice
     libcap
   ];
@@ -152,8 +157,7 @@ stdenv.mkDerivation rec {
     "${boolNo (qt5 == null)}qt4-legacy-compat"
   ] ++ optionals (config == "murmur") [
     "${boolNo (ice != null)}ice"
-    # TODO: grpc support, protoc-gen-grpc not found
-    "no-grpc"
+    "${boolNo (grpc != null)}grpc"
     "qssldiffiehellmanparameters"
   ];
 

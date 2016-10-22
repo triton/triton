@@ -1,9 +1,6 @@
 { stdenv
-, cmake
 , fetchgit
-, go
-, ninja
-, perl
+, which
 
 , openssl
 , protobuf-cpp
@@ -11,7 +8,7 @@
 }:
 
 let
-  version = "2016-10-17";
+  version = "2016-10-22";
 in
 stdenv.mkDerivation {
   name = "grpc-${version}";
@@ -19,15 +16,12 @@ stdenv.mkDerivation {
   src = fetchgit {
     version = 2;
     url = "https://github.com/grpc/grpc.git";
-    rev = "15586f27fa21a497cb3a4ba4d3ca5d3a381127f0";
-    sha256 = "1yw8f46r6zg2664qryz8ijki1lqmyp0v019sym8a8z3ja7gk5mqx";
+    rev = "566608e275c8b4b7bb9f8f61bb4d477e9c2dabc0";
+    sha256 = "0wx42jwys7bss13b2qj48dw9x9r79zz39iynn1f3y64yyj872bza";
   };
 
   nativeBuildInputs = [
-    cmake
-    go
-    ninja
-    perl
+    which
   ];
 
   buildInputs = [
@@ -36,16 +30,15 @@ stdenv.mkDerivation {
     zlib
   ];
 
-  # Don't vendor packages we have
-  postPatch = ''
-    sed -i 's,PROVIDER "module",PROVIDER "package",g' CMakeLists.txt
-  '';
-
   NIX_CFLAGS_LINK = [
     "-pthread"
     "-lprotobuf"
     "-lprotoc"
   ];
+
+  preBuild = ''
+    makeFlagsArray+=("prefix=$out")
+  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

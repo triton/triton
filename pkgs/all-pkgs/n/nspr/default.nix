@@ -8,7 +8,7 @@ let
     optionals
     platforms;
 
-  version = "4.13";
+  version = "4.13.1";
 
   baseUrls = [
     "https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v${version}/src"
@@ -19,8 +19,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = map (n: "${n}/nspr-${version}.tar.gz") baseUrls;
-    sha256Urls = map (n: "${n}/SHA256SUMS") baseUrls;
-    sha256 = "19c33334bb3fa6d24800ffa65d7d806c54ad5f8c3758a5c11352ad43212ab181";
+    hashOuput = false;
+    sha256 = "5e4c1751339a76e7c772c0c04747488d7f8c98980b434dc846977e43117833ab";
   };
 
   prePatch = ''
@@ -38,6 +38,17 @@ stdenv.mkDerivation rec {
   postInstall = ''
     find $out -name "*.a" -delete
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Urls = map (n: "${n}/SHA256SUMS") baseUrls;
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://www.mozilla.org/projects/nspr/;

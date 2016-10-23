@@ -5,7 +5,7 @@ with lib;
 let
   luks = config.boot.initrd.luks;
 
-  openCommand = name': { name, device, header, keyFile, keyFileSize, allowDiscards, yubikey, ... }: assert name' == name; ''
+  openCommand = name': { name, device, header, keyFile, keyFileSize, allowDiscards, tries, yubikey, ... }: assert name' == name; ''
     # Wait for luksRoot to appear, e.g. if on a usb drive.
     # XXX: copied and adapted from stage-1-init.sh - should be
     # available as a function.
@@ -33,11 +33,14 @@ let
 
     open_normally() {
         echo luksOpen ${device} ${name} ${optionalString allowDiscards "--allow-discards"} \
+          ${optionalString (tries != null) "--tries=${toString tries}"} \
           ${optionalString (header != null) "--header=${header}"} \
           ${optionalString (keyFile != null) "--key-file=${keyFile} ${optionalString (keyFileSize != null) "--keyfile-size=${toString keyFileSize}"}"} \
           > /.luksopen_args
-        cryptsetup-askpass
+        local status=0
+        cryptsetup-askpass || status=$?
         rm /.luksopen_args
+        return $status
     }
 
     ${optionalString (luks.yubikeySupport && (yubikey != null)) ''
@@ -89,7 +92,9 @@ let
                 k_luks="$(echo | pbkdf2-sha512 ${toString yubikey.keyLength} $iterations $response | rbtohex)"
             fi
 
-            echo -n "$k_luks" | hextorb | cryptsetup luksOpen ${device} ${name} ${optionalString allowDiscards "--allow-discards"} --key-file=-
+            echo -n "$k_luks" | hextorb | cryptsetup luksOpen ${device} ${name} \
+              ${optionalString allowDiscards "--allow-discards"} --key-file=- \
+              ${optionalString (tries != null) "--tries=${toString tries}"}
 
             if [ $? == "0" ]; then
                 opened=true
@@ -180,7 +185,7 @@ let
 
     if [ "$yubikey_missing" == true ]; then
         echo "no yubikey found, falling back to non-yubikey open procedure"
-        open_normally
+        open_normally || exit "$?"
     else
         open_yubikey
     fi
@@ -188,7 +193,7 @@ let
 
     # open luksRoot and scan for logical volumes
     ${optionalString ((!luks.yubikeySupport) || (yubikey == null)) ''
-    open_normally
+    open_normally || exit "$?"
     ''}
   '';
 
@@ -302,6 +307,14 @@ in
             Whether to allow TRIM requests to the underlying device. This option
             has security implications; please read the LUKS documentation before
             activating it.
+          '';
+        };
+
+        tries = mkOption {
+          type = types.nullOr types.int;
+          default = 10;
+          description = ''
+            The number of password retries to accept before dieing;
           '';
         };
 
@@ -425,7 +438,7 @@ in
       #!$out/bin/sh -e
       if [ -e /.luksopen_args ]; then
         cryptsetup \$(cat /.luksopen_args)
-        killall cryptsetup
+        exit "$?"
       else
         echo "Passphrase is not requested now"
         exit 1

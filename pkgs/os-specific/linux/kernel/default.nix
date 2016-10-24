@@ -31,8 +31,8 @@ let
       sha256 = "c1cb8d3d912ab23b7bc689b5473828ea6cc9485f13137e9c9892a2d4d81422b0";
     };
     "testing" = {
-      version = "4.9-rc1";
-      sha256 = "0efb65be9189e45868062190a61467296b6eec305e8408fcffe17e20f41a22e8";
+      version = "4.9-rc2";
+      sha256 = "24cd6bd2d2bdd5cece97b9e95b0cde2d63e8912ea0b070928fb67cffea08c9c1";
     };
     "bcache" =
       let

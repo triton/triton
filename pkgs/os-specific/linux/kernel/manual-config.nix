@@ -17,6 +17,7 @@ in {
   modDirVersion ? version,
   # The kernel source (tarball, git checkout, etc.)
   src,
+  patch,
   # Any patches
   kernelPatches ? [],
   # Patches for native compiling only
@@ -96,9 +97,9 @@ let
         export buildRoot="$(pwd)/build"
       '';
 
-      patches = map (p: p.patch) kernelPatches;
+      patches = [ patch ] ++ map (p: p.patch) kernelPatches;
 
-      prePatch = ''
+      postPatch = ''
         for mf in $(find -name Makefile -o -name Makefile.include -o -name install.sh); do
             echo "stripping FHS paths in \`$mf'..."
             sed -i "$mf" -e 's|/usr/bin/||g ; s|/bin/||g ; s|/sbin/||g'

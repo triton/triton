@@ -24,25 +24,29 @@ let
   sources = {
     "4.7" = {
       version = "4.7.10";
-      sha256 = "92459ba55210522ac96408c0049ca2a9a3147e7a690c70fb4b536526412b59dc";
+      baseSha256 = "5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10";
+      patchSha256 = "0ccdd4ccb962d542108a23e83498f07ec981bb629c77e2355ca25297cea47b93";
     };
     "4.8" = {
       version = "4.8.4";
-      sha256 = "c1cb8d3d912ab23b7bc689b5473828ea6cc9485f13137e9c9892a2d4d81422b0";
+      baseSha256 = "3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a";
+      patchSha256 = "86e246b19253ee3aa971403a5990376a5e33667122f7c8742cc0ee807f204403";
     };
     "testing" = {
       version = "4.9-rc2";
+      # We aren't using a patchset because 4.9-rc{x} apply's are currently broken
       sha256 = "24cd6bd2d2bdd5cece97b9e95b0cde2d63e8912ea0b070928fb67cffea08c9c1";
     };
     "bcache" =
       let
-        date = "2016-10-22";
+        date = "2016-10-23";
       in {
         version = "4.8.4";
-        urls = [
-          "https://github.com/wkennington/linux/releases/download/bcachefs-${version}-${date}/linux-bcachefs-${version}-${date}.tar.xz"
+        patchUrls = [
+          "https://github.com/wkennington/linux/releases/download/bcachefs-${version}-${date}/patch-bcachefs-${version}-${date}.xz"
         ];
-        sha256 = "001d580d79d30241d43b878ac719539a053c45dfebee36b1fadf7810a8a2f76c";
+        baseSha256 = "3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a";
+        patchSha256 = "3f79e87dfff786e547f7680b8887565d903105c412958bf42ec47cb47e0244ca";
         features.bcachefs = true;
       };
   };
@@ -52,9 +56,26 @@ let
   inherit (source)
     version;
 
-  tarballUrls = [
-    "mirror://kernel/linux/kernel/v4.x/linux-${version}.tar"
-    "mirror://kernel/linux/kernel/v4.x/testing/linux-${version}.tar"
+  inherit (stdenv.lib)
+    elemAt
+    head
+    optionals
+    splitString
+    tail
+    toInt;
+
+  unpatchedVersion =
+    let
+      rclist = splitString "-" version;
+      isRC = [ ] != tail rclist;
+      vlist = splitString "." (head rclist);
+      minorInt = toInt (elemAt vlist 1);
+      correctMinor = if isRC then minorInt - 1 else minorInt;
+    in "${elemAt vlist 0}.${toString correctMinor}";
+
+  directoryUrls = [
+    "mirror://kernel/linux/kernel/v4.x"
+    "mirror://kernel/linux/kernel/v4.x/testing"
   ];
 
   src = if source ? rev then
@@ -67,21 +88,46 @@ let
     }
   else
     fetchurl {
-      urls = source.urls or (map (n: "${n}.xz") tarballUrls);
+      urls =
+        let
+          version' = if source ? baseSha256 then unpatchedVersion else version;
+        in source.baseUrls or (source.urls or (map (n: "${n}/linux-${version'}.tar.xz") directoryUrls));
       hashOutput = false;
-      inherit (source) sha256;
+      sha256 = source.baseSha256 or source.sha256;
     };
 
-  srcVerification = fetchurl {
-    failEarly = true;
-    pgpDecompress = true;
-    pgpsigUrls = map (n: "${n}.sign") tarballUrls;
-    pgpKeyFingerprints = [
-      "647F 2865 4894 E3BD 4571  99BE 38DB BDC8 6092 693E"
-      "ABAF 11C6 5A29 70B1 30AB  E3C4 79BE 3E43 0041 1886"
-    ];
-    inherit (src) urls outputHash outputHashAlgo;
-  };
+  patch = if source ? patchSha256 then
+    fetchurl {
+      urls = source.patchUrls or (map (n: "${n}/patch-${version}.xz") directoryUrls);
+      hashOutput = false;
+      sha256 = source.patchSha256;
+    }
+  else
+    null;
+
+  srcsVerification = [
+    (fetchurl {
+      failEarly = true;
+      pgpDecompress = true;
+      pgpsigUrls = map (n: "${n}/linux-${if source ? baseSha256 then unpatchedVersion else version}.tar.sign") directoryUrls;
+      pgpKeyFingerprints = [
+        "647F 2865 4894 E3BD 4571  99BE 38DB BDC8 6092 693E"
+        "ABAF 11C6 5A29 70B1 30AB  E3C4 79BE 3E43 0041 1886"
+      ];
+      inherit (src) urls outputHash outputHashAlgo;
+    })
+  ] ++ optionals (patch != null) [
+    (fetchurl {
+      failEarly = true;
+      pgpDecompress = true;
+      pgpsigUrls = map (n: "${n}/patch-${version}.sign") directoryUrls;
+      pgpKeyFingerprints = [
+        "647F 2865 4894 E3BD 4571  99BE 38DB BDC8 6092 693E"
+        "ABAF 11C6 5A29 70B1 30AB  E3C4 79BE 3E43 0041 1886"
+      ];
+      inherit (patch) urls outputHash outputHashAlgo;
+    })
+  ];
 
   lib = stdenv.lib;
 
@@ -89,7 +135,7 @@ let
     rcSplit = lib.splitString "-" version;
     vSplit = lib.splitString "." (lib.head rcSplit);
     vSplit' = if lib.length vSplit == 2 then vSplit ++ [ "0" ] else vSplit;
-    rcSplit' = [ (lib.concatStringsSep "." vSplit') ] ++ lib.tail rcSplit;
+    rcSplit' = [ (lib.concatStringsSep "." vSplit') ] ++ tail rcSplit;
   in lib.concatStringsSep "-" rcSplit';
 
   common = import ./common.nix { inherit stdenv; };
@@ -116,7 +162,7 @@ let
     autoModules = true;
     arch = common.kernelArch;
 
-    prePatch = kernel.prePatch + ''
+    postPatch = kernel.postPatch + ''
       # Patch kconfig to print "###" after every question so that
       # generate-config.pl from the generic builder can answer them.
       sed -e '/fflush(stdout);/i\printf("###");' -i scripts/kconfig/conf.c
@@ -141,7 +187,7 @@ let
   };
 
   kernel = buildLinux {
-    inherit version modDirVersion src kernelPatches;
+    inherit version modDirVersion src patch kernelPatches;
 
     configfile = configfile.nativeDrv or configfile;
 
@@ -155,7 +201,7 @@ let
   passthru = {
     meta = kernel.meta // extraMeta;
 
-    inherit srcVerification;
+    inherit srcsVerification;
 
     features = source.features or { };
 

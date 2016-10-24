@@ -13,6 +13,7 @@ cleanup() {
   if [ -n "$TMPDIR" ]; then
     rm -rf "$TMPDIR"
   fi
+  trap - EXIT ERR INT QUIT PIPE TERM
   exit "$?"
 }
 trap cleanup EXIT ERR INT QUIT PIPE TERM

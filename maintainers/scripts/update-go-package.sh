@@ -35,6 +35,11 @@ while ! [ -d "pkgs/top-level" ]; do
 done
 TOP_LEVEL="$(pwd)"
 
+# Add our current version of nix to the path
+NIX_DIR="$(dirname "$(readlink -f "$(type -tP nix-build)")")"
+mkdir -p "$TMPDIR/bin"
+ln -s "$NIX_DIR"/nix-{build,prefetch-url} "$TMPDIR/bin"
+
 # Build all of the packages needed to run this script
 echo "Building script dependencies..." >&2
 exp="let pkgs = import ./. { };
@@ -49,7 +54,6 @@ in pkgs.buildEnv {
     $FETCHZIP_TAR
     git
     go
-    nix
     ncurses
     util-linux_full
     findutils
@@ -59,7 +63,7 @@ if ! nix-build --out-link $TMPDIR/nix-env -E "$exp"; then
   echo "Failed to build dependencies of this script" >&2
   exit 1
 fi
-export PATH="$(readlink -f "$TMPDIR/nix-env")/bin"
+export PATH="$(readlink -f "$TMPDIR/nix-env")/bin:$TMPDIR/bin"
 
 echo "Finding packages and all dependencies..." >&2
 pkglist='[ '

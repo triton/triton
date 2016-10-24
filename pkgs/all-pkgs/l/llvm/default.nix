@@ -117,7 +117,7 @@ stdenv.mkDerivation {
     isClang = true;
     inherit gcc;
 
-    srcVerifications = flip map srcs' (src: src.override {
+    srcsVerification = flip map srcs' (src: src.override {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
       pgpKeyFingerprints = [

@@ -198,13 +198,13 @@ tryDownload() {
             method="cat \"$out\""
             if [ "${pgpDecompress}" = "1" ]; then
               case "$out" in
-                *.tar.bz2 | *.tbz2)
+                *.bz2 | *.tbz2)
                   method="bzip2 -d -c \"$out\""
                   ;;
-                *.tar.gz | *.tgz)
+                *.gz | *.tgz)
                   method="gzip -d -c \"$out\""
                   ;;
-                *.tar.xz | *.txz)
+                *.xz | *.txz)
                   method="xz -d -c \"$out\""
                   ;;
                 *)

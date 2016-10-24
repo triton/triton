@@ -7,11 +7,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "taglib-1.11";
+  name = "taglib-1.11.1";
 
   src = fetchurl {
     url = "https://taglib.github.io/releases/${name}.tar.gz";
-    sha256 = "ed4cabb3d970ff9a30b2620071c2b054c4347f44fc63546dbe06f97980ece288";
+    sha256 = "b6d1a5a610aae6ff39d93de5efd0fdc787aa9e9dc1e7026fa4c961b26563526b";
   };
   nativeBuildInputs = [
     cmake

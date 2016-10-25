@@ -1767,6 +1767,8 @@ libdrm = callPackage ../all-pkgs/l/libdrm { };
 
 libebml = callPackage ../all-pkgs/l/libebml { };
 
+libebur128 = callPackage ../all-pkgs/l/libebur128 { };
+
 libedit = callPackage ../all-pkgs/l/libedit { };
 
 libelf = callPackage ../all-pkgs/l/libelf { };

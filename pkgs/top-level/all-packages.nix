@@ -998,7 +998,7 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   #opencl = null;
   #opencore-amr = null;
   opencv = null;
-  openjpeg_1-5 = null;
+  openjpeg = null;
   samba_client = null;
   #schannel = null;
   schroedinger = null;
@@ -1019,10 +1019,12 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
 } // overrides);
 ffmpeg_2-8 = pkgs.ffmpeg_generic {
   channel = "2.8";
+  SDL_2 = null;
 };
 ffmpeg_2 = callPackageAlias "ffmpeg_2-8" { };
 ffmpeg_3-1 = pkgs.ffmpeg_generic {
   channel = "3.1";
+  SDL_2 = null;
 };
 ffmpeg_3 = callPackageAlias "ffmpeg_3-1" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
@@ -1030,6 +1032,7 @@ ffmpeg_head = pkgs.ffmpeg_generic {
   # Use latest dependencies
   opus = pkgs.opus_head;
   libvpx = pkgs.libvpx_head;
+  SDL = null;
 };
 ffmpeg = callPackageAlias "ffmpeg_3" { };
 

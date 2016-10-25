@@ -127,7 +127,7 @@
 , opencv
 , mesa_noglu
 #, openh264
-, openjpeg_1-5
+, openjpeg
 , opensslExtlib ? false, openssl
 , pulseaudio_lib
 , rtmpdump
@@ -136,6 +136,7 @@
 , samba_client
 , schroedinger
 , SDL
+, SDL_2
 #, shine
 , snappy
 , soxr
@@ -244,7 +245,7 @@ assert ffplayProgram ->
   && avformatLibrary
   && swscaleLibrary
   && swresampleLibrary
-  && SDL != null;
+  && (SDL != null || SDL_2 != null);
 assert ffprobeProgram ->
   avcodecLibrary
   && avformatLibrary;
@@ -363,7 +364,7 @@ stdenv.mkDerivation rec {
     libssh
     libwebp
     openal
-    openjpeg_1-5
+    openjpeg
     opus
     libtheora
     libva
@@ -378,6 +379,7 @@ stdenv.mkDerivation rec {
     samba_client
     schroedinger
     SDL
+    SDL_2
     soxr
     snappy
     speex
@@ -555,7 +557,9 @@ stdenv.mkDerivation rec {
     /**/"--disable-libopencv"
     #"--${boolEn (openh264 != null)}-libopenh264"
     /**/"--disable-libopenh264"
-    "--${boolEn (openjpeg_1-5 != null)}-libopenjpeg"
+    "--${boolEn (openjpeg != null)}-libopenjpeg"
+    #(ffmpeg "--${boolEn (libopenmpt != null)}-libopenmpt" "3.2")
+    /**/(fflag "--disable-libopenmpt" "3.2")
     "--${boolEn (opus != null)}-libopus"
     "--${boolEn (pulseaudio_lib != null)}-libpulse"
     (deprfflag "--disable-libquvi" null "2.8")
@@ -608,7 +612,8 @@ stdenv.mkDerivation rec {
     "--${boolEn opensslExtlib}-openssl"
     #(fflag "--${boolEn (schannel != null)}-schannel" "3.0")
     /**/(fflag "--disable-schannel" "3.0")
-    "--${boolEn (SDL != null)}-sdl"
+    (deprfflag "--${boolEn (SDL != null)}-sdl" null "3.1")
+    (fflag "--${boolEn (SDL_2 != null)}-sdl2" "3.2")
     "--disable-securetransport"
     "--${boolEn x11grabExtlib}-x11grab"
     #"--${boolEn (xorg.libX11 != null && xorg.libXv != null)}-xlib"

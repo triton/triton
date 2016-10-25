@@ -6,11 +6,15 @@
 , zlib
 }:
 
+let
+  version = "1.11.1";
+in
 stdenv.mkDerivation rec {
-  name = "taglib-1.11.1";
+  name = "taglib-${version}";
 
   src = fetchurl {
-    url = "https://taglib.github.io/releases/${name}.tar.gz";
+    url = "https://github.com/taglib/taglib/releases/download/v${version}/"
+      + "${name}.tar.gz";
     sha256 = "b6d1a5a610aae6ff39d93de5efd0fdc787aa9e9dc1e7026fa4c961b26563526b";
   };
   nativeBuildInputs = [

@@ -96,6 +96,7 @@
 , libcaca
 #, libcdio-paranoia
 , libdc1394, libraw1394
+, libebur128
 #, libiec61883, libavc1394
 , libgcrypt
 , libmodplug
@@ -293,14 +294,14 @@ let
   # f - Configure flags w/o --enable/disable
   # b - Boolean: (some-pkg !=null) or someFlag
   # v - Version that the configure option was added
-  fflag = f: b: v:
+  fflag = f: v:
     if v == null || reqMin v  then
-    "--${boolEn b}-${f}"
+    "${f}"
     else
       null;
-  deprfflag = f: b: vmin: vmax:
+  deprfflag = f: vmin: vmax:
     if (vmin == null || reqMin vmin) && (vmax == null || reqMax vmax) then
-    "--${boolEn b}-${f}"
+    "${f}"
     else
       null;
 in
@@ -354,6 +355,7 @@ stdenv.mkDerivation rec {
     libbs2b
     libcaca
     libdc1394
+    libebur128
     libgcrypt
     libmodplug
     libogg
@@ -406,229 +408,218 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     patchShebangs .
-  '' + optionalString (versionOlder "2.8" channel) ''
-    sed -i libavcodec/libvpxenc.c \
-      -e '/VP8E_UPD_ENTROPY/d' \
-      -e '/VP8E_USE_REFERENCE/d' \
-      -e '/VP8E_UPD_REFERENCE/d' \
-      -e '/VP8D_USE_REFERENCE/d'
   '';
 
   configureFlags = [
     /*
      *  Licensing flags
      */
-    (fflag "gpl" gplLicensing null)
-    (fflag "version3" version3Licensing null)
-    (fflag "nonfree" nonfreeLicensing null)
+    "--${boolEn gplLicensing}-gpl"
+    "--${boolEn version3Licensing}-version3"
+    "--${boolEn nonfreeLicensing}-nonfree"
     /*
      *  Build flags
      */
     # On some ARM platforms --enable-thumb
     /**/"--disable-thumb"
     "--enable-shared --disable-static"
-    (fflag "pic" true "-")
+    "--enable-pic"
     (if stdenv.cc.isClang then "--cc=clang" else null)
-    (fflag "small" smallBuild null)
-    (fflag "runtime-cpudetect" runtimeCpuDetectBuild null)
-    (fflag "gray" grayBuild null)
-    (fflag "swscale-alpha" swscaleAlphaBuild null)
+    "--${boolEn smallBuild}-small"
+    "--${boolEn runtimeCpuDetectBuild}-runtime-cpudetect"
+    "--${boolEn grayBuild}-gray"
+    "--${boolEn swscaleAlphaBuild}-swscale-alpha"
     "--disable-incompatible-libav-abi"
-    (fflag "hardcoded-tables" hardcodedTablesBuild null)
-    (fflag "safe-bitstream-reader" safeBitstreamReaderBuild null)
-    (fflag "memalign-hack" memalignHackBuild null)
+    "--${boolEn hardcodedTablesBuild}-hardcoded-tables"
+    "--${boolEn safeBitstreamReaderBuild}-safe-bitstream-reader"
+    "--${boolEn memalignHackBuild}-memalign-hack"
     "--enable-pthreads"
     "--disable-w32threads" # windows
     "--disable-os2threads" # os/2
-    (fflag "network" networkBuild null)
-    (fflag "pixelutils" pixelutilsBuild null)
+    "--${boolEn networkBuild}-network"
+    "--${boolEn pixelutilsBuild}-pixelutils"
     /*
      *  Program flags
      */
-    (fflag "ffmpeg" ffmpegProgram null)
-    (fflag "ffplay" ffplayProgram null)
-    (fflag "ffprobe" ffprobeProgram null)
-    (fflag "ffserver" ffserverProgram null)
+    "--${boolEn ffmpegProgram}-ffmpeg"
+    "--${boolEn ffplayProgram}-ffplay"
+    "--${boolEn ffprobeProgram}-ffprobe"
+    "--${boolEn ffserverProgram}-ffserver"
     /*
      *  Library flags
      */
-    (fflag "avcodec" avcodecLibrary null)
-    (fflag "avdevice" avdeviceLibrary null)
-    (fflag "avfilter" avfilterLibrary null)
-    (fflag "avformat" avformatLibrary null)
-    (fflag "avresample" avresampleLibrary null)
-    (fflag "avutil" avutilLibrary null)
-    (fflag "postproc" (
-      postprocLibrary
-      && gplLicensing) null)
-    (fflag "swresample" swresampleLibrary null)
-    (fflag "swscale" swscaleLibrary null)
+    "--${boolEn avcodecLibrary}-avcodec"
+    "--${boolEn avdeviceLibrary}-avdevice"
+    "--${boolEn avfilterLibrary}-avfilter"
+    "--${boolEn avformatLibrary}-avformat"
+    "--${boolEn avresampleLibrary}-avresample"
+    "--${boolEn avutilLibrary}-avutil"
+    "--${boolEn (postprocLibrary && gplLicensing)}-postproc"
+    "--${boolEn swresampleLibrary}-swresample"
+    "--${boolEn swscaleLibrary}-swscale"
     /*
      *  Documentation flags
      */
-    (fflag "doc" (
+    "--${boolEn (
       htmlpagesDocumentation
       || manpagesDocumentation
       || podpagesDocumentation
-      || txtpagesDocumentation) null)
-    (fflag "htmlpages" htmlpagesDocumentation null)
-    (fflag "manpages" manpagesDocumentation null)
-    (fflag "podpages" podpagesDocumentation null)
-    (fflag "txtpages" txtpagesDocumentation null)
+      || txtpagesDocumentation)}-doc"
+    "--${boolEn htmlpagesDocumentation}-htmlpages"
+    "--${boolEn manpagesDocumentation}-manpages"
+    "--${boolEn podpagesDocumentation}-podpages"
+    "--${boolEn txtpagesDocumentation}-txtpages"
     /*
      *  Hardware accelerators
      */
-    (fflag "audiotoolbox" false "3.1") # darwin
-    (fflag "cuda" cudaExtLib "3.1")
-    /**/(fflag "cuvid" false "3.1")
+    (fflag "--disable-audiotoolbox" "3.1") # darwin
+    (fflag "--${boolEn cudaExtLib}-cuda" "3.1")
+    /**/(fflag "--disable-cuvid" "3.1")
     "--disable-d3d11va" # windows
     "--disable-dxva2" # windows
-    (fflag "libmfx" (mfx-dispatcher != null) "2.6")
-    #(fflag "libnpp" (npp != null) "3.1")
-    /**/(fflag "libnpp" false "3.1")
-    #(fflag "mmal" (mmal != null) "2.7")
+    "--${boolEn (mfx-dispatcher != null)}-libmfx"
+    #(fflag "--${boolEn (npp != null)}-libnpp" "3.1")
+    /**/(fflag "--disable-libnpp" "3.1")
+    #"--${boolEn (mmal != null)}-mmal"
     /**/"--disable-mmal"
-    (fflag "nvenc" nvencExtLib "2.6")
-    (fflag "vaapi" (libva != null) null)
+    "--${boolEn nvencExtLib}-nvenc"
+    "--${boolEn (libva != null)}-vaapi"
     "--disable-vda" # darwin
-    (fflag "vdpau" (libvdpau != null) null)
+    "--${boolEn (libvdpau != null)}-vdpau"
     "--disable-videotoolbox" # darwin
     # Undocumented
     "--enable-xvmc"
     /*
      *  External libraries
      */
-    #(fflag "avisynth" (avisynth != null) null)
+    #"--${boolEn (avisynth != null)}-avisynth"
     /**/"--disable-avisynth"
-    (fflag "bzlib" (bzip2 != null) null)
+    "--${boolEn (bzip2 != null)}-bzlib"
     # Recursive dependency
-    #(fflag "chromaprint" (chromaprint != null) "3.0")
-    /**/(fflag "chromaprint" false "3.0")
+    #(fflag "--${boolEn (chromaprint != null)}-chromaprint" "3.0")
+    /**/(fflag "--disable-chromaprint" "3.0")
     # Undocumented (broadcom)
-    #(fflag "crystalhd" (crystalhd != null) null)
+    #"--${boolEn (crystalhd != null)}-crystalhd"
     /**/"--disable-crystalhd"
     # fontconfig -> libfontconfig since 3.1
-    (deprfflag "fontconfig" (fontconfig != null) "0.0" "3.0")
-    (fflag "frei0r" (frei0r != null) null)
+    (deprfflag "--${boolEn (fontconfig != null)}-fontconfig" null "3.0")
+    "--${boolEn (frei0r != null)}-frei0r"
     # Undocumented before 3.0
-    (fflag "gcrypt" (libgcrypt != null) "3.0")
-    (fflag "gmp" (gmp != null) "3.0")
-    (fflag "gnutls" (
-      gnutls != null
-      && !opensslExtlib) null)
-    (fflag "iconv" (stdenv.cc.libc != null) null)
-    (fflag "jni" (jni != null) "3.1")
-    (fflag "ladspa" (ladspaH != null) "2.1")
-    (deprfflag "libaacplus" false "0.7" "2.8")
-    (fflag "libass" (libass != null) null)
-    (fflag "libbluray" (libbluray != null) null)
-    (fflag "libbs2b" (libbs2b != null) "2.3")
-    (fflag "libcaca" (libcaca != null) null)
-    (fflag "libcelt" (celt != null) null)
-    #(fflag "libcdio" (libcdio != null) null)
+    (fflag "--${boolEn (libgcrypt != null)}-gcrypt" "3.0")
+    (fflag "--${boolEn (gmp != null)}-gmp" "3.0")
+    "--${boolEn (gnutls != null && !opensslExtlib)}-gnutls"
+    "--${boolEn (stdenv.cc.libc != null)}-iconv"
+    (fflag "--${boolEn (jni != null)}-jni" "3.1")
+    "--${boolEn (ladspaH != null)}-ladspa"
+    (deprfflag "--disable-libaacplus" null "2.8")
+    "--${boolEn (libass != null)}-libass"
+    "--${boolEn (libbluray != null)}-libbluray"
+    "--${boolEn (libbs2b != null)}-libbs2b"
+    "--${boolEn (libcaca != null)}-libcaca"
+    "--${boolEn (celt != null)}-libcelt"
+    #"--${boolEn (libcdio != null)}-libcdio"
     /**/"--disable-libcdio"
-    (fflag "libdc1394" (
+    "--${boolEn (
       libdc1394 != null
-      && libraw1394 != null) null)
+      && libraw1394 != null)}-libdc1394"
     # Undocumented
-    (deprfflag "libdcadec" (dcadec != null) "2.7" "3.0")
-    #(fflag "libebur128" (libebur128 != null) "3.1")
-    /**/(fflag "libebur128" false "3.1")
-    (deprfflag "libfaac" faacExtlib null "3.1")
-    (fflag "libfdk-aac" fdkaacExtlib null)
-    (fflag "libfontconfig" (fontconfig != null) "3.1")
-    #(fflag "libflite" (flite != null) null)
+    (deprfflag "--${boolEn (dcadec != null)}-libdcadec" null "3.0")
+    (fflag "--${boolEn (libebur128 != null)}-libebur128" "3.1")
+    (deprfflag "--${boolEn faacExtlib}-libfaac" null "3.1")
+    (fflag "--${boolEn fdkaacExtlib}-libfdk-aac" null)
+    (fflag "--${boolEn (fontconfig != null)}-libfontconfig" "3.1")
+    #"--${boolEn (flite != null)}-libflite"
     /**/"--disable-libflite"
-    (fflag "libfreetype" (freetype != null) null)
-    (fflag "libfribidi" (fribidi != null) "2.3")
-    (fflag "libgme" (game-music-emu != null) "2.2")
-    #(fflag "libgsm" (gsm != null) null)
+    "--${boolEn (freetype != null)}-libfreetype"
+    "--${boolEn (fribidi != null)}-libfribidi"
+    "--${boolEn (game-music-emu != null)}-libgme"
+    #"--${boolEn (gsm != null)}-libgsm"
     /**/"--disable-libgsm"
-    #(fflag "libiec61883" (
+    #"--${boolEn (
     #  libiec61883 != null
     #  && libavc1394 != null
-    #  && libraw1394 != null) null)
+    #  && libraw1394 != null)}-libiec61883"
     "--disable-libiec61883"
-    #(fflag "libilbc" (ilbc != null) null)
+    #"--${boolEn (ilbc != null)}-libilbc"
     "--disable-libilbc"
-    (fflag "libkvazaar" (kvazaar != null) "2.8")
-    (fflag "libmodplug" (libmodplug != null) null)
-    (fflag "libmp3lame" (lame != null) null)
-    #(fflag "libnut" (libnut != null) null)
+    "--${boolEn (kvazaar != null)}-libkvazaar"
+    "--${boolEn (libmodplug != null)}-libmodplug"
+    "--${boolEn (lame != null)}-libmp3lame"
+    #"--${boolEn (libnut != null)}-libnut"
     /**/"--disable-libnut"
-    #(fflag "libopencore-amrnb" (opencore-amr != null) null)
+    #"--${boolEn (opencore-amr != null)}-libopencore-amrnb"
     /**/"--disable-libopencore-amrnb"
-    #(fflag "libopencore-amrwb" (opencore-amr != null) null)
+    #"--${boolEn (opencore-amr != null)}-libopencore-amrwb"
     /**/"--disable-libopencore-amrwb"
-    #(fflag "libopencv" (opencv != null) null)
+    #"--${boolEn (opencv != null)}-libopencv"
     /**/"--disable-libopencv"
-    #(fflag "libopenh264" (openh264 != null) "2.6")
+    #"--${boolEn (openh264 != null)}-libopenh264"
     /**/"--disable-libopenh264"
-    (fflag "libopenjpeg" (openjpeg_1-5 != null) null)
-    (fflag "libopus" (opus != null) null)
-    (fflag "libpulse" (pulseaudio_lib != null) null)
-    (deprfflag "libquvi" false "2.0" "2.8")
-    (fflag "librubberband" (rubberband != null) "3.0")
-    (fflag "librtmp" (rtmpdump != null) null)
-    (fflag "libschroedinger" (schroedinger != null) null)
-    #(fflag "libshine" (shine != null) "2.0")
+    "--${boolEn (openjpeg_1-5 != null)}-libopenjpeg"
+    "--${boolEn (opus != null)}-libopus"
+    "--${boolEn (pulseaudio_lib != null)}-libpulse"
+    (deprfflag "--disable-libquvi" null "2.8")
+    (fflag "--${boolEn (rubberband != null)}-librubberband" "3.0")
+    "--${boolEn (rtmpdump != null)}-librtmp"
+    "--${boolEn (schroedinger != null)}-libschroedinger"
+    #"--${boolEn (shine != null)}-libshine"
     /**/"--disable-libshine"
-    (fflag "libsmbclient" (samba_client != null) "2.3")
-    (fflag "libsnappy" (snappy != null) "2.8")
-    (fflag "libsoxr" (soxr != null) null)
-    (fflag "libspeex" (speex != null) null)
-    (fflag "libssh" (libssh != null) "2.1")
-    #(fflag "libtesseract" (tesseract != null) "3.0")
-    /**/(fflag "libtesseract" false "3.0")
-    (fflag "libtheora" (libtheora != null) null)
-    #(fflag "libtwolame" (twolame != null) null)
+    "--${boolEn (samba_client != null)}-libsmbclient"
+    "--${boolEn (snappy != null)}-libsnappy"
+    "--${boolEn (soxr != null)}-libsoxr"
+    "--${boolEn (speex != null)}-libspeex"
+    "--${boolEn (libssh != null)}-libssh"
+    #(fflag "--${boolEn (tesseract != null)}-libtesseract" "3.0")
+    /**/(fflag "--disable-libtesseract" "3.0")
+    "--${boolEn (libtheora != null)}-libtheora"
+    #"--${boolEn (twolame != null)}-libtwolame"
     /**/"--disable-libtwolame"
-    (deprfflag "libutvideo" false "0.0" "3.0")
-    (fflag "libv4l2" (v4l_lib != null) null)
-    (fflag "libvidstab" (vid-stab != null) "2.2")
-    (deprfflag "libvo-aacenc" false "0.6" "2.8")
-    (fflag "libvo-amrwbenc" (vo-amrwbenc != null) null)
-    (fflag "libvorbis" (libvorbis != null) null)
-    (fflag "libvpx" (libvpx != null) null)
-    (fflag "libwavpack" (wavpack != null) "2.0")
-    (fflag "libwebp" (libwebp != null) "2.2")
-    (fflag "libx264" (x264 != null) null)
-    (fflag "libx265" (x265 != null) "2.2")
-    (fflag "libxavs" (xavs != null) null)
-    #(enableFeature (xorg.libxcb != null) "libxcb") "2.5"
-    (fflag "libxcb-shm" libxcbshmExtlib "2.5")
-    (fflag "libxcb-xfixes" libxcbxfixesExtlib "2.5")
-    (fflag "libxcb-shape" libxcbshapeExtlib "2.5")
-    (fflag "libxvid" (xvidcore != null) null)
-    (fflag "libzimg" (libzimg != null) "3.0")
-    (fflag "libzmq" (zeromq4 != null) "2.0")
-    #(fflag "libzvbi" (zvbi != null) "2.1")
+    (deprfflag "--disable-libutvideo" null "3.0")
+    "--${boolEn (v4l_lib != null)}-libv4l2"
+    "--${boolEn (vid-stab != null)}-libvidstab"
+    (deprfflag "--disable-libvo-aacenc" null "2.8")
+    "--${boolEn (vo-amrwbenc != null)}-libvo-amrwbenc"
+    "--${boolEn (libvorbis != null)}-libvorbis"
+    "--${boolEn (libvpx != null)}-libvpx"
+    "--${boolEn (wavpack != null)}-libwavpack"
+    "--${boolEn (libwebp != null)}-libwebp"
+    "--${boolEn (x264 != null)}-libx264"
+    "--${boolEn (x265 != null)}-libx265"
+    "--${boolEn (xavs != null)}-libxavs"
+    #"--${boolEn (xorg.libxcb != null)}-libxcb"
+    "--${boolEn libxcbshmExtlib}-libxcb-shm"
+    "--${boolEn libxcbxfixesExtlib}-libxcb-xfixes"
+    "--${boolEn libxcbshapeExtlib}-libxcb-shape"
+    "--${boolEn (xvidcore != null)}-libxvid"
+    (fflag "--${boolEn (libzimg != null)}-libzimg" "3.0")
+    "--${boolEn (zeromq4 != null)}-libzmq"
+    #"--${boolEn (zvbi != null)}-libzvbi"
     /**/"--disable-libzvbi"
-    (fflag "lzma" (xz != null) "2.4")
-    #(fflag "decklink" decklinkExtlib "2.2")
+    "--${boolEn (xz != null)}-lzma"
+    #"--${boolEn decklinkExtlib}-decklink"
     /**/"--disable-decklink"
-    (fflag "mediacodec" false "3.1") # android
-    (fflag "netcdf" (netcdf != null) "3.0")
-    (fflag "openal" (openal != null) null)
-    #(fflag "opencl" (opencl != null) "2.2")
+    (fflag "--disable-mediacodec" "3.1") # android
+    (fflag "--${boolEn (netcdf != null)}-netcdf" "3.0")
+    "--${boolEn (openal != null)}-openal"
+    #"--${boolEn (opencl != null)}-opencl"
     /**/"--disable-opencl"
     # OpenGL requires libX11 for GLX
-    (fflag "opengl" (mesa_noglu != null && xorg.libX11 != null) "2.2")
-    (fflag "openssl" opensslExtlib null)
-    #(fflag "schannel" (schannel != null) "3.0")
-    /**/(fflag "schannel" false "3.0")
-    (fflag "sdl" (SDL != null) "2.5")
-    (fflag "securetransport" false "2.7")
-    (fflag "x11grab" x11grabExtlib null)
-    #(enableFeature (xorg.libX11 != null && xorg.libXv != null) "xlib") "2.3"
-    (fflag "zlib" (zlib != null) null)
+    "--${boolEn (mesa_noglu != null && xorg.libX11 != null)}-opengl"
+    "--${boolEn opensslExtlib}-openssl"
+    #(fflag "--${boolEn (schannel != null)}-schannel" "3.0")
+    /**/(fflag "--disable-schannel" "3.0")
+    "--${boolEn (SDL != null)}-sdl"
+    "--disable-securetransport"
+    "--${boolEn x11grabExtlib}-x11grab"
+    #"--${boolEn (xorg.libX11 != null && xorg.libXv != null)}-xlib"
+    "--${boolEn (zlib != null)}-zlib"
     /*
      *  Developer flags
      */
-    (fflag "debug" debugDeveloper null)
-    (fflag "optimizations" optimizationsDeveloper null)
-    (fflag "extra-warnings" extraWarningsDeveloper null)
-    (fflag "stripping" strippingDeveloper null)
+    "--${boolEn debugDeveloper}-debug"
+    "--${boolEn optimizationsDeveloper}-optimizations"
+    "--${boolEn extraWarningsDeveloper}-extra-warnings"
+    "--${boolEn strippingDeveloper}-stripping"
   ];
 
   # Build qt-faststart executable

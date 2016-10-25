@@ -982,6 +982,7 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   libbs2b = null;
   libcaca = null;
   libdc1394 = null;
+  libebur128 = null;
   #libiec61883 = null;
   libraw1394 = null;
   libmodplug = null;

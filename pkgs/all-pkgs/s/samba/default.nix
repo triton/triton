@@ -225,7 +225,7 @@ stdenv.mkDerivation rec {
       smbclient_bins+=("$lib")
     done
 
-    smbclient_pcs=($(find "$out/lib/pkgconfig" -type f))
+    smbclient_pcs=($(find "$out/lib/pkgconfig" -maxdepth 1 -not -type d))
     for smbclient_pc in "''${smbclient_pcs[@]}"; do
       names=$(sed 's, -l,\n\0,g' $smbclient_pc | sed -n 's,.* -l\([^ ]*\).*,\1,p')
       for name in $names; do
@@ -239,7 +239,13 @@ stdenv.mkDerivation rec {
 
     declare -A smbclient_files
     for i in "''${smbclient_bins[@]}" "''${smbclient_pcs[@]}" $(find $out/include $out/lib/python* -not -type d); do
-      smbclient_files["$i"]=1
+      local current="$i"
+      local link
+      while link="$(readlink "$current")" && [ -n "$link" ]; do
+        smbclient_files["$current"]=1
+        current="$(realpath -s "$(dirname "$current")/$link")"
+      done
+      smbclient_files["$current"]=1
     done
 
     for i in $(find $out -not -type d); do

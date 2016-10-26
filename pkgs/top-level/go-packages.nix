@@ -1245,11 +1245,11 @@ let
 
   gcloud-golang = buildFromGitHub {
     version = 2;
-    date = "2016-10-25";
-    rev = "2b8eb373216db8c887f4934051ab8338581e3656";
+    date = "2016-10-26";
+    rev = "0e0c2bb2f192f3d85ef3c1eea95b9c9453051dff";
     owner = "GoogleCloudPlatform";
     repo = "gcloud-golang";
-    sha256 = "09lws5biz6bixky5ycs91v0fsdfk8izamd14jnjy7810dnxi0ri0";
+    sha256 = "1mglcgwrgq64bvnrh89x4wk3wy7n2gga1zaqckaq01rn2r2hvh87";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"

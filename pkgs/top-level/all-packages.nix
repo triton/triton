@@ -1093,10 +1093,7 @@ freeipmi = callPackage ../all-pkgs/f/freeipmi { };
 
 freetype = callPackage ../all-pkgs/f/freetype { };
 
-frei0r-plugins = callPackage ../all-pkgs/f/frei0r-plugins {
-  # Re-enable once opencv has been re-written
-  opencv = null;
-};
+frei0r-plugins = callPackage ../all-pkgs/f/frei0r-plugins { };
 
 fstrm = callPackage ../all-pkgs/f/fstrm { };
 
@@ -2461,6 +2458,18 @@ obexftp = callPackage ../all-pkgs/o/obexftp { };
 
 oniguruma = callPackage ../all-pkgs/o/oniguruma { };
 
+opencv_2-4 = callPackage ../all-pkgs/o/opencv {
+  channel = "2.4";
+  gtk_3 = null;
+};
+opencv_2 = callPackageAlias "opencv_2-4" { };
+opencv_3-1 = callPackage ../all-pkgs/o/opencv {
+  channel = "3.1";
+  gtk_2 = null;
+};
+opencv_3 = callPackageAlias "opencv_3-1" { };
+opencv = callPackageAlias "opencv_3" { };
+
 openjpeg_1-5 = callPackage ../all-pkgs/o/openjpeg {
   channel = "1.5";
 };
@@ -3644,8 +3653,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   openal = callPackageAlias "openalSoft" { };
   openalSoft = callPackage ../development/libraries/openal-soft { };
-#
-  opencv = callPackage ../development/libraries/opencv { };
 #
   openexr = callPackage ../development/libraries/openexr { };
 #

@@ -7,8 +7,8 @@
   };
 
   "6" = {
-    version = "6.1.26";
-    sha256 = "19hkzcmdpjppgqbjbyjvzdy2l3n6qf30kr4q77p2dws3ajpif56x";
+    version = "6.1.29";
+    sha256 = "b3c18180e4160d97dd197ba1d37c19f6ea2ec91d31bbfaf8972d99ba097af17d";
     license = licenses.agpl30;
   };
 }

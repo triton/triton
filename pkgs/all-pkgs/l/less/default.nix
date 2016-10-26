@@ -12,12 +12,12 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "less-481";
+  name = "less-487";
 
   src = fetchurl {
     url = "http://www.greenwoodsoftware.com/less/${name}.tar.gz";
-    multihash = "QmVy7jpqHzt9Buwirm9b6ZRUHgQT3Xv1ePEXn25adXeHbb";
-    sha256 = "3fa38f2cf5e9e040bb44fffaa6c76a84506e379e47f5a04686ab78102090dda5";
+    multihash = "QmNvvbq4XTRfX5ZiAnYi7DbnVviNeDwXiAcYnpqWemr8c9";
+    sha256 = "f3dc8455cb0b2b66e0c6b816c00197a71bf6d1787078adeee0bcf2aea4b12706";
   };
 
   buildInputs = [

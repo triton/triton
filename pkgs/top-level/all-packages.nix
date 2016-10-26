@@ -1093,6 +1093,11 @@ freeipmi = callPackage ../all-pkgs/f/freeipmi { };
 
 freetype = callPackage ../all-pkgs/f/freetype { };
 
+frei0r-plugins = callPackage ../all-pkgs/f/frei0r-plugins {
+  # Re-enable once opencv has been re-written
+  opencv = null;
+};
+
 fstrm = callPackage ../all-pkgs/f/fstrm { };
 
 fuse = callPackage ../all-pkgs/f/fuse { };
@@ -3502,8 +3507,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
         fontconfig
         fontDirectories;
     };
-
-  frei0r = callPackage ../development/libraries/frei0r { };
 
   fribidi = callPackage ../development/libraries/fribidi { };
 #

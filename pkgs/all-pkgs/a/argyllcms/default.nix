@@ -40,18 +40,17 @@ let
       zlib
     ];
   };
+  version = "1.9.2";
 in
-
 stdenv.mkDerivation rec {
   name = "argyllcms-${version}";
-  version = "1.9.1";
 
   src = fetchzip {
     version = 2;
     url = "http://www.argyllcms.com/Argyll_V${version}_src.zip";
-    multihash = "QmcYj3gcv7BgjVEfyVxQC3RsSZH2Bub9Kq1Npf1wepeHk9";
+    multihash = "QmYCsVRzUNvxGd5Z29rpAKhPkaohNm4oaUaMi9aPs5p85v";
     purgeTimestamps = true;
-    sha256 = "35972d30d31c6cad7148c9b3fa6c7e44bb8b418b7a74451558dae7c279d62d34";
+    sha256 = "ae7d20929792f5cb60c05e1f9654b5e7705df0da0db4c8794fd75f17b00683da";
     # The argyllcms web server doesn't like curl ...
     curlOpts = "--user-agent 'Mozilla/5.0'";
   };

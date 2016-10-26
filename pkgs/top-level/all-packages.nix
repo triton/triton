@@ -1705,6 +1705,10 @@ kyotocabinet = callPackage ../all-pkgs/k/kyotocabinet { };
 
 kytea = callPackage ../all-pkgs/k/kytea { };
 
+ladspa-sdk = callPackage ../all-pkgs/l/ladspa-sdk { };
+# Deprecated alias
+ladspaH = callPackageAlias "ladspa-sdk" { };
+
 lame = callPackage ../all-pkgs/l/lame {
   libsndfile = null;
 };
@@ -3962,8 +3966,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   fluidsynth = callPackage ../applications/audio/fluidsynth { };
 #
   google_talk_plugin = callPackage ../applications/networking/browsers/mozilla-plugins/google-talk-plugin { };
-#
-  ladspaH = callPackage ../applications/audio/ladspa-sdk/ladspah.nix { };
 #
   mcpp = callPackage ../development/compilers/mcpp { };
 #

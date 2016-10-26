@@ -11,7 +11,7 @@
 }:
 
 let
-  version = "6.9.1";
+  version = "7.0.0";
 
   dirUrls = [
     "https://nodejs.org/dist/v${version}"
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/node-v${version}.tar.xz") dirUrls;
     hashOutput = false;
-    sha256 = "0bdd8d1305777cc8cd206129ea494d6c6ce56001868dd80147aff531d6df0729";
+    sha256 = "e16c3c76c2d6756bbfd711189cbdaf5676049b443e6817007bb537f243ca899a";
   };
 
   nativeBuildInputs = [
@@ -71,11 +71,18 @@ stdenv.mkDerivation rec {
       sha256Urls = map (n: "${n}/SHASUMS256.txt.asc") dirUrls;
       #pgpsigSha256Urls = map (n: "${n}.asc") sha256Urls;
       pgpKeyFingerprints = [
+        # Rod Vagg
         "DD8F 2338 BAE7 501E 3DD5  AC78 C273 792F 7D83 545D"
+        # Evan Lucas
         "B9AE 9905 FFD7 803F 2571  4661 B63B 535A 4C20 6CA9"
+        # Jeremiah Senkpiel
         "FD3A 5288 F042 B685 0C66  B31F 09FE 4473 4EB7 990E"
+        # Colin Ihrig
         "94AE 3667 5C46 4D64 BAFA  68DD 7434 390B DBE9 B9C5"
+        # Myles Borins
         "C4F0 DFFF 4E8C 1A82 3640  9D08 E73B C641 CC11 F4C8"
+        # James M Snell
+        "71DC FD28 4A79 C3B3 8668  286B C97E C7A0 7EDE 3FC1"
       ];
       inherit (src) urls outputHash outputHashAlgo;
     };

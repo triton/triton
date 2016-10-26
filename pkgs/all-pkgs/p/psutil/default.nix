@@ -3,14 +3,16 @@
 , fetchPyPi
 }:
 
+let
+  version = "4.4.0";
+in
 buildPythonPackage rec {
   name = "psutil-${version}";
-  version = "4.3.1";
 
   src = fetchPyPi {
     package = "psutil";
     inherit version;
-    sha256 = "38f74182fb9e15cafd0cdf0821098a95cc17301807aed25634a18b66537ba51b";
+    sha256 = "f4da111f473dbf7e813e6610aec1329000536aea5e7d7e73ed20bc42cfda7ecc";
   };
 
   meta = with stdenv.lib; {

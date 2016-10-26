@@ -6,7 +6,7 @@
 , amrwb
 , flac
 , gsm
-, ladspaH
+, ladspa-sdk
 , lame
 , libao
 , libid3tag
@@ -28,9 +28,9 @@ let
   inherit (stdenv)
     targetSystem;
   inherit (stdenv.lib)
+    boolWt
     elem
-    platforms
-    wtFlag;
+    platforms;
 in
 stdenv.mkDerivation rec {
   name = "sox-14.4.2";
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
     amrwb
     flac
     gsm
-    ladspaH
+    ladspa-sdk
     lame
     libao
     libid3tag
@@ -68,33 +68,31 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--with-distro=Triton"
     #"--with-magic"
-    (wtFlag "png" (libpng != null) null)
-    (wtFlag "ladspa" (ladspaH != null) null)
+    "--${boolWt (libpng != null)}-png"
+    "--${boolWt (ladspaH != null)}-ladspa"
     #--with-ladspa-path
-    (wtFlag "mad" (libmad != null) null)
-    (wtFlag "id3tag" (libid3tag != null) null)
-    (wtFlag "lame" (lame != null) null)
-    # FIXME: add twolame support
-    #(wtFlag "twolame" (twolame != null) null)
-    "--without-twolame"
-    (wtFlag "opusfile" (opusfile != null) null)
-    (wtFlag "opus" (opus != null) null)
-    (wtFlag "flac" (flac != null) null)
-    (wtFlag "amrwb" (amrwb != null) null)
-    (wtFlag "amrnb" (amrnb != null) null)
-    (wtFlag "wavpack" (wavpack != null) null)
+    "--${boolWt (libmad != null)}-mad"
+    "--${boolWt (libid3tag != null)}-id3tag"
+    "--${boolWt (lame != null)}-lame"
+    #"--${boolWt (twolame != null)}-twolame"
+    /**/"--without-twolame"
+    "--${boolWt (opusfile != null)}-opusfile"
+    "--${boolWt (opus != null)}-opus"
+    "--${boolWt (flac != null)}-flac"
+    "--${boolWt (amrwb != null)}-amrwb"
+    "--${boolWt (amrnb != null)}-amrnb"
+    "--${boolWt (wavpack != null)}-wavpack"
     #--with-sndio=dyn
     "--without-coreaudio" # Darwin
-    (wtFlag "alsa" (alsa-lib != null) null)
-    (wtFlag "ao" (libao != null) null)
-    (wtFlag "pulseaudio" (pulseaudio_lib != null) null)
+    "--${boolWt (alsa-lib != null)}-alsa"
+    "--${boolWt (libao != null)}-ao"
+    "--${boolWt (pulseaudio_lib != null)}-pulseaudio"
     #--with-waveaudio=dyn
-    (wtFlag "sndfile" (libsndfile != null) null)
-    #--with-oss=dyn
+    "--${boolWt (libsndfile != null)}-sndfile"
     "--without-oss"
-    (wtFlag "sunaudio" (elem targetSystem platforms.illumos) null)
+    "--${boolWt (elem targetSystem platforms.illumos)}-sunaudio"
     #--with-mp3=dyn
-    (wtFlag "gsm" (gsm != null) null)
+    "--${boolWt (gsm != null)}-gsm"
     #--with-lpc10=dyn
   ];
 

@@ -1954,6 +1954,8 @@ libnih = callPackage ../all-pkgs/l/libnih { };
 
 libnl = callPackage ../all-pkgs/l/libnl { };
 
+libnotify = callPackage ../all-pkgs/l/libnotify { };
+
 libogg = callPackage ../all-pkgs/l/libogg { };
 
 libomxil-bellagio = callPackage ../all-pkgs/l/libomxil-bellagio { };
@@ -3904,8 +3906,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   kmod-debian-aliases = callPackage ../os-specific/linux/kmod-debian-aliases { };
 
   libcap = callPackage ../os-specific/linux/libcap { };
-#
-  libnotify = callPackage ../development/libraries/libnotify { };
 #
   aggregateModules = modules:
     callPackage ../all-pkgs/k/kmod/aggregator.nix {

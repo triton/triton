@@ -2,7 +2,7 @@
 , autoreconfHook
 , fetchurl
 
-, ladspaH
+, ladspa-sdk
 , openssl
 , raptor2
 }:
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    ladspaH
+    ladspa-sdk
     openssl
     raptor2
   ];

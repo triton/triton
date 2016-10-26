@@ -977,7 +977,7 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   #iblc = null;
   jni = null;
   kvazaar = null;
-  ladspaH = null;
+  ladspa-sdk = null;
   #libavc1394 = null;
   libbs2b = null;
   libcaca = null;
@@ -1706,8 +1706,6 @@ kyotocabinet = callPackage ../all-pkgs/k/kyotocabinet { };
 kytea = callPackage ../all-pkgs/k/kytea { };
 
 ladspa-sdk = callPackage ../all-pkgs/l/ladspa-sdk { };
-# Deprecated alias
-ladspaH = callPackageAlias "ladspa-sdk" { };
 
 lame = callPackage ../all-pkgs/l/lame {
   libsndfile = null;

@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , makeWrapper
 , python
 
@@ -17,7 +18,7 @@
 , gtk2
 , gtkmm_2
 , jack2_lib
-, ladspaH
+, ladspa-sdk
 , lrdf
 , librsvg
 , libsndfile
@@ -68,7 +69,7 @@ stdenv.mkDerivation rec {
     gtk2
     gtkmm_2
     jack2_lib
-    ladspaH
+    ladspa-sdk
     lrdf
     librsvg
     libsndfile
@@ -117,7 +118,7 @@ stdenv.mkDerivation rec {
       --prefix 'PATH' : "${qjackctl}/bin"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A virtual guitar amplifier";
     homepage = http://guitarix.sourceforge.net/;
     license = licenses.gpl3Plus;

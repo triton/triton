@@ -15,7 +15,7 @@
 , gst-plugins-base
 , gstreamer
 , gtk3
-, ladspaH
+, ladspa-sdk
 , libass
 , libbs2b
 , libmms
@@ -82,7 +82,7 @@ stdenv.mkDerivation rec {
     gst-plugins-base
     gstreamer
     gtk3
-    ladspaH
+    ladspa-sdk
     libass
     libbs2b
     libmms
@@ -257,7 +257,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (gsm != null)}-gsm"
     #"--${boolEn ( != null)}-fluidsynth"
     #"--${boolEn ( != null)}-kate"
-    "--${boolEn (ladspaH != null)}-ladspa"
+    "--${boolEn (ladspa-sdk != null)}-ladspa"
     #"--${boolEn ( != null)}-lv2"
     #"--${boolEn ( != null)}-libde265"
     "--${boolEn (libmms != null)}-libmms"

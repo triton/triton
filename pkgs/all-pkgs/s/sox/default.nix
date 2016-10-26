@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , alsa-lib
 , amrnb
@@ -69,7 +70,7 @@ stdenv.mkDerivation rec {
     "--with-distro=Triton"
     #"--with-magic"
     "--${boolWt (libpng != null)}-png"
-    "--${boolWt (ladspaH != null)}-ladspa"
+    "--${boolWt (ladspa-sdk != null)}-ladspa"
     #--with-ladspa-path
     "--${boolWt (libmad != null)}-mad"
     "--${boolWt (libid3tag != null)}-id3tag"
@@ -96,7 +97,7 @@ stdenv.mkDerivation rec {
     #--with-lpc10=dyn
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Audio sample rate converter";
     homepage = http://sox.sourceforge.net/;
     license =

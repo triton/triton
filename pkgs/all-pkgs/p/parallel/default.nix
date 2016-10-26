@@ -7,11 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "parallel-20160722";
+  name = "parallel-20161022";
 
   src = fetchurl {
     url = "mirror://gnu/parallel/${name}.tar.bz2";
-    sha256 = "e391ebd081e8ba13e870be68106d1beb5def2b001fa5881f46df0ab95304f521";
+    hashOutput = false;
+    sha256 = "5937b9d8e31af482b6eac174a981aa849fbcd4ef93b14c0c345be1522113e8d7";
   };
 
   nativeBuildInputs = [
@@ -25,6 +26,15 @@ stdenv.mkDerivation rec {
       --prefix PATH : ${procps}/bin \
       --prefix PATH : "${perl}/bin" \
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "CDA0 1A42 08C4 F745 0610  7E7B D1AB 4516 8888 8888";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Shell tool for executing jobs in parallel";

@@ -78,7 +78,7 @@
 #, flite
 , fontconfig
 , freetype
-, frei0r
+, frei0r-plugins
 , fribidi
 , game-music-emu
 , gmp
@@ -88,7 +88,7 @@
 , jni ? null
 , kvazaar ? null
 , jack2_lib
-, ladspaH
+, ladspa-sdk
 , lame
 , libass
 , libbluray
@@ -190,7 +190,7 @@ assert
   fdkaacExtlib
   #|| avid != null
   #|| cdio != null
-  || frei0r != null
+  || frei0r-plugins != null
   || opensslExtlib
   || rubberband != null
   || samba_client != null
@@ -342,14 +342,14 @@ stdenv.mkDerivation rec {
     #chromaprint
     fontconfig
     freetype
-    frei0r
+    frei0r-plugins
     fribidi
     game-music-emu
     gmp
     gsm
     gnutls
     jack2_lib
-    ladspaH
+    ladspa-sdk
     lame
     libass
     libbluray
@@ -505,14 +505,14 @@ stdenv.mkDerivation rec {
     /**/"--disable-crystalhd"
     # fontconfig -> libfontconfig since 3.1
     (deprfflag "--${boolEn (fontconfig != null)}-fontconfig" null "3.0")
-    "--${boolEn (frei0r != null)}-frei0r"
+    "--${boolEn (frei0r-plugins != null)}-frei0r"
     # Undocumented before 3.0
     (fflag "--${boolEn (libgcrypt != null)}-gcrypt" "3.0")
     (fflag "--${boolEn (gmp != null)}-gmp" "3.0")
     "--${boolEn (gnutls != null && !opensslExtlib)}-gnutls"
     "--${boolEn (stdenv.cc.libc != null)}-iconv"
     (fflag "--${boolEn (jni != null)}-jni" "3.1")
-    "--${boolEn (ladspaH != null)}-ladspa"
+    "--${boolEn (ladspa-sdk != null)}-ladspa"
     (deprfflag "--disable-libaacplus" null "2.8")
     "--${boolEn (libass != null)}-libass"
     "--${boolEn (libbluray != null)}-libbluray"

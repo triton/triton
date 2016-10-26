@@ -11,7 +11,7 @@ let
   inherit (stdenv.lib)
     makeSearchPath;
 
-  version = "23.0.0.162";
+  version = "23.0.0.205";
 in
 stdenv.mkDerivation rec {
   name = "flash-player-${version}";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     url = "https://fpdownload.adobe.com/pub/flashplayer/pdc/${version}/"
       + "flash_player_ppapi_linux.x86_64.tar.gz";
     name = "flash_player_ppapi_linux.${version}.x86_64.tar.gz";
-    sha256 = "7467e5401d6cc6bb6f3c9034841aa834ff357d7500fbf2e0adf22d4979668bec";
+    sha256 = "5d1fd6f9a598fe901890dd02f5230b705f1c992703a24f62c93c7725c335b90e";
   };
 
   flashPlayerLibs = makeSearchPath "lib" [

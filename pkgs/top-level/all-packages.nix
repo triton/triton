@@ -3790,11 +3790,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 
   kernelPatches = callPackage ../os-specific/linux/kernel/patches.nix { };
 
-  linux_4_7 = callPackage ../os-specific/linux/kernel {
-    channel = "4.7";
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
-  };
-
   linux_4_8 = callPackage ../os-specific/linux/kernel {
     channel = "4.8";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
@@ -3879,7 +3874,7 @@ libtiff = callPackage ../development/libraries/libtiff { };
   in kPkgs;
 #
 #  # The current default kernel / kernel modules.
-  linuxPackages = pkgs.linuxPackages_4_7;
+  linuxPackages = pkgs.linuxPackages_4_8;
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
@@ -3887,9 +3882,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
-  linuxPackages_4_7 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_4_7;
-  });
   linuxPackages_4_8 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4_8;
   });

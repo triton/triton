@@ -1,22 +1,21 @@
 { stdenv
 , autoreconfHook
-, fetchzip
+, fetchFromGitHub
 , perl
 , python2
 
 , xorg
 }:
 
-let
-  version = "0.1.1";
-in
 stdenv.mkDerivation rec {
-  name = "libglvnd-${version}";
+  name = "libglvnd-2016-10-27";
 
-  src = fetchzip {
+  src = fetchFromGitHub {
     version = 1;
-    url = "https://github.com/NVIDIA/libglvnd/archive/v${version}.tar.gz";
-    sha256 = "a303021878625568e09712245d3b121788fa4c3ce246b449058ffae55ad40135";
+    owner = "NVIDIA";
+    repo = "libglvnd";
+    rev = "470fc824a38521a52707c6c0f59d827aa5e0f45a";
+    sha256 = "28f713c7b075d3dc7bd6029afb171c5b416dab29aef7779d83b7620f4de8502f";
   };
 
   nativeBuildInputs = [

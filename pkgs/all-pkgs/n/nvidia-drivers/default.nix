@@ -520,6 +520,21 @@ stdenv.mkDerivation {
     kms = true;
     nvenc = true;
     uvm = true;
+
+    srcVerification = fetchurl {
+      urls = [
+        ("http://us.download.nvidia.com/XFree86/Linux-x86/${version}/"
+            + "NVIDIA-Linux-x86-${version}.run")
+        ("http://us.download.nvidia.com/XFree86/Linux-x86_64/${version}/"
+            + "NVIDIA-Linux-x86_64-${version}"
+            + "${if channel == "tesla" then "" else "-no-compat32"}.run")
+      ];
+      # Arbitrary hash to trigger fetchurl to return the correct hash since
+      # we cannot enable recursion to use src.sha256 in the nvidia-drivers
+      # build.
+      sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+      insecureHashOutput = true;
+    };
   };
 
   meta = with stdenv.lib; {

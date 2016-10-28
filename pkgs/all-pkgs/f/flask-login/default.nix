@@ -5,14 +5,16 @@
 , flask
 }:
 
+let
+  version = "0.4.0";
+in
 buildPythonPackage rec {
   name = "flask-login-${version}";
-  version = "0.3.2";
 
   src = fetchPyPi {
     package = "Flask-Login";
     inherit version;
-    sha256 = "e72eff5c35e5a31db1aeca1db5d2501be702674ea88e8f223b5d2b11644beee6";
+    sha256 = "d25e356b14a59f52da0ab30c31c2ad285fa23a840f0f6971df7ed247c77082a7";
   };
 
   buildInputs = [

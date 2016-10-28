@@ -431,7 +431,7 @@ stdenv.mkDerivation rec {
     "--${boolEn runtimeCpuDetectBuild}-runtime-cpudetect"
     "--${boolEn grayBuild}-gray"
     "--${boolEn swscaleAlphaBuild}-swscale-alpha"
-    "--disable-incompatible-libav-abi"
+    (deprfflag "--disable-incompatible-libav-abi" null "3.1")
     "--${boolEn hardcodedTablesBuild}-hardcoded-tables"
     "--${boolEn safeBitstreamReaderBuild}-safe-bitstream-reader"
     "--${boolEn memalignHackBuild}-memalign-hack"

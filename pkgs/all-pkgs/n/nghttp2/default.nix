@@ -21,14 +21,14 @@ in
 let
   isLib = prefix == "lib";
 
-  version = "1.15.0";
+  version = "1.16.0";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}nghttp2-${version}";
 
   src = fetchurl {
     url = "https://github.com/tatsuhiro-t/nghttp2/releases/download/v${version}/nghttp2-${version}.tar.xz";
-    sha256 = "317afbef79eec624577d006ea7111cf978d2c88e999a6f336c83b99f924b5e4a";
+    sha256 = "311d53e13d1aea8991d06f7963b75dc0a853eca961e53a38b6bd3d8b1d89019d";
   };
 
   buildInputs = optionals (!isLib) [

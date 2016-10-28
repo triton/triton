@@ -1022,11 +1022,11 @@ ffmpeg_2-8 = pkgs.ffmpeg_generic {
   SDL_2 = null;
 };
 ffmpeg_2 = callPackageAlias "ffmpeg_2-8" { };
-ffmpeg_3-1 = pkgs.ffmpeg_generic {
-  channel = "3.1";
+ffmpeg_3-2 = pkgs.ffmpeg_generic {
+  channel = "3.2";
   SDL_2 = null;
 };
-ffmpeg_3 = callPackageAlias "ffmpeg_3-1" { };
+ffmpeg_3 = callPackageAlias "ffmpeg_3-2" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
   channel = "9.9";
   # Use latest dependencies

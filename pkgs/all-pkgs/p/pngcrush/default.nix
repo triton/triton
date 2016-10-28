@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.8.7";
+  version = "1.8.9";
 in
 stdenv.mkDerivation rec {
   name = "pngcrush-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/pmt/pngcrush/${version}/${name}-nolib.tar.xz";
     hashOutput = false;
-    sha256 = "f0cfc0d6f4df67106a184600f891b164875b6be7173111c87bec48a509fac60b";
+    sha256 = "ad1586bb93d743efa26b2a87a81b9085fc387c035e2e32fa780e5a5a5d8ca1b9";
   };
 
   buildInputs = [

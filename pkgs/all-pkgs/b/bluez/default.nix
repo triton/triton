@@ -12,12 +12,12 @@ let
   baseUrl = "mirror://kernel/linux/bluetooth";
 in
 stdenv.mkDerivation rec {
-  name = "bluez-5.42";
+  name = "bluez-5.43";
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "4f166fed80fc017396d6f2b3cae5185520875ab456d1c74d6b4eaa4da0e16109";
+    sha256 = "16c9c05d2a1da644ce3570d975ada3643d2e60c007a955bac09c0a0efeb58d15";
   };
 
   buildInputs = [

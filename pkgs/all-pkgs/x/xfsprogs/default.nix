@@ -79,10 +79,11 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      failEarly = true;
       pgpsigUrl = "mirror://kernel/linux/utils/fs/xfs/xfsprogs/${name}.tar.sign";
       # Dave Chinner
       pgpKeyFingerprint = "9893 A827 C19F 7D96 164A  38FF ADE8 2947 F475 FA1D";
+      failEarly = true;
+      pgpDecompress = true;
     };
   };
 

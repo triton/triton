@@ -20,13 +20,13 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "harfbuzz-1.3.2";
+  name = "harfbuzz-1.3.3";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2";
-    multihash = "QmSUBwGSDyWgrD4aY2wdV7dV8FM48ACsRUsGc8RKKFSsH4";
+    multihash = "QmePJeKb55ffcvqgoHCiWn3PtE4wqfafYCjn2goZKpYj5z";
     hashOutput = false;
-    sha256 = "8543a6372f08c5987c632dfaa86210c7edb3f43fbacd96095c609bc3539ce027";
+    sha256 = "2620987115a4122b47321610dccbcc18f7f121115fd7b88dc8a695c8b66cb3c9";
   };
 
   nativeBuildInputs = optionals doCheck [

@@ -8,13 +8,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xfsprogs-4.7.0";
+  name = "xfsprogs-4.8.0";
 
   src = fetchurl {
-    urls = map (dir: "ftp://oss.sgi.com/projects/xfs/${dir}/${name}.tar.gz")
-      [ "cmd_tars" "previous" ];
-    multihash = "QmdtRkJHmtuLiSo4w4LdNk1V5X5mekdX4RyoVyRYwPnbab";
-    sha256 = "88580bb3e6847c3edef436703a4fae403fc19b20739db4c31166ee4b256178d7";
+    url = "mirror://kernel/linux/utils/fs/xfs/xfsprogs/${name}.tar.xz";
+    sha256 = "82ce9cb3a55f4e208e8fe3471ff0aff0602b8300f3e50bdf05cc7e11549686f9";
   };
 
   nativeBuildInputs = [
@@ -82,7 +80,8 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpsigUrl = "mirror://kernel/linux/utils/fs/xfs/xfsprogs/${name}.tar.sign";
+      # Dave Chinner
       pgpKeyFingerprint = "9893 A827 C19F 7D96 164A  38FF ADE8 2947 F475 FA1D";
     };
   };

@@ -1,7 +1,8 @@
 { stdenv
+, autoreconfHook
 , fetchpatch
 , fetchTritonPatch
-, fetchurl
+, fetchFromGitHub
 , lib
 
 , libjpeg
@@ -11,17 +12,25 @@
 let
   inherit (lib)
     boolEn;
+
+  version = "1.900.17";
 in
 stdenv.mkDerivation rec {
-  name = "jasper-1.900.5";
+  name = "jasper-${version}";
 
-  src = fetchurl {
-    url = "https://www.ece.uvic.ca/~frodo/jasper/software/${name}.tar.gz";
-    multihash = "QmafPg972wF8hhQ63q2F1j1RLjxXrr5pWGB48uX8FQtivp";
-    sha256 = "d5082e14a50a7e461863991a8e932fc06a1b2f2688108c4478c400c39e257ebb";
+  src = fetchFromGitHub {
+    version = 2;
+    owner = "mdadams";
+    repo = "jasper";
+    rev = "version-${version}";
+    sha256 = "ece87c51e2abf4d06374603596b395b5d51d56206df24d489db21f5f2367f35e";
   };
 
-  propagatedBuildInputs = [
+  nativeBuildInputs = [
+    autoreconfHook
+  ];
+
+  buildInputs = [
     libjpeg
     mesa
   ];

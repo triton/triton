@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "0.15.2";
+  version = "0.16.0";
 in
 buildPythonPackage {
   name = "future-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "future";
     inherit version;
-    sha256 = "3d3b193f20ca62ba7d8782589922878820d0a023b885882deec830adbf639b97";
+    sha256 = "e39ced1ab767b5936646cedba8bcce582398233d6a627067d4c6a454c90cfedb";
   };
 
   meta = with stdenv.lib; {

@@ -9,13 +9,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libpcap-1.7.4";
+  name = "libpcap-1.8.1";
 
   src = fetchurl {
     url = "http://www.tcpdump.org/release/${name}.tar.gz";
     hashOutput = false;
-    multihash = "QmNLp64sSvuvbrmFDPBhrsiKjr63q2qXPpCpYGcwRvn4uU";
-    sha256 = "7ad3112187e88328b85e46dce7a9b949632af18ee74d97ffc3f2b41fe7f448b0";
+    multihash = "QmU6LRsVjwXsj8UFCnaNRiBXpSvxCkGrjrmY9sjmsjQiUQ";
+    sha256 = "673dbc69fdc3f5a86fb5759ab19899039a8e5e6c631749e48dcd9c6f0c83541e";
   };
 
   nativeBuildInputs = [
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     libnl
     libusb
   ];
-  
+
   configureFlags = [
     "--with-pcap=linux"
     "--with-libnl"

@@ -23,6 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://commondatastorage.googleapis.com/chromium-browser-official/"
       + "chromium-${source.version}.tar.xz";
+    hashOutput = false;
     inherit (source) sha256;
   };
 

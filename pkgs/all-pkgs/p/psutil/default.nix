@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "4.4.0";
+  version = "4.4.2";
 in
 buildPythonPackage rec {
   name = "psutil-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "psutil";
     inherit version;
-    sha256 = "f4da111f473dbf7e813e6610aec1329000536aea5e7d7e73ed20bc42cfda7ecc";
+    sha256 = "1c37e6428f7fe3aeea607f9249986d9bb933bb98133c7919837fd9aac4996b07";
   };
 
   meta = with stdenv.lib; {

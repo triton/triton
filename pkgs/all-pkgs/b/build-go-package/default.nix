@@ -1,4 +1,4 @@
-{ go, govers, parallel, lib }:
+{ go, parallel, lib }:
 
 { name, buildInputs ? [], nativeBuildInputs ? [], passthru ? {}, preFixup ? ""
 
@@ -13,8 +13,6 @@
 
 # Extra sources to include in the gopath
 , extraSrcs ? [ ]
-
-, dontRenameImports ? false
 
 # Do not enable this without good reason
 # IE: programs coupled with the compiler
@@ -48,7 +46,7 @@ go.stdenv.mkDerivation (
 
   name = "go${go.meta.branch}-${name}";
   nativeBuildInputs = [ go parallel ]
-    ++ (lib.optional (!dontRenameImports) govers) ++ nativeBuildInputs;
+    ++ nativeBuildInputs;
   buildInputs = [ go ] ++ buildInputs;
 
   configurePhase = args.configurePhase or ''
@@ -137,10 +135,31 @@ go.stdenv.mkDerivation (
       inputsWithAliases = lib.filter (x: x ? goPackageAliases)
         (buildInputs ++ (args.propagatedBuildInputs or [ ]));
       rename = to: from: ''
-        while grep -q -r '"${from}[^"]*"' .; do
-          echo Renaming '${from}' to '${to}' >&2
-          govers -d -m '${from}' '${to}'
-        done
+        echo Renaming '${from}' to '${to}' >&2
+        find . -name \*.go -type f -print0 | xargs -0 -P "$NIX_BUILD_CORES" awk -i inplace '
+        {
+          if (/^import/) {
+            insideImport = 1;
+            temporary = !/\($/;
+          }
+          if (/^\)/) {
+            insideImport = 0;
+          }
+          if (insideImport) {
+            idx = index($0, "${from}");
+            if (idx != 0) {
+              print substr($0, 1, idx-1) "${to}" substr($0, idx + length("${from}"));
+            } else {
+              print $0;
+            }
+          } else {
+            print $0;
+          }
+          if (temporary) {
+            insideImport = 0;
+          }
+        }
+        '
       '';
       renames = p: lib.concatMapStringsSep "\n" (rename p.goPackagePath) p.goPackageAliases;
     in ''
@@ -247,8 +266,7 @@ go.stdenv.mkDerivation (
     done < <(find $bin/bin -type f 2>/dev/null)
   '';
 
-  disallowedReferences = lib.optional (!allowGoReference) go
-    ++ lib.optional (!dontRenameImports) govers;
+  disallowedReferences = lib.optional (!allowGoReference) go;
 
   passthru = passthru // lib.optionalAttrs (goPackageAliases != []) { inherit goPackageAliases; };
 

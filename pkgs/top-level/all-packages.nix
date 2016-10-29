@@ -1349,7 +1349,6 @@ go17Packages = callPackage ./go-packages.nix {
   go = callPackageAlias "go_1_7" { };
   buildGoPackage = callPackage ../all-pkgs/b/build-go-package {
     go = callPackageAlias "go_1_7" { };
-    govers = (callPackageAlias "go17Packages" { }).govers.bin;
   };
   overrides = (config.goPackageOverrides or (p: { })) pkgs;
 };

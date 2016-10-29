@@ -7,11 +7,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libwps-0.4.3";
+  name = "libwps-0.4.4";
 
   src = fetchurl {
-    url = "mirror://sourceforge/libwps/${name}.tar.gz";
-    sha256 = "1ynp7hvx717n2d9m2817g2p3gj8j10i3grp2lillbv93izdh9v1c";
+    url = "mirror://sourceforge/libwps/libwps/${name}/${name}.tar.gz";
+    sha256 = "c22fffd547a7be639839c28d74ed3d77a6f2b74b7639532d578ee062d4bc9011";
   };
 
   buildInputs = [

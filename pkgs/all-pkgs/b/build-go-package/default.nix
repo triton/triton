@@ -67,7 +67,7 @@ go.stdenv.mkDerivation (
       fi
 
       mv go/src/$goPackagePath/vendor/gx go/src
-      pushd go/src
+      pushd go/src >/dev/null
       find gx -name vendor | xargs rm -rf
       deps=($(find gx -name package.json -exec dirname {} \;))
       for dep in "''${deps[@]}"; do
@@ -79,16 +79,16 @@ go.stdenv.mkDerivation (
 
         # Patch go files for dependencies
         ln -sv "$(pwd)" "$dep/vendor"
-        pushd "$dep"
+        pushd "$dep" >/dev/null
         gx-go rewrite
-        popd
+        popd >/dev/null
         rm "$dep/vendor"
 
         # Patch go files for self
         find "$dep" -type f -name \*.go -print0 \
           | xargs -n 1 -0 -P $NIX_BUILD_CORES sed -i "s,\([^a-zA-Z/]\)$rdep\(\"\|/\),\1$dep\2,g"
       done
-      popd
+      popd >/dev/null
     fi
 
     find go/src/$goPackagePath -type d \( -name vendor -or -name Godeps \) -prune -exec rm -r {} \;
@@ -107,7 +107,7 @@ go.stdenv.mkDerivation (
     IFS=":"
     NEWPATH=$NIX_BUILD_TOP/go
     mkdir -p "$NIX_BUILD_TOP/unpack"
-    pushd "$NIX_BUILD_TOP/unpack"
+    pushd "$NIX_BUILD_TOP/unpack" >/dev/null
     args=()
     decompress() {
       echo "Decompressing $1" >&2
@@ -121,7 +121,7 @@ go.stdenv.mkDerivation (
         NEWPATH="$NEWPATH:$path"
       fi
     done | parallel -j "$NIX_BUILD_CORES" decompress
-    popd
+    popd >/dev/null
     IFS="$OLDIFS"
 
     while read dir; do
@@ -139,9 +139,9 @@ go.stdenv.mkDerivation (
       rename = to: from: "echo Renaming '${from}' to '${to}'; govers -d -m ${from} ${to}";
       renames = p: lib.concatMapStringsSep "\n" (rename p.goPackagePath) p.goPackageAliases;
     in ''
-      pushd "go/src/$goPackagePath"
+      pushd "go/src/$goPackagePath" >/dev/null
       ${lib.concatMapStringsSep "\n" renames inputsWithAliases}
-      popd
+      popd >/dev/null
     '');
 
   buildPhase = args.buildPhase or ''
@@ -201,7 +201,7 @@ go.stdenv.mkDerivation (
 
     mkdir -p $out
     mkdir "$NIX_BUILD_TOP/${name}"
-    pushd "$NIX_BUILD_TOP/go"
+    pushd "$NIX_BUILD_TOP/go" >/dev/null
     if [ -n "$subPackages" ]; then
       subPackageExpr='/\('
       for subPackage in $subPackages; do
@@ -217,15 +217,15 @@ go.stdenv.mkDerivation (
       mkdir -p "$(dirname "$NIX_BUILD_TOP/${name}/$f")"
       cp "$NIX_BUILD_TOP/go/$f" "$NIX_BUILD_TOP/${name}/$f"
     done < <(find . -type f)
-    popd
+    popd >/dev/null
 
-    pushd "$NIX_BUILD_TOP"
+    pushd "$NIX_BUILD_TOP" >/dev/null
     mkdir -p "$out/share/go"
     tar --sort=name --owner=0 --group=0 --numeric-owner \
       --mode=go=rX,u+rw,a-s \
       --mtime=@946713600 \
       -c "${name}" | brotli --quality 6 --output "$out/share/go/files.tar.br"
-    popd
+    popd >/dev/null
 
     mkdir -p $bin
     dir="$NIX_BUILD_TOP/go/bin"

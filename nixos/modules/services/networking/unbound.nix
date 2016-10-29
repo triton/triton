@@ -36,6 +36,10 @@ let
     trust-anchor-file: "${rootKeyFile}"
   '';
 
+  rootHints = optionalString cfg.enableRootHints ''
+    root-hints: ${pkgs.root-nameservers.file}
+  '';
+
   confFile' = pkgs.writeText "unbound.conf" ''
     include: ${stateDir}/unbound-*.conf
     server:
@@ -43,6 +47,7 @@ let
       username: unbound
       pidfile: "/run/unbound.pid"
       chroot: "${stateDir}"
+      ${rootHints}
       ${trustAnchor}
     ${cfg.extraConfig}
   '';
@@ -62,6 +67,12 @@ in
         default = false;
         type = types.bool;
         description = "Whether to enable the Unbound domain name server.";
+      };
+
+      enableRootHints = mkOption {
+        default = true;
+        type = types.bool;
+        description = "Use root hints in case forwarding fails";
       };
 
       enableRootTrustAnchor = mkOption {

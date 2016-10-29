@@ -281,10 +281,6 @@ tryDownload() {
     if [ "$executable" = "1" ]; then
       chmod +x $out
     fi
-    # Make sure DIRMNGR is dead so the build completes
-    if [ -n "$DIRMNGR_INFO" ]; then
-      kill -9 $(echo "$DIRMNGR_INFO" | awk -F: '{print $2}')
-    fi
     exit 0
   fi
 
@@ -382,6 +378,17 @@ HOME="$TMPDIR"  # GNUPG needs this
 if [ -n "$pgpKeyFile" ]; then
   gpg --import "$pgpKeyFile"
 fi
+
+cleanup() {
+  CODE="$?"
+  # Make sure DIRMNGR is dead so the build completes
+  if [ -n "$DIRMNGR_INFO" ]; then
+    kill -9 $(echo "$DIRMNGR_INFO" | awk -F: '{print $2}')
+  fi
+  trap - EXIT ERR INT QUIT PIPE TERM
+  exit "$CODE"
+}
+trap cleanup EXIT ERR INT QUIT PIPE TERM
 
 if [ "${#pgpKeyFingerprints[@]}" -gt "0" ]; then
   eval `dirmngr --daemon --homedir=$HOME --disable-http --disable-ldap`

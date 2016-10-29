@@ -123,6 +123,12 @@ in
     ];
   };
 
+  xkeyboardconfig = attrs: attrs // {
+    postInstall = ''
+      ln -sv share "$out/etc"
+    '';
+  };
+
   libXpm = attrs: attrs // {
     # Has some makefile dependency on gettext
     nativeBuildInputs = [

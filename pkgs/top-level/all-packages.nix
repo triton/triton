@@ -2750,6 +2750,8 @@ rfkill = callPackage ../all-pkgs/r/rfkill { };
 
 rocksdb = callPackage ../all-pkgs/r/rocksdb { };
 
+root-nameservers = callPackage ../all-pkgs/r/root-nameservers { };
+
 rpm = callPackage ../all-pkgs/r/rpm { };
 
 rtkit = callPackage ../all-pkgs/r/rtkit { };

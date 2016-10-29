@@ -1,8 +1,9 @@
 {stdenv
-, git
-, gnutar_1-29
 , brotli_0-4-0
 , brotli_0-5-2
+, git
+, gnutar_1-29
+, openssl
 }: let
   urlToName = url: rev: let
     base = baseNameOf (stdenv.lib.removeSuffix "/" url);
@@ -82,7 +83,7 @@ stdenv.mkDerivation {
     '';
     preferLocalBuild = true;
   };
-  buildInputs = [git];
+  nativeBuildInputs = [git openssl];
 
   outputHashAlgo = if sha256 == "" then "md5" else "sha256";
   outputHashMode = "flat";

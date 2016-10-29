@@ -31,13 +31,14 @@ let
   };
 
   rootKeyFile = "${stateDir}/root.key";
+  rootHintsFile = "${stateDir}/root.hints";
 
   trustAnchor = optionalString cfg.enableRootTrustAnchor ''
     trust-anchor-file: "${rootKeyFile}"
   '';
 
   rootHints = optionalString cfg.enableRootHints ''
-    root-hints: ${pkgs.root-nameservers.file}
+    root-hints: "${rootHintsFile}"
   '';
 
   confFile' = pkgs.writeText "unbound.conf" ''
@@ -113,9 +114,14 @@ in
       path = [ pkgs.util-linux_full ];
 
       preStart = ''
-        rm -f ${confFile} ${rootKeyFile}
-        cp ${confFile'} ${confFile}
-        cp ${rootKeyFile'} ${rootKeyFile}
+        mkdir -p "${stateDir}"
+        rm -f "${confFile}" "${rootKeyFile}" "${rootHintsFile}"
+        cp "${confFile'}" "${confFile}"
+      '' + optionalString cfg.enableRootTrustAnchor ''
+        cp "${rootKeyFile'}" "${rootKeyFile}"
+      '' + optionalString cfg.enableRootHints ''
+        cp "${pkgs.root-nameservers.file}" "${rootHintsFile}"
+      '' + ''
         touch ${stateDir}/unbound-resolvconf.conf
 
         mkdir -p ${stateDir}/dev

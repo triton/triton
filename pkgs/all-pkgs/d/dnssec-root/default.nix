@@ -131,9 +131,10 @@ let
           install -Dm644 iana-root.txt "$out"
           hash="$(openssl "$outputHashAlgo" -r -hex "$out" | head -n 1 | awk '{print $1}')"
           if [ "$hash" != "$outputHash" ]; then
-            echo "Got a bad hash:" >&2
-            echo "  File: $out" >&2
-            echo "  Hash: $hash" >&2
+            str="Got a bad hash:\n"
+            str+="  File: $out\n"
+            str+="  Hash: $hash\n"
+            echo -e -n "$str" >&2
             exit 1
           fi
         '';

@@ -8,12 +8,12 @@
 
 buildPythonPackage rec {
   name = "cherrypy-${version}";
-  version = "8.1.0";
+  version = "8.1.2";
 
   src = fetchPyPi {
     package = "CherryPy";
     inherit version;
-    sha256 = "b4fa89b76adcb909daded1f14a373413ad6c34bbb0f99e2c497c248e91dd616f";
+    sha256 = "45a92fdd18baa19d055e5f53bb3c4293821a30e83bf3c5244b867685397f5380";
   };
 
   propagatedBuildInputs = [

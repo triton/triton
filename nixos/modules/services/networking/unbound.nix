@@ -23,7 +23,7 @@ let
       END {
         print domain "   1000    IN DNSKEY  " flags " " protocol " " algorithm " " key;
       }
-      ' ${pkgs.dnssec-root}/share/dnssec/iana-root.txt > $out
+      ' ${pkgs.dnssec-root.file} > $out
     '';
 
     preferLocalBuild = true;

@@ -45,7 +45,7 @@ toAbsoluteDependencies() {
 addOutputPkgconfigPaths() {
   local output;
   for output in $outputs; do
-    export PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}${!output}/lib/pkgconfig"
+    export PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}${!output}/lib/pkgconfig:${!output}/share/pkgconfig"
   done
 }
 
@@ -74,7 +74,7 @@ fixPkgconfigNameBug() {
 }
 
 pkgconfigFiles() {
-  find "${prefix}/lib/pkgconfig" -name \*.pc 2>/dev/null || true
+  find "${prefix}"/{lib,share}/pkgconfig -name \*.pc 2>/dev/null || true
 }
 
 # Takes a pkg name and returns the path to the pkgconfig file

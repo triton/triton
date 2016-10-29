@@ -34,7 +34,7 @@ buildAbsoluteLdflags() {
 
     # Get the paths to ldflags in .pc files
     local PC_FILES
-    PC_FILES=$(find ${!output}/lib/pkgconfig -name \*.pc 2>/dev/null || true)
+    PC_FILES=$(find "${!output}"/{lib,share}/pkgconfig -name \*.pc 2>/dev/null || true)
     local FILE
     for FILE in $PC_FILES; do
       pkg-config --libs-only-L --static $FILE >> $TMPDIR/absolute-ldflags
@@ -104,7 +104,7 @@ patchLaFiles() {
 
 patchPcFiles() {
   local PC_FILES
-  PC_FILES=$(find ${!output}/lib/pkgconfig -name \*.pc 2>/dev/null || true)
+  PC_FILES=$(find ${!output}/{lib,share}/pkgconfig -name \*.pc 2>/dev/null || true)
   local FILE
   for FILE in $PC_FILES; do
     echo "Patching Library Paths: $FILE" >&2

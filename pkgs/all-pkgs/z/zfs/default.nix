@@ -135,9 +135,6 @@ stdenv.mkDerivation rec {
   postInstall = optionalString buildUser ''
     # Remove test code
     rm -r $out/share/zfs
-
-    # Fix pkgconfig.
-    ln -s ../share/pkgconfig $out/lib/pkgconfig
   '';
 
   # We don't want these compiler security features / optimizations

@@ -123,15 +123,6 @@ in
     ];
   };
 
-  xkeyboardconfig = attrs: attrs // {
-    # 1: compatibility for X11/xkb location
-    # 2: I think pkgconfig/ is supposed to be in /lib/
-    postInstall = ''
-      ln -s share "$out/etc"
-      mkdir -p "$out/lib" && ln -s ../share/pkgconfig "$out/lib/"
-    '';
-  };
-
   libXpm = attrs: attrs // {
     # Has some makefile dependency on gettext
     nativeBuildInputs = [

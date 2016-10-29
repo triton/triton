@@ -851,6 +851,8 @@ dnscrypt-wrapper = callPackage ../all-pkgs/d/dnscrypt-wrapper { };
 
 dnsmasq = callPackage ../all-pkgs/d/dnsmasq { };
 
+dnssec-root = callPackage ../all-pkgs/d/dnssec-root { };
+
 dnstop = callPackage ../all-pkgs/d/dnstop { };
 
 docbook-xsl = callPackage ../all-pkgs/d/docbook-xsl { };
@@ -3269,8 +3271,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 ################################################################################
 ################################################################################
 ################################################################################
-#
-  dnssec-root = callPackage ../data/misc/dnssec-root { };
 #
   diffoscope = callPackage ../tools/misc/diffoscope { };
 #

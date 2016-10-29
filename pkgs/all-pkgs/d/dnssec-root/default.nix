@@ -1,4 +1,7 @@
-{ fetchurl, ldns }:
+{ stdenv
+, fetchurl
+, ldns
+}:
 
 # This is purposely not versioned to force the user to keep it up to date
 fetchurl {
@@ -7,6 +10,7 @@ fetchurl {
   sha256 = "14mlj3pv1nw60nhs289inrm3lqxi780kf0x146h7id2xhin56k3r";
   downloadToTemp = true;
   recursiveHash = true;
+
   postFetch = ''
     echo ""
     echo -n "##########################"
@@ -95,4 +99,12 @@ fetchurl {
 
     install -Dm644 iana-root.txt "$out/share/dnssec/iana-root.txt"
   '';
+
+  meta = with stdenv.lib; {
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
+  };
 }

@@ -5,12 +5,17 @@
 , ncurses
 }:
 
+let
+  version = "2016-10-05";
+  rev = stdenv.lib.replaceStrings ["-"] [""] version;
+in
 stdenv.mkDerivation rec {
-  name = "mg-20160421";
+  name = "mg-${version}";
 
   src = fetchurl {
-    url = "http://homepage.boetes.org/software/mg/${name}.tar.gz";
-    sha256 = "16iswsirhdc8s9v7x1cpnazzryi55zr4ii484prz03warfz8zpdm";
+    url = "https://homepage.boetes.org/software/mg/mg-${rev}.tar.gz";
+    multihash = "QmZGHhLQyBojc3BifQRjtoJ4r8dMyCm6Wtv7Fr6Ny1YnZU";
+    sha256 = "b7fcb5136a6783ca24c8463ab0852fc1f26bdb2bb1c24759b2c51ccfc46c5e61";
   };
 
   buildInputs = [
@@ -27,9 +32,6 @@ stdenv.mkDerivation rec {
     '' + /* Remove hardcoded paths */ ''
       sed -i GNUmakefile \
         -e 's|/usr/bin/||'
-    '' + /* Use ncurses instead of curses */ ''
-      sed -i GNUmakefile \
-        -e 's/curses/ncurses/'
     '';
 
   makefile = "GNUmakefile";

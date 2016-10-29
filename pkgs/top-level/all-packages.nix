@@ -1033,6 +1033,7 @@ ffmpeg_head = pkgs.ffmpeg_generic {
   opus = pkgs.opus_head;
   libvpx = pkgs.libvpx_head;
   SDL = null;
+  x265 = pkgs.x265_head;
 };
 ffmpeg = callPackageAlias "ffmpeg_3" { };
 
@@ -3125,7 +3126,13 @@ wxGTK = callPackage ../all-pkgs/w/wxGTK { };
 
 x264 = callPackage ../all-pkgs/x/x264 { };
 
-x265 = callPackage ../all-pkgs/x/x265 { };
+x265_stable = callPackage ../all-pkgs/x/x265 {
+  channel = "stable";
+};
+x265_head = callPackage ../all-pkgs/x/x265 {
+  channel = "head";
+};
+x265 = callPackageAlias "x265_stable" { };
 
 xdg-user-dirs = callPackage ../all-pkgs/x/xdg-user-dirs { };
 

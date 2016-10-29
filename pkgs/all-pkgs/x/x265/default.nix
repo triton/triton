@@ -1,5 +1,6 @@
 { stdenv
 , cmake
+, fetchFromBitbucket
 , fetchurl
 , ninja
 , yasm
@@ -15,6 +16,8 @@
 , debugSupport ? false # Run-time sanity checks (debugging)
 , werrorSupport ? false # Warnings as errors
 , custatsSupport ? false # Internal profiling of encoder work
+
+, channel
 }:
 
 let
@@ -27,14 +30,22 @@ let
     optionals
     platforms;
 
-  version = "2.1";
+  source = (import ./sources.nix { })."${channel}";
 
-  src = fetchurl {
-    url = "https://bitbucket.org/multicoreware/x265/downloads/"
-      + "x265_${version}.tar.gz";
-    multihash = "QmW92vUhh1nXAkV5GkdB7aXYhVFi4P7NY4SUDP8NXeEZZT";
-    sha256 = "b3bc83754e91ed5655c8cba5a2ed48e6b9ab39699c9ed6554c670211d5870f9c";
-  };
+  src =
+    if channel == "head" then
+      fetchFromBitbucket {
+        version = source.fetchzipversion;
+        owner = "multicoreware";
+        repo = "x265";
+        inherit (source) rev sha256;
+      }
+    else
+      fetchurl {
+        url = "https://bitbucket.org/multicoreware/x265/downloads/"
+          + "x265_${source.version}.tar.gz";
+        inherit (source) multihash sha256;
+      };
 
   cmakeFlagsAll = [
     "-DCHECKED_BUILD=${boolOn debugSupport}"
@@ -68,7 +79,7 @@ assert (elem targetSystem platforms.linux) -> numactl != null;
  */
 let
   libx265-10 = stdenv.mkDerivation {
-    name = "libx265-10-${version}";
+    name = "libx265-10-${source.version}";
 
     inherit src;
 
@@ -83,8 +94,13 @@ let
       "-DMAIN12=OFF"
     ] ++ cmakeFlagsAll;
 
-    preConfigure = /* x265 source directory is `source`, not `src` */ ''
-      cd source
+    postUnpack = ''
+      sourceRoot="$sourceRoot/source"
+    '';
+
+    postPatch = /* Work around to set version in the compiled binary */ ''
+      sed -i cmake/version.cmake \
+        -e '/X265_LATEST_TAG/s/0.0/${source.version}/g'
     '';
 
     nativeBuildInputs = [
@@ -107,7 +123,7 @@ let
       '';
   };
   libx265-12 = stdenv.mkDerivation {
-    name = "libx265-12-${version}";
+    name = "libx265-12-${source.version}";
 
     inherit src;
 
@@ -122,8 +138,13 @@ let
       "-DMAIN12=ON"
     ] ++ cmakeFlagsAll;
 
-    preConfigure = /* x265 source directory is `source`, not `src` */ ''
-      cd source
+    postUnpack = ''
+      sourceRoot="$sourceRoot/source"
+    '';
+
+    postPatch = /* Work around to set version in the compiled binary */ ''
+      sed -i cmake/version.cmake \
+        -e '/X265_LATEST_TAG/s/0.0/${source.version}/g'
     '';
 
     nativeBuildInputs = [
@@ -146,9 +167,8 @@ let
       '';
   };
 in
-
 stdenv.mkDerivation rec {
-  name = "x265-${version}";
+  name = "x265-${source.version}";
 
   inherit src;
 
@@ -165,13 +185,13 @@ stdenv.mkDerivation rec {
     numactl
   ];
 
-  postUnpack = /* x265 source directory is `source`, not `src` */ ''
+  postUnpack = ''
     sourceRoot="$sourceRoot/source"
   '';
 
   postPatch = /* Work around to set version in the compiled binary */ ''
     sed -i cmake/version.cmake \
-      -e 's/0.0/${version}/g'
+      -e '/X265_LATEST_TAG/s/0.0/${source.version}/g'
   '';
 
   x265AdditionalLibs = [

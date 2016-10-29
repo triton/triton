@@ -135,6 +135,9 @@ in
   # URLs (resulting from resolving mirror:// URLs) to $out.
   showURLs ? false
 
+, # Passthru data
+  passthru ? {}
+
 , # Meta information, if any.
   meta ? {}
 }:
@@ -243,5 +246,5 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${s
   # traffic, so don't do that.
   preferLocalBuild = true;
 
-  inherit meta;
+  inherit passthru meta;
 }

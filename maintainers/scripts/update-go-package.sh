@@ -20,7 +20,7 @@ cleanup() {
     rm -rf "$TMPDIR"
   fi
   trap - EXIT ERR INT QUIT PIPE TERM
-  exit "$?"
+  exit "$CODE"
 }
 trap cleanup EXIT ERR INT QUIT PIPE TERM
 TMPDIR="$(mktemp -d /tmp/update-go-package.XXXXXXXXXX)"

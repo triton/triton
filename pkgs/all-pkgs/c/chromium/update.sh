@@ -14,7 +14,7 @@ cleanup() {
     rm -rf "$TMPDIR"
   fi
   trap - EXIT ERR INT QUIT PIPE TERM
-  exit "$?"
+  exit "$CODE"
 }
 trap cleanup EXIT ERR INT QUIT PIPE TERM
 export TMPDIR="$(mktemp -d /tmp/chromium-updater.XXXXXXXXXX)"

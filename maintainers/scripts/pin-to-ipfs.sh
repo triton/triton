@@ -5,10 +5,10 @@ set -o pipefail
 cd "$(dirname "$(readlink -f "$0")")"
 
 cleanup() {
-  excode=$?
+  CODE=$?
   rm -rf "$TMPDIR"
-  trap - EXIT
-  exit $excode
+  trap - EXIT HUP INT QUIT PIPE TERM
+  exit $CODE
 }
 TMPDIR="$(mktemp -d)"
 trap cleanup EXIT HUP INT QUIT PIPE TERM

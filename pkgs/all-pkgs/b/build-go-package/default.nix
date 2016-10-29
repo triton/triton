@@ -146,9 +146,9 @@ go.stdenv.mkDerivation (
             insideImport = 0;
           }
           if (insideImport) {
-            idx = index($0, "${from}");
+            idx = index($0, "\"${from}");
             if (idx != 0) {
-              print substr($0, 1, idx-1) "${to}" substr($0, idx + length("${from}"));
+              print substr($0, 1, idx) "${to}" substr($0, idx + 1 + length("${from}"));
             } else {
               print $0;
             }

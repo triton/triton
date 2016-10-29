@@ -137,7 +137,7 @@ go.stdenv.mkDerivation (
       inputsWithAliases = lib.filter (x: x ? goPackageAliases)
         (buildInputs ++ (args.propagatedBuildInputs or [ ]));
       rename = to: from: ''
-        while grep -q -r '${from}' .; do
+        while grep -q -r '"${from}"' .; do
           echo Renaming '${from}' to '${to}' >&2
           govers -d -m '${from}' '${to}'
         done

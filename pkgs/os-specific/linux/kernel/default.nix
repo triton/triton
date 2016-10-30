@@ -28,9 +28,9 @@ let
       patchSha256 = "99f5e8f3836580440f12de9c00c9faab10f09529e2734fab584ef4baa84fd7ca";
     };
     "testing" = {
-      version = "4.9-rc2";
+      version = "4.9-rc3";
       # We aren't using a patchset because 4.9-rc{x} apply's are currently broken
-      sha256 = "24cd6bd2d2bdd5cece97b9e95b0cde2d63e8912ea0b070928fb67cffea08c9c1";
+      sha256 = "123a57d8dffe96786c38fec9345a14f6ecdcc20e922d517f454183186097bb99";
     };
     "bcache" =
       let

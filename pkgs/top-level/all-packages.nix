@@ -762,6 +762,8 @@ coreutils = callPackage ../all-pkgs/c/coreutils { };
 
 cpio = callPackage ../all-pkgs/c/cpio { };
 
+cpp-netlib = callPackage ../all-pkgs/c/cpp-netlib { };
+
 cracklib = callPackage ../all-pkgs/c/cracklib { };
 
 cryptodevHeaders = callPackage ../all-pkgs/c/cryptodev {

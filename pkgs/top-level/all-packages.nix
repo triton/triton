@@ -604,6 +604,8 @@ automake = callPackage ../all-pkgs/a/automake { };
 
 avahi = callPackage ../all-pkgs/a/avahi { };
 
+aws-sdk-cpp = callPackage ../all-pkgs/a/aws-sdk-cpp { };
+
 babl = callPackage ../all-pkgs/b/babl { };
 
 bash = callPackage ../all-pkgs/b/bash { };

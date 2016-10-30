@@ -2971,6 +2971,8 @@ thermal_daemon = callPackage ../all-pkgs/t/thermal_daemon { };
 
 thin-provisioning-tools = callPackage ../all-pkgs/t/thin-provisioning-tools { };
 
+thrift = callPackage ../all-pkgs/t/thrift { };
+
 tinc_1_0 = callPackage ../all-pkgs/t/tinc { channel = "1.0"; };
 tinc_1_1 = callPackage ../all-pkgs/t/tinc { channel = "1.1"; };
 

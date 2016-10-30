@@ -7264,10 +7264,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   ModuleBuild = buildPerlPackage rec {
-    name = "Module-Build-0.4214";
+    name = "Module-Build-0.4220";
     src = fetchurl {
       url = "mirror://cpan/authors/id/L/LE/LEONT/${name}.tar.gz";
-      sha256 = "0gywap0dfr8sx4wr6wqc23sjag1b4xsw8l55ai4vhkfg324lhyf5";
+      sha256 = "fb1207c7e799366f7a8adda3f135bf8141c4d6068505650d4db2b2d3ce34b5a2";
     };
     buildInputs = [ CPANMeta ExtUtilsCBuilder ];
     meta = {
@@ -11097,10 +11097,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   TermReadKey = buildPerlPackage {
-    name = "TermReadKey-2.31";
+    name = "TermReadKey-2.37";
     src = fetchurl {
-      url = mirror://cpan/authors/id/J/JS/JSTOWE/TermReadKey-2.31.tar.gz;
-      sha256 = "1czarrdxgnxmmbaasjnq3sj14nf1cvzhm37padq6xvl7h7r2acb2";
+      url = mirror://cpan/authors/id/J/JS/JSTOWE/TermReadKey-2.37.tar.gz;
+      sha256 = "4a9383cf2e0e0194668fe2bd546e894ffad41d556b41d2f2f577c8db682db241";
     };
   };
 
@@ -12487,6 +12487,14 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
+  TextWrapI18N = buildPerlPackage {
+    name = "Text-WrapI18N-0.06";
+    src = fetchurl {
+      url = mirror://cpan/authors/id/K/KU/KUBOTA/Text-WrapI18N-0.06.tar.gz;
+      sha256 = "4bd29a17f0c2c792d12c1005b3c276f2ab0fae39c00859ae1741d7941846a488";
+    };
+  };
+
   TextWrapper = buildPerlPackage {
     name = "Text-Wrapper-1.05";
     src = fetchurl {
@@ -12868,10 +12876,10 @@ let self = _self // overrides; _self = with self; {
   # };
 
   UnicodeLineBreak = buildPerlPackage rec {
-    name = "Unicode-LineBreak-2015.07.16";
+    name = "Unicode-LineBreak-2015.12";
     src = fetchurl {
       url = "mirror://cpan/authors/id/N/NE/NEZUMI/${name}.tar.gz";
-      sha256 = "0fycsfc3jhnalad7zvx47f13dpxihdh9c8fy8w7psjlyd5svs6sb";
+      sha256 = "9509114ee76ecd6e2990d9ad7f260a81292804de54acd1c852d7e57812b316b4";
     };
     propagatedBuildInputs = [ MIMECharset ];
     meta = {

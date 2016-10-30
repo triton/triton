@@ -5,8 +5,8 @@
 , cpio
 , db
 , file
-, elfutils
 , libarchive
+, libelf
 , nspr
 , nss
 , popt
@@ -20,6 +20,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://rpm.org/releases/rpm-4.12.x/${name}.tar.bz2";
+    multihash = "QmS8AfYHhwohJLHmisHPa1obUgKQKCduzvQtUEx9WbJkcf";
     sha256 = "77ddd228fc332193c874aa0b424f41db1ff8b7edbb6a338703ef747851f50229";
   };
 
@@ -27,9 +28,9 @@ stdenv.mkDerivation rec {
     bzip2
     cpio
     db
-    elfutils
     file
     libarchive
+    libelf
     nspr
     nss
     popt
@@ -46,20 +47,17 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
     "--with-external-db"
     "--without-lua"
     "--enable-python"
   ];
 
-  # Note: we don't add elfutils to buildInputs, since it provides a
-  # bad `ld' and other stuff.
   NIX_CFLAGS_COMPILE = [
     "-I${nspr}/include/nspr"
     "-I${nss}/include/nss"
-    "-I${elfutils}/include"
   ];
-
-  NIX_CFLAGS_LINK = "-L${elfutils}/lib";
 
   preFixup = /* Configure does not remove unused variables */ ''
     sed -i $out/lib/pkgconfig/rpm.pc \
@@ -70,7 +68,9 @@ stdenv.mkDerivation rec {
     description = "The RPM Package Manager";
     homepage = http://www.rpm.org/;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

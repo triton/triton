@@ -2535,6 +2535,8 @@ orbit2 = callPackage ../all-pkgs/o/orbit2 { };
 
 orc = callPackage ../all-pkgs/o/orc { };
 
+osquery = callPackage ../all-pkgs/o/osquery { };
+
 p7zip = callPackage ../all-pkgs/p/p7zip { };
 
 pam = callPackage ../all-pkgs/p/pam { };

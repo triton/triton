@@ -622,6 +622,8 @@ bcache-tools_dev = callPackageAlias "bcache-tools" {
   channel = "dev";
 };
 
+beecrypt = callPackage ../all-pkgs/b/beecrypt { };
+
 bind = callPackage ../all-pkgs/b/bind { };
 
 bind_tools = callPackageAlias "bind" {

@@ -2834,6 +2834,8 @@ signify = callPackage ../all-pkgs/s/signify { };
 
 sl = callPackage ../all-pkgs/s/sl { };
 
+sleuthkit = callPackage ../all-pkgs/s/sleuthkit { };
+
 slock = callPackage ../all-pkgs/s/slock { };
 
 smartmontools = callPackage ../all-pkgs/s/smartmontools { };

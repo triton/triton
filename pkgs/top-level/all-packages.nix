@@ -1372,6 +1372,8 @@ google-chrome = callPackageAlias "google-chrome_stable" { };
 
 gflags = callPackage ../all-pkgs/g/gflags { };
 
+glog = callPackage ../all-pkgs/g/glog { };
+
 gperf = callPackage ../all-pkgs/g/gperf { };
 
 gperftools = callPackage ../all-pkgs/g/gperftools { };

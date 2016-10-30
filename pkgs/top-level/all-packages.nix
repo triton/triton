@@ -2584,6 +2584,8 @@ plymouth = callPackage ../all-pkgs/p/plymouth { };
 
 pngcrush = callPackage ../all-pkgs/p/pngcrush { };
 
+po4a = callPackage ../all-pkgs/p/po4a { };
+
 polkit = callPackage ../all-pkgs/p/polkit { };
 
 poppler_qt = callPackageAlias "poppler" {

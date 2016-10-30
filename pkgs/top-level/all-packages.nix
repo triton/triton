@@ -879,6 +879,8 @@ double-conversion = callPackage ../all-pkgs/d/double-conversion { };
 
 dpdk = callPackage ../all-pkgs/d/dpdk { };
 
+dpkg = callPackage ../all-pkgs/d/dpkg { };
+
 #dropbox = callPackage ../all-pkgs/d/dropbox { };
 
 dtc = callPackage ../all-pkgs/d/dtc { };

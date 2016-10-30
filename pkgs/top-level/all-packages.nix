@@ -1370,7 +1370,7 @@ google-chrome_unstable = callPackage ../all-pkgs/g/google-chrome {
 };
 google-chrome = callPackageAlias "google-chrome_stable" { };
 
-google-gflags = callPackage ../all-pkgs/g/google-gflags { };
+gflags = callPackage ../all-pkgs/g/gflags { };
 
 gperf = callPackage ../all-pkgs/g/gperf { };
 

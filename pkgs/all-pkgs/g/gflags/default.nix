@@ -4,16 +4,18 @@
 , ninja
 }:
 
-stdenv.mkDerivation rec {
-  name = "google-gflags-${version}";
+let
   version = "2.1.2";
+in
+stdenv.mkDerivation rec {
+  name = "gflags-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "gflags";
     repo = "gflags";
     rev = "v${version}";
-    sha256 = "fea4902c36a582a0559f1ce10bc7a431a76e0ea46453d17bf6f1e2ea3d9fd99e";
+    sha256 = "7564048256b5149b9591b37d3e63cfc675f0050dfc4ec661030a8edc493d68c5";
   };
 
   nativeBuildInputs = [

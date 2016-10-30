@@ -3,7 +3,7 @@
 , perl
 
 , bzip2
-, google-gflags
+, gflags
 , jemalloc
 , lz4
 , numactl
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bzip2
-    google-gflags
+    gflags
     jemalloc
     lz4
     numactl

@@ -109,7 +109,6 @@ with stdenv.lib;
   ''}
   ${optionalString (versionAtLeast version "4.9") ''
     PCIE_PTM y
-    QCOM_EBI2 y
   ''}
 
   # Support drivers that need external firmware.
@@ -439,7 +438,6 @@ with stdenv.lib;
   STRIP_ASM_SYMS y
   UNUSED_SYMBOLS y
   PERSISTENT_KEYRINGS y
-  BIG_KEYS y
   SECURITY_NETWORK_XFRM y
   DDR y
   FONTS y

@@ -531,6 +531,8 @@ apr = callPackage ../all-pkgs/a/apr { };
 
 apr-util = callPackage ../all-pkgs/a/apr-util { };
 
+apt = callPackage ../all-pkgs/a/apt { };
+
 #ardour =  callPackage ../all-pkgs/a/ardour { };
 
 argyllcms = callPackage ../all-pkgs/a/argyllcms { };

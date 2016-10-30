@@ -3220,6 +3220,8 @@ xz = callPackage ../all-pkgs/x/xz { };
 
 yaml-cpp = callPackage ../all-pkgs/y/yaml-cpp { };
 
+yara = callPackage ../all-pkgs/y/yara { };
+
 yasm = callPackage ../all-pkgs/y/yasm { };
 
 yelp-tools = callPackage ../all-pkgs/y/yelp-tools { };

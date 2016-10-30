@@ -35,6 +35,12 @@ stdenv.mkDerivation rec {
     "-DCPP-NETLIB_BUILD_EXAMPLES=OFF"
   ];
 
+  # Cleanup some import paths that are broken
+  preFixup = ''
+    grep -r '<asio/[^>]*>' "$out/include" | awk -F: '{print $1}' | sort | uniq \
+      | xargs -n 1 -P $NIX_BUILD_CORES sed -i 's,<asio/\([^>]*\)>,<boost/asio/\1>,g'
+  '';
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

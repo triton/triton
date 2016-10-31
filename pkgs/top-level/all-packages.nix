@@ -1160,6 +1160,8 @@ gexiv2_0-10 = callPackage ../all-pkgs/g/gexiv2 {
 };
 gexiv2 = callPackageAlias "gexiv2_0-10" { };
 
+gflags = callPackage ../all-pkgs/g/gflags { };
+
 giflib = callPackage ../all-pkgs/g/giflib { };
 
 gimp = callPackage ../all-pkgs/g/gimp { };
@@ -1191,6 +1193,8 @@ glibmm_2-50 = callPackage ../all-pkgs/g/glibmm {
   libsigcxx = pkgs.libsigcxx_2-10;
 };
 glibmm = callPackageAlias "glibmm_2-50" { };
+
+glog = callPackage ../all-pkgs/g/glog { };
 
 glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 
@@ -1381,10 +1385,6 @@ google-chrome_unstable = callPackage ../all-pkgs/g/google-chrome {
   channel = "unstable";
 };
 google-chrome = callPackageAlias "google-chrome_stable" { };
-
-gflags = callPackage ../all-pkgs/g/gflags { };
-
-glog = callPackage ../all-pkgs/g/glog { };
 
 gperf = callPackage ../all-pkgs/g/gperf { };
 

@@ -114,8 +114,8 @@
 , mfx-dispatcher
 , mmal ? null
 , netcdf ? null
+, nvenc
 , nvidia-cuda-toolkit
-, nvidia-video-codec-sdk
 , openal
 #, opencl
 #, opencore-amr
@@ -213,7 +213,6 @@ assert
   fdk_aac != null
   #|| libnpp != null
   || nvidia-cuda-toolkit != null
-  || nvidia-video-codec-sdk != null
   || openssl != null
   -> nonfreeLicensing && gplLicensing && version3Licensing;
 /*
@@ -385,7 +384,6 @@ stdenv.mkDerivation rec {
     nvidia-cuda-toolkit
     fdk_aac
     openssl
-    nvidia-video-codec-sdk
   ];
 
   postPatch = ''
@@ -464,7 +462,7 @@ stdenv.mkDerivation rec {
     /**/(fflag "--disable-libnpp" "3.1")
     #"--${boolEn (mmal != null)}-mmal"
     /**/"--disable-mmal"
-    "--${boolEn (nvidia-video-codec-sdk != null)}-nvenc"
+    "--${boolEn nvenc}-nvenc"
     "--${boolEn (libva != null)}-vaapi"
     "--disable-vda" # darwin
     "--${boolEn (libvdpau != null)}-vdpau"

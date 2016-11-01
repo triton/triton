@@ -351,7 +351,7 @@ stdenv.mkDerivation {
     '' + /* Framebuffer capture library */ ''
       nvidia_lib_install 0 0 'libnvidia-fbc'
     '' + /* NVENC video encoding library */ ''
-      nvidia_lib_install 0 0 'libnvidia-encode'
+      nvidia_lib_install 0 0 'libnvidia-encode' '1'
     '' + /* NVIDIA Settings GTK+ 2/3 libraries */ ''
       ###nvidia_lib_install 0 0 'libnvidia-gtk2'
       ###nvidia_lib_install 0 0 'libnvidia-gtk3'

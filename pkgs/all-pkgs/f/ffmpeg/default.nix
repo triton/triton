@@ -66,15 +66,10 @@
 , celt
 #, chromaprint
 #, crystalhd
-, cudaExtLib ? false
-  , nvidia-cuda-toolkit
 , dcadec ? null
 #, decklinkExtlib ? false
 #  , blackmagic-design-desktop-video
-, faacExtlib ? false
-  , faac
-, fdkaacExtlib ? false
-  , fdk_aac ? null
+, fdk_aac
 #, flite
 , fontconfig
 , freetype
@@ -95,14 +90,14 @@
 , libbs2b
 , libcaca
 #, libcdio-paranoia
-, libdc1394, libraw1394
+, libdc1394
 , libebur128
 #, libiec61883, libavc1394
 , libgcrypt
 , libmodplug
 #, libnut
 , libogg
-, opus
+, libraw1394
 , libsndio ? null
 , libssh
 , libtheora
@@ -111,24 +106,24 @@
 , libvorbis
 , libvpx
 , libwebp
-, xorg
 , libxcbshmExtlib ? true
 , libxcbxfixesExtlib ? true
 , libxcbshapeExtlib ? true
 , libzimg ? null
+, mesa_noglu
 , mfx-dispatcher
 , mmal ? null
 , netcdf ? null
-, nvencExtLib ? false
-  , nvidia-video-codec-sdk
+, nvidia-cuda-toolkit
+, nvidia-video-codec-sdk
 , openal
 #, opencl
 #, opencore-amr
 , opencv
-, mesa_noglu
 #, openh264
 , openjpeg
-, opensslExtlib ? false, openssl
+, openssl
+, opus
 , pulseaudio_lib
 , rtmpdump
 , rubberband
@@ -153,6 +148,7 @@
 , x264
 , x265
 , xavs
+, xorg
 , xvidcore
 , xz
 , zeromq4
@@ -187,11 +183,11 @@ in
  */
 # GPL
 assert
-  fdkaacExtlib
+  fdk_aac != null
   #|| avid != null
   #|| cdio != null
   || frei0r-plugins != null
-  || opensslExtlib
+  || openssl != null
   || rubberband != null
   || samba_client != null
   #|| utvideo != null
@@ -204,7 +200,6 @@ assert
   #|| zvbi != null
   -> gplLicensing;
 # GPL3
-assert version3Licensing -> gplLicensing;
 assert
   #opencore-amrnb != null
   #|| opencore-amrwb != null
@@ -212,25 +207,19 @@ assert
   samba_client != null
   #|| vo-aacenc != null
   #|| vo-amrwbenc != null
-  -> version3Licensing;
+  -> version3Licensing && gplLicensing;
 # Non-free
-assert nonfreeLicensing ->
-  gplLicensing
-  && version3Licensing;
 assert
-  opensslExtlib
-  || fdkaacExtlib
-  || faacExtlib
-  #|| aacplusExtlib
-  || nvencExtLib
-  #|| blackmagic
-  -> nonfreeLicensing;
+  fdk_aac != null
+  #|| libnpp != null
+  || nvidia-cuda-toolkit != null
+  || nvidia-video-codec-sdk != null
+  || openssl != null
+  -> nonfreeLicensing && gplLicensing && version3Licensing;
 /*
  *  Build dependencies
  */
-assert networkBuild ->
-  gnutls != null
-  || opensslExtlib;
+assert networkBuild -> gnutls != null || openssl != null;
 assert pixelutilsBuild -> avutilLibrary;
 /*
  *  Program dependencies
@@ -268,19 +257,11 @@ assert swscaleLibrary -> avutilLibrary;
 /*
  *  External libraries
  */
-#assert decklinkExtlib ->
-#  blackmagic-design-desktop-video != null
-#  && multithreadBuild;
-assert faacExtlib -> faac != null;
-assert fdkaacExtlib -> fdk_aac != null;
-assert gnutls != null -> !opensslExtlib;
 assert libxcbshmExtlib -> xorg.libxcb != null;
 assert libxcbxfixesExtlib -> xorg.libxcb != null;
 assert libxcbshapeExtlib -> xorg.libxcb != null;
-assert nvencExtLib -> nvidia-video-codec-sdk != null;
-assert opensslExtlib ->
-  gnutls == null
-  && openssl != null;
+assert gnutls != null -> openssl == null;
+assert openssl != null -> gnutls == null;
 assert x11grabExtlib ->
   xorg.libX11 != null
   && xorg.libXv != null;
@@ -402,7 +383,6 @@ stdenv.mkDerivation rec {
     zlib
   ] ++ optionals nonfreeLicensing [
     nvidia-cuda-toolkit
-    faac
     fdk_aac
     openssl
     nvidia-video-codec-sdk
@@ -475,7 +455,7 @@ stdenv.mkDerivation rec {
      *  Hardware accelerators
      */
     (fflag "--disable-audiotoolbox" "3.1") # darwin
-    (fflag "--${boolEn cudaExtLib}-cuda" "3.1")
+    (fflag "--${boolEn (nvidia-cuda-toolkit != null)}-cuda" "3.1")
     /**/(fflag "--disable-cuvid" "3.1")
     "--disable-d3d11va" # windows
     "--disable-dxva2" # windows
@@ -484,7 +464,7 @@ stdenv.mkDerivation rec {
     /**/(fflag "--disable-libnpp" "3.1")
     #"--${boolEn (mmal != null)}-mmal"
     /**/"--disable-mmal"
-    "--${boolEn nvencExtLib}-nvenc"
+    "--${boolEn (nvidia-video-codec-sdk != null)}-nvenc"
     "--${boolEn (libva != null)}-vaapi"
     "--disable-vda" # darwin
     "--${boolEn (libvdpau != null)}-vdpau"
@@ -509,7 +489,7 @@ stdenv.mkDerivation rec {
     # Undocumented before 3.0
     (fflag "--${boolEn (libgcrypt != null)}-gcrypt" "3.0")
     (fflag "--${boolEn (gmp != null)}-gmp" "3.0")
-    "--${boolEn (gnutls != null && !opensslExtlib)}-gnutls"
+    "--${boolEn (gnutls != null)}-gnutls"
     "--${boolEn (stdenv.cc.libc != null)}-iconv"
     (fflag "--${boolEn (jni != null)}-jni" "3.1")
     "--${boolEn (ladspa-sdk != null)}-ladspa"
@@ -527,8 +507,8 @@ stdenv.mkDerivation rec {
     # Undocumented
     (deprfflag "--${boolEn (dcadec != null)}-libdcadec" null "3.0")
     (fflag "--${boolEn (libebur128 != null)}-libebur128" "3.1")
-    (deprfflag "--${boolEn faacExtlib}-libfaac" null "3.1")
-    (fflag "--${boolEn fdkaacExtlib}-libfdk-aac" null)
+    (deprfflag "--disable-libfaac" null "3.1")
+    (fflag "--${boolEn (fdk_aac != null)}-libfdk-aac" null)
     (fflag "--${boolEn (fontconfig != null)}-libfontconfig" "3.1")
     #"--${boolEn (flite != null)}-libflite"
     /**/"--disable-libflite"
@@ -609,7 +589,7 @@ stdenv.mkDerivation rec {
     /**/"--disable-opencl"
     # OpenGL requires libX11 for GLX
     "--${boolEn (mesa_noglu != null && xorg.libX11 != null)}-opengl"
-    "--${boolEn opensslExtlib}-openssl"
+    "--${boolEn (openssl != null)}-openssl"
     #(fflag "--${boolEn (schannel != null)}-schannel" "3.0")
     /**/(fflag "--disable-schannel" "3.0")
     (deprfflag "--${boolEn (SDL != null)}-sdl" null "3.1")

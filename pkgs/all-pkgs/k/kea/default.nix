@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   version = "1.0.0";
 
   src = fetchurl {
-    url = "http://ftp.isc.org/isc/kea/${version}/${name}.tar.gz";
+    url = "https://ftp.isc.org/isc/kea/${version}/${name}.tar.gz";
     sha256 = "1zjs2dbdwa7hk6a2h9dgry64v0985l0sqphisc43s4zr33llz64n";
   };
 

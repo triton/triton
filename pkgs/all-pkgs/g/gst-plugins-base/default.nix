@@ -14,6 +14,7 @@
 , libtheora
 , libvisual
 , libvorbis
+, opus
 , orc
 , pango
 , xorg
@@ -56,6 +57,7 @@ stdenv.mkDerivation rec {
     libtheora
     libvisual
     libvorbis
+    opus
     orc
     pango
     xorg.libX11
@@ -99,7 +101,6 @@ stdenv.mkDerivation rec {
     "--enable-videoconvert"
     "--enable-gio"
     "--enable-playback"
-    "--disable-ivorbis"
     "--enable-audioresample"
     "--enable-subparse"
     "--enable-tcp"
@@ -118,6 +119,7 @@ stdenv.mkDerivation rec {
     "--disable-ivorbis"
     "--${boolEn (libvisual != null)}-libvisual"
     "--${boolEn (libogg != null)}-ogg"
+    "--${boolEn (opus != null)}-opus"
     "--${boolEn (pango != null)}-pango"
     "--${boolEn (libtheora != null)}-theora"
     "--${boolEn (libvorbis != null)}-vorbis"

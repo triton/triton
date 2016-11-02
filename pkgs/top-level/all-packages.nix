@@ -1454,6 +1454,10 @@ gst-plugins-base_1-8 = callPackage ../all-pkgs/g/gst-plugins-base {
   channel = "1.8";
   gstreamer = pkgs.gstreamer_1-8;
 };
+gst-plugins-base_1-10 = callPackage ../all-pkgs/g/gst-plugins-base {
+  channel = "1.10";
+  gstreamer = pkgs.gstreamer_1-10;
+};
 gst-plugins-base = callPackageAlias "gst-plugins-base_1-8" { };
 
 gst-plugins-good_1-8 = callPackage ../all-pkgs/g/gst-plugins-good {

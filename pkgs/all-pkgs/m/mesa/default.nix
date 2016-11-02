@@ -19,8 +19,8 @@
 #, libva
 , libvdpau
 , llvm
+, lm-sensors
 , openssl
-, systemd_lib
 , wayland
 , xorg
 
@@ -53,24 +53,26 @@ let
     optionalString
     splitString;
 
+  version = "13.0.0";
+
   # this is the default search path for DRI drivers
   driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
 in
 stdenv.mkDerivation rec {
   name = "mesa-noglu-${version}";
-  version = "12.0.3";
 
   src =  fetchurl {
     urls = [
+      "https://mesa.freedesktop.org/archive/${version}/mesa-${version}.tar.xz"
       "ftp://ftp.freedesktop.org/pub/mesa/${version}/mesa-${version}.tar.xz"
       # Tarballs for old releases are moved to another directory
-      ("ftp://ftp.freedesktop.org/pub/mesa/older-versions/"
+      ("https://mesa.freedesktop.org/archive/older-versions/"
         + head (splitString "." version)
         + ".x/${version}/mesa-${version}.tar.xz")
     ];
-    multihash = "QmT7WzMaNSBaMWDVJhPiqgfe7cpA1QwsWdyZvJjWGpsQwY";
+    multihash = "QmVqR8KfVh8V5PN6R8gNHZd9hhaGZAKpTAr86XSrHDanyt";
     hashOutput = false;  # Provided by upstream directly
-    sha256 = "1dc86dd9b51272eee1fad3df65e18cda2e556ef1bc0b6e07cd750b9757f493b1";
+    sha256 = "94edb4ebff82066a68be79d9c2627f15995e1fe10f67ab3fc63deb842027d727";
   };
 
   nativeBuildInputs = [
@@ -96,8 +98,8 @@ stdenv.mkDerivation rec {
     #libva
     libvdpau
     llvm
+    lm-sensors
     openssl
-    systemd_lib
     wayland
     xorg.dri2proto
     xorg.dri3proto
@@ -122,11 +124,6 @@ stdenv.mkDerivation rec {
       file = "mesa/glx_ro_text_segm.patch";
       sha256 = "3f91c181307f7275f3c53ec172450b3b51129d796bacbca92f91e45acbbc861e";
     })
-    (fetchTritonPatch {
-      rev = "02cecd54589d7a77a38e4c183c24ffd30efdc9a7";
-      file = "mesa/dlopen-absolute-paths.patch";
-      sha256 = "aee62e3fcb535af73ba152c56c389d573efd6271f9aae702c0be98584643c518";
-    })
   ];
 
   postPatch = ''
@@ -134,10 +131,6 @@ stdenv.mkDerivation rec {
   '' + /* Set runtime driver search path */ ''
     sed -i src/egl/main/egldriver.c \
       -e 's,_EGL_DRIVER_SEARCH_DIR,"${driverSearchPath}",'
-  '' + /* Substitute the path to udev */ ''
-    grep -q '@udev@' src/loader/loader.c
-    sed -i src/loader/loader.c \
-      -e 's,@udev@,${systemd_lib},g'
   '' + /* Upstream incorrectly specifies PYTHONPATH explicitly, overriding
           the build environments PYTHONPATH */ ''
     sed -e 's,PYTHONPATH=,PYTHONPATH=$(PYTHONPATH):,g' \
@@ -163,6 +156,8 @@ stdenv.mkDerivation rec {
     "--enable-gles1"
     "--enable-gles2"
     "--enable-dri"
+    "--enable-gallium-extra-hud"
+    "--enable-lmsensors"
     "--enable-dri3"
     "--enable-glx"
     "--disable-osmesa"
@@ -186,7 +181,6 @@ stdenv.mkDerivation rec {
     "--disable-gallium-tests"
     "--enable-shared-glapi"
     "--enable-shader-cache"
-    "--enable-sysfs"
     "--enable-driglx-direct"
     "--enable-glx-tls"
     "--disable-glx-read-only-text"
@@ -201,7 +195,7 @@ stdenv.mkDerivation rec {
     "--with-dri-driverdir=$(drivers)/lib/dri"
     "--with-dri-searchpath=${driverSearchPath}/lib/dri"
     "--with-dri-drivers=i915,i965,nouveau,radeon,r200,swrast"
-    "--with-vulkan-drivers=intel"
+    "--with-vulkan-drivers=intel,radeon"
     #"--with-vulkan-icddir=DIR"
     #osmesa-bits=8
     #"--with-clang-libdir=${llvm}/lib"
@@ -275,7 +269,7 @@ stdenv.mkDerivation rec {
   bindnow = false;
 
   passthru = {
-    inherit driverSearchPath;
+    inherit driverSearchPath version;
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;

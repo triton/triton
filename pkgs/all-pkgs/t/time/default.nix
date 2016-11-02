@@ -4,13 +4,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "time-1.7.2";
+  name = "time-1.7.3-RC1";
 
   src = fetchzip {
     version = 2;
-    url = "http://git.savannah.gnu.org/cgit/time.git/snapshot/${name}.tar.xz";
-    multihash = "QmZwpQZrzub9eKaxsR4JGi2rQxCAx85m794ueVbuFYrHF8";
-    sha256 = "7792e109a3b586a498c3aa8fd42adcf45288001df0049d389d8c6fcf9115423c";
+    url = "http://git.savannah.gnu.org/cgit/time.git/snapshot/9cf20c04418e0ac22d077638d935325847368d42.tar.xz";
+    multihash = "Qmds3jGfVTszo8yUFn8Hp1UoZb8wMDousy1F5tt8N7YLUP";
+    sha256 = "c0516c7c162457983ae04d691403f227813d3d22d21046d238b84c83c53ffed2";
   };
 
   patches = [

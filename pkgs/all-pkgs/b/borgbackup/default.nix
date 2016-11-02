@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, setuptools-scm
 
 , acl
 , lz4
@@ -9,7 +10,7 @@
 }:
 
 let
-  version = "1.0.7";
+  version = "1.0.8";
 in
 buildPythonPackage rec {
   name = "borgbackup-${version}";
@@ -17,11 +18,15 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "borgbackup";
     inherit version;
-    sha256 = "203353a299b6ea0c092a1f23b6bb5414a0b795712c213c68f7a1f4c24be131d1";
+    sha256 = "6902563c447c4f378ff1a13167f83d15eb60a02316a06368a539b7ff3d88aeb9";
   };
 
   BORG_LZ4_PREFIX = lz4;
   BORG_OPENSSL_PREFIX = openssl;
+
+  nativeBuildInputs = [
+    setuptools-scm
+  ];
 
   buildInputs = [
     acl

@@ -660,6 +660,22 @@ bs1770gain = callPackage ../all-pkgs/b/bs1770gain { };
 
 btrfs-progs = callPackage ../all-pkgs/b/btrfs-progs { };
 
+busybox = callPackage ../all-pkgs/b/busybox { };
+
+busyboxBootstrap = callPackageAlias "busybox" {
+  static = true;
+  minimal = true;
+  extraConfig = ''
+    CONFIG_ASH y
+    CONFIG_ASH_BUILTIN_ECHO y
+    CONFIG_ASH_BUILTIN_TEST y
+    CONFIG_ASH_OPTIMIZE_FOR_SIZE y
+    CONFIG_MKDIR y
+    CONFIG_TAR y
+    CONFIG_UNXZ y
+  '';
+};
+
 bzip2 = callPackage ../all-pkgs/b/bzip2 { };
 
 cacert = callPackage ../all-pkgs/c/cacert { };
@@ -3803,22 +3819,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   alsa-tools = callPackage ../os-specific/linux/alsa-tools { };
 
   atop = callPackage ../os-specific/linux/atop { };
-#
-  busybox = callPackage ../os-specific/linux/busybox { };
-
-  busyboxBootstrap = callPackageAlias "busybox" {
-    enableStatic = true;
-    enableMinimal = true;
-    extraConfig = ''
-      CONFIG_ASH y
-      CONFIG_ASH_BUILTIN_ECHO y
-      CONFIG_ASH_BUILTIN_TEST y
-      CONFIG_ASH_OPTIMIZE_FOR_SIZE y
-      CONFIG_MKDIR y
-      CONFIG_TAR y
-      CONFIG_UNXZ y
-    '';
-  };
 #
   ffado_full = callPackage ../os-specific/linux/ffado { };
 

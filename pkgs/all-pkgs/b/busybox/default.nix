@@ -1,7 +1,9 @@
-{ stdenv, fetchurl, musl
-, enableStatic ? false
-, enableMinimal ? false
-, useMusl ? false
+{ stdenv
+, fetchTritonPatch
+, fetchurl
+
+, static ? false
+, minimal ? false
 , extraConfig ? ""
 }:
 
@@ -22,26 +24,30 @@ let
         done
     }
   '';
-
 in
-
 stdenv.mkDerivation rec {
-  name = "busybox-1.24.2";
+  name = "busybox-1.25.1";
 
   src = fetchurl {
     urls = [
-      "http://sources.openelec.tv/mirror/busybox/${name}.tar.bz2"
       "https://busybox.net/downloads/${name}.tar.bz2"
+      "http://sources.openelec.tv/mirror/busybox/${name}.tar.bz2"
     ];
-    md5Urls = map (n: "${n}.md5") src.urls;
-    sha256 = "e71ef53ec656f31c42633918d301405d40dea1d97eca12f272217ae4a971c855";
+    hashOutput = false;
+    sha256 = "27667e0f2328fdbd79cfd622e4453e5c57e58f781c5da97c9be337d93aa2a02e";
   };
 
-  patches = [ ./busybox-in-store.patch ];
+  patches = [
+    (fetchTritonPatch {
+      rev = "52c77549bc17a4827ecb1da36f57930c92c08afa";
+      file = "b/busybox/in-store.patch";
+      sha256 = "e29af28e3730d931a150729ad83b5876068a2390946759cfeaa2dada8edf2fb7";
+    })
+  ];
 
   configurePhase = ''
     export KCONFIG_NOTIMESTAMP=1
-    make ${if enableMinimal then "allnoconfig" else "defconfig"}
+    make ${if minimal then "allnoconfig" else "defconfig"}
 
     ${configParser}
 
@@ -52,7 +58,7 @@ stdenv.mkDerivation rec {
 
     CONFIG_LFS y
 
-    ${stdenv.lib.optionalString enableStatic ''
+    ${stdenv.lib.optionalString static ''
       CONFIG_STATIC y
     ''}
 
@@ -65,8 +71,6 @@ stdenv.mkDerivation rec {
     EOF
 
     make oldconfig
-  '' + stdenv.lib.optionalString useMusl ''
-    makeFlagsArray+=("CC=gcc -isystem ${musl}/include -B${musl}/lib -L${musl}/lib")
   '';
 
   crossAttrs = {
@@ -78,14 +82,24 @@ stdenv.mkDerivation rec {
       '' else "");
   };
 
-  enableParallelBuilding = true;
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha1Urls = map (n: "${n}.sign") src.urls;
+      pgpKeyFingerprint = "C9E9 416F 76E6 10DB D09D  040F 47B7 0C55 ACC9 965B";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Tiny versions of common UNIX utilities in a single small executable";
     homepage = http://busybox.net/;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ viric ];
-    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
     priority = 9;  # Lower than everything but lowPrio packages
   };
 }

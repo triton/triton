@@ -30,9 +30,9 @@ stdenv.mkDerivation rec {
       sha256 = "5b8a6c325cdaf83588fb87778328b47978db33230c44f24b4a909bc9306d2d86";
     })
     (fetchTritonPatch {
-      rev = "b6e1bea2561c92aca3790a5ce740230fa83250e3";
-      file = "g/gnutar/tar-1.29-extract-pathname-bypass.patch";
-      sha256 = "c5aef4c88c46978a51e0b4bd344d9de5d5b6e2c619e1b2e1f8bfd5dda1919455";
+      rev = "ef4ae4eb246abb08e9cb89174dd3854f7e3e3409";
+      file = "g/gnutar/CVE-2016-6321.patch";
+      sha256 = "53476b4482044a244a2858b7706ec91cacfe7083f27331b2158eda731b5f455a";
     })
   ];
 

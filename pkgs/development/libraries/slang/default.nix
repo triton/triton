@@ -1,10 +1,11 @@
 { stdenv, fetchurl, ncurses, pcre, libpng, zlib, readline }:
 
 stdenv.mkDerivation rec {
-  name = "slang-2.3.0";
+  name = "slang-2.3.1";
   src = fetchurl {
-    url = "http://www.jedsoft.org/releases/slang/${name}.tar.gz";
-    sha256 = "0aqd2cjabj6nhd4r3dc4vhqif2bf3dmqnrn2gj0xm4gqyfd177jy";
+    url = "http://www.jedsoft.org/releases/slang/${name}.tar.bz2";
+    sha1Confirm = "bfd47c83886665d30d358c30d154435ec7583a4d";
+    sha256 = "a810d5da7b0c0c8c335393c6b4f12884be6fa7696d9ca9521ef21316a4e00f9d";
   };
 
   # Fix some wrong hardcoded paths

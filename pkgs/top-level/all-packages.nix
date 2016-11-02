@@ -3002,6 +3002,8 @@ thin-provisioning-tools = callPackage ../all-pkgs/t/thin-provisioning-tools { };
 
 thrift = callPackage ../all-pkgs/t/thrift { };
 
+time = callPackage ../all-pkgs/t/time { };
+
 tinc_1_0 = callPackage ../all-pkgs/t/tinc { channel = "1.0"; };
 tinc_1_1 = callPackage ../all-pkgs/t/tinc { channel = "1.1"; };
 
@@ -3358,8 +3360,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   };
 #
   xl2tpd = callPackage ../tools/networking/xl2tpd { };
-#
-  time = callPackage ../tools/misc/time { };
 #
   tre = callPackage ../development/libraries/tre { };
 

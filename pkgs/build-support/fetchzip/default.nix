@@ -68,6 +68,7 @@ lib.overrideDerivation (fetchurl (rec {
     start="$(date -u '+%s')"
 
     unpackDir="$TMPDIR/unpack"
+    rm -rf "$unpackDir"
     mkdir "$unpackDir"
     cd "$unpackDir"
 
@@ -75,6 +76,7 @@ lib.overrideDerivation (fetchurl (rec {
     unpackFile "$TMPDIR/tarball.${tarball}"
 
     shopt -s dotglob
+    rm -rf "$TMPDIR/${name'}"
     mkdir "$TMPDIR/${name'}"
   '' + (if stripRoot then ''
     if [ $(ls "$unpackDir" | wc -l) != 1 ]; then
@@ -112,8 +114,6 @@ lib.overrideDerivation (fetchurl (rec {
       --mode=go=rX,u+rw,a-s \
       --clamp-mtime --mtime=@$mtime \
       -c "${name'}" | ${brotli}/bin/brotli --quality 6 --output "$out"
-    du -bhs "$out"
-    cp "$out" "$TMPDIR/${name}"
   '';
 } // removeAttrs args [ "name" "version" "purgeTimestamps" "downloadToTemp" "postFetch" "stripRoot" "extraPostFetch" ]))
 # Hackety-hack: we actually need unzip hooks, too

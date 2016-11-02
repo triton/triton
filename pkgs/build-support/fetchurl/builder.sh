@@ -491,7 +491,7 @@ getHashConfirmation() {
       eval "${varname}Confirm"='"broken"'
       continue
     fi
-    if echo "$url" | grep -q '\.\(asc\|sig\)$'; then
+    if echo "$url" | grep -q '\.\(asc\|sig\|sign\)$'; then
       mv "$TMPDIR/$varname" "$TMPDIR/$varname.asc"
       if ! gpg --lock-never --output "$TMPDIR/$varname" --decrypt "$TMPDIR/$varname.asc"; then
         echo "$TMPDIR/$varname.asc pgpsig does not validate" >&2

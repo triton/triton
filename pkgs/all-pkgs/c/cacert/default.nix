@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    perl curl-*/lib/mk-ca-bundle.pl -d "file://$(pwd)/nss/lib/ckfw/builtins/certdata.txt" ca-bundle.crt
+    perl curl-*/lib/mk-ca-bundle.pl -k -d "file://$(pwd)/nss/lib/ckfw/builtins/certdata.txt" ca-bundle.crt
   '';
 
   installPhase = ''

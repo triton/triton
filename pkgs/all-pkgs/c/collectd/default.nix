@@ -34,12 +34,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "collectd-5.6.0";
+  name = "collectd-5.6.1";
 
   src = fetchurl {
     url = "https://github.com/collectd/collectd/releases/download/"
       + "${name}/${name}.tar.bz2";
-    sha256 = "f0ffbbd91fac3682bd324a74b9b4c9eabe781394b303b5cfd457c4cfbe748623";
+    sha256 = "c30ff644f91407b4dc2d99787b99cc45ec00e538bd1cc269429d3c5e8a4aee2c";
   };
 
   buildInputs = [

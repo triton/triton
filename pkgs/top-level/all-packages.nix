@@ -733,6 +733,8 @@ chromium_old_dev = callPackageAlias "chromium_old" {
   channel = "dev";
 };
 
+chrony = callPackage ../all-pkgs/c/chrony { };
+
 cifs-utils = callPackage ../all-pkgs/c/cifs-utils { };
 
 civetweb = callPackage ../all-pkgs/c/civetweb { };

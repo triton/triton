@@ -1480,6 +1480,9 @@ gst-validate = callPackageAlias "gst-validate_1-8" { };
 gstreamer_1-8 = callPackage ../all-pkgs/g/gstreamer {
   channel = "1.8";
 };
+gstreamer_1-10 = callPackage ../all-pkgs/g/gstreamer {
+  channel = "1.10";
+};
 gstreamer = callPackageAlias "gstreamer_1-8" { };
 
 gstreamer-editing-services_1-8 =

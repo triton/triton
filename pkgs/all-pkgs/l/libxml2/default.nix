@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , findXMLCatalogs
@@ -35,6 +36,19 @@ stdenv.mkDerivation rec {
 
   propagatedBuildInputs = [
     findXMLCatalogs
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "1491e5f86aac6fbd6cb0e0dad846dd4e1f4cf190";
+      file = "l/libxml2/0001-CVE-2016-4658.patch";
+      sha256 = "7aee52ca24da6c7d36787cded379eaedd34803f8d355e11806b988a25de6a6bb";
+    })
+    (fetchTritonPatch {
+      rev = "1491e5f86aac6fbd6cb0e0dad846dd4e1f4cf190";
+      file = "l/libxml2/0002-CVE-2016-5131.patch";
+      sha256 = "4e0248f5a6877b157b9d736c412d4da7a2c015d58a816b859957efddb8d3c8d4";
+    })
   ];
 
   preConfigure = ''

@@ -7,6 +7,7 @@
 , apr-util
 , cyrus-sasl
 , expat
+, file
 , serf
 , sqlite
 , swig
@@ -49,6 +50,8 @@ stdenv.mkDerivation rec {
     apr
     apr-util
     cyrus-sasl
+    expat
+    file
     serf
     sqlite
     zlib
@@ -81,6 +84,15 @@ stdenv.mkDerivation rec {
 
     mkdir -p $out/share/bash-completion/completions
     cp tools/client-side/bash_completion $out/share/bash-completion/completions/subversion
+  '';
+
+  # Fix broken package config files
+  preFixup = ''
+    pcs=($(find "$out"/share/pkgconfig -type f))
+    for pc in "''${pcs[@]}"; do
+      sed -i 's,[ ]\(-l\|lib\)svn[^ ]*,\0-1,g' "$pc"
+      mv "$pc" "''${pc%.pc}-1.pc"
+    done
   '';
 
   # Parallel Building works fine but Parallel Install fails

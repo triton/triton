@@ -7,5 +7,5 @@ Name: libid3tag
 Description: ID3 tag manipulation library
 Version: @version@
 
-Libs: -L${libdir} -lid3tag
+Libs: -L${libdir} -lid3tag -lz
 Cflags: -I${includedir}

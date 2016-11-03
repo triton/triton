@@ -1910,6 +1910,8 @@ libibverbs = callPackage ../all-pkgs/l/libibverbs { };
 
 libical = callPackage ../all-pkgs/l/libical { };
 
+libid3tag = callPackage ../all-pkgs/l/libid3tag { };
+
 libidl = callPackage ../all-pkgs/l/libidl { };
 
 libidn = callPackage ../all-pkgs/l/libidn { };
@@ -3654,8 +3656,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libplist = callPackage ../development/libraries/libplist { };
 #
   librevenge = callPackage ../development/libraries/librevenge {};
-
-  libid3tag = callPackage ../development/libraries/libid3tag { };
 
   idnkit = callPackage ../development/libraries/idnkit { };
 

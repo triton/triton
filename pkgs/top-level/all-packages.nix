@@ -1649,6 +1649,8 @@ iftop = callPackage ../all-pkgs/i/iftop { };
 
 imagemagick = callPackage ../all-pkgs/i/imagemagick { };
 
+imlib2 = callPackage ../all-pkgs/i/imlib2 { };
+
 iniparser = callPackage ../all-pkgs/i/iniparser { };
 
 inkscape = callPackage ../all-pkgs/i/inkscape { };
@@ -3601,8 +3603,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
   ilmbase = callPackage ../development/libraries/ilmbase { };
 #
-  imlib2 = callPackage ../development/libraries/imlib2 { };
-
   ijs = callPackage ../development/libraries/ijs { };
 #
   jbig2dec = callPackage ../development/libraries/jbig2dec { };

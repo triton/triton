@@ -12,12 +12,14 @@
 , zlib
 }:
 
+let
+  version = "1.4.9";
+in
 stdenv.mkDerivation rec {
-  name = "imlib2-1.4.9";
+  name = "imlib2-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/enlightenment/${name}.tar.bz2";
-    multihash = "QmW4JVeh256xcdS6MGvRjDQCYHRjCSEKFNBxj5n6GAbJCc";
+    url = "mirror://sourceforge/enlightenment/imlib2-src/${version}/${name}.tar.bz2";
     sha256 = "7d2864972801823ce44ca8d5584a67a88f0e54e2bf47fa8cf4a514317b4f0021";
   };
 
@@ -38,8 +40,7 @@ stdenv.mkDerivation rec {
   ];
 
   preConfigure = ''
-    substituteInPlace imlib2-config.in \
-      --replace "@my_libs@" ""
+    sed -i 's,@my_libs@,,g' imlib2-config.in
   '';
 
   meta = with stdenv.lib; {

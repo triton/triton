@@ -1834,6 +1834,8 @@ libevdev = callPackage ../all-pkgs/l/libevdev { };
 
 libevent = callPackage ../all-pkgs/l/libevent { };
 
+libexif = callPackage ../all-pkgs/l/libexif { };
+
 libfaketime = callPackage ../all-pkgs/l/libfaketime { };
 
 libffi = callPackage ../all-pkgs/l/libffi { };
@@ -3640,8 +3642,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libdvdread = callPackage ../development/libraries/libdvdread { };
 #
   libgtop = callPackage ../development/libraries/libgtop {};
-#
-  libexif = callPackage ../development/libraries/libexif { };
 #
   libimobiledevice = callPackage ../development/libraries/libimobiledevice { };
 #

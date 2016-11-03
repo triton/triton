@@ -38,6 +38,7 @@
     # Misc tools
     config.programs.ssh.package
     pkgs.bind_tools
+    pkgs.curl
     pkgs.htop
     pkgs.iftop
     pkgs.iotop
@@ -48,6 +49,7 @@
     pkgs.gnupg
     pkgs.tmux
     pkgs.screen
+    pkgs.wget
   ];
 
   # Include support for various filesystems.

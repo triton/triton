@@ -15,11 +15,9 @@ let
       pkgs.bzip2
       pkgs.brotli
       pkgs.coreutils
-      pkgs.curl
       pkgs.diffutils
       pkgs.findutils
       pkgs.gawk
-      pkgs.glibc # for ldd, getent
       pkgs.gnugrep
       pkgs.gnupatch
       pkgs.gnused
@@ -27,10 +25,8 @@ let
       pkgs.gzip
       pkgs.xz
       pkgs.less
-      pkgs.ncurses
       pkgs.procps
       pkgs.shadow
-      pkgs.time
       pkgs.util-linux_full
     ];
 

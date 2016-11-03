@@ -47,7 +47,6 @@
 , zlib
 , zziplib
 # Options
-, debugSupport ? false
 , documentationSupport ? false
   , xmlto
   , doxygen
@@ -55,8 +54,8 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
-    wtFlag
+    boolEn
+    boolWt
     optional
     optionals;
 
@@ -72,6 +71,11 @@ stdenv.mkDerivation rec {
     multihash = "QmbjyKPGKkaFKxABi1omFEUSgDGNSJYALeZEbGKJHfHkWD";
     sha256 = "bc856cda4136403446d53d11576f86990b61d1fe4668f6008e9eae47450d4e1d";
   };
+
+  nativeBuildInputs = [ ] ++ optionals documentationSupport [
+    doxygen
+    xmlto
+  ];
 
   buildInputs = [
     # Required
@@ -117,74 +121,73 @@ stdenv.mkDerivation rec {
     yajl
     zlib
     zziplib
-  ] ++ optionals documentationSupport [
-    doxygen
-    xmlto
   ];
 
   configureFlags = [
-    (enFlag "aac" (faad2 != null) null)
+    "--help"
+    "--${boolEn (faad2 != null)}-aac"
     # TODO: adplug support
-    #(enFlag "adplug" true null)
-    (enFlag "alsa" (alsa-lib != null) null)
-    (enFlag "audiofile" (audiofile != null) null)
-    (enFlag "bzip2" (bzip2 != null) null)
+    #"--${boolEn }-adplug" true null)
+    "--${boolEn (alsa-lib != null)}-alsa"
+    "--${boolEn (audiofile != null)}-audiofile"
+    "--${boolEn (bzip2 != null)}-bzip2"
     # TODO: cdio-paranoia support
-    #(enFlag "cdio-paranoia" (libcdio != null) null)
-    (enFlag "curl" (curl != null) null)
-    (enFlag "database" true null)
-    (enFlag "dsd" true null)
-    (enFlag "fifo" true null)
-    (enFlag "ffmpeg" (ffmpeg != null) null)
-    (enFlag "flac" (flac != null) null)
-    (enFlag "fluidsynth" (fluidsynth != null) null)
-    (enFlag "gme" (game-music-emu != null) null)
-    (enFlag "haiku" true null)
-    (enFlag "httpd-output" true null)
+    #"--${boolEn (libcdio != null)}-cdio-paranoia"
+    "--${boolEn (curl != null)}-curl"
+    "--enable-database"
+    "--enable-dsd"
+    "--enable-fifo"
+    "--${boolEn (ffmpeg != null)}-ffmpeg"
+    "--${boolEn (flac != null)}-flac"
+    "--${boolEn (fluidsynth != null)}-fluidsynth"
+    "--${boolEn (game-music-emu != null)}-gme"
+    "--disable-haiku"
+    "--enable-httpd-output"
     "--enable-iconv"
-    (enFlag "icu" (icu != null) null)
-    (enFlag "id3" (libid3tag != null) null)
-    (enFlag "inotify" true null)
-    (enFlag "ipv6" true null)
-    (enFlag "jack" (jack2_lib != null) null)
-    (enFlag "lame-encoder" (lame != null) null)
-    (enFlag "libmpdclient" (libmpdclient != null) null)
+    "--${boolEn (icu != null)}-icu"
+    "--${boolEn (libid3tag != null)}-id3"
+    "--enable-inotify"
+    "--enable-ipv6"
+    "--${boolEn (jack2_lib != null)}-jack"
+    "--${boolEn (lame != null)}-lame-encoder"
+    "--${boolEn (libmpdclient != null)}-libmpdclient"
     # TODO: libwrap support
-    #(enFlag "libwrap" true null)
-    (enFlag "sndfile" (libsndfile != null) null)
-    (enFlag "lsr" (libsamplerate != null) null)
-    (enFlag "mad" (libmad != null) null)
-    (enFlag "mikmod" (libmikmod != null) null)
-    (enFlag "mms" (libmms != null) null)
-    (enFlag "modplug" (libmodplug != null) null)
-    (enFlag "mpg123" (mpg123 != null) null)
-    (enFlag "neighbor-plugins" true null)
-    (enFlag "openal" (openal != null) null)
-    (enFlag "opus" (opus != null) null)
-    (enFlag "oss" true null)
+    #"--${boolEn }-libwrap" true null)
+    "--${boolEn (libsndfile != null)}-sndfile"
+    "--${boolEn (libsamplerate != null)}-lsr"
+    "--${boolEn (libmad != null)}-mad"
+    "--${boolEn (libmikmod != null)}-mikmod"
+    "--${boolEn (libmms != null)}-mms"
+    "--${boolEn (libmodplug != null)}-modplug"
+    "--${boolEn (mpg123 != null)}-mpg123"
+    "--enable-neighbor-plugins"
+    "--${boolEn (openal != null)}-openal"
+    "--${boolEn (opus != null)}-opus"
+    "--disable-oss"
     "--disable-osx"
-    (enFlag "pipe-output" true null)
-    (enFlag "pulse" (pulseaudio_lib != null) null)
-    (enFlag "shout" (libshout != null) null)
+    "--enable-pipe-output"
+    "--${boolEn (pulseaudio_lib != null)}-pulse"
+    "--${boolEn (libshout != null)}-shout"
     "--disable-solaris-output"
-    (enFlag "soundcloud" (yajl != null) null)
-    (enFlag "sqlite" (sqlite != null) null)
+    "--${boolEn (yajl != null)}-soundcloud"
+    "--${boolEn (sqlite != null)}-sqlite"
     # TODO: twolame support
-    #(enFlag "twolame" (twolame != null) null)
-    (enFlag "un" true null)
-    (enFlag "upnp" (libupnp != null) null)
-    (enFlag "vorbis" (libvorbis != null) null)
-    (enFlag "vorbis-encoder" (libvorbis != null) null)
-    (enFlag "wave-encoder" true null)
-    (enFlag "wavpack" (wavpack != null) null)
-    (wtFlag "zeroconf" (avahi != null && dbus != null) "avahi")
-    (enFlag "zlib" (zlib != null) null)
-    (enFlag "zzip" (zziplib != null) null)
-
-    (wtFlag "systemdsystemunitdir" (systemd_lib != null) "$(out)/etc/systemd/system")
-    (enFlag "debug" debugSupport null)
-    (enFlag "documentation" documentationSupport null)
-    (enFlag "werror" false null)
+    #"--${boolEn (twolame != null)}-twolame"
+    "--enable-un"
+    "--${boolEn (libupnp != null)}-upnp"
+    "--${boolEn (libvorbis != null)}-vorbis"
+    "--${boolEn (libvorbis != null)}-vorbis-encoder"
+    "--enable-wave-encoder"
+    "--${boolEn (wavpack != null)}-wavpack"
+    "--${boolWt (avahi != null && dbus != null)}-zeroconf${
+        boolString (avahi != null && dbus != null) "avahi" ""}"
+    "--${boolEn (zlib != null)}-zlib"
+    "--${boolEn (zziplib != null)}-zzip"
+    "--${boolWt (systemd_lib != null)}-systemdsystemunitdir${
+        boolString (systemd_lib != null) "$(out)/etc/systemd/system" ""}"
+    "--disable-debug"
+    "--${boolEn documentationSupport}-documentation"
+    "--disable-werror"
   ];
 
   NIX_LDFLAGS = [ ] ++ optional (libshout != null) "-lshout";

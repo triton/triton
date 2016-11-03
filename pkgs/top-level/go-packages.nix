@@ -173,7 +173,7 @@ let
     goPackageAliases = [ "github.com/golang/oauth2" ];
     propagatedBuildInputs = [
       net
-      gcloud-golang-compute-metadata
+      google-cloud-go-compute-metadata
     ];
   };
 
@@ -1245,48 +1245,6 @@ let
     ];
   };
 
-  gcloud-golang = buildFromGitHub {
-    version = 2;
-    date = "2016-10-31";
-    rev = "2fc1b4432b57fa2dd641d443a4b88157f03b2f12";
-    owner = "GoogleCloudPlatform";
-    repo = "gcloud-golang";
-    sha256 = "0kw56i92qy68c1hbdbpg6hk8q3a78d7k4zbv19vg9d3rbjjzmzaa";
-    goPackagePath = "cloud.google.com/go";
-    goPackageAliases = [
-      "google.golang.org/cloud"
-    ];
-    propagatedBuildInputs = [
-      net
-      oauth2
-      protobuf
-      google-api-go-client
-      grpc
-    ];
-    excludedPackages = "oauth2";
-    meta.useUnstable = true;
-  };
-
-  gcloud-golang-for-go4 = buildFromGitHub {
-    inherit (gcloud-golang) rev date owner repo sha256 version goPackagePath goPackageAliases meta;
-    subPackages = [
-      "storage"
-    ];
-    propagatedBuildInputs = [
-      gax-go
-      google-api-go-client
-      grpc
-      net
-      oauth2
-    ];
-  };
-
-  gcloud-golang-compute-metadata = buildFromGitHub {
-    inherit (gcloud-golang) rev date owner repo sha256 version goPackagePath goPackageAliases meta;
-    subPackages = [ "compute/metadata" "internal" ];
-    buildInputs = [ net ];
-  };
-
   genproto = buildFromGitHub {
     version = 2;
     date = "2016-10-07";
@@ -1384,7 +1342,7 @@ let
     goPackagePath = "go4.org";
     goPackageAliases = [ "github.com/camlistore/go4" ];
     buildInputs = [
-      gcloud-golang-for-go4
+      google-cloud-go-for-go4
       oauth2
       net
       sys
@@ -1505,6 +1463,48 @@ let
     propagatedBuildInputs = [
       goutils_logging
     ];
+  };
+
+  google-cloud-go = buildFromGitHub {
+    version = 2;
+    date = "2016-10-28";
+    rev = "28994ff9b5baa92fe337dacaee126fcf80fefa3e";
+    owner = "GoogleCloudPlatform";
+    repo = "google-cloud-go";
+    sha256 = "5a4a4c2ee67056246371b7e59eb48b8bfeb11a965afe5fbaedae1532f521314d";
+    goPackagePath = "cloud.google.com/go";
+    goPackageAliases = [
+      "google.golang.org/cloud"
+    ];
+    propagatedBuildInputs = [
+      net
+      oauth2
+      protobuf
+      google-api-go-client
+      grpc
+    ];
+    excludedPackages = "oauth2";
+    meta.useUnstable = true;
+  };
+
+  google-cloud-go-for-go4 = buildFromGitHub {
+    inherit (google-cloud-go) rev date owner repo sha256 version goPackagePath goPackageAliases meta;
+    subPackages = [
+      "storage"
+    ];
+    propagatedBuildInputs = [
+      gax-go
+      google-api-go-client
+      grpc
+      net
+      oauth2
+    ];
+  };
+
+  google-cloud-go-compute-metadata = buildFromGitHub {
+    inherit (google-cloud-go) rev date owner repo sha256 version goPackagePath goPackageAliases meta;
+    subPackages = [ "compute/metadata" "internal" ];
+    buildInputs = [ net ];
   };
 
   gopcap = buildFromGitHub {
@@ -3962,7 +3962,6 @@ let
       prometheus_common
       yaml_v2
     ];
-    meta.broken = true;
   };
 
   prometheus_client_golang = buildFromGitHub {

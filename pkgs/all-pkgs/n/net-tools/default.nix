@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    sourceTarball = stdenv.mkDerivation {
+    srcTarball = stdenv.mkDerivation {
       name = "net-tools-tarball-${date}";
 
       src = fetchgit {

@@ -13,7 +13,6 @@
 , curl
 , dbus
 , expat
-, faad2
 , ffmpeg
 , flac
 , fluidsynth
@@ -89,7 +88,6 @@ stdenv.mkDerivation rec {
     curl
     dbus
     expat
-    faad2
     ffmpeg
     flac
     fluidsynth
@@ -125,7 +123,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--help"
-    "--${boolEn (faad2 != null)}-aac"
+    "--disable-aac"
     # TODO: adplug support
     #"--${boolEn }-adplug" true null)
     "--${boolEn (alsa-lib != null)}-alsa"

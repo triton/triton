@@ -54,6 +54,7 @@
 let
   inherit (stdenv.lib)
     boolEn
+    boolString
     boolWt
     optional
     optionals;
@@ -122,7 +123,6 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--help"
     "--disable-aac"
     # TODO: adplug support
     #"--${boolEn }-adplug" true null)
@@ -178,11 +178,11 @@ stdenv.mkDerivation rec {
     "--enable-wave-encoder"
     "--${boolEn (wavpack != null)}-wavpack"
     "--${boolWt (avahi != null && dbus != null)}-zeroconf${
-        boolString (avahi != null && dbus != null) "avahi" ""}"
+        boolString (avahi != null && dbus != null) "=avahi" ""}"
     "--${boolEn (zlib != null)}-zlib"
     "--${boolEn (zziplib != null)}-zzip"
     "--${boolWt (systemd_lib != null)}-systemdsystemunitdir${
-        boolString (systemd_lib != null) "$(out)/etc/systemd/system" ""}"
+        boolString (systemd_lib != null) "=$(out)/etc/systemd/system" ""}"
     "--disable-debug"
     "--${boolEn documentationSupport}-documentation"
     "--disable-werror"

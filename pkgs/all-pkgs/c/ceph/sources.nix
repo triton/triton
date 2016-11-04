@@ -29,8 +29,8 @@
 
   "git" = rec {
     fetchVersion = 2;
-    version = "2016-10-10";
-    rev = "e4a3d56e3468cced6a4d0392a32fdf178e7f255d";
-    sha256 = "0f224qgkxvw8im1ww54ks2s61z15v6fm20zm5b8pybf3cx1x8paa";
+    version = "2016-11-04";
+    rev = "d95d522846b5ddf8bd4b1a83e4b16818c851c754";
+    sha256 = "b044a6c61895956b3f90a6db9706fe834bea10482ffc24646b8e8653b2e969cf";
   };
 }

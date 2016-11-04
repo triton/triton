@@ -110,6 +110,7 @@ stdenv.mkDerivation {
     "-DWITH_TESTS=OFF"
     #"-DWITH_FIO=ON"
     "-DWITH_SYSTEMD=ON"
+    "-DWITH_LTTNG=OFF"
 
     "-DBUILD_SHARED_LIBS=ON"
     "-DXFS_INCLUDE_DIR=${xfsprogs_lib}/include"

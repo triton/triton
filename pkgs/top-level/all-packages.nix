@@ -1825,6 +1825,8 @@ libdrm = callPackage ../all-pkgs/l/libdrm { };
 
 libdvdcss = callPackage ../all-pkgs/l/libdvdcss { };
 
+libdvdread = callPackage ../all-pkgs/l/libdvdread { };
+
 libebml = callPackage ../all-pkgs/l/libebml { };
 
 libebur128 = callPackage ../all-pkgs/l/libebur128 { };
@@ -3645,8 +3647,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libdvbpsi = callPackage ../development/libraries/libdvbpsi { };
 
   libdvdnav = callPackage ../development/libraries/libdvdnav { };
-#
-  libdvdread = callPackage ../development/libraries/libdvdread { };
 #
   libgtop = callPackage ../development/libraries/libgtop {};
 #

@@ -113,8 +113,17 @@ stdenv.mkDerivation rec {
     xorg.libXScrnSaver
     xorg.libXv
     xorg.libXxf86vm
-  ]
-;
+  ];
+
+  postPatch =
+    /* https://github.com/mpv-player/mpv/issues/3766
+       vdpau configure detection requires a vdpau device to exist.
+       This hack replaces the configure test with the test for libdl. */ ''
+      sed -i wscript \
+        -e 's,libavcodec/vdpau.h,dlfcn.h,' \
+        -e "s/.*av_vdpau_bind_context.*/'dlopen\(\"\", 0)',/"
+    '';
+
   configureFlags = [
     ###"--enable-cplayer"
     "--enable-libmpv-shared"
@@ -216,7 +225,7 @@ stdenv.mkDerivation rec {
     "--disable-videotoolbox-hwaccel"
     "--disable-videotoolbox-gl"
     # FIXME
-    #"--${boolEn (libvdpau != null && ffmpeg != null)}-vdpau-hwaccel"
+    "--${boolEn (libvdpau != null && ffmpeg != null)}-vdpau-hwaccel"
     "--disable-d3d-hwaccel"
     # FIXME: add cuda support
     "--disable-cuda-hwaccel"

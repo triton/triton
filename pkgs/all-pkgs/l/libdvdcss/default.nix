@@ -10,8 +10,9 @@ stdenv.mkDerivation rec {
   name = "libdvdcss-${version}";
 
   src = fetchurl {
-    url = "https://get.videolan.org/libdvdcss/${version}/${name}.tar.bz2";
-    outputHash = false;
+    url = "https://download.videolan.org/pub/videolan/libdvdcss/${version}/"
+      + "${name}.tar.bz2";
+    hashOutput = false;
     sha256 = "2089375984800df29a4817b37f3123c1706723342d6dab4d0a8b75c25c2c845a";
   };
 

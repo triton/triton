@@ -1121,6 +1121,8 @@ flash-player = callPackage ../all-pkgs/f/flash-player { };
 
 flex = callPackage ../all-pkgs/f/flex { };
 
+flite = callPackage ../all-pkgs/f/flite { };
+
 fontconfig = callPackage ../all-pkgs/f/fontconfig { };
 
 fox = callPackage ../all-pkgs/f/fox { };
@@ -3552,8 +3554,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   cppunit = callPackage ../development/libraries/cppunit { };
 
   faad2 = callPackage ../development/libraries/faad2 { };
-#
-  flite = callPackage ../development/libraries/flite { };
 #
   fltk13 = callPackage ../development/libraries/fltk/fltk13.nix { };
 #

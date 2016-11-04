@@ -3,11 +3,13 @@
 , fetchPyPi
 , isPy3k
 
+, constantly
+, incremental
 , zope-interface
 }:
 
 let
-  version = "16.4.1";
+  version = "16.5.0";
 in
 buildPythonPackage rec {
   name = "Twisted-${version}";
@@ -16,10 +18,12 @@ buildPythonPackage rec {
     package = "Twisted";
     inherit version;
     type = ".tar.bz2";
-    sha256 = "1d8d73f006c990744effb35588359fd44d43608649ac0b6b7edc71176e88e816";
+    sha256 = "0207d88807482fa670a84926590e163a2a081a29745de34c5a6dc21066abae73";
   };
 
   propagatedBuildInputs = [
+    constantly
+    incremental
     zope-interface
   ];
 

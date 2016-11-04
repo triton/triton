@@ -513,8 +513,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (freetype != null)}-libfreetype"
     "--${boolEn (fribidi != null)}-libfribidi"
     "--${boolEn (game-music-emu != null)}-libgme"
-    #"--${boolEn (gsm != null)}-libgsm"
-    /**/"--disable-libgsm"
+    "--${boolEn (gsm != null)}-libgsm"
     #"--${boolEn (
     #  libiec61883 != null
     #  && libavc1394 != null

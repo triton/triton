@@ -246,6 +246,8 @@ html5lib = callPackage ../all-pkgs/h/html5lib { };
 
 idna = callPackage ../all-pkgs/i/idna { };
 
+incremental = callPackage ../all-pkgs/i/incremental { };
+
 iotop = callPackage ../all-pkgs/i/iotop { };
 
 imagesize = callPackage ../all-pkgs/i/imagesize { };

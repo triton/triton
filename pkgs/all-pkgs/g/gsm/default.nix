@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     sha256 = "0b1mx69jq88wva3wk0hi6fcl5a52qhnq2f9p3f3jdh5k61ma252q";
   };
 
-  postPhase =
+  postPatch =
     /* Fix include directory */ ''
       sed -i Makefile \
         -e 's,$(GSM_INSTALL_ROOT)/inc,$(GSM_INSTALL_ROOT)/include/gsm,'

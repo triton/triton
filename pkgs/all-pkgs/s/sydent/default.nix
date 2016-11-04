@@ -18,14 +18,14 @@
 }:
 
 buildPythonPackage {
-  name = "sydent-2016-09-20";
+  name = "sydent-2016-11-03";
 
   src = fetchFromGitHub {
     version = 2;
     owner = "matrix-org";
     repo = "sydent";
-    rev = "0d0dba43a469986d31ece161044cd9c5875c519d";
-    sha256 = "408187bebcd13388c91a6a4e208954936317f72e65d9ea1e8ea88176584a1b16";
+    rev = "188fbf6794d437e57d9a47e9ea4111b31e4cfdb4";
+    sha256 = "6b4d7899f3f101cd1d24ec2664fb7bdb8882093fe6df165baea02600ba1ca587";
   };
 
   buildInputs = [

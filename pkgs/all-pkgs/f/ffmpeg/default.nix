@@ -70,7 +70,7 @@
 #, decklinkExtlib ? false
 #  , blackmagic-design-desktop-video
 , fdk_aac
-#, flite
+, flite
 , fontconfig
 , freetype
 , frei0r-plugins
@@ -256,6 +256,7 @@ assert swscaleLibrary -> avutilLibrary;
 /*
  *  External libraries
  */
+assert flite != null -> alsa-lib != null;
 assert libxcbshmExtlib -> xorg.libxcb != null;
 assert libxcbxfixesExtlib -> xorg.libxcb != null;
 assert libxcbshapeExtlib -> xorg.libxcb != null;
@@ -320,6 +321,7 @@ stdenv.mkDerivation rec {
     bzip2
     celt
     #chromaprint
+    flite
     fontconfig
     freetype
     frei0r-plugins
@@ -508,8 +510,7 @@ stdenv.mkDerivation rec {
     (deprfflag "--disable-libfaac" null "3.1")
     (fflag "--${boolEn (fdk_aac != null)}-libfdk-aac" null)
     (fflag "--${boolEn (fontconfig != null)}-libfontconfig" "3.1")
-    #"--${boolEn (flite != null)}-libflite"
-    /**/"--disable-libflite"
+    "--${boolEn (flite != null)}-libflite"
     "--${boolEn (freetype != null)}-libfreetype"
     "--${boolEn (fribidi != null)}-libfribidi"
     "--${boolEn (game-music-emu != null)}-libgme"
@@ -602,6 +603,10 @@ stdenv.mkDerivation rec {
     "--${boolEn optimizationsDeveloper}-optimizations"
     "--${boolEn extraWarningsDeveloper}-extra-warnings"
     "--${boolEn strippingDeveloper}-stripping"
+  ] ++ optionals (alsa-lib != null && flite != null) [
+    # Flite requires alsa but the configure test under specifies
+    # dependencies and fails without -lasound.
+    "--extra-ldflags=-lasound"
   ];
 
   # Build qt-faststart executable

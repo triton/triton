@@ -1002,6 +1002,7 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   celt = null;
   dcadec = null;
   fdk_aac = null;
+  flite = null;
   frei0r-plugins = null;
   fribidi = null;
   game-music-emu = null;

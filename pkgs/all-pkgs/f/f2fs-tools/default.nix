@@ -6,9 +6,11 @@
 , util-linux_lib
 }:
 
+let
+  version = "1.7.0";
+in
 stdenv.mkDerivation rec {
   name = "f2fs-tools-${version}";
-  version = "1.7.0";
 
   src = fetchurl {
     url = "https://git.kernel.org/cgit/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/${name}.tar.gz";

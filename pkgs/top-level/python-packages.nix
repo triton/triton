@@ -340,6 +340,8 @@ python-dateutil = callPackage ../all-pkgs/p/python-dateutil { };
 
 python-ldap = callPackage ../all-pkgs/p/python-ldap { };
 
+python-magic = callPackage ../all-pkgs/p/python-magic { };
+
 python-tvrage = callPackage ../all-pkgs/p/python-tvrage { };
 
 pytz = callPackage ../all-pkgs/p/pytz { };

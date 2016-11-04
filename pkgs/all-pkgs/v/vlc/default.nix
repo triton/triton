@@ -29,6 +29,7 @@
 , libdc1394
 , libdvbpsi
 , libdvdnav
+, libdvdread
 , libebml
 , libgcrypt
 , libidn
@@ -124,7 +125,7 @@ stdenv.mkDerivation rec {
     libdc1394
     libdvbpsi
     libdvdnav
-    libdvdnav.libdvdread
+    libdvdread
     libebml
     libgcrypt
     libidn

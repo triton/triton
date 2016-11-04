@@ -84,7 +84,6 @@ stdenv.mkDerivation rec {
     #libcdio
     libdrm
     libdvdnav
-    libdvdnav.libdvdread
     libdvdread
     libjpeg
     libpng

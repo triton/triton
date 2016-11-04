@@ -44,7 +44,7 @@
 , avdeviceLibrary ? true
 , avfilterLibrary ? true
 , avformatLibrary ? true
-, avresampleLibrary ? true
+, avresampleLibrary ? false # Libav api compatibility library
 , avutilLibrary ? true
 , postprocLibrary ? true
 , swresampleLibrary ? true

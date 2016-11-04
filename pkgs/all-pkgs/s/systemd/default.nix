@@ -59,15 +59,15 @@ let
     '';
   };
 
-  upstreamVersion = "231";
-  version = "${upstreamVersion}-11-g76c65dc";
+  upstreamVersion = "232";
+  version = "${upstreamVersion}-9-gc81d700";
 in
 stdenv.mkDerivation rec {
   name = "${type}systemd-${version}";
 
   src = fetchurl {
     url = "https://github.com/triton/systemd/releases/download/v${version}/systemd-${upstreamVersion}.tar.xz";
-    sha256 = "cc6898df3b60e111e0da40b057b2796fc548daf5f1d1a7a9949e75dd9c07b7df";
+    sha256 = "d5119f4ca5dab277836da00f8ef6274eb210dfc9d14d4223a8eee197bf2426d8";
   };
 
   nativeBuildInputs = [
@@ -246,7 +246,7 @@ stdenv.mkDerivation rec {
   ];
 
   preBuild = optionalString libOnly ''
-    echo 'myBuildLibs: $(lib_LTLIBRARIES) udevadm' >> Makefile
+    echo 'myBuildLibs: $(rootlib_LTLIBRARIES) udevadm' >> Makefile
     echo 'myBuiltSources: $(BUILT_SOURCES)' >> Makefile
     make myBuiltSources
   '';
@@ -267,7 +267,7 @@ stdenv.mkDerivation rec {
   installTargets = optionals libOnly [
     "install-includeHEADERS"
     "install-pkgincludeHEADERS"
-    "install-libLTLIBRARIES"
+    "install-rootlibLTLIBRARIES"
     "install-pkgconfiglibDATA"
   ];
 

@@ -2532,6 +2532,8 @@ opencv_3-1 = callPackage ../all-pkgs/o/opencv {
 opencv_3 = callPackageAlias "opencv_3-1" { };
 opencv = callPackageAlias "opencv_3" { };
 
+openh264 = callPackage ../all-pkgs/o/openh264 { };
+
 openjpeg_1-5 = callPackage ../all-pkgs/o/openjpeg {
   channel = "1.5";
 };
@@ -3719,8 +3721,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   openalSoft = callPackage ../development/libraries/openal-soft { };
 #
   openexr = callPackage ../development/libraries/openexr { };
-#
-  openh264 = callPackage ../development/libraries/openh264 { };
 #
   p11_kit = callPackage ../development/libraries/p11-kit { };
 #

@@ -7,9 +7,13 @@
 }:
 
 let
+  inherit (stdenv)
+    targetSystem;
   inherit (lib)
+    elem
     optionals
-    optionalString;
+    optionalString
+    platforms;
 
   version = "1.6.0";
 in
@@ -31,6 +35,10 @@ stdenv.mkDerivation rec {
   preBuild = ''
     makeFlagsArray+=("PREFIX=$out")
   '';
+
+  makeFlags = optionals (elem targetSystem platforms.bit64) [
+    "ENABLE64BIT=Yes"
+  ];
 
   meta = with lib; {
     description = "A library for encoding & decoding h.264/AVC";

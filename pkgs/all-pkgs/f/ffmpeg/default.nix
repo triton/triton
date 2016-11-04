@@ -120,7 +120,7 @@
 #, opencl
 #, opencore-amr
 , opencv
-#, openh264
+, openh264
 , openjpeg
 , openssl
 , opus
@@ -346,6 +346,7 @@ stdenv.mkDerivation rec {
     libssh
     libwebp
     openal
+    openh264
     openjpeg
     opus
     libtheora
@@ -533,8 +534,7 @@ stdenv.mkDerivation rec {
     /**/"--disable-libopencore-amrwb"
     #"--${boolEn (opencv != null)}-libopencv"
     /**/"--disable-libopencv"
-    #"--${boolEn (openh264 != null)}-libopenh264"
-    /**/"--disable-libopenh264"
+    "--${boolEn (openh264 != null)}-libopenh264"
     "--${boolEn (openjpeg != null)}-libopenjpeg"
     #(ffmpeg "--${boolEn (libopenmpt != null)}-libopenmpt" "3.2")
     /**/(fflag "--disable-libopenmpt" "3.2")

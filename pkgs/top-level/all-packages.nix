@@ -1034,6 +1034,7 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   #opencl = null;
   #opencore-amr = null;
   opencv = null;
+  openh264 = null;
   openjpeg = null;
   openssl = null;
   samba_client = null;

@@ -865,6 +865,8 @@ dht = callPackage ../all-pkgs/d/dht { };
 
 dialog = callPackage ../all-pkgs/d/dialog { };
 
+diffoscope = pkgs.python3Packages.diffoscope;
+
 diffutils = callPackage ../all-pkgs/d/diffutils { };
 
 ding-libs = callPackage ../all-pkgs/d/ding-libs { };
@@ -3334,8 +3336,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 ################################################################################
 ################################################################################
 ################################################################################
-#
-  diffoscope = callPackage ../tools/misc/diffoscope { };
 #
   docbook2x = callPackage ../tools/typesetting/docbook2x { };
 #

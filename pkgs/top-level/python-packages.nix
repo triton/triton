@@ -199,6 +199,8 @@ decorator = callPackage ../all-pkgs/d/decorator { };
 
 deluge = callPackage ../all-pkgs/d/deluge { };
 
+diffoscope = callPackage ../all-pkgs/d/diffoscope { };
+
 discogs-client = callPackage ../all-pkgs/d/discogs-client { };
 
 docutils = callPackage ../all-pkgs/d/docutils { };

@@ -254,6 +254,8 @@ jmespath = callPackage ../all-pkgs/j/jmespath { };
 
 ldap3 = callPackage ../all-pkgs/l/ldap3 { };
 
+libarchive-c = callPackage ../all-pkgs/l/libarchive-c { };
+
 markupsafe = callPackage ../all-pkgs/m/markupsafe { };
 
 matrix-angular-sdk = callPackage ../all-pkgs/m/matrix-angular-sdk { };

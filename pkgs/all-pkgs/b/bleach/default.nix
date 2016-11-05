@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "1.4.3";
+  version = "1.5.0";
 in
 buildPythonPackage {
   name = "bleach-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "bleach";
     inherit version;
-    sha256 = "1293061adb5a9eebb7b260516e691785ac08cc1646c8976aeda7db9dbb1c6f4b";
+    sha256 = "978e758599b54cd3caa2e160d74102879b230ea8dc93871d0783721eef58bc65";
   };
 
   propagatedBuildInputs = [
@@ -23,8 +23,8 @@ buildPythonPackage {
     six
   ];
 
-  preConfigure = ''
-    sed -i '/html5lib/ s/\(,\|\)\(>\|<\|=\)\(=\|\)[0-9.]\+//g' setup.py bleach.egg-info/requires.txt
+  postPatch = ''
+    sed -i '/html5lib/ s/\(,\|\)\(!\|>\|<\|=\)\(=\|\)[0-9.]\+//g' setup.py bleach.egg-info/requires.txt
   '';
 
   meta = with stdenv.lib; {

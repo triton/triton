@@ -136,7 +136,6 @@
 , snappy
 , soxr
 , speex
-, speexdsp
 , tesseract
 #, twolame
 #, utvideo
@@ -367,7 +366,6 @@ stdenv.mkDerivation rec {
     soxr
     snappy
     speex
-    speexdsp
     tesseract
     v4l_lib
     vid-stab
@@ -551,7 +549,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (samba_client != null)}-libsmbclient"
     "--${boolEn (snappy != null)}-libsnappy"
     "--${boolEn (soxr != null)}-libsoxr"
-    "--${boolEn (speex != null && speexdsp != null)}-libspeex"
+    "--${boolEn (speex != null)}-libspeex"
     "--${boolEn (libssh != null)}-libssh"
     #(fflag "--${boolEn (tesseract != null)}-libtesseract" "3.0")
     /**/(fflag "--disable-libtesseract" "3.0")

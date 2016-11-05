@@ -1063,11 +1063,13 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
    });
 
    Mako = buildPythonPackage rec {
-     name = "Mako-1.0.4";
+     name = "Mako-${version}";
+     version = "1.0.5";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/M/Mako/${name}.tar.gz";
-       sha256 = "fed99dbe4d0ddb27a33ee4910d8708aca9ef1fe854e668387a9ab9a90cbf9059";
+     src = fetchPyPi {
+        package = "Mako";
+        inherit version;
+       sha256 = "e3e27cdd7abfd78337f33bd455f756c823c2d6224ad440a88f14bbd53a5ebc93";
      };
 
      buildInputs = with self; [

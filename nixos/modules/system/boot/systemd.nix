@@ -136,7 +136,6 @@ let
 
       # Slices / containers.
       "slices.target"
-      "-.slice"
       "system.slice"
       "user.slice"
       "machine.slice"

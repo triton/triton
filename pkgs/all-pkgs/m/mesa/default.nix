@@ -137,6 +137,10 @@ stdenv.mkDerivation rec {
       -i src/mesa/drivers/dri/i965/Makefile.am \
       -i src/gallium/drivers/freedreno/Makefile.am
   '';
+  # + /* Fix hardcoded OpenCL ICD install path */ ''
+  #   sed -i src/gallium/targets/opencl/Makefile.{in,am} \
+  #     -e "s,/etc,$out/etc,"
+  # '';
 
   configureFlags = [
     "--sysconfdir=/etc"
@@ -173,9 +177,6 @@ stdenv.mkDerivation rec {
     #"--enable-va"
     # TODO: Figure out how to enable opencl without having a
     #       runtime dependency on clang
-    # FIXME: fix opencl
-    #        llvm/invocation.cpp:25:45: fatal error: \
-    #        clang/Frontend/CompilerInstance.h: No such file
     "--disable-opencl"
     "--disable-opencl-icd"
     "--disable-gallium-tests"

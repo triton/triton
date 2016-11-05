@@ -5,18 +5,22 @@
 let
   inherit (stdenv.lib)
     replaceChars;
-in
 
+  baseUrls = v: [
+    "http://download.icu-project.org/files/icu4c/${v}/icu4c"
+  ];
+
+  version = "58.1";
+in
 stdenv.mkDerivation rec {
   name = "icu4c-${version}";
-  version = "57.1";
 
   src = fetchurl {
-    url = "http://download.icu-project.org/files/icu4c/${version}/icu4c-"
-      + (replaceChars ["."] ["_"] version) + "-src.tgz";
-    #md5Confirm = "http://download.icu-project.org/files/icu4c/${version}/"
-    #  + "icu4c-src-" + (replaceChars ["."] ["_"] version) + ".md5";
-    sha256 = "ff8c67cb65949b1e7808f2359f2b80f722697048e90e7cfc382ec1fe229e9581";
+    url =
+      map (n: "${n}-${replaceChars ["."] ["_"] version}-src.tgz")
+          (baseUrls version);
+    hashOutput = false;
+    sha256 = "0eb46ba3746a9c2092c8ad347a29b1a1b4941144772d13a88667a7b11ea30309";
   };
 
   postUnpack = ''
@@ -27,7 +31,7 @@ stdenv.mkDerivation rec {
     "--disable-debug"
     "--enable-release"
     "--disable-strict"
-    #"--enable-64bit-libs"
+    "--enable-shared"
     #"--enable-auto-cleanup"
     "--enable-draft"
     "--enable-renaming"
@@ -38,13 +42,34 @@ stdenv.mkDerivation rec {
     "--disable-weak-threads"
     "--enable-extras"
     "--enable-icuio"
-    "--enable-layout"
+    "--disable-layout"
     #"--enable-layoutex"
     "--enable-tools"
     "--disable-tests"
     "--disable-samples"
-    #"--with-library-bits="
   ];
+
+  passthru = {
+    srcVerification =
+      let
+        version = "58.1";
+      in
+      fetchurl {
+        inherit (src) outputHashAlgo;
+        urls =
+          map (n: "${n}-${replaceChars ["."] ["_"] version}-src.tgz")
+              (baseUrls version);
+        md5Urls =
+          map (n: "${n}-src-${replaceChars ["."] ["_"] version}.md5.asc")
+              (baseUrls version);
+        pgpKeyFingerprints = [
+          # Steven R. Loomis
+          "4C95 9C0F 547B D2D8 B783  5B17 AAA9 AE9C 0F0D E47D"
+        ];
+        outputHash = "0eb46ba3746a9c2092c8ad347a29b1a1b4941144772d13a88667a7b11ea30309";
+        failEarly = true;
+      };
+  };
 
   meta = with stdenv.lib; {
     description = "Unicode and globalization support library";

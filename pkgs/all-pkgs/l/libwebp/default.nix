@@ -7,8 +7,14 @@
 , libpng
 , libtiff
 , mesa
+
+, viewer ? false
 }:
 
+let
+  inherit (stdenv.lib)
+    optionals;
+in
 stdenv.mkDerivation rec {
   name = "libwebp-0.5.1";
 
@@ -33,11 +39,12 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    freeglut
     giflib
     libjpeg
     libpng
     libtiff
+  ] ++ optionals viewer [
+    freeglut
     mesa
   ];
 

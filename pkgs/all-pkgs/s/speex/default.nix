@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
     "--disable-blackfin-asm"
     "--disable-fixed-point-debug"
     "--disable-ti-c55x"
-    "--enable-vorbis-psy"
+    "--disable-vorbis-psy"
     "--with-fft=gpl-fftw3"
   ];
 

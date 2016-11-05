@@ -2521,6 +2521,9 @@ obexftp = callPackage ../all-pkgs/o/obexftp { };
 
 oniguruma = callPackage ../all-pkgs/o/oniguruma { };
 
+openal-soft = callPackage ../all-pkgs/o/openal-soft { };
+openal = callPackageAlias "openal-soft" { };
+
 opencv_2-4 = callPackage ../all-pkgs/o/opencv {
   channel = "2.4";
   gtk_3 = null;
@@ -3723,9 +3726,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   };
 #
   newt = callPackage ../development/libraries/newt { };
-#
-  openal = callPackageAlias "openalSoft" { };
-  openalSoft = callPackage ../development/libraries/openal-soft { };
 #
   openexr = callPackage ../development/libraries/openexr { };
 #

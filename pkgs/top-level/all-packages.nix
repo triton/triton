@@ -2846,6 +2846,8 @@ samba_client = callPackageAlias "samba_full" {
   type = "client";
 };
 
+schroedinger = callPackage ../all-pkgs/s/schroedinger { };
+
 scons = pkgs.pythonPackages.scons;
 
 screen = callPackage ../all-pkgs/s/screen { };
@@ -3736,8 +3738,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   rubberband = callPackage ../development/libraries/rubberband { };
 #
   sbc = callPackage ../development/libraries/sbc { };
-#
-  schroedinger = callPackage ../development/libraries/schroedinger { };
 #
   slang = callPackage ../development/libraries/slang { };
 #

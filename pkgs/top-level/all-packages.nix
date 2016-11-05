@@ -2656,6 +2656,8 @@ poppler = callPackage ../all-pkgs/p/poppler {
   qt5 = null;
 };
 
+portaudio = callPackage ../all-pkgs/p/portaudio { };
+
 postgresql_96 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.6";
 };
@@ -3734,8 +3736,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   phonon = callPackage ../development/libraries/phonon/qt4 {};
 #
   popt = callPackage ../development/libraries/popt { };
-
-  portaudio = callPackage ../development/libraries/portaudio { };
 #
   portmidi = callPackage ../development/libraries/portmidi { };
 #

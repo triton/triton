@@ -6,11 +6,14 @@
 , openssl
 }:
 
+let
+  version = "1.10.8";
+in
 stdenv.mkDerivation rec {
-  name = "asio-1.10.8";
+  name = "asio-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/asio/asio/${name}.tar.bz2";
+    url = "mirror://sourceforge/asio/asio/${version}%20%28Stable%29/${name}.tar.bz2";
     sha256 = "26deedaebbed062141786db8cfce54e77f06588374d08cccf11c02de1da1ed49";
   };
 

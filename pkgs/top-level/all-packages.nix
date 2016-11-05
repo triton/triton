@@ -2910,6 +2910,8 @@ soxr = callPackage ../all-pkgs/s/soxr { };
 
 spectrwm = callPackage ../all-pkgs/s/spectrwm { };
 
+speex = callPackage ../all-pkgs/s/speex { };
+
 speexdsp = callPackage ../all-pkgs/s/speexdsp { };
 
 spice = callPackage ../all-pkgs/s/spice { };
@@ -3746,8 +3748,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   spandsp = callPackage ../development/libraries/spandsp {};
 #
   speechd = callPackage ../development/libraries/speechd { };
-#
-  speex = callPackage ../development/libraries/speex { };
 #
   sqlite-interactive = pkgs.sqlite;
 #

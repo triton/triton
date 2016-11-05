@@ -18,7 +18,7 @@ in
 
       enable = mkOption {
         type = types.bool;
-        default = true;
+        default = false;
         description = ''
           Whether to enable GPM, the General Purpose Mouse daemon,
           which enables mouse support in virtual consoles.

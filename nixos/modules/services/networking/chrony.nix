@@ -11,7 +11,14 @@ let
   cfgFile = pkgs.writeText "chrony.conf" ''
     ${concatMapStringsSep "\n" (server: "server " + server + " iburst") cfg.servers}
 
+    ${optionalString cfg.initstepslew.enable ''
+      initstepslew 30 ${concatStringsSep " " cfg.initstepslew.servers}
+    ''}
+
+    driftfile ${stateDir}/chrony.drift
+
     ${optionalString (!config.time.hardwareClockInLocalTime) "rtconutc"}
+    rtcsync
 
     ${cfg.extraConfig}
   '';
@@ -31,7 +38,6 @@ in
   options = {
 
     services.chrony = {
-
       enable = mkOption {
         type = types.bool;
         default = false;
@@ -47,6 +53,33 @@ in
         description = ''
           The set of NTP servers from which to synchronise.
         '';
+      };
+
+      initstepslew = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = ''
+            Whether or not we should forcefully change the system time at start.
+          '';
+        };
+
+        threshold = mkOption {
+          type = types.int;
+          default = 1;
+          description = ''
+            The threshold for stepping all at once instead of doing a gradual slew.
+            The unit is seconds.
+          '';
+        };
+
+        servers = mkOption {
+          type = types.listOf types.str;
+          default = cfg.servers;
+          description = ''
+            The servers to use for determining the slew / step at startup.
+          '';
+        };
       };
 
       extraCmdline = mkOption {

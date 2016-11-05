@@ -3289,6 +3289,8 @@ xorg = recurseIntoAttrs (
   }
 );
 
+xvidcore = callPackage ../all-pkgs/x/xvidcore { };
+
 xz = callPackage ../all-pkgs/x/xz { };
 
 yaml-cpp = callPackage ../all-pkgs/y/yaml-cpp { };
@@ -3766,8 +3768,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
   xavs = callPackage ../development/libraries/xavs { };
 #
   xmlrpc_c = callPackage ../development/libraries/xmlrpc-c { };
-#
-  xvidcore = callPackage ../development/libraries/xvidcore { };
 #
   yajl = callPackage ../development/libraries/yajl { };
 #

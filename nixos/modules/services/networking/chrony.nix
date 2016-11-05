@@ -22,7 +22,7 @@ let
     "-m"
     "-u" "chrony"
     "-f" cfgFile
-  ] ++ extraCmdline;
+  ] ++ cfg.extraCmdline;
 in
 {
 

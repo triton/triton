@@ -11,12 +11,24 @@ let
     ${concatStringsSep "\n" (map (s: "server ${s}") cfg.servers)}
     ${cfg.extraConfig}
   '';
+
+  cmdline = [
+    "@${package}/sbin/ntpd" "openntpd"
+    "-d"
+    "-f" cfgFile
+  ] ++ cfg.extraCmdline;
 in
 {
   ###### interface
 
   options.services.openntpd = {
-    enable = mkEnableOption "OpenNTP time synchronization server";
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        OpenNTP time synchronization server
+      '';
+    };
 
     servers = mkOption {
       default = config.services.ntp.servers;
@@ -25,7 +37,7 @@ in
     };
 
     extraConfig = mkOption {
-      type = with types; lines;
+      type = types.lines;
       default = "";
       example = ''
         listen on 127.0.0.1 
@@ -36,10 +48,10 @@ in
       '';
     };
 
-    extraOptions = mkOption {
-      type = with types; string;
-      default = "";
-      example = "-s";
+    extraCmdline = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+      example = [ "-s" ];
       description = ''
         Extra options used when launching openntpd.
       '';
@@ -49,24 +61,33 @@ in
   ###### implementation
 
   config = mkIf cfg.enable {
-    services.ntp.enable = mkForce false;
+    assertions = [
+      {
+        assertion = !config.time.hardwareClockInLocalTime;
+        message = "openntpd does not support local time RTC.";
+      }
+    ];
 
     # Add ntpctl to the environment for status checking
     environment.systemPackages = [ package ];
 
-    users.extraUsers = singleton {
-      name = "ntp";
-      uid = config.ids.uids.ntp;
-      description = "OpenNTP daemon user";
-      home = "/var/empty";
-    };
+    services.ntp.providers = [
+      "openntpd"
+    ];
 
     systemd.services.openntpd = {
       description = "OpenNTP Server";
       wantedBy = [ "multi-user.target" ];
       wants = [ "network-online.target" ];
       after = [ "dnsmasq.service" "bind.service" "network-online.target" ];
-      serviceConfig.ExecStart = "${package}/sbin/ntpd -d -f ${cfgFile} ${cfg.extraOptions}";
+      serviceConfig.ExecStart = concatStringsSep " " cmdline;
+    };
+
+    users.extraUsers = singleton {
+      name = "ntp";
+      uid = config.ids.uids.ntp;
+      description = "OpenNTP daemon user";
+      home = "/var/empty";
     };
   };
 }

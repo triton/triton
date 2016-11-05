@@ -17,24 +17,42 @@ with lib;
   };
 
   config = mkIf config.services.timesyncd.enable {
-
-    systemd.additionalUpstreamSystemUnits = [ "systemd-timesyncd.service" ];
-
-    systemd.services.systemd-timesyncd = {
-      wantedBy = [ "sysinit.target" ];
-      restartTriggers = [ config.environment.etc."systemd/timesyncd.conf".source ];
-    };
+    assertions = [
+      {
+        assertion = !config.time.hardwareClockInLocalTime;
+        message = "systemd-timesyncd does not support local time RTC.";
+      }
+    ];
 
     environment.etc."systemd/timesyncd.conf".text = ''
       [Time]
       NTP=${concatStringsSep " " config.services.ntp.servers}
     '';
 
-    systemd.services.ntpd.enable = false;
+    services.ntp.providers = [
+      "timesyncd"
+    ];
 
-    users.extraUsers.systemd-timesync.uid = config.ids.uids.systemd-timesync;
-    users.extraGroups.systemd-timesync.gid = config.ids.gids.systemd-timesync;
+    systemd.additionalUpstreamSystemUnits = [
+      "systemd-timesyncd.service"
+    ];
 
+    systemd.services.systemd-timesyncd = {
+      wantedBy = [
+        "sysinit.target"
+      ];
+      restartTriggers = [
+        config.environment.etc."systemd/timesyncd.conf".source
+      ];
+    };
+
+    users.extraUsers.systemd-timesync = {
+      uid = config.ids.uids.systemd-timesync;
+    };
+
+    users.extraGroups.systemd-timesync ={
+      gid = config.ids.gids.systemd-timesync;
+    };
   };
 
 }

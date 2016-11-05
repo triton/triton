@@ -34,18 +34,16 @@ in
   };
 
   config = {
-
     environment.sessionVariables.TZDIR = "/etc/zoneinfo";
 
     systemd.globalEnvironment.TZDIR = tzdir;
 
-    environment.etc.localtime =
-      { source = "${tzdir}/${config.time.timeZone}";
-        mode = "direct-symlink";
-      };
+    environment.etc.localtime = {
+      source = "${tzdir}/${config.time.timeZone}";
+      mode = "direct-symlink";
+    };
 
     environment.etc.zoneinfo.source = "${pkgs.tzdata}/share/zoneinfo";
-
   };
 
 }

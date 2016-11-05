@@ -21,7 +21,12 @@ let
     ${toString (map (server: "server " + server + " iburst\n") cfg.servers)}
   '';
 
-  ntpFlags = "-c ${configFile} -u ${ntpUser}:nogroup ${toString cfg.extraFlags}";
+  cmdline = [
+    "@${ntp}/bin/ntpd" "ntpd"
+    "-g"
+    "-c" configFile
+    "-u" "${ntpUser}:nogroup"
+  ] ++ cfg.extraCmdline;
 
 in
 
@@ -35,13 +40,24 @@ in
 
       enable = mkOption {
         default = false;
+        type = types.bool;
         description = ''
           Whether to synchronise your machine's time using the NTP
           protocol.
         '';
       };
 
+      providers = mkOption {
+        default = [ ];
+        type = types.listOf types.str;
+        description = ''
+          This is for internal use only to describe the name of the
+          ntp providing service.
+        '';
+      };
+
       servers = mkOption {
+        type = types.listOf types.str;
         default = [
           "0.nixos.pool.ntp.org"
           "1.nixos.pool.ntp.org"
@@ -53,10 +69,10 @@ in
         '';
       };
 
-      extraFlags = mkOption {
+      extraCmdline = mkOption {
         type = types.listOf types.str;
         description = "Extra flags passed to the ntpd command.";
-        default = [];
+        default = [ ];
       };
 
     };
@@ -66,35 +82,52 @@ in
 
   ###### implementation
 
-  config = mkIf config.services.ntp.enable {
+  config = mkMerge [
+    {
+      assertions = [
+        {
+          assertion = length cfg.providers <= 1;
+          message = "You can only have a single ntp provider, not: ${toString cfg.providers}";
+        }
+      ];
+    }
+    (mkIf config.services.ntp.enable {
+      assertions = [
+        {
+          assertion = !config.time.hardwareClockInLocalTime;
+          message = "ntpd does not support local time RTC.";
+        }
+      ];
 
-    # Make tools such as ntpq available in the system path.
-    environment.systemPackages = [ pkgs.ntp ];
+      environment.systemPackages = [
+        pkgs.ntp
+      ];
 
-    users.extraUsers = singleton
-      { name = ntpUser;
+      services.ntp.providers = [
+        "ntp"
+      ];
+
+      systemd.services.ntpd = {
+        description = "NTP Daemon";
+        wantedBy = [
+          "multi-user.target"
+        ];
+        preStart = ''
+          mkdir -m 0755 -p ${stateDir}
+          chown ${ntpUser} ${stateDir}
+        '';
+        serviceConfig = {
+          Type = "forking";
+          ExecStart = concatStringsSep " " cmdline;
+        };
+      };
+
+      users.extraUsers."${ntpUser}" = {
         uid = config.ids.uids.ntp;
         description = "NTP daemon user";
         home = stateDir;
       };
-
-    systemd.services.ntpd =
-      { description = "NTP Daemon";
-
-        wantedBy = [ "multi-user.target" ];
-
-        preStart =
-          ''
-            mkdir -m 0755 -p ${stateDir}
-            chown ${ntpUser} ${stateDir}
-          '';
-
-        serviceConfig = {
-          ExecStart = "@${ntp}/bin/ntpd ntpd -g ${ntpFlags}";
-          Type = "forking";
-        };
-      };
-
-  };
+    })
+  ];
 
 }

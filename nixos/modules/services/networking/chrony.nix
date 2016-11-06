@@ -4,8 +4,6 @@ with lib;
 let
   stateDir = "/var/lib/chrony";
 
-  keyFile = "${stateDir}/chrony.keys";
-
   cfg = config.services.chrony;
 
   cfgFile = pkgs.writeText "chrony.conf" ''
@@ -15,10 +13,13 @@ let
       initstepslew 30 ${concatStringsSep " " cfg.initstepslew.servers}
     ''}
 
-    driftfile ${stateDir}/chrony.drift
+    driftfile ${stateDir}/drift
+    dumpdir ${stateDir}
+    dumponexit
 
-    ${optionalString (!config.time.hardwareClockInLocalTime) "rtconutc"}
-    rtcsync
+    hwclockfile /etc/adjtime
+    rtcdevice /dev/rtc
+    rtcfile ${stateDir}/rtc
 
     ${cfg.extraConfig}
   '';
@@ -27,6 +28,8 @@ let
     "@${pkgs.chrony}/bin/chronyd" "chronyd"
     "-n"
     "-m"
+    "-r"
+    "-s"
     "-u" "chrony"
     "-f" cfgFile
   ] ++ cfg.extraCmdline;
@@ -135,9 +138,6 @@ in
 
       preStart = ''
         mkdir -m 0755 -p ${stateDir}
-        touch ${keyFile}
-        chmod 0640 ${keyFile}
-        chown chrony:chrony ${stateDir} ${keyFile}
       '';
 
       serviceConfig = {

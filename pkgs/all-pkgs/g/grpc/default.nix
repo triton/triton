@@ -1,5 +1,8 @@
 { stdenv
+, autoconf
+, automake
 , fetchgit
+, libtool
 , which
 
 , openssl
@@ -21,19 +24,19 @@ stdenv.mkDerivation {
   };
 
   nativeBuildInputs = [
+    autoconf
+    automake
+    libtool
     which
   ];
 
   buildInputs = [
     openssl
-    protobuf-cpp
     zlib
   ];
 
   NIX_CFLAGS_LINK = [
     "-pthread"
-    "-lprotobuf"
-    "-lprotoc"
   ];
 
   preBuild = ''

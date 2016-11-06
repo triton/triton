@@ -47,6 +47,7 @@ with lib;
 
     # Allow ntp to be enabled via chrony
     services.chrony.enable = true;
+    services.chrony.initstepslew.enable = true;
     systemd.services.chrony.wantedBy = mkOverride 50 [];
 
     # Enable wpa_supplicant, but don't start it by default.

@@ -130,7 +130,7 @@ in
               ${optionalString (data.ed25519PrivateKeyFile != null) "Ed25519PrivateKeyFile = ${data.ed25519PrivateKeyFile}"}
               ${optionalString (data.listenAddress != null) "BindToAddress = ${data.listenAddress}"}
               Device = /dev/net/tun
-              Interface = tinc.${network}
+              Interface = network
               ${data.extraConfig}
             '';
           };
@@ -138,7 +138,7 @@ in
       ));
 
     networking.interfaces = flip mapAttrs' cfg.networks (network: data: nameValuePair
-      ("tinc.${network}")
+      (network)
       ({
         virtual = true;
         virtualType = "${data.interfaceType}";

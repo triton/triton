@@ -10,7 +10,8 @@ let
     ${concatMapStringsSep "\n" (server: "server " + server + " iburst") cfg.servers}
 
     ${optionalString cfg.initstepslew.enable ''
-      initstepslew 30 ${concatStringsSep " " cfg.initstepslew.servers}
+      initstepslew ${cfg.initstepslew.threshold} ${concatStringsSep " " cfg.initstepslew.servers}
+      makestep ${cfg.initstepslew.threshold} 3
     ''}
 
     driftfile ${stateDir}/drift
@@ -23,6 +24,10 @@ let
       rtcfile ${stateDir}/rtc
     '' else ''
       rtcsync
+    ''}
+
+    ${optionalString (!cfg.remoteCmdAccess) ''
+      cmdport 0
     ''}
 
     ${cfg.extraConfig}
@@ -95,6 +100,14 @@ in
         description = ''
           Allow chrony to take exclusive ownership of the system
           real time clock so it can better measure the accuracy.
+        '';
+      };
+
+      remoteCmdAccess = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Allow remove command access port to be open.
         '';
       };
 

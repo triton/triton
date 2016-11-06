@@ -10,7 +10,7 @@
 
 let
   major = "1.7";
-  patch = "2";
+  patch = "3";
 
   version = "${major}.${patch}";
 
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "dbb35dbf5f0c1749168c86c913fe98e872247bfc8425314b494c2423e7e43342";
+    sha256 = "af2b04e8475cf40b8d9ffd97a1acfa73aa787c890430afd89804fb544d6adc02";
   };
 
   buildInputs = [

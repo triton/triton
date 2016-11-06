@@ -19,7 +19,11 @@ let
 
     hwclockfile /etc/adjtime
     rtcdevice /dev/rtc
-    rtcfile ${stateDir}/rtc
+    ${if cfg.exclusiveRTC then ''
+      rtcfile ${stateDir}/rtc
+    '' else ''
+      rtcsync
+    ''}
 
     ${cfg.extraConfig}
   '';
@@ -83,6 +87,15 @@ in
             The servers to use for determining the slew / step at startup.
           '';
         };
+      };
+
+      exclusiveRTC = mkOption {
+        type = types.bool;
+        default = true;
+        description = ''
+          Allow chrony to take exclusive ownership of the system
+          real time clock so it can better measure the accuracy.
+        '';
       };
 
       extraCmdline = mkOption {

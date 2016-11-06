@@ -2259,6 +2259,8 @@ man-db = callPackage ../all-pkgs/m/man-db { };
 
 man-pages = callPackage ../all-pkgs/m/man-pages { };
 
+mcelog = callPackage ../all-pkgs/m/mcelog { };
+
 mdadm = callPackage ../all-pkgs/m/mdadm { };
 
 mediainfo = callPackage ../all-pkgs/m/mediainfo { };

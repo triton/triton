@@ -77,8 +77,8 @@ in
         };
 
         threshold = mkOption {
-          type = types.int;
-          default = 1;
+          type = types.str;
+          default = "0.1";
           description = ''
             The threshold for stepping all at once instead of doing a gradual slew.
             The unit is seconds.

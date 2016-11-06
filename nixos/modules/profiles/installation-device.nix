@@ -34,6 +34,9 @@ with lib;
             "Type `start display-manager' to\nstart the graphical user interface."}
       '';
 
+    # It's nice to have gpm by default since we have the binary anyway
+    services.gpm.enable = true;
+
     # Allow dhcpcd to be started manually through start dhcpcd
     networking.useDHCP = lib.mkDefault true;
     systemd.services.dhcpcd.wantedBy = lib.mkOverride 50 [];

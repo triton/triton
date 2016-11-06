@@ -2901,7 +2901,7 @@ let
     owner = "ipfs";
     repo = "go-ipfs";
     sha256 = "1p6c2k34k49bq94mr8gw7agz225dfjbc41nmxcrzi8isxiwgwjvm";
-    gxSha256 = "0437pn45vy605992j749hal51hy995jybf8s8qpmpfmrxzp46fj7";
+    gxSha256 = "0yh05w55jimp67nrafwy66n6fgjhzar3b8s191kxhmw7dzyk8kwd";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"
@@ -3042,10 +3042,12 @@ let
     buildInputs = [
       auroradnsclient
       aws-sdk-go
+      azure-sdk-for-go
       urfave_cli
       crypto
       dns
       weppos-dnsimple-go
+      go-autorest
       go-ini
       go-jose
       go-ovh

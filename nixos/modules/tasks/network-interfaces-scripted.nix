@@ -361,6 +361,29 @@ in
             '';
           });
 
+        createWgDevice = n: v: nameValuePair "network-dev-${n}"
+          { description = "Wg Interface ${n}";
+            wantedBy = [ "network.target" (subsystemDevice n) ];
+            after = [ "network-pre.target" ];
+            before = [ "network-interfaces.target" (subsystemDevice n) ];
+            serviceConfig.Type = "oneshot";
+            serviceConfig.RemainAfterExit = true;
+            path = with pkgs; [
+              iproute
+              wg
+            ];
+            script = ''
+              # Remove Dead Interfaces
+              ip link show "${n}" >/dev/null 2>&1 && ip link delete "${n}"
+              ip link add name "${n}" type wireguard
+              wg setconf "${n}" "${v.configFile}"
+              ip link set "${n}" up
+            '';
+            postStop = ''
+              ip link delete "${n}"
+            '';
+          };
+
       in listToAttrs (
            map configureAddrs interfaces ++
            map createTunDevice (filter (i: i.virtual) interfaces))

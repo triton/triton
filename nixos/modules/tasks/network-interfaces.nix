@@ -10,6 +10,7 @@ let
   hasVirtuals = any (i: i.virtual) interfaces;
   hasSits = cfg.sits != { };
   hasBonds = cfg.bonds != { };
+  hasWgs = cfg.wgs != { };
 
   slaves = concatMap (i: i.interfaces) (attrValues cfg.bonds)
     ++ concatMap (i: i.interfaces) (attrValues cfg.bridges)
@@ -725,6 +726,34 @@ in
       };
     };
 
+    networking.wgs = mkOption {
+      default = { };
+
+      example = {
+        wg0 = {
+          configFile = "/etc/wg0.conf";
+        };
+      };
+
+      description = ''
+        This option allows you to define wireguard devices.
+        The value of this option is an attribute set.
+        Each attribute specifies a wg, with the name
+        specifying the name of the wireguard interface.
+      '';
+
+      type = types.attrsOf types.optionSet;
+
+      options = {
+        configFile = mkOption {
+          type = types.str;
+          description = ''
+            Path to the configuration file for this interface.
+          '';
+        };
+      };
+    };
+
     networking.wlanInterfaces = mkOption {
       default = { };
       example = {
@@ -874,7 +903,12 @@ in
       ++ optional cfg.enableIPv6 "ipv6"
       ++ optional hasVirtuals "tun"
       ++ optional hasSits "sit"
-      ++ optional hasBonds "bonding";
+      ++ optional hasBonds "bonding"
+      ++ optional hasWgs "wireguard";
+
+    boot.extraModulePackages = optionals hasWgs [
+      config.boot.kernelPackages.wireguard
+    ];
 
     boot.extraModprobeConfig =
       # This setting is intentional as it prevents default bond devices
@@ -918,18 +952,17 @@ in
         }
       ];
 
-    environment.systemPackages =
-      [ pkgs.bind_tools
-        pkgs.iproute
-        pkgs.iputils
-        pkgs.net-tools
-        pkgs.openresolv
-      ]
-      ++ optionals config.networking.wireless.enable [
-        pkgs.iw
-        pkgs.rfkill
-      ]
-      ++ bridgeStp;
+    environment.systemPackages = [
+      pkgs.iproute
+      pkgs.iputils
+      pkgs.net-tools
+      pkgs.openresolv
+    ] ++ optionals hasWgs [
+      pkgs.wireguard
+    ] ++ optionals config.networking.wireless.enable [
+      pkgs.iw
+      pkgs.rfkill
+    ] ++ bridgeStp;
 
     systemd.targets."network-interfaces" =
       { description = "All Network Interfaces";

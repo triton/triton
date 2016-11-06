@@ -33,6 +33,14 @@ stdenv.mkDerivation rec {
     )
   '';
 
+  postInstall = ''
+    test -e "$out/share/zoneinfo-posix"
+    ln -sv ../zoneinfo-posix "$out"/share/zoneinfo/posix
+    test -e "$out/share/zoneinfo-leaps"
+    ln -sv ../zoneinfo-leaps "$out"/share/zoneinfo/leaps
+    ln -sv ../zoneinfo-leaps "$out"/share/zoneinfo/right
+  '';
+
   meta = with stdenv.lib; {
     homepage = http://www.iana.org/time-zones;
     description = "Database of current and historical time zones";

@@ -295,7 +295,7 @@ in
             wantedBy = [ "network.target" (subsystemDevice n) ];
             bindsTo = deps;
             after = [ "network-pre.target" ] ++ deps;
-            before = [ "network-interfaces.target" (subsystemDevice n) ];
+            before = [ "network-interfaces.target" ];
             serviceConfig.Type = "oneshot";
             serviceConfig.RemainAfterExit = true;
             path = [ pkgs.iproute ];
@@ -319,7 +319,7 @@ in
             wantedBy = [ "network.target" (subsystemDevice n) ];
             bindsTo = deps;
             after = [ "network-pre.target" ] ++ deps;
-            before = [ "network-interfaces.target" (subsystemDevice n) ];
+            before = [ "network-interfaces.target" ];
             serviceConfig.Type = "oneshot";
             serviceConfig.RemainAfterExit = true;
             path = [ pkgs.iproute ];
@@ -346,7 +346,7 @@ in
             wantedBy = [ "network.target" (subsystemDevice n) ];
             bindsTo = deps;
             after = [ "network-pre.target" ] ++ deps;
-            before = [ "network-interfaces.target" (subsystemDevice n) ];
+            before = [ "network-interfaces.target" ];
             serviceConfig.Type = "oneshot";
             serviceConfig.RemainAfterExit = true;
             path = [ pkgs.iproute ];
@@ -365,7 +365,7 @@ in
           { description = "Wg Interface ${n}";
             wantedBy = [ "network.target" (subsystemDevice n) ];
             after = [ "network-pre.target" ];
-            before = [ "network-interfaces.target" (subsystemDevice n) ];
+            before = [ "network-interfaces.target" ];
             serviceConfig.Type = "oneshot";
             serviceConfig.RemainAfterExit = true;
             path = with pkgs; [

@@ -1,28 +1,50 @@
 { stdenv
+, autoreconfHook
+, fetchFromGitHub
 , fetchurl
 , lib
 
 # Example encoding program
 , exampleSupport ? false
+
+, channel
 }:
 
 let
   inherit (lib)
-    boolEn;
+    boolEn
+    optionals;
+
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "fdk-aac-0.1.4";
+  name = "fdk-aac-${source.version}";
 
-  src = fetchurl {
-    url = "mirror://sourceforge/opencore-amr/fdk-aac/${name}.tar.gz";
-    sha256 = "1aqmzxri23q83wfmwbbashs27mq1mapvfirz5r9i7jkphrwgw42r";
-  };
+  src = (
+    if channel == "head" then
+      fetchFromGitHub {
+        version = source.fetchzipverion;
+        owner = "mstorsjo";
+        repo = "fdk-aac";
+        inherit (source) rev sha256;
+      }
+    else
+      fetchurl {
+        url = "mirror://sourceforge/opencore-amr/fdk-aac/${name}.tar.gz";
+        inherit (source) sha256;
+      }
+  );
+
+  nativeBuildInputs = optionals (channel == "head") [
+    autoreconfHook
+  ];
 
   configureFlags = [
     "--${boolEn exampleSupport}-example"
   ];
 
-  CXXFLAGS = [
+  # Remove for > 0.1.4
+  CXXFLAGS = optionals (channel == "stable") [
     "-std=c++03"
   ];
 

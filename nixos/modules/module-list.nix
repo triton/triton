@@ -392,32 +392,32 @@
   ./services/x11/xfs.nix
   ./services/x11/xserver.nix
 
-  ./services-new/a/accountsservice
-  ./services-new/a/alsa
-  ./services-new/a/at-spi2-core
-  ./services-new/b/bumblebee
-  ./services-new/c/cups
-  ./services-new/d/dbus
-  ./services-new/d/dconf
-  ./services-new/d/deluge
-  ./services-new/e/evolution-data-server
-  ./services-new/f/fleet
-  ./services-new/g/geoclue
-  ./services-new/g/gnome-documents
-  ./services-new/g/gnome-keyring
-  ./services-new/g/gnome-online-accounts
-  ./services-new/g/gnome-online-miners
-  ./services-new/g/gnome-user-share
-  ./services-new/g/gvfs
-  ./services-new/k/kubernetes
-  ./services-new/m/mpd
-  ./services-new/n/nautilus
-  ./services-new/n/nginx
-  ./services-new/n/nvidia-drivers
-  ./services-new/s/seahorse
-  ./services-new/s/sushi
-  ./services-new/t/tracker
-  ./services-new/u/udisks
+  ../../system/services/a/accountsservice
+  ../../system/services/a/alsa
+  ../../system/services/a/at-spi2-core
+  ../../system/services/b/bumblebee
+  ../../system/services/c/cups
+  ../../system/services/d/dbus
+  ../../system/services/d/dconf
+  ../../system/services/d/deluge
+  ../../system/services/e/evolution-data-server
+  ../../system/services/f/fleet
+  ../../system/services/g/geoclue
+  ../../system/services/g/gnome-documents
+  ../../system/services/g/gnome-keyring
+  ../../system/services/g/gnome-online-accounts
+  ../../system/services/g/gnome-online-miners
+  ../../system/services/g/gnome-user-share
+  ../../system/services/g/gvfs
+  ../../system/services/k/kubernetes
+  ../../system/services/m/mpd
+  ../../system/services/n/nautilus
+  ../../system/services/n/nginx
+  ../../system/services/n/nvidia-drivers
+  ../../system/services/s/seahorse
+  ../../system/services/s/sushi
+  ../../system/services/t/tracker
+  ../../system/services/u/udisks
 
   ./system/activation/activation-script.nix
   ./system/activation/top-level.nix

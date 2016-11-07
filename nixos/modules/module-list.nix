@@ -78,43 +78,25 @@
   ./security/rtkit.nix
   ./security/setuid-wrappers.nix
   ./security/sudo.nix
-  ./services/amqp/activemq/default.nix
-  ./services/amqp/rabbitmq.nix
-  ./services/audio/icecast.nix
-  ./services/audio/liquidsoap.nix
   ./services/audio/mopidy.nix
-  ./services/backup/almir.nix
   ./services/backup/bacula.nix
-  ./services/backup/crashplan.nix
   ./services/backup/mysql-backup.nix
   ./services/backup/postgresql-backup.nix
-  ./services/backup/rsnapshot.nix
-  ./services/backup/sitecopy-backup.nix
   ./services/backup/tarsnap.nix
-  ./services/cluster/panamax.nix
-  ./services/computing/torque/server.nix
-  ./services/computing/torque/mom.nix
-  ./services/computing/slurm/slurm.nix
   ./services/continuous-integration/jenkins/default.nix
   ./services/continuous-integration/jenkins/slave.nix
   ./services/continuous-integration/jenkins/job-builder.nix
-  ./services/databases/4store-endpoint.nix
-  ./services/databases/4store.nix
-  ./services/databases/couchdb.nix
   ./services/databases/firebird.nix
   ./services/databases/hbase.nix
   ./services/databases/influxdb.nix
   ./services/databases/memcached.nix
-  ./services/databases/monetdb.nix
   ./services/databases/mongodb.nix
   ./services/databases/mysql.nix
-  ./services/databases/neo4j.nix
   ./services/databases/openldap.nix
   ./services/databases/opentsdb.nix
   ./services/databases/postgresql.nix
   ./services/databases/redis.nix
   ./services/databases/riak.nix
-  ./services/databases/virtuoso.nix
   ./services/desktops/profile-sync-daemon.nix
   ./services/desktops/telepathy.nix
   ./services/hardware/acpid.nix
@@ -202,7 +184,6 @@
   ./services/misc/uhub.nix
   ./services/misc/zookeeper.nix
   ./services/monitoring/apcupsd.nix
-  ./services/monitoring/bosun.nix
   ./services/monitoring/cadvisor.nix
   ./services/monitoring/collectd.nix
   ./services/monitoring/das_watchdog.nix
@@ -219,7 +200,6 @@
   ./services/monitoring/riemann-tools.nix
   ./services/monitoring/scollector.nix
   ./services/monitoring/smartd.nix
-  ./services/monitoring/statsd.nix
   ./services/monitoring/systemhealth.nix
   ./services/monitoring/teamviewer.nix
   ./services/monitoring/ups.nix

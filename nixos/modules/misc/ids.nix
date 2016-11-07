@@ -69,7 +69,6 @@
       git = 41;
       fourstore = 42;
       fourstorehttp = 43;
-      virtuoso = 44;
       rtkit = 45;
       dovecot2 = 46;
       dovenull2 = 47;
@@ -94,7 +93,6 @@
       iodined = 66;
       #libvirtd = 67; # unused
       graphite = 68;
-      statsd = 69;
       transmission = 70;
       postgres = 71;
       #vboxusers = 72; # unused
@@ -107,11 +105,8 @@
       freenet = 79;
       ircd = 80;
       bacula = 81;
-      almir = 82;
       deluge = 83;
       mysql = 84;
-      rabbitmq = 85;
-      activemq = 86;
       gnunet = 87;
       oidentd = 88;
       quassel = 89;
@@ -131,7 +126,6 @@
       logcheck = 103;
       nix-ssh = 104;
       dictd = 105;
-      couchdb = 106;
       searx = 107;
       kippo = 108;
       jenkins = 109;
@@ -140,7 +134,6 @@
       ngircd = 112;
       btsync = 113;
       minecraft = 114;
-      monetdb = 115;
       rippled = 116;
       murmur = 117;
       foundationdb = 118;
@@ -161,7 +154,6 @@
       dhcpd = 133;
       siproxd = 134;
       mlmmj = 135;
-      neo4j = 136;
       riemann = 137;
       riemanndash = 138;
       radvd = 139;
@@ -180,13 +172,11 @@
       systemd-network = 152;
       systemd-resolve = 153;
       systemd-timesync = 154;
-      liquidsoap = 155;
       etcd = 156;
       docker-registry = 157;
       hbase = 158;
       opentsdb = 159;
       scollector = 160;
-      bosun = 161;
       kubernetes = 162;
       peerflix = 163;
       chronos = 164;
@@ -195,7 +185,6 @@
       cadvisor = 167;
       nylon = 168;
       apache-kafka = 169;
-      panamax = 170;
       exim = 172;
       #fleet = 173; # unused
       #input = 174; # unused
@@ -308,7 +297,6 @@
       git = 41;
       fourstore = 42;
       fourstorehttp = 43;
-      virtuoso = 44;
       #rtkit = 45; # unused
       dovecot2 = 46;
       #dovenull = 47; # unused
@@ -333,7 +321,6 @@
       iodined = 66;
       libvirtd = 67;
       graphite = 68;
-      #statsd = 69; # unused
       transmission = 70;
       postgres = 71;
       vboxusers = 72;
@@ -346,11 +333,8 @@
       freenet = 79;
       ircd = 80;
       bacula = 81;
-      almir = 82;
       deluge = 83;
       mysql = 84;
-      rabbitmq = 85;
-      activemq = 86;
       gnunet = 87;
       oidentd = 88;
       quassel = 89;
@@ -368,7 +352,6 @@
       #logcheck = 103; # unused
       #nix-ssh = 104; # unused
       dictd = 105;
-      couchdb = 106;
       searx = 107;
       kippo = 108;
       jenkins = 109;
@@ -377,7 +360,6 @@
       #ngircd = 112; # unused
       btsync = 113;
       #minecraft = 114; # unused
-      monetdb = 115;
       #ripped = 116; # unused
       #murmur = 117; # unused
       foundationdb = 118;
@@ -398,7 +380,6 @@
       #dhcpcd = 133; # unused
       siproxd = 134;
       mlmmj = 135;
-      #neo4j = 136; # unused
       riemann = 137;
       riemanndash = 138;
       #radvd = 139; # unused
@@ -417,19 +398,16 @@
       systemd-network = 152;
       systemd-resolve = 153;
       systemd-timesync = 154;
-      liquidsoap = 155;
       #etcd = 156; # unused
       #docker-registry = 157; # unused
       hbase = 158;
       opentsdb = 159;
       scollector = 160;
-      bosun = 161;
       kubernetes = 162;
       #peerflix = 163; # unused
       #chronos = 164; # unused
       gitlab = 165;
       nylon = 168;
-      panamax = 170;
       exim = 172;
       fleet = 173;
       input = 174;

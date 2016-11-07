@@ -3,9 +3,11 @@
 , fetchFromGitHub
 }:
 
+let
+  version = "1.6.9";
+in
 stdenv.mkDerivation rec {
   name = "geoip-${version}";
-  version = "1.6.9";
 
   src = fetchFromGitHub {
     version = 1;

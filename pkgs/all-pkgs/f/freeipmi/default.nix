@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "freeipmi-1.5.3";
+  name = "freeipmi-1.5.5";
 
   src = fetchurl {
     url = "mirror://gnu/freeipmi/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "5d36225b01cc965812e234e708d640381d030edf7689d4264d6f64c26a3c9868";
+    sha256 = "ae20b98d145b6316c4231903a64a96954bdd718e74fc4e6cec2cd0b63edcff53";
   };
 
   buildInputs = [

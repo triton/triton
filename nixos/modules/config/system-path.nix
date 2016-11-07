@@ -18,16 +18,18 @@ let
       pkgs.diffutils
       pkgs.findutils
       pkgs.gawk
+      pkgs.glibc
       pkgs.gnugrep
       pkgs.gnupatch
       pkgs.gnused
       pkgs.gnutar
       pkgs.gzip
-      pkgs.xz
       pkgs.less
+      pkgs.ncurses
       pkgs.procps
       pkgs.shadow
       pkgs.util-linux_full
+      pkgs.xz
     ];
 
 in

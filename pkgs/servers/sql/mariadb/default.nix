@@ -6,16 +6,16 @@
 
 with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "mariadb-${version}";
-  version = "10.1.18";
+  name = "mariadb-10.1.19";
 
   src = fetchurl {
     urls = map (n: "${n}/${name}/source/${name}.tar.gz") [
-      "https://downloads.mariadb.org/interstitial"
+      "http://downloads.mariadb.org/interstitial"
+      "http://sfo1.mirrors.digitalocean.com/mariadb"
       "http://mirror.jmu.edu/pub/mariadb"
     ];
     hashOutput = false;
-    sha256 = "d7336907e9ff44496d6453f92526b25bd253638a64a051ca879f953499873b73";
+    sha256 = "5b9373f314e2d1727422fb3795bcf50c1c59005129b35b6cadafae5663251a81";
   };
 
   nativeBuildInputs = [

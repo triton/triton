@@ -134,7 +134,6 @@
       ngircd = 112;
       btsync = 113;
       minecraft = 114;
-      rippled = 116;
       murmur = 117;
       foundationdb = 118;
       newrelic = 119;
@@ -197,7 +196,6 @@
       unifi = 183;
       uptimed = 184;
       zope2 = 185;
-      ripple-data-api = 186;
       mediatomb = 187;
       rdnssd = 188;
       ihaskell = 189;
@@ -208,7 +206,6 @@
       bird = 195;
       grafana = 196;
       skydns = 197;
-      ripple-rest = 198;
       nix-serve = 199;
       tvheadend = 200;
       uwsgi = 201;
@@ -360,7 +357,6 @@
       #ngircd = 112; # unused
       btsync = 113;
       #minecraft = 114; # unused
-      #ripped = 116; # unused
       #murmur = 117; # unused
       foundationdb = 118;
       newrelic = 119;
@@ -420,7 +416,6 @@
       #unifi = 183; # unused
       #uptimed = 184; # unused
       #zope2 = 185; # unused
-      #ripple-data-api = 186; #unused
       mediatomb = 187;
       #rdnssd = 188; # unused
       ihaskell = 189;
@@ -432,7 +427,6 @@
       bird = 195;
       #grafana = 196; #unused
       #skydns = 197; #unused
-      #ripple-rest = 198; #unused
       #nix-serve = 199; #unused
       #tvheadend = 200; #unused
       uwsgi = 201;

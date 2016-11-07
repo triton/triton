@@ -379,6 +379,9 @@ in
               wg setconf "${n}" "${v.configFile}"
               ip link set "${n}" up
             '';
+            reload = ''
+              wg setconf "${n}" "${v.configFile}"
+            '';
             postStop = ''
               ip link delete "${n}"
             '';

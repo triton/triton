@@ -160,7 +160,7 @@ in
             requires = [ "dev-net-tun.device" ];
             after = [ "dev-net-tun.device" "network-pre.target" ];
             wantedBy = [ "network.target" (subsystemDevice i.name) ];
-            before = [ "network-interfaces.target" (subsystemDevice i.name) ];
+            before = [ "network-interfaces.target" ];
             path = [ pkgs.iproute ];
             serviceConfig = {
               Type = "oneshot";
@@ -186,7 +186,7 @@ in
             partOf = optional v.rstp "mstpd.service";
             after = [ "network-pre.target" "mstpd.service" ] ++ deps
               ++ concatMap (i: [ "network-addresses-${i}.service" "network-link-${i}.service" ]) v.interfaces;
-            before = [ "network-interfaces.target" (subsystemDevice n) ];
+            before = [ "network-interfaces.target" ];
             serviceConfig.Type = "oneshot";
             serviceConfig.RemainAfterExit = true;
             path = [ pkgs.iproute ];
@@ -259,7 +259,7 @@ in
             bindsTo = deps;
             after = [ "network-pre.target" ] ++ deps
               ++ concatMap (i: [ "network-addresses-${i}.service" "network-link-${i}.service" ]) v.interfaces;
-            before = [ "network-interfaces.target" (subsystemDevice n) ];
+            before = [ "network-interfaces.target" ];
             serviceConfig.Type = "oneshot";
             serviceConfig.RemainAfterExit = true;
             path = [ pkgs.iproute pkgs.gawk ];

@@ -370,7 +370,7 @@ in
             serviceConfig.RemainAfterExit = true;
             path = with pkgs; [
               iproute
-              wg
+              wireguard
             ];
             script = ''
               # Remove Dead Interfaces
@@ -393,6 +393,7 @@ in
          // mapAttrs' createMacvlanDevice cfg.macvlans
          // mapAttrs' createSitDevice cfg.sits
          // mapAttrs' createVlanDevice cfg.vlans
+         // mapAttrs' createWgDevice cfg.wgs
          // {
            "network-setup" = networkSetup;
            "network-local-commands" = networkLocalCommands;

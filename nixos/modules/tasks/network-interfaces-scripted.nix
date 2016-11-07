@@ -370,22 +370,37 @@ in
             serviceConfig.RemainAfterExit = true;
             path = with pkgs; [
               iproute
-              wireguard
             ];
             script = ''
               # Remove Dead Interfaces
               ip link show "${n}" >/dev/null 2>&1 && ip link delete "${n}"
               ip link add name "${n}" type wireguard
-              wg setconf "${n}" "${v.configFile}"
               ip link set "${n}" up
-            '';
-            reload = ''
-              wg setconf "${n}" "${v.configFile}"
             '';
             postStop = ''
               ip link delete "${n}"
             '';
           };
+
+        setWgConfig = n: v: nameValuePair "wg-config-${n}"
+          { description = "Wg Config ${n}";
+            wantedBy = [ "multi-user.target" ];
+            requires = [ "network-dev-${n}.service" ];
+            bindsTo = [ "network-dev-${n}.service" ];
+            after = [ "network-dev-${n}.service" ];
+            serviceConfig = {
+              Type = "simple";
+              Restart = "on-failure";
+              RestartSec = "5s";
+            };
+            path = with pkgs; [
+              wireguard
+            ];
+            script = ''
+              wg setconf "${n}" "${v.configFile}"
+            '';
+          };
+
 
       in listToAttrs (
            map configureAddrs interfaces ++
@@ -397,10 +412,19 @@ in
          // mapAttrs' createSitDevice cfg.sits
          // mapAttrs' createVlanDevice cfg.vlans
          // mapAttrs' createWgDevice cfg.wgs
+         // mapAttrs' setWgConfig cfg.wgs
          // {
            "network-setup" = networkSetup;
            "network-local-commands" = networkLocalCommands;
          };
+
+    systemd.timers = flip mapAttrs' cfg.wgs (n: v: nameValuePair "wg-config-${n}" {
+      description = "Make sure wg config ${n} dns is up to date";
+      wantedBy = [ "multi-user.target" ];
+      timerConfig = {
+        OnUnitActiveSec = "5m";
+      };
+    });
 
     services.udev.extraRules =
       ''

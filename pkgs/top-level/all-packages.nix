@@ -1007,7 +1007,7 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   # The following are disabled by default
   celt = null;
   dcadec = null;
-  fdk_aac = null;
+  fdk-aac = null;
   flite = null;
   frei0r-plugins = null;
   fribidi = null;
@@ -1074,6 +1074,7 @@ ffmpeg_3 = callPackageAlias "ffmpeg_3-2" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
   channel = "9.9";
   # Use latest dependencies
+  fdk-aac = pkgs.fdk-aac_head;
   opus = pkgs.opus_head;
   libvpx = pkgs.libvpx_head;
   SDL = null;

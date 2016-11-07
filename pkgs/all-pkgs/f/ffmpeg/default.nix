@@ -69,7 +69,7 @@
 , dcadec ? null
 #, decklinkExtlib ? false
 #  , blackmagic-design-desktop-video
-, fdk_aac
+, fdk-aac
 , flite
 , fontconfig
 , freetype
@@ -183,7 +183,7 @@ in
  */
 # GPL
 assert
-  fdk_aac != null
+  fdk-aac != null
   #|| avid != null
   #|| cdio != null
   || frei0r-plugins != null
@@ -210,7 +210,7 @@ assert
   -> version3Licensing && gplLicensing;
 # Non-free
 assert
-  fdk_aac != null
+  fdk-aac != null
   #|| libnpp != null
   || nvidia-cuda-toolkit != null
   || openssl != null
@@ -385,7 +385,7 @@ stdenv.mkDerivation rec {
     zlib
   ] ++ optionals nonfreeLicensing [
     nvidia-cuda-toolkit
-    fdk_aac
+    fdk-aac
     openssl
   ];
 
@@ -509,7 +509,7 @@ stdenv.mkDerivation rec {
     (deprfflag "--${boolEn (dcadec != null)}-libdcadec" null "3.0")
     (fflag "--${boolEn (libebur128 != null)}-libebur128" "3.1")
     (deprfflag "--disable-libfaac" null "3.1")
-    (fflag "--${boolEn (fdk_aac != null)}-libfdk-aac" null)
+    (fflag "--${boolEn (fdk-aac != null)}-libfdk-aac" null)
     (fflag "--${boolEn (fontconfig != null)}-libfontconfig" "3.1")
     "--${boolEn (flite != null)}-libflite"
     "--${boolEn (freetype != null)}-libfreetype"

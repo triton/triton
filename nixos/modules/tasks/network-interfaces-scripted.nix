@@ -37,6 +37,18 @@ let
     ip link del "${i}" 2>/dev/null || true
   '';
 
+  ifUp = name: ''
+    echo "Bringing up interface ${name}" >&2
+    i=0
+    while ! ip link set "${name}" up; do
+      if [ "$i" -gt "25" ]; then
+        exit 1
+      fi
+      i=$(($i + 1))
+      sleep 0.2
+    done
+  '';
+
 in
 
 {
@@ -108,52 +120,80 @@ in
           in
           nameValuePair "network-addresses-${i.name}"
           { description = "Address configuration of ${i.name}";
-            wantedBy = [ "network-interfaces.target" ];
-            before = [ "network-interfaces.target" ];
-            bindsTo = [ (subsystemDevice i.name) ];
-            after = [ (subsystemDevice i.name) "network-pre.target" ];
+            wantedBy = [
+              "network-interfaces.target"
+            ];
+            before = [
+              "network-interfaces.target"
+            ];
+            bindsTo = [
+              (subsystemDevice i.name)
+            ];
+            after = [
+              (subsystemDevice i.name)
+              "network-pre.target"
+            ];
             serviceConfig.Type = "oneshot";
             serviceConfig.RemainAfterExit = true;
             path = [ pkgs.iproute ];
-            script =
-              ''
-                echo "bringing up interface..."
-                ip link set "${i.name}" up
+            script = ''
+              restart_network_interfaces=false
+            '' + flip concatMapStrings (ips) (ip:
+              let
+                address = "${ip.address}/${toString ip.prefixLength}";
+              in ''
+                echo "checking ip ${address}..."
+                if out=$(ip addr add "${address}" dev "${i.name}" 2>&1); then
+                  echo "added ip ${address}..."
+                  restart_network_setup=true
+                elif ! echo "$out" | grep "File exists" >/dev/null 2>&1; then
+                  echo "failed to add ${address}"
+                  exit 1
+                fi
+              '') + optionalString (ips != [ ]) ''
+              if [ "$restart_network_setup" = "true" ]; then
+                # Ensure that the default gateway remains set.
+                # (Flushing this interface may have removed it.)
+                ${config.systemd.package}/bin/systemctl try-restart --no-block network-setup.service
+              fi
+              ${config.systemd.package}/bin/systemctl start ip-up.target
+            '';
 
-                restart_network_interfaces=false
-              '' + flip concatMapStrings (ips) (ip:
-                let
-                  address = "${ip.address}/${toString ip.prefixLength}";
-                in
-                ''
-                  echo "checking ip ${address}..."
-                  if out=$(ip addr add "${address}" dev "${i.name}" 2>&1); then
-                    echo "added ip ${address}..."
-                    restart_network_setup=true
-                  elif ! echo "$out" | grep "File exists" >/dev/null 2>&1; then
-                    echo "failed to add ${address}"
-                    exit 1
-                  fi
-                '')
-              + optionalString (ips != [ ])
-                ''
-                  if [ "$restart_network_setup" = "true" ]; then
-                    # Ensure that the default gateway remains set.
-                    # (Flushing this interface may have removed it.)
-                    ${config.systemd.package}/bin/systemctl try-restart --no-block network-setup.service
-                  fi
-                  ${config.systemd.package}/bin/systemctl start ip-up.target
-                '';
             preStop = flip concatMapStrings (ips) (ip:
-                let
-                  address = "${ip.address}/${toString ip.prefixLength}";
-                in
-                ''
-                  echo -n "deleting ${address}..."
-                  ip addr del "${address}" dev "${i.name}" >/dev/null 2>&1 || echo -n " Failed"
-                  echo ""
-                '');
+              let
+                address = "${ip.address}/${toString ip.prefixLength}";
+              in ''
+                echo -n "deleting ${address}..."
+                ip addr del "${address}" dev "${i.name}" >/dev/null 2>&1 || echo -n " Failed"
+                echo ""
+              '');
           };
+
+        linkUp = i: nameValuePair "network-link-up-${i.name}" {
+          description = "Link up for ${i.name}";
+          wantedBy = [
+            "network-interfaces.target"
+          ];
+          before = [
+            "network-interfaces.target"
+          ];
+          bindsTo = [
+            (subsystemDevice i.name)
+          ];
+          after = [
+            (subsystemDevice i.name)
+            "network-pre.target"
+          ];
+          serviceConfig.Type = "oneshot";
+          serviceConfig.RemainAfterExit = true;
+          path = [ pkgs.iproute ];
+          script = ''
+            ${ifUp i.name}
+          '';
+          preStop = ''
+            ip link set "${i.name}" down || true
+          '';
+        };
 
         createTunDevice = i: nameValuePair "network-dev-${i.name}"
           { description = "Virtual Network Interface ${i.name}";
@@ -201,15 +241,13 @@ in
               # Enslave child interfaces
               ${flip concatMapStrings v.interfaces (i: ''
                 ip link set "${i}" master "${n}"
-                ip link set "${i}" up
+                ${ifUp i}
               '')}
 
               # Enable stp on the interface
               ${optionalString v.rstp ''
                 echo 2 >/sys/class/net/${n}/bridge/stp_state
               ''}
-
-              ip link set "${n}" up
             '';
             postStop = ''
               ip link set "${n}" down || true
@@ -278,7 +316,7 @@ in
               while [ ! -d "/sys/class/net/${n}" ]; do sleep 0.1; done;
 
               # Bring up the bond and enslave the specified interfaces
-              ip link set "${n}" up
+              ${ifUp n}
               ${flip concatMapStrings v.interfaces (i: ''
                 ip link set "${i}" down
                 ip link set "${i}" master "${n}"
@@ -304,7 +342,6 @@ in
               ip link show "${n}" >/dev/null 2>&1 && ip link delete "${n}"
               ip link add link "${v.interface}" name "${n}" type macvlan \
                 ${optionalString (v.mode != null) "mode ${v.mode}"}
-              ip link set "${n}" up
             '';
             postStop = ''
               ip link delete "${n}"
@@ -331,7 +368,6 @@ in
                 ${optionalString (v.local != null) "local \"${v.local}\""} \
                 ${optionalString (v.ttl != null) "ttl ${toString v.ttl}"} \
                 ${optionalString (v.dev != null) "dev \"${v.dev}\""}
-              ip link set "${n}" up
             '';
             postStop = ''
               ip link delete "${n}"
@@ -354,7 +390,6 @@ in
               # Remove Dead Interfaces
               ip link show "${n}" >/dev/null 2>&1 && ip link delete "${n}"
               ip link add link "${v.interface}" name "${n}" type vlan id "${toString v.id}"
-              ip link set "${n}" up
             '';
             postStop = ''
               ip link delete "${n}"
@@ -370,40 +405,56 @@ in
             serviceConfig.RemainAfterExit = true;
             path = with pkgs; [
               iproute
+              wireguard
             ];
             script = ''
               # Remove Dead Interfaces
               ip link show "${n}" >/dev/null 2>&1 && ip link delete "${n}"
               ip link add name "${n}" type wireguard
-              ip link set "${n}" up
+              wg set "${n}" listen-port "${toString v.port}"
             '';
             postStop = ''
               ip link delete "${n}"
             '';
           };
 
-        setWgConfig = n: v: nameValuePair "wg-config-${n}"
-          { description = "Wg Config ${n}";
-            wantedBy = [ "multi-user.target" ];
-            requires = [ "network-dev-${n}.service" ];
-            bindsTo = [ "network-dev-${n}.service" ];
-            after = [ "network-dev-${n}.service" ];
-            serviceConfig = {
-              Type = "simple";
-              Restart = "on-failure";
-              RestartSec = "5s";
-            };
-            path = with pkgs; [
-              wireguard
-            ];
-            script = ''
-              wg setconf "${n}" "${v.configFile}"
-            '';
+        setWgConfig = n: v: nameValuePair "wg-config-${n}" {
+          description = "Wg Config ${n}";
+          wantedBy = [
+            "multi-user.target"
+          ];
+          requiredBy = [
+            "network-link-up-${n}.service"
+          ];
+          requires = [
+            "network-dev-${n}.service"
+          ];
+          bindsTo = [
+            "network-dev-${n}.service"
+          ];
+          after = [
+            "network-dev-${n}.service"
+          ];
+          before = [
+            "network-link-up-${n}.service"
+          ];
+          serviceConfig = {
+            Type = "simple";
+            Restart = "on-failure";
+            RestartSec = "5s";
           };
+          path = with pkgs; [
+            wireguard
+          ];
+          script = ''
+            wg setconf "${n}" "${v.configFile}"
+          '';
+        };
 
 
       in listToAttrs (
            map configureAddrs interfaces ++
+           map linkUp interfaces ++
            map createTunDevice (filter (i: i.virtual) interfaces))
          // mapAttrs' createBridgeDevice cfg.bridges
          // mapAttrs' createVswitchDevice cfg.vswitches

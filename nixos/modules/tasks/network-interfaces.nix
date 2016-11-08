@@ -731,6 +731,7 @@ in
 
       example = {
         wg0 = {
+          port = 656;
           configFile = "/etc/wg0.conf";
         };
       };
@@ -745,6 +746,13 @@ in
       type = types.attrsOf types.optionSet;
 
       options = {
+        port = mkOption {
+          type = types.int;
+          description = ''
+            Port to initially bind the wireguard instance.
+          '';
+        };
+
         configFile = mkOption {
           type = types.str;
           description = ''

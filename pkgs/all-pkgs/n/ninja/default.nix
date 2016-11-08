@@ -6,14 +6,14 @@
 }:
 
 let
-  version = "1.7.1";
+  version = "1.7.2";
 in
 stdenv.mkDerivation rec {
   name = "ninja-${version}";
 
   src = fetchurl {
     url = "https://github.com/triton/ninja/releases/download/v${version}/${name}.tar.xz";
-    sha256 = "6e8bb087370819bb7d655c2d6b1b15d417d40b21556745ac7b77c1a8c51b6e15";
+    sha256 = "d857f906e37916d2c4cd7d3955a4758c6d2adb7387540e13e6541884c1fd2369";
   };
 
   nativeBuildInputs = [

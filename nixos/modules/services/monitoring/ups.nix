@@ -182,7 +182,7 @@ in
 
     systemd.services.upsmon = {
       description = "Uninterruptible Power Supplies (Monitor)";
-      wantedBy = [ "ip-up.target" ];
+      wantedBy = [ "multi-user.target" ];
       serviceConfig.Type = "forking";
       script = "${pkgs.nut}/sbin/upsmon";
       environment.NUT_CONFPATH = "/etc/nut/";

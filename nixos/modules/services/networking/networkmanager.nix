@@ -58,10 +58,9 @@ let
     });
   '';
 
-  ipUpScript = pkgs.writeScript "01nixos-ip-up" ''
+  ipUpScript = pkgs.writeScript "01nixos-network-online" ''
     #!/bin/sh
     if test "$2" = "up"; then
-      ${config.systemd.package}/bin/systemctl start ip-up.target
       ${config.systemd.package}/bin/systemctl start network-online.target
     fi
   '';
@@ -204,7 +203,7 @@ in
     environment.etc = [
       {
         source = ipUpScript;
-        target = "NetworkManager/dispatcher.d/01nixos-ip-up";
+        target = "NetworkManager/dispatcher.d/01nixos-network-online";
       }
       {
         source = configFile;

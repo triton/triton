@@ -714,8 +714,6 @@ in
         unitConfig.X-StopOnReconfiguration = true;
       };
 
-    systemd.targets.network-online.after = [ "ip-up.target" ];
-
     systemd.targets.network-pre = {
       wantedBy = [ "network.target" ];
       before = [ "network.target" ];

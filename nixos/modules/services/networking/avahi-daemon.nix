@@ -174,14 +174,17 @@ in
         deps = optionals (cfg.interfaces!=null) (map subsystemDevice cfg.interfaces);
       in
       { description = "Avahi daemon";
-        wantedBy = [ "ip-up.target" ];
+        wantedBy = [ "network.target" ];
         bindsTo = deps;
         after = deps;
-        before = [ "ip-up.target" ];
+        before = [ "network.target" ];
         # Receive restart event after resume
         partOf = [ "post-resume.target" ];
 
-        path = [ pkgs.coreutils pkgs.avahi ];
+        path = [
+          pkgs.coreutils
+          pkgs.avahi
+        ];
 
         preStart = "mkdir -p /var/run/avahi-daemon";
 

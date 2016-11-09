@@ -1074,7 +1074,6 @@ ffmpeg_3 = callPackageAlias "ffmpeg_3-2" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
   channel = "9.9";
   # Use latest dependencies
-  fdk-aac = pkgs.fdk-aac_head;
   opus = pkgs.opus_head;
   libvpx = pkgs.libvpx_head;
   SDL = null;

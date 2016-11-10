@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "2.3.1";
+  version = "2.4.0";
 in
 stdenv.mkDerivation rec {
   name = "fish-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/fish-shell/fish-shell/releases/download/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "328acad35d131c94118c1e187ff3689300ba757c4469c8cc1eaa994789b98664";
+    sha256 = "06bbb2323360439c4044da762d114ec1aa1aba265cec71c0543e6a0095c9efc5";
   };
 
   nativeBuildInputs = [

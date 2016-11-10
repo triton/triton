@@ -20,11 +20,11 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "ncmpcpp-0.7.5";
+  name = "ncmpcpp-0.7.7";
 
   src = fetchurl {
     url = "https://rybczak.net/ncmpcpp/stable/${name}.tar.bz2";
-    sha256 = "7e4f643020b36698462879013a8b16111f8c3a4c5819cf186aed78032a41e07d";
+    sha256 = "b7bcbec83b1f88cc7b21f196b10be09a27b430566c59f402df170163464d01ef";
   };
 
   buildInputs = [

@@ -4,6 +4,7 @@
 
 , ncurses
 , pcre2
+, python
 , which
 }:
 
@@ -38,6 +39,10 @@ stdenv.mkDerivation rec {
     "--with-gettext"
     "--without-included-pcre2"
   ];
+
+  preFixup = ''
+    sed -i 's,\(^\|[ \t]\)python\([ \t]\|$\),\1${python}/bin/python\2,' "$out/share/fish/functions/fish_update_completions.fish"
+  '';
 
   passthru = {
     srcVerification = fetchurl rec {

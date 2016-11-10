@@ -12,21 +12,16 @@
 }:
 
 let
-  inherit (builtins)
-    replaceStrings
-    substring;
-
-  version = "4.1.5";
-
-  versionMajorMinor = replaceStrings ["."] ["-"] (substring 0 3 version);
+  version = "4.2.0";
 in
 stdenv.mkDerivation rec {
   name = "zeromq-${version}";
 
   src = fetchurl {
-    url = "https://github.com/zeromq/zeromq${versionMajorMinor}/releases/"
-      + "download/v${version}/${name}.tar.gz";
-    sha256 = "04aac57f081ffa3a2ee5ed04887be9e205df3a7ddade0027460b8042432bdbcf";
+    url = "https://github.com/zeromq/libzmq/releases/download/v${version}/"
+      + "${name}.tar.gz";
+    hashOutput = false;
+    sha256 = "53b83bf0ee978931f76fa9cb46ad4affea65787264a5f3d140bc743412d0c117";
   };
 
   nativeBuildInputs = [
@@ -48,6 +43,20 @@ stdenv.mkDerivation rec {
     "--with-libsodium"
     # "--with-pgm" # TODO: Implement
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      md5Url = "https://github.com/zeromq/libzmq/releases/download/v${version}/"
+        + "MD5SUMS";
+      sha1Url = "https://github.com/zeromq/libzmq/releases/download/"
+        + "v${version}/SHA1SUMS";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "The Intelligent Transport Layer";

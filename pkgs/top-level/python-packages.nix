@@ -1064,12 +1064,12 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    Mako = buildPythonPackage rec {
      name = "Mako-${version}";
-     version = "1.0.5";
+     version = "1.0.6";
 
      src = fetchPyPi {
         package = "Mako";
         inherit version;
-       sha256 = "e3e27cdd7abfd78337f33bd455f756c823c2d6224ad440a88f14bbd53a5ebc93";
+       sha256 = "48559ebd872a8e77f92005884b3d88ffae552812cdf17db6768e5c3be5ebbe0d";
      };
 
      buildInputs = with self; [

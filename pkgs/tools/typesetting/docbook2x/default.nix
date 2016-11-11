@@ -3,11 +3,14 @@
 , docbook_xml_dtd_43
 , makeWrapper }:
 
+let
+  version = "0.8.8";
+in
 stdenv.mkDerivation rec {
-  name = "docbook2X-0.8.8";
+  name = "docbook2X-${version}";
   
   src = fetchurl {
-    url = "mirror://sourceforge/docbook2x/${name}.tar.gz";
+    url = "mirror://sourceforge/docbook2x/docbook2x/${version}/${name}.tar.gz";
     sha256 = "0ifwzk99rzjws0ixzimbvs83x6cxqk1xzmg84wa1p7bs6rypaxs0";
   };
 

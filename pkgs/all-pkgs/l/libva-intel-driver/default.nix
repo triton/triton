@@ -11,13 +11,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libva-intel-driver-1.7.2";
+  name = "libva-intel-driver-1.7.3";
 
   src = fetchurl rec {
     url = "https://www.freedesktop.org/software/vaapi/releases/libva-intel-driver/${name}.tar.bz2";
     sha1Url = "${url}.sha1sum";
-    multihash = "QmcWu3JLGbsSqYQNSU1rFf95u1cHNkTbym6WhQ8uUD5Wqu";
-    sha256 = "099e7bf6aa826971ec2caff235babf4da995f754e2ca16a73b258671130e67bc";
+    multihash = "QmUVKEkCug69AxiLGjAnuzBKo8WmmWGbnFQwgXBAp86RNg";
+    sha256 = "76ad37d9fd5ae23d8ce6052d50b5e6438a8df9e769b13fe34b771cd453f4f937";
   };
 
   nativeBuildInputs = [

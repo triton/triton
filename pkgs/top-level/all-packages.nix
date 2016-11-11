@@ -2087,6 +2087,8 @@ libsigsegv = callPackage ../all-pkgs/l/libsigsegv { };
 
 libsmbios = callPackage ../all-pkgs/l/libsmbios { };
 
+libsmi = callPackage ../all-pkgs/l/libsmi { };
+
 libsndfile = callPackage ../all-pkgs/l/libsndfile { };
 
 libsodium = callPackage ../all-pkgs/l/libsodium { };

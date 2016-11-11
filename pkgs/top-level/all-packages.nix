@@ -3042,6 +3042,8 @@ tcl_8-6 = callPackage ../all-pkgs/t/tcl {
 };
 tcl = callPackageAlias "tcl_8-6" { };
 
+tcpdump = callPackage ../all-pkgs/t/tcpdump { };
+
 tcp-wrappers = callPackage ../all-pkgs/t/tcp-wrappers { };
 
 tdb = callPackage ../all-pkgs/t/tdb { };
@@ -3411,8 +3413,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   rng_tools = callPackage ../tools/security/rng-tools { };
 #
   strongswan = callPackage ../tools/networking/strongswan { };
-#
-  tcpdump = callPackage ../tools/networking/tcpdump { };
 #
   vpnc = callPackage ../tools/networking/vpnc { };
 

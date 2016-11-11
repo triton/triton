@@ -23,8 +23,8 @@ let
       ];
     };
     "1.1.0" = {
-      version = "1.1.0b";
-      sha256 = "a45de072bf9be4dea437230aaf036000f0e68c6a665931c57e76b5b036cef6f7";
+      version = "1.1.0c";
+      sha256 = "fc436441a2e05752d31b4e46115eb89709a28aef96d4fe786abe92409b2fd6f5";
       patches = [
         (fetchTritonPatch {
           rev = "caf82b1cce7289f53531e0ae4775fe0f4aa417a9";

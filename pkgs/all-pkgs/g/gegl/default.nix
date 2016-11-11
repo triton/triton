@@ -37,14 +37,14 @@ let
     platforms;
 
   channel = "0.3";
-  version = "${channel}.8";
+  version = "${channel}.10";
 in
 stdenv.mkDerivation rec {
   name = "gegl-${version}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/gegl/${channel}/${name}.tar.bz2";
-    sha256 = "06ca9e67a59da026eb941b9d323269d7c19a922f1e478acdd3791a0eef8b229b";
+    sha256 = "26b4d6d0a8edb358ca2fbc097f9f97eec9d74e0ffe42f89fa1aff201728023d9";
   };
 
   nativeBuildInputs = [

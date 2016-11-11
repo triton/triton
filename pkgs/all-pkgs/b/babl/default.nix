@@ -4,7 +4,7 @@
 
 let
   major = "0.1";
-  patch = "18";
+  patch = "20";
   version = "${major}.${patch}";
 in
 stdenv.mkDerivation rec {
@@ -15,11 +15,10 @@ stdenv.mkDerivation rec {
       "https://download.gimp.org/pub/babl/${major}/${name}.tar.bz2"
       "http://ftp.gtk.org/pub/babl/${major}/${name}.tar.bz2"
     ];
-    multihash = "QmeBXFgyvtQormCBCX42mphESCSpgiQHxyXqxgJ8AxeXgK";
-    sha256 = "1ygvnq22pf0zvf3bj7h67vvbpz7b8hhjvrr79ribws7sr5dljfj8";
+    sha256 = "0010909979d4f025d734944722c76eb49e61e412608dbbe4f00857bc8cf59314";
   };
 
-  meta = with stdenv.lib; { 
+  meta = with stdenv.lib; {
     description = "Image pixel format conversion library";
     homepage = http://gegl.org/babl/;
     license = licenses.gpl3;

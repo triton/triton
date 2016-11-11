@@ -22,6 +22,7 @@
 , pulseaudio_lib
 , speechd
 , speex
+, speexdsp
 , xorg
 
 , mumbleOverlay ? true
@@ -94,6 +95,7 @@ stdenv.mkDerivation rec {
     pulseaudio_lib
     speechd
     speex
+    speexdsp
     xorg.fixesproto
     xorg.inputproto
     xorg.libX11

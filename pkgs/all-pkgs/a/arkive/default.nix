@@ -1,29 +1,44 @@
 { stdenv
 , cmake
-, fetchgit
+, fetchFromGitHub
+, makeWrapper
 
-, ffmpeg
+, bc
+, ffmpeg_head
+, jq
 , lib-bash
 }:
 
 stdenv.mkDerivation rec {
-  name = "arkive-2016-05-16";
+  name = "arkive-2016-11-11";
 
-  src = fetchgit {
-    version = 1;
-    url = "https://github.com/chlorm/arkive.git";
-    rev = "538d6413673e6fee40ed0c936a534ca18b24ccf9";
-    sha256 = "19hjbn57y2a5gf9hwqr51cy380m5z9qmjmf5rjags3cqc36nqgag";
+  src = fetchFromGitHub {
+    version = 2;
+    owner = "chlorm";
+    repo = "arkive";
+    rev = "dbe59908ca616ce766ba2a115874962b63bfc297";
+    sha256 = "5081d226de1f1c7fe9e9f1d9e94b71fdf5ef86e8fd2a23c631a5d06d70d495c3";
   };
 
   nativeBuildInputs = [
     cmake
+    makeWrapper
   ];
 
   buildInputs = [
-    ffmpeg
+    bc
+    ffmpeg_head
+    jq
     lib-bash
   ];
+
+  preFixup = ''
+    wrapProgram $out/bin/arkive \
+      --prefix 'PATH' : "${bc}" \
+      --prefix 'PATH' : "${ffmpeg_head}" \
+      --prefix 'PATH' : "${jq}" \
+      --prefix 'PATH' : "${lib-bash}"
+  '';
 
   meta = with stdenv.lib; {
     description = "Video encoding automation scripts";

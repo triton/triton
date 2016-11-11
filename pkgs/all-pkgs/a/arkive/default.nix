@@ -34,10 +34,10 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/arkive \
-      --prefix 'PATH' : "${bc}" \
-      --prefix 'PATH' : "${ffmpeg_head}" \
-      --prefix 'PATH' : "${jq}" \
-      --prefix 'PATH' : "${lib-bash}"
+      --prefix 'PATH' : "${bc}/bin" \
+      --prefix 'PATH' : "${ffmpeg_head}/bin" \
+      --prefix 'PATH' : "${jq}/bin" \
+      --prefix 'PATH' : "${lib-bash}/bin"
   '';
 
   meta = with stdenv.lib; {

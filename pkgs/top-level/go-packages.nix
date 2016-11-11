@@ -297,9 +297,9 @@ let
     version = 2;
     owner = "eknkc";
     repo = "amber";
-    rev = "7875e9689d335cd15294cd6f4f0ef8322ce4c8e7";
-    date = "2016-07-18";
-    sha256 = "169sdjs8v58ah35v8zlpka3xkfix46h2liyd5g5mi71xqbq5w9dy";
+    rev = "a69a021e158c3b06700cc881c05d0923f627b578";
+    date = "2016-10-12";
+    sha256 = "1050dnl3vdzhhk2slbc453lfabgn4xcrdfrahjdk88ldbsh6qshn";
   };
 
   amqp = buildFromGitHub {
@@ -1975,6 +1975,17 @@ let
     date = "2016-09-23";
   };
 
+  go-i18n = buildFromGitHub {
+    version = 2;
+    rev = "v1.6.0";
+    owner  = "nicksnyder";
+    repo   = "go-i18n";
+    sha256 = "1f86wxw3avwbjk3jam8p6bb2q39d43b19pjsrgg4lc82b98lsfsl";
+    buildInputs = [
+      yaml_v2
+    ];
+  };
+
   go-immutable-radix = buildFromGitHub {
     version = 1;
     date = "2016-06-08";
@@ -2226,14 +2237,6 @@ let
       clockwork
       pkg
     ];
-  };
-
-  go-ole = buildFromGitHub {
-    version = 1;
-    rev = "v1.2.0";
-    owner  = "go-ole";
-    repo   = "go-ole";
-    sha256 = "1bkvi5l2sshjrg1g9x1a4i337adrv1vhk8p1xrkx5z05nfwazvx0";
   };
 
   go-os-rename = buildFromGitHub {
@@ -2750,11 +2753,11 @@ let
   };
 
   hugo = buildFromGitHub {
-    version = 1;
+    version = 2;
     owner = "spf13";
     repo = "hugo";
-    rev = "v0.16";
-    sha256 = "1jf8mwpzggridb3dip0dd1hzbzn0kkajfi5jy9vh3naakxzk11w7";
+    rev = "v0.17";
+    sha256 = "025l734hc57vhxfnsrq6amr7yx3cls2p3sibgr3vmz81chmk2zky";
     buildInputs = [
       ace
       afero
@@ -2764,6 +2767,7 @@ let
       cobra
       cssmin
       emoji
+      go-i18n
       fsnotify
       fsync
       inflect
@@ -3540,14 +3544,15 @@ let
   };
 
   mmark = buildFromGitHub {
-    version = 1;
+    version = 2;
     owner = "miekg";
     repo = "mmark";
-    rev = "v1.3.4";
-    sha256 = "0mpnn6894j6cwvxq29vh3k06jg46swy58ff60i9vjqn942cklkvv";
+    rev = "2d4f1dd6f87cad351b9323bbaa6f6c586f0c4bee";
+    sha256 = "0r0mrsj0pz60g7ljiij0kl9b5s4r0nyl56fjgwy5fn5rpliakinc";
     buildInputs = [
       toml
     ];
+    date = "2016-11-03";
   };
 
   mongo-tools = buildFromGitHub {

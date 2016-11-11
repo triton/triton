@@ -4,6 +4,7 @@
 , libutempter
 , ncurses
 , openssl
+, perl
 , protobuf-cpp
 , zlib
 }:
@@ -24,6 +25,7 @@ stdenv.mkDerivation rec {
     libutempter
     ncurses
     openssl
+    perl  # Needed for $out/bin/mosh
     protobuf-cpp
     zlib
   ];

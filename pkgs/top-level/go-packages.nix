@@ -706,10 +706,10 @@ let
 
   consul = buildFromGitHub {
     version = 2;
-    rev = "v0.7.0";
+    rev = "v0.7.1";
     owner = "hashicorp";
     repo = "consul";
-    sha256 = "1xfq0c25z1qsv3psdqw4ydyvmlxdp971dqrky1panmw7b2s9hyi3";
+    sha256 = "1gmvdg01mv9nmwf77y34x7gxg124a7hxdqkcv8rdkx1y7fl9sp9f";
 
     buildInputs = [
       datadog-go circbuf armon_go-metrics go-radix speakeasy bolt
@@ -717,7 +717,7 @@ let
       go-immutable-radix go-memdb ugorji_go go-multierror go-reap go-syslog
       golang-lru hcl logutils memberlist net-rpc-msgpackrpc raft_v2 raft-boltdb_v2
       scada-client yamux muxado dns mitchellh_cli mapstructure columnize
-      copystructure hil hashicorp-go-uuid crypto sys
+      copystructure hil hashicorp-go-uuid crypto sys aws-sdk-go
     ];
 
     propagatedBuildInputs = [
@@ -913,12 +913,12 @@ let
 
   docker = buildFromGitHub {
     version = 2;
-    rev = "90d10203a40d9f2e4247693d2154bdf0bdb6a07c";
+    rev = "851d9149b1e9d67811b227ed7cdf1fc6734ccdda";
     owner = "docker";
     repo = "docker";
-    sha256 = "0hpcaxmbgyb76ch63w6mgwj27qmla1jfhncyg8nbkfcrrfs49h02";
+    sha256 = "03065dki18j543mbwxnplfw730870lzvf4iwjygdvysp3bnw3s73";
     meta.useUnstable = true;
-    date = "2016-11-10";
+    date = "2016-11-11";
   };
 
   docker_for_runc = buildFromGitHub {
@@ -4140,14 +4140,18 @@ let
 
   raft_v2 = buildFromGitHub {
     version = 2;
-    date = "2016-09-29";
+    date = "2016-11-09";
     # Use the library-v2-stage-one branch until it is merged
     # into master.
-    rev = "7c09f497f6830afdb2c8bcc1e411aee8c2c24b0d";
+    rev = "aaad9f10266e089bd401e7a6487651a69275641b";
     owner  = "hashicorp";
     repo   = "raft";
-    sha256 = "98b58635fb9f1d26d4958c5f72bbbb95796c037b2e458a7a9690620bdfaed4a1";
-    propagatedBuildInputs = [ armon_go-metrics ugorji_go ];
+    sha256 = "b5a3392c27c22bbd44bc7978ca61f9ce90658caf51bebef7b4db11788d4d5e80";
+    propagatedBuildInputs = [
+      armon_go-metrics
+      logxi
+      ugorji_go
+    ];
     meta.autoUpdate = false;
   };
 

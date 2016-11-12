@@ -13,7 +13,7 @@ let
   inherit (lib)
     boolEn;
 
-  version = "1.900.17";
+  version = "1.900.24";
 in
 stdenv.mkDerivation rec {
   name = "jasper-${version}";
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
     owner = "mdadams";
     repo = "jasper";
     rev = "version-${version}";
-    sha256 = "ece87c51e2abf4d06374603596b395b5d51d56206df24d489db21f5f2367f35e";
+    sha256 = "9d0cd04b9d5ffc44bbd3874abcea4e7403b48c9ed3548a8322d3e4d1c062d5df";
   };
 
   nativeBuildInputs = [

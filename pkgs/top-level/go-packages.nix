@@ -704,7 +704,7 @@ let
     excludedPackages = "test";
   };
 
-  consul = buildFromGitHub {
+  consul = buildFromGitHub rec {
     version = 2;
     rev = "v0.7.1";
     owner = "hashicorp";
@@ -724,6 +724,15 @@ let
       go-cleanhttp
       serf
     ];
+
+    postPatch = let
+      version = stdenv.lib.substring 1 (stdenv.lib.stringLength rev - 1) rev;
+    in ''
+      sed \
+        -e 's,\(Version[ \t]*= "\)unknown,\1${version},g' \
+        -e 's,\(VersionPrerelease[ \t]*= "\)unknown,\1,g' \
+        -i version/version.go
+    '';
 
     # Keep consul.ui for backward compatability
     passthru.ui = pkgs.consul-ui;

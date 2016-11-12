@@ -937,6 +937,7 @@ let
   docker_for_go-dockerclient = buildFromGitHub {
     inherit (docker) rev date owner repo sha256 version meta;
     subPackages = [
+      "api/types"
       "api/types/blkiodev"
       "api/types/container"
       "api/types/filters"

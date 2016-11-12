@@ -27,8 +27,10 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--with-user=nobody"
-    "--with-chroot=/var/empty"
+    # Don't instate privilege separation by default as
+    # it is not seamless
+    #"--with-user=nobody"
+    #"--with-chroot=/var/empty"
   ];
 
   passthru = {

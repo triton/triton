@@ -9,11 +9,12 @@
 
 let
   inherit (stdenv.lib)
-    cmFlag;
+    boolOn;
+
+  version = "1.3.1";
 in
 stdenv.mkDerivation rec {
   name = "chromaprint-${version}";
-  version = "1.3.1";
 
   src = fetchurl {
     url = [
@@ -37,7 +38,7 @@ stdenv.mkDerivation rec {
     "-DBUILD_SHARED_LIBS=ON"
     "-DBUILD_EXAMPLES=ON"
     "-DBUILD_TESTS=OFF"
-    (cmFlag "WITH_AVFFT" (ffmpeg != null))
+    "-DWITH_AVFFT=${boolOn (ffmpeg != null)}"
     "-DWITH_FFTW3=OFF"
     "-DWITH_VDSP=OFF"
     "-DWITH_KISSFFT=OFF"

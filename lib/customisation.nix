@@ -275,29 +275,6 @@ rec {
     acFlag "with" "without" flag boolean value;
 
   /**
-   * Autoconf style --custom configure flag
-   *
-   * flag: The name of the flag (string)
-   * boolean: The condition for passing the flag & the value (boolean)
-   *   - flag is not passed if null
-   * value: The value of the flag is only appended when boolean is
-   *        true (null/string)
-   *
-   * Returns a custom Autoconf formatted configure flag string
-   */
-  otFlag = flag: boolean: value:
-    let
-      _boolean =
-        if boolean == true then
-          true
-        else
-          # If boolean is not true, return null to make sure the
-          # configure flag is not returned.
-          null;
-    in
-    acFlag null null flag _boolean value;
-
-  /**
    * CMake configure flag
    *
    * flag: The name of the flag. (string)

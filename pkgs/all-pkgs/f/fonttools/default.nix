@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "3.0";
+  version = "3.2.1";
 in
 buildPythonPackage rec {
   name = "fonttools-${version}";
@@ -12,7 +12,8 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "fonttools";
     inherit version;
-    sha256 = "df92dc0ad80eaf3c67c0ce48dd4c8dcc1027266f9bb128157cc30fb72e5d9138";
+    type = ".zip";
+    sha256 = "2493ead7dc10ac019e7ec803b2afb326e5c26b44132c5d15d1e870dc21f9f0ba";
   };
 
   meta = with stdenv.lib; {

@@ -49,7 +49,7 @@
 
 with {
   inherit (stdenv.lib)
-    cmFlag
+    boolOn
     optionals;
 };
 
@@ -132,51 +132,50 @@ stdenv.mkDerivation rec {
   '';
 
   cmakeFlags = [
-    (cmFlag "CMAKE_BUILD_TYPE" "Release")
-    (cmFlag "PORT" "GTK")
-    (cmFlag "ENABLE_PLUGIN_PROCESS_GTK2" false)
+    "-DPORT=GTK"
+    "-DENABLE_PLUGIN_PROCESS_GTK2=OFF"
 
-    (cmFlag "ENABLE_WEBKIT" false)
-    (cmFlag "ENABLE_WEBKIT2" true)
-    (cmFlag "ENABLE_TOOLS" true)
+    "-DENABLE_WEBKIT=OFF"
+    "-DENABLE_WEBKIT2=ON"
+    "-DENABLE_TOOLS=ON"
     # Shared library causes linker failures
-    (cmFlag "SHARED_CORE" false)
-    (cmFlag "ENABLE_API_TESTS" false)
+    "-DSHARED_CORE=OFF"
+    "-DENABLE_API_TESTS=OFF"
 
-    (cmFlag "ENABLE_GRAPHICS_CONTEXT_3D" true)
-    (cmFlag "ENABLE_GTKDOC" false)
-    (cmFlag "ENABLE_INTROSPECTION" (gobject-introspection != null))
-    (cmFlag "USE_REDIRECTED_XCOMPOSITE_WINDOW" true)
+    "-DENABLE_GRAPHICS_CONTEXT_3D=ON"
+    "-DENABLE_GTKDOC=OFF"
+    "-DENABLE_INTROSPECTION=${boolOn (gobject-introspection != null)}"
+    "-DUSE_REDIRECTED_XCOMPOSITE_WINDOW=ON"
 
-    (cmFlag "ENABLE_DEVELOPER_MODE" false)
+    "-DENABLE_DEVELOPER_MODE=OFF"
 
     # Optional libraries
-    (cmFlag "ENABLE_CREDENTIAL_STORAGE" (libsecret != null))
-    (cmFlag "ENABLE_JIT" true)
-    (cmFlag "ENABLE_FTL_JIT" false) # llvm
+    "-DENABLE_CREDENTIAL_STORAGE=${boolOn (libsecret != null)}"
+    "-DENABLE_JIT=ON"
+    "-DENABLE_FTL_JIT=OFF" # llvm
     # TODO: add gudev support
-    (cmFlag "ENABLE_GAMEPAD_DEPRECATED" false)
-    (cmFlag "ENABLE_GEOLOCATION" (geoclue != null))
+    "-DENABLE_GAMEPAD_DEPRECATED=OFF"
+    "-DENABLE_GEOLOCATION=${boolOn (geoclue != null)}"
     # TODO: add openwebrtc support
-    (cmFlag "ENABLE_MEDIA_STREAM" false)
-    (cmFlag "ENABLE_OPENGL" (mesa_noglu != null))
-    (cmFlag "ENABLE_GLES2" (mesa_noglu != null))
-    (cmFlag "ENABLE_PLUGIN_PROCESS_GTK2" false)
-    (cmFlag "ENABLE_SECCOMP_FILTERS" false)
-    (cmFlag "ENABLE_SPELLCHECK" (enchant != null))
-    (cmFlag "ENABLE_SUBTLE_CRYPTO" (gnutls != null))
-    (cmFlag "ENABLE_VIDEO" (gstreamer != null && gst-plugins-base != null))
-    (cmFlag "ENABLE_WEB_AUDIO" (gstreamer != null && gst-plugins-base != null))
+    "-DENABLE_MEDIA_STREAM=OFF"
+    "-DENABLE_OPENGL=${boolOn (mesa_noglu != null)}"
+    "-DENABLE_GLES2=${boolOn (mesa_noglu != null)}"
+    "-DENABLE_PLUGIN_PROCESS_GTK2=OFF"
+    "-DENABLE_SECCOMP_FILTERS=OFF"
+    "-DENABLE_SPELLCHECK=${boolOn (enchant != null)}"
+    "-DENABLE_SUBTLE_CRYPTO=${boolOn (gnutls != null)}"
+    "-DENABLE_VIDEO=${boolOn (gstreamer != null && gst-plugins-base != null)}"
+    "-DENABLE_WEB_AUDIO=${boolOn (gstreamer != null && gst-plugins-base != null)}"
     # TODO: add gstreamer mpeg-ts support
-    (cmFlag "USE_GSTREAMER_MPEGTS" false)
+    "-DUSE_GSTREAMER_MPEGTS=OFF"
     # TODO: add gstreamer GL support
-    (cmFlag "USE_GSTREAMER_GL" false)
-    (cmFlag "ENABLE_X11_TARGET" (xorg != null))
+    "-DUSE_GSTREAMER_GL=OFF"
+    "-DENABLE_X11_TARGET=${boolOn (xorg != null)}"
     # TODO: add wayland support (linker errors)
-    (cmFlag "ENABLE_WAYLAND_TARGET" (wayland != null))
-    (cmFlag "USE_LIBNOTIFY" (libnotify != null))
+    "-DENABLE_WAYLAND_TARGET=${boolOn (wayland != null)}"
+    "-DUSE_LIBNOTIFY=${boolOn (libnotify != null)}"
     # TODO: add libhyphen support
-    (cmFlag "USE_LIBHYPHEN" false)
+    "-DUSE_LIBHYPHEN=OFF"
   ];
 
   # WebKit2 missing include path for gst-plugins-base.

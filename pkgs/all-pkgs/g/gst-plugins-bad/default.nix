@@ -4,6 +4,7 @@
 , python3
 
 , bzip2
+, chromaprint
 , curl
 , faac
 , faad2
@@ -14,7 +15,7 @@
 , gsm
 , gst-plugins-base
 , gstreamer
-, gtk3
+, gtk_3
 , ladspa-sdk
 , libass
 , libbs2b
@@ -28,11 +29,15 @@
 , mesa
 , musepack
 , openal
-#, opencv
+, opencv
+, openexr
 , openh264
 , openjpeg
+#, openssl
 , opus
 , orc
+, qt5
+, rtmpdump
 , schroedinger
 , SDL
 , soundtouch
@@ -49,7 +54,9 @@
 
 let
   inherit (lib)
-    boolEn;
+    boolEn
+    boolString
+    boolWt;
 
   source = (import ./sources.nix { })."${channel}";
 in
@@ -71,6 +78,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bzip2
+    chromaprint
     curl
     faac
     faad2
@@ -81,7 +89,7 @@ stdenv.mkDerivation rec {
     gsm
     gst-plugins-base
     gstreamer
-    gtk3
+    gtk_3
     ladspa-sdk
     libass
     libbs2b
@@ -95,10 +103,14 @@ stdenv.mkDerivation rec {
     mesa
     musepack
     openal
-    #opencv
+    opencv
+    openexr
     openh264
     openjpeg
+    #openssl
     orc
+    qt5
+    rtmpdump
     schroedinger
     SDL
     soundtouch
@@ -209,110 +221,112 @@ stdenv.mkDerivation rec {
     "--enable-y4m"
     "--enable-yadif"
     # External plugins
-    "--enable-opengl"
-    "--enable-gles2"
-    "--enable-egl"
+    "--${boolEn (mesa != null)}-opengl"
+    "--${boolEn (mesa != null)}-gles2"
+    "--${boolEn (mesa != null)}-egl"
     "--disable-wgl"
-    "--enable-glx"
-    "--disable-cocoa"
-    "--enable-x11"
-    "--enable-wayland"
+    "--${boolEn (mesa != null)}-glx"
+    "--disable-cocoa"  # macos
+    "--${boolEn (xorg.libX11 != null)}-x11"
+    "--${boolEn (wayland != null)}-wayland"
     "--enable-dispmanx"
-    "--disable-directsound"
-    "--disable-wasapi"
-    "--disable-direct3d"
-    "--disable-winscreencap"
+    "--disable-directsound"  # windows
+    "--disable-wasapi"  # windows
+    "--disable-direct3d"  # windows
+    "--disable-winscreencap"  # windows
     "--disable-winks"
-    "--disable-android_media"
-    "--disable-apple_media"
+    "--disable-android_media"  # android
+    "--disable-apple_media"  # macos
     "--disable-bluez"
     "--disable-avc"
     "--${boolEn (xorg != null)}-shm"
-    #--disable-vcd
-    #--disable-opensles
-    #--disable-uvch264
-    #"--disable-nvenc"
-    #"--disable-tinyalsa"
+    /**/"--disable-vcd"
+    "--disable-opensles"  # android
+    /**/"--disable-uvch264"
+    /**/"--disable-nvenc"
+    /**/"--disable-tinyalsa"
     "--${boolEn (libass != null)}-assrender"
-    #"--${boolEn (vo-amrwbenc != null)}-voamrwbenc"
-    #"--${boolEn (vo-aacenc != null)}-voaacenc"
-    #"--${boolEn ( != null)}-apexsink"
+    /**/"--disable-voamrwbenc"
+    /**/"--disable-voaacenc"
+    /**/"--disable-apexsink"
     "--${boolEn (libbs2b != null)}-bs2b"
     "--${boolEn (bzip2 != null)}-bz2"
-    #"--${boolEn ( != null)}-chromaprint"
+    "--${boolEn (chromaprint != null)}-chromaprint"
     "--${boolEn (curl != null)}-curl"
-    #"--${boolEn ( != null)}-dash"
-    #"--${boolEn ( != null)}-dc1394"
-    #"--${boolEn ( != null)}-decklink"
-    #"--${boolEn ( != null)}-directfb"
-    "--${boolEn (wayland != null)}-wayland"
+    /**/"--disable-dash"
+    /**/"--disable-dc1394"
+    /**/"--disable-decklink"
+    /**/"--disable-directfb"
+    "--${boolEn (wayland != null)}-wayland"  #"
     "--${boolEn (libwebp != null)}-webp"
-    #"--${boolEn ( != null)}-daala"
-    #"--${boolEn ( != null)}-dts"
-    #"--${boolEn ( != null)}-resindvd"
+    /**/"--disable-daala"
+    /**/"--disable-dts"
+    /**/"--disable-resindvd"
     "--${boolEn (faac != null)}-faac"
     "--${boolEn (faad2 != null)}-faad"
-    #"--${boolEn ( != null)}-fbdev"
+    /**/"--disable-fbdev"
     "--${boolEn (flite != null)}-flite"
     "--${boolEn (gsm != null)}-gsm"
-    #"--${boolEn ( != null)}-fluidsynth"
-    #"--${boolEn ( != null)}-kate"
+    /**/"--disable-fluidsynth"
+    /**/"--disable-kate"
+    /**/"--disable-kms"
     "--${boolEn (ladspa-sdk != null)}-ladspa"
-    #"--${boolEn ( != null)}-lv2"
-    #"--${boolEn ( != null)}-libde265"
+    /**/"--disable-lv2"
+    /**/"--disable-libde265"
     "--${boolEn (libmms != null)}-libmms"
-    #"--${boolEn ( != null)}-srtp"
-    #"--${boolEn ( != null)}-dtls"
-    #"--${boolEn ( != null)}-linsys"
+    /**/"--disable-srtp"
+    /**/"--disable-dtls"
+    /**/"--disable-linsys"
     "--${boolEn (libmodplug != null)}-modplug"
-    #"--${boolEn ( != null)}-mimic"
-    #"--${boolEn ( != null)}-mpeg2enc"
-    #"--${boolEn ( != null)}-mplex"
+    /**/"--disable-mimic"
+    /**/"--disable-mpeg2enc"
+    /**/"--disable-mplex"
     "--${boolEn (musepack != null)}-musepack"
-    #"--${boolEn ( != null)}-nas"
-    #"--${boolEn ( != null)}-neon"
-    #"--${boolEn ( != null)}-ofa"
+    /**/"--disable-nas"
+    /**/"--disable-neon"
+    /**/"--disable-ofa"
     "--${boolEn (openal != null)}-openal"
-    #"--${boolEn (opencv != null)}-opencv"
-    #"--${boolEn ( != null)}-openexr"
+    "--${boolEn (opencv != null)}-opencv"
+    "--${boolEn (openexr != null)}-openexr"
     "--${boolEn (openh264 != null)}-openh264"
     "--${boolEn (openjpeg != null)}-openjpeg"
-    #"--${boolEn ( != null)}-openni2"
+    /**/"--disable-openni2"
     "--${boolEn (opus != null)}-opus"
-    #"--${boolEn ( != null)}-pvr"
+    /**/"--disable-pvr"
     "--${boolEn (librsvg != null)}-rsvg"
     "--${boolEn (mesa != null)}-gl"
-    #"--${boolEn ( != null)}-gtk3"
-    #"--${boolEn ( != null)}-qt"
-    #"--disable-vulkan"
+    "--${boolEn (gtk_3 != null)}-gtk3"
+    "--${boolEn (qt5 != null)}-qt"
+    /**/"--disable-vulkan"
     "--${boolEn (libvisual != null)}-libvisual"
-    #"--${boolEn ( != null)}-timidity"
-    #"--${boolEn ( != null)}-teletextdec"
-    #"--${boolEn ( != null)}-wildmidi"
+    /**/"--disable-timidity"
+    /**/"--disable-teletextdec"
+    /**/"--disable-wildmidi"
     "--${boolEn (SDL != null)}-sdl"
-    #"--${boolEn ( != null)}-sdltest"
-    #"--${boolEn ( != null)}-smoothstreaming"
+    "--disable-sdltest"
+    /**/"--disable-smoothstreaming"
     "--${boolEn (libsndfile != null)}-sndfile"
     "--${boolEn (soundtouch != null)}-soundtouch"
-    #"--${boolEn ( != null)}-spc"
+    /**/"--disable-spc"
     "--${boolEn (game-music-emu != null)}-gme"
     "--${boolEn (xvidcore != null)}-xvid"
-    #"--${boolEn ( != null)}-dvb"
-    #"--${boolEn ( != null)}-wininet"
-    #"--${boolEn ( != null)}-acm"
+    /**/"--disable-svb"
+    "--disable-wininet"  # windows
+    /**/"--disable-acm"
     "--${boolEn (libvdpau != null)}-vdpau"
-    #"--${boolEn ( != null)}-sbc"
+    /**/"--disable-sbc"
     "--${boolEn (schroedinger != null)}-schro"
-    #"--${boolEn ( != null)}-zbar"
-    #"--${boolEn ( != null)}-rtmp"
+    /**/"--disable-zbar"
+    "--${boolEn (rtmpdump != null)}-rtmp"
     "--${boolEn (spandsp != null)}-spandsp"
-    #"--${boolEn ( != null)}-gsettings"
+    /**/"--disable-gsettings"
     "--enable-schemas-compile"
-    #"--${boolEn ( != null)}-sndio"
-    #"--${boolEn ( != null)}-hls"
+    /**/"--disable-sndio"
+    /**/"--disable-hls"
     "--${boolEn (x265 != null)}-x265"
-
-    "--without-gtk"
+    "--enable-webrtcdsp"
+    "--${boolWt (gtk_3 != null)}-gtk${boolString (gtk_3 != null) "=3.0" ""}"
+    #"--with-hls-crypto=openssl"
   ];
 
   passthru = {
@@ -321,7 +335,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       # Sebastian Dröge
       pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";

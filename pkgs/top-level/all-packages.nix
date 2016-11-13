@@ -1476,10 +1476,41 @@ gst-libav_1-10 = callPackage ../all-pkgs/g/gst-libav {
 };
 gst-libav = callPackageAlias "gst-libav_1-8" { };
 
-gst-plugins-bad_1-8 = callPackage ../all-pkgs/g/gst-plugins-bad {
+gst-plugins-bad_generics = overrides:
+  callPackage ../all-pkgs/g/gst-plugins-bad ({
+    chromaprint = null;
+    faac = null;
+    faad2 = null;
+    flite = null;
+    game-music-emu = null;
+    gsm = null;
+    ladspa-sdk = null;
+    libbs2b = null;
+    libmms = null;
+    libmodplug = null;
+    libvisual = null;
+    musepack = null;
+    openal = null;
+    opencv = null;
+    openexr = null;
+    openjpeg = null;
+    rtmpdump = null;
+    schroedinger = null;
+    SDL = null;
+    soundtouch = null;
+    spandsp = null;
+    gtk_3 = null;
+    qt5 = null;
+  } // overrides);
+gst-plugins-bad_1-8 = pkgs.gst-plugins-bad_generics {
   channel = "1.8";
   gst-plugins-base = pkgs.gst-plugins-base_1-8;
   gstreamer = pkgs.gstreamer_1-8;
+};
+gst-plugins-bad_1-10 = pkgs.gst-plugins-bad_generics {
+  channel = "1.10";
+  gst-plugins-base = pkgs.gst-plugins-base_1-10;
+  gstreamer = pkgs.gstreamer_1-10;
 };
 gst-plugins-bad = callPackageAlias "gst-plugins-bad_1-8" { };
 

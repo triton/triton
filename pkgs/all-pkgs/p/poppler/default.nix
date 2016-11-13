@@ -25,27 +25,21 @@
 
 # FIXME: gobject-introspection and openjpeg support is not working currently
 
-let
-  inherit (stdenv.lib)
-    cmFlag;
-
-  # If a is true, return b
-  ifDo = a: b:
-    if a then
-      b
-    else
-      false;
-in
-
 assert (
   suffix == "glib" ||
   suffix == "qt5" ||
   suffix == "utils"
 );
 
+let
+  inherit (stdenv.lib)
+    boolOn
+    boolString;
+
+  version = "0.48.0";
+in
 stdenv.mkDerivation rec {
   name = "poppler-${suffix}-${version}";
-  version = "0.48.0";
 
   src = fetchurl {
     url = "https://poppler.freedesktop.org/poppler-${version}.tar.xz";
@@ -91,32 +85,32 @@ stdenv.mkDerivation rec {
     "-DBUILD_GTK_TESTS=OFF"
     "-DBUILD_QT4_TESTS=OFF"
     "-DBUILD_QT5_TESTS=OFF"
-    (cmFlag "ENABLE_CMS" (ifDo (lcms2 != null) "lcms2"))
+    "-DENABLE_CMS=${boolString (lcms2 != null) "lcms2" "OFF"}"
     "-DENABLE_CPP=ON"
-    (cmFlag "ENABLE_LIBCURL" (curl != null))
-    (cmFlag "ENABLE_LIBOPENJPEG" (ifDo (openjpeg != null) "openjpeg2"))
+    "-DENABLE_LIBCURL=${boolOn (curl != null)}"
+    "-DENABLE_LIBOPENJPEG=${boolString (openjpeg != null) "openjpeg2" "OFF"}"
     #"-DENABLE_SPLASH=ON"
-    (cmFlag "ENABLE_UTILS" utils)
+    "-DENABLE_UTILS=${boolOn utils}"
     "-DENABLE_XPDF_HEADERS=ON"
-    (cmFlag "ENABLE_ZLIB" (zlib != null))
-    (cmFlag "ENABLE_ZLIB_UNCOMPRESS" (zlib != null))
-    (cmFlag "FONT_CONFIGURATION" (ifDo (fontconfig != null) "fontconfig"))
+    "-DENABLE_ZLIB=${boolOn (zlib != null)}"
+    "-DENABLE_ZLIB_UNCOMPRESS=${boolOn (zlib != null)}"
+    "-DFONT_CONFIGURATION=${boolString (fontconfig != null) "fontconfig" "OFF"}"
     "-DSPLASH_CMYK=ON"
     "-DUSE_FIXEDPOINT=OFF"
     "-DUSE_FLOAT=ON"
-    (cmFlag "WITH_Cairo" (cairo != null))
-    (cmFlag "WITH_GLIB" (
+    "-DWITH_Cairo=${boolOn (cairo != null)}"
+    "-DWITH_GLIB=${boolOn (
       cairo != null
       && glib != null
-      && gobject-introspection != null))
-    #(cmFlag "WITH_GObjectIntrospection" (gobject-introspection != null))
-    #(cmFlag "WITH_GTK" (gtk3 != null))
+      && gobject-introspection != null)}"
+    #"-DWITH_GObjectIntrospection=${boolOn (gobject-introspection != null)}"
+    #"-DWITH_GTK=${boolOn (gtk3 != null)}"
     "-DWITH_Iconv=ON"
-    (cmFlag "WITH_JPEG" (libjpeg != null))
-    (cmFlag "WITH_NSS3" (nss != null))
-    (cmFlag "WITH_PNG" (libpng != null))
+    "-DWITH_JPEG=${boolOn (libjpeg != null)}"
+    "-DWITH_NSS3=${boolOn (nss != null)}"
+    "-DWITH_PNG=${boolOn (libpng != null)}"
     "-DWITH_Qt4=OFF"
-    (cmFlag "WITH_TIFF" (libtiff != null))
+    "-DWITH_TIFF=${boolOn (libtiff != null)}"
   ];
 
   NIX_CFLAGS_COMPILE = [

@@ -507,7 +507,7 @@ stdenv.mkDerivation rec {
       && libraw1394 != null)}-libdc1394"
     # Undocumented
     (deprfflag "--${boolEn (dcadec != null)}-libdcadec" null "3.0")
-    (deprfflag "--${boolEn (libebur128 != null)}-libebur128" "3.1" "3.3")
+    (deprfflag "--${boolEn (libebur128 != null)}-libebur128" "3.1" "3.2")
     (deprfflag "--disable-libfaac" null "3.1")
     (fflag "--${boolEn (fdk-aac != null)}-libfdk-aac" null)
     (fflag "--${boolEn (fontconfig != null)}-libfontconfig" "3.1")

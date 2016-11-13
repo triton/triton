@@ -26,12 +26,12 @@ let
     boolEn;
 in
 stdenv.mkDerivation rec {
-  name = "appstream-glib-0.6.3";
+  name = "appstream-glib-0.6.5";
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/appstream-glib/"
       + "releases/${name}.tar.xz";
-    sha256 = "3ec355c950b86cd792b6e396a5a4a72487999e300fcacf7466a663974ec4ad24";
+    sha256 = "b6b77540b03ca56d7a8493d5f50ded747b6033e0437d8e4c516b5228e27b2a1a";
   };
 
   nativeBuildInputs = [

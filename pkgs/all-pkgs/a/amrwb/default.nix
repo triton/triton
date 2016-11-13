@@ -10,13 +10,15 @@ stdenv.mkDerivation rec {
   # NOTE: When updating amrwb-3gpp, update every instance of 26204-d10 to the
   #       updated file name.
   amrwb_3gpp = fetchurl {
-    # Rel-13
+    # Rel-13.1
     url = http://www.3gpp.org/ftp/Specs/archive/26_series/26.204/26204-d10.zip;
+    multihash = "Qmbce3E99N841HdBxXj8vnU92AxuPSTGY2vC2zqDmW4Ptz";
     sha256 = "c922636b1878e77d1d4a96bb9c4a014312edef280e1a6939d927acc1775c3452";
   };
 
   src = fetchurl {
     url = "http://www.penguin.cz/~utx/ftp/amr/${name}.tar.bz2";
+    multihash = "QmTK8e9a2a42Zpk3i2BSSYQnpByARjtwhiFU8kAWUJS4g7";
     sha256 = "5caf59b14480b0cd2a7babb8be472c4af39ff4c7c95f1278116557049a4dd5dc";
   };
 

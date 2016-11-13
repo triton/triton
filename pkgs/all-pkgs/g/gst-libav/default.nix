@@ -2,22 +2,24 @@
 , fetchurl
 , lib
 , python3
-, yasm # internal libav
+, yasm
 
 , bzip2
+, ffmpeg
 , glib
 , gst-plugins-base
 , gstreamer
 , orc
 , xz
-, zlib # internal libav
+, zlib
 
 , channel
 }:
 
 let
   inherit (lib)
-    boolEn;
+    boolEn
+    boolWt;
 
   source = (import ./sources.nix { })."${channel}";
 in
@@ -35,16 +37,17 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     python3
-    yasm
+    #yasm  # internal libav dependency
   ];
 
   buildInputs = [
-    bzip2
+    #bzip2  # internal libav dependency
+    ffmpeg
     glib
     gst-plugins-base
     gstreamer
     orc
-    xz
+    #xz  # internal libav dependency
     zlib
   ];
 
@@ -63,9 +66,12 @@ stdenv.mkDerivation rec {
     "--enable-Bsymbolic"
     "--disable-static-plugins"
     "--enable-gpl"
-    # Upstream dropped support for system libav
-    # http://bugzilla.gnome.org/show_bug.cgi?id=758183
-    "--without-system-libav"
+    "--${boolWt (ffmpeg != null)}-system-libav"
+  ];
+
+  NIX_CFLAGS_COMPILE = [
+    # Gstreamer lags behind FFmpeg and may use functions marked as deprecated.
+    "-Wno-deprecated-declarations"
   ];
 
   passthru = {
@@ -74,7 +80,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       # Sebastian Dröge
       pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";

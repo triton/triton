@@ -4,19 +4,35 @@
 , ninja
 }:
 
+let
+  version = "1.3.9";
+in
 stdenv.mkDerivation rec {
-  name = "graphite2-1.3.8";
+  name = "graphite2-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/silgraphite/graphite2/${name}.tgz";
-    multihash = "QmRbmYDFn4sZDjE7xGc4QM2Jx4a5Sw7KTjPB9RRp4mRWGG";
-    sha256 = "9f3f25b3a8495ce0782e77f69075c0dd9b7c054847b9bf9ff130bec38f4c8cc2";
+    url = "https://github.com/silnrsi/graphite/releases/download/${version}/"
+      + "${name}.tgz";
+    hashOutput = false;
+    sha256 = "ec0185b663059553fd46e8c4a4f0dede60a02f13a7a1fefc2ce70332ea814567";
   };
 
   nativeBuildInputs = [
     cmake
     ninja
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha1Url = "https://github.com/silnrsi/graphite/releases/download/"
+        + "${version}/${name}.sha1sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "An advanced font engine";

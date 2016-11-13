@@ -227,7 +227,32 @@ stdenv.mkDerivation {
     "-libinput"
     "-gstreamer" "1.0"
     "-system-proxies"
+
+    # Disable unused QT submodules
+    "-skip" "3d"
+    "-skip" "activeqt"
+    "-skip" "androidextras"
+    "-skip" "canvas3d"
+    "-skip" "charts"
+    "-skip" "connectivity"
+    "-skip" "datavis3d"
+    "-skip" "doc"
+    "-skip" "gamepad"
+    "-skip" "imageformats"
+    "-skip" "macextras"
+    "-skip" "purchasing"
+    "-skip" "quickcontrols2"
+    "-skip" "scxml"
+    "-skip" "sensors"
+    "-skip" "serialbus"
+    "-skip" "serialport"
+    "-skip" "virtualkeyboard"
+    "-skip" "websockets"
+    "-skip" "webview"
+    "-skip" "winextras"
   ] ++ optionals (!buildWebEngine) [
+    "-skip" "location"
+    "-skip" "webchannel"
     "-skip" "webengine"
   ];
 

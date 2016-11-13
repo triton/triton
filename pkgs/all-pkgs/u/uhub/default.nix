@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
     "-DSSL_SUPPORT=ON"
     "-DUSE_OPENSSL=ON"
     "-DSYSTEMD_SUPPORT=ON"
-    "ADC_STRESS=OFF"
+    "-DADC_STRESS=OFF"
   ];
 
   postInstall =

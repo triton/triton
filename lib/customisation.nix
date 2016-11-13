@@ -274,37 +274,6 @@ rec {
   wtFlag = flag: boolean: value:
     acFlag "with" "without" flag boolean value;
 
-  /**
-   * CMake configure flag
-   *
-   * flag: The name of the flag. (string)
-   * value: Value passed to flag. (boolean/string)
-   *   - true/false booleans are automatically tranlated to ON/OFF.
-   *
-   * Returns a CMake formatted configure flag string
-   */
-  cmFlag = flag: value:
-    let
-      valueSep =
-        if value != null && value != "" then
-          "="
-        else
-          "";
-      _value =
-        if value == true then
-          "ON"
-        else if value == false then
-          "OFF"
-        else if value != null && value != "" then
-          value
-        else
-          "";
-    in
-    if value != null then
-      genericFlag "-D" flag null valueSep _value
-    else
-      null;
-
   /* Make a set of packages with a common scope. All packages called
      with the provided `callPackage' will be evaluated with the same
      arguments. Any package in the set may depend on any other. The

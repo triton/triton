@@ -11,11 +11,6 @@
 , stresstestSupport ? false
 }:
 
-let
-  inherit (stdenv.lib)
-    cmFlag;
-in
-
 stdenv.mkDerivation rec {
   name = "uhub-${version}";
   version = "0.5.0";
@@ -78,7 +73,7 @@ stdenv.mkDerivation rec {
     "-DSSL_SUPPORT=ON"
     "-DUSE_OPENSSL=ON"
     "-DSYSTEMD_SUPPORT=ON"
-    (cmFlag "ADC_STRESS" stresstestSupport)
+    "ADC_STRESS=OFF"
   ];
 
   postInstall =

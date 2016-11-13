@@ -7,6 +7,7 @@
 , gobject-introspection
 , gst-plugins-base
 , gstreamer
+, json-glib
 , python3
 
 , channel
@@ -35,6 +36,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gst-plugins-base
     gstreamer
+    json-glib
     python3
   ];
 
@@ -60,7 +62,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       # Sebastian Dröge
       pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";

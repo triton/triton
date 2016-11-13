@@ -238,6 +238,11 @@ gst-python_1-8 = callPackage ../all-pkgs/g/gst-python {
   gst-plugins-base = pkgs.gst-plugins-base_1-8;
   gstreamer = pkgs.gstreamer_1-8;
 };
+gst-python_1-10 = callPackage ../all-pkgs/g/gst-python {
+  channel = "1.10";
+  gst-plugins-base = pkgs.gst-plugins-base_1-10;
+  gstreamer = pkgs.gstreamer_1-10;
+};
 gst-python = callPackageAlias "gst-python_1-8" { };
 
 guessit = callPackage ../all-pkgs/g/guessit { };

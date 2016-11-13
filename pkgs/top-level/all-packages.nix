@@ -501,6 +501,14 @@ acpid = callPackage ../all-pkgs/a/acpid { };
 
 adns = callPackage ../all-pkgs/a/adns { };
 
+adobe-flash-player_stable = callPackage ../all-pkgs/a/adobe-flash-player {
+  channel = "stable";
+};
+adobe-flash-player_beta = callPackage ../all-pkgs/a/adobe-flash-player {
+  channel = "beta";
+};
+adobe-flash-player = callPackageAlias "adobe-flash-player_stable" { };
+
 adwaita-icon-theme_3-22 = callPackage ../all-pkgs/a/adwaita-icon-theme {
   channel = "3.22";
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
@@ -1123,8 +1131,6 @@ firefox_wrapper = callPackage ../all-pkgs/f/firefox/wrapper.nix { };
 fish = callPackage ../all-pkgs/f/fish { };
 
 flac = callPackage ../all-pkgs/f/flac { };
-
-flash-player = callPackage ../all-pkgs/f/flash-player { };
 
 flex = callPackage ../all-pkgs/f/flex { };
 

@@ -1,5 +1,7 @@
 { stdenv
 , fetchurl
+
+, channel
 }:
 
 # https://helpx.adobe.com/flash-player/kb/archived-flash-player-versions.html
@@ -11,16 +13,22 @@ let
   inherit (stdenv.lib)
     makeSearchPath;
 
-  version = "23.0.0.205";
+  source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
-  name = "flash-player-${version}";
+  name = "flash-player-${source.version}";
 
   src = fetchurl {
-    url = "https://fpdownload.adobe.com/pub/flashplayer/pdc/${version}/"
-      + "flash_player_ppapi_linux.x86_64.tar.gz";
-    name = "flash_player_ppapi_linux.${version}.x86_64.tar.gz";
-    sha256 = "5d1fd6f9a598fe901890dd02f5230b705f1c992703a24f62c93c7725c335b90e";
+    url =
+      if channel == "beta" then
+        # FIXME: figure out stable url or use Gentoo's method using the rpm
+        "https://fpdownload.adobe.com/pub/labs/flashruntimes/flashplayer/"
+          + "linux64/flash_player_ppapi_linux.x86_64.tar.gz"
+      else
+        "https://fpdownload.adobe.com/pub/flashplayer/pdc/"
+          + "${source.version}/flash_player_ppapi_linux.x86_64.tar.gz";
+    name = "flash_player_ppapi_linux.${source.version}.x86_64.tar.gz";
+    inherit (source) sha256;
   };
 
   flashPlayerLibs = makeSearchPath "lib" [

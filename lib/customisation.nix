@@ -328,37 +328,6 @@ rec {
     else
       null;
 
-  /**
-   * SCons configure flag
-   *
-   * flag: The name of the flag (string)
-   * value: Value passed to flag (boolean/string)
-   *   - true/false booleans are automatically tranlated to 1/0.
-   *
-   * Returns a SCons formatted configure flag string
-   */
-  scFlag = flag: value:
-    let
-      valueSep =
-        if value != null && value != "" then
-          "="
-        else
-          "";
-      _value =
-        if value == true then
-          "1"
-        else if value == false then
-          "0"
-        else if value != null && value != "" then
-          value
-        else
-          "";
-    in
-    if value != null then
-      genericFlag null flag null "=" _value
-    else
-      null;
-
   /* Make a set of packages with a common scope. All packages called
      with the provided `callPackage' will be evaluated with the same
      arguments. Any package in the set may depend on any other. The

@@ -5,8 +5,8 @@
 , python3
 
 , a52dec
-#, amrnb
-#, amrwb
+, amrnb
+, amrwb
 , glib
 , gst-plugins-base
 , gstreamer
@@ -47,8 +47,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     a52dec
-    #amrnb
-    #amrwb
+    amrnb
+    amrwb
     glib
     gst-plugins-base
     gstreamer
@@ -91,8 +91,8 @@ stdenv.mkDerivation rec {
     "--enable-realmedia"
     # External plugins
     "--${boolEn (a52dec != null)}-a52dec"
-    #"--${boolEn (amrnb != null)}-amrnb"
-    #"--${boolEn (amrnb != null)}-amrwb"
+    "--${boolEn (amrnb != null)}-amrnb"
+    "--${boolEn (amrnb != null)}-amrwb"
     "--${boolEn (libcdio != null)}-cdio"
     "--${boolEn (libdvdread != null)}-dvdread"
     "--${boolEn (lame != null)}-lame"
@@ -100,7 +100,9 @@ stdenv.mkDerivation rec {
     "--${boolEn (libmpeg2 != null)}-mpeg2dec"
     "--${boolEn (mpg123 != null)}-mpg123"
     #"--${boolEn (sidplay != null)}-sidplay"
+    /**/"--disable-sidplay"
     #"--${boolEn (twolame != null)}-twolame"
+    /**/"--disable-twolame"
     "--${boolEn (x264 != null)}-x264"
   ];
 
@@ -110,7 +112,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = map (n: "${n}.sha256sum") src.urls;
+      sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       # Sebastian Dröge
       pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";

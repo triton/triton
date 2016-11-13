@@ -1536,10 +1536,20 @@ gst-plugins-good_1-10 = callPackage ../all-pkgs/g/gst-plugins-good {
 };
 gst-plugins-good = callPackageAlias "gst-plugins-good_1-8" { };
 
-gst-plugins-ugly_1-8 = callPackage ../all-pkgs/g/gst-plugins-ugly {
+gst-plugins-ugly_generics = overrides:
+  callPackage ../all-pkgs/g/gst-plugins-ugly ({
+    amrnb = null;
+    amrwb = null;
+  } // overrides);
+gst-plugins-ugly_1-8 = pkgs.gst-plugins-ugly_generics {
   channel = "1.8";
   gst-plugins-base = pkgs.gst-plugins-base_1-8;
   gstreamer = pkgs.gstreamer_1-8;
+};
+gst-plugins-ugly_1-10 = pkgs.gst-plugins-ugly_generics {
+  channel = "1.10";
+  gst-plugins-base = pkgs.gst-plugins-base_1-10;
+  gstreamer = pkgs.gstreamer_1-10;
 };
 gst-plugins-ugly = callPackageAlias "gst-plugins-ugly_1-8" { };
 

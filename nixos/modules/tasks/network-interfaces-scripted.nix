@@ -448,7 +448,11 @@ in
             wireguard
           ];
           script = ''
-            wg setconf "${n}" "${v.configFile}"
+            # This is hacky and won't always work
+            # to reset bad configurations but it will prevent
+            # connections from dropping.
+            # TODO: Fix
+            wg addconf "${n}" "${v.configFile}"
           '';
         };
 

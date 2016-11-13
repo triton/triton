@@ -243,7 +243,7 @@ gst-python_1-10 = callPackage ../all-pkgs/g/gst-python {
   gst-plugins-base = pkgs.gst-plugins-base_1-10;
   gstreamer = pkgs.gstreamer_1-10;
 };
-gst-python = callPackageAlias "gst-python_1-8" { };
+gst-python = callPackageAlias "gst-python_1-10" { };
 
 guessit = callPackage ../all-pkgs/g/guessit { };
 

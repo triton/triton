@@ -13,12 +13,12 @@ let
 in
 buildPythonPackage rec {
   name = "pytest-${version}";
-  version = "3.0.3";
+  version = "3.0.4";
 
   src = fetchPyPi {
     package = "pytest";
     inherit version;
-    sha256 = "f213500a356800a483e8a146ff971ae14a8df3f2c0ae4145181aad96996abee7";
+    sha256 = "879fee2c1fdbaacd1bf2c0047677c6dd4aee05b9c1e64330b34d130a584fa40d";
   };
 
   propagatedBuildInputs = [

@@ -27,7 +27,7 @@
 
 let
   inherit (stdenv.lib)
-    cmFlag;
+    boolOn;
 in
 stdenv.mkDerivation rec {
   name = "kid3-${version}";
@@ -73,23 +73,23 @@ stdenv.mkDerivation rec {
     #QT_QMAKE_EXECUTABLE:FILEPATH=NOTFOUND
     #Qt5Core_DIR:PATH=Qt5Core_DIR-NOTFOUND
     "-DWITH_APPS=QT;CLI" #KDE
-    (cmFlag "WITH_CHROMAPRINT" (chromaprint != null))
+    "-DWITH_CHROMAPRINT=${boolOn (chromaprint != null)}"
     #WITH_CHROMAPRINT_FFMPEG:BOOL=OFF
-    (cmFlag "WITH_DBUS" (dbus != null))
-    (cmFlag "WITH_FFMPEG" (ffmpeg != null))
-    (cmFlag "WITH_FLAC" (flac != null))
-    (cmFlag "WITH_GSTREAMER" (gstreamer != null))
-    (cmFlag "WITH_ID3LIB" (id3lib != null))
-    (cmFlag "WITH_MP4V2" (mp4v2 != null))
-    (cmFlag "WITH_PHONON" false)
+    "-DWITH_DBUS=${boolOn (dbus != null)}"
+    "-DWITH_FFMPEG=${boolOn (ffmpeg != null)}"
+    "-DWITH_FLAC=${boolOn (flac != null)}"
+    "-DWITH_GSTREAMER=${boolOn (gstreamer != null)}"
+    "-DWITH_ID3LIB=${boolOn (id3lib != null)}"
+    "-DWITH_MP4V2=${boolOn (mp4v2 != null)}"
+    "-DWITH_PHONON=OFF"
     #WITH_QAUDIODECODER:BOOL=OFF
     #WITH_QML:BOOL=ON
     "-DWITH_QT4=OFF"
     "-DWITH_QT5=ON"
-    (cmFlag "WITH_READLINE" (readline != null))
-    (cmFlag "WITH_TAGLIB" (taglib != null))
+    "-DWITH_READLINE=${boolOn (readline != null)}"
+    "-DWITH_TAGLIB=${boolOn (taglib != null)}"
     #WITH_UBUNTUCOMPONENTS:BOOL=OFF
-    (cmFlag "WITH_VORBIS" (libvorbis != null))
+    "-DWITH_VORBIS=${boolOn (libvorbis != null)}"
   ];
 
   passthru = {

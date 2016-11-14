@@ -3991,12 +3991,19 @@ libtiff = callPackage ../development/libraries/libtiff { };
       #};
       nvidia-drivers_long-lived = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "long-lived";
+        buildConfig = "kernelspace";
       };
       nvidia-drivers_short-lived = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "short-lived";
+        buildConfig = "kernelspace";
       };
       nvidia-drivers_beta = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "beta";
+        buildConfig = "kernelspace";
+      };
+      nvidia-drivers_latest = kCallPackage ../all-pkgs/n/nvidia-drivers {
+        channel = "latest";
+        buildConfig = "kernelspace";
       };
 
       spl = kCallPackage ../all-pkgs/s/spl {

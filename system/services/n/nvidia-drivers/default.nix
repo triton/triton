@@ -15,26 +15,44 @@ let
   # FIXME: should introduce an option like
   # ‘hardware.video.nvidia.package’ for overriding the default NVIDIA
   # driver.
-  nvidiaForKernel = kernelPackages:
-    if elem "nvidia" drivers || elem "nvidia-long" drivers then
-      kernelPackages.nvidia-drivers_long-lived
-    else if elem "nvidia-short" drivers then
-      kernelPackages.nvidia-drivers_short-lived
+  nvidiaKernelspace = kernelspacePackages:
+    if elem "nvidia" drivers || elem "nvidia-long-lived" drivers then
+      kernelspacePackages.nvidia-drivers_long-lived
+    else if elem "nvidia-short-lived" drivers then
+      kernelspacePackages.nvidia-drivers_short-lived
     else if elem "nvidia-beta" drivers then
-      kernelPackages.nvidia-drivers_beta
+      kernelspacePackages.nvidia-drivers_beta
+    else if elem "nvidia-latest" drivers then
+      kernelspacePackages.nvidia-drivers_latest
     else if elem "nvidia-tesla" drivers then
-      kernelPackages.nvidia-drivers_tesla
+      kernelspacePackages.nvidia-drivers_tesla
     else
       null;
 
-  nvidia-drivers = nvidiaForKernel config.boot.kernelPackages;
-  nvidia-drivers_libs32 = (nvidiaForKernel pkgs.pkgs_32.linuxPackages).override {
-    buildConfig = "userspace";
+  nvidiaUserspace = nvidiaUserspace:
+    if elem "nvidia" drivers || elem "nvidia-long-lived" drivers then
+      nvidiaUserspace.nvidia-drivers_long-lived
+    else if elem "nvidia-short-lived" drivers then
+      nvidiaUserspace.nvidia-drivers_short-lived
+    else if elem "nvidia-beta" drivers then
+      nvidiaUserspace.nvidia-drivers_beta
+    else if elem "nvidia-latest" drivers then
+      nvidiaUserspace.nvidia-drivers_latest
+    else if elem "nvidia-tesla" drivers then
+      nvidiaUserspace.nvidia-drivers_tesla
+    else
+      null;
+
+  nvidia-drivers_kernelspace = nvidiaKernelspace config.boot.kernelPackages;
+
+  nvidia-drivers_userspace = nvidiaUserspace pkgs;
+  nvidia-drivers_userspace_libs32 = (nvidiaUserspace pkgs.pkgs_32).override {
     libsOnly = true;
-    kernel = null;
   };
 
-  enabled = nvidia-drivers != null;
+  enabled =
+    nvidia-drivers_kernelspace != null
+    && nvidia-drivers_userspace != null;
 in
 
 {
@@ -49,40 +67,40 @@ in
     ];
 
     boot.extraModulePackages = [
-      nvidia-drivers
+      nvidia-drivers_kernelspace
     ];
 
-    boot.kernelModules = optionals nvidia-drivers.drm [
+    boot.kernelModules = optionals nvidia-drivers_kernelspace.drm [
       "nvidia-drm"
-    ] ++ optionals nvidia-drivers.kms [
+    ] ++ optionals nvidia-drivers_kernelspace.kms [
       "nvidia-modeset"
-    ] ++ optionals nvidia-drivers.uvm [
+    ] ++ optionals nvidia-drivers_kernelspace.uvm [
       "nvidia-uvm"
     ];
 
-    boot.kernelParams = optionals nvidia-drivers.kms [
+    boot.kernelParams = optionals nvidia-drivers_kernelspace.kms [
       "nvidia-drm.modeset=1"
     ];
 
     environment.etc."OpenCL/vendors/nvidia.icd".source =
-      "${nvidia-drivers}/etc/OpenCL/vendors/nvidia.icd";
+      "${nvidia-drivers_userspace}/etc/OpenCL/vendors/nvidia.icd";
     environment.etc."nvidia/nvidia-application-profiles-rc.d".source =
-      "${nvidia-drivers}/etc/nvidia/nvidia-application-profiles-rc.d";
+      "${nvidia-drivers_userspace}/etc/nvidia/nvidia-application-profiles-rc.d";
     environment.etc."nvidia/nvidia-application-profiles-key-documentation".source =
-      "${nvidia-drivers}/etc/nvidia/nvidia-application-profiles-key-documentation";
+      "${nvidia-drivers_userspace}/etc/nvidia/nvidia-application-profiles-key-documentation";
 
     environment.systemPackages = [
-      nvidia-drivers
+      nvidia-drivers_userspace
     ];
 
-    hardware.opengl.package = nvidia-drivers;
-    hardware.opengl.package32 = nvidia-drivers_libs32;
+    hardware.opengl.package = nvidia-drivers_userspace;
+    hardware.opengl.package32 = nvidia-drivers_userspace_libs32;
     hardware.opengl.extraPackages = [ pkgs.libva-vdpau-driver ];
 
     services.acpid.enable = true;
 
     # Create /dev/nvidia-uvm when the nvidia-uvm module is loaded.
-    services.udev.extraRules = optionalString nvidia-drivers.uvm ''
+    services.udev.extraRules = optionalString nvidia-drivers_kernelspace.uvm ''
       KERNEL=="nvidia_uvm", RUN+="${pkgs.stdenv.shell} -c 'mknod -m 666 /dev/nvidia-uvm c $(grep nvidia-uvm /proc/devices | cut -d \  -f 1) 0'"
     '';
 
@@ -97,10 +115,10 @@ in
       modules = [
         # x11glvnd module
         pkgs.libglvnd
-        nvidia-drivers
+        nvidia-drivers_userspace
       ];
       libPath = [
-        nvidia-drivers
+        nvidia-drivers_userspace
       ];
     };
 

@@ -517,10 +517,10 @@ stdenv.mkDerivation {
       versionMajor;
     inherit (mesa_noglu)
       driverSearchPath;
-    drm = true;
-    kms = true;
-    nvenc = true;
-    uvm = true;
+    drm = buildKernelspace;
+    kms = buildKernelspace;
+    nvenc = buildUserspace;
+    uvm = buildKernelspace;
 
     srcVerification = fetchurl {
       urls = [

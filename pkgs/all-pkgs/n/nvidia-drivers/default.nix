@@ -159,7 +159,8 @@ stdenv.mkDerivation {
   postPatch =
     # 364+ & Linux 4.7
     optionalString (
-      versionAtLeast kernel.version "4.7"
+      buildKernelspace
+      && versionAtLeast kernel.version "4.7"
       && versionAtLeast source.versionMajor "364"
       && versionOlder version "367.44") (
       /* Collision between function added in Linux 4.7 */ ''

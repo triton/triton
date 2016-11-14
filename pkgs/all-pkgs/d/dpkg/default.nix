@@ -11,14 +11,14 @@
 }:
 
 let
-  version = "1.18.10";
+  version = "1.18.14";
 in
 stdenv.mkDerivation {
   name = "dpkg-${version}";
 
   src = fetchurl {
     url = "mirror://debian/pool/main/d/dpkg/dpkg_${version}.tar.xz";
-    sha256 = "025524da41ba18b183ff11e388eb8686f7cc58ee835ed7d48bd159c46a8b6dc5";
+    sha256 = "1788e418526049097fb3d8f68d5a75053c19693ab1fa47a506a7ef80db454d5a";
   };
 
   nativeBuildInputs = [

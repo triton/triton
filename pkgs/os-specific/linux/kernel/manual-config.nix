@@ -1,4 +1,4 @@
-{ stdenv, runCommand, bc, gmp, mpfr, libmpc, perl, kmod, openssl, writeTextFile, ubootChooser }:
+{ stdenv, runCommand, git, bc, gmp, mpfr, libmpc, perl, kmod, openssl, writeTextFile, ubootChooser }:
 
 let
   readConfig = configfile: import (runCommand "config.nix" {} ''
@@ -97,7 +97,19 @@ let
         export buildRoot="$(pwd)/build"
       '';
 
-      patches = [ patch ] ++ map (p: p.patch) kernelPatches;
+      prePatch = optionalString (patch != null) ''
+        echo "Applying delta ${patch}"
+        case "${patch}" in
+          *.xz)
+            cmd='xz -d -'
+            ;;
+          *)
+            cmd='cat -'
+        esac
+        cat '${patch}' | eval "$cmd" | git apply --unsafe-paths
+      '';
+
+      patches = map (p: p.patch) kernelPatches;
 
       postPatch = ''
         for mf in $(find -name Makefile -o -name Makefile.include -o -name install.sh); do
@@ -235,7 +247,7 @@ stdenv.mkDerivation ((drvAttrs config (kernelPatches ++ nativeKernelPatches) con
   name = "linux-${version}";
 
   # GMP / MPFR / libmpc is a hack that should be fixed in gcc
-  nativeBuildInputs = [ perl bc openssl ]
+  nativeBuildInputs = [ git perl bc openssl ]
     ++ stdenv.lib.optionals (stdenv.lib.versionAtLeast version "4.9") [ gmp mpfr libmpc ];
 
   makeFlags = commonMakeFlags ++ [

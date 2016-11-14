@@ -2,6 +2,7 @@
 , buildLinux
 , fetchFromGitHub
 , fetchurl
+, git
 , perl
 
 , # Overrides to the kernel config.
@@ -28,9 +29,9 @@ let
       patchSha256 = "94213e7557d192d1054e352aec18e93275ed5a84abe190d43fd43847d1d86efe";
     };
     "testing" = {
-      version = "4.9-rc4";
-      # We aren't using a patchset because 4.9-rc{x} apply's are currently broken
-      sha256 = "bd6e386266d9ca28b292ae8d18dc517586c20d87370556c3332195c469ac8327";
+      version = "4.9-rc5";
+      baseSha256 = "3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a";
+      patchSha256 = "7c6184bda1289d66906107808a476c863e6542ed7f175bdce46af05fd200ca47";
     };
     "bcache" =
       let
@@ -149,7 +150,7 @@ let
 
     kernelConfig = kernelConfigFun config;
 
-    nativeBuildInputs = [ perl ];
+    nativeBuildInputs = [ git perl ];
 
     platformName = "pc";
     kernelBaseConfig = "defconfig";
@@ -163,7 +164,7 @@ let
       sed -e '/fflush(stdout);/i\printf("###");' -i scripts/kconfig/conf.c
     '';
 
-    inherit (kernel) src patches preUnpack;
+    inherit (kernel) src patches preUnpack prePatch;
 
     buildPhase = ''
       cd $buildRoot

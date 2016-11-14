@@ -11,7 +11,7 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "0.1.6";
+  version = "0.1.9";
 in
 buildPythonPackage rec {
   name = "s3transfer-${version}";
@@ -19,7 +19,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "s3transfer";
     inherit version;
-    sha256 = "7bff7d99c96cb7573781b3dfcc5148cab5196f46c5c43f045e3c4f29a10a212a";
+    sha256 = "17ad7d672115f93a72ed7917209cb0bb02fc87f96f11886408ed8a6b1bb4c754";
   };
 
   propagatedBuildInputs = [

@@ -1045,6 +1045,7 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   netcdf = null;
   nvenc = false;
   nvidia-cuda-toolkit = null;
+  nvidia-drivers = null;
   openal = null;
   #opencl = null;
   #opencore-amr = null;

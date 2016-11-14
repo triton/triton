@@ -7,15 +7,16 @@
 let
   inherit (stdenv.lib)
     optional;
-in
 
+  version = "1.0.21";
+in
 stdenv.mkDerivation rec {
-  name = "libusb-1.0.20";
+  name = "libusb-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/libusb/libusb-1.0/${name}/${name}.tar.bz2";
-    multihash = "QmVhJXs3ZHHguFH9KbQuFNPeN4sePqMB6BUmgBQUHWZnWp";
-    sha256 = "1zzp6hc7r7m3gl6zjbmzn92zkih4664cckaf49l1g5hapa8721fb";
+    url = "https://github.com/libusb/libusb/releases/download/v${version}/"
+      + "${name}.tar.bz2";
+    sha256 = "7dce9cce9a81194b7065ee912bcd55eeffebab694ea403ffb91b67db66b1824b";
   };
 
   buildInputs = [
@@ -25,6 +26,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-maintainer-mode"
     "--enable-udev"
+    "--disable-usbdk"
     #"--enable-timerfd"
     "--enable-log"
     "--disable-debug-log"
@@ -36,9 +38,6 @@ stdenv.mkDerivation rec {
   NIX_LDFLAGS = [
     "-lgcc_s"
   ];
-
-  # Fails to correctly order objects
-  parallelBuild = false;
 
   meta = with stdenv.lib; {
     description = "Userspace access to USB devices";

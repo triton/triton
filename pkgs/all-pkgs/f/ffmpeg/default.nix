@@ -64,7 +64,7 @@
 #, avisynth
 , bzip2
 , celt
-#, chromaprint
+, chromaprint
 #, crystalhd
 , dcadec ? null
 #, decklinkExtlib ? false
@@ -320,7 +320,7 @@ stdenv.mkDerivation rec {
     alsa-lib
     bzip2
     celt
-    #chromaprint
+    chromaprint
     flite
     fontconfig
     freetype
@@ -479,8 +479,7 @@ stdenv.mkDerivation rec {
     /**/"--disable-avisynth"
     "--${boolEn (bzip2 != null)}-bzlib"
     # Recursive dependency
-    #(fflag "--${boolEn (chromaprint != null)}-chromaprint" "3.0")
-    /**/(fflag "--disable-chromaprint" "3.0")
+    (fflag "--${boolEn (chromaprint != null)}-chromaprint" "3.0")
     # Undocumented (broadcom)
     #"--${boolEn (crystalhd != null)}-crystalhd"
     /**/"--disable-crystalhd"

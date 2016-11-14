@@ -1014,6 +1014,7 @@ feh = callPackage ../all-pkgs/f/feh { };
 ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   # The following are disabled by default
   celt = null;
+  chromaprint = null;
   dcadec = null;
   fdk-aac = null;
   flite = null;

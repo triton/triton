@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "1.11.1";
+  version = "1.11.14";
 in
 buildPythonPackage rec {
   name = "aws-cli-${version}";
@@ -18,7 +18,7 @@ buildPythonPackage rec {
   src = fetchzip {
     version = 2;
     url = "https://github.com/aws/aws-cli/archive/${version}.tar.gz";
-    sha256 = "829a1409aae273e03219e934ce2d01e249602e29f998d899f1e13133a9d6ed7b";
+    sha256 = "2132be5b344355f84ba3d1c207305f620c12e5f73588d5a59187a71083f99369";
   };
 
   propagatedBuildInputs = [

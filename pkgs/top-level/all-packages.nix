@@ -2611,6 +2611,11 @@ nvidia-drivers_beta = callPackage ../all-pkgs/n/nvidia-drivers {
   channel = "beta";
   buildConfig = "userspace";
 };
+nvidia-drivers_latest = callPackage ../all-pkgs/n/nvidia-drivers {
+  channel = "latest";
+  buildConfig = "userspace";
+};
+nvidia-drivers = callPackageAlias "nvidia-drivers_long-lived" { };
 
 nvidia-gpu-deployment-kit =
   callPackage ../all-pkgs/n/nvidia-gpu-deployment-kit { };

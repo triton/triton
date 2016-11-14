@@ -25,5 +25,6 @@ rec {
     sha256i686   = "77c06d9c6831d6d1b53276d0741eddac4aab2f2f02b7c1fe14b86aa982aacd69";
     sha256x86_64 = "7049a8dc8948f5d67f6eb3fac627ac0933270e992b1892401b0134c4bd33ccf6";
   };
+  # Update to which ever channel has the latest release at the time.
   latest = beta;
 }

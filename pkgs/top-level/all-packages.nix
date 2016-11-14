@@ -2596,6 +2596,17 @@ numactl = callPackage ../all-pkgs/n/numactl { };
 
 nvidia-cuda-toolkit_7-5 = callPackage ../all-pkgs/n/nvidia-cuda-toolkit {
   channel = "7.5";
+nvidia-drivers_long-lived = callPackage ../all-pkgs/n/nvidia-drivers {
+  channel = "long-lived";
+  buildConfig = "userspace";
+};
+nvidia-drivers_short-lived = callPackage ../all-pkgs/n/nvidia-drivers {
+  channel = "short-lived";
+  buildConfig = "userspace";
+};
+nvidia-drivers_beta = callPackage ../all-pkgs/n/nvidia-drivers {
+  channel = "beta";
+  buildConfig = "userspace";
 };
 #nvidia-cuda-toolkit_8-0 = callPackage ../all-pkgs/n/nvidia-cuda-toolkit {
 #  channel = "8.0";

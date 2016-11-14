@@ -622,6 +622,9 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
+    features = {
+      cuda = nvidia-cuda-toolkit != null && nvidia-drivers != null;
+    };
     srcVerification = assert channel != "9.9"; fetchurl {
       inherit (src)
         outputHash

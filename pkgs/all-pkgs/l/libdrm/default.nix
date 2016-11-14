@@ -51,8 +51,11 @@ stdenv.mkDerivation rec {
       pgpKeyFingerprints = [
         # Emil Velikov
         "8703 B670 0E7E E06D 7A39  B8D6 EDAE 37B0 2CEB 490D"
+        # Kenneth Graunke
         "E8EB 5B34 081C E1EE A26E  FE19 5B5B DA07 1D49 CC38"
+        # Eric Anholt
         "FC9B AE14 35A9 F7F6 64B8  2057 B5D6 2936 D1FC 9EE8"
+        # Rob Clark
         "D628 5B5E 8992 99F3 DA74  6184 191C 9B90 5522 B045"
       ];
       inherit (src) urls outputHash outputHashAlgo;

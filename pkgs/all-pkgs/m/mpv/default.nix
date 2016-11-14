@@ -32,6 +32,8 @@
 #, lua
 #, luaPackages
 , mesa
+, nvidia-cuda-toolkit
+, nvidia-drivers
 , openal
 , pulseaudio_lib
 , pythonPackages
@@ -95,6 +97,8 @@ stdenv.mkDerivation rec {
     #lua
     #luaPackages.luasocket
     mesa
+    nvidia-cuda-toolkit
+    nvidia-drivers
     openal
     pulseaudio_lib
     pythonPackages.youtube-dl
@@ -223,11 +227,13 @@ stdenv.mkDerivation rec {
     "--${boolEn (libva != null)}-vaapi-hwaccel"
     "--disable-videotoolbox-hwaccel"
     "--disable-videotoolbox-gl"
-    # FIXME
     "--${boolEn (libvdpau != null && ffmpeg != null)}-vdpau-hwaccel"
     "--disable-d3d-hwaccel"
-    # FIXME: add cuda support
-    "--disable-cuda-hwaccel"
+    "--${boolEn (
+      ffmpeg != null
+      && ffmpeg.features.cuda
+      && nvidia-cuda-toolkit != null
+      && nvidia-drivers != null)}-cuda-hwaccel"
     ###"--enable-tv-interface"
     "--${boolEn (v4l_lib != null)}-tv-v4l2"
     "--${boolEn (v4l_lib != null)}-libv4l2"

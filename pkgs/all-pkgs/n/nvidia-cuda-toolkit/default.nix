@@ -15,7 +15,7 @@
 , xorg
 , zlib
 
-, channel ? null
+, channel
 }:
 
 let
@@ -25,47 +25,20 @@ let
     elem
     makeSearchPath
     platforms;
-  inherit (builtins.getAttr channel (import ./sources.nix))
-    rev_PPC64le
-    rev_x86_64
-    sha256_PPC64le
-    sha256_x86_64;
 
-  version =
-    if elem targetSystem platforms.x86_64-linux then
-      channel + "." + rev_x86_64
-    else if elem targetSystem platforms.powerpc64le-linux then
-      channel + "." + rev_PPC64le
-    else
-      null;
-  sha256 =
-    if elem targetSystem platforms.x86_64-linux then
-      sha256_x86_64
-    else if elem targetSystem platforms.powerpc64le-linux then
-      sha256_PPC64le
-    else
-      null;
+  source = (import ./sources.nix { })."${channel}";
+
+  version = channel + "." + source."rev_${targetSystem}";
 in
-
-assert
-  elem targetSystem platforms.x86_64-linux
-  || elem targetSystem platforms.powerpc64le-linux;
-
 stdenv.mkDerivation rec {
   name = "nvidia-cuda-toolkit-${version}";
 
   src = fetchurl {
-    url =
-      if elem targetSystem platforms.x86_64-linux then
-        "http://developer.download.nvidia.com/compute/cuda/${channel}/Prod/"
-          + "local_installers/cuda_${version}_linux.run"
-      else if elem targetSystem platforms.powerpc64le-linux then
-        "http://developer.download.nvidia.com/compute/cuda/${channel}/Prod/"
-          + "local_installers/"
-          + "cuda-repo-rhel7-7-5-local-${channel}-${rev_PPC64le}.ppc64le.rpm"
-      else
-        null;
-    inherit sha256;
+    url = "https://developer.nvidia.com/compute/cuda/${channel}/prod/"
+      + "local_installers/cuda_${version}_linux-run";
+    insecureProtocolDowngrade = true;
+    hashOutput = false;
+    sha256 = source."sha256_${targetSystem}";
   };
 
   nativeBuildInputs = [
@@ -93,13 +66,58 @@ stdenv.mkDerivation rec {
 
   rpath = "${makeSearchPath "lib" runtimeDependencies}:${stdenv.cc.cc}/lib64";
 
-  unpackPhase = ''
-    sh $src --keep --noexec
-    cd pkg/run_files
-    sh cuda-linux64-rel-${version}-*.run --keep --noexec
-    sh cuda-samples-linux-${version}-*.run --keep --noexec
-    cd pkg
-  '';
+  unpackPhase =
+    /* This function prints the first 300 lines of the file, then awk's for
+       the line with `OLDSKIP=` which contains the line number where the tarball
+       begins, then tails to that line and pipes the tarball to the required
+       decompression utility (gzip/xz), which interprets the tarball, and
+       finally pipes the output to tar to extract the contents. This is
+       exactly what the cli commands in the `.run` file do, but there is an
+       issue with some versions so it is best to do it manually instead. */ ''
+      runHook 'preUnpack'
+
+      local skip
+
+      # The line you are looking for `OLDSKIP=` is within the first 300 lines of
+      # the file, make sure that you aren't grepping/awking/sedding the entire
+      # 60,000+ line file for 1 line.
+      skip="$(awk -F= '{if(NR<=300&&/OLDSKIP=/){print $2;exit}}' "$src")"
+      # Make sure skip is an integer
+      skip="''${skip//[^0-9]/}"
+
+      [ ! -z "$skip" ]
+
+      tail -n +"$skip" "$src" | gzip -cd | tar xvf -
+
+      skip="$(awk -F= '{if(NR<=300&&/OLDSKIP=/){print $2;exit}}' ./run_files/cuda-linux64-rel-${version}-*.run)"
+      # Make sure skip is an integer
+      skip="''${skip//[^0-9]/}"
+      tail -n +"$skip" ./run_files/cuda-linux64-rel-${version}-*.run |
+        gzip -cd | tar xvf -
+
+      sourceRoot="$(pwd)"
+      export sourceRoot
+
+      local -a RemoveList
+      RemoveList=(
+        'CUDA_Toolkit_Release_Notes.txt'
+        'EULA.txt'
+        'InstallUtils.pm'
+        'cuda-installer.pl'
+        'extras'  # TODO: add cuda-gdb support
+        'install-linux.pl'
+        'run_files'
+        'src'
+        'tools'
+        'uninstall_cuda.pl'
+        'version.txt'
+      )
+      for i in "''${RemoveList[@]}" ; do
+        rm -rvf "$i"
+      done
+
+      runHook 'postUnpack'
+    '';
 
   buildPhase = ''
     find . -type f -executable -exec patchelf \
@@ -112,25 +130,28 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
-    mkdir -pv $out
-    perl ./install-linux.pl --prefix="$out"
-    rm $out/tools/CUDA_Occupancy_Calculator.xls
-    perl ./install-sdk-linux.pl --prefix="$out" --cudaprefix="$out"
-
-    # let's remove the 32-bit libraries, they confuse the lib64->lib mover
-    rm -rf $out/lib
-
-    # Fixup path to samples (needed for cuda 6.5 or else nsight will not find them)
-    if [ -d "$out"/cuda-samples ]; then
-        mv "$out"/cuda-samples "$out"/samples
-    fi
+    cp -vR "$sourceRoot" "$out"
+    rm $out/env-vars
 
     # Change the #error on GCC > 4.9 to a #warning.
-    sed -i $out/include/host_config.h -e 's/#error\(.*unsupported GNU version\)/#warning\1/'
+    sed -i $out/include/host_config.h \
+      -e 's/#error\(.*unsupported GNU version\)/#warning\1/'
   '';
 
   dontPatchELF = true;
   dontStrip = true;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      md5Url = "http://developer.download.nvidia.com/compute/cuda/${channel}/"
+        + "Prod/docs/sidebar/md5sum.txt";
+      insecureProtocolDowngrade = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Compiler, libraries, and tools for CUDA gpus";
@@ -140,7 +161,6 @@ stdenv.mkDerivation rec {
       codyopel
     ];
     platforms = with platforms;
-      powerpc64le-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

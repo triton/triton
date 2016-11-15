@@ -9,8 +9,11 @@ let
     Addresses = {
       Swarm = [
         "/ip4/0.0.0.0/tcp/4001"
+      ] ++ optionals cfg.utp [
         "/ip4/0.0.0.0/udp/4001/utp"
+      ] ++ [
         "/ip6/::/tcp/4001"
+      ] ++ optionals cfg.utp [
         "/ip6/::/udp/4001/utp"
       ];
       API = "/ip4/127.0.0.1/tcp/5001";

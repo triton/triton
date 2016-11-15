@@ -1,6 +1,7 @@
 { stdenv
 , fetchFromGitHub
 , fetchurl
+, lib
 , perl
 , texinfo
 , yasm
@@ -114,7 +115,7 @@
 , mfx-dispatcher
 , mmal ? null
 , netcdf ? null
-, nvenc
+, nvenc ? false
 , nvidia-cuda-toolkit
 , nvidia-drivers
 , openal
@@ -169,7 +170,7 @@
 let
   inherit (builtins)
     compareVersions;
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     optional
     optionals

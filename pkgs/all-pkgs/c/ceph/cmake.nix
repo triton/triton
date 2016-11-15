@@ -1,6 +1,7 @@
 { stdenv
 , cmake
 , fetchgit
+, fetchurl
 , perl
 , pythonPackages
 , python2Packages
@@ -8,7 +9,7 @@
 , yasm
 
 , accelio
-, boost_1-61
+, boost
 , curl
 , expat
 , fcgi
@@ -35,20 +36,25 @@ let
   inherit (stdenv.lib)
     replaceChars;
 
-  inherit ((import ./sources.nix)."${channel}")
-    fetchVersion
-    rev
-    sha256
+  sources = (import ./sources.nix)."${channel}";
+
+  inherit (sources)
     version;
 in
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "ceph-${version}";
 
-  src = fetchgit {
-    url = "https://github.com/ceph/ceph.git";
-    inherit rev sha256;
-    version = fetchVersion;
-  };
+  src = if sources ? fetchVersion then
+    fetchgit {
+      url = "https://github.com/ceph/ceph.git";
+      inherit (sources) rev sha256;
+      version = sources.fetchVersion;
+    }
+  else
+    fetchurl {
+      url = "https://github.com/wkennington/ceph/releases/download/${version}/${name}.tar.xz";
+      inherit (sources) sha256;
+    };
 
   nativeBuildInputs = [
     cmake
@@ -62,8 +68,8 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
-    accelio
-    boost_1-61
+    #accelio
+    boost
     curl
     expat
     fcgi
@@ -103,7 +109,7 @@ stdenv.mkDerivation {
 
   cmakeFlags = [
     #"-DWITH_SPDK=ON"
-    "-DWITH_XIO=ON"
+    #"-DWITH_XIO=ON"  # Broken build
     "-DHAVE_BABELTRACE=OFF"
     "-DDEBUG_GATHER=OFF"
     #"-DHAVE_LIBZFS=ON"  # Broken build and broken for using anyway
@@ -111,6 +117,7 @@ stdenv.mkDerivation {
     #"-DWITH_FIO=ON"
     "-DWITH_SYSTEMD=ON"
     "-DWITH_LTTNG=OFF"
+    "-DWITH_SYSTEM_BOOST=ON"
 
     "-DBUILD_SHARED_LIBS=ON"
     "-DXFS_INCLUDE_DIR=${xfsprogs_lib}/include"

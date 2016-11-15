@@ -18,12 +18,6 @@
 , flac
 , flask
 , gobject-introspection
-#, gst-plugins-bad
-, gst-plugins-base
-, gst-plugins-good
-#, gst-plugins-ugly
-, gst-python
-, gstreamer
 , imagemagick
 , itsdangerous
 , jellyfish
@@ -38,7 +32,6 @@
 , pathlib
 , pyacoustid
 , pyechonest
-, pygobject_3
 , pylast
 , pyxdg
 , pyyaml
@@ -74,90 +67,21 @@ let
     versionOlder;
 
   optionalPlugins = {
-    # TODO: write a generic function to detect null dependencies
-    acousticbrainz =
-      if requests != null then
-        true
-      else
-        false;
-    badfiles =
-      if flac != null
-         && mp3val != null then
-        true
-      else
-        false;
-    beatport =
-      if requests != null then
-        true
-      else
-        false;
-    bpd =
-      if pygobject_3 != null
-         && gst-plugins-base != null
-         && gstreamer != null then
-        true
-      else
-        false;
-    chroma =
-      if pyacoustid != null then
-        true
-      else
-        false;
-    discogs =
-      if discogs-client != null then
-        true
-      else
-        false;
-    /*echonest =
-      if pyechonest != null then
-        true
-      else
-        false;*/
-    embyupdate =
-      if requests != null then
-        true
-      else
-        false;
-    fetchart =
-      if requests != null then
-        true
-      else
-        false;
-    lastgenre =
-      if pylast != null then
-        true
-      else
-        false;
-    lastimport =
-      if pylast != null then
-        true
-      else
-        false;
-    mpdstats =
-      if mpd != null then
-        true
-      else
-        false;
-    mpdupdate =
-      if mpd != null then
-        true
-      else
-        false;
-    replaygain =
-      if bs1770gain != null then
-        true
-      else
-        false;
-    thumbnails =
-      if pyxdg != null then
-        true
-      else
-        false;
-    web =
-      if flask != null then
-        true
-      else
-        false;
+    acousticbrainz = requests != null;
+    badfiles = flac != null && mp3val != null;
+    beatport = requests != null;
+    bpd = false;
+    chroma = pyacoustid != null;
+    discogs = discogs-client != null;
+    embyupdate = requests != null;
+    fetchart = requests != null;
+    lastgenre = pylast != null;
+    lastimport = pylast != null;
+    mpdstats = mpd != null;
+    mpdupdate = mpd != null;
+    replaygain = bs1770gain != null;
+    thumbnails = pyxdg != null;
+    web = flask != null;
   };
 
   pluginsWithoutDeps = [
@@ -212,7 +136,7 @@ let
   testShell = "${bash}/bin/bash --norc";
   completion = "${bash-completion}/share/bash-completion/bash_completion";
 
-  version = "2016-11-08";
+  version = "2016-11-13";
 in
 buildPythonPackage rec {
   name = "beets-${version}";
@@ -221,8 +145,8 @@ buildPythonPackage rec {
     version = 2;
     owner = "sampsyo";
     repo = "beets";
-    rev = "c5edd348414bda59bd5f31404d0574bf1f37fb9d";
-    sha256 = "575dd3c1f484c85a647052df709ca59ddcfe599a0da6c2aabe86249a600a4e79";
+    rev = "2eae2d6d170fbd2dca8d1f356378e976ac4c9bff";
+    sha256 = "72099b220cf3672689563ed79b123614b7d0015ae418343ab5034dffdc265b75";
   };
 
   nativeBuildInputs = [
@@ -237,7 +161,6 @@ buildPythonPackage rec {
     flask
     # Need to for hook to set GI_TYPELIB_PATH
     gobject-introspection
-    gstreamer
     imagemagick
     itsdangerous
     jellyfish
@@ -251,7 +174,6 @@ buildPythonPackage rec {
     nose
     pyacoustid
     pyechonest
-    pygobject_3
     pylast
     pyxdg
     pyyaml
@@ -335,19 +257,6 @@ buildPythonPackage rec {
     ' beetsplug/replaygain.py
     sed -i -e 's/if has_program.*bs1770gain.*:/if True:/' \
       test/test_replaygain.py
-  '';
-
-  GST_PLUGIN_PATH = makeSearchPath "lib/gstreamer-1.0" [
-    gst-plugins-base
-    gst-plugins-good
-    #gst-plugins-bad
-    #gst-plugins-ugly
-  ];
-
-  preFixup = ''
-    wrapProgram $out/bin/beet \
-      --prefix 'GI_TYPELIB_PATH' : "$GI_TYPELIB_PATH" \
-      --prefix 'GST_PLUGIN_PATH' : "$GST_PLUGIN_PATH"
   '';
 
   preCheck = ''

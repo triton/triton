@@ -17,6 +17,7 @@ in {
   modDirVersion ? version,
   # The kernel source (tarball, git checkout, etc.)
   src,
+  needsGitPatch,
   patch,
   # Any patches
   kernelPatches ? [],
@@ -97,7 +98,7 @@ let
         export buildRoot="$(pwd)/build"
       '';
 
-      prePatch = optionalString (patch != null) ''
+      prePatch = optionalString (needsGitPatch && patch != null) ''
         echo "Applying delta ${patch}"
         case "${patch}" in
           *.xz)
@@ -109,7 +110,8 @@ let
         cat '${patch}' | eval "$cmd" | git apply --unsafe-paths
       '';
 
-      patches = map (p: p.patch) kernelPatches;
+      patches = stdenv.lib.optionals (!needsGitPatch && patch != null) [ patch ]
+        ++ map (p: p.patch) kernelPatches;
 
       postPatch = ''
         for mf in $(find -name Makefile -o -name Makefile.include -o -name install.sh); do
@@ -247,8 +249,9 @@ stdenv.mkDerivation ((drvAttrs config (kernelPatches ++ nativeKernelPatches) con
   name = "linux-${version}";
 
   # GMP / MPFR / libmpc is a hack that should be fixed in gcc
-  nativeBuildInputs = [ git perl bc openssl ]
-    ++ stdenv.lib.optionals (stdenv.lib.versionAtLeast version "4.9") [ gmp mpfr libmpc ];
+  nativeBuildInputs = [ perl bc openssl ]
+    ++ stdenv.lib.optionals (stdenv.lib.versionAtLeast version "4.9") [ gmp mpfr libmpc ]
+    ++ stdenv.lib.optionals needsGitPatch [ git ];
 
   makeFlags = commonMakeFlags ++ [
     "ARCH=${common.kernelArch}"

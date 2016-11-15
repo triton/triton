@@ -30,6 +30,7 @@ let
     };
     "testing" = {
       version = "4.9-rc5";
+      needsGitPatch = true;
       baseSha256 = "3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a";
       patchSha256 = "7c6184bda1289d66906107808a476c863e6542ed7f175bdce46af05fd200ca47";
     };
@@ -59,6 +60,8 @@ let
     splitString
     tail
     toInt;
+
+  needsGitPatch = source.needsGitPatch or false;
 
   unpatchedVersion =
     let
@@ -150,7 +153,8 @@ let
 
     kernelConfig = kernelConfigFun config;
 
-    nativeBuildInputs = [ git perl ];
+    nativeBuildInputs = [ perl ]
+      ++ optionals needsGitPatch [ git ];
 
     platformName = "pc";
     kernelBaseConfig = "defconfig";
@@ -183,7 +187,7 @@ let
   };
 
   kernel = buildLinux {
-    inherit version modDirVersion src patch kernelPatches;
+    inherit version modDirVersion src needsGitPatch patch kernelPatches;
 
     configfile = configfile.nativeDrv or configfile;
 

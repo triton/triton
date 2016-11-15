@@ -3,13 +3,15 @@
 , pythonPackages
 }:
 
+let
+  version = "2.5.1";
+in
 pythonPackages.buildPythonPackage rec {
-  name = "scons-2.5.0";
+  name = "scons-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/scons/${name}.tar.gz";
-    multihash = "QmdMJFPe4BiX7T2LmQQsRs145GGihN1CEgxMfQu1qVLfCz";
-    sha256 = "eb296b47f23c20aec7d87d35cfa386d3508e01d1caa3040ea6f5bbab2292ace9";
+    url = "mirror://sourceforge/scons/scons/${version}/${name}.tar.gz";
+    sha256 = "0b25218ae7b46a967db42f2a53721645b3d42874a65f9552ad16ce26d30f51f2";
   };
 
   setupHook = ./setup-hook.sh;

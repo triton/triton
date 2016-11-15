@@ -11,7 +11,7 @@
 }:
 
 let
-  version = "0.24.2";
+  version = "0.24.3";
 in
 stdenv.mkDerivation {
   name = "libgit2-${version}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation {
     owner = "libgit2";
     repo = "libgit2";
     rev = "v${version}";
-    sha256 = "1a9a406bba8ff9a90d13f779ab0a5a602ecb76337f1e3b61b0730c56b3b30d08";
+    sha256 = "83f03f946ec4c374fd38896b997abea2c526e1a9fb6b80816096d52763b194a9";
   };
 
   nativeBuildInputs = [

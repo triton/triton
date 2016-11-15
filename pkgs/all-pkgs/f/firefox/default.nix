@@ -20,11 +20,12 @@
 , freetype
 , gconf
 , glib
+, gpsd
 , gtk2
 , gtk3
 , hunspell
 , icu
-, jemalloc
+, jack2_lib
 , libevent
 , libffi
 , libjpeg
@@ -89,10 +90,12 @@ stdenv.mkDerivation rec {
     freetype
     gconf
     glib
+    gpsd
     gtk2
     gtk3
     hunspell
     icu
+    jack2_lib
     libevent
     libffi
     libjpeg
@@ -113,6 +116,7 @@ stdenv.mkDerivation rec {
     xorg.libICE
     xorg.libSM
     xorg.libX11
+    xorg.libxcb
     xorg.libXcomposite
     xorg.libXdamage
     xorg.libXext
@@ -137,6 +141,8 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-default-toolkit=cairo-gtk3"
     "--enable-eme=widevine"
+    "--enable-jack"
+    "--enable-gpsd"
     "--disable-tests"
     "--enable-jemalloc=4"
     "--enable-system-hunspell"

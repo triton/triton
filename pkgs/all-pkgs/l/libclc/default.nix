@@ -7,14 +7,14 @@
 }:
 
 stdenv.mkDerivation {
-  name = "libclc-2016-11-14";
+  name = "libclc-2016-09-21";
 
   src = fetchFromGitHub {
     version = 2;
     owner = "llvm-mirror";
     repo = "libclc";
-    rev = "b906699f6876538f6528224b858418e4029e1f26";
-    sha256 = "d317e16c84ef679101639ed89f47bbc4748c03e05ee68d2a581d4fdda197e834";
+    rev = "520743b0b72862a987ead6213dc1a5321a2010f9";
+    sha256 = "0d4a526e7ba77ba583557f026e97845b6588495a55acde22c54fa401277bf524";
   };
 
   nativeBuildInputs = [

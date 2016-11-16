@@ -10,7 +10,7 @@
 
 let
   major = "2.3";
-  patch = "1";
+  patch = "2";
   version = "${major}.${patch}";
 in
 
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://cache.ruby-lang.org/pub/ruby/${major}/${name}.tar.gz";
     hashOutput = false;  # Get the hash from the website
-    sha256 = "b87c738cb2032bf4920fef8e3864dc5cf8eae9d89d8d523ce0236945c5797dcd";
+    sha256 = "8d7f6ca0f16d77e3d242b24da38985b7539f58dc0da177ec633a83d0c8f5b197";
   };
 
   buildInputs = [

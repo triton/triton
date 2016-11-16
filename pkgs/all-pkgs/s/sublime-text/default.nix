@@ -85,7 +85,7 @@ let
         --set NIX_REDIRECTS ${builtins.concatStringsSep ":" redirects}
     '' + /* Without this, plugin_host crashes, even though it has the rpath */ ''
       wrapProgram $out/plugin_host \
-        --prefix LD_PRELOAD : '${stdenv.cc.cc}/li64/libgcc_s.so.1' \
+        --prefix LD_PRELOAD : '${stdenv.cc.cc}/lib64/libgcc_s.so.1' \
         --prefix LD_PRELOAD : '${openssl}/lib/libssl.so' \
         --prefix LD_PRELOAD : '${bzip2}/lib/libbz2.so'
     '';

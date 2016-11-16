@@ -239,7 +239,7 @@ rec {
   ];
 
   xorg = [
-    http://www.x.org/releases
+    https://www.x.org/releases
     http://mirror.us.leaseweb.net/xorg
     http://xorg.freedesktop.org/releases
     http://ftp.x.org/pub

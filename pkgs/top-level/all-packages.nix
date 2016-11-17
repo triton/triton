@@ -1146,6 +1146,8 @@ firefox_wrapper = callPackage ../all-pkgs/f/firefox/wrapper.nix { };
 
 fish = callPackage ../all-pkgs/f/fish { };
 
+fixesproto = callPackage ../all-pkgs/f/fixesproto { };
+
 flac = callPackage ../all-pkgs/f/flac { };
 
 flex = callPackage ../all-pkgs/f/flex { };

@@ -2972,6 +2972,8 @@ resilio = callPackage ../all-pkgs/r/resilio { };
 
 resolv_wrapper = callPackage ../all-pkgs/r/resolv_wrapper { };
 
+resourceproto = callPackage ../all-pkgs/r/resourceproto { };
+
 rest = callPackage ../all-pkgs/r/rest { };
 
 rfkill = callPackage ../all-pkgs/r/rfkill { };
@@ -3477,6 +3479,7 @@ xorg = recurseIntoAttrs (
       # randrproto
       # recordproto
       # renderproto
+      # resourceproto
       # util-macros
       # xcb-proto
       # xcmiscproto

@@ -4,6 +4,7 @@
 , fetchTritonPatch
 , fetchurl
 , gettext
+, lib
 
 , expat
 , less
@@ -15,19 +16,19 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    wtFlag;
+  inherit (lib)
+    boolString
+    boolWt;
 in
-
 stdenv.mkDerivation rec {
-  name = "lftp-4.7.3";
+  name = "lftp-4.7.4";
 
   src = fetchurl {
     urls = [
       "https://lftp.yar.ru/ftp/${name}.tar.bz2"
       "https://lftp.yar.ru/ftp/old/${name}.tar.bz2"
     ];
-    sha256 = "4c75f797717c8de614794795926a7b61bb67d2fea598d3bd3f463d837a62551a";
+    sha256 = "95e7acfd9d0a2addeded1f00794aeeac43952ebc4924043965a5e1619df29128";
   };
 
   nativeBuildInputs = [
@@ -72,28 +73,32 @@ stdenv.mkDerivation rec {
     "--enable-ipv6"
     "--without-debug"
     "--without-profiling"
-    (wtFlag "gnu-ld" (stdenv.cc.isGNU) null)
+    "--${boolWt (stdenv.cc.isGNU)}-gnu-ld"
     #"--with-pager=${less}"
     # TODO: dante socks proxy support
     "--without-socks"
     "--without-socks5"
-    #(wtFlag "socksdante" (dante != null) null)
+    #"--${boolWt (dante != null)}-socksdante"
     "--without-socksdante"
     "--with-modules"
     #"--with-sysroot"
     "--without-gnutls"
-    (wtFlag "openssl" (openssl != null) openssl)
+    "--${boolWt (openssl != null)}-openssl${
+      boolString (openssl != null) "=${openssl}" ""}"
     "--without-included-regex"
     "--with-libresolv"
-    (wtFlag "readline" (readline != null) readline)
-    (wtFlag "zlib" (zlib != null) zlib)
-    (wtFlag "expat" (expat != null) expat)
+    "--${boolWt (readline != null)}-readline${
+      boolString (readline != null) "=${readline}" ""}"
+    "--${boolWt (zlib != null)}-zlib${
+      boolString (zlib != null) "=${zlib}" ""}"
+    "--${boolWt (expat != null)}-expat${
+      boolString (expat != null) "=${expat}" ""}"
     # TODO
     #"--with-dnssec-local-validation"
-    (wtFlag "libidn" (libidn != null) null)
+    "--${boolWt (libidn != null)}-libidn"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A ftp/sftp/http/https/torrent client & file transfer program";
     homepage = https://lftp.yar.ru/;
     license = licenses.gpl3;

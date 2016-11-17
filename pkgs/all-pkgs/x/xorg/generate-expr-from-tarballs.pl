@@ -9,6 +9,8 @@
 # extra.list are packages not contained in the tarballs
 # old.list are packages that used to be part of the tarballs
 
+die "Update derivation by hand until the xorg transition is complete";
+exit 1;
 
 use strict;
 

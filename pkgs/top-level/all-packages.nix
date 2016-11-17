@@ -1154,6 +1154,8 @@ flex = callPackage ../all-pkgs/f/flex { };
 
 flite = callPackage ../all-pkgs/f/flite { };
 
+fontcacheproto = callPackage ../all-pkgs/f/fontcacheproto { };
+
 fontconfig = callPackage ../all-pkgs/f/fontconfig { };
 
 fox = callPackage ../all-pkgs/f/fox { };
@@ -3445,6 +3447,7 @@ xorg = recurseIntoAttrs (
       # dmxproto
       # dri2proto
       # dri3proto
+      # fontcacheproto
       # inputproto
       # kbproto
       # libice

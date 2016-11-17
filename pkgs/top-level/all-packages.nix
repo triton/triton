@@ -634,6 +634,8 @@ bcache-tools_dev = callPackageAlias "bcache-tools" {
 
 beecrypt = callPackage ../all-pkgs/b/beecrypt { };
 
+bigreqsproto = callPackage ../all-pkgs/b/bigreqsproto { };
+
 bind = callPackage ../all-pkgs/b/bind { };
 
 bind_tools = callPackageAlias "bind" {

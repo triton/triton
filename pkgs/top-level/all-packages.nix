@@ -2962,6 +2962,8 @@ readline = callPackage ../all-pkgs/r/readline { };
 
 recode = callPackage ../all-pkgs/r/recode { };
 
+recordproto = callPackage ../all-pkgs/r/recordproto { };
+
 redis = callPackage ../all-pkgs/r/redis { };
 
 resilio = callPackage ../all-pkgs/r/resilio { };
@@ -3471,6 +3473,7 @@ xorg = recurseIntoAttrs (
       # presentproto
       # printproto
       # randrproto
+      # recordproto
       # util-macros
       # xcb-proto
       # xcmiscproto

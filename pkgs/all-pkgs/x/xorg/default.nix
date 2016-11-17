@@ -23,6 +23,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , presentproto
 # , printproto
 # , randrproto
+# , recordproto
 # , util-macros
 # , xcb-proto
 # , xcmiscproto
@@ -65,6 +66,7 @@ let
     #   presentproto
     #   printproto
     #   randrproto
+    #   recordproto
     #   xcmiscproto
     #   xextproto
     #   xproto

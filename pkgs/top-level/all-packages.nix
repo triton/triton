@@ -1158,6 +1158,8 @@ fontcacheproto = callPackage ../all-pkgs/f/fontcacheproto { };
 
 fontconfig = callPackage ../all-pkgs/f/fontconfig { };
 
+fontsproto = callPackage ../all-pkgs/f/fontsproto { };
+
 fox = callPackage ../all-pkgs/f/fox { };
 
 freeglut = callPackage ../all-pkgs/f/freeglut { };
@@ -3448,6 +3450,7 @@ xorg = recurseIntoAttrs (
       # dri2proto
       # dri3proto
       # fontcacheproto
+      # fontsproto
       # inputproto
       # kbproto
       # libice

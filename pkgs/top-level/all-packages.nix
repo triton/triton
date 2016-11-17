@@ -3357,6 +3357,8 @@ xdg-user-dirs = callPackage ../all-pkgs/x/xdg-user-dirs { };
 
 xdg-utils = callPackage ../all-pkgs/x/xdg-utils { };
 
+xextproto = callPackage ../all-pkgs/x/xextproto { };
+
 xf86-input-mtrack = callPackage ../all-pkgs/x/xf86-input-mtrack { };
 
 xf86-input-wacom = callPackage ../all-pkgs/x/xf86-input-wacom { };

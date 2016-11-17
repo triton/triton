@@ -3429,7 +3429,22 @@ xorg = recurseIntoAttrs (
       tradcpp
       util-linux_lib
       xmlto
-      zlib;
+      zlib
+      # Rewritten xorg packages
+      # bigreqsproto
+      # compositeproto
+      # damageproto
+      # dmxproto
+      # dri2proto
+      # dri3proto
+      # libpthread-stubs
+      # util-macros
+      # xcb-proto
+      # xcmiscproto
+      # xextproto
+      # xproto
+      # xtrans
+      ;
     mesa = pkgs.mesa_noglu;
   }
 );

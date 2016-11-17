@@ -3,7 +3,23 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxslt, expat, libpng, zlib, perl, mesa_noglu, mesa_drivers, spice-protocol, spice
 , dbus, util-linux_lib, openssl, gperf, gnum4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
 , autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, mtdev, cairo, glib
-, libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3, ... }: with args;
+, libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3
+
+# , bigreqsproto
+# , compositeproto
+# , damageproto
+# , dmxproto
+# , dri2proto
+# , dri3proto
+# , libpthread-stubs
+# , util-macros
+# , xcb-proto
+# , xcmiscproto
+# , xextproto
+# , xproto
+# , xtrans
+
+, ... }: with args;
 
 let
 
@@ -22,6 +38,24 @@ let
   overrides = import ./overrides.nix {inherit args xorg;};
 
   xorg = rec {
+
+    # inherit
+    #   bigreqsproto
+    #   compositeproto
+    #   damageproto
+    #   dmxproto
+    #   dri2proto
+    #   dri3proto
+    #   xcmiscproto
+    #   xextproto
+    #   xproto
+    #   xtrans;
+
+    # libpthreadstubs = libpthread-stubs;
+    # utilmacros = util-macros;
+    # xcbproto = xcb-proto;
+
+################################################################################
 
   bdftopcf = (mkDerivation "bdftopcf" {
     name = "bdftopcf-1.0.5";

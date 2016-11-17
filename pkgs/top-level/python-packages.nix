@@ -431,6 +431,8 @@ werkzeug = callPackage ../all-pkgs/w/werkzeug { };
 
 wheel = callPackage ../all-pkgs/w/wheel { };
 
+xcb-proto = callPackage ../all-pkgs/x/xcb-proto { };
+
 youtube-dl = callPackage ../all-pkgs/y/youtube-dl { };
 
 zope-component = callPackage ../all-pkgs/z/zope-component { };

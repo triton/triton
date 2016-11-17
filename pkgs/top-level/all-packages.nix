@@ -921,6 +921,8 @@ dpkg = callPackage ../all-pkgs/d/dpkg { };
 
 dri2proto = callPackage ../all-pkgs/d/dri2proto { };
 
+dri3proto = callPackage ../all-pkgs/d/dri3proto { };
+
 #dropbox = callPackage ../all-pkgs/d/dropbox { };
 
 dtc = callPackage ../all-pkgs/d/dtc { };

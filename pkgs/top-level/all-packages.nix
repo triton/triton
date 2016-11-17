@@ -3355,6 +3355,8 @@ x265_head = callPackage ../all-pkgs/x/x265 {
 };
 x265 = callPackageAlias "x265_stable" { };
 
+xcmiscproto = callPackage ../all-pkgs/x/xcmiscproto { };
+
 xdg-user-dirs = callPackage ../all-pkgs/x/xdg-user-dirs { };
 
 xdg-utils = callPackage ../all-pkgs/x/xdg-utils { };

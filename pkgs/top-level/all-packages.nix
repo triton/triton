@@ -3414,6 +3414,8 @@ xorg = recurseIntoAttrs (
   }
 );
 
+xproto = callPackage ../all-pkgs/x/xproto { };
+
 xvidcore = callPackage ../all-pkgs/x/xvidcore { };
 
 xz = callPackage ../all-pkgs/x/xz { };

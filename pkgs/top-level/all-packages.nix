@@ -2834,6 +2834,8 @@ pptp = callPackage ../all-pkgs/p/pptp { };
 
 presentproto = callPackage ../all-pkgs/p/presentproto { };
 
+printproto = callPackage ../all-pkgs/p/printproto { };
+
 procps = callPackageAlias "procps-ng" { };
 
 procps-ng = callPackage ../all-pkgs/p/procps-ng { };
@@ -3465,6 +3467,7 @@ xorg = recurseIntoAttrs (
       # libsm
       # libxau
       # presentproto
+      # printproto
       # util-macros
       # xcb-proto
       # xcmiscproto

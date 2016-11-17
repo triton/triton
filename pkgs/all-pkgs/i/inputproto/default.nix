@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = with lib; {
-    description = "";
+    description = "X.Org Input protocol headers";
     homepage = https://xorg.freedesktop.org;
     license = licenses.mit;
     maintainers = with maintainers; [

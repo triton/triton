@@ -889,6 +889,8 @@ dmenu = callPackage ../all-pkgs/d/dmenu { };
 
 dmidecode = callPackage ../all-pkgs/d/dmidecode { };
 
+dmxproto = callPackage ../all-pkgs/d/dmxproto { };
+
 dnscrypt-proxy = callPackage ../all-pkgs/d/dnscrypt-proxy { };
 
 dnscrypt-wrapper = callPackage ../all-pkgs/d/dnscrypt-wrapper { };

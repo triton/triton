@@ -3362,6 +3362,8 @@ xine-lib = callPackage ../all-pkgs/x/xine-lib { };
 
 xine-ui = callPackage ../all-pkgs/x/xine-ui { };
 
+xineramaproto = callPackage ../all-pkgs/x/xineramaproto { };
+
 xmlto = callPackage ../all-pkgs/x/xmlto { };
 
 xmltoman = callPackage ../all-pkgs/x/xmltoman { };

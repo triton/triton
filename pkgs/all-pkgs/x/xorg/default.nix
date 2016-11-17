@@ -11,6 +11,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , dmxproto
 # , dri2proto
 # , dri3proto
+# , inputproto
 # , libice
 # , libpthread-stubs
 # , libsm
@@ -48,6 +49,7 @@ let
     #   dmxproto
     #   dri2proto
     #   dri3proto
+    #   inputproto
     #   xcmiscproto
     #   xextproto
     #   xproto

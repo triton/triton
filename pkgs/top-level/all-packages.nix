@@ -1767,6 +1767,8 @@ iniparser = callPackage ../all-pkgs/i/iniparser { };
 
 inkscape = callPackage ../all-pkgs/i/inkscape { };
 
+inputproto = callPackage ../all-pkgs/i/inputproto { };
+
 intel-microcode = callPackage ../all-pkgs/i/intel-microcode { };
 
 intltool = callPackage ../all-pkgs/i/intltool { };
@@ -3441,6 +3443,7 @@ xorg = recurseIntoAttrs (
       # dmxproto
       # dri2proto
       # dri3proto
+      # inputproto
       # libice
       # libpthread-stubs
       # libsm

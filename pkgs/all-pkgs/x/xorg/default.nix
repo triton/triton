@@ -19,6 +19,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , libice
 # , libpthread-stubs
 # , libsm
+# , presentproto
 # , util-macros
 # , xcb-proto
 # , xcmiscproto
@@ -58,6 +59,7 @@ let
     #   glproto
     #   inputproto
     #   kbproto
+    #   presentproto
     #   xcmiscproto
     #   xextproto
     #   xproto

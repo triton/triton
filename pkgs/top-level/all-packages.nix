@@ -967,6 +967,8 @@ etcd = pkgs.goPackages.etcd.bin // { outputs = [ "bin" ]; };
 
 ethtool = callPackage ../all-pkgs/e/ethtool { };
 
+evieext = callPackage ../all-pkgs/e/evieext { };
+
 evince_3-22 = callPackage ../all-pkgs/e/evince {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;

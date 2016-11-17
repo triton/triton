@@ -1835,6 +1835,8 @@ judy = callPackage ../all-pkgs/j/judy { };
 
 kbd = callPackage ../all-pkgs/k/kbd { };
 
+kbproto = callPackage ../all-pkgs/k/kbproto { };
+
 kea = callPackage ../all-pkgs/k/kea { };
 
 keepalived = callPackage ../all-pkgs/k/keepalived { };
@@ -3444,6 +3446,7 @@ xorg = recurseIntoAttrs (
       # dri2proto
       # dri3proto
       # inputproto
+      # kbproto
       # libice
       # libpthread-stubs
       # libsm

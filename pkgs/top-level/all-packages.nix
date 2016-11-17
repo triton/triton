@@ -1256,6 +1256,8 @@ glibmm = callPackageAlias "glibmm_2-50" { };
 
 glog = callPackage ../all-pkgs/g/glog { };
 
+glproto = callPackage ../all-pkgs/g/glproto { };
+
 glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 
 gmp = callPackage ../all-pkgs/g/gmp { };
@@ -3451,6 +3453,7 @@ xorg = recurseIntoAttrs (
       # dri3proto
       # fontcacheproto
       # fontsproto
+      # glproto
       # inputproto
       # kbproto
       # libice

@@ -2966,6 +2966,8 @@ recordproto = callPackage ../all-pkgs/r/recordproto { };
 
 redis = callPackage ../all-pkgs/r/redis { };
 
+renderproto = callPackage ../all-pkgs/r/renderproto { };
+
 resilio = callPackage ../all-pkgs/r/resilio { };
 
 resolv_wrapper = callPackage ../all-pkgs/r/resolv_wrapper { };
@@ -3474,6 +3476,7 @@ xorg = recurseIntoAttrs (
       # printproto
       # randrproto
       # recordproto
+      # renderproto
       # util-macros
       # xcb-proto
       # xcmiscproto

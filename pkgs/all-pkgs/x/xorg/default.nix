@@ -11,7 +11,9 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , dmxproto
 # , dri2proto
 # , dri3proto
+# , libice
 # , libpthread-stubs
+# , libsm
 # , util-macros
 # , xcb-proto
 # , xcmiscproto
@@ -51,7 +53,9 @@ let
     #   xproto
     #   xtrans;
 
+    # libICE = libice;
     # libpthreadstubs = libpthread-stubs;
+    # libSM = libsm;
     # utilmacros = util-macros;
     # xcbproto = xcb-proto;
 

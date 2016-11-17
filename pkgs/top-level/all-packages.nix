@@ -2187,6 +2187,8 @@ libsigcxx = callPackageAlias "libsigcxx_2-10" { };
 
 libsigsegv = callPackage ../all-pkgs/l/libsigsegv { };
 
+libsm = callPackage ../all-pkgs/l/libsm { };
+
 libsmbios = callPackage ../all-pkgs/l/libsmbios { };
 
 libsmi = callPackage ../all-pkgs/l/libsmi { };
@@ -3439,7 +3441,9 @@ xorg = recurseIntoAttrs (
       # dmxproto
       # dri2proto
       # dri3proto
+      # libice
       # libpthread-stubs
+      # libsm
       # util-macros
       # xcb-proto
       # xcmiscproto

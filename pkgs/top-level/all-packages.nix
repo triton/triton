@@ -2030,6 +2030,8 @@ libibverbs = callPackage ../all-pkgs/l/libibverbs { };
 
 libical = callPackage ../all-pkgs/l/libical { };
 
+libice = callPackage ../all-pkgs/l/libice { };
+
 libid3tag = callPackage ../all-pkgs/l/libid3tag { };
 
 libidl = callPackage ../all-pkgs/l/libidl { };

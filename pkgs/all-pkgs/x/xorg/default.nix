@@ -1763,17 +1763,6 @@ let
 
   }) // {inherit ;};
 
-  xfindproxy = (mkDerivation "xfindproxy" {
-    name = "xfindproxy-1.0.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xfindproxy-1.0.4.tar.bz2;
-      sha256 = "07x0z360866szmgbhhnmjs5g1zrq4mazh5ws52z5rakzgjibs9jn";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libICE xproto xproxymanagementprotocol libXt ];
-
-  }) // {inherit libICE xproto xproxymanagementprotocol libXt ;};
-
   xfs = (mkDerivation "xfs" {
     name = "xfs-1.1.4";
     src = fetchurl {
@@ -1933,17 +1922,6 @@ let
     src = fetchurl {
       url = mirror://xorg/individual/proto/xproto-7.0.31.tar.bz2;
       sha256 = "0ivpxz0rx2a7nahkpkhfgymz7j0pwzaqvyqpdgw9afmxl1yp9yf6";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ ];
-
-  }) // {inherit ;};
-
-  xproxymanagementprotocol = (mkDerivation "xproxymanagementprotocol" {
-    name = "xproxymanagementprotocol-1.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/proto/xproxymanagementprotocol-1.0.3.tar.bz2;
-      sha256 = "1hi6zp27cad7pw4z5d6rpgndrbvzq1nbiji2nsz7g9bgqzcar0kk";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ ];

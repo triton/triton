@@ -2950,6 +2950,8 @@ quazip = callPackage ../all-pkgs/q/quazip { };
 
 radvd = callPackage ../all-pkgs/r/radvd { };
 
+randrproto = callPackage ../all-pkgs/r/randrproto { };
+
 rapidjson = callPackage ../all-pkgs/r/rapidjson { };
 
 raptor2 = callPackage ../all-pkgs/r/raptor2 { };
@@ -3468,6 +3470,7 @@ xorg = recurseIntoAttrs (
       # libxau
       # presentproto
       # printproto
+      # randrproto
       # util-macros
       # xcb-proto
       # xcmiscproto

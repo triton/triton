@@ -3254,6 +3254,8 @@ util-linux_lib = callPackageAlias "util-linux_full" {
   type = "lib";
 };
 
+util-macros = callPackage ../all-pkgs/u/util-macros { };
+
 v4l-utils = callPackage ../all-pkgs/v/v4l-utils {
   channel = "utils";
 };

@@ -826,6 +826,8 @@ curl_full = callPackage ../all-pkgs/c/curl {
 
 cyrus-sasl = callPackage ../all-pkgs/c/cyrus-sasl { };
 
+damageproto = callPackage ../all-pkgs/d/damageproto { };
+
 dash = callPackage ../all-pkgs/d/dash { };
 
 db_5 = callPackage ../all-pkgs/d/db {

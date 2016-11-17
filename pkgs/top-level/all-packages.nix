@@ -786,6 +786,8 @@ colord = callPackage ../all-pkgs/c/colord { };
 
 colord-gtk = callPackage ../all-pkgs/c/colord-gtk { };
 
+compositeproto = callPackage ../all-pkgs/c/compositeproto { };
+
 conntrack-tools = callPackage ../all-pkgs/c/conntrack-tools { };
 
 consul = pkgs.goPackages.consul.bin // { outputs = [ "bin" ]; };

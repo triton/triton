@@ -23,9 +23,9 @@
 
 /* NOTICE: ONLY versions 352+ are supported on Triton
  *
- * BETA:        367.xx,   xorg <=1.18.x, linux <=4.7
- * SHORTLIVED:  364.xx,   xorg <=1.18.x, linux <=4.5
- * LONGLIVED:   367.xx,   xorg <=1.18.x, linux <=4.7 (stable) <- default
+ * BETA:        367.xx,   xorg <=1.18.x, linux <=4.8
+ * SHORTLIVED:  364.xx,   xorg <=1.18.x, linux <=4.8
+ * LONGLIVED:   367.xx,   xorg <=1.18.x, linux <=4.8 (stable) <- default
  * TESLA:       352.xx,   xorg <=1.18.x, linux <=4.5
  * UNSUPPORTED: 340.xx,   xorg <=1.18.x, linux <=4.5
  * UNSUPPORTED: 304.xx,   xorg <=1.18.x, linux <=4.5
@@ -35,6 +35,8 @@
  *
  * If your gpu requires a version that is unsupported it is
  * recommended to use the nouveau driver.
+ * http://nvidia.custhelp.com/app/answers/detail/a_id/3142
+ * http://www.nvidia.com/object/IO_32667.html
  *
  * Information on the GLVND transition: https://goo.gl/4mraRX
  */

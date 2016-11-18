@@ -10,7 +10,6 @@
 , jansson
 , libvdpau
 , mesa_noglu
-, nvidia-gpu-deployment-kit
 , pango
 , xorg
 }:
@@ -19,7 +18,7 @@ let
   inherit (stdenv.lib)
     bool01;
 
-    version = "370.28";
+    version = "375.20";
 in
 stdenv.mkDerivation rec {
   name = "nvidia-settings-${version}";
@@ -27,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "http://http.download.nvidia.com/XFree86/nvidia-settings/"
       + "nvidia-settings-${version}.tar.bz2";
-    sha256 = "59d7818a4837144e373ce958233db059fde59e279477001e187579770ebf0c5f";
+    sha256 = "40cd293e79bda131147187f281578e2b1f887c05bee78f671bde329af4956ada";
   };
 
   nativeBuildInputs = [
@@ -43,7 +42,6 @@ stdenv.mkDerivation rec {
     jansson
     libvdpau
     mesa_noglu
-    nvidia-gpu-deployment-kit
     pango
     xorg.libX11
     xorg.libXext
@@ -77,7 +75,7 @@ stdenv.mkDerivation rec {
     "GTK3_AVAILABLE=1"
     "NV_VERBOSE=1"
     "NV_USE_BUNDLED_LIBJANSSON=0"
-    "NVML_AVAILABLE=${bool01 (nvidia-gpu-deployment-kit != null)}"
+    "NVML_AVAILABLE=1"
   ];
 
   postBuild = /* Build libXNVCtrl */ ''

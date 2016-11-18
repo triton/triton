@@ -2,16 +2,18 @@
 , fetchFromGitHub
 }:
 
+let
+  version = "1.7.3";
+in
 stdenv.mkDerivation rec {
   name = "lz4-${version}";
-  version = "131";
 
   src = fetchFromGitHub {
-    version = 1;
-    owner = "Cyan4973";
+    version = 2;
+    owner = "lz4";
     repo = "lz4";
-    rev = "r${version}";
-    sha256 = "2c5aba2f33913aadcfcc3942c69493cd9147be5704c94921d75ba70222a23d03";
+    rev = "v${version}";
+    sha256 = "b4ef4e45d4a0f01fdbc5ccf87a752bd88891341f15decf07314d0a7824fa5493";
   };
 
   preBuild = ''

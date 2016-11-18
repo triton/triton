@@ -1639,10 +1639,10 @@ let
   }) // {inherit inputproto libevdev systemd_lib mtdev xorgserver xproto ;};
 
   xf86inputjoystick = (mkDerivation "xf86inputjoystick" {
-    name = "xf86-input-joystick-1.6.2";
+    name = "xf86-input-joystick-1.6.3";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-joystick-1.6.2.tar.bz2;
-      sha256 = "038mfqairyyqvz02rk7v3i070sab1wr0k6fkxvyvxdgkfbnqcfzf";
+      url = mirror://xorg/individual/driver/xf86-input-joystick-1.6.3.tar.bz2;
+      sha256 = "9e7669ecf0f23b8e5dc39d5397cf28296f692aa4c0e4255f5e02816612c18eab";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ inputproto kbproto xorgserver xproto ];

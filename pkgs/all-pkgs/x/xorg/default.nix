@@ -1727,13 +1727,13 @@ let
   }) // {inherit fontsproto libpciaccess randrproto renderproto videoproto xextproto xf86dgaproto xorgserver xproto ;};
 
   xf86videoamdgpu = (mkDerivation "xf86videoamdgpu" {
-    name = "xf86-video-amdgpu-1.1.2";
+    name = "xf86-video-amdgpu-1.2.0";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-amdgpu-1.1.2.tar.bz2;
-      sha256 = "0y87d4rhm5r71qpzcmmz4q37f3d3461jzh3sr99j7lbhdpnpzs3f";
+      url = mirror://xorg/individual/driver/xf86-video-amdgpu-1.2.0.tar.bz2;
+      sha256 = "275b1aac5f127f55ba3d7480a1df89eace1d02650e24e46908067fc875e76c8f";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ fontsproto mesa_noglu glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ];
+    buildInputs = [ fontsproto mesa_noglu glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto damageproto fixesproto ];
 
   }) // {inherit fontsproto mesa_noglu glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ;};
 

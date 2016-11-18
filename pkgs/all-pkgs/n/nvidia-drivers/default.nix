@@ -25,7 +25,7 @@
  *
  * BETA:        367.xx,   xorg <=1.18.x, linux <=4.8
  * SHORTLIVED:  364.xx,   xorg <=1.18.x, linux <=4.8
- * LONGLIVED:   367.xx,   xorg <=1.18.x, linux <=4.8 (stable) <- default
+ * LONGLIVED:   367.xx,   xorg <=1.19.x, linux <=4.8 (stable) <- default
  * TESLA:       352.xx,   xorg <=1.18.x, linux <=4.5
  * UNSUPPORTED: 340.xx,   xorg <=1.18.x, linux <=4.5
  * UNSUPPORTED: 304.xx,   xorg <=1.18.x, linux <=4.5
@@ -150,7 +150,9 @@ stdenv.mkDerivation {
   ];
 
   patches =
-    optionals (versionAtLeast source.versionMajor "367") [
+    optionals (
+      versionAtLeast source.versionMajor "367"
+      && versionOlder version "375.20") [
       (fetchTritonPatch {
         rev = "daeb3f279f0c923644b352ac318e7f13c8692f0c";
         file = "nvidia-drivers/nvidia-drivers-367.35-fix-application-profiles-typo.patch";

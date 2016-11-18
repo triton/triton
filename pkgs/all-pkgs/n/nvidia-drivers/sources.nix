@@ -8,10 +8,10 @@ rec {
     sha256x86_64 = "055ee6acd3ca1f4a07fdb1a4a16abb9abc6bfcb17fe2158808060838a4e84b83";
   };
   long-lived = {
-    versionMajor = "367";
-    versionMinor = "57";
-    sha256i686   = "b2ad4d0d4a2e98528e877ae0d98c38039c2400b09cfb5928cd21899f3a991291";
-    sha256x86_64 = "b94a8ab6a1da464b44ba9bbb25e1e220441ae8340221de3bd159df00445dd6e4";
+    versionMajor = "375";
+    versionMinor = "20";
+    sha256i686   = "cc79d3ac2b688009ed2e47a1cf27557aea5dd745b3b6e9b83945c359ddab4335";
+    sha256x86_64 = "ef2e71b6eef6ce2ee2556c1449d129380f0312b5a6a51bd8483fd60f8df0b9bf";
   };
   short-lived = {
     versionMajor = "370";
@@ -26,5 +26,5 @@ rec {
     sha256x86_64 = "7049a8dc8948f5d67f6eb3fac627ac0933270e992b1892401b0134c4bd33ccf6";
   };
   # Update to which ever channel has the latest release at the time.
-  latest = beta;
+  latest = long-lived;
 }

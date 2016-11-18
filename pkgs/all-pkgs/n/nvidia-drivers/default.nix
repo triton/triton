@@ -158,25 +158,6 @@ stdenv.mkDerivation {
       })
     ];
 
-  postPatch =
-    # 364+ & Linux 4.7
-    optionalString (
-      buildKernelspace
-      && versionAtLeast kernel.version "4.7"
-      && versionAtLeast source.versionMajor "364"
-      && versionOlder version "367.44") (
-      /* Collision between function added in Linux 4.7 */ ''
-        sed -i kernel/nvidia-uvm/uvm_linux.h \
-          -i kernel/nvidia-uvm/uvm8_gpu.c \
-          -e 's/radix_tree_empty/nvidia_radix_tree_empty/'
-      '' + /* Change to drm_gem_object_lookup in Linux 4.7 */ ''
-        sed -i kernel/nvidia-drm/nvidia-drm-fb.c \
-          -i kernel/nvidia-drm/nvidia-drm-gem.c \
-          -i kernel/nvidia-uvm/uvm_linux.h \
-          -e 's/drm_gem_object_lookup(dev, file,/drm_gem_object_lookup(file,/'
-      ''
-    );
-
   configurePhase = ":";
 
   kernel =

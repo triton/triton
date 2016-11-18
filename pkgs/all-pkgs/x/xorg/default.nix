@@ -1650,10 +1650,10 @@ let
   }) // {inherit inputproto kbproto xorgserver xproto ;};
 
   xf86inputkeyboard = (mkDerivation "xf86inputkeyboard" {
-    name = "xf86-input-keyboard-1.8.1";
+    name = "xf86-input-keyboard-1.9.0";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-keyboard-1.8.1.tar.bz2;
-      sha256 = "04d27kwqq03fc26an6051hs3i0bff8albhnngzyd59wxpwwzzj0s";
+      url = mirror://xorg/individual/driver/xf86-input-keyboard-1.9.0.tar.bz2;
+      sha256 = "f7c900f21752683402992b288d5a2826de7a6c0c0abac2aadd7e8a409e170388";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ inputproto xorgserver xproto ];

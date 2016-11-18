@@ -15,18 +15,22 @@
 }:
 
 let
-  sources = import ./sources.nix;
+  inherit ((import ./sources.nix)."${channel}")
+    sha256
+    version;
 
-  source = sources."${channel}";
+  inherit (stdenv.lib)
+    optionals
+    versionAtLeast
+    versionOlder;
 in
-
 stdenv.mkDerivation rec {
-  name = "nginx-${source.version}";
+  name = "nginx-${version}";
 
   src = fetchurl {
     url = "http://nginx.org/download/${name}.tar.gz";
     hashOutput = false;
-    inherit (source) sha256;
+    inherit sha256;
   };
 
   buildInputs = [
@@ -59,7 +63,6 @@ stdenv.mkDerivation rec {
     "--with-poll_module"
     "--with-threads"
     "--with-file-aio"
-    "--with-ipv6"
     "--with-http_ssl_module"
     "--with-http_v2_module"
     "--with-http_realip_module"
@@ -89,6 +92,12 @@ stdenv.mkDerivation rec {
     "--with-pcre"
     "--with-pcre-jit"
     "--with-libatomic"
+  ] ++ optionals (versionAtLeast version "1.11.0") [
+    "--with-stream_realip_module"
+    "--with-stream_geoip_module"
+    "--with-stream_ssl_preread_module"
+  ] ++ optionals (versionOlder version "1.11.0") [
+    "--with-ipv6"
   ];
 
   # The install paths are a disaster
@@ -110,7 +119,7 @@ stdenv.mkDerivation rec {
       urls = src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFile = ./mdounin.key;
-      inherit (source) sha256;
+      inherit sha256;
     };
   };
 

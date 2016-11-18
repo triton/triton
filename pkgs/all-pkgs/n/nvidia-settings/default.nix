@@ -52,9 +52,9 @@ stdenv.mkDerivation rec {
     xorg.randrproto
     xorg.renderproto
     xorg.videoproto
+    xorg.xextproto
     xorg.xf86vidmodeproto
     xorg.xproto
-    xorg.xextproto
   ];
 
   postPatch = /* libXv is normally loaded at runtime via LD_LIBRARY_PATH */ ''

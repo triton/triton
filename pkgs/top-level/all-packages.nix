@@ -3164,6 +3164,8 @@ synapse = pkgs.python2Packages.synapse;
 
 syncthing = pkgs.goPackages.syncthing.bin // { outputs = [ "bin" ]; };
 
+synergy = callPackage ../all-pkgs/s/synergy { };
+
 syslinux = callPackage ../all-pkgs/s/syslinux { };
 
 sysstat = callPackage ../all-pkgs/s/sysstat { };

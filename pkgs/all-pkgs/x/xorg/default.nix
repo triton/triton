@@ -31,6 +31,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , renderproto
 # , resourceproto
 # , scrnsaverproto
+# , trapproto
 # , util-macros
 # , xcb-proto
 # , xcmiscproto
@@ -79,6 +80,7 @@ let
     #   renderproto
     #   resourceproto
     #   scrnsaverproto
+    #   trapproto
     #   xcmiscproto
     #   xextproto
     #   xf86bigfontproto

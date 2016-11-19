@@ -3276,6 +3276,8 @@ transmission = callPackageAlias "transmission_2" { };
 
 transmission-remote-gtk = callPackage ../all-pkgs/t/transmission-remote-gtk { };
 
+trapproto = callPackage ../all-pkgs/t/trapproto { };
+
 trousers = callPackage ../all-pkgs/t/trousers { };
 
 tslib = callPackage ../all-pkgs/t/tslib { };
@@ -3499,6 +3501,7 @@ xorg = recurseIntoAttrs (
       # renderproto
       # resourceproto
       # scrnsaverproto
+      # trapproto
       # util-macros
       # xcb-proto
       # xcmiscproto

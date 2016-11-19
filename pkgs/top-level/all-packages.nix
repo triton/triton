@@ -2299,6 +2299,8 @@ libwps = callPackage ../all-pkgs/l/libwps { };
 
 libxau = callPackage ../all-pkgs/l/libxau { };
 
+libxcb = callPackage ../all-pkgs/l/libxcb { };
+
 libxdmcp = callPackage ../all-pkgs/l/libxdmcp { };
 
 libxfce4ui_4-12 = callPackage ../all-pkgs/l/libxfce4ui {
@@ -3482,6 +3484,7 @@ xorg = recurseIntoAttrs (
       # libpthread-stubs
       # libsm
       # libxau
+      # libxcb
       # libxdmcp
       # presentproto
       # printproto

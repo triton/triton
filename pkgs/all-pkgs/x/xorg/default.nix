@@ -20,6 +20,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , libpthread-stubs
 # , libsm
 # , libxau
+# , libxcb
 # , libxdmcp
 # , presentproto
 # , printproto
@@ -68,6 +69,7 @@ let
     #   glproto
     #   inputproto
     #   kbproto
+    #   libxcb
     #   presentproto
     #   printproto
     #   randrproto

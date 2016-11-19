@@ -3419,6 +3419,8 @@ xf86dgaproto = callPackage ../all-pkgs/x/xf86dgaproto { };
 
 xf86driproto = callPackage ../all-pkgs/x/xf86driproto { };
 
+xf86miscproto = callPackage ../all-pkgs/x/xf86miscproto { };
+
 xfconf_4-12 = callPackage ../all-pkgs/x/xfconf {
   channel = "4.12";
 };

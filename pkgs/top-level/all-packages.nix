@@ -2297,6 +2297,8 @@ libwebp = callPackage ../all-pkgs/l/libwebp { };
 
 libwps = callPackage ../all-pkgs/l/libwps { };
 
+libx11 = callPackage ../all-pkgs/l/libx11 { };
+
 libxau = callPackage ../all-pkgs/l/libxau { };
 
 libxcb = callPackage ../all-pkgs/l/libxcb { };
@@ -3483,6 +3485,7 @@ xorg = recurseIntoAttrs (
       # libice
       # libpthread-stubs
       # libsm
+      # libx11
       # libxau
       # libxcb
       # libxdmcp

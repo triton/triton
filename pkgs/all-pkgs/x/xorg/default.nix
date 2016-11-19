@@ -19,6 +19,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , libice
 # , libpthread-stubs
 # , libsm
+# , libx11
 # , libxau
 # , libxcb
 # , libxdmcp
@@ -86,6 +87,7 @@ let
     # libICE = libice;
     # libpthreadstubs = libpthread-stubs;
     # libSM = libsm;
+    # libX11 - libx11;
     # libXau = libxau;
     # libXdmcp = libxdmcp;
     # utilmacros = util-macros;

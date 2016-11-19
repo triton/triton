@@ -34,10 +34,12 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , trapproto
 # , util-macros
 # , videoproto
+# , windowswmproto
 # , xcb-proto
 # , xcmiscproto
 # , xextproto
 # , xf86bigfontproto
+# , xineramaproto
 # , xproto
 # , xtrans
 
@@ -83,9 +85,11 @@ let
     #   scrnsaverproto
     #   trapproto
     #   videoproto
+    #   windowswmproto
     #   xcmiscproto
     #   xextproto
     #   xf86bigfontproto
+    #   xineramaproto
     #   xproto
     #   xtrans;
 

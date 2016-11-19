@@ -3375,6 +3375,8 @@ wget = callPackage ../all-pkgs/w/wget { };
 
 which = callPackage ../all-pkgs/w/which { };
 
+windowswmproto = callPackage ../all-pkgs/w/windowswmproto { };
+
 winusb = callPackage ../all-pkgs/w/winusb { };
 
 wiredtiger = callPackage ../all-pkgs/w/wiredtiger { };
@@ -3506,10 +3508,12 @@ xorg = recurseIntoAttrs (
       # trapproto
       # util-macros
       # videoproto
+      # windowswmproto
       # xcb-proto
       # xcmiscproto
       # xextproto
       # xf86bigfontproto
+      # xineramaproto
       # xproto
       # xtrans
       ;

@@ -40,6 +40,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , xextproto
 # , xf86bigfontproto
 # , xf86dgaproto
+# , xf86driproto
 # , xineramaproto
 # , xproto
 # , xtrans
@@ -91,6 +92,7 @@ let
     #   xextproto
     #   xf86bigfontproto
     #   xf86dgaproto
+    #   xf86driproto
     #   xineramaproto
     #   xproto
     #   xtrans;

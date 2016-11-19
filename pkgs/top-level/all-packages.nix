@@ -3417,6 +3417,8 @@ xf86bigfontproto = callPackage ../all-pkgs/x/xf86bigfontproto { };
 
 xf86dgaproto = callPackage ../all-pkgs/x/xf86dgaproto { };
 
+xf86driproto = callPackage ../all-pkgs/x/xf86driproto { };
+
 xfconf_4-12 = callPackage ../all-pkgs/x/xfconf {
   channel = "4.12";
 };

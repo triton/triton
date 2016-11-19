@@ -30,6 +30,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , xcb-proto
 # , xcmiscproto
 # , xextproto
+# , xf86bigfontproto
 # , xproto
 # , xtrans
 
@@ -73,6 +74,7 @@ let
     #   resourceproto
     #   xcmiscproto
     #   xextproto
+    #   xf86bigfontproto
     #   xproto
     #   xtrans;
 

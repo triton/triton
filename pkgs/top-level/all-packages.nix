@@ -3415,6 +3415,8 @@ xf86-input-wacom = callPackage ../all-pkgs/x/xf86-input-wacom { };
 
 xf86bigfontproto = callPackage ../all-pkgs/x/xf86bigfontproto { };
 
+xf86dgaproto = callPackage ../all-pkgs/x/xf86dgaproto { };
+
 xfconf_4-12 = callPackage ../all-pkgs/x/xfconf {
   channel = "4.12";
 };

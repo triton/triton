@@ -2299,6 +2299,8 @@ libwps = callPackage ../all-pkgs/l/libwps { };
 
 libxau = callPackage ../all-pkgs/l/libxau { };
 
+libxdmcp = callPackage ../all-pkgs/l/libxdmcp { };
+
 libxfce4ui_4-12 = callPackage ../all-pkgs/l/libxfce4ui {
   channel = "4.12";
 };
@@ -3480,6 +3482,7 @@ xorg = recurseIntoAttrs (
       # libpthread-stubs
       # libsm
       # libxau
+      # libxdmcp
       # presentproto
       # printproto
       # randrproto

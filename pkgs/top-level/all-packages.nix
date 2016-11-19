@@ -2323,6 +2323,8 @@ libxml2 = callPackage ../all-pkgs/l/libxml2 { };
 
 libxslt = callPackage ../all-pkgs/l/libxslt { };
 
+libxt = callPackage ../all-pkgs/l/libxt { };
+
 libyaml = callPackage ../all-pkgs/l/libyaml { };
 
 libzapojit = callPackage ../all-pkgs/l/libzapojit { };
@@ -3489,6 +3491,7 @@ xorg = recurseIntoAttrs (
       # libxau
       # libxcb
       # libxdmcp
+      # libxt
       # presentproto
       # printproto
       # randrproto

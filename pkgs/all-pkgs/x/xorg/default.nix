@@ -23,6 +23,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , libxau
 # , libxcb
 # , libxdmcp
+# , libxt
 # , presentproto
 # , printproto
 # , randrproto
@@ -90,6 +91,7 @@ let
     # libX11 - libx11;
     # libXau = libxau;
     # libXdmcp = libxdmcp;
+    # libXt = libxt;
     # utilmacros = util-macros;
     # xcbproto = xcb-proto;
 

@@ -3330,6 +3330,8 @@ vala = callPackageAlias "vala_0-34" { };
 
 vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
+videoproto = callPackage ../all-pkgs/v/videoproto { };
+
 vim = callPackage ../all-pkgs/v/vim { };
 
 vino_3-22 = callPackage ../all-pkgs/v/vino {
@@ -3503,6 +3505,7 @@ xorg = recurseIntoAttrs (
       # scrnsaverproto
       # trapproto
       # util-macros
+      # videoproto
       # xcb-proto
       # xcmiscproto
       # xextproto

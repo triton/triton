@@ -26,6 +26,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , recordproto
 # , renderproto
 # , resourceproto
+# , scrnsaverproto
 # , util-macros
 # , xcb-proto
 # , xcmiscproto
@@ -72,6 +73,7 @@ let
     #   recordproto
     #   renderproto
     #   resourceproto
+    #   scrnsaverproto
     #   xcmiscproto
     #   xextproto
     #   xf86bigfontproto

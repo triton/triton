@@ -3015,6 +3015,8 @@ scons = pkgs.pythonPackages.scons;
 
 screen = callPackage ../all-pkgs/s/screen { };
 
+scrnsaverproto = callPackage ../all-pkgs/s/scrnsaverproto { };
+
 scrot = callPackage ../all-pkgs/s/scrot { };
 
 sddm = callPackage ../all-pkgs/s/sddm { };
@@ -3484,6 +3486,7 @@ xorg = recurseIntoAttrs (
       # recordproto
       # renderproto
       # resourceproto
+      # scrnsaverproto
       # util-macros
       # xcb-proto
       # xcmiscproto

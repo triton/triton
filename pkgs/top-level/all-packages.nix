@@ -3421,6 +3421,8 @@ xf86driproto = callPackage ../all-pkgs/x/xf86driproto { };
 
 xf86miscproto = callPackage ../all-pkgs/x/xf86miscproto { };
 
+xf86vidmodeproto = callPackage ../all-pkgs/x/xf86vidmodeproto { };
+
 xfconf_4-12 = callPackage ../all-pkgs/x/xfconf {
   channel = "4.12";
 };
@@ -3519,6 +3521,10 @@ xorg = recurseIntoAttrs (
       # xcmiscproto
       # xextproto
       # xf86bigfontproto
+      # xf86dgaproto
+      # xf86driproto
+      # xf86miscproto
+      # xf86vidmodeproto
       # xineramaproto
       # xproto
       # xtrans

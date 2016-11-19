@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with lib; {
-    description = "";
+    description = "X.Org Fonts protocol headers";
     homepage = https://xorg.freedesktop.org;
     license = licenses.mit;
     maintainers = with maintainers; [

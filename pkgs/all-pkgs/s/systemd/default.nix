@@ -115,6 +115,12 @@ stdenv.mkDerivation rec {
     util-linux_full
   ];
 
+  postPatch = ''
+    # Fix lz4 configure test
+    sed -i configure \
+      -e '/liblz4/s/125/1.2.5/'
+  '';
+
   preConfigure = ''
     configureFlagsArray+=(
       "--with-rootprefix=$out"

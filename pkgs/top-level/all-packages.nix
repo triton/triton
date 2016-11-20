@@ -1566,9 +1566,6 @@ gst-validate_1-10 = callPackage ../all-pkgs/g/gst-validate {
 };
 gst-validate = callPackageAlias "gst-validate_1-10" { };
 
-gstreamer_1-8 = callPackage ../all-pkgs/g/gstreamer {
-  channel = "1.8";
-};
 gstreamer_1-10 = callPackage ../all-pkgs/g/gstreamer {
   channel = "1.10";
 };

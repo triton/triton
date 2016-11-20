@@ -233,11 +233,6 @@ future = callPackage ../all-pkgs/f/future { };
 
 futures = callPackage ../all-pkgs/f/futures { };
 
-gst-python_1-8 = callPackage ../all-pkgs/g/gst-python {
-  channel = "1.8";
-  gst-plugins-base = pkgs.gst-plugins-base_1-8;
-  gstreamer = pkgs.gstreamer_1-8;
-};
 gst-python_1-10 = callPackage ../all-pkgs/g/gst-python {
   channel = "1.10";
   gst-plugins-base = pkgs.gst-plugins-base_1-10;

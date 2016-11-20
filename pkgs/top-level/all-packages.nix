@@ -1584,12 +1584,6 @@ gstreamer-editing-services_1-10 =
 gstreamer-editing-services =
   callPackageAlias "gstreamer-editing-services_1-10" { };
 
-gstreamer-vaapi_1-8 = callPackage ../all-pkgs/g/gstreamer-vaapi {
-  channel = "1.8";
-  gst-plugins-bad = pkgs.gst-plugins-bad_1-8;
-  gst-plugins-base = pkgs.gst-plugins-base_1-8;
-  gstreamer = pkgs.gstreamer_1-8;
-};
 gstreamer-vaapi_1-10 = callPackage ../all-pkgs/g/gstreamer-vaapi {
   channel = "1.10";
   gst-plugins-bad = pkgs.gst-plugins-bad_1-10;

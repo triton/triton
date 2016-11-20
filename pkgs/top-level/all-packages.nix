@@ -1527,11 +1527,6 @@ gst-plugins-bad_generics = overrides:
     gtk_3 = null;
     qt5 = null;
   } // overrides);
-gst-plugins-bad_1-8 = pkgs.gst-plugins-bad_generics {
-  channel = "1.8";
-  gst-plugins-base = pkgs.gst-plugins-base_1-8;
-  gstreamer = pkgs.gstreamer_1-8;
-};
 gst-plugins-bad_1-10 = pkgs.gst-plugins-bad_generics {
   channel = "1.10";
   gst-plugins-base = pkgs.gst-plugins-base_1-10;

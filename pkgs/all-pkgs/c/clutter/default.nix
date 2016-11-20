@@ -20,6 +20,7 @@
 , mesa
 , pango
 , systemd_lib
+, tslib
 , xorg
 , wayland
 
@@ -75,6 +76,7 @@ stdenv.mkDerivation rec {
     mesa
     pango
     systemd_lib
+    tslib
     wayland
   ] ++ optionals (xorg != null) [
     xorg.inputproto
@@ -97,8 +99,7 @@ stdenv.mkDerivation rec {
     "--enable-egl-backend"
     "--disable-mir-backend"
     "--disable-cex100-backend"
-    # TODO: tslib, touch screen support
-    "--disable-tslib-input"
+    "--${boolEn (tslib != null)}-tslib-input"
     "--enable-evdev-input"
     "--${boolEn (wayland != null)}-wayland-compositor"
     "--${boolEn (xorg != null)}-xinput"

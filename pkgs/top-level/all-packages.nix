@@ -1534,10 +1534,6 @@ gst-plugins-bad_1-10 = pkgs.gst-plugins-bad_generics {
 };
 gst-plugins-bad = callPackageAlias "gst-plugins-bad_1-10" { };
 
-gst-plugins-base_1-8 = callPackage ../all-pkgs/g/gst-plugins-base {
-  channel = "1.8";
-  gstreamer = pkgs.gstreamer_1-8;
-};
 gst-plugins-base_1-10 = callPackage ../all-pkgs/g/gst-plugins-base {
   channel = "1.10";
   gstreamer = pkgs.gstreamer_1-10;

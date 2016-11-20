@@ -5,7 +5,7 @@
     sha256 = "a1d6579ba203a7734927c24b90bf6590d846c5a5fcec01a48201018c8ad2827a";
   };
   "1.10" = {
-    version = "1.10.0";
-    sha256 = "7a03559763f5634ab1b4b2edd3e9f7442bdd4657187e20ea5e1887ae46371de2";
+    version = "1.10.1";
+    sha256 = "a7642ea7e7c17fb67e94d0c17e56757b6577fa7ed244ff8c11031841d3556cc2";
   };
 }

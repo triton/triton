@@ -46,17 +46,9 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--disable-attach"
-    "--with-builtin=lz4"
-    "--enable-bzip2"
-    "--disable-diagnostic"
-    "--disable-java"
     "--enable-leveldb"
-    "--disable-python"
-    "--enable-snappy"
-    "--enable-lz4"
     "--enable-tcmalloc"
-    "--enable-zlib"
+    "--with-builtins=lz4,snappy,zlib"
     "--with-berkeleydb=${db}"
     "--without-helium"
   ];

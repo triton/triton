@@ -18,12 +18,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "389-ds-base-1.3.5.14";
+  name = "389-ds-base-1.3.5.15";
 
   src = fetchurl {
     url = "http://directory.fedoraproject.org/binaries/${name}.tar.bz2";
-    multihash = "QmNyiEya9LYp2Rr2JtQX87RAbwCofLiLwT5Tzz8gKUBRQL";
-    sha256 = "5b381319363d7b84a53e45185af16a85aeaa858ae0f57b4d223d39b93ce1058a";
+    multihash = "QmS9xkKoLWAbfVRdoeEteobXUVLAu5WMv5ifYctPLTCySW";
+    sha256 = "21dd81525422b64d2760144a4dedf1d3351ecdea7e8e40ae97cd7645b2b527fc";
   };
 
   nativeBuildInputs = [

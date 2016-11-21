@@ -4960,6 +4960,11 @@ let
     repo = "vault";
     sha256 = "088nixbi0p039cx4i19kcmgqc4kwkh2av71zwsmjkjakw2cz6qiz";
 
+    nativeBuildInputs = [
+      pkgs.protobuf-cpp
+      protobuf.bin
+    ];
+
     buildInputs = [
       azure-sdk-for-go
       armon_go-metrics
@@ -5024,7 +5029,18 @@ let
       jsonx
     ];
 
+    # Regerate protos
     preBuild = ''
+      srcDir="$(pwd)"/go/src
+      pushd go/src/$goPackagePath >/dev/null
+      find . -name \*pb.go -delete
+      for file in $(find . -name \*.proto | sort | uniq); do
+        pushd "$(dirname "$file")" > /dev/null
+        echo "Regenerating protobuf: $file" >&2
+        protoc -I "$srcDir" -I "$srcDir/$goPackagePath" -I . --go_out=plugins=grpc:. "$(basename "$file")"
+        popd >/dev/null
+      done
+      popd >/dev/null
     '';
   };
 

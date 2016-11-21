@@ -50,7 +50,7 @@ let
   inherit (stdenv.lib)
     boolEn;
 
-  version = "0.21.0";
+  version = "0.22.0";
 in
 stdenv.mkDerivation rec {
   name = "mpv-${version}";
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     version = 2;
     url = "https://github.com/mpv-player/mpv/archive/v${version}.tar.gz";
-    sha256 = "5c5210de0d47cb2e34661cfb23b17f3dca8f9ffc86ed73f9d3e7143e32eea1d4";
+    sha256 = "78ea8935c8cf156c3481e9ff94e1a2f7ac69fdce0e77a4614481bc36ca5c7f6a";
   };
 
   nativeBuildInputs = [
@@ -179,7 +179,7 @@ stdenv.mkDerivation rec {
     "--disable-opensles"  # android
     "--${boolEn (alsa-lib != null)}-alsa"
     "--disable-coreaudio"  # macos
-    ###"--disable-audiounit"  # ios
+    "--disable-audiounit"  # ios
     "--disable-wasapi"  # windows
     "--disable-cocoa"  # macos
     "--${boolEn (libdrm != null)}-drm"

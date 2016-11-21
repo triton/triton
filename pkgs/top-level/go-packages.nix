@@ -591,14 +591,17 @@ let
 
   urfave_cli = buildFromGitHub {
     version = 2;
-    rev = "v1.18.1";
+    rev = "v1.19.0";
     owner = "urfave";
     repo = "cli";
-    sha256 = "0vcmwlb9cp7jxza78wm3g2xwdw06fd5my7b43a2pgfhy0621jwi3";
+    sha256 = "beeb91b8c76df51ab8857d681ab6e15d036719feaf85ad3c8f1dfbf15af903e3";
+    goPackagePath = "gopkg.in/urfave/cli.v1";
     goPackageAliases = [
       "github.com/codegangsta/cli"
+      "github.com/urfave/cli"
     ];
     buildInputs = [
+      toml
       yaml_v2
     ];
   };
@@ -2938,12 +2941,12 @@ let
 
   ipfs = buildFromGitHub {
     version = 2;
-    date = "2016-11-10";
-    rev = "4442498d926a25b4084affe70d15d7c8dcf9a6f8";
+    date = "2016-11-21";
+    rev = "9094cc8f4297b9365a3d3260f839724b135094d0";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "0zs43397m5hdii0f68fsb8plx4519yfaqw0g53ji5w18kd5gvj25";
-    gxSha256 = "1g9z9f4v9ca1lv90ibzfxj6in34ijbxdgj0x6s1xrfx346jncyxl";
+    sha256 = "1dn9ff04rl0lzdlzg4wzl1c8qfwyjr1pw5p26cm3abvabgg0b49r";
+    gxSha256 = "1zn9zdpqgp80gvk5xsiiikqjsks93vxsdzqzk9dk9kqgps61pz8p";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"
@@ -4924,11 +4927,11 @@ let
 
   utp = buildFromGitHub {
     version = 2;
-    rev = "83bf7c81b0e1f917f18ac31b7a27b91c33737df9";
+    rev = "fa8b6bbd0386e3b98845c5d1f10148b29915d4b9";
     owner  = "anacrolix";
     repo   = "utp";
-    sha256 = "0zprk0nv0b79ld4cp0zxxqmxzfvrgixr5ifm98wrdymp795rplzf";
-    date = "2016-10-06";
+    sha256 = "1h5sbkvn8rrvhvibc0903giayvp7na2vy3xqq53kcd8d8i1n3ig8";
+    date = "2016-10-26";
     propagatedBuildInputs = [
       envpprof
       missinggo

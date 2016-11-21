@@ -1,17 +1,22 @@
-{ stdenv, fetchurl, unzip }:
+{ stdenv
+, fetchurl
+, unzip
+}:
 
+let
+  version = "5.2.9";
+in
 stdenv.mkDerivation rec {
   name = "unifi-controller-${version}";
-  version = "4.8.14";
 
   src = fetchurl {
     url = "https://www.ubnt.com/downloads/unifi/${version}/UniFi.unix.zip";
-    sha256 = "04gvvz9vyi4aw97hh8fp8mp19mpx3axy9rb2x8vfck4w76cdi614";
+    sha256 = "d31d193dd1a6624abb6d6d438aa9dfd5112ab06b5faa134fc94497d964614194";
   };
 
-  buildInputs = [ unzip ];
-
-  doConfigure = false;
+  nativeBuildInputs = [
+    unzip
+  ];
 
   buildPhase = ''
     rm -rf bin conf readme.txt
@@ -35,7 +40,10 @@ stdenv.mkDerivation rec {
     homepage = http://www.ubnt.com/;
     description = "Controller for Ubiquiti UniFi accesspoints";
     license = licenses.unfree;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

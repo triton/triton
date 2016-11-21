@@ -22,14 +22,15 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "w3m-0.5.3-2016-06-20";
+  name = "w3m-0.5.3-2016-11-21";
 
   src = fetchzip {
-    version = 1;
+    version = 2;
     inherit name;
-    url = "http://anonscm.debian.org/cgit/collab-maint/w3m.git/snapshot/"
-        + "537e574131535e7f1c738780c693ba356da1d707.tar.xz";
-    sha256 = "9bd228a66004bbe6d82172294ff4c10448ceea2b5a9bd8b4587c99c5d4fa81e6";
+    url = "https://anonscm.debian.org/cgit/collab-maint/w3m.git/snapshot/"
+        + "6519207d0bec5bea633485ef02783ddaa7fe9ada.tar.xz";
+    multihash = "QmeymsHyfkqN5uXCeoFjuecKDqSgibf4Mnx3ZMSQGjebs7";
+    sha256 = "98e3baab5e32af6487c297dec08fa27c9cd2acc17b70ba1767da6fe1149967b9";
   };
 
   nativeBuildInputs = [

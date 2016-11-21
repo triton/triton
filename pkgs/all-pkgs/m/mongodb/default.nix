@@ -15,7 +15,7 @@
 }:
 
 let
-  version = "3.2.10";
+  version = "3.2.11";
 
   inherit (stdenv.lib)
     concatStringsSep;
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://downloads.mongodb.org/src/mongodb-src-r${version}.tar.gz";
-    sha256 = "3bef44f50f302159c26194bcac9d51c81d98d57ea728f55400774850a70f5120";
+    sha256 = "625eb28fd47b2af63b30343a064de7f42e5265f4c642874ec766ba3643fd80d7";
   };
 
   nativeBuildInputs = [

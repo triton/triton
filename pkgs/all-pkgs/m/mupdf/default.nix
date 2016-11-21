@@ -14,13 +14,15 @@
 , zlib
 }:
 
+let
+  version = "1.10";
+in
 stdenv.mkDerivation rec {
-  version = "1.9a";
   name = "mupdf-${version}";
 
   src = fetchurl {
     url = "http://mupdf.com/downloads/archive/${name}-source.tar.gz";
-    sha256 = "8015c55f4e6dd892d3c50db4f395c1e46660a10b460e2ecd180a497f55bbc4cc";
+    sha256 = "1185637a93055cdae8335db14fef3e0fbd2acadae94eabd2ec0111d89a04a667";
   };
 
   buildInputs = [

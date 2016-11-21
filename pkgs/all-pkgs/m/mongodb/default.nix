@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , scons
 
@@ -46,18 +47,27 @@ stdenv.mkDerivation rec {
   ];
 
   patches = [
-    # Hopefully remove this in 3.2.9+
-    (fetchurl {
-      name = "mongodb-boost160.patch";
-      url = "https://projects.archlinux.org/svntogit/community.git/plain/trunk/boost160.patch?h=packages/mongodb&id=cfa3ad904c66ffbe407d0180fc90c49faef58e59";
-      sha256 = "0wvd4hamwrp1067jjjgsyh92spw92z2n32g7a6pkvr838dgs778f";
+    # Hopefully remove this in 3.2.11+
+    (fetchTritonPatch {
+      rev = "1a93e9f9c3689a6b85e2db14cec0f25ea26b1296";
+      file = "m/mongodb/0001-boost-1.60.patch";
+      sha256 = "0e9da35f4303e53daf51e78961c517895f2d12f4fa49298f01e1665e15246d73";
+    })
+    (fetchTritonPatch {
+      rev = "1a93e9f9c3689a6b85e2db14cec0f25ea26b1296";
+      file = "m/mongodb/0002-boost-1.62.patch";
+      sha256 = "8ad9640407be6f945b38275ff75014c8ba2c6118a25fba63a490c640267b4b66";
     })
 
     # When not building with the system valgrind, the build should use the
     # vendored header file - regardless of whether or not we're using the system
     # tcmalloc - so we need to lift the include path manipulation out of the
     # conditional.
-    ./valgrind-include.patch
+    (fetchTritonPatch {
+      rev = "d7830e5e4f86c529163ccd6ce14cb77b95f27922";
+      file = "m/mongodb/valgrind-include.patch";
+      sha256 = "ad12f41e74acfeaaa7dd59acbc628ce8363b02c1342c5435df42f229f9fc6c17";
+    })
   ];
 
   # Fix environment variable reading and reduces file size generation by removing debugging symbols

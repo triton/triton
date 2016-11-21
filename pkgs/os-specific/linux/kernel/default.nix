@@ -29,10 +29,10 @@ let
       patchSha256 = "9f3c1924080a16ac2b8f054aa9d0490bc0ee4c6159e2fd10e5f6732b2e9604f6";
     };
     "testing" = {
-      version = "4.9-rc5";
+      version = "4.9-rc6";
       needsGitPatch = true;
       baseSha256 = "3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a";
-      patchSha256 = "7c6184bda1289d66906107808a476c863e6542ed7f175bdce46af05fd200ca47";
+      patchSha256 = "49be0d2cc396a0a62126e43930744416b92d572885499fc6eee3a59782fec1b0";
     };
     "bcache" =
       let

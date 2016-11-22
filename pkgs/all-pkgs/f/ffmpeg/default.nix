@@ -96,6 +96,7 @@
 #, libiec61883, libavc1394
 , libgcrypt
 , libmodplug
+, libnppSupport ? false
 #, libnut
 , libogg
 , libraw1394
@@ -213,9 +214,16 @@ assert
 # Non-free
 assert
   fdk-aac != null
-  || nvidia-cuda-toolkit != null
-  || nvidia-drivers != null
+  || libnppSupport
   || openssl != null
+  # TODO: remove once minimum is 3.3
+  || (
+    if versionOlder channel "3.3" then (
+      nvidia-cuda-toolkit != null
+      || nvidia-drivers != null
+    ) else
+      false
+  )
   -> nonfreeLicensing && gplLicensing && version3Licensing;
 /*
  *  Build dependencies
@@ -346,18 +354,20 @@ stdenv.mkDerivation rec {
     libogg
     libraw1394
     libssh
-    libwebp
-    openal
-    openh264
-    openjpeg
-    opus
     libtheora
     libva
     libvdpau
     libvorbis
     libvpx
+    libwebp
     mesa_noglu
     mfx-dispatcher
+    nvidia-cuda-toolkit
+    nvidia-drivers
+    openal
+    openh264
+    openjpeg
+    opus
     pulseaudio_lib
     rtmpdump
     rubberband
@@ -386,8 +396,6 @@ stdenv.mkDerivation rec {
     zeromq4
     zlib
   ] ++ optionals nonfreeLicensing [
-    nvidia-cuda-toolkit
-    nvidia-drivers
     fdk-aac
     openssl
   ];
@@ -468,7 +476,7 @@ stdenv.mkDerivation rec {
     "--disable-d3d11va"  # windows
     "--disable-dxva2"  # windows
     "--${boolEn (mfx-dispatcher != null)}-libmfx"
-    (fflag "--${boolEn (nvidia-cuda-toolkit != null)}-libnpp" "3.1")
+    (fflag "--${boolEn libnppSupport}-libnpp" "3.1")
     #"--${boolEn (mmal != null)}-mmal"
     /**/"--disable-mmal"
     "--${boolEn nvenc}-nvenc"

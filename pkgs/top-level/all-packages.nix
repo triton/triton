@@ -1222,6 +1222,8 @@ gexiv2 = callPackageAlias "gexiv2_0-10" { };
 
 gflags = callPackage ../all-pkgs/g/gflags { };
 
+ghostscript = callPackage ../all-pkgs/g/ghostscript { };
+
 giflib = callPackage ../all-pkgs/g/giflib { };
 
 gimp = callPackage ../all-pkgs/g/gimp { };
@@ -4248,11 +4250,6 @@ libtiff = callPackage ../development/libraries/libtiff { };
 #
   dblatex = callPackage ../tools/typesetting/tex/dblatex {
     enableAllFeatures = false;
-  };
-#
-  ghostscript = callPackage ../misc/ghostscript {
-    x11Support = false;
-    cupsSupport = config.ghostscript.cups or true;
   };
 #
   jack2_full = callPackage ../misc/jackaudio { };

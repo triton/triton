@@ -1,33 +1,34 @@
 { stdenv
-, lib
 , fetchurl
 , fetchTritonPatch
-, libidn
-, libpaper
-, fontconfig
+
+, cups
 , dbus
+, fontconfig
 , freetype
-, libjpeg
-, zlib
-, libpng
-, lcms2
 , ijs
 , jbig2dec
-, x11Support ? false, xorg
-, cupsSupport ? false, cups
+, lcms2
+, libidn
+, libjpeg
+, libpaper
+, libpng
+, zlib
 }:
 
 let
-  version = "9.19";
-  versionNoP = lib.replaceChars ["."] [""] version;
-  sha256 = "f67acdcfcde1f86757ff3553cd719f12eac2d7681a0e96d8bdd1f40a0f47b45b";
+  inherit (stdenv.lib)
+    replaceChars;
+
+  version = "9.20";
+  versionNoP = replaceChars ["."] [""] version;
 
   fonts = stdenv.mkDerivation {
     name = "ghostscript-fonts";
 
     srcs = [
       (fetchurl {
-        url = "mirror://sourceforge/gs-fonts/ghostscript-fonts-std-8.11.tar.gz";
+        url = "mirror://sourceforge/gs-fonts/gs-fonts/8.11%20(base%2035,%20GPL)/ghostscript-fonts-std-8.11.tar.gz";
         sha256 = "00f4l10xd826kak51wsmaz69szzm2wp8a41jasr4jblz25bg7dhf";
       })
       (fetchurl {
@@ -48,33 +49,39 @@ stdenv.mkDerivation rec {
   name = "ghostscript-${version}";
 
   src = fetchurl {
-    url = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs${versionNoP}/${name}.tar.bz2";
-    inherit sha256;
+    url = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases"
+        + "/download/gs${versionNoP}/${name}.tar.xz";
+    sha256 = "3c0f3dc5df6f784850fa4ce7dcc3d6c56ef543af1fbaedd1d9f8d9f8b66de0ab";
   };
 
-  outputs = [ "out" "doc" ];
+  outputs = [
+    "out"
+    "doc"
+  ];
 
   buildInputs = [
-    libidn
-    libpaper
-    fontconfig
+    cups
     dbus
+    fontconfig
     freetype
-    libjpeg
-    zlib
-    libpng
-    lcms2
     ijs
     jbig2dec
-  ] ++ stdenv.lib.optionals x11Support [
-    xorg.xproto
-    xorg.libX11
-  ] ++ stdenv.lib.optional cupsSupport cups
-      ;
+    lcms2
+    libidn
+    libjpeg
+    libpaper
+    libpng
+    zlib
+  ];
 
   NIX_ZLIB_INCLUDE = "${zlib}/include";
 
   patches = [
+    (fetchTritonPatch {
+      rev = "9e45913651939a22fb58254b2482ae4dcb4c8d56";
+      file = "g/ghostscript/CVE-2016-8602.patch";
+      sha256 = "d48abd753695111b8b19b34c7590c8ed27b2c678575ac34f55e406b05bac0023";
+    })
     (fetchTritonPatch {
       rev = "16e1e82d413e33a3a46976f64c275c58a7dc3928";
       file = "ghostscript/urw-font-files.patch";
@@ -87,7 +94,9 @@ stdenv.mkDerivation rec {
 
     sed "s@if ( test -f \$(INCLUDE)[^ ]* )@if ( true )@; s@INCLUDE=/usr/include@INCLUDE=/no-such-path@" -i base/unix-aux.mak
     sed "s@^ZLIBDIR=.*@ZLIBDIR=${zlib}/include@" -i configure.ac
-  '' + lib.optionalString cupsSupport ''
+  '';
+
+  preConfigure = ''
     configureFlagsArray+=(
       "--with-cups-serverbin=$out/lib/cups"
       "--with-cups-serverroot=$out/etc/cups"
@@ -100,15 +109,17 @@ stdenv.mkDerivation rec {
     "--enable-fontconfig"
     "--enable-freetype"
     "--enable-dynamic"
-  ] ++ lib.optional x11Support "--with-x"
-    ++ lib.optional cupsSupport "--enable-cups"
-    ;
-
-  doCheck = true;
+    "--enable-cups"
+  ];
 
   # don't build/install statically linked bin/gs
-  buildFlags = [ "so" ];
-  installTargets = [ "soinstall" ];
+  buildFlags = [
+    "so"
+  ];
+
+  installTargets = [
+    "soinstall"
+  ];
 
   postInstall = ''
     ln -s gsc "$out"/bin/gs
@@ -125,7 +136,7 @@ stdenv.mkDerivation rec {
   parallelInstall = false;
 
   passthru = {
-    inherit version;
+    inherit version fonts;
   };
 
   meta = with stdenv.lib; {

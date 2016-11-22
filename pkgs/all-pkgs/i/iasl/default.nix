@@ -1,16 +1,23 @@
 { stdenv
-, fetchurl
 , bison
+, fetchurl
 , flex
 }:
 
+let
+  inherit (stdenv.lib)
+    replaceChars;
+
+  version = "2016-11-17";
+  version' = replaceChars ["-"] [""] version;
+in
 stdenv.mkDerivation rec {
   name = "iasl-${version}";
-  version = "20160527";
 
   src = fetchurl {
-    url = "https://acpica.org/sites/acpica/files/acpica-unix-${version}.tar.gz";
-    sha256 = "6b681732624de1eb58b2bcf1c7ef0744ba14ed35fcaa534d4421574782fbb848";
+    url = "https://acpica.org/sites/acpica/files/acpica-unix-${version'}.tar.gz";
+    multihash = "QmXZz1PhLhfNtsvQv45ucD8cX2pdzig2CShFNwJQnEJD4F";
+    sha256 = "703e352a2d3f57905d0b5fc8ce11a1f5312bf5d601808a18c120ae7828f45031";
   };
 
   nativeBuildInputs = [

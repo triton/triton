@@ -8,12 +8,12 @@ let
   baseUrl = "mirror://kernel/software/network/iw";
 in
 stdenv.mkDerivation rec {
-  name = "iw-4.7";
+  name = "iw-4.9";
 
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "d1720c04bc26661d42e71d13746d5c3aeedb6bdf743f7d6b7b056f0abd345ee8";
+    sha256 = "324cc805fad52cba2c16b9ab569906889fb645cc962aac4cfda1db85d2de97ce";
   };
 
   buildInputs = [

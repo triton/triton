@@ -5,11 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "seabios-1.9.3";
+  name = "seabios-1.10.1";
 
   src = fetchurl {
     url = "https://code.coreboot.org/p/seabios/downloads/get/${name}.tar.gz";
-    sha256 = "1ae85dc049cdee1ca953612e9ab4cec3941a4a4e744b7036624c308781b0678d";
+    multihash = "QmWGwG4ANLwEAKZfJUoL6VenJth2emVPKEAsi2g1N6kbLE";
+    sha256 = "5063ddbac61ec4e61a12daa83931c37e5629b1c18502f7c00ed4e696c2a1d2cb";
   };
 
   nativeBuildInputs = [
@@ -22,21 +23,29 @@ stdenv.mkDerivation rec {
     cat > .config << EOF
     CONFIG_CSM=y
     CONFIG_QEMU_HARDWARE=y
-    CONFIG_PERMIT_UNALIGNED_PCIROM=y
     EOF
 
     make olddefconfig
+    cat .config
   '';
 
   installPhase = ''
-    mkdir $out
-    cp out/Csm16.bin $out/Csm16.bin
+    mkdir -p $out/share/seabios
+    cp out/Csm16.bin $out/share/seabios/Csm16.bin
   '';
+
+  # We don't need any security / optimization features for a bios image
+  optFlags = false;
+  pie = false;
+  fpic = false;
+  noStrictOverflow = false;
+  fortifySource = false;
+  stackProtector = false;
+  optimize = false;
 
   meta = with stdenv.lib; {
     description = "Open source implementation of a 16bit X86 BIOS";
     homepage = http://www.seabios.org;
-    broken = true;
     license = licenses.lgpl3;
     maintainers = with maintainers; [
       wkennington

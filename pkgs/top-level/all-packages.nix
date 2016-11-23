@@ -842,6 +842,8 @@ dbus = callPackage ../all-pkgs/d/dbus { };
 
 dbus-glib = callPackage ../all-pkgs/d/dbus-glib { };
 
+dcadec = callPackage ../all-pkgs/d/dcadec { };
+
 dconf_0-26 = callPackage ../all-pkgs/d/dconf {
   channel = "0.26";
 };

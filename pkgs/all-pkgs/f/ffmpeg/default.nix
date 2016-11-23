@@ -67,7 +67,7 @@
 , celt
 , chromaprint
 #, crystalhd
-, dcadec ? null
+, dcadec
 #, decklinkExtlib ? false
 #  , blackmagic-design-desktop-video
 , fdk-aac

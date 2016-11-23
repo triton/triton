@@ -119,11 +119,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "9477e0b78b9ac3d0b03822fd95422e2fe07627cd";
-    date = "2016-10-31";
+    rev = "ede567c8e044a5913dad1d1af3696d9da953104c";
+    date = "2016-11-04";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "13bh912v42950rw019mnxvdyhn6z8whnrfm73pqxlwk0i6vhml2z";
+    sha256 = "1g1dbzszpm0b09nbfxnrkr0a9v4lz9647zx4q456zdrw6qcm1lrl";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -632,10 +632,10 @@ let
 
   urfave_cli = buildFromGitHub {
     version = 2;
-    rev = "v1.19.0";
+    rev = "v1.19.1";
     owner = "urfave";
     repo = "cli";
-    sha256 = "beeb91b8c76df51ab8857d681ab6e15d036719feaf85ad3c8f1dfbf15af903e3";
+    sha256 = "0083s7jjxcgkssh5kpr34f5razf1x04f6n1kk9mrdsk1s1xw6h1k";
     goPackagePath = "gopkg.in/urfave/cli.v1";
     goPackageAliases = [
       "github.com/codegangsta/cli"
@@ -3047,12 +3047,12 @@ let
 
   ipfs = buildFromGitHub {
     version = 2;
-    date = "2016-11-21";
-    rev = "9094cc8f4297b9365a3d3260f839724b135094d0";
+    date = "2016-11-22";
+    rev = "0fcb92f3a1953925a71923637d9cc7125dd92ac5";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "1dn9ff04rl0lzdlzg4wzl1c8qfwyjr1pw5p26cm3abvabgg0b49r";
-    gxSha256 = "1zn9zdpqgp80gvk5xsiiikqjsks93vxsdzqzk9dk9kqgps61pz8p";
+    sha256 = "1mi3b5asfzdcghpq1kpmmcj36xhmilx92jkv32gx2c7l5wsykgyj";
+    gxSha256 = "1xxwg52dwj135kmixnyhbwx36gnqz6s1lx2jy5w9542yd0gxbl8v";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"

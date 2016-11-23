@@ -41,6 +41,9 @@ let
       unpackFile "${src}"
       cd *
 
+      echo "Environment:" >&2
+      echo "  IPFS_API: $IPFS_API" >&2
+
       mtime=$(find . -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
       if [ "$start" -lt "$mtime" ]; then
         str="The newest file is too close to the current date:\n"

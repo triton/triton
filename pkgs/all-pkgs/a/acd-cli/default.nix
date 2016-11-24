@@ -6,6 +6,7 @@
 
 , appdirs
 , colorama
+, fuse
 , fusepy
 , python-dateutil
 , requests
@@ -38,6 +39,10 @@ buildPythonPackage rec {
     requests
     requests-toolbelt
     sqlalchemy
+  ];
+
+  makeWrapperArgs = [
+    "--prefix LIBFUSE_PATH : ${fuse}/lib/libfuse.so"
   ];
 
   preFixup = /* Remove __pycache__ directory in bin output directory*/ ''

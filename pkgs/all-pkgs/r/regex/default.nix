@@ -5,12 +5,12 @@
 
 buildPythonPackage rec {
   name = "regex-${version}";
-  version = "2016.08.27";
+  version = "2016.11.21";
 
   src = fetchPyPi {
     package = "regex";
     inherit version;
-    sha256 = "53b97d85ebcbae7536dc24e798da114551a50de925a565ca14df17e6aa562389";
+    sha256 = "245258012db0792838718c67fc33107f8b940196e29aa628341956d3d903ed1f";
   };
 
   meta = with stdenv.lib; {

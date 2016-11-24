@@ -2739,7 +2739,14 @@ perl = callPackage ../all-pkgs/p/perl { };
 
 pgbouncer = callPackage ../all-pkgs/p/pgbouncer { };
 
-pinentry = callPackage ../all-pkgs/p/pinentry { };
+pinentry_gtk = callPackage ../all-pkgs/p/pinentry {
+  qt5 = null;
+};
+pinentry_qt = callPackage ../all-pkgs/p/pinentry {
+  gcr = null;
+  gtk_2 = null;
+};
+pinentry = callPackageAlias "pinentry_qt" { };
 
 pkcs11-helper = callPackage ../all-pkgs/p/pkcs11-helper { };
 

@@ -1,6 +1,9 @@
 { stdenv
 , fetchurl
+, lib
 
+, gcr
+, gtk_2
 , libassuan
 , libcap
 , libgpg-error
@@ -9,6 +12,11 @@
 , qt5
 }:
 
+let
+  inherit (lib)
+    boolEn
+    boolWt;
+in
 stdenv.mkDerivation rec {
   name = "pinentry-0.9.7";
 
@@ -18,6 +26,8 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
+    gcr
+    gtk_2
     libassuan
     libcap
     libgpg-error
@@ -26,24 +36,37 @@ stdenv.mkDerivation rec {
     qt5
   ];
 
-  prePatch = ''
-    substituteInPlace pinentry/pinentry-curses.c --replace ncursesw ncurses
+  postPatch = ''
+    sed -i pinentry/pinentry-curses.c \
+      -e 's/ncursesw/ncurses/'
   '';
 
   configureFlags = [
-    "--with-libcap"
-    "--enable-pinentry-curses"
+    ""
+    "--disable-maintainer-mode"
+    "--${boolEn (ncurses != null)}-pinentry-curses"
     "--enable-pinentry-tty"
-    "--disable-pinentry-gtk2"
-    "--disable-pinentry-gnome3"
-    "--enable-pinentry-qt"
+    "--enable-rpath"
+    "--disable-pinentry-emacs"
+    "--disable-inside-emacs"
+    "--${boolEn (gtk_2 != null)}-pinentry-gtk2"
+    "--${boolEn (gtk_2 != null && gcr != null)}-pinentry-gnome3"
+    "--${boolEn (libsecret != null)}-libsecret"
+    "--${boolEn (qt5 != null)}-pinentry-qt"
+    "--${boolEn (qt5 != null)}-pinentry-qt5"
+    "--${boolWt (libcap != null)}-libcap"
   ];
 
-  meta = with stdenv.lib; {
-    homepage = "http://gnupg.org/aegypten2/";
+  NIX_LDFLAGS = [
+    "-L${gcr}/lib"
+  ];
+
+  meta = with lib; {
     description = "GnuPG's interface to passphrase input";
+    homepage = "http://gnupg.org/aegypten2/";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

@@ -42,7 +42,6 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    ""
     "--disable-maintainer-mode"
     "--${boolEn (ncurses != null)}-pinentry-curses"
     "--enable-pinentry-tty"

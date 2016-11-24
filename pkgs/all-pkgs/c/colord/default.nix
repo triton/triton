@@ -21,16 +21,15 @@
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    boolEn;
 in
-
 stdenv.mkDerivation rec {
-  name = "colord-1.3.2";
+  name = "colord-1.3.4";
 
   src = fetchurl rec {
     url = "https://www.freedesktop.org/software/colord/releases/${name}.tar.xz";
-    sha1Url = "${url}.sha1";
-    sha256 = "d4ab3f11ec5e98d1079242fda7ad0a84a51da93572405561362a6ce2c274b8f5";
+    sha256 = "7e79ba022148900da7c72033f8232eefeab8373da25768f4b32f5aeba53b2238";
+    hashOutput = false;
   };
 
   nativeBuildInputs = [
@@ -63,7 +62,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-schemas-compile"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
@@ -71,17 +70,17 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--disable-strict"
     "--enable-rpath"
-    (enFlag "libgusb" (libgusb != null) null)
-    (enFlag "udev" (systemd_lib != null) null)
+    "--${boolEn (libgusb != null)}-libgusb"
+    "--${boolEn (systemd_lib != null)}-udev"
     "--disable-bash-completion"
-    (enFlag "polkit" (polkit != null) null)
+    "--${boolEn (polkit != null)}-polkit"
     "--enable-libcolordcompat"
-    (enFlag "systemd-login" (systemd_lib != null) null)
+    "--${boolEn (systemd_lib != null)}-systemd-login"
     "--disable-examples"
-    (enFlag "argyllcms-sensor" (argyllcms != null) null)
+    "--${boolEn (argyllcms != null)}-argyllcms-sensor"
     "--disable-reverse"
     "--disable-sane"
-    (enFlag "vala" (vala != null) null)
+    "--${boolEn (vala != null)}-vala"
     "--disable-session-example"
     "--enable-print-profiles"
     "--disable-installed-tests"
@@ -93,6 +92,19 @@ stdenv.mkDerivation rec {
     mkdir -p $out/etc/bash_completion.d
     cp -v ./data/colormgr $out/etc/bash_completion.d
   '';
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha1Urls =  map (n: "${n}.sha1") urls;
+      pgpsigUrls = map (n: "${n}.asc") urls;
+      pgpKeyFingerprint = "163EB 50119 225DB 3DF8F  49EA1 7ACBA 8DFA9 70E17";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Accurately color manage input and output devices";

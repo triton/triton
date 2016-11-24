@@ -5,12 +5,13 @@
 , botocore
 , colorama
 , docutils
+, pyyaml
 , rsa
 , s3transfer
 }:
 
 let
-  version = "1.11.14";
+  version = "1.11.21";
 in
 buildPythonPackage rec {
   name = "aws-cli-${version}";
@@ -18,13 +19,14 @@ buildPythonPackage rec {
   src = fetchzip {
     version = 2;
     url = "https://github.com/aws/aws-cli/archive/${version}.tar.gz";
-    sha256 = "2132be5b344355f84ba3d1c207305f620c12e5f73588d5a59187a71083f99369";
+    sha256 = "dab937778557d8b5797f246e13e5aabe8746fc3fe3dd9dadb9d19aead736b617";
   };
 
   propagatedBuildInputs = [
     botocore
     colorama
     docutils
+    pyyaml
     rsa
     s3transfer
   ];

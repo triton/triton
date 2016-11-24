@@ -16,7 +16,7 @@
 }:
 
 let
-  version = "2.0.5";
+  version = "2.0.6";
 in
 stdenv.mkDerivation rec {
   name = "lxc-${version}";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://linuxcontainers.org/downloads/lxc/lxc-${version}.tar.gz";
     hashOutput = false;
-    sha256 = "65703aa44d87c3c38d630b3692030d9dede03f04d26b53d5b3f77cfad5ade131";
+    sha256 = "7c292cd0055dac1a0e6fbb6a7740fd12b6ffb204603c198faf37c11c9d6dcd7a";
   };
 
   nativeBuildInputs = [
@@ -73,6 +73,7 @@ stdenv.mkDerivation rec {
     "localstatedir=\${TMPDIR}"
     "sysconfdir=\${out}/etc"
     "sysconfigdir=\${out}/etc/default"
+    "bashcompdir=\${out}/share/bash_completion.d" # FIXME
     "READMEdir=\${TMPDIR}/var/lib/lxc/rootfs"
     "LXCPATH=\${TMPDIR}/var/lib/lxc"
   ];

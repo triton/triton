@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "1.4.71";
+  version = "1.4.78";
 in
 buildPythonPackage rec {
   name = "botocore-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "botocore";
     inherit version;
-    sha256 = "c42d350fffbb1374ac6bcd983b7c84d3f4c3dd489cce9840cad47cd21863b5f4";
+    sha256 = "5053ff212b429c74b18dd7a8aa27eec057e16c17a841c67d4c6a2b4b620abd1e";
   };
 
   propagatedBuildInputs = [

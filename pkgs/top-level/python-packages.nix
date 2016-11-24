@@ -130,6 +130,8 @@ in {
 ################################################################################
 ################################################################################
 
+acd-cli = callPackage ../all-pkgs/a/acd-cli { };
+
 alabaster = callPackage ../all-pkgs/a/alabaster { };
 
 aniso8601 = callPackage ../all-pkgs/a/aniso8601 { };

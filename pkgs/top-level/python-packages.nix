@@ -362,6 +362,8 @@ repoze-who = callPackage ../all-pkgs/r/repoze-who { };
 
 requests = callPackage ../all-pkgs/r/requests { };
 
+requests-toolbelt = callPackage ../all-pkgs/r/requests-toolbelt { };
+
 rpyc = callPackage ../all-pkgs/r/rpyc { };
 
 rsa = callPackage ../all-pkgs/r/rsa { };

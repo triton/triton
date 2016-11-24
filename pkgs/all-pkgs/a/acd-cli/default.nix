@@ -40,6 +40,14 @@ buildPythonPackage rec {
     sqlalchemy
   ];
 
+  preFixup = /* Remove __pycache__ directory in bin output directory*/ ''
+    rm -rvf $out/bin/__pycache__
+  '' + /* Fix wrapper argv0 by replacing acd_cli's aliases with symlinks  */ ''
+    rm -v $out/bin/acd{,_}cli
+    ln -sv $out/bin/acd_cli.py $out/bin/acdcli
+    ln -sv $out/bin/acd_cli.py $out/bin/acd_cli
+  '';
+
   disabled = !isPy3k;
 
   meta = with lib; {

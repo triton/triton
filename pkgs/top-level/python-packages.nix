@@ -231,6 +231,8 @@ frozendict = callPackage ../all-pkgs/f/frozendict { };
 
 funcsigs = callPackage ../all-pkgs/f/funcsigs { };
 
+fusepy = callPackage ../all-pkgs/f/fusepy { };
+
 future = callPackage ../all-pkgs/f/future { };
 
 futures = callPackage ../all-pkgs/f/futures { };

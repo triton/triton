@@ -134,6 +134,8 @@ alabaster = callPackage ../all-pkgs/a/alabaster { };
 
 aniso8601 = callPackage ../all-pkgs/a/aniso8601 { };
 
+appdirs = callPackage ../all-pkgs/a/appdirs { };
+
 apscheduler = callPackage ../all-pkgs/a/apscheduler { };
 
 asciinema = callPackage ../all-pkgs/a/asciinema { };

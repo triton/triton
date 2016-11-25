@@ -248,7 +248,7 @@ stdenv.mkDerivation rec {
     description = "Media / DLNA server";
     homepage = https://www.plex.tv/;
     license = licenses.unfree;
-    maintainers = with stdenv.lib.maintainers; [
+    maintainers = with maintainers; [
       codyopel
     ];
     platforms = with platforms;

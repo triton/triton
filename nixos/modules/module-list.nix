@@ -170,7 +170,6 @@
   ./services/misc/nix-ssh-serve.nix
   ./services/misc/parsoid.nix
   ./services/misc/phd.nix
-  ./services/misc/plex.nix
   ./services/misc/redmine.nix
   ./services/misc/rogue.nix
   ./services/misc/siproxd.nix
@@ -410,6 +409,7 @@
   ../../system/services/n/nautilus
   ../../system/services/n/nginx
   ../../system/services/n/nvidia-drivers
+  ../../system/services/p/plex-media-server
   ../../system/services/s/seahorse
   ../../system/services/s/sushi
   ../../system/services/t/tracker

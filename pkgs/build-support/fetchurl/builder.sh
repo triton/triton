@@ -19,14 +19,15 @@ set +o noglob
 
 source $stdenv/setup
 
-echo "Environment:" >&2
-echo "  HTTP_PROXY: $HTTP_PROXY" >&2
-echo "  HTTPS_PROXY: $HTTPS_PROXY" >&2
-echo "  FTP_PROXY: $FTP_PROXY" >&2
-echo "  ALL_PROXY: $ALL_PROXY" >&2
-echo "  NO_PROXY: $NO_PROXY" >&2
-echo "  NIX_CURL_FLAGS: $NIX_CURL_FLAGS" >&2
-echo "  IPFS_API: $IPFS_API" >&2
+str="Environment: $name\n"
+str+="  HTTP_PROXY: $HTTP_PROXY\n"
+str+="  HTTPS_PROXY: $HTTPS_PROXY\n"
+str+="  FTP_PROXY: $FTP_PROXY\n"
+str+="  ALL_PROXY: $ALL_PROXY\n"
+str+="  NO_PROXY: $NO_PROXY\n"
+str+="  NIX_CURL_FLAGS: $NIX_CURL_FLAGS\n"
+str+="  IPFS_API: $IPFS_API\n"
+echo -e "$str" 2>&1
 
 downloadedFile="$out"
 if [ -n "$downloadToTemp" ]; then downloadedFile="$TMPDIR/file"; fi

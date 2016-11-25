@@ -59,6 +59,10 @@ stdenv.mkDerivation rec {
     "-I${nss}/include/nss"
   ];
 
+  installFlags = [
+    "localstatedir=\${TMPDIR}"
+  ];
+
   preFixup = /* Configure does not remove unused variables */ ''
     sed -i $out/lib/pkgconfig/rpm.pc \
       -e 's, @WITH_LUA_LIB@,,'

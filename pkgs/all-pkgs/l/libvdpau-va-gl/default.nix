@@ -9,18 +9,17 @@
 }:
 
 let
-  version = "0.4.0";
+  version = "0.4.2";
 in
-
 stdenv.mkDerivation rec {
   name = "libvdpau-va-gl-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "i-rinat";
     repo = "libvdpau-va-gl";
     rev = "v" + version;
-    sha256 = "1c7bd460cdf977b78bf6c2c821d15dec039c2f12ab2c5de612aa291093634539";
+    sha256 = "1c5c03239f56e1092d273f822396a6c1103a100d737d425a67662892eb0b5d51";
   };
 
   nativeBuildInputs = [

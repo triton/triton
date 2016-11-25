@@ -134,6 +134,7 @@ in
         PLEX_MEDIA_SERVER_HOME="${cfg.package}/lib/plexmediaserver";
         PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS="6";
         PLEX_MEDIA_SERVER_TMPDIR="/tmp";
+        LD_LIBRARY_PATH = "${plexLibraryPath}:${cfg.dataDir}";
         LC_ALL="en_US.UTF-8";
         LANG="en_US.UTF-8";
       };

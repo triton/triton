@@ -190,7 +190,8 @@ stdenv.mkDerivation rec {
         --set 'PLEX_MEDIA_SERVER_HOME' "$out/lib/plexmediaserver" \
         --set 'PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS' \
           '"''${PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS:-6}"' \
-        --set 'PLEX_MEDIA_SERVER_TMPDIR' '"/tmp/plex"'
+        --set 'PLEX_MEDIA_SERVER_TMPDIR' '"/tmp/plex"' \
+        --prefix 'LD_LIBRARY_PATH' : "${plexLibraryPath}:$out/lib"
         # --run "
         #   if [ ! -d \"\$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/.skeleton\" ] ; then
         #     for db in 'com.plexapp.plugins.library.db' ; do
@@ -243,6 +244,11 @@ stdenv.mkDerivation rec {
       echo "PASSED"
     done
   '';
+
+  passthru = {
+    inherit
+      plexLibraryPath;
+  };
 
   meta = with lib; {
     description = "Media / DLNA server";

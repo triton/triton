@@ -2755,6 +2755,8 @@ pkg-config = callPackage ../all-pkgs/p/pkgconfig { };
 pkgconf = callPackage ../all-pkgs/p/pkgconf { };
 pkgconfig = callPackageAlias "pkgconf" { };
 
+plex-media-server = callPackage ../all-pkgs/p/plex-media-server { };
+
 plymouth = callPackage ../all-pkgs/p/plymouth { };
 
 pngcrush = callPackage ../all-pkgs/p/pngcrush { };

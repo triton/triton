@@ -85,7 +85,7 @@ in
         # why this is done.
         test -d "${cfg.dataDir}/.skeleton" || mkdir "${cfg.dataDir}/.skeleton"
         for db in "com.plexapp.plugins.library.db"; do
-            cp "${cfg.package}/usr/lib/plexmediaserver/Resources/base_$db" "${cfg.dataDir}/.skeleton/$db"
+            cp "${cfg.package}/lib/plexmediaserver/Resources/base_$db" "${cfg.dataDir}/.skeleton/$db"
             chmod u+w "${cfg.dataDir}/.skeleton/$db"
             chown ${cfg.user}:${cfg.group} "${cfg.dataDir}/.skeleton/$db"
         done

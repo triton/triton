@@ -135,7 +135,6 @@ stdenv.mkDerivation rec {
       'libxslt.so.1'
       #'libz.so.1'
       'libzen.so.0'
-      #'plex-archive-keyring.gpg'
     )
   '';
 
@@ -155,6 +154,9 @@ stdenv.mkDerivation rec {
       install -D -m 644 -v "usr/lib/plexmediaserver/$PlexLibrary" \
         "$out/lib/plexmediaserver/$PlexLibrary"
     done
+
+    install -D -m 644 -v 'usr/lib/plexmediaserver/plex-archive-keyring.gpg' \
+      "$out/lib/plexmediaserver/plex-archive-keyring.gpg"
 
     cp -dr --no-preserve='ownership' 'usr/lib/plexmediaserver/Resources' \
       "$out/lib/plexmediaserver"

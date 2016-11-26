@@ -5,15 +5,14 @@
 
 , curl
 , expat
-, libbsd
+#, ffmpeg
 , libnatpmp
-, libxml2
-, libxslt
+#, libxml2
+#, libxslt
 , openssl
-, python2
+#, python2
 , sqlite
 , taglib
-, xorg
 , zlib
 
 # Plex's data directory must be baked into the package due to symlinks.
@@ -45,20 +44,16 @@ stdenv.mkDerivation rec {
   plexLibraryPath = makeSearchPath "lib" [
     curl
     expat
-    libbsd
+    # ffmpeg  # Not ABI compatible
     libnatpmp
-    libxml2
-    libxslt
+    # libxml2  # Not ABI compatible
+    # libxslt  # Not ABI compatible
     openssl
-    python2
+    # python2  # Not ABI compatible
     sqlite
     stdenv.cc.cc
     stdenv.libc
     taglib
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXau
-    xorg.libXdmcp
     zlib
   ];
 
@@ -100,7 +95,7 @@ stdenv.mkDerivation rec {
       #'libcrypto.so.1.0.0'
       #'libcurl.so.4'
       #'libexpat.so.1'
-      #'libexslt.so.0'
+      'libexslt.so.0'
       'libfreeimage.so'
       'libgnsdk_correlates.so.3.07.7'
       'libgnsdk_dsp.so.3.07.7'
@@ -129,15 +124,15 @@ stdenv.mkDerivation rec {
       #'libnatpmp.so.1'
       'libopencv_core.so.2.4'
       'libopencv_imgproc.so.2.4'
-      #'libpython2.7.so.1.0'
+      'libpython2.7.so.1.0'
       'libsoci_core.so.3.0.0'
       'libsoci_sqlite3.so.3.0.0'
       #'libsqlite3.so.0'
       #'libssl.so.1.0.0'
       'libswscale.so.4'
       #'libtag.so.1'
-      #'libxml2.so.2'
-      #'libxslt.so.1'
+      'libxml2.so.2'
+      'libxslt.so.1'
       #'libz.so.1'
       'libzen.so.0'
       #'plex-archive-keyring.gpg'

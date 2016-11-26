@@ -5,7 +5,6 @@
 
 , curl
 , expat
-, ffmpeg
 , libbsd
 , libnatpmp
 , libxml2
@@ -46,7 +45,6 @@ stdenv.mkDerivation rec {
   plexLibraryPath = makeSearchPath "lib" [
     curl
     expat
-    ffmpeg
     libbsd
     libnatpmp
     libxml2
@@ -85,9 +83,9 @@ stdenv.mkDerivation rec {
 
     declare -a PlexLibraryList
     PlexLibraryList=(
-      #'libavcodec.so.57'
-      #'libavformat.so.57'
-      #'libavutil.so.55'
+      'libavcodec.so.57'
+      'libavformat.so.57'
+      'libavutil.so.55'
       'libboost_atomic.so.1.59.0'
       'libboost_chrono.so.1.59.0'
       'libboost_date_time.so.1.59.0'
@@ -136,7 +134,7 @@ stdenv.mkDerivation rec {
       'libsoci_sqlite3.so.3.0.0'
       #'libsqlite3.so.0'
       #'libssl.so.1.0.0'
-      #'libswscale.so.4'
+      'libswscale.so.4'
       #'libtag.so.1'
       #'libxml2.so.2'
       #'libxslt.so.1'

@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "1.7.3";
+  version = "1.7.4.2";
 in
 stdenv.mkDerivation rec {
   name = "lz4-${version}";
@@ -13,12 +13,14 @@ stdenv.mkDerivation rec {
     owner = "lz4";
     repo = "lz4";
     rev = "v${version}";
-    sha256 = "b4ef4e45d4a0f01fdbc5ccf87a752bd88891341f15decf07314d0a7824fa5493";
+    sha256 = "c50d5b0e5b9ddcbd67693c550038e5061973587a14b5dab55b4b8e1bb42fc094";
   };
 
   preBuild = ''
     makeFlagsArray+=("PREFIX=$out")
   '';
+
+  parallelBuild = false;
 
   meta = with stdenv.lib; {
     description = "Extremely fast compression algorithm";

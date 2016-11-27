@@ -163,12 +163,10 @@ stdenv.mkDerivation rec {
     read-only we create a symlink to a fixed location and copy the database
     to that location from the nix-store.
     */ ''
-    for db in "com.plexapp.plugins.library.db"; do
-      mv -v "$out/lib/plexmediaserver/Resources/$db" \
-        "$out/lib/plexmediaserver/Resources/base_$db"
-      ln -sv "${dataDir}/.skeleton/$db" \
-        "$out/lib/plexmediaserver/Resources/$db"
-    done
+    mv -v "$out/lib/plexmediaserver/Resources/com.plexapp.plugins.library.db" \
+      "$out/lib/plexmediaserver/Resources/base_com.plexapp.plugins.library.db"
+    ln -sv "${dataDir}/.skeleton/com.plexapp.plugins.library.db" \
+      "$out/lib/plexmediaserver/Resources/com.plexapp.plugins.library.db"
   '';
 
   postFixup = /* Run some tests */ ''

@@ -76,66 +76,18 @@ stdenv.mkDerivation rec {
       ['Plex Transcoder']='plex-transcoder'
     )
 
-    declare -a PlexLibraryList
-    PlexLibraryList=(
-      'libavcodec.so.57'
-      'libavformat.so.57'
-      'libavutil.so.55'
-      'libboost_atomic.so.1.59.0'
-      'libboost_chrono.so.1.59.0'
-      'libboost_date_time.so.1.59.0'
-      'libboost_filesystem.so.1.59.0'
-      'libboost_iostreams.so.1.59.0'
-      'libboost_locale.so.1.59.0'
-      'libboost_program_options.so.1.59.0'
-      'libboost_regex.so.1.59.0'
-      'libboost_system.so.1.59.0'
-      'libboost_thread.so.1.59.0'
-      'libboost_timer.so.1.59.0'
-      #'libcrypto.so.1.0.0'
-      #'libcurl.so.4'
-      #'libexpat.so.1'
-      'libexslt.so.0'
-      'libfreeimage.so'
-      'libgnsdk_correlates.so.3.07.7'
-      'libgnsdk_dsp.so.3.07.7'
-      'libgnsdk_fp.so.3.07.7'
-      'libgnsdk_link.so.3.07.7'
-      'libgnsdk_lookup_local.so.3.07.7'
-      'libgnsdk_lookup_localstream.so.3.07.7'
-      'libgnsdk_manager.so.3.07.7'
-      'libgnsdk_moodgrid.so.3.07.7'
-      'libgnsdk_musicid.so.3.07.7'
-      'libgnsdk_musicid_file.so.3.07.7'
-      'libgnsdk_musicid_match.so.3.07.7'
-      'libgnsdk_musicid_stream.so.3.07.7'
-      'libgnsdk_playlist.so.3.07.7'
-      'libgnsdk_rhythm.so.3.07.7'
-      'libgnsdk_storage_sqlite.so.3.07.7'
-      'libgnsdk_submit.so.3.07.7'
-      'libgnsdk_tocgen.so.3.07.7'
-      'libgnsdk_video.so.3.07.7'
-      'libiconv.so.2'
-      'libjemalloc.so.1'
-      'liblrc.so.0'
-      'libmediainfo.so.0'
-      'libminiupnpc.so.10'
-      'libminizip.so.1'
-      #'libnatpmp.so.1'
-      'libopencv_core.so.2.4'
-      'libopencv_imgproc.so.2.4'
-      'libpython2.7.so.1.0'
-      'libsoci_core.so.3.0.0'
-      'libsoci_sqlite3.so.3.0.0'
-      #'libsqlite3.so.0'
-      #'libssl.so.1.0.0'
-      'libswscale.so.4'
-      #'libtag.so.1'
-      'libxml2.so.2'
-      'libxslt.so.1'
-      #'libz.so.1'
-      'libzen.so.0'
+    mapfile -t PlexLibraryList < <(
+      find 'usr/lib/plexmediaserver' -maxdepth 1 -name '*.so*'
     )
+    for PlexLibrary in "''${PlexLibraryList[@]}" ; do
+      PlexLibraryBase="$(basename "$PlexLibrary")"
+      mapfile -d: -t InputLibraryList < <(echo ${libraryPath})
+      for InputLibrary in "''${InputLibraryList[@]}" ; do
+        if [ -f "$InputLibrary/$PlexLibraryBase" ] ; then
+          PlexLibraryList=("''${PlexLibraryList[@]//$PlexLibrary}")
+        fi
+      done
+    done
   '';
 
   buildPhase = ":";
@@ -151,8 +103,10 @@ stdenv.mkDerivation rec {
     done
 
     for PlexLibrary in "''${PlexLibraryList[@]}" ; do
-      install -D -m 644 -v "usr/lib/plexmediaserver/$PlexLibrary" \
-        "$out/lib/plexmediaserver/$PlexLibrary"
+      if [ -n "$PlexLibrary" ] ; then
+        install -D -m 644 -v "$PlexLibrary" \
+          "$out/lib/plexmediaserver/$(basename "$PlexLibrary")"
+      fi
     done
 
     install -D -m 644 -v 'usr/lib/plexmediaserver/plex-archive-keyring.gpg' \
@@ -173,9 +127,11 @@ stdenv.mkDerivation rec {
     done
 
     for PlexLibrary in "''${PlexLibraryList[@]}" ; do
-      patchelf \
-        --set-rpath "$libraryPath:$out/lib/plexmediaserver" \
-        "$out/lib/plexmediaserver/$PlexLibrary"
+      if [ -n "$PlexLibrary" ] ; then
+        patchelf \
+          --set-rpath "$libraryPath:$out/lib/plexmediaserver" \
+          "$out/lib/plexmediaserver/$(basename "$PlexLibrary")"
+      fi
     done
   '' + ''
     for PlexExecutable in "''${PlexExecutableList[@]}" ; do
@@ -215,11 +171,11 @@ stdenv.mkDerivation rec {
     local TestLib
     for TestLib in "''${PlexLibraryList[@]}" ; do
       echo "Testing rpath for: $TestLib"
-      if [ -n "$(ldd "$out/lib/plexmediaserver/$TestLib" 2> /dev/null |
+      if [ -n "$(ldd "$out/lib/plexmediaserver/$(basename "$TestLib")" 2> /dev/null |
                  grep --only-matching 'not found')" ] ; then
         echo "ERROR: failed to patch RPATH's for:"
-        echo "$TestLib"
-        ldd "$out/lib/plexmediaserver/$TestLib"
+        echo "$(basename "$TestLib")"
+        ldd "$out/lib/plexmediaserver/$(basename "$TestLib")"
         return 1
       fi
       echo "PASSED"

@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
     makeWrapper
   ];
 
-  plexLibraryPath = makeSearchPath "lib" [
+  libraryPath = makeSearchPath "lib" [
     curl
     expat
     # ffmpeg  # Not ABI compatible
@@ -168,13 +168,13 @@ stdenv.mkDerivation rec {
         --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
         "$out/lib/plexmediaserver/$PlexExecutable"
       patchelf \
-        --set-rpath "$plexLibraryPath:$out/lib/plexmediaserver" \
+        --set-rpath "$libraryPath:$out/lib/plexmediaserver" \
         "$out/lib/plexmediaserver/$PlexExecutable"
     done
 
     for PlexLibrary in "''${PlexLibraryList[@]}" ; do
       patchelf \
-        --set-rpath "$plexLibraryPath:$out/lib/plexmediaserver" \
+        --set-rpath "$libraryPath:$out/lib/plexmediaserver" \
         "$out/lib/plexmediaserver/$PlexLibrary"
     done
   '' + ''
@@ -186,7 +186,7 @@ stdenv.mkDerivation rec {
         --set 'PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS' \
           '"''${PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS:-6}"' \
         --set 'PLEX_MEDIA_SERVER_TMPDIR' '"/tmp/plex"' \
-        --prefix 'LD_LIBRARY_PATH' : "${plexLibraryPath}:$out/lib"
+        --prefix 'LD_LIBRARY_PATH' : "${libraryPath}:$out/lib"
         # --run "
         #   if [ ! -d \"\$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR/.skeleton\" ] ; then
         #     for db in 'com.plexapp.plugins.library.db' ; do
@@ -242,7 +242,8 @@ stdenv.mkDerivation rec {
 
   passthru = {
     inherit
-      plexLibraryPath;
+      dataDir
+      libraryPath;
   };
 
   meta = with lib; {

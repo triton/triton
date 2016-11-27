@@ -76,13 +76,18 @@ stdenv.mkDerivation rec {
       ['Plex Transcoder']='plex-transcoder'
     )
 
+    # Find all shared objects in usr/lib/plexmediaserver
     mapfile -t PlexLibraryList < <(
       find 'usr/lib/plexmediaserver' -maxdepth 1 -name '*.so*'
     )
+    # Filter out plex libraries if they match system libraries provided
+    # in `libraryPath`.
     for PlexLibrary in "''${PlexLibraryList[@]}" ; do
       PlexLibraryBase="$(basename "$PlexLibrary")"
+      # Read `libraryPath` string into an array
       mapfile -d: -t InputLibraryList < <(echo ${libraryPath})
       for InputLibrary in "''${InputLibraryList[@]}" ; do
+        # Drop matches from the array
         if [ -f "$InputLibrary/$PlexLibraryBase" ] ; then
           PlexLibraryList=("''${PlexLibraryList[@]//$PlexLibrary}")
         fi

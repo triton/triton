@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnu/readline/readline-${version}.tar.gz";
-    sha256 = "750d437185286f40a369e1e4f4764eda932b9459b5ec9a731628393dd3d32334";
+    sha256 = "0d13sg9ksf982rrrmv5mb6a2p4ys9rvg9r71d6il0vr8hmql63bm";
   };
 
   buildInputs = [

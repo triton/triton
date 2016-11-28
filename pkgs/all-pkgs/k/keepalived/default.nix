@@ -1,6 +1,8 @@
 { stdenv
 , fetchurl
+, which
 
+, glib
 , ipset
 , iptables
 , libnfnetlink
@@ -10,15 +12,20 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "keepalived-1.2.24";
+  name = "keepalived-1.3.2";
 
   src = fetchurl {
     url = "http://keepalived.org/software/${name}.tar.gz";
-    multihash = "QmVUJ7SnDaW6Dj9AyKwnnKa2wbQbHRznWfGzrraFgL1CAH";
-    sha256 = "3071804478077e606197a2348b5733d7d53af2843906af5e0d544945565c36ef";
+    multihash = "QmTuQqRbQW76P9DL4dtRA3dtQ6T65vYVDCnzYScBMvdHSn";
+    sha256 = "bb6729a7b7402ef5ef89e895b2dd597880702a4e2351d4da2f88bf24284e38f4";
   };
 
+  nativeBuildInputs = [
+    which
+  ];
+
   buildInputs = [
+    glib
     ipset
     iptables
     libnfnetlink
@@ -35,16 +42,20 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-snmp"
-    "--enable-snmp-keepalived"
+    "--enable-snmp-vrrp"
     "--enable-snmp-checker"
     "--enable-snmp-rfc"
     "--enable-snmp-rfcv2"
     "--enable-snmp-rfcv3"
+    "--enable-dbus"
     "--enable-sha1"
   ];
 
   preInstall = ''
-    installFlagsArray+=("sysconfdir=$out/etc")
+    installFlagsArray+=(
+      "dbussystemdir=$out/etc/dbus-1"
+      "sysconfdir=$out/etc"
+    )
   '';
 
   meta = with stdenv.lib; {

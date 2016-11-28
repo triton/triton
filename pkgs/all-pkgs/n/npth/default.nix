@@ -1,13 +1,33 @@
 { stdenv
 , fetchurl
+, gnupg
 }:
 
+let
+  tarballUrls = version: [
+    "mirror://gnupg/npth/npth-${version}.tar.bz2"
+  ];
+
+  version = "1.3";
+in
 stdenv.mkDerivation rec {
-  name = "npth-1.2";
+  name = "npth-${version}";
 
   src = fetchurl {
-    url = "mirror://gnupg/npth/${name}.tar.bz2";
-    sha256 = "12n0nvhw4fzwp0k7gjv3rc6pdml0qiinbbfiz4ilg6pl5kdxvnvd";
+    urls = tarballUrls version;
+    hashOutput = false;
+    sha256 = "bca81940436aed0734eb8d0ff8b179e04cc8c087f5625204419f5f45d736a82a";
+  };
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "1.3";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      inherit (gnupg.srcVerification) pgpKeyFingerprints;
+      outputHash = "bca81940436aed0734eb8d0ff8b179e04cc8c087f5625204419f5f45d736a82a";
+      inherit (src) outputHashAlgo;
+    };
   };
 
   meta = with stdenv.lib; {

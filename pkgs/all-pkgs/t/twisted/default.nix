@@ -2,6 +2,7 @@
 , buildPythonPackage
 , fetchPyPi
 , isPy3k
+, lib
 
 , constantly
 , incremental
@@ -9,7 +10,7 @@
 }:
 
 let
-  version = "16.5.0";
+  version = "16.6.0";
 in
 buildPythonPackage rec {
   name = "Twisted-${version}";
@@ -18,7 +19,7 @@ buildPythonPackage rec {
     package = "Twisted";
     inherit version;
     type = ".tar.bz2";
-    sha256 = "0207d88807482fa670a84926590e163a2a081a29745de34c5a6dc21066abae73";
+    sha256 = "d0fe115ea7ef8cf632d05103de60356c6e992b2153d6830bdc4476f8accb1fca";
   };
 
   propagatedBuildInputs = [
@@ -35,7 +36,7 @@ buildPythonPackage rec {
   # Tests are not fully compatible with Python 3
   doCheck = !isPy3k;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "An event-driven networking engine written in Python";
     homepage = https://twistedmatrix.com/;
     license = licenses.mit;

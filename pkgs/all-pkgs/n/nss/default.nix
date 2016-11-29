@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "3.27.1";
+  version = "3.27.2";
 
   baseUrl = "https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases"
     + "/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     sha256Url = "${baseUrl}/SHA256SUMS";
-    sha256 = "fd3637a1930cd838239a89633a7ed9a18859ae9b599043f3a18f726dc4ec2a6b";
+    sha256 = "dc8ac8524469d0230274fd13a53fdcd74efe4aa67205dde1a4a92be87dc28524";
   };
 
   buildInputs = [

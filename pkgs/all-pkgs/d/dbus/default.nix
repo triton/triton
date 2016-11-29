@@ -9,13 +9,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dbus-1.10.12";
+  name = "dbus-1.10.14";
 
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus/${name}.tar.gz";
-    multihash = "QmdiNrNvtnngm7ZZdEMuqA7PP6cQm9Lofm4RK7ermN4LhB";
+    multihash = "QmNXJSRDuRC2csQuxMKfA3trUcas9qPKxfRvF7eFri3Vyx";
     hashOutput = false;
-    sha256 = "210a79430b276eafc6406c71705e9140d25b9956d18068df98a70156dc0e475d";
+    sha256 = "23238f70353e38ce5ca183ebc9525c0d97ac00ef640ad29cf794782af6e6a083";
   };
 
   buildInputs = [
@@ -54,7 +54,10 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "DA98 F25C 0871 C49A 59EA  FF2C 4DE8 FF2A 63C7 CC90";
+      pgpKeyFingerprints = [
+        "DA98 F25C 0871 C49A 59EA  FF2C 4DE8 FF2A 63C7 CC90"
+        "3C86 72A0 F496 37FE 064A  C30F 52A4 3A1E 4B77 B059"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

@@ -1,11 +1,12 @@
 { stdenv
 , cmake
 , fetchFromGitHub
+, lib
 , ninja
 }:
 
 let
-  version = "2.1.2";
+  version = "2.2.0";
 in
 stdenv.mkDerivation rec {
   name = "gflags-${version}";
@@ -15,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "gflags";
     repo = "gflags";
     rev = "v${version}";
-    sha256 = "7564048256b5149b9591b37d3e63cfc675f0050dfc4ec661030a8edc493d68c5";
+    sha256 = "43d236421279e56eb4e86bc427b6912712a94ab33ce2618b3dc2eb5e63331432";
   };
 
   nativeBuildInputs = [
@@ -29,7 +30,7 @@ stdenv.mkDerivation rec {
     "-DBUILD_TESTING=OFF"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A C++ library that implements commandline flags processing";
     homepage = https://code.google.com/p/gflags/;
     license = licenses.bsd3;

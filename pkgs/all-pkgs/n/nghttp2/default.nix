@@ -15,20 +15,22 @@
 
 let
   inherit (stdenv.lib)
+    boolEn
+    boolWt
     optionals;
 in
 
 let
   isLib = prefix == "lib";
 
-  version = "1.16.0";
+  version = "1.17.0";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}nghttp2-${version}";
 
   src = fetchurl {
     url = "https://github.com/tatsuhiro-t/nghttp2/releases/download/v${version}/nghttp2-${version}.tar.xz";
-    sha256 = "311d53e13d1aea8991d06f7963b75dc0a853eca961e53a38b6bd3d8b1d89019d";
+    sha256 = "6bb446e6977f1daac96b94cd983bab15172728342f7e2b9b0f855e1532dd2ed2";
   };
 
   buildInputs = optionals (!isLib) [
@@ -45,14 +47,14 @@ stdenv.mkDerivation rec {
     "--disable-werror"
     "--disable-debug"
     "--enable-threads"
-    "--${if !isLib then "enable" else "disable"}-app"
-    "--${if !isLib then "enable" else "disable"}-hpack-tools"
-    "--${if !isLib then "enable" else "disable"}-asio-lib"
+    "--${boolEn (!isLib)}-app"
+    "--${boolEn (!isLib)}-hpack-tools"
+    "--${boolEn (!isLib)}-asio-lib"
     "--disable-examples"
     "--disable-python-bindings"
     "--disable-failmalloc"
-    "--${if !isLib then "with" else "without"}-libxml2"
-    "--${if !isLib then "with" else "without"}-jemalloc"
+    "--${boolWt (!isLib)}-libxml2"
+    "--${boolWt (!isLib)}-jemalloc"
     "--without-spdylay"
     "--without-neverbleed"
     "--without-cython"

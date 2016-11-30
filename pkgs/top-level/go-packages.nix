@@ -119,11 +119,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "ede567c8e044a5913dad1d1af3696d9da953104c";
-    date = "2016-11-04";
+    rev = "21853a76e0cca35cf785c34dceee499a3d5a7168";
+    date = "2016-11-30";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "1g1dbzszpm0b09nbfxnrkr0a9v4lz9647zx4q456zdrw6qcm1lrl";
+    sha256 = "1i91g49bnds1lc0j3xynj3w93y4aszsk9sfzh9blgl5g9vgrzx8g";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -248,11 +248,11 @@ let
 
   text = buildFromGitHub {
     version = 2;
-    rev = "4ea6c073aae78d08c7e95e95aa7f55b888287d6f";
-    date = "2016-11-22";
+    rev = "5c6cf4f9a2357d38515014cea8c488ed22bdab90";
+    date = "2016-11-30";
     owner = "golang";
     repo = "text";
-    sha256 = "1x0zwdxic7kp268c12x06537301sj8r6ci5iqbwwx5d2i4wvwpdy";
+    sha256 = "0lr9jrlyvip8mh2f9y38ifkgiys72bjl75df6ifinqd5jfy07bja";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
     excludedPackages = "cmd";
@@ -3058,12 +3058,12 @@ let
 
   ipfs = buildFromGitHub {
     version = 2;
-    date = "2016-11-29";
-    rev = "f81cccc3fc927f592e6655fe280aa7f0c7d885c6";
+    date = "2016-11-30";
+    rev = "f8635ba01f99765425f949e2fc1e5688f81b17a7";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "0s4qqrwcwk58hl26qkrabqcks2nchl4qm34ysyk32lpr1jaiwdzw";
-    gxSha256 = "19slnx7l84p1in1xys3z6pplqm5n7mzsx7xv4sd15z6fh4xnd2l3";
+    sha256 = "0x9js2wf7bql5dw8g2svxbssrmkyp4xqi6j296dlr35p1bcvz3gr";
+    gxSha256 = "0kr2xc54gc9zi4lb6yqndxzpiqafz5hbq3680r9jw38p2i5b383y";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"

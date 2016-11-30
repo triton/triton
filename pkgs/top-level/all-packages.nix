@@ -1264,6 +1264,8 @@ glproto = callPackage ../all-pkgs/g/glproto { };
 
 glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 
+gmime = callPackage ../all-pkgs/g/gmime { };
+
 gmp = callPackage ../all-pkgs/g/gmp { };
 
 gn = callPackage ../all-pkgs/g/gn { };
@@ -3823,8 +3825,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 
   # Only supported on Linux
   glibcLocales = callPackage ../development/libraries/glibc/locales.nix { };
-#
-  gmime = callPackage ../development/libraries/gmime { };
 #
   gom = callPackage ../all-pkgs/g/gom { };
 #

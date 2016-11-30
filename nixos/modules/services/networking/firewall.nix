@@ -100,7 +100,7 @@ let
 
     # Perform a reverse-path test to refuse spoofers
     # For now, we just drop, as the raw table doesn't have a log-refuse yet
-    ${optionalString (kernelHasRPFilter && cfg.checkReversePath) ''
+    ${optionalString cfg.checkReversePath ''
       if ! ip46tables -A PREROUTING -t raw -m rpfilter --invert -j DROP; then
         echo "<2>failed to initialise rpfilter support" >&2
       fi
@@ -187,7 +187,7 @@ let
     # Clean up after added ruleset
     ip46tables -D INPUT -j nixos-fw 2>/dev/null || true
 
-    ${optionalString (kernelHasRPFilter && cfg.checkReversePath) ''
+    ${optionalString cfg.checkReversePath ''
       if ! ip46tables -D PREROUTING -t raw -m rpfilter --invert -j DROP; then
         echo "<2>failed to stop rpfilter support" >&2
       fi
@@ -219,7 +219,6 @@ let
 
   kernelPackages = config.boot.kernelPackages;
 
-  kernelHasRPFilter = true;
   kernelCanDisableHelpers = true;
 
 in
@@ -361,7 +360,7 @@ in
     };
 
     networking.firewall.checkReversePath = mkOption {
-      default = kernelHasRPFilter;
+      default = false;
       type = types.bool;
       description =
         ''
@@ -461,7 +460,7 @@ in
       options nf_conntrack nf_conntrack_helper=0
     '';
 
-    assertions = [ { assertion = ! cfg.checkReversePath || kernelHasRPFilter;
+    assertions = [ { assertion = ! cfg.checkReversePath;
                      message = "This kernel does not support rpfilter"; }
                    { assertion = cfg.autoLoadConntrackHelpers || kernelCanDisableHelpers;
                      message = "This kernel does not support disabling conntrack helpers"; }

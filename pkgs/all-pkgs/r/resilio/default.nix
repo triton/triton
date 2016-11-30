@@ -11,7 +11,7 @@ let
     stdenv.cc.libc
   ];
 
-  version = "2.4.1";
+  version = "2.4.2";
 in
 stdenv.mkDerivation rec {
   name = "resilio-${version}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   src  = fetchurl {
     url  = "https://download-cdn.resilio.com/${version}/"
       + "linux-x64/resilio-sync_x64.tar.gz";
-    sha256 = "1597b39eb1e47a38240bda2e80e9579e0ff2ab0d8b99eb6d19b7e3f283456271";
+    sha256 = "df7f3cf0d5fca711b0b97d446dd517f7a532e894ec33b7b052078d8cc8581580";
   };
 
   nativeBuildInputs = [

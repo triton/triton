@@ -2966,6 +2966,8 @@ root-nameservers = callPackage ../all-pkgs/r/root-nameservers { };
 
 rpm = callPackage ../all-pkgs/r/rpm { };
 
+rrdtool = callPackage ../all-pkgs/r/rrdtool { };
+
 rtkit = callPackage ../all-pkgs/r/rtkit { };
 
 rtmpdump = callPackage ../all-pkgs/r/rtmpdump { };

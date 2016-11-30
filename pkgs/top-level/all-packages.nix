@@ -2740,13 +2740,14 @@ perl = callPackage ../all-pkgs/p/perl { };
 pgbouncer = callPackage ../all-pkgs/p/pgbouncer { };
 
 pinentry_gtk = callPackage ../all-pkgs/p/pinentry {
-  qt5 = null;
+  type = "gtk";
 };
 pinentry_qt = callPackage ../all-pkgs/p/pinentry {
-  gcr = null;
-  gtk_2 = null;
+  type = "qt";
 };
-pinentry = callPackageAlias "pinentry_qt" { };
+pinentry = callPackage ../all-pkgs/p/pinentry {
+  type = "nox";
+};
 
 pkcs11-helper = callPackage ../all-pkgs/p/pkcs11-helper { };
 

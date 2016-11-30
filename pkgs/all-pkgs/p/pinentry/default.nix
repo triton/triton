@@ -10,13 +10,22 @@
 , libsecret
 , ncurses
 , qt5
+
+, type
 }:
 
 let
   inherit (lib)
+    any
     boolEn
-    boolWt;
+    boolWt
+    optionals;
+
+  isNox = type == "nox";
+  isGtk = type == "gtk";
+  isQt = type == "qt";
 in
+assert isNox || isGtk || isQt;
 stdenv.mkDerivation rec {
   name = "pinentry-0.9.7";
 
@@ -26,13 +35,16 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    gcr
-    gtk_2
     libassuan
     libcap
     libgpg-error
-    libsecret
+  ] ++ optionals isNox [
     ncurses
+  ] ++ optionals isGtk [
+    gcr
+    gtk_2
+    libsecret
+  ] ++ optionals isQt [
     qt5
   ];
 
@@ -43,20 +55,20 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--${boolEn (ncurses != null)}-pinentry-curses"
+    "--${boolEn isNox}-pinentry-curses"
     "--enable-pinentry-tty"
     "--enable-rpath"
     "--disable-pinentry-emacs"
     "--disable-inside-emacs"
-    "--${boolEn (gtk_2 != null)}-pinentry-gtk2"
-    "--${boolEn (gtk_2 != null && gcr != null)}-pinentry-gnome3"
-    "--${boolEn (libsecret != null)}-libsecret"
-    "--${boolEn (qt5 != null)}-pinentry-qt"
-    "--${boolEn (qt5 != null)}-pinentry-qt5"
-    "--${boolWt (libcap != null)}-libcap"
+    "--${boolEn isGtk}-pinentry-gtk2"
+    "--${boolEn isGtk}-pinentry-gnome3"
+    "--${boolEn isGtk}-libsecret"
+    "--${boolEn isQt}-pinentry-qt"
+    "--${boolEn isQt}-pinentry-qt5"
+    "--with-libcap"
   ];
 
-  NIX_LDFLAGS = [
+  NIX_LDFLAGS = optionals isGtk [
     "-L${gcr}/lib"
   ];
 

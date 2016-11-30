@@ -19,14 +19,14 @@
 let
   sources = {
     "1.8" = {
-      version = "1.8.16";
-      sha1Confirm = "9596643a2728c55a4e54ff38608fde09b27fa494";
-      sha256 = "f18f6e8309270982135aae54d96958f9ca6b93f8a4e746dd634b1b5b84edb346";
+      version = "1.8.17";
+      sha1Confirm = "0999f5e16b146f824b952a5552826b9cb5c47b13";
+      sha256 = "de119538d29a5f2c028984cb54a55a4af3e9c32fa9316331bcbe5719e474a090";
     };
     "1.9" = {
-      version = "1.9.4";
-      sha1Confirm = "bc7d51fdda43bea01e1272dfe9d23d0a9d6cd11c";
-      sha256 = "1267f9e2ab983f260623bee841e6c9cc458bf4bf776238ed5f100983f79e9299";
+      version = "1.9.5";
+      sha1Confirm = "8bd6a44a1aed30c4c6b6b068488dafb44eaa6adf";
+      sha256 = "8a4fc68aff1d18dcb4dd9e460648d24d9e98657fbed496c582929c6b3ce555e5";
     };
   };
 
@@ -102,7 +102,13 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "E7B2 A7F4 EC28 BE9F F8B3  8BA4 B64F FF12 09F9 FA74";
+      pgpKeyFingerprints = [
+        "E7B2 A7F4 EC28 BE9F F8B3  8BA4 B64F FF12 09F9 FA74"
+        "056F 8016 D9B8 7B1B DE41  7467 99EC 741B 5792 1ACC"
+        "BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F"
+        "8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973"
+        "3D1D C66D 6D2E 0B90 3952  8138 C4A6 C625 CCC8 E1DF"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
       inherit (source) sha1Confirm;
     };

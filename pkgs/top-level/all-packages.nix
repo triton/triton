@@ -3107,13 +3107,13 @@ strace = callPackage ../all-pkgs/s/strace { };
 
 sublime-text = callPackage ../all-pkgs/s/sublime-text { };
 
-subversion_1_9 = callPackage ../all-pkgs/s/subversion {
+subversion_1-9 = callPackage ../all-pkgs/s/subversion {
   channel = "1.9";
 };
-subversion_1_8 = callPackage ../all-pkgs/s/subversion {
+subversion_1-8 = callPackage ../all-pkgs/s/subversion {
   channel = "1.8";
 };
-subversion = callPackageAlias "subversion_1_9" { };
+subversion = callPackageAlias "subversion_1-9" { };
 
 sudo = callPackage ../all-pkgs/s/sudo { };
 

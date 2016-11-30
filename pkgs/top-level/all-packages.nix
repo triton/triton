@@ -3372,6 +3372,8 @@ x265_head = callPackage ../all-pkgs/x/x265 {
 };
 x265 = callPackageAlias "x265_stable" { };
 
+xapian-core = callPackage ../all-pkgs/x/xapian-core { };
+
 xcmiscproto = callPackage ../all-pkgs/x/xcmiscproto { };
 
 xdg-user-dirs = callPackage ../all-pkgs/x/xdg-user-dirs { };

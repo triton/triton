@@ -2587,6 +2587,8 @@ noise = callPackage ../all-pkgs/n/noise { };
 
 nomad = pkgs.goPackages.nomad.bin // { outputs = [ "bin" ]; };
 
+notmuch = callPackage ../all-pkgs/n/notmuch { };
+
 npth = callPackage ../all-pkgs/n/npth { };
 
 nspr = callPackage ../all-pkgs/n/nspr { };

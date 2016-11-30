@@ -1894,6 +1894,8 @@ libcroco = callPackage ../all-pkgs/l/libcroco { };
 
 libcue = callPackage ../all-pkgs/l/libcue { };
 
+libdbi = callPackage ../all-pkgs/l/libdbi { };
+
 libdc1394 = callPackage ../all-pkgs/l/libdc1394 { };
 
 libdrm = callPackage ../all-pkgs/l/libdrm { };

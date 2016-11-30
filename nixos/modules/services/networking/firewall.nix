@@ -460,11 +460,12 @@ in
       options nf_conntrack nf_conntrack_helper=0
     '';
 
-    assertions = [ { assertion = ! cfg.checkReversePath;
-                     message = "This kernel does not support rpfilter"; }
-                   { assertion = cfg.autoLoadConntrackHelpers || kernelCanDisableHelpers;
-                     message = "This kernel does not support disabling conntrack helpers"; }
-                 ];
+    assertions = [
+      {
+        assertion = cfg.autoLoadConntrackHelpers || kernelCanDisableHelpers;
+        message = "This kernel does not support disabling conntrack helpers";
+      }
+    ];
 
     systemd.services.firewall = {
       description = "Firewall";

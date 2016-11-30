@@ -4043,19 +4043,19 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #  # -- Linux kernel expressions ------------------------------------------------
 #
 
-  kernelPatches = callPackage ../os-specific/linux/kernel/patches.nix { };
+  kernelPatches = callPackage ../all-pkgs/l/linux/patches.nix { };
 
-  linux_4_8 = callPackage ../os-specific/linux/kernel {
+  linux_4_8 = callPackage ../all-pkgs/l/linux {
     channel = "4.8";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
-  linux_testing = callPackage ../os-specific/linux/kernel {
+  linux_testing = callPackage ../all-pkgs/l/linux {
     channel = "testing";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
-  linux_bcache = callPackage ../os-specific/linux/kernel {
+  linux_bcache = callPackage ../all-pkgs/l/linux {
     channel = "bcache";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
@@ -4161,7 +4161,7 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
 #  # A function to build a manually-configured kernel
   linuxManualConfig = pkgs.buildLinux;
-  buildLinux = callPackage ../os-specific/linux/kernel/manual-config.nix {};
+  buildLinux = callPackage ../all-pkgs/l/linux/manual-config.nix {};
 #
   kmod-blacklist-ubuntu = callPackage ../os-specific/linux/kmod-blacklist-ubuntu { };
 

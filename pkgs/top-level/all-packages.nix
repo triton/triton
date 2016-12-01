@@ -3188,6 +3188,8 @@ taglib = callPackage ../all-pkgs/t/taglib { };
 
 talloc = callPackage ../all-pkgs/t/talloc { };
 
+task-spooler = callPackage ../all-pkgs/t/task-spooler { };
+
 tcl_8-5 = callPackage ../all-pkgs/t/tcl {
   channel = "8.5";
 };

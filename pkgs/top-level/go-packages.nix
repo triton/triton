@@ -1925,14 +1925,28 @@ let
       protobuf
     ];
     preBuild = ''
+      # Regerate protos
+      srcDir="$(pwd)"/go/src
+      pushd go/src/$goPackagePath >/dev/null
+      find . -name \*pb.go -delete
+      for file in $(find . -name \*.proto | sort | uniq); do
+        pushd "$(dirname "$file")" > /dev/null
+        echo "Regenerating protobuf: $file" >&2
+        protoc -I "$srcDir" -I "$srcDir/$goPackagePath" -I . --go_out=plugins=grpc:. "$(basename "$file")"
+        popd >/dev/null
+      done
+      popd >/dev/null
+
+      # Create a config.h and proper headers
       export COLLECTD_SRC="$(pwd)/collectd-src"
       mkdir -pv "$COLLECTD_SRC"
       tar -vxjf '${pkgs.collectd.src}' -C "$COLLECTD_SRC"
+      srcdir="$(echo "$COLLECTD_SRC"/collectd-*)"
       # Run configure to generate config.h
-      pushd "$COLLECTD_SRC/${pkgs.collectd.name}"
+      pushd "$srcdir" >/dev/null
         ./configure
-      popd
-      export CGO_CPPFLAGS="-I$COLLECTD_SRC/${pkgs.collectd.name}/src/daemon -I$COLLECTD_SRC/${pkgs.collectd.name}/src"
+      popd >/dev/null
+      export CGO_CPPFLAGS="-I$srcdir/src/daemon -I$srcdir/src"
     '';
   };
 

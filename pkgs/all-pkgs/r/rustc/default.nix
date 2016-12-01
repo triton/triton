@@ -4,6 +4,7 @@
 , file
 , python2
 , rustc_bootstrap
+, which
 
 , jemalloc
 , libffi
@@ -33,6 +34,7 @@ stdenv.mkDerivation {
     cmake
     file
     python2
+    which
   ];
 
   buildInputs = [
@@ -51,10 +53,15 @@ stdenv.mkDerivation {
 
   configureFlags = [
     "--disable-docs"
+    "--release-channel=${channel}"
     "--enable-local-rust"
     "--local-rust-root=${rustc_bootstrap}"
     "--llvm-root=${llvm}"
     "--jemalloc-root=${jemalloc}/lib"
+  ];
+
+  buildFlags = [
+    "VERBOSE=1"
   ];
 
   # Fix an issues with gcc6

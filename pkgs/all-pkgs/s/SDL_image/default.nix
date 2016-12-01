@@ -6,6 +6,7 @@
 , libtiff
 , libwebp
 , SDL
+, zlib
 }:
 
 let
@@ -25,6 +26,7 @@ stdenv.mkDerivation {
     libtiff
     libwebp
     SDL
+    zlib
   ];
 
   meta = with stdenv.lib; {

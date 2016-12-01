@@ -3030,7 +3030,9 @@ SDL_image = callPackage ../all-pkgs/s/SDL_1_image { };
 
 SDL_2 = callPackage ../all-pkgs/s/SDL { };
 
-SDL_2_image = callPackage ../all-pkgs/s/SDL_image { };
+SDL_2_image = callPackage ../all-pkgs/s/SDL_image {
+  SDL = pkgs.SDL_2;
+};
 
 sdparm = callPackage ../all-pkgs/s/sdparm { };
 

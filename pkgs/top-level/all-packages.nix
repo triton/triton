@@ -2408,6 +2408,8 @@ mkvtoolnix = callPackage ../all-pkgs/m/mkvtoolnix { };
 
 modemmanager = callPackage ../all-pkgs/m/modemmanager { };
 
+mongo-c-driver = callPackage ../all-pkgs/m/mongo-c-driver { };
+
 mongodb = callPackage ../all-pkgs/m/mongodb { };
 
 mongodb-tools = pkgs.goPackages.mongo-tools.bin // { outputs = [ "bin" ]; };

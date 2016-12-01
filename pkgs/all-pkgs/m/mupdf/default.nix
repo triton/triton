@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , curl
@@ -39,6 +40,14 @@ stdenv.mkDerivation rec {
     xorg.libXext
     xorg.xproto
     zlib
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "ba6793abd1c302421cc24007bf9e8b026d31d33b";
+      file = "m/mupdf/fix-openjpeg.patch";
+      sha256 = "e55c3b876149d46983b155b0a237fa7d8d47a49e4ecab848bfca3fd549c644c4";
+    })
   ];
 
   preBuild = ''

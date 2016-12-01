@@ -1946,6 +1946,8 @@ libfilezilla = callPackage ../all-pkgs/l/libfilezilla { };
 
 libfpx = callPackage ../all-pkgs/l/libfpx { };
 
+libftdi = callPackage ../all-pkgs/l/libftdi { };
+
 libgcrypt = callPackage ../all-pkgs/l/libgcrypt { };
 
 libgd = callPackage ../all-pkgs/l/libgd { };

@@ -4,11 +4,16 @@
 , libusb
 }:
 
+let
+  major = "0.1";
+  patch = "5";
+  version = "${major}.${patch}";
+in
 stdenv.mkDerivation rec {
-  name = "libusb-compat-0.1.5";
+  name = "libusb-compat-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/libusb/${name}.tar.bz2";
+    url = "mirror://sourceforge/libusb/libusb-compat-${major}/${name}/${name}.tar.bz2";
     sha256 = "0nn5icrfm9lkhzw1xjvaks9bq3w6mjg86ggv3fn7kgi4nfvg8kj0";
   };
 

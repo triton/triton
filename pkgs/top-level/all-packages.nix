@@ -1707,6 +1707,8 @@ hunspell = callPackage ../all-pkgs/h/hunspell { };
 
 hwdata = callPackage ../all-pkgs/h/hwdata { };
 
+i2c-tools = callPackage ../all-pkgs/i/i2c-tools { };
+
 iana-etc = callPackage ../all-pkgs/i/iana-etc { };
 
 iasl = callPackage ../all-pkgs/i/iasl { };

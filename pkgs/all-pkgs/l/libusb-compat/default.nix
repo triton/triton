@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     sha256 = "0nn5icrfm9lkhzw1xjvaks9bq3w6mjg86ggv3fn7kgi4nfvg8kj0";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     libusb
   ];
 

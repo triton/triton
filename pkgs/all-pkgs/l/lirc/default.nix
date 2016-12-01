@@ -2,10 +2,14 @@
 , fetchurl
 , help2man
 , libxslt
+, python3Packages
 
 , alsa-lib
+, libftdi
+, libusb-compat
+, linux-headers
 , portaudio
-, python3Packages
+, systemd_lib
 , xorg
 }:
 
@@ -13,6 +17,8 @@ let
   inherit (stdenv.lib)
     optionals
     wtFlag;
+
+  version = "0.9.4c";
 in
 
 # TODO: libirman support
@@ -20,56 +26,59 @@ in
 # TODO: xmode2 support
 # TODO: usb support
 
-assert xorg != null ->
-  xorg.libICE != null
-  && xorg.libSM != null
-  && xorg.libX11 != null;
-
 stdenv.mkDerivation rec {
-  name = "lirc-0.9.3a";
+  name = "lirc-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/lirc/${name}.tar.bz2";
-    sha256 = "08pgfsi40d0iq0xwnfkz53whphcnsx8ycxvp65anzd6vrgv0rzws";
+    url = "mirror://sourceforge/lirc/LIRC/${version}/${name}.tar.bz2";
+    sha256 = "8974fe5dc8eaa717daab6785d2aefeec27615f01ec24b96d31e3381b2f70726a";
   };
-
-  postPatch = ''
-    patchShebangs .
-  '';
 
   nativeBuildInputs = [
     help2man
     libxslt
+    python3Packages.python
+    python3Packages.pyyaml
   ];
 
   buildInputs = [
     alsa-lib
+    libftdi
+    libusb-compat
+    linux-headers
     portaudio
-    python3Packages.python
-    python3Packages.pyyaml
-  ] ++ optionals (xorg != null) [
+    systemd_lib
     xorg.libICE
     xorg.libSM
     xorg.libX11
   ];
 
+  postPatch = ''
+    patchShebangs .
+    sed -i "s,PYTHONPATH=,PYTHONPATH=$(toPythonPath ${python3Packages.pyyaml}):," \
+      doc/Makefile.in
+    sed -i "s,/usr/include/linux,${linux-headers}/include/linux,g" \
+      tools/lirc-make-devinput
+    sed -i 's,/usr/bin/false,false,' configure
+  '';
+
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--with-transmitter"
-    "--enable-sandboxed"
-    "--with-driver=all"
-    (wtFlag "x" (xorg != null) null)
+    "--with-x"
   ];
 
-  makeFlags = [
-    "m4dir=$(out)/m4"
-  ];
+  preBuild = ''
+    makeFlagsArray+=(
+      "m4dir=$out/share/m4"
+    )
+  '';
 
   preInstall = ''
     installFlagsArray+=(
       "sysconfdir=$out/etc"
       "localstatedir=$TMPDIR"
+      "systemdsystemunitdir=$out/lib/systemd/system"
     )
   '';
 
@@ -79,7 +88,9 @@ stdenv.mkDerivation rec {
     description = "Allows to receive and send infrared signals";
     homepage = http://www.lirc.org/;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

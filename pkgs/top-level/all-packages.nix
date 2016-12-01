@@ -1900,6 +1900,8 @@ libcdio = callPackage ../all-pkgs/l/libcdio { };
 
 libclc = callPackage ../all-pkgs/l/libclc { };
 
+libconfuse = callPackage ../all-pkgs/l/libconfuse { };
+
 libcroco = callPackage ../all-pkgs/l/libcroco { };
 
 libcue = callPackage ../all-pkgs/l/libcue { };

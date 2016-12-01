@@ -5,6 +5,7 @@
 , pythonPackages
 
 , aalib
+, alsa-lib
 , atk
 , babl
 , bzip2
@@ -34,8 +35,8 @@
 , pango
 , poppler
 , xorg
+, xz
 , zlib
-, ice
 }:
 
 stdenv.mkDerivation rec {
@@ -55,6 +56,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     aalib
+    alsa-lib
     atk
     babl
     bzip2
@@ -85,12 +87,19 @@ stdenv.mkDerivation rec {
     poppler
     pythonPackages.python
     pythonPackages.pygtk
+    xorg.fixesproto
+    xorg.libICE
+    xorg.libSM
+    xorg.libX11
+    xorg.libXcursor
     xorg.libXext
     xorg.libXfixes
     xorg.libXmu
     xorg.libXpm
+    xorg.libXt
+    xorg.xproto
+    xz
     zlib
-    ice
   ];
 
   pythonPath = [

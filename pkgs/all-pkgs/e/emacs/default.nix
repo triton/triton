@@ -14,12 +14,14 @@
 , gnutls
 , gpm
 , gtk3
+, libjpeg
 , libpng
 , librsvg
 , libtiff
 , libxml2
 , ncurses
 , xorg
+, zlib
 }:
 
 stdenv.mkDerivation rec {
@@ -47,6 +49,7 @@ stdenv.mkDerivation rec {
     gnutls
     gpm
     gtk3
+    libjpeg
     libpng
     librsvg
     libtiff
@@ -57,11 +60,14 @@ stdenv.mkDerivation rec {
     xorg.libSM
     xorg.libX11
     xorg.libXft
+    xorg.libXfixes
     xorg.libXinerama
     xorg.libXpm
     xorg.libXrandr
     xorg.libXrender
+    xorg.libxcb
     xorg.xproto
+    zlib
   ];
 
   configureFlags = [

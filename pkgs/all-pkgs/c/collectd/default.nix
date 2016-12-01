@@ -35,21 +35,38 @@
 , systemd_lib
 , xfsprogs_lib
 , yajl
+
+, type
 }:
 
+let
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
+
+  isBase = type == "base";
+  isPlugins = type == "plugins";
+
+  version = "5.6.2";
+in
+assert isBase || isPlugins;
 stdenv.mkDerivation rec {
-  name = "collectd-5.6.2";
+  name = "collectd-${type}-${version}";
 
   src = fetchurl {
     urls = [
-      "https://storage.googleapis.com/collectd-tarballs/${name}.tar.bz2"
-      "https://github.com/collectd/collectd/releases/download/${name}/${name}.tar.bz2"
+      "https://storage.googleapis.com/collectd-tarballs/collectd-${version}.tar.bz2"
+      ("https://github.com/collectd/collectd/releases/download"
+        + "/collectd-${version}/collectd-${version}.tar.bz2")
     ];
     hashOutput = false;  # Hashes at: https://collectd.org/download.shtml
     sha256 = "cc0b4118a91e5369409ced22d1d8a85c1a400098419414160c1839268ecad0c6";
   };
 
   buildInputs = [
+    libcap
+    libgcrypt
+  ] ++ optionals isPlugins [
     curl
     cyrus-sasl
     gdk-pixbuf
@@ -60,9 +77,7 @@ stdenv.mkDerivation rec {
     iptables
     jdk
     libatasmart
-    libcap
     libdbi
-    libgcrypt
     libmnl
     libnotify
     liboping
@@ -85,6 +100,25 @@ stdenv.mkDerivation rec {
     xfsprogs_lib
     yajl
   ];
+
+  configureFlags = [
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
+  ];
+
+  preInstall = ''
+    installFlagsArray+=(
+      "sysconfdir=$out/etc"
+      "localstatedir=$TMPDIR"
+    )
+  '';
+
+  postInstall = optionalString isBase ''
+    rm -rf "$out/lib/collectd"
+  '' + optionalString isPlugins ''
+    rm -rf "$out"/{bin,etc,include,lib/pkgconfig,sbin,share}
+    rm -rf "$out"/lib/lib*
+  '';
 
   meta = with stdenv.lib; {
     description = "System statistics collection daemon";

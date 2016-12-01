@@ -780,7 +780,13 @@ cogl_1-22 = callPackage ../all-pkgs/c/cogl {
 };
 cogl = callPackageAlias "cogl_1-22" { };
 
-collectd = callPackage ../all-pkgs/c/collectd { };
+collectd_lib = callPackageAlias "collect" { };
+collectd = callPackage ../all-pkgs/c/collectd {
+  type = "base";
+};
+collectd_plugins = callPackage ../all-pkgs/c/collectd {
+  type = "plugins";
+};
 
 colord = callPackage ../all-pkgs/c/colord { };
 

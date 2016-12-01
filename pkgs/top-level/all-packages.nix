@@ -2101,6 +2101,8 @@ libogg = callPackage ../all-pkgs/l/libogg { };
 
 libomxil-bellagio = callPackage ../all-pkgs/l/libomxil-bellagio { };
 
+liboping = callPackage ../all-pkgs/l/liboping { };
+
 libosinfo = callPackage ../all-pkgs/l/libosinfo { };
 
 libossp-uuid = callPackage ../all-pkgs/l/libossp-uuid { };

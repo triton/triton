@@ -18,6 +18,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     mv -v "$out/bin/ts" "$out/bin/task-spooler"
+    ln -sv "$out/bin/task-spooler" "$out/bin/ts"
     rm -rvf "$out/share"
   '';
 

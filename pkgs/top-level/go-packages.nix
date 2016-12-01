@@ -619,6 +619,12 @@ let
     date = "2016-11-25";
     rev = "9636d96501d1d89ea3827c9df770320544399422";
     sha256 = "1z6lvr4nkxyr8mhl0g3i32qlbf8fg8wcxrjyn9jmpvq82liwg056";
+    buildInputs = [
+      elastic_v5
+      toml
+      urfave_cli
+      yaml_v2
+    ];
   };
 
   mitchellh_cli = buildFromGitHub {
@@ -1149,11 +1155,24 @@ let
     version = 2;
     owner = "olivere";
     repo = "elastic";
-    rev = "v5.0.13";
-    sha256 = "17nzfn2jymhld7ij1kczlf5h125hcgm4pqdjajddvfm7xqghykwp";
+    rev = "v3.0.59";
+    sha256 = "dc2549cfdb71d8cbd901d339f3bb8a8844eede858f96842661986e990735aade";
     goPackagePath = "gopkg.in/olivere/elastic.v3";
     propagatedBuildInputs = [
       net
+    ];
+  };
+
+  elastic_v5 = buildFromGitHub {
+    version = 2;
+    owner = "olivere";
+    repo = "elastic";
+    rev = "v5.0.13";
+    sha256 = "dbff20655c7e4d5533dd8048006fa8fda2896b9dcce35a7549d1dc3f3228b3a9";
+    goPackagePath = "gopkg.in/olivere/elastic.v5";
+    propagatedBuildInputs = [
+      net
+      sync
     ];
   };
 
@@ -2990,7 +3009,7 @@ let
       go-bitstream
       go-collectd
       hllpp
-      jwt-go_v2
+      jwt-go
       liner
       pat
       pool_v2
@@ -3134,15 +3153,6 @@ let
     repo = "jwt-go";
     rev = "v3.0.0";
     sha256 = "0llmcxijl24gz6w75il6rnijc9gzda4byl5kwr4qnzpw9j0q87n9";
-  };
-
-  jwt-go_v2 = buildFromGitHub {
-    version = 2;
-    owner = "dgrijalva";
-    repo = "jwt-go";
-    rev = "v2.7.0";
-    sha256 = "bee3aac16ad7dfcf79cac6442ae4ef300698b0b3125026d34c36cd46b27060e6";
-    meta.autoUpdate = false;
   };
 
   gravitational_kingpin = buildFromGitHub {
@@ -4019,6 +4029,9 @@ let
     date = "2016-11-21";
     rev = "d7e6ca3010b6f084d8056847f55d7f572f180678";
     sha256 = "1c4gvmwkkiqyj48hvh7iga3jv3sxdp3wjwjv88qmhsgchbsl5k97";
+    propagatedBuildInputs = [
+      go-runewidth
+    ];
     meta.useUnstable = true;
   };
 

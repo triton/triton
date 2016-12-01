@@ -16,6 +16,11 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=("PREFIX=$out")
   '';
 
+  preFixup = ''
+    mv -v "$out/bin/ts" "$out/bin/task-spooler"
+    rm -rvf "$out/share"
+  '';
+
   meta = with lib; {
     description = "A comfortable way of running batch jobs";
     homepage = http://vicerveza.homeunix.net/~viric/soft/ts/;

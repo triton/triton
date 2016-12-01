@@ -4261,9 +4261,7 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
   mujs = callPackage ../all-pkgs/m/mujs { };
 
-  mupdf = callPackage ../all-pkgs/m/mupdf {
-    openjpeg = pkgs.openjpeg_2-0;
-  };
+  mupdf = callPackage ../all-pkgs/m/mupdf { };
 #
   ncdu = callPackage ../tools/misc/ncdu { };
 #

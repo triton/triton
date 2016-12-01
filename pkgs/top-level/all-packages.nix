@@ -3292,6 +3292,8 @@ unbound = callPackage ../all-pkgs/u/unbound { };
 unicode-character-database =
   callPackage ../all-pkgs/u/unicode-character-database { };
 
+unifi = callPackage ../all-pkgs/u/unifi { };
+
 unixODBC = callPackage ../all-pkgs/u/unixODBC { };
 
 unrar = callPackage ../all-pkgs/u/unrar { };
@@ -4045,8 +4047,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
   softether_4_18 = callPackage ../servers/softether/4.18.nix { };
   softether = callPackageAlias "softether_4_18" { };
-#
-  unifi = callPackage ../servers/unifi { };
 #
   zookeeper = callPackage ../servers/zookeeper { };
 

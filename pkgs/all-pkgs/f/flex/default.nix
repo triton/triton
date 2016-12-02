@@ -1,23 +1,29 @@
 { stdenv
 , bison
 , fetchurl
-, m4
+, gnum4
+
+, bootstrap ? false
 }:
 
 let
+  inherit (stdenv.lib)
+    optionalString;
+
   version = "2.6.4";
 in
 stdenv.mkDerivation rec {
-  name = "flex-${version}";
+  name = "${if bootstrap then "bootstrap-" else ""}flex-${version}";
 
   src = fetchurl {
-    url = "https://github.com/westes/flex/releases/download/v${version}/${name}.tar.gz";
+    url = "https://github.com/westes/flex/releases/download/v${version}/flex-${version}.tar.gz";
+    hashOutput = false;
     sha256 = "e87aae032bf07c26f85ac0ed3250998c37621d95f8bd748b31f15b33c45ee995";
   };
 
   nativeBuildInputs = [
     bison
-    m4
+    gnum4
   ];
 
   # Using static libraries fixes issues with references to
@@ -27,6 +33,12 @@ stdenv.mkDerivation rec {
     "--disable-shared"
   ];
 
+  preFixup = optionalString bootstrap ''
+    find "$out" -not -name bin -and -not -name share -mindepth 1 -maxdepth 1 | xargs -r rm -r
+  '';
+
+  ccFixFlags = !bootstrap;
+  buildDirCheck = !bootstrap;
   disableStatic = false;
 
   meta = with stdenv.lib; {

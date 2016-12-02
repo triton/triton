@@ -1,46 +1,44 @@
 addCmakeParams() {
-    addToSearchPath CMAKE_PREFIX_PATH $1
+  addToSearchPath CMAKE_PREFIX_PATH "$1"
 }
+envHooks+=(addCMakeParams)
 
 fixCmakeFiles() {
-    # Replace occurences of /usr and /opt by /var/empty.
-    echo "fixing cmake files..."
-    find "$1" \( -type f -name "*.cmake" -o -name "*.cmake.in" -o -name CMakeLists.txt \) -print |
-        while read fn; do
-            sed -e 's^/usr\([ /]\|$\)^/var/empty\1^g' -e 's^/opt\([ /]\|$\)^/var/empty\1^g' < "$fn" > "$fn.tmp"
-            mv "$fn.tmp" "$fn"
-        done
+  # Replace occurences of /usr and /opt by /var/empty.
+  echo "fixing cmake files..."
+  find "$1" \( -type f -name "*.cmake" -o -name "*.cmake.in" -o -name CMakeLists.txt \) -print |
+    while read fn; do
+      sed -e 's^/usr\([ /]\|$\)^/var/empty\1^g' -e 's^/opt\([ /]\|$\)^/var/empty\1^g' < "$fn" > "$fn.tmp"
+      mv "$fn.tmp" "$fn"
+    done
 }
 
-cmakeConfigurePhase() {
-    eval "$preConfigure"
+cmakeConfigureAction() {
+  if [ -n "${fixCmake-true}" ]; then
+    fixCmakeFiles "$srcRoot"
+  fi
 
-    if [ -n "${fixCmake-true}" ]; then
-        fixCmakeFiles .
-    fi
+  configureBuildRoot
 
-    if [ -n "${createCmakeBuildDir-true}" ]; then
-      cmakeDir="$(pwd)"
-      mkdir -p $TMPDIR/build
-      cd $TMPDIR/build
-    fi
+  if [ -n "${addPrefix-true}" ]; then
+    cmakeFlagsArray+=("-DCMAKE_INSTALL_PREFIX=$prefix")
+  fi
 
-    if [ -n "${addPrefix-true}" ]; then
-      cmakeFlagsArray+=("-DCMAKE_INSTALL_PREFIX=$prefix")
-    fi
+  # Avoid cmake resetting the rpath of binaries, on make install
+  # And build always Release, to ensure optimisation flags
+  cmakeFlagsArray+=(
+    "-DCMAKE_BUILD_TYPE=Release"
+    "-DCMAKE_SKIP_BUILD_RPATH=ON"
+  )
 
-    # Avoid cmake resetting the rpath of binaries, on make install
-    # And build always Release, to ensure optimisation flags
-    cmakeFlagsArray+=(
-      "-DCMAKE_BUILD_TYPE=Release"
-      "-DCMAKE_SKIP_BUILD_RPATH=ON"
-    )
+  local actualFlags
+  actualFlags=(
+    $cmakeFlags
+    "${cmakeFlagsArray[@]}"
+  )
 
-    echo "cmake flags: $cmakeFlags ${cmakeFlagsArray[@]}"
-
-    cmake ${cmakeDir:-.} $cmakeFlags "${cmakeFlagsArray[@]}"
-
-    eval "$postConfigure"
+  printFlags "cmake"
+  cmake ${cmakeDir:-.} "${actualFlags[@]}"
 }
 
 makeCmakeFindLibs() {
@@ -70,8 +68,8 @@ cmakeAddHookOnce() {
   eval "${hookVar}"'+=("$targetHook")'
 }
 
-if [ -n "${cmakeConfigure-true}" -a -z "$configurePhase" ]; then
-  configurePhase=cmakeConfigurePhase
+if [ -n "${cmakeConfigure-true}" -a "$configureAction" = "autotoolsConfigureAction" ]; then
+  configureAction=cmakeConfigureAction
 fi
 
 cmakeAddHookOnce envHooks addCmakeParams

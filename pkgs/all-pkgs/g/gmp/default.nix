@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, m4
+, gnum4
 }:
 
 let
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    m4
+    gnum4
   ];
 
   configureFlags = [

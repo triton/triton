@@ -28,29 +28,6 @@ runHook() {
   return 0
 }
 
-# Run all hooks with the specified name, until one succeeds (returns a
-# zero exit code). If none succeed, return a non-zero exit code.
-runOneHook() {
-  local hookName="$1"; shift
-  local var="$hookName"
-
-  if [[ "$hookName" =~ Hook$ ]]; then
-    var+='s'
-  else
-    var+='Hooks'
-  fi
-
-  eval "local -a dummy=(\"\${$var[@]}\")"
-
-  for hook in "_callImplicitHook 1 $hookName" "${dummy[@]}"; do
-    if _eval "$hook" "$@"; then
-      return 0
-    fi
-  done
-
-  return 1
-}
-
 # Run the named hook, either by calling the function with that name or
 # by evaluating the variable with that name. This allows convenient
 # setting of hooks both from Nix expressions (as attributes /
@@ -114,7 +91,7 @@ closeNest() {
 ################################ Error handling ################################
 
 exitHandler() {
-  exitCode=$?
+  local exitCode="$?"
   set +e
 
   closeNest
@@ -160,6 +137,54 @@ arrayToDict() {
   while [ "$i" -lt "${#tmp[@]}" ]; do
     eval "$1[\"${tmp[$(( $i - 1 ))]}\"]"='"${tmp[$i]}"'
     i=$(( $i + 2 ))
+  done
+}
+
+# A generic mechanism for running chained hooks to take an input file and
+# apply it over top of the environment.
+# Hooks should manipulate the following local variables to affect execution:
+#   - srcFile: The name of the file
+#   - canApply: Whether or not to finish generating the application command
+#   - cmd: The command which is run to apply to the file
+# Hooks can be set by appending to the ${applyName}CmdGenerator array
+# Examples where this is used can be found in the unpackPhase and patchPhase.
+applyFile() {
+  local applyName="$1"
+  local srcFileOrig="$2"
+
+  local -n generatorArr="${applyName}CmdGenerators"
+
+  local srcFile="$srcFileOrig"
+  local canApply=0
+  local cmd=('cat' "$srcFile")
+  local i=0
+  while [ "$canApply" -ne '1' ] && [ "$i" -lt "${#generatorArr[@]}" ]; do
+    if "${generatorArr[$i]}"; then
+      i=0
+    else
+      i=$(( $i + 1 ))
+    fi
+  done
+
+  if [ "$canApply" -ne '1' ]; then
+    echo "Do not know how to $applyName $srcFile"
+    exit 1
+  fi
+
+  header "${applyName}ing $srcFileOrig" 3
+  eval "${cmd[@]}"
+  stopNest
+}
+
+printFlags() {
+  local phaseName="$1"
+  local -n flagsRef="$2"
+
+  echo "$phaseName flags:"
+
+  local flag
+  for flag in "${flagsRef[@]}"; do
+    echo "  $flag"
   done
 }
 
@@ -216,9 +241,6 @@ substitute() {
     content="${content//"$pattern"/$replacement}"
   done
 
-  if [ -e "$output" ]; then
-    chmod +w "$output"
-  fi
   printf "%s" "$content" > "$output"
 }
 
@@ -314,289 +336,10 @@ _addToCrossEnv() {
 
 ############################### Generic builder ################################
 
-# This function is useful for debugging broken Nix builds.  It dumps
-# all environment variables to a file `env-vars' in the build
-# directory.  If the build fails and the `-K' option is used, you can
-# then go to the build directory and source in `env-vars' to reproduce
-# the environment used for building.
-dumpVars() {
-  if [ -n "${dumpEnvVars-true}" ]; then
-    export > "$NIX_BUILD_TOP/env-vars" || true
-  fi
-}
-
-# Utility function: return the base name of the given path, with the
-# prefix `HASH-' removed, if present.
-stripHash() {
-  strippedName="$(basename "$1")";
-  if echo "$strippedName" | grep -q '^[a-z0-9]\{32\}-'; then
-    strippedName=$(echo "$strippedName" | cut -c34-)
-  fi
-}
-
-_defaultUnpack() {
-  local fn="$1"
-
-  if [ -d "$fn" ]; then
-    stripHash "$fn"
-
-    # We can't preserve hardlinks because they may have been
-    # introduced by store optimization, which might break things
-    # in the build.
-    cp -pr --reflink=auto "$fn" "$strippedName"
-  else
-    case "$fn" in
-      *.tar.brotli | *.tar.bro | *.tar.br)
-        brotli -d < "$fn" | tar x
-        ;;
-      *.tar.xz | *.tar.lzma)
-        # Don't rely on tar knowing about .xz.
-        xz -d < "$fn" | tar x
-        ;;
-      *.tar | *.tar.* | *.tgz | *.tbz2)
-        # GNU tar can automatically select the decompression method
-        # (info "(tar) gzip").
-        tar xf "$fn"
-        ;;
-      *)
-        return 1
-        ;;
-    esac
-  fi
-}
-
-unpackFile() {
-  curSrc="$1"
-  header "unpacking source archive $curSrc" 3
-  if ! runOneHook 'unpackCmd' "$curSrc"; then
-    echo "do not know how to unpack source archive $curSrc"
-    exit 1
-  fi
-  stopNest
-}
-
-unpackPhase() {
-  runHook 'preUnpack'
-
-  if [ -z "$srcs" ]; then
-    if [ -z "$src" ]; then
-      echo 'variable $src or $srcs should point to the source'
-      exit 1
-    fi
-    srcs="$src"
-  fi
-
-  # To determine the source directory created by unpacking the
-  # source archives, we record the contents of the current
-  # directory, then look below which directory got added.  Yeah,
-  # it's rather hacky.
-  local dirsBefore=''
-  for i in *; do
-    if [ -d "$i" ]; then
-      dirsBefore="$dirsBefore $i "
-    fi
-  done
-
-  # Unpack all source archives.
-  for i in $srcs; do
-    unpackFile "$i"
-  done
-
-  # Find the source directory.
-  if [ -n "$setSourceRoot" ]; then
-    runOneHook 'setSourceRoot'
-  elif [ -z "$srcRoot" ]; then
-    srcRoot=
-    for i in *; do
-      if [ -d "$i" ]; then
-        case $dirsBefore in
-          *\ $i\ *)
-            ;;
-          *)
-            if [ -n "$srcRoot" ]; then
-              echo "unpacker produced multiple directories"
-              exit 1
-            fi
-            srcRoot="$i"
-            ;;
-        esac
-      fi
-    done
-  fi
-
-  if [ -z "$srcRoot" ]; then
-    echo "unpacker appears to have produced no directories"
-    exit 1
-  fi
-
-  echo "source root is $srcRoot"
-
-  # By default, add write permission to the sources.  This is often
-  # necessary when sources have been copied from other store
-  # locations.
-  if [ -n "${makeSourcesWritable-true}" ]; then
-    chmod -R u+w "$srcRoot"
-  fi
-
-  runHook 'postUnpack'
-}
-
-patchPhase() {
-  runHook 'prePatch'
-
-  for i in $patches; do
-    header "applying patch $i" '3'
-    local uncompress='cat'
-    case "$i" in
-      *.gz) uncompress='gzip -d' ;;
-      *.bz2) uncompress='bzip2 -d' ;;
-      *.xz) uncompress='xz -d' ;;
-      *.lzma) uncompress='lzma -d' ;;
-    esac
-    # "2>&1" is a hack to make patch fail if the decompressor fails (nonexistent patch, etc.)
-    $uncompress < "$i" 2>&1 | patch ${patchFlags:--p1}
-    stopNest
-  done
-
-  runHook 'postPatch'
-}
-
-libtoolFix() {
-  sed -i -e 's^eval sys_lib_.*search_path=.*^^' "$1"
-}
-
-configurePhase() {
-  runHook 'preConfigure'
-
-  if [ -z "$configureScript" -a -x ./configure ]; then
-    configureScript=./configure
-  fi
-
-  if [ -n "${fixLibtool-true}" ]; then
-    find . -iname "ltmain.sh" | while read i; do
-      echo "fixing libtool script $i"
-      libtoolFix "$i"
-    done
-  fi
-
-  if [ -n "${addPrefix-true}" ]; then
-    configureFlags="${prefixKey:---prefix=}$prefix $configureFlags"
-  fi
-
-  # Add --disable-dependency-tracking to speed up some builds.
-  if [ -n "${addDisableDepTrack-true}" ]; then
-    if grep -q dependency-tracking "$configureScript" 2>/dev/null; then
-      configureFlags="--disable-dependency-tracking $configureFlags"
-    fi
-  fi
-
-  # By default, disable static builds.
-  if [ -n "${disableStatic-true}" ]; then
-    if grep -q enable-static "$configureScript" 2>/dev/null; then
-      configureFlags="--disable-static $configureFlags"
-    fi
-  fi
-
-  if [ -n "$configureScript" ]; then
-    echo "configure flags: $configureFlags ${configureFlagsArray[@]}"
-    $configureScript $configureFlags "${configureFlagsArray[@]}"
-  else
-    echo "no configure script, doing nothing"
-  fi
-
-  runHook 'postConfigure'
-}
-
-commonMakeFlags() {
-  local phaseName
-  phaseName="$1"
-
-  local parallelVar
-  parallelVar="${phaseName}Parallel"
-
-  actualMakeFlags=()
-  if [ -n "$makefile" ]; then
-    actualMakeFlags+=('-f' "$makefile")
-  fi
-  if [ -n "${!parallelVar-true}" ]; then
-    actualMakeFlags+=("-j${NIX_BUILD_CORES}" "-l${NIX_BUILD_CORES}" "-O")
-  fi
-  actualMakeFlags+=("SHELL=$SHELL") # Needed for https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
-  actualMakeFlags+=($makeFlags)
-  actualMakeFlags+=("${makeFlagsArray[@]}")
-  local flagsVar
-  flagsVar="${phaseName}Flags"
-  actualMakeFlags+=(${!flagsVar})
-  local arrayVar
-  arrayVar="${phaseName}FlagsArray[@]"
-  actualMakeFlags+=("${!arrayVar}")
-}
-
-printMakeFlags() {
-  local phaseName
-  phaseName="$1"
-
-  echo "$phaseName flags:"
-
-  local flag
-  for flag in "${actualMakeFlags[@]}"; do
-    echo "  $flag"
-  done
-}
-
-buildPhase() {
-  runHook 'preBuild'
-
-  if [ -z "$makeFlags" ] && ! [ -n "$makefile" -o -e "Makefile" -o -e "makefile" -o -e "GNUmakefile" ]; then
-    echo "no Makefile, doing nothing"
-  else
-    local actualMakeFlags
-    commonMakeFlags 'build'
-    printMakeFlags 'build'
-    make "${actualMakeFlags[@]}"
-  fi
-
-  runHook 'postBuild'
-}
-
-checkPhase() {
-  runHook 'preCheck'
-
-  local actualMakeFlags
-  commonMakeFlags 'check'
-  actualMakeFlags+=(${checkFlags:-VERBOSE=y})
-  actualMakeFlags+=(${checkTarget:-check})
-  printMakeFlags 'check'
-  make "${actualMakeFlags[@]}"
-
-  runHook 'postCheck'
-}
-
-installPhase() {
-  runHook 'preInstall'
-
-  mkdir -p "$prefix"
-
-  local actualMakeFlags
-  commonMakeFlags 'install'
-  actualMakeFlags+=(${installTargets:-install})
-  printMakeFlags 'install'
-  make "${actualMakeFlags[@]}"
-
-  runHook 'postInstall'
-}
-
 # The fixup phase performs generic, package-independent stuff, like
 # stripping binaries, running patchelf and setting
 # propagated-build-inputs.
 fixupPhase() {
-  # Make sure everything is writable so "strip" et al. work.
-  for output in $outputs; do
-    if [ -e "${!output}" ]; then
-      chmod -R u+w "${!output}"
-    fi
-  done
-
   runHook 'preFixup'
 
   # Apply fixup to each output.
@@ -620,9 +363,17 @@ fixupPhase() {
     echo "$propagatedUserEnvPkgs" > "$out/nix-support/propagated-user-env-packages"
   fi
 
-  if [ -n "$setupHook" ]; then
-    mkdir -p "$out/nix-support"
-    substituteAll "$setupHook" "$out/nix-support/setup-hook"
+  if [ "${#setupHook[@]}" -gt '0' ]; then
+    mkdir -p "$out"/nix-support
+    if test -f "$out"/nix-support/setup-hook; then
+      echo "We already have a setup-hook"
+      exit 1
+    fi
+    local setupHook
+    for setupHook in "${setupHooks[@]}"; do
+      substituteAll "$setupHook" setup-hook-tmp
+      cat setup-hook-tmp >> "$out"/nix-support/setup-hook
+    done
   fi
 
   runHook 'postFixup'
@@ -643,52 +394,19 @@ fixupCheckPhase() {
   runHook 'postFixupCheck'
 }
 
-installCheckPhase() {
-  runHook 'preInstallCheck'
+phaseHeader() {
+  local phase="$1"
 
-  local actualMakeFlags
-  commonMakeFlags 'installCheck'
-  actualMakeFlags+=(${installCheckTargets:-installcheck})
-  printMakeFlags 'installCheck'
-  make "${actualMakeFlags[@]}"
-
-  runHook 'postInstallCheck'
-}
-
-distPhase() {
-  runHook 'preDist'
-
-  local actualMakeFlags
-  commonMakeFlags 'dist'
-  actualMakeFlags+=(${distTargets:-dist})
-  printMakeFlags 'dist'
-  make "${actualMakeFlags[@]}"
-
-  if [ "${copyDist-1}" != "1" ]; then
-    mkdir -p "$out/tarballs"
-
-    # Note: don't quote $tarballs, since we explicitly permit
-    # wildcards in there.
-    cp -pvd ${tarballs:-*.tar.*} "$out/tarballs"
+  if [[ "$phase" =~ Phase$ ]]; then
+    phase="${phase:0:-5}"
   fi
 
-  runHook 'postDist'
-}
+  if [ "${#phase}" -gt '20' ]; then
+    echo "Phase name too long: $phase"
+    exit 1
+  fi
 
-showPhaseHeader() {
-  local phase="$1"
-  case "$phase" in
-    'unpackPhase') header 'unpacking sources' ;;
-    'patchPhase') header 'patching sources' ;;
-    'configurePhase') header 'configuring' ;;
-    'buildPhase') header 'building' ;;
-    'checkPhase') header 'running tests' ;;
-    'installPhase') header 'installing' ;;
-    'fixupPhase') header 'post-installation fixup' ;;
-    'fixupCheckPhase') header 'post-installation fixup checks' ;;
-    'installCheckPhase') header 'running install tests' ;;
-    *) header "$phase" ;;
-  esac
+  header "$(printf '########## %-20s %37s ##########\n' "${phase^}" "$name")"
 }
 
 genericBuild() {
@@ -697,59 +415,49 @@ genericBuild() {
     return
   fi
 
-  if [ -n "$phases" ]; then
-    phases=($phases)
-  else
+  # Make our default directory empty and immutable so scripting has
+  # to be more specific about how it operates
+  mkdir -p "$TMPDIR"/empty
+  chattr +i "$TMPDIR"/empty 2>/dev/null || echo "WARNING: Missing chattr"
+  cd "$TMPDIR"/empty
+
+  if [ -z "$buildType" ] || [ "$buildType" = "normal" ]; then
     phases=(
       "${prePhases[@]}"
       'unpackPhase'
       'patchPhase'
-      "${preConfigurePhases[@]}"
       'configurePhase'
-      "${preBuildPhases[@]}"
       'buildPhase'
-      'checkPhase'
-      "${preInstallPhases[@]}"
+      ${doCheck:+checkPhase}
       'installPhase'
-      "${preFixupPhases[@]}"
+      ${doInstallCheck:+installCheckPhase}
       'fixupPhase'
       'fixupCheckPhase'
-      'installCheckPhase'
-      "${preDistPhases[@]}"
-      'distPhase'
       "${postPhases[@]}"
     )
+  elif [ "$buildType" = "dist" ]; then
+    phases=(
+      "${prePhases[@]}"
+      'unpackPhase'
+      'patchPhase'
+      'configurePhase'
+      'distPhase'
+      'fixupPhase'
+      'fixupCheckPhase'
+      "${postPhases[@]}"
+    )
+  else
+    echo "Unsupported build type"
+    exit 1
   fi
 
-  for curPhase in "${phases[@]}"; do
-    if [ "$curPhase" = 'buildPhase' -a -n "$dontBuild" ]; then continue; fi
-    if [ "$curPhase" = 'checkPhase' -a -z "$doCheck" ]; then continue; fi
-    if [ "$curPhase" = 'installPhase' -a -n "$dontInstall" ]; then continue; fi
-    if [ "$curPhase" = 'fixupPhase' -a -n "$dontFixup" ]; then continue; fi
-    if [ "$curPhase" = 'fixupCheckPhase' -a -n "$dontFixupCheck" ]; then continue; fi
-    if [ "$curPhase" = 'installCheckPhase' -a -z "$doInstallCheck" ]; then continue; fi
-    if [ "$curPhase" = 'distPhase' -a -z "$doDist" ]; then continue; fi
-
-    if [ -n "$tracePhases" ]; then
-      echo
-      echo "@ phase-started $out $curPhase"
-    fi
-
-    showPhaseHeader "$curPhase"
-    dumpVars
+  local phase
+  for phase in "${phases[@]}"; do
+    phaseHeader "$phase"
 
     # Evaluate the variable named $curPhase if it exists, otherwise the
     # function named $curPhase.
-    eval "${!curPhase:-$curPhase}"
-
-    if [ "$curPhase" = 'unpackPhase' ]; then
-      cd "${srcRoot:-.}"
-    fi
-
-    if [ -n "$tracePhases" ]; then
-      echo
-      echo "@ phase-succeeded $out $curPhase"
-    fi
+    eval "${!phase:-$phase}"
 
     stopNest
   done
@@ -761,12 +469,12 @@ genericBuild() {
 
 # Array handling, we need to turn some variables into arrays
 prePhases=($prePhases)
-preConfigurePhases=($preConfigurePhases)
-preBuildPhases=($preBuildPhases)
-preInstallPhases=($preInstallPhases)
-preFixupPhases=($preFixupPhases)
-preDistPhases=($preDistPhases)
 postPhases=($postPhases)
+srcs=($srcs $src)
+setupHooks=($setupHooks $setupHook)
+patches=($patches)
+
+arrayToDict patchVars
 
 PATH_DELIMITER=':'
 
@@ -785,11 +493,8 @@ export SOURCE_DATE_EPOCH
 shopt -s nullglob
 
 # Set up the initial path.
-PATH=
+PATH=""
 for i in $initialPath; do
-  if [ "$i" = / ]; then
-    i=
-  fi
   addToSearchPath 'PATH' "$i/bin"
 done
 
@@ -892,8 +597,6 @@ elif [ "$NIX_BUILD_CORES" -le 0 ]; then
 fi
 export NIX_BUILD_CORES
 
-unpackCmdHooks+=('_defaultUnpack')
-
 # Execute the post-hooks.
 runHook 'postHook'
 
@@ -901,5 +604,3 @@ runHook 'postHook'
 # configuration option ‘stdenv.userHook’).  This can be used to set
 # global compiler optimisation flags, for instance.
 runHook 'userHook'
-
-dumpVars

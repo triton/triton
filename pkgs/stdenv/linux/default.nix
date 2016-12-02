@@ -11,51 +11,103 @@
 , config
 }:
 
-# We haven't fleshed out cross compiling yet
-assert targetSystem == hostSystem;
-
 let
+  bootstrapSystem =
+    if [ hostSystem ] == lib.platforms.x86_64-linux ||
+        [ hostSystem ] == lib.platforms.i686-linux then
+      lib.head lib.platforms.i686-linux
+    else
+      throw "Unsupported Configuration";
 
-  bootstrapFiles = import ./bootstrap.nix { inherit lib hostSystem; };
-
-  commonStdenvOptions = {
-    inherit targetSystem hostSystem config;
-    preHook = ''
-      export NIX_ENFORCE_PURITY="''${NIX_ENFORCE_PURITY-1}"
-    '';
+  bootstrap-files = import ./bootstrap.nix {
+    inherit
+      lib;
+    targetSystem = bootstrapSystem;
   };
 
-  bootstrapTools = derivation {
+  bootstrap-tools = (derivation {
     name = "bootstrap-tools";
 
-    builder = bootstrapFiles.busybox;
+    builder = bootstrap-files.busybox;
 
-    args = [ "ash" "-e" ./unpack-bootstrap-tools.sh ];
+    args = [
+      "ash"
+      "-e" ./unpack-bootstrap-tools.sh
+    ];
 
-    tarball = bootstrapFiles.bootstrapTools;
+    tarball = bootstrap-files.bootstrap-tools;
 
-    inherit (bootstrapFiles)
-      langC
-      langCC
+    outputs = [
+      "out"
+      "glibc"
+    ];
+
+    system = bootstrapSystem;
+  }) // {
+    inherit (bootstrap-files)
       isGNU;
-
-    outputs = [ "out" "glibc" ];
-
-    system = hostSystem;
+    libc = bootstrap-tools.glibc;
+    langAda = false;
+    langFortran = false;
+    langJava = false;
+    langGo = false;
+    langVhdl = false;
   };
 
-  bootstrapShell = "${bootstrapTools}/bin/bash";
+  bootstrap-shell = "${bootstrap-tools}/bin/bash";
 
-  commonBootstrapOptions = {
-    shell = bootstrapShell;
-    initialPath = [ bootstrapTools ];
-    extraBuildInputs = [ ];
+  bootstrap-hook = { name, bin, setupHook, extraCmd ? "" }: derivation {
+    name = "bootstrap-tools-${name}";
+
+    builder = bootstrap-shell;
+    bootstrap = bootstrap-tools;
+
+    args = [
+      ./make-bootstrap-hook.sh
+    ];
+
+    inherit
+      bin
+      extraCmd
+      setupHook;
+
+    system = bootstrapSystem;
+  };
+
+  bootstrap-stdenv-tools = derivation {
+    name = "bootstrap-stdenv-tools";
+
+    builder = bootstrap-shell;
+    bootstrap = bootstrap-tools;
+
+    args = [
+      ./make-bootstrap-stdenv-tools.sh
+    ];
+
+    system = bootstrapSystem;
+  };
+
+  commonStdenvOptions = a: a // {
+    inherit
+      config;
+    preHook = (a.preHook or "") + ''
+      export NIX_ENFORCE_PURITY="''${NIX_ENFORCE_PURITY:-1}"
+    '';
+  };
+
+  commonBootstrapOptions = a: a // {
+    shell = bootstrap-shell;
+    initialPath = [
+      bootstrap-stdenv-tools
+    ];
+    extraBuildInputs = [
+      bootstrap-stdenv-tools
+    ];
 
     # We cant patch shebangs or we will retain references to the bootstrap
-    preHook = ''
+    preHook = (a.preHook or "") + ''
       export dontPatchShebangs=1
     '';
-
   };
 
   # This is not a real set of packages or stdenv.
@@ -63,96 +115,272 @@ let
   # first cc-wrapper and fetchurlBoot.
   # This does not provide any actual packages.
   stage0Pkgs = allPackages {
-    inherit targetSystem hostSystem config;
-    stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
-      name = "stdenv-linux-boot-stage0";
+    inherit
+      config;
+    hostSystem = bootstrapSystem;
+    targetSystem = bootstrapSystem;
+
+    stdenv = import ../generic { inherit lib; } (commonStdenvOptions (commonBootstrapOptions {
+      name = "bootstrap-stdenv-linux-stage0";
 
       cc = null;
+      hostSystem = bootstrapSystem;
+      targetSystem = bootstrapSystem;
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage0Pkgs is missing package definition for `${n}`") pkgs) // rec {
-        inherit (pkgs) stdenv fetchTritonPatch gcc;
+        inherit (pkgs)
+          stdenv
+          lib
+          fetchTritonPatch
+          gcc
+          gcc_unwrapped;
 
         fetchurl = pkgs.fetchurl.override {
-          stdenv = stage0Pkgs.stdenv;
-          curl = bootstrapTools;
-          openssl = bootstrapTools;
-          inherit (finalPkgs) gnupg;
+          inherit
+            lib;
+          inherit (finalPkgs)
+            stdenv
+            curl
+            openssl
+            gnupg
+            minisign
+            signify;
         };
 
-        patchelf = stage0Pkgs.stdenv.mkDerivation {
-          name = "patchelf-boot";
-          src = bootstrapTools;
-          installPhase = ''
-            mkdir -p $out/bin
-            ln -s $bootstrapTools/bin/patchelf $out/bin
+        bison = bootstrap-hook {
+          name = "bison";
+          bin = "bison";
+          setupHook = pkgs.bison.setupHook;
+          extraCmd = ''
+            mkdir -p "$out"/share
+            ln -sv "${bootstrap-tools}"/share/bison "$out"/share
           '';
-          setupHook = pkgs.patchelf.setupHook;
-          dontAbsoluteLibtool = true; # Depends on cc not being null
         };
 
-        gcc7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
-          nativeTools = false;
-          nativeLibc = false;
-          cc = bootstrapTools;
-          inherit (bootstrapTools) isGNU;
-          libc = bootstrapTools.glibc;
-          binutils = bootstrapTools;
-          coreutils = bootstrapTools;
-          gnugrep = bootstrapTools;
+        gnumake = bootstrap-hook {
+          name = "gnumake";
+          bin = "make";
+          setupHook = pkgs.gnumake.setupHook;
+        };
+
+        gnupatch = bootstrap-hook {
+          name = "gnupatch";
+          bin = "patch";
+          setupHook = pkgs.gnupatch.setupHook;
+        };
+
+        gnutar = bootstrap-hook {
+          name = "gnutar";
+          bin = "tar";
+          setupHook = pkgs.gnutar.setupHook;
+        };
+
+        xz = bootstrap-hook {
+          name = "xz";
+          bin = "xz";
+          setupHook = pkgs.xz.setupHook;
+        };
+
+        gcc_unwrapped_7 = bootstrap-tools;
+
+        gcc_7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           name = "bootstrap-cc-wrapper-stage0";
-          stdenv = stage0Pkgs.stdenv;
+          impureLibc = null;
+          impurePrefix = null;
+          cc = gcc_unwrapped_7;
+          libc = bootstrap-tools.glibc;
+          binutils = bootstrap-tools;
+          coreutils = bootstrap-tools;
+          inherit
+            stdenv
+            lib;
         };
       };
-    });
+    }));
   };
 
-  # This is the first package set and real stdenv using only the bootstrap tools
-  # for building.
-  # This stage is used for building the final glibc and linux-headers.
+  # This is the first package set which builds the cross toolchain
+  # and any packages not needing the target compiler
+  # This is primarily for building binutils
   stage1Pkgs = allPackages {
-    inherit targetSystem hostSystem config;
-    stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
-      name = "stdenv-linux-boot-stage1";
+    inherit
+      config;
+    hostSystem = bootstrapSystem;
+    targetSystem = bootstrapSystem;
+
+    stdenv = import ../generic { inherit lib; } (commonStdenvOptions (commonBootstrapOptions {
+      name = "bootstrap-stdenv-linux-stage1";
+
       cc = stage0Pkgs.gcc;
-      extraBuildInputs = [ stage0Pkgs.patchelf ];
+      hostSystem = bootstrapSystem;
+      targetSystem = bootstrapSystem;
+
 
       extraAttrs = {
         # stdenv.libc is used by GCC build to figure out the system-level
         # /usr/include directory.
-        libc = bootstrapTools.glibc;
+        libc = stage1Pkgs.stdenv.cc.libc;
       };
 
-      overrides = pkgs: (lib.mapAttrs (n: _: throw "stage1Pkgs is missing package definition for `${n}`") pkgs) // {
-        inherit (pkgs) stdenv glibc linux-headers_4-4 linux-headers;
+      overrides = pkgs: (lib.mapAttrs (n: _: throw "stage1Pkgs is missing package definition for `${n}`") pkgs) // rec {
+        inherit (pkgs)
+          stdenv
+          lib
+          gcc
+          gcc_unwrapped;
 
-        gcc7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
-          nativeTools = false;
-          nativeLibc = false;
-          cc = bootstrapTools;
-          isGNU = true; # Using glibc
-          libc = stage1Pkgs.glibc;
-          binutils = bootstrapTools;
-          coreutils = bootstrapTools;
-          gnugrep = bootstrapTools;
-          name = "bootstrap-cc-wrapper-stage1";
-          stdenv = stage0Pkgs.stdenv;
+        gcc_unwrapped_7 = pkgs.gcc_unwrapped_7.override {
+          bootstrap = true;
+          outputSystem = hostSystem;
         };
 
-        # These are only needed to evaluate
-        inherit (stage0Pkgs) fetchurl fetchTritonPatch patchelf;
-        inherit (pkgs) gcc;
-        bison = null;
+        gcc_7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+          impureLibc = null;
+          impurePrefix = null;
+          cc = gcc_unwrapped_7;
+          libc = glibc;
+          binutils = binutils;
+          coreutils = bootstrap-tools;
+          name = "bootstrap-cc-wrapper-stage1";
+          inherit
+            stdenv
+            lib;
+        };
+
+        # Only the sources of these packages should be used by gcc
+        inherit (pkgs)
+          gmp
+          isl
+          isl_0-18
+          mpc
+          mpfr;
+
+        # These should not be used outside of the bootstrapping binutils / gcc
+        inherit (bootstrap-tools)
+          glibc;
+        inherit (stage0Pkgs)
+          fetchurl
+          fetchTritonPatch
+          gnumake
+          gnupatch
+          gnutar
+          xz;
+        inherit (pkgs)
+          autotools;
+        binutils = pkgs.binutils.override {
+          bootstrap = true;
+          outputSystem = hostSystem;
+        };
       };
-    });
+    }));
+  };
+
+  # This is the second cross compile stage
+  # We use this for building glibc used in the rest of the cross compile stage
+  stage2Pkgs = allPackages {
+    inherit
+      config;
+    hostSystem = bootstrapSystem;
+    targetSystem = hostSystem;
+
+    stdenv = import ../generic { inherit lib; } (commonStdenvOptions (commonBootstrapOptions {
+      name = "bootstrap-stdenv-linux-stage2";
+
+      cc = stage1Pkgs.gcc;
+      hostSystem = bootstrapSystem;
+      targetSystem = hostSystem;
+
+      extraAttrs = {
+        # stdenv.libc is used by GCC build to figure out the system-level
+        # /usr/include directory.
+        libc = stage2Pkgs.stdenv.cc.libc;
+      };
+
+      overrides = pkgs: (lib.mapAttrs (n: _: throw "stage2Pkgs is missing package definition for `${n}`") pkgs) // rec {
+        inherit (pkgs)
+          stdenv
+          lib
+          gcc
+          gcc_unwrapped
+          linux-headers
+          linux-headers_4-9;
+
+        glibc = pkgs.glibc.override {
+          bootstrap = true;
+        };
+
+        gcc_unwrapped_7 = bootstrap-tools;
+
+        gcc_7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+          impureLibc = null;
+          impurePrefix = null;
+          cc = gcc_unwrapped_7;
+          libc = glibc;
+          binutils = binutils;
+          coreutils = bootstrap-tools;
+          gnugrep = bootstrap-tools;
+          name = "bootstrap-cc-wrapper-stage1";
+          inherit stdenv;
+        };
+
+        # These should not be used outside of the bootstrapping binutils / gcc
+        inherit (stage0Pkgs)
+          fetchurl
+          fetchTritonPatch;
+        inherit (stage1Pkgs)
+          binutils;
+      };
+    }));
+  };
+
+  # This is the first package set and real stdenv using only the bootstrap tools
+  # for building.
+  # This stage is used for building the bootstrap libc.
+  stage3Pkgs = allPackages {
+    inherit targetSystem hostSystem config;
+    stdenv = import ../generic { inherit lib; } (commonStdenvOptions (commonBootstrapOptions {
+      name = "bootstrap-stdenv-linux-stage3";
+      cc = stage2Pkgs.gcc;
+      extraBuildInputs = [
+        stage0Pkgs.patchelf
+      ];
+
+      extraAttrs = {
+        # stdenv.libc is used by GCC build to figure out the system-level
+        # /usr/include directory.
+        libc = stage3Pkgs.stdenv.cc.libc;
+      };
+
+      overrides = pkgs: (lib.mapAttrs (n: _: throw "stage3Pkgs is missing package definition for `${n}`") pkgs) // rec {
+        inherit (pkgs) stdenv gcc gcc_unwrapped glibc;
+
+        gcc_7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+          nativeLibc = null;
+          nativePrefix = null;
+          cc = gcc_unwrapped_7;
+          libc = glibc;
+          binutils = binutils;
+          coreutils = bootstrap-tools;
+          gnugrep = bootstrap-tools;
+          name = "bootstrap-cc-wrapper-stage2";
+          inherit stdenv;
+        };
+
+        # These should not be used outside of this stage
+        inherit (stage0Pkgs) fetchurl fetchTritonPatch;
+        inherit (stage1Pkgs) binutils linux-headers linux-headers_4-4;
+        inherit (stage2Pkgs) gcc_unwrapped_7;
+      };
+    }));
   };
 
   # This is the second package set using the final glibc and bootstrap tools.
   # This stage is used for building the final gcc, which, and gnum4.
   # Propagates stage1 glibc and linux-headers.
-  stage2Pkgs = allPackages rec {
+  stage5Pkgs = allPackages rec {
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
-      name = "stdenv-linux-boot-stage2";
+      name = "bootstrap-stdenv-linux-stage2";
       cc = stage1Pkgs.gcc;
       extraBuildInputs = [ stage0Pkgs.patchelf ];
 
@@ -163,8 +391,8 @@ let
       };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage2Pkgs is missing package definition for `${n}`") pkgs) // {
-        inherit (stage1Pkgs) glibc linux-headers_4-4 linux-headers;
-        inherit (pkgs) stdenv gnum4 m4 which gettext elfutils gcc isl;
+        inherit (stage1Pkgs) glibc linux-headers;
+        inherit (pkgs) stdenv gnum4 which gettext elfutils gcc;
         bzip2 = pkgs.bzip2.override { static = true; shared = false; };
         libelf = pkgs.libelf.override { static = true; shared = false; };
         gmp = pkgs.gmp.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
@@ -179,22 +407,21 @@ let
           nativeLibc = false;
           cc = pkgs.gcc7.cc.override {
             shouldBootstrap = true;
-            libPathExcludes = [ "${bootstrapTools}/lib"];
+            libPathExcludes = [ "${bootstrap-tools}/lib"];
           };
-          isGNU = true; # Using glibc
           libc = stage1Pkgs.glibc;
-          binutils = bootstrapTools;
-          coreutils = bootstrapTools;
-          gnugrep = bootstrapTools;
+          binutils = bootstrap-tools;
+          coreutils = bootstrap-tools;
+          gnugrep = bootstrap-tools;
           name = "bootstrap-cc-wrapper-stage2";
           stdenv = stage0Pkgs.stdenv;
         };
 
         # These are only needed to evaluate
         inherit (stage0Pkgs) fetchurl fetchTritonPatch patchelf;
-        coreutils = bootstrapTools;
-        binutils = bootstrapTools;
-        gnugrep = bootstrapTools;
+        coreutils = bootstrap-tools;
+        binutils = bootstrap-tools;
+        gnugrep = bootstrap-tools;
         perl = null;
         texinfo = null;
       };
@@ -204,7 +431,7 @@ let
 
   # This is the third package set using the final gcc, glibc and bootstrap tools.
   # This stage is used for building the final versions of all stdenv utilities.
-  stage3Pkgs = allPackages rec {
+  stage10Pkgs = allPackages rec {
     inherit targetSystem hostSystem config;
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage3";
@@ -231,7 +458,6 @@ let
           nativeTools = false;
           nativeLibc = false;
           cc = stage2Pkgs.gcc7.cc;
-          isGNU = true; # Using glibc
           libc = stage1Pkgs.glibc;
           binutils = stage3Pkgs.binutils;
           coreutils = stage3Pkgs.coreutils;
@@ -313,5 +539,5 @@ let
     inherit targetSystem hostSystem config stdenv;
   };
 in {
-  inherit bootstrapTools stage0Pkgs stage1Pkgs stage2Pkgs stage3Pkgs stdenv;
+  inherit bootstrap-tools stage0Pkgs stage1Pkgs stage2Pkgs stage3Pkgs stdenv;
 }

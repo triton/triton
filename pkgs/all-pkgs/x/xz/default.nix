@@ -1,8 +1,13 @@
 { stdenv
 , fetchurl
+
+, threads ? true
 }:
 
 let
+  inherit (stdenv.lib)
+    optionals;
+
   tarballUrls = version: [
     "https://tukaani.org/xz/xz-${version}.tar.xz"
   ];
@@ -24,9 +29,15 @@ stdenv.mkDerivation rec {
     unset CONFIG_SHELL
   '';
 
+  configureFlags = optionals (!threads) [
+    "--enable-threads=no"
+  ];
+
   postInstall = ''
     rm -rf $out/share/doc
   '';
+
+  setupHook = ./setup-hook.sh;
 
   disableStatic = false;
 

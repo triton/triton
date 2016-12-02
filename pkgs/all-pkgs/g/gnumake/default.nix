@@ -30,6 +30,8 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  setupHook = ./setup-hook.sh;
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

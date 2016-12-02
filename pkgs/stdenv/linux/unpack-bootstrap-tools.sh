@@ -1,29 +1,43 @@
+set -x
+set -e
+
 # Unpack the bootstrap tools tarball.
-echo Unpacking the bootstrap tools...
-$builder mkdir $out
-< $tarball $builder unxz | $builder tar x -C $out
+"$builder" mkdir "$out"
+"$builder" unxz <"$tarball" | "$builder" tar x -C "$out"
 
-# Set the ELF interpreter / RPATH in the bootstrap binaries.
-echo Patching the bootstrap tools...
+LD_BINARY="$out"/lib/ld-*so
 
-LD_BINARY=$out/lib/ld-*so
+# Keep a copy of libs so we don't patchelf the running patchelf
+LD_LIBRARY_PATH="$out"/lib $LD_BINARY "$out"/bin/cp "$out"/lib/*.so* "$NIX_BUILD_TOP"
 
-# On x86_64, ld-linux-x86-64.so.2 barfs on patchelf'ed programs.  So
-# use a copy of patchelf.
-LD_LIBRARY_PATH=$out/lib $LD_BINARY $out/bin/cp $out/bin/patchelf $out/lib/*.so* .
-
-for i in $out/bin/* $out/libexec/gcc/*/*/*; do
-  if [ -L "$i" ]; then continue; fi
-  if [ -z "${i##*/liblto*}" ]; then continue; fi
-  echo patching "$i"
-  LD_LIBRARY_PATH=. ./ld-*so ./patchelf --set-interpreter $LD_BINARY --set-rpath $out/lib --force-rpath "$i"
+# Patch all of the runnable binaries
+for i in "$out"/bin/* "$out"/libexec/gcc/*/*/*; do
+  if [ -L "$i" ]; then
+    continue
+  fi
+  if [ -z "${i##*/liblto*}" ]; then
+    continue
+  fi
+  if LD_LIBRARY_PATH="$NIX_BUILD_TOP" "$NIX_BUILD_TOP"/ld-*so "$out"/bin/awk \
+      '{ exit match($0, /\x7f\x45\x4c\x46/); }' "$i"; then
+    continue
+  fi
+  LD_LIBRARY_PATH="$NIX_BUILD_TOP" "$NIX_BUILD_TOP"/ld-*so "$out"/libexec/patchelf \
+    --set-interpreter $LD_BINARY --set-rpath "$out"/lib --force-rpath "$i"
 done
 
-for i in $out/lib/lib*.so*; do
-  if [ -L "$i" ]; then continue; fi
-  echo patching "$i"
-  LD_LIBRARY_PATH=. ./ld-*so ./patchelf --set-rpath $out/lib --force-rpath "$i" || true
+# Patch all of the shared objects
+for i in "$out"/lib/lib*.so*; do
+  if [ -L "$i" ]; then
+    continue
+  fi
+  LD_LIBRARY_PATH="$NIX_BUILD_TOP" "$NIX_BUILD_TOP"/ld-*so "$out"/libexec/patchelf \
+    --set-rpath "$out"/lib --force-rpath "$i" || true
 done
+export PATH=$out/bin
+
+# Remove the patchelf as we no longer need it
+rm "$out"/libexec/patchelf
 
 # Fix the libc linker script.
 export PATH=$out/bin
@@ -33,25 +47,6 @@ for file in "$out"/lib/*; do
     mv "$file.tmp" "$file"
   fi
 done
-
-# Provide some additional symlinks.
-ln -s bash $out/bin/sh
-ln -s bzip2 $out/bin/bunzip2
-
-# Provide a gunzip script.
-cat > $out/bin/gunzip <<EOF
-#!$out/bin/sh
-exec $out/bin/gzip -d "\$@"
-EOF
-chmod +x $out/bin/gunzip
-
-# Provide fgrep/egrep.
-echo "#! $out/bin/sh" > $out/bin/egrep
-echo "exec $out/bin/grep -E \"\$@\"" >> $out/bin/egrep
-echo "#! $out/bin/sh" > $out/bin/fgrep
-echo "exec $out/bin/grep -F \"\$@\"" >> $out/bin/fgrep
-
-chmod +x $out/bin/egrep $out/bin/fgrep
 
 # Create a separate glibc
 mkdir -p $glibc

@@ -231,6 +231,7 @@ let
       (removeAttrs attrs [
         "meta"
         "passthru"
+        "patchVars"
         "crossAttrs"
         "pos"
         "__impureHostDeps"
@@ -258,8 +259,7 @@ let
       system = result.system;
       userHook = config.stdenv.userHook or null;
       __ignoreNulls = true;
-
-      extraCCFlags = true;
+      patchVars = dictToArray (attrs.patchVars or { });
 
       # Inputs built by the cross compiler.
       buildInputs =
@@ -326,7 +326,17 @@ let
 
       args = [ "-e" ./builder.sh ];
 
-      setup = setupScript;
+      setup = [
+        setupScript
+        ./lib/50-build.sh
+        ./lib/50-dist.sh
+        ./lib/50-check.sh
+        ./lib/50-install.sh
+        ./lib/50-install-check.sh
+        ./lib/50-configure.sh
+        ./lib/50-patch.sh
+        ./lib/50-unpack.sh
+      ];
 
       inherit
         preHook

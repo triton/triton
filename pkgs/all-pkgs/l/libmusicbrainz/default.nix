@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
     neon
   ];
 
-  createCmakeBuildDir = false;
+  createBuildRoot = false;
 
   meta = with stdenv.lib; {
     description = "MusicBrainz Client Library";

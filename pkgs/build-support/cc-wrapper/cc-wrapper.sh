@@ -1,19 +1,30 @@
 #! @shell@ -e
 path_backup="$PATH"
 if [ -n "@coreutils@" ]; then
-  PATH="@coreutils@/bin:@gnugrep@/bin"
+  PATH="@coreutils@/bin"
+fi
+
+if [ "${ccFixFlags-$NIX_ENFORCE_PURITY}" = "1" ]; then
+  ccFixFlags=1
 fi
 
 if [ -n "$NIX_CC_WRAPPER_START_HOOK" ]; then
-    source "$NIX_CC_WRAPPER_START_HOOK"
+  source "$NIX_CC_WRAPPER_START_HOOK"
 fi
 
 if [ -z "$NIX_CC_WRAPPER_FLAGS_SET" ]; then
-    source @out@/nix-support/add-flags.sh
+  source @out@/nix-support/add-flags.sh
 fi
 
 source @out@/nix-support/utils.sh
 
+if [ -n "$NIX_DEBUG" ]; then
+  echo "ccFixFlags: ${ccFixFlags:-0}" >&2
+  echo "original flags to @prog@:" >&2
+  for i in "$@"; do
+    echo "  $i" >&2
+  done
+fi
 
 # Figure out if linker flags should be passed.  GCC prints annoying
 # warnings when they are not needed.
@@ -23,31 +34,27 @@ getVersion=0
 nonFlagArgs=0
 
 for i in "$@"; do
-    if [ "$i" = -c ]; then
-        dontLink=1
-    elif [ "$i" = -shared ]; then
-        shared=1
-    elif [ "$i" = -S ]; then
-        dontLink=1
-    elif [ "$i" = -E ]; then
-        dontLink=1
-    elif [ "$i" = -E ]; then
-        dontLink=1
-    elif [ "$i" = -M ]; then
-        dontLink=1
-    elif [ "$i" = -MM ]; then
-        dontLink=1
-    elif [ "$i" = -x ]; then
-        # At least for the cases c-header or c++-header we should set dontLink.
-        # I expect no one use -x other than making precompiled headers.
-        dontLink=1
-    elif [ "${i:0:1}" != - ]; then
-        nonFlagArgs=1
-    elif [ "$i" = -m32 ]; then
-        if [ -e @out@/nix-support/dynamic-linker-m32 ]; then
-            NIX_LDFLAGS="$NIX_LDFLAGS -dynamic-linker $(cat @out@/nix-support/dynamic-linker-m32)"
-        fi
-    fi
+  if [ "$i" = -c ]; then
+    dontLink=1
+  elif [ "$i" = -shared ]; then
+    shared=1
+  elif [ "$i" = -S ]; then
+    dontLink=1
+  elif [ "$i" = -E ]; then
+    dontLink=1
+  elif [ "$i" = -E ]; then
+    dontLink=1
+  elif [ "$i" = -M ]; then
+    dontLink=1
+  elif [ "$i" = -MM ]; then
+    dontLink=1
+  elif [ "$i" = -x ]; then
+    # At least for the cases c-header or c++-header we should set dontLink.
+    # I expect no one use -x other than making precompiled headers.
+    dontLink=1
+  elif [ "${i:0:1}" != - ]; then
+     nonFlagArgs=1
+  fi
 done
 
 # If we pass a flag like -Wl, then gcc will call the linker unless it
@@ -62,61 +69,71 @@ fi
 params=("$@")
 new_params=()
 
-if [ "${optFlags-$extraCCFlags}" = "1" ]; then
+if [ "${optFlags-$ccFixFlags}" = "1" ]; then
   new_params+=(@optFlags@)
 fi
 
-if [ "${pie-$extraCCFlags}" ] && [ "$dontLink" != "1" ] && [ "$shared" = "1" ]; then
+if [ "${ccPie-$ccFixFlags}" ] && [ "$dontLink" != "1" ] && [ "$shared" = "1" ]; then
   new_params+=("-pie")
 fi
 
-if [ "${fpic-$extraCCFlags}" ]; then
+if [ "${ccFpic-$ccFixFlags}" ]; then
   new_params+=("-fPIC")
 fi
 
-if [ "${noStrictOverflow-$extraCCFlags}" = "1" ]; then
+if [ "${ccNoStrictOverflow-$ccFixFlags}" = "1" ]; then
   new_params+=("-fno-strict-overflow")
 fi
 
-if [ "${fortifySource-$extraCCFlags}" = "1" ]; then
+if [ "${ccFortifySource-$ccFixFlags}" = "1" ]; then
   new_params+=("-D_FORTIFY_SOURCE=2")
 fi
 
-if [ "${stackProtector-$extraCCFlags}" = "1" ]; then
+if [ "${ccStackProtector-$ccFixFlags}" = "1" ]; then
   new_params+=("-fstack-protector-strong")
 fi
 
-if [ "${optimize-$extraCCFlags}" = "1" ]; then
+if [ "${ccOptimize-$ccFixFlags}" = "1" ]; then
   new_params+=("-O2")
+fi
+
+if [ "${ccDebug}" = "1" ]; then
+  new_params+=("-g")
 fi
 
 # Remove any flags which may interfere with hardening
 for (( i = 0; i < "${#params[@]}"; i++ )); do
   param="${params[$i]}"
-  if [ "${fortifySource-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-D_FORTIFY_SOURCE ]]; then
+  if [ "$ccFixFlags" = "1" ] && [[ "${param}" =~ ^-m(arch|tune|cpu)=native$ ]]; then
     continue
   fi
-  if [ "${stackProtector-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f.*strict-overflow ]]; then
+  if [ "$ccFixFlags" = "1" ] && [[ "${param}" =~ ^-g ]]; then
     continue
   fi
-  if [ "${stackProtector-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f.*stack-protector.* ]]; then
+  if [ "${ccFortifySource-$ccFixFlags}" = "1" ] && [[ "${param}" =~ ^-(U|D)_FORTIFY_SOURCE ]]; then
     continue
   fi
-  if [[ "${param}" =~ ^-m(arch|tune)=native$ ]]; then
+  if [ "${ccNoStrictOverflow-$ccFixFlags}" = "1" ] && [[ "${param}" =~ ^-f(|no-)strict-overflow ]]; then
     continue
   fi
-  if [ "${fpic-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-f(pic|PIC|pie|PIE)$ ]]; then
+  if [ "${ccStackProtector-$ccFixFlags}" = "1" ] && [[ "${param}" =~ ^-f(|no-)stack-protector.* ]]; then
     continue
   fi
-  if [ "${optimize-$extraCCFlags}" = "1" ] && [[ "${param}" =~ ^-O([0-9]|s|g|fast)$ ]]; then
+  if [ "${ccFpic-$ccFixFlags}" = "1" ] && [[ "${param}" =~ ^-f(|no-)(pic|PIC) ]]; then
+    continue
+  fi
+  if [ "${ccPie-$ccFixFlags}" = "1" ] && [[ "${param}" =~ ^-f(|no-)(pie|PIE)$ ]]; then
+    continue
+  fi
+  if [ "${ccOptimize-$ccFixFlags}" = "1" ] && [[ "${param}" =~ ^-O([0-9]|s|g|fast)$ ]]; then
     continue
   fi
   new_params+=("${param}")
 done
 params=("${new_params[@]}")
 
-# Optionally filter out paths not refering to the store.
-if [ "$NIX_ENFORCE_PURITY" = 1 -a -n "$NIX_STORE" ]; then
+# Optionally filter out paths that are bad.
+if [ -n "$NIX_STORE" ]; then
     rest=()
     n=0
     while [ $n -lt ${#params[*]} ]; do
@@ -133,7 +150,7 @@ if [ "$NIX_ENFORCE_PURITY" = 1 -a -n "$NIX_STORE" ]; then
         elif [ "$p" = -isystem ] && badPath "$p2"; then
             n=$((n + 1)); skip $p2
         else
-            rest=("${rest[@]}" "$p")
+            rest+=("$p")
         fi
         n=$((n + 1))
     done
@@ -146,14 +163,22 @@ if [ "$NIX_ENFORCE_PURITY" = 1 ]; then
     echo "Missing NIX_BUILD_TOP" >&2
     exit 1
   fi
-  params+=("-fdebug-prefix-map=$NIX_BUILD_TOP=/no-such-path")
+  if [ "${ccDebugMap-$ccFixFlags}" = "1" ]; then
+    params+=("-fdebug-prefix-map=$NIX_BUILD_TOP=/no-such-path")
+  fi
 fi
 
 if [[ "@prog@" = *++ ]]; then
-    if  echo "$@" | grep -qv -- -nostdlib; then
-        NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE ${NIX_CXXSTDLIB_COMPILE-@default_cxx_stdlib_compile@}"
-        NIX_CFLAGS_LINK="$NIX_CFLAGS_LINK $NIX_CXXSTDLIB_LINK"
+  using_stdlib=1
+  for arg in "$@"; do
+    if [ "$arg" = "-nostdlib" ]; then
+      using_stdlib=0
     fi
+  done
+  if [ "$using_stdlib" -eq "1" ]; then
+    NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE ${NIX_CXXSTDLIB_COMPILE-@default_cxx_stdlib_compile@}"
+    NIX_CFLAGS_LINK="$NIX_CFLAGS_LINK $NIX_CXXSTDLIB_LINK"
+  fi
 fi
 
 # Add the flags for the C compiler proper.
@@ -162,23 +187,23 @@ extraBefore=()
 
 
 if [ "$dontLink" != 1 ]; then
-    # Add the flags that should only be passed to the compiler when
-    # linking.
-    extraAfter+=($NIX_CFLAGS_LINK)
+  # Add the flags that should only be passed to the compiler when
+  # linking.
+  extraAfter+=($NIX_CFLAGS_LINK)
 
-    # Add the flags that should be passed to the linker (and prevent
-    # `ld-wrapper' from adding NIX_LDFLAGS again).
-    for i in $NIX_LDFLAGS_BEFORE; do
-        extraBefore=(${extraBefore[@]} "-Wl,$i")
-    done
-    for i in $NIX_LDFLAGS; do
-        if [ "${i:0:3}" = -L/ ]; then
-            extraAfter+=("$i")
-        else
-            extraAfter+=("-Wl,$i")
-        fi
-    done
-    export NIX_LDFLAGS_SET=1
+  # Add the flags that should be passed to the linker (and prevent
+  # `ld-wrapper' from adding NIX_LDFLAGS again).
+  for i in $NIX_LDFLAGS_BEFORE; do
+    extraBefore+=("-Wl,$i")
+  done
+  for i in $NIX_LDFLAGS; do
+    if [ "${i:0:3}" = -L/ ]; then
+      extraAfter+=("$i")
+    else
+      extraAfter+=("-Wl,$i")
+    fi
+  done
+  export NIX_LDFLAGS_SET=1
 fi
 
 # As a very special hack, if the arguments are just `-v', then don't
@@ -192,7 +217,7 @@ fi
 
 # Optionally print debug info.
 if [ -n "$NIX_DEBUG" ]; then
-  echo "original flags to @prog@:" >&2
+  echo "new flags to @prog@:" >&2
   for i in "${params[@]}"; do
       echo "  $i" >&2
   done

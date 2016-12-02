@@ -1,5 +1,5 @@
 { lib
-, hostSystem
+, targetSystem
 }:
 
 let
@@ -12,43 +12,22 @@ let
       inherit sha256 executable;
     };
 in
-if [ hostSystem ] == lib.platforms.x86_64-linux then {
+if [ targetSystem ] == lib.platforms.i686-linux then {
   busybox = makeUrls {
     file = "bootstrap-busybox";
-    nix-hash = "84md38hwv6v4vy0g7cdccnw4x87nkf6i";
-    multihash = "QmQ5isT1tEmJhuQ6KNPdtamANEcppBDhv3EyAZE7PHYj1p";
-    sha256 = "0ks3flp1kl2dgakzmrj2rw81r54j7wkbm2g176lqki1syzi9wd1c";
+    nix-hash = "chipd0431kk7rs4n0qjdjlkq0g0chvk5";
+    multihash = "QmbZdPv27g6b3oKwoGKKK94wZm5y7JsCd2e29oiAYGev9f";
+    sha256 = "1j0vjxwj84j6f1iyi4j2ps6pnbycw3c99z161fj19727kyvajj02";
     executable = true;
   };
 
-  bootstrapTools = makeUrls {
+  bootstrap-tools = makeUrls {
     file = "bootstrap-tools.tar.xz";
-    nix-hash = "84md38hwv6v4vy0g7cdccnw4x87nkf6i";
-    multihash = "QmVwrewK92FSgVPkbHbSL7V4UnYfyVvjA9mWkfJAudvGDH";
-    sha256 = "f11d55d5cf13189186c9dab09d887a14dd8a6c749178bbcad634b6cfbece92a8";
+    nix-hash = "chipd0431kk7rs4n0qjdjlkq0g0chvk5";
+    multihash = "Qmf3ZLJTsBUp24eLxtZo9o79wv4x8KuYabtepAuR5soiVj";
+    sha256 = "1mxsc3am1fdmpi4izzashmphm3abl6zhs5irr8yh4nx5cxyy791h";
   };
 
-  langC = true;
-  langCC = true;
-  isGNU = true;
-} else if [ hostSystem ] == lib.platforms.i686-linux then {
-  busybox = makeUrls {
-    file = "bootstrap-busybox";
-    nix-hash = "794m4bqyvkniwy14axhbvvlwn0nfkvgg";
-    multihash = "Qma8NRuL2omkHsjqYv7wYFqYJ5gVFsxe3C73iVpzQEKREV";
-    sha256 = "0m2jamdl5q86p7540g5bsb9g9dgxr3nq4a75rzchlm8ich6cljca";
-    executable = true;
-  };
-
-  bootstrapTools = makeUrls {
-    file = "bootstrap-tools.tar.xz";
-    nix-hash = "794m4bqyvkniwy14axhbvvlwn0nfkvgg";
-    multihash = "QmWq525ugaE6MWjVMCz8xUjxxGa9nLdw9ibwxH8b1qJdr6";
-    sha256 = "86774a1d77dec741652a162a3003a3cddfa40cef8b168f3a954c877fe8a81164";
-  };
-
-  langC = true;
-  langCC = true;
   isGNU = true;
 } else
-  throw "Unsupported System ${hostSystem}"
+  throw "Unsupported System ${targetSystem}"

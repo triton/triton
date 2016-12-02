@@ -4,57 +4,91 @@ if [ -n "@coreutils@" ]; then
   PATH="@coreutils@/bin"
 fi
 
+if [ "${ccFixFlags-$NIX_ENFORCE_PURITY}" = "1" ]; then
+  ccFixFlags=1
+fi
+
+if [ -n "$NIX_DEBUG" ]; then
+  echo "ccFixFlags: ${ccFixFlags:-0}" >&2
+  echo "original flags to @prog@:" >&2
+  for i in "$@"; do
+    echo "  $i" >&2
+  done
+fi
+
 if [ -n "$NIX_LD_WRAPPER_START_HOOK" ]; then
-    source "$NIX_LD_WRAPPER_START_HOOK"
+  source "$NIX_LD_WRAPPER_START_HOOK"
 fi
 
 if [ -z "$NIX_CC_WRAPPER_FLAGS_SET" ]; then
-    source @out@/nix-support/add-flags.sh
+  source @out@/nix-support/add-flags.sh
 fi
 
 source @out@/nix-support/utils.sh
 
 params=()
 
-if [ "${relro-$extraCCFlags}" = "1" ]; then
+if [ "${ccRelro-$ccFixFlags}" = "1" ]; then
   params+=("-z" "relro")
 fi
 
-if [ "${bindnow-$extraCCFlags}" = "1" ]; then
+if [ "${ccBindnow-$ccFixFlags}" = "1" ]; then
   params+=("-z" "now")
 fi
 
 params+=("$@")
 
+# Build a special search path for objects not made absolute
+search=(".")
+for flag in $NIX_CFLAGS_COMPILE; do
+  if [ "${flag:0:3}" = "-B/" ] && ! badPath "${flag:2}"; then
+    search+=("${flag:2}")
+  fi
+done
+
 # Optionally filter out paths not refering to the store.
-if [ "$NIX_ENFORCE_PURITY" = 1 -a -n "$NIX_STORE" \
+if [ -n "$NIX_STORE" \
         -a \( -z "$NIX_IGNORE_LD_THROUGH_GCC" -o -z "$NIX_LDFLAGS_SET" \) ]; then
-    rest=()
-    n=0
-    while [ $n -lt ${#params[*]} ]; do
-        p=${params[n]}
-        p2=${params[$((n+1))]}
-        if [ "${p:0:3}" = -L/ ] && badPath "${p:2}"; then
-            skip $p
-        elif [ "$p" = -L ] && badPath "$p2"; then
-            n=$((n + 1)); skip $p2
-        elif [ "$p" = -rpath ] && badPath "$p2"; then
-            n=$((n + 1)); skip $p2
-        elif [ "$p" = -dynamic-linker ] && badPath "$p2"; then
-            n=$((n + 1)); skip $p2
-        elif [ "${p:0:1}" = / ] && badPath "$p"; then
-            # We cannot skip this; barf.
-            echo "impure path \`$p' used in link" >&2
-            exit 1
-        elif [ "${p:0:9}" = --sysroot ]; then
-            # Our ld is not built with sysroot support (Can we fix that?)
-            :
-        else
-            rest=("${rest[@]}" "$p")
+  rest=()
+  n=0
+  while [ $n -lt ${#params[*]} ]; do
+    p="${params[n]}"
+    p2="${params[$((n+1))]}"
+    if [ "${p:0:3}" = "-L/" ] && badPath "${p:2}"; then
+      skip "$p"
+    elif [ "$p" = "-L" ] && badPath "$p2"; then
+      n=$((n + 1)); skip "$p2"
+    elif [ "$p" = "-rpath" ] && badPath "$p2"; then
+      n=$((n + 1)); skip "$p2"
+    elif [ "$p" = "-dynamic-linker" ] && badPath "$p2"; then
+      n=$((n + 1)); skip "$p2"
+    elif badPath "$p"; then
+      # We cannot skip this; barf.
+      echo "impure path \`$p' used in link" >&2
+      exit 1
+    elif [ "${p:0:9}" = --sysroot ]; then
+      # Our ld is not built with sysroot support (Can we fix that?)
+      :
+    elif [ "$p" = "-o" ]; then
+      n=$((n + 1)); rest+=("$p" "$p2");
+    elif [ "${p:0:1}" != "/" ] && [ "${p:0:1}" != "-" ]; then
+      added=0
+      for s in "${search[@]}"; do
+        if [ -e "$s/$p" ]; then
+          rest+=("$s/$p")
+          added=1
+          continue
         fi
-        n=$((n + 1))
-    done
-    params=("${rest[@]}")
+      done
+      if [ "$added" -eq "0" ]; then
+        rest+=("$p")
+      fi
+    else
+      rest+=("$p")
+    fi
+    n=$((n + 1))
+  done
+  params=("${rest[@]}")
 fi
 
 
@@ -163,11 +197,15 @@ fi
 
 # Optionally print debug info.
 if [ -n "$NIX_DEBUG" ]; then
-  echo "original flags to @prog@:" >&2
+  echo "new flags to @prog@:" >&2
   for i in "${params[@]}"; do
       echo "  $i" >&2
   done
-  echo "extra flags to @prog@:" >&2
+  echo "extraBefore flags to @prog@:" >&2
+  for i in ${extraBefore[@]}; do
+      echo "  $i" >&2
+  done
+  echo "extraAfter flags to @prog@:" >&2
   for i in ${extra[@]}; do
       echo "  $i" >&2
   done
@@ -177,5 +215,14 @@ if [ -n "$NIX_LD_WRAPPER_EXEC_HOOK" ]; then
     source "$NIX_LD_WRAPPER_EXEC_HOOK"
 fi
 
-PATH="$path_backup"
-exec @prog@ ${extraBefore[@]} "${params[@]}" ${extra[@]}
+export PATH="$path_backup"
+prog='@prog@'
+if [ "${prog: -3}" = "/ld" ]; then
+  if [ "$NIX_LD_FORCE_BFD" = "1" ]; then
+    prog="$prog".bfd
+  fi
+  if [ "$NIX_LD_FORCE_GOLD" = "1" ]; then
+    prog="$prog".gold
+  fi
+fi
+exec "$prog" ${extraBefore[@]} "${params[@]}" ${extra[@]}

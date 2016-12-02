@@ -1,4 +1,5 @@
 { stdenv
+, lib
 , curl
 , openssl
 , minisign
@@ -17,9 +18,9 @@ let
   # turn makes nix-env/nix-instantiate faster.
   mirrorsFile = stdenv.mkDerivation {
     name = "mirrors-list";
-    buildCommand = stdenv.lib.concatStrings (
-      stdenv.lib.flip stdenv.lib.mapAttrsToList mirrors (mirror: urls: ''
-        echo '${mirror} ${stdenv.lib.concatStringsSep " " urls}' >> "$out"
+    buildCommand = lib.concatStrings (
+      lib.flip lib.mapAttrsToList mirrors (mirror: urls: ''
+        echo '${mirror} ${lib.concatStringsSep " " urls}' >> "$out"
       '')
     );
     preferLocalBuild = true;
@@ -135,10 +136,6 @@ in
 , # If true, set executable bit on downloaded file
   executable ? false
 
-, # If set, don't download the file, but write a list of all possible
-  # URLs (resulting from resolving mirror:// URLs) to $out.
-  showURLs ? false
-
 , # Passthru data
   passthru ? {}
 
@@ -148,7 +145,7 @@ in
 
 let
 
-  hasHash = showURLs || (outputHash != "" && outputHashAlgo != "")
+  hasHash = (outputHash != "" && outputHashAlgo != "")
     || sha256 != "" || sha512 != "";
 
   urls_ = (if url != "" then [ url ] else [ ]) ++ urls;
@@ -162,50 +159,81 @@ let
   pgpsigSha1Urls_ = (if pgpsigSha1Url != "" then [ pgpsigSha1Url ] else [ ]) ++ pgpsigSha1Urls;
   pgpsigSha256Urls_ = (if pgpsigSha256Url != "" then [ pgpsigSha256Url ] else [ ]) ++ pgpsigSha256Urls;
   pgpsigSha512Urls_ = (if pgpsigSha512Url != "" then [ pgpsigSha512Url ] else [ ]) ++ pgpsigSha512Urls;
-  pgpKeyFingerprints_ = map (n: stdenv.lib.replaceChars [" "] [""] n) ((if pgpKeyFingerprint != "" then [ pgpKeyFingerprint ] else [ ]) ++ pgpKeyFingerprints);
+  pgpKeyFingerprints_ = map (n: replaceChars [" "] [""] n) ((if pgpKeyFingerprint != "" then [ pgpKeyFingerprint ] else [ ]) ++ pgpKeyFingerprints);
   signifyUrls_ = (if signifyUrl != "" then [ signifyUrl ] else [ ]) ++ signifyUrls;
 
-  inherit (stdenv.lib)
+  inherit (lib)
     concatStringsSep
     hasPrefix
-    head;
+    head
+    optionals
+    removePrefix
+    replaceChars
+    splitString
+    tail;
+
+  canBuiltin =
+    sha256Url == "" &&
+    sha256Urls == [] &&
+    sha512Url == "" &&
+    sha512Urls == [] &&
+    sha1Confirm == "" &&
+    sha1Url == "" &&
+    sha1Urls == [] &&
+    md5Confirm == "" &&
+    md5Url == "" &&
+    md5Urls == [] &&
+    minisignPub == "" &&
+    minisignUrl == "" &&
+    minisignUrls == [] &&
+    pgpKeyFingerprint == "" &&
+    pgpKeyFingerprints == [] &&
+    pgpKeyFile == null &&
+    pgpsigUrl == "" &&
+    pgpsigUrls == [] &&
+    pgpsigMd5Url == "" &&
+    pgpsigMd5Urls == [] &&
+    pgpsigSha1Url == "" &&
+    pgpsigSha1Urls == [] &&
+    pgpsigSha256Url == "" &&
+    pgpsigSha256Urls == [] &&
+    pgpsigSha512Url == "" &&
+    pgpsigSha512Urls == [] &&
+    signifyPub == "" &&
+    signifyUrl == "" &&
+    signifyUrls == [] &&
+    preFetch == "" &&
+    postFetch == "" &&
+    postVerification == "" &&
+    downloadToTemp == false;
+
+  require = {
+    curl = true;
+    openssl = true;
+    minisign = minisignPub != "";
+    gnupg = pgpKeyFile != null || pgpKeyFingerprints_ != [];
+    signify = signifyPub != "";
+  };
+
+  canFull =
+    (!require.curl || curl != null) &&
+    (!require.openssl || openssl != null) &&
+    (!require.minisign || minisign != null) &&
+    (!require.gnupg || gnupg != null) &&
+    (!require.signify || signify != null);
 in
 
 assert urls_ != [ ] || multihash != "";
 
 #assert insecureHashOutput || urls_ == [ ] || (!hasPrefix "http:" (head urls_)) || multihash != "";
 
-if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${concatStringsSep ", " urls_}" else stdenv.mkDerivation {
+if (!hasHash) then
+  throw "Specify hash for fetchurl fixed-output derivation: ${concatStringsSep ", " urls_}"
+else
+  ((if canBuiltin then derivation else stdenv.mkDerivation) ({
   name =
     if name != "" then name
     else baseNameOf (toString (builtins.head urls_));
-
-  builder = ./builder.sh;
-
-  buildInputs = [
-    curl
-    openssl
-  ] ++ stdenv.lib.optionals (minisignPub != "") [
-    minisign
-  ] ++ stdenv.lib.optionals (pgpKeyFile != null || pgpKeyFingerprints_ != []) [
-    gnupg
-  ] ++ stdenv.lib.optionals (signifyPub != "") [
-    signify
-  ];
-
-  urls = urls_;
-  sha512Urls = sha512Urls_;
-  sha256Urls = sha256Urls_;
-  sha1Urls = sha1Urls_;
-  md5Urls = md5Urls_;
-  minisignUrls = minisignUrls_;
-  pgpsigUrls = pgpsigUrls_;
-  pgpsigMd5Urls = pgpsigMd5Urls_;
-  pgpsigSha1Urls = pgpsigSha1Urls_;
-  pgpsigSha256Urls = pgpsigSha256Urls_;
-  pgpsigSha512Urls = pgpsigSha512Urls_;
-  pgpKeyFingerprints = pgpKeyFingerprints_;
-  signifyUrls = signifyUrls_;
 
   # New-style output content requirements.
   outputHashAlgo =
@@ -231,19 +259,66 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${c
   outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
 
   inherit
+    executable
+    impureEnvVars;
+
+  # Doing the download on a remote machine just duplicates network
+  # traffic, so don't do that.
+  preferLocalBuild = true;
+} // (if canBuiltin then {
+  builder = "builtin:fetchurl";
+
+  url =
+    if multihash != "" then
+      "${head mirrors.ipfs-cached}/ipfs/${multihash}"
+    else if hasPrefix "mirror://" (head urls_) then
+      let
+        split = splitString "/" (removePrefix "mirror://" (head urls_));
+      in
+        "${head mirrors."${head split}"}/${concatStringsSep "/" (tail split)}"
+    else
+      head urls_;
+
+  system = builtins.currentSystem;
+} else if canFull then {
+  builder = ./builder.sh;
+
+  buildInputs = [
+    curl
+    openssl
+  ] ++ optionals (minisignPub != "") [
+    minisign
+  ] ++ optionals (pgpKeyFile != null || pgpKeyFingerprints_ != []) [
+    gnupg
+  ] ++ optionals (signifyPub != "") [
+    signify
+  ];
+
+  urls = urls_;
+  sha512Urls = sha512Urls_;
+  sha256Urls = sha256Urls_;
+  sha1Urls = sha1Urls_;
+  md5Urls = md5Urls_;
+  minisignUrls = minisignUrls_;
+  pgpsigUrls = pgpsigUrls_;
+  pgpsigMd5Urls = pgpsigMd5Urls_;
+  pgpsigSha1Urls = pgpsigSha1Urls_;
+  pgpsigSha256Urls = pgpsigSha256Urls_;
+  pgpsigSha512Urls = pgpsigSha512Urls_;
+  pgpKeyFingerprints = pgpKeyFingerprints_;
+  signifyUrls = signifyUrls_;
+
+  inherit
     failEarly
     hashOutput
     insecureHashOutput
     insecureProtocolDowngrade
     curlOpts
-    showURLs
     mirrorsFile
-    impureEnvVars
     preFetch
     postFetch
     postVerification
     downloadToTemp
-    executable
     sha1Confirm
     md5Confirm
     multihash
@@ -251,10 +326,9 @@ if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${c
     pgpKeyFile
     pgpDecompress
     signifyPub;
-
-  # Doing the download on a remote machine just duplicates network
-  # traffic, so don't do that.
-  preferLocalBuild = true;
-
-  inherit passthru meta;
+} else {
+  err = throw "Could not find a valid fetchurl method";
+}))) // {
+  inherit
+    passthru;
 }

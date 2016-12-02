@@ -82,7 +82,9 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  parallelBuild = false;
+  preFixup = ''
+    sed -i '/#include "config.h"/d' "$out/include/lirc/curl_poll.h"
+  '';
 
   meta = with stdenv.lib; {
     description = "Allows to receive and send infrared signals";

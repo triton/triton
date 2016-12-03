@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, lib
+, gnupg
 
 , gcr
 , gtk_2
@@ -15,7 +15,7 @@
 }:
 
 let
-  inherit (lib)
+  inherit (stdenv.lib)
     any
     boolEn
     boolWt
@@ -27,11 +27,12 @@ let
 in
 assert isNox || isGtk || isQt;
 stdenv.mkDerivation rec {
-  name = "pinentry-0.9.7";
+  name = "pinentry-1.0.0";
 
   src = fetchurl {
     url = "mirror://gnupg/pinentry/${name}.tar.bz2";
-    sha256 = "6398208394972bbf897c3325780195584682a0d0c164ca5a0da35b93b1e4e7b2";
+    hashOutput = false;
+    sha256 = "1672c2edc1feb036075b187c0773787b2afd0544f55025c645a71b4c2f79275a";
   };
 
   buildInputs = [
@@ -72,7 +73,16 @@ stdenv.mkDerivation rec {
     "-L${gcr}/lib"
   ];
 
-  meta = with lib; {
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      inherit (gnupg.srcVerification) pgpKeyFingerprints;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
+
+  meta = with stdenv.lib; {
     description = "GnuPG's interface to passphrase input";
     homepage = "http://gnupg.org/aegypten2/";
     license = licenses.gpl2Plus;

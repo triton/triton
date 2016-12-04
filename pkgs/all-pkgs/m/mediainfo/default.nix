@@ -22,15 +22,15 @@ let
   inherit (stdenv.lib)
     optionalString;
 
-  version = "0.7.88";
+  version = "0.7.91";
 in
 stdenv.mkDerivation rec {
   name = "mediainfo-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/mediainfo/mediainfo_${version}.tar.xz";
-    multihash = "QmeRsTrvS9FBWJaVkwGr5QfmXFWoQvekJRdRGDUMdka1qJ";
-    sha256 = "853839f0dce758f97ab950069c73a2ea7b601f6712bbcee36d0bc2ee9f58f373";
+    url = "mirror://sourceforge/mediainfo/source/mediainfo/${version}/"
+      + "mediainfo_${version}.tar.xz";
+    sha256 = "b501e2776319448a1664371f05498af21db1133b3a8d530f62447d0913bc5996";
   };
 
   nativeBuildInputs = [

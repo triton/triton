@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
     "--with-crypto-impl=openssl"
     "--with-pkinit-crypto-impl=openssl"
     "--with-tls-impl=openssl"
-    "--enable-asan"
+    #"--enable-asan"  # FIXME: causes undefined reference errors
     "--enable-aesni"
     "--enable-kdc-lookaside-cache"
     "--enable-pkinit"

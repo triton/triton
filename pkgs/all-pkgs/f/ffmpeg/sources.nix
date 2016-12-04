@@ -1,9 +1,9 @@
 { }:
 {
   "2.8" = {
-    version = "2.8.8";
-    multihash = "QmfZEMLXNoumxEsUdxMHzbfH1YwTNAhLJCWirUGsghVgYM";
-    sha256 = "f94e2f71aacd1fdb1e28aac8cf36aa457c13b0fc9bf704b467d91489705d2199";
+    version = "2.8.9";
+    multihash = "QmWkJn8oTKofwQi5UYGQTF5dWEXCVQ7faqbxNWnxJ2nH65";
+    sha256 = "11bd97f3f3b9608869147a20d59bec7c8d02fbd951a13c6c29cb777d700860e8";
   };
   "3.2" = {
     version = "3.2.1";

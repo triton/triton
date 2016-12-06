@@ -3261,6 +3261,7 @@ transmission_generic = overrides: callPackage ../all-pkgs/t/transmission ({
   # The following are disabled by default
   adwaita-icon-theme = null;
   dbus = null;
+  gdk-pixbuf = null;
   glib = null;
   gtk_3 = null;
   qt5 = null;

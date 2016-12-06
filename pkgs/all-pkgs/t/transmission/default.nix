@@ -165,6 +165,7 @@ stdenv.mkDerivation rec {
     "-DENABLE_GTK=${boolOn (
       adwaita-icon-theme != null
       && dbus != null
+      && gdk-pixbuf != null
       && glib != null
       && gtk_3 != null)}"
     "-DENABLE_LIGHTWEIGHT=OFF"
@@ -194,6 +195,7 @@ stdenv.mkDerivation rec {
   preFixup = optionalString (
     adwaita-icon-theme != null
     && dbus != null
+    && gdk-pixbuf != null
     && glib != null
     && gtk_3 != null) ''
     wrapProgram $out/bin/transmission-gtk \

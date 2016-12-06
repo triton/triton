@@ -2226,6 +2226,8 @@ libunique_1 = callPackage ../all-pkgs/l/libunique/1.x.nix { };
 libunique_3 = callPackage ../all-pkgs/l/libunique/3.x.nix { };
 libunique = callPackageAlias "libunique_3" { };
 
+libunistring = callPackage ../all-pkgs/l/libunistring { };
+
 libunwind = callPackage ../all-pkgs/l/libunwind { };
 
 liburcu = callPackage ../all-pkgs/l/liburcu { };
@@ -3940,8 +3942,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
   libtxc_dxtn_s2tc = callPackage ../development/libraries/libtxc_dxtn_s2tc { };
 #
-  libunistring = callPackage ../development/libraries/libunistring { };
-
   libupnp = callPackage ../development/libraries/pupnp { };
 
   libvisio = callPackage ../development/libraries/libvisio { };

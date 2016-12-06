@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "4.3.1";
+  version = "4.4.0";
 in
 stdenv.mkDerivation rec {
   name = "jemalloc-${version}";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/jemalloc/jemalloc/releases/download/${version}/"
       + "${name}.tar.bz2";
-    sha256 = "f7bb183ad8056941791e0f075b802e8ff10bd6e2d904e682f87c8f6a510c278b";
+    sha256 = "a7aea63e9718d2f1adf81d87e3df3cb1b58deb86fc77bad5d702c4c59687b033";
   };
 
   dontDisableStatic = true;

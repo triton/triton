@@ -3776,12 +3776,12 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   };
   luaPackages = callPackageAlias "lua53Packages" { };
 #
-  php = pkgs.php70;
+  php = pkgs.php71;
 #
 #  phpPackages = recurseIntoAttrs (callPackage ./php-packages.nix {});
 #
   inherit (callPackages ../development/interpreters/php { })
-    php70;
+    php71;
 #
   ant = callPackageAlias "apacheAnt" { };
 

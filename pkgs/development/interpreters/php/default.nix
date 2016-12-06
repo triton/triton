@@ -278,6 +278,7 @@ let
           pgpKeyFingerprints = [
             "1A4E 8B72 77C4 2E53 DBA9  C7B9 BCAA 30EA 9C0D 5763"
             "6E4F 6AB3 21FD C07F 2C33  2E3A C2BF 0BC4 33CF C8B3"
+            "A917 B1EC DA84 AEC2 B568  FED6 F50A BC80 7BD5 DCD0"
           ];
           inherit (src) outputHashAlgo outputHash;
         };
@@ -295,9 +296,9 @@ let
     });
 in {
 
-  php70 = generic {
-    version = "7.0.13";
-    sha256 = "357ba7f93975d7d836abed0852dc3ed96a988af539e87750613294cbee82f1bf";
+  php71 = generic {
+    version = "7.1.0";
+    sha256 = "a810b3f29c21407c24caa88f50649320d20ba6892ae1923132598b8a0ca145b6";
   };
 
 }

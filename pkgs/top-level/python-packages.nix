@@ -9,6 +9,7 @@ let
   isPy33 = python.channel == "3.3";
   isPy34 = python.channel == "3.4";
   isPy35 = python.channel == "3.5";
+  isPy36 = python.channel == "3.6";
   isPyPy = python.executable == "pypy";
   isPy3k = strings.substring 0 1 python.channel == "3";
 
@@ -50,6 +51,8 @@ let
       "python34"
     else if isPy35 then
       "python35"
+    else if isPy36 then
+      "python35"
     else if isPyPy then
       "pypy"
     else
@@ -71,6 +74,7 @@ in {
     isPy33
     isPy34
     isPy35
+    isPy36
     isPyPy
     isPy3k
     python

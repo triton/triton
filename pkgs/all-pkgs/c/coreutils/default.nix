@@ -14,11 +14,11 @@ let
     optionals;
 in
 stdenv.mkDerivation rec {
-  name = "coreutils-8.25";
+  name = "coreutils-8.26";
 
   src = fetchurl {
     url = "mirror://gnu/coreutils/${name}.tar.xz";
-    sha256 = "11yfrnb94xzmvi4lhclkcmkqsbhww64wf234ya1aacjvg82prrii";
+    sha256 = "155e94d748f8e2bc327c66e0cbebdb8d6ab265d2f37c3c928f7bf6c3beba9a8e";
   };
 
   nativeBuildInputs = [

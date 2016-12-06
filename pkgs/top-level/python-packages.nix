@@ -308,6 +308,8 @@ py = callPackage ../all-pkgs/p/py { };
 
 py-bcrypt = callPackage ../all-pkgs/p/py-bcrypt { };
 
+pyacoustid = callPackage ../all-pkgs/p/pyacoustid { };
+
 pyasn1 = callPackage ../all-pkgs/p/pyasn1 { };
 
 pyasn1-modules = callPackage ../all-pkgs/p/pyasn1-modules { };
@@ -1284,31 +1286,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        package = "plumbum";
        inherit version;
        sha256 = "75eff3a55e056d8fc06f7b7ceb603ce4c26650cd6a2196bcdb0b80fee59471a8";
-     };
-   };
-
-   pyacoustid = buildPythonPackage rec {
-     name = "pyacoustid-${version}";
-     version = "1.1.2";
-
-     src = fetchPyPi {
-       package = "pyacoustid";
-       inherit version;
-       sha256 = "e5f2990c12232807bd5c534e60b6b1955d8bc9ddade37473ae5aea9d890f2945";
-     };
-
-     propagatedBuildInputs = with self; [ requests audioread ];
-
-     postPatch = ''
-       sed -i \
-           -e '/^FPCALC_COMMAND *=/s|=.*|= "${pkgs.chromaprint}/bin/fpcalc"|' \
-           acoustid.py
-     '';
-
-     meta = {
-       description = "Bindings for Chromaprint acoustic fingerprinting";
-       homepage = "https://github.com/sampsyo/pyacoustid";
-       license = licenses.mit;
      };
    };
 

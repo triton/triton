@@ -1111,6 +1111,19 @@ let
     sha256 = "17vi9qg1dd02pmqjajqkspvdl676f0jhfzh4vzr4rxrcwgnqxdwx";
   };
 
+  dropbox = buildFromGitHub {
+    version = 2;
+    owner = "stacktic";
+    repo = "dropbox";
+    rev = "58f839b21094d5e0af7caf613599830589233d20";
+    date = "2016-04-24";
+    sha256 = "4e9d14fa3be992f94b7672a21a90abfa746429d5ee260dcbfa11b391012595ad";
+    propagatedBuildInputs = [
+      net
+      oauth2
+    ];
+  };
+
   dsync = buildFromGitHub {
     version = 2;
     owner = "minio";
@@ -1175,6 +1188,16 @@ let
       net
       sync
     ];
+  };
+
+  eme = buildFromGitHub {
+    version = 2;
+    owner = "rfjakob";
+    repo = "eme";
+    rev = "601d0e278ceda9aa2085a61c9265f6e690ef5255";
+    date = "2016-07-27";
+    sha256 = "f3497a95d1638bfe22afc275e308a51626ca206a69675b6d5d48ca81297d0ebf";
+    meta.useUnstable = true;
   };
 
   emoji = buildFromGitHub {
@@ -1291,6 +1314,16 @@ let
     ];
   };
 
+  ewma = buildFromGitHub {
+    version = 2;
+    owner = "VividCortex";
+    repo = "ewma";
+    rev = "c595cd886c223c6c28fc9ae2727a61b5e4693d85";
+    date = "2016-08-22";
+    sha256 = "0367b039e90b5e08abd501874aeab77ba1c597f7395d5e3b2762642caf653ab9";
+    meta.useUnstable = true;
+  };
+
   exp = buildFromGitHub {
     version = 1;
     date = "2016-07-11";
@@ -1363,6 +1396,20 @@ let
     sha256 = "06fbr2yjnzgqcbscg09csjvbk9zxszwvmmfib8k4vqwwvpj1iq58";
     buildInputs = [
       afero
+    ];
+  };
+
+  fuse = buildFromGitHub {
+    version = 2;
+    owner = "bazil";
+    repo = "fuse";
+    rev = "371fbbdaa8987b715bdd21d6adc4c9b20155f748";
+    date = "2016-08-11";
+    sha256 = "1f3cb9274f037e14c2437126fa17d39e6284f40f0ddb93b2dbb59d5bab6b97d0";
+    goPackagePath = "bazil.org/fuse";
+    propagatedBuildInputs = [
+      net
+      sys
     ];
   };
 
@@ -1493,6 +1540,18 @@ let
     repo = "go";
     sha256 = "0cn3sc177kvxdmlnd4l2iyrvvdcc1hf9hra05k5hflc0cbwxszvr";
     goPackageAliases = [ "github.com/hashicorp/go-msgpack" ];
+  };
+
+  go-acd = buildFromGitHub {
+    version = 2;
+    owner = "ncw";
+    repo = "go-acd";
+    rev = "7954f1fad2bda6a7836999003e4481d6e32edc1e";
+    date = "2016-11-17";
+    sha256 = "fa27c7949aec70f33862ff626c1b8c32de2289000e6fd003396d1e17d2c0457e";
+    propagatedBuildInputs = [
+      go-querystring
+    ];
   };
 
   go4 = buildFromGitHub {
@@ -2678,6 +2737,15 @@ let
     owner  = "samuel";
     repo   = "go-zookeeper";
     sha256 = "15jwlcscvqpj6yfsjmi7735q45zn5pv1h0by3dzggfry6y0h44fs";
+  };
+
+  goconfig = buildFromGitHub {
+    version = 2;
+    owner = "Unknwon";
+    repo = "goconfig";
+    rev = "87a46d97951ee1ea20ed3b24c25646a79e87ba5d";
+    date = "2016-11-21";
+    sha256 = "4b1e8153d3bcaa0e5f929b1cd09e4fb780a4753d4aaf8df12b4915c6a65eb70a";
   };
 
   gorequest = buildFromGitHub {
@@ -3968,6 +4036,15 @@ let
     sha256 = "0ycjvfbvsq6pmlbq2v7670w1k25nydnz4scx0qgiv0f4llxnr0y9";
   };
 
+  open-golang = buildFromGitHub {
+    version = 2;
+    owner = "skratchdot";
+    repo = "open-golang";
+    rev = "75fb7ed4208cf72d323d7d02fd1a5964a7a9073c";
+    date = "2016-03-02";
+    sha256 = "da900f012522dd61cc0504a16bbb137e3ed2173d0715fbf709046a1e0d923ca3";
+  };
+
   openssl = buildFromGitHub {
     version = 2;
     date = "2016-09-22";
@@ -4398,6 +4475,35 @@ let
     repo   = "raw";
     sha256 = "0pkvvvln5cyyy0y2i82jv39gjnfgzpb5ih94iav404lfsachh8m1";
     date = "2013-03-27";
+  };
+
+  rclone = buildFromGitHub {
+    version = 2;
+    owner = "ncw";
+    repo = "rclone";
+    rev = "v1.34";
+    sha256 = "33a6147fd09052c57564c6a88bbc8b00828794a7ca8f1d6a2bdc76e8d095ae30";
+    propagatedBuildInputs = [
+      aws-sdk-go
+      cobra
+      crypto
+      dropbox
+      eme
+      errors
+      ewma
+      fs
+      fuse
+      go-acd
+      goconfig
+      google-api-go-client
+      oauth2
+      open-golang
+      pflag
+      swift
+      sys
+      tb
+      testify
+    ];
   };
 
   cupcake_rdb = buildFromGitHub {
@@ -4898,6 +5004,15 @@ let
     owner  = "whyrusleeping";
     repo   = "tar-utils";
     sha256 = "0p0cmk30b22bgfv4m29nnk2359frzzgin2djhysrqznw3wjpn3nz";
+  };
+
+  tb = buildFromGitHub {
+    version = 2;
+    owner = "tsenart";
+    repo = "tb";
+    rev = "19f4c3d79d2bd67d0911b2e310b999eeea4454c1";
+    date = "2015-12-08";
+    sha256 = "fb8fb335f10f48e641b3a6abcfe3eb20737cfb5a71aa6b6dbd3399aaedcb8fad";
   };
 
   teleport = buildFromGitHub {

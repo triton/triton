@@ -66,6 +66,8 @@ let
       head (splitString "a" source.versionPatch)
     else if head (splitString "b" source.versionPatch) != source.versionPatch then
       head (splitString "b" source.versionPatch)
+    else if head (splitString "rc" source.versionPatch) != source.versionPatch then
+      head (splitString "rc" source.versionPatch)
     else
       source.versionPatch;
 

@@ -1,8 +1,5 @@
 { stdenv
-, autoconf
-, automake
-, fetchFromGitHub
-, libtool
+, fetchurl
 
 , bzip2
 , db
@@ -11,25 +8,19 @@
 , lz4
 , snappy
 , zlib
+, zstd
 }:
 
+let
+  version = "2.9.0";
+in
 stdenv.mkDerivation rec {
   name = "wiredtiger-${version}";
-  version = "2.8.0";
 
-  src = fetchFromGitHub {
-    version = 1;
-    repo = "wiredtiger";
-    owner = "wiredtiger";
-    rev = version;
-    sha256 = "70ba31afabe65f02f84b1edeebf0c6be8eac93056b20a4027ae11b77eabc85a6";
+  src = fetchurl {
+    url = "https://github.com/wiredtiger/wiredtiger/releases/download/${version}/${name}.tar.bz2";
+    sha256 = "bdbd14753f704a2d7ffc7d132548ca8d2d29938821df747712165699c18c587e";
   };
-
-  nativeBuildInputs = [
-    autoconf
-    automake
-    libtool
-  ];
 
   buildInputs = [
     bzip2
@@ -39,16 +30,13 @@ stdenv.mkDerivation rec {
     lz4
     snappy
     zlib
+    zstd
   ];
-
-  preConfigure = ''
-    ./autogen.sh
-  '';
 
   configureFlags = [
     "--enable-leveldb"
     "--enable-tcmalloc"
-    "--with-builtins=lz4,snappy,zlib"
+    "--with-builtins=lz4,snappy,zlib,zstd"
     "--with-berkeleydb=${db}"
     "--without-helium"
   ];

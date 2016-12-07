@@ -8,12 +8,13 @@
 , imagesize
 , jinja2
 , pygments
+, requests
 , six
 , snowballstemmer
 }:
 
 let
-  version = "1.4.9";
+  version = "1.5";
 in
 buildPythonPackage {
   name = "Sphinx-${version}";
@@ -21,7 +22,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Sphinx";
     inherit version;
-    sha256 = "82cd2728c906be96e307b81352d3fd9fb731869234c6b835cc25e9a3dfb4b7e4";
+    sha256 = "1c52ac7696c4d37bb7bc59c58df81756928816e88624ba625f12082a9e9eb8f9";
   };
 
   propagatedBuildInputs = [
@@ -31,6 +32,7 @@ buildPythonPackage {
     imagesize
     jinja2
     pygments
+    requests
     six
     snowballstemmer
   ];

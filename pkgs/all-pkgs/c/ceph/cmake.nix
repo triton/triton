@@ -1,6 +1,5 @@
 { stdenv
 , cmake
-, fetchgit
 , fetchurl
 , perl
 , pythonPackages
@@ -44,17 +43,10 @@ in
 stdenv.mkDerivation rec {
   name = "ceph-${version}";
 
-  src = if sources ? fetchVersion then
-    fetchgit {
-      url = "https://github.com/ceph/ceph.git";
-      inherit (sources) rev sha256;
-      version = sources.fetchVersion;
-    }
-  else
-    fetchurl {
-      url = "https://github.com/wkennington/ceph/releases/download/${version}/${name}.tar.xz";
-      inherit (sources) sha256;
-    };
+  src = fetchurl {
+    url = "https://github.com/wkennington/ceph/releases/download/${version}/${name}.tar.xz";
+    inherit (sources) sha256;
+  };
 
   nativeBuildInputs = [
     cmake

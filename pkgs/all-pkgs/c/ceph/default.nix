@@ -4,6 +4,7 @@
 , ensureNewerSourcesHook
 , fetchgit
 , fetchTritonPatch
+, fetchurl
 , git
 , libtool
 , perl
@@ -53,11 +54,10 @@ let
     versionAtLeast
     versionOlder;
 
-  inherit ((import ./sources.nix).${channel})
-    fetchVersion
-    version
-    rev
-    sha256;
+  sources = (import ./sources.nix).${channel};
+
+  inherit (sources)
+    version;
 
   hasXio = versionAtLeast version "9.0.3";
 
@@ -72,10 +72,9 @@ in
 stdenv.mkDerivation rec {
   name="ceph-${version}";
 
-  src = fetchgit {
-    url = "https://github.com/ceph/ceph.git";
-    inherit rev sha256;
-    version = fetchVersion;
+  src = fetchurl {
+    url = "https://github.com/wkennington/ceph/releases/download/${version}/${name}.tar.xz";
+    inherit (sources) sha256;
   };
 
   patches = optionals (versionOlder version "9.0.0") [

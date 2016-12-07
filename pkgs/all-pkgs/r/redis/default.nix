@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "3.2.5";
+  version = "3.2.6";
 in
 stdenv.mkDerivation rec {
   name = "redis-${version}";
@@ -11,8 +11,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "http://download.redis.io/releases/${name}.tar.gz";
     # https://github.com/antirez/redis-hashes/blob/master/README
-    sha1Confirm = "6f6333db6111badaa74519d743589ac4635eba7a";
-    sha256 = "8509ceb1efd849d6b2346a72a8e926b5a4f6ed3cc7c3cd8d9f36b2e9ba085315";
+    sha1Confirm = "0c7bc5c751bdbc6fabed178db9cdbdd948915d1b";
+    sha256 = "2e1831c5a315e400d72bda4beaa98c0cfbe3f4eb8b20c269371634390cf729fa";
   };
 
   preBuild = ''

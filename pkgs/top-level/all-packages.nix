@@ -2765,6 +2765,8 @@ perl = callPackage ../all-pkgs/p/perl { };
 
 pgbouncer = callPackage ../all-pkgs/p/pgbouncer { };
 
+picocom = callPackage ../all-pkgs/p/picocom { };
+
 pinentry_gtk = callPackage ../all-pkgs/p/pinentry {
   type = "gtk";
 };

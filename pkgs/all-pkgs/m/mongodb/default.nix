@@ -16,7 +16,7 @@
 }:
 
 let
-  version = "3.2.11";
+  version = "3.4.0";
 
   inherit (stdenv.lib)
     concatStringsSep;
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://downloads.mongodb.org/src/mongodb-src-r${version}.tar.gz";
-    sha256 = "625eb28fd47b2af63b30343a064de7f42e5265f4c642874ec766ba3643fd80d7";
+    sha256 = "5a904b66d09e4d15f3ed35028a004640afcba5d8ecb5644165bd08cd7eb79df6";
   };
 
   nativeBuildInputs = [
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
   ];
 
   patches = [
-    # Hopefully remove this in 3.2.11+
+    # Hopefully remove this in 3.4.1+
     (fetchTritonPatch {
       rev = "1a93e9f9c3689a6b85e2db14cec0f25ea26b1296";
       file = "m/mongodb/0001-boost-1.60.patch";
@@ -57,16 +57,6 @@ stdenv.mkDerivation rec {
       rev = "1a93e9f9c3689a6b85e2db14cec0f25ea26b1296";
       file = "m/mongodb/0002-boost-1.62.patch";
       sha256 = "8ad9640407be6f945b38275ff75014c8ba2c6118a25fba63a490c640267b4b66";
-    })
-
-    # When not building with the system valgrind, the build should use the
-    # vendored header file - regardless of whether or not we're using the system
-    # tcmalloc - so we need to lift the include path manipulation out of the
-    # conditional.
-    (fetchTritonPatch {
-      rev = "d7830e5e4f86c529163ccd6ce14cb77b95f27922";
-      file = "m/mongodb/valgrind-include.patch";
-      sha256 = "ad12f41e74acfeaaa7dd59acbc628ce8363b02c1342c5435df42f229f9fc6c17";
     })
   ];
 

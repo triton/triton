@@ -2408,6 +2408,8 @@ mg = callPackage ../all-pkgs/m/mg { };
 
 mime-types = callPackage ../all-pkgs/m/mime-types { };
 
+minicom = callPackage ../all-pkgs/m/minicom { };
+
 minidlna = callPackage ../all-pkgs/m/minidlna { };
 
 minio = pkgs.goPackages.minio.bin // { outputs = [ "bin" ]; };

@@ -193,6 +193,8 @@ click = callPackage ../all-pkgs/c/click { };
 
 colorama = callPackage ../all-pkgs/c/colorama { };
 
+colorclass = callPackage ../all-pkgs/c/colorclass { };
+
 constantly = callPackage ../all-pkgs/c/constantly { };
 
 cryptography = callPackage ../all-pkgs/c/cryptography { };

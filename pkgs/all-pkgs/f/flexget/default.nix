@@ -16,7 +16,7 @@
 , flask-cors
 , flask-login
 , flask-restful
-, flask-restplus
+, flask-restplus_0-8
 , future
 , guessit
 , html5lib
@@ -66,14 +66,13 @@ buildPythonPackage rec {
     flask-cors
     flask-login
     flask-restful
-    flask-restplus
+    flask-restplus_0-8
     future
     guessit
     html5lib
     jinja2
     jsonschema
     pathpy
-    #progressbar
     pynzb
     pyparsing
     pyrss2gen
@@ -84,10 +83,6 @@ buildPythonPackage rec {
     safe
     sqlalchemy
     terminaltables
-
-    #paver
-    #python-tvrage
-    #tmdb3
     transmissionrpc
   ] ++ optionals (pythonOlder "3.4") [
     pathlib

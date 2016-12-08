@@ -2,11 +2,13 @@
 , buildPythonPackage
 , config
 , fetchPyPi
-, pythonPackages
+, isPy3k
+, pythonOlder
 
 , apscheduler
 , beautifulsoup
 , cherrypy
+, colorclass
 , deluge
 , feedparser
 , flask
@@ -33,15 +35,14 @@
 , rpyc
 , safe
 , sqlalchemy
+, terminaltables
 , transmissionrpc
 }:
 
 let
   inherit (stdenv.lib)
-    optionals;
-  inherit (pythonPackages)
-    isPy3k
-    pythonOlder;
+    optionals
+    optionalString;
 
   version = "2.7.4";
 in
@@ -58,6 +59,7 @@ buildPythonPackage rec {
     apscheduler
     beautifulsoup
     cherrypy
+    colorclass
     feedparser
     flask
     flask-compress
@@ -81,6 +83,7 @@ buildPythonPackage rec {
     rpyc
     safe
     sqlalchemy
+    terminaltables
 
     #paver
     #python-tvrage
@@ -92,16 +95,13 @@ buildPythonPackage rec {
     deluge
   ];
 
-  postPatch =
-    /* Allow using newer dependencies */ ''
-      sed -i requirements.txt \
-        -e 's/,.*<.*//' \
-        -e 's/<.*//' \
-        -e 's/!=.*//' \
-        -e 's/==.*//'
-    '';
-
-  pipWhlFile = "*py3*";
+  postPatch = /* Allow using newer dependencies */ ''
+    sed -i requirements.txt \
+      -e 's/,.*<.*//' \
+      -e 's/<.*//' \
+      -e 's/!=.*//' \
+      -e 's/==.*//'
+  '';
 
   meta = with stdenv.lib; {
     description = "Automation tool for content like torrents, nzbs, podcasts";

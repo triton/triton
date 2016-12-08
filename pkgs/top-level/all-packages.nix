@@ -2756,6 +2756,8 @@ pcsc-lite_lib = callPackageAlias "pcsc-lite_full" {
 
 perl = callPackage ../all-pkgs/p/perl { };
 
+pf-ring = callPackage ../all-pkgs/p/pf-ring { };
+
 pgbouncer = callPackage ../all-pkgs/p/pgbouncer { };
 
 picocom = callPackage ../all-pkgs/p/picocom { };

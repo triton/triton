@@ -16,11 +16,11 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = [
-      "https://www.nano-editor.org/dist/v${major}/${name}.tar.gz"
-      "mirror://gnu/nano/${name}.tar.gz"
+      "https://www.nano-editor.org/dist/v${major}/${name}.tar.xz"
+      "mirror://gnu/nano/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "81547310d3ab7a220426c9c2f2435a372fb43d4b27818f016de25698862ae118";
+    sha256 = "df5cbe69831d7394c0a32fb27373ab313335ea4dc586d6f4be4081eb1de857cd";
   };
 
   nativeBuildInputs = [

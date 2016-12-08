@@ -98,6 +98,8 @@ buildPythonPackage rec {
       -e 's/==.*//'
   '';
 
+  disabled = isPy3k;
+
   meta = with stdenv.lib; {
     description = "Automation tool for content like torrents, nzbs, podcasts";
     homepage = http://flexget.com/;

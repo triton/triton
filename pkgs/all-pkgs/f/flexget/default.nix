@@ -43,7 +43,7 @@ let
     isPy3k
     pythonOlder;
 
-  version = "2.3.26";
+  version = "2.7.4";
 in
 buildPythonPackage rec {
   name = "flexget-${version}";
@@ -51,7 +51,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "FlexGet";
     inherit version;
-    sha256 = "3ca01fafeaa31a76ae5e7d19695952da1ce3c55d55667afbb54a6cb7b7749729";
+    sha256 = "df35bfea715b15a94d819a4311c252615baa75569f28f06c96264039d1b69f8b";
   };
 
   propagatedBuildInputs = [
@@ -101,7 +101,7 @@ buildPythonPackage rec {
         -e 's/==.*//'
     '';
 
-    pipWhlFile = "*py3*";
+  pipWhlFile = "*py3*";
 
   meta = with stdenv.lib; {
     description = "Automation tool for content like torrents, nzbs, podcasts";

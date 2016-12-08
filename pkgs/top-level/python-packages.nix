@@ -420,6 +420,8 @@ sydent = callPackage ../all-pkgs/s/sydent { };
 
 synapse = callPackage ../all-pkgs/s/synapse { };
 
+terminaltables = callPackage ../all-pkgs/t/terminaltables { };
+
 tmdb3 = callPackage ../all-pkgs/t/tmdb3 { };
 
 tornado = callPackage ../all-pkgs/t/tornado { };

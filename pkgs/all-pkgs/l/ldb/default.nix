@@ -4,6 +4,7 @@
 , fetchurl
 , libxslt
 , python
+, samba_full
 
 , popt
 , talloc
@@ -11,12 +12,20 @@
 , tevent
 }:
 
+let
+  name = "ldb-1.1.29";
+
+  tarballUrls = [
+    "mirror://samba/ldb/${name}.tar"
+  ];
+in
 stdenv.mkDerivation rec {
-  name = "ldb-1.1.27";
+  inherit name;
 
   src = fetchurl {
-    url = "mirror://samba/ldb/${name}.tar.gz";
-    sha256 = "cdb8269cba09006ddf3766eb7721192b52ae3fdc8a6b95f4318b6b740b9d35ac";
+    urls = map (n: "${n}.gz") tarballUrls;
+    hashOutput = false;
+    sha256 = "59d84f9a5b799f519ba7b2685bb46f5a26f1bbf05b7a144b2f5e017d01d80f97";
   };
 
   nativeBuildInputs = [
@@ -41,6 +50,16 @@ stdenv.mkDerivation rec {
     "--bundled-libraries=NONE"
     "--builtin-libraries=replace"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") tarballUrls;
+      pgpDecompress = true;
+      inherit (samba_full.pgp.library) pgpKeyFingerprint;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "An LDAP-like embedded database";

@@ -23,12 +23,13 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "cairo-1.14.6";
+  name = "cairo-1.14.8";
 
   src = fetchurl {
-    url = "http://cairographics.org/releases/${name}.tar.xz";
-    multihash = "QmQ1u577J87b4eTN5eS1QCbTCLV1p9XAG5YawXLcW24hSz";
-    sha256 = "0lmjlzmghmr27y615px9hkm552x7ap6pmq9mfbzr6smp8y2b6g31";
+    url = "https://cairographics.org/releases/${name}.tar.xz";
+    multihash = "QmVNbPjNarRuKhgfLSVQ2fCYc9JpvHDaEiaJfzjiVvyYbt";
+    hashOutput = false;
+    sha256 = "d1f2d98ae9a4111564f6de4e013d639cf77155baf2556582295a0f00a9bc5e20";
   };
 
   nativeBuildInputs = [
@@ -138,6 +139,15 @@ stdenv.mkDerivation rec {
   '' + glib.flattenInclude;
 
   bindnow = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha1Urls = map (n: "${n}.sha1.asc") src.urls;
+      pgpKeyFingerprint = "C722 3EBE 4EF6 6513 B892  5989 11A3 0156 E0E6 7611";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A vector graphics library with cross-device output support";

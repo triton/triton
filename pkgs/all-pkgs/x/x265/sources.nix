@@ -7,8 +7,8 @@
   };
   "head" = {
     fetchzipversion = 2;
-    version = "2016-11-06";
-    rev = "a378efc939e37f13ec1673fda055b1c3d0632e68";
-    sha256 = "59348fc331e40693444f26081cc698e9789327df3d373723f9654fe441df504c";
+    version = "2016-12-07";
+    rev = "c97c64ab8b8eaea8b1de611adc9022815d88b09b";
+    sha256 = "00f4e32aa02a1507685c58c77d4a84797acd0531dc8bb7de60276094a3b323e4";
   };
 }

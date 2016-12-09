@@ -14,13 +14,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "knot-2.3.2";
+  name = "knot-2.3.3";
 
   src = fetchurl {
     url = "https://secure.nic.cz/files/knot-dns/${name}.tar.xz";
-    multihash = "QmVDbagVxFaaUbypyCnxQk5qLUaq6pVVCt1c9Dxj3mDmJs";
+    multihash = "QmYAhc6BTWo7a6SYE5rnc3TkJZJaqguhthQPZ44gm7R9VX";
     hashOutput = false;
-    sha256 = "ba298157693d2b3264ff53afd397d8bb240336b36c18064515890733254700df";
+    sha256 = "a929bce3b957a81776b1db7b43b0e4473339bf16be8dbba5abb4b0593bf43c94";
   };
 
   buildInputs = [

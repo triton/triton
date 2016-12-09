@@ -4,9 +4,11 @@
 , fetchurl
 , perl
 
+, cryptodevHeaders
 , gmp
 , libidn
 , libtasn1
+, libunistring
 , lzo
 , nettle
 , p11_kit
@@ -40,7 +42,10 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--with-default-trust-store-file=/etc/ssl/certs/ca-certificates.crt"
+    "--with-trousers-lib=${trousers}/lib"
     "--disable-dependency-tracking"
+    "--enable-manpages"
+    "--enable-cryptodev"
     "--enable-fast-install"
   ];
 
@@ -51,15 +56,17 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    cryptodevHeaders
+    gmp
+    libidn
+    libtasn1
+    libunistring
     lzo
     nettle
-    libtasn1
-    libidn
     p11_kit
-    zlib
-    gmp
     trousers
     unbound
+    zlib
   ];
 
   passthru = {

@@ -14,8 +14,8 @@
   # nextgenv2
   "2.999" = {
     fetchzipversion = 2;
-    version = "2016-10-18";
-    rev = "abf6fb9967984e64f13e85e7849b7b2684b14950";
-    sha256 = "2829f58a93c22ad9e64763fc6a9541c723e4cc225a4cbcd8f0f6806231c7c6b5";
+    version = "2016-12-08";
+    rev = "6515afc6b90751d86b3e2f77336cd374d80896d7";
+    sha256 = "7fee2e22e6b26dc0152aeae738604a399f23127cb0347b906e23e0e2e9b31228";
   };
 }

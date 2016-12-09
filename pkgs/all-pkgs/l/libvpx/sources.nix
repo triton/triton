@@ -7,9 +7,9 @@
   # master
   "1.999" = {
     fetchzipversion = 2;
-    version = "2016-10-21";
-    rev = "2e6a1976a0fd9bc1cfbae137876b397b1148037e";
-    sha256 = "d14fec8599d1b75f90795b61bba47004ba0b601655cb4238eaaf1576427ac098";
+    version = "2016-12-08";
+    rev = "7ba9d31e3f547128ea3eed9cddc94caf160f916a";
+    sha256 = "1b51eaca65fe45a1756da575cdf5ad98ea6ff5464f86129d3e45bc106e3b0928";
   };
   # nextgenv2
   "2.999" = {

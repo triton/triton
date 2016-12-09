@@ -205,7 +205,8 @@ stdenv.mkDerivation rec {
     rm -r $out/libexec/ctdb/tests
     rm -r $out/lib/python2.7/site-packages/samba/tests
     rm $out/bin/ctdb_run{_cluster,}_tests
-    rm -r $out/share/ctdb-tests
+    rm -r $out/share/ctdb/tests
+    rmdir $out/share/ctdb
   '';
 
   preFixup = optionalString isClient ''

@@ -20,13 +20,13 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "harfbuzz-1.3.3";
+  name = "harfbuzz-1.3.4";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2";
-    multihash = "QmePJeKb55ffcvqgoHCiWn3PtE4wqfafYCjn2goZKpYj5z";
+    multihash = "QmPX5PNkc4U3DsSP3nSf8EY1RboaTT8Bp76MCoVTVK5NqF";
     hashOutput = false;
-    sha256 = "2620987115a4122b47321610dccbcc18f7f121115fd7b88dc8a695c8b66cb3c9";
+    sha256 = "718aa6fcadef1a6548315b8cfe42cc27e926256302c337f42df3a443843f6a2b";
   };
 
   nativeBuildInputs = optionals doCheck [
@@ -45,12 +45,10 @@ stdenv.mkDerivation rec {
 
   postPatch = optionalString doCheck (''
     patchShebangs test/shaping/
-  '' +
-  /* failing test, https://bugs.freedesktop.org/show_bug.cgi?id=89190 */ ''
+  '' + /* failing test, https://bugs.freedesktop.org/show_bug.cgi?id=89190 */ ''
     sed -i test/shaping/Makefile.{am,in} \
       -e 's|tests/arabic-fallback-shaping.tests||'
-  '' +
-  /* test fails */ ''
+  '' + /* test fails */ ''
     sed -i test/shaping/Makefile.{am,in} \
       -e 's|tests/vertical.tests||'
   '');

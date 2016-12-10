@@ -10,7 +10,7 @@ let
     "http://download.icu-project.org/files/icu4c/${v}/icu4c"
   ];
 
-  version = "58.1";
+  version = "58.2";
 in
 stdenv.mkDerivation rec {
   name = "icu4c-${version}";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
       map (n: "${n}-${replaceChars ["."] ["_"] version}-src.tgz")
           (baseUrls version);
     hashOutput = false;
-    sha256 = "0eb46ba3746a9c2092c8ad347a29b1a1b4941144772d13a88667a7b11ea30309";
+    sha256 = "2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c";
   };
 
   postUnpack = ''
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification =
       let
-        version = "58.1";
+        version = "58.2";
       in
       fetchurl {
         inherit (src) outputHashAlgo;
@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
           # Steven R. Loomis
           "4C95 9C0F 547B D2D8 B783  5B17 AAA9 AE9C 0F0D E47D"
         ];
-        outputHash = "0eb46ba3746a9c2092c8ad347a29b1a1b4941144772d13a88667a7b11ea30309";
+        outputHash = "2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c";
         failEarly = true;
       };
   };

@@ -28,11 +28,15 @@ let
       baseSha256 = "3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a";
       patchSha256 = "efa9b7d87a6ca67426e3d7f206ac987eb7cb31602ad2011e81060626de790fcb";
     };
+    "4.9" = {
+      version = "4.9";
+      baseSha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
+      patchSha256 = null;
+    };
     "testing" = {
-      version = "4.9-rc8";
-      needsGitPatch = true;
-      baseSha256 = "3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a";
-      patchSha256 = "9847a3cab6ec2434258efe63fb6723ae7cf2377ff84e58710413c3d5e6f0654c";
+      version = "4.9";
+      baseSha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
+      patchSha256 = null;
     };
     "bcache" =
       let
@@ -95,7 +99,7 @@ let
       sha256 = source.baseSha256 or source.sha256;
     };
 
-  patch = if source ? patchSha256 then
+  patch = if source ? patchSha256 && source.patchSha256 != null then
     fetchurl {
       urls = source.patchUrls or (map (n: "${n}/patch-${version}.xz") directoryUrls);
       hashOutput = false;

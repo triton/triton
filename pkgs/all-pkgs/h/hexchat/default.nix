@@ -19,12 +19,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "hexchat-2.12.3";
+  name = "hexchat-2.12.4";
 
   src = fetchurl {
     url = "https://dl.hexchat.net/hexchat/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "6f2b22372c7a9ed8ffab817079638e8f4178f5f8ba63c89cb3baa01be614f2ba";
+    sha256 = "fa35913158bbc7d0d99de79371b6df3e8d21802f1d2c7c92f0e5db694acf2c3a";
   };
 
   postPatch = ''

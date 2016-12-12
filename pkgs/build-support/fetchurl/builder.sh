@@ -402,7 +402,7 @@ trap cleanup EXIT ERR INT QUIT PIPE TERM
 
 if [ "${#pgpKeyFingerprints[@]}" -gt "0" ]; then
   eval `dirmngr --daemon --homedir=$HOME --disable-http --disable-ldap`
-  gpg --verbose --recv-keys --keyserver "hkp://pgp.mit.edu" "${pgpKeyFingerprints[@]}"
+  gpg --verbose --recv-keys --keyserver "hkps://hkps.pool.sks-keyservers.net" "${pgpKeyFingerprints[@]}"
 fi
 
 i=0

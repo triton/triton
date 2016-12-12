@@ -60,16 +60,16 @@ let
     optionals;
 
   versionMajor = "0.19";
-  versionMinor = "19";
-  version = "${versionMajor}.${versionMinor}";
+  versionMinor = "20";
 in
 stdenv.mkDerivation rec {
-  name = "mpd-${version}";
+  name = "mpd-${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "https://www.musicpd.org/download/mpd/${versionMajor}/${name}.tar.xz";
-    multihash = "QmbjyKPGKkaFKxABi1omFEUSgDGNSJYALeZEbGKJHfHkWD";
-    sha256 = "bc856cda4136403446d53d11576f86990b61d1fe4668f6008e9eae47450d4e1d";
+    hashOutput = false;
+    multihash = "QmcnN4KRXuPvaBiQLE9dPabtP8SEZzn8EYZzHhUjjGRnDK";
+    sha256 = "ecf74993085509c82e2bfadce88434b62b7727d844add9c548eb63532a5e3b8a";
   };
 
   nativeBuildInputs = [ ] ++ optionals documentationSupport [
@@ -189,6 +189,18 @@ stdenv.mkDerivation rec {
   ];
 
   NIX_LDFLAGS = [ ] ++ optional (libshout != null) "-lshout";
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      pgpsigUrl = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "0392 335A 7808 3894 A430  1C43 236E 8A58 C6DB 4512";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "A flexible, powerful daemon for playing music";

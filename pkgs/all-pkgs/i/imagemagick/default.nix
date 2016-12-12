@@ -39,7 +39,7 @@ let
     optionalString;
 
   # Use stable patch releases, e.g. -9 or -10
-  version = "7.0.2-10";
+  version = "7.0.3-10";
 in
 
 assert xorg != null ->
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
       "mirror://imagemagick"
     ];
     hashOutput = false;
-    sha256 = "dad306bfd7730e1665c6fdb6eb478fb2c41e2db71ab56451bbaebe9df546b1d2";
+    sha256 = "d9f2d7fad313f5d1fcb7805225f3f65f3052bf813eb51bf1469b9aede081e97a";
   };
 
   buildInputs = [

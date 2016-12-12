@@ -119,11 +119,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "95cb608f365d51e0e69abc646ec90c0e26fb427f";
-    date = "2016-12-05";
+    rev = "b07d8c96772f426812d3fc5530710ec1f3b205e7";
+    date = "2016-10-26";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "0alxn37g637i684sp1xq3ym3dp6ady5zlgpcnv6cvd67s8kfn0av";
+    sha256 = "0cj1gwg0wwvbxgs7w5v6hn882jnh4spayz64r3hdjcl5z5mahh60";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -165,11 +165,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "944c58e9d57bcecf171fd4bea155269aa8a96805";
-    date = "2016-12-07";
+    rev = "b1a2d6e8c8b5fc8f601ead62536f02a8e1b6217d";
+    date = "2016-12-10";
     owner  = "golang";
     repo   = "net";
-    sha256 = "0bka4xapsnsyms5q1317j0lywvb1af5saqy0gad4zibw14jzzkz5";
+    sha256 = "0cjlvrpf3hr5y6124irbkhy978nmfdlnrddq4xprsybgwgdahd24";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "github.com/hashicorp/go.net"
@@ -268,11 +268,11 @@ let
 
   text = buildFromGitHub {
     version = 2;
-    rev = "5c6cf4f9a2357d38515014cea8c488ed22bdab90";
+    rev = "47a200a05c8b3fd1b698571caecbb68beb2611ec";
     date = "2016-11-30";
     owner = "golang";
     repo = "text";
-    sha256 = "0lr9jrlyvip8mh2f9y38ifkgiys72bjl75df6ifinqd5jfy07bja";
+    sha256 = "18bllk34hb1rxa5cqb5xnpzbmrfg2lz7mn6z7q7ncbqadn86vc7l";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
     excludedPackages = "cmd";
@@ -1782,6 +1782,15 @@ let
     ];
   };
 
+  goprocess = buildFromGitHub {
+    version = 2;
+    rev = "b497e2f366b8624394fb2e89c10ab607bebdde0b";
+    date = "2016-08-25";
+    owner = "jbenet";
+    repo = "goprocess";
+    sha256 = "1i4spw84hlka1l8xxizpiqklsqyc3hxxjz3wbpn3i2ql68raylbx";
+  };
+
   goredis = buildFromGitHub {
     version = 1;
     rev = "760763f78400635ed7b9b115511b8ed06035e908";
@@ -2173,6 +2182,23 @@ let
     sha256 = "0bha0a59akal9apycvrv0wq4gdsfh5hz5439rb4arbny0kvb9529";
   };
 
+  go-floodsub = buildFromGitHub {
+    version = 2;
+    rev = "985cedfe286703a2b200955a93c01bc0c7171a0e";
+    owner  = "libp2p";
+    repo   = "go-floodsub";
+    sha256 = "0r19nfa9cwh98y1zh059ffvznvdj17p117zdlsfj11av15hsknff";
+    date = "2016-11-28";
+    propagatedBuildInputs = [
+      gogo_protobuf
+      go-libp2p-host
+      go-libp2p-net
+      go-libp2p-peer
+      go-log
+      timecache
+    ];
+  };
+
   go-getter = buildFromGitHub {
     version = 2;
     rev = "2fbd997432e72fe36060c8f07ec1eaf98d098177";
@@ -2287,19 +2313,33 @@ let
 
   go-ipfs-api = buildFromGitHub {
     version = 2;
-    rev = "0ee867280b9b85f2fcd6a3aa324728fc775dae48";
+    rev = "4cadfedb1a3f22fe8dc8f38f2d317ac9d92e98b5";
     owner  = "ipfs";
     repo   = "go-ipfs-api";
-    sha256 = "1r3d8dwf2d2p25zpf183s8syxli1yg39jr8mr0jdgpqrgkgm82kl";
+    sha256 = "1jipziy8ddvxbx894aw5xnawpkqwiyhn9vywzkxa1s9bizdbd80x";
     excludedPackages = "tests";
     propagatedBuildInputs = [
+      go-floodsub
       go-multiaddr
       go-multiaddr-net
       go-multipart-files
       tar-utils
     ];
     meta.useUnstable = true;
-    date = "2016-10-06";
+    date = "2016-12-11";
+  };
+
+  go-ipfs-util = buildFromGitHub {
+    version = 2;
+    rev = "70eede8dce2a98e86bb760247702e4e9b23139bb";
+    owner  = "ipfs";
+    repo   = "go-ipfs-util";
+    sha256 = "0lbp58z0w4fxagicq66lq8jdc38f4cqp6bmsgqfrsg971k0dy7cd";
+    date = "2016-10-04";
+    buildInputs = [
+      go-base58
+      go-multihash
+    ];
   };
 
   go-isatty = buildFromGitHub {
@@ -2347,6 +2387,162 @@ let
     ];
   };
 
+  go-keyspace = buildFromGitHub {
+    version = 2;
+    rev = "5b898ac5add1da7178a4a98e69cb7b9205c085ee";
+    owner = "whyrusleeping";
+    repo = "go-keyspace";
+    sha256 = "1kf9gyrhfjhqckziaag8qg5kyyy2zmkfz33wmf9c6p6xqypg0bx7";
+    date = "2016-03-22";
+  };
+
+  go-libp2p-crypto = buildFromGitHub {
+    version = 2;
+    owner = "libp2p";
+    repo = "go-libp2p-crypto";
+    date = "2016-10-17";
+    rev = "d9387cd9d7519fe0a5b0974b79db3b15417ac246";
+    sha256 = "1xrfa4v08dns58jj8hpg7pwhsjkqi0qk9d5fzwb1d2zacsn7i737";
+    propagatedBuildInputs = [
+      ed25519
+      go-base58
+      go-ipfs-util
+      go-multihash
+      gogo_protobuf
+    ];
+  };
+
+  go-libp2p-host = buildFromGitHub {
+    version = 2;
+    owner = "libp2p";
+    repo = "go-libp2p-host";
+    date = "2016-11-17";
+    rev = "160b4e479a07f6257595f6c152936a5a80f4a56a";
+    sha256 = "0h9jwarab2l9p86bgp4061hjya5hphy8griz8fqkzdsifvawmcz9";
+    propagatedBuildInputs = [
+      go-libp2p-net
+      go-libp2p-peer
+      go-libp2p-peerstore
+      go-libp2p-protocol
+      go-multiaddr
+      go-multistream
+      go-semver
+    ];
+  };
+
+  go-libp2p-interface-conn = buildFromGitHub {
+    version = 2;
+    owner = "libp2p";
+    repo = "go-libp2p-interface-conn";
+    date = "2016-11-03";
+    rev = "e229506a1c0f193cf8ba5f9f35f40f6ef50e0d12";
+    sha256 = "0aa15b5aqwy4h3n22pi3bw51i2m4pm7r293hp9g81apd98wcyfbi";
+    propagatedBuildInputs = [
+      go-ipfs-util
+      go-libp2p-crypto
+      go-libp2p-peer
+      go-libp2p-transport
+      go-maddr-filter
+      go-multiaddr
+    ];
+  };
+
+  go-libp2p-net = buildFromGitHub {
+    version = 2;
+    owner = "libp2p";
+    repo = "go-libp2p-net";
+    date = "2016-11-17";
+    rev = "3e063c4154c3ba66314e2734673cbf33eebfe817";
+    sha256 = "0z74gw9di93xzw5pahybbhj3rzfk8svswdydi62pgnn4vx1d0nxx";
+    propagatedBuildInputs = [
+      goprocess
+      go-libp2p-interface-conn
+      go-libp2p-peer
+      go-libp2p-peerstore
+      go-libp2p-protocol
+      go-multiaddr
+    ];
+  };
+
+  go-libp2p-peer = buildFromGitHub {
+    version = 2;
+    owner = "libp2p";
+    repo = "go-libp2p-peer";
+    date = "2016-11-02";
+    rev = "668f732449f75e719b369a04998e048597f786cf";
+    sha256 = "0xq6pxxv5c8qklf2mrkqyy7m257h8pni7kldd2pylpwk9lg95y3b";
+    propagatedBuildInputs = [
+      go-base58
+      go-ipfs-util
+      go-libp2p-crypto
+      go-log
+      go-multihash
+    ];
+  };
+
+  go-libp2p-peerstore = buildFromGitHub {
+    version = 2;
+    owner = "libp2p";
+    repo = "go-libp2p-peerstore";
+    date = "2016-11-17";
+    rev = "63b884f50774b52336796d85f0b418ff5a99b128";
+    sha256 = "1s83sdq64sh6kr5ybb5dql4svg1npwgn9n88pyiyjb7flz3lli6m";
+    propagatedBuildInputs = [
+      go-libp2p-crypto
+      go-libp2p-peer
+      go-log
+      go-keyspace
+      go-multiaddr
+      go-multiaddr-net
+      mafmt
+    ];
+  };
+
+  go-libp2p-protocol = buildFromGitHub {
+    version = 2;
+    owner = "libp2p";
+    repo = "go-libp2p-protocol";
+    date = "2016-10-11";
+    rev = "40488c03777c16bfcd65da2f675b192863cbc2dc";
+    sha256 = "0mxs1x3cs0srrb2cvqbd2h0361gjhzz9xb7n6pjq013vnq6dyf03";
+  };
+
+  go-libp2p-transport = buildFromGitHub {
+    version = 2;
+    owner = "libp2p";
+    repo = "go-libp2p-transport";
+    date = "2016-12-07";
+    rev = "781e60ebcf259c8c6a12638b89f92c5d4df06086";
+    sha256 = "18g3f32cn4jmif1rnyizhy8iw5h91cv088i5daqnd8pb0hbprdv5";
+    propagatedBuildInputs = [
+      go-log
+      go-multiaddr
+      go-multiaddr-net
+      mafmt
+    ];
+  };
+
+  go-log = buildFromGitHub {
+    version = 2;
+    owner = "ipfs";
+    repo = "go-log";
+    date = "2016-09-03";
+    rev = "7c24d3c8b0889a7091d7f3618b9ad32b575db2c6";
+    sha256 = "0xvgrj61mi3g1i4kp10836wmvg1k8rgngh7c82w266x7lyg7w00s";
+    propagatedBuildInputs = [
+      whyrusleeping_go-logging
+    ];
+  };
+
+  whyrusleeping_go-logging = buildFromGitHub {
+    version = 2;
+    owner = "whyrusleeping";
+    repo = "go-logging";
+    date = "2016-12-07";
+    rev = "0a5b4a6decf577ce8293eca85ec733d7ab92d742";
+    sha256 = "057iwrmlhjnr4w9f9nhndicldv8h4007rxblr7l16rpkbski00wb";
+  };
+
   go-logging = buildFromGitHub {
     version = 2;
     owner = "op";
@@ -2376,6 +2572,19 @@ let
     repo   = "go-lz4";
     sha256 = "1hbbagvmq7kxrlwqkn0i4mz66i3n37ch7y6bm9yncnjgd97kldms";
     date = "2016-09-24";
+  };
+
+  go-maddr-filter = buildFromGitHub {
+    version = 2;
+    owner = "libp2p";
+    repo = "go-maddr-filter";
+    date = "2016-10-04";
+    rev = "d9f56211111ad200d4a1fb404c784870a89a0706";
+    sha256 = "14akw6zwx6i8x8azl64h05hlzidnhh7a6jdz4jq14mz1fhc78cm6";
+    propagatedBuildInputs = [
+      go-multiaddr
+      go-multiaddr-net
+    ];
   };
 
   go-md2man = buildFromGitHub {
@@ -2496,6 +2705,15 @@ let
     repo   = "go-multipart-files";
     sha256 = "0fdzi6v6rshh172hzxf8v9qq3d36nw3gc7g7d79wj88pinnqf5by";
     date = "2015-09-03";
+  };
+
+  go-multistream = buildFromGitHub {
+    version = 2;
+    rev = "b4a4ad9422aa66c32dce09d8d0fa15587d5f67b2";
+    date = "2016-11-10";
+    owner  = "whyrusleeping";
+    repo   = "go-multistream";
+    sha256 = "1s3ihslb48wynn4pnj1g2bl68w4xg55gdxrrn81pldibnrm4k26v";
   };
 
   go-nat-pmp = buildFromGitHub {
@@ -3207,12 +3425,12 @@ let
 
   ipfs = buildFromGitHub {
     version = 2;
-    date = "2016-12-07";
-    rev = "b6c1155ac89f47de512c8bac4251356d3a73e432";
+    date = "2016-12-10";
+    rev = "93c90020b275298694bdc5b6a484eb4f1d531560";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "05k8ix8yrwkd9xydp2m194yafy7ymllrkkv8hr5rh5849rzd1ynr";
-    gxSha256 = "18gf9w3vndjk80f8x529abhxfsvscfbmcqc0k1n1qjg8bbw5iwjq";
+    sha256 = "0298837x06gnnys0w7jr2yh1242xm3aigg1qhj229iawvnk0s9m9";
+    gxSha256 = "0jkq4ja7zajwcy2msrwyp7ghkkj4nr4qhzpvlwylqsmw7kwmd3br";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"
@@ -3570,6 +3788,18 @@ let
       com
       ini_v1
       inject
+    ];
+  };
+
+  mafmt = buildFromGitHub {
+    version = 2;
+    date = "2016-10-04";
+    rev = "a3d8d9c3218bb91d3a21ab40fcd6c94d0c568f30";
+    owner = "whyrusleeping";
+    repo = "mafmt";
+    sha256 = "06l4yfi7xb2blmcqxi8zbjx4py3lhmk3lqyy3qhavggrly2w0gwg";
+    propagatedBuildInputs = [
+      go-multiaddr
     ];
   };
 
@@ -5125,6 +5355,15 @@ let
       go-spew
       objx
     ];
+  };
+
+  timecache = buildFromGitHub {
+    version = 2;
+    rev = "cfcb2f1abfee846c430233aef0b630a946e0a5a6";
+    date = "2016-09-10";
+    owner  = "whyrusleeping";
+    repo   = "timecache";
+    sha256 = "0w65wbpf0fzxdj2f1d8km9hg91yp9519agdgb6v6jnxnjvi7d43j";
   };
 
   timetools = buildFromGitHub {

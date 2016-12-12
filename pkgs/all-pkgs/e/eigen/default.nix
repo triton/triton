@@ -7,16 +7,15 @@
 }:
 
 let
-  # Not all C++11 fixes have been backported to 3.2, use 3.3-pre
-  version = "3.3-beta2";
+  version = "3.3.0";
 in
 stdenv.mkDerivation rec {
   name = "eigen-${version}";
 
   src = fetchzip {
-    version = 1;
+    version = 2;
     url = "https://bitbucket.org/eigen/eigen/get/${version}.tar.bz2";
-    sha256 = "d8e1576145d707f9b1094ccd2f6212bf7451aa38f9dcb49c3175cf2c8951324c";
+    sha256 = "be6e391061a81074be67f5eb2bcc993d3b9187592a93c9f33b83a0d9ec79cb65";
   };
 
   nativeBuildInputs = [

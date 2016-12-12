@@ -1,6 +1,10 @@
 { stdenv
+, autoconf
+, autoconf-archive
+, automake
 , fetchurl
 , intltool
+, libtool
 , python2
 
 , dbus
@@ -27,13 +31,13 @@ stdenv.mkDerivation rec {
     sha256 = "fa35913158bbc7d0d99de79371b6df3e8d21802f1d2c7c92f0e5db694acf2c3a";
   };
 
-  postPatch = ''
-    grep 'libenchant.so.1' src/fe-gtk/sexy-spell-entry.c
-    sed -i src/fe-gtk/sexy-spell-entry.c \
-      -e "s,libenchant.so.1,${enchant}/lib/libenchant.so.1,g"
-  '';
-
   nativeBuildInputs = [
+    # Someone really bungled building the release tarball so we have to re-autotoolsify
+    autoconf
+    autoconf-archive
+    automake
+    libtool
+
     intltool
     libxml2
     python2
@@ -53,6 +57,22 @@ stdenv.mkDerivation rec {
     pciutils
   ];
 
+  postPatch = ''
+    links="$(find . -type l)"
+    for link in $links; do
+      readlink -f "$link" || rm "$link"
+    done
+
+    grep 'libenchant.so.1' src/fe-gtk/sexy-spell-entry.c
+    sed -i src/fe-gtk/sexy-spell-entry.c \
+      -e "s,libenchant.so.1,${enchant}/lib/libenchant.so.1,g"
+  '';
+
+  preConfigure = ''
+    export NOCONFIGURE=1
+    ./autogen.sh
+  '';
+
   configureFlags = [
     "--enable-openssl"
     "--enable-gtkfe"
@@ -60,7 +80,6 @@ stdenv.mkDerivation rec {
     "--enable-python=python2"
     "--disable-perl"
     "--disable-lua"
-    "--enable-shm"
   ];
 
   passthru = {

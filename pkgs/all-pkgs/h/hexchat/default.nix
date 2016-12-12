@@ -29,7 +29,8 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     grep 'libenchant.so.1' src/fe-gtk/sexy-spell-entry.c
-    sed -i "s,libenchant.so.1,${enchant}/lib/libenchant.so.1,g" src/fe-gtk/sexy-spell-entry.c
+    sed -i src/fe-gtk/sexy-spell-entry.c \
+      -e "s,libenchant.so.1,${enchant}/lib/libenchant.so.1,g"
   '';
 
   nativeBuildInputs = [

@@ -42,6 +42,23 @@ stdenv.mkDerivation rec {
     xdg-utils
   ];
 
+  # Allow newer wxGTK
+  postPatch = ''
+    awk -i inplace '
+      {
+        if (/if.*WX_VERSION.*3.1/) {
+          dontPrint = 1;
+        }
+        if (!dontPrint) {
+          print $0;
+        }
+        if (/fi/) {
+          dontPrint = 0;
+        }
+      }
+    ' configure
+  '';
+
   configureFlags = [
     "--disable-manualupdatecheck"
   ];

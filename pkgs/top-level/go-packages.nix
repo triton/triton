@@ -612,11 +612,11 @@ let
 
   circonus-gometrics = buildFromGitHub {
     version = 2;
-    date = "2016-12-06";
-    rev = "f0dc787f516d58e7d2474fb4718c1d3f812bd48b";
+    date = "2016-12-08";
+    rev = "4d93a8f79cb1e34a38f99dd13e64e8bfd3df1c72";
     owner  = "circonus-labs";
     repo   = "circonus-gometrics";
-    sha256 = "0r6f9kjdrfz9c9kyf80mkk8rwdfrnqkcmsi7x8bn3gsq0nykpxlg";
+    sha256 = "1zn0gryx41cr6j0kmgf759q2a0c1aadmnd03p3mn2xfhj5rpj03i";
     propagatedBuildInputs = [
       circonusllhist
       go-retryablehttp
@@ -834,6 +834,21 @@ let
     meta.autoUpdate = false;
   };
 
+  consulfs = buildFromGitHub {
+    version = 2;
+    rev = "745c59d46a74b8aceccbd3f1dd4ad064f6e8bb64";
+    owner = "bwester";
+    repo = "consulfs";
+    sha256 = "0a2hrppqyaymlg8bcmzbadcxrsz9kcnin4w10sinv7x142d21g7q";
+    date = "2016-10-28";
+    buildInputs = [
+      consul_api
+      fuse
+      logrus
+      net
+    ];
+  };
+
   consul-template = buildFromGitHub {
     version = 2;
     rev = "v0.18.0-rc1";
@@ -1017,11 +1032,11 @@ let
 
   dns = buildFromGitHub {
     version = 2;
-    rev = "f4d2b086946a624202dc59e6a43f72e8f3f02bc1";
-    date = "2016-12-02";
+    rev = "4744e915eb51a9defb5fb13c24ce2c8408d2fd98";
+    date = "2016-12-09";
     owner  = "miekg";
     repo   = "dns";
-    sha256 = "17w9zw222wcikazkjnyg9r41vfrcl29jbixwfv4y67khj5i2j7r0";
+    sha256 = "1ryffaz86j1l85c62smc21xwbi5mg14y34srj6rnl55h0hnq4sbj";
   };
 
   weppos-dnsimple-go = buildFromGitHub {
@@ -3805,11 +3820,11 @@ let
 
   mapstructure = buildFromGitHub {
     version = 2;
-    date = "2016-12-03";
-    rev = "5a0325d7fafaac12dda6e7fb8bd222ec1b69875e";
+    date = "2016-12-11";
+    rev = "bfdb1a85537d60bc7e954e600c250219ea497417";
     owner  = "mitchellh";
     repo   = "mapstructure";
-    sha256 = "0kak78ky0rrm60jacszmdnxmv9662xc7ywadjk0zcnmwk8i3f6i2";
+    sha256 = "043hd3hglxxk080lqh2d653lfy6mbxgw1dsil3chg5hb5ljkwwv4";
   };
 
   match = buildFromGitHub {

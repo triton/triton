@@ -789,6 +789,8 @@ conntrack-tools = callPackage ../all-pkgs/c/conntrack-tools { };
 
 consul = pkgs.goPackages.consul.bin // { outputs = [ "bin" ]; };
 
+consulfs = pkgs.goPackages.consulfs.bin // { outputs = [ "bin" ]; };
+
 consul-template = pkgs.goPackages.consul-template.bin // { outputs = [ "bin" ]; };
 
 consul-ui = callPackage ../all-pkgs/c/consul-ui { };

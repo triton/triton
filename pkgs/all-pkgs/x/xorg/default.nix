@@ -765,10 +765,10 @@ let
   }) // {inherit ;};
 
   intelgputools = (mkDerivation "intelgputools" {
-    name = "intel-gpu-tools-1.16";
+    name = "intel-gpu-tools-1.17";
     src = fetchurl {
-      url = mirror://xorg/individual/app/intel-gpu-tools-1.16.tar.bz2;
-      sha256 = "1q9sfb15081zm1rq4z67sfj13ryvbdha4fa6pdzdsfd9261nvgn6";
+      url = mirror://xorg/individual/app/intel-gpu-tools-1.17.tar.bz2;
+      sha256 = "a6cbc4e0e52ea87c082987d1bb90a354f8ffac94a31b7b4cd48b38b7f4aafb1a";
     };
     nativeBuildInputs = [ bison flex python python3 utilmacros ];
     buildInputs = [ cairo dri2proto glib libdrm systemd_lib libunwind libpciaccess libX11 libXext libXrandr libXv ];
@@ -1700,10 +1700,10 @@ let
   }) // {inherit inputproto xorgserver xproto ;};
 
   xf86inputlibinput = (mkDerivation "xf86inputlibinput" {
-    name = "xf86-input-libinput-0.22.0";
+    name = "xf86-input-libinput-0.23.0";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-libinput-0.22.0.tar.bz2;
-      sha256 = "1qpaffl21xxjqcn4cqdfnd1gvxwdxizvvkimkypf4j6l5q3v8qn7";
+      url = mirror://xorg/individual/driver/xf86-input-libinput-0.23.0.tar.bz2;
+      sha256 = "0b53ebdfe8f8fc7554dd92af1b1c3088a6d3ec4ae1a33fc76f57d635c736a9dc";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ inputproto libinput xorgserver xproto ];
@@ -1843,10 +1843,10 @@ let
   }) // {inherit randrproto videoproto xorgserver xproto ;};
 
   xf86videovmware = (mkDerivation "xf86videovmware" {
-    name = "xf86-video-vmware-13.1.0";
+    name = "xf86-video-vmware-13.2.1";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-vmware-13.1.0.tar.bz2;
-      sha256 = "1k50whwnkzxam2ihc1sw456dx0pvr76naycm4qhyjxqv9d72879w";
+      url = mirror://xorg/individual/driver/xf86-video-vmware-13.2.1.tar.bz2;
+      sha256 = "e2f7f7101fba7f53b268e7a25908babbf155b3984fb5268b3d244eb6c11bf62b";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ fontsproto libdrm libpciaccess randrproto renderproto videoproto libX11 libXext xextproto xineramaproto xorgserver xproto ];

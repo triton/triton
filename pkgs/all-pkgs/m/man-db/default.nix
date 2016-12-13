@@ -7,11 +7,12 @@
 }:
  
 stdenv.mkDerivation rec {
-  name = "man-db-2.7.5";
+  name = "man-db-2.7.6";
   
   src = fetchurl {
     url = "mirror://savannah/man-db/${name}.tar.xz";
-    sha256 = "056a3il7agfazac12yggcg4gf412yq34k065im0cpfxbcw6xskaw";
+    hashOutput = false;
+    sha256 = "c68cffa6b93f6362beb1d1259f9ad5b65af2aee9a7d9910086082ea4b75f5da2";
   };
 
   nativeBuildInputs = [
@@ -41,6 +42,15 @@ stdenv.mkDerivation rec {
       "sysconfdir=$out/etc"
     )
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "AC0A 4FF1 2611 B6FC CF01  C111 3935 87D9 7D86 500B";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = "http://man-db.nongnu.org";

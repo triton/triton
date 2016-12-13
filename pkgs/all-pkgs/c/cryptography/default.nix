@@ -16,7 +16,7 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "1.6";
+  version = "1.7";
 in
 buildPythonPackage {
   name = "cryptography-${version}";
@@ -24,7 +24,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "cryptography";
     inherit version;
-    sha256 = "4d0d86d2c8d3fc89133c3fa0d164a688a458b6663ab6fa965c80d6c2cdaf9b3f";
+    sha256 = "404e5c0d1754e2a9bc85ef9e97420cc082fced024c914cc9ff1793f7b5f14931";
   };
 
   buildInputs = [

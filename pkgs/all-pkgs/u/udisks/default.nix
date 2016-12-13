@@ -17,11 +17,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "udisks-2.1.7";
+  name = "udisks-2.1.8";
 
   src = fetchurl {
-    url = "http://udisks.freedesktop.org/releases/${name}.tar.bz2";
-    sha256 = "119pr2zbff8vkwlhghim7d7ir24c1dil9hp4q49wm4f6pnrjpbmb";
+    url = "https://udisks.freedesktop.org/releases/${name}.tar.bz2";
+    multihash = "QmSknjMv6ad2CqSDwtVJQ5JQMCVWzo536T7dyVzKK6C1qz";
+    hashOutput = false;
+    sha256 = "da416914812a77e5f4d82b81deb8c25799fd3228d27d52f7bf89a501b1857dda";
   };
 
   # FIXME remove /var/run/current-system/sw/* references
@@ -78,6 +80,15 @@ stdenv.mkDerivation rec {
       "INTROSPECTION_GIRDIR=$(echo "$INTROSPECTION_GIRDIR" | sed "s,${gobject-introspection},$out,g")"
     )
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sign") src.urls;
+      pgpKeyFingerprint = "3DB4 6B55 EFA5 9D40 E623  2148 D14E F15D AFE1 1347";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://www.freedesktop.org/wiki/Software/udisks;

@@ -1,8 +1,8 @@
 { }:
 {
   "1.2" = {
-    version = "1.2.17";
-    sha256 = "1c3601efdac611c8833d508054698ee9d8917b4e5fffb7fff8baec0bd6c8cb9c";
+    version = "1.2.18";
+    sha256 = "e0f7acc82691b9090e5d10a23ff4a7ceb9affe429b8f5221a9766129dc6f55aa";
   };
   "git" = {
     fetchzipversion = 2;

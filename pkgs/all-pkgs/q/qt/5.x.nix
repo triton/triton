@@ -48,7 +48,7 @@
 
 let
   versionMajor = "5.7";
-  versionPatch = "0";
+  versionPatch = "1";
   version = "${versionMajor}.${versionPatch}";
 
   inherit (stdenv.lib)
@@ -60,7 +60,7 @@ stdenv.mkDerivation {
   src = fetchurl {
     url = "http://download.qt.io/official_releases/qt/${versionMajor}/${version}"
       + "/single/qt-everywhere-opensource-src-${version}.tar.xz";
-    sha256 = "a6a2632de7e44bbb790bc3b563f143702c610464a7f537d02036749041fd1800";
+    sha256 = "46ebca977deb629c5e69c2545bc5fe13f7e40012e5e2e451695c583bd33502fa";
   };
 
   nativeBuildInputs = [

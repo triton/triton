@@ -16,23 +16,22 @@ let
     boolWt
     optionals;
 
-  version = "5.2";
+  version = "5.3";
 
   documentation = fetchurl {
-    url = "mirror://sourceforge/zsh/zsh-${version}-doc.tar.xz";
-    multihash = "QmTtr2J9Xja65dV2ehuer4UtPGPL7v7QT2fPyg5syJFDjN";
+    url = "mirror://sourceforge/zsh/zsh-doc/${version}/"
+      + "zsh-${version}-doc.tar.xz";
     hashOutput = false;
-    sha256 = "328352cf3d5d0ec4b6e31dcefd25ff5b4c0e6b8077d1fe84448ebb50d6ada52a";
+    sha256 = "cdfc6c3f7235b13308af5316cfa87abb5f51b3ec72d45f9043fde6e5b2e8663e";
   };
 in
 stdenv.mkDerivation rec {
   name = "zsh-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/zsh/zsh-${version}.tar.xz";
-    multihash = "Qmf4djuLdrXw15ACTq5TeUwm7CjNCFPF8CQgZFMghtp5t6";
+    url = "mirror://sourceforge/zsh/zsh/${version}/zsh-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "f17916320ffaa844bbd7ce48ceeb5945fc5f3eff64b149b4229bbfbdf3795a9d";
+    sha256 = "76f82cfd5ce373cf799a03b6f395283f128430db49202e3e3f512fb5a19d6f8a";
   };
 
   nativeBuildInputs = [
@@ -49,6 +48,8 @@ stdenv.mkDerivation rec {
   postPatch = ''
     patchShebangs ./Misc/
     patchShebangs ./Util/
+  '' + /* Test requres additional executables */ ''
+    rm -fv ./Test/A01grammar.ztst
   '' + /* Test requires filesystem to have atime enabled */ ''
     rm -fv ./Test/C02cond.ztst
   '';

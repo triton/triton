@@ -82,12 +82,14 @@ stdenv.mkDerivation rec {
   ];
 
   preInstall = ''
-    installFlagsArray+=(
-      "sysconfdir=$out/etc"
-      "localstatedir=$TMPDIR"
-      "utildir=$out/bin"
-      "GLUSTERD_WORKDIR=$TMPDIR"
-    )
+    find . -name Makefile -exec sed -i {} \
+      -e "s,sysconfdir[ ]*=.*,sysconfdir = $out/etc," \
+      -e "s,localstatedir[ ]*=.*,localstatedir = $TMPDIR," \
+      -e "s,mountutildir[ ]*=.*,mountutildir = $out/bin," \
+      -e "s,utildir[ ]*=.*,utildir = $out/bin," \
+      -e "s,GLUSTERD_WORKDIR[ ]*=.*,GLUSTERD_WORKDIR = $TMPDIR," \
+      -e "\,/var/lib/glusterd/events,d" \
+      \;
   '';
 
   preFixup = ''

@@ -88,6 +88,12 @@ stdenv.mkDerivation rec {
       -e 's,GIT-NOTFOUND,${version},g' \
       -e 's,GITDIR-NOTFOUND,${replaceChars ["-" "."] ["" ""] version},g' \
       -i cmake/modules/GetGitRevisionDescription.cmake
+
+    # {PYTHON_LIBRARIES} should be {PYTHON_LIBRARY}
+    sed -i 's,PYTHON_LIBRARIES,PYTHON_LIBRARY,g' src/CMakeLists.txt
+
+    # Boost doesn't know how to include python libraries
+    sed -i '/find_package(Boost/aLIST(APPEND Boost_LIBRARIES ''${PYTHON_LIBRARY})' CMakeLists.txt
   '';
 
   preConfigure = ''
@@ -100,6 +106,7 @@ stdenv.mkDerivation rec {
   '';
 
   cmakeFlags = [
+    #"-DWITH_RDMA=ON"
     #"-DWITH_SPDK=ON"
     #"-DWITH_XIO=ON"  # Broken build
     "-DHAVE_BABELTRACE=OFF"

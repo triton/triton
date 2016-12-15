@@ -13,7 +13,7 @@
 
 let
   majorVersion = "3.7";
-  minorVersion = "0";
+  minorVersion = "1";
   version = "${majorVersion}.${minorVersion}";
 in
 stdenv.mkDerivation rec {
@@ -21,8 +21,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://cmake.org/files/v${majorVersion}/cmake-${version}.tar.gz";
-    multihash = "Qmd7SEn2TWabHKW9NyYmrXquLeC3HvwzGbFUS8GT2Dny1Z";
-    sha256 = "ed63e05c41aeb6c036e503114ab15847f29c312f9f21f5f1a7060a4b4ec2fb31";
+    multihash = "QmZCLEj6EdX7CFWQSe9RYyYsnvSEuCMtVphDBjKb2CzqGe";
+    sha256 = "449a5bce64dbd4d5b9517ebd1a1248ed197add6ad27934478976fd5f1f9330e1";
   };
 
   patches = [

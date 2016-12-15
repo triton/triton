@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "0.1.14";
+  version = "0.1.15";
 
   fileUrls = [
     "https://kristaps.bsd.lv/acme-client/snapshots/acme-client-portable-${version}"
@@ -17,9 +17,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = map (n: "${n}.tgz") fileUrls;
-    multihash = "QmcYbwZxsyp7XsDgA6bmX1rCGFLxCAipv4ckLJUWCZLozd";
+    multihash = "QmUWFZNh2d5eQvu7qArRrADMea5wHkTaJew1CuYAHTcUat";
     hashOutput = false;
-    sha256 = "14aa753f65e3d2ca36a8b97d68fe36205f935eaf735b7bf6a8c5d81bc8ec04e3";
+    sha256 = "910f4ffab4aea2dc9563405aa6a53e85d00166a020c74c28d719f290c610e71e";
   };
 
   buildInputs = [

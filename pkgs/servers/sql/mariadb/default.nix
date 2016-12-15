@@ -6,7 +6,7 @@
 
 with stdenv.lib;
 stdenv.mkDerivation rec {
-  name = "mariadb-10.1.19";
+  name = "mariadb-10.1.20";
 
   src = fetchurl {
     urls = map (n: "${n}/${name}/source/${name}.tar.gz") [
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
       "http://mirror.jmu.edu/pub/mariadb"
     ];
     hashOutput = false;
-    sha256 = "5b9373f314e2d1727422fb3795bcf50c1c59005129b35b6cadafae5663251a81";
+    sha256 = "c24e83f24d674d9912319f9e9422f093c8ca6be1721a4380cbd74792b89ba0b9";
   };
 
   nativeBuildInputs = [

@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "1.29.0";
+  version = "1.30.0";
 in
 stdenv.mkDerivation rec {
   name = "aria2-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/tatsuhiro-t/aria2/releases/download/"
       + "release-${version}/${name}.tar.xz";
-    sha256 = "1a64d023e75bf61c751609ef0df198596f785f1abc371672a75d5b09bd91c82e";
+    sha256 = "bf6c5366d11d2a6038c8e19f01f9b874041793aaf317e0206120e3e8c9c431f6";
   };
 
   buildInputs = [

@@ -497,6 +497,8 @@ acl = callPackage ../all-pkgs/a/acl { };
 
 acme-client = callPackage ../all-pkgs/a/acme-client { };
 
+acpi = callPackage ../all-pkgs/a/acpi { };
+
 acpid = callPackage ../all-pkgs/a/acpid { };
 
 adns = callPackage ../all-pkgs/a/adns { };
@@ -4055,8 +4057,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   zookeeper = callPackage ../servers/zookeeper { };
 
   zookeeper_mt = callPackage ../development/libraries/zookeeper_mt { };
-#
-  acpi = callPackage ../os-specific/linux/acpi { };
 #
   alsa-oss = callPackage ../os-specific/linux/alsa-oss { };
 

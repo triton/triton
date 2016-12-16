@@ -149,16 +149,20 @@ stdenv.mkDerivation {
     "--follow-symlinks"
   ];
 
-  patches =
-    optionals (
-      versionAtLeast source.versionMajor "367"
-      && versionOlder version "375.20") [
-      (fetchTritonPatch {
-        rev = "daeb3f279f0c923644b352ac318e7f13c8692f0c";
-        file = "nvidia-drivers/nvidia-drivers-367.35-fix-application-profiles-typo.patch";
-        sha256 = "caae27b1883c5c6b3c4684720d2902421ad16ab49577ee7302a95c964236141d";
-      })
-    ];
+  patches = optionals (versionAtLeast source.versionMajor "367"
+    && versionOlder version "375.20") [
+    (fetchTritonPatch {
+      rev = "daeb3f279f0c923644b352ac318e7f13c8692f0c";
+      file = "nvidia-drivers/nvidia-drivers-367.35-fix-application-profiles-typo.patch";
+      sha256 = "caae27b1883c5c6b3c4684720d2902421ad16ab49577ee7302a95c964236141d";
+    })
+  ] ++ optionals (versionAtLeast version "375.26") [
+    (fetchTritonPatch {
+      rev = "6006a85706e75e7be60d28766f01245235d8b8b4";
+      file = "n/nvidia-drivers/nvidia-drivers-375.26-profiles-rc.patch";
+      sha256 = "293569431fdac59e0f08103bd135cc0148b03500740a5b0fddc0c60a479da74c";
+    })
+  ];
 
   configurePhase = ":";
 

@@ -21,12 +21,12 @@
 , libsOnly ? false
 }:
 
-/* NOTICE: ONLY versions 352+ are supported on Triton
+/* NOTICE: ONLY versions 375+ are supported on Triton
  *
- * BETA:        367.xx,   xorg <=1.18.x, linux <=4.8
- * SHORTLIVED:  364.xx,   xorg <=1.18.x, linux <=4.8
- * LONGLIVED:   367.xx,   xorg <=1.19.x, linux <=4.8 (stable) <- default
- * TESLA:       352.xx,   xorg <=1.18.x, linux <=4.5
+ * BETA:        375.xx,   xorg <=1.18.x, linux <=4.8
+ * SHORTLIVED:  370.xx,   xorg <=1.18.x, linux <=4.8
+ * LONGLIVED:   375.xx,   xorg <=1.19.x, linux <=4.9 (stable) <- default
+ * TESLA:       375.xx,   xorg <=1.19.x, linux <=4.9
  * UNSUPPORTED: 340.xx,   xorg <=1.18.x, linux <=4.5
  * UNSUPPORTED: 304.xx,   xorg <=1.18.x, linux <=4.5
  * UNSUPPORTED: 173.14.x, xorg <=1.15.x, linux <=3.13
@@ -350,7 +350,6 @@ stdenv.mkDerivation {
     ## Headers
     #
     /* OpenGL headers */ optionalString (!libsOnly) ''
-      ## OpenGL headers
       nvidia_header_install 0 0 'gl' 'GL'
       nvidia_header_install 0 0 'glext' 'GL'
       nvidia_header_install 0 0 'glx' 'GL'
@@ -410,24 +409,24 @@ stdenv.mkDerivation {
       # X.Org driver configuration file
       install -D -m644 -v 'nvidia-drm-outputclass.conf' \
         "$out/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf"
-    '' +
-    #
-    ## Desktop Entries
-    #
-    /* NVIDIA Settings .desktop entry */ ''
-      # Provided by the nvidia-settings package
-      ###install -D -m 644 -v 'nvidia-settings.desktop' \
-      ###  "$out/share/applications/nvidia-settings.desktop"
-      ###sed -i "$out/share/applications/nvidia-settings.desktop" \
-    '' +
-    #
-    ## Icons
-    #
-    /* NVIDIA Settings icon */ ''
-      # Provided by the nvidia-settings package
-      ###install -D -m 644 -v 'nvidia-settings.png' \
-      ###  "$out/share/pixmaps/nvidia-settings.png"
     ''
+    # +
+    # #
+    # ## Desktop Entries
+    # #
+    # /* NVIDIA Settings .desktop entry */ ''
+    #   install -D -m 644 -v 'nvidia-settings.desktop' \
+    #     "$out/share/applications/nvidia-settings.desktop"
+    #   sed -i "$out/share/applications/nvidia-settings.desktop" \
+    # '' +
+    # #
+    # ## Icons
+    # #
+    # /* NVIDIA Settings icon */ ''
+    #   # Provided by the nvidia-settings package
+    #   install -D -m 644 -v 'nvidia-settings.png' \
+    #     "$out/share/pixmaps/nvidia-settings.png"
+    # ''
   );
 
   preFixup = /* Patch RPATH's in libraries and executables */ ''

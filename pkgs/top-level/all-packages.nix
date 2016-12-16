@@ -3502,6 +3502,7 @@ xorg = recurseIntoAttrs (
       # dmxproto
       # dri2proto
       # dri3proto
+      # fixesproto
       # fontcacheproto
       # fontsproto
       # glproto

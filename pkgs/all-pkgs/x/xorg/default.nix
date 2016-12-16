@@ -11,6 +11,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 # , dmxproto
 # , dri2proto
 # , dri3proto
+# , fixesproto
 # , fontcacheproto
 # , fontsproto
 # , glproto
@@ -74,6 +75,7 @@ let
     #   dmxproto
     #   dri2proto
     #   dri3proto
+    #   fixesproto
     #   fontcacheproto
     #   fontsproto
     #   glproto

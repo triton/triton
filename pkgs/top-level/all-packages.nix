@@ -2625,6 +2625,10 @@ nvidia-cuda-toolkit_8-0 = callPackage ../all-pkgs/n/nvidia-cuda-toolkit {
 };
 nvidia-cuda-toolkit = callPackageAlias "nvidia-cuda-toolkit_8-0" { };
 
+nvidia-drivers_tesla = callPackage ../all-pkgs/n/nvidia-drivers {
+  channel = "tesla";
+  buildConfig = "userspace";
+};
 nvidia-drivers_long-lived = callPackage ../all-pkgs/n/nvidia-drivers {
   channel = "long-lived";
   buildConfig = "userspace";
@@ -4123,9 +4127,9 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 
       e1000e = kCallPackage ../os-specific/linux/e1000e {};
 
-      #nvidia-drivers_tesla = kCallPackage ../all-pkgs/n/nvidia-drivers {
-      #  channel = "tesla";
-      #};
+      nvidia-drivers_tesla = kCallPackage ../all-pkgs/n/nvidia-drivers {
+       channel = "tesla";
+      };
       nvidia-drivers_long-lived = kCallPackage ../all-pkgs/n/nvidia-drivers {
         channel = "long-lived";
         buildConfig = "kernelspace";

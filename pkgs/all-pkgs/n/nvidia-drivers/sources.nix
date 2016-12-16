@@ -3,9 +3,9 @@ rec {
   # http://www.nvidia.com/object/unix.html
 
   tesla = {
-    versionMajor = "352";
-    versionMinor = "99";
-    sha256x86_64 = "055ee6acd3ca1f4a07fdb1a4a16abb9abc6bfcb17fe2158808060838a4e84b83";
+    versionMajor = "375";
+    versionMinor = "20";
+    sha256x86_64 = "d10e40a19dc57ac958567a2b247c2b113e5f1e4186ad48e9a58e70a46d07620b";
   };
   long-lived = {
     versionMajor = "375";

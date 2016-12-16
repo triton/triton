@@ -5,12 +5,12 @@
 
 buildPythonPackage rec {
   name = "pip-${version}";
-  version = "8.1.2";
+  version = "9.0.1";
 
   src = fetchPyPi {
     package = "pip";
     inherit version;
-    sha256 = "4d24b03ffa67638a3fa931c09fd9e0273ffa904e95ebebe7d4b1a54c93d7b732";
+    sha256 = "09f243e1a7b461f654c26a725fa373211bb7ff17a9300058b205c61658ca940d";
   };
 
   meta = with stdenv.lib; {

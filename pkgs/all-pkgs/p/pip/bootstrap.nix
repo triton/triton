@@ -24,7 +24,7 @@ let
     package = "pip";
     inherit (pythonPackages.pip) version;
     type = "-py2.py3-none-any.whl";
-    sha256 = "6464dd9809fb34fc8df2bf49553bb11dac4c13d2ffa7a4f8038ad86a4ccb92a1";
+    sha256 = "690b762c0a8460c303c089d5d0be034fb15a5ea2b75bdf565f40421f542fefb0";
   };
 in
 

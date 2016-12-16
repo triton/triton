@@ -393,10 +393,10 @@ stdenv.mkDerivation {
     optionalString (!libsOnly) ''
       # NVIDIA application profiles
       install -D -m644 -v "nvidia-application-profiles-${version}-key-documentation" \
-        "$out/etc/nvidia-application-profiles-${version}-key-documentation"
+        "$out/share/nvidia/nvidia-application-profiles-${version}-key-documentation"
       ln -sv \
-        "$out/etc/nvidia-application-profiles-${version}-key-documentation" \
-        "$out/etc/nvidia-application-profiles-key-documentation"
+        "$out/share/nvidia/nvidia-application-profiles-${version}-key-documentation" \
+        "$out/share/nvidia/nvidia-application-profiles-key-documentation"
       install -D -m644 -v "nvidia-application-profiles-${version}-rc" \
         "$out/share/doc/nvidia-application-profiles-${version}-rc"
       mkdir -pv "$out/etc/nvidia"

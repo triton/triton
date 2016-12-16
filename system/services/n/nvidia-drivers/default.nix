@@ -87,7 +87,7 @@ in
     environment.etc."nvidia/nvidia-application-profiles-rc.d".source =
       "${nvidia-drivers_userspace}/etc/nvidia/nvidia-application-profiles-rc.d";
     environment.etc."nvidia/nvidia-application-profiles-key-documentation".source =
-      "${nvidia-drivers_userspace}/etc/nvidia/nvidia-application-profiles-key-documentation";
+      "${nvidia-drivers_userspace}/share/nvidia/nvidia-application-profiles-key-documentation";
 
     environment.systemPackages = [
       nvidia-drivers_userspace

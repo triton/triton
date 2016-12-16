@@ -1,24 +1,24 @@
 { stdenv
 , fetchurl
 , gnum4
+, lib
 , makeWrapper
 
-, gdk-pixbuf_unwrapped
+, adwaita-icon-theme
+, gdk-pixbuf
 , glib
 , gtk_2
 , gtk_3
 , jansson
 , libvdpau
 , mesa_noglu
+, nvidia-drivers_latest
 , pango
 , xorg
 }:
 
 let
-  inherit (stdenv.lib)
-    bool01;
-
-    version = "375.20";
+  version = "375.26";
 in
 stdenv.mkDerivation rec {
   name = "nvidia-settings-${version}";
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "http://http.download.nvidia.com/XFree86/nvidia-settings/"
       + "nvidia-settings-${version}.tar.bz2";
-    sha256 = "40cd293e79bda131147187f281578e2b1f887c05bee78f671bde329af4956ada";
+    sha256 = "beb0d88e2f63427239fd2014299ef7bf780e70800f68be5d011575e858711fe9";
   };
 
   nativeBuildInputs = [
@@ -35,13 +35,15 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    gdk-pixbuf_unwrapped
+    adwaita-icon-theme
+    gdk-pixbuf
     glib
     gtk_2
     gtk_3
     jansson
     libvdpau
     mesa_noglu
+    nvidia-drivers_latest
     pango
     xorg.libX11
     xorg.libXext
@@ -60,11 +62,9 @@ stdenv.mkDerivation rec {
   postPatch = /* libXv is normally loaded at runtime via LD_LIBRARY_PATH */ ''
     sed -i src/libXNVCtrlAttributes/NvCtrlAttributesXv.c \
       -e 's,"libXv.so.1","${xorg.libXv}/lib/libXv.so.1",'
-  '' + # FIXME: nvidia-settings should depend on the nvidia-drivers directly
-       #        for this file rather than using /etc.
-    /* Fix nvidia-application-profiles-key-documentation loading */ ''
+  '' + /* Fix nvidia-application-profiles-key-documentation loading */ ''
     sed -i src/gtk+-2.x/ctkappprofile.c  \
-      -e "s,/usr/share,/etc,"
+      -e "s,/usr/share,${nvidia-drivers_latest}/share,"
   '';
 
   preBuild = ''
@@ -98,10 +98,12 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/nvidia-settings \
-      --prefix LD_LIBRARY_PATH : "$out/lib"
+      --prefix LD_LIBRARY_PATH : "$out/lib" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "NVIDIA driver control panel";
     homepage = http://www.nvidia.com/;
     license = licenses.gpl2;

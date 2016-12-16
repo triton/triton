@@ -26,7 +26,7 @@ let
   inherit (lib)
     makeSearchPath;
 
-  version = "1.3.2.3112-1751929";
+  version = "1.3.3.3148-b38628e";
 in
 stdenv.mkDerivation rec {
   name = "plex-${version}";
@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://downloads.plex.tv/plex-media-server/${version}/"
       + "plexmediaserver_${version}_amd64.deb";
-    sha256 = "bf21c4fb7b5e541b51951c81bbd837ad0fc4b3e2b6ef01b0c3513b9b0f319d4d";
+    sha256 = "3b58d0ad9a9e27e86209c33550be832868102526d512a860d4984ef3daf7cad9";
   };
 
   nativeBuildInputs = [

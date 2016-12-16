@@ -1,17 +1,19 @@
 { stdenv
-, autoreconfHook
+, cmake
 , fetchpatch
 , fetchTritonPatch
 , fetchFromGitHub
 , lib
+, ninja
 
+, freeglut
 , libjpeg
 , mesa
 }:
 
 let
   inherit (lib)
-    boolEn;
+    boolOn;
 
   version = "2.0.6";
 in
@@ -27,28 +29,29 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    autoreconfHook
+    cmake
+    ninja
   ];
 
   buildInputs = [
+    freeglut
     libjpeg
     mesa
   ];
 
-  configureFlags = [
-    "--enable-shared"
-    "--${boolEn (libjpeg != null)}-libjpeg"
-    "--${boolEn (mesa != null)}-opengl"
-    "--disable-dmalloc"
-    "--disable-debug"
-    "--disable-special0"
-    "--with-x"
+  cmakeFlags = [
+    "-DJAS_ENABLE_SHARED=ON"
+    "-DJAS_ENABLE_LIBJPEG=${boolOn (libjpeg != null)}"
+    "-DJAS_ENABLE_OPENGL=${boolOn (freeglut != null && mesa != null)}"
+    "-DJAS_ENABLE_STRICT=OFF"
+    "-DJAS_ENABLE_AUTOMATIC_DEPENDENCIES=OFF"
+    "-DJAS_LOCAL=OFF"
   ];
 
   meta = with lib; {
     description = "JPEG2000 Library";
     homepage = https://www.ece.uvic.ca/~frodo/jasper/;
-    license = licenses.free; # JasPer2.0
+    license = licenses.free;  # JasPer2.0
     maintainers = with maintainers; [
       codyopel
     ];

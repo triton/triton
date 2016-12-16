@@ -29,17 +29,17 @@ let
     else
       null;
 
-  nvidiaUserspace = nvidiaUserspace:
+  nvidiaUserspace = userspacePackages:
     if elem "nvidia" drivers || elem "nvidia-long-lived" drivers then
-      nvidiaUserspace.nvidia-drivers_long-lived
+      userspacePackages.nvidia-drivers_long-lived
     else if elem "nvidia-short-lived" drivers then
-      nvidiaUserspace.nvidia-drivers_short-lived
+      userspacePackages.nvidia-drivers_short-lived
     else if elem "nvidia-beta" drivers then
-      nvidiaUserspace.nvidia-drivers_beta
+      userspacePackages.nvidia-drivers_beta
     else if elem "nvidia-latest" drivers then
-      nvidiaUserspace.nvidia-drivers_latest
+      userspacePackages.nvidia-drivers_latest
     else if elem "nvidia-tesla" drivers then
-      nvidiaUserspace.nvidia-drivers_tesla
+      userspacePackages.nvidia-drivers_tesla
     else
       null;
 

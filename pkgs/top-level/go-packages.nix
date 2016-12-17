@@ -3109,7 +3109,7 @@ let
   };
 
   grpc_for_gax-go = buildFromGitHub {
-    inherit (grpc) version date rev owner repo sha256 goPackagePath goPackageAliases;
+    inherit (grpc) version date rev owner repo sha256 goPackagePath goPackageAliases meta;
     propagatedBuildInputs = [
       net
       protobuf
@@ -3118,7 +3118,6 @@ let
       "."
       "codes"
     ];
-    meta.useUnstable = true;
   };
 
   grpc-gateway = buildFromGitHub {

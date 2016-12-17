@@ -422,10 +422,10 @@ let
 
   aws-sdk-go = buildFromGitHub {
     version = 2;
-    rev = "v1.6.3";
+    rev = "v1.6.4";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "0s58wz3bfl4q3dja24glvw5n2np6392nl2zjy1fkxff763y07351";
+    sha256 = "0bfk49g9r9k0q7vxhnvymp5l1ys0l3cyk9fw6n8sx6rri2n4ygn9";
     excludedPackages = "\\(awstesting\\|example\\)";
     buildInputs = [
       tools
@@ -1032,11 +1032,11 @@ let
 
   dns = buildFromGitHub {
     version = 2;
-    rev = "78bb99c423671ee9c2b8058cceab3b56d5c07b1e";
-    date = "2016-12-15";
+    rev = "4f8d08ab3c3f260afc934e9baf564bede5795458";
+    date = "2016-12-16";
     owner  = "miekg";
     repo   = "dns";
-    sha256 = "1018zqc87cp102rlq744hb9hm3dvmpi2m0hajkq0a6p2kba7frpz";
+    sha256 = "1dnbf2f3bnrf90prsflsg1hfipiv2hvya5l41xbmd1yrq8k1jxs3";
   };
 
   weppos-dnsimple-go = buildFromGitHub {
@@ -1495,12 +1495,12 @@ let
 
   genproto = buildFromGitHub {
     version = 2;
-    date = "2016-11-14";
-    rev = "08f135d1a31b6ba454287638a3ce23a55adace6f";
+    date = "2016-12-16";
+    rev = "b3e7c2fb04031add52c4817f53f43757ccbf9c18";
     owner  = "google";
     repo   = "go-genproto";
     goPackagePath = "google.golang.org/genproto";
-    sha256 = "0gl02a4pjpknyi95n9ijdsqg479b5dbq9amqrb9g3hlw195qhf64";
+    sha256 = "0b5lazz720bx1yfk3zkq1rh2bznfcwksd4dxng5x4dbkfj9lbsyr";
     propagatedBuildInputs = [
       grpc
       net
@@ -1748,11 +1748,11 @@ let
 
   google-cloud-go = buildFromGitHub {
     version = 2;
-    date = "2016-12-09";
-    rev = "9d965e63e8cceb1b5d7977a202f0fcb8866d6525";
+    date = "2016-12-16";
+    rev = "686f0e89858ea78eae54d4b2021e6bfc7d3a30ca";
     owner = "GoogleCloudPlatform";
     repo = "google-cloud-go";
-    sha256 = "776d2a4c3334863faaebdfc9067a86475b91c30c90e9c6c7e007dd63c223898a";
+    sha256 = "05k61yykaqshc173i5vz858nxm828jpx9ma0q48aikhm4pcndpik";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -2691,11 +2691,11 @@ let
 
   go-multierror = buildFromGitHub {
     version = 2;
-    date = "2016-11-06";
-    rev = "8484912a3b9987857bac52e0c5fec2b95f419628";
+    date = "2016-12-16";
+    rev = "ed905158d87462226a13fe39ddf685ea65f1c11f";
     owner  = "hashicorp";
     repo   = "go-multierror";
-    sha256 = "03if2rmn8h4dnsc2rk2fyj8b7p7m78gc9l4chyzfxx9pvv4911dj";
+    sha256 = "1lvmjf3mb1qx295djzddzj8w1j86c0cklkg19kfmzr5cbk257rzc";
     propagatedBuildInputs = [ errwrap ];
   };
 
@@ -3089,11 +3089,10 @@ let
 
   grpc = buildFromGitHub {
     version = 2;
-    date = "2016-12-09";
-    rev = "8712952b7d646dbbbc6fb73a782174f3115060f3";
+    rev = "v1.0.5";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "1v3jr36iy7kpcib9ss14xhfxrw34819zw52r4j9p0shv5siad9md";
+    sha256 = "1sf002gqhz8cf7g6qxrzlpsxh7iikknk5lc5bnv13kxrr1s8dq0g";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [
       "github.com/grpc/grpc-go"
@@ -3226,11 +3225,11 @@ let
 
   hcl = buildFromGitHub {
     version = 2;
-    date = "2016-12-01";
-    rev = "37ab263305aaeb501a60eb16863e808d426e37f2";
+    date = "2016-12-15";
+    rev = "80e628d796135357b3d2e33a985c666b9f35eee1";
     owner  = "hashicorp";
     repo   = "hcl";
-    sha256 = "02cs68xkn4nbi30d5wyfbxpxsfx2cy993byj7qmm7c3lvmpfkh0p";
+    sha256 = "0qcf1flvi3la6ka0fabif8zm4ai66n6n73nwklxd3n2mq053b5v5";
   };
 
   hdrhistogram = buildFromGitHub {
@@ -4781,8 +4780,8 @@ let
     version = 2;
     owner = "ncw";
     repo = "rclone";
-    rev = "v1.34";
-    sha256 = "33a6147fd09052c57564c6a88bbc8b00828794a7ca8f1d6a2bdc76e8d095ae30";
+    rev = "4482e75f385b1dd060d3fb8339e36196ad975987";
+    sha256 = "1yyisnhlkmafyh20qidrmagjs9d6pn6h7rv1dggmdx2p5y1djawg";
     propagatedBuildInputs = [
       aws-sdk-go
       cobra
@@ -4804,6 +4803,8 @@ let
       tb
       testify
     ];
+    meta.useUnstable = true;
+    date = "2016-12-15";
   };
 
   cupcake_rdb = buildFromGitHub {
@@ -5366,11 +5367,11 @@ let
   };
 
   testify = buildFromGitHub {
-    version = 1;
-    rev = "v1.1.3";
+    version = 2;
+    rev = "v1.1.4";
     owner = "stretchr";
     repo = "testify";
-    sha256 = "12r2v07zq22bk322hn8dn6nv1fg04wb5pz7j7bhgpq8ji2sassdp";
+    sha256 = "0n3z8225px7rylkwz6rvf48ykrh591a7p8gc27a2dh2zskny5qsz";
     propagatedBuildInputs = [
       go-difflib
       go-spew

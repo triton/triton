@@ -3089,10 +3089,11 @@ let
 
   grpc = buildFromGitHub {
     version = 2;
-    rev = "v1.0.5";
+    date = "2016-12-09";
+    rev = "8712952b7d646dbbbc6fb73a782174f3115060f3";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "1sf002gqhz8cf7g6qxrzlpsxh7iikknk5lc5bnv13kxrr1s8dq0g";
+    sha256 = "1v3jr36iy7kpcib9ss14xhfxrw34819zw52r4j9p0shv5siad9md";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [
       "github.com/grpc/grpc-go"
@@ -3117,6 +3118,7 @@ let
       "."
       "codes"
     ];
+    meta.useUnstable = true;
   };
 
   grpc-gateway = buildFromGitHub {

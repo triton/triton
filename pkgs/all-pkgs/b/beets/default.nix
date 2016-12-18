@@ -159,7 +159,7 @@ buildPythonPackage rec {
     discogs-client
     flac
     flask
-    # Need to for hook to set GI_TYPELIB_PATH
+    # Needed for hook to set GI_TYPELIB_PATH
     gobject-introspection
     imagemagick
     itsdangerous

@@ -7,11 +7,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gmime-2.6.20";
+  name = "gmime-2.6.22";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gmime/2.6/${name}.tar.xz";
-    sha256 = "0rfzbgsh8ira5p76kdghygl5i3fvmmx4wbw5rp7f8ajc4vxp18g0";
+    sha256 = "c25f9097d5842a4808f1d62faf5eace24af2c51d6113da58d559a3bfe1d5553a";
   };
 
   buildInputs = [

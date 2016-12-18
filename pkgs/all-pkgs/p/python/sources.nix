@@ -1,7 +1,7 @@
 {
   "2.7" = {
-    versionPatch = "12";
-    sha256 = "d7837121dd5652a05fef807c361909d255d173280c4e1a4ded94d73d80a1f978";
+    versionPatch = "13";
+    sha256 = "35d543986882f78261f97787fd3e06274bfa6df29fac9b4a94f73930ff98f731";
     # Benjamin Peterson
     pgpKeyFingerprint = "C01E 1CAD 5EA2 C4F0 B8E3  5715 04C3 67C2 18AD D4FF";
   };

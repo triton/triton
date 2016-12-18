@@ -1,10 +1,12 @@
 { stdenv
 , buildPythonPackage
 , fetchFromGitHub
+, fetchPyPi
 , fetchTritonPatch
 , glibcLocales
 , isPy27
 , isPy3k
+, lib
 , makeWrapper
 , pythonPackages
 , writeScript
@@ -52,7 +54,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     attrNames
     concatMapStrings
     concatStringsSep
@@ -136,17 +138,15 @@ let
   testShell = "${bash}/bin/bash --norc";
   completion = "${bash-completion}/share/bash-completion/bash_completion";
 
-  version = "2016-11-13";
+  version = "1.4.2";
 in
 buildPythonPackage rec {
   name = "beets-${version}";
 
-  src = fetchFromGitHub {
-    version = 2;
-    owner = "sampsyo";
-    repo = "beets";
-    rev = "2eae2d6d170fbd2dca8d1f356378e976ac4c9bff";
-    sha256 = "72099b220cf3672689563ed79b123614b7d0015ae418343ab5034dffdc265b75";
+  src = fetchPyPi {
+    package = "beets";
+    inherit version;
+    sha256 = "b54c72e220d7696740823d0a4e4f38d57d1e463daaf06da5194a358d3a14ca6a";
   };
 
   nativeBuildInputs = [
@@ -211,16 +211,6 @@ buildPythonPackage rec {
           pythonPackages;
       }
     )*/
-    # FIXME: Causes other plugins to fail to load
-    ++ optional enableCopyArtifacts (
-      import ./plugins/beets-copyartifacts.nix {
-        inherit
-          stdenv
-          buildPythonPackage
-          fetchFromGitHub
-          fetchTritonPatch;
-      }
-    )
     /* Provides edit & moveall plugins */
     ++ optional enableBeetsMoveAllArtifacts (
       import ./plugins/beets-moveall-artifacts.nix {
@@ -310,7 +300,7 @@ buildPythonPackage rec {
   doCheck = !isPy3k;
   doInstallCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Music tagger and library organizer";
     homepage = http://beets.radbox.org;
     license = licenses.mit;

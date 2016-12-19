@@ -94,7 +94,6 @@ stdenv.mkDerivation rec {
     "--enable-vipw"
     "--enable-newgrp"
     "--enable-write"
-    "--enable-pg"
     "--without-smack"
     "--with-python"
     "--enable-fs-paths-default=/var/setuid-wrappers:/run/current-system/sw/bin:/sbin:/bin"
@@ -115,6 +114,7 @@ stdenv.mkDerivation rec {
     "--with-libz"
     "--with-systemd"
     "--enable-chfn-chsh"
+    "--enable-pg"
   ]);
 
   preBuild = optionalString libOnly ''

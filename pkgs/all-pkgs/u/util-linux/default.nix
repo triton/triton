@@ -34,8 +34,8 @@ let
 
   tarballUrls = base: patch: map (n: "${n}/util-linux-${version base patch}.tar") (baseUrls base);
 
-  base = "2.28";
-  patch = "2";
+  base = "2.29";
+  patch = null;
 in
 
 stdenv.mkDerivation rec {
@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls base patch);
     hashOutput = false;
-    sha256 = "b89d37146f20bede93a42c847bce881a17e6dbd8066ff2db2bee733fa409f0cd";
+    sha256 = "2c59ea67cc7b564104f60532f6e0a95fe17a91acb870ba8fd7e986f273abf9e7";
   };
 
   nativeBuildInputs = [
@@ -88,13 +88,13 @@ stdenv.mkDerivation rec {
   # root...
   configureFlags = [
     "--with-cap-ng"  # We can't disable this at the moment even though it isn't needed for libs
-    "--enable-libmount-force-mountinfo"
     "--enable-tunelp"
     "--enable-line"
     "--enable-reset"
     "--enable-vipw"
     "--enable-newgrp"
     "--enable-write"
+    "--enable-pg"
     "--without-smack"
     "--with-python"
     "--enable-fs-paths-default=/var/setuid-wrappers:/run/current-system/sw/bin:/sbin:/bin"
@@ -110,7 +110,7 @@ stdenv.mkDerivation rec {
   ] else [
     "--with-audit"
     "--with-udev"
-    "--with-ncurses"
+    "--with-ncursesw"
     "--with-readline"
     "--with-libz"
     "--with-systemd"
@@ -135,12 +135,12 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      urls = map (n: "${n}.xz") (tarballUrls "2.28" "2");
-      pgpsigUrls = map (n: "${n}.sign") (tarballUrls "2.28" "2");
-      pgpsigSha256Urls = map (n: "${n}/sha256sums.asc") (baseUrls "2.28");
+      urls = map (n: "${n}.xz") (tarballUrls "2.29" null);
+      pgpsigUrls = map (n: "${n}.sign") (tarballUrls "2.29" null);
+      pgpsigSha256Urls = map (n: "${n}/sha256sums.asc") (baseUrls "2.29");
       pgpKeyFingerprint = "B0C6 4D14 301C C6EF AEDF  60E4 E4B7 1D5E EC39 C284";
       pgpDecompress = true;
-      outputHash = "b89d37146f20bede93a42c847bce881a17e6dbd8066ff2db2bee733fa409f0cd";
+      outputHash = "2c59ea67cc7b564104f60532f6e0a95fe17a91acb870ba8fd7e986f273abf9e7";
       inherit (src) outputHashAlgo;
     };
   };

@@ -3,11 +3,16 @@
 , bison
 , fetchurl
 , flex
+, makeWrapper
 , python
 
 , acl
 , attr
+, coreutils
+, gawk
 , glib
+, gnugrep
+, gnused
 , libaio
 , libibverbs
 , librdmacm
@@ -19,10 +24,23 @@
 , readline
 , sqlite
 , util-linux_lib
+, which
 , zlib
 }:
 
 let
+  inherit (stdenv.lib)
+    concatStringsSep;
+
+  mountPath = [
+    attr
+    coreutils
+    gawk
+    gnugrep
+    gnused
+    which
+  ];
+
   versionMajor = "3.9";
   versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
@@ -39,6 +57,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     bison
     flex
+    makeWrapper
     python
   ];
 
@@ -97,6 +116,11 @@ stdenv.mkDerivation rec {
     # that doesn't exist
     grep -q '\-lgfchangedb' $out/lib/pkgconfig/libgfdb.pc
     sed -i 's, -lgfchangedb,,g' $out/lib/pkgconfig/libgfdb.pc
+
+    # Fix mount.glusterfs
+    sed -i '/export PATH/d' "$out"/bin/mount.glusterfs
+    wrapProgram "$out"/bin/mount.glusterfs \
+      --set PATH "${concatStringsSep ":" (map (n: "${n}/bin") mountPath)}"
   '';
 
   meta = with stdenv.lib; {

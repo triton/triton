@@ -1,8 +1,13 @@
-{ stdenv, fetchsvn }:
+{ stdenv
+, fetchsvn
+, lib
+}:
 
+let
+  version = "55";
+in
 stdenv.mkDerivation rec {
   name = "xavs-${version}";
-  version = "55";
 
   src = fetchsvn {
     url = "https://svn.code.sf.net/p/xavs/code/trunk";
@@ -10,7 +15,7 @@ stdenv.mkDerivation rec {
     sha256 = "0drw16wm95dqszpl7j33y4gckz0w0107lnz6wkzb66f0dlbv48cf";
   };
 
-  patchPhase = ''
+  postPatch = ''
     patchShebangs configure
     patchShebangs config.sub
     patchShebangs version.sh
@@ -23,15 +28,17 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-pic"
     "--enable-shared"
-    # Bug preventing compilation with assembly enabled
     "--disable-asm"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "AVS encoder and decoder";
-    homepage    = http://xavs.sourceforge.net/;
-    license     = licenses.lgpl2;
-    platforms   = platforms.linux;
-    maintainers = with maintainers; [ codyopel ];
+    homepage = http://xavs.sourceforge.net/;
+    license = licenses.lgpl2;
+    maintainers = with maintainers; [
+      codyopel
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

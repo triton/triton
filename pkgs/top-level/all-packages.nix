@@ -3424,6 +3424,8 @@ x265 = callPackageAlias "x265_stable" { };
 
 xapian-core = callPackage ../all-pkgs/x/xapian-core { };
 
+xavs = callPackage ../all-pkgs/x/xavs { };
+
 xcmiscproto = callPackage ../all-pkgs/x/xcmiscproto { };
 
 xdg-user-dirs = callPackage ../all-pkgs/x/xdg-user-dirs { };
@@ -4011,8 +4013,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   vamp = callPackage ../development/libraries/audio/vamp { };
 #
   webrtc-audio-processing = callPackage ../development/libraries/webrtc-audio-processing { };
-#
-  xavs = callPackage ../development/libraries/xavs { };
 #
   xmlrpc_c = callPackage ../development/libraries/xmlrpc-c { };
 #

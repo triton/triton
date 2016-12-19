@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.musl-libc.org/releases/${name}.tar.gz";
+    multihash = "QmTjF42AzBFrByH6tJsrCrNyMBpijo8QLed4beVFyq2363";
     sha256 = "97e447c7ee2a7f613186ec54a93054fe15469fe34d7d323080f7ef38f5ecb0fa";
   };
 

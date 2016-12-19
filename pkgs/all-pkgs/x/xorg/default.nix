@@ -3,7 +3,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxslt, expat, libpng, zlib, perl, mesa_noglu, mesa_drivers, spice-protocol, spice
 , dbus, util-linux_lib, openssl, gperf, gnum4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
 , autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, mtdev, cairo, glib
-, libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3
+, libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3, kmod, procps-ng
 
 # , bigreqsproto
 # , compositeproto
@@ -773,9 +773,9 @@ let
       sha256 = "a6cbc4e0e52ea87c082987d1bb90a354f8ffac94a31b7b4cd48b38b7f4aafb1a";
     };
     nativeBuildInputs = [ bison flex python python3 utilmacros ];
-    buildInputs = [ cairo dri2proto glib libdrm systemd_lib libunwind libpciaccess libX11 libXext libXrandr libXv ];
+    buildInputs = [ cairo dri2proto glib kmod libdrm procps-ng systemd_lib libunwind libpciaccess libX11 libXext libXrandr libXv ];
 
-  }) // {inherit cairo dri2proto glib libdrm systemd_lib libunwind libpciaccess libX11 libXext libXrandr libXv ;};
+  }) // {inherit cairo dri2proto glib kmod libdrm procps-ng systemd_lib libunwind libpciaccess libX11 libXext libXrandr libXv ;};
 
   kbproto = (mkDerivation "kbproto" {
     name = "kbproto-1.0.7";

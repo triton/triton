@@ -290,8 +290,8 @@ in
 
       binaryCachePublicKeys = mkOption {
         type = types.listOf types.str;
-        default = [ "cache.triton.wak.io-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspaDShjY=" ];
-        example = [ "hydra.triton.wak.io-1:CNHJZBh9K4tP3EKF6FkkgeVYsS3ohTl+oS0Qa8beaVs=" ];
+        default = [ "cache.triton.wak.io-1:CXJOjY8UX9vBsWx5PwndZLQD7ZwAwXMrKPRBC6IL+6o=" ];
+        example = [ "hydra.triton.wak.io-1:ETSi37z3f01nToquTsfDR19UyUXxj7BRWCLunZpB9dE=" ];
         description = ''
           List of public keys used to sign binary caches. If
           <option>nix.requireSignedBinaryCaches</option> is enabled,

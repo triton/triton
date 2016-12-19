@@ -27,6 +27,13 @@ stdenv.mkDerivation rec {
     libressl
   ];
 
+  postPatch = ''
+    set -x
+    grep -q '/etc/ssl/cert.pem' http.c
+    sed -i 's,/etc/ssl/cert/pem,/etc/ssl/certs/ca-certificates.crt,g' http.c
+    set +x
+  '';
+
   preBuild = ''
     makeFlagsArray+=("PREFIX=$out")
   '';

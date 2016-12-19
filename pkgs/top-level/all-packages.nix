@@ -2322,6 +2322,8 @@ lilv = callPackage ../all-pkgs/l/lilv { };
 
 linenoise = callPackage ../all-pkgs/l/linenoise { };
 
+linenoise-ng = callPackage ../all-pkgs/l/linenoise-ng { };
+
 linux-firmware = callPackage ../all-pkgs/l/linux-firmware { };
 
 linux-headers_3-18 = callPackage ../all-pkgs/l/linux-headers {

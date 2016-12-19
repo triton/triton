@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libwpg, libwpd, lcms, pkgconfig, librevenge, icu, boost, cppunit }:
+{ stdenv, fetchurl, libwpg, libwpd, lcms, pkgconfig, librevenge, icu, boost, cppunit, zlib }:
 
 stdenv.mkDerivation rec {
   name = "libcdr-0.1.2";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     sha256 = "07jqc1hf36b5s7cl0i08gcjzh0qdj0x6awk08rj0x5lzmdnrhnnh";
   };
 
-  buildInputs = [ libwpg libwpd lcms librevenge icu boost cppunit ];
+  buildInputs = [ libwpg libwpd lcms librevenge icu boost cppunit zlib ];
 
   nativeBuildInputs = [ pkgconfig ];
 

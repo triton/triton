@@ -2061,6 +2061,8 @@ libmhash = callPackage ../all-pkgs/l/libmhash { };
 
 libmicrohttpd = callPackage ../all-pkgs/l/libmicrohttpd { };
 
+libmms = callPackage ../all-pkgs/l/libmms { };
+
 libmnl = callPackage ../all-pkgs/l/libmnl { };
 
 libmodplug = callPackage ../all-pkgs/l/libmodplug { };
@@ -3934,8 +3936,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libmad = callPackage ../development/libraries/libmad { };
 #
   libmikmod = callPackage ../development/libraries/libmikmod { };
-#
-  libmms = callPackage ../development/libraries/libmms { };
 #
   libmng = callPackage ../development/libraries/libmng { };
 #

@@ -2,6 +2,7 @@
 , fetchurl
 
 , kerberos
+, libbsd
 , libedit
 , openssl
 , pam
@@ -9,12 +10,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openssh-7.3p1";
+  name = "openssh-7.4p1";
 
   src = fetchurl {
     url = "mirror://openbsd/OpenSSH/portable/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "3ffb989a6dcaa69594c3b550d4855a5a2e1718ccdde7f5e36387b424220fbecc";
+    sha256 = "1b1fc4a14e2024293181924ed24872e6f2e06293f3e8926a376b8aec481f19d1";
   };
 
   patches = [
@@ -23,6 +24,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     kerberos
+    libbsd
     libedit
     openssl
     pam

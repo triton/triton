@@ -6,6 +6,7 @@
 
 , apt
 , audit_lib
+, augeas
 , aws-sdk-cpp
 , beecrypt
 , boost
@@ -20,6 +21,8 @@
 , iptables
 , libgcrypt
 , libgpg-error
+, libxml2
+, linenoise-ng
 , lvm2
 , lz4
 , ncurses
@@ -39,7 +42,7 @@
 }:
 
 let
-  version = "2.0.0";
+  version = "2.2.1";
 in
 stdenv.mkDerivation {
   name = "osquery-${version}";
@@ -48,7 +51,7 @@ stdenv.mkDerivation {
     version = 2;
     url = "https://github.com/facebook/osquery";
     rev = "refs/tags/${version}";
-    sha256 = "9bc85a972801beaacb8d89fc0489f1b2504f4fbe179dff0e2afb604f930a4cb7";
+    sha256 = "161336e8df16ba466ff7232de3da67367a20e9c2bab44fb259ce3b00b2332635";
   };
 
   nativeBuildInputs = [
@@ -61,6 +64,7 @@ stdenv.mkDerivation {
   buildInputs = [
     apt
     audit_lib
+    augeas
     aws-sdk-cpp
     beecrypt
     boost
@@ -75,6 +79,8 @@ stdenv.mkDerivation {
     iptables
     libgcrypt
     libgpg-error
+    libxml2
+    linenoise-ng
     lvm2
     lz4
     ncurses
@@ -94,8 +100,12 @@ stdenv.mkDerivation {
   ];
 
   postPatch = ''
+    set -x
     grep -q '\-Qunused-arguments' CMakeLists.txt
     sed -i '/-Qunused-arguments/d' CMakeLists.txt
+
+    grep -q '\-stdlib=libstdc++' CMakeLists.txt
+    sed -i 's, -stdlib=libstdc++,,g' CMakeLists.txt
 
     grep -q 'boost_.*-mt' osquery/CMakeLists.txt
     grep -q 'rocksdb_lite' osquery/CMakeLists.txt
@@ -103,6 +113,15 @@ stdenv.mkDerivation {
       -e 's,boost_\(.*\)-mt,boost_\1,g' \
       -e 's,rocksdb_lite,rocksdb,g' \
       -i osquery/CMakeLists.txt
+    set +x
+  '';
+
+  preConfigure = ''
+    mkdir bin
+    echo "#! ${stdenv.shell}" >> bin/git
+    echo "echo ${version}" >> bin/git
+    chmod +x bin/git
+    export PATH="$(pwd)/bin:$PATH"
   '';
 
   OSQUERY_PLATFORM = "Linux;NixOS";

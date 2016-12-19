@@ -207,7 +207,6 @@ stdenv.mkDerivation {
     "-nomake" "examples"
     "-no-compile-examples"
     "-verbose"
-    "-nis"
     "-cups"
     "-iconv"
     "-evdev"

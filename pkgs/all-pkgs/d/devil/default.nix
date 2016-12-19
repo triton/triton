@@ -5,7 +5,7 @@
 , libjpeg
 , libpng
 , libmng
-, lcms1
+, lcms
 , libtiff
 , openexr
 , mesa
@@ -23,7 +23,8 @@ stdenv.mkDerivation rec {
   name ="devil-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/openil/DevIL-${version}.tar.gz";
+    url = "mirror://sourceforge/openil/DevIL/${version}/"
+      + "DevIL-${version}.tar.gz";
     sha256 = "1zd850nn7nvkkhasrv7kn17kzgslr5ry933v6db62s4lr0zzlbv8";
   };
 
@@ -31,7 +32,7 @@ stdenv.mkDerivation rec {
     libjpeg
     libpng
     libmng
-    lcms1
+    lcms
     libtiff
     openexr
     mesa

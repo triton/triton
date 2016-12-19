@@ -1841,6 +1841,10 @@ lame = callPackage ../all-pkgs/l/lame {
   libsndfile = null;
 };
 
+lcms = callPackage ../all-pkgs/l/lcms { };
+# Deprecated alias
+lcms2 = callPackageAlias "lcms" { };
+
 ldb = callPackage ../all-pkgs/l/ldb { };
 
 lego = pkgs.goPackages.lego.bin // { outputs = [ "bin" ]; };
@@ -3888,12 +3892,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   jbig2dec = callPackage ../development/libraries/jbig2dec { };
 
   jbigkit = callPackage ../development/libraries/jbigkit { };
-#
-  lcms = callPackageAlias "lcms1" { };
-
-  lcms1 = callPackage ../development/libraries/lcms { };
-
-  lcms2 = callPackage ../development/libraries/lcms2 { };
 #
   libaacs = callPackage ../development/libraries/libaacs { };
 

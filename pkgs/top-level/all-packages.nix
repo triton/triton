@@ -3337,6 +3337,8 @@ vala = callPackageAlias "vala_0-34" { };
 
 vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
+vid-stab = callPackage ../all-pkgs/v/vid-stab { };
+
 videoproto = callPackage ../all-pkgs/v/videoproto { };
 
 vim = callPackage ../all-pkgs/v/vim { };
@@ -4005,8 +4007,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   uthash = callPackage ../development/libraries/uthash { };
 #
   vamp = callPackage ../development/libraries/audio/vamp { };
-#
-  vid-stab = callPackage ../development/libraries/vid-stab { };
 #
   webrtc-audio-processing = callPackage ../development/libraries/webrtc-audio-processing { };
 #

@@ -16,12 +16,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "rpm-4.12.0.1";
+  name = "rpm-4.13.0";
 
   src = fetchurl {
-    url = "http://rpm.org/releases/rpm-4.12.x/${name}.tar.bz2";
-    multihash = "QmS8AfYHhwohJLHmisHPa1obUgKQKCduzvQtUEx9WbJkcf";
-    sha256 = "77ddd228fc332193c874aa0b424f41db1ff8b7edbb6a338703ef747851f50229";
+    url = "https://github.com/rpm-software-management/rpm/releases/download/${name}-release/${name}.tar.bz2";
+    sha256 = "221166b61584721a8ca979d7d8576078a5dadaf09a44208f69cc1b353240ba1b";
   };
 
   buildInputs = [

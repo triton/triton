@@ -57,6 +57,7 @@ stdenv.mkDerivation {
   '';
 
   cmakeFlags = [
+    "-DROOT_GROUP=wheel"
     "-DWITH_DOC=OFF"
     "-DDOCBOOK_XSL=${docbook-xsl}/share/xml/docbook-xsl"
     "-DBERKELEY_DB_INCLUDE_DIRS=${db}/include"

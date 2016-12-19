@@ -119,11 +119,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "9b1a210a06ea1176ec1f0a1ddf83ad7463b8ea3e";
-    date = "2016-12-16";
+    rev = "2b786ab9e9649dc660afa3bd580fd05a05e20d95";
+    date = "2016-12-19";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "0imyxrxfh73jxkpj56rlnv8s5p0d6zq3akmyrqd84fk2jcywjsa7";
+    sha256 = "17aqinhp9g0515jvxxpm29villnvp0fxmlzdfvhg41rjivp864h9";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -1068,12 +1068,12 @@ let
 
   docker = buildFromGitHub {
     version = 2;
-    rev = "4436a5946d1cc20efb3af5a3d0c56894c02f1a29";
+    rev = "5add856be6411f776556f85b9e3ef17049de043e";
     owner = "docker";
     repo = "docker";
-    sha256 = "1fnqz5h0gjkp4bppja78a56i3jr7w0vfmd0s12z4r6k76df2i17f";
+    sha256 = "1rd4dp6lwjiwbsbpqbg8fiaswdhag752h3v08manxhzivnh5kxx2";
     meta.useUnstable = true;
-    date = "2016-12-18";
+    date = "2016-12-19";
   };
 
   docker_for_runc = buildFromGitHub {
@@ -2257,11 +2257,11 @@ let
 
   go-github = buildFromGitHub {
     version = 2;
-    date = "2016-12-07";
-    rev = "466070b0580728e63bd1a415e0019639e55d7148";
+    date = "2016-12-02";
+    rev = "7edde482875504b49769ad097eab7c572547ff21";
     owner = "google";
     repo = "go-github";
-    sha256 = "1gr26z40c9y7v0r59f2k3xa98s7hnzydpcjh5jlylzsi666kajj3";
+    sha256 = "0s5yn1n74vr1fyzapjq6qzk0q27v3sr4hyxv8nf8ychdp2fybvp4";
     buildInputs = [ oauth2 ];
     propagatedBuildInputs = [ go-querystring ];
   };
@@ -3332,8 +3332,8 @@ let
     version = 2;
     owner = "spf13";
     repo = "hugo";
-    rev = "v0.17";
-    sha256 = "025l734hc57vhxfnsrq6amr7yx3cls2p3sibgr3vmz81chmk2zky";
+    rev = "v0.18";
+    sha256 = "0smgfj1lzj11h4238fwyhx87l9rp4wxz4yhkqn5bwz26ha3zs0hl";
     buildInputs = [
       ace
       afero
@@ -4255,23 +4255,23 @@ let
 
   netlink = buildFromGitHub {
     version = 2;
-    rev = "c750a61f1836d48aacb1c74deafb05cfb549eb92";
+    rev = "13fb20a9787c14bfc4c7996ce27d7224aa815812";
     owner  = "vishvananda";
     repo   = "netlink";
-    sha256 = "0li6pdrwbg33qadizbkz6njqxwf4pcw08rjdxvyfa17jijm0hx6q";
-    date = "2016-12-13";
+    sha256 = "0jdh7n2lvvk23f9pwww911lcb3941iy1lvbwk23yhix9iz1xsz9f";
+    date = "2016-12-17";
     propagatedBuildInputs = [
       netns
     ];
   };
 
   netns = buildFromGitHub {
-    version = 1;
-    rev = "8ba1072b58e0c2a240eb5f6120165c7776c3e7b8";
+    version = 2;
+    rev = "2c9454e4fc6e2edc1a1c84e64ed3d6e662fb6991";
     owner  = "vishvananda";
     repo   = "netns";
-    sha256 = "05r4qri45ngm40kp9qdbyqrs15gx7swjj27bmc7i04wg9yd65j95";
-    date = "2016-04-30";
+    sha256 = "0rzlrhh9xyigf6q1iwb56pdzkx4yfwh8p4pmrdaqb4863cw8yl1g";
+    date = "2016-12-19";
   };
 
   nitro = buildFromGitHub {
@@ -4813,12 +4813,12 @@ let
   };
 
   raw = buildFromGitHub {
-    version = 1;
-    rev = "724aedf6e1a5d8971aafec384b6bde3d5608fba4";
+    version = 2;
+    rev = "6e1bed04d4993417da963db9d7baaace5b7f4138";
     owner  = "feyeleanor";
     repo   = "raw";
-    sha256 = "0pkvvvln5cyyy0y2i82jv39gjnfgzpb5ih94iav404lfsachh8m1";
-    date = "2013-03-27";
+    sha256 = "1480k9fwbbwby353rlgdhs7y5rzjiy9g71hckqpxkz61b1qvinr1";
+    date = "2016-12-19";
   };
 
   rclone = buildFromGitHub {
@@ -4920,10 +4920,10 @@ let
 
   roaring = buildFromGitHub {
     version = 2;
-    rev = "v0.3.0";
+    rev = "v0.3.1";
     owner  = "RoaringBitmap";
     repo   = "roaring";
-    sha256 = "0hjzbwaqm0vqv8fi9am1spkilfaqgzvhiasdjpmz4nhi95if0jzs";
+    sha256 = "1859c4p12vqsp03k1pvb1056f279sdf52hhjh1ny7wy26rgv0prp";
     propagatedBuildInputs = [
       go-unsnap-stream
       msgp
@@ -5367,10 +5367,10 @@ let
 
   teleport = buildFromGitHub {
     version = 2;
-    rev = "v1.2.6";
+    rev = "v1.3.0";
     owner = "gravitational";
     repo = "teleport";
-    sha256 = "1v6xlphqhpib6r05fk9zzh5i6iskdp0996p4vvmxf6an58pk5sf1";
+    sha256 = "01vhxl6i0q06xdc3bxqwy1jkk7iq6hz7rs2l4836pcfih6hiy1b2";
     buildInputs = [
       bolt
       configure
@@ -5388,6 +5388,7 @@ let
       roundtrip
       trace
       gravitational_ttlmap
+      u2f
       pborman_uuid
       yaml_v2
     ];
@@ -5491,9 +5492,9 @@ let
     version = 2;
     owner = "gravitational";
     repo = "trace";
-    rev = "6e153c7add15eb07e311f892779fb294373c4cfa";
-    sha256 = "0y1ly0n5x9vgvcc86xbs70my13ih0ag7qcys08dildl7cc6c1dh8";
-    date = "2016-09-29";
+    rev = "2105b524fbe43c8410eb1f762af1201ac9edbf5c";
+    sha256 = "0fgf01dps8jmf8ac6vkv3bxj981iinsx9ib6g8sdd7nygh8931g6";
+    date = "2016-12-18";
     propagatedBuildInputs = [
       clockwork
       grpc
@@ -5528,13 +5529,14 @@ let
     ];
   };
 
-  unidecode = buildFromGitHub {
-    version = 1;
-    rev = "cb7f23ec59bec0d61b19c56cd88cee3d0cc1870c";
-    owner = "rainycape";
-    repo = "unidecode";
-    sha256 = "1lf6r5clkmq72hx9yjc8s7z7g1vdn8a9333aq1c0n5lwhcavh6h3";
-    date = "2015-09-07";
+  u2f = buildFromGitHub {
+    version = 2;
+    rev = "eb799ce68da4150b16ff5d0c89a24e2a2ad993d8";
+    owner = "tstranex";
+    repo = "u2f";
+    sha256 = "8b2e6912aeced8aa055feedbbe3de2ef065666b81181eb1c9e2826cc6d37f81f";
+    date = "2016-05-08";
+    meta.autoUpdate = false;
   };
 
   units = buildFromGitHub {
@@ -5733,10 +5735,10 @@ let
 
   vultr = buildFromGitHub {
     version = 2;
-    rev = "1.11.0";
+    rev = "1.12.0";
     owner  = "JamesClonk";
     repo   = "vultr";
-    sha256 = "0b3qlklzlgv4pidz7swi8hx59hs53mhvq1y32dcq3yj66qr5ppcw";
+    sha256 = "1wnmdsik9cd1g47aa0w2k2c3cdi2b99paaj3wg4i3b63yrn76gm1";
     propagatedBuildInputs = [
       mow-cli
       tokenbucket

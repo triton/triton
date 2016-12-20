@@ -395,6 +395,8 @@ s3transfer = callPackage ../all-pkgs/s/s3transfer { };
 
 safe = callPackage ../all-pkgs/s/safe { };
 
+salt = callPackage ../all-pkgs/s/salt { };
+
 scons = callPackage ../all-pkgs/s/scons { };
 
 service-identity = callPackage ../all-pkgs/s/service-identity { };

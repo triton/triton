@@ -190,11 +190,11 @@ let
 
   oauth2 = buildFromGitHub {
     version = 2;
-    rev = "96382aa079b72d8c014eb0c50f6c223d1e6a2de0";
-    date = "2016-12-13";
+    rev = "314dd2c0bf3ebd592ec0d20847d27e79d0dbe8dd";
+    date = "2016-12-14";
     owner = "golang";
     repo = "oauth2";
-    sha256 = "0654xmh4lrvsm71d51n15i3vhv5w6x5k4x6z8qgldm3wda7ipgdm";
+    sha256 = "1r61rmfkqv17rh848pmy49xkzdjq8pmvvn9mxxxjq520vw3kk1rg";
     goPackagePath = "golang.org/x/oauth2";
     goPackageAliases = [ "github.com/golang/oauth2" ];
     propagatedBuildInputs = [
@@ -422,10 +422,10 @@ let
 
   aws-sdk-go = buildFromGitHub {
     version = 2;
-    rev = "v1.6.4";
+    rev = "v1.6.5";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "0bfk49g9r9k0q7vxhnvymp5l1ys0l3cyk9fw6n8sx6rri2n4ygn9";
+    sha256 = "02g9f83fx9pykrkfgj3ln30vr3db8zya20vbc9sbmpsswjdj14zp";
     excludedPackages = "\\(awstesting\\|example\\)";
     buildInputs = [
       tools
@@ -1766,11 +1766,11 @@ let
 
   google-cloud-go = buildFromGitHub {
     version = 2;
-    date = "2016-12-16";
-    rev = "686f0e89858ea78eae54d4b2021e6bfc7d3a30ca";
+    date = "2016-12-19";
+    rev = "3c4c8cc11d151d76587802cb55dd7b80beca832b";
     owner = "GoogleCloudPlatform";
     repo = "google-cloud-go";
-    sha256 = "05k61yykaqshc173i5vz858nxm828jpx9ma0q48aikhm4pcndpik";
+    sha256 = "1zsggnkg1vk1c2z6ljk2w5gsj8g212d249hlkf04kydyr044a5dq";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -3119,11 +3119,11 @@ let
 
   grpc = buildFromGitHub {
     version = 2;
-    date = "2016-12-09";
-    rev = "8712952b7d646dbbbc6fb73a782174f3115060f3";
+    date = "2016-12-19";
+    rev = "09aecb094ef6b9ebe49dd999f52c505beeeb402e";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "1v3jr36iy7kpcib9ss14xhfxrw34819zw52r4j9p0shv5siad9md";
+    sha256 = "1h75cl54qvp3n68mpvmd9b1s80pygwabb0z40vsbj29dvxh3kjq7";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [
       "github.com/grpc/grpc-go"
@@ -4825,8 +4825,8 @@ let
     version = 2;
     owner = "ncw";
     repo = "rclone";
-    rev = "4482e75f385b1dd060d3fb8339e36196ad975987";
-    sha256 = "1yyisnhlkmafyh20qidrmagjs9d6pn6h7rv1dggmdx2p5y1djawg";
+    rev = "1b2dda8c4cfeba86d72236ec51c29d873d17aa16";
+    sha256 = "0jfffh3rrsbpvdk4m0bwjavkx3qzipzh0wdc12cqafccik7nxscp";
     propagatedBuildInputs = [
       aws-sdk-go
       cobra
@@ -4849,7 +4849,7 @@ let
       testify
     ];
     meta.useUnstable = true;
-    date = "2016-12-15";
+    date = "2016-12-19";
   };
 
   cupcake_rdb = buildFromGitHub {

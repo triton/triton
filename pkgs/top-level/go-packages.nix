@@ -4567,11 +4567,11 @@ let
 
   pq = buildFromGitHub {
     version = 2;
-    rev = "4a82388ebc5138c8289fe9bc602cb0b3e32cd617";
+    rev = "c1ee285e12f70299b1a2d8319e7da69a44e35363";
     owner  = "lib";
     repo   = "pq";
-    sha256 = "1vlgd970sw2i9fa29892b8kpfzjlpmp2kgnk2ms4bzwp1gwqqwrx";
-    date = "2016-11-29";
+    sha256 = "01qcndhahk6qk0vsg9w3zpnmmjj2ja4gyb3c91765i19m0dzfdwp";
+    date = "2016-12-19";
   };
 
   probing = buildFromGitHub {
@@ -5109,9 +5109,9 @@ let
     version = 2;
     owner = "minio";
     repo = "sha256-simd";
-    date = "2016-10-15";
-    rev = "f78567f7ee70e4be482ad2849f6c3bb7651b34a5";
-    sha256 = "0mb6knh4bx8p4kpaq4grcc9gw7w9kliipky30sbw1nqnrymmcsja";
+    date = "2016-12-19";
+    rev = "e82e73b775766b9011503e80e6772fc32b9afc5b";
+    sha256 = "01pms9fsfjdnlw1n4wj00y7gj36cljjvhvhbmaq7yz86wm96bn48";
   };
 
   skyring-common = buildFromGitHub {

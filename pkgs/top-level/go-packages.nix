@@ -797,10 +797,10 @@ let
 
   consul = buildFromGitHub rec {
     version = 2;
-    rev = "v0.7.1";
+    rev = "v0.7.2";
     owner = "hashicorp";
     repo = "consul";
-    sha256 = "1gmvdg01mv9nmwf77y34x7gxg124a7hxdqkcv8rdkx1y7fl9sp9f";
+    sha256 = "0sxbxplg0g9adfgxl893s8x32rdzg6xy855fgmgj00n8rjzr3vdq";
 
     buildInputs = [
       datadog-go circbuf armon_go-metrics go-radix speakeasy bolt
@@ -808,7 +808,7 @@ let
       go-immutable-radix go-memdb ugorji_go go-multierror go-reap go-syslog
       golang-lru hcl logutils memberlist net-rpc-msgpackrpc raft_v2 raft-boltdb_v2
       scada-client yamux muxado dns mitchellh_cli mapstructure columnize
-      copystructure hil hashicorp-go-uuid crypto sys aws-sdk-go
+      copystructure hil hashicorp-go-uuid crypto sys aws-sdk-go go-sockaddr
     ];
 
     propagatedBuildInputs = [
@@ -1068,12 +1068,12 @@ let
 
   docker = buildFromGitHub {
     version = 2;
-    rev = "5add856be6411f776556f85b9e3ef17049de043e";
+    rev = "2cf32ee04360add15b4431ba55032824ac089349";
     owner = "docker";
     repo = "docker";
-    sha256 = "1rd4dp6lwjiwbsbpqbg8fiaswdhag752h3v08manxhzivnh5kxx2";
+    sha256 = "1rl77qxvnvkvg0ajv6swx02602pf6gwqdppkp1i9ka9ba3lfzj4a";
     meta.useUnstable = true;
-    date = "2016-12-19";
+    date = "2016-12-20";
   };
 
   docker_for_runc = buildFromGitHub {
@@ -2934,6 +2934,21 @@ let
     date = "2014-07-04";
   };
 
+  go-sockaddr = buildFromGitHub {
+    version = 2;
+    rev = "c97459b5a66774ed49deb0cc739f035fb7860bcf";
+    owner  = "hashicorp";
+    repo   = "go-sockaddr";
+    sha256 = "13p98glbz0xaxs4i55fln0c71sazaxh0f5hnir2zr3z0sjmdxs7s";
+    date = "2016-12-03";
+    propagatedBuildInputs = [
+      mitchellh_cli
+      columnize
+      errwrap
+      go-wordwrap
+    ];
+  };
+
   go-spew = buildFromGitHub {
     version = 2;
     rev = "v1.1.0";
@@ -3034,6 +3049,15 @@ let
     repo   = "go-version";
     sha256 = "13jrvfmg7vx1zzsjbwyfaxh06y8si7f9drcpy0400pv9fv9fxfs7";
     date = "2016-10-31";
+  };
+
+  go-wordwrap = buildFromGitHub {
+    version = 2;
+    rev = "ad45545899c7b13c020ea92b2072220eefad42b8";
+    owner  = "mitchellh";
+    repo   = "go-wordwrap";
+    sha256 = "0yj17x3c1mr9l3q4dwvy8y2xgndn833rbzsjf10y48yvr12zqjd0";
+    date = "2015-03-14";
   };
 
   go-zookeeper = buildFromGitHub {

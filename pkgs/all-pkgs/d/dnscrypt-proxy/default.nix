@@ -6,11 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dnscrypt-proxy-1.7.0";
+  name = "dnscrypt-proxy-1.8.1";
 
   src = fetchurl {
-    url = "https://download.dnscrypt.org/dnscrypt-proxy/${name}.tar.bz2";
-    sha256 = "1daf77df9092491ea0b5176ec4b170f7b0645f97b62d1a50412a960656b482e3";
+    url = "https://download.dnscrypt.org/dnscrypt-proxy/${name}.tar.gz";
+    multihash = "QmPw9pF3E91kRCXvm1Mo6gEaAqn8ETEessnwAbYYaHPSkS";
+    hashOutput = false;
+    sha256 = "5cad1d2357852dc16957085e7a9b32384fb9b95c609e185b7ae1a3959fc13769";
   };
 
   buildInputs = [

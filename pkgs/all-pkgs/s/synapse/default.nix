@@ -7,8 +7,8 @@
 , canonicaljson
 , daemonize
 , jinja2
-, ldap3
 , matrix-angular-sdk
+, matrix-synapse-ldap3
 , msgpack-python
 , netaddr
 , pillow
@@ -19,7 +19,6 @@
 , pynacl
 , pysaml2
 , pyyaml
-, service-identity
 , signedjson
 , twisted
 , ujson
@@ -27,7 +26,7 @@
 }:
 
 let
-  version = "0.18.4";
+  version = "0.18.5";
 in
 buildPythonPackage {
   name = "synapse-${version}";
@@ -37,7 +36,7 @@ buildPythonPackage {
     owner = "matrix-org";
     repo = "synapse";
     rev = "v${version}";
-    sha256 = "315a8fdf99a82fdf01dd5727c7807beb9daff58a08b131e583b5b311fcf7a81c";
+    sha256 = "5a8bfbea894d63c5fa8fc2ff00f32bf2f34ea374b9bf00054ab9dbbf10f2fc49";
   };
 
   propagatedBuildInputs = [
@@ -46,8 +45,8 @@ buildPythonPackage {
     canonicaljson
     daemonize
     jinja2
-    ldap3
     matrix-angular-sdk
+    matrix-synapse-ldap3
     msgpack-python
     netaddr
     pillow
@@ -58,7 +57,6 @@ buildPythonPackage {
     pynacl
     pysaml2
     pyyaml
-    service-identity
     signedjson
     twisted
     ujson

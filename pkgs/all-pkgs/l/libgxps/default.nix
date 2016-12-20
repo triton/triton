@@ -11,6 +11,7 @@
 , libjpeg
 , libpng
 , libtiff
+, zlib
 
 , channel
 }:
@@ -41,6 +42,7 @@ stdenv.mkDerivation rec {
     libjpeg
     libpng
     libtiff
+    zlib
   ];
 
   configureFlags = [
@@ -57,7 +59,7 @@ stdenv.mkDerivation rec {
     "--enable-man"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--${boolWt (libjpeg != null)}-libjpeg"
-    "--${boolWt (libtiff != null)}-libtiff"
+    "--${boolWt (libtiff != null && zlib != null)}-libtiff"
     "--${boolWt (lcms2 != null)}-liblcms2"
   ];
 

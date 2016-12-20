@@ -375,6 +375,8 @@ pytz = callPackage ../all-pkgs/p/pytz { };
 
 pyyaml = callPackage ../all-pkgs/p/pyyaml { };
 
+pyzmq = callPackage ../all-pkgs/p/pyzmq { };
+
 rebulk = callPackage ../all-pkgs/r/rebulk { };
 
 regex = callPackage ../all-pkgs/r/regex { };

@@ -11,6 +11,7 @@ let
     any
     versionAtLeast
     versionOlder;
+
   inherit (builtins.getAttr channel (import ./sources.nix))
     multihash
     sha256
@@ -22,24 +23,11 @@ assert any (n: n == channel) [
   "8.6"
 ];
 
-let
-  isTcl85 =
-    if versionAtLeast version "8.5.0" && versionOlder version "8.6.0" then
-      true
-    else
-      false;
-  isTcl86 =
-    if versionAtLeast version "8.6.0" && versionOlder version "8.7.0" then
-      true
-    else
-      false;
-in
-
 stdenv.mkDerivation rec {
   name = "tcl-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/tcl/tcl${version}-src.tar.gz";
+    url = "mirror://sourceforge/tcl/Tcl/${version}/tcl${version}-src.tar.gz";
     inherit multihash sha256;
   };
 
@@ -68,8 +56,6 @@ stdenv.mkDerivation rec {
   passthru = rec {
     inherit
       channel
-      isTcl85
-      isTcl86
       version;
     libPrefix = "tcl${channel}";
     libdir = "lib/${libPrefix}";

@@ -6,7 +6,7 @@
   };
   "8.6" = {
     version = "8.6.6";
-    multihash = "QmbJqmSWDkRoiNs68uvsifDFAqLYBTHpXkhhujGt8xhyXb";
+    multihash = "Qmdbh9s2fhzAzZbeZ4rk7CGmqu6HoHPJBETX9tQym7M8rH";
     sha256 = "a265409781e4b3edcc4ef822533071b34c3dc6790b893963809b9fe221befe07";
   };
 }

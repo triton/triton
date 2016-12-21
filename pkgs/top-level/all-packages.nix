@@ -816,6 +816,8 @@ cscope = callPackage ../all-pkgs/c/cscope { };
 
 cuetools = callPackage ../all-pkgs/c/cuetools { };
 
+cunit = callPackage ../all-pkgs/c/cunit { };
+
 cups = callPackage ../all-pkgs/c/cups { };
 
 curl = callPackage ../all-pkgs/c/curl {

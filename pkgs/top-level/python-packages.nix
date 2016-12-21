@@ -52,7 +52,7 @@ let
     else if isPy35 then
       "python35"
     else if isPy36 then
-      "python35"
+      "python36"
     else if isPyPy then
       "pypy"
     else

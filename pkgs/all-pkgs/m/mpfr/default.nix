@@ -26,10 +26,10 @@ stdenv.mkDerivation rec {
     sha256 = "015fde82b3979fbe5f83501986d328331ba8ddf008c1ff3da3c238f49ca062bc";
   };
 
-  patches = flip mapAttrsToList patchSha256s (n: sha256: fetchurl {
+  patches = flip mapAttrsToList patchSha256s (n: { multihash, sha256 }: fetchurl {
     name = "mpfr-${version}-${n}";
     url = "http://www.mpfr.org/mpfr-${version}/${n}";
-    inherit sha256;
+    inherit multihash sha256;
   });
 
   buildInputs = [

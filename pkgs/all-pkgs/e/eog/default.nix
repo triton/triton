@@ -25,6 +25,7 @@
 , pango
 , shared_mime_info
 , xorg
+, zlib
 
 , channel
 }:
@@ -74,6 +75,7 @@ stdenv.mkDerivation rec {
     libxml2
     pango
     shared_mime_info
+    zlib
   ] ++ optionals (xorg != null) [
     xorg.libX11
   ];

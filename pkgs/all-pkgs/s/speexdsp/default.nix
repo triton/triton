@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     version = 2;
     owner = "xiph";
     repo = "speexdsp";
-    # Upstream has not tagged a release since 2015
+    # Upstream has not tagged a release since 2014
     rev = "76c944d24ba07c7a19725f951acb1d481546e1e3";
     sha256 = "d7aea033cce23c911cfcd49a280864f21339df2d4edc76032a1a1ef39b834113";
   };

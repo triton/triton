@@ -10,10 +10,11 @@
 let
   inherit (stdenv.lib)
     optionals;
+
+  version = "4.5.1";
 in
 buildPythonPackage rec {
   name = "beautifulsoup-${version}";
-  version = "4.5.1";
 
   src = fetchPyPi {
     package = "beautifulsoup4";

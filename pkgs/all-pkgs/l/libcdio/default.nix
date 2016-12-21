@@ -12,12 +12,12 @@ let
     boolEn;
 in
 stdenv.mkDerivation rec {
-  name = "libcdio-0.93";
+  name = "libcdio-0.94";
 
   src = fetchurl {
-    url = "mirror://gnu/libcdio/${name}.tar.bz2";
+    url = "mirror://gnu/libcdio/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "f8276629226c7e1e74209b66ca421d09d6aec87f72f60ae9b1d3debd0a13dda8";
+    sha256 = "96e2c903f866ae96f9f5b9048fa32db0921464a2286f5b586c0f02699710025a";
   };
 
   nativeBuildInputs = [

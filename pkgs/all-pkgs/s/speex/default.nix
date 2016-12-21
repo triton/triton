@@ -16,11 +16,12 @@ let
     platforms;
 in
 stdenv.mkDerivation rec {
-  name = "speex-1.2rc2";
+  name = "speex-1.2.0";
 
   src = fetchurl {
     url = "http://downloads.xiph.org/releases/speex/${name}.tar.gz";
-    sha256 = "caa27c7247ff15c8521c2ae0ea21987c9e9710a8f2d3448e8b79da9806bce891";
+    multihash = "QmcFCHkLDs75eRoz1ibHcqkvrCfG2uE2pSyAEEqRzBptPB";
+    sha256 = "eaae8af0ac742dc7d542c9439ac72f1f385ce838392dc849cae4536af9210094";
   };
 
   postPatch = ''

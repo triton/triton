@@ -1,8 +1,11 @@
-List of undocumented changes
-============================
+Differences between Triton and NixOS
+====================================
 
-This is probably missing a lot
+**This is probably missing a lot**
 
+
+Changes incorporated in Triton
+------------------------------
 
 * absolute-pkgconfig hook
 

@@ -2,9 +2,11 @@
 , fetchurl
 
 , boost
+, cunit
 , jansson
 , jemalloc
 , libev
+, libevent
 , libxml2
 , openssl
 , zlib
@@ -35,9 +37,11 @@ stdenv.mkDerivation rec {
 
   buildInputs = optionals (!isLib) [
     boost
+    cunit
     jansson
     jemalloc
     libev
+    libevent
     libxml2
     openssl
     zlib
@@ -59,6 +63,9 @@ stdenv.mkDerivation rec {
     "--without-neverbleed"
     "--without-cython"
     "--without-mruby"
+  ] ++ optionals (!isLib) [
+    "--with-boost=${boost.dev}"
+    "--with-boost-libdir=${boost.lib}/lib"
   ];
 
   meta = with stdenv.lib; {

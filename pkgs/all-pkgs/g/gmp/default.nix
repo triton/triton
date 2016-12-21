@@ -4,11 +4,11 @@
 }:
 
 let
-  version = "6.1.1";
+  version = "6.1.2";
 
   tarballUrls = version: [
-    "mirror://gnu/gmp/gmp-${version}.tar.bz2"
-    "ftp://ftp.gmplib.org/pub/gmp-${version}/gmp-${version}.tar.bz2"
+    "mirror://gnu/gmp/gmp-${version}.tar.xz"
+    "ftp://ftp.gmplib.org/pub/gmp-${version}/gmp-${version}.tar.xz"
   ];
 in
 stdenv.mkDerivation rec {
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "a8109865f2893f1373b0a8ed5ff7429de8db696fc451b1036bd7bdf95bbeffd6";
+    sha256 = "87b565e89a9a684fe4ebeeddb8399dce2599f9c9049854ca8c0dfbdea0e21912";
   };
 
   nativeBuildInputs = [
@@ -35,11 +35,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "6.1.1";
+      urls = tarballUrls "6.1.2";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "343C 2FF0 FBEE 5EC2 EDBE  F399 F359 9FF8 28C6 7298";
       inherit (src) outputHashAlgo;
-      outputHash = "a8109865f2893f1373b0a8ed5ff7429de8db696fc451b1036bd7bdf95bbeffd6";
+      outputHash = "87b565e89a9a684fe4ebeeddb8399dce2599f9c9049854ca8c0dfbdea0e21912";
     };
   };
 

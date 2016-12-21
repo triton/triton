@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "2.12.3";
+  version = "2.12.4";
 in
 buildPythonPackage {
   name = "requests-${version}";
@@ -12,11 +12,15 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "requests";
     inherit version;
-    sha256 = "de5d266953875e9647e37ef7bfe6ef1a46ff8ddfe61b5b3652edf7ea717ee2b2";
+    sha256 = "ed98431a0631e309bb4b63c81d561c1654822cb103de1ac7b47e45c26be7ae34";
   };
 
   meta = with stdenv.lib; {
+    description = "HTTP library for Python";
+    homepage = http://python-requests.org/;
+    license = licenses.asl20;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

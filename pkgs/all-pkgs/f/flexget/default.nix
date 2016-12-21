@@ -44,7 +44,7 @@ let
     optionals
     optionalString;
 
-  version = "2.7.4";
+  version = "2.8.8";
 in
 buildPythonPackage rec {
   name = "flexget-${version}";
@@ -52,7 +52,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "FlexGet";
     inherit version;
-    sha256 = "df35bfea715b15a94d819a4311c252615baa75569f28f06c96264039d1b69f8b";
+    sha256 = "8588bfbea8d123743f6470bb2ea94c59a5f4de582ef79085969d63b83c5aa811";
   };
 
   propagatedBuildInputs = [

@@ -1,17 +1,15 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-
-, pythonPackages
+, lib
+, pythonAtLeast
 }:
 
 let
-  inherit (pythonPackages)
-    pythonAtLeast;
+  version = "1.1.6";
 in
 buildPythonPackage rec {
   name = "enum34-${version}";
-  version = "1.1.6";
 
   src = fetchPyPi {
     package = "enum34";
@@ -23,7 +21,7 @@ buildPythonPackage rec {
   disabled = pythonAtLeast "3.4";
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Python 3.4 Enum backported to 2.4 through 3.3";
     homepage = https://bitbucket.org/stoneleaf/enum34;
     license = licenses.bsd3;

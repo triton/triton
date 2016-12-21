@@ -1,15 +1,18 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , oauthlib
 , requests
 , six
 }:
 
+let
+  version = "2.2.1";
+in
 buildPythonPackage rec {
   name = "discogs-client-${version}";
-  version = "2.2.1";
 
   src = fetchPyPi {
     package = "discogs-client";
@@ -23,7 +26,7 @@ buildPythonPackage rec {
     six
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Official Python API client for Discogs";
     homepage = https://github.com/discogs/discogs_client/;
     license = licenses.bsd2;

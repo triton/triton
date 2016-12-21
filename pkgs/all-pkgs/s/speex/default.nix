@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     "--with-fft=gpl-fftw3"
   ];
 
-  meta = with lib; {
+  meta = with stdenv.lib; {
     description = "An audio compression format designed for speech";
     hompage = http://www.speex.org/;
     license = licenses.bsd3;

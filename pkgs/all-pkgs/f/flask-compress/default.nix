@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , flask
 , itsdangerous
@@ -8,14 +9,16 @@
 , werkzeug
 }:
 
+let
+  version = "1.3.2";
+in
 buildPythonPackage rec {
   name = "flask-compress-${version}";
-  version = "1.3.0";
 
   src = fetchPyPi {
     package = "Flask-Compress";
     inherit version;
-    sha256 = "e6c52f1e56b59e8702aed6eb73c6fb0bffe942e5ca188f10e54a33ec11bc5ed4";
+    sha256 = "4fbb53e7f6ce8b1458a2c3d7a528564912f2641ab2f9f43819fc96ed7f770734";
   };
 
   buildInputs = [
@@ -25,7 +28,7 @@ buildPythonPackage rec {
     werkzeug
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Compress responses in your Flask app with gzip";
     homepage = https://github.com/wichitacode/flask-compress;
     license = licenses.mit;

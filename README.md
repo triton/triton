@@ -7,7 +7,7 @@ manager.
 [Triton](https://nixos.org/nixos/) linux distribution source code is located inside the
 `nixos/` folder.
 
-[Documentation](https://triton.readthedocs.org/en/latest/)
+[Documentation](https://triton.github.io/triton/)
 
 ##### Legacy Documentation
 * [NixOS installation instructions](https://nixos.org/nixos/manual/#ch-installation)

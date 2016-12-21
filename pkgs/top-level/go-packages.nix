@@ -119,11 +119,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "2b786ab9e9649dc660afa3bd580fd05a05e20d95";
-    date = "2016-12-19";
+    rev = "f5719d24587163700c5f7fa625ef3e05d9b372e7";
+    date = "2016-12-13";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "17aqinhp9g0515jvxxpm29villnvp0fxmlzdfvhg41rjivp864h9";
+    sha256 = "0czmg5mnfy9z8jhs2zgyx3l332ichiwqn4bcn5747xxqpzaqzn1n";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -293,11 +293,11 @@ let
 
   tools = buildFromGitHub {
     version = 2;
-    rev = "dd796641777bce15ee87fb6bea64943b648bdcf3";
-    date = "2016-12-14";
+    rev = "908849c3379245f71612058fbf92cf6bf58c3c75";
+    date = "2016-12-20";
     owner = "golang";
     repo = "tools";
-    sha256 = "1hc211absrwj54wkczw57d19s2zmp262pxrrndg59k5cpk6xiynv";
+    sha256 = "16r0v2f4fq64i0xh1g80bf4qnvv398ypsw7v48zqz7ibxlj5ayab";
     goPackagePath = "golang.org/x/tools";
     goPackageAliases = [ "code.google.com/p/go.tools" ];
 
@@ -3501,12 +3501,12 @@ let
 
   ipfs = buildFromGitHub {
     version = 2;
-    date = "2016-12-17";
-    rev = "548490f558e44d6abe7f77b29112b149ba207a9c";
+    date = "2016-12-21";
+    rev = "99d72c27818353eb2b9c05710a9a8eba87518323";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "0jb9c19nj69syxilz0rscxlfddvf7xs08n0fy2gihl1lx6z8m9sr";
-    gxSha256 = "0v81xgb88yfg9855ycx3j7q9vcm6a8ggijxa54vfiszxci5vf0is";
+    sha256 = "0bq6ci1gbld1f2h4wdxppw74pzr73z8c9digqz199ilj4qakkdyi";
+    gxSha256 = "0qg7yrjjski84wp9apzhd25v3ljkgxg1vl1hm6xnb392pnxx9qiw";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"
@@ -4216,11 +4216,10 @@ let
 
   msgp = buildFromGitHub {
     version = 2;
-    rev = "b433144bef5f20ebd771c0872945f6707ed3f178";
+    rev = "v1.0";
     owner  = "tinylib";
     repo   = "msgp";
-    sha256 = "1w81p2pjr6cxyly6zir3z9pz3fm6nymmsz26iirhlwr8306w08xh";
-    date = "2016-12-17";
+    sha256 = "1m49ahnqqf40yjj9jij30iargq6jm0cm1alpr191nd3x692sc9ds";
     propagatedBuildInputs = [
       fwd
       chalk
@@ -4944,10 +4943,10 @@ let
 
   roaring = buildFromGitHub {
     version = 2;
-    rev = "v0.3.1";
+    rev = "v0.3.2";
     owner  = "RoaringBitmap";
     repo   = "roaring";
-    sha256 = "1859c4p12vqsp03k1pvb1056f279sdf52hhjh1ny7wy26rgv0prp";
+    sha256 = "0164igv8r3pq493ws0d4d1nyn2nvb6jdszrqzi9bmla5pb0flkyw";
     propagatedBuildInputs = [
       go-unsnap-stream
       msgp
@@ -5593,11 +5592,11 @@ let
 
   utp = buildFromGitHub {
     version = 2;
-    rev = "fa8b6bbd0386e3b98845c5d1f10148b29915d4b9";
+    rev = "cb02a8a1ac94501fb8421531cd94d874360d35b1";
     owner  = "anacrolix";
     repo   = "utp";
-    sha256 = "1h5sbkvn8rrvhvibc0903giayvp7na2vy3xqq53kcd8d8i1n3ig8";
-    date = "2016-10-26";
+    sha256 = "0cx70k83bccd1kxrwf3v957hhc3pr0dxzdym15bxdkylkrmg6jwk";
+    date = "2016-12-20";
     propagatedBuildInputs = [
       envpprof
       missinggo

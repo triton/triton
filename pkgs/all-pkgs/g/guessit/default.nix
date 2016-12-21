@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , babelfish
 , pytestrunner
@@ -15,10 +16,10 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 
-  version = "2.1.0";
+  version = "2.1.1";
 in
 buildPythonPackage rec {
   name = "guessit-${version}";
@@ -26,10 +27,10 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "guessit";
     inherit version;
-    sha256 = "a534a46bef3bbac7b313a55744860a9ddd5b7fae6abb6f6ae8bbace2b3e973b1";
+    sha256 = "cdb51ced109e05318f35dc5ee1c50182a85edd800e86de77ec96eb68a0a99391";
   };
 
-  buildInputs = optionals doCheck [
+  nativeBuildInputs = optionals doCheck [
     pytest
     pytest-benchmark
     pytest-capturelog
@@ -46,7 +47,7 @@ buildPythonPackage rec {
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A library for guessing information from video filenames";
     homepage = https://pypi.python.org/pypi/guessit;
     license = licenses.lgpl3;

@@ -2537,6 +2537,8 @@ nautilus_3-22 = callPackage ../all-pkgs/n/nautilus {
 };
 nautilus = callPackageAlias "nautilus_3-22" { };
 
+nbd = callPackage ../all-pkgs/n/nbd { };
+
 ncdc = callPackage ../all-pkgs/n/ncdc { };
 
 ncmpc = callPackage ../all-pkgs/n/ncmpc { };

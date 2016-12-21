@@ -1139,6 +1139,8 @@ filezilla = callPackage ../all-pkgs/f/filezilla { };
 
 findutils = callPackage ../all-pkgs/f/findutils { };
 
+fio = callPackage ../all-pkgs/f/fio { };
+
 firefox = pkgs.firefox_wrapper pkgs.firefox-unwrapped { };
 firefox-esr = pkgs.firefox_wrapper pkgs.firefox-esr-unwrapped { };
 firefox-unwrapped = callPackage ../all-pkgs/f/firefox { };

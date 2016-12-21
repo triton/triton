@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "2.5.3";
+  version = "2.6.0";
 in
 buildPythonPackage {
   name = "python-dateutil-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "python-dateutil";
     inherit version;
-    sha256 = "1408fdb07c6a1fa9997567ce3fcee6a337b39a503d80699e0f213de4aa4b32ed";
+    sha256 = "62a2f8df3d66f878373fd0072eacf4ee52194ba302e00082828e0d263b0418d2";
   };
 
   propagatedBuildInputs = [

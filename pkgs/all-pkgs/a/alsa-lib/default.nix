@@ -1,21 +1,22 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "alsa-lib-1.1.2";
+  name = "alsa-lib-1.1.3";
 
   src = fetchurl {
     url = "mirror://alsa/lib/${name}.tar.bz2";
-    multihash = "QmWXuyNFMFN5K59TCZnwtwuvg9XLw5b7fHxiKisw2ywzCs";
-    sha256 = "1mk1v2av6ibyydgr6f2mxrwy7clgnf0c68s9y2zvh1ibi7csr3fk";
+    multihash = "QmP3rdGjhyguio1GYMMG71ercHSonmf2eAK5u8WCT2VsZM";
+    sha256 = "71282502184c592c1a008e256c22ed0ba5728ca65e05273ceb480c70f515969c";
   };
 
   patches = [
     ./alsa-plugin-conf-multilib.patch
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "ALSA, the Advanced Linux Sound Architecture libraries";
     homepage = http://www.alsa-project.org/;
     license = licenses.gpl3Plus;

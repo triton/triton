@@ -13,7 +13,7 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "0.7.4";
+  version = "0.8.2";
 in
 buildPythonPackage rec {
   name = "rebulk-${version}";
@@ -21,10 +21,10 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "rebulk";
     inherit version;
-    sha256 = "1bbea5ebcc18b70c5deb19ba6924fb76392d5130b0fe712e3af7a4e4bee18e21";
+    sha256 = "8c09901bda7b79a21d46faf489d67d017aa54d38bdabdb53f824068a6640401a";
   };
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pytestrunner
     regex
     six

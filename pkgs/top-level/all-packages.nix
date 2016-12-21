@@ -1187,6 +1187,8 @@ gconf = callPackage ../all-pkgs/g/gconf { };
 
 gcr = callPackage ../all-pkgs/g/gcr { };
 
+gdb = callPackage ../all-pkgs/g/gdb { };
+
 gdbm = callPackage ../all-pkgs/g/gdbm { };
 
 # Combined gdk-pixbuf loaders.cache
@@ -3823,10 +3825,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   inotify-tools = callPackage ../development/tools/misc/inotify-tools { };
 #
   ltrace = callPackage ../development/tools/misc/ltrace { };
-#
-  gdb = callPackage ../development/tools/misc/gdb {
-    guile = null;
-  };
 #
   valgrind = callPackage ../development/tools/analysis/valgrind { };
 #

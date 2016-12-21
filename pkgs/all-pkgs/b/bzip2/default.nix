@@ -20,7 +20,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://www.bzip.org/${version}/${name}.tar.gz";
-    sha256 = "1kfrc7f0ja9fdn6j1y6yir6li818npy6217hvr3wzmnmzhs8z152";
+    multihash = "Qmdj4eF9zXRyey7hEvGZCvEzumeeiavq4NeFHFYtwaACdk";
+    md5Confirm = "00b516f4704d4a7cb50a1d97e6e8e15b";
+    sha256 = "a2848f34fcd5d6cf47def00461fcb528a0484d8edef8208d6d2e2909dc61d9cd";
   };
 
   # The builder also always builds the static library

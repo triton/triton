@@ -15,6 +15,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://download.gna.org/cryptodev-linux/${name}.tar.gz";
+    multihash = "QmQFLhYrHeLWqEzXd1EvCwm1Af9KXwWmXDunAWgTwPW4pa";
+    hashOutput = false;
     sha256 = "0xhkhcdlds9aiz0hams93dv0zkgcn2abaiagdjlqdck7zglvvyk7";
   };
 
@@ -37,6 +39,15 @@ stdenv.mkDerivation rec {
   installTargets = [
     "modules_install"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "AED6 E2A1 85EE B379 F174  76D2 E012 D07A D0E3 CC30";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Device that allows access to Linux kernel cryptographic drivers";

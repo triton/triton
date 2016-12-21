@@ -4,7 +4,7 @@
 , fetchurl
 , perl
 
-, cryptodevHeaders
+, cryptodev_headers
 , gmp
 , libidn
 , libtasn1
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    cryptodevHeaders
+    cryptodev_headers
     gmp
     libidn
     libtasn1

@@ -3,7 +3,7 @@
 , fetchurl
 , perl
 
-, cryptodevHeaders
+, cryptodev_headers
 , zlib
 
 , channel
@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    cryptodevHeaders
+    cryptodev_headers
     zlib
   ];
 

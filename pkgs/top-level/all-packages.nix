@@ -805,7 +805,7 @@ cpp-netlib = callPackage ../all-pkgs/c/cpp-netlib { };
 
 cracklib = callPackage ../all-pkgs/c/cracklib { };
 
-cryptodevHeaders = callPackage ../all-pkgs/c/cryptodev {
+cryptodev_headers = callPackage ../all-pkgs/c/cryptodev {
   onlyHeaders = true;
   kernel = null;
 };
@@ -4123,7 +4123,7 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 
       accelio = kCallPackage ../all-pkgs/a/accelio { };
 
-      cryptodev = pkgs.cryptodevHeaders.override {
+      cryptodev = pkgs.cryptodev_headers.override {
         onlyHeaders = false;
         inherit kernel;  # We shouldn't need this
       };

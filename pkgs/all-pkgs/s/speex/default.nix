@@ -1,16 +1,16 @@
 { stdenv
-, autoreconfHook
 , fetchurl
-, lib
 
 , fftw_single
+, libogg
 , speexdsp
 }:
 
 let
   inherit (stdenv)
     targetSystem;
-  inherit (lib)
+
+  inherit (stdenv.lib)
     boolEn
     elem
     platforms;
@@ -24,17 +24,9 @@ stdenv.mkDerivation rec {
     sha256 = "eaae8af0ac742dc7d542c9439ac72f1f385ce838392dc849cae4536af9210094";
   };
 
-  postPatch = ''
-    sed -i configure.ac \
-      -e '/AC_CONFIG_MACRO_DIR/i PKG_PROG_PKG_CONFIG'
-  '';
-
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
-
   buildInputs = [
     fftw_single
+    libogg
     speexdsp
   ];
 

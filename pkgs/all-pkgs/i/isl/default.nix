@@ -7,10 +7,11 @@
 }:
 
 let
-  channels = {
-    "0.16" = {
-      version = "0.16.1";
-      sha256 = "00jb3s5aavidfna1rr49mfsyjy9ayx6h414q001rr2ybncq2yaa5";
+  sources = {
+    "0.18" = {
+      version = "0.18";
+      multihash = "QmPTtYQfodApCrwdwgKg2B9yY8n21MAT1MwUuwPDQqTDNK";
+      sha256 = "0f35051cc030b87c673ac1f187de40e386a1482a0cfdf2c552dd6031b307ddc4";
     };
     "0.14" = {
       version = "0.14.1";
@@ -18,15 +19,17 @@ let
     };
   };
 
-  channelData = channels."${channel}";
+  inherit (sources."${channel}")
+    multihash
+    sha256
+    version;
 in
-
 stdenv.mkDerivation rec {
-  name = "isl-${channelData.version}";
+  name = "isl-${version}";
 
   src = fetchurl {
     url = "http://isl.gforge.inria.fr/${name}.tar.xz";
-    inherit (channelData) sha256;
+    inherit multihash sha256;
   };
 
   buildInputs = [

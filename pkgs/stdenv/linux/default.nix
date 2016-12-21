@@ -168,7 +168,7 @@ let
         bzip2 = pkgs.bzip2.override { static = true; shared = false; };
         libelf = pkgs.libelf.override { static = true; shared = false; };
         gmp = pkgs.gmp.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
-        isl_0-16 = pkgs.isl_0-16.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
+        isl_0-18 = pkgs.isl_0-18.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
         libmpc = pkgs.libmpc.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
         mpfr = pkgs.mpfr.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };
         xz = pkgs.xz.override { stdenv = pkgs.makeStaticLibraries pkgs.stdenv; };

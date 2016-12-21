@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "2.4.23";
+  version = "2.4.25";
 in
 stdenv.mkDerivation rec {
   name = "apache-httpd-${version}";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://apache/httpd/httpd-${version}.tar.bz2";
     hashOutput = false;
-    sha256 = "0c1694b2aad7765896faf92843452ee2555b9591ae10d4f19b245f2adfe85e58";
+    sha256 = "f87ec2df1c9fee3e6bfde3c8b855a3ddb7ca1ab20ca877bd0e2b6bf3f05c80b2";
   };
 
   nativeBuildInputs = [

@@ -3,6 +3,7 @@
 , docbook-xsl
 , fetchurl
 , gettext
+, lib
 , libxslt
 , xmlto
 
@@ -13,12 +14,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "alsa-utils-1.1.2";
+  name = "alsa-utils-1.1.3";
 
   src = fetchurl {
     url = "mirror://alsa/utils/${name}.tar.bz2";
-    multihash = "QmRmwwxqHowPTrZzGWYaB9pvy2YMkAMCf312Bpp5UaT2e7";
-    sha256 = "0wcha78c2sm8qqk5r3w83cvm8fp6fb1zpd35kmcm24kxhz007xks";
+    multihash = "QmZ2iyPWGzod3MdnUpgFju76q9y64TaWRonTT7KRa1txW9";
+    sha256 = "127217a54eea0f9a49700a2f239a2d4f5384aa094d68df04a8eb80132eb6167c";
   };
 
   nativeBuildInputs = [
@@ -49,7 +50,7 @@ stdenv.mkDerivation rec {
     installFlagsArray+=("ASOUND_STATE_DIR=$TMPDIR")
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "ALSA, the Advanced Linux Sound Architecture utils";
     homepage = http://www.alsa-project.org/;
     license = licenses.gpl2;

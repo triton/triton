@@ -15,7 +15,7 @@ let
   inherit (lib)
     boolOn;
 
-  version = "2.0.6";
+  version = "2.0.8";
 in
 stdenv.mkDerivation rec {
   name = "jasper-${version}";
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
     owner = "mdadams";
     repo = "jasper";
     rev = "version-${version}";
-    sha256 = "acfae7287d5730ee8a33d522c51e435cfc6640a96e38b4e0c1a0c0bec3aca4b0";
+    sha256 = "a6633ba13ceb30fecd56c7eb39c8839e06c71ab882b3c3f30fcd1a93beee9bf4";
   };
 
   nativeBuildInputs = [

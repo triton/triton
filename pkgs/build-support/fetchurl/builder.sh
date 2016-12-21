@@ -359,9 +359,12 @@ export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 # servers to need them during redirects, and work on SSL without a
 # certificate (this isn't a security problem because we check the
 # cryptographic hash of the output anyway).
+# TODO: Remove --no-npn and --no-alpn as this blocks http2 which is slow right now
 curl="curl \
  --location --max-redirs 20 \
  --retry 3 \
+ --no-npn \
+ --no-alpn \
  --disable-epsv \
  --cookie-jar cookies \
  --speed-limit 10240 \

@@ -6,16 +6,16 @@
 
 assert static || shared;
 
+let
+  version = "2016-12-04";
+in
 stdenv.mkDerivation rec {
   name = "zlib-${version}";
-  version = "1.2.8";
 
   src = fetchurl {
-    urls = [
-      "http://www.zlib.net/${name}.tar.gz"
-      "mirror://sourceforge/libpng/zlib/${version}/${name}.tar.gz"
-    ];
-    sha256 = "039agw5rqvqny92cpkrfn243x2gd4xn13hs3xi6isk55d2vqqr9n";
+    url = "https://github.com/wkennington/zlib/releases/download/${version}/${name}.tar.xz";
+    multihash = "QmS2XU2FfGp6oA8v9hYCVfDRNrXLub37cCtLKj87QypgXh";
+    sha256 = "12657d09bb77e092f189ea1201adaacb35aef1bcf788393e46956019e4e0c8e7";
   };
 
   configureFlags = [

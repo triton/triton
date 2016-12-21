@@ -9,21 +9,22 @@
 let
   inherit (stdenv)
     targetSystem;
+
   inherit (stdenv.lib)
     boolEn
     elem
     platforms;
 in
 stdenv.mkDerivation rec {
-  name = "speexdsp-2016-08-09";
+  name = "speexdsp-2016-09-22";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "xiph";
     repo = "speexdsp";
-    # Upstream has not tagged a release since 2014
-    rev = "bc82a5341e5437d27557ba9244f7f2100b0ad7e1";
-    sha256 = "46be1ad391e47626cf595759adf1f96d52f8addce8cd11ba3749586697798203";
+    # Upstream has not tagged a release since 2015
+    rev = "76c944d24ba07c7a19725f951acb1d481546e1e3";
+    sha256 = "d7aea033cce23c911cfcd49a280864f21339df2d4edc76032a1a1ef39b834113";
   };
 
   nativeBuildInputs = [

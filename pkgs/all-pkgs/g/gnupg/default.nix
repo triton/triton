@@ -3,7 +3,6 @@
 , gettext
 , texinfo
 
-#, adns
 , bzip2
 , curl
 , gnutls
@@ -72,7 +71,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    #adns
     bzip2
     gnutls
     libassuan

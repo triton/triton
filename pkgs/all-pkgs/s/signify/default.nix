@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "19";
+  version = "20";
 in
 stdenv.mkDerivation {
   name = "signify-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation {
     owner = "aperezdc";
     repo = "signify";
     rev = "v${version}";
-    sha256 = "26d997c29c5214740fd64fa3adebbee36df0514332816e13127f1d5c33c5c849";
+    sha256 = "e4461b7dfd3ff9c306d897466c65991f92e77add3d4be831709f39ef86ad3537";
   };
 
   buildInputs = [

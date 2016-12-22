@@ -5,6 +5,7 @@
 
 , db
 , libasr
+, libbsd
 , libevent
 , openssl
 , pam
@@ -36,6 +37,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     db
     libasr
+    libbsd
     libevent
     openssl
     pam

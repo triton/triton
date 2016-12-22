@@ -37,6 +37,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     name = "${name}.tar.xz";
     url = "http://alpha.gnu.org/gnu/grub/grub-2.02~beta3.tar.xz";
+    multihash = "QmWKaXPG17wgsgchV5gEbV6ZKCzTSjQVbtwXdtaeoocxV6";
     sha256 = "30ec3d555e52a702c3eef449872ef874eff28b320f40b55ffc47f70db8e5ada1";
   };
 

@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "6.0.1p1";
+  version = "6.0.2p1";
 
   name = "opensmtpd-${version}";
 
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = map (n: "${n}.tar.gz") baseUrls;
     hashOutput = false;
-    sha256 = "4cd61cd2d668715570896338c81d71eb64e6f90b3f88c5639b378db7b1af864a";
+    sha256 = "2af9b6d08784c7e546bf124bb61e311a6aa0c9835507710a76f5c242383190ac";
   };
 
   nativeBuildInputs = [

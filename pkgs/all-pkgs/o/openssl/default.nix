@@ -13,6 +13,7 @@ let
   sources = {
     "1.0.2" = {
       version = "1.0.2j";
+      multihash = "QmWvA1nistRYqDeM3zVCkSqaeB1oaniKPMuxhSAXJWcZAC";
       sha256 = "e7aff292be21c259c6af26469c7a9b3ba26e9abaaffd325e3dccc9785256c431";
       patches = [
         (fetchTritonPatch {
@@ -24,6 +25,7 @@ let
     };
     "1.1.0" = {
       version = "1.1.0c";
+      multihash = "QmS2ctMp1P3uQW3vB2P2hQQpQNEXcjRRTzUVwAk4zmpqPH";
       sha256 = "fc436441a2e05752d31b4e46115eb89709a28aef96d4fe786abe92409b2fd6f5";
       patches = [
         (fetchTritonPatch {
@@ -40,6 +42,7 @@ let
     versionOlder;
 
   inherit (sources."${channel}")
+    multihash
     patches
     sha256
     version;
@@ -53,7 +56,7 @@ stdenv.mkDerivation rec {
       "http://openssl.linux-mirror.org/source/${name}.tar.gz"
     ];
     hashOutput = false;
-    inherit sha256;
+    inherit multihash sha256;
   };
 
   inherit patches;

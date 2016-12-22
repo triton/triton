@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://linuxcontainers.org/downloads/cgmanager/${name}.tar.gz";
+    multihash = "QmYgy5r18amgq86xw9UjZuk8MooPfjqXuQtdw9Zvwf1cYm";
     hashOutput = false;
     sha256 = "29b155befb3ac233d5d29dbca7c791c8138bab01bfa78ea4757ebb88ce23b458";
   };

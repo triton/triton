@@ -23,6 +23,7 @@ stdenv.mkDerivation {
     })
     (fetchurl {
       url = "http://www.nico.schottelius.org/software/gpm/archives/${gpmName}.tar.bz2";
+      multihash = "QmfXgn4nAx8eudgPcBMhRFtqy3LAybB1cdRJmgkGjsf8Mx";
       sha256 = "13d426a8h403ckpc8zyf7s2p5rql0lqbg2bv0454x0pvgbfbf4gh";
     })
   ];

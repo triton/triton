@@ -6,14 +6,14 @@
 }:
 
 let
-  version = "1.0.2";
+  version = "201602131606";
 in
 stdenv.mkDerivation rec {
   name = "libasr-${version}";
 
   src = fetchurl {
     url = "https://www.opensmtpd.org/archives/${name}.tar.gz";
-    sha256 = "0d4blm0kzdhb75fq8sbcpvkc25lv5dbjaxa2ldniaf39633d3xd6";
+    sha256 = "e5684a08d5eb61d68a94a24688f23bee8785c8a51a1bd34c88cae5aee5aa6da2";
   };
 
   buildInputs = [

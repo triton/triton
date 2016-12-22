@@ -6,7 +6,8 @@ stdenv.mkDerivation rec {
   name = "patchelf-0.9";
 
   src = fetchurl {
-    url = "http://nixos.org/releases/patchelf/${name}/${name}.tar.bz2";
+    url = "https://nixos.org/releases/patchelf/${name}/${name}.tar.bz2";
+    multihash = "QmaF3c5ELwpV9T9FyDd3iwwmsPeHoRZiQzj2JtV9PfKd8w";
     sha256 = "10sg04wrmx8482clzxkjfx0xbjkyvyzg88vq5yghx2a8l4dmrxm0";
   };
 

@@ -2896,14 +2896,14 @@ python34 = callPackage ../all-pkgs/p/python {
   channel = "3.4";
   self = callPackageAlias "python34" { };
 };
-python35 = hiPrio (callPackage ../all-pkgs/p/python {
+python35 = callPackage ../all-pkgs/p/python {
   channel = "3.5";
   self = callPackageAlias "python35" { };
-});
-python36 = callPackage ../all-pkgs/p/python {
+};
+python36 = hiPrio (callPackage ../all-pkgs/p/python {
   channel = "3.6";
   self = callPackageAlias "python36" { };
-};
+});
 #pypy = callPackage ../all-pkgs/p/pypy {
 #  self = callPackageAlias "pypy" { };
 #};

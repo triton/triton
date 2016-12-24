@@ -2908,7 +2908,7 @@ python36 = callPackage ../all-pkgs/p/python {
 #  self = callPackageAlias "pypy" { };
 #};
 python2 = callPackageAlias "python27" { };
-python3 = callPackageAlias "python35" { };
+python3 = callPackageAlias "python36" { };
 python = callPackageAlias "python2" { };
 
 python27Packages = hiPrioSet (recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
@@ -2936,7 +2936,7 @@ python36Packages = recurseIntoAttrs (callPackage ../top-level/python-packages.ni
 #  self = callPackageAlias "pypyPackages" { };
 #});
 python2Packages = callPackageAlias "python27Packages" { };
-python3Packages = callPackageAlias "python35Packages" { };
+python3Packages = callPackageAlias "python36Packages" { };
 pythonPackages = callPackageAlias "python2Packages" { };
 
 qbittorrent = callPackage ../all-pkgs/q/qbittorrent { };

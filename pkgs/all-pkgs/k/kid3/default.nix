@@ -28,16 +28,16 @@
 let
   inherit (stdenv.lib)
     boolOn;
+
+  version = "3.4.4";
 in
 stdenv.mkDerivation rec {
   name = "kid3-${version}";
-  version = "3.4.2";
 
   src = fetchurl {
     url = "mirror://sourceforge/kid3/kid3/${version}/${name}.tar.gz";
-    multihash = "QmShzrc31XbMaWYzBnAn8SABTJ45oLQJfnzzpE8nS1jroE";
     hashOutput = false;
-    sha256 = "5c0707f1be73c486d09522ca086693d3ee830b7a28a88dbd2c010c5494256a3e";
+    sha256 = "ab1f622e26e5d672eb078f93abdb51f1a2667a748be8a211fcd91d18e0db4de0";
   };
 
   nativeBuildInputs = [

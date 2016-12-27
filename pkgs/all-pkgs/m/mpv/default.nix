@@ -50,7 +50,7 @@ let
   inherit (stdenv.lib)
     boolEn;
 
-  version = "0.22.0";
+  version = "0.23.0";
 in
 stdenv.mkDerivation rec {
   name = "mpv-${version}";
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     version = 2;
     url = "https://github.com/mpv-player/mpv/archive/v${version}.tar.gz";
-    sha256 = "78ea8935c8cf156c3481e9ff94e1a2f7ac69fdce0e77a4614481bc36ca5c7f6a";
+    sha256 = "200a9564fae9d10dff9fe652dc816336807acebec72c8fbf40ba2e10e247672a";
   };
 
   nativeBuildInputs = [

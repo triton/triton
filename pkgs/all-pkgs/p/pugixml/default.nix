@@ -1,19 +1,22 @@
 { stdenv
 , cmake
 , fetchFromGitHub
+, lib
 , ninja
 }:
 
+let
+  version = "1.8";
+in
 stdenv.mkDerivation rec {
   name = "pugixml-${version}";
-  version = "1.7";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "zeux";
     repo = "pugixml";
     rev = "v${version}";
-    sha256 = "0e76ee6c1a9bffd40aed870b3c97bd7521cbbbb859d65372ae794c562a5f5319";
+    sha256 = "4c66adfdccb5bd62715c8108a2f3ea610f988b53104f02bf4a1317d2728ea082";
   };
 
   nativeBuildInputs = [
@@ -31,7 +34,7 @@ stdenv.mkDerivation rec {
     cd scripts
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Light-weight, simple and fast XML parser for C++ with XPath support";
     homepage = http://pugixml.org/;
     license = licenses.mit;

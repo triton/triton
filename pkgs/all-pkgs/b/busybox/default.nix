@@ -73,15 +73,6 @@ stdenv.mkDerivation rec {
     make oldconfig
   '';
 
-  crossAttrs = {
-    extraCrossConfig = ''
-      CONFIG_CROSS_COMPILER_PREFIX "${stdenv.cross.config}-"
-    '' +
-      (if stdenv.cross.platform.kernelMajor == "2.4" then ''
-        CONFIG_IONICE n
-      '' else "");
-  };
-
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;

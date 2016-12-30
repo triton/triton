@@ -8,7 +8,7 @@
   "head" = {
     fetchzipversion = 2;
     version = "2016-12-07";
-    rev = "c97c64ab8b8eaea8b1de611adc9022815d88b09b";
-    sha256 = "00f4e32aa02a1507685c58c77d4a84797acd0531dc8bb7de60276094a3b323e4";
+    rev = "a2fe29ca5c6c67921bbe3e35330854d4d4fe6dc3";
+    sha256 = "1aa02b8c60e429ada6d06ccf5a67ac7f8949552258f752e44765592abd51acc9";
   };
 }

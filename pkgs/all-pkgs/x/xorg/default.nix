@@ -1053,9 +1053,9 @@ let
   }) // {inherit printproto libX11 libXau libXext xextproto ;};
 
   libXpm = (mkDerivation "libXpm" {
-    name = "libXpm-3.5.11";
+    name = "libXpm-3.5.12";
     src = fetchurl {
-      url = mirror://xorg/individual/lib/libXpm-3.5.11.tar.bz2;
+      url = mirror://xorg/individual/lib/libXpm-3.5.12.tar.bz2;
       sha256 = "07041q4k8m4nirzl7lrqn8by2zylx0xvh6n0za301qqs3njszgf5";
     };
     nativeBuildInputs = [ utilmacros ];

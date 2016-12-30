@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "3.0.10";
+  version = "4.0.0";
 in
 buildPythonPackage rec {
   name = "pyodbc-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pyodbc";
     inherit version;
-    sha256 = "a66d4f347f036df49a00addf38ca6769ad52f61acdb931c95bc3a9245d8f2b58";
+    sha256 = "dbd416e5afce6243e2c242a760f48db44914c049a416ebf7bd83768523476c34";
   };
 
   buildInputs = [

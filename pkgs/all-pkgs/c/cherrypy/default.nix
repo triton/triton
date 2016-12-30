@@ -1,19 +1,22 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , setuptools-scm
 , six
 }:
 
+let
+  version = "8.6.0";
+in
 buildPythonPackage rec {
   name = "cherrypy-${version}";
-  version = "8.1.2";
 
   src = fetchPyPi {
     package = "CherryPy";
     inherit version;
-    sha256 = "45a92fdd18baa19d055e5f53bb3c4293821a30e83bf3c5244b867685397f5380";
+    sha256 = "f1acd6d671cbc7d61edcb93a8e2aa11f55276b1460ef9ce1978dc21a5f852203";
   };
 
   propagatedBuildInputs = [
@@ -23,7 +26,7 @@ buildPythonPackage rec {
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A pythonic, object-oriented HTTP framework";
     homepage = http://www.cherrypy.org;
     license = licenses.bsd3;

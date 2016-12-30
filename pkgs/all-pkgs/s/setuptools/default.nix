@@ -1,5 +1,6 @@
 { stdenv
 , fetchPyPi
+, unzip
 , wrapPython
 
 , python
@@ -8,13 +9,18 @@
 stdenv.mkDerivation rec {
   name = "${python.executable}-setuptools-${version}";
   # Make sure to update pkgs/p/pip/bootstrap.nix setuptools hash when updating
-  version = "32.0.0";
+  version = "32.3.1";
 
   src = fetchPyPi {
     package = "setuptools";
     inherit version;
-    sha256 = "45dc38f1a53296f4613f9421680f62a94b65ed535c3ac4d24f87f20ceed4a927";
+    type = ".zip";
+    sha256 = "806bae0840429c13f6e6e44499f7c0b87f3b269fdfbd815d769569c1daa7c351";
   };
+
+  nativeBuildInputs = [
+    unzip
+  ];
 
   buildInputs = [
     python
@@ -31,7 +37,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     # Hash for pip bootstrap, see pkgs/p/pip/bootstrap.nix
-    bootstrapSha256 = "e1d5a1fd8e7ac66e8f9ed2f0e5c08ac3c8d45a389c167ac0270b6580f365b558";
+    bootstrapSha256 = "1876d17325e5157751e004d7911c0a0c3bb257d509d9d23483ff9f2f12c84315";
   };
 
   meta = with stdenv.lib; {

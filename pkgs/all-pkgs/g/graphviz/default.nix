@@ -24,15 +24,17 @@ let
     optional
     optionals
     optionalString;
-in
 
+  version = "2.40.1";
+in
 stdenv.mkDerivation rec {
-  version = "2.38.0";
   name = "graphviz-${version}";
 
   src = fetchurl {
     url = "http://www.graphviz.org/pub/graphviz/ARCHIVE/${name}.tar.gz";
-    sha256 = "17l5czpvv5ilmg17frg0w4qwf89jzh2aglm9fgx0l0aakn6j7al1";
+    multihash = "QmdPD26wXCnji2yTGjkv2EqYNxtoVPC1f86neMjQ7dSJMZ";
+    md5Confirm = "4ea6fd64603536406166600bcc296fc8";
+    sha256 = "ca5218fade0204d59947126c38439f432853543b0818d9d728c589dfe7f3a421";
   };
 
   patches = [

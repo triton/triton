@@ -15,17 +15,17 @@ in
 if [ hostSystem ] == lib.platforms.x86_64-linux then {
   busybox = makeUrls {
     file = "bootstrap-busybox";
-    nix-hash = "rimjf9i78mfc3k7xzznwgnrrjjbsgsii";
-    multihash = "QmXzC8ZcvakvH78hqbM1zL5MGJkuFhveNFkrrDdZ6X7CAD";
-    sha256 = "1l5b1w4gw92rhvn616i2sb0mykkks5jy67dlicbc0l5vj7cqn2hp";
+    nix-hash = "84md38hwv6v4vy0g7cdccnw4x87nkf6i";
+    multihash = "QmQ5isT1tEmJhuQ6KNPdtamANEcppBDhv3EyAZE7PHYj1p";
+    sha256 = "0ks3flp1kl2dgakzmrj2rw81r54j7wkbm2g176lqki1syzi9wd1c";
     executable = true;
   };
 
   bootstrapTools = makeUrls {
     file = "bootstrap-tools.tar.xz";
-    nix-hash = "rimjf9i78mfc3k7xzznwgnrrjjbsgsii";
-    multihash = "QmZNS3KdwfaFuXgmp4aVnQiHARZNeMsTSUek4x7tXQ4nAC";
-    sha256 = "04rxw6d0rnhhyan0g8wkn4yrx10bydh2958fpzdfr1d33yy6w85b";
+    nix-hash = "84md38hwv6v4vy0g7cdccnw4x87nkf6i";
+    multihash = "QmVwrewK92FSgVPkbHbSL7V4UnYfyVvjA9mWkfJAudvGDH";
+    sha256 = "f11d55d5cf13189186c9dab09d887a14dd8a6c749178bbcad634b6cfbece92a8";
   };
 
   langC = true;
@@ -34,17 +34,17 @@ if [ hostSystem ] == lib.platforms.x86_64-linux then {
 } else if [ hostSystem ] == lib.platforms.i686-linux then {
   busybox = makeUrls {
     file = "bootstrap-busybox";
-    nix-hash = "66zksl5jd4yq07nlz1p6a2nmlq6qcn60";
-    multihash = "QmV7shxYLE3qAe36j72wQHyA2Z5gh18RaVrfEG6HQEKwLQ";
-    sha256 = "0niq9636qqfph73qggqky58x1hjq78qfd9mg5ksmmys6sizg63ai";
+    nix-hash = "794m4bqyvkniwy14axhbvvlwn0nfkvgg";
+    multihash = "Qma8NRuL2omkHsjqYv7wYFqYJ5gVFsxe3C73iVpzQEKREV";
+    sha256 = "0m2jamdl5q86p7540g5bsb9g9dgxr3nq4a75rzchlm8ich6cljca";
     executable = true;
   };
 
   bootstrapTools = makeUrls {
     file = "bootstrap-tools.tar.xz";
-    nix-hash = "66zksl5jd4yq07nlz1p6a2nmlq6qcn60";
-    multihash = "QmR4pkiPEjFMdnZj6Z2UbWvZzvwTxyuDVmor1Qicd5j7Ed";
-    sha256 = "00b6bwz6ij4734w8fj89gchann6yncz0y2n9wa34b5ixcfzkz0zn";
+    nix-hash = "794m4bqyvkniwy14axhbvvlwn0nfkvgg";
+    multihash = "QmWq525ugaE6MWjVMCz8xUjxxGa9nLdw9ibwxH8b1qJdr6";
+    sha256 = "86774a1d77dec741652a162a3003a3cddfa40cef8b168f3a954c877fe8a81164";
   };
 
   langC = true;

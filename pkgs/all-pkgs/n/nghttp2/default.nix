@@ -2,6 +2,7 @@
 , fetchurl
 
 , boost
+, c-ares
 , cunit
 , jansson
 , jemalloc
@@ -38,6 +39,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = optionals (!isLib) [
     boost
+    c-ares
     cunit
     jansson
     jemalloc

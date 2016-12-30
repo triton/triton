@@ -39,9 +39,9 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "d39065dde0715c2c76e9898486ab36b905e83454";
+      rev = "d8ed11d3697c04c04e651fb9d5e3dcd1ff369eb1";
       file = "b/busybox/in-store.patch";
-      sha256 = "2417176a5609c9a201c8e5ae5c7dc055f8980b20716a130516f6553460bfb883";
+      sha256 = "e06431f0629f1456c728209ac160bbd932d13c34d326c577f6dc3ae948dae325";
     })
   ];
 

@@ -10,13 +10,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "nftables-0.6";
+  name = "nftables-0.7";
 
   src = fetchurl {
     url = "http://netfilter.org/projects/nftables/files/${name}.tar.bz2";
     hashOutput = false;
-    multihash = "Qme1McxoscPtzEjZ5gHskjhMErsjKLNWdZ7XJNbrWQZfxj";
-    sha256 = "dede62655f1c56f2bc9f9be12d103d930dcef6d5f9e0855854ad9c6f93cd6c2d";
+    multihash = "QmPaVkUfFmLDUCtiGHnwRUVhY9b7zbhWuypXLccUMNKEH5";
+    sha256 = "fe639239d801ce5890397f6f4391c58a934bfc27d8b7d5ef922692de5ec4ed43";
   };
 
   nativeBuildInputs = [

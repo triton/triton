@@ -25,14 +25,15 @@ in
 let
   isLib = prefix == "lib";
 
-  version = "1.17.0";
+  version = "1.18.0";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}nghttp2-${version}";
 
   src = fetchurl {
-    url = "https://github.com/tatsuhiro-t/nghttp2/releases/download/v${version}/nghttp2-${version}.tar.xz";
-    sha256 = "6bb446e6977f1daac96b94cd983bab15172728342f7e2b9b0f855e1532dd2ed2";
+    url = "https://github.com/tatsuhiro-t/nghttp2/releases/download/"
+      + "v${version}/nghttp2-${version}.tar.xz";
+    sha256 = "5e5620e103f9239c0758e0fbfcf9bc04744794c1ce7a415583fbd4c2671a4499";
   };
 
   buildInputs = optionals (!isLib) [
@@ -69,8 +70,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with stdenv.lib; {
-    homepage = http://nghttp2.org/;
     description = "an implementation of HTTP/2 in C";
+    homepage = http://nghttp2.org/;
     license = licenses.mit;
     maintainers = with maintainers; [
       wkennington

@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
   
   src = fetchurl {
     url = "http://www.litech.org/radvd/dist/${name}.tar.xz";
+    multihash = "QmaqkVxc8eFDUE1gCpKx3vwBb5BXqDCJuKi6rK1QdxUgpd";
     hashOutput = false;
     sha256 = "b3a10ddaf7b000b743abc3681050e7e13b206bc5be6eb483e83217e088f45727";
   };

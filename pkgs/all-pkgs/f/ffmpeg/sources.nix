@@ -12,7 +12,7 @@
   };
   "9.9" = { # Git
     version = "2016.12.20";
-    rev = "54931fd0fb820658042e84e6245162900796ad4d";
-    sha256 = "d8cf6d1d2a9520bcb781559c3f56c35fea6ce8c3600d086aecb28dcbd9cd1b38";
+    rev = "ec2f3b1f57fd5fc01c8ddb0c927112a18bcd7cba";
+    sha256 = "e058f9b42302a1b44e9c0d1546bc14ae2fcecc7c50d87096352405af77d17e25";
   };
 }

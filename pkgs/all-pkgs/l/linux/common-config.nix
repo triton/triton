@@ -72,7 +72,6 @@ with stdenv.lib;
   DYNAMIC_DEBUG y
   TIMER_STATS y
   BACKTRACE_SELF_TEST n
-  CPU_NOTIFIER_ERROR_INJECT n
   DEBUG_DEVRES n
   DEBUG_NX_TEST n
   DEBUG_STACK_USAGE n
@@ -80,6 +79,9 @@ with stdenv.lib;
   RCU_TORTURE_TEST n
   SCHEDSTATS n
   DETECT_HUNG_TASK y
+  ${optionalString (versionAtLeast version "4.10") ''
+    # BUG_ON_DATA_CORRUPTION y
+  ''}
 
   # Unix domain sockets.
   UNIX y
@@ -162,6 +164,10 @@ with stdenv.lib;
   IPV6_MROUTE_MULTIPLE_TABLES y
   IPV6_MROUTE y
   IPV6_PIMSM_V2 y
+  ${optionalString (versionAtLeast version "4.10") ''
+    IPV6_SEG6_LWTUNNEL y
+    IPV6_SEG6_HMAC y
+  ''}
   NETWORK_PHY_TIMESTAMPING y
   NETFILTER_ADVANCED y
   IP_VS_PROTO_TCP y
@@ -229,6 +235,9 @@ with stdenv.lib;
     SYNC_FILE y
     INTEL_PMC_CORE y
   ''}
+  ${optionalString (versionAtLeast version "4.10") ''
+    INTEL_RDT_A y
+  ''}
   SSB_PCMCIAHOST y
   SSB_SDIOHOST y
   SSB_SILENT y
@@ -276,6 +285,9 @@ with stdenv.lib;
   CAN_LEDS y
   ${optionalString (versionAtLeast version "4.8") ''
     LEDS_TRIGGER_DISK y
+  ''}
+  ${optionalString (versionAtLeast version "4.10") ''
+    LED_TRIGGER_PHY y
   ''}
 
   # Wireless networking.
@@ -365,8 +377,14 @@ with stdenv.lib;
   FSCACHE_HISTOGRAM y
   NTFS_RW y
   HFSPLUS_FS_POSIX_ACL y
+  ${optionalString (versionAtLeast version "4.10") ''
+    # OVERLAY_FS_REDIRECT_DIR y
+  ''}
   UBIFS_FS_ADVANCED_COMPR y
   UBIFS_ATIME_SUPPORT y
+  ${optionalString (versionAtLeast version "4.10") ''
+    UBIFS_FS_ENCRYPTION y
+  ''}
   ${optionalString (versionAtLeast version "4.6") ''
     FAT_DEFAULT_UTF8 y
   ''}
@@ -507,6 +525,11 @@ with stdenv.lib;
   MEGARAID_NEWGEN y
   MODVERSIONS y
   MOUSE_PS2_ELANTECH y # Elantech PS/2 protocol extension
+  ${optionalString (versionAtLeast version "4.10") ''
+    RMI4_F03 y
+    RMI4_F34 y
+    RMI4_F55 y
+  ''}
   MTRR_SANITIZER y
   ${optionalString (versionAtLeast version "4.8" && versionOlder version "4.9") ''
     SUNXI_CCU y
@@ -553,6 +576,9 @@ with stdenv.lib;
   NAMESPACES y #  Required by 'unshare' used by 'nixos-install'
   RT_GROUP_SCHED y
   CGROUP_DEVICE y
+  ${optionalString (versionAtLeast version "4.10") ''
+    CGROUP_BPF y
+  ''}
   MEMCG y
   MEMCG_SWAP y
   CGROUP_PIDS y
@@ -560,6 +586,11 @@ with stdenv.lib;
     DEVPTS_MULTIPLE_INSTANCES y
   ''}
   BLK_DEV_THROTTLING y
+  ${optionalString (versionAtLeast version "4.10") ''
+    BLK_DEV_ZONED y
+    BLK_WBT y
+    BLK_WBT_SQ y
+  ''}
   CFQ_GROUP_IOSCHED y
   CFS_BANDWIDTH y
 
@@ -664,6 +695,9 @@ with stdenv.lib;
   MEDIA_CAMERA_SUPPORT y
   MEDIA_RC_SUPPORT y
   MEDIA_USB_SUPPORT y
+  ${optionalString (versionAtLeast version "4.10") ''
+    MEDIA_CEC_SUPPORT y
+  ''}
 
   # Our initrd init uses shebang scripts, so can't be modular.
   BINFMT_SCRIPT y

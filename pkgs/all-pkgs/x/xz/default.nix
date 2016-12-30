@@ -3,12 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xz-5.2.2";
+  name = "xz-5.2.3";
 
   src = fetchurl {
     url = "http://tukaani.org/xz/${name}.tar.xz";
-    multihash = "QmR7egaexND8eJXdMCzzxf4FK7u9ya3V777ZCA1LuCvWhK";
-    sha256 = "f341b1906ebcdde291dd619399ae944600edc9193619dd0c0110a5f05bfcc89e";
+    multihash = "QmRoqsqhx11SwkwKokd3gkYsxNtfRwG7eRYnT21rx6KodS";
+    sha256 = "7876096b053ad598c31f6df35f7de5cd9ff2ba3162e5a5554e4fc198447e0347";
   };
 
   # In stdenv-linux, prevent a dependency on bootstrap-tools.

@@ -17,16 +17,16 @@ let
     "https://fedorahosted.org/releases/e/l/elfutils/${version}/elfutils-${version}.tar.bz2"
   ];
 
-  version = "0.167";
+  version = "0.168";
 in
 stdenv.mkDerivation rec {
   name = "elfutils-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmTUVjSnPLPmYQmDFKb5Twfb3AQxv9Rx7FcLwjoQPfa6My";
+    multihash = "Qme24e4zaT3nZXnsPBpiMpb9RNAWBYuSrWDVsXqfx7SJfa";
     hashOutput = false;
-    sha256 = "3f300087c42b6f35591163b48246b4098ce39c4c6f5d55a83023c903c5776553";
+    sha256 = "b88d07893ba1373c7dd69a7855974706d05377766568a7d9002706d5de72c276";
   };
 
   nativeBuildInputs = [

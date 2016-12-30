@@ -1056,7 +1056,7 @@ let
     name = "libXpm-3.5.12";
     src = fetchurl {
       url = mirror://xorg/individual/lib/libXpm-3.5.12.tar.bz2;
-      sha256 = "07041q4k8m4nirzl7lrqn8by2zylx0xvh6n0za301qqs3njszgf5";
+      sha256 = "fd6a6de3da48de8d1bb738ab6be4ad67f7cb0986c39bd3f7d51dd24f7854bdec";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ libX11 libXext xextproto xproto libXt ];

@@ -34,9 +34,10 @@ let
       patchSha256 = null;
     };
     "testing" = {
-      version = "4.9";
+      version = "4.10-rc1";
+      needsGitPatch = true;
       baseSha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
-      patchSha256 = null;
+      patchSha256 = "6b269bd7bf6a13733269f89b1205db7f76434dc9aa96cc5a1537decc5d2f5053";
     };
     "bcache" =
       let

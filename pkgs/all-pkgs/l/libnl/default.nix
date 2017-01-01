@@ -5,16 +5,17 @@
 }:
 
 let
-  version = "3.2.28";
+  version = "3.2.29";
   version' = stdenv.lib.replaceStrings ["."] ["_"] version;
 in
 stdenv.mkDerivation rec {
   name = "libnl-${version}";
 
   src = fetchurl {
-    url = "https://github.com/thom311/libnl/releases/download/libnl${version'}/libnl-${version}.tar.gz";
+    url = "https://github.com/thom311/libnl/releases/download/"
+      + "libnl${version'}/libnl-${version}.tar.gz";
     hashOutput = false;
-    sha256 = "cd608992c656e8f6e3ab6c1391b162a5a51c49336b9219f7f390e61fc5437c41";
+    sha256 = "0beb593dc6abfffa18a5c787b27884979c1b7e7f1fd468c801e3cc938a685922";
   };
 
   nativeBuildInputs = [

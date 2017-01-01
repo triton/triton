@@ -26,6 +26,8 @@
 , systemd_lib
 , zlib
 
+, useStableVersionUserAgent ? false
+
 , channel
 }:
 
@@ -157,6 +159,10 @@ stdenv.mkDerivation rec {
   postPatch = /* FIXME: remove in 2.93+ */ ''
     sed -i CMakeLists.txt \
       -e 's/libsystemd-daemon/libsystemd/'
+  '' + optionalString useStableVersionUserAgent ''
+    sed -i CMakeLists.txt \
+      -e '/TR_USER_AGENT_PREFIX/s/+//' \
+      -e '/TR_PEER_ID_PREFIX/s/Z/0/'
   '';
 
   cmakeFlags = [

@@ -36,21 +36,21 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "95043ea498ca0e8d0c5b7d2101263c5131814428";
+      rev = "e71938b3ed2c0c7e904c57444b656e3db19bfe73";
       file = "n/nss/0001-Add-pem-support.patch";
-      sha256 = "a2c64c308eef8885e731cdb5cca5e00ab00fcde5e12c0b234e2e125fa9ed162c";
+      sha256 = "aa7c5a1a22474868d6781897b988f9e23d7958ae49c225bd7da65a3bf63fe9d1";
     })
     (fetchTritonPatch {
-      rev = "95043ea498ca0e8d0c5b7d2101263c5131814428";
+      rev = "e71938b3ed2c0c7e904c57444b656e3db19bfe73";
       file = "n/nss/0002-Fix-sharedlib-loading.patch";
-      sha256 = "a7e9547fc47736997e129f997af77582335d1d7b59f8fae11ab4caa153740257";
+      sha256 = "bb719d9acf4e3d984fc8885251daa7148e995a2691a040fb5c45f5dc05fc4ae0";
     })
     (fetchTritonPatch {
-      rev = "95043ea498ca0e8d0c5b7d2101263c5131814428";
+      rev = "e71938b3ed2c0c7e904c57444b656e3db19bfe73";
       file = "n/nss/0003-Add-pkgconfig-files.patch";
-      sha256 = "0f8aea9c9a50561e3e704259883984a55d9eaade34a1fd589abb143ed9a20e72";
+      sha256 = "f02ea2bdf7011a896c2e19bb64ea91bc8674642dc267325cba6e69b23190cbd4";
     })
-  ];
+	];
 
   preBuild = ''
     makeFlagsArray+=("SOURCE_PREFIX=$out")

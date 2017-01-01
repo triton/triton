@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , libogg
 }:
@@ -7,29 +8,32 @@
 let
   inherit (stdenv)
     targetSystem;
-  inherit (stdenv.lib)
+  inherit (lib)
+    boolEn
     elem
-    enFlag
     platforms;
 in
 stdenv.mkDerivation rec {
-  name = "flac-1.3.1";
+  name = "flac-1.3.2";
 
   src = fetchurl {
     url = "http://downloads.xiph.org/releases/flac/${name}.tar.xz";
-    sha256 = "4773c0099dba767d963fd92143263be338c48702172e8754b9bc5103efe1c56c";
+    multihash = "QmZLYKX7bcZtUopiGmMzUCUGJDn1TEgqXvJtUw7M8KtjZU";
+    sha256 = "e48764f0761beb791a69590f12826fe8cf302c42db2879849c5d10bc7c85db66";
   };
 
-  configureFLags = [
+  configureFlags = [
     "--enable-largefile"
     "--enable-asm-optimizations"
     "--disable-debug"
-    (enFlag "sse" (elem targetSystem platforms.x86-all) null)
-    (enFlag "altivec" (elem targetSystem platforms.powerpc-all) null)
+    "--${boolEn (elem targetSystem platforms.x86-all)}-sse"
+    "--${boolEn (elem targetSystem platforms.powerpc-all)}-altivec"
+    "--${boolEn (elem targetSystem platforms.x86-all)}-avx"
     "--disable-thorough-tests"
     "--disable-exhaustive-tests"
     "--disable-werror"
     "--disable-stack-smash-protection"
+    "--enable-64-bit-words"
     "--disable-valgrind-testing"
     "--disable-doxygen-docs"
     "--disable-local-xmms-plugin"
@@ -44,14 +48,9 @@ stdenv.mkDerivation rec {
     libogg
   ];
 
-  outputs = [
-    "out"
-    "doc"
-  ];
-
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "FLAC lossless audio file format";
     homepage = http://xiph.org/flac/;
     license = with licenses; [

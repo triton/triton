@@ -58,16 +58,23 @@ buildAbsoluteLdflags() {
     is_rpath = 0;
     FS="[ \t\r\n]+"
   }
+  function set_path(path) {
+    if (match(path, "^" ENVIRON["NIX_BUILD_TOP"]) != 0) {
+      return 0;
+    }
+    lib_paths[path] = 1;
+    return 1;
+  }
   {
     # Parse each of the library paths
     for (i = 1; i <= NF; i++) {
       if (is_rpath) {
-        lib_paths[$i] = 1;
+        set_path($1);
         is_rpath = 0;
       } else if ($i ~ /^-rpath$/) {
         is_rpath = 1;
       } else if ($i ~ /^-L/) {
-        lib_paths[substr($i, 3, length($i)-2)] = 1;
+        set_path(substr($i, 3, length($i)-2));
       }
     }
   }

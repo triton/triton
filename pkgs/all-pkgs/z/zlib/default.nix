@@ -7,21 +7,36 @@
 assert static || shared;
 
 let
-  version = "2016-12-04";
+  version = "1.2.9";
+
+  tarballUrls = version: [
+    "http://zlib.net/zlib-${version}.tar.xz"
+  ];
 in
 stdenv.mkDerivation rec {
   name = "zlib-${version}";
 
   src = fetchurl {
-    url = "https://github.com/wkennington/zlib/releases/download/${version}/${name}.tar.xz";
-    multihash = "QmS2XU2FfGp6oA8v9hYCVfDRNrXLub37cCtLKj87QypgXh";
-    sha256 = "12657d09bb77e092f189ea1201adaacb35aef1bcf788393e46956019e4e0c8e7";
+    urls = tarballUrls version;
+    multihash = "QmaoDoqYRXzQ2joHwTn8195U23kArHUrG5DJp7KyDk4pg8";
+    sha256 = "03d9c7f67976cf1389589782de46f45011053ea7f4222c2fb8c2cf9fd813bb68";
   };
 
   configureFlags = [
     (if static then "--static" else "")
     (if shared then "--shared" else "")
   ];
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "1.2.9";
+      pgpsigUrls = map (n: "${n}.asc") urls;
+      pgpKeyFingerprint = "5ED4 6A67 21D3 6558 7791  E2AA 783F CD8E 58BC AFBA";
+      inherit (src) outputHashAlgo;
+      outputHash = "03d9c7f67976cf1389589782de46f45011053ea7f4222c2fb8c2cf9fd813bb68";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Lossless data-compression library";

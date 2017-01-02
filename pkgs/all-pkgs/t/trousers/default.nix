@@ -2,21 +2,25 @@
 , fetchTritonPatch
 , fetchurl
 
+, gmp
 , openssl
 }:
 
 let
-  version = "0.3.13";
+  version = "0.3.14";
 in
 stdenv.mkDerivation rec {
   name = "trousers-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/trousers/trousers/${version}/${name}.tar.gz";
-    sha256 = "bb908e4a3c88a17b247a4fc8e0fff3419d8a13170fe7bdfbe0e2c5c082a276d3";
+    sha256 = "ce50713a261d14b735ec9ccd97609f0ad5ce69540af560e8c3ce9eb5f2d28f47";
   };
 
+  sourceRoot = ".";
+
   buildInputs = [
+    gmp
     openssl
   ];
 
@@ -28,19 +32,43 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  postPatch = ''
+    sed \
+      -e 's,^localstatedir = .*,localstatedir = /var,' \
+      -e 's,^sysconfdir = .*,sysconfdir = /etc,' \
+      -i dist/Makefile.in
+
+    sed \
+      -e 's,@localstatedir@,''${localstatedir},g' \
+      -e 's,@sysconfdir@,''${sysconfdir},g' \
+      -i dist/Makefile.in
+  '';
+
   configureFlags = [
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
+    "--with-openssl=${openssl}"
+    "--with-gmp"
     "--disable-usercheck"
   ];
 
-  # Attempt to remove -std=gnu89 when updating w/ gcc5+
-  NIX_CFLAGS_COMPILE = "-std=gnu89 -DALLOW_NON_TSS_CONFIG_FILE";
+  preInstall = ''
+    installFlagsArray+=(
+      "sysconfdir=$out/etc"
+      "localstatedir=$TMPDIR"
+    )
+  '';
+
+  NIX_CFLAGS_COMPILE = "-DALLOW_NON_TSS_CONFIG_FILE";
   NIX_LDFLAGS = "-lgcc_s";
 
   meta = with stdenv.lib; {
     description = "Trusted computing software stack";
     homepage = http://trousers.sourceforge.net/;
     license = licenses.cpl10;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

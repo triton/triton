@@ -39,6 +39,9 @@ stdenv.mkDerivation {
     texinfo
   ];
 
+  # Prevent build directory impurities from being injected
+  YACC = "bison -l -y";
+
   installPhase = ''
     declare -A GPM_FILES
     declare -A NCURSES_FILES

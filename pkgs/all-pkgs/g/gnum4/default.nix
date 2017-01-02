@@ -2,13 +2,16 @@
 , fetchurl
 }:
 
+let
+  version = "1.4.18";
+in
 stdenv.mkDerivation rec {
   name = "gnum4-${version}";
-  version = "1.4.17";
 
   src = fetchurl {
     url = "mirror://gnu/m4/m4-${version}.tar.bz2";
-    sha256 = "0w0da1chh12mczxa5lnwzjk9czi3dq6gnnndbpa6w4rj76b1yklf";
+    hashOutput = false;
+    sha256 = "6640d76b043bc658139c8903e293d5978309bf0f408107146505eca701e67cf6";
   };
 
   # We don't want to depend on the bootstraped shell
@@ -17,6 +20,15 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = true;
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "AED6 E2A1 85EE B379 F174  76D2 E012 D07A D0E3 CC30";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/m4/;

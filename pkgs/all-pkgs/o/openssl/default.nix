@@ -85,15 +85,19 @@ stdenv.mkDerivation rec {
   ];
 
   preBuild = ''
-    # We don't want to build static libraries
-    sed -i 's, libcrypto.a,,g; s, libssl.a,,g' Makefile
-
     makeFlagsArray+=("MANDIR=$out/share/man")
     installFlagsArray+=("OPENSSLDIR=$out/etc/ssl")
   '';
 
   # Parallel installing is broken in OpenSSL, it creates invaild shared objects.
   parallelInstall = false;
+
+  # If we built shared objects don't include static
+  postInstall = ''
+    if ls "$out"/lib | grep -q '.so''$'; then
+      rm "$out"/lib/*.a
+    fi
+  '';
 
   preFixup = ''
     # remove dependency on Perl at runtime
@@ -103,7 +107,9 @@ stdenv.mkDerivation rec {
     rmdir $out/etc/ssl/{certs,private}
   '';
 
-  disallowedReferences = [ perl ];
+  disallowedReferences = [
+    perl
+  ];
 
   passthru = {
     srcVerification = fetchurl rec {

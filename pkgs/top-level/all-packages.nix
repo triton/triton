@@ -1855,6 +1855,8 @@ lcms2 = callPackageAlias "lcms" { };
 
 ldb = callPackage ../all-pkgs/l/ldb { };
 
+ldns = callPackage ../all-pkgs/l/ldns { };
+
 lego = pkgs.goPackages.lego.bin // { outputs = [ "bin" ]; };
 
 lensfun = callPackage ../all-pkgs/l/lensfun { };
@@ -3654,8 +3656,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   };
 #
   most = callPackage ../tools/misc/most { };
-#
-  ldns = callPackage ../development/libraries/ldns { };
 #
   libconfig = callPackage ../development/libraries/libconfig { };
 #

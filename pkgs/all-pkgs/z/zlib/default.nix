@@ -7,7 +7,7 @@
 assert static || shared;
 
 let
-  version = "1.2.9";
+  version = "1.2.10";
 
   tarballUrls = version: [
     "http://zlib.net/zlib-${version}.tar.xz"
@@ -18,8 +18,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmaoDoqYRXzQ2joHwTn8195U23kArHUrG5DJp7KyDk4pg8";
-    sha256 = "03d9c7f67976cf1389589782de46f45011053ea7f4222c2fb8c2cf9fd813bb68";
+    multihash = "QmNdvd5s9vseKCdBQsHuk24B2XHnVNmyUziWQhetFPdroB";
+    sha256 = "9612bf086047078ce3a1c154fc9052113fc1a2a97234a059da17a6299bd4dd32";
   };
 
   configureFlags = [
@@ -30,11 +30,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.2.9";
+      urls = tarballUrls "1.2.10";
       pgpsigUrls = map (n: "${n}.asc") urls;
       pgpKeyFingerprint = "5ED4 6A67 21D3 6558 7791  E2AA 783F CD8E 58BC AFBA";
       inherit (src) outputHashAlgo;
-      outputHash = "03d9c7f67976cf1389589782de46f45011053ea7f4222c2fb8c2cf9fd813bb68";
+      outputHash = "9612bf086047078ce3a1c154fc9052113fc1a2a97234a059da17a6299bd4dd32";
     };
   };
 

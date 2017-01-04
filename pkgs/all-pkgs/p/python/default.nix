@@ -280,11 +280,13 @@ stdenv.mkDerivation rec {
       LIBS="$(echo "$LIBS_WITH_PYTHON" | sed 's,[ ]*\(-L\|-l\)[^ ]*python[^ ]*[ ]*, ,g')"
     '' + ''
       sed -i $out/lib/python${channel}/${configdir}/Makefile \
-        -e "s@^LIBS=.*@LIBS= $LIBS@g"
+        -e "s@^LIBS=.*@LIBS= $LIBS@g" \
+        -e "s@$NIX_BUILD_TOP@/no-such-path@g"
 
       # We need to update _sysconfigdata.py{,o,c}
       sed -i $out/lib/python${channel}/${sysconfigdatapy} \
-        -e "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g"
+        -e "s@'\(SH\|\)LIBS': '.*',@'\1LIBS': '$LIBS',@g" \
+        -e "s@$NIX_BUILD_TOP@/no-such-path@g"
     '' + optionalString isPy2 ''
       rm $out/lib/python${channel}/${sysconfigdatapy}{o,c}
     '' + optionalString isPy3 ''

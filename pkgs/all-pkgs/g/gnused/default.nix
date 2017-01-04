@@ -1,15 +1,27 @@
 { stdenv
 , fetchurl
+, perl
 }:
 
+let
+  version = "4.3";
+in
 stdenv.mkDerivation rec {
   name = "gnused-${version}";
-  version = "4.2.2";
 
   src = fetchurl {
-    url = "mirror://gnu/sed/sed-${version}.tar.bz2";
-    sha256 = "f048d1838da284c8bc9753e4506b85a1e0cc1ea8999d36f6995bcb9460cddbd7";
+    url = "mirror://gnu/sed/sed-${version}.tar.xz";
+    hashOutput = false;
+    sha256 = "47c20d8841ce9e7b6ef8037768aac44bc2937fff1c265b291c824004d56bd0aa";
   };
+
+  nativeBuildInputs = [
+    perl
+  ];
+
+  postPatch = ''
+    patchShebangs build-aux/help2man
+  '';
 
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/sed/;

@@ -118,8 +118,8 @@ let
     ../../build-support/setup-hooks/absolute-libtool.sh # Must come after any $prefix/lib manipulations
     ../../build-support/setup-hooks/absolute-pkgconfig.sh # Must come after any $prefix/lib manipulations
     ../../build-support/setup-hooks/set-source-date-epoch-to-latest.sh
-    ../../build-support/setup-hooks/build-dir-check.sh # Should come before any compression happens
     ../../build-support/setup-hooks/compress-man-pages.sh
+    ../../build-support/setup-hooks/build-dir-check.sh
     cc
   ] ++ extraBuildInputs;
 

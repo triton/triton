@@ -1,7 +1,7 @@
 # This setup hook, for each output, checks to make sure that
 # no references to the build directory.
 
-fixupOutputHooks+=(_buildDirCheck)
+fixupCheckOutputHooks+=(_buildDirCheck)
 
 _buildDirCheck() {
   if [ "${buildDirCheck-1}" != 1 ]; then

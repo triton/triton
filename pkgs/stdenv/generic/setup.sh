@@ -832,6 +832,22 @@ fixupPhase() {
 }
 
 
+# The fixup check phase performs generic, package-independent checks
+# like making sure that we don't have any impure paths in the contents
+# of the resulting files.
+fixupCheckPhase() {
+  runHook 'preFixupCheck'
+
+  # Apply fixup checks to each output.
+  local output
+  for output in $outputs ; do
+    prefix=${!output} runHook 'fixupCheckOutput'
+  done
+
+  runHook 'postFixupCheck'
+}
+
+
 installCheckPhase() {
   runHook 'preInstallCheck'
 
@@ -876,6 +892,7 @@ showPhaseHeader() {
     'checkPhase') header 'running tests' ;;
     'installPhase') header 'installing' ;;
     'fixupPhase') header 'post-installation fixup' ;;
+    'fixupCheckPhase') header 'post-installation fixup checks' ;;
     'installCheckPhase') header 'running install tests' ;;
     *) header "$phase" ;;
   esac
@@ -904,6 +921,7 @@ genericBuild() {
       'installPhase'
       "${preFixupPhases[@]}"
       'fixupPhase'
+      'fixupCheckPhase'
       'installCheckPhase'
       "${preDistPhases[@]}"
       'distPhase'
@@ -916,6 +934,7 @@ genericBuild() {
     if [ "$curPhase" = 'checkPhase' -a -z "$doCheck" ] ; then continue ; fi
     if [ "$curPhase" = 'installPhase' -a -n "$dontInstall" ] ; then continue ; fi
     if [ "$curPhase" = 'fixupPhase' -a -n "$dontFixup" ] ; then continue ; fi
+    if [ "$curPhase" = 'fixupCheckPhase' -a -n "$dontCheckFixup" ] ; then continue ; fi
     if [ "$curPhase" = 'installCheckPhase' -a -z "$doInstallCheck" ] ; then continue ; fi
     if [ "$curPhase" = 'distPhase' -a -z "$doDist" ] ; then continue ; fi
 

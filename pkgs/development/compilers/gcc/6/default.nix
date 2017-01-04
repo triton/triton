@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, noSysDirs
+{ stdenv, fetchTritonPatch, fetchurl, noSysDirs
 , langC ? true, langCC ? true, langFortran ? false
 , langJava ? false
 , langAda ? false
@@ -53,14 +53,23 @@ let version = "6.3.0";
     # Whether building a cross-compiler for GNU/Hurd.
     crossGNU = cross != null && cross.config == "i586-pc-gnu";
 
-    patches =
-      [ ../use-source-date-epoch.patch ]
-      ++ optional (cross != null) ../libstdc++-target.patch
-      ++ optional noSysDirs ../no-sys-dirs.patch
-      # The GNAT Makefiles did not pay attention to CFLAGS_FOR_TARGET for its
-      # target libraries and tools.
-      ++ optional langAda ../gnat-cflags.patch
-      ++ optional langFortran ../gfortran-driving.patch;
+    patches = [
+      (fetchTritonPatch {
+        rev = "630752723bc6771db653d7343419643f24b43160";
+        file = "g/gcc/0001-libcpp-Remove-path-impurities.patch";
+        sha256 = "12e14c2233f6b6d58886ff2e523920037e09fde27374edca98d959b00be9f56f";
+      })
+      (fetchTritonPatch {
+        rev = "630752723bc6771db653d7343419643f24b43160";
+        file = "g/gcc/0002-libcpp-Enforce-purity-for-time-functions.patch";
+        sha256 = "a8befc8f561c6b885b3dd7c13efb60719f426a1fae8273663825198ef2117625";
+      })
+      (fetchTritonPatch {
+        rev = "630752723bc6771db653d7343419643f24b43160";
+        file = "g/gcc/0003-Don-t-look-in-usr.patch";
+        sha256 = "d897814d25fa6d0ea5d5605f609a1c0734ce4386a319ae55ec4115adc09919c9";
+      })
+    ];
 
     javaEcj = fetchurl {
       # The `$(top_srcdir)/ecj.jar' file is automatically picked up at

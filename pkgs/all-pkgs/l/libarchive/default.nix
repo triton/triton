@@ -1,5 +1,6 @@
 { stdenv
-, fetchurl
+, autoreconfHook
+, fetchFromGitHub
 
 , acl
 , attr
@@ -15,13 +16,19 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libarchive-3.2.2";
+  name = "libarchive-2017-01-04";
 
-  src = fetchurl {
-    url = "http://www.libarchive.org/downloads/${name}.tar.gz";
-    multihash = "QmXxhKX2o7UyYNRbEvwaj3JxRhBH2Wya62Pff2dCC4NN3c";
-    sha256 = "691c194ee132d1f0f7a42541f091db811bc2e56f7107e9121be2bc8c04f1060f";
+  src = fetchFromGitHub {
+    version = 2;
+    owner = "libarchive";
+    repo = "libarchive";
+    rev = "98eb6b0bf3624e1c4f05c5cf18c59c25b2ff2bb7";
+    sha256 = "e1545e7e1940c98214720c21a8cc089b263181d228c39a7c680b7d2cdb6a244a";
   };
+
+  nativeBuildInputs = [
+    autoreconfHook
+  ];
 
   buildInputs = [
     acl
@@ -40,7 +47,6 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--with-zlib"
     "--with-bz2lib"
-    "--without-lzmadec"
     "--with-iconv"
     "--with-lz4"
     "--with-lzma"

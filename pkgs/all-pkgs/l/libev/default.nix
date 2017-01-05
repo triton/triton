@@ -3,15 +3,15 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libev-4.22";
+  name = "libev-4.24";
 
   src = fetchurl {
     urls = [
       "mirror://gentoo/distfiles/${name}.tar.gz"
       "http://dist.schmorp.de/libev/Attic/${name}.tar.gz"
     ];
-    multihash = "QmPcmhWko3gMDNEdYxSkWD3HZnTT4Rj562hfv1zwpZbTSN";
-    sha256 = "1mhvy38g9947bbr0n0hzc34zwfvvfd99qgzpkbap8g2lmkl7jq3k";
+    multihash = "QmPXg8u39fKvwp1TY6bjE54GScPizDGQWE6Lb5pXd4AxT6";
+    sha256 = "973593d3479abdf657674a55afe5f78624b0e440614e2b8cb3a07f16d4d7f821";
   };
 
   meta = with stdenv.lib; {

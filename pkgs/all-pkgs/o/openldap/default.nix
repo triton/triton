@@ -25,6 +25,11 @@ stdenv.mkDerivation rec {
     openssl
   ];
 
+  # Prevent hostname / user / build directory impurities
+  postPatch = ''
+    sed -i '/^WHOWHERE=/s,=.*,="nix@localhost:/no-such-path",' build/mkversion
+  '';
+
   configureFlags = [
     "--enable-overlays"
     "--disable-dependency-tracking"   # speeds up one-time build

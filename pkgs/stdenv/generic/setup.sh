@@ -1,14 +1,6 @@
 set -e
 set -o pipefail
 
-# Set the TZ (timezone) environment variable, otherwise commands like
-# `date' will complain (e.g., `Tue Mar 9 10:01:47 Local time zone must
-# be set--see zic manual page 2004').
-export TZ='UTC'
-
-# Before doing anything else, state the build time
-NIX_BUILD_START="$(date '+%s')"
-
 : ${outputs:=out}
 
 
@@ -268,6 +260,16 @@ if [ -z "$SHELL" ] ; then
 fi
 BASH="$SHELL"
 export CONFIG_SHELL="$SHELL"
+
+
+# Set the TZ (timezone) environment variable, otherwise commands like
+# `date' will complain (e.g., `Tue Mar 9 10:01:47 Local time zone must
+# be set--see zic manual page 2004').
+export TZ='UTC'
+
+
+# Before doing anything else, state the build time
+NIX_BUILD_START="$(date '+%s')"
 
 
 # Execute the pre-hook.

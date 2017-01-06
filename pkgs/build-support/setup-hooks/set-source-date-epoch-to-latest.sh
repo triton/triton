@@ -22,7 +22,7 @@ updateSourceDateEpoch() {
         if [ "$sourceDateEpochWarn" = "1" ]; then
           t="warn"
         fi
-        if [ "$time" -gt "$NIX_BUILD_START" ]; then
+        if [ "$time" -ge "$NIX_BUILD_START" ]; then
             echo "$t: file $newestFile may be generated; SOURCE_DATE_EPOCH may be non-deterministic"
             if [ "$t" = "error" ]; then
               exit 1

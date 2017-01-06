@@ -23,6 +23,11 @@ stdenv.mkDerivation rec {
 
   sourceRoot = ".";
 
+  preUnpack = ''
+    mkdir src
+    cd src
+  '';
+
   preBuild = ''
     makeFlagsArray+=(
       "TOPDIR=$out"

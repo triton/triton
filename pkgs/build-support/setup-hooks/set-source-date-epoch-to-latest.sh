@@ -17,8 +17,7 @@ updateSourceDateEpoch() {
         # may indicate that we were being applied to a file generated
         # during the build, or that an unpacker didn't restore
         # timestamps properly.
-        local now="$(date +%s)"
-        if [ "$time" -gt $((now - 60)) ]; then
+        if [ "$time" -gt "$NIX_BUILD_START" ]; then
             echo "warning: file $newestFile may be generated; SOURCE_DATE_EPOCH may be non-deterministic"
         fi
     fi

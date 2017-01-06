@@ -1,6 +1,14 @@
 set -e
 set -o pipefail
 
+# Set the TZ (timezone) environment variable, otherwise commands like
+# `date' will complain (e.g., `Tue Mar 9 10:01:47 Local time zone must
+# be set--see zic manual page 2004').
+export TZ='UTC'
+
+# Before doing anything else, state the build time
+NIX_BUILD_START="$(date '+%s')"
+
 : ${outputs:=out}
 
 
@@ -368,12 +376,6 @@ if [ "$NIX_NO_SELF_RPATH" != 1 ] ; then
     export NIX_LDFLAGS="-rpath $out/lib32 $NIX_LDFLAGS"
   fi
 fi
-
-
-# Set the TZ (timezone) environment variable, otherwise commands like
-# `date' will complain (e.g., `Tue Mar 9 10:01:47 Local time zone must
-# be set--see zic manual page 2004').
-export TZ='UTC'
 
 
 # Set the prefix.  This is generally $out, but it can be overriden,

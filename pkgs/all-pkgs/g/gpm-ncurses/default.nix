@@ -42,6 +42,13 @@ stdenv.mkDerivation {
   # Prevent build directory impurities from being injected
   YACC = "bison -l -y";
 
+  # Make sure we don't introduce SOURCE_DATE_EPOCH impurities
+  postUnpack = ''
+    mkdir src
+    mv gpm* ncurses* src
+    cd src
+  '';
+
   installPhase = ''
     declare -A GPM_FILES
     declare -A NCURSES_FILES

@@ -65,7 +65,6 @@ lib.overrideDerivation (fetchurl (rec {
 
   postFetch = ''
     export PATH=${unzip}/bin:$PATH
-    start="$(date -u '+%s')"
 
     unpackDir="$TMPDIR/unpack"
     rm -rf "$unpackDir"
@@ -97,10 +96,10 @@ lib.overrideDerivation (fetchurl (rec {
     mtime="946713600"
   '' else ''
     mtime=$(find "${name'}" -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
-    if [ "$start" -lt "$mtime" ]; then
+    if [ "$NIX_BUILD_START" -lt "$mtime" ]; then
       str="The newest file is too close to the current date:\n"
-      str+="  File: $(date -u -d "@$mtime")\n"
-      str+="  Current: $(date -u)\n"
+      str+="  File: $(date -d "@$mtime")\n"
+      str+="  Build Start: $NIX_BUILD_START\n"
       echo -e "$str" >&2
       exit 1
     fi

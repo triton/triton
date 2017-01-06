@@ -13,12 +13,20 @@ updateSourceDateEpoch() {
         echo "setting SOURCE_DATE_EPOCH to timestamp $time of file $newestFile"
         export SOURCE_DATE_EPOCH="$time"
 
-        # Warn if the new timestamp is too close to the present. This
+        # Error if the new timestamp is too close to the present. This
         # may indicate that we were being applied to a file generated
         # during the build, or that an unpacker didn't restore
-        # timestamps properly.
+        # timestamps properly. Can optionally be turned into a warning.
+        local now="$(date +%s)"
+        local t="error"
+        if [ "$sourceDateEpochWarn" = "1" ]; then
+          t="warn"
+        fi
         if [ "$time" -gt "$NIX_BUILD_START" ]; then
-            echo "warning: file $newestFile may be generated; SOURCE_DATE_EPOCH may be non-deterministic"
+            echo "$t: file $newestFile may be generated; SOURCE_DATE_EPOCH may be non-deterministic"
+            if [ "$t" = "error" ]; then
+              exit 1
+            fi
         fi
     fi
 }

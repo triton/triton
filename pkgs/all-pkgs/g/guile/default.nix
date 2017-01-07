@@ -40,19 +40,27 @@ stdenv.mkDerivation rec {
     readline
   ];
 
-  # Fixes for parallel building
   postPatch = ''
+    # Fixes for parallel building
     sed -i libguile/Makefile.in \
       -e 's,^.c.x:$,.c.x: $(BUILT_SOURCES),g' \
       -e 's,DOT_X_FILES.*: ,\0$(DOT_I_FILES) ,g'
+
+    # Fix impurities in the generated libpath.h
+    sed -i libguile/Makefile.in \
+      -e '/echo.*srcdir/s@,[ ]*".*"@, "/no-such-path"@g'
+  '';
+
+  postInstall = ''
+    wrapProgram $out/bin/guile-snarf --prefix PATH : "${gawk}/bin"
+
+    # Hack to remove impurities
+    # TODO: We should fix this so we have a cached version of this module
+    rm "$out"/lib/guile/2.0/ccache/srfi/srfi-4/gnu.go
   '';
 
   # A native Guile 2.0 is needed to cross-build Guile.
   selfNativeBuildInput = true;
-
-  postInstall = ''
-    wrapProgram $out/bin/guile-snarf --prefix PATH : "${gawk}/bin"
-  '';
 
   setupHook = ./setup-hook-2.0.sh;
 

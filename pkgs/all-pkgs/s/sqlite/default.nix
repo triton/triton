@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation {
-  name = "sqlite-3.16.1";
+  name = "sqlite-3.16.2";
 
   src = fetchurl {
-    url = "https://sqlite.org/2017/sqlite-autoconf-3160100.tar.gz";
-    multihash = "QmX57FwC62eYCBj2rY8yQBjEp2Gxt66GDsUs5GTZPCgekN";
-    sha1Confirm = "77f8c59fec1575c5e05462dccac956f141677647";
-    sha256 = "13fbe45e3088b3955feb2ae68648a0f81586d6d519766b211767a1ffcd268fd0";
+    url = "https://sqlite.org/2017/sqlite-autoconf-3160200.tar.gz";
+    multihash = "QmZenckvVXSiCZLSygGToi5FWaRLwp1upiQrydj2up3zD4";
+    sha1Confirm = "64ca578ad44a94115b1db0406740e14288f74bb8";
+    sha256 = "65cc0c3e9366f50c0679c5ccd31432cea894bc4a3e8947dabab88c8693263615";
   };
 
   buildInputs = [

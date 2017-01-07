@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.6.27";
+  version = "1.6.28";
 in
 stdenv.mkDerivation rec {
   name = "libpng-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/libpng/libpng16/${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "fca2ffd97336356cdab9bfa8936b9d6dfd580a70205e5dfead3ac42cb054b57b";
+    sha256 = "d8d3ec9de6b5db740fefac702c37ffcf96ae46cb17c18c1544635a3852f78f7a";
   };
 
   buildInputs = [

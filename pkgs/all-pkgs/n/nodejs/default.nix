@@ -6,12 +6,12 @@
 , http-parser
 , icu
 , libuv
-, openssl
+, openssl_1-0-2
 , zlib
 }:
 
 let
-  version = "7.2.1";
+  version = "7.4.0";
 
   dirUrls = [
     "https://nodejs.org/dist/v${version}"
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/node-v${version}.tar.xz") dirUrls;
     hashOutput = false;
-    sha256 = "c08b03aa5d2cc61c5f04042658d247dc376e1e873946f2b36d54108fa6d9d80d";
+    sha256 = "9f15b916f8677ec1615c46bdd6d2208ed1b24fad26384f9ac249f5b09d31c32b";
   };
 
   nativeBuildInputs = [
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     http-parser
     icu
     libuv
-    openssl
+    openssl_1-0-2
     zlib
   ];
 

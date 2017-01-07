@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "0.9.3";
+  version = "0.10.0";
 in
 stdenv.mkDerivation rec {
   name = "thrift-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://apache/thrift/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "b0740a070ac09adde04d43e852ce4c320564a292f26521c46b78e0641564969e";
+    sha256 = "2289d02de6e8db04cbbabb921aeb62bfe3098c4c83f36eec6c31194301efa10b";
   };
 
   buildInputs = [

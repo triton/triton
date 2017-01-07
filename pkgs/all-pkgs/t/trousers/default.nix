@@ -24,6 +24,11 @@ stdenv.mkDerivation rec {
     openssl
   ];
 
+  preUnpack = ''
+    mkdir src
+    cd src
+  '';
+
   patches = [
     (fetchTritonPatch {
       rev = "35e456a096e677dc4ee1453c76c52821423f7405";

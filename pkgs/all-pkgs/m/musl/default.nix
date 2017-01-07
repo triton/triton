@@ -3,12 +3,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "musl-1.1.15";
+  name = "musl-1.1.16";
 
   src = fetchurl {
     url = "https://www.musl-libc.org/releases/${name}.tar.gz";
-    multihash = "QmTjF42AzBFrByH6tJsrCrNyMBpijo8QLed4beVFyq2363";
-    sha256 = "97e447c7ee2a7f613186ec54a93054fe15469fe34d7d323080f7ef38f5ecb0fa";
+    multihash = "QmZmqPbtjUsWo61PKm9nrpQnwRxbhUCwDo4KDgT4TMeHDS";
+    hashOutput = false;
+    sha256 = "937185a5e5d721050306cf106507a006c3f1f86d86cd550024ea7be909071011";
   };
 
   preConfigure = ''
@@ -25,6 +26,15 @@ stdenv.mkDerivation rec {
 
   # Dont depend on a shell potentially from the bootstrap
   dontPatchShebangs = true;
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "8364 8929 0BB6 B70F 99FF  DA05 56BC DB59 3020 450F";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "An efficient, small, quality libc implementation";

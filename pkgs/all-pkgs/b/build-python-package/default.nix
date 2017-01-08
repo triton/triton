@@ -120,8 +120,8 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
 
     pushd dist
-      ${pip_bootstrap}/bin/pip -v install \
-        ''${pipWhlFile-*}.whl --no-index --prefix=$out --no-cache
+      ${pip_bootstrap}/bin/pip -v install ''${pipWhlFile-*}.whl \
+        --no-index --prefix="$out" --no-cache --build pipUnpackTmp
     popd
 
     runHook postInstall

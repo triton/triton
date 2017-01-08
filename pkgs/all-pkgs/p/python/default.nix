@@ -8,6 +8,7 @@
 , gdbm
 , libffi
 , ncurses
+, openssl_1-0-2
 , openssl
 , readline
 , sqlite
@@ -91,14 +92,22 @@ stdenv.mkDerivation rec {
     gdbm
     libffi
     ncurses
-    openssl
+    #openssl
     readline
     sqlite
     stdenv.cc.libc
     zlib
   ] ++ optionals isPy3 [
     xz
-  ];
+  ] ++ (
+    if isPy3 && versionOlder version "3.6.0" then [
+      # Version 3.3 thru 3.5 do not support OpenSSL 1.1.0 in their
+      # latest release.
+      openssl_1-0-2
+    ] else [
+      openssl
+    ]
+  );
 
   setupHook = stdenv.mkDerivation {
     name = "python-${channel}-setup-hook";

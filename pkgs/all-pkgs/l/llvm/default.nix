@@ -85,6 +85,11 @@ stdenv.mkDerivation {
 
   patches = map (d: fetchTritonPatch d) patches;
 
+  # Remove impurities from llvm-config
+  postPatch = ''
+    sed -i 's,@LLVM_.*_ROOT@,/no-such-path,g' tools/llvm-config/BuildVariables.inc.in
+  '';
+
   cmakeFlags = with stdenv; [
     "-DCMAKE_BUILD_TYPE=Release"
     "-DCMAKE_CXX_FLAGS=-std=c++11"

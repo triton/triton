@@ -99,12 +99,15 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     runHook postConfigure
   '';
 
-  # we copy nix_run_setup.py over so it's executed relative to the root of the source
-  # many project make that assumption
   buildPhase = attrs.buildPhase or ''
     runHook preBuild
 
-    ${python.interpreter} ${./run_setup.py} ${
+    # Symlink the file into the build directory so it's executed relative to
+    # the root of the source.  Many project make assumptions by using
+    # relative paths.
+    ln -sv ${./run_setup.py} nix_run_setup.py
+
+    ${python.interpreter} nix_run_setup.py ${
       optionalString (configureFlags != []) (
         "build_ext " + (concatStringsSep " " configureFlags)
       )
@@ -134,7 +137,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   installCheckPhase = attrs.checkPhase or ''
     runHook preCheck
 
-    ${python.interpreter} ${./run_setup.py} test
+    ${python.interpreter} nix_run_setup.py test
 
     runHook postCheck
   '';

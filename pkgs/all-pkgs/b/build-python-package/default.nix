@@ -102,10 +102,10 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   buildPhase = attrs.buildPhase or ''
     runHook preBuild
 
-    # Symlink the file into the build directory so it's executed relative to
+    # Copy the file into the build directory so it's executed relative to
     # the root of the source.  Many project make assumptions by using
     # relative paths.
-    ln -sv ${./run_setup.py} nix_run_setup.py
+    cp -v ${./run_setup.py} nix_run_setup.py
 
     ${python.interpreter} nix_run_setup.py ${
       optionalString (configureFlags != []) (

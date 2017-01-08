@@ -64,9 +64,6 @@ assert disabled ->
   throw "`${name}` is not supported for interpreter `${python.executable}`";
 
 let
-  # use setuptools shim (so that setuptools is imported before distutils)
-  # pip does the same thing: https://github.com/pypa/pip/pull/3265
-  setuppy = ./run_setup.py;
   # For backwards compatibility, let's use an alias
   doInstallCheck = doCheck;
 in
@@ -107,9 +104,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   buildPhase = attrs.buildPhase or ''
     runHook preBuild
 
-    cp -v ${setuppy} nix_run_setup.py
-
-    ${python.interpreter} nix_run_setup.py ${
+    ${python.interpreter} ${./run_setup.py} ${
       optionalString (configureFlags != []) (
         "build_ext " + (concatStringsSep " " configureFlags)
       )
@@ -139,7 +134,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
   installCheckPhase = attrs.checkPhase or ''
     runHook preCheck
 
-    ${python.interpreter} nix_run_setup.py test
+    ${python.interpreter} ${./run_setup.py} test
 
     runHook postCheck
   '';

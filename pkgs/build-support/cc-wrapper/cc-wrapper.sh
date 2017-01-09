@@ -140,6 +140,15 @@ if [ "$NIX_ENFORCE_PURITY" = 1 -a -n "$NIX_STORE" ]; then
     params=("${rest[@]}")
 fi
 
+# Filter out any debug information referring to the NIX_BUILD_TOP
+if [ "$NIX_ENFORCE_PURITY" = 1 ]; then
+  if [ -z "$NIX_BUILD_TOP" ]; then
+    echo "Missing NIX_BUILD_TOP" >&2
+    exit 1
+  fi
+  params+=("-fdebug-prefix-map=$NIX_BUILD_TOP=/no-such-path")
+fi
+
 if [[ "@prog@" = *++ ]]; then
     if  echo "$@" | grep -qv -- -nostdlib; then
         NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE ${NIX_CXXSTDLIB_COMPILE-@default_cxx_stdlib_compile@}"

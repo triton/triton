@@ -173,6 +173,11 @@ go.stdenv.mkDerivation (
 
     runHook renameImports
 
+    buildFlagsArray+=(
+      "-asmflags" "-trimpath=$NIX_BUILD_TOP"
+      "-gcflags" "-trimpath=$NIX_BUILD_TOP"
+    )
+
     buildGoDir() {
       local d; local cmd;
       cmd="$1"

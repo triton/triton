@@ -145,8 +145,8 @@ stdenv.mkDerivation {
   preFixup = ''
     rm -r $out/share/go/pkg/bootstrap
     rm -r $out/share/go/{doc,misc}
-    find $out -type f \( -name run -or -name \*.bash -or -name \*.sh \) -delete
-    rm -r $out/share/go/src/cmd/go/testdata
+    find "$out" -type f \( -name run -or -name \*.bash -or -name \*.sh \) -delete
+    find "$out" -name testdata -prune -exec rm -r {} \;
 
     while read exe; do
       strip $exe || true

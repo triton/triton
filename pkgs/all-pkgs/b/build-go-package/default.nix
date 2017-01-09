@@ -177,8 +177,6 @@ go.stdenv.mkDerivation (
       "-asmflags" "-trimpath=$NIX_BUILD_TOP"
       "-gcflags" "-trimpath=$NIX_BUILD_TOP"
     )
-    # TODO: Embed in cc-wrapper instead
-    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -fdebug-prefix-map=$NIX_BUILD_TOP=/no-such-path"
 
     buildGoDir() {
       local d; local cmd;

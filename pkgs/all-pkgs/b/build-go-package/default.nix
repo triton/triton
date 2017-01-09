@@ -177,6 +177,8 @@ go.stdenv.mkDerivation (
       "-asmflags" "-trimpath=$NIX_BUILD_TOP"
       "-gcflags" "-trimpath=$NIX_BUILD_TOP"
     )
+    # TODO: Embed in cc-wrapper instead
+    export NIX_CFLAGS_COMPILE="-fdebug-prefix-map=$NIX_BUILD_TOP=/no-such-path"
 
     buildGoDir() {
       local d; local cmd;
@@ -184,7 +186,7 @@ go.stdenv.mkDerivation (
       d="$2"
       [ -n "$excludedPackages" ] && echo "$d" | grep -q "$excludedPackages" && return 0
       local OUT
-      if ! OUT="$(go $cmd -p $NIX_BUILD_CORES $buildFlags "''${buildFlagsArray[@]}" -v $d 2>&1)"; then
+      if ! OUT="$(go $cmd -work -x -p $NIX_BUILD_CORES $buildFlags "''${buildFlagsArray[@]}" -v $d 2>&1)"; then
         if ! echo "$OUT" | grep -q '\(no buildable Go source files\)'; then
           echo "$OUT" >&2
           return 1

@@ -8,11 +8,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xfsprogs-4.8.0";
+  name = "xfsprogs-4.9.0";
 
   src = fetchurl {
     url = "mirror://kernel/linux/utils/fs/xfs/xfsprogs/${name}.tar.xz";
-    sha256 = "82ce9cb3a55f4e208e8fe3471ff0aff0602b8300f3e50bdf05cc7e11549686f9";
+    sha256 = "f1e60a9a54583dba82fa506dd9b59bdec110a968f80f507bf5f93b263af7a4df";
   };
 
   nativeBuildInputs = [

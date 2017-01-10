@@ -48,6 +48,11 @@ stdenv.mkDerivation rec {
     )
   '';
 
+  # Fix impurities in man pages
+  preFixup = ''
+    sed -i "s,$NIX_BUILD_TOP,/no-such-path,g" $out/share/man/man5/chrony.conf.5
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;

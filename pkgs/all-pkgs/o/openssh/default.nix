@@ -4,7 +4,7 @@
 , kerberos
 , libbsd
 , libedit
-, openssl
+, openssl_1-0-2
 , pam
 , zlib
 }:
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     kerberos
     libbsd
     libedit
-    openssl
+    openssl_1-0-2
     pam
     zlib
   ];

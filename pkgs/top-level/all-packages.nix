@@ -2949,6 +2949,8 @@ qbittorrent = callPackage ../all-pkgs/q/qbittorrent { };
 
 qca = callPackage ../all-pkgs/q/qca { };
 
+qemu = callPackage ../all-pkgs/q/qemu { };
+
 qjackctl = callPackage ../all-pkgs/q/qjackctl { };
 
 qpdf = callPackage ../all-pkgs/q/qpdf { };

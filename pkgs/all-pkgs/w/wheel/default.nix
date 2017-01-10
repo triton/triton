@@ -30,10 +30,6 @@ buildPythonPackage rec {
     pytestcov
   ];
 
-  propagatedBuildInputs = [
-    jsonschema
-  ];
-
   doCheck = false;
 
   passthru = {

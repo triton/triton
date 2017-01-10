@@ -57,4 +57,8 @@ stdenv.mkDerivation rec {
 
     wrapPythonPrograms $out/bin
   '';
+
+  passthru = {
+    bootstrap = true;
+  };
 }

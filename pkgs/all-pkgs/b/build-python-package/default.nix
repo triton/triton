@@ -147,6 +147,9 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
     # Fail if two packages with the same name are found in the closure.
     ${python.interpreter} ${./catch_conflicts.py}
+  '' + optionalString (pip.bootstrap or false) ''
+    # Remove any impurities during bootstrapping
+    grep -l --include "*.pyc" -r "$NIX_BUILD_TOP" "$out" | xargs -r rm || true
   '';
 
   shellHook = attrs.shellHook or ''

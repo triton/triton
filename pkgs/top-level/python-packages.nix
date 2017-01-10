@@ -33,11 +33,14 @@ let
       inherit sha256;
     };
 
+  pip_bootstrap = callPackage ../all-pkgs/p/pip/bootstrap.nix {
+    inherit (self) wrapPython;
+  };
+
   buildPythonPackage_bootstrap = makeOverridable (
-    callPackage ../all-pkgs/b/build-python-package {
-      pip = callPackage ../all-pkgs/p/pip/bootstrap.nix {
-        inherit (self) wrapPython;
-      };
+    callPackage ../all-pkgs/b/build-python-package rec {
+      pip = pip_bootstrap;
+      setuptools = pip_bootstrap;
     }
   );
 
@@ -279,6 +282,8 @@ jinja2 = callPackage ../all-pkgs/j/jinja2 { };
 
 jmespath = callPackage ../all-pkgs/j/jmespath { };
 
+jsonschema = callPackage ../all-pkgs/j/jsonschema { };
+
 ldap3 = callPackage ../all-pkgs/l/ldap3 { };
 
 libarchive-c = callPackage ../all-pkgs/l/libarchive-c { };
@@ -407,7 +412,9 @@ scons = callPackage ../all-pkgs/s/scons { };
 
 service-identity = callPackage ../all-pkgs/s/service-identity { };
 
-setuptools = callPackage ../all-pkgs/s/setuptools { };
+setuptools = callPackage ../all-pkgs/s/setuptools {
+  buildPythonPackage = buildPythonPackage_bootstrap;
+};
 
 setuptools-scm = callPackage ../all-pkgs/s/setuptools-scm { };
 
@@ -453,13 +460,17 @@ ujson = callPackage ../all-pkgs/u/ujson { };
 
 unpaddedbase64 = callPackage ../all-pkgs/u/unpaddedbase64 { };
 
+vcversioner = callPackage ../all-pkgs/v/vcversioner { };
+
 webencodings = callPackage ../all-pkgs/w/webencodings { };
 
 webob = callPackage ../all-pkgs/w/webob { };
 
 werkzeug = callPackage ../all-pkgs/w/werkzeug { };
 
-wheel = callPackage ../all-pkgs/w/wheel { };
+wheel = callPackage ../all-pkgs/w/wheel {
+  buildPythonPackage = buildPythonPackage_bootstrap;
+};
 
 xcb-proto = callPackage ../all-pkgs/x/xcb-proto { };
 
@@ -910,49 +921,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        pytz
      ];
 
-   };
-
-
-   jsonschema = buildPythonPackage (rec {
-     version = "2.5.1";
-     name = "jsonschema-${version}";
-
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/j/jsonschema/jsonschema-${version}.tar.gz";
-       sha256 = "0hddbqjm4jq63y8jf44nswina1crjs16l9snb6m3vvgyg31klrrn";
-     };
-
-     buildInputs = with self; [ nose mock vcversioner ];
-     propagatedBuildInputs = with self; [ functools32 ];
-
-     patchPhase = ''
-       substituteInPlace jsonschema/tests/test_jsonschema_test_suite.py --replace "python" "${python}/bin/${python.executable}"
-    '';
-
-     checkPhase = ''
-       nosetests
-     '';
-
-     meta = {
-       homepage = https://github.com/Julian/jsonschema;
-       description = "An implementation of JSON Schema validation for Python";
-       license = licenses.mit;
-       maintainers = with maintainers; [ iElectric ];
-     };
-   });
-
-   vcversioner = buildPythonPackage rec {
-     name = "vcversioner-${version}";
-     version = "2.16.0.0";
-    src = fetchPyPi {
-      package = "vcversioner";
-      inherit version;
-      sha256 = "dae60c17a479781f44a4010701833f1829140b1eeccd258762a74974aa06e19b";
-     };
-
-     meta = with stdenv.lib; {
-       homepage = "https://github.com/habnabit/vcversioner";
-     };
    };
 
    gevent = buildPythonPackage rec {

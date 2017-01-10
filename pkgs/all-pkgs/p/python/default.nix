@@ -195,7 +195,7 @@ stdenv.mkDerivation rec {
     #"--with-libm"
     #"--with-libc"
     #"--with-computed-gotos"
-    #"--with-ensurepip"
+    "--without-ensurepip" # We have impurities otherwise
   ];
 
   postInstall =
@@ -208,10 +208,6 @@ stdenv.mkDerivation rec {
         echo $item
       fi
     done
-  '' + optionalString isPy3
-    /* Fixes impurities but drastically slows down built-in pip
-       TODO: Find a better solution */ ''
-    grep -r --include '*.pyc' -l "$NIX_BUILD_TOP" "$out" | xargs rm
   '' + optionalString isPy3 ''
     pushd $out/lib/pkgconfig
       if [ ! -f 'python3.pc' ] ; then

@@ -12,6 +12,11 @@ stdenv.mkDerivation rec {
 
   sourceRoot = ".";
 
+  preUnpack = ''
+    mkdir src
+    cd src
+  '';
+
   nativeBuildInputs = [
     libarchive
   ];

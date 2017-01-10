@@ -1105,7 +1105,6 @@ let
       "pkg/fileutils"
       "pkg/homedir"
       "pkg/idtools"
-      "pkg/integration/cmd"
       "pkg/ioutils"
       "pkg/jsonlog"
       "pkg/jsonmessage"

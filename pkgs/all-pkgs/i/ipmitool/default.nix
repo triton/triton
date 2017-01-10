@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 
-, openssl
+, openssl_1-0-2
 }:
 
 let
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    openssl
+    openssl_1-0-2
   ];
 
   preConfigure = ''

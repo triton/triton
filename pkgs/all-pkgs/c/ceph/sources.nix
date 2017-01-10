@@ -5,8 +5,8 @@
   };
 
   "dev" = rec {
-    version = "11.1.0";
-    sha256 = "e8959e9c755ee96357c7269b8e54cc93fbb30a6b0dcf11d0f2ad403d729ac80f";
+    version = "11.1.1";
+    sha256 = "ef8fad11bb8b6f2ed8fd8fadb29c7a3f73ed46da114a441579ad404bef6f72ae";
   };
 
   "git" = rec {

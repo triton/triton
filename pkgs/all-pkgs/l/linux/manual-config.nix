@@ -218,6 +218,11 @@ let
           $installFlags "''${installFlagsArray[@]}"
       '');
 
+      # Remove build directory impurities
+      preFixup = ''
+        find "$out" -name '*.s' -exec sed -i '/-fdebug-prefix-map/d' {} \;
+      '';
+
       # !!! This leaves references to gcc in $dev
       # that we might be able to avoid
       postFixup = if isModular then ''

@@ -220,7 +220,7 @@ let
 
       # Remove build directory impurities
       preFixup = ''
-        find "$out" -name '*.s' -exec sed -i '/-fdebug-prefix-map/d' {} \;
+        find "$dev" -name '*.s' -exec sed -i '/-fdebug-prefix-map/d' {} \;
       '';
 
       # !!! This leaves references to gcc in $dev

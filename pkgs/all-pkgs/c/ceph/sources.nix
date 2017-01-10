@@ -10,7 +10,7 @@
   };
 
   "git" = rec {
-    version = "2016-12-07";
-    sha256 = "59ab6134d41835815ac30428b51f06da373ab75d8d1b405c91a8ba2b9948347b";
+    version = "2017-01-09";
+    sha256 = "55a569f258e4fb41ec98aa6edacb4a3d01e5c3e7523d8cbd89f3fc27c02128f2";
   };
 }

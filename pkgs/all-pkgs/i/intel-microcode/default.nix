@@ -21,6 +21,11 @@ stdenv.mkDerivation rec {
 
   sourceRoot = ".";
 
+  preUnpack = ''
+    mkdir src
+    cd src
+  '';
+
   buildPhase = ''
     gcc -O2 -Wall -o intel-microcode2ucode ${./intel-microcode2ucode.c}
     ./intel-microcode2ucode microcode.dat

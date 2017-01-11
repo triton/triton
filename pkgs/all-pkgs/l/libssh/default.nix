@@ -14,6 +14,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://red.libssh.org/attachments/download/195/libssh-0.7.3.tar.xz";
+    multihash = "QmUVD9ayYoqbjcoQax3KGHtsB3yXoinJBPSZC2gE4vMWAn";
     sha256 = "165g49i4kmm3bfsjm0n8hm21kadv79g9yjqyq09138jxanz4dvr6";
   };
 

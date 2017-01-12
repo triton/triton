@@ -33,7 +33,7 @@ let
     optionals
     optionalString;
 
-  version = "9.11.0-P1";
+  version = "9.11.0-P2";
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
     hashOutput = false;
-    sha256 = "094cd3134ba1b44f0910de1334f05a7dca68d583da038de40a8ad7a0cb1592c6";
+    sha256 = "d651f83ce1c08c83d6ac8201685c4f2b5fdb79794f3a4f93c3948e0ef439c1e5";
   };
 
   nativeBuildInputs = [
@@ -160,6 +160,9 @@ stdenv.mkDerivation rec {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sha512.asc") src.urls;
       pgpKeyFile = dhcp.srcVerification.pgpKeyFile;
+      pgpKeyFingerprints = [
+        "BE0E 9748 B718 253A 28BB  89FF F1B1 1BF0 5CF0 2E57"
+      ];
       inherit (src) urls outputHashAlgo outputHash;
     };
   };

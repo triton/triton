@@ -33,16 +33,12 @@ let
       inherit sha256;
     };
 
-  buildPythonPackage_bootstrap = makeOverridable (
+  buildPythonPackage = makeOverridable (
     callPackage ../all-pkgs/b/build-python-package {
-      pip = callPackage ../all-pkgs/p/pip/bootstrap.nix {
+      pip_bootstrap = callPackage ../all-pkgs/p/pip/bootstrap.nix {
         inherit (self) wrapPython;
       };
     }
-  );
-
-  buildPythonPackage = makeOverridable (
-    callPackage ../all-pkgs/b/build-python-package { }
   );
 
   # Unique python version identifier
@@ -309,9 +305,7 @@ pbr = callPackage ../all-pkgs/p/pbr { };
 
 pillow = callPackage ../all-pkgs/p/pillow { };
 
-pip = callPackage ../all-pkgs/p/pip {
-  buildPythonPackage = buildPythonPackage_bootstrap;
-};
+pip = callPackage ../all-pkgs/p/pip { };
 
 ply = callPackage ../all-pkgs/p/ply { };
 

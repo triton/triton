@@ -161,6 +161,9 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     ${postShellHook}
   '';
 
+  # FIXME: build directory currently gets hardcoded in .pyc files
+  buildDirCheck = attrs.buildDirCheck or false;
+
   meta = with lib.maintainers; {
     # default to python's platforms
     platforms = python.meta.platforms;

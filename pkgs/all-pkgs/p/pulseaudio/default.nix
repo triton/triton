@@ -233,6 +233,9 @@ stdenv.mkDerivation rec {
     rm -rvf $out/{bin,share,etc,lib/{pulse-*,systemd}}
   '';
 
+  # FIXME
+  buildDirCheck = false;
+
   meta = with stdenv.lib; {
     description = "Sound server for POSIX and Win32 systems";
     homepage = http://www.pulseaudio.org/;

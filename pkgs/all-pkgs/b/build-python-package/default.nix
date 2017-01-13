@@ -7,7 +7,7 @@
 { python
 , ensureNewerSourcesHook
 , lib
-, pip_bootstrap
+, pip
 , setuptools
 , unzip
 , wrapPython
@@ -73,7 +73,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
 
   buildInputs = [
     wrapPython
-    pip_bootstrap
+    pip
   ] ++ [
     (ensureNewerSourcesHook { year = "1980"; })
   ] ++ buildInputs
@@ -123,7 +123,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
     export PYTHONPATH="$out/${python.sitePackages}:$PYTHONPATH"
 
     pushd dist
-      ${pip_bootstrap}/bin/pip -v install ''${pipWhlFile-*}.whl \
+      ${pip}/bin/pip -v install ''${pipWhlFile-*}.whl \
         --no-index --prefix="$out" --no-cache --build pipUnpackTmp
     popd
 
@@ -156,7 +156,7 @@ python.stdenv.mkDerivation (builtins.removeAttrs attrs ["disabled" "doCheck"] //
        export PATH="$tmp_path/bin:$PATH"
        export PYTHONPATH="$tmp_path/${python.sitePackages}:$PYTHONPATH"
        mkdir -pv $tmp_path/${python.sitePackages}
-       ${pip_bootstrap}/bin/pip -v install -e . --prefix $tmp_path
+       ${pip}/bin/pip -v install -e . --prefix $tmp_path
     fi
     ${postShellHook}
   '';

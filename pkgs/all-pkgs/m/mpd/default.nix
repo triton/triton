@@ -34,9 +34,12 @@
 , libupnp
 , libvorbis
 , mpg123
+, musepack
 , openal
 , opus
 , pulseaudio_lib
+, samba_client
+#, shine
 , soxr
 , sqlite
 , systemd_lib
@@ -59,8 +62,8 @@ let
     optional
     optionals;
 
-  versionMajor = "0.19";
-  versionMinor = "21";
+  versionMajor = "0.20";
+  versionMinor = "1";
 in
 stdenv.mkDerivation rec {
   name = "mpd-${versionMajor}.${versionMinor}";
@@ -110,9 +113,12 @@ stdenv.mkDerivation rec {
     libupnp
     libvorbis
     mpg123
+    musepack
     openal
     opus
     pulseaudio_lib
+    samba_client
+    #shine
     soxr
     sqlite
     systemd_lib
@@ -122,70 +128,98 @@ stdenv.mkDerivation rec {
     zziplib
   ];
 
+  postPatch = /* Fix systemd detection (0.20.1) */ ''
+    sed -i configure \
+      -e 's/libsystemd-daemon/libsystemd/g'
+  '';
+
   configureFlags = [
-    "--disable-aac"
+    "--enable-database"
+    "--${boolEn (libmpdclient != null)}-libmpdclient"
+    "--${boolEn (expat != null)}-expat"
+    "--${boolEn (libupnp != null)}-upnp"
     # TODO: adplug support
     #"--${boolEn }-adplug" true null)
+    "--disable-adplug"
     "--${boolEn (alsa-lib != null)}-alsa"
+    "--disable-roar"
+    "--${boolEn (libao != null)}-ao"
     "--${boolEn (audiofile != null)}-audiofile"
+    "--${boolEn (zlib != null)}-zlib"
     "--${boolEn (bzip2 != null)}-bzip2"
     # TODO: cdio-paranoia support
     #"--${boolEn (libcdio != null)}-cdio-paranoia"
+    "--disable-paranoia"
     "--${boolEn (curl != null)}-curl"
-    "--enable-database"
+    "--${boolEn (samba_client != null)}-smbclient"
+    # TODO: nfs support
+    "--disable-nfs"
+    "--disable-debug"
+    "--${boolEn documentationSupport}-documentation"
     "--enable-dsd"
-    "--enable-fifo"
     "--${boolEn (ffmpeg != null)}-ffmpeg"
+    "--enable-fifo"
     "--${boolEn (flac != null)}-flac"
     "--${boolEn (fluidsynth != null)}-fluidsynth"
     "--${boolEn (game-music-emu != null)}-gme"
-    "--disable-haiku"
     "--enable-httpd-output"
-    "--enable-iconv"
-    "--${boolEn (icu != null)}-icu"
     "--${boolEn (libid3tag != null)}-id3"
-    "--enable-inotify"
-    "--enable-ipv6"
+    # TODO: iso9660
+    "--disable-iso9660"
     "--${boolEn (jack2_lib != null)}-jack"
+    "--enable-largefile"
+    "--${boolEn (yajl != null)}-soundcloud"
     "--${boolEn (lame != null)}-lame-encoder"
-    "--${boolEn (libmpdclient != null)}-libmpdclient"
     # TODO: libwrap support
     #"--${boolEn }-libwrap" true null)
-    "--${boolEn (libsndfile != null)}-sndfile"
+    "--disable-libwrap"
     "--${boolEn (libsamplerate != null)}-lsr"
+    "--${boolEn (soxr != null)}-soxr"
     "--${boolEn (libmad != null)}-mad"
     "--${boolEn (libmikmod != null)}-mikmod"
     "--${boolEn (libmms != null)}-mms"
     "--${boolEn (libmodplug != null)}-modplug"
+    "--${boolEn (musepack != null)}-mpc"
     "--${boolEn (mpg123 != null)}-mpg123"
-    "--enable-neighbor-plugins"
     "--${boolEn (openal != null)}-openal"
     "--${boolEn (opus != null)}-opus"
     "--disable-oss"
     "--disable-osx"
     "--enable-pipe-output"
     "--${boolEn (pulseaudio_lib != null)}-pulse"
+    "--enable-recorder-output"
+    # TODO: sidplay
+    "--disable-sidplay"
+    # TODO: shine
+    #"--${boolEn (shine != null)}-shine-encoder"
+    "--disable-shine-encoder"
     "--${boolEn (libshout != null)}-shout"
+    "--${boolEn (libsndfile != null)}-sndfile"
     "--disable-solaris-output"
-    "--${boolEn (yajl != null)}-soundcloud"
     "--${boolEn (sqlite != null)}-sqlite"
+    "--${boolEn (systemd_lib != null)}-systemd-daemon"
+    "--enable-tcp"
+    "--disable-test"
     # TODO: twolame support
-    #"--${boolEn (twolame != null)}-twolame"
+    #"--${boolEn (twolame != null)}-twolame-encoder"
+    "--disable-twolame-encoder"
     "--enable-un"
-    "--${boolEn (libupnp != null)}-upnp"
     "--${boolEn (libvorbis != null)}-vorbis"
     "--${boolEn (libvorbis != null)}-vorbis-encoder"
     "--enable-wave-encoder"
     "--${boolEn (wavpack != null)}-wavpack"
-    "--${boolWt (avahi != null && dbus != null)}-zeroconf${
-        boolString (avahi != null && dbus != null) "=avahi" ""}"
-    "--${boolEn (zlib != null)}-zlib"
+    "--disable-werror"
+    # TODO: wildmidi
+    "--disable-wildmidi"
     "--${boolEn (zziplib != null)}-zzip"
+    "--${boolEn (icu != null)}-icu"
+    "--${boolEn (glib != null)}-glib"
+    "--enable-neighbor-plugins"
+    "--enable-aac"
     "--${boolWt (systemd_lib != null)}-systemdsystemunitdir${
         boolString (systemd_lib != null) "=$(out)/etc/systemd/system" ""}"
-    "--disable-debug"
-    "--${boolEn documentationSupport}-documentation"
-    "--disable-werror"
+    "--${boolWt (avahi != null && dbus != null)}-zeroconf${
+        boolString (avahi != null && dbus != null) "=avahi" ""}"
   ];
 
   NIX_LDFLAGS = [ ] ++ optional (libshout != null) "-lshout";

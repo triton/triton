@@ -71,8 +71,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://www.musicpd.org/download/mpd/${versionMajor}/${name}.tar.xz";
     hashOutput = false;
-    multihash = "QmNNP6SRdaAAWXXbN4wDvWLdWVTxVsAcSrVaHtJAyqds7V";
-    sha256 = "8305b8bc026f4b6bde28b8dd09bfdddbe5590acf36358eed4d083a396e301730";
+    multihash = "Qmdu2QGTBdq6qsdPaFWriWFiCczW6SonWvCZizN5fC8h4d";
+    sha256 = "34180ca4146bb161e86d9c4503fab2f64edc3850e77823c036278af08698f8be";
   };
 
   nativeBuildInputs = [ ] ++ optionals documentationSupport [
@@ -135,87 +135,95 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--enable-database"
+    "--enable-daemon"
+    "--disable-debug"
+    "--${boolEn documentationSupport}-documentation"
+    "--enable-dsd"
+    "--enable-fifo"
+    "--enable-httpd-output"
+    "--enable-inotify"
+    "--enable-ipv6"
+    "--enable-largefile"
+    "--${boolEn (yajl != null)}-soundcloud"
+    # TODO: libwrap support
+    #"--${boolEn }-libwrap" true null)
+    "--disable-libwrap"
+    "--${boolEn (libmikmod != null)}-mikmod"
+    "--${boolEn (openal != null)}-openal"
+    "--disable-oss"
+    "--disable-osx"
+    "--enable-pipe-output"
+    "--enable-recorder-output"
+    # TODO: sidplay
+    "--disable-sidplay"
+    "--${boolEn (libshout != null)}-shout"
+    "--disable-solaris-output"
+    "--enable-tcp"
+    "--disable-test"
+    "--enable-un"
+    "--${boolEn (libvorbis != null)}-vorbis"
+    "--enable-wave-encoder"
+    "--disable-werror"
+    "--${boolEn (icu != null)}-icu"
+    "--enable-iconv"
+    "--${boolEn (systemd_lib != null)}-systemd-daemon"
     "--${boolEn (libmpdclient != null)}-libmpdclient"
     "--${boolEn (expat != null)}-expat"
-    "--${boolEn (libupnp != null)}-upnp"
-    # TODO: adplug support
-    #"--${boolEn }-adplug" true null)
-    "--disable-adplug"
-    "--${boolEn (alsa-lib != null)}-alsa"
-    "--disable-roar"
-    "--${boolEn (libao != null)}-ao"
-    "--${boolEn (audiofile != null)}-audiofile"
-    "--${boolEn (zlib != null)}-zlib"
-    "--${boolEn (bzip2 != null)}-bzip2"
-    # TODO: cdio-paranoia support
-    #"--${boolEn (libcdio != null)}-cdio-paranoia"
-    "--disable-paranoia"
+    "--${boolEn (libid3tag != null)}-id3"
+    "--${boolEn (sqlite != null)}-sqlite"
+    "--${boolEn (libsamplerate != null)}-lsr"
+    "--${boolEn (soxr != null)}-soxr"
     "--${boolEn (curl != null)}-curl"
     "--${boolEn (samba_client != null)}-smbclient"
     # TODO: nfs support
     "--disable-nfs"
-    "--disable-debug"
-    "--${boolEn documentationSupport}-documentation"
-    "--enable-dsd"
+    # TODO: cdio-paranoia support
+    #"--${boolEn (libcdio != null)}-cdio-paranoia"
+    "--disable-paranoia"
+    "--${boolEn (libmms != null)}-mms"
+    "--enable-webdav"
+    "--enable-cue"
+    "--enable-neighbor-plugins"
+    # TODO: iso9660
+    "--disable-iso9660"
+    "--${boolEn (zlib != null)}-zlib"
+    "--${boolEn (bzip2 != null)}-bzip2"
+    "--${boolEn (libupnp != null)}-upnp"
+    "--${boolEn (zziplib != null)}-zzip"
+    # TODO: adplug support
+    #"--${boolEn }-adplug" true null)
+    "--disable-adplug"
+    "--${boolEn (audiofile != null)}-audiofile"
+    "--disable-aac"
     "--${boolEn (ffmpeg != null)}-ffmpeg"
-    "--enable-fifo"
     "--${boolEn (flac != null)}-flac"
     "--${boolEn (fluidsynth != null)}-fluidsynth"
     "--${boolEn (game-music-emu != null)}-gme"
-    "--enable-httpd-output"
-    "--${boolEn (libid3tag != null)}-id3"
-    # TODO: iso9660
-    "--disable-iso9660"
-    "--${boolEn (jack2_lib != null)}-jack"
-    "--enable-largefile"
-    "--${boolEn (yajl != null)}-soundcloud"
-    "--${boolEn (lame != null)}-lame-encoder"
-    # TODO: libwrap support
-    #"--${boolEn }-libwrap" true null)
-    "--disable-libwrap"
-    "--${boolEn (libsamplerate != null)}-lsr"
-    "--${boolEn (soxr != null)}-soxr"
     "--${boolEn (libmad != null)}-mad"
-    "--${boolEn (libmikmod != null)}-mikmod"
-    "--${boolEn (libmms != null)}-mms"
-    "--${boolEn (libmodplug != null)}-modplug"
-    "--${boolEn (musepack != null)}-mpc"
     "--${boolEn (mpg123 != null)}-mpg123"
-    "--${boolEn (openal != null)}-openal"
+    "--${boolEn (libmodplug != null)}-modplug"
     "--${boolEn (opus != null)}-opus"
-    "--disable-oss"
-    "--disable-osx"
-    "--enable-pipe-output"
-    "--${boolEn (pulseaudio_lib != null)}-pulse"
-    "--enable-recorder-output"
-    # TODO: sidplay
-    "--disable-sidplay"
+    "--${boolEn (libsndfile != null)}-sndfile"
+    "--${boolEn (musepack != null)}-mpc"
+    "--${boolEn (wavpack != null)}-wavpack"
+    # TODO: wildmidi
+    "--disable-wildmidi"
     # TODO: shine
     #"--${boolEn (shine != null)}-shine-encoder"
     "--disable-shine-encoder"
-    "--${boolEn (libshout != null)}-shout"
-    "--${boolEn (libsndfile != null)}-sndfile"
-    "--disable-solaris-output"
-    "--${boolEn (sqlite != null)}-sqlite"
-    "--${boolEn (systemd_lib != null)}-systemd-daemon"
-    "--enable-tcp"
-    "--disable-test"
+    "--${boolEn (libvorbis != null)}-vorbis-encoder"
+    "--${boolEn (lame != null)}-lame-encoder"
     # TODO: twolame support
     #"--${boolEn (twolame != null)}-twolame-encoder"
     "--disable-twolame-encoder"
-    "--enable-un"
-    "--${boolEn (libvorbis != null)}-vorbis"
-    "--${boolEn (libvorbis != null)}-vorbis-encoder"
-    "--enable-wave-encoder"
-    "--${boolEn (wavpack != null)}-wavpack"
-    "--disable-werror"
-    # TODO: wildmidi
-    "--disable-wildmidi"
-    "--${boolEn (zziplib != null)}-zzip"
-    "--${boolEn (icu != null)}-icu"
-    "--${boolEn (glib != null)}-glib"
-    "--enable-neighbor-plugins"
-    "--enable-aac"
+    "--${boolEn (alsa-lib != null)}-alsa"
+    "--disable-roar"
+    # TODO: sndio
+    #"--${boolEn (libsndio != null)}-sndio"
+    "--disable-haiku"
+    "--${boolEn (jack2_lib != null)}-jack"
+    "--${boolEn (libao != null)}-ao"
+    "--${boolEn (pulseaudio_lib != null)}-pulse"
     "--${boolWt (systemd_lib != null)}-systemdsystemunitdir${
         boolString (systemd_lib != null) "=$(out)/etc/systemd/system" ""}"
     "--${boolWt (avahi != null && dbus != null)}-zeroconf${

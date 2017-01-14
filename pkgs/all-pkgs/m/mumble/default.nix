@@ -16,7 +16,7 @@
 , opus
 , qt4
 , qt5
-, openssl
+, openssl_1-0-2
 , portaudio
 , protobuf-cpp
 , pulseaudio_lib
@@ -81,7 +81,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     avahi
     boost
-    openssl
+    openssl_1-0-2
     protobuf-cpp
     qt4
     qt5

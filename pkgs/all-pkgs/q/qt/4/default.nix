@@ -233,6 +233,9 @@ stdenv.mkDerivation rec {
 
   CXXFLAGS = "-std=gnu++98";
 
+  # FIXME
+  buildDirCheck = false;
+
   meta = with stdenv.lib; {
     description = "A cross-platform application framework for C++";
     homepage = http://qt-project.org/;

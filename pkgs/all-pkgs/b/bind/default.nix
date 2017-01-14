@@ -16,7 +16,7 @@
 , mysql_lib
 , ncurses
 , openldap
-, openssl
+, openssl_1-0-2
 , postgresql
 , protobuf-c
 , pythonPackages
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
     libxml2
     lmdb
     ncurses
-    openssl
+    openssl_1-0-2
     pythonPackages.python
     pythonPackages.ply
     readline
@@ -90,7 +90,7 @@ stdenv.mkDerivation rec {
     "--with-gssapi=${kerberos}"
     "--with-libtool"
     "--disable-native-pkcs11"
-    "--with-openssl=${openssl}"
+    "--with-openssl=${openssl_1-0-2}"
     "--with-pkcs11"
     "--with-ecdsa"
     "--without-gost"  # Insecure cipher

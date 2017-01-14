@@ -10,14 +10,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "spectrwm-2016-06-26";
+  name = "spectrwm-2016-12-09";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "conformal";
     repo = "spectrwm";
-    rev = "9d338b286b1a2a240f92070bf1e95dc6f4c27bea";
-    sha256 = "783d78d6fb84be0995db898c0e81a425f73a546537662cf08a88718049e0987c";
+    rev = "2646d004bf17fb42799b887b4781a28de4c8bfb9";
+    sha256 = "cc331269543ab8b0b2018ec7be549e0856738e1e2eeb8787280079fe7d225c86";
   };
 
   nativeBuildInputs = [

@@ -165,11 +165,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "0ab64c594a6a5489089faa1e7b2b541110f31eb5";
-    date = "2017-01-06";
+    rev = "f2499483f923065a842d38eb4c7f1927e6fc6e6d";
+    date = "2017-01-14";
     owner  = "golang";
     repo   = "net";
-    sha256 = "1q3fh42bfwj7bjskffrdlcwnbh4rk2lrz54719fvb3vn3wj87vpd";
+    sha256 = "00220xp5nczzyhm5b71hnx8qj7xc6hxvv7h0psb1bi4sbwbgkzp3";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "github.com/hashicorp/go.net"
@@ -2669,11 +2669,11 @@ let
 
   armon_go-metrics = buildFromGitHub {
     version = 2;
-    date = "2016-11-04";
-    rev = "97c69685293dce4c0a2d0b19535179bbc976e4d2";
+    date = "2017-01-14";
+    rev = "93f237eba9b0602f3e73710416558854a81d9337";
     owner = "armon";
     repo = "go-metrics";
-    sha256 = "075bz3ibx6i8mdlkvclnh035fpqrq6ymwcb7jj85ldr6fb7y08p3";
+    sha256 = "0f1c24krssll6k90ldf3hzf362r05km8j88riqj5lp6m4yxc4dka";
     propagatedBuildInputs = [
       circonus-gometrics
       datadog-go
@@ -4865,8 +4865,8 @@ let
     version = 2;
     owner = "ncw";
     repo = "rclone";
-    rev = "45862f4c1634ec05e49110f17f2714ce1471a012";
-    sha256 = "1ig66vlw38vjbq58d687kpgvmq9l67y8gr0fqxh81hkn8bsbin28";
+    rev = "aa62e93094c5206f09af619e85022bfedede5d54";
+    sha256 = "0bfhjwc3d8rr1k4l5wl580fgng9igp311x74kvc54l431g4mgapw";
     propagatedBuildInputs = [
       aws-sdk-go
       cobra
@@ -4889,7 +4889,7 @@ let
       testify
     ];
     meta.useUnstable = true;
-    date = "2017-01-12";
+    date = "2017-01-14";
   };
 
   cupcake_rdb = buildFromGitHub {

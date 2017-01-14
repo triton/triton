@@ -153,6 +153,9 @@ stdenv.mkDerivation rec {
 
   disallowedReferences = [ stdenv.cc ];
 
+  # FIXME
+  buildDirCheck = false;
+
   passthru = {
     psqlSchema = channel;
   };

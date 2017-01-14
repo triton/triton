@@ -7,7 +7,7 @@
 , db
 , gnused
 , openldap
-, openssl
+, openssl_1-0-2
 }:
 
 stdenv.mkDerivation rec {
@@ -28,14 +28,14 @@ stdenv.mkDerivation rec {
     db
     expat
     openldap
-    openssl
+    openssl_1-0-2
   ];
 
   configureFlags = [
     "--with-apr=${apr}"
     "--with-expat=${expat}"
     "--with-crypto"
-    "--with-openssl=${openssl}"
+    "--with-openssl=${openssl_1-0-2}"
     "--with-berkeley-db=${db}"
     "--with-ldap=ldap"
   ];

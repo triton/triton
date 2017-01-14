@@ -37,6 +37,9 @@ stdenv.mkDerivation rec {
     "--enable-shared"
   ];
 
+  # FIXME
+  buildDirCheck = false;
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

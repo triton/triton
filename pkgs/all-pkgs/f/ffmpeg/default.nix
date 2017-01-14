@@ -390,6 +390,7 @@ stdenv.mkDerivation rec {
     xorg.libXext
     xorg.libXfixes
     xorg.libXv
+    #xorg.libXvMC
     xorg.xproto
     xvidcore
     xz
@@ -485,7 +486,9 @@ stdenv.mkDerivation rec {
     "--${boolEn (libvdpau != null)}-vdpau"
     "--disable-videotoolbox"  # macos
     # Undocumented
-    "--enable-xvmc"
+    # FIXME
+    #"--${boolEn (xorg.libXvMC != null)}-xvmc"
+    "--disable-xvmc"
     /*
      *  External libraries
      */

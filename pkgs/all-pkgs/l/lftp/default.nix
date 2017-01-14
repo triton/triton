@@ -10,7 +10,7 @@
 , less
 , libidn
 , ncurses
-, openssl
+, openssl_1-0-2
 , readline
 , zlib
 }:
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     expat
     libidn
     ncurses
-    openssl
+    openssl_1-0-2
     readline
     zlib
   ];
@@ -84,8 +84,8 @@ stdenv.mkDerivation rec {
     "--with-modules"
     #"--with-sysroot"
     "--without-gnutls"
-    "--${boolWt (openssl != null)}-openssl${
-      boolString (openssl != null) "=${openssl}" ""}"
+    "--${boolWt (openssl_1-0-2 != null)}-openssl${
+      boolString (openssl_1-0-2 != null) "=${openssl_1-0-2}" ""}"
     "--without-included-regex"
     "--with-libresolv"
     "--${boolWt (readline != null)}-readline${

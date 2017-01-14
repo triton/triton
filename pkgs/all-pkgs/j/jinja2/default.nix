@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "2.8";
+  version = "2.9.4";
 in
 buildPythonPackage rec {
   name = "Jinja2-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "Jinja2";
     inherit version;
-    sha256 = "bc1ff2ff88dbfacefde4ddde471d1417d3b304e8df103a7a9437d47269201bf4";
+    sha256 = "aab8d8ca9f45624f1e77f2844bf3c144d180e97da8824c2a6d7552ad039b5442";
   };
 
   propagatedBuildInputs = [

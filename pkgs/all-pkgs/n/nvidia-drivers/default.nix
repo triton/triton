@@ -494,6 +494,7 @@ stdenv.mkDerivation {
     done
   '';
 
+  sourceDateEpochWarn = true;
   fpic = false;
   optFlags = false;
   stackProtector = false;

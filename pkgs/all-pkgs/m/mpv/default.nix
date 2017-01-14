@@ -8,7 +8,6 @@
 , which
 
 , alsa-lib
-, enca
 , ffmpeg
 , freefont_ttf
 , freetype
@@ -72,7 +71,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     alsa-lib
-    enca
     ffmpeg
     freefont_ttf
     freetype
@@ -157,7 +155,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (libdvdnav != null)}-dvdnav"
     # FIXME
     #"--${boolEn (libcdio != null)}-cdda"
-    "--${boolEn (enca != null)}-enca"
     #"--${boolEn ( != null)}-uchardet"
     "--${boolEn (rubberband != null)}-rubberband"
     "--${boolEn (lcms2 != null)}-lcms2"

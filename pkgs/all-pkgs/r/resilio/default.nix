@@ -40,6 +40,8 @@ stdenv.mkDerivation rec {
   '';
 
   dontStrip = true;
+  # FIXME
+  sourceDateEpochWarn = true;
 
   meta = with stdenv.lib; {
     description = "Automatically sync files via secure, distributed technology";

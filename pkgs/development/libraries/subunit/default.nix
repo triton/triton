@@ -27,6 +27,9 @@ stdenv.mkDerivation rec {
 
   postFixup = "wrapPythonPrograms";
 
+  # FIXME
+  buildDirCheck = false;
+
   meta = with stdenv.lib; {
     description = "A streaming protocol for test results";
     homepage = https://launchpad.net/subunit;

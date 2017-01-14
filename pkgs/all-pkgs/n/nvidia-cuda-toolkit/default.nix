@@ -140,6 +140,8 @@ stdenv.mkDerivation rec {
 
   dontPatchELF = true;
   dontStrip = true;
+  # FIXME
+  sourceDateEpochWarn = true;
 
   passthru = {
     srcVerification = fetchurl {

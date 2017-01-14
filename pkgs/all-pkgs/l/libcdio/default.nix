@@ -49,6 +49,9 @@ stdenv.mkDerivation rec {
     "--with-versioned-libs"
   ];
 
+  # FIXME
+  buildDirCheck = false;
+
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

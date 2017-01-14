@@ -78,6 +78,11 @@ stdenv.mkDerivation rec {
     "--with-linux-obj=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   ];
 
+  # Fix build impurities
+  preFixup = ''
+    find "$out" -name Module.symvers -exec sed -i "s,$NIX_BUILD_TOP,/no-such-path,g" {} \;
+  '';
+
   # We don't want these compiler security features / optimizations
   # when we are building kernel modules
   optFlags = !buildKernel;

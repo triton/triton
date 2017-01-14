@@ -263,6 +263,9 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$out/share"
   '';
 
+  # FIXME
+  buildDirCheck = false;
+
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

@@ -167,6 +167,9 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
   '';
 
+  # FIXME
+  buildDirCheck = false;
+
   passthru = {
     inherit
       broadway_backend

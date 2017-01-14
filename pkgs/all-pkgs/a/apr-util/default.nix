@@ -52,6 +52,9 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/apu-1-config --prefix PATH : "${gnused}/bin"
   '';
 
+  # FIXME
+  buildDirCheck = false;
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;

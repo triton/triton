@@ -40,6 +40,9 @@ stdenv.mkDerivation rec {
     done
   '';
 
+  # FIXME
+  sourceDateEpochWarn = true;
+
   meta = with stdenv.lib; {
     description = "Unicode Character Database";
     homepage = http://www.unicode.org/;

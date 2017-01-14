@@ -37,24 +37,8 @@ stdenv.mkDerivation rec {
     sha256 = "ca5218fade0204d59947126c38439f432853543b0818d9d728c589dfe7f3a421";
   };
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "a5349b39263106a93082ba995737b6f9218131b4";
-      file = "graphviz/0001-vimdot-lookup-vim-in-PATH.patch";
-      sha256 = "3c6ff408513bc040814266380f700e010a0cfca24d48f862e4d7154814aa9d3f";
-    })
-    # NOTE: Once this patch is removed, flex can probably be removed from
-    # buildInputs.
-    (fetchTritonPatch {
-      rev = "a5349b39263106a93082ba995737b6f9218131b4";
-      file = "graphviz/cve-2014-9157.patch";
-      sha256 = "259ecb8f1f23206a9ba2ccffe7e6fa04cb4d80d4c128c2ee434ed15e8ad689ef";
-    })
-  ];
-
   nativeBuildInputs = [
     bison
-    flex
     libtool
     swig
   ];

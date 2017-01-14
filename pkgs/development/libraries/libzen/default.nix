@@ -16,6 +16,9 @@ stdenv.mkDerivation {
 
   preConfigure = "sh autogen.sh";
 
+  # FIXME
+  buildDirCheck = false;
+
   meta = {
     description = "Shared library for libmediainfo and mediainfo";
     homepage = http://mediaarea.net/;

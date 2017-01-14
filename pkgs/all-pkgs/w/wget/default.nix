@@ -4,7 +4,7 @@
 
 , libidn
 , libpsl ? null
-, openssl
+, openssl_1-0-2
 , util-linux_lib
 
 , perl
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libidn
     libpsl
-    openssl
+    openssl_1-0-2
     util-linux_lib
   ] ++ optionals doCheck [
     perl

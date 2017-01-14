@@ -70,6 +70,9 @@ stdenv.mkDerivation rec {
     "--disable-iso-c"
   ];
 
+  # FIXME
+  buildDirCheck = false;
+
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

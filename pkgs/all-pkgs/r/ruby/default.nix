@@ -3,7 +3,7 @@
 
 , gdbm
 , libffi
-, openssl
+, openssl_1-0-2
 , readline
 , zlib
 }:
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     gdbm
     libffi
-    openssl
+    openssl_1-0-2
     readline
     zlib
   ];

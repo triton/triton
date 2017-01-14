@@ -22,7 +22,7 @@
 , libsndfile
 , jack2_lib
 , lirc
-, openssl
+, openssl_1-0-2
 , sbc
 , soxr
 , speexdsp
@@ -92,7 +92,7 @@ stdenv.mkDerivation rec {
     avahi
     jack2_lib
     lirc
-    openssl
+    openssl_1-0-2
     soxr
     systemd_lib
     webrtc-audio-processing

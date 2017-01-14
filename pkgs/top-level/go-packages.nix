@@ -165,11 +165,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "2497afe528999a59ebf56c8b8fb6191e4dcde594";
-    date = "2016-12-02";
+    rev = "0ab64c594a6a5489089faa1e7b2b541110f31eb5";
+    date = "2017-01-06";
     owner  = "golang";
     repo   = "net";
-    sha256 = "0f03i6xd29xbvk8q7a4a29d59mm9pawpczb78wg60pdcqjnqjyzl";
+    sha256 = "1q3fh42bfwj7bjskffrdlcwnbh4rk2lrz54719fvb3vn3wj87vpd";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "github.com/hashicorp/go.net"
@@ -4865,8 +4865,8 @@ let
     version = 2;
     owner = "ncw";
     repo = "rclone";
-    rev = "1b2dda8c4cfeba86d72236ec51c29d873d17aa16";
-    sha256 = "0jfffh3rrsbpvdk4m0bwjavkx3qzipzh0wdc12cqafccik7nxscp";
+    rev = "45862f4c1634ec05e49110f17f2714ce1471a012";
+    sha256 = "1ig66vlw38vjbq58d687kpgvmq9l67y8gr0fqxh81hkn8bsbin28";
     propagatedBuildInputs = [
       aws-sdk-go
       cobra
@@ -4889,7 +4889,7 @@ let
       testify
     ];
     meta.useUnstable = true;
-    date = "2016-12-19";
+    date = "2017-01-12";
   };
 
   cupcake_rdb = buildFromGitHub {
@@ -5119,9 +5119,9 @@ let
     version = 2;
     owner = "pkg";
     repo = "sftp";
-    rev = "e59687e8fa2ed36b4c997df28621fb8720ffc767";
-    date = "2017-01-07";
-    sha256 = "14qwzlxbih79399zyamnw0ai0b7h6rjvb3wm0knmk2hr0wmh2vjf";
+    rev = "f37534d398f7c9117a0604dcd0be60a0208aa155";
+    date = "2017-01-13";
+    sha256 = "1am6c3h3djak3ibfkjccy58a9qkbmif3pyispq134gq6g5m4582l";
     propagatedBuildInputs = [
       crypto
       errors

@@ -1,5 +1,5 @@
 { stdenv, fetchurl, cmake, ncurses, zlib, xz, lzo, lz4, bzip2, snappy
-, openssl, pcre, boost, judy, bison, libxml2, ninja, kytea, msgpack-c
+, openssl_1-0-2, pcre, boost, judy, bison, libxml2, ninja, kytea, msgpack-c
 , libaio, libevent, groff, jemalloc, cracklib, systemd_lib, numactl, perl
 , zeromq
 }:
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
     ninja
   ];
   buildInputs = [
-    ncurses openssl zlib xz lzo lz4 bzip2 snappy
+    ncurses openssl_1-0-2 zlib xz lzo lz4 bzip2 snappy
     pcre libxml2 boost judy bison libevent cracklib
     jemalloc libaio systemd_lib numactl kytea msgpack-c
     zeromq
@@ -85,7 +85,7 @@ stdenv.mkDerivation rec {
     # Fix the mysql_config
     sed -i $out/bin/mysql_config \
       -e 's,-lz,-L${zlib}/lib -lz,g' \
-      -e 's,-lssl,-L${openssl}/lib -lssl,g'
+      -e 's,-lssl,-L${openssl_1-0-2}/lib -lssl,g'
 
     # Don't install static libraries.
     rm $out/lib/*.a

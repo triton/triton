@@ -1034,12 +1034,12 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 
    pylast = buildPythonPackage rec {
      name = "pylast-${version}";
-     version = "1.6.0";
+     version = "1.7.0";
 
      src = fetchPyPi {
        package = "pylast";
        inherit version;
-       sha256 = "6bf325ee0fdeb35780554843cf64df99304abb98c5ce2e451c0df7e95e08b42e";
+       sha256 = "a482a769b6a037e2e9b78433de91a287eaf6aacff60bbb2f4562c3c7ece10430";
      };
 
      propagatedBuildInputs = with self; [ six ];

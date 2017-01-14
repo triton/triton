@@ -87,6 +87,7 @@ let
   };
 
   pluginsWithoutDeps = [
+    "absubmit"
     "bench"
     "bpd"
     "bpm"
@@ -138,7 +139,7 @@ let
   testShell = "${bash}/bin/bash --norc";
   completion = "${bash-completion}/share/bash-completion/bash_completion";
 
-  version = "1.4.2";
+  version = "1.4.3";
 in
 buildPythonPackage rec {
   name = "beets-${version}";
@@ -146,7 +147,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "beets";
     inherit version;
-    sha256 = "b54c72e220d7696740823d0a4e4f38d57d1e463daaf06da5194a358d3a14ca6a";
+    sha256 = "b93fbe11998a29cd432b0a88741b9ced0e5ac50e80362d41e13e867d851ae464";
   };
 
   nativeBuildInputs = [

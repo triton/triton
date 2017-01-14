@@ -262,6 +262,9 @@ stdenv.mkDerivation rec {
     wrapPythonPrograms $out/bin
   '';
 
+  # FIXME
+  buildDirCheck = false;
+
   passthru = rec {
     srcVerification = fetchurl {
       failEarly = true;

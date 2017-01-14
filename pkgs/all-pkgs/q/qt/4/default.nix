@@ -20,7 +20,7 @@
 , mesa_glu
 , mesa_noglu
 , mysql_lib
-, openssl
+, openssl_1-0-2
 , perl
 , postgresql
 , pulseaudio_lib
@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
     mesa_glu
     mesa_noglu
     mysql_lib
-    openssl
+    openssl_1-0-2
     postgresql
     pulseaudio_lib
     sqlite

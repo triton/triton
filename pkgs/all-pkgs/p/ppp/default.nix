@@ -7,7 +7,7 @@
 , curl
 , libpcap
 , linux-headers
-, openssl
+, openssl_1-0-2
 , pam
 }:
 
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     curl
     libpcap
     linux-headers
-    openssl
+    openssl_1-0-2
     pam
     stdenv.libc
   ];

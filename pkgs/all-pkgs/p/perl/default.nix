@@ -7,16 +7,24 @@
 
 let
   libc = if stdenv.cc.libc or null != null then stdenv.cc.libc else "/usr";
+
+  inherit (stdenv.lib)
+    optional
+    optionalString;
+
+  tarballUrls = version: [
+    "mirror://cpan/src/5.0/perl-${version}.tar.xz"
+  ];
+
+  version = "5.24.1";
 in
-
-with stdenv.lib;
-
 stdenv.mkDerivation rec {
-  name = "perl-5.24.0";
+  name = "perl-${version}";
 
   src = fetchurl {
-    url = "mirror://cpan/src/5.0/${name}.tar.xz";
-    sha256 = "a9a37c0860380ecd7b23aa06d61c20fc5bc6d95198029f3684c44a9d7e2952f2";
+    urls = tarballUrls version;
+    hashOutput = false;
+    sha256 = "03a77bac4505c270f1890ece75afc7d4b555090b41aa41ea478747e23b2afb3f";
   };
 
   setupHook = ./setup-hook.sh;
@@ -74,7 +82,18 @@ stdenv.mkDerivation rec {
     sed -i "/$self/b; s|$NIX_STORE/[a-z0-9]\{32\}-|$NIX_STORE/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-|g" "$out"/lib/perl5/*/*/Config_heavy.pl
   '';
 
-  passthru.libPrefix = "lib/perl5/site_perl";
+  passthru = {
+    libPrefix = "lib/perl5/site_perl";
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "5.24.1";
+      outputHash = "03a77bac4505c270f1890ece75afc7d4b555090b41aa41ea478747e23b2afb3f";
+      inherit (src) outputHashAlgo;
+      sha256Urls = map (n: "${n}.sha256.txt") urls;
+      sha1Urls = map (n: "${n}.sha1.txt") urls;
+      md5Urls = map (n: "${n}.md5.txt") urls;
+    };
+  };
 
   outputs = [ "out" "man" ];
 

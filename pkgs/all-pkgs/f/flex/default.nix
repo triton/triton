@@ -5,14 +5,15 @@
 }:
 
 let
-  version = "2.6.3";
+  # Flex 2.6.2 and 2.6.3 break grub2_efi so wait for 2.6.4
+  version = "2.6.1";
 in
 stdenv.mkDerivation rec {
   name = "flex-${version}";
 
   src = fetchurl {
-    url = "https://github.com/westes/flex/releases/download/v${version}/${name}.tar.gz";
-    sha256 = "68b2742233e747c462f781462a2a1e299dc6207401dac8f0bbb316f48565c2aa";
+    url = "https://github.com/westes/flex/releases/download/v${version}/${name}.tar.xz";
+    sha256 = "2c7a412c1640e094cb058d9b2fe39d450186e09574bebb7aa28f783e3799103f";
   };
 
   nativeBuildInputs = [

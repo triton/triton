@@ -3256,8 +3256,8 @@ thrift = callPackage ../all-pkgs/t/thrift { };
 
 time = callPackage ../all-pkgs/t/time { };
 
-tinc_1_0 = callPackage ../all-pkgs/t/tinc { channel = "1.0"; };
-tinc_1_1 = callPackage ../all-pkgs/t/tinc { channel = "1.1"; };
+tinc_1-0 = callPackage ../all-pkgs/t/tinc { channel = "1.0"; };
+tinc_1-1 = callPackage ../all-pkgs/t/tinc { channel = "1.1"; };
 
 tk_8-5 = callPackage ../all-pkgs/t/tk {
   channel = "8.5";

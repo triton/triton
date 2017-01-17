@@ -36,14 +36,14 @@ let
     boolOn
     boolString;
 
-  version = "0.50.0";
+  version = "0.51.0";
 in
 stdenv.mkDerivation rec {
   name = "poppler-${suffix}-${version}";
 
   src = fetchurl {
     url = "https://poppler.freedesktop.org/poppler-${version}.tar.xz";
-    sha256 = "c9c93318b789d3933f6e0bad3bc65110280c28eac3f0666284bb9c9a0ab4bc36";
+    sha256 = "e997c9ad81a8372f2dd03a02b00692b8cc479c220340c8881edaca540f402c1f";
   };
 
   nativeBuildInputs = [

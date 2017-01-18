@@ -60,14 +60,14 @@ let
   };
 
   upstreamVersion = "232";
-  version = "${upstreamVersion}-9-gc81d700";
+  version = "${upstreamVersion}-10-g04c9a10e4";
 in
 stdenv.mkDerivation rec {
   name = "${type}systemd-${version}";
 
   src = fetchurl {
     url = "https://github.com/triton/systemd/releases/download/v${version}/systemd-${upstreamVersion}.tar.xz";
-    sha256 = "d5119f4ca5dab277836da00f8ef6274eb210dfc9d14d4223a8eee197bf2426d8";
+    sha256 = "424ea7f88186c9bacd0b984503bfc9fb4c1850f58c98a422d9dd6b896d2b8289";
   };
 
   nativeBuildInputs = [

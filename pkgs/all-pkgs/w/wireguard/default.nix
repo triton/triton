@@ -49,6 +49,7 @@ stdenv.mkDerivation {
     makeFlagsArray+=(
       "M=$(pwd)"
       "INSTALL_MOD_PATH=$out"
+      "INSTALL_MOD_STRIP=1"
     )
   '';
 

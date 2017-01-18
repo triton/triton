@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "screen-4.4.0";
+  name = "screen-4.5.0";
 
   src = fetchurl {
     url = "mirror://gnu/screen/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "ef722a54759a3bf23aad272bbf33c414c1078cad6bcd982fada93c0d7917218b";
+    sha256 = "01c3a7c362185f35d6a95dff52d64337076496acd034d717de3c263500cfefb0";
   };
 
   buildInputs = [
@@ -48,7 +48,10 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "2EE5 9A5D 0C50 167B 5535  BBF1 B708 A383 C53E F3A4";
+      pgpKeyFingerprints = [
+        "2EE5 9A5D 0C50 167B 5535  BBF1 B708 A383 C53E F3A4"
+        "71AA 09D9 E887 0FDB 0AA7  B61E 21F9 68DE F747 ABD7"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

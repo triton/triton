@@ -88,16 +88,16 @@ stdenv.mkDerivation rec {
     })
   ] ++ optionals (channel == "dev") [
     (fetchTritonPatch {
-      rev = "1cc42ef42fcbbfa2963df44c651c523e3c105f02";
+      rev = "7a56edd41ce78feba009a15303b0295bf07026c6";
       file = "z/zfs/0001-Fix-makefile-paths.patch";
-      sha256 = "136266b4d4599a648453607e6c77b34e8d55874b9885a3a352c401142542aba4";
+      sha256 = "ff8583179901acc8315209c9546f0e930a9fc9c21de71cec5569968fddc11829";
     })
     (fetchTritonPatch {
-      rev = "1cc42ef42fcbbfa2963df44c651c523e3c105f02";
+      rev = "7a56edd41ce78feba009a15303b0295bf07026c6";
       file = "z/zfs/0002-Fix-binary-paths.patch";
-      sha256 = "94e78da1f9259b5ff2ac820039ed7076cc8c7b8542b323cf03405f1ac100d5fb";
+      sha256 = "01346dda86ce17b6d4a2ba7b3d56efdaf466c73d0e793e0875d166821fa4b2de";
     })
-  ];
+	];
 
   preConfigure = ''
     ./autogen.sh

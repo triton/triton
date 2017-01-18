@@ -99,6 +99,10 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  postPatch = ''
+    sed -i '/INSTALL_MOD_DIR=/a\		INSTALL_MOD_STRIP=1 \\' module/Makefile.in
+  '';
+
   preConfigure = ''
     ./autogen.sh
   '' + optionalString buildUser ''

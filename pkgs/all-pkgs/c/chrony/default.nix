@@ -10,7 +10,7 @@
 }:
 
 let
-  name = "chrony-2.4.1";
+  name = "chrony-3.0";
 
   baseUrls = [
     "https://download.tuxfamily.org/chrony/${name}"

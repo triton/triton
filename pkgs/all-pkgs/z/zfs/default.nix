@@ -97,7 +97,7 @@ stdenv.mkDerivation rec {
       file = "z/zfs/0002-Fix-binary-paths.patch";
       sha256 = "01346dda86ce17b6d4a2ba7b3d56efdaf466c73d0e793e0875d166821fa4b2de";
     })
-	];
+  ];
 
   preConfigure = ''
     ./autogen.sh

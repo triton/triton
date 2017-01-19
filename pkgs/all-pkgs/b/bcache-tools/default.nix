@@ -5,6 +5,7 @@
 , libnih
 , libscrypt
 , libsodium
+, liburcu
 , util-linux_lib
 
 , channel ? "stable"
@@ -20,9 +21,9 @@ let
     };
     "dev" = {
       fetchzipVersion = 2;
-      version = "2016-10-11";
-      rev = "4e158e155327d09868453ae9759a58284245175a";
-      sha256 = "3bc6ec9e498bdad2a6335ab6853d6e36e572739a7f3d32e4166830e08322ab14";
+      version = "2017-01-19";
+      rev = "7e714d245b03aa64d052e3fe2ae7619792eeb91f";
+      sha256 = "911e4461964f5021059bb75bc831668075358d7865ef784a4ddf6abfd439c1e6";
     };
   };
 
@@ -53,6 +54,7 @@ stdenv.mkDerivation {
     keyutils
     libscrypt
     libsodium
+    liburcu
   ];
 
   preBuild = ''

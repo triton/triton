@@ -152,6 +152,9 @@ stdenv.mkDerivation rec {
     "lib"
   ];
 
+  # FIXME
+  buildDirCheck = false;
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

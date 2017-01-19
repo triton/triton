@@ -323,6 +323,9 @@ stdenv.mkDerivation rec {
 
   passthru.version = version;
 
+  # FIXME
+  buildDirCheck = false;
+
   meta = with stdenv.lib; {
     description = "Distributed storage system";
     homepage = https://ceph.com/;

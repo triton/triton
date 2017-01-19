@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
     iptables
     libnfnetlink
     libnl
-    net-snmp
+    #net-snmp
     openssl
   ];
 
@@ -41,12 +41,12 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
-    "--enable-snmp"
-    "--enable-snmp-vrrp"
-    "--enable-snmp-checker"
-    "--enable-snmp-rfc"
-    "--enable-snmp-rfcv2"
-    "--enable-snmp-rfcv3"
+    #"--enable-snmp"
+    #"--enable-snmp-vrrp"
+    #"--enable-snmp-checker"
+    #"--enable-snmp-rfc"
+    #"--enable-snmp-rfcv2"
+    #"--enable-snmp-rfcv3"
     "--enable-dbus"
     "--enable-sha1"
   ];

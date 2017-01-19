@@ -9,11 +9,11 @@ stdenv.mkDerivation {
   name = "libscrypt-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "technion";
     repo = "libscrypt";
     rev = "v${version}";
-    sha256 = "451494a4805097f4a9f84093758df8f41f89e7f26d2cb65123e0467919eedd33";
+    sha256 = "6689e8a878ddd772df315ba19ffc7071738a0d839e5081313534516d173ab214";
   };
 
   preBuild = ''

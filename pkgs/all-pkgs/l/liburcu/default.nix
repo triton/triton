@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://lttng.org/files/urcu/userspace-rcu-${version}.tar.bz2";
+    multihash = "QmT8PS6QQv6Kk8XuiGovNa7saKDHP8tRHi3EVqJE4BM5GX";
     hashOutput = false;
     sha256 = "8f7fa313b1e0a3f742cea24ce63a39c0efe63e615a769e2961e55bd2663ecaa3";
   };

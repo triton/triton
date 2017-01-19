@@ -52,6 +52,8 @@ let
 
       # Test that the install worked
       $out/bin/go help
+
+      find "$out" -name testdata -prune -exec rm -r {} \;
     '';
   };
 

@@ -75,6 +75,7 @@ stdenv.mkDerivation rec {
     description = "Clients and server for the SNMP network monitoring protocol";
     homepage = http://net-snmp.sourceforge.net/;
     license = licenses.bsd3;
+    broken = true;
     maintainers = with maintainers; [
       wkennington
     ];

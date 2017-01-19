@@ -3,14 +3,16 @@
     version = "10.2.5";
     sha256 = "c351f976dac839829e8662f30205c5538e7cd75e7d5cbfe8f262a0dd4dca8349";
   };
-
-  "dev" = rec {
-    version = "11.1.1";
-    sha256 = "ef8fad11bb8b6f2ed8fd8fadb29c7a3f73ed46da114a441579ad404bef6f72ae";
+  "11" = rec {
+    version = "11.2.0";
+    sha256 = "8a8bd608404afe41dd42ad1a9f0077e5624b63c0daebad52d4f74785641fb8d4";
   };
-
+  "dev" = rec {
+    version = "11.2.0";
+    sha256 = "8a8bd608404afe41dd42ad1a9f0077e5624b63c0daebad52d4f74785641fb8d4";
+  };
   "git" = rec {
-    version = "2017-01-09";
-    sha256 = "55a569f258e4fb41ec98aa6edacb4a3d01e5c3e7523d8cbd89f3fc27c02128f2";
+    version = "2017-01-19";
+    sha256 = "916380c65d43cd0579154911cef5fc54b2a20b69a7c780686a9e2c228f2bf4b6";
   };
 }

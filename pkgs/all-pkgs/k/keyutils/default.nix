@@ -8,6 +8,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://people.redhat.com/dhowells/keyutils/${name}.tar.bz2";
+    multihash = "QmR3wkaD2VRBm4Mkruzpuf2QCiseCWJNgcoMdZqxZ8p29J";
     sha256 = "1bl3w03ygxhc0hz69klfdlwqn33jvzxl1zfl2jmnb2v85iawb8jd";
   };
 

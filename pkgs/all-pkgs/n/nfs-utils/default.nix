@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "1.3.4";
+  version = "2.1.1";
   name = "nfs-utils-${version}";
 
   baseTarballs = [
@@ -26,8 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.bz2") baseTarballs;
     hashOutput = false;
-    multihash = "QmYSe6736HZBZejfyZL3emutsExTrCTtiZ1BEEn4GAnfMS";
-    sha256 = "c529c82a82320daae811f3d3a143f83d2714d7e7a43beadd42fcd6022c17d590";
+    sha256 = "0a28416948516c26f3bfe90425b0de09b79364dc1f508bf1dda8de66e1edbb09";
   };
 
   buildInputs = [
@@ -44,15 +43,20 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     sed -i 's,/usr/sbin,/run/current-system/sw/bin,g' utils/statd/statd.c
+    sed -i "s,/usr/lib/systemd,$out/lib/systemd,g" systemd/Makefile.in
   '';
 
   preConfigure = ''
-    configureFlagsArray+=("--with-systemd=$out/lib/systemd/system")
+    configureFlagsArray+=(
+      "--with-systemd=$out/lib/systemd/system"
+    )
   '';
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
+    "--enable-svcgss"
+    "--enable-libmount-mount"
     "--with-statduser=rpcuser"
     "--with-start-statd=/run/current-system/bin/start-statd"
     "--without-tcp-wrappers"

@@ -14,7 +14,7 @@ let
     optionals
     platforms;
 
-  version = "3.3.5";
+  version = "3.3.6-pl1";
 in
 
 assert elem precision [
@@ -29,9 +29,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "http://www.fftw.org/fftw-${version}.tar.gz";
-    multihash = "QmPVvMpw6XJhgiEv6X8vPPA2xLaGdjuUvQrGg5ASeKpeMy";
+    multihash = "QmbFpznmFLwjW2ZkX2xfon8ykm2Yu1UqBWyNbogPxrrbhL";
     hashOutput = false;
-    sha256 = "8ecfe1b04732ec3f5b7d279fdb8efcad536d555f9d1e8fabd027037d45ea8bcf";
+    sha256 = "1ef4aa8427d9785839bc767f3eb6a84fcb5e9a37c31ed77a04e7e047519a183d";
   };
 
   configureFlags = [

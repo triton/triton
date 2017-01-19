@@ -24,7 +24,7 @@ let
     boolEn
     boolWt;
 
-  version = "2.2.1";
+  version = "2.2.2";
 in
 stdenv.mkDerivation rec {
   name = "cups-${version}";
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     url = "https://github.com/apple/cups/releases/download/v${version}/"
       + "cups-${version}-source.tar.gz";
     hashOutput = false;
-    sha256 = "83b8730aa977cc055e7410df6a3a682548994c113994ca630a16513017e419d5";
+    sha256 = "f589bb7d5d1dc3aa0915d7cf2b808571ef2e1530cd1a6ebe76ae8f9f4994e4f6";
   };
 
   buildInputs = [

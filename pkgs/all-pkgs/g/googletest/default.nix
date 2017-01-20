@@ -47,7 +47,9 @@ stdenv.mkDerivation rec {
     pushd "$sourceRoot"
       sourceRoot="$(pwd)"
     popd
+  '';
 
+  prePatch = ''
     cp -v ${./gtest.pc.in} $sourceRoot/googletest/gtest.pc.in
     sed -i $sourceRoot/googletest/gtest.pc.in \
       -e 's|(Version:) .+|1 ${version}|'

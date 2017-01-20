@@ -22,7 +22,7 @@
 , libsndfile
 , jack2_lib
 , lirc
-, openssl_1-0-2
+, openssl
 , sbc
 , soxr
 , speexdsp
@@ -52,7 +52,7 @@ let
 
   libOnly = prefix == "lib";
 
-  version = "9.0";
+  version = "10.0";
 in
 
 assert resampleMethodString != null;
@@ -62,8 +62,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "https://freedesktop.org/software/pulseaudio/releases/pulseaudio-${version}.tar.xz";
-    sha1Url = "${url}.sha1";
-    sha256 = "c3d3d66b827f18fbe903fe3df647013f09fc1e2191c035be1ee2d82a9e404686";
+    multihash = "QmQNcwxRfVPXpi3kgWkEgDmKGJ9Rqbpb1EqniqCh9q1ZJU";
+    hashOutput = false;
+    sha256 = "a3186824de9f0d2095ded5d0d0db0405dc73133983c2fbb37291547e37462f57";
   };
 
   nativeBuildInputs = [
@@ -92,7 +93,7 @@ stdenv.mkDerivation rec {
     avahi
     jack2_lib
     lirc
-    openssl_1-0-2
+    openssl
     soxr
     systemd_lib
     webrtc-audio-processing
@@ -235,6 +236,15 @@ stdenv.mkDerivation rec {
 
   # FIXME
   buildDirCheck = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha1Urls = map (n: "${n}.sha1") src.urls;
+      md5Urls = map (n: "${n}.md5") src.urls;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Sound server for POSIX and Win32 systems";

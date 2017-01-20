@@ -5,7 +5,7 @@
 , libtool
 , which
 
-, openssl
+, openssl_1-0-2
 , protobuf-cpp
 , zlib
 }:
@@ -31,7 +31,7 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
-    openssl
+    openssl_1-0-2
     zlib
   ];
 

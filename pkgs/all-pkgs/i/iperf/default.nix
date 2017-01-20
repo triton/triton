@@ -1,4 +1,5 @@
 { stdenv
+, fetchFromGitHub
 , fetchurl
 
 , channel
@@ -12,16 +13,18 @@ let
       sha256 = "a5350777b191e910334d3a107b5e5219b72ffa393da4186da1e0a4552aeeded6";
     };
     "3" = {
-      version = "3.1.3";
-      multihash = "QmPLdT2JXCwsVPv6Fhr2ruSFfRPB5FBydjUWJ63EsabNBT";
-      sha256 = "e34cf60cffc80aa1322d2c3a9b81e662c2576d2b03e53ddf1079615634e6f553";
+      fetchzipVersion = 2;
+      version = "3.1.5";
+      sha256 = "58ab9d597ad5c2cac33b603770bd3e444beebc853034b0e5a00f7e612730b2cc";
     };
   };
 
   inherit (stdenv.lib)
     optionalString;
 
-  inherit (sources."${channel}")
+  source = sources."${channel}";
+
+  inherit (source)
     version
     multihash
     sha256;
@@ -29,11 +32,21 @@ in
 stdenv.mkDerivation rec {
   name = "iperf-${version}";
 
-  src = fetchurl {
-    name = "${name}.tar.gz";
-    url = "https://iperf.fr/download/source/${name}-source.tar.gz";
-    inherit multihash sha256;
-  };
+  src =
+    if source ? fetchzipVersion then
+      fetchFromGitHub {
+        version = source.fetchzipVersion;
+        owner = "esnet";
+        repo = "iperf";
+        rev = version;
+        inherit sha256;
+      }
+    else
+      fetchurl {
+        name = "${name}.tar.gz";
+        url = "https://iperf.fr/download/source/${name}-source.tar.gz";
+        inherit multihash sha256;
+      };
 
   postInstall = optionalString (channel == "3") ''
     ln -s iperf3 $out/bin/iperf

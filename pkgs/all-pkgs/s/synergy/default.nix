@@ -5,12 +5,12 @@
 
 , curl
 , googletest
-, openssl
+, openssl_1-0-2
 , xorg
 }:
 
 let
-  version = "1.8.5";
+  version = "1.8.7";
 in
 stdenv.mkDerivation {
   name = "synergy-${version}";
@@ -20,7 +20,7 @@ stdenv.mkDerivation {
     owner = "symless";
     repo = "synergy";
     rev = "v${version}-stable";
-    sha256 = "03d7c046138c57e2c1c404a3209c86307aa88d3d9fed3824d86f50e2311a8cf3";
+    sha256 = "8301b2851089ad74c882c0d25586e010e64378d9061f8acc9c4ed8440c5bf84e";
   };
 
   nativeBuildInputs = [
@@ -31,7 +31,7 @@ stdenv.mkDerivation {
   buildInputs = [
     curl
     googletest
-    openssl
+    openssl_1-0-2
     xorg.fixesproto
     xorg.inputproto
     xorg.kbproto

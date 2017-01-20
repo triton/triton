@@ -1,7 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
-, gperf
+, gperf_3-0
 
 , zlib
 }:
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    gperf
+    gperf_3-0
   ];
 
   propagatedBuildInputs = [

@@ -279,6 +279,7 @@ let
             "1A4E 8B72 77C4 2E53 DBA9  C7B9 BCAA 30EA 9C0D 5763"
             "6E4F 6AB3 21FD C07F 2C33  2E3A C2BF 0BC4 33CF C8B3"
             "A917 B1EC DA84 AEC2 B568  FED6 F50A BC80 7BD5 DCD0"
+            "5289 95BF EDFB A719 1D46  839E F9BA 0ADA 31CB D89E"
           ];
           inherit (src) outputHashAlgo outputHash;
         };
@@ -297,8 +298,8 @@ let
 in {
 
   php71 = generic {
-    version = "7.1.0";
-    sha256 = "a810b3f29c21407c24caa88f50649320d20ba6892ae1923132598b8a0ca145b6";
+    version = "7.1.1";
+    sha256 = "b3565b0c1441064eba204821608df1ec7367abff881286898d900c2c2a5ffe70";
   };
 
 }

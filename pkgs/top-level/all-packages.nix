@@ -4200,7 +4200,7 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   in kPkgs;
 #
 #  # The current default kernel / kernel modules.
-  linuxPackages = pkgs.linuxPackages_4_8;
+  linuxPackages = pkgs.linuxPackages_4_9;
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
@@ -4208,9 +4208,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
-  linuxPackages_4_8 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_4_8;
-  });
   linuxPackages_4_9 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4_9;
   });

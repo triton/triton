@@ -1466,7 +1466,13 @@ google-chrome_unstable = callPackage ../all-pkgs/g/google-chrome {
 };
 google-chrome = callPackageAlias "google-chrome_stable" { };
 
-gperf = callPackage ../all-pkgs/g/gperf { };
+gperf = pkgs.gperf_3-1;
+gperf_3-1 = callPackage ../all-pkgs/g/gperf {
+  channel = "3.1";
+};
+gperf_3-0 = callPackage ../all-pkgs/g/gperf {
+  channel = "3.0";
+};
 
 gperftools = callPackage ../all-pkgs/g/gperftools { };
 

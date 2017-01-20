@@ -16,7 +16,6 @@
 , gconf
 , glib
 , gtk3
-, json-c
 , libasyncns
 , libcap
 , libsndfile
@@ -81,7 +80,6 @@ stdenv.mkDerivation rec {
     dbus
     libasyncns
     libcap
-    json-c
     libsndfile
     fftw_single
     tdb
@@ -176,7 +174,6 @@ stdenv.mkDerivation rec {
     "--enable-ipv6"
     "--with-fftw"
     "--with-speex"
-    "--disable-xen"
     "--disable-gcov"
     "--enable-adrian-aec"
     "--with-system-user=pulse"

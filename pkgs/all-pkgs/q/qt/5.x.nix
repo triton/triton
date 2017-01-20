@@ -31,7 +31,7 @@
 , mesa
 , mtdev
 , mysql
-, openssl
+, openssl_1-0-2
 , pciutils
 , pcre
 , postgresql_95
@@ -95,7 +95,7 @@ stdenv.mkDerivation {
     mesa
     mtdev
     mysql
-    openssl
+    openssl_1-0-2
     pcre
     postgresql_95
     pulseaudio_lib
@@ -259,6 +259,9 @@ stdenv.mkDerivation {
   preFixup = ''
     find $out/lib/pkgconfig -name \*.pc -exec sed -i 's,Qt5UiPlugin,,g' {} \;
   '';
+
+  # FIXME
+  buildDirCheck = false;
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

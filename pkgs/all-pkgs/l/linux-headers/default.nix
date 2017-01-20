@@ -10,10 +10,10 @@ let
       version = "3.18.14";
       sha256 = "1xh0vvn1l2g1kkg54f0mg0inbpsiqs24ybgsakksmcpcadjgqk1i";
     };
-    "4.6" = {
+    "4.9" = {
       major = "4";
-      version = "4.6";
-      sha256 = "a93771cd5a8ad27798f22e9240538dfea48d3a2bf2a6a6ab415de3f02d25d866";
+      version = "4.9";
+      sha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
     };
   };
 
@@ -53,7 +53,10 @@ stdenv.mkDerivation rec {
       failEarly = true;
       pgpDecompress = true;
       pgpsigUrls = map (n: "${n}.sign") tarballUrls;
-      pgpKeyFingerprint = "647F 2865 4894 E3BD 4571  99BE 38DB BDC8 6092 693E";
+      pgpKeyFingerprints = [
+        "647F 2865 4894 E3BD 4571  99BE 38DB BDC8 6092 693E"
+        "ABAF 11C6 5A29 70B1 30AB  E3C4 79BE 3E43 0041 1886"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

@@ -3,7 +3,7 @@
 , m4
 
 , bzip2
-, linux-headers_4-6
+, linux-headers_4-9
 , xz
 , zlib
 }:
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
   # Fix an issue where we are missing new enough headers to compile BPF
   # Moving this outside of preBuild would cause a mass rebuild
   preBuild = ''
-    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I${linux-headers_4-6}/include"
+    export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I${linux-headers_4-9}/include"
   '';
 
   passthru = {

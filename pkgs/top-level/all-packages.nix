@@ -2348,8 +2348,8 @@ linux-firmware = callPackage ../all-pkgs/l/linux-firmware { };
 linux-headers_3-18 = callPackage ../all-pkgs/l/linux-headers {
   channel = "3.18";
 };
-linux-headers_4-6 = callPackage ../all-pkgs/l/linux-headers {
-  channel = "4.6";
+linux-headers_4-9 = callPackage ../all-pkgs/l/linux-headers {
+  channel = "4.9";
 };
 linux-headers = callPackageAlias "linux-headers_3-18" { };
 

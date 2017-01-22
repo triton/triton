@@ -859,11 +859,11 @@ let
 
   consulfs = buildFromGitHub {
     version = 2;
-    rev = "745c59d46a74b8aceccbd3f1dd4ad064f6e8bb64";
+    rev = "6e4498b7b673f45b190f2fef31d79935385e87e3";
     owner = "bwester";
     repo = "consulfs";
-    sha256 = "0a2hrppqyaymlg8bcmzbadcxrsz9kcnin4w10sinv7x142d21g7q";
-    date = "2016-10-28";
+    sha256 = "16n8g6vgaxbykxnal7vrnmj77n984ip4p9kcxg1akqdxz77r92dd";
+    date = "2017-01-20";
     buildInputs = [
       consul_api
       fuse
@@ -1082,10 +1082,10 @@ let
 
   docker = buildFromGitHub {
     version = 2;
-    rev = "ae99820357877c010ee76892fb64068f1212e7ae";
+    rev = "7a97705b52e7f5c65d31870579cb1dcc09506d89";
     owner = "docker";
     repo = "docker";
-    sha256 = "1f86d503jx1dqng5rmqghbi371w156mgnfbsd5b3q0svm6nc8y78";
+    sha256 = "02b09zsq673y3rgcyb82jn507pvdslkyqy88fzsr6wrvjifwzhjw";
     meta.useUnstable = true;
     date = "2017-01-20";
   };
@@ -1328,8 +1328,8 @@ let
     version = 2;
     owner = "coreos";
     repo = "etcd";
-    rev = "v3.0.16";
-    sha256 = "0sfgqp299mal3x5d38s7jhmia26kiafdanbv75k87nbwbs8r58k3";
+    rev = "v3.1.0";
+    sha256 = "1pk68dwxx7wff420g1lxn7wcfp06b8xs7pkxxlqmg6g5l7h7w517";
     buildInputs = [
       bolt
       btree
@@ -1755,11 +1755,11 @@ let
 
   gomemcached = buildFromGitHub {
     version = 2;
-    rev = "832858c5df7b06c4d1df2b0d98e0a4213416a500";
-    date = "2016-12-01";
+    rev = "4a25d2f4e1dea9ea7dd76dfd943407abf9b07d29";
+    date = "2017-01-17";
     owner = "couchbase";
     repo = "gomemcached";
-    sha256 = "010qdrrrzyj74jj21riamq1p1s8cra58syy8vjy66jl8mi18b4w7";
+    sha256 = "16yjhgg7rhzq5qg5vfnrphzjzwpikwkkxq53731a89y79vdlhk5a";
     propagatedBuildInputs = [
       goutils_logging
     ];
@@ -2197,11 +2197,11 @@ let
 
   go-dockerclient = buildFromGitHub {
     version = 2;
-    date = "2017-01-10";
-    rev = "e085edda407c05214cc6e71e4881de47667e77ec";
+    date = "2017-01-20";
+    rev = "53f04ab33b89eef256c320c36435a10b672d473d";
     owner = "fsouza";
     repo = "go-dockerclient";
-    sha256 = "0sy9njxrn5h05pig92izpzga8z81l9grsxan0f2iwbmsfarx0nyf";
+    sha256 = "1da80a4h7wl9s4byr51nbls8b51xkm72dhvm2fgfldiv0bazygqp";
     propagatedBuildInputs = [
       docker_for_go-dockerclient
       go-cleanhttp
@@ -2248,11 +2248,11 @@ let
 
   go-getter = buildFromGitHub {
     version = 2;
-    rev = "21d247ece01f1f7d5b56f130fd7b1db19bb0d0db";
-    date = "2017-01-09";
+    rev = "8ff1c8c40df23480de72ae5f133e2a2be27b119a";
+    date = "2017-01-21";
     owner = "hashicorp";
     repo = "go-getter";
-    sha256 = "02s6miwibgrdamx74hyvqalvhms8ipw2yrlxpaki80awmw08lpj3";
+    sha256 = "08m8dw2x12h7mbd2h74z59wkm9rv2jissvqxgzl2mcb8v9hy8kz8";
     propagatedBuildInputs = [
       aws-sdk-go
       go-homedir
@@ -2924,11 +2924,11 @@ let
 
   go-shellwords = buildFromGitHub {
     version = 2;
-    rev = "525bedee691b5a8df547cb5cf9f86b7fb1883e24";
+    rev = "33bd8f1ebe16d6e5eb688cc885749a63059e9167";
     owner  = "mattn";
     repo   = "go-shellwords";
-    sha256 = "0ch7f3128mac8ymfh15p2nrsis5472h9yr6dzwmmc6dbcslpvfk1";
-    date = "2016-03-15";
+    sha256 = "0q4r0bc0wmxkgn1cpfcaai0527mfnxpqcsccj96bkifsi0hn9cyy";
+    date = "2017-01-21";
   };
 
   go-simplejson = buildFromGitHub {
@@ -3515,12 +3515,12 @@ let
 
   ipfs = buildFromGitHub {
     version = 2;
-    date = "2017-01-19";
-    rev = "42cb5d4ae3a47b6920d2af2b18eb71a2dcee0a02";
+    date = "2017-01-21";
+    rev = "585a0d9f9d8de6df17a98ea4637eb64c005ef743";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "0gh3cqx2aq5jdkf68kib8jfh4jxnys8f9awb2334pgy4icmgwc3k";
-    gxSha256 = "1y8j32rxa3j1dn8rx97c594f8dwzsn6ffx18r59cm9ndb1c74knz";
+    sha256 = "10h6wivlsz4lr8mxb7w900jkccri61gn5zgws5gy4xyhgm7afl87";
+    gxSha256 = "1q5hpmsg28pvnp2c73jblxg4pwfvv3jfwi5z258xn8cx78rr1q6i";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"
@@ -4109,10 +4109,10 @@ let
     version = 2;
     owner = "minio";
     repo = "minio-go";
-    rev = "2d9b5aa27693f8489b04aed103d2ef53fa5ddb4f";
-    sha256 = "06yb65rzd3pqxm7ijr3ffrw4llj5l53xglqqc24ff9nlsv96sr36";
+    rev = "83ba3bc20623438aa0e7157c4efee4091dfe5703";
+    sha256 = "0z1rlqjvda6f2wkij89x1p2jhg08fc23nplrd4q16m27b9cnzn7p";
     meta.useUnstable = true;
-    date = "2017-01-08";
+    date = "2017-01-20";
   };
 
   miniobrowser = buildFromGitHub {

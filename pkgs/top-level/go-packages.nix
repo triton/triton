@@ -422,10 +422,10 @@ let
 
   aws-sdk-go = buildFromGitHub {
     version = 2;
-    rev = "v1.6.14";
+    rev = "v1.6.15";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "1qkvkpwl3w5wbkm0fqjqh8rp3aij69bdpsazb8yzfwyjfghk6m4k";
+    sha256 = "1hka03lh2nr1gzq42yjcffivjlqnc2m0q2har1k3977mima0dvnk";
     excludedPackages = "\\(awstesting\\|example\\)";
     buildInputs = [
       tools
@@ -1612,11 +1612,11 @@ let
 
   ugorji_go = buildFromGitHub {
     version = 2;
-    date = "2017-01-07";
-    rev = "ded73eae5db7e7a0ef6f55aace87a2873c5d2b74";
+    date = "2017-01-21";
+    rev = "d23841a297e5489e787e72fceffabf9d2994b52a";
     owner = "ugorji";
     repo = "go";
-    sha256 = "1kzfkvz8h44j9n9ys7nd82v1nmq6dlfq2vmm3anhmjl3nkr4wldg";
+    sha256 = "1lqb1924ibmfxypv5r97r3kxhykkga87n5f3mcwqbx0v3y0ypapi";
     goPackageAliases = [ "github.com/hashicorp/go-msgpack" ];
   };
 
@@ -4864,8 +4864,8 @@ let
     version = 2;
     owner = "ncw";
     repo = "rclone";
-    rev = "aa62e93094c5206f09af619e85022bfedede5d54";
-    sha256 = "0bfhjwc3d8rr1k4l5wl580fgng9igp311x74kvc54l431g4mgapw";
+    rev = "9fdeb823282e5b6af943b62a644af932c0bcc7ba";
+    sha256 = "12b9nasgja7jp710dwidr8370sa74n7k5b4glqkxmpipy5mjd2w2";
     propagatedBuildInputs = [
       aws-sdk-go
       cobra
@@ -4888,7 +4888,7 @@ let
       testify
     ];
     meta.useUnstable = true;
-    date = "2017-01-14";
+    date = "2017-01-20";
   };
 
   cupcake_rdb = buildFromGitHub {

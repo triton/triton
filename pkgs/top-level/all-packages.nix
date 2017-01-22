@@ -939,6 +939,8 @@ duplicity = pkgs.pythonPackages.duplicity;
 
 e2fsprogs = callPackage ../all-pkgs/e/e2fsprogs { };
 
+ed = callPackage ../all-pkgs/e/ed { };
+
 edac-utils = callPackage ../all-pkgs/e/edac-utils { };
 
 efibootmgr = callPackage ../all-pkgs/e/efibootmgr { };
@@ -4289,8 +4291,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
   djview = callPackage ../applications/graphics/djview { };
   djview4 = pkgs.djview;
-#
-  ed = callPackage ../applications/editors/ed { };
 #
   fluidsynth = callPackage ../applications/audio/fluidsynth { };
 #

@@ -1,5 +1,4 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
 
 , pcregrep ? false
@@ -14,21 +13,13 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "pcre-8.39";
+  name = "pcre-8.40";
 
   src = fetchurl {
     url = "http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${name}.tar.bz2";
-    multihash = "QmPjEjowUiEi149yAUYcutkXvvxNmFGWuxkQZq6V4o1T7H";
-    sha256 = "12wyajlqx2v7dsh39ra9v9m5hibjkrl129q90bp32c28haghjn5q";
+    multihash = "Qmb1CRCYu75PaCTR1mRkU84gorUeBgUdC2yACSc4h93evH";
+    sha256 = "00e27a29ead4267e3de8111fcaa59b132d0533cdfdbdddf4b0604279acbcf4f4";
   };
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "f595acad67433d7ac50f03c05b6e5d530b2cd78a";
-      file = "pcre/head-overflow-r1636.patch";
-      sha256 = "7fda9e90001e46b5d47fc12ebf48ebb4389d6e80365677348015a62574024bd6";
-    })
-  ];
 
   buildInputs = optionals pcregrep [
     bzip2

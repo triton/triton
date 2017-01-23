@@ -15,7 +15,8 @@ stdenv.mkDerivation rec {
   name = "libbsd-${version}";
 
   src = fetchurl {
-    url = tarballUrls version;
+    urls = tarballUrls version;
+    multihash = "QmPbTzgi8XGkgMY6tXQ1wmdVDdqTqYurG5HsMS2WxFodtB";
     hashOutput = false;
     sha256 = "934b634f4dfd865b6482650b8f522c70ae65c463529de8be907b53c89c3a34a8";
   };

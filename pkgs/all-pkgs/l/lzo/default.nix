@@ -6,7 +6,8 @@ stdenv.mkDerivation rec {
   name = "lzo-2.09";
 
   src = fetchurl {
-    url = "${meta.homepage}/download/${name}.tar.gz";
+    url = "https://www.oberhumer.com/opensource/lzo/download/${name}.tar.gz";
+    multihash = "QmXGpQqmvbaYn4aMiyPWLRP4Kw7FWnvoPFLUziQqVSLr99";
     sha256 = "0k5kpj3jnsjfxqqkblpfpx0mqcy86zs5fhjhgh2kq1hksg7ag57j";
   };
 
@@ -18,7 +19,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Real-time data (de)compression library";
-    homepage = http://www.oberhumer.com/opensource/lzo;
+    homepage = https://www.oberhumer.com/opensource/lzo;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
       wkennington

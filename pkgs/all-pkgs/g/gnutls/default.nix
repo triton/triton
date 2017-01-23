@@ -11,7 +11,7 @@
 , libunistring
 , lzo
 , nettle
-, p11_kit
+, p11-kit
 , trousers
 , unbound
 , zlib
@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
     libunistring
     lzo
     nettle
-    p11_kit
+    p11-kit
     trousers
     unbound
     zlib

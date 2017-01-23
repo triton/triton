@@ -16,9 +16,10 @@ stdenv.mkDerivation rec {
   name = "icu4c-${version}";
 
   src = fetchurl {
-    url =
+    urls =
       map (n: "${n}-${replaceChars ["."] ["_"] version}-src.tgz")
           (baseUrls version);
+    multihash = "QmcA5utvqsnTutTbC1hjEKgiCAoP94funqqR3EmN3vPhBs";
     hashOutput = false;
     sha256 = "2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c";
   };

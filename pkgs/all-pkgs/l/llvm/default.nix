@@ -38,9 +38,9 @@ let
       version' = d.version or version;
     in makeOverridable fetchurl {
       urls = map (u: "${u}/${replaceChars ["-"] ["/"] version'}/${n}-${replaceChars ["-"] [""] version'}.src.tar.xz") [
+        "https://distfiles.macports.org/llvm"
         "http://llvm.org/releases"
         "http://llvm.org/pre-releases"
-        "https://distfile.macports.org/llvm"
       ];
       inherit (d) sha256;
     }

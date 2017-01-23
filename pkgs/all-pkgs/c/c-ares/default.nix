@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   name = "c-ares-${version}";
 
   src = fetchurl {
-    url = tarballUrls version;
+    urls = tarballUrls version;
     multihash = "QmVooF91kBXG9c2drfaHZXruSSXNfGBSb1bNceWCPvhHZ6";
     sha256 = "8692f9403cdcdf936130e045c84021665118ee9bfea905d1a76f04d4e6f365fb";
   };

@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   name = "libgcrypt-${version}";
 
   src = fetchurl {
-    url = tarballUrls version;
+    urls = tarballUrls version;
     hashOutput = false;
     sha256 = "626aafee84af9d2ce253d2c143dc1c0902dda045780cc241f39970fc60be05bc";
   };

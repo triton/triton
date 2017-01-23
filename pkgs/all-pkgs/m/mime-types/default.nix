@@ -6,8 +6,9 @@ stdenv.mkDerivation {
   name = "mime-types-2016-01-12";
 
   src = fetchurl {
-    url = "http://anonscm.debian.org/cgit/collab-maint/mime-support.git/plain/"
+    url = "https://anonscm.debian.org/cgit/collab-maint/mime-support.git/plain/"
         + "mime.types?id=fe8d90a379338a4a9dac4ca791ed7aca52fa0423";
+    multihash = "QmUZHmEDh8p21ZntKM3PaQNsZszW1XqrsWfYUwyqeDmQWw";
     sha256 = "1z6q4w90id3g8kmfrxxbkgj3sxqqwfka5cnkvn556l0nbc7zr4wi";
   };
 

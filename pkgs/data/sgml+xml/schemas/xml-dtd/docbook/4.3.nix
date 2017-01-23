@@ -5,6 +5,7 @@ import ./generic.nix {
   name = "docbook-xml-4.3";
   src = fetchurl {
     url = http://www.docbook.org/xml/4.3/docbook-xml-4.3.zip;
+    multihash = "QmatSkKQLsnoGJVNgPk7rKPbFZbwUv5X2qDDSuH7MVAnFD";
     sha256 = "0r1l2if1z4wm2v664sqdizm4gak6db1kx9y50jq89m3gxaa8l1i3";
   };
   meta = {

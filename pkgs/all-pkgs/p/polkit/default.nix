@@ -1,30 +1,44 @@
 { stdenv
+, autoconf
+, automake
 , docbook_xml_dtd_412
 , docbook-xsl
-, fetchurl
+, fetchzip
+, gtk-doc
 , intltool
+, libtool
 , libxslt
 
 , glib
 , expat
 , pam
-, spidermonkey_17
+, spidermonkey_24
 , gobject-introspection
 , systemd_lib
 }:
 
+let
+  date = "2016-12-12";
+  rev = "3272a988655c3236b55bad70e9a3af20857f384b";
+in
 stdenv.mkDerivation rec {
-  name = "polkit-0.113";
+  name = "polkit-${date}";
 
-  src = fetchurl {
-    url = "http://www.freedesktop.org/software/polkit/releases/${name}.tar.gz";
-    sha256 = "109w86kfqrgz83g9ivggplmgc77rz8kx8646izvm2jb57h4rbh71";
+  src = fetchzip {
+    version = 2;
+    url = "https://cgit.freedesktop.org/polkit/snapshot/${rev}.tar.xz";
+    multihash = "Qmba7Ei5AJTci1cDevcGmqVSdnboyQf2h9bXBzbQzCEV9b";
+    sha256 = "877444a34b99d32f44acd9c8d8e65fc3281c632b0177358babe0ce916252f636";
   };
 
   nativeBuildInputs = [
+    autoconf
+    automake
     docbook_xml_dtd_412
     docbook-xsl
+    gtk-doc
     intltool
+    libtool
     libxslt
   ];
 
@@ -32,7 +46,7 @@ stdenv.mkDerivation rec {
     glib
     expat
     pam
-    spidermonkey_17
+    spidermonkey_24
     gobject-introspection
     systemd_lib
   ];
@@ -41,7 +55,7 @@ stdenv.mkDerivation rec {
     patchShebangs .
 
     # Get rid of a check to see if systemd is running to allow libsystemd linking
-    sed '/libsystemd autoconfigured/s/.*/:/' -i configure
+    sed '/does not.*systemd/s/.*/:/' -i configure.ac
 
     # polkit-agent-helper-1 is a setuid binary so remap the path in the codebase.
     sed -i 's,PACKAGE_PREFIX "/lib/polkit-1,"/var/setuid-wrappers,g' \
@@ -49,6 +63,8 @@ stdenv.mkDerivation rec {
   '';
 
   preConfigure = ''
+    NOCONFIGURE=1 ./autogen.sh
+
     configureFlagsArray+=(
       "--with-systemdsystemunitdir=$out/etc/systemd/system"
     )

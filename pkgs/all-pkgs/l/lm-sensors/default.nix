@@ -13,6 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl rec {
     url = "http://pkgs.fedoraproject.org/repo/pkgs/lm_sensors/"
       + "${name}.tar.bz2/${md5Confirm}/${name}.tar.bz2";
+    multihash = "QmRdin9zYKQZRYjBDRF4MBu4w7eHKxttfbH5mwv5vMWVQ7";
     md5Confirm = "c03675ae9d43d60322110c679416901a";
     sha256 = "07q6811l4pp0f7pxr8bk3s97ippb84mx5qdg7v92s9hs10b90mz0";
   };

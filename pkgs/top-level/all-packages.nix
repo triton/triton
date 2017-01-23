@@ -2846,6 +2846,8 @@ poppler = callPackage ../all-pkgs/p/poppler {
   qt5 = null;
 };
 
+popt = callPackage ../all-pkgs/p/popt { };
+
 portaudio = callPackage ../all-pkgs/p/portaudio { };
 
 postgresql_96 = callPackage ../all-pkgs/p/postgresql {
@@ -4004,8 +4006,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   openexr = callPackage ../development/libraries/openexr { };
 #
   phonon = callPackage ../development/libraries/phonon/qt4 {};
-#
-  popt = callPackage ../development/libraries/popt { };
 #
   portmidi = callPackage ../development/libraries/portmidi { };
 #

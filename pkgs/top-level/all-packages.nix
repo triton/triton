@@ -2763,6 +2763,8 @@ orc = callPackage ../all-pkgs/o/orc { };
 
 osquery = callPackage ../all-pkgs/o/osquery { };
 
+p11-kit = callPackage ../all-pkgs/p/p11-kit { };
+
 p7zip = callPackage ../all-pkgs/p/p7zip { };
 
 pam = callPackage ../all-pkgs/p/pam { };
@@ -4000,8 +4002,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   newt = callPackage ../development/libraries/newt { };
 #
   openexr = callPackage ../development/libraries/openexr { };
-#
-  p11_kit = callPackage ../development/libraries/p11-kit { };
 #
   phonon = callPackage ../development/libraries/phonon/qt4 {};
 #

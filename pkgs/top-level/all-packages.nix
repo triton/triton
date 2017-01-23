@@ -1928,6 +1928,8 @@ libcroco = callPackage ../all-pkgs/l/libcroco { };
 
 libcue = callPackage ../all-pkgs/l/libcue { };
 
+libdaemon = callPackage ../all-pkgs/l/libdaemon { };
+
 libdbi = callPackage ../all-pkgs/l/libdbi { };
 
 libdc1394 = callPackage ../all-pkgs/l/libdc1394 { };
@@ -3935,8 +3937,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libcaca = callPackage ../development/libraries/libcaca { };
 #
   libcdr = callPackage ../development/libraries/libcdr { lcms = callPackageAlias "lcms2" { }; };
-#
-  libdaemon = callPackage ../development/libraries/libdaemon { };
 #
   libdiscid = callPackage ../development/libraries/libdiscid { };
 #

@@ -17,7 +17,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://download.oracle.com/berkeley-db/${name}.tar.gz";
-    inherit (source) sha256;
+    inherit (source)
+      multihash
+      sha256;
   };
 
   configureFlags = [

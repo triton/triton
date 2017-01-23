@@ -7,12 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libxkbcommon-0.7.0";
+  name = "libxkbcommon-0.7.1";
 
   src = fetchurl {
-    url = "http://xkbcommon.org/download/${name}.tar.xz";
+    url = "https://xkbcommon.org/download/${name}.tar.xz";
+    multihash = "QmV9fD6Anzj54NQfwAnHWHGwH1a63sPR1xzQwnuDz3oDwN";
     hashOutput = false;
-    sha256 = "09351592312d67b438655f54da5b67853026662c4a57e6be4d225f04a9989798";
+    sha256 = "ba59305d2e19e47c27ea065c2e0df96ebac6a3c6e97e28ae5620073b6084e68b";
   };
 
   nativeBuildInputs = [
@@ -36,7 +37,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "A library to handle keyboard descriptions";
-    homepage = http://xkbcommon.org;
+    homepage = https://xkbcommon.org;
     license = licenses.mit;
     maintainers = with maintainers; [
       wkennington

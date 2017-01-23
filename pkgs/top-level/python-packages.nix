@@ -16,7 +16,7 @@ let
   fetchPyPi = { package, version, sha256, type ? ".tar.gz" }:
     pkgs.fetchurl rec {
       name = "${package}-${version}${type}";
-      url = "http://localhost/not-a-url";
+      url = "https://localhost/not-a-url";
       preFetch = ''
         $curl 'https://pypi.python.org/pypi/${package}/json' | \
           ${pkgs.jq}/bin/jq -r '

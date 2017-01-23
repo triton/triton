@@ -12,6 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://www.openldap.org/software/download/OpenLDAP/openldap-release/${name}.tgz";
+    multihash = "QmUGVdrLEpfc9Nfs4G7raQCJF9UtvteFTCWJSdFJjwPXtL";
     sha256 = "0044p20hx07fwgw2mbwj1fkx04615hhs1qyx4mawj2bhqvrnppnp";
   };
 

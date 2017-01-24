@@ -3065,6 +3065,8 @@ samba_client = callPackageAlias "samba_full" {
   type = "client";
 };
 
+sbc = callPackage ../all-pkgs/s/sbc { };
+
 schroedinger = callPackage ../all-pkgs/s/schroedinger { };
 
 scons = pkgs.pythonPackages.scons;
@@ -4010,8 +4012,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   portmidi = callPackage ../development/libraries/portmidi { };
 #
   rubberband = callPackage ../development/libraries/rubberband { };
-#
-  sbc = callPackage ../development/libraries/sbc { };
 #
   slang = callPackage ../development/libraries/slang { };
 #

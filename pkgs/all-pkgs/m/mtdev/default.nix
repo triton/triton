@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://bitmath.org/code/mtdev/${name}.tar.bz2";
+    multihash = "QmXZ78H5pf9Jewr7ka1ztNySFaW74R88uhTgKLea5ri3Z2";
     sha256 = "0zxs7shzgbalkvlaiibi25bd902rbmkv9n1lww6q8j3ri9qdaxv6";
   };
 
@@ -14,7 +15,9 @@ stdenv.mkDerivation rec {
     homepage = http://bitmath.org/code/mtdev/;
     description = "Multitouch Protocol Translation Library";
     license = licenses.mit;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

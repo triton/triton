@@ -23,6 +23,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://archive.xfce.org/src/xfce/exo/${channel}/${name}.tar.bz2";
+    multihash = "Qmc1A3VwqurTNFYTfCXm4hd4iC7VCekBAheiWkeCB1Fe2u";
     sha256 = "521581481128af93e815f9690020998181f947ac9e9c2b232b1f144d76b1b35c";
   };
 

@@ -156,7 +156,8 @@ stdenv.mkDerivation {
       file = "nvidia-drivers/nvidia-drivers-367.35-fix-application-profiles-typo.patch";
       sha256 = "caae27b1883c5c6b3c4684720d2902421ad16ab49577ee7302a95c964236141d";
     })
-  ] ++ optionals (versionAtLeast version "375.26") [
+  ] ++ optionals (versionAtLeast version "375.26"
+    && versionOlder version "378.09") [
     (fetchTritonPatch {
       rev = "6006a85706e75e7be60d28766f01245235d8b8b4";
       file = "n/nvidia-drivers/nvidia-drivers-375.26-profiles-rc.patch";
@@ -287,6 +288,7 @@ stdenv.mkDerivation {
     '' + /* EGL API entry point */ ''
       nvidia_lib_install 0 354 'libEGL' # Renamed to *.so.1 in 355+
       nvidia_lib_install 355 0 'libEGL' '-' '1'
+      nvidia_lib_install 378 0 'libEGL_nvidia' '0'
     '' + /* Vendor neutral graphics libraries */ ''
       nvidia_lib_install 355 0 'libOpenGL' '-' '0'
       nvidia_lib_install 361 0 'libGLX' '-' '0'
@@ -303,7 +305,8 @@ stdenv.mkDerivation {
       #  "$out/lib/libGLX_nvidia.${version}" \
       #  "$out/lib/libGLX_indirect.so.0"
     '' + /* Internal driver components */ ''
-      nvidia_lib_install 364 0 'libnvidia-egl-wayland'
+      nvidia_lib_install 364 377 'libnvidia-egl-wayland'  # Renamed in 378.09
+      nvidia_lib_install 378 0 'libnvidia-egl-wayland' '1' '1.0.0'
       nvidia_lib_install 0 0 'libnvidia-eglcore'
       nvidia_lib_install 0 0 'libnvidia-glcore'
       nvidia_lib_install 0 0 'libnvidia-glsi'
@@ -409,6 +412,12 @@ stdenv.mkDerivation {
       # X.Org driver configuration file
       install -D -m644 -v 'nvidia-drm-outputclass.conf' \
         "$out/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf"
+
+      # EGL external platform configuration files
+      install -D -m644 -v '10_nvidia.json' \
+        "$out/share/egl/egl_external_platform.d/10_nvidia.json"
+      install -D -m644 -v '10_nvidia_wayland.json' \
+        "$out/share/egl/egl_external_platform.d/10_nvidia_wayland.json"
     ''
     # +
     # #

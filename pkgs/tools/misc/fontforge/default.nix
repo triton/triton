@@ -21,8 +21,10 @@ stdenv.mkDerivation {
     name = "use-system-uthash.patch";
     url = "http://pkgs.fedoraproject.org/cgit/fontforge.git/plain/"
       + "fontforge-20140813-use-system-uthash.patch?id=8bdf933";
+    multihash = "QmcmrPTJafenDXyxb27fUwp4z9gQuwUFUyDQyH7xRmYiLP";
     sha256 = "0n8i62qv2ygfii535rzp09vvjx4qf9zp5qq7qirrbzm1l9gykcjy";
   })];
+
   patchFlags = "-p0";
 
   # FIXME: git isn't really used, but configuration fails without it

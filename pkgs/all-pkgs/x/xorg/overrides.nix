@@ -192,6 +192,9 @@ in
     buildInputs = attrs.buildInputs ++ [
       args.zlib
     ];
+    prePatch = ''
+      sed -i '/-DIGT_SRCDIR/s,$(abs_top_srcdir),/no-such-path,' lib/Makefile.in
+    '';
   };
 
   xf86videointel = attrs: attrs // {

@@ -1759,6 +1759,8 @@ iniparser = callPackage ../all-pkgs/i/iniparser { };
 
 inkscape = callPackage ../all-pkgs/i/inkscape { };
 
+inotify-tools = callPackage ../all-pkgs/i/inotify-tools { };
+
 inputproto = callPackage ../all-pkgs/i/inputproto { };
 
 intel-microcode = callPackage ../all-pkgs/i/intel-microcode { };
@@ -3858,8 +3860,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   };
 #
   gnome_doc_utils = callPackage ../development/tools/documentation/gnome-doc-utils {};
-#
-  inotify-tools = callPackage ../development/tools/misc/inotify-tools { };
 #
   ltrace = callPackage ../development/tools/misc/ltrace { };
 #

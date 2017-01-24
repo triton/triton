@@ -13,6 +13,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://alpha.gnu.org/gnu/bc/${name}.tar.bz2";
+    multihash = "QmRDA6WLGngZ78WHmgJQrRgkkdkytf73iGVQPRe2MDJsUf";
     sha256 = "1k2yf9bhjxjwfhz0d1c5hmmrs8rxi9al0d4a39p8lgf0zayapr3y";
   };
 

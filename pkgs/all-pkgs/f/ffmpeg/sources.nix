@@ -11,8 +11,8 @@
     sha256 = "3f01bd1fe1a17a277f8c84869e5d9192b4b978cb660872aa2b54c3cc8a2fedfc";
   };
   "9.9" = { # Git
-    version = "2017.01.14";
-    rev = "0ba0187535498b34d23aa73196f0ed2414dfa15c";
-    sha256 = "ba05277e633ab3a716acf2d5ec946c4f6a81d444dd871d1e120a0a75cb70eb8c";
+    version = "2017.01.24";
+    rev = "9e6a2427558a718be0c1fffacffd935f630a7a8d";
+    sha256 = "e8fefc8e4e067f19fcf59f1a17efb86070299f509947577aa7e1a20286400a91";
   };
 }

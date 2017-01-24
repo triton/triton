@@ -8,7 +8,7 @@
 , glib
 , libcap-ng
 , libgcrypt
-, p11_kit
+, p11-kit
 , pam
 }:
 
@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
     glib
     libcap-ng
     libgcrypt
-    p11_kit
+    p11-kit
     pam
   ];
 

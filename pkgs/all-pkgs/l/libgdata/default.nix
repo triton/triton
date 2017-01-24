@@ -11,7 +11,7 @@
 , liboauth
 , libsoup
 , openssl
-, p11_kit
+, p11-kit
 , vala
 }:
 
@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
     libsoup
     libxml2
     openssl
-    p11_kit
+    p11-kit
     vala
   ];
 

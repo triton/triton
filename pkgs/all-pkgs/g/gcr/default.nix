@@ -12,7 +12,7 @@
 , gtk3
 , libgcrypt
 , libtasn1
-, p11_kit
+, p11-kit
 , pango
 , vala
 }:
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     gtk3
     libgcrypt
     libtasn1
-    p11_kit
+    p11-kit
     pango
     vala
   ];

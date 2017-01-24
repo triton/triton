@@ -23,7 +23,7 @@
 , openldap
 , nspr
 , nss
-, p11_kit
+, p11-kit
 , python
 , sqlite
 , vala
@@ -76,7 +76,7 @@ stdenv.mkDerivation rec {
     nspr
     nss
     openldap
-    p11_kit
+    p11-kit
     python
     sqlite
     vala

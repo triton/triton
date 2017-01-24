@@ -173,7 +173,7 @@ in
 
 assert urls_ != [ ] || multihash != "";
 
-#assert urls_ == [ ] || (!hasPrefix "http:" (head urls_)) || multihash != "";
+#assert insecureHashOutput || urls_ == [ ] || (!hasPrefix "http:" (head urls_)) || multihash != "";
 
 if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${concatStringsSep ", " urls_}" else stdenv.mkDerivation {
   name =

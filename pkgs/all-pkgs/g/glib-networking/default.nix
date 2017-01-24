@@ -6,7 +6,7 @@
 , gnutls
 , gsettings-desktop-schemas
 , libproxy
-, p11_kit
+, p11-kit
 
 , channel
 }:
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     gnutls
     gsettings-desktop-schemas
     libproxy
-    p11_kit
+    p11-kit
   ];
 
   configureFlags = [
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
     "--with-gnome-proxy"
     "--${boolWt (gnutls != null)}-gnutls"
     "--with-ca-certificates=/etc/ssl/certs/ca-certificates.crt"
-    "--${boolWt (p11_kit != null)}-pkcs11"
+    "--${boolWt (p11-kit != null)}-pkcs11"
   ];
 
   preBuild = ''

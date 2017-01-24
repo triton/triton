@@ -23,7 +23,7 @@
 
 /* NOTICE: ONLY versions 375+ are supported on Triton
  *
- * BETA:        375.xx,   xorg <=1.18.x, linux <=4.8
+ * BETA:        375.xx,   xorg <=1.19.x, linux <=4.9
  * SHORTLIVED:  370.xx,   xorg <=1.18.x, linux <=4.8
  * LONGLIVED:   375.xx,   xorg <=1.19.x, linux <=4.9 (stable) <- default
  * TESLA:       375.xx,   xorg <=1.19.x, linux <=4.9

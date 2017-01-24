@@ -222,18 +222,7 @@ stdenv.mkDerivation {
       -j$NIX_BUILD_CORES \
       -l$NIX_BUILD_CORES \
       module
-  '' + optionalString (versionOlder source.versionMajor "355"
-                       && targetSystem == "x86_64-linux") ''
-    # Versions 355+ combines the make files for all kernel modules. So for
-    # older versions make sure to build the Cuda UVM module
-    cd "$sourceRoot/kernel/uvm"
-    make \
-      SYSSRC="$kernelSource" \
-      SYSOUT="$kernelBuild" \
-      -j$NIX_BUILD_CORES \
-      -l$NIX_BUILD_CORES \
-      module
-  '' + ''
+
     cd "$sourceRoot"
   '');
 
@@ -245,29 +234,20 @@ stdenv.mkDerivation {
       nuke-refs 'kernel/nvidia.ko'
       install -D -m644 -v 'kernel/nvidia.ko' \
         "$out/lib/modules/$kernelVersion/misc/nvidia.ko"
-    '' + /* NVIDIA direct rendering manager kernel modesetting (DRM KMS) kernel module */
-      optionalString (versionAtLeast source.versionMajor "364") ''
+    '' + /* NVIDIA direct rendering manager kernel modesetting (DRM KMS) kernel module */ ''
         nuke-refs 'kernel/nvidia-drm.ko'
         install -D -m644 -v 'kernel/nvidia-drm.ko' \
           "$out/lib/modules/$kernelVersion/misc/nvidia-drm.ko"
-    '' + /* NVIDIA modesetting kernel module */
-      optionalString (versionAtLeast source.versionMajor "358") ''
+    '' + /* NVIDIA modesetting kernel module */ ''
         nuke-refs 'kernel/nvidia-modeset.ko'
         install -D -m644 -v 'kernel/nvidia-modeset.ko' \
           "$out/lib/modules/$kernelVersion/misc/nvidia-modeset.ko"
     '' + /* NVIDIA cuda unified virtual memory kernel module */
-      optionalString (targetSystem == "x86_64-linux") (
-      # The uvm kernel module build directory changed in 355+
-      if versionAtLeast source.versionMajor "355" then ''
-        nuke-refs 'kernel/nvidia-uvm.ko'
-        install -D -m644 -v 'kernel/nvidia-uvm.ko' \
-          "$out/lib/modules/$kernelVersion/misc/nvidia-uvm.ko"
-      '' else ''
-        nuke-refs 'kernel/uvm/nvidia-uvm.ko'
-        install -D -m644 -v 'kernel/uvm/nvidia-uvm.ko' \
-          "$out/lib/modules/$kernelVersion/misc/nvidia-uvm.ko"
-      ''
-    )
+      optionalString (targetSystem == "x86_64-linux") (''
+      nuke-refs 'kernel/nvidia-uvm.ko'
+      install -D -m644 -v 'kernel/nvidia-uvm.ko' \
+        "$out/lib/modules/$kernelVersion/misc/nvidia-uvm.ko"
+    '')
   ) + optionalString buildUserspace (
     #
     ## Libraries
@@ -275,18 +255,15 @@ stdenv.mkDerivation {
     /* OpenGL GLX API entry point */ (
       # Triton only supports the NVIDIA vendor libGL implementation
       # for versions that do not support GLVND (<361).
-      if versionOlder source.versionMajor "361" then /* NVIDIA */ ''
-        nvidia_lib_install 0 360 'libGL' '1'
-      '' else /* GLVND */ ''
+      /* NVIDIA */ ''
+        ###nvidia_lib_install 0 360 'libGL' '1'
+      '' + /* GLVND */ ''
         nvidia_lib_install 361 0 'libGL' '1' '1.0.0'
       ''
     ) + /* OpenGL ES API entry point */ ''
-      nvidia_lib_install 0 360 'libGLESv1_CM' '1' # Renamed to *.so.1 in 361+
       nvidia_lib_install 361 0 'libGLESv1_CM' '-' '1'
-      nvidia_lib_install 0 360 'libGLESv2' '2' # Renamed to *.so.2 in 361+
       nvidia_lib_install 361 0 'libGLESv2' '-' '2'
     '' + /* EGL API entry point */ ''
-      nvidia_lib_install 0 354 'libEGL' # Renamed to *.so.1 in 355+
       nvidia_lib_install 355 0 'libEGL' '-' '1'
       nvidia_lib_install 378 0 'libEGL_nvidia' '0'
     '' + /* Vendor neutral graphics libraries */ ''

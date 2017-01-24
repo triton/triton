@@ -17,18 +17,22 @@
 
 let
   inherit (lib)
-    boolEn;
+    boolEn
+    optionalAttrs;
 
   source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "libxfce4ui-${source.version}";
 
-  src = fetchurl {
+  src = fetchurl ({
     url = "http://archive.xfce.org/src/xfce/libxfce4ui/${channel}/"
       + "${name}.tar.bz2";
+    hashOutput = false;
     inherit (source) sha256;
-  };
+  } // optionalAttrs (source ? multihash) {
+    inherit (source) multihash;
+  });
 
   nativeBuildInputs = [
     gettext

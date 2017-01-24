@@ -2248,6 +2248,8 @@ libtorrent-rasterbar = callPackageAlias "libtorrent-rasterbar_1-1" { };
 
 libtsm = callPackage ../all-pkgs/l/libtsm { };
 
+libtxc_dxtn = callPackage ../all-pkgs/l/libtxc_dxtn { };
+
 libu2f-host = callPackage ../all-pkgs/l/libu2f-host { };
 
 libungif = callPackage ../all-pkgs/l/libungif { };
@@ -3975,8 +3977,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libpwquality = callPackage ../development/libraries/libpwquality { };
 #
 libstartup_notification = callPackage ../development/libraries/startup-notification { };
-#
-  libtxc_dxtn = callPackage ../development/libraries/libtxc_dxtn { };
 #
   libtxc_dxtn_s2tc = callPackage ../development/libraries/libtxc_dxtn_s2tc { };
 #

@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
   name = "git-${version}";
 
   src = fetchurl {
-    url = map (n: "${n}.xz") tarballUrls;
+    urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
     sha256 = "7e7e8d69d494892373b87007674be5820a4bc1ef596a0117d03ea3169119fd0b";
   };

@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://downloads.xiph.org/releases/theora/${name}.tar.gz";
+    multihash = "QmVFPCYBYy6btMevJBQ6aPXtNgXBEcBVosAdNfyppPwVaw";
     sha256 = "0swiaj8987n995rc7hw0asvpwhhzpjiws8kr3s6r44bqqib2k5a0";
   };
 

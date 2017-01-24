@@ -38,7 +38,9 @@ stdenv.mkDerivation rec {
     fetchurl {
       url = "http://downloads.xiph.org/releases/opus/${name}.tar.gz";
       hashOutput = false;
-      inherit (source) sha256;
+      inherit (source)
+        multihash
+        sha256;
     };
 
   configureFlags = [

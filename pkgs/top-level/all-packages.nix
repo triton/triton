@@ -806,6 +806,8 @@ cpio = callPackage ../all-pkgs/c/cpio { };
 
 cpp-netlib = callPackage ../all-pkgs/c/cpp-netlib { };
 
+cppunit = callPackage ../all-pkgs/c/cppunit { };
+
 cracklib = callPackage ../all-pkgs/c/cracklib { };
 
 cryptodev_headers = callPackage ../all-pkgs/c/cryptodev {
@@ -3871,8 +3873,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   celt_0_7 = callPackage ../development/libraries/celt/0.7.nix {};
   celt_0_5_1 = callPackage ../development/libraries/celt/0.5.1.nix {};
 #
-  cppunit = callPackage ../development/libraries/cppunit { };
-
   faad2 = callPackage ../development/libraries/faad2 { };
 #
   fltk13 = callPackage ../development/libraries/fltk/fltk13.nix { };

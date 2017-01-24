@@ -413,11 +413,13 @@ stdenv.mkDerivation {
       install -D -m644 -v 'nvidia-drm-outputclass.conf' \
         "$out/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf"
 
-      # EGL external platform configuration files
-      install -D -m644 -v '10_nvidia.json' \
-        "$out/share/egl/egl_external_platform.d/10_nvidia.json"
-      install -D -m644 -v '10_nvidia_wayland.json' \
-        "$out/share/egl/egl_external_platform.d/10_nvidia_wayland.json"
+      if [ $channel -ge 378 ] ; then
+        # EGL external platform configuration files
+        install -D -m644 -v '10_nvidia.json' \
+          "$out/share/egl/egl_external_platform.d/10_nvidia.json"
+        install -D -m644 -v '10_nvidia_wayland.json' \
+          "$out/share/egl/egl_external_platform.d/10_nvidia_wayland.json"
+      fi
     ''
     # +
     # #

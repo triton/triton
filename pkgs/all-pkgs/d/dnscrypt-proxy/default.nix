@@ -5,14 +5,20 @@
 , systemd_lib
 }:
 
+let
+  version = "1.9.4";
+in
 stdenv.mkDerivation rec {
-  name = "dnscrypt-proxy-1.9.2";
+  name = "dnscrypt-proxy-${version}";
 
   src = fetchurl {
-    url = "https://download.dnscrypt.org/dnscrypt-proxy/${name}.tar.gz";
-    multihash = "Qmc6JoKRAGixEN5UV9mAeoPD9sQwkXcEcr1nSGcV1eUTUA";
+    urls = [
+      "https://github.com/jedisct1/dnscrypt-proxy/releases/download/${version}/${name}.tar.bz2"
+      "https://download.dnscrypt.org/dnscrypt-proxy/${name}.tar.bz2"
+    ];
+    multihash = "QmWpcCZPPAkcC4i78e5wFpeF3q5MwyB9JbTrJkad5Vxmtu";
     hashOutput = false;
-    sha256 = "b63f9b44891c529be5cda8457b4b95d90db3d1efe7eb236cae8b8e253aa1def3";
+    sha256 = "fdf4a708e7922e13b14555f315ca8d5361aec89b0595b06fdbbcaacfa4e6f11e";
   };
 
   buildInputs = [

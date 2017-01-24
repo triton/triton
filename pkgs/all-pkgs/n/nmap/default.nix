@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   name = "nmap-7.40";
 
   src = fetchurl {
-    url = map (n: "${n}/${name}.tar.bz2") baseUrls;
+    urls = map (n: "${n}/${name}.tar.bz2") baseUrls;
     multihash = "QmUDaE8ELC6CdsgXdo8vX4VqqXN7dTy3WvR65W2q4Cd9Zg";
     hashOutput = false;
     sha256 = "9e14665fffd054554d129d62c13ad95a7b5c7a046daa2290501909e65f4d3188";

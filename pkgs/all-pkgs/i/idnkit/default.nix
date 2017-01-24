@@ -6,7 +6,8 @@ stdenv.mkDerivation rec {
   name = "idnkit-1.0";
 
   src = fetchurl {
-    url = "http://www.nic.ad.jp/ja/idn/idnkit/download/sources/${name}-src.tar.gz";
+    url = "https://www.nic.ad.jp/ja/idn/idnkit/download/sources/${name}-src.tar.gz";
+    multihash = "Qmd4KtudfHdzvm4rFJZHaH4bzm6wxpdaHVBzebNWYH51pc";
     sha256 = "1z4i6fmyv67sflmjg763ymcxrcv84rbj1kv15im0s655h775zk8n";
   };
 
@@ -21,7 +22,6 @@ stdenv.mkDerivation rec {
       wkennington
     ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

@@ -1745,6 +1745,8 @@ id3lib = callPackage ../all-pkgs/i/id3lib { };
 
 id3v2 = callPackage ../all-pkgs/i/id3v2 { };
 
+idnkit = callPackage ../all-pkgs/i/idnkit { };
+
 iftop = callPackage ../all-pkgs/i/iftop { };
 
 imagemagick = callPackage ../all-pkgs/i/imagemagick { };
@@ -3955,8 +3957,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libplist = callPackage ../development/libraries/libplist { };
 #
   librevenge = callPackage ../development/libraries/librevenge {};
-
-  idnkit = callPackage ../development/libraries/idnkit { };
 
   libiec61883 = callPackage ../development/libraries/libiec61883 { };
 #

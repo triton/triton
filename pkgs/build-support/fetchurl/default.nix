@@ -165,11 +165,17 @@ let
   pgpKeyFingerprints_ = map (n: stdenv.lib.replaceChars [" "] [""] n) ((if pgpKeyFingerprint != "" then [ pgpKeyFingerprint ] else [ ]) ++ pgpKeyFingerprints);
   signifyUrls_ = (if signifyUrl != "" then [ signifyUrl ] else [ ]) ++ signifyUrls;
 
+  inherit (stdenv.lib)
+    concatStringsSep
+    hasPrefix
+    head;
 in
 
 assert urls_ != [ ] || multihash != "";
 
-if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${stdenv.lib.concatStringsSep ", " urls_}" else stdenv.mkDerivation {
+#assert urls_ == [ ] || (!hasPrefix "http:" (head urls_)) || multihash != "";
+
+if (!hasHash) then throw "Specify hash for fetchurl fixed-output derivation: ${concatStringsSep ", " urls_}" else stdenv.mkDerivation {
   name =
     if name != "" then name
     else baseNameOf (toString (builtins.head urls_));

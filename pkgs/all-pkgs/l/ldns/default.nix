@@ -9,7 +9,8 @@ stdenv.mkDerivation rec {
   name = "ldns-1.7.0";
 
   src = fetchurl {
-    url = "http://www.nlnetlabs.nl/downloads/ldns/${name}.tar.gz";
+    url = "https://www.nlnetlabs.nl/downloads/ldns/${name}.tar.gz";
+    multihash = "QmfBkuFVgMUEUnaRqNdCNWsrTwoYngL5S76z8fFYKyZ4bW";
     hashOutput = false;
     sha256 = "c19f5b1b4fb374cfe34f4845ea11b1e0551ddc67803bd6ddd5d2a20f0997a6cc";
   };

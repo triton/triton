@@ -15,6 +15,7 @@ stdenv.mkDerivation rec {
       "http://mirror.jmu.edu/pub/mariadb"
     ];
     hashOutput = false;
+    insecureHashOutput = true;
     sha256 = "5a816355781ea22a6c65a436d8162f19bd292ec90e2b7d9499c031ae4a659490";
   };
 

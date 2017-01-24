@@ -60,6 +60,7 @@ stdenv.mkDerivation {
   src = fetchurl {
     url = "http://download.qt.io/official_releases/qt/${versionMajor}/${version}"
       + "/single/qt-everywhere-opensource-src-${version}.tar.xz";
+    insecureHashOutput = true;
     sha256 = "46ebca977deb629c5e69c2545bc5fe13f7e40012e5e2e451695c583bd33502fa";
   };
 

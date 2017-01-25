@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "2.1.3";
+  version = "2.2.0";
 in
 buildPythonPackage {
   name = "Pygments-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Pygments";
     inherit version;
-    sha256 = "88e4c8a91b2af5962bfa5ea2447ec6dd357018e86e94c7d14bd8cacbc5b55d81";
+    sha256 = "dbae1046def0efb574852fab9e90209b23f556367b5a320c0bcb871c77c3e8cc";
   };
 
   meta = with stdenv.lib; {

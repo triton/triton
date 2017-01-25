@@ -6,15 +6,15 @@
 }:
 
 let
-  version = "1.4.1";
+  version = "1.4.2";
 in
 stdenv.mkDerivation rec {
-  name = "xapian-core-1.4.1";
+  name = "xapian-core-${version}";
 
   src = fetchurl {
     url = "https://oligarchy.co.uk/xapian/${version}/${name}.tar.xz";
-    multihash = "QmSWk9ib9puuAUWGzfueYBQCWw2RapsykAQh32N9AkKjHz";
-    sha256 = "c5f2534de73c067ac19eed6d6bec65b7b2c1be00131c8867da9e1dfa8bce70eb";
+    multihash = "QmVB7zQeDJn5d4F6xb3kvj4d4PFeYNaCKPrTHSUnDfag6V";
+    sha256 = "aec2c4352998127a2f2316218bf70f48cef0a466a87af3939f5f547c5246e1ce";
   };
 
   buildInputs = [

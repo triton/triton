@@ -1,22 +1,32 @@
 { stdenv
+, bc
+, bind
+, dhcp
 , fetchurl
 , perl
-, bc
-, openssl
-, mysql_lib
-, postgresql
-, log4cplus
+
 , boost
+#, cassandra
 , googletest
+, log4cplus
+, mysql_lib
+, openssl_1-0-2
+, postgresql
 }:
 
+let
+  inherit (stdenv.lib)
+    optionals;
+
+  version = "1.1.0";
+in
 stdenv.mkDerivation rec {
   name = "kea-${version}";
-  version = "1.0.0";
 
   src = fetchurl {
     url = "https://ftp.isc.org/isc/kea/${version}/${name}.tar.gz";
-    sha256 = "1zjs2dbdwa7hk6a2h9dgry64v0985l0sqphisc43s4zr33llz64n";
+    hashOutput = false;
+    sha256 = "c3d97aee4faa19653ffe6d37e797e2fbf632124cd0b98bb502f9b97b5a383c2d";
   };
 
   nativeBuildInputs = [
@@ -25,31 +35,40 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    openssl
-    mysql_lib
-    postgresql
-    log4cplus
     boost
+    #cassandra
+    log4cplus
+    mysql_lib
+    openssl_1-0-2
+    postgresql
   ];
 
   postPatch = ''
-    sed -i 's,enable_static_link=yes,enable_static_link=$enableval,g' configure
+    find . -name \*.in -and -not -name Makefile.in \
+      -exec sed -i 's,@abs_top_\(src\|build\)dir@,/no-such-path,g' {} \;
+
+    find . -name Makefile.in -exec sed -i '/-D[^ =]*=/s,$(abs_top_\(src\|build\)dir),/no-such-path,g' {} \;
   '';
 
   configureFlags = [
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
     "--disable-debug"
-    "--with-werror"
+    #"--with-werror"
     # Flag is not a boolean
     #"--disable-static-link"
     "--with-pythonpath"
     # Flag is not a boolean
+  ] ++ optionals doCheck [
     "--with-gtest-source=${googletest}/src/gtest"
     "--with-gtest=${googletest}"
+  ] ++ [
     "--without-lcov"
-    "--with-openssl=${openssl}"
+    "--with-openssl=${openssl_1-0-2}"
     "--without-botan-config"
     "--with-dhcp-mysql=${mysql_lib}/bin/mysql_config"
     "--with-dhcp-pgsql=${postgresql}/bin/pg_config"
+    #"--with-cql=${cassandra}/bin/cql_config"
     "--with-log4cplus"
     "--disable-generate-parser"
     "--disable-generate-docs"
@@ -57,16 +76,34 @@ stdenv.mkDerivation rec {
     "--disable-logger-checks"
   ];
 
-  makeFlags = [
+  makeFlags = optionals doCheck [
     # Spoof libtool since googletest no longer provides libtool files.
     "GTEST_LDADD=${googletest}/lib/libgtest.so"
   ];
 
-  CXXFLAGS = "-std=c++11";
+  doCheck = false;
+
+  preInstall = ''
+    installFlagsArray+=(
+      "sysconfdir=$out/etc"
+      "localstatedir=$TMPDIR"
+      "dhcp_data_dir=$TMPDIR"
+    )
+  '';
 
   preFixup = ''
-    sed -i 's,openssl-1.0.0,openssl,g' $out/lib/pkgconfig/dns++.pc
+    rm "$out/lib/pkgconfig"/dns++.*
   '';
+  
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sha512.asc") src.urls;
+      pgpKeyFile = dhcp.srcVerification.pgpKeyFile;
+      pgpKeyFingerprints = bind.srcVerification.pgpKeyFingerprints;
+      inherit (src) urls outputHashAlgo outputHash;
+    };
+  };
 
   meta = with stdenv.lib; {
     license = licenses.mpl2;

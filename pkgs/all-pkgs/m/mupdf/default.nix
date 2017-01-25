@@ -10,20 +10,20 @@
 , libjpeg
 , mujs
 , openjpeg
-, openssl
+, openssl_1-0-2
 , xorg
 , zlib
 }:
 
 let
-  version = "1.10";
+  version = "1.10a";
 in
 stdenv.mkDerivation rec {
   name = "mupdf-${version}";
 
   src = fetchurl {
-    url = "http://mupdf.com/downloads/archive/${name}-source.tar.gz";
-    sha256 = "1185637a93055cdae8335db14fef3e0fbd2acadae94eabd2ec0111d89a04a667";
+    url = "https://mupdf.com/downloads/archive/${name}-source.tar.gz";
+    sha256 = "aacc1f36b9180f562022ef1ab3439b009369d944364f3cff8a2a898834e3a836";
   };
 
   buildInputs = [
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     libjpeg
     mujs
     openjpeg
-    openssl
+    openssl_1-0-2
     xorg.libX11
     xorg.libXext
     xorg.xproto

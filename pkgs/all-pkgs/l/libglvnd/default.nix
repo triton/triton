@@ -8,14 +8,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libglvnd-2016-12-13";
+  name = "libglvnd-2016-12-22";
 
   src = fetchFromGitHub {
     version = 2;
     owner = "NVIDIA";
     repo = "libglvnd";
-    rev = "480046fa044343749c0ed2782bbccaefa66c1958";
-    sha256 = "430b3c485564e0328856515152d9a0d2f8dea62958e544abb33084a0a1136810";
+    rev = "dc16f8c337703ad141f83583a4004fcf42e07766";
+    sha256 = "1a0b8a6b1cad6803060993d70f1f12f76f26a09c3578c58642a9de029cdd6736";
   };
 
   nativeBuildInputs = [
@@ -33,6 +33,14 @@ stdenv.mkDerivation rec {
   postPatch = ''
     patchShebangs ./src/generate
   '';
+
+  configureFlags = [
+    "--enable-egl"
+    "--enable-glx"
+    "--enable-gles"
+    "--enable-asm"
+    "--enable-tls"
+  ];
 
   meta = with stdenv.lib; {
     description = "The GL Vendor-Neutral Dispatch library";

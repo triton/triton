@@ -3,14 +3,14 @@
 
 , gdbm
 , libffi
-, openssl_1-0-2
+, openssl
 , readline
 , zlib
 }:
 
 let
-  major = "2.3";
-  patch = "3";
+  major = "2.4";
+  patch = "0";
   version = "${major}.${patch}";
 in
 
@@ -20,13 +20,13 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://cache.ruby-lang.org/pub/ruby/${major}/${name}.tar.xz";
     hashOutput = false;  # Get the hash from the website
-    sha256 = "1a4fa8c2885734ba37b97ffdb4a19b8fba0e8982606db02d936e65bac07419dc";
+    sha256 = "3a87fef45cba48b9322236be60c455c13fd4220184ce7287600361319bb63690";
   };
 
   buildInputs = [
     gdbm
     libffi
-    openssl_1-0-2
+    openssl
     readline
     zlib
   ];
@@ -37,8 +37,9 @@ stdenv.mkDerivation rec {
     "--enable-shared"
   ];
 
-  # FIXME
-  buildDirCheck = false;
+  preFixup = ''
+    rm "$out/share/ri/2.4.0/system/created.rid"
+  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

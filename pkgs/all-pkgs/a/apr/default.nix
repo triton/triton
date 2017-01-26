@@ -11,8 +11,9 @@ stdenv.mkDerivation rec {
     sha256 = "0ypn51xblix5ys9xy7da3ngdydip0qqh9rdq8nz54w9aq8lys0vx";
   };
 
-  # FIXME
-  buildDirCheck = false;
+  preFixup = ''
+    sed -i "s,$NIX_BUILD_TOP,/no-such-path,g" "$out"/bin/apr-1-config
+  '';
 
   passthru = {
     srcVerification = fetchurl {

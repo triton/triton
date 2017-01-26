@@ -102,6 +102,7 @@ declare -a CHROMIUM_LATEST_VERSIONS
 version_latest() {
   local -r Channel="${1}"
 
+  echo "${omahaproxy}/all.json" >&2
   curl ${CURL_ARGS[@]} "${omahaproxy}/all.json" -o "${TMPDIR}/all.json"
 
   Version="$(jq  -r -c -M ".[]|select(.os|contains(\"linux\"))|.versions[]|select(.channel|contains(\"${Channel}\"))|.version" "${TMPDIR}/all.json")"
@@ -118,8 +119,12 @@ hash_chromium() {
 
   [ -n "${Version}" ]
 
-  curl ${CURL_ARGS[@]} "${bucket_url}/chromium-${Version}.tar.xz.hashes" \
-    -o "${TMPDIR}/chromium-${Version}.tar.xz.hashes"
+  echo "${bucket_url}/chromium-${Version}.tar.xz.hashes" >&2
+  # Don't overwrite file, multiple channels may be on the same version.
+  if [ ! -f "${TMPDIR}/chromium-${Version}.tar.xz.hashes" ] ; then
+    curl ${CURL_ARGS[@]} "${bucket_url}/chromium-${Version}.tar.xz.hashes" \
+      -o "${TMPDIR}/chromium-${Version}.tar.xz.hashes"
+  fi
 
   # Maps hashes from checksum file to an array, assumes hashes are
   # always in the same order.
@@ -150,6 +155,7 @@ hash_google_chrome() {
   local -r HashAlgo="${1}"
   local -r Version="${3}"
 
+  echo "${deb_url}/google-chrome-${Channel}/google-chrome-${Channel}_${Version}-1_${Arch}.deb" >&2
   curl ${CURL_ARGS[@]} \
     "${deb_url}/google-chrome-${Channel}/google-chrome-${Channel}_${Version}-1_${Arch}.deb" \
     -o "${TMPDIR}/google-chrome-${Channel}_${Version}-1_${Arch}.deb"
@@ -170,6 +176,7 @@ sources_chromium() {
 
   for i in "${CHROMIUM_CHANNELS[@]}" ; do
     Version="$(version_latest "${i}")"
+    echo "Chromium: channel=${i} version=${Version}" >&2
     cat <<EOF
   "${i}" = {
     version = "${Version}";
@@ -214,6 +221,7 @@ sources_google_chrome() {
     Version="$(version_latest "${i}")"
     # FIXME: translate chromium -> chrome channels
     for x in "${Platforms[@]}" ; do
+      echo "Google Chrome: channel=${Channel} version=${Version} arch=FIXME" >&2
       cat <<EOF
     "${x}" = {
       sha256 = "$(hash_google_chrome 'sha256' "${Channel}" "${Version}" 'amd64')";

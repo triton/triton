@@ -141,7 +141,6 @@ stdenv.mkDerivation rec {
       -e "s,/opt,$out/share," \
       -e "s,$out/share/google/chrome/google-chrome${channame},$out/bin/google-chrome${channame},"
 
-
     pushd "$out/share/google/chrome${channame}/"
       local -a patch_exes=(
         'chrome'
@@ -156,16 +155,16 @@ stdenv.mkDerivation rec {
           "$elfExecutable"
       done
 
-      local -a patch_libs=(
-        'libwidevinecdm.so'
-        'libwidevinecdm.so'
-      )
-      for elfLibraries in "''${patch_libs[@]}" ; do
-        echo "patching: $elfLibraries"
-        patchelf \
-          --set-rpath "$chromeLibPath" \
-          "$elfLibraries"
-      done
+      # local -a patch_libs=(
+      #   'libwidevinecdm.so'
+      #   'libwidevinecdmadapter.so'
+      # )
+      # for elfLibraries in "''${patch_libs[@]}" ; do
+      #   echo "patching: $elfLibraries"
+      #   patchelf \
+      #     --set-rpath "$chromeLibPath" \
+      #     "$elfLibraries"
+      # done
     popd
 
     ln -sv \

@@ -103,6 +103,8 @@ in
 
         if [ ! -e "${ipfs_path}/config" ]; then
           echo "Missing config file: ${ipfs_path}/config" >&2
+          echo "You can fix this by running `ipfs init -e` and copying the config from \$HOME/.ipfs/config" >&2
+          echo "Or you can delete all of the file in ${ipfs_path} and restart the service" >&2
           exit 6
         fi
         touch "${ipfs_path}/new_config"

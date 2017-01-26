@@ -101,6 +101,10 @@ in
           chmod 0750 "${ipfs_path}"
         fi
 
+        if [ ! -e "${ipfs_path}/config" ]; then
+          echo "Missing config file: ${ipfs_path}/config" >&2
+          exit 1
+        fi
         touch "${ipfs_path}/new_config"
         chmod 0660 "${ipfs_path}/new_config"
         chown ipfs:ipfs "${ipfs_path}/new_config"

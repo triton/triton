@@ -13,7 +13,7 @@
   };
   "unstable" = {
     "x86_64-linux" = {
-      sha256 = "7fec3a15c53f62a66e89ee97489308235598acb887203f96ae556d2c9162d5c2";
+      sha256 = "8d9253b3ee3c3a9205757ee99dbd81983b8564fe787cfa1cf01719d9df361ab5";
     };
   };
 }

@@ -103,7 +103,7 @@ in
 
         if [ ! -e "${ipfs_path}/config" ]; then
           echo "Missing config file: ${ipfs_path}/config" >&2
-          exit 1
+          exit 6
         fi
         touch "${ipfs_path}/new_config"
         chmod 0660 "${ipfs_path}/new_config"
@@ -120,6 +120,7 @@ in
         User = "ipfs";
         PermissionsStartOnly = true;
         UMask = "0027";
+        RestartPreventExitStatus = "6";
       };
     };
 

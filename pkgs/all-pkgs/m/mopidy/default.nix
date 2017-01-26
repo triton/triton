@@ -20,7 +20,7 @@ let
   inherit (stdenv.lib)
     makeSearchPath;
 
-  version = "2.0.1";
+  version = "2.1.0";
 in
 
 buildPythonPackage rec {
@@ -29,7 +29,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "Mopidy";
     inherit version;
-    sha256 = "af3129d8b7e45c8a2af34f2b50592f64c00aaa0400ef6e6c742b6587ea9bdf67";
+    sha256 = "297369a34ebd584b2fe25a7184f68fe876a149256549b03b503a55ede3f13f6a";
   };
 
   buildInputs = [

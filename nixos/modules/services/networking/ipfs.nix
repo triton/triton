@@ -84,7 +84,7 @@ in
       path = with pkgs; [ ipfs gawk findutils jq ];
 
       preStart = ''
-        if [ ! -d "${ipfs_path}" ]; then
+        if [ "$(ls "${ipfs_path}" | wc -l)" -eq "0" ]; then
           mkdir -p "${ipfs_path}"
           chmod 0700 "${ipfs_path}"
 

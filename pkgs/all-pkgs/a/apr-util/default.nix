@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, fetchTritonPatch
 , makeWrapper
 
 , apr
@@ -7,7 +8,7 @@
 , db
 , gnused
 , openldap
-, openssl_1-0-2
+, openssl
 }:
 
 stdenv.mkDerivation rec {
@@ -28,14 +29,26 @@ stdenv.mkDerivation rec {
     db
     expat
     openldap
-    openssl_1-0-2
+    openssl
   ];
+
+  patches = [
+		(fetchTritonPatch {
+      rev = "a29a999dbbcc6a7965e65c31ab9bc2938f738f2c";
+      file = "a/apr-util/openssl-1.1.patch";
+      sha256 = "88225f93632ee4fb2fa1e0c5ee7a177b1299e1b55f644c567b4763f8c8acbe54";
+    })
+  ];
+
+  postPatch = ''
+    sed -i 's,BN_init,BN_new,g' configure
+  '';
 
   configureFlags = [
     "--with-apr=${apr}"
     "--with-expat=${expat}"
     "--with-crypto"
-    "--with-openssl=${openssl_1-0-2}"
+    "--with-openssl=${openssl}"
     "--with-berkeley-db=${db}"
     "--with-ldap=ldap"
   ];
@@ -46,14 +59,12 @@ stdenv.mkDerivation rec {
       -e 's,LIBS=",\0-L${expat}/lib ,g' \
       -e 's,LDAP_LIBS=",\0-L${openldap}/lib ,g' \
       -e 's,DBM_LIBS=",\0-L${db}/lib ,g' \
+      -e "s,$NIX_BUILD_TOP,/no-such-path,g" \
       -i $out/bin/apu-1-config
 
     # Give apr1 access to sed for runtime invocations
     wrapProgram $out/bin/apu-1-config --prefix PATH : "${gnused}/bin"
   '';
-
-  # FIXME
-  buildDirCheck = false;
 
   passthru = {
     srcVerification = fetchurl {

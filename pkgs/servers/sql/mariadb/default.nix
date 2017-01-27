@@ -1,7 +1,7 @@
-{ stdenv, fetchurl, cmake, ncurses, zlib, xz, lzo, lz4, bzip2, snappy
-, openssl_1-0-2, pcre, boost, judy, bison, libxml2, ninja, kytea, msgpack-c
-, libaio, libevent, groff, jemalloc, cracklib, systemd_lib, numactl, perl
-, zeromq
+{ stdenv, fetchurl, cmake, ncurses, zlib, xz, lzo, lz4
+, bzip2, snappy, openssl, pcre, boost, judy, bison, libxml2, ninja, kytea
+, msgpack-c, libaio, libevent, groff, jemalloc, cracklib, systemd_lib, numactl
+, perl, zeromq
 }:
 
 with stdenv.lib;
@@ -23,11 +23,12 @@ stdenv.mkDerivation rec {
     cmake
     ninja
   ];
+
   buildInputs = [
-    ncurses openssl_1-0-2 zlib xz lzo lz4 bzip2 snappy
+    ncurses zlib xz lzo lz4 bzip2 snappy
     pcre libxml2 boost judy bison libevent cracklib
     jemalloc libaio systemd_lib numactl kytea msgpack-c
-    zeromq
+    zeromq #openssl
   ];
 
   cmakeFlags = [
@@ -50,7 +51,8 @@ stdenv.mkDerivation rec {
     "-DINSTALL_SHAREDIR=share/mysql"
     "-DWITH_READLINE=ON"
     "-DWITH_ZLIB=system"
-    "-DWITH_SSL=system"
+    #"-DWITH_SSL=system"
+    "-DWITH_SSL=bundled"
     "-DWITH_PCRE=system"
     "-DWITH_EMBEDDED_SERVER=yes"
     "-DWITH_EXTRA_CHARSETS=complex"
@@ -85,8 +87,8 @@ stdenv.mkDerivation rec {
 
     # Fix the mysql_config
     sed -i $out/bin/mysql_config \
-      -e 's,-lz,-L${zlib}/lib -lz,g' \
-      -e 's,-lssl,-L${openssl_1-0-2}/lib -lssl,g'
+      -e 's,-lz,-L${zlib}/lib -lz,g'
+      #-e 's,-lssl,-L${openssl}/lib -lssl,g'
 
     # Don't install static libraries.
     rm $out/lib/*.a

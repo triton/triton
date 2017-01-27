@@ -1,24 +1,19 @@
 { stdenv
-, autoreconfHook
-, fetchFromGitHub
+, fetchurl
 
 , openssl
 }:
 
-stdenv.mkDerivation {
-  name = "pkcs11-helper-2016-06-11";
+let
+  version = "1.21";
+in
+stdenv.mkDerivation rec {
+  name = "pkcs11-helper-${version}";
 
-  src = fetchFromGitHub {
-    version = 1;
-    owner = "OpenSC";
-    repo = "pkcs11-helper";
-    rev = "2ccb555deeb22586cf0342e79d6e6142cf95c377";
-    sha256 = "f90a234a8fb1bffe88de9460357642b328897609ab70897c38ac0335f94789c7";
+  src = fetchurl {
+    url = "https://github.com/OpenSC/pkcs11-helper/releases/download/${name}/${name}.tar.bz2";
+    sha256 = "7bc455915590fec1a85593171f08a73ef343b1e7a73e60378d8744d54523e17c";
   };
-
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
 
   buildInputs = [
     openssl

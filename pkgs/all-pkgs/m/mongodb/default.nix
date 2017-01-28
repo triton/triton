@@ -7,7 +7,7 @@
 , cyrus-sasl
 , gperftools
 , libpcap
-, openssl
+, openssl_1-0-2
 , pcre
 , snappy
 , wiredtiger
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
     cyrus-sasl
     gperftools
     libpcap
-    openssl
+    openssl_1-0-2
     pcre
     snappy
     wiredtiger

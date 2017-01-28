@@ -5,35 +5,31 @@
 , sqlite
 }:
 
+let
+  version = "1.19";
+in
 stdenv.mkDerivation rec {
   name = "leveldb-${version}";
-  version = "1.18";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "google";
     repo = "leveldb";
     rev = "v${version}";
-    sha256 = "6cce5114ed37a80ed6da3e9b580879d805eabb6e1fc101c2015f13469308469a";
+    sha256 = "194febd1470f39009c0540ea145f7b42cb1527ce6e630d9f23fcb6b299574b21";
   };
 
-  buildInputs = [
-    kyotocabinet
-    sqlite
+  buildFlags = [
+    "all"
   ];
 
-  buildPhase = ''
-    make all db_bench{,_sqlite3,_tree_db} leveldbutil libmemenv.a
-  '';
-
-  installPhase = "
-    mkdir -p $out/{bin,lib,include}
+  installPhase = ''
+    mkdir -p "$out"/{bin,lib,include}
     cp -r include $out
-    cp lib* $out/lib
-    cp db_bench{,_sqlite3,_tree_db} leveldbutil $out/bin
-    mkdir -p $out/include/leveldb/helpers
-    cp helpers/memenv/memenv.h $out/include/leveldb/helpers
-  ";
+    cp out-static/leveldbutil "$out"/bin
+    cp out-static/libleveldb*.a* "$out"/lib
+    cp out-shared/libleveldb*.so* "$out"/lib
+  '';
 
   meta = with stdenv.lib; {
     homepage = "https://code.google.com/p/leveldb/";

@@ -103,6 +103,11 @@ let
       zlib
     ];
 
+    preUnpack = ''
+      mkdir src
+      cd src
+    '';
+
     prePatch = ''
       ls | grep jdk | grep -v '^jdk8u' | awk -F- '{print $1}' | \
       while read p; do

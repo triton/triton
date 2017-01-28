@@ -34,7 +34,7 @@
 , openssl_1-0-2
 , pciutils
 , pcre
-, postgresql_95
+, postgresql
 , pulseaudio_lib
 , sqlite
 , systemd_lib
@@ -47,8 +47,8 @@
 }:
 
 let
-  versionMajor = "5.7";
-  versionPatch = "1";
+  versionMajor = "5.8";
+  versionPatch = "0";
   version = "${versionMajor}.${versionPatch}";
 
   inherit (stdenv.lib)
@@ -61,7 +61,7 @@ stdenv.mkDerivation {
     url = "http://download.qt.io/official_releases/qt/${versionMajor}/${version}"
       + "/single/qt-everywhere-opensource-src-${version}.tar.xz";
     insecureHashOutput = true;
-    sha256 = "46ebca977deb629c5e69c2545bc5fe13f7e40012e5e2e451695c583bd33502fa";
+    sha256 = "0f4c54386d3dbac0606a936a7145cebb7b94b0ca2d29bc001ea49642984824b6";
   };
 
   nativeBuildInputs = [
@@ -98,7 +98,7 @@ stdenv.mkDerivation {
     mysql
     openssl_1-0-2
     pcre
-    postgresql_95
+    postgresql
     pulseaudio_lib
     sqlite
     systemd_lib
@@ -156,24 +156,20 @@ stdenv.mkDerivation {
     find qtwebengine -name \*.gyp\* -type f | xargs -n 1 -P $NIX_BUILD_CORES sed -i "s,/bin/echo,$(type -tP echo),g"
   '';
 
-  preConfigure = ''
-    configureFlagsArray+=(
-      "-prefix" "$out"
-    )
-  '';
+  prefixKey = "-prefix ";
 
   configureFlags = [
     "-release"
     "-opensource"
     "-confirm-license"
 
-    "-qt-sql-mysql"
+    "-sql-mysql"
     "-no-sql-odbc"
     "-no-sql-oci"
-    "-qt-sql-psql"
+    "-sql-psql"
     "-no-sql-tds"
     "-no-sql-db2"
-    "-qt-sql-sqlite"
+    "-sql-sqlite"
     "-no-sql-sqlite2"
     "-no-sql-ibase"
     "-system-sqlite"
@@ -209,7 +205,7 @@ stdenv.mkDerivation {
     "-no-compile-examples"
     "-verbose"
     "-cups"
-    "-iconv"
+    "-no-iconv"
     "-evdev"
     "-tslib"
     "-icu"
@@ -221,7 +217,7 @@ stdenv.mkDerivation {
     "-eglfs"
     "-kms"
     "-gbm"
-    "-directfb"
+    "-no-directfb"
     "-linuxfb"
     "-no-mirclient"
     "-libinput"
@@ -260,6 +256,8 @@ stdenv.mkDerivation {
   preFixup = ''
     find $out/lib/pkgconfig -name \*.pc -exec sed -i 's,Qt5UiPlugin,,g' {} \;
   '';
+
+  parallelBuild = false;
 
   # FIXME
   buildDirCheck = false;

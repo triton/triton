@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libunwind-1.2-rc1";
+  name = "libunwind-1.2";
 
   src = fetchurl {
     url = "mirror://savannah/libunwind/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "d222f186b6bc60f49dac5030516ec35a7ed0ccca675551d6cf81008112116abc";
+    sha256 = "1de38ffbdc88bd694d10081865871cd2bfbb02ad8ef9e1606aee18d65532b992";
   };
 
   buildInputs = [
@@ -21,7 +21,10 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl rec {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "5C96 BDEA F5F4 7FB0 2BD4  F6B9 65D9 8560 914F 3F48";
+      pgpKeyFingerprints = [
+        "5C96 BDEA F5F4 7FB0 2BD4  F6B9 65D9 8560 914F 3F48"
+        "1675 C8DA 2EF9 07FB 116E  B709 EC52 B396 E687 4AF2"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

@@ -2,7 +2,7 @@
 , fetchurl
 , perl
 
-, openssl
+, openssl_1-1-0
 }:
 
 stdenv.mkDerivation rec {
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    openssl
+    openssl_1-1-0
   ];
 
   postPatch = ''
@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
     "--enable-ed25519"
     "--enable-ed448"
     "--with-drill"
-    "--with-ssl=${openssl}"
+    "--with-ssl=${openssl_1-1-0}"
     "--with-ca-file=/etc/ssl/certs/ca-certificates.crt"
   ];
 

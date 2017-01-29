@@ -811,10 +811,10 @@ let
 
   consul = buildFromGitHub rec {
     version = 2;
-    rev = "v0.7.2";
+    rev = "v0.7.3";
     owner = "hashicorp";
     repo = "consul";
-    sha256 = "0sxbxplg0g9adfgxl893s8x32rdzg6xy855fgmgj00n8rjzr3vdq";
+    sha256 = "175c2xxm09cy2784x385djazvxnlh4a4yv872mmlgyb27f3c95q1";
 
     buildInputs = [
       datadog-go circbuf armon_go-metrics go-radix speakeasy bolt
@@ -823,6 +823,7 @@ let
       golang-lru hcl logutils memberlist net-rpc-msgpackrpc raft_v2 raft-boltdb_v2
       scada-client yamux muxado dns mitchellh_cli mapstructure columnize
       copystructure hil hashicorp-go-uuid crypto sys aws-sdk-go go-sockaddr
+      google-api-go-client oauth2
     ];
 
     propagatedBuildInputs = [
@@ -831,10 +832,10 @@ let
     ];
 
     postPatch = let
-      version = stdenv.lib.substring 1 (stdenv.lib.stringLength rev - 1) rev;
+      v = stdenv.lib.substring 1 (stdenv.lib.stringLength rev - 1) rev;
     in ''
       sed \
-        -e 's,\(Version[ \t]*= "\)unknown,\1${version},g' \
+        -e 's,\(Version[ \t]*= "\)unknown,\1${v},g' \
         -e 's,\(VersionPrerelease[ \t]*= "\)unknown,\1,g' \
         -i version/version.go
     '';
@@ -854,7 +855,6 @@ let
       "lib"
       "tlsutil"
     ];
-    meta.autoUpdate = false;
   };
 
   consulfs = buildFromGitHub {
@@ -874,10 +874,10 @@ let
 
   consul-template = buildFromGitHub {
     version = 2;
-    rev = "v0.18.0-rc1";
+    rev = "v0.18.0";
     owner = "hashicorp";
     repo = "consul-template";
-    sha256 = "f3dc56abb5f2fe584329ae881ef944bf31a0fb5baea7f78a781828e6922dd8d3";
+    sha256 = "6b699ab259600fe35b0f846889e1dd8fa8a8db13b899cd11ba6c8ecb9e05ed8f";
 
     propagatedBuildInputs = [
       consul_api
@@ -1203,10 +1203,10 @@ let
   egoscale = buildFromGitHub {
     version = 2;
     rev = "ab4b0d7ff424c462da486aef27f354cdeb29a319";
-    date = "2016-09-22";
+    date = "2017-01-11";
     owner  = "pyr";
     repo   = "egoscale";
-    sha256 = "d4eb223131b97f9048d32ee26741e4c4be409e80a23e39d1f0d01c2c7a19c8db";
+    sha256 = "5af0d24c309225f7243d71665b7f5558ae4403179663f40c01b1ba62a405eae5";
     meta.autoUpdate = false;
     subPackages = [
       "src/egoscale"

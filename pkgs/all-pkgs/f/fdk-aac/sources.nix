@@ -1,8 +1,10 @@
 { }:
 {
-  "stable" = {
-    version = "0.1.4";
-    sha256 = "1aqmzxri23q83wfmwbbashs27mq1mapvfirz5r9i7jkphrwgw42r";
+  "stable" = rec {
+    fetchzipverion = 2;
+    version = "0.1.5";
+    rev = "v${version}";
+    sha256 = "e2fdeb17d045e15cf57cd2689deca4ff7d0ad18cd4cdf9e400ff2664f3c91cf8";
   };
   "head" = {
     fetchzipverion = 2;

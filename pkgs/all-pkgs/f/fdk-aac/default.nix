@@ -1,7 +1,6 @@
 { stdenv
 , autoreconfHook
 , fetchFromGitHub
-, fetchurl
 , lib
 
 # Example encoding program
@@ -20,32 +19,19 @@ in
 stdenv.mkDerivation rec {
   name = "fdk-aac-${source.version}";
 
-  src = (
-    if channel == "head" then
-      fetchFromGitHub {
-        version = source.fetchzipverion;
-        owner = "mstorsjo";
-        repo = "fdk-aac";
-        inherit (source) rev sha256;
-      }
-    else
-      fetchurl {
-        url = "mirror://sourceforge/opencore-amr/fdk-aac/${name}.tar.gz";
-        inherit (source) sha256;
-      }
-  );
+  src = fetchFromGitHub {
+    version = source.fetchzipverion;
+    owner = "mstorsjo";
+    repo = "fdk-aac";
+    inherit (source) rev sha256;
+  };
 
-  nativeBuildInputs = optionals (channel == "head") [
+  nativeBuildInputs = [
     autoreconfHook
   ];
 
   configureFlags = [
     "--${boolEn exampleSupport}-example"
-  ];
-
-  # Remove for > 0.1.4
-  CXXFLAGS = optionals (channel == "stable") [
-    "-std=c++03"
   ];
 
   meta = with lib; {

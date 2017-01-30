@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     "--disable-exhaustive-tests"
     "--disable-werror"
     "--disable-stack-smash-protection"
-    "--enable-64-bit-words"
+    "--${boolEn (elem targetSystem platforms.bit64)}-64-bit-words"
     "--disable-valgrind-testing"
     "--disable-doxygen-docs"
     "--disable-local-xmms-plugin"

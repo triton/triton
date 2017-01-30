@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 , pythonOlder
 
 , cffi
@@ -16,7 +17,7 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "1.7";
+  version = "1.7.2";
 in
 buildPythonPackage {
   name = "cryptography-${version}";
@@ -24,7 +25,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "cryptography";
     inherit version;
-    sha256 = "404e5c0d1754e2a9bc85ef9e97420cc082fced024c914cc9ff1793f7b5f14931";
+    sha256 = "878cb68b3da3d493ffd68f36db11c29deee623671d3287c3f8d685117ffda9a9";
   };
 
   buildInputs = [
@@ -41,7 +42,7 @@ buildPythonPackage {
     enum34
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

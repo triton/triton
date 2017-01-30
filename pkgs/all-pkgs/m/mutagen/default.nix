@@ -1,21 +1,24 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
+let
+  version = "1.36.2";
+in
 buildPythonPackage rec {
   name = "mutagen-${version}";
-  version = "1.36";
 
   src = fetchPyPi {
     package = "mutagen";
     inherit version;
-    sha256 = "d7ee37e33b8c5893c3ebf66edac31241eb9d48e1dc7ec647bbfbc180565a4bcd";
+    sha256 = "86fe98e941ca305be8ee6bdc6bb0e4e9c473bf9fb69a838fe5bf2fc6124fbcc7";
   };
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Python multimedia tagging library";
     homepage = https://github.com/quodlibet/mutagen;
     license = licenses.lgpl2;

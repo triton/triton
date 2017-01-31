@@ -119,11 +119,11 @@ let
 
   crypto = buildFromGitHub {
     version = 2;
-    rev = "854ae91cdcbf914b499b1d7641d07859f3653481";
-    date = "2017-01-26";
+    rev = "dc137beb6cce2043eb6b5f223ab8bf51c32459f4";
+    date = "2017-01-30";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "1jxa956syjwyw7drr7wciwa3xay27m33pffgbvinjwwmzpk0dfkz";
+    sha256 = "1ls1sflzyiml91xbk4nwwcxy8m2md3qq4xi4lf9frw9gq6656swh";
     goPackagePath = "golang.org/x/crypto";
     goPackageAliases = [
       "code.google.com/p/go.crypto"
@@ -621,11 +621,11 @@ let
 
   circonus-gometrics = buildFromGitHub {
     version = 2;
-    date = "2017-01-27";
-    rev = "d0057d867074f25fc724212cb76cf9010f8d6f4f";
+    date = "2017-01-31";
+    rev = "a2c28f079ec3d4fdc17ed577cca75bee88a2da25";
     owner  = "circonus-labs";
     repo   = "circonus-gometrics";
-    sha256 = "0qk4n6s0q58j97cwxbylc28ixha38dlcxdv4d7r8f6mn69x1qjfh";
+    sha256 = "01nigc7y1fjkhq4jwhnrd6l0ibdh19yghd639cd5xrzkf294g2an";
     propagatedBuildInputs = [
       circonusllhist
       go-retryablehttp
@@ -730,9 +730,9 @@ let
     version = 2;
     owner = "spf13";
     repo = "cobra";
-    rev = "c29ece4386f74084680e5e6d02d7b943ae630f63";
-    date = "2017-01-26";
-    sha256 = "05pikg6n1a58iyib19k9xhg2q8k7is2zif26awqpk5f2akq8zfc9";
+    rev = "35136c09d8da66b901337c6e86fd8e88a1a255bd";
+    date = "2017-01-30";
+    sha256 = "10hp29b6zndpn28nfnvbxbh4s21fryfxbyb2yw77id6gr8b6g32a";
     buildInputs = [
       pflag
       viper
@@ -1055,11 +1055,11 @@ let
 
   dns = buildFromGitHub {
     version = 2;
-    rev = "2be0b50f7f04c7223e2b82601ac9ca1e199a9c21";
-    date = "2017-01-26";
+    rev = "99f84ae56e75126dd77e5de4fae2ea034a468ca1";
+    date = "2017-01-30";
     owner  = "miekg";
     repo   = "dns";
-    sha256 = "024gf9zbw2k7ywyd14pmkf9lzjlbac0dhjwmcwzgag1p7yq56qgy";
+    sha256 = "1nbidgs2fij4kpbgxjmga1m8wi01r5vw3hc69jqlszhfgbl059p4";
   };
 
   weppos-dnsimple-go = buildFromGitHub {
@@ -1780,11 +1780,11 @@ let
 
   google-cloud-go = buildFromGitHub {
     version = 2;
-    date = "2017-01-26";
-    rev = "2fad13a91cc5c2c321b67c95ca1e9ce123ebf5ac";
+    date = "2017-01-30";
+    rev = "38283be819556e2c5abdaec830f5b100b6ae9595";
     owner = "GoogleCloudPlatform";
     repo = "google-cloud-go";
-    sha256 = "0invnp994qiqi7pv47w9ijd6c1ai6vcndwyha6pnyqqk2c9wlqaz";
+    sha256 = "0qvyv8mjfz5rx1l84adpfr1iv38nh9kan98r102i4zgi2w3kx0zg";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -3305,11 +3305,11 @@ let
 
   hcl = buildFromGitHub {
     version = 2;
-    date = "2017-01-24";
-    rev = "db4f0768927a665a06c32855186e1bc762bcc8f5";
+    date = "2017-01-30";
+    rev = "88e9565e9965f4054f86c72ff1ad1bb50e560d6f";
     owner  = "hashicorp";
     repo   = "hcl";
-    sha256 = "1yba2ig1wwy5bfinp2l6fyfg9pg6gzlv9a3b605cp15jl7dpimi1";
+    sha256 = "0wwz6ifvb567gg1vigfb0dlv95k18r4jihcl3m1xi3faj6rqhk64";
   };
 
   hdrhistogram = buildFromGitHub {
@@ -4542,9 +4542,9 @@ let
     version = 2;
     owner = "spf13";
     repo = "pflag";
-    rev = "a9a634f3de0a7529baded7ad6b0c7467d5c6eca7";
-    date = "2017-01-25";
-    sha256 = "0g3jkg3d2k7pxkgrqppha4bj1pv79kknhqbiqbh43ilzhzhp87cj";
+    rev = "9ff6c6923cfffbcd502984b8e0c80539a94968b7";
+    date = "2017-01-30";
+    sha256 = "0h0iq8h2xwifaz3qfz89svy5by7zrfqmchvbkfyzs4k7w5fw6sh9";
   };
 
   pkcs7 = buildFromGitHub {
@@ -4875,8 +4875,8 @@ let
     version = 2;
     owner = "ncw";
     repo = "rclone";
-    rev = "9fdeb823282e5b6af943b62a644af932c0bcc7ba";
-    sha256 = "12b9nasgja7jp710dwidr8370sa74n7k5b4glqkxmpipy5mjd2w2";
+    rev = "37fe6d56e5ff5f7dd0b41f9466ea7492d588fdfc";
+    sha256 = "1jm1zv46jic4218zy3dzl995n63z1d6974d9841c8gqfl077b56l";
     propagatedBuildInputs = [
       aws-sdk-go
       cobra
@@ -4899,7 +4899,7 @@ let
       testify
     ];
     meta.useUnstable = true;
-    date = "2017-01-20";
+    date = "2017-01-30";
   };
 
   cupcake_rdb = buildFromGitHub {

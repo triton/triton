@@ -739,6 +739,7 @@ let
     ];
     propagatedBuildInputs = [
       go-md2man
+      yaml_v2
     ];
   };
 

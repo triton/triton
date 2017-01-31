@@ -29,10 +29,10 @@ let
       patchSha256 = "cd0d5ea27c487a7d1354ba3e80f85af4924b77ad1180f1fbfaf6844ae03c8728";
     };
     "testing" = {
-      version = "4.10-rc5";
+      version = "4.10-rc6";
       needsGitPatch = true;
       baseSha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
-      patchSha256 = "5a692b4d43b90899ed0543199cc320ce650c68f1527d7fe05bfba2a191c58224";
+      patchSha256 = "1ff82c02b097f63ad58b0ecd46657c020f3dc2f4e918fa7b96cfed8743661a08";
     };
     "bcache" =
       let
@@ -48,14 +48,14 @@ let
       };
     "bcache-testing" =
       let
-        date = "2017-01-22";
+        date = "2017-01-29";
       in {
-        version = "4.9.5";
+        version = "4.9.6";
         patchUrls = [
           "https://github.com/wkennington/linux/releases/download/bcachefs-testing-${version}-${date}/patch-bcachefs-testing-${version}-${date}.xz"
         ];
         baseSha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
-        patchSha256 = "79d22041d3be19de21509bcf1f8cc124ac7a695aeb30545c2537c40687bd8a38";
+        patchSha256 = "c7af913a2de248f934d8732983590f9821ce172f65491bdb970a4e3547d0aa6e";
         features.bcachefs = true;
       };
   };

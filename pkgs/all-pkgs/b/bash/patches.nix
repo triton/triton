@@ -10,4 +10,5 @@
   "bash44-009" = "0g1l56kvw61rpw7dqa9fcl9llkl693h73g631hrhxlm030ddssqb";
   "bash44-010" = "01lfhrkdsdkdz8ypzapr614ras23x7ckjnr60aa5bzkaqprccrc4";
   "bash44-011" = "038p7mhnq9m65g505hi3827jkf9f35nd1cy00w8mwafpyxp44mnx";
+  "bash44-012" = "0gh6lbb1rwpk44pvbamm6vzdfi50xnwkqd9v7s8cjwk3pz973hps";
 }

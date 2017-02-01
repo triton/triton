@@ -3,16 +3,16 @@
 }:
 
 let
-  version = "3.2.6";
+  version = "3.2.7";
 in
 stdenv.mkDerivation rec {
   name = "redis-${version}";
 
   src = fetchurl {
     url = "http://download.redis.io/releases/${name}.tar.gz";
-    # https://github.com/antirez/redis-hashes/blob/master/README
-    sha1Confirm = "0c7bc5c751bdbc6fabed178db9cdbdd948915d1b";
-    sha256 = "2e1831c5a315e400d72bda4beaa98c0cfbe3f4eb8b20c269371634390cf729fa";
+    multihash = "QmeH9v1rHVVd8mh7CyXhG85XcTq2iWRgx7DBndVoPXonMs";
+    hashOutput = false;
+    sha256 = "bf9df3e5374bfe7bfc3386380f9df13d94990011504ef07632b3609bb2836fa9";
   };
 
   preBuild = ''
@@ -21,6 +21,14 @@ stdenv.mkDerivation rec {
       "PREFIX=$out"
     )
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha1Url = "https://raw.githubusercontent.com/antirez/redis-hashes/master/README";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "An open source, advanced key-value store";

@@ -37,6 +37,26 @@ let
   # be re-routed to the PulseAudio server through ALSA's Pulse
   # plugin.
   alsaConf = writeText "asound.conf" (''
+    # Make sure all channel layouts use default output so that they
+    # route through pulseaudio.
+    pcm.!surround71 {
+      slave.pcm "default"
+    }
+    pcm.!surround51 {
+      slave.pcm "default"
+    }
+    pcm.!surround50 {
+      slave.pcm "default"
+    }
+    pcm.!surround41 {
+      slave.pcm "default"
+    }
+    pcm.!surround40 {
+      slave.pcm "default"
+    }
+    pcm.!surround20 {
+      slave.pcm "default"
+    }
     pcm_type.pulse {
       libs.native = ${pkgs.alsa-plugins}/lib/alsa-lib/libasound_module_pcm_pulse.so ;
       ${lib.optionalString enable32BitAlsaPlugins

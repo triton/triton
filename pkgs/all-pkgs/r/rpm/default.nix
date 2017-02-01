@@ -1,12 +1,13 @@
 { stdenv
 , fetchurl
 
+, binutils
 , bzip2
 , cpio
 , db
+, elfutils
 , file
 , libarchive
-, libelf
 , nspr
 , nss
 , popt
@@ -24,12 +25,13 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
+    binutils
     bzip2
     cpio
     db
+    elfutils
     file
     libarchive
-    libelf
     nspr
     nss
     popt
@@ -43,6 +45,8 @@ stdenv.mkDerivation rec {
     # but we want 'python3.4m' here
     sed -i configure \
       -e 's/python''${PYTHON_VERSION}/${python.executable}/'
+
+    sed -i '1i#include "config.h"' tools/sepdebugcrcfix.c
   '';
 
   configureFlags = [

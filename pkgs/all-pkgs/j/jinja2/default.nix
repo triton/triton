@@ -1,12 +1,13 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , markupsafe
 }:
 
 let
-  version = "2.9.4";
+  version = "2.9.5";
 in
 buildPythonPackage rec {
   name = "Jinja2-${version}";
@@ -14,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "Jinja2";
     inherit version;
-    sha256 = "aab8d8ca9f45624f1e77f2844bf3c144d180e97da8824c2a6d7552ad039b5442";
+    sha256 = "702a24d992f856fa8d5a7a36db6128198d0c21e1da34448ca236c42e92384825";
   };
 
   propagatedBuildInputs = [
@@ -23,7 +24,7 @@ buildPythonPackage rec {
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Jinja2 is a template engine written in pure Python";
     homepage = http://jinja.pocoo.org/;
     license = licenses.bsd3;

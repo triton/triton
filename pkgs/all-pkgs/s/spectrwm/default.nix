@@ -3,9 +3,9 @@
 , fetchFromGitHub
 , makeWrapper
 
-, dmenu
 , fontconfig
 , freetype
+, which
 , xorg
 }:
 
@@ -25,7 +25,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    dmenu
     fontconfig
     freetype
     xorg.libX11
@@ -62,7 +61,7 @@ stdenv.mkDerivation rec {
 
   preFixup = ''
     wrapProgram $out/bin/spectrwm \
-      --prefix 'PATH' : "${dmenu}/bin"
+      --prefix 'PATH' : "${which}/bin"
   '';
 
   meta = with stdenv.lib; {

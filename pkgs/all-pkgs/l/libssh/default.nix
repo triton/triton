@@ -6,16 +6,17 @@
 , kerberos
 , libsodium
 , zlib
-, openssl
+, openssl_1-0-2
 }:
 
 stdenv.mkDerivation rec {
-  name = "libssh-0.7.3";
+  name = "libssh-0.7.4";
 
   src = fetchurl {
-    url = "https://red.libssh.org/attachments/download/195/libssh-0.7.3.tar.xz";
-    multihash = "QmUVD9ayYoqbjcoQax3KGHtsB3yXoinJBPSZC2gE4vMWAn";
-    sha256 = "165g49i4kmm3bfsjm0n8hm21kadv79g9yjqyq09138jxanz4dvr6";
+    url = "https://red.libssh.org/attachments/download/210/libssh-0.7.4.tar.xz";
+    multihash = "QmTEsR21paatQZKzTU2ttY86uZWhaJfETFvhMFecii2spK";
+    hashOutput = false;
+    sha256 = "39e1bec3b3cb452af3b8fd7f59c12c5ef5b9ed64f057c7eb0d1a5cac67ba6c0d";
   };
 
   nativeBuildInputs = [
@@ -26,7 +27,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     kerberos
     libsodium
-    openssl
+    openssl_1-0-2
     zlib
   ];
 
@@ -55,6 +56,16 @@ stdenv.mkDerivation rec {
     "-DNACL_LIBRARY=${libsodium}/lib/libsodium.so"
     "-DNACL_INCLUDE_DIR=${libsodium}/include"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpDecompress = true;
+      pgpsigUrl = "https://red.libssh.org/attachments/download/209/libssh-0.7.4.tar.asc";
+      pgpKeyFingerprint = "8DFF 53E1 8F2A BC8D 8F3C  9223 7EE0 FC4D CC01 4E3D";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "SSH client library";

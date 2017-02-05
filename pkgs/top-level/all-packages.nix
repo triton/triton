@@ -1890,6 +1890,8 @@ lftp = callPackage ../all-pkgs/l/lftp { };
 
 lib-bash = callPackage ../all-pkgs/l/lib-bash { };
 
+libaacs = callPackage ../all-pkgs/l/libaacs { };
+
 libaccounts-glib = callPackage ../all-pkgs/l/libaccounts-glib { };
 
 libaio = callPackage ../all-pkgs/l/libaio { };
@@ -3929,8 +3931,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   ijs = callPackage ../development/libraries/ijs { };
 #
   jbigkit = callPackage ../development/libraries/jbigkit { };
-#
-  libaacs = callPackage ../development/libraries/libaacs { };
 
   libao = callPackage ../development/libraries/libao { };
 #

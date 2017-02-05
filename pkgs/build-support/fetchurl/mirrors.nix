@@ -234,6 +234,13 @@ rec {
     http://old-releases.ubuntu.com/ubuntu
   ];
 
+  videolan = [
+    "https://download.videolan.org/videolan"
+    "https://ftp.videolan.org/videolan"
+    # Mirror CDN
+    "http://get.videolan.org"
+  ];
+
   xfce = [
     http://archive.xfce.org
   ];

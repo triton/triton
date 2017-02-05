@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://videolan/libbluray/${version}/${name}.tar.bz2";
-    sha256 = "1sp71j4agcsg17g6b85cqz78pn5vknl5pl39rvr6mkib5ps99jgg";
+    sha256 = "a6366614ec45484b51fe94fcd1975b3b8716f90f038a33b24d59978de3863ce0";
   };
 
   nativeBuildInputs = [

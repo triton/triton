@@ -19,11 +19,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "wget-1.18";
+  name = "wget-1.19";
 
   src = fetchurl {
     url = "mirror://gnu/wget/${name}.tar.xz";
-    sha256 = "b5b55b75726c04c06fe253daec9329a6f1a3c0c1878e3ea76ebfebc139ea9cc1";
+    hashOutput = false;
+    sha256 = "0f1157bbf4daae19f3e1ddb70c6ccb2067feb834a6aa23c9d9daa7f048606384";
   };
 
   nativeBuildInputs = [
@@ -78,6 +79,15 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "1CB2 7DBC 9861 4B2D 5841  646D 0830 2DB6 A267 0428";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Tool for retrieving files using HTTP, HTTPS, and FTP";

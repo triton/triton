@@ -6,10 +6,10 @@
     sha256 = "e86087aa086c22dd349131adb0cf091ae45e0e596d0f81949ee04a92a216cb6d";
   };
   "dev" = {
-    date = "2017-01-20";
-    rev = "f5c5286daa5f76532d7a8a7988d6a42cfd58038c";
+    date = "2017-01-31";
+    rev = "97048200f888afc0b1387bff75049cf37e9715bd";
     maxKernelVersion = "4.11";
     fetchzipVersion = 2;
-    sha256 = "df83b2acc933a188de2e1725719140842e8cfd38a9ae4caecd19f3494588eafe";
+    sha256 = "88af33309e74d322a6d306bee2887ea8732c9f023c169cfdfa38371feffde1e3";
   };
 }

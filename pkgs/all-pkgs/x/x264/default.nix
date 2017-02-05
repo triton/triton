@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , yasm
 
 , enable10bit ? false
@@ -12,7 +13,7 @@ stdenv.mkDerivation rec {
   name = "x264-${version}";
 
   src = fetchurl {
-    url = "https://ftp.videolan.org/pub/videolan/x264/snapshots/"
+    url = "mirror://videolan/x264/snapshots/"
       + "x264-snapshot-${version}-2245-stable.tar.bz2";
     sha256 = "a6ee16e1ba8943f8ba7b4bc36488489146d5556f4fa11280efd406782889ce76";
   };
@@ -46,7 +47,7 @@ stdenv.mkDerivation rec {
     "--disable-lsmash"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library for encoding h.264/AVC video streams";
     homepage = https://www.videolan.org/developers/x264.html;
     license = licenses.gpl2;

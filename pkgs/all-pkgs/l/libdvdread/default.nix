@@ -15,8 +15,7 @@ stdenv.mkDerivation rec {
   name = "libdvdread-${version}";
 
   src = fetchurl {
-    url = "https://download.videolan.org/pub/videolan/libdvdread/${version}/"
-      + "${name}.tar.bz2";
+    url = "mirror://videolan/libdvdread/${version}/${name}.tar.bz2";
     hashOutput = false;
     sha256 = "321cdf2dbdc83c96572bc583cd27d8c660ddb540ff16672ecb28607d018ed82b";
   };

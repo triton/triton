@@ -18,13 +18,13 @@ let
     boolEn
     boolWt;
 
-  version  = "0.9.2";
+  version  = "0.9.3";
 in
 stdenv.mkDerivation rec {
   name = "libbluray-${version}";
 
   src = fetchurl {
-    url = "http://get.videolan.org/libbluray/${version}/${name}.tar.bz2";
+    url = "mirror://videolan/libbluray/${version}/${name}.tar.bz2";
     sha256 = "1sp71j4agcsg17g6b85cqz78pn5vknl5pl39rvr6mkib5ps99jgg";
   };
 

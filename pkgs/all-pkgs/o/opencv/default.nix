@@ -177,6 +177,8 @@ stdenv.mkDerivation rec {
     /**/"-DWITH_XINE=OFF"
   ];
 
+  buildDirCheck = false;
+
   meta = with lib; {
     description = "Algorithms and code for various computer vision problems";
     homepage = http://opencv.org/;

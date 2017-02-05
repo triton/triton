@@ -1,5 +1,5 @@
 { stdenv
-, fetchurl
+, fetchzip
 , autoreconfHook
 
 , libselinux
@@ -7,14 +7,15 @@
 }:
 
 let
-  version = "1.7.0";
+  version = "1.8.0";
 in
 stdenv.mkDerivation rec {
   name = "f2fs-tools-${version}";
 
-  src = fetchurl {
-    url = "https://git.kernel.org/cgit/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/${name}.tar.gz";
-    sha256 = "33d454c2e95aabef5659949c4fff15f6c9877b48349e64411de502bc62b0cbd4";
+  src = fetchzip {
+    version = 2;
+    url = "https://git.kernel.org/cgit/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/${name}.tar.xz";
+    sha256 = "b198db1b6bfd7aeb42ab9454bc4c3a1b571e11968ba6f512ad924727c3398465";
   };
 
   nativeBuildInputs = [

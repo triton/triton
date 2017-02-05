@@ -3,24 +3,25 @@
 , autoreconfHook
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , fontconfig
 , freetype
-###, jdk
+, jdk
 , libaacs
 , libbdplus
 , libxml2
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
-in
+  inherit (lib)
+    boolEn
+    boolWt;
 
+  version  = "0.9.2";
+in
 stdenv.mkDerivation rec {
   name = "libbluray-${version}";
-  version  = "0.9.2";
 
   src = fetchurl {
     url = "http://get.videolan.org/libbluray/${version}/${name}.tar.bz2";
@@ -28,14 +29,14 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    ###ant
+    ant
     autoreconfHook
   ];
 
   buildInputs = [
     fontconfig
     freetype
-    ###jdk
+    jdk
     libaacs
     libxml2
   ];
@@ -53,7 +54,7 @@ stdenv.mkDerivation rec {
     "--disable-werror"
     "--enable-optimizations"
     "--disable-examples"
-    ###(enFlag "bdjava" (jdk != null) null)
+    "--${boolEn (jdk != null)}-bdjava"
     "--disable-bdjava"
     "--enable-udf"
     "--disable-doxygen-doc"
@@ -66,10 +67,10 @@ stdenv.mkDerivation rec {
     "--disable-doxygen-html"
     "--disable-doxygen-ps"
     "--disable-doxygen-pdf"
-    (wtFlag "libxml2" (libxml2 != null) null)
-    (wtFlag "freetype" (freetype != null) null)
-    (wtFlag "fontconfig" (fontconfig != null) null)
-    ###"--with-bdj-type=j2se"
+    "--${boolWt (libxml2 != null)}-libxml2"
+    "--${boolWt (freetype != null)}-freetype"
+    "--${boolWt (fontconfig != null)}-fontconfig"
+    "--with-bdj-type=j2se"
     #"--with-bdj-bootclasspath="
   ];
 
@@ -80,11 +81,11 @@ stdenv.mkDerivation rec {
     "-lbdplus"
   ];
 
-  ###preConfigure = ''
-  ###  export JDK_HOME="${jdk.home}"
-  ###'';
+  preConfigure = ''
+    export JDK_HOME="${jdk.home}"
+  '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library to access Blu-Ray disks for video playback";
     homepage = http://www.videolan.org/developers/libbluray.html;
     license = licenses.lgpl21;

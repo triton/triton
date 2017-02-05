@@ -32,13 +32,14 @@ in
 assert efiSupport -> canEfi;
 
 stdenv.mkDerivation rec {
-  name = "grub-2.02-beta3";
+  name = "grub-2.02-rc1";
 
   src = fetchurl {
     name = "${name}.tar.xz";
-    url = "http://alpha.gnu.org/gnu/grub/grub-2.02~beta3.tar.xz";
-    multihash = "QmWKaXPG17wgsgchV5gEbV6ZKCzTSjQVbtwXdtaeoocxV6";
-    sha256 = "30ec3d555e52a702c3eef449872ef874eff28b320f40b55ffc47f70db8e5ada1";
+    url = "http://alpha.gnu.org/gnu/grub/grub-2.02~rc1.tar.xz";
+    multihash = "QmbZLy1z443d6vqg4CrW1YTmpmib1r3hF8EpWtwK4KiT63";
+    hashOutput = false;
+    sha256 = "445239e9b96d1143c194c1d37851cf4196b83701c60172e49665e9d453d80278";
   };
 
   nativeBuildInputs = [

@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "1.3";
+  version = "1.4";
 in
 stdenv.mkDerivation rec {
   name = "tslib-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/kergoth/tslib/releases/download/${version}/"
       + "${name}.tar.xz";
-    sha256 = "e935101adca980a14d1a13362796222575f99e6a41db585e8358fffddb98d92c";
+    sha256 = "ad0373f1dbfda27caec92cb10421227f226c79d160488f1ac915585ba947741f";
   };
 
   nativeBuildInputs = [

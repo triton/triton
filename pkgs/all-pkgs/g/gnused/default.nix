@@ -4,15 +4,19 @@
 }:
 
 let
-  version = "4.3";
+  version = "4.4";
+
+  tarballUrls = version: [
+    "mirror://gnu/sed/sed-${version}.tar.xz"
+  ];
 in
 stdenv.mkDerivation rec {
   name = "gnused-${version}";
 
   src = fetchurl {
-    url = "mirror://gnu/sed/sed-${version}.tar.xz";
+    urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "47c20d8841ce9e7b6ef8037768aac44bc2937fff1c265b291c824004d56bd0aa";
+    sha256 = "cbd6ebc5aaf080ed60d0162d7f6aeae58211a1ee9ba9bb25623daa6cd942683b";
   };
 
   nativeBuildInputs = [
@@ -22,6 +26,17 @@ stdenv.mkDerivation rec {
   postPatch = ''
     patchShebangs build-aux/help2man
   '';
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "4.4";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "155D 3FC5 00C8 3448 6D1E  EA67 7FD9 FCCB 000B EEEE";
+      inherit (src) outputHashAlgo;
+      outputHash = "cbd6ebc5aaf080ed60d0162d7f6aeae58211a1ee9ba9bb25623daa6cd942683b";
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/sed/;

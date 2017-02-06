@@ -1,10 +1,11 @@
 { stdenv
+, autoreconfHook
 , fetchurl
 , perl
 }:
 
 let
-  version = "1.5.3";
+  version = "1.6.0";
 in
 stdenv.mkDerivation rec {
   name = "libbson-${version}";
@@ -12,10 +13,11 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/mongodb/libbson/releases/download"
       + "/${version}/${name}.tar.gz";
-    sha256 = "731df43cb62642a26ac5f58ba0c492bd495c72eca6a9bc777808dfd45471b015";
+    sha256 = "827b974da1b2eb387e026f5efb7ac7802b87173562cc65ac95b0d332cbdf8d15";
   };
 
   nativeBuildInputs = [
+    autoreconfHook
     perl
   ];
 

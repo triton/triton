@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "0.7.92";
+  version = "0.7.92.1";
 in
 stdenv.mkDerivation rec {
   name = "libmediainfo-${version}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/mediainfo/source/libmediainfo/${version}/"
       + "libmediainfo_${version}.tar.xz";
-    sha256 = "63f8360b3abcb483ba1dd2ba7c8b2fb3c6b0dcf1383735375899a651f859320b";
+    sha256 = "200d4d7c52b6b3c1bed455e75fbc5b899b0c74846eab45e368388c74a2250e2e";
   };
 
   nativeBuildInputs = [

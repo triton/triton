@@ -1,17 +1,18 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "wavpack-5.0.0";
+  name = "wavpack-5.1.0";
 
   src = fetchurl {
     url = "http://www.wavpack.com/${name}.tar.bz2";
-    multihash = "QmRXZ8PkXwe6pUUgdfY7bNE9MQVvUv4i1pu8LmEFFzpN9S";
-    sha256 = "918d7e32a19598df543b17fff840b10a0880f87296f9e32af454d256b6a64049";
+    multihash = "QmVnbbB76TwzqZjdDxeG3pLvE5mbfcnQSXyACCJwbL9EwZ";
+    sha256 = "1939627d5358d1da62bc6158d63f7ed12905552f3a799c799ee90296a7612944";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Hybrid audio compression format";
     homepage = http://www.wavpack.com/;
     license = licenses.bsd3;

@@ -67,7 +67,6 @@
 , celt
 , chromaprint
 #, crystalhd
-, dcadec
 #, decklinkExtlib ? false
 #  , blackmagic-design-desktop-video
 , fdk-aac
@@ -133,7 +132,6 @@
 #, libquvi
 , samba_client
 , schroedinger
-, SDL
 , SDL_2
 #, shine
 , snappy
@@ -243,7 +241,7 @@ assert ffplayProgram ->
   && avformatLibrary
   && swscaleLibrary
   && swresampleLibrary
-  && (SDL != null || SDL_2 != null);
+  && SDL_2 != null;
 assert ffprobeProgram ->
   avcodecLibrary
   && avformatLibrary;
@@ -373,7 +371,6 @@ stdenv.mkDerivation rec {
     rubberband
     samba_client
     schroedinger
-    SDL
     SDL_2
     soxr
     snappy
@@ -424,7 +421,6 @@ stdenv.mkDerivation rec {
     "--${boolEn runtimeCpuDetectBuild}-runtime-cpudetect"
     "--${boolEn grayBuild}-gray"
     "--${boolEn swscaleAlphaBuild}-swscale-alpha"
-    (deprfflag "--disable-incompatible-libav-abi" null "3.1")
     "--${boolEn hardcodedTablesBuild}-hardcoded-tables"
     "--${boolEn safeBitstreamReaderBuild}-safe-bitstream-reader"
     "--${boolEn memalignHackBuild}-memalign-hack"
@@ -467,17 +463,17 @@ stdenv.mkDerivation rec {
     /*
      *  Hardware accelerators
      */
-    (fflag "--disable-audiotoolbox" "3.1")  # macos
-    (fflag "--${boolEn (
+    "--disable-audiotoolbox"  # macos
+    "--${boolEn (
       nvidia-cuda-toolkit != null
-      && nvidia-drivers != null)}-cuda" "3.1")
-    (fflag "--${boolEn (
+      && nvidia-drivers != null)}-cuda"
+    "--${boolEn (
       nvidia-cuda-toolkit != null
-      && nvidia-drivers != null)}-cuvid" "3.1")
+      && nvidia-drivers != null)}-cuvid"
     "--disable-d3d11va"  # windows
     "--disable-dxva2"  # windows
     "--${boolEn (mfx-dispatcher != null)}-libmfx"
-    (fflag "--${boolEn libnppSupport}-libnpp" "3.1")
+    "--${boolEn libnppSupport}-libnpp"
     #"--${boolEn (mmal != null)}-mmal"
     /**/"--disable-mmal"
     "--${boolEn nvenc}-nvenc"
@@ -496,21 +492,18 @@ stdenv.mkDerivation rec {
     /**/"--disable-avisynth"
     "--${boolEn (bzip2 != null)}-bzlib"
     # Recursive dependency
-    (fflag "--${boolEn (chromaprint != null)}-chromaprint" "3.0")
+    "--${boolEn (chromaprint != null)}-chromaprint"
     # Undocumented (broadcom)
     #"--${boolEn (crystalhd != null)}-crystalhd"
     /**/"--disable-crystalhd"
-    # fontconfig -> libfontconfig since 3.1
-    (deprfflag "--${boolEn (fontconfig != null)}-fontconfig" null "3.0")
     "--${boolEn (frei0r-plugins != null)}-frei0r"
     # Undocumented before 3.0
-    (fflag "--${boolEn (libgcrypt != null)}-gcrypt" "3.0")
-    (fflag "--${boolEn (gmp != null)}-gmp" "3.0")
+    "--${boolEn (libgcrypt != null)}-gcrypt"
+    "--${boolEn (gmp != null)}-gmp"
     "--${boolEn (gnutls != null)}-gnutls"
     "--${boolEn (stdenv.cc.libc != null)}-iconv"
-    (fflag "--${boolEn (jni != null)}-jni" "3.1")
+    "--${boolEn (jni != null)}-jni"
     "--${boolEn (ladspa-sdk != null)}-ladspa"
-    (deprfflag "--disable-libaacplus" null "2.8")
     "--${boolEn (libass != null)}-libass"
     "--${boolEn (libbluray != null)}-libbluray"
     "--${boolEn (libbs2b != null)}-libbs2b"
@@ -521,12 +514,9 @@ stdenv.mkDerivation rec {
     "--${boolEn (
       libdc1394 != null
       && libraw1394 != null)}-libdc1394"
-    # Undocumented
-    (deprfflag "--${boolEn (dcadec != null)}-libdcadec" null "3.0")
     (deprfflag "--${boolEn (libebur128 != null)}-libebur128" "3.1" "3.2")
-    (deprfflag "--disable-libfaac" null "3.1")
-    (fflag "--${boolEn (fdk-aac != null)}-libfdk-aac" null)
-    (fflag "--${boolEn (fontconfig != null)}-libfontconfig" "3.1")
+    "--${boolEn (fdk-aac != null)}-libfdk-aac"
+    "--${boolEn (fontconfig != null)}-libfontconfig"
     "--${boolEn (flite != null)}-libflite"
     "--${boolEn (freetype != null)}-libfreetype"
     "--${boolEn (fribidi != null)}-libfribidi"
@@ -552,12 +542,11 @@ stdenv.mkDerivation rec {
     /**/"--disable-libopencv"
     "--${boolEn (openh264 != null)}-libopenh264"
     "--${boolEn (openjpeg != null)}-libopenjpeg"
-    #(ffmpeg "--${boolEn (libopenmpt != null)}-libopenmpt" "3.2")
-    /**/(fflag "--disable-libopenmpt" "3.2")
+    #"--${boolEn (libopenmpt != null)}-libopenmpt"
+    /**/"--disable-libopenmpt"
     "--${boolEn (opus != null)}-libopus"
     "--${boolEn (pulseaudio_lib != null)}-libpulse"
-    (deprfflag "--disable-libquvi" null "2.8")
-    (fflag "--${boolEn (rubberband != null)}-librubberband" "3.0")
+    "--${boolEn (rubberband != null)}-librubberband"
     "--${boolEn (rtmpdump != null)}-librtmp"
     "--${boolEn (schroedinger != null)}-libschroedinger"
     #"--${boolEn (shine != null)}-libshine"
@@ -567,15 +556,13 @@ stdenv.mkDerivation rec {
     "--${boolEn (soxr != null)}-libsoxr"
     "--${boolEn (speex != null)}-libspeex"
     "--${boolEn (libssh != null)}-libssh"
-    #(fflag "--${boolEn (tesseract != null)}-libtesseract" "3.0")
-    /**/(fflag "--disable-libtesseract" "3.0")
+    #"--${boolEn (tesseract != null)}-libtesseract"
+    /**/"--disable-libtesseract"
     "--${boolEn (libtheora != null)}-libtheora"
     #"--${boolEn (twolame != null)}-libtwolame"
     /**/"--disable-libtwolame"
-    (deprfflag "--disable-libutvideo" null "3.0")
     "--${boolEn (v4l_lib != null)}-libv4l2"
     "--${boolEn (vid-stab != null)}-libvidstab"
-    (deprfflag "--disable-libvo-aacenc" null "2.8")
     "--${boolEn (vo-amrwbenc != null)}-libvo-amrwbenc"
     "--${boolEn (libvorbis != null)}-libvorbis"
     "--${boolEn (libvpx != null)}-libvpx"
@@ -589,24 +576,24 @@ stdenv.mkDerivation rec {
     "--${boolEn libxcbxfixesExtlib}-libxcb-xfixes"
     "--${boolEn libxcbshapeExtlib}-libxcb-shape"
     "--${boolEn (xvidcore != null)}-libxvid"
-    (fflag "--${boolEn (libzimg != null)}-libzimg" "3.0")
+    "--${boolEn (libzimg != null)}-libzimg"
     "--${boolEn (zeromq4 != null)}-libzmq"
     #"--${boolEn (zvbi != null)}-libzvbi"
     /**/"--disable-libzvbi"
     "--${boolEn (xz != null)}-lzma"
     #"--${boolEn decklinkExtlib}-decklink"
     /**/"--disable-decklink"
-    (fflag "--disable-mediacodec" "3.1")  # android
-    (fflag "--${boolEn (netcdf != null)}-netcdf" "3.0")
+    "--disable-mediacodec"  # android
+    "--${boolEn (netcdf != null)}-netcdf"
     "--${boolEn (openal != null)}-openal"
     #"--${boolEn (opencl != null)}-opencl"
     /**/"--disable-opencl"
     # OpenGL requires libX11 for GLX
     "--${boolEn (mesa_noglu != null && xorg.libX11 != null)}-opengl"
     "--${boolEn (openssl != null)}-openssl"
-    (fflag "--disable-schannel" "3.0")  # windows
-    (deprfflag "--${boolEn (SDL != null)}-sdl" null "3.1")
-    (fflag "--${boolEn (SDL_2 != null)}-sdl2" "3.2")
+    "--disable-schannel"  # windows
+    "--${boolEn (SDL_2 != null)}-sdl"
+    "--${boolEn (SDL_2 != null)}-sdl2"
     "--disable-securetransport"
     "--${boolEn x11grabExtlib}-x11grab"
     #"--${boolEn (xorg.libX11 != null && xorg.libXv != null)}-xlib"

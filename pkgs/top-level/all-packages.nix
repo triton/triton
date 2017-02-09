@@ -1041,7 +1041,6 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   # The following are disabled by default
   celt = null;
   chromaprint = null;
-  dcadec = null;
   fdk-aac = null;
   flite = null;
   frei0r-plugins = null;
@@ -1097,14 +1096,8 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   zeromq4 = null;
   #zvbi = null;
 } // overrides);
-ffmpeg_2-8 = pkgs.ffmpeg_generic {
-  channel = "2.8";
-  SDL_2 = null;
-};
-ffmpeg_2 = callPackageAlias "ffmpeg_2-8" { };
 ffmpeg_3-2 = pkgs.ffmpeg_generic {
   channel = "3.2";
-  SDL = null;
 };
 ffmpeg_3 = callPackageAlias "ffmpeg_3-2" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
@@ -1112,7 +1105,6 @@ ffmpeg_head = pkgs.ffmpeg_generic {
   # Use latest dependencies
   opus = pkgs.opus_head;
   libvpx = pkgs.libvpx_head;
-  SDL = null;
   x265 = pkgs.x265_head;
 };
 ffmpeg = callPackageAlias "ffmpeg_3" { };

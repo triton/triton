@@ -1,10 +1,12 @@
 { stdenv
+, fetchpatch
 , fetchurl
+, lib
 , scons
 
 , chromaprint
 , faad2
-, ffmpeg_2
+, ffmpeg
 , fftw_double
 , flac
 , libid3tag
@@ -32,17 +34,15 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    scFlag;
+  inherit (lib)
+    bool01;
 in
-
 stdenv.mkDerivation rec {
-  name = "mixxx-${version}";
-  version = "2.0.0";
+  name = "mixxx-2.0.0";
 
   src = fetchurl {
     url = "https://downloads.mixxx.org/${name}/${name}-src.tar.gz";
-    sha256 = "0vb71w1yq0xwwsclrn2jj9bk8w4n14rfv5c0aw46c11mp8xz7f71";
+    sha256 = "e1b8f33bba35046608578095ed3209967034579252d84c99e6bc03ec030f676d";
   };
 
   nativeBuildInputs = [
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     chromaprint
     faad2
-    ffmpeg_2
+    ffmpeg
     fftw_double
     flac
     libid3tag
@@ -79,6 +79,19 @@ stdenv.mkDerivation rec {
     xorg.libX11
   ];
 
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/mixxxdj/mixxx/commit/"
+        + "51d95ba58d99309f439cb7e2d1285cfb33aa0f63.patch";
+      sha256 = "18624e01632a2a27329ee692991a61ec9944f3a7f6c2ad3b0345429c1727b0c8";
+    })
+    (fetchpatch {
+      url = "https://github.com/mixxxdj/mixxx/commit/"
+        + "51d95ba58d99309f439cb7e2d1285cfb33aa0f63.patch";
+      sha256 = "18624e01632a2a27329ee692991a61ec9944f3a7f6c2ad3b0345429c1727b0c8";
+    })
+  ];
+
   postPatch = ''
     sed -i build/depends.py \
       -e 's/"which /"type -P /'
@@ -91,17 +104,17 @@ stdenv.mkDerivation rec {
 
     "opengles=0"
     "hss1394=0"
-    (scFlag "hid" (libusb != null))
-    (scFlag "bulk" (libusb != null))
-    (scFlag "mad" (libmad != null))
+    "hid=${bool01 (libusb != null)}"
+    "bulk=${bool01 (libusb != null)}"
+    "mad=${bool01 (libmad != null)}"
     "coreaudio=0"
     "mediafoundation=0"
     "ipod=0"
     "vinylcontrol=1"
-    (scFlag "vamp" (vamp.vampSDK != null))
-    (scFlag "modplug" (libmodplug != null))
-    (scFlag "faad" (faad2 != null))
-    (scFlag "wv" (wavpack != null))
+    "vamp=${bool01 (vamp.vampSDK != null)}"
+    "modplug=${bool01 (libmodplug != null)}"
+    "faad=${bool01 (faad2 != null)}"
+    "wv=${bool01 (wavpack != null)}"
     "color=0"
     "asan=0"
     "perftools=0"
@@ -111,9 +124,9 @@ stdenv.mkDerivation rec {
     "verbose=0"
     "profiling=0"
     "test=0"
-    (scFlag "shoutcast" (libshout != null))
-    (scFlag "opus" (opus != null))
-    (scFlag "ffmpeg" (ffmpeg_2 != null))
+    "shoutcast=${bool01 (libshout != null)}"
+    "opus=${bool01 (opus != null)}"
+    "ffmpeg=${bool01 (ffmpeg != null)}"
     "optimize=portable"
     "autodjcrates=1"
     "macappstore=0"
@@ -135,7 +148,7 @@ stdenv.mkDerivation rec {
     runHook 'postInstall'
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Digital DJ mixing software";
     homepage = "http://mixxx.org/";
     license = licenses.gpl2Plus;

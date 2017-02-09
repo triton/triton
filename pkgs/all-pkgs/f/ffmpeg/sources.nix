@@ -6,9 +6,9 @@
     sha256 = "2c48930205305a865ae698110f7b3e0cc90e9d243f48bb2a3fb59770d82448b1";
   };
   "3.2" = {
-    version = "3.2.2";
-    multihash = "QmXNZqya2NYBvHXycX9cewzMUZhXgUMnsmiyE5nyDE5sWP";
-    sha256 = "3f01bd1fe1a17a277f8c84869e5d9192b4b978cb660872aa2b54c3cc8a2fedfc";
+    version = "3.2.3";
+    multihash = "QmSGrF8uEsX1CZvdppukyfD6mBHUfQUFB1oJzv36Kd6j8U";
+    sha256 = "54ce502aca10b7e6059f19220ea2f68fa0c9c4c4d255ae13e615f08f0c94dcc5";
   };
   "9.9" = { # Git
     version = "2017.01.24";

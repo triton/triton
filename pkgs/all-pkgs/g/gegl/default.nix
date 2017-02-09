@@ -7,7 +7,7 @@
 , babl
 , cairo
 , exiv2
-, ffmpeg_2
+, ffmpeg
 , gdk-pixbuf_unwrapped
 , gexiv2
 , glib
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
     babl
     cairo
     #exiv2
-    ffmpeg_2
+    ffmpeg
     gdk-pixbuf_unwrapped
     #gexiv2
     glib
@@ -113,7 +113,7 @@ stdenv.mkDerivation rec {
     "--${boolWt (jasper != null)}-jasper"
     "--without-graphviz"
     "--without-lua"
-    "--${boolWt (ffmpeg_2 != null)}-libavformat"
+    "--${boolWt (ffmpeg != null)}-libavformat"
     #"--${boolWt (v4l_lib != null)}-libv4l"
     "--without-libv4l"
     "--${boolWt (lcms2 != null)}-lcms"

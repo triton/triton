@@ -1037,6 +1037,12 @@ fdk_aac = callPackageAlias "fdk-aac_stable" { };
 
 feh = callPackage ../all-pkgs/f/feh { };
 
+ffado_full = callPackage ../all-pkgs/f/ffado { };
+
+ffado_lib = callPackage ../all-pkgs/f/ffado {
+  prefix = "lib";
+};
+
 ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   # The following are disabled by default
   celt = null;
@@ -4081,12 +4087,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   alsa-tools = callPackage ../os-specific/linux/alsa-tools { };
 
   atop = callPackage ../os-specific/linux/atop { };
-#
-  ffado_full = callPackage ../os-specific/linux/ffado { };
-
-  ffado_lib = callPackage ../os-specific/linux/ffado {
-    prefix = "lib";
-  };
 #
 #  # -- Linux kernel expressions ------------------------------------------------
 #

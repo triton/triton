@@ -174,9 +174,9 @@ go.stdenv.mkDerivation (
     '');
 
   buildPhase = args.buildPhase or ''
-    runHook preBuild
-
     runHook renameImports
+
+    runHook preBuild
 
     buildFlagsArray+=(
       "-asmflags" "-trimpath=$NIX_BUILD_TOP"

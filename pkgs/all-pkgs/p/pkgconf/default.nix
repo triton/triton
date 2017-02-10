@@ -3,12 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "pkgconf-1.2.0";
+  name = "pkgconf-1.2.2";
 
   src = fetchurl {
     url = "https://distfiles.dereferenced.org/pkgconf/${name}.tar.xz";
-    multihash = "QmPzgjzdbhexoheiDWPT16SvbxgPhaCdqgHvJ81GtfN8tC";
-    sha256 = "7ec3839ed22f9e400fd3e6bf993b69ae74b9c1bf3d407293a7f6786725c2808a";
+    multihash = "QmV3RDvT8A4UcQyHZ2uGx7AHQ3TGfS1wcqU4THatzDSq5F";
+    sha256 = "b445d16df8b6e88489039eb2d7d91d5668025cb058a1852f3e0fdee19c8cb104";
   };
 
   postInstall = ''

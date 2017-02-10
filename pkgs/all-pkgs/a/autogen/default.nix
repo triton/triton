@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "5.18.10";
+  version = "5.18.12";
 
   tarballUrls = version: [
     "mirror://gnu/autogen/rel${version}/autogen-${version}.tar.xz"
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "4e248e02c50404ea5c5fc29027d26600f895a9eae7ea5ef851be2c8587abc148";
+    sha256 = "be3ba62e883185b6ee8475edae97d7197d701d6b9ad9c3d2df53697110c1bfd8";
   };
 
   nativeBuildInputs = [
@@ -44,11 +44,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "5.18.10";
+      urls = tarballUrls "5.18.12";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "44A0 88E2 95C3 A722 C450  590E C9EF 76DE B74E E762";
       inherit (src) outputHashAlgo;
-      outputHash = "4e248e02c50404ea5c5fc29027d26600f895a9eae7ea5ef851be2c8587abc148";
+      outputHash = "be3ba62e883185b6ee8475edae97d7197d701d6b9ad9c3d2df53697110c1bfd8";
     };
   };
 

@@ -5,18 +5,6 @@
     # Benjamin Peterson
     pgpKeyFingerprint = "C01E 1CAD 5EA2 C4F0 B8E3  5715 04C3 67C2 18AD D4FF";
   };
-  "3.3" = {
-    versionPatch = "6";
-    sha256 = "0gsxpgd5p4mwd01gw501vsyahncyw3h9836ypkr3y32kgazy89jj";
-    # Georg Brandl
-    pgpKeyFingerprint = "26DE A9D4 6133 91EF 3E25  C9FF 0A5B 1018 3658 0288";
-  };
-  "3.4" = {
-    versionPatch = "5";
-    sha256 = "ee64b1c8a47461009abf25252332d29a4e587cb4f0c1c96aa793a3732e9d898a";
-    # Larry Hastings
-    pgpKeyFingerprint = "97FC 712E 4C02 4BBE A48A  61ED 3A5C A953 F73C 700D";
-  };
   "3.5" = {
     versionPatch = "3";
     sha256 = "eefe2ad6575855423ab630f5b51a8ef6e5556f774584c06beab4926f930ddbb0";

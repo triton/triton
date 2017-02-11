@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , bzip2
 , db
@@ -164,7 +165,7 @@ stdenv.mkDerivation rec {
     #"--enable-big-digits" # py3
     (wtFlag "pydebug" pydebug null)
     #"--with-hash-algorithm" # py3
-    (if (versionAtLeast channel "3.5") then
+    (if isPy3 then
       # Flag is not a boolean
       (if stdenv.cc.isClang then
         "--with-address-sanitizer"
@@ -337,7 +338,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "An interpreted, object-oriented programming language";
     homepage = "http://www.python.org/";
     license = licenses.psf-2;

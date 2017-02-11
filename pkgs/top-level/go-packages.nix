@@ -5051,6 +5051,7 @@ let
       oauth2
       open-golang
       pflag
+      sftp
       swift
       sys
       tb

@@ -2582,9 +2582,6 @@ net-tools = callPackage ../all-pkgs/n/net-tools { };
 
 nettle = callPackage ../all-pkgs/n/nettle { };
 
-networkmanager_1-4 = callPackage ../all-pkgs/n/networkmanager {
-  channel = "1.4";
-};
 networkmanager_1-6 = callPackage ../all-pkgs/n/networkmanager {
   channel = "1.6";
 };

@@ -113,10 +113,8 @@ stdenv.mkDerivation rec {
     perl
     polkit
     ppp
-  ] ++ optionals (versionAtLeast channel "1.6") [
     python3Packages.python
     python3Packages.pygobject_3
-  ] ++ [
     readline
     systemd_full
     util-linux_lib
@@ -137,7 +135,7 @@ stdenv.mkDerivation rec {
     })
   ];*/
 
-  postPatch = optionalString (versionAtLeast channel "1.6") ''
+  postPatch = ''
     patchShebangs ./tools/create-exports-NetworkManager.sh
   '' + /* FIXME: don't use an impure runtime path
                  fix hardcoded `mobprobe` search path */ ''
@@ -185,9 +183,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-qt"
     #"--enable-teamdctl"
-  ] ++ optionals (versionAtLeast channel "1.6") [
     "--enable-json-validation"
-  ] ++ [
     "--${boolEn (polkit != null)}-polkit"
     "--${boolEn (polkit != null)}-polkit-agent"
     #"--enable-modify-system"
@@ -230,15 +226,11 @@ stdenv.mkDerivation rec {
       boolString (dhcp-client == "dhclient") "=${dhcp}/bin/dhclient" ""}"
     "--${boolWt (dhcp-client == "dhcpcd")}-dhcpcd${
       boolString (dhcp-client == "dhcpcd") "=${dhcpcd}/bin/dhcpcd" ""}"
-  ] ++ optionals (versionAtLeast channel "1.6") [
     "--${boolWt (dhcp-client == "dhcpcd")}-dhcpcd-supports-ipv6"
     "--with-config-dhcp-default=${dhcp-client}"
-  ] ++ [
     "--with-resolvconf=${openresolv}/sbin/resolvconf"
     "--without-netconfig"
-  ] ++ optionals (versionAtLeast channel "1.6") [
     #"--with-config-dns-rc-manager-default=symlink|file|netconfig|resolvconf"
-  ] ++ [
     "--with-iptables=${iptables}/bin/iptables"
     "--with-dnsmasq=${dnsmasq}/bin/dnsmasq"
     #"--with-dnssec-trigger=/path/to/dnssec-trigger-script"

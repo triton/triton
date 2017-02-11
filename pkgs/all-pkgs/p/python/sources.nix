@@ -18,8 +18,8 @@
     pgpKeyFingerprint = "97FC 712E 4C02 4BBE A48A  61ED 3A5C A953 F73C 700D";
   };
   "3.5" = {
-    versionPatch = "2";
-    sha256 = "0010f56100b9b74259ebcd5d4b295a32324b58b517403a10d1a2aa7cb22bca40";
+    versionPatch = "3";
+    sha256 = "eefe2ad6575855423ab630f5b51a8ef6e5556f774584c06beab4926f930ddbb0";
     # Larry Hastings
     pgpKeyFingerprint = "97FC 712E 4C02 4BBE A48A  61ED 3A5C A953 F73C 700D";
   };

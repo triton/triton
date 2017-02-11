@@ -137,7 +137,7 @@ stdenv.mkDerivation rec {
     })
   ];*/
 
-  postPatch = ''
+  postPatch = optionalString (versionAtLeast channel "1.6") ''
     patchShebangs ./tools/create-exports-NetworkManager.sh
   '' + /* FIXME: don't use an impure runtime path
                  fix hardcoded `mobprobe` search path */ ''

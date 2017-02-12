@@ -130,8 +130,6 @@ stdenv.mkDerivation rec {
     "--disable-gcov"
     # Required to build shared libraries
     "--enable-pic"
-    (deprFlag "1.6"
-      "--${boolEn (elem targetSystem platforms.x86-all)}-use-x86inc")
     "--enable-optimizations"
     "--disable-ccache"
     "--enable-runtime-cpu-detect"

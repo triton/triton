@@ -1,8 +1,8 @@
 { }:
 {
   "1.6" = {
-    version = "1.6.0";
-    sha256 = "d0afbb5eb1ecae68f8d578abace160a97e2e8a230e3028cf4db115d59a695aad";
+    version = "1.6.1";
+    sha256 = "1c2c0c2a97fba9474943be34ee39337dee756780fc12870ba1dc68372586a819";
   };
   # master
   "1.999" = {

@@ -5,14 +5,19 @@
 }:
 
 let
-  version = "2.27";
+  version = "3.0";
+
+  tarballUrls = version: [
+    "mirror://gnu/grep/grep-${version}.tar.xz"
+  ];
 in
 stdenv.mkDerivation rec {
   name = "gnugrep-${version}";
 
   src = fetchurl {
-    url = "mirror://gnu/grep/grep-${version}.tar.xz";
-    sha256 = "ad4cc44d23074a1c3a8baae8fbafff2a8c60f38a9a6108f985eef6fbee6dcaeb";
+    urls = tarballUrls version;
+    hashOutput = false;
+    sha256 = "e2c81db5056e3e8c5995f0bb5d0d0e1cad1f6f45c3b2fc77b6e81435aed48ab5";
   };
 
   nativeBuildInputs = [
@@ -35,6 +40,17 @@ stdenv.mkDerivation rec {
     echo "exec $out/bin/grep -F \"\$@\"" >> $out/bin/fgrep
     chmod +x $out/bin/egrep $out/bin/fgrep
   '';
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "3.0";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "155D 3FC5 00C8 3448 6D1E  EA67 7FD9 FCCB 000B EEEE";
+      inherit (src) outputHashAlgo;
+      outputHash = "e2c81db5056e3e8c5995f0bb5d0d0e1cad1f6f45c3b2fc77b6e81435aed48ab5";
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/grep/;

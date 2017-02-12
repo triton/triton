@@ -2,6 +2,7 @@
 , buildPythonPackage
 , fetchPyPi
 , isPy27
+, lib
 
 , botocore
 , futures
@@ -11,7 +12,7 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "0.1.9";
+  version = "0.1.10";
 in
 buildPythonPackage rec {
   name = "s3transfer-${version}";
@@ -19,7 +20,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "s3transfer";
     inherit version;
-    sha256 = "17ad7d672115f93a72ed7917209cb0bb02fc87f96f11886408ed8a6b1bb4c754";
+    sha256 = "ba1a9104939b7c0331dc4dd234d79afeed8b66edce77bbeeecd4f56de74a0fc1";
   };
 
   propagatedBuildInputs = [
@@ -28,7 +29,7 @@ buildPythonPackage rec {
     futures
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "An Amazon S3 Transfer Manager";
     homepage = https://github.com/boto/s3transfer;
     license = licenses.asl20;

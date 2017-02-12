@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , xz
 }:
@@ -9,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/orc/${name}.tar.xz";
-    sha256Url = "${url}.sha256sum";
+    hashOutput = false;
     sha256 = "7d52fa80ef84988359c3434e1eea302d077a08987abdde6905678ebcad4fa649";
   };
 
@@ -17,11 +18,10 @@ stdenv.mkDerivation rec {
     xz
   ];
 
-  postPatch =
-    /* Completely disable examples */ ''
-      sed -i Makefile.{am,in} \
-        -e '/SUBDIRS/ s:examples::'
-    '';
+  postPatch = /* Completely disable examples */ ''
+    sed -i Makefile.{am,in} \
+      -e '/SUBDIRS/ s:examples::'
+  '';
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -32,7 +32,21 @@ stdenv.mkDerivation rec {
     "--enable-Bsymbolic"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Urls = map (n: "${n}.sha256sum") src.urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Sebastian Dröge
+      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "The Oil Runtime Compiler, a JIT compiler for array operations";
     homepage = http://gstreamer.freedesktop.org/;
     # The source code implementing the Marsenne Twister algorithm is licensed

@@ -3364,10 +3364,10 @@ let
 
   gx = buildFromGitHub {
     version = 2;
-    rev = "v0.10.0";
+    rev = "v0.11.0";
     owner = "whyrusleeping";
     repo = "gx";
-    sha256 = "0kyx29qiijanbd3zrx239r1knzy5iglaj0gvsmy4d0kw7ai5isc4";
+    sha256 = "0pmwyscmbbqxdkpzncffn70d01vb7gb0ikg1gnhzkd8nwbx2kqzz";
     propagatedBuildInputs = [
       go-git-ignore
       go-homedir
@@ -3662,12 +3662,11 @@ let
 
   ipfs = buildFromGitHub {
     version = 2;
-    date = "2017-02-10";
-    rev = "466429ced3dbc4671f5e1d1bf233f19773acb0e9";
+    rev = "v0.4.5";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "08nn1242vhgl45nq3d7aqgflbxyqgznlzh0482jwb3mmp8m08k6s";
-    gxSha256 = "0lbw2yxx5x7dcinl15bdib5haszkqqd6hvmxg28jjf4rd4200c5c";
+    sha256 = "1ksizk51zybw0s6xx6z69a0ryfxwwnfcb5nl3bm9qnrd7ib6g4h6";
+    gxSha256 = "10rawqyxv81g1x9lva1hlxbs63gk618lyjg26d9cspl1r3w4vhd8";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"
@@ -3682,7 +3681,6 @@ let
     postConfigure = ''
       mv "$TMPDIR/Godeps" "go/src/$goPackagePath"
     '';
-    meta.useUnstable = true;
   };
 
   jose = buildFromGitHub {

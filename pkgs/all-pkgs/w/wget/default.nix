@@ -19,12 +19,12 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "wget-1.19";
+  name = "wget-1.19.1";
 
   src = fetchurl {
     url = "mirror://gnu/wget/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "0f1157bbf4daae19f3e1ddb70c6ccb2067feb834a6aa23c9d9daa7f048606384";
+    sha256 = "0c950b9671881222a4d385b013c9604e98a8025d1988529dfca0e93617744cd2";
   };
 
   nativeBuildInputs = [

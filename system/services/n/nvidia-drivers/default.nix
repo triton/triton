@@ -113,8 +113,6 @@ in
     services.xserver.drivers = singleton {
       name = "nvidia";
       modules = [
-        # x11glvnd module
-        pkgs.libglvnd
         nvidia-drivers_userspace
       ];
       libPath = [

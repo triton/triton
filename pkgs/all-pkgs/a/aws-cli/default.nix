@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchzip
+, lib
 
 , botocore
 , colorama
@@ -11,7 +12,7 @@
 }:
 
 let
-  version = "1.11.31";
+  version = "1.11.47";
 in
 buildPythonPackage rec {
   name = "aws-cli-${version}";
@@ -19,7 +20,7 @@ buildPythonPackage rec {
   src = fetchzip {
     version = 2;
     url = "https://github.com/aws/aws-cli/archive/${version}.tar.gz";
-    sha256 = "a81860adbf00e5567787aa8ee7fed9b44a2991adacd9d36855650d6db6dc499f";
+    sha256 = "5bffcc09734471f7a8a5c8fd3b05b174ea9eba6d4d176c270bdead316780fc19";
   };
 
   propagatedBuildInputs = [
@@ -35,7 +36,7 @@ buildPythonPackage rec {
     rm -f "$out"/bin/{aws.cmd,aws_completer,aws_bash_completer,aws_zsh_completer.sh}
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Command Line Interface for Amazon Web Services";
     homepage = https://github.com/aws/aws-cli;
     license = licenses.asl20;

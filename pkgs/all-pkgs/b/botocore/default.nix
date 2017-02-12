@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , docutils
 , jmespath
@@ -8,7 +9,7 @@
 }:
 
 let
-  version = "1.4.88";
+  version = "1.5.10";
 in
 buildPythonPackage rec {
   name = "botocore-${version}";
@@ -16,7 +17,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "botocore";
     inherit version;
-    sha256 = "fee22eb6fa95a3d56d9d11734f0b985d613fc7975c3a6c578592585d665c5e10";
+    sha256 = "9688a2984c2783257a6064c83b667f31347cbaf502d050ed249031f720c71bc3";
   };
 
   propagatedBuildInputs = [
@@ -25,7 +26,7 @@ buildPythonPackage rec {
     python-dateutil
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The low-level, core functionality of boto 3";
     homepage = https://github.com/boto/botocore;
     license = licenses.asl20;

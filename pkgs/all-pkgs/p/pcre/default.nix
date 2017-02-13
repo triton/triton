@@ -8,10 +8,9 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
+    boolEn
     optionals;
 in
-
 stdenv.mkDerivation rec {
   name = "pcre-8.40";
 
@@ -32,11 +31,11 @@ stdenv.mkDerivation rec {
     "--enable-pcre32"
     "--enable-cpp"
     "--enable-jit"
-    (enFlag "pcregrep-jit" pcregrep null)
+    "--${boolEn pcregrep}-pcregrep-jit"
     "--enable-utf"
     "--enable-unicode-properties"
-    (enFlag "pcregrep-libz" (pcregrep && zlib != null) null)
-    (enFlag "pcregrep-libbz2" (pcregrep && bzip2 != null) null)
+    "--${boolEn (pcregrep && zlib != null)}-pcregrep-libz"
+    "--${boolEn (pcregrep && bzip2 != null)}-pcregrep-libbz2"
     "--disable-pcretest-libedit"
     "--disable-pcretest-libreadline"
     "--disable-valgrind"

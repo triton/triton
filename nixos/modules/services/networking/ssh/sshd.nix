@@ -52,6 +52,27 @@ let
     ));
   in listToAttrs (map mkAuthKeyFile usersWithKeys);
 
+  pidFile = "/run/sshd.pid"
+
+  sshdCommon = {
+    description = "SSH Daemon";
+    after = [
+      "sshdgenkeys.service"
+      "network.target"
+    ];
+    requires = [
+      "sshdgenkeys.service"
+    ];
+    stopIfChanged = false;
+    path = [
+      cfgc.package
+    ];
+    environment.LD_LIBRARY_PATH = nssModulesPath;
+    serviceConfig = {
+      KillMode = "process";
+    };
+  };
+
 in
 
 {
@@ -222,129 +243,139 @@ in
 
   config = mkIf cfg.enable {
 
-    users.extraUsers.sshd =
-      { isSystemUser = true;
-        description = "SSH privilege separation user";
+    users.extraUsers.sshd = {
+      isSystemUser = true;
+      description = "SSH privilege separation user";
+    };
+
+    services.openssh.moduliFile =
+      mkDefault "${cfgc.package}/etc/ssh/moduli";
+
+    environment.etc = authKeysFiles // {
+      "ssh/moduli".source = cfg.moduliFile;
+    };
+
+    systemd.services = {
+      "sshdgenkeys" = {
+        path = [
+          cfgc.package
+        ];
+        script = ''
+          mkdir -m 0755 -p /etc/ssh
+
+          ${flip concatMapStrings cfg.hostKeys (k: ''
+            if ! [ -f "${k.path}" ]; then
+              ssh-keygen -t "${k.type}" -f "${k.path}" -N "" \
+                ${if k ? bits then "-b ${toString k.bits}" else ""}
+            fi
+          '')}
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+        };
       };
-
-    services.openssh.moduliFile = mkDefault "${cfgc.package}/etc/ssh/moduli";
-
-    environment.etc = authKeysFiles //
-      { "ssh/moduli".source = cfg.moduliFile; };
-
-    systemd =
-      let
-        service =
-          { description = "SSH Daemon";
-
-            wantedBy = optional (!cfg.startWhenNeeded) "multi-user.target";
-
-            stopIfChanged = false;
-
-            path = [ cfgc.package pkgs.gawk ];
-
-            environment.LD_LIBRARY_PATH = nssModulesPath;
-
-            preStart =
-              ''
-                mkdir -m 0755 -p /etc/ssh
-
-                ${flip concatMapStrings cfg.hostKeys (k: ''
-                  if ! [ -f "${k.path}" ]; then
-                      ssh-keygen -t "${k.type}" ${if k ? bits then "-b ${toString k.bits}" else ""} -f "${k.path}" -N ""
-                  fi
-                '')}
-              '';
-
-            serviceConfig =
-              { ExecStart =
-                  "${cfgc.package}/sbin/sshd " + (optionalString cfg.startWhenNeeded "-i ") +
-                  "-f ${pkgs.writeText "sshd_config" cfg.extraConfig}";
-                KillMode = "process";
-              } // (if cfg.startWhenNeeded then {
-                StandardInput = "socket";
-              } else {
-                Restart = "always";
-                Type = "forking";
-                PIDFile = "/run/sshd.pid";
-              });
+    } // mkIf (!cfg.startWhenNeeded) {
+      "sshd" = mkMerge [
+        sshdCommon
+        {
+          wantedBy = [
+            "multi-user.target"
+          ];
+          reloadIfChanged = true;
+          serviceConfig = {
+            ExecStart = "@${cfgc.package}/sbin/sshd sshd"
+              + "-f ${pkgs.writeText "sshd_config" cfg.extraConfig}";
+            ExecReload="${pkgs.coreutils}/bin/kill -HUP $MAINPID";
+            KillMode = "process";
+            Restart = "always";
+            Type = "forking";
+            PIDFile = pidFile;
           };
-      in
-
-      if cfg.startWhenNeeded then {
-
-        sockets.sshd =
-          { description = "SSH Socket";
-            wantedBy = [ "sockets.target" ];
-            socketConfig.ListenStream = cfg.ports;
-            socketConfig.Accept = true;
+        }
+      ];
+    } // mkIf cfg.startWhenNeeded {
+      "sshd@" = mkMerge [
+        sshdCommon
+        {
+          serviceConfig = {
+            ExecStart = "@${cfgc.package}/sbin/sshd sshd"
+              + "-f ${pkgs.writeText "sshd_config" cfg.extraConfig}";
+            StandardInput = "socket";
+            StandardError = "syslog";
           };
+        }
+      ];
+    };
 
-        services."sshd@" = service;
-
-      } else {
-
-        services.sshd = service;
-
+    systemd.sockets."sshd" = {
+      description = "SSHD Socket";
+      wantedBy = [
+        "sockets.target"
+      ];
+      wants = [
+        "sshdgenkeys.service"
+      ];
+      socketConfig = {
+        ListenStream = cfg.ports;
+        Accept = true;
       };
+    };
 
     networking.firewall.allowedTCPPorts = cfg.ports;
 
-    security.pam.services.sshd =
-      { startSession = true;
-        showMotd = true;
-        unixAuth = cfg.passwordAuthentication;
-      };
+    security.pam.services.sshd =  {
+      startSession = true;
+      showMotd = true;
+      unixAuth = cfg.passwordAuthentication;
+    };
 
-    services.openssh.authorizedKeysFiles =
-      [ ".ssh/authorized_keys" ".ssh/authorized_keys2" "/etc/ssh/authorized_keys.d/%u" ];
+    services.openssh.authorizedKeysFiles = [
+      ".ssh/authorized_keys"
+      ".ssh/authorized_keys2"
+      "/etc/ssh/authorized_keys.d/%u"
+    ];
 
-    services.openssh.extraConfig =
-      ''
-        PidFile /run/sshd.pid
+    services.openssh.extraConfig = ''
+      PidFile ${pidFile}
 
-        Protocol 2
+      Protocol 2
 
-        UsePAM yes
+      UsePAM yes
 
-        UsePrivilegeSeparation sandbox
+      UsePrivilegeSeparation sandbox
 
-        AddressFamily ${if config.networking.enableIPv6 then "any" else "inet"}
-        ${concatMapStrings (port: ''
-          Port ${toString port}
-        '') cfg.ports}
+      AddressFamily ${if config.networking.enableIPv6 then "any" else "inet"}
+      ${concatMapStrings (port: ''
+        Port ${toString port}
+      '') cfg.ports}
 
-        ${concatMapStrings ({ port, addr, ... }: ''
-          ListenAddress ${addr}${if port != null then ":" + toString port else ""}
-        '') cfg.listenAddresses}
+      ${concatMapStrings ({ port, addr, ... }: ''
+        ListenAddress ${addr}${if port != null then ":" + toString port else ""}
+      '') cfg.listenAddresses}
 
-        ${optionalString cfgc.setXAuthLocation ''
-            XAuthLocation ${pkgs.xorg.xauth}/bin/xauth
-        ''}
+      ${optionalString cfgc.setXAuthLocation ''
+          XAuthLocation ${pkgs.xorg.xauth}/bin/xauth
+      ''}
 
-        ${if cfg.forwardX11 then ''
-          X11Forwarding yes
-        '' else ''
-          X11Forwarding no
-        ''}
+      X11Forwarding ${if cfg.forwardX11 then "yes" else "no"}
 
-        ${optionalString cfg.allowSFTP ''
-          Subsystem sftp ${cfgc.package}/libexec/sftp-server
-        ''}
+      ${optionalString cfg.allowSFTP ''
+        Subsystem sftp ${cfgc.package}/libexec/sftp-server
+      ''}
 
-        PermitRootLogin ${cfg.permitRootLogin}
-        GatewayPorts ${cfg.gatewayPorts}
-        PasswordAuthentication ${if cfg.passwordAuthentication then "yes" else "no"}
-        ChallengeResponseAuthentication ${if cfg.challengeResponseAuthentication then "yes" else "no"}
+      PermitRootLogin ${cfg.permitRootLogin}
+      GatewayPorts ${cfg.gatewayPorts}
+      PasswordAuthentication ${if cfg.passwordAuthentication then "yes" else "no"}
+      ChallengeResponseAuthentication ${if cfg.challengeResponseAuthentication then "yes" else "no"}
 
-        PrintMotd no # handled by pam_motd
+      PrintMotd no # handled by pam_motd
 
-        AuthorizedKeysFile ${toString cfg.authorizedKeysFiles}
+      AuthorizedKeysFile ${toString cfg.authorizedKeysFiles}
 
-        ${flip concatMapStrings cfg.hostKeys (k: ''
-          HostKey ${k.path}
-        '')}
-      '';
+      ${flip concatMapStrings cfg.hostKeys (k: ''
+        HostKey ${k.path}
+      '')}
+    '';
 
     assertions = [{ assertion = if cfg.forwardX11 then cfgc.setXAuthLocation else true;
                     message = "cannot enable X11 forwarding without setting xauth location";}]

@@ -280,10 +280,5 @@ in {
       createHome = true;
       description = "Mediatomb DLNA Server User";
     });
-
-    networking.firewall = {
-      allowedUDPPorts = [ 1900 cfg.port ];
-      allowedTCPPorts = [ cfg.port ];
-    };
   };
 }

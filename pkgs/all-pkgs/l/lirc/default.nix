@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , help2man
+, lib
 , libxslt
 , python3Packages
 
@@ -13,25 +14,20 @@
 , xorg
 }:
 
-let
-  inherit (stdenv.lib)
-    optionals
-    wtFlag;
-
-  version = "0.9.4c";
-in
-
 # TODO: libirman support
 # TODO: irxevent support
 # TODO: xmode2 support
 # TODO: usb support
 
+let
+  version = "0.9.4d";
+in
 stdenv.mkDerivation rec {
   name = "lirc-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/lirc/LIRC/${version}/${name}.tar.bz2";
-    sha256 = "8974fe5dc8eaa717daab6785d2aefeec27615f01ec24b96d31e3381b2f70726a";
+    sha256 = "c68f18c35b489b865c0a741d119b136e8702191538cd3551b977a7af6c4e41ab";
   };
 
   nativeBuildInputs = [
@@ -86,7 +82,7 @@ stdenv.mkDerivation rec {
     sed -i '/#include "config.h"/d' "$out/include/lirc/curl_poll.h"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Allows to receive and send infrared signals";
     homepage = http://www.lirc.org/;
     license = licenses.gpl2;

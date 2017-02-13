@@ -1,5 +1,6 @@
 { stdenv
 , fetchzip
+, lib
 , makeWrapper
 , perl
 , pkgconfig
@@ -46,10 +47,10 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
-  version = "0.23.0";
+  version = "0.24.0";
 in
 stdenv.mkDerivation rec {
   name = "mpv-${version}";
@@ -57,7 +58,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     version = 2;
     url = "https://github.com/mpv-player/mpv/archive/v${version}.tar.gz";
-    sha256 = "200a9564fae9d10dff9fe652dc816336807acebec72c8fbf40ba2e10e247672a";
+    sha256 = "b6f5b5b4a2a1cf6e8a947db9e4ee1e6d32faba2d7bece2397f525b0d4828e7bc";
   };
 
   nativeBuildInputs = [
@@ -116,14 +117,13 @@ stdenv.mkDerivation rec {
     xorg.libXxf86vm
   ];
 
-  postPatch =
-    /* https://github.com/mpv-player/mpv/issues/3766
-       vdpau configure detection requires a vdpau device to exist.
-       This hack replaces the configure test with the test for libdl. */ ''
-      sed -i wscript \
-        -e 's,libavcodec/vdpau.h,dlfcn.h,' \
-        -e "s/.*av_vdpau_bind_context.*/'dlopen\(\"\", 0)',/"
-    '';
+  postPatch = /* https://github.com/mpv-player/mpv/issues/3766
+    vdpau configure detection requires a vdpau device to exist.
+    This hack replaces the configure test with the test for libdl. */ ''
+    sed -i wscript \
+      -e 's,libavcodec/vdpau.h,dlfcn.h,' \
+      -e "s/.*av_vdpau_bind_context.*/'dlopen\(\"\", 0)',/"
+  '';
 
   configureFlags = [
     ###"--enable-cplayer"
@@ -136,6 +136,7 @@ stdenv.mkDerivation rec {
     "--enable-manpage-build"
     "--disable-html-build"
     "--disable-pdf-build"
+    "--enable-cplugins"
     "--enable-vf-dlopen-filters"
     "--enable-zsh-comp"
     ###"--enable-asm"
@@ -162,8 +163,6 @@ stdenv.mkDerivation rec {
     #"--${boolEn (vapoursynth != null)}-vapoursynth-lazy"
     #"--${boolEn (vapoursynth != null)}-vapoursynth-core"
     "--${boolEn (libarchive != null)}-libarchive"
-    "--${boolEn (ffmpeg != null)}-libswresample"
-    "--disable-libavresample"
     "--${boolEn (ffmpeg != null)}-libavdevice"
     "--${boolEn (SDL_2 != null)}-sdl2"
     "--disable-sdl1"
@@ -245,17 +244,18 @@ stdenv.mkDerivation rec {
       $out/share/mpv/subfont.ttf
   '';
 
-  preFixup =
-    /* Ensure youtube-dl is available in $PATH for MPV */ ''
-      wrapProgram $out/bin/mpv \
-        --prefix PATH : "${pythonPackages.youtube-dl}/bin"
-    '';
+  preFixup = /* Ensure youtube-dl is available in $PATH for MPV */ ''
+    wrapProgram $out/bin/mpv \
+      --prefix PATH : "${pythonPackages.youtube-dl}/bin"
+  '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A media player that supports many video formats";
     homepage = http://mpv.io;
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

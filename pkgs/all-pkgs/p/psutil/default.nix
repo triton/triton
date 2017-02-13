@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
+, lib
 , fetchPyPi
 }:
 
 let
-  version = "5.0.1";
+  version = "5.1.3";
 in
 buildPythonPackage rec {
   name = "psutil-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "psutil";
     inherit version;
-    sha256 = "9d8b7f8353a2b2eb6eb7271d42ec99d0d264a9338a37be46424d56b4e473b39e";
+    sha256 = "959bd58bdc8152b0a143cb3bd822d4a1b8f7230617b0e3eb2ff6e63812120f2b";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A process and system utilities module for Python";
     homepage = https://github.com/giampaolo/psutil/;
     license = licenses.bsd3;

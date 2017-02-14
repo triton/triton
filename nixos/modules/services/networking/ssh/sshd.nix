@@ -52,7 +52,7 @@ let
     ));
   in listToAttrs (map mkAuthKeyFile usersWithKeys);
 
-  pidFile = "/run/sshd.pid"
+  pidFile = "/run/sshd.pid";
 
   sshdCommon = {
     description = "SSH Daemon";

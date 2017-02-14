@@ -285,7 +285,9 @@ in
             ];
             reloadIfChanged = true;
             serviceConfig = {
-              ExecStart = "${cfgc.package}/sbin/sshd"
+              ExecStartPre = "${cfgc.package}/bin/sshd -t"
+                + " -f ${pkgs.writeText "sshd_config" cfg.extraConfig}";
+              ExecStart = "${cfgc.package}/bin/sshd"
                 + " -f ${pkgs.writeText "sshd_config" cfg.extraConfig}";
               ExecReload="${pkgs.coreutils}/bin/kill -HUP $MAINPID";
               Restart = "always";
@@ -300,7 +302,7 @@ in
           sshdCommon
           {
             serviceConfig = {
-              ExecStart = "${cfgc.package}/sbin/sshd"
+              ExecStart = "${cfgc.package}/bin/sshd"
                 + " -f ${pkgs.writeText "sshd_config" cfg.extraConfig}";
               StandardInput = "socket";
               StandardError = "syslog";

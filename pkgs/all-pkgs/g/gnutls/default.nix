@@ -23,7 +23,7 @@ let
   ];
 
   major = "3.5";
-  minor = "8";
+  minor = "9";
   version = "${major}.${minor}";
 in
 stdenv.mkDerivation rec {
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls major minor;
     hashOutput = false;
-    sha256 = "0e97f243ae72b70307d684b84c7fe679385aa7a7a0e37e5be810193dcc17d4ff";
+    sha256 = "82b10f0c4ef18f4e64ad8cef5dbaf14be732f5095a41cf366b4ecb4050382951";
   };
 
   # This fixes some broken parallel dependencies
@@ -73,11 +73,11 @@ stdenv.mkDerivation rec {
     # Gnupg depends on this so we have to decouple this fetch from the rest of the build.
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.5" "8";
+      urls = tarballUrls "3.5" "9";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "1F42 4189 05D8 206A A754  CCDC 29EE 58B9 9686 5171";
       inherit (src) outputHashAlgo;
-      outputHash = "0e97f243ae72b70307d684b84c7fe679385aa7a7a0e37e5be810193dcc17d4ff";
+      outputHash = "82b10f0c4ef18f4e64ad8cef5dbaf14be732f5095a41cf366b4ecb4050382951";
     };
   };
 

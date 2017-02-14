@@ -20,7 +20,6 @@
 , libvdpau
 , llvm
 , lm-sensors
-, openssl
 , wayland
 , xorg
 
@@ -53,7 +52,7 @@ let
     optionalString
     splitString;
 
-  version = "13.0.4";
+  version = "17.0.0";
 
   # this is the default search path for DRI drivers
   driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
@@ -70,9 +69,9 @@ stdenv.mkDerivation rec {
         + head (splitString "." version)
         + ".x/${version}/mesa-${version}.tar.xz")
     ];
-    multihash = "QmNr8TiVtJjtcVcP5xoS7wzRdwQXHrx2ucGqgzpntMsx9b";
+    multihash = "Qmci7BC3LTxiLVjdZyV8KsUftcp8ocoXRs7AK2K5vXC795";
     hashOutput = false;  # Provided by upstream directly
-    sha256 = "a95d7ce8f7bd5f88585e4be3144a341236d8c0fc91f6feaec59bb8ba3120e726";
+    sha256 = "39db3d59700159add7f977307d12a7dfe016363e760ad82280ac4168ea668481";
   };
 
   nativeBuildInputs = [
@@ -99,7 +98,6 @@ stdenv.mkDerivation rec {
     libvdpau
     llvm
     lm-sensors
-    openssl
     wayland
     xorg.dri2proto
     xorg.dri3proto
@@ -128,10 +126,13 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     patchShebangs .
-  '' + /* Set runtime driver search path */ ''
-    sed -i src/egl/main/egldriver.c \
-      -e 's,_EGL_DRIVER_SEARCH_DIR,"${driverSearchPath}",'
-  '' + /* Upstream incorrectly specifies PYTHONPATH explicitly, overriding
+  ''
+  # FIXME: _EGL_DRIVER_SEARCH_DIR was removed in 17
+  # + /* Set runtime driver search path */ ''
+  #   sed -i src/egl/main/egldriver.c \
+  #     -e 's,_EGL_DRIVER_SEARCH_DIR,"${driverSearchPath}",'
+  # ''
+  + /* Upstream incorrectly specifies PYTHONPATH explicitly, overriding
           the build environments PYTHONPATH */ ''
     sed -e 's,PYTHONPATH=,PYTHONPATH=$(PYTHONPATH):,g' \
       -i src/mesa/drivers/dri/i965/Makefile.am \
@@ -146,6 +147,7 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-largefile"
+    "--disable-pwr8-inst"  # power
     # slight performance degradation, enable only for grsec
     "--${boolEn grsecEnabled}-glx-rts"
     "--disable-debug"
@@ -156,6 +158,7 @@ stdenv.mkDerivation rec {
     "--enable-asm"
     # TODO: selinux support
     "--disable-selinux"
+    "--enable-llvm-shared-libs"
     "--enable-opengl"
     "--enable-gles1"
     "--enable-gles2"
@@ -163,7 +166,7 @@ stdenv.mkDerivation rec {
     "--enable-gallium-extra-hud"
     "--enable-lmsensors"
     "--enable-dri3"
-    "--enable-glx"
+    "--enable-glx"  # dri|xlib|gallium-xlib
     "--disable-osmesa"
     "--enable-gallium-osmesa"
     "--enable-egl"
@@ -181,18 +184,15 @@ stdenv.mkDerivation rec {
     "--disable-opencl-icd"
     "--disable-gallium-tests"
     "--enable-shared-glapi"
-    "--enable-shader-cache"
     "--enable-driglx-direct"
     "--enable-glx-tls"
     "--disable-glx-read-only-text"
     "--enable-gallium-llvm"
-    "--disable-llvm-shared-libs"
     "--disable-valgrind"
 
     #gl-lib-name=GL
     #osmesa-libname=OSMesa
     "--with-gallium-drivers=svga,i915,ilo,r300,r600,radeonsi,nouveau,freedreno,swrast"
-    "--with-sha1=libcrypto"
     "--with-dri-driverdir=$(drivers)/lib/dri"
     "--with-dri-searchpath=${driverSearchPath}/lib/dri"
     "--with-dri-drivers=i915,i965,nouveau,radeon,r200,swrast"
@@ -248,8 +248,7 @@ stdenv.mkDerivation rec {
     for lib in $drivers/lib/*.so* $drivers/lib/*/*.so*; do
       if [[ ! -L "$lib" ]] ; then
         patchelf \
-          --set-rpath "$(patchelf \
-          --print-rpath $lib):$drivers/lib" \
+          --set-rpath "$(patchelf --print-rpath $lib):$drivers/lib" \
           "$lib"
       fi
     done

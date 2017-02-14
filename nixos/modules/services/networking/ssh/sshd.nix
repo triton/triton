@@ -255,59 +255,62 @@ in
       "ssh/moduli".source = cfg.moduliFile;
     };
 
-    systemd.services = {
-      "sshdgenkeys" = {
-        path = [
-          cfgc.package
-        ];
-        script = ''
-          mkdir -m 0755 -p /etc/ssh
-
-          ${flip concatMapStrings cfg.hostKeys (k: ''
-            if ! [ -f "${k.path}" ]; then
-              ssh-keygen -t "${k.type}" -f "${k.path}" -N "" \
-                ${if k ? bits then "-b ${toString k.bits}" else ""}
-            fi
-          '')}
-        '';
-        serviceConfig = {
-          Type = "oneshot";
-        };
-      };
-    } // mkIf (!cfg.startWhenNeeded) {
-      "sshd" = mkMerge [
-        sshdCommon
-        {
-          wantedBy = [
-            "multi-user.target"
+    systemd.services = mkMerge [
+      {
+        "sshdgenkeys" = {
+          path = [
+            cfgc.package
           ];
-          reloadIfChanged = true;
-          serviceConfig = {
-            ExecStart = "@${cfgc.package}/sbin/sshd sshd"
-              + "-f ${pkgs.writeText "sshd_config" cfg.extraConfig}";
-            ExecReload="${pkgs.coreutils}/bin/kill -HUP $MAINPID";
-            KillMode = "process";
-            Restart = "always";
-            Type = "forking";
-            PIDFile = pidFile;
-          };
-        }
-      ];
-    } // mkIf cfg.startWhenNeeded {
-      "sshd@" = mkMerge [
-        sshdCommon
-        {
-          serviceConfig = {
-            ExecStart = "@${cfgc.package}/sbin/sshd sshd"
-              + "-f ${pkgs.writeText "sshd_config" cfg.extraConfig}";
-            StandardInput = "socket";
-            StandardError = "syslog";
-          };
-        }
-      ];
-    };
+          script = ''
+            mkdir -m 0755 -p /etc/ssh
 
-    systemd.sockets."sshd" = {
+            ${flip concatMapStrings cfg.hostKeys (k: ''
+              if ! [ -f "${k.path}" ]; then
+                ssh-keygen -t "${k.type}" -f "${k.path}" -N "" \
+                  ${if k ? bits then "-b ${toString k.bits}" else ""}
+              fi
+            '')}
+          '';
+          serviceConfig = {
+            Type = "oneshot";
+          };
+        };
+      }
+      (mkIf (!cfg.startWhenNeeded) {
+        "sshd" = mkMerge [
+          sshdCommon
+          {
+            wantedBy = [
+              "multi-user.target"
+            ];
+            reloadIfChanged = true;
+            serviceConfig = {
+              ExecStart = "${cfgc.package}/sbin/sshd"
+                + " -f ${pkgs.writeText "sshd_config" cfg.extraConfig}";
+              ExecReload="${pkgs.coreutils}/bin/kill -HUP $MAINPID";
+              Restart = "always";
+              Type = "forking";
+              PIDFile = pidFile;
+            };
+          }
+        ];
+      })
+      (mkIf cfg.startWhenNeeded {
+        "sshd@" = mkMerge [
+          sshdCommon
+          {
+            serviceConfig = {
+              ExecStart = "${cfgc.package}/sbin/sshd"
+                + " -f ${pkgs.writeText "sshd_config" cfg.extraConfig}";
+              StandardInput = "socket";
+              StandardError = "syslog";
+            };
+          }
+        ];
+      })
+    ];
+
+    systemd.sockets."sshd" = mkIf cfg.startWhenNeeded {
       description = "SSHD Socket";
       wantedBy = [
         "sockets.target"

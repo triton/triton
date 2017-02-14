@@ -5,8 +5,8 @@
     sha256 = "65e13f22a60cecd7279c59882ff8ebe1ffe34078e85c602821a541817a4317f7";
   };
   "3" = {
-    version = "3.0.11";
-    multihash = "QmQyibwJnsJ1QncZ7AXtB3BpuNyjihcY4GktFiEUCmuCEn";
-    sha256 = "d9031d531d7418829a54d0d51c4ed9007016b213657ec70be44031951810566e";
+    version = "3.0.12";
+    multihash = "QmZcesjcBxr5SWoDGVAhHKMkfT5ViBghEhev3iYqwyeuop";
+    sha256 = "7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d";
   };
 }

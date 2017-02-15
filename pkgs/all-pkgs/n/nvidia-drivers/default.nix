@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 , makeWrapper
 , nukeReferences
 
@@ -44,7 +45,7 @@
 let
   inherit (stdenv)
     targetSystem;
-  inherit (stdenv.lib)
+  inherit (lib)
     any
     elem
     makeSearchPath
@@ -91,14 +92,16 @@ stdenv.mkDerivation {
           + "NVIDIA-Linux-x86_64-${version}"
           + "${if channel == "tesla" then "" else "-no-compat32"}.run"
       else
-        throw "The NVIDIA drivers are not supported for the `${targetSystem}` platform";
+        throw "The NVIDIA drivers are not supported for the "
+          + "`${targetSystem}` platform";
     sha256 =
       if elem targetSystem platforms.i686-linux then
         source.sha256i686
       else if elem targetSystem platforms.x86_64-linux then
         source.sha256x86_64
       else
-        throw "The NVIDIA drivers are not supported for the `${targetSystem}` platform";
+        throw "The NVIDIA drivers are not supported for the "
+          + "`${targetSystem}` platform";
   };
 
   nativeBuildInputs = [
@@ -112,8 +115,8 @@ stdenv.mkDerivation {
        begins, then tails to that line and pipes the tarball to the required
        decompression utility (gzip/xz), which interprets the tarball, and
        finally pipes the output to tar to extract the contents. This is
-       exactly what the cli commands in the `.run` file do, but there is an
-       issue with some versions so it is best to do it manually instead. */ ''
+       exactly what the cli commands in the `.run` file do, but there are
+       issues with some versions so it is best to do it manually instead. */ ''
       runHook 'preUnpack'
 
       local skip
@@ -137,13 +140,13 @@ stdenv.mkDerivation {
       runHook 'postUnpack'
     '';
 
-  postUnpack =
-    /* Rather than patching a patch, create a symlink with
-       a predictable name. */ ''
-      ln -fsv \
-        nvidia-application-profiles-${version}-rc \
-        nvidia-application-profiles-rc
-    '';
+  postUnpack = /* Rather than patching a patch, create a symlink with
+                  a predictable name. */
+    optionalString (versionOlder version "375.20") ''
+    ln -fsv \
+      nvidia-application-profiles-${version}-rc \
+      nvidia-application-profiles-rc
+  '';
 
   patchFlags = [
     "--follow-symlinks"
@@ -283,7 +286,13 @@ stdenv.mkDerivation {
       #  "$out/lib/libGLX_indirect.so.0"
     '' + /* Internal driver components */ ''
       nvidia_lib_install 364 377 'libnvidia-egl-wayland'  # Renamed in 378.09
-      nvidia_lib_install 378 0 'libnvidia-egl-wayland' '1' '1.0.0'
+    '' + (
+      if (versionAtLeast version "378.13") then ''
+        nvidia_lib_install 378 0 'libnvidia-egl-wayland' '1' '1.0.1'
+      '' else ''
+        nvidia_lib_install 378 378 'libnvidia-egl-wayland' '1' '1.0.0'
+      ''
+    ) + ''
       nvidia_lib_install 0 0 'libnvidia-eglcore'
       nvidia_lib_install 0 0 'libnvidia-glcore'
       nvidia_lib_install 0 0 'libnvidia-glsi'
@@ -351,7 +360,7 @@ stdenv.mkDerivation {
       # System Management Interface
       nvidia_bin_install 0 0 'nvidia-smi'
       ###nvidia_bin_install 0 0 'nvidia-xconfig'
-      ###nvidia_bin_install 0 0 'tls_test' (also tls_test.so)
+      ###nvidia_bin_install 0 0 'tls_test'  # (also tls_test.so)
     '' +
     #
     ## Manpages
@@ -398,23 +407,23 @@ stdenv.mkDerivation {
           "$out/share/egl/egl_external_platform.d/10_nvidia_wayland.json"
       fi
     ''
-    # +
-    # #
-    # ## Desktop Entries
-    # #
-    # /* NVIDIA Settings .desktop entry */ ''
-    #   install -D -m 644 -v 'nvidia-settings.desktop' \
-    #     "$out/share/applications/nvidia-settings.desktop"
-    #   sed -i "$out/share/applications/nvidia-settings.desktop" \
-    # '' +
-    # #
-    # ## Icons
-    # #
-    # /* NVIDIA Settings icon */ ''
-    #   # Provided by the nvidia-settings package
-    #   install -D -m 644 -v 'nvidia-settings.png' \
-    #     "$out/share/pixmaps/nvidia-settings.png"
-    # ''
+    ### +
+    ### #
+    ### ## Desktop Entries
+    ### #
+    ### /* NVIDIA Settings .desktop entry */ ''
+    ###   install -D -m 644 -v 'nvidia-settings.desktop' \
+    ###     "$out/share/applications/nvidia-settings.desktop"
+    ###   sed -i "$out/share/applications/nvidia-settings.desktop" \
+    ### '' +
+    ### #
+    ### ## Icons
+    ### #
+    ### /* NVIDIA Settings icon */ ''
+    ###   # Provided by the nvidia-settings package
+    ###   install -D -m 644 -v 'nvidia-settings.png' \
+    ###     "$out/share/pixmaps/nvidia-settings.png"
+    ### ''
   );
 
   preFixup = /* Patch RPATH's in libraries and executables */ ''
@@ -515,7 +524,7 @@ stdenv.mkDerivation {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Drivers and Linux kernel modules for NVIDIA graphics cards";
     homepage = http://www.nvidia.com/object/unix.html;
     license = licenses.unfreeRedistributable;

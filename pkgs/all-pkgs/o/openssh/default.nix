@@ -1,7 +1,9 @@
 { stdenv
 , fetchurl
 
+, audit_lib
 , kerberos
+, ldns
 , libbsd
 , libedit
 , openssl_1-0-2
@@ -23,7 +25,9 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    audit_lib
     kerberos
+    ldns
     libbsd
     libedit
     openssl_1-0-2
@@ -39,18 +43,25 @@ stdenv.mkDerivation rec {
     "--with-mantype=man"
     "--with-libedit=yes"
     "--disable-strip"
+    "--with-ldns"
+    "--with-libedit"
+    "--with-audit=linux"
     "--with-pam"
+    "--with-privsep-user=nobody"
     "--sysconfdir=/etc/ssh"
     "--with-kerberos5=${kerberos}"
   ];
 
-  preConfigure = ''
-    configureFlagsArray+=("--with-privsep-path=$out/empty")
-    mkdir -p $out/empty
+  preBuild = ''
+    cat Makefile
   '';
 
   preInstall = ''
-    installFlagsArray+=("sysconfdir=$out/etc/ssh")
+    installFlagsArray+=(
+      "sysconfdir=$out/etc/ssh"
+      "localstatedir=$TMPDIR"
+      "PRIVSEP_PATH=$TMPDIR"
+    )
   '';
 
   installTargets = [

@@ -37,9 +37,8 @@ let
   # be re-routed to the PulseAudio server through ALSA's Pulse
   # plugin.
   alsaConf = writeText "asound.conf" (''
-    # Non-stereo layouts have their own configs and need to be individually
-    # overridden to force routing through pulseaudio.
-    # See alsa-lib/src/conf/pcm/ for default configs.
+    # Make sure all channel layouts use default output so that they
+    # route through pulseaudio.
     pcm.!surround71 {
       slave.pcm "default"
     }
@@ -55,43 +54,7 @@ let
     pcm.!surround40 {
       slave.pcm "default"
     }
-    pcm.!surround21 {
-      slave.pcm "default"
-    }
-    pcm.!center_lfe {
-      slave.pcm "default"
-    }
-    pcm.!front {
-      slave.pcm "default"
-    }
-    pcm.!side {
-      slave.pcm "default"
-    }
-    pcm.!rear {
-      slave.pcm "default"
-    }
-    pcm.!modem {
-      slave.pcm "default"
-    }
-    pcm.!phoneline {
-      slave.pcm "default"
-    }
-    pcm.!iec958 {
-      slave.pcm "default"
-    }
-    pcm.!hdmi {
-      slave.pcm "default"
-    }
-    pcm.!dsnoop {
-      slave.pcm "default"
-    }
-    pcm.!dpl {
-      slave.pcm "default"
-    }
-    pcm.!dpl2 {
-      slave.pcm "default"
-    }
-    pcm.!dmix {
+    pcm.!surround20 {
       slave.pcm "default"
     }
     pcm_type.pulse {

@@ -1894,6 +1894,8 @@ libaccounts-glib = callPackage ../all-pkgs/l/libaccounts-glib { };
 
 libaio = callPackage ../all-pkgs/l/libaio { };
 
+libao = callPackage ../all-pkgs/l/libao { };
+
 libarchive = callPackage ../all-pkgs/l/libarchive { };
 
 libasr = callPackage ../all-pkgs/l/libasr { };
@@ -3917,8 +3919,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
   jbigkit = callPackage ../development/libraries/jbigkit { };
 
-  libao = callPackage ../development/libraries/libao { };
-#
   libasyncns = callPackage ../development/libraries/libasyncns { };
 #
   libbdplus = callPackage ../development/libraries/libbdplus { };

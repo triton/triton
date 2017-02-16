@@ -56,6 +56,9 @@ stdenv.mkDerivation rec {
     done
   '';
 
+  # FIXME
+  buildDirCheck = false;
+
   meta = {
     homepage = "http://haskell.org/ghc";
     description = "The Glasgow Haskell Compiler";

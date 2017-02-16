@@ -57,7 +57,7 @@ let
 
   isGhcjs = ghc.isGhcjs or false;
 
-  newCabalFileUrl = "http://hackage.haskell.org/package/${pname}-${version}/revision/${revision}.cabal";
+  newCabalFileUrl = "https://hackage.haskell.org/package/${pname}-${version}/revision/${revision}.cabal";
   newCabalFile = fetchurl {
     url = newCabalFileUrl;
     sha256 = editedCabalFile;

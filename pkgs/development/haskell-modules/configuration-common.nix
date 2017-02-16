@@ -513,7 +513,11 @@ self: super: {
   duplo = dontCheck super.duplo;
 
   # Nix-specific workaround
-  xmonad = appendPatch super.xmonad ./patches/xmonad-nix.patch;
+  xmonad = appendPatch super.xmonad (pkgs.fetchTritonPatch {
+    rev = "5d59cb9dd1eee114b03dcd236b39d8d03533b0e6";
+    file = "x/xmonad/xmonad-nix.patch";
+    sha256 = "02d45f49d57d5f118e443a2b5b0a9a9ad279b07536de81863ae5fde794841121";
+  });
 
   # https://github.com/evanrinehart/mikmod/issues/1
   mikmod = addExtraLibrary super.mikmod pkgs.libmikmod;

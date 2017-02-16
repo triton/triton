@@ -291,8 +291,7 @@ in
                 + " -f ${pkgs.writeText "sshd_config" cfg.extraConfig}";
               ExecReload="${pkgs.coreutils}/bin/kill -HUP $MAINPID";
               Restart = "always";
-              Type = "forking";
-              PIDFile = pidFile;
+              Type = "simple";
             };
           }
         ];
@@ -341,8 +340,6 @@ in
     ];
 
     services.openssh.extraConfig = ''
-      PidFile ${pidFile}
-
       Protocol 2
 
       UsePAM yes

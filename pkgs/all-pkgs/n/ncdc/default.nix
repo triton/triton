@@ -11,11 +11,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ncdc-1.19.1";
+  name = "ncdc-1.20";
 
   src = fetchurl {
     url = "https://dev.yorhel.nl/download/${name}.tar.gz";
-    sha256 = "a6b23381434a47f7134d9ebdf5658fd06768f9b5de498c43e0fa00d1c7229d47";
+    sha256 = "8a998857df6289b6bd44287fc06f705b662098189f2a8fe95b1a5fbc703b9631";
   };
 
   buildInputs = [

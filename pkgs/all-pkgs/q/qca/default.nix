@@ -12,14 +12,14 @@
 }:
 
 let
-  version = "2.1.1";
+  version = "2.1.3";
 in
 stdenv.mkDerivation rec {
   name = "qca-${version}";
   
   src = fetchurl {
-    url = "http://download.kde.org/stable/qca/${version}/src/${name}.tar.xz";
-    sha256 = "10z9icq28fww4qbzwra8d9z55ywbv74qk68nhiqfrydm21wkxplm";
+    url = "mirror://kde/stable/qca/${version}/src/${name}.tar.xz";
+    sha256 = "003fd86a32421057a03b18a8168db52e2940978f9db5ebbb6a08882f8ab1e353";
   };
 
   nativeBuildInputs = [

@@ -1872,11 +1872,11 @@ let
 
   google-cloud-go = buildFromGitHub {
     version = 2;
-    date = "2017-02-15";
-    rev = "a36575d2d41a1a6fbd1de1bb4509ef4c7dbef985";
+    date = "2017-02-16";
+    rev = "0b87d14d90086b53a97dfbd66f3000f7f112b494";
     owner = "GoogleCloudPlatform";
     repo = "google-cloud-go";
-    sha256 = "1ng49a9glka4j70dlfsb1cqv6mz83kv2s24syfms3awyk7k33hyy";
+    sha256 = "145fsk3v68faaf514v3yqz3lwgip1a3whwy637pds0i1w16dwdvk";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -3304,11 +3304,11 @@ let
 
   grpc = buildFromGitHub {
     version = 2;
-    date = "2017-02-14";
-    rev = "cbcceb2942a489498cf22b2f918536e819d33f0a";
+    date = "2017-02-15";
+    rev = "d0c32ee6a441117d49856d6120ca9552af413ee0";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "0pp1igmiw6gi8aaynw52j1ai7vz94ij9lwnkdgqi9cwdwlg8byhf";
+    sha256 = "0idijjxm1y8pj9gx85gp2z4xwrcw3apsdlkjk49w8pws4wak9xn9";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [
       "github.com/grpc/grpc-go"
@@ -5033,8 +5033,8 @@ let
     version = 2;
     owner = "ncw";
     repo = "rclone";
-    rev = "50e190ff54c9e3b94f6e1f48be5b66b5e113e561";
-    sha256 = "1wj0a3v0ry2mkg4cd9wsma65wgc6nbyy4gh2jz6z5j6cx9c2h96c";
+    rev = "dac4bb22d39b83300614b1dedf7cdfffe07dfe53";
+    sha256 = "1x6w3krpiv43xnyjja6bns351hdhr84wg1p3vylgcj1mikaanmpl";
     propagatedBuildInputs = [
       aws-sdk-go
       cobra
@@ -5058,7 +5058,7 @@ let
       testify
     ];
     meta.useUnstable = true;
-    date = "2017-02-09";
+    date = "2017-02-15";
   };
 
   cupcake_rdb = buildFromGitHub {

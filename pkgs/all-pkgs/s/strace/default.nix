@@ -6,13 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "strace-4.15";
+  name = "strace-4.16";
 
   src = fetchurl {
     url = "mirror://sourceforge/strace/${name}.tar.xz";
     hashOutput = false;
-    multihash = "QmVsHwkEDxeyC4mivSCGfCWLuN5UFqsPZPyn3fWsFcNcCu";
-    sha256 = "c0cdc094d6141fd9dbf6aaad605142d651ae10998b660fda57fc61f7ad583ca9";
+    sha256 = "98487cb5178ec1259986cc9f6e2a844f50e5d1208c112cc22431a1e4d9adf0ef";
   };
 
   nativeBuildInputs = [

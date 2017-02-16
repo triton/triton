@@ -1,32 +1,23 @@
 { stdenv
 , fetchurl
-, makeWrapper
-
-, coreutils
 }:
 
 stdenv.mkDerivation rec {
-  name = "openresolv-3.8.1";
+  name = "openresolv-3.9.0";
 
   src = fetchurl {
     url = "mirror://roy/openresolv/${name}.tar.xz";
-    sha256 = "0hqxvrhc4r310hr59bwi1vbl16my27pdlnbrnbqqihiav67xfnfj";
+    multihash = "QmXDub6YQT57hbvVh1tscQavrUnQpHbmzSYf4Pt72Bk7Pv";
+    sha256 = "51a04d39232bb797c9efeaad51a525cf50a1deefcb19a1ea5dd3475118634db8";
   };
-
-  nativeBuildInputs = [
-    makeWrapper
-  ];
 
   configureFlags = [
     "--sysconfdir=/etc"
+    "--localstatedir=/var"
   ];
 
   preInstall = ''
     installFlagsArray+=("SYSCONFDIR=$out/etc")
-  '';
-
-  postInstall = ''
-    wrapProgram "$out/sbin/resolvconf" --set PATH "${coreutils}/bin"
   '';
 
   meta = with stdenv.lib; {

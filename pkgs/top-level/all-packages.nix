@@ -2741,6 +2741,8 @@ openntpd = callPackage ../all-pkgs/o/openntpd { };
 
 openobex = callPackage ../all-pkgs/o/openobex { };
 
+openresolv = callPackage ../all-pkgs/o/openresolv { };
+
 opensmtpd = callPackage ../all-pkgs/o/opensmtpd { };
 
 opensmtpd-extras = callPackage ../all-pkgs/o/opensmtpd-extras { };
@@ -3682,8 +3684,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 #
   npapi_sdk = callPackage ../development/libraries/npapi-sdk { };
 #
-  openresolv = callPackage ../tools/networking/openresolv { };
-
   opensp = callPackage ../tools/text/sgml/opensp { };
 
   spCompat = callPackage ../tools/text/sgml/opensp/compat.nix { };

@@ -2,8 +2,24 @@
 
 shopt -s nullglob
 
-export PATH=/empty
-for i in @path@; do PATH=$PATH:$i/bin; done
+addToPath() {
+  if [ ! -e "$i" ]; then
+    return
+  fi
+
+  if [ -z "$PATH" ]; then
+    export PATH="$1"
+  else
+    export PATH="$PATH:$1"
+  fi
+}
+export PATH=
+for i in @path@; do
+  addToPath "$i/bin"
+done
+if [ -z "$PATH" ]; then
+  export PATH=/var/empty
+fi
 
 default=$1
 if test -z "$1"; then

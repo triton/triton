@@ -150,6 +150,7 @@ stdenv.mkDerivation {
 
   patchFlags = [
     "--follow-symlinks"
+    "-p1"
   ];
 
   patches = optionals (versionAtLeast source.versionMajor "367"
@@ -158,6 +159,13 @@ stdenv.mkDerivation {
       rev = "daeb3f279f0c923644b352ac318e7f13c8692f0c";
       file = "nvidia-drivers/nvidia-drivers-367.35-fix-application-profiles-typo.patch";
       sha256 = "caae27b1883c5c6b3c4684720d2902421ad16ab49577ee7302a95c964236141d";
+    })
+  ] ++ optionals (versionAtLeast version "378.13"
+    && (buildKernelspace && versionAtLeast kernel.version "4.10")) [
+    (fetchTritonPatch {
+      rev = "9fe9a276f8576135ed00f09f6dbf2776a55c33f4";
+      file = "n/nvidia-drivers/nvidia-drivers-378.13-linux-4.10-rc8.patch";
+      sha256 = "fab525ba498ee5706cd85b7fe625b572c1a2ff7fee952a63d0e0bddf347579af";
     })
   ];
 

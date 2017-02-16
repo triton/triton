@@ -251,7 +251,7 @@ in
 
     power.ups.schedulerRules = mkDefault "${pkgs.nut}/etc/upssched.conf.sample";
 
-    system.activationScripts.upsSetup = stringAfter [ "users" "groups" ]
+    system.activation.scripts.upsSetup = stringAfter [ "users" "groups" ]
       ''
         # Used to store pid files of drivers.
         mkdir -p /var/state/ups

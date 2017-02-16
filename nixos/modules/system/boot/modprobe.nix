@@ -89,7 +89,7 @@ with lib;
 
     environment.systemPackages = [ config.system.sbin.modprobe pkgs.kmod ];
 
-    system.activationScripts.modprobe =
+    system.activation.scripts.modprobe =
       ''
         # Allow the kernel to find our wrapped modprobe (which searches
         # in the right location in the Nix store for kernel modules).

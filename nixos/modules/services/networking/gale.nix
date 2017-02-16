@@ -74,7 +74,7 @@ in
          "You must run gale-install in order to generate a domain key."
        ];
 
-       system.activationScripts.gale = mkIf cfg.enable (
+       system.activation.scripts.gale = mkIf cfg.enable (
          stringAfter [ "users" "groups" ] ''
            chmod 755 ${home}
            mkdir -m 0777 -p ${home}/auth/cache

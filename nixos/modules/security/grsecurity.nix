@@ -272,7 +272,7 @@ in
 #     };
 #   };
 
-    system.activationScripts = lib.optionalAttrs (!cfg.config.disableRBAC) { grsec = ''
+    system.activation.scripts = lib.optionalAttrs (!cfg.config.disableRBAC) { grsec = ''
       mkdir -p /etc/grsec
       if [ ! -f /etc/grsec/learn_config ]; then
         cp ${pkgs.gradm}/etc/grsec/learn_config /etc/grsec

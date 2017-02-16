@@ -115,7 +115,7 @@ let
       installBootLoader =
         config.system.build.installBootLoader
         or "echo 'Warning: do not know how to make this configuration bootable; please enable a boot loader.' 1>&2; true";
-      activationScript = config.system.activationScripts.script;
+      activationScript = config.system.activation.scripts.script;
       nixosLabel = config.system.nixosLabel;
 
       configurationName = config.boot.loader.grub.configurationName;

@@ -94,7 +94,7 @@ in
       }
     ];
 
-    system.activationScripts.polkit =
+    system.activation.scripts.polkit =
       ''
         # Probably no more needed, clean up
         rm -rf /var/lib/{polkit-1,PolicyKit}

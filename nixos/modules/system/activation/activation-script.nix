@@ -12,16 +12,6 @@ let
     '';
   });
 
-  path = [
-    pkgs.coreutils
-    pkgs.gnugrep
-    pkgs.findutils
-    pkgs.e2fsprogs # needed for chattr
-    pkgs.glibc # needed for getent
-    pkgs.shadow
-    pkgs.net-tools # needed for hostname
-  ];
-
 in
 
 {
@@ -30,7 +20,11 @@ in
 
   options = {
 
-    system.activationScripts = mkOption {
+    system.activation.path = mkOption {
+      type = types.listOf types.path;
+    };
+
+    system.activation.scripts = mkOption {
       default = {};
 
       example = {
@@ -64,10 +58,24 @@ in
 
             systemConfig=@out@
 
-            export PATH=/empty
-            for i in ${toString path}; do
-                PATH=$PATH:$i/bin:$i/sbin
+            addToPath() {
+              if [ ! -e "$i" ]; then
+                return
+              fi
+
+              if [ -z "$PATH" ]; then
+                export PATH="$1"
+              else
+                export PATH="$PATH:$1"
+              fi
+            }
+            export PATH=
+            for i in ${toString config.system.activation.path}; do
+              addToPath "$i/bin"
             done
+            if [ -z "$PATH" ]; then
+              export PATH=/var/empty
+            fi
 
             _status=0
             trap "_status=1" ERR
@@ -116,51 +124,56 @@ in
 
   config = {
 
-    system.activationScripts.stdio =
-      ''
-        # Needed by some programs.
-        ln -sfn /proc/self/fd /dev/fd
-        ln -sfn /proc/self/fd/0 /dev/stdin
-        ln -sfn /proc/self/fd/1 /dev/stdout
-        ln -sfn /proc/self/fd/2 /dev/stderr
-      '';
+    system.activation.path = [
+      pkgs.coreutils
+      pkgs.gnugrep
+      pkgs.findutils
+      pkgs.e2fsprogs # needed for chattr
+      pkgs.glibc # needed for getent
+      pkgs.shadow
+      pkgs.net-tools # needed for hostname
+    ];
 
-    system.activationScripts.var =
-      ''
-        # Various log/runtime directories.
+    system.activation.scripts.stdio = ''
+      # Needed by some programs.
+      ln -sfn /proc/self/fd /dev/fd
+      ln -sfn /proc/self/fd/0 /dev/stdin
+      ln -sfn /proc/self/fd/1 /dev/stdout
+      ln -sfn /proc/self/fd/2 /dev/stderr
+    '';
 
-        mkdir -m 0755 -p /run/nix/current-load # for distributed builds
-        mkdir -m 0700 -p /run/nix/remote-stores
+    system.activation.scripts.var = ''
+      # Various log/runtime directories.
+      mkdir -m 0755 -p /run/nix/current-load # for distributed builds
+      mkdir -m 0700 -p /run/nix/remote-stores
 
-        mkdir -m 0755 -p /var/log
+      mkdir -m 0755 -p /var/log
 
-        touch /var/log/wtmp /var/log/lastlog # must exist
-        chmod 644 /var/log/wtmp /var/log/lastlog
+      touch /var/log/wtmp /var/log/lastlog # must exist
+      chmod 644 /var/log/wtmp /var/log/lastlog
 
-        mkdir -m 1777 -p /var/tmp
+      mkdir -m 1777 -p /var/tmp
 
-        # Empty, read-only home directory of many system accounts.
-        mkdir -m 0555 -p /var/empty
-        chattr +i /var/empty
-      '';
+      # Empty, read-only home directory of many system accounts.
+      mkdir -m 0555 -p /var/empty
+      chattr +i /var/empty
+    '';
 
-    system.activationScripts.usrbinenv = if config.environment.usrbinenv != null
-      then ''
+    system.activation.scripts.usrbinenv =
+      if config.environment.usrbinenv != null then ''
         mkdir -m 0755 -p /usr/bin
         ln -sfn ${config.environment.usrbinenv} /usr/bin/.env.tmp
         mv /usr/bin/.env.tmp /usr/bin/env # atomically replace /usr/bin/env
-      ''
-      else ''
+      '' else ''
         rm -f /usr/bin/env
         rmdir --ignore-fail-on-non-empty /usr/bin /usr
       '';
 
-    system.activationScripts.tmpfs =
-      ''
-        ${pkgs.util-linux_full}/bin/mount -o "remount,size=${config.boot.devSize}" none /dev
-        ${pkgs.util-linux_full}/bin/mount -o "remount,size=${config.boot.devShmSize}" none /dev/shm
-        ${pkgs.util-linux_full}/bin/mount -o "remount,size=${config.boot.runSize}" none /run
-      '';
+    system.activation.scripts.tmpfs = ''
+      ${pkgs.util-linux_full}/bin/mount -o "remount,size=${config.boot.devSize}" none /dev
+      ${pkgs.util-linux_full}/bin/mount -o "remount,size=${config.boot.devShmSize}" none /dev/shm
+      ${pkgs.util-linux_full}/bin/mount -o "remount,size=${config.boot.runSize}" none /run
+    '';
 
   };
 

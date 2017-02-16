@@ -5,7 +5,7 @@ with lib;
 let
 
   kernel = config.boot.kernelPackages.kernel;
-  activateConfiguration = config.system.activationScripts.script;
+  activateConfiguration = config.system.activation.scripts.script;
 
   readonlyMountpoint = pkgs.runCommand "readonly-mountpoint" {} ''
     mkdir -p $out/bin

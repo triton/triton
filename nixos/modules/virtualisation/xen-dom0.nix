@@ -118,7 +118,7 @@ in
         "xenfs"
       ];
 
-    # The xenfs module is needed in system.activationScripts.xen, but
+    # The xenfs module is needed in system.activation.scripts.xen, but
     # the modprobe command there fails silently. Include xenfs in the
     # initrd as a work around.
     boot.initrd.kernelModules = [ "xenfs" ];
@@ -146,7 +146,7 @@ in
       '';
 
     # Mount the /proc/xen pseudo-filesystem.
-    system.activationScripts.xen =
+    system.activation.scripts.xen =
       ''
         if [ -d /proc/xen ]; then
             ${pkgs.kmod}/bin/modprobe xenfs 2> /dev/null

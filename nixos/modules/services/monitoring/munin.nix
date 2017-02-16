@@ -195,7 +195,7 @@ in
       "*/5 * * * * munin ${pkgs.munin}/bin/munin-cron --config ${muninConf}"
     ];
 
-    system.activationScripts.munin-cron = stringAfter [ "users" "groups" ] ''
+    system.activation.scripts.munin-cron = stringAfter [ "users" "groups" ] ''
       mkdir -p /var/{run,log,www,lib}/munin
       chown -R munin:munin /var/{run,log,www,lib}/munin
     '';

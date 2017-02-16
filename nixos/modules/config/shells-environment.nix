@@ -175,7 +175,7 @@ in
          export PATH="$HOME/bin:$PATH"
        '';
 
-    system.activationScripts.binsh = stringAfter [ "stdio" ]
+    system.activation.scripts.binsh = stringAfter [ "stdio" ]
       ''
         # Create the required /bin/sh symlink; otherwise lots of things
         # (notably the system() function) won't work.

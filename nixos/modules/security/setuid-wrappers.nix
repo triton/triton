@@ -78,7 +78,7 @@ in
 
     security.setuidPrograms = [ "fusermount" ];
 
-    system.activationScripts.setuid =
+    system.activation.scripts.setuid =
       let
         setuidPrograms =
           (map (x: { program = x; owner = "root"; group = "root"; setuid = true; })

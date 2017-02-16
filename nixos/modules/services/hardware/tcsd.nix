@@ -119,7 +119,7 @@ in
 
     environment.systemPackages = [ pkgs.trousers ];
 
-#    system.activationScripts.tcsd =
+#    system.activation.scripts.tcsd =
 #      ''
 #        chown ${cfg.user}:${cfg.group} ${tcsdConf}
 #      '';

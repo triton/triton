@@ -123,7 +123,7 @@ in
       message = "Option driSupport32Bit only makes sense on a 64-bit system.";
     };
 
-    system.activationScripts.setup-opengl =
+    system.activation.scripts.setup-opengl =
       ''
         find /run -maxdepth 1 -name opengl-driver\* -exec rm -rf {} \;
         ln -sfn ${package} ${package.driverSearchPath}

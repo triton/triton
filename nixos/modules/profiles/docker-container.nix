@@ -46,7 +46,7 @@ in {
     '';
 
   # Install new init script
-  system.activationScripts.installInitScript = ''
+  system.activation.scripts.installInitScript = ''
     ln -fs $systemConfig/init /init
   '';
 }

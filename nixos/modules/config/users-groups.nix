@@ -501,7 +501,7 @@ in {
       input.gid = ids.gids.input;
     };
 
-    system.activationScripts.users = stringAfter [ "etc" ]
+    system.activation.scripts.users = stringAfter [ "etc" ]
       ''
         ${pkgs.perl}/bin/perl -w \
           -I${pkgs.perlPackages.FileSlurp}/${pkgs.perlPackages.perl.libPrefix} \
@@ -510,7 +510,7 @@ in {
       '';
 
     # for backwards compatibility
-    system.activationScripts.groups = stringAfter [ "users" ] "";
+    system.activation.scripts.groups = stringAfter [ "users" ] "";
 
     environment.etc."subuid" = {
       text = subuidFile;

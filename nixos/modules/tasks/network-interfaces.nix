@@ -936,11 +936,11 @@ in
     # Set the host and domain names in the activation script.  Don't
     # clear it if it's not configured in the NixOS configuration,
     # since it may have been set by dhcpcd in the meantime.
-    system.activationScripts.hostname =
+    system.activation.scripts.hostname =
       optionalString (cfg.hostName != "") ''
         hostname "${cfg.hostName}"
       '';
-    system.activationScripts.domain =
+    system.activation.scripts.domain =
       optionalString (cfg.domain != null) ''
         domainname "${cfg.domain}"
       '';

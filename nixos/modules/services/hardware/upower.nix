@@ -57,7 +57,7 @@ in
           };
       };
 
-    system.activationScripts.upower = ''
+    system.activation.scripts.upower = ''
       mkdir -m 0755 -p /var/lib/upower
     '';
 

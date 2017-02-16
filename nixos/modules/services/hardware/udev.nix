@@ -301,7 +301,7 @@ in
 
     boot.extraModprobeConfig = "options firmware_class path=${config.hardware.firmware}/lib/firmware";
 
-    system.activationScripts.udevd =
+    system.activation.scripts.udevd =
       ''
         # The deprecated hotplug uevent helper is not used anymore
         if [ -e /proc/sys/kernel/hotplug ]; then

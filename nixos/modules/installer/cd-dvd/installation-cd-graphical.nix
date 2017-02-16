@@ -44,7 +44,7 @@ with lib;
 
   # Custom kde-workspace adding some icons on the desktop
 
-  system.activationScripts.installerDesktop = let
+  system.activation.scripts.installerDesktop = let
     openManual = pkgs.writeScript "nixos-manual.sh" ''
       #!${pkgs.stdenv.shell}
       cd ${config.system.build.manual.manual}/share/doc/nixos/

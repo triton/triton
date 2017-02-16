@@ -216,7 +216,7 @@ in
         extraGroups = cfg.extraGroups;
       });
 
-    system.activationScripts.logcheck = ''
+    system.activation.scripts.logcheck = ''
       mkdir -m 700 -p /var/{lib,lock}/logcheck
       chown ${cfg.user} /var/{lib,lock}/logcheck
     '';

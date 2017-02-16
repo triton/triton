@@ -104,7 +104,7 @@ in
 
     environment.systemPackages = [ pkgs.mlmmj ];
 
-    system.activationScripts.mlmmj = ''
+    system.activation.scripts.mlmmj = ''
           ${pkgs.coreutils}/bin/mkdir -p ${stateDir} ${spoolDir}/${cfg.listDomain}
           ${pkgs.coreutils}/bin/chown -R ${cfg.user}:${cfg.group} ${spoolDir}
           ${lib.concatMapStrings (createList cfg.listDomain) cfg.mailLists}

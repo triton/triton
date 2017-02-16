@@ -189,7 +189,7 @@ in
 
     environment.etc = if cfg.daemon.enable then [nslcdConfig] else [ldapConfig];
 
-    system.activationScripts = mkIf insertLdapPassword {
+    system.activation.scripts = mkIf insertLdapPassword {
       ldap = stringAfter [ "etc" "groups" "users" ] ''
         if test -f "${cfg.bind.password}" ; then
           echo "bindpw "$(cat ${cfg.bind.password})"" | cat ${ldapConfig} - > /etc/ldap.conf.bindpw

@@ -77,7 +77,7 @@ in
   config = mkIf cfg.enable {
     services.cron.systemCronJobs = [ cronJob ];
 
-    system.activationScripts.systemhealth = stringAfter [ "var" ]
+    system.activation.scripts.systemhealth = stringAfter [ "var" ]
       ''
         mkdir -p ${rrdDir} ${htmlDir}
         chown wwwrun:wwwrun ${rrdDir} ${htmlDir}

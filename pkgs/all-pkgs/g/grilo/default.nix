@@ -3,6 +3,7 @@
 , file
 , gettext
 , intltool
+, lib
 
 , glib
 , gobject-introspection
@@ -14,11 +15,11 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
   channel = "0.3";
-  version = "0.3.2";
+  version = "${channel}.3";
 in
 stdenv.mkDerivation rec {
   name = "grilo-${version}";
@@ -26,7 +27,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/grilo/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "f26f684a5d76aea8dbce136750bc67d2170b36575f109292fbb78ae99ec87f5b";
+    sha256 = "5c874222c7bdf42490cd56765a593c41407247706bb1f24a1bd5d007aa38a0e3";
   };
 
   nativeBuildInputs = [
@@ -77,7 +78,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A framework for easy media discovery and browsing";
     homepage = https://wiki.gnome.org/Projects/Grilo;
     license = licenses.lgpl21Plus;

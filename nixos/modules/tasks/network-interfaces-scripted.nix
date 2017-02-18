@@ -424,9 +424,6 @@ in
           wantedBy = [
             "multi-user.target"
           ];
-          requiredBy = [
-            "network-link-up-${n}.service"
-          ];
           requires = [
             "network-dev-${n}.service"
           ];
@@ -435,9 +432,6 @@ in
           ];
           after = [
             "network-dev-${n}.service"
-          ];
-          before = [
-            "network-link-up-${n}.service"
           ];
           serviceConfig = {
             Type = "simple";

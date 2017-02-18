@@ -142,6 +142,8 @@ aniso8601 = callPackage ../all-pkgs/a/aniso8601 { };
 
 ansible = callPackage ../all-pkgs/a/ansible { };
 
+apache-libcloud = callPackage ../all-pkgs/a/apache-libcloud { };
+
 appdirs = callPackage ../all-pkgs/a/appdirs { };
 
 apscheduler = callPackage ../all-pkgs/a/apscheduler { };

@@ -11,13 +11,17 @@
 , openssl
 }:
 
+let
+  version = "1.3.3";
+  year = "2017";
+in
 stdenv.mkDerivation rec {
-  name = "keepalived-1.3.2";
+  name = "keepalived-${version}";
 
   src = fetchurl {
     url = "http://keepalived.org/software/${name}.tar.gz";
-    multihash = "QmTuQqRbQW76P9DL4dtRA3dtQ6T65vYVDCnzYScBMvdHSn";
-    sha256 = "bb6729a7b7402ef5ef89e895b2dd597880702a4e2351d4da2f88bf24284e38f4";
+    multihash = "QmRWjdPu2AAb3tvnqpzn6j5yieHN3GUXFx24Fv8GyRhbEZ";
+    sha256 = "7edab46df4e3bcd591d325f1d307743642bf1ab29e5ab11b1b27a89b1ce41f0f";
   };
 
   nativeBuildInputs = [
@@ -49,6 +53,11 @@ stdenv.mkDerivation rec {
     #"--enable-snmp-rfcv3"
     "--enable-dbus"
     "--enable-sha1"
+  ];
+
+  NIX_CFLAGS_COMPILE = [
+    "-DGIT_DATE=\"${version}\""
+    "-DGIT_YEAR=\"${year}\""
   ];
 
   preInstall = ''

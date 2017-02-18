@@ -1,5 +1,10 @@
 { stdenv
+, autoconf
+, automake
+, fetchFromGitHub
 , fetchurl
+, lib
+, libtool
 
 , boost
 , openssl
@@ -10,20 +15,32 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
+    optionals
+    optionalString
     replaceChars
+    splitString
+    tail
     versionOlder;
-  inherit (builtins.getAttr channel (import ./sources.nix))
-    sha256
-    version;
+
+  source = (import ./sources.nix { })."${channel}";
+
+  isHead =
+    if channel == "head" then
+      true
+    else if toString(tail(splitString "-" channel)) == "head" then
+      true
+    else
+      false;
 
   versionFormatted =
     # For initial minor releases drop the trailing zero
-    if replaceChars ["${channel}."] [""] version == "0" then
+    if replaceChars ["${channel}."] [""] source.version == "0" then
       replaceChars ["."] ["_"] channel
     else
-      replaceChars ["."] ["_"] version;
+      replaceChars ["."] ["_"] source.version;
+
   libtorrentOlder = chan: args:
     if versionOlder channel chan then
       args
@@ -31,13 +48,28 @@ let
       null;
 in
 stdenv.mkDerivation rec {
-  name = "libtorrent-rasterbar-${version}";
+  name = "libtorrent-rasterbar-${source.version}";
 
-  src = fetchurl {
-    url = "https://github.com/arvidn/libtorrent/releases/download/"
-      + "libtorrent-${versionFormatted}/${name}.tar.gz";
-    inherit sha256;
-  };
+  src =
+    if isHead then
+      fetchFromGitHub {
+        version = source.fetchzipversion;
+        owner = "arvidn";
+        repo = "libtorrent";
+        inherit (source) rev sha256;
+      }
+    else
+      fetchurl {
+        url = "https://github.com/arvidn/libtorrent/releases/download/"
+          + "libtorrent-${versionFormatted}/${name}.tar.gz";
+        inherit (source) sha256;
+      };
+
+  nativeBuildInputs = [ ] ++ optionals isHead [
+    autoconf
+    automake
+    libtool
+  ];
 
   buildInputs = [
     boost
@@ -45,6 +77,10 @@ stdenv.mkDerivation rec {
     pythonPackages.wrapPython
     zlib
   ];
+
+  preConfigure = optionalString isHead ''
+    ./autotool.sh
+  '';
 
   # FIXME: openssl header not found by qbittorrent
   #        include/libtorrent/hasher.hpp:53:25: fatal error:
@@ -77,7 +113,7 @@ stdenv.mkDerivation rec {
     "--with-boost-python"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "BitTorrent implementation focused on efficiency & scalability";
     homepage = http://libtorrent.org/;
     license = licenses.bsd3;

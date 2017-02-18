@@ -165,11 +165,11 @@ let
 
   net = buildFromGitHub {
     version = 2;
-    rev = "b4690f45fa1cafc47b1c280c2e75116efe40cc13";
-    date = "2017-02-15";
+    rev = "6b27048ae5e6ad1ef927e72e437531493de612fe";
+    date = "2017-02-17";
     owner  = "golang";
     repo   = "net";
-    sha256 = "0gf8ph06i5hyvb1a2sm9byd6x98815cbpi6865l2i88gwjxdc3zj";
+    sha256 = "0nl8lvijbagrizfv3nixmdgs44dgbzds37484b9gh7dd86n0niv9";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "github.com/hashicorp/go.net"
@@ -1125,12 +1125,12 @@ let
 
   docker = buildFromGitHub {
     version = 2;
-    rev = "95a2aed95ef9381c9e0740643422edbe7684d5af";
+    rev = "b89aff1afa1f61993ab2ba18fd62d9375a195f5d";
     owner = "docker";
     repo = "docker";
-    sha256 = "10vbwjrdqxh5c9l8d3lbkmd4x4r3d3vcam4g98696ayqgp5w0mp4";
+    sha256 = "0kyfibmpz7x2p9fala1csif9xihbhfxzkk3l2dw5yf9s18k9zisk";
     meta.useUnstable = true;
-    date = "2017-02-17";
+    date = "2017-02-18";
   };
 
   docker_for_nomad = buildFromGitHub {
@@ -1397,8 +1397,8 @@ let
     version = 2;
     owner = "coreos";
     repo = "etcd";
-    rev = "78fbe669ad2d989cd8020f92b38ac155cc17cdf8";
-    sha256 = "0nlc82idaqzg9wid83hjbfkc456dqxqacirhr8dxj0y11wszsnjz";
+    rev = "2533c2a50c4b6114ad6fd4c0000175fac3b6ee06";
+    sha256 = "098ahzgb06m5s223a5is44147gvja633044siwa8afdq5g5qvh2w";
     buildInputs = [
       bolt
       btree
@@ -2395,11 +2395,11 @@ let
 
   go-github = buildFromGitHub {
     version = 2;
-    date = "2017-02-15";
-    rev = "dfd20fd7fa6edec56447fcb049acd5e17a78ec2e";
+    date = "2017-02-18";
+    rev = "2a4b92075e5c5e42ee0e55819b70f49b02c1ac64";
     owner = "google";
     repo = "go-github";
-    sha256 = "1lix3c0nkincghgn24azwrl7vps7wabwgwxh07q5ycjikpmlfg60";
+    sha256 = "1zlcj8skd7s3pwpa4v5rjqzl7fpxiyr5w15xvfqlcra35jlrrrqm";
     buildInputs = [ oauth2 ];
     propagatedBuildInputs = [ go-querystring ];
   };
@@ -4093,8 +4093,8 @@ let
     version = 2;
     owner = "minio";
     repo = "mc";
-    rev = "d7a3a0bce38683e1adfb9b314dbddf18ea8bacd9";
-    sha256 = "04cvziipd4kq50ab6pgrqpjg4x9x6ic6qzlw71favw0900c5cc62";
+    rev = "f7dbf9a20bef1d0e8dd121dc8866da6c5808428d";
+    sha256 = "188qsian067df7dgrqhiwr3q4rv707k7r201grnqf077xladyncy";
     propagatedBuildInputs = [
       cli_minio
       color
@@ -4109,7 +4109,7 @@ let
       profile
       structs
     ];
-    date = "2017-02-17";
+    date = "2017-02-18";
   };
 
   mdns = buildFromGitHub {

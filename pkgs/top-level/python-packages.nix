@@ -397,7 +397,16 @@ s3transfer = callPackage ../all-pkgs/s/s3transfer { };
 
 safe = callPackage ../all-pkgs/s/safe { };
 
-salt = callPackage ../all-pkgs/s/salt { };
+salt_2016-3 = callPackage ../all-pkgs/s/salt {
+  channel = "2016.3";
+};
+salt_2016-11 = callPackage ../all-pkgs/s/salt {
+  channel = "2016.11";
+};
+salt_head = callPackage ../all-pkgs/s/salt {
+  channel = "head";
+};
+salt = callPackageAlias "salt_2016-11" { };
 
 scons = callPackage ../all-pkgs/s/scons { };
 

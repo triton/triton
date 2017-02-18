@@ -26,7 +26,7 @@
 , libinput
 , libstartup_notification
 , libxkbcommon
-, linux-headers_4-6
+, linux-headers
 , mesa_noglu
 , pango
 , systemd_lib
@@ -101,7 +101,7 @@ stdenv.mkDerivation rec {
     libinput
     libstartup_notification
     libxkbcommon
-    linux-headers_4-6
+    linux-headers
     mesa_noglu
     pango
     systemd_lib

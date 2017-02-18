@@ -3,6 +3,7 @@
 , pkgconfig
 , intltool
 , itstool
+, lib
 
 , avahi
 , glib
@@ -28,11 +29,11 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     enFlag;
 
     channel = "0.3";
-    version = "0.3.3";
+    version = "${channel}.4";
 in
 stdenv.mkDerivation rec {
   name = "grilo-plugins-${version}";
@@ -40,7 +41,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/grilo-plugins/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "fe66e887847fef9c361bcb7226047c43b2bc22b172aaf22afd5534947cc85b9c";
+    sha256 = "990282a518968c52f6a67b96c6b708e236a59da1c7c920ed45e6316ab49ddeb5";
   };
 
   nativeBuildInputs = [
@@ -120,7 +121,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A collection of plugins for the Grilo framework";
     homepage = https://wiki.gnome.org/action/show/Projects/Grilo;
     license = licenses.lgpl2;

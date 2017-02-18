@@ -55,7 +55,7 @@
 , networkmanager
 , networkmanager-applet
 , nss
-, p11_kit
+, p11-kit
 , pango
 , polkit
 , pulseaudio_lib
@@ -81,14 +81,14 @@ in
 stdenv.mkDerivation rec {
   name = "gnome-shell-${version}";
   versionMajor = "3.22";
-  versionMinor = "1";
+  versionMinor = "3";
   version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-shell/${versionMajor}/${name}.tar.xz";
     sha256Url = "mirror://gnome/sources/gnome-shell/${versionMajor}/"
       + "${name}.sha256sum";
-    sha256 = "ca9492fae6c647e6bf98624a7cef6e4776894e4888f54b63e60b672b754fb217";
+    sha256 = "d1e6bd80ddd1fef92d80b518d4dbeffa296e8f003402551b8c37c42744b7d42f";
   };
 
   nativeBuildInputs = [
@@ -149,7 +149,7 @@ stdenv.mkDerivation rec {
     networkmanager
     networkmanager-applet
     #nss
-    #p11_kit
+    #p11-kit
     pango
     polkit
     pulseaudio_lib

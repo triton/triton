@@ -7,6 +7,7 @@
 
 , apache-libcloud
 , cherrypy
+#, dnspython
 , futures
 #, ioflo
 , jinja2
@@ -18,11 +19,13 @@
 , markupsafe
 , msgpack-python
 #, mysql-python
+, netaddr
 , openssl
 , pycrypto
 #, pygit2
 , pymongo
 , pyopenssl
+, python-dateutil
 #, python-gnupg
 , python-ldap
 #, python-neutronclient
@@ -70,20 +73,41 @@ buildPythonPackage rec {
   propagatedBuildInputs = [
     apache-libcloud
     cherrypy
+    #dnspython  # states/Network NTP
     futures
+    #ioflo  # Salt RAET transport
     jinja2
-    Mako
+    #keyring
+    #libnacl  # Salt RAET transport
+    #libvirt-python
+    #m2crypto
+    Mako  # states parser
     markupsafe
     msgpack-python
+    #mysql-python
+    netaddr  # states/Network NTP
     openssl
-    pycrypto
-    pymongo
+    pycrypto  # Salt ZeroMQ transport
+    #pygit2
+    pymongo  # states/Mongodb Users
     pyopenssl
+    #python-croniter  # states/Scheduler
+    python-dateutil  # states/Scheduler
+    #python-gnupg  # states/Pkg repos (APT/YUM)
     python-ldap
+    #python-neutronclient
+    #python-novaclient
     pyyaml
-    pyzmq
+    pyzmq  # Salt ZeroMQ transport
+    #raet  # Salt RAET transport
+    #redis-py
     requests
+    #salt-vim
+    #selinux-salt
+    #systemd
+    #timelib
     tornado
+    #yappi
   ];
 
   disabled = isPy3k;

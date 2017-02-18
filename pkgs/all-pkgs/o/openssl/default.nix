@@ -24,9 +24,9 @@ let
       ];
     };
     "1.1.0" = {
-      version = "1.1.0d";
-      multihash = "QmS2ctMp1P3uQW3vB2P2hQQpQNEXcjRRTzUVwAk4zmpqPH";
-      sha256 = "7d5ebb9e89756545c156ff9c13cf2aa6214193b010a468a3bc789c3c28fe60df";
+      version = "1.1.0e";
+      multihash = "QmQHtGSHy73Cgqe9GKRvFphDRH3zonm1dTJ5eLruikrH66";
+      sha256 = "57be8618979d80c910728cfc99369bf97b2a1abd8f366ab6ebdee8975ad3874c";
       patches = [
         (fetchTritonPatch {
           rev = "caf82b1cce7289f53531e0ae4775fe0f4aa417a9";
@@ -46,15 +46,17 @@ let
     patches
     sha256
     version;
+
+  tarballUrls = version: [
+    "https://www.openssl.org/source/openssl-${version}.tar.gz"
+    #"http://openssl.linux-mirror.org/source/${name}.tar.gz"
+  ];
 in
 stdenv.mkDerivation rec {
   name = "openssl-${version}";
 
   src = fetchurl {
-    urls = [
-      "https://www.openssl.org/source/${name}.tar.gz"
-      "http://openssl.linux-mirror.org/source/${name}.tar.gz"
-    ];
+    urls = tarballUrls version;
     hashOutput = false;
     inherit multihash sha256;
   };
@@ -114,13 +116,15 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      sha256Urls = map (n: "${n}.sha256") src.urls;
+      urls = tarballUrls "1.1.0e";
+      pgpsigUrls = map (n: "${n}.asc") urls;
+      sha256Urls = map (n: "${n}.sha256") urls;
       pgpKeyFingerprints = [
         "EFC0 A467 D613 CB83 C7ED  6D30 D894 E2CE 8B3D 79F5"
         "8657 ABB2 60F0 56B1 E519  0839 D9C4 D26D 0E60 4491"
       ];
-      inherit (src) urls outputHash outputHashAlgo;
+      inherit (src) outputHashAlgo;
+      outputHash = "57be8618979d80c910728cfc99369bf97b2a1abd8f366ab6ebdee8975ad3874c";
     };
   };
 

@@ -1440,20 +1440,29 @@ gnutar = callPackage ../all-pkgs/g/gnutar { };
 
 gnutls = callPackage ../all-pkgs/g/gnutls { };
 
-go_1_7 = callPackage ../all-pkgs/g/go {
+go_1-7 = callPackage ../all-pkgs/g/go {
   channel = "1.7";
 };
-go = callPackageAlias "go_1_7" { };
+go_1-8 = callPackage ../all-pkgs/g/go {
+  channel = "1.8";
+};
+go = callPackageAlias "go_1-8" { };
 
-go17Packages = callPackage ./go-packages.nix {
-  go = callPackageAlias "go_1_7" { };
+goPackages_1-7 = callPackage ./go-packages.nix {
+  go = callPackageAlias "go_1-7" { };
   buildGoPackage = callPackage ../all-pkgs/b/build-go-package {
-    go = callPackageAlias "go_1_7" { };
+    go = callPackageAlias "go_1-7" { };
   };
   overrides = (config.goPackageOverrides or (p: { })) pkgs;
 };
-
-goPackages = callPackageAlias "go17Packages" { };
+goPackages_1-8 = callPackage ./go-packages.nix {
+  go = callPackageAlias "go_1-8" { };
+  buildGoPackage = callPackage ../all-pkgs/b/build-go-package {
+    go = callPackageAlias "go_1-8" { };
+  };
+  overrides = (config.goPackageOverrides or (p: { })) pkgs;
+};
+goPackages = callPackageAlias "goPackages_1-8" { };
 
 gobject-introspection = callPackage ../all-pkgs/g/gobject-introspection { };
 

@@ -4,13 +4,14 @@
 , fetchurl
 , gettext
 , intltool
+, isPy3k
 , lib
 , pythonPackages
 
 , chardet
 , geoip
 , librsvg
-, libtorrent-rasterbar_1-0
+, libtorrent-rasterbar_1-1_head
 , Mako
 , pillow
 #, pygame
@@ -34,12 +35,10 @@
 }:
 
 let
-  inherit (pythonPackages)
-    isPy3k;
   inherit (lib)
     optionals;
 
-  version = "2016-09-28";
+  version = "2017-02-13";
   # Using an invalid version breaks compatibility with some trackers
   versionSpoof = "1.3.13";
 in
@@ -49,9 +48,9 @@ buildPythonPackage rec {
   src = fetchgit {
     version = 2;
     url = "git://git.deluge-torrent.org/deluge";
-    rev = "aa164cdbcea86db9cd53c680c18a08b161ec6976";
+    rev = "df4d97c44731ee4125df8ca99c2eb31974573efa";
     branchName = "develop";
-    sha256 = "10gpj6g0kpgf0bpp6rlw3wnai3i54glvb2kwifxgmd8d072awmd5";
+    sha256 = "c6a1c0a63ac56d57414f9a7d2e86e626be052319660887c43a273e35c8a12a08";
   };
 
   nativeBuildInputs = [
@@ -63,7 +62,7 @@ buildPythonPackage rec {
     chardet
     geoip
     librsvg
-    libtorrent-rasterbar_1-0
+    libtorrent-rasterbar_1-1_head
     Mako
     pillow
     #pygame

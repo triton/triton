@@ -159,7 +159,6 @@ in
       description = "chrony NTP daemon";
 
       wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
       conflicts = [ "ntpd.service" "systemd-timesyncd.service" ];
 
       preStart = ''

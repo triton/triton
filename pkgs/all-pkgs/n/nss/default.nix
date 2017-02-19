@@ -1,6 +1,6 @@
 { stdenv
 , fetchTritonPatch
-,fetchurl
+, fetchurl
 
 , nspr
 , perl

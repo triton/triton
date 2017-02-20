@@ -28,11 +28,15 @@ let
       baseSha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
       patchSha256 = "23e773a670f3cac11a92c4e442405dea6d2c28fea0f914ea2ba4bea313c26541";
     };
+    "4.10" = {
+      version = "4.10";
+      baseSha256 = "3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b";
+      patchSha256 = null;
+    };
     "testing" = {
-      version = "4.10-rc8";
-      needsGitPatch = true;
-      baseSha256 = "029098dcffab74875e086ae970e3828456838da6e0ba22ce3f64ef764f3d7f1a";
-      patchSha256 = "dd82a91266497c94eea0e3973faa8caf222b08c8693b4c8c1eb7084e774ad7ea";
+      version = "4.10";
+      baseSha256 = "3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b";
+      patchSha256 = null;
     };
     "bcache" =
       let

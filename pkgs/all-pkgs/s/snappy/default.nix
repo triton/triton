@@ -6,16 +6,18 @@
 , zlib
 }:
 
+let
+  version = "1.1.4";
+in
 stdenv.mkDerivation rec {
   name = "snappy-${version}";
-  version = "1.1.3";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "google";
     repo = "snappy";
     rev = version;
-    sha256 = "df0ed01b58334a43a0f81b49bf8c3b51c5845385e1d081c7b65c01dac2b3ccd2";
+    sha256 = "ea51fc2c12aafbcd89bc65e859015fb7e63da0b95a952fbc52d0e624c301e484";
   };
 
   nativeBuildInputs = [

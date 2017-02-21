@@ -1162,6 +1162,8 @@ fixesproto = callPackage ../all-pkgs/f/fixesproto { };
 
 flac = callPackage ../all-pkgs/f/flac { };
 
+flashrom = callPackage ../all-pkgs/f/flashrom { };
+
 flex = callPackage ../all-pkgs/f/flex { };
 
 flite = callPackage ../all-pkgs/f/flite { };

@@ -5,23 +5,18 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ipset-6.30";
+  name = "ipset-6.31";
 
   src = fetchurl {
     url = "http://ipset.netfilter.org/${name}.tar.bz2";
-    md5Confirm = "41c32e3b884ec714f0aac95e7675f9d1";
-    multihash = "QmSzN6EeYqE1eA5m37VbPW1ZjCW9XgmN2Nwvinmdyu7D5g";
-    sha256 = "65bfa43fec3d51a6b4012f3d7e4b93a748df9b71b6cd6c53adbec8083e804a31";
+    md5Confirm = "231790be940438287438df1f33857376";
+    multihash = "QmbA5gjRv93Z9yQ4hr9CN7zxYG5FTbkqFViRrfXtaGQr1a";
+    sha256 = "498e411cc1d134201a31a56def6c0936c642958c2d4b4ce7d9955240047a45fe";
   };
 
   buildInputs = [
     libmnl
   ];
-
-  # The script fails to detect pkg-config correctly
-  preConfigure = ''
-    export PKG_CONFIG="$(type -P pkg-config)"
-  '';
 
   configureFlags = [
     "--with-kmod=no"

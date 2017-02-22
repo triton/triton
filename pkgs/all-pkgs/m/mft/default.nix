@@ -61,6 +61,11 @@ stdenv.mkDerivation rec {
 
     rm usr/bin/mst
     mv etc/init.d/mst usr/bin
+    sed \
+      -e 's,/sbin/modprobe,modprobe,g' \
+      -e 's,/sbin/lsmod,lsmod,g' \
+      -e "s,^mbindir=.*,mbindir='$out/bin',g" \
+      -i usr/bin/mst
     rmdir etc/init.d
 
     for file in $(echo usr/bin/*); do

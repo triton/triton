@@ -2429,6 +2429,10 @@ man-db = callPackage ../all-pkgs/m/man-db { };
 
 man-pages = callPackage ../all-pkgs/m/man-pages { };
 
+mariadb = callPackage ../all-pkgs/m/mariadb { };
+mysql = callPackageAlias "mariadb" { };
+mysql_lib = callPackageAlias "mysql" { };
+
 mcelog = callPackage ../all-pkgs/m/mcelog { };
 
 mdadm = callPackage ../all-pkgs/m/mdadm { };
@@ -4068,11 +4072,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
 #  # Backwards compatibility.
   mod_dnssd = pkgs.apacheHttpdPackages.mod_dnssd;
-#
-  mariadb = callPackage ../servers/sql/mariadb { };
-#
-  mysql = callPackageAlias "mariadb" { };
-  mysql_lib = callPackageAlias "mysql" { };
 #
   softether_4_18 = callPackage ../servers/softether/4.18.nix { };
   softether = callPackageAlias "softether_4_18" { };

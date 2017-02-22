@@ -1,10 +1,33 @@
-{ stdenv, fetchurl, cmake, ncurses, zlib, xz, lzo, lz4
-, bzip2, snappy, openssl, pcre, boost, judy, bison, libxml2, ninja, kytea
-, msgpack-c, libaio, libevent, groff, jemalloc, cracklib, systemd_lib, numactl
-, perl, zeromq
+{ stdenv
+, cmake
+, fetchurl
+, ninja
+
+, ncurses
+, zlib
+, xz
+, lzo
+, lz4
+, bzip2
+, snappy
+, openssl
+, pcre
+, boost
+, judy
+, bison
+, libxml2
+, kytea
+, msgpack-c
+, libaio
+, libevent
+, groff
+, jemalloc
+, cracklib
+, systemd_lib
+, numactl
+, zeromq
 }:
 
-with stdenv.lib;
 stdenv.mkDerivation rec {
   name = "mariadb-10.1.21";
 
@@ -25,10 +48,28 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    ncurses zlib xz lzo lz4 bzip2 snappy
-    pcre libxml2 boost judy bison libevent cracklib
-    jemalloc libaio systemd_lib numactl kytea msgpack-c
-    zeromq #openssl
+    bison
+    boost
+    bzip2
+    cracklib
+    jemalloc
+    judy
+    kytea
+    libaio
+    libevent
+    libxml2
+    lz4
+    lzo
+    msgpack-c
+    ncurses
+    numactl
+    #openssl
+    pcre
+    snappy
+    systemd_lib
+    xz
+    zeromq
+    zlib
   ];
 
   cmakeFlags = [
@@ -86,16 +127,16 @@ stdenv.mkDerivation rec {
     find $out/bin -name \*test\* -exec rm {} \;
 
     # Fix the mysql_config
-    sed -i $out/bin/mysql_config \
-      -e 's,-lz,-L${zlib}/lib -lz,g'
-      #-e 's,-lssl,-L${openssl}/lib -lssl,g'
+    sed \
+      -e 's,-lz,-L${zlib}/lib -lz,g' \
+      -e 's,-lssl,-L${openssl}/lib -lssl,g' \
+      -i $out/bin/mysql_config
 
     # Don't install static libraries.
     rm $out/lib/*.a
   '';
 
   passthru = {
-    mysqlVersion = "5.6";
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
@@ -106,9 +147,12 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "An enhanced, drop-in replacement for MySQL";
-    homepage    = https://mariadb.org/;
-    license     = stdenv.lib.licenses.gpl2;
-    maintainers = with stdenv.lib.maintainers; [ wkennington ];
-    platforms   = stdenv.lib.platforms.all;
+    homepage = https://mariadb.org/;
+    license = licenses.gpl2;
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

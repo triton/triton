@@ -41,6 +41,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "mirror://postgresql/source/v${source.version}/${name}.tar.bz2";
+    md5Url = "${url}.md5";
     sha256Url = "${url}.sha256";
     inherit (source) sha256;
   };

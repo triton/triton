@@ -2884,25 +2884,22 @@ popt = callPackage ../all-pkgs/p/popt { };
 
 portaudio = callPackage ../all-pkgs/p/portaudio { };
 
-postgresql_96 = callPackage ../all-pkgs/p/postgresql {
+postgresql_9-6 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.6";
 };
-postgresql_95 = callPackage ../all-pkgs/p/postgresql {
+postgresql_9-5 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.5";
 };
-postgresql_94 = callPackage ../all-pkgs/p/postgresql {
+postgresql_9-4 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.4";
 };
-postgresql_93 = callPackage ../all-pkgs/p/postgresql {
+postgresql_9-3 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.3";
 };
-postgresql_92 = callPackage ../all-pkgs/p/postgresql {
+postgresql_9-2 = callPackage ../all-pkgs/p/postgresql {
   channel = "9.2";
 };
-postgresql_91 = callPackage ../all-pkgs/p/postgresql {
-  channel = "9.1";
-};
-postgresql = callPackageAlias "postgresql_96" { };
+postgresql = callPackageAlias "postgresql_9-6" { };
 
 potrace = callPackage ../all-pkgs/p/potrace { };
 

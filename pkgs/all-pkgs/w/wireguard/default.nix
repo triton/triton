@@ -14,7 +14,7 @@ let
   date = "2017-02-14";
 in
 stdenv.mkDerivation {
-  name = "wireguard-${date}";
+  name = "wireguard-${date}${optionalString (kernel != null) "-${kernel.version}"}";
 
   src = fetchzip {
     version = 2;

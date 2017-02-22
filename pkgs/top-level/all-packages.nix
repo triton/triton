@@ -2458,6 +2458,10 @@ mesa = pkgs.buildEnv {
 #  perf = linuxPackages.perf;
 #};
 
+mft = callPackage ../all-pkgs/m/mft {
+  kernel = null;
+};
+
 mfx-dispatcher = callPackage ../all-pkgs/m/mfx-dispatcher { };
 
 mg = callPackage ../all-pkgs/m/mg { };
@@ -4138,6 +4142,10 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
       cpupower = kCallPackage ../os-specific/linux/cpupower { };
 
       e1000e = kCallPackage ../os-specific/linux/e1000e {};
+
+      mft = kCallPackage ../all-pkgs/m/mft {
+        inherit (kPkgs) kernel;
+      };
 
       nvidia-drivers_tesla = kCallPackage ../all-pkgs/n/nvidia-drivers {
        channel = "tesla";

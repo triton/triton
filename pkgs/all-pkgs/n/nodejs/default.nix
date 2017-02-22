@@ -11,7 +11,7 @@
 }:
 
 let
-  version = "7.5.0";
+  version = "7.6.0";
 
   dirUrls = [
     "https://nodejs.org/dist/v${version}"
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/node-v${version}.tar.xz") dirUrls;
     hashOutput = false;
-    sha256 = "f99ee74647fe223eb03f2dd1dc6acdc14d9a881621376c848236c8d2ac8afd03";
+    sha256 = "6ff9042696fff0b49647f5864e71cb495e554e4f66e61443494210f5e16ab4a9";
   };
 
   nativeBuildInputs = [
@@ -83,6 +83,8 @@ stdenv.mkDerivation rec {
         "C4F0 DFFF 4E8C 1A82 3640  9D08 E73B C641 CC11 F4C8"
         # James M Snell
         "71DC FD28 4A79 C3B3 8668  286B C97E C7A0 7EDE 3FC1"
+        # Italo A. Casas
+        "5673 0D54 0102 8683 275B  D23C 23EF EFE9 3C4C FFFE"
       ];
       inherit (src) urls outputHash outputHashAlgo;
     };

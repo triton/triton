@@ -3,7 +3,7 @@
 
 , c-ares
 , libevent
-, openssl
+, openssl_1-0-2
 }:
 
 let
@@ -20,10 +20,12 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libevent
-    openssl
+    openssl_1-0-2
   ];
 
   configureFlags = [
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
     "--with-cares=${c-ares}"
   ];
 

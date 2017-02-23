@@ -11,7 +11,7 @@
 }:
 
 let
-  version = "1.0.9";
+  version = "1.0.10";
 in
 buildPythonPackage rec {
   name = "borgbackup-${version}";
@@ -19,7 +19,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "borgbackup";
     inherit version;
-    sha256 = "35860840e0429d4bb3acc8b9dd33aa5996a42fb2b678813a982b321a7dba3cb2";
+    sha256 = "978f28f144924005219da989b1b436a32b2735a34c6d0dc15bb0a1ccffad59e9";
   };
 
   BORG_LZ4_PREFIX = lz4;

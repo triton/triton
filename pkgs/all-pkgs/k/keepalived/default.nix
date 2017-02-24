@@ -12,16 +12,15 @@
 }:
 
 let
-  version = "1.3.3";
-  year = "2017";
+  version = "1.3.4";
 in
 stdenv.mkDerivation rec {
   name = "keepalived-${version}";
 
   src = fetchurl {
     url = "http://keepalived.org/software/${name}.tar.gz";
-    multihash = "QmRWjdPu2AAb3tvnqpzn6j5yieHN3GUXFx24Fv8GyRhbEZ";
-    sha256 = "7edab46df4e3bcd591d325f1d307743642bf1ab29e5ab11b1b27a89b1ce41f0f";
+    multihash = "QmUsAQHNfpBtGgxuYQa8aLQxLDB6vegepd8KfEEpadFsVw";
+    sha256 = "d946e3db6f1b2ec8c8fd255c0a4d2d326d1539db61136ba147d33ef219e3a754";
   };
 
   nativeBuildInputs = [
@@ -53,11 +52,6 @@ stdenv.mkDerivation rec {
     #"--enable-snmp-rfcv3"
     "--enable-dbus"
     "--enable-sha1"
-  ];
-
-  NIX_CFLAGS_COMPILE = [
-    "-DGIT_DATE=\"${version}\""
-    "-DGIT_YEAR=\"${year}\""
   ];
 
   preInstall = ''

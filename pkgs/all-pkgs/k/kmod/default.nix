@@ -7,7 +7,7 @@
 }:
 
 let
-  name = "kmod-23";
+  name = "kmod-24";
 
   tarballUrls = [
     "mirror://kernel/linux/utils/kernel/kmod/${name}.tar"
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "d303d5519faec9d69e1132f6b37db2579db17a7fb5c1517da0115d03ba168155";
+    sha256 = "610b8d1df172acc39a4fdf1eaa47a57b04873c82f32152e7a62e29b6ff9cb397";
   };
 
   nativeBuildInputs = [

@@ -1,5 +1,8 @@
 { stdenv
 , fetchurl
+, makeWrapper
+
+, coreutils
 }:
 
 stdenv.mkDerivation rec {
@@ -11,6 +14,10 @@ stdenv.mkDerivation rec {
     sha256 = "51a04d39232bb797c9efeaad51a525cf50a1deefcb19a1ea5dd3475118634db8";
   };
 
+  nativeBuildInputs = [
+    makeWrapper
+  ];
+
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
@@ -18,6 +25,12 @@ stdenv.mkDerivation rec {
 
   preInstall = ''
     installFlagsArray+=("SYSCONFDIR=$out/etc")
+  '';
+
+  preFixup = ''
+    # Scripts calls rm, cat & other executables
+    wrapProgram "$out/sbin/resolvconf" \
+      --set PATH "${coreutils}/bin"
   '';
 
   meta = with stdenv.lib; {

@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   preFixup = ''
     # Scripts calls rm, cat & other executables
     wrapProgram "$out/sbin/resolvconf" \
-      --set PATH "${coreutils}/bin"
+      --prefix PATH : "${coreutils}/bin"
   '';
 
   meta = with stdenv.lib; {

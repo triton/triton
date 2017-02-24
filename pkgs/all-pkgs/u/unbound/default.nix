@@ -13,16 +13,16 @@ let
     "https://unbound.net/downloads/unbound-${version}.tar.gz"
   ];
 
-  version = "1.6.0";
+  version = "1.6.1";
 in
 stdenv.mkDerivation rec {
   name = "unbound-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmaxjHsjtrb9ikztCdpUvhhe53GZc6JAxoHSxf4jt527iX";
+    multihash = "QmXibvY97if5jMiYyzaEM6WJHMCbHQnuz2N1XbQZjjxheW";
     hashOutput = false;
-    sha256 = "6b7db874e6debda742fee8869d722e5a17faf1086e93c911b8564532aeeffab7";
+    sha256 = "42df63f743c0fe8424aeafcf003ad4b880b46c14149d696057313f5c1ef51400";
   };
 
   buildInputs = [
@@ -52,11 +52,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.6.0";
+      urls = tarballUrls "1.6.1";
       pgpsigUrls = map (n: "${n}.asc") urls;
       pgpKeyFingerprint = "EDFA A3F2 CA4E 6EB0 5681  AF8E 9F6F 1C2D 7E04 5F8D";
       inherit (src) outputHashAlgo;
-      outputHash = "6b7db874e6debda742fee8869d722e5a17faf1086e93c911b8564532aeeffab7";
+      outputHash = "42df63f743c0fe8424aeafcf003ad4b880b46c14149d696057313f5c1ef51400";
     };
   };
 

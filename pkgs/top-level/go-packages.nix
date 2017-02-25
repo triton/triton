@@ -4566,7 +4566,6 @@ let
     preBuild = ''
       pushd go/src/$goPackagePath
       go list ./... | xargs go generate
-      find . -name structs\*
       popd
     '';
   };

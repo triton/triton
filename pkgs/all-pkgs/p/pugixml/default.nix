@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.8";
+  version = "1.8.1";
 in
 stdenv.mkDerivation rec {
   name = "pugixml-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "zeux";
     repo = "pugixml";
     rev = "v${version}";
-    sha256 = "4c66adfdccb5bd62715c8108a2f3ea610f988b53104f02bf4a1317d2728ea082";
+    sha256 = "e9439efae818f525960d3bc8694e65c10dfb6c81ed81a9e2de5909f5c0bd16b3";
   };
 
   nativeBuildInputs = [
@@ -27,12 +27,6 @@ stdenv.mkDerivation rec {
   cmakeFlags = [
     "-DBUILD_SHARED_LIBS=ON"
   ];
-
-  preConfigure = ''
-    # Enable long long support (required for filezilla)
-    #sed -ire '/PUGIXML_HAS_LONG_LONG/ s/^\/\///' src/pugiconfig.hpp
-    cd scripts
-  '';
 
   meta = with lib; {
     description = "Light-weight, simple and fast XML parser for C++ with XPath support";

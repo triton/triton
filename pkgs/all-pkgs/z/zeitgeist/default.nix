@@ -22,9 +22,9 @@ let
   inherit (stdenv.lib)
     boolEn;
 
-  versionMajor = "0.9";
-  versionMinor = "16";
-  version = "${versionMajor}.${versionMinor}";
+  versionMajor = "1.0";
+  versionMinor = "";
+  version = "${versionMajor}"; #.${versionMinor}";
 in
 stdenv.mkDerivation rec {
   name = "zeitgeist-${version}";
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://launchpad.net/zeitgeist/${versionMajor}/${version}/"
       + "+download/${name}.tar.xz";
-    sha256 = "0fkxjbqcpnjmhy2g6xqryyq0xhgsrbn9ph9lw67aabnq1h6ydlvf";
+    sha256 = "5ff508508f7a7b46acc9fbf1cf73fecb1aec214e18d9d22325aae8c2c2e8ddc8";
   };
 
   nativeBuildInputs = [

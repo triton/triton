@@ -69,6 +69,8 @@ stdenv.mkDerivation rec {
 
   preBuild = ''
     makeFlagsArray+=("PREFIX=$out")
+  '' + /* Build libXNVCtrl */ ''
+    make -C src/ $makeFlags build-xnvctrl
   '';
 
   makeFlags = [
@@ -77,10 +79,6 @@ stdenv.mkDerivation rec {
     "NV_USE_BUNDLED_LIBJANSSON=0"
     "NVML_AVAILABLE=1"
   ];
-
-  postBuild = /* Build libXNVCtrl */ ''
-    #make -C src/ $makeFlags build-xnvctrl
-  '';
 
   postInstall = /* NVIDIA Settings .desktop entry */ ''
     install -D -m644 -v 'doc/nvidia-settings.desktop' \
@@ -92,8 +90,12 @@ stdenv.mkDerivation rec {
     install -D -m644 -v 'doc/nvidia-settings.png' \
       "$out/share/pixmaps/nvidia-settings.png"
   '' + /* Install libXNVCtrl */ ''
-    #install -D -m644 -v 'src/libXNVCtrl/libXNVCtrl.so' \
-    #  "$out/lib/libXNVCtrl.so"
+    install -D -m644 -v 'src/libXNVCtrl/NVCtrl.h' \
+      "$out/include/NVCtrl/NVCtrl.h"
+    install -D -m644 -v 'src/libXNVCtrl/nv_control.h' \
+      "$out/include/NVCtrl/nv_control.h"
+    install -D -m644 -v 'src/libXNVCtrl/libXNVCtrl.a' \
+      "$out/lib/libXNVCtrl.a"
   '';
 
   preFixup = ''

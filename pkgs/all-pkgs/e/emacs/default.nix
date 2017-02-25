@@ -102,6 +102,9 @@ stdenv.mkDerivation rec {
     };
   };
 
+  # FIXME
+  buildDirCheck = false;
+
   meta = with stdenv.lib; {
     description = "GNU Emacs 24, the extensible, customizable text editor";
     homepage = http://www.gnu.org/software/emacs/;

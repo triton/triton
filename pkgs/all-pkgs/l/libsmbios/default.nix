@@ -1,20 +1,28 @@
 { stdenv
-, fetchurl
+, autoreconfHook
+, fetchFromGitHub
 , gettext
 , perl
 
 , libxml2
 }:
 
+let
+  version = "2.3.2";
+in
 stdenv.mkDerivation rec {
-  name = "libsmbios-2.3.0";
+  name = "libsmbios-${version}";
 
-  src = fetchurl {
-    url = "https://linux.dell.com/libsmbios/download/libsmbios/${name}/${name}.tar.xz";
-    sha256 = "c71f040df170f6b55a874f292929792449ba1fad6029ba18544ed04a88343c1c";
+  src = fetchFromGitHub {
+    version = 2;
+    owner = "dell";
+    repo = "libsmbios";
+    rev = "v${version}";
+    sha256 = "9247ae2566e8d3b7f9044db1c25d991410a4cee26c279691a7b48e0053244efb";
   };
 
   nativeBuildInputs = [
+    autoreconfHook
     gettext
     perl
   ];
@@ -24,8 +32,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    # Fix building without doxygen
-    sed -i 's, doxygen,,g' Makefile.in
+    sed -i 's, doxygen,,g' Makefile.am
   '';
 
   # It forgets to install headers.

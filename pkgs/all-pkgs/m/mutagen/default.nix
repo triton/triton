@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.36.2";
+  version = "1.37";
 in
 buildPythonPackage rec {
   name = "mutagen-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "mutagen";
     inherit version;
-    sha256 = "86fe98e941ca305be8ee6bdc6bb0e4e9c473bf9fb69a838fe5bf2fc6124fbcc7";
+    sha256 = "539553d3f1ffd890c74f64b819750aef0316933d162c09798c9e7eaf334ae760";
   };
 
   doCheck = false;

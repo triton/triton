@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "3.24.0";
+  version = "3.24.1";
 
   file = "FileZilla_${version}_src.tar.bz2";
 in
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     urls = [
       "mirror://sourceforge/filezilla/FileZilla_Client/${version}/${file}"
     ];
-    sha256 = "3d5dd4899cdeca038afd330f24098a61a223f15b172611e0c210244911cd4cad";
+    sha256 = "e6dd748c7ec067c1165683ebe81325ce6c561f4725963a9515494af346a30c2a";
   };
 
   nativeBuildInputs = [

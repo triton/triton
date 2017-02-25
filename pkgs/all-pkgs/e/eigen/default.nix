@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "3.3.0";
+  version = "3.3.3";
 in
 stdenv.mkDerivation rec {
   name = "eigen-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     version = 2;
     url = "https://bitbucket.org/eigen/eigen/get/${version}.tar.bz2";
-    sha256 = "be6e391061a81074be67f5eb2bcc993d3b9187592a93c9f33b83a0d9ec79cb65";
+    sha256 = "a400fe5c3c2fd1d3d56b13ee2edb42a06a21cf8efd35dc13d80d39c1cc95fe01";
   };
 
   nativeBuildInputs = [

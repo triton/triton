@@ -16,7 +16,7 @@ self: super: {
   Cabal = null;
   containers = null;
   deepseq = null;
-  directory = null;
+  #directory = null;
   filepath = null;
   ghc-prim = null;
   haskeline = null;
@@ -24,7 +24,7 @@ self: super: {
   hpc = null;
   integer-gmp = null;
   pretty = null;
-  process = null;
+  #process = null;
   rts = null;
   template-haskell = null;
   terminfo = null;

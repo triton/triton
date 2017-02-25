@@ -4,15 +4,17 @@
 }:
 
 let
-  version = "20160714";
-  id = "26156";
+  version = "2016-11-04";
+  version' = stdenv.lib.replaceStrings ["-"] [""] version;
+  id = "26400";
 in
 stdenv.mkDerivation rec {
   name = "intel-microcode-${version}";
 
   src = fetchurl {
-    url = "https://downloadmirror.intel.com/${id}/eng/microcode-${version}.tgz";
-    sha256 = "f3a9c6fc93275bf1febc26f7c397ac93ed5f109e47fb52932f6dbd5cfdbc840e";
+    url = "https://downloadmirror.intel.com/${id}/eng/microcode-${version'}.tgz";
+    md5Confirm = "6720d5c2673d79ca8e4ac8e66d8597bf";
+    sha256 = "70154ca62ff9b3da6291dfdecc90daaeb399d7290c0d308d719df16dff5ee3d1";
   };
 
   nativeBuildInputs = [

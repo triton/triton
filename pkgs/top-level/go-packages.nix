@@ -2407,13 +2407,14 @@ let
 
   go-github = buildFromGitHub {
     version = 2;
-    date = "2017-02-24";
-    rev = "6d87e6ecefb23287203efc7b867f929ccb5a9375";
+    date = "2017-02-17";
+    rev = "82629e04595093a1cebd5e2aa8096ad87a3a81d1";
     owner = "google";
     repo = "go-github";
-    sha256 = "11l09q3gh3pdi1zigwp03p1nx7g1bwn026845aqi40s9vay4831g";
+    sha256 = "cec1f08c3ee954eb9ba406bf38d1e2da4ad37134b0520e49197438f77587e633";
     buildInputs = [ oauth2 ];
     propagatedBuildInputs = [ go-querystring ];
+    meta.autoUpdate = false;
   };
 
   go-grpc-prometheus = buildFromGitHub {
@@ -4556,11 +4557,12 @@ let
       "."
     ];
 
-    # Remove deprecated consul api.HealthUnknown
+    # Rename deprecated ParseNamed to ParseNormalizedNamed
     postPatch = ''
-      #sed -i nomad/structs/structs.go \
-      #  -e 's/api.HealthUnknown, //' \
-      #  -e '/api.HealthUnknown/d'
+      find . -type f -exec sed -i {} \
+        -e 's,.ParseNamed,.ParseNormalizedNamed,g' \
+        -e 's,"github.com/docker/docker/reference","github.com/docker/distribution/reference",g' \
+        \;
     '';
 
     preBuild = ''

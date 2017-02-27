@@ -29,14 +29,14 @@ let
       patchSha256 = "87a0f07dd393e2d08850f0536417d091684535ff0c8ab8f8d9aeab1db38589bf";
     };
     "4.10" = {
-      version = "4.10";
+      version = "4.10.1";
       baseSha256 = "3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b";
-      patchSha256 = null;
+      patchSha256 = "da560125aa350f76f0e4a5b9373a0d0a1c27ccefe3b7bd9231724f3a3c4ebb9e";
     };
     "testing" = {
-      version = "4.10";
+      version = "4.10.1";
       baseSha256 = "3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b";
-      patchSha256 = null;
+      patchSha256 = "da560125aa350f76f0e4a5b9373a0d0a1c27ccefe3b7bd9231724f3a3c4ebb9e";
     };
     "bcache" =
       let

@@ -5,12 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "seabios-1.10.1";
+  name = "seabios-1.10.2";
 
   src = fetchurl {
     url = "https://code.coreboot.org/p/seabios/downloads/get/${name}.tar.gz";
-    multihash = "QmWGwG4ANLwEAKZfJUoL6VenJth2emVPKEAsi2g1N6kbLE";
-    sha256 = "5063ddbac61ec4e61a12daa83931c37e5629b1c18502f7c00ed4e696c2a1d2cb";
+    multihash = "QmZeo4sGnCbd5ZZA8EvKLNrnrQUuU5rUN8ELQrvaGL2rbb";
+    sha256 = "89c70b70fa7ab179694efb95c2c89d4f50a39381321cbed5d8302cb9b25e953d";
   };
 
   nativeBuildInputs = [

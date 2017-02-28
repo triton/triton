@@ -1,13 +1,12 @@
 { stdenv
-, autoreconfHook
-, fetchFromGitHub
+, fetchurl
 , python
 
 , openssl
 }:
 
 let
-  version = "2.1.7-rc";
+  version = "2.1.8";
 
   tarballUrls = version: [
     "https://github.com/libevent/libevent/releases/download/release-${version}-stable/libevent-${version}-stable.tar.gz"
@@ -16,22 +15,13 @@ in
 stdenv.mkDerivation rec {
   name = "libevent-${version}";
 
-  /*src = fetchurl {
+  src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "18qz9qfwrkakmazdlwxvjmw8p76g70n3faikwvdwznns1agw9hki";
-  };*/
-
-  src = fetchFromGitHub {
-    version = 2;
-    owner = "libevent";
-    repo = "libevent";
-    rev = "release-${version}";
-    sha256 = "70a1e1042a1035f2e0d0d2edcb5eae84ca718b69a26803bebf6115e72dd5db41";
+    sha256 = "965cc5a8bb46ce4199a47e9b2c9e1cae3b137e8356ffdad6d94d3b9069b71dc2";
   };
 
   nativeBuildInputs = [
-    autoreconfHook
     python
   ];
 
@@ -47,16 +37,18 @@ stdenv.mkDerivation rec {
     "--disable-samples"
   ];
 
-  /*passthru = {
+  passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.0.22";
+      urls = tarballUrls "2.1.8";
       pgpsigUrls = map (n: "${n}.asc") urls;
-      pgpKeyFingerprint = "B35B F85B F194 89D0 4E28  C33C 2119 4EBB 1657 33EA";
+      pgpKeyFingerprints = [
+        "9E3A C83A 2797 4B84 D1B3  401D B860 8684 8EF8 686D"
+      ];
       inherit (src) outputHashAlgo;
-      outputHash = "18qz9qfwrkakmazdlwxvjmw8p76g70n3faikwvdwznns1agw9hki";
+      outputHash = "965cc5a8bb46ce4199a47e9b2c9e1cae3b137e8356ffdad6d94d3b9069b71dc2";
     };
-  };*/
+  };
 
   meta = with stdenv.lib; {
     description = "Event notification library";

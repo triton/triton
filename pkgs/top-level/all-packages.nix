@@ -3025,6 +3025,8 @@ rapidjson = callPackage ../all-pkgs/r/rapidjson { };
 
 raptor2 = callPackage ../all-pkgs/r/raptor2 { };
 
+rclone = pkgs.goPackages.rclone.bin // { outputs = [ "bin" ]; };
+
 re2c = callPackage ../all-pkgs/r/re2c { };
 
 readline = callPackage ../all-pkgs/r/readline { };

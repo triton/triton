@@ -20,7 +20,7 @@
 , mesa_glu
 , mesa_noglu
 , mysql_lib
-, openssl_1-0-2
+, openssl
 , perl
 , postgresql
 , pulseaudio_lib
@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
     mesa_glu
     mesa_noglu
     mysql_lib
-    openssl_1-0-2
+    openssl
     postgresql
     pulseaudio_lib
     sqlite
@@ -110,26 +110,36 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "1d82577840200894c2b4ca4b025eb809f8dd9b51";
-      file = "qt/qt-4.8-glib-2.32.patch";
-      sha256 = "9b019b4e62e8c9889748ad8772faf8436f5b47f2315bb9a68fdf9785784d1abf";
+      rev = "3a7e90a43079d94b6b1c4491ef3804d55c1e1216";
+      file = "q/qt/qt-4.8-openssl-1.1.0.patch";
+      sha256 = "9414949cfc5aaa764a52a70c02fe9958f8fd1b94e09aa82197b29ab0ccbba3e4";
     })
     (fetchTritonPatch {
-      rev = "1d82577840200894c2b4ca4b025eb809f8dd9b51";
-      file = "qt/qt-4.8-libressl.patch";
-      sha256 = "2535881d17d9a886b39bb6ed980e16d974bc3109bb7a7053ddf521e230ea547b";
+      rev = "3a7e90a43079d94b6b1c4491ef3804d55c1e1216";
+      file = "q/qt/qt-4.8-39_fix_medium_font.patch";
+      sha256 = "7c909f2cf38897ae8537e0f37d2d9d0d97f37d1d7f2910115222004f49bb2d27";
+    })
+    (fetchTritonPatch {
+      rev = "3a7e90a43079d94b6b1c4491ef3804d55c1e1216";
+      file = "q/qt/qt-4.8-disable-sslv3.patch";
+      sha256 = "829b02ba10f208c2beba8e8a0110b6d10c63932612dabc08d536f099b9f66101";
+    })
+    (fetchTritonPatch {
+      rev = "3a7e90a43079d94b6b1c4491ef3804d55c1e1216";
+      file = "q/qt/qt-4.8-glib-2.32.patch";
+      sha256 = "9b019b4e62e8c9889748ad8772faf8436f5b47f2315bb9a68fdf9785784d1abf";
     })
     (substituteAll {
-      src = ./qt-4.8-dlopen-absolute-paths.patch;
+      name = "qt-4.8-dlopen-absolute-paths.patch";
+      src = fetchTritonPatch {
+        rev = "f9b0e7835c04aea87181706a39344242e85db60c";
+        file = "q/qt/qt-4.8-dlopen-absolute-paths.patch";
+        sha256 = "d845a7e2fff67e0623d5895bcea8cc90940637e01efb217b1182fe12cf3c723b";
+      };
       inherit cups icu;
       inherit (xorg) libXfixes;
       glibc = stdenv.cc.libc;
       openglDriver = mesa_noglu.driverSearchPath;
-    })
-    (fetchTritonPatch {
-      rev = "1d82577840200894c2b4ca4b025eb809f8dd9b51";
-      file = "qt/qt-4.8-39_fix_medium_font.patch";
-      sha256 = "7c909f2cf38897ae8537e0f37d2d9d0d97f37d1d7f2910115222004f49bb2d27";
     })
   ];
 

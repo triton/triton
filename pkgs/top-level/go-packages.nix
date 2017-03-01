@@ -255,11 +255,11 @@ let
 
   sys = buildFromGitHub {
     version = 2;
-    rev = "21f2569f6feb83b68a25c98c1b20eca5d4e1e6ae";
-    date = "2017-02-28";
+    rev = "76cc09b634294339fa19ec41b5f2a0b3932cea8b";
+    date = "2017-03-01";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "07fcbvjyadzc70lbky6b4hdxkb0vhxrp41zzz4xansakd8bdq51d";
+    sha256 = "0vn8whgr4ci43bdga8x0knii6p0r5k4afdw0zmn7iixyw1psrm6f";
     goPackagePath = "golang.org/x/sys";
     goPackageAliases = [
       "github.com/golang/sys"
@@ -268,11 +268,11 @@ let
 
   text = buildFromGitHub {
     version = 2;
-    rev = "0ad425fe45e885577bef05dc1c50f72e33188b16";
-    date = "2017-02-26";
+    rev = "d680ca3ed853995402af43b866311167281bdc20";
+    date = "2017-03-01";
     owner = "golang";
     repo = "text";
-    sha256 = "1ypynyyslg2vlyzy1ghx7l93x08vqfygyzsywli3p8jhm3b8xnih";
+    sha256 = "041inc6ahf5bbsx04nbbm6yd7y90gmc432bdzydbzfdb4dj3phb9";
     goPackagePath = "golang.org/x/text";
     goPackageAliases = [ "github.com/golang/text" ];
     excludedPackages = "cmd";
@@ -1872,11 +1872,11 @@ let
 
   google-cloud-go = buildFromGitHub {
     version = 2;
-    date = "2017-02-28";
-    rev = "5e7b3ea7ac9326eccc657cc16879281396d1b93a";
+    date = "2017-03-01";
+    rev = "34d4e098303a6874a9e2d06ef843722588eae366";
     owner = "GoogleCloudPlatform";
     repo = "google-cloud-go";
-    sha256 = "1d93w5miy0k4bwsfgiwp3lml7802n9bp7cd05sjf6ccf5xhrza56";
+    sha256 = "1gay8jkdz3gxa4lafrhrs7asn23nk8ra863jpp7zhqm8myl0wznv";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -5047,8 +5047,8 @@ let
     version = 2;
     owner = "ncw";
     repo = "rclone";
-    rev = "69a15ae1739e9bd8b92f5571e0a625f892ef76ec";
-    sha256 = "1as8zfj038dr7vpg7114mci84xnj6lh5vx21l34ljahff2av2p29";
+    rev = "5fba9132071b8696cb9ae595f2bf700f2ec62403";
+    sha256 = "008is871bv3y55arikqpi2pvwqy2y7gpik8x4yzn0n85hr90x58b";
     propagatedBuildInputs = [
       aws-sdk-go
       cobra
@@ -5072,7 +5072,7 @@ let
       testify
     ];
     meta.useUnstable = true;
-    date = "2017-02-17";
+    date = "2017-02-27";
   };
 
   cupcake_rdb = buildFromGitHub {

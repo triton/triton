@@ -174,6 +174,8 @@ stdenv.mkDerivation rec {
     "--enable-hibernate"
     "--enable-ldconfig"
     "--with-tty-gid=3" # tty in NixOS has gid 3
+    "--with-default-hierarchy=unified"
+    "--with-default-hostname=triton"
     "--disable-split-usr"
     "--disable-tests"
   ] ++ (if libOnly then [

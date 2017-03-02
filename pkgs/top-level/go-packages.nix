@@ -293,11 +293,11 @@ let
 
   tools = buildFromGitHub {
     version = 2;
-    rev = "718875e4f9a39b5a303f3fa67a7dd9367b07c02f";
-    date = "2017-02-28";
+    rev = "1dce95f761bfeb6fe2aa3c4e9ffdb261b69b3fc4";
+    date = "2017-03-01";
     owner = "golang";
     repo = "tools";
-    sha256 = "1sj767i7ipwnwvvmy8b5j5iv6incahbmsmq0l85q8xjj9wx2mhqg";
+    sha256 = "1hwfay7fyzyr46467xpvw38ani6zwv4czh4hprgvmiy5nlz5wxsp";
     goPackagePath = "golang.org/x/tools";
     goPackageAliases = [ "code.google.com/p/go.tools" ];
 
@@ -2346,11 +2346,11 @@ let
 
   go-ethereum = buildFromGitHub {
     version = 2;
-    date = "2017-02-28";
-    rev = "167be7f260763bb21e703d304b553142d5422266";
+    date = "2017-03-01";
+    rev = "c52ab932e61ef9eba37c107e8b58b22c7d32e6c2";
     owner  = "ethereum";
     repo   = "go-ethereum";
-    sha256 = "1mq33l0nf2f8jdgjs0rp4aglzfjs172q90ipgxayygk50i59rn29";
+    sha256 = "1b2yaq017vz3j96gz7vkvqi6yzsn4hq816d2k24w6rsv11a2lqhs";
     subPackages = [
       "crypto/sha3"
     ];
@@ -2510,10 +2510,10 @@ let
 
   go-ipfs-api = buildFromGitHub {
     version = 2;
-    rev = "8e5f622a684e7a121ae7e02e705c15d101ea7ee4";
+    rev = "57e8d73c27b8e64b8d025bc24afa0439ccca309a";
     owner  = "ipfs";
     repo   = "go-ipfs-api";
-    sha256 = "16rl40hmd897dcf5wdagsdg925f97kpvrxwm1si9bvy3fqcy7kwb";
+    sha256 = "0wwk2xywpmzcifi56bmhn6d37x4mvrf6hwb9k7xsj90mlh34an2w";
     excludedPackages = "tests";
     propagatedBuildInputs = [
       go-floodsub
@@ -2523,7 +2523,7 @@ let
       tar-utils
     ];
     meta.useUnstable = true;
-    date = "2017-02-08";
+    date = "2017-03-01";
   };
 
   go-ipfs-util = buildFromGitHub {
@@ -3676,11 +3676,11 @@ let
 
   ipfs = buildFromGitHub {
     version = 2;
-    rev = "v0.4.5";
+    rev = "v0.4.6";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "1ksizk51zybw0s6xx6z69a0ryfxwwnfcb5nl3bm9qnrd7ib6g4h6";
-    gxSha256 = "10rawqyxv81g1x9lva1hlxbs63gk618lyjg26d9cspl1r3w4vhd8";
+    sha256 = "1yj0i2n8ww7fplkqpnk7106lc514wjiik4wagja2gp0miq40xh8v";
+    gxSha256 = "1wrx86118llzdpy1ksgn5v86ra3ickcjkf35pg3xjd3jvqy0rjqb";
     subPackages = [
       "cmd/ipfs"
       "cmd/ipfswatch"
@@ -5820,11 +5820,11 @@ let
 
   utp = buildFromGitHub {
     version = 2;
-    rev = "5ba96237026382ae0f0d081fff9fd3f89d20e536";
+    rev = "a45fe7814045a407e5878527cd8cea508171dd3c";
     owner  = "anacrolix";
     repo   = "utp";
-    sha256 = "1ji00i1513x2bqzpcx10y3cj7y4mi7sh0x984krkaq1vq9pg55p5";
-    date = "2017-02-27";
+    sha256 = "0qaymcsa8pg753b88zz8gw1414w8kw36xkdf3nnssk5wckq33zz2";
+    date = "2017-03-01";
     propagatedBuildInputs = [
       envpprof
       missinggo

@@ -3,12 +3,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "lzo-2.09";
+  name = "lzo-2.10";
 
   src = fetchurl {
     url = "https://www.oberhumer.com/opensource/lzo/download/${name}.tar.gz";
-    multihash = "QmXGpQqmvbaYn4aMiyPWLRP4Kw7FWnvoPFLUziQqVSLr99";
-    sha256 = "0k5kpj3jnsjfxqqkblpfpx0mqcy86zs5fhjhgh2kq1hksg7ag57j";
+    multihash = "QmR7bLmEDBw5ZnHRPCsYQ9rDV5tLNKRbG9KzGqDzYBYNEE";
+    sha256 = "c0f892943208266f9b6543b3ae308fab6284c5c90e627931446fb49b4221a072";
   };
 
   configureFlags = [

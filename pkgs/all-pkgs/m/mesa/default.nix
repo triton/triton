@@ -52,7 +52,7 @@ let
     optionalString
     splitString;
 
-  version = "17.0.0";
+  version = "17.0.1";
 
   # this is the default search path for DRI drivers
   driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
@@ -62,6 +62,7 @@ stdenv.mkDerivation rec {
 
   src =  fetchurl {
     urls = [
+      "https://mesa.freedesktop.org/archive/mesa-${version}.tar.xz"
       "https://mesa.freedesktop.org/archive/${version}/mesa-${version}.tar.xz"
       "ftp://ftp.freedesktop.org/pub/mesa/${version}/mesa-${version}.tar.xz"
       # Tarballs for old releases are moved to another directory
@@ -69,9 +70,9 @@ stdenv.mkDerivation rec {
         + head (splitString "." version)
         + ".x/${version}/mesa-${version}.tar.xz")
     ];
-    multihash = "Qmci7BC3LTxiLVjdZyV8KsUftcp8ocoXRs7AK2K5vXC795";
+    multihash = "QmTZJ4bQcVnHMqGs6Q8jqwB4ZbasYWRfo7oa3CHKfnAew6";
     hashOutput = false;  # Provided by upstream directly
-    sha256 = "39db3d59700159add7f977307d12a7dfe016363e760ad82280ac4168ea668481";
+    sha256 = "96fd70ef5f31d276a17e424e7e1bb79447ccbbe822b56844213ef932e7ad1b0c";
   };
 
   nativeBuildInputs = [

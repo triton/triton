@@ -18,7 +18,7 @@ let
     boolEn
     optionals;
 
-  version = "1.12.0";
+  version = "1.13.0";
 in
 stdenv.mkDerivation rec {
   name = "wayland-${version}";
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://wayland.freedesktop.org/releases/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "d6b4135cba0188abcb7275513c72dede751d6194f6edc5b82183a3ba8b821ab1";
+    sha256 = "69b052c031a61e89af7cc8780893d0da1e301492352aa449dee9345043e6fe51";
   };
 
   nativeBuildInputs = [ ]

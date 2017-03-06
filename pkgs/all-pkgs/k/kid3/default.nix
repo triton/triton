@@ -3,6 +3,7 @@
 , cmake
 , docbook_xml_dtd_45
 , docbook-xsl
+, lib
 , libxslt
 , ninja
 , perl
@@ -26,10 +27,10 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolOn;
 
-  version = "3.4.4";
+  version = "3.4.5";
 in
 stdenv.mkDerivation rec {
   name = "kid3-${version}";
@@ -37,7 +38,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/kid3/kid3/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "ab1f622e26e5d672eb078f93abdb51f1a2667a748be8a211fcd91d18e0db4de0";
+    sha256 = "0d703b0b8c2538eba1f8f540a87e13a4bf61f715ef9cd1253f18417ebb096404";
   };
 
   nativeBuildInputs = [
@@ -104,7 +105,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A simple and powerful audio tag editor";
     homepage = http://kid3.sourceforge.net/;
     license = licenses.gpl2Plus;

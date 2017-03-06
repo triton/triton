@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , alabaster
 , babel
@@ -14,7 +15,7 @@
 }:
 
 let
-  version = "1.5.2";
+  version = "1.5.3";
 in
 buildPythonPackage {
   name = "Sphinx-${version}";
@@ -22,7 +23,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Sphinx";
     inherit version;
-    sha256 = "049c48393909e4704a6ed4de76fd39c8622e165414660bfb767e981e7931c722";
+    sha256 = "4f6b257bea61ee6454538dcdb9e8cf56470b4dc6c4f9f750de4aedc57557814f";
   };
 
   propagatedBuildInputs = [
@@ -37,7 +38,7 @@ buildPythonPackage {
     snowballstemmer
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

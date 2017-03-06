@@ -2,6 +2,7 @@
 , automake
 , autoconf
 , fetchurl
+, lib
 , libtool
 , makeWrapper
 
@@ -19,10 +20,10 @@
 assert target == "CLI" || target == "GUI";
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionalString;
 
-  version = "0.7.91";
+  version = "0.7.93";
 in
 stdenv.mkDerivation rec {
   name = "mediainfo-${version}";
@@ -30,7 +31,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/mediainfo/source/mediainfo/${version}/"
       + "mediainfo_${version}.tar.xz";
-    sha256 = "b501e2776319448a1664371f05498af21db1133b3a8d530f62447d0913bc5996";
+    sha256 = "a268b190febc5fbf54a6cfcf0769fcb65c0d888920e6a52ef020822cefec4bae";
   };
 
   nativeBuildInputs = [
@@ -41,7 +42,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    glib # For setup-hook
+    glib  # For setup-hook
     libmediainfo
     libzen
     wxGTK
@@ -65,7 +66,7 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Displays technical & tag information for multimedia files";
     homepage = http://mediaarea.net/mediainfo/;
     license = licenses.bsd2;

@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "1.10.0";
+  version = "2.0.0";
 in
 buildPythonPackage {
   name = "pbr-${version}";
@@ -12,12 +13,13 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pbr";
     inherit version;
-    sha256 = "186428c270309e6fdfe2d5ab0949ab21ae5f7dea831eab96701b86bd666af39c";
+    sha256 = "0ccd2db529afd070df815b1521f01401d43de03941170f8a800e7531faba265d";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Injects default behaviors into setuptools";
     homepage = https://launchpad.net/pbr;
+    license = licenses.free;
     maintainers = with maintainers; [
       wkennington
     ];

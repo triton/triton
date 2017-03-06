@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , bzip2
 , dejavu-fonts
@@ -32,21 +33,20 @@
 , zlib
 }:
 
-let
-  inherit (stdenv.lib)
-    boolString
-    boolWt
-    optionalString;
-
-  # Use stable patch releases, e.g. -9 or -10
-  version = "7.0.3-10";
-in
-
 assert xorg != null ->
   xorg.libX11 != null
   && xorg.libXext != null
   && xorg.libXt != null;
 
+let
+  inherit (lib)
+    boolString
+    boolWt
+    optionalString;
+
+  # Use stable patch releases, e.g. -9 or -10
+  version = "7.0.4-10";
+in
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
 
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
       "mirror://imagemagick"
     ];
     hashOutput = false;
-    sha256 = "d9f2d7fad313f5d1fcb7805225f3f65f3052bf813eb51bf1469b9aede081e97a";
+    sha256 = "5725566b345a79381f37876aff69657c95d8981cb7506aa41363ccf4a650eb9f";
   };
 
   buildInputs = [
@@ -188,7 +188,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A collection of tools and libraries for many image formats";
     homepage = http://www.imagemagick.org/;
     license = licenses.imagemagick;

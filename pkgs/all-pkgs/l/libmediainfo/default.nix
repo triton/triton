@@ -1,6 +1,7 @@
 { stdenv
 , autoreconfHook
 , fetchurl
+, lib
 
 , curl
 , libmms
@@ -9,7 +10,7 @@
 }:
 
 let
-  version = "0.7.92.1";
+  version = "0.7.93";
 in
 stdenv.mkDerivation rec {
   name = "libmediainfo-${version}";
@@ -17,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/mediainfo/source/libmediainfo/${version}/"
       + "libmediainfo_${version}.tar.xz";
-    sha256 = "200d4d7c52b6b3c1bed455e75fbc5b899b0c74846eab45e368388c74a2250e2e";
+    sha256 = "3624a187c7159a055805a475e4bbcfd3d55b77b765507fd066b205cd55902114";
   };
 
   nativeBuildInputs = [
@@ -43,7 +44,7 @@ stdenv.mkDerivation rec {
     install -D -m 644 -v 'libmediainfo.pc' "$out/lib/pkgconfig/libmediainfo.pc"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Shared library for mediainfo";
     homepage = http://mediaarea.net/;
     license = licenses.bsd2;

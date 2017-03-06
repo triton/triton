@@ -70,10 +70,11 @@ with stdenv.lib;
   # Debugging.
   DEBUG_KERNEL y
   DYNAMIC_DEBUG y
-  TIMER_STATS y
   BACKTRACE_SELF_TEST n
+  ${optionalString (versionOlder version "4.11") ''
+    DEBUG_NX_TEST n
+  ''}
   DEBUG_DEVRES n
-  DEBUG_NX_TEST n
   DEBUG_STACK_USAGE n
   DEBUG_STACKOVERFLOW n
   RCU_TORTURE_TEST n
@@ -93,6 +94,9 @@ with stdenv.lib;
   X86_INTEL_LPSS y
   X86_INTEL_PSTATE y
   INTEL_IDLE y
+  ${optionalString (versionAtLeast version "4.11") ''
+    INTEL_TURBO_MAX_3 y
+  ''}
   CPU_FREQ_DEFAULT_GOV_PERFORMANCE y
   ACPI_PCI_SLOT y
   ACPI_HOTPLUG_MEMORY y
@@ -288,6 +292,9 @@ with stdenv.lib;
   ''}
   ${optionalString (versionAtLeast version "4.10") ''
     LED_TRIGGER_PHY y
+  ''}
+  ${optionalString (versionAtLeast version "4.11") ''
+    LEDS_BRIGHTNESS_HW_CHANGED y
   ''}
 
   # Wireless networking.
@@ -582,6 +589,9 @@ with stdenv.lib;
   MEMCG y
   MEMCG_SWAP y
   CGROUP_PIDS y
+  ${optionalString (versionAtLeast version "4.11") ''
+    CGROUP_RDMA y
+  ''}
   ${optionalString (versionOlder version "4.7") ''
     DEVPTS_MULTIPLE_INSTANCES y
   ''}
@@ -590,6 +600,9 @@ with stdenv.lib;
     BLK_DEV_ZONED y
     BLK_WBT y
     BLK_WBT_SQ y
+  ''}
+  ${optionalString (versionAtLeast version "4.11") ''
+    BLK_SED_OPAL y
   ''}
   CFQ_GROUP_IOSCHED y
   CFS_BANDWIDTH y
@@ -633,6 +646,9 @@ with stdenv.lib;
   IDLE_PAGE_TRACKING y
   ${optionalString (versionAtLeast version "4.9") ''
     GCC_PLUGIN_LATENT_ENTROPY y
+  ''}
+  ${optionalString (versionAtLeast version "4.11") ''
+    GCC_PLUGIN_STRUCTLEAK y
   ''}
 
   # Easier debugging of NFS issues.
@@ -687,6 +703,9 @@ with stdenv.lib;
   ''}
   VFIO_PCI_VGA y
   VIRTIO_MMIO_CMDLINE_DEVICES y
+  ${optionalString (versionAtLeast version "4.11") ''
+    VIRTIO_BLK_SCSI y
+  ''}
   VIRT_DRIVERS y
   INTEL_IOMMU_SVM y
 

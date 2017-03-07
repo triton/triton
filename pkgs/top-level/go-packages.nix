@@ -1417,10 +1417,11 @@ let
       clockwork
       cobra
       cmux
-      gopcap
+      go-grpc-prometheus
       go-humanize
       go-semver
       go-systemd
+      gopcap
       groupcache
       grpc
       grpc-gateway
@@ -1436,6 +1437,7 @@ let
       gogo_protobuf
       speakeasy
       tablewriter
+      time
       ugorji_go
       yaml
 

@@ -83,7 +83,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/pango/${channel}/"
+      sha256Url = "https://download.gnome.org/sources/pango/${versionMajor}/"
         + "${name}.sha256sum";
       failEarly = true;
     };

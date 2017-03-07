@@ -40,7 +40,7 @@ let
 
   version = "2017-03-01";
   # Using an invalid version breaks compatibility with some trackers
-  versionSpoof = "1.3.13";
+  versionSpoof = "1.3.14";
 in
 buildPythonPackage rec {
   name = "deluge-${version}";

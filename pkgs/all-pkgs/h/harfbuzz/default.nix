@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , python
 
 , cairo
@@ -12,7 +13,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt
     optionals
@@ -45,12 +46,9 @@ stdenv.mkDerivation rec {
 
   postPatch = optionalString doCheck (''
     patchShebangs test/shaping/
-  '' + /* failing test, https://bugs.freedesktop.org/show_bug.cgi?id=89190 */ ''
-    sed -i test/shaping/Makefile.{am,in} \
-      -e 's|tests/arabic-fallback-shaping.tests||'
   '' + /* test fails */ ''
     sed -i test/shaping/Makefile.{am,in} \
-      -e 's|tests/vertical.tests||'
+      -e 's|tests/fuzzed.tests||'
   '');
 
   configureFlags = [
@@ -85,7 +83,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "An OpenType text shaping engine";
     homepage = http://www.freedesktop.org/wiki/Software/HarfBuzz;
     license = with licenses; [

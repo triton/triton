@@ -587,6 +587,20 @@ let
     sha256 = "185c10ab80cn4jxdp915h428lm0r9zf1cqrfsjs71im3w3ankvsn";
   };
 
+  certificate-transparency = buildFromGitHub {
+    version = 2;
+    owner = "google";
+    repo = "certificate-transparency";
+    rev = "173728300b695a5336f65f4dfb6645ad1b1665e2";
+    date = "2017-02-24";
+    sha256 = "73627100e0e5874e268903118a4a7852ece1bcb78a18cfc99136cacd850deaa5";
+    propagatedBuildInputs = [
+      go-sqlite3
+      net
+      ratelimit
+    ];
+  };
+
   chalk = buildFromGitHub {
     version = 2;
     rev = "22c06c80ed312dcb6e1cf394f9634aa2c4676e22";

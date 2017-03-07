@@ -3876,6 +3876,18 @@ let
     ];
   };
 
+  libtrust = buildFromGitHub {
+    version = 2;
+    rev = "aabc10ec26b754e797f9028f4589c5b7bd90dc20";
+    owner = "docker";
+    repo = "libtrust";
+    sha256 = "40837c2420436be95f8098bf3a9c1b2820b72ec2b43fd0983a00c006d66ba1e8";
+    date = "2016-07-08";
+    postPatch = /* Demo uses same package namespace as actual library */ ''
+      rm -rfv tlsdemo
+    '';
+  };
+
   liner = buildFromGitHub {
     version = 2;
     rev = "bf27d3ba8e1d9899d45a457ffac16c953eb2d647";

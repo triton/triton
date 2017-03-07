@@ -4377,6 +4377,15 @@ let
     date = "2016-11-03";
   };
 
+  mock = buildFromGitHub {
+    version = 2;
+    owner = "golang";
+    repo = "mock";
+    rev = "bd3c8e81be01eef76d4b503f5e687d2d1354d2d9";
+    date = "2016-01-21";
+    sha256 = "5d964bd99a35234ae8a9a0a9ea030665f57ede3459dff10290788475744ba470";
+  };
+
   mongo-tools = buildFromGitHub {
     version = 2;
     rev = "r3.5.2";

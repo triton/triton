@@ -4717,6 +4717,9 @@ let
     rev = "v1.0.7";
     sha256 = "0lvy933pr81isx5n2yxa595iddvwnqmbvan14b7zmwpxws2h24kx";
     goPackagePath = "gopkg.in/cheggaaa/pb.v1";
+    propagatedBuildInputs = [
+      go-runewidth
+    ];
   };
 
   beorn7_perks = buildFromGitHub {

@@ -696,6 +696,15 @@ let
     ];
   };
 
+  clock = buildFromGitHub {
+    version = 2;
+    owner = "jmhodges";
+    repo = "clock";
+    rev = "880ee4c335489bc78d01e4d0a254ae880734bc15";
+    date = "2016-05-18";
+    sha256 = "6290b02c154e2ac0a6360133cef7584a9fe2008086002dff94846bcbc167109b";
+  };
+
   clockwork = buildFromGitHub {
     version = 2;
     rev = "v0.1.0";

@@ -1505,6 +1505,19 @@ let
     propagatedBuildInputs = [ bufs fileutil mathutil sortutil zappy ];
   };
 
+  fifo = buildFromGitHub {
+    version = 2;
+    owner = "tonistiigi";
+    repo = "fifo";
+    rev = "8cf41abe4d87641cd48738771bf25a20d06ca0b2";
+    date = "2017-02-24";
+    sha256 = "83ef31b8e00f05d73bc0a2070c4d9a84e65cb1bb1541d6b80ed01ccbaca397d3";
+    propagatedBuildInputs = [
+      errors
+      net
+    ];
+  };
+
   fileutil = buildFromGitHub {
     version = 2;
     date = "2016-12-22";

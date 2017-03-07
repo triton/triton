@@ -5636,6 +5636,19 @@ let
     date = "2017-02-06";
   };
 
+  tar-split = buildFromGitHub {
+    version = 2;
+    owner = "vbatts";
+    repo = "tar-split";
+    rev = "bd4c5d64c3e9297f410025a3b1bd0c58f659e721";
+    date = "2016-09-26";
+    sha256 = "e317e4bb73fab3e03ff34b96a861fec72e716f61fc01343876131e50dfacc402";
+    propagatedBuildInputs = [
+      urfave_cli
+      logrus
+    ];
+  };
+
   tar-utils = buildFromGitHub {
     version = 1;
     rev = "beab27159606f5a7c978268dd1c3b12a0f1de8a7";

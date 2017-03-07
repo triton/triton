@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , intltool
+, lib
 
 , libxml2
 , gcr
@@ -16,18 +17,20 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
+
+  versionMajor = "0.17";
+  versionMinor = "7";
+  version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
   name = "libgdata-${version}";
-  versionMajor = "0.17";
-  versionMinor = "6";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libgdata/${versionMajor}/${name}.tar.xz";
-    sha256 = "8b6a3ff1db23bd9e5ebbcc958b29b769a898f892eed4798222d562ba69df30b0";
+    hashOutput = false;
+    sha256 = "8a663ef314a6d20b73c762072e0c1353fa7ec1ca3c2dee6fb85927cbda0d44fd";
   };
 
   nativeBuildInputs = [
@@ -51,7 +54,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-gnome"
     # Remove dependency on webkit
-    #(enFlag "goa" (gnome-online-accounts != null) null)
+    #"--${boolEn (gnome-online-accounts != null)}-goa"
     "--disable-goa"
     "--disable-always-build-tests"
     "--disable-installed-tests"
@@ -59,14 +62,26 @@ stdenv.mkDerivation rec {
     "--disable-code-coverage"
     "--enable-compile-warnings"
     "--disable-Werror"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (vala != null)}-vala"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/libgdata/${versionMajor}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "GLib library for online service APIs using the GData protocol";
     homepage = https://wiki.gnome.org/Projects/libgdata;
     license = licenses.lgpl21Plus;
@@ -76,5 +91,4 @@ stdenv.mkDerivation rec {
     platforms = with platforms;
       x86_64-linux;
   };
-
 }

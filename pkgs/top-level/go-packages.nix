@@ -1130,6 +1130,18 @@ let
     sha256 = "0an27ky1rzr48774g9d85r6wv9qkfivs4ana2xdabn9hz1qslld4";
     meta.useUnstable = true;
     date = "2017-02-28";
+    propagatedBuildInputs = [
+      distribution_for_docker
+      errors
+      gotty
+      go-connections
+      go-digest
+      go-units
+      libtrust
+      net
+      pflag
+      logrus
+    ];
   };
 
   docker_for_nomad = buildFromGitHub {

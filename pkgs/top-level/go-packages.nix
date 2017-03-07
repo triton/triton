@@ -2382,6 +2382,18 @@ let
     ];
   };
 
+  go-events = buildFromGitHub {
+    version = 2;
+    owner = "docker";
+    repo = "go-events";
+    rev = "aa2e3b613fbbfdddbe055a7b9e3ce271cfd83eca";
+    date = "2016-09-06";
+    sha256 = "9a343e28d608971d2baec59bc62637a697f1b45c44e61b782b81c212b5ef507b";
+    propagatedBuildInputs = [
+      logrus
+    ];
+  };
+
   go-flags = buildFromGitHub {
     version = 2;
     rev = "v1.2.0";

@@ -51,7 +51,7 @@ let
     optionals
     optionalString;
 
-  version = "4.5.5";
+  version = "4.6.0";
   name = "samba${if isClient then "-client" else ""}-${version}";
 
   tarballUrls = [
@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "bff02762b3e4ee030f02266c6e24a0b888248b387246219b7fbe3e1758ef2184";
+    sha256 = "a3b3592e63d7064cae2624991f4925a443f3846c0dabb7011aee052c3fd4cc2b";
   };
 
   nativeBuildInputs = [
@@ -186,6 +186,8 @@ stdenv.mkDerivation rec {
     # ctdb/wscript
     (if isClient then null else "--enable-infiniband")
     #(if isClient then null else "--enable-pmda")
+    (if isClient then null else "--enable-etcd-reclock")
+    (if isClient then null else "--enable-ceph-reclock")
   ];
 
   preInstall = ''

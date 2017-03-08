@@ -1774,6 +1774,15 @@ let
     ];
   };
 
+  go-httpclient = buildFromGitHub {
+    version = 2;
+    owner = "mreiferson";
+    repo = "go-httpclient";
+    rev = "31f0106b4474f14bc441575c19d3a5fa21aa1f6c";
+    date = "2016-06-30";
+    sha256 = "e9fb80be94f61a8df23ee201be2988688cceba4d1c7339b60b955a66daebd3e3";
+  };
+
   go4 = buildFromGitHub {
     version = 2;
     date = "2017-01-17";

@@ -89,8 +89,9 @@ go.stdenv.mkDerivation (
       popd >/dev/null
     fi
 
-    find go/src/$goPackagePath -type d \( -name vendor -or -name Godeps \) -prune -exec rm -r {} \;
-
+    if [ -z "$allowVendoredSources" ]; then
+      find go/src/$goPackagePath -type d \( -name vendor -or -name Godeps \) -prune -exec rm -r {} \;
+    fi
   '' + lib.flip lib.concatMapStrings extraSrcs ({ src, goPackagePath }: ''
     mkdir extraSrc
     (cd extraSrc; unpackFile "${src}")

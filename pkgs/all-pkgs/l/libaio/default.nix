@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 stdenv.mkDerivation rec {
@@ -7,6 +8,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://fedorahosted.org/releases/l/i/libaio/${name}.tar.gz";
+    multihash = "QmPxxZxeCD1Dmgkbtr8DFwyBDEU7tY9E7cpP2tXVWJAedE";
     sha256 = "0zjzfkwd1kdvq6zpawhzisv7qbq1ffs343i5fs9p498pcf7046g0";
   };
 
@@ -14,7 +16,7 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=("prefix=$out")
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library for asynchronous I/O in Linux";
     homepage = http://lse.sourceforge.net/io/aio.html;
     license = licenses.lgpl21;

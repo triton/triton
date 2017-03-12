@@ -14,7 +14,7 @@ let
     optionalString;
 
   tarballUrls = version: [
-    "https://fedorahosted.org/releases/e/l/elfutils/${version}/elfutils-${version}.tar.bz2"
+    "https://sourceware.org/elfutils/ftp/${version}/elfutils-${version}.tar.bz2"
   ];
 
   version = "0.168";
@@ -56,17 +56,17 @@ stdenv.mkDerivation rec {
 
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "0.167";
+      urls = tarballUrls "0.168";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "47CC 0331 081B 8BC6 D0FD  4DA0 8370 665B 5781 6A6A";
       inherit (src) outputHashAlgo;
-      outputHash = "3f300087c42b6f35591163b48246b4098ce39c4c6f5d55a83023c903c5776553";
+      outputHash = "b88d07893ba1373c7dd69a7855974706d05377766568a7d9002706d5de72c276";
     };
   };
 
   meta = with stdenv.lib; {
     description = "Libraries/utilities to handle ELF objects";
-    homepage = https://fedorahosted.org/elfutils/;
+    homepage = https://sourceware.org/elfutils/;
     license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington

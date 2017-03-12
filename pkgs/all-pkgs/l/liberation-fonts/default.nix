@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , fontforge
 , pythonPackages
@@ -12,8 +13,7 @@ stdenv.mkDerivation rec {
   name = "liberation-fonts-${version}";
 
   src = fetchurl {
-    url = "https://fedorahosted.org/releases/l/i/liberation-fonts/"
-      + "${name}.tar.gz";
+    url = "https://releases.pagure.org/liberation-fonts/${name}.tar.gz";
     sha256 = "1ymryvd2nw4jmw4w5y1i3ll2dn48rpkqzlsgv7994lk6qc9cdjvs";
   };
 
@@ -35,9 +35,9 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Liberation Fonts";
-    homepage = https://fedorahosted.org/liberation-fonts/;
+    homepage = https://pagure.io/liberation-fonts;
     license = licenses.ofl;
     maintainers = with maintainers; [
       codyopel

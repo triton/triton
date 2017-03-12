@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   name = "xmlto-0.0.28";
 
   src = fetchurl {
-    url = "https://fedorahosted.org/releases/x/m/xmlto/${name}.tar.bz2";
+    url = "https://releases.pagure.org/xmlto/${name}.tar.bz2";
     multihash = "QmQddXXS6g9PUpw1Z5HDBHTX8gg7hcwKs3KYSWqXaUkMM2";
     sha256 = "0xhj8b2pwp4vhl9y16v3dpxpsakkflfamr191mprzsspg4xdyc0i";
   };
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "Front-end to an XSL toolchain";
-    homepage = https://fedorahosted.org/xmlto/;
+    homepage = https://pagure.io/xmlto;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [
       wkennington

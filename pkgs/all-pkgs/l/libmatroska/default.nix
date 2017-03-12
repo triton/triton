@@ -1,20 +1,21 @@
 { stdenv
 , fetchurl
+, lib
 
 , libebml
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 in
-
 stdenv.mkDerivation rec {
-  name = "libmatroska-1.4.5";
+  name = "libmatroska-1.4.7";
 
   src = fetchurl {
     url = "https://dl.matroska.org/downloads/libmatroska/${name}.tar.bz2";
-    sha256 = "79023fa46901e5562b27d93a9dd168278fa101361d7fd11a35e84e58e11557bc";
+    multihash = "QmP28YKW2UhrqK7FDcd8h4D8YVXJx2SnujrhMwv2YzteBZ";
+    sha256 = "46441eb3bae9f970f68affaa211dd74302a7072dcd2becfb1114da11b66525fa";
   };
 
   buildInputs = [
@@ -29,11 +30,13 @@ stdenv.mkDerivation rec {
     "CXX=clang++"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A library to parse Matroska files";
     homepage = http://matroska.org/;
     license = licenses.lgpl21;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

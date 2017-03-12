@@ -6,11 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libzip-1.1.3";
+  name = "libzip-1.2.0";
 
   src = fetchurl {
-    url = "https://nih.at/libzip/${name}.tar.xz";
-    sha256 = "729a295a59a9fd6e5b9fe9fd291d36ae391a9d2be0b0824510a214cfaa05ceee";
+    url = "https://www.nih.at/libzip/${name}.tar.xz";
+    multihash = "QmRCdruhq1ijRiNFvquzq9QE8f786e9C6ueZtHovRV7atu";
+    sha256 = "ffc0764395fba3d45dc5a6e32282788854618b9e9838337f8218b596007f1376";
   };
 
   nativeBuildInputs = [
@@ -26,7 +27,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = http://www.nih.at/libzip;
+    homepage = https://www.nih.at/libzip;
     description = "A C library for reading, creating and modifying zip archives";
     maintainers = with maintainers; [
       wkennington

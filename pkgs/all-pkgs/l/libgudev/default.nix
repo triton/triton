@@ -11,14 +11,15 @@ let
   inherit (lib)
     boolEn;
 
-  version = "230";
+  version = "231";
 in
 stdenv.mkDerivation rec {
   name = "libgudev-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libgudev/${version}/${name}.tar.xz";
-    sha256 = "a2e77faced0c66d7498403adefcc0707105e03db71a2b2abd620025b86347c18";
+    hashOutput = false;
+    sha256 = "3b1ef99d4a8984c35044103d8ddfc3cc52c80035c36abab2bcc5e3532e063f96";
   };
 
   buildInputs = [
@@ -32,6 +33,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--${boolEn (gobject-introspection != null)}-introspection"
+    "--disable-umockdev"
   ];
 
   passthru = {

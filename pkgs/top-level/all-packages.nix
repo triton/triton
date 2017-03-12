@@ -2183,6 +2183,8 @@ libproxy = callPackage ../all-pkgs/l/libproxy { };
 
 libpthread-stubs = callPackage ../all-pkgs/l/libpthread-stubs { };
 
+libpwquality = callPackage ../all-pkgs/l/libpwquality { };
+
 libqmi = callPackage ../all-pkgs/l/libqmi { };
 
 libraw = callPackage ../all-pkgs/l/libraw { };
@@ -3978,8 +3980,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   liboggz = callPackage ../development/libraries/liboggz { };
 #
   libpaper = callPackage ../development/libraries/libpaper { };
-#
-  libpwquality = callPackage ../development/libraries/libpwquality { };
 #
 libstartup_notification = callPackage ../development/libraries/startup-notification { };
 #

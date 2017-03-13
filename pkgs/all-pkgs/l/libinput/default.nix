@@ -21,7 +21,7 @@
 
 let
   inherit (stdenv.lib)
-    enFlag
+    boolEn
     optionals;
 in
 
@@ -64,9 +64,9 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    (enFlag "documentation" documentationSupport null)
-    (enFlag "event-gui" eventGUISupport null)
-    (enFlag "tests" testsSupport null)
+    "--${boolEn documentationSupport}-documentation"
+    "--${boolEn eventGUISupport}-event-gui"
+    "--${boolEn testsSupport}-tests"
   ];
 
   passthru = {

@@ -7,6 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://dl.matroska.org/downloads/libebml/${name}.tar.bz2";
+    multihash = "QmTN45Zqmf914LzAbCMqLTajuvsokWHRkbcjNoPHvYe4qM";
     sha256 = "c50d3ecf133742c6549c0669c3873f968e11a365a5ba17b2f4dc339bbe51f387";
   };
 

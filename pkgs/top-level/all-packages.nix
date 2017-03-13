@@ -3568,48 +3568,48 @@ xorg = recurseIntoAttrs (
       xmlto
       zlib
       # Rewritten xorg packages
-      # bigreqsproto
-      # compositeproto
-      # damageproto
-      # dmxproto
-      # dri2proto
-      # dri3proto
-      # fixesproto
-      # fontcacheproto
-      # fontsproto
-      # glproto
-      # inputproto
-      # kbproto
-      # libice
-      # libpthread-stubs
-      # libsm
-      # libx11
-      # libxau
-      # libxcb
-      # libxdmcp
-      # libxt
-      # presentproto
-      # printproto
-      # randrproto
-      # recordproto
-      # renderproto
-      # resourceproto
-      # scrnsaverproto
-      # trapproto
-      # util-macros
-      # videoproto
-      # windowswmproto
-      # xcb-proto
-      # xcmiscproto
-      # xextproto
-      # xf86bigfontproto
-      # xf86dgaproto
-      # xf86driproto
-      # xf86miscproto
-      # xf86vidmodeproto
-      # xineramaproto
-      # xproto
-      # xtrans
+      bigreqsproto
+      compositeproto
+      damageproto
+      dmxproto
+      dri2proto
+      dri3proto
+      fixesproto
+      fontcacheproto
+      fontsproto
+      glproto
+      inputproto
+      kbproto
+      libice
+      libpthread-stubs
+      libsm
+      libx11
+      libxau
+      libxcb
+      libxdmcp
+      libxt
+      presentproto
+      printproto
+      randrproto
+      recordproto
+      renderproto
+      resourceproto
+      scrnsaverproto
+      trapproto
+      util-macros
+      videoproto
+      windowswmproto
+      xcb-proto
+      xcmiscproto
+      xextproto
+      xf86bigfontproto
+      xf86dgaproto
+      xf86driproto
+      xf86miscproto
+      xf86vidmodeproto
+      xineramaproto
+      xproto
+      xtrans
       ;
     mesa = pkgs.mesa_noglu;
   }

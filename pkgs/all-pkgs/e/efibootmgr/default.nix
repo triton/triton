@@ -6,14 +6,14 @@
 }:
 
 let
-  version = "14";
+  version = "15";
 in
 stdenv.mkDerivation rec {
   name = "efibootmgr-${version}";
 
   src = fetchurl {
     url = "https://github.com/rhinstaller/efibootmgr/releases/download/${version}/${name}.tar.bz2";
-    sha256 = "377ec16484414b80afd1b8a586153d7ef55ccf048638080101d49b7c77f37ad8";
+    sha256 = "2081add77eb0641805386acd0a0fbbe6dbfb71831b814507ef49087f748333f9";
   };
 
   buildInputs = [
@@ -21,8 +21,13 @@ stdenv.mkDerivation rec {
     popt
   ];
 
+  EFIDIR = "BOOT";
+
   preBuild = ''
-    makeFlagsArray+=("prefix=$out")
+    makeFlagsArray+=(
+      "prefix=$out"
+      "libdir=$out/lib" # should not be $out/lib64
+    )
   '';
 
   NIX_CFLAGS_COMPILE = [

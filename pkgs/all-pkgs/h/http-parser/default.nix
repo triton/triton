@@ -9,11 +9,11 @@ stdenv.mkDerivation {
   name = "http-parser-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "nodejs";
     repo = "http-parser";
     rev = "v${version}";
-    sha256 = "36a70a437524904f1520d578f4c95e1c606b1746611863979eecfc20d2602469";
+    sha256 = "c59677ccb370d91732ddc2510f372360aa97ff36a974643ec0cb1d3384207d43";
   };
 
   postPatch = ''

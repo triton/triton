@@ -1812,10 +1812,10 @@ let
   }) // {inherit fontsproto libdrm systemd_lib libpciaccess randrproto libX11 xextproto xorgserver xproto ;};
 
   xf86videonouveau = (mkDerivation "xf86videonouveau" {
-    name = "xf86-video-nouveau-1.0.13";
+    name = "xf86-video-nouveau-1.0.14";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-nouveau-1.0.13.tar.bz2;
-      sha256 = "1js7vak68g2800f1cy5r41wl5x2j7dbmbd7zxypzfgcw2fx454kd";
+      url = mirror://xorg/individual/driver/xf86-video-nouveau-1.0.14.tar.bz2;
+      sha256 = "4ddff99b3cc49f16cdcf99f6e1c5856b6f06589ec98376cedb5754100afe31c1";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ dri2proto fontsproto libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xorgserver xproto ];

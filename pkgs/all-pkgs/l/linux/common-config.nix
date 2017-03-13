@@ -624,7 +624,14 @@ with stdenv.lib;
   SCHED_AUTOGROUP y
   SCHED_TRACER y
   STACK_TRACER y
-  UPROBE_EVENT y
+  ${optionalString (versionOlder version "4.11") ''
+    UPROBES y
+    UPROBE_EVENT y
+  ''}
+  ${optionalString (versionAtLeast version "4.11") ''
+    UPROBES y
+    UPROBE_EVENTS y
+  ''}
   FUNCTION_PROFILER y
   RING_BUFFER_BENCHMARK n
 

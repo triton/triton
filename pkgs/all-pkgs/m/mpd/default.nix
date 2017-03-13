@@ -48,6 +48,7 @@
 , yajl
 , zlib
 , zziplib
+
 # Options
 , documentationSupport ? false
   , xmlto
@@ -63,7 +64,7 @@ let
     optionals;
 
   versionMajor = "0.20";
-  versionMinor = "5";
+  versionMinor = "6";
 in
 stdenv.mkDerivation rec {
   name = "mpd-${versionMajor}.${versionMinor}";
@@ -71,8 +72,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://www.musicpd.org/download/mpd/${versionMajor}/${name}.tar.xz";
     hashOutput = false;
-    multihash = "QmXQq4TKP2nZo5wNuRvjmZbXAW13ryKEURKHQqvKuwaU9P";
-    sha256 = "525573be27443ae26868b21a61e88c03909e72f1212ddaa725a0389a28d88987";
+    multihash = "QmYsWENiwgxBNAeqEscwBC3vxiKEknMzfNHwuX8kZfd667";
+    sha256 = "f4055e1189e5cc00e83706b2e0b5ead924ced0303e073d7802ee9f9a8eba4b47";
   };
 
   nativeBuildInputs = [ ] ++ optionals documentationSupport [

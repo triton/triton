@@ -4115,10 +4115,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
-  linux_bcache-testing = callPackage ../all-pkgs/l/linux {
-    channel = "bcache-testing";
-    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
-  };
 #
 #  /* Linux kernel modules are inherently tied to a specific kernel.  So
 #     rather than provide specific instances of those packages for a
@@ -4219,9 +4215,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   });
   linuxPackages_bcache = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_bcache;
-  });
-  linuxPackages_bcache-testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_bcache-testing;
   });
   linuxPackages_custom = {version, src, configfile}:
                            let linuxPackages_self = (linuxPackagesFor (pkgs.linuxManualConfig {inherit version src configfile;

@@ -142,7 +142,7 @@ mirror://xorg/individual/driver/xf86-input-mouse-1.9.2.tar.bz2
 mirror://xorg/individual/driver/xf86-input-microtouch-1.2.0.tar.bz2
 mirror://xorg/individual/driver/xf86-input-magictouch-1.0.0.5.tar.bz2
 mirror://xorg/individual/driver/xf86-input-magellan-1.2.0.tar.bz2
-mirror://xorg/individual/driver/xf86-input-libinput-0.23.0.tar.bz2
+mirror://xorg/individual/driver/xf86-input-libinput-0.25.0.tar.bz2
 mirror://xorg/individual/driver/xf86-input-keyboard-1.9.0.tar.bz2
 mirror://xorg/individual/driver/xf86-input-joystick-1.6.3.tar.bz2
 mirror://xorg/individual/driver/xf86-input-jamstudio-1.2.0.tar.bz2

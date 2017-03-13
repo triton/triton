@@ -1702,10 +1702,10 @@ let
   }) // {inherit inputproto xorgserver xproto ;};
 
   xf86inputlibinput = (mkDerivation "xf86inputlibinput" {
-    name = "xf86-input-libinput-0.23.0";
+    name = "xf86-input-libinput-0.25.0";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-input-libinput-0.23.0.tar.bz2;
-      sha256 = "0b53ebdfe8f8fc7554dd92af1b1c3088a6d3ec4ae1a33fc76f57d635c736a9dc";
+      url = mirror://xorg/individual/driver/xf86-input-libinput-0.25.0.tar.bz2;
+      sha256 = "bb7fd1658fa7e6c757fd55480aa8a07f8ccfb0a80ae42c29dbc67d57958c556f";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ inputproto libinput xorgserver xproto ];

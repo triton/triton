@@ -10,12 +10,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "cifs-utils-6.5";
+  name = "cifs-utils-6.7";
 
   src = fetchurl {
     url = "mirror://samba/linux-cifs/cifs-utils/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "e2776578b8267c6dc0862897f5e10f87f10f8337fca9ca6a9118f5eb30cf49f7";
+    sha256 = "b2f21612474ab012e75accd167aab607a0614ff67efb56ea0f36789fa785cfab";
   };
 
   buildInputs = [

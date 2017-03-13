@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "146";
+  version = "148";
 in
 stdenv.mkDerivation {
   name = "mcelog-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation {
     owner = "andikleen";
     repo = "mcelog";
     rev = "v${version}";
-    sha256 = "8cfac41a60956674aa6ddd9ae10b4ffa2b480708aedf42f77e889fe5add534a2";
+    sha256 = "d577a4f3f5edc62fbd720df1c3cb03afc44114b51bc2a98b202323838c38881c";
   };
 
   preBuild = ''

@@ -13,9 +13,6 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    optionalAttrs;
-
   source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
@@ -24,9 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl ({
     url = "http://archive.xfce.org/src/xfce/xfconf/${channel}/${name}.tar.bz2";
     hashOutput = false;
-    inherit (source) sha256;
-  } // optionalAttrs (source ? multihash) {
-    inherit (source) multihash;
+    inherit (source) multihash sha256;
   });
 
   nativeBuildInputs = [

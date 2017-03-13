@@ -24,12 +24,12 @@ in
 stdenv.mkDerivation rec {
   name = "libxfce4ui-${source.version}";
 
-  src = fetchurl ({
+  src = fetchurl {
     url = "http://archive.xfce.org/src/xfce/libxfce4ui/${channel}/"
       + "${name}.tar.bz2";
     hashOutput = false;
     inherit (source) multihash sha256;
-  });
+  };
 
   nativeBuildInputs = [
     gettext

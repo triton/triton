@@ -18,11 +18,11 @@ in
 stdenv.mkDerivation rec {
   name = "xfconf-${source.version}";
 
-  src = fetchurl ({
+  src = fetchurl {
     url = "http://archive.xfce.org/src/xfce/xfconf/${channel}/${name}.tar.bz2";
     hashOutput = false;
     inherit (source) multihash sha256;
-  });
+  };
 
   nativeBuildInputs = [
     gettext

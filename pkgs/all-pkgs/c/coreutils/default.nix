@@ -12,13 +12,20 @@
 let
   inherit (stdenv.lib)
     optionals;
+
+  tarballUrls = version: [
+    "mirror://gnu/coreutils/coreutils-${version}.tar.xz"
+  ];
+
+  version = "8.27";
 in
 stdenv.mkDerivation rec {
-  name = "coreutils-8.26";
+  name = "coreutils-${version}";
 
   src = fetchurl {
-    url = "mirror://gnu/coreutils/${name}.tar.xz";
-    sha256 = "155e94d748f8e2bc327c66e0cbebdb8d6ab265d2f37c3c928f7bf6c3beba9a8e";
+    urls = tarballUrls version;
+    hashOutput = false;
+    sha256 = "8891d349ee87b9ff7870f52b6d9312a9db672d2439d289bc57084771ca21656b";
   };
 
   nativeBuildInputs = [
@@ -32,6 +39,17 @@ stdenv.mkDerivation rec {
     libselinux
     libsepol
   ];
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "8.27";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "6C37 DC12 121A 5006 BC1D  B804 DF6F D971 3060 37D9";
+      inherit (src) outputHashAlgo;
+      outputHash = "8891d349ee87b9ff7870f52b6d9312a9db672d2439d289bc57084771ca21656b";
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Basic file, shell & text manipulation utilities of the GNU operating system";

@@ -1,12 +1,14 @@
 { stdenv
 , fetchFromGitHub
 
+, attr
 , keyutils
 , libnih
 , libscrypt
 , libsodium
 , liburcu
 , util-linux_lib
+, zlib
 
 , channel ? "stable"
 }:
@@ -21,9 +23,9 @@ let
     };
     "dev" = {
       fetchzipVersion = 2;
-      version = "2017-02-06";
-      rev = "d230eaea612b5649a9b84ca1f5bb41455251741e";
-      sha256 = "7949ff223ee3b3a4381b65e996bf60ffafb8f5ea74b5d913b5330f327264f87d";
+      version = "2017-03-13";
+      rev = "d252e12accd8b4fdc0e50b539370b203f3894de9";
+      sha256 = "96d105c3f25e6f99fc5c8b61355d3f21dcd757fb21047d2e225ed1d92ad61036";
     };
   };
 
@@ -51,18 +53,26 @@ stdenv.mkDerivation {
     libnih
     util-linux_lib
   ] ++ optionals (channel == "dev") [
+    attr
     keyutils
     libscrypt
     libsodium
     liburcu
+    zlib
   ];
+
+  postPatch = ''
+    sed -i 's,<blkid.h>,<blkid/blkid.h>,g' tools-util.c
+    sed -i 's,</usr/include/dirent.h>,<${stdenv.libc}/include/dirent.h>,g' cmd_migrate.c
+
+    sed -i '/-static/d' Makefile
+  '';
 
   preBuild = ''
     makeFlagsArray+=(
       "PREFIX=$out"
       "UDEVLIBDIR=$out/lib/udev"
     )
-    sed -i '/-static/d' Makefile
   '';
 
   preInstall = optionalString (channel == "stable") ''

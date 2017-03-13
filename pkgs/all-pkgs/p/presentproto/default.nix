@@ -5,11 +5,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "presentproto-1.0";
+  name = "presentproto-1.1";
 
   src = fetchurl {
     url = "mirror://xorg/individual/proto/${name}.tar.bz2";
-    sha256 = "812c7d48721f909a0f7a2cb1e91f6eead76159a36c4712f4579ca587552839ce";
+    sha256 = "f69b23a8869f78a5898aaf53938b829c8165e597cda34f06024d43ee1e6d26b9";
   };
 
   nativeBuildInputs = [
@@ -21,6 +21,21 @@ stdenv.mkDerivation rec {
     "--enable-selective-werror"
     "--disable-strict-compilation"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprints = [
+        # Julien Cristau
+        "7B27 A3F1 A6E1 8CD9 588B  4AE8 3101 8005 0905 E40C"
+      ];
+    };
+  };
 
   meta = with lib; {
     description = "X.Org Present protocol specification & Xlib/Xserver headers";

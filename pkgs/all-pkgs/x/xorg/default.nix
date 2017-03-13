@@ -1471,10 +1471,10 @@ let
   }) // {inherit ;};
 
   xauth = (mkDerivation "xauth" {
-    name = "xauth-1.0.9";
+    name = "xauth-1.0.10";
     src = fetchurl {
-      url = mirror://xorg/individual/app/xauth-1.0.9.tar.bz2;
-      sha256 = "13y2invb0894b1in03jbglximbz6v31y2kr4yjjgica8xciibkjn";
+      url = mirror://xorg/individual/app/xauth-1.0.10.tar.bz2;
+      sha256 = "5afe42ce3cdf4f60520d1658d2b17face45c74050f39af45dccdc95e73fafc4d";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ libX11 libXau libXext libXmu xproto ];

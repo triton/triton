@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "4.0";
+  version = "4.1";
 in
 stdenv.mkDerivation rec {
   name = "dosfstools-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/dosfstools/dosfstools/releases/download/v${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "9037738953559d1efe04fc5408b6846216cc0138f7f9d32de80b6ec3c35e7daf";
+    sha256 = "e6b2aca70ccc3fe3687365009dd94a2e18e82b688ed4e260e04b7412471cc173";
   };
 
   buildInputs = [

@@ -7,12 +7,20 @@
 , util-linux_lib
 }:
 
+let
+  tarballUrls = version: [
+    "mirror://kernel/linux/utils/fs/xfs/xfsprogs/xfsprogs-${version}.tar"
+  ];
+
+  version = "4.10.0";
+in
 stdenv.mkDerivation rec {
-  name = "xfsprogs-4.9.0";
+  name = "xfsprogs-${version}";
 
   src = fetchurl {
-    url = "mirror://kernel/linux/utils/fs/xfs/xfsprogs/${name}.tar.xz";
-    sha256 = "f1e60a9a54583dba82fa506dd9b59bdec110a968f80f507bf5f93b263af7a4df";
+    urls = map (n: "${n}.xz") (tarballUrls version);
+    hashOutput = false;
+    sha256 = "d8cb9ab2c686699d37914354ce3992b4aff3677093cbce06ad18bf798da8a8a7";
   };
 
   nativeBuildInputs = [
@@ -79,9 +87,13 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      pgpsigUrl = "mirror://kernel/linux/utils/fs/xfs/xfsprogs/${name}.tar.sign";
-      # Dave Chinner
-      pgpKeyFingerprint = "9893 A827 C19F 7D96 164A  38FF ADE8 2947 F475 FA1D";
+      pgpsigUrl = map (n: "${n}.sign") (tarballUrls version);
+      pgpKeyFingerprints = [
+        # Dave Chinner
+        "9893 A827 C19F 7D96 164A  38FF ADE8 2947 F475 FA1D"
+        # Eric R. Sandeen
+        "2B81 8591 9E8D 2489 8186  9DED 20AE 1692 E13D DEE0"
+      ];
       failEarly = true;
       pgpDecompress = true;
     };

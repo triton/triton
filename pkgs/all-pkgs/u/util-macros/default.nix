@@ -4,11 +4,26 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "util-macros-1.19.0";
+  name = "util-macros-1.19.1";
 
   src = fetchurl {
     url = "mirror://xorg/individual/util/${name}.tar.bz2";
-    sha256 = "2835b11829ee634e19fa56517b4cfc52ef39acea0cd82e15f68096e27cbed0ba";
+    sha256 = "18d459400558f4ea99527bc9786c033965a3db45bf4c6a32eefdc07aa9e306a6";
+  };
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprints = [
+        # Matt Turner
+        "3BB6 39E5 6F86 1FA2 E865  0569 0FDD 682D 974C A72A"
+      ];
+    };
   };
 
   meta = with lib; {

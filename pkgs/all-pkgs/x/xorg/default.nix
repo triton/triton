@@ -822,10 +822,10 @@ let
   }) // {inherit fontconfig freetype libX11 xproto libXrender ;};
 
   libXi = (mkDerivation "libXi" {
-    name = "libXi-1.7.8";
+    name = "libXi-1.7.9";
     src = fetchurl {
-      url = mirror://xorg/individual/lib/libXi-1.7.8.tar.bz2;
-      sha256 = "1fr7mi4nbcxsa88qin9g2ipmzh595ydxy9qnabzl270laf6zmwnq";
+      url = mirror://xorg/individual/lib/libXi-1.7.9.tar.bz2;
+      sha256 = "c2e6b8ff84f9448386c1b5510a5cf5a16d788f76db018194dacdc200180faf45";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ inputproto libX11 libXext xextproto libXfixes xproto ];

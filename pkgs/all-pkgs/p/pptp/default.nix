@@ -8,11 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "pptp-1.8.0";
+  name = "pptp-1.9.0";
 
   src = fetchurl {
     url = "mirror://sourceforge/pptpclient/pptp/${name}/${name}.tar.gz";
-    sha256 = "e39c42d933242a8a6dd8600a0fa7f0a5ec8f066d10c4149d8e81a5c68fe4bbda";
+    hashOutput = false;
+    sha256 = "0b1e8cbfc578d3f5ab12ee87c5c2c60419abfe9cc445690a8a19c320b11c9201";
   };
 
   nativeBuildInputs = [
@@ -42,6 +43,21 @@ stdenv.mkDerivation rec {
   makeFlags = [
     "PPPD=${ppp}/bin/pppd"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = false;  # Make sure all mirrors are allowed
+      pgpsigUrls = map (n: "${n}.signature") src.urls;
+      pgpKeyFingerprints = [
+        # James Cameron
+        "A602 F7C9 A42C B3B5 4634  A882 6E64 70BF AE24 66C0"
+      ];
+    };
+  };
 
   meta = with lib; {
     description = "PPTP client for Linux";

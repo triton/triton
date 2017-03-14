@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://xorg/individual/proto/${name}.tar.bz2";
+    hashOutput = false;
     sha256 = "f69b23a8869f78a5898aaf53938b829c8165e597cda34f06024d43ee1e6d26b9";
   };
 

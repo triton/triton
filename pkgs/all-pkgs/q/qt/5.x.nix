@@ -61,6 +61,8 @@ stdenv.mkDerivation rec {
     url = "http://download.qt.io/official_releases/qt/${versionMajor}/${version}"
       + "/single/qt-everywhere-opensource-src-${version}.tar.xz";
     hashOutput = false;
+    md5Confirm = "66660cd3d9e1a6fed36e88adcb72e9fe";
+    sha1Confirm = "1a056ca4f731798e4142a691d0448c2c853228ca";
     sha256 = "0f4c54386d3dbac0606a936a7145cebb7b94b0ca2d29bc001ea49642984824b6";
   };
 

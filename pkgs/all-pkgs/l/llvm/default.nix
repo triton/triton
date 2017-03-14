@@ -81,6 +81,7 @@ stdenv.mkDerivation {
       | xargs -n 2 mv
     mv projects/cfe tools/clang
     mv projects/clang-tools-extra tools/clang/tools/extra
+    mv projects/lldb tools/lldb
   '';
 
   patches = map (d: fetchTritonPatch d) patches;

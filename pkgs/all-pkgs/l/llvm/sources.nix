@@ -1,49 +1,4 @@
 {
-  "3.8" = {
-    version = "3.8.1";
-    srcs = {
-      cfe = {
-        sha256 = "4cd3836dfb4b88b597e075341cae86d61c63ce3963e45c7fe6a8bf59bb382cdf";
-      };
-      clang-tools-extra = {
-        sha256 = "664a5c60220de9c290bf2a5b03d902ab731a4f95fe73a00856175ead494ec396";
-      };
-      compiler-rt = {
-        sha256 = "0df011dae14d8700499dfc961602ee0a9572fef926202ade5dcdfe7858411e5c";
-      };
-      libcxx = {
-        sha256 = "77d7f3784c88096d785bd705fa1bab7031ce184cd91ba8a7008abf55264eeecc";
-      };
-      libcxxabi = {
-        sha256 = "e1b55f7be3fad746bdd3025f43e42d429fb6194aac5919c2be17c4a06314dae1";
-      };
-      libunwind = {
-        sha256 = "21e58ce09a5982255ecf86b86359179ddb0be4f8f284a95be14201df90e48453";
-      };
-      lld = {
-        sha256 = "2bd9be8bb18d82f7f59e31ea33b4e58387dbdef0bc11d5c9fcd5ce9a4b16dc00";
-      };
-      lldb = {
-        sha256 = "349148116a47e39dcb5d5042f10d8a6357d2c865034563283ca512f81cdce8a3";
-      };
-      llvm = {
-        sha256 = "6e82ce4adb54ff3afc18053d6981b6aed1406751b8742582ed50f04b5ab475f9";
-      };
-      openmp = {
-        sha256 = "68fcde6ef34e0275884a2de3450a31e931caf1d6fda8606ef14f89c4123617dc";
-      };
-      polly = {
-        sha256 = "453c27e1581614bb3b6351bf5a2da2939563ea9d1de99c420f85ca8d87b928a2";
-      };
-    };
-    patches = [
-      {
-        rev = "1a001778aab424ecd36774befa1f546b0004c5fc";
-        file = "llvm/fix-llvm-config.patch";
-        sha256 = "059655c0e6ea5dd248785ffc1b2e6402eeb66544ffe36ff15d76543dd7abb413";
-      }
-    ];
-  };
   "3.9" = {
     version = "3.9.1";
     srcs = {
@@ -81,6 +36,51 @@
       };
       polly = {
         sha256 = "9ba5e61fc7bf8c7435f64e2629e0810c9b1d1b03aa5b5605b780d0e177b4cb46";
+      };
+    };
+    patches = [
+      {
+        rev = "9bbc7b11d649bbb0c5d8112cdd9a4eb5e437c76d";
+        file = "l/llvm/fix-llvm-config.patch";
+        sha256 = "45e71e71de3a8e2f41516832f5044e7226b35a273d25afac076e14fc3ae46036";
+      }
+    ];
+  };
+  "4.0" = {
+    version = "4.0.0";
+    srcs = {
+      cfe = {
+        sha256 = "cea5f88ebddb30e296ca89130c83b9d46c2d833685e2912303c828054c4dc98a";
+      };
+      clang-tools-extra = {
+        sha256 = "41b7d37eb128fd362ab3431be5244cf50325bb3bb153895735c5bacede647c99";
+      };
+      compiler-rt = {
+        sha256 = "d3f25b23bef24c305137e6b44f7e81c51bbec764c119e01512a9bd2330be3115";
+      };
+      libcxx = {
+        sha256 = "4f4d33c4ad69bf9e360eebe6b29b7b19486948b1a41decf89d4adec12473cf96";
+      };
+      libcxxabi = {
+        sha256 = "dca9cb619662ad2d3a0d685c4366078345247218c3702dd35bcaaa23f63481d8";
+      };
+      libunwind = {
+        sha256 = "0755efa9f969373d4d543123bbed4b3f9a835f6302875c1379c5745857725973";
+      };
+      lld = {
+        sha256 = "33e06457b9ce0563c89b11ccc7ccabf9cff71b83571985a5bf8684c9150e7502";
+      };
+      lldb = {
+        sha256 = "2dbd8f05c662c1c9f11270fc9d0c63b419ddc988095e0ad107ed911cf882033d";
+      };
+      llvm = {
+        sha256 = "8d10511df96e73b8ff9e7abbfb4d4d432edbdbe965f1f4f07afaf370b8a533be";
+      };
+      openmp = {
+        sha256 = "db55d85a7bb289804dc42fc5c8e35ca24dfc3885782261b675a194fd7e206e26";
+      };
+      polly = {
+        sha256 = "27a5dbf95e8aa9e0bbe3d6c5d1e83c92414d734357aa0d6c16020a65dc4dcd97";
       };
     };
     patches = [

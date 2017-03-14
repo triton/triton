@@ -2783,7 +2783,7 @@ openssl_1-0-2 = callPackage ../all-pkgs/o/openssl {
 openssl_1-1-0 = callPackage ../all-pkgs/o/openssl {
   channel = "1.1.0";
 };
-openssl = callPackageAlias "openssl_1-1-0" { };
+openssl = callPackageAlias "openssl_1-0-2" { };
 
 openvpn = callPackage ../all-pkgs/o/openvpn { };
 

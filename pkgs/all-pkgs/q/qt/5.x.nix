@@ -54,13 +54,13 @@ let
   inherit (stdenv.lib)
     optionals;
 in
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "qt-${version}";
 
   src = fetchurl {
     url = "http://download.qt.io/official_releases/qt/${versionMajor}/${version}"
       + "/single/qt-everywhere-opensource-src-${version}.tar.xz";
-    insecureHashOutput = true;
+    hashOutput = false;
     sha256 = "0f4c54386d3dbac0606a936a7145cebb7b94b0ca2d29bc001ea49642984824b6";
   };
 
@@ -261,6 +261,17 @@ stdenv.mkDerivation {
 
   # FIXME
   buildDirCheck = false;
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      md5Url = "https://download.qt.io/official_releases/qt/"
+        + "${versionMajor}/${version}/single/md5sums.txt";
+    };
+  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

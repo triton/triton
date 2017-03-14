@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , alsa-lib
 , dbus
@@ -10,18 +11,18 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
+  inherit (lib)
+    boolEn
     optionals;
-in
 
+  version = "0.4.4";
+in
 stdenv.mkDerivation rec {
-  version = "0.4.2";
   name = "qjackctl-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/qjackctl/${name}.tar.gz";
-    sha256 = "cf1c4aff22f8410feba9122e447b1e28c8fa2c71b12cfc0551755d351f9eaf5e";
+    url = "mirror://sourceforge/qjackctl/qjackctl/${version}/${name}.tar.gz";
+    sha256 = "531db2f7eca654fd8769a1281dccb54ebca57a0b2a575734d1bafc3896a46ba5";
   };
 
   buildInputs = [
@@ -44,14 +45,14 @@ stdenv.mkDerivation rec {
     "--enable-jack-port-aliases"
     "--enable-jack-metadata"
     "--enable-jack-version"
-    (enFlag "alsa-seq" (alsa-lib != null) null)
-    (enFlag "portaudio" (portaudio != null) null)
-    (enFlag "dbus" (dbus != null) null)
+    "--${boolEn (alsa-lib != null)}-alsa-seq"
+    "--${boolEn (portaudio != null)}-portaudio"
+    "--${boolEn (dbus != null)}-dbus"
     "--enable-xunique"
     "--disable-stacktrace"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Application to control the JACK sound server daemon";
     homepage = http://qjackctl.sourceforge.net/;
     license = licenses.gpl2Plus;

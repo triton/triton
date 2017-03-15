@@ -32,6 +32,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = tarballUrls major patch;
+    multihash = "QmXNEq8KM84xg7ciRncE53fp9eqhBgVMSNRnyS7XdfvUub";
     hashOutput = false;
     sha256 = "fd34752774c808ab4f6f864f935c49945f5a56b62240b1ad4ab1af7b4ded127c";
   };

@@ -20,7 +20,7 @@ let
   inherit (stdenv.lib)
     replaceChars;
 
-  version = "9.20";
+  version = "9.21";
   versionNoP = replaceChars ["."] [""] version;
 
   fonts = stdenv.mkDerivation {
@@ -44,14 +44,15 @@ let
     '';
   };
 
+  baseUrl = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs${versionNoP}";
 in
 stdenv.mkDerivation rec {
   name = "ghostscript-${version}";
 
   src = fetchurl {
-    url = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases"
-        + "/download/gs${versionNoP}/${name}.tar.xz";
-    sha256 = "3c0f3dc5df6f784850fa4ce7dcc3d6c56ef543af1fbaedd1d9f8d9f8b66de0ab";
+    url = "${baseUrl}/${name}.tar.xz";
+    hashOutput = false;
+    sha256 = "2be1d014888a34187ad4bbec19ab5692cc943bd1cb14886065aeb43a3393d053";
   };
 
   outputs = [
@@ -137,6 +138,15 @@ stdenv.mkDerivation rec {
 
   passthru = {
     inherit version fonts;
+
+    srcVerification = fetchurl {
+      failEarly = true;
+      md5Url = "${baseUrl}/MD5SUMS";
+      sha1Url = "${baseUrl}/SHA1SUMS";
+      sha256Url = "${baseUrl}/SHA256SUMS";
+      sha512Url = "${baseUrl}/SHA512SUMS";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
   };
 
   meta = with stdenv.lib; {

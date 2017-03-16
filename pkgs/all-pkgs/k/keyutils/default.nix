@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "keyutils-1.5.9";
+  name = "keyutils-1.5.10";
 
   src = fetchurl {
     url = "https://people.redhat.com/dhowells/keyutils/${name}.tar.bz2";
-    multihash = "QmR3wkaD2VRBm4Mkruzpuf2QCiseCWJNgcoMdZqxZ8p29J";
-    sha256 = "1bl3w03ygxhc0hz69klfdlwqn33jvzxl1zfl2jmnb2v85iawb8jd";
+    multihash = "QmU7esZtorARS6QNwsL8v2nm4kkVyT8tYLGzgicp1KyYZp";
+    sha256 = "115c3deae7f181778fd0e0ffaa2dad1bf1fe2f5677cf2e0e348cdb7a1c93afb6";
   };
 
   nativeBuildInputs = [

@@ -139,7 +139,7 @@ while read line; do
 
   cd $TMPDIR/src/$pkg
 
-  VERSION="$(git tag --sort "v:refname" | grep '\([0-9]\+\.\)\+[0-9]\+$' | grep -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
+  VERSION="$(git tag --sort "v:refname" | grep '\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\|\([0-9]\+\.\)\+[0-9]\+$\)' | grep -i -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
   HEAD_DATE="$(date --date="@$(git show -s --format=%ct origin/master)" --utc "+%Y-%m-%d")"
   REV="$(git rev-parse origin/master)"
   DATE="$HEAD_DATE"

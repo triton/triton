@@ -38,7 +38,12 @@ stdenv.mkDerivation rec {
   # Fix a broken sed expression used for detecting the minor
   # version of guile we are using
   postPatch = ''
-    sed -i "s,sed '.*-I.*',sed 's/\\\(^\\\| \\\)-I/\\\1/g',g" configure
+    sed \
+      -e "s,sed '.*-I.*',sed 's/\\\(^\\\| \\\)-I/\\\1/g',g" \
+      -e 's,guile_versions_to_search=",\02.2 ,g' \
+      -i configure
+
+    sed -i 's,< 201000,< 203000,g' agen5/guile-iface.h
   '';
 
   passthru = {

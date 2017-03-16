@@ -1421,6 +1421,8 @@ gnu-efi = callPackage ../all-pkgs/g/gnu-efi { };
 
 gnugrep = callPackage ../all-pkgs/g/gnugrep { };
 
+gnulib = callPackage ../all-pkgs/g/gnulib { };
+
 gnum4 = callPackage ../all-pkgs/g/gnum4 { };
 
 gnumake = callPackage ../all-pkgs/g/gnumake { };
@@ -3709,8 +3711,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 #
   fontforge = lowPrio (callPackage ../tools/misc/fontforge { });
 #
-  gnulib = callPackage ../development/tools/gnulib { };
-
   most = callPackage ../tools/misc/most { };
 #
   libconfig = callPackage ../development/libraries/libconfig { };

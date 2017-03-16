@@ -25,6 +25,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxcb
 , libxdmcp
 , libxext
+, libxfixes
 , libxt
 , presentproto
 , printproto
@@ -111,6 +112,7 @@ let
     libXau = libxau;
     libXdmcp = libxdmcp;
     libXext = libxext;
+    libXfixes = libxfixes;
     libXt = libxt;
     utilmacros = util-macros;
     xcbproto = xcb-proto;
@@ -756,17 +758,6 @@ let
     buildInputs = [ evieext libX11 libXext xextproto xproto ];
 
   }) // {inherit evieext libX11 libXext xextproto xproto ;};
-
-  libXfixes = (mkDerivation "libXfixes" {
-    name = "libXfixes-5.0.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXfixes-5.0.3.tar.bz2;
-      sha256 = "1miana3y4hwdqdparsccmygqr3ic3hs5jrqfzp70hvi2zwxd676y";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ fixesproto libX11 xextproto xproto ];
-
-  }) // {inherit fixesproto libX11 xextproto xproto ;};
 
   libXfont = (mkDerivation "libXfont" {
     name = "libXfont-1.5.2";

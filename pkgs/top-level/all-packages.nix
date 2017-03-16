@@ -2341,6 +2341,8 @@ libxcb = callPackage ../all-pkgs/l/libxcb { };
 
 libxdmcp = callPackage ../all-pkgs/l/libxdmcp { };
 
+libxext = callPackage ../all-pkgs/l/libxext { };
+
 libxfce4ui_4-12 = callPackage ../all-pkgs/l/libxfce4ui {
   channel = "4.12";
 };
@@ -3587,6 +3589,7 @@ xorg = recurseIntoAttrs (
       libxau
       libxcb
       libxdmcp
+      libxext
       libxt
       presentproto
       printproto

@@ -236,7 +236,7 @@ mirror://xorg/individual/lib/libxshmfence-1.2.tar.bz2
 mirror://xorg/individual/lib/libxkbui-1.0.2.tar.bz2
 mirror://xorg/individual/lib/libxkbfile-1.0.9.tar.bz2
 mirror://xorg/individual/xcb/libxcb-1.12.tar.bz2
-mirror://xorg/individual/xcb/libpthread-stubs-0.3.tar.bz2
+mirror://xorg/individual/xcb/libpthread-stubs-0.4.tar.bz2
 mirror://xorg/individual/lib/libpthread-stubs-0.1.tar.bz2
 mirror://xorg/individual/lib/libpciaccess-0.13.4.tar.bz2
 mirror://xorg/individual/lib/liboldX-1.0.1.tar.bz2

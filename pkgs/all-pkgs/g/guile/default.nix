@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "2.0.14";
+  version = "2.2.0";
 
   tarballUrls = version: [
     "mirror://gnu/guile/guile-${version}.tar.xz"
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "e8442566256e1be14e51fc18839cd799b966bc5b16c6a1d7a7c35155a8619d82";
+    sha256 = "c18198ff6e8b05c620dbdd49b816a2e63a2688af843b5cf8e965041f1adcb515";
   };
 
   nativeBuildInputs = [
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
 
     # Hack to remove impurities
     # TODO: We should fix this so we have a cached version of this module
-    rm "$out"/lib/guile/2.0/ccache/srfi/srfi-4/gnu.go
+    rm "$out"/lib/guile/2.2/ccache/srfi/srfi-4/gnu.go
   '';
 
   # A native Guile 2.0 is needed to cross-build Guile.
@@ -67,14 +67,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "2.0.14";
+      urls = tarballUrls "2.2.0";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprints = [
         "FF47 8FB2 64DE 32EC 2967  25A3 DDC0 F535 8812 F8F2"
         "3CE4 6455 8A84 FDC6 9DB4  0CFB 090B 1199 3D9A EBB5"
       ];
       inherit (src) outputHashAlgo;
-      outputHash = "e8442566256e1be14e51fc18839cd799b966bc5b16c6a1d7a7c35155a8619d82";
+      outputHash = "c18198ff6e8b05c620dbdd49b816a2e63a2688af843b5cf8e965041f1adcb515";
     };
   };
 

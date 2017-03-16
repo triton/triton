@@ -1513,6 +1513,18 @@ grilo-plugins = callPackage ../all-pkgs/g/grilo-plugins { };
 
 groff = callPackage ../all-pkgs/g/groff { };
 
+grub_bios-i386 = callPackage ../all-pkgs/g/grub {
+  type = "bios-i386";
+};
+
+grub_efi-x86_64 = callPackage ../all-pkgs/g/grub {
+  type = "efi-x86_64";
+};
+
+grub_efi-i386 = callPackage ../all-pkgs/g/grub {
+  type = "efi-x86_64";
+};
+
 gsettings-desktop-schemas_3-22 =
   callPackage ../all-pkgs/g/gsettings-desktop-schemas {
     channel = "3.22";
@@ -3699,12 +3711,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 #
   gnulib = callPackage ../development/tools/gnulib { };
 
-  grub2 = callPackage ../tools/misc/grub/2.0x.nix { };
-
-  grub2_efi = callPackageAlias "grub2" {
-    efiSupport = true;
-  };
-#
   most = callPackage ../tools/misc/most { };
 #
   libconfig = callPackage ../development/libraries/libconfig { };

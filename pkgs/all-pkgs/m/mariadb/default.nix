@@ -29,7 +29,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "mariadb-10.1.21";
+  name = "mariadb-10.1.22";
 
   src = fetchurl {
     urls = map (n: "${n}/${name}/source/${name}.tar.gz") [
@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
     ];
     hashOutput = false;
     insecureHashOutput = true;
-    sha256 = "5a816355781ea22a6c65a436d8162f19bd292ec90e2b7d9499c031ae4a659490";
+    sha256 = "bcb0572e7ad32cea9740a21e9255f733bdf60a5561ffbda317c22dd12b3966ce";
   };
 
   nativeBuildInputs = [
@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
     msgpack-c
     ncurses
     numactl
-    #openssl
+    openssl
     pcre
     snappy
     systemd_lib
@@ -92,8 +92,8 @@ stdenv.mkDerivation rec {
     "-DINSTALL_SHAREDIR=share/mysql"
     "-DWITH_READLINE=ON"
     "-DWITH_ZLIB=system"
-    #"-DWITH_SSL=system"
-    "-DWITH_SSL=bundled"
+    "-DWITH_SSL=system"
+    #"-DWITH_SSL=bundled"
     "-DWITH_PCRE=system"
     "-DWITH_EMBEDDED_SERVER=yes"
     "-DWITH_EXTRA_CHARSETS=complex"

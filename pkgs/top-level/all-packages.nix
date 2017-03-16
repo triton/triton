@@ -1174,6 +1174,8 @@ fontcacheproto = callPackage ../all-pkgs/f/fontcacheproto { };
 
 fontconfig = callPackage ../all-pkgs/f/fontconfig { };
 
+fontforge = callPackage ../all-pkgs/f/fontforge { };
+
 fontsproto = callPackage ../all-pkgs/f/fontsproto { };
 
 fox = callPackage ../all-pkgs/f/fox { };
@@ -3710,8 +3712,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 ################################################################################
 #
   docbook2x = callPackage ../tools/typesetting/docbook2x { };
-#
-  fontforge = lowPrio (callPackage ../tools/misc/fontforge { });
 #
   most = callPackage ../tools/misc/most { };
 #

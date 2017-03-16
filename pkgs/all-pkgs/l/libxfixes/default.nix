@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = with lib; {
-    description = "";
+    description = "X-Fixes extension";
     homepage = https://xorg.freedesktop.org;
     license = licenses.mit;
     maintainers = with maintainers; [

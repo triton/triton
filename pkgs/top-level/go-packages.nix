@@ -3503,6 +3503,7 @@ let
     repo = "grpc-gateway";
     sha256 = "1pm8wy77qd2lfff0c947xrz6k81sy1l84kikrah1n4l2sqggr3sl";
     propagatedBuildInputs = [
+      genproto
       glog
       grpc
       net

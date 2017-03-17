@@ -179,10 +179,6 @@ let
   # inside the set for derivations.
   recurseIntoAttrs = attrs: attrs // { recurseForDerivations = true; };
 
-  #builderDefs = lib.composedArgsAndFun (callPackage ../build-support/builder-defs/builder-defs.nix) {};
-
-  #builderDefsPackage = builderDefs.builderDefsPackage builderDefs;
-
   stringsWithDeps = lib.stringsWithDeps;
 
 

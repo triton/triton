@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "62";
+  version = "80";
 in
 buildPythonPackage rec {
   name = "diffoscope-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "diffoscope";
     inherit version;
-    sha256 = "1f3de98304fe1020d2b9417f7e45818204760589e55f59145c1286c0f523eb88";
+    sha256 = "3a1b8060ee3984d912940239a2f9906087297dcbe929c5bb85f0108fc0160ef6";
   };
 
   propagatedBuildInputs = [

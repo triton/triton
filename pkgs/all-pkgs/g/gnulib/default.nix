@@ -16,9 +16,12 @@ stdenv.mkDerivation {
     mkdir -p $out
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = "http://www.gnu.org/software/gnulib/";
     description = "central location for code to be shared among GNU packages";
-    license = stdenv.lib.licenses.gpl3Plus;
+    license = licenses.gpl3Plus;
+    maintainers = with maintainers; [
+      wkennington
+    ];
   };
 }

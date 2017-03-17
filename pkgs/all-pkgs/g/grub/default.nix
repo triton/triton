@@ -6,11 +6,14 @@
 , flex
 , python
 
+, dejavu-fonts
 , freetype
+, fuse
 , gettext
 , libusb_1
 , lvm2
 , ncurses
+, xz
 , zfs
 
 , type
@@ -61,10 +64,12 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     freetype
+    fuse
     gettext
     libusb_1
     lvm2
     ncurses
+    xz
     zfs
   ];
 
@@ -75,6 +80,10 @@ stdenv.mkDerivation rec {
       sha256 = "c9c6813abed894240070f9c107d1996e945395d8810479cccb559863a95d44ad";
     })
   ];
+
+  postPatch = ''
+    sed -i 's,/usr/share/fonts/truetype,${dejavu-fonts}/share/fonts/truetype,g' configure
+  '';
 
   configureFlags = [
     "--target=${target}"

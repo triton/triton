@@ -1526,7 +1526,7 @@ grub_efi-x86_64 = callPackage ../all-pkgs/g/grub {
 };
 
 grub_efi-i386 = callPackage ../all-pkgs/g/grub {
-  type = "efi-x86_64";
+  type = "efi-i386";
 };
 
 gsettings-desktop-schemas_3-22 =

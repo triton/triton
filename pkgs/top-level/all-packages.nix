@@ -3402,6 +3402,8 @@ upower = callPackage ../all-pkgs/u/upower { };
 
 usbmuxd = callPackage ../all-pkgs/u/usbmuxd { };
 
+uthash = callPackage ../all-pkgs/u/uthash { };
+
 util-linux_full = callPackage ../all-pkgs/u/util-linux { };
 util-linux_lib = callPackageAlias "util-linux_full" {
   type = "lib";
@@ -4043,8 +4045,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   t1lib = callPackage ../development/libraries/t1lib { };
 #
   telepathy_glib = callPackage ../development/libraries/telepathy/glib { };
-#
-  uthash = callPackage ../development/libraries/uthash { };
 #
   vamp = callPackage ../development/libraries/audio/vamp { };
 #

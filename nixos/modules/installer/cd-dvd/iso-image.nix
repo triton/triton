@@ -236,7 +236,13 @@ in
 
     # !!! Hack - attributes expected by other modules.
     system.boot.loader.kernelFile = "bzImage";
-    environment.systemPackages = [ pkgs.grub2 pkgs.grub2_efi pkgs.syslinux ];
+
+    system.extraDependencies = [
+      pkgs.grub_bios-i386
+      pkgs.grub_efi-x86_64
+      pkgs.grub_efi-i386
+      pkgs.syslinux
+    ];
 
     boot.consoleLogLevel = mkDefault 7;
 

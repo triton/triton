@@ -8,26 +8,28 @@ let
 
   efi = config.boot.loader.efi;
 
-  realGrub = if cfg.version == 1 then pkgs.grub
-    else if cfg.zfsSupport then pkgs.grub2.override { zfsSupport = true; }
-    else if cfg.trustedBoot.enable
-         then if cfg.trustedBoot.isHPLaptop
-              then pkgs.trustedGrub-for-HP
-              else pkgs.trustedGrub
-         else pkgs.grub2;
+  realGrub =
+    if cfg.version == 1 then
+      throw "Grub1 is not a thing anymore"
+    else if cfg.trustedBoot.enable then
+      throw "Trusted grub is not supported"
+    else
+      pkgs.grub_bios-i386;
 
   grub =
     # Don't include GRUB if we're only generating a GRUB menu (e.g.,
     # in EC2 instances).
-    if cfg.devices == ["nodev"]
-    then null
-    else realGrub;
+    if cfg.devices == [ "nodev" ] then
+      null
+    else
+      realGrub;
 
   grubEfi =
     # EFI version of Grub v2
-    if cfg.efiSupport && (cfg.version == 2)
-    then realGrub.override { efiSupport = cfg.efiSupport; }
-    else null;
+    if cfg.efiSupport && (cfg.version == 2) then
+      pkgs.grub_efi-x86_64
+    else
+      null;
 
   f = x: if x == null then "" else "" + x;
 

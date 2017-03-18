@@ -1,7 +1,8 @@
 { stdenv
-, fetchurl
 , autoconf
 , automake
+, fetchurl
+, lib
 , libtool
 , gettext
 , xmltoman
@@ -14,14 +15,14 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
-in
+  inherit (lib)
+    boolEn
+    boolWt;
 
+  version = "0.6.32";
+in
 stdenv.mkDerivation rec {
   name = "avahi-${version}";
-  version = "0.6.32";
 
   src = fetchurl {
     url = "https://github.com/lathiat/avahi/archive/v${version}.tar.gz";
@@ -56,17 +57,17 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--localstatedir=/var"
     "--enable-nls"
-    (enFlag "glib" (glib != null) null)
-    (enFlag "gobject" (glib != null) null)
+    "--${boolEn (glib != null)}-glib"
+    "--${boolEn (glib != null)}-gobject"
     # Disable all builtin interfaces
     "--disable-qt3"
     "--disable-qt4"
     "--disable-gtk"
     "--disable-gtk3"
-    (enFlag "dbus" (dbus != null) null)
+    "--${boolEn (dbus != null)}-dbus"
     "--disable-dbm"
     "--disable-gdbm"
-    (enFlag "libdaemon" (libdaemon != null) null)
+    "--${boolEn (libdaemon != null)}-libdaemon"
     "--disable-python"
     # Circular dependency:
     # avahi -> pygtk -> gtk2 -> cups -> avahi
@@ -92,7 +93,7 @@ stdenv.mkDerivation rec {
     "--enable-compat-libdns_sd"
     "--enable-compat-howl"
     "--with-distro=none"
-    (wtFlag "xml" (expat != null) "expat")
+    "--${boolWt (expat != null)}-xml"
     #"--with-avahi-group=<user>"
     #"--with-avahi-group=<group>"
     #"--with-autoipd-user=<user>"
@@ -111,7 +112,7 @@ stdenv.mkDerivation rec {
       ln -sv avahi-compat-howl.pc $out/lib/pkgconfig/howl.pc
     '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Facilitates service discovery on a local network";
     homepage = http://avahi.org;
     license = licenses.lgpl2Plus;

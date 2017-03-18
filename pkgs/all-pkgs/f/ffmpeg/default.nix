@@ -145,7 +145,6 @@
 #, vo-aacenc
 , vo-amrwbenc ? null
 , wavpack
-, x11grabExtlib ? false
 , x264
 , x265
 , xavs
@@ -193,7 +192,6 @@ assert
   || samba_client != null
   #|| utvideo != null
   || vid-stab != null
-  || x11grabExtlib
   || x264 != null
   || x265 != null
   || xavs != null
@@ -270,9 +268,6 @@ assert libxcbxfixesExtlib -> xorg.libxcb != null;
 assert libxcbshapeExtlib -> xorg.libxcb != null;
 assert gnutls != null -> openssl == null;
 assert openssl != null -> gnutls == null;
-assert x11grabExtlib ->
-  xorg.libX11 != null
-  && xorg.libXv != null;
 
 let
   # Minimum/maximun/matching version
@@ -595,7 +590,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (SDL_2 != null)}-sdl"
     "--${boolEn (SDL_2 != null)}-sdl2"
     "--disable-securetransport"
-    "--${boolEn x11grabExtlib}-x11grab"
+    (deprfflag null "3.2" "--disable-x11grab")
     #"--${boolEn (xorg.libX11 != null && xorg.libXv != null)}-xlib"
     "--${boolEn (zlib != null)}-zlib"
     /*

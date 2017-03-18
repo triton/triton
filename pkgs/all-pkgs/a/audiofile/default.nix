@@ -1,15 +1,15 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , flac
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
 in
-
 stdenv.mkDerivation rec {
   name = "audiofile-0.3.6";
 
@@ -39,12 +39,12 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
     "--disable-docs"
     "--disable-examples"
-    (enFlag "flac" (flac != null) null)
+    "--${boolEn (flac != null)}-flac"
   ];
 
   CXXFLAGS = "-std=c++03";
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library for reading & writing various audio file formats";
     homepage = http://www.68k.org/~michael/audiofile/;
     license = licenses.lgpl21Plus;

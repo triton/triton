@@ -28,7 +28,8 @@ let
 
     srcs = [
       (fetchurl {
-        url = "mirror://sourceforge/gs-fonts/gs-fonts/8.11%20(base%2035,%20GPL)/ghostscript-fonts-std-8.11.tar.gz";
+        url = "mirror://sourceforge/gs-fonts/gs-fonts/"
+          + "8.11%20(base%2035,%20GPL)/ghostscript-fonts-std-8.11.tar.gz";
         sha256 = "00f4l10xd826kak51wsmaz69szzm2wp8a41jasr4jblz25bg7dhf";
       })
       (fetchurl {
@@ -44,7 +45,8 @@ let
     '';
   };
 
-  baseUrl = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs${versionNoP}";
+  baseUrl = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/"
+    + "download/gs${versionNoP}";
 in
 stdenv.mkDerivation rec {
   name = "ghostscript-${version}";
@@ -77,12 +79,11 @@ stdenv.mkDerivation rec {
 
   NIX_ZLIB_INCLUDE = "${zlib}/include";
 
+  NIX_LDFLAGS = [
+    "-L${zlib}/lib -lz"
+  ];
+
   patches = [
-    (fetchTritonPatch {
-      rev = "9e45913651939a22fb58254b2482ae4dcb4c8d56";
-      file = "g/ghostscript/CVE-2016-8602.patch";
-      sha256 = "d48abd753695111b8b19b34c7590c8ed27b2c678575ac34f55e406b05bac0023";
-    })
     (fetchTritonPatch {
       rev = "16e1e82d413e33a3a46976f64c275c58a7dc3928";
       file = "ghostscript/urw-font-files.patch";
@@ -91,9 +92,10 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    rm -r freetype jbig2dec jpeg lcms2 libpng tiff zlib ijs
+    rm -rv freetype jbig2dec jpeg lcms2 libpng tiff zlib ijs
 
-    sed "s@if ( test -f \$(INCLUDE)[^ ]* )@if ( true )@; s@INCLUDE=/usr/include@INCLUDE=/no-such-path@" -i base/unix-aux.mak
+    sed -i base/unix-aux.mak \
+      -e "s@if ( test -f \$(INCLUDE)[^ ]* )@if ( true )@; s@INCLUDE=/usr/include@INCLUDE=/no-such-path@"
     sed "s@^ZLIBDIR=.*@ZLIBDIR=${zlib}/include@" -i configure.ac
   '';
 
@@ -150,8 +152,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
+    description = "PostScript interpreter";
     homepage = "http://www.ghostscript.com/";
-    description = "PostScript interpreter (mainline version)";
     license = licenses.gpl3Plus;
     maintainers = with maintainers; [
       wkennington

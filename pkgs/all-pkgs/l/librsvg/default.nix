@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , bzip2
 , cairo
@@ -14,15 +15,15 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
-in
+  inherit (lib)
+    boolEn;
 
-stdenv.mkDerivation rec {
-  name = "librsvg-${version}";
   versionMajor = "2.40";
   versionMinor = "16";
   version = "${versionMajor}.${versionMinor}";
+in
+stdenv.mkDerivation rec {
+  name = "librsvg-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.tar.xz";
@@ -51,8 +52,8 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--disable-tools"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (vala != null)}-vala"
   ];
 
   # It wants to add loaders and update the loaders.cache in gdk-pixbuf
@@ -67,7 +68,7 @@ stdenv.mkDerivation rec {
       -e "s#\$(GDK_PIXBUF_QUERYLOADERS)#GDK_PIXBUF_MODULEDIR=$GDK_PIXBUF/loaders \$(GDK_PIXBUF_QUERYLOADERS)#"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Scalable Vector Graphics (SVG) rendering library";
     homepage = https://wiki.gnome.org/Projects/LibRsvg;
     license = licenses.lgpl2;

@@ -17,6 +17,7 @@
 let
   inherit (lib)
     boolEn
+    boolString
     boolWt;
 
   version = "0.6.32";
@@ -93,7 +94,7 @@ stdenv.mkDerivation rec {
     "--enable-compat-libdns_sd"
     "--enable-compat-howl"
     "--with-distro=none"
-    "--${boolWt (expat != null)}-xml"
+    "--${boolWt (expat != null)}-xml${boolString (expat != null) "=expat" ""}"
     #"--with-avahi-group=<user>"
     #"--with-avahi-group=<group>"
     #"--with-autoipd-user=<user>"

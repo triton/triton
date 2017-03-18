@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   name = "chromaprint-${version}";
 
   src = fetchurl {
-    url = [
+    urls = [
       "https://bitbucket.org/acoustid/chromaprint/downloads/${name}.tar.gz"
       "mirror://gentoo/distfiles/${name}.tar.gz"
     ];

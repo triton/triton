@@ -3,6 +3,7 @@
 , gettext
 , fetchurl
 , intltool
+, lib
 , libxslt
 
 , dbus-glib
@@ -16,9 +17,9 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+  inherit (lib)
+    boolEn
+    boolWt;
 in
 stdenv.mkDerivation rec {
   name = "upower-0.99.4";
@@ -56,7 +57,7 @@ stdenv.mkDerivation rec {
     "--localstatedir=/var"
     "--sysconfdir=/etc"
     "--disable-maintainer-mode"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-deprecated"
     "--enable-manpages"
     "--disable-gtk-doc"
@@ -65,9 +66,7 @@ stdenv.mkDerivation rec {
     "--disable-tests"
     "--enable-nls"
     "--with-backend=linux"
-    (wtFlag "idevice" (
-      libimobiledevice != null
-      && libplist != null) null)
+    "--${boolWt (libimobiledevice != null && libplist != null)}-idevice"
   ];
 
   NIX_LDFLAGS = [
@@ -81,7 +80,7 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A D-Bus service for power management";
     homepage = https://upower.freedesktop.org/;
     license = licenses.gpl2Plus;

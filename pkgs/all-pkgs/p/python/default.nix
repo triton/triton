@@ -36,14 +36,14 @@ let
   inherit (stdenv)
     targetSystem;
   inherit (stdenv.lib)
+    boolWt
     concatStringsSep
     head
     optionals
     optionalString
     splitString
     versionAtLeast
-    versionOlder
-    wtFlag;
+    versionOlder;
 
   source = (import ./sources.nix)."${channel}";
 
@@ -161,9 +161,9 @@ stdenv.mkDerivation rec {
     (ifPy3 "--enable-loadable-sqlite-extensions" null)
     "--enable-ipv6"
     (ifPy2 "--enable-unicode=ucs4" null)
-    #(wtFlag "gcc" (!stdenv.cc.isClang) null)
+    #"--${boolWt (!stdenv.cc.isClang)}-gcc"
     #"--enable-big-digits" # py3
-    (wtFlag "pydebug" pydebug null)
+    "--${boolWt pydebug}-pydebug"
     #"--with-hash-algorithm" # py3
     (if isPy3 then
       # Flag is not a boolean

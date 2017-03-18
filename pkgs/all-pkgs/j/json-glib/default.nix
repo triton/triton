@@ -1,14 +1,15 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 
 , glib
 , gobject-introspection
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
 
   versionMajor = "1.2";
   versionMinor = "2";
@@ -42,12 +43,12 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--disable-man"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-nls"
     "--enable-rpath"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "(de)serialization support for JSON";
     homepage = http://live.gnome.org/JsonGlib;
     license = licenses.lgpl2;

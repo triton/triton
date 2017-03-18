@@ -2,6 +2,7 @@
 , autoreconfHook
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , cogl
 , fontconfig
@@ -18,8 +19,8 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
+  inherit (lib)
+    boolEn
     optionalString;
 in
 stdenv.mkDerivation rec {
@@ -84,11 +85,11 @@ stdenv.mkDerivation rec {
     #"--disable-atomic"
     "--disable-gcov"
     "--disable-valgrind"
-    (enFlag "xlib" (xorg != null) null)
-    (enFlag "xlib-xrender" (xorg != null) null)
-    (enFlag "xcb" (xorg != null) null)
-    (enFlag "xlib-xcb" (xorg != null) null)
-    (enFlag "xcb-shm" (xorg != null) null)
+    "--${boolEn (xorg != null)}-xlib"
+    "--${boolEn (xorg != null)}-xlib-xrender"
+    "--${boolEn (xorg != null)}-xcb"
+    "--${boolEn (xorg != null)}-xlib-xcb"
+    "--${boolEn (xorg != null)}-xcb-shm"
     "--disable-qt"
     "--disable-quartz"
     "--disable-quartz-font"
@@ -103,14 +104,14 @@ stdenv.mkDerivation rec {
     "--disable-gallium"
     # Only one OpenGL backend may be selected at compile time
     # OpenGL X (gl), or OpenGL ES 2.0 (glesv2)
-    (enFlag "gl" (!gles2) null)
-    (enFlag "glesv2" gles2 null)
+    "--${boolEn (!gles2)}-gl"
+    "--${boolEn gles2}-glesv2"
     "--disable-cogl" # recursive dependency
     # FIXME: fix directfb mirroring
     "--disable-directfb"
     "--disable-vg"
-    (enFlag "egl" (mesa_noglu != null) null)
-    (enFlag "glx" (mesa_noglu != null) null)
+    "--${boolEn (mesa_noglu != null)}-egl"
+    "--${boolEn (mesa_noglu != null)}-glx"
     "--disable-wgl"
     "--enable-script"
     "--enable-ft"
@@ -129,8 +130,8 @@ stdenv.mkDerivation rec {
     "--disable-symbol-lookup"
     #"--enable-some-floating-point"
     "--with-x"
-    #(wtFlag "skia" true "yes")
-    #(wtFlag "skia-build-type" true "Release")
+    #"--with-skia=yes"
+    #"--with-skia-build-type=Release"
     "--without-gallium"
   ];
 
@@ -149,7 +150,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A vector graphics library with cross-device output support";
     homepage = http://cairographics.org/;
     license = with licenses; [

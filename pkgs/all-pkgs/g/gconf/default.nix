@@ -2,6 +2,7 @@
 , fetchTritonPatch
 , fetchurl
 , intltool
+, lib
 
 , dbus
 , dbus-glib
@@ -15,9 +16,10 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+  inherit (lib)
+    boolEn
+    boolString
+    boolWt;
 
   versionMajor = "3.2";
   versionMinor = "6";
@@ -88,16 +90,16 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--disable-documentation"
     "--enable-gtk"
-    (enFlag "orbit" (orbit2 != null) null)
-    (enFlag "defaults-service" (dbus-glib != null) null)
+    "--${boolEn (orbit2 != null)}-orbit"
+    "--${boolEn (dbus-glib != null)}-defaults-service"
     "--enable-gsettings-backend"
     "--enable-nls"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (wtFlag "gtk" (gtk3 != null) "3.0")
-    (wtFlag "openldap" (openldap != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolWt (gtk3 != null)}-gtk${boolString (gtk3 != null) "=3.0" ""}"
+    "--${boolWt (openldap != null)}-openldap"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GNOME configuration system and daemon";
     homepage = http://projects.gnome.org/gconf/;
     license = licenses.lgpl2Plus;

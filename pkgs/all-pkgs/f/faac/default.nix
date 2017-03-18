@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , mp4v2
 
@@ -9,9 +10,9 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+  inherit (lib)
+    boolEn
+    boolWt;
 in
 stdenv.mkDerivation rec {
   name = "faac-${version}";
@@ -55,14 +56,14 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    (enFlag "drm" drmSupport null)
+    "--${boolEn drmSupport}-drm"
     "--enable-largefile"
-    (wtFlag "mp4v2" (mp4v2 != null) null)
+    "--${boolWt (mp4v2 != null)}-mp4v2"
   ];
 
   CXXFLAGS = "-std=c++03";
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Open source MPEG-4 and MPEG-2 AAC encoder";
     homepage = http://www.audiocoding.com/faac.html;
     license = licenses.unfreeRedistributable;

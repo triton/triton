@@ -46,6 +46,7 @@ let
       fullName = (builtins.parseDrvName realGrub.name).name;
       fullVersion = (builtins.parseDrvName realGrub.name).version;
       grubEfi = f grubEfi;
+      fontTTF = f cfg.fontTTF;
       grubTargetEfi = if grubEfi != null then "${grubEfi.target}-${grubEfi.platform}" else "";
       bootPath = args.path;
       storePath = config.boot.loader.grub.storePath;
@@ -269,12 +270,22 @@ in
 
       splashImage = mkOption {
         type = types.nullOr types.path;
+        default = null;
         example = literalExample "./my-background.png";
         description = ''
           Background image used for GRUB.  It must be a 640x480,
           14-colour image in XPM format, optionally compressed with
           <command>gzip</command> or <command>bzip2</command>.  Set to
           <literal>null</literal> to run GRUB in text mode.
+        '';
+      };
+
+      fontTTF = mkOption {
+        type = types.nullOr types.path;
+        default = null;
+        example = literalExample "''${pkgs.dejavu-fonts}/share/fonts/truetype/DejaVuSans.ttf";
+        description = ''
+          The TTF file to use for the font in the grub graphical mode.
         '';
       };
 
@@ -409,6 +420,10 @@ in
   ###### implementation
 
   config = mkMerge [
+
+    {
+      boot.loader.grub.fontTTF = mkDefault "${pkgs.dejavu-fonts}/share/fonts/truetype/DejaVuSansMono.ttf";
+    }
 
     (mkIf cfg.enable {
 

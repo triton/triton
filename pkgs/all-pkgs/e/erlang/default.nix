@@ -18,7 +18,7 @@
 }:
 
 let
-  version = "19.1.2";
+  version = "19.3";
 
   inherit (stdenv.lib)
     optionals;
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
     owner = "erlang";
     repo = "otp";
     rev = "OTP-${version}";
-    sha256 = "6e5ed5e595dc238facbfd01a7a8fdaed3a1c2e8b506e5eef629d1b8a821f0dba";
+    sha256 = "023a5459f24e4652ba8d5df82815fb525bb6600647cd80ab09ea2df6f71cf7e8";
   };
 
   nativeBuildInputs = [

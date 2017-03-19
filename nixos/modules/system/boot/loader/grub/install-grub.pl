@@ -272,6 +272,7 @@ else {
         else
           insmod vbe
         fi
+
         insmod font
         if loadfont " . $grubBoot->path . "/grub/fonts/unicode.pf2; then
           insmod gfxterm

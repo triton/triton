@@ -4337,9 +4337,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
     prefix = "lib";
   };
 #
-#
-  nixos-artwork = callPackage ../data/misc/nixos-artwork { };
-#
 #  # All the new TeX Live is inside. See description in default.nix.
  texlive = recurseIntoAttrs
     (callPackage ../tools/typesetting/tex/texlive-new { });

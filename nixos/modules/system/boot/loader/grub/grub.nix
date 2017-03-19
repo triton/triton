@@ -41,12 +41,12 @@ let
     pkgs.writeText "grub-config.xml" (builtins.toXML
     { splashImage = f cfg.splashImage;
       grub = f grub;
-      grubTarget = f (grub.grubTarget or "");
+      grubTarget = if grub != null then "${grub.target}-${grub.platform}" else "";
       shell = "${pkgs.stdenv.shell}";
       fullName = (builtins.parseDrvName realGrub.name).name;
       fullVersion = (builtins.parseDrvName realGrub.name).version;
       grubEfi = f grubEfi;
-      grubTargetEfi = if cfg.efiSupport && (cfg.version == 2) then f (grubEfi.grubTarget or "") else "";
+      grubTargetEfi = if grubEfi != null then "${grubEfi.target}-${grubEfi.platform}" else "";
       bootPath = args.path;
       storePath = config.boot.loader.grub.storePath;
       bootloaderId = if args.efiBootloaderId == null then "NixOS${efiSysMountPoint'}" else args.efiBootloaderId;

@@ -107,6 +107,10 @@ stdenv.mkDerivation rec {
   optimize = false;
 
   passthru = rec {
+    inherit
+      platform
+      target;
+
     srcVerification = fetchurl {
       failEarly = true;
       inherit (src) name urls outputHash outputHashAlgo;

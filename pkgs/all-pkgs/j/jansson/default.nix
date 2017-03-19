@@ -3,13 +3,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "jansson-2.9";
+  name = "jansson-2.10";
 
   src = fetchurl {
     url = "http://www.digip.org/jansson/releases/${name}.tar.gz";
     hashOutput = false;
-    multihash = "QmepVqa6YdvgG8UWmXeSKAoVWEe4cLRqH6zCi72cnFbEsE";
-    sha256 = "0ad0d074ca049a36637e7abef755d40849ad73e926b93914ce294927b97bd2a5";
+    multihash = "QmT3RPUpADroQwrkfhmyHJnQghjzYcPnuaJCmU7nCPe5Jn";
+    sha256 = "78215ad1e277b42681404c1d66870097a50eb084be9d771b1d15576575cf6447";
   };
 
   passthru = {

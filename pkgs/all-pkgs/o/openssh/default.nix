@@ -12,12 +12,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openssh-7.4p1";
+  name = "openssh-7.5p1";
 
   src = fetchurl {
     url = "mirror://openbsd/OpenSSH/portable/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "1b1fc4a14e2024293181924ed24872e6f2e06293f3e8926a376b8aec481f19d1";
+    sha256 = "9846e3c5fab9f0547400b4d2c017992f914222b3fd1f8eee6c7dc6bc5e59f9f0";
   };
 
   patches = [
@@ -46,15 +46,13 @@ stdenv.mkDerivation rec {
     "--with-ldns"
     "--with-libedit"
     "--with-audit=linux"
+    "--with-ssl-dir=${openssl_1-0-2}"
+    "--with-ssl-engine"
     "--with-pam"
     "--with-privsep-user=nobody"
     "--sysconfdir=/etc/ssh"
     "--with-kerberos5=${kerberos}"
   ];
-
-  preBuild = ''
-    cat Makefile
-  '';
 
   preInstall = ''
     installFlagsArray+=(

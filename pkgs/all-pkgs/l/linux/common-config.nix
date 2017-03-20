@@ -285,6 +285,10 @@ with stdenv.lib;
   PWM y
   POWERCAP y
   ISCSI_IBFT_FIND y
+  ${optionalString (versionAtLeast version "4.11") ''
+    LPFC_NVME_INITIATOR y
+    LPFC_NVME_TARGET y
+  ''}
 
   CAN_LEDS y
   ${optionalString (versionAtLeast version "4.8") ''

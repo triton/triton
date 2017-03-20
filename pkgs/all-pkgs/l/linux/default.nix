@@ -34,9 +34,9 @@ let
       patchSha256 = "68e935fbe1c3faaf186824a44b79a26f1ab85f04a1dade2e5bce5f8c2941624d";
     };
     "testing" = {
-      version = "4.11-rc2";
+      version = "4.11-rc3";
       baseSha256 = "3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b";
-      patchSha256 = "edeba5ed13d2cd13f522c10d7808497f043b1f89b7ee3b843f4f6a108a5e6a53";
+      patchSha256 = "42bc915a0fec22541716a32167dab53f8f3417e31be33588820985b0a791382e";
     };
     "bcache" =
       let

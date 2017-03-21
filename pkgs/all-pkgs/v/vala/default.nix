@@ -4,6 +4,7 @@
 , fetchurl
 , flex
 , gettext
+, lib
 , libxslt
 
 , glib
@@ -66,7 +67,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Compiler for GObject type system";
     homepage = http://live.gnome.org/Vala;
     license = licenses.lgpl21Plus;

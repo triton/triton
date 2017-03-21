@@ -3445,6 +3445,9 @@ v4l_lib = callPackageAlias "v4l-utils" {
 vala_0-34 = callPackage ../all-pkgs/v/vala {
   channel = "0.34";
 };
+vala_0-36 = callPackage ../all-pkgs/v/vala {
+  channel = "0.36";
+};
 vala = callPackageAlias "vala_0-34" { };
 
 vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };

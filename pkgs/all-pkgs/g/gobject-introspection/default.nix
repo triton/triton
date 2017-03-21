@@ -3,6 +3,7 @@
 , fetchTritonPatch
 , fetchurl
 , flex
+, lib
 
 , bzip2
 , glib
@@ -13,12 +14,12 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolWt
     optionals
     optionalString;
 
-  channel = "1.50";
+  channel = "1.52";
   version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
@@ -27,7 +28,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/gobject-introspection/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "1c6597c666f543c70ef3d7c893ab052968afae620efdc080c36657f4226337c5";
+    sha256 = "9fc6d1ebce5ad98942cb21e2fe8dd67b722dcc01981840632a1b233f7d0e2c1e";
   };
 
   nativeBuildInputs = [
@@ -54,8 +55,7 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  postPatch =
-  /* patchShebangs does not catch @PYTHON@ */ ''
+  postPatch = /* patchShebangs does not catch @PYTHON@ */ ''
     sed -i tools/g-ir-tool-template.in \
       -e 's|#!/usr/bin/env @PYTHON@|#!${python2.interpreter}|'
   '' +
@@ -93,7 +93,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A middleware layer between C libraries and language bindings";
     homepage = http://live.gnome.org/GObjectIntrospection;
     license = with licenses; [

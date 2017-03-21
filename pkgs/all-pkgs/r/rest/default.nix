@@ -49,6 +49,18 @@ stdenv.mkDerivation rec {
 
   postInstall = "rm -rvf $out/share/gtk-doc";
 
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/rest/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
   meta = with lib; {
     description = "Helper library for RESTful services";
     homepage = https://wiki.gnome.org/Projects/Librest;

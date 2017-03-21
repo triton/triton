@@ -184,6 +184,104 @@ go.stdenv.mkDerivation (
       "-gcflags" "-trimpath=$NIX_BUILD_TOP"
     )
 
+    export inputGoPaths="
+    C
+    gx
+    $(find "${go}/share/go/src" -maxdepth 1 -mindepth 1 -type d -exec basename {} \;)
+    ${lib.concatStringsSep "\n" (map (n: n.goPackagePath) (lib.filter (n: n ? goPackagePath) (extraSrcs ++ buildInputs ++ (args.propagatedBuildInputs or [ ]))))}
+    "
+
+    if [ -z "$subPackages" ]; then
+      export inputGoPaths="$inputGoPaths$goPackagePath"
+    else
+      pushd go/src >/dev/null
+      export inputGoPathsExact="$(echo "$subPackages" | tr ' ' '\n' | sed "s,\(^\| \|\n\),\1$goPackagePath/,g" | xargs -n 1 readlink -f | sed "s,^$(pwd)/,,")"
+      popd >/dev/null
+    fi
+
+    checkGoDir() {
+      export d="$1"
+      [ -n "$excludedPackages" ] && echo "$d" | grep -q "$excludedPackages" && return 0
+      while read file; do
+        if [ -z "$doCheck" ] && echo "$file" | grep -q '_test.go''$'; then
+          continue
+        fi
+        if grep -q '// +build ignore' "$file"; then
+          continue
+        fi
+        awk '
+        BEGIN {
+          split(ENVIRON["inputGoPaths"], inputs, "\n");
+          for (i in inputs) {
+            if (match(inputs[i], /^[ \t\n]*$/) == 1) {
+              delete inputs[i];
+            }
+          }
+          split(ENVIRON["inputGoPathsExact"], inputsExact, "\n");
+          for (i in inputsExact) {
+            if (match(inputsExact[i], /^[ \t\n]*$/) == 1) {
+              delete inputsExact[i];
+            }
+          }
+        }
+        {
+          if (/^[ \t]*\/\//) {
+            next;
+          }
+          if (inStringLiteral) {
+            next;
+          }
+          if (/^import/) {
+            insideImport = 1;
+            temporary = !/\($/;
+          }
+          if (insideImport) {
+            where = match($0, /"(.*)"/, matches);
+            if (where != 0) {
+              isMissing = 1;
+              for (i in inputs) {
+                if (match(matches[1], "(^" inputs[i] "(/|$))", subMatch) == 1) {
+                  isMissing = 0;
+                  break;
+                }
+              }
+              for (i in inputsExact) {
+                if (match(matches[1], "(^" inputsExact[i] "$)", subMatch) == 1) {
+                  isMissing = 0;
+                  break;
+                }
+              }
+              if (isMissing) {
+                print matches[1] " in " ENVIRON["d"];
+              }
+            }
+          }
+          if (/^\)/) {
+            insideImport = 0;
+          }
+          if (temporary) {
+            insideImport = 0;
+          }
+          split($0, chars, "");
+          for (i in chars) {
+            c = chars[i];
+            if (c == "\\" && inString && !escaped) {
+              escaped = 1;
+              continue;
+            }
+            if (c == "\"" && !escaped) {
+              inString = !inString;
+            }
+            if (c == "`") {
+              inStringLiteral = !inStringLiteral;
+            };
+            escaped = 0;
+          }
+        }
+        ' "$file" >> "$TMPDIR"/missing
+      done < <(find "go/src/$d" -maxdepth 1 -mindepth 1 -type f -name \*.go)
+    }
+
     buildGoDir() {
       local d; local cmd;
       cmd="$1"
@@ -206,7 +304,7 @@ go.stdenv.mkDerivation (
       local type;
       type="$1"
       if [ -n "$subPackages" ]; then
-        echo "$subPackages" | tr ' ' '\n' | sed "s,\(^\| \|\n\),\1$goPackagePath/,g"
+        echo "$inputGoPathsExact"
       else
         pushd go/src >/dev/null
         find "$goPackagePath" -type f -name \*$type.go -exec dirname {} \; | LC_ALL=c sort | uniq | grep -v "\(/_\|examples\|Godeps\)"
@@ -214,6 +312,19 @@ go.stdenv.mkDerivation (
       fi
     }
 
+    # Detect missing imports
+    touch "$TMPDIR"/missing
+    while read dir; do
+      checkGoDir "$dir"
+    done < <(getGoDirs "")
+    missing="$(sort "$TMPDIR"/missing | uniq | awk '{print "  " $0}')"
+    if [ -n "$missing" ]; then
+      echo "Missing these inputs:" >&2
+      echo "$missing" >&2
+      exit 1
+    fi
+
+    # Build go packages
     while read dir; do
       buildGoDir install "$dir"
     done < <(getGoDirs "")
@@ -283,6 +394,9 @@ go.stdenv.mkDerivation (
 
   # I prefer to call this dev but propagatedBuildInputs expects $out to exist
   outputs = [ "out" "bin" ];
+
+  # This breaks cgo packages like libseccomp-golang
+  optimize = false;
 
   meta = with lib; {
     # Add default meta information

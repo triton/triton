@@ -18,9 +18,11 @@ let
     boolWt
     optionals
     optionalString;
+
+  version = "1.4.5";
 in
 stdenv.mkDerivation rec {
-  name = "harfbuzz-1.4.5";
+  name = "harfbuzz-${version}";
 
   src = fetchurl {
     urls = [

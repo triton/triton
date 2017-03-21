@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , glib
 , gnome-backgrounds
@@ -11,7 +12,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
   source = (import ./sources.nix { })."${channel}";
@@ -60,7 +61,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Collection of GSettings schemas for GNOME desktop";
     homepage = https://git.gnome.org/browse/gsettings-desktop-schemas;
     license = licenses.lgpl21Plus;

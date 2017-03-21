@@ -1548,6 +1548,11 @@ gsettings-desktop-schemas_3-22 =
     channel = "3.22";
     gnome-backgrounds = pkgs.gnome-backgrounds_3-22;
   };
+gsettings-desktop-schemas_3-24 =
+  callPackage ../all-pkgs/g/gsettings-desktop-schemas {
+    channel = "3.24";
+    gnome-backgrounds = pkgs.gnome-backgrounds_3-24;
+  };
 gsettings-desktop-schemas =
   callPackageAlias "gsettings-desktop-schemas_3-22" { };
 

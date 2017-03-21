@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , intltool
+, lib
 , python
 
 , dbus
@@ -20,7 +21,7 @@ assert xorg != null ->
   && xorg.xextproto != null;
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt;
 
@@ -66,6 +67,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--${boolWt (xorg != null)}-x"
     "--with-dbus-daemondir=/run/current-system/sw/bin/"
+    #"--with-dbus-services="
   ];
 
   passthru = {
@@ -80,7 +82,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "D-Bus accessibility specifications and registration daemon";
     homepage = https://wiki.gnome.org/Accessibility;
     license = licenses.lgpl2Plus;

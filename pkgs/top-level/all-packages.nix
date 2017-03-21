@@ -1304,6 +1304,9 @@ gnome-autoar = callPackage ../all-pkgs/g/gnome-autoar { };
 gnome-backgrounds_3-22 = callPackage ../all-pkgs/g/gnome-backgrounds {
   channel = "3.22";
 };
+gnome-backgrounds_3-24 = callPackage ../all-pkgs/g/gnome-backgrounds {
+  channel = "3.24";
+};
 gnome-backgrounds = callPackageAlias "gnome-backgrounds_3-22" { };
 
 gnome-bluetooth_3-20 = callPackage ../all-pkgs/g/gnome-bluetooth {

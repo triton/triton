@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , channel
 }:
@@ -41,7 +42,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A set of backgrounds packaged with the GNOME desktop";
     homepage = https://git.gnome.org/browse/gnome-backgrounds;
     license = licenses.gpl2;

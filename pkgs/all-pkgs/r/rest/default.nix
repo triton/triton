@@ -22,6 +22,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/rest/${versionMajor}/${name}.tar.xz";
+    hashOutput = false;
     sha256 = "e7b89b200c1417073aef739e8a27ff2ab578056c27796ec74f5886a5e0dff647";
   };
 
@@ -55,7 +56,7 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "https://download.gnome.org/sources/rest/${channel}/"
+      sha256Url = "https://download.gnome.org/sources/rest/${versionMajor}/"
         + "${name}.sha256sum";
       failEarly = true;
     };

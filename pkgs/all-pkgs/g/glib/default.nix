@@ -34,8 +34,8 @@ let
     ln -sr -t "$out/include/" "$out"/lib/*/include/* 2>/dev/null || true
   '';
 
-  channel = "2.50";
-  version = "${channel}.3";
+  channel = "2.52";
+  version = "${channel}.0";
 in
 
 assert stdenv.cc.isGNU;
@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/glib/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "82ee94bf4c01459b6b00cb9db0545c2237921e3060c0b74cff13fbc020cfd999";
+    sha256 = "4578e3e077b1b978cafeec8d28b676c680aba0c0475923874c4c993403df311a";
   };
 
   nativeBuildInputs = [
@@ -90,7 +90,7 @@ stdenv.mkDerivation rec {
     "--disable-included-printf"
     "--${boolEn (libselinux != null)}-selinux"
     "--disable-fam"
-    "--${boolEn (attr != null)}-xattr" # glibc or attr
+    "--${boolEn (attr != null)}-xattr"  # glibc or attr
     "--${boolEn (libelf != null)}-libelf"
     "--${boolEn (util-linux_lib != null)}-libmount"
     "--disable-gtk-doc"

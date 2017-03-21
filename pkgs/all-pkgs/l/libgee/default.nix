@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , glib
 , gobject-introspection
@@ -10,7 +11,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
   source = (import ./sources.nix { })."${channel}";
@@ -43,7 +44,7 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
     "--disable-benchmark"
     "--enable-internal-asserts"
-    "--disable-consistency-checks"
+    "--disable-consistency-check"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--${boolEn (vala != null)}-vala"
     "--disable-vala-fatal-warnings"
@@ -63,8 +64,8 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
-    description = "GObject-based interfaces and classes for common data structures";
+  meta = with lib; {
+    description = "GObject-based interfaces/classes for common data structures";
     homepage = https://wiki.gnome.org/Projects/Libgee;
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [

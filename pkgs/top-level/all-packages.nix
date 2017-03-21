@@ -2041,6 +2041,9 @@ libgdata = callPackage ../all-pkgs/l/libgdata { };
 libgee_0-18 = callPackage ../all-pkgs/l/libgee {
   channel = "0.18";
 };
+libgee_0-20 = callPackage ../all-pkgs/l/libgee {
+  channel = "0.20";
+};
 libgee = callPackageAlias "libgee_0-18" { };
 
 libgfbgraph = callPackage ../all-pkgs/l/libgfbgraph { };

@@ -337,6 +337,14 @@ pygame = callPackage ../all-pkgs/p/pygame { };
 
 pygments = callPackage ../all-pkgs/p/pygments { };
 
+pygobject_2 = callPackage ../all-pkgs/p/pygobject {
+  channel = "2.28";
+};
+pygobject_3-24 = callPackage ../all-pkgs/p/pygobject {
+  channel = "3.24";
+};
+pygobject = callPackageAlias "pygobject_3-24" { };
+
 pygtk = callPackage ../all-pkgs/p/pygtk { };
 
 pykka = callPackage ../all-pkgs/p/pykka { };
@@ -491,13 +499,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
    pycairo = callPackage ../all-pkgs/p/pycairo { };
 
   pycrypto = callPackage ../development/python-modules/pycrypto { };
-
-   pygobject_2 = callPackage ../development/python-modules/pygobject { };
-   # Deprecated Alias
-   pygobject = callPackageAlias "pygobject_2" { };
-   pygobject_3 = callPackage ../development/python-modules/pygobject/3.nix { };
-   # Deprecated Alias
-   pygobject3 = callPackageAlias "pygobject_3" { };
 
    acme = buildPythonPackage rec {
      inherit (self.certbot) src version;

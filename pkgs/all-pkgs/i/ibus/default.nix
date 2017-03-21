@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , intltool
+, lib
 , makeWrapper
 
 , atk
@@ -15,7 +16,6 @@
 , json-glib
 , libnotify
 , libxkbcommon
-, python3
 , python3Packages
 , vala
 , wayland
@@ -23,15 +23,17 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
+
+  version = "1.5.14";
 in
 stdenv.mkDerivation rec {
   name = "ibus-${version}";
-  version = "1.5.14";
 
   src = fetchurl {
-    url = "https://github.com/ibus/ibus/releases/download/${version}/${name}.tar.gz";
+    url = "https://github.com/ibus/ibus/releases/download/${version}/"
+      + "${name}.tar.gz";
     sha256 = "a42b40fe4642f36bf2a6f0b4649f54f4043812d6bfee4faca38117799a009d3c";
   };
 
@@ -52,7 +54,7 @@ stdenv.mkDerivation rec {
     json-glib
     libnotify
     libxkbcommon
-    python3
+    python3Packages.python
     vala
     wayland
     xorg.libX11
@@ -66,38 +68,38 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-glibtest"
     "--disable-tests"
-    (enFlag "gtk2" (gtk2 != null) null)
-    (enFlag "gtk3" (gtk3 != null) null)
+    "--${boolEn (gtk2 != null)}-gtk2"
+    "--${boolEn (gtk3 != null)}-gtk3"
     "--enable-xim"
-    (enFlag "wayland" (wayland != null) null)
+    "--${boolEn (wayland != null)}-wayland"
     "--enable-appindicator"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--${boolEn (vala != null)}-vala"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--disable-gconf"
     "--enable-schemas-install"
     "--disable-memconf"
-    (enFlag "dconf" (dconf != null) null)
+    "--${boolEn (dconf != null)}-dconf"
     "--disable-schemas-compile"
-    (enFlag "python-library" (python3 != null) null)
+    "--${boolEn (python3Packages.python != null)}-python-library"
     "--enable-setup"
-    (enFlag "dbus-python-check" (python3 != null) null)
+    "--${boolEn (python3Packages.python != null)}-dbus-python-check"
     "--enable-key-snooper"
     "--enable-surrounding-text"
     "--enable-ui"
     "--enable-engine"
     "--enable-libnotify"
     "--disable-emoji-dict"
-    "--with-python=${python3.interpreter}"
+    "--with-python=${python3Packages.python.interpreter}"
   ];
 
   preConfigure = ''
     sed -i data/dconf/Makefile.in \
       -e 's/dconf update/echo/'
     sed -i configure \
-      -e "s|PYTHON2_LIBDIR=.*|PYTHON2_LIBDIR=$out/lib/${python3.libPrefix}|"
+      -e "s|PYTHON2_LIBDIR=.*|PYTHON2_LIBDIR=$out/lib/${python3Packages.python.libPrefix}|"
   '';
 
   preFixup = ''
@@ -111,7 +113,7 @@ stdenv.mkDerivation rec {
     done
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Intelligent Input Bus for Linux / Unix OS";
     homepage = https://github.com/ibus/ibus/wiki;
     license = licenses.lgpl21;

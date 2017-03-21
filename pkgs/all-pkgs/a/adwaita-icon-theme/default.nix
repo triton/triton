@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , gdk-pixbuf
 , hicolor-icon-theme
@@ -37,7 +38,6 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--enable-w32-cursors"
     "--enable-l-xl-variants"
   ];
 
@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GNOME default icon theme";
     homepage = https://git.gnome.org/browse/adwaita-icon-theme/;
     license = licenses.lgpl3;

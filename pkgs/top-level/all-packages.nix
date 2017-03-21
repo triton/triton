@@ -576,6 +576,9 @@ atftp = callPackage ../all-pkgs/a/atftp { };
 atk_2-22 = callPackage ../all-pkgs/a/atk {
   channel = "2.22";
 };
+atk_2-24 = callPackage ../all-pkgs/a/atk {
+  channel = "2.24";
+};
 atk = callPackageAlias "atk_2-22" { };
 
 atkmm_2-24 = callPackage ../all-pkgs/a/atkmm {

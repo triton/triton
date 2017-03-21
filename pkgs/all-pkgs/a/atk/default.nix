@@ -1,6 +1,7 @@
 { stdenv
 , gettext
 , fetchurl
+, lib
 , perl
 
 , glib
@@ -10,7 +11,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
   source = (import ./sources.nix { })."${channel}";
@@ -35,7 +36,7 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
-    "--enable-rebuilds"
+    "--disable-rebuilds"
     "--enable-glibtest"
     "--enable-nls"
     "--enable-rpath"
@@ -59,7 +60,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GTK+ & GNOME Accessibility Toolkit";
     homepage = http://library.gnome.org/devel/atk/;
     license = licenses.lgpl2Plus;

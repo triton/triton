@@ -87,6 +87,7 @@ in
 
       background = mkOption {
         type = types.str;
+        default = "";
         description = ''
           The background image or color to use.
         '';

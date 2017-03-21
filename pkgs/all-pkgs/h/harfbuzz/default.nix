@@ -23,8 +23,11 @@ stdenv.mkDerivation rec {
   name = "harfbuzz-1.4.5";
 
   src = fetchurl {
-    url = "https://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2";
-    multihash = "QmTDJhhKAGwE8MSG6vYNT5tZrWejjd171Co2Nh9RPaZhoY";
+    urls = [
+      "https://www.freedesktop.org/software/harfbuzz/release/${name}.tar.bz2"
+      ("https://github.com/behdad/harfbuzz/releases/download/${version}/"
+        + "${name}.tar.bz2")
+    ];
     hashOutput = false;
     sha256 = "d0e05438165884f21658154c709075feaf98c93ee5c694b951533ac425a9a711";
   };

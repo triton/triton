@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     python3
-    python3Packages.pygobject3
+    python3Packages.pygobject
     sqlite
   ];
 

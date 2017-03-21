@@ -1,16 +1,13 @@
 { stdenv
 , fetchurl
+, isPy3k
+, lib
 
 , pkgs
 , pythonPackages
 #, pygobject
 #, pycairo
 }:
-
-let
-  inherit (pythonPackages)
-    isPy3k;
-in
 
 stdenv.mkDerivation rec {
   name = "pygtk-2.24.0";
@@ -28,7 +25,7 @@ stdenv.mkDerivation rec {
     pkgs.pango
     #pythonPackages.numpy
     pythonPackages.pycairo
-    pythonPackages.pygobject
+    pythonPackages.pygobject_2
     pythonPackages.python
     pythonPackages.wrapPython
   ];
@@ -36,10 +33,10 @@ stdenv.mkDerivation rec {
   postInstall = ''
     rm -v $out/bin/pygtk-codegen-2.0
     ln -sv \
-      ${pythonPackages.pygobject}/bin/pygobject-codegen-2.0  \
+      ${pythonPackages.pygobject_2}/bin/pygobject-codegen-2.0  \
       $out/bin/pygtk-codegen-2.0
     ln -sv \
-      ${pythonPackages.pygobject}/lib/${pythonPackages.python.libPrefix}/site-packages/${pythonPackages.pygobject.name}.pth \
+      ${pythonPackages.pygobject_2}/lib/${pythonPackages.python.libPrefix}/site-packages/${pythonPackages.pygobject.name}.pth \
       $out/lib/${pythonPackages.python.libPrefix}/site-packages/${name}.pth
   '';
 
@@ -48,12 +45,12 @@ stdenv.mkDerivation rec {
       -e "s/glade = importModule('gtk.glade', buildDir)//" \
       -e "s/sys.path.insert(0, os.path.join(buildDir, 'gtk'))//" \
       -e "s/sys.path.insert(0, buildDir)//"
-           
+
     sed -i tests/test_api.py \
       -e "s/, glade$//" \
       -e "s/.*testGlade.*//" \
       -e "s/.*(glade.*//"
-           
+
     make check
   '';
 
@@ -64,7 +61,7 @@ stdenv.mkDerivation rec {
 
   disabled = isPy3k;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GTK+2 bindings for Python";
     homepage = http://www.pygtk.org/;
     license = licenses.lgpl21;

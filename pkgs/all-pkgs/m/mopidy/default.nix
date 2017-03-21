@@ -2,6 +2,7 @@
 , buildPythonPackage
 , fetchPyPi
 , isPy3k
+, lib
 
 , gobject-introspection
 , gst-plugins-bad
@@ -10,14 +11,14 @@
 , gst-plugins-ugly
 , gst-python
 , gstreamer
-, pygobject3
+, pygobject
 , pykka
 , requests
 , tornado
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     makeSearchPath;
 
   version = "2.1.0";
@@ -43,7 +44,7 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     gst-python
-    pygobject3
+    pygobject
     pykka
     requests
     tornado
@@ -65,7 +66,7 @@ buildPythonPackage rec {
   disabled = isPy3k;
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Music server with MPD and Spotify support";
     homepage = http://www.mopidy.com/;
     license = licenses.asl20;

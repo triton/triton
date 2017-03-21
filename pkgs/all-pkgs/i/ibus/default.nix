@@ -99,7 +99,8 @@ stdenv.mkDerivation rec {
     sed -i data/dconf/Makefile.in \
       -e 's/dconf update/echo/'
     sed -i configure \
-      -e "s|PYTHON2_LIBDIR=.*|PYTHON2_LIBDIR=$out/lib/${python3Packages.python.libPrefix}|"
+      -e "s|PYTHON2_LIBDIR=.*|PYTHON2_LIBDIR=$out/lib/${
+        python3Packages.python.libPrefix}|"
   '';
 
   preFixup = ''

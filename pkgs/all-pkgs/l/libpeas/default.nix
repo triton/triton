@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gtk_3
     pango
-    python3Packages.pygobject3
+    python3Packages.pygobject
     python3Packages.python
   ] ++ [
     # Fix ncurses not being detected via python3.6's pkgconfig path

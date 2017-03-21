@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
     gstreamer
     ncurses
     pythonPackages.python
-    pythonPackages.pygobject3
+    pythonPackages.pygobject
     pythonPackages.wrapPython
   ];
 

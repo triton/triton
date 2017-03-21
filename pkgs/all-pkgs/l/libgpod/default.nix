@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
     libusb
     libxml2
     mutagen
-    pythonPackages.pygobject
+    pythonPackages.pygobject_2
     pythonPackages.python
     sg3-utils
     sqlite

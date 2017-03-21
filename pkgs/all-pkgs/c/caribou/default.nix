@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   buildInputs =
     [ glib gtk3 clutter at-spi2-core dbus
     pythonPackages.python automake gdk-pixbuf pango
-      pythonPackages.pygobject3 libxml2 xorg.libXtst xorg.libX11
+      pythonPackages.pygobject libxml2 xorg.libXtst xorg.libX11
       gtk2 intltool libxslt autoconf gobject-introspection ];
 
   propagatedBuildInputs = [ libgee libxklavier ];

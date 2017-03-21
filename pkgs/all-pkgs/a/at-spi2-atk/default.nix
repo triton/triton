@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , python
 
 , at-spi2-core
@@ -16,7 +17,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolWt
     optionals;
 
@@ -67,7 +68,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Gtk module for bridging AT-SPI to Atk";
     homepage = https://wiki.gnome.org/Accessibility;
     license = licenses.lgpl2Plus;

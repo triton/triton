@@ -12,7 +12,7 @@ let
     boolEn;
 
   versionMajor = "1.2";
-  versionMinor = "2";
+  versionMinor = "8";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/json-glib/${versionMajor}/${name}.tar.xz";
-    sha256 = "ea128ab52a824fcd06e5448fbb2bd8d9a13740d51c66d445828edba71321a621";
+    sha256 = "fd55a9037d39e7a10f0db64309f5f0265fa32ec962bf85066087b83a2807f40a";
   };
 
   nativeBuildInputs = [
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     gobject-introspection
   ];
 
-  configureflags= [
+  configureFlags= [
     "--enable-Bsymbolic"
     "--disable-debug"
     "--disable-maintainer-mode"
@@ -47,6 +47,18 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-rpath"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/json-glib/${versionMajor}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "(de)serialization support for JSON";

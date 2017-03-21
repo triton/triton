@@ -2040,9 +2040,11 @@ libgdata = callPackage ../all-pkgs/l/libgdata { };
 
 libgee_0-18 = callPackage ../all-pkgs/l/libgee {
   channel = "0.18";
+  vala = pkgs.vala_0-34;
 };
 libgee_0-20 = callPackage ../all-pkgs/l/libgee {
   channel = "0.20";
+  vala = pkgs.vala_0-36;
 };
 libgee = callPackageAlias "libgee_0-18" { };
 

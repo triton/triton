@@ -641,9 +641,7 @@ bc = callPackage ../all-pkgs/b/bc { };
 
 bcache-tools = callPackage ../all-pkgs/b/bcache-tools { };
 
-bcache-tools_dev = callPackageAlias "bcache-tools" {
-  channel = "dev";
-};
+bcachefs-tools = callPackage ../all-pkgs/b/bcachefs-tools { };
 
 beecrypt = callPackage ../all-pkgs/b/beecrypt { };
 

@@ -15,14 +15,14 @@
 }:
 
 stdenv.mkDerivation {
-  name = "systemd-dist-v232-10-g04c9a10e4";
+  name = "systemd-dist-v233-9-g265d78708";
 
   src = fetchFromGitHub {
     version = 2;
     owner = "triton";
     repo = "systemd";
-    rev = "04c9a10e492dcb2b87a61d2096f2009cb090d8a6";
-    sha256 = "08c357b61499ebea3d7191a8cf45aa569135c5cf2b7eda2720ed79716c028469";
+    rev = "265d787083158f2ed8f17f902c2a219bd0c79bcd";
+    sha256 = "6c087a06de3865eb82f936158ccf39981df6c2a42b108118fd2900ba82ad9e5f";
   };
 
   nativeBuildInputs = [

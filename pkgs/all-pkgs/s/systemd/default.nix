@@ -59,15 +59,16 @@ let
     '';
   };
 
-  upstreamVersion = "232";
-  version = "${upstreamVersion}-10-g04c9a10e4";
+  upstreamVersion = "233";
+  version = "${upstreamVersion}-9-g265d78708";
 in
 stdenv.mkDerivation rec {
   name = "${type}systemd-${version}";
 
   src = fetchurl {
     url = "https://github.com/triton/systemd/releases/download/v${version}/systemd-${upstreamVersion}.tar.xz";
-    sha256 = "424ea7f88186c9bacd0b984503bfc9fb4c1850f58c98a422d9dd6b896d2b8289";
+    hashOutput = false;
+    sha256 = "b97b453c0b5783d7c90424ca0dd2fb5805f96505a06e0868a39d535abd2906f9";
   };
 
   nativeBuildInputs = [
@@ -85,7 +86,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libcap
-
     xz
     lz4
     libgcrypt
@@ -116,9 +116,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    # Fix lz4 configure test
-    sed -i configure \
-      -e '/liblz4/s/125/1.2.5/'
+    sed -i 's,\(-DABS_\(SRC\|BUILD\)_DIR=\\"\).*\\",\1/no-such-path\\",g' Makefile.in
   '';
 
   preConfigure = ''
@@ -175,7 +173,7 @@ stdenv.mkDerivation rec {
     "--enable-ldconfig"
     "--with-tty-gid=3" # tty in NixOS has gid 3
     "--with-default-hierarchy=unified"
-    "--with-default-hostname=triton"
+    "--with-fallback-hostname=triton"
     "--disable-split-usr"
     "--disable-tests"
   ] ++ (if libOnly then [
@@ -316,7 +314,7 @@ stdenv.mkDerivation rec {
   # in a backwards-incompatible way.  If the interface version of two
   # systemd builds is the same, then we can switch between them at
   # runtime; otherwise we can't and we need to reboot.
-  passthru.interfaceVersion = 2;
+  passthru.interfaceVersion = 3;
 
   # We can't enable some of these security hardenings due to systemd-boot
   # However, systemd already enables them where it can

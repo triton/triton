@@ -3236,6 +3236,8 @@ squashfs-tools = callPackage ../all-pkgs/s/squashfs-tools { };
 
 sratom = callPackage ../all-pkgs/s/sratom { };
 
+sshfs = callPackage ../all-pkgs/s/sshfs { };
+
 sssd = callPackage ../all-pkgs/s/sssd { };
 
 st = callPackage ../all-pkgs/s/st {

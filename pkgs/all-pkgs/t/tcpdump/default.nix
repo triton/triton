@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "http://www.tcpdump.org/release/${name}.tar.gz";
-    multihash = "Qmd8ChjWp9yAuc44XZiWQ3sUWynfj8PJe45hrNsHvqeQvj";
+    multihash = "QmXibvY97if5jMiYyzaEM6WJHMCbHQnuz2N1XbQZjjxheW";
     hashOutput = false;
     sha256 = "eae98121cbb1c9adbedd9a777bf2eae9fa1c1c676424a54740311c8abcee5a5e";
   };

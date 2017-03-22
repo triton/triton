@@ -3128,6 +3128,8 @@ samba_client = callPackageAlias "samba_full" {
   type = "client";
 };
 
+sas2flash = callPackage ../all-pkgs/s/sas2flash { };
+
 sbc = callPackage ../all-pkgs/s/sbc { };
 
 schroedinger = callPackage ../all-pkgs/s/schroedinger { };

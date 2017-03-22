@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "1.8.7";
+  version = "1.8.8";
 in
 stdenv.mkDerivation {
   name = "synergy-${version}";
@@ -20,7 +20,7 @@ stdenv.mkDerivation {
     owner = "symless";
     repo = "synergy";
     rev = "v${version}-stable";
-    sha256 = "8301b2851089ad74c882c0d25586e010e64378d9061f8acc9c4ed8440c5bf84e";
+    sha256 = "728e85364246dec4102d861b419e47cdc678a490ddae08b4e4f1f0c06488f803";
   };
 
   nativeBuildInputs = [

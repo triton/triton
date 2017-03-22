@@ -2441,7 +2441,7 @@ llvm_3-9 = callPackage ../all-pkgs/l/llvm {
 llvm_4-0 = callPackage ../all-pkgs/l/llvm {
   channel = "4.0";
 };
-llvm = callPackageAlias "llvm_3-9" { };
+llvm = callPackageAlias "llvm_4-0" { };
 
 lm-sensors = callPackage ../all-pkgs/l/lm-sensors { };
 

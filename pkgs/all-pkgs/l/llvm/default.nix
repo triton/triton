@@ -119,6 +119,10 @@ stdenv.mkDerivation {
     export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I$(pwd)/tools/clang/include"
   '';
 
+  preCheck = ''
+    export LD_LIBRARY_PATH="''${LD_LIBRARY_PATH}''${LD_LIBRARY_PATH+:}$(pwd)/lib"
+  '';
+
   passthru = {
     isClang = true;
     inherit gcc;

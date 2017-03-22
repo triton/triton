@@ -4151,8 +4151,8 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
-  linux_bcache = callPackage ../all-pkgs/l/linux {
-    channel = "bcache";
+  linux_bcachefs = callPackage ../all-pkgs/l/linux {
+    channel = "bcachefs";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
@@ -4254,8 +4254,8 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_testing;
   });
-  linuxPackages_bcache = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_bcache;
+  linuxPackages_bcachefs = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_bcachefs;
   });
   linuxPackages_custom = {version, src, configfile}:
                            let linuxPackages_self = (linuxPackagesFor (pkgs.linuxManualConfig {inherit version src configfile;

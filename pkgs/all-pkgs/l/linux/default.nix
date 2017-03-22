@@ -38,7 +38,7 @@ let
       baseSha256 = "3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b";
       patchSha256 = "42bc915a0fec22541716a32167dab53f8f3417e31be33588820985b0a791382e";
     };
-    "bcache" =
+    "bcachefs" =
       let
         date = "2017-03-18";
       in {

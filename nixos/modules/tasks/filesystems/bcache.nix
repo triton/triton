@@ -4,12 +4,12 @@ with lib;
 
 let
 
-  inInitrd = any (fs: fs == "bcache") config.boot.initrd.supportedFilesystems;
+  inInitrd = any (fs: fs == "bcachefs") config.boot.initrd.supportedFilesystems;
 
 in
 
 {
-  config = mkIf (any (fs: fs == "bcache") config.boot.supportedFilesystems) {
+  config = mkIf (any (fs: fs == "bcachefs") config.boot.supportedFilesystems) {
 
     assertions = [
       {
@@ -18,9 +18,9 @@ in
       }
     ];
 
-    system.fsPackages = [ pkgs.bcache-tools_dev ];
+    system.fsPackages = [ pkgs.bcachefs-tools ];
 
-    boot.initrd.kernelModules = mkIf inInitrd [ "bcache" ];
+    boot.initrd.kernelModules = mkIf inInitrd [ "bcachefs" ];
 
   };
 }

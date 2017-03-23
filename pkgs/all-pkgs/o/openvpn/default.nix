@@ -9,12 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openvpn-2.4.0";
+  name = "openvpn-2.4.1";
 
   src = fetchurl {
     url = "https://swupdate.openvpn.net/community/releases/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "f21db525b3c03a9bbd0a7ab6d0e4fbaf8902f238bf53b8bc4e04f834e4e7caa4";
+    sha256 = "831a1a05268fe3b1646d367e2559cff94d347d213ca8995cc48a4eedc452097a";
   };
 
   buildInputs = [
@@ -40,7 +40,10 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl rec {
       failEarly = true;
       pgpsigUrl = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "0330 0E11 FED1 6F59 715F  9996 C29D 97ED 198D 22A3";
+      pgpKeyFingerprints = [
+        "0330 0E11 FED1 6F59 715F  9996 C29D 97ED 198D 22A3"
+        "6D04 F8F1 B017 3111 F499  795E 2958 4D9F 4086 4578"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

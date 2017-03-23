@@ -219,6 +219,8 @@ diffoscope = callPackage ../all-pkgs/d/diffoscope { };
 
 discogs-client = callPackage ../all-pkgs/d/discogs-client { };
 
+dnspython = callPackage ../all-pkgs/d/dnspython { };
+
 docutils = callPackage ../all-pkgs/d/docutils { };
 
 duplicity = callPackage ../all-pkgs/d/duplicity { };

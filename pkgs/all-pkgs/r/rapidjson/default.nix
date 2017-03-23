@@ -4,16 +4,18 @@
 , ninja
 }:
 
+let
+  version = "1.1.0";
+in
 stdenv.mkDerivation rec {
   name = "rapidjson-${version}";
-  version = "1.0.2";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "miloyip";
     repo = "rapidjson";
     rev = "v${version}";
-    sha256 = "7ba9555701b383600d3f8a90fe06e491a085006effdf3592c0f3bb2b690f34f7";
+    sha256 = "48a3645abd0cdb13f071656102fd44bcb7c20b4d489f78b87973c8c0159da149";
   };
 
   nativeBuildInputs = [

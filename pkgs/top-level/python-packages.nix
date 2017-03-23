@@ -472,6 +472,8 @@ ujson = callPackage ../all-pkgs/u/ujson { };
 
 unpaddedbase64 = callPackage ../all-pkgs/u/unpaddedbase64 { };
 
+urllib3 = callPackage ../all-pkgs/u/urllib3 { };
+
 webencodings = callPackage ../all-pkgs/w/webencodings { };
 
 webob = callPackage ../all-pkgs/w/webob { };

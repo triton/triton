@@ -10,7 +10,7 @@
 
 , avahi
 , acl
-, ceph_lib
+, ceph
 , cups
 , dbus
 , glusterfs
@@ -110,12 +110,13 @@ stdenv.mkDerivation rec {
     uid_wrapper
     zlib
   ] ++ optionals (!isClient) [
-    ceph_lib
+    ceph
     dbus
     glusterfs
     libaio
     libibverbs
     librdmacm
+    pythonPackages.etcd
   ];
 
   pythonPath = [
@@ -157,7 +158,7 @@ stdenv.mkDerivation rec {
     "--with-libarchive"
     "--with-cluster-support"
     "--with-regedit"
-    (if isClient then null else "--with-libcephfs=${ceph_lib}")
+    (if isClient then null else "--with-libcephfs=${ceph}")
     (if isClient then null else "--enable-glusterfs")
 
     # dynconfig/wscript options

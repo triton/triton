@@ -379,6 +379,8 @@ pytest-capturelog = callPackage ../all-pkgs/p/pytest-capturelog { };
 
 python-dateutil = callPackage ../all-pkgs/p/python-dateutil { };
 
+python-etcd = callpackage ../all-pkgs/p/python-etcd { };
+
 python-ldap = callPackage ../all-pkgs/p/python-ldap { };
 
 python-magic = callPackage ../all-pkgs/p/python-magic { };

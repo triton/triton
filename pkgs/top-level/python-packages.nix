@@ -227,6 +227,8 @@ duplicity = callPackage ../all-pkgs/d/duplicity { };
 
 enum34 = callPackage ../all-pkgs/e/enum34 { };
 
+etcd = callPackage ../all-pkgs/e/etcd { };
+
 flask = callPackage ../all-pkgs/f/flask { };
 
 flask-compress = callPackage ../all-pkgs/f/flask-compress { };

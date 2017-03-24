@@ -26,7 +26,6 @@
 # Hardcode decode tables instead of runtime generation
 , hardcodedTablesBuild ? true
 , safeBitstreamReaderBuild ? true # Buffer boundary checking in bitreaders
-, memalignHackBuild ? false # Emulate memalign
 , multithreadBuild ? true # Multithreading via pthreads/win32 threads
 , networkBuild ? true # Network support
 , pixelutilsBuild ? true # Pixel utils in libavutil
@@ -418,7 +417,7 @@ stdenv.mkDerivation rec {
     "--${boolEn swscaleAlphaBuild}-swscale-alpha"
     "--${boolEn hardcodedTablesBuild}-hardcoded-tables"
     "--${boolEn safeBitstreamReaderBuild}-safe-bitstream-reader"
-    "--${boolEn memalignHackBuild}-memalign-hack"
+    (deprfflag null "3.3" "--disable-memalign-hack")
     "--enable-pthreads"
     "--disable-w32threads"  # windows
     "--disable-os2threads"  # os/2

@@ -6,14 +6,14 @@
 }:
 
 let
-  version = "1.2.0";
+  version = "1.2.2";
 in
 stdenv.mkDerivation rec {
   name = "libebur128-${version}";
 
   src = fetchurl {
     url = "https://github.com/jiixyj/libebur128/archive/v${version}.tar.gz";
-    sha256 = "f4c4ce732ae085214bcc47349f89b61ed53c13721c097e01cb966533ee6b1e5b";
+    sha256 = "1d0d7e855da04010a2432e11fbc596502caf11b61c3b571ccbcb10095fe44b43";
   };
 
   nativeBuildInputs = [

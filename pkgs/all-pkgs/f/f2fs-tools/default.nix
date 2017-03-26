@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
 
   src = fetchzip {
     version = 2;
-    url = "https://git.kernel.org/cgit/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/${name}.tar.xz";
+    url = "https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/${name}.tar.xz";
     sha256 = "b198db1b6bfd7aeb42ab9454bc4c3a1b571e11968ba6f512ad924727c3398465";
   };
 

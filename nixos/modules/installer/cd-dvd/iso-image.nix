@@ -101,8 +101,8 @@ let
       usage_size=$(du -sb --apparent-size . | tr -cd '[:digit:]')
       # Make the image 110% as big as the files need to make up for FAT overhead
       image_size=$(( ($usage_size * 110) / 100 ))
-      # Make the image fit blocks of 1K and sectors of 63
-      block_size=$(( 1024 * 63 ))
+      # Make the image fit blocks of 32 and sectors of 512
+      block_size=$(( 512 * 32 ))
       image_size=$(( ($image_size / $block_size + 1) * $block_size ))
       echo "Usage size: $usage_size"
       echo "Image size: $image_size"

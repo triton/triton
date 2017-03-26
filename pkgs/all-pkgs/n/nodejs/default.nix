@@ -11,7 +11,7 @@
 }:
 
 let
-  version = "7.7.3";
+  version = "7.7.4";
 
   dirUrls = [
     "https://nodejs.org/dist/v${version}"
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/node-v${version}.tar.xz") dirUrls;
     hashOutput = false;
-    sha256 = "5441daf11f743b5508ddf31a16b4f268835fbceb59ef709b44e85b03fece0edf";
+    sha256 = "807c61b1e90a6fd8af3f3b5c1929effa4e1cb4569e7a88357b73197feeba5719";
   };
 
   nativeBuildInputs = [

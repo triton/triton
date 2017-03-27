@@ -232,10 +232,13 @@ if ($grubTool eq "") {
     $grubTool = $grubEfi
 }
 my $relFontPath = "grub/fonts";
+my $absFontPath = $bootPath . "/" . $relFontPath;
 my $relFont = $relFontPath . "/default.pf2";
 my $absFont = $bootPath . "/" . $relFont;
 my $absFontHash = $bootPath . "/" . $relFontPath . "/default.ttf.hash";
 if ($grubTool ne "" && $fontTTF ne "") {
+    system("mkdir -p $absFontPath") == 0
+        or die("Failed to create $absFontPath\n");
     system("${grubTool}/bin/grub-mkfont $fontTTF -o $absFont") == 0
         or die("Failed to create $absFont from $fontTTF\n");
 }

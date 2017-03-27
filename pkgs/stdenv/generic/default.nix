@@ -291,7 +291,11 @@ let
         # include it in the result, it *is* available to nix-env for
         # queries.  We also a meta.position attribute here to
         # identify the source location of the package.
-        meta = meta // (if pos' != null then {
+        meta = {
+          outputsToInstall = [
+            (lib.findFirst (out: lib.elem out outputs) (lib.head outputs) [ "bin" "out" ])
+          ];
+        } // meta // (if pos' != null then {
           position = pos'.file + ":" + toString pos'.line;
         } else {});
         inherit passthru;

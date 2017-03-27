@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , intltool
 , itstool
@@ -27,7 +28,11 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    ./fix-paths.patch
+    (fetchTritonPatch {
+      rev = "4ea97c22cd362ea9b2586f916795eb5cba5499fc";
+      file = "l/lightdm/fix-paths.patch";
+      sha256 = "a408fa254ff01ec2b9c805cdf5a22da6bf6e49c1fdb82dc3882d500295ff8819";
+    })
   ];
 
   nativeBuildInputs = [

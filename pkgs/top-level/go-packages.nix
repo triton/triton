@@ -1950,7 +1950,9 @@ let
     repo = "go4";
     sha256 = "0ymrf0vzgywxm49la0f4wj0r10z27wkp1inqgb2v5jkpc58xgyla";
     goPackagePath = "go4.org";
-    goPackageAliases = [ "github.com/camlistore/go4" ];
+    goPackageAliases = [
+      "github.com/camlistore/go4"
+    ];
     buildInputs = [
       google-api-go-client
       google-cloud-go
@@ -2099,7 +2101,7 @@ let
     postPatch = ''
       sed -i 's,bundler.Close,bundler.Stop,g' logging/logging.go
     '';
-    excludedPackages = "oauth2";
+    excludedPackages = "\\(oauth2\\|readme\\)";
     meta.useUnstable = true;
   };
 
@@ -4899,42 +4901,45 @@ let
     ];
 
     buildInputs = [
-      #armon_go-metrics
+      armon_go-metrics
       circbuf
-      #colorstring
-      #columnize
+      colorstring
+      columnize
       consul-template
       consul_api
       copystructure
       cronexpr
+      distribution_for_docker
       docker_for_nomad
       go-checkpoint
-      #go-cleanhttp
+      go-cleanhttp
       go-dockerclient
       go-getter
-      #go-humanize
+      go-humanize
+      go-lxc_v2
       go-memdb
       go-multierror
       go-plugin
       go-ps
-      #go-spew
+      go-rootcerts
       go-syslog
       go-version
       gopsutil
       gziphandler
       hashstructure
-      #hcl
+      hcl
       logutils
       mapstructure
       memberlist
       mitchellh_cli
-      #net-rpc-msgpackrpc
-      #osext
+      net-rpc-msgpackrpc
+      osext
       raft-boltdb_v2
       raft_v2
       runc
       scada-client
-      #serf
+      seed
+      serf
       snappy
       srslog
       sync
@@ -4946,10 +4951,6 @@ let
       ugorji_go
       vault_api
       yamux
-    ];
-
-    subPackages = [
-      "."
     ];
 
     # Rename deprecated ParseNamed to ParseNormalizedNamed
@@ -4964,6 +4965,10 @@ let
       pushd go/src/$goPackagePath
       go list ./... | xargs go generate
       popd
+    '';
+
+    postInstall = ''
+      rm "$out"/bin/app
     '';
   };
 
@@ -5593,10 +5598,10 @@ let
 
   runc = buildFromGitHub {
     version = 2;
-    rev = "653207bc29a6d2d62b5d4f55b596467cb715a128";
+    rev = "v1.0.0-rc1";
     owner = "opencontainers";
     repo = "runc";
-    sha256 = "16rg9xm1c33hkjpv2bidfl1r89kw7p94dwz9vbyzgi6wcav0dxf9";
+    sha256 = "f9d79f48bbaf1c385219bf8617a25eb88f9a81f25f1a168830700e8ea9004db1";
     propagatedBuildInputs = [
       dbus
       docker_for_runc
@@ -5611,19 +5616,19 @@ let
       runtime-spec
       urfave_cli
     ];
-    date = "2017-03-27";
+    meta.autoUpdate = false;
   };
 
   runtime-spec = buildFromGitHub {
     version = 2;
-    rev = "3adac2677284e15aca6ca889e2c0508523972cde";
+    rev = "v1.0.0-rc1";
     owner = "opencontainers";
     repo = "runtime-spec";
-    sha256 = "0zjlac9ynamcs3xns8xfwjdxk3n0kssgrksgpzh7g4mdlyg6pcxa";
+    sha256 = "f5b8967328a8c42eafac05ae8569f6e23cbb5b23d7af55072ee57c04c4622742";
     buildInputs = [
       gojsonschema
     ];
-    date = "2017-03-27";
+    meta.autoUpdate = false;
   };
 
   sanitized-anchor-name = buildFromGitHub {

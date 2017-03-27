@@ -4968,7 +4968,7 @@ let
     '';
 
     postInstall = ''
-      rm "$out"/bin/app
+      rm "$bin"/bin/app
     '';
   };
 

@@ -603,6 +603,8 @@ atom_beta = callPackage ../all-pkgs/a/atom {
 };
 atom = callPackageAlias "atom_stable" { };
 
+atop = callPackage ../all-pkgs/a/atop { };
+
 attr = callPackage ../all-pkgs/a/attr { };
 
 audiofile = callPackage ../all-pkgs/a/audiofile { };
@@ -4129,8 +4131,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 
   alsa-tools = callPackage ../os-specific/linux/alsa-tools { };
 
-  atop = callPackage ../os-specific/linux/atop { };
-#
 #  # -- Linux kernel expressions ------------------------------------------------
 #
 

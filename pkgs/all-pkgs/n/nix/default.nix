@@ -1,5 +1,6 @@
 { stdenv
 , config
+, fetchTritonPatch
 , fetchurl
 , perl
 
@@ -49,8 +50,11 @@ stdenv.mkDerivation rec {
   ];
 
   patches = [
-    # Backport commit from triton/nyx
-    ./ca-certs.patch
+    (fetchTritonPatch {
+      rev = "3ff52684b7fa197b14157fc9f90e420dfdb80a33";
+      file = "n/nix/ca-certs.patch";
+      sha256 = "c6ba735c84d68ddac924d56fe4ccfd8ad9630857fc44c6b20d30b1385d127701";
+    })
   ];
 
   # Note: bzip2 is not passed as a build input, because the unpack phase

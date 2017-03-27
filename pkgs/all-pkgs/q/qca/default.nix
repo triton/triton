@@ -36,6 +36,10 @@ stdenv.mkDerivation rec {
     qt5
   ];
 
+  cmakeFlags = [
+    "-Dqca_CERTSTORE=/etc/ssl/certs/ca-certificates.crt"
+  ];
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

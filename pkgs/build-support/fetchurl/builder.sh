@@ -348,12 +348,12 @@ fixUrls 'pgpsigSha256Urls'
 fixUrls 'pgpsigSha512Urls'
 fixUrls 'signifyUrls'
 
-if ! test -f /etc/ssl/certs/ca-certificates.crt; then
-  echo "Warning, downloading without validating SSL cert." >&2
-  echo "Eventually this will be disallowed completely." >&2
-  curlOpts="$curlOpts --insecure"
-fi
 export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+if ! test -f "$SSL_CERT_FILE"; then
+  echo "ERROR: downloading without validating SSL cert." >&2
+  echo "Please check $SSL_CERT_FILE" >&2
+  exit 1
+fi
 
 # Curl flags to handle redirects, not use EPSV, handle cookies for
 # servers to need them during redirects, and work on SSL without a

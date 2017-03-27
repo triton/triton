@@ -567,6 +567,7 @@ if (($requireNewInstall != 0) && ($efiTarget eq "only" || $efiTarget eq "both"))
     if ($canTouchEfiVariables eq "true") {
         system("$grubEfi/sbin/grub-install", "--recheck", "--removable", "--target=$grubTargetEfi", "--boot-directory=$bootPath", "--efi-directory=$efiSysMountPoint", "--bootloader-id=$bootloaderId") == 0
                 or die "$0: installation of GRUB EFI into $efiSysMountPoint failed\n";
+        print STDERR "touching efi variables...\n";
     } else {
         system("$grubEfi/sbin/grub-install", "--recheck", "--removable", "--target=$grubTargetEfi", "--boot-directory=$bootPath", "--efi-directory=$efiSysMountPoint", "--no-nvram") == 0
                 or die "$0: installation of GRUB EFI into $efiSysMountPoint failed\n";

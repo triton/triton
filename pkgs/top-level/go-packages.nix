@@ -3406,6 +3406,15 @@ let
     ];
   };
 
+  go-stun = buildFromGitHub {
+    version = 2;
+    rev = "04a4eed61c57ecc9903f8983d1d2c17b88d2e9e1";
+    owner  = "ccding";
+    repo   = "go-stun";
+    sha256 = "1sadm5cr2108z25glyvsdkkxf8pr0jis67vyv56bbk01bqpvgkql";
+    date = "2017-03-23";
+  };
+
   go-syslog = buildFromGitHub {
     version = 2;
     date = "2016-12-13";
@@ -4071,6 +4080,20 @@ let
     rev = "2268707a8f0843315e2004ee4f1d021dc08baedf";
     sha256 = "164ly3njl7qbd4ddh8slmphwrs7vm7k8p6l5az57qrg3w00aijfy";
     date = "2017-02-01";
+  };
+
+  kcp-go = buildFromGitHub {
+    version = 2;
+    owner = "xtaci";
+    repo = "kcp-go";
+    rev = "v3.10";
+    sha256 = "11lnk98n7988hkqsk8yy610m67ai7v2vjppfjc0k6cpda5s0qaf3";
+    propagatedBuildInputs = [
+      crypto
+      errors
+      net
+      reedsolomon
+    ];
   };
 
   gravitational_kingpin = buildFromGitHub {
@@ -5072,6 +5095,15 @@ let
     sha256 = "0sjni0qz026xr4q04j0dzi0jnxnipm86qpic9l4wmxcf2q0bzx1y";
   };
 
+  pfilter = buildFromGitHub {
+    version = 2;
+    owner = "AudriusButkevicius";
+    repo = "pfilter";
+    rev = "09b3cfdd04de89f0196caecb0b335d7149a6593a";
+    date = "2017-02-09";
+    sha256 = "1p57lgdsssvl6s0jsf6ggh20z4rj06scnjr5cilp1jpjgrc87xzs";
+  };
+
   pflag = buildFromGitHub {
     version = 2;
     owner = "spf13";
@@ -5758,6 +5790,17 @@ let
     ];
   };
 
+  smux = buildFromGitHub {
+    version = 2;
+    rev = "v1.0.5";
+    owner  = "xtaci";
+    repo   = "smux";
+    sha256 = "0k22a97v7s50a0d62vf7q9my66jg8h4gi27bf3a30amir75cggzb";
+    propagatedBuildInputs = [
+      errors
+    ];
+  };
+
   sortutil = buildFromGitHub {
     version = 1;
     date = "2015-06-17";
@@ -5897,18 +5940,22 @@ let
       go-deadlock
       go-lz4
       go-nat-pmp
+      go-stun
       gogo_protobuf
       goleveldb
       groupcache
+      kcp-go
       luhn
       net
       osext
+      pfilter
       pq
       qart
       ql
       rcrowley_go-metrics
       rollinghash
       sha256-simd
+      smux
       suture
       text
       time

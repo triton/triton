@@ -2423,9 +2423,6 @@ linenoise-ng = callPackage ../all-pkgs/l/linenoise-ng { };
 
 linux-firmware = callPackage ../all-pkgs/l/linux-firmware { };
 
-linux-headers_3-18 = callPackage ../all-pkgs/l/linux-headers {
-  channel = "3.18";
-};
 # Minimum version for external distros
 linux-headers_4-4 = callPackage ../all-pkgs/l/linux-headers {
   channel = "4.4";
@@ -2434,7 +2431,7 @@ linux-headers_4-4 = callPackage ../all-pkgs/l/linux-headers {
 linux-headers_4-9 = callPackage ../all-pkgs/l/linux-headers {
   channel = "4.9";
 };
-linux-headers = callPackageAlias "linux-headers_3-18" { };
+linux-headers = callPackageAlias "linux-headers_4-4" { };
 
 lirc = callPackage ../all-pkgs/l/lirc { };
 

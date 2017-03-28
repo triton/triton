@@ -10,6 +10,11 @@ let
       version = "3.18.14";
       sha256 = "1xh0vvn1l2g1kkg54f0mg0inbpsiqs24ybgsakksmcpcadjgqk1i";
     };
+    "4.4" = {
+      major = "4";
+      version = "4.4.57";
+      sha256 = "92ff2916fe6401006e4d96f83fcd3d55f45c741f0a95efeff1b2a259ef59b2ca";
+    };
     "4.9" = {
       major = "4";
       version = "4.9";

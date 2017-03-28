@@ -2426,6 +2426,11 @@ linux-firmware = callPackage ../all-pkgs/l/linux-firmware { };
 linux-headers_3-18 = callPackage ../all-pkgs/l/linux-headers {
   channel = "3.18";
 };
+# Minimum version for external distros
+linux-headers_4-4 = callPackage ../all-pkgs/l/linux-headers {
+  channel = "4.4";
+};
+# Minimum version for triton
 linux-headers_4-9 = callPackage ../all-pkgs/l/linux-headers {
   channel = "4.9";
 };

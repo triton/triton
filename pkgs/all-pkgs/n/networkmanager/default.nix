@@ -114,7 +114,7 @@ stdenv.mkDerivation rec {
     polkit
     ppp
     python3Packages.python
-    python3Packages.pygobject_3
+    python3Packages.pygobject
     readline
     systemd_full
     util-linux_lib

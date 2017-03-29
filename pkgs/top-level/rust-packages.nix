@@ -14,11 +14,13 @@ let
 
   fetchCargo = callPackage ../all-pkgs/f/fetch-cargo { };
 
-  cargo_bootstrap = callPackage ../all-pkgs/c/cargo/bootstrap.nix {
+  cargo_bootstrap = callPackage' ../all-pkgs/c/cargo/bootstrap.nix {
     rustc = rustc_bootstrap;
   };
 
-  rustc_bootstrap = callPackage ../all-pkgs/r/rustc/bootstrap.nix { };
+  rustc_bootstrap = callPackage' ../all-pkgs/r/rustc/bootstrap.nix {
+    rustc = self.rustc;
+  };
 
   callPackage = newScope (self // {
     rustPackages = self;

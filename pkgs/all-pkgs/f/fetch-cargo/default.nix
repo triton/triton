@@ -15,10 +15,11 @@
 
 let
   index = fetchFromGitHub {
+    version = 2;
     owner = "rust-lang";
     repo = "crates.io-index";
-    rev = "7f30ec1e170e71f88ffe2bd647a0cd16e50029d8";
-    sha256 = "252da5cda7040c17921ead060689a6fd05b40ceb8d4a922caebcd83264223841";
+    rev = "3a2d9af68e13339cd65089c44b5bbc381f46f847";
+    sha256 = "4ed12e0aaed72a399c89b9da43022ef305ef02a92f73199221c0fe65203a60d9";
   };
 in
 stdenv.mkDerivation {

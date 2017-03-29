@@ -3,11 +3,11 @@
 
 {
   "stable" = rec {
-    version = "1.14.0";
+    version = "1.16.0";
     src = fetchurl {
       url = "https://static.rust-lang.org/dist/rustc-${version}-src.tar.gz";
       hashOutput = false;
-      sha256 = "c790edd2e915bd01bea46122af2942108479a2fda9a6f76d1094add520ac3b6b";
+      sha256 = "f966b31eb1cd9bd2df817c391a338eeb5b9253ae0a19bf8a11960c560f96e8b4";
     };
     srcVerification = fetchurl {
       failEarly = true;

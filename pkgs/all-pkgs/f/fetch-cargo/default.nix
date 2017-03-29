@@ -1,19 +1,41 @@
 { stdenv
+, brotli_0-4-0
+, brotli_0-5-2
 , cargo
 , fetchFromGitHub
+, fetchzip
 , git
+, gnutar_1-29
 }:
 
 { package
-, version
+, packageVersion
 
 , sha256 ? null
 , sha512 ? null
 , outputHash ? null
 , outputHashAlgo ? null
+, version ? null
 }:
 
+assert version != null || throw "Missing fetchzip version. The latest version is 2.";
+
 let
+  versions = {
+    "1" = {
+      brotli = brotli_0-4-0;
+      tar = gnutar_1-29;
+    };
+    "2" = {
+      brotli = brotli_0-5-2;
+      tar = gnutar_1-29;
+    };
+  };
+
+  inherit (versions."${toString version}")
+    brotli
+    tar;
+
   index = fetchFromGitHub {
     version = 2;
     owner = "rust-lang";
@@ -23,7 +45,7 @@ let
   };
 in
 stdenv.mkDerivation {
-  name = "${package}-${version}";
+  name = "${package}-${packageVersion}.tar.br";
 
   nativeBuildInputs = [
     cargo
@@ -43,14 +65,14 @@ stdenv.mkDerivation {
 
     # Pull in the registry
     mkdir -p "$CARGO_HOME/registry"
-    pushd "$CARGO_HOME/registry"
+    pushd "$CARGO_HOME/registry" >/dev/null
     unpackFile "${index}"
-    pushd *
+    pushd * >/dev/null
     git init
     git add .
     git commit -m "Initial Commit" >/dev/null
-    popd
-    popd
+    popd >/dev/null
+    popd >/dev/null
 
     # Configure cargo to use the local registry and predefined user settings
     sed ${./config.in} \
@@ -60,29 +82,21 @@ stdenv.mkDerivation {
 
     # Fetch the crate and all of its dependencies
     mkdir -p fetch-cargo
-    pushd fetch-cargo
+    pushd fetch-cargo >/dev/null
     cargo init
-    echo '${package} = "${version}"' >> Cargo.toml
+    echo '${package} = "${packageVersion}"' >> Cargo.toml
     cargo fetch
-    ln -rs $(find "$CARGO_HOME/registry/src" -mindepth 2 -maxdepth 2 -type d -name "${package}-${version}") "$CARGO_HOME/src"
-    popd
-    rm -rf fetch-cargo
-
-    # Create a Cargo.lock
-    pushd "$CARGO_HOME/src"
-    names=$(grep 'path = ".*version = "' Cargo.toml \
-      | sed 's,^.*path = "\([^"]*\)".*version = "\([^"]*\)".*$,\1 \2,' \
-      | awk 'print $1')
-    echo "$names"
-    cat "$CARGO_HOME/config"
-    ls -la
-    cargo generate-lockfile
-    popd
+    sed -i "s,$CARGO_HOME,@CARGO_HOME@,g" Cargo.lock
+    mv "$CARGO_HOME"/registry .
+    popd >/dev/null
 
     # Remove all of the git directories for determinism
-    find "$CARGO_HOME" -name .git | xargs rm -rf
+    find fetch-cargo -name .git | xargs rm -rf
 
-    touch $out
+    ${tar}/bin/tar --sort=name --owner=0 --group=0 --numeric-owner \
+      --mode=go=rX,u+rw,a-s \
+      --mtime=@946713600 \
+      -c fetch-cargo | ${brotli}/bin/bro --quality 6 --output "$out"
   '';
 
   preferLocalBuild = true;

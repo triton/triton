@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
     mkdir -p "$out"
     cp -r cargo/bin "$out/bin"
     patchelf --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" --set-rpath "${stdenv.cc.cc}/lib:${zlib}/lib" $out/bin/*
-    wrapProgram $out/bin/cargo --prefix PATH : "${rustc}/bin"
+    wrapProgram $out/bin/cargo --suffix PATH : "${rustc}/bin"
 
     # Check that we can launch cargo
     $out/bin/cargo --help

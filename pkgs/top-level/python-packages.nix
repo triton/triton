@@ -287,6 +287,8 @@ ldap3 = callPackage ../all-pkgs/l/ldap3 { };
 
 libarchive-c = callPackage ../all-pkgs/l/libarchive-c { };
 
+m2r = callPackage ../all-pkgs/m/m2r { };
+
 markupsafe = callPackage ../all-pkgs/m/markupsafe { };
 
 matrix-angular-sdk = callPackage ../all-pkgs/m/matrix-angular-sdk { };

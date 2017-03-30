@@ -16,7 +16,7 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "1.9.1";
+  version = "1.10.0";
 in
 buildPythonPackage rec {
   name = "cffi-${version}";
@@ -24,7 +24,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "cffi";
     inherit version;
-    sha256 = "563e0bd53fda03c151573217b3a49b3abad8813de9dd0632e10090f6190fdaf8";
+    sha256 = "b3b02911eb1f6ada203b0763ba924234629b51586f72a21faacc638269f4ced5";
   };
 
   propagatedBuildInputs = [

@@ -53,11 +53,13 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-werror"
+    "--enable-extra-warnings"
     "--enable-optimizations"
     "--disable-examples"
     "--${boolEn (jdk != null)}-bdjava"
-    "--disable-bdjava"
     "--enable-udf"
+    /**/"--disable-bdjava-jar"  # FIXME: Fix BDJ search path
+    #"--${boolEn (jdk != null)}-bdjava-jar"
     "--disable-doxygen-doc"
     "--disable-doxygen-dot"
     "--disable-doxygen-man"
@@ -71,7 +73,7 @@ stdenv.mkDerivation rec {
     "--${boolWt (libxml2 != null)}-libxml2"
     "--${boolWt (freetype != null)}-freetype"
     "--${boolWt (fontconfig != null)}-fontconfig"
-    "--with-bdj-type=j2se"
+    "--with-bdj-type=j2se"  # j2me
     #"--with-bdj-bootclasspath="
   ];
 

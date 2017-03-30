@@ -6,14 +6,16 @@
 , util-linux_full
 }:
 
+let
+  version = "2017.3.23";
+in
 stdenv.mkDerivation rec {
-  pname = "ntfs-3g";
-  version = "2016.2.22";
-  name = "${pname}-${version}";
+  name = "ntfs-3g-${version}";
 
   src = fetchurl {
     url = "https://tuxera.com/opensource/ntfs-3g_ntfsprogs-${version}.tgz";
-    sha256 = "d7b72c05e4b3493e6095be789a760c9f5f2b141812d5b885f3190c98802f1ea0";
+    multihash = "QmcwE57BBCRdzyQwDwREnXcTtu33eGbH4cL1v1VGceX9Up";
+    sha256 = "3e5a021d7b761261836dcb305370af299793eedbded731df3d6943802e1262d5";
   };
 
   buildInputs = [
@@ -37,6 +39,7 @@ stdenv.mkDerivation rec {
     "--enable-posix-acls"
     "--enable-xattr-mappings"
     "--enable-crypto"
+    "--enable-extras"
   ];
 
   postInstall = ''

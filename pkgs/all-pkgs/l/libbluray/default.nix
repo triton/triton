@@ -18,14 +18,15 @@ let
     boolEn
     boolWt;
 
-  version  = "0.9.3";
+  version  = "1.0.0";
 in
 stdenv.mkDerivation rec {
   name = "libbluray-${version}";
 
   src = fetchurl {
     url = "mirror://videolan/libbluray/${version}/${name}.tar.bz2";
-    sha256 = "a6366614ec45484b51fe94fcd1975b3b8716f90f038a33b24d59978de3863ce0";
+    hashOutput = false;
+    sha256 = "f7e3add335c7bbef45824fcd2249a9bf293868598c13f8479352c44ec95374cc";
   };
 
   nativeBuildInputs = [
@@ -41,14 +42,14 @@ stdenv.mkDerivation rec {
     libxml2
   ];
 
-  patches = [
+  postPatch = ''
     # Fix search path for BDJ jarfile
-    (fetchTritonPatch {
-      rev = "fea1481e3a5255acae6df3f2bcba5fdcc0b433a0";
-      file = "libbluray/BDJ-JARFILE-path.patch";
-      sha256 = "fc9ef430a85e61dc58932280da775d00c79a1487d55ee4c4955f7311170733a7";
-    })
-  ];
+    # See triton-patches "libbluray/BDJ-JARFILE-path.patch"
+    sed -i configure.ac \
+      -e "/\[JDK_HOME\], \[\"\$JDK_HOME\"\]/a CPPFLAGS=\"''${CPPFLAGS} -DJARDIR='\\\\\"\\\$(datadir)/java\\\\\"'\""
+    sed -i src/libbluray/bdj/bdj.c \
+      -e 's|/usr/share/java/" BDJ_JARFILE|JARDIR "/" BDJ_JARFILE|'
+  '';
 
   configureFlags = [
     "--disable-werror"
@@ -84,6 +85,17 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     export JDK_HOME="${jdk.home}"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha512Urls = map (n: "${n}.sha512") src.urls;
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "Library to access Blu-Ray disks for video playback";

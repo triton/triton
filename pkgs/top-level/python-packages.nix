@@ -152,6 +152,8 @@ asciinema = callPackage ../all-pkgs/a/asciinema { };
 
 attrs = callPackage ../all-pkgs/a/attrs { };
 
+automat = callPackage ../all-pkgs/a/automat { };
+
 aws-cli = callPackage ../all-pkgs/a/aws-cli { };
 
 babel = callPackage ../all-pkgs/b/babel { };

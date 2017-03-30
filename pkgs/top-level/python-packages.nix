@@ -315,6 +315,8 @@ pathlib2 = callPackage ../all-pkgs/p/pathlib2 { };
 
 pbr = callPackage ../all-pkgs/p/pbr { };
 
+phonenumbers = callPackage ../all-pkgs/p/phonenumbers { };
+
 pillow = callPackage ../all-pkgs/p/pillow { };
 
 pip = callPackage ../all-pkgs/p/pip { };

@@ -7,6 +7,7 @@
 , mock
 , pathlib2
 , pbr
+, phonenumbers
 , pyasn1
 , pynacl
 , service-identity
@@ -37,6 +38,7 @@ buildPythonPackage {
     funcsigs
     pathlib2
     pbr
+    phonenumbers
     pyasn1
     pynacl
     service-identity

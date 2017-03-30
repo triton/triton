@@ -60,9 +60,15 @@ let
         extraEntriesBeforeNixOS extraPrepareConfig configurationLimit copyKernels
         default fsIdentifier efiSupport gfxmodeEfi gfxmodeBios;
       path = (makeSearchPath "bin" ([
-        pkgs.coreutils pkgs.gnused pkgs.gnugrep pkgs.findutils pkgs.diffutils pkgs.btrfs-progs
-        pkgs.util-linux_full ] ++ (if cfg.efiSupport && (cfg.version == 2) then [pkgs.efibootmgr ] else [])
-      )) + ":" + (makeSearchPath "sbin" [
+        pkgs.btrfs-progs
+        pkgs.coreutils
+        pkgs.diffutils
+        pkgs.findutils
+        pkgs.gnused
+        pkgs.gnugrep
+        pkgs.utl-linux_full
+        pkgs.xz
+      ])) + ":" + (makeSearchPath "sbin" [
         pkgs.mdadm pkgs.util-linux_full
       ]);
     });

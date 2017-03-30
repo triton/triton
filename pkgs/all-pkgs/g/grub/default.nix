@@ -4,9 +4,11 @@
 , fetchTritonPatch
 , fetchurl
 , flex
+, makeWrapper
 , python
 
 , dejavu-fonts
+, efibootmgr
 , freetype
 , fuse
 , gettext
@@ -23,7 +25,8 @@ let
   inherit (stdenv.lib)
     any
     mapAttrsToList
-    optionals;
+    optionals
+    optionalString;
 
   typeMap = {
     "bios-i386" = {
@@ -59,6 +62,7 @@ stdenv.mkDerivation rec {
     autogen
     bison
     flex
+    makeWrapper
     python
   ];
 
@@ -96,6 +100,14 @@ stdenv.mkDerivation rec {
     "--enable-liblzma"
     "--enable-libzfs"
   ];
+
+  postFixup = optionalString ("efi" == platform) ''
+    progs="$(grep -r 'efibootmgr' -l "$out/bin")"
+    for prog in $progs; do
+      wrapProgram "$prog" \
+        --prefix PATH : "${efibootmgr}/bin"
+    done
+  '';
 
   # We don't need any security / optimization features for a bootloader
   optFlags = false;

@@ -545,32 +545,54 @@ my $requireNewInstall = $devicesDiffer || $nameDiffer || $versionDiffer || $efiD
 my $tmpDir = File::Temp::tempdir(CLEANUP => 1) or die "Failed to create temporary space";
 symlink "$bootPath", "$tmpDir/boot" or die "Failed to symlink $tmpDir/boot";
 
-# install non-EFI GRUB
-if (($requireNewInstall != 0) && ($efiTarget eq "no" || $efiTarget eq "both")) {
-    foreach my $dev (@deviceTargets) {
-        next if $dev eq "nodev";
-        print STDERR "installing the GRUB $grubVersion boot loader on $dev...\n";
-        if ($grubTarget eq "") {
-            system("$grub/sbin/grub-install", "--recheck", "--root-directory=$tmpDir", Cwd::abs_path($dev)) == 0
-                or die "$0: installation of GRUB on $dev failed\n";
-        } else {
-            system("$grub/sbin/grub-install", "--recheck", "--root-directory=$tmpDir", "--target=$grubTarget", Cwd::abs_path($dev)) == 0
-                or die "$0: installation of GRUB on $dev failed\n";
-        }
+my @grubOpts = ();
+my @grubBiosOpts = ();
+my @grubEfiOpts = ();
+push @grubOpts, "--compress=xz";
+push @grubOpts, "--core-compress=xz";
+push @grubOpts, "--recheck";
+
+if ($efiTarget eq "no" || $efiTarget eq "both") {
+    push @grubBiosOpts, "$grub/bin/grub-install";
+    push @grubBiosOpts, @grubOpts;
+    push @grubBiosOpts, "--root-directory=$tmpDir";
+    if ($grubTarget ne "") {
+        push @grubBiosOpts, "--target=$grubTarget";
+    }
+}
+if ($efiTarget eq "only" || $efiTarget eq "both") {
+    push @grubEfiOpts, "$grubEfi/bin/grub-install";
+    push @grubEfiOpts, @grubOpts;
+    push @grubEfiOpts, "--removable";
+    push @grubEfiOpts, "--target=$grubTargetEfi";
+    push @grubEfiOpts, "--boot-directory=$bootPath";
+    push @grubEfiOpts, "--efi-directory=$efiSysMountPoint";
+    if ($canTouchEfiVars eq "true") {
+        push @grubEfiOpts, "--bootloader-id=$bootloaderId";
+    } else {
+        push @grubEfiOpts, "--no-nvram";
     }
 }
 
-
-# install EFI GRUB
-if (($requireNewInstall != 0) && ($efiTarget eq "only" || $efiTarget eq "both")) {
-    print STDERR "installing the GRUB $grubVersion EFI boot loader into $efiSysMountPoint...\n";
-    if ($canTouchEfiVariables eq "true") {
-        system("$grubEfi/sbin/grub-install", "--recheck", "--removable", "--target=$grubTargetEfi", "--boot-directory=$bootPath", "--efi-directory=$efiSysMountPoint", "--bootloader-id=$bootloaderId") == 0
-                or die "$0: installation of GRUB EFI into $efiSysMountPoint failed\n";
-        print STDERR "touching efi variables...\n";
-    } else {
-        system("$grubEfi/sbin/grub-install", "--recheck", "--removable", "--target=$grubTargetEfi", "--boot-directory=$bootPath", "--efi-directory=$efiSysMountPoint", "--no-nvram") == 0
-                or die "$0: installation of GRUB EFI into $efiSysMountPoint failed\n";
+if ($requireNewInstall != 0) {
+    # install non-EFI GRUB
+    if (@grubBiosOpts) {
+        foreach my $dev (@deviceTargets) {
+            next if $dev eq "nodev";
+            print STDERR "installing the GRUB $grubVersion boot loader on $dev...\n";
+            push @grubBiosOpts, Cwd::abs_path($dev);
+            print STDERR "calling: ", join(" ", @grubBiosOpts), "\n";
+            system(@grubBisoOpts) == 0
+                or die "$0: installation of GRUB on $dev failed\n";
+            pop @grubBiosOpts;
+        }
+    }
+    # install EFI GRUB
+    if (@grubEfiOpts) {
+        print STDERR "installing the GRUB $grubVersion EFI boot loader into $efiSysMountPoint...\n";
+        print STDERR "calling: ", join(" ", @grubEfiOpts), "\n";
+        system(@grubEfiOpts) == 0
+            or die "$0: installation of GRUB EFI into $efiSysMountPoint failed\n";
     }
 }
 

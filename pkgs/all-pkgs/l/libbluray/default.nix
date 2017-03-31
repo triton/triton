@@ -30,14 +30,14 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    ant
+    #ant
     autoreconfHook
   ];
 
   buildInputs = [
     fontconfig
     freetype
-    jdk
+    #jdk
     libaacs
     libxml2
   ];
@@ -56,7 +56,8 @@ stdenv.mkDerivation rec {
     "--enable-extra-warnings"
     "--enable-optimizations"
     "--disable-examples"
-    "--${boolEn (jdk != null)}-bdjava"
+    /**/"--disable-bdjava"  # FIXME: Fix BDJ search path
+    #"--${boolEn (jdk != null)}-bdjava"
     "--enable-udf"
     /**/"--disable-bdjava-jar"  # FIXME: Fix BDJ search path
     #"--${boolEn (jdk != null)}-bdjava-jar"
@@ -84,9 +85,9 @@ stdenv.mkDerivation rec {
     "-lbdplus"
   ];
 
-  preConfigure = ''
-    export JDK_HOME="${jdk.home}"
-  '';
+  # preConfigure = ''
+  #   export JDK_HOME="${jdk.home}"
+  # '';
 
   passthru = {
     srcVerification = fetchurl {

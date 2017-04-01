@@ -66,7 +66,7 @@ let
         pkgs.findutils
         pkgs.gnused
         pkgs.gnugrep
-        pkgs.utl-linux_full
+        pkgs.util-linux_full
         pkgs.xz
       ])) + ":" + (makeSearchPath "sbin" [
         pkgs.mdadm pkgs.util-linux_full

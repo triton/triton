@@ -4,7 +4,7 @@
 , file
 , perlPackages
 
-, openssl
+, openssl_1-0-2
 }:
 
 let
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    openssl
+    openssl_1-0-2
   ];
 
   patches = [
@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
     "--with-sys-contact=root@unknown"
     "--with-logfile=/var/log/net-snmpd.log"
     "--with-persistent-directory=/var/lib/net-snmp"
-    "--with-openssl=${openssl}"
+    "--with-openssl=${openssl_1-0-2}"
     "--with-mnttab=/proc/mounts"
   ];
 
@@ -75,7 +75,6 @@ stdenv.mkDerivation rec {
     description = "Clients and server for the SNMP network monitoring protocol";
     homepage = http://net-snmp.sourceforge.net/;
     license = licenses.bsd3;
-    broken = true;
     maintainers = with maintainers; [
       wkennington
     ];

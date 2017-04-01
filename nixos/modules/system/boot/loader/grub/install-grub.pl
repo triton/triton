@@ -549,7 +549,6 @@ my @grubOpts = ();
 my @grubBiosOpts = ();
 my @grubEfiOpts = ();
 push @grubOpts, "--compress=xz";
-push @grubOpts, "--core-compress=xz";
 push @grubOpts, "--recheck";
 
 if ($efiTarget eq "no" || $efiTarget eq "both") {
@@ -567,7 +566,7 @@ if ($efiTarget eq "only" || $efiTarget eq "both") {
     push @grubEfiOpts, "--target=$grubTargetEfi";
     push @grubEfiOpts, "--boot-directory=$bootPath";
     push @grubEfiOpts, "--efi-directory=$efiSysMountPoint";
-    if ($canTouchEfiVars eq "true") {
+    if ($canTouchEfiVariables eq "true") {
         push @grubEfiOpts, "--bootloader-id=$bootloaderId";
     } else {
         push @grubEfiOpts, "--no-nvram";
@@ -582,7 +581,7 @@ if ($requireNewInstall != 0) {
             print STDERR "installing the GRUB $grubVersion boot loader on $dev...\n";
             push @grubBiosOpts, Cwd::abs_path($dev);
             print STDERR "calling: ", join(" ", @grubBiosOpts), "\n";
-            system(@grubBisoOpts) == 0
+            system(@grubBiosOpts) == 0
                 or die "$0: installation of GRUB on $dev failed\n";
             pop @grubBiosOpts;
         }

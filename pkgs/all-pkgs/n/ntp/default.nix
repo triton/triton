@@ -9,6 +9,7 @@
 , libseccomp
 , net-snmp
 , openssl
+, zlib
 }:
 
 let
@@ -37,6 +38,7 @@ stdenv.mkDerivation rec {
     libseccomp
     net-snmp
     openssl
+    zlib
   ];
 
   configureFlags = [

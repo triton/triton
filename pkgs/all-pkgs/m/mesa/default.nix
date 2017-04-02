@@ -52,7 +52,7 @@ let
     optionalString
     splitString;
 
-  version = "17.0.2";
+  version = "17.0.3";
 
   # this is the default search path for DRI drivers
   driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
@@ -70,9 +70,9 @@ stdenv.mkDerivation rec {
         + head (splitString "." version)
         + ".x/${version}/mesa-${version}.tar.xz")
     ];
-    multihash = "QmbgsKzPZ8ooifJMtkMH8DU1MyaLHYodxVwjbnbhtypiAR";
+    multihash = "QmWraRsGyUzqyMutCtreec86bMsYpSVoL9RcmFeNQ1zhxV";
     hashOutput = false;  # Provided by upstream directly
-    sha256 = "f8f191f909e01e65de38d5bdea5fb057f21649a3aed20948be02348e77a689d4";
+    sha256 = "ca646f5075a002d60ef9123c8a4331cede155c01712ef945a65c59a5e69fe7ed";
   };
 
   nativeBuildInputs = [
@@ -274,7 +274,10 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "8703 B670 0E7E E06D 7A39  B8D6 EDAE 37B0 2CEB 490D";
+      pgpKeyFingerprints = [
+        "8703 B670 0E7E E06D 7A39  B8D6 EDAE 37B0 2CEB 490D"
+        "946D 09B5 E4C9 845E 6307  5FF1 D961 C596 A720 3456"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

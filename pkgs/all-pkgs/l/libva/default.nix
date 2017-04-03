@@ -9,13 +9,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libva-1.7.3";
+  name = "libva-1.8.0";
 
   src = fetchurl rec {
     url = "https://www.freedesktop.org/software/vaapi/releases/libva/${name}.tar.bz2";
-    sha1Url = "${url}.sha1sum";
-    multihash = "QmNcKVKfyvJEE6gka3okfTPRyTtAEVtqNhgKnc5Y8xTF27";
-    sha256 = "22bc139498065a7950d966dbdb000cad04905cbd3dc8f3541f80d36c4670b9d9";
+    hashOutput = false;
+    multihash = "QmQ3LheJKGMQRJCoNMGnyoTrCdVjoLrRj9ZDACaBzSWwoo";
+    sha256 = "eb92f3dcbe3981df3575348377263b31361113c77b2c3745f23174d1f562d658";
   };
 
   buildInputs = [
@@ -33,14 +33,22 @@ stdenv.mkDerivation rec {
     "--enable-glx"
     "--enable-egl"
     "--enable-wayland"
-    #"--enable-dummy-driver"
-    "--enable-largefile"
+    "--enable-va-messaging"
+    "--enable-dummy-driver"
     "--with-drivers-path=${mesa_noglu.driverSearchPath}/lib/dri"
   ];
 
   preInstall = ''
     installFlagsArray+=("LIBVA_DRIVERS_PATH=$out/lib/dri")
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha1Url = map (n: "${n}.sha1sum") src.urls;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Video Acceleration (VA) API for Linux";

@@ -2097,8 +2097,6 @@ libgxps_0-2 = callPackage ../all-pkgs/l/libgxps {
 };
 libgxps = callPackageAlias "libgxps_0-2" { };
 
-libibverbs = callPackage ../all-pkgs/l/libibverbs { };
-
 libical = callPackage ../all-pkgs/l/libical { };
 
 libice = callPackage ../all-pkgs/l/libice { };
@@ -2234,8 +2232,6 @@ libraw1394 = callPackage ../all-pkgs/l/libraw1394 { };
 librelp = callPackage ../all-pkgs/l/librelp { };
 
 libressl = callPackage ../all-pkgs/l/libressl { };
-
-librdmacm = callPackage ../all-pkgs/l/librdmacm { };
 
 librsvg = callPackage ../all-pkgs/l/librsvg { };
 
@@ -3074,6 +3070,8 @@ rapidjson = callPackage ../all-pkgs/r/rapidjson { };
 raptor2 = callPackage ../all-pkgs/r/raptor2 { };
 
 rclone = pkgs.goPackages.rclone.bin // { outputs = [ "bin" ]; };
+
+rdma-core = callPackage ../all-pkgs/r/rdma-core { };
 
 re2c = callPackage ../all-pkgs/r/re2c { };
 

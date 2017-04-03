@@ -1,19 +1,31 @@
-{ stdenv, fetchurl, libibumad }:
+{ stdenv
+, fetchurl
+, lib
+
+, libibumad
+}:
 
 stdenv.mkDerivation rec {
-  name = "libibmad-1.3.12";
+  name = "libibmad-1.3.13";
 
   src = fetchurl {
     url = "https://www.openfabrics.org/downloads/management/${name}.tar.gz";
-    sha256 = "0ywkz0rskci414r6h6jd4iz4qjbj37ga2k91z1mlj9xrnl9bbgzi";
+    multihash = "QmNk1FRgykiHhDMo1AuEtryRgyNvfs2uTHf4B8aJvkmb6w";
+    sha256 = "17cdd721c81fecefc366601c46c55a4d44c93799980a0a34c271b12bc544520b";
   };
 
-  buildInputs = [ libibumad ];
+  buildInputs = [
+    libibumad
+  ];
 
-  meta = with stdenv.lib; {
-    homepage = http://www.openfabrics.org/;
+  meta = with lib; {
+    description = "Low layer IB functions for IB diagnostic/management programs";
+    homepage = https://www.openfabrics.org/;
     license = licenses.gpl2;
-    platforms = platforms.linux;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

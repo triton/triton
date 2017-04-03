@@ -430,6 +430,8 @@ salt_head = callPackage ../all-pkgs/s/salt {
 };
 salt = callPackageAlias "salt_2016-11" { };
 
+scandir = callPackage ../all-pkgs/s/scandir { };
+
 scons = callPackage ../all-pkgs/s/scons { };
 
 service-identity = callPackage ../all-pkgs/s/service-identity { };

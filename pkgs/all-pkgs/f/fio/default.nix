@@ -6,9 +6,8 @@
 , ceph
 , glusterfs
 , libaio
-, libibverbs
-, librdmacm
 , numactl
+, rdma-core
 , zlib
 }:
 
@@ -32,9 +31,8 @@ stdenv.mkDerivation rec {
     ceph
     glusterfs
     libaio
-    libibverbs
-    librdmacm
     numactl
+    rdma-core
     zlib
   ];
 

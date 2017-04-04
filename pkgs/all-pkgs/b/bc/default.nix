@@ -1,5 +1,6 @@
 { stdenv
-, ed
+, bison
+, fetchTritonPatch
 , fetchurl
 , flex
 
@@ -8,23 +9,35 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "bc-1.07";
+  name = "bc-1.06.95";
 
   src = fetchurl {
-    url = "mirror://gnu/bc/${name}.tar.gz";
-    hashOutput = false;
-    sha256 = "55cf1fc33a728d7c3d386cc7b0cb556eb5bacf8e0cb5a3fcca7f109fc61205ad";
+    url = "http://alpha.gnu.org/gnu/bc/${name}.tar.bz2";
+    multihash = "QmRDA6WLGngZ78WHmgJQrRgkkdkytf73iGVQPRe2MDJsUf";
+    sha256 = "1k2yf9bhjxjwfhz0d1c5hmmrs8rxi9al0d4a39p8lgf0zayapr3y";
   };
 
   nativeBuildInputs = [
-    ed
+    bison
     flex
   ];
 
   buildInputs = [
-    flex
     ncurses
     readline
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "4eaff4fc1ef159416bd98cf46c56dafa9d755a7a";
+      file = "bc/bc-1.06-mem-leak.patch";
+      sha256 = "27e30d0389b79556609a74a4bb2a19f208f0e527bf08357ad79e0f453f15ac17";
+    })
+    (fetchTritonPatch {
+      rev = "4eaff4fc1ef159416bd98cf46c56dafa9d755a7a";
+      file = "bc/bc-1.06-void_uninitialized.patch";
+      sha256 = "cb210e21f6a9ab5cac591259b1649120b0b74a722dc02ec17cb09bc9a19f3b8a";
+    })
   ];
 
   configureFlags = [
@@ -32,21 +45,19 @@ stdenv.mkDerivation rec {
     "--with-readline"
   ];
 
-  # Prevent doc rebuild
-  preBuild = ''
-    touch doc doc/*
-  '';
+  postConfigure =
+    /* Don't regen docs -- configure produces a small fragment
+       that includes the version info which causes all pages to
+       regen (newer file). */ ''
+    	touch -r doc doc/*
+    '';
 
-  doCheck =true;
+  postBuild =
+    /* Simple test */ ''
+      echo "quit" | ./bc/bc -l Test/checklib.b
+    '';
 
-  passthru = {
-    srcVerification = fetchurl {
-      failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "00E4 2623 2F38 4BF6 D32D  8B18 81C2 4FF1 2FB7 B14B";
-      inherit (src) urls outputHash outputHashAlgo;
-    };
-  };
+  doCheck = true;
 
   meta = with stdenv.lib; {
     description = "GNU software calculator";

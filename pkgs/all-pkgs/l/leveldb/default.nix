@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.19";
+  version = "1.20";
 in
 stdenv.mkDerivation rec {
   name = "leveldb-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     owner = "google";
     repo = "leveldb";
     rev = "v${version}";
-    sha256 = "194febd1470f39009c0540ea145f7b42cb1527ce6e630d9f23fcb6b299574b21";
+    sha256 = "5ff3768ea5515865fcc1336fdee6028ade616b9c65b17db6dea4c1a98eeeb0bf";
   };
 
   buildFlags = [

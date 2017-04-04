@@ -548,7 +548,6 @@ symlink "$bootPath", "$tmpDir/boot" or die "Failed to symlink $tmpDir/boot";
 my @grubOpts = ();
 my @grubBiosOpts = ();
 my @grubEfiOpts = ();
-push @grubOpts, "--compress=xz";
 push @grubOpts, "--recheck";
 
 if ($efiTarget eq "no" || $efiTarget eq "both") {

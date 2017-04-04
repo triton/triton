@@ -14,13 +14,12 @@
 , gnugrep
 , gnused
 , libaio
-, libibverbs
-, librdmacm
 , liburcu
 , libxml2
 , lvm2
 , ncurses
 , openssl
+, rdma-core
 , readline
 , sqlite
 , util-linux_lib
@@ -66,13 +65,12 @@ stdenv.mkDerivation rec {
     attr
     glib
     libaio
-    libibverbs
-    librdmacm
     liburcu
     libxml2
     lvm2
     ncurses
     openssl
+    rdma-core
     readline
     sqlite
     util-linux_lib

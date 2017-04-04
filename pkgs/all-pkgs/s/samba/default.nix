@@ -24,14 +24,13 @@
 , libcap
 , libgcrypt
 , libgpg-error
-, libibverbs
-, librdmacm
 , libunwind
 , ncurses
 , nss_wrapper
 , openldap
 , pam
 , popt
+, rdma-core
 , readline
 , resolv_wrapper
 , socket_wrapper
@@ -114,9 +113,8 @@ stdenv.mkDerivation rec {
     dbus
     glusterfs
     libaio
-    libibverbs
-    librdmacm
     pythonPackages.etcd
+    rdma-core
   ];
 
   pythonPath = [

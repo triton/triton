@@ -3,8 +3,12 @@
 , isPy3k
 , lib
 
-, pkgs
-, pythonPackages
+, atk
+, glib
+, gtk_2
+, libglade
+, pango
+, python2Packages
 #, pygobject
 #, pycairo
 }:
@@ -18,26 +22,26 @@ stdenv.mkDerivation rec {
   };
 
   propagatedBuildInputs = [
-    pkgs.atk
-    pkgs.glib
-    pkgs.gtk2
-    pkgs.libglade
-    pkgs.pango
-    #pythonPackages.numpy
-    pythonPackages.pycairo
-    pythonPackages.pygobject_2
-    pythonPackages.python
-    pythonPackages.wrapPython
+    atk
+    glib
+    gtk_2
+    libglade
+    pango
+    #python2Packages.numpy
+    python2Packages.pycairo
+    python2Packages.pygobject_2
+    python2Packages.python
+    python2Packages.wrapPython
   ];
 
   postInstall = ''
     rm -v $out/bin/pygtk-codegen-2.0
     ln -sv \
-      ${pythonPackages.pygobject_2}/bin/pygobject-codegen-2.0  \
+      ${python2Packages.pygobject_2}/bin/pygobject-codegen-2.0  \
       $out/bin/pygtk-codegen-2.0
     ln -sv \
-      ${pythonPackages.pygobject_2}/lib/${pythonPackages.python.libPrefix}/site-packages/${pythonPackages.pygobject.name}.pth \
-      $out/lib/${pythonPackages.python.libPrefix}/site-packages/${name}.pth
+      ${python2Packages.pygobject_2}/lib/${python2Packages.python.libPrefix}/site-packages/${python2Packages.pygobject_2.name}.pth \
+      $out/lib/${python2Packages.python.libPrefix}/site-packages/${name}.pth
   '';
 
   checkPhase = ''

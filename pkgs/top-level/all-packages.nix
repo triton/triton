@@ -1177,6 +1177,8 @@ flashmap = callPackage ../all-pkgs/f/flashmap { };
 
 flashrom = callPackage ../all-pkgs/f/flashrom { };
 
+flashrom_chromium = callPackage ../all-pkgs/f/flashrom/chromium.nix { };
+
 flex = callPackage ../all-pkgs/f/flex { };
 
 flite = callPackage ../all-pkgs/f/flite { };

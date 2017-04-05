@@ -1,25 +1,39 @@
 { stdenv
-, fetchurl
+, autoconf-archive
+, autoreconfHook
+, fetchFromGitHub
 , isPy3k
 , lib
+, pkgconfig
+, wrapPython
 
 , atk
 , glib
 , gtk_2
 , libglade
 , pango
-, python2Packages
-#, pygobject
-#, pycairo
+, pygobject_2
+, pycairo
+, python
 }:
 
-stdenv.mkDerivation rec {
-  name = "pygtk-2.24.0";
+# Pygtk is not compatible with Python 3.x
+assert !isPy3k;
 
-  src = fetchurl {
-    url = "mirror://gnome/sources/pygtk/2.24/${name}.tar.bz2";
-    sha256 = "04k942gn8vl95kwf0qskkv6npclfm31d78ljkrkgyqxxcni1w76d";
+stdenv.mkDerivation rec {
+  name = "pygtk-2.24-2011-10-02";
+
+  src = fetchFromGitHub {
+    version = 2;
+    owner = "GNOME";
+    repo = "pygtk";
+    rev = "eaf1c1b881d2d20d202cf475b5ffed2206b110df";
+    sha256 = "976d1da90ed977287c8f879958cdb949c81ab7a8d9ce4ae6c2fec6d1222c6336";
   };
+
+  nativeBuildInputs = [
+    autoreconfHook  # Just used to include all dependencies
+  ];
 
   propagatedBuildInputs = [
     atk
@@ -27,24 +41,37 @@ stdenv.mkDerivation rec {
     gtk_2
     libglade
     pango
-    #python2Packages.numpy
-    python2Packages.pycairo
-    python2Packages.pygobject_2
-    python2Packages.python
-    python2Packages.wrapPython
+    pycairo
+    pygobject_2
+    python
+    wrapPython
   ];
+
+  postPatch = ''
+    sed -i configure.ac \
+      -e 's/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/'
+  '';
+
+  autoreconfPhase = ''
+    # autoreconfHook doesn't use $ACLOCAL_FLAGS so it must be run manually
+    aclocal --force -I m4/
+    libtoolize --copy --force
+    autoheader
+    automake --force-missing --add-missing
+    autoconf --force
+  '';
 
   postInstall = ''
     rm -v $out/bin/pygtk-codegen-2.0
     ln -sv \
-      ${python2Packages.pygobject_2}/bin/pygobject-codegen-2.0  \
+      ${pygobject_2}/bin/pygobject-codegen-2.0  \
       $out/bin/pygtk-codegen-2.0
     ln -sv \
-      ${python2Packages.pygobject_2}/lib/${python2Packages.python.libPrefix}/site-packages/${python2Packages.pygobject_2.name}.pth \
-      $out/lib/${python2Packages.python.libPrefix}/site-packages/${name}.pth
+      ${pygobject_2}/lib/${python.libPrefix}/site-packages/${pygobject_2.name}.pth \
+      $out/lib/${python.libPrefix}/site-packages/${name}.pth
   '';
 
-  checkPhase = ''
+  preCheck = ''
     sed -i tests/common.py \
       -e "s/glade = importModule('gtk.glade', buildDir)//" \
       -e "s/sys.path.insert(0, os.path.join(buildDir, 'gtk'))//" \
@@ -54,16 +81,10 @@ stdenv.mkDerivation rec {
       -e "s/, glade$//" \
       -e "s/.*testGlade.*//" \
       -e "s/.*(glade.*//"
-
-    make check
   '';
 
   # XXX: TypeError: Unsupported type: <class 'gtk._gtk.WindowType'>
-  # The check phase was not executed in the previous
-  # non-buildPythonPackage setup - not sure why not.
   doCheck = false;
-
-  disabled = isPy3k;
 
   meta = with lib; {
     description = "GTK+2 bindings for Python";

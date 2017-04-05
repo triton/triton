@@ -1,13 +1,16 @@
 { stdenv
+, autoreconfHook
+, fetchFromGitHub
 , fetchurl
+, isPy3k
 , lib
 
-, python
 , glib
 , gobject-introspection
 , pycairo
 , cairo
 , libffi
+, python
 
 , channel
 }:
@@ -22,16 +25,33 @@ let
 
   source = (import ./sources.nix { })."${channel}";
 
-  is2x = versionOlder source.version "3.0.0";
+  is2x = versionOlder channel "3.0";
 in
-stdenv.mkDerivation rec {
-  name = "pygobject-${source.version}";
 
-  src = fetchurl {
-    url = "mirror://gnome/sources/pygobject/${channel}/${name}.tar.xz";
-    hashOutput = false;
-    inherit (source) sha256;
-  };
+# Pygobject 2.x is not compatible with Python 3.x
+assert is2x -> !isPy3k;
+
+stdenv.mkDerivation rec {
+  name = "pygobject-${source.version}${optionalString is2x "-${source.date}"}";
+
+  src =
+    if is2x then
+      fetchFromGitHub {
+        version = source.fetchzipversion;
+        owner = "GNOME";
+        repo = "pygobject";
+        inherit (source) rev sha256;
+      }
+    else
+      fetchurl {
+        url = "mirror://gnome/sources/pygobject/${channel}/${name}.tar.xz";
+        hashOutput = false;
+        inherit (source) sha256;
+      };
+
+  nativeBuildInputs = optionals is2x [
+    autoreconfHook
+  ];
 
   buildInputs = [
     cairo
@@ -83,8 +103,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with lib; {
-    description = "Python bindings for Glib";
-    homepage = http://live.gnome.org/PyGObject;
+    description = "Python Bindings for GLib/GObject/GIO/GTK+";
+    homepage = https://wiki.gnome.org/action/show/Projects/PyGObject;
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [
       codyopel

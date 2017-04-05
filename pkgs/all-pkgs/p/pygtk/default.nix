@@ -1,5 +1,4 @@
 { stdenv
-, autoconf-archive
 , autoreconfHook
 , fetchFromGitHub
 , isPy3k

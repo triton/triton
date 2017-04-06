@@ -1,9 +1,9 @@
 { }:
 {
   "stable" = {
-    version = "1.1.3";
-    multihash = "QmSBVDvnTRq1f74tFRP2xpB4ZxesjDvvqjBwuVPXtmHH34";
-    sha256 = "58b6fe802e7e30182e95d0cde890c0ace40b6f125cffc50635f0ad2eef69b633";
+    version = "1.1.4";
+    multihash = "QmVe2wKEnJLp8Dou4LXaTP9SJDAkZzqa57k9CH5MKqWiLN";
+    sha256 = "9122b6b380081dd2665189f97bfd777f04f92dc3ab6698eea1dbb27ad59d8692";
   };
   "head" = {
     fetchzipversion = 2;

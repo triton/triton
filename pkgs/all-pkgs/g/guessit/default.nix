@@ -19,7 +19,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "2.1.1";
+  version = "2.1.2";
 in
 buildPythonPackage rec {
   name = "guessit-${version}";
@@ -27,7 +27,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "guessit";
     inherit version;
-    sha256 = "cdb51ced109e05318f35dc5ee1c50182a85edd800e86de77ec96eb68a0a99391";
+    sha256 = "9f7e12b7f2215548284631a20aae6fc009c8af2bb8cc5d5e5e339cb15361dd95";
   };
 
   nativeBuildInputs = optionals doCheck [

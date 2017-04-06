@@ -1,7 +1,10 @@
 { stdenv
-, fetchurl
+, autoreconfHook
+, fetchFromGitHub
 , gettext
+, gtk-doc
 , intltool
+, lib
 , perl
 
 , atk
@@ -18,51 +21,30 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolString
     boolWt
     optionalString;
 
     channel = "2.24";
-    version = "2.24.31";
+    version = "${channel}-2017-03-27";
 in
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";
 
-  src = fetchurl {
-    url = "mirror://gnome/sources/gtk+/${channel}/${name}.tar.xz";
-    hashOutput = false;
-    sha256 = "68c1922732c7efc08df4656a5366dcc3afdc8791513400dac276009b40954658";
+  src = fetchFromGitHub {
+    version = 2;
+    owner = "GNOME";
+    repo = "gtk";
+    rev = "4435fb3c612da10522bf4f709b66887a055e4cab";
+    sha256 = "0e24db8d1d157e8fec7283cb7ef90a91c7e8c2879b600c9a317831b8f977f53e";
   };
 
-  configureFlags = [
-    "--${boolEn (xorg.libXext != null)}-shm"
-    "--${boolEn (libxkbcommon != null)}-xkb"
-    "--${boolEn (xorg.libXinerama != null)}-xinerama"
-    "--enable-rebuilds"
-    "--enable-visibility"
-    "--enable-explicit-deps"
-    "--enable-glibtest"
-    "--enable-modules"
-    "--disable-quartz-relocation"
-    "--${boolEn (cups != null)}-cups"
-    "--disable-papi"
-    "--${boolEn (cups != null)}-test-print-backend"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-man"
-    "--${boolWt (xorg.libXi != null)}-xinput"
-    "--${boolWt (xorg != null)}-gdktarget${
-      boolString (xorg != null) "=x11" ""}"
-    #"--with-gdktarget=directfb"
-    "--${boolWt (xorg != null)}-x"
-  ];
-
   nativeBuildInputs = [
+    autoreconfHook  # Just used to include all dependencies
     gettext
+    gtk-doc  # autoreconf
     intltool
     perl
   ];
@@ -91,6 +73,44 @@ stdenv.mkDerivation rec {
     xorg.libXrender
   ];
 
+  autoreconfPhase = ''
+    ln -sv ${gtk-doc}/share/gtk-doc/data/gtk-doc.make .
+
+    touch README  # File is expected to exist
+
+    # autoreconfHook doesn't use $ACLOCAL_FLAGS so it must be run manually
+    aclocal --force -I m4/
+    libtoolize --copy --force
+    autoheader
+    automake --force-missing --add-missing
+    autoconf --force
+  '';
+
+  configureFlags = [
+    "--${boolEn (xorg.libXext != null)}-shm"
+    "--${boolEn (libxkbcommon != null)}-xkb"
+    "--${boolEn (xorg.libXinerama != null)}-xinerama"
+    "--enable-rebuilds"
+    "--enable-visibility"
+    "--enable-explicit-deps"
+    "--enable-glibtest"
+    "--enable-modules"
+    "--disable-quartz-relocation"
+    "--${boolEn (cups != null)}-cups"
+    "--disable-papi"
+    "--${boolEn (cups != null)}-test-print-backend"
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--enable-man"
+    "--${boolWt (xorg.libXi != null)}-xinput"
+    "--${boolWt (xorg != null)}-gdktarget${
+      boolString (xorg != null) "=x11" ""}"
+    #"--with-gdktarget=directfb"
+    "--${boolWt (xorg != null)}-x"
+  ];
+
   postInstall = "rm -rf $out/share/gtk-doc";
 
   passthru = {
@@ -101,18 +121,18 @@ stdenv.mkDerivation rec {
         $out/lib/gtk-2.0/2.10.0/immodules.cache
     ''; # workaround for bug of nix-mode for Emacs */ '';
 
-    srcVerification = fetchurl {
-      inherit (src)
-        outputHash
-        outputHashAlgo
-        urls;
-      sha256Url = "https://download.gnome.org/sources/gtk+/${channel}/"
-        + "${name}.sha256sum";
-      failEarly = true;
-    };
+    # srcVerification = fetchurl {
+    #   inherit (src)
+    #     outputHash
+    #     outputHashAlgo
+    #     urls;
+    #   sha256Url = "https://download.gnome.org/sources/gtk+/${channel}/"
+    #     + "${name}.sha256sum";
+    #   failEarly = true;
+    # };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A toolkit for creating graphical user interfaces";
     homepage = http://www.gtk.org/;
     license = licenses.lgpl2Plus;

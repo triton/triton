@@ -1,7 +1,6 @@
 { stdenv
 , fetchzip
 
-, dtc
 , libftdi
 , libusb
 , libusb-compat
@@ -9,23 +8,22 @@
 }:
 
 let
-  date = "2017-03-30";
-  rev = "cc04a455585bbbf52861f9c28ec03e50a04cacff";
+  date = "2017-04-06";
+  rev = "342740e71571ec249a7150f7b31359d55990b9d3";
 in
 stdenv.mkDerivation rec {
-  name = "flashrom-chromium-2017-03-30";
+  name = "flashrom-chromium-${date}";
 
   src = fetchzip {
     version = 2;
     stripRoot = false;
     purgeTimestamps = true;
     url = "https://chromium.googlesource.com/chromiumos/third_party/flashrom/+archive/${rev}.tar.gz";
-    multihash = "QmPngpMFAqmG4PQndmV5UaymqPGpdowbLZonba8Hpg5f7J";
-    sha256 = "f2110ea3d25098e2326d44eeb7ae6796de8b116cd18688757a8666ba18408411";
+    multihash = "QmXsFsjC5fEyH1dPXhraMf1mfWWe1A3Mwivq2meFpMf7t2";
+    sha256 = "6015a091c06214cccdb9854ae81a3241df3dcf99bb621a45f098065316e57c8f";
   };
 
   buildInputs = [
-    dtc
     libftdi
     libusb
     libusb-compat

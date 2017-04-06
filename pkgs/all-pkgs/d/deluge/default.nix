@@ -38,7 +38,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "2017-03-15";
+  version = "2017-03-29";
   # Using an invalid version breaks compatibility with some trackers
   versionSpoof = "1.3.14";
 in
@@ -48,9 +48,9 @@ buildPythonPackage rec {
   src = fetchgit {
     version = 2;
     url = "git://git.deluge-torrent.org/deluge";
-    rev = "321677e05a7d24e3a0c76012b588671a03bdac54";
+    rev = "a727ee67bc8e0727425b2351f28ebf96f07f78b2";
     branchName = "develop";
-    sha256 = "3539b0f8b5504800f3b94bebbe5e6e19564212c17aeecdf6035eb40bfbf8928d";
+    sha256 = "2fca555cdbdb5e1e9fc8cb2b34bc978033e402d441dfbf665b7d14239199fe06";
   };
 
   nativeBuildInputs = [

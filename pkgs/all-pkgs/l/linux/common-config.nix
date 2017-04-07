@@ -449,10 +449,9 @@ with stdenv.lib;
   DEVKMEM n # Disable /dev/kmem
   CC_STACKPROTECTOR_REGULAR y
   USER_NS y # Support for user namespaces
-
-  # AppArmor support
-  SECURITY_APPARMOR y
-  DEFAULT_SECURITY_APPARMOR y
+  INTEL_TXT y
+  SECURITY_YAMA y
+  DEFAULT_SECURITY_DAC y
 
   # Microcode loading support
   MICROCODE y

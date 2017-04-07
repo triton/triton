@@ -445,6 +445,7 @@ with stdenv.lib;
   # Security related features.
   RANDOMIZE_BASE y
   STRICT_DEVMEM y # Filter access to /dev/mem
+  IO_STRICT_DEVMEM y
   SECURITY_SELINUX_BOOTPARAM_VALUE 0 # Disable SELinux by default
   DEVKMEM n # Disable /dev/kmem
   CC_STACKPROTECTOR_REGULAR y
@@ -452,6 +453,7 @@ with stdenv.lib;
   INTEL_TXT y
   SECURITY_YAMA y
   DEFAULT_SECURITY_DAC y
+  SECURITY_DMESG_RESTRICT y
 
   # Microcode loading support
   MICROCODE y
@@ -459,6 +461,8 @@ with stdenv.lib;
   MICROCODE_AMD y
 
   # Misc. options.
+  EARLY_PRINTK_DBGP n
+  EARLY_PRINTK_EFI y
   EXPERT y
   STRIP_ASM_SYMS y
   UNUSED_SYMBOLS y

@@ -66,6 +66,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://storage.googleapis.com/golang/go${version}.src.tar.gz";
+    hashOutput = false;
     inherit sha256;
   };
 

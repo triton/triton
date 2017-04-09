@@ -70,8 +70,9 @@ stdenv.mkDerivation rec {
         inherit (source) sha256;
       };
 
-  nativeBuildInputs = optionals (config == "mumble") [
+  nativeBuildInputs = [
     python2
+  ] ++ optionals (config == "mumble") [
     qt4
     qt5
   ] ++ optionals (config == "murmur") [

@@ -11,7 +11,7 @@
 }:
 
 let
-  version = "1.2.0";
+  version = "1.2.3";
 in
 stdenv.mkDerivation {
   name = "grpc-${version}";
@@ -20,7 +20,7 @@ stdenv.mkDerivation {
     version = 2;
     url = "https://github.com/grpc/grpc.git";
     rev = "refs/tags/v${version}";
-    sha256 = "a3087529f4219a95f187f2500e904877e6f9f3e0310cf15f100ea59875fbd681";
+    sha256 = "8cc17b17eea21f3ecbcc53b08c08c6a892c168afa75bc4ff7637562ccdf32eb6";
   };
 
   nativeBuildInputs = [

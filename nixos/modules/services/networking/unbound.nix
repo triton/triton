@@ -71,7 +71,7 @@ in
       };
 
       enableRootHints = mkOption {
-        default = true;
+        default = false;
         type = types.bool;
         description = "Use root hints in case forwarding fails";
       };
@@ -127,10 +127,12 @@ in
         mkdir -p ${stateDir}/dev
         touch ${stateDir}/dev/random
         mount -o defaults,bind /dev/urandom ${stateDir}/dev/random
+        mount -o defaults,bind /dev/log ${stateDir}/dev/log
       '';
 
       postStop = ''
         umount ${stateDir}/dev/random
+        umount ${stateDir}/dev/log
       '';
 
       serviceConfig = {

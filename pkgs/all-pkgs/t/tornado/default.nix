@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , pythonOlder
 , pythonPackages
@@ -13,12 +14,12 @@ in
 
 buildPythonPackage rec {
   name = "tornado-${version}";
-  version = "4.4.2";
+  version = "4.4.3";
 
   src = fetchPyPi {
     package = "tornado";
     inherit version;
-    sha256 = "2898f992f898cd41eeb8d53b6df75495f2f423b6672890aadaf196ea1448edcc";
+    sha256 = "f267acc96d5cf3df0fd8a7bfb5a91c2eb4ec81d5962d1a7386ceb34c655634a8";
   };
 
   propagatedBuildInputs = [
@@ -34,7 +35,7 @@ buildPythonPackage rec {
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Web framework and asynchronous networking library";
     homepage = http://www.tornadoweb.org/;
     license = licenses.asl20; # apache

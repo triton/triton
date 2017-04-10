@@ -4,9 +4,6 @@
 { config, pkgs, modulesPath, ... }:
 
 let
-
-  cfg = config.installer;
-
   makeProg = args: pkgs.substituteAll (args // {
     dir = "bin";
     isExecutable = true;
@@ -53,11 +50,12 @@ let
   nixos-version = makeProg {
     name = "nixos-version";
     src = ./nixos-version.sh;
-    inherit (config.system) nixosVersion nixosCodeName nixosRevision;
+    inherit (config.system)
+      nixosCodeName
+      nixosRevision
+      nixosVersion;
   };
-
 in
-
 {
 
   config = {
@@ -72,7 +70,11 @@ in
       ];
 
     system.build = {
-      inherit nixos-install nixos-generate-config nixos-option nixos-rebuild;
+      inherit
+        nixos-generate-config
+        nixos-install
+        nixos-option
+        nixos-rebuild;
     };
 
   };

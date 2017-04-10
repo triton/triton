@@ -74,13 +74,12 @@ let
     };
   };
 in
-
 stdenv.mkDerivation rec {
-  name = "ncmpc-0.25";
+  name = "ncmpc-0.27";
 
   src = fetchurl {
     url = "https://www.musicpd.org/download/ncmpc/0/${name}.tar.xz";
-    sha256 = "6e328acb71d06ae9e6c5fced99bc28ae78bcab1a73130b42ce9ab08a814ecea4";
+    sha256 = "f9a26a3fc869cfdf0a16b0ea3e6512c2fe28a031bbc71b1d24a2bf0bbd3e15d9";
   };
 
   nativeBuildInputs = [

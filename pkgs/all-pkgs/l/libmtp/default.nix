@@ -1,17 +1,20 @@
 { stdenv
 , fetchurl
+, lib
 
 , libusb_1
 }:
 
+let
+  version = "1.1.13";
+in
 stdenv.mkDerivation rec {
-  name = "libmtp-1.1.12";
+  name = "libmtp-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/libmtp/${name}.tar.gz";
-    multihash = "QmS2d3fXyGmNR9WxbpXwAhgvecKrcxYJ6CiXEiMnJmy41J";
+    url = "mirror://sourceforge/libmtp/libmtp/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "cdf59e816c6cda3e908a876c7fb42943f40b85669aea0029a1ca431c89afa1a0";
+    sha256 = "494ee02fbfbc316aad75b93263dac00f02a4899f28cfda1decbbd6e26fda6d40";
   };
 
   buildInputs = [
@@ -34,9 +37,10 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
-    homepage = http://libmtp.sourceforge.net;
+  meta = with lib; {
     description = "An implementation of Microsoft's Media Transfer Protocol";
+    homepage = http://libmtp.sourceforge.net;
+    license = licenses.lgpl21;
     maintainers = with maintainers; [
       wkennington
     ];

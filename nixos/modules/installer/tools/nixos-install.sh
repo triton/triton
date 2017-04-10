@@ -105,7 +105,7 @@ ln -s /run $mountPoint/var/run
 for f in /etc/resolv.conf /etc/hosts; do rm -f $mountPoint/$f; [ -f "$f" ] && cp -Lf $f $mountPoint/etc/; done
 for f in /etc/passwd /etc/group;      do touch $mountPoint/$f; [ -f "$f" ] && mount --rbind -o ro $f $mountPoint/$f; done
 mkdir -p /etc/ssl/certs
-for f in /etc/ssl/certs/ca-certificates.crt do rm -f $mountPoint/$f; [ -f "$f" ] && cp -Lf $f $mountPoint/$f; done
+for f in /etc/ssl/certs/ca-certificates.crt; do rm -f $mountPoint/$f; [ -f "$f" ] && cp -Lf $f $mountPoint/$f; done
 
 if [ -n "$runChroot" ]; then
     if ! [ -L $mountPoint/nix/var/nix/profiles/system ]; then

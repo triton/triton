@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , libdrm
 , mesa
@@ -8,13 +9,20 @@
 , xorg
 }:
 
+let
+  version = "1.8.0";
+in
 stdenv.mkDerivation rec {
-  name = "libva-1.8.0";
+  name = "libva-${version}";
 
   src = fetchurl rec {
-    url = "https://www.freedesktop.org/software/vaapi/releases/libva/${name}.tar.bz2";
+    urls = [
+      ("https://github.com/01org/libva/releases/download/${version}/"
+        + "${name}.tar.bz2")
+      ("https://www.freedesktop.org/software/vaapi/releases/libva/"
+        + "${name}.tar.bz2")
+    ];
     hashOutput = false;
-    multihash = "QmQ3LheJKGMQRJCoNMGnyoTrCdVjoLrRj9ZDACaBzSWwoo";
     sha256 = "eb92f3dcbe3981df3575348377263b31361113c77b2c3745f23174d1f562d658";
   };
 
@@ -28,6 +36,7 @@ stdenv.mkDerivation rec {
   ];
 
   configureFlags = [
+    "--disable-docs"
     "--enable-drm"
     "--enable-x11"
     "--enable-glx"
@@ -50,9 +59,9 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
-    description = "Video Acceleration (VA) API for Linux";
-    homepage = http://www.freedesktop.org/wiki/Software/vaapi;
+  meta = with lib; {
+    description = "Libva is an implementation for VA-API (VIdeo Acceleration API)";
+    homepage = https://github.com/01org/libva;
     license = licenses.mit;
     maintainers = with maintainers; [
       wkennington

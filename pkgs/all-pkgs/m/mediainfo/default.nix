@@ -23,7 +23,7 @@ let
   inherit (lib)
     optionalString;
 
-  version = "0.7.93";
+  version = "0.7.94";
 in
 stdenv.mkDerivation rec {
   name = "mediainfo-${version}";
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/mediainfo/source/mediainfo/${version}/"
       + "mediainfo_${version}.tar.xz";
-    sha256 = "a268b190febc5fbf54a6cfcf0769fcb65c0d888920e6a52ef020822cefec4bae";
+    sha256 = "2cfdf11efe10bee34a87a41a84db10c184bb0cc68f0c26a8ca635e5a56a06db9";
   };
 
   nativeBuildInputs = [

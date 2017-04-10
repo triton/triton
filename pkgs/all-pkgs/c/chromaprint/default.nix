@@ -9,10 +9,10 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolOn;
 
-  version = "1.4.1";
+  version = "1.4.2";
 in
 stdenv.mkDerivation rec {
   name = "chromaprint-${version}";
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
       "https://bitbucket.org/acoustid/chromaprint/downloads/${name}.tar.gz"
       "mirror://gentoo/distfiles/${name}.tar.gz"
     ];
-    sha256 = "d94e171e0b3d60a8fefe6846a3c0ed3a9a939cb44a7d7113331fdbc140de6d34";
+    sha256 = "989609a7e841dd75b34ee793bd1d049ce99a8f0d444b3cea39d57c3e5d26b4d4";
   };
 
   nativeBuildInputs = [

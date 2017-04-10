@@ -309,6 +309,8 @@ notify-python = callPackage ../all-pkgs/n/notify-python { };
 
 olefile = callPackage ../all-pkgs/o/olefile { };
 
+packaging = callPackage ../all-pkgs/p/packaging { };
+
 paste = callPackage ../all-pkgs/p/paste { };
 
 pathlib = callPackage ../all-pkgs/p/pathlib { };

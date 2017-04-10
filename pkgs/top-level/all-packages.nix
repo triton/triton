@@ -1803,6 +1803,8 @@ inputproto = callPackage ../all-pkgs/i/inputproto { };
 
 intel-microcode = callPackage ../all-pkgs/i/intel-microcode { };
 
+intel-vaapi-driver = callPackage ../all-pkgs/i/intel-vaapi-driver { };
+
 intltool = callPackage ../all-pkgs/i/intltool { };
 
 iotop = pkgs.python3Packages.iotop;
@@ -2331,8 +2333,6 @@ libutp = callPackage ../all-pkgs/l/libutp { };
 libuv = callPackage ../all-pkgs/l/libuv { };
 
 libva = callPackage ../all-pkgs/l/libva { };
-
-libva-intel-driver = callPackage ../all-pkgs/l/libva-intel-driver { };
 
 libva-vdpau-driver = callPackage ../all-pkgs/l/libva-vdpau-driver { };
 

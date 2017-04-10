@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "1.0.2";
+  version = "1.0.3";
 in
 buildPythonPackage rec {
   name = "speedtest-cli-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "speedtest-cli";
     inherit version;
-    sha256 = "60cd286e1a8244100f4e4faf8f79d534c7df508daaf9d77f11196878846f7bff";
+    sha256 = "e6897a11a8564b23e377fd63b8bdd895c015773ab0916d6a8358b996c423d653";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "CLI utility for testing internet bandwidth using speedtest.net";
     homepage = https://github.com/sivel/speedtest-cli;
     license = licenses.asl20;

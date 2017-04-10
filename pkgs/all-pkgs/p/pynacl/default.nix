@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , cffi
 , libsodium
@@ -9,7 +10,7 @@
 }:
 
 let
-  version = "1.1.1";
+  version = "1.1.2";
 in
 buildPythonPackage {
   name = "pynacl-${version}";
@@ -17,7 +18,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "PyNaCl";
     inherit version;
-    sha256 = "a251393a93c4bd85e7a2c1c0e938dc8862743ae27d8def87c32b2888ccca049e";
+    sha256 = "32f52b754abf07c319c04ce16905109cab44b0e7f7c79497431d3b2000f8af8c";
   };
 
   propagatedBuildInputs = [
@@ -29,7 +30,7 @@ buildPythonPackage {
     libsodium
   ];
 
-  # Make sure we use the system libsodium 
+  # Make sure we use the system libsodium
   postPatch = ''
     sed -i '/def use_system():/a\    return True' setup.py
   '';
@@ -38,7 +39,10 @@ buildPythonPackage {
     inherit version;
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
+    description = "Python binding to the Networking and Cryptography (NaCl) library";
+    homepage = https://pypi.python.org/pypi/PyNaCl;
+    license = licenses.asl20;
     maintainers = with maintainers; [
       wkennington
     ];

@@ -4,12 +4,13 @@
 , lib
 , pythonOlder
 
+, asn1crypto
 , cffi
 , enum34
 , idna
 , ipaddress
 , openssl
-, pyasn1
+, packaging
 , six
 }:
 
@@ -17,7 +18,7 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "1.7.2";
+  version = "1.8.1";
 in
 buildPythonPackage {
   name = "cryptography-${version}";
@@ -25,7 +26,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "cryptography";
     inherit version;
-    sha256 = "878cb68b3da3d493ffd68f36db11c29deee623671d3287c3f8d685117ffda9a9";
+    sha256 = "323524312bb467565ebca7e50c8ae5e9674e544951d28a2904a50012a8828190";
   };
 
   buildInputs = [
@@ -34,10 +35,11 @@ buildPythonPackage {
   ];
 
   propagatedBuildInputs = [
+    asn1crypto
     cffi
     idna
     ipaddress
-    pyasn1
+    packaging
   ] ++ optionals (pythonOlder "3.4") [
     enum34
   ];

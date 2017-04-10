@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , boost
 , librevenge
@@ -7,11 +8,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libwps-0.4.5";
+  name = "libwps-0.4.6";
 
   src = fetchurl {
     url = "mirror://sourceforge/libwps/libwps/${name}/${name}.tar.xz";
-    sha256 = "8e175ab9339d447a285a1533bfdc405432b9a275e4f3a98690ffaf12fe7f4d4a";
+    sha256 = "e48a7c2fd20048a0a8eaf69bad972575f8b9f06e7497c787463f127d332fccd0";
   };
 
   buildInputs = [
@@ -20,10 +21,10 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     inherit version;
-    homepage = http://libwps.sourceforge.net/;
     description = "Microsoft Works file word processor format import filter library";
+    homepage = http://libwps.sourceforge.net/;
     license = licenses.lgpl21;
     maintainers = with maintainers; [
       wkennington

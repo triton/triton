@@ -1002,10 +1002,10 @@ let
   }) // {inherit xproto zlib ;};
 
   libpciaccess = (mkDerivation "libpciaccess" {
-    name = "libpciaccess-0.13.4";
+    name = "libpciaccess-0.13.5";
     src = fetchurl {
-      url = mirror://xorg/individual/lib/libpciaccess-0.13.4.tar.bz2;
-      sha256 = "1krgryi9ngjr66242v0v5mczihgv0y7rrvx0563arr318mjn9y07";
+      url = mirror://xorg/individual/lib/libpciaccess-0.13.5.tar.bz2;
+      sha256 = "752c54e9b3c311b4347cb50aea8566fa48eab274346ea8a06f7f15de3240b999";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ zlib ];

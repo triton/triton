@@ -24,7 +24,7 @@ let
   inherit (stdenv.lib)
     makeSearchPath;
 
-  version = "3.1.1.1";
+  version = "3.1.3";
 in
 stdenv.mkDerivation rec {
   name = "teamspeak-client-${version}";
@@ -34,13 +34,13 @@ stdenv.mkDerivation rec {
       "http://dl.4players.de/ts/releases/${version}/TeamSpeak3-Client-linux_amd64-${version}.run"
       "http://teamspeak.gameserver.gamed.de/ts3/releases/${version}/TeamSpeak3-Client-linux_amd64-${version}.run"
     ];
-    sha256 = "4eae3495c2fcef150684e8b7bac3f12d6e0b6e0fe914efd06f3cf2f5b8ee2d96";
+    sha256 = "0673e83d3ff836f07b501549e75759df98d30640e7c6a658a3335b36d23458ec";
   };
 
   # grab the plugin sdk for the desktop icon
   pluginsdk = fetchurl {
-    url = "http://dl.4players.de/ts/client/pluginsdk/pluginsdk_3.1.0.1.zip";
-    sha256 = "73e364307cab849fd2ffcc260832d9dcc06a91b5991b2dd7703784ae5a6480b1";
+    url = "http://dl.4players.de/ts/client/pluginsdk/pluginsdk_3.1.1.1.zip";
+    sha256 = "ee788e81dc7d515a538175cda92f68ba114b503e226fe726689f3e5264abdcaf";
   };
 
   unpackPhase = ''

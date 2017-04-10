@@ -150,6 +150,8 @@ apscheduler = callPackage ../all-pkgs/a/apscheduler { };
 
 asciinema = callPackage ../all-pkgs/a/asciinema { };
 
+asn1crypto = callPackage ../all-pkgs/a/asn1crypto { };
+
 attrs = callPackage ../all-pkgs/a/attrs { };
 
 automat = callPackage ../all-pkgs/a/automat { };

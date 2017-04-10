@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "pcre2-10.22";
+  name = "pcre2-10.23";
 
   src = fetchurl {
     url = "http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${name}.tar.bz2";
-    multihash = "QmW9xCF2ypYLEThkjpds3h6VFJ2cY7znYGRFcHGNURP22G";
-    sha256 = "1q6lrj9b08l1q39vxipb0fi88x6ybvkr6439h8bjb9r8jd81fsn6";
+    multihash = "QmTF83JjY7todppYY9MhgiVTEBcURbvTXa7PHAoiQHBua9";
+    sha256 = "dfc79b918771f02d33968bd34a749ad7487fa1014aeb787fad29dd392b78c56e";
   };
 
   buildInputs = [

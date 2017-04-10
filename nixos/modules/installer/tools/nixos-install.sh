@@ -8,12 +8,8 @@
 #   * install the boot loader
 
 triton_install_create_directories() {
-  local -A -r directories
-  local directory
-  local -r mount_point="${1}"
-
-  directories=(
-    ['bin']='0755' # /bin/sh
+  local -A -r directories=(
+    ['bin']='0755'  # /bin/sh
     ['dev']='755'
     ['etc']='755'
     ['home']='755'
@@ -37,9 +33,11 @@ triton_install_create_directories() {
     ['sys']='755'
     ['tmp']='01777'
     ['tmp/root']='755'
-    ['user/bin']='0755' # /usr/bin/env
+    ['usr/bin']='0755'  # /usr/bin/env
     ['var/setuid-wrappers']='755'
   )
+  local directory
+  local -r mount_point="${1}"
 
   # Create directory structure relative to $MOUNT_POINT.
   for directory in "${!directories[@]}"; do

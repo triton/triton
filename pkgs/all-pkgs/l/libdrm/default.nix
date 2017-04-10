@@ -1,28 +1,29 @@
 { stdenv
 , fetchurl
+, lib
 
+, libpthread-stubs
 , xorg
 }:
 
 stdenv.mkDerivation rec {
-  name = "libdrm-2.4.77";
+  name = "libdrm-2.4.79";
 
   src = fetchurl {
     url = "https://dri.freedesktop.org/libdrm/${name}.tar.bz2";
-    multihash = "QmfLfpLTuK9DukR1vJykFrVk41GZFJYZRMA6MFnn9wtoML";
+    multihash = "QmbWfoozsJmRVZTBcogrNSyfnej46tAMqL7K9RbGZzTS4V";
     hashOutput = false;
-    sha256 = "e8d5e2ca3a42a4d02b4df97fde45a12eeeb34c158008361026f82c8bf6fb3b6d";
+    sha256 = "c6aaf319293bce38023e9a637471b0f45c93c807d2a279060d741fc7a2e5b197";
   };
 
   buildInputs = [
-    xorg.libpthreadstubs
+    libpthread-stubs
     xorg.libpciaccess
   ];
 
   configureFlags = [
     "--enable-largefile"
-    # Udev is only used by tests now.
-    "--disable-udev"
+    "--disable-udev"  # Udev is only used by tests.
     "--enable-libkms"
     "--enable-intel"
     "--enable-radeon"
@@ -68,7 +69,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library for accessing the kernel's Direct Rendering Manager";
     homepage = http://dri.freedesktop.org/libdrm/;
     license = licenses.bsd3;

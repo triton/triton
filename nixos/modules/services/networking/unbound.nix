@@ -127,6 +127,7 @@ in
         mkdir -p ${stateDir}/dev
         touch ${stateDir}/dev/random
         mount -o defaults,bind /dev/urandom ${stateDir}/dev/random
+        touch ${stateDir}/dev/log
         mount -o defaults,bind /dev/log ${stateDir}/dev/log
       '';
 

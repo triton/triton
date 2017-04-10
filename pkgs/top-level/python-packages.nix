@@ -307,6 +307,8 @@ netaddr = callPackage ../all-pkgs/n/netaddr { };
 
 notify-python = callPackage ../all-pkgs/n/notify-python { };
 
+olefile = callPackage ../all-pkgs/o/olefile { };
+
 paste = callPackage ../all-pkgs/p/paste { };
 
 pathlib = callPackage ../all-pkgs/p/pathlib { };

@@ -1,21 +1,23 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , freetype
 , lcms2
 , libjpeg
 , libtiff
 , libwebp
+, olefile
 , openjpeg
 , zlib
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 
-  version = "3.4.2";
+  version = "4.1.0";
 in
 buildPythonPackage rec {
   name = "pillow-${version}";
@@ -23,7 +25,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "Pillow";
     inherit version;
-    sha256 = "0ee9975c05602e755ff5000232e0335ba30d507f6261922a658ee11b1cec36d1";
+    sha256 = "a0fd487fed4a35717401b7566e51a1520b34e7c0f7f2a315a6509f82bc86299f";
   };
 
   buildInputs = [
@@ -32,6 +34,7 @@ buildPythonPackage rec {
     libjpeg
     libtiff
     libwebp
+    olefile
     openjpeg
     zlib
   ];
@@ -41,7 +44,7 @@ buildPythonPackage rec {
     export LDFLAGS="$(echo "$NIX_LDFLAGS" | sed 's,-rpath [^ ]*,,g')"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Fork of The Python Imaging Library (PIL)";
     homepage = http://python-pillow.org/;
     license = licenses.free; # PIL license

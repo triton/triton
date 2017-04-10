@@ -41,11 +41,11 @@ in
     # should define an option used by this module.
     environment.etc."nsswitch.conf".text =
       ''
-        passwd:    files ${optionalString ldap "ldap"}
-        group:     files ${optionalString ldap "ldap"}
+        passwd:    files mymachines systemd ${optionalString ldap "ldap"}
+        group:     files mymachines systemd ${optionalString ldap "ldap"}
         shadow:    files ${optionalString ldap "ldap"}
-        hosts:     files ${optionalString nssmdns "mdns_minimal [NOTFOUND=return]"} dns ${optionalString nssmdns "mdns"} ${optionalString nsswins "wins"} myhostname mymachines
-        networks:  files dns
+        hosts:     files mymachines ${optionalString nssmdns "mdns_minimal [NOTFOUND=return]"} dns ${optionalString nssmdns "mdns"} ${optionalString nsswins "wins"} myhostname
+        networks:  files
         ethers:    files
         services:  files
         protocols: files

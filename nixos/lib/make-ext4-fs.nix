@@ -40,7 +40,7 @@ pkgs.stdenv.mkDerivation {
       #   cd /nix/store/abcd...efg-coreutils-8.23/bin
       #   write /nix/store/abcd...efg-coreutils-8.23/bin/sleep sleep
       #   sif sleep mode 040555
-      #   sif sleep gid 30000
+      #   sif sleep gid 3510000
       # In particular, debugfs doesn't handle absolute target paths; you have to 'cd' in the virtual
       # filesystem first. Likewise the intermediate directories must already exist (using `find`
       # handles that for us). And when setting the file's permissions, the inode type flags (__S_IFDIR,
@@ -74,7 +74,7 @@ pkgs.stdenv.mkDerivation {
               ;;
           esac
 
-          echo sif $file gid 30000 # chgrp to nixbld
+          echo sif $file gid 3510000 # chgrp to nixbld
         done
       ) | faketime "1970-01-01 00:00:00" debugfs -w $out -f /dev/stdin > errorlog 2>&1
 

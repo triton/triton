@@ -1,7 +1,7 @@
 # This module defines the global list of uids and gids.  We keep a
 # central list to prevent id collisions.
 
-{ config, pkgs, lib, ... }:
+{ lib, ... }:
 
 {
   options = {
@@ -246,8 +246,9 @@
 
       # When adding a uid, make sure it doesn't match an existing gid. And don't use uids above 399!
 
-      nixbld = 30000; # start of range of uids
       nobody = 65534;
+
+      nixbld = 3510000; # start of range of uids
     };
 
     ids.gids = {
@@ -467,8 +468,9 @@
       # uids and gids. Also, don't use gids above 399!
 
       users = 100;
-      nixbld = 30000;
       nogroup = 65534;
+
+      nixbld = 3510000;
     };
 
   };

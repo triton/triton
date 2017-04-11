@@ -4,7 +4,6 @@ with lib;
 
 let
 
-  nssModulesPath = config.system.nssModules.path;
   cfg = config.services.nscd;
 
   inherit (lib) singleton;
@@ -50,9 +49,14 @@ in
     systemd.services.nscd =
       { description = "Name Service Cache Daemon";
 
-        wantedBy = [ "nss-lookup.target" "nss-user-lookup.target" ];
+        wantedBy = [
+          "nss-lookup.target"
+          "nss-user-lookup.target"
+        ];
 
-        environment = { LD_LIBRARY_PATH = nssModulesPath; };
+        environment = {
+          LD_LIBRARY_PATH = "/run/current-system/nss/lib";
+        };
 
         preStart =
           ''

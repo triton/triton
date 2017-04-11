@@ -188,14 +188,9 @@ in
 
         preStart = "mkdir -p /var/run/avahi-daemon";
 
-        script =
-          ''
-            # Make NSS modules visible so that `avahi_nss_support ()' can
-            # return a sensible value.
-            export LD_LIBRARY_PATH="${config.system.nssModules.path}"
-
-            exec ${pkgs.avahi}/sbin/avahi-daemon --syslog -f "${avahiDaemonConf}"
-          '';
+        script = ''
+          exec ${pkgs.avahi}/sbin/avahi-daemon --syslog -f "${avahiDaemonConf}"
+        '';
       };
 
     services.dbus.enable = true;

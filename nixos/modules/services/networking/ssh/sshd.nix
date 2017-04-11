@@ -7,8 +7,6 @@ let
   cfg  = config.services.openssh;
   cfgc = config.programs.ssh;
 
-  nssModulesPath = config.system.nssModules.path;
-
   userOptions = {
 
     openssh.authorizedKeys = {
@@ -67,7 +65,6 @@ let
     path = [
       cfgc.package
     ];
-    environment.LD_LIBRARY_PATH = nssModulesPath;
     serviceConfig = {
       KillMode = "process";
     };

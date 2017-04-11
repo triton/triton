@@ -39,9 +39,6 @@ let
       ${smbToString (map shareConfig (attrNames cfg.shares))}
     '');
 
-  # This may include nss_ldap, needed for samba if it has to use ldap.
-  nssModulesPath = config.system.nssModules.path;
-
   daemonService = appName: args:
     { description = "Samba Service Daemon ${appName}";
 
@@ -49,7 +46,6 @@ let
       partOf = [ "samba.target" ];
 
       environment = {
-        LD_LIBRARY_PATH = nssModulesPath;
         LOCALE_ARCHIVE = "/run/current-system/sw/lib/locale/locale-archive";
       };
 

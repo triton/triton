@@ -25,11 +25,14 @@ in
         several DNS resolution methods to be specified via
         <filename>/etc/nsswitch.conf</filename>.
       '';
-      apply = list:
-        {
-          inherit list;
-          path = makeSearchPath "lib" list;
-        };
+    };
+
+    system.nssPath = mkOption {
+      type = types.path;
+      internal = true;
+      description = ''
+        The environment containing NSS modules.
+      '';
     };
 
   };
@@ -56,7 +59,21 @@ in
     # configured IP addresses, or ::1 and 127.0.0.2 as
     # fallbacks. Systemd also provides nss-mymachines to return IP
     # addresses of local containers.
-    system.nssModules = [ config.systemd.package ];
+    system.nssModules = [
+      config.systemd.package
+    ];
+
+    system.nssPath = pkgs.buildEnv {
+      name = "nss-path";
+      paths = config.system.nssModules;
+      pathsToLink = [
+        "/lib"
+      ];
+      outputsToLink = [
+        "out"
+        "lib"
+      ];
+    };
 
   };
 }

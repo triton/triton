@@ -1,0 +1,174 @@
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include <errno.h>
+#include <grp.h>
+#include <nss.h>
+#include <pwd.h>
+#include <sys/types.h>
+
+const char *builder_name = "nixbld";
+const uid_t max_builders = 10000;
+const uid_t base_uid = @BASE_UID@;
+const gid_t base_gid = @BASE_GID@;
+
+enum nss_status populate_passwd(uid_t builder_id, struct passwd *pwd, char *buf,
+		size_t buf_len, int *errnop)
+{
+	int ret;
+
+	ret = snprintf(buf, buf_len, "%s%d", builder_name, builder_id);
+	if (ret < 0 || ret >= buf_len) {
+		*errnop = ERANGE;
+		return NSS_STATUS_TRYAGAIN;
+	}
+	pwd->pw_name = buf;
+	buf += ret + 1;
+	buf_len -= ret + 1;
+
+	pwd->pw_passwd = "x";
+	pwd->pw_uid = base_uid + builder_id;
+	pwd->pw_gid = base_gid;
+	pwd->pw_gecos = "Nix Builder";
+	pwd->pw_dir = "/var/empty";
+	pwd->pw_shell = "/run/current-system/sw/bin/nologin";
+
+	*errnop = 0;
+	return NSS_STATUS_SUCCESS;
+}
+
+enum nss_status _nss_nixos_getpwnam_r(const char *name, struct passwd *pwd,
+		char *buf, size_t buf_len, int *errnop)
+{
+	uid_t builder_id;
+
+	/* Validate args */
+	if (errnop == NULL)
+		return NSS_STATUS_TRYAGAIN;
+	if (name == NULL || pwd == NULL || buf == NULL) {
+		*errnop = EINVAL;
+		return NSS_STATUS_TRYAGAIN;
+	}
+
+	/* User should be prefixed with the `builder_name` */
+	if (strncmp(builder_name, name, strlen(builder_name))) {
+		*errnop = ENOENT;
+		return NSS_STATUS_NOTFOUND;
+	}
+
+	/* The suffix should be a number */
+	errno = 0;
+	builder_id = strtoul(name + strlen(builder_name), NULL, 10);
+	if (errno) {
+		*errnop = errno;
+		return NSS_STATUS_NOTFOUND;
+	}
+	if (builder_id >= max_builders) {
+		*errnop = ENOENT;
+		return NSS_STATUS_NOTFOUND;
+	}
+
+	return populate_passwd(builder_id, pwd, buf, buf_len, errnop);
+}
+
+enum nss_status _nss_nixos_getpwuid_r(uid_t uid, struct passwd *pwd, char *buf,
+		size_t buf_len, int *errnop)
+{
+	/* Validate args */
+	if (errnop == NULL)
+		return NSS_STATUS_TRYAGAIN;
+	if (pwd == NULL || buf == NULL) {
+		*errnop = EINVAL;
+		return NSS_STATUS_TRYAGAIN;
+	}
+
+	/* UID should be in range */
+	if (uid < base_uid || uid >= base_uid + max_builders) {
+		*errnop = ENOENT;
+		return NSS_STATUS_NOTFOUND;
+	}
+
+	return populate_passwd(uid - base_uid, pwd, buf, buf_len, errnop);
+}
+
+enum nss_status populate_group(struct group *grp, char *buf, size_t buf_len,
+		int *errnop)
+{
+	int ret;
+
+	ret = snprintf(buf, buf_len, "%s", builder_name);
+	if (ret < 0 || ret >= buf_len) {
+		*errnop = ERANGE;
+		return NSS_STATUS_TRYAGAIN;
+	}
+	grp->gr_name = buf;
+	buf += ret + 1;
+	buf_len -= ret + 1;
+
+	grp->gr_gid = base_gid;
+
+	ret = (max_builders + 1) * sizeof(char *);
+	if (ret > buf_len) {
+		*errnop = ERANGE;
+		return NSS_STATUS_TRYAGAIN;
+	}
+	grp->gr_mem = (char **)buf;
+	buf += ret;
+	buf_len -= ret;
+	for (uid_t i = 0; i < max_builders; i++) {
+		ret = snprintf(buf, buf_len, "%s%d", builder_name, i);
+		if (ret < 0 || ret >= buf_len) {
+			*errnop = ERANGE;
+			return NSS_STATUS_TRYAGAIN;
+		}
+		grp->gr_mem[i] = buf;
+		buf += ret + 1;
+		buf_len -= ret + 1;
+	}
+	grp->gr_mem[max_builders] = NULL;
+
+	*errnop = 0;
+	return NSS_STATUS_SUCCESS;
+}
+
+enum nss_status _nss_nixos_getgrnam_r(const char *name, struct group *grp,
+		char *buf, size_t buf_len, int *errnop)
+{
+	/* Validate args */
+	if (errnop == NULL)
+		return NSS_STATUS_TRYAGAIN;
+	if (name == NULL || grp == NULL || buf == NULL) {
+		*errnop = EINVAL;
+		return NSS_STATUS_TRYAGAIN;
+	}
+
+	/* Group should match `builder_name` */
+	if (strcmp(builder_name, name)) {
+		*errnop = ENOENT;
+		return NSS_STATUS_NOTFOUND;
+	}
+
+	return populate_group(grp, buf, buf_len, errnop);
+}
+
+enum nss_status _nss_nixos_getgrgid_r(gid_t gid, struct group *grp, char *buf,
+		size_t buf_len, int *errnop)
+{
+	/* Validate args */
+	if (errnop == NULL)
+		return NSS_STATUS_TRYAGAIN;
+	if (grp == NULL || buf == NULL) {
+		*errnop = EINVAL;
+		return NSS_STATUS_TRYAGAIN;
+	}
+
+	/* GID should be valid */
+	if (gid == base_gid) {
+		*errnop = ENOENT;
+		return NSS_STATUS_NOTFOUND;
+	}
+
+	return populate_group(grp, buf, buf_len, errnop);
+}

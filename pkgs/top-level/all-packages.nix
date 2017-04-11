@@ -2705,6 +2705,8 @@ nix_dev = callPackageAlias "nix" {
   channel = "dev";
 };
 
+nixos-utils = callPackage ../all-pkgs/n/nixos-utils { };
+
 nmap = callPackage ../all-pkgs/n/nmap { };
 
 nodejs = callPackage ../all-pkgs/n/nodejs { };

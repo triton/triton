@@ -44,8 +44,8 @@ in
     # should define an option used by this module.
     environment.etc."nsswitch.conf".text =
       ''
-        passwd:    files mymachines systemd ${optionalString ldap "ldap"}
-        group:     files mymachines systemd ${optionalString ldap "ldap"}
+        passwd:    files nixos mymachines systemd ${optionalString ldap "ldap"}
+        group:     files nixos mymachines systemd ${optionalString ldap "ldap"}
         shadow:    files ${optionalString ldap "ldap"}
         hosts:     files mymachines ${optionalString nssmdns "mdns_minimal [NOTFOUND=return]"} dns ${optionalString nssmdns "mdns"} ${optionalString nsswins "wins"} myhostname
         networks:  files
@@ -61,6 +61,7 @@ in
     # addresses of local containers.
     system.nssModules = [
       config.systemd.package
+      pkgs.nixos-utils
     ];
 
     system.nssPath = pkgs.buildEnv {

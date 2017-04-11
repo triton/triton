@@ -8,20 +8,6 @@ let
 
   nix = cfg.package;
 
-  makeNixBuildUser = nr:
-    { name = "nixbld${toString nr}";
-      description = "Nix build user ${toString nr}";
-
-      /* For consistency with the setgid(2), setuid(2), and setgroups(2)
-         calls in `libstore/build.cc', don't add any supplementary group
-         here except "nixbld".  */
-      uid = builtins.add config.ids.uids.nixbld nr;
-      group = "nixbld";
-      extraGroups = [ "nixbld" ];
-    };
-
-  nixbldUsers = map makeNixBuildUser (range 1 cfg.nrBuildUsers);
-
   nixConf =
     let
       # If we're using sandbox for builds, then provide /bin/sh in
@@ -233,16 +219,6 @@ in
         description = "Environment variables used by Nix.";
       };
 
-      nrBuildUsers = mkOption {
-        type = types.int;
-        description = ''
-          Number of <literal>nixbld</literal> user accounts created to
-          perform secure concurrent builds.  If you receive an error
-          message saying that “all build users are currently in use”,
-          you should increase this value.
-        '';
-      };
-
       readOnlyStore = mkOption {
         type = types.bool;
         default = true;
@@ -425,12 +401,6 @@ in
             export NIX_REMOTE=daemon
         fi
       '';
-
-    nix.nrBuildUsers = mkDefault (lib.max 10 cfg.maxJobs);
-
-    users.extraUsers = nixbldUsers;
-
-    services.xserver.displayManager.hiddenUsers = map ({ name, ... }: name) nixbldUsers;
 
     system.activation.scripts.nix = stringAfter [ "etc" "users" ] ''
       # Nix initialisation.

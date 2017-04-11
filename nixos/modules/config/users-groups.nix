@@ -494,7 +494,6 @@ in {
       dialout.gid = ids.gids.dialout;
       nogroup.gid = ids.gids.nogroup;
       users.gid = ids.gids.users;
-      nixbld.gid = ids.gids.nixbld;
       utmp.gid = ids.gids.utmp;
       adm.gid = ids.gids.adm;
       grsecurity.gid = ids.gids.grsecurity;

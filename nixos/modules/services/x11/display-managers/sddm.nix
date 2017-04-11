@@ -41,7 +41,6 @@ let
     FacesDir=${sddm}/share/sddm/faces
 
     [Users]
-    MaximumUid=${toString config.ids.uids.nixbld}
     HideUsers=${concatStringsSep "," dmcfg.hiddenUsers}
     HideShells=/run/current-system/sw/bin/nologin
 

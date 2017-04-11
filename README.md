@@ -18,14 +18,12 @@ manager.
 
 ##### Supported Platforms `(not all platforms implemented)`
 + `ARM` requires: `NEON`, `VFPv3+` (aka. armv7+)
-  * `armv7l-linux`
-  * `armv8l-linux`
-  * `aarch64-linux`
+  * `armv7l-linux` WIP
+  * `armv8l-linux` WIP
+  * `aarch64-linux` WIP
 + `x86` requires: `MMX`,`SSE`,`SSE2`,`SSE3`,`SSSE3`,`SSE4`,`SSE4.1`,`SSE4.2`,`AES`
  (aka. at least Intel Westmere, AMD 15h, or VIA Eden x4)
-  * `i686-freebsd` (libs only)
   * `i686-linux` (libs only)
-  * `x86_64-freebsd`
   * `x86_64-linux`
 + `POWER` requires: POWER8+
-  * `powerpc64le-linux`
+  * `powerpc64le-linux` Incomplete

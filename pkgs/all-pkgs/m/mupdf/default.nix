@@ -16,14 +16,14 @@
 }:
 
 let
-  version = "1.10a";
+  version = "1.11";
 in
 stdenv.mkDerivation rec {
   name = "mupdf-${version}";
 
   src = fetchurl {
     url = "https://mupdf.com/downloads/archive/${name}-source.tar.gz";
-    sha256 = "aacc1f36b9180f562022ef1ab3439b009369d944364f3cff8a2a898834e3a836";
+    sha256 = "209474a80c56a035ce3f4958a63373a96fad75c927c7b1acdc553fc85855f00a";
   };
 
   buildInputs = [

@@ -101,6 +101,12 @@ stdenv.mkDerivation ({
       file = "glibc/fix_path_attribute_in_getconf.patch";
       sha256 = "d7176285b786c701bd963d97047d845aaf05fdc1e400de3a0526e0cd8ab68047";
     })
+
+    (fetchTritonPatch {
+      rev = "2372c3f82f0b4b5f81202ca6a7e10898b9becc46";
+      file = "g/glibc/fix-nsswitch.patch";
+      sha256 = "71bcbce374883fedd895ff67eb4400c97c43b229df457a73f218c89a69b4cdb5";
+    })
   ];
 
   postPatch =

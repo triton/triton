@@ -2293,11 +2293,11 @@ let
 
   google-api-go-client = buildFromGitHub {
     version = 2;
-    rev = "48e49d1645e228d1c50c3d54fb476b2224477303";
-    date = "2017-03-27";
+    rev = "16ab375f94503bfa0d19db78e96bffbe1a34354f";
+    date = "2017-03-20";
     owner = "google";
     repo = "google-api-go-client";
-    sha256 = "016rhi79vsf2wj2rpshn0f06qdr6jpri3c1q0m9msk5qgvfnxzx5";
+    sha256 = "0c35bf490c54ae068da151676675c56c5facdaca82db81e45c5c04897c5951a6";
     goPackagePath = "google.golang.org/api";
     buildInputs = [
       appengine

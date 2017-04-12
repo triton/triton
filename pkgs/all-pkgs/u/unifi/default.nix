@@ -4,14 +4,14 @@
 }:
 
 let
-  version = "5.4.11";
+  version = "5.4.14";
 in
 stdenv.mkDerivation rec {
   name = "unifi-controller-${version}";
 
   src = fetchurl {
     url = "https://www.ubnt.com/downloads/unifi/${version}/UniFi.unix.zip";
-    sha256 = "623f698d55047887fe78d09be16801c71ed0d63e955f57bb4fddb8f803070da2";
+    sha256 = "1c1df4e91645e2af191e9b2b2581ad26c71c35eebd29ce15d7ba81879acf4c9b";
   };
 
   nativeBuildInputs = [

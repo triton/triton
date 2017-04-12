@@ -31,7 +31,11 @@ stdenv.mkDerivation rec {
   ];
 
   preBuild = ''
-    makeFlagsArray+=("PREFIX=$out")
+    makeFlagsArray+=(
+      "CONFIG_LINUX_I2C=y"
+      "CONFIG_LINUX_MTD=y"
+      "PREFIX=$out"
+    )
   '';
 
   meta = with stdenv.lib; {

@@ -7,14 +7,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "yaml-cpp-2017-01-04";
+  name = "yaml-cpp-2017-04-03";
 
   src = fetchFromGitHub {
     version = 2;
     owner = "jbeder";
     repo = "yaml-cpp";
-    rev = "86c69bb73c497bd127afd9802d0aef8ba160f9c6";
-    sha256 = "272db4a788f845fc0b886e4b8dae2fedd0cc035cd15710b41eefbd551cd15400";
+    rev = "11607eb5bf1258641d80f7051e7cf09e317b4746";
+    sha256 = "d435525d5b2761d4b2212177e3ba78d88db956611c26b9c41af4af66f05cbf80";
   };
 
   nativeBuildInputs = [

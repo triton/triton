@@ -51,13 +51,13 @@ let
   };
 in
 stdenv.mkDerivation rec {
-  name = "sssd-1.15.0";
+  name = "sssd-1.15.2";
   
   src = fetchurl {
     url = "https://fedorahosted.org/released/sssd/${name}.tar.gz";
-    multihash = "QmVi75ddji7FDBdFAuUmx7rs5hhkz9pkHHL5p4QFZvQx51";
+    multihash = "QmRedJMGZTADCG4npXTjiGfqjVFZUxYwW9HyTjUkWJ9fXi";
     hashOutput = false;
-    sha256 = "729ed277ff99e4adec81291b6a3ec28147a2531b733f36f429940de01ec7b344";
+    sha256 = "4cd5fcb314d77a58029a216b7e6001c6cb41c5b784cf570c5761c97d1c12d264";
   };
 
   nativeBuildInputs = [

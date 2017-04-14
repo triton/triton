@@ -14,7 +14,7 @@ let
     "ftp://sources.redhat.com/pub/lvm2/releases"
   ];
 
-  version = "2.02.169";
+  version = "2.02.170";
 in
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/LVM2.${version}.tgz") baseUrls;
     hashOutput = false;
-    sha512 = "0ff2418c54686f1a99d6196bab5fbc8188152d17ae826760aabd91b49e5f20d19ed1280e3670a769184aac9fd598a20b31312b56add831ed3863473e031b5327";
+    sha512 = "971a40f93db2b18a4b5c04f2b34d48cbcce81e6e3999760a474ddc52e8653317ac4969f402b9c9e12e486772bc27da8d9ca448f0551338b2a62031082a113f7c";
   };
 
   buildInputs = [

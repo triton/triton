@@ -18,11 +18,6 @@ let
   inherit ((import ./sources.nix)."${channel}")
     sha256
     version;
-
-  inherit (stdenv.lib)
-    optionals
-    versionAtLeast
-    versionOlder;
 in
 stdenv.mkDerivation rec {
   name = "nginx-${version}";
@@ -92,12 +87,9 @@ stdenv.mkDerivation rec {
     "--with-pcre"
     "--with-pcre-jit"
     "--with-libatomic"
-  ] ++ optionals (versionAtLeast version "1.11.0") [
     "--with-stream_realip_module"
     "--with-stream_geoip_module"
     "--with-stream_ssl_preread_module"
-  ] ++ optionals (versionOlder version "1.11.0") [
-    "--with-ipv6"
   ];
 
   # The install paths are a disaster

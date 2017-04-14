@@ -494,6 +494,8 @@ unpaddedbase64 = callPackage ../all-pkgs/u/unpaddedbase64 { };
 
 urllib3 = callPackage ../all-pkgs/u/urllib3 { };
 
+vcversioner = callPackage ../all-pkgs/v/vcversioner { };
+
 webencodings = callPackage ../all-pkgs/w/webencodings { };
 
 webob = callPackage ../all-pkgs/w/webob { };
@@ -928,20 +930,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        pytz
      ];
 
-   };
-
-   vcversioner = buildPythonPackage rec {
-     name = "vcversioner-${version}";
-     version = "2.16.0.0";
-    src = fetchPyPi {
-      package = "vcversioner";
-      inherit version;
-      sha256 = "dae60c17a479781f44a4010701833f1829140b1eeccd258762a74974aa06e19b";
-     };
-
-     meta = with stdenv.lib; {
-       homepage = "https://github.com/habnabit/vcversioner";
-     };
    };
 
    gevent = buildPythonPackage rec {

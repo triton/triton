@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "0.1.0";
+  version = "0.1.2";
 in
 buildPythonPackage {
   name = "matrix-synapse-ldap3-${version}";
@@ -18,7 +18,7 @@ buildPythonPackage {
     owner = "matrix-org";
     repo = "matrix-synapse-ldap3";
     rev = "v${version}";
-    sha256 = "00494986c7ed77149233c9cf134a3e8fefe4fcfc2864acbde1801517c4b76170";
+    sha256 = "b0b4d93d6b651f312cb93929f88af9fef936c900f88b1cde0a7c1dcb1151fb68";
   };
 
   propagatedBuildInputs = [

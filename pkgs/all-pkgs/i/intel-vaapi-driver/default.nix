@@ -12,10 +12,10 @@
 }:
 
 let
-  version = "1.8.0";
+  version = "1.8.1";
 in
 stdenv.mkDerivation rec {
-  name = "intel-vaapi-driver-1.8.0";
+  name = "intel-vaapi-driver-${version}";
 
   src = fetchurl rec {
     urls = [
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
         + "libva-intel-driver/${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "4fcbb282957cf4f33b6c43a0f476d8df21f7721e586a8546c71242551986b3a6";
+    sha256 = "efd041602635ce9450fbdf864563d3b95341ef3877337772af708d9cc17b2fce";
   };
 
   nativeBuildInputs = [
@@ -62,6 +62,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     srcVerification = fetchurl {
+      failEarly = true;
       inherit (src)
         outputHash
         outputHashAlgo

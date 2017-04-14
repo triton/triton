@@ -254,6 +254,8 @@ frozendict = callPackage ../all-pkgs/f/frozendict { };
 
 funcsigs = callPackage ../all-pkgs/f/funcsigs { };
 
+functools32 = callPackage ../all-pkgs/f/functools32 { };
+
 fusepy = callPackage ../all-pkgs/f/fusepy { };
 
 future = callPackage ../all-pkgs/f/future { };
@@ -748,22 +750,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        license = licenses.mit;
      };
    });
-
-   functools32 = if isPy3k then null else buildPythonPackage rec {
-     name = "functools32-${version}";
-     version = "3.2.3-2";
-
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/f/functools32/functools32-${version}.tar.gz";
-       sha256 = "0v8ya0b58x47wp216n1zamimv4iw57cxz3xxhzix52jkw3xks9gn";
-     };
-
-
-     meta = with stdenv.lib; {
-       description = "This is a backport of the functools standard library module from";
-       homepage = "https://github.com/MiCHiLU/python-functools32";
-     };
-   };
 
    itsdangerous = buildPythonPackage rec {
      name = "itsdangerous-0.24";

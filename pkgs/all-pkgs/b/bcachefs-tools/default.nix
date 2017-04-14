@@ -16,9 +16,9 @@ stdenv.mkDerivation {
 
   src = fetchzip {
     version = 2;
-    url = "https://evilpiepirate.org/git/bcachefs-tools.git/snapshot/bcachefs-tools-e394bd4ba3934cea237ad699cae9fe86396d6f15.tar.xz";
-    multihash = "QmWez7aUHLftCPnR1gnYMtEFF4PteLo7LhFTM6M1fDRpMX";
-    sha256 = "ac4cf483598f392b5c97bea5b465b40feb245902fc74086b6719bd765ecab1cc";
+    url = "https://evilpiepirate.org/git/bcachefs-tools.git/snapshot/bcachefs-tools-03bc9d71b13e6f8e879894f93ea16f1f4a8280c9.tar.xz";
+    multihash = "QmXtdmAb8k6QUpAx1keGHPqLMSYMWDnoTKEHK1ZTYQjh38";
+    sha256 = "509fc6b9d9621d9e19b68bece86533b2719c1e51dd6997baf9c2524b74529324";
   };
 
   buildInputs = [

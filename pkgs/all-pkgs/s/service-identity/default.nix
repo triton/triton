@@ -3,6 +3,7 @@
 , fetchPyPi
 
 , attrs
+, pyasn1
 , pyasn1-modules
 , pyopenssl
 , pytest
@@ -25,6 +26,7 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     attrs
+    pyasn1
     pyasn1-modules
     pyopenssl
   ];

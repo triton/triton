@@ -7,10 +7,12 @@
 , canonicaljson
 , daemonize
 , jinja2
+, jsonschema
 , matrix-angular-sdk
 , matrix-synapse-ldap3
 , msgpack-python
 , netaddr
+, phonenumbers
 , pillow
 , psutil
 , py-bcrypt
@@ -26,7 +28,7 @@
 }:
 
 let
-  version = "0.19.3";
+  version = "0.20.0";
 in
 buildPythonPackage {
   name = "synapse-${version}";
@@ -36,7 +38,7 @@ buildPythonPackage {
     owner = "matrix-org";
     repo = "synapse";
     rev = "v${version}";
-    sha256 = "d41b81f69fd66f524e6bb338d5d96c054e53e749e8003ae8bac265233fb7f46b";
+    sha256 = "8ed4f71bc674e948dbf22dad7493ce4d8c0558bfd762e76220286705e66845d0";
   };
 
   propagatedBuildInputs = [
@@ -45,10 +47,12 @@ buildPythonPackage {
     canonicaljson
     daemonize
     jinja2
+    jsonschema
     matrix-angular-sdk
     matrix-synapse-ldap3
     msgpack-python
     netaddr
+    phonenumbers
     pillow
     psutil
     py-bcrypt

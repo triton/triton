@@ -15,7 +15,7 @@ let
   inherit (stdenv.lib)
     boolEn;
 
-  version = "0.13.4";
+  version = "0.13.6";
 in
 stdenv.mkDerivation rec {
   name = "libass-${version}";
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/libass/libass/releases/download/${version}/"
       + "${name}.tar.xz";
-    sha256 = "d84a2fc89011b99d87fc47af91906622707c165d1860e9f774825ebbbc9c9fb6";
+    sha256 = "f8a874d104e3e72e2cc057e5a1710c650b10367486845a26e5ff28ed7a912c2d";
   };
 
   nativeBuildInputs = [

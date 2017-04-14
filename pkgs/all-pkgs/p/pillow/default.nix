@@ -34,9 +34,12 @@ buildPythonPackage rec {
     libjpeg
     libtiff
     libwebp
-    olefile
     openjpeg
     zlib
+  ];
+
+  propagatedBuildInputs = [
+    olefile
   ];
 
   preBuild = ''

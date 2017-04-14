@@ -287,6 +287,8 @@ jinja2 = callPackage ../all-pkgs/j/jinja2 { };
 
 jmespath = callPackage ../all-pkgs/j/jmespath { };
 
+jsonschema = callPackage ../all-pkgs/j/jsonschema { };
+
 ldap3 = callPackage ../all-pkgs/l/ldap3 { };
 
 libarchive-c = callPackage ../all-pkgs/l/libarchive-c { };
@@ -927,35 +929,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
      ];
 
    };
-
-
-   jsonschema = buildPythonPackage (rec {
-     version = "2.5.1";
-     name = "jsonschema-${version}";
-
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/j/jsonschema/jsonschema-${version}.tar.gz";
-       sha256 = "0hddbqjm4jq63y8jf44nswina1crjs16l9snb6m3vvgyg31klrrn";
-     };
-
-     buildInputs = with self; [ nose mock vcversioner ];
-     propagatedBuildInputs = with self; [ functools32 ];
-
-     patchPhase = ''
-       substituteInPlace jsonschema/tests/test_jsonschema_test_suite.py --replace "python" "${python}/bin/${python.executable}"
-    '';
-
-     checkPhase = ''
-       nosetests
-     '';
-
-     meta = {
-       homepage = https://github.com/Julian/jsonschema;
-       description = "An implementation of JSON Schema validation for Python";
-       license = licenses.mit;
-       maintainers = with maintainers; [ iElectric ];
-     };
-   });
 
    vcversioner = buildPythonPackage rec {
      name = "vcversioner-${version}";

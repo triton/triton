@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "0.2";
+  version = "0.3";
 in
 buildPythonPackage {
   name = "pydenticon-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pydenticon";
     inherit version;
-    sha256 = "035dawcspgjw2rksbnn863s7b0i9ac8cc1nshshvd1l837ir1czp";
+    sha256 = "02041c589e629c330e420ded65192c79980b3a68fa91aee6179f46af6ad4e298";
   };
 
   buildInputs = [

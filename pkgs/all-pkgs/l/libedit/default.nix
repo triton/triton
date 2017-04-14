@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libedit-20160903-3.1";
+  name = "libedit-20170329-3.1";
 
   src = fetchurl {
     url = "http://thrysoee.dk/editline/${name}.tar.gz";
-    multihash = "QmNmfgvb2fhGc6NvSoPg7RYtvpURzPhAqyuQmAJjZWJbJH";
-    sha256 = "0ccbd2e7d46097f136fcb1aaa0d5bc24e23bb73f57d25bee5a852a683eaa7567";
+    multihash = "QmULcVDrdQJZ8rpjkFveL3zqfhQw5Mg5XM8EMzuWvKeuCk";
+    sha256 = "91f2d90fbd2a048ff6dad7131d9a39e690fd8a8fd982a353f1333dd4017dd4be";
   };
 
   # Have `configure' avoid `/usr/bin/nroff' in non-chroot builds.

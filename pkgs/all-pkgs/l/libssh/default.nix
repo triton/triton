@@ -10,13 +10,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libssh-0.7.4";
+  name = "libssh-0.7.5";
 
   src = fetchurl {
-    url = "https://red.libssh.org/attachments/download/210/libssh-0.7.4.tar.xz";
-    multihash = "QmTEsR21paatQZKzTU2ttY86uZWhaJfETFvhMFecii2spK";
+    url = "https://red.libssh.org/attachments/download/218/libssh-0.7.5.tar.xz";
+    multihash = "QmeLAG99dVtcZLQTtnmCXbfqCdaPYei4Prx6w16ZUSmxVb";
     hashOutput = false;
-    sha256 = "39e1bec3b3cb452af3b8fd7f59c12c5ef5b9ed64f057c7eb0d1a5cac67ba6c0d";
+    sha256 = "54e86dd5dc20e5367e58f3caab337ce37675f863f80df85b6b1614966a337095";
   };
 
   nativeBuildInputs = [
@@ -61,7 +61,7 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpDecompress = true;
-      pgpsigUrl = "https://red.libssh.org/attachments/download/209/libssh-0.7.4.tar.asc";
+      pgpsigUrl = "https://red.libssh.org/attachments/download/217/libssh-0.7.5.tar.asc";
       pgpKeyFingerprint = "8DFF 53E1 8F2A BC8D 8F3C  9223 7EE0 FC4D CC01 4E3D";
       inherit (src) urls outputHash outputHashAlgo;
     };

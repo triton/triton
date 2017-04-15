@@ -26,8 +26,6 @@
 , libaio
 , libatomic_ops
 , libedit
-, libibverbs
-, librdmacm
 , libs3
 , libxml2
 , linux-headers
@@ -36,6 +34,7 @@
 , nspr
 , openldap
 , openssl
+, rdma-core
 , rocksdb
 , snappy
 , systemd_lib
@@ -140,8 +139,7 @@ stdenv.mkDerivation rec {
   ] ++ optionals hasXio ([
     accelio
   ] ++ optionals (versionOlder version "11.0.0") [
-    libibverbs
-    librdmacm
+    rdma-core
   ]) ++ optionals hasRocksdb [
     rocksdb
   ] ++ optionals (versionOlder version "9.1.0") [
@@ -176,7 +174,7 @@ stdenv.mkDerivation rec {
 
     # Fix pythonpath
     sed -i 's,export PYTHONPATH=,export PYTHONPATH+=:,g' src/Makefile-env.am
-  '' + optionalString (versionAtLeast version "10.1.0") ''
+  '' + optionalString (versionAtLeast version "10.1.0" && versionOlder version "10.2.7") ''
     # Fix LDAP linking
     ! grep '\(-lldap\|LDAP_LIB\)' src/rgw/Makefile.am
     sed -i 's,LIBRGW_DEPS +=,\0 -lldap,g' src/rgw/Makefile.am
@@ -260,9 +258,6 @@ stdenv.mkDerivation rec {
   ] ++ optionals (versionAtLeast version "10.1.0") [
     "--enable-subman"
     "--with-openldap"
-  ] ++ optionals (versionAtLeast version "11.0.0") [
-    "--with-reentrant-strsignal"
-    "--with-thread-safe-res-query"
   ];
 
   preBuild = optionalString (versionAtLeast version "9.0.0" && versionOlder version "12.0.0") ''

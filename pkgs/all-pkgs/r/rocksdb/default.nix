@@ -1,6 +1,7 @@
 { stdenv
 , fetchFromGitHub
 , perl
+, which
 
 , bzip2
 , gflags
@@ -13,7 +14,7 @@
 }:
 
 let
-  version = "5.1.2";
+  version = "5.2.1";
 in
 stdenv.mkDerivation rec {
   name = "rocksdb-${version}";
@@ -23,11 +24,12 @@ stdenv.mkDerivation rec {
     owner = "facebook";
     repo = "rocksdb";
     rev = "v${version}";
-    sha256 = "73045481fd83b96372aefee4dfd8241b2434373876dcdf4f40bef6b860af61fb";
+    sha256 = "ca7bd84ac453db1016c3dc808005a10eec004084c7575db9cb348ad12fd8d0c0";
   };
 
   nativeBuildInputs = [
     perl
+    which
   ];
 
   buildInputs = [

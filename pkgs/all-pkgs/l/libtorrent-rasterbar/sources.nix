@@ -1,8 +1,8 @@
 { }:
 {
   "1.1" = {
-    version = "1.1.2";
-    sha256 = "45e55f2374507bb67a9b9125f6b8d1c45e6cd33849c62b1d9cb56657354e359a";
+    version = "1.1.3";
+    sha256 = "44196a89932c26528f5db19289d0f0f4130730a61dccc61c9f1eac9ad3e881d8";
   };
   "1.1-head" = {
     fetchzipversion = 2;

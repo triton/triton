@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "3.4.0";
+  version = "3.10.0";
 in
 buildPythonPackage rec {
   name = "fonttools-${version}";
@@ -13,10 +14,10 @@ buildPythonPackage rec {
     package = "fonttools";
     inherit version;
     type = ".zip";
-    sha256 = "40bbe2a7a79f51757f5973a1a7d487d700987bb394d8611132a06f32fbc6a084";
+    sha256 = "d165f83078a8f1bb9f466b12cee1ff402f39ebf143970762ef34abdb13fd4255";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library for manipulating fonts";
     homepage = https://github.com/behdad/fonttools;
     license = licenses.mit;

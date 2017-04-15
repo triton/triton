@@ -3,9 +3,8 @@
 , fetchFromGitHub
 
 , libevent
-, libibverbs
-, librdmacm
 , numactl
+, rdma-core
 
 , kernel ? null
 }:
@@ -30,9 +29,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libevent
-    libibverbs
-    librdmacm
     numactl
+    rdma-core
   ];
 
   postPatch = ''

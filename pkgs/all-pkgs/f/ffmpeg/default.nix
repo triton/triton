@@ -25,10 +25,10 @@
 , swscaleAlphaBuild ? true
 # Hardcode decode tables instead of runtime generation
 , hardcodedTablesBuild ? true
-, safeBitstreamReaderBuild ? true # Buffer boundary checking in bitreaders
-, multithreadBuild ? true # Multithreading via pthreads/win32 threads
-, networkBuild ? true # Network support
-, pixelutilsBuild ? true # Pixel utils in libavutil
+, safeBitstreamReaderBuild ? true  # Buffer boundary checking in bitreaders
+, multithreadBuild ? true  # Multithreading via pthreads/win32 threads
+, networkBuild ? true  # Network support
+, pixelutilsBuild ? true  # Pixel utils in libavutil
 /*
  *  Program options
  */
@@ -44,7 +44,7 @@
 , avdeviceLibrary ? true
 , avfilterLibrary ? true
 , avformatLibrary ? true
-, avresampleLibrary ? false # Libav api compatibility library
+, avresampleLibrary ? false  # Libav api compatibility library
 , avutilLibrary ? true
 , postprocLibrary ? true
 , swresampleLibrary ? true
@@ -90,7 +90,6 @@
 , libcaca
 #, libcdio-paranoia
 , libdc1394
-, libebur128
 #, libiec61883, libavc1394
 , libgcrypt
 , libmodplug
@@ -184,6 +183,7 @@ in
 assert
   fdk-aac != null
   #|| avid != null
+  #|| avisynth != null
   #|| cdio != null
   || frei0r-plugins != null
   || openssl != null
@@ -211,14 +211,6 @@ assert
   fdk-aac != null
   || libnppSupport
   || openssl != null
-  # TODO: remove once minimum is 3.3
-  || (
-    if versionOlder channel "3.3" then (
-      nvidia-cuda-toolkit != null
-      || nvidia-drivers != null
-    ) else
-      false
-  )
   -> nonfreeLicensing && gplLicensing && version3Licensing;
 /*
  *  Build dependencies
@@ -275,21 +267,19 @@ let
   reqMatch = v: (compareVersions v channel == 0);
 
   # Usage:
-  # f - Configure flags w/o --enable/disable
-  # b - Boolean: (some-pkg !=null) or someFlag
+  # f - Configure flag
   # v - Version that the configure option was added
   fflag = f: v:
     if v == null || reqMin v  then
-    "${f}"
+      "${f}"
     else
       null;
   deprfflag = f: vmin: vmax:
     if (vmin == null || reqMin vmin) && (vmax == null || reqMax vmax) then
-    "${f}"
+      "${f}"
     else
       null;
 in
-
 stdenv.mkDerivation rec {
   name = "ffmpeg-${source.version}";
 
@@ -340,7 +330,6 @@ stdenv.mkDerivation rec {
     libbs2b
     libcaca
     libdc1394
-    libebur128
     libgcrypt
     libmodplug
     libogg
@@ -417,7 +406,6 @@ stdenv.mkDerivation rec {
     "--${boolEn swscaleAlphaBuild}-swscale-alpha"
     "--${boolEn hardcodedTablesBuild}-hardcoded-tables"
     "--${boolEn safeBitstreamReaderBuild}-safe-bitstream-reader"
-    (deprfflag null "3.3" "--disable-memalign-hack")
     "--enable-pthreads"
     "--disable-w32threads"  # windows
     "--disable-os2threads"  # os/2
@@ -491,7 +479,6 @@ stdenv.mkDerivation rec {
     #"--${boolEn (crystalhd != null)}-crystalhd"
     /**/"--disable-crystalhd"
     "--${boolEn (frei0r-plugins != null)}-frei0r"
-    # Undocumented before 3.0
     "--${boolEn (libgcrypt != null)}-gcrypt"
     "--${boolEn (gmp != null)}-gmp"
     "--${boolEn (gnutls != null)}-gnutls"
@@ -508,7 +495,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (
       libdc1394 != null
       && libraw1394 != null)}-libdc1394"
-    (deprfflag "--${boolEn (libebur128 != null)}-libebur128" "3.1" "3.2")
     "--${boolEn (fdk-aac != null)}-libfdk-aac"
     "--${boolEn (fontconfig != null)}-libfontconfig"
     "--${boolEn (flite != null)}-libflite"
@@ -589,7 +575,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (SDL_2 != null)}-sdl"
     "--${boolEn (SDL_2 != null)}-sdl2"
     "--disable-securetransport"
-    (deprfflag null "3.2" "--disable-x11grab")
     #"--${boolEn (xorg.libX11 != null && xorg.libXv != null)}-xlib"
     "--${boolEn (zlib != null)}-zlib"
     /*
@@ -629,7 +614,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Complete solution to record, convert & stream audio/video";
     homepage = http://www.ffmpeg.org/;
     license = (

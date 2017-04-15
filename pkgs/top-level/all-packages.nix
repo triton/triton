@@ -1073,7 +1073,6 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   libbs2b = null;
   libcaca = null;
   libdc1394 = null;
-  libebur128 = null;
   #libiec61883 = null;
   libraw1394 = null;
   libmodplug = null;
@@ -1113,10 +1112,10 @@ ffmpeg_generic = overrides: callPackage ../all-pkgs/f/ffmpeg ({
   zeromq4 = null;
   #zvbi = null;
 } // overrides);
-ffmpeg_3-2 = pkgs.ffmpeg_generic {
-  channel = "3.2";
+ffmpeg_3-3 = pkgs.ffmpeg_generic {
+  channel = "3.3";
 };
-ffmpeg_3 = callPackageAlias "ffmpeg_3-2" { };
+ffmpeg_3 = callPackageAlias "ffmpeg_3-3" { };
 ffmpeg_head = pkgs.ffmpeg_generic {
   channel = "9.9";
   # Use latest dependencies

@@ -8,11 +8,11 @@
     sha256 = "8a8bd608404afe41dd42ad1a9f0077e5624b63c0daebad52d4f74785641fb8d4";
   };
   "dev" = rec {
-    version = "12.0.0";
-    sha256 = "4b5710446d8a2310072773601462508a81d63ac130cbd0fbdb062ebbf0a0d558";
+    version = "12.0.1";
+    sha256 = "0ddce1b76817add5190c0324a6b8f1e601c5db996d80abb3091d035a0f45e4c9";
   };
   "git" = rec {
-    version = "2017-02-11";
-    sha256 = "228c9e083e66e971981e04255446604efb1c98cc15777e947609dead5e84086c";
+    version = "2017-04-15";
+    sha256 = "e4392e715e3b3f34a9bdb607242b2b16ab0fe01a141c36fa0296faf557011842";
   };
 }

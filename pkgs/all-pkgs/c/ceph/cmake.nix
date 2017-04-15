@@ -22,6 +22,8 @@
 , nspr
 , nss
 , openldap
+, openssl
+, rdma-core
 , snappy
 , systemd_lib
 , util-linux_lib
@@ -33,7 +35,9 @@
 
 let
   inherit (stdenv.lib)
-    replaceChars;
+    optionals
+    replaceChars
+    versionAtLeast;
 
   sources = (import ./sources.nix)."${channel}";
 
@@ -80,6 +84,9 @@ stdenv.mkDerivation rec {
     util-linux_lib
     xfsprogs_lib
     zlib
+  ] ++ optionals (versionAtLeast version "12.0.0") [
+    openssl
+    rdma-core
   ];
 
   postPatch = ''

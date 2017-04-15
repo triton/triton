@@ -208,6 +208,7 @@ assert
   -> version3Licensing && gplLicensing;
 # Non-free
 assert
+  #decklinkExtlib
   fdk-aac != null
   || libnppSupport
   || openssl != null

@@ -153,7 +153,7 @@ if ! test -e "$mountPoint"; then
 fi
 
 
-create_triton_fhs
+create_triton_fhs "${mountPoint}"
 
 
 # Mount some stuff in the target root directory.

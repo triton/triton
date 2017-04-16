@@ -17,7 +17,7 @@ if [ "$(id -u)" = 0 ]; then
     export NIXOS_INSTALL_REEXEC=1
     exec unshare --mount --uts -- "$0" "$@"
   else
-    mount --make-rprivate /
+    mount --verbose --make-rprivate /
   fi
 fi
 
@@ -89,30 +89,30 @@ fi
 
 
 # Mount some stuff in the target root directory.
-mkdir --mode 0755 --parents $mountPoint/dev $mountPoint/proc $mountPoint/sys $mountPoint/etc $mountPoint/run $mountPoint/home
-mkdir --mode 01777 --parents $mountPoint/tmp
-mkdir --mode 0755 --parents $mountPoint/tmp/root
-mkdir --mode 0755 --parents $mountPoint/var/setuid-wrappers
-mkdir --mode 0700 --parents $mountPoint/root
-mount --rbind /dev $mountPoint/dev
-mount --rbind /proc $mountPoint/proc
-mount --rbind /sys $mountPoint/sys
-mount --rbind / $mountPoint/tmp/root
-mount --types tmpfs --options "mode=0755" none $mountPoint/run
-mount --types tmpfs --options "mode=0755" none $mountPoint/var/setuid-wrappers
-rm --recursive --force $mountPoint/var/run
-ln --symbolic /run $mountPoint/var/run
-for f in /etc/resolv.conf /etc/hosts; do rm --force $mountPoint/$f; [ -f "$f" ] && cp --dereference --force $f $mountPoint/etc/; done
+mkdir --verbose --mode 0755 --parents $mountPoint/dev $mountPoint/proc $mountPoint/sys $mountPoint/etc $mountPoint/run $mountPoint/home
+mkdir --verbose --mode 01777 --parents $mountPoint/tmp
+mkdir --verbose --mode 0755 --parents $mountPoint/tmp/root
+mkdir --verbose --mode 0755 --parents $mountPoint/var/setuid-wrappers
+mkdir --verbose --mode 0700 --parents $mountPoint/root
+mount --verbose --rbind /dev $mountPoint/dev
+mount --verbose --rbind /proc $mountPoint/proc
+mount --verbose --rbind /sys $mountPoint/sys
+mount --verbose --rbind / $mountPoint/tmp/root
+mount --verbose --types tmpfs --options "mode=0755" none $mountPoint/run
+mount --verbose --types tmpfs --options "mode=0755" none $mountPoint/var/setuid-wrappers
+rm --verbose --recursive --force $mountPoint/var/run
+ln --verbose --symbolic /run $mountPoint/var/run
+for f in /etc/resolv.conf /etc/hosts; do rm --verbose --force $mountPoint/$f; [ -f "$f" ] && cp --dereference --force $f $mountPoint/etc/; done
 for f in /etc/passwd /etc/group; do touch $mountPoint/$f; [ -f "$f" ] && mount --rbind --options ro $f $mountPoint/$f; done
-mkdir -p /etc/ssl/certs
-for f in /etc/ssl/certs/ca-certificates.crt; do rm --force $mountPoint/$f; [ -f "$f" ] && cp --dereference --force $f $mountPoint/$f; done
+mkdir --verbose --parents /etc/ssl/certs
+for f in /etc/ssl/certs/ca-certificates.crt; do rm --verbose --force $mountPoint/$f; [ -f "$f" ] && cp --dereference --force $f $mountPoint/$f; done
 
 if [ -n "$runChroot" ]; then
   if ! [ -L $mountPoint/nix/var/nix/profiles/system ]; then
     echo "$0: installation not finished; cannot chroot into installation directory"
     exit 1
   fi
-  ln --symbolic /nix/var/nix/profiles/system $mountPoint/run/current-system
+  ln --verbose --symbolic /nix/var/nix/profiles/system $mountPoint/run/current-system
   exec chroot $mountPoint "${chrootCommand[@]}"
 fi
 
@@ -130,7 +130,7 @@ fi
 
 # Create the necessary Nix directories on the target device, if they
 # don't already exist.
-mkdir --mode 0755 --parents \
+mkdir --verbose --mode 0755 --parents \
   $mountPoint/nix/var/nix/gcroots \
   $mountPoint/nix/var/nix/temproots \
   $mountPoint/nix/var/nix/manifests \
@@ -139,7 +139,7 @@ mkdir --mode 0755 --parents \
   $mountPoint/nix/var/nix/db \
   $mountPoint/nix/var/log/nix/drvs
 
-mkdir --mode 1775 --parents $mountPoint/nix/store
+mkdir --verbose --mode 1775 --parents $mountPoint/nix/store
 chown @root_uid@:@nixbld_gid@ $mountPoint/nix/store
 
 
@@ -168,7 +168,7 @@ if ! NIX_DB_DIR=$mountPoint/nix/var/nix/db nix-store --check-validity @nix@ 2> /
   for i in $(@perl@/bin/perl @pathsFromGraph@ @nixClosure@); do
     echo "  $i"
     chattr -R -i $mountPoint/$i 2> /dev/null || true # clear immutable bit
-    @rsync@/bin/rsync --archive $i $mountPoint/nix/store/
+    @rsync@/bin/rsync --verbose --archive $i $mountPoint/nix/store/
   done
 
   # Register the paths in the Nix closure as valid.  This is necessary
@@ -182,9 +182,9 @@ fi
 
 # Create the required /bin/sh symlink; otherwise lots of things
 # (notably the system() function) won't work.
-mkdir --mode 0755 --parents $mountPoint/bin
+mkdir --verbose --mode 0755 --parents $mountPoint/bin
 # !!! assuming that @shell@ is in the closure
-ln --symbolic --force @shell@ $mountPoint/bin/sh
+ln --verbose --symbolic --force @shell@ $mountPoint/bin/sh
 
 
 # Build hooks likely won't function correctly in the minimal chroot; just disable them.
@@ -199,10 +199,10 @@ export NIX_SUBSTITUTERS=$p/copy-from-other-stores.pl:$p/download-from-binary-cac
 
 
 # Make manifests available in the chroot.
-rm -f $mountPoint/nix/var/nix/manifests/*
+rm --verbose --force $mountPoint/nix/var/nix/manifests/*
 for i in /nix/var/nix/manifests/*.nixmanifest; do
   chroot $mountPoint @nix@/bin/nix-store -r "$(readlink --canonicalize "$i")" > /dev/null
-  cp --preserve="links,mode,ownership,timestamps" --no-dereference "$i" $mountPoint/nix/var/nix/manifests/
+  cp --verbose --preserve="links,mode,ownership,timestamps" --no-dereference "$i" $mountPoint/nix/var/nix/manifests/
 done
 
 
@@ -226,21 +226,21 @@ NIX_PATH="nixpkgs=/tmp/root/$nixpkgs:nixos-config=$NIXOS_CONFIG" NIXOS_CONFIG= \
 
 # Copy the NixOS/Nixpkgs sources to the target as the initial contents
 # of the NixOS channel.
-mkdir --mode 0755 --parents $mountPoint/nix/var/nix/profiles
-mkdir --mode 1777 --parents $mountPoint/nix/var/nix/profiles/per-user
-mkdir --mode 0755 --parents $mountPoint/nix/var/nix/profiles/per-user/root
+mkdir --verbose --mode 0755 --parents $mountPoint/nix/var/nix/profiles
+mkdir --verbose --mode 1777 --parents $mountPoint/nix/var/nix/profiles/per-user
+mkdir --verbose --mode 0755 --parents $mountPoint/nix/var/nix/profiles/per-user/root
 srcs=$(nix-env "${extraBuildFlags[@]}" -p /nix/var/nix/profiles/per-user/root/channels -q nixos --no-name --out-path 2>/dev/null || echo -n "")
 if [ -z "$noChannelCopy" ] && [ -n "$srcs" ]; then
   echo "copying NixOS/Nixpkgs sources..."
   chroot $mountPoint @nix@/bin/nix-env \
       "${extraBuildFlags[@]}" -p /nix/var/nix/profiles/per-user/root/channels -i "$srcs" --quiet
 fi
-mkdir --mode 0700 --parents $mountPoint/root/.nix-defexpr
-ln --symbolic --force --no-dereference /nix/var/nix/profiles/per-user/root/channels $mountPoint/root/.nix-defexpr/channels
+mkdir --verbose --mode 0700 --parents $mountPoint/root/.nix-defexpr
+ln --verbose --symbolic --force --no-dereference /nix/var/nix/profiles/per-user/root/channels $mountPoint/root/.nix-defexpr/channels
 
 
 # Get rid of the /etc bind mounts.
-for f in /etc/passwd /etc/group; do [ -f "$f" ] && umount $mountPoint/$f; done
+for f in /etc/passwd /etc/group; do [ -f "$f" ] && umount --verbose $mountPoint/$f; done
 
 
 # Grub needs an mtab.

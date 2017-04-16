@@ -7,8 +7,73 @@
 #   * nix-env -p /nix/var/nix/profiles/system -i <nix-expr for the configuration>
 #   * install the boot loader
 
+
+
 # Ensure a consistent umask.
 umask 0022
+
+# Create FHS for Triton relative to mountpoint ($1).
+create_triton_fhs() {
+  local -A -r directories=(
+    ['bin']='0755'  # /bin/sh
+    ['dev']='0755'
+    ['etc']='0755'
+    ['etc/ssl']='0755'
+    ['etc/ssl/certs']='0755'
+    ['home']='0755'
+    ['nix']=0755
+    ['nix/store']='1775'
+    ['nix/var']='0755'
+    ['nix/var/log']='0755'
+    ['nix/var/log/nix']='0755'
+    ['nix/var/log/nix/drvs']='0755'
+    ['nix/var/nix']='0755'
+    ['nix/var/nix/db']='0755'
+    ['nix/var/nix/gcroots']='0755'
+    ['nix/var/nix/manifests']='0755'
+    ['nix/var/nix/profiles']='0755'
+    ['nix/var/nix/profiles/per-user']='1777'
+    ['nix/var/nix/profiles/per-user/root']='0755'
+    ['nix/var/nix/temproots']='0755'
+    ['nix/var/userpool']='0755'
+    ['proc']='0755'
+    ['root']='0700'
+    ['root/.nix-defexpr']='0700'
+    ['run']='0755'
+    ['sys']='0755'
+    ['tmp']='01777'
+    ['tmp/root']='0755'
+    ['usr']='0755'
+    ['usr/bin']='0755'  # /usr/bin/env
+    ['var']='0755'
+    ['var/setuid-wrappers']='0755'
+  )
+  local directory
+  local -r mount_point="${1}"
+
+  # Create directory structure relative to $mount_point.
+  for directory in "${!directories[@]}"; do
+    if [ -d "${mount_point}/${directory}" ]; then
+      chown --verbose "${directories["${directory}"]}" \
+        "${mount_point}/${directory}" || {
+          echo "ERROR: failed to set permissions for directory: ${mount_point}/${directory}" >&2
+          return 1
+        }
+    else
+      # Do NOT specify --parents to make sure the directory structure is
+      # unrolled correctly.  Instead specify the parent directories in
+      # the array above so that the structure is created with the correct
+      # permissions.
+      mkdir \
+        --verbose \
+        --mode="${directories["${directory}"]}" \
+        "${mount_point}/${directory}" || {
+          echo "ERROR: failed to create directory: ${mount_point}/${directory}" >&2
+          return 1
+        }
+    fi
+  done
+}
 
 # Re-exec ourselves in a private mount namespace so that our bind
 # mounts get cleaned up automatically.
@@ -88,12 +153,10 @@ if ! test -e "$mountPoint"; then
 fi
 
 
+create_triton_fhs
+
+
 # Mount some stuff in the target root directory.
-mkdir --verbose --mode 0755 --parents $mountPoint/dev $mountPoint/proc $mountPoint/sys $mountPoint/etc $mountPoint/run $mountPoint/home
-mkdir --verbose --mode 01777 --parents $mountPoint/tmp
-mkdir --verbose --mode 0755 --parents $mountPoint/tmp/root
-mkdir --verbose --mode 0755 --parents $mountPoint/var/setuid-wrappers
-mkdir --verbose --mode 0700 --parents $mountPoint/root
 mount --verbose --rbind /dev $mountPoint/dev
 mount --verbose --rbind /proc $mountPoint/proc
 mount --verbose --rbind /sys $mountPoint/sys
@@ -104,7 +167,6 @@ rm --verbose --recursive --force $mountPoint/var/run
 ln --verbose --symbolic /run $mountPoint/var/run
 for f in /etc/resolv.conf /etc/hosts; do rm --verbose --force $mountPoint/$f; [ -f "$f" ] && cp --dereference --force $f $mountPoint/etc/; done
 for f in /etc/passwd /etc/group; do touch $mountPoint/$f; [ -f "$f" ] && mount --rbind --options ro $f $mountPoint/$f; done
-mkdir --verbose --parents /etc/ssl/certs
 for f in /etc/ssl/certs/ca-certificates.crt; do rm --verbose --force $mountPoint/$f; [ -f "$f" ] && cp --dereference --force $f $mountPoint/$f; done
 
 if [ -n "$runChroot" ]; then
@@ -128,18 +190,6 @@ if [ ! -e "$mountPoint/$NIXOS_CONFIG" ] && [ -z "$closure" ]; then
 fi
 
 
-# Create the necessary Nix directories on the target device, if they
-# don't already exist.
-mkdir --verbose --mode 0755 --parents \
-  $mountPoint/nix/var/nix/gcroots \
-  $mountPoint/nix/var/nix/temproots \
-  $mountPoint/nix/var/nix/manifests \
-  $mountPoint/nix/var/nix/userpool \
-  $mountPoint/nix/var/nix/profiles \
-  $mountPoint/nix/var/nix/db \
-  $mountPoint/nix/var/log/nix/drvs
-
-mkdir --verbose --mode 1775 --parents $mountPoint/nix/store
 chown @root_uid@:@nixbld_gid@ $mountPoint/nix/store
 
 
@@ -180,9 +230,6 @@ if ! NIX_DB_DIR=$mountPoint/nix/var/nix/db nix-store --check-validity @nix@ 2> /
 fi
 
 
-# Create the required /bin/sh symlink; otherwise lots of things
-# (notably the system() function) won't work.
-mkdir --verbose --mode 0755 --parents $mountPoint/bin
 # !!! assuming that @shell@ is in the closure
 ln --verbose --symbolic --force @shell@ $mountPoint/bin/sh
 
@@ -226,16 +273,12 @@ NIX_PATH="nixpkgs=/tmp/root/$nixpkgs:nixos-config=$NIXOS_CONFIG" NIXOS_CONFIG= \
 
 # Copy the NixOS/Nixpkgs sources to the target as the initial contents
 # of the NixOS channel.
-mkdir --verbose --mode 0755 --parents $mountPoint/nix/var/nix/profiles
-mkdir --verbose --mode 1777 --parents $mountPoint/nix/var/nix/profiles/per-user
-mkdir --verbose --mode 0755 --parents $mountPoint/nix/var/nix/profiles/per-user/root
 srcs=$(nix-env "${extraBuildFlags[@]}" -p /nix/var/nix/profiles/per-user/root/channels -q nixos --no-name --out-path 2>/dev/null || echo -n "")
 if [ -z "$noChannelCopy" ] && [ -n "$srcs" ]; then
   echo "copying NixOS/Nixpkgs sources..."
   chroot $mountPoint @nix@/bin/nix-env \
       "${extraBuildFlags[@]}" -p /nix/var/nix/profiles/per-user/root/channels -i "$srcs" --quiet
 fi
-mkdir --verbose --mode 0700 --parents $mountPoint/root/.nix-defexpr
 ln --verbose --symbolic --force --no-dereference /nix/var/nix/profiles/per-user/root/channels $mountPoint/root/.nix-defexpr/channels
 
 

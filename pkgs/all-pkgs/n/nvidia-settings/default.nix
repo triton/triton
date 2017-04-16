@@ -5,20 +5,28 @@
 , makeWrapper
 
 , adwaita-icon-theme
+, dbus
 , gdk-pixbuf
 , glib
 , gtk_2
 , gtk_3
 , jansson
 , libvdpau
+, libx11
 , mesa_noglu
 , nvidia-drivers_latest
 , pango
+, randrproto
+, renderproto
+, videoproto
+, xextproto
+, xf86vidmodeproto
+, xproto
 , xorg
 }:
 
 let
-  version = "378.13";
+  version = "381.09";
 in
 stdenv.mkDerivation rec {
   name = "nvidia-settings-${version}";
@@ -26,7 +34,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "http://http.download.nvidia.com/XFree86/nvidia-settings/"
       + "nvidia-settings-${version}.tar.bz2";
-    sha256 = "b23f931e3107897ff73c57ce02aa77e8e1dc95559bfa338e898126731a230023";
+    multihash = "QmadtC9pNfugKUUYqkH5noeyvgLibUWWwnHL3rHCcKHPkU";
+    sha256 = "a25bcc37c49628b7f370eacd97365709f0897cf526e9d5e6b7e8c8c95813c805";
   };
 
   nativeBuildInputs = [
@@ -36,27 +45,28 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
+    dbus
     gdk-pixbuf
     glib
     gtk_2
     gtk_3
     jansson
     libvdpau
+    libx11
     mesa_noglu
     nvidia-drivers_latest
     pango
-    xorg.libX11
+    randrproto
+    renderproto
+    videoproto
+    xextproto
+    xf86vidmodeproto
+    xproto
     xorg.libXext
     xorg.libXrandr
     xorg.libXrender
     xorg.libXv
     xorg.libXxf86vm
-    xorg.randrproto
-    xorg.renderproto
-    xorg.videoproto
-    xorg.xextproto
-    xorg.xf86vidmodeproto
-    xorg.xproto
   ];
 
   postPatch = /* libXv is normally loaded at runtime via LD_LIBRARY_PATH */ ''

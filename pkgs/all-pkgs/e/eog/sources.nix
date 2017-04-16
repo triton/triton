@@ -2,6 +2,6 @@
 {
   "3.24" = {
     version = "3.24.0";
-    sha256 = "e6e7c5a1aaf2508065e19f0669eb6c1028e8e04c7d3504b9027bd1e009731b3b";
+    sha256 = "c640bb76f202d06858e4d82be626d83256326f9cedfb46ae3b450a82ff3f11cc";
   };
 }

@@ -21,16 +21,16 @@
 , libjpeg
 , libpeas
 , librsvg
+, libx11
 , libxml2
 , pango
 , shared_mime_info
-, xorg
 , zlib
 
 , channel
 }:
 
-assert xorg != null -> xorg.libX11 != null;
+assert !gtk.x11_backend -> libx11 == null;
 
 let
   inherit (lib)
@@ -72,12 +72,11 @@ stdenv.mkDerivation rec {
     libjpeg
     libpeas
     librsvg
+    libx11
     libxml2
     pango
     shared_mime_info
     zlib
-  ] ++ optionals (xorg != null) [
-    xorg.libX11
   ];
 
   configureFlags = [
@@ -93,17 +92,12 @@ stdenv.mkDerivation rec {
     "--enable-schemas-compile"
     "--disable-installed-tests"
     "--${boolWt (libexif != null)}-libexif"
-    "--${boolWt (xorg != null && lcms2 != null)}-cms"
+    "--${boolWt (libx11 != null && lcms2 != null)}-cms"
     "--${boolWt (exempi != null)}-xmp"
     "--${boolWt (libjpeg != null)}-libjpeg"
     "--${boolWt (librsvg != null)}-librsvg"
-    "--${boolWt (gtk.x11_backend && xorg != null)}-x"
+    "--${boolWt (gtk.x11_backend && libx11 != null)}-x"
   ];
-
-  # Disable -Werror as there are issues with 3.20.2 on gcc 6.1.0
-  postPatch = ''
-    #sed -i 's,-Werror[^ "]*,,g' configure
-  '';
 
   preFixup = ''
     wrapProgram $out/bin/eog \

@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   # so iwlwifi cards will fail to load on newly released kernels.
   src = fetchurl {
     url = "https://github.com/wkennington/linux-firmware/releases/download/${version}/${name}.tar.xz";
-    sha256 = "c99f1dd634188e8e0b69c2e84598afb4eb0bf8e1f7dc9f0146f467a0b4e15c57b";
+    sha256 = "99f1dd634188e8e0b69c2e84598afb4eb0bf8e1f7dc9f0146f467a0b4e15c57b";
   };
 
   preInstall = ''

@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , atk
 , gconf
@@ -20,7 +21,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolString
     boolWt;
@@ -83,7 +84,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library to access weather information from online services";
     homepage = https://wiki.gnome.org/Projects/LibGWeather;
     license = licenses.gpl2Plus;

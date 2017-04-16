@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 , makeWrapper
 , perl
 
@@ -45,7 +46,7 @@ assert xorg != null ->
   && xorg.libXrender != null;
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt
     optionals;
@@ -175,11 +176,13 @@ stdenv.mkDerivation rec {
       broadway_backend
       wayland_backend
       x11_backend;
+
+    # workaround for bug of nix-mode for Emacs
     gtkExeEnvPostBuild = ''
       rm -v $out/lib/gtk-3.0/3.0.0/immodules.cache
       $out/bin/gtk-query-immodules-3.0 $out/lib/gtk-3.0/3.0.0/immodules/*.so > \
         $out/lib/gtk-3.0/3.0.0/immodules.cache
-    ''; # workaround for bug of nix-mode for Emacs */ '';
+    '';
 
     srcVerification = fetchurl {
       inherit (src)
@@ -192,7 +195,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A toolkit for creating graphical user interfaces";
     homepage = http://www.gtk.org/;
     license = licenses.lgpl2Plus;

@@ -9,7 +9,7 @@
 , dconf
 , gdk-pixbuf
 , glib
-, gtk_3
+, gtk
 , libxml2
 
 , channel
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     dconf
     gdk-pixbuf
     glib
-    gtk_3
+    gtk
     libxml2
   ];
 

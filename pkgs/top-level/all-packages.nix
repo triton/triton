@@ -977,7 +977,7 @@ evieext = callPackage ../all-pkgs/e/evieext { };
 evince_3-22 = callPackage ../all-pkgs/e/evince {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-24;
-  atk = pkgs.atk_2-22;
+  atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   gvfs = pkgs.gvfs_1-30;
@@ -1243,7 +1243,7 @@ git = callPackage ../all-pkgs/g/git { };
 
 gjs_1-46 = callPackage ../all-pkgs/g/gjs {
   channel = "1.46";
-  atk = pkgs.atk_2-22;
+  atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 gjs = callPackageAlias "gjs_1-46" { };
@@ -1288,7 +1288,7 @@ gnome-backgrounds = callPackageAlias "gnome-backgrounds_3-24" { };
 gnome-bluetooth_3-20 = callPackage ../all-pkgs/g/gnome-bluetooth {
   channel = "3.20";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-24;
-  atk = pkgs.atk_2-22;
+  atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 gnome-bluetooth = callPackageAlias "gnome-bluetooth_3-20" { };
@@ -1312,7 +1312,7 @@ gnome-control-center = callPackage ../all-pkgs/g/gnome-control-center { };
 
 gnome-desktop_3-22 = callPackage ../all-pkgs/g/gnome-desktop {
   channel = "3.22";
-  atk = pkgs.atk_2-22;
+  atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
@@ -1650,7 +1650,7 @@ gtkmm_3 = callPackageAlias "gtkmm_3-22" { };
 
 gtksourceview_3-22 = callPackage ../all-pkgs/g/gtksourceview {
   channel = "3.22";
-  atk = pkgs.atk_2-22;
+  atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   vala = pkgs.vala_0-34;
 };
@@ -2550,7 +2550,7 @@ musl = callPackage ../all-pkgs/m/musl { };
 
 mutter_3-22 = callPackage ../all-pkgs/m/mutter {
   channel = "3.22";
-  atk = pkgs.atk_2-22;
+  atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-desktop = pkgs.gnome-desktop_3-22;
   #gnome-settings-daemon = pkgs.gnome-settings-daemon_3-22;
@@ -2567,7 +2567,7 @@ nasm = callPackage ../all-pkgs/n/nasm { };
 nautilus_3-22 = callPackage ../all-pkgs/n/nautilus {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-24;
-  atk = pkgs.atk_2-22;
+  atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-desktop = pkgs.gnome-desktop_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
@@ -3218,7 +3218,7 @@ sudo = callPackage ../all-pkgs/s/sudo { };
 
 sushi_3-22 = callPackage ../all-pkgs/s/sushi {
   channel = "3.21";
-  atk = pkgs.atk_2-22;
+  atk = pkgs.atk_2-24;
   gjs = pkgs.gjs_1-46;
   gtksourceview = pkgs.gtksourceview_3-22;
 };
@@ -3426,7 +3426,7 @@ vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 
 vte_0-46 = callPackage ../all-pkgs/v/vte {
   channel = "0.46";
-  atk = pkgs.atk_2-22;
+  atk = pkgs.atk_2-24;
   gdk-pixbuf_unwrapped = pkgs.gdk-pixbuf_unwrapped_2-36;
   vala = pkgs.vala_0-34;
 };

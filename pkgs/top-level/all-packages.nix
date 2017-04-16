@@ -507,15 +507,11 @@ adobe-flash-player_beta = callPackage ../all-pkgs/a/adobe-flash-player {
 };
 adobe-flash-player = callPackageAlias "adobe-flash-player_stable" { };
 
-adwaita-icon-theme_3-22 = callPackage ../all-pkgs/a/adwaita-icon-theme {
-  channel = "3.22";
-  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-};
 adwaita-icon-theme_3-24 = callPackage ../all-pkgs/a/adwaita-icon-theme {
   channel = "3.24";
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
-adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-22" { };
+adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-24" { };
 
 afflib = callPackage ../all-pkgs/a/afflib { };
 

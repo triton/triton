@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.0.3";
+  version = "1.0.4";
 in
 buildPythonPackage rec {
   name = "speedtest-cli-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "speedtest-cli";
     inherit version;
-    sha256 = "e6897a11a8564b23e377fd63b8bdd895c015773ab0916d6a8358b996c423d653";
+    sha256 = "6f61ef7e2cb9265b1685dbcc0c53fe8073367cda142356286712c2c4f0554f14";
   };
 
   meta = with lib; {

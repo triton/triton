@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "1.3.0";
+  version = "1.4.0";
 in
 buildPythonPackage {
   name = "asciinema-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "asciinema";
     inherit version;
-    sha256 = "acc1a07306c7af02cd9bc97c32e4748dbfa57ff11beb17fea64eaee67eaa2db3";
+    sha256 = "fb31457e7a4689340b872f625658dbaea33bcf6863fb5d696cf3857010432ecb";
   };
 
   meta = with stdenv.lib; {

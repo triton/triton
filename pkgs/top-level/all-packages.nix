@@ -3256,6 +3256,8 @@ systemd_dist = callPackage ../all-pkgs/s/systemd/dist.nix { };
 
 taglib = callPackage ../all-pkgs/t/taglib { };
 
+tahoe-lafs = pkgs.python2Packages.tahoe-lafs;
+
 talloc = callPackage ../all-pkgs/t/talloc { };
 
 task-spooler = callPackage ../all-pkgs/t/task-spooler { };

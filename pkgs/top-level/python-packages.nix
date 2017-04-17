@@ -252,6 +252,8 @@ flexget = callPackage ../all-pkgs/f/flexget { };
 
 fonttools = callPackage ../all-pkgs/f/fonttools { };
 
+foolscap = callPackage ../all-pkgs/f/foolscap { };
+
 frozendict = callPackage ../all-pkgs/f/frozendict { };
 
 funcsigs = callPackage ../all-pkgs/f/funcsigs { };

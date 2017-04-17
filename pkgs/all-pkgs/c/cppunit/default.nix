@@ -2,13 +2,13 @@
 , fetchurl
 }:
 
-stdenv.mkDerivation {
-  name = "cppunit-1.13.2";
+stdenv.mkDerivation rec {
+  name = "cppunit-1.14.0";
 
   src = fetchurl {
-    url = http://dev-www.libreoffice.org/src/cppunit-1.13.2.tar.gz;
-    multihash = "QmPmS34CqMma8f8RXYMHme2BPJhY7ijinaabKxX7F42syA";
-    sha256 = "17s2kzmkw3kfjhpp72rfppyd7syr7bdq5s69syj2nvrlwd3d4irz";
+    url = "https://dev-www.libreoffice.org/src/${name}.tar.gz";
+    multihash = "QmUdPCbTGq4fuyXUV7MoMBPQuW2shm4W9cWvMxfJe47koq";
+    sha256 = "3d569869d27b48860210c758c4f313082103a5e58219a7669b52bfd29d674780";
   };
 
   meta = with stdenv.lib; {

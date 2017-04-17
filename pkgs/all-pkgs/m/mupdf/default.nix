@@ -44,9 +44,9 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "ba6793abd1c302421cc24007bf9e8b026d31d33b";
+      rev = "10ac760ba2be89414f80c09f12081f311032a4d8";
       file = "m/mupdf/fix-openjpeg.patch";
-      sha256 = "e55c3b876149d46983b155b0a237fa7d8d47a49e4ecab848bfca3fd549c644c4";
+      sha256 = "899ca42045806f69919929c2af1921868c053441648524212aa386c7f14bae4f";
     })
   ];
 

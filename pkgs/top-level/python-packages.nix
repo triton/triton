@@ -361,6 +361,8 @@ pycrypto = callPackage ../all-pkgs/p/pycrypto { };
 
 pycryptodomex = callPackage ../all-pkgs/p/pycryptodomex { };
 
+pycryptopp = callPackage ../all-pkgs/p/pycryptopp { };
+
 pydenticon = callPackage ../all-pkgs/p/pydenticon { };
 
 pygame = callPackage ../all-pkgs/p/pygame { };

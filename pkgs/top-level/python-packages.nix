@@ -518,6 +518,8 @@ youtube-dl = callPackage ../all-pkgs/y/youtube-dl { };
 
 zbase32 = callPackage ../all-pkgs/z/zbase32 { };
 
+zfec = callPackage ../all-pkgs/z/zfec { };
+
 zope-component = callPackage ../all-pkgs/z/zope-component { };
 
 zope-event = callPackage ../all-pkgs/z/zope-event { };

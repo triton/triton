@@ -193,6 +193,8 @@ certbot = callPackage ../all-pkgs/c/certbot { };
 
 cffi = callPackage ../all-pkgs/c/cffi { };
 
+characteristic = callPackage ../all-pkgs/c/characteristic { };
+
 chardet = callPackage ../all-pkgs/c/chardet { };
 
 cherrypy = callPackage ../all-pkgs/c/cherrypy { };

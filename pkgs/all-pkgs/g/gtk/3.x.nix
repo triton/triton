@@ -15,7 +15,6 @@
 , gdk-pixbuf
 , glib
 , gobject-introspection
-, gnome-wrapper
 , json-glib
 , libepoxy
 , libxkbcommon

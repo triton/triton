@@ -313,6 +313,8 @@ mutagen = callPackage ../all-pkgs/m/mutagen { };
 
 netaddr = callPackage ../all-pkgs/n/netaddr { };
 
+nevow = callPackage ../all-pkgs/n/nevow { };
+
 notify-python = callPackage ../all-pkgs/n/notify-python { };
 
 olefile = callPackage ../all-pkgs/o/olefile { };

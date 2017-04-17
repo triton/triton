@@ -11,11 +11,15 @@
 , xorg
 }:
 
+let
+  version = "0.14.0";
+in
 stdenv.mkDerivation {
-  name = "sddm-0.14.0";
+  name = "sddm-${version}";
 
   src = fetchurl {
-    url = "https://github.com/sddm/sddm/releases/download/v0.14.0/sddm-0.14.0.tar.xz";
+    url = "https://github.com/sddm/sddm/releases/download/v${version}/sddm-${version}.tar.xz";
+    sha1Confirm = "ee92a2b27602c13d6ac5cfd34399192a31ca033c";
     sha256 = "7e348258618b20f777767a98f9e377b48824b5cb5aad3a3f10f8482c1eb27778";
   };
 

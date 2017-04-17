@@ -351,6 +351,8 @@ pycountry = callPackage ../all-pkgs/p/pycountry { };
 
 pycparser = callPackage ../all-pkgs/p/pycparser { };
 
+pycrypto = callPackage ../all-pkgs/p/pycrypto { };
+
 pycryptodomex = callPackage ../all-pkgs/p/pycryptodomex { };
 
 pydenticon = callPackage ../all-pkgs/p/pydenticon { };
@@ -527,8 +529,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
 ################################################################################
 
    pycairo = callPackage ../all-pkgs/p/pycairo { };
-
-  pycrypto = callPackage ../development/python-modules/pycrypto { };
 
    acme = buildPythonPackage rec {
      inherit (self.certbot) src version;

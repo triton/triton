@@ -7,15 +7,15 @@
 }:
 
 let
-  version = "2.8";
+  version = "2.9";
 in
 stdenv.mkDerivation rec {
   name = "sshfs-${version}";
 
   src = fetchurl {
-    url = "https://github.com/libfuse/sshfs/releases/download/sshfs_${version}/${name}.tar.gz";
+    url = "https://github.com/libfuse/sshfs/releases/download/${name}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "7f689174d02e6b7e2631306fda4fb8e6b4483102d1bce82b3cdafba33369ad22";
+    sha256 = "46d1e1287ce97255fcb50010355184d8c5585329f73ab1e755217419a8e6e5de";
   };
 
   buildInputs = [

@@ -14,13 +14,13 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "libsndfile-1.0.27";
+  name = "libsndfile-1.0.28";
 
   src = fetchurl {
     url = "http://www.mega-nerd.com/libsndfile/files/${name}.tar.gz";
     hashOutput = false;
-    multihash = "QmRYMLHB4bmnaxgqgBdNd1wjqU6PPv9rUBCmeDVMSqwGRv";
-    sha256 = "1h7s61nhf7vklh9sdsbbqzb6x287q4x4j1jc5gmjragl4wprb4d3";
+    multihash = "QmPaJ5ntBLX2CsU6i8FfvSL8UJnFjefTzkVfuNx5FMKxUA";
+    sha256 = "1ff33929f042fa333aed1e8923aa628c3ee9e1eb85512686c55092d1e5a9dfa9";
   };
 
   buildInputs = [

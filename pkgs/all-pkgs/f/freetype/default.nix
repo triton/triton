@@ -20,7 +20,7 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "freetype-2.7";
+  name = "freetype-2.7.1";
 
   src = fetchurl {
     urls = [
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
       "mirror://sourceforge/freetype/${name}.tar.bz2"
     ];
     hashOutput = false;
-    sha256 = "d6a451f5b754857d2aa3964fd4473f8bc5c64e879b24516d780fb26bec7f7d48";
+    sha256 = "3a3bb2c4e15ffb433f2032f50a5b5a92558206822e22bfe8cbe339af4aa82f88";
   };
 
   buildInputs = [
@@ -44,14 +44,14 @@ stdenv.mkDerivation rec {
     #      https://github.com/archfan/infinality_bundle, provides
     #      updated versions of the patches.
     (fetchTritonPatch {
-      rev = "4a158da85dc6d434cf7a441f3714cde13d0e0d39";
+      rev = "2d67959be9b13d2c4191cd7cea45ea337e677a7e";
       file = "f/freetype2/0001-Enable-table-validation-modules.patch";
       sha256 = "6d273254fd925d284e5f66e3861eaef69a4393f34872398b2c93af0d5e15d34e";
     })
     (fetchTritonPatch {
-      rev = "4a158da85dc6d434cf7a441f3714cde13d0e0d39";
-      file = "f/freetype2/0002-infinality-2.7-2016.09.09.patch";
-      sha256 = "cde2053ec4d5d31147138bd9775b53280592d6e7c4685747344608c0c7137e67";
+      rev = "2d67959be9b13d2c4191cd7cea45ea337e677a7e";
+      file = "f/freetype2/0002-infinality-2.7.1-2017.01.11.patch";
+      sha256 = "5ac6329d4ffd6d94d9dd76b178fa13ab2fcfadbf2ddaa7ad60bf0bb7632afd69";
     })
   ];
 

@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libmbim/${name}.tar.xz";
+    multihash = "QmPa7JEpYhkzimBrfJSCzdbtLox3PbkgW8MrvRfj6E3Cir";
     sha256 = "ca8d52a95a18cbabae8f15f83f1572316e888b6504f946e6645d24405127ab5b";
   };
 

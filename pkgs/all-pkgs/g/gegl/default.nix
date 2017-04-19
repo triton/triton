@@ -37,14 +37,16 @@ let
     platforms;
 
   channel = "0.3";
-  version = "${channel}.10";
+  version = "${channel}.14";
 in
 stdenv.mkDerivation rec {
   name = "gegl-${version}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/gegl/${channel}/${name}.tar.bz2";
-    sha256 = "26b4d6d0a8edb358ca2fbc097f9f97eec9d74e0ffe42f89fa1aff201728023d9";
+    multihash = "QmagGFqFYWtULSTjBz7j9LfDzaxLV7wb5XGwLvusznhe6K";
+    hashOutput = false;
+    sha256 = "09f5e2e6899697641d4660e3e274aed696f5bacc96ba389ac77674ee1156590a";
   };
 
   nativeBuildInputs = [
@@ -124,6 +126,15 @@ stdenv.mkDerivation rec {
     "--${boolWt (libtiff != null)}-libtiff"
     "--${boolWt (libwebp != null)}-webp"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha1Urls = map (n: "${n}/../SHA1SUMS") src.urls;
+      sha256Urls = map (n: "${n}/../SHA256SUMS") src.urls;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with lib; {
     description = "Graph-based image processing framework";

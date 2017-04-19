@@ -4,18 +4,26 @@
 
 let
   major = "0.1";
-  patch = "20";
+  patch = "24";
   version = "${major}.${patch}";
 in
 stdenv.mkDerivation rec {
   name = "babl-${version}";
 
   src = fetchurl {
-    url = [
-      "https://download.gimp.org/pub/babl/${major}/${name}.tar.bz2"
-      "http://ftp.gtk.org/pub/babl/${major}/${name}.tar.bz2"
-    ];
-    sha256 = "0010909979d4f025d734944722c76eb49e61e412608dbbe4f00857bc8cf59314";
+    url = "https://download.gimp.org/pub/babl/${major}/${name}.tar.bz2";
+    multihash = "QmU1BatiGMYAA6tEryzsvPmdXfUkLV5awxcY491QaBoXXx";
+    hashOutput = false;
+    sha256 = "472bf1acdde5bf076e6d86f3004eea4e9b007b1377ab305ebddec99994f29d0b";
+  };
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha1Urls = map (n: "${n}/../SHA1SUMS") src.urls;
+      sha256Urls = map (n: "${n}/../SHA256SUMS") src.urls;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
   };
 
   meta = with stdenv.lib; {

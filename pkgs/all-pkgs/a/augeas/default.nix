@@ -6,13 +6,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "augeas-1.7.0";
+  name = "augeas-1.8.0";
 
   src = fetchurl {
     url = "http://download.augeas.net/${name}.tar.gz";
+    multihash = "QmVSKZutqGJXibnZbp5WSuaXyvmxuoy3uYgVDnEX5RipAq";
     hashOutput = false;
-    multihash = "QmXpQ8CyxXLNDtnPd9QmUwzp1uRdqsXCLkghAMdacgbmMS";
-    sha256 = "b9315575d07f7ba28ca2f9f60b4987dfe77b5970c98b59dc6ca7873fc4979763";
+    sha256 = "515ce904138d99ff51d45ba7ed0d809bdee6c42d3bc538c8c820e010392d4cc5";
   };
 
   buildInputs = [

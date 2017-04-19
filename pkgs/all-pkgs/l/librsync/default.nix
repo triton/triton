@@ -9,16 +9,19 @@
 , zlib
 }:
 
+let
+  date = "2017-04-18";
+  rev = "572f55f9b798407ad913bc3e4e26087026149028";
+in
 stdenv.mkDerivation rec {
-  name = "librsync-${version}";
-  version = "2.0.0";
+  name = "librsync-${date}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 2;
     owner = "librsync";
     repo = "librsync";
-    rev = "v${version}";
-    sha256 = "566991bf13ac8ad1c7510dac68b1f411e6f8e1ccd0c2ab81cbe9fa7f20d5cafa";
+    rev = rev;
+    sha256 = "e7f90f0ebcd8ac4cf545d101cb68350ad490c6ff1067086825e2350a00395923";
   };
 
   nativeBuildInputs = [

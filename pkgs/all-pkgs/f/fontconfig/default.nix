@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , substituteAll
 
@@ -37,6 +38,11 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
+    (fetchTritonPatch {
+      rev = "5d041041e170793a8f38744ff40470ade94964d7";
+      file = "f/fontconfig/0001-fix-test-with-freetype2-2.7.1.patch";
+      sha256 = "b4992aab4e2b4ddae01f7565486752fa877edb6cd5ed435e15938ed21dfe22c8";
+    })
     (substituteAll {
       src = ./config-compat.patch;
       inherit configVersion;

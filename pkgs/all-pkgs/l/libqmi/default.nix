@@ -3,14 +3,17 @@
 , python
 
 , glib
+, libgudev
+, libmbim
 }:
 
 stdenv.mkDerivation rec {
-  name = "libqmi-1.16.0";
+  name = "libqmi-1.18.0";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libqmi/${name}.tar.xz";
-    sha256 = "7ab6bb47fd23bf4d3fa17424e40ea5552d08b19e5ee4f125f21f316c8086ba2a";
+    multihash = "QmZZs9nTRFqkwNHcjxU2XJuWJAF9okzF9PxBxEcnRSU93y";
+    sha256 = "a0a42c55935e75a630208e2f70840bd4407f56fe1c5258f5b0f6c0aaedf88cec";
   };
 
   nativeBuildInputs = [
@@ -19,6 +22,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     glib
+    libgudev
+    libmbim
   ];
 
   preBuild = ''

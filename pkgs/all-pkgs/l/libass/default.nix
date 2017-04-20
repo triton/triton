@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
     fontconfig
     freetype
     fribidi
-    harfbuzz
+    harfbuzz_lib
   ];
 
   configureFlags = [
@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
     "--disable-directwrite" # Windows
     "--disable-coretext" # OSX
     "--enable-require-system-font-provider"
-    "--${boolEn (harfbuzz != null)}-harfbuzz"
+    "--${boolEn (harfbuzz_lib != null)}-harfbuzz"
     "--${boolEn (yasm != null)}-asm"
     "--${boolEn rasterizerSupport}-rasterizer"
     "--${boolEn largeTilesSupport}-large-tiles"

@@ -19,7 +19,7 @@ let
     boolEn;
 
   versionMajor = "2.40";
-  versionMinor = "16";
+  versionMinor = "17";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -27,8 +27,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/librsvg/${versionMajor}/${name}.sha256sum";
-    sha256 = "d48bcf6b03fa98f07df10332fb49d8c010786ddca6ab34cbba217684f533ff2e";
+    hashOutput = false;
+    sha256 = "e6f6c5cbecc405bb945c7cd15061276035ae3173bbb3bb25e8a916779c7f69cc";
   };
 
   buildInputs = [
@@ -67,6 +67,14 @@ stdenv.mkDerivation rec {
       -e "s#gdk_pixbuf_cache_file = .*#gdk_pixbuf_cache_file = $GDK_PIXBUF/loaders.cache#" \
       -e "s#\$(GDK_PIXBUF_QUERYLOADERS)#GDK_PIXBUF_MODULEDIR=$GDK_PIXBUF/loaders \$(GDK_PIXBUF_QUERYLOADERS)#"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha256Url = "https://download.gnome.org/sources/librsvg/2.40/${name}.sha256sum";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with lib; {
     description = "Scalable Vector Graphics (SVG) rendering library";

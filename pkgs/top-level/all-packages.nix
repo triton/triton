@@ -1175,7 +1175,12 @@ freeglut = callPackage ../all-pkgs/f/freeglut { };
 
 freeipmi = callPackage ../all-pkgs/f/freeipmi { };
 
-freetype = callPackage ../all-pkgs/f/freetype { };
+freetype_for_harfbuzz = callPackage ../all-pkgs/f/freetype {
+  type = "harfbuzz";
+};
+freetype = callPackage ../all-pkgs/f/freetype {
+  type = "full";
+};
 
 frei0r-plugins = callPackage ../all-pkgs/f/frei0r-plugins { };
 
@@ -1693,7 +1698,12 @@ gzip = callPackage ../all-pkgs/g/gzip { };
 
 hadoop = callPackage ../all-pkgs/h/hadoop { };
 
-harfbuzz = callPackage ../all-pkgs/h/harfbuzz { };
+harfbuzz_lib = callPackage ../all-pkgs/h/harfbuzz {
+  type = "lib";
+};
+harfbuzz_full = callPackage ../all-pkgs/h/harfbuzz {
+  type = "full";
+};
 
 hdparm = callPackage ../all-pkgs/h/hdparm { };
 

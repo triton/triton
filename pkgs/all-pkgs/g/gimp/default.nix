@@ -18,7 +18,7 @@
 , ghostscript
 , glib
 , gtk2
-, harfbuzz
+, harfbuzz_lib
 , jasper
 , lcms2
 , libexif
@@ -69,7 +69,7 @@ stdenv.mkDerivation rec {
     ghostscript
     glib
     gtk2
-    harfbuzz
+    harfbuzz_lib
     jasper
     lcms2
     libexif

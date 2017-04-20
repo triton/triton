@@ -6,16 +6,18 @@
 , gnumake
 
 , bzip2
-#, harfbuzz
+, harfbuzz_lib
 , libpng
 , zlib
 
+, type
 /* passthru only */
 , glib
 }:
 
 let
   inherit (stdenv.lib)
+    boolWt
     optionals
     optionalString;
 in
@@ -33,9 +35,10 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bzip2
-    #harfbuzz
     libpng
     zlib
+  ] ++ optionals (type != "harfbuzz") [
+    harfbuzz_lib
   ];
 
   patches = [
@@ -60,8 +63,7 @@ stdenv.mkDerivation rec {
     "--with-zlib"
     "--with-bzip2"
     "--with-png"
-    # Recursive dependency
-    "--without-harfbuzz"
+    "--${boolWt (type != "harfbuzz")}-harfbuzz"
     "--without-old-mac-fonts"
     "--without-fsspec"
     "--without-fsref"

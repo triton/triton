@@ -17,7 +17,7 @@
 , glib
 , gstreamer
 , gst-plugins-base
-, harfbuzz
+, harfbuzz_lib
 , hunspell
 , icu
 , libcap
@@ -86,7 +86,7 @@ stdenv.mkDerivation rec {
     glib
     gstreamer
     gst-plugins-base
-    harfbuzz
+    harfbuzz_lib
     icu
     libdrm
     libevdev

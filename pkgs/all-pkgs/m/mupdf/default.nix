@@ -5,7 +5,7 @@
 , curl
 , freetype
 , glfw
-, harfbuzz
+, harfbuzz_lib
 , jbig2dec
 , libjpeg
 , mujs
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
     curl
     freetype
     glfw
-    harfbuzz
+    harfbuzz_lib
     jbig2dec
     libjpeg
     mujs

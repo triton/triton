@@ -7,7 +7,7 @@
 , freetype
 , glib
 , gobject-introspection
-, harfbuzz
+, harfbuzz_lib
 , xorg
 }:
 
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     freetype
     glib
     gobject-introspection
-    harfbuzz
+    harfbuzz_lib
   ] ++ optionals (xorg != null) [
     xorg.libX11
     xorg.libXft

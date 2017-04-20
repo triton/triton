@@ -5,7 +5,7 @@
 , fontconfig
 , freetype
 , fribidi
-, harfbuzz
+, harfbuzz_lib
 
 , rasterizerSupport ? true # Internal rasterizer
 , largeTilesSupport ? false # Use larger tiles in the rasterizer

@@ -1,15 +1,17 @@
 { stdenv
 , fetchurl
 , lib
-, python
 
 , cairo
 , fontconfig
+, freetype_for_harfbuzz
 , freetype
 , glib
 , gobject-introspection
 , graphite2
 , icu
+
+, type
 }:
 
 let
@@ -34,26 +36,18 @@ stdenv.mkDerivation rec {
     sha256 = "d0e05438165884f21658154c709075feaf98c93ee5c694b951533ac425a9a711";
   };
 
-  nativeBuildInputs = optionals doCheck [
-    python
-  ];
-
   buildInputs = [
-    cairo
-    fontconfig
-    freetype
     glib
     gobject-introspection
     graphite2
     icu
+  ] ++ optionals (type == "lib") [
+    freetype_for_harfbuzz
+  ] ++ optionals (type == "full") [
+    cairo
+    fontconfig
+    freetype
   ];
-
-  postPatch = optionalString doCheck (''
-    patchShebangs test/shaping/
-  '' + /* test fails */ ''
-    sed -i test/shaping/Makefile.{am,in} \
-      -e 's|tests/fuzzed.tests||'
-  '');
 
   configureFlags = [
     "--disable-gtk-doc"
@@ -62,21 +56,22 @@ stdenv.mkDerivation rec {
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--${boolWt (glib != null)}-glib"
     "--${boolWt (glib != null)}-gobject"
-    "--${boolWt (cairo != null)}-cairo"
-    "--${boolWt (fontconfig != null)}-fontconfig"
     "--${boolWt (icu != null)}-icu"
     "--${boolWt (graphite2 != null)}-graphite2"
-    "--${boolWt (freetype != null)}-freetype"
     "--without-uniscribe"
     "--without-directwrite"
     "--without-coretext"
+    "--with-freetype"
+  ] ++ optionals (type == "full") [
+    "--${boolWt (cairo != null)}-cairo"
+    "--${boolWt (fontconfig != null)}-fontconfig"
   ];
 
   postInstall = ''
     rm -rvf $out/share/gtk-doc
+  '' + optionalString (type == "lib") ''
+    rm -r $out/bin
   '';
-
-  doCheck = true;
 
   passthru = {
     srcVerification = fetchurl rec {

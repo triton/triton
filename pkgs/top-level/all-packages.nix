@@ -2487,6 +2487,8 @@ mixxx = callPackage ../all-pkgs/m/mixxx { };
 
 mkvtoolnix = callPackage ../all-pkgs/m/mkvtoolnix { };
 
+mm-common = callPackage ../all-pkgs/m/mm-common { };
+
 modemmanager = callPackage ../all-pkgs/m/modemmanager { };
 
 mongo-c-driver = callPackage ../all-pkgs/m/mongo-c-driver { };

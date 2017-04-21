@@ -6529,6 +6529,11 @@ let
       yaml
     ];
 
+    # Remove in 0.7.1
+    postPatch = ''
+      sed -i 's,Config: \*tlsConfig,Config: tlsConfig,g' builtin/logical/cassandra/util.go
+    '';
+
     # Regerate protos
     preBuild = ''
       srcDir="$(pwd)"/go/src

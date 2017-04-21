@@ -2856,7 +2856,7 @@ pinentry = callPackage ../all-pkgs/p/pinentry {
 
 pkcs11-helper = callPackage ../all-pkgs/p/pkcs11-helper { };
 
-pkg-config = callPackage ../all-pkgs/p/pkgconfig { };
+pkg-config = callPackage ../all-pkgs/p/pkg-config { };
 
 pkgconf = callPackage ../all-pkgs/p/pkgconf { };
 pkgconfig = callPackageAlias "pkgconf" { };

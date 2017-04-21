@@ -4190,10 +4190,14 @@ let
     repo   = "client-go";
     sha256 = "99319ed43886dbd9e730e9fa62dd724717ac34a5932e14af53fdf329dd67d19c";
     goPackageAliases = [
-      "k8s.io/client-go/1.4"
+      "k8s.io/client-go"
     ];
     subPackages = [
-      "pkg/util/yaml"
+      "1.4/pkg/util/yaml"
+    ];
+    buildInputs = [
+      glog
+      yaml
     ];
     meta.autoUpdate = false;
   };
@@ -6240,6 +6244,20 @@ let
       yaml_v2
     ];
     excludedPackages = "\\(test\\|suite\\)";
+
+    postPatch = ''
+      sed \
+        -e '/type HostKeyCallback/d' \
+        -i lib/utils/utils.go \
+        -i lib/client/api.go
+      sed \
+        -e '\#"golang.org/x/crypto/ssh"#d' \
+        -i lib/utils/utils.go
+      sed -i 's,HostKeyCallback HostKeyCallback,HostKeyCallback ssh.HostKeyCallback,g' lib/client/api.go
+      sed 's,utils\.HostKeyCallback,ssh.HostKeyCallback,g' \
+        -i lib/reversetunnel/agent.go \
+        -i lib/client/client.go
+    '';
   };
 
   template = buildFromGitHub {

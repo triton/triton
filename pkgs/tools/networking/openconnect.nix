@@ -13,6 +13,7 @@ stdenv.mkDerivation rec {
     urls = [
       "ftp://ftp.infradead.org/pub/openconnect/${name}.tar.gz"
     ];
+    multihash = "Qmav8tTKNPYJ2SKbcKqnNR65k7cPByb3Gg5MFzzT6TL8b3";
     sha256 = "1wkhmgfxkdkhy2p9w9idrgipxmxij2z4f88flfk3fifwd19nkkzs";
   };
 

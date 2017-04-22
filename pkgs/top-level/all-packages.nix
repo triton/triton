@@ -2073,6 +2073,8 @@ libiodbc = callPackage ../all-pkgs/l/libiodbc {
 
 libinput = callPackage ../all-pkgs/l/libinput { };
 
+libiscsi = callPackage ../all-pkgs/l/libiscsi { };
+
 libisoburn = callPackage ../all-pkgs/l/libisoburn { };
 
 libisofs = callPackage ../all-pkgs/l/libisofs { };

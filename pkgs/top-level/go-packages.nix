@@ -679,6 +679,14 @@ let
     sha256 = "185c10ab80cn4jxdp915h428lm0r9zf1cqrfsjs71im3w3ankvsn";
   };
 
+  ccache = buildFromGitHub {
+    version = 2;
+    rev = "v2.0.2";
+    owner = "karlseguin";
+    repo = "ccache";
+    sha256 = "11zg85f5v89dfqy1s5xs42cs56sxdqs768l9wx73yksxqkidddbh";
+  };
+
   certificate-transparency = buildFromGitHub {
     version = 2;
     owner = "google";
@@ -1588,34 +1596,32 @@ let
     version = 2;
     owner = "coreos";
     repo = "etcd";
-    date = "2017-04-21";
-    rev = "a9087ee659e58f26de72c4809ddabd8f58b4a97a";
-    sha256 = "1qjm9blr6lhbbaxwrahb434a4s6kjda1c8c1p1s8nqj2hlz6jsm4";
+    rev = "v3.1.6";
+    sha256 = "12024ccvyln5v4b9xab3yd8hjgzbh576ky934k9kqx78mzqcmvsp";
     buildInputs = [
       bolt
       btree
       urfave_cli
+      ccache
       clockwork
       cobra
       cmux
+      crypto
       go-grpc-prometheus
       go-humanize
       go-semver
       go-systemd
-      gopcap
-      groupcache
       grpc
       grpc-gateway
-      loghisto
       net
       pb_v1
       pflag
       pkg
       probing
-      procfs
       prometheus_client_golang
-      pty
+      protobuf
       gogo_protobuf
+      pty
       speakeasy
       tablewriter
       time
@@ -1624,11 +1630,10 @@ let
 
       pkgs.libpcap
     ];
-    meta.useUnstable = true;
   };
 
   etcd_client = buildFromGitHub {
-    inherit (etcd) rev date owner repo sha256 version meta;
+    inherit (etcd) rev owner repo sha256 version meta;
     subPackages = [
       "client"
       "pkg/fileutil"
@@ -1650,7 +1655,7 @@ let
   };
 
   etcd_for_vault = buildFromGitHub {
-    inherit (etcd) rev date owner repo sha256 version meta;
+    inherit (etcd) rev owner repo sha256 version meta;
     subPackages = [
       "auth/authpb"
       "client"

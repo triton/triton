@@ -25,12 +25,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "emacs-25.1";
+  name = "emacs-25.2";
 
   src = fetchurl {
     url = "mirror://gnu/emacs/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "19f2798ee3bc26c95dca3303e7ab141e7ad65d6ea2b6945eeba4dbea7df48f33";
+    sha256 = "59b55194c9979987c5e9f1a1a4ab5406714e80ffcfd415cc6b9222413bc073fa";
   };
 
   nativeBuildInputs = [

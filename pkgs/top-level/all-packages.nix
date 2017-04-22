@@ -2756,6 +2756,8 @@ opencv = callPackageAlias "opencv_3" { };
 
 openh264 = callPackage ../all-pkgs/o/openh264 { };
 
+open-isns = callPackage ../all-pkgs/o/open-isns { };
+
 openjpeg_1-5 = callPackage ../all-pkgs/o/openjpeg {
   channel = "1.5";
 };

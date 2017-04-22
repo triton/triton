@@ -6,12 +6,15 @@
 , python3
 }:
 
+let
+  version = "0.7.8";
+in
 stdenv.mkDerivation rec {
   name = "libcap-ng-${version}";
-  version = "0.7.8";
 
   src = fetchurl {
     url = "https://people.redhat.com/sgrubb/libcap-ng/${name}.tar.gz";
+    multihash = "QmWyF9KDXAS3pnEsCo8yLwTvUeH8wFDLfMTgmu19iCFhis";
     sha256 = "c21af997445cd4107a55d386f955c5ea6f6e96ead693e9151277c0ab5f97d05f";
   };
 

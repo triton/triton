@@ -1,22 +1,34 @@
 { stdenv
 , fetchurl
+
+, channel
 }:
 
+let
+  sources = import ./sources.nix;
+
+  inherit (sources."${channel}")
+    sha256
+    version;
+
+  inherit (stdenv.lib)
+    optionals
+    versionAtLeast;
+in
 stdenv.mkDerivation rec {
-  name = "fuse-2.9.7";
+  name = "fuse-${version}";
 
   src = fetchurl {
     url = "https://github.com/libfuse/libfuse/releases/download/${name}/"
       + "${name}.tar.gz";
     hashOutput = false;
-    sha256 = "832432d1ad4f833c20e13b57cf40ce5277a9d33e483205fc63c78111b3358874";
+    inherit sha256;
   };
 
   preConfigure = ''
     export MOUNT_FUSE_PATH=$out/sbin
     export INIT_D_PATH=$out/etc/init.d
     export UDEV_RULES_PATH=$out/etc/udev/rules.d
-    export NIX_CFLAGS_COMPILE="-DFUSERMOUNT_DIR=\"/no-such-path\""
   '';
 
   preBuild = ''
@@ -25,7 +37,12 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--disable-kernel-module"
+    "--enable-lib"
+    "--enable-util"
+    "--disable-example"
+    "--disable-mtab"
+  ] ++ optionals (versionAtLeast version "3.0.0") [
+    "--disable-test"
   ];
 
   passthru = {

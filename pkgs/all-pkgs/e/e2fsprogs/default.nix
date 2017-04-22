@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 
-, fuse
+, fuse_2
 , util-linux_lib
 }:
 
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    fuse
+    fuse_2
     util-linux_lib
   ];
 

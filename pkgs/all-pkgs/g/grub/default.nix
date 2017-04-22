@@ -10,7 +10,7 @@
 , dejavu-fonts
 , efibootmgr
 , freetype
-, fuse
+, fuse_2
 , gettext
 , libusb_1
 , lvm2
@@ -68,7 +68,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     freetype
-    fuse
+    fuse_2
     gettext
     libusb_1
     lvm2

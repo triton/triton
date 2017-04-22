@@ -7,7 +7,7 @@
 
 , appdirs
 , colorama
-, fuse
+, fuse_2
 , fusepy
 , python-dateutil
 , requests
@@ -43,7 +43,7 @@ buildPythonPackage rec {
   ];
 
   makeWrapperArgs = [
-    "--prefix LIBFUSE_PATH : ${fuse}/lib/libfuse.so"
+    "--prefix LIBFUSE_PATH : ${fuse_2}/lib/libfuse.so"
   ];
 
   preFixup = /* Remove __pycache__ directory in bin output directory*/ ''

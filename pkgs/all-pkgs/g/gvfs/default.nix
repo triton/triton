@@ -8,7 +8,7 @@
 
 , avahi
 , dbus
-, fuse
+, fuse_2
 , gconf
 , gcr
 , glib
@@ -62,7 +62,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     avahi
     dbus
-    fuse
+    fuse_2
     #gconf
     gcr
     glib

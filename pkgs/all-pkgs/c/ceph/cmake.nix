@@ -12,7 +12,7 @@
 , curl
 , expat
 , fcgi
-, fuse
+, fuse_2
 , jemalloc
 , keyutils
 , leveldb
@@ -69,7 +69,7 @@ stdenv.mkDerivation rec {
     curl
     expat
     fcgi
-    fuse
+    fuse_2
     jemalloc
     keyutils
     leveldb

@@ -18,7 +18,7 @@
 , curl
 , expat
 , fcgi
-, fuse
+, fuse_2
 , gperftools
 , jemalloc
 , keyutils
@@ -131,7 +131,7 @@ stdenv.mkDerivation rec {
     fcgi
     expat
     curl
-    fuse
+    fuse_2
   ] ++ optionals (versionOlder version "10.0.4") [
     libedit
   ] ++ optionals (versionAtLeast version "10.0.0") [

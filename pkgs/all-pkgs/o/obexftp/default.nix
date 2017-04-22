@@ -5,7 +5,7 @@
 
 , bluez
 , expat
-, fuse
+, fuse_2
 , openobex
 }:
 
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     bluez
     expat
-    fuse
+    fuse_2
     openobex
   ];
 

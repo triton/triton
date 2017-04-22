@@ -1,7 +1,7 @@
 { stdenv
 , fetchurl
 
-, fuse
+, fuse_2
 , glib
 , openssh
 }:
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    fuse
+    fuse_2
     glib
     openssh
   ];

@@ -4,7 +4,7 @@
 
 , curl
 , expat
-, fuse
+, fuse_2
 , ncurses
 , openssl
 , readline
@@ -32,7 +32,7 @@ stdenv.mkDerivation {
   buildInputs = [
     curl
     expat
-    fuse
+    fuse_2
     ncurses
     openssl
     readline

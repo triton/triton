@@ -1186,7 +1186,12 @@ frei0r-plugins = callPackage ../all-pkgs/f/frei0r-plugins { };
 
 fstrm = callPackage ../all-pkgs/f/fstrm { };
 
-fuse = callPackage ../all-pkgs/f/fuse { };
+fuse_2 = callPackage ../all-pkgs/f/fuse {
+  channel = "2";
+};
+fuse_3 = callPackage ../all-pkgs/f/fuse {
+  channel = "3";
+};
 
 game-music-emu = callPackage ../all-pkgs/g/game-music-emu { };
 

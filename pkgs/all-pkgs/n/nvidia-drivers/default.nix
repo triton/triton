@@ -160,7 +160,8 @@ stdenv.mkDerivation {
       file = "nvidia-drivers/nvidia-drivers-367.35-fix-application-profiles-typo.patch";
       sha256 = "caae27b1883c5c6b3c4684720d2902421ad16ab49577ee7302a95c964236141d";
     })
-  ] ++ optionals (versionAtLeast version "378.13"
+  ] ++ optionals (
+    (versionAtLeast version "378.13" && versionOlder version "381.00")
     && (buildKernelspace && versionAtLeast kernel.version "4.10")) [
     (fetchTritonPatch {
       rev = "9fe9a276f8576135ed00f09f6dbf2776a55c33f4";

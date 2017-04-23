@@ -9,8 +9,8 @@
 }:
 
 let
-  release = "20160223";
-  version = "2.5";
+  release = "20161014";
+  version = "2.6";
 in
 stdenv.mkDerivation rec {
   name = "libselinux-${version}";
@@ -18,7 +18,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/"
       + "files/releases/${release}/${name}.tar.gz";
-    sha256 = "94c9e97706280bedcc288f784f67f2b9d3d6136c192b2c9f812115edba58514f";
+    hashOutput = false;
+    sha256 = "4ea2dde50665c202253ba5caac7738370ea0337c47b251ba981c60d24e1a118a";
   };
 
   nativeBuildInputs = [
@@ -55,9 +56,10 @@ stdenv.mkDerivation rec {
     description = "SELinux userland library";
     homepage = http://userspace.selinuxproject.org;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

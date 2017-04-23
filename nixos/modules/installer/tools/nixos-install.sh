@@ -165,9 +165,7 @@ done
 set -e
 shopt -s nullglob
 
-if [ -z "$MOUNT_POINT" ]; then
-  MOUNT_POINT='/mnt'
-fi
+declare -r MOUNT_POINT="${MOUNT_POINT:-/mnt}"
 
 if ! test -e "$MOUNT_POINT"; then
   echo "mount point $MOUNT_POINT doesn't exist" >&2

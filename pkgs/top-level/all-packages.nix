@@ -1931,6 +1931,8 @@ libbson = callPackage ../all-pkgs/l/libbson { };
 
 libburn = callPackage ../all-pkgs/l/libburn { };
 
+libbytesize = callPackage ../all-pkgs/l/libbytesize { };
+
 libcacard = callPackage ../all-pkgs/l/libcacard { };
 
 libcanberra = callPackage ../all-pkgs/l/libcanberra { };

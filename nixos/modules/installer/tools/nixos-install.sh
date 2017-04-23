@@ -73,6 +73,30 @@ create_triton_fhs() {
   done
 }
 
+copy_host_file() {
+  local -r destination_file="${3}"
+  local file
+  local -r mount_point="${1}"
+  local -r permissions="${2}"
+  shift 3
+  local -a -r source_files=("$@")
+
+  if [ -f "${mount_point}/${destination_file}" ]; then
+    rm --force --verbose "${mount_point}/${destination_file}"
+  fi
+
+  # Always assume destination location is a source
+  source_files+=("${destination_file}")
+
+  for file in "${source_files[@]}"; do
+    if [ -f "/${file}"]; then
+      cp --dereference --force --verbose "/${file}" \
+        "${mount_point}/${destination_file}"
+      chown "${permissions}" "${mount_point}/${destination_file}"
+    fi
+  done
+}
+
 # Re-exec ourselves in a private mount namespace so that our bind
 # mounts get cleaned up automatically.
 if [ $(id -u) -eq 0 ]; then
@@ -152,6 +176,11 @@ fi
 
 create_triton_fhs "${mountPoint}"
 
+copy_host_file "${mountPoint}" '0644' 'etc/hosts'
+copy_host_file "${mountPoint}" '0644' 'etc/resolv.conf'
+copy_host_file "${mountPoint}" '0644' 'etc/ssl/certs/ca-certificates.crt' \
+  'etc/ssl/certs/ca-bundle.crt'
+
 # Mount some stuff in the target root directory.
 mount --verbose --rbind '/dev' "$mountPoint/dev"
 mount --verbose --rbind '/proc' "$mountPoint/proc"
@@ -162,18 +191,10 @@ mount --verbose --types tmpfs --options 'mode=0755' none \
   "$mountPoint/var/setuid-wrappers"
 rm --verbose --recursive --force "$mountPoint/var/run"
 ln --verbose --symbolic '/run' "$mountPoint/var/run"
-for f in '/etc/resolv.conf' '/etc/hosts'; do
-  rm --verbose --force "$mountPoint/$f"
-  [ -f "$f" ] && cp --dereference --force "$f" "$mountPoint/etc/"
-done
 for f in '/etc/passwd' '/etc/group'; do
-  touch $mountPoint/$f; [ -f "$f" ] && \
-    mount --rbind --options ro "$f" "$mountPoint/$f"
-done
-for f in 'etc/ssl/certs/ca-certificates.crt'; do
-  rm --verbose --force "$mountPoint/$f"
+  touch "$mountPoint/$f"
   if [ -f "$f" ]; then
-    cp --dereference --force "/$f" "$mountPoint/$f"
+    mount --rbind --options ro "$f" "$mountPoint/$f"
   fi
 done
 

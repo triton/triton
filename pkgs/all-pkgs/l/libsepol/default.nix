@@ -5,8 +5,8 @@
 }:
 
 let
-  release = "20160223";
-  version = "2.5";
+  release = "20161014";
+  version = "2.6";
 in
 stdenv.mkDerivation rec {
   name = "libsepol-${version}";
@@ -14,7 +14,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/"
       + "files/releases/${release}/${name}.tar.gz";
-    sha256 = "2bdeec56d0a08b082b93b40703b4b3329cc5562152f7254d8f6ef6b56afe850a";
+    hashOutput = false;
+    sha256 = "d856d6506054f52abeaa3543ea2f2344595a3dc05d0d873ed7f724f7a16b1874";
   };
 
   nativeBuildInputs = [
@@ -36,9 +37,10 @@ stdenv.mkDerivation rec {
     description = "SELinux binary policy representation library";
     homepage = http://userspace.selinuxproject.org;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
-      i686-linux
-      ++ x86_64-linux;
+      x86_64-linux;
   };
 }

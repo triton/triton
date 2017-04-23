@@ -2830,6 +2830,8 @@ pangox-compat = callPackage ../all-pkgs/p/pangox-compat { };
 
 parallel = callPackage ../all-pkgs/p/parallel { };
 
+parted = callPackage ../all-pkgs/p/parted { };
+
 patchelf = callPackage ../all-pkgs/p/patchelf { };
 
 patchutils = callPackage ../all-pkgs/p/patchutils { };
@@ -3728,8 +3730,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   opensp = callPackage ../tools/text/sgml/opensp { };
 
   spCompat = callPackage ../tools/text/sgml/opensp/compat.nix { };
-#
-  #parted = callPackage ../tools/misc/parted { hurd = null; };
 #
   rng_tools = callPackage ../tools/security/rng-tools { };
 #

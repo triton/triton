@@ -3451,6 +3451,8 @@ vlc = callPackage ../all-pkgs/v/vlc { };
 
 vobsub2srt = callPackage ../all-pkgs/v/vobsub2srt { };
 
+volume_key = callPackage ../all-pkgs/v/volume_key { };
+
 vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 
 vte_0-46 = callPackage ../all-pkgs/v/vte {

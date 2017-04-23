@@ -103,7 +103,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (libsoup != null)}-http"
     "--${boolEn (avahi != null)}-avahi"
     "--${boolEn (systemd_lib != null)}-udev"
-    "--${boolEn (fuse != null)}-fuse"
+    "--${boolEn (fuse_2 != null)}-fuse"
     "--disable-gdu"
     "--${boolEn (
       udisks != null

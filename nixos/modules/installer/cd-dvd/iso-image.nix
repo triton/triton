@@ -34,19 +34,19 @@ let
     SERIAL 0 38400
     TIMEOUT ${builtins.toString syslinuxTimeout}
     UI vesamenu.c32
-    MENU TITLE NixOS
+    MENU TITLE Triton
     MENU BACKGROUND /isolinux/background.png
     DEFAULT boot
 
     LABEL boot
-    MENU LABEL NixOS ${config.system.nixosLabel}${config.isoImage.appendToMenuLabel}
+    MENU LABEL Triton ${config.system.nixosLabel}${config.isoImage.appendToMenuLabel}
     LINUX /boot/bzImage
     APPEND init=${config.system.build.toplevel}/init ${toString config.boot.kernelParams}
     INITRD /boot/initrd
 
     # A variant to boot with 'nomodeset'
     LABEL boot-nomodeset
-    MENU LABEL NixOS ${config.system.nixosVersion}${config.isoImage.appendToMenuLabel} (with nomodeset)
+    MENU LABEL Triton ${config.system.nixosVersion}${config.isoImage.appendToMenuLabel} (with nomodeset)
     LINUX /boot/bzImage
     APPEND init=${config.system.build.toplevel}/init ${toString config.boot.kernelParams} nomodeset
     INITRD /boot/initrd
@@ -132,7 +132,7 @@ in
     };
 
     isoImage.isoBaseName = mkOption {
-      default = "nixos";
+      default = "triton";
       description = ''
         Prefix of the name of the generated ISO image file.
       '';

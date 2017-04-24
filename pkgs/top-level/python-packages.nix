@@ -419,6 +419,8 @@ python-tvrage = callPackage ../all-pkgs/p/python-tvrage { };
 
 pytz = callPackage ../all-pkgs/p/pytz { };
 
+pywbem = callPackage ../all-pkgs/p/pywbem { };
+
 pyutil = callPackage ../all-pkgs/p/pyutil { };
 
 pyyaml = callPackage ../all-pkgs/p/pyyaml { };

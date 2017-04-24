@@ -3658,6 +3658,8 @@ xvidcore = callPackage ../all-pkgs/x/xvidcore { };
 
 xz = callPackage ../all-pkgs/x/xz { };
 
+yajl = callPackage ../all-pkgs/y/yajl { };
+
 yaml-cpp = callPackage ../all-pkgs/y/yaml-cpp { };
 
 yara = callPackage ../all-pkgs/y/yara { };
@@ -4059,8 +4061,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   webrtc-audio-processing = callPackage ../development/libraries/webrtc-audio-processing { };
 #
   xmlrpc_c = callPackage ../development/libraries/xmlrpc-c { };
-#
-  yajl = callPackage ../development/libraries/yajl { };
 #
   zziplib = callPackage ../development/libraries/zziplib { };
 #

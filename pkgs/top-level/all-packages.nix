@@ -1925,6 +1925,8 @@ libavc1394 = callPackage ../all-pkgs/l/libavc1394 { };
 
 libb64 = callPackage ../all-pkgs/l/libb64 { };
 
+libblockdev = callPackage ../all-pkgs/l/libblockdev { };
+
 libbluray = callPackage ../all-pkgs/l/libbluray { };
 
 libbsd = callPackage ../all-pkgs/l/libbsd { };

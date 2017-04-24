@@ -93,6 +93,50 @@ copy_host_file() {
       cp --dereference --force --verbose "/${file}" \
         "${mount_point}/${destination_file}"
       chown "${permissions}" "${mount_point}/${destination_file}"
+      break
+    fi
+  done
+}
+
+rbind_host_dir() {
+  local -r destination_dir="${2}"
+  local dir
+  local -r mount_point="${1}"
+  shift 2
+  local -a -r source_dirs=("$@")
+
+  # Always assume destination location is a source
+  source_dirs+=("${destination_dir}")
+
+  for dir in "${source_dirs[@]}"; do
+    if [ -d "/${dir}"]; then
+      mount --verbose --rbind "/${dir}" \
+        "${mount_point}/${destination_dir}"
+      break
+    fi
+  done
+}
+
+rbind_host_file() {
+  local -r destination_file="${2}"
+  local file
+  local -r mount_point="${1}"
+  shift 2
+  local -a -r source_files=("$@")
+
+  if [ -f "${mount_point}/${destination_file}" ]; then
+    rm --force --verbose "${mount_point}/${destination_file}"
+  fi
+
+  # Always assume destination location is a source
+  source_files+=("${destination_file}")
+
+  for file in "${source_files[@]}"; do
+    if [ -f "/${file}"]; then
+      touch "${mount_point}/${destination_file}"
+      mount --verbose --rbind --options ro "/${file}" \
+        "${mount_point}/${destination_file}"
+      break
     fi
   done
 }
@@ -179,22 +223,19 @@ copy_host_file "${MOUNT_POINT}" '0644' 'etc/resolv.conf'
 copy_host_file "${MOUNT_POINT}" '0644' 'etc/ssl/certs/ca-certificates.crt' \
   'etc/ssl/certs/ca-bundle.crt'
 
-# Mount some stuff in the target root directory.
-mount --verbose --rbind '/dev' "$MOUNT_POINT/dev"
-mount --verbose --rbind '/proc' "$MOUNT_POINT/proc"
-mount --verbose --rbind '/sys' "$MOUNT_POINT/sys"
-mount --verbose --rbind '/' "$MOUNT_POINT/tmp/root"
+rbind_host_file "${MOUNT_POINT}" 'etc/group'
+rbind_host_file "${MOUNT_POINT}" 'etc/passwd'
+
+rbind_host_dir "${MOUNT_POINT}" 'dev'
+rbind_host_dir "${MOUNT_POINT}" 'proc'
+rbind_host_dir "${MOUNT_POINT}" "tmp/root" '/'
+rbind_host_dir "${MOUNT_POINT}" 'sys'
+
 mount --verbose --types tmpfs --options 'mode=0755' none "$MOUNT_POINT/run"
 mount --verbose --types tmpfs --options 'mode=0755' none \
   "$MOUNT_POINT/var/setuid-wrappers"
 rm --verbose --recursive --force "$MOUNT_POINT/var/run"
 ln --verbose --symbolic '/run' "$MOUNT_POINT/var/run"
-for f in '/etc/passwd' '/etc/group'; do
-  touch "$MOUNT_POINT/$f"
-  if [ -f "$f" ]; then
-    mount --rbind --options ro "$f" "$MOUNT_POINT/$f"
-  fi
-done
 
 if [ -n "$runChroot" ]; then
   if ! [ -L "$MOUNT_POINT/nix/var/nix/profiles/system" ]; then

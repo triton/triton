@@ -286,30 +286,31 @@ if ! NIX_DB_DIR="$MOUNT_POINT/nix/var/nix/db" nix-store --check-validity '@nix@'
 
   # Register the paths in the Nix closure as valid.  This is necessary
   # to prevent them from being deleted the first time we install
-  # something.  (I.e., Nix will see that, e.g., the glibc path is not
-  # valid, delete it to get it out of the way, but as a result nothing
-  # will work anymore.)
-  chroot "$MOUNT_POINT" '@nix@/bin/nix-store' --register-validity < '@nixClosure@'
+  # something.  (i.e. Nix will see that glibc's path is not valid,
+  # delete it to get it out of the way, but as a result nothing will
+  # work anymore.)
+  chroot "$MOUNT_POINT" \
+    '@nix@/bin/nix-store' --register-validity < '@nixClosure@'
 fi
 
 # !!! assuming that @shell@ is in the closure
 ln --verbose --symbolic --force '@shell@' "$MOUNT_POINT/bin/sh"
 
-# Build hooks likely won't function correctly in the minimal chroot; just disable them.
+# Build hooks likely won't function correctly in the minimal chroot
 unset NIX_BUILD_HOOK
 
-# Make the build below copy paths from the CD if possible.  Note that
-# /tmp/root in the chroot is the root of the CD.
+# Make the build below copy paths from the host if possible.  Note that
+# /tmp/root in the chroot is the root of the host.
 export NIX_OTHER_STORES="/tmp/root/nix:$NIX_OTHER_STORES"
 
 p='@nix@/libexec/nix/substituters'
 export NIX_SUBSTITUTERS="$p/copy-from-other-stores.pl:$p/download-from-binary-cache.pl"
 
 # Make manifests available in the chroot.
-rm --verbose --force $MOUNT_POINT/nix/var/nix/manifests/*
+rm --verbose --force "${MOUNT_POINT}/nix/var/nix/manifests"/* || true
 for i in /nix/var/nix/manifests/*.nixmanifest; do
-  chroot "$MOUNT_POINT" '@nix@/bin/nix-store' \
-    -r "$(readlink --canonicalize "$i")" > /dev/null
+  chroot "$MOUNT_POINT" \
+    '@nix@/bin/nix-store' -r "$(readlink --canonicalize "$i")" > /dev/null
   cp --verbose --preserve="links,mode,ownership,timestamps" \
     --no-dereference "$i" "$MOUNT_POINT/nix/var/nix/manifests/"
 done
@@ -328,8 +329,9 @@ fi
 # it into the system configuration profile.
 echo 'building the system configuration...' >&2
 NIX_PATH="nixpkgs=/tmp/root/$nixpkgs:nixos-config=$NIXOS_CONFIG" NIXOS_CONFIG= \
-  chroot "$MOUNT_POINT" '@nix@/bin/nix-env' \
-  "${extraBuildFlags[@]}" -p '/nix/var/nix/profiles/system' "$nixEnvAction"
+  chroot "$MOUNT_POINT" \
+    '@nix@/bin/nix-env' "${extraBuildFlags[@]}" \
+      -p '/nix/var/nix/profiles/system' "$nixEnvAction"
 
 # Copy the NixOS/Nixpkgs sources to the target as the initial contents
 # of the NixOS channel.

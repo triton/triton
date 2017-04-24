@@ -893,6 +893,8 @@ dmenu = callPackage ../all-pkgs/d/dmenu { };
 
 dmidecode = callPackage ../all-pkgs/d/dmidecode { };
 
+dmraid = callPackage ../all-pkgs/d/dmraid { };
+
 dmxproto = callPackage ../all-pkgs/d/dmxproto { };
 
 dnscrypt-proxy = callPackage ../all-pkgs/d/dnscrypt-proxy { };

@@ -4,8 +4,10 @@
 , expat
 , fstrm
 , libevent
+, libsodium
 , openssl
 , protobuf-c
+, systemd_lib
 }:
 
 let
@@ -13,24 +15,26 @@ let
     "https://unbound.net/downloads/unbound-${version}.tar.gz"
   ];
 
-  version = "1.6.1";
+  version = "1.6.2";
 in
 stdenv.mkDerivation rec {
   name = "unbound-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmXibvY97if5jMiYyzaEM6WJHMCbHQnuz2N1XbQZjjxheW";
+    multihash = "QmcaySys78XSJmY9TC4VoUv3KcxuJxSBsUqKacK17GucbD";
     hashOutput = false;
-    sha256 = "42df63f743c0fe8424aeafcf003ad4b880b46c14149d696057313f5c1ef51400";
+    sha256 = "1a323d72c32180b7141c9e6ebf199fc68a0208dfebad4640cd2c4c27235e3b9c";
   };
 
   buildInputs = [
     expat
     fstrm
     libevent
+    libsodium
     openssl
     protobuf-c
+    systemd_lib
   ];
 
   configureFlags = [
@@ -41,8 +45,15 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--enable-pie"
     "--enable-relro-now"
+    "--enable-subnet"
+    "--enable-tfo-client"
+    "--enable-tfo-server"
+    "--enable-systemd"
     "--enable-dnstap"
+    "--enable-dnscrypt"
+    "--enable-cachedb"
     "--with-dnstap-socket-path=/run/dnstap.sock"
+    "--with-pthreads"
   ];
 
   preInstall = ''
@@ -52,11 +63,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.6.1";
+      urls = tarballUrls "1.6.2";
       pgpsigUrls = map (n: "${n}.asc") urls;
       pgpKeyFingerprint = "EDFA A3F2 CA4E 6EB0 5681  AF8E 9F6F 1C2D 7E04 5F8D";
       inherit (src) outputHashAlgo;
-      outputHash = "42df63f743c0fe8424aeafcf003ad4b880b46c14149d696057313f5c1ef51400";
+      outputHash = "1a323d72c32180b7141c9e6ebf199fc68a0208dfebad4640cd2c4c27235e3b9c";
     };
   };
 

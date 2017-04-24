@@ -500,6 +500,8 @@ transmissionrpc = callPackage ../all-pkgs/t/transmissionrpc { };
 
 twisted = callPackage ../all-pkgs/t/twisted { };
 
+typing = callPackage ../all-pkgs/t/typing { };
+
 tzlocal = callPackage ../all-pkgs/t/tzlocal { };
 
 ujson = callPackage ../all-pkgs/u/ujson { };

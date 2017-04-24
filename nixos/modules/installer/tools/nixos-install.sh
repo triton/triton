@@ -210,9 +210,14 @@ set -e
 shopt -s nullglob
 
 declare -r MOUNT_POINT="${MOUNT_POINT:-/mnt}"
+if [ ! -e "$MOUNT_POINT" ]; then
+  echo "mount point doesn't exist: $MOUNT_POINT" >&2
+  exit 1
+fi
 
-if ! test -e "$MOUNT_POINT"; then
-  echo "mount point $MOUNT_POINT doesn't exist" >&2
+declare -r NIXOS_CONFIG="${NIXOS_CONFIG:-$MOUNT_POINT/etc/nixos/configuration.nix}"
+if [ ! -e "$NIXOS_CONFIG" ]; then
+  echo "nixos config doesn't exist: $NIXOS_CONFIG" >&2
   exit 1
 fi
 
@@ -245,16 +250,6 @@ if [ -n "$runChroot" ]; then
   ln --verbose --symbolic \
     '/nix/var/nix/profiles/system' "$MOUNT_POINT/run/current-system"
   exec chroot "$MOUNT_POINT" "${chrootCommand[@]}"
-fi
-
-# Get the path of the NixOS configuration file.
-if test -z "$NIXOS_CONFIG"; then
-  NIXOS_CONFIG='/etc/nixos/configuration.nix'
-fi
-
-if [ ! -e "$MOUNT_POINT/$NIXOS_CONFIG" ] && [ -z "$closure" ]; then
-  echo "configuration file $MOUNT_POINT/$NIXOS_CONFIG doesn't exist" >&2
-  exit 1
 fi
 
 chown @root_uid@:@nixbld_gid@ "$MOUNT_POINT/nix/store"

@@ -24,12 +24,13 @@ let
     boolEn;
 in
 stdenv.mkDerivation rec {
-  name = "colord-1.3.4";
+  name = "colord-1.3.5";
 
   src = fetchurl rec {
     url = "https://www.freedesktop.org/software/colord/releases/${name}.tar.xz";
-    sha256 = "7e79ba022148900da7c72033f8232eefeab8373da25768f4b32f5aeba53b2238";
+    multihash = "Qmb7gM6EEYoZ6p4zimVioFDdSrPQGZhfYGj5C8r9us68GF";
     hashOutput = false;
+    sha256 = "2daa8ffd2a532d7094927cd1a4af595b8310cea66f7707edcf6ab743460feed2";
   };
 
   nativeBuildInputs = [

@@ -6,22 +6,20 @@ let
   inherit (stdenv.lib)
     replaceChars;
 
-  baseUrls = v: [
-    "http://download.icu-project.org/files/icu4c/${v}/icu4c"
+  tarballUrls = v: [
+    "http://download.icu-project.org/files/icu4c/${v}/icu4c-${replaceChars ["."] ["_"] v}-src.tgz"
   ];
 
-  version = "58.2";
+  version = "59.1";
 in
 stdenv.mkDerivation rec {
   name = "icu4c-${version}";
 
   src = fetchurl {
-    urls =
-      map (n: "${n}-${replaceChars ["."] ["_"] version}-src.tgz")
-          (baseUrls version);
-    multihash = "QmcA5utvqsnTutTbC1hjEKgiCAoP94funqqR3EmN3vPhBs";
+    urls = tarballUrls version;
+    multihash = "QmbipSVYKdxUiT9hexbKw4FkJSCJhtoVmT2h979VP2WjKE";
     hashOutput = false;
-    sha256 = "2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c";
+    sha256 = "7132fdaf9379429d004005217f10e00b7d2319d0fea22bdfddef8991c45b75fe";
   };
 
   postUnpack = ''
@@ -29,47 +27,25 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--disable-debug"
-    "--enable-release"
-    "--disable-strict"
-    "--enable-shared"
-    #"--enable-auto-cleanup"
-    "--enable-draft"
-    "--enable-renaming"
-    "--disable-tracing"
-    #"--enable-plugins"
-    #"--enable-dynload"
+    "--enable-auto-cleanup"
     "--enable-rpath"
-    "--disable-weak-threads"
-    "--enable-extras"
-    "--enable-icuio"
-    "--disable-layout"
-    #"--enable-layoutex"
-    "--enable-tools"
     "--disable-tests"
     "--disable-samples"
   ];
 
   passthru = {
-    srcVerification =
-      let
-        version = "58.2";
-      in
-      fetchurl {
-        inherit (src) outputHashAlgo;
-        urls =
-          map (n: "${n}-${replaceChars ["."] ["_"] version}-src.tgz")
-              (baseUrls version);
-        md5Urls =
-          map (n: "${n}-src-${replaceChars ["."] ["_"] version}.md5.asc")
-              (baseUrls version);
-        pgpKeyFingerprints = [
-          # Steven R. Loomis
-          "4C95 9C0F 547B D2D8 B783  5B17 AAA9 AE9C 0F0D E47D"
-        ];
-        outputHash = "2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c";
-        failEarly = true;
-      };
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "59.1";
+      pgpsigUrls = map (n: "${n}.asc") urls;
+      pgpKeyFingerprints = [
+        # Steven R. Loomis
+        "4C95 9C0F 547B D2D8 B783  5B17 AAA9 AE9C 0F0D E47D"
+        "BA90 283A 60D6 7BA0 DD91  0A89 3932 080F 4FB4 19E3"
+      ];
+      outputHash = "7132fdaf9379429d004005217f10e00b7d2319d0fea22bdfddef8991c45b75fe";
+      inherit (src) outputHashAlgo;
+    };
   };
 
   meta = with stdenv.lib; {

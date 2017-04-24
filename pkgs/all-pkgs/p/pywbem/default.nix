@@ -20,14 +20,11 @@ buildPythonPackage {
     sha256 = "383a62087599041fa1d6ed89c583193270a7c7cbb7b5893a0eec2f03bd5cc845";
   };
 
-  buildInputs = [
-    ply
-    six
-  ];
-
   propagatedBuildInputs = [
     m2crypto
+    ply
     pyyaml
+    six
   ];
 
   meta = with stdenv.lib; {

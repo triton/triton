@@ -117,14 +117,6 @@ stdenv.mkDerivation rec {
     xorg.libXxf86vm
   ];
 
-  postPatch = /* https://github.com/mpv-player/mpv/issues/3766
-    vdpau configure detection requires a vdpau device to exist.
-    This hack replaces the configure test with the test for libdl. */ ''
-    sed -i wscript \
-      -e 's,libavcodec/vdpau.h,dlfcn.h,' \
-      -e "s/.*av_vdpau_bind_context.*/'dlopen\(\"\", 0)',/"
-  '';
-
   configureFlags = [
     ###"--enable-cplayer"
     "--enable-libmpv-shared"
@@ -153,7 +145,9 @@ stdenv.mkDerivation rec {
     "--enable-encoding"
     "--${boolEn (libbluray != null)}-libbluray"
     "--${boolEn (libdvdread != null)}-dvdread"
-    "--${boolEn (libdvdnav != null)}-dvdnav"
+    "--${boolEn (
+      libdvdnav != null
+      && libdvdread != null)}-dvdnav"
     # FIXME
     #"--${boolEn (libcdio != null)}-cdda"
     #"--${boolEn ( != null)}-uchardet"
@@ -181,12 +175,13 @@ stdenv.mkDerivation rec {
     "--${boolEn (libdrm != null)}-drm"
     #"--${boolEn ( != null)}-gbm"
     "--${boolEn (wayland != null && libxkbcommon != null)}-wayland"
-    "--${boolEn (xorg.libX11 != null)}-x11"
-    "--${boolEn (xorg.libXScrnSaver != null)}-xss"
-    "--${boolEn (xorg.libXext != null)}-xext"
+    "--${boolEn (
+        xorg.libX11 != null
+        && xorg.libXext != null
+        && xorg.libXinerama != null
+        && xorg.libXrandr != null
+        && xorg.libXScrnSaver != null)}-x11"
     "--${boolEn (xorg.libXv != null)}-xv"
-    "--${boolEn (xorg.libXinerama != null)}-xinerama"
-    "--${boolEn (xorg.libXrandr != null)}-xrandr"
     "--disable-gl-cocoa"
     # FIXME: add passthru booleans to mesa for feature detection
     # "--${boolEn (mesa.x11-gl-backend != null)}-gl-x11"
@@ -212,10 +207,7 @@ stdenv.mkDerivation rec {
     "--disable-android"  # android
     # FIXME: add raspberry pi support
     "--disable-rpi"
-    "--${boolEn (mesa != null)}-standard-gl"
-    "--disable-android-gl"
     ###"--disable-ios-gl"
-    "--${boolEn (mesa != null)}-any-gl"
     "--disable-plain-gl"
     # FIXME:
     ###"--disable-mali-dbdev"

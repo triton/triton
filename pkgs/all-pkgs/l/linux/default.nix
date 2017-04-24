@@ -34,9 +34,9 @@ let
       patchSha256 = "ed919b49178bbda14b341058a92362322cbb09e9028229e860e6927553c8d037";
     };
     "testing" = {
-      version = "4.11-rc7";
+      version = "4.11-rc8";
       baseSha256 = "3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b";
-      patchSha256 = "71b805ab591e4916b2638f41a93e07075e31ae1a206e0027171c2b64fb6b4b9c";
+      patchSha256 = "423865d9781e9ab7b86f7b7694ea85600deb9565b552d6c589e907317dc72e07";
     };
     "bcachefs" =
       let

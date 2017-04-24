@@ -303,8 +303,11 @@ unset NIX_BUILD_HOOK
 # /tmp/root in the chroot is the root of the host.
 export NIX_OTHER_STORES="/tmp/root/nix:$NIX_OTHER_STORES"
 
-p='@nix@/libexec/nix/substituters'
-export NIX_SUBSTITUTERS="$p/copy-from-other-stores.pl:$p/download-from-binary-cache.pl"
+nix_substituters_a=(
+  '@nix@/libexec/nix/substituters/copy-from-other-stores.pl'
+  '@nix@/libexec/nix/substituters/download-from-binary-cache.pl'
+)
+IFS=":" export NIX_SUBSTITUTERS="${nix_substituters_a[*]}"
 
 # Make manifests available in the chroot.
 rm --verbose --force "${MOUNT_POINT}/nix/var/nix/manifests"/* || true

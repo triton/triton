@@ -421,6 +421,8 @@ pytz = callPackage ../all-pkgs/p/pytz { };
 
 pywbem = callPackage ../all-pkgs/p/pywbem { };
 
+pyudev = callPackage ../all-pkgs/p/pyudev { };
+
 pyutil = callPackage ../all-pkgs/p/pyutil { };
 
 pyyaml = callPackage ../all-pkgs/p/pyyaml { };

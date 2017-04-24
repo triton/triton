@@ -206,7 +206,8 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 
-set -e
+set -o errexit
+set -o pipefail
 shopt -s nullglob
 
 declare -r MOUNT_POINT="${MOUNT_POINT:-/mnt}"

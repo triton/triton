@@ -2251,6 +2251,8 @@ libssh = callPackage ../all-pkgs/l/libssh { };
 
 libssh2 = callPackage ../all-pkgs/l/libssh2 { };
 
+libstoragemgmt = callPackage ../all-pkgs/l/libstoragemgmt { };
+
 libtasn1 = callPackage ../all-pkgs/l/libtasn1 { };
 
 libtheora = callPackage ../all-pkgs/l/libtheora { };

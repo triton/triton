@@ -21,7 +21,7 @@ let
     boolEn;
 
   versionMajor = "0.17";
-  versionMinor = "7";
+  versionMinor = "8";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/libgdata/${versionMajor}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "8a663ef314a6d20b73c762072e0c1353fa7ec1ca3c2dee6fb85927cbda0d44fd";
+    sha256 = "e5e735bfac219c6cbe4a14df481cb3cb4b1c4b8b5e70f9a105a884035bc3a161";
   };
 
   nativeBuildInputs = [

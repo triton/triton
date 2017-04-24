@@ -1,7 +1,9 @@
 { stdenv
+, autoreconfHook
 , bison
 , fetchFromGitHub
 , flex
+, texinfo
 }:
 
 let
@@ -19,9 +21,29 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    autoreconfHook
     bison
     flex
+    texinfo
   ];
+
+  postPatch = ''
+    rm lib/grammar.{h,c} lib/scanner.c
+    rm -r m4 aux-build aclocal.m4 config.* configure ac_config.h.in
+    find . -name Makefile.in -delete
+  '';
+
+  configureFlags = [
+    "--disable-examples"
+  ];
+
+  preBuild = ''
+    cat -n lib/Makefile
+  '';
+
+  postInstall = ''
+    rm -rf "$out"/share
+  '';
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

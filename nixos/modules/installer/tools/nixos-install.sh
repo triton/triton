@@ -240,7 +240,9 @@ rbind_host_dir "${MOUNT_POINT}" 'sys'
 mount --verbose --types tmpfs --options 'mode=0755' none "$MOUNT_POINT/run"
 mount --verbose --types tmpfs --options 'mode=0755' none \
   "$MOUNT_POINT/var/setuid-wrappers"
-rm --verbose --recursive --force "$MOUNT_POINT/var/run"
+if [ -e "${MOUNT_POINT}/var/run" ]; then
+  rm --verbose --recursive --force "$MOUNT_POINT/var/run"
+fi
 ln --verbose --symbolic '/run' "$MOUNT_POINT/var/run"
 
 if [ -n "$runChroot" ]; then

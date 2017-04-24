@@ -12,6 +12,10 @@ let
   inherit (stdenv.lib)
     enFlag
     optionals;
+
+  versionMajor = "1.9";
+  versionMinor = "1";
+  version = "${versionMajor}.${versionMinor}";
 in
 
 assert gdk-pixbuf != null -> qt5 == null;
@@ -19,13 +23,11 @@ assert qt5 != null -> gdk-pixbuf == null;
 
 stdenv.mkDerivation rec {
   name = "libmediaart-${version}";
-  versionMajor = "1.9";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libmediaart/${versionMajor}/${name}.tar.xz";
-    sha256 = "0vshvm3sfwqs365glamvkmgnzjnmxd15j47xn0ak3p6l57dqlrll";
+    hashOutput = false;
+    sha256 = "5b14aa4e0cc84eaec57b6cb28f39092d503fdaecf36d5d165fac37583b7fe949";
   };
 
   buildInputs = [
@@ -49,6 +51,18 @@ stdenv.mkDerivation rec {
     "--disable-unit-tests"
     "--with-compile-warnings"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/libmediaart/${versionMajor}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Manages, extracts and handles media art caches";

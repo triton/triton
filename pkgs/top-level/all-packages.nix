@@ -1949,6 +1949,8 @@ libcdio = callPackage ../all-pkgs/l/libcdio { };
 
 libclc = callPackage ../all-pkgs/l/libclc { };
 
+libconfig = callPackage ../all-pkgs/l/libconfig { };
+
 libconfuse = callPackage ../all-pkgs/l/libconfuse { };
 
 libcroco = callPackage ../all-pkgs/l/libcroco { };
@@ -3726,8 +3728,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   docbook2x = callPackage ../tools/typesetting/docbook2x { };
 #
   most = callPackage ../tools/misc/most { };
-#
-  libconfig = callPackage ../development/libraries/libconfig { };
 #
   liboauth = callPackage ../development/libraries/liboauth { };
 #

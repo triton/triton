@@ -1,5 +1,8 @@
 { stdenv
 , fetchFromGitHub
+
+, xz
+, zlib
 }:
 
 let
@@ -15,6 +18,11 @@ stdenv.mkDerivation rec {
     rev = "v${version}";
     sha256 = "d0e2d6c6c7f02d37278c4aa8caf98f593f83633dd4e705d74110f3d1e39f1dc7";
   };
+
+  buildInputs = [
+    xz
+    zlib
+  ];
 
   # Makefile builds during the install phase
   preInstall = ''

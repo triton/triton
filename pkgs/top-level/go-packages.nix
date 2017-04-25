@@ -1917,6 +1917,15 @@ let
     ];
   };
 
+  gitmap = buildFromGitHub {
+    version = 2;
+    rev = "dcb907b39a0690430d435eb8f63cd8811961231f";
+    date = "2017-02-17";
+    owner = "bep";
+    repo = "gitmap";
+    sha256 = "1zykf519xplb23lj0rjggpgbmd375l0zhzx29q4vxrsppyjsqzkk";
+  };
+
   gjson = buildFromGitHub {
     version = 2;
     owner = "tidwall";
@@ -2118,6 +2127,10 @@ let
     buildInputs = [
       pkgs.libpcap
       pkgs.pf-ring
+    ];
+    propagatedBuildInputs = [
+      net
+      sys
     ];
     date = "2017-04-24";
   };
@@ -2335,6 +2348,19 @@ let
     ];
   };
 
+  goorgeous = buildFromGitHub {
+    version = 2;
+    rev = "5d094ef478c140a32b46ddb7b8234c789629de26";
+    date = "2017-04-12";
+    owner = "chaseadamsio";
+    repo = "goorgeous";
+    sha256 = "19bq3w6dfmznbz1pa2aq88774cpjxb0iswvr9pc1ymg24gy4435k";
+    propagatedBuildInputs = [
+      blackfriday
+      sanitized-anchor-name
+    ];
+  };
+
   gopass = buildFromGitHub {
     version = 2;
     date = "2017-01-09";
@@ -2344,6 +2370,7 @@ let
     sha256 = "0chij9mja3pwgmyvjcbp86xh9h9v1ljgpvscph6jxa1k1pp9dfah";
     propagatedBuildInputs = [
       crypto
+      sys
     ];
   };
 
@@ -2798,6 +2825,7 @@ let
     repo   = "go-i18n";
     sha256 = "17wi361lgb19bn47bvwyazgax91zm5nl0g9sy0hw51pcgr7abvf4";
     buildInputs = [
+      go-toml
       yaml_v2
     ];
   };
@@ -3947,9 +3975,12 @@ let
       cobra
       cssmin
       emoji
-      go-i18n
       fsnotify
       fsync
+      gitmap
+      go-i18n
+      go-toml
+      goorgeous
       inflect
       jwalterweatherman
       mapstructure
@@ -3959,7 +3990,6 @@ let
       pflag
       purell
       text
-      toml
       viper
       websocket
       yaml_v2
@@ -4479,9 +4509,9 @@ let
       gettext
       gocapability
       golang-petname
+      go-colorable
       go-lxc_v2
       go-sqlite3
-      go-systemd
       log15_v2
       pkgs.lxc
       mux
@@ -4793,11 +4823,11 @@ let
     owner = "miekg";
     repo = "mmark";
     rev = "8b498b013a3e10b12864c2023a59d490c9d4bf5b";
+    date = "2017-04-07";
     sha256 = "0srih857ry0a1bg98clr3yvsxpddlks17pm008igynh93mplvfsh";
-    buildInputs = [
+    propagatedBuildInputs = [
       toml
     ];
-    date = "2017-04-07";
   };
 
   moby = buildFromGitHub {
@@ -5125,10 +5155,15 @@ let
     owner = "10gen";
     repo = "openssl";
     sha256 = "0jlr0y8812ayj5xfpn7m0m1pfm8pf1g43xbw7ngs4zxcs0ip7l9g";
-    goPackageAliases = [ "github.com/spacemonkeygo/openssl" ];
-    nativeBuildInputs = [ pkgs.pkgconfig ];
-    buildInputs = [ pkgs.openssl ];
-    propagatedBuildInputs = [ spacelog ];
+    goPackageAliases = [
+      "github.com/spacemonkeygo/openssl"
+    ];
+    buildInputs = [
+      pkgs.openssl
+    ];
+    propagatedBuildInputs = [
+      spacelog
+    ];
 
     preBuild = ''
       find go/src/$goPackagePath -name \*.go | xargs sed -i 's,spacemonkeygo/openssl,10gen/openssl,g'

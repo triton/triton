@@ -2108,14 +2108,6 @@ let
     propagatedBuildInputs = [ gojsonreference ];
   };
 
-  gollectd = buildFromGitHub {
-    version = 2;
-    owner = "kimor79";
-    repo = "gollectd";
-    rev = "v1.0.0";
-    sha256 = "16ax20j3ji6zqxii16kinvgrxb0xjn9qhfhhiin7k40w0aas5dhi";
-  };
-
   gomemcache = buildFromGitHub {
     version = 2;
     rev = "1952afaa557dc08e8e0d89eafab110fb501c1a2b";
@@ -3668,6 +3660,7 @@ let
     rev = "v0.2.15";
     sha256 = "0r3jidgjrnh43slhxhggwy11ka90gd05blsh102x48di7pxz3kn8";
     propagatedBuildInputs = [
+      errors
       http2curl
       net
     ];
@@ -4054,7 +4047,6 @@ let
     sha256 = "14ng7c4xrxw897j1iwnl9jp9mn05kaiyzw8c4ww7f6x5la2g948b";
     propagatedBuildInputs = [
       bolt
-      gollectd
       crypto
       encoding
       go-bits
@@ -4064,13 +4056,14 @@ let
       jwt-go
       liner
       pat
-      pool_v2
       gogo_protobuf
       ratecounter
       snappy
       statik
+      sys
       toml
       usage-client
+      xxhash
       zap
     ];
     goPackageAliases = [
@@ -5229,6 +5222,9 @@ let
     date = "2017-04-14";
     rev = "660542b98f76c58910002c82e912b71248f4daa0";
     sha256 = "0l67ba34dbpdnj5fvzbqbrvfkamsxqjkwv0ly1z29gb8ldyrxfn4";
+    propagatedBuildInputs = [
+      sys
+    ];
   };
 
   objx = buildFromGitHub {
@@ -5417,16 +5413,6 @@ let
     repo   = "pongo2";
     sha256 = "1qjcj7hcjskjqp03fw4lvn1cwy78dck4jcd0rcrgdchis1b84isk";
     goPackagePath = "gopkg.in/flosch/pongo2.v3";
-  };
-
-  pool_v2 = buildFromGitHub {
-    version = 2;
-    owner = "fatih";
-    repo = "pool";
-    date = "2017-01-11";
-    rev = "6e328e67893eb46323ad06f0e92cb9536babbabc";
-    sha256 = "0zyv8ikhvj3jmqlv0s6ablgazyzc61d3k2jybqa1h95ibb9qrdhq";
-    goPackagePath = "gopkg.in/fatih/pool.v2";
   };
 
   pq = buildFromGitHub {
@@ -6901,6 +6887,15 @@ let
     owner  = "huandu";
     repo   = "xstrings";
     sha256 = "16l1cqpqsgipa4c6q55n8vlnpg9kbylkx1ix8hsszdikj25mcig1";
+  };
+
+  xxhash = buildFromGitHub {
+    version = 2;
+    rev = "09e1e23aaa83fc6b47aa8aedbb62846c521ede77";
+    owner  = "cespare";
+    repo   = "xxhash";
+    sha256 = "10axqp9jvwj7ssqh11qzx3k5n6b7rq5zvk7jlna54bxdvqlfmrwd";
+    date = "2017-03-30";
   };
 
   zap = buildFromGitHub {

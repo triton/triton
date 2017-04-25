@@ -397,6 +397,7 @@ go.stdenv.mkDerivation (
 
   # This breaks cgo packages like libseccomp-golang
   optimize = false;
+  fortifySource = false;  # Can't fortify without optimize
 
   meta = with lib; {
     # Add default meta information

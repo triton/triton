@@ -1,11 +1,14 @@
 { stdenv
+, bison
 , fetchFromGitHub
+, flex
 
 , hiredis
+, zeromq
 }:
 
 let
-  version = "6.4.1";
+  version = "6.6.0";
 in
 stdenv.mkDerivation {
   name = "pf-ring-${version}";
@@ -14,24 +17,31 @@ stdenv.mkDerivation {
     version = 2;
     owner = "ntop";
     repo = "PF_RING";
-    rev = "v${version}";
-    sha256 = "9a11ba708741b05a1705548bb1a249794030df813bd542447aab231a105fd24f";
+    rev = version;
+    sha256 = "52274b6ae2208da6294cc9036641b18b18825377a38ef90a1662dba58c2f6404";
   };
+
+  nativeBuildInputs = [
+    bison
+    flex
+  ];
 
   buildInputs = [
     hiredis
+    zeromq
   ];
+
+  postPatch = ''
+    sed -i 's, lex$, flex,' userland/nbpf/Makefile.in
+  '';
 
   preConfigure = ''
     cd userland/lib
   '';
 
-  preBuild = ''
-    cat config.log
-  '';
-
   configureFlags = [
     "--enable-redis"
+    "--enable-zmq"
   ];
 
   postInstall = ''

@@ -659,7 +659,10 @@ brotli_0-4-0 = callPackage ../all-pkgs/b/brotli {
 brotli_0-5-2 = callPackage ../all-pkgs/b/brotli {
   version = "0.5.2";
 };
-brotli = callPackage ../all-pkgs/b/brotli { };
+brotli_0-6-0 = callPackage ../all-pkgs/b/brotli {
+  version = "0.6.0";
+};
+brotli = callPackageAlias "brotli_0-5-2" { };
 
 bs1770gain = callPackage ../all-pkgs/b/bs1770gain { };
 

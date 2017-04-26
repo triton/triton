@@ -11,6 +11,7 @@
 , gnutar_1-29
 , brotli_0-4-0
 , brotli_0-5-2
+, brotli_0-6-0
 }:
 
 { # Optionally move the contents of the unpacked tree up one level.
@@ -22,7 +23,7 @@
 , version ? null
 , ... } @ args:
 
-assert version != null || throw "Missing fetchzip version. The latest version is 2.";
+assert version != null || throw "Missing fetchzip version. The latest version is 3.";
 
 let
   removeTarZip = l:
@@ -43,6 +44,10 @@ let
     };
     "2" = {
       brotli = brotli_0-5-2;
+      tar = gnutar_1-29;
+    };
+    "3" = {
+      brotli = brotli_0-6-0;
       tar = gnutar_1-29;
     };
   };

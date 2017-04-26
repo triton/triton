@@ -3323,6 +3323,16 @@ let
     date = "2016-10-03";
   };
 
+  go-ole = buildFromGitHub {
+    version = 2;
+    date = "2017-02-09";
+    rev = "de8695c8edbf8236f30d6e1376e20b198a028d42";
+    owner  = "go-ole";
+    repo   = "go-ole";
+    sha256 = "127k5hw9ghsqwqfnxirlzf7zvzgb13g1x41654bg533857j2491p";
+    excludedPackages = "example";
+  };
+
   go-os-rename = buildFromGitHub {
     version = 1;
     rev = "3ac97f61ef67a6b87b95c1282f6c317ed0e693c2";

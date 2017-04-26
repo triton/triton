@@ -5,6 +5,7 @@
 , fetchFromBitbucket
 , fetchFromGitHub
 , fetchTritonPatch
+, fetchzip
 , go
 , overrides
 , pkgs
@@ -67,6 +68,28 @@ let
     preferLocalBuild = true;
   };
 
+  nameFunc =
+    { rev
+    , goPackagePath
+    , name ? null
+    , date ? null
+    }:
+    let
+      name' =
+        if name == null then
+          baseNameOf goPackagePath
+        else
+          name;
+      version =
+        if date != null then
+          date
+        else if builtins.stringLength rev != 40 then
+          rev
+        else
+          stdenv.lib.strings.substring 0 7 rev;
+    in
+      "${name'}-${version}";
+
   buildFromGitHub =
     { rev
     , date ? null
@@ -76,25 +99,30 @@ let
     , version
     , gxSha256 ? null
     , goPackagePath ? "github.com/${owner}/${repo}"
-    , name ? baseNameOf goPackagePath
+    , name ? null
     , ...
     } @ args:
     buildGoPackage (args // (let
-        name' = "${name}-${if date != null then date else if builtins.stringLength rev != 40 then rev else stdenv.lib.strings.substring 0 7 rev}";
-      in {
-        inherit rev goPackagePath;
-        name = name';
-        src = let
-          src' = fetchFromGitHub {
-            name = name';
-            inherit rev owner repo sha256 version;
-          };
-        in if gxSha256 == null then
-          src'
-        else
-          fetchGxPackage { src = src'; sha256 = gxSha256; };
-      })
-  );
+      name' = nameFunc {
+        inherit
+          rev
+          goPackagePath
+          name
+          date;
+      };
+    in {
+      inherit rev goPackagePath;
+      name = name';
+      src = let
+        src' = fetchFromGitHub {
+          name = name';
+          inherit rev owner repo sha256 version;
+        };
+      in if gxSha256 == null then
+        src'
+      else
+        fetchGxPackage { src = src'; sha256 = gxSha256; };
+    }));
 
   ## OFFICIAL GO PACKAGES
 

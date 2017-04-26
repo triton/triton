@@ -121,5 +121,5 @@ lib.overrideDerivation (fetchurl (rec {
     unzip
   ];
 }) // {
-  inherit brotli tar;
+  inherit brotli tar purgeTimestamps;
 }

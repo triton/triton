@@ -46,16 +46,16 @@ let
   inherit (typeMap."${type}")
     platform
     target;
+
+  version = "2.02";
 in
 stdenv.mkDerivation rec {
-  name = "grub-2.02-rc2-${type}";
+  name = "grub-${version}-${type}";
 
   src = fetchurl {
-    name = "${name}.tar.xz";
-    url = "http://alpha.gnu.org/gnu/grub/grub-2.02~rc2.tar.xz";
-    multihash = "QmQsrqeBaAaqQosxajjUB3WK9g1q3jjGb89hGEpdWBc7hS";
+    url = "mirror://gnu/grub/grub-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "053bfcbe366733e4f5a1baf4eb15e1efd977225bdd323b78087ce5fa172fc246";
+    sha256 = "810b3798d316394f94096ec2797909dbf23c858e48f7b3830826b8daa06b7b0f";
   };
 
   nativeBuildInputs = [

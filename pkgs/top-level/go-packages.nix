@@ -525,7 +525,8 @@ let
 
   azure-storage-go = buildFromGitHub {
     version = 2;
-    rev = "v0.1.0";
+    rev = "v0.1.
+    nae0";
     owner  = "Azure";
     repo   = "azure-storage-go";
     sha256 = "1p6n6s9xhrbh67k0dkpd2ph598qmnlnaaayq6pdqwrh0q5pgwx6s";
@@ -2058,22 +2059,6 @@ let
     ];
   };
 
-  goautoneg = buildGoPackage rec {
-    name = "goautoneg-2012-07-07";
-    goPackagePath = "bitbucket.org/ww/goautoneg";
-    rev = "75cd24fc2f2c2a2088577d12123ddee5f54e0675";
-
-    src = fetchFromBitbucket {
-      version = 1;
-      inherit rev;
-      owner  = "ww";
-      repo   = "goautoneg";
-      sha256 = "9acef1c250637060a0b0ac3db033c1f679b894ef82395c15f779ec751ec7700a";
-    };
-
-    meta.autoUpdate = false;
-  };
-
   gocapability = buildFromGitHub {
     version = 2;
     rev = "e7cb7fa329f456b3855136a2642b197bad7366ba";
@@ -2369,14 +2354,23 @@ let
     ];
   };
 
-  google-api-go-client = buildFromGitHub {
-    version = 2;
+  google-api-go-client = buildGoPackage rec {
+    name = nameFunc {
+      inherit
+        goPackagePath
+        rev;
+      date = "2017-04-21";
+    };
     rev = "fbbaff1827317122a8a0e1b24de25df8417ce87b";
-    date = "2017-04-21";
-    owner = "google";
-    repo = "google-api-go-client";
-    sha256 = "0v4709clzxcvjrs0473bny46zph9gvj9bxnzx8bczpzrbp97jab7";
     goPackagePath = "google.golang.org/api";
+    src = fetchzip {
+      version = 2;
+      stripRoot = false;
+      purgeTimestamps = true;
+      inherit name;
+      url = "https://code.googlesource.com/google-api-go-client/+archive/${rev}.tar.gz";
+      sha256 = "1fm8wy6abzql82dg55n5m0jxr6kypqbc0jaw7xfhs6ds9n1s9r6x";
+    };
     buildInputs = [
       appengine
       genproto
@@ -5526,7 +5520,6 @@ let
     repo = "client_golang";
     sha256 = "1fcrblwbbpf9xr0v1ad9hl3kclyk76djxxlyy2dg2w4hlbzfbj1w";
     propagatedBuildInputs = [
-      goautoneg
       net
       protobuf
       prometheus_client_model

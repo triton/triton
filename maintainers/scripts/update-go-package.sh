@@ -90,6 +90,7 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
             date = pkg.date or "nodate";
             autoUpdate = pkg.meta.autoUpdate or true;
             useUnstable = pkg.meta.useUnstable or false;
+            purgeTimestamps = pkg.src.purgeTimestamps or false;
             names = let
               names = pkgs.lib.attrNames (pkgs.lib.filterAttrs
               (n: d: d ? goPackagePath && d.goPackagePath == pkg.goPackagePath) pkgs.goPackages);
@@ -103,7 +104,7 @@ nix-build --out-link $TMPDIR/nix-list --arg pkgList "$pkglist" -E '
       { }
       pkgList;
     pkgOutput = pkgs.lib.mapAttrsToList
-      (n: d: "${n} ${d.rev} ${d.date} ${pkgs.lib.concatStringsSep "," d.names} ${if d.useUnstable then "1" else "0"}\n")
+      (n: d: "${n} ${d.rev} ${d.date} ${pkgs.lib.concatStringsSep "," d.names} ${if d.useUnstable then "1" else "0"} ${if d.purgeTimestamps then "1" else "0"}\n")
       (pkgs.lib.filterAttrs (n: d: d.autoUpdate) combinedList);
   in
     pkgs.writeText "current-go-package-list" pkgOutput
@@ -136,6 +137,7 @@ while read line; do
   date="$(echo "$line" | awk '{print $3}')"
   names="$(echo "$line" | awk '{print $4}')"
   useUnstable="$(echo "$line" | awk '{print $5}')"
+  purgeTimestamps="$(echo "$line" | awk '{print $6}')"
 
   cd $TMPDIR/src/$pkg
 
@@ -158,7 +160,7 @@ while read line; do
     if [ "$REV" = "$VERSION" ]; then
       DATE="nodate"
     fi
-    echo "$pkg $REV $DATE $names" >> $TMPDIR/updates
+    echo "$pkg $REV $DATE $names $purgeTimestamps" >> $TMPDIR/updates
   fi
 done < $TMPDIR/list
 
@@ -179,6 +181,7 @@ generate_hash() {
   pkg="$1"
   rev="$2"
   date="$3"
+  purgeTimestamps="$4"
 
   if [ "${#rev}" -eq "40" ]; then
     name="$(echo "$pkg" | awk -F/ '{ print $NF }')-$date"
@@ -192,7 +195,11 @@ generate_hash() {
   export TZ="UTC"
   git archive --format=tar --prefix="$name/" "$rev" | tar -xC "$tmp"
   
-  mtime=$(find "$tmp/$name" -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
+  if [ "$purgeTimestamps" = "1" ]; then
+    mtime="946713600"
+  else
+    mtime=$(find "$tmp/$name" -type f -print0 | xargs -0 -r stat -c '%Y' | sort -n | tail -n 1)
+  fi
   echo -n "Clamping to date: " >&2
   date -d "@$mtime" --utc >&2
 
@@ -212,7 +219,7 @@ generate_hash() {
   sed -i "s,^$pkg [^ ]*,\0 $HASH,g" "$TMPDIR/updates"
   exec 3>&-
 }
-ARGS=($(awk '{ print "- " $1 " generate_hash " $1 " " $2 " " $3; }' $TMPDIR/updates))
+ARGS=($(awk '{ print "- " $1 " generate_hash " $1 " " $2 " " $3 " " $5; }' $TMPDIR/updates))
 concurrent "${ARGS[@]}"
 
 export TMPDIR
@@ -238,7 +245,8 @@ BEGIN {
   # Find a package opening stmt
   if (/^  [^ ]*[ ]*=/) {
     currentPkg = $1;
-    shouldSetDate = dates[$1] != "nodate" && /(buildFromGitHub|buildFromGoogle)/;
+    shouldSetDate = dates[$1] != "nodate";
+    shouldAddDate = /buildFromGitHub/;
     shouldSetRev = 1;
     shouldSetHash = 1;
     shouldSetVersion = 1;
@@ -247,7 +255,7 @@ BEGIN {
   # Find the closing stmt and add any unadded fields
   if (/^  };/ && currentPkg != "") {
     if (exists[currentPkg]) {
-      if (shouldSetDate) {
+      if (shouldSetDate && shouldAddDate) {
         print "    date = \"" dates[currentPkg] "\";";
       }
       if (shouldSetRev) {
@@ -263,24 +271,25 @@ BEGIN {
     currentPkg = "";
   }
 
+  match($0, /^[ ]*/, spaces);
   if (/^    [ ]*date[ ]*=[ ]*/ && exists[currentPkg]) {
     if (shouldSetDate) {
-      print "    date = \"" dates[currentPkg] "\";";
+      print spaces[0] "date = \"" dates[currentPkg] "\";";
     }
     shouldSetDate = 0;
   } else if (/^    [ ]*rev[ ]*=[ ]*/ && exists[currentPkg]) {
     if (shouldSetRev) {
-      print "    rev = \"" revs[currentPkg] "\";";
+      print spaces[0] "rev = \"" revs[currentPkg] "\";";
     }
     shouldSetRev = 0;
   } else if (/^    [ ]*sha256[ ]*=[ ]*/ && exists[currentPkg]) {
     if (shouldSetHash) {
-      print "    sha256 = \"" hashes[currentPkg] "\";";
+      print spaces[0] "sha256 = \"" hashes[currentPkg] "\";";
     }
     shouldSetHash = 0;
   } else if (/^    [ ]*version[ ]*=[ ]*/ && exists[currentPkg]) {
     if (shouldSetVersion) {
-      print "    version = " fetchzipVersion ";";
+      print spaces[0] "version = " fetchzipVersion ";";
     }
     shouldSetVersion = 0;
   } else {

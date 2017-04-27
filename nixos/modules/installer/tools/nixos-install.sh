@@ -46,7 +46,7 @@ create_triton_fhs() {
     'var'
     'var/setuid-wrappers'
   )
-  # BASH associative arrays are ordered by hash so this is only
+  # BASH associative arrays are ordered by hash, so this is only
   # used as a lookup for the directory's permissions.
   local -A -r directory_permissions=(
     ['bin']='0755'  # /bin/sh
@@ -115,7 +115,7 @@ copy_host_file() {
   local -r mount_point="${1}"
   local -r permissions="${2}"
   shift 3
-  local -a -r source_files=("$@")
+  local -a source_files=("$@")
 
   if [ -f "${mount_point}/${destination_file}" ]; then
     rm --force --verbose "${mount_point}/${destination_file}"
@@ -139,7 +139,7 @@ rbind_host_dir() {
   local dir
   local -r mount_point="${1}"
   shift 2
-  local -a -r source_dirs=("$@")
+  local -a source_dirs=("$@")
 
   # Always assume destination location is a source
   source_dirs+=("${destination_dir}")
@@ -158,7 +158,7 @@ rbind_host_file() {
   local file
   local -r mount_point="${1}"
   shift 2
-  local -a -r source_files=("$@")
+  local -a source_files=("$@")
 
   if [ -f "${mount_point}/${destination_file}" ]; then
     rm --force --verbose "${mount_point}/${destination_file}"

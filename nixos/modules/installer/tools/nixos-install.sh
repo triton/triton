@@ -125,7 +125,7 @@ copy_host_file() {
   source_files+=("${destination_file}")
 
   for file in "${source_files[@]}"; do
-    if [ -f "/${file}"]; then
+    if [ -f "/${file}" ]; then
       cp --dereference --force --verbose "/${file}" \
         "${mount_point}/${destination_file}"
       chown "${permissions}" "${mount_point}/${destination_file}"
@@ -145,7 +145,7 @@ rbind_host_dir() {
   source_dirs+=("${destination_dir}")
 
   for dir in "${source_dirs[@]}"; do
-    if [ -d "/${dir}"]; then
+    if [ -d "/${dir}" ]; then
       mount --verbose --rbind "/${dir}" \
         "${mount_point}/${destination_dir}"
       break

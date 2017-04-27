@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , atkmm
 , cairomm
@@ -13,7 +14,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
   source = (import ./sources.nix { })."${channel}";
@@ -69,7 +70,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "C++ interface for GTK+";
     homepage = http://gtkmm.org/;
     license = licenses.lgpl2Plus;

@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , python
 
@@ -37,6 +38,14 @@ stdenv.mkDerivation rec {
     libuv
     openssl_1-0-2
     zlib
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "1aff209779d64f23980bf3da0a4c1de69fa08d84";
+      file = "n/nodejs/icu59.patch";
+      sha256 = "040aad43816b8f768ac1d207b78f4cb21e7ec472d11f6dfe812600c3604bf2de";
+    })
   ];
 
   postPatch = ''

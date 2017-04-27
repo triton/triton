@@ -129,6 +129,11 @@ stdenv.mkDerivation rec {
       file = "q/qt/qt-4.8-glib-2.32.patch";
       sha256 = "9b019b4e62e8c9889748ad8772faf8436f5b47f2315bb9a68fdf9785784d1abf";
     })
+    (fetchTritonPatch {
+      rev = "a2a939c7e9045e6b5969ab70f6f096872e66be53";
+      file = "q/qt/qt-4.8-icu59.patch";
+      sha256 = "61d6bf45649c728dec5f8d22be5b496ed9d40f52c2c70102696d07133cd1750d";
+    })
     (substituteAll {
       name = "qt-4.8-dlopen-absolute-paths.patch";
       src = fetchTritonPatch {

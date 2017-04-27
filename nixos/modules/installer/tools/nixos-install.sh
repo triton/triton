@@ -151,6 +151,9 @@ rbind_host_dir() {
       break
     fi
   done
+
+  # Track created rbind mounts
+  TRACK_MOUNTS+=("${mount_point}/${destination_dir}")
 }
 
 rbind_host_file() {
@@ -168,12 +171,25 @@ rbind_host_file() {
   source_files+=("${destination_file}")
 
   for file in "${source_files[@]}"; do
-    if [ -f "/${file}"]; then
+    if [ -f "/${file}" ]; then
       touch "${mount_point}/${destination_file}"
       mount --verbose --rbind --options ro "/${file}" \
         "${mount_point}/${destination_file}"
       break
     fi
+  done
+
+  # Track created rbind mounts
+  TRACK_MOUNTS+=("${mount_point}/${destination_file}")
+}
+
+cleanup_mounts() {
+  local index
+  local rbind
+
+  # Un-mount in the reverse order they were mounted
+  for ((index=${#TRACK_MOUNTS[@]}-1; index>=0; index--)) ; do
+    umount --verbose "${TRACK_MOUNTS["${index}"]}"
   done
 }
 
@@ -258,6 +274,8 @@ if [ ! -e "$NIXOS_CONFIG" ]; then
   exit 1
 fi
 
+declare -a TRACK_MOUNTS
+
 create_triton_fhs "${MOUNT_POINT}"
 
 copy_host_file "${MOUNT_POINT}" '0644' 'etc/hosts'
@@ -274,8 +292,10 @@ rbind_host_dir "${MOUNT_POINT}" "tmp/root" '/'
 rbind_host_dir "${MOUNT_POINT}" 'sys'
 
 mount --verbose --types tmpfs --options 'mode=0755' none "$MOUNT_POINT/run"
+TRACK_MOUNTS+=("$MOUNT_POINT/run")
 mount --verbose --types tmpfs --options 'mode=0755' none \
   "$MOUNT_POINT/var/setuid-wrappers"
+TRACK_MOUNTS+=("$MOUNT_POINT/var/setuid-wrappers")
 if [ -e "${MOUNT_POINT}/var/run" ]; then
   rm --verbose --recursive --force "$MOUNT_POINT/var/run"
 fi

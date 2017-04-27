@@ -12,7 +12,43 @@ umask 0022
 
 # Create FHS for Triton relative to mountpoint ($1).
 create_triton_fhs() {
-  local -A -r directories=(
+  local -a -r directories=(
+    'bin'  # /bin/sh
+    'dev'
+    'etc'
+    'etc/ssl'
+    'etc/ssl/certs'
+    'home'
+    'nix'
+    'nix/store'
+    'nix/var'
+    'nix/var/log'
+    'nix/var/log/nix'
+    'nix/var/log/nix/drvs'
+    'nix/var/nix'
+    'nix/var/nix/db'
+    'nix/var/nix/gcroots'
+    'nix/var/nix/manifests'
+    'nix/var/nix/profiles'
+    'nix/var/nix/profiles/per-user'
+    'nix/var/nix/profiles/per-user/root'
+    'nix/var/nix/temproots'
+    'nix/var/userpool'
+    'proc'
+    'root'
+    'root/.nix-defexpr'
+    'run'
+    'sys'
+    'tmp'
+    'tmp/root'
+    'usr'
+    'usr/bin'  # /usr/bin/env
+    'var'
+    'var/setuid-wrappers'
+  )
+  # BASH associative arrays are ordered by hash so this is only
+  # used as a lookup for the directory's permissions.
+  local -A -r directory_permissions=(
     ['bin']='0755'  # /bin/sh
     ['dev']='0755'
     ['etc']='0755'
@@ -50,9 +86,9 @@ create_triton_fhs() {
   local -r mount_point="${1}"
 
   # Create directory structure relative to $mount_point.
-  for directory in "${!directories[@]}"; do
+  for directory in "${directories[@]}"; do
     if [ -d "${mount_point}/${directory}" ]; then
-      chown --verbose "${directories["${directory}"]}" \
+      chown --verbose "${directory_permissions["${directory}"]}" \
         "${mount_point}/${directory}" || {
           echo "ERROR: failed to set permissions for directory: ${mount_point}/${directory}" >&2
           return 1
@@ -64,7 +100,7 @@ create_triton_fhs() {
       # permissions.
       mkdir \
         --verbose \
-        --mode="${directories["${directory}"]}" \
+        --mode="${directory_permissions["${directory}"]}" \
         "${mount_point}/${directory}" || {
           echo "ERROR: failed to create directory: ${mount_point}/${directory}" >&2
           return 1

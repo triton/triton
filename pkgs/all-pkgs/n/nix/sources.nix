@@ -1,7 +1,7 @@
 {
   "stable" = {
-    version = "1.11.8";
-    multihash = "QmZTBkxshg41ULXVa13DrDSh4Z72CzFEPcNWFPc1JeMAhE";
-    sha256 = "69e0f398affec2a14c47b46fec712906429c85312d5483be43e4c34da4f63f67";
+    version = "1.11.9";
+    multihash = "QmQAeW7URK5XuRAFMBkJtJuYxLZE9suBXYn5cE9tPFZ2RF";
+    sha256 = "0e943e277f37843f9196b0293cc31d828613ad7a328ee77cd5be01935dc6e7e1";
   };
 }

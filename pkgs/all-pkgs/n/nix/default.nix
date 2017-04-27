@@ -88,6 +88,17 @@ stdenv.mkDerivation rec {
     "doc"
   ];
 
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = map (x: "${x}.sha256") src.urls;
+      failEarly = true;
+    };
+  };
+
   meta = with stdenv.lib; {
     description = "Package manager that makes packages reproducible";
     homepage = https://nixos.org/;

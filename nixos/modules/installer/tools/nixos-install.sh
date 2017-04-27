@@ -343,7 +343,10 @@ nix_substituters_a=(
   '@nix@/libexec/nix/substituters/copy-from-other-stores.pl'
   '@nix@/libexec/nix/substituters/download-from-binary-cache.pl'
 )
-IFS=":" export NIX_SUBSTITUTERS="${nix_substituters_a[*]}"
+for nix_substituter in "${nix_substituters_a[@]}"; do
+  NIX_SUBSTITUTERS="${NIX_SUBSTITUTERS}${NIX_SUBSTITUTERS:+:}${nix_substituter}"
+done
+export NIX_SUBSTITUTERS
 
 # Make manifests available in the chroot.
 rm --verbose --force "${MOUNT_POINT}/nix/var/nix/manifests"/* || true

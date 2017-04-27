@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     gnum4
   ];
 
-  # This is to fix c++11 comaptability with other applications
+  # This is to fix c++11 compatability with other applications
   setupHook = ./setup-hook.sh;
 
   passthru = {

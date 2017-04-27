@@ -577,6 +577,7 @@ atk = callPackageAlias "atk_2-24" { };
 
 atkmm_2-24 = callPackage ../all-pkgs/a/atkmm {
   channel = "2.24";
+  atk = pkgs.atk_2-24;
 };
 atkmm = callPackageAlias "atkmm_2-24" { };
 
@@ -1641,6 +1642,9 @@ gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
 gtk2 = callPackageAlias "gtk_2" { };
 gtk_3-22 = callPackage ../all-pkgs/g/gtk/3.x.nix {
   channel = "3.22";
+  atk = pkgs.atk_2-24;
+  at-spi2-atk = pkgs.at-spi2-atk_2-24;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 gtk_3 = callPackageAlias "gtk_3-22" { };
 # Deprecated alias
@@ -3452,8 +3456,7 @@ vim = callPackage ../all-pkgs/v/vim { };
 
 vino_3-22 = callPackage ../all-pkgs/v/vino {
   channel = "3.22";
-  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-22;
-  gtk = pkgs.gtk_3-22;
+  adwaita-icon-theme = pkgs.adwaita-icon-theme_3-24;
   libsoup = pkgs.libsoup_2-56;
 };
 vino = callPackageAlias "vino_3-22" { };

@@ -5,6 +5,7 @@
 , fetchFromGitHub
 , gettext
 , intltool
+, lib
 , libtool
 , makeWrapper
 , pkgconfig
@@ -25,7 +26,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
   version = "2017-05-25";
@@ -38,7 +39,7 @@ stdenv.mkDerivation rec {
     owner = "gnome-mpv";
     repo = "gnome-mpv";
     rev = "a8e2ae2c9d4df01e6d93c24c8d5441fdf4e8b37f";
-    sha256 = "aeb4b51d01fcfa8e8edcf49da9f789a7c4398e2c935b27e370c29f2a35b26c42";
+    sha256 = "b1166d1bbaf2a767b9013fca4206a0bf4d6543e50b27335b1bb236bd835b0a1e";
   };
 
   nativeBuildInputs = [
@@ -93,7 +94,7 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A simple GTK+ frontend for mpv";
     homepage = https://github.com/gnome-mpv/gnome-mpv;
     license = licenses.gpl3;

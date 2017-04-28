@@ -23,8 +23,6 @@ stdenv.mkDerivation {
     owner = "grpc";
     repo = "grpc";
     rev = "v${version}";
-    #url = "https://github.com/grpc/grpc.git";
-    #rev = "refs/tags/v${version}";
     sha256 = "60782ecec66f91a4a0f4994842fb98c1de57d5450eb43f82c6ed8e0b1c20946f";
   };
 

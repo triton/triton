@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
   preConfigure = /* Ignore autogen.sh and run the commands manually */ ''
     aclocal --install -I m4
     intltoolize --copy --automake
-    autoreconf --install -Wno-portability
+    autoreconf --force --install -Wno-portability
   '';
 
   configureFlags = [

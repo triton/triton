@@ -2,6 +2,7 @@
 , cmake
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , curl
 , cairo
@@ -32,18 +33,18 @@ assert (
 );
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolOn
     boolString;
 
-  version = "0.51.0";
+  version = "0.54.0";
 in
 stdenv.mkDerivation rec {
   name = "poppler-${suffix}-${version}";
 
   src = fetchurl {
     url = "https://poppler.freedesktop.org/poppler-${version}.tar.xz";
-    sha256 = "e997c9ad81a8372f2dd03a02b00692b8cc479c220340c8881edaca540f402c1f";
+    sha256 = "10cca9a67cc2e6f4f9024192b1067c444218bf94430891f43dc819d78536ca31";
   };
 
   nativeBuildInputs = [
@@ -117,7 +118,7 @@ stdenv.mkDerivation rec {
     "-Wno-deprecated-declarations"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A PDF rendering library";
     homepage = http://poppler.freedesktop.org/;
     license = licenses.gpl2;

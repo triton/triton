@@ -16,11 +16,11 @@ let
     optionals;
 in
 stdenv.mkDerivation rec {
-  name = "libwebp-0.5.2";
+  name = "libwebp-0.6.0";
 
   src = fetchurl {
     url = "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/${name}.tar.gz";
-    sha256 = "b75310c810b3eda222c77f6d6c26b061240e3d9060095de44b2c1bae291ecdef";
+    sha256 = "c928119229d4f8f35e20113ffb61f281eda267634a8dc2285af4b0ee27cf2b40";
   };
 
   configureFlags = [
@@ -36,6 +36,7 @@ stdenv.mkDerivation rec {
     "--enable-libwebpmux"
     "--enable-libwebpdemux"
     "--enable-libwebpdecoder"
+    "--enable-libwebpextras"
   ];
 
   buildInputs = [

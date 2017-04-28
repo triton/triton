@@ -2,22 +2,24 @@
 , fetchurl
 , perl
 
+, gperftools
 , libcap
 , libevent
 , libscrypt
 , libseccomp
 , libsodium
 , openssl
+, systemd_lib
 , zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "tor-0.2.9.10";
+  name = "tor-0.3.0.6";
 
   src = fetchurl {
     url = "https://www.torproject.org/dist/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "d611283e1fb284b5f884f8c07e7d3151016851848304f56cfdf3be2a88bd1341";
+    sha256 = "a3e512e93cb555601fd207d914d7c5fe981d66d6ebb5821ecdf5dea738c2fb14";
   };
 
   nativeBuildInputs = [
@@ -25,12 +27,14 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    gperftools
     libcap
     libevent
     libscrypt
     libseccomp
     libsodium
     openssl
+    systemd_lib
     zlib
   ];
 
@@ -43,6 +47,8 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--disable-unittests"
+    "--enable-systemd"
+    "--with-tcmalloc"
   ];
 
   preInstall = ''

@@ -1,5 +1,6 @@
 { stdenv
 , cargo
+, rustc
 }:
 
 args:
@@ -14,9 +15,10 @@ let
   ];
   args' = filterAttrs (n: d: !(elem n disallowedArgs)) args;
 in
-stdenv.mkDerivation ({
+(stdenv.mkDerivation ({
   nativeBuildInputs = [
     cargo
+    rustc
   ] ++ (args.nativeBuildInputs or [ ]);
 
   preUnpack = ''
@@ -47,4 +49,8 @@ stdenv.mkDerivation ({
     cargo install -j $NIX_BUILD_CORES --root $out
     runHook postInstall
   '';
-} // args')
+} // args')) // {
+  inherit
+    cargo
+    rustc;
+}

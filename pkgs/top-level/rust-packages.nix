@@ -31,7 +31,6 @@ let
 in
 {
   cargo = callPackage ../all-pkgs/c/cargo {
-    inherit cargo_bootstrap;
     buildRustPackage = buildRustPackage.override {
       cargo = cargo_bootstrap;
     };

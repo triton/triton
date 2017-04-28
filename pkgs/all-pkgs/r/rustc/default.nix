@@ -5,11 +5,12 @@
 , file
 , python2
 , rustc
+, strace
 , which
 
 , jemalloc
 , libffi
-, llvm_3-9
+, llvm
 , ncurses
 , zlib
 
@@ -42,52 +43,50 @@ stdenv.mkDerivation {
   inherit src;
 
   nativeBuildInputs = [
-    cmake
     file
+    local-rustc
     python2
+    strace
     which
   ];
 
   buildInputs = [
-    ncurses
-    zlib
+    #ncurses
+    #zlib
   ];
-
-  # We don't directly run the cmake configure
-  # The build system uses it for building compiler-rt
-  cmakeConfigure = false;
-
-  prePatch = ''
-    # Fix not filtering out -L lines from llvm-config
-    sed -i '\#if len(lib) == 1#a\        continue\n    if lib[0:2] == "-L":' src/etc/mklldeps.py
-  '';
 
   configureFlags = [
     "--disable-docs"
-    "--disable-rustbuild"
     "--release-channel=${channel}"
     "--enable-local-rust"
+    "--enable-local-rebuild"
     "--local-rust-root=${local-rustc}"
-    "--llvm-root=${llvm_3-9}"
+    "--llvm-root=${llvm}"
     "--jemalloc-root=${jemalloc}/lib"
   ];
+
+  preBuild = ''
+    sed -i 's,$(CFG_PYTHON),strace $(CFG_PYTHON),g' Makefile
+    cat src/bootstrap/bootstrap.py
+  '';
 
   buildFlags = [
     "VERBOSE=1"
   ];
 
   # Fix an issues with gcc6
-  NIX_CFLAGS_COMPILE = "-Wno-error";
+  #NIX_CFLAGS_COMPILE = "-Wno-error";
 
-  NIX_LDFLAGS = "-L${libffi}/lib -lffi";
+  #NIX_LDFLAGS = "-L${libffi}/lib -lffi";
 
   # FIXME
   buildDirCheck = false;
 
   passthru = {
     inherit
+      cargo
+      rustc
       srcVerification;
-    bootstrap = rustc;
   };
 
   meta = with stdenv.lib; {

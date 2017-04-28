@@ -1,12 +1,10 @@
 { stdenv
 , buildRustPackage
-, cargo_bootstrap
 , fetchCargo
-, rustc
 }:
 
 let
-  version = "0.17.0";
+  version = "0.18.0";
 in
 buildRustPackage {
   name = "cargo-${version}";
@@ -16,14 +14,6 @@ buildRustPackage {
     package = "cargo";
     packageVersion = version;
     sha256 = "18k55xb89v8liar7aqa8f7074ic9h4bklfbx16qhhcbl9bjs8p2s";
-  };
-
-  nativeBuildInputs = [
-    rustc
-  ];
-
-  passthru = {
-    bootstrap = cargo_bootstrap;
   };
 
   meta = with stdenv.lib; {

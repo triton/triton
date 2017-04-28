@@ -1,39 +1,54 @@
 { stdenv
 , autoconf
 , automake
-, fetchgit
+, fetchFromGitHub
 , libtool
 , which
 
-, openssl_1-0-2
+, c-ares
+, gperftools
+, openssl
 , protobuf-cpp
 , zlib
 }:
 
 let
-  version = "1.2.5";
+  version = "1.3.0";
 in
 stdenv.mkDerivation {
   name = "grpc-${version}";
 
-  src = fetchgit {
-    version = 2;
-    url = "https://github.com/grpc/grpc.git";
-    rev = "refs/tags/v${version}";
-    sha256 = "f53d391678655145a22ee7f5f267baa0ecc269de1ba64b06cd5f94cd44dcaf03";
+  src = fetchFromGitHub {
+    version = 3;
+    owner = "grpc";
+    repo = "grpc";
+    rev = "v${version}";
+    #url = "https://github.com/grpc/grpc.git";
+    #rev = "refs/tags/v${version}";
+    sha256 = "60782ecec66f91a4a0f4994842fb98c1de57d5450eb43f82c6ed8e0b1c20946f";
   };
 
   nativeBuildInputs = [
     autoconf
     automake
     libtool
+    protobuf-cpp
     which
   ];
 
   buildInputs = [
-    openssl_1-0-2
+    c-ares
+    gperftools
+    openssl
+    protobuf-cpp
     zlib
   ];
+
+  postPatch = ''
+    rm -r third_party/{cares,protobuf,zlib,googletest,thrift,boringssl}
+    unpackFile ${protobuf-cpp.src}
+    mv -v protobuf* third_party/protobuf
+  '';
 
   NIX_CFLAGS_LINK = [
     "-pthread"

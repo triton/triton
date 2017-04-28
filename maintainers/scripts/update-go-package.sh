@@ -242,6 +242,20 @@ BEGIN {
   currentPkg = "";
 }
 {
+  # Check for fetchTritonPath
+  if (currentPkg != "") {
+    if (/fetchTritonPatch {/) {
+      inFTP = 1;
+    }
+    if (inFTP && /}/) {
+      inFTP = 0;
+    }
+    if (inFTP) {
+      print $0;
+      next;
+    }
+  }
+
   # Find a package opening stmt
   if (/^  [^ ]*[ ]*=/) {
     currentPkg = $1;

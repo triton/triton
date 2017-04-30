@@ -908,6 +908,8 @@ dnscrypt-proxy = callPackage ../all-pkgs/d/dnscrypt-proxy { };
 
 dnscrypt-wrapper = callPackage ../all-pkgs/d/dnscrypt-wrapper { };
 
+dnsdiag = pkgs.python3Packages.dnsdiag;
+
 dnsmasq = callPackage ../all-pkgs/d/dnsmasq { };
 
 dnssec-root = callPackage ../all-pkgs/d/dnssec-root { };

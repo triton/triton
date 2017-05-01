@@ -4126,13 +4126,18 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 
   kernelPatches = callPackage ../all-pkgs/l/linux/patches.nix { };
 
-  linux_4_9 = callPackage ../all-pkgs/l/linux {
+  linux_4-9 = callPackage ../all-pkgs/l/linux {
     channel = "4.9";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
-  linux_4_10 = callPackage ../all-pkgs/l/linux {
+  linux_4-10 = callPackage ../all-pkgs/l/linux {
     channel = "4.10";
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
+  };
+
+  linux_4-11 = callPackage ../all-pkgs/l/linux {
+    channel = "4.11";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
@@ -4227,19 +4232,22 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   in kPkgs;
 #
 #  # The current default kernel / kernel modules.
-  linuxPackages = pkgs.linuxPackages_4_9;
+  linuxPackages = pkgs.linuxPackages_4-9;
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
-  linuxPackages_latest = pkgs.linuxPackages_4_10;
+  linuxPackages_latest = pkgs.linuxPackages_4-11;
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
-  linuxPackages_4_9 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_4_9;
+  linuxPackages_4-9 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_4-9;
   });
-  linuxPackages_4_10 = recurseIntoAttrs (pkgs.linuxPackagesFor {
-    kernel = pkgs.linux_4_10;
+  linuxPackages_4-10 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_4-10;
+  });
+  linuxPackages_4-11 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_4-11;
   });
   linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_testing;

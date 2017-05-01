@@ -4,12 +4,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "lzip-1.18";
+  name = "lzip-1.19";
 
   src = fetchurl {
     url = "mirror://savannah/lzip/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "47f9882a104ab05532f467a7b8f4ddbb898fa2f1e8d9d468556d6c2d04db14dd";
+    sha256 = "ffadc4f56be1bc0d3ae155ec4527bd003133bdc703a753b2cc683f610e646ba9";
   };
 
   nativeBuildInputs = [

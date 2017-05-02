@@ -3814,6 +3814,19 @@ zstd = callPackage ../all-pkgs/z/zstd { };
     cross = null;
     libcCross = null;
   }));
+
+  gcc7 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/7 {
+    noSysDirs = true;
+
+    # PGO seems to speed up compilation by gcc by ~10%, see #445 discussion
+    profiledCompiler = true;
+
+    # When building `gcc.crossDrv' (a "Canadian cross", with host == target
+    # and host != build), `cross' must be null but the cross-libc must still
+    # be passed.
+    cross = null;
+    libcCross = null;
+  }));
 #
   haskell = callPackage ./haskell-packages.nix { };
 #

@@ -8,7 +8,7 @@ let
   inherit (stdenv.lib)
     replaceChars;
 
-  version = "2017-01-19";
+  version = "2017-03-03";
   version' = replaceChars ["-"] [""] version;
 in
 stdenv.mkDerivation rec {
@@ -16,8 +16,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://acpica.org/sites/acpica/files/acpica-unix-${version'}.tar.gz";
-    multihash = "QmRP8SEy1XrMWfmUkUxjZnHLTDGcp5vAvUxMNRo3zAADbr";
-    sha256 = "766e39c96649f32f5288a033b818ffe85b9a80daaa9d6d80acb1e44dce233dc9";
+    multihash = "QmVf7ZLx8dL4mJjzVcFpwuvke6NagRHJ1Tg1QsT3KgYn1T";
+    sha256 = "c093c9eabd1f8c51d79364d829975c5335c8028c4816a7a80dfb8590f31889b5";
   };
 
   nativeBuildInputs = [

@@ -6,14 +6,14 @@
 }:
 
 let
-  version = "2.3";
+  version = "2.4";
 in
 stdenv.mkDerivation rec {
   name = "tmux-${version}";
 
   src = fetchurl {
     url = "https://github.com/tmux/tmux/releases/download/${version}/${name}.tar.gz";
-    sha256 = "55313e132f0f42de7e020bf6323a1939ee02ab79c48634aa07475db41573852b";
+    sha256 = "757d6b13231d0d9dd48404968fc114ac09e005d475705ad0cd4b7166f799b349";
   };
 
   buildInputs = [

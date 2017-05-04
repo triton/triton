@@ -8,11 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dmenu-4.6";
+  name = "dmenu-4.7";
 
   src = fetchurl {
     url = "http://dl.suckless.org/tools/${name}.tar.gz";
-    sha256 = "1cwnvamqqlgczvd5dv5rsgqbhv8kp0ddjnhmavb3q732i8028yja";
+    multihash = "QmfWHbjBueUn281KveLuFytjLepEBBMAGvj8YKcrfBR79Y";
+    sha256 = "a75635f8dc2cbc280deecb906ad9b7594c5c31620e4a01ba30dc83984881f7b9";
   };
 
   buildInputs = [
@@ -44,6 +45,7 @@ stdenv.mkDerivation rec {
     license = licenses.mit;
     maintainers = with maintainers; [
       codyopel
+      wkennington
     ];
     platforms = with platforms;
       x86_64-linux;

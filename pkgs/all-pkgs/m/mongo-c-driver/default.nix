@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "1.6.1";
+  version = "1.6.2";
 in
 stdenv.mkDerivation rec {
   name = "mongo-c-driver-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/mongodb/mongo-c-driver/releases/download"
       + "/${version}/${name}.tar.gz";
-    sha256 = "1bdfb27944c6da8e56da209a5d56efac70df1f8c4ca4498b46f75bf3f9360898";
+    sha256 = "7ec27e9be4da2bf9e4b316374f8c29f816f0a0f019b984411777e9681e17f70e";
   };
 
   nativeBuildInputs = [
@@ -27,6 +27,11 @@ stdenv.mkDerivation rec {
     cyrus-sasl
     libbson
     openssl
+  ];
+
+  configureFlags = [
+    "--disable-examples"
+    "--disable-tests"
   ];
 
   meta = with stdenv.lib; {

@@ -15,6 +15,8 @@
 , boost
 , judy
 , bison
+, libarchive
+, pam
 , libxml2
 , kytea
 , msgpack-c
@@ -56,6 +58,7 @@ stdenv.mkDerivation rec {
     judy
     kytea
     libaio
+    libarchive
     libevent
     libxml2
     lz4
@@ -64,6 +67,7 @@ stdenv.mkDerivation rec {
     ncurses
     numactl
     openssl
+    pam
     pcre
     snappy
     systemd_lib
@@ -95,6 +99,7 @@ stdenv.mkDerivation rec {
     "-DWITH_SSL=system"
     #"-DWITH_SSL=bundled"
     "-DWITH_PCRE=system"
+    "-DWITH_LIBARCHIVE=ON"
     "-DWITH_EMBEDDED_SERVER=yes"
     "-DWITH_EXTRA_CHARSETS=complex"
     "-DWITH_EMBEDDED_SERVER=ON"

@@ -259,8 +259,6 @@ stdenv.mkDerivation rec {
     find $out/lib/pkgconfig -name \*.pc -exec sed -i 's,Qt5UiPlugin,,g' {} \;
   '';
 
-  parallelBuild = false;
-
   # FIXME
   buildDirCheck = false;
 

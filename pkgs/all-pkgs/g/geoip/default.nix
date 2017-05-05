@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "1.6.9";
+  version = "1.6.10";
 in
 stdenv.mkDerivation rec {
   name = "geoip-${version}";
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "maxmind";
     repo = "geoip-api-c";
     rev = "v${version}";
-    sha256 = "bf32c498fdd99af946419ed981b8d93c8eac8d3d01a6f372b68ed8f416b6865c";
+    sha256 = "a4e9caaf51edbce6d28b38e40996e851a4a4650a737f70c8f388b1bb37728136";
   };
 
   nativeBuildInputs = [

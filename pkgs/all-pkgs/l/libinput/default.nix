@@ -37,13 +37,13 @@ assert testsSupport ->
   && valgrind != null;
 
 stdenv.mkDerivation rec {
-  name = "libinput-1.7.1";
+  name = "libinput-1.7.2";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libinput/${name}.tar.xz";
+    multihash = "QmSeh6y9qqvLz1LHvvo7aRTeVGay2JRTmfcgnoAPwugPbd";
     hashOutput = false;
-    multihash = "QmaKHTC1SSnejXPBKinzgdfCVtP8wt7uM3Yv1mWVB33pxL";
-    sha256 = "2e56bc5bbf7d202dd94e1a5673489ce86fe10b1d4b5145948e9ba15f053247c1";
+    sha256 = "0b1e5a6c106ccc609ccececd9e33e6b27c8b01fc7457ddb4c1dd266e780d6bc2";
   };
 
   buildInputs = [

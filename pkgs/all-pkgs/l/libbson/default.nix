@@ -1,5 +1,4 @@
 { stdenv
-, autoreconfHook
 , fetchurl
 , perl
 }:
@@ -17,8 +16,12 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    autoreconfHook
     perl
+  ];
+
+  configureFlags = [
+    "--disable-examples"
+    "--disable-tests"
   ];
 
   meta = with stdenv.lib; {

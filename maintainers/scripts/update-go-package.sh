@@ -141,9 +141,14 @@ while read line; do
 
   cd $TMPDIR/src/$pkg
 
-  VERSION="$(git tag --sort "v:refname" | grep '\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\|\([0-9]\+\.\)\+[0-9]\+$\)' | grep -i -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
-  HEAD_DATE="$(date --date="@$(git show -s --format=%ct origin/master)" --utc "+%Y-%m-%d")"
-  REV="$(git rev-parse origin/master)"
+  if echo "$pkg" | grep -q '\.v[0-9]\+$'; then
+    VERSIONS="$(git tag --sort "v:refname" --merged)"
+  else
+    VERSIONS="$(git tag --sort "v:refname")"
+  fi
+  VERSION="$(echo "$VERSIONS" | grep '\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\|\([0-9]\+\.\)\+[0-9]\+$\)' | grep -i -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
+  HEAD_DATE="$(date --date="@$(git show -s --format=%ct HEAD)" --utc "+%Y-%m-%d")"
+  REV="$(git rev-parse HEAD)"
   DATE="$HEAD_DATE"
   if [ "$useUnstable" = "0" ] && [ -n "$VERSION" ]; then
     VERSION_DATE="$(git log "$VERSION" -n 1 --date=short | awk '{ if (/Date/) { print $2 } }')"

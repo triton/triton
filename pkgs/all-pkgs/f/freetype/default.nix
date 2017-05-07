@@ -56,6 +56,16 @@ stdenv.mkDerivation rec {
       file = "f/freetype2/0002-infinality-2.7.1-2017.01.11.patch";
       sha256 = "5ac6329d4ffd6d94d9dd76b178fa13ab2fcfadbf2ddaa7ad60bf0bb7632afd69";
     })
+    (fetchTritonPatch {
+      rev = "5a2b7f23e6843dbfca86143d902a4c8e49f40ac7";
+      file = "f/freetype2/CVE-2017-8105.patch";
+      sha256 = "3ecb4da1dfa58ebba09dd27a12b5348d717a8be9f46bf08c08d905c543df4525";
+    })
+    (fetchTritonPatch {
+      rev = "5a2b7f23e6843dbfca86143d902a4c8e49f40ac7";
+      file = "f/freetype2/CVE-2017-8287.patch";
+      sha256 = "de2170d1ab3f3e20b526cb1f6900a8b39ef2c08f1e9366f393086227a40638f5";
+    })
   ];
 
   configureFlags = [

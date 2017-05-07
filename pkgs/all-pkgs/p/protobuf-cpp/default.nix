@@ -12,6 +12,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/google/protobuf/releases/download/v${version}/${name}.tar.gz";
+    multihash = "QmRfu3z6DpPcQNsKDzhda9ATRC3QyfiXLYPaNAnkteSeYv";
     sha256 = "578a2589bf9258adb03245dec5d624b61536867ebb732dbb8aeb30d96b0ada1f";
   };
 

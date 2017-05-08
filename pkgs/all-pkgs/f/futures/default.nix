@@ -1,24 +1,27 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , isPy3k
 }:
 
+let
+  version = "3.1.1";
+in
 buildPythonPackage rec {
   name = "futures-${version}";
-  version = "3.0.5";
 
   src = fetchPyPi {
     package = "futures";
     inherit version;
-    sha256 = "0542525145d5afc984c88f914a0c85c77527f65946617edb5274f72406f981df";
+    sha256 = "51ecb45f0add83c806c68e4b06106f90db260585b25ef2abfcda0bd95c0132fd";
   };
 
   # This module is for backporting Python 3.2 functionality to Python 2.x.
   disabled = isPy3k;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Backport of the concurrent.futures package from Python 3.2";
     homepage = https://github.com/agronholm/pythonfutures;
     license = licenses.bsd2;

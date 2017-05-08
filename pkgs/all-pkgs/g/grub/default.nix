@@ -94,6 +94,7 @@ stdenv.mkDerivation rec {
     "--with-platform=${platform}"
     "--program-prefix="
     "--program-suffix="
+    "--disable-werror"
     "--enable-grub-mkfont"
     "--enable-grub-themes"
     "--enable-grub-mount"

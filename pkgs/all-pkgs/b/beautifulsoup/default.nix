@@ -2,16 +2,17 @@
 , buildPythonPackage
 , fetchPyPi
 , isPy3k
+, lib
 
 , html5lib
 , lxml
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 
-  version = "4.5.1";
+  version = "4.6.0";
 in
 buildPythonPackage rec {
   name = "beautifulsoup-${version}";
@@ -19,7 +20,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "beautifulsoup4";
     inherit version;
-    sha256 = "3c9474036afda9136aac6463def733f81017bf9ef3510d25634f335b0c87f5e1";
+    sha256 = "808b6ac932dccb0a4126558f7dfdcf41710dd44a4ef497a0bb59a77f9f078e89";
   };
 
   propagatedBuildInputs = [
@@ -30,7 +31,7 @@ buildPythonPackage rec {
   # Not all tests have been converted to Python 3
   doCheck = !isPy3k;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "HTML/XML parser";
     homepage = http://www.crummy.com/software/BeautifulSoup/;
     license = licenses.mit;

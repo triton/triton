@@ -39,8 +39,9 @@ let
   ] ++ extraSrcs;
 
   srcPathsExpr = lib.concatStringsSep "\\|" (map ({ src, goPackagePath }: goPackagePath) srcList);
-in
 
+  goInputs = lib.filter (n: n ? goPackagePath) (extraSrcs ++ buildInputs ++ (args.propagatedBuildInputs or [ ]));
+in
 go.stdenv.mkDerivation (
   (builtins.removeAttrs args [ "goPackageAliases" "disabled" ]) // {
 
@@ -206,14 +207,18 @@ go.stdenv.mkDerivation (
     C
     gx
     $(find "${go}/share/go/src" -maxdepth 1 -mindepth 1 -type d -exec basename {} \;)
-    ${lib.concatStringsSep "\n" (map (n: n.goPackagePath) (lib.filter (n: n ? goPackagePath) (extraSrcs ++ buildInputs ++ (args.propagatedBuildInputs or [ ]))))}
+    ${lib.concatStringsSep "\n" (map (n: n.goPackagePath) (lib.filter (n: (n.subPackages or null) == null) goInputs))}
+    "
+
+    export inputGoPathsExact="
+    ${lib.concatStringsSep "\n" (lib.concatMap (n: map (m: "${n.goPackagePath}/${m}") n.subPackages) (lib.filter (n: (n.subPackages or null) != null) goInputs))}
     "
 
     if [ -z "$subPackages" ]; then
       export inputGoPaths="$inputGoPaths$goPackagePath"
     else
       pushd go/src >/dev/null
-      export inputGoPathsExact="$(echo "$subPackages" | tr ' ' '\n' | sed "s,\(^\| \|\n\),\1$goPackagePath/,g" | xargs -n 1 readlink -f | sed "s,^$(pwd)/,,")"
+      export inputGoPathsExact="$inputGoPathsExact$(echo "$subPackages" | tr ' ' '\n' | sed "s,\(^\| \|\n\),\1$goPackagePath/,g" | xargs -n 1 readlink -f | sed "s,^$(pwd)/,,")"
       popd >/dev/null
     fi
 

@@ -1343,10 +1343,10 @@ let
   }) // {inherit fontsproto mesa_noglu glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ;};
 
   xf86videoati = (mkDerivation "xf86videoati" {
-    name = "xf86-video-ati-7.8.0";
+    name = "xf86-video-ati-7.9.0";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-ati-7.8.0.tar.bz2;
-      sha256 = "401f5de772928f3dc4ce43a885adb0a47a2f61aa4a9e45d2ab3d184136a9d6fa";
+      url = mirror://xorg/individual/driver/xf86-video-ati-7.9.0.tar.bz2;
+      sha256 = "3cad872e6330afb1707da11e4e959e6887ebe5bcd81854b4d2e496c52c059875";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ fontsproto glamoregl libdrm systemd_lib libpciaccess randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto damageproto fixesproto ];

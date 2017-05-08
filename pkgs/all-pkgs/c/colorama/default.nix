@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "0.3.7";
+  version = "0.3.9";
 in
 buildPythonPackage rec {
   name = "colorama-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "colorama";
     inherit version;
-    sha256 = "e043c8d32527607223652021ff648fbb394d5e19cba9f1a698670b338c9d782b";
+    sha256 = "48eb22f4f8461b1df5734a074b57042430fb06e1d61bd1e11b078c0fe6d7a1f1";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Cross-platform colored terminal text";
     homepage = https://github.com/tartley/colorama;
     license = licenses.bsd3;

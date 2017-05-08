@@ -728,6 +728,8 @@ cgit = callPackage ../all-pkgs/c/cgit { };
 
 cgmanager = callPackage ../all-pkgs/c/cgmanager { };
 
+chck = callPackage ../all-pkgs/c/chck { };
+
 check = callPackage ../all-pkgs/c/check { };
 
 chromaprint = callPackage ../all-pkgs/c/chromaprint { };

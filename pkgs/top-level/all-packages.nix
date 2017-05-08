@@ -3284,6 +3284,8 @@ sushi = callPackageAlias "sushi_3-22" { };
 
 svrcore = callPackage ../all-pkgs/s/svrcore { };
 
+sway = callPackage ../all-pkgs/s/sway { };
+
 swig_2 = callPackage ../all-pkgs/s/swig {
   channel = "2";
 };

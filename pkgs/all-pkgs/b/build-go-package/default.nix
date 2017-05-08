@@ -128,6 +128,24 @@ go.stdenv.mkDerivation (
     done < <(find "$NIX_BUILD_TOP/unpack" -maxdepth 1 -mindepth 1)
     export GOPATH="$NEWPATH"
 
+    # Make sure we can find all of our subpackages
+    missing=()
+    if [ -n "$subPackages" ]; then
+      for subPackage in $subPackages; do
+        if [ ! -d "go/src/$goPackagePath/$subPackage" ]; then
+          missing+=("$subPackage")
+        fi
+      done
+    fi
+    if [ "''${#missing[@]}" -gt "0" ]; then
+      str="Missing subpackage sources:\n"
+      for source in "''${missing[@]}"; do
+        str+="  $source\n"
+      done
+      echo -en "$str" 2>&1
+      exit 1
+    fi
+
     runHook postConfigure
   '';
 

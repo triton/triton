@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "1.20";
+  version = "1.21.1";
 in
 buildPythonPackage {
   name = "urllib3-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "urllib3";
     inherit version;
-    sha256 = "97ef2b6e2878d84c0126b9f4e608e37a951ca7848e4855a7f7f4437d5c34a72f";
+    sha256 = "b14486978518ca0901a76ba973d7821047409d7f726f22156b24e83fd71382a5";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

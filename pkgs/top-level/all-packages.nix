@@ -1186,7 +1186,7 @@ freeglut = callPackage ../all-pkgs/f/freeglut { };
 
 freeipmi = callPackage ../all-pkgs/f/freeipmi { };
 
-freetype_for_harfbuzz = callPackage ../all-pkgs/f/freetype {
+freetype_for-harfbuzz = callPackage ../all-pkgs/f/freetype {
   type = "harfbuzz";
 };
 freetype = callPackage ../all-pkgs/f/freetype {

@@ -4,7 +4,7 @@
 
 , cairo
 , fontconfig
-, freetype_for_harfbuzz
+, freetype_for-harfbuzz
 , freetype
 , glib
 , gobject-introspection
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     graphite2
     icu
   ] ++ optionals (type == "lib") [
-    freetype_for_harfbuzz
+    freetype_for-harfbuzz
   ] ++ optionals (type == "full") [
     cairo
     fontconfig

@@ -391,17 +391,19 @@ go.stdenv.mkDerivation (
     mkdir "$NIX_BUILD_TOP/${name}"
     pushd "$NIX_BUILD_TOP/go" >/dev/null
     if [ -n "$subPackages" ]; then
-      subPackageExpr='/\('
+      subPackageExpr='\('
       for subPackage in $subPackages; do
         if [ "$subPackageExpr" != '/\(' ]; then
           subPackageExpr+='\|'
         fi
-        subPackageExpr+="$subPackage"
+        if [ "$subPackage" != "." ]; then
+          subPackageExpr+="/$subPackage"
+        fi
       done
-      subPackageExpr+='\)'
+      subPackageExpr+='\)''$'
     fi
     while read f; do
-      echo "$f" | grep -q '^./\(src\|pkg/[^/]*\)/\(${srcPathsExpr}\)'"$subPackageExpr" || continue
+      echo "$(dirname $f)" | grep -q '^./\(src\|pkg/[^/]*\)/\(${srcPathsExpr}\)'"$subPackageExpr" || continue
       mkdir -p "$(dirname "$NIX_BUILD_TOP/${name}/$f")"
       cp "$NIX_BUILD_TOP/go/$f" "$NIX_BUILD_TOP/${name}/$f"
     done < <(find . -type f)

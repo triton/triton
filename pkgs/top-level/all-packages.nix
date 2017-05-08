@@ -1009,6 +1009,8 @@ evolution-data-server_3-22 = callPackage ../all-pkgs/e/evolution-data-server {
 };
 evolution-data-server = callPackageAlias "evolution-data-server_3-22" { };
 
+ewlc = callPackage ../all-pkgs/e/ewlc { };
+
 exempi = callPackage ../all-pkgs/e/exempi { };
 
 exiv2 = callPackage ../all-pkgs/e/exiv2 { };

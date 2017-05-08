@@ -1,11 +1,12 @@
 { stdenv
 , cmake
 , fetchurl
+, lib
 , ninja
 }:
 
 let
-  version = "1.3.9";
+  version = "1.3.10";
 in
 stdenv.mkDerivation rec {
   name = "graphite2-${version}";
@@ -14,13 +15,17 @@ stdenv.mkDerivation rec {
     url = "https://github.com/silnrsi/graphite/releases/download/${version}/"
       + "${name}.tgz";
     hashOutput = false;
-    sha256 = "ec0185b663059553fd46e8c4a4f0dede60a02f13a7a1fefc2ce70332ea814567";
+    sha256 = "90fde3b2f9ea95d68ffb19278d07d9b8a7efa5ba0e413bebcea802ce05cda1ae";
   };
 
   nativeBuildInputs = [
     cmake
     ninja
   ];
+
+  # cmakeFlags = [
+  #   "-DGRAPHITE2_ASAN=ON"
+  # ];
 
   passthru = {
     srcVerification = fetchurl {
@@ -34,8 +39,10 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "An advanced font engine";
+    homepage = https://github.com/silnrsi/graphite;
+    license = licenses.lgpl21;
     maintainers = with maintainers; [
       wkennington
     ];

@@ -1332,10 +1332,10 @@ let
   }) // {inherit fontsproto libpciaccess randrproto renderproto videoproto xextproto xf86dgaproto xorgserver xproto ;};
 
   xf86videoamdgpu = (mkDerivation "xf86videoamdgpu" {
-    name = "xf86-video-amdgpu-1.2.0";
+    name = "xf86-video-amdgpu-1.3.0";
     src = fetchurl {
-      url = mirror://xorg/individual/driver/xf86-video-amdgpu-1.2.0.tar.bz2;
-      sha256 = "275b1aac5f127f55ba3d7480a1df89eace1d02650e24e46908067fc875e76c8f";
+      url = mirror://xorg/individual/driver/xf86-video-amdgpu-1.3.0.tar.bz2;
+      sha256 = "c1630f228938be949273f72b29ae70822dde064ad79c3ccb14d55f427e3f4e70";
     };
     nativeBuildInputs = [ utilmacros ];
     buildInputs = [ fontsproto mesa_noglu glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto damageproto fixesproto ];

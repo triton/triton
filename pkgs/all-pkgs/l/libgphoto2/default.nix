@@ -2,6 +2,7 @@
 , fetchurl
 , flex
 , gettext
+, lib
 , libtool
 
 , libexif
@@ -14,16 +15,17 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    wtFlag;
-in
+  inherit (lib)
+    boolWt;
 
+  version = "2.5.13";
+in
 stdenv.mkDerivation rec {
-  name = "libgphoto2-2.5.10";
+  name = "libgphoto2-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/gphoto/${name}.tar.bz2";
-    sha256 = "8d8668d432ba595c7466442aec2cf553bdf8782ec171291dbc65717c633a4ef2";
+    url = "mirror://sourceforge/gphoto/libgphoto/${version}/${name}.tar.bz2";
+    sha256 = "ceaacbdf187d1cd1aed5336991f46b0100f6960b6c8383f9aeab98f1f64780ef";
   };
 
   nativeBuildInputs = [
@@ -48,11 +50,24 @@ stdenv.mkDerivation rec {
     "--enable-largefile"
     "--disable-internal-docs"
     "--disable-docs"
-    (wtFlag "jpeg" (libjpeg-turbo_1-4 != null) null)
+    "--${boolWt (libjpeg-turbo_1-4 != null)}-jpeg"
     "--with-camlibs=all"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl rec {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      # Marcus Meissner
+      pgpKeyFingerprint = "7C4A FD61 D8AA E757 0796  A517 2209 D690 2F96 9C95";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "A library for accessing digital cameras";
     homepage = http://www.gphoto.org/proj/libgphoto2/;
     license = licenses.gpl2;

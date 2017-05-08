@@ -60,6 +60,15 @@ stdenv.mkDerivation rec {
     "-DWLC_BUILD_TESTS=OFF"
   ];
 
+  # Make libwlc compatible links
+  postInstall = ''
+    pushd "$out" >/dev/null
+    for lib in $(find lib64 -name \*ewlc\*); do
+      ln -sv "$(basename "$lib")" "$(echo "$lib" | sed 's,ewlc,wlc,g')"
+    done
+    popd >/dev/null
+  '';
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

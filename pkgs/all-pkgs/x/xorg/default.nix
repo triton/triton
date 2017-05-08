@@ -1453,10 +1453,10 @@ let
   }) // {inherit inputproto libX11 libXext libXi libXinerama libXrandr ;};
 
   xkbcomp = (mkDerivation "xkbcomp" {
-    name = "xkbcomp-1.3.1";
+    name = "xkbcomp-1.4.0";
     src = fetchurl {
-      url = mirror://xorg/individual/app/xkbcomp-1.3.1.tar.bz2;
-      sha256 = "0gcjy70ppmcl610z8gxc7sydsx93f8cm8pggm4qhihaa1ngdq103";
+      url = mirror://xorg/individual/app/xkbcomp-1.4.0.tar.bz2;
+      sha256 = "bc69c8748c03c5ad9afdc8dff9db11994dd871b614c65f8940516da6bf61ce6b";
     };
     nativeBuildInputs = [ bison utilmacros ];
     buildInputs = [ libX11 libxkbfile xproto ];

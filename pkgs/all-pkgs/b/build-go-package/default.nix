@@ -20,14 +20,31 @@
 
 , meta ? {}, ... } @ args':
 
-if disabled then throw "${name} not supported for go ${go.meta.branch}" else
+if disabled
+  then throw "${name} not supported for go ${go.meta.branch}"
+else
 
 let
-  args = lib.filterAttrs (name: _: name != "extraSrcs") args';
+  inherit (lib)
+    concatMap
+    concatMapStrings
+    concatMapStringsSep
+    concatStringsSep
+    filter
+    filterAttrs
+    flip
+    optional
+    optionalAttrs
+    optionalString
+    ;
 
-  removeReferences = [ go ];
+  args = filterAttrs (name: _: name != "extraSrcs") args';
 
-  removeExpr = refs: lib.flip lib.concatMapStrings refs (ref: ''
+  removeReferences = [
+    go
+  ];
+
+  removeExpr = refs: flip concatMapStrings refs (ref: ''
     | sed "s,${ref},$(echo "${ref}" | sed "s,$NIX_STORE/[^-]*,$NIX_STORE/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,"),g" \
   '');
 
@@ -38,9 +55,9 @@ let
     }
   ] ++ extraSrcs;
 
-  srcPathsExpr = lib.concatStringsSep "\\|" (map ({ src, goPackagePath }: goPackagePath) srcList);
+  srcPathsExpr = concatStringsSep "\\|" (map ({ src, goPackagePath }: goPackagePath) srcList);
 
-  goInputs = lib.filter (n: n ? goPackagePath) (extraSrcs ++ buildInputs ++ (args.propagatedBuildInputs or [ ]));
+  goInputs = filter (n: n ? goPackagePath) (extraSrcs ++ buildInputs ++ (args.propagatedBuildInputs or [ ]));
 in
 go.stdenv.mkDerivation (
   (builtins.removeAttrs args [ "goPackageAliases" "disabled" ]) // {
@@ -93,7 +110,7 @@ go.stdenv.mkDerivation (
     if [ -z "$allowVendoredSources" ]; then
       find go/src/$goPackagePath -type d \( -name vendor -or -name Godeps \) -prune -exec rm -r {} \;
     fi
-  '' + lib.flip lib.concatMapStrings extraSrcs ({ src, goPackagePath }: ''
+  '' + flip concatMapStrings extraSrcs ({ src, goPackagePath }: ''
     mkdir extraSrc
     (cd extraSrc; unpackFile "${src}")
     mkdir -p "go/src/$(dirname "${goPackagePath}")"
@@ -152,7 +169,7 @@ go.stdenv.mkDerivation (
 
   renameImports = args.renameImports or (
     let
-      inputsWithAliases = lib.filter (x: x ? goPackageAliases)
+      inputsWithAliases = filter (x: x ? goPackageAliases)
         (buildInputs ++ (args.propagatedBuildInputs or [ ]));
       rename = to: from: ''
         echo Renaming '${from}' to '${to}' >&2
@@ -186,10 +203,10 @@ go.stdenv.mkDerivation (
         }
         '
       '';
-      renames = p: lib.concatMapStringsSep "\n" (rename p.goPackagePath) p.goPackageAliases;
+      renames = p: concatMapStringsSep "\n" (rename p.goPackagePath) p.goPackageAliases;
     in ''
       pushd "go/src/$goPackagePath" >/dev/null
-      ${lib.concatMapStringsSep "\n" renames inputsWithAliases}
+      ${concatMapStringsSep "\n" renames inputsWithAliases}
       popd >/dev/null
     '');
 
@@ -207,19 +224,21 @@ go.stdenv.mkDerivation (
     C
     gx
     $(find "${go}/share/go/src" -maxdepth 1 -mindepth 1 -type d -exec basename {} \;)
-    ${lib.concatStringsSep "\n" (map (n: n.goPackagePath) (lib.filter (n: (n.subPackages or null) == null) goInputs))}
+    ${concatStringsSep "\n" (map (n: n.goPackagePath) (filter (n: (n.subPackages or null) == null) goInputs))}
     "
 
+    export localGoPathsExact=""
     export inputGoPathsExact="
-    ${lib.concatStringsSep "\n" (lib.concatMap (n: map (m: "${n.goPackagePath}/${m}") n.subPackages) (lib.filter (n: (n.subPackages or null) != null) goInputs))}
+    ${concatStringsSep "\n" (concatMap (n: map (m: "${n.goPackagePath}${optionalString (m != ".") "/${m}"}") n.subPackages) (filter (n: (n.subPackages or null) != null) goInputs))}
     "
 
     if [ -z "$subPackages" ]; then
       export inputGoPaths="$inputGoPaths$goPackagePath"
     else
       pushd go/src >/dev/null
-      export inputGoPathsExact="$inputGoPathsExact$(echo "$subPackages" | tr ' ' '\n' | sed "s,\(^\| \|\n\),\1$goPackagePath/,g" | xargs -n 1 readlink -f | sed "s,^$(pwd)/,,")"
+      export localGoPathsExact="$(echo "$subPackages" | tr ' ' '\n' | sed "s,\(^\| \|\n\),\1$goPackagePath/,g" | xargs -n 1 readlink -f | sed "s,^$(pwd)/,,")"
       popd >/dev/null
+      export inputGoPathsExact="$inputGoPathsExact$localGoPathsExact"
     fi
 
     checkGoDir() {
@@ -327,7 +346,7 @@ go.stdenv.mkDerivation (
       local type;
       type="$1"
       if [ -n "$subPackages" ]; then
-        echo "$inputGoPathsExact"
+        echo "$localGoPathsExact"
       else
         pushd go/src >/dev/null
         find "$goPackagePath" -type f -name \*$type.go -exec dirname {} \; | LC_ALL=c sort | uniq | grep -v "\(/_\|examples\|Godeps\)"
@@ -411,9 +430,9 @@ go.stdenv.mkDerivation (
     done < <(find $bin/bin -type f 2>/dev/null)
   '';
 
-  disallowedReferences = lib.optional (!allowGoReference) go;
+  disallowedReferences = optional (!allowGoReference) go;
 
-  passthru = passthru // lib.optionalAttrs (goPackageAliases != []) { inherit goPackageAliases; };
+  passthru = passthru // optionalAttrs (goPackageAliases != []) { inherit goPackageAliases; };
 
   # I prefer to call this dev but propagatedBuildInputs expects $out to exist
   outputs = [ "out" "bin" ];

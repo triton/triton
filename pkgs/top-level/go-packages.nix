@@ -798,6 +798,22 @@ let
     date = "2014-07-27";
   };
 
+  docker_cli = buildFromGitHub {
+    version = 3;
+    date = "2017-05-05";
+    rev = "a6feb55a4821fd2b77fb7412e2955914359ed99d";
+    owner = "docker";
+    repo = "cli";
+    sha256 = "1jaq6ivgv6dk1mwhkc0y15gqv4gb1ji3dw2764gdcv32s30hqywl";
+    subPackages = [
+      "cli/config/configfile"
+    ];
+    buildInputs = [
+      errors
+      moby_for_go-dockerclient
+    ];
+  };
+
   mitchellh_cli = buildFromGitHub {
     version = 2;
     date = "2017-03-28";
@@ -1213,18 +1229,33 @@ let
     owner = "docker";
     repo = "distribution";
     sha256 = "0l5farhxfb9i2ah1wrvza49qqkmqyzvs1lw5p8m5c39zi845c53n";
+    meta.useUnstable = true;
+    date = "2017-05-05";
+  };
+
+  distribution_for_moby = buildFromGitHub {
+    inherit (distribution) date rev owner repo sha256 version meta;
+    subPackages = [
+      "."
+      "digestset"
+      "context"
+      "reference"
+      "registry/api/errcode"
+      "registry/api/v2"
+      "registry/client"
+      "registry/client/auth"
+      "registry/client/auth/challenge"
+      "registry/client/transport"
+      "registry/storage/cache"
+      "registry/storage/cache/memory"
+      "uuid"
+    ];
     propagatedBuildInputs = [
-      cobra
-      gorelic
+      go-digest
       logrus
       mux
       net
-      pflag
-      resumable
-      swift
     ];
-    meta.useUnstable = true;
-    date = "2017-05-05";
   };
 
   distribution_for_engine-api = buildFromGitHub {
@@ -1520,6 +1551,7 @@ let
       "auth/authpb"
       "client"
       "clientv3"
+      "clientv3/concurrency"
       "etcdserver/api/v3rpc/rpctypes"
       "etcdserver/etcdserverpb"
       "mvcc/mvccpb"
@@ -4817,6 +4849,45 @@ let
     meta.useUnstable = true;
   };
 
+  moby_for_nomad = buildFromGitHub {
+    inherit (moby) version owner repo rev date sha256 meta postPatch goPackageAliases;
+    subPackages = [
+      "api/types"
+      "api/types/blkiodev"
+      "api/types/container"
+      "api/types/filters"
+      "api/types/mount"
+      "api/types/network"
+      "api/types/strslice"
+      "api/types/swarm"
+      "api/types/registry"
+      "api/types/versions"
+      "opts"
+      "pkg/httputils"
+      "pkg/ioutils"
+      "pkg/jsonlog"
+      "pkg/jsonmessage"
+      "pkg/longpath"
+      "pkg/random"
+      "pkg/stringid"
+      "pkg/tarsum"
+      "pkg/term"
+      "pkg/term/windows"
+      "registry"
+    ];
+    propagatedBuildInputs = [
+      distribution_for_moby
+      errors
+      go-ansiterm
+      go-connections
+      go-units
+      gotty
+      logrus
+      net
+      pflag
+    ];
+  };
+
   moby_for_runc = buildFromGitHub {
     inherit (moby) version owner repo rev date sha256 meta postPatch goPackageAliases;
     subPackages = [
@@ -5075,6 +5146,8 @@ let
       consul_api
       copystructure
       cronexpr
+      distribution_for_engine-api
+      docker_cli
       go-checkpoint
       go-cleanhttp
       go-dockerclient
@@ -5096,6 +5169,7 @@ let
       mapstructure
       memberlist
       mitchellh_cli
+      moby_for_nomad
       net-rpc-msgpackrpc
       osext
       raft-boltdb_v2
@@ -5122,6 +5196,7 @@ let
       find . -type f -exec sed -i {} \
         -e 's,.ParseNamed,.ParseNormalizedNamed,g' \
         -e 's,"github.com/docker/docker/reference","github.com/docker/distribution/reference",g' \
+        -e 's,"github.com/docker/docker/cli,"github.com/docker/cli/cli,g' \
         \;
     '';
 
@@ -6308,6 +6383,7 @@ let
       kubernetes-client-go_1-4
       lemma
       logrus
+      moby_for_runc
       net
       osext
       otp

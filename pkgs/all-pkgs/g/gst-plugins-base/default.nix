@@ -102,6 +102,7 @@ stdenv.mkDerivation rec {
     "--enable-gio"
     "--enable-playback"
     "--enable-audioresample"
+    "--enable-rawparse"
     "--enable-subparse"
     "--enable-tcp"
     "--enable-typefind"

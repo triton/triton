@@ -1,7 +1,8 @@
 { stdenv
-, fetchurl
+, fetchzip
 , cmake
 , gettext
+, lib
 , perl
 
 , atk
@@ -18,15 +19,15 @@
 
 let
   channel = "0.4";
-  version = "${channel}.0.1";
+  version = "${channel}.1";
 in
 stdenv.mkDerivation rec {
   name = "granite-${version}";
 
-  src = fetchurl {
-    url = "https://launchpad.net/granite/${channel}/${version}/"
-      + "+download/${name}.tar.xz";
-    sha256 = "95a142a8befeedc35a089d638e759b657905508dc3007036d6c1fa3efe94c4dd";
+  src = fetchzip {
+    version = 3;
+    url = "https://github.com/elementary/granite/archive/${version}.tar.gz";
+    sha256 = "21d4e6e1ab5280fbe627f5b01c5f8f0e7cc606328ef7a7c17343a9ea463f7039";
   };
 
   nativeBuildInputs = [
@@ -55,9 +56,9 @@ stdenv.mkDerivation rec {
     )
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "An extension to GTK+ used by elementary OS";
-    homepage = https://launchpad.net/granite;
+    homepage = https://github.com/elementary/granite/;
     license = licenses.lgpl3;
     maintainers = with maintainers; [
       codyopel

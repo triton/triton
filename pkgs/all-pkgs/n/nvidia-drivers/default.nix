@@ -71,7 +71,7 @@ assert buildKernelspace -> kernel != null;
 assert libsOnly -> !buildKernelspace;
 assert channel == "tesla" -> elem targetSystem platforms.x86_64-linux;
 
-assert versionAtLeast kernel.channel source.maxLinuxVersion ->
+assert ! versionAtLeast source.maxLinuxVersion kernel.channel ->
   throw ("The '${channel}' NVIDIA driver channel is only supported on Linux"
     + " kernel channels less than or equal to ${source.maxLinuxVersion}");
 

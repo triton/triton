@@ -71,9 +71,9 @@ assert buildKernelspace -> kernel != null;
 assert libsOnly -> !buildKernelspace;
 assert channel == "tesla" -> elem targetSystem platforms.x86_64-linux;
 
-# FIXME: remove once drivers are updated upstream to support 4.7+
-assert versionOlder source.versionMajor "364" ->
-  versionOlder kernel.version "4.7";
+assert versionAtLeast kernel.channel source.maxLinuxVersion ->
+  throw ("The '${channel}' NVIDIA driver channel is only supported on Linux"
+    + " kernel channels less than or equal to ${source.maxLinuxVersion}");
 
 assert elem targetSystem platforms.bit32 && !libsOnly ->
   throw "Only libs are supported for 32bit platforms";

@@ -210,7 +210,7 @@ let
   passthru = {
     meta = kernel.meta // extraMeta;
 
-    inherit srcsVerification;
+    inherit channel srcsVerification;
 
     features = source.features or { };
 

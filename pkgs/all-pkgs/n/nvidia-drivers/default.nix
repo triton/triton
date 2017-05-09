@@ -140,27 +140,7 @@ stdenv.mkDerivation {
       runHook 'postUnpack'
     '';
 
-  postUnpack = /* Rather than patching a patch, create a symlink with
-                  a predictable name. */
-    optionalString (versionOlder version "375.20") ''
-    ln -fsv \
-      nvidia-application-profiles-${version}-rc \
-      nvidia-application-profiles-rc
-  '';
-
-  patchFlags = [
-    "--follow-symlinks"
-    "-p1"
-  ];
-
-  patches = optionals (versionAtLeast source.versionMajor "367"
-    && versionOlder version "375.20") [
-    (fetchTritonPatch {
-      rev = "daeb3f279f0c923644b352ac318e7f13c8692f0c";
-      file = "nvidia-drivers/nvidia-drivers-367.35-fix-application-profiles-typo.patch";
-      sha256 = "caae27b1883c5c6b3c4684720d2902421ad16ab49577ee7302a95c964236141d";
-    })
-  ] ++ optionals (
+  patches = optionals (
     (versionAtLeast version "378.13" && versionOlder version "381.00")
     && (buildKernelspace && versionAtLeast kernel.version "4.10")) [
     (fetchTritonPatch {

@@ -7,12 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dialog-1.3-20160828";
+  name = "dialog-1.3-20170509";
 
   src = fetchurl {
     url = "ftp://invisible-island.net/dialog/${name}.tgz";
+    multihash = "QmRG5VR19eTAj78VKEmwWJXis8mELsWrftGqYMuBKXZ5R5";
     hashOutput = false;
-    sha256 = "453095abaec288bfbc1ca9faced917e17742cff1ea45ec46210071ac153562f9";
+    sha256 = "2ff1ba74c632b9d13a0d0d2c942295dd4e8909694eeeded7908a467d0bcd4756";
   };
 
   nativeBuildInputs = [

@@ -8,18 +8,19 @@
 , coreutils
 , cyrus-sasl
 , openldap
+, openssl
 , pam
 , zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "sudo-1.8.19p2";
+  name = "sudo-1.8.20";
 
   src = fetchurl {
     url = "https://www.sudo.ws/dist/${name}.tar.gz";
-    multihash = "QmfSvF9bpmkviqCJxvGcTcxXm7RSh3ArfHmKtqhURYdT74";
+    multihash = "QmcWnHCm6z7eNK365Q6oPeHg1y142JxwZDh7ki7ojX4fYu";
     hashOutput = false;
-    sha256 = "237e18e67c2ad59ecacfa4b7707198b09fcf84914621585a9bc670dcc31a52e0";
+    sha256 = "9e97b8da859c6cc1b5b8c31db93002b750eae16af1bbda9140f8dd85b970e0e0";
   };
 
   nativeBuildInputs = [
@@ -32,6 +33,7 @@ stdenv.mkDerivation rec {
     audit_lib
     cyrus-sasl
     openldap
+    openssl
     pam
     zlib
   ];
@@ -47,6 +49,7 @@ stdenv.mkDerivation rec {
     "--with-env-editor"
     "--with-ldap"
     "--enable-zlib"
+    "--enable-openssl"
     "--with-pam-login"
   ];
 

@@ -9,12 +9,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openvpn-2.4.1";
+  name = "openvpn-2.4.2";
 
   src = fetchurl {
     url = "https://swupdate.openvpn.net/community/releases/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "831a1a05268fe3b1646d367e2559cff94d347d213ca8995cc48a4eedc452097a";
+    sha256 = "b24740c9d44a81eaf2befc4846d51445a520104321e32aaf0c135ed2e098a624";
   };
 
   buildInputs = [

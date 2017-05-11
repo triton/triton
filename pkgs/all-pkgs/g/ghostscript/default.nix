@@ -85,6 +85,11 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
+      rev = "50998f27713ba0488f098b566f79a92992a79539";
+      file = "g/ghostscript/CVE-2017-8291.patch";
+      sha256 = "9cf9b04c274eba318907807b24d813fdfd5e7e2f88352a4b88dfc728a5b1e6c3";
+    })
+    (fetchTritonPatch {
       rev = "16e1e82d413e33a3a46976f64c275c58a7dc3928";
       file = "ghostscript/urw-font-files.patch";
       sha256 = "1f7e0e309802c4400a31eaadbdd4eb89c63db848f867891119156ce2cffd5c89";

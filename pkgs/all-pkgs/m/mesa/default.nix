@@ -22,6 +22,7 @@
 , lm-sensors
 , wayland
 , xorg
+, zlib
 
 , grsecEnabled
 # Texture floats are patented, see docs/patents.txt
@@ -52,7 +53,7 @@ let
     optionalString
     splitString;
 
-  version = "17.0.5";
+  version = "17.1.0";
 
   # this is the default search path for DRI drivers
   driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
@@ -70,9 +71,9 @@ stdenv.mkDerivation rec {
         + head (splitString "." version)
         + ".x/${version}/mesa-${version}.tar.xz")
     ];
-    multihash = "Qmewrw4Frm5gKruz8TTJ98MHPuPPwuTZ4YKHdZ19h2Sy4j";
+    multihash = "QmTCzv99X8NmrAHuab3YNSzz4L6L8MRv6eD4GxrZP9Hab5";
     hashOutput = false;  # Provided by upstream directly
-    sha256 = "668efa445d2f57a26e5c096b1965a685733a3b57d9c736f9d6460263847f9bfe";
+    sha256 = "cf234a6ed4764673886b6661553b54675776ef0898f774716173cec890ac3b17";
   };
 
   nativeBuildInputs = [
@@ -114,6 +115,7 @@ stdenv.mkDerivation rec {
     xorg.libXvMC
     xorg.libXxf86vm
     xorg.presentproto
+    zlib
   ];
 
   patches = [
@@ -148,13 +150,13 @@ stdenv.mkDerivation rec {
     "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-largefile"
-    "--disable-pwr8-inst"  # power
     # slight performance degradation, enable only for grsec
     "--${boolEn grsecEnabled}-glx-rts"
     "--disable-debug"
     "--disable-profile"
     "--${boolEn (libglvnd != null)}-libglvnd"
     "--disable-mangling"
+    "--disable-libunwind"
     "--${boolEn enableTextureFloats}-texture-float"
     "--enable-asm"
     # TODO: selinux support
@@ -188,12 +190,12 @@ stdenv.mkDerivation rec {
     "--enable-driglx-direct"
     "--enable-glx-tls"
     "--disable-glx-read-only-text"
-    "--enable-gallium-llvm"
+    "--enable-llvm"
     "--disable-valgrind"
 
     #gl-lib-name=GL
     #osmesa-libname=OSMesa
-    "--with-gallium-drivers=svga,i915,ilo,r300,r600,radeonsi,nouveau,freedreno,swrast"
+    "--with-gallium-drivers=svga,i915,nouveau,r300,r600,radeonsi,freedreno,swrast,swr,virgl"
     "--with-dri-driverdir=$(drivers)/lib/dri"
     "--with-dri-searchpath=${driverSearchPath}/lib/dri"
     "--with-dri-drivers=i915,i965,nouveau,radeon,r200,swrast"
@@ -201,7 +203,7 @@ stdenv.mkDerivation rec {
     #"--with-vulkan-icddir=DIR"
     #osmesa-bits=8
     #"--with-clang-libdir=${llvm}/lib"
-    "--with-egl-platforms=x11,wayland,drm"
+    "--with-platforms=x11,wayland,drm"
     #llvm-prefix
     #xvmc-libdir
     #vdpau-libdir

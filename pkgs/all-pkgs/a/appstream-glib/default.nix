@@ -33,6 +33,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/appstream-glib/"
       + "releases/${name}.tar.xz";
+    multihash = "QmW5bn9N8T9y3gQNC3axVVHdQA9SpEX66rvKqj5tx9H9JL";
     sha256 = "1a3734b2cdaab55ad63c6e3ee31026fdceb122cecae39f9f7126a0305e8836bf";
   };
 
@@ -79,17 +80,6 @@ stdenv.mkDerivation rec {
     "--enable-dep11"
     #"--${boolEn (snowball-stemmer != null)}-stemmer"
   ];
-
-  passthru = {
-    srcVerification = fetchurl {
-      inherit (src)
-        outputHash
-        outputHashAlgo
-        urls;
-      pgpKeyFingerprint = "C12B 8963 4A18 D2C3 F8B3  6C4C F09D 2D23 7A47 1537";
-      failEarly = true;
-    };
-  };
 
   meta = with lib; {
     description = "Objects & helper methods to read & write AppStream metadata";

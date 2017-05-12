@@ -93,12 +93,18 @@ stdenv.mkDerivation rec {
     "--disable-maintainer-mode"
     "--enable-nls"
     "--${boolEn (iso-codes != null)}-iso-codes"
-    "--disable-migration"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-schemas-compile"
     "--enable-more-warnings"
+    #"--enable-lto"
+    #"--enable-ld-gc"
     #"--with-appindicator"
     "--${boolWt (modemmanager != null)}-wwan"
+    /**/"--without-selinux"
+    #"--${boolWt (libselinux != null)}-selinux"
+    #"--with-team"
+    #"--with-gcr"
+    "--with-more-asserts=0"
   ];
 
   makeFlags = [

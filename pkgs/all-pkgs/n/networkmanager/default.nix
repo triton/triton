@@ -12,6 +12,7 @@
 , bind
 , bluez
 , coreutils
+, curl
 , dbus
 , dbus-glib
 , dnsmasq
@@ -89,6 +90,7 @@ stdenv.mkDerivation rec {
     avahi
     bind
     bluez
+    curl
     dbus
     dbus-glib
     dnsmasq
@@ -189,7 +191,7 @@ stdenv.mkDerivation rec {
     #"--enable-modify-system"
     "--${boolEn (ppp != null)}-ppp"
     "--${boolEn (bluez != null)}-bluez5-dun"
-    #"--enable-concheck"
+    "--${boolEn (curl != null)}-concheck"
     "--disable-more-warnings"
     "--disable-more-asserts"
     "--disable-more-logging"
@@ -208,7 +210,7 @@ stdenv.mkDerivation rec {
     "--with-libnm-glib"
     #"--with-hostname-persist=default"
     "--with-systemd-journal"
-    #"--with-logging-backend"
+    #"--with-config-logging-backend-default="
     "--with-systemd-logind"
     "--without-consolekit"
     "--with-session-tracking=systemd"
@@ -237,7 +239,7 @@ stdenv.mkDerivation rec {
     #"--with-system-ca-path=/path/"
     # FIXME: fix impure path
     "--with-kernel-firmware-dir=/run/current-system/firmware"
-    "--${boolWt (libsoup != null)}-libsoup"
+    #"--with-libpsl"
     "--with-nmcli"
     "--with-nmtui"
     "--with-more-asserts=0"

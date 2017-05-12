@@ -3,7 +3,9 @@
 #, docbook-xsl
 , fetchurl
 , gettext
+, gperf
 , intltool
+, lib
 
 , fontconfig
 , freetype
@@ -26,18 +28,19 @@ let
     boolEn;
 in
 stdenv.mkDerivation rec {
-  name = "appstream-glib-0.6.5";
+  name = "appstream-glib-0.6.13";
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/appstream-glib/"
       + "releases/${name}.tar.xz";
-    sha256 = "b6b77540b03ca56d7a8493d5f50ded747b6033e0437d8e4c516b5228e27b2a1a";
+    sha256 = "1a3734b2cdaab55ad63c6e3ee31026fdceb122cecae39f9f7126a0305e8836bf";
   };
 
   nativeBuildInputs = [
     #docbook_xml_dtd_43
     #docbook-xsl
     gettext
+    gperf
     intltool
   ];
 
@@ -62,6 +65,7 @@ stdenv.mkDerivation rec {
     "--enable-largefile"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-nls"
+    "--enable-rpath"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -76,7 +80,18 @@ stdenv.mkDerivation rec {
     #"--${boolEn (snowball-stemmer != null)}-stemmer"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      pgpKeyFingerprint = "C12B 8963 4A18 D2C3 F8B3  6C4C F09D 2D23 7A47 1537";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "Objects & helper methods to read & write AppStream metadata";
     homepage = https://github.com/hughsie/appstream-glib;
     license = licenses.lgpl21Plus;

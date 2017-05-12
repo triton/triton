@@ -1,24 +1,25 @@
 { stdenv
 , cmake
 , fetchFromGitHub
+, lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "lib-bash-2016-10-16";
+  name = "lib-bash-2016-12-21";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "chlorm";
     repo = "lib-bash";
-    rev = "abb084744afe7a5345d8c5bae5ee9c0b178af581";
-    sha256 = "195e24ecd19b56fd7a6fb55feb324952a58ec2e4e5fad6b388f74e12d9f681ab";
+    rev = "cb72b622d2d865b1e1bdb364d1fad1fa1b274d60";
+    sha256 = "893ba9a9faa8efbd1f20d341dbad69b888b61e16799e13a185c5cab5818f1172";
   };
 
   nativeBuildInputs = [
     cmake
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A standard library of sorts for shell scripting";
     homepage = https://github.com/chlorm/lib-bash;
     license = licenses.bsd3;

@@ -1,13 +1,16 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
-, pythonPackages
+, py
 }:
 
+let
+  version = "0.7";
+in
 buildPythonPackage rec {
   name = "pytest-capturelog-${version}";
-  version = "0.7";
 
   src = fetchPyPi {
     package = "pytest-capturelog";
@@ -16,12 +19,12 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    pythonPackages.py
+    py
   ];
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "py.test plugin to capture log messages";
     homepage = http://bitbucket.org/memedough/pytest-capturelog/;
     license = licenses.mit;

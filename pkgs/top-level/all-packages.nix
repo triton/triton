@@ -3748,6 +3748,8 @@ zita-resampler = callPackage ../all-pkgs/z/zita-resampler { };
 
 zlib = callPackage ../all-pkgs/z/zlib { };
 
+zookeeper = callPackage ../all-pkgs/z/zookeeper { };
+
 zsh = callPackage ../all-pkgs/z/zsh { };
 
 zstd = callPackage ../all-pkgs/z/zstd { };
@@ -4151,8 +4153,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
   softether_4_18 = callPackage ../servers/softether/4.18.nix { };
   softether = callPackageAlias "softether_4_18" { };
-#
-  zookeeper = callPackage ../servers/zookeeper { };
 
   zookeeper_mt = callPackage ../development/libraries/zookeeper_mt { };
 #

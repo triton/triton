@@ -327,6 +327,8 @@ nevow = callPackage ../all-pkgs/n/nevow { };
 
 notify-python = callPackage ../all-pkgs/n/notify-python { };
 
+oauthlib = callPackage ../all-pkgs/o/oauthlib { };
+
 olefile = callPackage ../all-pkgs/o/olefile { };
 
 packaging = callPackage ../all-pkgs/p/packaging { };
@@ -1134,30 +1136,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
      src = pkgs.fetchurl {
        url = "https://pypi.python.org/packages/source/n/nose/${name}.tar.gz";
        sha256 = "f1bffef9cbc82628f6e7d7b40d7e255aefaa1adb6a1b1d26c69a8b79e6208a98";
-     };
-   };
-
-   oauthlib = buildPythonPackage rec {
-     name = "oauthlib-${version}";
-       version = "2.0.0";
-
-     src = fetchPyPi {
-       package = "oauthlib";
-       inherit version;
-       sha256 = "0ad22b4f03fd75ef18d5793e1fed5e2361af5d374009f7722b4af390a0030dfd";
-     };
-
-     buildInputs = with self; optionals doCheck [ mock nose unittest2 ];
-
-     propagatedBuildInputs = with self; [ cryptography pycrypto blinker pyjwt ];
-
-     doCheck = false;
-
-     meta = {
-       homepage = https://github.com/idan/oauthlib;
-       downloadPage = https://github.com/idan/oauthlib/releases;
-       description = "A generic, spec-compliant, thorough implementation of the OAuth request-signing logic";
-       maintainers = with maintainers; [ ];
      };
    };
 

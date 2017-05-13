@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "2.13.0";
+  version = "2.14.2";
 in
 buildPythonPackage {
   name = "requests-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "requests";
     inherit version;
-    sha256 = "5722cd09762faa01276230270ff16af7acf7c5c45d623868d9ba116f15791ce8";
+    sha256 = "a274abba399a23e8713ffd2b5706535ae280ebe2b8069ee6a941cb089440d153";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "HTTP library for Python";
     homepage = http://python-requests.org/;
     license = licenses.asl20;

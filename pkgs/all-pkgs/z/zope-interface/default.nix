@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "4.3.3";
+  version = "4.4.0";
 in
 buildPythonPackage rec {
   name = "zope.interface-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "zope.interface";
     inherit version;
-    sha256 = "8780ef68ca8c3fe1abb30c058a59015129d6e04a6b02c2e56b9c7de6078dfa88";
+    sha256 = "e50e5e87cde9bf0ed59229fd372390c2d68b3674ae313858ef544d32051e2cd3";
   };
 
   buildInputs = [

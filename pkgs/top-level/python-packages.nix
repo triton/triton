@@ -397,6 +397,8 @@ pygtk = callPackage ../all-pkgs/p/pygtk { };
 
 pykka = callPackage ../all-pkgs/p/pykka { };
 
+pylast = callPackage ../all-pkgs/p/pylast { };
+
 pymacaroons-pynacl = callPackage ../all-pkgs/p/pymacaroons-pynacl { };
 
 pymysql = callPackage ../all-pkgs/p/pymysql { };
@@ -953,27 +955,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        homepage = http://github.com/sunlightlabs/jellyfish;
        description = "Approximate and phonetic matching of strings";
        maintainers = with maintainers; [ ];
-     };
-   };
-
-   pylast = buildPythonPackage rec {
-     name = "pylast-${version}";
-     version = "1.7.0";
-
-     src = fetchPyPi {
-       package = "pylast";
-       inherit version;
-       sha256 = "a482a769b6a037e2e9b78433de91a287eaf6aacff60bbb2f4562c3c7ece10430";
-     };
-
-     propagatedBuildInputs = with self; [ six ];
-
-     # error: invalid command 'test'
-
-     meta = {
-       homepage = http://code.google.com/p/pylast/;
-       description = "A python interface to last.fm (and compatibles)";
-       license = licenses.asl20;
      };
    };
 

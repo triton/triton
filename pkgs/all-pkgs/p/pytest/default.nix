@@ -3,22 +3,19 @@
 , fetchPyPi
 , lib
 
-, isPy3k
 , py
 }:
 
 let
-  inherit (lib)
-    optionalString;
+  version = "3.0.7";
 in
 buildPythonPackage rec {
   name = "pytest-${version}";
-  version = "3.0.4";
 
   src = fetchPyPi {
     package = "pytest";
     inherit version;
-    sha256 = "879fee2c1fdbaacd1bf2c0047677c6dd4aee05b9c1e64330b34d130a584fa40d";
+    sha256 = "b70696ebd1a5e6b627e7e3ac1365a4bc60aaf3495e843c1e70448966c5224cab";
   };
 
   propagatedBuildInputs = [

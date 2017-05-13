@@ -331,6 +331,8 @@ olefile = callPackage ../all-pkgs/o/olefile { };
 
 packaging = callPackage ../all-pkgs/p/packaging { };
 
+paramiko = callPackage ../all-pkgs/p/paramiko { };
+
 paste = callPackage ../all-pkgs/p/paste { };
 
 pathlib = callPackage ../all-pkgs/p/pathlib { };
@@ -1167,26 +1169,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        sha256 = "17c578775520c99131634e09cfca5a05ea9e1bd2a05cd06967ebece10df7af2d";
      };
 
-   };
-
-   paramiko = buildPythonPackage rec {
-     name = "paramiko-${version}";
-     version = "2.0.2";
-
-     src = fetchPyPi {
-       package = "paramiko";
-       inherit version;
-       sha256 = "411bf90fa22b078a923ff19ef9772c1115a0953702db93549a2848acefd141dc";
-     };
-
-     propagatedBuildInputs = with self; [ cryptography pyasn1 pycrypto ecdsa six ];
-
-     meta = {
-       homepage = "https://github.com/paramiko/paramiko/";
-       description = "Native Python SSHv2 protocol library";
-       license = licenses.lgpl21Plus;
-       maintainers = with maintainers; [ aszlig ];
-     };
    };
 
    pathpy = buildPythonPackage rec {

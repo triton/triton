@@ -7,9 +7,11 @@
 , statistics
 }:
 
+let
+  version = "3.0.0";
+in
 buildPythonPackage rec {
   name = "pytest-benchmark-${version}";
-  version = "3.0.0";
 
   src = fetchPyPi {
     package = "pytest-benchmark";

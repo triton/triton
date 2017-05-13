@@ -1,8 +1,10 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
-, pythonPackages
+, pytest
+, statistics
 }:
 
 buildPythonPackage rec {
@@ -17,13 +19,13 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.pytest
-    pythonPackages.statistics
+    pytest
+    statistics
   ];
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "py.test fixture for benchmarking code";
     homepage = https://github.com/ionelmc/pytest-benchmark;
     license = licenses.bsd3;

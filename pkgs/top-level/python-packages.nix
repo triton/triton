@@ -272,6 +272,8 @@ futures = callPackage ../all-pkgs/f/futures { };
 
 gevent = callPackage ../all-pkgs/g/gevent { };
 
+greenlet = callPackage ../all-pkgs/g/greenlet { };
+
 gst-python_1-10 = callPackage ../all-pkgs/g/gst-python {
   channel = "1.10";
   gst-plugins-base = pkgs.gst-plugins-base_1-10;
@@ -915,25 +917,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        pytz
      ];
 
-   };
-
-   greenlet = buildPythonPackage rec {
-     name = "greenlet-${version}";
-     version = "0.4.10";
-     disabled = isPyPy;  # builtin for pypy
-
-     src = fetchPyPi {
-       package = "greenlet";
-       inherit version;
-       sha256 = "c4417624aa88380cdf0fe110a8a6e0dbcc26f80887197fe5df0427dfa348ae62";
-     };
-
-     meta = {
-       homepage = https://pypi.python.org/pypi/greenlet;
-       description = "Module for lightweight in-process concurrent programming";
-       license     = licenses.lgpl2;
-       platforms   = platforms.all;
-    };
    };
 
    gyp = buildPythonPackage rec {

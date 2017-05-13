@@ -301,6 +301,8 @@ ldap3 = callPackage ../all-pkgs/l/ldap3 { };
 
 libarchive-c = callPackage ../all-pkgs/l/libarchive-c { };
 
+lxml = callPackage ../all-pkgs/l/lxml { };
+
 m2crypto = callPackage ../all-pkgs/m/m2crypto { };
 
 m2r = callPackage ../all-pkgs/m/m2r { };
@@ -1046,26 +1048,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        license = licenses.asl20;
      };
    };
-
-   lxml = buildPythonPackage ( rec {
-     name = "lxml-${version}";
-     version = "3.7.3";
-
-     src = fetchPyPi {
-       package = "lxml";
-       inherit version;
-       sha256 = "aa502d78a51ee7d127b4824ff96500f0181d3c7826e6ee7b800d068be79361c7";
-     };
-
-     buildInputs = with self; [ pkgs.libxml2 pkgs.libxslt ];
-
-     meta = {
-       description = "Pythonic binding for the libxml2 and libxslt libraries";
-       homepage = http://lxml.de;
-       license = licenses.bsd3;
-       maintainers = with maintainers; [ ];
-     };
-   });
 
    Mako = buildPythonPackage rec {
      name = "Mako-${version}";

@@ -2,7 +2,7 @@
 , buildPythonPackage
 , fetchPyPi
 
-, pytestrunner
+, pytest-runner
 , regex
 , six
 
@@ -25,7 +25,7 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pytestrunner
+    pytest-runner
     regex
     six
   ] ++ optionals doCheck [

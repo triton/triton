@@ -4,7 +4,7 @@
 , lib
 
 , babelfish
-, pytestrunner
+, pytest-runner
 , python-dateutil
 , rebulk
 , regex
@@ -39,7 +39,7 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     babelfish
-    pytestrunner
+    pytest-runner
     python-dateutil
     rebulk
     regex

@@ -409,6 +409,8 @@ pytest-benchmark = callPackage ../all-pkgs/p/pytest-benchmark { };
 
 pytest-capturelog = callPackage ../all-pkgs/p/pytest-capturelog { };
 
+pytest-runner = callPackage ../all-pkgs/p/pytest-runner { };
+
 python-dateutil = callPackage ../all-pkgs/p/python-dateutil { };
 
 python-etcd = callpackage ../all-pkgs/p/python-etcd { };
@@ -724,27 +726,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        inherit version;
        sha256 = "e312776d3ef04632ec742ce2d2b7048b635073e0245e4f44dfe8b08cc50ac656";
      };
-   };
-
-   pytestrunner = buildPythonPackage rec {
-     name = "pytest-runner-${version}";
-     version = "2.9";
-
-     src = fetchPyPi {
-       package = "pytest-runner";
-       inherit version;
-       sha256 = "50378de59b02f51f64796d3904dfe71b9dc6f06d88fc6bfbd5c8e8366ae1d131";
-     };
-
-     buildInputs = with self; [setuptools-scm pytest];
-
-     meta = {
-       description = "Invoke py.test as distutils command with dependency resolution";
-       homepage = https://bitbucket.org/pytest-dev/pytest-runner;
-       license = licenses.mit;
-     };
-
-     # Trying to run tests fails with # RuntimeError: dictionary changed size during iteration
    };
 
    cov-core = buildPythonPackage rec {
@@ -1266,7 +1247,7 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        sha256 = "c9ad2d462a7f8d7f6f6d2b89220bd50425221e399a4b8dfe5fa6725eb26fd708";
      };
 
-     buildInputs = with self; [setuptools-scm pytestrunner pytest pkgs.glibcLocales ];
+     buildInputs = with self; [setuptools-scm pytest-runner pytest pkgs.glibcLocales ];
 
      LC_ALL="en_US.UTF-8";
 
@@ -1350,7 +1331,7 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        sha256 = "87a831b7a3bfa8351511961469ed0462a769724d4da48a501cb8c96d1e17f570";
      };
 
-     propagatedBuildInputs = with self; [ pycrypto ecdsa pytestrunner ];
+     propagatedBuildInputs = with self; [ pycrypto ecdsa pytest-runner ];
 
 
      meta = {

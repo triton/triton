@@ -437,6 +437,8 @@ pyyaml = callPackage ../all-pkgs/p/pyyaml { };
 
 pyzmq = callPackage ../all-pkgs/p/pyzmq { };
 
+rarfile = callPackage ../all-pkgs/r/rarfile { };
+
 rebulk = callPackage ../all-pkgs/r/rebulk { };
 
 regex = callPackage ../all-pkgs/r/regex { };
@@ -621,22 +623,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
      propagatedBuildInputs = with self; [ cookies mock requests six ];
 
 
-   };
-
-   rarfile = self.buildPythonPackage rec {
-     name = "rarfile-${version}";
-     version = "2.8";
-
-     src = fetchPyPi {
-       package = "rarfile";
-       inherit version;
-       sha256 = "2a27e401daa6d8ff0df1112a274a3661ca3e4afaac626217506fb1391069ca61";
-     };
-
-     meta = {
-       description = "rarfile - RAR archive reader for Python";
-       homepage = https://github.com/markokr/rarfile;
-     };
    };
 
    pyechonest = self.buildPythonPackage rec {

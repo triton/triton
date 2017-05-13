@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "8.4.2";
+  version = "8.4.3";
 in
 buildPythonPackage {
   name = "phonenumbers-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "phonenumbers";
     inherit version;
-    sha256 = "9f5c5eef95eab7fc637ea43f97ef69051dbb2674655cb89d8abd3db401d3f353";
+    sha256 = "03d942ed0cda5b81a35e846ebcc453280152b7129423b6b83342fe9caab0131f";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

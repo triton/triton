@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , zope-event
 }:
@@ -21,7 +22,7 @@ buildPythonPackage rec {
     zope-event
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Interfaces for Python";
     homepage = http://zope.org/Products/ZopeInterface;
     license = licenses.zpt20;

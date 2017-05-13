@@ -2656,7 +2656,7 @@ networkmanager_1-6 = callPackage ../all-pkgs/n/networkmanager {
 networkmanager_1-8 = callPackage ../all-pkgs/n/networkmanager {
   channel = "1.8";
 };
-networkmanager = callPackageAlias "networkmanager_1-6" { };
+networkmanager = callPackageAlias "networkmanager_1-8" { };
 
 networkmanager-applet_1-4 = callPackage ../all-pkgs/n/networkmanager-applet {
   channel = "1.4";
@@ -2666,7 +2666,7 @@ networkmanager-applet_1-8 = callPackage ../all-pkgs/n/networkmanager-applet {
   channel = "1.8";
   networkmanager = pkgs.networkmanager_1-8;
 };
-networkmanager-applet = callPackageAlias "networkmanager-applet_1-4" { };
+networkmanager-applet = callPackageAlias "networkmanager-applet_1-8" { };
 
 networkmanager-l2tp = callPackage ../all-pkgs/n/networkmanager-l2tp { };
 

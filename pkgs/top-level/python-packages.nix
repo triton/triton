@@ -341,6 +341,10 @@ paramiko = callPackage ../all-pkgs/p/paramiko { };
 
 paste = callPackage ../all-pkgs/p/paste { };
 
+path-py = callPackage ../all-pkgs/p/path-py { };
+# Deprecated alias
+pathpy = callPackageAlias "path-py" { };
+
 pathlib = callPackage ../all-pkgs/p/pathlib { };
 
 pathlib2 = callPackage ../all-pkgs/p/pathlib2 { };
@@ -1086,31 +1090,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        sha256 = "17c578775520c99131634e09cfca5a05ea9e1bd2a05cd06967ebece10df7af2d";
      };
 
-   };
-
-   pathpy = buildPythonPackage rec {
-     version = "8.2.1";
-     name = "path.py-${version}";
-
-     src = fetchPyPi {
-       package = "path.py";
-       inherit version;
-       sha256 = "c9ad2d462a7f8d7f6f6d2b89220bd50425221e399a4b8dfe5fa6725eb26fd708";
-     };
-
-     buildInputs = with self; [setuptools-scm pytest-runner pytest pkgs.glibcLocales ];
-
-     LC_ALL="en_US.UTF-8";
-
-     meta = {
-       description = "A module wrapper for os.path";
-       homepage = http://github.com/jaraco/path.py;
-       license = licenses.mit;
-     };
-
-     checkPhase = ''
-       py.test test_path.py
-     '';
    };
 
    fixtures = buildPythonPackage rec {

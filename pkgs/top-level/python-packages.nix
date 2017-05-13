@@ -530,6 +530,8 @@ tzlocal = callPackage ../all-pkgs/t/tzlocal { };
 
 ujson = callPackage ../all-pkgs/u/ujson { };
 
+unidecode = callPackage ../all-pkgs/u/unidecode { };
+
 unpaddedbase64 = callPackage ../all-pkgs/u/unpaddedbase64 { };
 
 urllib3 = callPackage ../all-pkgs/u/urllib3 { };
@@ -1460,28 +1462,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
      meta = with stdenv.lib; {
        description = "A backport of linecachetestscenarios to older supported Pythons.";
        homepage = "https://github.com/testing-cabal/linecache2";
-     };
-   };
-
-   unidecode = buildPythonPackage rec {
-     name = "Unidecode-${version}";
-     version = "0.04.19";
-
-     src = fetchPyPi {
-       package = "Unidecode";
-       inherit version;
-       sha256 = "51477646a9169469e37e791b13ae65fcc75b7f7f570d0d3e514d077805c02e1e";
-     };
-
-     LC_ALL="en_US.UTF-8";
-
-     buildInputs = [ pkgs.glibcLocales ];
-
-     meta = {
-       homepage = https://pypi.python.org/pypi/Unidecode/;
-       description = "ASCII transliterations of Unicode text";
-       license = licenses.gpl2;
-       maintainers = with maintainers; [ iElectric ];
      };
    };
 

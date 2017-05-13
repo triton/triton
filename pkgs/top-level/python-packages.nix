@@ -270,6 +270,8 @@ future = callPackage ../all-pkgs/f/future { };
 
 futures = callPackage ../all-pkgs/f/futures { };
 
+gevent = callPackage ../all-pkgs/g/gevent { };
+
 gst-python_1-10 = callPackage ../all-pkgs/g/gst-python {
   channel = "1.10";
   gst-plugins-base = pkgs.gst-plugins-base_1-10;
@@ -913,35 +915,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        pytz
      ];
 
-   };
-
-   gevent = buildPythonPackage rec {
-     name = "gevent-${version}";
-     version = "1.1.2";
-
-     src = fetchPyPi {
-       package = "gevent";
-       inherit version;
-       sha256 = "cb15cf73d69a2eeefed330858f09634e2c50bf46da9f9e7635730fcfb872c02c";
-     };
-
-     prePatch = ''
-       rm -rf libev
-     '';
-
-     buildInputs = [
-       pkgs.libev
-     ];
-     propagatedBuildInputs = optionals (!isPyPy) [ self.greenlet ];
-
-
-     meta = {
-       description = "Coroutine-based networking library";
-       homepage = http://www.gevent.org/;
-       license = licenses.mit;
-       platforms = platforms.all;
-       maintainers = with maintainers; [ ];
-     };
    };
 
    greenlet = buildPythonPackage rec {

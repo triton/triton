@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "2.0.0";
+  version = "3.0.0";
 in
 buildPythonPackage {
   name = "pbr-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pbr";
     inherit version;
-    sha256 = "0ccd2db529afd070df815b1521f01401d43de03941170f8a800e7531faba265d";
+    sha256 = "568f988af109114fbfa0525dcb6836b069838360d11732736ecc82e4c15d5c12";
   };
 
   meta = with lib; {

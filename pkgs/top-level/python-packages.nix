@@ -191,6 +191,8 @@ canonicaljson = callPackage ../all-pkgs/c/canonicaljson { };
 
 certbot = callPackage ../all-pkgs/c/certbot { };
 
+certifi = callPackage ../all-pkgs/c/certifi { };
+
 cffi = callPackage ../all-pkgs/c/cffi { };
 
 characteristic = callPackage ../all-pkgs/c/characteristic { };
@@ -664,24 +666,6 @@ zope-interface = callPackage ../all-pkgs/z/zope-interface { };
        homepage = http://pythonhosted.org/blinker/;
        description = "Fast, simple object-to-object and broadcast signaling";
        license = licenses.mit;
-       maintainers = with maintainers; [ ];
-     };
-   };
-
-   certifi = buildPythonPackage rec {
-     name = "certifi-${version}";
-     version = "2016.9.26";
-
-     src = fetchPyPi {
-       package = "certifi";
-       inherit version;
-       sha256 = "8275aef1bbeaf05c53715bfc5d8569bd1e04ca1e8e69608cc52bcaac2604eb19";
-     };
-
-     meta = {
-       homepage = http://certifi.io/;
-       description = "Python package for providing Mozilla's CA Bundle";
-       license = licenses.isc;
        maintainers = with maintainers; [ ];
      };
    };

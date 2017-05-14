@@ -44,6 +44,9 @@ with stdenv.lib;
   ''}
   ASYMMETRIC_KEY_TYPE y
   SYSTEM_TRUSTED_KEYRING y
+  ${optionalString (versionAtLeast version "4.12") ''
+    SYSTEM_BLACKLIST_KEYRING y
+  ''}
   CRYPTO_DEFLATE y
   CRYPTO_LZ4 y
   CRYPTO_LZ4HC y
@@ -116,6 +119,10 @@ with stdenv.lib;
   ''}
   ${optionalString (versionAtLeast version "4.9") ''
     PCIE_PTM y
+  ''}
+  ${optionalString (versionAtLeast version "4.12") ''
+    PCI_ENDPOINT y
+    PCI_ENDPOINT_CONFIGFS y
   ''}
 
   # Support drivers that need external firmware.
@@ -227,6 +234,9 @@ with stdenv.lib;
       QEDE_GENEVE y
     ''}
     QLCNIC_VXLAN y
+  ''}
+  ${optionalString (versionAtLeast version "4.12") ''
+    MLX5_CORE_IPOIB y
   ''}
   VIA_RHINE_MMIO y
   DEFXX_MMIO y
@@ -342,7 +352,6 @@ with stdenv.lib;
   SND_HDA_RECONFIG y
   SND_HDA_PATCH_LOADER y
   SND_HDA_CODEC_CA0132_DSP y
-  PSS_MIXER y # Enable PSS mixer (Beethoven ADSP-16 and other compatible)
 
   # USB serial devices.
   USB_SERIAL_GENERIC y # USB Generic Serial Driver
@@ -595,6 +604,9 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.11") ''
     CGROUP_RDMA y
   ''}
+  ${optionalString (versionAtLeast version "4.12") ''
+    BFQ_GROUP_IOSCHED y
+  ''}
   ${optionalString (versionOlder version "4.7") ''
     DEVPTS_MULTIPLE_INSTANCES y
   ''}
@@ -644,6 +656,10 @@ with stdenv.lib;
   DEVTMPFS y
 
   X86_AMD_PLATFORM_DEVICE y
+  ${optionalString (versionAtLeast version "4.12") ''
+    X86_MCELOG_LEGACY y
+    RAS_CEC y
+  ''}
 
   PREEMPT y
   MEMORY y
@@ -673,7 +689,6 @@ with stdenv.lib;
   ''}
   KVM_ASYNC_PF y
   KVM_COMPAT y
-  KVM_DEVICE_ASSIGNMENT y
   KVM_GENERIC_DIRTYLOG_READ_PROTECT y
   KVM_GUEST y
   KVM_MMIO y
@@ -726,6 +741,10 @@ with stdenv.lib;
   MEDIA_USB_SUPPORT y
   ${optionalString (versionAtLeast version "4.10") ''
     MEDIA_CEC_SUPPORT y
+  ''}
+  ${optionalString (versionAtLeast version "4.12") ''
+    MEDIA_CEC_RC y
+    CEC_PLATFORM_DRIVERS y
   ''}
 
   # Our initrd init uses shebang scripts, so can't be modular.

@@ -1,5 +1,6 @@
 { stdenv
 , cmake
+, fetchTritonPatch
 , fetchurl
 , ninja
 
@@ -74,6 +75,14 @@ stdenv.mkDerivation rec {
     xz
     zeromq
     zlib
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "13ffc92151e03d6690dee7b37781e94312401a3b";
+      file = "m/mariadb/openssl-1.1.0.patch";
+      sha256 = "f337505ce421aea82693ab95372ce93fde3ea0351e0b6b78c26c9e1154df174c";
+    })
   ];
 
   cmakeFlags = [

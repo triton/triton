@@ -1,23 +1,37 @@
-{ stdenv, fetchFromGitHub, python, makeWrapper
-, bash, libsamplerate, libsndfile, readline, expat
+{ stdenv
+, fetchFromGitHub
+, lib
+, makeWrapper
+, python
+
+, bash
+, expat
+, libsamplerate
+, libsndfile
+, readline
 
 # Optional Dependencies
-, dbus, pythonPackages, ffado_lib, alsa-lib
+, alsa-lib
+, dbus
+, ffado_lib
 , opus
+, pythonPackages
 
 # Extra options
 , prefix ? ""
 }:
 
 let
-  libOnly = prefix == "lib";
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals
     optionalString;
+
+  libOnly = prefix == "lib";
+
+  version = "1.9.10";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}jack2-${version}";
-  version = "1.9.10";
 
   src = fetchFromGitHub {
     version = 1;
@@ -27,13 +41,21 @@ stdenv.mkDerivation rec {
     sha256 = "c012e28cc2d6687bf34a9f2a87a507f0d3b46670428e1553634f29de82451b22";
   };
 
-  nativeBuildInputs = [ python makeWrapper ];
+  nativeBuildInputs = [
+    python
+    makeWrapper
+  ];
+
   buildInputs = [
     python
 
-    libsamplerate libsndfile readline expat
+    expat
+    libsamplerate
+    libsndfile
+    readline
 
-    dbus opus
+    dbus
+    opus
   ] ++ optionals (!libOnly) [
     alsa-lib
     ffado_lib
@@ -41,10 +63,13 @@ stdenv.mkDerivation rec {
   ];
 
   prePatch = ''
-    substituteInPlace svnversion_regenerate.sh --replace /bin/bash ${bash}/bin/bash
+    sed -i svnversion_regenerate.sh \
+      -e 's,/bin/bash,${bash}/bin/bash,'
   '';
 
-  patches = [ ./jack-gcc5.patch ];
+  patches = [
+    ./jack-gcc5.patch
+  ];
 
   configurePhase = ''
     python waf configure --prefix=$out \
@@ -70,11 +95,14 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/jack_control --set PYTHONPATH $PYTHONPATH
   '');
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "JACK audio connection kit, version 2 with jackdbus";
     homepage = "http://jackaudio.org";
     license = licenses.gpl2Plus;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ goibhniu wkennington ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
+    platforms = with platforms;
+      x86_64-linux;
   };
 }

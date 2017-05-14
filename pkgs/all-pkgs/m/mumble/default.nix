@@ -20,7 +20,7 @@
 , portaudio
 , protobuf-cpp
 , pulseaudio_lib
-, speechd
+, speech-dispatcher
 , speex
 , speexdsp
 , xorg
@@ -94,7 +94,7 @@ stdenv.mkDerivation rec {
     opus
     portaudio
     pulseaudio_lib
-    speechd
+    speech-dispatcher
     speex
     speexdsp
     xorg.fixesproto
@@ -140,7 +140,7 @@ stdenv.mkDerivation rec {
     "packaged"
     "no-update"
     "no-embed-qt-translations"
-    "${boolNo (speechd != null)}speechd"
+    "${boolNo (speech-dispatcher != null)}speechd"
   ] ++ optionals (config == "mumble") [
     "${boolNo (alsa-lib != null)}alsa"
     "no-directsound"

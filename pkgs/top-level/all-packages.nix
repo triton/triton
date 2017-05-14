@@ -2575,7 +2575,7 @@ mumble_generics = overrides: callPackage ../all-pkgs/m/mumble ({
   jack2_lib = null;
   portaudio = null;
   pulseaudio_lib = null;
-  speechd = null;
+  speech-dispatcher = null;
 } // overrides);
 mumble_1-2 = pkgs.mumble_generics {
   channel = "1.2";
@@ -3211,6 +3211,8 @@ sox = callPackage ../all-pkgs/s/sox {
 soxr = callPackage ../all-pkgs/s/soxr { };
 
 spectrwm = callPackage ../all-pkgs/s/spectrwm { };
+
+speech-dispatcher = callPackage ../all-pkgs/s/speech-dispatcher { };
 
 speex = callPackage ../all-pkgs/s/speex { };
 
@@ -4094,8 +4096,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   soundtouch = callPackage ../development/libraries/soundtouch {};
 
   spandsp = callPackage ../development/libraries/spandsp {};
-#
-  speechd = callPackage ../development/libraries/speechd { };
 #
   sqlite-interactive = pkgs.sqlite;
 #

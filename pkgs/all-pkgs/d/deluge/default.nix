@@ -88,6 +88,9 @@ buildPythonPackage rec {
   postPatch = /* Fix version detection */ ''
     sed -i setup.py \
       -e 's/_version = .*/_version = "${versionSpoof}"/' # .dev"/'
+  '' + /* Format the user-agent string the same as the release versions */ ''
+    sed -i deluge/core/core.py \
+      -e "s/user_agent = .*/useragent = 'Deluge {}'.format(deluge_version)/"
   '' + /* Fix incorrect path to build directory */ ''
     sed -i setup.py \
       -e '/js_basedir/ s|self.build_lib, ||'

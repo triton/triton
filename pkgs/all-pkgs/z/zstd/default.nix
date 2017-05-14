@@ -1,5 +1,6 @@
 { stdenv
 , fetchFromGitHub
+, lib
 
 , xz
 , zlib
@@ -29,7 +30,7 @@ stdenv.mkDerivation rec {
     installFlagsArray+=("PREFIX=$out")
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Fast real-time lossless compression algorithm";
     homepage = http://www.zstd.net/;
     license = licenses.bsd2;

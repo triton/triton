@@ -8,33 +8,25 @@
 
 let
 
-  name = "hplip-${version}";
   version = "3.15.11";
 
-  src = fetchurl {
-    url = "mirror://sourceforge/hplip/${name}.tar.gz";
-    sha256 = "0vbw815a3wffp6l5m7j6f78xwp9pl1vn43ppyf0lp8q4vqdp3i1k";
-  };
-
   plugin = fetchurl {
-    url = "http://www.openprinting.org/download/printdriver/auxfiles/HP/plugins/${name}-plugin.run";
+    url = "http://www.openprinting.org/download/printdriver/auxfiles/HP/"
+      + "plugins/hplip-${version}-plugin.run";
     sha256 = "00ii36y3914jd8zz4h6rn3xrf1w8szh1z8fngbl2qvs3qr9cm1m9";
   };
 
-  hplipState =
-    substituteAll
-      {
-        inherit version;
-        src = ./hplip.state;
-      };
+  hplipState = substituteAll {
+    inherit version;
+    src = ./hplip.state;
+  };
 
-  hplipPlatforms =
-    {
-      "i686-linux"   = "x86_32";
-      "x86_64-linux" = "x86_64";
-      "armv6l-linux" = "arm32";
-      "armv7l-linux" = "arm32";
-    };
+  hplipPlatforms = {
+    "i686-linux" = "x86_32";
+    "x86_64-linux" = "x86_64";
+    "armv6l-linux" = "arm32";
+    "armv7l-linux" = "arm32";
+  };
 
   hplipArch = hplipPlatforms."${stdenv.system}"
     or (throw "HPLIP not supported on ${stdenv.system}");
@@ -47,7 +39,12 @@ assert withPlugin -> builtins.elem hplipArch pluginArches
   || throw "HPLIP plugin not supported on ${stdenv.system}";
 
 stdenv.mkDerivation {
-  inherit name src;
+  name = "hplip-${version}";
+
+  src = fetchurl {
+    url = "mirror://sourceforge/hplip/${name}.tar.gz";
+    sha256 = "0vbw815a3wffp6l5m7j6f78xwp9pl1vn43ppyf0lp8q4vqdp3i1k";
+  };
 
   buildInputs = [
     libjpeg
@@ -58,7 +55,7 @@ stdenv.mkDerivation {
     sane-backends
     dbus
     net_snmp
-  ] ++ stdenv.lib.optionals qtSupport [
+  ] ++ optionals qtSupport [
     qt4
   ];
 
@@ -73,7 +70,7 @@ stdenv.mkDerivation {
     recursivePthLoader
     reportlab
     usbutils
-  ] ++ stdenv.lib.optionals qtSupport [
+  ] ++ optionals qtSupport [
     pyqt4
   ];
 
@@ -90,30 +87,27 @@ stdenv.mkDerivation {
   '';
 
   preConfigure = ''
-    export configureFlags="$configureFlags
-      --with-cupsfilterdir=$out/lib/cups/filter
-      --with-cupsbackenddir=$out/lib/cups/backend
-      --with-icondir=$out/share/applications
-      --with-systraydir=$out/xdg/autostart
-      --with-mimedir=$out/etc/cups
-      --enable-policykit
-    "
+    configureFlags+=(
+      "--with-cupsfilterdir=$out/lib/cups/filter"
+      "--with-cupsbackenddir=$out/lib/cups/backend"
+      "--with-icondir=$out/share/applications"
+      "--with-systraydir=$out/xdg/autostart"
+      "--with-mimedir=$out/etc/cups"
+      "--enable-policykit"
+    )
 
-    export makeFlags="
-      halpredir=$out/share/hal/fdi/preprobe/10osvendor
-      rulesdir=$out/etc/udev/rules.d
-      policykit_dir=$out/share/polkit-1/actions
-      policykit_dbus_etcdir=$out/etc/dbus-1/system.d
-      policykit_dbus_sharedir=$out/share/dbus-1/system-services
-      hplip_confdir=$out/etc/hp
-      hplip_statedir=$out/var/lib/hp
-    "
+    makeFlags+=(
+      "halpredir=$out/share/hal/fdi/preprobe/10osvendor"
+      "rulesdir=$out/etc/udev/rules.d"
+      "policykit_dir=$out/share/polkit-1/actions"
+      "policykit_dbus_etcdir=$out/etc/dbus-1/system.d"
+      "policykit_dbus_sharedir=$out/share/dbus-1/system-services"
+      "hplip_confdir=$out/etc/hp"
+      "hplip_statedir=$out/var/lib/hp"
+    )
   '';
 
-  enableParallelBuilding = true;
-
-  postInstall = stdenv.lib.optionalString withPlugin
-    ''
+  postInstall = optionalString withPlugin ''
     sh ${plugin} --noexec --keep
     cd plugin_tmp
 
@@ -177,7 +171,7 @@ stdenv.mkDerivation {
     substituteInPlace $out/etc/hp/hplip.conf --replace /usr $out
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Print, scan and fax HP drivers for Linux";
     homepage = http://hplipopensource.com/;
     license = if withPlugin

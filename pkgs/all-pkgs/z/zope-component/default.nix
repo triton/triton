@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , zope-event
 , zope-interface
@@ -23,7 +24,7 @@ buildPythonPackage rec {
     zope-interface
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Zope Component Architecture";
     homepage = https://github.com/zopefoundation/zope.component;
     license = licenses.zpt20;

@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , perl
 
 , coreutils
@@ -10,7 +11,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolString
     boolWt
@@ -122,7 +123,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The Z command shell";
     homepage = http://www.zsh.org/;
     license = licenses.mit;

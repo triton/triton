@@ -4030,22 +4030,16 @@ let
   };
 
   ipfs = buildFromGitHub {
-    version = 2;
-    rev = "v0.4.8";
+    version = 3;
+    rev = "v0.4.9";
     owner = "ipfs";
     repo = "go-ipfs";
-    sha256 = "0a02vxgf54qcb0z5ynvvr79gfzsh49mwfs2xdj8xkp8yi38mbbaf";
-    gxSha256 = "0p90xn2b50ks59qqr35m5wiqj9q6p4j131bjfnirsp4apcs3s324";
+    sha256 = "17d13vays2drcxn7bpzyjx4cxi8fn9q6mcj4nva19xwlgb0z1jz4";
+    gxSha256 = "128r9pv0gcrsv2x7msgr180i3ls4sxxhr0a077yhgs1ylldp5h1p";
     nativeBuildInputs = [
       gx-go.bin
     ];
-    # Prevent our Godeps remover from work here
-    preConfigure = ''
-      mv Godeps "$TMPDIR"
-    '';
-    postConfigure = ''
-      mv "$TMPDIR/Godeps" "go/src/$goPackagePath"
-    '';
+    allowVendoredSources = true;
     postInstall = ''
       find "$bin"/bin -not -name ipfs\* -mindepth 1 -maxdepth 1 -delete
     '';

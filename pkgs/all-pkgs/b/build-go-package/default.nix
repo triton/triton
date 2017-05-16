@@ -87,6 +87,10 @@ go.stdenv.mkDerivation (
       find gx -name vendor | xargs rm -rf
       deps=($(find gx -name package.json -exec dirname {} \;))
       for dep in "''${deps[@]}"; do
+        if echo "$dep" | grep -q 'example'; then
+          continue
+        fi
+
         local rdep
         rdep="$(awk -F\" '{ if (/dvcsimport/) { print $4; exit 0; } }' "$dep/package.json")"
         if [ -z "$rdep" ]; then

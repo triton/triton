@@ -89,12 +89,19 @@ in
       description="Unbound recursive Domain Name Server";
       before = [ "network-setup.service" ];
       wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.util-linux_full ];
+      path = [
+        pkgs.unbound
+        pkgs.util-linux_full
+      ];
 
       preStart = ''
         mkdir -p "${stateDir}"
         rm -f "${confFile}" "${rootHintsFile}"
         cp "${confFile'}" "${confFile}"
+      '' + optionalString cfg.enableAutoTrustAnchor ''
+        if [ ! -e root.key ]; then
+          unbound-anchor -l | grep '\. IN DS' > "${rootKeyFile}"
+        fi
       '' + optionalString cfg.enableRootHints ''
         cp "${pkgs.root-nameservers.file}" "${rootHintsFile}"
       '' + ''
@@ -108,8 +115,8 @@ in
       '';
 
       postStop = ''
-        umount ${stateDir}/dev/random
-        umount ${stateDir}/dev/log
+        umount ${stateDir}/dev/random || true
+        umount ${stateDir}/dev/log || true
       '';
 
       serviceConfig = {

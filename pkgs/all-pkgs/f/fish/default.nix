@@ -4,7 +4,7 @@
 
 , ncurses
 , pcre2
-, python
+, python3
 , which
 }:
 
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
   ];
 
   preFixup = ''
-    sed -i 's,\(^\|[ \t]\)python\([ \t]\|$\),\1${python}/bin/python\2,' "$out/share/fish/functions/fish_update_completions.fish"
+    sed -i 's,\(^\|[ \t]\)python\([ \t]\|$\),\1${python3}/bin/python3\2,' "$out/share/fish/functions/fish_update_completions.fish"
   '';
 
   passthru = {

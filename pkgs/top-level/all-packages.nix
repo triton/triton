@@ -914,8 +914,6 @@ dnsdiag = pkgs.python3Packages.dnsdiag;
 
 dnsmasq = callPackage ../all-pkgs/d/dnsmasq { };
 
-dnssec-root = callPackage ../all-pkgs/d/dnssec-root { };
-
 dnstop = callPackage ../all-pkgs/d/dnstop { };
 
 docbook-xsl = callPackage ../all-pkgs/d/docbook-xsl { };

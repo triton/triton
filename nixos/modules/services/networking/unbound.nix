@@ -8,33 +8,11 @@ let
 
   stateDir = "/var/lib/unbound";
 
-  rootKeyFile' = pkgs.stdenv.mkDerivation {
-    name = "unbound-root-key";
-
-    buildCommand = ''
-      awk '
-      {
-        if (/Domain:/) { domain=$2; }
-        if (/Flags:/) { flags=$2; }
-        if (/Protocol:/) { protocol=$2; }
-        if (/Algorithm:/) { algorithm=$2; }
-        if (/Key:/) { key=$2; }
-      }
-      END {
-        print domain "   1000    IN DNSKEY  " flags " " protocol " " algorithm " " key;
-      }
-      ' ${pkgs.dnssec-root.file} > $out
-    '';
-
-    preferLocalBuild = true;
-    allowSubstitutes = false;
-  };
-
   rootKeyFile = "${stateDir}/root.key";
   rootHintsFile = "${stateDir}/root.hints";
 
-  trustAnchor = optionalString cfg.enableRootTrustAnchor ''
-    trust-anchor-file: "${rootKeyFile}"
+  trustAnchor = optionalString cfg.enableAutoTrustAnchor ''
+    auto-trust-anchor-file: "${rootKeyFile}"
   '';
 
   rootHints = optionalString cfg.enableRootHints ''
@@ -76,7 +54,7 @@ in
         description = "Use root hints in case forwarding fails";
       };
 
-      enableRootTrustAnchor = mkOption {
+      enableAutoTrustAnchor = mkOption {
         default = true;
         type = types.bool;
         description = "Use and update root trust anchor for DNSSEC validation.";
@@ -115,10 +93,8 @@ in
 
       preStart = ''
         mkdir -p "${stateDir}"
-        rm -f "${confFile}" "${rootKeyFile}" "${rootHintsFile}"
+        rm -f "${confFile}" "${rootHintsFile}"
         cp "${confFile'}" "${confFile}"
-      '' + optionalString cfg.enableRootTrustAnchor ''
-        cp "${rootKeyFile'}" "${rootKeyFile}"
       '' + optionalString cfg.enableRootHints ''
         cp "${pkgs.root-nameservers.file}" "${rootHintsFile}"
       '' + ''

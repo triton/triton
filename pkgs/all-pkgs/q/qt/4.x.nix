@@ -110,9 +110,9 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "3a7e90a43079d94b6b1c4491ef3804d55c1e1216";
+      rev = "7c97a6a9ecdab5c104c195a64de96694902728ed";
       file = "q/qt/qt-4.8-openssl-1.1.0.patch";
-      sha256 = "9414949cfc5aaa764a52a70c02fe9958f8fd1b94e09aa82197b29ab0ccbba3e4";
+      sha256 = "ff3ddb5428cd2ff243558dc0c75b35f470077e9204bbc989ddcba04c866c1b68";
     })
     (fetchTritonPatch {
       rev = "3a7e90a43079d94b6b1c4491ef3804d55c1e1216";

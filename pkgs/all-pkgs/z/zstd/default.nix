@@ -7,17 +7,17 @@
 }:
 
 let
-  version = "1.1.4";
+  version = "1.2.0";
 in
 stdenv.mkDerivation rec {
   name = "zstd-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "facebook";
     repo = "zstd";
     rev = "v${version}";
-    sha256 = "d0e2d6c6c7f02d37278c4aa8caf98f593f83633dd4e705d74110f3d1e39f1dc7";
+    sha256 = "d9b1d70ec10723d8af88d88c728ea28d41f984215a4d4aac6812a3e2be6703ed";
   };
 
   buildInputs = [

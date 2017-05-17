@@ -4,6 +4,11 @@ set -o pipefail
 
 cd "$(dirname "$(readlink -f "$0")")"
 
+if ipfs pin ls -t direct | grep -q 'api version mismatch'; then
+  echo "Got ipfs version mismatch" >&2
+  exit 1
+fi
+
 cleanup() {
   CODE=$?
   rm -rf "$TMPDIR"

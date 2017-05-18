@@ -245,14 +245,6 @@ let
 
   #dockerTools = callPackage ../build-support/docker { };
 
-  #dotnetenv = callPackage ../build-support/dotnetenv {
-  #  dotnetfx = dotnetfx40;
-  #};
-
-  #dotnetbuildhelpers = callPackage ../build-support/dotnetbuildhelpers {
-  #  inherit helperFunctions;
-  #};
-
   fetchbower = callPackage ../build-support/fetchbower {
     inherit (nodePackages) fetch-bower;
   };
@@ -270,8 +262,6 @@ let
   fetchgitrevision = import ../build-support/fetchgitrevision runCommand pkgs.git;
 
   fetchgitLocal = callPackage ../build-support/fetchgitlocal { };
-
-  #packer = callPackage ../development/tools/packer { };
 
   fetchpatch = callPackage ../build-support/fetchpatch { };
 
@@ -366,9 +356,6 @@ let
       fi
     '';
   };
-
-#  fetchNuGet = callPackage ../build-support/fetchnuget { };
-#  buildDotnetPackage = callPackage ../build-support/build-dotnet-package { };
 
   resolveMirrorURLs = {url}: pkgs.fetchurl {
     showURLs = true;
@@ -3915,12 +3902,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
   };
   lua5 = callPackageAlias "lua5_3_compat" { };
   lua = callPackageAlias "lua5" { };
-#
-#  lua52Packages = callPackage ./lua-packages.nix { lua = lua5_2; };
-  lua53Packages = callPackage ./lua-packages.nix {
-    lua = callPackageAlias "lua5_3" { };
-  };
-  luaPackages = callPackageAlias "lua53Packages" { };
 #
   php = pkgs.php71;
 #

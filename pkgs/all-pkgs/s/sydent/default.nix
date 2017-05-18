@@ -18,15 +18,19 @@
 , unpaddedbase64
 }:
 
+let
+  date = "2017-04-25";
+  rev = "3d3ac5ab802ad91bbecfc0cd6a50bdd31875c1fe";
+in
 buildPythonPackage {
-  name = "sydent-2017-03-31";
+  name = "sydent-${date}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "matrix-org";
     repo = "sydent";
-    rev = "2d60e738df2acac4a98eb1c2cbdb9503463ab0fd";
-    sha256 = "f5524587b2ab98634c210728de992751566915aa1ed3a5e9f674bca0d5f16bee";
+    inherit rev;
+    sha256 = "0912dcbde9a772299d5080eb60e5d24667410c04c5198253d2cf0c79858d7a0c";
   };
 
   buildInputs = [

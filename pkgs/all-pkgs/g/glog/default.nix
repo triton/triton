@@ -3,17 +3,17 @@
 }:
 
 let
-  version = "0.3.4";
+  version = "0.3.5";
 in
 stdenv.mkDerivation {
   name = "glog-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "google";
     repo = "glog";
     rev = "v${version}";
-    sha256 = "4b669c77148e5bbe25864069cfcd9ac3efa3cbd646a2bc50bb95f12f9dc02c2c";
+    sha256 = "7f6f9632b1c1ca7a9fb63485c3693c41420ad5ace3e7f94a0d13d6186ba18985";
   };
 
   meta = with stdenv.lib; {

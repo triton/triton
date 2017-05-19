@@ -93,6 +93,7 @@ stdenv.mkDerivation rec {
     libxkbcommon
     # MPV does not support lua 5.3 yet
     #lua
+    #luasockets
     mesa
     nvidia-cuda-toolkit
     nvidia-drivers

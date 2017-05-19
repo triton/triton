@@ -54,8 +54,8 @@ stdenv.mkDerivation rec {
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--${boolEn (vala != null)}-vala"
     "--disable-coverage"
-    "--with-usb-ids-path=${hwdata}/data/hwdata/usb.ids"
-    "--with-pci-ids-path=${hwdata}/data/hwdata/pci.ids"
+    "--with-usb-ids-path=${hwdata}/share/hwdata/usb.ids"
+    "--with-pci-ids-path=${hwdata}/share/hwdata/pci.ids"
   ];
 
   passthru = {

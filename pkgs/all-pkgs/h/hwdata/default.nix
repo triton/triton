@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--datadir=$(prefix)/data"
+    "--datadir=$(prefix)/share"
   ];
 
   meta = with stdenv.lib; {

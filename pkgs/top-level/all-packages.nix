@@ -3433,6 +3433,8 @@ upower = callPackage ../all-pkgs/u/upower { };
 
 usbmuxd = callPackage ../all-pkgs/u/usbmuxd { };
 
+usbutils = callPackage ../all-pkgs/u/usbutils { };
+
 uthash = callPackage ../all-pkgs/u/uthash { };
 
 util-linux_full = callPackage ../all-pkgs/u/util-linux { };
@@ -4301,8 +4303,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
     filesToInstall = ["tools/dumpimage" "tools/mkenvimage" "tools/mkimage"];
   };
 #
-  usbutils = callPackage ../os-specific/linux/usbutils { };
-
   cantarell_fonts = callPackage ../data/fonts/cantarell-fonts { };
 #
   docbook5 = callPackage ../data/sgml+xml/schemas/docbook-5.0 { };

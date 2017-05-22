@@ -1,9 +1,9 @@
 { }:
 {
   "3.3" = {
-    version = "3.3";
-    multihash = "QmcQWDyd1so7EhYwfSqH9ZMrvT7P6Fog8Ygp9Lei6ppESi";
-    sha256 = "599e7f7c017221c22011c4037b88bdcd1c47cd40c1e466838bc3c465f3e9569d";
+    version = "3.3.1";
+    multihash = "QmdRrtWDXkfCKUZefiqWhtqWvJWHMW46wYwVKc3Vju1EJ4";
+    sha256 = "b702a7fc656ac23e276b8c823a2f646e4e6f6309bb2788435a708e69bea98f2f";
   };
   "9.9" = { # Git
     version = "2017.05.17";

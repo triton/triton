@@ -15,17 +15,17 @@ let
   inherit (lib)
     boolOn;
 
-  version = "2.0.12";
+  version = "2.0.13";
 in
 stdenv.mkDerivation rec {
   name = "jasper-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "mdadams";
     repo = "jasper";
     rev = "version-${version}";
-    sha256 = "9c4280a1b43028e4687c7882afed12d4a33d90c223ec70bcd2f8fa63d370a7c2";
+    sha256 = "36bd07db8840ac3cb2c72ea3a3aea20db7b2e81e51f5016b6ad48f6974e82f98";
   };
 
   nativeBuildInputs = [

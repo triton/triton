@@ -17,6 +17,10 @@ stdenv.mkDerivation rec {
     pciutils
   ];
 
+  prePatch = ''
+    sed -i 's, -Werror,,g' Make.defaults
+  '';
+
   preBuild = ''
     makeFlagsArray+=("PREFIX=$out")
   '';

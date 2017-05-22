@@ -35,6 +35,11 @@ stdenv.mkDerivation rec {
   postPatch = ''
     sed -i src/Makefile \
       -e 's|$(LIBDIR)/libsepol.a|${libsepol}/lib/libsepol.a|'
+
+    sed \
+      -e 's,-Werror ,,g' \
+      -i utils/Makefile \
+      -i src/Makefile
   '';
 
   preBuild = ''
@@ -46,6 +51,11 @@ stdenv.mkDerivation rec {
       "DESTDIR=$out"
     )
   '';
+
+  buildFlags = [
+    "all"
+    "pywrap"
+  ];
 
   installTargets = [
     "install"

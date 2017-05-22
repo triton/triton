@@ -15,7 +15,7 @@
 }:
 
 let
-  version = "4.10.2";
+  version = "4.11";
 
   tarballUrls = [
     "mirror://kernel/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar"
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "ed09df670338562a52d9e7d76a362cc932737e2a67adca4c09395374be1de60a";
+    sha256 = "e17a68cc52a27d905b715445e91ddbaa4d42de4847d54836d6ed21e012dabf0e";
   };
 
   nativeBuildInputs = [

@@ -12,8 +12,8 @@
 }:
 
 let
-  id = "4203";
-  version = "1.8.20";
+  id = "4216";
+  version = "1.8.21";
 
   tarballUrls = id: version: [
     "https://alioth.debian.org/frs/download.php/file/${id}/pcsc-lite-${version}.tar.bz2"
@@ -29,8 +29,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls id version;
     hashOutput = false;
-    multihash = "QmbPXMUFauSyofLi1Rn3mp52vhAoqYteQWqWdVEysh5AtP";
-    sha256 = "ec7d0114016c788c1c09859c84860f6cec6c4595436d23245105154b9c046bb2";
+    multihash = "QmabfNsHHEbpxqbzMmDQSXVuVbrU7vopAhojMXPdWsaTyy";
+    sha256 = "fe3365eb7d4ce0fe891e2b6d6248351c287435ca502103f1f1431b1710e513ad";
   };
 
   nativeBuildInputs = optionals (!libOnly) [
@@ -89,11 +89,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "4203" "1.8.20";
-      pgpsigUrls = map (n: "${n}.asc") (tarballUrls "4204" "1.8.20");
+      urls = tarballUrls "4216" "1.8.21";
+      pgpsigUrls = map (n: "${n}.asc") (tarballUrls "4217" "1.8.21");
       pgpKeyFingerprint = "F5E1 1B9F FE91 1146 F41D  953D 78A1 B4DF E8F9 C57E";
       inherit (src) outputHashAlgo;
-      outputHash = "b22d32b018f6a1016adba91abfcc63876cca999daa472dd86e953ddd41d00905";
+      outputHash = "fe3365eb7d4ce0fe891e2b6d6248351c287435ca502103f1f1431b1710e513ad";
     };
   };
 

@@ -17,16 +17,16 @@ let
     "https://sourceware.org/elfutils/ftp/${version}/elfutils-${version}.tar.bz2"
   ];
 
-  version = "0.168";
+  version = "0.169";
 in
 stdenv.mkDerivation rec {
   name = "elfutils-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "Qme24e4zaT3nZXnsPBpiMpb9RNAWBYuSrWDVsXqfx7SJfa";
+    multihash = "QmUqm217Cj9QcnVncA5bTZ7ShGhY5sjuQEhT2ZkkyAQoXh";
     hashOutput = false;
-    sha256 = "b88d07893ba1373c7dd69a7855974706d05377766568a7d9002706d5de72c276";
+    sha256 = "9412fac7b30872b738bc1ed1ebcaed54493c26ef9a67887913498c17b10f3bc2";
   };
 
   nativeBuildInputs = [
@@ -56,11 +56,11 @@ stdenv.mkDerivation rec {
 
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "0.168";
+      urls = tarballUrls "0.169";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "47CC 0331 081B 8BC6 D0FD  4DA0 8370 665B 5781 6A6A";
       inherit (src) outputHashAlgo;
-      outputHash = "b88d07893ba1373c7dd69a7855974706d05377766568a7d9002706d5de72c276";
+      outputHash = "9412fac7b30872b738bc1ed1ebcaed54493c26ef9a67887913498c17b10f3bc2";
     };
   };
 

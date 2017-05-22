@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , python
 
 , glib
@@ -16,7 +17,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt;
 
@@ -89,7 +90,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "An HTTP library implementation in C";
     homepage = https://wiki.gnome.org/Projects/libsoup;
     license = licenses.lgpl2Plus;

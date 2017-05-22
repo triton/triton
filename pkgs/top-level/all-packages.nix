@@ -989,7 +989,7 @@ evolution-data-server_3-22 = callPackage ../all-pkgs/e/evolution-data-server {
   channel = "3.22";
   #gnome-online-accounts
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
-  libsoup = pkgs.libsoup_2-56;
+  libsoup = pkgs.libsoup_2-58;
   vala = pkgs.vala_0-34;
 };
 evolution-data-server = callPackageAlias "evolution-data-server_3-22" { };
@@ -1310,7 +1310,7 @@ gnome-calculator_3-22 = callPackage ../all-pkgs/g/gnome-calculator {
   gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   gtksourceview = pkgs.gtksourceview_3-22;
-  libsoup = pkgs.libsoup_2-56;
+  libsoup = pkgs.libsoup_2-58;
 };
 gnome-calculator = callPackageAlias "gnome-calculator_3-22" { };
 
@@ -1526,7 +1526,7 @@ gsound = callPackage ../all-pkgs/g/gsound { };
 
 gssdp_1-0 = callPackage ../all-pkgs/g/gssdp {
   channel = "1.0";
-  libsoup = pkgs.libsoup_2-56;
+  libsoup = pkgs.libsoup_2-58;
   vala = pkgs.vala_0-34;
 };
 gssdp = callPackageAlias "gssdp_1-0" { };
@@ -1694,7 +1694,7 @@ guitarix = callPackage ../all-pkgs/g/guitarix {
 gupnp_1-0 = callPackage ../all-pkgs/g/gupnp {
   channel = "1.0";
   gssdp = pkgs.gssdp_1-0;
-  libsoup = pkgs.libsoup_2-56;
+  libsoup = pkgs.libsoup_2-58;
   vala = pkgs.vala_0-34;
 };
 gupnp = callPackageAlias "gupnp_1-0" { };
@@ -1708,7 +1708,7 @@ gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 
 gvfs_1-30 = callPackage ../all-pkgs/g/gvfs {
   channel = "1.30";
-  libsoup = pkgs.libsoup_2-56;
+  libsoup = pkgs.libsoup_2-58;
 };
 gvfs = callPackageAlias "gvfs_1-30" { };
 
@@ -2068,7 +2068,7 @@ libgweather_3-24 = callPackage ../all-pkgs/l/libgweather {
   channel = "3.24";
   atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  libsoup = pkgs.libsoup_2-56;
+  libsoup = pkgs.libsoup_2-58;
   vala = pkgs.vala_0-36;
 };
 libgweather = callPackageAlias "libgweather_3-24" { };
@@ -2253,10 +2253,10 @@ libsndfile = callPackage ../all-pkgs/l/libsndfile { };
 
 libsodium = callPackage ../all-pkgs/l/libsodium { };
 
-libsoup_2-56 = callPackage ../all-pkgs/l/libsoup {
-  channel = "2.56";
+libsoup_2-58 = callPackage ../all-pkgs/l/libsoup {
+  channel = "2.58";
 };
-libsoup = callPackageAlias "libsoup_2-56" { };
+libsoup = callPackageAlias "libsoup_2-58" { };
 
 libspectre = callPackage ../all-pkgs/l/libspectre { };
 
@@ -3470,7 +3470,7 @@ vim = callPackage ../all-pkgs/v/vim { };
 vino_3-22 = callPackage ../all-pkgs/v/vino {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-24;
-  libsoup = pkgs.libsoup_2-56;
+  libsoup = pkgs.libsoup_2-58;
 };
 vino = callPackageAlias "vino_3-22" { };
 

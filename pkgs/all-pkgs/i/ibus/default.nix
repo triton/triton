@@ -26,7 +26,7 @@ let
   inherit (lib)
     boolEn;
 
-  version = "1.5.15";
+  version = "1.5.16";
 in
 stdenv.mkDerivation rec {
   name = "ibus-${version}";
@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/ibus/ibus/releases/download/${version}/"
       + "${name}.tar.gz";
-    sha256 = "41f7baad6f3aac0cdfaebef674a8731ae47950f140edfbeefebaeed78c93e385";
+    sha256 = "36b57bfbe4f92e3281fb535cae65794b6f25164b2a3288e73e6d06b4a409fe1e";
   };
 
   nativeBuildInputs = [

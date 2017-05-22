@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "17.1.8";
+  version = "17.5.14";
 in
 buildPythonPackage rec {
   name = "pycountry-${version}";
@@ -12,12 +13,12 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pycountry";
     inherit version;
-    sha256 = "c5ccad49e47caee92779bf83da81565159b1fe3d8f48b063068ac118b73dd1f8";
+    sha256 = "d31321e59a134aac326ac07d4b2595d63f7e7f755bcb503bdecca2bd1b54ff2f";
   };
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "ISO country, subdivision, language, currency & script definitions";
     homepage = https://bitbucket.org/flyingcircus/pycountry;
     license = licenses.lgpl21;

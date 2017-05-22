@@ -3,11 +3,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "hdparm-9.51";
+  name = "hdparm-9.52";
 
   src = fetchurl {
     url = "mirror://sourceforge/hdparm/hdparm/${name}.tar.gz";
-    sha256 = "1afad8891ecbe644c283f7d725157660ebf8bd5b4d9d67232afd45f83d2d5d91";
+    sha256 = "c3429cd423e271fa565bf584598fd751dd2e773bb7199a592b06b5a61cec4fb6";
   };
 
   preBuild = ''

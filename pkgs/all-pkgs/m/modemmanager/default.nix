@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , glib
 , systemd_lib
@@ -14,11 +15,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ModemManager-1.6.2";
+  name = "ModemManager-1.6.6";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/ModemManager/${name}.tar.xz";
-    sha256 = "e4544398d9c166f8e13fe7c97149f262ad1fb48af980e0d4f9c34013920c6393";
+    multihash = "QmUwz9xbS2LsCKmBWXrbjT1z4kZx9osqHfVYFFJ8hNN2Fk";
+    sha256 = "b050aa0d9e0dd7cb2f22451efecfa2ac53b9a70d26da211b0e8bbc1ecba58a43";
   };
 
   nativeBuildInputs = [
@@ -70,7 +72,7 @@ stdenv.mkDerivation rec {
       $out/etc/systemd/system/dbus-org.freedesktop.ModemManager1.service
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "WWAN modem manager, part of NetworkManager";
     homepage = https://www.freedesktop.org/wiki/Software/ModemManager/;
     license = licenses.gpl2;

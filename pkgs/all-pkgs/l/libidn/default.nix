@@ -18,6 +18,12 @@ stdenv.mkDerivation rec {
     sha256 = "44a7aab635bb721ceef6beecc4d49dfd19478325e1b47f3196f7d2acc4930e19";
   };
 
+  postPatch = ''
+    SOURCE_TIME=$(stat -c "%Y" configure)
+    sed -i 's,gl_cv_cc_vis_werror=yes,gl_cv_cc_vis_werror=no,g' configure
+    touch -d "@$SOURCE_TIME" configure
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
@@ -28,8 +34,6 @@ stdenv.mkDerivation rec {
       outputHash = "44a7aab635bb721ceef6beecc4d49dfd19478325e1b47f3196f7d2acc4930e19";
     };
   };
-
-  doCheck = true;
 
   meta = with stdenv.lib; {
     homepage = http://www.gnu.org/software/libidn/;

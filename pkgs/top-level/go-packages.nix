@@ -3916,6 +3916,21 @@ let
     ];
   };
 
+  image-spec = buildFromGitHub {
+    version = 3;
+    rev = "5ebcc54f1725d37e8a8dbdebe1931df46d486736";
+    owner  = "opencontainers";
+    repo   = "image-spec";
+    sha256 = "1g2frm24i6qab52bxbrmgn334j4v5jid0zk3byagjm00qsp3fkw3";
+    date = "2017-05-19";
+    propagatedBuildInputs = [
+      errors
+      go4
+      go-digest
+      gojsonschema
+    ];
+  };
+
   inf_v0 = buildFromGitHub {
     version = 1;
     rev = "v0.9.0";
@@ -4021,15 +4036,6 @@ let
     ];
   };
 
-  iter = buildFromGitHub {
-    version = 1;
-    rev = "454541ec3da2a73fc34fd049b19ee5777bf19345";
-    owner  = "bradfitz";
-    repo   = "iter";
-    sha256 = "0sv6rwr05v219j5vbwamfvpp1dcavci0nwr3a2fgxx98pjw7hgry";
-    date = "2014-01-23";
-  };
-
   ipfs = buildFromGitHub {
     version = 3;
     rev = "v0.4.9";
@@ -4044,6 +4050,15 @@ let
     postInstall = ''
       find "$bin"/bin -not -name ipfs\* -mindepth 1 -maxdepth 1 -delete
     '';
+  };
+
+  iter = buildFromGitHub {
+    version = 1;
+    rev = "454541ec3da2a73fc34fd049b19ee5777bf19345";
+    owner  = "bradfitz";
+    repo   = "iter";
+    sha256 = "0sv6rwr05v219j5vbwamfvpp1dcavci0nwr3a2fgxx98pjw7hgry";
+    date = "2014-01-23";
   };
 
   jose = buildFromGitHub {
@@ -4861,9 +4876,11 @@ let
       go-connections
       go-units
       gotty
+      image-spec
       logrus
       net
       pflag
+      sys
     ];
   };
 
@@ -4925,6 +4942,7 @@ let
       go-units
       go-winio
       gotty
+      image-spec
       logrus
       net
       runc

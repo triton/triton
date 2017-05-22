@@ -9,15 +9,22 @@
 let
   inherit (stdenv.lib)
     optionalString;
+
+  tarballUrls = version: [
+    "http://nwl.cc/pub/cryptodev-linux/cryptodev-linux-${version}.tar.gz"
+    "http://download.gna.org/cryptodev-linux/cryptodev-linux-${version}.tar.gz"
+  ];
+
+  version = "1.9";
 in
 stdenv.mkDerivation rec {
-  name = "cryptodev-linux-1.8";
+  name = "cryptodev-linux-${version}";
 
   src = fetchurl {
-    url = "http://download.gna.org/cryptodev-linux/${name}.tar.gz";
-    multihash = "QmQFLhYrHeLWqEzXd1EvCwm1Af9KXwWmXDunAWgTwPW4pa";
+    urls = tarballUrls version;
+    multihash = "QmZqPXZDUZdsjnkx7wbYUirnzj6ajmGTA1DzMXe9gtXU2a";
     hashOutput = false;
-    sha256 = "0xhkhcdlds9aiz0hams93dv0zkgcn2abaiagdjlqdck7zglvvyk7";
+    sha256 = "9f4c0b49b30e267d776f79455d09c70cc9c12c86eee400a0d0a0cd1d8e467950";
   };
 
   # If we are only building headers, just do that
@@ -41,11 +48,13 @@ stdenv.mkDerivation rec {
   ];
 
   passthru = {
-    srcVerification = fetchurl {
+    srcVerification = fetchurl rec {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "AED6 E2A1 85EE B379 F174  76D2 E012 D07A D0E3 CC30";
-      inherit (src) urls outputHash outputHashAlgo;
+      urls = tarballUrls "1.9";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "EE81 2532 E317 608B 671D  9760 DA30 48E2 7A12 7A6F";
+      inherit (src) outputHashAlgo;
+      outputHash = "9f4c0b49b30e267d776f79455d09c70cc9c12c86eee400a0d0a0cd1d8e467950";
     };
   };
 

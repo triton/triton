@@ -1506,6 +1506,8 @@ let
 
       pkgs.libpcap
     ];
+
+    excludedPackages = "\\(benchmark\\|example\\|bridge\\)";
   };
 
   etcd_client = buildFromGitHub {
@@ -4179,12 +4181,12 @@ let
   };
 
   kubernetes-client-go_1-4 = buildFromGitHub {
-    version = 2;
+    version = 3;
     rev = "e5fcd1eb6215fb420fbfc95d7e2b3b672ab5d8e8";
     date = "2017-02-11";
     owner  = "kubernetes";
     repo   = "client-go";
-    sha256 = "99319ed43886dbd9e730e9fa62dd724717ac34a5932e14af53fdf329dd67d19c";
+    sha256 = "e70098488f56e95ec82b92c3f6daf5a4e92e9c0fd73f56e2af5c5a50504c60e1";
     goPackageAliases = [
       "k8s.io/client-go"
     ];

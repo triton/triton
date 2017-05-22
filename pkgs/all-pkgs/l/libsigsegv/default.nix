@@ -2,12 +2,31 @@
 , fetchurl
 }:
 
+let
+  tarballUrls = version: [
+    "mirror://gnu/libsigsegv/libsigsegv-${version}.tar.gz"
+  ];
+
+  version = "2.11";
+in
 stdenv.mkDerivation rec {
-  name = "libsigsegv-2.10";
+  name = "libsigsegv-${version}";
 
   src = fetchurl {
-    url = "mirror://gnu/libsigsegv/${name}.tar.gz";
-    sha256 = "16hrs8k3nmc7a8jam5j1fpspd6sdpkamskvsdpcw6m29vnis8q44";
+    urls = tarballUrls version;
+    hashOutput = false;
+    sha256 = "dd7c2eb2ef6c47189406d562c1dc0f96f2fc808036834d596075d58377e37a18";
+  };
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "2.11";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "68D9 4D8A AEEA D48A E7DC  5B90 4F49 4A94 2E46 16C2";
+      inherit (src) outputHashAlgo;
+      outputHash = "dd7c2eb2ef6c47189406d562c1dc0f96f2fc808036834d596075d58377e37a18";
+    };
   };
 
   meta = with stdenv.lib; {

@@ -64,7 +64,7 @@ let
     optionals;
 
   versionMajor = "0.20";
-  versionMinor = "6";
+  versionMinor = "8";
 in
 stdenv.mkDerivation rec {
   name = "mpd-${versionMajor}.${versionMinor}";
@@ -72,8 +72,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://www.musicpd.org/download/mpd/${versionMajor}/${name}.tar.xz";
     hashOutput = false;
-    multihash = "QmYsWENiwgxBNAeqEscwBC3vxiKEknMzfNHwuX8kZfd667";
-    sha256 = "f4055e1189e5cc00e83706b2e0b5ead924ced0303e073d7802ee9f9a8eba4b47";
+    multihash = "QmPd4dMUDt8fCn2ztDkw9BwY69hHhuerVbirKq1KoCZz44";
+    sha256 = "7d177f29663c4a0997413401e52bbf11d2bb472773bbcf9294f839c4b8751e35";
   };
 
   nativeBuildInputs = [ ] ++ optionals documentationSupport [

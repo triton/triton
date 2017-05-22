@@ -3782,7 +3782,7 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 
   systemd-cryptsetup-generator = callPackage ../os-specific/linux/systemd/cryptsetup-generator.nix { };
 #
-  gcc = callPackageAlias "gcc6" { };
+  gcc = callPackageAlias "gcc7" { };
 #
   gcc48 = lowPrio (wrapCC (callPackage ../development/compilers/gcc/4.8 {
     noSysDirs = true;

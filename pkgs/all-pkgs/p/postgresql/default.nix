@@ -41,8 +41,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "mirror://postgresql/source/v${source.version}/${name}.tar.bz2";
-    md5Url = "${url}.md5";
-    sha256Url = "${url}.sha256";
+    hashOutput = false;
     inherit (source) sha256;
   };
 
@@ -159,6 +158,13 @@ stdenv.mkDerivation rec {
 
   passthru = {
     psqlSchema = channel;
+
+    srcVerification = fetchurl {
+      failEarly = true;
+      md5Url = map (n: "${n}.md5") src.urls;
+      sha256Url = map (n: "${n}.sha256")src.urls;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
   };
 
   # Sometimes fails

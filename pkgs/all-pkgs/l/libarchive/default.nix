@@ -16,14 +16,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libarchive-2017-03-29";
+  name = "libarchive-2017-05-21";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "libarchive";
     repo = "libarchive";
-    rev = "c20d7a5c3bae648cc9394f9d8eca15e6e53eb288";
-    sha256 = "96ffbcaf79dca1dd268d39775f926c2d517487afb2e72d3d1acb0d07fc4936f0";
+    rev = "328453a041e2ead52bf2c64b778a29f99bd17f14";
+    sha256 = "8f263d675c238fa667de69bc39a673ccf8f01297d061e7facc685273d2d9d06e";
   };
 
   nativeBuildInputs = [
@@ -43,6 +43,10 @@ stdenv.mkDerivation rec {
     xz
     zlib
   ];
+
+  postPatch = ''
+    sed -i 's,-Werror ,,g' Makefile.am
+  '';
 
   configureFlags = [
     "--with-zlib"

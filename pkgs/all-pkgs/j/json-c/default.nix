@@ -16,6 +16,10 @@ stdenv.mkDerivation rec {
     autoconf
   ];
 
+  postPatch = ''
+    sed -i 's,-Werror ,,g' Makefile.in
+  '';
+
   meta = with stdenv.lib; {
     description = "A JSON implementation in C";
     homepage = https://github.com/json-c/json-c/wiki;

@@ -39,6 +39,10 @@ stdenv.mkDerivation rec {
   postPatch = ''
     sed -i includes/dhcpd.h \
       -e "s|^ *#define \+_PATH_DHCLIENT_SCRIPT.*$|#define _PATH_DHCLIENT_SCRIPT \"$out/bin/dhclient-script\"|g"
+
+    SOURCE_TIME=$(stat -c "%Y" configure)
+    sed -i 's, -Werror,,g' configure
+    touch -d "@$SOURCE_TIME" configure
   '';
 
   configureFlags = [

@@ -101,6 +101,18 @@ stdenv.mkDerivation rec {
 
     # Boost doesn't know how to include python libraries
     sed -i '/find_package(Boost/aLIST(APPEND Boost_LIBRARIES ''${PYTHON_LIBRARY})' CMakeLists.txt
+
+    # Rocksdb fails with gcc7 with Werror
+    sed \
+      -e '/-Werror/d' \
+      -i src/rocksdb/Makefile \
+      -i src/rocksdb/CMakeLists.txt
+    sed \
+      -e '1i#include <functional>' \
+      -i src/rocksdb/util/thread_local.h \
+      -i src/rocksdb/utilities/persistent_cache/block_cache_tier_file.h \
+      -i src/rocksdb/utilities/persistent_cache/hash_table_evictable.h \
+      -i src/os/FuseStore.h
   '';
 
   preConfigure = ''

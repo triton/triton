@@ -86,9 +86,14 @@ stdenv.mkDerivation {
 
   patches = map (d: fetchTritonPatch d) patches;
 
-  # Remove impurities from llvm-config
   postPatch = ''
+    # Remove impurities from llvm-config
     sed -i 's,@LLVM_.*_ROOT@,/no-such-path,g' tools/llvm-config/BuildVariables.inc.in
+
+    # Gcc 7 requires <functional> to be included
+    sed \
+      -e '1i#include <functional>' \
+      -i tools/lldb/include/lldb/Utility/TaskPool.h
   '';
 
   cmakeFlags = with stdenv; [

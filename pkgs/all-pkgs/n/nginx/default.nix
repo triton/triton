@@ -45,6 +45,10 @@ stdenv.mkDerivation rec {
     "-I${libxml2}/include/libxml2"
   ];
 
+  postPatch = ''
+    sed -i '/-Werror/d' auto/cc/gcc
+  '';
+
   configureFlags = [
     "--conf-path=/etc/nginx/nginx.conf"
     "--error-log-path=/var/log/nginx/error.log"

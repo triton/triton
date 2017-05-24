@@ -2,13 +2,16 @@
 , fetchurl
 }:
 
+let
+  version = "7.6.0";
+in
 stdenv.mkDerivation rec {
-  name = "libatomic_ops-7.4.4";
+  name = "libatomic_ops-${version}";
 
   src = fetchurl {
-    url = "http://www.ivmaisoft.com/_bin/atomic_ops/${name}.tar.gz";
-    multihash = "QmSYucF6vEfzhFcs4DhJkMnr2Jaxik5kf4hxiyUQGqh5Cn";
-    sha256 = "bf210a600dd1becbf7936dd2914cf5f5d3356046904848dcfd27d0c8b12b6f8f";
+    url = "https://github.com/ivmai/libatomic_ops/releases/download/"
+      + "v${version}/${name}.tar.gz";
+    sha256 = "8e2c06d1d7a05339aae2ddceff7ac54552854c1cbf2bb34c06eca7974476d40f";
   };
 
   meta = with stdenv.lib; {

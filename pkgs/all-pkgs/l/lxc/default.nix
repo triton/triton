@@ -66,6 +66,7 @@ stdenv.mkDerivation rec {
     "--enable-python"
     # "--enable-lua"
     "--enable-bash"
+    "--disable-werror"
     "--disable-tests"
     "--with-rootfs-path=/var/lib/lxc/rootfs"
   ];

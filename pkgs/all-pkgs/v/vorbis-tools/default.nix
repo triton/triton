@@ -35,8 +35,8 @@ stdenv.mkDerivation rec {
   name = "vorbis-tools-1.4.0";
 
   src = fetchurl {
-    url = "http://downloads.xiph.org/releases/vorbis/${name}.tar.gz";
-    sha256Url = http://downloads.xiph.org/releases/vorbis/SHA256SUMS;
+    url = "mirror://xiph/vorbis/${name}.tar.gz";
+    sha256Url = mirror://xiph/vorbis/SHA256SUMS;
     sha256 = "a389395baa43f8e5a796c99daf62397e435a7e73531c9f44d9084055a05d22bc";
   };
 

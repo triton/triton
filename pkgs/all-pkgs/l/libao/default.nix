@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   name = "libao-1.2.0";
 
   src = fetchurl {
-    url = "http://downloads.xiph.org/releases/ao/${name}.tar.gz";
+    url = "mirror://xiph/ao/${name}.tar.gz";
     multihash = "QmQGVMEhh5eEhJc5tQFWcDZzNf9rMwLrQxqWLVwqDtEwYo";
     hashOutput = false;  # Hashes are at https://xiph.org/downloads/
     sha256 = "03ad231ad1f9d64b52474392d63c31197b0bc7bd416e58b1c10a329a5ed89caf";

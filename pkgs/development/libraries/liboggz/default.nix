@@ -4,7 +4,7 @@ stdenv.mkDerivation rec {
   name = "liboggz-1.1.1";
 
   src = fetchurl {
-    url = "http://downloads.xiph.org/releases/liboggz/${name}.tar.gz";
+    url = "mirror://xiph/liboggz/${name}.tar.gz";
     sha256 = "0nj17lhnsw4qbbk8jy4j6a78w6v2llhqdwq46g44mbm9w2qsvbvb";
   };
 

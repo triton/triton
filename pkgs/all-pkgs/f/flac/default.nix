@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   name = "flac-1.3.2";
 
   src = fetchurl {
-    url = "http://downloads.xiph.org/releases/flac/${name}.tar.xz";
+    url = "mirror://xiph/flac/${name}.tar.xz";
     multihash = "QmZLYKX7bcZtUopiGmMzUCUGJDn1TEgqXvJtUw7M8KtjZU";
     sha256 = "e48764f0761beb791a69590f12826fe8cf302c42db2879849c5d10bc7c85db66";
   };

@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
   name = "cdparanoia-III-10.2";
 
   src = fetchurl {
-    url = "http://downloads.xiph.org/releases/cdparanoia/${name}.src.tgz";
+    url = "mirror://xiph/cdparanoia/${name}.src.tgz";
     multihash = "QmTXrt8wNhdSEi6r1We8wi5hRKM7NxrMVnfxqE7LCdRn9e";
     sha256 = "1pv4zrajm46za0f6lv162iqffih57a8ly4pc69f7y0gfyigb8p80";
   };

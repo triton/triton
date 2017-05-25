@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   name = "opus-tools-0.1.10";
 
   src = fetchurl {
-    url = "http://downloads.xiph.org/releases/opus/${name}.tar.gz";
+    url = "mirror://xiph/opus/${name}.tar.gz";
     multihash = "QmeBwLLdV5fnjXKQFpngiBPPJrA3b2g68jLYFJGiCY3JKS";
     hashOutput = false;
     sha256 = "a2357532d19471b70666e0e0ec17d514246d8b3cb2eb168f68bb0f6fd372b28c";

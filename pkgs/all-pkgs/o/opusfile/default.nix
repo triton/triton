@@ -10,8 +10,8 @@ stdenv.mkDerivation rec {
   name = "opusfile-0.8";
 
   src = fetchurl {
-    url = "http://downloads.xiph.org/releases/opus/${name}.tar.gz";
-    sha256Url = "http://downloads.xiph.org/releases/opus/SHA256SUMS.txt";
+    url = "mirror://xiph/opus/${name}.tar.gz";
+    sha256Url = "mirror://xiph/opus/SHA256SUMS.txt";
     sha256 = "2c231ed3cfaa1b3173f52d740e5bbd77d51b9dfecb87014b404917fba4b855a4";
   };
 

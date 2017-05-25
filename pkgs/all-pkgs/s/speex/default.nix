@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   name = "speex-1.2.0";
 
   src = fetchurl {
-    url = "http://downloads.xiph.org/releases/speex/${name}.tar.gz";
+    url = "mirror://xiph/speex/${name}.tar.gz";
     multihash = "QmcFCHkLDs75eRoz1ibHcqkvrCfG2uE2pSyAEEqRzBptPB";
     sha256 = "eaae8af0ac742dc7d542c9439ac72f1f385ce838392dc849cae4536af9210094";
   };

@@ -1,25 +1,28 @@
 { stdenv
-, fetchzip
+, fetchurl
 }:
 
-let
-  date = "2017-01-20";
-  rev = "adbd050d70b6173dd6880b21fd6f995af5ea79d2";
-in
 stdenv.mkDerivation rec {
-  name = "dmidecode-${date}";
+  name = "dmidecode-3.1";
 
-  src = fetchzip {
-    version = 2;
-    url = "https://git.savannah.nongnu.org/cgit/dmidecode.git/snapshot/dmidecode-${rev}.tar.xz";
-    multihash = "QmfRA9HrdFLo5T9xivwiejn6wpi7YKdpjvawgvHqqeKwVG";
-    sha256 = "2bbea761bf3e4b6b0605bded87532eb6080cdb0f063089ced7ad9af64d8447c1";
+  src = fetchurl {
+    url = "mirror://savannah/dmidecode/${name}.tar.xz";
+    hashOutput = false;
+    sha256 = "d766ce9b25548c59b1e7e930505b4cad9a7bb0b904a1a391fbb604d529781ac0";
   };
 
   preBuild = ''
     makeFlagsArray+=("prefix=$out")
   '';
 
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "90DF D652 3C57 373D 81F6  3D19 8656 88D0 38F0 2FC8";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
   meta = with stdenv.lib; {
     description = "Gathers hardware information from the BIOS via the SMBIOS/DMI standard";
     homepage = http://www.nongnu.org/dmidecode/;

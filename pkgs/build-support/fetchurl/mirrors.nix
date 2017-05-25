@@ -245,6 +245,11 @@ rec {
     http://archive.xfce.org
   ];
 
+  xiph = [
+    "https://ftp.osuosl.org/pub/xiph/releases"
+    "http://downloads.xiph.org/releases"
+  ];
+
   xorg = [
     https://www.x.org/releases
     http://mirror.us.leaseweb.net/xorg

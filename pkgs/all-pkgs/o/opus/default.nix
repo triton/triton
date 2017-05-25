@@ -17,6 +17,10 @@ let
     optionals
     platforms;
 
+  releaseUrls = [
+    "mirror://xiph/opus"
+  ];
+
   source = (import ./sources.nix { })."${channel}";
 in
 stdenv.mkDerivation rec {
@@ -37,7 +41,7 @@ stdenv.mkDerivation rec {
       }
     else
     fetchurl {
-      url = "http://downloads.xiph.org/releases/opus/${name}.tar.gz";
+      urls = map (n: "${n}/${name}.tar.gz") releaseUrls;
       hashOutput = false;
       inherit (source)
         multihash
@@ -74,7 +78,9 @@ stdenv.mkDerivation rec {
         outputHash
         outputHashAlgo
         urls;
-      sha256Url = "http://downloads.xiph.org/releases/opus/SHA256SUMS.txt";
+      md5Urls = map (n: "${n}/MD5SUMS") releaseUrls;
+      sha1Urls = map (n: "${n}/SHA1SUMS") releaseUrls;
+      sha256Urls = map (n: "${n}/SHA256SUMS.txt") releaseUrls;
       failEarly = true;
     };
   };

@@ -1,7 +1,7 @@
 { stdenv
 , autoreconfHook
+, fetchgit
 , fetchurl
-, fetchzip
 
 , fixedPoint ? false
 
@@ -33,11 +33,10 @@ stdenv.mkDerivation rec {
 
   src =
     if channel == "head" then
-      fetchzip {
-        name = "${name}.tar.gz";
+      fetchgit {
         version = source.fetchzipversion;
-        url = "https://git.xiph.org/?p=opus.git;a=snapshot;h=${source.rev};sf=tgz";
-        inherit (source) multihash sha256;
+        url = "git://git.xiph.org/opus.git";
+        inherit (source) rev sha256;
       }
     else
     fetchurl {

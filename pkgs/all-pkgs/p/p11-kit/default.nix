@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "0.23.5";
+  version = "0.23.6";
 
   tarballUrls = version: [
     "https://github.com/p11-glue/p11-kit/releases/download/${version}/p11-kit-${version}.tar.gz"
@@ -17,7 +17,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     urls = tarballUrls version;
-    sha256 = "0d8fed192563c324bb5ace3c068f06558a5569a6e8eb47eee1cd79ada3b1124f";
+    hashOutput = false;
+    sha256 = "b89d3824a802af29605b9cbec48f4ce8a80f90ee933a3192f3ac252db121c9ea";
   };
 
   buildInputs = [
@@ -38,14 +39,14 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "0.23.5";
+      urls = tarballUrls "0.23.6";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprints = [
         "AED6 E2A1 85EE B379 F174  76D2 E012 D07A D0E3 CC30"
         "4622 25C3 B46F 3487 9FC8  496C D605 848E D7E6 9871"
       ];
       inherit (src) outputHashAlgo;
-      outputHash = "0d8fed192563c324bb5ace3c068f06558a5569a6e8eb47eee1cd79ada3b1124f";
+      outputHash = "b89d3824a802af29605b9cbec48f4ce8a80f90ee933a3192f3ac252db121c9ea";
     };
   };
 

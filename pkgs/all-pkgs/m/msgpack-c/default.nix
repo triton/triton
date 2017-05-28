@@ -3,6 +3,7 @@
 , fetchurl
 , ninja
 
+, boost
 , zlib
 }:
 
@@ -23,7 +24,17 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    boost
     zlib
+  ];
+
+  postPatch = ''
+    sed -i 's, -Werror,,g' CMakeLists.txt
+  '';
+
+  cmakeFlags = [
+    "-DMSGPACK_BUILD_EXAMPLES=OFF"
+    "-DMSGPACK_BUILD_TESTS=OFF"
   ];
 
   meta = with stdenv.lib; {

@@ -280,8 +280,6 @@ let
               "password sufficient ${pam_ldap}/lib/security/pam_ldap.so"}
           ${optionalString config.krb5.enable
               "password sufficient ${pam_krb5}/lib/security/pam_krb5.so use_first_pass"}
-          ${optionalString config.services.samba.syncPasswordsByPam
-              "password optional ${pkgs.samba_client}/lib/security/pam_smbpass.so nullok use_authtok try_first_pass"}
 
           # Session management.
           session required pam_env.so envfile=${config.system.build.pamEnvironment}

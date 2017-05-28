@@ -66,6 +66,9 @@ stdenv.mkDerivation rec {
     icu
   ];
 
+  # Fixes an issue with gcc7 c++ strictness
+  CXXFLAGS = "-fpermissive";
+
   prePatch = ''
     cd js/src
   '';

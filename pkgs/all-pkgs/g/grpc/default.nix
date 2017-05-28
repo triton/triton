@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "1.3.0";
+  version = "1.3.6";
 in
 stdenv.mkDerivation {
   name = "grpc-${version}";
@@ -23,7 +23,7 @@ stdenv.mkDerivation {
     owner = "grpc";
     repo = "grpc";
     rev = "v${version}";
-    sha256 = "60782ecec66f91a4a0f4994842fb98c1de57d5450eb43f82c6ed8e0b1c20946f";
+    sha256 = "391fcc4685cfbb0a0d3840e7ce068664080de54d8897dc2f926825e1d8854d50";
   };
 
   nativeBuildInputs = [
@@ -46,6 +46,8 @@ stdenv.mkDerivation {
     rm -r third_party/{cares,protobuf,zlib,googletest,thrift,boringssl}
     unpackFile ${protobuf-cpp.src}
     mv -v protobuf* third_party/protobuf
+
+    sed -i 's, -Werror,,g' Makefile
   '';
 
   NIX_CFLAGS_LINK = [

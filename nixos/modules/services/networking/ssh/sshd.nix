@@ -280,7 +280,6 @@ in
             wantedBy = [
               "multi-user.target"
             ];
-            reloadIfChanged = true;
             serviceConfig = {
               ExecStartPre = "${cfgc.package}/bin/sshd -t"
                 + " -f ${pkgs.writeText "sshd_config" cfg.extraConfig}";

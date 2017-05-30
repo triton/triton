@@ -5,14 +5,27 @@
 , ncurses
 }:
 
-stdenv.mkDerivation {
-  name = "sqlite-3.18.0";
+let
+  inherit (stdenv.lib)
+    fixedWidthString
+    head
+    splitString
+    tail;
+
+  version = "3.19.2";
+  releaseYear = "2017";
+  versionList = splitString "." version;
+  version' = "${head versionList}${fixedWidthString 2 "0" (head (tail versionList))}"
+    + "${fixedWidthString 2 "0" (head (tail (tail versionList)))}00";
+in
+stdenv.mkDerivation rec {
+  name = "sqlite-${version}";
 
   src = fetchurl {
-    url = "https://sqlite.org/2017/sqlite-autoconf-3180000.tar.gz";
-    multihash = "QmZfgdU2RbHeuHdaaCzeQijCdA8xrksBFe5cc3jPjoASUN";
-    sha1Confirm = "74559194e1dd9b9d577cac001c0e9d370856671b";
-    sha256 = "3757612463976e7d08c5e9f0af3021613fc24bbcfe1c51197d6776b9ece9ac5c";
+    url = "https://sqlite.org/${releaseYear}/sqlite-autoconf-${version'}.tar.gz";
+    multihash = "QmY74pCJm3VejEC36w51U9K5qtErzjYNQqjgxtvWANgCRy";
+    hashOutput = false;
+    sha256 = "ca5361fb01cc3ad63d6fd4eb2cb0b6398e629595896d3558f7e121d37dac2ffc";
   };
 
   buildInputs = [
@@ -56,6 +69,14 @@ stdenv.mkDerivation {
       export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -DUSE_PREAD64 -D_LARGEFILE64_SOURCE"
     fi
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha1Confirm = "597735a7039ebb105ea36366783ff0a3177f9131";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     homepage = http://www.sqlite.org/;

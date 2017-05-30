@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "1.8.1";
+  version = "1.8.2";
 in
 stdenv.mkDerivation rec {
   name = "intel-vaapi-driver-${version}";
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
         + "libva-intel-driver/${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "efd041602635ce9450fbdf864563d3b95341ef3877337772af708d9cc17b2fce";
+    sha256 = "866cdf9974911e58b0d3a2cade29dbe7b5b68836e142cf092b99db68e366b702";
   };
 
   nativeBuildInputs = [

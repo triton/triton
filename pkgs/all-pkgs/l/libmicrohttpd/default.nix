@@ -8,12 +8,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libmicrohttpd-0.9.54";
+  name = "libmicrohttpd-0.9.55";
 
   src = fetchurl {
     url = "mirror://gnu/libmicrohttpd/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "bcc721895d4a114b0548a39d2241c35caacb9e2e072d40e11b55c60e3d5ddcbe";
+    sha256 = "0c1cab8dc9f2588bd3076a28f77a7f8de9560cbf2d80e53f9a8696ada80ed0f8";
   };
 
   buildInputs = [
@@ -45,7 +45,11 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl rec {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;
-      pgpKeyFingerprint = "D842 3BCB 326C 7907 0339  29C7 939E 6BE1 E29F C3CC";
+      pgpKeyFingerprints = [
+        "D842 3BCB 326C 7907 0339  29C7 939E 6BE1 E29F C3CC"
+        # Evgeny Grin (Karlson2k)
+        "289F E99E 138C F6D4 73A3  F0CF BF7A C4A5 EAC2 BAF4"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

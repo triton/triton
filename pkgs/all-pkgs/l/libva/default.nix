@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "1.8.1";
+  version = "1.8.2";
 in
 stdenv.mkDerivation rec {
   name = "libva-${version}";
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
         + "${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "c1d5d85b6b40b76f37993b4da33388d3d73b64998dcbc160b7578e24ed775c73";
+    sha256 = "9ed3e3ddc8f47a715d4c6ec366beb21c83fc4e8a3d4d39a811baff76f0a0cede";
   };
 
   buildInputs = [

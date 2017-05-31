@@ -1,6 +1,5 @@
 { stdenv
 , cmake
-, fetchTritonPatch
 , fetchurl
 , ninja
 
@@ -32,7 +31,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "mariadb-10.1.23";
+  name = "mariadb-10.2.6";
 
   src = fetchurl {
     urls = map (n: "${n}/${name}/source/${name}.tar.gz") [
@@ -41,8 +40,7 @@ stdenv.mkDerivation rec {
       "http://mirror.jmu.edu/pub/mariadb"
     ];
     hashOutput = false;
-    insecureHashOutput = true;
-    sha256 = "54d8114e24bfa5e3ebdc7d69e071ad1471912847ea481b227d204f9d644300bf";
+    sha256 = "c385c76e40d6e5f0577eba021805da5f494a30c9ef51884baefe206d5658a2e5";
   };
 
   nativeBuildInputs = [
@@ -77,14 +75,6 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "13ffc92151e03d6690dee7b37781e94312401a3b";
-      file = "m/mariadb/openssl-1.1.0.patch";
-      sha256 = "f337505ce421aea82693ab95372ce93fde3ea0351e0b6b78c26c9e1154df174c";
-    })
-  ];
-
   cmakeFlags = [
     "-DBUILD_CONFIG=mysql_release"
     "-DDEFAULT_CHARSET=utf8"
@@ -103,13 +93,12 @@ stdenv.mkDerivation rec {
     "-DINSTALL_MYSQLSHAREDIR=share/mysql"
     "-DINSTALL_DOCDIR=share/mysql/docs"
     "-DINSTALL_SHAREDIR=share/mysql"
+    "-DWITH_INNODB_SNAPPY=ON"
     "-DWITH_READLINE=ON"
     "-DWITH_ZLIB=system"
     "-DWITH_SSL=system"
-    #"-DWITH_SSL=bundled"
     "-DWITH_PCRE=system"
     "-DWITH_LIBARCHIVE=ON"
-    "-DWITH_EMBEDDED_SERVER=yes"
     "-DWITH_EXTRA_CHARSETS=complex"
     "-DWITH_EMBEDDED_SERVER=ON"
     "-DWITH_ARCHIVE_STORAGE_ENGINE=1"
@@ -124,20 +113,18 @@ stdenv.mkDerivation rec {
   ];
 
   prePatch = ''
-    substituteInPlace cmake/libutils.cmake \
-      --replace /usr/bin/libtool libtool
-    sed -i 's,[^"]*/var/log,/var/log,g' storage/mroonga/vendor/groonga/CMakeLists.txt
+    sed -i 's,[^"]*/var/log,/var/log,g' \
+      storage/mroonga/vendor/groonga/CMakeLists.txt
   '';
 
   postInstall = ''
-    substituteInPlace $out/bin/mysql_install_db \
-      --replace basedir=\"\" basedir=\"$out\"
+    sed -i "s,basedir=\"\",basedir=\"$out\",g" \
+      "$out"/bin/mysql_install_db
 
     # Remove superfluous files
     rm -r $out/mysql-test $out/sql-bench $out/data # Don't need testing data
     rm $out/share/man/man1/mysql-test-run.pl.1
     rm $out/bin/rcmysql # Not needed with nixos units
-    rm $out/bin/mysqlbug # Encodes a path to gcc and not really useful
     find $out/bin -name \*test\* -exec rm {} \;
 
     # Fix the mysql_config

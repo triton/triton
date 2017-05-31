@@ -1,5 +1,4 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
 , python
 
@@ -12,7 +11,7 @@
 }:
 
 let
-  version = "7.10.0";
+  version = "8.0.0";
 
   dirUrls = [
     "https://nodejs.org/dist/v${version}"
@@ -24,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/node-v${version}.tar.xz") dirUrls;
     hashOutput = false;
-    sha256 = "dc34dd15524ba821ffcae7b245eabe8631e2614d5e3cb8ff08fbfdadf5919f21";
+    sha256 = "258d3aa3632bbbf2a447c5d524bd7074e23aa26e2b698774ff452954f6174f1c";
   };
 
   nativeBuildInputs = [
@@ -38,14 +37,6 @@ stdenv.mkDerivation rec {
     libuv
     openssl_1-0-2
     zlib
-  ];
-
-  patches = [
-    (fetchTritonPatch {
-      rev = "1aff209779d64f23980bf3da0a4c1de69fa08d84";
-      file = "n/nodejs/icu59.patch";
-      sha256 = "040aad43816b8f768ac1d207b78f4cb21e7ec472d11f6dfe812600c3604bf2de";
-    })
   ];
 
   postPatch = ''

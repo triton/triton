@@ -7369,14 +7369,13 @@ let self = _self // overrides; _self = with self; {
     };
   };
 
-  ModuleInstall = let version = "1.16"; in buildPerlPackage {
+  ModuleInstall = let version = "1.18"; in buildPerlPackage {
     name = "Module-Install-${version}";
     src = fetchurl {
       url = "mirror://cpan/authors/id/E/ET/ETHER/Module-Install-${version}.tar.gz";
-      sha256 = "0ph242hmz11wv41yh1g8k9zj1bgzkamg2kgq8hnq4kaz4mj15b5g";
+      sha256 = "29068ac33502cec959844c206516c09cc4a847cb57327d41015f605153ca645e";
     };
     buildInputs = [ YAMLTiny ];
-    propagatedBuildInputs = [ FileRemove ModuleScanDeps YAMLTiny ];
     meta = {
       description = "Standalone, extensible Perl module installer";
       license = "perl";
@@ -13030,9 +13029,9 @@ let self = _self // overrides; _self = with self; {
     name = "WWW-Curl-4.17";
     src = fetchurl {
       url = "mirror://cpan/authors/id/S/SZ/SZBALINT/${name}.tar.gz";
-      sha256 = "1fmp9aib1kaps9vhs4dwxn7b15kgnlz9f714bxvqsd1j1q8spzsj";
+      sha256 = "52ffab110e32348d775f241c973eb56f96b08eedbc110d77d257cdb0a24ab7ba";
     };
-    buildInputs = [ pkgs.curl ];
+    buildInputs = [ pkgs.curl ModuleInstall ];
     NIX_CFLAGS_COMPILE = "-DCURL_STRICTER";
     preConfigure = ''
       sed -e 's,"cpp","gcc -E",g' -i Makefile.PL
@@ -13477,10 +13476,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   YAMLTiny = buildPerlPackage rec {
-    name = "YAML-Tiny-1.69";
+    name = "YAML-Tiny-1.70";
     src = fetchurl {
       url = "mirror://cpan/authors/id/E/ET/ETHER/${name}.tar.gz";
-      sha256 = "14pmhksj68ii3rf4dza8im1i6jw3zafxkvxww5xlz7ib95cv135w";
+      sha256 = "bbce4b52b5eafdb04e3043975a08dbf394d00b7d2c958adb9d03d9f7e9291255";
     };
   };
 

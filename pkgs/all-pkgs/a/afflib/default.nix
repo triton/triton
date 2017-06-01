@@ -12,17 +12,17 @@
 }:
 
 let
-  version = "3.7.13";
+  version = "3.7.15";
 in
 stdenv.mkDerivation {
   name = "afflib-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "sshock";
     repo = "AFFLIBv3";
     rev = "v${version}";
-    sha256 = "0a39e479f8daa17f2df490df7f5624b15edfa8b3aa0188a7850d8370035f793b";
+    sha256 = "26f09cafbe3ea4a3cc32ffb2208a0e2b647d04749970b023ccde54d1bd47baa0";
   };
 
   nativeBuildInputs = [

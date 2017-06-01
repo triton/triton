@@ -33,7 +33,7 @@
 , mysql
 , openssl_1-0-2
 , pciutils
-, pcre
+, pcre2
 , postgresql
 , pulseaudio_lib
 , sqlite
@@ -47,7 +47,7 @@
 }:
 
 let
-  versionMajor = "5.8";
+  versionMajor = "5.9";
   versionPatch = "0";
   version = "${versionMajor}.${versionPatch}";
 
@@ -61,9 +61,9 @@ stdenv.mkDerivation rec {
     url = "http://download.qt.io/official_releases/qt/${versionMajor}/${version}"
       + "/single/qt-everywhere-opensource-src-${version}.tar.xz";
     hashOutput = false;
-    md5Confirm = "66660cd3d9e1a6fed36e88adcb72e9fe";
-    sha1Confirm = "1a056ca4f731798e4142a691d0448c2c853228ca";
-    sha256 = "0f4c54386d3dbac0606a936a7145cebb7b94b0ca2d29bc001ea49642984824b6";
+    md5Confirm = "9c8bc8b828c2b56721980368266df9d9";
+    sha1Confirm = "6308cd1e95c64323490a9a526a7f0a380cdcfb6e";
+    sha256 = "f70b5c66161191489fc13c7b7eb69bf9df3881596b183e7f6d94305a39837517";
   };
 
   nativeBuildInputs = [
@@ -99,7 +99,7 @@ stdenv.mkDerivation rec {
     mtdev
     mysql
     openssl_1-0-2
-    pcre
+    pcre2
     postgresql
     pulseaudio_lib
     sqlite
@@ -110,6 +110,7 @@ stdenv.mkDerivation rec {
     xorg.inputproto
     xorg.libX11
     xorg.libxcb
+    xorg.libXcomposite
     xorg.libXext
     xorg.libXfixes
     xorg.libXi

@@ -15,12 +15,12 @@ let
     optionals;
 in
 stdenv.mkDerivation rec {
-  name = "rrdtool-1.6.0";
+  name = "rrdtool-1.7.0";
 
   src = fetchurl {
     url = "https://oss.oetiker.ch/rrdtool/pub/${name}.tar.gz";
-    multihash = "Qmf54Ys2NcVmiKtnZhEDPKZ2VmVnQC4HosT2kX9FShhKFp";
-    sha256 = "cd948e89cd2d8825fab4a6fb0323f810948d934af7d92c9ee8b5e9e1350e52d7";
+    multihash = "QmNscVByZWVLBZMsr1GjSEGpqKKaPnrA7qMKov26cPBjzs";
+    sha256 = "f97d348935b91780f2cd80399719e20c0b91f0a23537c0a85f9ff306d4c5526b";
   };
 
   nativeBuildInputs = [

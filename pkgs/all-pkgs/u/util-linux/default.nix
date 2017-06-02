@@ -34,8 +34,8 @@ let
 
   tarballUrls = base: patch: map (n: "${n}/util-linux-${version base patch}.tar") (baseUrls base);
 
-  base = "2.29";
-  patch = "2";
+  base = "2.30";
+  patch = null;
 in
 stdenv.mkDerivation rec {
   name = "${type}util-linux-${version base patch}";
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls base patch);
     hashOutput = false;
-    sha256 = "accea4d678209f97f634f40a93b7e9fcad5915d1f4749f6c47bee6bf110fe8e3";
+    sha256 = "c208a4ff6906cb7f57940aa5bc3a6eed146e50a7cc0a092f52ef2ab65057a08d";
   };
 
   nativeBuildInputs = [
@@ -134,12 +134,12 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      urls = map (n: "${n}.xz") (tarballUrls "2.29" "2");
-      pgpsigUrls = map (n: "${n}.sign") (tarballUrls "2.29" "2");
-      pgpsigSha256Urls = map (n: "${n}/sha256sums.asc") (baseUrls "2.29");
+      urls = map (n: "${n}.xz") (tarballUrls "2.30" null);
+      pgpsigUrls = map (n: "${n}.sign") (tarballUrls "2.30" null);
+      pgpsigSha256Urls = map (n: "${n}/sha256sums.asc") (baseUrls "2.30");
       pgpKeyFingerprint = "B0C6 4D14 301C C6EF AEDF  60E4 E4B7 1D5E EC39 C284";
       pgpDecompress = true;
-      outputHash = "accea4d678209f97f634f40a93b7e9fcad5915d1f4749f6c47bee6bf110fe8e3";
+      outputHash = "c208a4ff6906cb7f57940aa5bc3a6eed146e50a7cc0a092f52ef2ab65057a08d";
       inherit (src) outputHashAlgo;
     };
   };

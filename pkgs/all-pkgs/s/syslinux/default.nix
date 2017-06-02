@@ -10,14 +10,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "syslinux-2017-03-25";
+  name = "syslinux-2017-05-31";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "geneC";
     repo = "syslinux";
-    rev = "48e94f4fa7b3c32cbd43b6e57c64bc933f76d059";
-    sha256 = "6d4c163b72b926526fb719af238934aa1a4568a1e9b819c50c5e6e697f85e20d";
+    rev = "828a75d005daf87707e883f04909282efb3e764a";
+    sha256 = "c631d80c0e89166b8ea3c20c0b9bfacf787e6b22d3986bef214a11aed2727d92";
   };
 
   nativeBuildInputs = [

@@ -3,17 +3,17 @@
 }:
 
 let
-  version = "0.9.19";
+  version = "0.9.21";
 in
 stdenv.mkDerivation rec {
   name = "lmdb-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "LMDB";
     repo = "lmdb";
     rev = "LMDB_${version}";
-    sha256 = "bc4441d3607a624cf81e859edd1dbfadd1ce00396643ef9493cad94a42b0e39e";
+    sha256 = "c8a2892fcc50e5991bbdca77fca87d75f9f953f9156d2149aeedcb35b64121c4";
   };
 
   prePatch = ''

@@ -17,13 +17,13 @@ let
   ];
 in
 stdenv.mkDerivation rec {
-  name = "dnsmasq-2.76";
+  name = "dnsmasq-2.77";
 
   src = fetchurl {
     url = "http://www.thekelleys.org.uk/dnsmasq/${name}.tar.xz";
-    multihash = "QmYZcmsVefbxGB3WmtJHjhrWFuKpEuGGWT96tqob49yqZ3";
+    multihash = "QmbvHaekEYZHwEdE7pse67wDLQzmUo5TFpBtn3FP9juagY";
     hashOutput = false;
-    sha256 = "4b92698dee19ca0cb2a8f2e48f1d2dffd01a21eb15d1fbed4cf085630c8c9f96";
+    sha256 = "6eac3b1c50ae25170e3ff8c96ddb55236cf45007633fdb8a35b1f3e02f5f8b8a";
   };
 
   buildInputs = [
@@ -66,7 +66,10 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "2693 22E7 D925 5916 E039  4DD6 28FC 869A 289B 82B7";
+      pgpKeyFingerprints = [
+        "2693 22E7 D925 5916 E039  4DD6 28FC 869A 289B 82B7"
+        "D6EA CBD6 EE46 B834 248D  1112 15CD DA6A E191 35A2"
+      ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

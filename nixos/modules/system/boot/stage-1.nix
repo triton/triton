@@ -140,8 +140,8 @@ let
       check_test_string 'BusyBox' "$TEST_MOUNT" "$out/bin/mount --help"
 
       echo 'TESTING: blkid'
-      TEST_BLKID="$($out/bin/blkid --help 2>&1 | grep -o 'libblkid' || :)"
-      check_test_string 'libblkid' "$TEST_BLKID" "$out/bin/blkid --help"
+      TEST_BLKID="$($out/bin/blkid --help 2>&1 | grep -o 'blkid(8)' || :)"
+      check_test_string 'blkid(8)' "$TEST_BLKID" "$out/bin/blkid --help"
 
       echo 'TESTING: udevadm'
       $out/bin/udevadm --version

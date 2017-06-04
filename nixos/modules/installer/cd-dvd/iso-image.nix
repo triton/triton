@@ -254,10 +254,12 @@ in
     # UUID of the USB stick.  It would be nicer to write
     # `root=/dev/disk/by-label/...' here, but UNetbootin doesn't
     # recognise that.
-    boot.kernelParams =
-      [ "root=LABEL=${config.isoImage.volumeID}"
-        "boot.shell_on_fail"
-      ];
+    boot.kernelParams = [
+      "root=LABEL=${config.isoImage.volumeID}"
+      "boot.shell_on_fail"
+      "console=tty0"
+      "console=ttyS0,115200n8"
+    ];
 
     fileSystems = mkMerge [
       (mkOrder 0 [ {

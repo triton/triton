@@ -271,7 +271,7 @@ if [ ! -e "$MOUNT_POINT" ]; then
   exit 1
 fi
 
-declare -r NIXOS_CONFIG="${NIXOS_CONFIG:-$MOUNT_POINT/etc/nixos/configuration.nix}"
+declare NIXOS_CONFIG="${NIXOS_CONFIG:-$MOUNT_POINT/etc/nixos/configuration.nix}"
 if [ ! -e "$NIXOS_CONFIG" ]; then
   echo "nixos config doesn't exist: $NIXOS_CONFIG" >&2
   exit 1

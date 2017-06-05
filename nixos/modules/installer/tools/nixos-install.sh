@@ -146,7 +146,7 @@ rbind_host_dir() {
 
   for dir in "${source_dirs[@]}"; do
     if [ -d "/${dir}" ]; then
-      mount --verbose --rbind "/${dir}" \
+      mount ${debugFlags:+--verbose} --rbind "/${dir}" \
         "${mount_point}/${destination_dir}"
       break
     fi
@@ -173,7 +173,7 @@ rbind_host_file() {
   for file in "${source_files[@]}"; do
     if [ -f "/${file}" ]; then
       touch "${mount_point}/${destination_file}"
-      mount --verbose --rbind --options ro "/${file}" \
+      mount ${debugFlags:+--verbose} --rbind --options ro "/${file}" \
         "${mount_point}/${destination_file}"
       break
     fi
@@ -189,7 +189,7 @@ cleanup_mounts() {
 
   # Un-mount in the reverse order they were mounted
   for ((index=${#TRACK_MOUNTS[@]}-1; index>=0; index--)) ; do
-    umount --verbose "${TRACK_MOUNTS["${index}"]}"
+    umount ${debugFlags:+--verbose} "${TRACK_MOUNTS["${index}"]}"
   done
 }
 
@@ -200,7 +200,7 @@ if [ $(id -u) -eq 0 ]; then
     export NIXOS_INSTALL_REEXEC=1
     exec unshare --mount --uts -- "$0" "$@"
   else
-    mount --verbose --make-rprivate '/'
+    mount ${debugFlags:+--verbose} --make-rprivate '/'
   fi
 fi
 
@@ -246,6 +246,9 @@ while [ "$#" -gt 0 ]; do
         chrootCommand=("$@")
       fi
       break
+      ;;
+    '--debug')
+      debugFlags=1
       ;;
     '--help')
       exec man nixos-install
@@ -337,7 +340,7 @@ if ! NIX_DB_DIR="$MOUNT_POINT/nix/var/nix/db" nix-store --check-validity '@nix@'
   for i in $(@perl@/bin/perl @pathsFromGraph@ @nixClosure@); do
     echo "  $i" >&2
     chattr -R -i "$MOUNT_POINT/$i" 2> /dev/null || true  # clear immutable bit
-    @rsync@/bin/rsync --verbose --archive "$i" "$MOUNT_POINT/nix/store/"
+    @rsync@/bin/rsync ${debugFlags:+--verbose} --archive "$i" "$MOUNT_POINT/nix/store/"
   done
 
   # Register the paths in the Nix closure as valid.  This is necessary
@@ -419,7 +422,7 @@ ln --verbose --symbolic --force --no-dereference \
 # Get rid of the /etc bind mounts.
 for f in '/etc/passwd' '/etc/group'; do
   if [ -f "$f" ]; then
-    umount --verbose "$MOUNT_POINT/$f"
+    umount ${debugFlags:+--verbose} "$MOUNT_POINT/$f"
   fi
 done
 

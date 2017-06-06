@@ -6,8 +6,8 @@
 }:
 
 let
-  date = "2017-04-29";
-  rev = "6d89e297febdbcbad4ecf201e56fc8ec99f67137";
+  date = "2017-05-21";
+  rev = "c538237f4e4c381d35f1c15497c95f659fd55850";
 in
 stdenv.mkDerivation rec {
   name = "jq-${date}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     owner = "stedolan";
     repo = "jq";
     inherit rev;
-    sha256 = "83eb0fe70189f848daf4cf61300825ebf439e0c99dfabab1cd3a8b0139fdf1c1";
+    sha256 = "542883672416e0a2d4d3735ff520c4504a462768d8aca9e42a10b1c66703fd7b";
   };
 
   nativeBuildInputs = [

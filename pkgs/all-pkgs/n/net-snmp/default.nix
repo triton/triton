@@ -4,7 +4,7 @@
 , file
 , perlPackages
 
-, openssl_1-0-2
+, openssl
 }:
 
 let
@@ -26,13 +26,18 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    openssl_1-0-2
+    openssl
   ];
 
   patches = [
     (fetchTritonPatch {
-      rev = "fa150c43b9b4f3d0f3a01badc7cf368ebb1b34ab";
-      file = "net-snmp/perl-5.24-fix.patch";
+      rev = "e4e2b13f53b7419e829273fa3408ad71d10f5fdb";
+      file = "n/net-snmp/openssl-1.1.0.patch";
+      sha256 = "5ca97127a6201372b0d758d844e0cb06decbd146998b8d49f9a430a83e1aadb5";
+    })
+    (fetchTritonPatch {
+      rev = "e4e2b13f53b7419e829273fa3408ad71d10f5fdb";
+      file = "n/net-snmp/perl-5.24-fix.patch";
       sha256 = "56962215c560e4b7870300118855c132b96a542f8568ce16d95d195816e47cfd";
     })
   ];
@@ -49,7 +54,7 @@ stdenv.mkDerivation rec {
     "--with-sys-contact=root@unknown"
     "--with-logfile=/var/log/net-snmpd.log"
     "--with-persistent-directory=/var/lib/net-snmp"
-    "--with-openssl=${openssl_1-0-2}"
+    "--with-openssl=${openssl}"
     "--with-mnttab=/proc/mounts"
   ];
 

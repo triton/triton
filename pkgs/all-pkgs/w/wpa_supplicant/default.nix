@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , writeText
 
@@ -14,7 +15,9 @@ let
   version = "2.6";
 
   inherit (stdenv.lib)
-    optionalString;
+    optionals
+    optionalString
+    versionAtLeast;
 
   # TODO: Patch epoll so that the dbus actually responds
   # TODO: Figure out how to get privsep working, currently getting SIGBUS
@@ -75,6 +78,23 @@ stdenv.mkDerivation rec {
     sha256 = "b4936d34c4e6cdd44954beba74296d964bc2c9668ecaa5255e499636fe2b1450";
   };
 
+  patches = optionals (versionAtLeast openssl.version "1.1.0") [
+    (fetchTritonPatch {
+      rev = "01c6bdc70a6e1f37438e98777b9e645d5e6f994b";
+      file = "w/wpa_supplicant/fix-pem-decryption.patch";
+      sha256 = "849444bd27390b00386a237941bcf3f3a0c429528445580148a919e08a58187d";
+    })
+  ];
+
+  buildInputs = [
+    dbus
+    libnl
+    ncurses
+    openssl
+    pcsc-lite_lib
+    readline
+  ];
+
   preBuild = ''
     cd wpa_supplicant
     cp -v defconfig .config
@@ -87,15 +107,6 @@ stdenv.mkDerivation rec {
       -I$(echo "${libnl}"/include/libnl*/) \
       -I${pcsc-lite_lib}/include/PCSC/"
   '';
-
-  buildInputs = [
-    dbus
-    libnl
-    ncurses
-    openssl
-    pcsc-lite_lib
-    readline
-  ];
 
   postInstall = ''
     mkdir -p $out/share/man/man5 $out/share/man/man8

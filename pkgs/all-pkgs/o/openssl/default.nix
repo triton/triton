@@ -114,6 +114,7 @@ stdenv.mkDerivation rec {
   ];
 
   passthru = {
+    inherit version;
     srcVerification = fetchurl rec {
       failEarly = true;
       urls = tarballUrls "1.1.0e";

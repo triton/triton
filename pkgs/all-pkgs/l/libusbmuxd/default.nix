@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , inotify-tools
@@ -26,6 +27,14 @@ stdenv.mkDerivation rec {
     libplist
   ] ++ optionals (elem targetSystem platforms.linux) [
     inotify-tools
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "272bdf3b004be583496e804d7c80553ddbef18a9";
+      file = "l/libusbmuxd/CVE-2016-5104.patch";
+      sha256 = "9f3a84c8d0a32df13985f6574f5f0e86af435a67606612c0811df631070a97e3";
+    })
   ];
 
   configureFlags = [

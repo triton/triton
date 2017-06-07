@@ -3,15 +3,14 @@
 }:
 
 let
-  version = "0.8.8.5";
+  version = "0.8.9.0";
 in
 stdenv.mkDerivation rec {
   name = "libmodplug-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/modplug-xmms/libmodplug/${version}/${name}.tar.gz";
-    multihash = "QmSfTtNJjzvM29zfgGGWS7DhXL57n6A3u9Fjp1xdUjgD6R";
-    sha256 = "1bfsladg7h6vnii47dd66f5vh1ir7qv12mfb8n36qiwrxq92sikp";
+    sha256 = "457ca5a6c179656d66c01505c0d95fafaead4329b9dbaa0f997d00a3508ad9de";
   };
 
   meta = with stdenv.lib; {

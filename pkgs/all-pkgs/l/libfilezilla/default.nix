@@ -3,7 +3,7 @@
 }:
 
 let
-  version = "0.9.1";
+  version = "0.9.2";
 in
 stdenv.mkDerivation rec {
   name = "libfilezilla-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
       "https://download.filezilla-project.org/libfilezilla/${name}.tar.bz2"
       "mirror://sourceforge/filezilla/libfilezilla/${version}/${name}.tar.bz2"
     ];
-    sha256 = "18b2391771f330cccab2c55a66197b9098f236e616f26f86326795b900913b1a";
+    sha256 = "c162e8a23555b3bbc707cf240b0b4122ea2975d6d8b10744325b968f656b3be3";
   };
 
   meta = with stdenv.lib; {

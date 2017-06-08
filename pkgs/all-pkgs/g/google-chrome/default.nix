@@ -17,6 +17,7 @@
 , gdk-pixbuf_unwrapped
 , glib
 , gtk_2
+, gtk_3
 , libcap
 , nspr
 , nss
@@ -85,6 +86,7 @@ stdenv.mkDerivation rec {
     gdk-pixbuf_unwrapped
     glib
     gtk_2
+    gtk_3
     libcap
     nspr
     nss

@@ -28,17 +28,17 @@ let
 
   libOnly = prefix == "lib";
 
-  version = "1.9.10";
+  version = "2017-05-18";
 in
 stdenv.mkDerivation rec {
   name = "${prefix}jack2-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 3;
     owner = "jackaudio";
     repo = "jack2";
-    rev = "v${version}";
-    sha256 = "c012e28cc2d6687bf34a9f2a87a507f0d3b46670428e1553634f29de82451b22";
+    rev = "31d4ae97f296fe1c954cbb51e50d5e60578260b8";
+    sha256 = "c357e5e8384231dab58e8070c9fc7515e6975f1fa61c98e7231bd3dbb3964cf5";
   };
 
   nativeBuildInputs = [
@@ -62,14 +62,16 @@ stdenv.mkDerivation rec {
     pythonPackages.dbus
   ];
 
-  prePatch = ''
+  postPatch = ''
     sed -i svnversion_regenerate.sh \
       -e 's,/bin/bash,${bash}/bin/bash,'
-  '';
 
-  patches = [
-    ./jack-gcc5.patch
-  ];
+    # FIXME: disable tests to work around bug with gcc7
+    ## if not bld.env['IS_WINDOWS']:
+    ##   bld.recurse('tests')
+    sed -i wscript \
+      -e 's/not bld.env/bld.env/'
+  '';
 
   configurePhase = ''
     python waf configure --prefix=$out \
@@ -79,8 +81,6 @@ stdenv.mkDerivation rec {
       ${optionalString (!libOnly) "--alsa"} \
       --autostart=dbus \
   '';
-
-  CXXFLAGS = "-std=c++98";
 
   buildPhase = ''
     python waf build

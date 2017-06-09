@@ -4,6 +4,7 @@
 , makeWrapper
 , patchelf
 
+, adwaita-icon-theme
 , alsa-lib
 , atk
 , bzip2
@@ -14,8 +15,10 @@
 , fontconfig
 , freetype
 , gconf
+, gdk-pixbuf
 , gdk-pixbuf_unwrapped
 , glib
+, gsettings-desktop-schemas
 , gtk_2
 , gtk_3
 , libcap
@@ -73,6 +76,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    adwaita-icon-theme
     alsa-lib
     atk
     bzip2
@@ -83,8 +87,10 @@ stdenv.mkDerivation rec {
     fontconfig
     freetype
     gconf
+    gdk-pixbuf
     gdk-pixbuf_unwrapped
     glib
+    gsettings-desktop-schemas
     gtk_2
     gtk_3
     libcap
@@ -174,8 +180,12 @@ stdenv.mkDerivation rec {
       "$out/bin/google-chrome${channame}"
 
     wrapProgram "$out/bin/google-chrome${channame}" \
+      --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix LD_LIBRARY_PATH : "${chromeLibPath}" \
-      --prefix PATH : "${chromeBinPath}"
+      --prefix PATH : "${chromeBinPath}" \
+      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
   meta = with lib; {

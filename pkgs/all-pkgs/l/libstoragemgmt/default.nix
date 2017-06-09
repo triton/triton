@@ -59,6 +59,11 @@ stdenv.mkDerivation rec {
     )
   '';
 
+  NIX_CFLAGS_COMPILE = [
+    "-Wno-format-overflow"
+    "-Wno-implicit-fallthrough"
+  ];
+
   meta = with stdenv.lib; {
     maintainers = with maintainers; [
       wkennington

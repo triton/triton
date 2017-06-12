@@ -2,10 +2,12 @@
 , fetchurl
 , gettext
 
-, libidn
-, libpsl ? null
+, libidn2
+, libpsl
 , openssl_1-0-2
+, pcre
 , util-linux_lib
+, zlib
 
 , perl
 , perlPackages
@@ -32,10 +34,12 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    libidn
+    libidn2
     libpsl
     openssl_1-0-2
+    pcre
     util-linux_lib
+    zlib
   ] ++ optionals doCheck [
     perl
     perlPackages.IOSocketSSL

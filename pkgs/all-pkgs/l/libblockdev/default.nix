@@ -21,17 +21,17 @@
 }:
 
 let
-  version = "2.6";
+  version = "2.8";
 in
 stdenv.mkDerivation rec {
   name = "libblockdev-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "rhinstaller";
     repo = "libblockdev";
     rev = "${version}-1";
-    sha256 = "bb2fe6f39a378fb40fd3913673158f424618c1b026d9316dcb442b8bbd66310c";
+    sha256 = "ab69068d27f433419d5c2956bff47d472f011a3719a6f193397b528652974df3";
   };
 
   nativeBuildInputs = [

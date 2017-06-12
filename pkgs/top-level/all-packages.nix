@@ -2466,6 +2466,8 @@ mariadb = callPackage ../all-pkgs/m/mariadb { };
 mysql = callPackageAlias "mariadb" { };
 mysql_lib = callPackageAlias "mysql" { };
 
+mariadb-connector-c = callPackage ../all-pkgs/m/mariadb-connector-c { };
+
 mcelog = callPackage ../all-pkgs/m/mcelog { };
 
 mdadm = callPackage ../all-pkgs/m/mdadm { };

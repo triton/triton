@@ -12,7 +12,7 @@ let
     replaceChars;
 
   channel = "1.4";
-  version = "${channel}.2";
+  version = "${channel}.3";
 
   versionFormatted =
     # For initial minor releases drop the trailing zero
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
       "mirror://gnome/sources/libepoxy/${channel}/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "bea6fdec3d10939954495da898d872ee836b75c35699074cbf02a64fcb80d5b3";
+    sha256 = "0b808a06c9685a62fca34b680abb8bc7fb2fda074478e329b063c1f872b826f6";
   };
 
   nativeBuildInputs = [

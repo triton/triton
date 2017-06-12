@@ -91,6 +91,8 @@ stdenv.mkDerivation rec {
     (cd build-tools; make install)
     rm -rf $out/{sbin,share}
     find $out/bin -type f | grep -v 'krb5-config' | xargs rm
+  '' + ''
+    ln -s libgssapi_krb5.so "$out"/lib/libgssapi.so
   '';
 
   passthru = rec {

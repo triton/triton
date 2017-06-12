@@ -4,6 +4,7 @@
 , fstrm
 , gnutls
 , jansson
+, libcap-ng
 , libedit
 , libidn
 , liburcu
@@ -14,19 +15,20 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "knot-2.4.3";
+  name = "knot-2.5.1";
 
   src = fetchurl {
     url = "https://secure.nic.cz/files/knot-dns/${name}.tar.xz";
-    multihash = "QmUDaTiExb9gFnFgFUYfQx69Gr5WPHL5218dxoFcfddcaK";
+    multihash = "QmaMo4joLMraQeabqFf8tJGEng4PVi5ASuK1x8tfbfMzft";
     hashOutput = false;
-    sha256 = "f90258bcb29c1f351cd8d824ff8d67aef906ae5d5ff0f652c4f69c69ed8a704f";
+    sha256 = "6c08cdc0a0182e262136b936a968ad667abce112195d99c27e50ea22afc08398";
   };
 
   buildInputs = [
     fstrm
     gnutls
     jansson
+    libcap-ng
     libedit
     libidn
     liburcu

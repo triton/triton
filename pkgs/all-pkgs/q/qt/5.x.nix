@@ -28,9 +28,9 @@
 , libpng
 , libproxy
 , libxkbcommon
+, mariadb-connector-c
 , mesa
 , mtdev
-, mysql
 , openssl_1-0-2
 , pciutils
 , pcre2
@@ -95,9 +95,9 @@ stdenv.mkDerivation rec {
     libpng
     libproxy
     libxkbcommon
+    mariadb-connector-c
     mesa
     mtdev
-    mysql
     openssl_1-0-2
     pcre2
     postgresql

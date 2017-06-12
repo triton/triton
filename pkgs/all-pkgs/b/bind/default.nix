@@ -13,7 +13,7 @@
 , libseccomp
 , libxml2
 , lmdb
-, mysql_lib
+, mariadb-connector-c
 , ncurses
 , openldap
 , openssl_1-0-2
@@ -67,7 +67,7 @@ stdenv.mkDerivation rec {
     db
     fstrm
     openldap
-    mysql_lib
+    mariadb-connector-c
     postgresql
     protobuf-c
   ];
@@ -127,7 +127,7 @@ stdenv.mkDerivation rec {
     "--enable-full-report"
   ] ++ optionals (!toolsOnly) [
     "--with-dlz-postgres=${postgresql}"
-    "--with-dlz-mysql=${mysql_lib}"
+    "--with-dlz-mysql=${mariadb-connector-c}"
     "--with-dlz-bdb=${db}"
     "--with-dlz-filesystem"
     "--with-dlz-ldap=${openldap}"

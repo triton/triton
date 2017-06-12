@@ -12,14 +12,14 @@
 let
 in
 stdenv.mkDerivation rec {
-  name = "iputils-2017-01-14";
+  name = "iputils-2017-04-14";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "iputils";
     repo = "iputils";
-    rev = "3c7b5f7177b62245babe42e1e5b572865186ab7b";
-    sha256 = "08136ef95deeb0bcf82227c58917cc1364df42f71c5ed7459458dfdac821bb40";
+    rev = "1ef0e4c86d358c8e217b90686394196412e184d2";
+    sha256 = "dd4caad57510e33908dee58773d8a1f575663cfdceac973601d53f79ef3d7b91";
   };
 
   postPatch =

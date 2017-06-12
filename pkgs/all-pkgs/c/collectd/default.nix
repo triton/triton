@@ -22,7 +22,7 @@
 , lm-sensors
 , lua
 , lvm2
-, mysql_lib
+, mariadb-connector-c
 , net-snmp
 , openldap
 , perl
@@ -86,7 +86,7 @@ stdenv.mkDerivation rec {
     lm-sensors
     lua
     lvm2
-    mysql_lib
+    mariadb-connector-c
     net-snmp
     openldap
     perl

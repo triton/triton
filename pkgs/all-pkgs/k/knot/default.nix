@@ -6,7 +6,7 @@
 , jansson
 , libcap-ng
 , libedit
-, libidn
+, libidn2
 , liburcu
 , lmdb
 , nettle
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
     jansson
     libcap-ng
     libedit
-    libidn
+    libidn2
     liburcu
     lmdb
     nettle
@@ -45,7 +45,6 @@ stdenv.mkDerivation rec {
     "--enable-systemd"
     "--with-urcu=${liburcu}"
     "--with-lmdb=${lmdb}"
-    "--with-libidn=${libidn}"
     "--enable-dnstap"
   ];
 

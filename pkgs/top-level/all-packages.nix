@@ -3989,8 +3989,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
   gsl = callPackage ../development/libraries/gsl { };
 #
-  gss = callPackage ../development/libraries/gss { };
-#
   gts = callPackage ../development/libraries/gts { };
 #
   ilmbase = callPackage ../development/libraries/ilmbase { };

@@ -3,14 +3,14 @@
 
 , dbus
 , gmp
-, libidn
+, libidn2
 , libnetfilter_conntrack
 , nettle
 }:
 
 let
   copts = stdenv.lib.concatStringsSep " " [
-    "-DHAVE_IDN"
+    "-DHAVE_LIBIDN2"
     "-DHAVE_DNSSEC"
     "-DHAVE_DBUS"
     "-DHAVE_CONNTRACK"
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     dbus
     gmp
-    libidn
+    libidn2
     libnetfilter_conntrack
     nettle
   ];

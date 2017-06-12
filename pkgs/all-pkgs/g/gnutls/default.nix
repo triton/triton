@@ -6,7 +6,7 @@
 
 , cryptodev_headers
 , gmp
-, libidn
+, libidn2
 , libtasn1
 , libunistring
 , lzo
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     cryptodev_headers
     gmp
-    libidn
+    libidn2
     libtasn1
     libunistring
     lzo

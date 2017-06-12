@@ -22,11 +22,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "udisks-2.6.5";
+  name = "udisks-2.7.0";
 
   src = fetchurl {
     url = "https://github.com/storaged-project/udisks/releases/download/${name}/${name}.tar.bz2";
-    sha256 = "cbc3cd1600a39e168175b1f22bdda7bc9c3feea0f3ed0556001f8b23ee73a7d1";
+    sha256 = "0070022b71bf4551d02e73d3a76f6540beea0be66f3cfac28fffaed48695fe91";
   };
 
   postPatch = ''
@@ -46,6 +46,11 @@ stdenv.mkDerivation rec {
 
     # We need to fix uses of BUILD_DIR
     find . -name \*.c -exec sed -i 's,BUILD_DIR,"/no-such-path",g' {} \;
+
+    grep -q '<loop.h>' configure
+    sed -i 's,<loop.h>,<blockdev/loop.h>,g' configure
+    grep -q '<swap.h>' configure
+    sed -i 's,<swap.h>,<blockdev/swap.h>,g' configure
   '';
 
   nativeBuildInputs = [

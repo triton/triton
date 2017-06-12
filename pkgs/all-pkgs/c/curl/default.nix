@@ -3,10 +3,11 @@
 , perl
 
 , c-ares
-, gss
-, libidn
-, nghttp2_lib
+, krb5_lib
+, libidn2
+, libpsl
 , libssh2
+, nghttp2_lib
 , openldap
 , openssl
 , rtmpdump
@@ -50,8 +51,9 @@ stdenv.mkDerivation rec {
     openssl
     zlib
   ] ++ optionals isFull [
-    gss
-    libidn
+    krb5_lib
+    libidn2
+    libpsl
     libssh2
     openldap
     rtmpdump
@@ -88,7 +90,7 @@ stdenv.mkDerivation rec {
     "--without-cyassl"
     "--without-nss"
     "--without-axtls"
-    "--without-libpsl"
+    "--${if isFull then "with" else "without"}-libpsl"
     "--without-libmetalink"
     # "--without-zsh-functions-dir"
     "--${if isFull then "with" else "without"}-libssh2"

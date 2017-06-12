@@ -2088,6 +2088,8 @@ libidl = callPackage ../all-pkgs/l/libidl { };
 
 libidn = callPackage ../all-pkgs/l/libidn { };
 
+libidn2 = callPackage ../all-pkgs/l/libidn2 { };
+
 libiodbc = callPackage ../all-pkgs/l/libiodbc {
   gtk_2 = null;
 };

@@ -2204,6 +2204,8 @@ libpng = callPackage ../all-pkgs/l/libpng { };
 
 libproxy = callPackage ../all-pkgs/l/libproxy { };
 
+libpsl = callPackage ../all-pkgs/l/libpsl { };
+
 libpthread-stubs = callPackage ../all-pkgs/l/libpthread-stubs { };
 
 libpwquality = callPackage ../all-pkgs/l/libpwquality { };

@@ -5,13 +5,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "mercurial-4.2";
+  name = "mercurial-4.2.1";
 
   src = fetchurl {
     url = "https://www.mercurial-scm.org/release/${name}.tar.gz";
-    multihash = "QmVSEyLMi82ixejuiQyWPmCDwAsuADVjGwK7cJdsM8b8zf";
+    multihash = "QmW3QiDQHg7YZTpH8c1PfF3AJ42MzFuZpEpS2UUPriuidP";
     hashOutput = false;
-    sha256 = "23a412308fc9c2b354a0e91a89588a4af2af061b47da80bc4233ccb0cceef47d";
+    sha256 = "d7d5572f5aa0797fbf2168440eaa51149df88645fe37af8b15fa660d9a8158a0";
   };
 
   nativeBuildInputs = [

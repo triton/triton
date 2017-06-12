@@ -141,6 +141,12 @@ rec {
     http://mirrors.xmission.com/kernel.org
   ];
 
+  mariadb = [
+    http://downloads.mariadb.org/interstitial
+    http://sfo1.mirrors.digitalocean.com/mariadb
+    http://mirror.jmu.edu/pub/mariadb
+  ];
+
   metalab = [
     ftp://ftp.gwdg.de/pub/linux/metalab
   ];

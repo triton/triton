@@ -34,11 +34,7 @@ stdenv.mkDerivation rec {
   name = "mariadb-10.2.6";
 
   src = fetchurl {
-    urls = map (n: "${n}/${name}/source/${name}.tar.gz") [
-      "http://downloads.mariadb.org/interstitial"
-      "http://sfo1.mirrors.digitalocean.com/mariadb"
-      "http://mirror.jmu.edu/pub/mariadb"
-    ];
+    url = "mirror://mariadb/${name}/source/${name}.tar.gz";
     hashOutput = false;
     sha256 = "c385c76e40d6e5f0577eba021805da5f494a30c9ef51884baefe206d5658a2e5";
   };

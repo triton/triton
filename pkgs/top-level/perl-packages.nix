@@ -3169,10 +3169,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   DevelChecklib = buildPerlPackage rec {
-    name = "Devel-CheckLib-1.05";
+    name = "Devel-CheckLib-1.11";
     src = fetchurl {
       url = "mirror://cpan/authors/id/M/MA/MATTN/${name}.tar.gz";
-      sha256 = "0qs7c8jffar2rpvscrd8rcds75zsc46cizp5fi5369821jl4fw3a";
+      sha256 = "bd6d1c187e80be6de1f0d37add441ba8f14950c7bc1f54e764770ed484b232c1";
     };
     propagatedBuildInputs = [ IOCaptureOutput ];
   };
@@ -3269,11 +3269,6 @@ let self = _self // overrides; _self = with self; {
   DBDSQLite = import ../development/perl-modules/DBD-SQLite {
     inherit stdenv fetchurl buildPerlPackage DBI;
     inherit (pkgs) sqlite;
-  };
-
-  DBDmysql = import ../development/perl-modules/DBD-mysql {
-    inherit fetchurl buildPerlPackage DBI;
-    inherit (pkgs) mysql;
   };
 
   DBDPg = import ../development/perl-modules/DBD-Pg {
@@ -5937,10 +5932,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   IOCaptureOutput = buildPerlPackage rec {
-    name = "IO-CaptureOutput-1.1103";
+    name = "IO-CaptureOutput-1.1104";
     src = fetchurl {
       url = "mirror://cpan/authors/id/D/DA/DAGOLDEN/${name}.tar.gz";
-      sha256 = "1bcl7p87ysbzab6hssq19xn3djzc0yk9l4hk0a2mqbqb8hv6p0m5";
+      sha256 = "fcc732fcb438f97a72b30e8c7796484bef2562e374553b207028e2fbf73f8330";
     };
   };
 
@@ -6943,10 +6938,6 @@ let self = _self // overrides; _self = with self; {
       sha256 = "0i306p7mdqx09qfsf6b3rnn5xw9v9r3md4swlbk9z0mskjl0l4w4";
     };
     propagatedBuildInputs = [ LWP NetDNS ];
-  };
-
-  maatkit = import ../development/perl-modules/maatkit {
-    inherit fetchurl buildPerlPackage stdenv DBDmysql;
   };
 
   MailDKIM = buildPerlPackage rec {

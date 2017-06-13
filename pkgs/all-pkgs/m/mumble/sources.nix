@@ -6,8 +6,8 @@
   };
   "git" = {
     fetchzipversion = 3;
-    version = "2017-05-31";
-    rev = "13bc12d3d00f3fa2cd001e4fb78375c5b86e1058";
-    sha256 = "3c7ecac2c7ee45c14218ac0996be0b482c07f9143e7931678a92172ec698224b";
+    version = "2017-06-11";
+    rev = "e913a441c1a55eca70e62e1e3ec17dfd174beeb3";
+    sha256 = "7203002318683441d8039f2272754e2b2e9adc9a288556fd9b802b1742042ab5";
   };
 }

@@ -1,6 +1,6 @@
 { stdenv
 , cmake
-, fetchurl
+, fetchFromGitHub
 , ninja
 
 , curl
@@ -11,15 +11,18 @@
 }:
 
 let
-  version = "3.0.1";
+  rev = "e5ce85b0b6f2e734b497aea5c2eff6398da749f5";
+  date = "2017-06-08";
 in
 stdenv.mkDerivation rec {
-  name = "mariadb-connector-c-${version}";
+  name = "mariadb-connector-c-${date}";
 
-  src = fetchurl {
-    url = "mirror://mariadb/connector-c-${version}/${name}-beta-src.tar.gz";
-    hashOutput = false;
-    sha256 = "37b7922254e637285e69deceaa81667be103b1ac904b5a946a74d6d3ec97eeac";
+  src = fetchFromGitHub {
+    version = 3;
+    owner = "MariaDB";
+    repo = "mariadb-connector-c";
+    inherit rev;
+    sha256 = "00898eda42dce5a432336fbfdbac71e7e3af81799b1afcd70667be88aada7749";
   };
 
   nativeBuildInputs = [
@@ -44,18 +47,10 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = ''
+    ln -sv mariadb_config "$out"/bin/mysql_config
     ln -sv mariadb "$out"/include/mysql
     ln -sv libmariadb.so "$out"/lib/libmysqlclient.so
   '';
-
-  passthru = {
-    srcVerification = fetchurl {
-      failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
-      pgpKeyFingerprint = "1993 69E5 404B D5FC 7D2F  E43B CBCB 082A 1BB9 43DB";
-      inherit (src) urls outputHash outputHashAlgo;
-    };
-  };
 
   meta = with stdenv.lib; {
     maintainers = with maintainers; [

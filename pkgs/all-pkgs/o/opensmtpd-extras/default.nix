@@ -6,7 +6,7 @@
 , libasr
 , libevent
 , luajit
-, mariadb
+, mariadb-connector-c
 , openssl
 , pam
 , perl
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     libasr
     libevent
     luajit
-    mariadb
+    mariadb-connector-c
     openssl
     pam
     perl

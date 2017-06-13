@@ -3,14 +3,15 @@
 }:
 
 let
-  version = "2.0.4";
+  version = "2.0.5";
 in
 stdenv.mkDerivation rec {
   name  = "luajit-${version}";
 
   src = fetchurl {
-    url = "http://luajit.org/download/LuaJIT-${version}.tar.gz";
-    sha256 = "0zc0y7p6nx1c0pp4nhgbdgjljpfxsb5kgwp4ysz22l1p2bms83v2";
+    url = "https://luajit.org/download/LuaJIT-${version}.tar.gz";
+    multihash = "QmPAYcifDQ5QbKjrhCM35gXznxMkHiLVZwM3zVZgbJNCvZ";
+    sha256 = "874b1f8297c697821f561f9b73b57ffd419ed8f4278c82e05b48806d30c1e979";
   };
 
   preBuild = ''

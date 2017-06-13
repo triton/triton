@@ -9,7 +9,7 @@
 #, cassandra
 , googletest
 , log4cplus
-, mysql_lib
+, mariadb-connector-c
 , openssl_1-0-2
 , postgresql
 }:
@@ -18,7 +18,7 @@ let
   inherit (stdenv.lib)
     optionals;
 
-  version = "1.1.0";
+  version = "1.2.0";
 in
 stdenv.mkDerivation rec {
   name = "kea-${version}";
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://ftp.isc.org/isc/kea/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "c3d97aee4faa19653ffe6d37e797e2fbf632124cd0b98bb502f9b97b5a383c2d";
+    sha256 = "22d15945b13600b56c37213797ca1f3ee9851e6119120aeae08033c4cc52d129";
   };
 
   nativeBuildInputs = [
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
     boost
     #cassandra
     log4cplus
-    mysql_lib
+    mariadb-connector-c
     openssl_1-0-2
     postgresql
   ];
@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
     "--without-lcov"
     "--with-openssl=${openssl_1-0-2}"
     "--without-botan-config"
-    "--with-dhcp-mysql=${mysql_lib}/bin/mysql_config"
+    "--with-dhcp-mysql=${mariadb-connector-c}/bin/mariadb_config"
     "--with-dhcp-pgsql=${postgresql}/bin/pg_config"
     #"--with-cql=${cassandra}/bin/cql_config"
     "--with-log4cplus"

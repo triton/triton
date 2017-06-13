@@ -19,7 +19,7 @@
 , libsoup
 , libxml2
 , libxslt
-, mysql
+, mariadb-connector-c
 , ncurses
 , openldap
 , openssl
@@ -68,7 +68,7 @@ stdenv.mkDerivation rec {
     libsoup
     libxml2
     libxslt
-    mysql
+    mariadb-connector-c
     ncurses
     openldap
     openssl
@@ -107,7 +107,7 @@ stdenv.mkDerivation rec {
     "--disable-goocanvas"
     (wtFlag "graphviz" (graphviz != null) null)
     (wtFlag "bdb" (db != null) null)
-    (wtFlag "mysql" (mysql != null) null)
+    (wtFlag "mysql" (mariadb-connector-c != null) null)
     (wtFlag "postgres" (postgresql != null) null)
     "--without-oracle"
     # TODO: java support

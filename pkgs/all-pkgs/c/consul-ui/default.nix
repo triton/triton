@@ -12,7 +12,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://releases.hashicorp.com/consul/${version}/consul_${version}_web_ui.zip";
-    sha256 = "9212c44c3ee4acaeca88d794225a2858a558be531a3cd44c741990c4493d6f12";
+    sha256 = "7a49924a872205002b2bf72af8c82d5560d4a7f4a58b2f65ee284dd254ebd063";
   };
 
   preUnpack = ''

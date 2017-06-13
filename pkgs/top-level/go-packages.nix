@@ -190,11 +190,11 @@ let
 
   net = buildFromGitHub {
     version = 3;
-    rev = "1a68b1313cf4ad7778376e82641197b60c02f65c";
-    date = "2017-06-10";
+    rev = "9c9a3f3e9f9c5c5b124354c89f615e418c7d3537";
+    date = "2017-06-13";
     owner  = "golang";
     repo   = "net";
-    sha256 = "09r67629rzpsm4c1bmi2gmicp5amig8nadi6yirhjz8yq371ly6i";
+    sha256 = "1v2bis9h06xvlb1cqk8ms4zxw7c3vmgkcc6bk72izyryc9msfk1y";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "github.com/hashicorp/go.net"
@@ -308,11 +308,11 @@ let
 
   tools = buildFromGitHub {
     version = 3;
-    rev = "e011c1062a41d0e2614279f1dc8cf7f1bf6aaac3";
-    date = "2017-06-09";
+    rev = "011098bb9222df9796d1d4c85a8772f0bf39d741";
+    date = "2017-06-12";
     owner = "golang";
     repo = "tools";
-    sha256 = "09bj03ryln4rils0d1a7fi2di733vmjdyfd8c545w1mkd0g5zgir";
+    sha256 = "19n1f1p0mlawx86rcf85gsf4q1z8zcmcrqfsp64447qsj6wnc81n";
     goPackagePath = "golang.org/x/tools";
 
     preConfigure = ''
@@ -467,10 +467,10 @@ let
 
   aws-sdk-go = buildFromGitHub {
     version = 3;
-    rev = "v1.8.39";
+    rev = "v1.8.40";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "1j502xqz49a5861zpna1cvad4gmz6cr0zk4cr80lpjvnib0df01l";
+    sha256 = "0qxgwqpi5yk2impzh8dyf6axxkxnwqh5yfq2c8bh1yq4znx1mz7c";
     excludedPackages = "\\(awstesting\\|example\\)";
     buildInputs = [
       tools
@@ -793,11 +793,11 @@ let
 
   docker_cli = buildFromGitHub {
     version = 3;
-    date = "2017-06-10";
-    rev = "f82f61efc6968712e8c8cc6346b8d99fe2f6c7e8";
+    date = "2017-06-13";
+    rev = "85453417090376b9fded34309715eca137980529";
     owner = "docker";
     repo = "cli";
-    sha256 = "1g7yryd4nnv1qfrgf2kwwf5rvjf8q66dnshmjm880d576nszn62h";
+    sha256 = "1r29x8kr4wggf9nw3lpld19kmq14pzamm68zrf7k5z52j2dcdv97";
     subPackages = [
       "cli/config/configfile"
     ];
@@ -973,13 +973,11 @@ let
     buildInputs = [
       armon_go-metrics
       aws-sdk-go
-      azure-sdk-for-go
       circbuf
       columnize
       copystructure
       dns
       errors
-      go-autorest
       go-bindata-assetfs
       go-checkpoint
       go-dockerclient
@@ -1022,6 +1020,9 @@ let
         -e 's,\(Version[ \t]*= "\)unknown,\1${v},g' \
         -e 's,\(VersionPrerelease[ \t]*= "\)unknown,\1,g' \
         -i version/version.go
+
+      rm command/agent/config_azure.go
+      sed -i 's/cfg.discoverAzureHosts(.*)/nil, fmt.Errorf("Azure is not supported")/' command/agent/retry_join.go
     '';
 
     # Keep consul.ui for backward compatability
@@ -2039,10 +2040,10 @@ let
   google-cloud-go = buildFromGitHub {
     version = 3;
     date = "2017-06-12";
-    rev = "dd88571a2747f25e093c425b9a598db5bec04e57";
+    rev = "b4e9a381a01e953e880e6d2cf7fd02d412977cae";
     owner = "GoogleCloudPlatform";
     repo = "google-cloud-go";
-    sha256 = "1kz4plwy10vkkszx220cyrvx71gjp328cm9kxggkb68d2ikliaf0";
+    sha256 = "1gbyyb76s18hb9gwir3kag5xr625hrab6wvkbqs69qvq9ppvzxmx";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -2328,10 +2329,10 @@ let
 
   go-autorest = buildFromGitHub {
     version = 3;
-    rev = "v8.0.0";
+    rev = "v8.1.0";
     owner  = "Azure";
     repo   = "go-autorest";
-    sha256 = "1xp48h6r98x5h1f7jmg54wjgk80g4aag1icfc9mh19l467d56sqy";
+    sha256 = "0ycb878kqprxv58b9j4caikmmp24cdyylp85c7d1s9bixwfcy3s7";
     propagatedBuildInputs = [
       crypto
       jwt-go
@@ -3650,11 +3651,11 @@ let
 
   grpc = buildFromGitHub {
     version = 3;
-    date = "2017-06-09";
-    rev = "84158ac547c2e121582f5f37458e693e339f099b";
+    date = "2017-06-13";
+    rev = "a94a7ac054dc76e5ab6cf170a9d82faba8aaf33f";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "0b5k7drmsw5amf7nm7pdcqkq93nkqqm748p2yggd8hsc4hz3cf3w";
+    sha256 = "0gwck0qn9iglfg33fnsnnm1c2wyjv4vz2yq4wcsn5zwzlabkhsrh";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [
       "github.com/grpc/grpc-go"
@@ -4630,8 +4631,8 @@ let
     version = 3;
     owner = "minio";
     repo = "mc";
-    rev = "398bac82d9c503d94c9c07e95b43ff3bd2ce4047";
-    sha256 = "1fh7c8nzbr77fz8dgs81vxjswyxd08ymgh34vz0656j76wm1c0gh";
+    rev = "800f0af04e455d345fd04d9533a9a85d6fa600d1";
+    sha256 = "04n56nwghbmzxr8285f8hbkfsdwky1pls2phqv0i0mbybl8xvaim";
     propagatedBuildInputs = [
       cli_minio
       color
@@ -4646,7 +4647,7 @@ let
       profile
       structs
     ];
-    date = "2017-06-08";
+    date = "2017-06-12";
   };
 
   mdns = buildFromGitHub {
@@ -4811,10 +4812,10 @@ let
     version = 3;
     owner = "minio";
     repo = "minio-go";
-    rev = "f2362d9e7d8daf89594ee0a079be2424eaf360be";
-    sha256 = "11jlcmd5yiljrg9jbvambpssqcvbq2wxhabsfc4dbc2wgnqfv9vc";
+    rev = "f8e360d4dc446022b46f1be1e8bdda5f736b9195";
+    sha256 = "0w60yzcdab4wv2jsriyigbx9z1giwvr0lgffmcshi8rv4s78fwyj";
     meta.useUnstable = true;
-    date = "2017-06-03";
+    date = "2017-06-12";
   };
 
   missinggo = buildFromGitHub {
@@ -4874,9 +4875,9 @@ let
     version = 3;
     owner = "moby";
     repo = "moby";
-    rev = "dd790d0e37df618bf8d9c204c29947f70c2e6045";
-    date = "2017-06-12";
-    sha256 = "0w4gv0kl1hbn2lkggf58ap8dgpc0rcr4ilc03bayjc6g3x5cy4xa";
+    rev = "4310f7da7e6bcd8185bf05e032f9b7321cfa6ea2";
+    date = "2017-06-13";
+    sha256 = "1xjig74rk459rfjcml8z8hmyrr0x9l7afpnxibl291kgm7r66nvz";
     goPackageAliases = [
       "github.com/docker/docker"
     ];

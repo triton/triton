@@ -33,7 +33,7 @@ let
     optionals
     optionalString;
 
-  version = "9.11.1";
+  version = "9.11.1-P1";
 in
 stdenv.mkDerivation rec {
   name = "bind${optionalString (suffix != "") "-${suffix}"}-${version}";
@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://ftp.isc.org/isc/bind9/${version}/bind-${version}.tar.gz";
     hashOutput = false;
-    sha256 = "22050095f5c82a1385cc4174190ac60392670bbc5d63d592ecae52a214bc10b2";
+    sha256 = "6b1b3e88d51b8471bd6aee24a8cea70817e850a5901315dc506f9dde275ca638";
   };
 
   nativeBuildInputs = [

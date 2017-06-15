@@ -6,6 +6,7 @@
 , python
 , samba_full
 
+, cmocka
 , popt
 , talloc
 , tdb
@@ -36,6 +37,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    cmocka
     talloc
     tdb
     tevent

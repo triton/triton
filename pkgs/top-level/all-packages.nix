@@ -3245,6 +3245,8 @@ sratom = callPackage ../all-pkgs/s/sratom { };
 
 sshfs = callPackage ../all-pkgs/s/sshfs { };
 
+sslh = callPackage ../all-pkgs/s/sslh { };
+
 sssd = callPackage ../all-pkgs/s/sssd { };
 
 st = callPackage ../all-pkgs/s/st {

@@ -19,6 +19,7 @@
 , glib
 , gtk2
 , harfbuzz_lib
+, iso-codes
 , jasper
 , lcms2
 , libexif
@@ -70,6 +71,7 @@ stdenv.mkDerivation rec {
     glib
     gtk2
     harfbuzz_lib
+    iso-codes
     jasper
     lcms2
     libexif

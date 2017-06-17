@@ -7,6 +7,7 @@
 , boehm-gc
 , bzip2
 , curl
+, libseccomp
 , libsodium
 , openssl
 , perlPackages
@@ -39,10 +40,11 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     curl
+    libseccomp
+    libsodium
     openssl
     sqlite
     xz
-    libsodium
   ];
 
   propagatedBuildInputs = [

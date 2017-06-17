@@ -1,31 +1,42 @@
 { stdenv
 , fetchurl
 , gettext
+, which
 
+, curl
 , expat
+, libssh
 , zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "exiv2-0.25";
+  name = "exiv2-0.26";
 
   src = fetchurl {
-    url = "http://www.exiv2.org/${name}.tar.gz";
-    multihash = "QmbXb7zCNYLyrAHjVnA2NUGcary3orL7sV7KR8moMPiZBp";
-    sha256 = "197g6vgcpyf9p2cwn5p5hb1r714xsk1v4p96f5pv1z8mi9vzq2y8";
+    url = "http://www.exiv2.org/builds/${name}-trunk.tar.gz";
+    multihash = "QmYcP4u3oBrQy899PAA9caNCxzrbsGeXuaZvoLkwoX58G2";
+    sha256 = "0c625cbeb494aa1b9221280a5b053b54d0c9720d48fa9120cef7c6f93efd4dc3";
   };
-
-  postPatch = ''
-    patchShebangs ./src/svn_version.sh
-  '';
 
   nativeBuildInputs = [
     gettext
+    which
   ];
 
-  propagatedBuildInputs = [
+  buildInputs = [
+    curl
     expat
+    libssh
     zlib
+  ];
+
+  postPatch = ''
+    patchShebangs src/svn_version.sh
+  '';
+
+  configureFlags = [
+    "--enable-video"
+    "--enable-webready"
   ];
 
   meta = with stdenv.lib; {

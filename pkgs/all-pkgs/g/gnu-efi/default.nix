@@ -4,13 +4,15 @@
 , pciutils
 }:
 
+let
+  version = "3.0.5";
+in
 stdenv.mkDerivation rec {
   name = "gnu-efi-${version}";
-  version = "3.0.4";
 
   src = fetchurl {
     url = "mirror://sourceforge/gnu-efi/${name}.tar.bz2";
-    sha256 = "51a00428c3ccb96db24089ed8394843c4f83cf8f42c6a4dfddb4b7c23f2bf8af";
+    sha256 = "bd8fcd5914f18fc0e4ba948ab03b00013e528504f529c60739b748f6ef130b22";
   };
 
   buildInputs = [

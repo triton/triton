@@ -1000,6 +1000,8 @@ ewlc = callPackage ../all-pkgs/e/ewlc { };
 
 exempi = callPackage ../all-pkgs/e/exempi { };
 
+exfat-utils = callPackage ../all-pkgs/e/exfat-utils { };
+
 exiv2 = callPackage ../all-pkgs/e/exiv2 { };
 
 exo = callPackage ../all-pkgs/e/exo { };
@@ -1194,6 +1196,8 @@ fuse_2 = callPackage ../all-pkgs/f/fuse {
 fuse_3 = callPackage ../all-pkgs/f/fuse {
   channel = "3";
 };
+
+fuse-exfat = callPackage ../all-pkgs/f/fuse-exfat { };
 
 game-music-emu = callPackage ../all-pkgs/g/game-music-emu { };
 

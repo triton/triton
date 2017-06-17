@@ -5,11 +5,10 @@
 , ncurses
 , pcre2
 , python3
-, which
 }:
 
 let
-  version = "2.6b1";
+  version = "2.6.0";
 in
 stdenv.mkDerivation rec {
   name = "fish-${version}";
@@ -17,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/fish-shell/fish-shell/releases/download/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "be36568dfebc0cb144b769e9ac09a570d09c528859e426480c9b4f96b0ccf001";
+    sha256 = "7ee5bbd671c73e5323778982109241685d58a836e52013e18ee5d9f2e638fdfb";
   };
 
   nativeBuildInputs = [
@@ -29,19 +28,14 @@ stdenv.mkDerivation rec {
     pcre2
   ];
 
-  postPatch = ''
-    sed -i 'share/functions/_.fish' \
-      -e 's,gettext ,${gettext}/bin/gettext ,g' \
-      -e 's,which ,${which}/bin/which ,'
-  '';
-
   configureFlags = [
     "--with-gettext"
     "--without-included-pcre2"
   ];
 
   preFixup = ''
-    sed -i 's,\(^\|[ \t]\)python\([ \t]\|$\),\1${python3}/bin/python3\2,' "$out/share/fish/functions/fish_update_completions.fish"
+    sed -i 's,\(^\|[ \t]\)python\([ \t]\|$\),\1${python3}/bin/python3\2,' \
+      "$out/share/fish/functions/fish_update_completions.fish"
   '';
 
   passthru = {

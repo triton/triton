@@ -5,10 +5,10 @@
     sha256 = "44196a89932c26528f5db19289d0f0f4130730a61dccc61c9f1eac9ad3e881d8";
   };
   "1.1-head" = {
-    fetchzipversion = 2;
-    version = "2017-05-07";
-    rev = "ff63557f582ee5d7f6afbc11e5c80e9d5077d18b";
-    sha256 = "a16296ec9bf9b5571fbf0d431280b7b72fe5a3c646e00057668ab8b36d1b3ae8";
+    fetchzipversion = 3;
+    version = "2017-05-15";
+    rev = "b8ed0164ff59f0ba8ef1bfc39edbd7b986caefd6";
+    sha256 = "c3566d9763b269d590191253a917de34a1d683aea581d5bbfa25687b24e955ce";
   };
   "head" = {
     fetchzipversion = 2;

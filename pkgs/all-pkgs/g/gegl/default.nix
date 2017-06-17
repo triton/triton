@@ -37,16 +37,16 @@ let
     platforms;
 
   channel = "0.3";
-  version = "${channel}.14";
+  version = "${channel}.18";
 in
 stdenv.mkDerivation rec {
   name = "gegl-${version}";
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/gegl/${channel}/${name}.tar.bz2";
-    multihash = "QmagGFqFYWtULSTjBz7j9LfDzaxLV7wb5XGwLvusznhe6K";
+    multihash = "QmeC7yPAgNirKJF3iUqnn9ApBm3tLkJ9zcNzpimtytyMKz";
     hashOutput = false;
-    sha256 = "09f5e2e6899697641d4660e3e274aed696f5bacc96ba389ac77674ee1156590a";
+    sha256 = "d7858ef26ede136d14e3de188a9e9c0de7707061a9fb96d7d615fab4958491fb";
   };
 
   nativeBuildInputs = [
@@ -59,10 +59,10 @@ stdenv.mkDerivation rec {
   buildInputs = [
     babl
     cairo
-    #exiv2
+    exiv2
     ffmpeg
     gdk-pixbuf_unwrapped
-    #gexiv2
+    gexiv2
     glib
     gobject-introspection
     jasper
@@ -97,9 +97,7 @@ stdenv.mkDerivation rec {
     "--disable-workshop"
     "--${boolEn (vala != null)}-vala"
     "--without-mrg"
-    # Requres --with-mrg
-    #"--${boolWt (gexiv2 != null && mrg != null)}-gexiv2"
-    "--without-gexiv2"
+    "--${boolWt (gexiv2 != null)}-gexiv2"
     "--${boolWt (cairo != null)}-cairo"
     "--${boolWt (pango != null)}-pango"
     "--${boolWt (pango != null)}-pangocairo"
@@ -120,7 +118,7 @@ stdenv.mkDerivation rec {
     "--without-libv4l"
     "--${boolWt (lcms2 != null)}-lcms"
     "--without-libspiro"
-    #"--${boolWt (exiv2 != null)}-exiv2"
+    "--${boolWt (exiv2 != null)}-exiv2"
     "--without-exit2"
     "--without-umfpack"
     "--${boolWt (libtiff != null)}-libtiff"

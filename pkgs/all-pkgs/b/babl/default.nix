@@ -4,7 +4,7 @@
 
 let
   major = "0.1";
-  patch = "24";
+  patch = "26";
   version = "${major}.${patch}";
 in
 stdenv.mkDerivation rec {
@@ -12,9 +12,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://download.gimp.org/pub/babl/${major}/${name}.tar.bz2";
-    multihash = "QmU1BatiGMYAA6tEryzsvPmdXfUkLV5awxcY491QaBoXXx";
+    multihash = "QmYGzxQuU4DvLydhpd9T7Gi19T58jMCUFykQ3L6mLUQGyZ";
     hashOutput = false;
-    sha256 = "472bf1acdde5bf076e6d86f3004eea4e9b007b1377ab305ebddec99994f29d0b";
+    sha256 = "fd80e165f1534c64457a8cce7a8aa90559ab28ecd32beb9e3948c5b8cd373d34";
   };
 
   passthru = {

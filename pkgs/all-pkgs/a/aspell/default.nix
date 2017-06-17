@@ -17,10 +17,12 @@ stdenv.mkDerivation rec {
 
   preConfigure = ''
     configureFlagsArray+=(
-      --enable-pkglibdir=$out/lib/aspell
-      --enable-pkgdatadir=$out/lib/aspell
+      "--enable-pkglibdir=$out/lib/aspell"
+      "--enable-pkgdatadir=$out/lib/aspell"
     );
   '';
+
+  CXXFLAGS = "-fpermissive";
 
   # Note: Users should define the `ASPELL_CONF' environment variable to
   # `data-dir $HOME/.nix-profile/lib/aspell/' so that they can access

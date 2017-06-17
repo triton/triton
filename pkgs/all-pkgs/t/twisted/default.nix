@@ -6,12 +6,13 @@
 
 , automat
 , constantly
+, hyperlink
 , incremental
 , zope-interface
 }:
 
 let
-  version = "17.1.0";
+  version = "17.5.0";
 in
 buildPythonPackage rec {
   name = "Twisted-${version}";
@@ -20,12 +21,13 @@ buildPythonPackage rec {
     package = "Twisted";
     inherit version;
     type = ".tar.bz2";
-    sha256 = "dbf211d70afe5b4442e3933ff01859533eba9f13d8b3e2e1b97dc2125e2d44dc";
+    sha256 = "f198a494f0df2482f7c5f99d7f3eef33d22763ffc76641b36fec476b878002ea";
   };
 
   propagatedBuildInputs = [
     automat
     constantly
+    hyperlink
     incremental
     zope-interface
   ];

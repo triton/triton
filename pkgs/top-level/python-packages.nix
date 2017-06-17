@@ -285,6 +285,8 @@ guessit = callPackage ../all-pkgs/g/guessit { };
 
 html5lib = callPackage ../all-pkgs/h/html5lib { };
 
+hyperlink = callPackage ../all-pkgs/h/hyperlink { };
+
 idna = callPackage ../all-pkgs/i/idna { };
 
 incremental = callPackage ../all-pkgs/i/incremental { };

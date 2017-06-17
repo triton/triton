@@ -23,7 +23,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/gexiv2/${channel}/${name}.tar.xz";
-    sha256 = "ad8d31afdc0a1932cc44c4cfcea449497c0d0b445c0ad2f9735707b306e71ca4";
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   buildInputs = [

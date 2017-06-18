@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , getopt
 , lua
@@ -7,13 +8,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "highlight-3.36";
+  name = "highlight-3.37";
 
   src = fetchurl {
     url = "http://www.andre-simon.de/zip/${name}.tar.bz2";
-    multihash = "QmSsDPhL4ywkkBfNkHuZA5VhnoCx35rNrv9rsAGwUHYHMC";
+    multihash = "QmP69XxfbqLczjGN79GcsJvmFUPkjkZAFr5VkEUQTL5biP";
     hashOutput = false;
-    sha256 = "34cd5bcf52714f83364460c0c3551320564c56ff4e117353034e532275792171";
+    sha256 = "645a16ff3e4c175b731951ee409377b85c2959212641ae18a9a1e42e2bc985ba";
   };
 
   buildInputs = [
@@ -44,7 +45,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Source code highlighting tool";
     homepage = http://www.andre-simon.de/;
     license = licenses.gpl3;

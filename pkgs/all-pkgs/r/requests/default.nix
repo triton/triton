@@ -2,10 +2,15 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
+
+, certifi
+, chardet
+, idna
+, urllib3
 }:
 
 let
-  version = "2.14.2";
+  version = "2.18.1";
 in
 buildPythonPackage {
   name = "requests-${version}";
@@ -13,8 +18,15 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "requests";
     inherit version;
-    sha256 = "a274abba399a23e8713ffd2b5706535ae280ebe2b8069ee6a941cb089440d153";
+    sha256 = "c6f3bdf4a4323ac7b45d01e04a6f6c20e32a052cd04de81e05103abc049ad9b9";
   };
+
+  propagatedBuildInputs = [
+    certifi
+    chardet
+    idna
+    urllib3
+  ];
 
   meta = with lib; {
     description = "HTTP library for Python";

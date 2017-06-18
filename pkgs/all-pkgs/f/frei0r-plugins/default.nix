@@ -13,16 +13,16 @@ let
     boolOn;
 in
 stdenv.mkDerivation rec {
-  name = "frei0r-plugins-1.6.0";
+  name = "frei0r-plugins-1.6.1";
 
   src = fetchurl {
     urls = [
       "https://files.dyne.org/frei0r/${name}.tar.gz"
       "https://files.dyne.org/frei0r/releases/${name}.tar.gz"
     ];
-    multihash = "QmUXtVFscGUiPk6vwSDu8yqY4tAbkCuN9g6v7qRBRz8fxk";
+    multihash = "Qmd3BPv3T2TrM1BhfAtg9tRRFLNqink5fyb8aPqZJpBTmh";
     hashOutput = false;
-    sha256 = "ab2d7254f3a822944252f6c85453eeb8b38fd9368e087034c8d47d68fe6e36fe";
+    sha256 = "e0c24630961195d9bd65aa8d43732469e8248e8918faa942cfb881769d11515e";
   };
 
   nativeBuildInputs = [

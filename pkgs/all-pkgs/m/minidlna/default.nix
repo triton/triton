@@ -2,6 +2,7 @@
 , autoreconfHook
 , fetchgit
 , fetchurl
+, lib
 
 , ffmpeg
 , flac
@@ -14,9 +15,9 @@
 }:
 
 let
-  version = "1.1.6";
+  version = "1.2.0";
 
-  inherit (stdenv.lib)
+  inherit (lib)
     replaceStrings;
 in
 stdenv.mkDerivation rec {
@@ -24,8 +25,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     name = "${name}.tar.xz";
-    multihash = "Qmbm8MHTmvxYGw433bmNGSMGb583vQrkZXAit4Cvk9nubV";
-    sha256 = "5964d568246cead8e3d4eb6a28ea2477710bd4598a7129df30dc5db304f6f428";
+    multihash = "QmfWjHiEYTv1SckfQodoaoJhKAWXewyk3Y4nZHcyuBxZjY";
+    sha256 = "c25064f9bcdfcd573b6425381c256e1d0f55c58afd0fc837c269ded9047caed8";
   };
 
   nativeBuildInputs = [
@@ -56,10 +57,10 @@ stdenv.mkDerivation rec {
       name = "net-tools-tarball-${version}";
 
       src = fetchgit {
-        version = 2;
+        version = 3;
         url = "git://git.code.sf.net/p/minidlna/git";
         rev = "refs/tags/v${replaceStrings ["."] ["_"] version}";
-        sha256 = "c63d03df0aa14b8115080dfb93ac828a674a65524ab88bef9559c2e0848f032a";
+        sha256 = "e85ef6a90d9a521821a87e1bd4fe225244b51065f5cbadea50f2c6ad37e331f1";
       };
 
       buildPhase = ''
@@ -74,7 +75,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     license = licenses.bsd3;
     maintainers = with maintainers; [
       wkennington

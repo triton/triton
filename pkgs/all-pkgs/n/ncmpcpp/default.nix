@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , boost
 , curl
@@ -15,16 +16,17 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "ncmpcpp-0.7.7";
+  name = "ncmpcpp-0.8";
 
   src = fetchurl {
     url = "https://rybczak.net/ncmpcpp/stable/${name}.tar.bz2";
-    sha256 = "b7bcbec83b1f88cc7b21f196b10be09a27b430566c59f402df170163464d01ef";
+    multihash = "QmYnG5Y5D6eSfeHZAprKw9g5ztTNnEbRcViandCmASYnRZ";
+    sha256 = "2f0f2a1c0816119430880be6932e5eb356b7875dfa140e2453a5a802909f465a";
   };
 
   buildInputs = [
@@ -50,7 +52,7 @@ stdenv.mkDerivation rec {
     "--${boolWt (taglib != null)}-taglib"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A featureful ncurses based MPD client";
     homepage = https://rybczak.net/ncmpcpp/;
     license = licenses.gpl2Plus;

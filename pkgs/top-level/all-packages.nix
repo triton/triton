@@ -1016,6 +1016,8 @@ f2fs-tools = callPackage ../all-pkgs/f/f2fs-tools { };
 
 faac = callPackage ../all-pkgs/f/faac { };
 
+factorio = callPackage ../all-pkgs/f/factorio { };
+
 fbterm = callPackage ../all-pkgs/f/fbterm { };
 
 fcgi = callPackage ../all-pkgs/f/fcgi { };

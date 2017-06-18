@@ -24,15 +24,15 @@ let
     boolEn
     boolWt;
 
-  version = "0.8.6";
+  version = "0.8.7";
 in
 stdenv.mkDerivation rec {
   name = "speech-dispatcher-${version}";
 
   src = fetchurl {
     url = "https://www.freebsoft.org/pub/projects/speechd/${name}.tar.gz";
-    multihash = "QmPadN5cep1YdcjKt2PBPSSsBDTzAzzvFamUXRuhjvDTf7";
-    sha256 = "c233dc3757c1f0d3676480d1052d42d88d18d29ab0cb0c8b5ce8edc3e7386ff8";
+    multihash = "QmQh9t5jShS5VFDftqmczeVYeF2oGW3ajrv6yLZFELbWjJ";
+    sha256 = "200be1adb054dd14bfbc46e798ac6a7c0d4abaa13343fb987312c5265e4cb134";
   };
 
   nativeBuildInputs = [

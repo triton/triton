@@ -93,8 +93,8 @@
 #, libiec61883, libavc1394
 , libgcrypt
 , libmodplug
+, libmysofa ? null
 , libnppSupport ? false
-#, libnut
 , libogg
 , libraw1394
 , libsndio ? null
@@ -112,7 +112,6 @@
 , mesa_noglu
 , mfx-dispatcher
 , mmal ? null
-, netcdf ? null
 , nvenc ? false
 , nvidia-cuda-toolkit
 , nvidia-drivers
@@ -129,7 +128,6 @@
 , rubberband
 #, libquvi
 , samba_client
-, schroedinger
 , SDL_2
 #, shine
 , snappy
@@ -354,7 +352,6 @@ stdenv.mkDerivation rec {
     rtmpdump
     rubberband
     samba_client
-    schroedinger
     SDL_2
     soxr
     snappy
@@ -513,8 +510,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (kvazaar != null)}-libkvazaar"
     "--${boolEn (libmodplug != null)}-libmodplug"
     "--${boolEn (lame != null)}-libmp3lame"
-    #"--${boolEn (libnut != null)}-libnut"
-    /**/"--disable-libnut"
+    (deprfflag null "3.4" "--disable-libnut")
     #"--${boolEn (opencore-amr != null)}-libopencore-amrnb"
     /**/"--disable-libopencore-amrnb"
     #"--${boolEn (opencore-amr != null)}-libopencore-amrwb"
@@ -529,7 +525,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (pulseaudio_lib != null)}-libpulse"
     "--${boolEn (rubberband != null)}-librubberband"
     "--${boolEn (rtmpdump != null)}-librtmp"
-    "--${boolEn (schroedinger != null)}-libschroedinger"
+    (deprfflag null "3.4" "--disable-libschroedinger")
     #"--${boolEn (shine != null)}-libshine"
     /**/"--disable-libshine"
     "--${boolEn (samba_client != null)}-libsmbclient"
@@ -565,7 +561,8 @@ stdenv.mkDerivation rec {
     #"--${boolEn decklinkExtlib}-decklink"
     /**/"--disable-decklink"
     "--disable-mediacodec"  # android
-    "--${boolEn (netcdf != null)}-netcdf"
+    "--${boolEn (libmysofa != null)}-libmysofa"
+    (deprfflag null "3.4" "--disable-netcdf")
     "--${boolEn (openal != null)}-openal"
     #"--${boolEn (opencl != null)}-opencl"
     /**/"--disable-opencl"

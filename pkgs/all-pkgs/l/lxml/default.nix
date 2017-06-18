@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "3.7.3";
+  version = "3.8.0";
 in
 buildPythonPackage rec {
   name = "lxml-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "lxml";
     inherit version;
-    sha256 = "aa502d78a51ee7d127b4824ff96500f0181d3c7826e6ee7b800d068be79361c7";
+    sha256 = "736f72be15caad8116891eb6aa4a078b590d231fdc63818c40c21624ac71db96";
   };
 
   propagatedBuildInputs = [

@@ -1,12 +1,13 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , pyasn1
 }:
 
 let
-  version = "0.0.8";
+  version = "0.0.9";
 in
 buildPythonPackage {
   name = "pyasn1-modules-${version}";
@@ -14,14 +15,14 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pyasn1-modules";
     inherit version;
-    sha256 = "10561934f1829bcc455c7ecdcdacdb4be5ffd3696f26f468eb6eb41e107f3837";
+    sha256 = "be0e4157e4a53551279d6c6e366b080527f5fd068616835b4abf32c14f657f5f";
   };
 
   buildInputs = [
     pyasn1
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

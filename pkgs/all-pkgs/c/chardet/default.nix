@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "3.0.2";
+  version = "3.0.4";
 in
 buildPythonPackage rec {
   name = "chardet-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "chardet";
     inherit version;
-    sha256 = "4f7832e7c583348a9eddd927ee8514b3bf717c061f57b21dbe7697211454d9bb";
+    sha256 = "84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae";
   };
 
   propagatedBuildInputs = [

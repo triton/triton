@@ -1,12 +1,13 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , pythonPackages
 }:
 
 let
-  version = "1.15.0";
+  version = "1.15.6";
 in
 buildPythonPackage rec {
   name = "setuptools-scm-${version}";
@@ -14,10 +15,10 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "setuptools_scm";
     inherit version;
-    sha256 = "daf12d05aa2155a46aa357453757ffdc47d87f839e62114f042bceac6a619e2f";
+    sha256 = "49ab4685589986a42da85706b3311a2f74f1af567d39fee6cb1e088d7a75fb5f";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Handles managing python package versions in scm metadata";
     homepage = https://bitbucket.org/pypa/setuptools_scm/;
     license = licenses.mit;

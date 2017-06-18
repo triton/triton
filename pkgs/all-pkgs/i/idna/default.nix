@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "2.1";
+  version = "2.5";
 in
 buildPythonPackage {
   name = "idna-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "idna";
     inherit version;
-    sha256 = "ed36f281aebf3cd0797f163bb165d84c31507cedd15928b095b1675e2d04c676";
+    sha256 = "3cb5ce08046c4e3a560fc02f138d0ac63e00f8ce5901a56b32ec8b7994082aab";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "1.1.4";
+  version = "1.1.5";
 in
 buildPythonPackage rec {
   name = "pyacoustid-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
    package = "pyacoustid";
    inherit version;
-   sha256 = "b54bc803e936e49170f01febcf89621dda4a1ebb3d407e04e9ead290fa3a6cf3";
+   sha256 = "efb6337a470c9301a108a539af7b775678ff67aa63944e9e04ce4216676cc777";
   };
 
   buildInputs = [

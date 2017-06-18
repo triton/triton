@@ -18,14 +18,15 @@ let
   inherit (lib)
     boolWt;
 
-  version = "2.5.13";
+  version = "2.5.14";
 in
 stdenv.mkDerivation rec {
   name = "libgphoto2-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/gphoto/libgphoto/${version}/${name}.tar.bz2";
-    sha256 = "ceaacbdf187d1cd1aed5336991f46b0100f6960b6c8383f9aeab98f1f64780ef";
+    hashOutput = false;
+    sha256 = "d3ce70686fb87d6791b9adcbb6e5693bfbe1cfef9661c23c75eb8a699ec4e274";
   };
 
   nativeBuildInputs = [

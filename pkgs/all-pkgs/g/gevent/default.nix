@@ -12,7 +12,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "1.2.1";
+  version = "1.2.2";
 in
 buildPythonPackage rec {
   name = "gevent-${version}";
@@ -20,7 +20,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "gevent";
     inherit version;
-    sha256 = "3de300d0e32c31311e426e4d5d73b36777ed99c2bac3f8fbad939eeb2c29fa7c";
+    sha256 = "4791c8ae9c57d6f153354736e1ccab1e2baf6c8d9ae5a77a9ac90f41e2966b2d";
   };
 
   buildInputs = [

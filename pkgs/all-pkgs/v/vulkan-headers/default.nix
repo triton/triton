@@ -4,14 +4,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "vulkan-headers-1.0.39";
+  name = "vulkan-headers-1.0.51";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "KhronosGroup";
     repo = "Vulkan-Docs";
-    rev = "ca4abe0d34ca8ed8410c65c177f8658da183576d";
-    sha256 = "4c20be55c7b9ed06a6bffe1da172844a8621b2b2b0599380e606c366dfd0992b";
+    rev = "1d67e47f1464d5f5e654a405e9a91c7d5441bbb6";
+    sha256 = "58bab4fc00f105b4688c67a7cda04b0b40e04084ef04bb67191ef1559ab0bc88";
   };
 
   installPhase = ''

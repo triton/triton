@@ -561,7 +561,7 @@ stdenv.mkDerivation rec {
     #"--${boolEn decklinkExtlib}-decklink"
     /**/"--disable-decklink"
     "--disable-mediacodec"  # android
-    "--${boolEn (libmysofa != null)}-libmysofa"
+    (fflag "--${boolEn (libmysofa != null)}-libmysofa" "3.4")
     (deprfflag null "3.4" "--disable-netcdf")
     "--${boolEn (openal != null)}-openal"
     #"--${boolEn (opencl != null)}-opencl"

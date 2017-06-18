@@ -15,12 +15,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "ModemManager-1.6.6";
+  name = "ModemManager-1.6.8";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/ModemManager/${name}.tar.xz";
-    multihash = "QmUwz9xbS2LsCKmBWXrbjT1z4kZx9osqHfVYFFJ8hNN2Fk";
-    sha256 = "b050aa0d9e0dd7cb2f22451efecfa2ac53b9a70d26da211b0e8bbc1ecba58a43";
+    multihash = "QmUmcBzP8TG27LsTnTdPMT8dCQHJvA2EdMo4fFQXb9BR8T";
+    sha256 = "0f9f9a1db2f48cafc70ed2596ff3594b597e2027408f5f2be6191c245d67853a";
   };
 
   nativeBuildInputs = [

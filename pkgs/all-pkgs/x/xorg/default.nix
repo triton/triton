@@ -650,10 +650,10 @@ let
   }) // {inherit xproto ;};
 
   intelgputools = (mkDerivation "intelgputools" {
-    name = "intel-gpu-tools-1.18";
+    name = "intel-gpu-tools-1.19";
     src = fetchurl {
-      url = mirror://xorg/individual/app/intel-gpu-tools-1.18.tar.bz2;
-      sha256 = "df77f91b5a8bdd590f1128a36b7616bc292f18ecb98e77c9c4467574fb67e4ee";
+      url = mirror://xorg/individual/app/intel-gpu-tools-1.19.tar.bz2;
+      sha256 = "a49c8ae7c0431c1f33cd9492f83ec4e06e98a48429178e4bd22d9a1a87e3b0f1";
     };
     nativeBuildInputs = [ bison flex python python3 utilmacros ];
     buildInputs = [ cairo dri2proto glib kmod libdrm procps-ng systemd_lib libunwind libpciaccess libX11 libXext libXrandr libXv ];

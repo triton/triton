@@ -2,12 +2,13 @@
 , buildPythonPackage
 , fetchurl
 
+, fasteners
 , librsync
 , lockfile
 }:
 
 let
-  version = "0.7.12";
+  version = "0.7.13.1";
 in
 buildPythonPackage rec {
   name = "duplicity-${version}";
@@ -15,8 +16,8 @@ buildPythonPackage rec {
   src = fetchurl {
     url = "https://code.launchpad.net/duplicity/0.7-series/${version}/"
       + "+download/${name}.tar.gz";
-    multihash = "QmYoNVYBk3TK3cwfGwBRjwmjyGA2aR2aj1HzTGF56Epeq8";
-    sha256 = "11cbad44a90891af1bf9e294260ba7c21a1660ccd3ab2c6e736ba74ac5cf0fe6";
+    multihash = "QmPAzT2Z9NoBDjaErbey5Es6S8bd86TkS6MpgdhncWUTzs";
+    sha256 = "adb8668fb10e0b0f91cb77f758d02c02bf5c02e6c4835904a82cbdab6db4bef2";
   };
 
   buildInputs = [
@@ -24,6 +25,7 @@ buildPythonPackage rec {
   ];
 
   propagatedBuildInputs = [
+    fasteners
     lockfile
   ];
 

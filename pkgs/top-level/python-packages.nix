@@ -239,6 +239,8 @@ enum34 = callPackage ../all-pkgs/e/enum34 { };
 
 etcd = callPackage ../all-pkgs/e/etcd { };
 
+fasteners = callPackage ../all-pkgs/f/fasteners { };
+
 flask = callPackage ../all-pkgs/f/flask { };
 
 flask-compress = callPackage ../all-pkgs/f/flask-compress { };

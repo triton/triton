@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://www.freedesktop.org/software/ModemManager/${name}.tar.xz";
     multihash = "QmUmcBzP8TG27LsTnTdPMT8dCQHJvA2EdMo4fFQXb9BR8T";
-    sha256 = "0f9f9a1db2f48cafc70ed2596ff3594b597e2027408f5f2be6191c245d67853a";
+    sha256 = "ffc035c4bfeb07780c4580bb4488ade0ab1d197c3cdf89cb8ab36386cfb34376";
   };
 
   nativeBuildInputs = [

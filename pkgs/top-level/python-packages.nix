@@ -321,6 +321,8 @@ matrix-synapse-ldap3 = callPackage ../all-pkgs/m/matrix-synapse-ldap3 { };
 
 mistune = callPackage ../all-pkgs/m/mistune { };
 
+monotonic = callPackage ../all-pkgs/m/monotonic { };
+
 mopidy = callPackage ../all-pkgs/m/mopidy { };
 
 msgpack-python = callPackage ../all-pkgs/m/msgpack-python { };

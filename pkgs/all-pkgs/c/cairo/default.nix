@@ -24,13 +24,13 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "cairo-1.14.8";
+  name = "cairo-1.14.10";
 
   src = fetchurl {
     url = "https://cairographics.org/releases/${name}.tar.xz";
-    multihash = "QmVNbPjNarRuKhgfLSVQ2fCYc9JpvHDaEiaJfzjiVvyYbt";
+    multihash = "QmceAfwie7MyRPHeezGiTA7aUtMVrMKdT6v7YVq8yPavj7";
     hashOutput = false;
-    sha256 = "d1f2d98ae9a4111564f6de4e013d639cf77155baf2556582295a0f00a9bc5e20";
+    sha256 = "7e87878658f2c9951a14fc64114d4958c0e65ac47530b8ac3078b2ce41b66a09";
   };
 
   nativeBuildInputs = [

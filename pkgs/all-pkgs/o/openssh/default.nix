@@ -20,10 +20,6 @@ stdenv.mkDerivation rec {
     sha256 = "9846e3c5fab9f0547400b4d2c017992f914222b3fd1f8eee6c7dc6bc5e59f9f0";
   };
 
-  patches = [
-    ./locale_archive.patch
-  ];
-
   buildInputs = [
     audit_lib
     kerberos
@@ -34,6 +30,16 @@ stdenv.mkDerivation rec {
     pam
     zlib
   ];
+
+  patches = [
+    ./locale_archive.patch
+  ];
+
+  postPatch = ''
+    # setuid can't be in a nixbuild
+    grep -q 'INSTALL.*-m 4' Makefile.in
+    sed -i '/INSTALL/s,-m 4,-m 0,' Makefile.in
+  '';
 
   # I set --disable-strip because later we strip anyway. And it fails to strip
   # properly when cross building.

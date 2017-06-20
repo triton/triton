@@ -3,15 +3,17 @@
 , fetchPyPi
 , lib
 
+, bcrypt
 , cryptography
 , ecdsa
 , pyasn1
 , pycrypto
+, pynacl
 , six
 }:
 
 let
-  version = "2.1.2";
+  version = "2.2.1";
 in
 buildPythonPackage rec {
   name = "paramiko-${version}";
@@ -19,14 +21,16 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "paramiko";
     inherit version;
-    sha256 = "5fae49bed35e2e3d45c4f7b0db2d38b9ca626312d91119b3991d0ecf8125e310";
+    sha256 = "ff94ae65379914ec3c960de731381f49092057b6dd1d24d18842ead5a2eb2277";
   };
 
   propagatedBuildInputs = [
+    bcrypt
     cryptography
     ecdsa
     pyasn1
     pycrypto
+    pynacl
     six
   ];
 
@@ -34,7 +38,9 @@ buildPythonPackage rec {
     description = "Native Python SSHv2 protocol library";
     homepage = https://github.com/paramiko/paramiko/;
     license = licenses.lgpl21Plus;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

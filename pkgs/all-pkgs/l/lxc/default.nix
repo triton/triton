@@ -51,6 +51,11 @@ stdenv.mkDerivation rec {
     ./support-db2x.patch
   ];
 
+  postPatch = ''
+    # Can't setuid in a nixbuild
+    sed -i 's,chmod u+s.*,true,' src/lxc/Makefile.{am,in}
+  '';
+
   configureFlags = [
     "--localstatedir=/var"
     "--sysconfdir=/etc"

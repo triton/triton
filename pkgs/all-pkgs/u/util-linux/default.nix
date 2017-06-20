@@ -76,9 +76,13 @@ stdenv.mkDerivation rec {
   #FIXME: make it also work on non-nixos?
   postPatch = ''
     # Substituting store paths would create a circular dependency on systemd
-    substituteInPlace include/pathnames.h \
-      --replace "/bin/login" "/run/current-system/sw/bin/login" \
-      --replace "/sbin/shutdown" "/run/current-system/sw/bin/shutdown"
+    sed \
+      -e "s,/bin/login,/run/current-system/sw/bin/login," \
+      -e "s,/sbin/shutdown,/run/current-system/sw/bin/shutdown," \
+      -i include/pathnames.h
+
+    # We can't setuid in a nixbuild
+    sed -i 's, 4755 , 0755 ,g' Makefile.in
   '';
 
   # !!! It would be better to obtain the path to the mount helpers

@@ -169,6 +169,8 @@ backports-ssl-match-hostname =
 
 bazaar = callPackage ../all-pkgs/b/bazaar { };
 
+bcrypt = callPackage ../all-pkgs/b/bcrypt { };
+
 beautifulsoup = callPackage ../all-pkgs/b/beautifulsoup { };
 
 beets = callPackage ../all-pkgs/b/beets { };

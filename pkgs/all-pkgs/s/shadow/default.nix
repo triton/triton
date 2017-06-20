@@ -42,6 +42,12 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  postPatch = ''
+    # setuid can't happen in a nixbuild
+    grep -q '4755' src/Makefile.in
+    sed -i 's,4755,0755,g' src/Makefile.in
+  '';
+
   # Assume System V `setpgrp (void)', which is the default on GNU variants
   # (`AC_FUNC_SETPGRP' is not cross-compilation capable.)
   preConfigure = ''

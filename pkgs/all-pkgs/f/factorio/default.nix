@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "0.14.23";
+  version = "0.15.21";
 in
 stdenv.mkDerivation rec {
   name = "factorio-${version}";
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     name = "${name}.tar.gz";
     url = "https://www.factorio.com/get-download/${version}/alpha/linux64";
-    sha256 = "b532094309e9ebc0c03c0442350948f23113c7d54a973e68210bc71321c8f17a";
+    sha256 = "423e57d622298bfde81cc053542398d3b258d15352587dcb0cccc5eca935c32c";
   };
 
   libs = [

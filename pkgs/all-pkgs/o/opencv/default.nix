@@ -170,6 +170,7 @@ stdenv.mkDerivation rec {
     "-DWITH_V4L=${boolOn (v4l_lib != null)}"
     # WITH_VA
     # WITH_VA_INTEL
+    # WITH_MFX
     "-DWITH_VTK=OFF"
     "-DWITH_WEBP=${boolOn (libwebp != null)}"
     #WITH_XIMEA

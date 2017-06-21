@@ -2778,16 +2778,14 @@ oniguruma = callPackage ../all-pkgs/o/oniguruma { };
 openal-soft = callPackage ../all-pkgs/o/openal-soft { };
 openal = callPackageAlias "openal-soft" { };
 
-opencv_2-4 = callPackage ../all-pkgs/o/opencv {
-  channel = "2.4";
+opencv_2 = callPackage ../all-pkgs/o/opencv {
+  channel = "2";
   gtk_3 = null;
 };
-opencv_2 = callPackageAlias "opencv_2-4" { };
-opencv_3-1 = callPackage ../all-pkgs/o/opencv {
-  channel = "3.1";
+opencv_3 = callPackage ../all-pkgs/o/opencv {
+  channel = "3";
   gtk_2 = null;
 };
-opencv_3 = callPackageAlias "opencv_3-1" { };
 opencv = callPackageAlias "opencv_3" { };
 
 openh264 = callPackage ../all-pkgs/o/openh264 { };

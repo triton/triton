@@ -1,19 +1,20 @@
 { stdenv
 , fetchurl
+, lib
 
 , ffmpeg
 , sox
 }:
 
 let
-  version = "0.4.9";
+  version = "0.4.12";
 in
 stdenv.mkDerivation rec {
   name = "bs1770gain-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/bs1770gain/${name}.tar.gz";
-    sha256 = "d839cc429c371b06589974bf5f54585d265ca2309b07d6cac07b2687a9b6499b";
+    url = "mirror://sourceforge/bs1770gain/bs1770gain/${version}/${name}.tar.gz";
+    sha256 = "cafc5440cf4940939c675e98c8dbeb839f4965d60f74270a37d4ee70559b3a59";
   };
 
   buildInputs = [
@@ -21,10 +22,7 @@ stdenv.mkDerivation rec {
     sox
   ];
 
-  NIX_CFLAGS_COMPILE = "-Wno-error";
-  CFLAGS = "-std=gnu89";
-
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A audio/video loudness scanner implementing ITU-R BS.1770";
     homepage = "http://bs1770gain.sourceforge.net/";
     license = licenses.gpl2Plus;

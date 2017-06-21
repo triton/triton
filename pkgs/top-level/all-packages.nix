@@ -1542,6 +1542,11 @@ gst-libav_1-10 = callPackage ../all-pkgs/g/gst-libav {
   gst-plugins-base = pkgs.gst-plugins-base_1-10;
   gstreamer = pkgs.gstreamer_1-10;
 };
+gst-libav_1-12 = callPackage ../all-pkgs/g/gst-libav {
+  channel = "1.12";
+  gst-plugins-base = pkgs.gst-plugins-base_1-12;
+  gstreamer = pkgs.gstreamer_1-12;
+};
 gst-libav = callPackageAlias "gst-libav_1-10" { };
 
 gst-plugins-bad_generics = overrides:

@@ -1630,6 +1630,11 @@ gst-validate_1-10 = callPackage ../all-pkgs/g/gst-validate {
   gst-plugins-base = pkgs.gst-plugins-base_1-10;
   gstreamer = pkgs.gstreamer_1-10;
 };
+gst-validate_1-12 = callPackage ../all-pkgs/g/gst-validate {
+  channel = "1.12";
+  gst-plugins-base = pkgs.gst-plugins-base_1-12;
+  gstreamer = pkgs.gstreamer_1-12;
+};
 gst-validate = callPackageAlias "gst-validate_1-10" { };
 
 gstreamer_1-10 = callPackage ../all-pkgs/g/gstreamer {

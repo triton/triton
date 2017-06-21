@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , buildPythonPackage
+, lib
 , makeWrapper
 
 , ffmpeg
@@ -16,10 +17,10 @@
 # the tool that doesn't have the formatted man page included.
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionalString;
 
-  version = "2017.05.07";
+  version = "2017.06.18";
 in
 buildPythonPackage rec {
   name = "youtube-dl-${version}";
@@ -28,7 +29,7 @@ buildPythonPackage rec {
     url = "https://github.com/rg3/youtube-dl/releases/download/"
       + "${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "45308c76b5e49b657ec7fa23b6b09e4d832355b54c86da79f09586b9664f6be0";
+    sha256 = "f53d32c2ca64bb7bf2307666b42c88fa68dcc399f6a92ebed01b8693794e5f99";
   };
 
   nativeBuildInputs = [
@@ -60,7 +61,7 @@ buildPythonPackage rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "CLI tool to download videos from YouTube.com & other sites";
     homepage = http://rg3.github.io/youtube-dl/;
     license = licenses.publicDomain;

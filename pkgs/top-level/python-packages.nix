@@ -535,6 +535,8 @@ synapse = callPackage ../all-pkgs/s/synapse { };
 
 tahoe-lafs = callPackage ../all-pkgs/t/tahoe-lafs { };
 
+tempora = callPackage ../all-pkgs/t/tempora { };
+
 terminaltables = callPackage ../all-pkgs/t/terminaltables { };
 
 tmdb3 = callPackage ../all-pkgs/t/tmdb3 { };

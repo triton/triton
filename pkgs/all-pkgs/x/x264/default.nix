@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "20170507";
+  version = "20170620";
 in
 stdenv.mkDerivation rec {
   name = "x264-${version}";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://videolan/x264/snapshots/"
       + "x264-snapshot-${version}-2245-stable.tar.bz2";
-    sha256 = "09553f4c0d58475e9474684a7c25cb7c66a0a411c3fcac344f1f61264a6cbec1";
+    sha256 = "17ceb937ff1347983d96c13a1b086674bd57b71f52879c3c1bf3355ce79482d1";
   };
 
   nativeBuildInputs = [

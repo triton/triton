@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , aniso8601
 , flask
@@ -15,11 +16,11 @@
 #, rednose
 , tzlocal
 
-, channel ? "0.9"
+, channel ? "latest"
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals
     versionOlder;
 
@@ -28,9 +29,9 @@ let
       version = "0.8.6";
       sha256 = "3bb76cc156b9a09da62396d82b29fa31e4f27cccf79528538fe7155cf2785593";
     };
-    "0.9" = {
-      version = "0.9.2";
-      sha256 = "c4313097a673ef2cffabceb44b6fdd03132ee5e7ab34d0289c37af12a3d11186";
+    "latest" = {
+      version = "0.10.1";
+      sha256 = "129767ba6087a6f0a6d1bd901f4c11192b4d33fe80c38cf2a8a0b5f8dd6049e3";
     };
   };
 
@@ -62,7 +63,7 @@ buildPythonPackage rec {
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Framework for fast, easy and documented API development";
     homepage = https://github.com/noirbizarre/flask-restplus;
     license = licenses.mit;

@@ -201,6 +201,8 @@ characteristic = callPackage ../all-pkgs/c/characteristic { };
 
 chardet = callPackage ../all-pkgs/c/chardet { };
 
+cheroot = callPackage ../all-pkgs/c/cheroot { };
+
 cherrypy = callPackage ../all-pkgs/c/cherrypy { };
 
 click = callPackage ../all-pkgs/c/click { };

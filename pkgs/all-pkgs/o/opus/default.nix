@@ -67,7 +67,7 @@ stdenv.mkDerivation rec {
     "--enable-ambisonics"
     "--disable-doc"
     "--disable-extra-programs"
-    (if channel == "head" then "--enable-update-draft" else null)
+    "--enable-update-draft"
     #--with-NE10
   ];
 

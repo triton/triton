@@ -1537,17 +1537,12 @@ gssdp_1-0 = callPackage ../all-pkgs/g/gssdp {
 };
 gssdp = callPackageAlias "gssdp_1-0" { };
 
-gst-libav_1-10 = callPackage ../all-pkgs/g/gst-libav {
-  channel = "1.10";
-  gst-plugins-base = pkgs.gst-plugins-base_1-10;
-  gstreamer = pkgs.gstreamer_1-10;
-};
 gst-libav_1-12 = callPackage ../all-pkgs/g/gst-libav {
   channel = "1.12";
   gst-plugins-base = pkgs.gst-plugins-base_1-12;
   gstreamer = pkgs.gstreamer_1-12;
 };
-gst-libav = callPackageAlias "gst-libav_1-10" { };
+gst-libav = callPackageAlias "gst-libav_1-12" { };
 
 gst-plugins-bad_generics = overrides:
   callPackage ../all-pkgs/g/gst-plugins-bad ({
@@ -1574,87 +1569,50 @@ gst-plugins-bad_generics = overrides:
     gtk_3 = null;
     qt5 = null;
   } // overrides);
-gst-plugins-bad_1-10 = pkgs.gst-plugins-bad_generics {
-  channel = "1.10";
-  gst-plugins-base = pkgs.gst-plugins-base_1-10;
-  gstreamer = pkgs.gstreamer_1-10;
-};
 gst-plugins-bad_1-12 = pkgs.gst-plugins-bad_generics {
   channel = "1.12";
   gst-plugins-base = pkgs.gst-plugins-base_1-12;
   gstreamer = pkgs.gstreamer_1-12;
 };
-gst-plugins-bad = callPackageAlias "gst-plugins-bad_1-10" { };
+gst-plugins-bad = callPackageAlias "gst-plugins-bad_1-12" { };
 
-gst-plugins-base_1-10 = callPackage ../all-pkgs/g/gst-plugins-base {
-  channel = "1.10";
-  gstreamer = pkgs.gstreamer_1-10;
-};
 gst-plugins-base_1-12 = callPackage ../all-pkgs/g/gst-plugins-base {
   channel = "1.12";
   gstreamer = pkgs.gstreamer_1-12;
 };
-gst-plugins-base = callPackageAlias "gst-plugins-base_1-10" { };
+gst-plugins-base = callPackageAlias "gst-plugins-base_1-12" { };
 
-gst-plugins-good_1-10 = callPackage ../all-pkgs/g/gst-plugins-good {
-  channel = "1.10";
-  gst-plugins-base = pkgs.gst-plugins-base_1-10;
-  gstreamer = pkgs.gstreamer_1-10;
-};
 gst-plugins-good_1-12 = callPackage ../all-pkgs/g/gst-plugins-good {
   channel = "1.12";
   gst-plugins-base = pkgs.gst-plugins-base_1-12;
   gstreamer = pkgs.gstreamer_1-12;
 };
-gst-plugins-good = callPackageAlias "gst-plugins-good_1-10" { };
+gst-plugins-good = callPackageAlias "gst-plugins-good_1-12" { };
 
 gst-plugins-ugly_generics = overrides:
   callPackage ../all-pkgs/g/gst-plugins-ugly ({
     amrnb = null;
     amrwb = null;
   } // overrides);
-gst-plugins-ugly_1-10 = pkgs.gst-plugins-ugly_generics {
-  channel = "1.10";
-  gst-plugins-base = pkgs.gst-plugins-base_1-10;
-  gstreamer = pkgs.gstreamer_1-10;
-};
 gst-plugins-ugly_1-12 = pkgs.gst-plugins-ugly_generics {
   channel = "1.12";
   gst-plugins-base = pkgs.gst-plugins-base_1-12;
   gstreamer = pkgs.gstreamer_1-12;
 };
-gst-plugins-ugly = callPackageAlias "gst-plugins-ugly_1-10" { };
+gst-plugins-ugly = callPackageAlias "gst-plugins-ugly_1-12" { };
 
-gst-validate_1-10 = callPackage ../all-pkgs/g/gst-validate {
-  channel = "1.10";
-  gst-plugins-base = pkgs.gst-plugins-base_1-10;
-  gstreamer = pkgs.gstreamer_1-10;
-};
 gst-validate_1-12 = callPackage ../all-pkgs/g/gst-validate {
   channel = "1.12";
   gst-plugins-base = pkgs.gst-plugins-base_1-12;
   gstreamer = pkgs.gstreamer_1-12;
 };
-gst-validate = callPackageAlias "gst-validate_1-10" { };
+gst-validate = callPackageAlias "gst-validate_1-12" { };
 
-gstreamer_1-10 = callPackage ../all-pkgs/g/gstreamer {
-  channel = "1.10";
-};
 gstreamer_1-12 = callPackage ../all-pkgs/g/gstreamer {
   channel = "1.12";
 };
-gstreamer = callPackageAlias "gstreamer_1-10" { };
+gstreamer = callPackageAlias "gstreamer_1-12" { };
 
-gstreamer-editing-services_1-10 =
-  callPackage ../all-pkgs/g/gstreamer-editing-services {
-    channel = "1.10";
-    gnonlin = callPackageAlias "gnonlin" {
-      gst-plugins-base = pkgs.gst-plugins-base_1-10;
-      gstreamer = pkgs.gstreamer_1-10;
-    };
-    gst-plugins-base = pkgs.gst-plugins-base_1-10;
-    gstreamer = pkgs.gstreamer_1-10;
-  };
 gstreamer-editing-services_1-12 =
   callPackage ../all-pkgs/g/gstreamer-editing-services {
     channel = "1.12";
@@ -1666,21 +1624,15 @@ gstreamer-editing-services_1-12 =
     gstreamer = pkgs.gstreamer_1-12;
   };
 gstreamer-editing-services =
-  callPackageAlias "gstreamer-editing-services_1-10" { };
+  callPackageAlias "gstreamer-editing-services_1-12" { };
 
-gstreamer-vaapi_1-10 = callPackage ../all-pkgs/g/gstreamer-vaapi {
-  channel = "1.10";
-  gst-plugins-bad = pkgs.gst-plugins-bad_1-10;
-  gst-plugins-base = pkgs.gst-plugins-base_1-10;
-  gstreamer = pkgs.gstreamer_1-10;
-};
 gstreamer-vaapi_1-12 = callPackage ../all-pkgs/g/gstreamer-vaapi {
   channel = "1.12";
   gst-plugins-bad = pkgs.gst-plugins-bad_1-12;
   gst-plugins-base = pkgs.gst-plugins-base_1-12;
   gstreamer = pkgs.gstreamer_1-12;
 };
-gstreamer-vaapi = callPackageAlias "gstreamer-vaapi_1-10" { };
+gstreamer-vaapi = callPackageAlias "gstreamer-vaapi_1-12" { };
 
 googletest = callPackage ../all-pkgs/g/googletest { };
 

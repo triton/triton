@@ -148,6 +148,14 @@ stdenv.mkDerivation {
       file = "n/nvidia-drivers/nvidia-drivers-378.13-linux-4.10-rc8.patch";
       sha256 = "fab525ba498ee5706cd85b7fe625b572c1a2ff7fee952a63d0e0bddf347579af";
     })
+  ] ++ optionals (
+    (versionAtLeast version "381.00" && versionOlder version "381.22")
+    && (versionAtLeast kernel.version "4.11")) [
+    (fetchTritonPatch {
+      rev = "073bc882b4e3e5a1f82d4f1ed5e21cd5ae7446f6";
+      file = "n/nvidia-drivers/nvidia-drivers-381.09-linux-4.11-rc5.patch";
+      sha256 = "969a0c633d04bdad53707fe6818ba09d33cced049304ea94eb14986622c6253e";
+    })
   ];
 
   configurePhase = ":";

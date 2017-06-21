@@ -20,14 +20,14 @@ rec {
     versionMinor = "22";
     sha256i686   = "7b7dd6ee1c871dc5367fc207bba65077c3820a683decbfe6126fc70c0d1b9d08";
     sha256x86_64 = "c2468130af124bfe748bdf2bc4c08952a81b35d2bdb87d1217717e6a576217e8";
-    maxLinuxVersion = "4.10";
+    maxLinuxVersion = "4.11";
   };
   beta = {
     versionMajor = "381";
     versionMinor = "09";
     sha256i686   = "c39805e6610f710d16acf57c9d09cb5504d33c557e634e632079d46f18da4268";
     sha256x86_64 = "ff433aa127a602a3cdf6d308faab841a64e02f32a750caf0dc3999f0a3b70120";
-    maxLinuxVersion = "4.10";
+    maxLinuxVersion = "4.11";
   };
   # Update to which ever channel has the latest release at the time.
   latest = short-lived;

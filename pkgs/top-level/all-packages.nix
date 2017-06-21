@@ -1664,6 +1664,12 @@ gstreamer-vaapi_1-10 = callPackage ../all-pkgs/g/gstreamer-vaapi {
   gst-plugins-base = pkgs.gst-plugins-base_1-10;
   gstreamer = pkgs.gstreamer_1-10;
 };
+gstreamer-vaapi_1-12 = callPackage ../all-pkgs/g/gstreamer-vaapi {
+  channel = "1.12";
+  gst-plugins-bad = pkgs.gst-plugins-bad_1-12;
+  gst-plugins-base = pkgs.gst-plugins-base_1-12;
+  gstreamer = pkgs.gstreamer_1-12;
+};
 gstreamer-vaapi = callPackageAlias "gstreamer-vaapi_1-10" { };
 
 googletest = callPackage ../all-pkgs/g/googletest { };

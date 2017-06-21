@@ -66,6 +66,7 @@ stdenv.mkDerivation rec {
     "--disable-fatal-warnings"
     "--disable-extra-checks"
     "--disable-debug"
+    "--disable-examples"
     "--enable-encoders"
     "--${boolEn (libdrm != null)}-drm"
     "--${boolEn (xorg != null)}-x11"

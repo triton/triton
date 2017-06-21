@@ -3,10 +3,12 @@
 , config
 , fetchPyPi
 , isPy3k
+, lib
 , pythonOlder
 
 , apscheduler
 , beautifulsoup
+, cheroot
 , cherrypy
 , colorclass
 , deluge
@@ -25,6 +27,7 @@
 , pathlib
 , pathpy
 , pkgs
+, portend
 #, progressbar
 , pynzb
 , pyparsing
@@ -37,14 +40,15 @@
 , sqlalchemy
 , terminaltables
 , transmissionrpc
+, zxcvbn-python
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals
     optionalString;
 
-  version = "2.8.8";
+  version = "2.10.63";
 in
 buildPythonPackage rec {
   name = "flexget-${version}";
@@ -52,12 +56,13 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "FlexGet";
     inherit version;
-    sha256 = "8588bfbea8d123743f6470bb2ea94c59a5f4de582ef79085969d63b83c5aa811";
+    sha256 = "7071dc0aa07e73d13eb2294af3b0d352a7209d3f15e63ddeaabd5459604f5aeb";
   };
 
   propagatedBuildInputs = [
     apscheduler
     beautifulsoup
+    cheroot
     cherrypy
     colorclass
     feedparser
@@ -73,6 +78,7 @@ buildPythonPackage rec {
     jinja2
     jsonschema
     pathpy
+    portend
     pynzb
     pyparsing
     pyrss2gen
@@ -84,6 +90,7 @@ buildPythonPackage rec {
     sqlalchemy
     terminaltables
     transmissionrpc
+    zxcvbn-python
   ] ++ optionals (pythonOlder "3.4") [
     pathlib
   ] ++ optionals (config.deluge or false) [
@@ -100,7 +107,7 @@ buildPythonPackage rec {
 
   disabled = isPy3k;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Automation tool for content like torrents, nzbs, podcasts";
     homepage = http://flexget.com/;
     license = licenses.mit;

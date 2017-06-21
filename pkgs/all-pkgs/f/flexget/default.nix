@@ -18,7 +18,7 @@
 , flask-cors
 , flask-login
 , flask-restful
-, flask-restplus_0-8
+, flask-restplus
 , future
 , guessit
 , html5lib
@@ -71,7 +71,7 @@ buildPythonPackage rec {
     flask-cors
     flask-login
     flask-restful
-    flask-restplus_0-8
+    flask-restplus
     future
     guessit
     html5lib

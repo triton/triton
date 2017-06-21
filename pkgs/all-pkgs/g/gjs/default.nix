@@ -3,6 +3,7 @@
 , fetchurl
 , gettext
 #, gnome-common
+, lib
 
 , atk
 , cairo
@@ -14,14 +15,14 @@
 , libxml2
 , pango
 , readline
-, spidermonkey_24
+, spidermonkey
 , xorg
 
 , channel
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolWt;
 
   source = (import ./sources.nix { })."${channel}";
@@ -52,7 +53,7 @@ stdenv.mkDerivation rec {
     libxml2
     pango
     readline
-    spidermonkey_24
+    spidermonkey
   ];
 
   configureFlags = [
@@ -89,7 +90,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Javascript bindings for GNOME";
     homepage = https://wiki.gnome.org/Projects/Gjs;
     license = with licenses; [

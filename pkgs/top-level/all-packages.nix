@@ -1262,6 +1262,11 @@ gjs_1-46 = callPackage ../all-pkgs/g/gjs {
   atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
+gjs_1-48 = callPackage ../all-pkgs/g/gjs {
+  channel = "1.48";
+  atk = pkgs.atk_2-24;
+  gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
+};
 gjs = callPackageAlias "gjs_1-46" { };
 
 gksu = callPackage ../all-pkgs/g/gksu { };

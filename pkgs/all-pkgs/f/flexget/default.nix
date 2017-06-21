@@ -36,7 +36,6 @@
 , pyyaml
 , requests
 , rpyc
-, safe
 , sqlalchemy
 , terminaltables
 , transmissionrpc
@@ -86,7 +85,6 @@ buildPythonPackage rec {
     pyyaml
     requests
     rpyc
-    safe
     sqlalchemy
     terminaltables
     transmissionrpc

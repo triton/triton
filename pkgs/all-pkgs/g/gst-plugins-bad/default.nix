@@ -39,7 +39,6 @@
 , qt5
 , rtmpdump
 , schroedinger
-, SDL
 , soundtouch
 , spandsp
 #, vo-aacenc
@@ -47,7 +46,6 @@
 , wayland
 , x265
 , xorg
-, xvidcore
 
 , channel
 }:
@@ -112,7 +110,6 @@ stdenv.mkDerivation rec {
     qt5
     rtmpdump
     schroedinger
-    SDL
     soundtouch
     spandsp
     #vo-aacenc
@@ -120,7 +117,6 @@ stdenv.mkDerivation rec {
     wayland
     x265
     xorg.libX11
-    xvidcore
   ];
 
   postPatch =
@@ -149,6 +145,7 @@ stdenv.mkDerivation rec {
     "--enable-gobject-cast-checks"
     "--disable-glib-asserts"
     "--enable-Bsymbolic"
+    #"--disable-iqa"
     "--${boolEn (orc != null)}-orc"
     "--disable-static-plugins"
     # Internal Plugins
@@ -158,14 +155,15 @@ stdenv.mkDerivation rec {
     "--enable-aiff"
     "--enable-videoframe_audiolevel"
     "--enable-asfmux"
+    "--enable-audiobuffersplit"
     "--enable-audiofxbad"
     "--enable-audiomixer"
+    "--enable-audiomixmatrix"
     "--enable-compositor"
     "--enable-audiovisualizers"
     "--enable-autoconvert"
     "--enable-bayer"
     "--enable-camerabin2"
-    "--enable-cdxaparse"
     "--enable-coloreffects"
     "--enable-dataurisrc"
     "--enable-dccp"
@@ -180,7 +178,6 @@ stdenv.mkDerivation rec {
     "--enable-gaudieffects"
     "--enable-geometrictransform"
     "--enable-gdp"
-    "--enable-hdvparse"
     "--enable-id3tag"
     "--enable-inter"
     "--enable-interlace"
@@ -194,17 +191,14 @@ stdenv.mkDerivation rec {
     "--enable-mpegtsdemux"
     "--enable-mpegtsmux"
     "--enable-mpegpsmux"
-    "--enable-mve"
     "--enable-mxf"
     "--enable-netsim"
     "--enable-nuvdemux"
     "--enable-onvif"
-    "--enable-patchdetect"
     "--enable-pcapparse"
     "--enable-pnm"
     "--enable-rawparse"
     "--enable-removesilence"
-    "--enable-sdi"
     "--enable-sdp"
     "--enable-segmentclip"
     "--enable-siren"
@@ -212,9 +206,8 @@ stdenv.mkDerivation rec {
     "--enable-speed"
     "--enable-subenc"
     "--enable-stereo"
-    "--enable-tta"
+    "--enable-timecode"
     "--enable-videofilters"
-    "--enable-videomeasure"
     "--enable-videoparsers"
     "--enable-videosignal"
     "--enable-vmnc"
@@ -248,7 +241,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (libass != null)}-assrender"
     /**/"--disable-voamrwbenc"
     /**/"--disable-voaacenc"
-    /**/"--disable-apexsink"
     "--${boolEn (libbs2b != null)}-bs2b"
     "--${boolEn (bzip2 != null)}-bz2"
     "--${boolEn (chromaprint != null)}-chromaprint"
@@ -276,13 +268,11 @@ stdenv.mkDerivation rec {
     "--${boolEn (libmms != null)}-libmms"
     /**/"--disable-srtp"
     /**/"--disable-dtls"
-    /**/"--disable-linsys"
+    /**/"--disable-ttml"
     "--${boolEn (libmodplug != null)}-modplug"
-    /**/"--disable-mimic"
     /**/"--disable-mpeg2enc"
     /**/"--disable-mplex"
     "--${boolEn (musepack != null)}-musepack"
-    /**/"--disable-nas"
     /**/"--disable-neon"
     /**/"--disable-ofa"
     "--${boolEn (openal != null)}-openal"
@@ -302,16 +292,12 @@ stdenv.mkDerivation rec {
     /**/"--disable-timidity"
     /**/"--disable-teletextdec"
     /**/"--disable-wildmidi"
-    "--${boolEn (SDL != null)}-sdl"
-    "--disable-sdltest"
     /**/"--disable-smoothstreaming"
     "--${boolEn (libsndfile != null)}-sndfile"
     "--${boolEn (soundtouch != null)}-soundtouch"
     /**/"--disable-spc"
     "--${boolEn (game-music-emu != null)}-gme"
-    "--${boolEn (xvidcore != null)}-xvid"
-    /**/"--disable-svb"
-    "--disable-wininet"  # windows
+    /**/"--disable-dvb"
     /**/"--disable-acm"
     "--${boolEn (libvdpau != null)}-vdpau"
     /**/"--disable-sbc"
@@ -319,9 +305,6 @@ stdenv.mkDerivation rec {
     /**/"--disable-zbar"
     "--${boolEn (rtmpdump != null)}-rtmp"
     "--${boolEn (spandsp != null)}-spandsp"
-    /**/"--disable-gsettings"
-    "--enable-schemas-compile"
-    /**/"--disable-sndio"
     /**/"--disable-hls"
     "--${boolEn (x265 != null)}-x265"
     "--enable-webrtcdsp"

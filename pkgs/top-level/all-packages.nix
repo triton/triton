@@ -1564,7 +1564,6 @@ gst-plugins-bad_generics = overrides:
     openjpeg = null;
     rtmpdump = null;
     schroedinger = null;
-    SDL = null;
     soundtouch = null;
     spandsp = null;
     gtk_3 = null;
@@ -1574,6 +1573,11 @@ gst-plugins-bad_1-10 = pkgs.gst-plugins-bad_generics {
   channel = "1.10";
   gst-plugins-base = pkgs.gst-plugins-base_1-10;
   gstreamer = pkgs.gstreamer_1-10;
+};
+gst-plugins-bad_1-12 = pkgs.gst-plugins-bad_generics {
+  channel = "1.12";
+  gst-plugins-base = pkgs.gst-plugins-base_1-12;
+  gstreamer = pkgs.gstreamer_1-12;
 };
 gst-plugins-bad = callPackageAlias "gst-plugins-bad_1-10" { };
 

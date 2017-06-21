@@ -193,6 +193,17 @@ cleanup_mounts() {
   done
 }
 
+error_trace() {
+  local -i i=0
+  local -i x=${#BASH_LINENO[@]}
+
+  for ((i=x-2; i>=0; i--)); do
+    echo '  File' \"${BASH_SOURCE[i+1]}\", line ${BASH_LINENO[i]}, in ${FUNCNAME[i+1]}
+    # Print the text from the line
+    sed -n "${BASH_LINENO[i]}{s/^/    /;p}" "${BASH_SOURCE[i+1]}"
+  done
+}
+
 # Re-exec ourselves in a private mount namespace so that our bind
 # mounts get cleaned up automatically.
 if [ $(id -u) -eq 0 ]; then
@@ -262,8 +273,12 @@ while [ "$#" -gt 0 ]; do
 done
 
 set -o errexit
+set -o errtrace
+set -o functrace
 set -o pipefail
 shopt -s nullglob
+
+trap 'error_trace; exit 1' ERR
 
 declare -r MOUNT_POINT="${MOUNT_POINT:-/mnt}"
 if [ ! -e "$MOUNT_POINT" ]; then

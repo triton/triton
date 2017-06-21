@@ -13,7 +13,6 @@
 , lame
 , libcdio
 , libdvdread
-, libmad
 , libmpeg2
 , mpg123
 , orc
@@ -55,7 +54,6 @@ stdenv.mkDerivation rec {
     lame
     libcdio
     libdvdread
-    libmad
     libmpeg2
     mpg123
     orc
@@ -96,7 +94,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (libcdio != null)}-cdio"
     "--${boolEn (libdvdread != null)}-dvdread"
     "--${boolEn (lame != null)}-lame"
-    "--${boolEn (libmad != null)}-mad"
     "--${boolEn (libmpeg2 != null)}-mpeg2dec"
     "--${boolEn (mpg123 != null)}-mpg123"
     #"--${boolEn (sidplay != null)}-sidplay"

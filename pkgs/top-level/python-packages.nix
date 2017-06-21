@@ -374,6 +374,8 @@ pip = callPackage ../all-pkgs/p/pip { };
 
 ply = callPackage ../all-pkgs/p/ply { };
 
+portend = callPackage ../all-pkgs/p/portend { };
+
 progressbar = callPackage ../all-pkgs/p/progressbar { };
 
 psutil = callPackage ../all-pkgs/p/psutil { };

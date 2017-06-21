@@ -68,9 +68,8 @@ stdenv.mkDerivation rec {
     "--enable-Bsymbolic"
     "--disable-benchmarks"
     "--disable-static-plugins"
-    "--without-gtk"
     #"--with-bash-completion-dir"
-    #"--with-gtk=3.0"
+    "--without-gtk"
   ];
 
   passthru = {

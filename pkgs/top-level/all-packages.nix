@@ -1655,6 +1655,16 @@ gstreamer-editing-services_1-10 =
     gst-plugins-base = pkgs.gst-plugins-base_1-10;
     gstreamer = pkgs.gstreamer_1-10;
   };
+gstreamer-editing-services_1-12 =
+  callPackage ../all-pkgs/g/gstreamer-editing-services {
+    channel = "1.12";
+    gnonlin = callPackageAlias "gnonlin" {
+      gst-plugins-base = pkgs.gst-plugins-base_1-12;
+      gstreamer = pkgs.gstreamer_1-12;
+    };
+    gst-plugins-base = pkgs.gst-plugins-base_1-12;
+    gstreamer = pkgs.gstreamer_1-12;
+  };
 gstreamer-editing-services =
   callPackageAlias "gstreamer-editing-services_1-10" { };
 

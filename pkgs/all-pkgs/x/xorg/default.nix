@@ -29,6 +29,8 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxdmcp
 , libxext
 , libxfixes
+, libxfont
+, libxfont2
 , libxscrnsaver
 , libxt
 , presentproto
@@ -124,6 +126,8 @@ let
     libXdmcp = libxdmcp;
     libXext = libxext;
     libXfixes = libxfixes;
+    libXfont = libxfont;
+    libXfont2 = libxfont2;
     libXScrnSaver = libxscrnsaver;
     libXt = libxt;
     utilmacros = util-macros;
@@ -737,28 +741,6 @@ let
     buildInputs = [ evieext libX11 libXext xextproto xproto ];
 
   }) // {inherit evieext libX11 libXext xextproto xproto ;};
-
-  libXfont = (mkDerivation "libXfont" {
-    name = "libXfont-1.5.2";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXfont-1.5.2.tar.bz2;
-      sha256 = "0w8d07bkmjiarkx09579bl8zsq903mn8javc7qpi0ix4ink5x502";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libfontenc fontsproto freetype xproto xtrans zlib ];
-
-  }) // {inherit libfontenc fontsproto freetype xproto xtrans zlib ;};
-
-  libXfont2 = (mkDerivation "libXfont2" {
-    name = "libXfont2-2.0.1";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXfont2-2.0.1.tar.bz2;
-      sha256 = "0znvwk36nhmyqpmhbm9mzisgixp1mp5qkfald8x1n5yxbm3vpyz9";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libfontenc fontsproto freetype xproto xtrans zlib ];
-
-  }) // {inherit libfontenc fontsproto freetype xproto xtrans zlib ;};
 
   libXfontcache = (mkDerivation "libXfontcache" {
     name = "libXfontcache-1.0.5";

@@ -2382,6 +2382,14 @@ libxfce4util = callPackageAlias "libxfce4util_4-12" { };
 
 libxfixes = callPackage ../all-pkgs/l/libxfixes { };
 
+libxfont = callPackage ../all-pkgs/l/libxfont {
+  channel = "1";
+};
+
+libxfont2 = callPackage ../all-pkgs/l/libxfont {
+  channel = "2";
+};
+
 libxkbcommon = callPackage ../all-pkgs/l/libxkbcommon { };
 
 libxklavier = callPackage ../all-pkgs/l/libxklavier { };
@@ -3660,6 +3668,8 @@ xorg = recurseIntoAttrs (
       libxdmcp
       libxext
       libxfixes
+      libxfont
+      libxfont2
       libxscrnsaver
       libxt
       presentproto

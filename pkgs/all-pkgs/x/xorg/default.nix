@@ -50,6 +50,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , xineramaproto
 , xproto
 , xtrans
+, xwininfo
 
 , ... }: with args;
 
@@ -104,7 +105,8 @@ let
       xf86vidmodeproto
       xineramaproto
       xproto
-      xtrans;
+      xtrans
+      xwininfo;
 
     libICE = libice;
     libpthreadstubs = libpthread-stubs;
@@ -1629,16 +1631,5 @@ let
     buildInputs = [ libX11 libXau libXaw libXext libXi libXmu libXt xtrans libXtst ];
 
   }) // {inherit libX11 libXau libXaw libXext libXi libXmu libXt xtrans libXtst ;};
-
-  xwininfo = (mkDerivation "xwininfo" {
-    name = "xwininfo-1.1.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xwininfo-1.1.3.tar.bz2;
-      sha256 = "1y1zn8ijqslb5lfpbq4bb78kllhch8in98ps7n8fg3dxjpmb13i1";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libxcb xproto ];
-
-  }) // {inherit libX11 libxcb xproto ;};
 
 }; in xorg

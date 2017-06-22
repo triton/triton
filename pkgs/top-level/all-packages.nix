@@ -3675,6 +3675,7 @@ xorg = recurseIntoAttrs (
       xineramaproto
       xproto
       xtrans
+      xwininfo
       ;
     mesa = pkgs.mesa_noglu;
   }
@@ -3685,6 +3686,8 @@ xproto = callPackage ../all-pkgs/x/xproto { };
 xtrans = callPackage ../all-pkgs/x/xtrans { };
 
 xvidcore = callPackage ../all-pkgs/x/xvidcore { };
+
+xwininfo = callPackage ../all-pkgs/x/xwininfo { };
 
 xz = callPackage ../all-pkgs/x/xz { };
 

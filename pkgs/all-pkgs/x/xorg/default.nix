@@ -49,6 +49,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , xf86vidmodeproto
 , xineramaproto
 , xproto
+, xrefresh
 , xtrans
 , xwininfo
 
@@ -105,6 +106,7 @@ let
       xf86vidmodeproto
       xineramaproto
       xproto
+      xrefresh
       xtrans
       xwininfo;
 
@@ -1587,17 +1589,6 @@ let
     buildInputs = [ libX11 libXmu xproto ];
 
   }) // {inherit libX11 libXmu xproto ;};
-
-  xrefresh = (mkDerivation "xrefresh" {
-    name = "xrefresh-1.0.5";
-    src = fetchurl {
-      url = mirror://xorg/individual/app/xrefresh-1.0.5.tar.bz2;
-      sha256 = "1mlinwgvql6s1rbf46yckbfr9j22d3c3z7jx3n6ix7ca18dnf4rj";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 xproto ];
-
-  }) // {inherit libX11 xproto ;};
 
   xset = (mkDerivation "xset" {
     name = "xset-1.2.3";

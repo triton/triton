@@ -3674,6 +3674,7 @@ xorg = recurseIntoAttrs (
       xf86vidmodeproto
       xineramaproto
       xproto
+      xrefresh
       xtrans
       xwininfo
       ;
@@ -3682,6 +3683,8 @@ xorg = recurseIntoAttrs (
 );
 
 xproto = callPackage ../all-pkgs/x/xproto { };
+
+xrefresh = callPackage ../all-pkgs/x/xrefresh { };
 
 xtrans = callPackage ../all-pkgs/x/xtrans { };
 

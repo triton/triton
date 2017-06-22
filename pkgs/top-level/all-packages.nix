@@ -2360,6 +2360,8 @@ libxau = callPackage ../all-pkgs/l/libxau { };
 
 libxcb = callPackage ../all-pkgs/l/libxcb { };
 
+libxcomposite = callPackage ../all-pkgs/l/libxcomposite { };
+
 libxdmcp = callPackage ../all-pkgs/l/libxdmcp { };
 
 libxext = callPackage ../all-pkgs/l/libxext { };
@@ -3646,6 +3648,7 @@ xorg = recurseIntoAttrs (
       libx11
       libxau
       libxcb
+      libxcomposite
       libxdmcp
       libxext
       libxfixes

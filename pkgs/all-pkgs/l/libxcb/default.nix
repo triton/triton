@@ -1,7 +1,6 @@
 { stdenv
 , fetchurl
 , lib
-, python3
 , util-macros
 
 , libpthread-stubs

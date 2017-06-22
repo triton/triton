@@ -2008,6 +2008,8 @@ libffi = callPackage ../all-pkgs/l/libffi { };
 
 libfilezilla = callPackage ../all-pkgs/l/libfilezilla { };
 
+libfontenc = callPackage ../all-pkgs/l/libfontenc { };
+
 libfpx = callPackage ../all-pkgs/l/libfpx { };
 
 libftdi = callPackage ../all-pkgs/l/libftdi { };
@@ -3646,6 +3648,7 @@ xorg = recurseIntoAttrs (
       glproto
       inputproto
       kbproto
+      libfontenc
       libice
       libpthread-stubs
       libsm

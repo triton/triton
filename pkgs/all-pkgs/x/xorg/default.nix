@@ -17,6 +17,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , glproto
 , inputproto
 , kbproto
+, libfontenc
 , libice
 , libpthread-stubs
 , libsm
@@ -88,6 +89,7 @@ let
       glproto
       inputproto
       kbproto
+      libfontenc
       libxcb
       presentproto
       printproto
@@ -966,17 +968,6 @@ let
     buildInputs = [ dmxproto libX11 libXext xextproto ];
 
   }) // {inherit dmxproto libX11 libXext xextproto ;};
-
-  libfontenc = (mkDerivation "libfontenc" {
-    name = "libfontenc-1.1.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libfontenc-1.1.3.tar.bz2;
-      sha256 = "08gxmrhgw97mv0pvkfmd46zzxrn6zdw4g27073zl55gwwqq8jn3h";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ xproto zlib ];
-
-  }) // {inherit xproto zlib ;};
 
   libpciaccess = (mkDerivation "libpciaccess" {
     name = "libpciaccess-0.13.5";

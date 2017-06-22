@@ -24,6 +24,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxau
 , libxcb
 , libxcomposite
+, libxdamage
 , libxdmcp
 , libxext
 , libxfixes
@@ -116,6 +117,7 @@ let
     libX11 = libx11;
     libXau = libxau;
     libXcomposite = libxcomposite;
+    libXdamage = libxdamage;
     libXdmcp = libxdmcp;
     libXext = libxext;
     libXfixes = libxfixes;
@@ -731,17 +733,6 @@ let
     buildInputs = [ fixesproto libX11 libXfixes xproto libXrender ];
 
   }) // {inherit fixesproto libX11 libXfixes xproto libXrender ;};
-
-  libXdamage = (mkDerivation "libXdamage" {
-    name = "libXdamage-1.1.4";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXdamage-1.1.4.tar.bz2;
-      sha256 = "1bamagq7g6s0d23l8rb3nppj8ifqj05f7z9bhbs4fdg8az3ffgvw";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ damageproto fixesproto libX11 xextproto libXfixes xproto ];
-
-  }) // {inherit damageproto fixesproto libX11 xextproto libXfixes xproto ;};
 
   libXevie = (mkDerivation "libXevie" {
     name = "libXevie-1.0.3";

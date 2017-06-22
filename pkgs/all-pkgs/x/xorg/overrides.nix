@@ -47,13 +47,6 @@ in
     patchFlags = [ "-p0" ];
   };
 
-  libxcb = attrs : attrs // {
-    configureFlags = [
-      "--enable-xkb"
-      "--enable-xinput"
-    ];
-  };
-
   setxkbmap = attrs: attrs // {
     postInstall = ''
       mkdir -p $out/share

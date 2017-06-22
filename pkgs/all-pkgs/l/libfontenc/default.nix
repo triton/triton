@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = with lib; {
-    description = "";
+    description = "Font encoding library";
     homepage = https://xorg.freedesktop.org;
     license = licenses.mit;
     maintainers = with maintainers; [

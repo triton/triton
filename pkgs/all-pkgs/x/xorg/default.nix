@@ -28,6 +28,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxdmcp
 , libxext
 , libxfixes
+, libxscrnsaver
 , libxt
 , presentproto
 , printproto
@@ -121,6 +122,7 @@ let
     libXdmcp = libxdmcp;
     libXext = libxext;
     libXfixes = libxfixes;
+    libXScrnSaver = libxscrnsaver;
     libXt = libxt;
     utilmacros = util-macros;
     xcbproto = xcb-proto;
@@ -678,17 +680,6 @@ let
     buildInputs = [ fontsproto xproto xtrans ];
 
   }) // {inherit fontsproto xproto xtrans ;};
-
-  libXScrnSaver = (mkDerivation "libXScrnSaver" {
-    name = "libXScrnSaver-1.2.2";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXScrnSaver-1.2.2.tar.bz2;
-      sha256 = "07ff4r20nkkrj7h08f9fwamds9b3imj8jz5iz6y38zqw6jkyzwcg";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ scrnsaverproto libX11 libXext xextproto ];
-
-  }) // {inherit scrnsaverproto libX11 libXext xextproto ;};
 
   libXTrap = (mkDerivation "libXTrap" {
     name = "libXTrap-1.0.1";

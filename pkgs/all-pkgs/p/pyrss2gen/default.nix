@@ -1,11 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
+let
+  version = "1.1";
+in
 buildPythonPackage rec {
   name = "pyrss2gen-${version}";
-  version = "1.1";
 
   src = fetchPyPi {
     package = "PyRSS2Gen";
@@ -15,7 +18,7 @@ buildPythonPackage rec {
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Generate RSS2 using a Python data structure";
     homepage = http://www.dalkescientific.om/Python/PyRSS2Gen.html;
     license = licenses.bsd2;

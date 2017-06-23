@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , attrs
 , pyasn1
@@ -10,10 +11,10 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 
-  version = "16.0.0";
+  version = "17.0.0";
 in
 buildPythonPackage rec {
   name = "service_identity-${version}";
@@ -21,7 +22,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "service_identity";
     inherit version;
-    sha256 = "0630e222f59f91f3db498be46b1d879ff220955d7bbad719a5cb9ad14e3c3036";
+    sha256 = "4001fbb3da19e0df22c47a06d29681a398473af4aa9d745eca525b3b2c2302ab";
   };
 
   propagatedBuildInputs = [
@@ -37,7 +38,7 @@ buildPythonPackage rec {
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Service identity verification for pyOpenSSL";
     homepage = https://github.com/pyca/service_identity;
     license = licenses.bsd3;

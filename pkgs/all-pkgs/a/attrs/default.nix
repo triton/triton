@@ -1,19 +1,22 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
+let
+  version = "17.2.0";
+in
 buildPythonPackage rec {
   name = "attrs-${version}";
-  version = "16.2.0";
 
   src = fetchPyPi {
     package = "attrs";
     inherit version;
-    sha256 = "136f2ec0f94ec77ff2990830feee965d608cab1e8922370e3abdded383d52001";
+    sha256 = "5d4d1b99f94d69338f485984127e4473b3ab9e20f43821b0e546cc3b2302fd11";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Attributes without boilerplate";
     homepage = https://github.com/hynek/attrs;
     license = licenses.mit;

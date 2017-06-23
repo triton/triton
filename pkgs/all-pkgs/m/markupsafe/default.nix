@@ -1,19 +1,22 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
+let
+  version = "1.0";
+in
 buildPythonPackage rec {
   name = "markupsafe-${version}";
-  version = "0.23";
 
   src = fetchPyPi {
     package = "MarkupSafe";
     inherit version;
-    sha256 = "a4ec1aff59b95a14b45eb2e23761a0179e98319da5a7eb76b56ea8cdc7b871c3";
+    sha256 = "a6be69091dac236ea9c6bc7d012beab42010fa914c459791d627dad4910eb665";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Implements a XML/HTML/XHTML Markup safe string for Python";
     homepage = http://github.com/mitsuhiko/markupsafe;
     license = licenses.bsd3;

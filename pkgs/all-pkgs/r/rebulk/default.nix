@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , pytest-runner
 , regex
@@ -10,10 +11,10 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 
-  version = "0.8.2";
+  version = "0.9.0";
 in
 buildPythonPackage rec {
   name = "rebulk-${version}";
@@ -21,7 +22,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "rebulk";
     inherit version;
-    sha256 = "8c09901bda7b79a21d46faf489d67d017aa54d38bdabdb53f824068a6640401a";
+    sha256 = "e0c69bdddccbba3ef881948ea96f1d62eda91201c306ea568a676507a30985eb";
   };
 
   propagatedBuildInputs = [
@@ -34,7 +35,7 @@ buildPythonPackage rec {
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Define search patterns in bulk to perform matching on any string";
     homepage = https://github.com/Toilal/rebulk;
     license = licenses.mit;

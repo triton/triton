@@ -1,11 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
+let
+  version = "1.2.1";
+in
 buildPythonPackage rec {
   name = "pykka-${version}";
-  version = "1.2.1";
 
   src = fetchPyPi {
     package = "Pykka";
@@ -13,7 +16,7 @@ buildPythonPackage rec {
     sha256 = "e847ffeadee49b563426ab803e8eee67264d773e38ca14763fdcda56411e3c11";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A Python implementation of the actor model";
     homepage = https://www.pykka.org;
     license = licenses.asl20;

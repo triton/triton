@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , click
 , itsdangerous
@@ -9,7 +10,7 @@
 }:
 
 let
-  version = "0.12";
+  version = "0.12.2";
 in
 buildPythonPackage {
   name = "Flask-${version}";
@@ -17,7 +18,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Flask";
     inherit version;
-    sha256 = "93e803cdbe326a61ebd5c5d353959397c85f829bec610d59cb635c9f97d7ca8b";
+    sha256 = "49f44461237b69ecd901cc7ce66feea0319b9158743dd27a2899962ab214dac1";
   };
 
   propagatedBuildInputs = [
@@ -27,7 +28,7 @@ buildPythonPackage {
     werkzeug
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Micro webdevelopment framework for Python";
     homepage = http://flask.pocoo.org/;
     licenses = license.bsd3;

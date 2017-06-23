@@ -2,10 +2,12 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
+
+, requests
 }:
 
 let
-  version = "1.5.0";
+  version = "2.0.0";
 in
 buildPythonPackage rec {
   name = "apache-libcloud-${version}";
@@ -13,9 +15,12 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "apache-libcloud";
     inherit version;
-    type = ".tar.bz2";
-    sha256 = "ea3dd7825e30611e5a018ab18107b33a9029097d64bd8b39a87feae7c2770282";
+    sha256 = "c72add0e74ca975bc51d9ad9cf3861a25825a76df56132c569b4b3c904f8e1a8";
   };
+
+  propagatedBuildInputs = [
+    requests
+  ];
 
   meta = with lib; {
     description = "Python library for interacting with cloud service providers";

@@ -626,12 +626,12 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
    audioread = buildPythonPackage rec {
      name = "audioread-${version}";
-     version = "2.1.4";
+     version = "2.1.5";
 
      src = fetchPyPi {
        package = "audioread";
        inherit version;
-       sha256 = "8ffee2d2787258c214841853f600c52943baea9ad2303cb3d4b625cde4f08fff";
+       sha256 = "36c3b118f097c58ba073b7d040c4319eff200756f094295677567e256282d0d7";
      };
 
      # No tests, need to disable or py3k breaks

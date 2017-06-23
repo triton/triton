@@ -1099,13 +1099,18 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
    };
 
    parsedatetime = buildPythonPackage rec {
-     name = "parsedatetime-2.1";
+     name = "parsedatetime-${version}";
+     version = "2.4";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/p/parsedatetime/${name}.tar.gz";
-       sha256 = "17c578775520c99131634e09cfca5a05ea9e1bd2a05cd06967ebece10df7af2d";
+     src = fetchPyPi {
+       package = "parsedatetime";
+       inherit version;
+       sha256 = "3d817c58fb9570d1eec1dd46fa9448cd644eeed4fb612684b02dfda3a79cb84b";
      };
 
+     propagatedBuildInputs = [
+      self.future
+     ];
    };
 
    fixtures = buildPythonPackage rec {

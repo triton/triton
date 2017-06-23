@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , attrs
 , docutils
@@ -10,7 +11,7 @@
 }:
 
 let
-  version = "0.5.0";
+  version = "0.6.0";
 in
 buildPythonPackage {
   name = "Automat-${version}";
@@ -18,7 +19,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Automat";
     inherit version;
-    sha256 = "4889ec6763377432ec4db265ad552bbe956768ea3fff39014855308ba79dd7c2";
+    sha256 = "3c1fd04ecf08ac87b4dd3feae409542e9bf7827257097b2b6ed5692f69d6f6a8";
   };
 
   buildInputs = [
@@ -32,7 +33,7 @@ buildPythonPackage {
     six
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

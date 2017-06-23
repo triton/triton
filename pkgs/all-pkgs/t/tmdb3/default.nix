@@ -1,11 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
+let
+  version = "0.7.2";
+in
 buildPythonPackage rec {
   name = "tmdb3-${version}";
-  version = "0.7.2";
 
   src = fetchPyPi {
     package = "tmdb3";
@@ -15,7 +18,7 @@ buildPythonPackage rec {
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "TheMovieDB.org APIv3 interface";
     homepage = https://pypi.python.org/pypi/tmdb3;
     license = licenses.bsd3;

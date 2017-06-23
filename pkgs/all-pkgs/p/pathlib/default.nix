@@ -1,16 +1,15 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, pythonPackages
+, lib
+, pythonAtLeast
 }:
 
 let
-  inherit (pythonPackages)
-    pythonAtLeast;
+  version = "1.0.1";
 in
 buildPythonPackage rec {
   name = "pathlib-${version}";
-  version = "1.0.1";
 
   src = fetchPyPi {
     package = "pathlib";
@@ -22,7 +21,7 @@ buildPythonPackage rec {
   disabled = pythonAtLeast "3.4";
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Object-oriented filesystem paths";
     homepage = "https://pathlib.readthedocs.org/";
     license = licenses.mit;

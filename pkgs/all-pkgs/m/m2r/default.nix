@@ -1,13 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , docutils
 , mistune
 }:
 
 let
-  version = "0.1.5";
+  version = "0.1.6";
 in
 buildPythonPackage {
   name = "m2r-${version}";
@@ -15,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "m2r";
     inherit version;
-    sha256 = "3448f770aed05ca10390d0917cd51836cbf82a2f095bc91507e6291cfab03223";
+    sha256 = "a26bc2e25e0ad3f8650385aea25cf734ac4fcd30e54faec92fd39675da75e527";
   };
 
   buildInputs = [
@@ -26,7 +27,7 @@ buildPythonPackage {
     mistune
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

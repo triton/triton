@@ -13,7 +13,7 @@
 }:
 
 let
-  version = "1.3.6";
+  version = "1.4.0";
 in
 stdenv.mkDerivation {
   name = "grpc-${version}";
@@ -23,7 +23,7 @@ stdenv.mkDerivation {
     owner = "grpc";
     repo = "grpc";
     rev = "v${version}";
-    sha256 = "391fcc4685cfbb0a0d3840e7ce068664080de54d8897dc2f926825e1d8854d50";
+    sha256 = "80213afd3f490fc4d3973f085d208656db06b61cd49148e3279bc3c50fb0c57f";
   };
 
   nativeBuildInputs = [
@@ -43,7 +43,7 @@ stdenv.mkDerivation {
   ];
 
   postPatch = ''
-    rm -r third_party/{cares,protobuf,zlib,googletest,thrift,boringssl}
+    rm -r third_party/{cares,protobuf,zlib,googletest,boringssl}
     unpackFile ${protobuf-cpp.src}
     mv -v protobuf* third_party/protobuf
 

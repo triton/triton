@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.40";
+  version = "0.44";
 in
 buildPythonPackage rec {
   name = "olefile-${version}";
@@ -14,7 +14,7 @@ buildPythonPackage rec {
     package = "olefile";
     inherit version;
     type = ".zip";
-    sha256 = "75e889e2e49a76f7387ea935e54c70fd8762fc56860d86a5695f92111a63c335";
+    sha256 = "61f2ca0cd0aa77279eb943c07f607438edf374096b66332fae1ee64a6f0f73ad";
   };
 
   meta = with lib; {

@@ -1,11 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
+let
+  version = "9.0.1";
+in
 buildPythonPackage rec {
   name = "pip-${version}";
-  version = "9.0.1";
 
   src = fetchPyPi {
     package = "pip";
@@ -13,7 +16,7 @@ buildPythonPackage rec {
     sha256 = "09f243e1a7b461f654c26a725fa373211bb7ff17a9300058b205c61658ca940d";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The PyPA recommended tool for installing Python packages";
     homepage = https://pip.pypa.io/;
     license = licenses.mit;

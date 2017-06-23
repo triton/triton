@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "2.1.10";
+  version = "2.2.0";
 in
 buildPythonPackage rec {
   name = "pyparsing-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pyparsing";
     inherit version;
-    sha256 = "811c3e7b0031021137fc83e051795025fcb98674d07eb8fe922ba4de53d39188";
+    sha256 = "0832bcf47acd283788593e7a0f542407bd9550a55a8a8435214a1960e04bcb04";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Python parsing module";
     homepage = http://pyparsing.wikispaces.com/;
     license = licenses.mit;

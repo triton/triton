@@ -1,6 +1,9 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, isPy3k
+, lib
+, pythonOlder
 , pythonPackages
 
 , enum34
@@ -22,20 +25,17 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
-  inherit (pythonPackages)
-    isPy3k
-    pythonOlder;
 in
 buildPythonPackage rec {
   name = "apscheduler-${version}";
-  version = "3.2.0";
+  version = "3.3.1";
 
   src = fetchPyPi {
     package = "APScheduler";
     inherit version;
-    sha256 = "5baa1195ba711868fae257612cf80372ff1124014ca896884bf132f75636f638";
+    sha256 = "f68874dff1bdffcc6ce3adb7840c1e4d162c609a3e3f831351df30b75732767b";
   };
 
   propagatedBuildInputs = [
@@ -65,7 +65,7 @@ buildPythonPackage rec {
   # TODO: needs rethinkdb & QT4/5
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "In-process task scheduler with Cron-like capabilities";
     homepage = https://github.com/agronholm/apscheduler/;
     license = licenses.mit;

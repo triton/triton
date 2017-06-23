@@ -1,13 +1,17 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, isPy3k
+, lib
 
-, pythonPackages
+, docutils
 }:
 
+let
+  version = "1.0.3.5";
+in
 buildPythonPackage rec {
   name = "statistics-${version}";
-  version = "1.0.3.5";
 
   src = fetchPyPi {
     package = "statistics";
@@ -16,13 +20,13 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.docutils
+    docutils
   ];
 
-  disabled = pythonPackages.isPy3k;
+  disabled = isPy3k;
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A Python 2.* port of 3.4 Statistics Module";
     homepage = https://pypi.python.org/pypi/statistics;
     license = licenses.asl20;

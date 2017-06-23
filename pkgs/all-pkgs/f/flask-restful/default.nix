@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , aniso8601
 , flask
@@ -14,17 +15,18 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
+
+  version = "0.3.6";
 in
 buildPythonPackage rec {
   name = "flask-restful-${version}";
-  version = "0.3.5";
 
   src = fetchPyPi {
     package = "Flask-RESTful";
     inherit version;
-    sha256 = "cce4aeff959b571136b5af098bebe7d3deeca7eb1411c4e722ff2c5356ab4c42";
+    sha256 = "5795519501347e108c436b693ff9a4d7b373a3ac9069627d64e4001c05dd3407";
   };
 
   buildInputs = [
@@ -41,7 +43,7 @@ buildPythonPackage rec {
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Simple framework for creating REST APIs";
     homepage = https://github.com/flask-restful/flask-restful/;
     license = licenses.bsd3;

@@ -829,12 +829,12 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
    SPARQLWrapper = buildPythonPackage rec {
      name = "SPARQLWrapper-${version}";
-     version = "1.7.6";
+     version = "1.8.0";
 
      src = fetchPyPi {
        package = "SPARQLWrapper";
        inherit version;
-       sha256 = "dccabec900eb9c97cb47834bd4b66ceaeb4d9ea11bae24a24fe734e9f48522f8";
+       sha256 = "3b46d0f18ca0b65b8b965d6d1ae257b229388400b06e7dc19f0a51614dc1abde";
      };
 
      # break circular dependency loop

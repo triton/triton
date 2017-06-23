@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "0.7.9";
+  version = "0.7.10";
 in
 buildPythonPackage {
   name = "alabaster-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "alabaster";
     inherit version;
-    sha256 = "47afd43b08a4ecaa45e3496e139a193ce364571e7e10c6a87ca1a4c57eb7ea08";
+    sha256 = "37cdcb9e9954ed60912ebc1ca12a9d12178c26637abdf124e3cde2341c257fe0";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

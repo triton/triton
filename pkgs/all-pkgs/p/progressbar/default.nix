@@ -2,11 +2,14 @@
 , buildPythonPackage
 , fetchPyPi
 , fetchTritonPatch
+, lib
 }:
 
+let
+  version = "2.3";
+in
 buildPythonPackage rec {
   name = "progressbar-${version}";
-  version = "2.3";
 
   src = fetchPyPi {
     package = "progressbar";
@@ -25,7 +28,7 @@ buildPythonPackage rec {
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Text progressbar library for python";
     homepage = https://github.com/niltonvolpato/python-progressbar;
     license = licenses.lgpl3Plus;

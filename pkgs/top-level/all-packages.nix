@@ -659,6 +659,8 @@ bs1770gain = callPackage ../all-pkgs/b/bs1770gain { };
 
 btrfs-progs = callPackage ../all-pkgs/b/btrfs-progs { };
 
+build-dir-check = callPackage ../all-pkgs/b/build-dir-check { };
+
 busybox = callPackage ../all-pkgs/b/busybox { };
 
 busyboxBootstrap = callPackageAlias "busybox" {

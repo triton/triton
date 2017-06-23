@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , libffi
 , pycparser
@@ -13,7 +14,7 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 
   version = "1.10.0";
@@ -49,7 +50,7 @@ buildPythonPackage rec {
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Foreign Function Interface for Python calling C code";
     homepage = http://cffi.readthedocs.org/;
     license = licenses.mit;

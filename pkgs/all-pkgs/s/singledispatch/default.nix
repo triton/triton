@@ -1,13 +1,16 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
-, pythonPackages
+, six
 }:
 
+let
+  version = "3.4.0.3";
+in
 buildPythonPackage rec {
   name = "singledispatch-${version}";
-  version = "3.4.0.3";
 
   src = fetchPyPi {
     package = "singledispatch";
@@ -16,10 +19,10 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    pythonPackages.six
+    six
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Backport of functools.singledispatch from Python 3.4";
     homepage = https://pypi.python.org/pypi/singledispatch;
     license = licenses.mit;

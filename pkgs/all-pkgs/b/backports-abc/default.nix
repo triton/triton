@@ -1,29 +1,27 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-
-, pythonPackages
+, lib
+, pythonAtLeast
 }:
 
 let
-  inherit (pythonPackages)
-    pythonAtLeast;
+  version = "0.5";
 in
 buildPythonPackage rec {
   name = "backports_abc-${version}";
-  version = "0.4";
 
   src = fetchPyPi {
     package = "backports_abc";
     inherit version;
-    sha256 = "8b3e4092ba3d541c7a2f9b7d0d9c0275b21c6a01c53a61c731eba6686939d0a5";
+    sha256 = "033be54514a03e255df75c5aee8f9e672f663f93abb723444caec8fe43437bde";
   };
 
   # Backport of Python 3.5 "collections.abc"
   disabled = pythonAtLeast "3.5";
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Backport of recent additions to the 'collections.abc' module";
     homepage = https://github.com/cython/backports_abc;
     license = licenses.free; # python sfl

@@ -16,7 +16,7 @@ buildPythonPackage {
     inherit version;
     sha256 = "de455946346df2212e02f4c4138aaaa11203cbd6681970f08946e3af93c9e99c";
   };
-  
+
   propagatedBuildInputs = [
     dnspython
   ];

@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "0.7.0";
+  version = "0.8.0";
 in
 buildPythonPackage rec {
   name = "requests-toolbelt-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "requests-toolbelt";
     inherit version;
-    sha256 = "33899d4a559c3f0f5e9fbc115d337c4236febdc083755a160a4132d92fc3c91a";
+    sha256 = "f6a531936c6fa4c6cfce1b9c10d5c4f498d16528d2a54a22ca00011205a187b5";
   };
 
   propagatedBuildInputs = [

@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "1.6.1";
+  version = "1.7.2";
 in
 buildPythonPackage {
   name = "webob-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "WebOb";
     inherit version;
-    sha256 = "e804c583bd0fb947bd7c03d296942b38b985cf1da4fd82bf879994d29edb21fe";
+    sha256 = "0dc8b30bdbf15d8fd1a967e30ece3357f2f468206354f69213e57b30a63f0039";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

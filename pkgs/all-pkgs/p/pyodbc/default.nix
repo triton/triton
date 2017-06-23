@@ -2,12 +2,13 @@
 , buildPythonPackage
 , fetchPyPi
 , isPyPy
+, lib
 
 , libiodbc
 }:
 
 let
-  version = "4.0.0";
+  version = "4.0.17";
 in
 buildPythonPackage rec {
   name = "pyodbc-${version}";
@@ -15,7 +16,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pyodbc";
     inherit version;
-    sha256 = "dbd416e5afce6243e2c242a760f48db44914c049a416ebf7bd83768523476c34";
+    sha256 = "a82892ba8d74318524efaaccaf8351d3a3b4079a07e1a758902a2b9e84529c9d";
   };
 
   buildInputs = [
@@ -25,7 +26,7 @@ buildPythonPackage rec {
   # use pypyodbc instead
   disabled = isPyPy;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Python ODBC module to connect to almost any database";
     homepage = https://github.com/mkleehammer/pyodbc/;
     license = licenses.mit;

@@ -1,12 +1,13 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , pytz
 }:
 
 let
-  version = "2.3.4";
+  version = "2.4.0";
 in
 buildPythonPackage {
   name = "Babel-${version}";
@@ -14,14 +15,14 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Babel";
     inherit version;
-    sha256 = "c535c4403802f6eb38173cd4863e419e2274921a01a8aad8a5b497c131c62875";
+    sha256 = "8c98f5e5f8f5f088571f2c6bd88d530e331cbbcb95a7311a0db69d3dca7ec563";
   };
 
   propagatedBuildInputs = [
     pytz
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

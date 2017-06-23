@@ -1,21 +1,22 @@
 { stdenv
 , buildPythonPackage
-, fetchurl
+, fetchPyPi
+, isPy3k
+, lib
 
 , pkgs
 , pythonPackages
 }:
 
 let
-  inherit (pythonPackages)
-    isPy3k;
+  version = "1.9.3";
 in
-
 buildPythonPackage rec {
-  name = "pygame-1.9.1";
+  name = "pygame-${version}";
 
-  src = fetchurl {
-    url = "http://www.pygame.org/ftp/${name}release.tar.gz";
+  src = fetchPyPi {
+    package = "Pygame";
+    inherit version;
     sha256 = "0cyl0ww4fjlx289pjxa53q4klyn55ajvkgymw0qrdgp4593raq52";
   };
 
@@ -56,7 +57,7 @@ buildPythonPackage rec {
 
   disabled = isPy3k;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Python library for games";
     homepage = "http://www.pygame.org/";
     license = licenses.lgpl21Plus;

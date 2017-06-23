@@ -1,27 +1,28 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , pyasn1
 }:
 
 let
-  version = "2.1.0";
+  version = "2.2.4";
 in
 buildPythonPackage {
   name = "ldap3-${version}";
-  
+
   src = fetchPyPi {
     package = "ldap3";
     inherit version;
-    sha256 = "8a9b0331d9405884ac273106ded1a7d9ad5ba3e309c4bad25bae7dc5774cc809";
+    sha256 = "40c4d670e8e0f046ba2e29e3d9592b810c22094dcce83240a1c1695fb3602604";
   };
 
   buildInputs = [
     pyasn1
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

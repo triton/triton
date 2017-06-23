@@ -1048,12 +1048,12 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
    munkres = buildPythonPackage rec {
      name = "munkres-${version}";
-     version = "1.0.8";
+     version = "1.0.10";
 
      src = fetchPyPi {
        package = "munkres";
        inherit version;
-       sha256 = "185f1a9c4d2c31f2f19afa48bc2ec726c11e945eded4784d272da2fd49bf7a55";
+       sha256 = "eb41e68e93be08ad8cb80fd470f8282f21cd2bac87b07da645e27cf9c6b014db";
      };
 
      # error: invalid command 'test'

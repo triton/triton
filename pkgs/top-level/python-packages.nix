@@ -723,12 +723,12 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
    coverage = buildPythonPackage rec {
      name = "coverage-${version}";
-     version = "4.2";
+     version = "4.4.1";
 
      src = fetchPyPi {
        package = "coverage";
        inherit version;
-       sha256 = "e312776d3ef04632ec742ce2d2b7048b635073e0245e4f44dfe8b08cc50ac656";
+       sha256 = "7a9c44400ee0f3b4546066e0710e1250fd75831adc02ab99dda176ad8726f424";
      };
    };
 

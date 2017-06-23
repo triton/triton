@@ -749,12 +749,12 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
    pytestcov = buildPythonPackage (rec {
      name = "pytest-cov-${version}";
-     version = "2.3.1";
+     version = "2.5.1";
 
      src = fetchPyPi {
        package = "pytest-cov";
        inherit version;
-       sha256 = "fa0a212283cdf52e2eecc24dd6459bb7687cc29adb60cb84258fab73be8dda0f";
+       sha256 = "03aa752cf11db41d281ea1d807d954c4eda35cfa1b21d6971966cc041bbf6e2d";
      };
 
     buildInputs = with self; [ cov-core pytest ];

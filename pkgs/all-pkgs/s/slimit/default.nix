@@ -1,13 +1,16 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
-, pythonPackages
+, ply
 }:
 
+let
+  version = "0.8.1";
+in
 buildPythonPackage rec {
   name = "slimit-${version}";
-  version = "0.8.1";
 
   src = fetchPyPi {
     package = "slimit";
@@ -17,12 +20,12 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.ply
+    ply
   ];
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "JavaScript minifier";
     homepage = https://github.com/rspivak/slimit;
     license = licenses.mit;

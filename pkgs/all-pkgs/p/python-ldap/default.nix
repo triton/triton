@@ -1,16 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , cyrus-sasl
 , openldap
 }:
 
 let
-  inherit (stdenv.lib)
-    optionals;
-
-  version = "2.4.27";
+  version = "2.4.39";
 in
 buildPythonPackage {
   name = "python-ldap-${version}";
@@ -18,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "python-ldap";
     inherit version;
-    sha256 = "6306a57a3c659ffda0003b386b1a23fdcee0b903a0ede0ce04c33ba78be64a2e";
+    sha256 = "3fb75108d27e8091de80dffa2ba3bf45c7a3bdc357e2959006aed52fa58bb2f3";
   };
 
   NIX_CFLAGS_COMPILE = "-I${cyrus-sasl}/include/sasl";
@@ -28,7 +26,7 @@ buildPythonPackage {
     openldap
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

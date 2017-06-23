@@ -4,10 +4,11 @@
 , lib
 
 , py
+, setuptools-scm
 }:
 
 let
-  version = "3.0.7";
+  version = "3.1.2";
 in
 buildPythonPackage rec {
   name = "pytest-${version}";
@@ -15,10 +16,11 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "pytest";
     inherit version;
-    sha256 = "b70696ebd1a5e6b627e7e3ac1365a4bc60aaf3495e843c1e70448966c5224cab";
+    sha256 = "795ec29fbba70b22a593691ce8bcd4bdde2dc96e8099731f73c7d8bb3ce879bf";
   };
 
   propagatedBuildInputs = [
+    setuptools-scm
     py
   ];
 

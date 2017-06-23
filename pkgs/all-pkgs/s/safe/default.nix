@@ -1,18 +1,20 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
-, pythonPackages
+, nose
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
+
+  version = "0.4";
 in
 
 buildPythonPackage rec {
   name = "safe-${version}";
-  version = "0.4";
 
   src = fetchPyPi {
     package = "Safe";
@@ -21,12 +23,12 @@ buildPythonPackage rec {
   };
 
   buildInputs = optionals doCheck [
-    pythonPackages.nose
+    nose
   ];
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Safe checks password strength";
     homepage = https://github.com/lepture/safe;
     license = licenses.bsd3;

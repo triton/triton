@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , iproute
 , lzo
@@ -9,12 +10,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "openvpn-2.4.2";
+  name = "openvpn-2.4.3";
 
   src = fetchurl {
     url = "https://swupdate.openvpn.net/community/releases/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "b24740c9d44a81eaf2befc4846d51445a520104321e32aaf0c135ed2e098a624";
+    sha256 = "cee3d3ca462960a50a67c0ebd186e01b6d13db70275205663695152c9aca8579";
   };
 
   buildInputs = [
@@ -25,7 +26,7 @@ stdenv.mkDerivation rec {
     systemd_lib
   ];
 
-  # This fix should be removed in 2.3.13+
+  # FIXME: check to see if this has been fixed when updating
   postPatch = ''
     sed -i 's,systemd-daemon,systemd,g' configure
   '';
@@ -40,15 +41,21 @@ stdenv.mkDerivation rec {
     srcVerification = fetchurl rec {
       failEarly = true;
       pgpsigUrl = map (n: "${n}.asc") src.urls;
+      # https://openvpn.net/index.php/open-source/documentation/sig.html
       pgpKeyFingerprints = [
-        "0330 0E11 FED1 6F59 715F  9996 C29D 97ED 198D 22A3"
+        # James Yonan
+        "C699 B264 0C6D 404E 6454  A9AD 1D0B 4996 1FBF 51F3"
+        # Samuli Seppänen
+        "0330 0E11 FED1 6F59 715F  9996 C29D 97ED 198D 22A3"  # Old
         "6D04 F8F1 B017 3111 F499  795E 2958 4D9F 4086 4578"
+        # Security Mailing List
+        "F554 A368 7412 CFFE BDEF  E0A3 12F5 F7B4 2F2B 01E7"
       ];
       inherit (src) urls outputHash outputHashAlgo;
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A robust and highly flexible tunneling application";
     homepage = http://openvpn.net/;
     license = licenses.gpl2;

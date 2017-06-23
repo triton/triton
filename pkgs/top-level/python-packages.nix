@@ -1173,13 +1173,13 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
    });
 
    pyjwt = buildPythonPackage rec {
-     version = "1.4.2";
+     version = "1.5.2";
      name = "pyjwt-${version}";
 
      src = fetchPyPi {
        package = "PyJWT";
        inherit version;
-       sha256 = "87a831b7a3bfa8351511961469ed0462a769724d4da48a501cb8c96d1e17f570";
+       sha256 = "1179f0bff86463b5308ee5f7aff1c350e1f38139d62a723e16fb2c557d1c795f";
      };
 
      propagatedBuildInputs = with self; [ pycrypto ecdsa pytest-runner ];

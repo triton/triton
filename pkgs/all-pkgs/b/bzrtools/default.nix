@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchurl
+, lib
 
 , bazaar
 }:
@@ -20,7 +21,7 @@ buildPythonPackage rec {
     bazaar
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "BzrTools is a useful collection of utilities for bzr";
     homepage = http://wiki.bazaar.canonical.com/BzrTools;
     license = licenses.gpl2;

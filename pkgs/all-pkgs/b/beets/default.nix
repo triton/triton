@@ -139,7 +139,7 @@ let
   testShell = "${bash}/bin/bash --norc";
   completion = "${bash-completion}/share/bash-completion/bash_completion";
 
-  version = "1.4.3";
+  version = "1.4.5";
 in
 buildPythonPackage rec {
   name = "beets-${version}";
@@ -147,7 +147,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "beets";
     inherit version;
-    sha256 = "b93fbe11998a29cd432b0a88741b9ced0e5ac50e80362d41e13e867d851ae464";
+    sha256 = "1bea88c5c23137a36d09590856df8c2f4e857ef29890d16c4d14b1170e9202fc";
   };
 
   nativeBuildInputs = [

@@ -1213,11 +1213,13 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
    };
 
    rdflib = buildPythonPackage (rec {
-     name = "rdflib-4.2.1";
+     name = "rdflib-${version}";
+     version = "4.2.2";
 
-     src = pkgs.fetchurl {
-       url = "https://pypi.python.org/packages/source/r/rdflib/${name}.tar.gz";
-       sha256 = "eb02bd235606ef3b26e213da3e576557a6392ce103efd8c6c8ff1e08321608c8";
+     src = fetchPyPi {
+       package = "rdflib";
+       inherit version;
+       sha256 = "da1df14552555c5c7715d8ce71c08f404c988c58a1ecd38552d0da4fc261280d";
      };
 
      # error: invalid command 'test'

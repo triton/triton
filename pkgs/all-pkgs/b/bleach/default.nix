@@ -1,13 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , html5lib
 , six
 }:
 
 let
-  version = "1.5.0";
+  version = "2.0.0";
 in
 buildPythonPackage {
   name = "bleach-${version}";
@@ -15,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "bleach";
     inherit version;
-    sha256 = "978e758599b54cd3caa2e160d74102879b230ea8dc93871d0783721eef58bc65";
+    sha256 = "b9522130003e4caedf4f00a39c120a906dcd4242329c1c8f621f5370203cbc30";
   };
 
   propagatedBuildInputs = [
@@ -24,10 +25,12 @@ buildPythonPackage {
   ];
 
   postPatch = ''
-    sed -i '/html5lib/ s/\(,\|\)\(!\|>\|<\|=\)\(=\|\)[0-9.]\+//g' setup.py bleach.egg-info/requires.txt
+    sed -i setup.py \
+      -i bleach.egg-info/requires.txt \
+      -e '/html5lib/ s/\(,\|\)\(!\|>\|<\|=\)\(=\|\)[0-9.]\+//g'
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

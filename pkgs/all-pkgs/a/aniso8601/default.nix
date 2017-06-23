@@ -1,12 +1,13 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , python-dateutil
 }:
 
 let
-  version = "1.1.0";
+  version = "1.2.1";
 in
 buildPythonPackage rec {
   name = "aniso8601-${version}";
@@ -14,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "aniso8601";
     inherit version;
-    sha256 = "4fc462db59811f541bc25d865b86367153d8ce773ae75b16d54e2e1cd393b5cc";
+    sha256 = "e7ba4f42d3aea75909c79b1f4c4614768b4f13fbb98fc658a7b6061ddb0be47c";
   };
 
   propagatedBuildInputs = [
@@ -23,7 +24,7 @@ buildPythonPackage rec {
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A library for parsing ISO 8601 strings";
     homepage = https://bitbucket.org/nielsenb/aniso8601;
     license = licenses.bsd3;

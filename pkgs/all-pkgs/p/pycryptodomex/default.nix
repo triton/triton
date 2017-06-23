@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "3.4.2";
+  version = "3.4.6";
 in
 buildPythonPackage {
   name = "pycryptodomex-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pycryptodomex";
     inherit version;
-    sha256 = "66489980aa0dd97dce28171c5f42e9862d33cc354a518e52a7bad0699d9b402a";
+    sha256 = "cc43b0e76f76f15da149c27ae3a4ceaf782a7a4c26c5b024eb30dab19156d15e";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

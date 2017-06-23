@@ -1307,12 +1307,12 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
    testtools = buildPythonPackage rec {
      name = "testtools-${version}";
-     version = "2.2.0";
+     version = "2.3.0";
 
      src = fetchPyPi {
        package = "testtools";
        inherit version;
-       sha256 = "80f606607a6e4ce4d0e24e5b786562aa42c581906f3c070607a4265f3da65810";
+       sha256 = "5827ec6cf8233e0f29f51025addd713ca010061204fdea77484a2934690a0559";
      };
 
      propagatedBuildInputs = with self; [

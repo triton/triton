@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "0.9.0";
+  version = "0.9.3";
 in
 buildPythonPackage rec {
   name = "jmespath-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "jmespath";
     inherit version;
-    sha256 = "08dfaa06d4397f283a01e57089f3360e3b52b5b9da91a70e1fd91e9f0cdd3d3d";
+    sha256 = "6a81d4c9aa62caf061cb517b4d9ad1dd300374cd4706997aff9cd6aedd61fc64";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "JSON Matching Expressions";
     homepage = https://github.com/jmespath/jmespath.py;
     license = licenses.mit;

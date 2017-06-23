@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "16.10.1";
+  version = "17.5.0";
 in
 buildPythonPackage rec {
   name = "incremental-${version}";
@@ -12,10 +13,10 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "incremental";
     inherit version;
-    sha256 = "14ad6b720ec47aad6c9caa83e47db1843e2b9b98742da5dda08e16a99f400342";
+    sha256 = "7b751696aaf36eebfab537e458929e194460051ccad279c72b755a167eebd4b3";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

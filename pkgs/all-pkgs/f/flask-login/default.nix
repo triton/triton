@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , flask
 }:
@@ -24,7 +25,7 @@ buildPythonPackage rec {
   # No make check target
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "User session management for Flask";
     homepage = https://github.com/maxcountryman/flask-login;
     license = licenses.mit;

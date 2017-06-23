@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , netaddr
 , pydenticon
@@ -8,7 +9,7 @@
 }:
 
 let
-  version = "0.7.18";
+  version = "0.7.19";
 in
 buildPythonPackage {
   name = "netaddr-${version}";
@@ -16,10 +17,10 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "netaddr";
     inherit version;
-    sha256 = "06dxjlbcicq7q3vqy8agq11ra01kvvd47j4mk6dmghjsyzyckxd1";
+    sha256 = "38aeec7cdd035081d3a4c306394b19d677623bf76fa0913f6695127c7753aefd";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

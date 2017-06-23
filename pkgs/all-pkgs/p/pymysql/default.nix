@@ -1,10 +1,11 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "0.7.9";
+  version = "0.7.11";
 in
 buildPythonPackage rec {
   name = "pymysql-${version}";
@@ -12,12 +13,12 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "PyMySQL";
     inherit version;
-    sha256 = "2331f82b7b85d407c8d9d7a8d7901a6abbeb420533e5d5d64ded5009b5c6dcc3";
+    sha256 = "56e3f5bcef6501012233620b54f6a7b8a34edc5751e85e4e3da9a0d808df5f68";
   };
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Pure Python MySQL Driver";
     homepage = https://github.com/PyMySQL/PyMySQL/;
     license = licenses.mit;

@@ -1,17 +1,15 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-
-, pythonPackages
+, lib
+, pythonAtLeast
 }:
 
 let
-  inherit (pythonPackages)
-    pythonAtLeast;
+  version = "3.5.0.1";
 in
 buildPythonPackage rec {
-  name = "backports.ssl_match_hostname-${version}";
-  version = "3.5.0.1";
+  name = "backports-ssl-match-hostname-${version}";
 
   src = fetchPyPi {
     package = "backports.ssl_match_hostname";
@@ -23,7 +21,7 @@ buildPythonPackage rec {
   disabled = pythonAtLeast "3.5";
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The ssl.match_hostname() function from Python 3.5";
     homepage = http://bitbucket.org/brandon/backports.ssl_match_hostname;
     license = licenses.free; # python sfl

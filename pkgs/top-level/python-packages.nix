@@ -1134,14 +1134,14 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
    plumbum = buildPythonPackage rec {
      name = "plumbum-${version}";
-     version = "1.6.2";
+     version = "1.6.3";
 
      buildInputs = with self; [ self.six ];
 
      src = fetchPyPi {
        package = "plumbum";
        inherit version;
-       sha256 = "75eff3a55e056d8fc06f7b7ceb603ce4c26650cd6a2196bcdb0b80fee59471a8";
+       sha256 = "0249e708459f1b05627a7ca8787622c234e4db495a532acbbd1f1f17f28c7320";
      };
    };
 

@@ -3,12 +3,14 @@
 , fetchPyPi
 , lib
 
+, cheroot
+, portend
 , setuptools-scm
 , six
 }:
 
 let
-  version = "8.9.1";
+  version = "10.2.2";
 in
 buildPythonPackage rec {
   name = "cherrypy-${version}";
@@ -16,10 +18,12 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "CherryPy";
     inherit version;
-    sha256 = "dfad2f34e929836d016ae79f9e27aff250a8a71df200bf87c3e9b23541e091c5";
+    sha256 = "32d93334df765c7fd5d22815ab643333e850f0cc4f6d51fee62a68f23eea8ff8";
   };
 
   propagatedBuildInputs = [
+    cheroot
+    portend
     setuptools-scm
     six
   ];

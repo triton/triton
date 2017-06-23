@@ -1,34 +1,37 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
-, pythonPackages
+, plumbum
+
+, nose
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
-in
 
+  version = "3.4.2";
+in
 buildPythonPackage rec {
   name = "rpyc-${version}";
-  version = "3.3.0";
 
   src = fetchPyPi {
     package = "rpyc";
     inherit version;
-    sha256 = "43fa845314f0bf442f5f5fab15bb1d1b5fe2011a8fc603f92d8022575cef8b4b";
+    sha256 = "65862f275894dd933bb64b81c250acd7e000ce9439a323c1f8b0de2259782ae5";
   };
 
   propagatedBuildInputs = [
-    pythonPackages.plumbum
+    plumbum
   ] ++ optionals doCheck [
-    pythonPackages.nose
+    nose
   ];
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A transparent and symmetric RPC library";
     homepage = http://rpyc.readthedocs.org;
     license = licenses.mit;

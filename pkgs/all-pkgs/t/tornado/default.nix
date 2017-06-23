@@ -2,35 +2,39 @@
 , buildPythonPackage
 , fetchPyPi
 , lib
-
 , pythonOlder
-, pythonPackages
+
+, backports-abc
+, backports-ssl-match-hostname
+, certifi
+, singledispatch
+, six
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
-in
 
+  version = "4.5.1";
+in
 buildPythonPackage rec {
   name = "tornado-${version}";
-  version = "4.4.3";
 
   src = fetchPyPi {
     package = "tornado";
     inherit version;
-    sha256 = "f267acc96d5cf3df0fd8a7bfb5a91c2eb4ec81d5962d1a7386ceb34c655634a8";
+    sha256 = "db0904a28253cfe53e7dedc765c71596f3c53bb8a866ae50123320ec1a7b73fd";
   };
 
   propagatedBuildInputs = [
-    pythonPackages.six
+    six
   ] ++ optionals (pythonOlder "3.2") [
-    pythonPackages.backports-ssl-match-hostname
+    backports-ssl-match-hostname
   ] ++ optionals (pythonOlder "3.4") [
-    pythonPackages.singledispatch
-    pythonPackages.certifi
+    singledispatch
+    certifi
   ] ++ optionals (pythonOlder "3.5") [
-    pythonPackages.backports-abc
+    backports-abc
   ];
 
   doCheck = false;

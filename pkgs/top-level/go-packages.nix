@@ -145,6 +145,17 @@ let
     date = "2017-05-22";
   };
 
+  arch = buildFromGitHub {
+    version = 3;
+    rev = "87a6340e8e91c1dbcc2472d666b69536e91ec163";
+    date = "2017-06-22";
+    owner = "golang";
+    repo = "arch";
+    sha256 = "1fpn7l07nagvd9qlfg3dlzhmddpn5bwhc92nqr8aiak8k33402hz";
+    goPackagePath = "golang.org/x/arch";
+    excludedPackages = "spec";
+  };
+
   crypto = buildFromGitHub {
     version = 3;
     rev = "adbae1b6b6fb4b02448a0fc0dbbc9ba2b95b294d";
@@ -190,11 +201,11 @@ let
 
   net = buildFromGitHub {
     version = 3;
-    rev = "fe686d45ea04bc1bd4eff6a52865ce8757320325";
-    date = "2017-06-19";
+    rev = "5f8847ae0d0e90b6a9dc8148e7ad616874625171";
+    date = "2017-06-24";
     owner  = "golang";
     repo   = "net";
-    sha256 = "1sdhlnllcxl0lwj7ksaq2mqr0y2kcbl96pwahwahq7id4bh73sim";
+    sha256 = "176x2ww842dy6wpl8j6avvh1w97622hbv9xgxmc3zjn93nyj135q";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "github.com/hashicorp/go.net"
@@ -231,11 +242,11 @@ let
 
   protobuf = buildFromGitHub {
     version = 3;
-    rev = "e325f446bebc2998605911c0a2650d9920361d4a";
-    date = "2017-06-13";
+    rev = "6a1fa9404c0aebf36c879bc50152edcc953910d2";
+    date = "2017-06-22";
     owner = "golang";
     repo = "protobuf";
-    sha256 = "0ndxm5p52vjrp7a3xdrdmgn0mx5ssynrr8qcbcbhyii1vb86xb22";
+    sha256 = "0b0di9qzwp52yw3sc5s5j5ciycjwi42k4jp7x3rwz3aq5xk4q17z";
     goPackagePath = "github.com/golang/protobuf";
     buildInputs = [
       genproto_protobuf
@@ -274,11 +285,11 @@ let
 
   sys = buildFromGitHub {
     version = 3;
-    rev = "fb4cac33e3196ff7f507ab9b2d2a44b0142f5b5a";
-    date = "2017-06-15";
+    rev = "c23410a886927bab8ca5e80b08af6a56faeb330d";
+    date = "2017-06-23";
     owner  = "golang";
     repo   = "sys";
-    sha256 = "0qfh08agzjs086k4pr2m579yry6l701rln0pkhwi01jrdlpva8nb";
+    sha256 = "1vygh0fz6nww538hmlgdqxqvi20l966zm55hc0qb8wl2gbg87mgc";
     goPackagePath = "golang.org/x/sys";
   };
 
@@ -308,11 +319,11 @@ let
 
   tools = buildFromGitHub {
     version = 3;
-    rev = "63c6481f3be3d4c29183574fa76516c4e7f54c6e";
-    date = "2017-06-19";
+    rev = "e6cb469339aef5b7be0c89de730d5f3cc8e47e50";
+    date = "2017-06-23";
     owner = "golang";
     repo = "tools";
-    sha256 = "0f7h747w5rhbgwvx27ngqrwbh8pg414s4hbq7kv2fffzlk0ar3qb";
+    sha256 = "1lgkxrcw8bs9ss8ipfddh8l6xdshzzbnxnrddx6w4qzaq15v4rv9";
     goPackagePath = "golang.org/x/tools";
 
     preConfigure = ''
@@ -467,10 +478,10 @@ let
 
   aws-sdk-go = buildFromGitHub {
     version = 3;
-    rev = "v1.9.44";
+    rev = "v1.10.3";
     owner  = "aws";
     repo   = "aws-sdk-go";
-    sha256 = "19d6mbk44i7rnmaw427z8g9qan7dpgg0v2pq759007qzghfcz52w";
+    sha256 = "14pcfa1vqpvphlqh90lp5kq9gb6yhk8wbx1hwgq9rbvwb9zx0nqy";
     excludedPackages = "\\(awstesting\\|example\\)";
     buildInputs = [
       tools
@@ -489,11 +500,11 @@ let
 
   azure-sdk-for-go = buildFromGitHub {
     version = 3;
-    date = "2017-06-14";
-    rev = "720c2a183bcccbe8a90f3159b63e1e2e5d4c9911";
+    date = "2017-06-23";
+    rev = "82ab03022b7c5cf71137165bbf9251ec3ef6132e";
     owner  = "Azure";
     repo   = "azure-sdk-for-go";
-    sha256 = "1xajxx89nakqqalkyaj9dzfajaksbxw9d6rb7hjrbrpmiahm6i99";
+    sha256 = "1062cp9l40nz1a5fny8xx3i93jcnachiabnbl5498xl8pa0gsl6f";
     excludedPackages = "\\(Gododir\\|storageimportexport\\)";
     buildInputs = [
       crypto
@@ -527,6 +538,18 @@ let
     repo   = "b";
     sha256 = "1kr8nh3hknlp50c10hnryh9mbdhqxqpkf7yiz8839wbqdhnnnxzj";
     excludedPackages = "example";
+  };
+
+  backoff = buildFromGitHub {
+    version = 3;
+    owner = "cenkalti";
+    repo = "backoff";
+    rev = "5d150e7eec023ce7a124856b37c68e54b4050ac7";
+    date = "2017-03-29";
+    sha256 = "0p0cvfpixa1aks6sxngyla7jc16gza3clyy1d13mdlnw304wcybg";
+    propagatedBuildInputs = [
+      net
+    ];
   };
 
   barcode = buildFromGitHub {
@@ -793,17 +816,20 @@ let
 
   docker_cli = buildFromGitHub {
     version = 3;
-    date = "2017-06-16";
-    rev = "5dd30732a23bbf14db1c64d084ae4a375f592cfa";
+    date = "2017-06-23";
+    rev = "8b6196ded7d610bfec0c2fea0cb1ff6df5f6cbf8";
     owner = "docker";
     repo = "cli";
-    sha256 = "1z72bbjnnplci8hrfcf7i5hrn2za3zqyksrkksyxsxj0d40pgk4p";
+    sha256 = "1c40hw46knqkkqbilg2a874pbcnb6y62jr5vqm36nakj99cbyidf";
     subPackages = [
       "cli/config/configfile"
+      "opts"
     ];
     buildInputs = [
       errors
+      go-connections
       moby_for_go-dockerclient
+      go-units
     ];
   };
 
@@ -881,9 +907,9 @@ let
     version = 3;
     owner = "spf13";
     repo = "cobra";
-    rev = "99b5d838ca16c25cc4944e323684f8415e8b10ba";
-    date = "2017-06-19";
-    sha256 = "0yxh4jyc4vp5gbrkj2gnhv8k19mfxa4bvji2g26n55and6xx2xy8";
+    rev = "d638dcb7c7c1c9b62f3a6297a17834980d245dc7";
+    date = "2017-06-23";
+    sha256 = "08dp52pw35nnrfdipsw5kjmb49hqs6vnvxw4p9hlq4dk06vagzxr";
     buildInputs = [
       go-homedir
       mousetrap
@@ -992,7 +1018,7 @@ let
       golang-text
       google-api-go-client
       gopsutil
-      go-uuid
+      hashicorp_go-uuid
       hcl
       hil
       logutils
@@ -1203,11 +1229,11 @@ let
 
   dbus = buildFromGitHub {
     version = 3;
-    rev = "012f3c27dcbdbe5d1285634e604e4ef869d83f7d";
+    rev = "37252881b3a87eaa2eb04b0ff2211f54f45199ab";
     owner = "godbus";
     repo = "dbus";
-    sha256 = "01g4lr3a0jsaj8200p84x9r18b3wj854sbafks82aj6dlnnsj0vb";
-    date = "2017-05-27";
+    sha256 = "07vw8bn208p7qdsyr9psq8c901jgf2k4r4yc72p0znahmyivznbv";
+    date = "2017-06-20";
   };
 
   decimal = buildFromGitHub {
@@ -1221,12 +1247,12 @@ let
 
   distribution = buildFromGitHub {
     version = 3;
-    rev = "1e2f10eb65743fed02f573d31a4587de09afb20e";
+    rev = "b9f76758aee5baadbd0061cde2bcb29602eb7bfe";
     owner = "docker";
     repo = "distribution";
-    sha256 = "181siai33j2mz4zs27ly044ii6sm3df10c5ykf7afyni7g78k19g";
+    sha256 = "0x57awi4vac24slj3z2y6hagcxmnjblilvah70vyrz3sx0rpxank";
     meta.useUnstable = true;
-    date = "2017-05-24";
+    date = "2017-06-23";
   };
 
   distribution_for_moby = buildFromGitHub {
@@ -1360,9 +1386,9 @@ let
     version = 3;
     owner = "mailru";
     repo = "easyjson";
-    rev = "44c0351a5bc860bcb2608d54aa03ea686c4e7b25";
-    date = "2017-05-30";
-    sha256 = "07pakmacrrawvzciq7abq4f95si9zsdlf68ik5miv2xsi1qmy388";
+    rev = "0eb186976b9a20e56d9a1369f9c5095b78f30ca8";
+    date = "2017-06-22";
+    sha256 = "05fxz8xrsd85xzjnh7l7w3wdryw5dms89b8db0ng396by6sja2sm";
     excludedPackages = "benchmark";
   };
 
@@ -1499,8 +1525,8 @@ let
     version = 3;
     owner = "coreos";
     repo = "etcd";
-    rev = "v3.2.0";
-    sha256 = "1z84rvh9bphd820gbvmy02rsxb6p1f43cwkd1rv0nr5vh2if733a";
+    rev = "v3.2.1";
+    sha256 = "0fx58qsfh588rj825gcdz8xz94iwl8ia6dpm34jnsgiawc82mics";
     buildInputs = [
       bolt
       btree
@@ -1545,6 +1571,7 @@ let
       "client"
       "pkg/fileutil"
       "pkg/pathutil"
+      "pkg/srv"
       "pkg/tlsutil"
       "pkg/transport"
       "pkg/types"
@@ -1590,6 +1617,15 @@ let
       ugorji_go
       yaml
     ];
+  };
+
+  etree = buildFromGitHub {
+    version = 3;
+    owner = "beevik";
+    repo = "etree";
+    rev = "09746331a38f3da8c023a85a65c8c152070de725";
+    sha256 = "07a8s135jr3z6isplwbjah4zigsyhhnkq9azb5f75jkpglpwdqiv";
+    date = "2017-05-11";
   };
 
   ewma = buildFromGitHub {
@@ -1653,6 +1689,15 @@ let
     owner  = "spacemonkeygo";
     repo   = "flagfile";
     sha256 = "0vaqlmayva323hs7qyza1n7383d2ly2k0hv8p2j6jl4bid9w8jy0";
+  };
+
+  form = buildFromGitHub {
+    version = 3;
+    rev = "c4048f792f70d207e6d8b9c1bf52319247f202b8";
+    date = "2015-11-09";
+    owner = "gravitational";
+    repo = "form";
+    sha256 = "0800jqfkmy4h2pavi8lhjqca84kam9b1azgwvb6z4kpirbnchpy3";
   };
 
   fs = buildFromGitHub {
@@ -2039,11 +2084,11 @@ let
 
   google-cloud-go = buildFromGitHub {
     version = 3;
-    date = "2017-06-20";
-    rev = "1de0ed4e08034a9c7876ac0388a3ce4829975c2d";
+    date = "2017-06-23";
+    rev = "9d0d2cf2897dfcd18a86e1666038caf1c38e77f8";
     owner = "GoogleCloudPlatform";
     repo = "google-cloud-go";
-    sha256 = "0xw0cm7xvvlfadxa8ivqk6ia99fw4pmrx9ndfr6h6dnzl7xg3ixg";
+    sha256 = "1d1mbrw953sw6gf1mnwhip8hp9pnbw3grjwb4v5134kx56zgcm9g";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -2101,6 +2146,18 @@ let
     owner = "jbenet";
     repo = "goprocess";
     sha256 = "1i4spw84hlka1l8xxizpiqklsqyc3hxxjz3wbpn3i2ql68raylbx";
+  };
+
+  gops = buildFromGitHub {
+    version = 3;
+    rev = "v0.3.1";
+    owner = "google";
+    repo = "gops";
+    sha256 = "14lqa91gwq7b3pwqfmfq7gf3mgfd5d0kfld1a0xvaxw36sa09q49";
+    propagatedBuildInputs = [
+      arch
+      keybase_go-ps
+    ];
   };
 
   goredis = buildFromGitHub {
@@ -2237,9 +2294,9 @@ let
       inherit
         goPackagePath
         rev;
-      date = "2017-06-09";
+      date = "2017-06-22";
     };
-    rev = "324744a33f1f37e63dd1695cfb3ec9a3e4a1cb05";
+    rev = "1ba364a3bb616587dfd46d5009edefdfd7896ed9";
     goPackagePath = "google.golang.org/api";
     src = fetchzip {
       version = 3;
@@ -2247,7 +2304,7 @@ let
       purgeTimestamps = true;
       inherit name;
       url = "https://code.googlesource.com/google-api-go-client/+archive/${rev}.tar.gz";
-      sha256 = "0b0jpxldrn05wyf434fiw8m4nq5z4vli27798b8kygad8hvf8kv6";
+      sha256 = "03xb9bm8z7ys9r7ig8hr5scpaxys616c3pivdj2bmd763wwwxbvs";
     };
     buildInputs = [
       appengine
@@ -2309,6 +2366,22 @@ let
     ];
   };
 
+  gosaml2 = buildFromGitHub {
+    version = 3;
+    rev = "8908227c114abe0b63b1f0606abae72d11bf632a";
+    owner  = "russellhaering";
+    repo   = "gosaml2";
+    sha256 = "ebc793728bfb3f10c7aecedaf1831d4ea77c9c6f9572d374b02ca683ec531633";
+    date = "2017-05-15";
+    excludedPackages = "test";
+    propagatedBuildInputs = [
+      etree
+      goxmldsig
+      satori_go-uuid
+    ];
+    meta.autoUpdate = false;
+  };
+
   goskiplist = buildFromGitHub {
     version = 1;
     rev = "2dfbae5fcf46374f166f8969cb07e167f1be6273";
@@ -2325,6 +2398,19 @@ let
     repo = "govalidator";
     sha256 = "1b5vkv3ch5dz23lgn7ya0649w4ag21jrmsnyq92nklx47nzw9x0y";
     date = "2017-05-29";
+  };
+
+  goxmldsig = buildFromGitHub {
+    version = 3;
+    rev = "605161228693b2efadce55323c9c661a40c5fbaa";
+    owner  = "russellhaering";
+    repo   = "goxmldsig";
+    sha256 = "0sclfnwqrkl2nm0l0v0jal9hif54nc4bi1w5s5xkgss8svdr5v5s";
+    date = "2017-05-15";
+    propagatedBuildInputs = [
+      clockwork
+      etree
+    ];
   };
 
   go-autorest = buildFromGitHub {
@@ -2398,9 +2484,9 @@ let
     owner  = "hashicorp";
     repo   = "go-checkpoint";
     sha256 = "04kpyjc0fi0yz9id0hpy0m7rcv3rmz0l91p7zq8l6q3p9fy5a69g";
-    buildInputs = [
+    propagatedBuildInputs = [
       go-cleanhttp
-      go-uuid
+      hashicorp_go-uuid
     ];
   };
 
@@ -2467,11 +2553,11 @@ let
   };
 
   go-connections = buildFromGitHub {
-    version = 2;
-    rev = "e15c02316c12de00874640cd76311849de2aeed5";
+    version = 3;
+    rev = "3ede32e2033de7505e6500d6c868c2b9ed9f169d";
     owner  = "docker";
     repo   = "go-connections";
-    sha256 = "154a8z0jcqqqgnn1x08q1yffb09hz90qvpqs5h45676anb7cb8a8";
+    sha256 = "0jaq1w5jbml6g5gdc0cfig8lfwldzx2kwvx0a1xcn74mplnfik9f";
     propagatedBuildInputs = [
       errors
       go-winio
@@ -2479,7 +2565,7 @@ let
       net
       runc
     ];
-    date = "2017-03-31";
+    date = "2017-06-23";
   };
 
   go-couchbase = buildFromGitHub {
@@ -2570,11 +2656,11 @@ let
 
   go-ethereum = buildFromGitHub {
     version = 3;
-    date = "2017-06-16";
-    rev = "431cf2a1e453346bcc627ac1fb9df3950a6c3499";
+    date = "2017-06-23";
+    rev = "78c04c920d07e65864f781fb5c6e5d77435d7aa0";
     owner  = "ethereum";
     repo   = "go-ethereum";
-    sha256 = "0gqxv27d4js8f3axdf75hxbcrhlhfzvl18vd34ay9kb83z03ni0j";
+    sha256 = "1z72wclhn9w2j0kp05f1vs9a95d8scvrk49bwwv51agwk14d0qry";
     subPackages = [
       "crypto/sha3"
     ];
@@ -3141,12 +3227,12 @@ let
   };
 
   go-multierror = buildFromGitHub {
-    version = 2;
-    date = "2016-12-16";
-    rev = "ed905158d87462226a13fe39ddf685ea65f1c11f";
+    version = 3;
+    date = "2017-06-22";
+    rev = "83588e72410abfbe4df460eeb6f30841ae47d4c4";
     owner  = "hashicorp";
     repo   = "go-multierror";
-    sha256 = "1lvmjf3mb1qx295djzddzj8w1j86c0cklkg19kfmzr5cbk257rzc";
+    sha256 = "0j2wkfr596av3ba1vd7bxqjvbipbh6p23b22afrfncpfq7hgqvh4";
     propagatedBuildInputs = [
       errwrap
     ];
@@ -3267,12 +3353,15 @@ let
 
   go-plugin = buildFromGitHub {
     version = 3;
-    rev = "b7d6477501c13292d71fd3b8e688269e51b028ba";
-    date = "2017-05-16";
+    rev = "5ee1a665d1862b865bd2203cdce4f08e39841815";
+    date = "2017-06-21";
     owner  = "hashicorp";
     repo   = "go-plugin";
-    sha256 = "0qbjfcf6f37b5a8bgbmf08cqm9rh706dl3fnibw6ji1b0z06928l";
-    buildInputs = [
+    sha256 = "0ivlfpl61zs4p07dcxrbv2lp34bqn15ray01h34rya4nga2z7276";
+    propagatedBuildInputs = [
+      grpc
+      net
+      protobuf
       yamux
     ];
   };
@@ -3284,6 +3373,15 @@ let
     owner  = "mitchellh";
     repo   = "go-ps";
     sha256 = "1x70gc6y9licdi6qww1lkwx1wkwwkqylzhkfl0wpnizl8m7vpdmp";
+  };
+
+  keybase_go-ps = buildFromGitHub {
+    version = 3;
+    rev = "668c8856d9992f97248b3177d45743d2cc1068db";
+    date = "2016-10-05";
+    owner  = "keybase";
+    repo   = "go-ps";
+    sha256 = "04f1qw4h19907d6x8lg4r1gkzl3i7z120bqsmrpl6lwb5irfy065";
   };
 
   go-python = buildFromGitHub {
@@ -3411,11 +3509,11 @@ let
 
   go-sockaddr = buildFromGitHub {
     version = 3;
-    rev = "2d10d7c10258d11196c0ebf2943509e4afd06cd4";
+    rev = "e12d9401a74f025fe672cd1a84b2081c773990d3";
     owner  = "hashicorp";
     repo   = "go-sockaddr";
-    sha256 = "19psd72iwgrr9w9jkwmgifz2kfnnh78vcwkmmspipdaqvh035k1w";
-    date = "2017-05-23";
+    sha256 = "1792flmabh63bv9zifgn9cybnym77s57418swkxra03r19y3qvz3";
+    date = "2017-06-22";
     propagatedBuildInputs = [
       mitchellh_cli
       columnize
@@ -3434,10 +3532,10 @@ let
 
   go-sqlite3 = buildFromGitHub {
     version = 3;
-    rev = "a819994f72c9c22cbe7d0849038a394d8154d4c9";
+    rev = "afe454f6220b3972691678af2c5579781563183f";
     owner  = "mattn";
     repo   = "go-sqlite3";
-    sha256 = "0sh6sqm5wsbdispqcgch4qb5mibspg34x9z136zdf3awj1lnnazc";
+    sha256 = "0qrpfxrl9n2hmazixll41xpngyvqwm36msa19wwxnrx5r8j6kwn2";
     excludedPackages = "test";
     buildInputs = [
       goquery
@@ -3445,7 +3543,7 @@ let
     propagatedBuildInputs = [
       net
     ];
-    date = "2017-06-18";
+    date = "2017-06-21";
   };
 
   go-stun = buildFromGitHub {
@@ -3529,13 +3627,22 @@ let
     ];
   };
 
-  go-uuid = buildFromGitHub {
+  hashicorp_go-uuid = buildFromGitHub {
     version = 1;
     rev = "64130c7a86d732268a38cb04cfbaf0cc987fda98";
     date = "2016-07-16";
     owner  = "hashicorp";
     repo   = "go-uuid";
     sha256 = "072c84wn90di09qxrg0ml8vjfb5k10zk2n4k0rgxk1n45wyghkjx";
+  };
+
+  satori_go-uuid = buildFromGitHub {
+    version = 3;
+    rev = "5bf94b69c6b68ee1b541973bb8e1144db23a194b";
+    date = "2017-03-21";
+    owner  = "satori";
+    repo   = "go.uuid";
+    sha256 = "0xdavv3zghc00xa8in1427yksbx1lzk2x2fzq8y82vhdj3majrr7";
   };
 
   go-version = buildFromGitHub {
@@ -3651,11 +3758,11 @@ let
 
   grpc = buildFromGitHub {
     version = 3;
-    date = "2017-06-19";
-    rev = "40e7a759a035a36611d6c9a3c2acb11ce1497727";
+    date = "2017-06-23";
+    rev = "f0c566b827bc5e23848489a1a5de1adb5cbbeab3";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "1rp2nz3jk9l3yji030176x3pnk1gxxwxcbcx6bqgk04vcgrj1zjn";
+    sha256 = "1qsnwhhd4fw0mjggjll5g03jjnl5d9vcd51804hm6916s9yh0pn3";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [
       "github.com/grpc/grpc-go"
@@ -3777,12 +3884,12 @@ let
   };
 
   gziphandler = buildFromGitHub {
-    version = 2;
-    date = "2017-04-03";
-    rev = "22d4470af89e09998fc16b35029df973932df4ae";
+    version = 3;
+    date = "2017-06-23";
+    rev = "56545f4a5d46df9a6648819d1664c3a03a13ffdb";
     owner = "NYTimes";
     repo = "gziphandler";
-    sha256 = "1yb6zq2g3nr3r8c4wp60b9dlfw2rfn422l2x36ym1sikjm5g1gj1";
+    sha256 = "1jxr3icnj007v657jbqfpyafyh9accx6vbxzyi6ins2bljy0papc";
   };
 
   hashland = buildFromGitHub {
@@ -3919,10 +4026,10 @@ let
 
   hugo = buildFromGitHub {
     version = 3;
-    owner = "spf13";
+    owner = "gohugoio";
     repo = "hugo";
-    rev = "v0.23";
-    sha256 = "1sfy7fpbsp3z21qgx03898505s6g6klml2yl99hn292xfiknzj52";
+    rev = "v0.24";
+    sha256 = "05j3507164n0g6l9hv7rqamkya4jkf4dhkfiiqd8dsyj7qjc8qip";
     buildInputs = [
       ace
       afero
@@ -3957,11 +4064,11 @@ let
 
   image-spec = buildFromGitHub {
     version = 3;
-    rev = "d207df434d113728dc3373cb3a905f00b482a858";
+    rev = "af173bcb2fb0e0b95f240b914c4791f69738b765";
     owner  = "opencontainers";
     repo   = "image-spec";
-    sha256 = "16icx57ppmlmdrdzsf6y3zad3hdznmlzp5zsm5mm97cyigs6746f";
-    date = "2017-06-16";
+    sha256 = "0rpvjrg8b6amjnnr81nzvy4dqzd4szk83r9ssjw7vw80v7idv9py";
+    date = "2017-06-23";
     propagatedBuildInputs = [
       errors
       go4
@@ -3992,8 +4099,8 @@ let
     version = 3;
     owner = "influxdata";
     repo = "influxdb";
-    rev = "v1.2.4";
-    sha256 = "1xic0sbkpzjs8gxvbm0g1f01nd7cv8sxgxv4dyyhsclg62m1srcm";
+    rev = "v1.3.0";
+    sha256 = "1l7zygqx2z9v76v3q7bfp0n4yd77inxmd2h218kq98zkq446vf22";
     propagatedBuildInputs = [
       bolt
       crypto
@@ -4427,16 +4534,16 @@ let
   };
 
   log15 = buildFromGitHub {
-    version = 2;
-    rev = "39bacc234bf1afd0b68573e95b45871f67ba2cd4";
+    version = 3;
+    rev = "74a0988b5f804e8ce9ff74fca4f16980776dff29";
     owner  = "inconshreveable";
     repo   = "log15";
-    sha256 = "0sqk1yjya1gbfdy2sr453q07rvhfg3whxm0kj60qv35l68c8sw68";
+    sha256 = "091d87dz7ddx1jz5hk47465x83f2ayagylpgc8b5fwvbm1lbmlps";
     propagatedBuildInputs = [
       go-colorable
       stack
     ];
-    date = "2017-02-16";
+    date = "2017-06-22";
   };
 
   log15_v2 = buildFromGitHub {
@@ -4604,12 +4711,12 @@ let
   };
 
   mathutil = buildFromGitHub {
-    version = 2;
-    date = "2017-03-13";
-    rev = "1447ad269d64ca91aa8d7079baa40b6fc8b965e7";
+    version = 3;
+    date = "2017-06-21";
+    rev = "6baf61e0317058e3207936f50e310bd500fbbdb0";
     owner = "cznic";
     repo = "mathutil";
-    sha256 = "1v1ff44562dwmijs5pnmsa1ylxnskpm916rfcwqf1padgjxmp6bm";
+    sha256 = "01w47c14kbhncmvgz5k7xwp1c8h7hfxv9jbdds9abakbb89zvi72";
     excludedPackages = "example";
     buildInputs = [
       bigfft
@@ -4631,8 +4738,8 @@ let
     version = 3;
     owner = "minio";
     repo = "mc";
-    rev = "c32b1ea48b651125e33015ea0d1596cb377685a4";
-    sha256 = "0ks12c3h4rh1zfrg6k292c8ghjbml4wlfxsdrbic3cmairf2mrsz";
+    rev = "3b53bbe4784aa6d45134b49107cc7793f30f6f00";
+    sha256 = "1261hc64r88mx23w8y7v2sfbcqppxds0r83pl3yw6970vmffv1k2";
     propagatedBuildInputs = [
       cli_minio
       color
@@ -4647,7 +4754,7 @@ let
       profile
       structs
     ];
-    date = "2017-06-15";
+    date = "2017-06-23";
   };
 
   mdns = buildFromGitHub {
@@ -4665,10 +4772,10 @@ let
 
   memberlist = buildFromGitHub {
     version = 3;
-    rev = "16fe34d996eba2b68f6f46f26c51c617c6bc1bf0";
+    rev = "0a136466d82a7e6f1b7866dde3578ac28ed675ad";
     owner = "hashicorp";
     repo = "memberlist";
-    sha256 = "1010c88qq8yavqg461rvzv231fqwyl3sc43ia1imm29lc8gw655n";
+    sha256 = "0rl8gxv0kbfzajhkmqiigy222fk3i2w1f1nm8dqxb91fa6x7mhsq";
     propagatedBuildInputs = [
       dns
       ugorji_go
@@ -4678,7 +4785,7 @@ let
       seed
     ];
     meta.useUnstable = true;
-    date = "2017-05-26";
+    date = "2017-06-22";
   };
 
   memcache = buildFromGitHub {
@@ -4812,10 +4919,10 @@ let
     version = 3;
     owner = "minio";
     repo = "minio-go";
-    rev = "ce8164be18911fae2dec3bd21e95cfbc104503db";
-    sha256 = "05yxjixin7vpsslx4ifg3i2yyr2jmkmkfl6n8w9pk7iig735ymq0";
+    rev = "2cca719d0760cc8906b0843a3e1e93fe9dbd8bb4";
+    sha256 = "0alhl6kpyf3fqcqahc1c2bjvvrrgz5lgvdz1sfhbbl4pnyg7b70a";
     meta.useUnstable = true;
-    date = "2017-06-20";
+    date = "2017-06-23";
   };
 
   missinggo = buildFromGitHub {
@@ -4875,9 +4982,9 @@ let
     version = 3;
     owner = "moby";
     repo = "moby";
-    rev = "99c72eb2682c0539ad3cc544eb28876af78b33a1";
-    date = "2017-06-20";
-    sha256 = "07mra0i7jfs5j478nkfs5draap23mg87wm4vifz1x95qqh9qjyaf";
+    rev = "25a65a185b6b512117803ab25c716ca8f831ccdf";
+    date = "2017-06-23";
+    sha256 = "0v217if5f2bsyrkbx4lwmhs6460vdar4j3qwa7316gi559jviqiw";
     goPackageAliases = [
       "github.com/docker/docker"
     ];
@@ -4905,7 +5012,6 @@ let
       "pkg/jsonlog"
       "pkg/jsonmessage"
       "pkg/longpath"
-      "pkg/random"
       "pkg/stringid"
       "pkg/tarsum"
       "pkg/term"
@@ -5005,10 +5111,10 @@ let
 
   mongo-tools = buildFromGitHub {
     version = 3;
-    rev = "r3.5.8";
+    rev = "r3.5.9";
     owner  = "mongodb";
     repo   = "mongo-tools";
-    sha256 = "0j4i6rk886y3047la1yiagj9y85l8izl4c9iildpqfaa71rhmgx9";
+    sha256 = "1a2j1211a2rl6wv4xr9sgkhpy99cx8xmlm60m8jngkhnj7hgj6bp";
     buildInputs = [
       crypto
       escaper
@@ -5288,12 +5394,12 @@ let
   };
 
   openssl = buildFromGitHub {
-    version = 2;
-    date = "2016-09-22";
-    rev = "5be686e264d836e7a01ca7fc7c53acdb8edbe768";
+    version = 3;
+    date = "2017-06-20";
+    rev = "2869e8ca1a6eb35fb727f41611fd52b55cd0f49c";
     owner = "10gen";
     repo = "openssl";
-    sha256 = "0jlr0y8812ayj5xfpn7m0m1pfm8pf1g43xbw7ngs4zxcs0ip7l9g";
+    sha256 = "0f71bslql8cz863xnhnxxh23yjx048wv3qm1ax9rlzhvfxwvavkk";
     goPackageAliases = [
       "github.com/spacemonkeygo/openssl"
     ];
@@ -5397,12 +5503,12 @@ let
   };
 
   pester = buildFromGitHub {
-    version = 2;
+    version = 3;
     owner = "sethgrid";
     repo = "pester";
-    rev = "4f4c0a67b6496764028e1ab9fd8dfb630282ed2f";
-    date = "2017-04-08";
-    sha256 = "0xydrln1gmzb9kqf0kq7g62xazsxrnza5w8g0jzppdpf25zjnxwm";
+    rev = "99271bb5a99e5769f688c483eabb3c22d71ebf93";
+    date = "2017-06-20";
+    sha256 = "1lp61pi2h504m0qjdggf89ixbkz9swhh3b4kiq3zrs79lk12rmmg";
   };
 
   pfilter = buildFromGitHub {
@@ -5551,11 +5657,11 @@ let
 
   prometheus_common = buildFromGitHub {
     version = 3;
-    date = "2017-06-16";
-    rev = "0d0c3d572886e0f2323ed376557f9eb99b97d25b";
+    date = "2017-06-21";
+    rev = "0866df4b85a18d652b6965be022d007cdf076822";
     owner = "prometheus";
     repo = "common";
-    sha256 = "13pb5y04d684xqgix90yqa17j6dcsfy8ark1rw68yl773gqxxwzg";
+    sha256 = "1m3psca61rjwa0rxnvnbkwjbx54bzkfm8zyzbns5796ygyrvrqdf";
     buildInputs = [
       net
       prometheus_client_model
@@ -5735,9 +5841,9 @@ let
     version = 3;
     owner = "ncw";
     repo = "rclone";
-    date = "2017-06-20";
-    rev = "8d77e4819024545be07ad1e4ab3189958ae1adf0";
-    sha256 = "1l8s0dz4bzi70rqakrl7zrk25xyj76s1a5k69vg22b6v1lxwd86q";
+    date = "2017-06-23";
+    rev = "d55f8f0492282a9a624981f5320dcc30fc1b378b";
+    sha256 = "11f2av0v0cskxas6wg8c5glnfd80b0rv0rd25sckgk8hnwlizpak";
     propagatedBuildInputs = [
       aws-sdk-go
       cgofuse
@@ -5817,9 +5923,9 @@ let
     version = 3;
     owner = "klauspost";
     repo = "reedsolomon";
-    date = "2017-06-19";
-    rev = "87c4e5ae751ee8e66791461ce6dc079e4255da5a";
-    sha256 = "0blvnnxcpfwr0ymgnlrhbzd9mpprp7cfgyjaviwnyhagz0rmsybi";
+    date = "2017-06-20";
+    rev = "18d548df635f0d2c5c0e6bfc500d425ba1859403";
+    sha256 = "0cswmg7hr9b29ir1wvz2vwmn19xn4yyrinm29bzylw8gx0m6bvwb";
     propagatedBuildInputs = [
       cpuid
     ];
@@ -6424,20 +6530,29 @@ let
 
   teleport = buildFromGitHub {
     version = 3;
-    rev = "v2.2.0";
+    rev = "v2.2.2";
     owner = "gravitational";
     repo = "teleport";
-    sha256 = "1qzar36ilgk9r5a2pkqmlvvq83rz61a26l2sqkbfxcka7434bnwy";
+    sha256 = "0iy48iw42z2m1zhp6ds8qlz6vz9k4pqglkbbqs9852r84wlzi564";
     buildInputs = [
       aws-sdk-go
+      backoff
       bolt
       configure
       clockwork
       crypto
       etcd_client
+      etree
+      form
       go-oidc
       go-shellwords
+      gops
+      gosaml2
       goterm
+      goxmldsig
+      grpc
+      grpc-gateway
+      hdrhistogram
       hotp
       httprouter
       gravitational_kingpin
@@ -6449,6 +6564,8 @@ let
       osext
       otp
       oxy
+      prometheus_client_golang
+      protobuf
       pty
       roundtrip
       shellescape
@@ -6463,7 +6580,7 @@ let
       yaml_v2
     ];
 
-    excludedPackages = "\\(test\\|suite\\)";
+    excludedPackages = "\\(test\\|suite\\|fixtures\\)";
 
     patches = [
       (fetchTritonPatch {
@@ -6731,7 +6848,7 @@ let
       go-rootcerts
       go-semver
       go-syslog
-      go-uuid
+      hashicorp_go-uuid
       go-zookeeper
       gocql
       golang-lru
@@ -6839,11 +6956,12 @@ let
   };
 
   websocket = buildFromGitHub {
-    version = 2;
-    rev = "v1.1.0";
+    version = 3;
+    rev = "ea4d1f681babbce9545c9c5f3d5194a789c89f5b";
     owner  = "gorilla";
     repo   = "websocket";
-    sha256 = "0qrvpvjnsi9bash1x8fhnj1fnpgydxjvys2adbkih2vys20a3hch";
+    sha256 = "1qhz0x1l8502ipkc5h99i93sbi7cvjddxvz5vpybnrz8n52d4dw8";
+    date = "2017-06-20";
   };
 
   w32 = buildFromGitHub {

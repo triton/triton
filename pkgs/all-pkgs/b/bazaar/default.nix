@@ -2,7 +2,8 @@
 , buildPythonPackage
 , fetchTritonPatch
 , fetchurl
-, pythonPackages
+, isPy3k
+, lib
 
 , paramiko
 , pycurl
@@ -10,14 +11,12 @@
 }:
 
 let
-  inherit (pythonPackages)
-    isPy3k;
+  versionMajor = "2.7";
+  versionMinor = "0";
+  version = "${versionMajor}.${versionMinor}";
 in
 buildPythonPackage rec {
   name = "bazaar-${version}";
-    versionMajor = "2.7";
-    versionMinor = "0";
-    version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "http://launchpad.net/bzr/${versionMajor}/${version}/+download/"
@@ -46,7 +45,7 @@ buildPythonPackage rec {
 
   disabled = isPy3k;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Bazaar is a distributed version control system";
     homepage = http://bazaar-vcs.org/;
     license = licenses.gpl2;

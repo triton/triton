@@ -1,21 +1,22 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
 let
-  version = "0.11.11";
+  version = "0.12.2";
 in
 buildPythonPackage {
-  name = "Werkzeug-${version}";
+  name = "werkzeug-${version}";
 
   src = fetchPyPi {
     package = "Werkzeug";
     inherit version;
-    sha256 = "e72c46bc14405cba7a26bd2ce28df734471bc9016bc8b4cb69466c2c14c2f7e5";
+    sha256 = "903a7b87b74635244548b30d30db4c8947fe64c5198f58899ddcd3a13c23bb26";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

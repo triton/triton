@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "1.3.2";
+  version = "1.4.0";
 in
 buildPythonPackage rec {
   name = "flask-compress-${version}";
@@ -18,7 +18,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "Flask-Compress";
     inherit version;
-    sha256 = "4fbb53e7f6ce8b1458a2c3d7a528564912f2641ab2f9f43819fc96ed7f770734";
+    sha256 = "468693f4ddd11ac6a41bca4eb5f94b071b763256d54136f77957cfee635badb3";
   };
 
   buildInputs = [

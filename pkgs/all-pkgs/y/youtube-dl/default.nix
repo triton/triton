@@ -20,7 +20,7 @@ let
   inherit (lib)
     optionalString;
 
-  version = "2017.06.18";
+  version = "2017.06.23";
 in
 buildPythonPackage rec {
   name = "youtube-dl-${version}";
@@ -29,7 +29,7 @@ buildPythonPackage rec {
     url = "https://github.com/rg3/youtube-dl/releases/download/"
       + "${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "f53d32c2ca64bb7bf2307666b42c88fa68dcc399f6a92ebed01b8693794e5f99";
+    sha256 = "632109900e84619471c1c578688ec0a93834275be80ed98434ddd598cc0ca127";
   };
 
   nativeBuildInputs = [

@@ -1,21 +1,24 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
+let
+  version = "1.4.34";
+in
 buildPythonPackage rec {
   name = "py-${version}";
-  version = "1.4.31";
 
   src = fetchPyPi {
     package = "py";
     inherit version;
-    sha256 = "a6501963c725fc2554dabfece8ae9a8fb5e149c0ac0a42fd2b02c5c1c57fc114";
+    sha256 = "0f2d585d22050e90c7d293b6451c83db097df77871974d90efd5a30dc12fcde3";
   };
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Cross-python path, ini-parsing, io, code, log facilities";
     homepage = http://bitbucket.org/pytest-dev/py/;
     licenses = licenses.mit;

@@ -1,11 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 }:
 
+let
+  version = "0.5.5";
+in
 buildPythonPackage rec {
   name = "babelfish-${version}";
-  version = "0.5.5";
 
   src = fetchPyPi {
     package = "babelfish";
@@ -15,7 +18,7 @@ buildPythonPackage rec {
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A module to work with countries and languages";
     homepage = https://github.com/Diaoul/babelfish;
     license = licenses.bsd3;

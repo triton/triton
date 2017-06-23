@@ -1268,12 +1268,12 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
   pyrsistent = buildPythonPackage rec {
     name = "pyrsistent-${version}";
-    version = "0.11.13";
+    version = "0.12.3";
 
     src = fetchPyPi {
       package = "pyrsistent";
       inherit version;
-      sha256 = "cfbf194cb33b97722f6a3d6efa7b6e7a93b09bb13571266cfc9c1556fdb26f29";
+      sha256 = "0614ad17af8a65d79b2550261c00686c241cea7278bf7a7fddfc7eed3f854068";
     };
 
     propagatedBuildInputs = with self; [

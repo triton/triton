@@ -1,13 +1,16 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
-, pythonPackages
+, six
 }:
 
+let
+  version = "0.11";
+in
 buildPythonPackage rec {
   name = "transmissionrpc-${version}";
-  version = "0.11";
 
   src = fetchPyPi {
     package = "transmissionrpc";
@@ -16,12 +19,12 @@ buildPythonPackage rec {
   };
 
   buildInputs = [
-    pythonPackages.six
+    six
   ];
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Transmission bittorent client RPC protocol";
     homepage = https://pypi.python.org/pypi/transmissionrpc/;
     license = licenses.mit;

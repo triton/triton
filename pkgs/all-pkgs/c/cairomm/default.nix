@@ -1,16 +1,19 @@
 { stdenv
 , fetchurl
+, lib
 
 , cairo
 , libsigcxx
 }:
 
 stdenv.mkDerivation rec {
-  name = "cairomm-1.12.0";
+  name = "cairomm-1.12.2";
 
   src = fetchurl {
     url = "http://cairographics.org/releases/${name}.tar.gz";
-    sha256 = "1k3lb3jwnk5nm4s5cfm5kk8kl4b066chis4inws6k5yxdzn5lhsh";
+    multihash = "QmbiHbZeBhdVb5anjocYxJ9KQQKnZ85PRpDbAnmHRzYx48";
+    hashOutput = false;
+    sha256 = "45c47fd4d0aa77464a75cdca011143fea3ef795c4753f6e860057da5fb8bd599";
   };
 
   buildInputs = [
@@ -30,7 +33,22 @@ stdenv.mkDerivation rec {
     "--without-boost-unit-test-framework"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      sha1Urls = map (n: "${n}.sha1.asc") src.urls;
+      pgpKeyFingerprints = [
+        # Murray Cumming
+        "7835 91DD 0B84 B151 C957  3D66 3B76 CE0E B51B D20A"
+      ];
+    };
+  };
+
+  meta = with lib; {
     description = "C++ bindings for the Cairo vector graphics library";
     homepage = http://cairographics.org/cairomm;
     license = licenses.lgpl2Plus;

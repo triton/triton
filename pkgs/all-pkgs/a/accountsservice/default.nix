@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , libtool
 , makeWrapper
 
@@ -19,12 +20,12 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "accountsservice-0.6.43";
+  name = "accountsservice-0.6.45";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/accountsservice/${name}.tar.xz";
-    multihash = "QmSNrbCYfdeNwq3nqs7WctLmZ8jK2NmGPfWdDWuWLtVpC7";
-    sha256 = "ed3ba94aa38ceb822a0e1a1ac71bf1a8123babf90be049397b3a00900e48d6cc";
+    multihash = "QmQquttaZYGAEnVWzBpYUwj1WHrddAhDgMW8vt112er15v";
+    sha256 = "fb0fc293aa75d59f5ef5db719d37a21831c4dd74a97526ee7e51ce936311ef26";
   };
 
   nativeBuildInputs = [
@@ -81,7 +82,7 @@ stdenv.mkDerivation rec {
       --run "${coreutils}/bin/mkdir -p /var/lib/AccountsService/icons"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "D-Bus interface for user account query and manipulation";
     homepage = http://www.freedesktop.org/wiki/Software/AccountsService;
     license = licenses.gpl3;

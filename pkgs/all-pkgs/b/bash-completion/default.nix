@@ -1,9 +1,10 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 let
-  version = "2.4";
+  version = "2.5";
 in
 stdenv.mkDerivation rec {
   name = "bash-completion-${version}";
@@ -11,7 +12,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/scop/bash-completion/releases/download/"
       + "${version}/${name}.tar.xz";
-    sha256 = "c0f76b5202fec9ef8ffba82f5605025ca003f27cfd7a85115f838ba5136890f6";
+    sha256 = "b0b9540c65532825eca030f1241731383f89b2b65e80f3492c5dd2f0438c95cf";
   };
 
   doCheck = true;
@@ -19,7 +20,7 @@ stdenv.mkDerivation rec {
   parallelInstall = false;
   parallelCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Programmable completion for the bash shell";
     homepage = "https://github.com/scop/bash-completion/";
     license = licenses.gpl2;

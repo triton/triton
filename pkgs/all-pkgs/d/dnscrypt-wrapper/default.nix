@@ -1,12 +1,13 @@
 { stdenv
 , fetchurl
+, lib
 
 , libevent
 , libsodium
 }:
 
 let
-  version = "0.2.2";
+  version = "0.3";
 in
 stdenv.mkDerivation rec {
   name = "dnscrypt-wrapper-${version}";
@@ -14,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/Cofyc/dnscrypt-wrapper/releases/download/"
       + "v${version}/dnscrypt-wrapper-v${version}.tar.bz2";
-    sha256 = "6fa0d2bea41a11c551d6b940bf4dffeaaa0e034fffd8c67828ee2093c1230fee";
+    sha256 = "ec5c290ba9b9a05536fa6ee827373ca9b3841508e6d075ae364405152446499c";
   };
 
   buildInputs = [
@@ -26,7 +27,7 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=("PREFIX=$out")
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     desciption = "Wrapper helps to add dnscrypt support to any name resolver";
     homepage = https://github.com/Cofyc/dnscrypt-wrapper;
     license = licenses.gpl2;

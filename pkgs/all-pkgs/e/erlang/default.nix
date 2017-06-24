@@ -3,6 +3,7 @@
 , bison
 , fetchFromGitHub
 , flex
+, lib
 , libxml2
 , libxslt
 , perl
@@ -18,7 +19,7 @@
 }:
 
 let
-  version = "19.3";
+  version = "20.0";
 
   inherit (stdenv.lib)
     optionals;
@@ -27,11 +28,11 @@ stdenv.mkDerivation rec {
   name = "erlang-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "erlang";
     repo = "otp";
     rev = "OTP-${version}";
-    sha256 = "023a5459f24e4652ba8d5df82815fb525bb6600647cd80ab09ea2df6f71cf7e8";
+    sha256 = "6f171c1142829fe3a87d584b646668ed98828180162c2ba66bdc6975c2198812";
   };
 
   nativeBuildInputs = [
@@ -71,7 +72,7 @@ stdenv.mkDerivation rec {
     "--enable-hipe"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     license = licenses.asl20;
     maintainers = with maintainers; [
       wkennington

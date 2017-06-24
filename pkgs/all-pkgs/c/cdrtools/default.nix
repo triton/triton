@@ -1,17 +1,18 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 
 , acl
 , libcap
 }:
 
 stdenv.mkDerivation rec {
-  name = "cdrtools-3.02a06";
+  name = "cdrtools-3.02a07";
 
   src = fetchurl {
-    url = "mirror://sourceforge/cdrtools/${name}.tar.bz2";
-    sha256 = "ed79ab99414352ea9305163660b52b6a82394466bae03aebdbe2150997835eb1";
+    url = "mirror://sourceforge/cdrtools/alpha/${name}.tar.bz2";
+    sha256 = "49c1a67fa7ad3d7c0b05d41d18cb6677b40d4811faba111f0c01145d3ef0491b";
   };
 
   nativeBuildInputs = [
@@ -43,7 +44,7 @@ stdenv.mkDerivation rec {
   # cdda2wav fails if > -j1, it tries to link/copy files out of order.
   parallelBuild = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Portable CD/DVD/BluRay command line recording software";
     homepage = http://sourceforge.net/projects/cdrtools/;
     license = with licenses; [

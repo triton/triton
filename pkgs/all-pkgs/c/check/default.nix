@@ -1,21 +1,23 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 let
-  version = "0.10.0";
+  version = "0.11.0";
 in
 stdenv.mkDerivation rec {
   name = "check-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/check/${version}/check-${version}.tar.gz";
-    sha256 = "0lhhywf5nxl3dd0hdakra3aasl590756c9kmvyifb3vgm9k0gxgm";
+    url = "https://github.com/libcheck/check/releases/download/${version}/"
+      + "${name}.tar.gz";
+    sha256 = "24f7a48aae6b74755bcbe964ce8bc7240f6ced2141f8d9cf480bc3b3de0d5616";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Unit testing framework for C";
-    homepage = http://check.sourceforge.net/;
+    homepage = https://libcheck.github.io/check/;
     license = licenses.lgpl2Plus;
     maintainers = with maintainers; [
       wkennington

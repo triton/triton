@@ -4,14 +4,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dcadec-2016-04-07";
+  name = "dcadec-2016-06-03";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "foo86";
     repo = "dcadec";
     rev = "b93deed1a231dd6dd7e39b9fe7d2abe05aa00158";
-    sha256 = "451bf50181f2531dfba4d891987bc9af7c2b7a6ab774f182c50498bfb69232e4";
+    sha256 = "46fcd95f31dc98e9ae581130e3a3a5994c632f73c2b70361b9d17bdc7d374b53";
   };
 
   preBuild = ''

@@ -10,6 +10,8 @@
 , glib
 , libpng
 , libspectre
+, libx11
+, libxcb
 , lzo
 , mesa_noglu
 , xorg
@@ -45,8 +47,8 @@ stdenv.mkDerivation rec {
     libspectre
     lzo
     mesa_noglu
-    xorg.libX11
-    xorg.libxcb
+    libx11
+    libxcb
     xorg.libXext
     xorg.libXrender
     xorg.pixman
@@ -85,11 +87,11 @@ stdenv.mkDerivation rec {
     #"--disable-atomic"
     "--disable-gcov"
     "--disable-valgrind"
-    "--${boolEn (xorg != null)}-xlib"
-    "--${boolEn (xorg != null)}-xlib-xrender"
-    "--${boolEn (xorg != null)}-xcb"
-    "--${boolEn (xorg != null)}-xlib-xcb"
-    "--${boolEn (xorg != null)}-xcb-shm"
+    "--${boolEn (libx11 != null && xorg.libXext != null)}-xlib"
+    "--${boolEn (libx11 != null && xorg.libXrender != null)}-xlib-xrender"
+    "--${boolEn (libx11 != null && libxcb != null)}-xcb"
+    "--${boolEn (libx11 != null && libxcb != null)}-xlib-xcb"
+    "--${boolEn (libx11 != null && libxcb != null)}-xcb-shm"
     "--disable-qt"
     "--disable-quartz"
     "--disable-quartz-font"
@@ -130,8 +132,8 @@ stdenv.mkDerivation rec {
     "--disable-symbol-lookup"
     #"--enable-some-floating-point"
     "--with-x"
-    #"--with-skia=yes"
-    #"--with-skia-build-type=Release"
+    #(wtFlag "skia" true "yes")
+    #(wtFlag "skia-build-type" true "Release")
     "--without-gallium"
   ];
 
@@ -143,10 +145,13 @@ stdenv.mkDerivation rec {
 
   passthru = {
     srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
       failEarly = true;
       sha1Urls = map (n: "${n}.sha1.asc") src.urls;
       pgpKeyFingerprint = "C722 3EBE 4EF6 6513 B892  5989 11A3 0156 E0E6 7611";
-      inherit (src) urls outputHash outputHashAlgo;
     };
   };
 

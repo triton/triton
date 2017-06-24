@@ -1,14 +1,15 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 stdenv.mkDerivation rec {
-  name = "dpdk-16.04";
+  name = "dpdk-17.05";
 
   src = fetchurl {
     url = "http://fast.dpdk.org/rel/${name}.tar.xz";
-    multihash = "QmNa4P2aH5qNajc72LJbh9LdtSBPxuaYWq6wKDRiwsSoDP";
-    sha256 = "1fwqljvg0lr94qlba2xzn3zqg1jcbj4yz450k72fgj4mqpjsdmys";
+    multihash = "QmbkSWfvN9jdH2vpr34Hpvqk2fgMrPWB6R1q5giYhaYwXN";
+    sha256 = "c8503392bcc2f1eac236034ea0f3aed1c3c6a23327ec3c81937fc1068a44b78f";
   };
 
   # We want to make sure we always target nehalem for all builds
@@ -25,7 +26,7 @@ stdenv.mkDerivation rec {
 
   makefile = "GNUmakefile";
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Libraries and drivers for fast packet processing";
     homepage = http://dpdk.org/;
     license = licenses.bsd3;

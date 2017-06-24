@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , makeWrapper
 , perl
 
@@ -59,7 +60,7 @@ stdenv.mkDerivation {
     done
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

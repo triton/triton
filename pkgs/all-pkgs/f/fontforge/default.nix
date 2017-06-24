@@ -6,6 +6,7 @@
 , gettext
 , gnulib
 , gnum4
+, lib
 , libtool
 , perl
 
@@ -22,14 +23,14 @@
 }:
 
 let
-  version = "20161005";
+  version = "20161012";
 in
 stdenv.mkDerivation rec {
   name = "fontforge-${version}";
 
   src = fetchurl {
     url = "https://github.com/fontforge/fontforge/archive/${version}.tar.gz";
-    sha256 = "faf5e911a634b6931060858b093b22f1c5bf549969e7dbf4c4ee6f7372fc1c75";
+    sha256 = "a5f5c2974eb9109b607e24f06e57696d5861aaebb620fc2c132bdbac6e656351";
   };
 
   patches = [
@@ -80,7 +81,7 @@ stdenv.mkDerivation rec {
     "--disable-python-scripting"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A font editor";
     homepage = http://fontforge.github.io;
     maintainers = with maintainers; [

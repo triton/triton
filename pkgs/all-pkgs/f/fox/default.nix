@@ -1,30 +1,31 @@
 { stdenv
 , fetchurl
+, lib
 
 , bzip2
 , fontconfig
 , freetype
+, libice
 , libjpeg
 , libpng
+, libsm
 , libtiff
+, libx11
 , mesa
 , xorg
 , zlib
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+  inherit (lib)
+    boolEn
+    boolWt;
 
-  version = "1.6.51";
+  version = "1.6.54";
 in
 
 assert xorg != null ->
-  xorg.libICE != null
-  && xorg.libSM != null
-  && xorg.libX11 != null
-  && xorg.libXext != null
+  xorg.libXext != null
   && xorg.libXcursor != null
   && xorg.libXft != null
   && xorg.libXrandr != null
@@ -37,8 +38,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "http://ftp.fox-toolkit.org/pub/${name}.tar.gz";
+    multihash = "QmRSwf1L6juSt1sNZxiNzmGV8QcXtCR2PgWkg3H8y6gVDP";
     #sha1Url = url + ".sha1sum";
-    sha256 = "15a99792965d933a4936e48b671c039657546bdec6a318c223ab1131624403d1";
+    sha256 = "960f16a8a69d41468f841039e83c2f58f3cb32622fc283a69f20381abb355219";
   };
 
   buildInputs = [
@@ -49,9 +51,9 @@ stdenv.mkDerivation rec {
     libpng
     libtiff
     mesa
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
+    libice
+    libsm
+    libx11
     xorg.libXext
     xorg.libXcursor
     xorg.libXft
@@ -66,30 +68,30 @@ stdenv.mkDerivation rec {
     "--disable-debug"
     "--enable-release"
     #"--disable-native"
-    (enFlag "jpeg" (libjpeg != null) null)
-    #(enFlag "jp2" (openjpeg != null) null)
-    (enFlag "png" (libpng != null) null)
-    #(enFlag "webp" (libwebp != null) null)
-    (enFlag "tiff" (libtiff != null) null)
-    (enFlag "zlib" (zlib != null) null)
-    (enFlag "bz2lib" (bzip2 != null) null)
-    (wtFlag "x" (xorg != null) null)
+    "--${boolEn (libjpeg != null)}-jpeg"
+    #"--${boolEn (openjpeg != null)}-jp2"
+    "--${boolEn (libpng != null)}-png"
+    #"--${boolEn (libwebp != null)}-webp"
+    "--${boolEn (libtiff != null)}-tiff"
+    "--${boolEn (zlib != null)}-zlib"
+    "--${boolEn (bzip2 != null)}-bz2lib"
+    "--${boolWt (xorg != null)}-x"
     "--without-profiling"
-    (wtFlag "xft" (xorg != null) null)
-    (wtFlag "xshm" (xorg != null) null)
-    (wtFlag "shape" (xorg != null) null)
-    (wtFlag "xcursor" (xorg != null) null)
-    (wtFlag "xrender" (xorg != null) null)
-    (wtFlag "xrandr" (xorg != null) null)
-    (wtFlag "xfixes" (xorg != null) null)
-    (wtFlag "xinput" (xorg != null) null)
-    (wtFlag "xim" (xorg != null) null)
-    (wtFlag "opengl" (mesa != null) null)
+    "--${boolWt (xorg != null)}-xft"
+    "--${boolWt (xorg != null)}-xshm"
+    "--${boolWt (xorg != null)}-shape"
+    "--${boolWt (xorg != null)}-xcursor"
+    "--${boolWt (xorg != null)}-xrender"
+    "--${boolWt (xorg != null)}-xrandr"
+    "--${boolWt (xorg != null)}-xfixes"
+    "--${boolWt (xorg != null)}-xinput"
+    "--${boolWt (xorg != null)}-xim"
+    "--${boolWt (mesa != null)}-opengl"
   ];
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "C++ based class library for Graphical User Interfaces";
     homepage = "http://fox-toolkit.org";
     license = licenses.lgpl3;

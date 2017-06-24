@@ -1,12 +1,13 @@
 { stdenv
 , fetchurl
+, lib
 
 , libsodium
 , systemd_lib
 }:
 
 let
-  version = "1.9.4";
+  version = "1.9.5";
 in
 stdenv.mkDerivation rec {
   name = "dnscrypt-proxy-${version}";
@@ -16,9 +17,9 @@ stdenv.mkDerivation rec {
       "https://github.com/jedisct1/dnscrypt-proxy/releases/download/${version}/${name}.tar.bz2"
       "https://download.dnscrypt.org/dnscrypt-proxy/${name}.tar.bz2"
     ];
-    multihash = "QmWpcCZPPAkcC4i78e5wFpeF3q5MwyB9JbTrJkad5Vxmtu";
+    multihash = "QmRCSZZ2wVLtYtvsJk27dtAhfWAqM5RRKBZXJorkpdT5VC";
     hashOutput = false;
-    sha256 = "fdf4a708e7922e13b14555f315ca8d5361aec89b0595b06fdbbcaacfa4e6f11e";
+    sha256 = "e89f5b9039979ab392302faf369ef7593155d5ea21580402a75bbc46329d1bb6";
   };
 
   buildInputs = [
@@ -40,7 +41,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A tool for securing communications between a client & a DNS resolver";
     homepage = http://dnscrypt.org/;
     license = licenses.isc;

@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 , unzip
 }:
 
@@ -7,13 +8,13 @@ stdenv.mkDerivation rec{
   name = "amrnb-11.0.0.0";
 
   # http://www.3gpp.org/DynaReport/26104.htm
-  # NOTE: When updating amrnb-3gpp, update every instance of 26104-d00 to the
+  # NOTE: When updating amrnb-3gpp, update every instance of 26104-e00 to the
   #       updated file name.
   amrnb_3gpp = fetchurl {
-    # Rel-13
-    url = "http://www.3gpp.org/ftp/Specs/archive/26_series/26.104/26104-d00.zip";
-    multihash = "QmWFJTCdcERKsPwkkWLGhRhz54QEosYWmVJpxTkKw3CFuh";
-    sha256 = "d5447f8a672243dd9db32ba64fd69181da725cac1f7b347c0af95d9949a47619";
+    # Rel-14
+    url = "http://www.3gpp.org/ftp/Specs/archive/26_series/26.104/26104-e00.zip";
+    multihash = "QmaQRi5VKMGgRTgxhjARAbNB5aTgKCLpskfCvg3QwEoGH9";
+    sha256 = "5d0c70576cea76bf200c6412306a6152758391b1aa40e7e14271169bbafa9125";
   };
 
   src = fetchurl {
@@ -30,7 +31,7 @@ stdenv.mkDerivation rec{
     sed -i Makefile.{in,am} \
       -i configure{,.ac} \
       -i prepare_sources.sh.in \
-      -e 's/26104-b00/26104-d00/g'
+      -e 's/26104-b00/26104-e00/g'
   '';
 
   configureFlags = [
@@ -38,10 +39,10 @@ stdenv.mkDerivation rec{
   ];
 
   preConfigure = ''
-    cp -v $amrnb_3gpp 26104-d00.zip
+    cp -v $amrnb_3gpp 26104-e00.zip
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "AMR Narrow-Band Codec";
     homepage = http://www.penguin.cz/~utx/amr;
     # The wrapper code is free, but not the libraries from 3gpp.

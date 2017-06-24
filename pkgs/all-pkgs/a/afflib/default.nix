@@ -1,6 +1,7 @@
 { stdenv
 , autoreconfHook
 , fetchFromGitHub
+, lib
 
 , curl
 , expat
@@ -12,7 +13,7 @@
 }:
 
 let
-  version = "3.7.15";
+  version = "3.7.16";
 in
 stdenv.mkDerivation {
   name = "afflib-${version}";
@@ -22,13 +23,13 @@ stdenv.mkDerivation {
     owner = "sshock";
     repo = "AFFLIBv3";
     rev = "v${version}";
-    sha256 = "26f09cafbe3ea4a3cc32ffb2208a0e2b647d04749970b023ccde54d1bd47baa0";
+    sha256 = "75445be21a4b6c3d0c0198f05f1305dec85f54682f40a480bb874093965974e3";
   };
 
   nativeBuildInputs = [
     autoreconfHook
   ];
-  
+
   buildInputs = [
     curl
     expat
@@ -45,7 +46,7 @@ stdenv.mkDerivation {
     "--enable-s3"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

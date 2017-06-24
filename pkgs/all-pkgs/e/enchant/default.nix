@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , fetchTritonPatch
+, lib
 
 , aspell
 , dbus-glib
@@ -9,15 +10,19 @@
 }:
 
 let
-  version = "1.6.0";
+  inherit (lib)
+    replaceChars;
+
+  version = "1.6.1";
+  versionFormatted = replaceChars ["."] ["-"] version;
 in
 stdenv.mkDerivation rec {
   name = "enchant-${version}";
 
   src = fetchurl {
-    url = "http://www.abisource.com/downloads/enchant/${version}/${name}.tar.gz";
-    md5Url = "http://www.abisource.com/downloads/enchant/${version}/MD5SUM";
-    sha256 = "0zq9yw1xzk8k9s6x83n1f9srzcwdavzazn3haln4nhp9wxxrxb1g";
+    url = "https://github.com/AbiWord/enchant/releases/download/"
+      + "enchant-${versionFormatted}/${name}.tar.gz";
+    sha256 = "bef0d9c0fef2e4e8746956b68e4d6c6641f6b85bd2908d91731efb68eba9e3f5";
   };
 
   buildInputs = [
@@ -35,8 +40,8 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  meta = with stdenv.lib; {
-    homepage = http://www.abisource.com/enchant;
+  meta = with lib; {
+    homepage = https://abiword.github.io/enchant/;
     maintainers = with maintainers; [
       wkennington
     ];

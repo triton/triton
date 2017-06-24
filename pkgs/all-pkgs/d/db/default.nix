@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , channel
 }:
@@ -7,7 +8,7 @@
 let
   source = (
     import ./sources.nix {
-      inherit (stdenv.lib)
+      inherit (lib)
         licenses;
     }
   )."${channel}";
@@ -38,7 +39,7 @@ stdenv.mkDerivation rec {
     rm -rf $out/docs
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Berkeley DB";
     homepage = http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/index.html;
     license = source.license;

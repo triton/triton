@@ -8,9 +8,9 @@
   };
 
   "6" = {
-    version = "6.2.23";
-    multihash = "QmUGJeaFH65kQPBgHK6qLPc9Gq2WZ8fE9mDtLm2YR4twCA";
-    sha256 = "47612c8991aa9ac2f6be721267c8d3cdccf5ac83105df8e50809daea24e95dc7";
+    version = "6.2.32";
+    multihash = "QmfRgQRkdgn4meygisxDSvuJNgvFip9pyQxrUXKcUNA2v2";
+    sha256 = "a9c5e2b004a5777aa03510cfe5cd766a4a3b777713406b02809c17c8e0e7a8fb";
     license = licenses.agpl30;
   };
 }

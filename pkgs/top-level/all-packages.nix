@@ -1533,8 +1533,6 @@ gsettings-desktop-schemas =
 
 grpc = callPackage ../all-pkgs/g/grpc { };
 
-grumpy = callPackage ../all-pkgs/g/grumpy { };
-
 gsm = callPackage ../all-pkgs/g/gsm { };
 
 gsound = callPackage ../all-pkgs/g/gsound { };

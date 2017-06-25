@@ -7,6 +7,7 @@
 , fetchTritonPatch
 , fetchzip
 , go
+, lib
 , overrides
 , pkgs
 }:
@@ -3818,6 +3819,68 @@ let
     ];
   };
 
+  grumpy = buildFromGitHub {
+    version = 3;
+    owner = "google";
+    repo = "grumpy";
+    rev = "f1446cd91c750b2439a1eb9a1e92f736a9fbb551";
+    sha256 = "6ad8e8b05e189d7c288963c1f1eeed433c6b333ad51c89ec788ae2b1f52b4c03";
+
+    nativeBuildInputs = [
+      pkgs.makeWrapper
+      pkgs.which
+    ];
+
+    buildInputs = [
+      pkgs.python2
+    ];
+
+    postPatch = ''
+      # FIXME: fix executables not installing to $bin correctly
+      sed -i Makefile \
+        -e "s,[^@]/usr/bin,\)$out/bin,g" \
+        -e "s,/usr/lib,$out/lib,g"
+    '';
+
+    preBuild = ''
+      cd go/src/github.com/google/grumpy
+    '';
+
+    buildPhase = ''
+      runHook preBuild
+      make
+      runHook postBuild
+    '';
+
+    installPhase = ''
+      runHook preInstall
+      make install "PY_INSTALL_DIR=$out/${pkgs.python2.sitePackages}"
+      runHook postInstall
+    '';
+
+    preFixup = ''
+      for i in $out/bin/grump{c,run}; do
+        wrapProgram  "$i" \
+          --set 'GOPATH' : "$out" \
+          --prefix 'PYTHONPATH' : "$out/${pkgs.python2.sitePackages}"
+      done
+      # FIXME: prevent failures
+      mkdir -p $bin
+    '';
+
+    buildDirCheck = false;
+
+    meta = with lib; {
+      description = "Python to Go source code transcompiler and runtime";
+      homepage = https://github.com/google/grumpy;
+      license = licenses.asl20;
+      maintainers = with maintainers; [
+        codyopel
+      ];
+      platforms = with platforms;
+        x86_64-linux;
+    };
+  };
 
   gucumber = buildFromGitHub {
     version = 1;

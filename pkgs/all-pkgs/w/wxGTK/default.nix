@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , cairo
 , gconf
@@ -18,9 +19,11 @@
 , zlib
 }:
 
+let
+  version = "3.1.0";
+in
 stdenv.mkDerivation rec {
   name = "wxWidgets-${version}";
-  version = "3.1.0";
 
   src = fetchurl {
     url = "https://github.com/wxWidgets/wxWidgets/releases/download/v${version}/${name}.tar.bz2";
@@ -79,7 +82,7 @@ stdenv.mkDerivation rec {
     popd
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

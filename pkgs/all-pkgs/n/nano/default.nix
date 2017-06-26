@@ -1,13 +1,14 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 
 , ncurses
 }:
 
 let
   major = "2.8";
-  patch = "4";
+  patch = "5";
 
   version = "${major}.${patch}";
 in
@@ -20,7 +21,7 @@ stdenv.mkDerivation rec {
       "mirror://gnu/nano/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "c7cf264f0f3e4af43ecdbc4ec72c3b1e831c69a1a5f6512d5b0c109e6bac7b11";
+    sha256 = "cb43bf11990b2839446229b0c21ed7abef67c2df861f250cc874553ca27d89c2";
   };
 
   nativeBuildInputs = [
@@ -46,7 +47,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://www.nano-editor.org/;
     description = "A small, user-friendly console text editor";
     license = licenses.gpl3Plus;

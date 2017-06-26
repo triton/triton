@@ -2,11 +2,12 @@
 , bison
 , fetchurl
 , flex
+, lib
 }:
 
 let
-  version = "3.2.29";
-  version' = stdenv.lib.replaceStrings ["."] ["_"] version;
+  version = "3.3.0";
+  version' = lib.replaceStrings ["."] ["_"] version;
 in
 stdenv.mkDerivation rec {
   name = "libnl-${version}";
@@ -15,7 +16,7 @@ stdenv.mkDerivation rec {
     url = "https://github.com/thom311/libnl/releases/download/"
       + "libnl${version'}/libnl-${version}.tar.gz";
     hashOutput = false;
-    sha256 = "0beb593dc6abfffa18a5c787b27884979c1b7e7f1fd468c801e3cc938a685922";
+    sha256 = "705468b5ae4cd1eb099d2d1c476d6a3abe519bc2810becf12fb1e32de1e074e4";
   };
 
   nativeBuildInputs = [
@@ -32,7 +33,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = "http://www.infradead.org/~tgr/libnl/";
     description = "Linux NetLink interface library";
     maintainers = with maintainers; [

@@ -2,6 +2,7 @@
 , autoreconfHook
 , fetchgit
 , fetchurl
+, lib
 
 , fixedPoint ? false
 
@@ -11,17 +12,31 @@
 let
   inherit (stdenv)
     targetSystem;
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     elem
     optionals
     platforms;
 
   releaseUrls = [
+    "https://archive.mozilla.org/pub/opus"
     "mirror://xiph/opus"
   ];
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "stable" = {
+      version = "1.2.1";
+      multihash = "QmT3msAH9XUDrWe43kP9Mpw47y6tmKBTrXmudNhXpKTji3";
+      sha256 = "cfafd339ccd9c5ef8d6ab15d7e1a412c054bf4cb4ecbbbcc78c12ef2def70732";
+    };
+    "head" = {
+      fetchzipversion = 3;
+      version = "2017-06-20";
+      rev = "acfa035bf7b5bbe68351c4a3bb41239ea882ff71";
+      sha256 = "db061d88e28a3699805de0da69cbd5d2a5b78f45497d1b42485e698db4801f24";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "opus-${source.version}";
@@ -39,13 +54,13 @@ stdenv.mkDerivation rec {
         inherit (source) rev sha256;
       }
     else
-    fetchurl {
-      urls = map (n: "${n}/${name}.tar.gz") releaseUrls;
-      hashOutput = false;
-      inherit (source)
-        multihash
-        sha256;
-    };
+      fetchurl {
+        urls = map (n: "${n}/${name}.tar.gz") releaseUrls;
+        hashOutput = false;
+        inherit (source)
+          multihash
+          sha256;
+      };
 
   configureFlags = [
     "--disable-maintainer-mode"
@@ -84,7 +99,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Versatile codec designed for speech and audio transmission";
     homepage = http://www.opus-codec.org/;
     license = licenses.bsd3;

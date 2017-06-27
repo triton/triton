@@ -22,6 +22,11 @@ stdenv.mkDerivation rec {
     xorg.xproto
   ];
 
+  # Don't setuid as nixbuild doesn't allow this
+  postPatch = ''
+    sed -i '/chmod u+s/d' Makefile
+  '';
+
   preInstall = ''
     installFlagsArray+=("PREFIX=$out")
   '';

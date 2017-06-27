@@ -44,6 +44,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://poppler.freedesktop.org/poppler-${version}.tar.xz";
+    multihash = "QmZvYscfpS27U19LCbps76bHUWRVio2zQrrHqVZUWzYMAo";
     sha256 = "869dbadf99ed882e776acbdbc06689d8a81872a2963440b1e8516cd7a2577173";
   };
 

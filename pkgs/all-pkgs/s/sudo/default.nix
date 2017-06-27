@@ -38,6 +38,11 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  postPatch = ''
+    # Don't setuid
+    sed -i 's,4755,0755,g' src/Makefile.in
+  '';
+
   configureFlags = [
     "--with-linux-audit"
     "--with-sssd"

@@ -40,8 +40,8 @@ let
     which
   ];
 
-  versionMajor = "3.10";
-  versionMinor = "1";
+  versionMajor = "3.11";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://download.gluster.org/pub/gluster/glusterfs/${versionMajor}/"
       + "${version}/${name}.tar.gz";
-    sha256 = "d3c23df3299964efe6b688c94ddde258506ecf173b58e8c07fa18d470bb21517";
+    sha256 = "930f83ea3b9f055adf174cdb85af1435b7aa67853372e56ff9b5e2d63e7465fb";
   };
 
   nativeBuildInputs = [
@@ -77,9 +77,12 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  # Glusterfs ships broken config.* files
   postPatch = ''
+    # Glusterfs ships broken config.* files
     cp ${automake}/share/automake*/config.* .
+
+    # Don't chown / setuid anything
+    sed -i '/\(chown\|chmod\)/d' contrib/fuse-util/Makefile.in
   '';
 
   preConfigure = ''

@@ -1,6 +1,6 @@
 { stdenv
 , cmake
-, fetchFromGitHub
+, fetchurl
 , ninja
 , python
 
@@ -8,15 +8,15 @@
 , systemd_lib
 }:
 
+let
+  version = "14";
+in
 stdenv.mkDerivation rec {
-  name = "rdma-core-2017-04-03";
+  name = "rdma-core-${version}";
 
-  src = fetchFromGitHub {
-    version = 2;
-    owner = "linux-rdma";
-    repo = "rdma-core";
-    rev = "8e6808615cd9eca8e433c9359034622ad2addda5";
-    sha256 = "cb64b729103f66ab64514fe981706b7535548200a7b5994c80153eadfe770433";
+  src = fetchurl {
+    url = "https://github.com/linux-rdma/rdma-core/releases/download/v${version}/${name}.tar.gz";
+    sha256 = "6d2202fcd5aa8f70358d99936944d3e1189a34a08861423cadcba49948fb0370";
   };
 
   nativeBuildInputs = [

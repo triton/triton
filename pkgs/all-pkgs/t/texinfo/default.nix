@@ -11,11 +11,11 @@ let
 in
 
 stdenv.mkDerivation rec {
-  name = "texinfo-6.3";
+  name = "texinfo-6.4";
 
   src = fetchurl {
     url = "mirror://gnu/texinfo/${name}.tar.xz";
-    sha256 = "246cf3ffa54985118ec2eea2b8d0c71b92114efe6282c2ae90d65029db4cf93a";
+    sha256 = "6ae2e61d87c6310f9af7c6f2426bd0470f251d1a6deb61fba83a3b3baff32c3a";
   };
 
   nativeBuildInputs = [

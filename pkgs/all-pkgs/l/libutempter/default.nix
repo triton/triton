@@ -23,6 +23,11 @@ stdenv.mkDerivation rec {
     glib
   ];
 
+  preBuild = ''
+    # Fix install permissions
+    sed -i 's,2711,0755,g' Makefile
+  '';
+
   preInstall = ''
     installFlagsArray+=(
       "libdir=$out/lib"

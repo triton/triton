@@ -1,8 +1,10 @@
 { stdenv
 , fetchurl
 
-, ncurses
 , libevent
+, libutempter
+, ncurses
+, utf8proc
 }:
 
 let
@@ -18,12 +20,17 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libevent
+    libutempter
     ncurses
+    utf8proc
   ];
 
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
+
+    "--enable-utempter"
+    "--enable-utf8proc"
   ];
 
   meta = with stdenv.lib; {

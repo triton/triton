@@ -3457,6 +3457,8 @@ usbmuxd = callPackage ../all-pkgs/u/usbmuxd { };
 
 usbutils = callPackage ../all-pkgs/u/usbutils { };
 
+utf8proc = callPackage ../all-pkgs/u/utf8proc { };
+
 uthash = callPackage ../all-pkgs/u/uthash { };
 
 util-linux_full = callPackage ../all-pkgs/u/util-linux { };

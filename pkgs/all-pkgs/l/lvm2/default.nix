@@ -2,6 +2,8 @@
 , fetchurl
 
 , coreutils
+, libselinux
+, libsepol
 , readline
 , systemd_lib
 , thin-provisioning-tools
@@ -14,7 +16,7 @@ let
     "ftp://sources.redhat.com/pub/lvm2/releases"
   ];
 
-  version = "2.02.171";
+  version = "2.02.172";
 in
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
@@ -23,10 +25,12 @@ stdenv.mkDerivation rec {
     urls = map (n: "${n}/LVM2.${version}.tgz") baseUrls;
     multihash = "QmNoaxzkpjDpjb95efvtNqcVApcyZjrpKC8WXfxQmfU9zQ";
     hashOutput = false;
-    sha512 = "801adcc2ae483f81edf6bfba73090b6b8f710370e48764f08a62da71d617157075bea01593c2535ad5ba71dcb5e0cfe83cec9a65180a6e8b9e0d214bdee79883";
+    sha512 = "402612667f279be5f1c682b9037022788e9b76e3157907a0832e8b7847c3aa96e4b44a3bd880657a7e577ab46db0e4f283ac6edbb52502e365617633c802ae40";
   };
 
   buildInputs = [
+    libselinux
+    libsepol
     readline
     thin-provisioning-tools
     systemd_lib

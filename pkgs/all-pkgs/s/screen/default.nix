@@ -1,20 +1,22 @@
 { stdenv
 , fetchurl
 
+, libutempter
 , ncurses
 , pam
 }:
 
 stdenv.mkDerivation rec {
-  name = "screen-4.5.1";
+  name = "screen-4.6.0";
 
   src = fetchurl {
     url = "mirror://gnu/screen/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "97db2114dd963b016cd4ded34831955dcbe3251e5eee45ac2606e67e9f097b2d";
+    sha256 = "9433706b653e941cc4c745f28e252e57be2a141eded923e61cc2c4a09768fed4";
   };
 
   buildInputs = [
+    libutempter
     ncurses
     pam
   ];

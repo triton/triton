@@ -1020,6 +1020,10 @@ faac = callPackage ../all-pkgs/f/faac { };
 
 factorio = callPackage ../all-pkgs/f/factorio { };
 
+factorio_headless = callPackage ../all-pkgs/f/factorio {
+  type = "headless";
+};
+
 fbterm = callPackage ../all-pkgs/f/fbterm { };
 
 fcgi = callPackage ../all-pkgs/f/fcgi { };

@@ -4,23 +4,34 @@
 
 , alsa-lib
 , xorg
+
+, type ? "alpha"
 }:
 
 let
   version = "0.15.25";
+
+  sha256s = {
+    "alpha" = "e998125db03eebe8ecd272c5344c985f0f30dabcdb36471b01053a41babef33d";
+    "headless" = "c7ea6045a4f35dccdfefb3dd263db08168e414975ada2f5500eb4ad51534a5e0";
+  };
+
+  inherit (stdenv.lib)
+    optionals
+    optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "factorio-${version}";
+  name = "factorio${if type != "" then "-${type}" else ""}-${version}";
   
   # NOTE: You need to login and fetch the tarball manually
   # Then run the script at pkgs/all-pkgs/f/factorio/inject-tar <game-tar>
   src = fetchurl {
     name = "${name}.tar.gz";
-    url = "https://www.factorio.com/get-download/${version}/alpha/linux64";
-    sha256 = "e998125db03eebe8ecd272c5344c985f0f30dabcdb36471b01053a41babef33d";
+    url = "http://www.factorio.com/get-download/${version}/${type}/linux64";
+    sha256 = sha256s."${type}";
   };
 
-  libs = [
+  libs = optionals (type != "headless") [
     alsa-lib
     xorg.libX11
     xorg.libXcursor
@@ -30,8 +41,11 @@ stdenv.mkDerivation rec {
   ];
 
   installPhase = ''
+    mkdir -p "$out"/share
+  '' + optionalString (type != "headless") ''
     mkdir -p "$out"/share/doc
     mv doc-html "$out"/share/doc/factorio
+  '' + ''
     mv data "$out"/share/factorio
     sed ${./factorio.sh} \
       -e "s,@sed@,$(dirname "$(type -tP sed)")," \

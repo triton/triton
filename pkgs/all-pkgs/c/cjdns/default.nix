@@ -8,17 +8,17 @@
 }:
 
 let
-  version = "19.1";
+  version = "20";
 in
 stdenv.mkDerivation {
   name = "cjdns-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "cjdelisle";
     repo = "cjdns";
     rev = "cjdns-v${version}";
-    sha256 = "ea9b1d37045c01c1eb6978160a273ce3a00623ad986a73fa8138ca91cd87738c";
+    sha256 = "42b60b266ecf5e0b246afbbea71dabed8222d21e524aed3907e9bba3c5036623";
   };
 
   nativeBuildInputs = [

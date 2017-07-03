@@ -1,17 +1,22 @@
 { stdenv
 , cmake
-, fetchurl
+, fetchFromGitHub
+, lib
 , ninja
 }:
 
+let
+  version = "1.1.0";
+in
 stdenv.mkDerivation rec {
   name = "vid-stab-${version}";
-  version = "0.98b";
 
-  src = fetchurl {
-    url = "https://github.com/georgmartius/vid.stab/archive/"
-      + "release-${version}.tar.gz";
-    sha256 = "09fh6xbd1f5xp3il3dpvr87skmnp2mm2hfmg4s9rvj4y8zvhn3sk";
+  src = fetchFromGitHub {
+    version = 3;
+    owner = "georgmartius";
+    repo = "vid.stab";
+    rev = "v${version}";
+    sha256 = "4fc53aba090d7b4741a96e7345ac2a0d420a759d3e3d1f609c568a6d7d3e0c37";
   };
 
   nativeBuildInputs = [
@@ -19,7 +24,7 @@ stdenv.mkDerivation rec {
     ninja
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Video stabilization library";
     homepage = http://public.hronopik.de/vid.stab/;
     license = licenses.gpl2;

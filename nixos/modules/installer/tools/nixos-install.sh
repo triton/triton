@@ -411,7 +411,7 @@ echo 'building the system configuration...' >&2
 NIX_PATH="nixpkgs=/tmp/root/$nixpkgs:nixos-config=$NIXOS_CONFIG" NIXOS_CONFIG= \
   chroot "$MOUNT_POINT" \
     '@nix@/bin/nix-env' "${extraBuildFlags[@]}" \
-      -p '/nix/var/nix/profiles/system' "$nixEnvAction"
+      -p '/nix/var/nix/profiles/system' $nixEnvAction
 
 # Copy the NixOS/Nixpkgs sources to the target as the initial contents
 # of the NixOS channel.

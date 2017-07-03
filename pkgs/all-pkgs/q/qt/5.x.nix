@@ -48,7 +48,7 @@
 
 let
   versionMajor = "5.9";
-  versionPatch = "0";
+  versionPatch = "1";
   version = "${versionMajor}.${versionPatch}";
 
   inherit (stdenv.lib)
@@ -61,9 +61,9 @@ stdenv.mkDerivation rec {
     url = "http://download.qt.io/official_releases/qt/${versionMajor}/${version}"
       + "/single/qt-everywhere-opensource-src-${version}.tar.xz";
     hashOutput = false;
-    md5Confirm = "9c8bc8b828c2b56721980368266df9d9";
-    sha1Confirm = "6308cd1e95c64323490a9a526a7f0a380cdcfb6e";
-    sha256 = "f70b5c66161191489fc13c7b7eb69bf9df3881596b183e7f6d94305a39837517";
+    md5Confirm = "77b4af61c49a09833d4df824c806acaf";
+    sha1Confirm = "8b9900cece0a18cf23d53a42379a628a1c1330ae";
+    sha256 = "7b41a37d4fe5e120cdb7114862c0153f86c07abbec8db71500443d2ce0c89795";
   };
 
   nativeBuildInputs = [

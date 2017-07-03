@@ -96,6 +96,8 @@ in
 
       preStart = ''
         mkdir -p "${stateDir}"
+        chown unbound:root "${stateDir}"
+        chmod 0700 "${stateDir}"
         rm -f "${confFile}" "${rootHintsFile}"
         cp "${confFile'}" "${confFile}"
       '' + optionalString cfg.enableAutoTrustAnchor ''

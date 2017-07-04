@@ -9,11 +9,11 @@
 }:
 
 let
-  version = "0.15.25";
+  version = "0.15.27";
 
   sha256s = {
-    "alpha" = "e998125db03eebe8ecd272c5344c985f0f30dabcdb36471b01053a41babef33d";
-    "headless" = "c7ea6045a4f35dccdfefb3dd263db08168e414975ada2f5500eb4ad51534a5e0";
+    "alpha" = "d5504a9b3655b1110e8daa218d6a223308b9f16877c2761bdfca1c520cef9c1b";
+    "headless" = "8cb2289cc31397974a4ae546cefbc3425762e9072f628e3bc69facb566c91b1c";
   };
 
   inherit (stdenv.lib)
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   # NOTE: You need to login and fetch the tarball manually
   # Then run the script at pkgs/all-pkgs/f/factorio/inject-tar <game-tar>
   src = fetchurl {
-    name = "${name}.tar.gz";
+    name = "${name}.tar.xz";
     url = "http://www.factorio.com/get-download/${version}/${type}/linux64";
     sha256 = sha256s."${type}";
   };

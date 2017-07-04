@@ -12,6 +12,10 @@
     version = "2016.11.6";
     sha256 = "9031af68d31d0416fe3161526ef122a763afc6182bd63fe48b6c4d0a16a0703a";
   };
+  "2017.7" = {
+    version = "2017.7.0rc1";
+    sha256 = "efc4cbb5f66132fcedb4b4297248b9982a0f606f5853ba0386eabdadb596d565";
+  };
   head = {
     fetchzipversion = 2;
     version = "2017-02-17";

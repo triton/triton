@@ -489,6 +489,9 @@ salt_2016-3 = callPackage ../all-pkgs/s/salt {
 salt_2016-11 = callPackage ../all-pkgs/s/salt {
   channel = "2016.11";
 };
+salt_2017-7 = callPackage ../all-pkgs/s/salt {
+  channel = "2017.7";
+};
 salt_head = callPackage ../all-pkgs/s/salt {
   channel = "head";
 };

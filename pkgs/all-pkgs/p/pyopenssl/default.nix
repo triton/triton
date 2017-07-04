@@ -1,13 +1,14 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, lib
 
 , cryptography
 , six
 }:
 
 let
-  version = "17.0.0";
+  version = "17.1.0";
 in
 buildPythonPackage {
   name = "pyOpenSSL-${version}";
@@ -15,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pyOpenSSL";
     inherit version;
-    sha256 = "48abfe9d2bb8eb8d8947c8452b0223b7b1be2383b332f3b4f248fe59ef0bafdd";
+    sha256 = "5a20a51d35104cd234d056861ace3e7a335aaf1f47fc96726c9e20ac1dc49563";
   };
 
   propagatedBuildInputs = [
@@ -23,7 +24,7 @@ buildPythonPackage {
     six
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

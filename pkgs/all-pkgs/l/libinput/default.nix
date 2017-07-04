@@ -9,8 +9,8 @@
 , documentationSupport ? false
   , doxygen ? null
   , graphviz ? null
- # GUI event viewer support
-, eventGUISupport ? false
+ # GUI debug viewer support
+, debugGUISupport ? false
   , cairo ? null
   , glib ? null
   , gtk3 ? null
@@ -28,7 +28,7 @@ in
 assert documentationSupport ->
   doxygen != null
   && graphviz != null;
-assert eventGUISupport ->
+assert debugGUISupport ->
   cairo != null
   && glib != null
   && gtk3 != null;
@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
     libwacom
     mtdev
     systemd_lib
-  ] ++ optionals eventGUISupport [
+  ] ++ optionals debugGUISupport [
     cairo
     glib
     gtk3
@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--${boolEn documentationSupport}-documentation"
-    "--${boolEn eventGUISupport}-event-gui"
+    "--${boolEn debugGUISupport}-debug-gui"
     "--${boolEn testsSupport}-tests"
   ];
 

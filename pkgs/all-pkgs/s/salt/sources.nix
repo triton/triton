@@ -9,8 +9,8 @@
     sha256 = "fec215dfdec33ca6826453e5437656f9ed5e4a121ef3db6341f91f799cd3e751";
   };
   "2016.11" = {
-    version = "2016.11.4";
-    sha256 = "fb4109b28d3fd898291c162e42ef843fbd4c3e57244075670fa8f366e705765f";
+    version = "2016.11.6";
+    sha256 = "9031af68d31d0416fe3161526ef122a763afc6182bd63fe48b6c4d0a16a0703a";
   };
   head = {
     fetchzipversion = 2;

@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "2.4.39";
+  version = "2.4.40";
 in
 buildPythonPackage {
   name = "python-ldap-${version}";
@@ -16,7 +16,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "python-ldap";
     inherit version;
-    sha256 = "3fb75108d27e8091de80dffa2ba3bf45c7a3bdc357e2959006aed52fa58bb2f3";
+    sha256 = "202f2f4aeeed2333d4095e8122d066e502e9a64de30cb09ffae16d18c71053f4";
   };
 
   NIX_CFLAGS_COMPILE = "-I${cyrus-sasl}/include/sasl";

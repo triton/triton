@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "4.6.0-48";
+  version = "4.7.0-42";
 
   urls' = arch: [
     "http://www.mellanox.com/downloads/MFT/mft-${version}-${arch}.tgz"
@@ -14,8 +14,8 @@ let
   sources = {
     "x86_64-linux" = {
       urls = urls' "x86_64-deb";
-      md5Confirm = "637ad04bb1c19e25aa811e7782679da0";
-      sha256 = "253777450f2c6b04e85cacc14acc14d59bd335f2cd9ebdc272c2c01e5b89c8e2";
+      md5Confirm = "ccd62cd6105265ea40ce9c26ffd24f66";
+      sha256 = "a02a81b67da1979113b00b9a51c361b32e1c3d4043e1f5b697217581aaa30bf7";
     };
   };
 

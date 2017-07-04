@@ -14,7 +14,7 @@ if [ "$EXPECTED_SHA256" != "$THIS_SHA256" ]; then
   echo "  EXPECTED: $EXPECTED_SHA256" >&2
   exit 1
 fi
-if ! nix-prefetch-url --name "factorio-alpha-$VERSION.tar.gz" "file://$(readlink -f "$1")" >/dev/null 2>&1; then
+if ! nix-prefetch-url --name "factorio-alpha-$VERSION.tar.xz" "file://$(readlink -f "$1")" >/dev/null 2>&1; then
   echo "Failed to insert tarball" >&2
   exit 1
 fi

@@ -57,7 +57,6 @@
   ./programs/environment.nix
   ./programs/fish.nix
   ./programs/ibus.nix
-  ./programs/kbdlight.nix
   ./programs/light.nix
   ./programs/man.nix
   ./programs/shadow.nix

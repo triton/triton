@@ -2,16 +2,17 @@
 , autoconf
 , fetchurl
 
+, libcap
 , ncurses
 }:
 
 stdenv.mkDerivation rec {
-  name="mtr-0.87";
+  name="mtr-0.92";
   
   src = fetchurl {
     url = "ftp://ftp.bitwizard.nl/mtr/${name}.tar.gz";
-    multihash = "Qmf153tZNQG7vjup3i3cVK4EvxC1eQ4xkYJ4HYskNkcfTg";
-    sha256 = "17zi99n8bdqrwrnbfyjn327jz4gxx287wrq3vk459c933p34ff8r";
+    multihash = "QmedTmUYx5N4NtHMAuNA7aSVPVmHLHwKJw9rDGPiZTAuu3";
+    sha256 = "f2979db9e2f41aa8e6574e7771767c9afe111d9213814eb47f5e1e71876e4382";
   };
 
   nativeBuildInputs = [
@@ -19,8 +20,13 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    libcap
     ncurses
   ];
+
+  postPatch = ''
+    sed -i '/install-exec-hook/d' Makefile.in
+  '';
 
   configureFlags = [
     "--without-gtk"

@@ -151,6 +151,10 @@ stdenv.mkDerivation rec {
   postPatch = /* Enable dhcp */ ''
     sed -i pppd/plugins/Makefile.linux \
       -e '/^SUBDIRS :=/s:$: dhcp:'
+  '' + /* Cannot change permissions inside of nix-builder */ ''
+    sed -i pppd/plugins/pppoatm/Makefile.linux \
+      -i pppd/plugins/rp-pppoe/Makefile.linux \
+      -e 's/-m 4550//'
   '';
 
   preBuild = ''

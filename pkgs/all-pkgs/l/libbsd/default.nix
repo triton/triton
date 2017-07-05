@@ -9,16 +9,16 @@ let
     "https://libbsd.freedesktop.org/releases/libbsd-${version}.tar.xz"
   ];
 
-  version = "0.8.3";
+  version = "0.8.5";
 in
 stdenv.mkDerivation rec {
   name = "libbsd-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmU3yw1wwbghZWsL51HzEbKMssZzvpcGHbp7pWjJ8St1Bx";
+    multihash = "QmYsWkRm41GFNiVjNx5dFw21en1YqX6oV5TwGYUQXPpgj9";
     hashOutput = false;
-    sha256 = "217af1642915703151ea6df077311633dd6ad7bfa3c7e07dd9329a93f642cab3";
+    sha256 = "7647d024f41389305272c263da933a6f2a978213c1801592f47e68d83ac05b28";
   };
 
   buildInputs = [
@@ -35,11 +35,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "0.8.4";
+      urls = tarballUrls "0.8.5";
       pgpsigUrls = map (n: "${n}.asc") urls;
       pgpKeyFingerprint = "4F3E 74F4 3605 0C10 F569  6574 B972 BF3E A4AE 57A3";
       inherit (src) outputHashAlgo;
-      outputHash = "217af1642915703151ea6df077311633dd6ad7bfa3c7e07dd9329a93f642cab3";
+      outputHash = "7647d024f41389305272c263da933a6f2a978213c1801592f47e68d83ac05b28";
     };
   };
 

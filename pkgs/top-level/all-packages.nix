@@ -3803,8 +3803,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 
   spCompat = callPackage ../tools/text/sgml/opensp/compat.nix { };
 #
-  rng_tools = callPackage ../tools/security/rng-tools { };
-#
   strongswan = callPackage ../tools/networking/strongswan { };
 #
   vpnc = callPackage ../tools/networking/vpnc { };

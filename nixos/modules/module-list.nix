@@ -209,7 +209,6 @@
   ./services/network-filesystems/rsyncd.nix
   ./services/network-filesystems/samba.nix
   ./services/network-filesystems/diod.nix
-  ./services/network-filesystems/u9fs.nix
   ./services/network-filesystems/yandex-disk.nix
   ./services/network-filesystems/xtreemfs.nix
   ./services/networking/aiccu.nix

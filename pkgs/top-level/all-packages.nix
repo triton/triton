@@ -2353,9 +2353,6 @@ libvpx_1-6 = callPackage ../all-pkgs/l/libvpx {
 libvpx_head = callPackage ../all-pkgs/l/libvpx {
   channel = "1.999";
 };
-libvpx_next = callPackage ../all-pkgs/l/libvpx {
-  channel = "2.999";
-};
 libvpx = callPackageAlias "libvpx_1-6" { };
 
 libwacom = callPackage ../all-pkgs/l/libwacom { };

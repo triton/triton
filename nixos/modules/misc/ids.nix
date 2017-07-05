@@ -208,7 +208,6 @@
       skydns = 197;
       nix-serve = 199;
       tvheadend = 200;
-      uwsgi = 201;
       gitit = 202;
       riemanntools = 203;
       subsonic = 204;
@@ -430,7 +429,6 @@
       #skydns = 197; #unused
       #nix-serve = 199; #unused
       #tvheadend = 200; #unused
-      uwsgi = 201;
       gitit = 202;
       riemanntools = 203;
       subsonic = 204;

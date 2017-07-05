@@ -516,6 +516,8 @@ amrnb = callPackage ../all-pkgs/a/amrnb { };
 
 amrwb = callPackage ../all-pkgs/a/amrwb { };
 
+aomedia = callPackage ../all-pkgs/a/aomedia { };
+
 appdata-tools = callPackage ../all-pkgs/a/appdata-tools { };
 
 appstream-glib = callPackage ../all-pkgs/a/appstream-glib { };

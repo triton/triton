@@ -4161,9 +4161,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
 #  # Backwards compatibility.
   mod_dnssd = pkgs.apacheHttpdPackages.mod_dnssd;
-#
-  softether_4_18 = callPackage ../servers/softether/4.18.nix { };
-  softether = callPackageAlias "softether_4_18" { };
 
   zookeeper_mt = callPackage ../development/libraries/zookeeper_mt { };
 #

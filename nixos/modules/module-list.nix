@@ -292,7 +292,6 @@
   ./services/networking/skydns.nix
   ./services/networking/shairport-sync.nix
   ./services/networking/shout.nix
-  ./services/networking/softether.nix
   ./services/networking/spiped.nix
   ./services/networking/sslh.nix
   ./services/networking/ssh/sshd.nix

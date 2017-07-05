@@ -4380,8 +4380,6 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 
   mupdf = callPackage ../all-pkgs/m/mupdf { };
 #
-  ncdu = callPackage ../tools/misc/ncdu { };
-#
   rsync = callPackage ../applications/networking/sync/rsync { };
 #
 #

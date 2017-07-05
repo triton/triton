@@ -31,9 +31,9 @@ let
     };
     "head" = {
       fetchzipversion = 3;
-      version = "2017-06-20";
-      rev = "acfa035bf7b5bbe68351c4a3bb41239ea882ff71";
-      sha256 = "db061d88e28a3699805de0da69cbd5d2a5b78f45497d1b42485e698db4801f24";
+      version = "2017-06-28";
+      rev = "3105fa273c125faeda6b7168c74854a7f71a90c4";
+      sha256 = "31cdcc2422a7849239068e810b5cf935fa869d0af7fc7ba3ba44d05ece8c6d7f";
     };
   };
   source = sources."${channel}";

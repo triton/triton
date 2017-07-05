@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "0.04.20";
+  version = "0.04.21";
 in
 buildPythonPackage rec {
   name = "Unidecode-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "Unidecode";
     inherit version;
-    sha256 = "ed4418b4b1b190487753f1cca6299e8076079258647284414e6d607d1f8a00e0";
+    sha256 = "280a6ab88e1f2eb5af79edff450021a0d3f0448952847cd79677e55e58bad051";
   };
 
   buildInputs = [

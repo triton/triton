@@ -6,9 +6,9 @@
   };
   # master
   "1.999" = {
-    fetchzipversion = 2;
-    version = "2016-12-08";
-    rev = "7ba9d31e3f547128ea3eed9cddc94caf160f916a";
-    sha256 = "1b51eaca65fe45a1756da575cdf5ad98ea6ff5464f86129d3e45bc106e3b0928";
+    fetchzipversion = 3;
+    version = "2017-07-01";
+    rev = "7d526c1654ed972e4083c89f17fbb8f92782dfb0";
+    sha256 = "63ef1c3c11b7671bd9c50129aadec41c102192d82a693d646b6add6a4d31f352";
   };
 }

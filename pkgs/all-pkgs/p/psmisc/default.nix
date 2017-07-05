@@ -1,44 +1,34 @@
 { stdenv
-, autoreconfHook
-, fetchTritonPatch
 , fetchurl
 
+, libselinux
 , ncurses
 }:
 
 stdenv.mkDerivation rec {
-  name = "psmisc-${version}";
-  version = "22.21";
+  name = "psmisc-23.1";
 
   src = fetchurl {
-    url = "https://gitlab.com/psmisc/psmisc/repository/"
-        + "archive.tar.gz?ref=v${version}";
-    name = "${name}.tar.gz";
-    sha256 = "15k506r9p5d9clrcgis6vdh6pqk77af5a8lf233cqjc0465n5g9y";
+    url = "mirror://sourceforge/psmisc/psmisc/${name}.tar.xz";
+    sha256 = "2e84d474cf75dfbe3ecdacfb797bbfab71a35c7c2639d1b9f6d5f18b2149ba30";
   };
 
-  nativeBuildInputs = [
-    autoreconfHook
-  ];
-
   buildInputs = [
+    libselinux
     ncurses
   ];
 
-  patches = [
-    # From upstream, will be in next release.
-    (fetchTritonPatch {
-      rev = "0f7d71c8d72ed94cd06270096d82c1275fe42fb7";
-      file = "psmisc/0001-Typo-in-fuser-makes-M-on-all-the-time.patch";
-      sha256 = "e1e88176f1620f932e5f38027a5f9a5b03c163aa5ce12b26e6440ea471840a3f";
-    })
+  configureFlags = [
+    "--enable-selinux"
   ];
 
   meta = with stdenv.lib; {
     description = "A set of tools that use the proc filesystem";
     homepage = http://psmisc.sourceforge.net/;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      wkennington
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

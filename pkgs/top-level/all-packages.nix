@@ -3789,8 +3789,6 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 #
   docbook2x = callPackage ../tools/typesetting/docbook2x { };
 #
-  most = callPackage ../tools/misc/most { };
-#
   liboauth = callPackage ../development/libraries/liboauth { };
 #
   memtest86plus = callPackage ../tools/misc/memtest86+ { };

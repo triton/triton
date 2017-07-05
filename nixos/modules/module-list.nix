@@ -75,7 +75,6 @@
   ./security/pam_usb.nix
   ./security/pam_mount.nix
   ./security/polkit.nix
-  ./security/rngd.nix
   ./security/rtkit.nix
   ./security/setuid-wrappers.nix
   ./security/sudo.nix

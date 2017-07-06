@@ -821,9 +821,11 @@ let
     sha256 = "1iqr636inr0cj57m0v72nj9brh9rks7ay4j4ikwb5apids6vyg0i";
     subPackages = [
       "cli/config/configfile"
+      "cli/config/credentials"
       "opts"
     ];
-    buildInputs = [
+    propagatedBuildInputs = [
+      docker-credential-helpers
       errors
       go-connections
       moby_for_go-dockerclient
@@ -1318,6 +1320,20 @@ let
     repo = "dnspod-go";
     sha256 = "1dag0m8q3332b5dilml72bhrw9ixpv2r51p5rsfqcliag1ajc6zh";
     date = "2017-06-01";
+  };
+
+  docker-credential-helpers = buildFromGitHub {
+    version = 3;
+    rev = "v0.5.2";
+    owner = "docker";
+    repo = "docker-credential-helpers";
+    sha256 = "03hmhqcplinffkvgdjy4wdjw85hvl4wh6b2wggs5nxlhinzprpbn";
+    postPatch = ''
+      find . -name \*_windows.go -delete
+    '';
+    buildInputs = [
+      pkgs.libsecret
+    ];
   };
 
   docopt-go = buildFromGitHub {
@@ -5220,9 +5236,13 @@ let
       "pkg/pools"
       "pkg/promise"
       "pkg/stdcopy"
+      "pkg/stringid"
       "pkg/system"
+      "pkg/tarsum"
       "pkg/term"
       "pkg/term/windows"
+      "registry"
+      "registry/resumable"
     ];
     propagatedBuildInputs = [
       distribution_for_moby
@@ -5235,6 +5255,7 @@ let
       image-spec
       logrus
       net
+      pflag
       runc
       sys
     ];

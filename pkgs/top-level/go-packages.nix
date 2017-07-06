@@ -159,11 +159,11 @@ let
 
   crypto = buildFromGitHub {
     version = 3;
-    rev = "51714a8c4ac1764f07ab4127d7f739351ced4759";
-    date = "2017-07-04";
+    rev = "a48ac81e47fd6f9ed1258f3b60ae9e75f93cb7ed";
+    date = "2017-07-06";
     owner    = "golang";
     repo     = "crypto";
-    sha256 = "0b55cq03pvcchb5zgap96wz3d0pjca7jbi32f5psfljnbc00kh14";
+    sha256 = "0pgzv9hlmayk3cnbnf6rzvsd6wrllmk89irbfrbx9969ilw27i7r";
     goPackagePath = "golang.org/x/crypto";
     buildInputs = [
       net_crypto_lib
@@ -202,11 +202,11 @@ let
 
   net = buildFromGitHub {
     version = 3;
-    rev = "570fa1c91359c1869590e9cedf3b53162a51a167";
-    date = "2017-07-04";
+    rev = "054b33e6527139ad5b1ec2f6232c3b175bd9a30c";
+    date = "2017-07-06";
     owner  = "golang";
     repo   = "net";
-    sha256 = "0xs42d3c591bhhskxji64hqmn4hx66fgirl4j2lhh0gjgxvimbd8";
+    sha256 = "0zf3s34kk0ipjqz8yp0rk22lbiszsasbjjmfcgmyj5p8cig3y18g";
     goPackagePath = "golang.org/x/net";
     goPackageAliases = [
       "github.com/hashicorp/go.net"
@@ -296,11 +296,11 @@ let
 
   text = buildFromGitHub {
     version = 3;
-    rev = "2bf8f2a19ec09c670e931282edfe6567f6be21c9";
-    date = "2017-06-30";
+    rev = "cfdf022e86b4ecfb646e1efbd7db175dd623a8fa";
+    date = "2017-07-06";
     owner = "golang";
     repo = "text";
-    sha256 = "0pvm0nx59kld69jk56zy3zlzmc9y18lwvs0x2v9djzh175nmj57q";
+    sha256 = "1135bjlqg3k85c1hnp6qvvmach7dbj0ymrqxyd016nvshpxva7as";
     goPackagePath = "golang.org/x/text";
     excludedPackages = "cmd";
   };
@@ -2084,10 +2084,10 @@ let
   google-cloud-go = buildFromGitHub {
     version = 3;
     date = "2017-07-05";
-    rev = "bf1179e926531f070f3519295bfb208bc19ea013";
+    rev = "0dcfca594c1c27abc8ef55a03210e34214f59292";
     owner = "GoogleCloudPlatform";
     repo = "google-cloud-go";
-    sha256 = "132am9rzmcdmxp21jldwh52aqa3m5vc4xwb2im3n1j5hi4krny6j";
+    sha256 = "1a8nhd1cbqz3hgbb6hfrianbkv87np80fzawscah8ys4979nnqbm";
     goPackagePath = "cloud.google.com/go";
     goPackageAliases = [
       "google.golang.org/cloud"
@@ -3808,10 +3808,10 @@ let
   grpc = buildFromGitHub {
     version = 3;
     date = "2017-07-05";
-    rev = "0100e4262caf7c685f9fd42821a5e74bf213f0c9";
+    rev = "41d9b6ea2a6335f3a22074ed35c0542c9da1baf4";
     owner = "grpc";
     repo = "grpc-go";
-    sha256 = "142hl19vzmcbyrflmmxxlidp7fh0n9s2zpj907bwmp31717w57cy";
+    sha256 = "0zbvh16q2sbxv85m8l52gh593c1qivkvqmg5x5w3v0li40lila0z";
     goPackagePath = "google.golang.org/grpc";
     goPackageAliases = [
       "github.com/grpc/grpc-go"
@@ -5827,11 +5827,11 @@ let
 
   prometheus_common = buildFromGitHub {
     version = 3;
-    date = "2017-06-21";
-    rev = "0866df4b85a18d652b6965be022d007cdf076822";
+    date = "2017-07-06";
+    rev = "fb369f752a7f8b880c4a5199af7bfcb8aaaabaa4";
     owner = "prometheus";
     repo = "common";
-    sha256 = "1m3psca61rjwa0rxnvnbkwjbx54bzkfm8zyzbns5796ygyrvrqdf";
+    sha256 = "1j8g90pp74b9hj1sdayri8pa7p4k6652l050ph6fi95bhmfxyz00";
     buildInputs = [
       net
       prometheus_client_model
@@ -6020,9 +6020,9 @@ let
     version = 3;
     owner = "ncw";
     repo = "rclone";
-    date = "2017-07-05";
-    rev = "51866fbd34b01574090365a02d8480093174f076";
-    sha256 = "14mxwr8mmckm11rqgk4nfi98xchzwid24mj545jbv5mgkk7k6bbv";
+    date = "2017-07-06";
+    rev = "92294a4a927557ba11746fedbc6005e51a446e47";
+    sha256 = "02y160nwsbzw7fv3wcrjj33zgpsl980rngv2241q971pbfw9m0ar";
     propagatedBuildInputs = [
       aws-sdk-go
       cgofuse
@@ -6278,10 +6278,10 @@ let
 
   serf = buildFromGitHub {
     version = 3;
-    rev = "91fd53b1d3e624389ed9a295a3fa380e5c7b9dfc";
+    rev = "121978f00e9c0d81cd2f28b2e628d72b66196de8";
     owner  = "hashicorp";
     repo   = "serf";
-    sha256 = "16ii1jkcphiihi1wwb9x62f56q9y9gwx3smpzrycx79ixsjl4xqf";
+    sha256 = "1shav3mw8j974xhyg0hfib612h77wbl5grd7syv32kaz7na4h0rd";
 
     buildInputs = [
       armon_go-metrics
@@ -6296,7 +6296,7 @@ let
       ugorji_go
     ];
     meta.useUnstable = true;
-    date = "2017-06-14";
+    date = "2017-07-06";
   };
 
   session = buildFromGitHub {

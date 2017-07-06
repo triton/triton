@@ -104,6 +104,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"
+    "--disable-werror"
   ];
 
   preInstall = ''

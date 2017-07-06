@@ -14,12 +14,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "tor-0.3.0.7";
+  name = "tor-0.3.0.9";
 
   src = fetchurl {
     url = "https://www.torproject.org/dist/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "9640c4448ef3cad7237c68ed6984e705db8fb2b9d6bb74c8815d01bb06527d02";
+    sha256 = "48d4880bf6ccb19ce9af2abde6946d7cf0635cc807548badbf4a221a79581e42";
   };
 
   nativeBuildInputs = [

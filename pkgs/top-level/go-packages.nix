@@ -507,13 +507,11 @@ let
     repo   = "azure-sdk-for-go";
     sha256 = "0s09dg0i86113rklinnn0z2wx48az959xwg371bqrjpzmqxlm9jr";
     excludedPackages = "\\(Gododir\\|storageimportexport\\)";
-    buildInputs = [
+    propagatedBuildInputs = [
       crypto
       decimal
-      satori_uuid
-    ];
-    propagatedBuildInputs = [
       go-autorest
+      satori_uuid
     ];
   };
 
@@ -799,7 +797,6 @@ let
     rev = "v1.3.0";
     sha256 = "08z1g5g3f07inpgyb93ip037f4y1cnhsm2wvg63qnnnry9chwy36";
     buildInputs = [
-      elastic_v5
       toml
       urfave_cli
       yaml_v2
@@ -1435,6 +1432,7 @@ let
     sha256 = "1x14g61fj78x4r5x02xlzc1mh54sfsfjqhfm92lw05y3lbialdjr";
     goPackagePath = "gopkg.in/olivere/elastic.v5";
     propagatedBuildInputs = [
+      errors
       net
       sync
     ];
@@ -3287,6 +3285,36 @@ let
     ];
   };
 
+  go-nats = buildFromGitHub {
+    version = 3;
+    date = "2017-06-12";
+    rev = "0f25ebdb0f66fac3de939396a6eeb64d3cee23cd";
+    owner = "nats-io";
+    repo = "go-nats";
+    sha256 = "1g6xkv6zcspvq50qpgsznd77c25hkkfag0q49cjl4d46qcbvq68a";
+    excludedPackages = "test";
+    propagatedBuildInputs = [
+      nuid
+      protobuf
+    ];
+    goPackageAliases = [
+      "github.com/nats-io/nats"
+    ];
+  };
+
+  go-nats-streaming = buildFromGitHub {
+    version = 3;
+    rev = "v0.3.4";
+    owner = "nats-io";
+    repo = "go-nats-streaming";
+    sha256 = "17v382v5v3r3x0w7m7lgqcjhb9rh4qwsazi707i60pvqna90hi27";
+    propagatedBuildInputs = [
+      go-nats
+      nuid
+      gogo_protobuf
+    ];
+  };
+
   go-netrc = buildFromGitHub {
     version = 2;
     owner = "bgentry";
@@ -3393,10 +3421,7 @@ let
     date = "2017-03-14";
     rev = "ba7e58341058bdefb92b359870caf2dc0a05cfcf";
     sha256 = "1jkkkg5nrdqz6iv6bzlbxg7gycmq4bjc5mrpw3r3lvzqn73sdga7";
-    nativeBuildInputs = [
-      pkgs.pkgconfig
-    ];
-    buildInputs = [
+    propagatedBuildInputs = [
       pkgs.python2Packages.python
     ];
   };
@@ -3417,6 +3442,15 @@ let
     repo   = "go-radix";
     sha256 = "0b5vksrw462w1j5ipsw7fmswhpnwsnaqgp6klw714dc6ppz57aqv";
     date = "2016-01-15";
+  };
+
+  go-resiliency = buildFromGitHub {
+    version = 3;
+    rev = "b1fe83b5b03f624450823b751b662259ffc6af70";
+    owner  = "eapache";
+    repo   = "go-resiliency";
+    sha256 = "0iyn9ssm02ila0n8lm44awgsdpvzv833y0zwk9pgnm7s089slm8g";
+    date = "2017-06-07";
   };
 
   go-restful = buildFromGitHub {
@@ -3675,6 +3709,18 @@ let
     repo   = "go-wordwrap";
     sha256 = "0yj17x3c1mr9l3q4dwvy8y2xgndn833rbzsjf10y48yvr12zqjd0";
     date = "2015-03-14";
+  };
+
+  go-xerial-snappy = buildFromGitHub {
+    version = 3;
+    rev = "bb955e01b9346ac19dc29eb16586c90ded99a98c";
+    owner  = "eapache";
+    repo   = "go-xerial-snappy";
+    sha256 = "055fdp516prfb61sl4gww6mkj0wd909n3m80l5mvhbyngsh67h8i";
+    date = "2016-06-09";
+    propagatedBuildInputs = [
+      snappy
+    ];
   };
 
   go-zookeeper = buildFromGitHub {
@@ -4178,6 +4224,7 @@ let
       hllpp
       jwt-go
       liner
+      murmur3
       pat
       gogo_protobuf
       ratecounter
@@ -4732,6 +4779,17 @@ let
     ];
   };
 
+  lz4 = buildFromGitHub {
+    version = 3;
+    rev = "v1.0";
+    owner  = "pierrec";
+    repo   = "lz4";
+    sha256 = "1g8jpvfgbsdz24ypsj587fp3sl6vrjbg7zczyy5k5vvryha9yr9k";
+    propagatedBuildInputs = [
+      pierrec_xxhash
+    ];
+  };
+
   macaron_v1 = buildFromGitHub {
     version = 2;
     rev = "v1.2.1";
@@ -4815,6 +4873,7 @@ let
       go-colorable
       go-homedir_minio
       go-humanize
+      go-isatty
       go-version
       minio_pkg
       minio-go
@@ -4822,8 +4881,26 @@ let
       pb
       profile
       structs
+      text
     ];
     date = "2017-07-04";
+    postPatch = ''
+      # Hack to workaround no longer provided `pkg/probe`
+      mv vendor/github.com/minio/minio/pkg/probe pkg/probe
+      find cmd -type f | xargs sed -i 's,github.com/minio/minio/pkg/probe,github.com/minio/mc/pkg/probe,g'
+    '';
+  };
+
+  mc_pkg = buildFromGitHub {
+    inherit (mc) version owner repo rev sha256 date;
+    subPackages = [
+      "pkg/console"
+    ];
+    propagatedBuildInputs = [
+      color
+      go-colorable
+      go-isatty
+    ];
   };
 
   mdns = buildFromGitHub {
@@ -4913,39 +4990,46 @@ let
   };
 
   minio = buildFromGitHub {
-    version = 2;
+    version = 3;
     owner = "minio";
     repo = "minio";
-    rev = "RELEASE.2017-03-16T21-50-32Z";
-    sha256 = "09ddcbzh05sv35m7nvabjv4j8n3byr4gfj3iab37712ivpgzx1il";
+    rev = "RELEASE.2017-06-13T19-01-01Z";
+    sha256 = "1c8hsmpwzadj7a6rj62ndpl3xcp25m60qzgpbz50kcbxpss9idx4";
     buildInputs = [
       amqp
-      blake2b-simd
+      atomic
+      azure-sdk-for-go
       cli_minio
       color
       cors
       crypto
       dsync
-      elastic_v3
+      elastic_v5
       gjson
       go-bindata-assetfs
       go-homedir_minio
       go-humanize
+      go-nats
+      go-nats-streaming
       go-version
       handlers
       jwt-go
       logrus
-      mc
+      mc_pkg
       minio-go
       mux
+      mysql
       pb
+      pq
       profile
       redigo
       reedsolomon
       rpc
+      sarama_v1
       sha256-simd
       skyring-common
       structs
+      yaml_v2
     ];
   };
 
@@ -4953,49 +5037,32 @@ let
   minio_pkg = buildFromGitHub {
     inherit (minio) version owner repo rev sha256;
     propagatedBuildInputs = [
-      # Propagate minio_pkg_probe from here for consistency
-      minio_pkg_probe
+      minio-go
       pb
       structs
+      yaml_v2
     ];
-    postUnpack = ''
-      mv -v "$sourceRoot" "''${sourceRoot}.old"
-      mkdir -pv "$sourceRoot"
-      mv -v "''${sourceRoot}.old"/pkg "$sourceRoot"/pkg
-      rm -rf "''${sourceRoot}.old"
-    '';
-  };
-
-  # Probe pkg was remove in later releases, but still required by mc
-  minio_pkg_probe = buildFromGitHub {
-    version = 2;
-    inherit (minio) owner repo;
-    rev = "RELEASE.2017-03-16T21-50-32Z";
-    sha256 = "09ddcbzh05sv35m7nvabjv4j8n3byr4gfj3iab37712ivpgzx1il";
-    propagatedBuildInputs = [
-      go-humanize
+    subPackages = [
+      "pkg/madmin"
+      "pkg/quick"
+      "pkg/safe"
+      "pkg/trie"
+      "pkg/words"
+      "pkg/x/os"
     ];
-    postUnpack = ''
-      mv -v "$sourceRoot" "''${sourceRoot}.old"
-      mkdir -pv "$sourceRoot"/pkg
-      mv -v "''${sourceRoot}.old"/pkg/probe "$sourceRoot"/pkg/probe
-      rm -rf "''${sourceRoot}.old"
-    '';
-    meta.autoUpdate = false;
   };
 
   minio-go = buildFromGitHub {
     version = 3;
     owner = "minio";
     repo = "minio-go";
-    rev = "fb54c1def6b1376e9bc99dfcee115415d5cf6336";
-    sha256 = "1swlmhb5bjcaap77n2kb0qmrmkym7ksjmjw0cqkc33y1r9agj8x3";
-    meta.useUnstable = true;
-    date = "2017-07-04";
+    rev = "v2.1.0";
+    sha256 = "bc7a0e5dd0a4a0668ee313fd02cdbe6ddd6924395836abb8c5b914d27a96bc66";
     propagatedBuildInputs = [
       go-homedir_minio
       ini
     ];
+    meta.autoUpdate = false;
   };
 
   missinggo = buildFromGitHub {
@@ -5265,6 +5332,18 @@ let
     date = "2015-07-14";
   };
 
+  multierr = buildFromGitHub {
+    version = 3;
+    rev = "v1.1.0";
+    owner  = "uber-go";
+    repo   = "multierr";
+    sha256 = "0yd7ydwhdfaxn6gyq6z9qb4s1y0ijsa9qya3g4zcg9az4vya19bg";
+    goPackagePath = "go.uber.org/multierr";
+    propagatedBuildInputs = [
+      atomic
+    ];
+  };
+
   murmur3 = buildFromGitHub {
     version = 2;
     rev = "0d12bf811670bf6a1a63828dfbd003eded177fce";
@@ -5447,6 +5526,14 @@ let
     propagatedBuildInputs = [
       sys
     ];
+  };
+
+  nuid = buildFromGitHub {
+    version = 3;
+    rev = "v1.0.0";
+    owner = "nats-io";
+    repo = "nuid";
+    sha256 = "1fxdhbhww71gsfb91z5nxs6fa4kngvhvd6bvsvr5qsqdmqyxbqng";
   };
 
   objx = buildFromGitHub {
@@ -5844,6 +5931,15 @@ let
     ];
   };
 
+  queue = buildFromGitHub {
+    version = 3;
+    rev = "44cc805cf13205b55f69e14bcb69867d1ae92f98";
+    owner  = "eapache";
+    repo   = "queue";
+    sha256 = "00bdh38341icyyxf9rpprnbpbwqkg87g3p1sjbcx194370x5jj7d";
+    date = "2016-08-05";
+  };
+
   rabbit-hole = buildFromGitHub {
     version = 2;
     rev = "v1.3.0";
@@ -6129,6 +6225,24 @@ let
     sha256 = "1l09ibm48a92q9galxf2q5d81a2b4rcd5qa11ss5if18v9wvcnfa";
   };
 
+  sarama_v1 = buildFromGitHub {
+    version = 3;
+    owner = "Shopify";
+    repo = "sarama";
+    rev = "v1.12.0";
+    sha256 = "0kjrw3c4p2z4k4nfwd7rpg6d4wfqkmqg6fchjwzmrczfk0z0zi5j";
+    goPackagePath = "gopkg.in/Shopify/sarama.v1";
+    excludedPackages = "\\(mock\\|tools\\)";
+    propagatedBuildInputs = [
+      go-resiliency
+      go-spew
+      go-xerial-snappy
+      lz4
+      queue
+      rcrowley_go-metrics
+    ];
+  };
+
   scada-client = buildFromGitHub {
     version = 1;
     date = "2016-06-01";
@@ -6256,11 +6370,12 @@ let
     rev = "d1c0bb1cbd5ed8438be1385c85c4f494608cde1e";
     sha256 = "0wr3bw55daf8ryz46hviwvs1wz1l2c6x3rrccr70gllg74lg1wd5";
     buildInputs = [
+      crypto
       go-logging
       go-python
       gorequest
       graphite-golang
-      influxdb
+      influxdb_client
       mgo_v2
     ];
     postPatch = /* go-python now uses float64 */ ''
@@ -6696,16 +6811,17 @@ let
   };
 
   testify = buildFromGitHub {
-    version = 2;
-    rev = "v1.1.4";
+    version = 3;
+    rev = "f6abca593680b2315d2075e0f5e2a9751e3f431a";
     owner = "stretchr";
     repo = "testify";
-    sha256 = "0n3z8225px7rylkwz6rvf48ykrh591a7p8gc27a2dh2zskny5qsz";
+    sha256 = "0mwxlfl20v7rylwkxda2j78q69xznp8sca427y1svi550f2paryn";
     propagatedBuildInputs = [
       go-difflib
       go-spew
       objx
     ];
+    date = "2017-06-01";
   };
 
   kr_text = buildFromGitHub {
@@ -7148,13 +7264,21 @@ let
     sha256 = "16l1cqpqsgipa4c6q55n8vlnpg9kbylkx1ix8hsszdikj25mcig1";
   };
 
-  xxhash = buildFromGitHub {
+  cespare_xxhash = buildFromGitHub {
     version = 3;
     rev = "1b6d2e40c16ba0dfce5c8eac2480ad6e7394819b";
     owner  = "cespare";
     repo   = "xxhash";
     sha256 = "0lnc15cw0rvcpcqh91dx7ljrd2dl1g5c77xpqs956q81g7bq0ls4";
     date = "2017-06-04";
+  };
+
+  pierrec_xxhash = buildFromGitHub {
+    version = 3;
+    rev = "v0.1.1";
+    owner  = "pierrec";
+    repo   = "xxHash";
+    sha256 = "0k48fp8m9c6z60m89mvq6x74kg9rg1rhfxz9n357s2mji833zy21";
   };
 
   zap = buildFromGitHub {
@@ -7169,6 +7293,7 @@ let
     ];
     propagatedBuildInputs = [
       atomic
+      multierr
     ];
   };
 

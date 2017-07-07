@@ -5,14 +5,15 @@
 , lib
 , makeWrapper
 
+, at-spi2-core
 , exo
 , glib
 , gobject-introspection
 , gtk_3
 , hicolor-icon-theme
 , lightdm
+, libx11
 , libxklavier
-, xorg
 }:
 
 let
@@ -43,9 +44,15 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gtk_3
     lightdm
+    libx11
     libxklavier
-    xorg.libX11
   ];
+
+  preConfigure = ''
+    configureFlagsArray+=(
+      '--enable-at-spi-command=${at-spi2-core}/libexec/at-spi-bus-launcher --launch-immediately'
+    )
+  '';
 
   configureFlags = [
     "--localstatedir=/var"
@@ -56,7 +63,6 @@ stdenv.mkDerivation rec {
     "--disable-iso-c"
     "--disable-libindicator"
     "--disable-libido"
-    #"--enable-at-spi-command"
     "--disable-indicator-services-command"
     #"--enable-kill-on-sigterm"
     "--enable-nls"
@@ -77,7 +83,8 @@ stdenv.mkDerivation rec {
       --prefix XDG_DATA_DIRS ":" "${hicolor-icon-theme}/share"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
+    description = "LightDM GTK+ Greeter";
     homepage = http://launchpad.net/lightdm-gtk-greeter;
     license = licenses.gpl3;
     maintainers = with maintainers; [

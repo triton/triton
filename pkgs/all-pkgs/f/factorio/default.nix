@@ -9,11 +9,11 @@
 }:
 
 let
-  version = "0.15.27";
+  version = "0.15.28";
 
   sha256s = {
-    "alpha" = "d5504a9b3655b1110e8daa218d6a223308b9f16877c2761bdfca1c520cef9c1b";
-    "headless" = "8cb2289cc31397974a4ae546cefbc3425762e9072f628e3bc69facb566c91b1c";
+    "alpha" = "c1a94f71e3eef51c6bd07a030b8e0505009be6f4df05554751967c6f1855c558";
+    "headless" = "7c9d4307e85e573d1c34cb8e7ef4f884dfd3544a45f84fc9418ddd152f946752";
   };
 
   inherit (stdenv.lib)

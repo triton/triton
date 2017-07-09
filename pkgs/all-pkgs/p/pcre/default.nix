@@ -10,14 +10,22 @@ let
   inherit (stdenv.lib)
     boolEn
     optionals;
+
+  tarballUrls = version: [
+    "https://ftp.pcre.org/pub/pcre/pcre-${version}.tar.bz2"
+    "http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${version}.tar.bz2"
+    "mirror://sourceforge/pcre/pcre/${version}/pcre-${version}.tar.bz2"
+  ];
+
+  version = "8.41";
 in
 stdenv.mkDerivation rec {
-  name = "pcre-8.40";
+  name = "pcre-${version}";
 
   src = fetchurl {
-    url = "http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${name}.tar.bz2";
-    multihash = "Qmb1CRCYu75PaCTR1mRkU84gorUeBgUdC2yACSc4h93evH";
-    sha256 = "00e27a29ead4267e3de8111fcaa59b132d0533cdfdbdddf4b0604279acbcf4f4";
+    url = tarballUrls version;
+    hashOutput = false;
+    sha256 = "e62c7eac5ae7c0e7286db61ff82912e1c0b7a0c13706616e94a7dd729321b530";
   };
 
   buildInputs = optionals pcregrep [
@@ -42,13 +50,17 @@ stdenv.mkDerivation rec {
     "--disable-coverage"
   ];
 
-  outputs = [
-    "out"
-    "doc"
-    "man"
-  ];
-
   doCheck = true;
+
+  passthru = {
+    srcVerification = fetchurl rec {
+      failEarly = true;
+      urls = tarballUrls "8.41";
+      pgpsigUrls = map (n: "${n}.sig") urls;
+      pgpKeyFingerprint = "45F6 8D54 BBE2 3FB3 039B  46E5 9766 E084 FB0F 43D8";
+      inherit (src) outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Perl Compatible Regular Expressions";

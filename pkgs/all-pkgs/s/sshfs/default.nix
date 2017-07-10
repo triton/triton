@@ -1,13 +1,13 @@
 { stdenv
 , fetchurl
 
-, fuse_2
+, fuse_3
 , glib
 , openssh
 }:
 
 let
-  version = "2.9";
+  version = "3.0.0";
 in
 stdenv.mkDerivation rec {
   name = "sshfs-${version}";
@@ -15,11 +15,11 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/libfuse/sshfs/releases/download/${name}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "46d1e1287ce97255fcb50010355184d8c5585329f73ab1e755217419a8e6e5de";
+    sha256 = "644966c7326c1b788a80318c5806f20f6d42dd72ab686f66d6120bd108b54d2d";
   };
 
   buildInputs = [
-    fuse_2
+    fuse_3
     glib
     openssh
   ];

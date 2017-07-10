@@ -4,12 +4,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "dos2unix-7.3.4";
+  name = "dos2unix-7.3.5";
   
   src = fetchurl {
     url = "http://waterlan.home.xs4all.nl/dos2unix/${name}.tar.gz";
+    multihash = "QmcoEVHQpQTHSRpkQ1vXaXpPsDjC9XoVyZz15asHVnWRgg";
     hashOutput = false;
-    sha256 = "8ccda7bbc5a2f903dafd95900abb5bf5e77a769b572ef25150fde4056c5f30c5";
+    sha256 = "a72caa2fb5cb739403315472fe522eda41aabab2a02ad6f5589639330af262e5";
   };
 
   nativeBuildInputs = [

@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , channel
@@ -24,6 +25,14 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     inherit sha256;
   };
+
+  patches = optionals (channel == "3") [
+    (fetchTritonPatch {
+      rev = "fc9cab71a5192c898889e092affbf1b36a19c093";
+      file = "f/fuse/fix-3.1.0.patch";
+      sha256 = "b90bbce0e6b9a721ac91ee8f19f8902d4c6e85d68140363494025a19dfc472bd";
+    })
+  ];
 
   preConfigure = ''
     export MOUNT_FUSE_PATH=$out/sbin

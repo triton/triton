@@ -16,14 +16,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libarchive-2017-05-21";
+  name = "libarchive-2017-07-09";
 
   src = fetchFromGitHub {
     version = 3;
     owner = "libarchive";
     repo = "libarchive";
-    rev = "328453a041e2ead52bf2c64b778a29f99bd17f14";
-    sha256 = "8f263d675c238fa667de69bc39a673ccf8f01297d061e7facc685273d2d9d06e";
+    rev = "347ac2b6adfd4bca7418d30d7278d5343fc6e25e";
+    sha256 = "f00151d630a8e509703e8e207f37d3ad472f5a3385639a6550bdd6c4fb86dfcc";
   };
 
   nativeBuildInputs = [

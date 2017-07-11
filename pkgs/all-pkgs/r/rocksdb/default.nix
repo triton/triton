@@ -14,7 +14,7 @@
 }:
 
 let
-  version = "5.3.4";
+  version = "5.5.1";
 in
 stdenv.mkDerivation rec {
   name = "rocksdb-${version}";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     owner = "facebook";
     repo = "rocksdb";
     rev = "v${version}";
-    sha256 = "ee76ca3b37ab989a5db511fadd331555521240fbf17d379288f5fe94202be5cf";
+    sha256 = "5b28a1d361adb454eb70c134205b1dc2c542fec2c70af86006e0814b1572e6e6";
   };
 
   nativeBuildInputs = [

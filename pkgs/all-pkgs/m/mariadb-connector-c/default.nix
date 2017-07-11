@@ -11,8 +11,8 @@
 }:
 
 let
-  rev = "e5ce85b0b6f2e734b497aea5c2eff6398da749f5";
-  date = "2017-06-08";
+  rev = "3f356c0598ad4785e9b4eff23e03fd662a701070";
+  date = "2017-07-07";
 in
 stdenv.mkDerivation rec {
   name = "mariadb-connector-c-${date}";
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     owner = "MariaDB";
     repo = "mariadb-connector-c";
     inherit rev;
-    sha256 = "00898eda42dce5a432336fbfdbac71e7e3af81799b1afcd70667be88aada7749";
+    sha256 = "40749572ddae702b7522dd0bed864f3b5cadb6a4fec798fd4aacb6213d0d0685";
   };
 
   nativeBuildInputs = [
@@ -49,7 +49,6 @@ stdenv.mkDerivation rec {
   postInstall = ''
     ln -sv mariadb_config "$out"/bin/mysql_config
     ln -sv mariadb "$out"/include/mysql
-    ln -sv libmariadb.so "$out"/lib/libmysqlclient.so
   '';
 
   meta = with stdenv.lib; {

@@ -3016,18 +3016,22 @@ python2 = callPackageAlias "python27" { };
 python3 = callPackageAlias "python36" { };
 python = callPackageAlias "python2" { };
 
-python27Packages = hiPrioSet (recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
-  python = callPackageAlias "python27" { };
-  self = callPackageAlias "python27Packages" { };
-}));
-python36Packages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
-  python = callPackageAlias "python36" { };
-  self = callPackageAlias "python36Packages" { };
-});
-#pypyPackages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
-#  python = callPackageAlias "pypy" { };
-#  self = callPackageAlias "pypyPackages" { };
-#});
+python27Packages = hiPrioSet (
+  recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+    python = callPackageAlias "python27" { };
+    self = callPackageAlias "python27Packages" { };
+  })
+);
+python36Packages =
+  recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+    python = callPackageAlias "python36" { };
+    self = callPackageAlias "python36Packages" { };
+  });
+#pypyPackages =
+#  recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
+#    python = callPackageAlias "pypy" { };
+#    self = callPackageAlias "pypyPackages" { };
+#  });
 python2Packages = callPackageAlias "python27Packages" { };
 python3Packages = callPackageAlias "python36Packages" { };
 pythonPackages = callPackageAlias "python2Packages" { };
@@ -3807,7 +3811,8 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 #
   tre = callPackage ../development/libraries/tre { };
 
-  systemd-cryptsetup-generator = callPackage ../os-specific/linux/systemd/cryptsetup-generator.nix { };
+  systemd-cryptsetup-generator =
+    callPackage ../os-specific/linux/systemd/cryptsetup-generator.nix { };
 #
   gcc = callPackageAlias "gcc7" { };
 #
@@ -3883,15 +3888,22 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 
   icedtea_web = pkgs.icedtea8_web;
 #
-#  openjdk7-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "7"; };
-  openjdk8-bootstrap = callPackage ../development/compilers/openjdk/bootstrap.nix { version = "8"; };
+#  openjdk7-bootstrap =
+#    callPackage ../development/compilers/openjdk/bootstrap.nix {
+#      version = "7";
+#    };
+  openjdk8-bootstrap =
+    callPackage ../development/compilers/openjdk/bootstrap.nix {
+      version = "8";
+    };
 #
 #  openjdk7-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
 #    openjdk = openjdk7.override { minimal = true; };
 #  };
-  openjdk8-make-bootstrap = callPackage ../development/compilers/openjdk/make-bootstrap.nix {
-    openjdk = pkgs.openjdk8.override { minimal = true; };
-  };
+  openjdk8-make-bootstrap =
+    callPackage ../development/compilers/openjdk/make-bootstrap.nix {
+      openjdk = pkgs.openjdk8.override { minimal = true; };
+    };
 #
 #  openjdk7 = callPackage ../development/compilers/openjdk/7.nix {
 #    bootjdk = openjdk7-bootstrap;
@@ -3951,7 +3963,8 @@ zstd = callPackage ../all-pkgs/z/zstd { };
     qt4 = null;
   };
 #
-  gnome_doc_utils = callPackage ../development/tools/documentation/gnome-doc-utils {};
+  gnome_doc_utils =
+    callPackage ../development/tools/documentation/gnome-doc-utils { };
 #
   ltrace = callPackage ../development/tools/misc/ltrace { };
 #
@@ -3971,7 +3984,8 @@ zstd = callPackage ../all-pkgs/z/zstd { };
 #
 cfitsio = callPackage ../development/libraries/cfitsio { };
 
-  fontconfig-ultimate = callPackage ../development/libraries/fontconfig-ultimate {};
+  fontconfig-ultimate =
+    callPackage ../development/libraries/fontconfig-ultimate { };
 #
   makeFontsConf =
     let
@@ -4028,7 +4042,9 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
   libcaca = callPackage ../development/libraries/libcaca { };
 #
-  libcdr = callPackage ../development/libraries/libcdr { lcms = callPackageAlias "lcms2" { }; };
+  libcdr = callPackage ../development/libraries/libcdr {
+    lcms = callPackageAlias "lcms2" { };
+  };
 #
   libdiscid = callPackage ../development/libraries/libdiscid { };
 #
@@ -4060,7 +4076,8 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
 #
   libpaper = callPackage ../development/libraries/libpaper { };
 #
-libstartup_notification = callPackage ../development/libraries/startup-notification { };
+libstartup_notification =
+  callPackage ../development/libraries/startup-notification { };
 #
   libtxc_dxtn_s2tc = callPackage ../development/libraries/libtxc_dxtn_s2tc { };
 #
@@ -4111,7 +4128,8 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
   vamp = callPackage ../development/libraries/audio/vamp { };
 #
-  webrtc-audio-processing = callPackage ../development/libraries/webrtc-audio-processing { };
+  webrtc-audio-processing =
+    callPackage ../development/libraries/webrtc-audio-processing { };
 #
   xmlrpc_c = callPackage ../development/libraries/xmlrpc-c { };
 #
@@ -4127,25 +4145,33 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
   apache-httpd = callPackage ../all-pkgs/a/apache-httpd  { };
 
-  apacheHttpdPackagesFor = apacheHttpd: self: let callPackage = pkgs.newScope self; in {
-    inherit apacheHttpd;
+  apacheHttpdPackagesFor = apacheHttpd: self:
+    let
+      callPackage = pkgs.newScope self;
+    in {
+      inherit apacheHttpd;
 
-    mod_dnssd = callPackage ../servers/http/apache-modules/mod_dnssd { };
+      mod_dnssd = callPackage ../servers/http/apache-modules/mod_dnssd { };
+
+      # mod_evasive =
+      #   callPackage ../servers/http/apache-modules/mod_evasive { };
+      #
+      # mod_fastcgi =
+      #   callPackage ../servers/http/apache-modules/mod_fastcgi { };
+      #
+      # mod_python = callPackage ../servers/http/apache-modules/mod_python { };
+      #
+      # mod_wsgi = callPackage ../servers/http/apache-modules/mod_wsgi { };
+      #
+      # php = pkgs.php.override { inherit apacheHttpd; };
+      #
+      # subversion = pkgs.subversion.override {
+      #   httpServer = true; inherit apacheHttpd;
+      # };
+    };
 #
-#    mod_evasive = callPackage ../servers/http/apache-modules/mod_evasive { };
-#
-#    mod_fastcgi = callPackage ../servers/http/apache-modules/mod_fastcgi { };
-#
-#    mod_python = callPackage ../servers/http/apache-modules/mod_python { };
-#
-#    mod_wsgi = callPackage ../servers/http/apache-modules/mod_wsgi { };
-#
-#    php = pkgs.php.override { inherit apacheHttpd; };
-#
-#    subversion = pkgs.subversion.override { httpServer = true; inherit apacheHttpd; };
-  };
-#
-  apacheHttpdPackages = pkgs.apacheHttpdPackagesFor pkgs.apacheHttpd pkgs.apacheHttpdPackages;
+  apacheHttpdPackages =
+    pkgs.apacheHttpdPackagesFor pkgs.apacheHttpd pkgs.apacheHttpdPackages;
 #
 #  # Backwards compatibility.
   mod_dnssd = pkgs.apacheHttpdPackages.mod_dnssd;
@@ -4290,19 +4316,27 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
   linuxPackages_bcachefs = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_bcachefs;
   });
-  linuxPackages_custom = {version, src, configfile}:
-                           let linuxPackages_self = (linuxPackagesFor (pkgs.linuxManualConfig {inherit version src configfile;
-                                                                                               allowImportFromDerivation=true;})
-                                                     linuxPackages_self);
-                           in recurseIntoAttrs linuxPackages_self;
+  linuxPackages_custom = { version, src, configfile }:
+    let
+      linuxPackages_self = (
+        linuxPackagesFor (
+          pkgs.linuxManualConfig {
+            inherit version src configfile;
+            allowImportFromDerivation=true;
+          }
+        ) linuxPackages_self);
+    in
+    recurseIntoAttrs linuxPackages_self;
 #
 #  # A function to build a manually-configured kernel
   linuxManualConfig = pkgs.buildLinux;
   buildLinux = callPackage ../all-pkgs/l/linux/manual-config.nix {};
 #
-  kmod-blacklist-ubuntu = callPackage ../os-specific/linux/kmod-blacklist-ubuntu { };
+  kmod-blacklist-ubuntu =
+    callPackage ../os-specific/linux/kmod-blacklist-ubuntu { };
 
-  kmod-debian-aliases = callPackage ../os-specific/linux/kmod-debian-aliases { };
+  kmod-debian-aliases =
+    callPackage ../os-specific/linux/kmod-debian-aliases { };
 
   libcap = callPackage ../os-specific/linux/libcap { };
 #
@@ -4315,7 +4349,8 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
   sysfsutils = callPackage ../os-specific/linux/sysfsutils { };
 
-#  # TODO(dezgeg): either refactor & use ubootTools directly, or remove completely
+  # TODO(dezgeg): either refactor & use ubootTools directly, or
+  # remove completely
   ubootChooser = name: ubootTools;
 
   # Upstream U-Boots:
@@ -4329,27 +4364,36 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
   docbook5 = callPackage ../data/sgml+xml/schemas/docbook-5.0 { };
 
-  docbook_sgml_dtd_31 = callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/3.1.nix { };
+  docbook_sgml_dtd_31 =
+    callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/3.1.nix { };
 
-  docbook_sgml_dtd_41 = callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/4.1.nix { };
+  docbook_sgml_dtd_41 =
+    callPackage ../data/sgml+xml/schemas/sgml-dtd/docbook/4.1.nix { };
 
-  docbook_xml_dtd_412 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.1.2.nix { };
+  docbook_xml_dtd_412 =
+    callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.1.2.nix { };
 
-  docbook_xml_dtd_42 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.2.nix { };
+  docbook_xml_dtd_42 =
+    callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.2.nix { };
 
-  docbook_xml_dtd_43 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.3.nix { };
+  docbook_xml_dtd_43 =
+    callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.3.nix { };
 #
-  docbook_xml_dtd_44 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.4.nix { };
+  docbook_xml_dtd_44 =
+    callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.4.nix { };
 #
-  docbook_xml_dtd_45 = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.5.nix { };
+  docbook_xml_dtd_45 =
+    callPackage ../data/sgml+xml/schemas/xml-dtd/docbook/4.5.nix { };
 #
   freefont_ttf = callPackage ../data/fonts/freefont-ttf { };
 #
   meslo-lg = callPackage ../data/fonts/meslo-lg {};
 #
-  mobile_broadband_provider_info = callPackage ../data/misc/mobile-broadband-provider-info { };
+  mobile_broadband_provider_info =
+    callPackage ../data/misc/mobile-broadband-provider-info { };
 #
-  sound-theme-freedesktop = callPackage ../data/misc/sound-theme-freedesktop { };
+  sound-theme-freedesktop =
+    callPackage ../data/misc/sound-theme-freedesktop { };
 #
   unifont = callPackage ../data/fonts/unifont { };
 #
@@ -4360,7 +4404,9 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
   fluidsynth = callPackage ../applications/audio/fluidsynth { };
 #
-  google_talk_plugin = callPackage ../applications/networking/browsers/mozilla-plugins/google-talk-plugin { };
+google_talk_plugin =
+  callPackage
+    ../applications/networking/browsers/mozilla-plugins/google-talk-plugin { };
 #
   mcpp = callPackage ../development/compilers/mcpp { };
 #
@@ -4377,11 +4423,16 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
 #
   subunit = callPackage ../development/libraries/subunit { };
 #
-  telepathy_logger = callPackage ../applications/networking/instant-messengers/telepathy/logger {};
+telepathy_logger =
+  callPackage
+    ../applications/networking/instant-messengers/telepathy/logger {};
 
-  telepathy_mission_control = callPackage ../applications/networking/instant-messengers/telepathy/mission-control { };
+telepathy_mission_control =
+  callPackage
+    ../applications/networking/instant-messengers/telepathy/mission-control { };
 #
-  #trezor-bridge = callPackage ../applications/networking/browsers/mozilla-plugins/trezor { };
+  #trezor-bridge =
+  #  callPackage ../applications/networking/browsers/mozilla-plugins/trezor { };
 #
   xpdf = callPackage ../applications/misc/xpdf {
     base14Fonts = "${ghostscript}/share/ghostscript/fonts";
@@ -4399,10 +4450,10 @@ libstartup_notification = callPackage ../development/libraries/startup-notificat
     prefix = "lib";
   };
 #
-#  # All the new TeX Live is inside. See description in default.nix.
- texlive = recurseIntoAttrs
-    (callPackage ../tools/typesetting/tex/texlive-new { });
-  texLive = callPackageAlias "texlive" { };
+# All the new TeX Live is inside. See description in default.nix.
+texlive =
+  recurseIntoAttrs (callPackage ../tools/typesetting/tex/texlive-new { });
+texLive = callPackageAlias "texlive" { };
 #
   #wine = callPackage ../misc/emulators/wine {
   #  wineRelease = config.wine.release or "stable";

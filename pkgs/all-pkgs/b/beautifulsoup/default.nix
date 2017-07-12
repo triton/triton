@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy3k
+, isPy3
 , lib
 
 , html5lib
@@ -29,7 +29,7 @@ buildPythonPackage rec {
   ];
 
   # Not all tests have been converted to Python 3
-  doCheck = !isPy3k;
+  doCheck = !isPy3;
 
   meta = with lib; {
     description = "HTML/XML parser";

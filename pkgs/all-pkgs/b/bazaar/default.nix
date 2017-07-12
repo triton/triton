@@ -2,7 +2,7 @@
 , buildPythonPackage
 , fetchTritonPatch
 , fetchurl
-, isPy3k
+, isPy3
 , lib
 
 , paramiko
@@ -43,7 +43,7 @@ buildPythonPackage rec {
       -e 's,@TritonCACertPath@,/etc/ssl/certs/ca-certificates.crt,'
   '';
 
-  disabled = isPy3k;
+  disabled = isPy3;
 
   meta = with lib; {
     description = "Bazaar is a distributed version control system";

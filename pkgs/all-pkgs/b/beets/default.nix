@@ -5,7 +5,7 @@
 , fetchTritonPatch
 , glibcLocales
 , isPy27
-, isPy3k
+, isPy3
 , lib
 , makeWrapper
 , pythonPackages
@@ -298,7 +298,7 @@ buildPythonPackage rec {
     runHook 'postInstallCheck'
   '';
 
-  doCheck = !isPy3k;
+  doCheck = !isPy3;
   doInstallCheck = true;
 
   meta = with lib; {

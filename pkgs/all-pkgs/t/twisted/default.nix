@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy3k
+, isPy3
 , lib
 
 , automat
@@ -38,7 +38,7 @@ buildPythonPackage rec {
   postInstall = "$out/bin/twistd --help > /dev/null";
 
   # Tests are not fully compatible with Python 3
-  doCheck = !isPy3k;
+  doCheck = !isPy3;
 
   meta = with lib; {
     description = "An event-driven networking engine written in Python";

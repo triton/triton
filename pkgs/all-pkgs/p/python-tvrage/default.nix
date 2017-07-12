@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy3k
+, isPy3
 , lib
 
 , beautifulsoup
@@ -28,7 +28,7 @@ buildPythonPackage rec {
     beautifulsoup
   ];
 
-  disabled = isPy3k;
+  disabled = isPy3;
   doCheck = true;
 
   meta = with lib; {

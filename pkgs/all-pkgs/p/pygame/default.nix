@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy3k
+, isPy3
 , lib
 
 , pkgs
@@ -55,7 +55,7 @@ buildPythonPackage rec {
     LOCALBASE=/ python config.py
   '';
 
-  disabled = isPy3k;
+  disabled = isPy3;
 
   meta = with lib; {
     description = "Python library for games";

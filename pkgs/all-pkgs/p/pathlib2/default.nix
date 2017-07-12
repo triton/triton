@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy3k
+, isPy3
 , lib
 
 , scandir
@@ -26,7 +26,7 @@ buildPythonPackage {
   propagatedBuildInputs = [
     scandir
     six
-  ] ++ optionals (!isPy3k) [
+  ] ++ optionals (!isPy3) [
     scandir
   ];
 

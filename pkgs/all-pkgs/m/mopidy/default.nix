@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy3k
+, isPy3
 , lib
 
 , gobject-introspection
@@ -63,7 +63,7 @@ buildPythonPackage rec {
       --prefix GST_PLUGIN_PATH : "$GST_PLUGIN_PATH"
   '';
 
-  disabled = isPy3k;
+  disabled = isPy3;
   doCheck = false;
 
   meta = with lib; {

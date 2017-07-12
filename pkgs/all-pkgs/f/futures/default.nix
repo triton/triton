@@ -3,7 +3,7 @@
 , fetchPyPi
 , lib
 
-, isPy3k
+, isPy3
 }:
 
 let
@@ -19,7 +19,7 @@ buildPythonPackage rec {
   };
 
   # This module is for backporting Python 3.2 functionality to Python 2.x.
-  disabled = isPy3k;
+  disabled = isPy3;
 
   meta = with lib; {
     description = "Backport of the concurrent.futures package from Python 3.2";

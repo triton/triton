@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy3k
+, isPy3
 , lib
 
 , docutils
@@ -23,7 +23,7 @@ buildPythonPackage rec {
     docutils
   ];
 
-  disabled = isPy3k;
+  disabled = isPy3;
   doCheck = false;
 
   meta = with lib; {

@@ -4,7 +4,7 @@
 , fetchurl
 , gettext
 , intltool
-, isPy3k
+, isPy3
 , lib
 , pythonPackages
 
@@ -108,7 +108,7 @@ buildPythonPackage rec {
       $out/share/applications
   '';
 
-  disabled = isPy3k;
+  disabled = isPy3;
 
   doCheck = false;
 

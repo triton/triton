@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchFromGitHub
-, isPy3k
+, isPy3
 , pythonPackages
 
 , acme
@@ -49,7 +49,7 @@ buildPythonPackage rec {
     zope-interface
   ];
 
-  disabled = isPy3k;
+  disabled = isPy3;
   doCheck = true;
 
   meta = with stdenv.lib; {

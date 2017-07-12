@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy3k
+, isPy3
 , lib
 , pythonOlder
 , pythonPackages
@@ -53,7 +53,7 @@ buildPythonPackage rec {
     redis
     #rethinkdb
     sqlalchemy
-  ] ++ optionals (!isPy3k) /* python 2 only */ [
+  ] ++ optionals (!isPy3) /* python 2 only */ [
     funcsigs
     futures
   ] ++ optionals (pythonOlder "3.4") [

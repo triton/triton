@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy3k
+, isPy3
 , isPy36
 , lib
 
@@ -54,7 +54,7 @@ buildPythonPackage rec {
     ln -sv $out/bin/acd_cli.py $out/bin/acd_cli
   '';
 
-  disabled = !isPy3k || isPy36;
+  disabled = !isPy3 || isPy36;
 
   meta = with lib; {
     description = "A CLI and FUSE filesystem for Amazon (Cloud) Drive";

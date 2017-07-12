@@ -1,7 +1,7 @@
 { stdenv
 , autoreconfHook
 , fetchFromGitHub
-, isPy3k
+, isPy3
 , lib
 , pkgconfig
 , wrapPython
@@ -17,7 +17,7 @@
 }:
 
 # Pygtk is not compatible with Python 3.x
-assert !isPy3k;
+assert !isPy3;
 
 stdenv.mkDerivation rec {
   name = "pygtk-2.24-2011-10-02";

@@ -8,7 +8,7 @@ let
   isPy27 = python.channel == "2.7";
   isPy36 = python.channel == "3.6";
   isPyPy = python.executable == "pypy";
-  isPy3k = strings.substring 0 1 python.channel == "3";
+  isPy3 = strings.substring 0 1 python.channel == "3";
 
   fetchPyPi = { package, version, sha256, type ? ".tar.gz" }:
     pkgs.fetchurl rec {
@@ -53,7 +53,7 @@ in {
     isPy27
     isPy36
     isPyPy
-    isPy3k
+    isPy3
     python
     pythonAtLeast
     pythonOlder;
@@ -591,7 +591,7 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
        pyRFC3339
      ];
 
-     disabled = isPy3k;
+     disabled = isPy3;
    };
 
    argparse = buildPythonPackage rec {

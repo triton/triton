@@ -2,7 +2,7 @@
 , buildPythonPackage
 , config
 , fetchPyPi
-, isPy3k
+, isPy3
 , lib
 , pythonOlder
 
@@ -103,7 +103,7 @@ buildPythonPackage rec {
       -e 's/==.*//'
   '';
 
-  disabled = isPy3k;
+  disabled = isPy3;
 
   meta = with lib; {
     description = "Automation tool for content like torrents, nzbs, podcasts";

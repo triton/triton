@@ -2,7 +2,7 @@
 , autoreconfHook
 , fetchFromGitHub
 , fetchurl
-, isPy3k
+, isPy3
 , lib
 
 , glib
@@ -29,7 +29,7 @@ let
 in
 
 # Pygobject 2.x is not compatible with Python 3.x
-assert is2x -> !isPy3k;
+assert is2x -> !isPy3;
 
 stdenv.mkDerivation rec {
   name = "pygobject-${source.version}${optionalString is2x "-${source.date}"}";

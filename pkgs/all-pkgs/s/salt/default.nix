@@ -2,7 +2,7 @@
 , buildPythonPackage
 , fetchFromGitHub
 , fetchPyPi
-, isPy3k
+, isPy3
 , lib
 
 , apache-libcloud
@@ -110,7 +110,7 @@ buildPythonPackage rec {
     #yappi
   ];
 
-  disabled = isPy3k;
+  disabled = isPy3;
 
   meta = with lib; {
     description = "Distributed, remote execution & configuration management system";

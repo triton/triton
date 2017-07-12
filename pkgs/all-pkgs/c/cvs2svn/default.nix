@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchurl
-, isPy3k
+, isPy3
 
 , bazaar
 , git
@@ -23,7 +23,7 @@ buildPythonPackage rec {
     subversion
   ];
 
-  disabled = isPy3k;
+  disabled = isPy3;
 
   meta = with stdenv.lib; {
     description = "CVS to Subversion/git/Bazaar/Mercurial repository converter";

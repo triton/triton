@@ -18,7 +18,7 @@
 , stdenv
 } @ args:
 
-let
+let  # BEGIN let/in 1
 
   lib = import ../../lib;
 
@@ -96,7 +96,7 @@ let
   # The package compositions.  Yes, this isn't properly indented.
   pkgsFun = pkgs: overrides:
     with helperFunctions;
-    let
+    let  # BEGIN let/in 2
       defaultScope = pkgs;
       self = self_ // overrides;
       self_ =
@@ -4588,4 +4588,7 @@ texLive = callPackageAlias "texlive" { };
 #
 };
 
-in self; in pkgs
+in  # END let/in 1
+self;
+in  # END let/in 2
+pkgs

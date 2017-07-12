@@ -2,7 +2,6 @@
 , buildPythonPackage
 , fetchPyPi
 , isPy3
-, isPy36
 , lib
 
 , appdirs
@@ -54,7 +53,7 @@ buildPythonPackage rec {
     ln -sv $out/bin/acd_cli.py $out/bin/acd_cli
   '';
 
-  disabled = !isPy3 || isPy36;
+  disabled = !isPy3;
 
   meta = with lib; {
     description = "A CLI and FUSE filesystem for Amazon (Cloud) Drive";

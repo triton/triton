@@ -38,17 +38,6 @@ let
     }
   );
 
-  # Unique python version identifier
-  pythonName =
-    if isPy27 then
-      "python27"
-    else if isPy36 then
-      "python36"
-    else if isPyPy then
-      "pypy"
-    else
-      "";
-
   callPackage = pkgs.newScope (self // {
     inherit pkgs;
     pythonPackages = self;
@@ -67,7 +56,6 @@ in {
     isPy3k
     python
     pythonAtLeast
-    pythonName
     pythonOlder;
 
   # helpers

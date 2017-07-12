@@ -3005,10 +3005,6 @@ python27 = callPackage ../all-pkgs/p/python {
   channel = "2.7";
   self = callPackageAlias "python27" { };
 };
-python35 = callPackage ../all-pkgs/p/python {
-  channel = "3.5";
-  self = callPackageAlias "python35" { };
-};
 python36 = hiPrio (callPackage ../all-pkgs/p/python {
   channel = "3.6";
   self = callPackageAlias "python36" { };
@@ -3024,10 +3020,6 @@ python27Packages = hiPrioSet (recurseIntoAttrs (callPackage ../top-level/python-
   python = callPackageAlias "python27" { };
   self = callPackageAlias "python27Packages" { };
 }));
-python35Packages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
-  python = callPackageAlias "python35" { };
-  self = callPackageAlias "python35Packages" { };
-});
 python36Packages = recurseIntoAttrs (callPackage ../top-level/python-packages.nix {
   python = callPackageAlias "python36" { };
   self = callPackageAlias "python36Packages" { };

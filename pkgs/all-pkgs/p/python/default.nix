@@ -267,14 +267,12 @@ stdenv.mkDerivation rec {
       configdir =
         if versionOlder channel "3.0" then
           "config"
-        else if versionAtLeast channel "3.6" then
+        else
           # FIXME: implement a list of platform tuples instead of
           #        using the targetSystem string.  We may eventually
           #        add a non-GNU system and our tuples differ
           #        from those returned by the autoconf macro.
-          "config-${channel}${ifPyDebug}m-${targetSystem}-gnu"
-        else
-          "config-${channel}${ifPyDebug}m";
+          "config-${channel}${ifPyDebug}m-${targetSystem}-gnu";
     in ''
       # The lines we are replacing dont include libpython so we parse it out
       LIBS_WITH_PYTHON="$(pkg-config --libs --static $out/lib/pkgconfig/python-${channel}.pc)"

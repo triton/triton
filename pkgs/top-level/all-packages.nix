@@ -29,7 +29,9 @@ let
     if args.config != null then
       args.config
     else if builtins.getEnv "NIXPKGS_CONFIG" != "" then
-      import (builtins.toPath (builtins.getEnv "NIXPKGS_CONFIG")) { inherit pkgs; }
+      import (builtins.toPath (builtins.getEnv "NIXPKGS_CONFIG")) {
+        inherit pkgs;
+      }
     else
       let
         home = builtins.getEnv "HOME";
@@ -45,12 +47,15 @@ let
           { };
 
   # Helper functions that are exported through `pkgs'.
-  helperFunctions =
-    stdenvAdapters //
-    (import ../build-support/trivial-builders.nix { inherit lib; inherit (pkgs) stdenv; inherit (pkgs.xorg) lndir; });
+  helperFunctions = stdenvAdapters // (
+    import ../build-support/trivial-builders.nix {
+      inherit lib;
+      inherit (pkgs) stdenv;
+      inherit (pkgs.xorg) lndir;
+    }
+  );
 
-  stdenvAdapters =
-    import ../stdenv/adapters.nix pkgs;
+  stdenvAdapters = import ../stdenv/adapters.nix pkgs;
 
 
   # Allow packages to be overriden globally via the `packageOverrides'
@@ -62,8 +67,11 @@ let
   # ... pkgs.foo ...").
   pkgs = applyGlobalOverrides (config.packageOverrides or (pkgs: {}));
 
-  mkOverrides = pkgsOrig: overrides: overrides //
-        (lib.optionalAttrs (pkgsOrig.stdenv ? overrides) (pkgsOrig.stdenv.overrides pkgsOrig));
+  mkOverrides = pkgsOrig: overrides:
+    overrides // (
+      lib.optionalAttrs (pkgsOrig.stdenv ? overrides)
+          (pkgsOrig.stdenv.overrides pkgsOrig)
+    );
 
   # Return the complete set of packages, after applying the overrides
   # returned by the `overrider' function (see above).  Warning: this
@@ -81,29 +89,32 @@ let
 
       # The overriden, final packages.
       pkgs = pkgsFun pkgs overrides;
-    in pkgs;
+    in
+    pkgs;
 
 
   # The package compositions.  Yes, this isn't properly indented.
   pkgsFun = pkgs: overrides:
     with helperFunctions;
-    let defaultScope = pkgs; self = self_ // overrides;
-    self_ =
-      let
-        inherit (self_)
-          callPackage
-          callPackages
-          callPackageAlias
-          recurseIntoAttrs
-          wrapCCWith
-          wrapCC;
-        inherit (lib)
-          hiPrio
-          hiPrioSet
-          lowPrio
-          lowPrioSet;
-      in
-     helperFunctions // {
+    let
+      defaultScope = pkgs;
+      self = self_ // overrides;
+      self_ =
+        let
+          inherit (self_)
+            callPackage
+            callPackages
+            callPackageAlias
+            recurseIntoAttrs
+            wrapCCWith
+            wrapCC;
+          inherit (lib)
+            hiPrio
+            hiPrioSet
+            lowPrio
+            lowPrioSet;
+        in
+        helperFunctions // {
 
   # Make some arguments passed to all-packages.nix available
   targetSystem = args.targetSystem;
@@ -117,7 +128,7 @@ let
   # can be obtained from `pkgs' or `pkgs.xorg' (i.e. `defaultScope').
   # Use `newScope' for sets of packages in `pkgs' (see e.g. `gnome'
   # below).
-  callPackage = self_.newScope {};
+  callPackage = self_.newScope { };
 
   callPackages = lib.callPackagesWith defaultScope;
 
@@ -140,19 +151,26 @@ let
     let
       newpkgs = pkgsFun newpkgs overrides;
       overrides = mkOverrides pkgs (f newpkgs pkgs);
-    in newpkgs;
+    in
+    newpkgs;
 
   # Override system. This is useful to build i686 packages on x86_64-linux.
   forceSystem = { targetSystem, hostSystem }: (import ./all-packages.nix) {
-    inherit targetSystem hostSystem config stdenv;
+    inherit
+      targetSystem
+      hostSystem
+      config
+      stdenv;
   };
 
   pkgs_32 =
     let
       hostSystem' =
-        if [ hostSystem ] == lib.platforms.x86_64-linux && [ targetSystem' ] == lib.platforms.i686-linux then
+        if [ hostSystem ] == lib.platforms.x86_64-linux
+            && [ targetSystem' ] == lib.platforms.i686-linux then
           lib.head lib.platforms.i686-linux
-        else if [ hostSystem ] == lib.platforms.i686-linux && [ targetSystem' ] == lib.platforms.i686-linux then
+        else if [ hostSystem ] == lib.platforms.i686-linux
+            && [ targetSystem' ] == lib.platforms.i686-linux then
           lib.head lib.platforms.i686-linux
         else
           throw "Couldn't determine the 32 bit host system.";
@@ -164,7 +182,8 @@ let
           lib.head lib.platforms.i686-linux
         else
           throw "Couldn't determine the 32 bit target system.";
-    in pkgs.forceSystem {
+    in
+    pkgs.forceSystem {
       hostSystem = hostSystem';
       targetSystem = targetSystem';
     };
@@ -173,7 +192,10 @@ let
   path = ../..;
 
   ### Helper functions.
-  inherit lib config stdenvAdapters;
+  inherit
+    lib
+    config
+    stdenvAdapters;
 
   # Applying this to an attribute set will cause nix-env to look
   # inside the set for derivations.
@@ -184,7 +206,8 @@ let
 
   ### Nixpkgs maintainer tools
 
-  nix-generate-from-cpan = callPackage ../../maintainers/scripts/nix-generate-from-cpan.nix { };
+  nix-generate-from-cpan =
+    callPackage ../../maintainers/scripts/nix-generate-from-cpan.nix { };
 
   nixpkgs-lint = callPackage ../../maintainers/scripts/nixpkgs-lint.nix { };
 
@@ -197,29 +220,43 @@ let
     else
       import ../stdenv {
         allPackages = args': import ./all-packages.nix (args // args');
-        inherit lib targetSystem hostSystem config;
+        inherit
+          lib
+          targetSystem
+          hostSystem
+          config;
       };
 
   ### BUILD SUPPORT
 
-  attrSetToDir = arg: callPackage ../build-support/upstream-updater/attrset-to-dir.nix {
-    theAttrSet = arg;
-  };
+  attrSetToDir = arg:
+    callPackage ../build-support/upstream-updater/attrset-to-dir.nix {
+      theAttrSet = arg;
+    };
 
-  autoreconfHook = makeSetupHook
-    { substitutions = { inherit (pkgs) autoconf automake gettext libtool; }; }
-    ../build-support/setup-hooks/autoreconf.sh;
+  autoreconfHook = makeSetupHook {
+    substitutions = {
+      inherit (pkgs)
+        autoconf
+        automake
+        gettext
+        libtool;
+    };
+  } ../build-support/setup-hooks/autoreconf.sh;
 
-  ensureNewerSourcesHook = { year }: makeSetupHook {}
-    (writeScript "ensure-newer-sources-hook.sh" ''
+  ensureNewerSourcesHook = { year }: makeSetupHook { } (
+    writeScript "ensure-newer-sources-hook.sh" ''
       postUnpackHooks+=(_ensureNewerSources)
       _ensureNewerSources() {
         '${pkgs.findutils}/bin/find' "$sourceRoot" \
-          '!' -newermt '${year}-01-01' -exec touch -h -d '${year}-01-02' '{}' '+'
+          '!' -newermt '${year}-01-01' \
+          -exec touch -h -d '${year}-01-02' '{}' '+'
       }
-    '');
+    ''
+  );
 
-  buildEnv = callPackage ../build-support/buildenv { }; # not actually a package
+  # not actually a package
+  buildEnv = callPackage ../build-support/buildenv { };
 
   #buildFHSEnv = callPackage ../build-support/build-fhs-chrootenv/env.nix { };
 
@@ -232,7 +269,12 @@ let
   #};
 
   #buildFHSUserEnv = args: userFHSEnv {
-  #  env = buildFHSEnv (removeAttrs args [ "runScript" "extraBindMounts" "extraInstallCommands" "meta" ]);
+  #  env = buildFHSEnv (removeAttrs args [
+  #    "runScript"
+  #    "extraBindMounts"
+  #    "extraInstallCommands"
+  #    "meta"
+  #  ]);
   #  runScript = args.runScript or "bash";
   #  extraBindMounts = args.extraBindMounts or [];
   #  extraInstallCommands = args.extraInstallCommands or "";
@@ -259,7 +301,8 @@ let
 
   fetchgitPrivate = callPackage ../build-support/fetchgit/private.nix { };
 
-  fetchgitrevision = import ../build-support/fetchgitrevision runCommand pkgs.git;
+  fetchgitrevision =
+    import ../build-support/fetchgitrevision runCommand pkgs.git;
 
   fetchgitLocal = callPackage ../build-support/fetchgitlocal { };
 
@@ -269,7 +312,8 @@ let
     sshSupport = true;
   };
 
-  fetchsvnrevision = import ../build-support/fetchsvnrevision runCommand pkgs.subversion;
+  fetchsvnrevision =
+    import ../build-support/fetchsvnrevision runCommand pkgs.subversion;
 
   fetchsvnssh = callPackage ../build-support/fetchsvnssh {
     sshSupport = true;
@@ -281,83 +325,145 @@ let
   fetchurl = callPackage ../build-support/fetchurl { };
 
   fetchTritonPatch = { rev, file, sha256 }: pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/triton/triton-patches/${rev}/${file}";
+    url = "https://raw.githubusercontent.com/triton/triton-patches/"
+      + "${rev}/${file}";
     hashOutput = false;
     inherit sha256;
   };
 
   fetchzip = callPackage ../build-support/fetchzip { };
 
-  fetchFromGitHub = { owner, repo, rev, sha256, version ? null, name ? "${repo}-${rev}" }: pkgs.fetchzip {
-    inherit name sha256 version;
-    url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
-    meta.homepage = "https://github.com/${owner}/${repo}/";
-  } // { inherit rev; };
+  fetchFromGitHub =
+    { owner
+    , repo
+    , rev
+    , sha256
+    , version ? null
+    , name ? "${repo}-${rev}"
+    }:
+    pkgs.fetchzip {
+      inherit
+        name
+        sha256
+        version;
+      url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
+      meta.homepage = "https://github.com/${owner}/${repo}/";
+    } // {
+      inherit rev;
+    };
 
-  fetchFromBitbucket = { owner, repo, rev, sha256, version ? null, name ? "${repo}-${rev}" }: pkgs.fetchzip {
-    inherit name sha256 version;
-    url = "https://bitbucket.org/${owner}/${repo}/get/${rev}.tar.gz";
-    meta.homepage = "https://bitbucket.org/${owner}/${repo}/";
-    extraPostFetch = ''
-      find . -name .hg_archival.txt -delete
-    ''; # impure file; see #12002
-  };
+  fetchFromBitbucket =
+    { owner
+    , repo
+    , rev
+    , sha256
+    , version ? null
+    , name ? "${repo}-${rev}"
+    }:
+    pkgs.fetchzip {
+      inherit
+        name
+        sha256
+        version;
+      url = "https://bitbucket.org/${owner}/${repo}/get/${rev}.tar.gz";
+      meta.homepage = "https://bitbucket.org/${owner}/${repo}/";
+      extraPostFetch = ''
+        # impure file, see https://github.com/NixOS/nixpkgs/pull/12002
+        find . -name .hg_archival.txt -delete
+      '';
+    };
 
-  # cgit example, snapshot support is optional in cgit
-  fetchFromSavannah = { repo, rev, sha256, version ? null, name ? "${repo}-${rev}" }: pkgs.fetchzip {
-    inherit name sha256 version;
-    url = "http://git.savannah.gnu.org/cgit/${repo}.git/snapshot/${repo}-${rev}.tar.gz";
-    meta.homepage = "http://git.savannah.gnu.org/cgit/${repo}.git/";
-  };
+  fetchFromSavannah =
+    { repo
+    , rev
+    , sha256
+    , version ? null
+    , name ? "${repo}-${rev}"
+    }:
+    pkgs.fetchzip {
+      inherit
+        name
+        sha256
+        version;
+      # cgit, snapshot support is optional in cgit
+      url = "http://git.savannah.gnu.org/cgit/${repo}.git/snapshot/"
+        + "${repo}-${rev}.tar.gz";
+      meta.homepage = "http://git.savannah.gnu.org/cgit/${repo}.git/";
+    };
 
-  # gitlab example
-  fetchFromGitLab = { owner, repo, rev, sha256, version ? null, name ? "${repo}-${rev}" }: pkgs.fetchzip {
-    inherit name sha256 version;
-    url = "https://gitlab.com/${owner}/${repo}/repository/archive.tar.gz?ref=${rev}";
-    meta.homepage = "https://gitlab.com/${owner}/${repo}/";
-  };
+  fetchFromGitLab =
+    { owner
+    , repo
+    , rev
+    , sha256
+    , version ? null
+    , name ? "${repo}-${rev}"
+    }:
+    pkgs.fetchzip {
+      inherit name sha256 version;
+      url = "https://gitlab.com/${owner}/${repo}/repository/"
+        + "archive.tar.gz?ref=${rev}";
+      meta.homepage = "https://gitlab.com/${owner}/${repo}/";
+    };
 
-  # gitweb example, snapshot support is optional in gitweb
-  fetchFromRepoOrCz = { repo, rev, sha256, version ? null, name ? "${repo}-${rev}" }: pkgs.fetchzip {
-    inherit name sha256 version;
-    url = "http://repo.or.cz/${repo}.git/snapshot/${rev}.tar.gz";
-    meta.homepage = "http://repo.or.cz/${repo}.git/";
-  };
+  fetchFromRepoOrCz =
+    { repo
+    , rev
+    , sha256
+    , version ? null
+    , name ? "${repo}-${rev}"
+    }:
+    pkgs.fetchzip {
+      inherit name sha256 version;
+      # gitweb, snapshot support is optional in gitweb
+      url = "http://repo.or.cz/${repo}.git/snapshot/${rev}.tar.gz";
+      meta.homepage = "http://repo.or.cz/${repo}.git/";
+    };
 
-  fetchFromSourceforge = { repo, rev, sha256, name ? "${repo}-${rev}" }: pkgs.fetchzip {
-    inherit name sha256;
-    url = "http://sourceforge.net/code-snapshots/git/"
-      + "${lib.substring 0 1 repo}/"
-      + "${lib.substring 0 2 repo}/"
-      + "${repo}/code.git/"
-      + "${repo}-code-${rev}.zip";
-    meta.homepage = "http://sourceforge.net/p/${repo}/code";
-    preFetch = ''
-      echo "Telling sourceforge to generate code tarball..."
-      $curl --data "path=&" "http://sourceforge.net/p/${repo}/code/ci/${rev}/tarball" >/dev/null
-      local found
-      found=0
-      for i in {1..30}; do
-        echo "Checking tarball generation status..." >&2
-        status="$($curl "http://sourceforge.net/p/${repo}/code/ci/${rev}/tarball_status?path=")"
-        echo "$status"
-        if echo "$status" | grep -q '{"status": "complete"}'; then
-          found=1
-          break
+  fetchFromSourceforge =
+    { repo
+    , rev
+    , sha256
+    , name ? "${repo}-${rev}"
+    }:
+    pkgs.fetchzip {
+      inherit name sha256;
+      url = "http://sourceforge.net/code-snapshots/git/"
+        + "${lib.substring 0 1 repo}/"
+        + "${lib.substring 0 2 repo}/"
+        + "${repo}/code.git/"
+        + "${repo}-code-${rev}.zip";
+      meta.homepage = "http://sourceforge.net/p/${repo}/code";
+      preFetch = ''
+        echo "Telling sourceforge to generate code tarball..."
+        $curl --data "path=&" \
+          "http://sourceforge.net/p/${repo}/code/ci/${rev}/tarball" >/dev/null
+        local found
+        found=0
+        for i in {1..30}; do
+          echo "Checking tarball generation status..." >&2
+          status="$(
+            $curl \
+              "http://sourceforge.net/p/${repo}/code/ci/${rev}/tarball_status?path="
+          )"
+          echo "$status"
+          if echo "$status" | grep -q '{"status": "complete"}'; then
+            found=1
+            break
+          fi
+          if ! echo "$status" | grep -q '{"status": "\(ready\|busy\)"}'; then
+            break
+          fi
+          sleep 1
+        done
+        if [ "$found" -ne "1" ]; then
+          echo "Sourceforge failed to generate tarball"
+          exit 1
         fi
-        if ! echo "$status" | grep -q '{"status": "\(ready\|busy\)"}'; then
-          break
-        fi
-        sleep 1
-      done
-      if [ "$found" -ne "1" ]; then
-        echo "Sourceforge failed to generate tarball"
-        exit 1
-      fi
-    '';
-  };
+      '';
+    };
 
-  resolveMirrorURLs = {url}: pkgs.fetchurl {
+  resolveMirrorURLs = { url }: pkgs.fetchurl {
     showURLs = true;
     inherit url;
   };
@@ -384,9 +490,11 @@ let
 
   srcOnly = args: callPackage ../build-support/src-only args;
 
-  substituteAll = callPackage ../build-support/substitute/substitute-all.nix { };
+  substituteAll =
+    callPackage ../build-support/substitute/substitute-all.nix { };
 
-  substituteAllFiles = callPackage ../build-support/substitute-files/substitute-all-files.nix { };
+  substituteAllFiles =
+    callPackage ../build-support/substitute-files/substitute-all-files.nix { };
 
   replaceDependency = callPackage ../build-support/replace-dependency.nix { };
 
@@ -400,26 +508,35 @@ let
 
   #platforms = import ./platforms.nix;
 
-  setJavaClassPath = makeSetupHook { } ../build-support/setup-hooks/set-java-classpath.sh;
+  setJavaClassPath =
+    makeSetupHook { } ../build-support/setup-hooks/set-java-classpath.sh;
 
-  keepBuildTree = makeSetupHook { } ../build-support/setup-hooks/keep-build-tree.sh;
+  keepBuildTree =
+    makeSetupHook { } ../build-support/setup-hooks/keep-build-tree.sh;
 
-  enableGCOVInstrumentation = makeSetupHook { } ../build-support/setup-hooks/enable-coverage-instrumentation.sh;
+  enableGCOVInstrumentation =
+    makeSetupHook { }
+      ../build-support/setup-hooks/enable-coverage-instrumentation.sh;
 
   makeGCOVReport = makeSetupHook
     { deps = [ pkgs.lcov pkgs.enableGCOVInstrumentation ]; }
     ../build-support/setup-hooks/make-coverage-analysis-report.sh;
 
-  # intended to be used like nix-build -E 'with <nixpkgs> {}; enableDebugging fooPackage'
-  enableDebugging = pkg: pkg.override { stdenv = stdenvAdapters.keepDebugInfo pkgs.stdenv; };
+  # intended to be used like:
+  # nix-build -E 'with <nixpkgs> {}; enableDebugging fooPackage'
+  enableDebugging = pkg: pkg.override {
+    stdenv = stdenvAdapters.keepDebugInfo pkgs.stdenv;
+  };
 
-  findXMLCatalogs = makeSetupHook { } ../build-support/setup-hooks/find-xml-catalogs.sh;
+  findXMLCatalogs =
+    makeSetupHook { } ../build-support/setup-hooks/find-xml-catalogs.sh;
 
   wrapGAppsHook = makeSetupHook {
     deps = [ makeWrapper ];
   } ../build-support/setup-hooks/wrap-gapps-hook.sh;
 
-  separateDebugInfo = makeSetupHook { } ../build-support/setup-hooks/separate-debug-info.sh;
+  separateDebugInfo =
+    makeSetupHook { } ../build-support/setup-hooks/separate-debug-info.sh;
 
 ################################################################################
 ################################################################################
@@ -444,7 +561,8 @@ wrapCCWith = ccWrapper: libc: extraBuildCommands: baseCC: ccWrapper {
   inherit libc extraBuildCommands;
 };
 
-wrapCC = wrapCCWith (callPackage ../build-support/cc-wrapper) pkgs.stdenv.cc.libc "";
+wrapCC =
+  wrapCCWith (callPackage ../build-support/cc-wrapper) pkgs.stdenv.cc.libc "";
 
 ################################################################################
 ################################################################################

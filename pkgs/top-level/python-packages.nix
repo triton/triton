@@ -50,7 +50,6 @@ in {
     buildPythonPackage
     fetchPyPi
     isPy2
-    isPy36
     isPyPy
     isPy3
     python

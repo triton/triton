@@ -114,7 +114,7 @@ let  # BEGIN let/in 1
             lowPrio
             lowPrioSet;
         in
-        helperFunctions // {
+        helperFunctions // {  # BEGIN helperFunctions merge
 
   # Make some arguments passed to all-packages.nix available
   targetSystem = args.targetSystem;
@@ -4586,7 +4586,7 @@ texLive = callPackageAlias "texlive" { };
 #
   myEnvFun = callPackage ../misc/my-env { };
 #
-};
+};  # END helperFunctions merge
 
 in  # END let/in 1
 self;

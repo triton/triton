@@ -4,7 +4,7 @@
 , fetchPyPi
 , fetchTritonPatch
 , glibcLocales
-, isPy27
+, isPy2
 , isPy3
 , lib
 , makeWrapper
@@ -183,7 +183,7 @@ buildPythonPackage rec {
     requests
     unidecode
     werkzeug
-  ] ++ optionals isPy27 [
+  ] ++ optionals isPy2 [
     enum34
   ] ++ optionals (versionOlder pythonPackages.python.channel "3.5") [
     pathlib
@@ -195,7 +195,7 @@ buildPythonPackage rec {
           stdenv
           buildPythonPackage
           fetchFromGitHub
-          isPy27
+          isPy2
           optionals
           pythonPackages;
       }

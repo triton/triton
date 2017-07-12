@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
-, isPy27
+, isPy2
 , lib
 
 , botocore
@@ -25,7 +25,7 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [
     botocore
-  ] ++ optionals isPy27 [
+  ] ++ optionals isPy2 [
     futures
   ];
 

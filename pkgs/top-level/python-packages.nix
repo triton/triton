@@ -5,10 +5,9 @@ with pkgs.lib;
 let
   pythonAtLeast = versionAtLeast python.channel;
   pythonOlder = versionOlder python.channel;
-  isPy27 = python.channel == "2.7";
-  isPy36 = python.channel == "3.6";
-  isPyPy = python.executable == "pypy";
+  isPy2 = strings.substring 0 1 python.channel == "2";
   isPy3 = strings.substring 0 1 python.channel == "3";
+  isPyPy = python.executable == "pypy";
 
   fetchPyPi = { package, version, sha256, type ? ".tar.gz" }:
     pkgs.fetchurl rec {
@@ -50,7 +49,7 @@ in {
   inherit
     buildPythonPackage
     fetchPyPi
-    isPy27
+    isPy2
     isPy36
     isPyPy
     isPy3
@@ -891,7 +890,7 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
    python2-pythondialog = buildPythonPackage rec {
      name = "python2-pythondialog-${version}";
      version = "3.4.0";
-     disabled = !isPy27;
+     disabled = !isPy2;
 
      src = fetchPyPi {
        package = "python2-pythondialog";

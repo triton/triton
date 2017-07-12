@@ -1,7 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchFromGitHub
-, isPy27
+, isPy2
 , optionals
 , pythonPackages
 }:
@@ -23,7 +23,7 @@ buildPythonPackage rec {
       -e '/install_requires/,/\]/{/beets/d}'
   '';
 
-  propagatedBuildInputs = optionals isPy27 [
+  propagatedBuildInputs = optionals isPy2 [
     pythonPackages.futures
   ];
 

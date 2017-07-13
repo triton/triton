@@ -16,6 +16,8 @@ buildPythonPackage {
     sha256 = "df57b79494a310d02791e3b24527536c0bcfcf8df32b30a6e4b4e071ec94ddb4";
   };
 
+  setupHook = ./setup-hook.sh;
+
   meta = with lib; {
     maintainers = with maintainers; [
       wkennington

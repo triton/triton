@@ -1,15 +1,14 @@
 { stdenv
-, autoconf
-, automake
 , fetchurl
-, lib
-, libtool
 , gettext
-, xmltoman
+, lib
 , intltool
+, perl
+, xmltoman
 
 , dbus
 , expat
+, gdbm
 , glib
 , libdaemon
 }:
@@ -20,42 +19,33 @@ let
     boolString
     boolWt;
 
-  version = "0.6.32";
+  version = "0.7";
 in
 stdenv.mkDerivation rec {
   name = "avahi-${version}";
 
   src = fetchurl {
-    url = "https://github.com/lathiat/avahi/archive/v${version}.tar.gz";
-    name = "${name}.tar.gz";
-    sha256 = "0vi2f48d3jhkads02zrvvn27li2kxnrky5rla380qvr4g3c97dky";
+    url = "https://github.com/lathiat/avahi/releases/download/v${version}/${name}.tar.gz";
+    sha256 = "57a99b5dfe7fdae794e3d1ee7a62973a368e91e414bd0dfa5d84434de5b14804";
   };
 
   nativeBuildInputs = [
-    autoconf
-    automake
-    libtool
     gettext
-    xmltoman
     intltool
+    perl
+    xmltoman
   ];
 
   buildInputs = [
     dbus
     expat
+    gdbm
     glib
     libdaemon
   ];
 
-  postPatch = ''
-    patchShebangs .
-  '';
-
-  preConfigure = ''
-    NOCONFIGURE=1 ./autogen.sh
-  '';
-
   configureFlags = [
+    "--sysconfdir=/etc"
     "--localstatedir=/var"
     "--enable-nls"
     "--${boolEn (glib != null)}-glib"
@@ -67,12 +57,10 @@ stdenv.mkDerivation rec {
     "--disable-gtk3"
     "--${boolEn (dbus != null)}-dbus"
     "--disable-dbm"
-    "--disable-gdbm"
+    "--enable-gdbm"
     "--${boolEn (libdaemon != null)}-libdaemon"
     "--disable-python"
-    # Circular dependency:
-    # avahi -> pygtk -> gtk2 -> cups -> avahi
-    "--disable-pygtk"
+    "--disable-pygobject"
     "--disable-python-dbus"
     "--disable-mono"
     "--disable-monodoc"
@@ -90,7 +78,7 @@ stdenv.mkDerivation rec {
     "--disable-core-docs"
     "--enable-manpages"
     "--enable-xmltoman"
-    "--enable-tests"
+    "--disable-tests"
     "--enable-compat-libdns_sd"
     "--enable-compat-howl"
     "--with-distro=none"
@@ -103,7 +91,12 @@ stdenv.mkDerivation rec {
   ];
 
   preInstall = ''
-    installFlagsArray+=("localstatedir=$TMPDIR")
+    installFlagsArray+=(
+      "localstatedir=$TMPDIR"
+      "sysconfdir=$out"
+      "avahi_runtime_dir=$TMPDIR"
+      "DBUS_SYS_DIR=$out/etc/dbus-1/system.d"
+    )
   '';
 
   postInstall =

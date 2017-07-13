@@ -2628,6 +2628,8 @@ mesa = pkgs.buildEnv {
   passthru = pkgs.mesa_glu.passthru // pkgs.mesa_noglu.passthru;
 };
 
+meson = pkgs.python3Packages.meson;
+
 #mesos = callPackage ../all-pkgs/m/mesos {
 #  inherit (pythonPackages) python boto setuptools wrapPython;
 #  pythonProtobuf = pythonPackages.protobuf2_5;

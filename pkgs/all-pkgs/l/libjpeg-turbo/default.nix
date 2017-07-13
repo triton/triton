@@ -16,6 +16,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/libjpeg-turbo/${version}/${name}.tar.gz";
+    hashOutput = false;
     inherit (source) sha256;
   };
 
@@ -25,6 +26,12 @@ stdenv.mkDerivation rec {
 
   passthru = {
     type = "turbo";
+    srcVerification = fetchurl {
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.sig") src.urls;
+      pgpKeyFingerprint = "7D62 93CC 6378 786E 1B5C  4968 85C7 044E 033F DE16";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
   };
 
   meta = with stdenv.lib; {

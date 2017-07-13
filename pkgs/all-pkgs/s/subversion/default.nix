@@ -19,9 +19,9 @@
 let
   sources = {
     "1.8" = {
-      version = "1.8.17";
-      sha1Confirm = "0999f5e16b146f824b952a5552826b9cb5c47b13";
-      sha256 = "de119538d29a5f2c028984cb54a55a4af3e9c32fa9316331bcbe5719e474a090";
+      version = "1.8.18";
+      sha1Confirm = "026f42b53b8595b9b87c4d24441f7a121c27554c";
+      sha256 = "e56b00ad3e927183bb6568781b85fe66dd3a7372c342af6e73b21a4473c397a6";
     };
     "1.9" = {
       version = "1.9.5";
@@ -107,7 +107,11 @@ stdenv.mkDerivation rec {
         "056F 8016 D9B8 7B1B DE41  7467 99EC 741B 5792 1ACC"
         "BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F"
         "8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973"
+        "A844 790F B574 3606 EE95  9207 76D7 88E1 ED1A 599C"
         "3D1D C66D 6D2E 0B90 3952  8138 C4A6 C625 CCC8 E1DF"
+        "7B8C A7F6 451A D89C 8ADC  077B 376A 3CFD 110B 1C95"
+        "6011 63CF 9D49 9FD7 18CF  582D 1FB0 64B8 4EEC C493"
+        "E966 46BE 08C0 AF0A A0F9  0788 A5FE EE3A C793 7444"
       ];
       inherit (src) urls outputHash outputHashAlgo;
       inherit (source) sha1Confirm;

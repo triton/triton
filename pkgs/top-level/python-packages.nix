@@ -197,6 +197,8 @@ cython = callPackage ../all-pkgs/c/cython { };
 
 daemonize = callPackage ../all-pkgs/d/daemonize { };
 
+dbus-python = callPackage ../all-pkgs/d/dbus-python { };
+
 decorator = callPackage ../all-pkgs/d/decorator { };
 
 deluge = callPackage ../all-pkgs/d/deluge { };

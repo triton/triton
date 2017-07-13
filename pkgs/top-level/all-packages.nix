@@ -2607,6 +2607,8 @@ mariadb-connector-c = callPackage ../all-pkgs/m/mariadb-connector-c { };
 
 mcelog = callPackage ../all-pkgs/m/mcelog { };
 
+mcpp = callPackage ../all-pkgs/m/mcpp { };
+
 mdadm = callPackage ../all-pkgs/m/mdadm { };
 
 mediainfo = callPackage ../all-pkgs/m/mediainfo { };
@@ -4527,8 +4529,6 @@ libstartup_notification =
 google_talk_plugin =
   callPackage
     ../applications/networking/browsers/mozilla-plugins/google-talk-plugin { };
-#
-  mcpp = callPackage ../development/compilers/mcpp { };
 #
   mpg123 = callPackage ../applications/audio/mpg123 { };
 #

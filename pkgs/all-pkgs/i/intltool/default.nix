@@ -5,9 +5,11 @@
 , perlPackages
 }:
 
+let
+  version = "0.51.0";
+in
 stdenv.mkDerivation rec {
   name = "intltool-${version}";
-  version = "0.51.0";
 
   src = fetchurl {
     url = "https://launchpad.net/intltool/trunk/${version}/+download/${name}.tar.gz";

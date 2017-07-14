@@ -823,6 +823,9 @@ ceph_10 = callPackage ../all-pkgs/c/ceph {
 ceph_11 = callPackage ../all-pkgs/c/ceph/cmake.nix {
   channel = "11";
 };
+ceph_12 = callPackage ../all-pkgs/c/ceph/cmake.nix {
+  channel = "12";
+};
 ceph_dev = callPackage ../all-pkgs/c/ceph/cmake.nix {
   channel = "dev";
 };

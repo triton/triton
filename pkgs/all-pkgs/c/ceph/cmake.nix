@@ -13,6 +13,7 @@
 , expat
 , fcgi
 , fuse_2
+, gperf
 , jemalloc
 , keyutils
 , leveldb
@@ -30,7 +31,7 @@
 , xfsprogs_lib
 , zlib
 
-, channel ? "10"
+, channel
 }:
 
 let
@@ -85,6 +86,7 @@ stdenv.mkDerivation rec {
     xfsprogs_lib
     zlib
   ] ++ optionals (versionAtLeast version "12.0.0") [
+    gperf
     openssl
     rdma-core
   ];

@@ -43,7 +43,7 @@
 , zfs
 , zlib
 
-, channel ? "10"
+, channel
 }:
 
 let

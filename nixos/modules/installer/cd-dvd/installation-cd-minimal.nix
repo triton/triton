@@ -7,5 +7,7 @@
   imports =
     [ ./installation-cd-base.nix
       ../../profiles/minimal.nix
+      /conf/nixos/common/base.nix
+      /conf/nixos/common/sshd.nix
     ];
 }

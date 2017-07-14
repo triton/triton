@@ -13221,10 +13221,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   XMLLibXML = buildPerlPackage rec {
-    name = "XML-LibXML-2.0123";
+    name = "XML-LibXML-2.0129";
     src = fetchurl {
       url = "mirror://cpan/authors/id/S/SH/SHLOMIF/${name}.tar.gz";
-      sha256 = "1i7p2hkgkw6mdhg4rz7xa4w3kyw0ldwhqmb3ikpasb0m3x4s4985";
+      sha256 = "5ca0269ba06800c84061a7f3333c85fab5584d69cd7b4e0641963da7fd36b366";
     };
     SKIP_SAX_INSTALL = 1;
     buildInputs = [ pkgs.libxml2 ];
@@ -13254,11 +13254,11 @@ let self = _self // overrides; _self = with self; {
     propagatedBuildInputs = [ XMLLibXML ];
   };
 
-  XMLNamespaceSupport = buildPerlPackage {
-    name = "XML-NamespaceSupport-1.11";
+  XMLNamespaceSupport = buildPerlPackage rec {
+    name = "XML-NamespaceSupport-1.12";
     src = fetchurl {
-      url = mirror://cpan/authors/id/P/PE/PERIGRIN/XML-NamespaceSupport-1.11.tar.gz;
-      sha256 = "1sklgcldl3w6gn706vx1cgz6pm4y5lfgsjxnfqyk20pilgq530bd";
+      url = "mirror://cpan/authors/id/P/PE/PERIGRIN/${name}.tar.gz";
+      sha256 = "47e995859f8dd0413aa3f22d350c4a62da652e854267aa0586ae544ae2bae5ef";
     };
   };
 

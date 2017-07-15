@@ -8,27 +8,11 @@ in
 
 {
   imports = [
-    ./afterstep.nix
-    ./bspwm.nix
-    ./clfswm.nix
-    ./compiz.nix
-    ./dwm.nix
-    ./fluxbox.nix
-    ./herbstluftwm.nix
-    ./i3.nix
     ./metacity.nix
-    ./openbox.nix
-    ./notion.nix
-    ./ratpoison.nix
-    ./sawfish.nix
-    ./stumpwm.nix
     ./spectrwm.nix
-    ./twm.nix
-    ./windowmaker.nix
-    ./wmii.nix
     ./xmonad.nix
-    ./qtile.nix
-    ./none.nix ];
+    ./none.nix
+  ];
 
   options = {
 

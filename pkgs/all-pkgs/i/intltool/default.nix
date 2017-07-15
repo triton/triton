@@ -20,14 +20,24 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "e04c105d75d64c7dc9b99b21e843318fc1de43b7";
-      file = "i/intltool/0001-perl-compat-5.26.patch";
-      sha256 = "3a02adba6d81b55834934ff2b8cefd45c5461e2693d711b1ba7a633fc3b748a7";
+      rev = "df8f358d8979bbac156256431d9c116677f33b55";
+      file = "i/intltool/0001-perl-compat-5.22.patch";
+      sha256 = "635c37f1f7761f2ed220614e4e37907d7f498d322ea5a1ee580b1eb1372e7419";
     })
     (fetchTritonPatch {
-      rev = "e04c105d75d64c7dc9b99b21e843318fc1de43b7";
-      file = "i/intltool/0002-create-cache-file-atomically.patch";
+      rev = "df8f358d8979bbac156256431d9c116677f33b55";
+      file = "i/intltool/0002-perl-compat-5.26.patch";
+      sha256 = "713e66dbd1d69abe438775a7130e846b40cb1383254025cb76fd593d2f6e0ce7";
+    })
+    (fetchTritonPatch {
+      rev = "df8f358d8979bbac156256431d9c116677f33b55";
+      file = "i/intltool/0003-create-cache-file-atomically.patch";
       sha256 = "13bd6deb65dc94933f132919d4eea4c24354d7c1c1c9e5930cb6e70c75703763";
+    })
+    (fetchTritonPatch {
+      rev = "df8f358d8979bbac156256431d9c116677f33b55";
+      file = "i/intltool/0004-absolute-paths.patch";
+      sha256 = "100745c58324e737af6b9b6c3691d2a1c43dd46993ab045da23b97d105c157c0";
     })
   ];
 

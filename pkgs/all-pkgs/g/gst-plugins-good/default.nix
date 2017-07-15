@@ -36,7 +36,14 @@ let
     boolEn
     boolWt;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.12" = {
+      version = "1.12.2";
+      sha256 = "5591ee7208ab30289a30658a82b76bf87169c927572d9b794f3a41ed48e1ee96";
+    };
+  };
+
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gst-plugins-good-${source.version}";

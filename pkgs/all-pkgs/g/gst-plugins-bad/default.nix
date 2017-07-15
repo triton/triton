@@ -56,7 +56,14 @@ let
     boolString
     boolWt;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.12" = {
+      version = "1.12.2";
+      sha256 = "9c2c7edde4f59d74eb414e0701c55131f562e5c605a3ce9b091754f106c09e37";
+    };
+  };
+
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gst-plugins-bad-${source.version}";

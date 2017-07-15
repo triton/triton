@@ -22,6 +22,9 @@ stdenv.mkDerivation rec {
   postPatch = ''
     grep -q 'chown' Makefile
     sed -i 's,chown,true,g' Makefile
+  '' + /* Cannot setuid inside of nix-builder */ ''
+    sed -i Makefile \
+      -e 's/chmod 04711/chmod 0711/'
   '';
 
   preBuild = ''

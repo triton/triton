@@ -11,17 +11,17 @@
 }:
 
 let
-  version = "0.25.1";
+  version = "0.26.0";
 in
 stdenv.mkDerivation {
   name = "libgit2-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "libgit2";
     repo = "libgit2";
     rev = "v${version}";
-    sha256 = "ea6e1d7f6c9b47882c4a41790ec14e0aa6486890e3bb06f33295b91813ee7967";
+    sha256 = "6d395de55aaed0c4f897f294b1eb4bb96c11846e4ab7e175fe173cf2ef98a710";
   };
 
   nativeBuildInputs = [

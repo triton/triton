@@ -27,7 +27,14 @@ let
   inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.12" = {
+      version = "1.12.2";
+      sha256 = "5067dce3afe197a9536fea0107c77213fab536dff4a213b07fc60378d5510675";
+    };
+  };
+
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gst-plugins-base-${source.version}";

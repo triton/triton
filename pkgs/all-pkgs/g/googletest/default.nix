@@ -2,7 +2,7 @@
 , autoreconfHook
 , cmake
 , fetchTritonPatch
-, fetchzip
+, fetchFromGitHub
 , ninja
 
 , python2
@@ -18,11 +18,12 @@ in
 stdenv.mkDerivation rec {
   name = "googletest-${version}";
 
-  src = fetchzip {
-    version = 1;
-    url = "https://github.com/google/googletest/archive/"
-      + "release-${version}.tar.gz";
-    sha256 = "6c0f5c6f4e325b840ac9c69b0e70e0c21eacfce31c1bdcaad685879dff21d5bc";
+  src = fetchFromGitHub {
+    version = 3;
+    owner = "google";
+    repo = "googletest";
+    rev = "release-${version}";
+    sha256 = "2c62c73fa68be8a9d38bb19c741757323b07e7317eafa9a8a76c60db0c8108f0";
   };
 
   nativeBuildInputs = [
@@ -89,9 +90,9 @@ stdenv.mkDerivation rec {
     pushd $sourceRoot/googletest
       install -D -m755 -v scripts/gtest-config -t "$out"/bin
       install -D -m644 -v m4/gtest.m4 -t "$out"/share/aclocal
-      install -D -m644 -v fused-src/gtest/* -t "$out"/src/gtest/src
-      install -D -m644 -v cmake/* -t "$out"/src/gtest/cmake
-      install -D -m644 -v CMakeLists.txt -t "$out"/src/gtest
+      install -D -m644 -v fused-src/gtest/* -t "$out"/share/gtest/src/src
+      install -D -m644 -v cmake/* -t "$out"/share/gtest/src/cmake
+      install -D -m644 -v CMakeLists.txt -t "$out"/share/gtest/src
     popd
   '';
 

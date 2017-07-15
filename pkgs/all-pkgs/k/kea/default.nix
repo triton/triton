@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
     "--with-pythonpath"
     # Flag is not a boolean
   ] ++ optionals doCheck [
-    "--with-gtest-source=${googletest}/src/gtest"
+    "--with-gtest-source=${googletest}/share/gtest/src"
     "--with-gtest=${googletest}"
   ] ++ [
     "--without-lcov"

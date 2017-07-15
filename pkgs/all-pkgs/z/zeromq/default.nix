@@ -12,7 +12,7 @@
 }:
 
 let
-  version = "4.2.1";
+  version = "4.2.2";
 in
 stdenv.mkDerivation rec {
   name = "zeromq-${version}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     url = "https://github.com/zeromq/libzmq/releases/download/v${version}/"
       + "${name}.tar.gz";
     hashOutput = false;
-    sha256 = "27d1e82a099228ee85a7ddb2260f40830212402c605a4a10b5e5498a7e0e9d03";
+    sha256 = "5b23f4ca9ef545d5bd3af55d305765e3ee06b986263b31967435d285a3e6df6b";
   };
 
   nativeBuildInputs = [

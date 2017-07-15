@@ -383,33 +383,33 @@
   ./services/x11/xfs.nix
   ./services/x11/xserver.nix
 
-  ../../system/services/a/accountsservice
-  ../../system/services/a/alsa
-  ../../system/services/a/at-spi2-core
-  ../../system/services/b/bumblebee
-  ../../system/services/c/cups
-  ../../system/services/d/dbus
-  ../../system/services/d/dconf
-  ../../system/services/d/deluge
-  ../../system/services/e/evolution-data-server
-  ../../system/services/f/fleet
-  ../../system/services/g/geoclue
-  ../../system/services/g/gnome-documents
-  ../../system/services/g/gnome-keyring
-  ../../system/services/g/gnome-online-accounts
-  ../../system/services/g/gnome-online-miners
-  ../../system/services/g/gnome-user-share
-  ../../system/services/g/gvfs
-  ../../system/services/k/kubernetes
-  ../../system/services/m/mpd
-  ../../system/services/n/nautilus
-  ../../system/services/n/nginx
-  ../../system/services/n/nvidia-drivers
-  ../../system/services/p/plex-media-server
-  ../../system/services/s/seahorse
-  ../../system/services/s/sushi
-  ../../system/services/t/tracker
-  ../../system/services/u/udisks
+  ../../services/a/accountsservice
+  ../../services/a/alsa
+  ../../services/a/at-spi2-core
+  ../../services/b/bumblebee
+  ../../services/c/cups
+  ../../services/d/dbus
+  ../../services/d/dconf
+  ../../services/d/deluge
+  ../../services/e/evolution-data-server
+  ../../services/f/fleet
+  ../../services/g/geoclue
+  ../../services/g/gnome-documents
+  ../../services/g/gnome-keyring
+  ../../services/g/gnome-online-accounts
+  ../../services/g/gnome-online-miners
+  ../../services/g/gnome-user-share
+  ../../services/g/gvfs
+  ../../services/k/kubernetes
+  ../../services/m/mpd
+  ../../services/n/nautilus
+  ../../services/n/nginx
+  ../../services/n/nvidia-drivers
+  ../../services/p/plex-media-server
+  ../../services/s/seahorse
+  ../../services/s/sushi
+  ../../services/t/tracker
+  ../../services/u/udisks
 
   ./system/activation/activation-script.nix
   ./system/activation/top-level.nix

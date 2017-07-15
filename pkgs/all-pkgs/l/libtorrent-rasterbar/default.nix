@@ -24,7 +24,26 @@ let
     tail
     versionOlder;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.1" = {
+      version = "1.1.4";
+      sha256 = "ccf42367803a6df7edcf4756d1f7d0a9ce6158ec33b851b3b58fd470ac4eeba6";
+    };
+    "1.1-head" = {
+      fetchzipversion = 3;
+      version = "2017-07-12";
+      rev = "ec65e12ee61ca49f563613e2a6a5f75d60f9bf84";
+      sha256 = "6c57304bb88cbb22e2dfc40b101a3f884c89ec144e58312b31e020417a94f649";
+    };
+    "head" = {
+      fetchzipversion = 2;
+      version = "2017-02-18";
+      rev = "1ab1b98138e551ee8c8bc0525a51dc31d41999fe";
+      sha256 = "aad76aaf1710869a599209f473b93918d11d2b5699b76a6f466d95271ca28aca";
+    };
+  };
+
+  source = sources."${channel}";
 
   isHead =
     if channel == "head" then

@@ -18,7 +18,14 @@ let
   inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.12" = {
+      version = "1.12.2";
+      sha256 = "9fde3f39a2ea984f9e07ce09250285ce91f6e3619d186889f75b5154ecf994ba";
+    };
+  };
+
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gstreamer-${source.version}";

@@ -17,7 +17,14 @@ let
   inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.12" = {
+      version = "1.12.2";
+      sha256 = "6b7a25d1fd2a08ffe08e4809587f16b4c4e01dfd9e77cfa222b7f2558666fedd";
+    };
+  };
+
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gst-validate-${source.version}";

@@ -24,7 +24,14 @@ let
     boolEn
     optionals;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.12" = {
+      version = "1.12.2";
+      sha256 = "23c714e0474b3c7ae6ff8884aebf8503a1bc3ded335fa2d2b2ac31788466163a";
+    };
+  };
+
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gstreamer-vaapi-${source.version}";

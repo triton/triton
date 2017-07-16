@@ -52,6 +52,11 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  postPatch = /* Can't setuid inside nix-builder */ ''
+    sed -i mk/smtpctl/Makefile.in \
+      -e 's/chmod 2555/chmod 0555/'
+  '';
+
   configureFlags = [
     "--sysconfdir=/etc"
     "--localstatedir=/var"

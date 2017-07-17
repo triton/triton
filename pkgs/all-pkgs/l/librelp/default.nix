@@ -6,11 +6,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "librelp-1.2.12";
+  name = "librelp-1.2.14";
 
+  # SHA256 found at http://www.librelp.com/
   src = fetchurl {
     url = "http://download.rsyslog.com/librelp/${name}.tar.gz";
-    sha256 = "1mvvxqfsfg96rb6xv3fw7mcsqmyfnsb74sc53gnhpcpp4h2p6m83";
+    multihash = "QmbTcR2p7q3ZwSb4jvSAnBAQX6DMuBked8HhGBbgd88aUa";
+    hashOutput = false;
+    sha256 = "11f6241a4336358a33bfdadd43ef299e8258db0a5243d0c164499c6b85ae5955";
   };
 
   buildInputs = [

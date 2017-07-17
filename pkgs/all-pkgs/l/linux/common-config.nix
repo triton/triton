@@ -394,7 +394,10 @@ with stdenv.lib;
   NTFS_RW y
   HFSPLUS_FS_POSIX_ACL y
   ${optionalString (versionAtLeast version "4.10") ''
-    # OVERLAY_FS_REDIRECT_DIR y
+    #OVERLAY_FS_REDIRECT_DIR y
+  ''}
+  ${optionalString (versionAtLeast version "4.13") ''
+    #OVERLAY_FS_INDEX y
   ''}
   UBIFS_FS_ADVANCED_COMPR y
   UBIFS_ATIME_SUPPORT y
@@ -435,7 +438,9 @@ with stdenv.lib;
   CIFS_POSIX y
   CIFS_FSCACHE y
   CIFS_DFS_UPCALL y
-  CIFS_SMB2 y
+  ${optionalString (versionOlder version "4.13") ''
+    CIFS_SMB2 y
+  ''}
   CIFS_SMB311 y
   CEPH_FSCACHE y
   CEPH_FS_POSIX_ACL y
@@ -568,7 +573,9 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.9") ''
     RTC_DRV_DS1307_CENTURY y
   ''}
-  SCSI_MQ_DEFAULT y
+  ${optionalString (versionOlder version "4.13") ''
+    SCSI_MQ_DEFAULT y
+  ''}
   DM_MQ_DEFAULT y
   DM_UEVENT y
   ${optionalString (versionAtLeast version "4.5") ''
@@ -676,6 +683,12 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.11") ''
     GCC_PLUGIN_STRUCTLEAK y
   ''}
+  ${optionalString (versionAtLeast version "4.13") ''
+    GCC_PLUGIN_RANDSTRUCT y
+    GCC_PLUGIN_RANDSTRUCT_PERFORMANCE y
+    REFCOUNT_FULL y
+    FORTIFY_SOURCE y
+  ''}
 
   # Easier debugging of NFS issues.
   SUNRPC_DEBUG y
@@ -759,6 +772,16 @@ with stdenv.lib;
   TRANSPARENT_HUGEPAGE y
   TRANSPARENT_HUGEPAGE_ALWAYS n
   TRANSPARENT_HUGEPAGE_MADVISE y
+
+  # Misc
+  ${optionalString (versionAtLeast version "4.13") ''
+    MLX5_FPGA y
+    MLX5_EN_IPSEC y
+    SECURITY_INFINIBAND y
+    NFP_APP_FLOWER y
+    SPI_SLAVE y
+    SDR_PLATFORM_DRIVERS y
+  ''}
 
   # zram support (e.g for in-memory compressed swap).
   ZSMALLOC y

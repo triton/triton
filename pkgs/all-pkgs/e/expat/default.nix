@@ -3,11 +3,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "expat-2.2.1";
+  name = "expat-2.2.2";
 
   src = fetchurl {
     url = "mirror://sourceforge/expat/${name}.tar.bz2";
-    sha256 = "1868cadae4c82a018e361e2b2091de103cd820aaacb0d6cfa49bd2cd83978885";
+    sha256 = "4376911fcf81a23ebd821bbabc26fd933f3ac74833f74924342c29aad2c86046";
   };
 
   meta = with stdenv.lib; {

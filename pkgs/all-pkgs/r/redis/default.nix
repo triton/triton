@@ -3,16 +3,16 @@
 }:
 
 let
-  version = "3.2.9";
+  version = "4.0.0";
 in
 stdenv.mkDerivation rec {
   name = "redis-${version}";
 
   src = fetchurl {
     url = "http://download.redis.io/releases/${name}.tar.gz";
-    multihash = "QmePjNBoje13ZSJhB83KMjVVs31peve8FSwycqwZgR9Dbb";
+    multihash = "QmXkppqdM8ZnnVdWs5DXecAqgXfUwE8EcGwSuSUzsQk9RP";
     hashOutput = false;
-    sha256 = "6eaacfa983b287e440d0839ead20c2231749d5d6b78bbe0e0ffa3a890c59ff26";
+    sha256 = "d539ae309295721d5c3ed7298939645b6f86ab5d25fdf2a0352ab575c159df2d";
   };
 
   preBuild = ''

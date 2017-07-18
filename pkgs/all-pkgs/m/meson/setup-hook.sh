@@ -7,11 +7,21 @@ mesonConfigurePhase() {
       )
     fi
 
-    if [ -n "${createMesonBuildDir-true}" ]; then
-      mesonDir="$(pwd)"
-      mkdir -p "$TMPDIR"/build
-      cd "$TMPDIR"/build
+    # Configure the source and build directories
+    if [ -z "$mesonSrcDir" ]; then
+      mesonSrcDir="$(pwd)"
     fi
+    if [ -z "$mesonBuildDir" ]; then
+      if [ -n "${createMesonBuildDir-true}" ]; then
+        mkdir -p "$TMPDIR"/build
+        cd "$TMPDIR"/build
+      fi
+      mesonBuildDir="$(pwd)"
+    fi
+
+    # Meson requires a python executable for itself in the build directory
+    echo "from subprocess import call; import sys; exit(call(['$(type -tP meson)'] + sys.argv[1:]))" \
+      >"$mesonBuildDir"/meson
 
     # Build always Release, to ensure optimisation flags
     mesonFlagsArray+=(
@@ -20,7 +30,7 @@ mesonConfigurePhase() {
 
     echo "meson flags: $mesonFlags ${mesonFlagsArray[@]}"
 
-    meson ${mesonDir:-.} $mesonFlags "${mesonFlagsArray[@]}"
+    meson $mesonFlags "${mesonFlagsArray[@]}" "${mesonSrcDir}" "${mesonBuildDir}"
 
     eval "$postConfigure"
 }

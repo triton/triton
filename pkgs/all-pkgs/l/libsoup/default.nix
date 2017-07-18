@@ -40,7 +40,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     glib
-    glib-networking
     gobject-introspection
     kerberos
     libxml2

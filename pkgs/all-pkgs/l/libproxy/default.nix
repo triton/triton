@@ -7,17 +7,17 @@
 }:
 
 let
-  version = "0.4.13";
+  version = "0.4.15";
 in
 stdenv.mkDerivation rec {
   name = "libproxy-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 3;
     owner = "libproxy";
     repo = "libproxy";
     rev = version;
-    sha256 = "eecc5f5fb1d897b5e73417223edb08001f38e8182dba6cf3c508d2568cf11dab";
+    sha256 = "09bbe39a15ec4fe7be6293e8ea3a15a3ef2d71e38f5e9b4f551c85db715aed05";
   };
 
   nativeBuildInputs = [

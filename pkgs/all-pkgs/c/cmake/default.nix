@@ -12,8 +12,8 @@
 }:
 
 let
-  majorVersion = "3.8";
-  minorVersion = "2";
+  majorVersion = "3.9";
+  minorVersion = "0";
   version = "${majorVersion}.${minorVersion}";
 in
 stdenv.mkDerivation rec {
@@ -21,15 +21,15 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://cmake.org/files/v${majorVersion}/cmake-${version}.tar.gz";
-    multihash = "QmYGvCRK8FJw1V5h3PchGEJT6yHwCNwWK5HDuEyZmbWUku";
-    sha256 = "da3072794eb4c09f2d782fcee043847b99bb4cf8d4573978d9b2024214d6e92d";
+    multihash = "QmUEALHQqDUSqPZ95UzC7pYzDdcSM1F2rqBGzvst1pixVb";
+    sha256 = "167701525183dbb722b9ffe69fb525aa2b81798cf12f5ce1c020c93394dfae0f";
   };
 
   patches = [
     (fetchTritonPatch {
-      rev = "78526c83438b5935a0d7516e3cbe0e3482495ffe";
-      file = "cmake/search-path.patch";
-      sha256 = "33cde1d7ed95194b699dfb82fe8340bcd234c4d51ce33e87c4c96e6c72acde53";
+      rev = "e6b0d2af7e353e719ea3bb38f550111dab30cd91";
+      file = "c/cmake/0001-Fix-search-paths.patch";
+      sha256 = "e7c0b304f3c7340d22a44ecff64bd6d9f3997f12f437594f7ec59e5864a5e23a";
     })
   ];
 

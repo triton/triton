@@ -2,6 +2,8 @@
 , fetchurl
 , gettext
 , lib
+, meson
+, ninja
 
 , glib
 , gobject-introspection
@@ -11,8 +13,8 @@ let
   inherit (lib)
     boolEn;
 
-  versionMajor = "1.2";
-  versionMinor = "8";
+  versionMajor = "1.3";
+  versionMinor = "2";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -20,11 +22,14 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/json-glib/${versionMajor}/${name}.tar.xz";
-    sha256 = "fd55a9037d39e7a10f0db64309f5f0265fa32ec962bf85066087b83a2807f40a";
+    hashOutput = false;
+    sha256 = "f6a80f42e63a3267356f20408bf91a1696837aa66d864ac7de2564ecbd332a7c";
   };
 
   nativeBuildInputs = [
     gettext
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -32,21 +37,10 @@ stdenv.mkDerivation rec {
     gobject-introspection
   ];
 
-  configureFlags= [
-    "--enable-Bsymbolic"
-    "--disable-debug"
-    "--disable-maintainer-mode"
-    "--disable-installed-tests"
-    "--disable-always-build-tests"
-    "--disable-gcov"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-man"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--enable-nls"
-    "--enable-rpath"
-  ];
+  # Fix use of absolute filenames
+  postPatch = ''
+    sed -i 's,@filename@,@basename@,g' json-glib/json-enum-types.h.in
+  '';
 
   passthru = {
     srcVerification = fetchurl {

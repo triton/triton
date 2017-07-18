@@ -18,17 +18,17 @@
 }:
 
 let
-  date = "2016-12-12";
-  rev = "3272a988655c3236b55bad70e9a3af20857f384b";
+  date = "2017-04-24";
+  rev = "766a2eab6bfedc9df00b0509bc34ccdee9fe0a76";
 in
 stdenv.mkDerivation rec {
   name = "polkit-${date}";
 
   src = fetchzip {
-    version = 2;
+    version = 3;
     url = "https://cgit.freedesktop.org/polkit/snapshot/${rev}.tar.xz";
-    multihash = "Qmba7Ei5AJTci1cDevcGmqVSdnboyQf2h9bXBzbQzCEV9b";
-    sha256 = "877444a34b99d32f44acd9c8d8e65fc3281c632b0177358babe0ce916252f636";
+    multihash = "QmaRi4JCEz7SZhSwARy4iFUeHe9CisUcpHo6XcmjuzdejC";
+    sha256 = "1db5e8fe9d74a538d46b5eb8dbe00bdf2d6dd3dade9f51869d3599cb3be33fa0";
   };
 
   nativeBuildInputs = [

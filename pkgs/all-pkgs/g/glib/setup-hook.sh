@@ -141,12 +141,19 @@ compile_gschemas() {
   fi
 }
 
+set_gsettingschemadir() {
+  # Only add installFlags if we are using the default `make install` process
+  if [ -z "$installPhase" ]; then
+    installFlagsArray+=(
+      "gsettingsschemadir=${out}/share/gschemas/${name}/glib-2.0/schemas/"
+    )
+  fi
+}
+
 envHooks+=('find_gio_modules')
 envHooks+=('find_gsettings_schemas')
 
-installFlagsArray+=(
-  "gsettingsschemadir=${out}/share/gschemas/${name}/glib-2.0/schemas/"
-)
+preInstallPhases+=('set_gsettingschemadir')
 
 preFixupPhases+=('fix_gio_modules_install_path')
 preFixupPhases+=('fix_gschemas_install_path')

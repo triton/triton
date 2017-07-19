@@ -24,7 +24,7 @@ let
     optionalString;
 
   versionMajor = "1.40";
-  versionMinor = "6";
+  versionMinor = "7";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/pango/${versionMajor}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "ca152b7383a1e9f7fd74ae96023dc6770dc5043414793bfe768ff06b6759e573";
+    sha256 = "517645c00c4554e82c0631e836659504d3fd3699c564c633fccfdfd37574e278";
   };
 
   buildInputs = [

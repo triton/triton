@@ -11,15 +11,19 @@
 
 let
   inherit (stdenv.lib)
-    enFlag;
+    enFlag
+    optionalString;
+
+  versionMajor = "0.7";
+  versionMinor = null;
 in
 stdenv.mkDerivation rec {
-  name = "gcab-${version}";
-  version = "0.6";
+  name = "gcab-${versionMajor}${optionalString (versionMinor != null) ".${versionMinor}"}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gcab/${version}/${name}.tar.xz";
-    sha256 = "1frl2dpjz5qzqkhyp3qbjck6wsr5m6gdzz2v2nsjfwps9f83ni50";
+    url = "mirror://gnome/sources/gcab/${versionMajor}/${name}.tar.xz";
+    hashOutput = false;
+    sha256 = "a16e5ef88f1c547c6c8c05962f684ec127e078d302549f3dfd2291e167d4adef";
   };
 
   nativeBuildInputs = [
@@ -43,6 +47,18 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-glibtest"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gcab/${versionMajor}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "Library and tool for Microsoft Cabinet (CAB) files";

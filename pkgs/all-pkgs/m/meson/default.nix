@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.41.1";
+  version = "0.41.2";
 in
 buildPythonPackage {
   name = "meson-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "meson";
     inherit version;
-    sha256 = "df57b79494a310d02791e3b24527536c0bcfcf8df32b30a6e4b4e071ec94ddb4";
+    sha256 = "ad1707717987fe8b7b65392b8327580105fcbdd5f2032bf3b7232b647284c95c";
   };
 
   setupHook = ./setup-hook.sh;

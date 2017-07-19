@@ -363,6 +363,8 @@ pyasn1 = callPackage ../all-pkgs/p/pyasn1 { };
 
 pyasn1-modules = callPackage ../all-pkgs/p/pyasn1-modules { };
 
+pycairo = callPackage ../all-pkgs/p/pycairo { };
+
 pycountry = callPackage ../all-pkgs/p/pycountry { };
 
 pycparser = callPackage ../all-pkgs/p/pycparser { };
@@ -574,8 +576,6 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 ################################################################################
 ################################################################################
 ################################################################################
-
-   pycairo = callPackage ../all-pkgs/p/pycairo { };
 
    acme = buildPythonPackage rec {
      inherit (self.certbot) src version;

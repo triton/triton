@@ -1,9 +1,10 @@
 { stdenv
 , fetchurl
 , lib
-, python3
+, meson
+, ninja
 
-, mesa
+, mesa_noglu
 , xorg
 }:
 
@@ -35,17 +36,19 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    python3
-    xorg.utilmacros
+    meson
+    ninja
   ];
 
   buildInputs = [
-    mesa
+    mesa_noglu
     xorg.libX11
+    xorg.xproto
   ];
 
-  configureFlags = [
-    "--enable-glx"
+  mesonFlags = [
+    "-Denable-glx=yes"
+    "-Denable-egl=yes"
   ];
 
   passthru = {

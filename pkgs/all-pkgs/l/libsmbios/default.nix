@@ -5,20 +5,21 @@
 , perl
 
 , libxml2
+, python2Packages
 }:
 
 let
-  version = "2.3.2";
+  version = "2.3.3";
 in
 stdenv.mkDerivation rec {
   name = "libsmbios-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "dell";
     repo = "libsmbios";
     rev = "v${version}";
-    sha256 = "9247ae2566e8d3b7f9044db1c25d991410a4cee26c279691a7b48e0053244efb";
+    sha256 = "3cae3fa513023c237ee967745540008c8687587a24aba581953f25eab74c64f9";
   };
 
   nativeBuildInputs = [
@@ -29,10 +30,23 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libxml2
+    python2Packages.python
   ];
 
   postPatch = ''
     sed -i 's, doxygen,,g' Makefile.am
+  '';
+
+  configureFlags = [
+    "--sysconfdir=/etc"
+    "--localstatedir=/var"
+    "--enable-libsmbios_cxx"
+    "--disable-doxygen"
+    "--disable-graphviz"
+  ];
+
+  preInstall = ''
+    installFlagsArray+=("sysconfdir=$out/etc")
   '';
 
   # It forgets to install headers.

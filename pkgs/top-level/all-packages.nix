@@ -1327,6 +1327,8 @@ fuse_3 = callPackage ../all-pkgs/f/fuse {
 
 fuse-exfat = callPackage ../all-pkgs/f/fuse-exfat { };
 
+fwupdate = callPackage ../all-pkgs/f/fwupdate { };
+
 game-music-emu = callPackage ../all-pkgs/g/game-music-emu { };
 
 gawk = callPackage ../all-pkgs/g/gawk { };

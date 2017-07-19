@@ -25,6 +25,11 @@ buildPythonPackage rec {
     cairo
   ];
 
+  # pkgconfig has a broken prefix
+  preFixup = ''
+    sed -i "s,prefix=.*,prefix=$out," $out/lib/pkgconfig/*.pc
+  '';
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;

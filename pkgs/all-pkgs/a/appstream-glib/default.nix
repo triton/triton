@@ -1,11 +1,14 @@
 { stdenv
-#, docbook_xml_dtd_43
-#, docbook-xsl
+, docbook_xml_dtd_42
+, docbook-xsl
 , fetchurl
 , gettext
 , gperf
 , intltool
 , lib
+, libxslt
+, meson
+, ninja
 
 , fontconfig
 , freetype
@@ -28,21 +31,23 @@ let
     boolEn;
 in
 stdenv.mkDerivation rec {
-  name = "appstream-glib-0.6.13";
+  name = "appstream-glib-0.7.0";
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/appstream-glib/"
       + "releases/${name}.tar.xz";
-    multihash = "QmW5bn9N8T9y3gQNC3axVVHdQA9SpEX66rvKqj5tx9H9JL";
-    sha256 = "1a3734b2cdaab55ad63c6e3ee31026fdceb122cecae39f9f7126a0305e8836bf";
+    multihash = "Qmb4Z1eSy4UpvXTHfn3KpVrLh6P4Kf1nqb65NgwCF6n2cf";
+    sha256 = "08c3655a54af958263800f1f4a5ef4e6a1da4e6db2432006b1ea07b94f4bc106";
   };
 
   nativeBuildInputs = [
-    #docbook_xml_dtd_43
-    #docbook-xsl
+    docbook_xml_dtd_42
+    docbook-xsl
     gettext
     gperf
-    intltool
+    libxslt
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -57,28 +62,12 @@ stdenv.mkDerivation rec {
     libarchive
     libsoup
     libyaml
-    pango
-    sqlite
     util-linux_lib
   ];
 
-  configureFlags = [
-    "--enable-largefile"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--enable-nls"
-    "--enable-rpath"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-firmware"
-    "--enable-fonts"
-    "--enable-builder"
-    "--disable-rpm"
-    # Flag is not a boolean
-    #"--disable-alpm"
-    "--disable-man"
-    "--enable-dep11"
-    #"--${boolEn (snowball-stemmer != null)}-stemmer"
+  mesonFlags = [
+    "-Denable-rpm=false"
+    "-Denable-stemmer=false"
   ];
 
   meta = with lib; {
@@ -87,6 +76,7 @@ stdenv.mkDerivation rec {
     license = licenses.lgpl21Plus;
     maintainers = with maintainers; [
       codyopel
+      wkennington
     ];
     platforms = with platforms;
       x86_64-linux;

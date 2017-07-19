@@ -6,15 +6,19 @@
 , llvm
 }:
 
+let
+  date = "2017-06-02";
+  rev = "1cb3fbf504e25d86d972e8b2af3e24571767046b";
+in
 stdenv.mkDerivation {
-  name = "libclc-2017-02-24";
+  name = "libclc-${date}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "llvm-mirror";
     repo = "libclc";
-    rev = "17648cd846390e294feafef21c32c7106eac1e24";
-    sha256 = "24e41e12cd1133e6aab7edc06ec161b1730bbf600a267944fb0c9d9d3b0a1d0d";
+    inherit rev;
+    sha256 = "ad68af6b4206533f22eae5d0add7619fc622795e62170954b98e6e98961c59bc";
   };
 
   nativeBuildInputs = [

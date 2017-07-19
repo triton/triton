@@ -9,7 +9,7 @@
     fetchzipversion = 2;
   };
   "3.24" = {
-    version = "3.24.0";
-    sha256 = "4e228b1c0f36e810acd971fad1c7030014900d8427c308d63a560f3f1037fa3c";
+    version = "3.24.1";
+    sha256 = "a628a95aa0909e13fb08230b1b98fc48adef10b220932f76d62f6821b3fdbffd";
   };
 }

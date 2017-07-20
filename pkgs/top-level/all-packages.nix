@@ -1327,6 +1327,10 @@ fuse_3 = callPackage ../all-pkgs/f/fuse {
 
 fuse-exfat = callPackage ../all-pkgs/f/fuse-exfat { };
 
+fwupd = callPackage ../all-pkgs/f/fwupd {
+  fwupdate = null; # Broken until binutils update
+};
+
 fwupdate = callPackage ../all-pkgs/f/fwupdate { };
 
 game-music-emu = callPackage ../all-pkgs/g/game-music-emu { };

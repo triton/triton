@@ -3,26 +3,33 @@
 , coreutils
 , fetchurl
 , gettext
+, lib
 
 , glib
 , gobject-introspection
 , libtiff
 , libjpeg
 , libpng
+, libx11
 , jasper
 , shared_mime_info
-, xorg
 
 , channel
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt
     optionals;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2.36" = {
+      version = "2.36.5";
+      sha256 = "7ace06170291a1f21771552768bace072ecdea9bd4a02f7658939b9a314c40fc";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gdk-pixbuf-${source.version}";
@@ -46,8 +53,7 @@ stdenv.mkDerivation rec {
     libjpeg
     libpng
     libtiff
-  ] ++ optionals (xorg != null) [
-    xorg.libX11
+    libx11
   ];
 
   postPatch =
@@ -87,7 +93,7 @@ stdenv.mkDerivation rec {
     "--${boolWt (libtiff != null)}-libtiff"
     "--${boolWt (jasper != null)}-libjasper"
     "--without-gdiplus"
-    "--${boolWt (xorg != null)}-x11"
+    "--${boolWt (libx11 != null)}-x11"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";
@@ -108,7 +114,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A library for image loading and manipulation";
     homepage = http://library.gnome.org/devel/gdk-pixbuf/;
     license = licenses.lgpl2Plus;

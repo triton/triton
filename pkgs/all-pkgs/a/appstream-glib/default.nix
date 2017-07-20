@@ -26,10 +26,6 @@
 , util-linux_lib
 }:
 
-let
-  inherit (stdenv.lib)
-    boolEn;
-in
 stdenv.mkDerivation rec {
   name = "appstream-glib-0.7.0";
 

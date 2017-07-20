@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , intltool
+, lib
 
 , glib
 , gnutls
@@ -12,10 +13,17 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolWt;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2.50" = {
+      version = "2.50.0";
+      sha256 = "3f1a442f3c2a734946983532ce59ed49120319fdb10c938447c373d5e5286bee";
+    };
+  };
+
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "glib-networking-${source.version}";
@@ -72,7 +80,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Network-related giomodules for glib";
     homepage = https://git.gnome.org/browse/glib-networking/;
     license = licenses.lgpl2Plus;

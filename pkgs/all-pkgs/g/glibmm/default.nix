@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , glib
 , libsigcxx
@@ -8,7 +9,13 @@
 }:
 
 let
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2.52" = {
+      version = "2.52.0";
+      sha256 = "81b8abf21c645868c06779abc5f34efc1a51d5e61589dab2a2ed67faa8d4811e";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "glibmm-${source.version}";
@@ -48,7 +55,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "C++ interface to the GLib library";
     homepage = http://gtkmm.org/;
     license = licenses.lgpl2Plus;

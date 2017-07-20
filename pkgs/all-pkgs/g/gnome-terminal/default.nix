@@ -10,7 +10,6 @@
 , which
 
 , adwaita-icon-theme
-, appdata-tools
 , dconf
 , gdk-pixbuf
 , glib
@@ -25,7 +24,13 @@
 }:
 
 let
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.22" = {
+      version = "3.22.1";
+      sha256 = "b00752336eb22d6d9f10c863c166ac73dcbb2ce4b280abdc0c78337e261bb0d4";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gnome-terminal-${source.version}";
@@ -49,7 +54,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
-    appdata-tools
     dconf
     gdk-pixbuf
     glib

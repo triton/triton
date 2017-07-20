@@ -2,6 +2,7 @@
 , atk
 , gdk-pixbuf
 , fetchurl
+, lib
 , pango
 
 , glib
@@ -11,11 +12,11 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
-  channel = "0.1";
-  version = "${channel}.1";
+  channel = "0.2";
+  version = "${channel}.2";
 in
 stdenv.mkDerivation rec {
   name = "gnome-autoar-${version}";
@@ -23,7 +24,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-autoar/${channel}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "f65cb810b562dc038ced739fbf59739fd5df1a8e848636e21f363ded9f349ac9";
+    sha256 = "e1fe2c06eed30305c38bf0939c72b0e51b4716658e2663a0cf4a4bf57874ca62";
   };
 
   nativeBuildInputs = [
@@ -49,6 +50,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--${boolEn (gobject-introspection != null)}-gobject-introspection"
+    "--disable-vala"
     "--${boolEn (gtk_3 != null)}-gtk"
   ];
 
@@ -64,7 +66,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A file manager for the GNOME desktop";
     homepage = https://wiki.gnome.org/Apps/Nautilus;
     license = with licenses; [

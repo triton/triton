@@ -12,7 +12,7 @@ let
     "mirror://kernel/linux/utils/fs/xfs/xfsprogs/xfsprogs-${version}.tar"
   ];
 
-  version = "4.11.0";
+  version = "4.12.0";
 in
 stdenv.mkDerivation rec {
   name = "xfsprogs-${version}";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "c3a6d87b564d7738243c507df82276bed982265e345363a95f2c764e8a5f5bb2";
+    sha256 = "b330ad8d737f4152ae511580102e2fc49212bb51dfb4b614084344abae46d0df";
   };
 
   nativeBuildInputs = [
@@ -38,6 +38,7 @@ stdenv.mkDerivation rec {
   ];
 
   prePatch = ''
+    grep -q '/bin/bash' install-sh
     sed -i "s,/bin/bash,$(type -P bash),g" install-sh
     sed -i "s,ldconfig,$(type -P ldconfig),g" configure m4/libtool.m4
 
@@ -49,13 +50,18 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchTritonPatch {
-      rev = "f2cc828cd4a47b008b7503974f35bcdd2a9c74b3";
-      file = "xfsprogs/xfsprogs-4.7.0-sharedlibs.patch";
-      sha256 = "983b08b2a4a4ee91be21f14063167a3752554b41fd78aead6dfd6ac38702a5a7";
+      rev = "185665e99c148594758a4f22346ad4d3c6cbbb5d";
+      file = "x/xfsprogs/0001-xfsprogs-4.12.0-sharedlibs.patch";
+      sha256 = "4f10b622e8b7c8654a5dc79356343515ef203742ba4781b97a6f02f23e99555a";
     })
     (fetchTritonPatch {
-      rev = "f2cc828cd4a47b008b7503974f35bcdd2a9c74b3";
-      file = "xfsprogs/xfsprogs-4.7.0-libxcmd-link.patch";
+      rev = "185665e99c148594758a4f22346ad4d3c6cbbb5d";
+      file = "x/xfsprogs/0002-xfsprogs-4.9.0-underlinking.patch";
+      sha256 = "644713208fcce550cbe66de8aa3fc366449a838baaba2db030bfc6111f4de7b5";
+    })
+    (fetchTritonPatch {
+      rev = "185665e99c148594758a4f22346ad4d3c6cbbb5d";
+      file = "x/xfsprogs/0003-xfsprogs-4.7.0-libxcmd-link.patch";
       sha256 = "06cced4aeeb9a2d8c90e6d6fd1ff6571020122dbfe62140513f52bd82bf9abe8";
     })
   ];

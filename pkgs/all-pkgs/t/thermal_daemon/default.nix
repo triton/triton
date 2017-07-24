@@ -9,17 +9,17 @@
 }:
 
 let
-  version = "1.5.3";
+  version = "1.6";
 in
 stdenv.mkDerivation {
   name = "thermal_daemon-${version}";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 3;
     owner = "01org";
     repo = "thermal_daemon";
     rev = "v${version}";
-    sha256 = "d7b9adc66aa60875f544d356622c4cae245469c4fb01bffcaf41a2d5093d4b96";
+    sha256 = "961a86075dab0f46206bf667f0fe0ad1feb7a97fca049dfd8b3f7aaf1c7c6c7b";
   };
 
   nativeBuildInputs = [

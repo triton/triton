@@ -913,8 +913,6 @@ consul-replicate = pkgs.goPackages.consul-replicate.bin // { outputs = [ "bin" ]
 
 consul-template = pkgs.goPackages.consul-template.bin // { outputs = [ "bin" ]; };
 
-consul-ui = callPackage ../all-pkgs/c/consul-ui { };
-
 coreutils = callPackage ../all-pkgs/c/coreutils { };
 
 cpio = callPackage ../all-pkgs/c/cpio { };

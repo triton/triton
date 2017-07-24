@@ -8,7 +8,7 @@
 
 let
   major = "2.8";
-  patch = "5";
+  patch = "6";
 
   version = "${major}.${patch}";
 in
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
       "mirror://gnu/nano/${name}.tar.xz"
     ];
     hashOutput = false;
-    sha256 = "cb43bf11990b2839446229b0c21ed7abef67c2df861f250cc874553ca27d89c2";
+    sha256 = "9a46962a3ae59db922467a095217ed23280b42d80640f932f3a59ba2a6a85776";
   };
 
   nativeBuildInputs = [

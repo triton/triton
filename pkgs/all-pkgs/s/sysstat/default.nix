@@ -4,13 +4,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "sysstat-11.5.5";
+  name = "sysstat-11.5.7";
 
   src = fetchurl {
     url = "http://pagesperso-orange.fr/sebastien.godard/${name}.tar.xz";
-    sha1Confirm = "30929b7c92ab2e1e66906ed084d068398148eb78";
-    multihash = "QmZqJiSF5At3MU51iQkUbyVLN7c7hdeb4zxansCgzrFHi1";
-    sha256 = "f4c5b333827cb588df1842d7a8f46947f486c95b305edbbce7565925e88e86c3";
+    sha1Confirm = "ba45b9c6f6acff756fba70e4819f259bb0c3f1bc";
+    multihash = "QmSEq6QCbtLjVmuGFA2ih3BRNscQ2v14TKC1hqd91x8Lsk";
+    sha256 = "4a38efaa0ca85ee5484d046bd427012979264fef17f07fd7855860e592819482";
   };
 
   nativeBuildInputs = [

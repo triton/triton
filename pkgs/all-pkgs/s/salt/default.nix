@@ -49,10 +49,6 @@ let
   # https://docs.saltstack.com/en/latest/topics/releases/index.html
   # https://saltstack.com/product-support-lifecycle/
   sources = {
-    "2016.3" = {
-      version = "2016.3.6";
-      sha256 = "4cc45f48255b7e46631807b071674552872c322ab77f398c9beefbf14d6a212f";
-    };
     "2016.11" = {
       version = "2016.11.6";
       sha256 = "9031af68d31d0416fe3161526ef122a763afc6182bd63fe48b6c4d0a16a0703a";

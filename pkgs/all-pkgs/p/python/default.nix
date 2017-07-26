@@ -351,7 +351,6 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       failEarly = true;
-      urls = tarballUrls source.versionPatch;
       pgpsigUrls = map (n: "${n}.asc") urls;
     };
 

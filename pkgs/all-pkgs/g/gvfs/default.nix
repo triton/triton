@@ -2,6 +2,7 @@
 , docbook-xsl
 , fetchurl
 , intltool
+, lib
 , libtool
 , libxslt
 , makeWrapper
@@ -37,10 +38,16 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.32" = {
+      version = "1.32.1";
+      sha256 = "d0b6c9edab09d52472355657a2f0a14831b2e6c58caba395f721ab683f836ade";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gvfs-${source.version}";
@@ -73,7 +80,7 @@ stdenv.mkDerivation rec {
     libcap
     libcdio
     libgcrypt
-    #libgdata # goa
+    #libgdata  # goa
     libgnome-keyring
     libgphoto2
     libgudev
@@ -111,8 +118,6 @@ stdenv.mkDerivation rec {
     "--${boolEn (
       systemd_lib != null
       && udisks != null)}-libsystemd-login"
-    "--disable-hal"
-    "--${boolEn (libgudev != null)}-gudev"
     "--${boolEn (
       libcdio != null
       && systemd_lib != null)}-cdda"
@@ -131,11 +136,9 @@ stdenv.mkDerivation rec {
     "--${boolEn (libarchive != null)}-archive"
     "--${boolEn (libgcrypt != null)}-afp"
     "--disable-nfs"
-    "--enable-bash-completion"
     "--enable-more-warnings"
     "--disable-installed-tests"
     "--disable-always-build-tests"
-    #"--with-bash-completion-dir="
   ];
 
   preFixup = ''
@@ -156,7 +159,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Virtual filesystem implementation for gio";
     homepage = https://git.gnome.org/browse/gvfs;
     license = licenses.lgpl2Plus;

@@ -978,12 +978,12 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
    Mako = buildPythonPackage rec {
      name = "Mako-${version}";
-     version = "1.0.6";
+     version = "1.0.7";
 
      src = fetchPyPi {
         package = "Mako";
         inherit version;
-       sha256 = "48559ebd872a8e77f92005884b3d88ffae552812cdf17db6768e5c3be5ebbe0d";
+       sha256 = "4e02fde57bd4abb5ec400181e4c314f56ac3e49ba4fb8b0d50bba18cb27d25ae";
      };
 
      buildInputs = with self; [

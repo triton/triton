@@ -44,8 +44,8 @@ let
     boolWt
     optionalString;
 
-  # Use stable patch releases, e.g. -9 or -10
-  version = "7.0.4-10";
+  # Use stable patch releases, e.g. -10
+  version = "7.0.5-10";
 in
 stdenv.mkDerivation rec {
   name = "imagemagick-${version}";
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
       "mirror://imagemagick"
     ];
     hashOutput = false;
-    sha256 = "5725566b345a79381f37876aff69657c95d8981cb7506aa41363ccf4a650eb9f";
+    sha256 = "0058fcde533986334458a5c99600b1b9633182dd9562cbad4ba618c5ccf2a28f";
   };
 
   buildInputs = [

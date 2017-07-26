@@ -6,12 +6,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "orc-0.4.26";
+  name = "orc-0.4.27";
 
   src = fetchurl rec {
     url = "https://gstreamer.freedesktop.org/src/orc/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "7d52fa80ef84988359c3434e1eea302d077a08987abdde6905678ebcad4fa649";
+    sha256 = "51e53e58fc8158e5986a1f1a49a6d970c5b16493841cf7b9de2c2bde7ce36b93";
   };
 
   buildInputs = [
@@ -40,8 +40,12 @@ stdenv.mkDerivation rec {
         urls;
       sha256Urls = map (n: "${n}.sha256sum") src.urls;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
-      # Sebastian Dröge
-      pgpKeyFingerprint = "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5";
+      pgpKeyFingerprints = [
+        # Sebastian Dröge
+        "7F4B C7CC 3CA0 6F97 336B  BFEB 0668 CC14 86C2 D7B5"
+        # Tim-Philipp Müller
+        "D637 032E 45B8 C658 5B94  5656 5D2E EE6F 6F34 9D7C"
+      ];
       failEarly = true;
     };
   };

@@ -88,7 +88,7 @@ create_triton_fhs() {
   # Create directory structure relative to $mount_point.
   for directory in "${directories[@]}"; do
     if [ -d "${mount_point}/${directory}" ]; then
-      chown --verbose "${directory_permissions["${directory}"]}" \
+      chmod --verbose "${directory_permissions["${directory}"]}" \
         "${mount_point}/${directory}" || {
           echo "ERROR: failed to set permissions for directory: ${mount_point}/${directory}" >&2
           return 1
@@ -128,7 +128,7 @@ copy_host_file() {
     if [ -f "/${file}" ]; then
       cp --dereference --force --verbose "/${file}" \
         "${mount_point}/${destination_file}"
-      chown "${permissions}" "${mount_point}/${destination_file}"
+      chmod "${permissions}" "${mount_point}/${destination_file}"
       break
     fi
   done
@@ -329,7 +329,7 @@ if [ -n "$runChroot" ]; then
   exec chroot "$MOUNT_POINT" "${chrootCommand[@]}"
 fi
 
-chown @root_uid@:@nixbld_gid@ "$MOUNT_POINT/nix/store"
+chmod @root_uid@:@nixbld_gid@ "$MOUNT_POINT/nix/store"
 
 # There is no daemon in the chroot.
 unset NIX_REMOTE

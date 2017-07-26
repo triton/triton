@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , glib
 , libxml2
@@ -7,7 +8,7 @@
 
 let
   versionMajor = "0.6";
-  versionMinor = "11";
+  versionMinor = "12";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -15,7 +16,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://gnome/sources/libcroco/${versionMajor}/${name}.tar.xz";
-    sha256 = "0mm0wldbi40am5qn0nv7psisbg01k42rwzjxl3gv11l5jj554aqk";
+    sha256 = "ddc4b5546c9fb4280a5017e2707fbd4839034ed1aba5b7d4372212f34f84f860";
   };
 
   buildInputs = [
@@ -28,11 +29,20 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--enable-checks"
+    "--disable-checks"
     "--enable-Bsymbolic"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      sha256Url = "https://download.gnome.org/sources/libcroco/${versionMajor}/"
+        + "${name}.sha256sum";
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
+
+  meta = with lib; {
     description = "Generic Cascading Style Sheet (CSS) parsing and manipulation";
     homepage = https://git.gnome.org/browse/libcroco/;
     license = licenses.lgpl2;

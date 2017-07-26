@@ -20,8 +20,10 @@ mesonConfigurePhase() {
     fi
 
     # Meson requires a python executable for itself in the build directory
-    echo "from subprocess import call; import sys; exit(call(['$(type -tP meson)'] + sys.argv[1:]))" \
-      >"$mesonBuildDir"/meson
+    for bin in $(ls "$(dirname "$(type -tP meson)")"/meson*); do
+      echo "from subprocess import call; import sys; exit(call(['$bin'] + sys.argv[1:]))" \
+        >"$mesonBuildDir"/"$(basename "$bin")"
+    done
 
     # Build always Release, to ensure optimisation flags
     mesonFlagsArray+=(
@@ -37,4 +39,7 @@ mesonConfigurePhase() {
 
 if [ -n "${mesonConfigure-true}" -a -z "$configurePhase" ]; then
   configurePhase=mesonConfigurePhase
+  if [ -z "$checkTarget" ]; then
+    checkTarget="test"
+  fi
 fi

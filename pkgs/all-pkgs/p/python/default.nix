@@ -45,7 +45,21 @@ let
     versionAtLeast
     versionOlder;
 
-  source = (import ./sources.nix)."${channel}";
+  sources = {
+    "2.7" = {
+      versionPatch = "13";
+      sha256 = "35d543986882f78261f97787fd3e06274bfa6df29fac9b4a94f73930ff98f731";
+      # Benjamin Peterson
+      pgpKeyFingerprint = "C01E 1CAD 5EA2 C4F0 B8E3  5715 04C3 67C2 18AD D4FF";
+    };
+    "3.6" = {
+      versionPatch = "2";
+      sha256 = "9229773be41ed144370f47f0f626a1579931f5a390f1e8e3853174d52edd64a9";
+      # Ned Deily
+      pgpKeyFingerprint = "0D96 DF4D 4110 E5C4 3FBF  B17F 2D34 7EA6 AA65 421D";
+    };
+  };
+  source = sources."${channel}";
 
   isPy2 = versionOlder channel "3.0";
   isPy3 = versionAtLeast channel "3.0";
@@ -62,25 +76,30 @@ let
 
   # For alpha/beta releases we need to discard a<int> from the version
   # for part of the url.
-  baseVersionPatch =
-    if head (splitString "a" source.versionPatch) != source.versionPatch then
-      head (splitString "a" source.versionPatch)
-    else if head (splitString "b" source.versionPatch) != source.versionPatch then
-      head (splitString "b" source.versionPatch)
-    else if head (splitString "rc" source.versionPatch) != source.versionPatch then
-      head (splitString "rc" source.versionPatch)
+  baseVersionPatch = versionPatch:
+    if head (splitString "a" versionPatch) != versionPatch then
+      head (splitString "a" versionPatch)
+    else if head (splitString "b" versionPatch) != versionPatch then
+      head (splitString "b" versionPatch)
+    else if head (splitString "rc" versionPatch) != versionPatch then
+      head (splitString "rc" versionPatch)
     else
-      source.versionPatch;
+      versionPatch;
 
   version = "${channel}.${source.versionPatch}";
+
+  tarballUrls = versionPatch: [
+    ("https://www.python.org/ftp/python/"
+      + "${channel}.${baseVersionPatch versionPatch}/"
+      + "Python-${channel}.${versionPatch}.tar.xz")
+  ];
 in
 
 stdenv.mkDerivation rec {
   name = "python-${version}";
 
   src = fetchurl {
-    url = "https://www.python.org/ftp/python/${channel}.${baseVersionPatch}/"
-      + "Python-${version}.tar.xz";
+    url = tarballUrls source.versionPatch;
     inherit (source) sha256;
     hashOutput = false;
   };
@@ -332,7 +351,17 @@ stdenv.mkDerivation rec {
         outputHashAlgo
         urls;
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      urls = tarballUrls source.versionPatch;
+      pgpsigUrls = map (n: "${n}.asc") urls;
+    };
+
+    srcVerificationBootstrap = fetchurl rec {
+      inherit (source) pgpKeyFingerprint;
+      inherit (src) outputHashAlgo;
+      failEarly = true;
+      urls = tarballUrls "2";
+      outputHash = "9229773be41ed144370f47f0f626a1579931f5a390f1e8e3853174d52edd64a9";
+      pgpsigUrls = map (n: "${n}.asc") urls;
     };
   };
 

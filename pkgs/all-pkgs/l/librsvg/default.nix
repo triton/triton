@@ -41,7 +41,6 @@ stdenv.mkDerivation rec {
     libgsf
     libxml2
     pango
-    vala
   ];
 
   configureFlags = [
@@ -53,7 +52,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--disable-tools"
     "--${boolEn (gobject-introspection != null)}-introspection"
-    "--${boolEn (vala != null)}-vala"
+    "--disable-vala"
   ];
 
   # It wants to add loaders and update the loaders.cache in gdk-pixbuf
@@ -71,7 +70,8 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha256Url = "https://download.gnome.org/sources/librsvg/2.40/${name}.sha256sum";
+      sha256Url = "https://download.gnome.org/sources/librsvg/${versionMajor}/"
+        + "${name}.sha256sum";
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

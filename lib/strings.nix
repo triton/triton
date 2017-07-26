@@ -284,5 +284,7 @@ rec {
     boolString boolean "1" "0";
   boolNo = boolean:
     boolString boolean "" "no-";
+  boolTf = boolean:
+    boolString boolean "true" "false";
 
 }

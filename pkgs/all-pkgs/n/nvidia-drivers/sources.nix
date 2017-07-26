@@ -9,10 +9,10 @@ rec {
     maxLinuxVersion = "4.10";
   };
   long-lived = {
-    versionMajor = "375";
-    versionMinor = "66";
-    sha256i686   = "29220e249a308f89c2a6fa48be6a0009d58f082d07d3fedfbf4ab0015559f14c";
-    sha256x86_64 = "26f3133dd053835c35fb27b04fccd3a3bb4f18bbbacb5e4bf89c40d142cab397";
+    versionMajor = "384";
+    versionMinor = "59";
+    sha256i686   = "0c17658a4f874df43c02b521cd0a1357dfe2ea0b553be6b47ebae2e45323916c";
+    sha256x86_64 = "2d03e687b6b77d072de057349fceb0b7b19a4387d610ea22928ce99d2945d165";
     maxLinuxVersion = "4.12";
   };
   short-lived = {

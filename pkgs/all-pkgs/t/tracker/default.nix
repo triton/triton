@@ -3,6 +3,7 @@
 , gettext
 , intltool
 , itstool
+, lib
 , makeWrapper
 
 , adwaita-icon-theme
@@ -57,10 +58,17 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.12" = {
+      version = "1.12.1";
+      sha256 = "3b8488f0e372054790f2fd4207227c5b15425bf1ab829d76928ac0b32de9c5b7";
+    };
+  };
+
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "tracker-${source.version}";
@@ -140,10 +148,8 @@ stdenv.mkDerivation rec {
   ];
 
   preConfigure = ''
-    substituteInPlace src/libtracker-sparql/Makefile.in \
-      --replace \
-        "--shared-library=libtracker-sparql" \
-        "--shared-library=$out/lib/libtracker-sparql"
+    sed -i src/libtracker-sparql/Makefile.in \
+      -e "s,--shared-library=libtracker-sparql,--shared-library=$out/lib/libtracker-sparql,"
   '';
 
   configureFlags = [
@@ -278,7 +284,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "User information store, search tool and indexer";
     homepage = https://wiki.gnome.org/Projects/Tracker;
     license = licenses.gpl2;

@@ -1,6 +1,7 @@
 { stdenv
 , autoreconfHook
 , fetchFromGitHub
+, lib
 
 , file
 , jansson
@@ -8,7 +9,7 @@
 }:
 
 let
-  version = "3.5.0";
+  version = "3.6.3";
 in
 stdenv.mkDerivation {
   name = "yara-${version}";
@@ -18,7 +19,7 @@ stdenv.mkDerivation {
     owner = "VirusTotal";
     repo = "yara";
     rev = "v${version}";
-    sha256 = "d414d73a7258bcbba9ffd3ec3011d1a0c1c0728d753052d969f99834d114e460";
+    sha256 = "90c8113c2bc17715d02e269518120abb4298b3be8e5f9a5bc83d7213b8d98fac";
   };
 
   nativeBuildInputs = [
@@ -39,7 +40,7 @@ stdenv.mkDerivation {
   # This is broken with their build system
   dontDisableStatic = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

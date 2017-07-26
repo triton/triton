@@ -51,7 +51,6 @@
 , totem-pl-parser
 , upower
 , util-linux_lib
-, vala
 , zlib
 
 , channel
@@ -143,7 +142,6 @@ stdenv.mkDerivation rec {
     #thunderbird
     upower
     util-linux_lib
-    vala
     zlib
   ];
 

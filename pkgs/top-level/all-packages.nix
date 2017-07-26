@@ -1461,13 +1461,13 @@ gnome-common = callPackage ../all-pkgs/g/gnome-common { };
 
 gnome-control-center = callPackage ../all-pkgs/g/gnome-control-center { };
 
-gnome-desktop_3-22 = callPackage ../all-pkgs/g/gnome-desktop {
-  channel = "3.22";
+gnome-desktop_3-24 = callPackage ../all-pkgs/g/gnome-desktop {
+  channel = "3.24";
   atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
-gnome-desktop = callPackageAlias "gnome-desktop_3-22" { };
+gnome-desktop = callPackageAlias "gnome-desktop_3-24" { };
 
 gnome-documents_3-20 = callPackage ../all-pkgs/g/gnome-documents {
   channel = "3.20";
@@ -1502,7 +1502,7 @@ gnome-session_3-22 = callPackage ../all-pkgs/g/gnome-session {
   channel = "3.22";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gnome-desktop = pkgs.gnome-desktop_3-22;
+  gnome-desktop = pkgs.gnome-desktop_3-24;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
 gnome-session = callPackageAlias "gnome-session_3-22" { };
@@ -1512,7 +1512,7 @@ gnome-settings-daemon_3-22 =
     channel = "3.22";
     adwaita-icon-theme = pkgs.adwaita-icon-theme_3-24;
     gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-    gnome-desktop = pkgs.gnome-desktop_3-22;
+    gnome-desktop = pkgs.gnome-desktop_3-24;
     gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
     gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   };
@@ -2745,7 +2745,7 @@ mutter_3-22 = callPackage ../all-pkgs/m/mutter {
   channel = "3.22";
   atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gnome-desktop = pkgs.gnome-desktop_3-22;
+  gnome-desktop = pkgs.gnome-desktop_3-24;
   #gnome-settings-daemon = pkgs.gnome-settings-daemon_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
@@ -2762,7 +2762,7 @@ nautilus_3-22 = callPackage ../all-pkgs/n/nautilus {
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-24;
   atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
-  gnome-desktop = pkgs.gnome-desktop_3-22;
+  gnome-desktop = pkgs.gnome-desktop_3-24;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   gvfs = pkgs.gvfs_1-32;
   tracker = pkgs.tracker_1-12;

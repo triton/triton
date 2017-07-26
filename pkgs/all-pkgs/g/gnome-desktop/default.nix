@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , libxslt
 , which
 
@@ -14,31 +15,38 @@
 , gtk
 , iso-codes
 , itstool
+, libx11
+, libxext
 , libxml2
 , pango
 , python
+, randrproto
 , systemd_lib
 , wayland
 , xorg
+, xproto
 
 , channel
 }:
 
-assert xorg != null ->
-  xorg.libX11 != null
-  && xorg.libXext != null
-  && xorg.libXrandr != null
-  && xorg.randrproto != null
-  && xorg.xkeyboardconfig != null
-  && xorg.xproto != null;
+assert libx11 != null ->
+  xorg.libXrandr != null
+  && xorg.libxkbfile != null
+  && xorg.xkeyboardconfig != null;
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt
     optionals;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.24" = {
+      version = "3.24.2";
+      sha256 = "8fa1de66a6a75963bffc79b01a60434c71237d44c51beca09c0f714a032d785e";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gnome-desktop-${source.version}";
@@ -65,17 +73,17 @@ stdenv.mkDerivation rec {
     gsettings-desktop-schemas
     gtk
     iso-codes
+    libx11
+    libxext
     libxml2
     pango
+    randrproto
     systemd_lib
-  ] ++ optionals (xorg != null) [
-    xorg.libX11
-    xorg.libXext
-    xorg.libxkbfile
+    xproto
+  ] ++ optionals (libx11 != null) [
     xorg.libXrandr
-    xorg.randrproto
+    xorg.libxkbfile
     xorg.xkeyboardconfig
-    xorg.xproto
   ];
 
   configureFlags = [
@@ -94,7 +102,7 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--${boolWt (xorg != null)}-x"
+    "--${boolWt (libx11 != null)}-x"
   ];
 
   passthru = {
@@ -109,7 +117,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Libraries for the gnome desktop that are not part of the UI";
     homepage = https://git.gnome.org/browse/gnome-desktop;
     license = with licenses; [

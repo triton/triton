@@ -22,7 +22,14 @@ let
     boolString
     boolWt;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.10" = {
+      version = "3.10.8";
+      sha256 = "ffc50a0713d5f3049912545169eea7d367483b2c4a868032940516ed1e78dd2b";
+    };
+  };
+
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "totem-pl-parser-${source.version}";

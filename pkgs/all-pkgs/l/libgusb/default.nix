@@ -10,12 +10,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libgusb-0.2.10";
+  name = "libgusb-0.2.11";
 
   src = fetchurl {
     url = "https://people.freedesktop.org/~hughsient/releases/${name}.tar.xz";
-    multihash = "QmNsvtiRfjoWVwKYg4Td8xrcm97L4cWLAYhridmRffKEKB";
-    sha256 = "5c0442f5e00792bea939bbd16df09245740ae0d8b6ad9890d09189e1f4a3a17a";
+    multihash = "QmRbs4mYpj8vfNSEnViiYi1KZro2qAE9hrtuyaiWWaFtC3";
+    sha256 = "9cb143493fab1dc3d0d0fdba2114b1d8ec8c5b6fad05bfd0f7700e4e4ff8f7de";
   };
 
   nativeBuildInputs = [

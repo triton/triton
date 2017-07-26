@@ -37,9 +37,16 @@ mesonConfigurePhase() {
     eval "$postConfigure"
 }
 
+mesonFixup() {
+  rm -rf "$prefix"/{share,libexec}/installed-tests
+  rmdir "$prefix"/libexec >/dev/null 2>&1 || true
+  rmdir "$prefix"/share >/dev/null 2>&1 || true
+}
+
 if [ -n "${mesonConfigure-true}" -a -z "$configurePhase" ]; then
   configurePhase=mesonConfigurePhase
   if [ -z "$checkTarget" ]; then
     checkTarget="test"
   fi
+  fixupOutputHooks+=(mesonFixup)
 fi

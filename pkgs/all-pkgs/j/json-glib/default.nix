@@ -42,6 +42,8 @@ stdenv.mkDerivation rec {
     sed -i 's,@filename@,@basename@,g' json-glib/json-enum-types.h.in
   '';
 
+  doCheck = true;
+
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

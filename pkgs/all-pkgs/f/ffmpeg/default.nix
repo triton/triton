@@ -171,7 +171,19 @@ let
     optionalString
     versionOlder;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.3" = {
+      version = "3.3.2";
+      multihash = "QmULta1UaHgk9tUSTnLpe2AKGfEVxRQszifUjatjEdDitE";
+      sha256 = "1998de1ab32616cbf2ff86efc3f1f26e76805ec5dc51e24c041c79edd8262785";
+    };
+    "9.9" = { # Git
+      version = "2017.07.24";
+      rev = "c8305079dae1044d7e6d978ec3251176464fb5f6";
+      sha256 = "71629e8744bd12e85a51547b546157768713068ee16a135633164c60ce8873b4";
+    };
+  };
+  source = sources."${channel}";
 in
 
 /*

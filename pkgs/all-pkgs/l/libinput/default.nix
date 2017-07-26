@@ -1,5 +1,8 @@
 { stdenv
 , fetchurl
+, lib
+, meson
+, ninja
 
 , libevdev
 , libwacom
@@ -7,21 +10,21 @@
 , systemd_lib
 
 , documentationSupport ? false
-  , doxygen ? null
-  , graphviz ? null
+  , doxygen
+  , graphviz
  # GUI debug viewer support
 , debugGUISupport ? false
-  , cairo ? null
-  , glib ? null
-  , gtk3 ? null
+  , cairo
+  , glib
+  , gtk3
 , testsSupport ? false
-  , check ? null
-  , valgrind ? null
+  , check
+  , valgrind
 }:
 
 let
-  inherit (stdenv.lib)
-    boolEn
+  inherit (lib)
+    boolTf
     optionals;
 in
 
@@ -46,6 +49,11 @@ stdenv.mkDerivation rec {
     sha256 = "f8c9dbc31bf549008486258ebfa328d3dbc749c0029c6168e46949c24cf19076";
   };
 
+  nativeBuildInputs = [
+    meson
+    ninja
+  ];
+
   buildInputs = [
     libevdev
     libwacom
@@ -63,10 +71,12 @@ stdenv.mkDerivation rec {
     valgrind
   ];
 
-  configureFlags = [
-    "--${boolEn documentationSupport}-documentation"
-    "--${boolEn debugGUISupport}-debug-gui"
-    "--${boolEn testsSupport}-tests"
+  mesonFlags = [
+    #"-Dudev-dir"
+    "-Dlibwacom=${boolTf (libwacom != null)}"
+    "-Ddebug-gui=${boolTf debugGUISupport}"
+    "-Dtests=${boolTf testsSupport}"
+    "-Ddocumentation=${boolTf documentationSupport}"
   ];
 
   passthru = {
@@ -78,7 +88,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library to handle input devices";
     homepage = http://www.freedesktop.org/wiki/Software/libinput;
     license = licenses.mit;

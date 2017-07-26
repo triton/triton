@@ -26,7 +26,7 @@
 }:
 
 let
-  version = "381.22";
+  version = "384.59";
 in
 stdenv.mkDerivation rec {
   name = "nvidia-settings-${version}";
@@ -34,8 +34,8 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "http://http.download.nvidia.com/XFree86/nvidia-settings/"
       + "nvidia-settings-${version}.tar.bz2";
-    multihash = "QmRjvYHXeU62ANmqjy2QDKMGovdQWaHckkewunHyMv4xZR";
-    sha256 = "304b7202c43c3324da3626619a282f77bf4237de7c3b9cc40a4034f70f0a9abe";
+    multihash = "QmS2sHYE9evBrdEKpC6LXNzWwPkXhmameTw7i5yCj4FqiC";
+    sha256 = "d7b9cc117bff1397f3a2ccf745acbc8294a668f06740ea35dd38b38c9788adb7";
   };
 
   nativeBuildInputs = [

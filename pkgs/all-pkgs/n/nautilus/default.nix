@@ -1,8 +1,11 @@
 { stdenv
+, autoreconfHook
 , fetchTritonPatch
 , fetchurl
 , gettext
+, gtk-doc
 , intltool
+, lib
 , makeWrapper
 
 , adwaita-icon-theme
@@ -22,22 +25,29 @@
 , libnotify
 , librsvg
 , libunique
+, libx11
 , libxml2
 , pango
 , shared_mime_info
 , tracker
-, xorg
 
 , channel
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     optionals
     versionOlder;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.24" = {
+      version = "3.24.2";
+      sha256 = "e5b0036f6fbfaf2e9d9ddbac98e19a43f3d8b626f73d1680e979fa312845cc60";
+    };
+  };
+
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "nautilus-${source.version}";
@@ -49,7 +59,9 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    autoreconfHook
     gettext
+    gtk-doc  # autoreconf
     intltool
     makeWrapper
   ];
@@ -76,26 +88,32 @@ stdenv.mkDerivation rec {
     pango
     shared_mime_info
     tracker
-    xorg.libX11
+    libx11
   ];
 
-  patches = optionals (versionOlder channel "3.22") [
-    (fetchTritonPatch {
-      rev = "734f89c9d36781e3f50f30dc9aa33d071136dbd0";
-      file = "nautilus/extension_dir.patch";
-      sha256 = "ebd28b1f94106562574bb43884565761a34f233bcefa0ab516bf82e7691ee764";
-    })
-  ];
+  # FIXME
+  # patches = optionals (versionOlder channel "3.22") [
+  #   (fetchTritonPatch {
+  #     rev = "734f89c9d36781e3f50f30dc9aa33d071136dbd0";
+  #     file = "nautilus/extension_dir.patch";
+  #     sha256 = "ebd28b1f94106562574bb43884565761a34f233bcefa0ab516bf82e7691ee764";
+  #   })
+  # ];
 
-  postPatch = ''
+  preAutoreconf = ''
+    mkdir m4 && gtkdocize --copy
+  '';
+
+  postAutoreconf = ''
     sed -i configure \
+      -e '/GTK_DOC_CHECK/d' \
       -e 's/DISABLE_DEPRECATED_CFLAGS=.*/DISABLE_DEPRECATED_CFLAGS=/'
   '';
 
   configureFlags = [
     "--disable-maintainer-mode"
-    "--enable-schemas-compile"
     "--enable-nls"
+    "--enable-schemas-compile"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
@@ -104,8 +122,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (libexif != null)}-libexif"
     "--enable-xmp"
     "--disable-selinux"
-    # Flag is not a proper boolean
-    #"--disable-empty-view"
+    "--enable-desktop"
     "--enable-packagekit"
     "--enable-more-warnings"
     "--${boolEn (tracker != null)}-tracker"
@@ -137,7 +154,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A file manager for the GNOME desktop";
     homepage = https://wiki.gnome.org/Apps/Nautilus;
     license = with licenses; [

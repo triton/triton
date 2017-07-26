@@ -1101,7 +1101,7 @@ evince_3-22 = callPackage ../all-pkgs/e/evince {
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   gvfs = pkgs.gvfs_1-32;
-  nautilus = pkgs.nautilus_3-22;
+  nautilus = pkgs.nautilus_3-24;
 };
 evince = callPackageAlias "evince_3-22" { };
 
@@ -1527,7 +1527,7 @@ gnome-terminal_3-22 = callPackage ../all-pkgs/g/gnome-terminal {
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
-  nautilus = pkgs.nautilus_3-22;
+  nautilus = pkgs.nautilus_3-24;
   vala = pkgs.vala_0-34;
   vte = pkgs.vte_0-46;
 };
@@ -2757,8 +2757,8 @@ nano = callPackage ../all-pkgs/n/nano { };
 
 nasm = callPackage ../all-pkgs/n/nasm { };
 
-nautilus_3-22 = callPackage ../all-pkgs/n/nautilus {
-  channel = "3.22";
+nautilus_3-24 = callPackage ../all-pkgs/n/nautilus {
+  channel = "3.24";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-24;
   atk = pkgs.atk_2-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
@@ -2767,7 +2767,7 @@ nautilus_3-22 = callPackage ../all-pkgs/n/nautilus {
   gvfs = pkgs.gvfs_1-32;
   tracker = pkgs.tracker_1-12;
 };
-nautilus = callPackageAlias "nautilus_3-22" { };
+nautilus = callPackageAlias "nautilus_3-24" { };
 
 nbd = callPackage ../all-pkgs/n/nbd { };
 

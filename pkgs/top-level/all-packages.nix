@@ -3523,7 +3523,6 @@ tracker_1-12 = callPackage ../all-pkgs/t/tracker {
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
-  vala = pkgs.vala_0-34;
 };
 tracker = callPackageAlias "tracker_1-12" { };
 

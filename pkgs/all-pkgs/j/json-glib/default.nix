@@ -48,8 +48,6 @@ stdenv.mkDerivation rec {
     "--enable-rpath"
   ];
 
-  doCheck = true;
-
   passthru = {
     srcVerification = fetchurl {
       inherit (src)

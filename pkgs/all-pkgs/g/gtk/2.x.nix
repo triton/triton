@@ -74,7 +74,7 @@ stdenv.mkDerivation rec {
   ];
 
   autoreconfPhase = ''
-    ln -sv ${gtk-doc}/share/gtk-doc/data/gtk-doc.make .
+    gtkdocize --copy
 
     touch README  # File is expected to exist
 

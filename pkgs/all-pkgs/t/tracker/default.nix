@@ -28,6 +28,7 @@
 , gstreamer
 , gtk
 , icu
+, json-glib
 , libcue
 , libexif
 , libgee
@@ -40,6 +41,8 @@
 , libosinfo
 , libpng
 , librsvg
+, libseccomp
+, libsoup
 , libtiff
 , libvorbis
 , libxml2
@@ -118,7 +121,8 @@ stdenv.mkDerivation rec {
     gtk
     #gupnp-dlna
     icu
-    #libcue
+    json-glib
+    libcue
     libexif
     #libgrss
     libgsf
@@ -131,6 +135,8 @@ stdenv.mkDerivation rec {
     libosinfo
     libpng
     librsvg
+    libseccomp
+    libsoup
     libtiff
     libvorbis
     libxml2
@@ -195,11 +201,10 @@ stdenv.mkDerivation rec {
     "--${boolEn (taglib != null)}-taglib"
     "--enable-tracker-needle"
     "--enable-tracker-preferences"
-    "--disable-enca"
+    "--disable-enca"  # ICU is used instead
     "--enable-icu-charset-detection"
     "--${boolEn (libxml2 != null)}-libxml2"
-    "--enable-cfg-man-pages"
-    #"--enable-generic-media-extractor="
+    "--enable-generic-media-extractor=libav"
     "--enable-unzip-ps-gz-files"
     "--${boolEn (poppler != null)}-poppler"
     "--${boolEn (libgxps != null)}-libgxps"
@@ -211,8 +216,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (libpng != null)}-libpng"
     "--${boolEn (libvorbis != null)}-libvorbis"
     "--${boolEn (flac != null)}-libflac"
-    # TODO: libcue support
-    "--disable-libcue"
+    "--${boolEn (libcue != null)}-libcue"
     "--enable-abiword"
     "--enable-dvi"
     "--enable-mp3"
@@ -225,14 +229,13 @@ stdenv.mkDerivation rec {
     "--with-compile-warnings"
     #"--with-bash-completion-dir="
     #"--with-session-bus-services-dir"
-    #"--with-unicode-support"
+    "--with-unicode-support=libicu"
     #"--with-evolution-plugin-dir"
     #"--with-thunderbird-plugin-dir"
     #"--with-firefox-plugin-dir"
     #"--with-nautilus-extensions-dir"
     # TODO: gstreamer support
     "--with-gstreamer-backend=discoverer"
-    #"--with-gstreamer-backend=gupnp-dlna"
   ];
 
   preFixup = ''

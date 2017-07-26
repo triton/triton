@@ -1,29 +1,72 @@
 { stdenv
 , fetchurl
+, lib
 
 , glib
+, gobject-introspection
 , libgpg-error
 , zlib
 }:
 
+let
+  inherit (lib)
+    boolEn;
+
+  channel = "3.0";
+  version = "${channel}.0";
+in
 stdenv.mkDerivation rec {
-  name = "gmime-2.6.23";
+  name = "gmime-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/gmime/2.6/${name}.tar.xz";
-    sha256 = "7149686a71ca42a1390869b6074815106b061aaeaaa8f2ef8c12c191d9a79f6a";
+    url = "mirror://gnome/sources/gmime/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    sha256 = "9d4874fb66d8b09d79ba144d2fbcab6157cf5986268fc4fdc9d98daa12c1a791";
   };
 
   buildInputs = [
     glib
+    gobject-introspection
     libgpg-error
     zlib
   ];
 
-  meta = with stdenv.lib; {
-    homepage = http://spruce.sourceforge.net/gmime/;
+  configureFlags = [
+    "--disable-maintainer-mode"
+    "--disable-gtk-doc"
+    "--disable-gtk-doc-html"
+    "--disable-gtk-doc-pdf"
+    "--disable-profiling"
+    "--disable-warnings"
+    "--disable-glibtest"
+    "--enable-largefile"
+    "--${boolEn (libgpg-error != null)}-crypto"
+    "--${boolEn (gobject-introspection != null)}-introspection"
+    "--disable-vala"
+    "--disable-coverage"
+    #--with-libiconv=
+    #--with-gpgme-prefix=
+    #--with-libidn=
+  ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/gmime/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "A C/C++ library for manipulating MIME messages";
+    homepage = http://spruce.sourceforge.net/gmime/;
+    license = licenses.lgpl2;
     maintainers = with maintainers; [
+      codyopel
       wkennington
     ];
     platforms = with platforms;

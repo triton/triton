@@ -11,12 +11,21 @@
 , colord
 , cups
 , expat
+, fixesproto
 , fontconfig
 , gdk-pixbuf
 , glib
 , gobject-introspection
+, inputproto
 , json-glib
 , libepoxy
+, libice
+, libsm
+, libx11
+, libxcomposite
+, libxdamage
+, libxext
+, libxfixes
 , libxkbcommon
 , mesa_noglu
 , pango
@@ -25,20 +34,13 @@
 , wayland
 , wayland-protocols
 , xorg
+, xproto
 
 , channel
 }:
 
-assert xorg != null ->
-  xorg.inputproto != null
-  && xorg.libICE != null
-  && xorg.libSM != null
-  && xorg.libX11 != null
-  && xorg.libXcomposite != null
-  && xorg.libXcursor != null
-  && xorg.libXdamage != null
-  && xorg.libXext != null
-  && xorg.libXfixes != null
+assert libx11 != null ->
+  xorg.libXcursor != null
   && xorg.libXi != null
   && xorg.libXinerama != null
   && xorg.libXrandr != null
@@ -57,12 +59,22 @@ let
     else
       false;
   x11_backend =
-    if xorg != null then
+    if libx11 != null then
       true
     else
       false;
 
-  source = (import ./3-sources.nix { })."${channel}";
+  sources = {
+    "3.22" = {
+      version = "3.22.17";
+      sha256 = "a6c1fb8f229c626a3d9c0e1ce6ea138de7f64a5a6bc799d45fa286fe461c3437";
+    };
+    "3.91" = {
+      version = "3.91.1";
+      sha256 = "a6c1fb8f229c626a3d9c0e1ce6ea138de7f64a5a6bc799d45fa286fe461c3434";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gtk+-${source.version}";
@@ -86,12 +98,21 @@ stdenv.mkDerivation rec {
     colord
     cups
     expat
+    fixesproto
     fontconfig
     gdk-pixbuf
     glib
     gobject-introspection
+    inputproto
     json-glib
     libepoxy
+    libice
+    libsm
+    libx11
+    libxcomposite
+    libxdamage
+    libxext
+    libxfixes
     libxkbcommon
     mesa_noglu
     pango
@@ -99,22 +120,13 @@ stdenv.mkDerivation rec {
     shared_mime_info
     wayland
     wayland-protocols
-  ] ++ optionals (xorg != null) [
-    xorg.fixesproto
-    xorg.inputproto
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXcomposite
+    xproto
+  ] ++ optionals (libx11 != null) [
     xorg.libXcursor
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
     xorg.libXi
     xorg.libXinerama
     xorg.libXrandr
     xorg.libXrender
-    xorg.xproto
   ];
 
   configureFlags = [
@@ -126,10 +138,10 @@ stdenv.mkDerivation rec {
     "--${boolEn (libxkbcommon != null)}-xkb"
     "--${boolEn (xorg != null)}-xinerama"
     "--${boolEn (xorg != null)}-xrandr"
-    "--${boolEn (xorg != null)}-xfixes"
-    "--${boolEn (xorg != null)}-xcomposite"
-    "--${boolEn (xorg != null)}-xdamage"
-    "--${boolEn (xorg != null)}-x11-backend"
+    "--${boolEn (libxfixes != null)}-xfixes"
+    "--${boolEn (libxcomposite != null)}-xcomposite"
+    "--${boolEn (libxdamage != null)}-xdamage"
+    "--${boolEn (libx11 != null)}-x11-backend"
     "--disable-win32-backend"
     "--disable-quartz-backend"
     "--${boolEn true}-broadway-backend"
@@ -154,7 +166,7 @@ stdenv.mkDerivation rec {
     "--disable-man"
     "--disable-doc-cross-references"
     "--enable-Bsymbolic"
-    "--${boolWt (xorg != null)}-x"
+    "--${boolWt (libx11 != null)}-x"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";
@@ -167,8 +179,7 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH"
   '';
 
-  # FIXME
-  buildDirCheck = false;
+  buildDirCheck = false;  # FIXME
 
   passthru = {
     inherit

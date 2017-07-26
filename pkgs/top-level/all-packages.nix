@@ -1774,7 +1774,7 @@ googletest = callPackage ../all-pkgs/g/googletest { };
 gtk_2 = callPackage ../all-pkgs/g/gtk/2.x.nix { };
 # Deprecated alias
 gtk2 = callPackageAlias "gtk_2" { };
-gtk_3-22 = callPackage ../all-pkgs/g/gtk/3.x.nix {
+gtk_3-22 = callPackage ../all-pkgs/g/gtk {
   channel = "3.22";
   atk = pkgs.atk_2-24;
   at-spi2-atk = pkgs.at-spi2-atk_2-24;

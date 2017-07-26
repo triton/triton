@@ -30,5 +30,5 @@ rec {
     maxLinuxVersion = "4.12";
   };
   # Update to which ever channel has the latest release at the time.
-  latest = beta;
+  latest = long-lived;
 }

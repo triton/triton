@@ -15,6 +15,12 @@
 , gdk-pixbuf
 , glib
 , gobject-introspection
+, inputproto
+, libx11
+, libxcomposite
+, libxext
+, libxfixes
+, libxdamage
 , libxkbcommon
 , pango
 , xorg
@@ -58,15 +64,15 @@ stdenv.mkDerivation rec {
     gdk-pixbuf
     glib
     gobject-introspection
+    inputproto
+    libx11
+    libxcomposite
+    libxext
+    libxfixes
+    libxdamage
     libxkbcommon
     pango
-    xorg.inputproto
-    xorg.libX11
-    xorg.libXcomposite
     xorg.libXcursor
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXdamage
     xorg.libXi
     xorg.libXinerama
     xorg.libXrandr
@@ -105,10 +111,10 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc-pdf"
     "--enable-man"
     "--${boolWt (xorg.libXi != null)}-xinput"
-    "--${boolWt (xorg != null)}-gdktarget${
-      boolString (xorg != null) "=x11" ""}"
+    "--${boolWt (libx11 != null)}-gdktarget${
+      boolString (libx11 != null) "=x11" ""}"
     #"--with-gdktarget=directfb"
-    "--${boolWt (xorg != null)}-x"
+    "--${boolWt (libx11 != null)}-x"
   ];
 
   postInstall = "rm -rf $out/share/gtk-doc";

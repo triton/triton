@@ -1,6 +1,9 @@
 { stdenv
 , fetchurl
+, help2man
 , lib
+, meson
+, ninja
 
 , cairo
 , fontconfig
@@ -8,6 +11,7 @@
 , glib
 , gobject-introspection
 , harfbuzz_lib
+, libx11
 , xorg
 }:
 
@@ -18,8 +22,6 @@ assert xorg != null ->
 
 let
   inherit (lib)
-    boolEn
-    boolWt
     optionals
     optionalString;
 
@@ -36,6 +38,12 @@ stdenv.mkDerivation rec {
     sha256 = "517645c00c4554e82c0631e836659504d3fd3699c564c633fccfdfd37574e278";
   };
 
+  nativeBuildInputs = [
+    help2man
+    meson
+    ninja
+  ];
+
   buildInputs = [
     cairo
     fontconfig
@@ -43,39 +51,45 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     harfbuzz_lib
+    libx11
   ] ++ optionals (xorg != null) [
-    xorg.libX11
     xorg.libXft
     xorg.libXrender
   ];
 
-  postPatch = /* Test fails randomly */ optionalString doCheck ''
-    sed -i tests/Makefile.in \
-      -e 's,\(am__append_4 = testiter\) test-pangocairo-threads,\1,g'
+  postPatch = /* FIXME: Fixed in >1.40.7 */ ''
+    sed -i pango/meson.build \
+      -e 's/symbols_prefix/symbol_prefix/g'
+  '' +  /* FIXME: Files are missing from 1.40.7 release for some reason */ ''
+    cat > pango/pango-features.h.meson <<EOF
+    #ifndef PANGO_FEATURES_H
+    #define PANGO_FEATURES_H
+
+    #mesondefine PANGO_VERSION_MAJOR
+    #mesondefine PANGO_VERSION_MINOR
+    #mesondefine PANGO_VERSION_MICRO
+
+    #define PANGO_VERSION_STRING "@PANGO_VERSION_MAJOR@.@PANGO_VERSION_MINOR@.@PANGO_VERSION_MICRO@"
+
+    #endif /* PANGO_FEATURES_H */
+    EOF
+
+    for i in {1..9}; do
+      touch tests/markups/{fail,valid}-$i.{expected,markup}
+    done
   '';
 
-  configureFlags = [
-    "--enable-rebuilds"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-doc-cross-reference"
-    "--enable-Bsymbolic"
-    "--disable-installed-tests"
-    "--${boolWt (xorg != null)}-xft"
-    "--${boolWt (cairo != null)}-cairo"
+  mesonFlags = [
+    "-Denable_docs=false"  # gtk-doc
   ];
 
-  # Does not respect --disable-gtk-doc
-  postInstall = "rm -rvf $out/share/gtk-doc";
+  # preCheck = /* Fontconfig fails to load default config in test */
+  #     optionalString doCheck ''
+  #   export FONTCONFIG_FILE="${fontconfig}/etc/fonts/fonts.conf"
+  # '';
 
-  preCheck = /* Fontconfig fails to load default config in test */
-      optionalString doCheck ''
-    export FONTCONFIG_FILE="${fontconfig}/etc/fonts/fonts.conf"
-  '';
-
-  doCheck = true;
+  doCheck = false;  # FIXME: files missing from release
+  buildDirCheck = false; # FIXME
 
   passthru = {
     srcVerification = fetchurl {

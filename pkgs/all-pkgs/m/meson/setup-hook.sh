@@ -27,7 +27,7 @@ mesonConfigurePhase() {
 
     # Build always Release, to ensure optimisation flags
     mesonFlagsArray+=(
-      "--buildtype" "release"
+      "--buildtype" "${mesonBuildType-release}"
     )
 
     echo "meson flags: $mesonFlags ${mesonFlagsArray[@]}"

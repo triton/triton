@@ -1,12 +1,11 @@
-{ fetchzip, stdenv, slang, popt }:
+{ stdenv, fetchurl, slang, popt }:
 
 stdenv.mkDerivation rec {
-  name = "newt-0.52.19";
+  name = "newt-0.52.20";
 
-  src = fetchzip {
-    version = 2;
+  src = fetchurl {
     url = "https://pagure.io/releases/newt/${name}.tar.gz";
-    sha256 = "cc2d30acee5f78981f1e31bbb4c6fe30cf3ae25be2c1d8668f956cd8e43c9aa1";
+    sha256 = "8d66ba6beffc3f786d4ccfee9d2b43d93484680ef8db9397a4fb70b5adbb6dbc";
   };
 
   patchPhase = ''
@@ -20,11 +19,11 @@ stdenv.mkDerivation rec {
   };
 
   meta = {
-    homepage = https://fedorahosted.org/newt/;
+    homepage = https://pagure.io/newt;
     description = "Library for color text mode, widget based user interfaces";
 
     license = stdenv.lib.licenses.lgpl2;
     platforms = stdenv.lib.platforms.linux;
-    maintainers = [ stdenv.lib.maintainers.viric ];
+    maintainers = [ ];
   };
 }

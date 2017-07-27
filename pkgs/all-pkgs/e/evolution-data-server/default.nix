@@ -1,7 +1,10 @@
 { stdenv
+, cmake
 , fetchurl
 , gettext
 , intltool
+, lib
+, ninja
 
 , db
 , gcr
@@ -26,19 +29,22 @@
 , p11-kit
 , python
 , sqlite
-, vala
 , zlib
 
 , channel
 }:
 
 let
-  inherit (stdenv.lib)
-    boolEn
-    boolString
-    boolWt;
+  inherit (lib)
+    boolOn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.24" = {
+      version = "3.24.4";
+      sha256 = "c8527da0ffe8e81ad4192411ea4a9b99f8870e70565e187136426252c103a9d0";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "evolution-data-server-${source.version}";
@@ -51,8 +57,10 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    cmake
     gettext
     intltool
+    ninja
   ];
 
   buildInputs = [
@@ -79,52 +87,37 @@ stdenv.mkDerivation rec {
     p11-kit
     python
     sqlite
-    vala
     zlib
   ];
 
-  configureFlags = [
-    "--enable-schemas-compile"
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--disable-code-coverage"
-    "--disable-installed-tests"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--${boolEn (gtk != null)}-gtk"
-    # TODO: add google auth support
-    "--disable-google-auth"
-    "--disable-examples"
-    # Remove dependency on webkit
-    #"--${boolEn }-goa" (gnome-online-accounts != null) null)
-    "--disable-goa"
-    # TODO: requires libsignon-glib (Ubuntu online accounts)
-    "--disable-uoa"
-    "--enable-backend-per-process"
-    "--disable-backtraces"
-    "--${boolEn (nss != null)}-smime"
-    "--enable-ipv6"
-    "--${boolEn (libgweather != null)}-weather"
-    "--enable-dot-locking"
-    "--enable-file-locking"
-    "--disable-purify"
-    "--enable-google"
-    "--enable-largefile"
-    "--enable-glibtest"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--${boolEn (vala != null)}-vala-bindings"
-    # TODO: libphonenumber support
-    "--without-phonenumber"
-    "--without-private-docs"
-    "--${boolWt (db != null)}-libdb${boolString (db != null) "=${db}" ""}"
-    "--${boolWt (kerberos != null)}-krb5${
-      boolString (kerberos != null) "=${kerberos}" ""}"
-    "--${boolWt (openldap != null)}-openldap"
-    "--without-static-ldap"
-    "--without-sunldap"
-    "--without-static-sunldap"
+  cmakeFlags = [
+    "-DENABLE_MAINTAINER_MODE=OFF"
+    "-DWITH_PRIVATE_DOCS=OFF"
+    "-DENABLE_GTK=${boolOn (gtk != null)}"
+    "-DENABLE_GOOGLE_AUTH=OFF"  # Remove dependency on webkit
+    "-DENABLE_EXAMPLES=OFF"
+    "-DENABLE_GOA=OFF"  # Remove dependency on webkit
+    "-DENABLE_UOA=OFF"  # Remove dependency on webkit
+    "-DENABLE_BACKEND_PER_PROCESS=ON"
+    "-DENABLE_BACKTRACES=OFF"
+    "-DENABLE_IPV6=ON"
+    "-DENABLE_WEATHER=${boolOn (libgweather != null)}"
+    "-DENABLE_DOT_LOCKING=ON"
+    "-DENABLE_FILE_LOCKING=ON"
+    "-DENABLE_BROKEN_SPOOL=OFF"
+    "-DENABLE_GOOGLE=OFF"  # Remove dependency on webkit
+    "-DENABLE_LARGEFILE=ON"
+    "-DENABLE_VALA_BINDINGS=OFF"
+    # "-DWITH_DBUS_SERVICE_DIR"
+    # "-DWITH_SYSTEMDUSERUNITDIR"
+    # "-DWITH_GOOGLE_CLIENT_ID"
+    # "-DWITH_GOOGLE_CLIENT_SECRET"
+    "-DWITH_LIBDB=${if (db != null) then "${db}" else "OFF"}"
+    # "-DWITH_LIBDB_CFLAGS"
+    # "-DWITH_LIBDB_LIBS"
   ];
+
+  buildDirCheck = false;  # FIXME
 
   passthru = {
     srcVerification = fetchurl {
@@ -138,7 +131,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Evolution groupware backend";
     homepage = https://wiki.gnome.org/Apps/Evolution;
     license = with licenses; [

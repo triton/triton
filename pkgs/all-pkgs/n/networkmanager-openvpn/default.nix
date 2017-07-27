@@ -8,7 +8,7 @@
 
 , dbus-glib
 , glib
-, gtk_3
+, gtk
 , libsecret
 , networkmanager
 , networkmanager-applet
@@ -21,7 +21,13 @@ let
   inherit (lib)
     boolWt;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.2" = {
+      version = "1.2.10";
+      sha256 = "ac86a7a539d78df90095676e9183f2d422fb93dbfe4b3afef22f81825d303d61";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "NetworkManager-openvpn-${source.version}";
@@ -41,7 +47,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     dbus-glib
     glib
-    gtk_3
+    gtk
     libsecret
     networkmanager
     networkmanager-applet
@@ -65,7 +71,7 @@ stdenv.mkDerivation rec {
     "--enable-nls"
     "--enable-more-warnings"
     "--${boolWt (
-      gtk_3 != null
+      gtk != null
       && networkmanager-applet != null
       && libsecret != null)}-gnome"
     "--with-libnm-glib"

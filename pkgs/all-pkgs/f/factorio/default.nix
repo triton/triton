@@ -19,7 +19,7 @@ let
     };
     # "0.16" = {
     #   version = "0.16.0";
-    #   sha256_client = "04e6437cb95e0da575ad7b0784df7cc83b8d40a33e5b1d03357acfc120e8e757";
+    #   sha256_alpha = "04e6437cb95e0da575ad7b0784df7cc83b8d40a33e5b1d03357acfc120e8e757";
     #   sha256_headless = "3d514c9db3cad7d211a74e68ef54780164b9b78558f5f14e6f3eb60ce4356ecd";
     # };
   };

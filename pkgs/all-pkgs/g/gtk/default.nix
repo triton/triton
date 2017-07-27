@@ -30,7 +30,7 @@
 , mesa_noglu
 , pango
 , rest
-, shared_mime_info
+, shared-mime-info
 , wayland
 , wayland-protocols
 , xorg
@@ -117,7 +117,7 @@ stdenv.mkDerivation rec {
     mesa_noglu
     pango
     rest
-    shared_mime_info
+    shared-mime-info
     wayland
     wayland-protocols
     xproto

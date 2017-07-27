@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, shared_mime_info
+, shared-mime-info
 
 , curl
 , libcaca
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    shared_mime_info
+    shared-mime-info
   ];
 
   buildInputs = [

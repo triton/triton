@@ -3317,7 +3317,6 @@ sg3-utils = callPackage ../all-pkgs/s/sg3-utils { };
 shadow = callPackage ../all-pkgs/s/shadow { };
 
 shared-mime-info = callPackage ../all-pkgs/s/shared-mime-info { };
-shared_mime_info = callPackageAlias "shared-mime-info" { };  # DEPRECATED alias
 
 sharutils = callPackage ../all-pkgs/s/sharutils { };
 

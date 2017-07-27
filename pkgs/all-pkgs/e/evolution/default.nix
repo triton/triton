@@ -40,7 +40,7 @@
 , nss
 , p11_kit
 , procps
-, shared_mime_info
+, shared-mime-info
 , sqlite
 }:
 
@@ -101,7 +101,7 @@ stdenv.mkDerivation rec {
     nss
     p11_kit
     procps
-    shared_mime_info
+    shared-mime-info
     sqlite
   ];
 

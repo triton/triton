@@ -24,7 +24,7 @@
 , gnome-shell
 , dconf
 , glib
-, shared_mime_info
+, shared-mime-info
 }:
 
 let
@@ -150,7 +150,7 @@ stdenv.mkDerivation {
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
-      --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share" \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix-contents PATH ':' "$(filterExisting $(addSuffix /extra-bin-path $plugins))" \
       --set MOZ_OBJDIR "$(ls -d "${browser}/lib/${browserName}"* | head -1)"
 

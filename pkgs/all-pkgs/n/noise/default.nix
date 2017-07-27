@@ -28,6 +28,7 @@
 , librsvg
 , libsoup
 , libxml2
+, shared-mime-info
 , taglib
 , vala
 , zeitgeist

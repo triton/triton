@@ -50,7 +50,7 @@ in
       [ pkgs.gtk # To get GTK+'s themes.
         pkgs.hicolor-icon-theme
         pkgs.tango-icon-theme
-        pkgs.shared_mime_info
+        pkgs.shared-mime-info
         pkgs.which # Needed by the xfce's xinitrc script.
         pkgs.xfce.exo
         pkgs.xfce.gtk_xfce_engine

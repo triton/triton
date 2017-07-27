@@ -30,7 +30,7 @@
 , nautilus
 , pango
 , poppler
-, shared_mime_info
+, shared-mime-info
 , zlib
 
 , python
@@ -174,17 +174,17 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
-      --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share"
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
 
     wrapProgram $out/bin/evince-previewer \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix 'PATH' : "${gvfs}/bin" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
-      --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share"
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
 
     wrapProgram $out/bin/evince-thumbnailer \
       --prefix 'PATH' : "${gvfs}/bin" \
-      --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share"
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
   '';
 
   doCheck = false;

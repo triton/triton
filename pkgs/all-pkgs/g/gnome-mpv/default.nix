@@ -20,7 +20,7 @@
 , librsvg
 , mpv
 , python2Packages
-, shared_mime_info
+, shared-mime-info
 , wayland
 , xorg
 }:
@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
     librsvg
     mpv
     python2Packages.youtube-dl
-    shared_mime_info
+    shared-mime-info
     wayland
     xorg.libX11
   ];
@@ -90,7 +90,7 @@ stdenv.mkDerivation rec {
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
-      --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share" \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 

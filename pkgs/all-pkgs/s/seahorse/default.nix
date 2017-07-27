@@ -15,7 +15,7 @@
 , libxml2
 , openldap
 , openssh
-, shared_mime_info
+, shared-mime-info
 , vala
 }:
 
@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
     libxml2
     openldap
     openssh
-    shared_mime_info
+    shared-mime-info
     vala
   ];
 

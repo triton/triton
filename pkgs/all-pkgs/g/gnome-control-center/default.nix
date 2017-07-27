@@ -52,7 +52,7 @@
 , pulseaudio_lib
 , python
 , samba_client
-, shared_mime_info
+, shared-mime-info
 , sound-theme-freedesktop
 , systemd_lib
 , tzdata
@@ -128,7 +128,7 @@ stdenv.mkDerivation rec {
     polkit
     pulseaudio_lib
     samba_client
-    shared_mime_info
+    shared-mime-info
     systemd_lib
     upower
     vino

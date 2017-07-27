@@ -24,7 +24,7 @@
 , libx11
 , libxml2
 , pango
-, shared_mime_info
+, shared-mime-info
 , zlib
 
 , channel
@@ -75,7 +75,7 @@ stdenv.mkDerivation rec {
     libx11
     libxml2
     pango
-    shared_mime_info
+    shared-mime-info
     zlib
   ];
 
@@ -108,7 +108,7 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
-      --prefix 'XDG_DATA_DIRS' : "${shared_mime_info}/share"
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
   '';
 
   passthru = {

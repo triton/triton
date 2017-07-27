@@ -183,7 +183,7 @@ in {
       pkgs.gvfs
       pkgs.hicolor-icon-theme
       pkgs.ibus
-      pkgs.shared_mime_info
+      pkgs.shared-mime-info
     ] ++ config.services.xserver.desktopManager.gnome3.sessionPath;
 
     # Needed for themes and backgrounds

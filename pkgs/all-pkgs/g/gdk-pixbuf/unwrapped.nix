@@ -12,7 +12,7 @@
 , libpng
 , libx11
 , jasper
-, shared_mime_info
+, shared-mime-info
 
 , channel
 }:

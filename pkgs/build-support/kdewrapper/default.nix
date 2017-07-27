@@ -1,4 +1,4 @@
-{ stdenv, kde4, shared_mime_info, extraLibs ? [] }:
+{ stdenv, kde4, shared-mime-info, extraLibs ? [] }:
 
 /* Supply a KDE program, and it will have the necessary KDE vars to
   get icons, mime types, etc. working.
@@ -11,7 +11,7 @@
 program:
 
 let
-  libs = with kde4; [ kdelibs kde_runtime oxygen_icons shared_mime_info ]
+  libs = with kde4; [ kdelibs kde_runtime oxygen_icons shared-mime-info ]
     ++ extraLibs;
 in
 stdenv.mkDerivation {

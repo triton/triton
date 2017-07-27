@@ -2,6 +2,7 @@
 , docbook_xml_dtd_44
 , docbook-xsl
 , fetchurl
+, lib
 , libxslt
 , libxml2
 
@@ -51,13 +52,13 @@ let
   };
 in
 stdenv.mkDerivation rec {
-  name = "sssd-1.15.2";
-  
+  name = "sssd-1.15.3";
+
   src = fetchurl {
-    url = "https://fedorahosted.org/released/sssd/${name}.tar.gz";
-    multihash = "QmRedJMGZTADCG4npXTjiGfqjVFZUxYwW9HyTjUkWJ9fXi";
+    url = "https://releases.pagure.org/SSSD/sssd/${name}.tar.gz";
+    multihash = "QmdKnfSBrvXgYcQwiVnCZax4v4VcYWNwJciXDS3JNHH69d";
     hashOutput = false;
-    sha256 = "4cd5fcb314d77a58029a216b7e6001c6cb41c5b784cf570c5761c97d1c12d264";
+    sha256 = "6e508dc71c0e132b15db1db29d2e309d610027e89f7097ead5d7c9867f6d6634";
   };
 
   nativeBuildInputs = [
@@ -155,7 +156,10 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
+    description = "System Security Services Daemon";
+    homepage = https://pagure.io/SSSD/sssd/;
+    license = licenses.gpl3;
     maintainers = with maintainers; [
       wkennington
     ];

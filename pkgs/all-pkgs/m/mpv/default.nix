@@ -3,8 +3,6 @@
 , lib
 , makeWrapper
 , perl
-, pkgconfig
-, python
 , waf
 , which
 
@@ -25,12 +23,17 @@
 , libdvdread
 , libjpeg
 , libpng
+, libpthread-stubs
 , libtheora
 , libva
 , libvdpau
+, libx11
+, libxext
 , libxkbcommon
+, libxscrnsaver
 #, lua
 , mesa
+, mujs
 , nvidia-cuda-toolkit
 , nvidia-drivers
 , openal
@@ -43,27 +46,28 @@
 , v4l_lib
 , wayland
 , xorg
+, zlib
 }:
 
 let
   inherit (lib)
     boolEn;
 
-  version = "0.25.0";
+  version = "0.26.0";
 in
 stdenv.mkDerivation rec {
   name = "mpv-${version}";
 
   src = fetchzip {
-    version = 2;
+    version = 3;
     url = "https://github.com/mpv-player/mpv/archive/v${version}.tar.gz";
-    sha256 = "ebfd1e0d389e6450e1f268db830b8f2f69acc88fb6d8f1e10722eba47c7491cc";
+    sha256 = "0d8eebc876f55ee7f72ed49cf2a1dc72604bffb205ad78eb54514da2051f4ca0";
   };
 
   nativeBuildInputs = [
     makeWrapper
     perl
-    python
+    pythonPackages.python
     pythonPackages.docutils
     waf
     which
@@ -87,14 +91,19 @@ stdenv.mkDerivation rec {
     libdvdread
     libjpeg
     libpng
+    libpthread-stubs
     libtheora
     libva
     libvdpau
+    libx11
+    libxext
     libxkbcommon
+    libxscrnsaver
     # MPV does not support lua 5.3 yet
     #lua
     #luasockets
     mesa
+    mujs
     nvidia-cuda-toolkit
     nvidia-drivers
     openal
@@ -106,14 +115,11 @@ stdenv.mkDerivation rec {
     speex
     v4l_lib
     wayland
-    xorg.libpthreadstubs
-    xorg.libX11
-    xorg.libXext
     xorg.libXinerama
     xorg.libXrandr
-    xorg.libXScrnSaver
     xorg.libXv
     xorg.libXxf86vm
+    zlib
   ];
 
   configureFlags = [
@@ -128,19 +134,22 @@ stdenv.mkDerivation rec {
     "--disable-html-build"
     "--disable-pdf-build"
     "--enable-cplugins"
-    "--enable-vf-dlopen-filters"
     "--enable-zsh-comp"
     ###"--enable-asm"
     "--disable-test"
     "--disable-clang-database"
+    "--disable-uwp"  # windows
     "--disable-win32-internal-pthreads"
     "--enable-iconv"
     "--disable-termios"
     #"--disable-shm"
     "--${boolEn (samba_client != null)}-libsmbclient"
     #"--${boolEn (lua != null)}-lua"
+    /**/"--disable-lua"  # FIXME: need lua 5.2
+    "--${boolEn (mujs != null)}-javascript"
     "--${boolEn (libass != null)}-libass"
     "--${boolEn (libass != null)}-libass-osd"
+    "--${boolEn (zlib != null)}-zlib"
     "--enable-encoding"
     "--${boolEn (libbluray != null)}-libbluray"
     "--${boolEn (libdvdread != null)}-dvdread"
@@ -175,11 +184,11 @@ stdenv.mkDerivation rec {
     #"--${boolEn ( != null)}-gbm"
     "--${boolEn (wayland != null && libxkbcommon != null)}-wayland"
     "--${boolEn (
-        xorg.libX11 != null
-        && xorg.libXext != null
+        libx11 != null
+        && libxext != null
         && xorg.libXinerama != null
         && xorg.libXrandr != null
-        && xorg.libXScrnSaver != null)}-x11"
+        && libxscrnsaver != null)}-x11"
     "--${boolEn (xorg.libXv != null)}-xv"
     "--disable-gl-cocoa"
     # FIXME: add passthru booleans to mesa for feature detection
@@ -190,6 +199,7 @@ stdenv.mkDerivation rec {
     "--disable-gl-win32"  # windows
     "--disable-gl-dxinterop"  # windows
     "--disable-egl-angle"  # windows
+    "--disable-egl-angle-win32"  # windows
     "--${boolEn (libvdpau != null)}-vdpau"
     # FIXME: add passthru booleans to libvdpau for feature detection
     #"--${boolEn ( != null)}-vdpau-gl-x11"
@@ -212,19 +222,24 @@ stdenv.mkDerivation rec {
     ###"--disable-mali-dbdev"
     "--${boolEn (mesa != null)}-gl"
     "--${boolEn (libva != null)}-vaapi-hwaccel"
-    "--disable-videotoolbox-hwaccel"
-    "--disable-videotoolbox-gl"
+    "--disable-videotoolbox-hwaccel-new"  # macos
+    "--disable-videotoolbox-hwaccel-old"  # macos
+    "--disable-videotoolbox-gl"  # macos
     "--${boolEn (libvdpau != null && ffmpeg != null)}-vdpau-hwaccel"
-    "--disable-d3d-hwaccel"
+    "--disable-d3d-hwaccel"  # windows
+    "--disable-d3d-hwaccel-new"  # windows
+    "--disable-d3d9-hwaccel"  # windows
+    "--disable-gl-dxinterop-d3d9"  # windows
     "--${boolEn (
       ffmpeg != null
       && ffmpeg.features.cuda
       && nvidia-cuda-toolkit != null
       && nvidia-drivers != null)}-cuda-hwaccel"
     ###"--enable-tv-interface"
-    "--${boolEn (v4l_lib != null)}-tv-v4l2"
-    "--${boolEn (v4l_lib != null)}-libv4l2"
-    "--${boolEn (v4l_lib != null)}-audio-input"
+    # FIXME
+    # "--${boolEn (v4l_lib != null)}-tv-v4l2"
+    # "--${boolEn (v4l_lib != null)}-libv4l2"
+    # "--${boolEn (v4l_lib != null)}-audio-input"
     #"--${boolEn ( != null)}-dvbin"
     "--disable-apple-remote"
   ];

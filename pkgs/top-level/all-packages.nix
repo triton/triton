@@ -2693,8 +2693,14 @@ mpdris2 = callPackage ../all-pkgs/m/mpdris2 { };
 mpfr = callPackage ../all-pkgs/m/mpfr { };
 
 mpv = callPackage ../all-pkgs/m/mpv {
+  jack2_lib = null;
+  lcms2 = null;
+  libcaca = null;
   nvidia-cuda-toolkit = null;
   nvidia-drivers = null;
+  openal = null;
+  rubberband = null;
+  samba_client = null;
 };
 
 ms-sys = callPackage ../all-pkgs/m/ms-sys { };

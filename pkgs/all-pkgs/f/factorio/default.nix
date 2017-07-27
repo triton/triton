@@ -3,37 +3,47 @@
 , lib
 
 , alsa-lib
+, libx11
 , xorg
 
+, channel ? "0.15"
 , type ? "alpha"
 }:
 
 let
-  version = "0.15.30";
-
-  sha256s = {
-    "alpha" = "5f7fd094ce940a718605e42abedc55bc73d34ef57465abc86e7b51a12c21b0f9";
-    "headless" = "feebfd240333934b1bbd8826aafc130e702a913bfaeaeae07dd83295e238b95a";
+  sources = {
+    "0.15" = {
+      version = "0.15.31";
+      sha256_alpha = "04e6637cb95e0da575ad7b0784df7cc83b8d40a33e5b1d03357acfc120e8e757";
+      sha256_headless = "3d510c9db3cad7d211a74e68ef54780164b9b78558f5f14e6f3eb60ce4356ecd";
+    };
+    # "0.16" = {
+    #   version = "0.16.0";
+    #   sha256_client = "04e6437cb95e0da575ad7b0784df7cc83b8d40a33e5b1d03357acfc120e8e757";
+    #   sha256_headless = "3d514c9db3cad7d211a74e68ef54780164b9b78558f5f14e6f3eb60ce4356ecd";
+    # };
   };
+  source = sources."${channel}";
 
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "factorio${if type != "" then "-${type}" else ""}-${version}";
-  
+  name = "factorio${if type != "" then "-${type}" else ""}-${source.version}";
+
   # NOTE: You need to login and fetch the tarball manually
   # Then run the script at pkgs/all-pkgs/f/factorio/inject-tar <game-tar>
   src = fetchurl {
     name = "${name}.tar.xz";
-    url = "http://www.factorio.com/get-download/${version}/${type}/linux64";
-    sha256 = sha256s."${type}";
+    url = "http://www.factorio.com/get-download/${source.version}/"
+      + "${type}/linux64";
+    sha256 = source."sha256_${type}";
   };
 
   libs = optionals (type != "headless") [
     alsa-lib
-    xorg.libX11
+    libx11
     xorg.libXcursor
     xorg.libXi
     xorg.libXinerama

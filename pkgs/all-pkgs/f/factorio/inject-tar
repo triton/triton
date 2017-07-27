@@ -4,17 +4,62 @@ if [ "$#" -le "0" ]; then
   exit 1
 fi
 
+find_src_sha256() {
+  local srclist="$1"
+  local channel="$2"
+  local type="$3"
+  local context
+
+  context="$(echo "$srclist" | grep -A 3 "\"$channel\" = {")"
+  echo "$context" | grep -oP "(?<=sha256_$type = \")[0-9a-z]{64}(?=\";)"
+}
+
+find_src_version() {
+  local srclist="$1"
+  local channel="$2"
+  local context
+
+  context="$(echo "$srclist" | grep -A 1 "\"$channel\" = {")"
+  echo "$context" | grep -oP '(?<=version = ")[0-9]+\.[0-9]+\.[0-9]+(?=";)'
+}
+
+find_tar_channel() {
+  local file="$1"
+  echo "$file" | grep -oP '(?<=_x64_)[0-9]+\.[0-9]+(?=\.[0-9]+\.tar\.xz)'
+}
+
+find_tar_version() {
+  local file="$1"
+  echo "$file" | grep -oP '(?<=_x64_)[0-9]+\.[0-9]+\.[0-9]+(?=\.tar\.xz)'
+}
+
+find_tar_type() {
+  local file="$1"
+  echo "$file" | grep -oP '(alpha|headless)'
+}
+
+FILE="$1"
 SRC_DIR="$(dirname "$(readlink -f "$0")")"
-VERSION="$(cat "$SRC_DIR"/default.nix | grep 'version =' | sed 's,.*version = "\(.*\)";.*,\1,')"
-EXPECTED_SHA256="$(cat "$SRC_DIR"/default.nix | grep '"alpha" =' | sed 's,.*"alpha" = "\(.*\)";.*,\1,')"
-THIS_SHA256="$(sha256sum "$1" | awk '{ print $1 }')"
-if [ "$EXPECTED_SHA256" != "$THIS_SHA256" ]; then
+# Update lines of context after match if adding additional channels
+SRC_LIST="$(cat "$SRC_DIR/default.nix" | grep -A 9 'sources = {')"
+TAR_CHANNEL="$(find_tar_channel "$FILE")"
+TAR_VERSION="$(find_tar_version "$FILE")"
+TAR_TYPE="$(find_tar_type "$FILE")"
+SRC_VERSION="$(find_src_version "$SRC_LIST" "$TAR_CHANNEL")"
+SRC_SHA256="$(find_src_sha256 "$SRC_LIST" "$TAR_CHANNEL" "$TAR_TYPE")"
+THIS_SHA256="$(sha256sum "$1" | awk '{ print $1; exit }')"
+
+if [ "$SRC_SHA256" != "$THIS_SHA256" ]; then
   echo "SHA256 Mismatch:" >&2
   echo "  GOT:      $THIS_SHA256" >&2
-  echo "  EXPECTED: $EXPECTED_SHA256" >&2
+  echo "  EXPECTED: $SRC_SHA256" >&2
   exit 1
 fi
-if ! nix-prefetch-url --name "factorio-alpha-$VERSION.tar.xz" "file://$(readlink -f "$1")" >/dev/null 2>&1; then
+echo "injecting: factorio-$TAR_TYPE-$SRC_VERSION.tar.xz"
+if ! nix-prefetch-url --name "factorio-$TAR_TYPE-$SRC_VERSION.tar.xz" "file://$(readlink -f "$1")" >/dev/null 2>&1; then
   echo "Failed to insert tarball" >&2
   exit 1
 fi
+
+echo 'success'
+exit 0

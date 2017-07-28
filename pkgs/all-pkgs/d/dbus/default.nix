@@ -4,32 +4,34 @@
 , audit_lib
 , expat
 , libcap-ng
+, libx11
 , systemd_lib
-, xorg
+, xproto
 }:
 
 stdenv.mkDerivation rec {
-  name = "dbus-1.10.20";
+  name = "dbus-1.10.22";
 
   src = fetchurl {
     url = "https://dbus.freedesktop.org/releases/dbus/${name}.tar.gz";
-    multihash = "QmZL7qXW7QFKTuTtuJWzxwRqFwYeSHNFAgRSVf8VS42RtK";
+    multihash = "QmTGECrBJdSwdLY5vGwPV1u6TvJrve2Vh92GbRF3oxKM7s";
     hashOutput = false;
-    sha256 = "e574b9780b5425fde4d973bb596e7ea0f09e00fe2edd662da9016e976c460b48";
+    sha256 = "e2b1401e3eedc7b5c9a2034d31254c886e1fcbc7858006e0a1c59158fe4b7b97";
   };
 
   buildInputs = [
     audit_lib
     expat
     libcap-ng
+    libx11
     systemd_lib
-    xorg.xproto
-    xorg.libX11
+    xproto
   ];
 
   preConfigure = ''
     configureFlagsArray+=(
       "--with-systemdsystemunitdir=$out/etc/systemd/system"
+      "--with-systemduserunitdir=$out/etc/systemd/user"
     )
     installFlagsArray+=(
       "sysconfdir=$out/etc"
@@ -50,11 +52,14 @@ stdenv.mkDerivation rec {
     "--enable-user-session"
   ];
 
+  doCheck = true;
+
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.asc") src.urls;
       pgpKeyFingerprints = [
+        # Simon McVittie
         "DA98 F25C 0871 C49A 59EA  FF2C 4DE8 FF2A 63C7 CC90"
         "3C86 72A0 F496 37FE 064A  C30F 52A4 3A1E 4B77 B059"
       ];

@@ -600,6 +600,14 @@ stdenv.mkDerivation rec {
     "--extra-ldflags=-lasound"
   ];
 
+  postPatch = optionalString (frei0r-plugins != null) ''
+    sed -i libavfilter/vf_frei0r.c \
+      -e 's,/usr/,${frei0r-plugins},g'
+  '' ++ optionalString (ladspa-sdk != null) ''
+    sed -i libavfilter/af_ladspa.c \
+      -e 's,/usr,${ladspa-sdk},g'
+  '';
+
   # Build qt-faststart executable
   postBuild = optionalString qtFaststartProgram ''
     make tools/qt-faststart

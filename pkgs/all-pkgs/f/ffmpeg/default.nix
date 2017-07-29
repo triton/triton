@@ -173,9 +173,9 @@ let
 
   sources = {
     "3.3" = {
-      version = "3.3.2";
-      multihash = "QmULta1UaHgk9tUSTnLpe2AKGfEVxRQszifUjatjEdDitE";
-      sha256 = "1998de1ab32616cbf2ff86efc3f1f26e76805ec5dc51e24c041c79edd8262785";
+      version = "3.3.3";
+      multihash = "QmdtNR6MVR4YppjScd6MJ9Ek2Ga15BJLAR6vXV7RgevKSB";
+      sha256 = "d2a9002cdc6b533b59728827186c044ad02ba64841f1b7cd6c21779875453a1e";
     };
     "9.9" = { # Git
       version = "2017.07.24";

@@ -178,9 +178,9 @@ let
       sha256 = "d2a9002cdc6b533b59728827186c044ad02ba64841f1b7cd6c21779875453a1e";
     };
     "9.9" = { # Git
-      version = "2017.07.24";
-      rev = "c8305079dae1044d7e6d978ec3251176464fb5f6";
-      sha256 = "71629e8744bd12e85a51547b546157768713068ee16a135633164c60ce8873b4";
+      version = "2017.07.28";
+      rev = "bf8ab72ae95bb11f2c281d464594c2f6ba70326b";
+      sha256 = "b48a4e947018c89e11481a6495e2b703ab194d7e15e8494e5873362f207eb8cc";
     };
   };
   source = sources."${channel}";

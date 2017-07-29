@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , krb5_lib
 }:
@@ -19,7 +20,11 @@ stdenv.mkDerivation rec {
     krb5_lib
   ];
 
-  meta = with stdenv.lib; {
+  NIX_CFLAGS_COMPILE = [
+    "-std=c99"  # Breaks libraries linking against this one using >c99.
+  ];
+
+  meta = with lib; {
     homepage = "http://sourceforge.net/projects/libtirpc/";
     description = "The transport-independent Sun RPC implementation (TI-RPC)";
     license = licenses.bsd3;

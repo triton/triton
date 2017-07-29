@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, lib
 
 , audit_lib
 , cracklib
@@ -7,9 +8,11 @@
 , libtirpc
 }:
 
+let
+  version = "1.3.0";
+in
 stdenv.mkDerivation rec {
   name = "pam-${version}";
-  version = "1.3.0";
 
   src = fetchurl {
     url = "http://www.linux-pam.org/library/Linux-PAM-${version}.tar.bz2";
@@ -60,7 +63,7 @@ stdenv.mkDerivation rec {
     ln -sv /var/setuid-wrappers/unix_chkpwd $out/sbin/unix_chkpwd
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://ftp.kernel.org/pub/linux/libs/pam/;
     description = "Pluggable Authentication Modules, a flexible mechanism for authenticating user";
     license = licenses.bsd3;

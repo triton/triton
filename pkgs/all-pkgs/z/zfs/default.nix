@@ -75,18 +75,7 @@ stdenv.mkDerivation rec {
   # for zdb to get the rpath to libgcc_s, needed for pthread_cancel to work
   NIX_CFLAGS_LINK = "-lgcc_s";
 
-  patches = optionals (channel == "stable") [
-    (fetchTritonPatch {
-      rev = "593be6ddc5f0fce4ea6f7cf1472ea9b4a4e71787";
-      file = "z/zfs/0001-Fix-makefile-paths.patch";
-      sha256 = "6653fa2b514c47c2470a675bedafd0b978a23d8986e8917ecb38a0d7512f385c";
-    })
-    (fetchTritonPatch {
-      rev = "593be6ddc5f0fce4ea6f7cf1472ea9b4a4e71787";
-      file = "z/zfs/0002-Fix-binary-paths.patch";
-      sha256 = "2c8ec10bba7672d8da6262f81c2f8dedda0ba146f9ee59a3a5bbd05ebbb9adf1";
-    })
-  ] ++ optionals (channel == "dev") [
+  patches = [
     (fetchTritonPatch {
       rev = "7a56edd41ce78feba009a15303b0295bf07026c6";
       file = "z/zfs/0001-Fix-makefile-paths.patch";

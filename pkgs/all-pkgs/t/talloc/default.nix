@@ -2,14 +2,15 @@
 , docbook-xsl
 , docbook_xml_dtd_42
 , fetchurl
+, lib
 , libxslt
 , python2
 , samba_full
 }:
 
 let
-  version = "2.1.9";
-  newVersion = "2.1.9";
+  version = "2.1.10";
+  newVersion = "2.1.10";
 
   tarballUrls = version: [
     "mirror://samba/talloc/talloc-${version}.tar"
@@ -21,7 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "f0aad4cb88a3322207c82136ddc07bed48a37c2c21f82962d6c5ccb422711062";
+    sha256 = "c985e94bebd6ec2f6af3d95dcc3fcb192a2ddb7781a021d70ee899e26221f619";
   };
 
   nativeBuildInputs = [
@@ -53,7 +54,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Hierarchical pool based memory allocator with destructors";
     homepage = http://tdb.samba.org/;
     license = licenses.gpl3;

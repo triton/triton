@@ -13,7 +13,7 @@
 # https://wiki.archlinux.org/index.php/BluRay
 
 let
-  version = "0.8.1";
+  version = "0.9.0";
 in
 stdenv.mkDerivation rec {
   name = "libaacs-${version}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://videolan/libaacs/${version}/${name}.tar.bz2";
     hashOutput = false;
-    sha256 = "95c344a02c47c9753c50a5386fdfb8313f9e4e95949a5c523a452f0bcb01bbe8";
+    sha256 = "47e0bdc9c9f0f6146ed7b4cc78ed1527a04a537012cf540cf5211e06a248bace";
   };
 
   nativeBuildInputs = [

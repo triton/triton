@@ -1,9 +1,8 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
-, fetchpatch
-, which
 , gnumake
+, lib
+, which
 
 , bzip2
 , harfbuzz_lib
@@ -16,13 +15,13 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolWt
     optionals
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "freetype-2.7.1";
+  name = "freetype-2.8";
 
   src = fetchurl {
     urls = [
@@ -30,7 +29,7 @@ stdenv.mkDerivation rec {
       "mirror://sourceforge/freetype/${name}.tar.bz2"
     ];
     hashOutput = false;
-    sha256 = "3a3bb2c4e15ffb433f2032f50a5b5a92558206822e22bfe8cbe339af4aa82f88";
+    sha256 = "a3c603ed84c3c2495f9c9331fe6bba3bb0ee65e06ec331e0a0fb52158291b40b";
   };
 
   buildInputs = [
@@ -41,32 +40,24 @@ stdenv.mkDerivation rec {
     harfbuzz_lib
   ];
 
-  patches = [
-    # XXX: if fontconfig-infinality-ultimate updates to support 2.6.5+
-    #      then revert to using their patches, in the meantime
-    #      https://github.com/archfan/infinality_bundle, provides
-    #      updated versions of the patches.
-    (fetchTritonPatch {
-      rev = "2d67959be9b13d2c4191cd7cea45ea337e677a7e";
-      file = "f/freetype2/0001-Enable-table-validation-modules.patch";
-      sha256 = "6d273254fd925d284e5f66e3861eaef69a4393f34872398b2c93af0d5e15d34e";
-    })
-    (fetchTritonPatch {
-      rev = "2d67959be9b13d2c4191cd7cea45ea337e677a7e";
-      file = "f/freetype2/0002-infinality-2.7.1-2017.01.11.patch";
-      sha256 = "5ac6329d4ffd6d94d9dd76b178fa13ab2fcfadbf2ddaa7ad60bf0bb7632afd69";
-    })
-    (fetchTritonPatch {
-      rev = "5a2b7f23e6843dbfca86143d902a4c8e49f40ac7";
-      file = "f/freetype2/CVE-2017-8105.patch";
-      sha256 = "3ecb4da1dfa58ebba09dd27a12b5348d717a8be9f46bf08c08d905c543df4525";
-    })
-    (fetchTritonPatch {
-      rev = "5a2b7f23e6843dbfca86143d902a4c8e49f40ac7";
-      file = "f/freetype2/CVE-2017-8287.patch";
-      sha256 = "de2170d1ab3f3e20b526cb1f6900a8b39ef2c08f1e9366f393086227a40638f5";
-    })
-  ];
+  postPatch = ''
+    # Enable table validation modules
+    sed -i modules.cfg \
+      -e '/AUX_MODULES += gxvalid/ s/#\s//g' \
+      -e '/AUX_MODULES += otvalid/ s/#\s//g'
+
+    # Enable subpixel rendering
+    sed -i include/freetype/config/ftoption.h \
+      -e '/#define FT_CONFIG_OPTION_SUBPIXEL_RENDERING/ s,\(/\*\s\|\*/\),,g'
+
+    # Enable infinality subpixel hinting
+    sed -i include/freetype/config/ftoption.h \
+      -e '/^#define TT_CONFIG_OPTION_SUBPIXEL_HINTING/ s/2/( 1 | 2 )/g'
+
+    # Enable long PCF familyy names
+    sed -i include/freetype/config/ftoption.h \
+      -e '/#define PCF_CONFIG_OPTION_LONG_FAMILY_NAMES/ s,\(/\*\s\|\*/\),,g'
+  '';
 
   configureFlags = [
     "--enable-biarch-config"
@@ -101,7 +92,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A font rendering engine";
     homepage = http://www.freetype.org/;
     license = licenses.gpl2Plus; # or the FreeType License (BSD + advertising clause)

@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "1.6.30";
+  version = "1.6.31";
 in
 stdenv.mkDerivation rec {
   name = "libpng-${version}";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/libpng/libpng16/${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "267c332ffff70cc599d3929207869f698798f1df143aa5f9597b007c14353666";
+    sha256 = "232a602de04916b2b5ce6f901829caf419519e6a16cc9cd7c1c91187d3ee8b41";
   };
 
   buildInputs = [
@@ -22,8 +22,8 @@ stdenv.mkDerivation rec {
 
   patches = [
     (fetchurl {
-      url = "mirror://sourceforge/libpng-apng/libpng16/1.6.30/libpng-1.6.30-apng.patch.gz";
-      sha256 = "1a6359b1fa7855ed8afcf11be57725093d29cc7ee921c8e030c59d63c565d91a";
+      url = "mirror://sourceforge/libpng-apng/libpng16/${version}/${name}-apng.patch.gz";
+      sha256 = "8ae6147298248bf4bcd64c94878e95956d74c6bc2052bdef26a148540c8c2038";
     })
   ];
 

@@ -1,6 +1,7 @@
 { stdenv
 , fetchFromGitHub
 , fetchurl
+, lib
 , perl
 , yasm
 
@@ -26,8 +27,6 @@
 , experimentalEmulateHardwareSupport ? false
 , experimentalMiscFixes ? false
 
-, aomQm ? false
-
 , channel
 }:
 
@@ -44,7 +43,7 @@ let
     compareVersions;
   inherit (stdenv)
     targetSystem;
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolString
     elem
@@ -53,7 +52,20 @@ let
     platforms
     versionAtLeast;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.6" = {
+      version = "1.6.1";
+      sha256 = "1c2c0c2a97fba9474943be34ee39337dee756780fc12870ba1dc68372586a819";
+    };
+    # master
+    "1.999" = {
+      fetchzipversion = 3;
+      version = "2017-07-28";
+      rev = "5d0bef4763b7e87451b4176771d344d4172960df";
+      sha256 = "15c829f4bd8f7ae290c7fd75921f25706b924c4cb43ae14caea29314ae61deb1";
+    };
+  };
+  source = sources."${channel}";
 
   reqMin = v: (compareVersions v channel != 1);
   reqMax = v: (compareVersions channel v != 1);
@@ -70,20 +82,6 @@ let
       flag
     else
       null;
-
-  # Return aom or vp9 depending on version
-  aomOrVp9 =
-    if channel == "2.999" then
-      "aom"
-    else
-      "vp9";
-
-  # Return av1 or vp9 depending on version
-  av1OrVp9 =
-    if channel == "2.999" then
-      "av1"
-    else
-      "vp9";
 in
 stdenv.mkDerivation rec {
   name = "libvpx-${source.version}";
@@ -139,22 +137,22 @@ stdenv.mkDerivation rec {
     "--disable-docs"
     #libc
     "--as=yasm"
-    "${boolString (sizeLimit != null) "--size-limit=${sizeLimit}" ""}"
+    "${if (sizeLimit != null) then "--size-limit=${sizeLimit}" else null}"
     "--disable-codec-srcs"
     "--disable-debug-libs"
     "--${boolEn (elem targetSystem platforms.mips)}-dequant-tokens"
     "--${boolEn (elem targetSystem platforms.mips)}-dc-recon"
     "--${boolEn postprocSupport}-postproc"
-    "--${boolEn postprocSupport}-${av1OrVp9}-postproc"
+    "--${boolEn postprocSupport}-vp9-postproc"
     "--${boolEn multithreadSupport}-multithread"
     "--${boolEn internalStatsSupport}-internal-stats"
 
     (deprFlag "1.999" "--enable-vp8")
     (deprFlag "1.999" "--enable-vp8-encoder")
     (deprFlag "1.999" "--enable-vp8-decoder")
-    "--enable-${av1OrVp9}"
-    "--enable-${av1OrVp9}-encoder"
-    "--enable-${av1OrVp9}-decoder"
+    "--enable-vp9"
+    "--enable-vp9-encoder"
+    "--enable-vp9-decoder"
 
     "--disable-static-msvcrt"
     "--${boolEn spatialResamplingSupport}-spatial-resampling"
@@ -174,22 +172,21 @@ stdenv.mkDerivation rec {
     "--disable-encode-perf-tests"
     "--${boolEn multiResEncodingSupport}-multi-res-encoding"
     "--${boolEn temporalDenoisingSupport}-temporal-denoising"
-    "--${boolEn temporalDenoisingSupport}-${av1OrVp9}-temporal-denoising"
+    "--${boolEn temporalDenoisingSupport}-vp9-temporal-denoising"
     "--${boolEn coefficientRangeCheckingSupport}-coefficient-range-checking"
     "--${boolEn betterHWCompatibility}-better-hw-compatibility"
-    "--${boolEn (elem targetSystem platforms.bit64)}-${aomOrVp9}-highbitdepth"
+    "--${boolEn (elem targetSystem platforms.bit64)}-vp9-highbitdepth"
     "--${boolEn (
       experimentalSpatialSvcSupport
       || experimentalFpMbStatsSupport
       || experimentalEmulateHardwareSupport)}-experimental"
-    (newFlag "2.999" "--${boolEn aomQm}-aom-qm")
   ] # Experimental features
     ++ optional experimentalSpatialSvcSupport "--enable-spatial-svc"
     ++ optional experimentalFpMbStatsSupport "--enable-fp-mb-stats"
     ++ optional experimentalEmulateHardwareSupport "--enable-emulate-hardware"
     ++ optional experimentalMiscFixes "--enable-misc-fixes";
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "WebM VP8/VP9 codec SDK";
     homepage = http://www.webmproject.org/;
     license = licenses.bsd3;

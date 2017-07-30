@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "2017.07.11";
+  version = "2017.07.26";
 in
 buildPythonPackage rec {
   name = "regex-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "regex";
     inherit version;
-    sha256 = "dbda8bdc31a1c85445f1a1b29d04abda46e5c690f8f933a9cc3a85a358969616";
+    sha256 = "b0e0c1c80e677ee351d14bdb0345c33caab6acdbaf3a41c3f34c09bbb68c8897";
   };
 
   meta = with lib; {

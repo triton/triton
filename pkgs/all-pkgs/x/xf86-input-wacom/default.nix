@@ -1,37 +1,44 @@
 { stdenv
 , fetchurl
+, lib
 
 , file
+, inputproto
+, kbproto
+, libx11
+, libxext
 , ncurses
+, randrproto
 , systemd_lib
+, xproto
 , xorg
 }:
 
 stdenv.mkDerivation rec {
-  name = "xf86-input-wacom-0.33.0";
+  name = "xf86-input-wacom-0.35.0";
 
   src = fetchurl {
     url = "mirror://sourceforge/linuxwacom/${name}.tar.bz2";
-    multihash = "QmWVD3PFeRbH9dYbhWDzkWiSM58tt5V9fJwbUYVBdtPAKK";
+    multihash = "QmPA6Kjv4JcADphnrnk4VSwssCQXyp8dKsMm7EmH9JnrC7";
     hashOutput = false;
-    sha256 = "24eef830744a388795a318ef743f19c451e394d9ef1332e98e2d54810a70f8e0";
+    sha256 = "55f60a71e81ef5544885652069a4f52b5cbaceabba53a28ac1397ec0ac26447d";
   };
 
   buildInputs = [
     ncurses
     systemd_lib
-    xorg.inputproto
-    xorg.kbproto
-    xorg.libX11
-    xorg.libXext
+    inputproto
+    kbproto
+    libx11
+    libxext
     xorg.libXi
     xorg.libXinerama
     xorg.libXrandr
     xorg.libXrender
     xorg.pixman
-    xorg.randrproto
+    randrproto
     xorg.xorgserver
-    xorg.xproto
+    xproto
   ];
 
   preConfigure = ''
@@ -55,7 +62,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Wacom digitizer driver for X11";
     homepage = http://linuxwacom.sourceforge.net;
     license = licenses.gpl2;

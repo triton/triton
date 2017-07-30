@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "3.31";
+  version = "3.32";
 
   baseUrl = "https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases"
     + "/NSS_${stdenv.lib.replaceStrings ["."] ["_"] version}_RTM/src";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "${baseUrl}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "e90561256a3271486162c1fbe8d614d118c333d36a4455be2af8688bd420a65d";
+    sha256 = "35c6f381cc96bb25e4f924469f6ba3e57b3a16e0c2fb7e295a284a00d57ed335";
   };
 
   buildInputs = [
@@ -46,12 +46,11 @@ stdenv.mkDerivation rec {
       sha256 = "bb719d9acf4e3d984fc8885251daa7148e995a2691a040fb5c45f5dc05fc4ae0";
     })
     (fetchTritonPatch {
-      rev = "e71938b3ed2c0c7e904c57444b656e3db19bfe73";
+      rev = "cb1b429f5caaddd49687dc0a1348f5af555bcc72";
       file = "n/nss/0003-Add-pkgconfig-files.patch";
-      sha256 = "f02ea2bdf7011a896c2e19bb64ea91bc8674642dc267325cba6e69b23190cbd4";
+      sha256 = "ad8db1ad37e8accfd1213c9c4e5b0cb2b0e142c9ef2d0222062667a565cf380e";
     })
 	];
-
   preBuild = ''
     makeFlagsArray+=("SOURCE_PREFIX=$out")
   '';

@@ -1,14 +1,15 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     elem
     optionals
     platforms;
 
-  version = "4.15";
+  version = "4.16";
 
   baseUrls = [
     "https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v${version}/src"
@@ -20,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/nspr-${version}.tar.gz") baseUrls;
     hashOutput = false;
-    sha256 = "27dde06bc3d0c88903a20d6ad807361a912cfb624ca0ab4efb10fc50b19e2d80";
+    sha256 = "9b3102d97665504aeee73363c11a21c062ad67a2522242368b7f019f96a53cd1";
   };
 
   prePatch = ''
@@ -50,7 +51,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://www.mozilla.org/projects/nspr/;
     description = "Netscape Portable Runtime, a platform-neutral API for system-level and libc-like functions";
     maintainers = with maintainers; [

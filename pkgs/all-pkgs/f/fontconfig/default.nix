@@ -1,6 +1,7 @@
 { stdenv
-, fetchTritonPatch
 , fetchurl
+, gperf
+, lib
 , substituteAll
 
 , freetype
@@ -27,31 +28,30 @@ let
   configVersion = "2.12";
 in
 stdenv.mkDerivation rec {
-  name = "fontconfig-2.12.1";
+  name = "fontconfig-2.12.4";
 
   src = fetchurl {
     urls = [
       "https://www.freedesktop.org/software/fontconfig/release/${name}.tar.bz2"
       "http://fontconfig.org/release/${name}.tar.bz2"
     ];
-    sha256 = "b449a3e10c47e1d1c7a6ec6e2016cca73d3bd68fbbd4f0ae5cc6b573f7d6c7f3";
+    sha256 = "668293fcc4b3c59765cdee5cee05941091c0879edcc24dfec5455ef83912e45c";
   };
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "5d041041e170793a8f38744ff40470ade94964d7";
-      file = "f/fontconfig/0001-fix-test-with-freetype2-2.7.1.patch";
-      sha256 = "b4992aab4e2b4ddae01f7565486752fa877edb6cd5ed435e15938ed21dfe22c8";
-    })
-    (substituteAll {
-      src = ./config-compat.patch;
-      inherit configVersion;
-    })
+  nativeBuildInputs = [
+    gperf
   ];
 
   buildInputs = [
     expat
     freetype
+  ];
+
+  patches = [
+    (substituteAll {
+      src = ./config-compat.patch;
+      inherit configVersion;
+    })
   ];
 
   configureFlags = [
@@ -88,7 +88,7 @@ stdenv.mkDerivation rec {
     inherit configVersion;
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A library for font customization and configuration";
     homepage = http://fontconfig.org/;
     license = licenses.bsd2; # custom but very bsd-like

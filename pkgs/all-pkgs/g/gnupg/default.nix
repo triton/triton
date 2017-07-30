@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 , texinfo
 
 , bzip2
@@ -27,7 +28,7 @@ let
   inherit (stdenv)
     targetSystem;
 
-  inherit (stdenv.lib)
+  inherit (lib)
     elem
     optional
     optionals
@@ -35,7 +36,21 @@ let
     versionAtLeast
     versionOlder;
 
-  sources = import ./sources.nix;
+  sources = {
+    "2.0" = {
+      version = "2.0.30";
+      newVersion = "2.0.30";
+      sha256 = "e329785a4f366ba5d72c2c678a7e388b0892ac8440c2f4e6810042123c235d71";
+      newSha256 = "e329785a4f366ba5d72c2c678a7e388b0892ac8440c2f4e6810042123c235d71";
+    };
+
+    "2.1" = {
+      version = "2.1.22";
+      newVersion = "2.1.22";
+      sha256 = "46716faf9e1b92cfca86609f3bfffbf5bb4b6804df90dc853ff7061cfcfb4ad7";
+      newSha256 = "46716faf9e1b92cfca86609f3bfffbf5bb4b6804df90dc853ff7061cfcfb4ad7";
+    };
+  };
 
   tarballUrls = version: [
     "mirror://gnupg/gnupg/gnupg-${version}.tar.bz2"
@@ -138,7 +153,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://gnupg.org;
     description = "a complete and free implementation of the OpenPGP standard";
     license = licenses.gpl3Plus;

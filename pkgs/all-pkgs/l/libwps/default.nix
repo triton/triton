@@ -8,11 +8,11 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libwps-0.4.6";
+  name = "libwps-0.4.7";
 
   src = fetchurl {
     url = "mirror://sourceforge/libwps/libwps/${name}/${name}.tar.xz";
-    sha256 = "e48a7c2fd20048a0a8eaf69bad972575f8b9f06e7497c787463f127d332fccd0";
+    sha256 = "2f2cab630bceace24f9dbb7d187cd6cd1f4c9f8a7b682c5f7e49c1e2cb58b217";
   };
 
   buildInputs = [
@@ -22,7 +22,6 @@ stdenv.mkDerivation rec {
   ];
 
   meta = with lib; {
-    inherit version;
     description = "Microsoft Works file word processor format import filter library";
     homepage = http://libwps.sourceforge.net/;
     license = licenses.lgpl21;

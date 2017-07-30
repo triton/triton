@@ -3,6 +3,7 @@
 , docbook-xsl
 , docbook_xml_dtd_45
 , fetchurl
+, lib
 , libxslt
 , xmlto
 
@@ -15,7 +16,7 @@
 }:
 
 let
-  version = "4.11.1";
+  version = "4.12";
 
   tarballUrls = [
     "mirror://kernel/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar"
@@ -27,7 +28,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "d0d0d833e36b06648b27147fe20a4f91348873dc332481a1849095a1804a976d";
+    sha256 = "917710c84a9d529c92038390ddf8ace19ad409f61cdcf93c38ccaf2678472ece";
   };
 
   nativeBuildInputs = [
@@ -57,7 +58,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Utilities for the btrfs filesystem";
     homepage = https://btrfs.wiki.kernel.org/;
     license = licenses.gpl2;

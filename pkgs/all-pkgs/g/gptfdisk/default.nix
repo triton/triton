@@ -30,8 +30,8 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     for prog in gdisk sgdisk fixparts cgdisk; do
-      install -D -v -m755 $prog $out/bin
-      install -D -v -m644 $prog.8 $out/share/man/man8
+      install -D -v -m755 $prog $out/bin/$prog
+      install -D -v -m644 $prog.8 $out/share/man/man8/$prog.8
     done
   '';
 

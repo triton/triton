@@ -2,6 +2,7 @@
 , cmake
 , fetchFromBitbucket
 , fetchurl
+, lib
 , ninja
 , yasm
 
@@ -23,14 +24,27 @@
 let
   inherit (stdenv)
     targetSystem;
-  inherit (stdenv.lib)
+  inherit (lib)
     boolOn
     concatStringsSep
     elem
     optionals
     platforms;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "stable" = {
+      version = "2.5";
+      multihash = "QmSsqLD2yPEuf9CDKgMFEBNSpHYzpE8K2cr6d8aV2icLfB";
+      sha256 = "2e53259b504a7edb9b21b9800163b1ff4c90e60c74e23e7001d423c69c5d3d17";
+    };
+    "head" = {
+      fetchzipversion = 3;
+      version = "2017-06-21";
+      rev = "80c23559084c78c8154ca411ed8e369a07fd7e78";
+      sha256 = "074441de68a38488af0f4054292783425abe2a119987785225b2af13ecb44b3c";
+    };
+  };
+  source = sources."${channel}";
 
   src =
     if channel == "head" then
@@ -48,17 +62,27 @@ let
       };
 
   cmakeFlagsAll = [
+    "-DFPROFILE_GENERATE=OFF"
+    "-DFPROFILE_USE=OFF"
+    "-DNATIVE_BUILD=OFF"
     "-DCHECKED_BUILD=${boolOn debugSupport}"
     "-DENABLE_AGGRESSIVE_CHECKS=OFF"
     "-DENABLE_ASSEMBLY=ON"
     "-DENABLE_LIBNUMA=${boolOn (
       elem targetSystem platforms.linux
       && numactl != null)}"
+      #"NO_ATOMICS"
     "-DENABLE_PIC=ON"
-    "-DENABLE_PPA=OFF"
-    "-DENABLE_TESTS=OFF"
-    "-DENABLE_VTUNE=OFF"
+    "-DENABLE_AGGRESSIVE_CHECKS=OFF"
+    "-DENABLE_ASSEMBLY=ON"
+    "-DCHECKED_BUILD=OFF"
     "-DWARNINGS_AS_ERRORS=OFF"
+    "-DENABLE_ALTIVEC=${boolOn (elem targetSystem platforms.powerpc-all)}"
+    "-DCPU_POWER8=${boolOn (elem targetSystem platforms.powerpc-all)}"
+    "-DENABLE_PPA=OFF"
+    "-DENABLE_VTUNE=OFF"
+    "-DDETAILED_CU_STATS=${boolOn custatsSupport}"
+    "-DENABLE_TESTS=OFF"
   ];
 in
 
@@ -86,6 +110,7 @@ let
     cmakeFlags = [
       "-DENABLE_CLI=OFF"
       "-DENABLE_SHARED=OFF"
+      "-DENABLE_HDR10_PLUS=ON"
       "-DEXPORT_C_API=OFF"
       "-DHIGH_BIT_DEPTH=ON"
       "-DLINKED_8BIT=OFF"
@@ -130,6 +155,7 @@ let
     cmakeFlags = [
       "-DENABLE_CLI=OFF"
       "-DENABLE_SHARED=OFF"
+      "-DENABLE_HDR10_PLUS=ON"
       "-DEXPORT_C_API=OFF"
       "-DHIGH_BIT_DEPTH=ON"
       "-DLINKED_8BIT=OFF"
@@ -202,10 +228,10 @@ stdenv.mkDerivation rec {
   x265Libs = concatStringsSep ";" x265AdditionalLibs;
 
   cmakeFlags = [
-    "-DDETAILED_CU_STATS=${boolOn custatsSupport}"
     "-DENABLE_CLI=${boolOn cliSupport}"
     "-DENABLE_SHARED=ON"
     "-DHIGH_BIT_DEPTH=OFF"
+    "-DENABLE_HDR10_PLUS=OFF"
     "-DLINKED_8BIT=OFF"
     "-DLINKED_10BIT=ON"
     "-DLINKED_12BIT=ON"
@@ -219,7 +245,7 @@ stdenv.mkDerivation rec {
     rm -v $out/lib/libx265.a
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library for encoding h.265/HEVC video streams";
     homepage = http://x265.org;
     license = licenses.gpl2;

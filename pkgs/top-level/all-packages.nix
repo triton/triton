@@ -1151,8 +1151,6 @@ fdk-aac_head = callPackage ../all-pkgs/f/fdk-aac {
   channel = "head";
 };
 fdk-aac = callPackageAlias "fdk-aac_stable" { };
-# Deprecated alias
-fdk_aac = callPackageAlias "fdk-aac_stable" { };
 
 feh = callPackage ../all-pkgs/f/feh { };
 

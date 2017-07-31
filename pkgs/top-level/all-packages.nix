@@ -701,7 +701,6 @@ attr = callPackage ../all-pkgs/a/attr { };
 audiofile = callPackage ../all-pkgs/a/audiofile { };
 
 audit_full = callPackage ../all-pkgs/a/audit { };
-
 audit_lib = callPackageAlias "audit_full" {
   prefix = "lib";
 };
@@ -1155,7 +1154,6 @@ fdk-aac = callPackageAlias "fdk-aac_stable" { };
 feh = callPackage ../all-pkgs/f/feh { };
 
 ffado_full = callPackage ../all-pkgs/f/ffado { };
-
 ffado_lib = callPackage ../all-pkgs/f/ffado {
   prefix = "lib";
 };
@@ -4563,7 +4561,6 @@ telepathy_mission_control =
   };
 #
   jack2_full = callPackage ../misc/jackaudio { };
-
   jack2_lib = callPackageAlias "jack2_full" {
     prefix = "lib";
   };

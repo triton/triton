@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
 
     # Enable infinality subpixel hinting
     sed -i include/freetype/config/ftoption.h \
-      -e '/^#define TT_CONFIG_OPTION_SUBPIXEL_HINTING/ s/2/( 1 | 2 )/g'
+      -e '/^#define TT_CONFIG_OPTION_SUBPIXEL_HINTING/ s/2/3/g'
 
     # Enable long PCF familyy names
     sed -i include/freetype/config/ftoption.h \

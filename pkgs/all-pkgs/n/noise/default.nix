@@ -1,16 +1,19 @@
 { stdenv
 , cmake
-, fetchurl
+, fetchFromGitHub
 , gettext
 , intltool
+, lib
 , makeWrapper
 
 , adwaita-icon-theme
+, dbus-glib
 , dconf
 , gdk-pixbuf
 , glib
 , gobject-introspection
 , granite
+, gsettings-desktop-schemas
 , gst-plugins-bad
 , gst-plugins-base
 , gst-plugins-good
@@ -18,6 +21,7 @@
 , gstreamer
 , gtk3
 , json-glib
+, libaccounts-glib
 #, libdbusmenu
 , libgda
 , libgee
@@ -39,19 +43,21 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     makeSearchPath;
 
   channel = "0.4";
-  version = "${channel}";
+  version = "${channel}.0.3";
 in
 stdenv.mkDerivation rec {
   name = "noise-${version}";
 
-  src = fetchurl {
-    url = "https://launchpad.net/noise/${channel}.x/${version}/"
-      + "+download/${name}.tar.xz";
-    sha256 = "ae7b1f07df1f1e773c602cad224188ebc26799f1b759525b114edc698d044ab1";
+  src = fetchFromGitHub {
+    version = 3;
+    owner = "elementary";
+    repo = "music";
+    rev = "${version}";
+    sha256 = "0f89b9311f367b1c1c3c99b59130a28bf4ff52750a4ee4ab47f3cde5ca4cd9e5";
   };
 
   nativeBuildInputs = [
@@ -63,18 +69,21 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     adwaita-icon-theme
+    dbus-glib
     dconf
     gdk-pixbuf
     glib
     gobject-introspection
     granite
+    gsettings-desktop-schemas
+    gst-plugins-bad
     gst-plugins-base
     gst-plugins-good
-    gst-plugins-bad
     gst-plugins-ugly
     gstreamer
     gtk3
     json-glib
+    libaccounts-glib
     #libdbusmenu
     libgda
     libgee
@@ -84,18 +93,19 @@ stdenv.mkDerivation rec {
     libpeas
     libsoup
     libxml2
+    shared-mime-info
     taglib
     vala
     zeitgeist
   ];
 
   cmakeFlags = [
+    "-DBUILD_SHARED_LIBS=ON"
     "-DBUILD_FOR_ELEMENTARY=OFF"
     "-DBUILD_PLUGINS=ON"
-    "-DBUILD_SHARED_LIBS=ON"
     "-DICON_UPDATE=OFF"
-    "-DGSETTINGS_COMPILE=OFF"
     "-DGSETTINGS_LOCALINSTALL=ON"
+    "-DGSETTINGS_COMPILE=OFF"
     "-DVALA_EXECUTABLE=${vala}/bin/valac"
   ];
 
@@ -108,12 +118,13 @@ stdenv.mkDerivation rec {
       --prefix 'GST_PLUGIN_PATH' : "$GST_PLUGIN_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Music player for Elementary OS";
-    homepage = https://launchpad.net/noise;
+    homepage = https://github.com/elementary/music;
     license = licenses.gpl3;
     maintainers = with maintainers; [
       codyopel

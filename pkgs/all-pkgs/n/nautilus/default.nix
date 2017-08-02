@@ -1,12 +1,12 @@
 { stdenv
-, autoreconfHook
 , fetchTritonPatch
 , fetchurl
 , gettext
-, gtk-doc
 , intltool
 , lib
 , makeWrapper
+, meson
+, ninja
 
 , adwaita-icon-theme
 , atk
@@ -36,7 +36,7 @@
 
 let
   inherit (lib)
-    boolEn
+    boolTf
     optionals
     versionOlder;
 
@@ -59,11 +59,10 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    autoreconfHook
     gettext
-    gtk-doc  # autoreconf
-    intltool
     makeWrapper
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -99,34 +98,21 @@ stdenv.mkDerivation rec {
   #   })
   # ];
 
-  preAutoreconf = ''
-    mkdir m4 && gtkdocize --copy
+  postPatch = /* FIXME: i18n.merge_file in meson is failing with permission denied */ ''
+    sed -i data/meson.build \
+      -e 's/install: true/install: false/g'
   '';
 
-  postAutoreconf = ''
-    sed -i configure \
-      -e '/GTK_DOC_CHECK/d' \
-      -e 's/DISABLE_DEPRECATED_CFLAGS=.*/DISABLE_DEPRECATED_CFLAGS=/'
-  '';
-
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--enable-schemas-compile"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-profiling"
-    "--enable-nst-extension"
-    "--${boolEn (libexif != null)}-libexif"
-    "--enable-xmp"
-    "--disable-selinux"
-    "--enable-desktop"
-    "--enable-packagekit"
-    "--enable-more-warnings"
-    "--${boolEn (tracker != null)}-tracker"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-update-mimedb"
+  mesonFlags = [
+    "-Denable-profiling=false"
+    "-Denable-nst-extension=true"
+    "-Denable-exif=${boolTf (libexif != null)}"
+    "-Denable-xmp=${boolTf (exempi != null)}"
+    "-Denable-selinux=false"  # FIXME
+    "-Denable-desktop=true"
+    "-Denable-packagekit=false"
+    "-Denable-tracker=${boolTf (tracker != null)}"  # FIXME: remove next release
+    "-Denable-gtk-doc=false"
   ];
 
   preFixup = ''

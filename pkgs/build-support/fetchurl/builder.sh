@@ -403,7 +403,7 @@ trap cleanup EXIT ERR INT QUIT PIPE TERM
 mkdir -m 0700 -p "$HOME/.gnupg"
 echo "keyserver hkps://hkps.pool.sks-keyservers.net" >> "$HOME/.gnupg/gpg.conf"
 if [ "${#pgpKeyFingerprints[@]}" -gt "0" ]; then
-  eval `dirmngr --daemon --homedir=$HOME --disable-http --disable-ldap`
+  eval `dirmngr --verbose --daemon --homedir=$HOME/.gnupg --disable-http --disable-ldap --allow-ocsp --no-use-tor`
   gpg --verbose --recv-keys "${pgpKeyFingerprints[@]}"
 fi
 

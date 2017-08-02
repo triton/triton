@@ -10,7 +10,7 @@
 }:
 
 let
-  version = "2.18.2";
+  version = "2.18.3";
 in
 buildPythonPackage {
   name = "requests-${version}";
@@ -18,7 +18,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "requests";
     inherit version;
-    sha256 = "5b26fcc5e72757a867e4d562333f841eddcef93548908a1bb1a9207260618da9";
+    sha256 = "fb68a7baef4965c12d9cd67c0f5a46e6e28be3d8c7b6910c758fbcc99880b518";
   };
 
   propagatedBuildInputs = [

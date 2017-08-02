@@ -18,18 +18,18 @@
 , gtk3
 , libepoxy
 , librsvg
+, libx11
 , mpv
 , python2Packages
 , shared-mime-info
 , wayland
-, xorg
 }:
 
 let
   inherit (lib)
     boolEn;
 
-  version = "2017-07-24";
+  version = "2017-08-02";
 in
 stdenv.mkDerivation rec {
   name = "gnome-mpv-${version}";
@@ -38,8 +38,8 @@ stdenv.mkDerivation rec {
     version = 3;
     owner = "gnome-mpv";
     repo = "gnome-mpv";
-    rev = "1dde50244bd73fe05b886eb10da910450c80207d";
-    sha256 = "2009dbe5da726acfdcbbb26c88f597a81501c1835853a437ef10d1452ba2ccb4";
+    rev = "be654fb2ca9833d8ac19bd8cada28071a360acf2";
+    sha256 = "30f6975c84de0a2518f6dc74d55f58748dcbd4d121a58fce5dc2fb1c9e16d887";
   };
 
   nativeBuildInputs = [
@@ -62,11 +62,11 @@ stdenv.mkDerivation rec {
     gtk3
     libepoxy
     librsvg
+    libx11
     mpv
     python2Packages.youtube-dl
     shared-mime-info
     wayland
-    xorg.libX11
   ];
 
   preConfigure = /* Ignore autogen.sh and run the commands manually */ ''

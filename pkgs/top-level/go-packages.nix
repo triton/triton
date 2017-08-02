@@ -92,7 +92,7 @@ let
       "${name'}-${version}";
 
   buildFromGitHub =
-    { rev
+    lib.makeOverridable ({ rev
     , date ? null
     , owner
     , repo
@@ -123,7 +123,7 @@ let
         src'
       else
         fetchGxPackage { src = src'; sha256 = gxSha256; };
-    }));
+    })));
 
   ## OFFICIAL GO PACKAGES
 
@@ -1655,8 +1655,7 @@ let
     excludedPackages = "\\(benchmark\\|example\\|bridge\\)";
   };
 
-  etcd_client = buildFromGitHub {
-    inherit (etcd) rev owner repo sha256 version meta;
+  etcd_client = etcd.override {
     subPackages = [
       "client"
       "pkg/fileutil"
@@ -1678,8 +1677,18 @@ let
     ];
   };
 
-  etcd_for_vault = buildFromGitHub {
-    inherit (etcd) rev owner repo sha256 version meta;
+  etcd_for_swarmkit = etcd.override {
+    subPackages = [
+      "raft/raftpb"
+    ];
+    buildInputs = [
+    ];
+    propagatedBuildInputs = [
+      protobuf
+    ];
+  };
+
+  etcd_for_vault = etcd.override {
     subPackages = [
       "auth/authpb"
       "client"
@@ -1695,6 +1704,8 @@ let
       "pkg/transport"
       "pkg/types"
       "version"
+    ];
+    buildInputs = [
     ];
     propagatedBuildInputs = [
       go-grpc-prometheus
@@ -1915,23 +1926,25 @@ let
     ];
   };
 
-  genproto_protobuf = buildFromGitHub {
-    inherit (genproto) version date rev owner repo goPackagePath sha256;
+  genproto_protobuf = genproto.override {
     subPackages = [
       "protobuf"
     ];
     buildInputs = [
       protobuf_genproto
     ];
+    propagatedBuildInputs = [
+    ];
   };
 
-  genproto_for_grpc = buildFromGitHub {
-    inherit (genproto) version date rev owner repo goPackagePath sha256;
+  genproto_for_grpc = genproto.override {
     subPackages = [
       "googleapis/rpc/status"
     ];
     buildInputs = [
       protobuf
+    ];
+    propagatedBuildInputs = [
     ];
   };
 
@@ -4739,6 +4752,40 @@ let
     ];
   };
 
+  libkv = buildFromGitHub {
+    version = 3;
+    rev = "93ab0e6c056d325dfbb11e1d58a3b4f5f62e7f3c";
+    owner = "docker";
+    repo = "libkv";
+    sha256 = "14qw4rmhw5biq5mpiqyrlvzp0vhy2ilgxvgbxflp6114l5w0vkki";
+    date = "2017-07-01";
+    excludedPackages = "\\(mock\\|testutils\\)";
+    propagatedBuildInputs = [
+      bolt
+      consul_api
+      etcd_client
+      go-zookeeper
+      net
+    ];
+  };
+
+  libnetwork = buildFromGitHub {
+    version = 3;
+    rev = "e85aeedbc643caeece25b50789e7e56e4e2fcb0a";
+    owner = "docker";
+    repo = "libnetwork";
+    sha256 = "0dnwmihwpizpdgsjwnrzm1yly1iycx6f9g40zg9cjjafcm4wrghw";
+    date = "2017-08-01";
+    subPackages = [
+      "datastore"
+      "discoverapi"
+      "types"
+    ];
+    propagatedBuildInputs = [
+      libkv
+    ];
+  };
+
   libseccomp-golang = buildFromGitHub {
     version = 2;
     rev = "v0.9.0";
@@ -5296,8 +5343,7 @@ let
     meta.useUnstable = true;
   };
 
-  moby_for_nomad = buildFromGitHub {
-    inherit (moby) version owner repo rev date sha256 meta postPatch goPackageAliases;
+  moby_for_nomad = moby.override {
     subPackages = [
       "api/types"
       "api/types/blkiodev"
@@ -5338,8 +5384,7 @@ let
     ];
   };
 
-  moby_for_runc = buildFromGitHub {
-    inherit (moby) version owner repo rev date sha256 meta postPatch goPackageAliases;
+  moby_for_runc = moby.override {
     subPackages = [
       "pkg/longpath"
       "pkg/mount"
@@ -5358,8 +5403,7 @@ let
     ];
   };
 
-  moby_for_go-dockerclient = buildFromGitHub {
-    inherit (moby) version owner repo rev date sha256 meta postPatch goPackageAliases;
+  moby_for_go-dockerclient = moby.override {
     subPackages = [
       "api/types"
       "api/types/blkiodev"
@@ -5383,6 +5427,7 @@ let
       "pkg/jsonmessage"
       "pkg/longpath"
       "pkg/mount"
+      "pkg/namesgenerator"
       "pkg/pools"
       "pkg/promise"
       "pkg/stdcopy"
@@ -5404,10 +5449,12 @@ let
       gogo_protobuf
       gotty
       image-spec
+      libnetwork
       logrus
       net
       pflag
       runc
+      swarmkit
       sys
     ];
   };
@@ -6028,8 +6075,7 @@ let
     ];
   };
 
-  prometheus_common_for_client = buildFromGitHub {
-    inherit (prometheus_common) date rev owner repo sha256 version;
+  prometheus_common_for_client = prometheus_common.override {
     subPackages = [
       "expfmt"
       "model"
@@ -6743,6 +6789,46 @@ let
     ];
   };
 
+  swarmkit = buildFromGitHub {
+    version = 3;
+    rev = "253ec7189365b443219c99bc95e04ffafc278f95";
+    owner = "docker";
+    repo = "swarmkit";
+    sha256 = "06q78cwq9rpbg9af6wc1gc36ks5v8fjdh349gn7msny52zwa30i6";
+    date = "2017-07-27";
+    subPackages = [
+      "api"
+      "api/deepcopy"
+      "api/equality"
+      "api/genericresource"
+      "api/naming"
+      "ca"
+      "connectionbroker"
+      "identity"
+      "ioutils"
+      "log"
+      "manager/raftselector"
+      "manager/state"
+      "manager/state/store"
+      "protobuf/plugin"
+      "remotes"
+      "watch"
+      "watch/queue"
+    ];
+    propagatedBuildInputs = [
+      errors
+      etcd_for_swarmkit
+      go-digest
+      go-events
+      go-grpc-prometheus
+      go-memdb
+      gogo_protobuf
+      grpc
+      logrus
+      net
+    ];
+  };
+
   swift = buildFromGitHub {
     version = 3;
     rev = "e3042b26a510db220549150362f6733012148d45";
@@ -6811,21 +6897,6 @@ let
       go run script/genassets.go gui > lib/auto/gui.files.go
       popd
     '';
-  };
-
-  syncthing-lib = buildFromGitHub {
-    inherit (syncthing) rev owner repo sha256 version;
-    subPackages = [
-      "lib/sync"
-      "lib/logger"
-      "lib/protocol"
-      "lib/osutil"
-      "lib/tlsutil"
-      "lib/dialer"
-      "lib/relay/client"
-      "lib/relay/protocol"
-    ];
-    propagatedBuildInputs = [ go-lz4 luhn xdr text suture du net ];
   };
 
   syslogparser = buildFromGitHub {
@@ -7288,13 +7359,18 @@ let
     '';
   };
 
-  vault_api = buildFromGitHub {
-    inherit (vault) rev owner repo sha256 version;
+  vault_api = vault.override {
     subPackages = [
       "api"
       "helper/compressutil"
       "helper/jsonutil"
     ];
+    nativeBuildInputs = [
+    ];
+    buildInputs = [
+    ];
+    preBuild = ''
+    '';
     propagatedBuildInputs = [
       hcl
       go-cleanhttp

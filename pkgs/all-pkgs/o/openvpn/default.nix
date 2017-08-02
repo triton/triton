@@ -4,7 +4,7 @@
 
 , iproute
 , lzo
-, openssl_1-0-2
+, openssl
 , pam
 , systemd_lib
 }:
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     iproute
     lzo
-    openssl_1-0-2
+    openssl
     pam
     systemd_lib
   ];

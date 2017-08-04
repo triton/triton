@@ -2,37 +2,40 @@
 , bison
 , fetchurl
 , flex
+, meson
+, ninja
 
+, wayland
+, wayland-protocols
 , xorg
 }:
 
 stdenv.mkDerivation rec {
-  name = "libxkbcommon-0.7.1";
+  name = "libxkbcommon-0.7.2";
 
   src = fetchurl {
     url = "https://xkbcommon.org/download/${name}.tar.xz";
-    multihash = "QmV9fD6Anzj54NQfwAnHWHGwH1a63sPR1xzQwnuDz3oDwN";
+    multihash = "QmZFWeRWKZQxRxVDa3Hswd6QQn5YtJXMM4PW5PWEDA1ha2";
     hashOutput = false;
-    sha256 = "ba59305d2e19e47c27ea065c2e0df96ebac6a3c6e97e28ae5620073b6084e68b";
+    sha256 = "28a4dc2735863bec2dba238de07fcdff28c5dd2300ae9dfdb47282206cd9b9d8";
   };
 
   nativeBuildInputs = [
     bison
     flex
+    meson
+    ninja
   ];
 
   buildInputs = [
+    wayland
+    wayland-protocols
     xorg.libxcb
     xorg.xkeyboardconfig
   ];
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-selective-werror"
-    "--disable-strict-compilation"
-    "--disable-docs"
-    "--enable-x11"
-    "--with-xkb-config-root=${xorg.xkeyboardconfig}/etc/X11/xkb"
+  mesonFlags = [
+    "-Denable-docs=false"
   ];
 
   meta = with stdenv.lib; {

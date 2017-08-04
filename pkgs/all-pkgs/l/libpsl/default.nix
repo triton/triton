@@ -3,17 +3,19 @@
 , python2Packages
 
 , icu
+, libidn2
+, libunistring
 }:
 
 let
-  version = "0.17.0";
+  version = "0.18.0";
 in
 stdenv.mkDerivation rec {
   name = "libpsl-${version}";
 
   src = fetchurl {
     url = "https://github.com/rockdaboot/libpsl/releases/download/${name}/${name}.tar.gz";
-    sha256 = "025729d6a26ffd53cb54b4d86196f62c01d1813a4360c627546c6eb60ce3dd4b";
+    sha256 = "91b0f7954709ced5d6ad44d0e2b872675300d834573a569bb516eb46916e3102";
   };
 
   nativeBuildInputs = [
@@ -22,6 +24,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     icu
+    libidn2
+    libunistring
   ];
 
   postPatch = ''

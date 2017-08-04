@@ -16,7 +16,7 @@
 , gnugrep
 , gnused
 , openssl
-, pcre
+, pcre2
 , perl
 , python
 , zlib
@@ -31,7 +31,7 @@ let
     gnused
   ];
 
-  version = "2.13.4";
+  version = "2.14.0";
 
   tarballUrls = [
     "mirror://kernel/software/scm/git/git-${version}.tar"
@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.xz") tarballUrls;
     hashOutput = false;
-    sha256 = "371a592a52d240a6350d4ec6b63cd8301e1fab6dd03388a339a8c7429305afda";
+    sha256 = "f93e6e6a307d2e953cccafd9f4003c62992628fa508d07586476c953c1655975";
   };
 
   patches = [
@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
     curl
     expat
     openssl
-    pcre
+    pcre2
     zlib
   ];
 
@@ -74,7 +74,7 @@ stdenv.mkDerivation rec {
   makeFlags = [
     "SHELL_PATH=${stdenv.shell}"
     "SANE_TOOL_PATH=${stdenv.lib.concatStringsSep ":" path}"
-    "USE_LIBPCRE=1"
+    "USE_LIBPCRE2=1"
     "GNU_ROFF=1"
     "PERL_PATH=${perl}/bin/perl"
     "PYTHON_PATH=${python}/bin/python"

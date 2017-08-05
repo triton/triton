@@ -155,18 +155,28 @@ with lib;
               <edit mode="assign" name="hinting">
                 ${fcBool fontconfig.hinting.enable}
               </edit>
+            </match>
+            <match target="font">
               <edit mode="assign" name="autohint">
                 ${fcBool fontconfig.hinting.autohint}
               </edit>
+            </match>
+            <match target="font">
               <edit mode="assign" name="hintstyle">
                 <const>hint${fontconfig.hinting.hintstyle}</const>
               </edit>
+            </match>
+            <match target="font">
               <edit mode="assign" name="antialias">
                 ${fcBool fontconfig.antialias}
               </edit>
+            </match>
+            <match target="font">
               <edit mode="assign" name="rgba">
                 <const>${fontconfig.subpixel.rgba}</const>
               </edit>
+            </match>
+            <match target="font">
               <edit mode="assign" name="lcdfilter">
                 <const>lcd${fontconfig.subpixel.lcdfilter}</const>
               </edit>

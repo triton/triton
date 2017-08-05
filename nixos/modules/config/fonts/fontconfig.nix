@@ -85,7 +85,7 @@ with lib;
             type = types.str // {
               check = flip elem ["none" "slight" "medium" "full"];
             };
-            default = "full";
+            default = "slight";
             description = ''
               TrueType hinting style, one of <literal>none</literal>,
               <literal>slight</literal>, <literal>medium</literal>, or

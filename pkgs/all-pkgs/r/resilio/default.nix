@@ -1,17 +1,18 @@
 { stdenv
 , fetchurl
+, lib
 , patchelf
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     makeSearchPath;
 
   libPath = makeSearchPath "lib" [
     stdenv.cc.libc
   ];
 
-  version = "2.4.5";
+  version = "2.5.6";
 in
 stdenv.mkDerivation rec {
   name = "resilio-${version}";
@@ -19,7 +20,7 @@ stdenv.mkDerivation rec {
   src  = fetchurl {
     url  = "https://download-cdn.resilio.com/${version}/"
       + "linux-x64/resilio-sync_x64.tar.gz";
-    sha256 = "831596e3969bf1a8dd4c5a2412b46d76e34e38df36570ff24791b3f771da8833";
+    sha256 = "2940e7684b06ac21f2643eed63d20b5662b31731bf28e8e642fccfd3ebd59ad6";
   };
 
   nativeBuildInputs = [
@@ -43,7 +44,7 @@ stdenv.mkDerivation rec {
   # FIXME
   sourceDateEpochWarn = true;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Automatically sync files via secure, distributed technology";
     homepage = https://www.resilio.com/individuals/;
     license = licenses.unfreeRedistributable;

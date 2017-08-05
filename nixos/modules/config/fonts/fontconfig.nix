@@ -73,7 +73,7 @@ with lib;
 
           autohint = mkOption {
             type = types.bool;
-            default = true;
+            default = false;
             description = ''
               Enable the autohinter, which provides hinting for otherwise
               un-hinted fonts. The results are usually lower quality than

@@ -16,15 +16,15 @@ let
   cfg = config.services.xserver;
   xorg = pkgs.xorg;
 
-  fontconfig = config.fonts.fontconfig;
+  fontconfig = config.fontconfig;
   xresourcesXft = pkgs.writeText "Xresources-Xft" ''
     ${optionalString (fontconfig.dpi != 0) ''Xft.dpi: ${toString fontconfig.dpi}''}
     Xft.antialias: ${if fontconfig.antialias then "1" else "0"}
-    Xft.rgba: ${fontconfig.subpixel.rgba}
-    Xft.lcdfilter: lcd${fontconfig.subpixel.lcdfilter}
-    Xft.hinting: ${if fontconfig.hinting.enable then "1" else "0"}
-    Xft.autohint: ${if fontconfig.hinting.autohint then "1" else "0"}
-    Xft.hintstyle: hint${fontconfig.hinting.style}
+    Xft.rgba: ${fontconfig.rgba}
+    Xft.lcdfilter: lcd${fontconfig.lcdfilter}
+    Xft.hinting: ${if fontconfig.hinting then "1" else "0"}
+    Xft.autohint: ${if fontconfig.autohint then "1" else "0"}
+    Xft.hintstyle: hint${fontconfig.hintstyle}
   '';
 
   # file provided by services.xserver.displayManager.session.script

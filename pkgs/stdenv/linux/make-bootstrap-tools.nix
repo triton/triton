@@ -10,6 +10,9 @@ let
       stdenv
       nukeReferences
       cpio
+      bison
+      flex
+      gnum4
       glibc
       patchelf
       openssl

@@ -2,14 +2,19 @@
 , nukeReferences
 , cpio
 , readelf
-, glibc
-, coreutils
+
 , bash
-, findutils
+, binutils
+, bison
+, coreutils
 , diffutils
+, findutils
+, flex
+, gawk
+, glibc
 , gnused
 , gnugrep
-, gawk
+, gnum4
 , gnutar
 , brotli
 , gzip
@@ -22,7 +27,6 @@
 , openssl
 , gcc
 , pkgconfig
-, binutils
 , busybox
 }:
 
@@ -47,39 +51,34 @@ rec {
     '' +
     /* Hopefully we won't need these. */ ''
       rm -rf $out/include/mtd $out/include/rdma $out/include/sound $out/include/video
-      find $out/include -name .install -exec rm {} \;
-      find $out/include -name ..install.cmd -exec rm {} \;
+      find $out/include -name \*.install\* -exec rm {} \;
       mv $out/include $out/include-glibc
     '' +
     /* Copy coreutils, bash, etc. */ ''
-      cp ${coreutils}/bin/* $out/bin
-      (cd $out/bin && rm vdir dir sha*sum pinky factor pathchk runcon shuf who whoami shred users)
-
-      cp ${bash}/bin/bash $out/bin
-      cp ${findutils}/bin/find $out/bin
-      cp ${findutils}/bin/xargs $out/bin
-      cp -d ${diffutils}/bin/* $out/bin
-      cp -d ${gnused}/bin/* $out/bin
-      cp -d ${gnugrep}/bin/grep $out/bin
-      cp ${gawk}/bin/gawk $out/bin
-      cp -d ${gawk}/bin/awk $out/bin
-      cp ${gnutar}/bin/tar $out/bin
-      cp ${brotli}/bin/bro $out/bin
-      ln -s bro $out/bin/brotli
-      cp ${gzip}/bin/gzip $out/bin
-      cp ${bzip2}/bin/bzip2 $out/bin
-      cp ${xz}/bin/xz $out/bin
-      cp -d ${gnumake}/bin/* $out/bin
-      cp -d ${gnupatch}/bin/* $out/bin
-      cp ${patchelf}/bin/* $out/bin
-      cp ${curl}/bin/curl $out/bin
-      cp ${openssl}/bin/openssl $out/bin
-      cp ${pkgconfig}/bin/pkg-config $out/bin
+      cp -v "${coreutils}"/bin/* "$out"/bin
+      cp -v "${bash}"/bin/bash "$out"/bin
+      ln -sv bash "$out"/bin/sh
+      cp -v "${findutils}"/bin/{find,xargs} "$out"/bin
+      cp -v "${diffutils}"/bin/{cmp,diff} "$out"/bin
+      cp -v "${gnused}"/bin/sed "$out"/bin
+      cp -v "${gnugrep}"/bin/grep "$out"/bin
+      cp -v "${gawk}"/bin/gawk "$out"/bin
+      ln -sv gawk "$out"/bin/awk
+      cp -v "${gnutar}"/bin/tar "$out"/bin
+      cp -v "${gzip}"/bin/gzip "$out"/bin
+      cp -v "${bzip2}"/bin/bzip2 "$out"/bin
+      cp -v "${xz}"/bin/xz "$out"/bin
+      cp -v "${gnumake}"/bin/make "$out"/bin
+      cp -v "${gnupatch}"/bin/patch "$out"/bin
+      cp -v "${gnum4}"/bin/m4 "$out"/bin
+      cp -v "${bison}"/bin/bison "$out"/bin
+      echo "#!/bin/sh" > "$out"/bin/yacc
+      echo 'exec "$(dirname "$0")"/bison -y "$@"' >> "$out"/bin/yacc
+      chmod +x "$out"/bin/yacc
+      cp -v "${flex}"/bin/flex "$out"/bin
     '' +
     /* Copy what we need of GCC. */ ''
-      cp -d ${gcc}/bin/gcc $out/bin
-      cp -d ${gcc}/bin/cpp $out/bin
-      cp -d ${gcc}/bin/g++ $out/bin
+      cp -d "${gcc}"/bin/{cpp,g++,gcc} "$out"/bin
       cp -d ${gcc}/lib/{*.a,*.so*} $out/lib
       chmod -R u+w $out/lib
       cp -rd ${gcc}/lib/gcc $out/lib
@@ -89,7 +88,6 @@ rec {
       rm -rf $out/lib/gcc/*/*/include*/root
       rm -f $out/lib/gcc/*/*/include-fixed/asm
       rm -rf $out/lib/gcc/*/*/plugin
-      #rm -f $out/lib/gcc/*/*/*.a
       cp -rd ${gcc}/libexec/* $out/libexec
       chmod -R u+w $out/libexec
       rm -rf $out/libexec/gcc/*/*/plugin
@@ -100,9 +98,10 @@ rec {
       rm -rf $out/include/c++/*/ext/parallel
     '' +
     /* Copy binutils. */ ''
-      for i in as ld ar ranlib nm strip readelf objdump; do
-        cp ${binutils}/bin/$i $out/bin
-      done
+      cp -v "${binutils}"/bin/{ar,as,ld,ranlib,strip} "$out"/bin
+    '' +
+    /* We need patchelf to deal with fixing binaries after unpack */ ''
+      cp -v "${patchelf}/bin/patchelf" "$out"/libexec
     '' +
     /* Copy all of the needed libraries for the binaries */ ''
       copy_libs_in_elf() {
@@ -160,17 +159,23 @@ rec {
 
       nuke-refs $out/bin/*
       nuke-refs $out/lib/*
+      nuke-refs $out/libexec/*
       nuke-refs $out/libexec/gcc/*/*/*
 
       mkdir $out/.pack
       mv $out/* $out/.pack
       mv $out/.pack $out/pack
-
+      #
       mkdir $out/on-server
-      tar cvfJ $out/on-server/bootstrap-tools.tar.xz -C $out/pack .
+      tar --sort=name --owner=0 --group=0 --numeric-owner \
+        --no-acls --no-selinux --no-xattrs \
+        --mode=go=rX,u+rw,a-s \
+        --clamp-mtime --mtime=@946713600 \
+        -c -C "$out/pack" . | xz -9 -e > "$out"/on-server/bootstrap-tools.tar.xz
       cp ${busybox}/bin/busybox $out/on-server/bootstrap-busybox
       chmod u+w $out/on-server/bootstrap-busybox
       nuke-refs $out/on-server/bootstrap-busybox
+      set +x
     '';
 
     # The result should not contain any references (store paths) so

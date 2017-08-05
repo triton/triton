@@ -1,7 +1,6 @@
 [
   ./config/debug-info.nix
   ./config/fonts/corefonts.nix
-  ./config/fonts/fontconfig-ultimate.nix
   ./config/fonts/fontconfig.nix
   ./config/fonts/fontdir.nix
   ./config/fonts/fonts.nix

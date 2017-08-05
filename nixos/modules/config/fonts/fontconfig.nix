@@ -81,7 +81,7 @@ with lib;
             '';
           };
 
-          style = mkOption {
+          hintstyle = mkOption {
             type = types.str // {
               check = flip elem ["none" "slight" "medium" "full"];
             };
@@ -159,7 +159,7 @@ with lib;
                 ${fcBool fontconfig.hinting.autohint}
               </edit>
               <edit mode="assign" name="hintstyle">
-                <const>hint${fontconfig.hinting.style}</const>
+                <const>hint${fontconfig.hinting.hintstyle}</const>
               </edit>
               <edit mode="assign" name="antialias">
                 ${fcBool fontconfig.antialias}

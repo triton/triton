@@ -23,14 +23,14 @@
 }:
 
 let
-  version = "20161012";
+  version = "20170731";
 in
 stdenv.mkDerivation rec {
   name = "fontforge-${version}";
 
   src = fetchurl {
     url = "https://github.com/fontforge/fontforge/archive/${version}.tar.gz";
-    sha256 = "a5f5c2974eb9109b607e24f06e57696d5861aaebb620fc2c132bdbac6e656351";
+    sha256 = "3f53d06caba2a96dc498df81717e35504815046b3178e811c85c4cc135492d8c";
   };
 
   patches = [

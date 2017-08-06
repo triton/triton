@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "82";
+  version = "85";
 in
 buildPythonPackage rec {
   name = "diffoscope-${version}";
@@ -15,8 +15,13 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "diffoscope";
     inherit version;
-    sha256 = "e90c5d99a7c750c1f2c8baa5a34c8f2640d79d9c0837b8e10831bbc8ad350637";
+    sha256 = "370070197ec0c313963ba81b225e3e0dfd0d51a494a796df1267cfb5c9762ad6";
   };
+
+  postPatch = /* Fix invalid encoding in README */ ''
+    sed -i setup.py \
+      -e '/long_description/d'
+  '';
 
   propagatedBuildInputs = [
     libarchive-c

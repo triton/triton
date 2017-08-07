@@ -15,7 +15,7 @@ let
     optionalString
     platforms;
 
-  version = "1.6.0";
+  version = "1.7.0";
 in
 stdenv.mkDerivation rec {
   name = "openh264-${version}";
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
     owner = "cisco";
     repo = "openh264";
     rev = "v${version}";
-    sha256 = "c3138b4d29344e47d1ec4c3e208dffa4959040e5317c8b22c4314702e04aeb79";
+    sha256 = "0ed1d2ff56d86f2d26eaa1400f6fe2a701b862fbc64579e7b82b464b52febd80";
   };
 
   nativeBuildInputs = [

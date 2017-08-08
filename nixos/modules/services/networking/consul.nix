@@ -7,7 +7,6 @@ let
   cfg = config.services.consul;
 
   configOptions = { data_dir = dataDir; } //
-    (if cfg.webUi then { ui_dir = "${cfg.package.ui}"; } else { }) //
     cfg.extraConfig;
 
   configFiles = [ "/etc/consul.json" "/etc/consul-addrs.json" ]
@@ -36,15 +35,6 @@ in
         defaultText = "pkgs.consul";
         description = ''
           The package used for the Consul agent and CLI.
-        '';
-      };
-
-
-      webUi = mkOption {
-        type = types.bool;
-        default = false;
-        description = ''
-          Enables the web interface on the consul http port.
         '';
       };
 

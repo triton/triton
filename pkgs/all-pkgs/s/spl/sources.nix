@@ -1,7 +1,7 @@
 {
   "stable" = {
     version = "0.7.0";
-    maxKernelVersion = "4.9";
+    maxKernelVersion = "4.13";
     fetchzipVersion = 3;
     sha256 = "33827c7f4fe9aaaf304d05c4f26e873b91d081591d0f24a9d344aaa298ceba7f";
   };

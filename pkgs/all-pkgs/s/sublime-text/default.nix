@@ -8,9 +8,9 @@
 , glib
 , gtk2
 , libredirect
+, libx11
 , openssl
 , pango
-, xorg
 
 , pkexecPath ? "/var/setuid-wrappers/pkexec"
 }:
@@ -47,7 +47,7 @@ let
       glib
       gtk2
       pango
-      xorg.libX11
+      libx11
     ];
 
     redirects = [

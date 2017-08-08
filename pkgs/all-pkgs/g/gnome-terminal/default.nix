@@ -1,9 +1,11 @@
 { stdenv
 , desktop_file_utils
 , fetchurl
+, gettext
 , gnome_doc_utils
 , intltool
 , itstool
+, lib
 , libxml2
 , makeWrapper
 , util-linux_lib
@@ -15,19 +17,19 @@
 , glib
 , gsettings-desktop-schemas
 , gtk
+, libx11
 , nautilus
 , vala
 , vte
-, xorg
 
 , channel
 }:
 
 let
   sources = {
-    "3.22" = {
-      version = "3.22.1";
-      sha256 = "b00752336eb22d6d9f10c863c166ac73dcbb2ce4b280abdc0c78337e261bb0d4";
+    "3.24" = {
+      version = "3.24.2";
+      sha256 = "281edac30a07ca45beaaaf0a13fe2219cf8b87ece5e55dccbfc49ef769dfec0f";
     };
   };
   source = sources."${channel}";
@@ -43,6 +45,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     desktop_file_utils
+    gettext
     gnome_doc_utils
     intltool
     itstool
@@ -62,12 +65,21 @@ stdenv.mkDerivation rec {
     nautilus
     vala
     vte
-    xorg.libX11
+    libx11
   ];
 
   configureFlags = [
-    "--disable-search-provider"
+    "--disable-maintainer-mode"
+    "--enable-nls"
+    "--enable-gterminal"
+    "--disable-schemas-compile"
     "--disable-migration"
+    "--disable-search-provider"
+    "--disable-distro-packaging"
+    "--disable-debug"
+    "--with-gtk=3.0"
+    "--with-nautilus-extension"
+    #"--with-nautilus-dir=PATH"
   ];
 
   preFixup = ''
@@ -92,7 +104,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The Gnome Terminal";
     homepage = https://wiki.gnome.org/Apps/Terminal/;
     license = licenses.gpl3Plus;

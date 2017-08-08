@@ -1519,16 +1519,16 @@ gnome-shell = callPackage ../all-pkgs/g/gnome-shell { };
 
 gnome-shell-extensions = callPackage ../all-pkgs/g/gnome-shell-extensions { };
 
-gnome-terminal_3-22 = callPackage ../all-pkgs/g/gnome-terminal {
-  channel = "3.22";
+gnome-terminal_3-24 = callPackage ../all-pkgs/g/gnome-terminal {
+  channel = "3.24";
   adwaita-icon-theme = pkgs.adwaita-icon-theme_3-24;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   nautilus = pkgs.nautilus_3-24;
-  vala = pkgs.vala_0-34;
-  vte = pkgs.vte_0-46;
+  vala = pkgs.vala_0-36;
+  vte = pkgs.vte_0-48;
 };
-gnome-terminal = callPackageAlias "gnome-terminal_3-22" { };
+gnome-terminal = callPackageAlias "gnome-terminal_3-24" { };
 
 gnome-themes-standard_3-22 = callPackage ../all-pkgs/g/gnome-themes-standard {
   channel = "3.22";

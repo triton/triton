@@ -1,6 +1,8 @@
 { stdenv
 , fetchurl
+, gperf
 , intltool
+, lib
 
 , atk
 , gdk-pixbuf_unwrapped
@@ -24,7 +26,13 @@ let
     boolWt
     optional;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "0.48" = {
+      version = "0.48.3";
+      sha256 = "a3a9fb182740b392a45cd3f46fa61a985f68bb6b1817b52daec22034c46158c3";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "vte-${source.version}";
@@ -36,6 +44,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    gperf
     intltool
   ];
 
@@ -50,7 +59,6 @@ stdenv.mkDerivation rec {
     gobject-introspection
     pango
     pcre2
-    vala
     zlib
   ];
 
@@ -66,7 +74,7 @@ stdenv.mkDerivation rec {
     "--enable-Bsymbolic"
     "--disable-glade"
     "--${boolEn (gobject-introspection != null)}-introspection"
-    "--${boolEn (vala != null)}-vala"
+    "--disable-vala"
     # test application uses deprecated functions
     "--disable-test-application"
     "--disable-gtk-doc"
@@ -89,7 +97,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A library implementing a terminal emulator widget for GTK+";
     homepage = http://www.gnome.org/;
     license = licenses.lgpl2;

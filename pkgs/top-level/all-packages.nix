@@ -3634,13 +3634,12 @@ volume_key = callPackage ../all-pkgs/v/volume_key { };
 
 vorbis-tools = callPackage ../all-pkgs/v/vorbis-tools { };
 
-vte_0-46 = callPackage ../all-pkgs/v/vte {
-  channel = "0.46";
+vte_0-48 = callPackage ../all-pkgs/v/vte {
+  channel = "0.48";
   atk = pkgs.atk_2-24;
   gdk-pixbuf_unwrapped = pkgs.gdk-pixbuf_unwrapped_2-36;
-  vala = pkgs.vala_0-34;
 };
-vte = callPackageAlias "vte_0-46" { };
+vte = callPackageAlias "vte_0-48" { };
 
 vulkan-headers = callPackage ../all-pkgs/v/vulkan-headers { };
 

@@ -1,16 +1,20 @@
 { stdenv
 , fetchurl
+, lib
 }:
 
+let
+  version = "2.2.3";
+in
 stdenv.mkDerivation rec {
-  name = "expat-2.2.2";
+  name = "expat-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/expat/${name}.tar.bz2";
-    sha256 = "4376911fcf81a23ebd821bbabc26fd933f3ac74833f74924342c29aad2c86046";
+    url = "mirror://sourceforge/expat/expat/${version}/${name}.tar.bz2";
+    sha256 = "b31890fb02f85c002a67491923f89bda5028a880fd6c374f707193ad81aace5f";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A stream-oriented XML parser library written in C";
     homepage = http://www.libexpat.org/;
     license = licenses.mit;

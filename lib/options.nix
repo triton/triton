@@ -73,48 +73,6 @@ rec {
   getValues = map (x: x.value);
   getFiles = map (x: x.file);
 
-  # Generate documentation template from the list of option declaration like
-  # the set generated with filterOptionSets.
-  optionAttrSetToDocList = optionAttrSetToDocList' [ ];
-
-  optionAttrSetToDocList' = prefix: options:
-    concatMap (opt:
-      let
-        docOption = rec {
-          name = showOption opt.loc;
-          description = opt.description or (
-            throw "Option `${name}' has no description."
-          );
-          declarations = filter (x: x != unknownModule) opt.declarations;
-          internal = opt.internal or false;
-          visible = opt.visible or true;
-          readOnly = opt.readOnly or false;
-          type = opt.type.name or null;
-        } // (
-          if opt ? example then {
-            example = scrubOptionValue opt.example;
-          } else { }
-        ) // (
-          if opt ? default then {
-            default = scrubOptionValue opt.default;
-          } else { }
-        ) // (
-          if opt ? defaultText then {
-            default = opt.defaultText;
-          } else { }
-        );
-
-        subOptions =
-          let
-            ss = opt.type.getSubOptions opt.loc;
-          in
-          if ss != {} then
-            optionAttrSetToDocList' opt.loc ss
-          else [ ];
-      in [
-        docOption
-      ] ++ subOptions) (collect isOption options);
-
   /* This function recursively removes all derivation attributes from
      `x' except for the `name' attribute.  This is to make the
      generation of `options.xml' much more efficient: the XML

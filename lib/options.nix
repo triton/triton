@@ -28,24 +28,6 @@ rec {
       _type = "option";
     };
 
-  # This option accept anything, but it does not produce any result.  This
-  # is useful for sharing a module across different module sets without
-  # having to implement similar features as long as the value of the options
-  # are not expected.
-  mkSinkUndeclaredOptions = attrs: mkOption ({
-    internal = true;
-    visible = false;
-    default = false;
-    description = "Sink for option definitions.";
-    type = mkOptionType {
-      name = "sink";
-      check = x: true;
-      merge = loc: defs: false;
-    };
-    apply = x:
-      throw "Option value is not readable because the option is not declared.";
-  } // attrs);
-
   mergeDefaultOption = loc: defs:
     let
       list = getValues defs;

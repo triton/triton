@@ -50,6 +50,11 @@ stdenv.mkDerivation rec {
     })
   ];
 
+  postPatch = /* Fix include to use current openjpeg release */ ''
+    sed -i source/fitz/load-jpx.c \
+      -e '/openjpeg-/ s/[0-9]\.[0-9]/${openjpeg.channel}/'
+  '';
+
   preBuild = ''
     rm -rf thirdparty
 

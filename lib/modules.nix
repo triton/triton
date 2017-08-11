@@ -98,7 +98,7 @@ rec {
           unifyModuleSyntax file key (applyIfFunction key (import x) args));
     in
       builtins.genericClosure {
-        startSet = toClosureList unknownModule "" modules;
+        startSet = toClosureList "<unknown-file>" "" modules;
         operator = m: toClosureList m.file m.key m.imports;
       };
 

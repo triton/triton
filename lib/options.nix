@@ -103,6 +103,5 @@ rec {
   /* Helper functions. */
   showOption = concatStringsSep ".";
   showFiles = files: concatStringsSep " and " (map (f: "`${f}'") files);
-  unknownModule = "<unknown-file>";
 
 }

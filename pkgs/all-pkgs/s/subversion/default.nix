@@ -24,9 +24,9 @@ let
       sha256 = "e56b00ad3e927183bb6568781b85fe66dd3a7372c342af6e73b21a4473c397a6";
     };
     "1.9" = {
-      version = "1.9.6";
-      sha1Confirm = "3375e697805fcdf6dc8c9b52f4e6626f70cabcd6";
-      sha256 = "dbcbc51fb634082f009121f2cb64350ce32146612787ffb0f7ced351aacaae19";
+      version = "1.9.7";
+      sha1Confirm = "874b81749cdc3e88152d103243c3623ac6338388";
+      sha256 = "c3b118333ce12e501d509e66bb0a47bcc34d053990acab45559431ac3e491623";
     };
   };
 

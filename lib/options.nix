@@ -28,13 +28,6 @@ rec {
       _type = "option";
     };
 
-  mkEnableOption = name: mkOption {
-    default = false;
-    example = true;
-    description = "Whether to enable ${name}.";
-    type = lib.types.bool;
-  };
-
   # This option accept anything, but it does not produce any result.  This
   # is useful for sharing a module across different module sets without
   # having to implement similar features as long as the value of the options

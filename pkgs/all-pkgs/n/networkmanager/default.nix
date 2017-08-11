@@ -270,6 +270,9 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
+    inherit
+      dhcp-client;
+
     srcVerification = fetchurl {
       inherit (src)
         outputHash

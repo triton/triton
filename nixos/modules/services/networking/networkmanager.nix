@@ -19,7 +19,7 @@ let
 
   configFile = pkgs.writeText "NetworkManager.conf" ''
     [main]
-    dhcp=${pkgs.networkmanager.dhcp-client}
+    dhcp=${cfg.dhcp-client}
     plugins=keyfile
 
     [keyfile]
@@ -103,6 +103,15 @@ in
           Add all users that should have permission to change network
           settings to this group.
         '';
+      };
+
+      dhcp-client = mkOption {
+        type = types.enum [
+          "dhclient"
+          "dhcpcd"
+          "internal"
+        ];
+        default = pkgs.networkmanager.dhcp-client;
       };
 
       unmanaged = mkOption {

@@ -1,17 +1,18 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 , pythonPackages
 }:
 
 stdenv.mkDerivation rec {
-  name = "mercurial-4.2.2";
+  name = "mercurial-4.3.1";
 
   src = fetchurl {
     url = "https://www.mercurial-scm.org/release/${name}.tar.gz";
-    multihash = "QmSY4KEqfDYgfNhMUEequZFyTF8v5xN8RJAXVSkaFzuCfh";
+    multihash = "QmVu6MoxeVGJ9Q2dnTC6hNjqXxFdacGHvsTJKQLjWk3Ntd";
     hashOutput = false;
-    sha256 = "b20132dec5ae6d27ee43a133144069895befe09f7e454bfa9e39950a185f0afe";
+    sha256 = "2b12f02e3a452adff4ec9cf007017bab0cadb3f37eaf12f4b25a662df73618a2";
   };
 
   nativeBuildInputs = [
@@ -41,7 +42,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Scalable distributed SCM";
     homepage = https://www.mercurial-scm.org/;
     license = licenses.gpl2;

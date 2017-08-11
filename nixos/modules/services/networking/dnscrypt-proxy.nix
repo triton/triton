@@ -26,13 +26,7 @@ in
 {
   options = {
     services.dnscrypt-proxy = {
-      enable = mkEnableOption ''
-        Enable dnscrypt-proxy. The proxy relays regular DNS queries to a
-        DNSCrypt enabled upstream resolver. The traffic between the
-        client and the upstream resolver is encrypted and authenticated,
-        which may mitigate the risk of MITM attacks and third-party
-        snooping (assuming the upstream is trustworthy).
-      '';
+      enable = mkOption { type = types.bool; default = false; };
       localAddress = mkOption {
         default = "127.0.0.1";
         type = types.string;

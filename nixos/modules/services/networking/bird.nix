@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkEnableOption mkIf mkOption singleton types;
+  inherit (lib) mkIf mkOption singleton types;
   inherit (pkgs) bird;
   cfg = config.services.bird;
 
@@ -18,7 +18,7 @@ in
 
     services.bird = {
 
-      enable = mkEnableOption "BIRD Internet Routing Daemon";
+      enable = mkOption { type = types.bool; default = false; };
 
       config = mkOption {
         type = types.string;

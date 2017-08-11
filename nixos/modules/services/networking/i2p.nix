@@ -7,7 +7,7 @@ let
   homeDir = "/var/lib/i2p";
 in {
   ###### interface
-  options.services.i2p.enable = mkEnableOption "I2P router";
+  options.services.i2p.enable = mkOption { type = types.bool; default = false; };
 
   ###### implementation
   config = mkIf cfg.enable {

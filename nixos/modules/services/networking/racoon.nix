@@ -6,7 +6,7 @@ let
   cfg = config.services.racoon;
 in {
   options.services.racoon = {
-    enable = mkEnableOption "racoon";
+    enable = mkOption { type = types.bool; default = false; };
 
     config = mkOption {
       description = "Contents of racoon configuration file.";

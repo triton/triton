@@ -12,7 +12,7 @@ in
 
 {
   options = {
-    services.xserver.windowManager.metacity.enable = mkEnableOption "metacity";
+    services.xserver.windowManager.metacity.enable = mkOption { type = types.bool; default = false; };
   };
 
   config = mkIf cfg.enable {

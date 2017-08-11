@@ -7,7 +7,7 @@ let
 in
 {
   options.virtualisation.rkt = {
-    enable = mkEnableOption "rkt metadata service";
+    enable = mkOption { type = types.bool; default = false; };
 
     gc = {
       automatic = mkOption {

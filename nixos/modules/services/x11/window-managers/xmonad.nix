@@ -14,7 +14,7 @@ in
 {
   options = {
     services.xserver.windowManager.xmonad = {
-      enable = mkEnableOption "xmonad";
+      enable = mkOption { type = types.bool; default = false; };
       haskellPackages = mkOption {
         default = pkgs.haskellPackages;
         defaultText = "pkgs.haskellPackages";

@@ -16,16 +16,9 @@ in
 
     services.xserver.displayManager.gdm = {
 
-      enable = mkEnableOption ''
-        GDM as the display manager.
-        <emphasis>GDM in NixOS is not well-tested with desktops other
-        than GNOME, so use with caution, as it could render the
-        system unusable.</emphasis>
-      '';
+      enable = mkOption { type = types.bool; default = false; };
 
-      debug = mkEnableOption ''
-        debugging messages in GDM
-      '';
+      debug = mkOption { type = types.bool; default = false; };
 
       autoLogin = mkOption {
         default = {};

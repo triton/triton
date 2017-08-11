@@ -17,7 +17,7 @@ in
 
     networking.fan = {
 
-      enable = mkEnableOption "FAN Networking";
+      enable = mkOption { type = types.bool; default = false; };
 
     };
 

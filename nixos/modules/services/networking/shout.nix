@@ -8,7 +8,7 @@ let
 
 in {
   options.services.shout = {
-    enable = mkEnableOption "Shout web IRC client";
+    enable = mkOption { type = types.bool; default = false; };
 
     private = mkOption {
       type = types.bool;

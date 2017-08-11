@@ -7,7 +7,7 @@ let
 
 in {
   options.services.nodeDockerRegistry = {
-    enable = mkEnableOption "docker registry service";
+    enable = mkOption { type = types.bool; default = false; };
 
     port = mkOption {
       description = "Docker registry listening port.";

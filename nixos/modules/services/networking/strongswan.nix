@@ -4,7 +4,7 @@ let
 
   inherit (builtins) toFile;
   inherit (lib) concatMapStringsSep concatStringsSep mapAttrsToList
-                mkIf mkEnableOption mkOption types;
+                mkIf mkOption types;
 
   cfg = config.services.strongswan;
 
@@ -49,7 +49,7 @@ let
 in
 {
   options.services.strongswan = {
-    enable = mkEnableOption "strongSwan";
+    enable = mkOption { type = types.bool; default = false; };
 
     secrets = mkOption {
       type = types.listOf types.path;

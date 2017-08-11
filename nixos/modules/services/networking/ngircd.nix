@@ -20,7 +20,7 @@ let
 in {
   options = {
     services.ngircd = {
-      enable = mkEnableOption "the ngircd IRC server";
+      enable = mkOption { type = types.bool; default = false; };
 
       config = mkOption {
         description = "The ngircd configuration (see ngircd.conf(5)).";

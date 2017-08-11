@@ -15,7 +15,7 @@ in
 
     services.heyefi = {
 
-      enable = mkEnableOption "heyefi";
+      enable = mkOption { type = types.bool; default = false; };
 
       cardMacaddress = mkOption {
         default = "";

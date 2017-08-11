@@ -9,7 +9,7 @@ let
 
 in
 {
-  options.services.irqbalance.enable = mkEnableOption "irqbalance daemon";
+  options.services.irqbalance.enable = mkOption { type = types.bool; default = false; };
 
   config = mkIf cfg.enable {
 

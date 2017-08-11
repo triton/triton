@@ -38,7 +38,7 @@ let
   )));
 in {
   options.services.kibana = {
-    enable = mkEnableOption "enable kibana service";
+    enable = mkOption { type = types.bool; default = false; };
 
     listenAddress = mkOption {
       description = "Kibana listening host";

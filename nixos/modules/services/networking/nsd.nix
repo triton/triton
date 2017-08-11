@@ -300,8 +300,8 @@ in
   options = {
     services.nsd = {
 
-      enable = mkEnableOption "NSD authoritative DNS server";
-      bind8Stats = mkEnableOption "BIND8 like statistics";
+      enable = mkOption { type = types.bool; default = false; };
+      bind8Stats = mkOption { type = types.bool; default = false; };
 
       rootServer = mkOption {
         type        = types.bool;
@@ -469,7 +469,7 @@ in
 
 
       ratelimit = {
-        enable = mkEnableOption "ratelimit capabilities";
+        enable = mkOption { type = types.bool; default = false; };
 
         size = mkOption {
           type        = types.int;
@@ -528,7 +528,7 @@ in
 
 
       remoteControl = {
-        enable = mkEnableOption "remote control via nsd-control";
+        enable = mkOption { type = types.bool; default = false; };
 
         interfaces = mkOption {
           type        = types.listOf types.str;

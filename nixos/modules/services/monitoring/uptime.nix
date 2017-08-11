@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (lib) mkOption mkEnableOption mkIf mkMerge types optionalAttrs optional;
+  inherit (lib) mkOption mkIf mkMerge types optionalAttrs optional;
 
   cfg = config.services.uptime;
 
@@ -49,9 +49,9 @@ in {
       type = types.bool;
     };
 
-    enableWebService = mkEnableOption "the uptime monitoring program web service";
+    enableWebService = mkOption { type = types.bool; default = false; };
 
-    enableSeparateMonitoringService = mkEnableOption "the uptime monitoring service" // { default = cfg.enableWebService; };
+    enableSeparateMonitoringService = mkOption { type = types.bool; default = false; } // { default = cfg.enableWebService; };
 
     nodeEnv = mkOption {
       description = "The node environment to run in (development, production, etc.)";

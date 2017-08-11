@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkEnableOption mkIf mkOption singleton types;
+  inherit (lib)  mkIf mkOption singleton types;
   inherit (pkgs) coreutils charybdis;
   cfg = config.services.charybdis;
 
@@ -18,7 +18,7 @@ in
 
     services.charybdis = {
 
-      enable = mkEnableOption "Charybdis IRC daemon";
+      enable = mkOption { type = types.bool; default = false; };
 
       config = mkOption {
         type = types.string;

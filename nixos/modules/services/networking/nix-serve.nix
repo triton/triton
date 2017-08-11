@@ -8,7 +8,7 @@ in
 {
   options = {
     services.nix-serve = {
-      enable = mkEnableOption "nix-serve, the standalone Nix binary cache server";
+      enable = mkOption { type = types.bool; default = false; };
 
       port = mkOption {
         type = types.int;

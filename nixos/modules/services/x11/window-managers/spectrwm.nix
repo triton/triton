@@ -9,7 +9,7 @@ in
 
 {
   options = {
-    services.xserver.windowManager.spectrwm.enable = mkEnableOption "spectrwm";
+    services.xserver.windowManager.spectrwm.enable = mkOption { type = types.bool; default = false; };
   };
 
   config = mkIf cfg.enable {

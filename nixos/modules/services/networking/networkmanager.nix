@@ -22,6 +22,7 @@ let
     dhcp=${cfg.dhcp-client}
     dns=${cfg.dns}
     plugins=keyfile
+    rc-manager=${cfg.rc-manager}
 
     [keyfile]
     ${optionalString (config.networking.hostName != "")
@@ -126,6 +127,17 @@ in
           "none"
         ];
         default = "default";
+      };
+
+      rc-manager = mkOption {
+        type = types.enum [
+          "symlink"
+          "file"
+          "resolvconf"
+          "netconfig"
+          "unmanaged"
+        ];
+        default = "symlink";
       };
 
       unmanaged = mkOption {

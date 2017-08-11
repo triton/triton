@@ -107,12 +107,12 @@ in
     nvs name {
       set = {
         configureFlags = [
-          (lib.enFlag feat true value)
+          "--enable-${feat}${if value != "" then "=${value}" else ""}"
         ];
       } // enable;
       unset = {
         configureFlags = [
-          (lib.enFlag feat false null)
+          "--disable-${feat}"
         ];
       } // disable;
     };
@@ -129,12 +129,12 @@ in
     nvs name {
       set = enable // {
         configureFlags = [
-          (lib.wtFlag feat true value)
+          "--with-${feat}${if value != "" then "=${value}" else ""}"
         ] ++ lib.maybeAttr "configureFlags" [ ] enable;
       };
       unset = disable // {
         configureFlags = [
-          (lib.wtFlag feat false null)
+          "--without-${feat}"
         ] ++ lib.maybeAttr "configureFlags" [ ] disable;
       };
     };

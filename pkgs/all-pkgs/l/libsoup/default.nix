@@ -21,7 +21,13 @@ let
     boolEn
     boolWt;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2.58" = {
+      version = "2.58.2";
+      sha256 = "442300ca1b1bf8a3bbf2f788203287ff862542d4fc048f19a92a068a27d17b72";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "libsoup-${source.version}";

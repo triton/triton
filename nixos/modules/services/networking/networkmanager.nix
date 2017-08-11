@@ -20,6 +20,7 @@ let
   configFile = pkgs.writeText "NetworkManager.conf" ''
     [main]
     dhcp=${cfg.dhcp-client}
+    dns=${cfg.dns}
     plugins=keyfile
 
     [keyfile]
@@ -112,6 +113,19 @@ in
           "internal"
         ];
         default = pkgs.networkmanager.dhcp-client;
+      };
+
+      dns = mkOption {
+        type = types.enum [
+          "default"
+          "dnsmasq"
+          # If /etc/resolv.conf is symlinked to /run/systemd/resolve/resolv.conf
+          # this option is used automatically.
+          "systemd-resolved"
+          "unbound"
+          "none"
+        ];
+        default = "default";
       };
 
       unmanaged = mkOption {

@@ -14,8 +14,11 @@ with {
 let
   cfg = config.networking.networkmanager;
 
-  # /var/lib/misc is for dnsmasq.leases.
-  stateDirs = "/var/lib/NetworkManager /var/lib/dhclient /var/lib/misc";
+  stateDirs = [
+    "/var/lib/NetworkManager"
+    "/var/lib/dhclient"
+    "/var/lib/misc"  # dnsmasq leases
+  ];
 
   configFile = pkgs.writeText "NetworkManager.conf" ''
     [main]
@@ -60,7 +63,7 @@ let
     });
   '';
 
-  ipUpScript = pkgs.writeScript "01nixos-network-online" ''
+  ipUpScript = pkgs.writeScript "01-nixos-network-online" ''
     #!/bin/sh
     if test "$2" = "up"; then
       ${config.systemd.package}/bin/systemctl start network-online.target
@@ -71,7 +74,7 @@ let
     concatStrings (map (s: "nameserver ${s}\n") xs)
   );
 
-  overrideNameserversScript = pkgs.writeScript "02overridedns" ''
+  overrideNameserversScript = pkgs.writeScript "02-override-dns" ''
     #!/bin/sh
     tmp=`${pkgs.coreutils}/bin/mktemp`
     ${pkgs.gnused}/bin/sed '/nameserver /d' /etc/resolv.conf > $tmp
@@ -238,7 +241,7 @@ in
     environment.etc = [
       {
         source = ipUpScript;
-        target = "NetworkManager/dispatcher.d/01nixos-network-online";
+        target = "NetworkManager/dispatcher.d/01-nixos-network-online";
       }
       {
         source = configFile;
@@ -267,11 +270,11 @@ in
     ] ++ optionals (cfg.appendNameservers == [] || cfg.insertNameservers == []) [
       {
         source = overrideNameserversScript;
-        target = "NetworkManager/dispatcher.d/02overridedns";
+        target = "NetworkManager/dispatcher.d/02-override-dns";
       }
     ] ++ lib.imap (i: s: {
         text = s.source;
-        target = "NetworkManager/dispatcher.d/${dispatcherTypesSubdirMap.${s.type}}03userscript${lib.fixedWidthNumber 4 i}";
+        target = "NetworkManager/dispatcher.d/${dispatcherTypesSubdirMap.${s.type}}03-userscript${lib.fixedWidthNumber 4 i}";
       }) cfg.dispatcherScripts;
 
     environment.systemPackages = cfg.packages;

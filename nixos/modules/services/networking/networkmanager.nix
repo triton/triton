@@ -317,7 +317,7 @@ in
       before = [ "NetworkManager.service" ];
       script = ''
         mkdir -m 700 -p /etc/NetworkManager/system-connections
-        mkdir -m 755 -p ${stateDirs}
+        mkdir -m 755 -p ${concatStringsSep " " stateDirs}
       '';
       serviceConfig.Type = "oneshot";
     };

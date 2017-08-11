@@ -2728,6 +2728,8 @@ mumble_git = pkgs.mumble_generics {
 };
 mumble = callPackageAlias "mumble_1-2" { };
 
+mupdf = callPackage ../all-pkgs/m/mupdf { };
+
 murmur_1-2 = pkgs.mumble_generics {
   channel = "1.2";
   config = "murmur";
@@ -4525,8 +4527,6 @@ google_talk_plugin =
   mpg123 = callPackage ../applications/audio/mpg123 { };
 #
   mujs = callPackage ../all-pkgs/m/mujs { };
-
-  mupdf = callPackage ../all-pkgs/m/mupdf { };
 #
   rsync = callPackage ../applications/networking/sync/rsync { };
 #

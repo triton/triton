@@ -28,7 +28,7 @@
 # JP3D comp
 , jp3dSupport ? false
 
-, channel
+, channel ? "2.2"
 }:
 
 assert jpipServerSupport ->
@@ -48,12 +48,12 @@ let
 
   sources = {
     # FIXME: drop 1.x when ffmpeg supports 2.x+
-    "1" = {
+    "1.5" = {
       fetchzipversion = 2;
       version = "1.5.2";
       sha256 = "3ced2c9e5292024b045052385ae98127d786c76fe3b7289ab02ccb46d087bb34";
     };
-    "2" = {
+    "2.2" = {
       fetchzipversion = 3;
       version = "2.2.0";
       sha256 = "d3a3007893a722b08cbe94b1c07e9a32b6426c08452341997a075d0a4bf3e8b5";
@@ -67,7 +67,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     version = source.fetchzipversion;
     url = "https://github.com/uclouvain/openjpeg/archive/"
-      + "${if versionAtLeast channel "2" then "v" else "version."}"
+      + "${if versionAtLeast channel "2.1" then "v" else "version."}"
       + "${source.version}.tar.gz";
     inherit (source) sha256;
   };
@@ -107,7 +107,7 @@ stdenv.mkDerivation rec {
   ];
 
   passthru = {
-    incDir = "openjpeg-${channel}";
+    inherit channel;
   };
 
   meta = with lib; {

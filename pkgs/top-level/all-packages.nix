@@ -2938,12 +2938,9 @@ open-iscsi = callPackage ../all-pkgs/o/open-iscsi { };
 open-isns = callPackage ../all-pkgs/o/open-isns { };
 
 openjpeg_1 = callPackage ../all-pkgs/o/openjpeg {
-  channel = "1";
+  channel = "1.5";
 };
-openjpeg_2 = callPackage ../all-pkgs/o/openjpeg {
-  channel = "2";
-};
-openjpeg = callPackageAlias "openjpeg_2" { };
+openjpeg = callPackage ../all-pkgs/o/openjpeg { };
 
 openldap = callPackage ../all-pkgs/o/openldap { };
 

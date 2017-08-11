@@ -5,6 +5,7 @@
 
 , coreutils
 , gdbm
+, less
 , libcap
 , ncurses
 , pcre
@@ -17,13 +18,13 @@ let
     boolWt
     optionals;
 
-  version = "5.3.1";
+  version = "5.4.1";
 
   documentation = fetchurl {
     url = "mirror://sourceforge/zsh/zsh-doc/${version}/"
       + "zsh-${version}-doc.tar.xz";
     hashOutput = false;
-    sha256 = "d51762fcb5699c332da8a4e404cb9eb8d5de8fa4e0235a08bcf252c915bda6ed";
+    sha256 = "b8b1a40aeec852806ad2b74b0a0c534320bf517e2fe2a087c0c9d39e75dc29f1";
   };
 in
 stdenv.mkDerivation rec {
@@ -32,7 +33,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://sourceforge/zsh/zsh/${version}/zsh-${version}.tar.xz";
     hashOutput = false;
-    sha256 = "fc886cb2ade032d006da8322c09a7e92b2309177811428b121192d44832920da";
+    sha256 = "94cbd57508287e8faa081424509738d496f5f41e32ed890e3a5498ce05d3633b";
   };
 
   nativeBuildInputs = [
@@ -71,6 +72,7 @@ stdenv.mkDerivation rec {
     "--disable-zsh-mem-debug"
     "--disable-zsh-mem-warning"
     "--disable-zsh-secure-free"
+    "--disable-zsh-heap-debug"
     "--disable-zsh-valgrind"
     "--disable-zsh-hash-debug"
     # Tests fail with stack allocation enabled >=5.2
@@ -80,12 +82,13 @@ stdenv.mkDerivation rec {
     "--disable-ansi2knr"
     "--enable-function-subdirs"
     "--enable-maildir-support"
-    "--enable-readnullcmd=pager"
+    "--enable-readnullcmd=${less}/bin/less"
     "--${boolEn (pcre != null)}-pcre"
     "--${boolEn (libcap != null)}-cap"
     "--${boolEn (gdbm != null)}-gdbm"
     "--enable-largefile"
     "--enable-multibyte"
+    "--enable-unicode9"
     # TODO: musl libc support
     "--disable-libc-musl"
     "--enable-dynamic-nss"

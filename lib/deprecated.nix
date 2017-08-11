@@ -16,15 +16,15 @@ rec {
 
   defaultMergeArg = x : y: if builtins.isAttrs y then
     y
-  else 
+  else
     (y x);
   defaultMerge = x: y: x // (defaultMergeArg x y);
-  foldArgs = merger: f: init: x: 
+  foldArgs = merger: f: init: x:
     let arg=(merger init (defaultMergeArg init x));
       # now add the function with composed args already applied to the final attrs
-        base = (setAttrMerge "passthru" {} (f arg) 
-                        ( z : z // rec { 
-                          function = foldArgs merger f arg; 
+        base = (setAttrMerge "passthru" {} (f arg)
+                        ( z : z // rec {
+                          function = foldArgs merger f arg;
 			  args = (lib.attrByPath ["passthru" "args"] {} z) // x;
                           } ));
 	withStdOverrides = base // {
@@ -32,7 +32,7 @@ rec {
 	   } ;
         in
 	withStdOverrides;
-    
+
 
   # predecessors: proposed replacement for applyAndFun (which has a bug cause it merges twice)
   # the naming "overridableDelayableArgs" tries to express that you can
@@ -53,13 +53,13 @@ rec {
           initial :  # you pass attrs, the functions below are passing a function taking the fix argument
     let
         takeFixed = if isFunction initial then initial else (fixed : initial); # transform initial to an expression always taking the fixed argument
-        tidy = args : 
+        tidy = args :
             let # apply all functions given in "applyPreTidy" in sequence
                 applyPreTidyFun = fold ( n : a : x : n ( a x ) ) lib.id (maybeAttr "applyPreTidy" [] args);
             in removeAttrs (applyPreTidyFun args) ( ["applyPreTidy"] ++ (maybeAttr  "removeAttrs" [] args) ); # tidy up args before applying them
         fun = n : x :
              let newArgs = fixed :
-                     let args = takeFixed fixed; 
+                     let args = takeFixed fixed;
                          mergeFun = args.${n};
                      in if isAttrs x then (mergeFun args x)
                         else assert isFunction x;
@@ -70,7 +70,7 @@ rec {
       merge   = fun "mergeFun";
       replace = fun "keepFun";
     };
-  defaultOverridableDelayableArgs = f : 
+  defaultOverridableDelayableArgs = f :
       let defaults = {
             mergeFun = mergeAttrByFunc; # default merge function. merge strategie (concatenate lists, strings) is given by mergeAttrBy
             keepFun = a : b : { inherit (a) removeAttrs mergeFun keepFun mergeAttrBy; } // b; # even when using replace preserve these values
@@ -119,7 +119,7 @@ rec {
     else if val == true || val == false then false
     else null;
 
-    
+
   # Return true only if there is an attribute and it is true.
   checkFlag = attrSet: name:
         if name == "true" then true else
@@ -134,25 +134,25 @@ rec {
   ( attrByPath [name] (if checkFlag attrSet name then true else
         if argList == [] then null else
         let x = builtins.head argList; in
-                if (head x) == name then 
+                if (head x) == name then
                         (head (tail x))
-                else (getValue attrSet 
+                else (getValue attrSet
                         (tail argList) name)) attrSet );
 
-                        
+
   # Input : attrSet, [[name default] ...], [ [flagname reqs..] ... ]
   # Output : are reqs satisfied? It's asserted.
   checkReqs = attrSet : argList : condList :
   (
-    fold lib.and true 
+    fold lib.and true
       (map (x: let name = (head x) ; in
-        
-        ((checkFlag attrSet name) -> 
+
+        ((checkFlag attrSet name) ->
         (fold lib.and true
         (map (y: let val=(getValue attrSet argList y); in
-                (val!=null) && (val!=false)) 
+                (val!=null) && (val!=false))
         (tail x))))) condList)) ;
-        
+
 
   # This function has O(n^2) performance.
   uniqList = {inputList, acc ? []} :
@@ -167,23 +167,23 @@ rec {
   uniqListExt = {inputList, outputList ? [],
     getter ? (x : x), compare ? (x: y: x==y)}:
         if inputList == [] then outputList else
-        let x=head inputList; 
+        let x=head inputList;
         isX = y: (compare (getter y) (getter x));
         newOutputList = outputList ++
          (if any isX outputList then [] else [x]);
-        in uniqListExt {outputList=newOutputList; 
+        in uniqListExt {outputList=newOutputList;
                 inputList = (tail inputList);
                 inherit getter compare;
                 };
 
 
-                
+
   condConcat = name: list: checker:
         if list == [] then name else
-        if checker (head list) then 
-                condConcat 
-                        (name + (head (tail list))) 
-                        (tail (tail list)) 
+        if checker (head list) then
+                condConcat
+                        (name + (head (tail list)))
+                        (tail (tail list))
                         checker
         else condConcat
                 name (tail (tail list)) checker;
@@ -202,7 +202,7 @@ rec {
     in
       work startSet [] [];
 
-  innerModifySumArgs = f: x: a: b: if b == null then (f a b) // x else 
+  innerModifySumArgs = f: x: a: b: if b == null then (f a b) // x else
         innerModifySumArgs f x (a // b);
   modifySumArgs = f: x: innerModifySumArgs f x {};
 
@@ -235,7 +235,7 @@ rec {
   setAttr = set : name : v : set // (nvs name v);
 
   # setAttrMerge (similar to mergeAttrsWithFunc but only merges the values of a particular name)
-  # setAttrMerge "a" [] { a = [2];} (x : x ++ [3]) -> { a = [2 3]; } 
+  # setAttrMerge "a" [] { a = [2];} (x : x ++ [3]) -> { a = [2 3]; }
   # setAttrMerge "a" [] {         } (x : x ++ [3]) -> { a = [  3]; }
   setAttrMerge = name : default : attrs : f :
     setAttr attrs name (f (maybeAttr name default attrs));
@@ -263,9 +263,9 @@ rec {
   mergeAttrsNoOverride = { mergeLists ? ["buildInputs" "propagatedBuildInputs"],
                            overrideSnd ? [ "buildPhase" ]
                          } : attrs1 : attrs2 :
-    fold (n: set : 
+    fold (n: set :
         setAttr set n ( if set ? ${n}
-            then # merge 
+            then # merge
               if elem n mergeLists # attribute contains list, merge them by concatenating
                 then attrs2.${n} ++ attrs1.${n}
               else if elem n overrideSnd
@@ -308,45 +308,6 @@ rec {
     ];
   mergeAttrsByFuncDefaults = foldl mergeAttrByFunc { inherit mergeAttrBy; };
   mergeAttrsByFuncDefaultsClean = list: removeAttrs (mergeAttrsByFuncDefaults list) ["mergeAttrBy"];
-
-  # merge attrs based on version key into mkDerivation args, see mergeAttrBy to learn about smart merge defaults
-  #
-  # This function is best explained by an example:
-  #
-  #     {version ? "2.x"} :
-  #
-  #     mkDerivation (mergeAttrsByVersion "package-name" version 
-  #       { # version specific settings
-  #         "git" = { src = ..; preConfigre = "autogen.sh"; buildInputs = [automake autoconf libtool];  };
-  #         "2.x" = { src = ..; };
-  #       }
-  #       {  // shared settings
-  #          buildInputs = [ common build inputs ];
-  #          meta = { .. }
-  #       }
-  #     )
-  #
-  # Please note that e.g. Eelco Dolstra usually prefers having one file for
-  # each version. On the other hand there are valuable additional design goals
-  #  - readability
-  #  - do it once only
-  #  - try to avoid duplication
-  #
-  # Marc Weber and Michael Raskin sometimes prefer keeping older
-  # versions around for testing and regression tests - as long as its cheap to
-  # do so.
-  #
-  # Very often it just happens that the "shared" code is the bigger part.
-  # Then using this function might be appropriate.
-  #
-  # Be aware that its easy to cause recompilations in all versions when using
-  # this function - also if derivations get too complex splitting into multiple
-  # files is the way to go.
-  #
-  # See misc.nix -> versionedDerivation
-  # discussion: nixpkgs: pull/310
-  mergeAttrsByVersion = name: version: attrsByVersion: base:
-    mergeAttrsByFuncDefaultsClean [ { name = "${name}-${version}"; } base (maybeAttr version (throw "bad version ${version} for ${name}") attrsByVersion)];
 
   # sane defaults (same name as attr name so that inherit can be used)
   mergeAttrBy = # { buildInputs = concatList; [...]; passthru = mergeAttr; [..]; }
@@ -406,18 +367,5 @@ rec {
     in removeAttrs
       (mergeAttrsByFuncDefaults ([args] ++ opts ++ [{ passthru = cfgWithDefaults; }]))
       ["flags" "cfg" "mergeAttrBy" ];
-
-
-  nixType = x:
-      if isAttrs x then
-          if x ? outPath then "derivation"
-          else "attrs"
-      else if isFunction x then "function"
-      else if isList x then "list"
-      else if x == true then "bool"
-      else if x == false then "bool"
-      else if x == null then "null"
-      else if isInt x then "int"
-      else "string";
 
 }

@@ -15,9 +15,8 @@
 , xorg
 }:
 
-assert xorg != null ->
-  xorg.libX11 != null
-  && xorg.libXft != null
+assert libx11 != null ->
+  xorg.libXft != null
   && xorg.libXrender != null;
 
 let
@@ -26,7 +25,7 @@ let
     optionalString;
 
   versionMajor = "1.40";
-  versionMinor = "7";
+  versionMinor = "9";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -35,7 +34,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/pango/${versionMajor}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "517645c00c4554e82c0631e836659504d3fd3699c564c633fccfdfd37574e278";
+    sha256 = "9faea6535312fe4436b93047cf7a04af544eb52a079179bd3a33821aacce7e16";
   };
 
   nativeBuildInputs = [
@@ -56,28 +55,6 @@ stdenv.mkDerivation rec {
     xorg.libXft
     xorg.libXrender
   ];
-
-  postPatch = /* FIXME: Fixed in >1.40.7 */ ''
-    sed -i pango/meson.build \
-      -e 's/symbols_prefix/symbol_prefix/g'
-  '' +  /* FIXME: Files are missing from 1.40.7 release for some reason */ ''
-    cat > pango/pango-features.h.meson <<EOF
-    #ifndef PANGO_FEATURES_H
-    #define PANGO_FEATURES_H
-
-    #mesondefine PANGO_VERSION_MAJOR
-    #mesondefine PANGO_VERSION_MINOR
-    #mesondefine PANGO_VERSION_MICRO
-
-    #define PANGO_VERSION_STRING "@PANGO_VERSION_MAJOR@.@PANGO_VERSION_MINOR@.@PANGO_VERSION_MICRO@"
-
-    #endif /* PANGO_FEATURES_H */
-    EOF
-
-    for i in {1..9}; do
-      touch tests/markups/{fail,valid}-$i.{expected,markup}
-    done
-  '';
 
   mesonFlags = [
     "-Denable_docs=false"  # gtk-doc

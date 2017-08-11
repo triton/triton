@@ -75,6 +75,8 @@ rec {
       echo "#!/bin/sh" > "$out"/bin/yacc
       echo 'exec "$(dirname "$0")"/bison -y "$@"' >> "$out"/bin/yacc
       chmod +x "$out"/bin/yacc
+      mkdir -p "$out"/share
+      cp -rv "${bison}"/share/bison "$out"/share
       cp -v "${flex}"/bin/flex "$out"/bin
     '' +
     /* Copy what we need of GCC. */ ''

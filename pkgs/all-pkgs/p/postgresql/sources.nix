@@ -10,8 +10,8 @@
   };
 
   "9.4" = {
-    version = "9.4.12";
-    sha256 = "fca055481875d1c49e31c28443f56472a1474b3fbe25b7ae64440c6118f82e64";
+    version = "9.4.13";
+    sha256 = "0080f55d65194de8b96a2dab153443f8248ff2b2b10e6ab4cda2dcadcac7f2ab";
   };
 
   "9.5" = {

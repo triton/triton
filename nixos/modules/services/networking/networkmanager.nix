@@ -79,9 +79,14 @@ let
     tmp=`${pkgs.coreutils}/bin/mktemp`
     ${pkgs.gnused}/bin/sed '/nameserver /d' /etc/resolv.conf > $tmp
     ${pkgs.gnugrep}/bin/grep 'nameserver ' /etc/resolv.conf | \
-      ${pkgs.gnugrep}/bin/grep -vf ${ns (cfg.appendNameservers ++ cfg.insertNameservers)} > $tmp.ns
-    ${optionalString (cfg.appendNameservers != []) "${pkgs.coreutils}/bin/cat $tmp $tmp.ns ${ns cfg.appendNameservers} > /etc/resolv.conf"}
-    ${optionalString (cfg.insertNameservers != []) "${pkgs.coreutils}/bin/cat $tmp ${ns cfg.insertNameservers} $tmp.ns > /etc/resolv.conf"}
+      ${pkgs.gnugrep}/bin/grep -vf \
+        ${ns (cfg.appendNameservers ++ cfg.insertNameservers)} > $tmp.ns
+    ${optionalString (cfg.appendNameservers != [])
+      "${pkgs.coreutils}/bin/cat $tmp $tmp.ns ${ns cfg.appendNameservers} \
+        > /etc/resolv.conf"}
+    ${optionalString (cfg.insertNameservers != [])
+      "${pkgs.coreutils}/bin/cat $tmp ${ns cfg.insertNameservers} $tmp.ns \
+        > /etc/resolv.conf"}
     ${pkgs.coreutils}/bin/rm -f $tmp $tmp.ns
   '';
 
@@ -217,7 +222,8 @@ in
         });
         default = [ ];
         description = ''
-          A list of scripts which will be executed in response to  network  events.
+          A list of scripts which will be executed in response to  network
+          events.
         '';
       };
     };
@@ -230,7 +236,8 @@ in
 
     assertions = [{
       assertion = config.networking.wireless.enable == false;
-      message = "You can not use networking.networkmanager with services.networking.wireless";
+      message = "You can not use networking.networkmanager with "
+        + "services.networking.wireless";
     }];
 
     boot.kernelModules = [
@@ -248,23 +255,28 @@ in
         target = "NetworkManager/NetworkManager.conf";
       }
       {
-        source = "${pkgs.networkmanager-openvpn}/etc/NetworkManager/VPN/nm-openvpn-service.name";
+        source = "${pkgs.networkmanager-openvpn}/etc/NetworkManager/VPN/"
+          + "nm-openvpn-service.name";
         target = "NetworkManager/VPN/nm-openvpn-service.name";
       }
       {
-        source = "${pkgs.networkmanager-vpnc}/etc/NetworkManager/VPN/nm-vpnc-service.name";
+        source = "${pkgs.networkmanager-vpnc}/etc/NetworkManager/VPN/"
+          + "nm-vpnc-service.name";
         target = "NetworkManager/VPN/nm-vpnc-service.name";
       }
       {
-        source = "${pkgs.networkmanager-openconnect}/etc/NetworkManager/VPN/nm-openconnect-service.name";
+        source = "${pkgs.networkmanager-openconnect}/etc/NetworkManager/VPN/"
+          + "nm-openconnect-service.name";
         target = "NetworkManager/VPN/nm-openconnect-service.name";
       }
       {
-        source = "${pkgs.networkmanager-pptp}/etc/NetworkManager/VPN/nm-pptp-service.name";
+        source = "${pkgs.networkmanager-pptp}/etc/NetworkManager/VPN/"
+          + "nm-pptp-service.name";
         target = "NetworkManager/VPN/nm-pptp-service.name";
       }
       {
-        source = "${pkgs.networkmanager-l2tp}/etc/NetworkManager/VPN/nm-l2tp-service.name";
+        source = "${pkgs.networkmanager-l2tp}/etc/NetworkManager/VPN/"
+          + "nm-l2tp-service.name";
         target = "NetworkManager/VPN/nm-l2tp-service.name";
       }
     ] ++ optionals (cfg.appendNameservers == [] || cfg.insertNameservers == []) [
@@ -274,7 +286,8 @@ in
       }
     ] ++ lib.imap (i: s: {
         text = s.source;
-        target = "NetworkManager/dispatcher.d/${dispatcherTypesSubdirMap.${s.type}}03-userscript${lib.fixedWidthNumber 4 i}";
+        target = "NetworkManager/dispatcher.d/"
+          + "${dispatcherTypesSubdirMap.${s.type}}03-userscript${lib.fixedWidthNumber 4 i}";
       }) cfg.dispatcherScripts;
 
     environment.systemPackages = cfg.packages;

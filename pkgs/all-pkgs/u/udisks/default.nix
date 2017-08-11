@@ -22,17 +22,19 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "udisks-2.7.1";
+  name = "udisks-2.7.2";
 
   src = fetchurl {
-    url = "https://github.com/storaged-project/udisks/releases/download/${name}/${name}.tar.bz2";
-    sha256 = "449150e13716d5fce512997142e696dfc8ab0985dc04f9a94c66bb8e8b749c12";
+    url = "https://github.com/storaged-project/udisks/releases/download/"
+      + "${name}/${name}.tar.bz2";
+    sha256 = "861964e6dd4cd1d814ad801c3042c8be748fddeb2970737132e2aff500c0d815";
   };
 
   postPatch = ''
     # We need to fix the default path inside of udisks
     grep -q '"/usr/bin:/bin:/usr/sbin:/sbin"' src/main.c
-    sed -i 's,"/usr/bin:/bin:/usr/sbin:/sbin","/run/current-system/sw/bin",g' src/main.c
+    sed -i  src/main.c \
+      -e 's,"/usr/bin:/bin:/usr/sbin:/sbin","/run/current-system/sw/bin",g'
 
     # We need to fix the udev rules
     grep -q '/bin/sh' data/80-udisks2.rules
@@ -100,7 +102,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     homepage = http://www.freedesktop.org/wiki/Software/udisks;
-    description = "A daemon and command-line utility for querying and manipulating storage devices";
+    description = "Daemon & cli utility for querying & manipulating storage devices";
     license = licenses.gpl2;
     maintainers = with maintainers; [
       wkennington

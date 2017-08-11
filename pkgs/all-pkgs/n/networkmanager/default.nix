@@ -93,6 +93,8 @@ stdenv.mkDerivation rec {
     curl
     dbus
     dbus-glib
+    dhcp
+    dhcpcd
     dnsmasq
     ethtool
     glib
@@ -123,10 +125,6 @@ stdenv.mkDerivation rec {
     vala
     wpa_supplicant
     xz
-  ] ++ optionals (dhcp-client == "dhclient") [
-    dhcp
-  ] ++ optionals (dhcp-client == "dhcpcd") [
-    dhcpcd
   ];
 
   /*patches = [
@@ -224,10 +222,10 @@ stdenv.mkDerivation rec {
     "--with-pppd=${ppp}/bin/pppd"
     "--with-modem-manager-1"
     "--with-ofono"
-    "--${boolWt (dhcp-client == "dhclient")}-dhclient${
-      boolString (dhcp-client == "dhclient") "=${dhcp}/bin/dhclient" ""}"
-    "--${boolWt (dhcp-client == "dhcpcd")}-dhcpcd${
-      boolString (dhcp-client == "dhcpcd") "=${dhcpcd}/bin/dhcpcd" ""}"
+    "--${boolWt (dhcp != null)}-dhclient${
+        if dhcp != null then "=${dhcp}/bin/dhclient" else ""}"
+    "--${boolWt (dhcpcd != null)}-dhcpcd${
+        if dhcpcd != null then "=${dhcpcd}/bin/dhcpcd" else ""}"
     "--${boolWt (dhcp-client == "dhcpcd")}-dhcpcd-supports-ipv6"
     "--with-config-dhcp-default=${dhcp-client}"
     "--with-resolvconf=${openresolv}/sbin/resolvconf"
@@ -272,9 +270,6 @@ stdenv.mkDerivation rec {
   '';
 
   passthru = {
-    inherit
-      dhcp-client;
-
     srcVerification = fetchurl {
       inherit (src)
         outputHash

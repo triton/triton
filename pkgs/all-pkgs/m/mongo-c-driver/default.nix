@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "1.6.3";
+  version = "1.7.0";
 in
 stdenv.mkDerivation rec {
   name = "mongo-c-driver-${version}";
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/mongodb/mongo-c-driver/releases/download"
       + "/${version}/${name}.tar.gz";
-    sha256 = "82df03de117a3ccf563b9eccfd2e5365df8f215a36dea7446d439969033ced7b";
+    sha256 = "48a0dbd44fef2124b51cf501f06be269b1a39452303b880b37473a6030c6e023";
   };
 
   nativeBuildInputs = [

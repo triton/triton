@@ -1,6 +1,7 @@
 { stdenv
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , curl
 , freetype
@@ -8,10 +9,12 @@
 , harfbuzz_lib
 , jbig2dec
 , libjpeg
+, libx11
+, libxext
 , mujs
 , openjpeg
 , openssl_1-0-2
-, xorg
+, xproto
 , zlib
 }:
 
@@ -36,9 +39,9 @@ stdenv.mkDerivation rec {
     mujs
     openjpeg
     openssl_1-0-2
-    xorg.libX11
-    xorg.libXext
-    xorg.xproto
+    libx11
+    libxext
+    xproto
     zlib
   ];
 
@@ -98,7 +101,7 @@ stdenv.mkDerivation rec {
     EOF
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = http://mupdf.com/;
     description = "Lightweight PDF viewer and toolkit written in portable C";
     license = licenses.gpl3Plus;

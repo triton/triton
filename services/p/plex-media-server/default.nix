@@ -9,7 +9,7 @@ in
 {
   options = {
     services.plex-media-server = {
-      enable = mkEnableOption "Plex Media Server";
+      enable = mkOption { type = types.bool; default = false; };
 
       user = mkOption {
         type = types.str;

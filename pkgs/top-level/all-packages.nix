@@ -2937,16 +2937,13 @@ open-iscsi = callPackage ../all-pkgs/o/open-iscsi { };
 
 open-isns = callPackage ../all-pkgs/o/open-isns { };
 
-openjpeg_1-5 = callPackage ../all-pkgs/o/openjpeg {
-  channel = "1.5";
+openjpeg_1 = callPackage ../all-pkgs/o/openjpeg {
+  channel = "1";
 };
-openjpeg_2-0 = callPackage ../all-pkgs/o/openjpeg {
-  channel = "2.0";
+openjpeg_2 = callPackage ../all-pkgs/o/openjpeg {
+  channel = "2";
 };
-openjpeg_2-1 = callPackage ../all-pkgs/o/openjpeg {
-  channel = "2.1";
-};
-openjpeg = callPackageAlias "openjpeg_2-1" { };
+openjpeg = callPackageAlias "openjpeg_2" { };
 
 openldap = callPackage ../all-pkgs/o/openldap { };
 

@@ -1,16 +1,18 @@
 { stdenv
 , cmake
 , fetchzip
+, lib
 , ninja
 
 , lcms2
 , libpng
 , libtiff
+, zlib
 
 # MJ2 executables
-, mj2Support ? true
+, mj2Support ? false
 # JPWL library & executables
-, jpwlLibSupport ? true
+, jpwlLibSupport ? false
 # JPIP library & executables
 , jpipLibSupport ? false
   , jdk
@@ -24,7 +26,7 @@
 # Openjpeg jar (Java)
 , openjpegJarSupport ? false
 # JP3D comp
-, jp3dSupport ? true
+, jp3dSupport ? false
 
 , channel
 }:
@@ -44,7 +46,20 @@ let
     optionalString
     versionAtLeast;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    # FIXME: drop 1.x when ffmpeg supports 2.x+
+    "1" = {
+      fetchzipversion = 2;
+      version = "1.5.2";
+      sha256 = "3ced2c9e5292024b045052385ae98127d786c76fe3b7289ab02ccb46d087bb34";
+    };
+    "2" = {
+      fetchzipversion = 3;
+      version = "2.2.0";
+      sha256 = "d3a3007893a722b08cbe94b1c07e9a32b6426c08452341997a075d0a4bf3e8b5";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "openjpeg-${source.version}";
@@ -52,7 +67,7 @@ stdenv.mkDerivation rec {
   src = fetchzip {
     version = source.fetchzipversion;
     url = "https://github.com/uclouvain/openjpeg/archive/"
-      + "${if versionAtLeast channel "2.1" then "v" else "version."}"
+      + "${if versionAtLeast channel "2" then "v" else "version."}"
       + "${source.version}.tar.gz";
     inherit (source) sha256;
   };
@@ -66,6 +81,7 @@ stdenv.mkDerivation rec {
     lcms2
     libpng
     libtiff
+    zlib
   ] ++ optionals jpipServerSupport [
     curl
     fcgi
@@ -94,13 +110,7 @@ stdenv.mkDerivation rec {
     incDir = "openjpeg-${channel}";
   };
 
-  postInstall = /* Fix the pkg-config requires field */
-    optionalString ("${channel}" == "2.0") ''
-    sed -i $out/lib/pkgconfig/libopenjpwl.pc \
-      -e '/Requires:/ s,openjp2,libopenjp2,'
-  '';
-
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Open-source JPEG 2000 codec written in C language";
     homepage = http://www.openjpeg.org/;
     license = licenses.bsd2;

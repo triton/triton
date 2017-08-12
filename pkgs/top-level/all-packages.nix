@@ -1560,13 +1560,7 @@ gnumake = callPackage ../all-pkgs/g/gnumake { };
 
 gnupatch = callPackage ../all-pkgs/g/gnupatch { };
 
-gnupg_2_0 = callPackage ../all-pkgs/g/gnupg {
-  channel = "2.0";
-};
-gnupg_2_1 = callPackage ../all-pkgs/g/gnupg {
-  channel = "2.1";
-};
-gnupg = callPackageAlias "gnupg_2_1" { };
+gnupg = callPackage ../all-pkgs/g/gnupg { };
 
 gnused = callPackage ../all-pkgs/g/gnused { };
 

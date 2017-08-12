@@ -14,7 +14,7 @@ let
     optionals;
 
   versionMajor = "1.9";
-  versionMinor = "1";
+  versionMinor = "4";
   version = "${versionMajor}.${versionMinor}";
 in
 
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/libmediaart/${versionMajor}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "5b14aa4e0cc84eaec57b6cb28f39092d503fdaecf36d5d165fac37583b7fe949";
+    sha256 = "a57be017257e4815389afe4f58fdacb6a50e74fd185452b23a652ee56b04813d";
   };
 
   buildInputs = [

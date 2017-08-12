@@ -410,7 +410,6 @@ fi
 i=0
 while [ "$i" -lt "${#pgpKeyFingerprints[@]}" ]; do
   pgpKeyFingerprint="${pgpKeyFingerprints[$i]}"
-  echo "hi"
   if [ "$(gpg --fingerprint "$pgpKeyFingerprint" | sed '2s, ,,g' | head -n 2 | tail -n -1)" != "$pgpKeyFingerprint" ]; then
     echo "Fingerprints didn't match for $pgpKeyFingerprint" >&2
     exit 1

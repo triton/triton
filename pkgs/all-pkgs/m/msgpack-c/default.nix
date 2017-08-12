@@ -8,14 +8,14 @@
 }:
 
 let
-  version = "2.1.3";
+  version = "2.1.5";
 in
 stdenv.mkDerivation rec {
   name = "msgpack-c-${version}";
 
   src = fetchurl {
     url = "https://github.com/msgpack/msgpack-c/releases/download/cpp-${version}/msgpack-${version}.tar.gz";
-    sha256 = "beaac1209f33276b5a75e7a02f8689ed44b97209cef82ba0909e06f0c45f6cae";
+    sha256 = "6126375af9b204611b9d9f154929f4f747e4599e6ae8443b337915dcf2899d2b";
   };
 
   nativeBuildInputs = [

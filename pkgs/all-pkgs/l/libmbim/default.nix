@@ -7,12 +7,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libmbim-1.14.0";
+  name = "libmbim-1.14.2";
 
   src = fetchurl {
     url = "https://www.freedesktop.org/software/libmbim/${name}.tar.xz";
-    multihash = "QmPa7JEpYhkzimBrfJSCzdbtLox3PbkgW8MrvRfj6E3Cir";
-    sha256 = "ca8d52a95a18cbabae8f15f83f1572316e888b6504f946e6645d24405127ab5b";
+    multihash = "QmaCdwLjoRqvJxArMcu28kkDcNDqH5zHKVHWvjFbknVNaD";
+    sha256 = "22cafe6b8432433aa58bedcf7db71111522ce6531bfe24e8e9b6058412cd31cf";
   };
 
   nativeBuildInputs = [

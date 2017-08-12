@@ -6,14 +6,14 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "gperftools-2.5";
+  name = "gperftools-2.6.1";
 
   src = fetchFromGitHub {
-    version = 1;
+    version = 3;
     owner = "gperftools";
     repo = "gperftools";
     rev = name;
-    sha256 = "308505a2211ee0716dad888d2ea66426699e4a7ec814426e197f81945cda967e";
+    sha256 = "dfe31ac0d98936ab55ed694c04f7b4d52ec90b7be4e18d59b4e76e9054535324";
   };
 
   nativeBuildInputs = [

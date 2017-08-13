@@ -18,16 +18,16 @@ let
     boolEn
     optionals;
 
-  version = "1.13.0";
+  version = "1.14.0";
 in
 stdenv.mkDerivation rec {
   name = "wayland-${version}";
 
   src = fetchurl {
     url = "https://wayland.freedesktop.org/releases/${name}.tar.xz";
-    multihash = "QmaQkEpHw3CPYUGhimCbxoKi7aJwuAJWqeekpkXEw2r5WK";
+    multihash = "QmbHiXA1JkG8Cpw8CA83Ae7atdBUSyjniHgfA3JmMPmphy";
     hashOutput = false;
-    sha256 = "69b052c031a61e89af7cc8780893d0da1e301492352aa449dee9345043e6fe51";
+    sha256 = "ed80cabc0961a759a42092e2c39aabfc1ec9a13c86c98bbe2b812f008da27ab8";
   };
 
   nativeBuildInputs = [ ]

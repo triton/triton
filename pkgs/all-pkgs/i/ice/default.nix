@@ -9,17 +9,18 @@
 }:
 
 # TODO: support for java, mono, python, & ruby
-
+let
+  version = "3.7.0";
+in
 stdenv.mkDerivation rec {
   name = "ice-${version}";
-  version = "3.6.3";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "zeroc-ice";
     repo = "ice";
     rev = "v${version}";
-    sha256 = "da1b4df462dc68f367aa1754c20e08976a56b93d45bed7854666d122d8dd13ee";
+    sha256 = "dc26d72374aa42e02a850f53d896da48ca47e4f6699638862b932fc6579bb80f";
   };
 
   buildInputs = [
@@ -37,8 +38,6 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     makeFlagsArray+=("prefix=$out")
   '';
-
-  parallelBuild = false;
 
   meta = with stdenv.lib; {
     description = "The internet communications engine";

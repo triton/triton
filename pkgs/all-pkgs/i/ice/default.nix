@@ -2,8 +2,8 @@
 , fetchFromGitHub
 
 , bzip2
-, db
 , expat
+, lmdb
 , mcpp
 , openssl
 }:
@@ -25,8 +25,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     bzip2
-    db
     expat
+    lmdb
     mcpp
     openssl
   ];
@@ -38,6 +38,10 @@ stdenv.mkDerivation rec {
   preConfigure = ''
     makeFlagsArray+=("prefix=$out")
   '';
+
+  buildFlags = [
+    "srcs"
+  ];
 
   meta = with stdenv.lib; {
     description = "The internet communications engine";

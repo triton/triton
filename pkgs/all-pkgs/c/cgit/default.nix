@@ -6,13 +6,14 @@
 }:
 
 stdenv.mkDerivation {
-  name = "cgit-2017-01-23";
+  name = "cgit-2017-08-10";
 
   src = fetchgit {
-    version = 2;
+    version = 3;
     url = "https://git.zx2c4.com/cgit";
-    rev = "be39d22328f841536b8e44e8aaeed80a74ebb353";
-    sha256 = "28e4e9c1c36e430c855526cdc00ba284312a50b061439de9cd078ee07ed637dd";
+    rev = "51cc456b773a3bb7253fad2146c1a0d2b0fa98cb";
+    multihash = "QmaLBxCZxBictEMjkqVhhucgGJRbyC3DwduHY68JiRLRgf";
+    sha256 = "726227d351687922bdb0b28ab70846fc7063ee96e40b6d9c13337c3413d0165f";
   };
 
   buildInputs = [

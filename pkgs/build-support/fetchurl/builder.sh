@@ -304,13 +304,16 @@ fixUrls() {
   local result
   result=()
 
+  local array
   array="${varname}[@]"
+  local url
   for url in "${!array}"; do
     if test "${url:0:9}" != "mirror://"; then
       result+=("$url")
     else
       local mirror
       mirror="$(echo "$url" | awk -F/ '{print $3}')"
+      local base
       base="$(echo "$url" | awk -F/ '{ for (i=4; i<=NF; i++) { printf "%s", "/" $i; } }')"
       while read mirror; do
         eval mirror="\"$mirror\""

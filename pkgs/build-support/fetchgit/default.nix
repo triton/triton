@@ -2,6 +2,7 @@
 , brotli_0-4-0
 , brotli_0-5-2
 , brotli_0-6-0
+, curl
 , git
 , gnutar_1-29
 , openssl
@@ -20,7 +21,7 @@
 in
 { url
 , rev ? "HEAD"
-, md5 ? ""
+, multihash ? ""
 , sha256 ? ""
 , leaveDotGit ? deepClone
 , fetchSubmodules ? true
@@ -52,7 +53,7 @@ in
    server admins start using the new version?
 */
 
-assert md5 != "" || sha256 != "";
+assert sha256 != "";
 assert deepClone -> leaveDotGit;
 assert version != null || throw "Missing fetchzip version. The latest version is 3.";
 
@@ -72,6 +73,8 @@ let
     };
   };
 
+  mirrors = import ../fetchurl/mirrors.nix;
+
   inherit (versions."${toString version}")
     brotli
     tar;
@@ -88,21 +91,62 @@ stdenv.mkDerivation {
     '';
     preferLocalBuild = true;
   };
-  nativeBuildInputs = [git openssl];
+  nativeBuildInputs = [
+    curl
+    git
+    openssl
+  ];
 
-  outputHashAlgo = if sha256 == "" then "md5" else "sha256";
+  outputHashAlgo = "sha256";
   outputHashMode = "flat";
-  outputHash = if sha256 == "" then md5 else sha256;
+  outputHash = sha256;
 
-  inherit url rev leaveDotGit fetchSubmodules deepClone branchName;
+  inherit
+    url
+    rev
+    multihash
+    leaveDotGit
+    fetchSubmodules
+    deepClone
+    branchName;
 
   impureEnvVars = [
     # We borrow these environment variables from the caller to allow
     # easy proxy configuration.  This is impure, but a fixed-output
     # derivation like fetchurl is allowed to do so since its result is
     # by definition pure.
-    "http_proxy" "https_proxy" "ftp_proxy" "all_proxy" "no_proxy" "GIT_PROXY_COMMAND" "SOCKS_SERVER"
-    ];
+    "HTTP_PROXY"
+    "HTTPS_PROXY"
+    "FTP_PROXY"
+    "ALL_PROXY"
+    "NO_PROXY"
+
+    # Git specific variables
+    "GIT_PROXY_COMMAND"
+    "SOCKS_SERVER"
+
+    # This variable allows the user to pass additional options to curl
+    "NIX_CURL_FLAGS"
+
+    # This allows the end user to specify the local ipfs host:port which hosts
+    # the content
+    "IPFS_API"
+  ];
+
+  # Write the list of mirrors to a file that we can reuse between
+  # fetchurl instantiations, instead of passing the mirrors to
+  # fetchurl instantiations via environment variables.  This makes the
+  # resulting store derivations (.drv files) much smaller, which in
+  # turn makes nix-env/nix-instantiate faster.
+  mirrorsFile = stdenv.mkDerivation {
+    name = "mirrors-list";
+    buildCommand = stdenv.lib.concatStrings (
+      stdenv.lib.flip stdenv.lib.mapAttrsToList mirrors (mirror: urls: ''
+        echo '${mirror} ${stdenv.lib.concatStringsSep " " urls}' >> "$out"
+      '')
+    );
+    preferLocalBuild = true;
+  };
 
   preferLocalBuild = true;
 }

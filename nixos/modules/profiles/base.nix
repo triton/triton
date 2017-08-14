@@ -22,12 +22,6 @@
     pkgs.pciutils
     pkgs.usbutils
 
-    # Tools to create / manipulate filesystems.
-    pkgs.ntfs-3g # for resizing NTFS partitions
-    pkgs.dosfstools
-    pkgs.xfsprogs
-    pkgs.f2fs-tools
-
     # Tools for building
     pkgs.stdenv
     pkgs.git
@@ -53,7 +47,15 @@
   ];
 
   # Include support for various filesystems.
-  boot.supportedFilesystems = [ "btrfs" "vfat" "f2fs" "xfs" "zfs" "ntfs" ];
+  boot.supportedFilesystems = [
+    "btrfs"
+    "ext4"
+    "f2fs"
+    "ntfs"
+    "vfat"
+    "xfs"
+    "zfs"
+  ];
 
   # Configure host id for ZFS to work
   networking.hostId = lib.mkDefault "8425e349";

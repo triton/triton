@@ -6,12 +6,13 @@
 , libtool
 , nukeReferences
 
-, util-linux_full
-, zlib
 , attr
+, libtirpc
+, lvm2
 , python
 , systemd_lib
-, lvm2
+, util-linux_full
+, zlib
 
 , kernel ? null
 , spl ? null
@@ -65,6 +66,7 @@ stdenv.mkDerivation rec {
     spl
   ] ++ optionals buildUser [
     attr
+    libtirpc
     lvm2
     python
     systemd_lib
@@ -111,6 +113,7 @@ stdenv.mkDerivation rec {
     "--with-config=${type}"
   ] ++ optionals buildUser [
     "--enable-systemd"
+    "--with-tirpc"
   ] ++ optionals buildKernel [
     "--with-spl=${spl}/libexec/spl"
     "--with-linux=${kernel.dev}/lib/modules/${kernel.modDirVersion}/source"

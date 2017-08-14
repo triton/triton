@@ -23,6 +23,7 @@
 , libxdamage
 , libxkbcommon
 , pango
+, shared-mime-info
 , xorg
 }:
 
@@ -34,17 +35,17 @@ let
     optionalString;
 
     channel = "2.24";
-    version = "${channel}-2017-03-27";
+    version = "${channel}-2017-08-07";
 in
 stdenv.mkDerivation rec {
   name = "gtk+-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "GNOME";
     repo = "gtk";
-    rev = "4435fb3c612da10522bf4f709b66887a055e4cab";
-    sha256 = "0e24db8d1d157e8fec7283cb7ef90a91c7e8c2879b600c9a317831b8f977f53e";
+    rev = "bf8c1c212ebc6d05b534aa1c0edff73103e9cc56";
+    sha256 = "72be94622c5318bdc6c787515fd805ac4028f71aa5b4fac33abb1e52197c2c62";
   };
 
   nativeBuildInputs = [
@@ -72,6 +73,7 @@ stdenv.mkDerivation rec {
     libxdamage
     libxkbcommon
     pango
+    shared-mime-info
     xorg.libXcursor
     xorg.libXi
     xorg.libXinerama

@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , glib
 , gobject-introspection
@@ -11,20 +12,19 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
 
-  versionMajor = "3.20";
-  version = "${versionMajor}.1";
+  channel = "3.24";
+  version = "${channel}.0";
 in
 stdenv.mkDerivation rec {
   name = "geocode-glib-${version}";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/geocode-glib/${versionMajor}/${name}.tar.xz";
-    sha256Url = "mirror://gnome/sources/geocode-glib/${versionMajor}/"
-      + "${name}.sha256sum";
-    sha256 = "669fc832cabf8cc2f0fc4194a8fa464cdb9c03ebf9aca5353d7cf935ba8637a2";
+    url = "mirror://gnome/sources/geocode-glib/${channel}/${name}.tar.xz";
+    hashOutput = false;
+    sha256 = "19c1fef4fd89eb4bfe6decca45ac45a2eca9bb7933be560ce6c172194840c35e";
   };
 
   nativeBuildInputs = [
@@ -47,15 +47,26 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    "--disable-debug"
+    "--${boolEn (gobject-introspection != null)}-introspection"
     "--enable-compile-warnings"
-    "--disable-iso-c"
-    "--enable-cxx-warnings"
-    "--disable-iso-cxx"
+    "--disable-Werror"
+    "--disable-always-build-tests"
+    "--disable-installed-tests"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha256Url = "https://download.gnome.org/sources/geocode-glib/${channel}/"
+        + "${name}.sha256sum";
+      failEarly = true;
+    };
+  };
+
+  meta = with lib; {
     description = "GLib geocoding library uses the Yahoo! Place Finder service";
     homepage = https://git.gnome.org/browse/geocode-glib;
     license = licenses.lgpl2;

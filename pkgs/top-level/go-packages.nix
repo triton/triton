@@ -994,16 +994,13 @@ let
     rev = "b26b538f693051ac6518e65672de3144ce3fbedc";
     date = "2017-07-31";
     sha256 = "0bwzbq3ihjn5yqr3q2m99pym3p0r045sg924afqksj2mb5dfy8qv";
-    buildInputs = [
+    propagatedBuildInputs = [
       go-homedir
       mousetrap
       pflag
       viper
     ];
-    propagatedBuildInputs = [
-      go-md2man
-      yaml_v2
-    ];
+    excludedPackages = "doc";
   };
 
   cockroach-go = buildFromGitHub {
@@ -2783,12 +2780,16 @@ let
     date = "2017-08-02";
     propagatedBuildInputs = [
       aws-sdk-go
-      azure-sdk-for-go
-      go-autorest
+      #azure-sdk-for-go
+      #go-autorest
       google-api-go-client
       oauth2
       softlayer-go
     ];
+    postPatch = ''
+      rm -r provider/azure
+      sed -i '/azure"/d' discover.go
+    '';
   };
 
   go-difflib = buildFromGitHub {

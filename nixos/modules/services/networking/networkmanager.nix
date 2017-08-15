@@ -4,6 +4,8 @@ with {
   inherit (lib)
     concatStrings
     concatStringsSep
+    fixedWidthNumber
+    imap
     mkIf
     mkOption
     optionals
@@ -29,9 +31,9 @@ let
 
     [keyfile]
     ${optionalString (config.networking.hostName != "")
-      ''hostname=${config.networking.hostName}''}
+      "hostname=${config.networking.hostName}"}
     ${optionalString (cfg.unmanaged != [])
-      ''unmanaged-devices=${concatStringsSep ";" cfg.unmanaged}''}
+      "unmanaged-devices=${concatStringsSep ";" cfg.unmanaged}"}
 
     [logging]
     level=WARN
@@ -53,14 +55,19 @@ let
     ResultActive=yes
   */
   polkitConf = ''
-    polkit.addRule(function(action, subject) {
-      if (
-        subject.isInGroup("networkmanager")
-        && (action.id.indexOf("org.freedesktop.NetworkManager.") == 0
+    polkit.addRule(
+      function(action, subject) {
+        if (
+          subject.isInGroup("networkmanager")
+          && (
+            action.id.indexOf("org.freedesktop.NetworkManager.") == 0
             || action.id.indexOf("org.freedesktop.ModemManager")  == 0
-        ))
-          { return polkit.Result.YES; }
-    });
+          )
+        ) {
+          return polkit.Result.YES;
+        }
+      }
+    );
   '';
 
   ipUpScript = pkgs.writeScript "01-nixos-network-online" ''
@@ -77,16 +84,18 @@ let
   overrideNameserversScript = pkgs.writeScript "02-override-dns" ''
     #!/bin/sh
     tmp=`${pkgs.coreutils}/bin/mktemp`
-    ${pkgs.gnused}/bin/sed '/nameserver /d' /etc/resolv.conf > $tmp
+    ${pkgs.gnused}/bin/sed -i /etc/resolv.conf \
+      -e '/nameserver /d' > $tmp
     ${pkgs.gnugrep}/bin/grep 'nameserver ' /etc/resolv.conf | \
       ${pkgs.gnugrep}/bin/grep -vf \
         ${ns (cfg.appendNameservers ++ cfg.insertNameservers)} > $tmp.ns
-    ${optionalString (cfg.appendNameservers != [])
-      "${pkgs.coreutils}/bin/cat $tmp $tmp.ns ${ns cfg.appendNameservers} \
-        > /etc/resolv.conf"}
-    ${optionalString (cfg.insertNameservers != [])
-      "${pkgs.coreutils}/bin/cat $tmp ${ns cfg.insertNameservers} $tmp.ns \
-        > /etc/resolv.conf"}
+  '' + optionalString (cfg.appendNameservers != []) ''
+    ${pkgs.coreutils}/bin/cat $tmp $tmp.ns ${ns cfg.appendNameservers} \
+      > /etc/resolv.conf
+  '' + optionalString (cfg.insertNameservers != []) ''
+    ${pkgs.coreutils}/bin/cat $tmp ${ns cfg.insertNameservers} $tmp.ns \
+      > /etc/resolv.conf
+  '' + ''
     ${pkgs.coreutils}/bin/rm -f $tmp $tmp.ns
   '';
 
@@ -241,8 +250,7 @@ in
     }];
 
     boot.kernelModules = [
-      # Needed for most (all?) PPTP VPN connections.
-      "ppp_mppe"
+      "ppp_mppe"  # PPTP VPNs
     ];
 
     environment.etc = [
@@ -284,26 +292,31 @@ in
         source = overrideNameserversScript;
         target = "NetworkManager/dispatcher.d/02-override-dns";
       }
-    ] ++ lib.imap (i: s: {
-        text = s.source;
-        target = "NetworkManager/dispatcher.d/"
-          + "${dispatcherTypesSubdirMap.${s.type}}03-userscript${lib.fixedWidthNumber 4 i}";
-      }) cfg.dispatcherScripts;
+    ] ++ imap (i: s: {
+      text = s.source;
+      target = "NetworkManager/dispatcher.d/"
+        + "${dispatcherTypesSubdirMap.${s.type}}03-userscript${fixedWidthNumber 4 i}";
+    }) cfg.dispatcherScripts;
 
     environment.systemPackages = cfg.packages;
 
-    users.extraGroups = [{
-      name = "networkmanager";
-      gid = config.ids.gids.networkmanager;
-    }
-    {
-      name = "nm-openvpn";
-      gid = config.ids.gids.nm-openvpn;
-    }];
-    users.extraUsers = [{
-      name = "nm-openvpn";
-      uid = config.ids.uids.nm-openvpn;
-    }];
+    users.extraGroups = [
+      {
+        name = "networkmanager";
+        gid = config.ids.gids.networkmanager;
+      }
+      {
+        name = "nm-openvpn";
+        gid = config.ids.gids.nm-openvpn;
+      }
+    ];
+
+    users.extraUsers = [
+      {
+        name = "nm-openvpn";
+        uid = config.ids.uids.nm-openvpn;
+      }
+    ];
 
     systemd.packages = cfg.packages;
 
@@ -312,9 +325,15 @@ in
     # and sets up necessary directories for NM.
     systemd.services."networkmanager-init" = {
       description = "NetworkManager initialisation";
-      wantedBy = [ "network.target" ];
-      wants = [ "NetworkManager.service" ];
-      before = [ "NetworkManager.service" ];
+      wantedBy = [
+        "network.target"
+      ];
+      wants = [
+        "NetworkManager.service"
+      ];
+      before = [
+        "NetworkManager.service"
+      ];
       script = ''
         mkdir -m 700 -p /etc/NetworkManager/system-connections
         mkdir -m 755 -p ${concatStringsSep " " stateDirs}
@@ -324,7 +343,6 @@ in
 
     # Turn off NixOS' network management
     networking = {
-      #useDHCP = false;
       wireless.enable = false;
     };
 

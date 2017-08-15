@@ -1,4 +1,6 @@
 { stdenv
+, autoreconfHook
+, fetchFromGitHub
 , fetchurl
 }:
 

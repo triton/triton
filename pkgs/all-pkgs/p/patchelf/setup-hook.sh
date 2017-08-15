@@ -28,7 +28,7 @@ patchSingleBinaryWrapped() {
 
   # We want to remove any temporary directories from the path
   local notmprpath
-    notmprpath="$(echo "$oldrpath" | tr ':' '\n' | sed "\,$TMPDIR,d")"
+  notmprpath="$(echo "$oldrpath" | tr ':' '\n' | sed "\,$TMPDIR,d")"
 
   # Make sure the paths in the rpath exist
   local existrpath
@@ -44,7 +44,7 @@ patchSingleBinaryWrapped() {
   if [ "${patchELFAddRpath-1}" = "1" ] && [ -n "$sodirs" ]; then
     # We want to make sure we know exactly what new paths we need to add
     local extradirs
-    findparams=$(patchelf --print-needed "$file" | awk '{ print "-or"; print "-name"; print $0}')
+    findparams=$(patchelf --print-needed "$file" | awk '{ if (!/^\//) { print "-or"; print "-name"; print $0 } }')
     extradirs="$(find ${sodirs} -mindepth 1 -maxdepth 1 \( -name 'no-such-file' $findparams \) -exec dirname {} \;)"
     rpathlist="$(printf "%s\n%s" "${extradirs}" "${existrpath}")"
   else
@@ -79,6 +79,55 @@ patchSingleBinaryWrapped() {
   if [ "$NIX_DEBUG" = 1 ]; then
     echo "  Shrunk Rpath: $(patchelf --print-rpath "$file")"
   fi
+
+  # Now we rewrite all of the needed shared libraries based on the rpath
+  # This allows us to keep the rpath and speed up shared library resolution
+  # Patchelf allows us to do this all in one command, so we build the command here
+  echo "  Rewriting all needed libraries to absolute paths"
+
+  local oldifs
+  oldifs="$IFS"
+  IFS=$'\n'
+  local rpathdirs
+  rpathdirs=($(patchelf --print-rpath "$file" | tr ':' '\n'))
+  local patchelfArgs
+  patchelfArgs=()
+  local needed
+  for needed in $(patchelf --print-needed "$file"); do
+    # Absolute paths don't need to be fixed
+    if [[ "$needed" =~ ^/ ]]; then
+      continue
+    fi
+
+    # We might have some special libraries to ignore hardcoding
+    # Most notably this is used for libgl.so which is vendor
+    # dependent based on the graphics stack on the running machine
+    local shouldIgnore=0
+    local ignored
+    for ignored in "${patchelfIgnoredLibs[@]}"; do
+      if [ "$ignored" = "$needed" ]; then
+        shouldIgnore=1
+        break
+      fi
+    done
+    if [ "$shouldIgnore" -eq "1" ]; then
+      continue
+    fi
+
+    local abs="$(find "${rpathdirs[@]}" -mindepth 1 -maxdepth 1 -name "$needed" | head -n 1)"
+    if [ ! -e "$abs" ]; then
+      echo "  Failed to satisfy: $needed"
+      exit 1
+    fi
+
+    patchelfArgs+=("--replace-needed" "$needed" "$abs")
+    patchelf --debug "--replace-needed" "$needed" "$abs" "$file"
+  done
+  IFS="$oldifs"
+
+  # TODO: Eventually with a working patchelf we should be able to do
+  # all of the patching in one command
+  #patchelf --debug "${patchelfArgs[@]}" "$file"
 }
 
 patchELF() {

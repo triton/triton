@@ -5,12 +5,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "patchelf-0.9";
+  name = "patchelf-2017-06-15";
 
   src = fetchurl {
-    url = "https://nixos.org/releases/patchelf/${name}/${name}.tar.bz2";
-    multihash = "QmaF3c5ELwpV9T9FyDd3iwwmsPeHoRZiQzj2JtV9PfKd8w";
-    sha256 = "10sg04wrmx8482clzxkjfx0xbjkyvyzg88vq5yghx2a8l4dmrxm0";
+    name = "${name}.tar.xz";
+    #url = "https://nixos.org/releases/patchelf/${name}/${name}.tar.bz2";
+    multihash = "QmYWUVa6zPxNpCiZb5vSTobmLMv38393ofGvXnzujKmJC1";
+    sha256 = "efeb715563de2aae5ac08ed5ee85db80ba00e09887cf87f2cf7ee26575896edc";
   };
 
   setupHook = ./setup-hook.sh;

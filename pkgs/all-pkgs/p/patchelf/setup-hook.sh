@@ -121,13 +121,13 @@ patchSingleBinaryWrapped() {
     fi
 
     patchelfArgs+=("--replace-needed" "$needed" "$abs")
-    patchelf --debug "--replace-needed" "$needed" "$abs" "$file"
+    patchelf "--replace-needed" "$needed" "$abs" "$file"
   done
   IFS="$oldifs"
 
   # TODO: Eventually with a working patchelf we should be able to do
   # all of the patching in one command
-  #patchelf --debug "${patchelfArgs[@]}" "$file"
+  #patchelf "${patchelfArgs[@]}" "$file"
 }
 
 patchELF() {

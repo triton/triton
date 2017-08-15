@@ -29,16 +29,16 @@ let
     "https://curl.haxx.se/download/curl-${version}.tar.bz2"
   ];
 
-  version = "7.55.0";
+  version = "7.55.1";
 in
 stdenv.mkDerivation rec {
   name = "curl${nameSuffix}-${version}";
 
   src = fetchurl {
     urls = tarballUrls version;
-    multihash = "QmZifS62pa5qz82uj6QManrWr3cesEDgURwpyiuVyuEArS";
+    multihash = "QmZncLTtRLoTyHkXF4Z9sCrH6PpdELkhCUYUCRHEyWMXG3";
     hashOutput = false;
-    sha256 = "af1d69ec6f15fe70a2cabaa98309732bf035ef2a735e4e1a3e08754d2780e5b1";
+    sha256 = "e5b1a92ed3b0c11f149886458fa063419500819f1610c020d62f25b8e4b16cfb";
   };
 
   nativeBuildInputs = [

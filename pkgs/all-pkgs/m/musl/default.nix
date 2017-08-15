@@ -21,6 +21,10 @@ stdenv.mkDerivation rec {
     "--enable-static"
   ];
 
+  postInstall = ''
+   ln -rsv "$out"/lib/ld*.so* "$out"/bin/ldd
+  '';
+
   # We need this for embedded things like busybox
   dontDisableStatic = true;
 

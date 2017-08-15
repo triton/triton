@@ -1,6 +1,8 @@
 { stdenv
+, fetchFromGitHub
 , fetchTritonPatch
-, fetchzip
+, fetchurl
+, lib
 , which
 
 , boost
@@ -9,28 +11,50 @@
 , qt5
 , zlib
 
+, guiSupport ? false
 , webuiSupport ? true
+
+, channel ? "stable"
 }:
 
+assert guiSupport -> dbus != null;
+
 let
-  inherit (stdenv.lib)
-    enFlag
+  inherit (lib)
+    boolEn
     optionals;
 
-  version = "3.3.5";
-in
-
-assert qt5 != null -> dbus != null;
-
-stdenv.mkDerivation rec {
-  name = "qbittorrent-" + version;
-
-  src = fetchzip {
-    version = 1;
-    url = "https://github.com/qbittorrent/qBittorrent/archive/"
-      + "release-${version}.tar.gz";
-    sha256 = "4dc222e0362765f57b2f9177e8f2f1fd2ecae6c0626b7a5ba6e4b4e0d3886de8";
+  sources = {
+    stable = {
+      version = "3.3.15";
+      sha256 = "a7bbc08a39912a15a496702e736a98c083011bbb14fe5f04440880d7e6b2ceae";
+    };
+    head = {
+      fetchzipversion = 3;
+      version = "2017-08-14";
+      rev = "ea749bb052cc866ca70876b213fb057ecd69f33e";
+      sha256 = "dcdf4d98e6eaa04c05a34e8c03575015e4176ae448ab9523495d2eaa2aa380dd";
+    };
   };
+  source = sources."${channel}";
+in
+stdenv.mkDerivation rec {
+  name = "qbittorrent-${source.version}";
+
+  src =
+    if channel != "head" then
+      fetchurl {
+        url = "mirror://sourceforge/qbittorrent/qbittorrent/${name}/${name}.tar.xz";
+        hashOutput = false;
+        inherit (source) sha256;
+      }
+    else
+      fetchFromGitHub {
+        version = source.fetchzipversion;
+        owner = "qbittorrent";
+        repo = "qbittorrent";
+        inherit (source) rev sha256;
+      };
 
   nativeBuildInputs = [
     which
@@ -38,41 +62,51 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     boost
-    libtorrent-rasterbar
-    zlib
-  ] ++ optionals (qt5 != null) [
     dbus
+    libtorrent-rasterbar
     qt5
+    zlib
   ];
 
-  patches = [
-    # The lrelease binary is named lrelease instead of lrelease-qt5
-    (fetchTritonPatch {
-      rev = "2b33aa1bf7a7c334e1099e7de4f05a11065c698c";
-      file = "qbittorrent/qbittorrent-fix-lrelease.patch";
-      sha256 = "cfe72a7016e1ea1d23032654350c230f149189457deeb6d8b491eff6dac1e7ff";
-    })
-  ];
+  postPatch = /* Our lrelease binary is named lrelease, not lrelease-qt5 */ ''
+    sed -i qm_gen.pri \
+      -e 's/lrelease-qt5/lrelease/'
+  '';
 
   configureFlags = [
     "--disable-debug"
-    (enFlag "gui" (qt5 != null) null)
+    "--${boolEn (guiSupport)}-gui"
     "--enable-systemd"
-    (enFlag "webui" webuiSupport null)
-    (enFlag "qt-dbus" (qt5 != null && dbus != null) null)
-    "--without-qt4"
+    "--${boolEn webuiSupport}-webui"
+    "--${boolEn (dbus != null)}-qt-dbus"
     "--with-qtsingleapplication=shipped"
-    "--with-qjson=system"
     "--with-boost=${boost.dev}"
     "--with-boost-libdir=${boost.lib}/lib"
     "--with-boost-system"
+  ] ++ optionals (channel != "head") [
+    "--without-qt4"
+    "--with-qjson=system"
   ];
 
-  meta = with stdenv.lib; {
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      failEarly = true;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprint = "D8F3 DA77 AAC6 7410 5359  9C13 6E4A 2D02 5B7C C9A2";
+    };
+  };
+
+  meta = with lib; {
     description = "BitTorrent client in C++ and Qt";
     homepage = http://www.qbittorrent.org/;
     license = licenses.gpl2;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [
+      codyopel
+    ];
     platforms = with platforms;
       x86_64-linux;
   };

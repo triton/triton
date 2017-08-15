@@ -3157,6 +3157,16 @@ python3Packages = callPackageAlias "python36Packages" { };
 pythonPackages = callPackageAlias "python2Packages" { };
 
 qbittorrent = callPackage ../all-pkgs/q/qbittorrent { };
+qbittorrent_head = callPackage ../all-pkgs/q/qbittorrent {
+  channel = "head";
+  libtorrent-rasterbar = pkgs.libtorrent-rasterbar_1-1_head;
+};
+qbittorrent_nox = callPackage ../all-pkgs/q/qbittorrent { };
+qbittorrent_nox_head = callPackage ../all-pkgs/q/qbittorrent {
+  channel = "head";
+  guiSupport = false;
+  libtorrent-rasterbar = pkgs.libtorrent-rasterbar_1-1_head;
+};
 
 qca = callPackage ../all-pkgs/q/qca { };
 

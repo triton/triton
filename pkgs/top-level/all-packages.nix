@@ -2516,6 +2516,8 @@ libxklavier = callPackage ../all-pkgs/l/libxklavier { };
 
 libxml2 = callPackage ../all-pkgs/l/libxml2 { };
 
+libxrender = callPackage ../all-pkgs/l/libxrender { };
+
 libxscrnsaver = callPackage ../all-pkgs/l/libxscrnsaver { };
 
 libxslt = callPackage ../all-pkgs/l/libxslt { };
@@ -3804,6 +3806,7 @@ xorg = recurseIntoAttrs (
       libxfont
       libxfont2
       libxinerama
+      libxrender
       libxscrnsaver
       libxt
       presentproto

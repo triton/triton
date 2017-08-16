@@ -32,6 +32,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxfont
 , libxfont2
 , libxinerama
+, libxrender
 , libxscrnsaver
 , libxt
 , presentproto
@@ -130,6 +131,7 @@ let
     libXfont = libxfont;
     libXfont2 = libxfont2;
     libXinerama = libxinerama;
+    libXrender = libxrender;
     libXScrnSaver = libxscrnsaver;
     libXt = libxt;
     utilmacros = util-macros;
@@ -842,17 +844,6 @@ let
     buildInputs = [ randrproto renderproto libX11 libXext xextproto xproto libXrender ];
 
   }) // {inherit randrproto renderproto libX11 libXext xextproto xproto libXrender ;};
-
-  libXrender = (mkDerivation "libXrender" {
-    name = "libXrender-0.9.10";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXrender-0.9.10.tar.bz2;
-      sha256 = "0j89cnb06g8x79wmmnwzykgkkfdhin9j7hjpvsxwlr3fz1wmjvf0";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ renderproto libX11 xproto ];
-
-  }) // {inherit renderproto libX11 xproto ;};
 
   libXres = (mkDerivation "libXres" {
     name = "libXres-1.0.7";

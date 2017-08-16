@@ -79,17 +79,6 @@ let
           inherit (finalPkgs) gnupg;
         };
 
-        patchelf = stage0Pkgs.stdenv.mkDerivation {
-          name = "patchelf-boot";
-          src = bootstrapTools;
-          installPhase = ''
-            mkdir -p $out/bin
-            ln -s $bootstrapTools/bin/patchelf $out/bin
-          '';
-          setupHook = pkgs.patchelf.setupHook;
-          dontAbsoluteLibtool = true; # Depends on cc not being null
-        };
-
         gcc7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
           nativeLibc = false;
@@ -114,7 +103,6 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage1";
       cc = stage0Pkgs.gcc;
-      extraBuildInputs = [ stage0Pkgs.patchelf ];
 
       extraAttrs = {
         # stdenv.libc is used by GCC build to figure out the system-level
@@ -123,7 +111,7 @@ let
       };
 
       overrides = pkgs: (lib.mapAttrs (n: _: throw "stage1Pkgs is missing package definition for `${n}`") pkgs) // {
-        inherit (pkgs) stdenv glibc linux-headers_4-4 linux-headers;
+        inherit (pkgs) stdenv glibc linux-headers_4-4 linux-headers patchelf;
 
         gcc7 = lib.makeOverridable (import ../../build-support/cc-wrapper) {
           nativeTools = false;
@@ -139,7 +127,7 @@ let
         };
 
         # These are only needed to evaluate
-        inherit (stage0Pkgs) fetchurl fetchTritonPatch patchelf;
+        inherit (stage0Pkgs) fetchurl fetchTritonPatch;
         inherit (pkgs) gcc;
         bison = null;
       };
@@ -154,7 +142,7 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage2";
       cc = stage1Pkgs.gcc;
-      extraBuildInputs = [ stage0Pkgs.patchelf ];
+      extraBuildInputs = [ stage1Pkgs.patchelf ];
 
       extraAttrs = {
         # stdenv.libc is used by GCC build to figure out the system-level
@@ -191,7 +179,7 @@ let
         };
 
         # These are only needed to evaluate
-        inherit (stage0Pkgs) fetchurl fetchTritonPatch patchelf;
+        inherit (stage0Pkgs) fetchurl fetchTritonPatch;
         coreutils = bootstrapTools;
         binutils = bootstrapTools;
         gnugrep = bootstrapTools;
@@ -209,7 +197,7 @@ let
     stdenv = import ../generic { inherit lib; } (commonStdenvOptions // commonBootstrapOptions // {
       name = "stdenv-linux-boot-stage3";
       cc = stage2Pkgs.gcc;
-      extraBuildInputs = [ stage0Pkgs.patchelf ];
+      extraBuildInputs = [ stage1Pkgs.patchelf ];
 
       extraAttrs = {
         # stdenv.libc is used by GCC build to figure out the system-level
@@ -266,7 +254,10 @@ let
     # We need patchelf to be a buildInput since it has to install a setup-hook.
     # We need pkgconfig to be a buildInput as it has aclocal files needed to
     # generate PKG_CHECK_MODULES.
-    extraBuildInputs = with stage3Pkgs; [ patchelf pkgconfig ];
+    extraBuildInputs = with stage3Pkgs; [
+      patchelf
+      pkgconfig
+    ];
 
     cc = stage3Pkgs.gcc;
 

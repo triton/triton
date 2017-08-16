@@ -14,6 +14,8 @@ stdenv.mkDerivation rec {
     sha256 = "efeb715563de2aae5ac08ed5ee85db80ba00e09887cf87f2cf7ee26575896edc";
   };
 
+  NIX_DEBUG = true;
+
   setupHook = ./setup-hook.sh;
 
   passthru = {

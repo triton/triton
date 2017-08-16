@@ -31,6 +31,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxfixes
 , libxfont
 , libxfont2
+, libxinerama
 , libxscrnsaver
 , libxt
 , presentproto
@@ -128,6 +129,7 @@ let
     libXfixes = libxfixes;
     libXfont = libxfont;
     libXfont2 = libxfont2;
+    libXinerama = libxinerama;
     libXScrnSaver = libxscrnsaver;
     libXt = libxt;
     utilmacros = util-macros;
@@ -774,17 +776,6 @@ let
     buildInputs = [ inputproto libX11 libXext xextproto libXfixes xproto ];
 
   }) // {inherit inputproto libX11 libXext xextproto libXfixes xproto ;};
-
-  libXinerama = (mkDerivation "libXinerama" {
-    name = "libXinerama-1.1.3";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXinerama-1.1.3.tar.bz2;
-      sha256 = "1qlqfvzw45gdzk9xirgwlp2qgj0hbsyiqj8yh8zml2bk2ygnjibs";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ libX11 libXext xextproto xineramaproto ];
-
-  }) // {inherit libX11 libXext xextproto xineramaproto ;};
 
   libXmu = (mkDerivation "libXmu" {
     name = "libXmu-1.1.2";

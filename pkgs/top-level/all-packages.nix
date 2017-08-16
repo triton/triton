@@ -2508,6 +2508,8 @@ libxfont2 = callPackage ../all-pkgs/l/libxfont {
   channel = "2";
 };
 
+libxinerama = callPackage ../all-pkgs/l/libxinerama { };
+
 libxkbcommon = callPackage ../all-pkgs/l/libxkbcommon { };
 
 libxklavier = callPackage ../all-pkgs/l/libxklavier { };
@@ -3801,6 +3803,7 @@ xorg = recurseIntoAttrs (
       libxfixes
       libxfont
       libxfont2
+      libxinerama
       libxscrnsaver
       libxt
       presentproto

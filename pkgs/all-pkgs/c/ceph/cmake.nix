@@ -7,7 +7,6 @@
 , python3Packages
 , yasm
 
-, accelio
 , boost
 , curl
 , expat
@@ -65,7 +64,6 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    #accelio
     boost
     curl
     expat

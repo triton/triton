@@ -4,8 +4,8 @@
     sha256 = "d70604c0838d231f24a1e6ad375e7a5190c222d0f34b91078cfd3a3c2aa50c88";
   };
   "11" = rec {
-    version = "11.2.0";
-    sha256 = "8a8bd608404afe41dd42ad1a9f0077e5624b63c0daebad52d4f74785641fb8d4";
+    version = "11.2.1";
+    sha256 = "971c575c63942c4d068a98935bd950a5df124315024f9cafce87f5c7e13cdac2";
   };
   "12" = rec {
     version = "12.1.0";

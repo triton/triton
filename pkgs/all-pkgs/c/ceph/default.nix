@@ -12,7 +12,6 @@
 , which
 , yasm
 
-, accelio
 , boost
 , bzip2
 , curl
@@ -34,7 +33,6 @@
 , nspr
 , openldap
 , openssl
-, rdma-core
 , rocksdb
 , snappy
 , systemd_lib
@@ -136,11 +134,7 @@ stdenv.mkDerivation rec {
     libedit
   ] ++ optionals (versionAtLeast version "10.0.0") [
     lz4
-  ] ++ optionals hasXio ([
-    accelio
-  ] ++ optionals (versionOlder version "11.0.0") [
-    rdma-core
-  ]) ++ optionals hasRocksdb [
+  ] ++ optionals hasRocksdb [
     rocksdb
   ] ++ optionals (versionOlder version "9.1.0") [
     libs3
@@ -224,7 +218,7 @@ stdenv.mkDerivation rec {
     "--${if malloc == gperftools then "with" else "without"}-tcmalloc"
     "--disable-pgrefdebugging"
     "--disable-cephfs-java"
-    "--${if hasXio then "enable" else "disable"}-xio"
+    "--disable-xio"
     "--with-libatomic-ops"
     "--with-ocf"
     "--without-kinetic"

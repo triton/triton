@@ -590,8 +590,6 @@ wrapCC =
 
 "389-ds-base" = callPackage ../all-pkgs/3/389-ds-base { };
 
-accelio = callPackage ../all-pkgs/a/accelio { };
-
 accountsservice = callPackage ../all-pkgs/a/accountsservice { };
 
 acl = callPackage ../all-pkgs/a/acl { };
@@ -4356,8 +4354,6 @@ libstartup_notification =
 
     kPkgs = {
       inherit kernel;
-
-      accelio = kCallPackage ../all-pkgs/a/accelio { };
 
       cryptodev = pkgs.cryptodev_headers.override {
         onlyHeaders = false;

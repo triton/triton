@@ -27,10 +27,12 @@ done
 
 # Fix the libc linker script.
 export PATH=$out/bin
-cat $out/lib/libc.so | sed "s|/nix/store/e*-[^/]*/|$out/|g" > $out/lib/libc.so.tmp
-mv $out/lib/libc.so.tmp $out/lib/libc.so
-cat $out/lib/libpthread.so | sed "s|/nix/store/e*-[^/]*/|$out/|g" > $out/lib/libpthread.so.tmp
-mv $out/lib/libpthread.so.tmp $out/lib/libpthread.so
+for file in "$out"/lib/*; do
+  if head -n 1 "$file" | grep -q '^/\*'; then
+    sed "s,/nix/store/e*-[^/]*,$out,g" "$file" >"$file.tmp"
+    mv "$file.tmp" "$file"
+  fi
+done
 
 # Provide some additional symlinks.
 ln -s bash $out/bin/sh

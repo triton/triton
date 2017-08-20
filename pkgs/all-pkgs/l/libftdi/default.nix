@@ -11,12 +11,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libftdi1-1.3";
+  name = "libftdi1-1.4";
 
   src = fetchurl {
     url = "https://www.intra2net.com/en/developer/libftdi/download/${name}.tar.bz2";
-    multihash = "QmUiNXWTKhPBir2RmU7NBFWQqHGZv36vzrg4RcqgjNfQzP";
-    sha256 = "9a8c95c94bfbcf36584a0a58a6e2003d9b133213d9202b76aec76302ffaa81f4";
+    multihash = "QmQietPVmHuxa3nyFJqi8F3yYGnu34d6e6M2HBgwYcJrHR";
+    sha256 = "ec36fb49080f834690c24008328a5ef42d3cf584ef4060f3a35aa4681cb31b74";
   };
 
   nativeBuildInputs = [

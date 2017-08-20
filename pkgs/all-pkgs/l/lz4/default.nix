@@ -3,17 +3,17 @@
 }:
 
 let
-  version = "1.7.4.2";
+  version = "1.8.0";
 in
 stdenv.mkDerivation rec {
   name = "lz4-${version}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "lz4";
     repo = "lz4";
     rev = "v${version}";
-    sha256 = "c50d5b0e5b9ddcbd67693c550038e5061973587a14b5dab55b4b8e1bb42fc094";
+    sha256 = "f69f9004072636f0e9575da7c3dd87b89c04e77d6d9e7a8ae6fa0330506065c6";
   };
 
   preBuild = ''

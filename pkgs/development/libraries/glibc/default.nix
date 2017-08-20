@@ -2,6 +2,7 @@
 , fetchurl
 , fetchTritonPatch
 , linux-headers
+, patchelf
 , installLocales ? false
 }:
 
@@ -9,6 +10,11 @@ import ./common.nix {
   name = "glibc";
 
   inherit fetchurl fetchTritonPatch stdenv linux-headers installLocales;
+
+  # This is a hack to bring in the setup hook
+  nativeBuildInputs = [
+    patchelf
+  ];
 
   installTargets = [
     "install"

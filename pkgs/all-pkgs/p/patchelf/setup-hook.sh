@@ -87,12 +87,27 @@ patchSingleBinaryWrapped() {
 
   local oldifs
   oldifs="$IFS"
-  IFS=$'\n'
-  local rpathdirs
-  rpathdirs=($(patchelf --print-rpath "$file" | tr ':' '\n'))
+  IFS=':'
+  local rpathdirs=()
+  local rpathe
+  for rpathe in $rpath; do
+    rpathdirs+=("$(echo "$rpathe" | sed "s,\\\$ORIGIN,$(dirname "$file"),g")")
+  done
+
+  local output
+  for output in $outputs; do
+    if [ -e "${!output}/lib" ]; then
+      rpathdirs+=("${!output}/lib")
+    fi
+  done
+  if [ "${#rpathdirs[@]}" -eq "0" ]; then
+    echo "  No rpath directories provided"
+    exit 1
+  fi
   local patchelfArgs
   patchelfArgs=()
   local needed
+  IFS=$'\n'
   for needed in $(patchelf --print-needed "$file"); do
     # Absolute paths don't need to be fixed
     if [[ "$needed" =~ ^/ ]]; then

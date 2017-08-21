@@ -2776,6 +2776,8 @@ nbd = callPackage ../all-pkgs/n/nbd { };
 
 ncdc = callPackage ../all-pkgs/n/ncdc { };
 
+ncdu = callPackage ../all-pkgs/n/ncdu { };
+
 ncmpc = callPackage ../all-pkgs/n/ncmpc { };
 
 ncmpcpp = callPackage ../all-pkgs/n/ncmpcpp { };

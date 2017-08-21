@@ -10,7 +10,6 @@ LD_BINARY=$out/lib/ld-*so
 
 # On x86_64, ld-linux-x86-64.so.2 barfs on patchelf'ed programs.  So
 # use a copy of patchelf.
-set -x
 LD_LIBRARY_PATH=$out/lib $LD_BINARY $out/bin/cp $out/bin/patchelf $out/lib/*.so* .
 
 for i in $out/bin/* $out/libexec/gcc/*/*/*; do

@@ -93,9 +93,10 @@ patchSingleBinaryWrapped() {
   for rpathe in $rpath; do
     rpathdirs+=("$(echo "$rpathe" | sed "s,\\\$ORIGIN,$(dirname "$file"),g")")
   done
+  IFS="$oldifs"
 
   local output
-  for output in $outputs; do
+  for output in prefix $outputs; do
     if [ -e "${!output}/lib" ]; then
       rpathdirs+=("${!output}/lib")
     fi
@@ -104,6 +105,7 @@ patchSingleBinaryWrapped() {
     echo "  No rpath directories provided"
     exit 1
   fi
+
   local patchelfArgs
   patchelfArgs=()
   local needed
@@ -147,6 +149,7 @@ patchSingleBinaryWrapped() {
 
 patchELF() {
   header "patching ELF executables and libraries in $prefix"
+
   if [ -e "$prefix" ]; then
     # We need to know the path to all of the shared objects for the set of outputs.
     # Our outputs are allowed to reference the private shared objects of these outputs
@@ -168,18 +171,35 @@ patchELF() {
     fi
 
     # For each of the execuatable or library fix the rpath
+    local patchedFiles
+    declare -A patchedFiles
     local files
     files=($(find "$prefix" -type f -a \( -name '*.so*' -o -name '*.a*' -o -perm -0100 \)))
     local outstanding=0
     for file in "${files[@]}"; do
+      local abspath
+      abspath="$(readlink -f "$file")"
+      if [ "${patchedFiles["$abspath"]}" = "1" ]; then
+        continue
+      fi
+      patchedFiles["$abspath"]=1
       if [ "$outstanding" -gt "$NIX_BUILD_CORES" ]; then
-        wait
+        wait -n
         outstanding=0
       fi
       patchSingleBinary "$file" &
       outstanding+=1
     done
-    wait
+    while true; do
+      if ! wait -n; then
+        local s="$?"
+        if [ "$s" -eq "127" ]; then
+          break
+        else
+          exit "$s"
+        fi
+      fi
+    done
   fi
   stopNest
 }

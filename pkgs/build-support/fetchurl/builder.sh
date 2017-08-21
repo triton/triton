@@ -405,6 +405,9 @@ trap cleanup EXIT ERR INT QUIT PIPE TERM
 
 mkdir -m 0700 -p "$HOME/.gnupg"
 echo "keyserver hkps://pgp.mit.edu" >> "$HOME/.gnupg/gpg.conf"
+echo "no-auto-key-retrieve" >> "$HOME/.gnupg/gpg.conf"
+echo "auto-key-locate local" >> "$HOME/.gnupg/gpg.conf"
+echo "trust-model always" >> "$HOME/.gnupg/gpg.conf"
 if [ "${#pgpKeyFingerprints[@]}" -gt "0" ]; then
   eval `dirmngr --verbose --daemon --homedir=$HOME/.gnupg --disable-http --disable-ldap --allow-ocsp --no-use-tor`
   gpg --verbose --recv-keys "${pgpKeyFingerprints[@]}"

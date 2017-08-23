@@ -329,7 +329,7 @@ if [ -n "$runChroot" ]; then
   exec chroot "$MOUNT_POINT" "${chrootCommand[@]}"
 fi
 
-chmod @root_uid@:@nixbld_gid@ "$MOUNT_POINT/nix/store"
+chown @root_uid@:@nixbld_gid@ "$MOUNT_POINT/nix/store"
 
 # There is no daemon in the chroot.
 unset NIX_REMOTE

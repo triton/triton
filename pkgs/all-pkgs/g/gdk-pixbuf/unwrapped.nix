@@ -54,6 +54,7 @@ stdenv.mkDerivation rec {
     libpng
     libtiff
     libx11
+    shared-mime-info
   ];
 
   postPatch =

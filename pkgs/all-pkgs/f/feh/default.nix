@@ -1,13 +1,17 @@
 { stdenv
 , makeWrapper
 , fetchurl
+, lib
 
 , curl
 , imlib2
 , libexif
 , libjpeg
 , libpng
-, xorg
+, libx11
+, libxinerama
+, libxt
+, xproto
 }:
 
 stdenv.mkDerivation rec {
@@ -29,10 +33,10 @@ stdenv.mkDerivation rec {
     imlib2
     libexif
     libpng
-    xorg.libX11
-    xorg.libXinerama
-    xorg.libXt
-    xorg.xproto
+    libx11
+    libxinerama
+    libxt
+    xproto
   ];
 
   preBuild = ''
@@ -57,7 +61,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A light-weight image viewer";
     homepage = https://feh.finalrewind.org/;
     license = licenses.mit;

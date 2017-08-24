@@ -17,6 +17,7 @@
 , libsoup
 , libxml2
 , mpfr
+, shared-mime-info
 
 , channel
 }:
@@ -71,8 +72,9 @@ stdenv.mkDerivation rec {
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
-      --prefix 'XDG_DATA_DIRS' : "$out/share" \
-      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
+      --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS" \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share"
   '';
 
   passthru = {

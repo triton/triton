@@ -25,6 +25,7 @@
 , nspr
 , nss
 , pango
+, shared-mime-info
 , systemd_lib
 , xdg-utils
 , xorg
@@ -185,6 +186,7 @@ stdenv.mkDerivation rec {
       --prefix PATH : "${chromeBinPath}" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share" \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$XDG_ICON_DIRS"
   '';
 

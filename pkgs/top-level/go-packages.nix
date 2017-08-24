@@ -6416,7 +6416,7 @@ let
     sha256 = "08vadrxizbimdsv1qd1m7dpqv7vkkspmmsib9b8n33qh20q78g6a";
     propagatedBuildInputs = [
       aws-sdk-go
-      azure-storage-go
+      #azure-sdk-for-go
       cgofuse
       cobra
       crypto
@@ -6446,6 +6446,12 @@ let
       time
       tree
     ];
+    postPatch = ''
+      # Azure-sdk-for-go does not provide a stable apit status:
+      rm -rf azureblob/
+      sed -i fs/all/all.go \
+        -e '/azureblob/d'
+    '';
     meta.useUnstable = true;
   };
 

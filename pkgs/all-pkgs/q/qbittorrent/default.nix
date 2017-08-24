@@ -22,7 +22,10 @@ assert guiSupport -> dbus != null;
 let
   inherit (lib)
     boolEn
-    optionals;
+    elemAt
+    optionals
+    optionalString
+    splitString;
 
   sources = {
     stable = {
@@ -37,6 +40,10 @@ let
     };
   };
   source = sources."${channel}";
+
+  versionSpoofMaj = elemAt (splitString "." sources.stable.version) 0;
+  versionSpoofMin = elemAt (splitString "." sources.stable.version) 1;
+  versionSpoofPat = elemAt (splitString "." sources.stable.version) 2;
 in
 stdenv.mkDerivation rec {
   name = "qbittorrent-${source.version}";
@@ -71,6 +78,14 @@ stdenv.mkDerivation rec {
   postPatch = /* Our lrelease binary is named lrelease, not lrelease-qt5 */ ''
     sed -i qm_gen.pri \
       -e 's/lrelease-qt5/lrelease/'
+  '' + /* Use release peer id for head for compatibility with trackers */ 
+    optionalString (channel == "head") ''
+    sed -i version.pri \
+      -e '/VER_MAJOR/ s/[0-9]\+/${versionSpoofMaj}/' \
+      -e '/VER_MINOR/ s/[0-9]\+/${versionSpoofMin}/' \
+      -e '/VER_BUGFIX/ s/[0-9]\+/${versionSpoofPat}/' \
+      -e '/VER_BUILD/ s/[0-9]\+/0/' \
+      -e '/VER_STATUS/ s/beta//'
   '';
 
   configureFlags = [

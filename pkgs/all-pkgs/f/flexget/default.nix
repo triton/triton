@@ -64,6 +64,7 @@ buildPythonPackage rec {
     cheroot
     cherrypy
     colorclass
+    deluge
     feedparser
     flask
     flask-compress

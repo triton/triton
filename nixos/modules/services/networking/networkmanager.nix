@@ -81,7 +81,7 @@ let
     concatStrings (map (s: "nameserver ${s}\n") xs)
   );
 
-  overrideNameserversScript = pkgs.writeScript "02-override-dns" ''
+  overrideNameserversScript = pkgs.writeScript "02-override-dns" (''
     #!/bin/sh
     tmp=`${pkgs.coreutils}/bin/mktemp`
     ${pkgs.gnused}/bin/sed -i /etc/resolv.conf \
@@ -97,7 +97,7 @@ let
       > /etc/resolv.conf
   '' + ''
     ${pkgs.coreutils}/bin/rm -f $tmp $tmp.ns
-  '';
+  '');
 
   dispatcherTypesSubdirMap = {
     "basic" = "";

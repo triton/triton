@@ -201,7 +201,12 @@ dbus-python = callPackage ../all-pkgs/d/dbus-python { };
 
 decorator = callPackage ../all-pkgs/d/decorator { };
 
-deluge = callPackage ../all-pkgs/d/deluge { };
+deluge = callPackage ../all-pkgs/d/deluge {
+  channel = "stable";
+};
+deluge_head = callPackage ../all-pkgs/d/deluge {
+  channel = "head";
+};
 
 diffoscope = callPackage ../all-pkgs/d/diffoscope { };
 

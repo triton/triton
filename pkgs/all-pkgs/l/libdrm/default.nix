@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libdrm-2.4.82";
+  name = "libdrm-2.4.83";
 
   src = fetchurl {
     url = "https://dri.freedesktop.org/libdrm/${name}.tar.bz2";
-    multihash = "QmNiWMM4BjVaThGzBo3wRkhjc2xgiYdTp49HE35X9iuEhs";
+    multihash = "QmSm6uyaHnt5ee2eegH8PXEnooquJVVkSQCxUSGNN7U5Pn";
     hashOutput = false;
-    sha256 = "43fa2dbd422d6d41ac141272cc9855360ce4d08c7cf7f2c7bb55dfe449c4ce1c";
+    sha256 = "03a52669da60ead62548a35bc430aafb6c2d8dd21ec9dba3a90f96eff5fe36d6";
   };
 
   buildInputs = [
@@ -66,6 +66,8 @@ stdenv.mkDerivation rec {
         "CD47 C534 1A37 5F33 BEF7  BAFA FDD1 5D5A CEF0 F2B1"
         # Lucas Stach
         "CFD0 E654 BCBE 5DD2 D030  D222 CFCC 297C 6D0A 120B"
+        # Daniel Stone
+        "A66D 805F 7C93 29B4 C5D8  2767 CCC4 F07F AC64 1EFF"
       ];
       inherit (src) urls outputHash outputHashAlgo;
     };

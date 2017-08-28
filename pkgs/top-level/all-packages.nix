@@ -1591,7 +1591,7 @@ goPackages_1-9 = callPackage ./go-packages.nix {
   };
   overrides = (config.goPackageOverrides or (p: { })) pkgs;
 };
-goPackages = callPackageAlias "goPackages_1-8" { };
+goPackages = callPackageAlias "goPackages_1-9" { };
 
 gobject-introspection = callPackage ../all-pkgs/g/gobject-introspection { };
 

@@ -2,12 +2,13 @@
 , fetchFromGitHub
 , lib
 
+, lz4
 , xz
 , zlib
 }:
 
 let
-  version = "1.3.0";
+  version = "1.3.1";
 in
 stdenv.mkDerivation rec {
   name = "zstd-${version}";
@@ -17,10 +18,11 @@ stdenv.mkDerivation rec {
     owner = "facebook";
     repo = "zstd";
     rev = "v${version}";
-    sha256 = "3b7e4966b77dc7ae13bf328c880691468612f41e66725c9286af5bf73b9a10d1";
+    sha256 = "61bbd7cab9d9b7a1f94d2122ca9496236ece5c0739fa02ba48dc7449ff3a4e16";
   };
 
   buildInputs = [
+    lz4
     xz
     zlib
   ];

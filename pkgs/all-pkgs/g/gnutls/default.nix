@@ -22,8 +22,8 @@ let
     "mirror://gnupg/gnutls/v${major}/gnutls-${major}.${minor}.tar.xz"
   ];
 
-  major = "3.5";
-  minor = "14";
+  major = "3.6";
+  minor = "0";
   version = "${major}.${minor}";
 in
 stdenv.mkDerivation rec {
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls major minor;
     hashOutput = false;
-    sha256 = "4aa12dec92f42a0434df794aca3d02f6f2a35b47b48c01252de65f355c051bda";
+    sha256 = "2ab9e3c0131fcd9142382f37ba9c6d20022b76cba83560cbcaa8e4002d71fb72";
   };
 
   # This fixes some broken parallel dependencies
@@ -41,11 +41,16 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
+    "--disable-ssl3-support"
+    "--disable-ssl2-support"
+    "--enable-cryptodev"
+    "--disable-tests"
+    "--disable-valgrind-tests"
+    "--disable-full-test-suite"
     "--with-default-trust-store-file=/etc/ssl/certs/ca-certificates.crt"
     "--with-trousers-lib=${trousers}/lib"
     "--disable-dependency-tracking"
     "--enable-manpages"
-    "--enable-cryptodev"
     "--enable-fast-install"
   ];
 
@@ -73,11 +78,11 @@ stdenv.mkDerivation rec {
     # Gnupg depends on this so we have to decouple this fetch from the rest of the build.
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.5" "14";
+      urls = tarballUrls "3.6" "0";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "1F42 4189 05D8 206A A754  CCDC 29EE 58B9 9686 5171";
       inherit (src) outputHashAlgo;
-      outputHash = "4aa12dec92f42a0434df794aca3d02f6f2a35b47b48c01252de65f355c051bda";
+      outputHash = "2ab9e3c0131fcd9142382f37ba9c6d20022b76cba83560cbcaa8e4002d71fb72";
     };
   };
 

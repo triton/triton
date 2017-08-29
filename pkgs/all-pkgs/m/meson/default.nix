@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.41.2";
+  version = "0.42.0";
 in
 buildPythonPackage {
   name = "meson-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "meson";
     inherit version;
-    sha256 = "ad1707717987fe8b7b65392b8327580105fcbdd5f2032bf3b7232b647284c95c";
+    sha256 = "4ef46250beea2af272a2ab5bdf835dd06e8c8d341c18529d502b5f7be0ac73fe";
   };
 
   # Never mangle our RPATHS

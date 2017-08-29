@@ -119,7 +119,7 @@ export GOPATH="$TMPDIR"
 
 fetch_go() {
   if ! ERR="$(go get -d "$1" 2>&1)"; then
-    if ! echo "$ERR" | grep -q '\(no buildable Go source files\|no Go files\)'; then
+    if ! echo "$ERR" | grep -q '\(no buildable Go source files\|no Go files\|build constraints exclude all Go files\)'; then
       echo "$ERR" >&2
       exit 1
     fi

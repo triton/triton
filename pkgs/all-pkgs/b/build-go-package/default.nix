@@ -328,6 +328,15 @@ go.stdenv.mkDerivation (
       done < <(find "go/src/$d" -maxdepth 1 -mindepth 1 -type f -name \*.go)
     }
 
+  '' + (optionalString (go.channel == "1.8") ''
+    ERREGEX="no buildable Go source files"
+  '') + (optionalString (go.channel == "1.9") ''
+    ERREGEX="\("
+    ERREGEX="''${ERREGEX}build constraints exclude all Go files\|"
+    ERREGEX="''${ERREGEX}no non-test Go files\|"
+    ERREGEX="''${ERREGEX}no Go files\)"
+  '') + ''
+
     buildGoDir() {
       local d; local cmd;
       cmd="$1"
@@ -335,7 +344,7 @@ go.stdenv.mkDerivation (
       [ -n "$excludedPackages" ] && echo "$d" | grep -q "$excludedPackages" && return 0
       local OUT
       if ! OUT="$(go $cmd -work -x -p $NIX_BUILD_CORES $buildFlags "''${buildFlagsArray[@]}" -v $d 2>&1)"; then
-        if ! echo "$OUT" | grep -q '\(no buildable Go source files\)'; then
+        if ! echo "$OUT" | grep -q "$ERREGEX"; then
           echo "$OUT" >&2
           return 1
         fi

@@ -170,6 +170,12 @@ stdenv.mkDerivation {
     goBootstrap
   ];
 
+  passthru = {
+    inherit
+      channel
+      version;
+  };
+
   meta = with stdenv.lib; {
     branch = channel;
     homepage = http://golang.org/;

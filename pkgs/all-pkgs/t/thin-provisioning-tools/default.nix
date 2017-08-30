@@ -8,18 +8,17 @@
 }:
 
 let
-  date = "2017-04-29";
-  rev = "b7d418131d0bbfb97ae15b5e886fae56c521e445";
+  version = "0.7.1";
 in
 stdenv.mkDerivation {
-  name = "thin-provisioning-tools-${date}";
+  name = "thin-provisioning-tools-${version}";
 
   src = fetchFromGitHub {
     version = 3;
     owner = "jthornber";
     repo = "thin-provisioning-tools";
-    inherit rev;
-    sha256 = "b187f6975242dee88e9524ce47596eb075cd3fe2362d0a409e61149506fc17e6";
+    rev = "v${version}";
+    sha256 = "d94cb3b9de77ff4bdd46e410e6aa25ede8fe93cbc30a7f750c81a629afff24b1";
   };
 
   nativeBuildInputs = [

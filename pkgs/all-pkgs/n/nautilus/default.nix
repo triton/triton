@@ -100,7 +100,7 @@ stdenv.mkDerivation rec {
 
   postPatch = /* FIXME: i18n.merge_file in meson is failing with permission denied */ ''
     sed -i data/meson.build \
-      -e 's/install: true/install: false/g'
+      -e '/org.gnome.Nautilus.desktop/ N; s/install: true/install: false/'
   '';
 
   mesonFlags = [

@@ -26,7 +26,7 @@ let
   '';
 in
 stdenv.mkDerivation rec {
-  name = "busybox-1.27.1";
+  name = "busybox-1.27.2";
 
   src = fetchurl {
     urls = [
@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
       "http://sources.openelec.tv/mirror/busybox/${name}.tar.bz2"
     ];
     hashOutput = false;
-    sha256 = "c890ac53fb218eb4c6ad9ed3207a896783b142e6d306f292b8d9bec82af5f936";
+    sha256 = "9d4be516b61e6480f156b11eb42577a13529f75d3383850bb75c50c285de63df";
   };
 
   patches = [

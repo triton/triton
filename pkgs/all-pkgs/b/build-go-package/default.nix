@@ -220,8 +220,8 @@ go.stdenv.mkDerivation (
     runHook preBuild
 
     buildFlagsArray+=(
-      "-asmflags" "-trimpath=$NIX_BUILD_TOP"
-      "-gcflags" "-trimpath=$NIX_BUILD_TOP"
+      "-asmflags" "-trimpath '$NIX_BUILD_TOP'"
+      "-gcflags" "-trimpath '$NIX_BUILD_TOP'"
     )
 
     export inputGoPaths="
@@ -343,7 +343,7 @@ go.stdenv.mkDerivation (
       d="$2"
       [ -n "$excludedPackages" ] && echo "$d" | grep -q "$excludedPackages" && return 0
       local OUT
-      if ! OUT="$(go $cmd -work -x -p $NIX_BUILD_CORES $buildFlags "''${buildFlagsArray[@]}" -v $d 2>&1)"; then
+      if ! OUT="$(go $cmd -work''${NIX_DEBUG+ -x} -p $NIX_BUILD_CORES $buildFlags "''${buildFlagsArray[@]}" -v $d 2>&1)"; then
         if ! echo "$OUT" | grep -q "$ERREGEX"; then
           echo "$OUT" >&2
           return 1

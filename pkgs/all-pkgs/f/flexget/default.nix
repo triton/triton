@@ -1,6 +1,5 @@
 { stdenv
 , buildPythonPackage
-, config
 , fetchPyPi
 , isPy3
 , lib
@@ -24,7 +23,6 @@
 , html5lib
 , jinja2
 , jsonschema
-, pathlib
 , pathpy
 , pkgs
 , portend
@@ -90,10 +88,6 @@ buildPythonPackage rec {
     terminaltables
     transmissionrpc
     zxcvbn-python
-  ] ++ optionals (pythonOlder "3.4") [
-    pathlib
-  ] ++ optionals (config.deluge or false) [
-    deluge
   ];
 
   postPatch = /* Allow using newer dependencies */ ''

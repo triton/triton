@@ -21,7 +21,7 @@ let
     optionals
     optionalString;
 
-  version = "1.4.8";
+  version = "1.5.0";
 in
 stdenv.mkDerivation rec {
   name = "harfbuzz-${version}";
@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
         + "${name}.tar.bz2")
     ];
     hashOutput = false;
-    sha256 = "ccec4930ff0bb2d0c40aee203075447954b64a8c2695202413cc5e428c907131";
+    sha256 = "c088ec363be8d03f7708feb76dd22d5f102678e67d6ce63b02496ca0beb64ac1";
   };
 
   buildInputs = [
@@ -58,10 +58,10 @@ stdenv.mkDerivation rec {
     "--${boolWt (glib != null)}-gobject"
     "--${boolWt (icu != null)}-icu"
     "--${boolWt (graphite2 != null)}-graphite2"
+    "--${boolWt (freetype != null)}-freetype"
     "--without-uniscribe"
     "--without-directwrite"
     "--without-coretext"
-    "--with-freetype"
   ] ++ optionals (type == "full") [
     "--${boolWt (cairo != null)}-cairo"
     "--${boolWt (fontconfig != null)}-fontconfig"

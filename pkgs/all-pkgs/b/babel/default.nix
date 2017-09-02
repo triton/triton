@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "2.4.0";
+  version = "2.5.0";
 in
 buildPythonPackage {
   name = "Babel-${version}";
@@ -15,7 +15,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Babel";
     inherit version;
-    sha256 = "8c98f5e5f8f5f088571f2c6bd88d530e331cbbcb95a7311a0db69d3dca7ec563";
+    sha256 = "754177ee7481b6fac1bf84edeeb6338ab51640984e97e4083657d384b1c8830d";
   };
 
   propagatedBuildInputs = [

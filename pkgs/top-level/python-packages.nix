@@ -1179,12 +1179,12 @@ zxcvbn-python = callPackage ../all-pkgs/z/zxcvbn-python { };
 
    pymongo = buildPythonPackage rec {
      name = "pymongo-${version}";
-     version = "3.4.0";
+     version = "3.5.1";
 
      src = fetchPyPi {
        package = "pymongo";
        inherit version;
-       sha256 = "d359349c6c9ff9f482805f89e66e476846317dc7b1eea979d7da9c0857ee2721";
+       sha256 = "e820d93414f3bec1fa456c84afbd4af1b43ff41366321619db74e6bc065d6924";
      };
 
 

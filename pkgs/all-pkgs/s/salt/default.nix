@@ -54,8 +54,8 @@ let
       sha256 = "9031af68d31d0416fe3161526ef122a763afc6182bd63fe48b6c4d0a16a0703a";
     };
     "2017.7" = {
-      version = "2017.7.0";
-      sha256 = "aaf45f8dcf95a20b56072e620100432d058ab297210c4902dc90e197b236b064";
+      version = "2017.7.1";
+      sha256 = "fe868415d0e1162157186f4c5263e9af902b0571870ad2da210e7edf5ff5331d";
     };
     head = {
       fetchzipversion = 2;

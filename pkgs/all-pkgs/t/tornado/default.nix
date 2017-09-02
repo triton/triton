@@ -15,7 +15,7 @@ let
   inherit (lib)
     optionals;
 
-  version = "4.5.1";
+  version = "4.5.2";
 in
 buildPythonPackage rec {
   name = "tornado-${version}";
@@ -23,7 +23,7 @@ buildPythonPackage rec {
   src = fetchPyPi {
     package = "tornado";
     inherit version;
-    sha256 = "db0904a28253cfe53e7dedc765c71596f3c53bb8a866ae50123320ec1a7b73fd";
+    sha256 = "1fb8e494cd46c674d86fac5885a3ff87b0e283937a47d74eb3c02a48c9e89ad0";
   };
 
   propagatedBuildInputs = [

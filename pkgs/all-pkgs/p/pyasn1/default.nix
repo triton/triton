@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.3.1";
+  version = "0.3.3";
 in
 buildPythonPackage {
   name = "pyasn1-${version}";
@@ -13,7 +13,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "pyasn1";
     inherit version;
-    sha256 = "f6e437000baec5feda6bc4c04acaf7ca25bbca76a6cbce142ebbfada12244fac";
+    sha256 = "01c20ade412088b42dcd5f0fef6149f6b7377297c5c5f222bb5ef0331ee3517c";
   };
 
   meta = with lib; {

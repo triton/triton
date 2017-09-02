@@ -4,7 +4,7 @@
 
 , zlib
 
-, channel ? null
+, channel
 }:
 
 let

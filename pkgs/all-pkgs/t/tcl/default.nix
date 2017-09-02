@@ -15,9 +15,9 @@ let
       sha256 = "d3f04456da873d17f02efc30734b0300fb6c3b85028d445fe284b83253a6db18";
     };
     "8.6" = {
-      version = "8.6.6";
-      multihash = "Qmdbh9s2fhzAzZbeZ4rk7CGmqu6HoHPJBETX9tQym7M8rH";
-      sha256 = "a265409781e4b3edcc4ef822533071b34c3dc6790b893963809b9fe221befe07";
+      version = "8.6.7";
+      multihash = "";  # FIXME
+      sha256 = "7c6b8f84e37332423cfe5bae503440d88450da8cc1243496249faa5268026ba5";
     };
   };
   source = sources."${channel}";
@@ -52,6 +52,8 @@ stdenv.mkDerivation rec {
   postInstall = ''
     ln -sv $out/bin/tclsh${channel} $out/bin/tclsh
   '';
+
+  buildDirCheck = false;  # FIXME
 
   passthru = rec {
     inherit channel;

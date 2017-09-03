@@ -7,10 +7,9 @@
     version = "9.3.19";
     sha256 = "fb9e872cd9e927ba331690d86bc63dcb5a596acb7a536fa0518a3c7d43ac2fb5";
   };
-
   "9.4" = {
-    version = "9.4.13";
-    sha256 = "0080f55d65194de8b96a2dab153443f8248ff2b2b10e6ab4cda2dcadcac7f2ab";
+    version = "9.4.14";
+    sha256 = "8e7df23a104b057b360d03180ebcb67f645e198a4a0bee94bf56b2bc9505ec6b";
   };
 
   "9.5" = {

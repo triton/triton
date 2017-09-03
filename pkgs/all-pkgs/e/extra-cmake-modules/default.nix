@@ -5,7 +5,7 @@
 }:
 
 let
-  majorVersion = "5.35";
+  majorVersion = "5.37";
   patchVersion = "0";
   version = "${majorVersion}.${patchVersion}";
 in
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://kde/stable/frameworks/${majorVersion}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "b020fd5451f4aae9702b575dda07a125b5c1fcfb04e4c840f76063989e80ec30";
+    sha256 = "26198cf05c084c158bb23f0585a9df5bba1aa16b746252c80bdf4f0261b527cb";
   };
 
   nativeBuildInputs = [

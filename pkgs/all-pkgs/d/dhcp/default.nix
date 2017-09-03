@@ -14,7 +14,7 @@
 }:
 
 let
-  version = "4.3.5";
+  version = "4.3.6";
 in
 stdenv.mkDerivation rec {
   name = "dhcp-${version}";
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://ftp.isc.org/isc/dhcp/${version}/${name}.tar.gz";
     hashOutput = false;
-    sha256 = "eb95936bf15d2393c55dd505bc527d1d4408289cec5a9fa8abb99f7577e7f954";
+    sha256 = "a41eaf6364f1377fe065d35671d9cf82bbbc8f21207819b2b9f33f652aec6f1b";
   };
 
   nativeBuildInputs = [
@@ -89,8 +89,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      pgpsigUrls = map (n: "${n}.sha512.asc") src.urls;
-      pgpKeyFile = ./signing.key;
+      pgpsigUrls = map (n: "${n}.asc") src.urls;
+      pgpKeyFingerprints = [
+        # 2017-2018
+        "BE0E 9748 B718 253A 28BB  89FF F1B1 1BF0 5CF0 2E57"
+      ];
       inherit (src) urls outputHashAlgo outputHash;
     };
   };

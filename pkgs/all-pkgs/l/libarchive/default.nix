@@ -9,21 +9,22 @@
 , libxml2
 , lz4
 , lzo
-, pcre
 , openssl
+, pcre
 , xz
 , zlib
+, zstd
 }:
 
 stdenv.mkDerivation rec {
-  name = "libarchive-2017-07-09";
+  name = "libarchive-2017-08-30";
 
   src = fetchFromGitHub {
     version = 3;
     owner = "libarchive";
     repo = "libarchive";
-    rev = "347ac2b6adfd4bca7418d30d7278d5343fc6e25e";
-    sha256 = "f00151d630a8e509703e8e207f37d3ad472f5a3385639a6550bdd6c4fb86dfcc";
+    rev = "1f3877960058e7f7b6a79748d73276cece0d5de0";
+    sha256 = "f6ee59b32b3166b0079b066c9530f9c9b4376b7ed9d07e470d1dc8ab18fe7c73";
   };
 
   nativeBuildInputs = [
@@ -38,10 +39,11 @@ stdenv.mkDerivation rec {
     libxml2
     lz4
     lzo
-    pcre
     openssl
+    pcre
     xz
     zlib
+    zstd
   ];
 
   postPatch = ''
@@ -55,6 +57,7 @@ stdenv.mkDerivation rec {
     "--with-lz4"
     "--with-lzma"
     "--with-lzo2"
+    "--with-zstd"
     "--without-nettle"
     "--with-openssl"
     "--with-xml2"

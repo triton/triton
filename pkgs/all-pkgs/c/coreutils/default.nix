@@ -17,7 +17,7 @@ let
     "mirror://gnu/coreutils/coreutils-${version}.tar.xz"
   ];
 
-  version = "8.27";
+  version = "8.28";
 in
 stdenv.mkDerivation rec {
   name = "coreutils-${version}";
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "8891d349ee87b9ff7870f52b6d9312a9db672d2439d289bc57084771ca21656b";
+    sha256 = "1117b1a16039ddd84d51a9923948307cfa28c2cea03d1a2438742253df0a0c65";
   };
 
   nativeBuildInputs = [

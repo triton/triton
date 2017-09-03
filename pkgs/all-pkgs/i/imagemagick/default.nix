@@ -15,28 +15,29 @@
 , jemalloc
 , lcms2
 , libfpx
+, libice
 , libjpeg
 , liblqr1
 , libpng
 , librsvg
+, libsm
 , libtiff
 , libtool
 , libwebp
+, libx11
+, libxext
 , libxml2
+, libxt
 #, opencl
 , openexr
 , openjpeg
 , pango
 , perl
-, xorg
+, xextproto
+, xproto
 , xz
 , zlib
 }:
-
-assert xorg != null ->
-  xorg.libX11 != null
-  && xorg.libXext != null
-  && xorg.libXt != null;
 
 let
   inherit (lib)
@@ -73,26 +74,26 @@ stdenv.mkDerivation rec {
     jemalloc
     lcms2
     libfpx
+    libice
     libjpeg
     liblqr1
     libpng
     librsvg
+    libsm
     libtool
     libtiff
     libwebp
+    libx11
+    libxext
     libxml2
+    libxt
     #opencl
     openexr
     openjpeg
     pango
     perl
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
-    xorg.libXext
-    xorg.libXt
-    xorg.xextproto
-    xorg.xproto
+    xextproto
+    xproto
     xz
     zlib
   ];
@@ -134,7 +135,7 @@ stdenv.mkDerivation rec {
     "--${boolWt (jemalloc != null)}-jemalloc"
     #"--${boolWt ( != null)}-umem"
     "--${boolWt (bzip2 != null)}-bzlib"
-    "--${boolWt (xorg != null)}-x"
+    "--${boolWt (libx11 != null)}-x"
     "--${boolWt (zlib != null)}-zlib"
     #"--${boolWt ( != null)}-autotrace"
     #"--${boolWt ( != null)}-dps"

@@ -65,13 +65,18 @@ let
   inherit (source)
     version;
 
+  inherit (builtins)
+    substring;
+
   inherit (stdenv.lib)
+    any
     elemAt
     head
     optionals
     splitString
     tail
-    toInt;
+    toInt
+    versionOlder;
 
   needsGitPatch = source.needsGitPatch or false;
 
@@ -210,12 +215,34 @@ let
     crossConfig = { CONFIG_MODULES = "y"; CONFIG_FW_LOADER = "m"; };
   };
 
-  passthru = {
+  passthru = rec {
     meta = kernel.meta // extraMeta;
 
     inherit channel srcsVerification;
 
+    # Return Major.Minor version string.
+    channelVersion =
+      let
+        kv = source.version;
+      in
+      if any (n: n == (substring 3 1 kv)) [ "." "-" "" ] then
+        substring 0 3 kv
+      else if any (n: n == (substring 4 1 kv)) [ "." "-" "" ] then
+        substring 0 4 kv
+      else
+        throw "linux.channelVersion: Unsupported kernel version string `${kv}`";
+
     features = source.features or { };
+
+    # Returns false if channelVerison is greater than mv.
+    isSupportedVersion = mv:
+      let
+        cv = channelVersion;
+      in
+      if cv == mv || versionOlder cv mv then
+        true
+      else
+        false;
 
     passthru = kernel.passthru // (removeAttrs passthru [ "passthru" "meta" ]);
   };

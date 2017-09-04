@@ -1481,14 +1481,16 @@ let
 
   dropbox-sdk-go-unofficial = buildFromGitHub {
     version = 3;
-    rev = "v2.0.0";
+    rev = "b05850d887adc3fab2e87f337b71b25d4649bf4c";
     owner  = "dropbox";
     repo   = "dropbox-sdk-go-unofficial";
-    sha256 = "1shf53zmg89ir5a8isax4hsnijfn5q8n9rpljyak3r140d2x7f63";
+    sha256 = "0zivvryzfj28fk91fi1j3rdvpp739dkq5nwrj3f148gijic5m8ic";
     propagatedBuildInputs = [
       oauth2
     ];
     excludedPackages = "generator";
+    meta.useUnstable = true;
+    date = "2017-08-28";
   };
 
   dsync = buildFromGitHub {

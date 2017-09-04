@@ -161,7 +161,7 @@ stdenv.mkDerivation rec {
   optimize = !buildKernel;
 
   passthru = {
-    inherit (source) maxKernelVersion;
+    inherit (source) maxLinuxVersion;
     inherit spl channel;
     buildType = type;
   };

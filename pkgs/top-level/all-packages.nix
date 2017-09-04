@@ -4344,6 +4344,11 @@ libstartup_notification =
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
   };
 
+  linux_4-13 = callPackage ../all-pkgs/l/linux {
+    channel = "4.13";
+    kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
+  };
+
   linux_testing = callPackage ../all-pkgs/l/linux {
     channel = "testing";
     kernelPatches = [ pkgs.kernelPatches.bridge_stp_helper ];
@@ -4437,7 +4442,7 @@ libstartup_notification =
   linux = pkgs.linuxPackages.kernel;
 #
 #  # Update this when adding the newest kernel major version!
-  linuxPackages_latest = pkgs.linuxPackages_4-12;
+  linuxPackages_latest = pkgs.linuxPackages_4-13;
   linux_latest = pkgs.linuxPackages_latest.kernel;
 #
 #  # Build the kernel modules for the some of the kernels.
@@ -4446,6 +4451,9 @@ libstartup_notification =
   });
   linuxPackages_4-12 = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_4-12;
+  });
+  linuxPackages_4-13 = recurseIntoAttrs (pkgs.linuxPackagesFor {
+    kernel = pkgs.linux_4-13;
   });
   linuxPackages_testing = recurseIntoAttrs (pkgs.linuxPackagesFor {
     kernel = pkgs.linux_testing;

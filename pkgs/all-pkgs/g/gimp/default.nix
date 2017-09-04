@@ -17,6 +17,7 @@
 , gexiv2
 , ghostscript
 , glib
+, glib-networking
 , gtk2
 , harfbuzz_lib
 , iso-codes
@@ -30,23 +31,26 @@
 , libpng
 , librsvg
 , libtiff
+, libwebp
 , libwmf
 , libzip
 , openexr
 , pango
 , poppler
+, shared-mime-info
 , xorg
 , xz
 , zlib
 }:
 
 stdenv.mkDerivation rec {
-  name = "gimp-2.9.4";
+  name = "gimp-2.9.6";
 
   src = fetchurl rec {
     url = "https://download.gimp.org/pub/gimp/v2.9/${name}.tar.bz2";
-    md5Url = "${url}.md5";
-    sha256 = "c13ac540fd0bd566d7bdd404afe8a04ec0cb1e547788995cd4e8b218c1057b8a";
+    multihash = "Qman1jmYyoHRXpJLTvRgeyGBrrVUpATSDUtTpafrXEPozS";
+    hashOutput = false;
+    sha256 = "b46f31d822a33ab416dcb15e33e10b5b98430814fa34f5ea4036230e845dfc9f";
   };
 
   nativeBuildInputs = [
@@ -69,6 +73,7 @@ stdenv.mkDerivation rec {
     gexiv2
     ghostscript
     glib
+    glib-networking
     gtk2
     harfbuzz_lib
     iso-codes
@@ -82,6 +87,7 @@ stdenv.mkDerivation rec {
     libpng
     librsvg
     libtiff
+    libwebp
     libwmf
     libzip
     openexr
@@ -89,6 +95,7 @@ stdenv.mkDerivation rec {
     poppler
     pythonPackages.python
     pythonPackages.pygtk
+    shared-mime-info
     xorg.fixesproto
     xorg.libICE
     xorg.libSM
@@ -108,6 +115,10 @@ stdenv.mkDerivation rec {
     pythonPackages.pygtk
   ];
 
+  configureFlags = [
+    "--enable-vector-icons"
+  ];
+
   postInstall = ''
     wrapPythonPrograms
     ln -sv gimp-2.9 $out/bin/gimp
@@ -117,6 +128,14 @@ stdenv.mkDerivation rec {
   NIX_LDFLAGS = [
     "-rpath ${xorg.libX11}/lib"
   ];
+
+  passthru = {
+    srcVerification = fetchurl {
+      failEarly = true;
+      md5Urls = map (n: "${n}.md5") src.urls;
+      inherit (src) urls outputHash outputHashAlgo;
+    };
+  };
 
   meta = with stdenv.lib; {
     description = "The GNU Image Manipulation Program";

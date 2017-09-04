@@ -26,7 +26,7 @@ let
     any
     optionals
     optionalString
-    versionOlder;
+    versionAtLeast;
 
   buildKernel = any (n: n == type) [ "kernel" "all" ];
   buildUser = any (n: n == type) [ "user" "all" ];
@@ -41,8 +41,9 @@ assert buildKernel -> kernel != null && spl != null;
 
 assert spl != null -> spl.buildType == type;
 
-assert kernel != null -> versionOlder kernel.version source.maxKernelVersion
-  || throw "SPL ${version} is too old for kernel ${kernel.version}";
+assert buildKernel && ! versionAtLeast source.maxKernelVersion kernel.channel ->
+  throw ("The '${channel}' ZFS channel is only supported on Linux kernel "
+    + "channels less than or equal to ${source.maxKernelVersion}");
 
 stdenv.mkDerivation rec {
   name = "zfs-${type}-${version}${optionalString buildKernel "-${kernel.version}"}";

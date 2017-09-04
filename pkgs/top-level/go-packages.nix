@@ -4126,7 +4126,6 @@ let
       "connectivity"
       "credentials"
       "grpclb/grpc_lb_v1"
-      "grpclb/grpc_lb_v1/messages"
       "grpclog"
       "internal"
       "keepalive"
@@ -4138,9 +4137,6 @@ let
       "tap"
       "transport"
     ];
-    rev = "v1.6.0";
-    sha256 = "1hwibykd1qhrvlzw8zx8878kc4hwn81rjkza2x47wigvw7mmslc1";
-    version = 3;
   };
 
   grpc-gateway = buildFromGitHub {

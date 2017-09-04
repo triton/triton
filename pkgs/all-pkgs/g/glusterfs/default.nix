@@ -40,8 +40,8 @@ let
     which
   ];
 
-  versionMajor = "3.11";
-  versionMinor = "2";
+  versionMajor = "3.12";
+  versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
 in
 stdenv.mkDerivation rec {
@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://download.gluster.org/pub/gluster/glusterfs/${versionMajor}/"
       + "${version}/${name}.tar.gz";
-    sha256 = "8a5782c114e5bd4bf5fcfacc59c28fc82eda2b5c0813d2bc4c039ace309b9e7d";
+    sha256 = "874292f6a09f7a2f6d81fe43bf478717d72093ffcd27de7ff1aa398256210459";
   };
 
   nativeBuildInputs = [

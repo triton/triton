@@ -1462,7 +1462,7 @@ let
     rev = "v0.6.0";
     owner = "docker";
     repo = "docker-credential-helpers";
-    sha256 = "194597faad42bcpzb6n8f4c4gyr3xgjyzc7kch6lrzxrhdkv47v4";
+    sha256 = "1k0aym74a6f83nsqjb2avsypakh3i23wk6il9295hfjd8ljwilpm";
     postPatch = ''
       find . -name \*_windows.go -delete
     '';

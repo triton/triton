@@ -12,7 +12,7 @@ let
     splitString
     tail;
 
-  version = "3.20.0";
+  version = "3.20.1";
   releaseYear = "2017";
   versionList = splitString "." version;
   version' = "${head versionList}${fixedWidthString 2 "0" (head (tail versionList))}"
@@ -23,9 +23,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://sqlite.org/${releaseYear}/sqlite-autoconf-${version'}.tar.gz";
-    multihash = "QmVwxnYTzRTdqf7q7kg9qWkkzmUnoYdZWVqTZmdtqXZt9Y";
+    multihash = "QmWC5UnAHn7h3wWv7n31Sdusm2TdiFTTJLBYGQb16632sr";
     hashOutput = false;
-    sha256 = "3814c6f629ff93968b2b37a70497cfe98b366bf587a2261a56a5f750af6ae6a0";
+    sha256 = "ec66595b29bc0798b023a5122021ea646ab4fa9e2f735937c5426feeba950742";
   };
 
   buildInputs = [
@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl {
       failEarly = true;
-      sha1Confirm = "2a451bcf42dc0865840463f7efc3f51cebeb4ea8";
+      sha1Confirm = "48593dcd19473f25fe6fcd08048e13ddbff4c983";
       inherit (src) urls outputHash outputHashAlgo;
     };
   };

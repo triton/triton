@@ -3,6 +3,7 @@
 , gettext
 , intltool
 , lib
+, makeWrapper
 , pythonPackages
 
 , aalib
@@ -20,7 +21,7 @@
 , ghostscript
 , glib
 , glib-networking
-, gtk2
+, gtk_2
 , harfbuzz_lib
 , iso-codes
 , jasper
@@ -52,11 +53,20 @@
 , zlib
 }:
 
+let
+  version = "2.9.6";
+  verMajMin =
+    # Handle possible double digit minor version
+    if builtins.substring 3 1 version == "." then
+      builtins.substring 0 3 version  # single
+    else
+      builtins.substring 0 4 version;  # double
+in
 stdenv.mkDerivation rec {
   name = "gimp-2.9.6";
 
   src = fetchurl rec {
-    url = "https://download.gimp.org/pub/gimp/v2.9/${name}.tar.bz2";
+    url = "https://download.gimp.org/pub/gimp/v${verMajMin}/${name}.tar.bz2";
     multihash = "Qman1jmYyoHRXpJLTvRgeyGBrrVUpATSDUtTpafrXEPozS";
     hashOutput = false;
     sha256 = "b46f31d822a33ab416dcb15e33e10b5b98430814fa34f5ea4036230e845dfc9f";
@@ -65,6 +75,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     gettext
     intltool
+    makeWrapper
     pythonPackages.wrapPython
   ];
 
@@ -84,7 +95,7 @@ stdenv.mkDerivation rec {
     ghostscript
     glib
     glib-networking
-    gtk2
+    gtk_2
     harfbuzz_lib
     iso-codes
     jasper
@@ -128,15 +139,25 @@ stdenv.mkDerivation rec {
     "--enable-vector-icons"
   ];
 
-  postInstall = ''
-    wrapPythonPrograms
-    ln -sv gimp-2.9 $out/bin/gimp
-  '';
-
   NIX_LDFLAGS = [
     # "screenshot" needs this.
     "-rpath ${libx11}/lib"
   ];
+
+  preBuild = ''
+    # Build depends on shared-mime-info
+    export XDG_DATA_DIRS="$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${shared-mime-info}/share"
+  '';
+
+  postInstall = ''
+    wrapPythonPrograms
+    ln -sv gimp-${verMajMin} $out/bin/gimp
+  '';
+
+  preFixup = ''
+    wrapProgram $out/bin/gimp-${verMajMin} \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share"
+  '';
 
   passthru = {
     srcVerification = fetchurl {

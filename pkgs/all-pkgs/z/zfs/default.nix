@@ -41,9 +41,9 @@ assert buildKernel -> kernel != null && spl != null;
 
 assert spl != null -> spl.buildType == type;
 
-assert buildKernel && ! versionAtLeast source.maxKernelVersion kernel.channel ->
+assert buildKernel && ! versionAtLeast source.maxLinuxVersion kernel.channel ->
   throw ("The '${channel}' ZFS channel is only supported on Linux kernel "
-    + "channels less than or equal to ${source.maxKernelVersion}");
+    + "channels less than or equal to ${source.maxLinuxVersion}");
 
 stdenv.mkDerivation rec {
   name = "zfs-${type}-${version}${optionalString buildKernel "-${kernel.version}"}";

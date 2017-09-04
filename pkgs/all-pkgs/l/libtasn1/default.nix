@@ -1,4 +1,5 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 , perl
 , texinfo
@@ -23,6 +24,14 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     perl
     texinfo
+  ];
+
+  patches = [
+    (fetchTritonPatch {
+      rev = "2252cbbaccd389577ff53aac055012b1817ea230";
+      file = "l/libtasn1/libtasn1-4.12-CVE-2017-10790.patch";
+      sha256 = "f1dc9ff3f7e660633a2cc3e60f4198aafc46f479662176cf160ca7fb5503bcec";
+    })
   ];
 
   passthru = {

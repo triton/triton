@@ -32,7 +32,7 @@
 }:
 
 let
-  version = "0.9.5";
+  version = "0.9.7";
 in
 stdenv.mkDerivation rec {
   name = "fwupd-${version}";
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     owner = "hughsie";
     repo = "fwupd";
     rev = version;
-    sha256 = "57d557be3abb795df5f944bc998410eb8d511ce90f678b1bba6f5c9e2d3373d7";
+    sha256 = "980393b4ea3d58b1be26598daaed4fb36932cf893dfd97f534ff01ba7ff9719d";
   };
 
   nativeBuildInputs = [

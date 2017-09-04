@@ -10,15 +10,19 @@
 , pam
 }:
 
+let
+  rev = "f76eb971d456619d0f26eb0c5c96157bee3d94e3";
+  date = "2017-09-02";
+in
 stdenv.mkDerivation rec {
-  name = "cyrus-sasl-2016-12-15";
+  name = "cyrus-sasl-${date}";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "cyrusimap";
     repo = "cyrus-sasl";
-    rev = "497c716c5f5f2ad6a1d189615b21b8d2741c3f71";
-    sha256 = "94352571ba34268dea1cc80aa003ea076ba0a0c06617c99eb7e8af58396da552";
+    inherit rev;
+    sha256 = "75a0f7fa8b859c73cb6532f458d32bf7120f01b39907867ffd0beda2b4055979";
   };
 
   nativeBuildInputs = [

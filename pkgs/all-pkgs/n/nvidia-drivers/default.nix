@@ -65,7 +65,7 @@ let
       versionMinor = "69";
       sha256i686   = "3b70587582220ab1102bcb8386f206f89e6b146856af41f16eaa5910e54ef8fd";
       sha256x86_64 = "1011b9a9db903d243ff722fc7982da7b91dc91f4b82c60227d89b812aa67257f";
-      maxLinuxVersion = "4.12";
+      maxLinuxVersion = "4.13";
       maxXorgVersion = "1.19";
     };
     short-lived = {

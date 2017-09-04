@@ -68,6 +68,9 @@ stdenv.mkDerivation rec {
     "--without-ldapcasa"
   ];
 
+  # Fix kerberos rpath
+  NIX_LDFLAGS = "-rpath ${krb5_lib}/lib";
+
   preInstall = ''
     installFlagsArray+=("sysconfdir=$out/etc")
   '';

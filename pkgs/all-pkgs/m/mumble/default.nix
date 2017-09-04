@@ -8,7 +8,6 @@
 , avahi
 , boost
 , grpc
-, ice
 , jack2_lib
 , libcap
 , libsndfile
@@ -106,7 +105,6 @@ stdenv.mkDerivation rec {
     xorg.xproto
   ] ++ optionals (config == "murmur") [
     grpc
-    ice
     libcap
   ];
 
@@ -120,10 +118,7 @@ stdenv.mkDerivation rec {
     '' + optionalString (channel != "1.2") ''
       patchShebangs ./scripts/rcc-depends.py
     ''
-  ) + optionalString (config == "murmur" && ice != null) ''
-    grep -Rl '/usr/share/Ice' . | \
-      xargs sed -i 's,/usr/share/Ice/,${ice}/,g'
-  '';
+  );
 
   configureFlags = [
     "${releaseType}"
@@ -159,7 +154,7 @@ stdenv.mkDerivation rec {
     "${boolNo mumbleOverlay}overlay"
     "${boolNo (qt5 == null)}qt4-legacy-compat"
   ] ++ optionals (config == "murmur") [
-    "${boolNo (ice != null)}ice"
+    "no-ice"
     "${boolNo (grpc != null)}grpc"
     "qssldiffiehellmanparameters"
   ];

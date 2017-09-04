@@ -12,6 +12,12 @@
 , kernel ? null
 
 # Userspace dependencies
+, libx11
+, libxau
+, libxcb
+, libxdmcp
+, libxext
+, libxrandr
 , wayland
 , xorg
 , zlib
@@ -213,14 +219,14 @@ stdenv.mkDerivation {
 
   allLibPath = makeSearchPath "lib" [
     stdenv.cc.cc
-    wayland
-    xorg.libX11
-    xorg.libXau
-    xorg.libxcb
-    xorg.libXdmcp
-    xorg.libXext
-    xorg.libXrandr
+    libx11
+    libxau
+    libxcb
+    libxdmcp
+    libxext
+    libxrandr
     xorg.libXv
+    wayland
     zlib
   ];
 

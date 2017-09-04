@@ -14,7 +14,7 @@
 }:
 
 let
-  name = "ldb-1.1.31";
+  name = "ldb-1.2.1";
 
   tarballUrls = [
     "mirror://samba/ldb/${name}.tar"
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "04d53e2ab5b35688f5ed7a4471f5b273da121016e1af0630b36a36506afaeb46";
+    sha256 = "d123faf7fb84ab250cb073eb2bbc1e235d9ff9e71742165c91810726c5117cc8";
   };
 
   nativeBuildInputs = [

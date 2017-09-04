@@ -12,8 +12,8 @@
 }:
 
 let
-  version = "0.9.32";
-  newVersion = "0.9.32";
+  version = "0.9.33";
+  newVersion = "0.9.33";
 
   tarballUrls = version: [
     "mirror://samba/tevent/tevent-${version}.tar"
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") (tarballUrls version);
     hashOutput = false;
-    sha256 = "d316e1438ffbb588a0afc90b748499dead25884ef275664fdca0df2793b62f8b";
+    sha256 = "22712ee981fd4298fcd5f3afb27d87a72257cebad37812cfbd3da5d968ed1bdc";
   };
 
   nativeBuildInputs = [
@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
       pgpDecompress = true;
       inherit (samba_full.pgp.library) pgpKeyFingerprint;
       inherit (src) outputHashAlgo;
-      outputHash = "d316e1438ffbb588a0afc90b748499dead25884ef275664fdca0df2793b62f8b";
+      outputHash = "22712ee981fd4298fcd5f3afb27d87a72257cebad37812cfbd3da5d968ed1bdc";
     };
   };
 

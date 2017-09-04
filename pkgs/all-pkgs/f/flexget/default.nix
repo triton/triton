@@ -1,6 +1,5 @@
 { stdenv
 , buildPythonPackage
-, config
 , fetchPyPi
 , isPy3
 , lib
@@ -92,8 +91,6 @@ buildPythonPackage rec {
     zxcvbn-python
   ] ++ optionals (pythonOlder "3.4") [
     pathlib
-  ] ++ optionals (config.deluge or false) [
-    deluge
   ];
 
   postPatch = /* Allow using newer dependencies */ ''

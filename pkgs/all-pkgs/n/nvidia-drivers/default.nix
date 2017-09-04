@@ -107,6 +107,11 @@ assert buildKernelspace && ! versionAtLeast source.maxLinuxVersion kernel.channe
   throw ("The '${channel}' NVIDIA driver channel is only supported on Linux"
     + " kernel channels less than or equal to ${source.maxLinuxVersion}");
 
+# FIXME: enable after xorg-server rewrite
+# assert buildKernelspace && ! versionAtLeast source.maxXorgVersion xorg-server.channel ->
+#   throw ("The '${channel}' NVIDIA driver channel is only supported on Xorg"
+#     + " server channels less than or equal to ${source.maxXorgVersion}");
+
 assert elem targetSystem platforms.bit32 && !libsOnly ->
   throw "Only libs are supported for 32bit platforms";
 

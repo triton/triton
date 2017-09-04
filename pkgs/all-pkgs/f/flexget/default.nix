@@ -96,6 +96,9 @@ buildPythonPackage rec {
       -e 's/<.*//' \
       -e 's/!=.*//' \
       -e 's/==.*//'
+  '' + /* Fix discover plugin not respecting limit */ ''
+    sed -i flexget/plugins/input/discover.py \
+      -e '/>\s500/,+2d'
   '';
 
   disabled = isPy3;

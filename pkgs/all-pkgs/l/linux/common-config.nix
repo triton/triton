@@ -684,8 +684,8 @@ with stdenv.lib;
     GCC_PLUGIN_STRUCTLEAK y
   ''}
   ${optionalString (versionAtLeast version "4.13") ''
-    GCC_PLUGIN_RANDSTRUCT y
-    GCC_PLUGIN_RANDSTRUCT_PERFORMANCE y
+    #GCC_PLUGIN_RANDSTRUCT y
+    #GCC_PLUGIN_RANDSTRUCT_PERFORMANCE y
     REFCOUNT_FULL y
     FORTIFY_SOURCE y
   ''}

@@ -26,7 +26,7 @@ let
       cfgZfs.useDev
     else
       versionAtLeast kernelPackages.kernel.version pkgs.spl.maxKernelVersion
-      || versionAtLeast kernelPackages.kernel.version pkgs.zfs.maxKernelVersion;
+      || versionAtLeast kernelPackages.kernel.version pkgs.zfs.maxLinuxVersion;
 
   splKernelPkg = if useDev then kernelPackages.spl_dev else kernelPackages.spl;
   zfsKernelPkg = if useDev then kernelPackages.zfs_dev else kernelPackages.zfs;

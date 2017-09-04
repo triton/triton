@@ -77,16 +77,27 @@ stdenv.mkDerivation rec {
   # for zdb to get the rpath to libgcc_s, needed for pthread_cancel to work
   NIX_CFLAGS_LINK = "-lgcc_s";
 
-  patches = [
+  patches = optionals (channel == "stable") [
     (fetchTritonPatch {
-      rev = "7a56edd41ce78feba009a15303b0295bf07026c6";
+      rev = "7ed796b8d2ca1446fc9ca0556f75c99b2a1ff5ef";
       file = "z/zfs/0001-Fix-makefile-paths.patch";
-      sha256 = "ff8583179901acc8315209c9546f0e930a9fc9c21de71cec5569968fddc11829";
+      sha256 = "0f7012f4aea63646ebd4c7624db0e80b871fbd931313794a81326425fcd4bc51";
     })
     (fetchTritonPatch {
-      rev = "7a56edd41ce78feba009a15303b0295bf07026c6";
+      rev = "7ed796b8d2ca1446fc9ca0556f75c99b2a1ff5ef";
       file = "z/zfs/0002-Fix-binary-paths.patch";
-      sha256 = "01346dda86ce17b6d4a2ba7b3d56efdaf466c73d0e793e0875d166821fa4b2de";
+      sha256 = "928368e849db348bc17ca8d464bb82fd96ad95b787f1172935c01a46b12127c5";
+    })
+  ] ++ optionals (channel == "dev") [
+    (fetchTritonPatch {
+      rev = "4e02a3bc465222d26916d242d048d60fbade872d";
+      file = "z/zfs/0001-Fix-makefile-paths.patch";
+      sha256 = "50b7de0cd33e9be077877545e7dd2edee8666f15ca0690f4f8c45d53c5e3c482";
+    })
+    (fetchTritonPatch {
+      rev = "4e02a3bc465222d26916d242d048d60fbade872d";
+      file = "z/zfs/0002-Fix-binary-paths.patch";
+      sha256 = "66510e0620a746e700d481a135b8fc9653fdef88acce5bd82a480962a3cc5b80";
     })
   ];
 

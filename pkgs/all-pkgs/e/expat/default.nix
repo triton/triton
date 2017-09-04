@@ -1,18 +1,28 @@
 { stdenv
 , fetchurl
 , lib
+
+, libbsd
 }:
 
 let
-  version = "2.2.3";
+  version = "2.2.4";
 in
 stdenv.mkDerivation rec {
   name = "expat-${version}";
 
   src = fetchurl {
     url = "mirror://sourceforge/expat/expat/${version}/${name}.tar.bz2";
-    sha256 = "b31890fb02f85c002a67491923f89bda5028a880fd6c374f707193ad81aace5f";
+    sha256 = "03ad85db965f8ab2d27328abcf0bc5571af6ec0a414874b2066ee3fdd372019e";
   };
+
+  configureFlags = [
+    "--with-libbsd"
+  ];
+
+  buildInputs = [
+    libbsd
+  ];
 
   meta = with lib; {
     description = "A stream-oriented XML parser library written in C";

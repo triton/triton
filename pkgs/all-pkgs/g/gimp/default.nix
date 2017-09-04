@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 , pythonPackages
 
 , aalib
@@ -10,6 +11,7 @@
 , babl
 , bzip2
 , cairo
+, fixesproto
 , freetype
 , fontconfig
 , gdk-pixbuf
@@ -25,20 +27,27 @@
 , lcms2
 , libexif
 , libgudev
+, libice
 , libjpeg
 , libmng
 , libmypaint
 , libpng
 , librsvg
+, libsm
 , libtiff
 , libwebp
 , libwmf
+, libx11
+, libxext
+, libxfixes
+, libxt
 , libzip
 , openexr
 , pango
 , poppler
 , shared-mime-info
 , xorg
+, xproto
 , xz
 , zlib
 }:
@@ -66,6 +75,7 @@ stdenv.mkDerivation rec {
     babl
     bzip2
     cairo
+    fixesproto
     freetype
     fontconfig
     gdk-pixbuf
@@ -81,14 +91,20 @@ stdenv.mkDerivation rec {
     lcms2
     libexif
     libgudev
+    libice
     libjpeg
     libmng
     libmypaint
     libpng
     librsvg
+    libsm
     libtiff
     libwebp
     libwmf
+    libx11
+    libxext
+    libxfixes
+    libxt
     libzip
     openexr
     pango
@@ -96,17 +112,10 @@ stdenv.mkDerivation rec {
     pythonPackages.python
     pythonPackages.pygtk
     shared-mime-info
-    xorg.fixesproto
-    xorg.libICE
-    xorg.libSM
-    xorg.libX11
     xorg.libXcursor
-    xorg.libXext
-    xorg.libXfixes
     xorg.libXmu
     xorg.libXpm
-    xorg.libXt
-    xorg.xproto
+    xproto
     xz
     zlib
   ];
@@ -124,9 +133,9 @@ stdenv.mkDerivation rec {
     ln -sv gimp-2.9 $out/bin/gimp
   '';
 
-  # "screenshot" needs this.
   NIX_LDFLAGS = [
-    "-rpath ${xorg.libX11}/lib"
+    # "screenshot" needs this.
+    "-rpath ${libx11}/lib"
   ];
 
   passthru = {
@@ -137,7 +146,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The GNU Image Manipulation Program";
     homepage = http://www.gimp.org/;
     license = licenses.gpl3Plus;

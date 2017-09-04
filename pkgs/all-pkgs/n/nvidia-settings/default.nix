@@ -13,6 +13,9 @@
 , jansson
 , libvdpau
 , libx11
+, libxext
+, libxrandr
+, libxrender
 , mesa_noglu
 , nvidia-drivers_latest
 , pango
@@ -53,6 +56,9 @@ stdenv.mkDerivation rec {
     jansson
     libvdpau
     libx11
+    libxext
+    libxrandr
+    libxrender
     mesa_noglu
     nvidia-drivers_latest
     pango
@@ -62,9 +68,6 @@ stdenv.mkDerivation rec {
     xextproto
     xf86vidmodeproto
     xproto
-    xorg.libXext
-    xorg.libXrandr
-    xorg.libXrender
     xorg.libXv
     xorg.libXxf86vm
   ];

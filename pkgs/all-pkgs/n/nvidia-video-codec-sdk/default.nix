@@ -1,18 +1,19 @@
 { stdenv
 , fetchurl
+, lib
 , unzip
 }:
 
 # TODO: build tools (NvEncoder,NvEncoderPerf,NvTranscoder,NvEncoderLowLatency)
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     replaceStrings;
-in
 
+  version = "6.0.1";
+in
 stdenv.mkDerivation rec {
   name = "nvidia-video-codec-sdk-${version}";
-  version = "6.0.1";
 
   src = fetchurl {
     url = "https://developer.nvidia.com/"
@@ -30,7 +31,7 @@ stdenv.mkDerivation rec {
       "$out/include/nvEncodeAPI.h"
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "";
     homepage = https://developer.nvidia.com/nvidia-video-codec-sdk;
     license = licenses.unfreeRedistributable;

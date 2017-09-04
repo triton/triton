@@ -12,15 +12,15 @@
 }:
 
 let
-  version = "0.14.0";
+  version = "0.15.0";
 in
 stdenv.mkDerivation {
   name = "sddm-${version}";
 
   src = fetchurl {
-    url = "https://github.com/sddm/sddm/releases/download/v${version}/sddm-${version}.tar.xz";
-    sha1Confirm = "ee92a2b27602c13d6ac5cfd34399192a31ca033c";
-    sha256 = "7e348258618b20f777767a98f9e377b48824b5cb5aad3a3f10f8482c1eb27778";
+    url = "https://github.com/sddm/sddm/releases/download/v${version}/sddm-${version}.tar.gz";
+    hashOutput = false;  # https://github.com/sddm/sddm/releases
+    sha256 = "a4211e5b66f674415e07bc1cc39c16f60ae6025418bcbaba1118cd51e57c3174";
   };
 
   nativeBuildInputs = [

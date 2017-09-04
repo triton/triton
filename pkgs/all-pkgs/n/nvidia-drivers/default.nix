@@ -13,13 +13,13 @@
 
 # Userspace dependencies
 , libx11
-, libxau
-, libxcb
-, libxdmcp
+#, libxau
+#, libxcb
+#, libxdmcp
 , libxext
-, libxrandr
+#, libxrandr
 , wayland
-, xorg
+#, xorg
 , zlib
 
 # Just needed for the passthru driver path
@@ -214,12 +214,12 @@ stdenv.mkDerivation {
   allLibPath = makeSearchPath "lib" [
     stdenv.cc.cc
     libx11
-    libxau
-    libxcb
-    libxdmcp
+    #libxau  # nvidia-settings
+    #libxcb  # nvidia-settings
+    #libxdmcp  # nvidia-settings
     libxext
-    libxrandr
-    xorg.libXv
+    #libxrandr  # nvidia-settings
+    #xorg.libXv  # nvidia-settings
     wayland
     zlib
   ];
@@ -323,7 +323,7 @@ stdenv.mkDerivation {
     '' + /* Thread local storage libraries for NVIDIA OpenGL libraries */ ''
       nvidia_lib_install 0 0 'libnvidia-tls'
       nvidia_lib_install 0 0 'tls/libnvidia-tls' '-' "${version}" 'tls'
-      ###nvidia_lib_install 0 0 'tls_test_dso' '-' '-'
+      ###nvidia_lib_install 0 0 'tls_test_dso' '-' '-'  # Not used
     '' + /* X.Org DDX driver */ optionalString (!libsOnly) ''
       nvidia_lib_install 0 0 'nvidia_drv' '-' '-' 'xorg/modules/drivers'
     '' + /* X.Org GLX extension module */ optionalString (!libsOnly) ''
@@ -344,7 +344,7 @@ stdenv.mkDerivation {
       nvidia_lib_install 0 0 'libOpenCL' '1' '1.0.0'
       # NVIDIA ICD
       nvidia_lib_install 0 0 'libnvidia-opencl'
-    '' + /* Linux kernel userspace driver config library */ ''
+    '' + /* Linux kernel, userspace driver config library */ ''
       nvidia_lib_install 0 0 'libnvidia-cfg'
     '' + /* Wrapped software rendering library */ optionalString (!libsOnly) ''
       nvidia_lib_install 0 0 'libnvidia-wfb' '-' "${version}" 'xorg/modules'
@@ -354,6 +354,7 @@ stdenv.mkDerivation {
     '' + /* NVENC video encoding library */ ''
       nvidia_lib_install 0 0 'libnvidia-encode' '1'
     '' + /* NVIDIA Settings GTK+ 2/3 libraries */ ''
+      # Provided by nvidia-settings
       ###nvidia_lib_install 0 0 'libnvidia-gtk2'
       ###nvidia_lib_install 0 0 'libnvidia-gtk3'
     '' +
@@ -370,19 +371,19 @@ stdenv.mkDerivation {
     ## Executables
     #
     optionalString (!libsOnly) ''
-      ###nvidia_bin_install 0 0 'mkprecompiled'
-      ###nvidia_bin_install 0 0 'nvidia-bug-report.sh'
+      ###nvidia_bin_install 0 0 'mkprecompiled'  # Not used
+      ###nvidia_bin_install 0 0 'nvidia-bug-report.sh'  # Would probably require patching
       nvidia_bin_install 0 0 'nvidia-cuda-mps-control'
       nvidia_bin_install 0 0 'nvidia-cuda-mps-server'
       nvidia_bin_install 0 0 'nvidia-debugdump'
-      ###nvidia_bin_install 0 0 'nvidia-installer'
-      ###nvidia_bin_install 0 0 'nvidia-modprobe'
+      ###nvidia_bin_install 0 0 'nvidia-installer'  # Not used
+      ###nvidia_bin_install 0 0 'nvidia-modprobe'  Not used
       nvidia_bin_install 0 0 'nvidia-persistenced'
       ###nvidia_bin_install 0 0 'nvidia-settings'
       # System Management Interface
       nvidia_bin_install 0 0 'nvidia-smi'
-      ###nvidia_bin_install 0 0 'nvidia-xconfig'
-      ###nvidia_bin_install 0 0 'tls_test'  # (also tls_test.so)
+      ###nvidia_bin_install 0 0 'nvidia-xconfig'  # Not used, might still be useful?
+      ###nvidia_bin_install 0 0 'tls_test'  # (also tls_test.so)  # Not used
     '' +
     #
     ## Manpages
@@ -429,6 +430,7 @@ stdenv.mkDerivation {
           "$out/share/egl/egl_external_platform.d/10_nvidia_wayland.json"
       fi
     ''
+    # Provided by nvidia-settings
     ### +
     ### #
     ### ## Desktop Entries

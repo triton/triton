@@ -41,7 +41,7 @@ assert buildKernel -> kernel != null && spl != null;
 
 assert spl != null -> spl.buildType == type;
 
-assert buildKernel && ! versionAtLeast source.maxLinuxVersion kernel.channel ->
+assert buildKernel && ! (kernel.isSupportedVersion source.maxLinuxVersion) ->
   throw ("The '${channel}' ZFS channel is only supported on Linux kernel "
     + "channels less than or equal to ${source.maxLinuxVersion}");
 

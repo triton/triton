@@ -45,6 +45,15 @@ stdenv.mkDerivation rec {
     "--with-cyrus-sasl"
   ];
 
+  postInstall = ''
+    # Fix the installation of so files
+    for so in $(find "$out"/lib -name \*.so\*); do
+      if [ -f "$so" ]; then
+        chmod +x "$so"
+      fi
+    done
+  '';
+
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;

@@ -1065,6 +1065,14 @@ efivar = callPackage ../all-pkgs/e/efivar { };
 
 eigen = callPackage ../all-pkgs/e/eigen { };
 
+elasticsearch_5-5 = callPackage ../all-pkgs/e/elasticsearch {
+  channel = "5.5";
+};
+elasticsearch_6-0 = callPackage ../all-pkgs/e/elasticsearch {
+  channel = "6.0";
+};
+elasticsearch = callPackageAlias "elasticsearch_5-5" { };
+
 elfutils = callPackage ../all-pkgs/e/elfutils { };
 
 emacs = callPackage ../all-pkgs/e/emacs { };

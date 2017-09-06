@@ -51,7 +51,7 @@ let
 
   libOnly = prefix == "lib";
 
-  version = "10.0";
+  version = "11.0";
 in
 
 assert resampleMethodString != null;
@@ -61,9 +61,9 @@ stdenv.mkDerivation rec {
 
   src = fetchurl rec {
     url = "https://freedesktop.org/software/pulseaudio/releases/pulseaudio-${version}.tar.xz";
-    multihash = "QmQNcwxRfVPXpi3kgWkEgDmKGJ9Rqbpb1EqniqCh9q1ZJU";
+    multihash = "Qme9MfCRHAVkx3t8qqivGUdmHUJ8PMMk3d5Wu1LSK7LCSR";
     hashOutput = false;
-    sha256 = "a3186824de9f0d2095ded5d0d0db0405dc73133983c2fbb37291547e37462f57";
+    sha256 = "072305d4018fc5e75bb1b45ee6b938fa52fc9fd27493bf327415ef89ed14c969";
   };
 
   nativeBuildInputs = [

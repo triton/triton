@@ -10,6 +10,9 @@
 }:
 
 let
+  inherit (lib)
+    optionalString;
+
   sources = {
     "5.5" = {
       version = "5.5.2";
@@ -41,7 +44,7 @@ stdenv.mkDerivation rec {
     util-linux_full
   ];
 
-  postPatch = ''
+  postPatch = optionalString (channel == "5.0") ''
     # ES_HOME defaults to install prefix which is read-only
     sed -i bin/elasticsearch{,-plugin} \
       -e 's,ES_HOME=`dirname "$SCRIPT"`/..,,'
@@ -49,6 +52,12 @@ stdenv.mkDerivation rec {
     sed -i bin/elasticsearch \
       -e '/x$ES_INCLUDE/,+16 d'
     rm -f bin/elasticsearch.in.sh
+  '' + optionalString (channel == "6.0") ''
+    # 1: ES_HOME defaults to install prefix which is read-only
+    # 2: Remove broken code, we hard code the path anyways
+    sed -i bin/elasticsearch-env \
+      -e '/ES_HOME=`dirname "$SCRIPT"`/d' \
+      -e '/basename "$ES_HOME"/,+3 d'
   '';
 
   configurePhase = ''

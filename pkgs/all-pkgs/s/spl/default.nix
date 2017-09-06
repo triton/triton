@@ -29,8 +29,9 @@ in
 assert any (n: n == type) [ "kernel" "user" "all" ];
 assert buildKernel -> kernel != null;
 
-assert kernel != null -> versionOlder kernel.version source.maxKernelVersion
-  || throw "SPL ${version} is too old for kernel ${kernel.version}";
+assert buildKernel && !(kernel.isSupportedVersion source.maxKernelVersion) ->
+  throw ("The '${channel}' SPL channel is only supported on Linux kernel "
+    + "channels less than or equal to ${source.maxKernelVersion}");
 
 stdenv.mkDerivation rec {
   name = "spl-${type}-${version}${optionalString buildKernel "-${kernel.version}"}";

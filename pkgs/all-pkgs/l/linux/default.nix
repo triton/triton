@@ -76,6 +76,7 @@ let
     splitString
     tail
     toInt
+    versionAtLeast
     versionOlder;
 
   needsGitPatch = source.needsGitPatch or false;
@@ -234,12 +235,12 @@ let
 
     features = source.features or { };
 
-    # Returns false if channelVerison is greater than mv.
-    isSupportedVersion = mv:
+    # Returns false if channelVerison is greater than maxv or lessthan minv.
+    isCompatibleVersion = maxv: minv:
       let
         cv = channelVersion;
       in
-      if cv == mv || versionOlder cv mv then
+      if cv == maxv || (versionOlder cv maxv && versionAtLeast cv minv) then
         true
       else
         false;

@@ -29,7 +29,7 @@ in
 assert any (n: n == type) [ "kernel" "user" "all" ];
 assert buildKernel -> kernel != null;
 
-assert buildKernel && !(kernel.isSupportedVersion source.maxKernelVersion) ->
+assert buildKernel && !(kernel.isCompatibleVersion source.maxKernelVersion "0") ->
   throw ("The '${channel}' SPL channel is only supported on Linux kernel "
     + "channels less than or equal to ${source.maxKernelVersion}");
 

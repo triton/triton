@@ -4,7 +4,6 @@
 , fetchurl
 , docbook2x
 , docbook_xml_dtd_45
-, python3Packages
 
 , cgmanager
 , dbus
@@ -16,23 +15,22 @@
 }:
 
 let
-  version = "2.0.8";
+  version = "2.1.0";
 in
 stdenv.mkDerivation rec {
   name = "lxc-${version}";
 
   src = fetchurl {
     url = "https://linuxcontainers.org/downloads/lxc/lxc-${version}.tar.gz";
-    multihash = "QmZ297kwawB5LaEMXMwgEzjwoYZF8xAd4jTfXvFzhmuz1j";
+    multihash = "QmfUMfD5dd9afbfsdeWoXy9RDmpjMZybgNF6zECNNQt5CT";
     hashOutput = false;
-    sha256 = "0d8e34b302cfe4c40c6c9ae5097096aa5cc2c1dfceea3f0f22e3e16c4a4e8494";
+    sha256 = "394407305a409eb1f95fe06e7718acfe89b1d5df267b0c6aafb1d714e2038de2";
   };
 
   nativeBuildInputs = [
     autoconf
     automake
     docbook2x
-    python3Packages.python
   ];
 
   buildInputs = [
@@ -59,20 +57,22 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--localstatedir=/var"
     "--sysconfdir=/etc"
+    "--disable-werror"
+    "--enable-rpath"
     "--enable-doc"
     "--disable-api-docs"
     "--with-init-script=none"
     "--with-distro=nixos" # just to be sure it is "unknown"
-    # "--enable-apparmor"
+    "--disable-apparmor"
+    "--enable-gnutls"
     "--enable-selinux"
     "--enable-seccomp"
+    "--enable-cgmanager"
     "--enable-capabilities"
     "--disable-examples"
-    "--enable-python"
-    # "--enable-lua"
-    "--enable-bash"
-    "--disable-werror"
-    "--disable-tests"
+    "--disable-python"
+    "--disable-lua"
+    "--disable-bash"
     "--with-rootfs-path=/var/lib/lxc/rootfs"
   ];
 

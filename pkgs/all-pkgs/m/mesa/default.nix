@@ -6,6 +6,7 @@
 , flex
 , gettext
 , intltool
+, lib
 , python2Packages
 
 , dri2proto
@@ -56,7 +57,7 @@
 # FIXME: Wayland scanner
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     head
     optional
@@ -110,8 +111,7 @@ stdenv.mkDerivation rec {
     libglvnd
     libomxil-bellagio
     libpthread-stubs
-    # FIXME: recursive dependency
-    #libva
+    #libva  # FIXME: recursive dependency
     libvdpau
     libx11
     libxcb
@@ -149,7 +149,7 @@ stdenv.mkDerivation rec {
   #     -e 's,_EGL_DRIVER_SEARCH_DIR,"${driverSearchPath}",'
   # ''
   + /* Upstream incorrectly specifies PYTHONPATH explicitly, overriding
-          the build environments PYTHONPATH */ ''
+       the build environments PYTHONPATH */ ''
     sed -e 's,PYTHONPATH=,PYTHONPATH=$(PYTHONPATH):,g' \
       -i src/mesa/drivers/dri/i965/Makefile.am \
       -i src/gallium/drivers/freedreno/Makefile.am
@@ -234,7 +234,7 @@ stdenv.mkDerivation rec {
 
   # move gallium-related stuff to $drivers, so $out doesn't depend on LLVM;
   #   also move libOSMesa to $osmesa, as it's relatively big
-  # ToDo: probably not all .la files are completely fixed, but it shouldn't matter
+  # TODO: probably not all .la files are completely fixed, but it shouldn't matter
   postInstall = /* Remove vendored Vulkan headers */ ''
     rm -fv $out/include/vulkan/vk_platform.h
     rm -fv $out/include/vulkan/vulkan.h
@@ -260,7 +260,7 @@ stdenv.mkDerivation rec {
   '' + /* work around bug #529, but maybe $drivers should also be patchelf'd */ ''
     find $drivers/ $osmesa/ -type f -executable -print0 | \
       xargs -0 strip -S || true
-  '' + /* add RPATH so the drivers can find the moved libgallium and libdricore9 */ ''
+  '' + /* add RPATH so the drivers can find the moved libgallium & libdricore9 */ ''
     for lib in $drivers/lib/*.so* $drivers/lib/*/*.so*; do
       if [[ ! -L "$lib" ]] ; then
         patchelf \
@@ -268,7 +268,7 @@ stdenv.mkDerivation rec {
           "$lib"
       fi
     done
-  '' + /* set the default search path for DRI drivers; used e.g. by X server */ ''
+  '' + /* set the default search path for DRI drivers */ ''
     sed -i "$out/lib/pkgconfig/dri.pc" \
       -e 's,$(drivers),${driverSearchPath},'
   '';
@@ -298,7 +298,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "An open source implementation of OpenGL";
     homepage = http://www.mesa3d.org/;
     license = licenses.mit;

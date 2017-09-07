@@ -180,7 +180,12 @@ stdenv.mkDerivation rec {
       "$out/share/google/chrome${channame}/google-chrome${channame}" \
       "$out/bin/google-chrome${channame}"
 
+    # NOTE: --disable-lcd-text
+    #       When sub-pixel rendering is enabled in both freetype/fontconfig and
+    #       chrome's internal sub-pixel rendering, it will sometimes cause
+    #       hinting to fail completely.
     wrapProgram "$out/bin/google-chrome${channame}" \
+      --add-flags '--disable-lcd-text' \
       --set 'GDK_PIXBUF_MODULE_FILE' "$GDK_PIXBUF_MODULE_FILE" \
       --prefix LD_LIBRARY_PATH : "${chromeLibPath}" \
       --prefix PATH : "${chromeBinPath}" \

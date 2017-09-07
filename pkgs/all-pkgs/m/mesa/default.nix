@@ -21,6 +21,7 @@
 , llvm
 , lm-sensors
 , wayland
+, wayland-protocols
 , xorg
 , zlib
 
@@ -101,6 +102,7 @@ stdenv.mkDerivation rec {
     llvm
     lm-sensors
     wayland
+    wayland-protocols
     xorg.dri2proto
     xorg.dri3proto
     xorg.glproto

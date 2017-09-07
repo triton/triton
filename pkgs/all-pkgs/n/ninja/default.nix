@@ -1,19 +1,22 @@
 { stdenv
 , asciidoc
-, fetchurl
+, fetchFromGitHub
 , python
 , re2c
 }:
 
 let
-  version = "1.7.2";
+  version = "1.8.1";
 in
 stdenv.mkDerivation rec {
   name = "ninja-${version}";
 
-  src = fetchurl {
-    url = "https://github.com/triton/ninja/releases/download/v${version}/${name}.tar.xz";
-    sha256 = "d857f906e37916d2c4cd7d3955a4758c6d2adb7387540e13e6541884c1fd2369";
+  src = fetchFromGitHub {
+    version = 3;
+    owner = "ninja-build";
+    repo = "ninja";
+    rev = "v${version}";
+    sha256 = "569a1684a2900094979ee405be9472582f45c7a451cc4cf0382b5c2842a2bdac";
   };
 
   nativeBuildInputs = [

@@ -8,18 +8,28 @@
 , intltool
 , python2Packages
 
+, dri2proto
+, dri3proto
 , expat
-#, file
+, glproto
 , libclc
 , libdrm
 , libelf
 , libffi
 , libglvnd
 , libomxil-bellagio
+, libpthread-stubs
 #, libva
 , libvdpau
+, libx11
+, libxcb
+, libxdamage
+, libxext
+, libxfixes
+, libxt
 , llvm
 , lm-sensors
+, presentproto
 , wayland
 , wayland-protocols
 , xorg
@@ -89,34 +99,35 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    dri2proto
+    dri3proto
     expat
+    glproto
     libclc
     libdrm
     libelf
     libffi
     libglvnd
     libomxil-bellagio
+    libpthread-stubs
     # FIXME: recursive dependency
     #libva
     libvdpau
+    libx11
+    libxcb
+    libxdamage
+    libxext
+    libxfixes
+    libxt
     llvm
     lm-sensors
+    presentproto
     wayland
     wayland-protocols
-    xorg.dri2proto
-    xorg.dri3proto
     xorg.glproto
-    xorg.libpthreadstubs
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
     xorg.libxshmfence
-    xorg.libXt
     xorg.libXvMC
     xorg.libXxf86vm
-    xorg.presentproto
     zlib
   ];
 

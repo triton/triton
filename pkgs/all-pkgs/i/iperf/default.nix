@@ -2,6 +2,8 @@
 , fetchFromGitHub
 , fetchurl
 
+, openssl
+
 , channel
 }:
 
@@ -13,13 +15,14 @@ let
       sha256 = "a5350777b191e910334d3a107b5e5219b72ffa393da4186da1e0a4552aeeded6";
     };
     "3" = {
-      fetchzipVersion = 2;
-      version = "3.1.7";
-      sha256 = "5133c033d68d72991cb0b07e7ca1aa82f123e51e971f9fb2f6dc92d904749816";
+      fetchzipVersion = 3;
+      version = "3.2";
+      sha256 = "f677cea3a50a6a000758266016b8480e037a74f7d4cc8c744f4e2cc473cf4b76";
     };
   };
 
   inherit (stdenv.lib)
+    optionals
     optionalString;
 
   source = sources."${channel}";
@@ -47,6 +50,10 @@ stdenv.mkDerivation rec {
         url = "https://iperf.fr/download/source/${name}-source.tar.gz";
         inherit multihash sha256;
       };
+
+  buildInputs = optionals (channel == "3") [
+    openssl
+  ];
 
   postInstall = optionalString (channel == "3") ''
     ln -s iperf3 $out/bin/iperf

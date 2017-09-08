@@ -2574,13 +2574,13 @@ lirc = callPackage ../all-pkgs/l/lirc { };
 
 live555 = callPackage ../all-pkgs/l/live555 { };
 
-llvm_3-9 = callPackage ../all-pkgs/l/llvm {
-  channel = "3.9";
+llvm_4 = callPackage ../all-pkgs/l/llvm {
+  channel = "4";
 };
-llvm_4-0 = callPackage ../all-pkgs/l/llvm {
-  channel = "4.0";
+llvm_5 = callPackage ../all-pkgs/l/llvm {
+  channel = "5";
 };
-llvm = callPackageAlias "llvm_4-0" { };
+llvm = callPackageAlias "llvm_5" { };
 
 lm-sensors = callPackage ../all-pkgs/l/lm-sensors { };
 

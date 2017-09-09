@@ -21,7 +21,11 @@ export TMPDIR="$(mktemp -d /tmp/chromium-updater.XXXXXXXXXX)"
 
 # Find the top git level
 TOP_LEVEL="$(pwd)"
-while ! [ -d "${TOP_LEVEL}/.git" ]; do
+while ! [ -e "${TOP_LEVEL}/.git" ]; do
+  if [ "$(readlink -f "$TOP_LEVEL")" = "/" ]; then
+    echo "Failed to find git directory" >&2
+    exit 1
+  fi
   TOP_LEVEL="$(readlink -f "${TOP_LEVEL}/..")"
 done
 

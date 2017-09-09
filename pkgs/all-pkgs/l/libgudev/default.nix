@@ -11,7 +11,7 @@ let
   inherit (lib)
     boolEn;
 
-  version = "231";
+  version = "232";
 in
 stdenv.mkDerivation rec {
   name = "libgudev-${version}";
@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "mirror://gnome/sources/libgudev/${version}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "3b1ef99d4a8984c35044103d8ddfc3cc52c80035c36abab2bcc5e3532e063f96";
+    sha256 = "ee4cb2b9c573cdf354f6ed744f01b111d4b5bed3503ffa956cefff50489c7860";
   };
 
   buildInputs = [

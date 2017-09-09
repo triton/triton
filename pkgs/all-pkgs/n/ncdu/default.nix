@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://dev.yorhel.nl/download/${name}.tar.gz";
+    multihash = "QmbDWb9ycS5sudqN1Q8JUAuui4T2MwyDiW8zJNCmD9YzNc";
     hashOutput = false;
     sha256 = "820e4e4747a2a2ec7a2e9f06d2f5a353516362c22496a10a9834f871b877499a";
   };

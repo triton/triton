@@ -8,13 +8,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "tcpdump-4.9.1";
+  name = "tcpdump-4.9.2";
 
   src = fetchurl {
     url = "http://www.tcpdump.org/release/${name}.tar.gz";
-    multihash = "QmVBCZsksUMay9YXVuZTBU1tFWvm2RucnWrG8CHxKMJgdm";
+    multihash = "QmYgD5Mag91Qe4dd7HrknJQKcXE7JWMeGAZqrDD1ed8fDd";
     hashOutput = false;
-    sha256 = "f9448cf4deb2049acf713655c736342662e652ef40dbe0a8f6f8d5b9ce5bd8f3";
+    sha256 = "798b3536a29832ce0cbb07fafb1ce5097c95e308a6f592d14052e1ef1505fe79";
   };
 
   buildInputs = [

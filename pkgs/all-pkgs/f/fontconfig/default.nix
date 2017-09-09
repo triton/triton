@@ -28,14 +28,14 @@ let
   configVersion = "2.12";
 in
 stdenv.mkDerivation rec {
-  name = "fontconfig-2.12.4";
+  name = "fontconfig-2.12.5";
 
   src = fetchurl {
     urls = [
       "https://www.freedesktop.org/software/fontconfig/release/${name}.tar.bz2"
       "http://fontconfig.org/release/${name}.tar.bz2"
     ];
-    sha256 = "668293fcc4b3c59765cdee5cee05941091c0879edcc24dfec5455ef83912e45c";
+    sha256 = "e10ccf1e26b0968f61d81037af1147fea28e86bfd159ffd8cfd5a486da126ce4";
   };
 
   nativeBuildInputs = [

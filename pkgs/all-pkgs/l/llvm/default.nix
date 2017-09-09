@@ -31,7 +31,9 @@ let
     flip
     makeOverridable
     mapAttrsToList
-    replaceChars;
+    replaceChars
+    optionalString
+    versionAtLeast;
 
   srcs' = flip mapAttrsToList srcs (n: d:
     let
@@ -90,10 +92,18 @@ stdenv.mkDerivation {
     # Remove impurities from llvm-config
     sed -i 's,@LLVM_.*_ROOT@,/no-such-path,g' tools/llvm-config/BuildVariables.inc.in
 
+    # Remove impurities in polly
+    sed -i "s,@POLLY_CONFIG_LLVM_CMAKE_DIR@,$out/lib/cmake/llvm," projects/polly/cmake/PollyConfig.cmake.in
+
     # Gcc 7 requires <functional> to be included
     sed \
       -e '1i#include <functional>' \
       -i tools/lldb/include/lldb/Utility/TaskPool.h
+
+  '' + optionalString (versionAtLeast version "5.0.0") ''
+    # Remove the permissions test
+    # It tries to set permissions we can't have in our build env
+    sed -i '/TEST_F(FileSystemTest, permissions)/a\  return;' unittests/Support/Path.cpp
   '';
 
   cmakeFlags = with stdenv; [

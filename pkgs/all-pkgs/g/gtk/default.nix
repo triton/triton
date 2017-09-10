@@ -26,7 +26,10 @@
 , libxdamage
 , libxext
 , libxfixes
+, libxinerama
 , libxkbcommon
+, libxrandr
+, libxrender
 , mesa_noglu
 , pango
 , rest
@@ -41,10 +44,7 @@
 
 assert libx11 != null ->
   xorg.libXcursor != null
-  && xorg.libXi != null
-  && xorg.libXinerama != null
-  && xorg.libXrandr != null
-  && xorg.libXrender != null;
+  && xorg.libXi != null;
 
 let
   inherit (lib)
@@ -113,7 +113,10 @@ stdenv.mkDerivation rec {
     libxdamage
     libxext
     libxfixes
+    libxinerama
     libxkbcommon
+    libxrandr
+    libxrender
     mesa_noglu
     pango
     rest
@@ -124,9 +127,6 @@ stdenv.mkDerivation rec {
   ] ++ optionals (libx11 != null) [
     xorg.libXcursor
     xorg.libXi
-    xorg.libXinerama
-    xorg.libXrandr
-    xorg.libXrender
   ];
 
   configureFlags = [
@@ -136,8 +136,8 @@ stdenv.mkDerivation rec {
     "--disable-debug"
     "--disable-installed-tests"
     "--${boolEn (libxkbcommon != null)}-xkb"
-    "--${boolEn (xorg != null)}-xinerama"
-    "--${boolEn (xorg != null)}-xrandr"
+    "--${boolEn (libxinerama != null)}-xinerama"
+    "--${boolEn (libxrandr != null)}-xrandr"
     "--${boolEn (libxfixes != null)}-xfixes"
     "--${boolEn (libxcomposite != null)}-xcomposite"
     "--${boolEn (libxdamage != null)}-xdamage"

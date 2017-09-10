@@ -31,14 +31,6 @@ stdenv.mkDerivation rec {
     findXMLCatalogs
   ];
 
-  patches = [
-    (fetchTritonPatch {
-      rev = "6c24b4d6845e8d1be84a9e0abe36b601d395ff09";
-      file = "l/libxslt/CVE-2016-4738.patch";
-      sha256 = "334ab9a931e09fd310d6e75a0e0b488cee12280d6384c8b884c2fd3a154b18ec";
-    })
-  ];
-
   configureFlags = [
     "--with-libxml-prefix=${libxml2}"
     "--without-python"

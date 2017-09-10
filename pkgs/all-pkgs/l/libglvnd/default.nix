@@ -1,21 +1,25 @@
 { stdenv
 , autoreconfHook
 , fetchFromGitHub
+, lib
 , perl
 , python2
 
-, xorg
+, glproto
+, libx11
+, libxext
+, xproto
 }:
 
 stdenv.mkDerivation rec {
-  name = "libglvnd-2016-12-22";
+  name = "libglvnd-2017-08-30";
 
   src = fetchFromGitHub {
-    version = 2;
+    version = 3;
     owner = "NVIDIA";
     repo = "libglvnd";
-    rev = "dc16f8c337703ad141f83583a4004fcf42e07766";
-    sha256 = "1a0b8a6b1cad6803060993d70f1f12f76f26a09c3578c58642a9de029cdd6736";
+    rev = "5ff90a15681612be60ef712f4aba962267ceaf13";
+    sha256 = "087954d8a9d87b9b259a4014819ef1d226883efc8cd138e54f14690a59e394f1";
   };
 
   nativeBuildInputs = [
@@ -24,10 +28,10 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    xorg.glproto
-    xorg.libX11
-    xorg.libXext
-    xorg.xproto
+    glproto
+    libx11
+    libxext
+    xproto
   ];
 
   postPatch = ''
@@ -42,7 +46,7 @@ stdenv.mkDerivation rec {
     "--enable-tls"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The GL Vendor-Neutral Dispatch library";
     homepage = https://github.com/NVIDIA/libglvnd;
     license = licenses.mit;

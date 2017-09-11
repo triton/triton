@@ -2953,6 +2953,10 @@ opencv_3 = callPackage ../all-pkgs/o/opencv {
 };
 opencv = callPackageAlias "opencv_3" { };
 
+opengl-dummy = callPackage ../all-pkgs/m/mesa {
+  buildConfig = "opengl-dummy";
+};
+
 openh264 = callPackage ../all-pkgs/o/openh264 { };
 
 openjpeg_1 = callPackage ../all-pkgs/o/openjpeg {

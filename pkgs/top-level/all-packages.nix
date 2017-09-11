@@ -1424,6 +1424,9 @@ glog = callPackage ../all-pkgs/g/glog { };
 
 glproto = callPackage ../all-pkgs/g/glproto { };
 
+glu = callPackage ../all-pkgs/g/glu { };
+mesa_glu =  callPackageAlias "glu" { };  # DEPRECATED
+
 glusterfs = callPackage ../all-pkgs/g/glusterfs { };
 
 gmime = callPackage ../all-pkgs/g/gmime { };
@@ -2632,7 +2635,6 @@ mediainfo = callPackage ../all-pkgs/m/mediainfo { };
 
 mercurial = callPackage ../all-pkgs/m/mercurial { };
 
-mesa_glu =  callPackage ../all-pkgs/m/mesa-glu { };
 mesa_noglu = callPackage ../all-pkgs/m/mesa {
   libglvnd = null;
   # makes it slower, but during runtime we link against just

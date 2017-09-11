@@ -158,6 +158,9 @@ stdenv.mkDerivation rec {
   '' + /* Files are unnecessarily pre-generated for an older LLVM version */ ''
     # https://github.com/mesa3d/mesa/commit/5233eaf9ee85bb551ea38c1e2bbd8ac167754e50
     rm src/gallium/drivers/swr/rasterizer/jitter/gen_builder{,_x86}.hpp
+  '' + /* Install glvnd files in the current prefix */ ''
+    sed -i src/egl/Makefile.am \
+      -e 's/LIBGLVND_DATADIR/DATADIR/'
   '';
   # + /* Fix hardcoded OpenCL ICD install path */ ''
   #   sed -i src/gallium/targets/opencl/Makefile.{in,am} \

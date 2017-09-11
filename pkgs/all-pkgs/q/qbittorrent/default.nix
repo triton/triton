@@ -34,9 +34,9 @@ let
     };
     head = {
       fetchzipversion = 3;
-      version = "2017-08-14";
-      rev = "ea749bb052cc866ca70876b213fb057ecd69f33e";
-      sha256 = "dcdf4d98e6eaa04c05a34e8c03575015e4176ae448ab9523495d2eaa2aa380dd";
+      version = "2017-09-11";
+      rev = "56887efdf507fa63530096f7a35c0f74eadae9de";
+      sha256 = "514310264736b91b43f0bbea5e8f5e28d688dd6f94acfdab7b3a0d2bf807f6fb";
     };
   };
   source = sources."${channel}";
@@ -78,7 +78,7 @@ stdenv.mkDerivation rec {
   postPatch = /* Our lrelease binary is named lrelease, not lrelease-qt5 */ ''
     sed -i qm_gen.pri \
       -e 's/lrelease-qt5/lrelease/'
-  '' + /* Use release peer id for head for compatibility with trackers */ 
+  '' + /* Use release peer id for head for compatibility with trackers */
     optionalString (channel == "head") ''
     sed -i version.pri \
       -e '/VER_MAJOR/ s/[0-9]\+/${versionSpoofMaj}/' \

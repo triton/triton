@@ -2936,6 +2936,10 @@ obexftp = callPackage ../all-pkgs/o/obexftp { };
 
 oniguruma = callPackage ../all-pkgs/o/oniguruma { };
 
+open-iscsi = callPackage ../all-pkgs/o/open-iscsi { };
+
+open-isns = callPackage ../all-pkgs/o/open-isns { };
+
 openal-soft = callPackage ../all-pkgs/o/openal-soft { };
 openal = callPackageAlias "openal-soft" { };
 
@@ -2950,10 +2954,6 @@ opencv_3 = callPackage ../all-pkgs/o/opencv {
 opencv = callPackageAlias "opencv_3" { };
 
 openh264 = callPackage ../all-pkgs/o/openh264 { };
-
-open-iscsi = callPackage ../all-pkgs/o/open-iscsi { };
-
-open-isns = callPackage ../all-pkgs/o/open-isns { };
 
 openjpeg_1 = callPackage ../all-pkgs/o/openjpeg {
   channel = "1.5";

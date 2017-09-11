@@ -2636,11 +2636,7 @@ mediainfo = callPackage ../all-pkgs/m/mediainfo { };
 mercurial = callPackage ../all-pkgs/m/mercurial { };
 
 mesa_noglu = callPackage ../all-pkgs/m/mesa {
-  libglvnd = null;
-  # makes it slower, but during runtime we link against just
-  # mesa_drivers through mesa_noglu.driverSearchPath, which is overriden
-  # according to config.grsecurity
-  grsecEnabled = config.grsecurity or false;
+  buildConfig = "full";
 };
 mesa_drivers = pkgs.mesa_noglu.drivers;
 mesa = pkgs.buildEnv {

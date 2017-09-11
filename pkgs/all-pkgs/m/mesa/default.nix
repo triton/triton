@@ -36,9 +36,11 @@
 , xorg
 , zlib
 
-, grsecEnabled
+, grsecEnabled ? false
 # Texture floats are patented, see docs/patents.txt
 , enableTextureFloats ? false
+
+, buildConfig
 }:
 
 /* Packaging design:
@@ -54,11 +56,10 @@
  * - libOSMesa is in $osmesa (~4 MB)
  */
 
-# FIXME: Wayland scanner
-
 let
   inherit (lib)
     boolEn
+    boolWt
     head
     optional
     optionals
@@ -90,6 +91,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoreconfHook
+  ]++ optionals (buildConfig != "opengl-dummy") [
     bison
     flex
     gettext
@@ -100,35 +102,35 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    dri2proto
-    dri3proto
     expat
     glproto
-    libclc
     libdrm
-    libelf
-    libffi
-    libglvnd
-    libomxil-bellagio
-    libpthread-stubs
-    #libva  # FIXME: recursive dependency
-    libvdpau
     libx11
     libxcb
     libxdamage
     libxext
     libxfixes
+    xorg.libxshmfence
+    wayland
+    wayland-protocols
+    zlib
+  ] ++ optionals (buildConfig != "opengl-dummy") [
+    dri2proto
+    dri3proto
+    libclc
+    libelf
+    libffi
+    libglvnd
+    libpthread-stubs
+    libomxil-bellagio
+    #libva  # FIXME: recursive dependency
+    libvdpau
     libxt
     llvm
     lm-sensors
     presentproto
-    wayland
-    wayland-protocols
-    xorg.glproto
-    xorg.libxshmfence
     xorg.libXvMC
     xorg.libXxf86vm
-    zlib
   ];
 
   patches = [
@@ -170,31 +172,31 @@ stdenv.mkDerivation rec {
     "--${boolEn grsecEnabled}-glx-rts"
     "--disable-debug"
     "--disable-profile"
-    "--${boolEn (libglvnd != null)}-libglvnd"
+    "--${boolEn (buildConfig != "opengl-dummy" && libglvnd != null)}-libglvnd"
     "--disable-mangling"
     "--disable-libunwind"
     "--${boolEn enableTextureFloats}-texture-float"
     "--enable-asm"
     # TODO: selinux support
     "--disable-selinux"
-    "--enable-llvm-shared-libs"
+    "--${boolEn (buildConfig != "opengl-dummy")}-llvm-shared-libs"
     "--enable-opengl"
     "--enable-gles1"
     "--enable-gles2"
     "--enable-dri"
-    "--enable-gallium-extra-hud"
-    "--enable-lmsensors"
+    "--${boolEn (buildConfig != "opengl-dummy")}-gallium-extra-hud"
+    "--${boolEn (buildConfig != "opengl-dummy")}-lmsensors"
     "--enable-dri3"
     "--enable-glx"  # dri|xlib|gallium-xlib
     "--disable-osmesa"
-    "--enable-gallium-osmesa"
+    "--${boolEn (buildConfig != "opengl-dummy")}-gallium-osmesa"
     "--enable-egl"
-    "--enable-xa" # used in vmware driver
+    "--${boolEn (buildConfig != "opengl-dummy")}-xa" # used in vmware driver
     "--enable-gbm"
-    "--enable-nine" # Direct3D in Wine
-    "--enable-xvmc"
-    "--enable-vdpau"
-    "--enable-omx"
+    "--${boolEn (buildConfig != "opengl-dummy")}-nine" # Direct3D in Wine
+    "--${boolEn (buildConfig != "opengl-dummy")}-xvmc"
+    "--${boolEn (buildConfig != "opengl-dummy")}-vdpau"
+    "--${boolEn (buildConfig != "opengl-dummy")}-omx"
     # FIXME: We use mesa as libgl at build time and libva depends on libgl
     #"--enable-va"
     # TODO: Figure out how to enable opencl without having a
@@ -203,19 +205,19 @@ stdenv.mkDerivation rec {
     "--disable-opencl-icd"
     "--disable-gallium-tests"
     "--enable-shared-glapi"
-    "--enable-driglx-direct"
+    "--${boolEn (buildConfig != "opengl-dummy")}-driglx-direct"
     "--enable-glx-tls"
     "--disable-glx-read-only-text"
-    "--enable-llvm"
+    "--${boolEn (buildConfig != "opengl-dummy")}-llvm"
     "--disable-valgrind"
 
     #gl-lib-name=GL
     #osmesa-libname=OSMesa
-    "--with-gallium-drivers=svga,i915,nouveau,r300,r600,radeonsi,freedreno,swrast,swr,virgl"
-    "--with-dri-driverdir=$(drivers)/lib/dri"
-    "--with-dri-searchpath=${driverSearchPath}/lib/dri"
-    "--with-dri-drivers=i915,i965,nouveau,radeon,r200,swrast"
-    "--with-vulkan-drivers=intel,radeon"
+    "--${boolWt (buildConfig != "opengl-dummy")}-gallium-drivers${if (buildConfig != "opengl-dummy") then "=svga,i915,nouveau,r300,r600,radeonsi,freedreno,swrast,swr,virgl" else ""}"
+    "--${boolWt (buildConfig != "opengl-dummy")}-dri-driverdir${if (buildConfig != "opengl-dummy") then "=$(drivers)/lib/dri" else ""}"
+    "--${boolWt (buildConfig != "opengl-dummy")}-dri-searchpath${if (buildConfig != "opengl-dummy") then "=${driverSearchPath}/lib/dri" else ""}"
+    "--${boolWt (buildConfig != "opengl-dummy")}-dri-drivers${if (buildConfig != "opengl-dummy") then "=i915,i965,nouveau,radeon,r200,swrast" else ""}"
+    "--${boolWt (buildConfig != "opengl-dummy")}-vulkan-drivers${if (buildConfig != "opengl-dummy") then "=intel,radeon" else ""}"
     #"--with-vulkan-icddir=DIR"
     #osmesa-bits=8
     #"--with-clang-libdir=${llvm}/lib"
@@ -238,46 +240,49 @@ stdenv.mkDerivation rec {
   # move gallium-related stuff to $drivers, so $out doesn't depend on LLVM;
   #   also move libOSMesa to $osmesa, as it's relatively big
   # TODO: probably not all .la files are completely fixed, but it shouldn't matter
-  postInstall = /* Remove vendored Vulkan headers */ ''
-    rm -fv $out/include/vulkan/vk_platform.h
-    rm -fv $out/include/vulkan/vulkan.h
-  '' + ''
-    mv -t "$drivers/lib/" \
-      $out/lib/libXvMC* \
-      $out/lib/d3d \
-      $out/lib/vdpau \
-      $out/lib/libxatracker*
+  postInstall = optionalString (buildConfig != "opengl-dummy") (
+      /* Remove vendored Vulkan headers */ ''
+      rm -fv $out/include/vulkan/vk_platform.h
+      rm -fv $out/include/vulkan/vulkan.h
+    '' + ''
+      mv -t "$drivers/lib/" \
+        $out/lib/libXvMC* \
+        $out/lib/d3d \
+        $out/lib/vdpau \
+        $out/lib/libxatracker*
 
-    mkdir -p {$osmesa,$drivers}/lib/pkgconfig
-    mv -t $osmesa/lib/ \
-      $out/lib/libOSMesa*
+      mkdir -p {$osmesa,$drivers}/lib/pkgconfig
+      mv -t $osmesa/lib/ \
+        $out/lib/libOSMesa*
 
-    mv -t $drivers/lib/pkgconfig/ \
-      $out/lib/pkgconfig/xatracker.pc
+      mv -t $drivers/lib/pkgconfig/ \
+        $out/lib/pkgconfig/xatracker.pc
 
-    mv -t $osmesa/lib/pkgconfig/ \
-      $out/lib/pkgconfig/osmesa.pc
-  '' + /* fix references in .la files */ ''
-    sed "/^libdir=/s,$out,$osmesa," -i \
-      $osmesa/lib/libOSMesa*.la
-  '' + /* work around bug #529, but maybe $drivers should also be patchelf'd */ ''
-    find $drivers/ $osmesa/ -type f -executable -print0 | \
-      xargs -0 strip -S || true
-  '' + /* add RPATH so the drivers can find the moved libgallium & libdricore9 */ ''
-    for lib in $drivers/lib/*.so* $drivers/lib/*/*.so*; do
-      if [[ ! -L "$lib" ]] ; then
-        patchelf \
-          --set-rpath "$(patchelf --print-rpath $lib):$drivers/lib" \
-          "$lib"
-      fi
-    done
-  '' + /* set the default search path for DRI drivers */ ''
-    sed -i "$out/lib/pkgconfig/dri.pc" \
-      -e 's,$(drivers),${driverSearchPath},'
-  '';
+      mv -t $osmesa/lib/pkgconfig/ \
+        $out/lib/pkgconfig/osmesa.pc
+    '' + /* fix references in .la files */ ''
+      sed "/^libdir=/s,$out,$osmesa," -i \
+        $osmesa/lib/libOSMesa*.la
+    '' + /* work around bug #529, but maybe $drivers should also be patchelf'd */ ''
+      find $drivers/ $osmesa/ -type f -executable -print0 | \
+        xargs -0 strip -S || true
+    '' + /* add RPATH so the drivers can find the moved libgallium & libdricore9 */ ''
+      for lib in $drivers/lib/*.so* $drivers/lib/*/*.so*; do
+        if [[ ! -L "$lib" ]] ; then
+          patchelf \
+            --set-rpath "$(patchelf --print-rpath $lib):$drivers/lib" \
+            "$lib"
+        fi
+      done
+    '' + /* set the default search path for DRI drivers */ ''
+      sed -i "$out/lib/pkgconfig/dri.pc" \
+        -e 's,$(drivers),${driverSearchPath},'
+    ''
+  );
 
   outputs = [
     "out"
+  ] ++ optionals (buildConfig != "opengl-dummy") [
     "drivers"
     "osmesa"
   ];

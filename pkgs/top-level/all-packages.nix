@@ -1063,6 +1063,8 @@ efibootmgr = callPackage ../all-pkgs/e/efibootmgr { };
 
 efivar = callPackage ../all-pkgs/e/efivar { };
 
+egl-headers = callPackage ../all-pkgs/e/egl-headers { };
+
 eigen = callPackage ../all-pkgs/e/eigen { };
 
 elasticsearch_5-5 = callPackage ../all-pkgs/e/elasticsearch {

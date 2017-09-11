@@ -200,6 +200,19 @@ let
     excludedPackages = "\\(testdata\\)";
   };
 
+  exp = buildFromGitHub {
+    version = 3;
+    rev = "50c28f97489115b511c3104aafe83f148deb39a9";
+    owner = "golang";
+    repo = "exp";
+    sha256 = "1698184g1lf79rykrp82906b6ydqm8nfsbxcwl4pna796qml9s58";
+    date = "2017-09-05";
+    goPackagePath = "golang.org/x/exp";
+    subPackages = [
+      "ebnf"
+    ];
+  };
+
   geo = buildFromGitHub {
     version = 3;
     rev = "31fb0106dc4a947e5aaee1fe186e56447f839510";
@@ -1139,6 +1152,7 @@ let
       raft-boltdb_v2
       raft_v2
       scada-client
+      time
       ugorji_go
       yamux
     ];
@@ -1760,29 +1774,6 @@ let
     date = "2017-08-04";
     sha256 = "0mdiahsdh61nbvdbzbf1p1rp13k08mcsw5xk75h8bn3smk3j8nrk";
     meta.useUnstable = true;
-  };
-
-  exp = buildFromGitHub {
-    version = 1;
-    date = "2016-07-11";
-    rev = "888ba4519f76bfc1e26a9b32e52c6775677b36fd";
-    owner  = "cznic";
-    repo   = "exp";
-    sha256 = "1a32kv2wjzz1yfgivrm1bp4hzg878jwfmv9qy9hvdx0kccy7rvpw";
-    propagatedBuildInputs = [ bufs fileutil mathutil sortutil zappy ];
-  };
-
-  fifo = buildFromGitHub {
-    version = 2;
-    owner = "tonistiigi";
-    repo = "fifo";
-    rev = "8cf41abe4d87641cd48738771bf25a20d06ca0b2";
-    date = "2017-02-24";
-    sha256 = "83ef31b8e00f05d73bc0a2070c4d9a84e65cb1bb1541d6b80ed01ccbaca397d3";
-    propagatedBuildInputs = [
-      errors
-      net
-    ];
   };
 
   fileutil = buildFromGitHub {
@@ -2412,7 +2403,24 @@ let
     owner = "syndtr";
     repo = "goleveldb";
     sha256 = "1ijqvxh39181i9xirbmqzx8ap9y8q76nli47q59xhswvxsymaa35";
-    propagatedBuildInputs = [ ginkgo gomega snappy ];
+    propagatedBuildInputs = [
+      ginkgo
+      gomega
+      snappy
+    ];
+  };
+
+  golex = buildFromGitHub {
+    version = 3;
+    rev = "4ab7c5e190e49208c823ce8ec803aa39e6a4b31a";
+    date = "2017-08-03";
+    owner = "cznic";
+    repo = "golex";
+    sha256 = "02hk6gqr5559v7iz88p14l61h11a111kab391as61xwjhr1pplxa";
+    propagatedBuildInputs = [
+      lex
+      lexer
+    ];
   };
 
   gomega = buildFromGitHub {
@@ -3781,6 +3789,15 @@ let
     ];
   };
 
+  go-shellquote = buildFromGitHub {
+    version = 3;
+    rev = "cd60e84ee657ff3dc51de0b4f55dd299a3e136f2";
+    owner  = "kballard";
+    repo   = "go-shellquote";
+    sha256 = "1mihgvq5vmj0z3fp1kp5ap8bl46inb8np2andw97fabcck86qvyy";
+    date = "2017-06-19";
+  };
+
   go-shellwords = buildFromGitHub {
     version = 2;
     rev = "v1.0.3";
@@ -4706,7 +4723,8 @@ let
       crypto
       errors
       net
-      reedsolomon
+      templexxx_reedsolomon
+      xor
     ];
   };
 
@@ -4875,6 +4893,32 @@ let
     ];
   };
 
+  lex = buildFromGitHub {
+    version = 3;
+    rev = "68050f59b71a42ca5b94e7b832e5bc2cdb48af66";
+    date = "2017-01-12";
+    owner = "cznic";
+    repo = "lex";
+    sha256 = "1gx2rp0169aznsnv924q80777mzncb0w9vb2vppszpg30kh5w8zv";
+    propagatedBuildInputs = [
+      fileutil
+      lexer
+    ];
+  };
+
+  lexer = buildFromGitHub {
+    version = 3;
+    rev = "52ae7862082bd9649e03c1c4013a104b37811bfa";
+    date = "2014-12-11";
+    owner = "cznic";
+    repo = "lexer";
+    sha256 = "1sdwxgdx26lzaiprwkc5h8fxnxiq5qaihpqggsmw6205b5rb1yad";
+    propagatedBuildInputs = [
+      exp
+      fileutil
+    ];
+  };
+
   libkv = buildFromGitHub {
     version = 3;
     rev = "93ab0e6c056d325dfbb11e1d58a3b4f5f62e7f3c";
@@ -4956,13 +5000,11 @@ let
     owner  = "cznic";
     repo   = "lldb";
     sha256 = "1a3zd71vkvz1c319ihpmrky4zy84lazhsy3gwmnac71f6r8schii";
-    buildInputs = [
+    propagatedBuildInputs = [
       fileutil
       mathutil
-      sortutil
-    ];
-    propagatedBuildInputs = [
       mmap-go
+      sortutil
     ];
     extraSrcs = [
       {
@@ -5357,7 +5399,7 @@ let
       pq
       profile
       redigo
-      reedsolomon
+      klauspost_reedsolomon
       rpc
       sarama_v1
       sha256-simd
@@ -5753,6 +5795,7 @@ let
       consul_api
       copystructure
       cronexpr
+      crypto
       distribution_for_engine-api
       docker_cli
       go-checkpoint
@@ -5801,15 +5844,16 @@ let
       yamux
     ];
 
-    excludedPackages = "testutil";
-
-    # Rename deprecated ParseNamed to ParseNormalizedNamed
     postPatch = ''
+      # Rename deprecated ParseNamed to ParseNormalizedNamed
       find . -type f -exec sed -i {} \
         -e 's,.ParseNamed,.ParseNormalizedNamed,g' \
         -e 's,"github.com/docker/docker/reference","github.com/docker/distribution/reference",g' \
         -e 's,"github.com/docker/docker/cli,"github.com/docker/cli/cli,g' \
         \;
+
+      # Remove test junk
+      find . \( -name testutil -or -name testagent.go \) -prune -exec rm -r {} \;
     '';
 
     preBuild = ''
@@ -5862,6 +5906,18 @@ let
     owner  = "stretchr";
     repo   = "objx";
     sha256 = "0ycjvfbvsq6pmlbq2v7670w1k25nydnz4scx0qgiv0f4llxnr0y9";
+  };
+
+  oktasdk-go = buildFromGitHub {
+    version = 3;
+    owner = "chrismalek";
+    repo = "oktasdk-go";
+    rev = "ae553c909ca06a4c34eb41ee435e83871a7c2496";
+    date = "2017-09-11";
+    sha256 = "0jcqdiczz94xkw0xcq97adfc9nk3wgy67l419811q8j7caqim7jv";
+    propagatedBuildInputs = [
+      go-querystring
+    ];
   };
 
   open-golang = buildFromGitHub {
@@ -6306,6 +6362,7 @@ let
       b
       exp
       go4
+      golex
       lldb
       mathutil
       strutil
@@ -6342,17 +6399,19 @@ let
 
   raft_v2 = buildFromGitHub {
     version = 3;
-    date = "2017-06-09";
+    date = "2017-08-30";
     # Use the library-v2-stage-one branch until it is merged
     # into master.
-    rev = "e5e581e04af7c46974b99195347cc0c380c0d841";
+    rev = "c837e57a6077e74a4a3749959fb6cfefc26d7705";
     owner  = "hashicorp";
     repo   = "raft";
-    sha256 = "13a16af54b18db9d1444a6d8c3e9315d9914aa3a1e8eed54c8f404b321b0f204";
+    sha256 = "62d03237236f4c40bcccb1b0120f14aaf493c52b3eea703970d669f29452cacf";
     propagatedBuildInputs = [
       armon_go-metrics
-      logxi
       ugorji_go
+    ];
+    subPackages = [
+      "."
     ];
     meta.autoUpdate = false;
   };
@@ -6489,7 +6548,7 @@ let
     ];
   };
 
-  reedsolomon = buildFromGitHub {
+  klauspost_reedsolomon = buildFromGitHub {
     version = 3;
     owner = "klauspost";
     repo = "reedsolomon";
@@ -6500,6 +6559,17 @@ let
       cpuid
     ];
     meta.useUnstable = true;
+  };
+
+  templexxx_reedsolomon = buildFromGitHub {
+    version = 3;
+    owner = "templexxx";
+    repo = "reedsolomon";
+    rev = "0.1.0";
+    sha256 = "0n53qkzc3qq61qgg82qg2jb3myhkm40qs5gm7dmiglqwqp9hydf2";
+    subPackages = [
+      "."
+    ];
   };
 
   reflectwalk = buildFromGitHub {
@@ -6851,12 +6921,12 @@ let
   };
 
   sortutil = buildFromGitHub {
-    version = 1;
+    version = 3;
     date = "2015-06-17";
     rev = "4c7342852e65c2088c981288f2c5610d10b9f7f4";
     owner = "cznic";
     repo = "sortutil";
-    sha256 = "11iykyi1d7vjmi7778chwbl86j6s1742vnd4k7n1rvrg7kq558xq";
+    sha256 = "1r57m3g20dm3ayp9mjqp4s4bl0wvak5ahgisgb1k6hbsc5si27vr";
   };
 
   spacelog = buildFromGitHub {
@@ -7077,6 +7147,7 @@ let
       go-deadlock
       go-lz4
       go-nat-pmp
+      go-shellquote
       go-stun
       gogo_protobuf
       goleveldb
@@ -7528,11 +7599,13 @@ let
       azure-storage-go
       columnize
       cockroach-go
+      complete
       consul_api
       copystructure
       crypto
       duo_api_golang
       errwrap
+      errors
       etcd_client
       go-cache
       go-cleanhttp
@@ -7574,6 +7647,7 @@ let
       mysql
       net
       oauth2
+      oktasdk-go
       otp
       pester
       pkcs7
@@ -7834,6 +7908,14 @@ let
     propagatedBuildInputs = [
       text
     ];
+  };
+
+  xor = buildFromGitHub {
+    version = 3;
+    rev = "0.1.1";
+    owner  = "templexxx";
+    repo   = "xor";
+    sha256 = "0y683cx748cm2g49iyzgyv1mr80yi5pmqqji031s2r92bdkwb4b7";
   };
 
   xorm = buildFromGitHub {

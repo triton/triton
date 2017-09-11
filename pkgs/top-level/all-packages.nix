@@ -2957,6 +2957,8 @@ opengl-dummy = callPackage ../all-pkgs/m/mesa {
   buildConfig = "opengl-dummy";
 };
 
+opengl-headers = callPackage ../all-pkgs/o/opengl-headers { };
+
 openh264 = callPackage ../all-pkgs/o/openh264 { };
 
 openjpeg_1 = callPackage ../all-pkgs/o/openjpeg {

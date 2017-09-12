@@ -1065,6 +1065,8 @@ efivar = callPackage ../all-pkgs/e/efivar { };
 
 egl-headers = callPackage ../all-pkgs/e/egl-headers { };
 
+egl-wayland = callPackage ../all-pkgs/e/egl-wayland { };
+
 eglexternalplatform = callPackage ../all-pkgs/e/eglexternalplatform { };
 
 eigen = callPackage ../all-pkgs/e/eigen { };

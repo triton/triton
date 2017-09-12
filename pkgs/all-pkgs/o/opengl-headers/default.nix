@@ -27,7 +27,6 @@ stdenv.mkDerivation rec {
     for api in api/GL{,ES{,2,3},SC{,2}}; do
       pushd $api
         while read header; do
-          echo $header >&2
           install -D -m644 -v $header $out/include/$(basename "$api")/$header
         done < <(find . -name "*.h" -printf '%P\n')
       popd

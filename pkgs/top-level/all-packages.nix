@@ -1065,6 +1065,8 @@ efivar = callPackage ../all-pkgs/e/efivar { };
 
 egl-headers = callPackage ../all-pkgs/e/egl-headers { };
 
+eglexternalplatform = callPackage ../all-pkgs/e/eglexternalplatform { };
+
 eigen = callPackage ../all-pkgs/e/eigen { };
 
 elasticsearch_5-5 = callPackage ../all-pkgs/e/elasticsearch {

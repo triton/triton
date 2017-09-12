@@ -2640,6 +2640,7 @@ mediainfo = callPackage ../all-pkgs/m/mediainfo { };
 mercurial = callPackage ../all-pkgs/m/mercurial { };
 
 mesa_noglu = callPackage ../all-pkgs/m/mesa {
+  libglvnd = null;
   buildConfig = "full";
 };
 mesa_drivers = pkgs.mesa_noglu.drivers;

@@ -1,12 +1,13 @@
 { stdenv
 , fetchurl
+, lib
 , makeWrapper
 
 , bzip2
 , cairo
 , gksu
 , glib
-, gtk2
+, gtk_2
 , libredirect
 , libx11
 , openssl
@@ -18,13 +19,13 @@
 let
   inherit (stdenv)
     system;
-  inherit (stdenv.lib)
+  inherit (lib)
     makeSearchPath
     optionalString;
 in
 
 let
-  version = "3126";
+  version = "3143";
 in
 
 let
@@ -34,8 +35,8 @@ let
     src = fetchurl {
       url = "https://download.sublimetext.com/"
         + "sublime_text_3_build_${version}_x64.tar.bz2";
-      multihash = "QmY76AscajnPmFYWAryuZdPVBUZHcWD45Srt5HrYWAcwXb";
-      sha256 = "18db132e9a305fa3129014b608628e06f9442f48d09cfe933b3b1a84dd18727a";
+      multihash = "QmNgoqdq9jSkuVao3mcFphT8ujcPbCRCaCz8pN87MzJnyP";
+      sha256 = "9ce120c4f28b239d3b3860ee672d9d87e1397a4c08ee6c4e62fd6e261a296519";
     };
 
     nativeBuildInputs = [
@@ -45,7 +46,7 @@ let
     libPath = makeSearchPath "lib" [
       cairo
       glib
-      gtk2
+      gtk_2
       pango
       libx11
     ];
@@ -69,6 +70,12 @@ let
           --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
           --set-rpath ${libPath}:${stdenv.cc.cc}/lib64 \
           $i
+        if [ -n "$(ldd "$i" 2>&- | grep --only-matching 'not found')" ]; then
+          echo "ERROR: failed to patch RPATH's for:"
+          echo "$i"
+          ldd $i
+          return 1
+        fi
       done
     '' + /* Rewrite gksudo/pkexec argument. Note that we can't delete
             bytes in binary. */ ''
@@ -119,7 +126,7 @@ stdenv.mkDerivation rec {
     ln -sv ${sublime-text-bin}/Icon/256x256/sublime_text.png $out/share/icons
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Sophisticated text editor for code, markup and prose";
     homepage = https://www.sublimetext.com/;
     license = licenses.unfreeRedistributable;

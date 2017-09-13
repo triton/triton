@@ -85,7 +85,8 @@ stdenv.mkDerivation rec {
       -e '/VER_MINOR/ s/[0-9]\+/${versionSpoofMin}/' \
       -e '/VER_BUGFIX/ s/[0-9]\+/${versionSpoofPat}/' \
       -e '/VER_BUILD/ s/[0-9]\+/0/' \
-      -e '/VER_STATUS/ s/beta//'
+      -e '/VER_STATUS/ s/beta//' \
+      -e '/VER_STATUS/ s/[0-9]\+//'
   '';
 
   configureFlags = [

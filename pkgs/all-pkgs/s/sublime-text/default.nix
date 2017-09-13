@@ -96,7 +96,7 @@ let
     dontStrip = true;
     dontPatchELF = true;
 
-    meta = with stdenv.lib; {
+    meta = with lib; {
       license = licenses.unfreeRedistributable;
       platforms = with platforms;
         x86_64-linux;

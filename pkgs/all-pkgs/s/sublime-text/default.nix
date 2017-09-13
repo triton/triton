@@ -22,13 +22,9 @@ let
   inherit (lib)
     makeSearchPath
     optionalString;
-in
 
-let
   version = "3143";
-in
 
-let
   sublime-text-bin = stdenv.mkDerivation rec {
     name = "sublime-text-bin-${version}";
 
@@ -107,7 +103,6 @@ let
     };
   };
 in
-
 stdenv.mkDerivation rec {
   name = "sublime-text-${version}";
 

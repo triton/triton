@@ -30,7 +30,7 @@ let
   sources = {
     stable = {
       version = "3.3.16";
-      sha256 = "e5e2a1ba6bd239dc117f4250f1fc67e2549393d4a620efccf49f0eb1568d6f28";
+      sha256 = "ea08a61872c397258c2627780f6e09fe777189d9a57cc5e02a656da9aeb0be57";
     };
     head = {
       fetchzipversion = 3;

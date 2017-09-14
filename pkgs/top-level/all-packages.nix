@@ -2346,6 +2346,8 @@ libpeas = callPackageAlias "libpeas_1-20" { };
 
 libpipeline = callPackage ../all-pkgs/l/libpipeline { };
 
+libplist = callPackage ../all-pkgs/l/libplist { };
+
 libpng = callPackage ../all-pkgs/l/libpng { };
 
 libproxy = callPackage ../all-pkgs/l/libproxy { };
@@ -4225,8 +4227,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libnatspec = callPackage ../development/libraries/libnatspec { };
 #
   libndp = callPackage ../development/libraries/libndp { };
-#
-  libplist = callPackage ../development/libraries/libplist { };
 #
   librevenge = callPackage ../development/libraries/librevenge {};
 

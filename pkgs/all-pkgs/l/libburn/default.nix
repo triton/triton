@@ -1,5 +1,7 @@
 { stdenv
 , fetchurl
+
+, libcdio
 }:
 
 stdenv.mkDerivation rec {
@@ -11,6 +13,15 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     sha256 = "3e81a2e359376c38d96239a9c9967be715f706d150d89c337de0fc85ecb79da6";
   };
+
+  buildInputs = [
+    libcdio
+  ];
+
+  configureFlags = [
+    "--enable-libcdio"
+    "--enable-pkg-check-modules"
+  ];
 
   passthru = {
     srcVerification = fetchurl {

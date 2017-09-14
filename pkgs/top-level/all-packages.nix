@@ -3652,6 +3652,8 @@ vala = callPackageAlias "vala_0-36" { };
 
 vault = pkgs.goPackages.vault.bin // { outputs = [ "bin" ]; };
 
+vcdimager = callPackage ../all-pkgs/v/vcdimager { };
+
 vid-stab = callPackage ../all-pkgs/v/vid-stab { };
 
 videoproto = callPackage ../all-pkgs/v/videoproto { };

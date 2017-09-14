@@ -7,13 +7,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libisofs-1.4.4";
+  name = "libisofs-1.4.8";
 
   src = fetchurl {
     url = "http://files.libburnia-project.org/releases/${name}.tar.gz";
+    multihash = "QmaYUk6YDiiL7gKNLBuJpyb7Y9QBHtkVtB3uHDYGcYr7qi";
     hashOutput = false;
-    multihash = "QmcCGco1R8bEKVqZYUBnF2LngiEh2AYjyornmz5bDRC1FM";
-    sha256 = "2418f0feeea652dc122a39840d58c6931aa1008480385f7403881d82a629bdfd";
+    sha256 = "dc9de9df366c27cf03d31d860c83a08ddad9028fe192801ee344602ccec29b69";
   };
 
   buildInputs = [

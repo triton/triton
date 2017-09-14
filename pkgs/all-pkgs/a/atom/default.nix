@@ -59,7 +59,7 @@ let
     "beta" = {
       suffix = "-beta";
       version = "1.21.0-beta0";
-      sha256 = "951148e50c531c6f4ae0f25b54fde93cccd8db0dc56bf8d5b397b16dcfa9bf4e";
+      sha256 = "dffdee47dc64ab36bb00c5ed8a28484b148ef0aef0abd86485e96e6196a7ddeb";
     };
   };
   source = sources."${channel}";

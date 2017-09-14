@@ -354,6 +354,8 @@ ply = callPackage ../all-pkgs/p/ply { };
 
 portend = callPackage ../all-pkgs/p/portend { };
 
+prettytable = callPackage ../all-pkgs/p/prettytable { };
+
 progressbar = callPackage ../all-pkgs/p/progressbar { };
 
 psutil = callPackage ../all-pkgs/p/psutil { };

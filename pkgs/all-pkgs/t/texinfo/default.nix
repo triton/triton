@@ -13,7 +13,7 @@ let
     "mirror://gnu/texinfo/texinfo-${version}.tar.xz"
   ];
 
-  version = "6.4";
+  version = "6.5";
 in
 stdenv.mkDerivation rec {
   name = "texinfo-${version}";
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "6ae2e61d87c6310f9af7c6f2426bd0470f251d1a6deb61fba83a3b3baff32c3a";
+    sha256 = "77774b3f4a06c20705cc2ef1c804864422e3cf95235e965b1f00a46df7da5f62";
   };
 
   nativeBuildInputs = [

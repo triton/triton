@@ -12,10 +12,11 @@
 , requests
 , six
 , snowballstemmer
+, sphinxcontrib-websupport
 }:
 
 let
-  version = "1.5.5";
+  version = "1.6.3";
 in
 buildPythonPackage {
   name = "Sphinx-${version}";
@@ -23,7 +24,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "Sphinx";
     inherit version;
-    sha256 = "4064ea6c56feeb268838cb8fbbee507d0c3d5d92fa63a7df935a916b52c9e2f5";
+    sha256 = "af8bdb8c714552b77d01d4536e3d6d2879d6cb9d25423d29163d5788e27046e6";
   };
 
   propagatedBuildInputs = [
@@ -36,6 +37,7 @@ buildPythonPackage {
     requests
     six
     snowballstemmer
+    sphinxcontrib-websupport
   ];
 
   meta = with lib; {

@@ -814,7 +814,7 @@ cdrtools = callPackage ../all-pkgs/c/cdrtools { };
 # The default channel should be the latest LTS
 # Dev should always point to the latest versioned release
 ceph_lib = pkgs.ceph.lib;
-ceph = hiPrio pkgs.ceph_11;
+ceph = hiPrio pkgs.ceph_12;
 ceph_10 = callPackage ../all-pkgs/c/ceph {
   channel = "10";
 };

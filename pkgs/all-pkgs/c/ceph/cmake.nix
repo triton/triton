@@ -2,7 +2,6 @@
 , cmake
 , fetchurl
 , perl
-, pythonPackages
 , python2Packages
 , python3Packages
 , yasm
@@ -24,6 +23,7 @@
 , openldap
 , openssl
 , rdma-core
+, rocksdb
 , snappy
 , systemd_lib
 , util-linux_lib
@@ -36,8 +36,10 @@
 let
   inherit (stdenv.lib)
     optionals
+    optionalString
     replaceChars
-    versionAtLeast;
+    versionAtLeast
+    versionOlder;
 
   sources = (import ./sources.nix)."${channel}";
 
@@ -54,39 +56,47 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
-    perl
-    pythonPackages.sphinx
     python2Packages.python
     python2Packages.wrapPython
+    python3Packages.sphinx
     python3Packages.cython
     python3Packages.python
     yasm
+  ] ++ optionals (versionOlder version "12.0.0") [
+    perl
   ];
 
   buildInputs = [
     boost
     curl
     expat
-    fcgi
     fuse_2
     jemalloc
     keyutils
     leveldb
     libaio
-    libatomic_ops
     lz4
     nspr
     nss
     openldap
+    openssl
     snappy
     systemd_lib
     util-linux_lib
     xfsprogs_lib
     zlib
+  ] ++ optionals (versionOlder version "12.0.0") [
+    fcgi
+    libatomic_ops
   ] ++ optionals (versionAtLeast version "12.0.0") [
     gperf
-    openssl
     rdma-core
+    rocksdb
+  ];
+
+  # Needed by the ceph command line
+  propagatedBuildInputs = optionals (versionAtLeast version "12.2.0") [
+    python2Packages.prettytable
   ];
 
   postPatch = ''
@@ -101,7 +111,7 @@ stdenv.mkDerivation rec {
 
     # Boost doesn't know how to include python libraries
     sed -i '/find_package(Boost/aLIST(APPEND Boost_LIBRARIES ''${PYTHON_LIBRARY})' CMakeLists.txt
-
+  '' + optionalString (versionOlder version "12.0.0") ''
     # Rocksdb fails with gcc7 with Werror
     sed \
       -e '/-Werror/d' \
@@ -113,43 +123,46 @@ stdenv.mkDerivation rec {
       -i src/rocksdb/utilities/persistent_cache/block_cache_tier_file.h \
       -i src/rocksdb/utilities/persistent_cache/hash_table_evictable.h \
       -i src/os/FuseStore.h
+  '' + optionalString (versionAtLeast version "12.0.0") ''
+    # Fix for rocksdb api change
+    grep -q 'rocksdb::perf_context' src/kv/RocksDBStore.cc
+    sed -i 's,rocksdb::perf_context.,rocksdb::get_perf_context()->,g' src/kv/RocksDBStore.cc
   '';
 
   preConfigure = ''
     cmakeFlagsArray+=(
-      #"-DCMAKE_INSTALL_SYSCONFDIR=/etc"
-      #"-DCMAKE_INSTALL_LOCALSTATEDIR=/var"
       "-DCMAKE_INSTALL_INCLUDEDIR=$lib/include"
       "-DCMAKE_INSTALL_LIBDIR=$lib/lib"
     )
   '';
 
   cmakeFlags = [
-    #"-DWITH_RDMA=ON"
-    #"-DWITH_SPDK=ON"
-    #"-DWITH_XIO=ON"  # Broken build
-    "-DHAVE_BABELTRACE=OFF"
     "-DDEBUG_GATHER=OFF"
-    #"-DHAVE_LIBZFS=ON"  # Broken build and broken for using anyway
     "-DWITH_TESTS=OFF"
-    #"-DWITH_FIO=ON"
-    "-DWITH_SYSTEMD=ON"
     "-DWITH_LTTNG=OFF"
     "-DWITH_SYSTEM_BOOST=ON"
+    "-DWITH_SYSTEMD=ON"
 
-    "-DBUILD_SHARED_LIBS=ON"
     "-DXFS_INCLUDE_DIR=${xfsprogs_lib}/include"
+  ] ++ optionals (versionOlder version "12.2.0") [
+    "-DHAVE_BABELTRACE=OFF"
+    "-DBUILD_SHARED_LIBS=ON"
     "-DKEYUTILS_INCLUDE_DIR=${keyutils}/include"
+  ] ++ optionals (versionAtLeast version "12.2.0") [
+    "-DWITH_LZ4=ON"
+    "-DWITH_BABELTRACE=OFF"
+    "-DWITH_SYSTEM_ROCKSDB=ON"
   ];
 
   makeFlags = [
     "VERBOSE=1"
+    "-O"
   ];
 
   # Ensure we have the correct rpath already to work around
   # a broken patchelf.
   preBuild = ''
-    export NIX_LDFLAGS="$NIX_LDFLAGS -rpath $lib/lib"
+    export NIX_LDFLAGS="$NIX_LDFLAGS -rpath $lib/lib -rpath $(pwd)/lib"
   '';
 
   postInstall = ''

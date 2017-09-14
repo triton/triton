@@ -10,7 +10,7 @@ let
     "mirror://gnu/mpfr/mpfr-${version}.tar.xz"
   ];
 
-  version = "3.1.5";
+  version = "3.1.6";
 
   inherit (stdenv.lib)
     flip
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "015fde82b3979fbe5f83501986d328331ba8ddf008c1ff3da3c238f49ca062bc";
+    sha256 = "7a62ac1a04408614fccdc506e4844b10cf0ad2c2b1677097f8f35d3a1344a950";
   };
 
   patches = flip mapAttrsToList patchSha256s (n: { multihash, sha256 }: fetchurl {

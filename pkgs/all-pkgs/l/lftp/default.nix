@@ -8,9 +8,9 @@
 
 , expat
 , less
-, libidn
+, libidn2
 , ncurses
-, openssl_1-0-2
+, openssl
 , readline
 , zlib
 }:
@@ -21,15 +21,15 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "lftp-4.8.0";
+  name = "lftp-4.8.1";
 
   src = fetchurl {
     urls = [
       "https://lftp.yar.ru/ftp/${name}.tar.bz2"
       "https://lftp.yar.ru/ftp/old/${name}.tar.bz2"
     ];
-    multihash = "QmeVeVg9bMdfEuYcpLDfLtxH6xG9RkpwXruvMS3ThyXzEw";
-    sha256 = "64e8b122aba45cb2c1cc0f0c2065c6e62415679aca8b13b94600bddfbf18447c";
+    multihash = "QmZLvP354jwE7vetSK3nnZZcUxYkHoCLvjM2gU1G8EJnUX";
+    sha256 = "3756d0d4ad756ceb90bd149870065b24337db0978a8f3386f95ffda6555db9c2";
   };
 
   nativeBuildInputs = [
@@ -40,9 +40,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     expat
-    libidn
+    libidn2
     ncurses
-    openssl_1-0-2
+    openssl
     readline
     zlib
   ];
@@ -84,8 +84,8 @@ stdenv.mkDerivation rec {
     "--with-modules"
     #"--with-sysroot"
     "--without-gnutls"
-    "--${boolWt (openssl_1-0-2 != null)}-openssl${
-      boolString (openssl_1-0-2 != null) "=${openssl_1-0-2}" ""}"
+    "--${boolWt (openssl != null)}-openssl${
+      boolString (openssl != null) "=${openssl}" ""}"
     "--without-included-regex"
     "--with-libresolv"
     "--${boolWt (readline != null)}-readline${
@@ -96,7 +96,7 @@ stdenv.mkDerivation rec {
       boolString (expat != null) "=${expat}" ""}"
     # TODO
     #"--with-dnssec-local-validation"
-    "--${boolWt (libidn != null)}-libidn"
+    "--${boolWt (libidn2 != null)}-libidn2"
   ];
 
   meta = with lib; {

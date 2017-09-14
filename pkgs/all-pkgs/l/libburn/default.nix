@@ -3,13 +3,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libburn-1.4.4";
+  name = "libburn-1.4.8";
 
   src = fetchurl {
     url = "http://files.libburnia-project.org/releases/${name}.tar.gz";
+    multihash = "QmaPEPX5ZQ4eJwzVVKDLm9gVP5aZBDyEURuXE8mj55eYYA";
     hashOutput = false;
-    multihash = "QmWkE5BPAKKmQusdRBuFca7zNrGAJ3Yz4tYyiZA4a5Ee4K";
-    sha256 = "1bf7040d6f1274acd868aec02a3c13241d0da8d9078067d228f2966ca40e7d14";
+    sha256 = "3e81a2e359376c38d96239a9c9967be715f706d150d89c337de0fc85ecb79da6";
   };
 
   passthru = {

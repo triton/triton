@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "0.13.1";
+  version = "0.14";
 in
 buildPythonPackage {
   name = "docutils-${version}";
@@ -12,7 +12,7 @@ buildPythonPackage {
   src = fetchPyPi {
     package = "docutils";
     inherit version;
-    sha256 = "718c0f5fb677be0f34b781e04241c4067cbd9327b66bdd8e763201130f5175be";
+    sha256 = "51e64ef2ebfb29cae1faa133b3710143496eca21c530f3f71424d77687764274";
   };
   
   meta = with stdenv.lib; {

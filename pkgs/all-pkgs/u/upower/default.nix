@@ -22,11 +22,12 @@ let
     boolWt;
 in
 stdenv.mkDerivation rec {
-  name = "upower-0.99.4";
+  name = "upower-0.99.6";
 
   src = fetchurl {
     url = "https://upower.freedesktop.org/releases/${name}.tar.xz";
-    sha256 = "9ca325a6ccef505529b268ebbbd9becd0ce65a65f6ac7ee31e2e5b17648037b0";
+    multihash = "QmYevSLJTwpBEQn83QaCCd2YgKCyRi2ZrxfToapuvvT1T4";
+    sha256 = "b194d1f227ed33e76ae29aa5c11acabad334938f2726b8c7903fac07a1335015";
   };
 
   nativeBuildInputs = [
@@ -41,6 +42,7 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     libgudev
+    libimobiledevice
     libusb
     systemd_lib
   ];

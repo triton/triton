@@ -2236,6 +2236,8 @@ libidn = callPackage ../all-pkgs/l/libidn { };
 
 libidn2 = callPackage ../all-pkgs/l/libidn2 { };
 
+libimobiledevice = callPackage ../all-pkgs/l/libimobiledevice { };
+
 libiodbc = callPackage ../all-pkgs/l/libiodbc {
   gtk_2 = null;
 };
@@ -4219,8 +4221,6 @@ cfitsio = callPackage ../development/libraries/cfitsio { };
   libdvbpsi = callPackage ../development/libraries/libdvbpsi { };
 #
   libgtop = callPackage ../development/libraries/libgtop {};
-#
-  libimobiledevice = callPackage ../development/libraries/libimobiledevice { };
 #
   liblqr1 = callPackage ../development/libraries/liblqr-1 { };
 #

@@ -1,10 +1,14 @@
 { stdenv
+, fetchTritonPatch
 , fetchurl
 
 , type ? ""
 }:
 
 let
+  inherit (stdenv.lib)
+    optionals;
+
   sources = {
     "" = {
       multihash = "QmPr15Jcki6Q434fgNcbESVkS84Wyj5NPjXDZ6vrnLQ4Nj";
@@ -31,6 +35,15 @@ stdenv.mkDerivation rec {
     url = "mirror://sourceforge/docbook/${pname}/${version}/${name}.tar.bz2";
     inherit multihash sha256;
   };
+
+  patches = optionals (type == "") [
+    # Fix infinite recursion.
+    (fetchTritonPatch {
+      rev = "1fcb617f160d9c0367f334a907ef6bf0a87512c5";
+      file = "d/docbook-xsl/nonrecursive-string-subst.patch";
+      sha256 = "9ba5a2f75647df559c2399ec660017135e6997a188e220557e7ce106f5b6a174";
+    })
+  ];
 
   # Running make will cause the build to fail
   buildPhase = ''

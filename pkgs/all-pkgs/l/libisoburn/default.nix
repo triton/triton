@@ -10,13 +10,13 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "libisoburn-1.4.4";
+  name = "libisoburn-1.4.8";
 
   src = fetchurl {
     url = "http://files.libburnia-project.org/releases/${name}.tar.gz";
+    multihash = "Qmcw3rrfR8UysFDLJgjE13nvsJdk3vKRHtzz3ZtcrMbYQQ";
     hashOutput = false;
-    multihash = "QmfKeuBkXucrqpoR8gu6Djc31S66Z92BrUBnLoCZD1BaSG";
-    sha256 = "7b02a1930382d7ebb4ed9e32917aebd4967c2255fdb3549a95ace5c6276fc2d6";
+    sha256 = "91cf50473f0f19400629515974bda441545aaae29862dcbbdb28d87b821ca5a5";
   };
 
   buildInputs = [

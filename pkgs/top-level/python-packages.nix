@@ -507,6 +507,8 @@ speedtest-cli = callPackage ../all-pkgs/s/speedtest-cli { };
 
 sphinx = callPackage ../all-pkgs/s/sphinx { };
 
+sphinxcontrib-websupport = callPackage ../all-pkgs/s/sphinxcontrib-websupport { };
+
 sqlalchemy = callPackage ../all-pkgs/s/sqlalchemy { };
 
 statistics = callPackage ../all-pkgs/s/statistics { };

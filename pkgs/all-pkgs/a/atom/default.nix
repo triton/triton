@@ -18,6 +18,7 @@
 , glib
 , gtk_2
 , gvfs
+, kbproto
 , libcap
 , libgnome-keyring
 , libgpg-error
@@ -39,6 +40,7 @@
 , shared-mime-info
 , systemd_lib
 , xorg
+, xproto
 , zlib
 
 , channel
@@ -91,6 +93,7 @@ stdenv.mkDerivation rec {
     glib
     gtk_2
     gvfs
+    kbproto
     libcap
     libgnome-keyring
     libgpg-error
@@ -113,6 +116,7 @@ stdenv.mkDerivation rec {
     pango
     stdenv.cc.cc
     systemd_lib
+    xproto
     zlib
   ];
 
@@ -144,7 +148,17 @@ stdenv.mkDerivation rec {
       -e 's,$(basename $0),atom${source.suffix},'
 
     wrapProgram $out/bin/atom${source.suffix} \
+      --prefix 'CPATH' : "${makeSearchPath "include" buildInputs}" \
       --prefix 'PATH' : "${gvfs}/bin:${python}/bin" \
+      --prefix 'LIBRARY_PATH' : "${libPath}" \
+      --prefix 'LD_LIBRARY_PATH' : "${libPath}" \
+      --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
+      --prefix 'XDG_DATA_DIRS' : "$out/share"
+
+    wrapProgram $out/bin/apm${source.suffix} \
+      --prefix 'CPATH' : "${makeSearchPath "include" buildInputs}" \
+      --prefix 'PATH' : "${gvfs}/bin:${python}/bin" \
+      --prefix 'LIBRARY_PATH' : "${libPath}" \
       --prefix 'LD_LIBRARY_PATH' : "${libPath}" \
       --prefix 'XDG_DATA_DIRS' : "${shared-mime-info}/share" \
       --prefix 'XDG_DATA_DIRS' : "$out/share"

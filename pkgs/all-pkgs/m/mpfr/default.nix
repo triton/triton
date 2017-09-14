@@ -45,11 +45,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "3.1.5";
+      urls = tarballUrls "3.1.6";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "07F3 DBBE CC1A 3960 5078  094D 980C 1976 98C3 739D";
       inherit (src) outputHashAlgo;
-      outputHash = "015fde82b3979fbe5f83501986d328331ba8ddf008c1ff3da3c238f49ca062bc";
+      outputHash = "7a62ac1a04408614fccdc506e4844b10cf0ad2c2b1677097f8f35d3a1344a950";
     };
   };
 

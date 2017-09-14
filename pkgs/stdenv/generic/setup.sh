@@ -723,7 +723,7 @@ commonMakeFlags() {
     actualMakeFlags+=('-f' "$makefile")
   fi
   if [ -n "${!parallelVar-true}" ] ; then
-    actualMakeFlags+=("-j${NIX_BUILD_CORES}" "-l${NIX_BUILD_CORES}")
+    actualMakeFlags+=("-j${NIX_BUILD_CORES}" "-l${NIX_BUILD_CORES}" "-O")
   fi
   actualMakeFlags+=("SHELL=$SHELL") # Needed for https://github.com/NixOS/nixpkgs/pull/1354#issuecomment-31260409
   actualMakeFlags+=($makeFlags)

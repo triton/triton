@@ -6,12 +6,15 @@
 , libx11
 , libxext
 , libxfixes
-, mesa
 , mesa_noglu
+, opengl-dummy
 , wayland
 }:
 
 let
+  inherit (lib)
+    boolEn;
+
   version = "1.8.3";
 in
 stdenv.mkDerivation rec {
@@ -33,7 +36,7 @@ stdenv.mkDerivation rec {
     libx11
     libxext
     libxfixes
-    mesa
+    opengl-dummy
     wayland
   ];
 
@@ -41,8 +44,8 @@ stdenv.mkDerivation rec {
     "--disable-docs"
     "--enable-drm"
     "--enable-x11"
-    "--enable-glx"
-    "--enable-egl"
+    "--${boolEn opengl-dummy.glx}-glx"
+    "--${boolEn opengl-dummy.egl}-egl"
     "--enable-wayland"
     "--enable-va-messaging"
     "--enable-dummy-driver"

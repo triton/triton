@@ -2,7 +2,7 @@
 , fetchurl
 , lib
 
-, mesa_noglu
+, opengl-dummy
 }:
 
 stdenv.mkDerivation rec {
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    mesa_noglu
+    opengl-dummy
   ];
 
   configureFlags = [

@@ -4,8 +4,9 @@
 , meson
 , ninja
 
+, libx11
 , mesa_noglu
-, xorg
+, xproto
 }:
 
 let
@@ -41,9 +42,9 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    libx11
     mesa_noglu
-    xorg.libX11
-    xorg.xproto
+    xproto
   ];
 
   mesonFlags = [

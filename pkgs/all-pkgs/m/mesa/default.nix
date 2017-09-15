@@ -73,7 +73,7 @@ let
   driverSearchPath = "/run/opengl-driver-${stdenv.targetSystem}";
 in
 stdenv.mkDerivation rec {
-  name = "mesa-noglu-${version}";
+  name = "${if buildConfig == "opengl-dummy" then "opengl-dummy" else "mesa-noglu"}-${version}";
 
   src =  fetchurl {
     urls = [

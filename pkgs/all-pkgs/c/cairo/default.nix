@@ -18,8 +18,6 @@
 , opengl-dummy
 , xorg
 , zlib
-
-, gles2 ? false
 }:
 
 let
@@ -111,8 +109,8 @@ stdenv.mkDerivation rec {
     "--disable-gallium"
     # Only one OpenGL backend may be selected at compile time
     # OpenGL X (gl), or OpenGL ES 2.0 (glesv2)
-    "--${boolEn (!opengl-dummy.glesv2 && opengl-dummy.glx)}-gl"
-    "--${boolEn opengl-dummy.glesv2}-glesv2"
+    "--${boolEn opengl-dummy.glx}-gl"
+    "--${boolEn (opengl-dummy.glesv2 && !opengl-dummy.glx)}-glesv2"
     "--disable-cogl"  # recursive dependency
     # FIXME: fix directfb mirroring
     "--disable-directfb"

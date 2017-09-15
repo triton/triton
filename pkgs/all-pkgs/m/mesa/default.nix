@@ -296,6 +296,7 @@ stdenv.mkDerivation rec {
   bindnow = false;
 
   passthru = {
+    # FIXME: convert references to mesa-noglu.driverSearchPath -> opengl-dummy.driverSearchPath
     inherit driverSearchPath version;
 
     srcVerification = fetchurl {

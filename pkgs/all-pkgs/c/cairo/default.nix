@@ -12,6 +12,8 @@
 , libspectre
 , libx11
 , libxcb
+, libxext
+, libxrender
 , lzo
 , opengl-dummy
 , xorg
@@ -54,8 +56,8 @@ stdenv.mkDerivation rec {
   ]  ++ optionals opengl-dummy.glx [
     libx11
     libxcb
-    xorg.libXext
-    xorg.libXrender
+    libxext
+    libxrender
   ];
 
   patches = [

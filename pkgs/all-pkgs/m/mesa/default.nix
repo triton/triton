@@ -20,7 +20,7 @@
 , libglvnd
 , libomxil-bellagio
 , libpthread-stubs
-#, libva
+, libva
 , libvdpau
 , libx11
 , libxcb
@@ -124,7 +124,7 @@ stdenv.mkDerivation rec {
     libglvnd
     libpthread-stubs
     libomxil-bellagio
-    #libva  # FIXME: recursive dependency
+    libva
     libvdpau
     libxt
     llvm
@@ -201,8 +201,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (buildConfig != "opengl-dummy")}-xvmc"
     "--${boolEn (buildConfig != "opengl-dummy")}-vdpau"
     "--${boolEn (buildConfig != "opengl-dummy")}-omx"
-    # FIXME: We use mesa as libgl at build time and libva depends on libgl
-    #"--enable-va"
+    "--${boolEn (buildConfig != "opengl-dummy")}-va"
     # TODO: Figure out how to enable opencl without having a
     #       runtime dependency on clang
     "--disable-opencl"

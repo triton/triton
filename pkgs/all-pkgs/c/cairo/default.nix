@@ -24,6 +24,7 @@ let
   inherit (lib)
     boolEn
     boolWt
+    optionals
     optionalString;
 in
 stdenv.mkDerivation rec {
@@ -46,14 +47,15 @@ stdenv.mkDerivation rec {
     glib
     libpng
     libspectre
-    libx11
-    libxcb
     lzo
     opengl-dummy
-    xorg.libXext
-    xorg.libXrender
     xorg.pixman
     zlib
+  ]  ++ optionals opengl-dummy.glx [
+    libx11
+    libxcb
+    xorg.libXext
+    xorg.libXrender
   ];
 
   patches = [
@@ -74,7 +76,7 @@ stdenv.mkDerivation rec {
        Freetype `-I' cflags from being propagated. */ ''
       sed -i src/cairo.pc.in \
         -e 's|^Cflags:\(.*\)$|Cflags: \1 -I${freetype}/include/freetype2 -I${freetype}/include|g'
-    '' + optionalString (xorg == null)
+    '' + optionalString (!opengl-dummy.glx)
     /* tests and perf tools require Xorg */ ''
       sed -i Makefile.am \
         -e '/^SUBDIRS/ s#boilerplate test perf# #'
@@ -88,11 +90,11 @@ stdenv.mkDerivation rec {
     #"--disable-atomic"
     "--disable-gcov"
     "--disable-valgrind"
-    "--${boolEn (libx11 != null && xorg.libXext != null)}-xlib"
-    "--${boolEn (libx11 != null && xorg.libXrender != null)}-xlib-xrender"
-    "--${boolEn (libx11 != null && libxcb != null)}-xcb"
-    "--${boolEn (libx11 != null && libxcb != null)}-xlib-xcb"
-    "--${boolEn (libx11 != null && libxcb != null)}-xcb-shm"
+    "--${boolEn opengl-dummy.glx}-xlib"
+    "--${boolEn opengl-dummy.glx}-xlib-xrender"
+    "--${boolEn opengl-dummy.glx}-xcb"
+    "--${boolEn opengl-dummy.glx}-xlib-xcb"
+    "--${boolEn opengl-dummy.glx}-xcb-shm"
     "--disable-qt"
     "--disable-quartz"
     "--disable-quartz-font"
@@ -107,7 +109,7 @@ stdenv.mkDerivation rec {
     "--disable-gallium"
     # Only one OpenGL backend may be selected at compile time
     # OpenGL X (gl), or OpenGL ES 2.0 (glesv2)
-    "--${boolEn (!opengl-dummy.glexv2 && opengl-dummy.glx)}-gl"
+    "--${boolEn (!opengl-dummy.glesv2 && opengl-dummy.glx)}-gl"
     "--${boolEn opengl-dummy.glesv2}-glesv2"
     "--disable-cogl"  # recursive dependency
     # FIXME: fix directfb mirroring
@@ -132,7 +134,7 @@ stdenv.mkDerivation rec {
     "--enable-interpreter"
     "--disable-symbol-lookup"
     #"--enable-some-floating-point"
-    "--${boolwt opengl-dummy.glx}-x"
+    "--${boolWt opengl-dummy.glx}-x"
     #(wtFlag "skia" true "yes")
     #(wtFlag "skia-build-type" true "Release")
     "--without-gallium"

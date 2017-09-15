@@ -8,7 +8,7 @@
 
 , freeglut
 , libjpeg
-, mesa
+, opengl-dummy
 }:
 
 let
@@ -36,13 +36,13 @@ stdenv.mkDerivation rec {
   buildInputs = [
     freeglut
     libjpeg
-    mesa
+    opengl-dummy
   ];
 
   cmakeFlags = [
     "-DJAS_ENABLE_SHARED=ON"
-    "-DJAS_ENABLE_LIBJPEG=${boolOn (libjpeg != null)}"
-    "-DJAS_ENABLE_OPENGL=${boolOn (freeglut != null && mesa != null)}"
+    "-DJAS_ENABLE_LIBJPEG=ON"
+    "-DJAS_ENABLE_OPENGL=ON"
     "-DJAS_ENABLE_STRICT=OFF"
     "-DJAS_ENABLE_AUTOMATIC_DEPENDENCIES=OFF"
     "-DJAS_LOCAL=OFF"

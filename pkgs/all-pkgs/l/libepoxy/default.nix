@@ -5,7 +5,7 @@
 , ninja
 
 , libx11
-, mesa_noglu
+, opengl-dummy
 , xproto
 }:
 
@@ -43,13 +43,14 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libx11
-    mesa_noglu
+    opengl-dummy
     xproto
   ];
 
   mesonFlags = [
-    "-Denable-glx=yes"
-    "-Denable-egl=yes"
+    "-Denable-docs=false"
+    "-Denable-glx=${if opengl-dummy.glx then "yes" else "no"}"
+    "-Denable-egl=${if opengl-dummy.egl then "yes" else "no"}"
   ];
 
   passthru = {

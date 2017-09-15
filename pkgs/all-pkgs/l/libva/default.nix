@@ -3,10 +3,12 @@
 , lib
 
 , libdrm
+, libx11
+, libxext
+, libxfixes
 , mesa
 , mesa_noglu
 , wayland
-, xorg
 }:
 
 let
@@ -28,11 +30,11 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libdrm
+    libx11
+    libxext
+    libxfixes
     mesa
     wayland
-    xorg.libX11
-    xorg.libXext
-    xorg.libXfixes
   ];
 
   configureFlags = [

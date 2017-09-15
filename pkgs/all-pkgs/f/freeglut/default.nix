@@ -4,6 +4,7 @@
 , lib
 , ninja
 
+, glu
 , inputproto
 , libx11
 , libxrandr
@@ -14,6 +15,8 @@
 , xf86vidmodeproto
 , xorg
 , xproto
+
+, glesSupport ? false
 }:
 
 let
@@ -34,6 +37,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    glu
     inputproto
     libx11
     xorg.libXi
@@ -49,9 +53,10 @@ stdenv.mkDerivation rec {
 
   cmakeFlags = [
     "-DFREEGLUT_BUILD_DEMOS=OFF"
-    # FIXME: is glesv1 or glesv2?
+    # XXX: Cannot build both libglut and libfreeglut-gles.
     "-DFREEGLUT_GLES=${boolOn (
-      opengl-dummy.egl
+      glesSupport
+      && opengl-dummy.egl
       && opengl-dummy.glesv1
       && opengl-dummy.glesv2)}"
   ];

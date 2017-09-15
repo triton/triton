@@ -12,12 +12,12 @@
 , gobject-introspection
 , harfbuzz_lib
 , libx11
+, libxrender
 , xorg
 }:
 
 assert libx11 != null ->
-  xorg.libXft != null
-  && xorg.libXrender != null;
+  xorg.libXft != null;
 
 let
   inherit (lib)
@@ -51,9 +51,9 @@ stdenv.mkDerivation rec {
     gobject-introspection
     harfbuzz_lib
     libx11
+    libxrender
   ] ++ optionals (xorg != null) [
     xorg.libXft
-    xorg.libXrender
   ];
 
   mesonFlags = [

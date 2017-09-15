@@ -13,7 +13,7 @@
 , libx11
 , libxcb
 , lzo
-, mesa_noglu
+, opengl-dummy
 , xorg
 , zlib
 
@@ -23,6 +23,7 @@
 let
   inherit (lib)
     boolEn
+    boolWt
     optionalString;
 in
 stdenv.mkDerivation rec {
@@ -45,10 +46,10 @@ stdenv.mkDerivation rec {
     glib
     libpng
     libspectre
-    lzo
-    mesa_noglu
     libx11
     libxcb
+    lzo
+    opengl-dummy
     xorg.libXext
     xorg.libXrender
     xorg.pixman
@@ -106,15 +107,15 @@ stdenv.mkDerivation rec {
     "--disable-gallium"
     # Only one OpenGL backend may be selected at compile time
     # OpenGL X (gl), or OpenGL ES 2.0 (glesv2)
-    "--${boolEn (!gles2)}-gl"
-    "--${boolEn gles2}-glesv2"
-    "--disable-cogl" # recursive dependency
+    "--${boolEn (!opengl-dummy.glexv2 && opengl-dummy.glx)}-gl"
+    "--${boolEn opengl-dummy.glesv2}-glesv2"
+    "--disable-cogl"  # recursive dependency
     # FIXME: fix directfb mirroring
     "--disable-directfb"
     "--disable-vg"
-    "--${boolEn (mesa_noglu != null)}-egl"
-    "--${boolEn (mesa_noglu != null)}-glx"
-    "--disable-wgl"
+    "--${boolEn (opengl-dummy.egl)}-egl"
+    "--${boolEn (opengl-dummy.glx)}-glx"
+    "--disable-wgl"  # Windows
     "--enable-script"
     "--enable-ft"
     "--enable-fc"
@@ -131,7 +132,7 @@ stdenv.mkDerivation rec {
     "--enable-interpreter"
     "--disable-symbol-lookup"
     #"--enable-some-floating-point"
-    "--with-x"
+    "--${boolwt opengl-dummy.glx}-x"
     #(wtFlag "skia" true "yes")
     #(wtFlag "skia-build-type" true "Release")
     "--without-gallium"

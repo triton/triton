@@ -124,7 +124,7 @@ stdenv.mkDerivation rec {
     "--enable-pdf"
     "--enable-svg"
     "--disable-test-surfaces"
-    "--enable-tee"
+    "--${boolEn opengl-dummy.glx}-tee"
     "--enable-xml"
     "--enable-pthread"
     "--enable-gobject"

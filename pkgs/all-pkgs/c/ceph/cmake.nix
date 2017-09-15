@@ -95,7 +95,7 @@ stdenv.mkDerivation rec {
   ];
 
   # Needed by the ceph command line
-  propagatedBuildInputs = optionals (versionAtLeast version "12.2.0") [
+  pythonPath = optionals (versionAtLeast version "12.2.0") [
     python2Packages.prettytable
   ];
 

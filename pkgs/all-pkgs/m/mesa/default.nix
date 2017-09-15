@@ -297,6 +297,17 @@ stdenv.mkDerivation rec {
 
   passthru = {
     inherit driverSearchPath version;
+
+    # opengl-dummy
+    # XXX: this establishes interfaces for future use
+    egl = true;
+    egl-streams = true;  # To soon to tell where this will lead
+    gbm = true;
+    glesv1 = true;
+    glesv2 = true;
+    glx = true;
+
+
     srcVerification = fetchurl {
       failEarly = true;
       pgpsigUrls = map (n: "${n}.sig") src.urls;

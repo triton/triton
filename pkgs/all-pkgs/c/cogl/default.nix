@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 
 , cairo
 , gdk-pixbuf
@@ -18,11 +19,17 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     optionalString;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.22" = {
+      version = "1.22.2";
+      sha256 = "39a718cdb64ea45225a7e94f88dddec1869ab37a21b339ad058a9d898782c00d";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "cogl-${source.version}";
@@ -130,7 +137,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "2D graphics library with support for multiple output devices";
     homepage = http://cairographics.org/;
     license = with licenses; [

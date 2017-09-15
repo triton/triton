@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
     opengl-dummy
     xorg.pixman
     zlib
-  ]  ++ optionals opengl-dummy.glx [
+  ] ++ optionals opengl-dummy.glx [
     libx11
     libxcb
     libxext
@@ -76,8 +76,7 @@ stdenv.mkDerivation rec {
        Freetype `-I' cflags from being propagated. */ ''
       sed -i src/cairo.pc.in \
         -e 's|^Cflags:\(.*\)$|Cflags: \1 -I${freetype}/include/freetype2 -I${freetype}/include|g'
-    '' + optionalString (!opengl-dummy.glx)
-    /* tests and perf tools require Xorg */ ''
+    '' + optionalString (!opengl-dummy.glx) /* tests and perf tools require Xorg */ ''
       sed -i Makefile.am \
         -e '/^SUBDIRS/ s#boilerplate test perf# #'
     '';
@@ -97,10 +96,10 @@ stdenv.mkDerivation rec {
     "--${boolEn opengl-dummy.glx}-xcb-shm"
     "--disable-qt"
     "--disable-quartz"
-    "--disable-quartz-font"
-    "--disable-quartz-image"
-    "--disable-win32"
-    "--disable-win32-font"
+    "--disable-quartz-font"  # macOS
+    "--disable-quartz-image"  # macOS
+    "--disable-win32"  # Windows
+    "--disable-win32-font"  # Windows
     # TODO: package skia
     "--disable-skia"
     "--disable-os2"

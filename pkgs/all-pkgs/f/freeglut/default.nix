@@ -8,7 +8,7 @@
 , libx11
 , libxrandr
 , libxrender
-, mesa
+, opengl-dummy
 , randrproto
 , renderproto
 , xf86vidmodeproto
@@ -16,6 +16,10 @@
 , xproto
 }:
 
+let
+  inherit (lib)
+    boolOn;
+in
 stdenv.mkDerivation rec {
   name = "freeglut-3.0.0";
 
@@ -36,11 +40,20 @@ stdenv.mkDerivation rec {
     libxrandr
     libxrender
     xorg.libXxf86vm
-    mesa
+    opengl-dummy
     randrproto
     renderproto
     xf86vidmodeproto
     xproto
+  ];
+
+  cmakeFlags = [
+    "-DFREEGLUT_BUILD_DEMOS=OFF"
+    # FIXME: is glesv1 or glesv2?
+    "-DFREEGLUT_GLES=${boolOn (
+      opengl-dummy.egl
+      && opengl-dummy.glesv1
+      && opengl-dummy.glesv2)}"
   ];
 
   meta = with lib; {

@@ -1,10 +1,19 @@
 { stdenv
 , cmake
 , fetchurl
+, lib
 , ninja
 
+, inputproto
+, libx11
+, libxrandr
+, libxrender
 , mesa
+, randrproto
+, renderproto
+, xf86vidmodeproto
 , xorg
+, xproto
 }:
 
 stdenv.mkDerivation rec {
@@ -21,20 +30,20 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    mesa
-    xorg.inputproto
-    xorg.libX11
+    inputproto
+    libx11
     xorg.libXi
-    xorg.libXrandr
-    xorg.libXrender
+    libxrandr
+    libxrender
     xorg.libXxf86vm
-    xorg.randrproto
-    xorg.renderproto
-    xorg.xf86vidmodeproto
-    xorg.xproto
+    mesa
+    randrproto
+    renderproto
+    xf86vidmodeproto
+    xproto
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Create and manage windows containing OpenGL contexts";
     homepage = http://freeglut.sourceforge.net/;
     license = licenses.mit;

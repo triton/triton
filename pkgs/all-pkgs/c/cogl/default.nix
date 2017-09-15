@@ -10,10 +10,15 @@
 , gst-plugins-base
 , gstreamer
 , libdrm
-, mesa_noglu
+, libx11
+, libxcomposite
+, libxdamage
+, libxext
+, libxfixes
+, libxrandr
+, opengl-dummy
 , pango
 , wayland
-, xorg
 
 , channel
 }:
@@ -21,6 +26,8 @@
 let
   inherit (lib)
     boolEn
+    boolWt
+    optionals
     optionalString;
 
   sources = {
@@ -51,16 +58,18 @@ stdenv.mkDerivation rec {
     gobject-introspection
     gst-plugins-base
     gstreamer
-    libdrm
-    mesa_noglu
+    opengl-dummy
     pango
+  ] ++ optionals opengl-dummy.egl [
+    libdrm
     wayland
-    xorg.libX11
-    xorg.libXcomposite
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXrandr
+  ] ++ optionals (opengl-dummy.glx || opengl-dummy.egl) [
+    libx11
+    libxcomposite
+    libxdamage
+    libxext
+    libxfixes
+    libxrandr
   ];
 
   postPatch =
@@ -86,41 +95,39 @@ stdenv.mkDerivation rec {
     "--disable-standalone"
     "--disable-debug"
     "--${boolEn doCheck}-unit-tests"
-    "--${boolEn (cairo != null)}-cairo"
+    "--enable-cairo"
     "--disable-profile"
     "--disable-maintainer-flags"
     "--enable-deprecated"
-    "--${boolEn (glib != null)}-glibtest"
-    "--${boolEn (glib != null)}-glib"
-    "--${boolEn (pango != null)}-cogl-pango"
-    "--${boolEn (
-      gstreamer != null
-      && gst-plugins-base != null)}-cogl-gst"
+    "--enable-glibtest"
+    "--enable-glib"
+    "--enable-cogl-pango"
+    "--enable-cogl-gst"
     "--enable-cogl-path"
-    "--${boolEn (gdk-pixbuf != null)}-gdk-pixbuf"
+    "--enable-gdk-pixbuf"
     "--disable-quartz-image"
     "--disable-examples-install"
-    "--enable-gles1"
-    "--enable-gles2"
+    "--${boolEn opengl-dummy.glesv1}-gles1"
+    "--${boolEn opengl-dummy.glesv2}-gles2"
     "--enable-gl"
-    "--enable-cogl-gles2"
-    "--enable-glx"
-    "--disable-wgl"
-    "--enable-null-egl-platform"
-    "--disable-gdl-egl-platform"
-    "--enable-wayland-egl-platform"
-    "--enable-kms-egl-platform"
-    "--enable-wayland-egl-server"
-    "--disable-android-egl-platform"
-    "--disable-mir-egl-platform"
-    "--enable-xlib-egl-platform"
+    "--${boolEn opengl-dummy.glesv2}-cogl-gles2"
+    "--${boolEn opengl-dummy.glx}-glx"
+    "--disable-wgl"  # Windows
+    "--${boolEn opengl-dummy.egl}-null-egl-platform"
+    "--disable-gdl-egl-platform"  # Windows
+    "--${boolEn (opengl-dummy.egl && opengl-dummy.gbm)}-wayland-egl-platform"
+    "--${boolEn (opengl-dummy.egl && opengl-dummy.gbm)}-kms-egl-platform"
+    "--${boolEn opengl-dummy.egl}-wayland-egl-server"
+    "--disable-android-egl-platform"  # Android
+    "--disable-mir-egl-platform"  # DEPRECATED
+    "--${boolEn opengl-dummy.egl}-xlib-egl-platform"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--enable-nls"
     "--enable-rpath"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--with-x"
+    "--enable-introspection"
+    "--${boolWt opengl-dummy.glx}-x"
   ];
 
   doCheck = false;

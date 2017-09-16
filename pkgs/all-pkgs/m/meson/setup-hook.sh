@@ -32,6 +32,7 @@ mesonConfigurePhase() {
 
     echo "meson flags: $mesonFlags ${mesonFlagsArray[@]}"
 
+    export LC_ALL='en_US.UTF-8'
     meson $mesonFlags "${mesonFlagsArray[@]}" "${mesonSrcDir}" "${mesonBuildDir}"
 
     eval "$postConfigure"

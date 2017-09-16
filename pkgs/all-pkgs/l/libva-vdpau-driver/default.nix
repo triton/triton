@@ -5,8 +5,9 @@
 
 , libvdpau
 , libva
+, libx11
 , mesa
-, xorg
+, xproto
 }:
 
 stdenv.mkDerivation rec {
@@ -26,9 +27,9 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libvdpau
     libva
+    libx11
     mesa
-    xorg.libX11
-    xorg.xproto
+    xproto
   ];
 
   patches = [

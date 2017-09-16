@@ -14,7 +14,7 @@
 , libx11
 , libxrandr
 , libxrender
-, mesa
+, opengl-dummy
 , renderproto
 , systemd_lib
 , wayland
@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
     libx11
     libxrandr
     libxrender
-    mesa
+    opengl-dummy
     renderproto
     systemd_lib
     wayland
@@ -80,9 +80,9 @@ stdenv.mkDerivation rec {
     "--enable-encoders"
     "--${boolEn (libdrm != null)}-drm"
     "--${boolEn (libx11 != null)}-x11"
-    "--${boolEn (libx11 != null && mesa != null)}-glx"
+    "--${boolEn opengl-dummy.glx}-glx"
     "--${boolEn (wayland != null)}-wayland"
-    "--${boolEn (wayland != null && mesa != null)}-egl"
+    "--${boolEn opengl-dummy.egl}-egl"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"

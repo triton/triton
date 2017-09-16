@@ -1,6 +1,8 @@
 { stdenv
 , fetchurl
 , lib
+, meson
+, ninja
 , python3
 
 , bzip2
@@ -26,11 +28,11 @@
 , libvdpau
 , libvisual
 , libwebp
-, mesa
 , musepack
 , openal
 , opencv
 , openexr
+, opengl-dummy
 , openh264
 , openjpeg
 #, openssl
@@ -52,9 +54,15 @@
 
 let
   inherit (lib)
-    boolEn
-    boolString
-    boolWt;
+    concatStringsSep
+    optionals;
+
+  gl_platforms = [ ]
+    ++ optionals opengl-dummy.glx [
+      "glx"
+    ] ++ optionals opengl-dummy.egl [
+      "egl"
+    ];
 
   sources = {
     "1.12" = {
@@ -62,7 +70,6 @@ let
       sha256 = "9c2c7edde4f59d74eb414e0701c55131f562e5c605a3ce9b091754f106c09e37";
     };
   };
-
   source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
@@ -78,6 +85,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
+    meson
+    ninja
     python3
   ];
 
@@ -105,11 +114,11 @@ stdenv.mkDerivation rec {
     libvdpau
     libvisual
     libwebp
-    mesa
     musepack
     openal
     opencv
     openexr
+    opengl-dummy
     openh264
     openjpeg
     #openssl
@@ -126,197 +135,20 @@ stdenv.mkDerivation rec {
     xorg.libX11
   ];
 
-  postPatch =
-    /* tests are slower than upstream expects */ ''
-      sed -e 's:/\* tcase_set_timeout.*:tcase_set_timeout (tc_chain, 5 * 60);:' \
-        -i tests/check/elements/audiomixer.c
-    '';
+  postPatch = ''
+    patchShebangs gst-libs/gst/interfaces/build_mkenum.py
+    patchShebangs gst-libs/gst/mpegts/mpegts_enum.py
+  '' + /* tests are slower than upstream expects */ ''
+    sed -e 's:/\* tcase_set_timeout.*:tcase_set_timeout (tc_chain, 5 * 60);:' \
+      -i tests/check/elements/audiomixer.c
+  '';
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--enable-rpath"
-    "--disable-fatal-warnings"
-    "--disable-extra-checks"
-    "--disable-debug"
-    "--disable-profiling"
-    "--disable-valgrind"
-    "--disable-gcov"
-    "--disable-examples"
-    "--enable-external"
-    "--enable-experimental"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-gobject-cast-checks"
-    "--disable-glib-asserts"
-    "--enable-Bsymbolic"
-    #"--disable-iqa"
-    "--${boolEn (orc != null)}-orc"
-    "--disable-static-plugins"
-    # Internal Plugins
-    "--enable-accurip"
-    "--enable-adpcmdec"
-    "--enable-adpcmenc"
-    "--enable-aiff"
-    "--enable-videoframe_audiolevel"
-    "--enable-asfmux"
-    "--enable-audiobuffersplit"
-    "--enable-audiofxbad"
-    "--enable-audiomixer"
-    "--enable-audiomixmatrix"
-    "--enable-compositor"
-    "--enable-audiovisualizers"
-    "--enable-autoconvert"
-    "--enable-bayer"
-    "--enable-camerabin2"
-    "--enable-coloreffects"
-    "--enable-dataurisrc"
-    "--enable-dccp"
-    "--enable-debugutils"
-    "--enable-dvbsuboverlay"
-    "--enable-dvdspu"
-    "--enable-faceoverlay"
-    "--enable-festival"
-    "--enable-fieldanalysis"
-    "--enable-freeverb"
-    "--enable-frei0r"
-    "--enable-gaudieffects"
-    "--enable-geometrictransform"
-    "--enable-gdp"
-    "--enable-id3tag"
-    "--enable-inter"
-    "--enable-interlace"
-    "--enable-ivfparse"
-    "--enable-ivtc"
-    "--enable-jp2kdecimator"
-    "--enable-jpegformat"
-    "--enable-librfb"
-    "--enable-midi"
-    "--enable-mpegdemux"
-    "--enable-mpegtsdemux"
-    "--enable-mpegtsmux"
-    "--enable-mpegpsmux"
-    "--enable-mxf"
-    "--enable-netsim"
-    "--enable-nuvdemux"
-    "--enable-onvif"
-    "--enable-pcapparse"
-    "--enable-pnm"
-    "--enable-rawparse"
-    "--enable-removesilence"
-    "--enable-sdp"
-    "--enable-segmentclip"
-    "--enable-siren"
-    "--enable-smooth"
-    "--enable-speed"
-    "--enable-subenc"
-    "--enable-stereo"
-    "--enable-timecode"
-    "--enable-videofilters"
-    "--enable-videoparsers"
-    "--enable-videosignal"
-    "--enable-vmnc"
-    "--enable-y4m"
-    "--enable-yadif"
-    # External plugins
-    "--${boolEn (mesa != null)}-opengl"
-    "--${boolEn (mesa != null)}-gles2"
-    "--${boolEn (mesa != null)}-egl"
-    "--disable-wgl"
-    "--${boolEn (mesa != null)}-glx"
-    "--disable-cocoa"  # macos
-    "--${boolEn (xorg.libX11 != null)}-x11"
-    "--${boolEn (wayland != null)}-wayland"
-    "--enable-dispmanx"
-    "--disable-directsound"  # windows
-    "--disable-wasapi"  # windows
-    "--disable-direct3d"  # windows
-    "--disable-winscreencap"  # windows
-    "--disable-winks"
-    "--disable-android_media"  # android
-    "--disable-apple_media"  # macos
-    "--disable-bluez"
-    "--disable-avc"
-    "--${boolEn (xorg != null)}-shm"
-    /**/"--disable-vcd"
-    "--disable-opensles"  # android
-    /**/"--disable-uvch264"
-    /**/"--disable-nvenc"
-    /**/"--disable-tinyalsa"
-    "--${boolEn (libass != null)}-assrender"
-    /**/"--disable-voamrwbenc"
-    /**/"--disable-voaacenc"
-    "--${boolEn (libbs2b != null)}-bs2b"
-    "--${boolEn (bzip2 != null)}-bz2"
-    "--${boolEn (chromaprint != null)}-chromaprint"
-    "--${boolEn (curl != null)}-curl"
-    /**/"--disable-dash"
-    /**/"--disable-dc1394"
-    /**/"--disable-decklink"
-    /**/"--disable-directfb"
-    "--${boolEn (wayland != null)}-wayland"  #"
-    "--${boolEn (libwebp != null)}-webp"
-    /**/"--disable-daala"
-    /**/"--disable-dts"
-    /**/"--disable-resindvd"
-    "--${boolEn (faac != null)}-faac"
-    "--${boolEn (faad2 != null)}-faad"
-    /**/"--disable-fbdev"
-    "--${boolEn (flite != null)}-flite"
-    "--${boolEn (gsm != null)}-gsm"
-    /**/"--disable-fluidsynth"
-    /**/"--disable-kate"
-    /**/"--disable-kms"
-    "--${boolEn (ladspa-sdk != null)}-ladspa"
-    /**/"--disable-lv2"
-    /**/"--disable-libde265"
-    "--${boolEn (libmms != null)}-libmms"
-    /**/"--disable-srtp"
-    /**/"--disable-dtls"
-    /**/"--disable-ttml"
-    "--${boolEn (libmodplug != null)}-modplug"
-    /**/"--disable-mpeg2enc"
-    /**/"--disable-mplex"
-    "--${boolEn (musepack != null)}-musepack"
-    /**/"--disable-neon"
-    /**/"--disable-ofa"
-    "--${boolEn (openal != null)}-openal"
-    "--${boolEn (opencv != null)}-opencv"
-    "--${boolEn (openexr != null)}-openexr"
-    "--${boolEn (openh264 != null)}-openh264"
-    "--${boolEn (openjpeg != null)}-openjpeg"
-    /**/"--disable-openni2"
-    "--${boolEn (opus != null)}-opus"
-    /**/"--disable-pvr"
-    "--${boolEn (librsvg != null)}-rsvg"
-    "--${boolEn (mesa != null)}-gl"
-    "--${boolEn (gtk_3 != null)}-gtk3"
-    "--${boolEn (qt5 != null)}-qt"
-    /**/"--disable-vulkan"
-    "--${boolEn (libvisual != null)}-libvisual"
-    /**/"--disable-timidity"
-    /**/"--disable-teletextdec"
-    /**/"--disable-wildmidi"
-    /**/"--disable-smoothstreaming"
-    "--${boolEn (libsndfile != null)}-sndfile"
-    "--${boolEn (soundtouch != null)}-soundtouch"
-    /**/"--disable-spc"
-    "--${boolEn (game-music-emu != null)}-gme"
-    /**/"--disable-dvb"
-    /**/"--disable-acm"
-    "--${boolEn (libvdpau != null)}-vdpau"
-    /**/"--disable-sbc"
-    "--${boolEn (schroedinger != null)}-schro"
-    /**/"--disable-zbar"
-    "--${boolEn (rtmpdump != null)}-rtmp"
-    "--${boolEn (spandsp != null)}-spandsp"
-    /**/"--disable-hls"
-    "--${boolEn (x265 != null)}-x265"
-    "--enable-webrtcdsp"
-    "--${boolWt (gtk_3 != null)}-gtk${boolString (gtk_3 != null) "=3.0" ""}"
-    #"--with-hls-crypto=openssl"
+  mesonFlags = [
+    "-Duse_orc=yes"
+    #"-Dwith_gl_api=${if opengl-dummy.glesv2 then "gles2" else "opengl"}"
+    "-Dwith_gl_api=opengl"
+    "-Dwith_gl_platform=${concatStringsSep "," gl_platforms}"
+    "-Ddisable_introspection=false"
   ];
 
   passthru = {

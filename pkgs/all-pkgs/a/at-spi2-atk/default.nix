@@ -3,6 +3,8 @@
 , gettext
 , intltool
 , lib
+#, meson
+#, ninja
 , python
 
 , at-spi2-core
@@ -21,7 +23,13 @@ let
     boolWt
     optionals;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2.26" = {
+      version = "2.26.0";
+      sha256 = "d25e528e1406a10c7d9b675aa15e638bcbf0a122ca3681f655a30cce83272fb9";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "at-spi2-atk-${source.version}";
@@ -34,7 +42,8 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
-    intltool
+    #meson
+    #ninja
     python
   ];
 

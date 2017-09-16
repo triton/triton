@@ -610,11 +610,11 @@ adobe-flash-player_beta = callPackage ../all-pkgs/a/adobe-flash-player {
 };
 adobe-flash-player = callPackageAlias "adobe-flash-player_stable" { };
 
-adwaita-icon-theme_3-24 = callPackage ../all-pkgs/a/adwaita-icon-theme {
-  channel = "3.24";
+adwaita-icon-theme_3-26 = callPackage ../all-pkgs/a/adwaita-icon-theme {
+  channel = "3.26";
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
-adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-24" { };
+adwaita-icon-theme = callPackageAlias "adwaita-icon-theme_3-26" { };
 
 afflib = callPackage ../all-pkgs/a/afflib { };
 
@@ -659,12 +659,12 @@ asio = callPackage ../all-pkgs/a/asio { };
 
 aspell = callPackage ../all-pkgs/a/aspell { };
 
-at-spi2-atk_2-24 = callPackage ../all-pkgs/a/at-spi2-atk {
-  channel = "2.24";
+at-spi2-atk_2-26 = callPackage ../all-pkgs/a/at-spi2-atk {
+  channel = "2.26";
   at-spi2-core = pkgs.at-spi2-core_2-26;
   atk = pkgs.atk_2-26;
 };
-at-spi2-atk = callPackageAlias "at-spi2-atk_2-24" { };
+at-spi2-atk = callPackageAlias "at-spi2-atk_2-26" { };
 
 at-spi2-core_2-26 = callPackage ../all-pkgs/a/at-spi2-core {
   channel = "2.26";
@@ -1795,7 +1795,7 @@ gtk2 = callPackageAlias "gtk_2" { };
 gtk_3-22 = callPackage ../all-pkgs/g/gtk {
   channel = "3.22";
   atk = pkgs.atk_2-26;
-  at-spi2-atk = pkgs.at-spi2-atk_2-24;
+  at-spi2-atk = pkgs.at-spi2-atk_2-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
 };
 gtk_3 = callPackageAlias "gtk_3-22" { };

@@ -10,7 +10,6 @@
 , glib
 , libgudev
 , libimobiledevice
-, libplist
 , libusb
 , systemd_lib
 , gobject-introspection
@@ -46,6 +45,11 @@ stdenv.mkDerivation rec {
     libusb
     systemd_lib
   ];
+
+  postPatch = /* Fix deprecated libimobiledevice variable */ ''
+    sed -i src/linux/up-device-idevice.c \
+      -e 's/LOCKDOWN_E_NOT_ENOUGH_DATA/LOCKDOWN_E_RECEIVE_TIMEOUT/'
+  '';
 
   preConfigure = ''
     configureFlagsArray+=(

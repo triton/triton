@@ -1,7 +1,10 @@
 { stdenv
 , fetchurl
+, lib
 
-, xorg
+, dri2proto
+, libx11
+, libxext
 , mesa_noglu
 }:
 
@@ -16,9 +19,9 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    xorg.dri2proto
-    xorg.libX11
-    xorg.libXext
+    dri2proto
+    libx11
+    libxext
   ];
 
   configureFlags = [
@@ -43,7 +46,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "VDPAU wrapper and trace libraries";
     homepage = https://people.freedesktop.org/~aplattner/vdpau/;
     license = licenses.mit;

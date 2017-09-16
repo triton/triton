@@ -1,6 +1,9 @@
 { stdenv
 , fetchurl
+, gettext
 , lib
+, meson
+, ninja
 , python3
 
 , aalib
@@ -21,11 +24,14 @@
 , libsoup
 , v4l_lib
 , libvpx
+, libx11
+, libxext
 , orc
 , speex
 , taglib
 , wavpack
 , xorg
+, xextproto
 , zlib
 
 , channel
@@ -58,7 +64,9 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    python3
+    gettext
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -80,114 +88,20 @@ stdenv.mkDerivation rec {
     libsoup
     v4l_lib
     libvpx
+    libx11
+    libxext
     orc
     speex
     taglib
     wavpack
+    xextproto
     zlib
-    xorg.libX11
-    xorg.libXext
-    xorg.xextproto
   ];
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--enable-rpath"
-    "--disable-fatal-warnings"
-    "--disable-extra-checks"
-    "--disable-debug"
-    "--disable-profiling"
-    "--disable-valgrind"
-    "--disable-gcov"
-    "--disable-examples"
-    "--enable-external"
-    "--enable-experimental"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-gobject-cast-checks"
-    "--disable-glib-asserts"
-    "--${boolEn (orc != null)}-orc"
-    "--enable-Bsymbolic"
-    "--disable-static-plugins"
-    # Internal plugins
-    "--enable-alpha"
-    "--enable-apetag"
-    "--enable-audiofx"
-    "--enable-audioparsers"
-    "--enable-auparse"
-    "--enable-autodetect"
-    "--enable-avi"
-    "--enable-cutter"
-    "--disable-debugutils"
-    "--enable-deinterlace"
-    "--enable-dtmf"
-    "--enable-effectv"
-    "--enable-equalizer"
-    "--enable-flv"
-    "--enable-flx"
-    "--enable-goom"
-    "--enable-goom2k1"
-    "--enable-icydemux"
-    "--enable-id3demux"
-    "--enable-imagefreeze"
-    "--enable-interleave"
-    "--enable-isomp4"
-    "--enable-law"
-    "--enable-level"
-    "--enable-matroska"
-    "--enable-monoscope"
-    "--enable-multifile"
-    "--enable-multipart"
-    "--enable-replaygain"
-    "--enable-rtp"
-    "--enable-rtpmanager"
-    "--enable-rtsp"
-    "--enable-shapewipe"
-    "--enable-smpte"
-    "--enable-spectrum"
-    "--enable-udp"
-    "--enable-videobox"
-    "--enable-videocrop"
-    "--enable-videofilter"
-    "--enable-videomixer"
-    "--enable-wavenc"
-    "--enable-wavparse"
-    "--enable-y4m"
-    # External plugins
-    "--disable-directsound"
-    "--enable-waveform"
-    "--disable-oss"
-    "--disable-oss4"
-    "--disable-sunaudio"
-    "--disable-osx_audio"
-    "--disable-osx_video"
-    "--${boolEn (v4l_lib != null)}-gst_v4l2"
-    "--${boolEn (v4l_lib != null)}-v4l2-probe"
-    "--${boolEn (xorg != null)}-x"
-    "--${boolEn (aalib != null)}-aalib"
-    "--disable-aalibtest"
-    "--${boolEn (cairo != null)}-cairo"
-    "--${boolEn (flac != null)}-flac"
-    "--${boolEn (gdk-pixbuf != null)}-gdk_pixbuf"
-    "--${boolEn (jack2_lib != null)}-jack"
-    "--${boolEn (libjpeg != null)}-jpeg"
-    "--${boolEn (libcaca != null)}-libcaca"
-    "--disable-libdv"
-    "--${boolEn (libpng != null)}-libpng"
-    "--${boolEn (pulseaudio_lib != null)}-pulse"
-    "--disable-dv1394"
-    "--${boolEn (libshout != null)}-shout2"
-    "--${boolEn (libsoup != null)}-soup"
-    "--${boolEn (speex != null)}-speex"
-    "--${boolEn (taglib != null)}-taglib"
-    "--${boolEn (libvpx != null)}-vpx"
-    "--${boolEn (wavpack != null)}-wavpack"
-    "--${boolEn (zlib != null)}-zlib"
-    "--${boolEn (bzip2 != null)}-bz2"
-    "--${boolWt (libgudev != null)}-gudev"
-    "--${boolWt (v4l_lib != null)}-libv4l2"
+  mesonFlags = [
+    "-Dv4l2-probe=${if v4l_lib != null then "true" else "false"}"
+    "-Dwith-libv4l2=${if v4l_lib != null then "true" else "false"}"
+    "-Duse_orc=yes"
   ];
 
   passthru = {

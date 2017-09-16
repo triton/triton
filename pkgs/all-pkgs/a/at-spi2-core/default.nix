@@ -8,17 +8,18 @@
 , dbus-glib
 , glib
 , gobject-introspection
+, inputproto
+, kbproto
+, libsm
+, libice
+, libx11
+, libxi
+, xextproto
 , xorg
+, xproto
 
 , channel
 }:
-
-assert xorg != null ->
-  xorg.libSM != null
-  && xorg.libX11 != null
-  && xorg.libXi != null
-  && xorg.libXtst != null
-  && xorg.xextproto != null;
 
 let
   inherit (lib)
@@ -46,26 +47,26 @@ stdenv.mkDerivation rec {
     dbus-glib
     glib
     gobject-introspection
-    xorg.inputproto
-    xorg.kbproto
-    xorg.xproto
-    xorg.libSM
-    xorg.libX11
-    xorg.libXi
+    inputproto
+    kbproto
+    xproto
+    libsm
+    libx11
+    libxi
     xorg.libXtst
-    xorg.xextproto
+    xextproto
   ];
 
   configureFlags = [
     "--enable-nls"
-    "--${boolEn (xorg != null)}-x11"
+    "--${boolEn (libx11 != null)}-x11"
     # xevie is deprecated/broken since xorg-1.6/1.7
     "--disable-xevie"
     "--${boolEn (gobject-introspection != null)}-introspection"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    "--${boolWt (xorg != null)}-x"
+    "--${boolWt (libx11 != null)}-x"
     "--with-dbus-daemondir=/run/current-system/sw/bin/"
     #"--with-dbus-services="
   ];

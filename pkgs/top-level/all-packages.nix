@@ -3339,11 +3339,6 @@ scrot = callPackage ../all-pkgs/s/scrot { };
 
 sddm = callPackage ../all-pkgs/s/sddm { };
 
-# TODO SDL is a clusterfuck that needs to be fixed / renamed
-SDL = callPackage ../all-pkgs/s/SDL_1 { };
-
-SDL_image = callPackage ../all-pkgs/s/SDL_1_image { };
-
 SDL_2 = callPackage ../all-pkgs/s/SDL { };
 
 SDL_2_image = callPackage ../all-pkgs/s/SDL_image {

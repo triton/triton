@@ -1,8 +1,9 @@
 { stdenv
 , fetchurl
-, intltool
+, gettext
 , lib
-, python
+, meson
+, ninja
 
 , dbus
 , dbus-glib
@@ -44,8 +45,9 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    intltool
-    python
+    gettext
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -63,18 +65,23 @@ stdenv.mkDerivation rec {
     xextproto
   ];
 
-  configureFlags = [
-    "--enable-nls"
-    "--${boolEn (libx11 != null)}-x11"
-    # xevie is deprecated/broken since xorg-1.6/1.7
-    "--disable-xevie"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--${boolWt (libx11 != null)}-x"
-    "--with-dbus-daemondir=/run/current-system/sw/bin/"
-    #"--with-dbus-services="
+  postPatch = /* Meson file missing in release tarball */ ''
+    [ ! -f po/meson.build ]
+    cat > po/meson.build <<EOF
+    i18n = import('i18n')
+    i18n.gettext('at-spi2-core', preset: 'glib')
+    EOF
+  '' + /* Remove hardcoded references to the build driectory */ ''
+    sed -i atspi/atspi-enum-types.h.template \
+      -e '/@filename@/d'
+  '';
+
+  mesonFlags = [
+    #"-Ddbus_services_dir"
+    "-Ddbus_daemon=/run/current-system/sw/bin/"
+    #"-Dsystemd_user_dir"
+    "-Denable_docs=false"
+    "-Denable-introspection=yes"
   ];
 
   passthru = {

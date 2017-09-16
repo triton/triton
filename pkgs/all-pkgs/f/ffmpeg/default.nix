@@ -109,7 +109,6 @@
 , libxcbxfixesExtlib ? true
 , libxcbshapeExtlib ? true
 , libzimg ? null
-, mesa_noglu
 , mfx-dispatcher
 , mmal ? null
 , nvenc ? false
@@ -119,6 +118,7 @@
 #, opencl
 #, opencore-amr
 , opencv
+, opengl-dummy
 , openh264
 , openjpeg
 , openssl
@@ -352,11 +352,11 @@ stdenv.mkDerivation rec {
     libvorbis
     libvpx
     libwebp
-    mesa_noglu
     mfx-dispatcher
     nvidia-cuda-toolkit
     nvidia-drivers
     openal
+    opengl-dummy
     openh264
     openjpeg
     opus
@@ -584,8 +584,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (openal != null)}-openal"
     #"--${boolEn (opencl != null)}-opencl"
     /**/"--disable-opencl"
-    # OpenGL requires libX11 for GLX
-    "--${boolEn (mesa_noglu != null && xorg.libX11 != null)}-opengl"
+    "--${boolEn (opengl-dummy != null && opengl-dummy.glx)}-opengl"
     "--${boolEn (openssl != null)}-openssl"
     "--disable-schannel"  # windows
     "--${boolEn (SDL_2 != null)}-sdl"

@@ -1,8 +1,8 @@
 { stdenv
 , fetchurl
 , lib
-, python3
-, yasm
+, meson
+, ninja
 
 , glib
 , gst-plugins-bad
@@ -25,7 +25,7 @@
 
 let
   inherit (lib)
-    boolEn
+    boolYn
     optionals;
 
   sources = {
@@ -50,8 +50,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    python3
-    yasm
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -71,29 +71,13 @@ stdenv.mkDerivation rec {
     wayland
   ];
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--disable-fatal-warnings"
-    "--disable-extra-checks"
-    "--disable-debug"
-    "--disable-examples"
-    "--enable-encoders"
-    "--${boolEn (libdrm != null)}-drm"
-    "--${boolEn (libx11 != null)}-x11"
-    "--${boolEn opengl-dummy.glx}-glx"
-    "--${boolEn (wayland != null)}-wayland"
-    "--${boolEn opengl-dummy.egl}-egl"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-gobject-cast-checks"
-    "--disable-glib-asserts"
-  ];
-
-  NIX_CFLAGS_COMPILE = [
-    "-I${gst-plugins-bad}/include/gstreamer-1.0"
-    # FIXME: Gstreamer installs gstglconfig.h in the wrong location
-    "-I${gst-plugins-bad}/lib/gstreamer-1.0/include"
+  mesonFlags = [
+    "-Dwith_encoders=yes"
+    "-Dwith_drm=${boolYn (libdrm != null)}"
+    "-Dwith_x11=${boolYn (libx11 != null)}"
+    "-Dwith_glx=${boolYn opengl-dummy.glx}"
+    "-Dwith_wayland=${boolYn (opengl-dummy.egl && wayland != null)}"
+    "-Dwith_egl=${boolYn opengl-dummy.egl}"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";

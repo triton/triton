@@ -2541,6 +2541,8 @@ libxfont2 = callPackage ../all-pkgs/l/libxfont {
   channel = "2";
 };
 
+libxft = callPackage ../all-pkgs/l/libxft { };
+
 libxi = callPackage ../all-pkgs/l/libxi { };
 
 libxinerama = callPackage ../all-pkgs/l/libxinerama { };
@@ -3851,6 +3853,7 @@ xorg = recurseIntoAttrs (
       libxfixes
       libxfont
       libxfont2
+      libxft
       libxi
       libxinerama
       libxrandr

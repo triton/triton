@@ -2,7 +2,8 @@
 , gettext
 , fetchurl
 , lib
-, perl
+, meson
+, ninja
 
 , glib
 , gobject-introspection
@@ -14,7 +15,13 @@ let
   inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2.26" = {
+      version = "2.26.0";
+      sha256 = "eafe49d5c4546cb723ec98053290d7e0b8d85b3fdb123938213acb7bb4178827";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "atk-${source.version}";
@@ -27,7 +34,8 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
-    perl
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -35,15 +43,14 @@ stdenv.mkDerivation rec {
     gobject-introspection
   ];
 
-  configureFlags = [
-    "--disable-rebuilds"
-    "--enable-glibtest"
-    "--enable-nls"
-    "--enable-rpath"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
+  postPatch = /* Remove hardcoded references to the build directory */ ''
+    sed -i atk/atk-enum-types.h.template \
+      -e '/@filename@/d'
+  '';
+
+  mesonFlags = [
+    "-Denable_docs=false"
+    "-Ddisable_introspection=false"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";

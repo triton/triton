@@ -31,6 +31,7 @@ args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, 
 , libxfixes
 , libxfont
 , libxfont2
+, libxi
 , libxinerama
 , libxrandr
 , libxrender
@@ -131,6 +132,7 @@ let
     libXfixes = libxfixes;
     libXfont = libxfont;
     libXfont2 = libxfont2;
+    libXi = libxi;
     libXinerama = libxinerama;
     libXrandr = libxrandr;
     libXrender = libxrender;
@@ -769,17 +771,6 @@ let
     buildInputs = [ fontconfig freetype libX11 xproto libXrender ];
 
   }) // {inherit fontconfig freetype libX11 xproto libXrender ;};
-
-  libXi = (mkDerivation "libXi" {
-    name = "libXi-1.7.9";
-    src = fetchurl {
-      url = mirror://xorg/individual/lib/libXi-1.7.9.tar.bz2;
-      sha256 = "c2e6b8ff84f9448386c1b5510a5cf5a16d788f76db018194dacdc200180faf45";
-    };
-    nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ inputproto libX11 libXext xextproto libXfixes xproto ];
-
-  }) // {inherit inputproto libX11 libXext xextproto libXfixes xproto ;};
 
   libXmu = (mkDerivation "libXmu" {
     name = "libXmu-1.1.2";

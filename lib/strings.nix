@@ -286,5 +286,7 @@ rec {
     boolString boolean "" "no-";
   boolTf = boolean:
     boolString boolean "true" "false";
+  boolYn = boolean:
+    boolString boolean "yes" "no";
 
 }

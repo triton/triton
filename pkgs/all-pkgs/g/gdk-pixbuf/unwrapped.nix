@@ -1,9 +1,10 @@
 { stdenv
-, autoreconfHook
-, coreutils
 , fetchurl
 , gettext
 , lib
+, meson
+, ninja
+, python3
 
 , glib
 , gobject-introspection
@@ -41,9 +42,10 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    autoreconfHook
-    coreutils
     gettext
+    meson
+    ninja
+    python3
   ];
 
   buildInputs = [
@@ -57,44 +59,27 @@ stdenv.mkDerivation rec {
     shared-mime-info
   ];
 
-  postPatch =
-    /* The configure script only tests glib for mimetype detection
-       support if --enable-gio-sniffing=auto, this patches it to
-       run the test and explicitly fail if glib isn't configured
-       correctly. */ ''
-      sed -i configure.ac \
-        -e '/x$enable_gio_sniffing/ s/xauto/xyes/' \
-        -e 's|\[gio_can_sniff=no\]|\[gio_can_sniff=no, AC_MSG_ERROR(gio cannot determine mimetype)\]|'
-    '';
+  postPatch = ''
+    sed -i build-aux/gen-installed-test.py \
+      -i build-aux/gen-resources.py \
+      -i build-aux/gen-thumbnailer.py \
+      -e 's,^#!.*,#!${python3}/bin/python3,g'
+  '' + /* Remove hardcoded references to build directory */ ''
+    sed -i gdk-pixbuf/gdk-pixbuf-enum-types.h.template \
+      -e '/@filename@/d'
+  '';
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    # TODO: fix glib to support gio sniffing
-    "--disable-gio-sniffing"
-    "--enable-largefile"
-    "--disable-debug"
-    "--enable-rebuilds"
-    "--enable-nls"
-    "--enable-rpath"
-    "--enable-glibtest"
-    "--enable-modules"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--disable-man"
-    "--enable-Bsymbolic"
-    "--disable-installed-tests"
-    "--disable-always-build-tests"
-    "--disable-coverage"
-    # Enabling relocations breaks setting loaders.cache path
-    "--disable-relocations"
-    "--${boolWt (libpng != null)}-libpng"
-    "--${boolWt (libjpeg != null)}-libjpeg"
-    "--${boolWt (libtiff != null)}-libtiff"
-    "--${boolWt (jasper != null)}-libjasper"
-    "--without-gdiplus"
-    "--${boolWt (libx11 != null)}-x11"
+  mesonFlags = [
+    "-Denable_png=true"
+    "-Denable_tiff=true"
+    "-Denable_jpeg=true"
+    "-Denable_jasper=true"
+    "-Dbuiltin_loaders=all"
+    "-Dwith_docs=false"
+    "-Dwith_gir=true"
+    "-Dwith_man=false"
+    "-Denable_relocatable=false"
+    "-Denable_native_windows_loaders=false"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";

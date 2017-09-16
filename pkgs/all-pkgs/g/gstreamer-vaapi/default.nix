@@ -11,7 +11,11 @@
 , libdrm
 , libva
 , libvpx
+, libx11
+, libxrandr
+, libxrender
 , mesa
+, renderproto
 , systemd_lib
 , wayland
 , xorg
@@ -58,14 +62,13 @@ stdenv.mkDerivation rec {
     libdrm
     libva
     libvpx
+    libx11
+    libxrandr
+    libxrender
     mesa
+    renderproto
     systemd_lib
     wayland
-  ] ++ optionals (xorg != null) [
-    xorg.libX11
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.renderproto
   ];
 
   configureFlags = [
@@ -76,8 +79,8 @@ stdenv.mkDerivation rec {
     "--disable-examples"
     "--enable-encoders"
     "--${boolEn (libdrm != null)}-drm"
-    "--${boolEn (xorg != null)}-x11"
-    "--${boolEn (xorg != null && mesa != null)}-glx"
+    "--${boolEn (libx11 != null)}-x11"
+    "--${boolEn (libx11 != null && mesa != null)}-glx"
     "--${boolEn (wayland != null)}-wayland"
     "--${boolEn (wayland != null && mesa != null)}-egl"
     "--disable-gtk-doc"

@@ -4,8 +4,9 @@
 , flex
 , gettext
 , lib
-, perl
-, python
+, meson
+, ninja
+, python3
 
 , glib
 , gobject-introspection
@@ -43,8 +44,9 @@ stdenv.mkDerivation rec {
     bison
     flex
     gettext
-    perl
-    python
+    meson
+    ninja
+    python3
   ];
 
   buildInputs = [
@@ -55,41 +57,21 @@ stdenv.mkDerivation rec {
 
   setupHook = ./setup-hook.sh;
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--enable-rpath"
-    "--disable-fatal-warnings"
-    "--disable-extra-checks"
-    "--enable-gst-debug"
-    "--disable-gst-tracer-hooks"
-    "--enable-parse"
-    "--enable-option-parsing"
-    "--disable-trace"
-    "--disable-alloc-trace"
-    "--enable-registry"
-    "--enable-plugin"
-    "--disable-debug"
-    "--disable-profiling"
-    "--disable-valgrind"
-    "--disable-gcov"
-    "--disable-examples"
-    "--disable-static-plugins"
-    "--disable-tests"
-    "--disable-failing-tests"
-    "--disable-benchmarks"
-    "--enable-tools"
-    "--disable-poisoning"
-    "--enable-largefile"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-docbook"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-gobject-cast-checks"
-    "--disable-glib-asserts"
-    "--disable-check"
-    "--enable-Bsymbolic"
+  postPatch = ''
+    patchShebangs libs/gst/controller/controller_mkenum.py
+  '';
+
+  mesonFlags = [
+    "-Dbuild_tools=false"
+    "-Dpoisoning=false"
+    "-Ddisable_gtkdoc=true"
+    "-Ddisable_examples=true"
+    "-Ddisable_gst_debug=true"
+    "-Ddisable_registry=false"
+    "-Ddisable_tracer_hooks=true"
+    "-Dlibrary_format=shared"
+    "-Ddisable_introspection=false"
+    "-Ddisable_libunwind=false"
   ];
 
   preFixup =

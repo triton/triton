@@ -11,7 +11,13 @@
 }:
 
 let
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "3.26" = {
+      version = "3.26.0";
+      sha256 = "9cad85de19313f5885497aceab0acbb3f08c60fcd5fa5610aeafff37a1d12212";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "adwaita-icon-theme-${source.version}";

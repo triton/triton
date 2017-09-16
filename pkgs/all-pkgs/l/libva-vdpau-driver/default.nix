@@ -2,14 +2,19 @@
 , autoreconfHook
 , fetchTritonPatch
 , fetchurl
+, lib
 
 , libvdpau
 , libva
 , libx11
-, mesa
+, opengl-dummy
 , xproto
 }:
 
+let
+  inherit (lib)
+    boolEn;
+in
 stdenv.mkDerivation rec {
   name = "libva-vdpau-driver-0.7.4";
 
@@ -28,7 +33,7 @@ stdenv.mkDerivation rec {
     libvdpau
     libva
     libx11
-    mesa
+    opengl-dummy
     xproto
   ];
 
@@ -64,12 +69,12 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    "--enable-glx"
+    "--${boolEn opengl-dummy.glx}-glx"
     "--disable-debug"
     "--enable-tracer"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "VDPAU Backend for Video Acceleration (VA) API";
     homepage = https://www.freedesktop.org/wiki/Software/vaapi;
     license = licenses.gpl2;

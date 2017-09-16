@@ -140,9 +140,18 @@ stdenv.mkDerivation rec {
       -e "s,/usr/share/atom${source.suffix},$out/bin,"
 
     # Replace vendored git binary
-    rm -fv $out/share/atom/resources/app/node_modules/dugite/git/bin/git
+    atom_git=$out/share/atom/resources/app/node_modules/dugite/git
+    rm -fv $atom_git/bin/git
     ln -sv ${git}/bin/git \
-      $out/share/atom/resources/app/node_modules/dugite/git/bin/git
+      $atom_git/bin/git
+    for gitcommand in ${git}/libexec/git-core/*; do
+      if [ -e "$atom_git/libexec/git-core/$(basename "$gitcommand")" ] && \
+         [ ! -d "$atom_git/libexec/git-core/$(basename "$gitcommand")" ]; then
+        rm -v "$atom_git/libexec/git-core/$(basename "$gitcommand")"
+        ln -sv "$gitcommand" \
+          "$atom_git/libexec/git-core/$(basename "$gitcommand")"
+      fi
+    done
 
     # Fix beta detection
     sed -i $out/bin/atom${source.suffix} \

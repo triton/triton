@@ -22,6 +22,17 @@
 , gtk_2
 , gtk_3
 , libcap
+, libx11
+, libxcomposite
+, libxcursor
+, libxdamage
+, libxext
+, libxfixes
+, libxi
+, libxrandr
+, libxrender
+, libxscrnsaver
+#, libxtst
 , nspr
 , nss
 , pango
@@ -95,6 +106,17 @@ stdenv.mkDerivation rec {
     gtk_2
     gtk_3
     libcap
+    libx11
+    libxcomposite
+    libxcursor
+    libxdamage
+    libxext
+    libxfixes
+    libxi
+    libxrandr
+    libxrender
+    libxscrnsaver
+    xorg.libXtst
     nspr
     nss
     pango
@@ -102,18 +124,6 @@ stdenv.mkDerivation rec {
     stdenv.libc
     systemd_lib
     xdg-utils
-    xorg.libX11
-    xorg.libxcb
-    xorg.libXcomposite
-    xorg.libXcursor
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXi
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.libXScrnSaver
-    xorg.libXtst
   ];
 
   chromeBinPath = makeSearchPath "bin" buildInputs;

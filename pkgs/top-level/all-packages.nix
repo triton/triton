@@ -1410,6 +1410,8 @@ gjs = callPackageAlias "gjs_1-46" { };
 
 gksu = callPackage ../all-pkgs/g/gksu { };
 
+glew = callPackage ../all-pkgs/g/glew { };
+
 glfw = callPackage ../all-pkgs/g/glfw { };
 
 glib = callPackage ../all-pkgs/g/glib { };

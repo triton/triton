@@ -30,7 +30,7 @@
 , libxkbcommon
 , libxrandr
 , libxrender
-, mesa_noglu
+, opengl-dummy
 , pango
 , rest
 , shared-mime-info
@@ -54,15 +54,8 @@ let
 
   broadway_backend = true;
   wayland_backend =
-    if wayland != null && wayland-protocols != null then
-      true
-    else
-      false;
-  x11_backend =
-    if libx11 != null then
-      true
-    else
-      false;
+    opengl-dummy.egl && wayland != null && wayland-protocols != null;
+  x11_backend = opengl-dummy.glx && libx11 != null;
 
   sources = {
     "3.22" = {
@@ -106,27 +99,27 @@ stdenv.mkDerivation rec {
     inputproto
     json-glib
     libepoxy
-    libice
-    libsm
-    libx11
-    libxcomposite
-    libxdamage
-    libxext
-    libxfixes
-    libxinerama
     libxkbcommon
-    libxrandr
-    libxrender
-    mesa_noglu
+    opengl-dummy
     pango
     rest
     shared-mime-info
     wayland
     wayland-protocols
     xproto
-  ] ++ optionals (libx11 != null) [
+  ] ++ optionals opengl-dummy.glx [
+    libice
+    libsm
+    libx11
+    libxcomposite
     xorg.libXcursor
+    libxdamage
+    libxext
+    libxfixes
     xorg.libXi
+    libxinerama
+    libxrandr
+    libxrender
   ];
 
   configureFlags = [
@@ -135,19 +128,17 @@ stdenv.mkDerivation rec {
     "--enable-largefile"
     "--disable-debug"
     "--disable-installed-tests"
-    "--${boolEn (libxkbcommon != null)}-xkb"
-    "--${boolEn (libxinerama != null)}-xinerama"
-    "--${boolEn (libxrandr != null)}-xrandr"
-    "--${boolEn (libxfixes != null)}-xfixes"
-    "--${boolEn (libxcomposite != null)}-xcomposite"
-    "--${boolEn (libxdamage != null)}-xdamage"
-    "--${boolEn (libx11 != null)}-x11-backend"
+    "--${boolEn (x11_backend && libxkbcommon != null)}-xkb"
+    "--${boolEn (x11_backend && libxinerama != null)}-xinerama"
+    "--${boolEn (x11_backend && libxrandr != null)}-xrandr"
+    "--${boolEn (x11_backend && libxfixes != null)}-xfixes"
+    "--${boolEn (x11_backend && libxcomposite != null)}-xcomposite"
+    "--${boolEn (x11_backend && libxdamage != null)}-xdamage"
+    "--${boolEn x11_backend}-x11-backend"
     "--disable-win32-backend"
     "--disable-quartz-backend"
-    "--${boolEn true}-broadway-backend"
-    "--${boolEn (
-      wayland != null
-      && wayland-protocols != null)}-wayland-backend"
+    "--enable-broadway-backend"
+    "--${boolEn wayland_backend}-wayland-backend"
     "--disable-mir-backend"
     "--disable-quartz-relocation"
     #"--enable-explicit-deps"
@@ -158,15 +149,15 @@ stdenv.mkDerivation rec {
     "--${boolEn (rest != null && json-glib != null)}-cloudprint"
     "--${boolEn (cups != null)}-test-print-backend"
     "--enable-schemas-compile"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--${boolEn (colord != null)}-colord"
+    "--enable-introspection"
+    "--enable-colord"
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
     "--disable-man"
     "--disable-doc-cross-references"
     "--enable-Bsymbolic"
-    "--${boolWt (libx11 != null)}-x"
+    "--${boolWt x11_backend}-x"
   ];
 
   postInstall = "rm -rvf $out/share/gtk-doc";

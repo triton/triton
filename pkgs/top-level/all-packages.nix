@@ -2658,6 +2658,8 @@ mesa = pkgs.buildEnv {
   passthru = pkgs.mesa_glu.passthru // pkgs.mesa_noglu.passthru;
 };
 
+mesa-demos = callPackage ../all-pkgs/m/mesa-demos { };
+
 meson = pkgs.python3Packages.meson;
 
 #mesos = callPackage ../all-pkgs/m/mesos {

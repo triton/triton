@@ -1,6 +1,6 @@
 # THIS IS A GENERATED FILE.  DO NOT EDIT!
 args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, fontconfig
-, libxslt, expat, libpng, zlib, perl, mesa_noglu, mesa_drivers, spice-protocol, spice
+, libxslt, expat, libpng, zlib, perl, opengl-dummy, mesa_drivers, spice-protocol, spice
 , dbus, util-linux_lib, openssl, gperf, gnum4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
 , autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, mtdev, cairo, glib
 , libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3, kmod, procps-ng
@@ -640,9 +640,9 @@ let
       sha256 = "1jg5clihklb9drh1jd7nhhdsszla6nv7xmbvm8yvakh5wrb1nlv6";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ dri2proto mesa_noglu libdrm xorgserver ];
+    buildInputs = [ dri2proto opengl-dummy libdrm xorgserver ];
 
-  }) // {inherit dri2proto mesa_noglu libdrm xorgserver ;};
+  }) // {inherit dri2proto opengl-dummy libdrm xorgserver ;};
 
   iceauth = (mkDerivation "iceauth" {
     name = "iceauth-1.0.7";
@@ -1234,9 +1234,9 @@ let
       sha256 = "c1630f228938be949273f72b29ae70822dde064ad79c3ccb14d55f427e3f4e70";
     };
     nativeBuildInputs = [ utilmacros ];
-    buildInputs = [ fontsproto mesa_noglu glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto damageproto fixesproto ];
+    buildInputs = [ fontsproto opengl-dummy glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto damageproto fixesproto ];
 
-  }) // {inherit fontsproto mesa_noglu glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ;};
+  }) // {inherit fontsproto opengl-dummy glamoregl libdrm systemd_lib randrproto renderproto videoproto xextproto xf86driproto xorgserver xproto ;};
 
   xf86videoati = (mkDerivation "xf86videoati" {
     name = "xf86-video-ati-7.9.0";
@@ -1432,9 +1432,9 @@ let
       sha256 = "677a8166e03474719238dfe396ce673c4234735464d6dadf2959b600d20e5a98";
     };
     nativeBuildInputs = [ bison flex utilmacros ];
-    buildInputs = [ bigreqsproto compositeproto damageproto dbus libdmx dmxproto mesa_noglu dri2proto dri3proto libepoxy fixesproto fontsproto glproto inputproto kbproto libdrm systemd_lib libunwind openssl libpciaccess pixman presentproto randrproto recordproto renderproto resourceproto scrnsaverproto videoproto wayland windowswmproto libX11 libXau libXaw libxcb xcbutil xcbutilwm xcbutilimage xcbutilkeysyms xcbutilrenderutil xcmiscproto libXdmcp libXext xextproto xf86bigfontproto xf86dgaproto xf86driproto xf86vidmodeproto libXfixes libXfont2 libXi xineramaproto libxkbfile libXmu libXpm xproto libXrender libXres libxshmfence libXt xtrans libXtst ];
+    buildInputs = [ bigreqsproto compositeproto damageproto dbus libdmx dmxproto opengl-dummy dri2proto dri3proto libepoxy fixesproto fontsproto glproto inputproto kbproto libdrm systemd_lib libunwind openssl libpciaccess pixman presentproto randrproto recordproto renderproto resourceproto scrnsaverproto videoproto wayland windowswmproto libX11 libXau libXaw libxcb xcbutil xcbutilwm xcbutilimage xcbutilkeysyms xcbutilrenderutil xcmiscproto libXdmcp libXext xextproto xf86bigfontproto xf86dgaproto xf86driproto xf86vidmodeproto libXfixes libXfont2 libXi xineramaproto libxkbfile libXmu libXpm xproto libXrender libXres libxshmfence libXt xtrans libXtst ];
 
-  }) // {inherit bigreqsproto compositeproto damageproto dbus libdmx dmxproto mesa_noglu dri2proto dri3proto libepoxy fixesproto fontsproto glproto inputproto kbproto libdrm systemd_lib libunwind openssl libpciaccess pixman presentproto randrproto recordproto renderproto resourceproto scrnsaverproto videoproto wayland windowswmproto libX11 libXau libXaw libxcb xcbutil xcbutilwm xcbutilimage xcbutilkeysyms xcbutilrenderutil xcmiscproto libXdmcp libXext xextproto xf86bigfontproto xf86dgaproto xf86driproto xf86vidmodeproto libXfixes libXfont libXi xineramaproto libxkbfile libXmu libXpm xproto libXrender libXres libxshmfence libXt xtrans libXtst ;};
+  }) // {inherit bigreqsproto compositeproto damageproto dbus libdmx dmxproto opengl-dummy dri2proto dri3proto libepoxy fixesproto fontsproto glproto inputproto kbproto libdrm systemd_lib libunwind openssl libpciaccess pixman presentproto randrproto recordproto renderproto resourceproto scrnsaverproto videoproto wayland windowswmproto libX11 libXau libXaw libxcb xcbutil xcbutilwm xcbutilimage xcbutilkeysyms xcbutilrenderutil xcmiscproto libXdmcp libXext xextproto xf86bigfontproto xf86dgaproto xf86driproto xf86vidmodeproto libXfixes libXfont libXi xineramaproto libxkbfile libXmu libXpm xproto libXrender libXres libxshmfence libXt xtrans libXtst ;};
 
   xpr = (mkDerivation "xpr" {
     name = "xpr-1.0.4";

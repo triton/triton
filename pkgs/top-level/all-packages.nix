@@ -3807,8 +3807,9 @@ xorg = recurseIntoAttrs (
       m4
       makeWrapper
       mcpp
-      mesa_drivers
+      mesa_noglu
       mtdev
+      opengl-dummy
       openssl
       perl
       pkgconfig

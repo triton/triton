@@ -14,10 +14,16 @@
 , libtheora
 , libvisual
 , libvorbis
+, libx11
+, libxext
+#, libxv
 , opus
 , orc
 , pango
+, videoproto
+, xextproto
 , xorg
+, xproto
 , zlib
 
 , channel
@@ -64,15 +70,15 @@ stdenv.mkDerivation rec {
     libtheora
     libvisual
     libvorbis
+    libx11
+    libxext
+    xorg.libXv
     opus
     orc
     pango
-    xorg.libX11
-    xorg.libXext
-    xorg.libXv
-    xorg.videoproto
-    xorg.xextproto
-    xorg.xproto
+    videoproto
+    xextproto
+    xproto
     zlib
   ];
 
@@ -119,9 +125,9 @@ stdenv.mkDerivation rec {
     "--enable-volume"
     "--${boolEn (iso-codes != null)}-iso-codes"
     "--${boolEn (zlib != null)}-zlib"
-    "--${boolEn (xorg.libX11 != null)}-x"
+    "--${boolEn (libx11 != null)}-x"
     "--${boolEn (xorg.libXv != null)}-xvideo"
-    "--${boolEn (xorg.libXext != null)}-xshm"
+    "--${boolEn (libxext != null)}-xshm"
     "--${boolEn (alsa-lib != null)}-alsa"
     "--${boolEn (cdparanoia != null)}-cdparanoia"
     "--disable-ivorbis"

@@ -1323,12 +1323,8 @@ frei0r-plugins = callPackage ../all-pkgs/f/frei0r-plugins { };
 
 fstrm = callPackage ../all-pkgs/f/fstrm { };
 
-fuse_2 = callPackage ../all-pkgs/f/fuse {
-  channel = "2";
-};
-fuse_3 = callPackage ../all-pkgs/f/fuse {
-  channel = "3";
-};
+fuse_2 = callPackage ../all-pkgs/f/fuse/2.nix { };
+fuse_3 = callPackage ../all-pkgs/f/fuse/3.nix { };
 
 fuse-exfat = callPackage ../all-pkgs/f/fuse-exfat { };
 

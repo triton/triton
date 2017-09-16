@@ -1,28 +1,15 @@
 { stdenv
 , fetchurl
-
-, channel
 }:
 
-let
-  sources = import ./sources.nix;
-
-  inherit (sources."${channel}")
-    sha256
-    version;
-
-  inherit (stdenv.lib)
-    optionals
-    versionAtLeast;
-in
 stdenv.mkDerivation rec {
-  name = "fuse-${version}";
+  name = "fuse-2.9.7";
 
   src = fetchurl {
     url = "https://github.com/libfuse/libfuse/releases/download/${name}/"
       + "${name}.tar.gz";
     hashOutput = false;
-    inherit sha256;
+    sha256 = "832432d1ad4f833c20e13b57cf40ce5277a9d33e483205fc63c78111b3358874";
   };
 
   preConfigure = ''
@@ -41,8 +28,6 @@ stdenv.mkDerivation rec {
     "--enable-util"
     "--disable-example"
     "--disable-mtab"
-  ] ++ optionals (versionAtLeast version "3.0.0") [
-    "--disable-test"
   ];
 
   passthru = {

@@ -26,10 +26,11 @@
 , libx11
 , libxcb
 , libxcomposite
+, libxcursor
 , libxdamage
 , libxext
 , libxfixes
-#, libxi
+, libxi
 , libxrandr
 , libxrender
 , libxscrnsaver
@@ -101,11 +102,11 @@ stdenv.mkDerivation rec {
     libx11
     libxcb
     libxcomposite
-    xorg.libXcursor
+    libxcursor
     libxdamage
     libxext
     libxfixes
-    xorg.libXi
+    libxi
     xorg.libxkbfile
     libxrandr
     libxrender

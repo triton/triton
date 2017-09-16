@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
     "--disable-tests"
     "--enable-nls"
     "--with-backend=linux"
-    "--${boolWt (libimobiledevice != null && libplist != null)}-idevice"
+    "--${boolWt (libimobiledevice != null)}-idevice"
   ];
 
   NIX_LDFLAGS = [

@@ -26,7 +26,13 @@ let
     boolEn
     boolWt;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "2.26" = {
+      version = "2.26.0";
+      sha256 = "511568a65fda11fdd5ba5d4adfd48d5d76810d0e6ba4f7460f1b2ec0dbbbc337";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "at-spi2-core-${source.version}";

@@ -2,6 +2,8 @@
 , fetchurl
 , gettext
 , lib
+, meson
+, ninja
 , python3
 
 , alsa-lib
@@ -56,6 +58,8 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
+    meson
+    ninja
     python3
   ];
 
@@ -82,62 +86,22 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--enable-rpath"
-    "--disable-fatal-warnings"
-    "--disable-extra-checks"
-    "--disable-debug"
-    "--disable-profiling"
-    "--disable-valgrind"
-    "--disable-gcov"
-    "--disable-examples"
-    "--enable-external"
-    "--enable-experimental"
-    "--enable-largefile"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-gobject-cast-checks"
-    "--disable-glib-asserts"
-    "--${boolEn (orc != null)}-orc"
-    "--enable-Bsymbolic"
-    "--disable-static-plugins"
-    "--enable-adder"
-    "--enable-app"
-    "--enable-audioconvert"
-    "--enable-audiorate"
-    "--enable-audiotestsrc"
-    "--enable-encoding"
-    "--enable-videoconvert"
-    "--enable-gio"
-    "--enable-playback"
-    "--enable-audioresample"
-    "--enable-rawparse"
-    "--enable-subparse"
-    "--enable-tcp"
-    "--enable-typefind"
-    "--enable-videotestsrc"
-    "--enable-videorate"
-    "--enable-videoscale"
-    "--enable-volume"
-    "--${boolEn (iso-codes != null)}-iso-codes"
-    "--${boolEn (zlib != null)}-zlib"
-    "--${boolEn (libx11 != null)}-x"
-    "--${boolEn (xorg.libXv != null)}-xvideo"
-    "--${boolEn (libxext != null)}-xshm"
-    "--${boolEn (alsa-lib != null)}-alsa"
-    "--${boolEn (cdparanoia != null)}-cdparanoia"
-    "--disable-ivorbis"
-    "--${boolEn (libvisual != null)}-libvisual"
-    "--${boolEn (libogg != null)}-ogg"
-    "--${boolEn (opus != null)}-opus"
-    "--${boolEn (pango != null)}-pango"
-    "--${boolEn (libtheora != null)}-theora"
-    "--${boolEn (libvorbis != null)}-vorbis"
-    "--with-audioresample-format=float"
+  postPatch = ''
+    patchShebangs gst-libs/gst/tag/tag_mkenum.py
+    patchShebangs gst-libs/gst/video/video_mkenum.py
+    patchShebangs gst-libs/gst/audio/audio_mkenum.py
+    patchShebangs gst-libs/gst/rtp/rtp_mkenum.py
+    patchShebangs gst-libs/gst/rtsp/rtsp_mkenum.py
+    patchShebangs gst-libs/gst/pbutils/pbutils_mkenum.py
+    patchShebangs gst-libs/gst/app/app_mkenum.py
+  '';
+
+  mesonFlags = [
+    "-Daudioresample_format=float"
+    "-Ddisable_examples=true"
+    "-Duse_orc=yes"
+    "-Ddisable_introspection=false"
+    "-Ddisable_gtkdoc=false"
   ];
 
   passthru = {

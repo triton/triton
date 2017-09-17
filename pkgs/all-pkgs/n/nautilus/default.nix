@@ -7,6 +7,7 @@
 , makeWrapper
 , meson
 , ninja
+, python3
 
 , adwaita-icon-theme
 , atk
@@ -41,9 +42,9 @@ let
     versionOlder;
 
   sources = {
-    "3.24" = {
-      version = "3.24.2";
-      sha256 = "e5b0036f6fbfaf2e9d9ddbac98e19a43f3d8b626f73d1680e979fa312845cc60";
+    "3.26" = {
+      version = "3.26.0";
+      sha256 = "a02b30ef9033f6f92fbc5e29abaceeb58ce6a600ed9fa5a4697ba82901d07924";
     };
   };
 
@@ -63,6 +64,7 @@ stdenv.mkDerivation rec {
     makeWrapper
     meson
     ninja
+    python3
   ];
 
   buildInputs = [
@@ -98,7 +100,10 @@ stdenv.mkDerivation rec {
   #   })
   # ];
 
-  postPatch = /* FIXME: i18n.merge_file in meson is failing with permission denied */ ''
+  postPatch = /* Disable post-install hook, already handled by setup-hooks */ ''
+    sed -i meson.build \
+      -e '/postinstall.py/d'
+  '' + /* FIXME: i18n.merge_file in meson is failing with permission denied */ ''
     sed -i data/meson.build \
       -e '/org.gnome.Nautilus.desktop/ N; s/install: true/install: false/'
   '';

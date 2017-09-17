@@ -1,6 +1,9 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
+, meson
+, ninja
 
 , atk
 , clutter
@@ -16,10 +19,16 @@
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.8" = {
+      version = "1.8.4";
+      sha256 = "521493ec038973c77edcb8bc5eac23eed41645117894aaee7300b2487cb42b06";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "clutter-gtk-${source.version}";
@@ -32,6 +41,8 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -46,16 +57,8 @@ stdenv.mkDerivation rec {
     pango
   ];
 
-  configureFlags = [
-    "--disable-deprecated"
-    "--disable-debug"
-    "--disable-maintainer-flags"
-    "--enable-nls"
-    "--enable-rpath"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--${boolEn (gobject-introspection != null)}-introspection"
+  mesonFlags = [
+    "-Denable_docs=false"
   ];
 
   postBuild = "rm -frv $out/share/gtk-doc";
@@ -72,7 +75,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library for embedding a Clutter canvas (stage) in GTK+";
     homepage = http://www.clutter-project.org/;
     license = licenses.lgpl2Plus;

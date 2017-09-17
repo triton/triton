@@ -2,7 +2,8 @@
 , fetchurl
 , gettext
 , lib
-, python3
+, meson
+, ninja
 
 , a52dec
 , amrnb
@@ -48,11 +49,12 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
-    python3
+    meson
+    ninja
   ];
 
   buildInputs = [
-    a52dec
+    #a52dec  # FIXME
     amrnb
     amrwb
     glib
@@ -67,47 +69,9 @@ stdenv.mkDerivation rec {
     x264
   ];
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--enable-rpath"
-    "--disable-fatal-warnings"
-    "--disable-extra-checks"
-    "--disable-debug"
-    "--disable-profiling"
-    "--disable-valgrind"
-    "--disable-gcov"
-    "--disable-examples"
-    "--enable-external"
-    "--enable-experimental"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-gobject-cast-checks"
-    "--disable-glib-asserts"
-    "--${boolEn (orc != null)}-orc"
-    "--enable-Bsymbolic"
-    # Internal plugins
-    "--disable-static-plugins"
-    "--enable-asfdemux"
-    "--enable-dvdlpcmdec"
-    "--enable-dvdsub"
-    "--enable-xingmux"
-    "--enable-realmedia"
-    # External plugins
-    "--${boolEn (a52dec != null)}-a52dec"
-    "--${boolEn (amrnb != null)}-amrnb"
-    "--${boolEn (amrnb != null)}-amrwb"
-    "--${boolEn (libcdio != null)}-cdio"
-    "--${boolEn (libdvdread != null)}-dvdread"
-    "--${boolEn (lame != null)}-lame"
-    "--${boolEn (libmpeg2 != null)}-mpeg2dec"
-    "--${boolEn (mpg123 != null)}-mpg123"
-    #"--${boolEn (sidplay != null)}-sidplay"
-    /**/"--disable-sidplay"
-    #"--${boolEn (twolame != null)}-twolame"
-    /**/"--disable-twolame"
-    "--${boolEn (x264 != null)}-x264"
+  mesonFlags = [
+    # FIXME: add additional x264 libs for 10bpcc
+    #"-Dx264_libraries"
   ];
 
   passthru = {

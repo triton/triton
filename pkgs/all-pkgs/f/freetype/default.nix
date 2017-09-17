@@ -21,7 +21,7 @@ let
     optionalString;
 in
 stdenv.mkDerivation rec {
-  name = "freetype-2.8";
+  name = "freetype-2.8.1";
 
   src = fetchurl {
     urls = [
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
       "mirror://sourceforge/freetype/${name}.tar.bz2"
     ];
     hashOutput = false;
-    sha256 = "a3c603ed84c3c2495f9c9331fe6bba3bb0ee65e06ec331e0a0fb52158291b40b";
+    sha256 = "e5435f02e02d2b87bb8e4efdcaa14b1f78c9cf3ab1ed80f94b6382fb6acc7d78";
   };
 
   buildInputs = [

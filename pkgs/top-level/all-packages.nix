@@ -2796,7 +2796,7 @@ nautilus_3-24 = callPackage ../all-pkgs/n/nautilus {
   gnome-desktop = pkgs.gnome-desktop_3-24;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
   gvfs = pkgs.gvfs_1-34;
-  tracker = pkgs.tracker_1-12;
+  tracker = pkgs.tracker_2-0;
 };
 nautilus = callPackageAlias "nautilus_3-24" { };
 
@@ -3556,15 +3556,15 @@ totem-pl-parser_3-26 = callPackage ../all-pkgs/t/totem-pl-parser {
 };
 totem-pl-parser = callPackageAlias "totem-pl-parser_3-26" { };
 
-tracker_1-12 = callPackage ../all-pkgs/t/tracker {
-  channel = "1.12";
+tracker_2-0 = callPackage ../all-pkgs/t/tracker {
+  channel = "2.0";
   #evolution
   evolution-data-server = pkgs.evolution-data-server_3-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-themes-standard = pkgs.gnome-themes-standard_3-22;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
 };
-tracker = callPackageAlias "tracker_1-12" { };
+tracker = callPackageAlias "tracker_2-0" { };
 
 transmission_generic = overrides: callPackage ../all-pkgs/t/transmission ({
   # The following are disabled by default

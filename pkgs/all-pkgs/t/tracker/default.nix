@@ -5,6 +5,7 @@
 , itstool
 , lib
 , makeWrapper
+, python3
 
 , adwaita-icon-theme
 , bash
@@ -50,10 +51,12 @@
 , networkmanager
 , poppler
 , sqlite
+, systemd_lib
 , taglib
 , totem-pl-parser
 , upower
 , util-linux_lib
+, vala
 , zlib
 
 , channel
@@ -64,9 +67,9 @@ let
     boolEn;
 
   sources = {
-    "1.12" = {
-      version = "1.12.1";
-      sha256 = "b912cb06944abc676b4644219db777896455fb33aa5589f0b46e417bc9b82a4b";
+    "2.0" = {
+      version = "2.0.0";
+      sha256 = "efc3af5b44461ec938af0622fe8eacbf0c7abbadce32ae55df28c9d4b4b1ff6c";
     };
   };
 
@@ -91,6 +94,7 @@ stdenv.mkDerivation rec {
     itstool
     libxslt
     makeWrapper
+    python3
   ];
 
   buildInputs = [
@@ -144,12 +148,18 @@ stdenv.mkDerivation rec {
     #pango
     poppler
     sqlite
+    systemd_lib
     taglib
     #thunderbird
     upower
     util-linux_lib
+    vala
     zlib
   ];
+
+  postPatch = ''
+    patchShebangs utils/g-ir-merge/g-ir-merge
+  '';
 
   preConfigure = ''
     sed -i src/libtracker-sparql/Makefile.in \
@@ -245,25 +255,7 @@ stdenv.mkDerivation rec {
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix 'XDG_DATA_DIRS' : "$out/share"
 
-    wrapProgram $out/libexec/tracker-extract \
-      --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
-      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
-      --prefix 'XDG_DATA_DIRS' : "$out/share"
-
-    wrapProgram $out/libexec/tracker-miner-fs \
-      --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
-      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
-      --prefix 'XDG_DATA_DIRS' : "$out/share"
-
     wrapProgram $out/libexec/tracker-store \
-      --set 'GSETTINGS_BACKEND' 'dconf' \
-      --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
-      --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \
-      --prefix 'XDG_DATA_DIRS' : "$out/share"
-
-    wrapProgram $out/libexec/tracker-writeback \
       --set 'GSETTINGS_BACKEND' 'dconf' \
       --prefix 'GIO_EXTRA_MODULES' : "$GIO_EXTRA_MODULES" \
       --prefix 'XDG_DATA_DIRS' : "$GSETTINGS_SCHEMAS_PATH" \

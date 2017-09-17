@@ -6,7 +6,7 @@
 , libdrm
 , libtsm
 , libxkbcommon
-, mesa
+, opengl-dummy
 , pango
 , systemd_lib
 , xorg
@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     libdrm
     libtsm
     libxkbcommon
-    mesa
+    opengl-dummy
     pango
     systemd_lib
     xorg.pixman

@@ -20,6 +20,7 @@
 , mariadb-connector-c
 , mesa_glu
 , mesa_noglu
+, opengl-dummy
 , openssl
 , perl
 , postgresql
@@ -146,7 +147,7 @@ stdenv.mkDerivation rec {
       inherit cups icu;
       inherit (xorg) libXfixes;
       glibc = stdenv.cc.libc;
-      openglDriver = mesa_noglu.driverSearchPath;
+      openglDriver = opengl-dummy.driverSearchPath;
     })
   ];
 

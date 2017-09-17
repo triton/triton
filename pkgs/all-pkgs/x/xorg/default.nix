@@ -1,6 +1,6 @@
 # THIS IS A GENERATED FILE.  DO NOT EDIT!
 args @ { fetchurl, fetchzip, fetchpatch, stdenv, pkgconfig, intltool, freetype, fontconfig
-, libxslt, expat, libpng, zlib, perl, opengl-dummy, mesa_drivers, spice-protocol, spice
+, libxslt, expat, libpng, zlib, perl, opengl-dummy, spice-protocol, spice
 , dbus, util-linux_lib, openssl, gperf, gnum4, libevdev, tradcpp, libinput, mcpp, makeWrapper, autoreconfHook
 , autoconf, automake, libtool, xmlto, asciidoc, flex, bison, python, mtdev, cairo, glib
 , libepoxy, wayland, libbsd, systemd_lib, gettext, pciutils, python3, kmod, procps-ng

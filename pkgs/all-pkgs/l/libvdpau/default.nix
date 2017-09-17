@@ -5,7 +5,7 @@
 , dri2proto
 , libx11
 , libxext
-, mesa_noglu
+, opengl-dummy
 }:
 
 stdenv.mkDerivation rec {
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--enable-dri2"
     "--disable-documentation"
-    "--with-module-dir=${mesa_noglu.driverSearchPath}/lib/vdpau"
+    "--with-module-dir=${opengl-dummy.driverSearchPath}/lib/vdpau"
   ];
 
   preInstall = ''

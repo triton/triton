@@ -160,7 +160,7 @@ in
         --add-flags "-xkbdir ${xorg.xkeyboardconfig}/share/X11/xkb"
       wrapProgram $out/bin/Xvfb \
         --set XKB_BINDIR "${xorg.xkbcomp}/bin" \
-        --set XORG_DRI_DRIVER_PATH ${args.mesa_noglu.driverSearchPath}/lib/dri \
+        --set XORG_DRI_DRIVER_PATH ${args.opengl-dummy.driverSearchPath}/lib/dri \
         --add-flags "-xkbdir ${xorg.xkeyboardconfig}/share/X11/xkb"
     '';
 

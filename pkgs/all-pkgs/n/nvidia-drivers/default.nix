@@ -23,7 +23,7 @@
 , zlib
 
 # Just needed for the passthru driver path
-, mesa_noglu
+, opengl-dummy
 
 , libsOnly ? false
 }:
@@ -530,7 +530,7 @@ stdenv.mkDerivation {
       version;
     inherit (source)
       versionMajor;
-    inherit (mesa_noglu)
+    inherit (opengl-dummy)
       driverSearchPath;
     drm = buildKernelspace;
     kms = buildKernelspace;

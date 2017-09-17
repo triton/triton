@@ -3807,7 +3807,6 @@ xorg = recurseIntoAttrs (
       m4
       makeWrapper
       mcpp
-      mesa_noglu
       mtdev
       opengl-dummy
       openssl
@@ -3881,7 +3880,6 @@ xorg = recurseIntoAttrs (
       xtrans
       xwininfo
       ;
-    mesa = pkgs.mesa_noglu;
   }
 );
 

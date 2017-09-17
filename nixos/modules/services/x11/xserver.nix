@@ -500,9 +500,9 @@ in
         environment =
           {
             XKB_BINDIR = "${xorg.xkbcomp}/bin"; # Needed for the Xkb extension.
-            XORG_DRI_DRIVER_PATH = "${pkgs.mesa.driverSearchPath}/lib/dri"; # !!! Depends on the driver selected at runtime.
+            XORG_DRI_DRIVER_PATH = "${pkgs.opengl-dummy.driverSearchPath}/lib/dri"; # !!! Depends on the driver selected at runtime.
             LD_LIBRARY_PATH = concatStringsSep ":" (
-              [ "${xorg.libX11}/lib" "${xorg.libXext}/lib" "${pkgs.mesa.driverSearchPath}/lib" ]
+              [ "${xorg.libX11}/lib" "${xorg.libXext}/lib" "${pkgs.opengl-dummy.driverSearchPath}/lib" ]
               ++ concatLists (catAttrs "libPath" cfg.drivers));
           } // cfg.displayManager.job.environment;
 

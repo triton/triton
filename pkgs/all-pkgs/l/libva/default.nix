@@ -6,7 +6,6 @@
 , libx11
 , libxext
 , libxfixes
-, mesa_noglu
 , opengl-dummy
 , wayland
 }:
@@ -49,7 +48,7 @@ stdenv.mkDerivation rec {
     "--enable-wayland"
     "--enable-va-messaging"
     "--enable-dummy-driver"
-    "--with-drivers-path=${mesa_noglu.driverSearchPath}/lib/dri"
+    "--with-drivers-path=${opengl-dummy.driverSearchPath}/lib/dri"
   ];
 
   preInstall = ''

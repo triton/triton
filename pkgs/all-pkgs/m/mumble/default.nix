@@ -7,10 +7,16 @@
 , alsa-lib
 , avahi
 , boost
+, fixesproto
 , grpc
+, inputproto
 , jack2_lib
 , libcap
 , libsndfile
+, libx11
+, libxext
+, libxfixes
+, libxi
 , opengl-dummy
 , opus
 , openssl_1-0-2
@@ -22,7 +28,7 @@
 , speech-dispatcher
 , speex
 , speexdsp
-, xorg
+, xproto
 
 , mumbleOverlay ? true
 , releaseType ? "release"
@@ -87,8 +93,14 @@ stdenv.mkDerivation rec {
     qt5
   ] ++ optionals (config == "mumble") [
     alsa-lib
+    fixesproto
+    inputproto
     jack2_lib
     libsndfile
+    libx11
+    libxext
+    libxfixes
+    libxi
     opengl-dummy
     opus
     portaudio
@@ -96,13 +108,7 @@ stdenv.mkDerivation rec {
     speech-dispatcher
     speex
     speexdsp
-    xorg.fixesproto
-    xorg.inputproto
-    xorg.libX11
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXi
-    xorg.xproto
+    xproto
   ] ++ optionals (config == "murmur") [
     grpc
     libcap

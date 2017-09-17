@@ -22,9 +22,9 @@ let
     boolWt;
 
   sources = {
-    "2.58" = {
-      version = "2.58.2";
-      sha256 = "442300ca1b1bf8a3bbf2f788203287ff862542d4fc048f19a92a068a27d17b72";
+    "2.60" = {
+      version = "2.60.0";
+      sha256 = "b324edbecda0884143c0853b4a2bd5bd37fb3761f12f293c621ff34b9acdc84c";
     };
   };
   source = sources."${channel}";

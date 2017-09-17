@@ -11,7 +11,7 @@
 , opengl-dummy
 , wayland
 , xorg
-, proto
+, xproto
 }:
 
 let

@@ -4,6 +4,9 @@
 
 , alsa-lib
 , libx11
+, libxi
+, libxinerama
+, libxrandr
 , xorg
 
 , channel ? "0.15"
@@ -13,9 +16,9 @@
 let
   sources = {
     "0.15" = {
-      version = "0.15.32";
-      sha256_alpha = "61ad08c381e7833259559b1f38634a6cd3eb291131233b35c25a42e061cc338b";
-      sha256_headless = "b0405b5277cdc1807782bf68a4564564140808173a09c980484195d1d2141874";
+      version = "0.15.34";
+      sha256_alpha = "9ae0de043baf70a1e008c0859b16a859d165fe33951f20c8bf7c5500369f115e";
+      sha256_headless = "e0d2a79dfa587d8d01ec514d4e6ed7ae9f353a47c49a2a471bd34489280327d4";
     };
   };
   source = sources."${channel}";
@@ -40,9 +43,9 @@ stdenv.mkDerivation rec {
     alsa-lib
     libx11
     xorg.libXcursor
-    xorg.libXi
-    xorg.libXinerama
-    xorg.libXrandr
+    libxi
+    libxinerama
+    libxrandr
   ];
 
   installPhase = ''

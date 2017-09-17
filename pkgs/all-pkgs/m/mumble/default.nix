@@ -11,14 +11,14 @@
 , jack2_lib
 , libcap
 , libsndfile
-, mesa_noglu
+, opengl-dummy
 , opus
-, qt4
-, qt5
 , openssl_1-0-2
 , portaudio
 , protobuf-cpp
 , pulseaudio_lib
+, qt4
+, qt5
 , speech-dispatcher
 , speex
 , speexdsp
@@ -89,7 +89,7 @@ stdenv.mkDerivation rec {
     alsa-lib
     jack2_lib
     libsndfile
-    mesa_noglu
+    opengl-dummy
     opus
     portaudio
     pulseaudio_lib

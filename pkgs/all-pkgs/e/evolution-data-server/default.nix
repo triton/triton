@@ -39,9 +39,9 @@ let
     boolOn;
 
   sources = {
-    "3.24" = {
-      version = "3.24.4";
-      sha256 = "c8527da0ffe8e81ad4192411ea4a9b99f8870e70565e187136426252c103a9d0";
+    "3.26" = {
+      version = "3.26.0";
+      sha256 = "7776ef431e58a07b32e5b678b8df4ae5e85f99003a933dafa6bb73842ccff067";
     };
   };
   source = sources."${channel}";

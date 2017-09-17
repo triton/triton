@@ -2,6 +2,8 @@
 , fetchTritonPatch
 , fetchurl
 , lib
+#, pkgs
+#, ninja
 
 , gst-plugins-base
 , gstreamer
@@ -33,6 +35,11 @@ stdenv.mkDerivation rec {
     inherit (source) sha256;
   };
 
+  # nativeBuildInputs = [
+  #   pkgs.meson
+  #   ninja
+  # ];
+
   buildInputs = [
     gst-plugins-base
     gstreamer
@@ -56,6 +63,13 @@ stdenv.mkDerivation rec {
       "--with-pygi-overrides-dir=$out/lib/${pythonPackages.python.libPrefix}/site-packages/gi/overrides"
     )
   '';
+
+  # preConfigure = ''
+  #   mesonFlagsArray+=(
+  #     # Fix overrides site directory
+  #     "-Dpygi-overrides-dir=$out/lib/${pythonPackages.python.libPrefix}/site-packages/gi/overrides"
+  #   )
+  # '';
 
   configureFlags = [
     "--disable-maintainer-mode"

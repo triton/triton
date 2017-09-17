@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , gettext
+, lib
 
 , atk
 , bzip2
@@ -12,12 +13,19 @@
 , glib
 , gobject-introspection
 , gtk
+, inputproto
 , json-glib
 , libdrm
 , libgudev
 , libinput
+, libx11
+, libxcomposite
+, libxdamage
+, libxext
+, libxi
 , libxkbcommon
-, mesa
+, libxrandr
+, opengl-dummy
 , pango
 , systemd_lib
 , tslib
@@ -27,22 +35,19 @@
 , channel
 }:
 
-assert xorg != null ->
-  xorg.inputproto != null
-  && xorg.libX11 != null
-  && xorg.libXcomposite != null
-  && xorg.libXdamage != null
-  && xorg.libXext != null
-  && xorg.libXi != null
-  && xorg.libXrandr != null;
-
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     boolEn
     boolWt
     optionals;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "1.26" = {
+      version = "1.26.2";
+      sha256 = "e7233314983055e9018f94f56882e29e7fc34d8d35de030789fdcd9b2d0e2e56";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "clutter-${source.version}";
@@ -68,41 +73,40 @@ stdenv.mkDerivation rec {
     glib
     gobject-introspection
     gtk
+    inputproto
     json-glib
     libdrm
     libgudev
     libinput
+    libx11
+    libxcomposite
+    libxdamage
+    libxext
+    libxi
     libxkbcommon
-    mesa
+    libxrandr
+    opengl-dummy
     pango
     systemd_lib
     tslib
     wayland
-  ] ++ optionals (xorg != null) [
-    xorg.inputproto
-    xorg.libX11
-    xorg.libXcomposite
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXi
-    xorg.libXrandr
   ];
 
   configureFlags = [
     "--enable-glibtest"
     "--enable-Bsymbolic"
-    "--${boolEn (xorg != null)}-x11-backend"
+    "--${boolEn (libx11 != null)}-x11-backend"
     "--disable-win32-backend"
     "--disable-quartz-backend"
     "--enable-gdk-backend"
     "--${boolEn (wayland != null)}-wayland-backend"
-    "--enable-egl-backend"
+    "--${boolEn opengl-dummy.egl}-egl-backend"
     "--disable-mir-backend"
     "--disable-cex100-backend"
     "--${boolEn (tslib != null)}-tslib-input"
     "--enable-evdev-input"
     "--${boolEn (wayland != null)}-wayland-compositor"
-    "--${boolEn (xorg != null)}-xinput"
+    "--${boolEn (libxi != null)}-xinput"
     "--${boolEn (gdk-pixbuf != null)}-gdk-pixbuf"
     "--disable-debug"
     "--disable-deprecated"
@@ -119,7 +123,7 @@ stdenv.mkDerivation rec {
     "--disable-installed-tests"
     "--disable-always-build-tests"
     "--disable-examples"
-    "--${boolWt (xorg != null)}-x"
+    "--${boolWt (libx11 != null)}-x"
   ];
 
   passthru = {
@@ -134,7 +138,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Library for creating graphical user interfaces";
     homepage = http://www.clutter-project.org/;
     license = licenses.lgpl2Plus;

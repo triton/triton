@@ -1560,11 +1560,6 @@ gnome-wrapper = makeSetupHook {
   deps = [ makeWrapper ];
 } ../build-support/setup-hooks/gnome-wrapper.sh;
 
-gnonlin_1-4 = callPackage ../all-pkgs/g/gnonlin {
-  channel = "1.4";
-};
-gnonlin = callPackageAlias "gnonlin_1-4" { };
-
 gnu-efi = callPackage ../all-pkgs/g/gnu-efi { };
 
 gnugrep = callPackage ../all-pkgs/g/gnugrep { };

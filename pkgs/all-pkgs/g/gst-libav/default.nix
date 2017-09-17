@@ -1,16 +1,14 @@
 { stdenv
 , fetchurl
 , lib
-, python3
-, yasm
+, meson
+, ninja
 
-, bzip2
 , ffmpeg
 , glib
 , gst-plugins-base
 , gstreamer
 , orc
-, xz
 , zlib
 
 , channel
@@ -43,37 +41,17 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    python3
-    #yasm  # internal libav dependency
+    meson
+    ninja
   ];
 
   buildInputs = [
-    #bzip2  # internal libav dependency
     ffmpeg
     glib
     gst-plugins-base
     gstreamer
     orc
-    #xz  # internal libav dependency
     zlib
-  ];
-
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--${boolEn (orc != null)}-orc"
-    "--disable-fatal-warnings"
-    "--disable-extra-checks"
-    "--disable-valgrind"
-    "--disable-gcov"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-gobject-cast-checks"
-    "--disable-glib-asserts"
-    "--enable-Bsymbolic"
-    "--disable-static-plugins"
-    "--enable-gpl"
-    "--${boolWt (ffmpeg != null)}-system-libav"
   ];
 
   NIX_CFLAGS_COMPILE = [

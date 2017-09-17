@@ -4,8 +4,9 @@
 , ninja
 
 , libva
-, mesa
-, xorg
+, libx11
+, opengl-dummy
+, xproto
 }:
 
 let
@@ -29,9 +30,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     libva
-    mesa
-    xorg.libX11
-    xorg.xproto
+    libx11
+    opengl-dummy
+    xproto
   ];
 
   meta = with stdenv.lib; {

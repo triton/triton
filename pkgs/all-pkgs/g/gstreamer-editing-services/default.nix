@@ -2,8 +2,8 @@
 , fetchurl
 , flex
 , lib
-, perl
-, python3
+, meson
+, ninja
 
 , glib
 , gnonlin
@@ -42,8 +42,8 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     flex
-    perl
-    python3
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -55,28 +55,9 @@ stdenv.mkDerivation rec {
     libxml2
   ];
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--disable-fatal-warnings"
-    "--disable-extra-checks"
-    "--disable-debug"
-    "--disable-profiling"
-    "--disable-valgrind"
-    "--disable-gcov"
-    "--disable-examples"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-docbook"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-gobject-cast-checks"
-    "--disable-glib-asserts"
-    "--enable-plugins"
-    "--enable-Bsymbolic"
-    "--disable-benchmarks"
-    "--disable-static-plugins"
-    #"--with-bash-completion-dir"
-    "--without-gtk"
+  mesonFlags = [
+    "-Ddisable_introspection=false"
+    "-Ddisable_gtkdoc=true"
   ];
 
   passthru = {

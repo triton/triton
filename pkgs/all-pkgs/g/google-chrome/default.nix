@@ -23,6 +23,7 @@
 , gtk_3
 , libcap
 , libx11
+, libxcb
 , libxcomposite
 , libxcursor
 , libxdamage
@@ -107,6 +108,7 @@ stdenv.mkDerivation rec {
     gtk_3
     libcap
     libx11
+    libxcb
     libxcomposite
     libxcursor
     libxdamage

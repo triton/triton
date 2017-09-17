@@ -2212,10 +2212,10 @@ libgweather_3-24 = callPackage ../all-pkgs/l/libgweather {
 };
 libgweather = callPackageAlias "libgweather_3-24" { };
 
-libgxps_0-2 = callPackage ../all-pkgs/l/libgxps {
-  channel = "0.2";
+libgxps_0-3 = callPackage ../all-pkgs/l/libgxps {
+  channel = "0.3";
 };
-libgxps = callPackageAlias "libgxps_0-2" { };
+libgxps = callPackageAlias "libgxps_0-3" { };
 
 libical = callPackage ../all-pkgs/l/libical { };
 

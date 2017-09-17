@@ -1,6 +1,8 @@
 { stdenv
 , fetchurl
 , lib
+, meson
+, ninja
 
 , cairo
 , glib
@@ -17,11 +19,13 @@
 }:
 
 let
-  inherit (lib)
-    boolEn
-    boolWt;
-
-  source = (import ./sources.nix { })."${channel}";
+  sources = {
+    "0.3" = {
+      version = "0.3.0";
+      sha256 = "412b1343bd31fee41f7204c47514d34c563ae34dafa4cc710897366bd6cd0fae";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "libgxps-${source.version}";
@@ -31,6 +35,11 @@ stdenv.mkDerivation rec {
     hashOutput = false;
     inherit (source) sha256;
   };
+
+  nativeBuildInputs = [
+    meson
+    ninja
+  ];
 
   buildInputs = [
     cairo
@@ -45,22 +54,14 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-compile-warnings"
-    "--disable-iso-c"
-    "--enable-cxx-warnings"
-    "--disable-iso-cxx"
-    "--disable-debug"
-    "--disable-test"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--enable-man"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--${boolWt (libjpeg != null)}-libjpeg"
-    "--${boolWt (libtiff != null && zlib != null)}-libtiff"
-    "--${boolWt (lcms2 != null)}-liblcms2"
+  mesonFlags = [
+    "-Denable-test=false"
+    "-Denable-gtk-doc=false"
+    "-Denable-man=false"
+    "-Ddisable-introspection=false"
+    "-Dwith-liblcms2=true"
+    "-Dwith-libjpeg=true"
+    "-Dwith-libtiff=true"
   ];
 
   passthru = {

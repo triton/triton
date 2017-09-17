@@ -1,18 +1,19 @@
 { stdenv
 , fetchurl
+, lib
 
 , freeglut
 , giflib
 , libjpeg
 , libpng
 , libtiff
-, mesa
+, opengl-dummy
 
 , viewer ? false
 }:
 
 let
-  inherit (stdenv.lib)
+  inherit (lib)
     optionals;
 in
 stdenv.mkDerivation rec {
@@ -46,10 +47,10 @@ stdenv.mkDerivation rec {
     libtiff
   ] ++ optionals viewer [
     freeglut
-    mesa
+    opengl-dummy
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Tools and library for the WebP image format";
     homepage = https://developers.google.com/speed/webp/;
     license = licenses.bsd3;

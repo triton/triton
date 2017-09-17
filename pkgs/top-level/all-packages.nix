@@ -1114,7 +1114,7 @@ evince_3-22 = callPackage ../all-pkgs/e/evince {
   atk = pkgs.atk_2-26;
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
-  gvfs = pkgs.gvfs_1-32;
+  gvfs = pkgs.gvfs_1-34;
   nautilus = pkgs.nautilus_3-24;
 };
 evince = callPackageAlias "evince_3-22" { };
@@ -1843,11 +1843,11 @@ gupnp-av = callPackageAlias "gupnp-av_0-12" { };
 
 gupnp-igd = callPackage ../all-pkgs/g/gupnp-igd { };
 
-gvfs_1-32 = callPackage ../all-pkgs/g/gvfs {
-  channel = "1.32";
+gvfs_1-34 = callPackage ../all-pkgs/g/gvfs {
+  channel = "1.34";
   libsoup = pkgs.libsoup_2-60;
 };
-gvfs = callPackageAlias "gvfs_1-32" { };
+gvfs = callPackageAlias "gvfs_1-34" { };
 
 gx = pkgs.goPackages.gx.bin // { outputs = [ "bin" ]; };
 
@@ -2795,7 +2795,7 @@ nautilus_3-24 = callPackage ../all-pkgs/n/nautilus {
   gdk-pixbuf = pkgs.gdk-pixbuf_2-36;
   gnome-desktop = pkgs.gnome-desktop_3-24;
   gsettings-desktop-schemas = pkgs.gsettings-desktop-schemas_3-24;
-  gvfs = pkgs.gvfs_1-32;
+  gvfs = pkgs.gvfs_1-34;
   tracker = pkgs.tracker_1-12;
 };
 nautilus = callPackageAlias "nautilus_3-24" { };

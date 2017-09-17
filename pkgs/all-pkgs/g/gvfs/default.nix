@@ -14,7 +14,6 @@
 , gcr
 , glib
 #, gnome-online-accounts
-, gtk
 , libarchive
 , libbluray
 , libcap
@@ -27,6 +26,7 @@
 , libmtp
 , libsecret
 , libsoup
+, libusb
 , libxml2
 , openssh
 , polkit
@@ -42,9 +42,9 @@ let
     boolEn;
 
   sources = {
-    "1.32" = {
-      version = "1.32.1";
-      sha256 = "d0b6c9edab09d52472355657a2f0a14831b2e6c58caba395f721ab683f836ade";
+    "1.34" = {
+      version = "1.34.0";
+      sha256 = "79fb4fd9a671333efc6f3c88dd5d1589481390bc3978b03b6de89599a62e015a";
     };
   };
   source = sources."${channel}";
@@ -74,7 +74,6 @@ stdenv.mkDerivation rec {
     gcr
     glib
     #gnome-online-accounts
-    gtk
     libarchive
     libbluray
     libcap
@@ -90,6 +89,7 @@ stdenv.mkDerivation rec {
     #libnfs
     libsecret
     libsoup
+    libusb
     libxml2
     openssh
     polkit
@@ -110,6 +110,7 @@ stdenv.mkDerivation rec {
     "--${boolEn (libsoup != null)}-http"
     "--${boolEn (avahi != null)}-avahi"
     "--${boolEn (systemd_lib != null)}-udev"
+    "--enable-gudev"
     "--${boolEn (fuse_2 != null)}-fuse"
     "--disable-gdu"
     "--${boolEn (
@@ -128,11 +129,11 @@ stdenv.mkDerivation rec {
     "--${boolEn (libgphoto2 != null)}-gphoto2"
     "--${boolEn (libgnome-keyring != null)}-keyring"
     "--${boolEn (libbluray != null)}-bluray"
+    "--enable-libusb"
     "--${boolEn (
       libmtp != null
       && systemd_lib != null)}-libmtp"
     "--${boolEn (samba_client != null)}-samba"
-    "--${boolEn (gtk != null)}-gtk"
     "--${boolEn (libarchive != null)}-archive"
     "--${boolEn (libgcrypt != null)}-afp"
     "--disable-nfs"

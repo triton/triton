@@ -15,7 +15,13 @@ let
   inherit (lib)
     boolEn;
 
-  source = (import ./sources.nix { })."${channel}";
+  sources ={
+    "3.24" = {
+      version = "3.24.1";
+      sha256 = "76a3fa309f9de6074d66848987214f0b128124ba7184c958c15ac78a8ac7eea7";
+    };
+  };
+  source = sources."${channel}";
 in
 stdenv.mkDerivation rec {
   name = "gsettings-desktop-schemas-${source.version}";

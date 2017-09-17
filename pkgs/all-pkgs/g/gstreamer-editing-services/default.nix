@@ -6,7 +6,6 @@
 , ninja
 
 , glib
-, gnonlin
 , gobject-introspection
 , gst-plugins-base
 , gstreamer
@@ -48,7 +47,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     glib
-    gnonlin
     gobject-introspection
     gst-plugins-base
     gstreamer

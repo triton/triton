@@ -3551,10 +3551,10 @@ tmux = callPackage ../all-pkgs/t/tmux { };
 
 tor = callPackage ../all-pkgs/t/tor { };
 
-totem-pl-parser_3-10 = callPackage ../all-pkgs/t/totem-pl-parser {
-  channel = "3.10";
+totem-pl-parser_3-26 = callPackage ../all-pkgs/t/totem-pl-parser {
+  channel = "3.26";
 };
-totem-pl-parser = callPackageAlias "totem-pl-parser_3-10" { };
+totem-pl-parser = callPackageAlias "totem-pl-parser_3-26" { };
 
 tracker_1-12 = callPackage ../all-pkgs/t/tracker {
   channel = "1.12";

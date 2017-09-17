@@ -3,6 +3,8 @@
 , gettext
 , intltool
 , lib
+, meson
+, ninja
 
 , file
 , glib
@@ -17,15 +19,10 @@
 }:
 
 let
-  inherit (lib)
-    boolEn
-    boolString
-    boolWt;
-
   sources = {
-    "3.10" = {
-      version = "3.10.8";
-      sha256 = "ffc50a0713d5f3049912545169eea7d367483b2c4a868032940516ed1e78dd2b";
+    "3.26" = {
+      version = "3.26.0";
+      sha256 = "f153a53391e9b42fed5cb6ce62322a58e323fde6ec4a54d8ba4d376cf4c1fbcb";
     };
   };
 
@@ -42,7 +39,8 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     gettext
-    intltool
+    meson
+    ninja
   ];
 
   buildInputs = [
@@ -56,23 +54,12 @@ stdenv.mkDerivation rec {
     libxml2
   ];
 
-  configureFlags = [
-    "--disable-maintainer-mode"
-    "--enable-nls"
-    "--enable-gmime-i-know-what-im-doing"
-    # TODO: quvi support
-    "--disable-quvi"
-    "--${boolEn (libarchive != null)}-libarchive"
-    "--${boolEn (libgcrypt != null)}-libgcrypt"
-    "--disable-debug"
-    "--enable-cxx-warnings"
-    "--disable-gtk-doc"
-    "--disable-gtk-doc-html"
-    "--disable-gtk-doc-pdf"
-    "--${boolEn (gobject-introspection != null)}-introspection"
-    "--disable-code-coverage"
-    "--${boolWt (libgcrypt != null)}-libgcrypt-prefix${
-      boolString (libgcrypt != null) "=${libgcrypt}" ""}"
+  mesonFlags = [
+    "-Ddisable-gmime-i-know-what-im-doing=false"
+    "-Denable-quvi=no"
+    "-Denable-libarchive=yes"
+    "-Denable-libgcrypt=yes"
+    "-Denable-gtk-doc=false"
   ];
 
   passthru = {

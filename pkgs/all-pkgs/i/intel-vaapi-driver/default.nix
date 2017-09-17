@@ -4,11 +4,14 @@
 , lib
 , python
 
+#, intelgputools
 , libdrm
 , libva
-, mesa_noglu
+, libx11
+, opengl-dummy
 , wayland
 , xorg
+, proto
 }:
 
 let
@@ -34,13 +37,13 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    xorg.intelgputools
     libdrm
     libva
-    mesa_noglu
+    libx11
+    opengl-dummy
     wayland
-    xorg.intelgputools
-    xorg.libX11
-    xorg.xproto
+    xproto
   ];
 
   patchPhase = ''

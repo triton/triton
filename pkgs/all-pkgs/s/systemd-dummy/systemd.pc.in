@@ -1,0 +1,27 @@
+prefix=@PREFIX@
+systemdutildir=${prefix}/lib/systemd
+systemdsystemunitdir=${systemdutildir}/system
+systemdsystempresetdir=${systemdutildir}/system-preset
+systemduserunitdir=${systemdutildir}/user
+systemduserpresetdir=${systemdutildir}/user-preset
+systemdsystemconfdir=/etc/systemd/system
+systemduserconfdir=/etc/systemd/user
+systemdsystemunitpath=${systemdsystemconfdir}:/etc/systemd/system:/etc/systemd-mutable/system:/run/systemd/system:${systemdsystemunitdir}
+systemduserunitpath=${systemduserconfdir}:/etc/systemd/user:/etc/systemd-mutable/user:/run/systemd/user:${systemduserunitdir}
+systemdsystemgeneratordir=${systemdutildir}/system-generators
+systemdusergeneratordir=${systemdsystemutildir}/user-generators
+systemdsleepdir=${systemdsystemutildir}/system-sleep
+systemdshutdowndir=${systemdsystemutildir}/system-shutdown
+tmpfilesdir=${prefix}/lib/tmpfiles.d
+sysusersdir=${prefix}/lib/sysusers.d
+sysctldir=${prefix}/lib/sysctl.d
+binfmtdir=${prefix}/lib/binfmt.d
+modulesloaddir=${prefix}/lib/modules-load.d
+catalogdir=${systemdsystemutildir}/catalog
+systemuidmax=999
+systemgidmax=999
+
+Name: systemd
+Description: systemd dummy
+URL: https://www.freedesktop.org/wiki/Software/systemd
+Version: @VERSION@

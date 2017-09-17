@@ -1,0 +1,5 @@
+Name: udev
+Description: udev-dummy
+Version: @VERSION@
+
+udevdir=@INSTALL_PREFIX@/lib/udev

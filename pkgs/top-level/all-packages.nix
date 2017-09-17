@@ -3497,6 +3497,8 @@ systemd_lib = callPackageAlias "systemd_full" {
 
 systemd_dist = callPackage ../all-pkgs/s/systemd/dist.nix { };
 
+systemd-dummy = callPackage ../all-pkgs/s/systemd-dummy { };
+
 taglib = callPackage ../all-pkgs/t/taglib { };
 
 tahoe-lafs = pkgs.python2Packages.tahoe-lafs;

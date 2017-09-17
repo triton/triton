@@ -143,6 +143,11 @@ stdenv.mkDerivation rec {
   ];
 
   preFixup = ''
+    for bin in $out/bin/*; do
+      wrapProgram $bin \
+        --prefix 'PATH' : "${glib}/bin"
+    done
+
     wrapProgram $out/libexec/gvfsd \
       --prefix XDG_DATA_DIRS : "$GSETTINGS_SCHEMAS_PATH" \
       --prefix XDG_DATA_DIRS : "$out/share"

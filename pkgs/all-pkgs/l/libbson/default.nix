@@ -4,7 +4,7 @@
 }:
 
 let
-  version = "1.7.0";
+  version = "1.8.0";
 in
 stdenv.mkDerivation rec {
   name = "libbson-${version}";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://github.com/mongodb/libbson/releases/download"
       + "/${version}/${name}.tar.gz";
-    sha256 = "442d89e89dfb43bba1f65080dc61fdcba01dcb23468b2842c1dbdd4acd6049d3";
+    sha256 = "63dea744b265a2e17c7b5e289f7803c679721d98e2975ea7d56bc1e7b8586bc1";
   };
 
   nativeBuildInputs = [

@@ -2,6 +2,7 @@
 , docbook-xsl
 , fetchurl
 , intltool
+, lib
 , libxslt
 
 , glib
@@ -11,9 +12,8 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag
-    wtFlag;
+  inherit (lib)
+    boolEn;
 
   versionMajor = "0.18";
   versionMinor = "5";
@@ -46,16 +46,16 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
+    "--enable-introspection"
     "--enable-manpages"
-    (enFlag "vala" (vala != null) null)
-    (enFlag "gcrypt" (libgcrypt != null) null)
+    "--${boolEn (vala != null)}-vala"
+    "--enable-gcrypt"
     "--disable-debug"
     "--disable-coverage"
-    (wtFlag "libgcrypt-prefix" (libgcrypt != null) libgcrypt)
+    "--with-libgcrypt-prefix=${libgcrypt}"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GObject library for the freedesktop.org Secret Service API";
     homepage = https://wiki.gnome.org/Projects/Libsecret;
     license = with licenses; [

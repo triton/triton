@@ -1,6 +1,7 @@
 { stdenv
 , buildPythonPackage
 , fetchPyPi
+, isPy3
 , lib
 
 , glibcLocales
@@ -29,6 +30,8 @@ buildPythonPackage {
   '';
 
   setupHook = ./setup-hook.sh;
+
+  disabled = !isPy3;
 
   meta = with lib; {
     maintainers = with maintainers; [

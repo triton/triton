@@ -2,6 +2,7 @@
 , fetchurl
 , gettext
 , intltool
+, lib
 
 , dbus
 , glib
@@ -12,15 +13,16 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
+  inherit (lib)
+    boolEn;
+
+  versionMajor = "3.12";
+  versionMinor = "0";
+  version = "${versionMajor}.${versionMinor}";
 in
 
 stdenv.mkDerivation rec {
   name = "libgnome-keyring-${version}";
-  versionMajor = "3.12";
-  versionMinor = "0";
-  version = "${versionMajor}.${versionMinor}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/libgnome-keyring/${versionMajor}/"
@@ -50,13 +52,13 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
+    "--enable-introspection"
+    "--${boolEn (vala != null)}-vala"
     "--disable-debug"
     "--disable-coverage"
   ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Compatibility library for accessing secrets";
     homepage = https://wiki.gnome.org/Projects/GnomeKeyring;
     license = with licenses; [

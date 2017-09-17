@@ -38,10 +38,8 @@ with stdenv.lib;
   # Enable all of the crypto libraries directly in the kernel
   # This way the kernel supports any of the needed decompression
   # schemes at boot.
-  ${optionalString (versionAtLeast version "4.7") ''
-    KEY_DH_OPERATIONS y
-    SECONDARY_TRUSTED_KEYRING y
-  ''}
+  KEY_DH_OPERATIONS y
+  SECONDARY_TRUSTED_KEYRING y
   ASYMMETRIC_KEY_TYPE y
   SYSTEM_TRUSTED_KEYRING y
   ${optionalString (versionAtLeast version "4.12") ''
@@ -51,9 +49,6 @@ with stdenv.lib;
   CRYPTO_LZ4 y
   CRYPTO_LZ4HC y
   CRYPTO_LZO y
-  ${optionalString (versionOlder version "4.6") ''
-    CRYPTO_ZLIB y
-  ''}
   LZ4_COMPRESS y
   LZ4_DECOMPRESS y
   LZ4HC_COMPRESS y
@@ -110,16 +105,15 @@ with stdenv.lib;
   HOTPLUG_PCI_ACPI y
   HOTPLUG_PCI_CPCI y
 
-  ${optionalString (versionAtLeast version "4.8") ''
-    GCC_PLUGINS y
-    CPU_FREQ_STAT y
-    PCIE_DPC y
-    SLAB_FREELIST_RANDOM y
-    HARDENED_USERCOPY y
+  GCC_PLUGINS y
+  CPU_FREQ_STAT y
+  PCIE_DPC y
+  SLAB_FREELIST_RANDOM y
+  HARDENED_USERCOPY y
+  ${optionalString (versionAtLeast version "4.14") ''
+    SLAB_FREELIST_HARDENED y
   ''}
-  ${optionalString (versionAtLeast version "4.9") ''
-    PCIE_PTM y
-  ''}
+  PCIE_PTM y
   ${optionalString (versionAtLeast version "4.12") ''
     PCI_ENDPOINT y
     PCI_ENDPOINT_CONFIGFS y
@@ -192,6 +186,9 @@ with stdenv.lib;
   ${optionalString (stdenv.system == "x86_64-linux") ''
     BPF_JIT y
   ''}
+  ${optionalString (versionAtLeast version "4.14") ''
+    BPF_STREAM_PARSER y
+  ''}
   NF_CONNTRACK_ZONES y
   NF_CONNTRACK_EVENTS y
   NF_CONNTRACK_TIMEOUT y
@@ -204,37 +201,15 @@ with stdenv.lib;
   SCTP_COOKIE_HMAC_MD5 y
   L2TP_V3 y
   NET_CLS_IND y
-  ${optionalString (versionAtLeast version "4.6") ''
-    BATMAN_ADV_BATMAN_V y
-  ''}
+  BATMAN_ADV_BATMAN_V y
   BATMAN_ADV_DAT y
   BATMAN_ADV_NC y
   BATMAN_ADV_MCAST y
   NET_SWITCHDEV y
   NET_L3_MASTER_DEV y
-  ${optionalString (versionAtLeast version "4.9") ''
-    AF_RXRPC_IPV6 y
-  ''}
+  AF_RXRPC_IPV6 y
 
   MLX5_CORE_EN y
-  ${optionalString (versionOlder version "4.8") ''
-    MLX4_EN_VXLAN y
-    BNX2X_VXLAN y
-    ${optionalString (versionAtLeast version "4.6") ''
-      BNX2X_GENEVE y
-    ''}
-    IXGBE_VXLAN y
-    I40E_VXLAN y
-    ${optionalString (versionAtLeast version "4.6") ''
-      I40E_GENEVE y
-    ''}
-    FM10K_VXLAN y
-    ${optionalString (versionAtLeast version "4.7") ''
-      QEDE_VXLAN y
-      QEDE_GENEVE y
-    ''}
-    QLCNIC_VXLAN y
-  ''}
   ${optionalString (versionAtLeast version "4.12") ''
     MLX5_CORE_IPOIB y
   ''}
@@ -245,12 +220,10 @@ with stdenv.lib;
   NVM y
 
   # Random Devices
-  ${optionalString (versionAtLeast version "4.7") ''
-    SYNC_FILE y
-    INTEL_PMC_CORE y
-  ''}
+  SYNC_FILE y
+  INTEL_PMC_CORE y
   ${optionalString (versionAtLeast version "4.10") ''
-    INTEL_RDT_A y
+    INTEL_RDT${optionalString (versionOlder version "4.14") "_A"} y
   ''}
   SSB_PCMCIAHOST y
   SSB_SDIOHOST y
@@ -269,22 +242,13 @@ with stdenv.lib;
   V4L_MEM2MEM_DRIVERS y
   DVB_PLATFORM_DRIVERS y
   RADIO_SI470X y
-  ${optionalString (versionAtLeast version "4.6") ''
-    DRM_DP_AUX_CHARDEV y
-  ''}
+  DRM_DP_AUX_CHARDEV y
   DRM_RADEON_USERPTR y
   DRM_AMDGPU_CIK y
   DRM_AMDGPU_USERPTR y
-  ${optionalString (versionAtLeast version "4.5" && versionOlder version "4.9") ''
-    DRM_AMD_POWERPLAY y
-  ''}
-  ${optionalString (versionAtLeast version "4.9") ''
-    DRM_AMDGPU_SI y
-  ''}
+  DRM_AMDGPU_SI y
   DRM_VMWGFX_FBCON y
-  ${optionalString (versionAtLeast version "4.8") ''
-    DRM_I915_GVT y
-  ''}
+  DRM_I915_GVT y
   FIRMWARE_EDID y
   LOGO y
   HID_BATTERY_STRENGTH y
@@ -297,14 +261,15 @@ with stdenv.lib;
   ISCSI_IBFT_FIND y
 
   CAN_LEDS y
-  ${optionalString (versionAtLeast version "4.8") ''
-    LEDS_TRIGGER_DISK y
-  ''}
+  LEDS_TRIGGER_DISK y
   ${optionalString (versionAtLeast version "4.10") ''
     LED_TRIGGER_PHY y
   ''}
   ${optionalString (versionAtLeast version "4.11") ''
     LEDS_BRIGHTNESS_HW_CHANGED y
+  ''}
+  ${optionalString (versionAtLeast version "4.14") ''
+    LEDS_PCA955X_GPIO y
   ''}
 
   # Wireless networking.
@@ -375,9 +340,7 @@ with stdenv.lib;
   EXT3_FS n
   EXT4_FS_POSIX_ACL y
   EXT4_FS_SECURITY y
-  ${optionalString (versionAtLeast version "4.8") ''
-    EXT4_ENCRYPTION y
-  ''}
+  EXT4_ENCRYPTION y
   REISERFS_FS n
   JFS_FS n
   XFS_QUOTA y
@@ -404,19 +367,12 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.10") ''
     UBIFS_FS_ENCRYPTION y
   ''}
-  ${optionalString (versionAtLeast version "4.6") ''
-    FAT_DEFAULT_UTF8 y
-  ''}
+  FAT_DEFAULT_UTF8 y
   JFFS2_FS_XATTR y
   JFFS2_COMPRESSION_OPTIONS y
   JFFS2_LZO y
   JFFS2_CMODE_FAVOURLZO y
-  ${optionalString (versionAtLeast version "4.8") ''
-    EXPORTFS_BLOCK_OPS y
-  ''}
-  ${optionalString (versionAtLeast version "4.0" && versionOlder version "4.6") ''
-    NFSD_PNFS y
-  ''}
+  EXPORTFS_BLOCK_OPS y
   NFSD_V2_ACL y
   NFSD_V3 y
   NFSD_V3_ACL y
@@ -428,9 +384,7 @@ with stdenv.lib;
   NFS_V4_1 y  # NFSv4.1 client support
   NFS_V4_2 y
   NFS_V4_SECURITY_LABEL y
-  ${optionalString (versionAtLeast version "4.8") ''
-    NFSD_FLEXFILELAYOUT y
-  ''}
+  NFSD_FLEXFILELAYOUT y
   CIFS_STATS y
   CIFS_UPCALL y
   CIFS_ACL y
@@ -445,9 +399,7 @@ with stdenv.lib;
   CEPH_FSCACHE y
   CEPH_FS_POSIX_ACL y
   CEPH_LIB_USE_DNS_RESOLVER y
-  ${optionalString (versionAtLeast version "4.8") ''
-    PSTORE_LZ4_COMPRESS y
-  ''}
+  PSTORE_LZ4_COMPRESS y
   SQUASHFS_FILE_DIRECT y
   SQUASHFS_DECOMP_MULTI_PERCPU y
   SQUASHFS_XATTR y
@@ -455,6 +407,9 @@ with stdenv.lib;
   SQUASHFS_LZO y
   SQUASHFS_XZ y
   SQUASHFS_LZ4 y
+  ${optionalString (versionAtLeast version "4.14") ''
+    SQUASHFS_ZSTD y
+  ''}
 
   # Security related features.
   RANDOMIZE_BASE y
@@ -490,8 +445,9 @@ with stdenv.lib;
   POWER_RESET y
   POWER_RESET_RESTART y
   POWER_AVS y
-  ${optionalString (versionAtLeast version "4.5") ''
-    WATCHDOG_SYSFS y
+  WATCHDOG_SYSFS y
+  ${optionalString (versionAtLeast version "4.14") ''
+    RESET_ATTACK_MITIGATION y
   ''}
   8139TOO_8129 y
   8139TOO_PIO n # PIO is slower
@@ -506,20 +462,14 @@ with stdenv.lib;
   BT_RFCOMM_TTY y # RFCOMM TTY support
   BT_BNEP_MC_FILTER y
   BT_BNEP_PROTO_FILTER y
-  ${optionalString (versionAtLeast version "4.6") ''
-    BT_LEDS y
-  ''}
+  BT_LEDS y
   BT_HCIUART_ATH3K y
   BT_HCIUART_3WIRE y
   BT_HCIUART_INTEL y
   BT_HCIUART_BCM y
   BT_HCIUART_QCA y
-  ${optionalString (versionAtLeast version "4.6") ''
-    BT_HCIUART_AG6XX y
-  ''}
-  ${optionalString (versionAtLeast version "4.9") ''
-    BT_HCIUART_MRVL y
-  ''}
+  BT_HCIUART_AG6XX y
+  BT_HCIUART_MRVL y
   MAC80211_MESH y
   MAC80211_RC_MINSTREL_VHT y
   RFKILL_INPUT y
@@ -528,9 +478,6 @@ with stdenv.lib;
   NFTL_RW y
   MTD_NAND_ECC_SMC y
   MTD_NAND_ECC_BCH y
-  ${optionalString (versionOlder version "4.8") ''
-    ZRAM_LZ4_COMPRESS y
-  ''}
   DVB_DYNAMIC_MINORS y # we use udev
   EFI_STUB y
   EFI_MIXED y
@@ -538,6 +485,10 @@ with stdenv.lib;
   FUSION y # Fusion MPT device support
   IDE n
   IRDA_ULTRA y # Ultra (connectionless) protocol
+  ${optionalString (versionAtLeast version "4.14") ''
+    IRDA_CACHE_LAST_LSAP y
+    IRDA_FAST_RR y
+  ''}
   JOYSTICK_IFORCE_232 y # I-Force Serial joysticks and wheels
   JOYSTICK_IFORCE_USB y # I-Force USB joysticks and wheels
   JOYSTICK_XPAD_FF y # X-Box gamepad rumble support
@@ -555,14 +506,8 @@ with stdenv.lib;
     RMI4_F55 y
   ''}
   MTRR_SANITIZER y
-  ${optionalString (versionAtLeast version "4.8" && versionOlder version "4.9") ''
-    SUNXI_CCU y
-    SUN8I_H3_CCU y
-  ''}
   NET_FC y # Fibre Channel driver support
-  ${optionalString (versionAtLeast version "4.8") ''
-    NET_NCSI y
-  ''}
+  NET_NCSI y
   PINCTRL_BAYTRAIL y # GPIO on Intel Bay Trail, for some Chromebook internal eMMC disks
   MMC_BLOCK_MINORS 32 # 8 is default. Modern gpt tables on eMMC may go far beyond 8.
   PPP_MULTILINK y # PPP multilink support
@@ -570,17 +515,13 @@ with stdenv.lib;
   REGULATOR y # Voltage and Current Regulator Support
   RC_DEVICES y # Enable IR devices
   RT2800USB_RT55XX y
-  ${optionalString (versionAtLeast version "4.9") ''
-    RTC_DRV_DS1307_CENTURY y
-  ''}
+  RTC_DRV_DS1307_CENTURY y
   ${optionalString (versionOlder version "4.13") ''
     SCSI_MQ_DEFAULT y
   ''}
   DM_MQ_DEFAULT y
   DM_UEVENT y
-  ${optionalString (versionAtLeast version "4.5") ''
-    DM_VERITY_FEC y
-  ''}
+  DM_VERITY_FEC y
   SCSI_SCAN_ASYNC y
   SCSI_DH y
   SCSI_LOGGING y # SCSI logging facility
@@ -589,6 +530,10 @@ with stdenv.lib;
   SLIP_SMART y
   HWMON y
   THERMAL_HWMON y # Hardware monitoring support
+  ${optionalString (versionAtLeast version "4.14") ''
+    CLOCK_THERMAL y
+    DEVFREQ_THERMAL y
+  ''}
   UEVENT_HELPER n
   USB_EHCI_ROOT_HUB_TT y # Root Hub Transaction Translators
   USB_EHCI_TT_NEWSCHED y # Improved transaction translator scheduling
@@ -613,9 +558,6 @@ with stdenv.lib;
   ''}
   ${optionalString (versionAtLeast version "4.12") ''
     BFQ_GROUP_IOSCHED y
-  ''}
-  ${optionalString (versionOlder version "4.7") ''
-    DEVPTS_MULTIPLE_INSTANCES y
   ''}
   BLK_DEV_THROTTLING y
   ${optionalString (versionAtLeast version "4.10") ''
@@ -667,6 +609,9 @@ with stdenv.lib;
     X86_MCELOG_LEGACY y
     RAS_CEC y
   ''}
+  ${optionalString (versionAtLeast version "4.14") ''
+    AMD_MEM_ENCRYPT y
+  ''}
 
   PREEMPT y
   MEMORY y
@@ -677,9 +622,7 @@ with stdenv.lib;
   KEXEC_FILE y
   KEXEC_JUMP y
   IDLE_PAGE_TRACKING y
-  ${optionalString (versionAtLeast version "4.9") ''
-    GCC_PLUGIN_LATENT_ENTROPY y
-  ''}
+  GCC_PLUGIN_LATENT_ENTROPY y
   ${optionalString (versionAtLeast version "4.11") ''
     GCC_PLUGIN_STRUCTLEAK y
   ''}
@@ -689,6 +632,9 @@ with stdenv.lib;
     REFCOUNT_FULL y
     FORTIFY_SOURCE y
   ''}
+  ${optionalString (versionAtLeast version "4.14") ''
+    GCC_PLUGIN_STRUCTLEAK_BYREF_ALL y
+  ''}
 
   # Easier debugging of NFS issues.
   SUNRPC_DEBUG y
@@ -697,9 +643,6 @@ with stdenv.lib;
   PARAVIRT y
   PARAVIRT_SPINLOCKS y
   HYPERVISOR_GUEST y
-  ${optionalString (versionOlder version "4.8") ''
-    KVM_APIC_ARCHITECTURE y
-  ''}
   KVM_ASYNC_PF y
   KVM_COMPAT y
   KVM_GENERIC_DIRTYLOG_READ_PROTECT y
@@ -750,7 +693,9 @@ with stdenv.lib;
   # Media support.
   MEDIA_DIGITAL_TV_SUPPORT y
   MEDIA_CAMERA_SUPPORT y
-  MEDIA_RC_SUPPORT y
+  ${optionalString (versionOlder version "4.14") ''
+    MEDIA_RC_SUPPORT y
+  ''}
   MEDIA_USB_SUPPORT y
   ${optionalString (versionAtLeast version "4.10") ''
     MEDIA_CEC_SUPPORT y
@@ -787,6 +732,9 @@ with stdenv.lib;
   ZSMALLOC y
   ZRAM m
   ZSWAP y
+  ${optionalString (versionAtLeast version "4.14") ''
+    ZRAM_WRITEBACK y
+  ''}
 
   # Enable PCIe and USB for the brcmfmac driver
   BRCMFMAC_USB y

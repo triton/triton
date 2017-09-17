@@ -16,8 +16,8 @@
 , libxext
 , libxrandr
 , libxrender
-, mesa_noglu
 , nvidia-drivers_latest
+, opengl-dummy
 , pango
 , randrproto
 , renderproto
@@ -59,8 +59,8 @@ stdenv.mkDerivation rec {
     libxext
     libxrandr
     libxrender
-    mesa_noglu
     nvidia-drivers_latest
+    opengl-dummy
     pango
     randrproto
     renderproto

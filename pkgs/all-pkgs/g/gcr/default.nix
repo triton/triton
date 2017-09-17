@@ -1,6 +1,7 @@
 { stdenv
 , fetchurl
 , intltool
+, lib
 , libxslt
 
 , atk
@@ -18,14 +19,15 @@
 }:
 
 let
-  inherit (stdenv.lib)
-    enFlag;
-in
-stdenv.mkDerivation rec {
-  name = "gcr-${version}";
+  inherit (lib)
+    boolEn;
+
   versionMajor = "3.20";
   versionMinor = "0";
   version = "${versionMajor}.${versionMinor}";
+in
+stdenv.mkDerivation rec {
+  name = "gcr-${version}";
 
   src = fetchurl {
     url = "mirror://gnome/sources/gcr/${versionMajor}/${name}.tar.xz";
@@ -59,8 +61,8 @@ stdenv.mkDerivation rec {
     "--disable-gtk-doc"
     "--disable-gtk-doc-html"
     "--disable-gtk-doc-pdf"
-    (enFlag "introspection" (gobject-introspection != null) null)
-    (enFlag "vala" (vala != null) null)
+    "--enable-introspection"
+    "--${boolEn (vala != null)}-vala"
     "--disable-update-mime"
     "--disable-update-icon-cache"
     "--disable-debug"
@@ -70,7 +72,7 @@ stdenv.mkDerivation rec {
 
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Libraries for cryptographic UIs and accessing PKCS#11 modules";
     homepage = https://git.gnome.org/browse/gcr;
     license = with licenses; [

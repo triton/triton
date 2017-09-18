@@ -1,6 +1,6 @@
 { stdenv
 , fetchurl
-, pythonPackages
+, python3Packages
 
 , glib
 , gmime
@@ -20,8 +20,8 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    pythonPackages.python
-    pythonPackages.sphinx
+    python3Packages.python
+    python3Packages.sphinx
   ];
 
   buildInputs = [

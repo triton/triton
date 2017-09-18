@@ -29,7 +29,6 @@
 , libproxy
 , libxkbcommon
 , mariadb-connector-c
-, opengl-dummy
 , mtdev
 , opengl-dummy
 , openssl_1-0-2

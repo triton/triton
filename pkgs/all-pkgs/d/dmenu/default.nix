@@ -30,8 +30,9 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     sed -i dmenu_run \
-      -i dmenu_path \
-      -re 's!\<(dmenu|dmenu_run|dmenu_path|stest)\>!'"$out/bin"'/&!g'
+      -re 's!\<(dmenu|dmenu_path)\>!'"$out/bin"'/&!g'
+    sed -i dmenu_path \
+      -re 's!\<(stest)\>!'"$out/bin"'/&!g'
   '';
 
   preConfigure = ''

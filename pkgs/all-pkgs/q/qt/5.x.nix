@@ -29,8 +29,9 @@
 , libproxy
 , libxkbcommon
 , mariadb-connector-c
-, mesa
+, opengl-dummy
 , mtdev
+, opengl-dummy
 , openssl_1-0-2
 , pciutils
 , pcre2
@@ -96,8 +97,8 @@ stdenv.mkDerivation rec {
     libproxy
     libxkbcommon
     mariadb-connector-c
-    mesa
     mtdev
+    opengl-dummy
     openssl_1-0-2
     pcre2
     postgresql

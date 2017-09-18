@@ -18,8 +18,6 @@
 , libpng
 , libtiff
 , mariadb-connector-c
-, mesa_glu
-, mesa_noglu
 , opengl-dummy
 , openssl
 , perl
@@ -72,8 +70,7 @@ stdenv.mkDerivation rec {
     libpng
     libtiff
     mariadb-connector-c
-    mesa_glu
-    mesa_noglu
+    opengl-dummy
     openssl
     postgresql
     pulseaudio_lib

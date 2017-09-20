@@ -1,8 +1,6 @@
 { stdenv
 , cmake
-, fetchpatch
-, fetchTritonPatch
-, fetchFromGitHub
+, fetchurl
 , lib
 , ninja
 
@@ -15,17 +13,15 @@ let
   inherit (lib)
     boolOn;
 
-  version = "2.0.13";
+  version = "2.0.14";
 in
 stdenv.mkDerivation rec {
   name = "jasper-${version}";
 
-  src = fetchFromGitHub {
-    version = 3;
-    owner = "mdadams";
-    repo = "jasper";
-    rev = "version-${version}";
-    sha256 = "36bd07db8840ac3cb2c72ea3a3aea20db7b2e81e51f5016b6ad48f6974e82f98";
+  src = fetchurl {
+    url = "http://www.ece.uvic.ca/~frodo/jasper/software/${name}.tar.gz";
+    multihash = "Qme5shSvnKXsNvoACmeqFUUh9UiNCsVy9oGd1JQiHdswFr";
+    sha256 = "2a1f61e55afe8b4ce8115e1508c5d7cb314d56dfcc2dd323f90c072f88ccf57b";
   };
 
   nativeBuildInputs = [

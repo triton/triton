@@ -3,6 +3,7 @@
 , lib
 , meson
 , ninja
+, python3Packages
 
 , fuse_3
 , glib
@@ -10,20 +11,21 @@
 }:
 
 let
-  version = "3.2.0";
+  version = "3.3.0";
 in
 stdenv.mkDerivation rec {
   name = "sshfs-${version}";
 
   src = fetchurl {
-    url = "https://github.com/libfuse/sshfs/releases/download/${name}/${name}.tar.gz";
+    url = "https://github.com/libfuse/sshfs/releases/download/${name}/${name}.tar.xz";
     hashOutput = false;
-    sha256 = "b494cdbac7ba2e77b994b3d3957171610be640e49c287ff6cb8f2959c4768101";
+    sha256 = "9ddfcc2564fafe002706b093b6295afbcb2cc0a3bc52bc805cc5361cb69ca51d";
   };
 
   nativeBuildInputs = [
     meson
     ninja
+    python3Packages.docutils
   ];
 
   buildInputs = [
@@ -31,6 +33,11 @@ stdenv.mkDerivation rec {
     glib
     openssh
   ];
+
+  postPatch = ''
+    grep -q "'rst2man'" meson.build
+    sed -i "s,'rst2man','rst2man.py',g" meson.build
+  '';
 
   passthru = {
     srcVerification = fetchurl {

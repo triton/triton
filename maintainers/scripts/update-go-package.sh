@@ -146,6 +146,7 @@ while read line; do
   else
     VERSIONS="$(git tag --sort "v:refname")"
   fi
+  VERSIONS="$(echo "$VERSIONS" | awk '{ match($0, /[0-9]+(\.[0-9]+)*/, arr); print arr[0] " " $0; }' | sort -V | awk '{ print $2; }')"
   VERSION="$(echo "$VERSIONS" | grep '\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\|\([0-9]\+\.\)\+[0-9]\+$\)' | grep -i -v "\(dev\|alpha\|beta\|rc\)" | tail -n 1 || true)"
   HEAD_DATE="$(date --date="@$(git show -s --format=%ct HEAD)" --utc "+%Y-%m-%d")"
   REV="$(git rev-parse HEAD)"

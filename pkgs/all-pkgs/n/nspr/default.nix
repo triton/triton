@@ -9,7 +9,7 @@ let
     optionals
     platforms;
 
-  version = "4.16";
+  version = "4.17";
 
   baseUrls = [
     "https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v${version}/src"
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}/nspr-${version}.tar.gz") baseUrls;
     hashOutput = false;
-    sha256 = "9b3102d97665504aeee73363c11a21c062ad67a2522242368b7f019f96a53cd1";
+    sha256 = "590a0aea29412ae22d7728038c21ef2ab42646e48172a47d2e4bb782846d1095";
   };
 
   prePatch = ''

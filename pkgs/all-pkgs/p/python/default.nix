@@ -47,8 +47,8 @@ let
 
   sources = {
     "2.7" = {
-      versionPatch = "13";
-      sha256 = "35d543986882f78261f97787fd3e06274bfa6df29fac9b4a94f73930ff98f731";
+      versionPatch = "14";
+      sha256 = "71ffb26e09e78650e424929b2b457b9c912ac216576e6bd9e7d204ed03296a66";
       # Benjamin Peterson
       pgpKeyFingerprint = "C01E 1CAD 5EA2 C4F0 B8E3  5715 04C3 67C2 18AD D4FF";
     };
@@ -358,7 +358,7 @@ stdenv.mkDerivation rec {
       inherit (source) pgpKeyFingerprint;
       inherit (src) outputHashAlgo;
       failEarly = true;
-      urls = tarballUrls "2";
+      urls = tarballUrls "14";
       outputHash = "9229773be41ed144370f47f0f626a1579931f5a390f1e8e3853174d52edd64a9";
       pgpsigUrls = map (n: "${n}.asc") urls;
     };

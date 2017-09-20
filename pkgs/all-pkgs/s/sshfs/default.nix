@@ -1,5 +1,8 @@
 { stdenv
 , fetchurl
+, lib
+, meson
+, ninja
 
 , fuse_3
 , glib
@@ -18,6 +21,11 @@ stdenv.mkDerivation rec {
     sha256 = "b494cdbac7ba2e77b994b3d3957171610be640e49c287ff6cb8f2959c4768101";
   };
 
+  nativeBuildInputs = [
+    meson
+    ninja
+  ];
+
   buildInputs = [
     fuse_3
     glib
@@ -33,7 +41,7 @@ stdenv.mkDerivation rec {
     };
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     maintainers = with maintainers; [
       wkennington
     ];

@@ -15,13 +15,11 @@ let
 
   sources = {
     "5.5" = {
-      version = "5.5.2";
-      sha1Confirm = "91b3b3c823fafce54609ed5c9075d9cf50b2edff";
-      sha256 = "0870e2c0c72e6eda976effa07aa1cdd06a9500302320b5c22ed292ce21665bf1";
+      version = "5.6.1";
+      sha256 = "006f9cb3886877df845e3c3dea8a688777fb739a862d3afe1a113c16a732715f";
     };
     "6.0" = {
       version = "6.0.0-beta2";
-      sha1Confirm = "c3f7c1685fc4925a4fac96fa4dfb1706c85acde6";
       sha256 = "0c200154c4980ad6e278d9c9ee9e2ca22d2c501c4c67e6fe748adde31aa36b0e";
     };
   };
@@ -32,7 +30,8 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://artifacts.elastic.co/downloads/elasticsearch/${name}.tar.gz";
-    inherit (source) sha1Confirm sha256;
+    hashOutput = false;
+    inherit (source) sha256;
   };
 
   nativeBuildInputs = [
@@ -86,6 +85,17 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/elasticsearch-plugin \
       --set JAVA_HOME "${openjdk}"
   '';
+
+  passthru = {
+    srcVerification = fetchurl {
+      inherit (src)
+        outputHash
+        outputHashAlgo
+        urls;
+      sha1Url = map (n: "${n}.sha1") src.urls;
+      failEarly = true;
+    };
+  };
 
   meta = with lib; {
     description = "Distributed RESTful search engine built on top of Lucene";

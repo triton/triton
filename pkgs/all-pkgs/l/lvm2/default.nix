@@ -16,16 +16,16 @@ let
     "ftp://sources.redhat.com/pub/lvm2/releases"
   ];
 
-  version = "2.02.172";
+  version = "2.02.174";
 in
 stdenv.mkDerivation rec {
   name = "lvm2-${version}";
 
   src = fetchurl {
     urls = map (n: "${n}/LVM2.${version}.tgz") baseUrls;
-    multihash = "QmNoaxzkpjDpjb95efvtNqcVApcyZjrpKC8WXfxQmfU9zQ";
+    multihash = "QmdPojtvp9MfCLbaHqUdKQGB526KYDLAxKDaLny2nYw5bs";
     hashOutput = false;
-    sha512 = "402612667f279be5f1c682b9037022788e9b76e3157907a0832e8b7847c3aa96e4b44a3bd880657a7e577ab46db0e4f283ac6edbb52502e365617633c802ae40";
+    sha512 = "dcf5c919e937583e0d0afbcedb011689d944a3c321aac049741f6564a48e07eb3ce49c5ef245e6b71686b5cfee3eca1969b7e0ebe90f084e2be391b805d3f588";
   };
 
   buildInputs = [
@@ -82,6 +82,10 @@ stdenv.mkDerivation rec {
     mkdir -p $out/etc/systemd/system $out/lib/systemd/system-generators
     cp scripts/blk_availability_systemd_red_hat.service $out/etc/systemd/system
     cp scripts/lvm2_activation_generator_systemd_red_hat $out/lib/systemd/system-generators
+
+    # Fix extraneous @RT_LIB@
+    grep -q '@RT_LIB@' "$out"/lib/pkgconfig/devmapper.pc
+    sed -i 's,@RT_LIB@,,g' "$out"/lib/pkgconfig/devmapper.pc
   '';
 
   passthru = {

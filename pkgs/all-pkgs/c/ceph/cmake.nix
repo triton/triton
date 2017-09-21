@@ -154,11 +154,6 @@ stdenv.mkDerivation rec {
     "-DWITH_SYSTEM_ROCKSDB=ON"
   ];
 
-  makeFlags = [
-    "VERBOSE=1"
-    "-O"
-  ];
-
   # Ensure we have the correct rpath already to work around
   # a broken patchelf.
   preBuild = ''

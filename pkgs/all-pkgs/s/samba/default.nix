@@ -50,7 +50,7 @@ let
     optionals
     optionalString;
 
-  version = "4.6.8";
+  version = "4.7.0";
   name = "samba${if isClient then "-client" else ""}-${version}";
 
   tarballUrls = [
@@ -65,7 +65,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = map (n: "${n}.gz") tarballUrls;
     hashOutput = false;
-    sha256 = "581deeb2543f5cedcb556cb950d0e82690d9f0cd33811d76624502ca0c32575d";
+    sha256 = "bd16d169988eb513e685a87e9964a5210482498fa9b3a22aaa8287a061e3c936";
   };
 
   nativeBuildInputs = [
@@ -85,7 +85,7 @@ stdenv.mkDerivation rec {
     cups
     gnutls
     iniparser
-    #krb5_full
+    krb5_full
     ldb
     libarchive
     libbsd
@@ -179,7 +179,8 @@ stdenv.mkDerivation rec {
     "--enable-gnutls"
 
     # wscript options
-    #"--with-system-mitkrb5"
+    "--with-system-mitkrb5" "${krb5_full}"
+    "--with-system-mitkdc" "${krb5_full}/bin/krb5kdc"
     # "--without-ad-dc"
 
     # ctdb/wscript

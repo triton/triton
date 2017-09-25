@@ -16,7 +16,7 @@ let
     "mirror://cpan/src/5.0/perl-${version}.tar.xz"
   ];
 
-  version = "5.26.0";
+  version = "5.26.1";
 in
 stdenv.mkDerivation rec {
   name = "perl-${version}";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "9bf2e3d0d72aad77865c3bdbc20d3b576d769c5c255c4ceb30fdb9335266bf55";
+    sha256 = "fe8208133e73e47afc3251c08d2c21c5a60160165a8ab8b669c43a420e4ec680";
   };
 
   setupHook = ./setup-hook.sh;
@@ -86,8 +86,8 @@ stdenv.mkDerivation rec {
     libPrefix = "lib/perl5/site_perl";
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "5.26.0";
-      outputHash = "9bf2e3d0d72aad77865c3bdbc20d3b576d769c5c255c4ceb30fdb9335266bf55";
+      urls = tarballUrls "5.26.1";
+      outputHash = "fe8208133e73e47afc3251c08d2c21c5a60160165a8ab8b669c43a420e4ec680";
       inherit (src) outputHashAlgo;
       sha256Urls = map (n: "${n}.sha256.txt") urls;
       sha1Urls = map (n: "${n}.sha1.txt") urls;

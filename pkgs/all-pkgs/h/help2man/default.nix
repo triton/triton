@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "1.47.4";
+  version = "1.47.5";
 
   tarballUrls = version: [
     "mirror://gnu/help2man/help2man-${version}.tar.xz"
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     urls = tarballUrls version;
     hashOutput = false;
-    sha256 = "d4ecf697d13f14dd1a78c5995f06459bff706fd1ce593d1c02d81667c0207753";
+    sha256 = "7ca60b2519fdbe97f463fe2df66a6188d18b514bfd44127d985f0234ee2461b1";
   };
 
   nativeBuildInputs = [
@@ -35,11 +35,11 @@ stdenv.mkDerivation rec {
   passthru = {
     srcVerification = fetchurl rec {
       failEarly = true;
-      urls = tarballUrls "1.47.4";
+      urls = tarballUrls "1.47.5";
       pgpsigUrls = map (n: "${n}.sig") urls;
       pgpKeyFingerprint = "87EA 44D1 50D8 9615 E39A  3FEE F0DC 8E00 B28C 5995";
       inherit (src) outputHashAlgo;
-      outputHash = "d4ecf697d13f14dd1a78c5995f06459bff706fd1ce593d1c02d81667c0207753";
+      outputHash = "7ca60b2519fdbe97f463fe2df66a6188d18b514bfd44127d985f0234ee2461b1";
     };
   };
 

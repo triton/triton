@@ -157,9 +157,9 @@ rec {
   ];
 
   nvidia = [
-    "http://download.nvidia.com"
+    "https://download.nvidia.com"
     # Some files are only available on the US mirror
-    "http://us.download.nvidia.com"
+    "https://us.download.nvidia.com"
   ];
 
   openbsd = [

@@ -539,9 +539,9 @@ stdenv.mkDerivation {
 
     srcVerification = fetchurl {
       urls = [
-        ("http://us.download.nvidia.com/XFree86/Linux-x86/${version}/"
+        ("mirror://nvidia/XFree86/Linux-x86/${version}/"
             + "NVIDIA-Linux-x86-${version}.run")
-        ("http://us.download.nvidia.com/XFree86/Linux-x86_64/${version}/"
+        ("mirror://nvidia/XFree86/Linux-x86_64/${version}/"
             + "NVIDIA-Linux-x86_64-${version}"
             + "${if channel == "tesla" then "" else "-no-compat32"}.run")
       ];
@@ -549,7 +549,6 @@ stdenv.mkDerivation {
       # we cannot enable recursion to use src.sha256 in the nvidia-drivers
       # build.
       sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-      insecureHashOutput = true;
     };
   };
 

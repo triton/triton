@@ -7,6 +7,7 @@
 , glu
 , inputproto
 , libx11
+, libxi
 , libxrandr
 , libxrender
 , opengl-dummy
@@ -19,16 +20,24 @@
 , glesSupport ? false
 }:
 
+assert glesSupport ->
+  opengl-dummy.egl
+  && opengl-dummy.glesv1
+  && opengl-dummy.glesv2;
+
 let
   inherit (lib)
     boolOn;
+
+  version = "3.0.0";
 in
 stdenv.mkDerivation rec {
-  name = "freeglut-3.0.0";
+  name = "freeglut-${version}";
 
   src = fetchurl {
-    url = "mirror://sourceforge/freeglut/${name}.tar.gz";
-    sha256 = "18knkyczzwbmyg8hr4zh8a1i5ga01np2jzd1rwmsh7mh2n2vwhra";
+    url = "mirror://sourceforge/freeglut/freeglut/${version}/${name}.tar.gz";
+    multihash = "QmTo2cUAxj3gHqYSCRRgbhJebR35yxpKah4DikRmtRCQ6H";
+    sha256 = "2a43be8515b01ea82bcfa17d29ae0d40bd128342f0930cd1f375f1ff999f76a2";
   };
 
   nativeBuildInputs = [
@@ -40,7 +49,7 @@ stdenv.mkDerivation rec {
     glu
     inputproto
     libx11
-    xorg.libXi
+    libxi
     libxrandr
     libxrender
     xorg.libXxf86vm
@@ -54,11 +63,7 @@ stdenv.mkDerivation rec {
   cmakeFlags = [
     "-DFREEGLUT_BUILD_DEMOS=OFF"
     # XXX: Cannot build both libglut and libfreeglut-gles.
-    "-DFREEGLUT_GLES=${boolOn (
-      glesSupport
-      && opengl-dummy.egl
-      && opengl-dummy.glesv1
-      && opengl-dummy.glesv2)}"
+    "-DFREEGLUT_GLES=${boolOn glesSupport}"
   ];
 
   meta = with lib; {

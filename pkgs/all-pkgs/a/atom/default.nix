@@ -140,7 +140,7 @@ stdenv.mkDerivation rec {
       -e "s,/usr/share/atom${source.suffix},$out/bin,"
 
     # Replace vendored git binary
-    atom_git=$out/share/atom/resources/app/node_modules/dugite/git
+    atom_git=$out/share/atom${source.suffix}/resources/app${if channel == "beta" then ".asar.unpacked" else ""}/node_modules/dugite/git
     rm -fv $atom_git/bin/git
     ln -sv ${git}/bin/git \
       $atom_git/bin/git
@@ -181,9 +181,9 @@ stdenv.mkDerivation rec {
       --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
       --set-rpath "${libPath}" \
       $out/share/atom${source.suffix}/resources/app/apm/bin/node
-    #find $out/share/atom \
+    #find $out/share/atom${source.suffix} \
     #  -name "*.node" \
-    #  -exec patchelf --set-rpath "${libPath}:$out/share/atom" {} \;
+    #  -exec patchelf --set-rpath "${libPath}:$out/share/atom${source.suffix}" {} \;
   '';
 
   buildDirCheck = false;  # slow
